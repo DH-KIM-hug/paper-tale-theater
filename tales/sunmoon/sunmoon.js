@@ -250,7 +250,12 @@
     await say('엄마가 말했어요. "문 꼭 잠그고 엄마 기다려라~"');
     await mom.move(1180, 500, 1800);
 
-    /* --- 2. 떡 받아 오기 (부잣집 부엌) --- */
+    /* --- 2. 떡 받아 오기 (부잣집 부엌) ---
+       세 고개 수 놀이(2지선다): 첫째 1~5개, 둘째 1~10개, 셋째 = 남은 떡(1~5개). 부엌에서는 그 합계만큼 받는다 */
+    const NUMS = ['하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열'];
+    const rint = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+    const ASKS = [rint(1, 5), rint(1, 10), rint(1, 5)];
+    const TOTAL = ASKS[0] + ASKS[1] + ASKS[2];
     let plateCakes = [];
     await T.sceneCard('부잣집 부엌', () => {
       T.clear(); kitchenBG(T);
@@ -258,7 +263,7 @@
       const plate = el('g', { id: 'plate' }, T.world);
       el('rect', { x: 560, y: 300, width: 260, height: 140, fill: 'transparent' }, plate);
       T.paper(plate, [['ellipse', { cx: 690, cy: 400, rx: 110, ry: 26, fill: C.snow, stroke: C.gold, 'stroke-width': 5 }]]);
-      plateCakes = [[640, 390], [690, 392], [740, 390], [665, 368], [715, 368]].map(([x, y]) => ({ x, y, g: drawCake(T, plate, x, y, 1.8) }));
+      plateCakes = [[630, 394], [690, 396], [750, 394], [660, 370], [720, 370]].map(([x, y]) => ({ x, y, g: drawCake(T, plate, x, y, 1.8) }));
     });
     await say('엄마는 부잣집에서 하루 종일 부지런히 일했어요.');
     await say('"수고했어요. 떡 가져가요!" 떡을 톡톡 눌러서 바구니에 담아요!');
@@ -269,22 +274,55 @@
       await T.anim(g, [{ transform: `translate(${x0}px,${y0}px)` }, { transform: `translate(${mx}px,${my}px) rotate(180deg)` }, { transform: `translate(${x1}px,${y1}px) rotate(360deg)` }], { duration: dur, easing: 'ease-in-out' });
       g.remove();
     };
+    let inBasket = 0;
+    const showBasket = () => mom.P.setCakes(Math.min(5, Math.ceil(inBasket * 5 / TOTAL))); // 바구니 그림은 5칸 — 비율로 보여준다
     await T.mash(T.world.querySelector('#plate'), { count: 5, prompt: '떡을 톡톡 눌러서 바구니에 담아요!', onStep: i => {
       const c = plateCakes[5 - i]; c.g.setAttribute('opacity', 0);
       const [x1, y1] = toBasket(i - 1);
       T.tone(500 + i * 90, .15, { type: 'triangle', vol: .18 });
-      fly(c.x, c.y, x1, y1, 1.8, 450).then(() => { mom.P.setCakes(i); AudioFX.pop(); });
-      T.pop(c.x, c.y - 90, ['하나', '둘', '셋', '넷', '다섯'][i - 1], C.bean);
+      fly(c.x, c.y, x1, y1, 1.8, 450).then(() => { inBasket = Math.round(TOTAL * i / 5); showBasket(); AudioFX.pop(); });
+      T.pop(c.x, c.y - 90, '영차!', C.bean);
     } });
     await sleep(700);
     mom.P.smile();
-    await say('떡이 다섯 개! "우리 아이들이 좋아하겠다!" 엄마는 서둘러 집으로 떠났어요.');
+    await say('떡을 바구니 가득 받았어요! "우리 아이들이 좋아하겠다!" 엄마는 서둘러 집으로 떠났어요.');
 
-    /* --- 3·4. 첫째·둘째·셋째 고개 --- */
+    /* 접시 고르기(2지선다): 화면 고정 접시 두 개. 떡 n개를 5개씩 줄 맞춰 놓고 아래에 숫자 */
+    function cakePlate(n, x, y) {
+      const g = el('g', { transform: `translate(${x},${y})` }, document.getElementById('stage'));
+      T.paper(g, [['rect', { x: -150, y: -105, width: 300, height: 210, rx: 26, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }],
+                  ['ellipse', { cx: 0, cy: 8, rx: 128, ry: 70, fill: '#B9844F', stroke: C.bark, 'stroke-width': 5 }]]); // 나무 쟁반: 흰 떡이 잘 보이게
+      for (let k = 0; k < n; k++) {
+        const row = Math.floor(k / 5), col = k % 5, inRow = Math.min(5, n - row * 5);
+        drawCake(T, g, (col - (inRow - 1) / 2) * 48, (n > 5 ? -16 : 2) + row * 38, 1.55);
+      }
+      el('text', { y: 92, 'text-anchor': 'middle', 'font-size': 34, fill: C.bean, 'font-family': 'Jua, sans-serif', text: String(n) }, g);
+      return g;
+    }
+    /* 호랑이 말풍선: 떡 그림 n개 + 숫자 (숫자를 몰라도 그림으로 맞출 수 있게) */
+    function askBubble(n) {
+      const g = el('g', {}, document.getElementById('stage'));
+      const cols = Math.min(5, n), rows = Math.ceil(n / 5), w = cols * 44 + 120, h = 60 + rows * 34;
+      T.paper(g, [['rect', { x: 500 - w / 2, y: 18, width: w, height: h, rx: 22, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }]]);
+      for (let k = 0; k < n; k++) drawCake(T, g, 500 - w / 2 + 48 + (k % 5) * 44, 50 + Math.floor(k / 5) * 34, 1.45);
+      el('text', { x: 500 + w / 2 - 38, y: 18 + h / 2 + 15, 'text-anchor': 'middle', 'font-size': 42, fill: C.bean, 'font-family': 'Jua, sans-serif', text: String(n) }, g);
+      return g;
+    }
+    /* 오답 개수: 정답과 1~3 차이, 범위 안 */
+    const decoy = (n, max) => { const opts = [n - 1, n + 1, n - 2, n + 2, n + 3].filter(v => v >= 1 && v <= max && v !== n); return opts[Math.floor(Math.random() * Math.min(opts.length, 2))]; };
+    async function pickPlate(n, max, where) {
+      const okLeft = Math.random() < .5;
+      const good = cakePlate(n, okLeft ? 250 : 750, 400), bad = cakePlate(decoy(n, max), okLeft ? 750 : 250, 400);
+      await T.choose([{ el: good, ok: true }, { el: bad, ok: false }], { prompt: '떡 접시를 골라 톡 눌러요!',
+        where, who: '반짝이는 접시예요! 톡 눌러 봐요!' });
+      AudioFX.ding();
+      await T.anim(good, [{ scale: '1' }, { scale: '1.12' }, { scale: '1' }], 360);
+      good.remove(); bad.remove();
+    }
+
+    /* --- 3·4. 첫째·둘째·셋째 고개: 호랑이가 달라는 만큼 떡 접시 고르기 --- */
     const tiger = mkTiger(T, T.world, 700, 610);
-    let rock;
-    const TIGER_LINES = ['"어흥! 떡 하나 주면 안 잡아먹지!"', '"어흥! 떡 하나 더 주면 안 잡아먹지!"', '"어흥! 남은 떡 몽땅 주면 안 잡아먹지!"'];
-    let given = 0;
+    let rock, given = 0;
     for (let n = 0; n < 3; n++) {
       await T.sceneCard(['첫째 고개', '둘째 고개', '셋째 고개'][n], () => {
         T.clear(); hillBG(T, n); camSnap(500, 280, 1);
@@ -303,22 +341,40 @@
       T.world.appendChild(tiger.pos); AudioFX.boing();
       await Promise.all([tiger.move(630, 500, 500), tiger.hop(50, 500)]);
       await camTo(630, 330, 1.6, 600);
-      tigerVoice(T);
-      await say(TIGER_LINES[n]);
-      await camWide(600);
-      const want = n < 2 ? 1 : 3;
-      await say(n < 2 ? '바구니를 톡 눌러서 떡을 하나 줘요!' : '이번엔 남은 떡을 몽땅! 바구니를 톡 눌러요!');
-      await T.tap(mom.P.basket, { prompt: '엄마 바구니를 톡 눌러요!' });
-      for (let k = 0; k < want; k++) {
-        const [x0, y0] = toBasket(4 - given);
-        given++; mom.P.setCakes(5 - given);
-        await fly(x0, y0, tiger.x, tiger.y - 140, 1.4, 520);
-        AudioFX.chomp(); T.pop(tiger.x + 60, tiger.y - 250, '냠!', C.bean);
-        tiger.P.setBelly(n === 2 ? 2 + (k + 1) / 3 * 1.4 : n + 1);
-        tiger.wiggle(5, 300);
+      AudioFX.growl();
+      const ask = ASKS[n];
+      if (n < 2) {
+        await say(`"어흥! 떡 ${NUMS[ask - 1]} 개 주면 안 잡아먹지!"`);
+        await camWide(600);
+        const bub = askBubble(ask);
+        await say(`호랑이가 떡 ${NUMS[ask - 1]} 개를 달래요. 어느 접시를 줄까요?`);
+        await pickPlate(ask, n === 0 ? 5 : 10, '호랑이 말풍선의 떡이랑 똑같이 생긴 접시를 골라요!');
+        bub.remove();
+      } else {
+        await say('"어흥! 남은 떡 몽땅 주면 안 잡아먹지!"');
+        await camWide(600);
+        // 바구니에 남은 떡을 보여주고, 나머지는 몇 개인지 고른다
+        const ui = document.getElementById('stage');
+        const left = el('g', {}, ui);
+        const w = Math.min(5, ask) * 50 + 80;
+        T.paper(left, [['path', { d: `M${500 - w / 2} 40 H${500 + w / 2} L${500 + w / 2 - 24} 150 H${500 - w / 2 + 24} Z`, fill: '#C9975E', stroke: C.bark, 'stroke-width': 5 }]]);
+        for (let k = 0; k < ask; k++) drawCake(T, left, 500 - (Math.min(5, ask) - 1) * 25 + (k % 5) * 50, 78 + Math.floor(k / 5) * 40, 1.5);
+        await say('바구니에 남은 떡은 몇 개일까요? 세어 보고 접시를 골라요!');
+        await pickPlate(ask, 5, '바구니에 남은 떡이랑 똑같은 개수의 접시를 골라요!');
+        left.remove();
+      }
+      // 고른 만큼 호랑이에게 날아간다
+      for (let k = 0; k < ask; k++) {
+        const [x0, y0] = toBasket(Math.max(0, Math.min(4, Math.ceil((TOTAL - given) * 5 / TOTAL) - 1)));
+        given++; inBasket = TOTAL - given; showBasket();
+        T.pop(tiger.x - 60, tiger.y - 300, NUMS[k], C.bean);
+        await fly(x0, y0, tiger.x, tiger.y - 140, 1.4, 360);
+        AudioFX.chomp();
+        tiger.P.setBelly(1 + (given / TOTAL) * 2.4);
+        tiger.wiggle(4, 220);
       }
       AudioFX.gulp && AudioFX.gulp();
-      await say(['호랑이는 떡을 꿀꺽! 배가 볼록해졌어요.', '또 꿀꺽! 배가 더 볼록해졌어요.', '떡을 몽땅 꿀꺽! 배가 빵빵해졌어요!'][n]);
+      await say([`호랑이는 떡 ${NUMS[ASKS[0] - 1]} 개를 꿀꺽! 배가 볼록해졌어요.`, `떡 ${NUMS[ASKS[1] - 1]} 개를 또 꿀꺽! 배가 더 볼록해졌어요.`, '남은 떡을 몽땅 꿀꺽! 배가 빵빵해졌어요!'][n]);
       if (n < 2) { AudioFX.whoosh(); await Promise.all([tiger.move(1250, 500, 900, 'ease-in'), tiger.hop(30, 450)]); tiger.face('left'); await mom.move(1180, 500, 1400); }
     }
 
