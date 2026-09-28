@@ -164,10 +164,12 @@ button {
 .card:nth-child(5n) { --tilt: 0.6deg; }
 .card:active { transform: scale(.93) rotate(var(--tilt)); }
 /* 연출/내레이션 중에는 카드 잠금 표시 */
+/* 연출·대사 중: 누를 수 없다는 게 분명히 보이게 흐리고 회색으로 (눌러도 살짝 흔들리기만 함) */
 #tray.locked .card {
-  opacity: 0.78;
-  transform: translateY(8px) scale(0.96) rotate(var(--tilt));
-  transition: transform .25s ease, opacity .25s ease;
+  opacity: 0.45;
+  filter: saturate(0.3) brightness(0.85);
+  transform: scale(0.97) rotate(var(--tilt));
+  transition: transform .25s ease, opacity .25s ease, filter .25s ease;
 }
 .card svg { width: clamp(44px, 8vmin, 64px); height: clamp(44px, 8vmin, 64px); }
 .card span { font-size: clamp(14px, 2.2vmin, 19px); }
@@ -187,7 +189,6 @@ button {
   animation: cardHint 1s ease-in-out infinite;
   box-shadow: 0 0 0 4px #ffd54f, 0 0 22px 6px rgba(255, 213, 79, .75);
 }
-#tray.locked .card.hint { opacity: 1; filter: none; }
 @keyframes cardHint {
   0%, 100% { transform: translateY(0) rotate(var(--tilt)) scale(1); }
   50% { transform: translateY(-10px) rotate(var(--tilt)) scale(1.08); }
