@@ -635,3 +635,8 @@ a.tale-card { text-decoration: none; color: var(--ink); cursor: pointer; }
 .mini-thumb svg { width: 86%; height: 86%; }
 .ribbon.new { background: #6B4A32; }
 .tale-grid { grid-template-columns: repeat(3, 1fr); }
+/* 휴대폰에서 홈이 옆으로 넘치지 않게: 격자 칸이 내용물 최소 너비보다 줄어들 수 있게 */
+.home-inner { min-width: 0; width: 100%; }
+.tale-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.tale-card.hero { grid-template-columns: minmax(0, 42%) minmax(0, 1fr); }
+@media (max-width: 560px) { .tale-card.hero { grid-template-columns: minmax(0, 1fr); } }

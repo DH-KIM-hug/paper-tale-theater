@@ -111,15 +111,16 @@ const Tale = (() => {
   /* 막힘 방지 공통: 입력이 오면 poke()로 타이머 리셋 */
   function helper({ target, kind = 'tap', prompt, auto }) {
     let t1, t2, t3, dead = false;
-    const arm = () => {
-      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); hideHand();
+    const arm = (keepAuto = false) => {
+      clearTimeout(t1); clearTimeout(t2); hideHand();
+      if (!keepAuto) clearTimeout(t3);
       if (dead) return;
       t1 = setTimeout(() => !dead && showHand(target, kind), 5000);
       if (prompt) t2 = setTimeout(() => !dead && Narrator.speak(prompt), 12000);
-      if (auto) t3 = setTimeout(() => !dead && auto(), 20000);
+      if (auto && !keepAuto) t3 = setTimeout(() => !dead && auto(), 20000);
     };
     arm();
-    return { poke: arm, stop() { dead = true; clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); hideHand(); } };
+    return { poke: keepAuto => arm(keepAuto), stop() { dead = true; clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); hideHand(); } };
   }
 
   function arm(target, on) {
@@ -233,7 +234,12 @@ const Tale = (() => {
           if (p >= 1) finish();
         }, 50);
       };
-      const down = e => { e.stopPropagation(); if (busy || done) return; h.poke(); if (!timer) tick(); };
+      const down = e => {
+        e.stopPropagation(); if (busy || done) return; h.poke(true);
+        p = Math.min(1, p + .2); onProgress && onProgress(p); // 톡톡 치는 아이도 앞으로 간다
+        if (p >= 1) return finish();
+        if (!timer) tick();
+      };
       target.addEventListener('pointerdown', down);
       ['pointerup', 'pointercancel'].forEach(ev => window.addEventListener(ev, () => { if (!done) stopT(); }));
     });
