@@ -330,7 +330,8 @@ const Tale = (() => {
   const SPRING = [0, 1.35, .86, 1.07, .97, 1]; // 넘쳤다 되돌아오는 스프링 곡선 (키프레임 값)
   function springFrames(fn) { return SPRING.map((v, i) => ({ transform: fn(v, i), offset: i / (SPRING.length - 1) })); }
   function pop(x, y, word, color = '#A93B32') {
-    const g = el('g', { transform: `translate(${x},${y})` }, fxL);
+    // 카메라가 가까이 붙을수록 화면에서 커지므로 확대 배율만큼 줄여 늘 비슷한 크기로 보이게
+    const g = el('g', { transform: `translate(${x},${y}) scale(${(1 / Math.max(1, camState.z)).toFixed(3)})` }, fxL);
     const chars = [...word], size = chars.length > 3 ? 48 : 56;
     const cw = ch => /[!?~.…,]/.test(ch) ? size * .42 : size * .86; // 문장부호는 좁게
     const total = chars.reduce((a, ch) => a + cw(ch), 0);
