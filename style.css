@@ -30,6 +30,10 @@ body {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  /* 한글은 어절(띄어쓰기) 단위로만 줄바꿈 — 단어가 중간에서 잘리지 않게.
+     한 어절이 한 줄보다 길 때만 예외로 끊어 넘침을 막는다 */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 #app { position: relative; height: 100%; display: flex; flex-direction: column; }
@@ -76,7 +80,7 @@ body {
   z-index: 20;
   animation: bubblePop .25s ease-out;
 }
-#bubble p { margin: 0; font-size: clamp(17px, 2.6vmin, 26px); line-height: 1.45; text-align: center; }
+#bubble p { margin: 0; font-size: clamp(17px, 2.6vmin, 26px); line-height: 1.45; text-align: center; text-wrap: balance; /* 줄 길이를 고르게 (미지원 브라우저는 무시) */ }
 @keyframes bubblePop { from { transform: translateX(-50%) rotate(-0.5deg) scale(.8); opacity: 0; } }
 
 /* ============ 버튼 공통 ============ */
