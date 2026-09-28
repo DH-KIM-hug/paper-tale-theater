@@ -626,3 +626,12 @@ body.setA #gImgHoe { display: inline !important; }
   #audience { top: calc(56vw - 60px); bottom: auto; height: 80px; }
 }
 #sceneCard { transform-box: fill-box; transform-origin: center; }
+
+/* 새 동화 카드 (임시 그림 버전으로 바로 플레이) */
+a.tale-card { text-decoration: none; color: var(--ink); cursor: pointer; }
+.tale-card.open { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 8px 14px; }
+.tale-card.open:active { transform: rotate(var(--tilt)) scale(.96); }
+.tale-card.open strong { font-size: clamp(13px, 2vmin, 16px); text-align: center; color: var(--bean); }
+.mini-thumb svg { width: 86%; height: 86%; }
+.ribbon.new { background: #6B4A32; }
+.tale-grid { grid-template-columns: repeat(3, 1fr); }
