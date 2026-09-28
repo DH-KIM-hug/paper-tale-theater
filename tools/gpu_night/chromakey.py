@@ -6,7 +6,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw
 
-def key(src, dst, pad=12, thresh=45):
+def key(src, dst, pad=12, thresh=45, nogreen=False):
     im = Image.open(src).convert('RGB')
     w, h = im.size
     work = im.copy()
@@ -34,6 +34,12 @@ def key(src, dst, pad=12, thresh=45):
         n |= np.roll(bg, (dy, dx), (0, 1))
     ring = n & ~bg
     alpha[ring] = 140
+    if nogreen:
+        # 초록이 없는 소품 전용: 배경에 번진 연두 빛·짙은 초록 그림자까지 초록 기운이 강한 픽셀은 모두 지운다
+        greenness = g16 - np.maximum(r16, b16)
+        alpha[greenness > 22] = 0
+        soft = (greenness > 8) & (greenness <= 22)
+        alpha[soft] = np.minimum(alpha[soft], 110)
     out = np.dstack([orig, alpha])
     g_cap = np.maximum(orig[..., 0], orig[..., 2])
     out[..., 1] = np.where(ring & (orig[..., 1] > g_cap), g_cap, out[..., 1])
@@ -48,4 +54,5 @@ def key(src, dst, pad=12, thresh=45):
     print(f'{dst}: {img.size[0]}x{img.size[1]} transparent={100*(a==0).mean():.0f}%')
 
 if __name__ == '__main__':
-    key(sys.argv[1], sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 12)
+    key(sys.argv[1], sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 12,
+        nogreen='--nogreen' in sys.argv)

@@ -66,7 +66,8 @@ def postprocess(j, raw):
     dst = os.path.join(OUT, j['name'] + '.png')
     if j.get('key'):
         pad = '12' if j.get('trim') else '-1'
-        subprocess.run([PY_PIL, os.path.join(HERE, 'chromakey.py'), raw, dst, pad], check=False)
+        cmd = [PY_PIL, os.path.join(HERE, 'chromakey.py'), raw, dst, pad] + (['--nogreen'] if j.get('nogreen') else [])
+        subprocess.run(cmd, check=False)
     else:
         shutil.copy(raw, dst)
 
