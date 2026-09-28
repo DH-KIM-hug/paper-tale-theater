@@ -47,6 +47,12 @@ body {
 }
 #scene { position: absolute; inset: 0; transform-style: preserve-3d; }
 .layer3d { position: absolute; inset: 0; }
+/* 극장 틀(벽·무대턱·현판 포함): 와이드에선 전체, 클로즈업(1.05배 초과)에선 통째로 화면 밖으로 */
+#apFrame {
+  transform-box: view-box; transform-origin: 500px 280px;
+  transition: transform .8s cubic-bezier(.35, 0, .25, 1);
+}
+#apFrame.out { transform: scale(2.4); }
 .lsvg, #uiStage { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 #uiStage { pointer-events: none; }
 #defsSvg { position: absolute; }
@@ -55,8 +61,9 @@ body {
 #audience {
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: 19%;
+  height: 27%;
   z-index: 22;
+  transition: transform 2.6s cubic-bezier(.35, 0, .25, 1);
   pointer-events: none;
 }
 #audience svg { width: 100%; height: 100%; display: block; }
@@ -102,7 +109,15 @@ button {
   font-size: 15px;
   box-shadow: 0 3px 0 rgba(216,201,168,.9), 0 7px 10px rgba(7,3,18,.45);
   transform: rotate(0.8deg);
+  overflow: hidden;
+  isolation: isolate;
 }
+#skipBtn span { position: relative; z-index: 1; }
+#skipBtn::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: #f2b366; transform: scaleX(0); transform-origin: left;
+}
+#skipBtn.holding::before { transform: scaleX(1); transition: transform 1s linear; }
 
 /* ============ 친구 카드 ============ */
 #tray {
@@ -150,9 +165,9 @@ button {
 .card:active { transform: scale(.93) rotate(var(--tilt)); }
 /* 연출/내레이션 중에는 카드 잠금 표시 */
 #tray.locked .card {
-  opacity: 0.45;
-  filter: saturate(0.3) brightness(0.85);
-  transform: scale(0.97) rotate(var(--tilt));
+  opacity: 0.78;
+  transform: translateY(8px) scale(0.96) rotate(var(--tilt));
+  transition: transform .25s ease, opacity .25s ease;
 }
 .card svg { width: clamp(44px, 8vmin, 64px); height: clamp(44px, 8vmin, 64px); }
 .card span { font-size: clamp(14px, 2.2vmin, 19px); }
@@ -343,7 +358,7 @@ button {
 .title-card h1 { margin: 0; font-size: clamp(34px, 7vmin, 62px); line-height: 1.15; color: var(--bean); }
 .title-card h2 { margin: 0; font-size: clamp(26px, 5vmin, 44px); color: var(--bean); }
 .title-sub { margin: 12px 0 0; font-size: clamp(16px, 2.4vmin, 22px); line-height: 1.5; }
-#startBtn, #retryBtn {
+#startBtn {
   margin-top: 20px;
   display: block;
   width: 100%;
@@ -354,7 +369,7 @@ button {
   border-radius: 999px;
   box-shadow: 0 6px 0 #b5622a;
 }
-#startBtn:active, #retryBtn:active { transform: translateY(4px); box-shadow: 0 2px 0 #b5622a; }
+#startBtn:active { transform: translateY(4px); box-shadow: 0 2px 0 #b5622a; }
 button.ghost {
   margin-top: 12px;
   background: none;
@@ -382,9 +397,10 @@ button.ghost {
 #f-jeolgu .act { animation-delay: -0.6s; animation-duration: 4.2s; }
 #f-myeongseok .act { animation-delay: -1.8s; animation-duration: 4.4s; }
 #f-jige .act { animation-delay: -2.9s; animation-duration: 4s; }
+/* rotate 개별 속성: 친구를 옮기는 transform(등장·지게 운반·잔치·커튼콜)을 덮어쓰지 않는다 */
 @keyframes puppetSway {
-  from { transform: rotate(-1.6deg); }
-  to { transform: rotate(1.8deg); }
+  from { rotate: -1.6deg; }
+  to { rotate: 1.8deg; }
 }
 
 .snow circle {
@@ -442,20 +458,24 @@ button.ghost {
 /* ============ 상태 클래스 ============ */
 .friend { opacity: 0; }               /* 인트로에서 등장하며 보이게 됨 */
 .friend.shown { opacity: 1; }
-.friend .act { transform-box: fill-box; transform-origin: 50% 100%; }
+/* 친구 심볼은 발끝 가운데가 로컬 (0,0) — 그 점을 기준으로 돌리고 키운다 (fill-box는 <use>에서 기준점이 어긋남) */
+.friend .act { transform-box: view-box; transform-origin: 0 0; }
 
 .friend.bounce .act { animation: fBounce .5s ease-out; }
-@keyframes fBounce { 0% { transform: translateY(0); } 35% { transform: translateY(-26px) scale(1.06); } 70% { transform: translateY(0) scale(.96); } 100% { transform: translateY(0); } }
+/* translate/scale 개별 속성: 친구의 위치(transform)를 덮어쓰지 않고 그 위에 합쳐진다 */
+@keyframes fBounce { 0% { translate: 0 0; } 35% { translate: 0 -26px; } 70% { translate: 0 2px; } 100% { translate: 0 0; } }
+
 
 .friend.party .act { animation: fParty .55s ease-in-out infinite alternate; }
-@keyframes fParty { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-16px) rotate(4deg); } }
+@keyframes fParty { from { translate: 0 0; rotate: -4deg; } to { translate: 0 -16px; rotate: 4deg; } }
 
 #tiger { transform-box: fill-box; transform-origin: 50% 100%; }
 #tiger.walking { animation: walkBob .32s ease-in-out infinite alternate; }
 @keyframes walkBob { from { translate: 0 0; } to { translate: 0 -7px; } }
 
-#tiger.fallen { transform: rotate(-78deg) translate(30px, 26px); }
-#tiger.flat { transform: rotate(-90deg) translate(40px, 30px); }
+/* 그림(560×380)이 상자(156×160) 아래쪽 66%만 채우므로 그만큼만 올린다 */
+#tiger.fallen { transform: translateY(-66%) rotate(180deg); }
+#tiger.flat { transform: scale(1.22, .58); }
 #tiger.shiver { animation: shiver .12s linear infinite; }
 @keyframes shiver { 0%,100% { translate: 0 0; } 50% { translate: 5px 0; } }
 
@@ -491,6 +511,46 @@ body.setB2 #granny, body.setB2 #tiger { --as: 1.45; }
 }
 
 /* ============ 폭죽(색종이) ============ */
+#endScreen {
+  background: rgba(20, 8, 12, .28);
+  grid-template-rows: auto auto;
+  align-content: center;
+  gap: clamp(18px, 4vmin, 40px);
+}
+.end-banner {
+  background: var(--hanji);
+  border: 6px solid #d9a94e;
+  outline: 6px solid var(--bean);
+  border-radius: 10px;
+  padding: clamp(12px, 2.5vmin, 22px) clamp(28px, 6vmin, 64px);
+  text-align: center;
+  box-shadow: 0 8px 0 #6b4a32, 0 18px 24px rgba(7, 3, 18, .5);
+  transform: rotate(-1deg);
+}
+.end-banner h2 { margin: 0; font-size: clamp(34px, 7vmin, 60px); color: var(--bean); }
+.end-banner p { margin: 6px 0 0; font-size: clamp(16px, 2.6vmin, 22px); }
+.end-tickets { display: flex; gap: clamp(14px, 3vmin, 28px); justify-content: center; flex-wrap: wrap; }
+.ticket {
+  position: relative;
+  min-width: clamp(150px, 26vmin, 230px);
+  padding: clamp(14px, 2.6vmin, 22px) clamp(22px, 4vmin, 36px);
+  font: inherit; font-size: clamp(22px, 3.8vmin, 32px);
+  color: var(--bean);
+  background: #f6ecd8;
+  border: 3px dashed #c9a45a;
+  border-radius: 8px;
+  /* 입장권 양쪽 반원 홈 */
+  -webkit-mask: radial-gradient(circle 12px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat,
+                radial-gradient(circle 12px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+          mask: radial-gradient(circle 12px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat,
+                radial-gradient(circle 12px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+  box-shadow: 0 5px 0 #b98f4a;
+  transform: rotate(1.2deg);
+  cursor: pointer;
+}
+.ticket.alt { color: #6b4a32; transform: rotate(-1.4deg); }
+.ticket:active { translate: 0 3px; box-shadow: 0 2px 0 #b98f4a; }
+
 #confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 30; }
 #confetti span {
   position: absolute;
@@ -549,3 +609,19 @@ body.setA #gImgLadle { display: none; }
 body.setA #gImgHoe { display: inline !important; }
 
 #cutPanel { pointer-events: auto; cursor: pointer; }
+
+/* ============ 세로 모드 레이아웃 ============ */
+@media (orientation: portrait) {
+  #stageWrap { flex: none; height: 56vw; margin-top: max(12px, env(safe-area-inset-top, 0px)); }
+  #bubble {
+    top: calc(56vw + max(12px, env(safe-area-inset-top, 0px)) + 16px);
+    max-width: calc(100% - 28px);
+  }
+  #bubble p { font-size: clamp(18px, 5vw, 24px); }
+  #tray { margin-top: auto; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 18px 14px calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .card { min-height: 104px; }
+  .card svg { width: 60px; height: 60px; }
+  .card span { font-size: 17px; }
+  #audience { top: calc(56vw - 60px); bottom: auto; height: 80px; }
+}
+#sceneCard { transform-box: fill-box; transform-origin: center; }

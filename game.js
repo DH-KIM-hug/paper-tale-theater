@@ -18,6 +18,8 @@ const el = {
   rolled: $('#rolledTiger'), rolledInner: $('#rolledInner'),
   splash: $('#splashFX'),
   darkOverlay: $('#darkOverlay'),
+  apFrame: $('#apFrame'), spotDark: $('#spotDark'), plaque: $('#plaque'),
+  sceneCard: $('#sceneCard'), sceneCardText: $('#sceneCardText'),
   tray: $('#tray'), skipBtn: $('#skipBtn'),
   /* 홈 화면(앱 라이브러리)이 기존 타이틀 역할을 대신한다 */
   titleScreen: $('#homeScreen'), startBtn: $('#playPatjuk'),
@@ -34,7 +36,7 @@ const POS = {
   tigerEnter: 1080,
   tigerStage: [270, 335, 430, 470, 885, 560, 640], // 단계별 호랑이 위치 (컨셉 레이아웃)
   grannyCook: 250,
-  grannyCorner: 680,
+  grannyCorner: 620,
   rolledSpot: 560,
 };
 
@@ -119,7 +121,12 @@ function preloadCuts() {
   });
 }
 let cutTapResolve = null;
-async function showCut(id, hold = 4000) {
+let lastCut = Promise.resolve();
+function showCut(id, hold) {
+  lastCut = showCutInner(id, hold);
+  return lastCut;
+}
+async function showCutInner(id, hold = 4000) {
   const panel = $('#cutPanel'), img = $('#cutImg');
   if (!panel) return;
   const keys = [id, id + '_b'];
@@ -224,6 +231,7 @@ function cam3dT(cx, cy, z, rx) {
 
 async function camTo(cx, cy, z = 1.4, dur = 800, rx = 0) {
   [cx, cy] = clampCam(cx, cy, z);
+  frameFor(z, dur);
   await anim(el.scene,
     [{ transform: cam3dT(cam.x, cam.y, cam.z, cam.rx) }, { transform: cam3dT(cx, cy, z, rx) }],
     { duration: dur, easing: 'cubic-bezier(.35,0,.25,1)' });
@@ -232,8 +240,14 @@ async function camTo(cx, cy, z = 1.4, dur = 800, rx = 0) {
 
 const camWide = (dur = 800) => camTo(500, 280, 1, dur);
 
+/* 극장 틀 규칙: 와이드(1.05배 이하)면 틀 전체, 클로즈업이면 틀을 통째로 화면 밖으로 */
+function frameFor(z, dur) {
+  el.apFrame.style.transitionDuration = dur + 'ms';
+  el.apFrame.classList.toggle('out', z > 1.05);
+}
 function camSnap(cx, cy, z, rx = 0) {
   [cx, cy] = clampCam(cx, cy, z);
+  frameFor(z, 0);
   el.scene.style.transform = cam3dT(cx, cy, z, rx);
   Object.assign(cam, { x: cx, y: cy, z, rx });
 }
@@ -266,13 +280,21 @@ async function setCurtain(open, dur = 1200) {
 }
 
 /* 무대막: 종이 시트가 내려와 덮은 사이 무대를 갈아끼운다 */
-async function backdropSwap(change) {
+async function backdropSwap(change, label) {
   AudioFX.swish();
   el.backdrop.style.visibility = 'visible'; // 주차 중엔 숨겨둔다 (모바일 비율에서 가장자리 비침 방지)
   await anim(el.backdrop, [{ transform: 'translateY(-660px)' }, { transform: 'translateY(0)' }],
     { duration: 480, easing: 'ease-in' });
   if (change) change();
-  await sleep(180);
+  if (label) {
+    el.sceneCardText.textContent = label;
+    await anim(el.sceneCard, [{ opacity: 0, transform: 'scale(.85)' }, { opacity: 1, transform: 'scale(1)' }],
+      { duration: 220, easing: 'ease-out' });
+    await sleep(900);
+    await anim(el.sceneCard, [{ opacity: 1 }, { opacity: 0 }], { duration: 160 });
+  } else {
+    await sleep(180);
+  }
   AudioFX.swish();
   await anim(el.backdrop, [{ transform: 'translateY(0)' }, { transform: 'translateY(-660px)' }],
     { duration: 480, easing: 'ease-out' });
@@ -281,17 +303,29 @@ async function backdropSwap(change) {
 
 /* 공연장 오프닝: 버드아이뷰 → 정면뷰, 조명 디졸브, 커튼 오픈 */
 async function theaterOpening() {
+  // 0) 공연장 와이드: 불 켜진 객석 너머로 닫힌 커튼
+  await sleep(600);
   AudioFX.bell();
-  await sleep(900);
-  // 하우스라이트 디졸브 + 객석에서 무대 정면으로 카메라 이동
-  anim(el.houseLight, [{ opacity: 0.22 }, { opacity: 0 }], { duration: 1600 });
-  el.audience.style.transition = 'opacity 1.8s';
-  el.audience.style.opacity = 0;
-  // 줌아웃 객석 뷰 → 무대로 서서히 다가간다 (돌리 인)
-  await camTo(500, 280, 1, 2400, 0);
+  await sleep(1000);
+  // 1) 암전: 객석 불이 꺼지고 커튼 가운데만 스포트라이트
+  anim(el.houseLight, [{ opacity: 0.22 }, { opacity: 0 }], { duration: 900 });
+  await anim(el.spotDark, [{ opacity: 0 }, { opacity: 1 }], { duration: 900, easing: 'ease-in' });
+  await sleep(300);
+  // 2) 돌리 인: 관객 머리 사이로 무대에 다가간다 (객석은 아래로 빠진다)
+  el.audience.style.transform = 'translateY(105%)';
+  await camTo(500, 280, 1, 2600, 0);
   el.audience.hidden = true;
-  await sleep(250);
-  // 커튼이 열리며 공연 시작
+  // 3) 제목 현판이 줄에 매달려 내려온다
+  AudioFX.swish();
+  await anim(el.plaque, [
+    { transform: 'translateY(-320px)' },
+    { transform: 'translateY(14px)', offset: 0.75 },
+    { transform: 'translateY(0)' },
+  ], { duration: 850, easing: 'ease-out' });
+  await sleep(1500);
+  // 4) 현판이 올라가며 불이 들어오고 커튼이 열린다
+  anim(el.plaque, [{ transform: 'translateY(0)' }, { transform: 'translateY(-320px)' }], { duration: 600, easing: 'ease-in' });
+  anim(el.spotDark, [{ opacity: 1 }, { opacity: 0 }], { duration: 1300 });
   await setCurtain(true, 1400);
 }
 
@@ -370,6 +404,25 @@ function buildTray() {
   el.tray.hidden = false;
 }
 
+/* 친구 클로즈업: 친구의 실제 위치를 중심으로, 친구 키가 화면 높이의 약 30%가 되게 */
+function camFriend(id, dur) {
+  const g = friendEl(id);
+  const m = (g.getAttribute('transform') || '').match(/translate\(([\d.-]+),\s*([\d.-]+)\)/);
+  const gx = m ? parseFloat(m[1]) : 500, gy = m ? parseFloat(m[2]) : 520;
+  const b = friendAct(id).getBBox();
+  const z = Math.min(2.6, Math.max(1.6, (560 * 0.3) / Math.max(b.height, 1)));
+  return camTo(gx + b.x + b.width / 2, gy + b.y + b.height / 2 - 20, z, dur);
+}
+
+/* 부엌 스테이션 카메라: 호랑이와 구석의 할멈이 함께 온전히 들어오게 */
+function stationCam(i, tigerX = POS.tigerStage[i]) {
+  const [cx, cy, z] = STATION_CAM[i];
+  if (currentScene !== 'B1') return [cx, cy, z];
+  const lo = Math.min(tigerX - 120, POS.grannyCorner - 70);
+  const hi = Math.max(tigerX + 120, POS.grannyCorner + 70);
+  return [(lo + hi) / 2, cy, Math.min(z, Math.max(1.1, 1000 / (hi - lo)))];
+}
+
 /* ===== 인트로 ===== */
 async function playIntro() {
   mode = 'intro';
@@ -426,7 +479,7 @@ async function playIntro() {
       grannyMood('cry');
       el.daylight.style.opacity = 0.45;
       camSnap(240, 430, 1.6);
-    });
+    }, '동짓날 저녁');
     await Narrator.speak(INTRO.opening[3]);
   });
   // 5~11. 친구들 등장 — 와이드로 입장을 보여주고 숨는 곳을 클로즈업
@@ -434,7 +487,7 @@ async function playIntro() {
     if (skipRequested) return;
     // 멍석부터는 마당에 숨는다 — 무대막 전환
     if (FRIEND_SET[f.id] === 'B2' && currentScene !== 'B2') {
-      await backdropSwap(() => setScene('B2'));
+      await backdropSwap(() => setScene('B2'), '마당');
     }
     await camWide(500);
     AudioFX.jingle();
@@ -458,7 +511,7 @@ async function playIntro() {
          { transform: 'translate(0, 0)' }],
         { duration: Math.max(420, groundDy * 2.2), easing: 'ease-in-out' });
     }
-    camTo(spotX, spotY, 1.5, 650);
+    camFriend(f.id, 650);
     bounceFriend(f.id);
     await Narrator.speak(f.intro);
   }));
@@ -506,7 +559,7 @@ async function beginPlay(firstTime) {
       setScene('B1');
       el.daylight.style.opacity = 0;
       camSnap(500, 280, 1);
-    });
+    }, '깜깜한 밤');
   }
 
   AudioFX.growl();
@@ -519,19 +572,21 @@ async function beginPlay(firstTime) {
   el.tigerPos.style.opacity = 1;
   stageShake();
   impact(DOOR_X.B1 - 25, 370, '어흥!', '#c0392b');
-  // 할멈은 호랑이를 피해 방 안쪽으로 물러나 떤다
+  // 할멈은 아궁이 앞에서 호랑이를 보며 덜덜 떤다
   grannyMood('scared');
-  await walk(el.grannyPos, el.granny, POS.grannyCorner, 320);
-  el.granny.classList.remove('faceR'); // 구석에 닿으면 호랑이 쪽을 보며 떤다
-  el.granny.classList.add('scaredShake');
+  el.granny.classList.add('faceR');
   await arriveLine; // 등장 내레이션이 끝난 뒤에
 
-  // 유인: 할멈의 말에 이끌려 호랑이가 그제서야 아궁이로 향한다 (대사와 이동 동기화)
+  // 유인: 할멈의 말에 이끌려 호랑이가 아궁이로 가고, 그 틈에 할멈은 반대편 구석으로 피한다
   const lureLine = Narrator.speak(PROMPTS[0]);
   await sleep(1400); // "호랑아, 불 좀 봐주렴"을 듣고 나서 움직이기 시작
   await Promise.all([
     walk(el.tigerPos, el.tiger, POS.tigerStage[0], 240),
-    camTo(...STATION_CAM[0], 1300),
+    walk(el.grannyPos, el.granny, POS.grannyCorner, 300).then(() => {
+      el.granny.classList.remove('faceR');
+      el.granny.classList.add('scaredShake');
+    }),
+    camTo(...stationCam(0), 1300),
   ]);
   el.granny.classList.toggle('faceR', el.tigerPos._x > el.grannyPos._x);
   await lureLine;
@@ -585,7 +640,7 @@ async function handleWrong(idx) {
   AudioFX.miss();
   await Narrator.speak(f.fail);
   stageMisses++;
-  await camTo(...STATION_CAM[stage], 550); // 호랑이에게 컷백
+  await camTo(...stationCam(stage, el.tigerPos._x), 550); // 호랑이에게 컷백
   await giveHelp();
   setBusy(false);
 }
@@ -759,15 +814,21 @@ const SUCCESS = {
 const ADVANCE = {
   1: async () => {
     tigerEyesHurt(true);
-    await Promise.all([walk(el.tigerPos, el.tiger, POS.tigerStage[1], 380), camTo(...STATION_CAM[1], 900)]);
+    await Promise.all([walk(el.tigerPos, el.tiger, POS.tigerStage[1], 380), camTo(...stationCam(1), 900)]);
   },
   2: async () => {
     tigerEyesHurt(false);
-    await Promise.all([walk(el.tigerPos, el.tiger, POS.tigerStage[2], 300), camTo(...STATION_CAM[2], 900)]);
+    await Promise.all([walk(el.tigerPos, el.tiger, POS.tigerStage[2], 300), camTo(...stationCam(2), 900)]);
   },
-  3: async () => { await camTo(...STATION_CAM[3], 600); /* 이미 미끄러져 넘어진 상태 */ },
+  3: async () => { await camTo(...stationCam(3, el.tigerPos._x), 600); /* 이미 미끄러져 넘어진 상태 */ },
   4: async () => {
-    await Promise.all([walk(el.tigerPos, el.tiger, POS.tigerStage[4], 360), camTo(...STATION_CAM[4], 900)]);
+    const over = sleep(Math.max(0, (POS.grannyCorner - 60 - el.tigerPos._x) / 360 * 1000)).then(() => {
+      el.granny.classList.add('scaredShake');
+      return tigerHop([
+        { transform: 'translateY(0)' }, { transform: 'translateY(-120px)', offset: 0.5 }, { transform: 'translateY(0)' },
+      ], { duration: 520, easing: 'ease-in-out' });
+    });
+    await Promise.all([walk(el.tigerPos, el.tiger, POS.tigerStage[4], 360), camTo(...stationCam(4), 900), over]);
   },
   5: async () => {
     // 절구에 맞은 호랑이가 집 문에서 뛰쳐나와 마당으로 도망친다 — 무대 전환
@@ -775,7 +836,7 @@ const ADVANCE = {
       setScene('B2');
       setPos(el.grannyPos, -70, 520); // 할멈은 부엌에 남는다
       camSnap(500, 280, 1);
-    });
+    }, '마당');
     // 호랑이가 마당 문에서 뚜렷하게 나타난다 (막이 걷힌 뒤, 별도 등장 비트)
     el.tigerPos.style.opacity = 0;
     setPos(el.tigerPos, DOOR_X.B2 + 30, 520);
@@ -857,45 +918,121 @@ const FAIL = {
 };
 
 /* ===== 엔딩 ===== */
+const FINALE_SFX = { bam: 'pop', jara: 'chomp', ddong: 'boing', songgot: 'poke', jeolgu: 'bonk', myeongseok: 'roll', jige: 'boing' };
+
+/* 잔치·커튼콜에서 작은 친구일수록 크게 (발끝 기준) */
+const STAR_SCALE = { bam: 1.9, jara: 1.9, ddong: 1.9, songgot: 1.9, jeolgu: 1.45, myeongseok: 1.15, jige: 1.15 };
+
+/* 친구를 무대 위 x 위치로 보낸다 (발은 바닥선 y=520). big이면 STAR_SCALE만큼 키운다.
+   크기는 같은 transform 안에 넣어야 이동 거리까지 커지지 않는다 */
+function friendTo(id, x, dur, big = false) {
+  const g = friendEl(id);
+  g.classList.add('shown');
+  g.style.display = '';
+  const m = (g.getAttribute('transform') || '').match(/translate\(([\d.-]+),\s*([\d.-]+)\)/);
+  const gx = m ? parseFloat(m[1]) : 500, gy = m ? parseFloat(m[2]) : 520;
+  const to = `translate(${x - gx}px, ${Math.max(0, 520 - gy)}px) scale(${big ? STAR_SCALE[id] : 1})`;
+  if (!dur) { friendAct(id).style.transform = to; return Promise.resolve(); }
+  return anim(friendAct(id), [{ transform: to }], { duration: dur, easing: 'ease-out' });
+}
+
 async function happyEnd() {
   mode = 'end';
   el.tray.hidden = true;
+  await lastCut; // 풍덩 컷이 잔치 장면을 가리지 않게 끝까지 보고 넘어간다
 
   AudioFX.fanfare();
-  await camWide(900); // 잔치는 다 함께 와이드로
+  await camWide(900);
   spawnConfetti();
   el.granny.classList.remove('scaredShake');
   grannyMood('happy');
-  // 할멈이 부엌문에서 마당으로 걸어 나온다 (호랑이 등장과 같은 문)
+  // 할멈이 집 문에서 마당으로 걸어 나온다
   el.granny.style.opacity = 0;
   setPos(el.grannyPos, DOOR_X.B2, 520);
   el.granny.classList.remove('faceR');
   await sleep(150);
   el.granny.style.opacity = 1;
-  await walk(el.grannyPos, el.granny, 545, 260);
-  // 친구들이 할멈 주위로 우르르 모여든다
-  const GATHER = { bam: 400, jara: 450, ddong: 498, songgot: 600, jeolgu: 648, myeongseok: 705, jige: 765 };
-  await Promise.all(FRIENDS.map(f => {
-    const g = friendEl(f.id);
-    g.classList.add('shown', 'party');
-    g.style.display = '';
-    const m = (g.getAttribute('transform') || '').match(/translate\(([\d.-]+),\s*([\d.-]+)\)/);
-    const gx = m ? parseFloat(m[1]) : 500;
-    const gy = m ? parseFloat(m[2]) : 520;
-    return anim(friendAct(f.id),
-      [{ transform: `translate(${GATHER[f.id] - gx}px, ${Math.max(0, 520 - gy)}px)` }],
-      { duration: 850, easing: 'ease-out' });
-  }));
+  await walk(el.grannyPos, el.granny, 560, 260);
+  // 친구들이 할멈을 가운데 두고 반원으로 모인다 → 잔치 구도로 다가간다
+  const GATHER = { jara: 395, bam: 445, ddong: 495, songgot: 625, jeolgu: 670, myeongseok: 735, jige: 810 };
+  FRIENDS.forEach(f => friendEl(f.id).classList.add('party'));
+  await Promise.all([
+    ...FRIENDS.map(f => friendTo(f.id, GATHER[f.id], 850, true)),
+    camTo(600, 430, 1.4, 1100),
+  ]);
   await Narrator.speak(LINES.happyEnd);
-  await sleep(600);
-  await setCurtain(false, 1300); // 막이 내린다
+
+  // 잔치 자유 놀이: 친구·할멈을 톡 하면 인사한다
+  mode = 'finale';
+  await Narrator.speak(LINES.finaleTap);
+  await sleep(12000);
+  mode = 'end';
+
+  await curtainCall();
   showEnd();
 }
 
+/* 잔치 중 톡: 누른 자리의 친구(또는 할멈)가 폴짝 인사 */
+function finaleTap(e) {
+  if (mode !== 'finale') return;
+  const hit = document.elementsFromPoint(e.clientX, e.clientY)
+    .map(n => n.closest && n.closest('.friend, #grannyPos'))
+    .find(Boolean);
+  if (!hit) return;
+  if (hit.id === 'grannyPos') {
+    AudioFX.jingle();
+    anim(el.granny, [{ translate: '0 0' }, { translate: '0 -22px' }, { translate: '0 0' }], { duration: 420, easing: 'ease-out' });
+    return;
+  }
+  const id = hit.id.replace('f-', '');
+  const sfx = FINALE_SFX[id];
+  if (sfx && AudioFX[sfx]) AudioFX[sfx]();
+  hit.classList.remove('party');
+  bounceFriend(id).then(() => { if (mode === 'finale') hit.classList.add('party'); });
+}
+
+/* 커튼콜: 커튼이 닫혔다 다시 열리고, 출연진이 한 줄로 서서 차례로 인사 */
+async function curtainCall() {
+  await camWide(700);
+  await setCurtain(false, 1100);
+  // 닫힌 커튼 뒤에서 한 줄로 세운다 (호랑이는 반창고를 붙인 채 맨 끝)
+  el.confetti.innerHTML = '';
+  FRIENDS.forEach(f => friendEl(f.id).classList.remove('party'));
+  const LINE_X = { jara: 235, bam: 295, ddong: 355, songgot: 420, jeolgu: 595, myeongseok: 675, jige: 770 };
+  FRIENDS.forEach(f => friendTo(f.id, LINE_X[f.id], 0, true));
+  setPos(el.grannyPos, 505, 520);
+  el.granny.classList.remove('faceR');
+  el.rolled.style.opacity = 0;
+  el.tiger.classList.remove('fallen', 'flat', 'shiver');
+  tigerEyesHurt(false);
+  el.dizzy.setAttribute('opacity', 0);
+  setPos(el.tigerPos, 880, 520);
+  el.tiger.classList.remove('faceR');
+  el.tigerPos.style.opacity = 1;
+  await sleep(400);
+  await setCurtain(true, 1100);
+  await camTo(560, 440, 1.3, 900);
+  // 차례로 꾸벅
+  const bow = t => anim(t, [{ rotate: '0deg' }, { rotate: '-16deg' }, { rotate: '0deg' }], { duration: 520, easing: 'ease-in-out' });
+  for (const f of FRIENDS) {
+    const sfx = FINALE_SFX[f.id];
+    if (sfx && AudioFX[sfx]) AudioFX[sfx]();
+    await bow(friendAct(f.id));
+  }
+  AudioFX.jingle();
+  await bow(el.granny);
+  AudioFX.whimper();
+  await bow(el.tiger); // 반창고 붙인 호랑이도 꾸벅 — 무섭지 않게 끝낸다
+  AudioFX.fanfare();
+  await sleep(700);
+  await camWide(700);
+  await setCurtain(false, 1300);
+}
+
 function showEnd() {
-  el.endTitle.textContent = '🎉 만세!';
+  el.endTitle.textContent = '만세!';
   el.endMsg.textContent = '친구들이 힘을 모아 호랑이를 물리쳤어요!';
-  el.retryBtn.textContent = '다시 하기';
+  el.retryBtn.textContent = '다시 보기';
   el.endScreen.hidden = false;
 }
 
@@ -940,6 +1077,10 @@ function resetScene() {
 
   el.rolled.style.opacity = '';
   el.rolled.style.transform = '';
+  el.granny.style.rotate = '';
+  el.tiger.style.rotate = '';
+  el.plaque.style.transform = 'translateY(-320px)';
+  el.spotDark.style.opacity = 0;
 
   FRIENDS.forEach(f => {
     const g = friendEl(f.id);
@@ -957,7 +1098,7 @@ function init() {
   setPos(el.grannyPos, POS.grannyCook, 520);
   grannyMood('cook');
   // 시작 전: 객석에서 본 줌아웃 공연장 뷰
-  camSnap(500, 295, 0.78, 0);
+  camSnap(500, 300, 0.64, 0);
   el.backdrop.style.visibility = 'hidden'; // 무대막은 전환 중에만 표시
 
   el.startBtn.addEventListener('click', async () => {
@@ -994,11 +1135,22 @@ function init() {
   });
   ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => el.stage.addEventListener(ev, cancelHold));
 
-  el.skipBtn.addEventListener('click', () => {
+  // 건너뛰기: 1초 꾹 누르기 (아이가 실수로 톡 눌러 인트로를 날리지 않게)
+  let skipTimer = null;
+  const cancelSkip = () => { clearTimeout(skipTimer); skipTimer = null; el.skipBtn.classList.remove('holding'); };
+  el.skipBtn.addEventListener('pointerdown', e => {
+    e.stopPropagation();
     AudioFX.tap();
-    skipRequested = true;
-    Narrator.stop();
+    el.skipBtn.classList.add('holding');
+    skipTimer = setTimeout(() => {
+      cancelSkip();
+      skipRequested = true;
+      Narrator.stop();
+    }, 1000);
   });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => el.skipBtn.addEventListener(ev, cancelSkip));
+
+  el.stage.addEventListener('pointerdown', finaleTap);
 
   el.retryBtn.addEventListener('click', async () => {
     AudioFX.tap();
@@ -1051,7 +1203,7 @@ function init() {
     if (location.hash === '#stage-zoom') {
       grannyMood('scared');
       setPos(el.grannyPos, POS.grannyCorner, 520);
-      camSnap(...STATION_CAM[0]);
+      camSnap(...stationCam(0));
       el.impact.setAttribute('transform', 'translate(212,390)');
       el.impact.setAttribute('opacity', 1);
       el.impactText.textContent = '톡!';
