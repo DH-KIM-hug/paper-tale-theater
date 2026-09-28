@@ -146,7 +146,6 @@ button {
 .card:active { transform: scale(.93) rotate(var(--tilt)); }
 /* 연출/내레이션 중에는 카드 잠금 표시 */
 #tray.locked .card {
-  pointer-events: none;
   opacity: 0.45;
   filter: saturate(0.3) brightness(0.85);
   transform: scale(0.97) rotate(var(--tilt));
@@ -157,6 +156,22 @@ button {
   filter: grayscale(1);
   opacity: .5;
   position: relative;
+}
+/* 잠긴 동안 누르면 살짝 도리도리 */
+.card.nudge { animation: cardNudge .35s ease-out; }
+@keyframes cardNudge {
+  25% { transform: translateX(-5px) rotate(var(--tilt)); }
+  75% { transform: translateX(5px) rotate(var(--tilt)); }
+}
+/* 두 번째 실수부터: 정답 카드가 반짝이며 들썩인다 */
+.card.hint {
+  animation: cardHint 1s ease-in-out infinite;
+  box-shadow: 0 0 0 4px #ffd54f, 0 0 22px 6px rgba(255, 213, 79, .75);
+}
+#tray.locked .card.hint { opacity: 1; filter: none; }
+@keyframes cardHint {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt)) scale(1); }
+  50% { transform: translateY(-10px) rotate(var(--tilt)) scale(1.08); }
 }
 .card.used::after {
   content: '✔';
@@ -389,30 +404,6 @@ button.ghost {
   to { transform: scale(1.06); opacity: 1; }
 }
 
-/* ============ 남은 기회 하트 ============ */
-#lives {
-  position: absolute;
-  top: max(10px, env(safe-area-inset-top, 0px));
-  left: 12px;
-  z-index: 18;
-  display: flex;
-  gap: 3px;
-  background: rgba(253, 243, 227, 0.92);
-  border-radius: 12px 16px 10px 18px / 16px 10px 18px 12px;
-  padding: 5px 10px;
-  box-shadow: 0 3px 0 rgba(216,201,168,.9), 0 8px 10px rgba(7,3,18,.45);
-  transform: rotate(-1deg);
-}
-#lives span {
-  font-size: clamp(20px, 3.4vmin, 28px);
-  filter: drop-shadow(0 2px 0 rgba(0,0,0,.35));
-  transition: filter .3s, opacity .3s, transform .3s;
-}
-#lives span.lost {
-  filter: grayscale(1);
-  opacity: 0.3;
-  transform: scale(0.85);
-}
 #impactText {
   font-family: 'Jua', 'Apple SD Gothic Neo', sans-serif;
   fill: #8e3b2f;

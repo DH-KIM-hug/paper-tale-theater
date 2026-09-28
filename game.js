@@ -7,7 +7,6 @@ const el = {
   scene: $('#scene'),
   world: $('#world'), daylight: $('#daylight'),
   layerFar: $('#layer-far'), layerMid: $('#layer-mid'), layerFg: $('#layer-fg'),
-  lives: $('#lives'),
   backdrop: $('#backdrop'), curtainL: $('#curtainL'), curtainR: $('#curtainR'),
   houseLight: $('#houseLight'), audience: $('#audience'),
   impact: $('#impact'), impactText: $('#impactText'),
@@ -18,7 +17,7 @@ const el = {
   gTears: $('#gTears'), gArmStir: $('#gArmStir'), gArmsUp: $('#gArmsUp'), gMouth: $('#gMouth'),
   rolled: $('#rolledTiger'), rolledInner: $('#rolledInner'),
   splash: $('#splashFX'),
-  warnFlash: $('#warnFlash'), darkOverlay: $('#darkOverlay'),
+  darkOverlay: $('#darkOverlay'),
   tray: $('#tray'), skipBtn: $('#skipBtn'),
   /* 홈 화면(앱 라이브러리)이 기존 타이틀 역할을 대신한다 */
   titleScreen: $('#homeScreen'), startBtn: $('#playPatjuk'),
@@ -56,11 +55,9 @@ const STATION_CAM = [
   [640, 450, 1.3],  // 멍석말이
 ];
 
-const MAX_MISTAKES = 5; // 실패 기회 (하트 수)
-
 let mode = 'title';   // title | intro | play | end
 let stage = 0;        // 다음 정답 인덱스
-let mistakes = 0;
+let stageMisses = 0;  // 현재 단계에서 틀린 횟수 (도움 단계 결정)
 let busy = true;
 let skipRequested = false;
 
@@ -298,17 +295,6 @@ async function theaterOpening() {
   await setCurtain(true, 1400);
 }
 
-/* ===== 남은 기회 하트 ===== */
-function renderLives() {
-  el.lives.innerHTML = '';
-  for (let i = 0; i < MAX_MISTAKES; i++) {
-    const s = document.createElement('span');
-    s.textContent = '❤️';
-    if (i >= MAX_MISTAKES - mistakes) s.classList.add('lost');
-    el.lives.appendChild(s);
-  }
-}
-
 /* ===== 의성어 임팩트 ===== */
 function impact(x, y, word, color = '#8e3b2f') {
   el.impactText.textContent = word;
@@ -361,10 +347,6 @@ function stageShake() {
   void el.stage.getBoundingClientRect();
   el.stage.classList.add('shake');
   setTimeout(() => el.stage.classList.remove('shake'), 450);
-}
-
-async function flashWarn() {
-  await anim(el.warnFlash, [{ opacity: 0 }, { opacity: 0.32 }, { opacity: 0 }, { opacity: 0.25 }, { opacity: 0 }], { duration: 550 });
 }
 
 /* ===== 카드 ===== */
@@ -508,11 +490,9 @@ async function playIntro() {
 async function beginPlay(firstTime) {
   mode = 'play';
   stage = 0;
-  mistakes = 0;
+  stageMisses = 0;
   setBusy(true);
   buildTray();
-  renderLives();
-  el.lives.hidden = false;
 
   if (curtainShut) {
     // 엔딩 뒤 재도전: 닫힌 커튼 뒤에서 무대를 갈아끼우고 커튼을 연다
@@ -530,7 +510,7 @@ async function beginPlay(firstTime) {
   }
 
   AudioFX.growl();
-  const arriveLine = Narrator.speak(firstTime ? INTRO.tigerBack : LINES.retryTiger);
+  const arriveLine = Narrator.speak(INTRO.tigerBack);
   // 호랑이가 부엌문을 벌컥 열고 들어와 문가에 버티고 선다
   el.tigerPos.style.opacity = 0;
   setPos(el.tigerPos, DOOR_X.B1 - 25, 520);
@@ -559,7 +539,13 @@ async function beginPlay(firstTime) {
 }
 
 function onCard(idx, btn) {
-  if (busy || mode !== 'play') return;
+  if (mode !== 'play') return;
+  if (busy) {
+    // 연출 중에 눌러도 무반응이면 답답하다 — 살짝 흔들고 톡 소리만
+    AudioFX.tap();
+    btn.classList.remove('nudge'); void btn.offsetWidth; btn.classList.add('nudge');
+    return;
+  }
   if (btn.classList.contains('used')) { AudioFX.tap(); return; }
   setBusy(true);
   const run = idx === stage ? handleCorrect(idx, btn) : handleWrong(idx);
@@ -570,6 +556,8 @@ async function handleCorrect(idx, btn) {
   const f = FRIENDS[idx];
   AudioFX.ding();
   btn.classList.add('used');
+  btn.classList.remove('hint');
+  stageMisses = 0;
   await SUCCESS[f.id]();
   showWound(idx); // 맞은 자리마다 상처가 남는다
   await Narrator.speak(f.success);
@@ -593,23 +581,28 @@ async function handleWrong(idx) {
     impact(sx, sy - 40, '어라?', '#7a6a55');
   }
   // 다른 세트에 있는 친구를 눌러도 비웃는 컷은 항상 뜬다 (부엌에서 멍석·지게 등)
-  await showCut('wrong_' + f.id);
+  await showCut('wrong_' + f.id, 2000);
   AudioFX.miss();
   await Narrator.speak(f.fail);
-  mistakes++;
-  renderLives();
-  if (mistakes < MAX_MISTAKES) {
-    await camTo(...STATION_CAM[stage], 550); // 호랑이에게 컷백
-    AudioFX.growl();
-    impact(el.tigerPos._x - 30, 360, '어흥!', '#c0392b');
-    stageShake();
-    await flashWarn();
-    // 마지막 기회에는 더 강한 경고
-    await Narrator.speak(mistakes === MAX_MISTAKES - 1 ? LINES.warningLast : LINES.warning);
-    setBusy(false);
-  } else {
-    await badEnd();
+  stageMisses++;
+  await camTo(...STATION_CAM[stage], 550); // 호랑이에게 컷백
+  await giveHelp();
+  setBusy(false);
+}
+
+/* 틀릴수록 더 많이 도와준다: 1회 = 장소 힌트, 2회부터 = 정답 카드·친구가 들썩이며 이름을 알려줌 */
+async function giveHelp() {
+  const help = HELP[stage];
+  if (stageMisses === 1) {
+    await Narrator.speak(help.where);
+    return;
   }
+  const id = FRIENDS[stage].id;
+  const card = $('#card-' + id);
+  if (card) card.classList.add('hint');
+  bounceFriend(id);
+  AudioFX.jingle();
+  await Narrator.speak(help.who);
 }
 
 /* ===== 정답 연출: 각 친구가 호랑이를 혼내주는 장면 ===== */
@@ -864,56 +857,9 @@ const FAIL = {
 };
 
 /* ===== 엔딩 ===== */
-async function badEnd() {
-  mode = 'end';
-  el.tray.hidden = true;
-  el.lives.hidden = true;
-
-  // 멍석에 말려 있었다면 빠져나온다
-  if (el.tigerPos.style.opacity === '0') {
-    el.rolled.style.opacity = 0;
-    el.tigerPos.style.opacity = 1;
-    setPos(el.tigerPos, POS.rolledSpot, 520);
-  }
-  el.tiger.classList.remove('fallen', 'flat', 'shiver');
-  tigerEyesHurt(false);
-  el.dizzy.setAttribute('opacity', 0);
-
-  anim(el.darkOverlay, [{ opacity: 0 }, { opacity: 0.5 }], { duration: 1200 });
-  AudioFX.growl();
-  // 카메라가 구석의 할멈에게 다가가는 호랑이를 따라간다
-  await Promise.all([
-    walk(el.tigerPos, el.tiger, 120, 260),
-    camTo(180, 430, 1.5, 1800),
-  ]);
-  grannyMood('scared');
-  await sleep(300);
-
-  AudioFX.gulp();
-  impact(120, 390, '꿀꺽…', '#5b3a24');
-  await anim(el.granny, [
-    { transform: 'translate(0,0) scale(1)', opacity: 1 },
-    { transform: 'translate(40px,-20px) scale(.4)', opacity: 1 },
-    { transform: 'translate(70px,-30px) scale(0)', opacity: 0 },
-  ], { duration: 700, easing: 'ease-in' });
-  el.granny.style.opacity = 0;
-  el.belly.style.transformBox = 'fill-box';
-  el.belly.style.transformOrigin = 'center';
-  await anim(el.belly, [
-    { transform: 'scale(1)' }, { transform: 'scale(1.45)' }, { transform: 'scale(1.3)' },
-  ], { duration: 600 });
-  el.belly.style.transform = 'scale(1.3)';
-
-  AudioFX.sad();
-  await Narrator.speak(LINES.badEnd);
-  await setCurtain(false, 1100); // 막이 내린다
-  showEnd(false);
-}
-
 async function happyEnd() {
   mode = 'end';
   el.tray.hidden = true;
-  el.lives.hidden = true;
 
   AudioFX.fanfare();
   await camWide(900); // 잔치는 다 함께 와이드로
@@ -943,15 +889,13 @@ async function happyEnd() {
   await Narrator.speak(LINES.happyEnd);
   await sleep(600);
   await setCurtain(false, 1300); // 막이 내린다
-  showEnd(true);
+  showEnd();
 }
 
-function showEnd(happy) {
-  el.endTitle.textContent = happy ? '🎉 만세!' : '아이고…';
-  el.endMsg.textContent = happy
-    ? '친구들이 힘을 모아 호랑이를 물리쳤어요!'
-    : '호랑이가 할멈을 꿀꺽! 친구들을 순서대로 불러 볼까요?';
-  el.retryBtn.textContent = happy ? '다시 하기' : '다시 해볼까?';
+function showEnd() {
+  el.endTitle.textContent = '🎉 만세!';
+  el.endMsg.textContent = '친구들이 힘을 모아 호랑이를 물리쳤어요!';
+  el.retryBtn.textContent = '다시 하기';
   el.endScreen.hidden = false;
 }
 
@@ -1038,10 +982,17 @@ function init() {
     if (cutTapResolve) cutTapResolve();
   });
 
-  // 무대(말풍선) 탭 → 현재 대사를 건너뛰고 다음으로
+  // 무대를 1초 길게 누르면 현재 대사 건너뛰기 (보호자용)
+  // 아이들이 화면을 톡톡 두드려도 힌트 대사가 끊기지 않게 짧은 탭은 무시한다
+  let holdTimer = null;
+  const cancelHold = () => { clearTimeout(holdTimer); holdTimer = null; };
   el.stage.addEventListener('pointerdown', () => {
-    if (mode === 'intro' || (mode === 'play' && busy)) Narrator.stop();
+    cancelHold();
+    holdTimer = setTimeout(() => {
+      if (mode === 'intro' || (mode === 'play' && busy)) Narrator.stop();
+    }, 1000);
   });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => el.stage.addEventListener(ev, cancelHold));
 
   el.skipBtn.addEventListener('click', () => {
     AudioFX.tap();
@@ -1083,7 +1034,7 @@ function init() {
     ['myeongseok', 'jige'].forEach(id => friendEl(id).classList.add('shown'));
     setPos(el.tigerPos, 560, 520);
     setPos(el.grannyPos, -70, 520);
-    el.tray.hidden = false; buildTray(); renderLives(); el.lives.hidden = false;
+    el.tray.hidden = false; buildTray();
   }
   if (location.hash === '#stage' || location.hash === '#stage-zoom') {
     el.titleScreen.hidden = true;
