@@ -1,0 +1,556 @@
+/* 팥죽할멈과 호랑이 — 3~4세 인터랙티브 동화
+   단일 테마(밤 풍경 동화책 룩)로 모든 색을 명시적으로 칠한다. */
+:root {
+  --night: #1a0f3d;
+  --frame: #0d0620;
+  --hanji: #fdf3e3;
+  --thatch: #d9a441;
+  --tiger: #f2913d;
+  --bean: #8e3b2f;
+  --ink: #3d2b1f;
+  --card-bg: #fdf3e3;
+  /* 손으로 오린 종이의 삐뚤한 모서리 + 겹겹이 쌓인 종이 그림자 */
+  --paper-radius: 20px 26px 18px 28px / 26px 18px 28px 20px;
+  --paper-stack:
+    0 3px 0 rgba(216, 201, 168, 0.9),
+    0 8px 0 rgba(18, 9, 43, 0.28),
+    0 16px 20px rgba(7, 3, 18, 0.5);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--night);
+  font-family: 'Jua', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  color: var(--ink);
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#app { position: relative; height: 100%; display: flex; flex-direction: column; }
+
+/* ===== 2.5D 무대: 레이어가 실제 Z깊이를 갖는 원근 스택 ===== */
+#stageWrap { flex: 1; position: relative; min-height: 0; overflow: hidden; }
+#scene3d {
+  position: absolute; inset: 0;
+  perspective: 1200px;
+  perspective-origin: 50% 50%; /* 레이어 prescale 원점과 일치해야 정렬이 맞는다 */
+}
+#scene { position: absolute; inset: 0; transform-style: preserve-3d; }
+.layer3d { position: absolute; inset: 0; }
+.lsvg, #uiStage { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#uiStage { pointer-events: none; }
+#defsSvg { position: absolute; }
+
+/* 관객석 실루엣 (공연장 오프닝) */
+#audience {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 19%;
+  z-index: 22;
+  pointer-events: none;
+}
+#audience svg { width: 100%; height: 100%; display: block; }
+
+/* 원근 흐림(DOF): 맨 뒤·맨 앞 레이어만 살짝 흐리게 */
+#layer-far { filter: blur(1.4px); }
+#layer-fg { filter: blur(1.6px); }
+
+/* ============ 내레이션 말풍선 ============ */
+#bubble {
+  position: absolute;
+  top: max(10px, env(safe-area-inset-top, 0px));
+  left: 50%;
+  transform: translateX(-50%) rotate(-0.5deg);
+  max-width: min(720px, calc(100% - 32px));
+  background: var(--hanji);
+  border: 4px solid var(--bean);
+  border-radius: var(--paper-radius);
+  padding: 10px 22px;
+  box-shadow: var(--paper-stack);
+  z-index: 20;
+  animation: bubblePop .25s ease-out;
+}
+#bubble p { margin: 0; font-size: clamp(17px, 2.6vmin, 26px); line-height: 1.45; text-align: center; }
+@keyframes bubblePop { from { transform: translateX(-50%) rotate(-0.5deg) scale(.8); opacity: 0; } }
+
+/* ============ 버튼 공통 ============ */
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+#skipBtn {
+  position: absolute;
+  right: max(12px, env(safe-area-inset-right, 0px));
+  bottom: 14px;
+  z-index: 25;
+  background: rgba(253,243,227,.92);
+  border-radius: 14px 18px 12px 20px / 18px 12px 20px 14px;
+  padding: 8px 18px;
+  font-size: 15px;
+  box-shadow: 0 3px 0 rgba(216,201,168,.9), 0 7px 10px rgba(7,3,18,.45);
+  transform: rotate(0.8deg);
+}
+
+/* ============ 친구 카드 ============ */
+#tray {
+  position: relative;
+  z-index: 15;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: 14px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(#241845, #150c38);
+  border-top: none;
+}
+/* 무대 앞판의 종이 스캘럽 장식 */
+#tray::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0; right: 0;
+  height: 13px;
+  background: radial-gradient(circle 13px at 14px 14px, #241845 97%, transparent 100%);
+  background-size: 28px 13px;
+  background-repeat: repeat-x;
+  filter: drop-shadow(0 -3px 3px rgba(7,3,18,.5));
+  pointer-events: none;
+}
+.card {
+  --tilt: 0deg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: var(--card-bg);
+  border: 4px solid var(--thatch);
+  border-radius: var(--paper-radius);
+  padding: 6px 4px 4px;
+  min-height: 96px;
+  box-shadow: var(--paper-stack);
+  transition: transform .15s ease, opacity .2s, filter .2s;
+  transform: rotate(var(--tilt));
+}
+/* 손으로 흩어 놓은 종이 카드 느낌의 미세한 기울기 */
+.card:nth-child(3n) { --tilt: -1.3deg; }
+.card:nth-child(3n+1) { --tilt: 1.1deg; }
+.card:nth-child(5n) { --tilt: 0.6deg; }
+.card:active { transform: scale(.93) rotate(var(--tilt)); }
+/* 연출/내레이션 중에는 카드 잠금 표시 */
+#tray.locked .card {
+  pointer-events: none;
+  opacity: 0.45;
+  filter: saturate(0.3) brightness(0.85);
+  transform: scale(0.97) rotate(var(--tilt));
+}
+.card svg { width: clamp(44px, 8vmin, 64px); height: clamp(44px, 8vmin, 64px); }
+.card span { font-size: clamp(14px, 2.2vmin, 19px); }
+.card.used {
+  filter: grayscale(1);
+  opacity: .5;
+  position: relative;
+}
+.card.used::after {
+  content: '✔';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  color: #2e7d32;
+  opacity: 1;
+}
+@media (max-width: 640px) {
+  #tray { grid-template-columns: repeat(4, 1fr); }
+  .card { min-height: 84px; }
+}
+
+/* ============ 앱 홈: 종이 동화극장 ============ */
+.home {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at 82% 12%, rgba(255,233,179,0.14), transparent 40%),
+    radial-gradient(circle at 12% 85%, rgba(138,116,189,0.18), transparent 45%),
+    #1a0f3d;
+  padding: max(20px, env(safe-area-inset-top, 0px)) 18px calc(24px + env(safe-area-inset-bottom, 0px));
+}
+.home-inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.home-head { text-align: center; color: var(--hanji); }
+.home-head h1 {
+  margin: 6px 0 4px;
+  font-size: clamp(30px, 6vmin, 46px);
+  color: #ffd98a;
+  text-shadow: 0 3px 0 rgba(7,3,18,.6);
+  letter-spacing: 0.04em;
+}
+.home-head p { margin: 0; font-size: clamp(13px, 2vmin, 16px); opacity: 0.75; }
+
+.tale-card {
+  --tilt: 0deg;
+  position: relative;
+  background: var(--hanji);
+  border: none;
+  border-radius: var(--paper-radius);
+  box-shadow: var(--paper-stack);
+  transform: rotate(var(--tilt));
+  text-align: left;
+  color: var(--ink);
+  padding: 0;
+  overflow: hidden;
+}
+.tale-card.hero {
+  display: grid;
+  grid-template-columns: minmax(150px, 42%) 1fr;
+  min-height: 210px;
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+.tale-card.hero:active { transform: rotate(var(--tilt)) scale(0.97); }
+.tale-card.hero .thumb {
+  background: #241845;
+  display: block;
+  overflow: hidden;
+}
+.tale-card.hero .thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.tale-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 22px;
+}
+.tale-eyebrow { font-size: 13px; color: var(--bean); letter-spacing: 0.14em; }
+.tale-info strong { font-size: clamp(22px, 4vmin, 32px); line-height: 1.2; color: var(--bean); }
+.tale-desc { font-size: clamp(14px, 2.2vmin, 17px); line-height: 1.5; color: #6a5744; }
+.play-chip {
+  margin-top: 6px;
+  align-self: flex-start;
+  background: var(--tiger);
+  color: #fff;
+  font-size: clamp(16px, 2.6vmin, 20px);
+  padding: 10px 22px;
+  border-radius: 999px;
+  box-shadow: 0 4px 0 #b5622a;
+}
+
+.tale-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.tale-card.locked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px 14px;
+  filter: saturate(0.55) brightness(0.92);
+}
+.mini-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px 16px 10px 14px / 14px 10px 16px 12px;
+  display: grid;
+  place-items: center;
+  font-size: clamp(22px, 4vmin, 34px);
+  box-shadow: inset 0 0 0 3px rgba(253,243,227,.25), 0 3px 6px rgba(7,3,18,.3);
+}
+.tale-card.locked strong { font-size: clamp(12px, 1.9vmin, 15px); text-align: center; color: #6a5744; }
+.ribbon {
+  position: absolute;
+  top: 10px; right: -34px;
+  transform: rotate(35deg);
+  background: var(--bean);
+  color: var(--hanji);
+  font-size: 11px;
+  padding: 3px 36px;
+  box-shadow: 0 2px 4px rgba(7,3,18,.4);
+}
+.home-foot { text-align: center; color: rgba(253,243,227,.5); font-size: 13px; }
+
+@media (max-width: 560px) {
+  .tale-card.hero { grid-template-columns: 1fr; }
+  .tale-card.hero .thumb { aspect-ratio: 16 / 10; }
+  .tale-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 가로모드(폰을 눕힌 낮은 화면): 카드 트레이가 화면 높이를 너무 먹지 않도록 축소해 무대를 넓게 확보 */
+@media (max-height: 480px) and (orientation: landscape) {
+  #tray { padding: 8px 12px calc(6px + env(safe-area-inset-bottom, 0px)); gap: 6px; }
+  .card { min-height: 62px; padding: 4px 3px 3px; }
+  .card svg { width: clamp(30px, 7vmin, 46px); height: clamp(30px, 7vmin, 46px); }
+  .card span { font-size: clamp(11px, 2vmin, 15px); }
+}
+
+/* ============ 타이틀 / 엔딩 ============ */
+.screen {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  background: rgba(26,17,54,.72);
+  padding: 16px;
+}
+.title-card {
+  background: var(--hanji);
+  border: 6px solid var(--bean);
+  border-radius: 34px 26px 38px 24px / 26px 38px 24px 34px;
+  padding: clamp(20px, 4vmin, 44px) clamp(28px, 6vmin, 70px);
+  text-align: center;
+  box-shadow:
+    0 4px 0 rgba(216, 201, 168, 0.9),
+    0 12px 0 rgba(18, 9, 43, 0.3),
+    0 24px 30px rgba(7, 3, 18, 0.6);
+  max-width: min(560px, 100%);
+  transform: rotate(-0.7deg);
+}
+.title-eyebrow { margin: 0 0 4px; font-size: clamp(14px, 2vmin, 19px); color: var(--bean); letter-spacing: .12em; }
+.title-card h1 { margin: 0; font-size: clamp(34px, 7vmin, 62px); line-height: 1.15; color: var(--bean); }
+.title-card h2 { margin: 0; font-size: clamp(26px, 5vmin, 44px); color: var(--bean); }
+.title-sub { margin: 12px 0 0; font-size: clamp(16px, 2.4vmin, 22px); line-height: 1.5; }
+#startBtn, #retryBtn {
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  background: var(--tiger);
+  color: #fff;
+  font-size: clamp(22px, 3.6vmin, 32px);
+  padding: 14px 30px;
+  border-radius: 999px;
+  box-shadow: 0 6px 0 #b5622a;
+}
+#startBtn:active, #retryBtn:active { transform: translateY(4px); box-shadow: 0 2px 0 #b5622a; }
+button.ghost {
+  margin-top: 12px;
+  background: none;
+  font-size: 16px;
+  color: #7a6a55;
+  text-decoration: underline;
+}
+
+/* ============ 카메라 & 임팩트 ============ */
+#world, #layer-far, #layer-mid, #layer-fg { transform-origin: 0 0; }
+
+.shd { fill: #2e241c; opacity: 0.22; }
+
+/* 페이퍼아트: 캐릭터는 가벼운 CSS 그림자로 종이 조각처럼 띄운다
+   (애니메이션 중 필터 재계산 비용이 큰 displacement는 배경 전용) */
+.friend .act, #granny, #tiger, #rolledInner, #impact {
+  filter: drop-shadow(0 5px 4px rgba(46, 36, 28, 0.45));
+}
+.card svg { filter: drop-shadow(0 2px 2px rgba(46, 36, 28, 0.35)); }
+
+/* 종이인형극: 막대 인형처럼 살랑이는 친구들 */
+.friend .act { animation: puppetSway 3.6s ease-in-out infinite alternate; }
+#f-jara .act { animation-delay: -1.1s; }
+#f-ddong .act { animation-delay: -2.3s; }
+#f-jeolgu .act { animation-delay: -0.6s; animation-duration: 4.2s; }
+#f-myeongseok .act { animation-delay: -1.8s; animation-duration: 4.4s; }
+#f-jige .act { animation-delay: -2.9s; animation-duration: 4s; }
+@keyframes puppetSway {
+  from { transform: rotate(-1.6deg); }
+  to { transform: rotate(1.8deg); }
+}
+
+.snow circle {
+  transform-box: fill-box;
+  animation: snowfall 10s linear infinite;
+}
+@keyframes snowfall {
+  0% { transform: translate(0, -40px); opacity: 0; }
+  8% { opacity: 1; }
+  55% { transform: translate(22px, 320px); }
+  100% { transform: translate(-10px, 660px); opacity: 0.6; }
+}
+
+#fireGlow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: glowPulse 1.7s ease-in-out infinite alternate;
+}
+@keyframes glowPulse {
+  from { transform: scale(0.94); opacity: 0.85; }
+  to { transform: scale(1.06); opacity: 1; }
+}
+
+/* ============ 남은 기회 하트 ============ */
+#lives {
+  position: absolute;
+  top: max(10px, env(safe-area-inset-top, 0px));
+  left: 12px;
+  z-index: 18;
+  display: flex;
+  gap: 3px;
+  background: rgba(253, 243, 227, 0.92);
+  border-radius: 12px 16px 10px 18px / 16px 10px 18px 12px;
+  padding: 5px 10px;
+  box-shadow: 0 3px 0 rgba(216,201,168,.9), 0 8px 10px rgba(7,3,18,.45);
+  transform: rotate(-1deg);
+}
+#lives span {
+  font-size: clamp(20px, 3.4vmin, 28px);
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,.35));
+  transition: filter .3s, opacity .3s, transform .3s;
+}
+#lives span.lost {
+  filter: grayscale(1);
+  opacity: 0.3;
+  transform: scale(0.85);
+}
+#impactText {
+  font-family: 'Jua', 'Apple SD Gothic Neo', sans-serif;
+  fill: #8e3b2f;
+  paint-order: stroke;
+  stroke: #fff;
+  stroke-width: 7px;
+  stroke-linejoin: round;
+}
+
+/* ============ 무대 상시 애니메이션 ============ */
+.tw { animation: twinkle 2.4s ease-in-out infinite; }
+.tw.d1 { animation-delay: .8s; }
+.tw.d2 { animation-delay: 1.5s; }
+@keyframes twinkle { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+
+.flame { transform-box: fill-box; transform-origin: 50% 100%; animation: flick .5s ease-in-out infinite alternate; }
+.flame.f2 { animation-duration: .38s; }
+.flame.f3 { animation-duration: .3s; }
+@keyframes flick { from { transform: scaleY(.88) scaleX(1.04); } to { transform: scaleY(1.1) scaleX(.94); } }
+
+.puff { animation: rise 2.6s ease-in infinite; transform-box: fill-box; }
+.puff.p2 { animation-delay: .9s; }
+.puff.p3 { animation-delay: 1.7s; }
+@keyframes rise {
+  0% { transform: translateY(0); opacity: .8; }
+  100% { transform: translateY(-46px); opacity: 0; }
+}
+
+#tigerTail { transform-box: fill-box; transform-origin: 0% 100%; animation: wag 1.6s ease-in-out infinite; }
+@keyframes wag { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(10deg); } }
+
+/* ============ 상태 클래스 ============ */
+.friend { opacity: 0; }               /* 인트로에서 등장하며 보이게 됨 */
+.friend.shown { opacity: 1; }
+.friend .act { transform-box: fill-box; transform-origin: 50% 100%; }
+
+.friend.bounce .act { animation: fBounce .5s ease-out; }
+@keyframes fBounce { 0% { transform: translateY(0); } 35% { transform: translateY(-26px) scale(1.06); } 70% { transform: translateY(0) scale(.96); } 100% { transform: translateY(0); } }
+
+.friend.party .act { animation: fParty .55s ease-in-out infinite alternate; }
+@keyframes fParty { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-16px) rotate(4deg); } }
+
+#tiger { transform-box: fill-box; transform-origin: 50% 100%; }
+#tiger.walking { animation: walkBob .32s ease-in-out infinite alternate; }
+@keyframes walkBob { from { translate: 0 0; } to { translate: 0 -7px; } }
+
+#tiger.fallen { transform: rotate(-78deg) translate(30px, 26px); }
+#tiger.flat { transform: rotate(-90deg) translate(40px, 30px); }
+#tiger.shiver { animation: shiver .12s linear infinite; }
+@keyframes shiver { 0%,100% { translate: 0 0; } 50% { translate: 5px 0; } }
+
+#granny { transform-box: fill-box; transform-origin: 50% 100%; }
+/* 배우 크기·방향: --as=세트별 크기, --fx=진행 방향(왼쪽 기본, 오른쪽 이동 시 반전)
+   scale 속성이라 걷기/흔들림 transform 애니메이션과 합성됨 */
+#granny, #tiger { --fx: 1; --as: 1.25; scale: calc(var(--fx) * var(--as)) var(--as); }
+body.setA #granny, body.setA #tiger { --as: 2.1; }
+body.setB2 #granny, body.setB2 #tiger { --as: 1.45; }
+#granny.faceR, #tiger.faceR { --fx: -1; }
+#granny.walking { animation: walkBob .3s ease-in-out infinite alternate; }
+#granny.scaredShake { animation: shiver .14s linear infinite; }
+#gArmStir { transform-box: fill-box; transform-origin: 100% 0%; }
+#granny.cooking #gArmStir { animation: stir 1.2s ease-in-out infinite; }
+@keyframes stir { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-14deg); } }
+
+#gTears .tear { animation: drip 1s ease-in infinite; transform-box: fill-box; }
+#gTears .t2 { animation-delay: .5s; }
+@keyframes drip { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(18px); opacity: 0; } }
+
+#dizzyStars .dz { transform-box: fill-box; transform-origin: 50% 50%; animation: spinStar 1.1s linear infinite; }
+#dizzyStars .d1 { animation-delay: .3s; }
+#dizzyStars .d2 { animation-delay: .6s; }
+@keyframes spinStar { from { transform: rotate(0) scale(1); } 50% { transform: rotate(180deg) scale(1.25); } to { transform: rotate(360deg) scale(1); } }
+
+#stageWrap.shake { animation: stageShake .4s linear; }
+@keyframes stageShake {
+  0%,100% { transform: translate(0,0); }
+  20% { transform: translate(-8px, 4px); }
+  40% { transform: translate(7px, -4px); }
+  60% { transform: translate(-6px, 3px); }
+  80% { transform: translate(5px, -2px); }
+}
+
+/* ============ 폭죽(색종이) ============ */
+#confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 30; }
+#confetti span {
+  position: absolute;
+  top: -20px;
+  width: 12px; height: 12px;
+  border-radius: 3px;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(720deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tw, .flame, .puff, #tigerTail, .snow circle, #fireGlow, .friend .act { animation: none; }
+}
+
+/* 생성 이미지로 대체된 레거시 벡터 요소 */
+.legacy { display: none !important; }
+
+/* 소품: 종이 낱장 그림자 (층간 깊이) */
+.prop { filter: drop-shadow(0 6px 5px rgba(46, 36, 28, 0.5)); }
+/* 배경 스트립도 아래층에 그림자를 드리운다 (음각 AO) */
+.strip { filter: drop-shadow(0 7px 6px rgba(46, 36, 28, 0.45)); }
+
+/* ===== 만화 임팩트 컷 패널 ===== */
+#cutPanel {
+  position: absolute; inset: 0; z-index: 60;
+  display: grid; place-items: center;
+  pointer-events: none;
+}
+#cutPanel img {
+  box-sizing: border-box;
+  /* aspect-ratio CSS 속성에 기대지 않는 고전 패턴(모든 브라우저 호환):
+     실제 컷 이미지가 전부 4:3(1000x750)이므로 이미지 자체의 고유 비율로 자동 스케일된다.
+     width/height 둘 다 auto + 양쪽 상한만 걸면 어떤 화면비에서도 박스 안에 들어온다. */
+  display: block;
+  max-width: min(660px, 90%); max-height: min(560px, 82%);
+  width: auto; height: auto;
+  background: #f6ecd8;
+  border: 10px solid #f6ecd8; border-radius: 12px;
+  box-shadow: 0 6px 0 rgba(120, 70, 40, .45), 0 22px 44px rgba(18, 9, 43, .55);
+  rotate: -3deg;
+}
+#cutPanel.in img { animation: cutIn .3s cubic-bezier(.2, 1.5, .4, 1) both; }
+#cutPanel.out img { animation: cutOut .28s ease-in both; }
+@keyframes cutIn {
+  from { transform: scale(1.7) rotate(-16deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes cutOut {
+  to { transform: translateY(-46px) rotate(7deg) scale(.88); opacity: 0; }
+}
+
+/* 팥밭에선 호미 든 할멈, 부엌·마당에선 주걱 든 할멈 */
+body.setA #gImgLadle { display: none; }
+body.setA #gImgHoe { display: inline !important; }
+
+#cutPanel { pointer-events: auto; cursor: pointer; }

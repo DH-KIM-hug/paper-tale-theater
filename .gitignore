@@ -1,0 +1,13 @@
+# 원본 생성 이미지·구버전 애셋 (게임에서 참조하지 않음)
+assets/raw/
+assets/char/
+assets/scene/
+assets/props/
+assets/voice-ref/
+# 이전 TTS 버전 백업 (현재 게임은 audio/ 사용)
+audio_edge_backup/
+audio_sovits/
+audio_sovits2/
+# 로컬 환경
+venv/
+.DS_Store
