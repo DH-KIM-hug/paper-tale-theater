@@ -48,15 +48,33 @@ button { font: inherit; border: none; cursor: pointer; color: inherit; }
 #tale.open #curtainL { transform: translateX(-102%); }
 #tale.open #curtainR { transform: translateX(102%); }
 
-/* 장면 카드 (무대막) */
-#sceneSheet {
+/* 동그라미 장면 전환 (아이리스): 구멍 반지름 --r 을 JS가 움직인다. 금색 종이 테두리가 구멍을 두른다 */
+#iris {
+  --x: 50%; --y: 50%; --r: 0px;
   position: absolute; inset: 0; z-index: 28; display: grid; place-items: center;
-  background: var(--indigo); transform: translateY(-102%); transition: transform .5s ease-in-out;
+  background: var(--indigo);
+  -webkit-mask: radial-gradient(circle at var(--x) var(--y), transparent var(--r), #000 calc(var(--r) + 1px));
+          mask: radial-gradient(circle at var(--x) var(--y), transparent var(--r), #000 calc(var(--r) + 1px));
 }
-#sceneSheet.down { transform: translateY(0); }
-#sceneSheet span {
-  background: var(--cream); color: var(--bean); border: 5px solid var(--gold); border-radius: 14px;
+#iris::before {
+  content: ''; position: absolute; left: var(--x); top: var(--y);
+  width: calc(var(--r) * 2 + 20px); height: calc(var(--r) * 2 + 20px); transform: translate(-50%, -50%);
+  border-radius: 50%; border: 10px solid var(--gold); box-shadow: 0 0 0 6px var(--bean);
+}
+#iris.shut::before { display: none; }
+#irisCard {
+  position: relative; background: var(--cream); color: var(--bean); border: 5px solid var(--gold); border-radius: 14px;
   padding: 14px 34px; font-size: clamp(26px, 5vmin, 46px); box-shadow: 0 6px 0 var(--bark);
+  opacity: 0; transform: scale(.3) rotate(-8deg);
+}
+#irisCard:empty { display: none; }
+#irisCard.on { animation: cardSpring .7s ease-out forwards; }
+@keyframes cardSpring {
+  0% { opacity: 0; transform: scale(.3) rotate(-8deg); }
+  40% { opacity: 1; transform: scale(1.18) rotate(3deg); }
+  60% { transform: scale(.92) rotate(-1deg); }
+  80% { transform: scale(1.04) rotate(0); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
 }
 
 /* 말풍선 */

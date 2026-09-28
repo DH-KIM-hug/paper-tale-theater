@@ -170,7 +170,7 @@ const Tale = (() => {
           if (busy || locked) return;
           locked = true; clearTimeout(t2);
           if (o.ok) {
-            options.forEach(x => { x.el.removeEventListener('pointerdown', x._on); arm(x.el, false); x.el.style.filter = ''; });
+            options.forEach(x => { x.el.removeEventListener('pointerdown', x._on); arm(x.el, false); x.el.style.filter = ''; x.el.style.opacity = ''; });
             AudioFX.ding(); res(o); return;
           }
           misses++;
@@ -179,6 +179,7 @@ const Tale = (() => {
           if (misses === 1 && where) await say(where);
           if (misses >= 2) {
             good.el.style.filter = 'url(#hintGlow)';
+            options.forEach(x => { if (!x.ok) { x.el.style.transition = 'opacity .4s'; x.el.style.opacity = '.35'; } });
             pulse(good.el);
             if (who) await say(who);
           }
@@ -252,13 +253,45 @@ const Tale = (() => {
 
   /* ---------- 무대 장치 ---------- */
   function curtain(open) { root.classList.toggle('open', open); AudioFX.swish(); return sleep(1250); }
-  async function sceneCard(label, change) {
-    const sh = $('#sceneSheet');
-    sh.querySelector('span').textContent = label;
-    AudioFX.swish(); sh.classList.add('down'); await sleep(520);
+  /* 동그라미 장면 전환 (옛날 만화식 아이리스). focus: 동그라미가 모일 요소(주인공). 없으면 가운데
+     닫힘 → 주인공 둘레에서 잠깐 멈춤 → 완전히 닫힘 → 장면 카드(탄력) → change() → 톡 튀며 열림 */
+  function irisTo(cx, cy, r0, r1, ms, ease) {
+    const ir = $('#iris');
+    return new Promise(res => {
+      const t0 = performance.now();
+      const f = now => {
+        const k = Math.min(1, (now - t0) / ms), r = r0 + (r1 - r0) * ease(k);
+        ir.style.setProperty('--x', cx + 'px'); ir.style.setProperty('--y', cy + 'px'); ir.style.setProperty('--r', Math.max(0, r) + 'px');
+        ir.classList.toggle('shut', r < 6); // 완전히 닫히면 금테도 숨긴다
+        k < 1 ? requestAnimationFrame(f) : res();
+      };
+      requestAnimationFrame(f);
+    });
+  }
+  const easeIn = k => k * k * k;
+  const easeOutBack = k => 1 + 2.4 * Math.pow(k - 1, 3) + 1.4 * Math.pow(k - 1, 2);
+  async function sceneCard(label, change, focus) {
+    const wrap = $('#stageWrap'), ir = $('#iris'), card = $('#irisCard');
+    const W = wrap.clientWidth, H = wrap.clientHeight;
+    let cx = W / 2, cy = H / 2;
+    if (focus && focus.getBoundingClientRect) {
+      const r = focus.getBoundingClientRect(), sr = wrap.getBoundingClientRect();
+      if (r.width) { cx = r.left - sr.left + r.width / 2; cy = r.top - sr.top + r.height / 2; }
+    }
+    const far = (x, y) => Math.hypot(Math.max(x, W - x), Math.max(y, H - y)) + 24;
+    const hole = Math.min(W, H) * .16;
+    ir.hidden = false; card.textContent = ''; card.className = '';
+    AudioFX.swish();
+    await irisTo(cx, cy, far(cx, cy), hole, 520, easeIn);
+    await sleep(260); // 주인공 둘레에 동그라미를 잠깐 남긴다
+    await irisTo(cx, cy, hole, 0, 180, easeIn);
+    if (label) { card.textContent = label; card.className = 'on'; tone([520, 780], .18, { type: 'triangle', vol: .12 }); }
     if (change) change();
-    await sleep(1000);
-    AudioFX.swish(); sh.classList.remove('down'); await sleep(520);
+    await sleep(label ? 1050 : 250);
+    card.className = '';
+    AudioFX.swish();
+    await irisTo(W / 2, H / 2, 0, far(W / 2, H / 2), 640, easeOutBack);
+    ir.hidden = true;
   }
   /* 만화 컷: draw(svg 0..400 x 0..300)로 임시 그림. 탭하면 빨리 넘어간다 */
   async function cut(draw, { hold: ms = 2600, sfx } = {}) {
@@ -287,12 +320,29 @@ const Tale = (() => {
       $('#confetti').appendChild(s); setTimeout(() => s.remove(), 6000);
     }
   }
-  /* 텍스트 효과 (의성어) */
+  /* 텍스트 효과 (의성어) — 탄력: 별이 스프링처럼 튀고, 글자가 한 자씩 떨어지며 출렁이다 자리 잡는다 */
+  const SPRING = [0, 1.35, .86, 1.07, .97, 1]; // 넘쳤다 되돌아오는 스프링 곡선 (키프레임 값)
+  function springFrames(fn) { return SPRING.map((v, i) => ({ transform: fn(v, i), offset: i / (SPRING.length - 1) })); }
   function pop(x, y, word, color = '#A93B32') {
     const g = el('g', { transform: `translate(${x},${y})` }, fxL);
-    el('path', { d: 'M60 0 L36 10 L52 30 L26 26 L30 52 L10 36 L0 60 L-10 36 L-30 52 L-26 26 L-52 30 L-36 10 L-60 0 L-36 -10 L-52 -30 L-26 -26 L-30 -52 L-10 -36 L0 -60 L10 -36 L30 -52 L26 -26 L52 -30 L36 -10 Z', fill: '#F2B366', stroke: '#E8703A', 'stroke-width': 4 }, g);
-    el('text', { y: 13, 'text-anchor': 'middle', 'font-size': 36, fill: color, 'font-family': 'Jua, sans-serif', stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', text: word }, g);
-    g.animate([{ opacity: 0, transform: `translate(${x}px,${y}px) scale(.3)` }, { opacity: 1, transform: `translate(${x}px,${y}px) scale(1.15)`, offset: .3 }, { opacity: 1, transform: `translate(${x}px,${y}px) scale(1)`, offset: .75 }, { opacity: 0, transform: `translate(${x}px,${y}px) scale(1.05)` }], { duration: 950 }).finished.then(() => g.remove());
+    const chars = [...word], size = chars.length > 3 ? 48 : 56;
+    const cw = ch => /[!?~.…,]/.test(ch) ? size * .42 : size * .86; // 문장부호는 좁게
+    const total = chars.reduce((a, ch) => a + cw(ch), 0);
+    const burst = el('path', { d: 'M60 0 L36 10 L52 30 L26 26 L30 52 L10 36 L0 60 L-10 36 L-30 52 L-26 26 L-52 30 L-36 10 L-60 0 L-36 -10 L-52 -30 L-26 -26 L-30 -52 L-10 -36 L0 -60 L10 -36 L30 -52 L26 -26 L52 -30 L36 -10 Z',
+      fill: '#F2B366', stroke: '#E8703A', 'stroke-width': 4, transform: `scale(${Math.max(1.4, total / 70)},${1.4})` }, g);
+    const bw = el('g', {}, g); bw.appendChild(burst);
+    bw.style.transformBox = 'view-box'; bw.style.transformOrigin = '0 0';
+    bw.animate(springFrames(v => `scale(${v}) rotate(${(1 - v) * 40}deg)`), { duration: 620, easing: 'ease-out', fill: 'both' });
+    let cursor = -total / 2;
+    chars.forEach((ch, i) => {
+      const px = cursor + cw(ch) / 2; cursor += cw(ch);
+      const t = el('text', { 'text-anchor': 'middle', 'font-size': size, fill: color, 'font-family': 'Jua, sans-serif', stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', text: ch }, g);
+      t.style.transformBox = 'view-box'; t.style.transformOrigin = '0 0';
+      const rot = (i % 2 ? 1 : -1) * 9;
+      t.animate(springFrames((v, k) => `translate(${px}px, ${size * .36 - (k === 0 ? 56 : 0)}px) scale(${Math.max(v, .01)}) rotate(${k < 3 ? rot : 0}deg)`),
+        { duration: 700, delay: 70 * i, easing: 'ease-out', fill: 'both' });
+    });
+    g.animate([{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400 + chars.length * 70 }).finished.then(() => g.remove());
   }
 
   /* ---------- 음 재생 (동화별 효과음: 개굴 음계, 음매 등) ---------- */
@@ -329,7 +379,7 @@ const Tale = (() => {
     </svg>
     <div id="frame"></div>
     <div id="curtainL" class="curtain"></div><div id="curtainR" class="curtain"></div>
-    <div id="sceneSheet"><span></span></div>
+    <div id="iris" hidden><span id="irisCard"></span></div>
     <div id="cutPanel" hidden></div>
     <div id="confetti"></div>
     <div id="hand" hidden>${HAND_SVG}</div>

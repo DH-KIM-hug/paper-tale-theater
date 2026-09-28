@@ -141,7 +141,7 @@
     await T.sceneCard('풀밭', () => {
       T.clear(); grassBG(T);
       babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(.9); b.place(120 + i * 70, 500); });
-    });
+    }, babies[1].pos);
     await say('아기 개구리들이 몰래 풀밭으로 나왔어요. 톡톡 눌러서 폴짝폴짝 가 볼까요?');
     await T.mash(T.root.querySelector('#stageWrap'), { count: 5, prompt: '화면을 톡톡 눌러서 폴짝폴짝!',
       onStep: i => babies.forEach((b, k) => { setTimeout(() => { croak(T, 380 + k * 40); b.move(b.x + 110, 500, 420); b.hop(50, 420); }, k * 90); }) });
@@ -152,7 +152,7 @@
       T.clear(); grassBG(T);
       actor(T.world, 520, 540, g => drawOx(T, g), { scale: 1 });
       camSnap(706, 450, 3.4);
-    });
+    }, babies[1].pos);
     await say('어? 눈앞에 커다란 무언가가 있어요!');
     const quiz = [
       { cam: [706, 450, 3.4], q: '이건 뭘까요? 꼬리일까요, 나무일까요?', ok: 'tail', no: 'tree', okName: '꼬리' },
@@ -185,7 +185,7 @@
     await say('엄마 개구리가 말했어요. "흥, 얼마나 컸는데?"');
 
     /* --- 5. 누가 더 커요? (비교 놀이) --- */
-    await T.sceneCard('키재기', () => { T.clear(); chartBG(T); });
+    await T.sceneCard('키재기', () => { T.clear(); chartBG(T); }, mom.pos);
     await say('누가 더 큰지 키를 재 볼까요?');
     const pairs = [['tadpole', 'frog'], ['frog', 'duck'], ['duck', 'sheep'], ['sheep', 'ox']];
     for (const [small, big] of pairs) {
@@ -274,7 +274,7 @@
       T.clear(); pads = pondBG(T);
       T.world.appendChild(mom.pos); mom.place(120, 480);
       actor(T.world, 900, 520, g => drawOx(T, g), { scale: .55 });
-    });
+    }, mom.pos);
     const ox = T.world.lastChild;
     moo(T);
     await say('황소가 몸을 낮추고 다정하게 말했어요. "크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!"');
@@ -298,7 +298,7 @@
       const x = actor(T.world, pads[4][0], pads[4][1], g => drawFrog(T, g, { color: '#58805a' }), { scale: .8 });
       x.pos.id = 'uncleFrog';
       T.world.__uncle = x;
-    });
+    }, mom.pos);
     const choir = [babies[0], babies[1], mom, babies[2], T.world.__uncle];
     const NOTES = [262, 294, 330, 392, 440]; // 도레미솔라 — 어떻게 눌러도 어울린다
     await say('밤이 되었어요. 개구리 가족이 노래를 불러요. 개구리를 톡톡 눌러서 합창해 봐요!');
