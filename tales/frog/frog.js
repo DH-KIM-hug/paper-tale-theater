@@ -111,8 +111,8 @@
     branch: (T, g) => T.el('path', { d: 'M0 44 V-10 M0 10 L-30 -30 M0 -4 L28 -36', stroke: C.bark, 'stroke-width': 10, fill: 'none', 'stroke-linecap': 'round' }, g),
   };
 
-  const moo = T => { T.tone([150, 105], .9, { type: 'sawtooth', vol: .12 }); T.tone([300, 210], .9, { type: 'triangle', vol: .08 }); };
-  const croak = (T, f = 330) => { T.tone([f, f * .8], .12, { type: 'square', vol: .12 }); T.tone([f * .9, f * .7], .12, { type: 'square', vol: .1, when: .14 }); };
+  const moo = T => AudioFX.animal('cow') || (() => { T.tone([150, 105], .9, { type: 'sawtooth', vol: .12 }); T.tone([300, 210], .9, { type: 'triangle', vol: .08 }); })();
+  const croak = (T, f = 330) => AudioFX.animal('frog', .7) || (() => { T.tone([f, f * .8], .12, { type: 'square', vol: .12 }); T.tone([f * .9, f * .7], .12, { type: 'square', vol: .1, when: .14 }); })();
 
   /* ================= 이야기 ================= */
   async function run(T) {
@@ -166,9 +166,9 @@
       const bNo = badge(T, left ? 870 : 130, 300, g => ICONS[r.no](T, g));
       await say(r.q);
       await T.choose([{ el: bOk, ok: true }, { el: bNo, ok: false }], { prompt: r.q,
-        where: '가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!', who: `${r.okName}예요! 반짝이는 걸 눌러 봐요!` });
+        where: '가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!', who: `${T.josa(r.okName, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });
       bOk.remove(); bNo.remove();
-      await say(`맞아요, ${r.okName}예요!`);
+      await say(`맞아요, ${T.josa(r.okName, '이에요/예요')}!`);
     }
     await camTo(500, 280, 1, 1600);
     moo(T); T.shake();
@@ -197,7 +197,7 @@
       };
       const A = mk(bigLeft ? big : small, 340), B = mk(bigLeft ? small : big, 660);
       const bigA = bigLeft ? A : B, smallA = bigLeft ? B : A;
-      await say(`${ANIMALS[A.key].name}랑 ${ANIMALS[B.key].name}, 누가 더 커요?`);
+      await say(`${T.josa(ANIMALS[A.key].name, '이랑/랑')} ${ANIMALS[B.key].name}, 누가 더 커요?`);
       await T.choose([
         { el: bigA.pos, ok: true },
         { el: smallA.pos, ok: false, onWrong: async () => {
@@ -208,10 +208,10 @@
           await Promise.all([A.move(ax, 470, 500), B.move(bx, 470, 500)]);
         } },
       ], { prompt: '누가 더 커요? 큰 친구를 눌러 봐요!',
-        where: '둘이 나란히 섰어요. 머리가 더 높은 친구는 누구지?', who: `${ANIMALS[big].name}가 더 커요! 반짝이는 친구를 눌러 봐요!` });
+        where: '둘이 나란히 섰어요. 머리가 더 높은 친구는 누구지?', who: `${T.josa(ANIMALS[big].name, '이/가')} 더 커요! 반짝이는 친구를 눌러 봐요!` });
       big === 'ox' ? moo(T) : croak(T, 500);
       await bigA.hop(24);
-      await say(`맞아요! ${ANIMALS[big].name}가 더 커요!`);
+      await say(`맞아요! ${T.josa(ANIMALS[big].name, '이/가')} 더 커요!`);
       A.pos.remove(); B.pos.remove();
     }
 
@@ -302,6 +302,7 @@
     const choir = [babies[0], babies[1], mom, babies[2], T.world.__uncle];
     const NOTES = [262, 294, 330, 392, 440]; // 도레미솔라 — 어떻게 눌러도 어울린다
     await say('밤이 되었어요. 개구리 가족이 노래를 불러요. 개구리를 톡톡 눌러서 합창해 봐요!');
+    AudioFX.animal('frogs', .35); // 밤 연못 개구리 합창 (실제 녹음)
     const metro = setInterval(() => T.tone([140, 110], .5, { type: 'triangle', vol: .08 }), 1600);
     await T.free(choir.map((f, i) => ({ el: f.pos, onTap: () => { T.tone(NOTES[i], .35, { type: 'triangle', vol: .22 }); f.hop(22, 300); } })), 20000);
     clearInterval(metro);

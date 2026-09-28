@@ -103,9 +103,10 @@ button { font: inherit; border: none; cursor: pointer; color: inherit; }
 .hold-ring { transition: stroke-dashoffset .1s linear; }
 
 /* 만화 컷 */
-#cutPanel { position: absolute; inset: 0; z-index: 35; display: grid; place-items: center; cursor: pointer; }
+/* 화면 전체 위에 뜬다: 세로 화면에서도 무대 상자에 갇혀 잘리지 않고 크게 */
+#cutPanel { position: fixed; inset: 0; z-index: 45; display: grid; place-items: center; cursor: pointer; background: rgba(20,10,30,.35); }
 #cutPanel .cut {
-  width: min(640px, 88%); aspect-ratio: 4 / 3; background: var(--cream);
+  width: min(720px, 92vw, calc((100vh - 40px) * 4 / 3), calc((100dvh - 40px) * 4 / 3)); aspect-ratio: 4 / 3; background: var(--cream);
   border: 10px solid var(--cream); border-radius: 12px; overflow: hidden;
   box-shadow: 0 6px 0 rgba(120,70,40,.45), 0 22px 44px rgba(18,9,43,.55);
   animation: cutIn .3s cubic-bezier(.2,1.5,.4,1) both; rotate: -2deg;

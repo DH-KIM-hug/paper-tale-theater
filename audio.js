@@ -71,8 +71,44 @@ const AudioFX = (() => {
     return narBuffers[url];
   }
 
-  return {
-    unlock() { ensure(); },
+  /* ===== 실제 녹음 효과음·동물 소리 (sounds/). 못 불러오면 아래 합성음으로 대신한다 ===== */
+  // audio.js 옆의 sounds/ 폴더 — 팥죽할멈(루트)과 새 동화(tales/*/)가 같은 파일을 쓴다
+  const SOUND_BASE = (() => {
+    const src = document.currentScript && document.currentScript.src;
+    return src ? src.replace(/audio\.js(\?.*)?$/, 'sounds/') : 'sounds/';
+  })();
+  const samples = {};
+  function loadSample(path) {
+    if (path in samples) return;
+    samples[path] = null;
+    const c = ensure(); if (!c) return;
+    fetch(SOUND_BASE + path).then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); })
+      .then(b => c.decodeAudioData(b)).then(buf => { samples[path] = buf; })
+      .catch(() => { samples[path] = false; });
+  }
+  function playSample(path, vol = 0.9) {
+    const buf = samples[path];
+    if (!buf) { loadSample(path); return false; }
+    const c = ensure();
+    const s = c.createBufferSource(), g = c.createGain();
+    s.buffer = buf; g.gain.value = vol;
+    s.connect(g).connect(c.destination); s.start();
+    return true;
+  }
+  const SFX = { thud: 'sfx/thud', boom: 'sfx/boom', pow: 'sfx/pow', bonk: 'sfx/bonk', pop: 'sfx/pop', poke: 'sfx/poke',
+    tap: 'sfx/tap', ding: 'sfx/ding', swish: 'sfx/swish', whoosh: 'sfx/whoosh', bell: 'sfx/bell', splash: 'sfx/splash', growl: 'animals/tiger' };
+  const EXTRA = ['sfx/knock', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door',
+    ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs'].map(a => 'animals/' + a)];
+
+  const api = {
+    unlock() {
+      ensure();
+      [...Object.values(SFX), ...EXTRA].forEach(p => loadSample(p + '.mp3'));
+    },
+    /* 동물 소리: AudioFX.animal('pig') — 실제 녹음, 없으면 false */
+    animal(name, vol) { return playSample('animals/' + name + '.mp3', vol); },
+    /* 기타 효과음: AudioFX.sfx('chop') */
+    sfx(name, vol) { return playSample('sfx/' + name + '.mp3', vol); },
     async playUrl(url) {
       const buf = await loadClip(url);
       const c = ensure();
@@ -156,6 +192,12 @@ const AudioFX = (() => {
       [523, 659, 784, 1047].forEach((f, i) => tone(f * 1.0, 0.6, { type: 'sine', vol: 0.12, when: 0.75 + i * 0.02 }));
     },
   };
+  // 녹음 파일이 있는 효과음은 녹음을 먼저 재생하고, 아직 못 불러왔으면 합성음으로 대신한다
+  for (const [name, path] of Object.entries(SFX)) {
+    const synth = api[name];
+    api[name] = (...a) => { if (!playSample(path + '.mp3')) synth(...a); };
+  }
+  return api;
 })();
 
 /* ===== 내레이션 (TTS + 말풍선) ===== */

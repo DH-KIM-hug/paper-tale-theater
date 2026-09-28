@@ -227,7 +227,7 @@
       a.stand = () => { parts.up.setAttribute('transform', 'translate(0 -22)'); show(parts.legs, 1); show(parts.armsDown, 0); show(parts.armsUp, 1); show(parts.shh, 0); };
       a.sit = () => { parts.up.setAttribute('transform', ''); show(parts.legs, 0); show(parts.armsDown, 1); show(parts.armsUp, 0); };
       a.hush = on => { show(parts.shh, on); show(parts.armsDown, !on); show(parts.armsUp, 0); if (on) T.pop(a.x, a.y - 140 * a.scale, '쉿!', C.indigo); };
-      a.cry = () => CRY[k](T);
+      a.cry = () => AudioFX.animal(k) || CRY[k](T); // 실제 녹음 우선, 없으면 합성음
       a.cheer = async (word, keep) => {
         if (a.cheering) return; a.cheering = true;
         a.stand(); a.cry(); a.hop(14, 320);
@@ -433,7 +433,8 @@
       await owl.move(h.x - 120, 340, 900);
       await say(i === 0 ? '문을 톡 두드려 봐요. 누가 나올까?' : '이번 집도 문을 톡!');
       await T.tap(h.door, { prompt: '문을 톡 두드려 봐요!' });
-      T.tone([200, 130], .08, { type: 'square', vol: .25 }); T.tone([200, 130], .08, { type: 'square', vol: .25, when: .2 });
+      if (!AudioFX.sfx('knock')) { T.tone([200, 130], .08, { type: 'square', vol: .25 }); T.tone([200, 130], .08, { type: 'square', vol: .25, when: .2 }); }
+      else setTimeout(() => AudioFX.sfx('knock'), 220);
       T.pop(h.x, 380, '똑똑!', C.bark);
       await sleep(700);
       a.cry(); T.anim(h.g, [{ translate: '0 0' }, { translate: '-4px 0' }, { translate: '4px 0' }, { translate: '0 0' }], 400);
@@ -443,7 +444,7 @@
       await tween(400, t => h.door.setAttribute('transform', `translate(${h.x - 42} 0) scale(${1 - .8 * t} 1) translate(${-(h.x - 42)} 0)`));
       a.reset(); put(a, h.x, 474, 1);
       a.cheer();
-      await say(`${a.name}였어요!`);
+      await say(`${T.josa(a.name, '이었어요/였어요')}!`);
       const env = paper(T.fx, [['rect', { x: -22, y: -15, width: 44, height: 30, rx: 3, fill: C.cream, stroke: C.bark, 'stroke-width': 2 }], ['path', { d: 'M-22 -15 L0 3 L22 -15', stroke: C.bean, 'stroke-width': 3, fill: 'none' }]]);
       await T.anim(env, [{ transform: `translate(${owl.x}px,${owl.y - 60}px)` }, { transform: `translate(${a.x + 30}px,${a.y - 60}px) rotate(360deg)` }], 700);
       AudioFX.ding(); env.remove();

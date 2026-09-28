@@ -578,9 +578,10 @@ body.setB2 #granny, body.setB2 #tiger { --as: 1.45; }
 
 /* ===== 만화 임팩트 컷 패널 ===== */
 #cutPanel {
-  position: absolute; inset: 0; z-index: 60;
+  position: fixed; inset: 0; z-index: 60;
   display: grid; place-items: center;
-  pointer-events: none;
+  background: rgba(20, 10, 30, .35);
+  transform: translateZ(0); /* 독립된 합성 레이어 */
 }
 #cutPanel img {
   box-sizing: border-box;
@@ -588,7 +589,7 @@ body.setB2 #granny, body.setB2 #tiger { --as: 1.45; }
      실제 컷 이미지가 전부 4:3(1000x750)이므로 이미지 자체의 고유 비율로 자동 스케일된다.
      width/height 둘 다 auto + 양쪽 상한만 걸면 어떤 화면비에서도 박스 안에 들어온다. */
   display: block;
-  max-width: min(660px, 90%); max-height: min(560px, 82%);
+  max-width: min(760px, 92vw); max-height: min(600px, 84vh, 84dvh);
   width: auto; height: auto;
   background: #f6ecd8;
   border: 10px solid #f6ecd8; border-radius: 12px;

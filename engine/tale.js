@@ -367,6 +367,19 @@ const Tale = (() => {
     } catch (e) { /* 소리 없이 진행 */ }
   }
 
+  /* ---------- 조사: 받침을 보고 고른다 (양+이랑 → 양이랑, 소+랑 → 소랑) ---------- */
+  function josa(word, pair) {
+    const [withB, noB] = pair.split('/');
+    const w = String(word).replace(/[^가-힣a-zA-Z0-9]+$/, '');
+    const c = w.charCodeAt(w.length - 1);
+    if (c >= 0xAC00 && c <= 0xD7A3) {
+      const jong = (c - 0xAC00) % 28;
+      if (withB === '으로') return word + (jong === 0 || jong === 8 ? '로' : '으로'); // ㄹ받침은 '로'
+      return word + (jong ? withB : noB);
+    }
+    return word + noB;
+  }
+
   /* ---------- 장면 비우기 ---------- */
   function clear() { bgL.innerHTML = ''; world.innerHTML = ''; fxL.innerHTML = ''; }
 
@@ -387,11 +400,11 @@ const Tale = (() => {
     <div id="frame"></div>
     <div id="curtainL" class="curtain"></div><div id="curtainR" class="curtain"></div>
     <div id="iris" hidden><span id="irisCard"></span></div>
-    <div id="cutPanel" hidden></div>
     <div id="confetti"></div>
     <div id="hand" hidden>${HAND_SVG}</div>
   </div>
   <div id="bubble" hidden><p id="bubbleText"></p></div>
+  <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
     <div class="plaque"><h1>${title}</h1>${subtitle ? `<p>${subtitle}</p>` : ''}</div>
     <div class="tickets"><button class="ticket" id="startBtn">공연 시작</button><a class="ticket alt" href="../../index.html" style="text-decoration:none;display:grid;place-items:center">처음으로</a></div>
@@ -428,7 +441,7 @@ const Tale = (() => {
   const input = fn => async (...a) => { busy = false; try { return await fn(...a); } finally { busy = true; } };
 
   const api = {
-    el, paper, anim, actor, sleep, say, tone, camTo, camSnap, camWide, curtain, sceneCard, cut, shake, confetti, pop, clear,
+    el, paper, anim, actor, sleep, say, tone, josa, camTo, camSnap, camWide, curtain, sceneCard, cut, shake, confetti, pop, clear,
     tap: input(tap), mash: input(mash), choose: input(choose), swipe: input(swipe), hold: input(hold), free: input(free),
     get bg() { return bgL; }, get world() { return world; }, get fx() { return fxL; }, get root() { return root; },
   };

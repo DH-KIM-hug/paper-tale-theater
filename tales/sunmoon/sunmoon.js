@@ -1,6 +1,6 @@
 /* 해와 달이 된 오누이 (햇님 달님) — 임시 도형(그레이박스) 버전. 기획: TALES_PLAN.md §1 (3막 15장면)
-   3~4세 순화: 엄마는 잡아먹히지 않는다 — 호랑이는 떡을 몽땅 받아먹고 엄마 수건만 낚아채 간다.
-   엄마는 무사히 뒤따라오고(3막 중간 컷), 엔딩에서 해님 달님이 엄마를 빛으로 감싼다.
+   원작대로 엄마는 호랑이에게 잡아먹힌다(사용자 결정, 2026-09-29). 단, 먹는 장면은 보여주지 않고
+   어둠 속 "어흥!" → 까만 화면 "꿀꺽…" 컷과 내레이션으로만 처리한다.
    호랑이는 헌 줄이 끊어져 수수밭에 엉덩방아 → 혹 달고 산으로 도망. 눈은 늘 동그랗고 순하다. */
 (() => {
   const C = { cream: '#F6ECD8', gold: '#D9A94E', persimmon: '#E8703A', bean: '#A93B32', bark: '#6B4A32', pine: '#3F6B4F',
@@ -31,8 +31,8 @@
   const momVoice = T => [659, 784, 880, 784, 659].forEach((f, i) => T.tone(f, .26, { type: 'sine', vol: .16, when: i * .17 }));
   const tigerVoice = T => { T.tone([130, 92], .5, { type: 'sawtooth', vol: .13 }); T.tone([170, 110], .4, { type: 'square', vol: .06, when: .35 }); T.tone([140, 88], .6, { type: 'sawtooth', vol: .13, when: .62 }); };
   const giggle = T => [880, 1046, 880, 1175, 988, 1318].forEach((f, i) => T.tone([f, f * 1.12], .08, { type: 'triangle', vol: .15, when: i * .1 }));
-  const creak = T => { T.tone([230, 160], .5, { type: 'sawtooth', vol: .08 }); T.tone([170, 250], .45, { type: 'sawtooth', vol: .06, when: .45 }); };
-  const kok = T => { T.tone([1300, 800], .06, { type: 'square', vol: .12 }); T.tone([500, 300], .08, { type: 'triangle', vol: .12, when: .04 }); };
+  const creak = T => AudioFX.sfx('creak') || (() => { T.tone([230, 160], .5, { type: 'sawtooth', vol: .08 }); T.tone([170, 250], .45, { type: 'sawtooth', vol: .06, when: .45 }); })();
+  const kok = T => AudioFX.sfx('chop') || (() => { T.tone([1300, 800], .06, { type: 'square', vol: .12 }); T.tone([500, 300], .08, { type: 'triangle', vol: .12, when: .04 }); })();
   const yeongcha = (T, i) => T.tone([300 + i * 50, 520 + i * 50], .18, { type: 'triangle', vol: .16 });
 
   /* ================= 캐릭터 (임시 도형) ================= */
@@ -322,23 +322,33 @@
       if (n < 2) { AudioFX.whoosh(); await Promise.all([tiger.move(1250, 500, 900, 'ease-in'), tiger.hop(30, 450)]); tiger.face('left'); await mom.move(1180, 500, 1400); }
     }
 
-    /* --- 5. 수건 도둑 (컷 2장) --- */
+    /* --- 5. 떡이 떨어지자 (원작: 엄마를 잡아먹는다 — 화면에는 보여주지 않는다) --- */
+    await say('떡이 다 떨어지자 호랑이가 말했어요. "떡이 없으면 너를 잡아먹어야지!"');
+    AudioFX.growl && AudioFX.growl(); T.shake();
+    await T.cut(svg => {
+      el('rect', { width: 400, height: 300, fill: '#0b0a1a' }, svg);
+      el('circle', { cx: 320, cy: 70, r: 34, fill: C.cream, opacity: .8 }, svg);
+      const g = el('g', { transform: 'translate(200,300) scale(1.5)', opacity: .92 }, svg);
+      drawTiger(T, g);
+      el('rect', { width: 400, height: 300, fill: '#0b0a1a', opacity: .55 }, svg);
+      el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 52, fill: C.persimmon, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '어흥!' }, svg);
+    }, { sfx: 'boom', hold: 2400 });
+    mom.pos.remove();
+    AudioFX.gulp && AudioFX.gulp();
+    await T.cut(svg => {
+      el('rect', { width: 400, height: 300, fill: '#0b0a1a' }, svg);
+      el('text', { x: 200, y: 165, 'text-anchor': 'middle', 'font-size': 56, fill: C.cream, 'font-family': 'Jua, sans-serif', text: '꿀꺽…' }, svg);
+    }, { hold: 2200 });
+    await say('호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.');
+    tiger.P.scarf.setAttribute('opacity', 1);
     await T.cut(svg => {
       const g = el('g', { transform: 'translate(200,290) scale(1)' }, svg);
       const P = drawTiger(T, g); P.scarf.setAttribute('opacity', 1); P.setBelly(2.5);
       el('text', { x: 200, y: 44, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '엄마 흉내 내야지~' }, svg);
     }, { sfx: 'whoosh', hold: 2600 });
-    await T.cut(svg => {
-      const g = el('g', { transform: 'translate(200,292) scale(1.15)' }, svg);
-      const P = drawMom(T, g, { basket: true }); P.scarf.setAttribute('opacity', 0);
-      el('text', { x: 200, y: 44, 'text-anchor': 'middle', 'font-size': 34, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '얘들아!' }, svg);
-    }, { sfx: 'swish', hold: 2400 });
-    tiger.P.scarf.setAttribute('opacity', 1); mom.P.scarf.setAttribute('opacity', 0);
-    await say('떡이 없어지자, 호랑이는 엄마 수건을 휙 낚아채 머리에 썼어요.');
+    await say('호랑이는 엄마 수건을 머리에 쓰고, 오누이가 기다리는 집으로 갔어요.');
     tiger.face('right');
     await tiger.move(1250, 480, 1500, 'ease-in');
-    await say('엄마는 괜찮아요! 빈 바구니를 들고 "얘들아!" 하며 서둘러 뒤따라갔어요.');
-    await mom.move(1180, 500, 1400);
     tiger.face('left');
 
     /* ====== 2막 — 문 앞의 호랑이 ====== */
@@ -376,6 +386,7 @@
     });
     AudioFX.thud(); await sleep(250); AudioFX.thud();
     tigerVoice(T);
+    [0, 260, 520].forEach(t => setTimeout(() => AudioFX.sfx('knock'), t));
     await say('똑똑똑. "얘들아~ 엄마 왔다. 문 열어라~" 걸걸한 목소리예요.');
     await say('엄마 목소리는 어땠지? 두 소리를 들어 봐요.');
     const soft = badge(T, 140, 250, 80, g => {
@@ -672,14 +683,6 @@
       await sleep(640);
     }
     tr1.cancel(); tr2.cancel();
-    // (a) 엄마는 무사해요 — 엄마가 고개를 넘어 달려온다
-    await Promise.all([T.cut(svg => {
-      el('path', { d: 'M0 230 Q120 150 220 200 Q320 140 400 190 V300 H0 Z', fill: '#3E4466' }, svg);
-      const g = el('g', { transform: 'translate(210,292) scale(1.05)' }, svg);
-      const P = drawMom(T, g, { basket: true }); P.scarf.setAttribute('opacity', 0);
-      g.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 300, iterations: 12 });
-      el('text', { x: 200, y: 44, 'text-anchor': 'middle', 'font-size': 32, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '헐레벌떡!' }, svg);
-    }, { sfx: 'whoosh', hold: 3200 }), say('그 시각, 엄마가 고개를 넘어 헐레벌떡 달려오고 있어요!')]);
     split.remove();
     tt.P.axe.setAttribute('opacity', 1);
     tt.place(640, 240);
@@ -809,7 +812,6 @@
       P.set = s => { P.sun.setAttribute('opacity', s ? 1 : 0); P.moon.setAttribute('opacity', s ? 0 : 1); };
       return P;
     };
-    let homeMom;
     await T.sceneCard('해와 달', () => {
       T.clear(); camSnap(500, 280, 1);
       skyRect = sky(T, T.bg, C.indigo); skyRect.style.transition = 'fill 1s';
@@ -821,10 +823,6 @@
       sunKid = mk(T, T.world, 260, 170, drawOrb(false), .9);   // 오빠 (처음엔 해)
       moonKid = mk(T, T.world, 740, 170, drawOrb(true), .9);   // 동생 (처음엔 달)
       sunKid.P.set(true); moonKid.P.set(false);
-      beam = el('path', { d: '', fill: C.amber, opacity: 0 }, T.bg);
-      beam.style.transition = 'opacity .6s';
-      homeMom = mkMom(T, T.world, -150, 545, .95, { basket: true });
-      homeMom.P.scarf.setAttribute('opacity', 0);
     });
     T.confetti(); AudioFX.bell();
     await Promise.all([sunKid.hop(20), moonKid.hop(20)]);
@@ -839,28 +837,16 @@
       isDay = day;
       skyRect.style.fill = day ? '#F2DFA8' : C.indigo; starG.style.opacity = day ? 0 : 1;
       girlSun.body.style.opacity = day ? 1 : .7; boyMoon.body.style.opacity = day ? .7 : 1;
-      const [sx, sy] = day ? [girlSun.x, girlSun.y] : [boyMoon.x, boyMoon.y];
-      beam.setAttribute('d', `M${sx - 50} ${sy + 40} L${sx + 50} ${sy + 40} L${homeMom.x + 110} ${homeMom.y} L${homeMom.x - 110} ${homeMom.y} Z`);
-      beam.setAttribute('fill', day ? C.amber : C.snow);
-      beam.style.opacity = day ? .4 : .3;
     };
     setSky(true);
     await say('그래서 동생은 해님, 오빠는 달님이 되었답니다.');
-    await homeMom.move(430, 545, 2000);
-    homeMom.P.head.style.transform = 'rotate(-10deg)';
-    await say('그때 엄마가 집에 도착했어요. "얘들아! 거기 있었구나!"');
-    setSky(true);
-    homeMom.P.smile(); waveArm(T, homeMom.P.arm);
-    await say('해님 달님이 따스한 빛으로 엄마를 꼭 감싸 주었어요.');
     await say('해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.');
-    const momWave = () => { waveArm(T, homeMom.P.arm); homeMom.hop(14, 360); T.pop(homeMom.x + 80, homeMom.y - 260, '안녕!', C.pine); };
     await T.free([
-      { el: girlSun.pos, onTap: () => { setSky(true); AudioFX.jingle(); girlSun.hop(24); momWave(); } },
-      { el: boyMoon.pos, onTap: () => { setSky(false); AudioFX.bell(); boyMoon.hop(24); momWave(); } },
-      { el: homeMom.pos, onTap: () => { momWave(); AudioFX.pop(); setSky(!isDay); } },
+      { el: girlSun.pos, onTap: () => { setSky(true); AudioFX.jingle(); girlSun.hop(24); } },
+      { el: boyMoon.pos, onTap: () => { setSky(false); AudioFX.bell(); boyMoon.hop(24); } },
     ], 18000);
     setSky(true);
-    await say('해님 달님은 오늘도 하늘에서 엄마와 우리를 환하게 비춰 준답니다.');
+    await say('해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.');
     return '해님 달님이 늘 우리를 비춰 줘요!';
   }
 

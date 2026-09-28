@@ -552,7 +552,6 @@
 
     <!-- 화면 고정 요소: 질감/비네트/무대막/커튼/프레임/조명 -->
     <!-- 만화 임팩트 컷 패널 -->
-    <div id="cutPanel" hidden aria-hidden="true"><img id="cutImg" alt=""></div>
 
     <svg id="uiStage" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
 
@@ -641,6 +640,8 @@
       <button id="homeBtn" type="button" class="ticket alt">처음으로</button>
     </div>
   </div>
+  <!-- 만화 컷: 3D 무대 밖, 화면 전체 위에 뜬다 (iOS 사파리에서 3D 레이어가 컷을 덮는 문제 방지, 세로 화면에서도 크게) -->
+  <div id="cutPanel" hidden aria-hidden="true"><img id="cutImg" alt=""></div>
   <div id="confetti" aria-hidden="true"></div>
 </div>
 
