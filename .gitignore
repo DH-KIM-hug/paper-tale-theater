@@ -11,3 +11,7 @@ audio_sovits2/
 # 로컬 환경
 venv/
 .DS_Store
+
+# GPU 원본(배경 제거 PNG) — 게임은 assets/v3w(webp)를 쓴다
+assets/v3/
+audio_new/
