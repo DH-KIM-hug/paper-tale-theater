@@ -83,6 +83,7 @@ const Tale = (() => {
   /* 연출(director)이 움직이는 카메라와 동화가 직접 움직이는 카메라를 구분한다.
      동화가 카메라를 잡으면 epoch가 바뀌고, 진행 중이던 연출 이동은 그 자리에서 멈춘다 */
   let camEpoch = 0, directing = false, dirAnim = null, taleMoving = 0;
+  const dirDest = { x: 500, y: 280, z: 1 }; // 연출 이동이 향하는 곳 (이동 중 비교용)
   const camTarget = { x: 500, y: 280, z: 1 }; // 동화가 마지막으로 잡으려 한 화면 (이동 중이어도)
   function syncCamFromScreen() {
     const m = new DOMMatrix(getComputedStyle(cam).transform);
@@ -100,7 +101,7 @@ const Tale = (() => {
     $('#frame').classList.toggle('out', z > 1.05);
     const a = cam.animate([{ transform: camT(camState.x, camState.y, camState.z) }, { transform: camT(x, y, z) }],
       { duration: dur, easing: 'cubic-bezier(.35,0,.25,1)', fill: 'forwards' });
-    if (mine) dirAnim = a;
+    if (mine) { dirAnim = a; Object.assign(dirDest, { x, y, z }); }
     try { await a.finished; } catch (e) { return; } finally { if (!mine) taleMoving--; } // 연출 이동이 취소됨: 상태는 취소한 쪽이 맞췄다
     if (mine && dirAnim !== a) return;
     if (mine) dirAnim = null;
@@ -171,7 +172,8 @@ const Tale = (() => {
         const ours = () => alive && camEpoch === epoch && $('#cutPanel').hidden && $('#iris').hidden;
         const go = (x, y, z) => {
           if (!ours() || taleMoving) return; // 동화가 카메라를 옮기는 중이면 끼어들지 않는다
-          if (Math.abs(x - camState.x) * z < 30 && Math.abs(y - camState.y) * z < 30 && Math.abs(z - camState.z) < .1) return;
+          const cur = dirAnim ? dirDest : camState; // 돌아가는 중이면 가는 곳과 비교
+          if (Math.abs(x - cur.x) * z < 30 && Math.abs(y - cur.y) * z < 30 && Math.abs(z - cur.z) < .1) return;
           moved = true; directing = true;
           try { moveCam(x, y, z, 650); } finally { directing = false; }
         };
