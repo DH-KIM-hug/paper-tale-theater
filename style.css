@@ -645,3 +645,6 @@ a.tale-card { text-decoration: none; color: var(--ink); cursor: pointer; }
 .tale-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .tale-card.hero { grid-template-columns: minmax(0, 42%) minmax(0, 1fr); }
 @media (max-width: 560px) { .tale-card.hero { grid-template-columns: minmax(0, 1fr); } }
+
+/* 1씬(팥밭)에서는 무대 널판 바닥을 숨긴다 */
+body.setA #world .plank, body.setA #world .plank + g { display: none; }

@@ -145,7 +145,13 @@
         <div class="layer3d" style="transform: translateZ(-260px) scale(1.2167)"><svg class="lsvg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
     <!-- ===== 원경: 하늘 (Qwen 생성 페이퍼컷 이미지) ===== -->
     <g id="layer-far">
-      <image class="scnA" href="assets/v2/a_sky.png" x="-150" y="-80" width="1300" height="760" preserveAspectRatio="xMidYMid slice"/>
+      <image class="scnA" href="assets/v3w/a3_sky.webp" x="-150" y="-80" width="1300" height="760" preserveAspectRatio="xMidYMid slice"/>
+      <!-- 1씬 하늘 소품: 민화 구름 두 조각 + 기러기 -->
+      <g class="scnA">
+        <image href="assets/v3w/a3_cloud1.webp" x="520" y="30" width="320" height="97"/>
+        <image href="assets/v3w/a3_cloud1.webp" x="-60" y="-120" width="230" height="70" transform="scale(-1,1) translate(-200,200)"/>
+        <image href="assets/v3w/a3_geese.webp" x="700" y="140" width="190" height="56"/>
+      </g>
       <image class="scnB2" href="assets/v2/b_sky.png" x="-150" y="-80" width="1300" height="760" preserveAspectRatio="xMidYMid slice"/>
       <!-- 부엌(B1) 원경: 어두운 흙벽 -->
       <rect class="scnB1" x="-150" y="-80" width="1300" height="760" fill="#241811"/>
@@ -175,7 +181,7 @@
     <!-- ===== 주무대 (카메라 기준) ===== -->
     <g id="world">
     <!-- 인형극 무대 널판 바닥 -->
-    <rect x="-150" y="430" width="1300" height="200" fill="url(#plankGrad)" filter="url(#paperCut)"/>
+    <rect class="plank" x="-150" y="430" width="1300" height="200" fill="url(#plankGrad)" filter="url(#paperCut)"/>
     <g stroke="#4e2e1c" stroke-linecap="round">
       <path d="M-150 464 H1150 M-150 498 H1150 M-150 530 H1150" stroke-width="3" opacity="0.5"/>
       <path d="M80 432 V464 M320 432 V464 M560 432 V464 M800 432 V464 M1040 432 V464
@@ -188,7 +194,9 @@
 
     <!-- 세트 A: 가을 팥밭 -->
     <g id="setA" class="scnA">
-      <image href="assets/v2/a_field.png" x="-150" y="330" width="1300" height="230" preserveAspectRatio="none"/>
+      <!-- 팥밭 두 줄: 뒷줄은 작게, 앞줄은 크게 (배우 발 y=520 앞뒤) -->
+      <image href="assets/v3w/a3_field.webp" x="-170" y="370" width="650" height="250" preserveAspectRatio="xMidYMax slice"/>
+      <image href="assets/v3w/a3_field.webp" x="450" y="360" width="720" height="265" preserveAspectRatio="xMidYMax slice"/>
     </g>
 
 
@@ -483,7 +491,12 @@
         <div class="layer3d" style="transform: translateZ(120px) scale(0.9)"><svg class="lsvg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
     <!-- ===== 근경: 실루엣 풀숲과 눈 (패럴랙스 1.35) ===== -->
     <g id="layer-fg" pointer-events="none">
-      <image class="scnA strip" href="assets/v2/a_fg.png" x="-150" y="370" width="1300" height="200" preserveAspectRatio="none"/>
+      <g class="scnA">
+        <!-- 1씬 근경: 왼쪽 위 감나무 가지, 양쪽 아래 억새 (가운데는 비움) -->
+        <image href="assets/v3w/a3_fg_branch.webp" x="-120" y="-70" width="240" height="338"/>
+        <image href="assets/v3w/a3_fg_grass.webp" x="-140" y="250" width="180" height="343"/>
+        <image href="assets/v3w/a3_fg_grass.webp" x="-1150" y="270" width="170" height="324" transform="scale(-1,1)"/>
+      </g>
       <image class="scnB2 strip" href="assets/v2/b_fg.png" x="-150" y="490" width="1300" height="74" preserveAspectRatio="none"/>
       <g class="snow" opacity="0.9" data-set="B2" fill="#f6f8fd">
         <circle cx="140" cy="-30" r="5" style="animation-duration:7s"/>
