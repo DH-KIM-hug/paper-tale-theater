@@ -146,7 +146,7 @@
       const pl = el('g', { id: 'pjPlaque' }, g);
       pl.style.transform = 'translateY(-560px)';
       img(pl, 'v3w/t3_plaque.webp', 310, -143, 380, 336);
-      el('text', { x: 500, y: 74, 'text-anchor': 'middle', 'font-family': 'Jua, sans-serif', 'font-size': 42, fill: '#f6ecd8', text: '팥죽할멈과 호랑이' }, pl);
+      el('text', { x: 500, y: 74, 'text-anchor': 'middle', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", 'font-size': 42, fill: '#f6ecd8', text: '팥죽할멈과 호랑이' }, pl);
       el('rect', { id: 'pjHouseLight', x: -3000, y: -3000, width: 7000, height: 7000, fill: '#ffdca0', opacity: 0 }, g);
       return g;
     }
@@ -859,8 +859,8 @@
       Object.values(friends).forEach(fr => fr.pos.classList.add('party'));
       await Promise.all([...FRIENDS.map(f => friendTo(f.id, GATHER[f.id], 850, true)), camTo(600, 430, 1.4, 1100)]);
       // 세로 화면: 1.4배 클로즈업이면 양 끝 친구가 잘린다 → 잔치에 모인 모두가 들어오게 카메라를 맞춘다.
-      // 친구 그림(act)만 누름 대상으로 쓴다 (원래 자리에 남은 그림자까지 포함하면 대상이 화면 밖으로 넓어진다)
-      const partyEl = f => portrait() ? friends[f.id].act : friends[f.id].pos;
+      // 친구 그림(act)만 누름 대상으로 쓴다 (원래 자리에 남은 그림자까지 넣으면 누름 영역이 화면 밖으로 넓어진다)
+      const partyEl = f => friends[f.id].act;
       if (portrait()) await fitCam([...FRIENDS.map(partyEl), granny.pos], 1.4, 28, 800);
       await say(LINES.happyEnd);
       // 잔치 자유 놀이: 친구·할멈을 톡 하면 인사한다

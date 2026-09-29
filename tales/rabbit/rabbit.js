@@ -85,7 +85,7 @@
     const medal = paper(root, [
       ['path', { d: 'M46 -50 L56 -26 L66 -50', stroke: C.persimmon, 'stroke-width': 6, fill: 'none' }],
       ['circle', { cx: 56, cy: -22, r: 13, fill: C.gold, stroke: '#b98f4a', 'stroke-width': 3 }],
-      ['text', { x: 56, y: -16, 'text-anchor': 'middle', 'font-size': 16, fill: C.bean, 'font-family': 'Jua, sans-serif', text: '1' }],
+      ['text', { x: 56, y: -16, 'text-anchor': 'middle', 'font-size': 16, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }],
     ]);
     show(medal, 0);
     return {
@@ -262,7 +262,7 @@
     }
   }
   function floatText(T, x, y, text, color = C.indigo, size = 40) {
-    const t = T.el('text', { x, y, 'font-size': size, fill: color, 'font-family': 'Jua, sans-serif', stroke: '#fff', 'stroke-width': 5, 'paint-order': 'stroke', text }, T.fx);
+    const t = T.el('text', { x, y, 'font-size': size, fill: color, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", stroke: '#fff', 'stroke-width': 5, 'paint-order': 'stroke', text }, T.fx);
     t.animate([{ transform: 'translate(0,0)', opacity: 0 }, { opacity: 1, offset: .2 }, { transform: 'translate(30px,-90px)', opacity: 0 }], { duration: 2000, fill: 'forwards' }).finished.then(() => t.remove());
   }
   function noteShape(T, x, y, color = C.bean) {
@@ -368,7 +368,7 @@
     [440, 485].forEach(y => T.el('rect', { x: -200, y, width: 1400, height: 4, fill: C.cream, opacity: .8 }, T.bg));
     T.paper(T.bg, [['rect', { x: 150, y: 170, width: 14, height: 300, fill: C.bark }], ['rect', { x: 836, y: 170, width: 14, height: 300, fill: C.bark }],
       ['rect', { x: 140, y: 176, width: 720, height: 50, rx: 10, fill: C.bean }], ['rect', { x: 430, y: 182, width: 140, height: 38, rx: 8, fill: C.cream }],
-      ['text', { x: 500, y: 212, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': 'Jua, sans-serif', text: '출발' }]]);
+      ['text', { x: 500, y: 212, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '출발' }]]);
   }
 
   /* ================= 이야기 ================= */
@@ -650,7 +650,7 @@
       for (let i = 0; i < 12; i++) el('circle', { cx: 80 + (i * 83) % 860, cy: 90 + (i * 57) % 300, r: 4, fill: C.gold }, T.bg);
       paper(T.bg, [['rect', { x: -300, y: 470, width: 1600, height: 300, fill: '#CFC6E6' }]]);
       paper(T.bg, [['rect', { x: 180, y: 400, width: 120, height: 70, fill: C.lav }], ['rect', { x: 300, y: 350, width: 200, height: 120, fill: C.gold }], ['rect', { x: 500, y: 420, width: 120, height: 50, fill: C.persimmon }],
-        ['text', { x: 400, y: 430, 'text-anchor': 'middle', 'font-size': 60, fill: C.cream, 'font-family': 'Jua, sans-serif', text: '1' }]]);
+        ['text', { x: 400, y: 430, 'text-anchor': 'middle', 'font-size': 60, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }]]);
       rabbitReset(); rp.setEyes('open');
       put(rabbit, 400, 352, .95);
       // 거대한 당근 트로피 (한 입 먹으면 마스크로 뜯긴 자리를 만든다)
@@ -835,7 +835,7 @@
     await T.cut(svg => {
       const g = el('g', { transform: 'translate(170 330) scale(1.35)' }, svg);
       const p = drawRabbit(T, g); p.setEyes('wide'); p.ears(1.2); p.mouth('yawn');
-      el('text', { x: 310, y: 110, 'text-anchor': 'middle', 'font-size': 80, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '앗!' }, svg);
+      el('text', { x: 310, y: 110, 'text-anchor': 'middle', 'font-size': 80, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '앗!' }, svg);
     }, { sfx: 'boing', hold: 2200 });
     await say('토끼가 벌떡 일어났어요! "앗, 내가 잠들었네!"');
     bar.pulse('t');
@@ -851,7 +851,7 @@
       for (let r = 0; r < 6; r++) el('rect', { x: 760 + (r % 2) * 14, y: 400 + r * 18, width: 14, height: 18, fill: C.snow }, T.bg);
       paper(T.world, [['rect', { x: 800, y: 60, width: 18, height: 440, fill: C.bark }]]);
       paper(T.world, [['rect', { x: 818, y: 70, width: 170, height: 64, fill: C.snow }], ...Array.from({ length: 24 }, (_, i) => ['rect', { x: 818 + (i % 8) * 21.25, y: 70 + Math.floor(i / 8) * 21.3, width: 21.25, height: 21.3, fill: (i + Math.floor(i / 8)) % 2 ? C.ink : C.snow }]),
-        ['rect', { x: 845, y: 84, width: 116, height: 38, rx: 8, fill: C.cream }], ['text', { x: 903, y: 113, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': 'Jua, sans-serif', text: '결승' }]]);
+        ['rect', { x: 845, y: 84, width: 116, height: 38, rx: 8, fill: C.cream }], ['text', { x: 903, y: 113, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '결승' }]]);
       turtleReset(); put(turtle, 540, 476, 1.5);
       rabbitReset(); rp.pose('run'); put(rabbit, -200, 472, 1);
       tapeTop = el('rect', { x: 786, y: 376, width: 8, height: 50, fill: C.bean }, T.world);
@@ -863,7 +863,7 @@
     await T.cut(svg => {
       for (let i = 0; i < 10; i++) el('rect', { x: 0, y: 30 + i * 26, width: 140 + (i % 3) * 60, height: 6, fill: C.snow }, svg);
       const g = el('g', { transform: 'translate(230 250) rotate(10)' }, svg); const p = drawRabbit(T, g); p.pose('run');
-      el('text', { x: 90, y: 90, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '쌩쌩!' }, svg);
+      el('text', { x: 90, y: 90, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '쌩쌩!' }, svg);
     }, { sfx: 'whoosh', hold: 1800 });
     setRace(.8, null, 800);
     await T.cut(svg => {
@@ -890,7 +890,7 @@
       el('path', { d: 'M250 60 V236', stroke: C.bean, 'stroke-width': 5, 'stroke-dasharray': '10 6' }, svg);
       const gr = el('g', { transform: 'translate(120 222) scale(.7)' }, svg); drawRabbit(T, gr).pose('run');
       const gt = el('g', { transform: 'translate(170 226) scale(.85)' }, svg); drawTurtle(T, gt);
-      el('text', { x: 200, y: 262, 'text-anchor': 'middle', 'font-size': 26, fill: C.bark, 'font-family': 'Jua, sans-serif', text: '찰칵!' }, svg);
+      el('text', { x: 200, y: 262, 'text-anchor': 'middle', 'font-size': 26, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '찰칵!' }, svg);
     }, { sfx: 'poke', hold: 2600 });
     await say('사진을 보니… 거북이 코끝이 먼저 닿았어요!');
     AudioFX.fanfare && AudioFX.fanfare(); T.confetti();
@@ -904,12 +904,12 @@
       bar.show(false);
       standsBG(T);
       seat(KINDS.map((k, i) => [k, 90 + i * 117, 330, .72]));
-      paper(T.world, [['rect', { x: 410, y: 400, width: 180, height: 100, fill: C.gold }], ['text', { x: 500, y: 470, 'text-anchor': 'middle', 'font-size': 56, fill: C.cream, 'font-family': 'Jua, sans-serif', text: '1' }]]);
+      paper(T.world, [['rect', { x: 410, y: 400, width: 180, height: 100, fill: C.gold }], ['text', { x: 500, y: 470, 'text-anchor': 'middle', 'font-size': 56, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }]]);
       turtleReset(); put(turtle, 490, 402, 1.25);
       rabbitReset(); put(rabbit, 150, 500, 1);
       racc = actor(T.world, 860, 500, g => drawRaccoon(T, g), { scale: .95 });
       medal = paper(T.world, [['path', { d: 'M-30 -70 L0 -10 L30 -70', stroke: C.persimmon, 'stroke-width': 12, fill: 'none' }], ['circle', { cx: 0, cy: 10, r: 44, fill: C.gold, stroke: '#b98f4a', 'stroke-width': 6 }],
-        ['text', { x: 0, y: 28, 'text-anchor': 'middle', 'font-size': 48, fill: C.bean, 'font-family': 'Jua, sans-serif', text: '1' }]], { transform: 'translate(730 420)' });
+        ['text', { x: 0, y: 28, 'text-anchor': 'middle', 'font-size': 48, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }]], { transform: 'translate(730 420)' });
     });
     await say('시상식이에요! 관객 친구들이 파도타기를 해요.');
     for (let w = 0; w < 2; w++) for (const k of KINDS) { const a = aud[k]; a.stand(); T.tone(400 + KINDS.indexOf(k) * 60, .12, { type: 'triangle', vol: .12 }); setTimeout(() => a.sit(), 350); await sleep(140); }

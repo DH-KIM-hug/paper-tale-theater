@@ -268,7 +268,7 @@
     await T.cut(svg => {
       T.el('circle', { cx: 200, cy: 150, r: 110, fill: C.pine }, svg);
       T.el('ellipse', { cx: 200, cy: 170, rx: 70, ry: 50, fill: C.cream }, svg);
-      T.el('text', { x: 200, y: 175, 'text-anchor': 'middle', 'font-size': 90, fill: '#A93B32', stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '뻥!' }, svg);
+      T.el('text', { x: 200, y: 175, 'text-anchor': 'middle', 'font-size': 90, fill: '#A93B32', stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '뻥!' }, svg);
     }, { sfx: 'boom' });
     babies.forEach(b => b.parts.hands.setAttribute('opacity', 0));
     mom.body.style.transition = 'transform 3s linear';

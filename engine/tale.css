@@ -12,12 +12,14 @@
 html, body { height: 100%; margin: 0; }
 body {
   background: var(--wall);
-  font-family: 'Jua', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  color: var(--ink); overflow: hidden;
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  color: var(--ink); overflow: hidden; font-weight: 600;
   -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
   touch-action: manipulation; word-break: keep-all; overflow-wrap: anywhere;
 }
 button { font: inherit; border: none; cursor: pointer; color: inherit; }
+/* 무대 위 글자(의성어, 숫자, 팻말)는 굵게: 예전 Jua의 동글동글한 무게감을 프리텐다드 굵기로 */
+svg text { font-weight: 800; }
 
 #tale { position: relative; height: 100%; display: flex; flex-direction: column; }
 #stageWrap { flex: 1; position: relative; min-height: 0; overflow: hidden; }

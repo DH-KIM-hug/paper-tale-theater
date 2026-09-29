@@ -508,7 +508,7 @@ const Tale = (() => {
     let cursor = -total / 2;
     chars.forEach((ch, i) => {
       const px = cursor + cw(ch) / 2; cursor += cw(ch);
-      const t = el('text', { 'text-anchor': 'middle', 'font-size': size, fill: color, 'font-family': 'Jua, sans-serif', stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', text: ch }, g);
+      const t = el('text', { 'text-anchor': 'middle', 'font-size': size, fill: color, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', text: ch }, g);
       t.style.transformBox = 'view-box'; t.style.transformOrigin = '0 0';
       const rot = (i % 2 ? 1 : -1) * 9;
       t.animate(springFrames((v, k) => `translate(${px}px, ${size * .36 - (k === 0 ? 56 : 0)}px) scale(${Math.max(v, .01)}) rotate(${k < 3 ? rot : 0}deg)`),

@@ -501,7 +501,7 @@
       const dogG = T.el('g', { transform: 'translate(70,262) scale(-2.3,2.3)' }, svg); DRAW.dog(T, dogG);
       const catG = T.el('g', { transform: 'translate(350,262) scale(2.5)' }, svg); DRAW.cat(T, catG);
       T.el('path', { d: 'M226 96 L212 116 L230 124 L214 146 L232 154 L218 176', stroke: '#FFD54F', 'stroke-width': 7, fill: 'none', 'stroke-linejoin': 'round' }, svg);
-      T.el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '째릿!' }, svg);
+      T.el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '째릿!' }, svg);
       voiceLine('cut_glare', 300);
     }, { hold: 2200 });
     await say('"흥!" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.');
@@ -551,7 +551,7 @@
       T.el('rect', { x: 0, y: 220, width: 400, height: 80, fill: C.soil }, svg);
       const tg = T.el('g', { transform: `translate(200,${y}) scale(${s})` }, svg); drawTurnip(T, tg);
       T.el('rect', { x: 0, y: 236, width: 400, height: 64, fill: C.soil, opacity: y > 180 ? 1 : 0 }, svg);
-      T.el('text', { x: 200, y: 64, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: word }, svg);
+      T.el('text', { x: 200, y: 64, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: word }, svg);
     };
     voiceLine('cut_heave', 150);
     await T.cut(svg => cutTurnip(svg, 230, .6, '영~'), { hold: 1100 });
@@ -616,7 +616,7 @@
       good.pos.style.filter = '';
       good.hop(30, 400);
       const tag = T.paper(T.fx, [['circle', { cx: good.x, cy: 510 - good.h * good.scale - 34, r: 22, fill: C.cream, stroke: C.gold, 'stroke-width': 4 }]]);
-      el('text', { x: good.x, y: 510 - good.h * good.scale - 25, 'text-anchor': 'middle', 'font-size': 26, fill: C.bean, 'font-family': 'Jua, sans-serif', text: k + 1 }, tag);
+      el('text', { x: good.x, y: 510 - good.h * good.scale - 25, 'text-anchor': 'middle', 'font-size': 26, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1 }, tag);
       T.tone(392 + k * 60, .25, { type: 'triangle', vol: .16 });
     }
     await say('와! 할아버지, 할머니, 손녀, 강아지, 고양이, 생쥐! 차례를 다 기억했어요.');

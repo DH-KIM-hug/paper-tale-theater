@@ -169,7 +169,7 @@
     for (let k = 0; k < n; k++) {
       const x = 500 + (k - (n - 1) / 2) * 46;
       const c = T.el('circle', { cx: x, cy: 96, r: 17, fill: '#fff', stroke: C.gold, 'stroke-width': 3 }, g);
-      const t = T.el('text', { x, y: 104, 'text-anchor': 'middle', 'font-size': 22, fill: C.cream, 'font-family': 'Jua, sans-serif', text: k + 1, opacity: 0 }, g);
+      const t = T.el('text', { x, y: 104, 'text-anchor': 'middle', 'font-size': 22, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1, opacity: 0 }, g);
       dots.push([c, t]);
     }
     return {
@@ -270,7 +270,7 @@
       el('rect', { x: 0, y: 250, width: 400, height: 50, fill: C.ground }, svg);
       T.paper(svg, [['rect', { x: 150, y: -20, width: 120, height: 190, rx: 30, fill: C.lion }], ['ellipse', { cx: 210, cy: 190, rx: 110, ry: 55, fill: C.lion }],
         ...[140, 185, 235, 280].map(x => ['circle', { cx: x, cy: 238, r: 20, fill: C.lionDk }])]);
-      el('text', { x: 90, y: 110, 'text-anchor': 'middle', 'font-size': 80, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '탁!' }, svg);
+      el('text', { x: 90, y: 110, 'text-anchor': 'middle', 'font-size': 80, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '탁!' }, svg);
     }, { sfx: 'thud', hold: 1800 });
 
     /* --- 3. 잡혔다! (생쥐 시점 로우앵글) --- */
@@ -308,7 +308,7 @@
     await T.cut(svg => {
       const g = el('g', { transform: 'translate(200,160) scale(1.25)' }, svg);
       const h = drawHead(T, g); h.eyes('happy'); h.mouth('open');
-      el('text', { x: 200, y: 290, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '하하하!' }, svg);
+      el('text', { x: 200, y: 290, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '하하하!' }, svg);
     }, { hold: 2200 });
     head.eyes('happy'); head.mouth('open');
     roar(T, .15);
@@ -430,7 +430,7 @@
       const h = drawHead(T, g); h.eyes('shut'); h.mouth('open');
       const n = el('g', { stroke: C.rope, 'stroke-width': 5 }, svg);
       for (let k = -4; k < 12; k++) { el('line', { x1: k * 40, y1: 0, x2: k * 40 + 240, y2: 300 }, n); el('line', { x1: k * 40, y1: 0, x2: k * 40 - 240, y2: 300 }, n); }
-      el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '버둥버둥' }, svg);
+      el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '버둥버둥' }, svg);
     }, { hold: 2000 });
     AudioFX.sfx('step_grass', .15);
     await say('사자가 버둥버둥, 그래도 그물이 풀리지 않아요.');
