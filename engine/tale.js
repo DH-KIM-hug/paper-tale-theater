@@ -80,15 +80,38 @@ const Tale = (() => {
     if (z <= 1) return [hx >= 500 ? 500 : Math.min(Math.max(x, hx), 1000 - hx), 280];
     return [Math.min(Math.max(x, hx), 1000 - hx), Math.min(Math.max(y, hy), 560 - hy)];
   }
+  /* 연출(director)이 움직이는 카메라와 동화가 직접 움직이는 카메라를 구분한다.
+     동화가 카메라를 잡으면 epoch가 바뀌고, 진행 중이던 연출 이동은 그 자리에서 멈춘다 */
+  let camEpoch = 0, directing = false, dirAnim = null, taleMoving = 0;
+  const camTarget = { x: 500, y: 280, z: 1 }; // 동화가 마지막으로 잡으려 한 화면 (이동 중이어도)
+  function syncCamFromScreen() {
+    const m = new DOMMatrix(getComputedStyle(cam).transform);
+    if (m.a > 0) Object.assign(camState, { z: m.a, x: (500 - m.e) / m.a, y: (280 - m.f) / m.a });
+  }
   async function camTo(x, y, z = 1, dur = 800) {
+    const mine = directing;
+    if (mine && dirAnim) { syncCamFromScreen(); dirAnim.cancel(); dirAnim = null; }
+    if (!mine) {
+      camEpoch++;
+      if (dirAnim) { syncCamFromScreen(); dirAnim.cancel(); dirAnim = null; cam.style.transform = camT(camState.x, camState.y, camState.z); }
+    }
     [x, y] = clampCam(x, y, z);
+    if (!mine) { Object.assign(camTarget, { x, y, z }); taleMoving++; }
     $('#frame').classList.toggle('out', z > 1.05);
-    await anim(cam, [{ transform: camT(camState.x, camState.y, camState.z) }, { transform: camT(x, y, z) }],
-      { duration: dur, easing: 'cubic-bezier(.35,0,.25,1)' });
+    const a = cam.animate([{ transform: camT(camState.x, camState.y, camState.z) }, { transform: camT(x, y, z) }],
+      { duration: dur, easing: 'cubic-bezier(.35,0,.25,1)', fill: 'forwards' });
+    if (mine) dirAnim = a;
+    try { await a.finished; } catch (e) { return; } finally { if (!mine) taleMoving--; } // 연출 이동이 취소됨: 상태는 취소한 쪽이 맞췄다
+    if (mine && dirAnim !== a) return;
+    if (mine) dirAnim = null;
+    try { a.commitStyles(); } catch (e) { /* 미표시 */ }
+    a.cancel();
     Object.assign(camState, { x, y, z });
   }
   function camSnap(x, y, z = 1) {
+    if (!directing) { camEpoch++; if (dirAnim) { dirAnim.cancel(); dirAnim = null; } }
     [x, y] = clampCam(x, y, z);
+    if (!directing) Object.assign(camTarget, { x, y, z });
     $('#frame').classList.toggle('out', z > 1.05);
     cam.style.transform = camT(x, y, z);
     Object.assign(camState, { x, y, z });
@@ -98,8 +121,98 @@ const Tale = (() => {
   /* ---------- 대사 ---------- */
   async function say(text) {
     const was = busy; busy = true;
-    await Narrator.speak(text);
-    busy = was;
+    const d = dir && dir.begin();
+    try { await Narrator.speak(text, d ? { onSeg: d.seg } : {}); }
+    finally { if (d) d.end(); busy = was; }
+  }
+
+  /* ---------- 대사 연출: 목소리를 따라가는 카메라 + 서로 바라보기 ----------
+     T.director({ cast: {배역: actor | () => actor}, listener: (배역, 직전 화자) => 청자 배역, camTo, noFace: [배역] })
+     - 배역 대사가 나오면: 화자와 청자가 서로 마주 보고, 카메라가 두 사람(멀면 화자)을 잡는다
+     - 내레이터 대사가 나오거나 대사가 끝나면: 동화가 잡아 둔 원래 화면으로 돌아간다
+     - 동화가 그 사이 카메라를 직접 움직이면 연출은 그 대사에서 손을 뗀다 */
+  let dir = null;
+  function director(cfg) {
+    if (!cfg) { dir = null; return; }
+    const moveCam = cfg.camTo || camTo;
+    let lastSpeaker = null;
+    const get = r => { const a = cfg.cast[r]; return typeof a === 'function' ? a() : a; };
+    const visible = a => {
+      if (!a || !a.pos || !a.pos.isConnected) return false;
+      for (let n = a.pos; n && n !== world; n = n.parentNode) {
+        const cs = getComputedStyle(n);
+        if (cs.display === 'none' || cs.visibility === 'hidden' || +cs.opacity < .05) return false;
+      }
+      return a.x > -40 && a.x < 1040;
+    };
+    /* 배우의 무대 좌표 상자 (발끝 기준 그림 크기) */
+    const box = a => {
+      let b; try { b = a.body.getBBox(); } catch (e) { b = null; }
+      if (!b || !b.height) b = { x: -60, y: -200, width: 120, height: 200 };
+      const s = a.scale || 1, w = b.width * s, h = b.height * s;
+      const cx = a.x + (a.flip || 1) * s * (b.x + b.width / 2);
+      return { cx, top: a.y + s * b.y, h, w };
+    };
+    const faceEach = (sp, li) => {
+      const out = [];
+      const turn = (a, other, r) => {
+        if (!a.face || (cfg.noFace || []).includes(r) || Math.abs(other.x - a.x) < 20) return;
+        const before = a.flip;
+        a.face(other.x > a.x ? 'right' : 'left');
+        if (a.flip !== before) out.push({ a, before, set: a.flip, x: a.x });
+      };
+      turn(sp.a, li.a, sp.r); turn(li.a, sp.a, li.r);
+      return out;
+    };
+    return (dir = {
+      begin() {
+        const base = { ...camTarget }, epoch = camEpoch, turned = [];
+        let moved = false, alive = true;
+        const ours = () => alive && camEpoch === epoch && $('#cutPanel').hidden && $('#iris').hidden;
+        const go = (x, y, z) => {
+          if (!ours() || taleMoving) return; // 동화가 카메라를 옮기는 중이면 끼어들지 않는다
+          if (Math.abs(x - camState.x) * z < 30 && Math.abs(y - camState.y) * z < 30 && Math.abs(z - camState.z) < .1) return;
+          moved = true; directing = true;
+          try { moveCam(x, y, z, 650); } finally { directing = false; }
+        };
+        return {
+          seg(role) {
+            if (!ours()) return;
+            if (role === 'nar' || !cfg.cast[role]) { if (moved) go(base.x, base.y, base.z); return; }
+            const a = get(role);
+            if (!visible(a)) return;
+            const lr = cfg.listener ? cfg.listener(role, lastSpeaker) : (lastSpeaker !== role ? lastSpeaker : null);
+            let la = lr && lr !== role && cfg.cast[lr] ? get(lr) : null;
+            if (!visible(la)) la = null;
+            lastSpeaker = role;
+            if (la) {
+              for (const t of faceEach({ a, r: role }, { a: la, r: lr }))
+                if (!turned.some(o => o.a === t.a)) turned.push(t);
+            }
+            const vw = viewWidth(), A = box(a);
+            let shot = null;
+            if (la) {
+              const B = box(la);
+              const span = Math.abs(A.cx - B.cx) + (A.w + B.w) / 2 + 90;
+              const z = Math.min(1.55, vw / span, 560 * .78 / Math.max(A.h, B.h));
+              if (z >= 1.12) shot = [(A.cx + B.cx) / 2, (Math.min(A.top, B.top) + Math.max(A.top + A.h, B.top + B.h)) / 2, z];
+            }
+            if (!shot) {
+              const z = Math.max(1.25, Math.min(1.7, 560 * .6 / A.h));
+              const bias = la ? Math.sign(la.x - a.x) * vw / z * .12 : 0; // 청자 쪽에 여백
+              shot = [A.cx + bias, A.top + A.h * .5, z];
+            }
+            go(...shot);
+          },
+          end() {
+            if (moved && ours()) go(base.x, base.y, base.z);
+            alive = false;
+            // 동화가 그 사이 돌려세우거나 옮기지 않았다면 원래 방향으로
+            turned.forEach(t => { if (t.a.flip === t.set && t.a.x === t.x) { t.a.flip = t.before; t.a.place(t.a.x, t.a.y); } });
+          },
+        };
+      },
+    });
   }
 
   /* ---------- 손가락 안내 ---------- */
@@ -497,7 +610,7 @@ const Tale = (() => {
   const input = fn => async (...a) => { busy = false; try { return await fn(...a); } finally { busy = true; } };
 
   const api = {
-    el, paper, anim, actor, sleep, say, tone, josa, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
+    el, paper, anim, actor, sleep, say, director, tone, josa, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,
     tap: input(tap), mash: input(mash), choose: input(choose), swipe: input(swipe), hold: input(hold), free: input(free),

@@ -22,6 +22,36 @@ V = {  # 배역 → Typecast 목소리
 TIGER_Q = ['할멈, 잡아먹어야겠다!', '앗, 뜨거워! 눈이야!', '아야야!', '엉엉, 아파!']
 HALMI_SAD = ['호랑이야, 동짓날에', '얘들아, 도와줘!']
 
+# 말풍선 없이 소리만 나는 대사: 컷신 속 호랑이 비명, 마지막 인사 (키 → [(배역, 대사, 감정, 앞 상황)])
+EXTRA = {
+  'cut_bam':        [('bam', '받아라, 알밤 발사!', 'smart', '알밤이 아궁이에서 톡 튀어나와요!'), ('tiger', '에구구, 내 눈이야!', 'smart', '알밤이 튀어나와 호랑이 눈을 딱 때렸어요!')],
+  'cut_jara':       [('jara', '앙! 꽉 물었다!', 'smart', '자라가 물독에서 호랑이 입을 물어요!'), ('tiger', '아야야! 내 입! 놔라, 놔!', 'smart', '자라가 호랑이 입을 앙 물었어요!')],
+  'cut_ddong':      [('ddong', '여기 미끌미끌 조심해!', 'smart', '호랑이가 뒷걸음질 치다 쇠똥을 밟아요!'), ('tiger', '으악! 미끄러워!', 'smart', '호랑이가 쇠똥을 밟고 쭈르륵 미끄러졌어요!')],
+  'cut_songgot':    [('songgot', '콕! 따끔하지?', 'smart', '송곳이 넘어진 호랑이를 찔러요!'), ('tiger', '아얏! 내 엉덩이!', 'smart', '송곳이 호랑이 엉덩이를 콕 찔렀어요!')],
+  'cut_jeolgu':     [('jeolgu', '쿵더쿵, 내려간다!', 'smart', '절구가 문 위에서 떨어져요!'), ('tiger', '아이고, 내 머리야!', 'smart', '절구가 호랑이 머리 위로 쿵 떨어졌어요!')],
+  'cut_myeongseok': [('myeongseok', '돌돌돌, 꽁꽁 말아라!', 'smart', '멍석이 호랑이를 말아요!'), ('tiger', '으으, 못 움직이겠다! 풀어 줘!', 'smart', '멍석이 호랑이를 돌돌 말아 버렸어요!')],
+  'cut_jige':       [('jige', '영차! 바다로 풍덩!', 'smart', '지게가 멍석에 말린 호랑이를 바다에 던져요!'), ('tiger', '으아아악!', 'smart', '호랑이가 바다에 풍덩 빠졌어요!')],
+  'cut_jige_b':     [('tiger', '호랑이 살려! 다시는 안 그럴게요!', 'smart', '지게가 호랑이를 바다에 풍덩 던졌어요!')],
+  'cut_wrong_1':    [('tiger', '크하하! 어림없지!', 'smart', '친구가 헛손질을 했어요. 호랑이가 비웃어요.')],
+  'cut_wrong_2':    [('tiger', '헤헤, 하나도 안 아프다!', 'smart', '친구가 헛손질을 했어요. 호랑이가 놀려요.')],
+  # 헛수고 컷: 친구가 머쓱해한다 (그 뒤 호랑이 비웃음 cut_wrong_1/2)
+  'oops_bam':        [('bam', '어라? 호랑이가 어디 갔지?', 'smart', None)],
+  'oops_jara':       [('jara', '어? 아무것도 없네?', 'smart', None)],
+  'oops_ddong':      [('ddong', '에잉, 안 밟았잖아!', 'smart', None)],
+  'oops_songgot':    [('songgot', '어라? 허공만 찔렀네!', 'smart', None)],
+  'oops_jeolgu':     [('jeolgu', '앗, 빗나갔다!', 'smart', None)],
+  'oops_myeongseok': [('myeongseok', '어? 아무도 없잖아!', 'smart', None)],
+  'oops_jige':       [('jige', '끙차… 아이고, 무거워!', 'smart', None)],
+  'hi_bam':        [('bam', '고마워, 할멈! 팥죽 최고!', 'happy', None)],
+  'hi_jara':       [('jara', '팥죽 정말 맛있어요!', 'happy', None)],
+  'hi_ddong':      [('ddong', '헤헤, 나도 신난다!', 'happy', None)],
+  'hi_songgot':    [('songgot', '콕콕! 우리가 이겼다!', 'happy', None)],
+  'hi_jeolgu':     [('jeolgu', '쿵더쿵! 만세!', 'happy', None)],
+  'hi_myeongseok': [('myeongseok', '돌돌돌! 고마워요!', 'happy', None)],
+  'hi_jige':       [('jige', '영차! 또 놀러 올게!', 'happy', None)],
+  'hi_halmi':      [('halmi', '고맙다, 얘들아! 다 같이 팥죽 먹자!', 'happy', None)],
+}
+
 def load_story():
     js = open(os.path.join(ROOT, 'story.js')).read()
     js += '\nconsole.log(JSON.stringify({FRIENDS, INTRO, PROMPTS, LINES, HELP}));'
@@ -84,9 +114,24 @@ def main():
                     print('ERR', e.code, e.read()[:200], s); continue
             urls.append(rel)
         clips[text] = urls[0] if len(urls) == 1 else urls
+    voice = {}
+    for key, segs in EXTRA.items():
+        urls = []
+        for role, text, emo, prev in segs:
+            h = hashlib.md5(f'{role}|{emo}|{text}'.encode()).hexdigest()[:10]
+            rel = f'audio/tc/{role}_{h}.mp3'
+            if redo or not os.path.exists(os.path.join(ROOT, rel)):
+                try:
+                    tts(os.path.join(ROOT, rel), role, text, emo, prev, None); chars += len(text); print('ok', key, text)
+                except urllib.error.HTTPError as e:
+                    print('ERR', e.code, e.read()[:200], text); continue
+            urls.append(rel)
+        voice[key] = urls[0] if len(urls) == 1 else urls
     with open(os.path.join(ROOT, 'narration_tc.js'), 'w') as f:
         f.write('/* Typecast 배역 내레이션 (tools/typecast/gen_patjuk.py가 생성) — 연화·순이·학철 + 사물은 어린이 목소리 */\n')
         f.write('const NARRATION_CLIPS = ' + json.dumps(clips, ensure_ascii=False, indent=1) + ';\n')
+        f.write('/* 말풍선 없이 소리만: 컷신 호랑이 대사(cut_*), 마지막 인사(hi_*) */\n')
+        f.write('const VOICE_LINES = ' + json.dumps(voice, ensure_ascii=False, indent=1) + ';\n')
     print('새로 생성한 글자 수:', chars, '/ 줄:', len(clips))
 
 main()

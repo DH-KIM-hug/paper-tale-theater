@@ -58,7 +58,7 @@ const AudioFX = (() => {
 
   /* ===== 사전 녹음 내레이션 재생 ===== */
   const narBuffers = {};
-  let narSrc = null;
+  let narSrc = null, voiceSrc = null, voiceGen = 0, voiceDone = Promise.resolve();
 
   async function loadClip(url) {
     const c = ensure();
@@ -154,6 +154,29 @@ const AudioFX = (() => {
         src.start();
       });
     },
+    /* 말풍선 없는 짧은 대사 (컷신 비명, 인사): 내레이션과 따로 재생하고, 새 대사가 오면 앞 대사는 끊는다 */
+    async voice(urls) {
+      const gen = ++voiceGen;
+      if (voiceSrc) { try { voiceSrc.stop(); } catch (e) { /* 무시 */ } voiceSrc = null; }
+      const run = (async () => {
+        for (const url of [].concat(urls || [])) {
+          if (gen !== voiceGen) return;
+          let buf; try { buf = await loadClip(url); } catch (e) { continue; }
+          if (gen !== voiceGen) return;
+          await new Promise(resolve => {
+            const src = ensure().createBufferSource();
+            src.buffer = buf; src.connect(ensure().destination);
+            voiceSrc = src;
+            src.onended = () => { if (voiceSrc === src) voiceSrc = null; resolve(); };
+            src.start();
+          });
+        }
+      })();
+      voiceDone = run;
+      return run;
+    },
+    /* 짧은 대사가 끝날 때까지 기다린다 (내레이션과 겹치지 않게, 최대 ms) */
+    voiceIdle(ms = 4000) { return Promise.race([voiceDone, new Promise(r => setTimeout(r, ms))]); },
     stopNarration() {
       if (narSrc) { try { narSrc.stop(); } catch (e) { /* 무시 */ } narSrc = null; }
     },
@@ -315,17 +338,23 @@ const Narrator = (() => {
      세대 카운터로, 뒤이어 시작된 내레이션의 말풍선을 앞선 호출이 지우지 못하게 한다 */
   let speakGen = 0;
 
-  async function speak(text, { keep = false } = {}) {
+  /* 클립 경로에서 배역을 읽는다: audio/tc/tiger_ab12.mp3 → 'tiger' (없으면 내레이터) */
+  const roleOf = url => (/\/tc\/([a-z]+)_[0-9a-f]+\.mp3$/.exec(url) || [, 'nar'])[1];
+
+  async function speak(text, { keep = false, onSeg } = {}) {
     const gen = ++speakGen;
     AudioFX.stopNarration(); // 겹침 방지: 진행 중인 클립 중단
     showBubble(text);
     const clip = (typeof NARRATION_CLIPS !== 'undefined') && NARRATION_CLIPS[text];
     if (clip) {
+      await AudioFX.voiceIdle(); // 컷신 대사가 끝난 뒤 이어서
+      if (gen !== speakGen) return;
       try {
         // 배열이면 배역별 세그먼트를 순서대로 이어서 재생
         const list = Array.isArray(clip) ? clip : [clip];
         for (const url of list) {
           if (gen !== speakGen) return; // 중간에 다른 내레이션이 시작됨
+          if (onSeg) try { onSeg(roleOf(url)); } catch (e) { /* 연출 실패는 무시 */ }
           await AudioFX.playUrl(url);
         }
         if (!keep && gen === speakGen) hideBubble();

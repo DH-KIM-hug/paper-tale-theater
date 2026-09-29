@@ -114,6 +114,18 @@
     };
     const camSnap = (x, y, z = 1) => { frameFor(z, 0); T.camSnap(keepTiger(x, z), groundY(y, z), z); };
     const camWide = (dur = 800) => camTo(500, 280, 1, dur);
+    /* 세로 화면: 주어진 요소들이 모두 보이도록 카메라를 맞춘다 (화면 좌표 → 무대 좌표로 바꿔 합친 상자) */
+    async function fitCam(els, maxZ, pad, dur) {
+      const r = stage.getBoundingClientRect(), c = T.camera, k = Math.max(r.width / 1000, r.height / 560) * c.z;
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      els.forEach(e => { const b = e.getBoundingClientRect(); if (!b.width) return;
+        x0 = Math.min(x0, c.x + (b.left - cx) / k); x1 = Math.max(x1, c.x + (b.right - cx) / k);
+        y0 = Math.min(y0, c.y + (b.top - cy) / k); y1 = Math.max(y1, c.y + (b.bottom - cy) / k); });
+      if (!isFinite(x0)) return;
+      const z = Math.min(maxZ, T.viewWidth() / (x1 - x0 + 2 * pad), 560 / (y1 - y0 + 2 * pad));
+      await camTo((x0 + x1) / 2, (y0 + y1) / 2, z, dur);
+    }
 
     function buildProscenium() {
       const g = el('g', { id: 'pros', 'pointer-events': 'none' });
@@ -350,8 +362,14 @@
     let lastCut = Promise.resolve();
     function showCut(id, hold = 4000) {
       const keys = id.startsWith('wrong_') ? [id] : [id, id + '_b'];
-      const list = keys.map(key => ({ src: cutUrl(key), sfx: key.startsWith('wrong_') ? 'laugh' : CUT_SFX[key] }));
-      lastCut = lastCut.then(() => T.cutImage(list, { hold, onShow: punch }));
+      const V = typeof VOICE_LINES !== 'undefined' ? VOICE_LINES : {};
+      // 컷 속 목소리: 친구의 외침 → 호랑이 비명. 헛수고 컷은 친구가 머쓱 → 호랑이가 비웃음
+      const voiceOf = key => key.startsWith('wrong_')
+        ? [].concat(V['oops_' + key.slice(6)] || [], V[Math.random() < .5 ? 'cut_wrong_1' : 'cut_wrong_2'] || [])
+        : V['cut_' + key];
+      const list = keys.map(key => ({ src: cutUrl(key), sfx: key.startsWith('wrong_') ? 'laugh' : CUT_SFX[key], voice: voiceOf(key) }));
+      const onShow = o => { punch(o); if (o.voice && o.voice.length) setTimeout(() => AudioFX.voice(o.voice), 380); };
+      lastCut = lastCut.then(() => T.cutImage(list, { hold, onShow }));
       return lastCut;
     }
 
@@ -423,6 +441,13 @@
     T.world.appendChild(tiger.pos);
     T.world.appendChild(rolled.pos);
     let stageI = 0, misses = 0;
+
+    /* 대사 연출: 목소리 주인에게 카메라가 가고, 말하는 쪽과 듣는 쪽이 서로 마주 본다 */
+    T.director({
+      cast: { halmi: granny, tiger, ...friends },
+      listener: r => (r === 'halmi' ? 'tiger' : 'halmi'),
+      camTo: (x, y, z, dur) => camTo(x, y, z, dur),
+    });
 
     /* ================= 공연장 오프닝 ================= */
     async function theaterOpening() {
@@ -618,7 +643,7 @@
         impact(fr.gx, fr.gy + fr.by - 30, '어라?', '#7a6a55');
       }
       // 다른 세트의 친구를 눌러도 비웃는 컷은 항상 뜬다
-      await showCut('wrong_' + f.id, 2000);
+      await showCut('wrong_' + f.id, 3600);
       AudioFX.miss();
       await say(f.fail);
       misses++;
@@ -833,12 +858,18 @@
       const GATHER = { jara: 395, bam: 445, ddong: 495, songgot: 625, jeolgu: 670, myeongseok: 735, jige: 810 };
       Object.values(friends).forEach(fr => fr.pos.classList.add('party'));
       await Promise.all([...FRIENDS.map(f => friendTo(f.id, GATHER[f.id], 850, true)), camTo(600, 430, 1.4, 1100)]);
+      // 세로 화면: 1.4배 클로즈업이면 양 끝 친구가 잘린다 → 잔치에 모인 모두가 들어오게 카메라를 맞춘다.
+      // 친구 그림(act)만 누름 대상으로 쓴다 (원래 자리에 남은 그림자까지 포함하면 대상이 화면 밖으로 넓어진다)
+      const partyEl = f => portrait() ? friends[f.id].act : friends[f.id].pos;
+      if (portrait()) await fitCam([...FRIENDS.map(partyEl), granny.pos], 1.4, 28, 800);
       await say(LINES.happyEnd);
       // 잔치 자유 놀이: 친구·할멈을 톡 하면 인사한다
       await say(LINES.finaleTap);
+      // 누르면 처음 등장 때와 같은 목소리로 인사
+      const hello = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]);
       await T.free([
-        ...FRIENDS.map(f => ({ el: friends[f.id].pos, onTap: () => { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); } })),
-        { el: granny.pos, onTap: () => { AudioFX.jingle(); granny.hop(22, 420); } },
+        ...FRIENDS.map(f => ({ el: partyEl(f), onTap: () => { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); hello('hi_' + f.id); } })),
+        { el: granny.pos, onTap: () => { AudioFX.jingle(); granny.hop(22, 420); hello('hi_halmi'); } },
       ], 12000);
       await curtainCall();
     }

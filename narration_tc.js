@@ -100,3 +100,52 @@ const NARRATION_CLIPS = {
  "호랑이가 멍석에 꽁꽁 말렸어요. 담벼락에 기대 숨은 친구는 누구지?": "audio/tc/nar_6cad599a8d.mp3",
  "지게를 눌러 봐요!": "audio/tc/nar_fd8e3b8d79.mp3"
 };
+/* 말풍선 없이 소리만: 컷신 호랑이 대사(cut_*), 마지막 인사(hi_*) */
+const VOICE_LINES = {
+ "cut_bam": [
+  "audio/tc/bam_e582c0d9aa.mp3",
+  "audio/tc/tiger_95495860a8.mp3"
+ ],
+ "cut_jara": [
+  "audio/tc/jara_48f966fa08.mp3",
+  "audio/tc/tiger_5230898a51.mp3"
+ ],
+ "cut_ddong": [
+  "audio/tc/ddong_216ef18c10.mp3",
+  "audio/tc/tiger_1463254e38.mp3"
+ ],
+ "cut_songgot": [
+  "audio/tc/songgot_8f58a63b67.mp3",
+  "audio/tc/tiger_e7ffce067c.mp3"
+ ],
+ "cut_jeolgu": [
+  "audio/tc/jeolgu_ac2e2c5f3e.mp3",
+  "audio/tc/tiger_b4ab2d8e3d.mp3"
+ ],
+ "cut_myeongseok": [
+  "audio/tc/myeongseok_1ee64edbfe.mp3",
+  "audio/tc/tiger_f14cab9ab1.mp3"
+ ],
+ "cut_jige": [
+  "audio/tc/jige_6605723837.mp3",
+  "audio/tc/tiger_e00c5a4ecc.mp3"
+ ],
+ "cut_jige_b": "audio/tc/tiger_13f2d4d114.mp3",
+ "cut_wrong_1": "audio/tc/tiger_a8ea3f527a.mp3",
+ "cut_wrong_2": "audio/tc/tiger_c717f7f7e4.mp3",
+ "oops_bam": "audio/tc/bam_651fea5fec.mp3",
+ "oops_jara": "audio/tc/jara_c45c1231f3.mp3",
+ "oops_ddong": "audio/tc/ddong_35637b4972.mp3",
+ "oops_songgot": "audio/tc/songgot_0b00876fb4.mp3",
+ "oops_jeolgu": "audio/tc/jeolgu_a212662be4.mp3",
+ "oops_myeongseok": "audio/tc/myeongseok_bf6fedc321.mp3",
+ "oops_jige": "audio/tc/jige_4e06768b1d.mp3",
+ "hi_bam": "audio/tc/bam_8eae613d48.mp3",
+ "hi_jara": "audio/tc/jara_9460d77607.mp3",
+ "hi_ddong": "audio/tc/ddong_f2506e937c.mp3",
+ "hi_songgot": "audio/tc/songgot_9c7a9f716a.mp3",
+ "hi_jeolgu": "audio/tc/jeolgu_a799410440.mp3",
+ "hi_myeongseok": "audio/tc/myeongseok_6d00a5bf90.mp3",
+ "hi_jige": "audio/tc/jige_45abe791ff.mp3",
+ "hi_halmi": "audio/tc/halmi_ed681eb897.mp3"
+};
