@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>팥죽할멈과 호랑이</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <div id="stageWrap">
+    <!-- 공용 defs/심볼 (레이어 SVG들이 참조) -->
+    <svg id="defsSvg" width="0" height="0" aria-hidden="true">
+    <defs>
+      <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2b2350"/>
+        <stop offset="0.65" stop-color="#4b3566"/>
+        <stop offset="1" stop-color="#7a4a63"/>
+      </linearGradient>
+      <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8a6244"/>
+        <stop offset="0.55" stop-color="#63444a"/>
+        <stop offset="1" stop-color="#382852"/>
+      </linearGradient>
+      <!-- 라이트박스: 달을 광원으로 하는 발광 하늘 -->
+      <radialGradient id="skyGlow" cx="0.82" cy="0.16" r="1.15">
+        <stop offset="0" stop-color="#8a74b8"/>
+        <stop offset="0.3" stop-color="#5a4590"/>
+        <stop offset="0.65" stop-color="#33235e"/>
+        <stop offset="1" stop-color="#1a0f3d"/>
+      </radialGradient>
+      <filter id="softGlow" x="-25%" y="-60%" width="150%" height="220%">
+        <feGaussianBlur stdDeviation="9"/>
+      </filter>
+
+      <!-- ===== 친구 심볼 (카드와 무대 공용) ===== -->
+      <symbol id="sym-bam" viewBox="0 0 100 100"><image href="assets/v2/c2_bam.png" x="2" y="2" width="96" height="96" preserveAspectRatio="xMidYMax meet"/></symbol>
+
+      <symbol id="sym-jara" viewBox="0 0 100 100"><image href="assets/v2/c2_jara.png" x="2" y="2" width="96" height="96" preserveAspectRatio="xMidYMax meet"/></symbol>
+
+      <symbol id="sym-ddong" viewBox="0 0 100 100"><image href="assets/v2/c2_ddong.png" x="2" y="2" width="96" height="96" preserveAspectRatio="xMidYMax meet"/></symbol>
+
+      <symbol id="sym-songgot" viewBox="0 0 100 100"><image href="assets/v2/c2_songgot.png" x="2" y="2" width="96" height="96" preserveAspectRatio="xMidYMax meet"/></symbol>
+
+      <symbol id="sym-jeolgu" viewBox="0 0 100 100"><image href="assets/v2/c2_jeolgu.png" x="2" y="2" width="96" height="96" preserveAspectRatio="xMidYMax meet"/></symbol>
+
+      <symbol id="sym-myeongseok" viewBox="0 0 100 100"><image href="assets/v2/c2_myeongseok.png" x="2" y="2" width="96" height="96" preserveAspectRatio="xMidYMax meet"/></symbol>
+
+      <symbol id="sym-jige" viewBox="0 0 100 100"><image href="assets/v2/c2_jige.png" x="2" y="2" width="96" height="96" preserveAspectRatio="xMidYMax meet"/></symbol>
+      <linearGradient id="dayGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8ec9e8"/>
+        <stop offset="0.7" stop-color="#c9e4ef"/>
+        <stop offset="1" stop-color="#f2e3c0"/>
+      </linearGradient>
+      <!-- 입체감용 그라데이션 -->
+      <radialGradient id="vig" gradientUnits="userSpaceOnUse" cx="500" cy="252" r="780">
+        <stop offset="0.55" stop-color="#12092b" stop-opacity="0"/>
+        <stop offset="1" stop-color="#12092b" stop-opacity="0.4"/>
+      </radialGradient>
+      <radialGradient id="moonGlowG">
+        <stop offset="0" stop-color="#ffe9b3" stop-opacity="0.6"/>
+        <stop offset="0.5" stop-color="#f6e3a1" stop-opacity="0.25"/>
+        <stop offset="1" stop-color="#f6e3a1" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="fireGlowG">
+        <stop offset="0" stop-color="#ff9a4d" stop-opacity="0.5"/>
+        <stop offset="1" stop-color="#ff9a4d" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="winGlowG">
+        <stop offset="0" stop-color="#f7d98a" stop-opacity="0.62"/>
+        <stop offset="1" stop-color="#f7d98a" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="tigerGrad" cx="0.38" cy="0.3" r="0.95">
+        <stop offset="0" stop-color="#ffb066"/>
+        <stop offset="1" stop-color="#e8842f"/>
+      </radialGradient>
+      <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f4dfae"/>
+        <stop offset="1" stop-color="#cfa76a"/>
+      </linearGradient>
+      <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3f2c60"/>
+        <stop offset="1" stop-color="#241845"/>
+      </linearGradient>
+      <linearGradient id="jarGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#7a5040"/>
+        <stop offset="0.55" stop-color="#55344a"/>
+        <stop offset="1" stop-color="#2e1c38"/>
+      </linearGradient>
+      <linearGradient id="potGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4e4e58"/>
+        <stop offset="1" stop-color="#26262b"/>
+      </linearGradient>
+      <linearGradient id="hearthGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4e3628"/>
+        <stop offset="1" stop-color="#241628"/>
+      </linearGradient>
+      <linearGradient id="skirtGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8c9ac4"/>
+        <stop offset="1" stop-color="#66739d"/>
+      </linearGradient>
+      <linearGradient id="plankGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#9a6a42"/>
+        <stop offset="0.6" stop-color="#6e4a34"/>
+        <stop offset="1" stop-color="#3c2842"/>
+      </linearGradient>
+      <!-- 페이퍼아트: 손으로 오린 가장자리 + 밝은 절단면(종이 두께) + 낱장 그림자 -->
+      <filter id="paperCut" x="-10%" y="-10%" width="120%" height="128%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="4" result="d"/>
+        <feMorphology in="d" operator="dilate" radius="2.5" result="dil"/>
+        <feFlood flood-color="#f2e8d4" flood-opacity="0.85" result="pc"/>
+        <feComposite in="pc" in2="dil" operator="in" result="edge"/>
+        <feMerge result="m">
+          <feMergeNode in="edge"/>
+          <feMergeNode in="d"/>
+        </feMerge>
+        <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#2e241c" flood-opacity="0.42"/>
+      </filter>
+      <filter id="paperCutSm" x="-15%" y="-15%" width="130%" height="138%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="3" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.5" result="d"/>
+        <feMorphology in="d" operator="dilate" radius="1.8" result="dil"/>
+        <feFlood flood-color="#f2e8d4" flood-opacity="0.8" result="pc"/>
+        <feComposite in="pc" in2="dil" operator="in" result="edge"/>
+        <feMerge result="m">
+          <feMergeNode in="edge"/>
+          <feMergeNode in="d"/>
+        </feMerge>
+        <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#2e241c" flood-opacity="0.38"/>
+      </filter>
+      <!-- 종이 질감 (화면 전체에 은은한 그레인) -->
+      <filter id="grainF" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" seed="11"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 0.96  0 0 0 0 0.88  0 0 0 0.11 0"/>
+      </filter>
+    </defs>
+    </svg>
+
+    <!-- 실제 깊이를 가진 2.5D 레이어 스택 -->
+    <div id="scene3d">
+      <div id="scene">
+        <div class="layer3d" style="transform: translateZ(-260px) scale(1.2167)"><svg class="lsvg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+    <!-- ===== 원경: 하늘 (Qwen 생성 페이퍼컷 이미지) ===== -->
+    <g id="layer-far">
+      <image class="scnA" href="assets/v3w/a3_sky.webp" x="-150" y="-80" width="1300" height="760" preserveAspectRatio="xMidYMid slice"/>
+      <!-- 1씬 하늘 소품: 민화 구름 두 조각 + 기러기 -->
+      <g class="scnA">
+        <image href="assets/v3w/a3_cloud1.webp" x="520" y="30" width="320" height="97"/>
+        <image href="assets/v3w/a3_cloud1.webp" x="-60" y="-120" width="230" height="70" transform="scale(-1,1) translate(-200,200)"/>
+        <image href="assets/v3w/a3_geese.webp" x="700" y="140" width="190" height="56"/>
+      </g>
+      <image class="scnB2" href="assets/v2/b_sky.png" x="-150" y="-80" width="1300" height="760" preserveAspectRatio="xMidYMid slice"/>
+      <!-- 부엌(B1) 원경: 어두운 흙벽 -->
+      <rect class="scnB1" x="-150" y="-80" width="1300" height="760" fill="#241811"/>
+      <rect id="daylight" x="-150" y="-80" width="1300" height="760" fill="url(#dayGrad)" opacity="0"/>
+    </g>
+
+
+        </svg></div>
+        <div class="layer3d" style="transform: translateZ(-140px) scale(1.1167)"><svg class="lsvg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+    <!-- ===== 중경: 산과 숲, 눈 (패럴랙스 0.55) ===== -->
+    <g id="layer-mid">
+      <image class="scnA strip" href="assets/v2/a_hills.png" x="-150" y="264" width="1300" height="170" preserveAspectRatio="none"/>
+      <image class="scnB2 strip" href="assets/v2/b_hills.png" x="-150" y="249" width="1300" height="185" preserveAspectRatio="none"/>
+      <g class="snow" opacity="0.65" data-set="B2" fill="#eef2fa">
+        <circle cx="80" cy="-20" r="3" style="animation-duration:11s"/>
+        <circle cx="240" cy="-20" r="2.6" style="animation-duration:13s; animation-delay:-4s"/>
+        <circle cx="420" cy="-20" r="3.2" style="animation-duration:10s; animation-delay:-7s"/>
+        <circle cx="590" cy="-20" r="2.6" style="animation-duration:12s; animation-delay:-2s"/>
+        <circle cx="760" cy="-20" r="3" style="animation-duration:14s; animation-delay:-9s"/>
+        <circle cx="930" cy="-20" r="2.8" style="animation-duration:11s; animation-delay:-5s"/>
+      </g>
+    </g>
+
+
+        </svg></div>
+        <div class="layer3d" style="transform: translateZ(0px)"><svg class="lsvg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+    <!-- ===== 주무대 (카메라 기준) ===== -->
+    <g id="world">
+    <!-- 인형극 무대 널판 바닥 -->
+    <rect class="plank" x="-150" y="430" width="1300" height="200" fill="url(#plankGrad)" filter="url(#paperCut)"/>
+    <g stroke="#4e2e1c" stroke-linecap="round">
+      <path d="M-150 464 H1150 M-150 498 H1150 M-150 530 H1150" stroke-width="3" opacity="0.5"/>
+      <path d="M80 432 V464 M320 432 V464 M560 432 V464 M800 432 V464 M1040 432 V464
+               M200 464 V498 M440 464 V498 M680 464 V498 M920 464 V498
+               M120 498 V530 M360 498 V530 M600 498 V530 M840 498 V530
+               M240 530 V560 M480 530 V560 M720 530 V560 M960 530 V560" stroke-width="3" opacity="0.35"/>
+      <path d="M150 470 q40 3 90 0 M520 505 q50 3 100 0 M760 452 q40 2 84 0" stroke-width="2" opacity="0.2"/>
+    </g>
+    <path d="M-150 432 H1150" stroke="#d9a869" stroke-width="2.5" opacity="0.45"/>
+
+    <!-- 세트 A: 가을 팥밭 -->
+    <g id="setA" class="scnA">
+      <!-- 팥밭 두 줄: 뒷줄은 작게, 앞줄은 크게 (배우 발 y=520 앞뒤) -->
+      <image href="assets/v3w/a3_field.webp" x="-170" y="370" width="650" height="250" preserveAspectRatio="xMidYMax slice"/>
+      <image href="assets/v3w/a3_field.webp" x="450" y="360" width="720" height="265" preserveAspectRatio="xMidYMax slice"/>
+    </g>
+
+
+    <!-- 개별 생성 소품들 (컨셉 좌표 배치) -->
+    <!-- ===== 세트 B1: 부엌 내부 ===== -->
+    <g id="setB1" class="scnB1">
+      <!-- 부엌 배경: 생성 배경(b_kitchen) + SVG 뼈대(생성 전 폴백) -->
+      <rect x="-150" y="-60" width="1300" height="600" fill="#2b1c11"/>
+      <rect x="-150" y="60" width="1300" height="26" fill="#4a3220"/>
+      <rect x="-150" y="96" width="1300" height="12" fill="#3a2718" opacity="0.8"/>
+      <g fill="#4a3220">
+        <rect x="118" y="60" width="16" height="460"/>
+        <rect x="498" y="60" width="16" height="460"/>
+        <rect x="878" y="60" width="16" height="460"/>
+      </g>
+      <image class="prop" href="assets/v2/b_kitchen.png" x="-150" y="-60" width="1300" height="600" preserveAspectRatio="xMidYMax slice" opacity="0.96"/>
+      <!-- 살창(밤빛이 새어드는 부엌 창) -->
+      <g transform="translate(615,140)">
+        <rect x="0" y="0" width="150" height="92" rx="8" fill="#182448"/>
+        <g fill="#4a3220"><rect x="18" y="-4" width="10" height="100"/><rect x="46" y="-4" width="10" height="100"/><rect x="74" y="-4" width="10" height="100"/><rect x="102" y="-4" width="10" height="100"/><rect x="130" y="-4" width="10" height="100"/></g>
+        <rect x="-8" y="-8" width="166" height="108" rx="10" fill="none" stroke="#5b3f28" stroke-width="10"/>
+      </g>
+      <!-- 부엌 봉당(흙바닥): 소품·배우가 이 위에 선다 -->
+      <rect x="-150" y="512" width="1300" height="34" rx="6" fill="#1c110a"/>
+      <!-- 온기 글로우 -->
+      <ellipse cx="220" cy="400" rx="280" ry="190" fill="url(#winGlowG)" opacity="0.6"/>
+      <!-- 부엌 벽 살림살이 -->
+      <image class="prop" href="assets/v2/p2_meju.png"    x="80"  y="180" width="80" height="128" preserveAspectRatio="xMidYMin meet"/>
+      <image class="prop" href="assets/v2/p2_chaeban.png" x="196" y="196" width="96" height="96"  preserveAspectRatio="xMidYMid meet"/>
+      <image class="prop" href="assets/v2/p2_gourds.png"  x="320" y="182" width="74" height="108" preserveAspectRatio="xMidYMin meet"/>
+      <image class="prop" href="assets/v2/p2_jipsin.png"  x="420" y="204" width="76" height="66"  preserveAspectRatio="xMidYMid meet"/>
+      <image class="prop" href="assets/v2/p2_lamp.png"    x="392" y="330" width="96" height="80"  preserveAspectRatio="xMidYMid meet"/>
+      <!-- 부엌문(마당으로 나가는 문): 절구가 문 위에 숨는다 -->
+      <image class="prop" href="assets/v2/p2_door.png" x="840" y="310" width="90" height="214" preserveAspectRatio="none"/>
+      <!-- 부뚜막 · 물독 · 장작 -->
+      <image class="prop" href="assets/v2/p2_hearth.png"  x="45"  y="325" width="225" height="200" preserveAspectRatio="xMidYMax meet"/>
+      <image class="prop" href="assets/v2/p2_muldok.png"  x="258" y="408" width="88"  height="115" preserveAspectRatio="xMidYMax meet"/>
+      <image class="prop" href="assets/v2/p2_firewood.png" x="352" y="462" width="78" height="62" preserveAspectRatio="xMidYMax meet"/>
+      <!-- 접지 그림자 -->
+      <g class="shd-row" fill="#000" opacity="0.28">
+        <ellipse cx="158" cy="521" rx="100" ry="9"/>
+        <ellipse cx="302" cy="522" rx="42" ry="6"/>
+        <ellipse cx="391" cy="523" rx="36" ry="5"/>
+        <ellipse cx="885" cy="523" rx="46" ry="6"/>
+      </g>
+    </g>
+
+    <!-- ===== 세트 B2: 마당 ===== -->
+    <g id="setB2" class="scnB2">
+      <!-- 뒤열: 소나무 · 낟가리 — 담 뒤, 작고 높게 -->
+      <image class="prop" href="assets/v2/p2_pine.png"    x="700" y="235" width="200" height="220" preserveAspectRatio="xMidYMax meet"/>
+      <image class="prop" href="assets/v2/p2_haystack.png" x="845" y="368" width="92" height="108" preserveAspectRatio="xMidYMax meet"/>
+      <!-- 집(외관): 문틈으로 부엌 불빛 -->
+      <image class="prop" href="assets/v2/b_house.png" x="-200" y="92" width="580" height="430" preserveAspectRatio="none"/>
+      <image class="prop" href="assets/v2/p2_door.png" x="118" y="310" width="72" height="214" preserveAspectRatio="none"/>
+      <ellipse cx="154" cy="430" rx="100" ry="100" fill="url(#winGlowG)" opacity="0.35"/>
+      <!-- 마당 중열: 장독 · 돌담 -->
+      <image class="prop" href="assets/v2/p2_jangdok.png" x="388" y="444" width="84" height="80" preserveAspectRatio="xMidYMax meet"/>
+      <image class="prop" href="assets/v2/p2_doldam.png"  x="470" y="440" width="190" height="80" preserveAspectRatio="none"/>
+      <!-- 앞열: 강 -->
+      <image class="prop" href="assets/v2/p2_river.png"   x="880" y="464" width="185" height="58" preserveAspectRatio="none"/>
+      <!-- 접지 그림자 -->
+      <g class="shd-row" fill="#120a28" opacity="0.2">
+        <ellipse cx="430" cy="522" rx="38" ry="6"/>
+        <ellipse cx="565" cy="521" rx="92" ry="8"/>
+      </g>
+      <!-- 마당 눈 둔덕 조각 -->
+      <g fill="#eef2fa" opacity="0.85">
+        <path d="M500 522 Q532 512 568 522 Z"/>
+        <path d="M840 524 Q880 512 930 524 Z"/>
+      </g>
+    </g>
+      <g id="steam" data-set="B1" fill="#f6efe2" opacity="0.8">
+        <ellipse class="puff p1" cx="140" cy="332" rx="9" ry="6"/>
+        <ellipse class="puff p2" cx="160" cy="322" rx="11" ry="7"/>
+        <ellipse class="puff p3" cx="150" cy="308" rx="8" ry="5"/>
+      </g>
+
+
+    <!-- ===== 집 (부엌 단면) ===== -->
+    <g id="house" class="legacy" filter="url(#paperCut)">
+      <rect x="40" y="180" width="600" height="250" fill="url(#wallGrad)"/>
+      <rect x="40" y="180" width="600" height="250" fill="none" stroke="#8a6a3e" stroke-width="3"/>
+      <rect x="36" y="180" width="14" height="340" fill="#3a2a5c"/>
+      <rect x="560" y="180" width="14" height="340" fill="#3a2a5c"/>
+      <path d="M2 202 Q340 40 678 202 Z" fill="url(#roofGrad)"/>
+      <path d="M2 202 Q340 40 678 202" fill="none" stroke="#e8c184" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+      <path d="M70 168 Q340 66 610 168" stroke="#8a74bd" stroke-width="4" fill="none" opacity="0.25"/>
+      <!-- 창문 (안에서 새어 나오는 불빛) -->
+      <ellipse cx="465" cy="285" rx="95" ry="85" fill="url(#winGlowG)"/>
+      <rect x="420" y="240" width="90" height="90" rx="6" fill="#ffe9a8" stroke="#8a6a3e" stroke-width="5"/>
+      <path d="M465 240 V330 M420 285 H510" stroke="#a87f3c" stroke-width="4"/>
+    </g>
+
+    <!-- 벽 소품: 민화 산수 액자, 조롱박, 등잔 선반 -->
+    <g id="wallProps" class="legacy" filter="url(#paperCutSm)">
+      <rect x="150" y="238" width="88" height="112" rx="6" fill="#5b3a24"/>
+      <rect x="158" y="246" width="72" height="96" rx="4" fill="#f4e6c4"/>
+      <circle cx="214" cy="264" r="9" fill="#c05a3a"/>
+      <path d="M162 322 L184 284 L202 322 Z" fill="#4f7d68"/>
+      <path d="M186 322 L212 276 L232 322 Z" fill="#3f6a58"/>
+      <path d="M164 300 q10 -4 18 0 M198 292 q9 -4 17 0" stroke="#e8d9b8" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <rect x="158" y="322" width="72" height="20" fill="#7aa86a" opacity="0.7"/>
+      <!-- 조롱박 한 쌍 -->
+      <path d="M296 236 V254 M330 236 V262" stroke="#8a6a3e" stroke-width="3"/>
+      <circle cx="296" cy="262" r="8" fill="#c9a45a"/>
+      <circle cx="296" cy="282" r="12" fill="#b5924a"/>
+      <path d="M288 268 H304" stroke="#8a6a3e" stroke-width="3"/>
+      <circle cx="330" cy="270" r="7" fill="#c9a45a"/>
+      <circle cx="330" cy="288" r="10" fill="#b5924a"/>
+      <path d="M323 276 H337" stroke="#8a6a3e" stroke-width="3"/>
+      <!-- 등잔 선반 -->
+      <rect x="514" y="356" width="64" height="8" rx="3" fill="#6e4a2c"/>
+      <path d="M522 364 L518 380 M570 364 L574 380" stroke="#6e4a2c" stroke-width="4" stroke-linecap="round"/>
+      <ellipse cx="546" cy="348" rx="12" ry="8" fill="#8a5a35"/>
+      <path d="M546 336 Q542 328 546 322 Q550 328 549 334 Z" fill="#ffb74d"/>
+      <circle cx="546" cy="332" r="24" fill="url(#winGlowG)" opacity="0.7"/>
+    </g>
+
+    <!-- 문 + 절구 선반 -->
+    <g id="door" class="legacy" filter="url(#paperCut)">
+      <rect x="588" y="250" width="86" height="270" fill="#3a2a5c" rx="4"/>
+      <rect x="598" y="262" width="66" height="248" fill="#ffedc4" rx="3"/>
+      <path d="M620 262 V510 M642 262 V510 M598 320 H664 M598 390 H664 M598 460 H664" stroke="#a8834a" stroke-width="3"/>
+      <rect x="580" y="232" width="102" height="16" rx="5" fill="#2e2050"/>
+    </g>
+
+    <!-- 마당 장독대 -->
+    <g id="jangdok" class="legacy" filter="url(#paperCutSm)">
+      <path d="M656 520 Q648 484 656 458 Q662 442 680 442 Q698 442 704 458 Q712 484 704 520 Z" fill="#6e4a3a"/>
+      <ellipse cx="680" cy="444" rx="16" ry="5" fill="#4a2e26"/>
+      <path d="M666 448 Q680 440 694 448" stroke="#eef2fa" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M706 520 Q700 494 706 476 Q710 464 722 464 Q734 464 738 476 Q744 494 738 520 Z" fill="#5f3e33"/>
+      <ellipse cx="722" cy="466" rx="12" ry="4" fill="#3e2620"/>
+      <path d="M712 469 Q722 463 732 469" stroke="#eef2fa" stroke-width="4" fill="none" stroke-linecap="round"/>
+    </g>
+
+    <!-- 민화풍 소나무 (담 뒤에서 가지를 뻗는다) -->
+    <g id="minhwaPine" class="legacy" filter="url(#paperCutSm)" transform="translate(-58,0)">
+      <path d="M880 470 Q872 420 888 380 Q900 344 886 312 M886 340 Q908 320 934 314 M888 380 Q862 360 844 336"
+            stroke="#6e4a2c" stroke-width="14" fill="none" stroke-linecap="round"/>
+      <g fill="#b5542e">
+        <path d="M842 322 Q846 300 868 302 Q876 286 898 292 Q918 286 924 302 Q942 304 942 320 Q942 334 924 336 L858 336 Q840 334 842 322 Z"/>
+        <path d="M808 352 Q812 336 828 338 Q834 326 850 330 Q864 326 868 338 Q880 340 880 352 Q880 362 866 364 L820 364 Q806 362 808 352 Z"/>
+        <path d="M912 344 Q916 330 930 332 Q936 322 950 326 Q962 322 966 332 Q976 334 976 344 Q976 354 964 356 L924 356 Q910 354 912 344 Z"/>
+      </g>
+    </g>
+
+    <!-- 담벼락 + 강 -->
+    <g id="wallRiver" class="legacy" filter="url(#paperCut)">
+      <path d="M930 560 L930 470 Q965 455 1000 470 L1000 560 Z" fill="#7fa8d8"/>
+      <path d="M936 495 Q948 490 960 495 M962 510 Q974 505 986 510 M940 530 Q952 525 964 530" stroke="#d9ecff" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <rect x="830" y="366" width="96" height="154" rx="10" fill="#57496a" stroke="#362b4a" stroke-width="3"/>
+      <g stroke="#362b4a" stroke-width="2">
+        <circle cx="852" cy="392" r="11" fill="#6a5c80"/><circle cx="884" cy="386" r="9" fill="#493c5c"/><circle cx="908" cy="398" r="10" fill="#6a5c80"/>
+        <circle cx="846" cy="428" r="10" fill="#493c5c"/><circle cx="876" cy="422" r="12" fill="#6a5c80"/><circle cx="906" cy="436" r="9" fill="#493c5c"/>
+        <circle cx="856" cy="466" r="11" fill="#6a5c80"/><circle cx="888" cy="460" r="9" fill="#493c5c"/><circle cx="910" cy="478" r="10" fill="#6a5c80"/>
+        <circle cx="846" cy="498" r="9" fill="#493c5c"/><circle cx="878" cy="496" r="11" fill="#6a5c80"/>
+      </g>
+    </g>
+
+    <!-- 아궁이 + 가마솥 -->
+    <g id="hearth" class="legacy">
+      <path d="M78 520 L78 430 Q80 400 110 396 L200 396 Q230 400 232 430 L232 520 Z" fill="url(#hearthGrad)" filter="url(#paperCutSm)"/>
+      <path d="M112 520 L112 452 Q112 430 155 430 Q198 430 198 452 L198 520 Z" fill="#241610"/>
+      <g filter="url(#paperCutSm)">
+        <ellipse cx="155" cy="398" rx="62" ry="16" fill="#2f2f33"/>
+        <path d="M93 398 Q93 356 155 356 Q217 356 217 398 Z" fill="url(#potGrad)"/>
+        <path d="M100 380 Q104 364 122 360" stroke="#6a6a74" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8"/>
+        <ellipse cx="155" cy="358" rx="30" ry="8" fill="#2f2f33"/>
+        <circle cx="155" cy="350" r="7" fill="#2f2f33"/>
+      </g>
+    </g>
+    <!-- 아궁이 불빛 웅덩이 -->
+    <ellipse id="fireGlow" data-set="B1" cx="165" cy="505" rx="170" ry="85" fill="url(#fireGlowG)"/>
+
+    <!-- 물독 -->
+    <g id="jarG" class="legacy" filter="url(#paperCutSm)">
+      <path d="M262 520 Q252 470 262 436 Q270 412 300 412 Q330 412 338 436 Q348 470 338 520 Z" fill="url(#jarGrad)"/>
+      <path d="M268 448 Q266 480 272 505" stroke="#c08a55" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.5"/>
+      <ellipse cx="300" cy="414" rx="34" ry="10" fill="#5a3a20"/>
+      <ellipse cx="300" cy="415" rx="26" ry="7" fill="#3e6a8a"/>
+      <path d="M268 470 Q300 480 332 470" stroke="#6e4526" stroke-width="4" fill="none"/>
+    </g>
+
+    <!-- ===== 숨은 친구들 (무대 배치) ===== -->
+    <g id="f-bam" class="friend" data-set="B1" transform="translate(155,512)"><ellipse class="shd" cx="0" cy="-2" rx="14" ry="3.5"/><use class="act" href="#sym-bam" x="-19" y="-38" width="38" height="38"/></g>
+    <g id="f-jara" class="friend" data-set="B1" transform="translate(300,428)"><ellipse class="shd" cx="0" cy="-3" rx="18" ry="4"/><use class="act" href="#sym-jara" x="-24" y="-42" width="48" height="48"/></g>
+    <g id="f-ddong" class="friend" data-set="B1" transform="translate(432,520)"><ellipse class="shd" cx="0" cy="-2" rx="21" ry="5"/><use class="act" href="#sym-ddong" x="-23" y="-42" width="46" height="46"/></g>
+    <g id="f-songgot" class="friend" data-set="B1" transform="translate(495,520)"><ellipse class="shd" cx="0" cy="-2" rx="12" ry="4"/><use class="act" href="#sym-songgot" x="-20" y="-42" width="40" height="42"/></g>
+    <g id="f-jeolgu" class="friend" data-set="B1" transform="translate(885,312)"><ellipse class="shd" cx="0" cy="0" rx="23" ry="5"/><use class="act" href="#sym-jeolgu" x="-27" y="-52" width="54" height="54"/></g>
+    <g id="f-myeongseok" class="friend" data-set="B2" transform="translate(560,520)"><ellipse class="shd" cx="0" cy="-2" rx="42" ry="7"/><use class="act" href="#sym-myeongseok" x="-47" y="-76" width="94" height="80"/></g>
+    <g id="f-jige" class="friend" data-set="B2" transform="translate(690,520)"><ellipse class="shd" cx="0" cy="-2" rx="40" ry="7"/><use class="act" href="#sym-jige" x="-54" y="-118" width="108" height="120"/></g>
+
+    <!-- ===== 할멈 ===== -->
+    <g id="grannyPos">
+      <ellipse class="shd" cx="0" cy="-2" rx="27" ry="6"/>
+      <g id="granny">
+        <image id="gImgLadle" href="assets/v2/c2_granny.png" x="-32" y="-118" width="64" height="118" preserveAspectRatio="xMidYMax meet"/>
+        <image id="gImgHoe" href="assets/v2/c2_granny_hoe.png" x="-32" y="-118" width="64" height="118" preserveAspectRatio="xMidYMax meet" style="display:none"/>
+        <g id="gArmStir" opacity="0"></g>
+        <g id="gArmsUp" opacity="0"></g>
+        <g id="gFace"><path id="gMouth" d="" opacity="0"/></g>
+        <g id="gTears" opacity="0" fill="#9ec8e8">
+          <path class="tear t1" d="M-12 -92 q-3 6 0 8 q3 -2 0 -8"/>
+          <path class="tear t2" d="M12 -92 q3 6 0 8 q-3 -2 0 -8"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- ===== 호랑이 ===== -->
+    <g id="tigerPos">
+      <ellipse class="shd" cx="-4" cy="-3" rx="76" ry="10"/>
+      <g id="tiger">
+        <!-- 무대 호랑이: 만화 컷과 같은 그림체(v3). 자세는 이미지 교체로 (넘어짐·쭉 뻗음·인사) -->
+        <image class="tbase" href="assets/v3w/tiger_stand.webp" x="-86" y="-108" width="172" height="108" preserveAspectRatio="xMidYMax meet"/>
+        <image class="tpose" data-pose="fallen" href="assets/v3w/tiger_fallen.webp" x="-100" y="-92" width="200" height="92" preserveAspectRatio="xMidYMax meet"/>
+        <image class="tpose" data-pose="flat" href="assets/v3w/tiger_flat.webp" x="-112" y="-74" width="224" height="74" preserveAspectRatio="xMidYMax meet"/>
+        <image class="tpose" data-pose="bow" href="assets/v3w/tiger_bow.webp" x="-80" y="-117" width="160" height="117" preserveAspectRatio="xMidYMax meet"/>
+        <!-- JS가 참조하는 상태 요소들 (이미지 위 오버레이) -->
+        <ellipse id="tigerBelly" cx="-6" cy="-45" rx="30" ry="22" opacity="0"/>
+        <g id="tEyeL" opacity="0"></g>
+        <g id="tEyeR" opacity="0"></g>
+        <g class="toverlay">
+        <g id="tEyeHurt" opacity="0" stroke="#2c1a10" stroke-width="4.5" stroke-linecap="round">
+          <path d="M-73 -81 l14 14 M-59 -81 l-14 14"/>
+        </g>
+        <!-- 누적 상처: 맞을 때마다 하나씩 켜진다 (종이 반창고·혹) — 새 호랑이 얼굴 위치 기준 -->
+        <g id="tigerWounds">
+          <g id="wnd0" opacity="0"><!-- 알밤: 눈 붓기 + 눈가 반창고 -->
+            <circle cx="-66" cy="-66" r="7" fill="#f2a7a0" opacity="0.85"/>
+            <g fill="#efe0bd" transform="translate(-60,-90) rotate(-20)">
+              <rect x="-8" y="-2.6" width="16" height="5.2" rx="2.6"/>
+              <rect x="-2.6" y="-8" width="5.2" height="16" rx="2.6"/>
+            </g>
+          </g>
+          <g id="wnd1" opacity="0"><!-- 자라: 입 물린 자국 -->
+            <circle cx="-80" cy="-62" r="6" fill="#f2a7a0" opacity="0.9"/>
+            <g fill="#efe0bd" transform="translate(-80,-60) rotate(18)">
+              <rect x="-8" y="-2.6" width="16" height="5.2" rx="2.6"/>
+              <rect x="-2.6" y="-8" width="5.2" height="16" rx="2.6"/>
+            </g>
+          </g>
+          <g id="wnd2" opacity="0" fill="#8a6a45"><!-- 쇠똥: 엉덩방아 얼룩 -->
+            <circle cx="46" cy="-26" r="4"/>
+            <circle cx="57" cy="-21" r="3"/>
+            <circle cx="52" cy="-34" r="2.6"/>
+          </g>
+          <g id="wnd3" opacity="0"><!-- 송곳: 엉덩이 반창고 -->
+            <circle cx="60" cy="-44" r="5" fill="#f2a7a0" opacity="0.9"/>
+            <g fill="#efe0bd" transform="translate(60,-44) rotate(20)">
+              <rect x="-9" y="-3" width="18" height="6" rx="3"/>
+              <rect x="-3" y="-9" width="6" height="18" rx="3"/>
+            </g>
+          </g>
+          <g id="wnd4" opacity="0"><!-- 절구: 머리 혹 -->
+            <ellipse cx="-52" cy="-104" rx="11" ry="9" fill="#f0b26a"/>
+            <ellipse cx="-55" cy="-107" rx="4" ry="3" fill="#f8d9a8"/>
+          </g>
+        </g>
+        <g id="dizzyStars" opacity="0" fill="#ffd54f" transform="translate(8,24)">
+          <path class="dz" d="M-58 -136 l3 6 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1 Z"/>
+          <path class="dz d1" d="M-80 -130 l2.4 5 5.6 .8 -4 4 .8 5.6 -4.8 -2.4 -4.8 2.4 .8 -5.6 -4 -4 5.6 -.8 Z"/>
+          <path class="dz d2" d="M-36 -130 l2.4 5 5.6 .8 -4 4 .8 5.6 -4.8 -2.4 -4.8 2.4 .8 -5.6 -4 -4 5.6 -.8 Z"/>
+        </g>
+        </g>
+      </g>
+    </g>
+
+    <!-- 멍석에 말린 호랑이 -->
+    <g id="rolledTiger" opacity="0">
+      <ellipse class="shd" cx="0" cy="0" rx="84" ry="10"/>
+      <g id="rolledInner">
+        <image href="assets/v2/c2_rolled.png" x="-105" y="-96" width="210" height="96" preserveAspectRatio="xMidYMax meet"/>
+      </g>
+    </g>
+
+    <!-- 물보라 -->
+    <g id="splashFX" data-set="B2" opacity="0" transform="translate(962,478)">
+      <path d="M0 0 Q-16 -34 -30 -10 M0 0 Q0 -44 14 -14 M0 0 Q20 -30 30 -6" stroke="#8fb8dd" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <circle cx="-22" cy="-30" r="5" fill="#bcd8ee"/><circle cx="8" cy="-40" r="6" fill="#bcd8ee"/><circle cx="28" cy="-24" r="4.6" fill="#bcd8ee"/>
+    </g>
+
+    <!-- 의성어 임팩트 (타격 순간 팡!) -->
+    <g id="impact" opacity="0">
+      <path id="impactBurst" d="M64 0 L38.6 10.4 L55.4 32 L28.3 28.3 L32 55.4 L10.4 38.6 L0 64 L-10.4 38.6 L-32 55.4 L-28.3 28.3 L-55.4 32 L-38.6 10.4 L-64 0 L-38.6 -10.4 L-55.4 -32 L-28.3 -28.3 L-32 -55.4 L-10.4 -38.6 L0 -64 L10.4 -38.6 L32 -55.4 L28.3 -28.3 L55.4 -32 L38.6 -10.4 Z" fill="#ffd54f" stroke="#e8842f" stroke-width="5" stroke-linejoin="round"/>
+      <text id="impactText" y="15" text-anchor="middle" font-size="42">쿵!</text>
+    </g>
+
+    </g><!-- /world -->
+        </svg></div>
+        <div class="layer3d" style="transform: translateZ(120px) scale(0.9)"><svg class="lsvg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+    <!-- ===== 근경: 실루엣 풀숲과 눈 (패럴랙스 1.35) ===== -->
+    <g id="layer-fg" pointer-events="none">
+      <g class="scnA">
+        <!-- 1씬 근경: 왼쪽 위 감나무 가지, 양쪽 아래 억새 (가운데는 비움) -->
+        <image href="assets/v3w/a3_fg_branch.webp" x="-120" y="-70" width="240" height="338"/>
+        <image href="assets/v3w/a3_fg_grass.webp" x="-140" y="250" width="180" height="343"/>
+        <image href="assets/v3w/a3_fg_grass.webp" x="-1150" y="270" width="170" height="324" transform="scale(-1,1)"/>
+      </g>
+      <image class="scnB2 strip" href="assets/v2/b_fg.png" x="-150" y="490" width="1300" height="74" preserveAspectRatio="none"/>
+      <g class="snow" opacity="0.9" data-set="B2" fill="#f6f8fd">
+        <circle cx="140" cy="-30" r="5" style="animation-duration:7s"/>
+        <circle cx="360" cy="-30" r="4.4" style="animation-duration:8.5s; animation-delay:-3s"/>
+        <circle cx="540" cy="-30" r="5.2" style="animation-duration:6.5s; animation-delay:-5s"/>
+        <circle cx="730" cy="-30" r="4.6" style="animation-duration:9s; animation-delay:-1.5s"/>
+        <circle cx="900" cy="-30" r="5" style="animation-duration:7.5s; animation-delay:-6s"/>
+      </g>
+    </g>
+
+
+        </svg></div>
+        <div class="layer3d" style="transform: translateZ(180px) scale(0.85)"><svg class="lsvg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+    <!-- 무대막: 장면 전환 때 위에서 내려와 배경을 갈아끼우는 종이 시트 -->
+    <g id="backdrop" style="transform: translateY(-660px)" pointer-events="none">
+      <image href="assets/v2/t_backdrop.png" x="-20" y="-80" width="1040" height="733" preserveAspectRatio="none"/>
+    </g>
+
+
+        </svg></div>
+        <div class="layer3d" style="transform: translateZ(260px) scale(0.7833)"><svg class="lsvg" style="overflow: visible" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+    <!-- 인형극 커튼 -->
+    <g id="curtainL" pointer-events="none">
+      <image href="assets/v2/t_curtain.png" x="-10" y="-20" width="530" height="600" preserveAspectRatio="none"/>
+    </g>
+    <g id="curtainR" pointer-events="none">
+      <g transform="matrix(-1,0,0,1,1000,0)">
+        <image href="assets/v2/t_curtain.png" x="-10" y="-20" width="530" height="600" preserveAspectRatio="none"/>
+      </g>
+    </g>
+
+    <g id="apFrame" pointer-events="none">
+      <!-- 음각: 개구부 rim이 안쪽으로 드리우는 그림자 -->
+      <g pointer-events="none">
+        <defs>
+          <linearGradient id="aoT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e241c" stop-opacity="0.5"/><stop offset="1" stop-color="#2e241c" stop-opacity="0"/></linearGradient>
+          <linearGradient id="aoL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2e241c" stop-opacity="0.4"/><stop offset="1" stop-color="#2e241c" stop-opacity="0"/></linearGradient>
+          <linearGradient id="aoR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#2e241c" stop-opacity="0.4"/><stop offset="1" stop-color="#2e241c" stop-opacity="0"/></linearGradient>
+        </defs>
+        <rect x="30" y="82" width="940" height="56" fill="url(#aoT)"/>
+        <rect x="30" y="82" width="42" height="436" fill="url(#aoL)"/>
+        <rect x="928" y="82" width="42" height="436" fill="url(#aoR)"/>
+      </g>
+      <!-- 극장 벽: 틀 바깥으로 무대 배경·대기 배우가 새어 보이지 않게 가린다 -->
+      <defs>
+        <pattern id="hallPat" patternUnits="userSpaceOnUse" x="-452" y="-262" width="1904" height="1073">
+          <rect width="1904" height="1073" fill="#1a0d08"/>
+          <image href="assets/v3w/t3_hall.webp" width="1904" height="1073" preserveAspectRatio="none"/>
+        </pattern>
+      </defs>
+      <path d="M-3000 -3000 H4000 V4000 H-3000 Z M-25 -20 V525 H1017 V-20 Z" fill-rule="evenodd" fill="url(#hallPat)"/>
+      <image href="assets/v2/t_frame.png" x="-177" y="-45" width="1356" height="624" preserveAspectRatio="none"/>
+      <!-- 오프닝 암전: 커튼 가운데만 스포트라이트로 남기고 어둡게 -->
+      <defs>
+        <radialGradient id="spotG" gradientUnits="userSpaceOnUse" cx="500" cy="300" r="460">
+          <stop offset="0" stop-color="#0b0610" stop-opacity="0"/>
+          <stop offset="0.42" stop-color="#0b0610" stop-opacity="0"/>
+          <stop offset="0.7" stop-color="#0b0610" stop-opacity="0.82"/>
+          <stop offset="1" stop-color="#0b0610" stop-opacity="0.92"/>
+        </radialGradient>
+      </defs>
+      <rect id="spotDark" x="-3000" y="-3000" width="7000" height="7000" fill="url(#spotG)" opacity="0"/>
+      <!-- 제목 현판: 오프닝에 줄에 매달려 내려온다 (생성 애셋 전 임시 종이 현판) -->
+      <g id="plaque" style="transform: translateY(-520px)">
+        <image href="assets/v3w/t3_plaque.webp" x="310" y="-143" width="380" height="336" preserveAspectRatio="xMidYMid meet"/>
+        <text x="500" y="74" text-anchor="middle" font-family="Jua, sans-serif" font-size="42" fill="#f6ecd8">팥죽할멈과 호랑이</text>
+      </g>
+    </g>
+    </g>
+
+
+        </svg></div>
+      </div>
+    </div>
+
+    <!-- 화면 고정 요소: 질감/비네트/무대막/커튼/프레임/조명 -->
+    <!-- 만화 임팩트 컷 패널 -->
+
+    <svg id="uiStage" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+
+    <!-- 종이 질감 + 비네트 (화면 고정) -->
+    <rect x="-1200" y="-1600" width="3400" height="3800" filter="url(#grainF)" pointer-events="none"/>
+    <rect x="-1200" y="-1600" width="3400" height="3800" fill="url(#vig)" pointer-events="none"/>
+
+    <!-- 공연장 조명 (하우스라이트): 시작 전 켜져 있다가 디졸브로 꺼짐 -->
+    <rect id="houseLight" x="-1200" y="-1600" width="3400" height="3800" fill="#ffdca0" opacity="0.22" pointer-events="none"/>
+
+    <!-- 장면 카드: 무대막이 내려와 있는 동안 다음 장면 이름을 보여준다 -->
+      <g id="sceneCard" opacity="0">
+        <rect x="332" y="236" width="344" height="100" rx="14" fill="#6b4a32"/>
+        <rect x="326" y="228" width="344" height="100" rx="14" fill="#f6ecd8" stroke="#d9a94e" stroke-width="5"/>
+        <text id="sceneCardText" x="498" y="292" text-anchor="middle" font-family="Jua, sans-serif" font-size="44" fill="#a93b32"></text>
+      </g>
+    <rect id="darkOverlay" x="-1200" y="-1600" width="3400" height="3800" fill="#150c2e" opacity="0" pointer-events="none"/>
+    </svg>
+  </div>
+
+
+  <!-- 관객석 실루엣 (공연장 오프닝에서만 보임) -->
+  <div id="audience" aria-hidden="true"></div>
+
+  <!-- 내레이션 말풍선 -->
+  <div id="bubble" hidden><p id="bubbleText"></p></div>
+
+  <button id="skipBtn" type="button" hidden><span>꾹 눌러 건너뛰기</span></button>
+
+  <!-- 남은 기회 (하트 5개) -->
+
+  <!-- 친구 카드 -->
+  <div id="tray" hidden></div>
+
+  <!-- 예전 2.5D 무대판 (비교·개발용). 앱 홈은 index.html, 공개판 팥죽할멈은 tales/patjuk/ -->
+  <div id="homeScreen" class="home">
+    <div class="home-inner">
+      <header class="home-head"><h1>팥죽할멈과 호랑이</h1><p>예전 2.5D 무대판</p></header>
+      <button id="playPatjuk" type="button" class="ticket">공연 시작</button>
+      <p><a href="index.html" style="color:#F6ECD8">홈으로</a></p>
+    </div>
+  </div>
+
+  <!-- 엔딩 -->
+  <div id="endScreen" class="screen" hidden>
+    <div class="end-banner"><h2 id="endTitle"></h2><p id="endMsg"></p></div>
+    <div class="end-tickets">
+      <button id="retryBtn" type="button" class="ticket"></button>
+      <button id="homeBtn" type="button" class="ticket alt">처음으로</button>
+    </div>
+  </div>
+  <!-- 만화 컷: 3D 무대 밖, 화면 전체 위에 뜬다 (iOS 사파리에서 3D 레이어가 컷을 덮는 문제 방지, 세로 화면에서도 크게) -->
+  <div id="cutPanel" hidden aria-hidden="true"><img id="cutImg" alt=""></div>
+  <div id="confetti" aria-hidden="true"></div>
+</div>
+
+<script src="story.js"></script>
+<script src="narration.js"></script>
+<script src="audio.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

@@ -34,7 +34,7 @@ python3 -m http.server 8765
 | `audio/` | 신경망 TTS(edge-tts, ko-KR-SunHiNeural)로 사전 녹음한 내레이션 38개 |
 | `game.js` | 상태머신, 장면 시퀀서, 정답/오답 연출 |
 
-개발 확인용: `index.html#stage` 로 열면 타이틀 없이 무대가 바로 표시된다 (`#stage-zoom`은 줌 구도 확인).
+개발 확인용: `legacy.html#stage` 로 열면 (예전 2.5D 판. 앱 홈은 `index.html`) 타이틀 없이 무대가 바로 표시된다 (`#stage-zoom`은 줌 구도 확인).
 
 ## 내레이션 재녹음
 
