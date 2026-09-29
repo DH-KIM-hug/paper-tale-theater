@@ -403,52 +403,57 @@
     <g id="tigerPos">
       <ellipse class="shd" cx="-4" cy="-3" rx="76" ry="10"/>
       <g id="tiger">
-        <!-- Qwen 생성 다층 페이퍼크래프트 호랑이 (원본 벡터 대체) -->
-        <image href="assets/v2/c2_tiger.png" x="-80" y="-160" width="156" height="160" preserveAspectRatio="xMidYMax meet"/>
-        <!-- JS가 참조하는 상태 요소들 (이미지 위 오버레이/플레이스홀더) -->
+        <!-- 무대 호랑이: 만화 컷과 같은 그림체(v3). 자세는 이미지 교체로 (넘어짐·쭉 뻗음·인사) -->
+        <image class="tbase" href="assets/v3w/tiger_stand.webp" x="-86" y="-108" width="172" height="108" preserveAspectRatio="xMidYMax meet"/>
+        <image class="tpose" data-pose="fallen" href="assets/v3w/tiger_fallen.webp" x="-100" y="-92" width="200" height="92" preserveAspectRatio="xMidYMax meet"/>
+        <image class="tpose" data-pose="flat" href="assets/v3w/tiger_flat.webp" x="-112" y="-74" width="224" height="74" preserveAspectRatio="xMidYMax meet"/>
+        <image class="tpose" data-pose="bow" href="assets/v3w/tiger_bow.webp" x="-80" y="-117" width="160" height="117" preserveAspectRatio="xMidYMax meet"/>
+        <!-- JS가 참조하는 상태 요소들 (이미지 위 오버레이) -->
         <ellipse id="tigerBelly" cx="-6" cy="-45" rx="30" ry="22" opacity="0"/>
         <g id="tEyeL" opacity="0"></g>
         <g id="tEyeR" opacity="0"></g>
+        <g class="toverlay">
         <g id="tEyeHurt" opacity="0" stroke="#2c1a10" stroke-width="4.5" stroke-linecap="round">
-          <path d="M-51 -82 l13 12 M-38 -82 l-13 12"/>
+          <path d="M-73 -81 l14 14 M-59 -81 l-14 14"/>
         </g>
-        <!-- 누적 상처: 맞을 때마다 하나씩 켜진다 (종이 반창고·혹·붕대) -->
+        <!-- 누적 상처: 맞을 때마다 하나씩 켜진다 (종이 반창고·혹) — 새 호랑이 얼굴 위치 기준 -->
         <g id="tigerWounds">
-          <g id="wnd0" opacity="0"><!-- 알밤: 눈 붓기+눈가 반창고 -->
-            <circle cx="-44" cy="-76" r="7" fill="#f2a7a0" opacity="0.85"/>
-            <g fill="#efe0bd" transform="translate(-44,-88) rotate(-20)">
+          <g id="wnd0" opacity="0"><!-- 알밤: 눈 붓기 + 눈가 반창고 -->
+            <circle cx="-66" cy="-66" r="7" fill="#f2a7a0" opacity="0.85"/>
+            <g fill="#efe0bd" transform="translate(-60,-90) rotate(-20)">
               <rect x="-8" y="-2.6" width="16" height="5.2" rx="2.6"/>
               <rect x="-2.6" y="-8" width="5.2" height="16" rx="2.6"/>
             </g>
           </g>
-          <g id="wnd1" opacity="0"><!-- 자라: 주둥이(입) 물린 자국 -->
-            <circle cx="-63" cy="-56" r="6" fill="#f2a7a0" opacity="0.9"/>
-            <g fill="#efe0bd" transform="translate(-63,-56) rotate(18)">
+          <g id="wnd1" opacity="0"><!-- 자라: 입 물린 자국 -->
+            <circle cx="-80" cy="-62" r="6" fill="#f2a7a0" opacity="0.9"/>
+            <g fill="#efe0bd" transform="translate(-80,-60) rotate(18)">
               <rect x="-8" y="-2.6" width="16" height="5.2" rx="2.6"/>
               <rect x="-2.6" y="-8" width="5.2" height="16" rx="2.6"/>
             </g>
           </g>
           <g id="wnd2" opacity="0" fill="#8a6a45"><!-- 쇠똥: 엉덩방아 얼룩 -->
-            <circle cx="44" cy="-34" r="4"/>
-            <circle cx="55" cy="-28" r="3"/>
-            <circle cx="50" cy="-42" r="2.6"/>
+            <circle cx="46" cy="-26" r="4"/>
+            <circle cx="57" cy="-21" r="3"/>
+            <circle cx="52" cy="-34" r="2.6"/>
           </g>
           <g id="wnd3" opacity="0"><!-- 송곳: 엉덩이 반창고 -->
-            <circle cx="58" cy="-52" r="5" fill="#f2a7a0" opacity="0.9"/>
-            <g fill="#efe0bd" transform="translate(58,-52) rotate(20)">
+            <circle cx="60" cy="-44" r="5" fill="#f2a7a0" opacity="0.9"/>
+            <g fill="#efe0bd" transform="translate(60,-44) rotate(20)">
               <rect x="-9" y="-3" width="18" height="6" rx="3"/>
               <rect x="-3" y="-9" width="6" height="18" rx="3"/>
             </g>
           </g>
           <g id="wnd4" opacity="0"><!-- 절구: 머리 혹 -->
-            <ellipse cx="-50" cy="-150" rx="11" ry="9" fill="#f0b26a"/>
-            <ellipse cx="-53" cy="-153" rx="4" ry="3" fill="#f8d9a8"/>
+            <ellipse cx="-52" cy="-104" rx="11" ry="9" fill="#f0b26a"/>
+            <ellipse cx="-55" cy="-107" rx="4" ry="3" fill="#f8d9a8"/>
           </g>
         </g>
-        <g id="dizzyStars" opacity="0" fill="#ffd54f">
+        <g id="dizzyStars" opacity="0" fill="#ffd54f" transform="translate(8,24)">
           <path class="dz" d="M-58 -136 l3 6 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1 Z"/>
           <path class="dz d1" d="M-80 -130 l2.4 5 5.6 .8 -4 4 .8 5.6 -4.8 -2.4 -4.8 2.4 .8 -5.6 -4 -4 5.6 -.8 Z"/>
           <path class="dz d2" d="M-36 -130 l2.4 5 5.6 .8 -4 4 .8 5.6 -4.8 -2.4 -4.8 2.4 .8 -5.6 -4 -4 5.6 -.8 Z"/>
+        </g>
         </g>
       </g>
     </g>
@@ -523,7 +528,13 @@
         <rect x="928" y="82" width="42" height="436" fill="url(#aoR)"/>
       </g>
       <!-- 극장 벽: 틀 바깥으로 무대 배경·대기 배우가 새어 보이지 않게 가린다 -->
-      <path d="M-3000 -3000 H4000 V4000 H-3000 Z M-25 -20 V525 H1017 V-20 Z" fill-rule="evenodd" fill="#2b1712"/>
+      <defs>
+        <pattern id="hallPat" patternUnits="userSpaceOnUse" x="-452" y="-262" width="1904" height="1073">
+          <rect width="1904" height="1073" fill="#1a0d08"/>
+          <image href="assets/v3w/t3_hall.webp" width="1904" height="1073" preserveAspectRatio="none"/>
+        </pattern>
+      </defs>
+      <path d="M-3000 -3000 H4000 V4000 H-3000 Z M-25 -20 V525 H1017 V-20 Z" fill-rule="evenodd" fill="url(#hallPat)"/>
       <image href="assets/v2/t_frame.png" x="-177" y="-45" width="1356" height="624" preserveAspectRatio="none"/>
       <!-- 오프닝 암전: 커튼 가운데만 스포트라이트로 남기고 어둡게 -->
       <defs>
@@ -536,11 +547,9 @@
       </defs>
       <rect id="spotDark" x="-3000" y="-3000" width="7000" height="7000" fill="url(#spotG)" opacity="0"/>
       <!-- 제목 현판: 오프닝에 줄에 매달려 내려온다 (생성 애셋 전 임시 종이 현판) -->
-      <g id="plaque" style="transform: translateY(-320px)">
-        <path d="M388 -260 V24 M612 -260 V24" stroke="#d9a94e" stroke-width="4"/>
-        <rect x="318" y="20" width="364" height="92" rx="10" fill="#6b4a32"/>
-        <rect x="326" y="14" width="348" height="88" rx="9" fill="#a93b32" stroke="#d9a94e" stroke-width="6"/>
-        <text x="500" y="72" text-anchor="middle" font-family="Jua, sans-serif" font-size="40" fill="#f6ecd8">팥죽할멈과 호랑이</text>
+      <g id="plaque" style="transform: translateY(-520px)">
+        <image href="assets/v3w/t3_plaque.webp" x="310" y="-143" width="380" height="336" preserveAspectRatio="xMidYMid meet"/>
+        <text x="500" y="74" text-anchor="middle" font-family="Jua, sans-serif" font-size="42" fill="#f6ecd8">팥죽할멈과 호랑이</text>
       </g>
     </g>
     </g>
@@ -574,13 +583,7 @@
 
 
   <!-- 관객석 실루엣 (공연장 오프닝에서만 보임) -->
-  <div id="audience" aria-hidden="true">
-    <svg viewBox="0 0 1000 170" preserveAspectRatio="xMidYMax slice">
-      <g fill="#4a3226"><circle cx="20" cy="66" r="20"/><ellipse cx="11.0" cy="39.0" rx="5.6000000000000005" ry="15.0"/><ellipse cx="29.0" cy="39.0" rx="5.6000000000000005" ry="15.0"/><circle cx="94" cy="66" r="20"/><circle cx="94" cy="45.0" r="8.4"/><circle cx="168" cy="66" r="20"/><circle cx="242" cy="66" r="20"/><circle cx="227.6" cy="51.6" r="7.199999999999999"/><circle cx="256.4" cy="51.6" r="7.199999999999999"/><circle cx="316" cy="66" r="20"/><path d="M298.0 60.0 L305.0 39.0 L314.0 49.0 Z"/><path d="M334.0 60.0 L327.0 39.0 L318.0 49.0 Z"/><circle cx="390" cy="66" r="20"/><ellipse cx="381.0" cy="39.0" rx="5.6000000000000005" ry="15.0"/><ellipse cx="399.0" cy="39.0" rx="5.6000000000000005" ry="15.0"/><circle cx="464" cy="66" r="20"/><circle cx="464" cy="45.0" r="8.4"/><circle cx="538" cy="66" r="20"/><circle cx="612" cy="66" r="20"/><circle cx="597.6" cy="51.6" r="7.199999999999999"/><circle cx="626.4" cy="51.6" r="7.199999999999999"/><circle cx="686" cy="66" r="20"/><path d="M668.0 60.0 L675.0 39.0 L684.0 49.0 Z"/><path d="M704.0 60.0 L697.0 39.0 L688.0 49.0 Z"/><circle cx="760" cy="66" r="20"/><ellipse cx="751.0" cy="39.0" rx="5.6000000000000005" ry="15.0"/><ellipse cx="769.0" cy="39.0" rx="5.6000000000000005" ry="15.0"/><circle cx="834" cy="66" r="20"/><circle cx="834" cy="45.0" r="8.4"/><circle cx="908" cy="66" r="20"/><circle cx="982" cy="66" r="20"/><circle cx="967.6" cy="51.6" r="7.199999999999999"/><circle cx="996.4" cy="51.6" r="7.199999999999999"/><rect x="-20" y="78" width="1040" height="200" rx="18"/></g>
-      <g fill="#33211a"><circle cx="58" cy="104" r="27"/><circle cx="38.56" cy="84.56" r="9.719999999999999"/><circle cx="77.44" cy="84.56" r="9.719999999999999"/><circle cx="162" cy="104" r="27"/><path d="M137.7 95.9 L147.15 67.55 L159.3 81.05 Z"/><path d="M186.3 95.9 L176.85 67.55 L164.7 81.05 Z"/><circle cx="266" cy="104" r="27"/><ellipse cx="253.85" cy="67.55" rx="7.5600000000000005" ry="20.25"/><ellipse cx="278.15" cy="67.55" rx="7.5600000000000005" ry="20.25"/><circle cx="370" cy="104" r="27"/><circle cx="370" cy="75.65" r="11.34"/><circle cx="474" cy="104" r="27"/><circle cx="578" cy="104" r="27"/><circle cx="558.56" cy="84.56" r="9.719999999999999"/><circle cx="597.44" cy="84.56" r="9.719999999999999"/><circle cx="682" cy="104" r="27"/><path d="M657.7 95.9 L667.15 67.55 L679.3 81.05 Z"/><path d="M706.3 95.9 L696.85 67.55 L684.7 81.05 Z"/><circle cx="786" cy="104" r="27"/><ellipse cx="773.85" cy="67.55" rx="7.5600000000000005" ry="20.25"/><ellipse cx="798.15" cy="67.55" rx="7.5600000000000005" ry="20.25"/><circle cx="890" cy="104" r="27"/><circle cx="890" cy="75.65" r="11.34"/><circle cx="994" cy="104" r="27"/><rect x="-20" y="120" width="1040" height="200" rx="18"/></g>
-      <g fill="#1f130e"><circle cx="0" cy="148" r="35"/><path d="M-31.5 137.5 L-19.25 100.75 L-3.5 118.25 Z"/><path d="M31.5 137.5 L19.25 100.75 L3.5 118.25 Z"/><circle cx="142" cy="148" r="35"/><ellipse cx="126.25" cy="100.75" rx="9.8" ry="26.25"/><ellipse cx="157.75" cy="100.75" rx="9.8" ry="26.25"/><circle cx="284" cy="148" r="35"/><circle cx="284" cy="111.25" r="14.7"/><circle cx="426" cy="148" r="35"/><circle cx="568" cy="148" r="35"/><circle cx="542.8" cy="122.8" r="12.6"/><circle cx="593.2" cy="122.8" r="12.6"/><circle cx="710" cy="148" r="35"/><path d="M678.5 137.5 L690.75 100.75 L706.5 118.25 Z"/><path d="M741.5 137.5 L729.25 100.75 L713.5 118.25 Z"/><circle cx="852" cy="148" r="35"/><ellipse cx="836.25" cy="100.75" rx="9.8" ry="26.25"/><ellipse cx="867.75" cy="100.75" rx="9.8" ry="26.25"/><circle cx="994" cy="148" r="35"/><circle cx="994" cy="111.25" r="14.7"/><rect x="-20" y="169" width="1040" height="200" rx="18"/></g>
-    </svg>
-  </div>
+  <div id="audience" aria-hidden="true"></div>
 
   <!-- 내레이션 말풍선 -->
   <div id="bubble" hidden><p id="bubbleText"></p></div>

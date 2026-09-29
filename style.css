@@ -67,6 +67,8 @@ body {
   pointer-events: none;
 }
 #audience svg { width: 100%; height: 100%; display: block; }
+/* 종이 관객 그림을 원래 비율 그대로 가로로 이어 붙인다 (머리·귀가 잘리지 않게) */
+#audience { background: url(assets/v3w/t3_audience.webp) repeat-x 50% 100% / auto 100%; }
 
 /* 원근 흐림(DOF): 맨 뒤·맨 앞 레이어만 살짝 흐리게 */
 #layer-far { filter: blur(1.4px); }
@@ -474,9 +476,11 @@ button.ghost {
 #tiger.walking { animation: walkBob .32s ease-in-out infinite alternate; }
 @keyframes walkBob { from { translate: 0 0; } to { translate: 0 -7px; } }
 
-/* 그림(560×380)이 상자(156×160) 아래쪽 66%만 채우므로 그만큼만 올린다 */
-#tiger.fallen { transform: translateY(-66%) rotate(180deg); }
-#tiger.flat { transform: scale(1.22, .58); }
+/* 호랑이 자세: 이미지 교체 (넘어짐·쭉 뻗음·인사). 자세 그림엔 표정이 들어 있어 상처·눈 표시는 숨긴다 */
+#tiger .tpose { display: none; }
+#tiger.fallen .tbase, #tiger.flat .tbase, #tiger.bow .tbase,
+#tiger.fallen .toverlay, #tiger.flat .toverlay, #tiger.bow .toverlay { display: none; }
+#tiger.fallen .tpose[data-pose="fallen"], #tiger.flat .tpose[data-pose="flat"], #tiger.bow .tpose[data-pose="bow"] { display: inline; }
 #tiger.shiver { animation: shiver .12s linear infinite; }
 @keyframes shiver { 0%,100% { translate: 0 0; } 50% { translate: 5px 0; } }
 

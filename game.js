@@ -318,13 +318,13 @@ async function theaterOpening() {
   // 3) 제목 현판이 줄에 매달려 내려온다
   AudioFX.swish();
   await anim(el.plaque, [
-    { transform: 'translateY(-320px)' },
+    { transform: 'translateY(-520px)' },
     { transform: 'translateY(14px)', offset: 0.75 },
     { transform: 'translateY(0)' },
   ], { duration: 850, easing: 'ease-out' });
   await sleep(1500);
   // 4) 현판이 올라가며 불이 들어오고 커튼이 열린다
-  anim(el.plaque, [{ transform: 'translateY(0)' }, { transform: 'translateY(-320px)' }], { duration: 600, easing: 'ease-in' });
+  anim(el.plaque, [{ transform: 'translateY(0)' }, { transform: 'translateY(-520px)' }], { duration: 600, easing: 'ease-in' });
   anim(el.spotDark, [{ opacity: 1 }, { opacity: 0 }], { duration: 1300 });
   await setCurtain(true, 1400);
 }
@@ -1022,7 +1022,8 @@ async function curtainCall() {
   AudioFX.jingle();
   await bow(el.granny);
   AudioFX.whimper();
-  await bow(el.tiger); // 반창고 붙인 호랑이도 꾸벅 — 무섭지 않게 끝낸다
+  el.tiger.classList.add('bow'); // 반창고 붙인 호랑이도 꾸벅 (인사 자세 그림) — 무섭지 않게 끝낸다
+  await bow(el.tiger);
   AudioFX.fanfare();
   await sleep(700);
   await camWide(700);
@@ -1064,7 +1065,7 @@ function resetScene() {
   camSnap(500, 280, 1, 0);
 
   el.tigerPos.style.opacity = 1;
-  el.tiger.classList.remove('fallen', 'flat', 'shiver', 'walking');
+  el.tiger.classList.remove('fallen', 'flat', 'shiver', 'walking', 'bow');
   tigerEyesHurt(false);
   el.dizzy.setAttribute('opacity', 0);
   el.belly.style.transform = '';
@@ -1079,7 +1080,7 @@ function resetScene() {
   el.rolled.style.transform = '';
   el.granny.style.rotate = '';
   el.tiger.style.rotate = '';
-  el.plaque.style.transform = 'translateY(-320px)';
+  el.plaque.style.transform = 'translateY(-520px)';
   el.spotDark.style.opacity = 0;
 
   FRIENDS.forEach(f => {
