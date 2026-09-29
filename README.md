@@ -68,6 +68,11 @@ python3 -m http.server 8765
 - [`HOME_UI_PLAN.md`](HOME_UI_PLAN.md): 앱 홈 기획
 - [`BACKGROUND_PLAN.md`](BACKGROUND_PLAN.md), [`STAGE_REVIEW.md`](STAGE_REVIEW.md), [`GPU_QUEUE.md`](GPU_QUEUE.md): 무대·그림 작업 기록
 
-## 라이선스
+## 라이선스·사용 조건
 
-소리 파일 중 CC BY-SA 녹음은 출처 표시가 필요합니다 (`sounds/CREDITS.md`). 그 밖의 코드와 그림의 사용 조건은 아직 정하지 않았습니다.
+**비상업적 용도(개인·교육·연구)로만 사용할 수 있습니다.**
+
+- **그림:** 페이퍼아트 그림은 [Qwen-Image 2.1](https://huggingface.co/Qwen/Qwen-Image-2.1)로 생성했습니다. 이 모델은 [Qwen Research License](https://huggingface.co/Qwen/Qwen-Image-2.1/blob/main/LICENSE)를 따르며 **상업적 이용이 금지**되어 있습니다 (상업 이용은 Qwen의 별도 상업 라이선스 필요). 이 저장소의 그림도 같은 조건으로 비상업적 용도로만 제공합니다. Built with Qwen.
+- **코드:** 비상업적 용도로 자유롭게 보고, 고치고, 공유할 수 있습니다. 상업적 이용은 저작자와 따로 협의해야 합니다.
+- **소리:** 동물 소리·효과음은 각 파일의 라이선스를 따릅니다 (CC0 / CC BY / CC BY-SA). 출처와 조건은 [`sounds/CREDITS.md`](sounds/CREDITS.md)에 있고, CC BY·CC BY-SA 소리는 출처 표시가 필요합니다.
+- **내레이션 음성:** GPT-SoVITS로 합성했습니다. 비상업적 용도로만 사용합니다.
