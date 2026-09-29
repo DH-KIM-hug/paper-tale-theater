@@ -159,8 +159,23 @@ button { font: inherit; border: none; cursor: pointer; color: inherit; }
 .shake { animation: shake .4s linear; }
 @keyframes shake { 20% { transform: translate(-8px, 4px); } 40% { transform: translate(7px,-4px); } 60% { transform: translate(-6px,3px); } 80% { transform: translate(5px,-2px); } }
 
+/* 세로 화면: 무대를 화면 높이의 약 60%로 키우고 양옆을 잘라 보여준다 (카메라가 주인공을 따라간다).
+   --pv 는 동화별로 바꿀 수 있다 (카드 트레이가 있는 팥죽할멈은 더 작게) */
 @media (orientation: portrait) {
-  #stageWrap { flex: none; height: 56vw; margin-top: max(12px, env(safe-area-inset-top, 0px)); }
-  #bubble { top: calc(56vw + max(12px, env(safe-area-inset-top, 0px)) + 16px); }
+  #tale { --pv: 60svh; }
+  #stageWrap { flex: none; height: var(--pv); margin-top: env(safe-area-inset-top, 0px); }
+  #bubble { top: calc(var(--pv) + env(safe-area-inset-top, 0px) + 14px); }
   #bubble p { font-size: clamp(18px, 5vw, 24px); }
 }
+/* 세로일 때 잠깐 뜨는 '돌려서 크게 보기' 안내 */
+#rotateHint {
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 46;
+  display: none; align-items: center; gap: 8px; padding: 6px 14px 6px 10px;
+  background: rgba(246,236,216,.94); color: var(--bean); border: 3px solid var(--gold); border-radius: 999px;
+  font-size: 15px; box-shadow: 0 4px 10px rgba(7,3,18,.35); pointer-events: auto; cursor: pointer;
+  transition: opacity .6s;
+}
+#rotateHint svg { width: 30px; height: 30px; animation: rotHint 1.6s ease-in-out infinite; }
+@keyframes rotHint { 0%, 30% { transform: rotate(0); } 60%, 100% { transform: rotate(-90deg); } }
+@media (orientation: portrait) { #rotateHint { display: flex; } }
+#rotateHint.gone { opacity: 0; pointer-events: none; }

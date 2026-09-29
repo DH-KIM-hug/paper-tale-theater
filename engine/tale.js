@@ -438,6 +438,7 @@ const Tale = (() => {
     <div id="confetti"></div>
     <div id="hand" hidden>${HAND_SVG}</div>
   </div>
+  <div id="rotateHint"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3" fill="none" stroke="#A93B32" stroke-width="2.6"/><circle cx="16" cy="25" r="1.6" fill="#A93B32"/></svg>돌려서 크게 보기</div>
   <div id="bubble" hidden><p id="bubbleText"></p></div>
   <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
@@ -450,7 +451,13 @@ const Tale = (() => {
     <div class="tickets"><button class="ticket" id="againBtn">다시 보기</button><a class="ticket alt" href="../../index.html" style="text-decoration:none;display:grid;place-items:center">처음으로</a></div>
   </div>
 </div>`);
-    root = $('#tale'); stage = $('#stage'); cam = $('#cam'); bgL = $('#bgL'); world = $('#world'); fxL = $('#fxL'); handEl = $('#hand');
+    root = $('#tale'); stage = $('#stage');
+    // 세로 화면: 무대를 크게 키워 양옆을 자른다(slice), 가로: 전체를 맞춘다(meet)
+    const portraitMQ = window.matchMedia('(orientation: portrait)');
+    const fitStage = () => stage.setAttribute('preserveAspectRatio', portraitMQ.matches ? 'xMidYMid slice' : 'xMidYMid meet');
+    fitStage(); portraitMQ.addEventListener ? portraitMQ.addEventListener('change', fitStage) : portraitMQ.addListener(fitStage);
+    const hint = $('#rotateHint');
+    if (hint) { hint.onpointerdown = e => { e.stopPropagation(); hint.classList.add('gone'); }; setTimeout(() => hint.classList.add('gone'), 6000); } cam = $('#cam'); bgL = $('#bgL'); world = $('#world'); fxL = $('#fxL'); handEl = $('#hand');
     // 대사 건너뛰기: 무대 1초 꾹 (보호자용). 짧은 탭은 무시한다
     let ht = null;
     $('#stageWrap').addEventListener('pointerdown', () => { clearTimeout(ht); ht = setTimeout(() => Narrator.stop(), 1000); });

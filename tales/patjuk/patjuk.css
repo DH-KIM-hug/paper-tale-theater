@@ -118,6 +118,7 @@ body { background: #1a0f3d; }
   .card span { font-size: clamp(11px, 2vmin, 15px); }
 }
 @media (orientation: portrait) {
+  #tale { --pv: 48svh; } /* 아래 카드 두 줄 자리를 남긴다 */
   #tray { margin-top: auto; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 18px 14px calc(16px + env(safe-area-inset-bottom, 0px)); }
   .card { min-height: 104px; }
   .card img { width: 60px; height: 60px; }
