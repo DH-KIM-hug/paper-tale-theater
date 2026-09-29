@@ -1,22 +1,52 @@
-/* 종이 동화극장 — 앱 홈 (HOME_UI_PLAN.md v2 「태그로 고르기」 + v3 「모션」 + v5 「한 장의 종이」)
-   화면 전체가 한 장의 무광 남색 판지(#222B45). 동화는 그 종이에 뚫린 구멍 속에 있고,
-   태그·로고는 같은 종이를 눌러 올린(엠보싱) 또는 오려 낸 자리다. 다른 재료·소품 없음.
-   장식은 모서리에서 차오르는 같은 색 계단의 종이 물결 하나, 따뜻한 색은 작은 구리색 하나뿐.
-   iPad 가로·세로가 먼저, 휴대폰은 그다음. */
+/* 종이 동화극장 — 앱 홈 (HOME_UI_PLAN.md v2 「태그로 고르기」 + v3 「모션」 + v5 「한 장의 종이」 + v6 「밝은 종이·어두운 종이」)
+   화면 전체가 한 장의 무광 판지. 밝은 모드 = 옅은 청회색 종이(#ECEFF4), 어두운 모드 = 남색 종이(#222B45).
+   동화는 그 종이에 뚫린 구멍 속에 있다. 태그는 평소 종이에 눌러 찍힌 자리(음각)이고, 고르면 도톰하게 솟는다(양각).
+   다른 재료·소품 없음. 장식은 모서리에서 차오르는 같은 색 계단의 종이 물결 하나, 따뜻한 색은 작은 구리색 하나뿐.
+   글꼴은 프리텐다드. iPad 가로·세로가 먼저, 휴대폰은 그다음. */
 
+/* 태그가 음각(-1) ↔ 양각(+1)으로 스프링처럼 넘어가도록 숫자 하나를 애니메이션한다 */
+@property --lift { syntax: '<number>'; inherits: false; initial-value: -1; }
+
+/* ═════════ 밝은 종이 (기본) ═════════ */
 :root {
-  --sheet: #222B45;        /* 종이 한 장 */
-  --sheet-hi: #2A3453;     /* 빛 받는 볼록한 면 */
-  --sheet-lo: #1B2238;     /* 눌린 면 */
-  --deep: #121729;         /* 구멍 속 깊은 곳 */
-  --cream: #EDE6D6;        /* 글자·고른 태그 */
-  --cream-2: #D6CEBC;
-  --mute: #9098B3;         /* 보조 글자 (종이 위 5.3:1) */
-  --mute-2: #6A7394;
-  --copper: #C98A5B;       /* 단 하나의 따뜻한 색: 포커스·길게 누르기 */
+  color-scheme: light dark;
+  --sheet: #ECEFF4;        /* 종이 한 장 */
+  --sheet-up: #F9FAFC;     /* 솟은 종이(양각) */
+  --sheet-dn: #E3E7EE;     /* 눌린 자리(음각) */
+  --deep: #D3D9E3;         /* 구멍 속 깊은 곳 */
+  --text: #222B45;         /* 글자 (종이 위 13:1) */
+  --text-2: #5C6784;       /* 보조 글자 (5.1:1) */
+  --text-3: #7C86A0;       /* 태그 줄 이름·꺼진 글자 */
+  --copper: #C98A5B;       /* 단 하나의 따뜻한 색 */
 
-  /* 종이결: 잔 알갱이(어두운 점 + 밝은 섬유) + 아주 큰 얼룩 */
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 .01 0 0 0 0 .04 .6 0 0 0 -.22'/%3E%3C/filter%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='1' seed='21' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .92 0 0 0 0 .92 0 0 0 0 1 .5 0 0 0 -.28'/%3E%3C/filter%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 .03 .3 0 0 0 -.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+  /* 빛은 왼쪽 위에서: 어두운 그늘 / 밝은 입술 */
+  --sh-cut: rgba(34, 43, 69, .30);     /* 구멍·음각 안쪽 위 가장자리 */
+  --sh-cut-2: rgba(34, 43, 69, .16);
+  --lip: rgba(255, 255, 255, .95);     /* 아래·오른쪽 입술의 빛 */
+  --sh-drop: rgba(34, 43, 69, .20);    /* 솟은 종이가 드리우는 그늘 */
+  --sh-drop-2: rgba(34, 43, 69, .12);
+  --hi-top: rgba(255, 255, 255, 1);    /* 솟은 종이 윗면의 빛 */
+  --edge-dn: rgba(34, 43, 69, .10);
+  --line-soft: rgba(92, 103, 132, .25);
+  --veil: rgba(236, 239, 244, .72);
+  --vignette: rgba(120, 135, 165, .16);
+  --glow: rgba(255, 255, 255, .5);
+  --grain-op: .55;
+
+  /* SVG 필터(아이콘·옛 그림·물결 그늘)도 종이 색을 따른다 */
+  --f-ic: url(#duoL-l);
+  --f-ic-on: url(#duoOn-l);
+  --f-tag: url(#duoM-l);
+  --f-art: url(#duoArt-l);
+  --f-layer: url(#layer-l);
+  --f-gear: drop-shadow(-.6px -.6px 0 rgba(255, 255, 255, .9)) drop-shadow(.8px 1.2px 1px rgba(34, 43, 69, .28));
+  --gear: #C9D0DC;
+  --logo-ink: #2B3553;
+  --w1: #E1E6EE; --w2: #E7EBF2; --w3: #EDF0F5; --w4: #F3F5F9; --w5: #FAFBFD;
+  --wave-grain: .22;
+  --confetti: #222B45, #5C6784, #C9D0DC, #F9FAFC, #9AA4BB, #222B45, #E3E7EE, #C98A5B;
+
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .13 0 0 0 0 .17 0 0 0 0 .27 .5 0 0 0 -.2'/%3E%3C/filter%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='1' seed='21' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .7 0 0 0 -.3'/%3E%3C/filter%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .25 0 0 0 0 .4 .2 0 0 0 -.07'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
 
   --gap: 28px;
   --row-gap: 34px;
@@ -31,7 +61,46 @@
   --line: 13px;
   --hole-k: .82;           /* 옛 썸네일(크림 여백)을 동그랗게 오려 낼 지름 비율 (반지름 44%) */
   --waves-w: min(430px, 36vw);
-  color-scheme: dark;
+  --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+}
+
+/* ═════════ 어두운 종이: 남색 판지 ═════════ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sheet: #222B45;
+    --sheet-up: #36416A;
+    --sheet-dn: #1C233A;
+    --deep: #121729;
+    --text: #EDE6D6;       /* 크림 (종이 위 11:1) */
+    --text-2: #9098B3;     /* 5.3:1 */
+    --text-3: #6F789A;
+
+    --sh-cut: rgba(3, 5, 12, .8);
+    --sh-cut-2: rgba(3, 5, 12, .5);
+    --lip: rgba(236, 232, 255, .14);
+    --sh-drop: rgba(3, 5, 14, .62);
+    --sh-drop-2: rgba(3, 5, 14, .4);
+    --hi-top: rgba(255, 255, 255, .2);
+    --edge-dn: rgba(0, 0, 0, .3);
+    --line-soft: rgba(144, 152, 179, .3);
+    --veil: rgba(8, 10, 22, .62);
+    --vignette: rgba(6, 8, 20, .38);
+    --glow: rgba(255, 255, 255, .035);
+
+    --f-ic: url(#duoL);
+    --f-ic-on: url(#duoOn);
+    --f-tag: url(#duoM);
+    --f-art: url(#duoArt);
+    --f-layer: url(#layer);
+    --f-gear: drop-shadow(-.6px -.6px 0 rgba(255, 255, 255, .12)) drop-shadow(1px 1.5px 1.2px rgba(4, 6, 16, .7));
+    --gear: #3A4466;
+    --logo-ink: #D6CEBC;
+    --w1: #262F4C; --w2: #2B3553; --w3: #313C5C; --w4: #384467; --w5: #3F4B71;
+    --wave-grain: .7;
+    --confetti: #EDE6D6, #D8D0BE, #3A4568, #2E3858, #465378, #C9C1AE, #EDE6D6, #C98A5B;
+
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 .01 0 0 0 0 .04 .6 0 0 0 -.22'/%3E%3C/filter%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='1' seed='21' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .92 0 0 0 0 .92 0 0 0 0 1 .5 0 0 0 -.28'/%3E%3C/filter%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 .03 .3 0 0 0 -.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+  }
 }
 
 * { box-sizing: border-box; }
@@ -44,12 +113,15 @@ body {
   overflow: hidden;
   overscroll-behavior: none;
   background:
-    radial-gradient(120% 90% at 30% 20%, rgba(255, 255, 255, .035), transparent 60%),
-    radial-gradient(140% 120% at 50% 50%, transparent 55%, rgba(6, 8, 20, .38)),
+    radial-gradient(120% 90% at 30% 20%, var(--glow), transparent 60%),
+    radial-gradient(140% 120% at 50% 50%, transparent 55%, var(--vignette)),
     var(--grain),
     var(--sheet);
-  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  color: var(--cream);
+  font-family: var(--font);
+  font-weight: 500;
+  letter-spacing: -.01em;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
   user-select: none;
@@ -57,11 +129,11 @@ body {
   touch-action: manipulation;
 }
 .defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-button { font: inherit; color: inherit; }
+button { font: inherit; color: inherit; letter-spacing: inherit; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 img.ic { object-fit: contain; -webkit-user-drag: none; }
 
-/* 단 하나의 장식: 모서리에서 차오르는 종이 물결 */
+/* 단 하나의 장식: 모서리에서 차오르는 종이 물결 (같은 색 계단) */
 .waves {
   position: fixed;
   left: 0; bottom: 0;
@@ -71,6 +143,13 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   pointer-events: none;
   display: block;
 }
+.waves g, .waves .moon { filter: var(--f-layer); }
+.waves .w1 { fill: var(--w1); }
+.waves .w2 { fill: var(--w2); }
+.waves .w3 { fill: var(--w3); }
+.waves .w4 { fill: var(--w4); }
+.waves .w5 { fill: var(--w5); }
+.waves .wgrain { opacity: var(--wave-grain); }
 
 /* ───────── 뼈대: 가로 = 왼쪽 레일 + 오른쪽 구멍 격자 ───────── */
 #home {
@@ -95,25 +174,26 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
 }
 .board::-webkit-scrollbar { display: none; }
 
-/* ───────── 로고: 종이에서 오려 낸 글자 (아래 크림 종이가 비친다) ───────── */
+/* ───────── 로고: 종이에서 오려 낸 글자 ───────── */
 .brand { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 56px; }
 .logo {
   margin: 0;
   display: flex;
   align-items: baseline;
-  gap: calc(var(--logo) * .06);
-  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  font-weight: 700;
+  gap: calc(var(--logo) * .02);
+  font-family: var(--font);
+  font-weight: 800;
   font-size: var(--logo);
+  letter-spacing: -.02em;
   line-height: 1;
   white-space: nowrap;
 }
 .lt {
   display: inline-block;
-  color: var(--cream-2);
+  color: var(--logo-ink);
   filter: url(#cut);
 }
-.lt.gap { margin-left: calc(var(--logo) * .28); }
+.lt.gap { margin-left: calc(var(--logo) * .26); }
 
 /* 보호자 톱니: 종이를 눌러 올린 톱니. 3초 누르면 둘레가 구리색으로 채워진다 */
 .gear {
@@ -122,14 +202,11 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   width: 48px; height: 48px;
   border: 0; padding: 0;
   background: none;
-  color: #3A4466;
+  color: var(--gear);
   cursor: pointer;
   touch-action: none;
 }
-.gear-ic {
-  position: absolute; inset: 11px; width: 26px; height: 26px;
-  filter: drop-shadow(-.6px -.6px 0 rgba(255, 255, 255, .12)) drop-shadow(1px 1.5px 1.2px rgba(4, 6, 16, .7));
-}
+.gear-ic { position: absolute; inset: 11px; width: 26px; height: 26px; filter: var(--f-gear); }
 .gear-ring { position: absolute; inset: 0; width: 48px; height: 48px; transform: rotate(-90deg); }
 .gear-ring circle {
   fill: none; stroke: var(--copper); stroke-width: 2.5;
@@ -143,16 +220,21 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
 .tagrow { display: flex; flex-direction: column; gap: 12px; }
 .row-tab {
   margin: 0;
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: .28em;
-  color: var(--mute);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .3em;
+  color: var(--text-3);
 }
 .chips { display: flex; flex-wrap: wrap; gap: 10px 8px; }
 
-/* 칩 = 같은 종이를 뒤에서 밀어 올린 알약 모양 (색 없이 빛과 그늘로만).
-   고르면 그 자리에 크림 종이 한 겹이 올라온다 */
+/* 칩 = 종이 자체의 모양.
+   평소(--lift -1) = 종이에 눌러 찍힌 음각: 한 톤 어둡고, 안쪽 위·왼쪽에 그늘, 아래·오른쪽 입술에 빛.
+   고름(--lift +1) = 도톰하게 솟은 양각: 한 톤 밝고, 윗면에 빛, 아래·오른쪽으로 깊은 그늘.
+   --lift 하나를 튕기는 곡선으로 옮겨서 눌린 종이가 '톡' 솟았다가 자리 잡는다 (돌아갈 때도) */
 .chip {
+  --lift: -1;
+  --dn: max(0, -1 * var(--lift));
+  --up: max(0, var(--lift));
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -161,19 +243,25 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   padding: 0 calc(var(--chip-h) * .4) 0 calc(var(--chip-h) * .28);
   border: 0;
   border-radius: 999px;
-  background: var(--grain), linear-gradient(150deg, #29334F, #1F2740);
-  color: var(--cream-2);
+  background:
+    var(--grain),
+    color-mix(in srgb, var(--sheet-up) clamp(0%, calc((var(--lift) + 1) * 50%), 100%), var(--sheet-dn));
+  color: var(--text-2);
   font-size: var(--chip-fs);
-  font-weight: 700;
-  letter-spacing: -.02em;
+  font-weight: 600;
+  letter-spacing: -.01em;
   white-space: nowrap;
   cursor: pointer;
+  transform: translateY(calc(var(--up) * -2px));
   box-shadow:
-    inset 1px 1px 0 rgba(255, 255, 255, .09),
-    inset -1px -1px 0 rgba(0, 0, 0, .28),
-    -1px -1px 2px rgba(255, 255, 255, .035),
-    2px 3px 6px rgba(5, 7, 18, .5);
-  transition: box-shadow .12s, background .12s, color .12s;
+    inset calc(var(--dn) * 1.5px) calc(var(--dn) * 2px) calc(var(--dn) * 3px) var(--sh-cut),
+    inset calc(var(--dn) * .5px) calc(var(--dn) * 1px) 0 var(--sh-cut-2),
+    inset calc(var(--dn) * -1px) calc(var(--dn) * -1px) 0 var(--lip),
+    inset calc(var(--up) * 1px) calc(var(--up) * 1.2px) 0 var(--hi-top),
+    inset calc(var(--up) * -1px) calc(var(--up) * -1px) 0 var(--edge-dn),
+    calc(var(--up) * 2px) calc(var(--up) * 4px) calc(var(--up) * 6px) var(--sh-drop),
+    calc(var(--up) * 5px) calc(var(--up) * 10px) calc(var(--up) * 18px) var(--sh-drop-2);
+  transition: --lift .5s cubic-bezier(.3, 1.9, .45, .85), color .18s;
 }
 /* 손가락 닿는 곳은 44px 이상 */
 .chip::after {
@@ -185,25 +273,22 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   width: var(--chip-ic); height: var(--chip-ic);
   flex: none;
   display: block;
-  filter: url(#duoL);
+  filter: var(--f-ic);
+  opacity: .8;
 }
 .chip .lb { display: inline-flex; }
 .chip .lb i { display: inline-block; font-style: normal; transform-origin: 50% 90%; }
 .chip .lb i.sp { width: .3em; }
-.chip:active {
-  box-shadow: inset 2px 2px 4px rgba(4, 6, 16, .55), inset -1px -1px 0 rgba(255, 255, 255, .06);
-}
 .chip.on {
-  background: var(--grain), linear-gradient(160deg, #F5EFE2, var(--cream) 55%, #E0D7C3);
-  color: var(--sheet);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .6),
-    inset 0 -1px 0 rgba(90, 70, 40, .18),
-    0 1px 0 rgba(4, 6, 16, .5),
-    2px 5px 10px rgba(4, 6, 16, .55);
+  --lift: 1;
+  color: var(--text);
+  font-weight: 700;
   z-index: 1;
 }
-.chip.on .ic { filter: url(#duoInk); }
+.chip.on .ic { filter: var(--f-ic-on); opacity: 1; }
+/* 누르는 순간: 음각은 더 깊이, 양각은 반쯤 눌린다 */
+.chip:active { --lift: -1.4; transition-duration: .08s; }
+.chip.on:active { --lift: .35; }
 .chip:focus-visible, .ticket:focus-visible, .gear:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
 
 /* ───────── 구멍 격자 ───────── */
@@ -268,10 +353,9 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   border-radius: inherit;
   pointer-events: none;
   box-shadow:
-    inset 1px 1.5px 0 rgba(3, 5, 12, .85),
-    inset 4px 6px 7px rgba(3, 5, 12, .6),
-    inset -1px -1.5px 0 rgba(236, 232, 255, .16),
-    inset -3px -4px 6px rgba(236, 232, 255, .04);
+    inset 1px 1.5px 0 var(--sh-cut),
+    inset 4px 6px 8px var(--sh-cut-2),
+    inset -1px -1.5px 0 var(--lip);
 }
 .art { transition: transform .25s; }
 .thumb .art { position: absolute; display: block; }
@@ -282,10 +366,10 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   height: calc(100% / var(--hole-k));
   object-fit: cover;
 }
-/* 그림이 없는 동화: 옛 SVG 그림을 남색~크림 톤으로 */
-.thumb.svgart svg, .so-box.svgart svg { inset: 0; width: 100%; height: 100%; filter: url(#duoArt); }
+/* 그림이 없는 동화: 옛 SVG 그림을 종이 색 계단으로 */
+.thumb.svgart svg, .so-box.svgart svg { inset: 0; width: 100%; height: 100%; filter: var(--f-art); }
 .art .pc { filter: url(#pp); }
-/* 새 썸네일: 남색 종이에 모양 구멍이 이미 뚫린 그림. 네모 그대로, 바깥 가장자리만 종이에 녹인다 */
+/* 새 썸네일: 종이에 모양 구멍이 이미 뚫린 그림(밝은/어두운 판이 따로). 네모 그대로, 바깥 가장자리만 종이에 녹인다 */
 .thumb.full { border-radius: 0; background: none; -webkit-mask-image: none; overflow: visible; }
 .thumb.full::after { display: none; }
 .thumb.full img, .so-box.full img {
@@ -312,36 +396,37 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--grain), linear-gradient(150deg, #2A3453, #1F2740);
+  background: var(--grain), var(--sheet);
   box-shadow:
-    inset 1px 1px 0 rgba(255, 255, 255, .1),
-    inset -1px -1px 0 rgba(0, 0, 0, .3),
-    3px 4px 8px rgba(3, 5, 12, .6);
+    inset 1px 1px 0 var(--hi-top),
+    inset -1px -1px 0 var(--edge-dn),
+    3px 4px 8px var(--sh-drop);
 }
 .thumb.full .plug { inset: 18%; }
 .plug b {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: .2em;
-  padding-left: .2em;
-  color: var(--mute);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .24em;
+  padding-left: .24em;
+  color: var(--text-3);
 }
 
 .label { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 14px 4px 0; min-width: 0; flex: 1; text-align: center; }
 .title {
-  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-family: var(--font);
   font-weight: 700;
   font-size: var(--title);
-  line-height: 1.25;
-  letter-spacing: .01em;
-  color: var(--cream);
+  line-height: 1.3;
+  letter-spacing: -.015em;
+  color: var(--text);
   word-break: keep-all;
 }
 .line {
   font-size: var(--line);
+  font-weight: 450;
   letter-spacing: -.01em;
-  line-height: 1.4;
-  color: var(--mute);
+  line-height: 1.45;
+  color: var(--text-2);
   word-break: keep-all;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -349,38 +434,38 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   overflow: hidden;
 }
 .tags { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: auto; padding-top: 6px; }
-.tags .ic { width: 18px; height: 18px; display: block; filter: url(#duoM); opacity: .85; }
-.tags .org { padding-right: 7px; margin-right: 1px; border-right: 1px solid rgba(144, 152, 179, .3); }
+.tags .ic { width: 18px; height: 18px; display: block; filter: var(--f-tag); opacity: .85; }
+.tags .org { padding-right: 7px; margin-right: 1px; border-right: 1px solid var(--line-soft); }
 .card.closed { cursor: default; }
-.card.closed .title { color: var(--mute); }
+.card.closed .title { color: var(--text-2); }
 .card.closed .thumb .art { visibility: hidden; }
 .card.closed .line, .card.closed .tags { opacity: .6; }
 
 /* 결과 없음 */
-.empty { text-align: center; padding: 48px 10px; color: var(--cream-2); font-size: 17px; font-weight: 700; letter-spacing: .04em; animation: pop .45s cubic-bezier(.3, 1.6, .5, 1) both; }
+.empty { text-align: center; padding: 48px 10px; color: var(--text-2); font-size: 17px; font-weight: 600; animation: pop .45s cubic-bezier(.3, 1.6, .5, 1) both; }
 .empty p { margin: 0 0 18px; }
 @keyframes pop { from { opacity: 0; transform: scale(.9); } }
 
-/* 버튼 (보호자 메뉴·결과 없음): 같은 종이를 눌러 올린 알약, 주 버튼만 크림 */
+/* 버튼 (보호자 메뉴·결과 없음): 같은 종이의 알약. 보조 = 음각, 주 버튼 = 양각 */
 .ticket {
   min-height: 48px;
   border: 0;
   padding: 0 24px;
   font-size: 15px;
-  font-weight: 700;
-  letter-spacing: .04em;
+  font-weight: 600;
   border-radius: 999px;
   cursor: pointer;
-  color: var(--cream-2);
-  background: var(--grain), linear-gradient(150deg, #2D3756, #222A44);
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .09), inset -1px -1px 0 rgba(0, 0, 0, .28), 2px 3px 6px rgba(5, 7, 18, .5);
+  color: var(--text-2);
+  background: var(--grain), var(--sheet-dn);
+  box-shadow: inset 1.5px 2px 3px var(--sh-cut), inset -1px -1px 0 var(--lip);
 }
 .sheet .ticket:not(.alt), .empty .ticket {
-  color: var(--sheet);
-  background: var(--grain), linear-gradient(160deg, #F5EFE2, var(--cream) 55%, #E0D7C3);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), 0 1px 0 rgba(4, 6, 16, .5), 2px 5px 10px rgba(4, 6, 16, .5);
+  color: var(--text);
+  font-weight: 700;
+  background: var(--grain), var(--sheet-up);
+  box-shadow: inset 1px 1.2px 0 var(--hi-top), inset -1px -1px 0 var(--edge-dn), 2px 4px 6px var(--sh-drop), 5px 10px 18px var(--sh-drop-2);
 }
-.ticket:active { box-shadow: inset 2px 2px 4px rgba(4, 6, 16, .5); }
+.ticket:active { box-shadow: inset 2px 2px 4px var(--sh-cut); }
 
 /* 짧은 안내 쪽지: 같은 종이 한 겹 */
 .hint {
@@ -389,13 +474,12 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   transform: translateX(-50%);
   z-index: 20;
   padding: 12px 22px;
-  background: var(--grain), var(--sheet-hi);
-  color: var(--cream);
+  background: var(--grain), var(--sheet-up);
+  color: var(--text);
   font-size: 14px;
-  font-weight: 700;
-  letter-spacing: .04em;
+  font-weight: 600;
   border-radius: 999px;
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .08), 3px 6px 14px rgba(3, 5, 12, .6);
+  box-shadow: inset 1px 1px 0 var(--hi-top), 3px 6px 14px var(--sh-drop);
   white-space: nowrap;
   animation: hintIn .4s cubic-bezier(.3, 1.6, .5, 1) both;
 }
@@ -406,7 +490,7 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   position: fixed; inset: 0; z-index: 30;
   display: grid; place-items: center;
   padding: 16px;
-  background: rgba(8, 10, 22, .6);
+  background: var(--veil);
 }
 .parent[hidden], .hint[hidden], .empty[hidden], .stage-out[hidden] { display: none; }
 .sheet {
@@ -414,15 +498,15 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   max-height: 100%;
   overflow-y: auto;
   padding: 28px 28px 22px;
-  background: var(--grain), linear-gradient(150deg, #2B3554, #232C47);
-  color: var(--cream);
+  background: var(--grain), var(--sheet-up);
+  color: var(--text);
   border-radius: 6px;
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .08), inset -1px -1px 0 rgba(0, 0, 0, .25), 6px 12px 30px rgba(2, 4, 12, .6);
+  box-shadow: inset 1px 1px 0 var(--hi-top), inset -1px -1px 0 var(--edge-dn), 4px 8px 14px var(--sh-drop), 10px 22px 44px var(--sh-drop-2);
 }
-.sheet h2 { margin: 0 0 12px; font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; font-size: 21px; letter-spacing: .04em; color: var(--cream); }
-.how { margin: 0 0 16px; font-size: 14px; line-height: 1.6; color: var(--mute); word-break: keep-all; }
-.how b { color: var(--cream-2); }
-.toggle { display: flex; align-items: center; gap: 10px; min-height: 48px; font-size: 15px; font-weight: 700; color: var(--cream); margin-bottom: 12px; }
+.sheet h2 { margin: 0 0 12px; font-family: var(--font); font-size: 21px; font-weight: 700; letter-spacing: -.01em; color: var(--text); }
+.how { margin: 0 0 16px; font-size: 14px; line-height: 1.65; color: var(--text-2); word-break: keep-all; }
+.how b { color: var(--text); font-weight: 700; }
+.toggle { display: flex; align-items: center; gap: 10px; min-height: 48px; font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
 .toggle input { width: 22px; height: 22px; accent-color: var(--copper); }
 .sheet-btns { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
 
@@ -434,21 +518,21 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   z-index: 15;
   max-width: calc(100vw - 32px);
   padding: 10px 22px 11px;
-  background: var(--grain), var(--sheet-hi);
+  background: var(--grain), var(--sheet-up);
   border-radius: 999px;
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .08), 3px 6px 14px rgba(3, 5, 12, .6);
+  box-shadow: inset 1px 1px 0 var(--hi-top), 3px 6px 14px var(--sh-drop);
   pointer-events: none;
 }
 #bubble[hidden] { display: none; }
-#bubble p { margin: 0; font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: .04em; color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#bubble p { margin: 0; font-family: var(--font); font-weight: 700; font-size: 16px; letter-spacing: -.01em; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* ───────── 여는 장면: 종이 부스러기가 날아와 오린 글자가 된다 ───────── */
 .confetti { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; }
-.bit { position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 1px; box-shadow: 1px 2px 3px rgba(0, 0, 0, .4); will-change: transform, opacity; }
+.bit { position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 1px; box-shadow: 1px 2px 3px var(--sh-drop); will-change: transform, opacity; }
 .bit.b1 { border-radius: 50%; }
 .bit.b2 { width: 13px; height: 6px; }
 
-/* ───────── 카드 → 무대: 구멍 속 그림이 화면 가득 커지고, 남색 종이가 조리개처럼 닫힌다 ───────── */
+/* ───────── 카드 → 무대: 구멍 속 그림이 화면 가득 커지고, 종이가 조리개처럼 닫힌다 (종이 색을 따른다) ───────── */
 .stage-out { position: fixed; inset: 0; z-index: 50; overflow: hidden; }
 .so-veil { position: absolute; inset: 0; background: var(--deep); opacity: 0; }
 .so-box { position: absolute; left: 0; top: 0; overflow: hidden; transform-origin: 0 0; border-radius: 50%; background: var(--deep); will-change: transform; }
@@ -461,7 +545,7 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   translate: -50% -50%;
   border-radius: 50%;
   opacity: 0;
-  box-shadow: 0 0 0 200vmax var(--sheet), inset 5px 7px 10px rgba(3, 5, 12, .6), inset -1px -2px 0 rgba(236, 232, 255, .14);
+  box-shadow: 0 0 0 200vmax var(--sheet), inset 5px 7px 10px var(--sh-cut), inset -1px -2px 0 var(--lip);
 }
 
 /* ═════════ iPad (가로·세로) — 기본 대상 ═════════ */
@@ -472,10 +556,10 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
     --board-w: clamp(290px, 26vw, 360px); --card-min: 190px; --gap: 34px; --row-gap: 40px;
     --title: 19px; --line: 14px;
   }
-  .row-tab { font-size: 13.5px; }
+  .row-tab { font-size: 13px; }
   .chips { gap: 12px 10px; }
   .tags .ic { width: 21px; height: 21px; }
-  .plug b { font-size: 15px; }
+  .plug b { font-size: 14.5px; }
   .gear { width: 56px; height: 56px; }
   .gear-ic { inset: 14px; width: 28px; height: 28px; }
   .gear-ring { width: 56px; height: 56px; }
@@ -491,11 +575,11 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   .board { gap: 10px; }
   .tagrow { gap: 7px; }
   .chips { gap: 11px 5px; }
-  .chip { gap: 4px; padding: 0 10px 0 8px; letter-spacing: -.04em; }
-  .row-tab { font-size: 11px; }
+  .chip { gap: 4px; padding: 0 10px 0 8px; letter-spacing: -.03em; }
+  .row-tab { font-size: 10.5px; }
   .label { padding-top: 9px; gap: 3px; }
   .tags .ic { width: 15px; height: 15px; }
-  .plug b { font-size: 11px; letter-spacing: .12em; }
+  .plug b { font-size: 11px; letter-spacing: .14em; }
   .sheet { padding: 18px 20px 14px; }
   .how { font-size: 13px; margin-bottom: 10px; }
 }
@@ -511,12 +595,11 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   .board { overflow: visible; padding-bottom: 0; gap: 12px; }
   .tagrow { gap: 8px; }
   .chips { gap: 8px 4px; }
-  .chip { gap: 4px; padding: 0 10px 0 9px; letter-spacing: -.04em; }
+  .chip { gap: 4px; padding: 0 10px 0 9px; letter-spacing: -.03em; }
   .board { padding-left: 0; padding-right: 0; }
-  .row-tab { font-size: 11.5px; }
+  .row-tab { font-size: 11px; }
   /* 물결은 오른쪽 위 모서리에서 내려온다 (격자 위에 겹치지 않게) */
   .waves { left: auto; bottom: auto; right: 0; top: 0; transform: rotate(180deg); }
-  .brand { padding-right: 0; }
 }
 /* 세로 iPad */
 @media (orientation: portrait) and (min-width: 700px) {
@@ -526,13 +609,12 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   }
   #home { gap: 22px; }
   .board { gap: 20px; }
-  .chip { gap: 7px; padding: 0 calc(var(--chip-h) * .4) 0 calc(var(--chip-h) * .28); letter-spacing: -.02em; }
+  .chip { gap: 7px; padding: 0 calc(var(--chip-h) * .4) 0 calc(var(--chip-h) * .28); letter-spacing: -.01em; }
   .chips { gap: 12px 10px; }
   .tagrow { gap: 10px; }
-  .chips { gap: 12px 10px; }
-  .row-tab { font-size: 13.5px; }
+  .row-tab { font-size: 13px; }
   .tags .ic { width: 21px; height: 21px; }
-  .plug b { font-size: 15px; }
+  .plug b { font-size: 14.5px; }
   .gear { width: 56px; height: 56px; }
   .gear-ic { inset: 14px; width: 28px; height: 28px; }
   .gear-ring { width: 56px; height: 56px; }
@@ -541,7 +623,8 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
 /* 움직임 줄이기 (JS 도 같은 설정을 보고 애니메이션을 건너뛴다) */
 @media (prefers-reduced-motion: reduce) {
   .empty, .hint { animation: none; }
-  .art, .chip { transition: none; }
+  .art { transition: none; }
+  .chip { transition: none; }
   a.card:active .art { transform: none; }
   .gear.holding .gear-ring circle { transition-duration: 3s; }
 }

@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<meta name="theme-color" content="#222B45">
+<meta name="theme-color" content="#ECEFF4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222B45" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -22,9 +24,16 @@
     </filter>
     <!-- 한 가지 색 종이: 아이콘·옛 그림을 남색~크림 두 톤(또는 세 톤)으로 -->
     <filter id="duoL" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".36 .93"/><feFuncG type="table" tableValues=".39 .9"/><feFuncB type="table" tableValues=".53 .84"/></feComponentTransfer></filter>
-    <filter id="duoInk" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".13 .56"/><feFuncG type="table" tableValues=".17 .59"/><feFuncB type="table" tableValues=".27 .7"/></feComponentTransfer></filter>
     <filter id="duoM" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".27 .72"/><feFuncG type="table" tableValues=".31 .71"/><feFuncB type="table" tableValues=".45 .74"/></feComponentTransfer></filter>
     <filter id="duoArt" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".07 .13 .22 .46"/><feFuncG type="table" tableValues=".09 .16 .25 .47"/><feFuncB type="table" tableValues=".16 .26 .38 .58"/></feComponentTransfer></filter>
+    <!-- 어두운 종이: 고른 태그(한 톤 밝은 남색) 위 아이콘 -->
+    <filter id="duoOn" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".5 .95"/><feFuncG type="table" tableValues=".53 .92"/><feFuncB type="table" tableValues=".66 .86"/></feComponentTransfer></filter>
+    <!-- 밝은 종이용 -->
+    <filter id="duoL-l" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".36 .68"/><feFuncG type="table" tableValues=".4 .71"/><feFuncB type="table" tableValues=".52 .78"/></feComponentTransfer></filter>
+    <filter id="duoOn-l" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".13 .49"/><feFuncG type="table" tableValues=".17 .53"/><feFuncB type="table" tableValues=".27 .63"/></feComponentTransfer></filter>
+    <filter id="duoM-l" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".36 .72"/><feFuncG type="table" tableValues=".4 .75"/><feFuncB type="table" tableValues=".52 .82"/></feComponentTransfer></filter>
+    <filter id="duoArt-l" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".45 .62 .8 .97"/><feFuncG type="table" tableValues=".5 .66 .83 .98"/><feFuncB type="table" tableValues=".62 .74 .88 .99"/></feComponentTransfer></filter>
+    <filter id="layer-l" x="-10%" y="-20%" width="130%" height="130%"><feDropShadow dx="4" dy="-3" stdDeviation="6" flood-color="#222B45" flood-opacity=".13"/></filter>
     <!-- 종이에서 오려 낸 글자: 오린 자리 안쪽 위·왼쪽 가장자리에 그늘 -->
     <filter id="cut" x="-10%" y="-10%" width="120%" height="120%"><feOffset in="SourceAlpha" dx="1.3" dy="1.7"/><feGaussianBlur stdDeviation=".8" result="o"/><feComposite in="SourceAlpha" in2="o" operator="out" result="edge"/><feFlood flood-color="#0C1020" flood-opacity=".9"/><feComposite in2="edge" operator="in" result="sh"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="sh"/></feMerge></filter>
     <!-- 겹친 종이 물결의 그림자 -->
@@ -59,18 +68,18 @@
   <!-- 마음·배려: 하트 -->
   <symbol id="i-heart" viewBox="0 0 32 32"><path d="M16 28 C4 20 2 14 4 9.5 C6 5 12 4.5 16 9.5 C20 4.5 26 5 28 9.5 C30 14 28 20 16 28Z" fill="#F0506E"/></symbol>
   <!-- 보호자 톱니 -->
-  <symbol id="i-gear" viewBox="0 0 32 32"><path d="M13.5 3 h5 l.8 3.6 3 1.3 3.1 -2 3.5 3.5 -2 3.1 1.3 3 3.6 .8 v5 l-3.6 .8 -1.3 3 2 3.1 -3.5 3.5 -3.1 -2 -3 1.3 -.8 3.6 h-5 l-.8 -3.6 -3 -1.3 -3.1 2 -3.5 -3.5 2 -3.1 -1.3 -3 -3.6 -.8 v-5 l3.6 -.8 1.3 -3 -2 -3.1 3.5 -3.5 3.1 2 3 -1.3z" fill="currentColor"/><circle cx="16" cy="16" r="4.5" fill="#1A2136"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 32 32"><path d="M13.5 3 h5 l.8 3.6 3 1.3 3.1 -2 3.5 3.5 -2 3.1 1.3 3 3.6 .8 v5 l-3.6 .8 -1.3 3 2 3.1 -3.5 3.5 -3.1 -2 -3 1.3 -.8 3.6 h-5 l-.8 -3.6 -3 -1.3 -3.1 2 -3.5 -3.5 2 -3.1 -1.3 -3 -3.6 -.8 v-5 l3.6 -.8 1.3 -3 -2 -3.1 3.5 -3.5 3.1 2 3 -1.3z" fill="currentColor"/><circle cx="16" cy="16" r="4.5" style="fill: var(--sheet)"/></symbol>
 </svg>
 
 <!-- 한 장의 종이 위 단 하나의 장식: 모서리에서 차오르는 남색 종이 물결(같은 색 계단) + 작은 구리색 달 하나 -->
 <svg class="waves" viewBox="0 0 600 500" preserveAspectRatio="xMinYMax meet" aria-hidden="true" focusable="false">
-  <circle class="moon" cx="470" cy="300" r="14" fill="#C98A5B" filter="url(#layer)"/>
-  <g filter="url(#layer)"><path fill="#262F4C" d="M0 60 C90 70 140 150 220 180 C300 210 360 260 420 330 C470 390 540 430 600 500 L0 500Z"/></g>
-  <g filter="url(#layer)"><path fill="#2B3553" d="M0 150 C80 150 130 210 190 250 C260 295 320 300 370 360 C410 410 450 460 480 500 L0 500Z"/></g>
-  <g filter="url(#layer)"><path fill="#313C5C" d="M0 240 C60 235 110 280 150 320 C200 370 260 380 300 430 C320 455 335 480 345 500 L0 500Z"/></g>
-  <g filter="url(#layer)"><path fill="#384467" d="M0 320 C50 318 90 350 120 390 C150 430 190 440 215 500 L0 500Z"/></g>
-  <g filter="url(#layer)"><path fill="#3F4B71" d="M0 400 C35 398 65 420 85 450 C100 472 115 485 120 500 L0 500Z"/></g>
-  <rect width="600" height="500" clip-path="url(#waveClip)" filter="url(#waveGrain)" opacity=".7"/>
+  <circle class="moon" cx="470" cy="300" r="14" fill="#C98A5B"/>
+  <g><path class="w1" d="M0 60 C90 70 140 150 220 180 C300 210 360 260 420 330 C470 390 540 430 600 500 L0 500Z"/></g>
+  <g><path class="w2" d="M0 150 C80 150 130 210 190 250 C260 295 320 300 370 360 C410 410 450 460 480 500 L0 500Z"/></g>
+  <g><path class="w3" d="M0 240 C60 235 110 280 150 320 C200 370 260 380 300 430 C320 455 335 480 345 500 L0 500Z"/></g>
+  <g><path class="w4" d="M0 320 C50 318 90 350 120 390 C150 430 190 440 215 500 L0 500Z"/></g>
+  <g><path class="w5" d="M0 400 C35 398 65 420 85 450 C100 472 115 485 120 500 L0 500Z"/></g>
+  <rect class="wgrain" width="600" height="500" clip-path="url(#waveClip)" filter="url(#waveGrain)"/>
 </svg>
 
 <div id="home">

@@ -162,14 +162,20 @@
     (sel.origin.size === 0 || sel.origin.has(t.origin)) &&
     (sel.skill.size === 0 || t.skills.some(k => sel.skill.has(k)));
 
-  /* 새 썸네일(THUMBS2) = 남색 종이에 모양 구멍이 이미 뚫린 그림: 네모 그대로, 가장자리만 종이 색에 녹인다.
-     옛 썸네일(THUMBS, 크림 여백) = 임시로 동그랗게 오려 낸다. 그림이 없으면 옛 SVG 그림을 두 톤으로 */
+  /* 새 썸네일 = 종이에 모양 구멍이 이미 뚫린 그림: 네모 그대로, 가장자리만 종이 색에 녹인다.
+     어두운 판(THUMBS2: <id>.webp, 남색 종이)과 밝은 판(THUMBS2L: <id>_light.webp, 옅은 종이)을
+     화면 모드에 맞춰 고르고, 한쪽만 있으면 있는 쪽을 쓴다.
+     옛 썸네일(THUMBS, 크림 여백) = 임시로 동그랗게 오려 낸다. 그림이 없으면 옛 SVG 그림을 종이 색 계단으로 */
   const PIC2 = new Set(window.THUMBS2 || []);
+  const PIC2L = new Set(window.THUMBS2L || []);
   const PIC = new Set(window.THUMBS || []);
+  const imgAttrs = 'class="art" alt="" loading="lazy" decoding="async"';
 
   function holeHTML(t, open) {
     const plug = open ? '' : '<span class="plug" aria-hidden="true"><b>곧 열려요</b></span>';
-    if (PIC2.has(t.id)) return `<span class="thumb full"><img class="art" src="assets/thumbs/${t.id}.webp" alt="" loading="lazy" decoding="async">${plug}</span>`;
+    const dk = PIC2.has(t.id), lt = PIC2L.has(t.id), base = `assets/thumbs/${t.id}`;
+    if (dk && lt) return `<span class="thumb full"><picture><source media="(prefers-color-scheme: dark)" srcset="${base}.webp"><img ${imgAttrs} src="${base}_light.webp"></picture>${plug}</span>`;
+    if (dk || lt) return `<span class="thumb full"><img ${imgAttrs} src="${base}${dk ? '' : '_light'}.webp">${plug}</span>`;
     if (PIC.has(t.id)) return `<span class="thumb pic"><img class="art" src="assets/thumbs/${t.id}.webp" alt="" loading="lazy" decoding="async">${plug}</span>`;
     return `<span class="thumb svgart"><svg class="art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${t.art}</svg>${plug}</span>`;
   }
@@ -294,7 +300,7 @@
     const ov = $('#stageOut'), veil = ov.querySelector('.so-veil'), box = ov.querySelector('.so-box'), lid = ov.querySelector('.so-iris');
     box.className = 'so-box ' + [...hole.classList].filter(c => c !== 'thumb').join(' ');
     box.innerHTML = art.tagName === 'IMG'
-      ? `<img class="art" src="${art.getAttribute('src')}" alt="">`
+      ? `<img class="art" src="${art.currentSrc || art.getAttribute('src')}" alt="">`
       : `<svg class="art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice">${art.innerHTML}</svg>`;
     box.style.width = box.style.height = W + 'px';
     const D = Math.hypot(vw, vh) * 1.04;
@@ -426,14 +432,14 @@
     const R = rng(11), vw = innerWidth, vh = innerHeight;
     const layer = document.createElement('div');
     layer.className = 'confetti';
-    const PAL = ['#EDE6D6', '#D8D0BE', '#3A4568', '#2E3858', '#465378', '#C9C1AE', '#EDE6D6', '#C98A5B'];
+    const PAL = getComputedStyle(document.documentElement).getPropertyValue('--confetti').split(',').map(c => c.trim()).filter(Boolean);
     const bits = [];
     tiles.forEach((el, i) => {
       const r = el.getBoundingClientRect(), col = getComputedStyle(el).color;
       for (let j = 0; j < 9; j++) {
         const d = document.createElement('i');
         d.className = 'bit b' + (j % 3);
-        d.style.background = j < 5 ? col : PAL[(i + j) % PAL.length];
+        d.style.background = j < 5 || !PAL.length ? col : PAL[(i + j) % PAL.length];
         layer.appendChild(d);
         const sx = R() * vw, sy = R() * vh;
         bits.push({
