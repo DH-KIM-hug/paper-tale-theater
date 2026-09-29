@@ -160,17 +160,23 @@
     (sel.origin.size === 0 || sel.origin.has(t.origin)) &&
     (sel.skill.size === 0 || t.skills.some(k => sel.skill.has(k)));
 
+  const PIC = new Set(window.THUMBS || []);
   const stageBits = '<span class="drape l"></span><span class="drape r"></span><span class="valance"></span>';
 
   function cardHTML(t) {
     const open = readyNow.has(t.id);
     const o = ORIGIN[t.origin];
     const skills = t.skills.map(k => `<span class="sk" title="${SKILL[k].label}">${icon(k)}</span>`).join('');
-    const inner = `
-      <span class="thumb">
+    const sign = open ? '' : '<span class="sign" aria-hidden="true"><b>곧 열려요</b></span>';
+    // 동화마다 모양이 다른 오목한 종이 액자 그림이 있으면 그것을, 없으면 작은 종이 극장
+    const pic = PIC.has(t.id)
+      ? `<span class="thumb pic"><img class="art" src="assets/thumbs/${t.id}.webp" alt="" loading="lazy" decoding="async">${sign}</span>`
+      : `<span class="thumb">
         <svg class="art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${t.art}</svg>
-        ${stageBits}${open ? '' : '<span class="sign" aria-hidden="true"><b>곧 열려요</b></span>'}
-      </span>
+        ${stageBits}${sign}
+      </span>`;
+    const inner = `
+      ${pic}
       <span class="label">
         <strong class="title">${t.title}</strong>
         <span class="line">${t.line}</span>
@@ -228,6 +234,7 @@
     });
     items.forEach(it => it.card.classList.add('anim'));
     const openDrapes = (ds, tt) => {
+      if (!ds || ds.length < 2) return; // 종이 액자 그림 카드에는 커튼이 없다
       const c = eio(tt / .42);
       ds[0].style.transform = `scaleX(${lerp(1, DRAPE_REST, c).toFixed(4)})`;
       ds[1].style.transform = `scaleX(${lerp(1, DRAPE_REST, eio((tt - .05) / .42)).toFixed(4)})`;
@@ -288,7 +295,9 @@
     const vw = innerWidth, vh = innerHeight, AR = r.width / r.height;
     const W = Math.max(vw, vh * AR), H = W / AR, X = (vw - W) / 2, Y = (vh - H) / 2, s0 = r.width / W;
     const ov = $('#stageOut'), veil = ov.querySelector('.so-veil'), box = ov.querySelector('.so-box');
-    box.innerHTML = `<svg viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice">${art.innerHTML}</svg>` + stageBits;
+    box.innerHTML = (art.tagName === 'IMG'
+      ? `<img src="${art.getAttribute('src')}" alt="">`
+      : `<svg viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice">${art.innerHTML}</svg>`) + stageBits;
     box.style.width = W + 'px';
     box.style.height = H + 'px';
     const [dl, dr] = box.querySelectorAll('.drape');
@@ -317,6 +326,11 @@
   function peek(c) {
     if (!motion()) return;
     const ds = [...c.querySelectorAll('.drape')];
+    if (ds.length < 2) { // 종이 액자 카드: 그림이 도리도리 흔들린다
+      const img = c.querySelector('.thumb img');
+      img && img.animate([{ rotate: '0deg' }, { rotate: '-4deg' }, { rotate: '3deg' }, { rotate: '-1.5deg' }, { rotate: '0deg' }], { duration: 600, easing: 'ease-out' });
+      return;
+    }
     c.classList.add('anim');
     play(.8, t => {
       const open = t < .15 ? Math.sin(Math.PI / 2 * t / .15) : wob(t - .15, .32, 20);
