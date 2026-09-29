@@ -70,6 +70,12 @@
     $('#pros') && $('#pros').remove();
     const pros = buildProscenium();
     stage.appendChild(pros);
+    // 무대턱(아래 나무 턱)은 확대해도 제자리: 틀 그림의 아래 띠만 잘라 화면에 고정한다
+    $('#pjApron') && $('#pjApron').remove();
+    const apron = el('g', { id: 'pjApron', 'pointer-events': 'none' }, stage);
+    const apClip = el('clipPath', { id: 'pjApronClip' }, apron);
+    el('rect', { x: 0, y: 517, width: 1000, height: 120 }, apClip);
+    img(el('g', { 'clip-path': 'url(#pjApronClip)' }, apron), 'v2/t_frame.png', -177, -45, 1356, 624, 'none');
 
     /* ---------- 극장 틀 규칙: 와이드면 틀 전체, 클로즈업(1.05배 초과)이면 틀을 통째로 화면 밖으로 ---------- */
     const S = z => `translate(500px,280px) scale(${z}) translate(-500px,-280px)`;
@@ -249,7 +255,7 @@
         img(bg, 'v3w/c3_house.webp', -130, 250, 560, 275, 'xMidYMax meet', { class: 'prop' });
         el('ellipse', { cx: DOOR_X.B2, cy: 440, rx: 90, ry: 90, fill: '#f7d98a', opacity: .16 }, bg);
         img(bg, 'v3w/c3_jangdok.webp', 330, 438, 140, 82, 'xMidYMax meet', { class: 'prop' });
-        img(bg, 'v2/p2_doldam.png', 470, 440, 190, 80, 'none', { class: 'prop' });
+        if (!full) img(bg, 'v2/p2_doldam.png', 470, 440, 190, 80, 'none', { class: 'prop' }); // 장면 그림엔 돌담·사립문이 이미 있다
       }
       // 배우 크기·옷차림·보이는 친구
       granny.setScale(ACTOR_SCALE[k]); tiger.setScale(ACTOR_SCALE[k]);

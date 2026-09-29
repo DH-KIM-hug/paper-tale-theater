@@ -432,7 +432,7 @@ const Tale = (() => {
       </defs>
       <g id="cam"><g id="bgL"></g><g id="world"></g><g id="fxL"></g></g>
     </svg>
-    <div id="frame"></div>
+    <div id="frame"></div><div id="apron"></div>
     <div id="curtainL" class="curtain"></div><div id="curtainR" class="curtain"></div>
     <div id="iris" hidden><span id="irisCard"></span></div>
     <div id="confetti"></div>

@@ -35,6 +35,12 @@ button { font: inherit; border: none; cursor: pointer; color: inherit; }
   border-radius: 6px; transition: opacity .6s;
 }
 #frame.out { opacity: 0; }
+/* 무대턱: 확대해도 사라지지 않는 아래 나무 턱 */
+#apron {
+  position: absolute; left: 0; right: 0; bottom: 0; height: clamp(12px, 3.2%, 26px); pointer-events: none; z-index: 29;
+  background: linear-gradient(#6B4A32, #3d2a1c); border-top: 4px solid var(--gold);
+  box-shadow: 0 -6px 10px rgba(46,36,28,.45);
+}
 
 /* 커튼 */
 .curtain {
