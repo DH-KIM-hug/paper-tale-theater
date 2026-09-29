@@ -1,18 +1,49 @@
-/* 종이 동화극장 — 앱 홈 (HOME_UI_PLAN.md v2 「태그로 고르기」)
-   재료: 밤색 벽 위의 색지 칩(태그)과 나무 선반 위 종이 극장 카드. 그라데이션·빛 번짐·알약 버튼·이모지 없음. */
+/* 종이 동화극장 — 앱 홈 (HOME_UI_PLAN.md v2 「태그로 고르기」 + v3 「모션·색」)
+   재료: 밤하늘 색지 벽 위의 색종이 칩(태그)과 나무 선반 위 종이 극장 카드.
+   부드러운 그라데이션·빛 번짐·알약 버튼·이모지 없음. 커튼 주름은 딱 끊기는 색띠(종이 띠)로만 그린다. */
 
 :root {
-  --cream: #F6ECD8;
-  --gold: #D9A94E;
-  --persimmon: #E8703A;
-  --red: #A93B32;
-  --red-dk: #8A2E27;
-  --bark: #6B4A32;
-  --bark-dk: #4E3524;
-  --pine: #3F6B4F;
-  --indigo: #1F2A56;
-  --ink: #2E241C;
-  --shadow: rgba(46, 36, 28, .42);
+  /* ── v3 팔레트: 밤하늘 색지 + 선명한 색종이 ── */
+  --night: #1D2459;        /* 벽: 밤하늘 색지 */
+  --night-2: #2A3380;      /* 벽 무늬 · 밝은 겹 */
+  --night-dk: #11163D;     /* 그림자 · 가장 깊은 겹 */
+  --paper: #FFF7E8;        /* 카드·칩 종이 */
+  --paper-2: #F1DFBD;      /* 종이 두께(아랫단) */
+  --ink: #2B2340;          /* 글자 */
+  --ink-2: #66587D;        /* 보조 글자 (종이 위 4.9:1) */
+  --sunflower: #FFC83D;
+  --coral: #FF7759;
+  --tangerine: #FF9F2E;
+  --cherry: #E8445F;       /* 커튼 */
+  --cherry-dk: #B52E47;    /* 커튼 주름 */
+  --vermilion: #E0413A;
+  --rose: #F0506E;
+  --pink: #FF78B0;
+  --lilac: #B48CF5;
+  --violet: #7B61F0;
+  --sky: #3AA6F5;
+  --royal: #4E6AF0;
+  --teal: #19B3A5;
+  --mint: #22B07D;
+  --leaf: #8CC63F;
+  --wood: #7A4A30;         /* 선반 널판 */
+  --wood-dk: #54301D;
+  --shadow: rgba(10, 12, 40, .5);
+
+  /* 태그 색: 이야기 종류 (카드 테두리 색도 된다) */
+  --t-aesop: var(--mint);
+  --t-korean: var(--vermilion);
+  --t-world: var(--royal);
+  /* 태그 색: 배우는 것 */
+  --t-count: var(--sunflower);
+  --t-size: var(--coral);
+  --t-order: var(--teal);
+  --t-sort: var(--leaf);
+  --t-spot: var(--sky);
+  --t-sound: var(--lilac);
+  --t-shape: var(--pink);
+  --t-season: var(--tangerine);
+  --t-heart: var(--rose);
 
   --gap: 18px;
   --card-min: 186px;
@@ -21,6 +52,8 @@
   --chip-fs: 15px;
   --chip-ic: 24px;
   --pad: 18px;
+  --logo: 19px;
+  --drape-rest: .16;       /* 열린 무대의 커튼: 양옆에 묶어 둔 폭 */
   color-scheme: light;
 }
 
@@ -29,11 +62,11 @@ html, body { margin: 0; height: 100%; }
 body {
   overflow: hidden;
   overscroll-behavior: none;
-  background-color: var(--bark);
-  /* 벽지: 금색 마름모를 오려 붙인 색지 + 종이결 */
+  background-color: var(--night);
+  /* 벽지: 밤하늘 색지 + 오려 붙인 색종이 조각(별·동그라미·세모) + 종이결 */
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .18 0 0 0 0 .13 0 0 0 0 .09 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 20 L34 28 L28 36 L22 28Z' fill='%23D9A94E' fill-opacity='.22'/%3E%3Cpath d='M0 -4 L4 0 L0 4 L-4 0Z M56 -4 L60 0 L56 4 L52 0Z M0 52 L4 56 L0 60 L-4 56Z M56 52 L60 56 L56 60 L52 56Z' fill='%23D9A94E' fill-opacity='.14'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .97 0 0 0 0 .9 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cg fill-opacity='.3'%3E%3Cpath d='M22 14 l3 6.5 7 .8 -5.2 4.8 1.5 7 -6.3 -3.6 -6.3 3.6 1.5 -7 -5.2 -4.8 7 -.8z' fill='%23FFC83D'/%3E%3Ccircle cx='104' cy='36' r='4.5' fill='%23FF78B0'/%3E%3Cpath d='M64 92 l8 -13 8 13z' fill='%2322B07D'/%3E%3Crect x='124' y='106' width='9' height='9' transform='rotate(18 128 110)' fill='%233AA6F5'/%3E%3Ccircle cx='30' cy='122' r='3' fill='%23FF7759'/%3E%3Cpath d='M112 72 l2 4.2 4.6 .5 -3.4 3.1 1 4.6 -4.2 -2.4 -4.2 2.4 1 -4.6 -3.4 -3.1 4.6 -.5z' fill='%23B48CF5'/%3E%3C/g%3E%3C/svg%3E");
   font-family: 'Sunflower', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   color: var(--ink);
   -webkit-tap-highlight-color: transparent;
@@ -43,6 +76,7 @@ body {
 }
 .defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 button { font: inherit; color: inherit; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ───────── 뼈대: 가로 = 왼쪽 게시판 + 오른쪽 선반 ───────── */
 #home {
@@ -59,32 +93,38 @@ button { font: inherit; color: inherit; }
   min-height: 0;
   overflow-y: auto;
   scrollbar-width: none;
-  padding: 2px 4px max(var(--pad), env(safe-area-inset-bottom)) 2px;
+  padding: 4px 4px max(var(--pad), env(safe-area-inset-bottom)) 2px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 .board::-webkit-scrollbar { display: none; }
 
-/* 로고: 크림 한지 띠에 빨간 글자 (작게) */
+/* 로고: 글자마다 한 장씩 오린 색종이 조각 */
 .brand { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .logo {
   margin: 0;
-  display: inline-block;
-  padding: 6px 14px 7px;
-  background: var(--cream);
-  color: var(--red);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--logo) * .16);
   font-family: 'Gowun Batang', serif;
   font-weight: 700;
-  font-size: 20px;
-  letter-spacing: -.02em;
-  line-height: 1.1;
+  font-size: var(--logo);
+  line-height: 1;
   white-space: nowrap;
-  border-radius: 3px;
-  transform: rotate(-1.2deg);
-  box-shadow: 0 2px 0 var(--bark-dk), 0 4px 8px var(--shadow);
 }
-.logo span { color: var(--bark); }
+.lt {
+  display: grid;
+  place-items: center;
+  width: 1.6em; height: 1.6em;
+  padding-bottom: .06em;
+  background: var(--c);
+  color: var(--t, var(--ink));
+  border-radius: 3px;
+  transform: rotate(var(--r));
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .22), 0 5px 8px var(--shadow);
+}
+.lt.gap { margin-left: calc(var(--logo) * .34); }
 
 /* 보호자 톱니: 눈에 덜 띄게, 3초 누르면 둘레가 채워진다 */
 .gear {
@@ -93,19 +133,19 @@ button { font: inherit; color: inherit; }
   width: 44px; height: 44px;
   border: 0; padding: 0;
   background: none;
-  color: #8C6A4E;
+  color: #6F78B8;
   cursor: pointer;
   touch-action: none;
 }
 .gear-ic { position: absolute; inset: 9px; width: 26px; height: 26px; }
 .gear-ring { position: absolute; inset: 0; width: 44px; height: 44px; transform: rotate(-90deg); }
 .gear-ring circle {
-  fill: none; stroke: var(--gold); stroke-width: 3;
+  fill: none; stroke: var(--sunflower); stroke-width: 3;
   stroke-dasharray: 120; stroke-dashoffset: 120;
   transition: stroke-dashoffset .2s;
 }
 .gear.holding .gear-ring circle { stroke-dashoffset: 0; transition: stroke-dashoffset 3s linear; }
-.gear.holding .gear-ic { color: var(--gold); }
+.gear.holding .gear-ic { color: var(--sunflower); }
 
 /* ───────── 태그 줄 ───────── */
 .tagrow { display: flex; flex-direction: column; gap: 8px; }
@@ -115,57 +155,72 @@ button { font: inherit; color: inherit; }
   padding: 3px 10px 4px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--bark-dk);
-  background: var(--gold);
+  color: var(--ink);
+  background: var(--sunflower);
   border-radius: 2px 2px 0 0;
-  box-shadow: 0 2px 0 var(--bark-dk);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .25);
+  transform: rotate(-1deg);
 }
+.tagrow[data-row="skill"] .row-tab { background: var(--pink); transform: rotate(.8deg); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px 7px; }
 
-/* 칩 = 오려 붙인 종이 스티커. 고르면 눌려 들어가고 도장처럼 색이 찍힌다 */
+/* 칩 = 오려 붙인 색종이 스티커. 평소엔 종이에 태그 색 한 조각, 고르면 태그 색 종이로 도장 찍힘 */
 .chip {
-  --tc: var(--red);
+  --tc: var(--ink);
+  --tt: var(--ink);
   display: inline-flex;
   align-items: center;
   gap: 6px;
   height: var(--chip-h);
-  padding: 0 11px 0 6px;
+  padding: 0 11px 0 5px;
   border: 0;
   border-radius: 5px;
-  background: var(--cream);
+  background: var(--paper);
   color: var(--ink);
   font-size: var(--chip-fs);
   font-weight: 700;
   letter-spacing: -.05em;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 0 3px 0 #C9B48E, 0 5px 8px var(--shadow);
+  box-shadow: 0 3px 0 var(--paper-2), 0 5px 9px var(--shadow);
   transform: translateY(0);
   transition: transform .08s, box-shadow .08s;
 }
 .chip .ic {
-  width: var(--chip-ic); height: var(--chip-ic);
+  width: calc(var(--chip-ic) + 4px); height: calc(var(--chip-ic) + 4px);
+  padding: 2px;
   flex: none;
+  border-radius: 4px;
+  background: var(--paper);
+  background: color-mix(in srgb, var(--tc) 22%, var(--paper));
 }
-.chip:active { transform: translateY(2px); box-shadow: 0 1px 0 #C9B48E, 0 2px 3px var(--shadow); }
+.chip .lb { display: inline-flex; }
+.chip .lb i { display: inline-block; font-style: normal; transform-origin: 50% 90%; }
+.chip .lb i.sp { width: .3em; }
+.chip:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--paper-2), 0 2px 3px var(--shadow); }
 .chip.on {
   background: var(--tc);
-  color: var(--cream);
+  color: var(--tt);
   transform: translateY(3px);
-  box-shadow: inset 0 2px 3px rgba(0, 0, 0, .35), 0 1px 1px var(--shadow);
-  outline: 1.5px dashed rgba(246, 236, 216, .75);
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, .28), 0 1px 1px var(--shadow);
+  outline: 1.5px dashed rgba(255, 247, 232, .85);
   outline-offset: -4px;
 }
-.chip.on .ic {
-  background: var(--cream);
-  border-radius: 4px;
-  padding: 2px;
-}
-.chip.all { --tc: var(--bark-dk); }
-.chip.stamp { animation: stamp .22s ease-out; }
-@keyframes stamp { 0% { transform: translateY(3px) scale(1.08); } 100% { transform: translateY(3px) scale(1); } }
-.chip:not(.on).stamp { animation: none; }
-.chip:focus-visible, .card:focus-visible, .ticket:focus-visible, .gear:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.chip.on .ic { background: var(--paper); }
+.chip.all { --tc: var(--ink); --tt: var(--paper); }
+.chip[data-key="aesop"]  { --tc: var(--t-aesop); }
+.chip[data-key="korean"] { --tc: var(--t-korean); --tt: var(--paper); }
+.chip[data-key="world"]  { --tc: var(--t-world);  --tt: var(--paper); }
+.chip[data-key="count"]  { --tc: var(--t-count); }
+.chip[data-key="size"]   { --tc: var(--t-size); }
+.chip[data-key="order"]  { --tc: var(--t-order); }
+.chip[data-key="sort"]   { --tc: var(--t-sort); }
+.chip[data-key="spot"]   { --tc: var(--t-spot); }
+.chip[data-key="sound"]  { --tc: var(--t-sound); }
+.chip[data-key="shape"]  { --tc: var(--t-shape); }
+.chip[data-key="season"] { --tc: var(--t-season); }
+.chip[data-key="heart"]  { --tc: var(--t-heart); }
+.chip:focus-visible, .card:focus-visible, .ticket:focus-visible, .gear:focus-visible { outline: 3px solid var(--sunflower); outline-offset: 2px; }
 
 /* ───────── 선반 ───────── */
 .shelf {
@@ -174,11 +229,12 @@ button { font: inherit; color: inherit; }
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  padding: 4px calc(var(--gap) / 2 + 2px) max(24px, env(safe-area-inset-bottom));
+  padding: 6px calc(var(--gap) / 2 + 2px) max(24px, env(safe-area-inset-bottom));
   scrollbar-width: thin;
-  scrollbar-color: var(--bark-dk) transparent;
+  scrollbar-color: var(--night-2) transparent;
 }
 .grid {
+  position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -187,7 +243,8 @@ button { font: inherit; color: inherit; }
   gap: 30px var(--gap);
 }
 .slot { position: relative; padding-bottom: 14px; min-width: 0; }
-/* 선반 널판: 칸마다 한 토막, 이웃 칸과 이어 붙는다 */
+.slot[hidden] { display: none; }
+/* 선반 널판: 칸마다 한 토막, 이웃 칸과 이어 붙는다. 앞 모서리에 해바라기색 종이띠 */
 .slot::after {
   content: '';
   position: absolute;
@@ -195,32 +252,45 @@ button { font: inherit; color: inherit; }
   right: calc(var(--gap) / -2);
   bottom: 0;
   height: 14px;
-  background: var(--bark-dk);
-  border-top: 4px solid var(--gold);
-  box-shadow: 0 5px 6px rgba(0, 0, 0, .3);
+  background: var(--wood);
+  border-top: 4px solid var(--sunflower);
+  box-shadow: 0 5px 7px rgba(0, 0, 0, .35);
 }
+/* 필터에서 빠지는 카드: 제자리에 핀으로 꽂아 두고 사라지는 동안 격자에서 빠진다 */
+.slot.leaving { position: absolute; z-index: 0; pointer-events: none; }
+.slot.leaving::after { display: none; }
 
 /* 카드 = 작은 종이 극장: 이야기 종류 색 테두리 + 크림 이름표 */
 .card {
+  --oc: var(--ink);
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 7px 7px 9px;
-  background: var(--cream);
+  background: var(--paper);
   border-radius: 4px;
   border-top: 7px solid var(--oc);
   color: inherit;
   text-decoration: none;
   transform: rotate(var(--tilt));
-  box-shadow: 0 3px 0 #C9B48E, 0 8px 12px var(--shadow);
-  transition: transform .12s;
+  box-shadow: 0 3px 0 var(--paper-2), 0 9px 14px var(--shadow);
+  transition: translate .18s, scale .18s;
   cursor: pointer;
-  animation: cardIn .28s ease-out both;
 }
-@keyframes cardIn { from { opacity: 0; transform: rotate(var(--tilt)) translateY(8px); } }
-.card:active { transform: rotate(var(--tilt)) translateY(3px); box-shadow: 0 1px 0 #C9B48E, 0 3px 5px var(--shadow); }
+.card[data-origin="aesop"]  { --oc: var(--t-aesop); }
+.card[data-origin="korean"] { --oc: var(--t-korean); }
+.card[data-origin="world"]  { --oc: var(--t-world); }
+.card.anim, .card.anim .drape, .card.anim .art { transition: none; }
+.card:active { translate: 0 3px; box-shadow: 0 1px 0 var(--paper-2), 0 3px 5px var(--shadow); }
+@media (hover: hover) {
+  a.card:hover { translate: 0 -5px; scale: 1.025; }
+  a.card:hover .drape { transform: scaleX(.07); }
+  a.card:hover .art { transform: scale(1.06); }
+}
+a.card:focus-visible { translate: 0 -5px; scale: 1.025; }
+a.card:focus-visible .drape { transform: scaleX(.07); }
 
 .thumb {
   position: relative;
@@ -232,7 +302,26 @@ button { font: inherit; color: inherit; }
   background: var(--oc);
 }
 .thumb svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.art { transition: transform .3s; }
 .art .pc { filter: url(#pp); }
+
+/* 무대 커튼: 종이 띠를 이어 붙인 주름. 열린 무대는 양옆에 묶어 두고(--drape-rest), 닫힌 무대는 끝까지 친다 */
+.drape {
+  position: absolute; top: 0; bottom: 0; width: 50.5%;
+  background: repeating-linear-gradient(90deg, var(--cherry) 0 9px, var(--cherry-dk) 9px 12px);
+  transform: scaleX(var(--drape-rest));
+  transition: transform .3s;
+  box-shadow: inset 0 -5px 0 var(--sunflower);
+}
+.drape.l { left: 0; transform-origin: 0 50%; }
+.drape.r { right: 0; transform-origin: 100% 50%; }
+.card.closed .drape { transform: scaleX(1); }
+/* 커튼 위 장식 휘장: 해바라기색 물결 */
+.valance {
+  position: absolute; left: 0; right: 0; top: 0; height: 13%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='14'%3E%3Cpath d='M0 0 H20 V7 Q15 14 10 7 Q5 14 0 7Z' fill='%23FFC83D'/%3E%3C/svg%3E") 0 0 / auto 100% repeat-x;
+  filter: drop-shadow(0 1.5px 0 rgba(0, 0, 0, .25));
+}
 
 .label { display: flex; flex-direction: column; gap: 4px; padding: 8px 3px 0; min-width: 0; flex: 1; }
 .title {
@@ -248,7 +337,7 @@ button { font: inherit; color: inherit; }
   font-size: 12.5px;
   letter-spacing: -.03em;
   line-height: 1.35;
-  color: var(--bark);
+  color: var(--ink-2);
   word-break: keep-all;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -257,35 +346,33 @@ button { font: inherit; color: inherit; }
 }
 .tags { display: flex; gap: 4px; margin-top: auto; padding-top: 4px; }
 .tags .ic { width: 20px; height: 20px; display: block; }
-.tags .org { padding-right: 4px; margin-right: 1px; border-right: 1.5px solid #D8C6A2; }
+.tags .org { padding-right: 4px; margin-right: 1px; border-right: 1.5px solid var(--paper-2); }
 
 /* 아직 없는 동화: 커튼 닫힌 무대 + 나무 팻말 */
 .card.closed { cursor: default; }
-.card.closed .title { color: #7A6552; }
+.card.closed .title { color: #7C6E8F; }
 .card.closed .line, .card.closed .tags { opacity: .7; }
-.curtain { transform-origin: top center; }
-.card.peek .curtain { animation: peek .6s ease-in-out; }
-@keyframes peek { 0%, 100% { transform: scaleX(1); } 40% { transform: scaleX(1.03) skewX(-1.5deg); } 70% { transform: skewX(1deg); } }
 .sign {
   position: absolute;
-  left: 50%; top: 50%;
+  left: 50%; top: 54%;
   transform: translate(-50%, -50%) rotate(-3deg);
-  display: flex; flex-direction: column; align-items: center;
 }
 .sign b {
+  display: block;
   padding: 5px 11px 6px;
-  background: var(--bark);
-  color: var(--cream);
+  background: var(--paper);
+  color: var(--cherry-dk);
   font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
   border-radius: 2px;
-  box-shadow: 0 2px 0 var(--bark-dk), 0 4px 6px rgba(0, 0, 0, .35);
+  box-shadow: 0 2px 0 var(--paper-2), 0 4px 6px rgba(0, 0, 0, .35);
 }
 
 /* 결과 없음 */
-.empty { text-align: center; padding: 40px 10px; color: var(--cream); font-size: 17px; font-weight: 700; }
+.empty { text-align: center; padding: 40px 10px; color: var(--paper); font-size: 17px; font-weight: 700; animation: pop .45s cubic-bezier(.3, 1.6, .5, 1) both; }
 .empty p { margin: 0 0 16px; }
+@keyframes pop { from { opacity: 0; transform: scale(.85); } }
 
 /* 입장권 버튼 (보호자 메뉴·결과 없음) */
 .ticket {
@@ -293,8 +380,8 @@ button { font: inherit; color: inherit; }
   padding: 10px 20px 11px;
   font-size: 15px;
   font-weight: 700;
-  background: var(--cream);
-  color: var(--red);
+  background: var(--paper);
+  color: var(--cherry-dk);
   border-radius: 3px;
   cursor: pointer;
   /* 양옆 반원 절취 홈 */
@@ -302,10 +389,10 @@ button { font: inherit; color: inherit; }
                 radial-gradient(circle 6px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
           mask: radial-gradient(circle 6px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
                 radial-gradient(circle 6px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
-  box-shadow: 0 3px 0 #C9B48E;
+  box-shadow: 0 3px 0 var(--paper-2);
 }
-.ticket.alt { background: var(--gold); color: var(--bark-dk); }
-.sheet .ticket:not(.alt), .empty .ticket { background: var(--red); color: var(--cream); box-shadow: 0 3px 0 var(--red-dk); }
+.ticket.alt { background: var(--sunflower); color: var(--ink); box-shadow: 0 3px 0 #D9A021; }
+.sheet .ticket:not(.alt), .empty .ticket { background: var(--cherry); color: var(--paper); box-shadow: 0 3px 0 var(--cherry-dk); }
 .ticket:active { transform: translateY(2px); }
 
 /* 짧은 안내 쪽지 */
@@ -315,38 +402,41 @@ button { font: inherit; color: inherit; }
   transform: translateX(-50%) rotate(-1deg);
   z-index: 20;
   padding: 9px 16px;
-  background: var(--cream);
-  color: var(--bark-dk);
+  background: var(--sunflower);
+  color: var(--ink);
   font-size: 14px;
   font-weight: 700;
   border-radius: 3px;
   box-shadow: 0 6px 12px var(--shadow);
   white-space: nowrap;
+  animation: hintIn .4s cubic-bezier(.3, 1.6, .5, 1) both;
 }
+@keyframes hintIn { from { opacity: 0; transform: translateX(-50%) translateY(16px) rotate(-5deg) scale(.8); } }
 
 /* 보호자 메뉴 */
 .parent {
   position: fixed; inset: 0; z-index: 30;
   display: grid; place-items: center;
   padding: 16px;
-  background: rgba(30, 20, 14, .55);
+  background: rgba(10, 12, 40, .62);
 }
-.parent[hidden], .hint[hidden], .empty[hidden] { display: none; }
+.parent[hidden], .hint[hidden], .empty[hidden], .stage-out[hidden] { display: none; }
 .sheet {
   width: min(460px, 100%);
   max-height: 100%;
   overflow-y: auto;
   padding: 20px 22px 18px;
-  background: var(--cream);
+  background: var(--paper);
   border-radius: 4px;
-  border-top: 8px solid var(--red);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, .4);
+  border-top: 8px solid var(--cherry);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, .45);
   transform: rotate(-.6deg);
 }
-.sheet h2 { margin: 0 0 10px; font-family: 'Gowun Batang', serif; font-size: 20px; color: var(--red); }
-.how { margin: 0 0 14px; font-size: 14px; line-height: 1.55; color: var(--bark-dk); word-break: keep-all; }
+.sheet h2 { margin: 0 0 10px; font-family: 'Gowun Batang', serif; font-size: 20px; color: var(--cherry-dk); }
+.how { margin: 0 0 14px; font-size: 14px; line-height: 1.55; color: var(--ink-2); word-break: keep-all; }
+.how b { color: var(--ink); }
 .toggle { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 16px; }
-.toggle input { width: 20px; height: 20px; accent-color: var(--red); }
+.toggle input { width: 20px; height: 20px; accent-color: var(--cherry); }
 .sheet-btns { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
 
 /* Narrator 말풍선 → 홈에서는 아래쪽 작은 이름표 */
@@ -357,30 +447,42 @@ button { font: inherit; color: inherit; }
   z-index: 15;
   max-width: calc(100vw - 32px);
   padding: 7px 16px 8px;
-  background: var(--cream);
+  background: var(--paper);
   border-radius: 3px;
   box-shadow: 0 5px 10px var(--shadow);
   pointer-events: none;
 }
 #bubble[hidden] { display: none; }
-#bubble p { margin: 0; font-family: 'Gowun Batang', serif; font-weight: 700; font-size: 16px; color: var(--red); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#bubble p { margin: 0; font-family: 'Gowun Batang', serif; font-weight: 700; font-size: 16px; color: var(--cherry-dk); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ───────── 여는 장면: 색종이 조각이 날아와 로고가 된다 ───────── */
+.confetti { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; }
+.bit { position: absolute; left: 0; top: 0; width: 11px; height: 11px; border-radius: 1px; will-change: transform, opacity; }
+.bit.b1 { border-radius: 50%; }
+.bit.b2 { width: 14px; height: 6px; }
+
+/* ───────── 카드 → 무대: 누른 카드가 화면 가득 커지고 커튼이 닫힌 채 동화로 넘어간다 ───────── */
+.stage-out { position: fixed; inset: 0; z-index: 50; overflow: hidden; }
+.so-veil { position: absolute; inset: 0; background: var(--night-dk); opacity: 0; }
+.so-box { position: absolute; left: 0; top: 0; overflow: hidden; transform-origin: 0 0; background: var(--night); will-change: transform; }
+.so-box > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* 동화 엔진(engine/tale.css)의 무대 커튼과 같은 색띠: 동화 안의 막과 같은 천 */
+.so-box .drape { width: 51%; background: repeating-linear-gradient(90deg, #a93b32 0 26px, #8e2f28 26px 34px, #b94a3f 34px 52px); box-shadow: inset 0 -18px 0 #D9A94E; transition: none; }
 
 /* ───────── 큰 가로 화면 (태블릿·PC) ───────── */
 @media (min-width: 1100px) and (min-height: 700px) {
-  :root { --card-min: 188px; --chip-h: 44px; --chip-fs: 16px; --chip-ic: 26px; --pad: 26px; }
-  .logo { font-size: 23px; }
+  :root { --card-min: 188px; --chip-h: 44px; --chip-fs: 16px; --chip-ic: 26px; --pad: 26px; --logo: 21px; }
   .board { gap: 20px; }
 }
 
 /* ───────── 낮은 가로 화면 (휴대폰 가로) ───────── */
 @media (orientation: landscape) and (max-height: 520px) {
-  :root { --chip-h: 32px; --chip-fs: 13px; --chip-ic: 20px; --pad: 12px; --gap: 14px; --card-min: 150px; --board-w: clamp(250px, 32vw, 320px); }
+  :root { --chip-h: 32px; --chip-fs: 13px; --chip-ic: 18px; --pad: 12px; --gap: 14px; --card-min: 150px; --board-w: clamp(250px, 32vw, 320px); --logo: 15.5px; }
   .board { gap: 9px; }
   .tagrow { gap: 5px; }
   .chips { gap: 6px 5px; }
   .chip { padding: 0 8px 0 4px; gap: 4px; }
   .row-tab { font-size: 11.5px; padding: 2px 8px 3px; }
-  .logo { font-size: 17px; padding: 5px 11px 6px; }
   .gear { width: 36px; height: 36px; }
   .gear-ic { inset: 7px; width: 22px; height: 22px; }
   .gear-ring { width: 36px; height: 36px; }
@@ -395,7 +497,7 @@ button { font: inherit; color: inherit; }
 
 /* ───────── 세로 화면: 위 = 로고와 태그, 아래 = 선반 ───────── */
 @media (orientation: portrait) {
-  :root { --chip-h: 36px; --chip-fs: 13.5px; --chip-ic: 21px; --pad: 16px; --gap: 14px; --card-min: 150px; }
+  :root { --chip-h: 36px; --chip-fs: 13.5px; --chip-ic: 19px; --pad: 16px; --gap: 14px; --card-min: 150px; --logo: 17px; }
   #home {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
@@ -412,11 +514,15 @@ button { font: inherit; color: inherit; }
 }
 /* 세로 태블릿 */
 @media (orientation: portrait) and (min-width: 700px) {
-  :root { --chip-h: 44px; --chip-fs: 16px; --chip-ic: 26px; --pad: 28px; --card-min: 200px; --gap: 20px; }
-  .logo { font-size: 23px; }
+  :root { --chip-h: 44px; --chip-fs: 16px; --chip-ic: 26px; --pad: 28px; --card-min: 200px; --gap: 20px; --logo: 21px; }
 }
 
+/* 움직임 줄이기: 꼭 필요한 눌림 표시만 남긴다 (JS 도 같은 설정을 보고 애니메이션을 건너뛴다) */
 @media (prefers-reduced-motion: reduce) {
-  .card, .chip.stamp, .card.peek .curtain { animation: none; }
+  .empty, .hint { animation: none; }
+  .card, .drape, .art { transition: none; }
+  a.card:hover, a.card:focus-visible { translate: none; scale: none; }
+  a.card:hover .drape, a.card:focus-visible .drape { transform: scaleX(var(--drape-rest)); }
+  a.card:hover .art { transform: none; }
   .gear.holding .gear-ring circle { transition-duration: 3s; }
 }
