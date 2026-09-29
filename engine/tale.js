@@ -196,7 +196,8 @@ const Tale = (() => {
             if (la) {
               const B = box(la);
               const span = Math.abs(A.cx - B.cx) + (A.w + B.w) / 2 + 90;
-              const z = Math.min(1.55, vw / span, 560 * .78 / Math.max(A.h, B.h));
+              const vspan = Math.max(A.top + A.h, B.top + B.h) - Math.min(A.top, B.top); // 높이 차이(들보 위 닭 등)도 담는다
+              const z = Math.min(1.55, vw / span, 560 * .78 / Math.max(A.h, B.h), 560 * .86 / vspan);
               if (z >= 1.12) shot = [(A.cx + B.cx) / 2, (Math.min(A.top, B.top) + Math.max(A.top + A.h, B.top + B.h)) / 2, z];
             }
             if (!shot) {
