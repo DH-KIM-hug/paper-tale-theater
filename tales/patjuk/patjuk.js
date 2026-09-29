@@ -83,8 +83,17 @@
       pros.style.transition = dur ? `transform ${dur}ms cubic-bezier(.35,0,.25,1)` : 'none';
       pros.style.transform = S(z > 1.05 ? 2.4 : Math.min(z, 1));
     }
-    const camTo = (x, y, z = 1, dur = 800) => { frameFor(z, dur); return T.camTo(x, y, z, dur); };
-    const camSnap = (x, y, z = 1) => { frameFor(z, 0); T.camSnap(x, y, z); };
+    /* 확대해도 배우가 선 바닥선(y=520)이 화면 아래 무대턱(y≈517) 바로 위에 오도록 카메라 높이를 맞춘다.
+       그래야 가까이 가도 인형 발이 무대턱에 붙어 있다 (위로 뜨지 않는다) */
+    const GROUND = 520, APRON_TOP = 519;
+    const groundY = (y, z) => {
+      if (z <= 1.05) return y;
+      const anchored = GROUND - (APRON_TOP - 280) / z;
+      // 선반 위 절구처럼 높은 곳을 비출 때 대상이 화면 밖으로 밀려나면 예외로 둔다
+      return Math.abs(anchored - y) < 0.55 * 280 / z ? anchored : y;
+    };
+    const camTo = (x, y, z = 1, dur = 800) => { frameFor(z, dur); return T.camTo(x, groundY(y, z), z, dur); };
+    const camSnap = (x, y, z = 1) => { frameFor(z, 0); T.camSnap(x, groundY(y, z), z); };
     const camWide = (dur = 800) => camTo(500, 280, 1, dur);
 
     function buildProscenium() {
