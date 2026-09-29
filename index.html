@@ -3,13 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<meta name="theme-color" content="#10163F">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231D2459'/%3E%3Crect x='4' y='4' width='24' height='5' fill='%23FFC83D'/%3E%3Crect x='7' y='9' width='18' height='19' fill='%23E8445F'/%3E%3Ccircle cx='16' cy='18' r='5' fill='%23FFF7E8'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#222B45">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="종이 동화극장">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23222B45'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23141A2C'/%3E%3Ccircle cx='17' cy='17' r='7' fill='%23EDE6D6'/%3E%3C/svg%3E">
 <title>종이 동화극장</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=Sunflower:wght@500;700&display=swap">
-<link rel="preload" as="image" href="assets/home/wall.webp">
 <link rel="stylesheet" href="home.css">
 </head>
 <body>
@@ -19,6 +22,17 @@
     <filter id="pp" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="0" dy="1.6" stdDeviation="1.1" flood-color="#2E241C" flood-opacity="0.45"/>
     </filter>
+    <!-- 한 가지 색 종이: 아이콘·옛 그림을 남색~크림 두 톤(또는 세 톤)으로 -->
+    <filter id="duoL" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".36 .93"/><feFuncG type="table" tableValues=".39 .9"/><feFuncB type="table" tableValues=".53 .84"/></feComponentTransfer></filter>
+    <filter id="duoInk" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".13 .56"/><feFuncG type="table" tableValues=".17 .59"/><feFuncB type="table" tableValues=".27 .7"/></feComponentTransfer></filter>
+    <filter id="duoM" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".27 .72"/><feFuncG type="table" tableValues=".31 .71"/><feFuncB type="table" tableValues=".45 .74"/></feComponentTransfer></filter>
+    <filter id="duoArt" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".3 .59 .11 0 0 .3 .59 .11 0 0 .3 .59 .11 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues=".07 .13 .22 .46"/><feFuncG type="table" tableValues=".09 .16 .25 .47"/><feFuncB type="table" tableValues=".16 .26 .38 .58"/></feComponentTransfer></filter>
+    <!-- 종이에서 오려 낸 글자: 오린 자리 안쪽 위·왼쪽 가장자리에 그늘 -->
+    <filter id="cut" x="-10%" y="-10%" width="120%" height="120%"><feOffset in="SourceAlpha" dx="1.3" dy="1.7"/><feGaussianBlur stdDeviation=".8" result="o"/><feComposite in="SourceAlpha" in2="o" operator="out" result="edge"/><feFlood flood-color="#0C1020" flood-opacity=".9"/><feComposite in2="edge" operator="in" result="sh"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="sh"/></feMerge></filter>
+    <!-- 겹친 종이 물결의 그림자 -->
+    <filter id="layer" x="-10%" y="-20%" width="130%" height="130%"><feDropShadow dx="4" dy="-3" stdDeviation="6" flood-color="#070A18" flood-opacity=".55"/></filter>
+    <filter id="waveGrain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="5"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0 0 0 -.2"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+    <clipPath id="waveClip"><path d="M0 60 C90 70 140 150 220 180 C300 210 360 260 420 330 C470 390 540 430 600 500 L0 500Z"/></clipPath>
   </defs>
   <!-- 전체: 선반 위 상자 넷 -->
   <symbol id="i-all" viewBox="0 0 32 32"><rect x="5" y="5" width="9.5" height="9.5" rx="1.5" fill="#E0413A"/><rect x="17.5" y="5" width="9.5" height="9.5" rx="1.5" fill="#22B07D"/><rect x="5" y="17.5" width="9.5" height="9.5" rx="1.5" fill="#4E6AF0"/><rect x="17.5" y="17.5" width="9.5" height="9.5" rx="1.5" fill="#FFC83D"/></symbol>
@@ -47,13 +61,24 @@
   <!-- 마음·배려: 하트 -->
   <symbol id="i-heart" viewBox="0 0 32 32"><path d="M16 28 C4 20 2 14 4 9.5 C6 5 12 4.5 16 9.5 C20 4.5 26 5 28 9.5 C30 14 28 20 16 28Z" fill="#F0506E"/></symbol>
   <!-- 보호자 톱니 -->
-  <symbol id="i-gear" viewBox="0 0 32 32"><path d="M13.5 3 h5 l.8 3.6 3 1.3 3.1 -2 3.5 3.5 -2 3.1 1.3 3 3.6 .8 v5 l-3.6 .8 -1.3 3 2 3.1 -3.5 3.5 -3.1 -2 -3 1.3 -.8 3.6 h-5 l-.8 -3.6 -3 -1.3 -3.1 2 -3.5 -3.5 2 -3.1 -1.3 -3 -3.6 -.8 v-5 l3.6 -.8 1.3 -3 -2 -3.1 3.5 -3.5 3.1 2 3 -1.3z" fill="currentColor"/><circle cx="16" cy="16" r="4.5" fill="#141A45"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 32 32"><path d="M13.5 3 h5 l.8 3.6 3 1.3 3.1 -2 3.5 3.5 -2 3.1 1.3 3 3.6 .8 v5 l-3.6 .8 -1.3 3 2 3.1 -3.5 3.5 -3.1 -2 -3 1.3 -.8 3.6 h-5 l-.8 -3.6 -3 -1.3 -3.1 2 -3.5 -3.5 2 -3.1 -1.3 -3 -3.6 -.8 v-5 l3.6 -.8 1.3 -3 -2 -3.1 3.5 -3.5 3.1 2 3 -1.3z" fill="currentColor"/><circle cx="16" cy="16" r="4.5" fill="#1A2136"/></symbol>
+</svg>
+
+<!-- 한 장의 종이 위 단 하나의 장식: 모서리에서 차오르는 남색 종이 물결(같은 색 계단) + 작은 구리색 달 하나 -->
+<svg class="waves" viewBox="0 0 600 500" preserveAspectRatio="xMinYMax meet" aria-hidden="true" focusable="false">
+  <circle class="moon" cx="470" cy="300" r="14" fill="#C98A5B" filter="url(#layer)"/>
+  <g filter="url(#layer)"><path fill="#262F4C" d="M0 60 C90 70 140 150 220 180 C300 210 360 260 420 330 C470 390 540 430 600 500 L0 500Z"/></g>
+  <g filter="url(#layer)"><path fill="#2B3553" d="M0 150 C80 150 130 210 190 250 C260 295 320 300 370 360 C410 410 450 460 480 500 L0 500Z"/></g>
+  <g filter="url(#layer)"><path fill="#313C5C" d="M0 240 C60 235 110 280 150 320 C200 370 260 380 300 430 C320 455 335 480 345 500 L0 500Z"/></g>
+  <g filter="url(#layer)"><path fill="#384467" d="M0 320 C50 318 90 350 120 390 C150 430 190 440 215 500 L0 500Z"/></g>
+  <g filter="url(#layer)"><path fill="#3F4B71" d="M0 400 C35 398 65 420 85 450 C100 472 115 485 120 500 L0 500Z"/></g>
+  <rect width="600" height="500" clip-path="url(#waveClip)" filter="url(#waveGrain)" opacity=".7"/>
 </svg>
 
 <div id="home">
   <aside class="board" aria-label="동화 고르기">
     <header class="brand">
-      <h1 class="logo"><span class="sr">종이 동화극장</span><span class="lt" aria-hidden="true" style="--c:#D9A94E;--r:-4deg">종</span><span class="lt" aria-hidden="true" style="--c:#D26A4C;--r:3deg">이</span><span class="lt gap" aria-hidden="true" style="--c:#3F6B4F;--r:-2deg">동</span><span class="lt" aria-hidden="true" style="--c:#3D5A94;--r:4deg">화</span><span class="lt" aria-hidden="true" style="--c:#7E6AAE;--r:-3deg">극</span><span class="lt" aria-hidden="true" style="--c:#A93B32;--r:2deg">장</span></h1>
+      <h1 class="logo"><span class="sr">종이 동화극장</span><span class="lt" aria-hidden="true">종</span><span class="lt" aria-hidden="true">이</span><span class="lt gap" aria-hidden="true">동</span><span class="lt" aria-hidden="true">화</span><span class="lt" aria-hidden="true">극</span><span class="lt" aria-hidden="true">장</span></h1>
       <button id="parentBtn" class="gear" type="button" aria-label="보호자 메뉴: 3초 동안 누르세요">
         <svg class="gear-ic" aria-hidden="true"><use href="#i-gear"/></svg>
         <svg class="gear-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19"/></svg>
@@ -88,7 +113,7 @@
     <h2 id="parentTitle">보호자 메뉴</h2>
     <p class="how">위 줄에서 <b>이야기 종류</b>, 아래 줄에서 <b>배우는 것</b>을 고릅니다.
       같은 줄에서 여러 개를 고르면 그중 <b>하나라도</b> 맞는 이야기, 두 줄을 함께 고르면 <b>둘 다</b> 맞는 이야기가 나옵니다.
-      커튼이 닫힌 이야기는 아직 만들고 있는 중이에요.</p>
+      구멍이 종이 마개로 덮인 이야기는 아직 만들고 있는 중이에요.</p>
     <label class="toggle"><input type="checkbox" id="optSpeak"> 태그와 제목을 소리로 읽어 주기</label>
     <div class="sheet-btns">
       <button type="button" class="ticket alt" id="optReset">고른 태그 지우기</button>
@@ -98,7 +123,7 @@
 </div>
 
 <!-- 카드 → 무대 전환 (JS 가 채운다) -->
-<div id="stageOut" class="stage-out" hidden aria-hidden="true"><div class="so-veil"></div><div class="so-box"></div></div>
+<div id="stageOut" class="stage-out" hidden aria-hidden="true"><div class="so-veil"></div><div class="so-box"></div><div class="so-iris"></div></div>
 
 <!-- audio.js 의 Narrator 가 쓰는 말풍선 (홈에서는 작은 이름표로 보인다) -->
 <div id="bubble" hidden><p id="bubbleText"></p></div>

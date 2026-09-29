@@ -98,7 +98,7 @@
   function buildChips(row) {
     const box = document.querySelector(`.tagrow[data-row="${row}"] .chips`);
     const chip = (key, label, ic) =>
-      `<button type="button" class="chip${key ? '' : ' all'}" data-row="${row}" data-key="${key}" aria-label="${label}"><span class="face">${icon(ic)}<span class="lb" aria-hidden="true">${letters(label)}</span></span></button>`;
+      `<button type="button" class="chip${key ? '' : ' all'}" data-row="${row}" data-key="${key}" aria-label="${label}">${icon(ic)}<span class="lb" aria-hidden="true">${letters(label)}</span></button>`;
     box.innerHTML = chip('', '전체', 'all') + TAGS[row].map(t => chip(t.key, t.label, t.key)).join('');
     box.addEventListener('click', e => {
       const b = e.target.closest('.chip');
@@ -154,39 +154,38 @@
     }));
   }
 
-  /* ── 선반 ── */
-  const TILT = [-1.2, 0.8, -0.5, 1.1, -0.9, 0.4, 1.3, -1.1, 0.6, -0.3];
+  /* ── 선반: 한 장의 남색 종이에 뚫린 구멍들 ── */
   const ORIGIN = Object.fromEntries(TAGS.origin.map(t => [t.key, t]));
   const SKILL = Object.fromEntries(TAGS.skill.map(t => [t.key, t]));
-  const DRAPE_REST = .16;
 
   const match = t =>
     (sel.origin.size === 0 || sel.origin.has(t.origin)) &&
     (sel.skill.size === 0 || t.skills.some(k => sel.skill.has(k)));
 
+  /* 새 썸네일(THUMBS2) = 남색 종이에 모양 구멍이 이미 뚫린 그림: 네모 그대로, 가장자리만 종이 색에 녹인다.
+     옛 썸네일(THUMBS, 크림 여백) = 임시로 동그랗게 오려 낸다. 그림이 없으면 옛 SVG 그림을 두 톤으로 */
+  const PIC2 = new Set(window.THUMBS2 || []);
   const PIC = new Set(window.THUMBS || []);
-  const stageBits = '<span class="drape l"></span><span class="drape r"></span><span class="valance"></span>';
+
+  function holeHTML(t, open) {
+    const plug = open ? '' : '<span class="plug" aria-hidden="true"><b>곧 열려요</b></span>';
+    if (PIC2.has(t.id)) return `<span class="thumb full"><img class="art" src="assets/thumbs/${t.id}.webp" alt="" loading="lazy" decoding="async">${plug}</span>`;
+    if (PIC.has(t.id)) return `<span class="thumb pic"><img class="art" src="assets/thumbs/${t.id}.webp" alt="" loading="lazy" decoding="async">${plug}</span>`;
+    return `<span class="thumb svgart"><svg class="art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${t.art}</svg>${plug}</span>`;
+  }
 
   function cardHTML(t) {
     const open = readyNow.has(t.id);
     const o = ORIGIN[t.origin];
     const skills = t.skills.map(k => `<span class="sk" title="${SKILL[k].label}">${icon(k)}</span>`).join('');
-    const sign = open ? '' : '<span class="sign" aria-hidden="true"><b>곧 열려요</b></span>';
-    // 동화마다 모양이 다른 오목한 종이 액자 그림이 있으면 그것을, 없으면 작은 종이 극장
-    const pic = PIC.has(t.id)
-      ? `<span class="thumb pic"><img class="art" src="assets/thumbs/${t.id}.webp" alt="" loading="lazy" decoding="async">${sign}</span>`
-      : `<span class="thumb">
-        <svg class="art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${t.art}</svg>
-        ${stageBits}${sign}
-      </span>`;
     const inner = `
-      ${pic}
+      ${holeHTML(t, open)}
       <span class="label">
         <strong class="title">${t.title}</strong>
         <span class="line">${t.line}</span>
         <span class="tags"><span class="org" title="${o.label}">${icon(t.origin)}</span>${skills}</span>
       </span>`;
-    const attrs = `data-id="${t.id}" data-origin="${t.origin}" style="--tilt:${TILT[TALES.indexOf(t) % TILT.length]}deg"`;
+    const attrs = `data-id="${t.id}" data-origin="${t.origin}"`;
     return open
       ? `<a class="card" href="tales/${t.folder || t.id}/index.html" ${attrs}>${inner}</a>`
       : `<div class="card closed" role="button" tabindex="0" aria-disabled="true" aria-label="${t.title}, 곧 열려요" ${attrs}>${inner}</div>`;
@@ -194,9 +193,8 @@
 
   /* 선반 다시 그리기 + FLIP:
      · 남는 카드 = 예전 자리에서 새 자리로 스프링으로 미끄러지고, 살짝 앞으로 튀어나온다
-     · 새로 들어오는 카드 = 위에서 선반 위로 떨어져 통통 튄다(차례로) + 무대 커튼이 열린다
-     · 빠지는 카드 = 제자리에 핀으로 꽂힌 채 작아지며 사라진다
-     · 방금 준비된 동화(닫힘 → 열림) = 커튼이 걷힌다 */
+     · 새로 들어오는 카드 = 종이에 구멍이 가운데서부터 스프링으로 뚫리며 열린다(차례로)
+     · 빠지는 카드 = 제자리에 둔 채 구멍이 오므라들며 사라진다 */
   let gridAnim = null, pending = false;
   function render(opts = {}) {
     if (gridAnim) gridAnim.finish();
@@ -225,40 +223,33 @@
     const delay0 = opts.delay || .04, step = opts.step || .045;
     let k = 0;
     grid.querySelectorAll('.slot:not([hidden])').forEach(s => {
-      const card = s.firstElementChild, id = s.dataset.id, open = card.tagName === 'A';
-      const drapes = open ? [...card.querySelectorAll('.drape')] : null;
-      if (s.classList.contains('leaving')) { items.push({ kind: 'out', card }); return; }
+      const card = s.firstElementChild, id = s.dataset.id, hole = card.querySelector('.thumb');
+      if (s.classList.contains('leaving')) { items.push({ kind: 'out', card, hole }); return; }
       const r = s.getBoundingClientRect(), b = before.get(id);
       if (b) {
-        items.push({ kind: 'stay', card, dx: b.x - (r.left - g1.left), dy: b.y - (r.top - g1.top), drapes: open && !b.open ? drapes : null });
+        items.push({ kind: 'stay', card, dx: b.x - (r.left - g1.left), dy: b.y - (r.top - g1.top) });
       } else {
         const seen = r.top < vh && r.bottom > 0;
-        items.push({ kind: 'in', card, at: delay0 + (seen ? Math.min(k++ * step, .45) : 0), drapes });
+        items.push({ kind: 'in', card, hole, at: delay0 + (seen ? Math.min(k++ * step, .45) : 0) });
       }
     });
     items.forEach(it => it.card.classList.add('anim'));
-    const openDrapes = (ds, tt) => {
-      if (!ds || ds.length < 2) return; // 종이 액자 그림 카드에는 커튼이 없다
-      const c = eio(tt / .42);
-      ds[0].style.transform = `scaleX(${lerp(1, DRAPE_REST, c).toFixed(4)})`;
-      ds[1].style.transform = `scaleX(${lerp(1, DRAPE_REST, eio((tt - .05) / .42)).toFixed(4)})`;
-    };
+    const iris = (el, f) => { el.style.clipPath = `circle(${(Math.max(0, f) * 72).toFixed(2)}% at 50% 50%)`; };
     gridAnim = play(delay0 + .95, t => {
       for (const it of items) {
         const c = it.card;
         if (it.kind === 'out') {
-          const q = eio(t / .26);
+          const q = eio(t / .3);
           c.style.opacity = (1 - q).toFixed(3);
-          tf(c, 0, 16 * q, 1 - .2 * q, -5 * q);
+          iris(it.hole, 1 - q);
         } else if (it.kind === 'stay') {
-          const s = spring(t, .62, 16), pop = Math.sin(Math.PI * clamp(t / .42)) * .05;
+          const s = spring(t, .62, 16), pop = Math.sin(Math.PI * clamp(t / .42)) * .04;
           tf(c, it.dx * (1 - s), it.dy * (1 - s), 1 + pop, 0);
-          if (it.drapes) openDrapes(it.drapes, t - .12);
         } else {
-          const tt = t - it.at, s = spring(tt, .42, 15);
+          const tt = t - it.at, s = spring(tt, .5, 14);
           c.style.opacity = clamp(tt / .08).toFixed(3);
-          tf(c, 0, -48 * (1 - s), .86 + .14 * s, -6 * (1 - s));
-          if (it.drapes) openDrapes(it.drapes, tt - .1);
+          iris(it.hole, tt <= 0 ? 0 : .06 + .94 * s);
+          tf(c, 0, 10 * (1 - clamp(s)), 1, 0);
         }
       }
     }, () => {
@@ -266,7 +257,7 @@
       items.forEach(it => {
         untf(it.card);
         it.card.classList.remove('anim');
-        if (it.drapes) it.drapes.forEach(d => { d.style.transform = ''; });
+        if (it.hole) it.hole.style.clipPath = '';
       });
       gridAnim = null;
       if (pending) { pending = false; render(); }
@@ -286,8 +277,9 @@
 
   /* ── 카드 누르기 ── */
   let leavingPage = false;
-  /* 카드 → 무대: 썸네일이 화면 가득 커지고(모양 그대로), 막이 내리듯 커튼이 닫히면 동화로 넘어간다.
-     닫힌 커튼이 페이지를 불러오는 틈을 가려 준다. 전부 0.68초. 애니메이션이 멈춰도 1.2초 뒤엔 넘어간다. */
+  /* 카드 → 무대: 구멍 속 그림이 화면 가득 커지고(동그란 구멍은 동그랗게), 이어서 남색 종이가
+     조리개처럼 가운데로 오므라들며 닫히면 동화로 넘어간다. 닫힌 종이가 페이지를 불러오는 틈을 가려 준다.
+     전부 0.72초. 애니메이션이 멈춰도 1.2초 뒤엔 넘어간다. */
   function openTale(card) {
     const href = card.getAttribute('href');
     if (leavingPage) return;
@@ -295,27 +287,29 @@
     let gone = false;
     const go = () => { if (!gone) { gone = true; location.href = href; } };
     if (!motion()) { go(); return; }
-    const art = card.querySelector('.art'), r = art.getBoundingClientRect();
-    const vw = innerWidth, vh = innerHeight, AR = r.width / r.height;
-    const W = Math.max(vw, vh * AR), H = W / AR, X = (vw - W) / 2, Y = (vh - H) / 2, s0 = r.width / W;
-    const ov = $('#stageOut'), veil = ov.querySelector('.so-veil'), box = ov.querySelector('.so-box');
-    box.innerHTML = (art.tagName === 'IMG'
-      ? `<img src="${art.getAttribute('src')}" alt="">`
-      : `<svg viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice">${art.innerHTML}</svg>`) + stageBits;
-    box.style.width = W + 'px';
-    box.style.height = H + 'px';
-    const [dl, dr] = box.querySelectorAll('.drape');
+    const hole = card.querySelector('.thumb'), art = hole.querySelector('.art'), r = hole.getBoundingClientRect();
+    const round = !hole.classList.contains('full');
+    const vw = innerWidth, vh = innerHeight;
+    const W = round ? Math.hypot(vw, vh) : Math.max(vw, vh), X = (vw - W) / 2, Y = (vh - W) / 2, s0 = r.width / W;
+    const ov = $('#stageOut'), veil = ov.querySelector('.so-veil'), box = ov.querySelector('.so-box'), lid = ov.querySelector('.so-iris');
+    box.className = 'so-box ' + [...hole.classList].filter(c => c !== 'thumb').join(' ');
+    box.innerHTML = art.tagName === 'IMG'
+      ? `<img class="art" src="${art.getAttribute('src')}" alt="">`
+      : `<svg class="art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice">${art.innerHTML}</svg>`;
+    box.style.width = box.style.height = W + 'px';
+    const D = Math.hypot(vw, vh) * 1.04;
     ov.hidden = false;
     const fallback = setTimeout(go, 1200);
-    setTimeout(() => fx('swish'), 360);
+    setTimeout(() => fx('swish'), 380);
     card.classList.add('anim');
-    play(.68, t => {
-      card.style.scale = (1 - .05 * Math.sin(Math.PI * clamp(t / .14))).toFixed(4);
-      veil.style.opacity = (.7 * eo(t / .3)).toFixed(3);
-      const k = eio((t - .05) / .42);
+    play(.72, t => {
+      card.style.scale = (1 - .04 * Math.sin(Math.PI * clamp(t / .14))).toFixed(4);
+      veil.style.opacity = (.8 * eo(t / .3)).toFixed(3);
+      const k = eio((t - .04) / .42);
       box.style.transform = `translate(${lerp(r.left, X, k).toFixed(2)}px, ${lerp(r.top, Y, k).toFixed(2)}px) scale(${lerp(s0, 1, k).toFixed(4)})`;
-      dl.style.transform = `scaleX(${lerp(DRAPE_REST, 1, eio((t - .36) / .3)).toFixed(4)})`;
-      dr.style.transform = `scaleX(${lerp(DRAPE_REST, 1, eio((t - .38) / .3)).toFixed(4)})`;
+      const q = eio((t - .4) / .32), d = Math.max(0, D * (1 - q));
+      lid.style.width = lid.style.height = d.toFixed(1) + 'px';
+      lid.style.opacity = t < .4 ? '0' : '1';
     }, () => { clearTimeout(fallback); go(); });
   }
   /* 뒤로 가기로 돌아왔을 때(페이지 캐시) 전환 막을 걷는다 */
@@ -326,22 +320,18 @@
     document.querySelectorAll('.card.anim').forEach(c => { untf(c); c.classList.remove('anim'); });
   });
 
-  /* 닫힌 카드: 커튼이 살짝 들썩이며 틈이 벌어졌다 닫힌다 */
+  /* 닫힌 카드: 구멍을 막은 종이 마개가 들썩이다 제자리에 앉는다 */
   function peek(c) {
     if (!motion()) return;
-    const ds = [...c.querySelectorAll('.drape')];
-    if (ds.length < 2) { // 종이 액자 카드: 그림이 도리도리 흔들린다
-      const img = c.querySelector('.thumb img');
-      img && img.animate([{ rotate: '0deg' }, { rotate: '-4deg' }, { rotate: '3deg' }, { rotate: '-1.5deg' }, { rotate: '0deg' }], { duration: 600, easing: 'ease-out' });
-      return;
-    }
-    c.classList.add('anim');
-    play(.8, t => {
-      const open = t < .15 ? Math.sin(Math.PI / 2 * t / .15) : wob(t - .15, .32, 20);
-      const sk = 2 * wob(t, .3, 18);
-      ds[0].style.transform = `scaleX(${(1 - .16 * open).toFixed(4)}) skewY(${sk.toFixed(2)}deg)`;
-      ds[1].style.transform = `scaleX(${(1 - .16 * open).toFixed(4)}) skewY(${(-sk).toFixed(2)}deg)`;
-    }, () => { ds.forEach(d => { d.style.transform = ''; }); c.classList.remove('anim'); });
+    const plug = c.querySelector('.plug');
+    if (!plug) return;
+    plug.animate([
+      { transform: 'translate(0, 0) rotate(0deg) scale(1)' },
+      { transform: 'translate(-2px, -4px) rotate(-8deg) scale(1.04)', offset: .2 },
+      { transform: 'translate(2px, -2px) rotate(6deg) scale(1.03)', offset: .45 },
+      { transform: 'translate(-1px, 0) rotate(-2.5deg) scale(1.01)', offset: .7 },
+      { transform: 'translate(0, 0) rotate(0deg) scale(1)' }
+    ], { duration: 650, easing: 'ease-out' });
   }
 
   $('#grid').addEventListener('click', e => {
@@ -436,10 +426,10 @@
     const R = rng(11), vw = innerWidth, vh = innerHeight;
     const layer = document.createElement('div');
     layer.className = 'confetti';
-    const PAL = ['#D9A94E', '#D26A4C', '#3F6B4F', '#3D5A94', '#7E6AAE', '#A93B32', '#C97891', '#F4EAD3'];
+    const PAL = ['#EDE6D6', '#D8D0BE', '#3A4568', '#2E3858', '#465378', '#C9C1AE', '#EDE6D6', '#C98A5B'];
     const bits = [];
     tiles.forEach((el, i) => {
-      const r = el.getBoundingClientRect(), col = getComputedStyle(el).getPropertyValue('--c').trim() || getComputedStyle(el).backgroundColor;
+      const r = el.getBoundingClientRect(), col = getComputedStyle(el).color;
       for (let j = 0; j < 9; j++) {
         const d = document.createElement('i');
         d.className = 'bit b' + (j % 3);
