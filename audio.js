@@ -98,7 +98,7 @@ const AudioFX = (() => {
   const SFX = { thud: 'sfx/thud', boom: 'sfx/boom', pow: 'sfx/pow', bonk: 'sfx/bonk', pop: 'sfx/pop', poke: 'sfx/poke',
     tap: 'sfx/tap', ding: 'sfx/ding', swish: 'sfx/swish', whoosh: 'sfx/whoosh', bell: 'sfx/bell', splash: 'sfx/splash', growl: 'animals/tiger' };
   const EXTRA = ['sfx/knock', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door',
-    ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs'].map(a => 'animals/' + a)];
+    ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a)];
 
   const api = {
     unlock() {

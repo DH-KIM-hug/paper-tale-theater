@@ -19,6 +19,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `animals/frog.mp3` | Single Frog Croak.oga | MichaeltheFox8621 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Single_Frog_Croak.oga |
 | `animals/frogs.mp3` | Frogs croak calling chorus at night.ogg | JogiAsad | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Frogs_croak_calling_chorus_at_night.ogg |
 | `sfx/splash.mp3` | Bathtub water splashes.ogg | gradha | Public domain | https://commons.wikimedia.org/wiki/File:Bathtub_water_splashes.ogg |
+| `animals/donkey.mp3` | 157763 felix-blume a-donkey-is-braying-in-his-enclosure-in-south-of-france.wav | felix-blume | CC0 | https://commons.wikimedia.org/wiki/File:157763_felix-blume_a-donkey-is-braying-in-his-enclosure-in-south-of-france.wav |
 
 ## 효과음 (Kenney, CC0 — 출처 표시 의무 없음)
 
