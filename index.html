@@ -616,7 +616,10 @@
         <p>겹겹이 오린 종이 무대에서 펼쳐지는 전래동화</p>
       </header>
 
-      <button id="playPatjuk" class="tale-card hero" type="button">
+      <!-- 팥죽할멈은 공용 2D 엔진판(tales/patjuk)으로 연다. 예전 2.5D 판(game.js)은 비교용으로 남겨 두고,
+           game.js가 찾는 #playPatjuk는 숨긴 버튼으로 둔다 (개발자 콘솔에서 document.getElementById('playPatjuk').click()) -->
+      <button id="playPatjuk" type="button" hidden>예전 2.5D 무대로 보기</button>
+      <a id="playPatjukLink" class="tale-card hero" href="tales/patjuk/index.html">
         <span class="thumb"><img src="assets/thumb/patjuk.png" alt="팥죽할멈과 호랑이"></span>
         <span class="tale-info">
           <span class="tale-eyebrow">오늘의 공연</span>
@@ -624,7 +627,7 @@
           <span class="tale-desc">친구들을 순서대로 불러서<br>호랑이를 물리쳐요!</span>
           <span class="play-chip">▶ 공연 시작</span>
         </span>
-      </button>
+      </a>
 
       <div class="tale-grid">
         <a class="tale-card open" href="tales/frog/index.html" style="--tilt:-1.2deg">

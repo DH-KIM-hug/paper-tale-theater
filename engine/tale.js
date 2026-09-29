@@ -316,6 +316,41 @@ const Tale = (() => {
     await new Promise(res => { const t = setTimeout(res, ms); p.onpointerdown = () => { clearTimeout(t); setTimeout(res, 200); }; });
     p.hidden = true; p.innerHTML = '';
   }
+  /* 그림 컷 (이미지 파일): list = ['url' | {src, sfx, hold}] — 파일이 없으면 조용히 건너뛴다.
+     화면 전체 위에 뜨고, 탭하면 빨리 넘어간다. (그림 컷을 쓰는 동화용 — 선택 기능) */
+  const imgCache = {};
+  function preload(src) {
+    if (!(src in imgCache)) {
+      const i = new Image();
+      imgCache[src] = new Promise(res => { i.onload = () => res(true); i.onerror = () => res(false); });
+      imgCache[src].img = i; // 참조 유지 (GC 방지)
+      i.src = src;
+    }
+    return imgCache[src];
+  }
+  async function cutImage(list, { hold: ms = 4000, onShow } = {}) {
+    const p = $('#cutPanel');
+    for (const it of [].concat(list)) {
+      const o = typeof it === 'string' ? { src: it } : it;
+      if (!(await preload(o.src))) continue;
+      p.innerHTML = '<div class="cut img"></div>';
+      const img = document.createElement('img');
+      img.src = o.src; img.alt = '';
+      p.firstChild.appendChild(img);
+      p.hidden = false;
+      if (typeof o.sfx === 'function') o.sfx(); else if (o.sfx && AudioFX[o.sfx]) AudioFX[o.sfx]();
+      if (onShow) onShow(o);
+      shake();
+      await new Promise(res => {
+        const t = setTimeout(res, o.hold || ms);
+        p.onpointerdown = e => { e.stopPropagation(); p.onpointerdown = null; AudioFX.tap(); clearTimeout(t); setTimeout(res, 200); };
+      });
+      p.onpointerdown = null;
+      p.firstChild.classList.add('out');
+      await sleep(280);
+    }
+    p.hidden = true; p.innerHTML = '';
+  }
   function shake() { const w = $('#stageWrap'); w.classList.remove('shake'); void w.offsetWidth; w.classList.add('shake'); }
   function confetti() {
     const colors = ['#E8703A', '#D9A94E', '#A93B32', '#3F6B4F', '#8B7BB8', '#F6ECD8'];
@@ -384,7 +419,7 @@ const Tale = (() => {
   function clear() { bgL.innerHTML = ''; world.innerHTML = ''; fxL.innerHTML = ''; }
 
   /* ---------- 틀 만들기 ---------- */
-  function mount({ title, subtitle, run }) {
+  function mount({ title, subtitle, run, note = '임시 그림 버전 — 페이퍼아트 그림은 제작 중이에요', endTitle = '끝!' }) {
     document.title = title;
     document.body.insertAdjacentHTML('beforeend', `
 <div id="tale">
@@ -408,10 +443,10 @@ const Tale = (() => {
   <div id="startScreen" class="screen">
     <div class="plaque"><h1>${title}</h1>${subtitle ? `<p>${subtitle}</p>` : ''}</div>
     <div class="tickets"><button class="ticket" id="startBtn">공연 시작</button><a class="ticket alt" href="../../index.html" style="text-decoration:none;display:grid;place-items:center">처음으로</a></div>
-    <div class="greybox-note">임시 그림 버전 — 페이퍼아트 그림은 제작 중이에요</div>
+    ${note ? `<div class="greybox-note">${note}</div>` : ''}
   </div>
   <div id="endScreen" class="screen" hidden>
-    <div class="plaque"><h2>끝!</h2><p id="endMsg"></p></div>
+    <div class="plaque"><h2>${endTitle}</h2><p id="endMsg"></p></div>
     <div class="tickets"><button class="ticket" id="againBtn">다시 보기</button><a class="ticket alt" href="../../index.html" style="text-decoration:none;display:grid;place-items:center">처음으로</a></div>
   </div>
 </div>`);
@@ -441,7 +476,8 @@ const Tale = (() => {
   const input = fn => async (...a) => { busy = false; try { return await fn(...a); } finally { busy = true; } };
 
   const api = {
-    el, paper, anim, actor, sleep, say, tone, josa, camTo, camSnap, camWide, curtain, sceneCard, cut, shake, confetti, pop, clear,
+    el, paper, anim, actor, sleep, say, tone, josa, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
+    get camera() { return { ...camState }; },
     tap: input(tap), mash: input(mash), choose: input(choose), swipe: input(swipe), hold: input(hold), free: input(free),
     get bg() { return bgL; }, get world() { return world; }, get fx() { return fxL; }, get root() { return root; },
   };

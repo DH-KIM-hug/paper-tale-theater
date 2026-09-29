@@ -1,0 +1,130 @@
+/* 팥죽할멈과 호랑이 — 엔진 공용 스타일 위에 얹는 이 동화만의 무대 장치 (카드 받침·극장 틀·배우 자세) */
+body { background: #1a0f3d; }
+
+/* 극장 틀·커튼은 SVG(#pros)로 그린다 — 엔진의 CSS 틀·커튼은 쓰지 않는다 */
+#frame, #curtainL, #curtainR { display: none; }
+#pros { transform-box: view-box; transform-origin: 0 0; }
+#pjCurL, #pjCurR, #pjPlaque { transform-box: view-box; transform-origin: 0 0; }
+
+/* 관객석 실루엣 (오프닝에서만) */
+#pjAudience {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 27%; z-index: 22; pointer-events: none;
+  background-repeat: repeat-x; background-position: 50% 100%; background-size: auto 100%;
+  transition: transform 2.6s cubic-bezier(.35, 0, .25, 1);
+}
+#pjAudience.gone { transform: translateY(105%); }
+
+/* 소품: 종이 낱장 그림자 */
+.prop { filter: drop-shadow(0 6px 5px rgba(46, 36, 28, .5)); }
+.shd { fill: #2e241c; opacity: .22; }
+.pj-art, .fr-act, .fr-sway { transform-box: view-box; transform-origin: 0 0; }
+.fr-sway, .pj-art { filter: drop-shadow(0 5px 4px rgba(46, 36, 28, .45)); }
+
+/* 친구: 막대 인형처럼 살랑 */
+.fr-sway { animation: puppetSway 3.6s ease-in-out infinite alternate; }
+.fr-jara .fr-sway { animation-delay: -1.1s; }
+.fr-ddong .fr-sway { animation-delay: -2.3s; }
+.fr-jeolgu .fr-sway { animation-delay: -.6s; animation-duration: 4.2s; }
+.fr-myeongseok .fr-sway { animation-delay: -1.8s; animation-duration: 4.4s; }
+.fr-jige .fr-sway { animation-delay: -2.9s; animation-duration: 4s; }
+@keyframes puppetSway { from { rotate: -1.6deg; } to { rotate: 1.8deg; } }
+.friend.party .fr-sway { animation: fParty .55s ease-in-out infinite alternate; }
+@keyframes fParty { from { translate: 0 0; rotate: -4deg; } to { translate: 0 -16px; rotate: 4deg; } }
+
+/* 호랑이 자세: 그림 교체 (넘어짐·쭉 뻗음·인사). 자세 그림엔 표정이 들어 있어 상처·눈 표시는 숨긴다 */
+.pj-tiger .tpose { display: none; }
+.pj-tiger.fallen .tbase, .pj-tiger.flat .tbase, .pj-tiger.bow .tbase,
+.pj-tiger.fallen .toverlay, .pj-tiger.flat .toverlay, .pj-tiger.bow .toverlay { display: none; }
+.pj-tiger.fallen .tpose[data-pose="fallen"], .pj-tiger.flat .tpose[data-pose="flat"], .pj-tiger.bow .tpose[data-pose="bow"] { display: inline; }
+.pj-art.shiver, .pj-art.scaredShake { animation: shiver .13s linear infinite; }
+@keyframes shiver { 0%, 100% { translate: 0 0; } 50% { translate: 5px 0; } }
+.pj-art.walking { animation: walkBob .32s ease-in-out infinite alternate; }
+@keyframes walkBob { from { translate: 0 0; } to { translate: 0 -7px; } }
+.pj-tears .tear { animation: drip 1s ease-in infinite; transform-box: fill-box; }
+.pj-tears .t2 { animation-delay: .5s; }
+@keyframes drip { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(18px); opacity: 0; } }
+#pjDizzy .dz { transform-box: fill-box; transform-origin: 50% 50%; animation: spinStar 1.1s linear infinite; }
+#pjDizzy .d1 { animation-delay: .3s; }
+#pjDizzy .d2 { animation-delay: .6s; }
+@keyframes spinStar { from { transform: rotate(0) scale(1); } 50% { transform: rotate(180deg) scale(1.25); } to { transform: rotate(360deg) scale(1); } }
+
+/* 무대 상시 움직임 */
+.pj-steam .puff { animation: rise 2.6s ease-in infinite; transform-box: fill-box; }
+.pj-steam .p2 { animation-delay: .9s; }
+.pj-steam .p3 { animation-delay: 1.7s; }
+@keyframes rise { 0% { transform: translateY(0); opacity: .8; } 100% { transform: translateY(-46px); opacity: 0; } }
+.pj-fire { transform-box: fill-box; transform-origin: center; animation: glowPulse 1.7s ease-in-out infinite alternate; }
+@keyframes glowPulse { from { transform: scale(.94); opacity: .14; } to { transform: scale(1.06); opacity: .24; } }
+.pj-snow circle { transform-box: fill-box; animation: snowfall 10s linear infinite; }
+@keyframes snowfall {
+  0% { transform: translate(0, -40px); opacity: 0; } 8% { opacity: 1; }
+  55% { transform: translate(22px, 320px); } 100% { transform: translate(-10px, 660px); opacity: .6; }
+}
+
+/* ============ 건너뛰기 (인트로, 1초 꾹) ============ */
+#skipBtn {
+  position: absolute; right: max(12px, env(safe-area-inset-right, 0px)); bottom: 14px; z-index: 42;
+  background: rgba(253,243,227,.92); border-radius: 14px 18px 12px 20px / 18px 12px 20px 14px;
+  padding: 8px 18px; font-size: 15px; color: var(--ink);
+  box-shadow: 0 3px 0 rgba(216,201,168,.9), 0 7px 10px rgba(7,3,18,.45);
+  transform: rotate(.8deg); overflow: hidden; isolation: isolate;
+}
+#skipBtn span { position: relative; z-index: 1; }
+#skipBtn::before { content: ''; position: absolute; inset: 0; z-index: 0; background: #f2b366; transform: scaleX(0); transform-origin: left; }
+#skipBtn.holding::before { transform: scaleX(1); transition: transform 1s linear; }
+
+/* ============ 친구 카드 받침 ============ */
+#tray {
+  position: relative; z-index: 15; display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
+  padding: 14px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(#241845, #150c38);
+}
+#tray::before {
+  content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 13px;
+  background: radial-gradient(circle 13px at 14px 14px, #241845 97%, transparent 100%);
+  background-size: 28px 13px; background-repeat: repeat-x;
+  filter: drop-shadow(0 -3px 3px rgba(7,3,18,.5)); pointer-events: none;
+}
+.card {
+  --tilt: 0deg; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: #fdf3e3; border: 4px solid #d9a441; border-radius: var(--paper-radius);
+  padding: 6px 4px 4px; min-height: 96px; box-shadow: var(--paper-stack);
+  transition: transform .15s ease, opacity .2s, filter .2s; transform: rotate(var(--tilt));
+}
+#tray .card.tap-target.armed { filter: none; } /* 엔진의 무대용 반짝임은 카드엔 쓰지 않는다 */
+.card:nth-child(3n) { --tilt: -1.3deg; }
+.card:nth-child(3n+1) { --tilt: 1.1deg; }
+.card:nth-child(5n) { --tilt: .6deg; }
+.card:active { transform: scale(.93) rotate(var(--tilt)); }
+/* 연출·대사 중: 누를 수 없다는 게 분명히 보이게 흐리고 회색으로 */
+#tray.locked .card {
+  opacity: .45; filter: saturate(.3) brightness(.85); transform: scale(.97) rotate(var(--tilt));
+  transition: transform .25s ease, opacity .25s ease, filter .25s ease;
+}
+.card img { width: clamp(44px, 8vmin, 64px); height: clamp(44px, 8vmin, 64px); object-fit: contain; filter: drop-shadow(0 2px 2px rgba(46,36,28,.35)); pointer-events: none; }
+.card span { font-size: clamp(14px, 2.2vmin, 19px); }
+.card.used { filter: grayscale(1); opacity: .5; position: relative; }
+.card.used::after { content: '✔'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 34px; color: #2e7d32; }
+.card.nudge { animation: cardNudge .35s ease-out; }
+@keyframes cardNudge { 25% { transform: translateX(-5px) rotate(var(--tilt)); } 75% { transform: translateX(5px) rotate(var(--tilt)); } }
+/* 두 번째 실수부터: 정답 카드가 반짝이며 들썩인다 */
+.card.hint { animation: cardHint 1s ease-in-out infinite; box-shadow: 0 0 0 4px #ffd54f, 0 0 22px 6px rgba(255,213,79,.75); }
+@keyframes cardHint { 0%, 100% { transform: translateY(0) rotate(var(--tilt)) scale(1); } 50% { transform: translateY(-10px) rotate(var(--tilt)) scale(1.08); } }
+@media (max-width: 640px) { #tray { grid-template-columns: repeat(4, 1fr); } .card { min-height: 84px; } }
+@media (max-height: 480px) and (orientation: landscape) {
+  #tray { padding: 8px 12px calc(6px + env(safe-area-inset-bottom, 0px)); gap: 6px; }
+  .card { min-height: 62px; padding: 4px 3px 3px; }
+  .card img { width: clamp(30px, 7vmin, 46px); height: clamp(30px, 7vmin, 46px); }
+  .card span { font-size: clamp(11px, 2vmin, 15px); }
+}
+@media (orientation: portrait) {
+  #tray { margin-top: auto; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 18px 14px calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .card { min-height: 104px; }
+  .card img { width: 60px; height: 60px; }
+  .card span { font-size: 17px; }
+  #pjAudience { height: 40%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fr-sway, .pj-steam .puff, .pj-snow circle, .pj-fire { animation: none; }
+}

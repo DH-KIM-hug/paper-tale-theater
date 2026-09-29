@@ -112,6 +112,9 @@ button { font: inherit; border: none; cursor: pointer; color: inherit; }
   animation: cutIn .3s cubic-bezier(.2,1.5,.4,1) both; rotate: -2deg;
 }
 #cutPanel .cut svg { width: 100%; height: 100%; display: block; }
+#cutPanel .cut.img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#cutPanel .cut.out { animation: cutOut .28s ease-in both; }
+@keyframes cutOut { to { transform: translateY(-46px) rotate(7deg) scale(.88); opacity: 0; } }
 @keyframes cutIn { from { transform: scale(1.6) rotate(-14deg); opacity: 0; } }
 
 /* 시작·끝 화면 */
