@@ -286,6 +286,15 @@
     });
     const line = CAST.map(c => cast[c.key]);
     const put = (a, x, y = GROUND, s = 1) => { T.world.appendChild(a.pos); a.face('left'); a.setScale(s); a.place(x, y); a.pose(POSE.stand()); a.body.style.transform = ''; };
+    /* 대사 연출: 목소리 주인에게 카메라가 가고 화자·청자가 마주 본다 (그림은 모두 왼쪽을 본다 → face('left') = 원래 방향) */
+    const onStage = k => cast[k].pos.isConnected && cast[k].x > -40;
+    const HEAR = { grandpa: 'grandma', grandma: 'grandpa', girl: 'grandma', dog: 'girl', cat: 'dog', mouse: 'cat' };
+    T.director({
+      cast,
+      listener: (r, last) => r === 'grandma' && onStage('girl') ? 'girl' : r === 'cat' && onStage('mouse') ? 'mouse'
+        : onStage(HEAR[r]) ? HEAR[r] : (last !== r ? last : null),
+    });
+    const voiceLine = (k, delay = 0) => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && setTimeout(() => AudioFX.voice(VOICE_LINES[k]), delay);
 
     let turnip, leaves, rise = 0;
     turnip = actor(T.world, 0, 0, g => { leaves = drawTurnip(T, g); });
@@ -300,7 +309,10 @@
       putTurnip(TX, GROUND - rise, 1);
       soilFront(T);
       for (let i = 0; i < n; i++) put(line[i], LINE_X[i]);
-      camSnap(500, 280, 1);
+      if (T.portrait()) { // 세로 화면(양옆이 잘림): 순무부터 줄 끝까지 보이게 옮기고, 넘치면 살짝 물러선다
+        const x0 = TX - 150, x1 = (n ? LINE_X[n - 1] : TX) + 60, half = (x1 - x0) / 2 + 12;
+        camSnap((x0 + x1) / 2, 280, Math.min(1, T.viewWidth() / 2 / half));
+      } else camSnap(500, 280, 1);
     }
     /* 당기기 한 판: 톡톡톡 ×5, 끝나면 순무가 한 뼘 올라온다 */
     async function pullRound(n, gain, prompt) {
@@ -319,6 +331,7 @@
       const sc = { girl: 1.25, cow: .72, dog: 1.2, cat: 1.25, pig: 1.2 };
       const bOk = badge(T, left ? 250 : 750, 320, 92, okKey, sc[okKey]);
       const bNo = badge(T, left ? 750 : 250, 320, 92, noKey, sc[noKey]);
+      T.fitRow([bOk, bNo]); // 세로 화면: 보이는 폭 안으로
       await T.choose([
         { el: bOk, ok: true },
         { el: bNo, ok: false, onWrong: async () => { noSound && noSound(); await T.anim(bNo, [{ translate: '0 0' }, { translate: '-10px 0' }, { translate: '10px 0' }, { translate: '0 0' }], 400); } },
@@ -401,8 +414,7 @@
     cast.grandpa.pose(POSE.sit('grandpa'));
     await cast.grandpa.move(680, 500, 350, 'ease-out');
     thud(T); T.shake(); T.pop(800, 300, '쿵!');
-    const st1 = stars(T, 680, 395);
-    giggle(T);
+    const st1 = stars(T, 680, 395); // (킥킥 기계음은 뺐다: 할아버지 "아이코!"와 겹침)
     await say('아이코! 할아버지가 엉덩방아를 찧었어요.');
     st1.remove();
 
@@ -416,7 +428,7 @@
     await say('혼자서는 안 되겠어요. 할아버지를 톡 눌러서 할머니를 불러요!');
     await T.tap(cast.grandpa.pos, { prompt: '할아버지를 톡! 할머니를 불러요.' });
     cast.grandpa.hop(20);
-    T.pop(620, 230, '할머니~!', C.bean);
+    T.pop(620, 230, '할머니~!', C.bean); voiceLine('call_grandma');
     await sleep(600);
     AudioFX.sfx('door');
     door.style.transform = 'scaleX(.15)';
@@ -490,8 +502,8 @@
       const catG = T.el('g', { transform: 'translate(350,262) scale(2.5)' }, svg); DRAW.cat(T, catG);
       T.el('path', { d: 'M226 96 L212 116 L230 124 L214 146 L232 154 L218 176', stroke: '#FFD54F', 'stroke-width': 7, fill: 'none', 'stroke-linejoin': 'round' }, svg);
       T.el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '째릿!' }, svg);
+      voiceLine('cut_glare', 300);
     }, { hold: 2200 });
-    giggle(T);
     await say('"흥!" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.');
     await pullRound(5, 10, '순무를 톡톡 눌러서 영차!');
 
@@ -511,7 +523,7 @@
     T.world.appendChild(cast.mouse.pos);
     await cast.mouse.move(560, 360, 300, 'ease-out');
     await cast.mouse.move(640, 520, 300, 'ease-in');
-    T.pop(640, 300, '찍찍!', C.bark);
+    T.pop(640, 300, '찍찍!', C.bark); voiceLine('squeak_mouse');
     await say('아주 작은 생쥐가 쪼르르 나왔어요.');
     await T.sceneCard(null, () => { sideView(5); for (let k = 0; k < 5; k++) line[k].pose(POSE.sit(line[k].key)); }, cast.cat.pos);
     put(cast.mouse, 1060);
@@ -521,7 +533,7 @@
     for (let k = 0; k < 5; k++) setTimeout(() => line[k].hop(16, 300), k * 90);
     T.pop(440, 220, '하하하!', C.persimmon);
     await sleep(800);
-    squeak(T); cast.mouse.hop(40);
+    cast.mouse.hop(40);
     await say('"나도 할래요!" 생쥐가 고양이 꼬리를 꼭 잡았어요.');
     for (let k = 0; k < 5; k++) line[k].pose(POSE.stand());
     await sleep(400);
@@ -541,6 +553,7 @@
       T.el('rect', { x: 0, y: 236, width: 400, height: 64, fill: C.soil, opacity: y > 180 ? 1 : 0 }, svg);
       T.el('text', { x: 200, y: 64, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: word }, svg);
     };
+    voiceLine('cut_heave', 150);
     await T.cut(svg => cutTurnip(svg, 230, .6, '영~'), { hold: 1100 });
     await T.cut(svg => cutTurnip(svg, 190, .6, '차~'), { hold: 1100 });
     await T.cut(svg => cutTurnip(svg, 140, .6, '쑥!'), { hold: 1500, sfx: 'pow' });
@@ -560,9 +573,8 @@
     }
     await sleep(300);
     thud(T); T.shake();
-    T.pop(520, 260, '벌렁!', C.persimmon);
+    T.pop(520, 260, '벌렁!', C.persimmon); voiceLine('flop');
     await sleep(900);
-    giggle(T);
     await say('쑥! 커다란 순무가 뽑혔어요! 모두 벌렁 넘어졌어요.');
     T.confetti();
     for (let k = 0; k < 6; k++) setTimeout(() => { line[k].pose(POSE.stand()); line[k].hop(26, 380); }, k * 110);
@@ -579,8 +591,10 @@
       T.paper(T.world, [['rect', { x: 390, y: 400, width: 220, height: 20, rx: 6, fill: C.bark }], ['rect', { x: 410, y: 420, width: 16, height: 90, fill: C.bark }], ['rect', { x: 574, y: 420, width: 16, height: 90, fill: C.bark }]]);
       pot = T.paper(T.world, [['path', { d: 'M446 350 H554 Q556 400 500 402 Q444 400 446 350 Z', fill: C.ink }], ['rect', { x: 438, y: 342, width: 124, height: 12, rx: 6, fill: '#4a3a30' }], ['ellipse', { cx: 500, cy: 344, rx: 50, ry: 8, fill: C.snow }]]);
       el('rect', { x: 420, y: 300, width: 160, height: 110, fill: '#fff', opacity: 0 }, pot);
-      seats.forEach((a, i) => { put(a, FX[i], 510, SEAT_S[a.key]); if (i < 3) a.face('right'); });
-      camSnap(500, 280, 1);
+      // 세로 화면: 자리를 가운데로 조금 모으고, 살짝 물러서서 여섯 명이 다 보이게 (가로는 그대로)
+      const fk = T.portrait() ? .78 : 1, fz = T.portrait() ? Math.min(1, T.viewWidth() / 2 / (390 * fk + 75)) : 1;
+      seats.forEach((a, i) => { put(a, Math.round(500 + (FX[i] - 500) * fk), 510, SEAT_S[a.key]); if (i < 3) a.face('right'); });
+      camSnap(500, 280, fz);
     });
     const steam = setInterval(() => { const s = el('circle', { cx: 480 + Math.random() * 40, cy: 330, r: 8, fill: C.snow, opacity: .7 }, T.fx); s.animate([{ transform: 'translateY(0)', opacity: .7 }, { transform: 'translateY(-60px)', opacity: 0 }], { duration: 1400 }).finished.then(() => s.remove()); }, 400);
     await say('맛있는 순무국을 끓였어요.');
@@ -632,5 +646,72 @@
     return '작은 힘도 모이면 커다란 힘이 돼요!';
   }
 
-  Tale.mount({ title: '커다란 순무', subtitle: '다 함께 영차!', run: T => run(Tale.api) });
+  /* ================= 세로 화면 도우미 (이 동화 안에서만) =================
+     세로 화면은 무대 양옆이 잘린다(보이는 폭 = T.viewWidth(), 폰에서 약 430).
+     조작을 기다리기 전에 누를 대상(카메라 안의 그림)이 화면 밖이면 카메라를 옆으로 옮기고,
+     그래도 다 안 들어가면 살짝 물러서서(줌아웃) 모두 보이게 한다.
+     장면이 바뀌면 이 도우미가 옮긴 카메라는 제자리로 돌려놓는다.
+     가로 화면(보이는 폭 1000)에서는 아무것도 하지 않는다. */
+  function portraitGuard(api) {
+    const T = Object.create(api);
+    const portrait = () => api.viewWidth() < 990;
+    let guardCam = null;
+    const inCam = n => n && n.closest && n.closest('#cam');
+    function worldBox(nodes) {
+      const w = document.getElementById('stageWrap').getBoundingClientRect();
+      const s = w.height / 560, c = api.camera; // 세로(slice): 무대 높이 560이 화면 높이에 맞는다
+      const wx = px => c.x + ((px - w.left - w.width / 2) / s) / c.z, wy = py => c.y + ((py - w.top - w.height / 2) / s) / c.z;
+      let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      nodes.forEach(n => {
+        const r = n.getBoundingClientRect(); if (!r.width && !r.height) return;
+        x0 = Math.min(x0, wx(r.left)); x1 = Math.max(x1, wx(r.right)); y0 = Math.min(y0, wy(r.top)); y1 = Math.max(y1, wy(r.bottom));
+      });
+      return x0 < x1 ? { x0, x1, y0, y1 } : null;
+    }
+    T.portrait = portrait;
+    /* 화면 고정 UI(#stage에 바로 붙은 카드·배지)를 보이는 폭 안에 한 줄로 다시 놓는다.
+       gs: translate(x,y)로 놓인 그룹들. 원래 왼쪽→오른쪽 순서를 지키고, 넘치면 함께 줄인다. 세로 화면에서만 */
+    T.fitRow = (gs, { gap = 16, margin = 12 } = {}) => {
+      if (!portrait()) return;
+      const vw = api.viewWidth();
+      const at = g => (g.getAttribute('transform') || '').match(/translate\(\s*([-\d.]+)[ ,]+([-\d.]+)/) || [0, 0, 0];
+      const items = gs.map(g => { const m = at(g), b = g.getBBox(); return { g, x: +m[1], y: +m[2], b }; }).sort((p, q) => p.x - q.x);
+      const total = items.reduce((s, it) => s + it.b.width, 0) + gap * (items.length - 1);
+      const k = Math.min(1, (vw - 2 * margin) / total);
+      let x = 500 - total * k / 2;
+      items.forEach(it => {
+        const cx = x + it.b.width * k / 2 - (it.b.x + it.b.width / 2) * k;
+        // 자리·크기는 바깥 틀(wrap)이 맡는다 → 카드 자신의 톡 커지는(scale) 애니메이션은 카드 가운데 기준 그대로
+        const wrap = it.g._fitWrap || T.el('g', {}, it.g.parentNode);
+        if (!it.g._fitWrap) { it.g.parentNode.insertBefore(wrap, it.g); wrap.appendChild(it.g); it.g._fitWrap = wrap; const rm = it.g.remove.bind(it.g); it.g.remove = () => { rm(); wrap.remove(); }; }
+        wrap.setAttribute('transform', `translate(${cx.toFixed(1)},${it.y}) scale(${k.toFixed(3)})`);
+        it.g.setAttribute('transform', 'translate(0,0)');
+        it.g._x = cx; x += (it.b.width + gap) * k;
+      });
+    };
+    /* nodes가 모두 보이게 카메라를 옮긴다 (세로 화면에서만) */
+    T.fitTo = async (nodes, { dur = 600, pad = 22, minZ = .5 } = {}) => {
+      if (!portrait()) return;
+      nodes = [].concat(nodes).filter(inCam); if (!nodes.length) return;
+      const b = worldBox(nodes); if (!b) return;
+      const vw = api.viewWidth(), c = api.camera, vert = c.z > 1.001; // z ≤ 1이면 세로는 늘 무대 전체가 보인다
+      const hx = vw / 2 / c.z, hy = 280 / c.z;
+      if (b.x0 - pad >= c.x - hx && b.x1 + pad <= c.x + hx && (!vert || (b.y0 - pad >= c.y - hy && b.y1 + pad <= c.y + hy))) return;
+      const z = Math.max(minZ, Math.min(c.z, vw / 2 / ((b.x1 - b.x0) / 2 + pad), vert ? 280 / ((b.y1 - b.y0) / 2 + pad) : 9));
+      const nx = vw / 2 / z, ny = 280 / z;
+      const x = Math.min(Math.max(c.x, b.x1 + pad - nx), b.x0 - pad + nx);
+      const y = Math.min(Math.max(c.y, b.y1 + pad - ny), b.y0 - pad + ny);
+      await api.camTo(x, y, z, dur);
+      guardCam = api.camera;
+    };
+    const targetsOf = { tap: a => a[0], mash: a => a[0], swipe: a => a[0], hold: a => a[0], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
+    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); return api[k](...a); }; });
+    T.sceneCard = (label, change, focus) => api.sceneCard(label, () => {
+      if (guardCam) { const c = api.camera; if (c.x === guardCam.x && c.y === guardCam.y && c.z === guardCam.z) api.camSnap(500, 280, 1); guardCam = null; }
+      change && change();
+    }, focus);
+    return T;
+  }
+
+  Tale.mount({ title: '커다란 순무', subtitle: '다 함께 영차!', run: T => run(portraitGuard(Tale.api)) });
 })();

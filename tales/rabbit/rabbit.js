@@ -310,7 +310,12 @@
     const rb = mk(iconRabbit, Y[0]), tb = mk(iconTurtle, Y[1]);
     const place = (ic, p, dur) => { ic.o.style.transition = `transform ${dur}ms ease-out`; ic.o.style.transform = `translate(${X0 + (X1 - X0) * p}px,${ic.y}px)`; };
     return {
-      show(on) { g.style.opacity = on ? 1 : 0; },
+      show(on) {
+        // 세로 화면은 양옆이 잘리니, 보이는 폭 안에 들어오게 막대를 줄인다 (가로는 그대로)
+        const k = Math.min(1, (T.viewWidth() - 20) / 620);
+        if (k < 1) g.setAttribute('transform', `translate(500 546) scale(${k.toFixed(3)}) translate(-500 -546)`); else g.removeAttribute('transform');
+        g.style.opacity = on ? 1 : 0;
+      },
       set(r, t, dur = 700) { if (r != null) place(rb, r, dur); if (t != null) place(tb, t, dur); },
       pulse(which) { (which === 'r' ? rb : tb).inner.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.7)' }, { transform: 'scale(1)' }], { duration: 700, iterations: 3 }); },
       remove() { g.remove(); },
@@ -380,27 +385,40 @@
     const rabbit = actor(null, 0, 0, g => { rp = drawRabbit(T, g); });
     const turtle = actor(null, 0, 0, g => { tp = drawTurtle(T, g); });
     const faceL = a => a.face('right'), faceR = a => a.face('left'); // 그림이 오른쪽을 보고 있어서 뒤집힌 이름
+    /* 대사 연출: 목소리 주인에게 카메라가 가고 서로 마주 본다.
+       토끼·거북이 그림은 오른쪽을 보고 있으니, 연출에는 face 방향을 뒤집어 넘긴다 */
+    const mirror = a => new Proxy(a, { get: (o, k) => (k === 'face' ? d => o.face(d === 'right' ? 'left' : 'right') : o[k]) });
+    T.director({
+      cast: { rabbit: mirror(rabbit), turtle: mirror(turtle), duck: aud.duck, cow: aud.cow, pig: aud.pig, dog: aud.dog, sheep: aud.sheep },
+      listener: r => (r === 'rabbit' ? 'turtle' : r === 'turtle' ? 'rabbit' : null),
+      noFace: ['duck', 'cow', 'pig', 'dog', 'sheep'],
+    });
+    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]); // 말풍선 없는 소리 대사
     const put = (a, x, y, s = a.scale, parent = T.world) => { parent.appendChild(a.pos); a.setScale(s); a.place(x, y); return a; };
     const seat = list => list.forEach(([k, x, y, s]) => { const a = aud[k]; a.reset(); put(a, x, y, s); });
     const rabbitReset = () => { rp.pose('stand'); rp.setEyes('open'); rp.mouth('smile'); rp.sleepy(false); rp.ears(1); faceR(rabbit); };
     const turtleReset = () => { tp.step(0); tp.neck(1); tp.tilt(0); faceR(turtle); };
     const walk = (ms, gap = 260) => { let k = 0; const h = setInterval(() => { tp.step(k++ % 2); footstep(T); }, gap); setTimeout(() => { clearInterval(h); tp.step(0); }, ms); };
     const scene = (label, fn) => T.sceneCard(label, () => { stopLoops(); T.clear(); camSnap(500, 280, 1); fn(); });
+    /* 세로 화면(양옆이 잘림)용: 카메라가 x를 따라가고, 넓게 벌려 선 자리는 가운데로 모은다. 가로 화면에서는 아무 일도 안 한다 */
+    const follow = (x, dur = 500) => T.portrait() ? camTo(x, 280, 1, dur) : Promise.resolve();
+    const PX = (x, k) => T.portrait() ? Math.round(500 + (x - 500) * k) : x;
+    const fitZ = half => T.portrait() ? Math.min(1, T.viewWidth() / 2 / half) : 1;
 
     /* ===== 1막 — 경주를 열자 ===== */
     /* --- 1. 숲속 마을 아침 --- */
     villageBG(T);
     turtleReset(); rabbitReset();
-    put(turtle, 200, 470, 1.25);
-    put(rabbit, 1150, 470, 1);
+    put(turtle, PX(200, .7), 470, 1.25);
+    put(rabbit, T.portrait() ? 1060 : 1150, 470, 1);
     await T.curtain(true);
     walk(2600);
-    turtle.move(330, 470, 2600, 'linear');
+    turtle.move(T.portrait() ? 400 : 330, 470, 2600, 'linear');
     await say('숲속 마을에 아침이 왔어요.');
     await say('거북이가 엉금엉금 산책해요. 거북이를 톡!');
     await T.tap(turtle.pos, { prompt: '거북이를 톡 눌러 봐요!' });
     turtle.hop(16, 400);
-    await tween(300, t => tp.neck(1 + t * .6)); T.tone([260, 330], .3, { type: 'triangle', vol: .2 });
+    await tween(300, t => tp.neck(1 + t * .6)); // 인사는 거북이 목소리로 (겹치던 합성음 뺌)
     await say('"안녕! 나는 거북이야."');
     tp.neck(1);
     faceL(rabbit);
@@ -454,10 +472,11 @@
 
     /* --- 3. 관객석 모이기 --- */
     const SEATS = [['rooster', 200, 330, 1.05], ['sheep', 400, 330, 1.05], ['cat', 600, 330, 1.05], ['owl', 800, 330, 1.05],
-      ['duck', 170, 480, 1.3], ['cow', 390, 480, 1.3], ['pig', 610, 480, 1.3], ['dog', 830, 480, 1.3]];
+      ['duck', 170, 480, 1.3], ['cow', 390, 480, 1.3], ['pig', 610, 480, 1.3], ['dog', 830, 480, 1.3]].map(([k, x, y, s]) => [k, PX(x, .72), y, s]);
     await scene('관객석', () => {
       standsBG(T);
       seat(SEATS.map(([k, x, y, s], i) => [k, i % 2 ? 1150 : -150, y, s]));
+      camSnap(500, 280, fitZ(330 * .72 + 80));
     });
     await Promise.all(SEATS.map(async ([k, x, y], i) => { await sleep(i * 180); aud[k].hop(20, 400); await aud[k].move(x, y, 1100); }));
     await say('동물 친구들이 응원하러 모였어요!');
@@ -482,7 +501,7 @@
       await say(i ? '거북이도 톡!' : '이번엔 거북이를 톡! 목을 쭉~');
       await T.tap(turtle.pos, { prompt: '거북이를 톡 눌러 봐요!' });
       await stretchT();
-      if (!i) { aud.pig.cheer('하하!'); await say('와, 거북이 목이 쭈욱~ 길어졌어요!'); }
+      if (!i) { aud.pig.cheer('하하!'); vo('laugh_pig'); await say('와, 거북이 목이 쭈욱~ 길어졌어요!'); }
     }
 
     /* --- 5. 요이~ 땅! --- */
@@ -530,6 +549,7 @@
       const [rx, ry] = at(.08), [tx, ty] = at(.02);
       tokR.style.transform = `translate(${rx}px,${ry - 22}px) scale(2.2)`; tokT.style.transform = `translate(${tx}px,${ty + 18}px) scale(2.2)`;
       setRace(.08, .02, 0); bar.show(true);
+      camSnap(500, 280, fitZ(470)); // 세로 화면: 지도 전체가 보이게 물러선다
     });
     const moveTok = (tok, f, dy, ms) => { const [x, y] = at(f); tok.style.transition = `transform ${ms}ms ease-in-out`; tok.style.transform = `translate(${x}px,${y + dy}px) scale(2.2)`; };
     await say('여기는 경주 지도예요. 돌멩이, 개울, 언덕을 지나 깃발까지!');
@@ -553,7 +573,7 @@
       paper(near, [['path', { d: 'M2800 450 Q3150 250 3500 450 Z', fill: C.leaf }]]); tree(T, near, 3150, 330, 1.4);
       rabbitReset(); rp.pose('run');
       put(rabbit, 300, 468, 1.1);
-      camSnap(470, 300, 1.12);
+      camSnap(T.portrait() ? 360 : 470, 300, 1.12);
     });
     bob = rp.root.animate([{ translate: '0 0' }, { translate: '0 -14px' }], { duration: 200, iterations: Infinity, direction: 'alternate' });
     every(900, () => speedLines(T, 5, 420));
@@ -561,7 +581,8 @@
     await T.swipe(wrap, { dir: 'right', count: 3, prompt: '화면을 옆으로 쓱 밀어 봐요!', onStep: i => {
       far.style.transform = `translateX(${-280 * i}px)`; near.style.transform = `translateX(${-900 * i}px)`;
       AudioFX.whoosh(); speedLines(T, 16, 480); rabbit.hop(70, 500); T.pop(rabbit.x + 60, 300, '쌩!', C.persimmon);
-      camTo(490, 300, 1.2, 180).then(() => camTo(470, 300, 1.12, 300));
+      const cx = T.portrait() ? 370 : 490; // 세로 화면은 토끼 쪽으로
+      camTo(cx, 300, 1.2, 180).then(() => camTo(cx - 20, 300, 1.12, 300));
       setRace(.3 + .1 * i, null, 700);
     } });
     await sleep(900);
@@ -570,7 +591,7 @@
     await say('금세 언덕 위 나무 그늘까지 왔어요.');
     faceL(rabbit); rp.setEyes('open');
     await say('뒤를 돌아보니… 거북이는 안 보여요!');
-    faceR(rabbit); rp.mouth('yawn'); rp.setEyes('half'); T.tone([400, 200], .8, { type: 'sine', vol: .12 });
+    faceR(rabbit); rp.mouth('yawn'); rp.setEyes('half'); // 하품은 토끼 목소리로 (겹치던 합성음 뺌)
     await say('"하암~ 한숨 자고 가도 되겠다~"');
 
     /* --- 7. 토끼 재우기 --- */
@@ -591,6 +612,7 @@
       blanket = el('g', { transform: 'translate(220 470)' }, T.world);
       paper(blanket, [['path', { d: 'M-100 0 Q-40 -70 100 -10 Q40 60 -100 0 Z', fill: C.leaf }], ['path', { d: 'M-100 0 Q0 -10 100 -10 M-40 -4 L-10 -30 M0 -6 L30 -30 M-40 -4 L-10 20 M0 -6 L34 18', stroke: C.pine, 'stroke-width': 4, fill: 'none' }]]);
       dim = el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: '#2E2440', opacity: 0, 'pointer-events': 'none' }, T.fx);
+      if (T.portrait()) camSnap(390, 280, fitZ(290)); // 세로 화면: 이불과 토끼가 함께 보이게
     });
     bar.show(true);
     await say('토끼를 푹 재워 줄까요?');
@@ -668,6 +690,7 @@
       paper(T.world, [['ellipse', { cx: 300, cy: 420, rx: 26, ry: 14, fill: '#b3aca0' }], ['ellipse', { cx: 520, cy: 400, rx: 18, ry: 10, fill: '#b3aca0' }]]);
       rock = paper(T.world, [['path', { d: 'M580 482 Q570 380 660 350 Q760 330 810 400 Q840 450 820 482 Z', fill: '#9a948a' }], ['path', { d: 'M620 380 Q660 360 700 366', stroke: '#c9c2b6', 'stroke-width': 8, fill: 'none', 'stroke-linecap': 'round' }]]);
       turtleReset(); put(turtle, 150, 480, 1.6);
+      if (T.portrait()) camSnap(300, 280, 1);
       // 거북이 눈높이 전경: 커다란 풀잎·꽃·조약돌
       for (let i = 0; i < 5; i++) paper(T.fx, [['path', { d: `M${-40 + i * 34} 560 Q${-10 + i * 30} 300 ${30 + i * 26} ${120 + i * 30} Q${30 + i * 34} 330 ${10 + i * 34} 560 Z`, fill: i % 2 ? C.pine : C.leaf }]]);
       for (let i = 0; i < 4; i++) paper(T.fx, [['path', { d: `M${930 + i * 30} 560 Q${940 + i * 20} 320 ${900 + i * 28} ${140 + i * 36} Q${960 + i * 28} 330 ${960 + i * 30} 560 Z`, fill: i % 2 ? C.leaf : C.pine }]]);
@@ -679,15 +702,16 @@
     await say('화면을 톡톡 눌러서 한 발 한 발 걸어요!');
     let st = 0;
     await T.mash(wrap, { count: 6, prompt: '화면을 톡톡 눌러서 엉금엉금!', onStep: i => {
-      tp.step(st++ % 2); footstep(T); turtle.move(150 + i * 46, 480, 380);
+      tp.step(st++ % 2); footstep(T); turtle.move(150 + i * 46, 480, 380); follow(250 + i * 46, 380);
       setRace(null, .04 + i * .02, 400);
-      if (i === 3) { aud.dog.cheer('힘내!'); setTimeout(() => aud.cat.cheer('힘내!'), 300); }
+      if (i === 3) { aud.dog.cheer('힘내!'); vo('cheer_dog'); setTimeout(() => aud.cat.cheer('힘내!'), 300); }
     } });
     await sleep(500); tp.step(0);
     await say('어? 커다란 돌멩이예요! 돌멩이를 톡 해서 넘어가요!');
     await T.tap(rock, { prompt: '돌멩이를 톡 눌러 봐요!' });
     T.pop(700, 290, '영차!', C.pine);
     tp.tilt(-22); walk(1800, 200);
+    follow(700, 1700);
     await turtle.move(640, 372, 900);
     tp.tilt(18);
     await turtle.move(790, 480, 800);
@@ -712,17 +736,18 @@
         fish.push(f);
       });
       turtleReset(); put(turtle, 160, 420, 1.35);
+      if (T.portrait()) camSnap(270, 280, 1);
       bar.show(true);
     });
     let sw = every(160, () => tp.step(Math.random() < .5 ? 1 : 0));
     await say('앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.');
     await say('옆으로 쓱 밀어서 헤엄쳐요!');
     await T.swipe(wrap, { dir: 'right', count: 3, prompt: '화면을 옆으로 쓱 밀어 봐요!', onStep: i => {
-      AudioFX.splash(); turtle.move(160 + i * 185, 420 - (i % 2) * 30, 900);
+      AudioFX.splash(); turtle.move(160 + i * 185, 420 - (i % 2) * 30, 900); follow(160 + i * 185, 900);
       fish.forEach((f, k) => f.move(f.x + 185, f.y + (k - 1) * 8, 1000));
       for (let b = 0; b < 5; b++) { const c = el('circle', { cx: turtle.x + 60, cy: 380, r: 5 + b * 2, fill: 'none', stroke: C.snow, 'stroke-width': 3 }, T.fx); c.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${b * 10}px,-140px)`, opacity: 0 }], { duration: 1200, delay: b * 120, fill: 'both' }).finished.then(() => c.remove()); }
       setRace(null, .2 + i * .06, 800);
-      if (i === 2) aud.duck.cheer('꽥꽥! 힘내!');
+      if (i === 2) { aud.duck.cheer('꽥꽥! 힘내!'); vo('cheer_duck'); }
     } });
     await sleep(1000); clearInterval(sw); tp.step(0);
     await say('물고기랑 같이 개울을 건넜어요!');
@@ -736,6 +761,7 @@
       tree(T, T.bg, 960, 205, .7);
       seat([['sheep', 880, 556, .95]]);
       turtleReset(); tp.tilt(-18.6); put(turtle, 190, slopeY(190), 1.3);
+      if (T.portrait()) camSnap(290, 280, 1);
       paper(T.fx, [['path', { d: 'M-20 560 Q0 420 30 330 Q40 440 60 560 Z', fill: C.pine }], ['path', { d: 'M40 560 Q70 450 110 400 Q90 480 100 560 Z', fill: C.leaf }]]);
       bar.show(true);
     });
@@ -744,10 +770,10 @@
     let lastStep = -1, cheered = false;
     const yo = new Set();
     await holdOn(T, wrap, { count: 14, prompt: '화면을 꾹 누르고 있어 봐요!', onProgress: p => {
-      const x = 190 + 580 * p; turtle.move(x, slopeY(x), 180, 'linear'); 
+      const x = 190 + 580 * p; turtle.move(x, slopeY(x), 180, 'linear'); follow(x + 40, 180);
       const s = Math.floor(p * 16); if (s !== lastStep) { lastStep = s; tp.step(s % 2); footstep(T); }
       [.3, .7].forEach(m => { if (p >= m && !yo.has(m)) { yo.add(m); T.pop(x + 60, slopeY(x) - 160, '영차!', C.pine); } });
-      if (p > .5 && !cheered) { cheered = true; aud.sheep.cheer('힘내!'); }
+      if (p > .5 && !cheered) { cheered = true; aud.sheep.cheer('힘내!'); vo('cheer_sheep'); }
       setRace(null, .38 + .17 * p, 100);
     } });
     tp.step(0);
@@ -776,8 +802,10 @@
     aud.owl.hush(true);
     await say('위에는 쿨쿨 자는 토끼, 아래에는 거북이!');
     await say('쉿, 조용히 지나가요~ 살금살금.');
+    await follow(250, 700); // 세로 화면: 거북이를 따라간다
     for (let i = 0; i < 5; i++) {
       tp.step(i % 2); T.tone(880 + (i % 2) * 110, .08, { type: 'triangle', vol: .12 });
+      follow(110 + (i + 1) * 150, 700);
       await turtle.move(110 + (i + 1) * 150, 472, 700, 'ease-in-out');
       setRace(null, .55 + (i + 1) * .04, 600);
       await sleep(150);
@@ -803,6 +831,7 @@
     aud.rooster.stand(); aud.rooster.cry(); aud.rooster.hop(20, 400);
     T.pop(500, 150, '꼬끼오!', C.bean);
     await sleep(1400); aud.rooster.sit();
+    vo('wake_rabbit'); // 컷 속 토끼 외침 (말풍선 없음)
     await T.cut(svg => {
       const g = el('g', { transform: 'translate(170 330) scale(1.35)' }, svg);
       const p = drawRabbit(T, g); p.setEyes('wide'); p.ears(1.2); p.mouth('yawn');
@@ -850,6 +879,7 @@
       AudioFX.pop(); T.pop(790, 330, '골인!', C.bean);
       tween(500, t => { tapeTop.setAttribute('transform', `rotate(${-70 * t} 790 376)`); tapeBot.setAttribute('transform', `rotate(${70 * t} 790 476)`); });
     }, 1150);
+    follow(640, 2000); // 세로 화면: 결승선 쪽으로
     await Promise.all([turtle.move(650, 476, 2000, 'ease-out'), rabbit.move(430, 472, 2100, 'ease-out')]);
     setRace(.95, 1, 500);
     rp.pose('stand');
@@ -913,7 +943,8 @@
           el('circle', { cx: x, cy: y + 14, r: 22, fill: C.amber, opacity: .25 }, T.bg); paper(T.bg, [['rect', { x: x - 10, y: y, width: 20, height: 28, rx: 9, fill: [C.amber, C.persimmon, C.gold][i % 3] }]]); }
       });
       seat([['rooster', 150, 340, .75], ['sheep', 320, 340, .75], ['cat', 680, 340, .75], ['owl', 850, 340, .75],
-        ['duck', 100, 520, .95], ['cow', 260, 520, .95], ['pig', 740, 520, .95], ['dog', 900, 520, .95]]);
+        ['duck', 100, 520, .95], ['cow', 260, 520, .95], ['pig', 740, 520, .95], ['dog', 900, 520, .95]].map(([k, x, y, s]) => [k, PX(x, .72), y, s]));
+      camSnap(500, 280, fitZ(400 * .72 + 70)); // 세로 화면: 모두 보이게
       KINDS.forEach(k => show(aud[k].parts.instr, 1));
       rabbitReset(); put(rabbit, 420, 480, .95);
       turtleReset(); show(tp.medal, 1); put(turtle, 580, 486, 1.15);
@@ -935,5 +966,72 @@
     return '천천히, 꾸준히, 끝까지!';
   }
 
-  Tale.mount({ title: '토끼와 거북이', subtitle: '누가 먼저 도착할까?', run: T => run(Tale.api) });
+  /* ================= 세로 화면 도우미 (이 동화 안에서만) =================
+     세로 화면은 무대 양옆이 잘린다(보이는 폭 = T.viewWidth(), 폰에서 약 430).
+     조작을 기다리기 전에 누를 대상(카메라 안의 그림)이 화면 밖이면 카메라를 옆으로 옮기고,
+     그래도 다 안 들어가면 살짝 물러서서(줌아웃) 모두 보이게 한다.
+     장면이 바뀌면 이 도우미가 옮긴 카메라는 제자리로 돌려놓는다.
+     가로 화면(보이는 폭 1000)에서는 아무것도 하지 않는다. */
+  function portraitGuard(api) {
+    const T = Object.create(api);
+    const portrait = () => api.viewWidth() < 990;
+    let guardCam = null;
+    const inCam = n => n && n.closest && n.closest('#cam');
+    function worldBox(nodes) {
+      const w = document.getElementById('stageWrap').getBoundingClientRect();
+      const s = w.height / 560, c = api.camera; // 세로(slice): 무대 높이 560이 화면 높이에 맞는다
+      const wx = px => c.x + ((px - w.left - w.width / 2) / s) / c.z, wy = py => c.y + ((py - w.top - w.height / 2) / s) / c.z;
+      let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      nodes.forEach(n => {
+        const r = n.getBoundingClientRect(); if (!r.width && !r.height) return;
+        x0 = Math.min(x0, wx(r.left)); x1 = Math.max(x1, wx(r.right)); y0 = Math.min(y0, wy(r.top)); y1 = Math.max(y1, wy(r.bottom));
+      });
+      return x0 < x1 ? { x0, x1, y0, y1 } : null;
+    }
+    T.portrait = portrait;
+    /* 화면 고정 UI(#stage에 바로 붙은 카드·배지)를 보이는 폭 안에 한 줄로 다시 놓는다.
+       gs: translate(x,y)로 놓인 그룹들. 원래 왼쪽→오른쪽 순서를 지키고, 넘치면 함께 줄인다. 세로 화면에서만 */
+    T.fitRow = (gs, { gap = 16, margin = 12 } = {}) => {
+      if (!portrait()) return;
+      const vw = api.viewWidth();
+      const at = g => (g.getAttribute('transform') || '').match(/translate\(\s*([-\d.]+)[ ,]+([-\d.]+)/) || [0, 0, 0];
+      const items = gs.map(g => { const m = at(g), b = g.getBBox(); return { g, x: +m[1], y: +m[2], b }; }).sort((p, q) => p.x - q.x);
+      const total = items.reduce((s, it) => s + it.b.width, 0) + gap * (items.length - 1);
+      const k = Math.min(1, (vw - 2 * margin) / total);
+      let x = 500 - total * k / 2;
+      items.forEach(it => {
+        const cx = x + it.b.width * k / 2 - (it.b.x + it.b.width / 2) * k;
+        // 자리·크기는 바깥 틀(wrap)이 맡는다 → 카드 자신의 톡 커지는(scale) 애니메이션은 카드 가운데 기준 그대로
+        const wrap = it.g._fitWrap || T.el('g', {}, it.g.parentNode);
+        if (!it.g._fitWrap) { it.g.parentNode.insertBefore(wrap, it.g); wrap.appendChild(it.g); it.g._fitWrap = wrap; const rm = it.g.remove.bind(it.g); it.g.remove = () => { rm(); wrap.remove(); }; }
+        wrap.setAttribute('transform', `translate(${cx.toFixed(1)},${it.y}) scale(${k.toFixed(3)})`);
+        it.g.setAttribute('transform', 'translate(0,0)');
+        it.g._x = cx; x += (it.b.width + gap) * k;
+      });
+    };
+    /* nodes가 모두 보이게 카메라를 옮긴다 (세로 화면에서만) */
+    T.fitTo = async (nodes, { dur = 600, pad = 22, minZ = .5 } = {}) => {
+      if (!portrait()) return;
+      nodes = [].concat(nodes).filter(inCam); if (!nodes.length) return;
+      const b = worldBox(nodes); if (!b) return;
+      const vw = api.viewWidth(), c = api.camera, vert = c.z > 1.001; // z ≤ 1이면 세로는 늘 무대 전체가 보인다
+      const hx = vw / 2 / c.z, hy = 280 / c.z;
+      if (b.x0 - pad >= c.x - hx && b.x1 + pad <= c.x + hx && (!vert || (b.y0 - pad >= c.y - hy && b.y1 + pad <= c.y + hy))) return;
+      const z = Math.max(minZ, Math.min(c.z, vw / 2 / ((b.x1 - b.x0) / 2 + pad), vert ? 280 / ((b.y1 - b.y0) / 2 + pad) : 9));
+      const nx = vw / 2 / z, ny = 280 / z;
+      const x = Math.min(Math.max(c.x, b.x1 + pad - nx), b.x0 - pad + nx);
+      const y = Math.min(Math.max(c.y, b.y1 + pad - ny), b.y0 - pad + ny);
+      await api.camTo(x, y, z, dur);
+      guardCam = api.camera;
+    };
+    const targetsOf = { tap: a => a[0], mash: a => a[0], swipe: a => a[0], hold: a => a[0], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
+    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); return api[k](...a); }; });
+    T.sceneCard = (label, change, focus) => api.sceneCard(label, () => {
+      if (guardCam) { const c = api.camera; if (c.x === guardCam.x && c.y === guardCam.y && c.z === guardCam.z) api.camSnap(500, 280, 1); guardCam = null; }
+      change && change();
+    }, focus);
+    return T;
+  }
+
+  Tale.mount({ title: '토끼와 거북이', subtitle: '누가 먼저 도착할까?', run: T => run(portraitGuard(Tale.api)) });
 })();

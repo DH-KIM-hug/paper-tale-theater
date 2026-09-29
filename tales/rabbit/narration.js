@@ -1,0 +1,141 @@
+/* rabbit — Typecast 배역 내레이션 (tools/typecast/gen_tale.py가 voice_script.json에서 생성, 손으로 고치지 말 것) */
+const NARRATION_CLIPS = {
+ "숲속 마을에 아침이 왔어요.": "audio/tc/rabbit/nar_ef4634a900.mp3",
+ "거북이가 엉금엉금 산책해요. 거북이를 톡!": "audio/tc/rabbit/nar_5e2b16c714.mp3",
+ "거북이를 톡 눌러 봐요!": "audio/tc/rabbit/nar_37bdcc1478.mp3",
+ "\"안녕! 나는 거북이야.\"": "audio/tc/rabbit/turtle_ad367b1f00.mp3",
+ "깡충깡충 토끼도 왔어요. 토끼를 톡!": "audio/tc/rabbit/nar_4c77af35a0.mp3",
+ "토끼를 톡 눌러 봐요!": "audio/tc/rabbit/nar_051adcd0aa.mp3",
+ "\"안녕! 나는 깡충 토끼야!\"": "audio/tc/rabbit/rabbit_57f003c8be.mp3",
+ "토끼가 말했어요. \"느림보야, 나랑 달리기 할래?\"": [
+  "audio/tc/rabbit/nar_1cab740248.mp3",
+  "audio/tc/rabbit/rabbit_878be2453e.mp3"
+ ],
+ "거북이가 방긋 웃었어요. \"좋아!\"": [
+  "audio/tc/rabbit/nar_678a65262e.mp3",
+  "audio/tc/rabbit/turtle_4f28e5bad3.mp3"
+ ],
+ "\"숲속 친구들한테 응원해 달라고 하자!\"": "audio/tc/rabbit/rabbit_8463a8e7a8.mp3",
+ "부엉이 우체부가 초대장을 가져왔어요.": "audio/tc/rabbit/nar_09bc9a5490.mp3",
+ "문을 톡 두드려 봐요. 누가 나올까?": "audio/tc/rabbit/nar_8622a9903a.mp3",
+ "이번 집도 문을 톡!": "audio/tc/rabbit/nar_fe8da97bd1.mp3",
+ "문을 톡 두드려 봐요!": "audio/tc/rabbit/nar_0baf997457.mp3",
+ "\"꽥꽥!\" 누구 목소리일까요?": [
+  "audio/tc/rabbit/duck_f48662cfe0.mp3",
+  "audio/tc/rabbit/nar_d83b6ac9cc.mp3"
+ ],
+ "오리였어요!": "audio/tc/rabbit/nar_f2c1f3033f.mp3",
+ "\"음매~\" 누구 목소리일까요?": [
+  "audio/tc/rabbit/cow_40ccebb0a8.mp3",
+  "audio/tc/rabbit/nar_d83b6ac9cc.mp3"
+ ],
+ "소였어요!": "audio/tc/rabbit/nar_0e8f64a9da.mp3",
+ "\"꿀꿀!\" 누구 목소리일까요?": [
+  "audio/tc/rabbit/pig_422e267a26.mp3",
+  "audio/tc/rabbit/nar_d83b6ac9cc.mp3"
+ ],
+ "돼지였어요!": "audio/tc/rabbit/nar_cc5021bac7.mp3",
+ "\"멍멍!\" 누구 목소리일까요?": [
+  "audio/tc/rabbit/dog_f9d607077e.mp3",
+  "audio/tc/rabbit/nar_d83b6ac9cc.mp3"
+ ],
+ "강아지였어요!": "audio/tc/rabbit/nar_ac27fa3249.mp3",
+ "닭이랑 양이랑 고양이도 초대장을 받았어요!": "audio/tc/rabbit/nar_1cde09fc01.mp3",
+ "동물 친구들이 응원하러 모였어요!": "audio/tc/rabbit/nar_1c87ee815b.mp3",
+ "친구들을 톡 눌러 봐요! 벌떡 일어나 인사해요.": "audio/tc/rabbit/nar_fb2721f0bb.mp3",
+ "와, 신나는 응원 소리!": "audio/tc/rabbit/nar_fa02daf9b5.mp3",
+ "달리기 전에 준비 운동을 해요.": "audio/tc/rabbit/nar_11becb87e4.mp3",
+ "토끼를 톡! 귀를 쭉~": "audio/tc/rabbit/nar_797bb76b7f.mp3",
+ "한 번 더! 토끼를 톡!": "audio/tc/rabbit/nar_b166d1e864.mp3",
+ "이번엔 거북이를 톡! 목을 쭉~": "audio/tc/rabbit/nar_1b703c56f0.mp3",
+ "거북이도 톡!": "audio/tc/rabbit/nar_4fd99877fc.mp3",
+ "와, 거북이 목이 쭈욱~ 길어졌어요!": "audio/tc/rabbit/nar_e0001e585f.mp3",
+ "너구리 심판이 커다란 북을 가져왔어요.": "audio/tc/rabbit/nar_16b0d2e2e9.mp3",
+ "준비~ 북을 톡 치면 출발해요!": "audio/tc/rabbit/nar_ca57db0317.mp3",
+ "큰 북을 톡 쳐 봐요!": "audio/tc/rabbit/nar_9e27461da1.mp3",
+ "토끼는 쌩~ 거북이는 엉금 한 발!": "audio/tc/rabbit/nar_99e83772a7.mp3",
+ "여기는 경주 지도예요. 돌멩이, 개울, 언덕을 지나 깃발까지!": "audio/tc/rabbit/nar_d1186b5a4f.mp3",
+ "아래 막대를 보면 누가 앞서는지 알 수 있어요.": "audio/tc/rabbit/nar_015ceccd58.mp3",
+ "토끼는 쌩쌩 달려요! 옆으로 쓱 밀어 봐요!": "audio/tc/rabbit/nar_3061b61247.mp3",
+ "화면을 옆으로 쓱 밀어 봐요!": "audio/tc/rabbit/nar_d80bfc1954.mp3",
+ "금세 언덕 위 나무 그늘까지 왔어요.": "audio/tc/rabbit/nar_5ed412989b.mp3",
+ "뒤를 돌아보니… 거북이는 안 보여요!": "audio/tc/rabbit/nar_0881869a74.mp3",
+ "\"하암~ 한숨 자고 가도 되겠다~\"": "audio/tc/rabbit/rabbit_2e8d82655b.mp3",
+ "토끼를 푹 재워 줄까요?": "audio/tc/rabbit/nar_4ce8c2dcb3.mp3",
+ "먼저 나뭇잎 이불을 톡!": "audio/tc/rabbit/nar_bda57ec7e6.mp3",
+ "나뭇잎 이불을 톡 눌러 봐요!": "audio/tc/rabbit/nar_8713b7e602.mp3",
+ "포근포근~ 이불을 덮어 줬어요.": "audio/tc/rabbit/nar_141d2d2efd.mp3",
+ "부엉이를 톡! 자장가를 불러 줘요.": "audio/tc/rabbit/nar_235e2fdad5.mp3",
+ "나무 위 부엉이를 톡 눌러 봐요!": "audio/tc/rabbit/nar_6668dc15e2.mp3",
+ "부엉 부엉~ 토끼 눈이 스르르 감겨요.": "audio/tc/rabbit/nar_74ed8adbe3.mp3",
+ "마지막으로 해님을 톡! 구름이 해를 가려 줘요.": "audio/tc/rabbit/nar_1b112d16c5.mp3",
+ "해님을 톡 눌러 봐요!": "audio/tc/rabbit/nar_bfdb20e590.mp3",
+ "토끼가 쿨쿨 잠이 들었어요.": "audio/tc/rabbit/nar_47e5758042.mp3",
+ "관객 친구들도 \"쉿!\" 조용히~": [
+  "audio/tc/rabbit/nar_6c10b2aed2.mp3",
+  "audio/tc/rabbit/sheep_fc395e2f1d.mp3",
+  "audio/tc/rabbit/nar_b6d606ab74.mp3"
+ ],
+ "토끼가 꿈을 꿔요. 꿈속에서 1등을 했어요!": "audio/tc/rabbit/nar_7543834103.mp3",
+ "상으로 커다란 당근을 받았어요. 당근을 톡!": "audio/tc/rabbit/nar_9eee321171.mp3",
+ "커다란 당근을 톡 눌러 봐요!": "audio/tc/rabbit/nar_937e2bf820.mp3",
+ "\"아삭! 음~ 맛있다!\"": "audio/tc/rabbit/rabbit_5987a27598.mp3",
+ "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~": "audio/tc/rabbit/nar_ac659b1ef7.mp3",
+ "그동안 거북이는? 엉금엉금 걷고 있어요.": "audio/tc/rabbit/nar_fa01a3f34e.mp3",
+ "화면을 톡톡 눌러서 한 발 한 발 걸어요!": "audio/tc/rabbit/nar_8d512a8b21.mp3",
+ "화면을 톡톡 눌러서 엉금엉금!": "audio/tc/rabbit/nar_0320c1cbe9.mp3",
+ "어? 커다란 돌멩이예요! 돌멩이를 톡 해서 넘어가요!": "audio/tc/rabbit/nar_54fad82849.mp3",
+ "돌멩이를 톡 눌러 봐요!": "audio/tc/rabbit/nar_9c44ee4303.mp3",
+ "영차! 돌멩이를 넘었어요!": [
+  "audio/tc/rabbit/turtle_21c306a968.mp3",
+  "audio/tc/rabbit/nar_02c19a76ec.mp3"
+ ],
+ "앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.": "audio/tc/rabbit/nar_6618c231e6.mp3",
+ "옆으로 쓱 밀어서 헤엄쳐요!": "audio/tc/rabbit/nar_9a8e3b711e.mp3",
+ "물고기랑 같이 개울을 건넜어요!": "audio/tc/rabbit/nar_69953c58dc.mp3",
+ "이번엔 높은 언덕이에요.": "audio/tc/rabbit/nar_fbaf02261a.mp3",
+ "화면을 꾹 누르고 있으면 영차영차 올라가요!": "audio/tc/rabbit/nar_86dc0b7a65.mp3",
+ "화면을 꾹 누르고 있어 봐요!": "audio/tc/rabbit/nar_c337787587.mp3",
+ "영차! 언덕 꼭대기에 올라왔어요.": [
+  "audio/tc/rabbit/turtle_21c306a968.mp3",
+  "audio/tc/rabbit/nar_990ac98b64.mp3"
+ ],
+ "위에는 쿨쿨 자는 토끼, 아래에는 거북이!": "audio/tc/rabbit/nar_5cc4274ac9.mp3",
+ "쉿, 조용히 지나가요~ 살금살금.": "audio/tc/rabbit/nar_5d038b69a5.mp3",
+ "와, 거북이가 토끼를 앞질렀어요!": "audio/tc/rabbit/nar_45120103c7.mp3",
+ "해가 뉘엿뉘엿 지고 있어요.": "audio/tc/rabbit/nar_fb8f007cb0.mp3",
+ "닭을 톡 눌러서 토끼를 깨워 줄까요?": "audio/tc/rabbit/nar_fe79ef992e.mp3",
+ "닭을 톡 눌러 봐요!": "audio/tc/rabbit/nar_2e2977fa0c.mp3",
+ "토끼가 벌떡 일어났어요! \"앗, 내가 잠들었네!\"": [
+  "audio/tc/rabbit/nar_5e42c9de3b.mp3",
+  "audio/tc/rabbit/rabbit_12a2a37bec.mp3"
+ ],
+ "막대를 봐요! 거북이가 결승선 코앞이에요!": "audio/tc/rabbit/nar_f69d2a79b6.mp3",
+ "관객 친구들이 모두 일어났어요!": "audio/tc/rabbit/nar_3c9e869ed7.mp3",
+ "토끼가 쌩쌩 달려와요! 거북이는 딱 한 발 남았어요.": "audio/tc/rabbit/nar_2be0109e09.mp3",
+ "거북이를 톡! 마지막 한 발!": "audio/tc/rabbit/nar_fecace0915.mp3",
+ "거북이를 톡 눌러서 마지막 한 발!": "audio/tc/rabbit/nar_20ad18eb9e.mp3",
+ "사진을 보니… 거북이 코끝이 먼저 닿았어요!": "audio/tc/rabbit/nar_9119e711d2.mp3",
+ "거북이가 1등이에요!": "audio/tc/rabbit/nar_7912219535.mp3",
+ "시상식이에요! 관객 친구들이 파도타기를 해요.": "audio/tc/rabbit/nar_927f9b3a03.mp3",
+ "메달을 톡! 거북이 목에 걸어 줘요.": "audio/tc/rabbit/nar_a5fdf0f2ae.mp3",
+ "반짝반짝 메달을 톡 눌러 봐요!": "audio/tc/rabbit/nar_36d960af7f.mp3",
+ "반짝반짝, 금메달이에요!": "audio/tc/rabbit/nar_0f38428c7d.mp3",
+ "토끼가 다가와 말했어요.": "audio/tc/rabbit/nar_1b3986f78c.mp3",
+ "\"축하해! 다음엔 나도 쉬지 않고 열심히 할게.\"": "audio/tc/rabbit/rabbit_154fe40aed.mp3",
+ "거북이도 말했어요. \"고마워! 우리 또 같이 달리자!\"": [
+  "audio/tc/rabbit/nar_c557fc7e9a.mp3",
+  "audio/tc/rabbit/turtle_b7425e6079.mp3"
+ ],
+ "밤이 되었어요. 숲속 잔치가 열렸어요!": "audio/tc/rabbit/nar_96db922b6c.mp3",
+ "친구들을 톡톡 눌러서 신나게 연주해요!": "audio/tc/rabbit/nar_d6ba5c522d.mp3",
+ "모두 함께 신나는 잔치를 했답니다.": "audio/tc/rabbit/nar_19bc57b563.mp3",
+ "천천히 가도 끝까지 하면 해낼 수 있어요!": "audio/tc/rabbit/nar_0730f1bdff.mp3"
+};
+const VOICE_LINES = {
+ "laugh_pig": "audio/tc/rabbit/pig_983a8ebc5e.mp3",
+ "cheer_dog": "audio/tc/rabbit/dog_8b9dab2887.mp3",
+ "cheer_duck": "audio/tc/rabbit/duck_643b80f1f3.mp3",
+ "cheer_sheep": "audio/tc/rabbit/sheep_1a61a737a3.mp3",
+ "wake_rabbit": "audio/tc/rabbit/rabbit_f9892c0bf7.mp3"
+};

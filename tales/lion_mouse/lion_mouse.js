@@ -163,6 +163,9 @@
     const g = T.el('g', {}, ui);
     T.paper(g, [['rect', { x: 500 - n * 23 - 14, y: 70, width: n * 46 + 28, height: 52, rx: 26, fill: C.cream, stroke: C.gold, 'stroke-width': 4 }]]);
     const dots = [];
+    // 세로 화면(양옆이 잘림): 판이 보이는 폭보다 넓으면 가운데를 기준으로 줄인다. 가로는 그대로
+    const fit = Math.min(1, (T.viewWidth() - 24) / (n * 46 + 36));
+    if (fit < 1) g.setAttribute('transform', `translate(500 70) scale(${fit.toFixed(3)}) translate(-500 -70)`);
     for (let k = 0; k < n; k++) {
       const x = 500 + (k - (n - 1) / 2) * 46;
       const c = T.el('circle', { cx: x, cy: 96, r: 17, fill: '#fff', stroke: C.gold, 'stroke-width': 3 }, g);
@@ -211,25 +214,38 @@
     const breathe2 = lion.parts.bubble.animate([{ transform: 'scale(3)' }, { transform: 'scale(9)' }], { duration: 1300, iterations: Infinity, direction: 'alternate' });
 
     /* --- 2. 생쥐 산책 (생쥐 눈높이) --- */
-    let mouse;
+    let mouse, head;
+    /* 대사 연출: 목소리 주인에게 카메라, 사자와 생쥐가 서로 마주 봄.
+       '잡혔다' 장면의 사자는 얼굴 그림(head)뿐이라 얼굴을 배우처럼 넘긴다 (돌려세우지 않음) */
+    T.director({
+      cast: {
+        lion: () => (head && head.H.isConnected ? { pos: head.H, body: head.H, x: 330, y: 175, scale: 1.75 } : lion),
+        mouse: () => mouse,
+      },
+      listener: r => (r === 'lion' ? 'mouse' : 'lion'),
+    });
+    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]); // 말풍선 없는 소리 대사
+    const cutVo = k => setTimeout(() => vo(k), 380);
     await T.sceneCard('생쥐의 산책', () => {
       breathe2.cancel();
       T.clear(); grassForestBG(T);
       lion = mk(T, T.world, 640, 500, drawLionLie, 1.8); lion.face('right'); lion.parts.eyes('shut');
       mouse = mk(T, T.world, 60, 500, drawMouse, 1.5); mouse.face('right');
+      if (T.portrait()) camSnap(60, 280, 1); // 세로 화면(양옆이 잘림): 카메라가 생쥐를 따라간다
     }, lion.parts.H);
     squeak(T);
     await say('작은 생쥐가 산책을 나왔어요. 풀이 숲처럼 커다래요!');
     await say('화면을 톡톡 눌러서 폴짝폴짝 가 볼까요?');
     let q = Promise.resolve();
-    const hopTo = (x, y, dur = 380) => { q = q.then(() => { squeak(T, 1400 + Math.random() * 300); mouse.hop(40, dur); return mouse.move(x, y, dur); }); return q; };
+    const follow = (x, dur) => { if (T.portrait()) camTo(x, 280, 1, dur); };
+    const hopTo = (x, y, dur = 380) => { q = q.then(() => { squeak(T, 1400 + Math.random() * 300); mouse.hop(40, dur); follow(x + 60, dur); return mouse.move(x, y, dur); }); return q; };
     await T.mash(T.root.querySelector('#stageWrap'), { count: 4, prompt: '화면을 톡톡 눌러서 폴짝!',
       onStep: i => { if (i < 4) hopTo(60 + i * 42, 500); } });
     await q;
     // 네 번째 폴짝: 꼬리 → 등 → 갈기 미끄럼틀
     await say('어? 이건 뭐지? 폴짝!');
     for (const [x, y, d] of [[232, 488, 380], [372, 376, 500], [568, 302, 500], [690, 250, 400], [815, 170, 450]]) {
-      squeak(T, 1500); mouse.hop(24, d); await mouse.move(x, y, d);
+      squeak(T, 1500); mouse.hop(24, d); follow(x, d); await mouse.move(x, y, d);
     }
     await sleep(200);
     mouse.body.style.transform = 'rotate(-35deg)';
@@ -237,6 +253,7 @@
     T.pop(760, 150, '쭈르륵~', C.bean);
     await mouse.move(925, 250, 260, 'ease-in');
     await mouse.move(975, 360, 240, 'linear');
+    follow(760, 500);
     await mouse.move(880, 500, 320, 'ease-out');
     mouse.body.style.transform = '';
     squeak(T, 1700); mouse.hop(30);
@@ -248,6 +265,7 @@
     await say('어? 사자가 눈을 떴어요!');
 
     /* 거대한 발 컷 */
+    cutVo('cut_paw');
     await T.cut(svg => {
       el('rect', { x: 0, y: 250, width: 400, height: 50, fill: C.ground }, svg);
       T.paper(svg, [['rect', { x: 150, y: -20, width: 120, height: 190, rx: 30, fill: C.lion }], ['ellipse', { cx: 210, cy: 190, rx: 110, ry: 55, fill: C.lion }],
@@ -256,9 +274,10 @@
     }, { sfx: 'thud', hold: 1800 });
 
     /* --- 3. 잡혔다! (생쥐 시점 로우앵글) --- */
-    let head, paw;
+    let paw;
     await T.sceneCard('잡혔다!', () => {
       T.clear(); lowAngleBG(T);
+      if (T.portrait()) camSnap(500, 280, 1);
       T.paper(T.world, [['ellipse', { cx: 560, cy: 40, rx: 330, ry: 190, fill: C.lionDk }]]); // 올려다본 사자 가슴
       const hg = el('g', { transform: 'translate(330,175) scale(1.75)' }, T.world);
       head = drawHead(T, hg); head.eyes('sleepy');
@@ -285,6 +304,7 @@
     await camTo(330, 200, 1.6, 900);
     head.eyes('open');
     await say('"네가? 나를 도와준다고?"');
+    cutVo('cut_laugh');
     await T.cut(svg => {
       const g = el('g', { transform: 'translate(200,160) scale(1.25)' }, svg);
       const h = drawHead(T, g); h.eyes('happy'); h.mouth('open');
@@ -404,6 +424,7 @@
     const struggle = lion.body.animate([{ rotate: '0deg' }, { rotate: '-2deg' }, { rotate: '2deg' }, { rotate: '0deg' }], { duration: 500, iterations: Infinity });
     await say('밤이 되었어요. 앗, 사자가 그물에 걸렸어요!');
     lion.parts.mouth('smile');
+    cutVo('cut_net');
     await T.cut(svg => {
       const g = el('g', { transform: 'translate(200,150) scale(1.2)' }, svg);
       const h = drawHead(T, g); h.eyes('shut'); h.mouth('open');
@@ -508,12 +529,79 @@
     await say('바람을 가르며 초원을 달려요! 신난다!');
     await say('사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!');
     await T.free([
-      { el: rider.pos, onTap: () => { squeak(T, 1600 + Math.random() * 400); rider.hop(26, 320); T.pop(390, 220, '찍!', C.pine); } },
-      { el: lion.pos, onTap: () => { roar(T, .3); lion.parts.mouth('open'); setTimeout(() => lion.parts.mouth('smile'), 500); lion.hop(20, 360); T.pop(560, 200, '어흥~', C.persimmon); } },
+      { el: rider.pos, onTap: () => { rider.hop(26, 320); T.pop(390, 220, '찍!', C.pine); vo('hi_mouse'); } },
+      { el: lion.pos, onTap: () => { vo('hi_lion'); lion.parts.mouth('open'); setTimeout(() => lion.parts.mouth('smile'), 500); lion.hop(20, 360); T.pop(560, 200, '어흥~', C.persimmon); } },
     ], 12000);
     await say(`그날부터 ${josa(LION, '과/와')} ${josa(MOUSE, '은/는')} 둘도 없는 친구가 되었답니다.`);
     return '작아도 큰 친구를 도울 수 있어요!';
   }
 
-  Tale.mount({ title: '사자와 생쥐', subtitle: '작은 친구의 큰 힘', run: T => run(Tale.api) });
+  /* ================= 세로 화면 도우미 (이 동화 안에서만) =================
+     세로 화면은 무대 양옆이 잘린다(보이는 폭 = T.viewWidth(), 폰에서 약 430).
+     조작을 기다리기 전에 누를 대상(카메라 안의 그림)이 화면 밖이면 카메라를 옆으로 옮기고,
+     그래도 다 안 들어가면 살짝 물러서서(줌아웃) 모두 보이게 한다.
+     장면이 바뀌면 이 도우미가 옮긴 카메라는 제자리로 돌려놓는다.
+     가로 화면(보이는 폭 1000)에서는 아무것도 하지 않는다. */
+  function portraitGuard(api) {
+    const T = Object.create(api);
+    const portrait = () => api.viewWidth() < 990;
+    let guardCam = null;
+    const inCam = n => n && n.closest && n.closest('#cam');
+    function worldBox(nodes) {
+      const w = document.getElementById('stageWrap').getBoundingClientRect();
+      const s = w.height / 560, c = api.camera; // 세로(slice): 무대 높이 560이 화면 높이에 맞는다
+      const wx = px => c.x + ((px - w.left - w.width / 2) / s) / c.z, wy = py => c.y + ((py - w.top - w.height / 2) / s) / c.z;
+      let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      nodes.forEach(n => {
+        const r = n.getBoundingClientRect(); if (!r.width && !r.height) return;
+        x0 = Math.min(x0, wx(r.left)); x1 = Math.max(x1, wx(r.right)); y0 = Math.min(y0, wy(r.top)); y1 = Math.max(y1, wy(r.bottom));
+      });
+      return x0 < x1 ? { x0, x1, y0, y1 } : null;
+    }
+    T.portrait = portrait;
+    /* 화면 고정 UI(#stage에 바로 붙은 카드·배지)를 보이는 폭 안에 한 줄로 다시 놓는다.
+       gs: translate(x,y)로 놓인 그룹들. 원래 왼쪽→오른쪽 순서를 지키고, 넘치면 함께 줄인다. 세로 화면에서만 */
+    T.fitRow = (gs, { gap = 16, margin = 12 } = {}) => {
+      if (!portrait()) return;
+      const vw = api.viewWidth();
+      const at = g => (g.getAttribute('transform') || '').match(/translate\(\s*([-\d.]+)[ ,]+([-\d.]+)/) || [0, 0, 0];
+      const items = gs.map(g => { const m = at(g), b = g.getBBox(); return { g, x: +m[1], y: +m[2], b }; }).sort((p, q) => p.x - q.x);
+      const total = items.reduce((s, it) => s + it.b.width, 0) + gap * (items.length - 1);
+      const k = Math.min(1, (vw - 2 * margin) / total);
+      let x = 500 - total * k / 2;
+      items.forEach(it => {
+        const cx = x + it.b.width * k / 2 - (it.b.x + it.b.width / 2) * k;
+        // 자리·크기는 바깥 틀(wrap)이 맡는다 → 카드 자신의 톡 커지는(scale) 애니메이션은 카드 가운데 기준 그대로
+        const wrap = it.g._fitWrap || T.el('g', {}, it.g.parentNode);
+        if (!it.g._fitWrap) { it.g.parentNode.insertBefore(wrap, it.g); wrap.appendChild(it.g); it.g._fitWrap = wrap; const rm = it.g.remove.bind(it.g); it.g.remove = () => { rm(); wrap.remove(); }; }
+        wrap.setAttribute('transform', `translate(${cx.toFixed(1)},${it.y}) scale(${k.toFixed(3)})`);
+        it.g.setAttribute('transform', 'translate(0,0)');
+        it.g._x = cx; x += (it.b.width + gap) * k;
+      });
+    };
+    /* nodes가 모두 보이게 카메라를 옮긴다 (세로 화면에서만) */
+    T.fitTo = async (nodes, { dur = 600, pad = 22, minZ = .5 } = {}) => {
+      if (!portrait()) return;
+      nodes = [].concat(nodes).filter(inCam); if (!nodes.length) return;
+      const b = worldBox(nodes); if (!b) return;
+      const vw = api.viewWidth(), c = api.camera, vert = c.z > 1.001; // z ≤ 1이면 세로는 늘 무대 전체가 보인다
+      const hx = vw / 2 / c.z, hy = 280 / c.z;
+      if (b.x0 - pad >= c.x - hx && b.x1 + pad <= c.x + hx && (!vert || (b.y0 - pad >= c.y - hy && b.y1 + pad <= c.y + hy))) return;
+      const z = Math.max(minZ, Math.min(c.z, vw / 2 / ((b.x1 - b.x0) / 2 + pad), vert ? 280 / ((b.y1 - b.y0) / 2 + pad) : 9));
+      const nx = vw / 2 / z, ny = 280 / z;
+      const x = Math.min(Math.max(c.x, b.x1 + pad - nx), b.x0 - pad + nx);
+      const y = Math.min(Math.max(c.y, b.y1 + pad - ny), b.y0 - pad + ny);
+      await api.camTo(x, y, z, dur);
+      guardCam = api.camera;
+    };
+    const targetsOf = { tap: a => a[0], mash: a => a[0], swipe: a => a[0], hold: a => a[0], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
+    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); return api[k](...a); }; });
+    T.sceneCard = (label, change, focus) => api.sceneCard(label, () => {
+      if (guardCam) { const c = api.camera; if (c.x === guardCam.x && c.y === guardCam.y && c.z === guardCam.z) api.camSnap(500, 280, 1); guardCam = null; }
+      change && change();
+    }, focus);
+    return T;
+  }
+
+  Tale.mount({ title: '사자와 생쥐', subtitle: '작은 친구의 큰 힘', run: T => run(portraitGuard(Tale.api)) });
 })();
