@@ -44,8 +44,8 @@ def prop(name, pal, body, wide=False, nogreen=True, extra_neg=''):
     """라임 배경 위 단독 요소. 위치·크기는 코드에서 정한다."""
     w, h = (1760, 992) if wide else (1024, 1024)
     return {'name': name, 'w': w, 'h': h, 'cfg': 3.0, 'key': True, 'trim': True, 'nogreen': nogreen,
-            'negative': NEG_BG + ", glow on background, halo, light spill, green shadow" + extra_neg,
-            'prompt': (f"{STYLE} {pal}{body} The element is shown whole and uncropped, centered, straight-on. "
+            'negative': NEG_BG + ", glow on background, halo, light spill, green shadow, color swatches, colour palette chart, stack of colored strips, sample color bars" + extra_neg,
+            'prompt': (f"{STYLE} {body} The element is shown whole and uncropped, centered, straight-on. "
                        f"Isolated on a plain solid flat lime green (#7CFC00) background, nothing else. {NO_OUTSIDE_SHADOW}{NO_GLOW}"
                        "No text, no watermark.")}
 
@@ -56,7 +56,7 @@ NEG_CHAR = NEG + ", scary, realistic tiger, fangs, claws, blood, human, person, 
 
 def tiger(name, pose):
     return {'name': name, 'w': 1024, 'h': 1024, 'cfg': 3.0, 'key': True, 'trim': True, 'nogreen': True, 'negative': NEG_CHAR,
-            'prompt': (f"{STYLE} Palette: persimmon #E8703A, bark brown #6B4A32, paper cream #F6ECD8, pink cheeks. "
+            'prompt': (f"{STYLE} "
                        f"{TIGER}{pose} Exactly ONE tiger, whole body visible, centered. "
                        f"Isolated on a plain solid lime green (#7CFC00) background, nothing else. {NO_OUTSIDE_SHADOW}{NO_GLOW}"
                        "No text, no watermark.")}

@@ -16,17 +16,23 @@ KID = ("Cute, round, friendly Korean picture-book characters for 3-4 year olds: 
        "small pink cheek circles, simple rounded shapes, never scary. ")
 
 
+DEPTH = ("A layered paper-cut diorama scene seen straight-on: the scene is built from SIX to EIGHT flat paper layers one behind "
+         "another (far sky, distant hills, middle ground, ground, near foreground), each layer a cut-paper silhouette casting a soft "
+         "warm shadow on the layer behind, giving strong depth like a shadow-box. Leave the lower middle of the image open and "
+         "uncluttered so characters can stand there. ")
+
+
 def sheet(name, pal, body, neg=''):
     return {'name': name, 'w': 1760, 'h': 992, 'cfg': 3.0, 'key': False, 'trim': False, 'negative': NEG_BG + neg,
-            'prompt': f"{STYLE} {pal}{body} A FULL-BLEED sheet filling the ENTIRE image edge to edge, no lime green, "
+            'prompt': f"{STYLE} {pal}{DEPTH}{body} A FULL-BLEED sheet filling the ENTIRE image edge to edge, no lime green, "
                       "no characters unless described. No text, no watermark."}
 
 
 def prop(name, pal, body, wide=False, tall=False, nogreen=True, neg=''):
     w, h = (1760, 992) if wide else (768, 1280) if tall else (1024, 1024)
     return {'name': name, 'w': w, 'h': h, 'cfg': 3.0, 'key': True, 'trim': True, 'nogreen': nogreen,
-            'negative': NEG_BG + ", glow on background, halo, green shadow, duplicate, two of them" + neg,
-            'prompt': f"{STYLE} {pal}{KID}{body} Shown whole and uncropped, centered. "
+            'negative': NEG_BG + ", glow on background, halo, green shadow, duplicate, two of them, color swatches, colour palette chart, stack of colored strips, sample color bars" + neg,
+            'prompt': f"{STYLE} {KID}{body} Shown whole and uncropped, centered. "
                       f"Isolated on a plain solid flat lime green (#7CFC00) background, nothing else. {NO_SHADOW}No text, no watermark."}
 
 
