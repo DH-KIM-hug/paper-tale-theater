@@ -87,14 +87,18 @@
   }
 
   /* ── 태그 칩 ── */
-  const icon = (key, cls = 'ic') => `<svg class="${cls}" aria-hidden="true"><use href="#i-${key}"/></svg>`;
+  /* 종이 스티커 아이콘(assets/icons/<key>.webp)이 준비된 태그는 그림으로, 아니면 SVG 아이콘 */
+  const STICKER = new Set(window.ICONS || []);
+  const icon = (key, cls = 'ic') => STICKER.has(key)
+    ? `<img class="${cls} stk" src="assets/icons/${key}.webp" alt="" aria-hidden="true" draggable="false" decoding="async">`
+    : `<svg class="${cls}" aria-hidden="true"><use href="#i-${key}"/></svg>`;
   /* 글자마다 따로 늘었다 줄었다 할 수 있게 한 글자씩 감싼다 (읽기 이름은 aria-label 로) */
   const letters = s => [...s].map(ch => ch === ' ' ? '<i class="sp"> </i>' : `<i>${ch}</i>`).join('');
 
   function buildChips(row) {
     const box = document.querySelector(`.tagrow[data-row="${row}"] .chips`);
     const chip = (key, label, ic) =>
-      `<button type="button" class="chip${key ? '' : ' all'}" data-row="${row}" data-key="${key}" aria-label="${label}">${icon(ic)}<span class="lb" aria-hidden="true">${letters(label)}</span></button>`;
+      `<button type="button" class="chip${key ? '' : ' all'}" data-row="${row}" data-key="${key}" aria-label="${label}"><span class="face">${icon(ic)}<span class="lb" aria-hidden="true">${letters(label)}</span></span></button>`;
     box.innerHTML = chip('', '전체', 'all') + TAGS[row].map(t => chip(t.key, t.label, t.key)).join('');
     box.addEventListener('click', e => {
       const b = e.target.closest('.chip');
@@ -432,10 +436,10 @@
     const R = rng(11), vw = innerWidth, vh = innerHeight;
     const layer = document.createElement('div');
     layer.className = 'confetti';
-    const PAL = ['#FFC83D', '#FF7759', '#22B07D', '#3AA6F5', '#B48CF5', '#E8445F', '#FF78B0', '#8CC63F'];
+    const PAL = ['#D9A94E', '#D26A4C', '#3F6B4F', '#3D5A94', '#7E6AAE', '#A93B32', '#C97891', '#F4EAD3'];
     const bits = [];
     tiles.forEach((el, i) => {
-      const r = el.getBoundingClientRect(), col = getComputedStyle(el).backgroundColor;
+      const r = el.getBoundingClientRect(), col = getComputedStyle(el).getPropertyValue('--c').trim() || getComputedStyle(el).backgroundColor;
       for (let j = 0; j < 9; j++) {
         const d = document.createElement('i');
         d.className = 'bit b' + (j % 3);

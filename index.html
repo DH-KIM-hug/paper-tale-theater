@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<meta name="theme-color" content="#1D2459">
+<meta name="theme-color" content="#10163F">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231D2459'/%3E%3Crect x='4' y='4' width='24' height='5' fill='%23FFC83D'/%3E%3Crect x='7' y='9' width='18' height='19' fill='%23E8445F'/%3E%3Ccircle cx='16' cy='18' r='5' fill='%23FFF7E8'/%3E%3C/svg%3E">
 <title>종이 동화극장</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=Sunflower:wght@500;700&display=swap">
+<link rel="preload" as="image" href="assets/home/wall.webp">
 <link rel="stylesheet" href="home.css">
 </head>
 <body>
@@ -46,13 +47,13 @@
   <!-- 마음·배려: 하트 -->
   <symbol id="i-heart" viewBox="0 0 32 32"><path d="M16 28 C4 20 2 14 4 9.5 C6 5 12 4.5 16 9.5 C20 4.5 26 5 28 9.5 C30 14 28 20 16 28Z" fill="#F0506E"/></symbol>
   <!-- 보호자 톱니 -->
-  <symbol id="i-gear" viewBox="0 0 32 32"><path d="M13.5 3 h5 l.8 3.6 3 1.3 3.1 -2 3.5 3.5 -2 3.1 1.3 3 3.6 .8 v5 l-3.6 .8 -1.3 3 2 3.1 -3.5 3.5 -3.1 -2 -3 1.3 -.8 3.6 h-5 l-.8 -3.6 -3 -1.3 -3.1 2 -3.5 -3.5 2 -3.1 -1.3 -3 -3.6 -.8 v-5 l3.6 -.8 1.3 -3 -2 -3.1 3.5 -3.5 3.1 2 3 -1.3z" fill="currentColor"/><circle cx="16" cy="16" r="4.5" fill="#1D2459"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 32 32"><path d="M13.5 3 h5 l.8 3.6 3 1.3 3.1 -2 3.5 3.5 -2 3.1 1.3 3 3.6 .8 v5 l-3.6 .8 -1.3 3 2 3.1 -3.5 3.5 -3.1 -2 -3 1.3 -.8 3.6 h-5 l-.8 -3.6 -3 -1.3 -3.1 2 -3.5 -3.5 2 -3.1 -1.3 -3 -3.6 -.8 v-5 l3.6 -.8 1.3 -3 -2 -3.1 3.5 -3.5 3.1 2 3 -1.3z" fill="currentColor"/><circle cx="16" cy="16" r="4.5" fill="#141A45"/></symbol>
 </svg>
 
 <div id="home">
   <aside class="board" aria-label="동화 고르기">
     <header class="brand">
-      <h1 class="logo"><span class="sr">종이 동화극장</span><span class="lt" aria-hidden="true" style="--c:#FFC83D;--r:-4deg">종</span><span class="lt" aria-hidden="true" style="--c:#FF7759;--r:3deg">이</span><span class="lt gap" aria-hidden="true" style="--c:#22B07D;--r:-2deg">동</span><span class="lt" aria-hidden="true" style="--c:#3AA6F5;--r:4deg">화</span><span class="lt" aria-hidden="true" style="--c:#B48CF5;--r:-3deg">극</span><span class="lt" aria-hidden="true" style="--c:#E8445F;--t:#FFF7E8;--r:2deg">장</span></h1>
+      <h1 class="logo"><span class="sr">종이 동화극장</span><span class="lt" aria-hidden="true" style="--c:#D9A94E;--r:-4deg">종</span><span class="lt" aria-hidden="true" style="--c:#D26A4C;--r:3deg">이</span><span class="lt gap" aria-hidden="true" style="--c:#3F6B4F;--r:-2deg">동</span><span class="lt" aria-hidden="true" style="--c:#3D5A94;--r:4deg">화</span><span class="lt" aria-hidden="true" style="--c:#7E6AAE;--r:-3deg">극</span><span class="lt" aria-hidden="true" style="--c:#A93B32;--r:2deg">장</span></h1>
       <button id="parentBtn" class="gear" type="button" aria-label="보호자 메뉴: 3초 동안 누르세요">
         <svg class="gear-ic" aria-hidden="true"><use href="#i-gear"/></svg>
         <svg class="gear-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19"/></svg>
@@ -105,6 +106,7 @@
 <script src="audio.js"></script>
 <script src="tales/catalog.js"></script>
 <script src="assets/thumbs/thumbs.js"></script>
+<script src="assets/icons/icons.js"></script>
 <script src="home.js"></script>
 </body>
 </html>
