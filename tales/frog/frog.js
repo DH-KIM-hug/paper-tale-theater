@@ -162,8 +162,10 @@
     for (const r of quiz) {
       await camTo(...r.cam, 900);
       const left = Math.random() < .5;
-      const bOk = badge(T, left ? 130 : 870, 300, g => ICONS[r.ok](T, g));
-      const bNo = badge(T, left ? 870 : 130, 300, g => ICONS[r.no](T, g));
+      // 세로 화면은 무대 양옆이 잘리므로, 실제로 보이는 폭 안쪽 끝에 배지를 둔다
+      const vw = T.viewWidth ? T.viewWidth() : 1000, L = 500 - vw / 2 + 85, R = 500 + vw / 2 - 85;
+      const bOk = badge(T, left ? L : R, 300, g => ICONS[r.ok](T, g));
+      const bNo = badge(T, left ? R : L, 300, g => ICONS[r.no](T, g));
       await say(r.q);
       await T.choose([{ el: bOk, ok: true }, { el: bNo, ok: false }], { prompt: r.q,
         where: '가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!', who: `${T.josa(r.okName, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });

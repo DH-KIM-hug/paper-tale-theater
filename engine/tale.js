@@ -69,9 +69,15 @@ const Tale = (() => {
 
   /* ---------- 카메라 (SVG 사용자 좌표) ---------- */
   function camT(x, y, z) { return `translate(500px,280px) scale(${z}) translate(${-x}px,${-y}px)`; }
+  /* 화면에 실제로 보이는 무대 폭(사용자 좌표). 세로 화면(slice)에서는 1000보다 좁다 */
+  function viewWidth() {
+    const r = stage && stage.getBoundingClientRect();
+    if (!r || !r.width || !r.height) return 1000;
+    return Math.min(1000, 560 * r.width / r.height);
+  }
   function clampCam(x, y, z) {
-    if (z <= 1) return [500, 280];
-    const hx = 500 / z, hy = 280 / z;
+    const hx = viewWidth() / 2 / Math.max(z, 1e-3), hy = 280 / z;
+    if (z <= 1) return [hx >= 500 ? 500 : Math.min(Math.max(x, hx), 1000 - hx), 280];
     return [Math.min(Math.max(x, hx), 1000 - hx), Math.min(Math.max(y, hy), 560 - hy)];
   }
   async function camTo(x, y, z = 1, dur = 800) {
@@ -485,6 +491,7 @@ const Tale = (() => {
   const api = {
     el, paper, anim, actor, sleep, say, tone, josa, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
+    viewWidth,
     tap: input(tap), mash: input(mash), choose: input(choose), swipe: input(swipe), hold: input(hold), free: input(free),
     get bg() { return bgL; }, get world() { return world; }, get fx() { return fxL; }, get root() { return root; },
   };

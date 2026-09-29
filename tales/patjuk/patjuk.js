@@ -92,8 +92,21 @@
       // 선반 위 절구처럼 높은 곳을 비출 때 대상이 화면 밖으로 밀려나면 예외로 둔다
       return Math.abs(anchored - y) < 0.55 * 280 / z ? anchored : y;
     };
-    const camTo = (x, y, z = 1, dur = 800) => { frameFor(z, dur); return T.camTo(x, groundY(y, z), z, dur); };
-    const camSnap = (x, y, z = 1) => { frameFor(z, 0); T.camSnap(x, groundY(y, z), z); };
+    /* 세로 화면: 양옆이 잘리므로 카메라를 좌우로 옮겨 호랑이 전신이 늘 보이게 한다 */
+    let tigerDest = null, camBusy = 0;
+    const portrait = () => T.viewWidth() < 990;
+    function keepTiger(x, z) {
+      let tg; try { tg = tiger; } catch (e) { return x; } // 호랑이를 만들기 전(오프닝)에는 그대로
+      if (!portrait() || tg.pos.style.opacity === '0') return x;
+      const tx = tigerDest ?? tg.x, hw = T.viewWidth() / 2 / z, tw = 112 * tg.scale + 12;
+      const lo = tx + tw - hw, hi = tx - tw + hw;
+      return lo > hi ? tx : Math.min(Math.max(x, lo), hi);
+    }
+    const camTo = async (x, y, z = 1, dur = 800) => {
+      frameFor(z, dur); camBusy++;
+      try { await T.camTo(keepTiger(x, z), groundY(y, z), z, dur); } finally { camBusy--; }
+    };
+    const camSnap = (x, y, z = 1) => { frameFor(z, 0); T.camSnap(keepTiger(x, z), groundY(y, z), z); };
     const camWide = (dur = 800) => camTo(500, 280, 1, dur);
 
     function buildProscenium() {
@@ -279,7 +292,17 @@
       const dur = Math.max(300, Math.abs(dx) / speed * 1000);
       if (Math.abs(dx) > 4) a.face(dx > 0 ? 'right' : 'left');
       a.art && a.art.classList.add('walking');
-      await a.move(x, a.y, dur, 'ease-in-out');
+      const moving = a.move(x, a.y, dur, 'ease-in-out');
+      let follow = null;
+      if (a === tiger) {
+        tigerDest = x;
+        await Promise.resolve(); // 같은 Promise.all 안의 카메라 이동이 먼저 시작되게
+        // 세로 화면에서 따로 카메라를 움직이는 중이 아니면, 호랑이를 따라 카메라를 옮긴다
+        if (portrait() && !camBusy) { const c = T.camera; follow = camTo(c.x, c.y, c.z, dur); }
+      }
+      await moving;
+      if (follow) await follow;
+      if (a === tiger) tigerDest = null;
       a.art && a.art.classList.remove('walking');
     }
     /* 무대 밖 대기: 가로 화면 클로즈업 때 레터박스 가장자리로 비치지 않게 숨긴다 */
