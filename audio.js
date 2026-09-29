@@ -338,8 +338,8 @@ const Narrator = (() => {
      세대 카운터로, 뒤이어 시작된 내레이션의 말풍선을 앞선 호출이 지우지 못하게 한다 */
   let speakGen = 0;
 
-  /* 클립 경로에서 배역을 읽는다: audio/tc/tiger_ab12.mp3 → 'tiger' (없으면 내레이터) */
-  const roleOf = url => (/\/tc\/([a-z]+)_[0-9a-f]+\.mp3$/.exec(url) || [, 'nar'])[1];
+  /* 클립 경로에서 배역을 읽는다: audio/tc/tiger_ab12cd34ef.mp3, audio/tc/frog/mom_…mp3 → 'tiger', 'mom' (없으면 내레이터) */
+  const roleOf = url => (/\/([a-z]+)_[0-9a-f]{10}\.mp3$/.exec(url) || [, 'nar'])[1];
 
   async function speak(text, { keep = false, onSeg } = {}) {
     const gen = ++speakGen;
