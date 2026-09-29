@@ -396,6 +396,7 @@
     if (!/slice/.test(s.getAttribute('preserveAspectRatio') || '')) return 1000;
     return Math.min(1000, 560 * w.clientWidth / Math.max(1, w.clientHeight));
   }
+  const narrow = () => visW() < 760; // 세로(좁은) 화면: 양옆이 잘린다
   function slots(n) {
     const vw = visW(), sp = Math.min(230, (vw - 24) / n), r = Math.min(84, sp * .45);
     return { xs: [...Array(n)].map((_, i) => 500 + (i - (n - 1) / 2) * sp), r };
@@ -405,7 +406,7 @@
     T.paper(g, [['circle', { r, fill: C.cream, stroke: C.gold, 'stroke-width': Math.max(4, r * .09) }]]);
     const inner = T.el('g', { transform: `scale(${r / 84})` }, g);
     draw(inner);
-    if (label) T.el('text', { y: r + Math.max(22, r * .34), 'text-anchor': 'middle', 'font-size': Math.max(22, r * .34), fill: C.bean, stroke: C.cream, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: label }, g);
+    if (label) T.el('text', { y: r + Math.max(22, r * .34), 'text-anchor': 'middle', 'font-size': Math.max(22, r * .34), fill: C.bean, stroke: C.cream, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: label }, g);
     g._x = x; g._y = y;
     return g;
   }
@@ -450,6 +451,27 @@
     const put = (a, x, y, s = a.scale, dir = 'left') => { T.world.appendChild(a.pos); a.setScale(s); a.face(dir); a.place(x, y); };
     let snowT = null;
 
+    /* 대사 연출: 목소리 주인에게 카메라가 가고, 말하는 쪽과 듣는 쪽이 서로 마주 본다.
+       동물들은 장면마다 새로 만들어지므로 함수로 (아직 없거나 무대에 없으면 건너뜀) */
+    const ref = f => () => { try { return f(); } catch (e) { return null; } };
+    const onStage = (...fs) => fs.map(f => ref(f)()).find(a => a && a.pos.isConnected) || null;
+    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && setTimeout(() => AudioFX.voice(VOICE_LINES[k]), 380);
+    const momNow = () => onStage(() => far._ducks[0], () => mom); // 마지막 장면: 멀리서 손 흔드는 엄마 오리
+    T.director({
+      cast: {
+        hero, mom: momNow,
+        rooster: ref(() => rooster), ducks: ref(() => ducks[0]), geese: ref(() => geese[1]), farmer: ref(() => farmer),
+        cat: ref(() => cat), hen: ref(() => henIn), swan: ref(() => swans[0]),
+      },
+      listener: (r, last) => {
+        if (r === 'hero') return last && last !== 'hero' && last !== 'card' ? last : null;
+        if (r !== 'mom') return 'hero';
+        if (last === 'rooster' || last === 'ducks') return last; // 엄마 오리가 놀린 친구들에게 한마디
+        const m = momNow(); // 둥지 위·먼 언덕처럼 위아래로 멀면 둘을 한 화면에 못 잡으니 엄마만
+        return m && Math.abs(m.y - hero.y) > 120 ? null : 'hero';
+      },
+    });
+
     /* 감정 골라요: 주인공 얼굴을 크게 보여주고, 아래에 얼굴 카드 */
     async function askMood(answer, moods, q) {
       /* 주인공 얼굴을 위에 크게 비춰 주고(거울), 아래에 얼굴 카드 */
@@ -490,7 +512,7 @@
         await T.anim(good.g, [{ transform: `translate(${good.g._x}px,${good.g._y}px) scale(1)` }, { transform: `translate(${tx}px,${ty}px) scale(.55)` }], { duration: 480, easing: 'cubic-bezier(.3,1.4,.5,1)' });
         T.tone(440 + k * 110, .25, { type: 'triangle', vol: .16 });
         const tag = T.paper(good.g, [['circle', { cx: r * .8, cy: -r * .8, r: 24, fill: C.persimmon, stroke: C.cream, 'stroke-width': 4 }]]);
-        el('text', { x: r * .8, y: -r * .8 + 10, 'text-anchor': 'middle', 'font-size': 30, fill: C.cream, 'font-family': 'Jua, sans-serif', text: k + 1 }, tag);
+        el('text', { x: r * .8, y: -r * .8 + 10, 'text-anchor': 'middle', 'font-size': 30, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1 }, tag);
       }
       await say(doneLine);
       await sleep(400);
@@ -560,13 +582,16 @@
       sibs.forEach((d, k) => put(d, LINE[k], 452, 1.3));
       put(hero, -40, 454, 1.15);
       waterFront(T, 441);
+      if (narrow()) camSnap(250, 280, 1); // 세로: 줄 선 오리들 쪽을 비춘다
     }, hero.pos);
     await say('엄마 오리가 아기들을 데리고 연못에 갔어요. 줄을 서서 헤엄쳐요.');
     await say('화면을 옆으로 쓱 밀어서 헤엄쳐 볼까요?');
     const swimmers = [mom, ...sibs, hero];
     await T.swipe(T.root.querySelector('#stageWrap'), { dir: 'right', count: 3, prompt: '옆으로 쓱 밀어서 헤엄쳐요!', onStep: i => {
       AudioFX.sfx('splash', .35) || AudioFX.splash();
-      swimmers.forEach((a, k) => setTimeout(() => { a.move(a.x + 150, a.y, 650); if (a !== hero) a.hop(8, 400); }, k * 70));
+      swimmers.forEach((a, k) => setTimeout(() => {
+        if (a === hero && narrow()) camTo(a.x + 150 + 130, 280, 1, 650); // 세로: 맨 끝 회색 오리를 카메라가 따라간다
+        a.move(a.x + 150, a.y, 650); if (a !== hero) a.hop(8, 400); }, k * 70));
       if (i === 2) setTimeout(async () => {
         await T.anim(hero.inner, [{ transform: 'translateY(0)' }, { transform: 'translateY(60px)' }, { transform: 'translateY(60px)' }, { transform: 'translateY(0)' }], 900);
         T.pop(hero.x, hero.y - 130, '퐁!', C.indigo);
@@ -585,11 +610,13 @@
       ducks = [cast(T, 'mom', 650, 505, 1.5), cast(T, 'mom', 750, 515, 1.6)];
       put(hero, 525, 525, 1.35);
       put(mom, 960, 500, 1.5);
+      camSnap(narrow() ? 420 : 500, 280, 1); // 세로: 먼저 닭 쪽
     }, hero.pos);
     await say('농장 마당에 닭이랑 오리들이 모여 있어요.');
     crow(T); rooster.hop(20);
     T.pop(420, 250, '못생겼다!', C.bean);
     await say('수탉이 말했어요. "꼬꼬댁! 너는 못생겼어!"');
+    if (narrow()) await camTo(600, 280, 1, 600); // 세로: 말하는 오리들 쪽으로
     quack(T); ducks.forEach(d => d.hop(14));
     await say('오리들도 말했어요. "꽥꽥! 너는 우리랑 달라!"');
     hero.setMood('sad'); hero.pose('translateY(4px) scale(1,.96)');
@@ -612,6 +639,7 @@
     await say('"괜찮아. 너는 너라서 멋져."');
     quack(T); ducks.forEach((d, k) => d.move(d.x + 120, d.y, 600)); await mom.move(650, 505, 800);
     await say('엄마 오리도 말했어요. "우리 아기는 헤엄을 제일 잘한단다!"');
+    if (narrow()) await camTo(470, 280, 1, 600); // 세로: 머쓱한 수탉 쪽으로
     rooster.wiggle(6); hen.wiggle(6);
     await say('수탉과 오리들이 머쓱해서 말했어요. "놀려서 미안해."');
 
@@ -619,7 +647,7 @@
     await say('그래도 아기 오리는 마음이 쓸쓸했어요. 넓은 세상을 보러 길을 떠났어요.');
     let bgReeds, fgReeds;
     await T.sceneCard('갈대숲', () => {
-      T.clear(); bgReeds = reedEyeBG(T);
+      T.clear(); bgReeds = reedEyeBG(T); camSnap(500, 280, 1);
       put(hero, 380, 540, 1.7, 'right');
       const list = []; for (let i = 0; i < 14; i++) list.push([60 + i * 130 + (i % 2) * 30, 562]);
       fgReeds = reeds(T, T.world, list, 460, C.reedDk);
@@ -641,8 +669,10 @@
     let geese;
     await T.sceneCard('늪', () => {
       T.clear(); swampBG(T);
-      put(hero, 380, 470, 1.45);  hero.face('right');
-      geese = [cast(T, 'goose', 580, 452, 1.3), cast(T, 'goose', 690, 470, 1.35), cast(T, 'goose', 800, 458, 1.25)];
+      const nw = narrow(); // 세로: 기러기 셋과 아기 오리가 한 화면에
+      put(hero, nw ? 372 : 380, 470, 1.45);  hero.face('right');
+      geese = (nw ? [[552, 452], [632, 470], [708, 458]] : [[580, 452], [690, 470], [800, 458]]).map(([x, y], k) => cast(T, 'goose', x, y, [1.3, 1.35, 1.25][k]));
+      camSnap(nw ? 530 : 500, 280, 1);
       waterFront(T, 446, '#6A8FA4');
     }, hero.pos);
     honk(T); geese.forEach((g, k) => setTimeout(() => g.hop(16), k * 120));
@@ -657,7 +687,7 @@
     /* --- 6. 쾅! (감정 3 · 늪 하이앵글) --- */
     let bush;
     await T.sceneCard('늪 한가운데', () => {
-      T.clear(); swampHighBG(T);
+      T.clear(); swampHighBG(T); camSnap(500, 280, 1);
       put(hero, 500, 410, 1.6); hero.face('left'); hero.setMood('neutral');
       geese.forEach((g, k) => put(g, [300, 700, 640][k], [300, 320, 500][k], 1.2));
       bush = el('g', {}, T.world);
@@ -676,7 +706,7 @@
     AudioFX.sfx('boom', .5) || AudioFX.boom();
     await T.cut(svg => {
       el('rect', { width: 400, height: 300, fill: C.indigo }, svg);
-      el('text', { x: 200, y: 180, 'text-anchor': 'middle', 'font-size': 110, fill: C.amber, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '쾅!' }, svg);
+      el('text', { x: 200, y: 180, 'text-anchor': 'middle', 'font-size': 110, fill: C.amber, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '쾅!' }, svg);
     }, { hold: 1500 });
     honk(T);
     await say('저 멀리서 큰 소리가 났어요. 깜짝 놀란 기러기들이 모두 날아가 버렸어요.');
@@ -706,7 +736,7 @@
     await T.sceneCard('둘째 막 · 가을', () => {
       T.clear(); autumnLowBG(T);
       hero.setForm('young');
-      put(hero, 400, 548, 1.45, 'right');
+      put(hero, narrow() ? 440 : 400, 548, 1.45, 'right');
       hero.pose('rotate(-8deg)');
       flock = el('g', {}, T.world);
       [[0, 0], [70, 44], [-70, 44], [140, 88], [-140, 88]].forEach(([x, y]) => flyingSwan(T, flock, 560 + x, 110 + y, 1.15));
@@ -784,11 +814,11 @@
     let cat, henIn, grandma;
     await T.sceneCard('할머니 집', () => {
       T.clear(); [...T.fx.children].forEach(n => n.remove()); cabinBG(T);
-      grandma = cast(T, 'grandma', 715, 505, 1.55);
+      grandma = cast(T, 'grandma', narrow() ? 680 : 715, 505, 1.55);
       cat = cast(T, 'cat', 480, 520, 1.7); cat.face('left');
       henIn = cast(T, 'hen', 610, 490, 1.45); henIn.face('left');
       T.paper(T.world, [['path', { d: 'M545 516 L560 478 L670 478 L655 516 Z', fill: '#C39445' }], ['rect', { x: 556, y: 486, width: 104, height: 6, fill: C.bark }]]);
-      put(hero, 355, 525, 1.25, 'right');
+      put(hero, narrow() ? 385 : 355, 525, 1.25, 'right');
     }, hero.pos);
     await say('할머니 집은 난로가 있어 따뜻했어요. 고양이와 암탉도 함께 살았어요.');
     meow(T); cat.hop(14);
@@ -798,11 +828,11 @@
       el('rect', { width: 400, height: 300, fill: '#F2DFA8' }, svg);
       const g = el('g', { transform: 'translate(210,286) scale(1.7)' }, svg);
       HERO.young(T, g, mood);
-      el('text', { x: 300, y: 76, 'text-anchor': 'middle', 'font-size': 58, fill: C.bean, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: word }, svg);
+      el('text', { x: 300, y: 76, 'text-anchor': 'middle', 'font-size': 58, fill: C.bean, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: word }, svg);
     };
-    purr(T);
+    vo('cut_purr') || purr(T); // 목소리 흉내가 있으면 합성음은 생략
     await T.cut(svg => hugeHero(svg, '가르릉…', 'neutral'), { hold: 1500 });
-    quack(T);
+    vo('cut_quack') || quack(T);
     await T.cut(svg => hugeHero(svg, '꽥!', 'happy'), { hold: 1500, sfx: 'pop' });
     giggle(T);
     [cat, henIn, grandma].forEach((a, k) => setTimeout(() => a.hop(14, 320), k * 120));
@@ -822,8 +852,8 @@
       const cards = opts.map((o, i) => ({ ...o, g: card(T, sl.xs[i], 190, r, g => o.icon(T, g), o.label) }));
       const pick = await T.choose(cards.map(c => ({ el: c.g, ok: c.ok, onWrong: async () => {
         await T.anim(c.g, [{ translate: '0 0' }, { translate: '-10px 0' }, { translate: '10px 0' }, { translate: '0 0' }], 360);
-        if (c.k === 'purr') { purr(T); cat.hop(14); await say('고양이: "가르릉은 내가 잘하지~"'); }
-        else { cluck(T); henIn.hop(14); await say('암탉: "알 낳기는 내가 잘하지~"'); }
+        if (c.k === 'purr') { cat.hop(14); await say('고양이: "가르릉은 내가 잘하지~"'); } // 목소리와 겹치던 합성음은 뺐다
+        else { henIn.hop(14); await say('암탉: "알 낳기는 내가 잘하지~"'); }
       } })), { prompt: q9, where: '연못에서 쏙 들어갔다가 퐁! 기억나요?', who: '헤엄이에요! 반짝이는 카드를 눌러 봐요.' });
       await T.anim(pick.el, [{ translate: '0 0' }, { translate: '0 -24px' }, { translate: '0 0' }], 420);
       cards.forEach(c => c.g.remove());
@@ -874,6 +904,7 @@
     await say('길고 하얀 목, 커다란 하얀 날개…');
     await camWide(1400);
     swanCall(T); T.pop(640, 110, '백조!', C.indigo);
+    await sleep(900); // 백조 울음이 끝나고 "어? 이게 나야?"
     await say('"어? 이게 나야?" 아기 오리는 하얀 백조였어요!');
     await orderGame([
       { label: '알', icon: growthIcon('egg') }, { label: '아기', icon: growthIcon('baby') },
@@ -909,6 +940,8 @@
     far._ducks.forEach((d, k) => setTimeout(() => { d.parts.wing && d.parts.wing.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-40deg)' }, { transform: 'rotate(0deg)' }], { duration: 500, iterations: 4 }); d.hop(10, 300); }, k * 100));
     quack(T, .4);
     await say('저 멀리 엄마 오리와 형제들도 반갑게 날개를 흔들어요. "잘 자랐구나!"');
+    // 세로: 백조 넷이 한 화면에 다 들어오게 카메라를 살짝 물린다
+    if (narrow()) await camTo(605, 280, Math.min(1, visW() / 610), 700);
     await say('백조들을 톡톡 눌러서 함께 춤을 춰요!');
     const NOTES = [392, 440, 523, 587];
     await T.free([hero, ...swans].map((a, i) => ({ el: a.pos, onTap: () => {

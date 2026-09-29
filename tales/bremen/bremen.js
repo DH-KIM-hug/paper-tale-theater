@@ -406,6 +406,23 @@
     }
     const flap = r => { const w = r.parts.wing; return w.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-50deg)' }, { transform: 'rotate(0deg)' }], { duration: 220, iterations: 5 }); };
 
+    /* 대사 연출: 목소리 주인에게 카메라가 가고, 말하는 쪽과 듣는 쪽이 서로 마주 본다.
+       주인·도둑은 뒤에서 만들어지므로 함수로 (아직 없으면 null) */
+    const ref = f => () => { try { return f(); } catch (e) { return null; } };
+    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && setTimeout(() => AudioFX.voice(VOICE_LINES[k]), 380);
+    T.director({
+      cast: { ...cast, miller: ref(() => miller), robber: ref(() => rb[0]), boss: ref(() => rb[1]) },
+      listener: (r, last) => {
+        if (r === 'robber') { // 방금 깨어난 친구에게 혼쭐 (들보 위 닭은 너무 높아 한 화면에 안 잡히니 도둑만)
+          const w = band.find(a => a.lean.style.filter === 'brightness(1)');
+          return w ? (w.key === 'rooster' ? null : w.key) : 'boss';
+        }
+        if (r === 'boss') return 'robber';
+        if (r === 'miller') return 'donkey';
+        return last && last !== r ? last : (r === 'donkey' ? 'dog' : 'donkey');
+      },
+    });
+
     /* 골라요: 소리를 듣고 그림판 셋 중에서 */
     async function soundChoice(okKey, q, hidden) {
       const keys = ['dog', 'cat', 'rooster'].sort(() => Math.random() - .5);
@@ -529,7 +546,7 @@
 
     /* ---------- 5. 음악대 연습 (길가 풀밭 와이드) ---------- */
     const SPOT = L({ donkey: [200, 1.05], dog: [420, 1.2], cat: [590, 1.3], rooster: [770, 1.3] },
-      { donkey: [390, .75], dog: [496, .85], cat: [592, 1], rooster: [668, .95] });
+      { donkey: [390, .75], dog: [492, .85], cat: [584, .98], rooster: [648, .9] }); // 세로: 닭이 오른쪽 끝에 잘리지 않게
     await T.sceneCard('음악대 연습', () => {
       T.clear(); meadowBG(T);
       band.forEach(a => put(a, SPOT[a.key][0], 500, SPOT[a.key][1]));
@@ -702,9 +719,9 @@
     }, cast.rooster.pos);
     const countC = setInterval(() => { S.jingle(); rb.forEach((r, i) => setTimeout(() => r.hop(10, 260), i * 90)); }, 900);
     await say('창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.');
+    clearInterval(countC); // 두목 목소리와 짤랑 합성음이 겹치지 않게
     T.pop(500, 170, '하하하!', C.bean);
     await say('도둑: "금화가 잔뜩이다! 하하하!"');
-    clearInterval(countC);
     await say('닭: "우리 음악을 크게 들려주자!"');
 
     /* ---------- 9. 음악 대폭발 (창문 와이드 → 컷) ---------- */
@@ -735,7 +752,7 @@
       const g2 = T.el('g', { transform: 'translate(110,150) rotate(20) scale(1.1)' }, svg); DRAW.dog(T, g2);
       const g3 = T.el('g', { transform: 'translate(300,130) rotate(-30) scale(1.2)' }, svg); DRAW.cat(T, g3);
       const g4 = T.el('g', { transform: 'translate(220,90) rotate(15) scale(1.1)' }, svg); DRAW.rooster(T, g4);
-      T.el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 60, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '와장창!' }, svg);
+      T.el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 60, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '와장창!' }, svg);
     }, { hold: 2000 });
     // 탑째로 창문 안으로 쏙
     band.slice().reverse().forEach((a, i) => setTimeout(() => {
@@ -756,15 +773,16 @@
       await sleep(350);
     }
     await sleep(900);
+    const yelled = vo('cut_monster');
     await T.cut(svg => {
       T.el('rect', { x: 0, y: 230, width: 400, height: 70, fill: '#3E5A3A' }, svg);
       [[90, 260, C.pine, -12], [200, 250, C.bean, 8], [310, 262, C.bark, -6]].forEach(([x, y, c, r]) => {
         const g = T.el('g', { transform: `translate(${x},${y}) rotate(${r}) scale(1.05)` }, svg); const p = DRAW.robber(T, g, c); p.mouth.setAttribute('ry', 9);
         T.el('path', { d: 'M-26 -176 L-10 -196 M0 -180 L0 -204 M26 -176 L10 -196', stroke: C.cream, 'stroke-width': 5, 'stroke-linecap': 'round' }, g);
       });
-      T.el('text', { x: 200, y: 58, 'text-anchor': 'middle', 'font-size': 50, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '으악, 괴물이다!' }, svg);
+      T.el('text', { x: 200, y: 58, 'text-anchor': 'middle', 'font-size': 50, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '으악, 괴물이다!' }, svg);
     }, { hold: 2200 });
-    S.giggle();
+    if (!yelled) S.giggle(); // 컷 목소리가 이어지는 동안 합성 웃음은 생략
     await say('도둑들은 "괴물이다!" 하고 숲으로 후다닥 달아났어요.');
     await say('네 친구는 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.');
 
@@ -791,7 +809,7 @@
     for (const [si, [k]] of SPOTS.entries()) {
       const a = cast[k], [ex, ey] = EYE[k], s = a.scale * (a.flip === -1 ? -1 : 1);
       const eyes = el('g', { transform: `translate(${a.x + ex * s},${a.y + ey * a.scale})` }, T.world);
-      el('circle', { r: 56, fill: '#fff', opacity: 0 }, eyes);
+      el('circle', { r: Math.min(56, Math.max(36, a.y + ey * a.scale - 6)), fill: "#fff", opacity: 0 }, eyes); // 들보 위 닭: 누름 원이 무대 위로 넘치지 않게 (세로·가로 모두)
       [-9, 9].forEach(dx => el('ellipse', { cx: dx, cy: 0, rx: 6, ry: 8, fill: '#FFE066' }, eyes));
       eyes.animate([{ opacity: .2 }, { opacity: 1 }], { duration: 500, fill: 'forwards' });
       T.tone(1400, .1, { type: 'sine', vol: .08 });
@@ -826,16 +844,17 @@
     await sleep(400);
     rb.forEach((r, i) => walk(r, -200 - i * 60, 470, 1400, false));
     await sleep(1200);
+    const told = vo('cut_ghost');
     await T.cut(svg => {
       const cells = [['cat', 0, 0, '귀신?', 1.25], ['dog', 200, 0, '콕?', 1.2], ['donkey', 0, 150, '거인?', .6], ['rooster', 200, 150, '재판관?', 1.2]];
       T.el('rect', { x: 0, y: 0, width: 400, height: 300, fill: C.cream }, svg);
       T.el('path', { d: 'M200 0 V300 M0 150 H400', stroke: C.bark, 'stroke-width': 6 }, svg);
       cells.forEach(([k, x, y, w, s]) => {
         const g = T.el('g', { transform: `translate(${x + 84},${y + 140}) scale(${s})` }, svg); DRAW[k](T, g);
-        T.el('text', { x: x + 160, y: y + 38, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: w }, svg);
+        T.el('text', { x: x + 160, y: y + 38, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: w }, svg);
       });
     }, { hold: 3000 });
-    S.giggle();
+    if (!told) S.giggle();
     await say('사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.');
 
     /* ---------- 11. 우리 집 (아침 와이드 · 자유 합주) ---------- */

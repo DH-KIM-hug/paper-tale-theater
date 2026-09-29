@@ -285,8 +285,6 @@
   }
 
   /* ================= 소리 ================= */
-  const hello = (T, kind) => { const f = BEAR[kind].voice; const type = kind === 'dad' ? 'sawtooth' : 'triangle';
-    T.tone([f * 1.25, f], .22, { type, vol: .16 }); T.tone([f * 1.4, f * 1.1], .32, { type, vol: .16, when: .26 }); };
   const giggle = T => [0, .12, .24, .36].forEach((w, i) => T.tone([620 - i * 40, 520 - i * 40], .1, { type: 'triangle', vol: .12, when: w }));
   const thud = T => AudioFX.sfx('thud') || T.tone([120, 60], .25, { type: 'sine', vol: .25 });
   const knock = T => AudioFX.sfx('knock') || (T.tone([220, 160], .08, { type: 'square', vol: .2 }), T.tone([220, 160], .08, { type: 'square', vol: .2, when: .18 }));
@@ -322,6 +320,15 @@
     const bears = {};
     ['dad', 'mom', 'baby'].forEach(k => { bears[k] = mk(g => drawBear(T, g, k)); Object.assign(bears[k], BEAR[k], { key: k }); });
     const B = [bears.dad, bears.mom, bears.baby];
+    /* 대사 연출: 목소리 주인에게 카메라. 모두 앞모습 그림이라 돌려세우지 않는다(noFace).
+       골디락스는 아기 곰에게, 곰들은 골디락스에게 (골디락스가 없으면 곰 가족끼리) */
+    T.director({
+      cast: { goldi, ...bears },
+      listener: r => (r === 'goldi' ? 'baby' : goldi.pos.isConnected ? 'goldi' : r === 'baby' ? 'mom' : 'baby'),
+      noFace: ['goldi', 'dad', 'mom', 'baby'],
+    });
+    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]); // 말풍선 없는 소리 대사
+    const cutVo = k => setTimeout(() => vo(k), 380);
     const put = (a, x, y, s = 1, parent = T.world) => {
       parent.appendChild(a.pos); a.setScale(s); a.place(x, y); a.pose(''); a.body.style.transform = ''; a.pos.style.opacity = '';
       if (a.setFace) a.setFace('smile');
@@ -365,7 +372,7 @@
     await say('숲속 통나무집에 곰 세 식구가 살았어요.');
     await say('곰 가족을 톡 눌러서 인사해요!');
     await tapAll(B, { prompt: '곰을 톡 눌러서 안녕!', onTap: async b => {
-      hello(T, b.key); b.setFace('happy'); b.hop(24, 420);
+      vo('hi_' + b.key); b.setFace('happy'); b.hop(24, 420);
       pop(b.x, headY(b) - 40, '안녕!', b.key === 'dad' ? C.bark : b.key === 'mom' ? C.persimmon : C.pine);
       await sleep(700);
     } });
@@ -397,7 +404,6 @@
     } });
     await sleep(400);
     await say('김이 줄었지만, 아직 뜨거워요.');
-    hello(T, 'dad');
     await say('아빠 곰: "죽이 식을 동안 산책 다녀오자!"');
     B.forEach((b, i) => setTimeout(() => b.move(b.x + 900, b.y, 1400, 'ease-in'), i * 150));
     AudioFX.sfx('step_wood', .5);
@@ -478,12 +484,12 @@
     await T.choose([
       { el: tops[0], ok: false, onWrong: async () => {
         goldi.setFace('tongue'); hot(T); goldi.hop(30, 400); pop(X(300), 150, '앗 뜨거!', C.bean);
-        if (!cutHot) { cutHot = true; await sleep(500); await T.cut(svg => cutFace(T, svg, 'tongue', '앗 뜨거!'), { hold: 2000 }); }
+        if (!cutHot) { cutHot = true; await sleep(500); cutVo('cut_hot'); await T.cut(svg => cutFace(T, svg, 'tongue', '앗 뜨거!'), { hold: 2000 }); }
         await say('펄펄 너무 뜨거워요!'); giggle(T); goldi.setFace('smile');
       } },
       { el: tops[1], ok: false, onWrong: async () => {
         goldi.setFace('brr'); brr(T); goldi.wiggle(6, 400); pop(500, 120, '으 차가워!', C.indigo);
-        if (!cutCold) { cutCold = true; await sleep(500); await T.cut(svg => cutFace(T, svg, 'brr', '부르르!'), { hold: 2000 }); }
+        if (!cutCold) { cutCold = true; await sleep(500); cutVo('cut_cold'); await T.cut(svg => cutFace(T, svg, 'brr', '부르르!'), { hold: 2000 }); }
         await say('얼음처럼 너무 차가워요!'); giggle(T); goldi.setFace('smile');
       } },
       { el: tops[2], ok: true },
@@ -530,6 +536,7 @@
     sitOn(chairs[2]); goldi.hop(16, 300); goldi.setFace('happy');
     await say('딱 맞아요! 그런데…');
     await sleep(300);
+    cutVo('cut_crack');
     await T.cut(svg => cutCrack(T, svg), { hold: 1800, sfx: 'pow' });
     AudioFX.sfx('chop') || AudioFX.bonk();
     chairs[2].setBroken(1);
@@ -594,7 +601,7 @@
       view();
     }, bears.dad.pos);
     await say('그때 곰 가족이 산책에서 돌아왔어요.');
-    bears.dad.setFace('o'); hello(T, 'dad');
+    bears.dad.setFace('o');
     await say('아빠 곰: "누가 내 죽을 먹었지?"');
     bears.dad.setFace('smile');
     await say('그릇이 뒤죽박죽이에요. 주인을 찾아 줘요!');
@@ -609,8 +616,8 @@
       const tx = owner.x, ty = floor8 - 40 * owner.scale;
       card.remove();
       await T.anim(bw.g, [{ transform: `translate(500px,250px) scale(${SIZE[i]})` }, { transform: `translate(${tx}px,${ty}px) scale(${SIZE[i]})` }], { duration: 600, easing: 'ease-in-out' });
-      owner.hop(20, 360); hello(T, owner.key);
-      if (i < 2) { owner.setFace('happy'); pop(owner.x, headY(owner) - 30, '내 거!', C.pine); await sleep(900); }
+      owner.hop(20, 360);
+      if (i < 2) { owner.setFace('happy'); vo('mine_' + owner.key); pop(owner.x, headY(owner) - 30, '내 거!', C.pine); await sleep(900); }
     }
     bears.baby.setFace('cry'); AudioFX.whimper();
     pop(bears.baby.x, headY(bears.baby) - 30, '으앙!', C.bean);
@@ -637,7 +644,7 @@
       c.g.animate([{ translate: '0 0' }, { translate: '0 -16px' }, { translate: '0 0' }], { duration: 600, iterations: 2 });
       await whoseIs(c.g, B[i], `이 ${SNAME[i]} 의자는 누구 거예요?`, '의자');
       c.g.style.filter = '';
-      B[i].hop(20, 360); hello(T, B[i].key); B[i].setFace('happy');
+      B[i].hop(20, 360); vo('chair_' + B[i].key); B[i].setFace('happy');
       pop(B[i].x, headY(B[i]) - 30, '내 의자!', C.pine);
       await sleep(900);
     }
@@ -678,15 +685,17 @@
     goldi.place(500, 400); goldi.hop(50, 450);
     AudioFX.boing();
     pop(500, 300, '깜짝!', C.bean);
-    if (P()) { put(bears.dad, 780, 520, SIZE[0]); put(bears.mom, 715, 530, SIZE[1]); put(bears.baby, 660, 540, SIZE[2]); }
+    if (P()) { put(bears.dad, 738, 520, SIZE[0]); put(bears.mom, 676, 530, SIZE[1]); put(bears.baby, 626, 540, SIZE[2]); } // 세로: 아빠 곰 오른쪽 끝이 잘리지 않게
     else { put(bears.dad, 910, 520, SIZE[0]); put(bears.mom, 790, 520, SIZE[1]); put(bears.baby, 690, 520, SIZE[2]); }
     B.forEach(b => b.setFace('o'));
     await camTo(500, 280, P() ? Z : 1, 700);
+    cutVo('cut_eyes');
     await T.cut(svg => cutEyes(T, svg), { hold: 2400 });
     await say('골디락스와 곰 세 마리 눈이 딱 마주쳤어요!');
     AudioFX.whoosh();
     await goldi.move(winX + 75, 470, 700, 'ease-in');
     await goldi.move(winX + 75, 380, 300, 'ease-out');
+    cutVo('cut_skirt');
     await T.cut(svg => cutSkirt(T, svg), { hold: 2200 });
     pop(winX + 80, 170, '앗!', C.bean);
     giggle(T);
@@ -709,7 +718,7 @@
       view();
     }, goldi.pos);
     await say('골디락스: "허락 없이 들어와서 미안해요."');
-    bears.dad.setFace('happy'); hello(T, 'dad');
+    bears.dad.setFace('happy');
     await say('아빠 곰: "괜찮아. 다음엔 똑똑 하고 기다려 줘."');
     goldi.setFace('smile');
     await say('골디락스: "아기 곰 의자, 같이 고칠래?"');
@@ -729,7 +738,6 @@
     pop(fix.x, 300, '짠!', C.persimmon);
     goldi.setFace('happy'); bears.baby.setFace('happy');
     await say('짠! 의자가 다 고쳐졌어요.');
-    hello(T, 'baby');
     await say('아기 곰: "고마워! 우리 친구 하자!"');
 
     /* 새 죽 나눠 먹기: 작은 그릇부터 차례대로 톡 */
@@ -759,7 +767,7 @@
       good.setFull(true);
       steam(T, T.world, good.x, 510 - 80 * good.s, good.s);
       const tag = T.paper(T.fx, [['circle', { cx: good.x - 85 * good.s - 30, cy: 470, r: 24, fill: C.cream, stroke: C.gold, 'stroke-width': 4 }]]);
-      el('text', { x: good.x - 85 * good.s - 30, y: 480, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, 'font-family': 'Jua, sans-serif', text: k + 1 }, tag);
+      el('text', { x: good.x - 85 * good.s - 30, y: 480, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1 }, tag);
       T.tone(440 + k * 110, .25, { type: 'triangle', vol: .16 });
     }
     await say('작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.');
@@ -777,7 +785,7 @@
 
   /* ================= 만화 컷 (400×300) ================= */
   function cutText(T, svg, word, y = 62) {
-    T.el('text', { x: 200, y, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: word }, svg);
+    T.el('text', { x: 200, y, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: word }, svg);
   }
   function cutFace(T, svg, face, word) {
     const g = T.el('g', { transform: 'translate(200,560) scale(3.3)' }, svg);

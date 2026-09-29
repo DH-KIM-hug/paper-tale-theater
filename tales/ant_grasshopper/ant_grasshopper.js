@@ -215,7 +215,7 @@
     // 창고 단면 (칸 10개)
     const box = el('g', {}, b);
     paper(box, [['rect', { x: 530, y: 256, width: 180, height: 214, rx: 16, fill: C.soilDk }]]);
-    el('text', { x: 620, y: 244, 'text-anchor': 'middle', 'font-size': 26, fill: C.cream, stroke: C.bark, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: '창고' }, box);
+    el('text', { x: 620, y: 244, 'text-anchor': 'middle', 'font-size': 26, fill: C.cream, stroke: C.bark, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '창고' }, box);
     const slots = [];
     for (let r = 0; r < 5; r++) for (let c = 0; c < 2; c++) {
       const x = 580 + c * 80, y = 440 - r * 40;
@@ -317,7 +317,7 @@
     return { stop() { anims.forEach(a => a.cancel()); g.remove(); } };
   }
   function notes(T, x, y) {
-    const n = T.el('text', { x, y, 'text-anchor': 'middle', 'font-size': 42, fill: C.indigo, stroke: '#fff', 'stroke-width': 5, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text: Math.random() < .5 ? '♪' : '♫' }, T.fx);
+    const n = T.el('text', { x, y, 'text-anchor': 'middle', 'font-size': 42, fill: C.indigo, stroke: '#fff', 'stroke-width': 5, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: Math.random() < .5 ? '♪' : '♫' }, T.fx);
     n.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${rnd(-40, 40)}px,-90px)`, opacity: 0 }], { duration: 1100, easing: 'ease-out' }).finished.then(() => n.remove());
   }
   function sparkles(T, x, y, r = 90, n = 6) {
@@ -376,7 +376,7 @@
       const x = cx + (k - (n - 1) / 2) * 60;
       const c = T.el('circle', { cx: x, cy: y, r: 22, fill: '#fff', stroke: C.gold, 'stroke-width': 4 }, g);
       origin(c, x, y);
-      const t = T.el('text', { x, y: y + 10, 'text-anchor': 'middle', 'font-size': 28, fill: C.cream, 'font-family': 'Jua, sans-serif', text: k + 1, opacity: 0 }, g);
+      const t = T.el('text', { x, y: y + 10, 'text-anchor': 'middle', 'font-size': 28, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1, opacity: 0 }, g);
       dots.push([c, t]);
     }
     return {
@@ -395,15 +395,15 @@
     if (season === 'spring') { T.el('path', { d: 'M0 10 V-20 M0 -8 Q-24 -30 -30 -14 Q-20 -2 0 -8 M0 -16 Q24 -38 30 -22 Q20 -10 0 -16', stroke: C.pine, 'stroke-width': 5, fill: '#8DBA6A' }, inner); T.el('circle', { cx: -44, cy: 0, r: 10, fill: C.pink }, inner); T.el('circle', { cx: 44, cy: 4, r: 10, fill: C.pink }, inner); }
     if (season === 'autumn') [[-30, -30, 30], [10, -10, -20], [36, -40, 60], [-6, -44, 0]].forEach(([cx, cy, r]) => T.el('ellipse', { cx, cy, rx: 16, ry: 9, fill: r > 20 ? C.persimmon : C.bean, transform: `rotate(${r} ${cx} ${cy})` }, inner));
     if (season === 'winter') [[-40, -40], [0, -20], [36, -46], [-20, -2], [44, 0]].forEach(([cx, cy]) => T.el('circle', { cx, cy, r: 8, fill: '#fff', stroke: '#C9D0DC', 'stroke-width': 2 }, inner));
-    T.el('text', { x: 0, y: 66, 'text-anchor': 'middle', 'font-size': 26, fill: C.bark, 'font-family': 'Jua, sans-serif', text: SEASON_KO[season] }, g);
+    T.el('text', { x: 0, y: 66, 'text-anchor': 'middle', 'font-size': 26, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: SEASON_KO[season] }, g);
     const check = T.el('g', { opacity: 0 }, g);
     T.el('circle', { cx: 70, cy: -62, r: 24, fill: C.pine, stroke: '#fff', 'stroke-width': 4 }, check);
-    const num = T.el('text', { x: 70, y: -52, 'text-anchor': 'middle', 'font-size': 28, fill: '#fff', 'font-family': 'Jua, sans-serif', text: '' }, check);
+    const num = T.el('text', { x: 70, y: -52, 'text-anchor': 'middle', 'font-size': 28, fill: '#fff', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '' }, check);
     return { g, check, num };
   }
 
   /* 컷 그림 도우미 */
-  const cutText = (T, svg, x, y, text, size = 72) => T.el('text', { x, y, 'text-anchor': 'middle', 'font-size': size, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': 'Jua, sans-serif', text }, svg);
+  const cutText = (T, svg, x, y, text, size = 72) => T.el('text', { x, y, 'text-anchor': 'middle', 'font-size': size, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text }, svg);
 
   /* ================= 이야기 ================= */
   async function run(T) {
@@ -418,6 +418,20 @@
     let hop = mk(T, T.world, 360, 494, drawHopper, .95);
     hop.face('right');
     hopperMode(hop.p, 'play');
+
+    /* 대사 연출: 목소리 주인에게 카메라가 가고, 말하는 쪽과 듣는 쪽이 서로 마주 본다.
+       개미들은 장면마다 새로 만들어지므로 함수로 (아직 없거나 무대에 없으면 건너뜀) */
+    const ref = f => () => { try { return f(); } catch (e) { return null; } };
+    const onStage = (...fs) => fs.map(f => ref(f)()).find(a => a && a.pos.isConnected) || null;
+    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && setTimeout(() => AudioFX.voice(VOICE_LINES[k]), 380);
+    T.director({
+      cast: {
+        hop: () => hop,
+        ant: ref(() => host), baby: ref(() => baby), // 옷 고르는 개미(lead)도 같은 목소리지만, 그림판과 겹치지 않게 카메라는 동화가 잡은 그대로
+        ants: () => onStage(() => workers[0], () => passers[1], () => ants[0]),
+      },
+      listener: (r, last) => r !== 'hop' ? 'hop' : last && last !== 'hop' && last !== 'card' ? last : onStage(() => host) ? 'ant' : 'ants',
+    });
     await T.curtain(true);
     await say('여름이에요. 개미들이 줄지어 먹이를 날라요. 개미를 톡 눌러 봐요!');
     await T.tap(line, { prompt: '줄지어 가는 개미들을 톡!' });
@@ -428,6 +442,7 @@
     await T.tap(hop.pos, { prompt: '초록 베짱이를 톡!' });
     SND.tune(T); const bw = bowing(hop.p); notes(T, 310, 280); notes(T, 370, 260);
     T.pop(360, 230, '띠리링~', C.pine);
+    await sleep(900); // 연주가 끝나고 베짱이가 말한다 (목소리와 겹치지 않게)
     await say('"여름은 신나! 띠리링~" 베짱이는 노래를 불러요.');
     bw.cancel(); marchAnim.forEach(m => m.cancel());
 
@@ -437,13 +452,14 @@
       T.clear(); E = antEyeBG(T);
     }, ants[1].pos);
     const pile = el('g', {}, T.world);
-    T.paper(pile, [[0, 0], [60, 0], [120, 0], [30, -24], [90, -24], [60, -48]].map(([dx, dy]) => ['ellipse', { cx: 300 + dx, cy: 478 + dy, rx: 32, ry: 16, fill: C.gold }]));
+    const PX = narrow() ? 332 : 300; // 세로: 곡식 더미 왼쪽이 잘리지 않게
+    T.paper(pile, [[0, 0], [60, 0], [120, 0], [30, -24], [90, -24], [60, -48]].map(([dx, dy]) => ['ellipse', { cx: PX + dx, cy: 478 + dy, rx: 32, ry: 16, fill: C.gold }]));
     const boss = ant(T, T.world, 190, 496, 1.05); boss.face('right');
     await say('개미 눈으로 보면 풀잎이 나무처럼 커다래요!');
     await say('곡식을 톡톡 눌러서 창고로 날라 줘요!');
     let stored = 0;
     await T.mash(pile, { count: 10, prompt: '노란 곡식을 톡톡 눌러 봐요!', onStep: i => {
-      const a = ant(T, T.world, 440, 496, .9); a.face('right'); carry(a.p, true);
+      const a = ant(T, T.world, PX + 140, 496, .9); a.face('right'); carry(a.p, true);
       SND.yeongcha(T, 2);
       a.move(E.door[0], 496, 1500, 'linear').then(() => a.pos.remove());
       a.body.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px)' }, { transform: 'translateY(0)' }], { duration: 320, iterations: 4 });
@@ -459,19 +475,21 @@
 
     /* --- 3. 베짱이 연주 (풀잎 무대 로우앵글) --- */
     let fl;
+    const FLX = narrow() ? [348, 652] : [335, 668]; // 세로: 오른쪽 꽃이 잘리지 않게
     await T.sceneCard('풀잎 무대', () => {
       T.clear(); leafStageBG(T);
-      fl = [flower(T, T.world, 335, 250, C.pink), flower(T, T.world, 668, 250, C.persimmon)];
+      fl = [flower(T, T.world, FLX[0], 250, C.pink), flower(T, T.world, FLX[1], 250, C.persimmon)];
       T.world.appendChild(hop.pos); hop.face('right'); hop.setScale(1.45); hop.place(500, 470); hopperMode(hop.p, 'play');
     }, pile);
     SND.tune(T);
+    await sleep(900);
     await say('"같이 놀자~ 띠리링!" 베짱이가 노래해요.');
     await say('베짱이랑 꽃을 톡톡 눌러서 같이 연주해 봐요!');
     let ni = 0;
     await T.free([
       { el: hop.pos, onTap: () => { SND.violin(T, PENTA[ni++ % PENTA.length]); notes(T, 460, 200); hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-16deg)' }, { transform: 'rotate(0deg)' }], 400); } },
-      { el: fl[0], onTap: () => { SND.violin(T, 330); notes(T, 335, 190); T.anim(fl[0], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); } },
-      { el: fl[1], onTap: () => { SND.violin(T, 988); notes(T, 668, 190); T.anim(fl[1], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); } },
+      { el: fl[0], onTap: () => { SND.violin(T, 330); notes(T, FLX[0], 190); T.anim(fl[0], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); } },
+      { el: fl[1], onTap: () => { SND.violin(T, 988); notes(T, FLX[1], 190); T.anim(fl[1], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); } },
     ], 10000);
     const passers = [0, 1, 2].map(i => { const a = ant(T, T.world, -60 - i * 90, 532, .62); a.face('right'); carry(a.p, true); return a; });
     passers.forEach(a => a.move(a.x + 520, 532, 3200, 'linear'));
@@ -480,17 +498,18 @@
 
     /* --- 4. 소나기 (들판 와이드 비) --- */
     let rain, leafU;
+    const LY = 438; // 잎 끝(누름 영역)이 무대 아래로 잘리지 않게 (세로·가로 모두)
     const shelterAnts = [];
     await T.sceneCard('소나기', () => {
       T.clear();
       const F = fieldBG(T, 'summer', { sky: SKY.rain });
       if (F.sun) F.sun.remove();
       T.paper(T.bg, [['ellipse', { cx: 300, cy: 70, rx: 220, ry: 60, fill: '#8C98A4' }], ['ellipse', { cx: 720, cy: 60, rx: 260, ry: 64, fill: '#7E8B97' }]]);
-      T.world.appendChild(hop.pos); hop.setScale(.95); hop.place(330, 494); hop.face('right'); hopperMode(hop.p, 'play');
+      T.world.appendChild(hop.pos); hop.setScale(.95); hop.place(narrow() ? 372 : 330, 494); hop.face('right'); hopperMode(hop.p, 'play'); // 세로: 젖는 베짱이가 잘리지 않게
       [545, 605, 665].forEach(x => { const a = ant(T, T.world, x, 494, .62); a.face('left'); shelterAnts.push(a); });
       leafU = el('g', {}, T.world);
       T.paper(leafU, [['path', { d: 'M-150 0 Q0 -90 150 0 Q0 -30 -150 0 Z', fill: C.leaf }], ['path', { d: 'M-140 -2 Q0 -60 140 -2', stroke: C.pine, 'stroke-width': 5, fill: 'none' }], ['rect', { x: -4, y: -40, width: 8, height: 120, fill: C.pine }]]);
-      leafU.setAttribute('transform', 'translate(455,470) scale(.75) rotate(-40)');
+      leafU.setAttribute('transform', `translate(455,${LY}) scale(.75) rotate(-40)`);
       rain = precip(T, 'rain', 44);
     }, hop.pos);
     AudioFX.sfx('splash', .25);
@@ -498,7 +517,7 @@
     shelterAnts.forEach(a => { a.p.mouth.setAttribute('d', 'M-26 -80 Q-21 -86 -15 -80'); a.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 160, iterations: 6 }); });
     await say('큰 잎을 꾹 눌러서 개미들 우산을 펼쳐 줘요!');
     await T.hold(leafU, { ms: 1600, prompt: '초록 잎을 꾹 눌러 봐요!', onProgress: p => {
-      const x = 455 + p * 150, y = 470 - p * 140, s = .75 + p * .45, r = -40 + p * 40;
+      const x = 455 + p * 150, y = LY - (LY - 330) * p, s = .75 + p * .45, r = -40 + p * 40;
       leafU.setAttribute('transform', `translate(${x},${y}) scale(${s}) rotate(${r})`);
     } });
     leafU.setAttribute('transform', 'translate(605,330) scale(1.2)');
@@ -510,13 +529,14 @@
     hop.p.ant.setAttribute('d', 'M-8 -156 Q10 -170 30 -150 M-20 -154 Q-40 -160 -50 -140');
     SND.drip(T);
     await sleep(500);
+    const sneezed = vo('cut_sneeze');
     await T.cut(svg => {
       T.paper(svg, [['ellipse', { cx: 200, cy: 190, rx: 90, ry: 80, fill: C.hop }], ['circle', { cx: 170, cy: 170, r: 16, fill: '#fff' }], ['circle', { cx: 165, cy: 170, r: 8, fill: C.ink }]]);
       [[110, 110], [260, 120], [290, 200], [120, 230]].forEach(([x, y]) => el('path', { d: `M${x} ${y} q-10 16 0 24 q10 -8 0 -24 Z`, fill: '#9FC6DE' }, svg));
       el('ellipse', { cx: 150, cy: 225, rx: 14, ry: 10, fill: C.ink }, svg);
       cutText(T, svg, 200, 90, '에취!', 84);
     }, { hold: 2000 });
-    SND.sneeze(T);
+    if (!sneezed) SND.sneeze(T); // 목소리 재채기가 있으면 합성음은 생략
     hop.hop(24);
     await say('베짱이는 혼자 흠뻑 젖었어요. 에취! 그래도 "괜찮아~" 하고 웃었어요.');
     rain.stop();
@@ -576,7 +596,7 @@
     }, { hold: 2000 });
     await T.sceneCard('첫눈', () => {
       T.clear(); W = winterHighBG(T);
-      T.world.appendChild(lead.pos); lead.place(330, 470); lead.setScale(1.05); lead.face('right'); wear(lead.p, []);
+      T.world.appendChild(lead.pos); lead.place(narrow() ? 350 : 330, 470); lead.setScale(1.05); lead.face('right'); wear(lead.p, []);
       [440, 510].forEach(x => { const a = ant(T, T.world, x, 440, .8); a.face('right'); crew.push(a); });
       snow = precip(T, 'snow', 40);
     }, lead.pos);
@@ -606,6 +626,7 @@
 
     /* --- 7. 똑똑 베짱이 (창고 문 로우앵글) --- */
     let D, baby;
+    vo('cut_shiver');
     await T.cut(svg => {
       el('rect', { width: 400, height: 300, fill: SKY.winter }, svg);
       for (let i = 0; i < 20; i++) el('circle', { cx: rnd(10, 390), cy: rnd(10, 290), r: rnd(4, 9), fill: '#fff' }, svg);
@@ -615,7 +636,7 @@
     }, { hold: 2000, sfx: null });
     await T.sceneCard('똑똑', () => {
       T.clear(); D = doorBG(T);
-      T.world.appendChild(hop.pos); hop.setScale(1.75); hop.place(650, 500); hop.face('left'); hopperMode(hop.p, 'arms');
+      T.world.appendChild(hop.pos); hop.setScale(1.75); hop.place(narrow() ? 626 : 650, 500); hop.face('left'); hopperMode(hop.p, 'arms');
       hop.p.drops.setAttribute('opacity', 0); hop.p.ant.setAttribute('d', 'M-8 -156 Q-6 -204 34 -216 M-20 -154 Q-36 -202 -6 -224');
       snow = precip(T, 'snow', 30);
     }, hop.pos);
@@ -627,7 +648,7 @@
     SND.creak(T);
     await T.anim(D.door, [{ transform: 'scaleX(1)' }, { transform: 'scaleX(.45)' }], 700);
     const host = ant(T, T.world, 400, 486, .95); host.face('right'); wear(host.p, ['scarf']);
-    baby = ant(T, T.world, 335, 486, .62); baby.face('right');
+    baby = ant(T, T.world, narrow() ? 352 : 335, 486, .62); baby.face('right');
     host.pos.parentNode.insertBefore(host.pos, hop.pos);
     await say('"개미야, 먹을 것 좀 나눠 줄 수 있니?"');
     await say('개미가 물었어요. "여름엔 뭘 했니?"');
@@ -673,7 +694,7 @@
     await say('베짱이에게 목도리와 털모자도 나눠 줬어요.');
     await say('먹을 게 이렇게 많으니 친구들도 불러요! 문 앞에 온 친구를 톡 눌러요.');
     const cnt = counter(T, FRIENDS.length, 470, 150);
-    const seats = [[335, 522], [410, 522], [595, 524], [665, 510]];
+    const seats = narrow() ? [[352, 522], [418, 522], [590, 524], [648, 510]] : [[335, 522], [410, 522], [595, 524], [665, 510]]; // 세로: 음악회 확대에서도 다 보이게
     for (let i = 0; i < guests.length; i++) {
       const g = guests[i];
       SND.step(T); await g.move(630, 192, 700);
@@ -692,7 +713,7 @@
 
     /* --- 9. 겨울 음악회 (큰 방 확대, 반딧불 조명) --- */
     await T.sceneCard('겨울 음악회', () => {
-      camSnap(500, 430, narrow() ? 1.2 : 2.1);
+      camSnap(500, 430, narrow() ? 1.1 : 2.1);
       hopperMode(hop.p, 'play');
       K.light.setAttribute('opacity', .55);
       for (let i = 0; i < 7; i++) {
@@ -717,7 +738,7 @@
     /* --- 10. 봄 (새싹 들판 와이드) --- */
     const workers = [];
     await T.sceneCard('봄', () => {
-      T.clear(); camSnap(500, 280, 1); fieldBG(T, 'spring');
+      T.clear(); camSnap(narrow() ? 380 : 500, 280, 1); fieldBG(T, 'spring'); // 세로: 베짱이와 일개미가 함께 보이게
       T.world.appendChild(hop.pos); hop.setScale(.9); hop.place(300, 494); hop.face('right'); hopperMode(hop.p, 'carry');
       hop.p.scarf.setAttribute('opacity', 0); hop.p.hat.setAttribute('opacity', 0);
       [400, 460, 520].forEach(x => { const a = ant(T, T.world, x, 494, .6); a.face('right'); carry(a.p, true); workers.push(a); });
@@ -728,6 +749,7 @@
     await T.mash(hop.pos, { count: 4, prompt: '베짱이를 톡톡 눌러서 영차 영차!', onStep: i => {
       SND.yeongcha(T, 4); SND.step(T);
       const dx = 80;
+      if (narrow()) camTo(hop.x + dx + 80, 280, 1, 420); // 세로: 걸어가는 베짱이를 카메라가 따라간다
       hop.move(hop.x + dx, 494, 420); hop.hop(16, 420);
       workers.forEach((a, k) => setTimeout(() => { a.move(a.x + dx, 494, 420); a.hop(12, 420); }, k * 70));
       T.pop(hop.x + 40, 240, '영차!', C.bean);
