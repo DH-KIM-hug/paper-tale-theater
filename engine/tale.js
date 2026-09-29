@@ -305,6 +305,14 @@ const Tale = (() => {
     await irisTo(W / 2, H / 2, 0, far(W / 2, H / 2), 640, easeOutBack);
     ir.hidden = true;
   }
+  /* 컷 효과음: 함수면 그대로, 스팅 이름('hit'·'bigHit'·'slip'·'bite'·'splash'·'laugh'·'magic'·'win'·'surprise' 등)이면
+     AudioFX.sting으로 여러 소리를 겹쳐 울리고, 아니면 예전처럼 AudioFX[이름]() */
+  function playSfx(sfx) {
+    if (!sfx) return;
+    if (typeof sfx === 'function') return sfx();
+    if (AudioFX.hasSting && AudioFX.hasSting(sfx)) return AudioFX.sting(sfx);
+    if (AudioFX[sfx]) AudioFX[sfx]();
+  }
   /* 만화 컷: draw(svg 0..400 x 0..300)로 임시 그림. 탭하면 빨리 넘어간다 */
   async function cut(draw, { hold: ms = 2600, sfx } = {}) {
     const p = $('#cutPanel');
@@ -317,7 +325,7 @@ const Tale = (() => {
     }
     draw(svg);
     p.hidden = false;
-    if (sfx && AudioFX[sfx]) AudioFX[sfx]();
+    playSfx(sfx);
     shake();
     await new Promise(res => { const t = setTimeout(res, ms); p.onpointerdown = () => { clearTimeout(t); setTimeout(res, 200); }; });
     p.hidden = true; p.innerHTML = '';
@@ -344,7 +352,7 @@ const Tale = (() => {
       img.src = o.src; img.alt = '';
       p.firstChild.appendChild(img);
       p.hidden = false;
-      if (typeof o.sfx === 'function') o.sfx(); else if (o.sfx && AudioFX[o.sfx]) AudioFX[o.sfx]();
+      playSfx(o.sfx);
       if (onShow) onShow(o);
       shake();
       await new Promise(res => {

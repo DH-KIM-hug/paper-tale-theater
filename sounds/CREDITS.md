@@ -25,3 +25,35 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 
 `sounds/sfx/` 의 thud·boom·pow·bonk·pop·poke·tap·ding·swish·whoosh·knock·chop·creak·bell·drum·step_grass·step_wood·door
 — Kenney "Impact Sounds", "Interface Sounds", "RPG Audio" (https://kenney.nl, CC0 1.0)
+
+## 만화 컷 효과음 (AudioFX.sting 재료)
+
+원본에서 잘라내거나 여러 개를 섞은 뒤 음량을 맞췄다(loudnorm I=-16 TP=-1.5, 모노 44.1kHz, 96kbps mp3).
+CC BY 파일은 **출처 표시 의무가 있다** — 크레딧 화면에 "Kevin MacLeod (incompetech.com), CC BY 3.0"을 꼭 넣는다.
+
+| 파일 | 원본 | 만든 이 | 라이선스 | 출처 |
+|---|---|---|---|---|
+| `sfx/boing.mp3` | boing.flac | Aeva | CC0 | https://opengameart.org/content/boing |
+| `sfx/spring.mp3` | 100-CC0-SFX: spring_01.ogg | rubberduck | CC0 | https://opengameart.org/content/100-cc0-sfx |
+| `sfx/crash.mp3` | 100-CC0-SFX: dishes_01 + glass_04 + dishes_03 + slam_03 섞음 | rubberduck | CC0 | https://opengameart.org/content/100-cc0-sfx |
+| `sfx/pan.mp3` | 100-CC0-SFX: pot_01.ogg | rubberduck | CC0 | https://opengameart.org/content/100-cc0-sfx |
+| `sfx/splash_big.mp3` | 100-CC0-SFX: splash_01 + splash_02 섞음 + 18 random sfx: thump.wav | rubberduck, bart | CC0 | https://opengameart.org/content/100-cc0-sfx · https://opengameart.org/content/18-random-video-game-sound-effects |
+| `sfx/zip.mp3` | 18 random sfx: whoosh2.wav | bart (Bart Kelsey) | CC0 | https://opengameart.org/content/18-random-video-game-sound-effects |
+| `sfx/bubbles.mp3` | 18 random sfx: bloops.wav | bart (Bart Kelsey) | CC0 | https://opengameart.org/content/18-random-video-game-sound-effects |
+| `sfx/squeak.mp3` | squeak toy - squeak1.wav | bart (Bart Kelsey) | CC0 | https://opengameart.org/content/squeak-toy-sounds |
+| `sfx/cork.mp3` | plup.mp3 | EZduzziteh | CC0 | https://opengameart.org/content/silly-sound-effects |
+| `sfx/uah.mp3` | uah.mp3 | EZduzziteh | CC0 | https://opengameart.org/content/silly-sound-effects |
+| `sfx/rattle.mp3` | qubodup-wobble1.wav | qubodup | CC0 | https://opengameart.org/content/wood-wobbling-rattling |
+| `sfx/xylo_up.mp3` · `sfx/xylo_down.mp3` · `sfx/giggle_xylo.mp3` | child's_xylophone-2.wav 의 한 음을 음높이만 바꿔 이어 붙임 | AntumDeluge | CC0 | https://opengameart.org/content/childrens-xylophone |
+| `sfx/tada.mp3` | Music Jingles: jingles_STEEL02.ogg | Kenney | CC0 | https://kenney.nl/assets/music-jingles |
+| `sfx/womp.mp3` | Music Jingles: jingles_SAX07.ogg | Kenney | CC0 | https://kenney.nl/assets/music-jingles |
+| `sfx/drumroll.mp3` | Drum Roll Intro.ogg | Iwan Sounds and DIY | CC0 | https://commons.wikimedia.org/wiki/File:Drum_Roll_Intro.ogg |
+| `sfx/giggle.mp3` | Cartoon Laugh.ogg | JohnsonBrandEditing | CC0 | https://commons.wikimedia.org/wiki/File:Cartoon_Laugh.ogg |
+| `sfx/laugh_deep.mp3` | Weird cartoonish laughs.ogg | stilgar | Public domain | https://commons.wikimedia.org/wiki/File:Weird_cartoonish_laughs.ogg |
+| `sfx/sparkle.mp3` | Windchimes.ogg | Esc861 | Public domain | https://commons.wikimedia.org/wiki/File:Windchimes.ogg |
+| `sfx/doop.mp3` | Cute doop.ogg | stephan | Public domain | https://commons.wikimedia.org/wiki/File:Cute_doop.ogg |
+| `sfx/cheer.mp3` | Slow starting applause.ogg | stephan | Public domain | https://commons.wikimedia.org/wiki/File:Slow_starting_applause.ogg |
+| `sfx/chomp.mp3` | Dragon bite.ogg | gregoryweir | Public domain | https://commons.wikimedia.org/wiki/File:Dragon_bite.ogg |
+| `sfx/gulp.mp3` | Swallowing gulp.ogg | gregoryweir | Public domain | https://commons.wikimedia.org/wiki/File:Swallowing_gulp.ogg |
+| `sfx/cymbal.mp3` | Kevin MacLeod assorted rimshots - Crasher.wav | Kevin MacLeod (incompetech.com) | **CC BY 3.0** | https://commons.wikimedia.org/wiki/File:Kevin_MacLeod_assorted_rimshots_-_Crasher.wav |
+| `sfx/slide_up.mp3` · `sfx/slide_down.mp3` | 슬라이드 휘슬 — 이 프로젝트에서 직접 합성(사인파+숨소리+비브라토) | 팥죽 게임 | CC0 | — |

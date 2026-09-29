@@ -36,9 +36,15 @@
     jige: { x: 690, y: 520, box: [-54, -118, 108, 120], shd: 40 },
   };
   const ACTOR_SCALE = { A: 2.1, B1: 1.25, B2: 1.45 };
+  /* 만화 컷 스팅 (audio.js AudioFX.sting): 친구 컷은 맞는 순간, _b 컷은 호랑이 반응, wrong_ 컷은 비웃음 */
   const CUT_SFX = {
-    bam: 'pow', bam_b: 'yelp', jara: 'pow', jara_b: 'yelp', ddong: 'boom', ddong_b: 'yelp', songgot: 'pow', songgot_b: 'yelp',
-    jeolgu: 'boom', jeolgu_b: 'yelp', myeongseok: 'roll', myeongseok_b: 'yelp', jige: 'splash', jige_b: 'yelp',
+    bam: 'hit', bam_b: 'dizzy',               // 알밤이 눈에 톡! → 눈 감싸고 빙글빙글
+    jara: 'bite', jara_b: 'ouch',             // 자라가 코를 앙! → 엉엉
+    ddong: 'slip', ddong_b: 'dizzy',          // 쇠똥에 미끄덩 → 눈이 뱅글뱅글
+    songgot: 'poke', songgot_b: 'surprise',   // 송곳이 엉덩이 콕! → 펄쩍
+    jeolgu: 'bigHit', jeolgu_b: 'dizzy',      // 절구가 머리 위에 쿵! → 혹 나고 어질어질
+    myeongseok: 'roll', myeongseok_b: 'ouch', // 멍석이 돌돌 → 멍석 속에서 엉엉
+    jige: 'splash', jige_b: 'surprise',       // 지게째 풍덩 → 바다에서 허우적
   };
   const FINALE_SFX = { bam: 'pop', jara: 'chomp', ddong: 'boing', songgot: 'poke', jeolgu: 'bonk', myeongseok: 'roll', jige: 'boing' };
   const STAR_SCALE = { bam: 1.9, jara: 1.9, ddong: 1.9, songgot: 1.9, jeolgu: 1.45, myeongseok: 1.15, jige: 1.15 };
@@ -344,11 +350,7 @@
     let lastCut = Promise.resolve();
     function showCut(id, hold = 4000) {
       const keys = id.startsWith('wrong_') ? [id] : [id, id + '_b'];
-      const list = keys.map(key => ({ src: cutUrl(key), sfx: () => {
-        if (!key.startsWith('wrong_')) AudioFX.whoosh();
-        const s = key.startsWith('wrong_') ? 'laugh' : CUT_SFX[key];
-        if (s && AudioFX[s]) AudioFX[s]();
-      } }));
+      const list = keys.map(key => ({ src: cutUrl(key), sfx: key.startsWith('wrong_') ? 'laugh' : CUT_SFX[key] }));
       lastCut = lastCut.then(() => T.cutImage(list, { hold, onShow: punch }));
       return lastCut;
     }
@@ -817,7 +819,7 @@
     async function happyEnd() {
       trayEl.hidden = true;
       await lastCut; // 풍덩 컷이 잔치 장면을 가리지 않게 끝까지 보고 넘어간다
-      AudioFX.fanfare();
+      AudioFX.sting('win'); // 두구두구-짜잔!-와아
       await camWide(900);
       T.confetti();
       grannyMood('happy');

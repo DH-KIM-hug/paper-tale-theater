@@ -86,19 +86,52 @@ const AudioFX = (() => {
       .then(b => c.decodeAudioData(b)).then(buf => { samples[path] = buf; })
       .catch(() => { samples[path] = false; });
   }
-  function playSample(path, vol = 0.9) {
+  /* when: 몇 초 뒤, dur: 앞부분만 (초) — 스팅에서 겹쳐 쌓을 때 쓴다 */
+  function playSample(path, vol = 0.9, when = 0, dur) {
     const buf = samples[path];
     if (!buf) { loadSample(path); return false; }
     const c = ensure();
     const s = c.createBufferSource(), g = c.createGain();
+    const t0 = c.currentTime + when;
     s.buffer = buf; g.gain.value = vol;
-    s.connect(g).connect(c.destination); s.start();
+    s.connect(g).connect(c.destination);
+    if (dur) { // 잘라 쓸 때 끝을 살짝 줄여 딸깍 소리를 막는다
+      g.gain.setValueAtTime(vol, t0 + Math.max(0, dur - 0.06));
+      g.gain.linearRampToValueAtTime(0.0001, t0 + dur);
+      s.start(t0, 0, dur);
+    } else s.start(t0);
     return true;
   }
   const SFX = { thud: 'sfx/thud', boom: 'sfx/boom', pow: 'sfx/pow', bonk: 'sfx/bonk', pop: 'sfx/pop', poke: 'sfx/poke',
-    tap: 'sfx/tap', ding: 'sfx/ding', swish: 'sfx/swish', whoosh: 'sfx/whoosh', bell: 'sfx/bell', splash: 'sfx/splash', growl: 'animals/tiger' };
+    tap: 'sfx/tap', ding: 'sfx/ding', swish: 'sfx/swish', whoosh: 'sfx/whoosh', bell: 'sfx/bell', splash: 'sfx/splash', growl: 'animals/tiger',
+    boing: 'sfx/boing', chomp: 'sfx/chomp', gulp: 'sfx/gulp', slide: 'sfx/slide_down' };
+  /* 만화 컷용 신나는 효과음 (sounds/CREDITS.md) — sting()이 여러 개를 겹쳐 쓴다 */
+  const COMIC = ['spring', 'slide_up', 'slide_down', 'zip', 'cork', 'doop', 'sparkle', 'xylo_up', 'xylo_down', 'giggle_xylo',
+    'crash', 'cymbal', 'drumroll', 'tada', 'womp', 'pan', 'squeak', 'splash_big', 'bubbles', 'laugh_deep', 'giggle', 'cheer',
+    'rattle', 'uah'];
   const EXTRA = ['sfx/knock', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door',
+    ...COMIC.map(n => 'sfx/' + n),
     ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a)];
+
+  /* 스팅: [효과음, 시작(초), 음량, 앞부분만 쓸 길이(초)?] 를 겹쳐서 한 번에 "휙-딱-반짝!" 처럼 울린다.
+     음량은 내레이션이 묻히지 않게 0.35~0.95 사이, 전체에 STING_VOL을 곱한다 */
+  const STING_VOL = 0.8;
+  const STINGS = {
+    hit:      [['zip', 0, .6], ['pan', .1, .95], ['sparkle', .22, .45]],                        // 휙-땡!-반짝
+    poke:     [['zip', 0, .55], ['poke', .1, .85], ['squeak', .16, .75], ['slide_up', .38, .5]], // 휙-콕!-삑-뿅~
+    bigHit:   [['drumroll', 0, .55, .42], ['boom', .4, 1], ['crash', .42, .75], ['cymbal', .46, .6]], // 두구두-쾅!와장창-챙
+    slip:     [['slide_down', 0, .6], ['thud', .62, .9], ['boing', .72, .6]],                  // 삐유~-쿵-보잉
+    bite:     [['zip', 0, .55], ['chomp', .1, .95], ['squeak', .2, .6], ['uah', .42, .8]],      // 휙-앙!-삑-으악
+    splash:   [['whoosh', 0, .6], ['splash_big', .14, .9], ['splash', .2, .5], ['bubbles', .6, .5]], // 휙-풍덩!-보글보글
+    roll:     [['rattle', 0, .7], ['drumroll', .08, .35, .6], ['spring', .7, .55], ['boing', .78, .45]], // 달그락 돌돌-띠용
+    laugh:    [['giggle_xylo', 0, .45], ['laugh_deep', .2, .8]],                               // 또로롱-으하하
+    fail:     [['womp', 0, .7]],                                                               // 빠밤빠밤~
+    magic:    [['zip', 0, .35], ['sparkle', .05, .6], ['xylo_up', .3, .55]],                    // 반짝반짝-또로롱
+    win:      [['drumroll', 0, .55, .7], ['tada', .62, .85], ['cymbal', .64, .4], ['cheer', .8, .45]], // 두구두구-짜잔!-와아
+    surprise: [['slide_up', 0, .55], ['cork', .5, .9], ['sparkle', .55, .35]],                 // 삐융~-뽕!
+    dizzy:    [['xylo_down', 0, .5], ['sparkle', .15, .45], ['spring', .9, .45]],              // 또로롱↓-반짝-띠요옹
+    ouch:     [['uah', 0, .8], ['squeak', .15, .5], ['xylo_down', .3, .4]],                     // 으악-삑-또로롱↓
+  };
 
   const api = {
     unlock() {
@@ -192,11 +225,52 @@ const AudioFX = (() => {
       [523, 659, 784, 1047].forEach((f, i) => tone(f * 1.0, 0.6, { type: 'sine', vol: 0.12, when: 0.75 + i * 0.02 }));
     },
   };
+  const SYN = Object.assign({}, api); // 녹음이 없을 때 쓸 합성음 원본
   // 녹음 파일이 있는 효과음은 녹음을 먼저 재생하고, 아직 못 불러왔으면 합성음으로 대신한다
   for (const [name, path] of Object.entries(SFX)) {
     const synth = api[name];
     api[name] = (...a) => { if (!playSample(path + '.mp3')) synth(...a); };
   }
+
+  /* 스팅 재료가 아직 없을 때의 합성음 (소리가 비지 않게) */
+  const run = (fs, gap, type = 'triangle', vol = .16, dur = .1) => fs.forEach((f, i) => tone(f, dur, { type, vol, when: i * gap }));
+  const FALLBACK = {
+    spring: SYN.boing, boing: SYN.boing, slide: SYN.slide,
+    slide_up: () => tone([420, 1700], .55, { vol: .22 }),
+    slide_down: () => tone([1700, 300], .75, { vol: .22 }),
+    zip: SYN.whoosh, whoosh: SYN.whoosh, cork: SYN.pop, doop: SYN.pop, pop: SYN.pop,
+    sparkle: () => run([2093, 2637, 3136, 2637, 3520], .06, 'sine', .08, .25),
+    xylo_up: () => run([523, 587, 659, 784, 880, 1047], .065),
+    xylo_down: () => run([1047, 880, 784, 659, 587, 523], .065),
+    giggle_xylo: () => run([1047, 880, 1047, 880, 1047, 784, 880, 659], .075),
+    crash: () => { noise(.5, { freq: 3500, q: .4, vol: .3 }); noise(.3, { freq: 1200, q: .6, vol: .2, when: .08 }); },
+    cymbal: () => noise(1.2, { freq: 6500, q: .3, vol: .22 }),
+    drumroll: () => { for (let i = 0; i < 9; i++) noise(.05, { freq: 900, vol: .14 + i * .01, when: i * .05 }); },
+    tada: () => { tone(784, .12, { type: 'triangle', vol: .22 }); [784, 988, 1175].forEach(f => tone(f, .6, { type: 'triangle', vol: .16, when: .16 })); },
+    womp: SYN.sad, pan: SYN.bonk, bonk: SYN.bonk, thud: SYN.thud, boom: SYN.boom, poke: SYN.poke,
+    squeak: () => { tone([1600, 2500], .12, { vol: .18 }); tone([2500, 1700], .14, { vol: .16, when: .13 }); },
+    splash_big: SYN.splash, splash: SYN.splash,
+    bubbles: () => run([600, 900, 700, 1100, 800], .12, 'sine', .14, .07),
+    laugh_deep: SYN.laugh, giggle: SYN.laugh,
+    cheer: () => noise(1.6, { freq: 1500, q: .5, vol: .15 }),
+    rattle: SYN.roll, chomp: SYN.chomp, gulp: SYN.gulp, uah: SYN.yelp,
+  };
+  function layer(name, when, vol, dur) {
+    if (playSample('sfx/' + name + '.mp3', vol * STING_VOL, when, dur)) return true;
+    const f = FALLBACK[name];
+    if (f) { if (when > 0) setTimeout(f, when * 1000); else f(); }
+    return false;
+  }
+  /* AudioFX.sting('hit') — 여러 효과음을 살짝 어긋나게 겹친 만화 효과. 모르는 이름이면 false */
+  api.sting = kind => {
+    const L = STINGS[kind];
+    if (!L) return false;
+    ensure();
+    L.forEach(([n, t, v, d]) => layer(n, t, v, d));
+    return true;
+  };
+  api.stingKinds = Object.keys(STINGS);
+  api.hasSting = kind => kind in STINGS;
   return api;
 })();
 
