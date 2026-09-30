@@ -54,9 +54,9 @@ def newest(prefixes):
         for src in sorted(glob.glob(os.path.join(RAW, pre + '*.png'))):
             got[os.path.basename(src)[len(pre):-4]] = src
     return got
-for tid, src in sorted(newest(['thumb2_', 'thumb3_']).items()):
+for tid, src in sorted(newest(['thumb2_', 'thumb3_', 'thumb4_']).items()):
     new_style(src, os.path.join(OUT, tid + '.webp'), SHEET['dark']); T2.append(tid)
-for tid, src in sorted(newest(['thumb2L_', 'thumb3L_']).items()):
+for tid, src in sorted(newest(['thumb2L_', 'thumb3L_', 'thumb4L_']).items()):
     new_style(src, os.path.join(OUT, tid + '_light.webp'), SHEET['light']); T2L.append(tid)
 for src in sorted(glob.glob(os.path.join(RAW, 'thumb_*.png'))):
     tid = os.path.basename(src)[6:-4]
