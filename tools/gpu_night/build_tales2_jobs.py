@@ -586,3 +586,7 @@ if __name__ == '__main__':
         print(f"{name:16s} {len(jobs):3d}  (배경 {kinds['bg']}, 캐릭터·소품 {kinds['prop']}, 컷 {kinds['cut']})")
         total += len(jobs)
     print('합계', total)
+
+
+# 2026-10-01: 사물 소품에 캐릭터 얼굴 문구(KID)가 들어가면 모델이 사물에 눈·볼을 붙인다 (등잔·동아줄·연잎에서 확인).
+# 생성된 jobs_*.json 은 사물 소품에 한해 KID 대신 "OBJECT, no face" 문구로 바꿔 두었다 (이 스크립트를 다시 돌리면 그 수정이 사라지니 주의).
