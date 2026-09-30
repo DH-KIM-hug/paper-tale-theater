@@ -200,6 +200,29 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
 .lt.gap { margin-left: calc(var(--logo) * .26); }
 
 /* 보호자 톱니: 종이를 눌러 올린 톱니. 3초 누르면 둘레가 구리색으로 채워진다 */
+/* 태그 숨기기 버튼: 필터와 같은 종이 알약 (보일 때 = 솟음, 숨김 = 눌림) */
+.brand .logo { margin-right: auto; }
+.tagtoggle {
+  flex: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 44px; padding: 0 14px 0 11px;
+  border: 0; border-radius: 22px;
+  font: 600 14px/1 var(--font); letter-spacing: -.01em;
+  color: var(--text-2);
+  background: var(--sheet-dn);
+  box-shadow: inset 1.5px 1.5px 3px rgba(34, 43, 69, .16), inset -1px -1px 2px rgba(255, 255, 255, .7);
+  cursor: pointer;
+  transition: background .2s, box-shadow .2s, color .2s;
+}
+.tagtoggle svg { width: 20px; height: 20px; }
+.tagtoggle.on { color: var(--text); background: var(--sheet-up); box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset, 0 3px 8px -2px rgba(34, 43, 69, .22); }
+.tagtoggle .tt-n { min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--copper); color: #fff; font-size: 12px; line-height: 20px; text-align: center; }
+.tagrows { display: flex; flex-direction: column; gap: inherit; }
+/* 태그를 숨기면: 로고줄만 남고, 격자가 가로 전체를 쓴다 */
+#home.tags-off { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+#home.tags-off .tagrows { display: none; }
+#home.tags-off .board { overflow: visible; padding-bottom: 8px; }
+#home.tags-off .brand { justify-content: flex-start; }
 .gear {
   position: relative;
   flex: none;

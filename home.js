@@ -54,12 +54,13 @@
     try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; }
   }
   function save() {
-    try { localStorage.setItem(STORE, JSON.stringify({ origin: [...sel.origin], skill: [...sel.skill], speak })); } catch (e) { /* 무시 */ }
+    try { localStorage.setItem(STORE, JSON.stringify({ origin: [...sel.origin], skill: [...sel.skill], speak, tagsOff })); } catch (e) { /* 무시 */ }
   }
   const saved = load();
   const valid = (row, list) => (Array.isArray(list) ? list : []).filter(k => TAGS[row].some(t => t.key === k));
   const sel = { origin: new Set(valid('origin', saved.origin)), skill: new Set(valid('skill', saved.skill)) };
   let speak = saved.speak !== false;
+  let tagsOff = saved.tagsOff === true; // 태그 숨기기 (홈 첫 화면을 그림만으로)
 
   /* ── 소리 ── */
   function say(text) {
@@ -280,7 +281,28 @@
     else render();
   }
 
+  /* ── 태그 숨기기/보이기: 숨기면 격자가 화면을 넓게 쓴다. 고른 태그는 그대로 적용되고, 버튼에 개수만 표시 ── */
+  const tagBtn = $('#tagToggle');
+  function paintTagToggle() {
+    const n = sel.origin.size + sel.skill.size;
+    $('#home').classList.toggle('tags-off', tagsOff);
+    tagBtn.setAttribute('aria-expanded', String(!tagsOff));
+    tagBtn.setAttribute('aria-label', tagsOff ? '태그 보이기' : '태그 숨기기');
+    tagBtn.classList.toggle('on', !tagsOff);
+    const badge = tagBtn.querySelector('.tt-n');
+    badge.hidden = !(tagsOff && n); badge.textContent = n;
+  }
+  tagBtn.addEventListener('click', () => {
+    tagsOff = !tagsOff;
+    paper(tagsOff ? 'down' : 'up');
+    paintTagToggle();
+    render({ anim: false });
+    save();
+  });
+  paintTagToggle();
+
   function update(opts) {
+    paintTagToggle();
     paintChips();
     render(opts);
     save();

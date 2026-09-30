@@ -86,12 +86,17 @@
   <aside class="board" aria-label="동화 고르기">
     <header class="brand">
       <h1 class="logo"><span class="sr">종이 동화극장</span><span class="lt" aria-hidden="true">종</span><span class="lt" aria-hidden="true">이</span><span class="lt gap" aria-hidden="true">동</span><span class="lt" aria-hidden="true">화</span><span class="lt" aria-hidden="true">극</span><span class="lt" aria-hidden="true">장</span></h1>
+      <button id="tagToggle" class="tagtoggle" type="button" aria-controls="tagRows" aria-expanded="true" aria-label="태그 숨기기">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>
+        <span class="tt-lb">태그</span><span class="tt-n" hidden></span>
+      </button>
       <button id="parentBtn" class="gear" type="button" aria-label="보호자 메뉴: 3초 동안 누르세요">
         <svg class="gear-ic" aria-hidden="true"><use href="#i-gear"/></svg>
         <svg class="gear-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19"/></svg>
       </button>
     </header>
 
+    <div id="tagRows" class="tagrows">
     <section class="tagrow" data-row="origin">
       <h2 class="row-tab">이야기</h2>
       <div class="chips" role="group" aria-label="이야기 종류"></div>
@@ -100,6 +105,7 @@
       <h2 class="row-tab">배우는 것</h2>
       <div class="chips" role="group" aria-label="배우는 것"></div>
     </section>
+    </div>
   </aside>
 
   <main class="shelf" id="shelf">
