@@ -309,3 +309,6 @@ svg text { font-weight: 800; }
   #irisCard.on, #irisCard.on i { animation-duration: .01s; }
   .pill { transition: none; }
 }
+
+/* 무대에서 옆으로 미는 동작(T.swipe)이 휴대폰에서 스크롤로 빼앗기지 않게 */
+#stageWrap { touch-action: none; }

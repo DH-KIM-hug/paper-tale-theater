@@ -15,7 +15,6 @@
   const ART = {
     bg_pond: 'v3w/frog_bg_pond.webp', bg_meadow: 'v3w/frog_bg_meadow.webp', bg_chart: 'v3w/frog_bg_chart.webp',
     bg_night: 'v3w/frog_bg_pond_night.webp',
-    q_tail: 'v3w/frog_q_tail.webp', q_hoof: 'v3w/frog_q_hoof.webp', q_horn: 'v3w/frog_q_horn.webp',
     mom: 'v3w/frog_mom.webp', mom_flying: 'v3w/frog_mom_flying.webp', mom_puffed: 'v3w/frog_mom_puffed.webp', mom_dizzy: 'v3w/frog_mom_dizzy.webp',
     baby_sleep: 'v3w/frog_baby_sleep.webp', baby_awake: 'v3w/frog_baby_awake.webp', baby_cover: 'v3w/frog_baby_cover.webp',
     tadpole: 'v3w/frog_tadpole.webp',
@@ -27,8 +26,7 @@
   };
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
-  const EDGE = { bg_pond: ['#9acbe3', '#414e3f'], bg_meadow: ['#9fcbd9', '#18270e'], bg_chart: ['#fcecaf', '#637055'], bg_night: ['#000111', '#000b23'],
-    q_tail: ['#205a00', '#0e4700'], q_hoof: ['#325a04', '#076600'], q_horn: ['#1e6c00', '#352202'] };
+  const EDGE = { bg_pond: ['#9acbe3', '#414e3f'], bg_meadow: ['#9fcbd9', '#18270e'], bg_chart: ['#fcecaf', '#637055'], bg_night: ['#000111', '#000b23'] };
   /* 장면 그림 한 장을 무대 전체에 (없으면 false → 임시 도형 배경) */
   function artBG(T, key, parent = T.bg) {
     if (!ART[key]) return false;
@@ -136,6 +134,38 @@
     ]);
     return { set() {}, has: () => false };
   }
+  /* 황소 들여다보기 창: 무대의 황소(ox_stand, 발끝 at)와 똑같은 그림·자리를 창 안에서 크게 비춘다.
+     PEEK: 부위별 [무대 좌표 가운데 x, y, 확대 배율] — 황소 그림 811×560이 발끝 기준 440×300 상자(dx -20)에 들어간 자리로 잰 값 */
+  const PEEK = { tail: [703, 385, 3.2], hoof: [440, 488, 3.0], horn: [440, 252, 3.6] };
+  function oxPeek(T, at) {
+    const { el } = T, pt = () => T.viewWidth() < 990;
+    const g = el('g', {}, T.world);
+    // 창 밖: 같은 풀밭을 종이로 덮고 살짝 어둡게
+    grassCover(T, g);
+    el('rect', { x: -1200, y: -1200, width: 3400, height: 2960, fill: '#1c1a14', opacity: .45 }, g);
+    const id = 'peekClip';
+    const cp = el('clipPath', { id }, el('defs', {}, g));
+    const hole = el('circle', { cx: 500, cy: 262, r: 210 }, cp);
+    const win = el('g', { 'clip-path': `url(#${id})` }, g);
+    const zoom = el('g', { opacity: 0 }, win); // 첫 문제 전에는 창을 비워 둔다 (황소 전체가 먼저 보이지 않게)
+    grassCover(T, zoom);
+    const ox = el('g', { transform: `translate(${at[0]} ${at[1]})` }, zoom);
+    drawOx(T, ox);
+    const ring = el('circle', { cx: 500, cy: 262, r: 210, fill: 'none', stroke: C.cream, 'stroke-width': 14, filter: 'url(#pp)' }, g);
+    const place = () => { const r = pt() ? Math.min(170, T.viewWidth() / 2 - 16) : 210, cy = pt() ? 205 : 262;
+      [hole, ring].forEach(n => { n.setAttribute('r', r); n.setAttribute('cy', cy); }); return [r, cy]; };
+    return {
+      async show(part, swap) {
+        if (swap) { AudioFX.swish(); await T.anim(zoom, [{ opacity: 1 }, { opacity: 0 }], 250); }
+        const [r, cy] = place(), [x, y, z0] = PEEK[part], z = z0 * r / 210;
+        zoom.setAttribute('transform', `translate(500 ${cy}) scale(${z.toFixed(3)}) translate(${-x} ${-y})`);
+        zoom.removeAttribute('opacity'); await T.anim(zoom, [{ opacity: 0 }, { opacity: 1 }], 300);
+      },
+      async hide() { await T.anim(g, [{ opacity: 1 }, { opacity: 0 }], 900); g.remove(); },
+    };
+  }
+  /* 풀밭 그림을 다른 그룹 안에 한 번 더 (들여다보기 창 안·밖) */
+  function grassCover(T, parent) { if (!artBG(T, 'bg_meadow', parent)) T.el('rect', { x: -1200, y: -1200, width: 3400, height: 2960, fill: '#7c9a58' }, parent); }
   const ANIMALS = {
     tadpole: { name: '올챙이', h: 36, draw: (T, g) => sprite(T, g, 'tadpole', 76, 43) || T.paper(g, [['path', { d: 'M18 -18 Q50 -30 60 -10 Q50 -2 18 -14', fill: '#2f4a3a' }], ['circle', { cx: 0, cy: -18, r: 18, fill: '#2f4a3a' }], ['circle', { cx: -6, cy: -22, r: 4, fill: '#fff' }]]) },
     frog: { name: '개구리', h: 72, draw: (T, g) => sprite(T, g, 'mom', 64, 80) || drawFrog(T, g) },
@@ -258,38 +288,38 @@
         if (T.portrait()) camTo(babies[1].x + 110, 280, 1, 500); } }); // 세로 화면: 카메라가 아기들을 따라간다 (가로는 그대로)
     await sleep(500);
 
-    /* --- 3. 이건 뭐지? (부분만 보이는 황소 퀴즈) --- */
-    let quizPic = null;
+    /* --- 3. 이건 뭐지? (부분만 보이는 황소 퀴즈) ---
+       무대 위 그 황소(같은 그림 ox_stand, 같은 자리)를 동그란 들여다보기 창으로 크게 비춘다 → 세 문제가 모두 한 황소.
+       창 밖은 같은 풀밭을 어둡게 덮어 그 부위만 보인다. (예전 따로 뽑은 확대 그림 frog_q_* 는 황소가 저마다 달라 쓰지 않는다) */
+    const OX_AT = [520, ART.ox_stand ? 522 : 540];
+    let peek = null;
     await T.sceneCard('커다란 무언가', () => {
       T.clear(); grassBG(T);
-      actor(T.world, 520, ART.ox_stand ? 522 : 540, g => drawOx(T, g), { scale: 1 });
-      // 그림 버전: 부분 확대 그림(꼬리·발굽·뿔)을 무대 전체에 덮어 보여 준다. 없으면 카메라로 확대
-      quizPic = ART.q_tail ? artBG(T, 'q_tail', T.el('g', {}, T.world)) : null;
-      if (quizPic) camSnap(500, 280, 1); else camSnap(706, 450, 3.4);
+      actor(T.world, ...OX_AT, g => drawOx(T, g), { scale: 1 });
+      peek = oxPeek(T, OX_AT);
+      camSnap(500, 280, 1);
     }, babies[1].pos);
     await say('어? 눈앞에 커다란 무언가가 있어요!');
     const quiz = [
-      { cam: [706, 450, 3.4], pic: 'q_tail', q: '이건 뭘까요? 꼬리일까요, 나무일까요?', ok: 'tail', no: 'tree', okName: '꼬리' },
-      { cam: [395, 505, 2.6], pic: 'q_hoof', q: '이번엔 뭘까요? 발굽일까요, 돌멩이일까요?', ok: 'hoof', no: 'rock', okName: '발굽' },
-      { cam: [320, 280, 2.1], pic: 'q_horn', q: '이건 뭘까요? 뿔일까요, 나뭇가지일까요?', ok: 'horn', no: 'branch', okName: '뿔' },
+      { part: 'tail', q: '이건 뭘까요? 꼬리일까요, 나무일까요?', ok: 'tail', no: 'tree', okName: '꼬리' },
+      { part: 'hoof', q: '이번엔 뭘까요? 발굽일까요, 돌멩이일까요?', ok: 'hoof', no: 'rock', okName: '발굽' },
+      { part: 'horn', q: '이건 뭘까요? 뿔일까요, 나뭇가지일까요?', ok: 'horn', no: 'branch', okName: '뿔' },
     ];
-    for (const r of quiz) {
-      if (quizPic && ART[r.pic]) {
-        const img = quizPic.parentNode.lastChild;
-        if (img.getAttribute('href') !== A(ART[r.pic])) { AudioFX.swish(); await T.anim(img, [{ opacity: 1 }, { opacity: 0 }], 250); img.setAttribute('href', A(ART[r.pic])); await T.anim(img, [{ opacity: 0 }, { opacity: 1 }], 300); }
-      } else await camTo(...r.cam, 900);
+    for (const [qi, r] of quiz.entries()) {
+      await peek.show(r.part, qi > 0);
       const left = Math.random() < .5;
-      // 세로 화면은 무대 양옆이 잘리므로, 실제로 보이는 폭 안쪽 끝에 배지를 둔다
-      const vw = T.viewWidth ? T.viewWidth() : 1000, L = 500 - vw / 2 + 85, R = 500 + vw / 2 - 85;
-      const bOk = badge(T, left ? L : R, 300, g => ICONS[r.ok](T, g));
-      const bNo = badge(T, left ? R : L, 300, g => ICONS[r.no](T, g));
+      // 세로 화면은 무대 양옆이 잘리므로, 실제로 보이는 폭 안쪽 끝에 배지를 둔다 (창 아래 줄)
+      const vw = T.viewWidth ? T.viewWidth() : 1000, pt = vw < 990;
+      const L = pt ? 500 - Math.min(vw / 2 - 75, 115) : 500 - vw / 2 + 85, R = 1000 - L, by = pt ? 462 : 300;
+      const bOk = badge(T, left ? L : R, by, g => ICONS[r.ok](T, g));
+      const bNo = badge(T, left ? R : L, by, g => ICONS[r.no](T, g));
       await say(r.q);
       await T.choose([{ el: bOk, ok: true }, { el: bNo, ok: false }], { prompt: r.q,
         where: '가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!', who: `${T.josa(r.okName, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });
       bOk.remove(); bNo.remove();
       await say(`맞아요, ${T.josa(r.okName, '이에요/예요')}!`);
     }
-    if (quizPic) { await T.anim(quizPic.parentNode, [{ opacity: 1 }, { opacity: 0 }], 900); quizPic.parentNode.remove(); quizPic = null; }
+    await peek.hide();
     await camTo(500, 280, 1, 1600);
     T.shake(); // 음매~는 황소 목소리로 (대사 첫 조각)
     await say('음매~! 커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.');

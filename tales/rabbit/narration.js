@@ -20,29 +20,20 @@ const NARRATION_CLIPS = {
  "문을 톡 두드려 봐요. 누가 나올까?": "audio/tc/rabbit/nar_8622a9903a.mp3",
  "이번 집도 문을 톡!": "audio/tc/rabbit/nar_fe8da97bd1.mp3",
  "문을 톡 두드려 봐요!": "audio/tc/rabbit/nar_0baf997457.mp3",
- "\"꽥꽥!\" 누구 목소리일까요?": [
-  "audio/tc/rabbit/duck_f48662cfe0.mp3",
-  "audio/tc/rabbit/nar_d83b6ac9cc.mp3"
- ],
+ "누구 목소리일까요? 둘 중에서 골라 봐요!": "audio/tc/rabbit/nar_8a77a4c70a.mp3",
+ "잘 들었지요? 누구 목소리일까요?": "audio/tc/rabbit/nar_b82085c062.mp3",
+ "오리예요! 반짝이는 친구를 눌러 봐요!": "audio/tc/rabbit/nar_eac68eb856.mp3",
  "오리였어요!": "audio/tc/rabbit/nar_f2c1f3033f.mp3",
- "\"음매~\" 누구 목소리일까요?": [
-  "audio/tc/rabbit/cow_40ccebb0a8.mp3",
-  "audio/tc/rabbit/nar_d83b6ac9cc.mp3"
- ],
+ "소예요! 반짝이는 친구를 눌러 봐요!": "audio/tc/rabbit/nar_8ee228d7ab.mp3",
  "소였어요!": "audio/tc/rabbit/nar_0e8f64a9da.mp3",
- "\"꿀꿀!\" 누구 목소리일까요?": [
-  "audio/tc/rabbit/pig_422e267a26.mp3",
-  "audio/tc/rabbit/nar_d83b6ac9cc.mp3"
- ],
+ "돼지예요! 반짝이는 친구를 눌러 봐요!": "audio/tc/rabbit/nar_a624dd1978.mp3",
  "돼지였어요!": "audio/tc/rabbit/nar_cc5021bac7.mp3",
- "\"멍멍!\" 누구 목소리일까요?": [
-  "audio/tc/rabbit/dog_f9d607077e.mp3",
-  "audio/tc/rabbit/nar_d83b6ac9cc.mp3"
- ],
+ "강아지예요! 반짝이는 친구를 눌러 봐요!": "audio/tc/rabbit/nar_0da4388365.mp3",
  "강아지였어요!": "audio/tc/rabbit/nar_ac27fa3249.mp3",
  "닭이랑 양이랑 고양이도 초대장을 받았어요!": "audio/tc/rabbit/nar_1cde09fc01.mp3",
  "동물 친구들이 응원하러 모였어요!": "audio/tc/rabbit/nar_1c87ee815b.mp3",
- "친구들을 톡 눌러 봐요! 벌떡 일어나 인사해요.": "audio/tc/rabbit/nar_fb2721f0bb.mp3",
+ "친구들을 모두 톡톡 눌러 봐요! 벌떡 일어나 응원해요.": "audio/tc/rabbit/nar_d86077ada0.mp3",
+ "아직 안 일어난 친구를 톡 눌러 봐요!": "audio/tc/rabbit/nar_eb4d9fb2fc.mp3",
  "와, 신나는 응원 소리!": "audio/tc/rabbit/nar_fa02daf9b5.mp3",
  "달리기 전에 준비 운동을 해요.": "audio/tc/rabbit/nar_11becb87e4.mp3",
  "토끼를 톡! 귀를 쭉~": "audio/tc/rabbit/nar_797bb76b7f.mp3",
@@ -56,8 +47,8 @@ const NARRATION_CLIPS = {
  "토끼는 쌩~ 거북이는 엉금 한 발!": "audio/tc/rabbit/nar_99e83772a7.mp3",
  "여기는 경주 지도예요. 돌멩이, 개울, 언덕을 지나 깃발까지!": "audio/tc/rabbit/nar_d1186b5a4f.mp3",
  "아래 막대를 보면 누가 앞서는지 알 수 있어요.": "audio/tc/rabbit/nar_015ceccd58.mp3",
- "토끼는 쌩쌩 달려요! 옆으로 쓱 밀어 봐요!": "audio/tc/rabbit/nar_3061b61247.mp3",
- "화면을 옆으로 쓱 밀어 봐요!": "audio/tc/rabbit/nar_d80bfc1954.mp3",
+ "토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!": "audio/tc/rabbit/nar_1aeef0fe94.mp3",
+ "화면을 톡톡 눌러 봐요!": "audio/tc/rabbit/nar_5ea22bc4db.mp3",
  "금세 언덕 위 나무 그늘까지 왔어요.": "audio/tc/rabbit/nar_5ed412989b.mp3",
  "뒤를 돌아보니… 거북이는 안 보여요!": "audio/tc/rabbit/nar_0881869a74.mp3",
  "\"하암~ 한숨 자고 가도 되겠다~\"": "audio/tc/rabbit/rabbit_2e8d82655b.mp3",
@@ -91,7 +82,7 @@ const NARRATION_CLIPS = {
   "audio/tc/rabbit/nar_02c19a76ec.mp3"
  ],
  "앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.": "audio/tc/rabbit/nar_6618c231e6.mp3",
- "옆으로 쓱 밀어서 헤엄쳐요!": "audio/tc/rabbit/nar_9a8e3b711e.mp3",
+ "화면을 톡톡 눌러서 헤엄쳐요!": "audio/tc/rabbit/nar_8639f695a8.mp3",
  "물고기랑 같이 개울을 건넜어요!": "audio/tc/rabbit/nar_69953c58dc.mp3",
  "이번엔 높은 언덕이에요.": "audio/tc/rabbit/nar_fbaf02261a.mp3",
  "화면을 꾹 누르고 있으면 영차영차 올라가요!": "audio/tc/rabbit/nar_86dc0b7a65.mp3",
@@ -135,7 +126,7 @@ const NARRATION_CLIPS = {
 const VOICE_LINES = {
  "laugh_pig": "audio/tc/rabbit/pig_983a8ebc5e.mp3",
  "cheer_dog": "audio/tc/rabbit/dog_8b9dab2887.mp3",
- "cheer_duck": "audio/tc/rabbit/duck_643b80f1f3.mp3",
+ "cheer_duck": "audio/tc/rabbit/duck_a8821c1247.mp3",
  "cheer_sheep": "audio/tc/rabbit/sheep_1a61a737a3.mp3",
  "wake_rabbit": "audio/tc/rabbit/rabbit_f9892c0bf7.mp3"
 };

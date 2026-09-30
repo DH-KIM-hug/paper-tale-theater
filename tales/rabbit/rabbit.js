@@ -36,7 +36,8 @@
     aud_duck: 'v3w/rab_aud_duck.webp', aud_cow: 'v3w/rab_aud_cow.webp', aud_pig: 'v3w/rab_aud_pig.webp', aud_rooster: 'v3w/rab_aud_rooster.webp',
     aud_sheep: 'v3w/rab_aud_sheep.webp', aud_dog: 'v3w/rab_aud_dog.webp', aud_cat: 'v3w/rab_aud_cat.webp', aud_owl: 'v3w/rab_owl_post.webp',
     carrot_trophy: 'v3w/rab_carrot_trophy.webp', medal: 'v3w/rab_medal.webp',
-    cut_wake: 'v3w/rab_cut_wake.webp', cut_dash: 'v3w/rab_cut_dash.webp', cut_photo: 'v3w/rab_cut_photo.webp',
+    // cut_photo: 원본(rab_cut_photo)은 거북이가 왼쪽·토끼가 오른쪽이라 무대(토끼가 왼쪽에서 달려옴)와 반대 → 좌우로 뒤집은 파일
+    cut_wake: 'v3w/rab_cut_wake.webp', cut_dash: 'v3w/rab_cut_dash.webp', cut_photo: 'v3w/rab_cut_photo_m.webp',
   };
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
@@ -107,7 +108,7 @@
     const yawn = el('ellipse', { cx: 45, cy: -95, rx: 5, ry: 7, fill: C.bean }, face);
     const p = {
       root, head, ears, eyes, smile, yawn,
-      setEyes(k) { Object.entries(eyes).forEach(([n, e]) => show(e, n === k)); },
+      setEyes(k) { const e0 = k === 'drowsy' ? 'closed' : k; Object.entries(eyes).forEach(([n, e]) => show(e, n === e0)); }, // drowsy = 선 채로 눈만 감음
       pose(k) { show(legsStand, k !== 'run'); show(legsRun, k === 'run'); root.setAttribute('transform', k === 'run' ? 'rotate(12)' : ''); },
       mouth(k) { show(smile, k !== 'yawn'); show(yawn, k === 'yawn'); },
       sleepy(on) { head.setAttribute('transform', on ? 'rotate(14 20 -90)' : ''); },
@@ -117,16 +118,23 @@
     p.bobEl = root;
     /* 그림: 자세마다 한 장. 코드는 '오른쪽을 본다'고 가정 → 왼쪽을 보는 그림(tease·congrats)은 뒤집어 넣는다.
        그림이 없는 자세(지금은 잠)는 위 임시 도형을 대신 보인다 */
-    const artG = el('g', {}, g), imgs = {};
-    for (const [k, [key, w, h, o]] of Object.entries(RABBIT_ART)) { const s = sprite(T, artG, key, w, h, o); if (s) imgs[k] = s; }
+    const artG = el('g', {}, g), imgs = {}, lids = {};
+    for (const [k, [key, w, h, o]] of Object.entries(RABBIT_ART)) {
+      const s = sprite(T, artG, key, w, h, o); if (!s) continue;
+      imgs[k] = s;
+      if (RABBIT_LIDS[k]) lids[k] = eyelids(T, s, w, h, RABBIT_LIDS[k]);
+    }
     if (!Object.keys(imgs).length) return p;
     const st = { pose: 'stand', eyes: 'open', cheer: false };
     const upd = () => {
       const want = st.cheer ? 'congrats' : st.pose === 'run' ? 'run' : st.eyes === 'closed' ? 'sleep' : st.eyes === 'wide' ? 'wake' : 'stand';
       const k = imgs[want] ? want : want === 'sleep' ? null : imgs.stand ? 'stand' : null;
       Object.entries(imgs).forEach(([n, s]) => { s.style.display = n === k ? '' : 'none'; });
+      // 감은 눈꺼풀: 잠자는 그림은 늘 (그림 속 눈이 떠 있다), 선 그림은 졸 때(drowsy)만
+      Object.entries(lids).forEach(([n, l]) => { l.style.display = n === k && (n === 'sleep' || st.eyes === 'drowsy') ? '' : 'none'; });
       root.style.display = k ? 'none' : '';
     };
+    p.lids = () => lids.stand || null; // 부엉이 자장가: 선 채로 눈이 스르르 감긴다 (눈꺼풀을 서서히 보인다)
     const wrapM = (name, fn) => { const o = p[name]; p[name] = (...a) => { o(...a); fn(...a); upd(); }; };
     wrapM('setEyes', k => { st.eyes = k; });
     wrapM('pose', k => { st.pose = k; st.cheer = false; });
@@ -141,6 +149,21 @@
     stand: ['rabbit_stand', 104, 208, { flip: true }], run: ['rabbit_run', 150, 166, { dy: -6 }], wake: ['rabbit_wake', 104, 198],
     congrats: ['rabbit_congrats', 128, 202, { flip: true }], sleep: ['rabbit_sleep', 216, 123],
   };
+  /* 감은 눈꺼풀 (그림 원본 픽셀 좌표): 선 그림(tease)은 두 눈, 잠자는 그림(sleep)은 눈을 뜨고 그려져 있어 늘 덮는다 */
+  const RABBIT_LIDS = {
+    stand: { size: [267, 560], face: '#F9F5E6', line: 6, eyes: [[29, 237, 15, 21], [60, 239, 24, 28]] },
+    sleep: { size: [704, 400], face: '#F6F5F1', line: 7, eyes: [[267, 203, 32, 29], [197, 286, 30, 24]] },
+  };
+  function eyelids(T, wrap, w, h, { size: [iw, ih], face, line, eyes }) {
+    const s = Math.min(w / iw, h / ih), x0 = -w / 2 + (w - iw * s) / 2, y0 = -h + (h - ih * s);
+    const g = T.el('g', { transform: `translate(${x0.toFixed(2)} ${y0.toFixed(2)}) scale(${s.toFixed(4)})` }, wrap);
+    eyes.forEach(([cx, cy, rx, ry]) => {
+      T.el('ellipse', { cx, cy, rx, ry, fill: face }, g);
+      T.el('path', { d: `M${cx - rx * .78} ${cy - ry * .05} Q${cx} ${cy + ry * .62} ${cx + rx * .78} ${cy - ry * .05}`, stroke: C.ink, 'stroke-width': line, fill: 'none', 'stroke-linecap': 'round' }, g);
+    });
+    g.style.display = 'none';
+    return g;
+  }
 
   function drawTurtle(T, g) {
     const { el, paper } = T;
@@ -235,18 +258,26 @@
     cat: T => { T.tone([480, 820], .25, { type: 'triangle', vol: .2 }); T.tone([820, 420], .4, { type: 'triangle', vol: .2, when: .25 }); },
     owl: T => { T.tone([420, 380], .3, { type: 'sine', vol: .25 }); T.tone([380, 330], .5, { type: 'sine', vol: .25, when: .45 }); },
   };
-  const NOTES = [262, 294, 330, 392, 440, 523, 587, 659];
   const rnd = a => a[Math.floor(Math.random() * a.length)];
-  const PLAY = {
-    duck: T => [0, .06, .12].forEach(w => T.tone(1400 + w * 2000, .08, { type: 'triangle', vol: .1, when: w })),
-    cow: T => T.tone([130, 60], .45, { type: 'sine', vol: .4 }),
-    pig: T => { const n = rnd(NOTES); T.tone(n, .35, { type: 'sine', vol: .25 }); T.tone(n * 4, .08, { type: 'sine', vol: .05 }); },
-    rooster: T => { const n = rnd(NOTES); T.tone(n, .18, { type: 'sawtooth', vol: .09 }); T.tone(n * 1.5, .25, { type: 'sawtooth', vol: .09, when: .18 }); },
-    sheep: T => T.tone(rnd(NOTES) * 2, .7, { type: 'sine', vol: .18 }),
-    dog: T => [0, .12].forEach(w => T.tone([320, 150], .09, { type: 'square', vol: .12, when: w })),
-    cat: T => [1568, 1760, 2093].forEach((f, i) => T.tone(f, .15, { type: 'triangle', vol: .07, when: i * .07 })),
-    owl: T => T.tone(rnd(NOTES) * 1.5, .5, { type: 'sine', vol: .22 }),
+  /* 잔치 연주: [음 높이(Hz), 악기] — 다장조 5음계(도레미솔라) 두 옥타브를 연주자마다 하나씩. 낮은 소·거북이 ~ 높은 고양이 */
+  const BAND = {
+    cow: [261.6, 'drum'], turtle: [293.7, 'bass'], pig: [329.6, 'xylo'], dog: [392, 'drum'], sheep: [440, 'bell'],
+    rabbit: [523.3, 'pluck'], owl: [587.3, 'flute'], duck: [659.3, 'tamb'], rooster: [784, 'horn'], cat: [880, 'bell'],
   };
+  const INSTR = {
+    xylo: (T, f, w) => { T.tone(f, .38, { type: 'triangle', vol: .2, when: w }); T.tone(f * 4, .08, { type: 'sine', vol: .05, when: w }); },
+    bell: (T, f, w) => { T.tone(f, .9, { type: 'sine', vol: .17, when: w }); T.tone(f * 2, .5, { type: 'sine', vol: .05, when: w }); T.tone(f * 2.76, .3, { type: 'sine', vol: .04, when: w }); },
+    horn: (T, f, w) => { T.tone(f, .4, { type: 'sawtooth', vol: .06, when: w }); T.tone(f, .4, { type: 'triangle', vol: .13, when: w }); },
+    flute: (T, f, w) => { T.tone(f, .5, { type: 'sine', vol: .22, when: w }); T.tone(f * 2, .3, { type: 'sine', vol: .03, when: w }); },
+    drum: (T, f, w) => { T.tone([f * 1.6, f], .3, { type: 'sine', vol: .3, when: w }); T.tone(f, .24, { type: 'triangle', vol: .1, when: w }); },
+    tamb: (T, f, w) => { T.tone(f, .26, { type: 'triangle', vol: .17, when: w }); [0, .06].forEach(d => T.tone(4200, .05, { type: 'square', vol: .02, when: w + d })); },
+    pluck: (T, f, w) => { T.tone([f * 1.03, f], .32, { type: 'triangle', vol: .2, when: w }); T.tone(f * 2, .12, { type: 'sine', vol: .05, when: w }); },
+    bass: (T, f, w) => { T.tone(f, .45, { type: 'triangle', vol: .18, when: w }); T.tone(f / 2, .45, { type: 'sine', vol: .12, when: w }); },
+  };
+  /* 마지막 한 소절: [연주자(=음), 시각(초)] — 미솔라솔 미레도레 미솔도~ 그리고 높은 미솔라, 마지막은 다 함께 */
+  const SONG = [['pig', 0], ['dog', .38], ['sheep', .76], ['dog', 1.14], ['pig', 1.52], ['turtle', 1.9], ['cow', 2.28], ['turtle', 2.66],
+    ['pig', 3.04], ['dog', 3.42], ['rabbit', 3.8], ['duck', 4.4], ['rooster', 4.6], ['cat', 4.8],
+    ...['cow', 'rabbit', 'duck', 'sheep'].map(k => [k, 5.3])]; // 마지막 화음 (도·도·미·라 — 소리는 넷만, 나머지는 함께 폴짝)
 
   /* 잔치 악기 (임시 도형) */
   const INS = {
@@ -345,10 +376,22 @@
         a.stand(); a.cry(); a.hop(14, 320);
         if (word !== '') T.pop(a.x, a.y - 150 * a.scale, word || a.word, C.bean);
         await T.sleep(1100);
-        if (!keep) a.sit();
+        if (!keep && !a.stay) a.sit();
         a.cheering = false;
       };
-      a.reset = () => { a.sit(); show(parts.shh, 0); show(parts.instr, 0); if (parts.bag) show(parts.bag, 0); a.face('left'); a.cheering = false; };
+      /* 응원 완료 표시: 일어선 채로 머리 위에 금별 (응원석에서 모두 눌러야 넘어간다) */
+      a.done = () => {
+        a.stay = true; a.stand(); a.cry(); a.hop(18, 340);
+        T.pop(a.x, a.y - 150 * a.scale, a.word, C.bean);
+        if (a.star) return;
+        const h = k === 'owl' ? 142 : 152;
+        a.star = T.el('g', { transform: `translate(0 ${-h})` }, a.body);
+        const s = T.paper(a.star, [['path', { d: 'M0 -22 L6.5 -7 L22 -6 L10 4.5 L13.5 20 L0 11.5 L-13.5 20 L-10 4.5 L-22 -6 L-6.5 -7 Z', fill: '#FFD54F', stroke: C.persimmon, 'stroke-width': 3, 'stroke-linejoin': 'round' }]]);
+        s.style.transformBox = 'fill-box'; s.style.transformOrigin = 'center';
+        T.anim(s, [{ transform: 'scale(0) rotate(-90deg)' }, { transform: 'scale(1.35) rotate(10deg)' }, { transform: 'scale(1) rotate(0)' }], 480);
+      };
+      a.undone = () => { a.stay = false; if (a.star) { a.star.remove(); a.star = null; } };
+      a.reset = () => { a.undone(); a.sit(); show(parts.shh, 0); show(parts.instr, 0); if (parts.bag) show(parts.bag, 0); a.face('left'); a.cheering = false; };
       // 언제든 톡: 이야기 중에도 일어나 울음소리 (조작 대기 중인 대상이면 엔진에 맡긴다)
       a.pos.classList.add('tap-target');
       a.pos.addEventListener('pointerdown', e => { if (a.pos.classList.contains('armed')) return; e.stopPropagation(); a.cheer(); });
@@ -394,6 +437,17 @@
     window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
     try { await T.mash(target, { count, prompt, onStep: i => onProgress && onProgress(i / count) }); }
     finally { up(); target.removeEventListener('pointerdown', down); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); }
+  }
+  /* 소리 퀴즈 카드 (화면 고정 UI — 카메라 영향 없음): 동물 그림이 든 동그란 종이. slot 0 = 왼쪽, 1 = 오른쪽.
+     세로 화면은 보이는 폭이 좁아 둘이 나란히 들어가게 줄인다 */
+  function voiceBadge(T, k, slot) {
+    const vw = T.viewWidth(), pt = vw < 990;
+    const s = pt ? Math.min(1, (vw - 36) / 4 / 80) : 1, dx = pt ? 80 * s + 8 : 230;
+    const g = T.el('g', { transform: `translate(${500 + (slot ? dx : -dx)},${pt ? 440 : 420}) scale(${s.toFixed(3)})` }, document.getElementById('stage'));
+    T.paper(g, [['circle', { r: 80, fill: C.cream, stroke: C.gold, 'stroke-width': 7 }]]);
+    if (ART['aud_' + k]) T.el('image', { href: A(ART['aud_' + k]), x: -62, y: -66, width: 124, height: 124, preserveAspectRatio: 'xMidYMid meet' }, g);
+    else { const p = drawAnimal(T, T.el('g', { transform: 'translate(0 50) scale(.95)' }, g), k); show(p.legs, 1); }
+    return g;
   }
   const footstep = T => T.tone([120, 80], .14, { type: 'sine', vol: .3 });
   const snore = (T, k) => T.tone(k ? [140, 210] : [210, 130], .7, { type: 'sine', vol: .07 });
@@ -570,6 +624,8 @@
     });
     await say('부엉이 우체부가 초대장을 가져왔어요.');
     const guests = ['duck', 'cow', 'pig', 'dog'];
+    const CRY_MS = { duck: 1150, cow: 2000, pig: 850, dog: 1350 }; // 녹음 길이 (소리를 다 듣고 나서 묻는다)
+    const cryAt = (h, a) => { a.cry(); T.anim(h.g, [{ translate: '0 0' }, { translate: '-4px 0' }, { translate: '4px 0' }, { translate: '0 0' }], 400); };
     for (let i = 0; i < 4; i++) {
       const h = houses[i], k = guests[i], a = aud[k];
       camTo(h.x, h.ay ? 300 : 350, 1.6, 900);
@@ -579,10 +635,24 @@
       if (!AudioFX.sfx('knock')) { T.tone([200, 130], .08, { type: 'square', vol: .25 }); T.tone([200, 130], .08, { type: 'square', vol: .25, when: .2 }); }
       else setTimeout(() => AudioFX.sfx('knock'), 220);
       T.pop(h.x, h.ky || 380, '똑똑!', C.bark);
-      await sleep(700);
-      a.cry(); T.anim(h.g, [{ translate: '0 0' }, { translate: '-4px 0' }, { translate: '4px 0' }, { translate: '0 0' }], 400);
-      await say(`"${a.word}" 누구 목소리일까요?`);
       await sleep(900);
+      /* 먼저 문 뒤에서 울음소리만 들려주고 → 둘 중에서 골라요 (틀리면 소리를 다시 들려준다) */
+      cryAt(h, a);
+      await sleep(CRY_MS[k] + 250);
+      const decoy = rnd(['duck', 'cow', 'pig', 'rooster', 'sheep', 'dog', 'cat'].filter(x => x !== k));
+      const okLeft = Math.random() < .5;
+      const bOk = voiceBadge(T, k, okLeft ? 0 : 1), bNo = voiceBadge(T, decoy, okLeft ? 1 : 0);
+      const replay = e => { e.stopPropagation(); cryAt(h, a); }; // 문을 다시 누르면 소리를 또 들려준다
+      h.door.addEventListener('pointerdown', replay);
+      await say('누구 목소리일까요? 둘 중에서 골라 봐요!');
+      await T.choose([
+        { el: bOk, ok: true },
+        { el: bNo, ok: false, onWrong: async () => { await T.anim(bNo, [{ translate: '0 0' }, { translate: '-8px 0' }, { translate: '8px 0' }, { translate: '0 0' }], 360); cryAt(h, a); await sleep(CRY_MS[k] + 200); } },
+      ], { prompt: '누구 목소리일까요? 둘 중에서 골라 봐요!', where: '잘 들었지요? 누구 목소리일까요?', who: `${T.josa(a.name, '이에요/예요')}! 반짝이는 친구를 눌러 봐요!` });
+      h.door.removeEventListener('pointerdown', replay);
+      bNo.remove();
+      await T.anim(bOk, [{ opacity: 1 }, { opacity: 0 }], 300);
+      bOk.remove();
       AudioFX.pop();
       const hg = h.hinge ?? h.x - 42;
       await tween(400, t => h.door.setAttribute('transform', `translate(${hg} 0) scale(${1 - .8 * t} 1) translate(${-hg} 0)`));
@@ -609,9 +679,27 @@
     });
     await Promise.all(SEATS.map(async ([k, x, y], i) => { await sleep(i * 180); aud[k].hop(20, 400); await aud[k].move(x, y, 1100); }));
     await say('동물 친구들이 응원하러 모였어요!');
-    await say('친구들을 톡 눌러 봐요! 벌떡 일어나 인사해요.');
-    await T.free(KINDS.map(k => ({ el: aud[k].pos, onTap: () => aud[k].cheer() })), 15000);
+    await say('친구들을 모두 톡톡 눌러 봐요! 벌떡 일어나 응원해요.');
+    /* 여덟 친구를 한 번씩 다 눌러야 넘어간다. 누른 친구는 일어선 채 머리 위에 금별.
+       막힘 방지: 5초 동안 안 누르면 남은 친구들이 들썩, 20초면 하나씩 대신 일으켜 준다 */
+    {
+      const left = [...KINDS];
+      let nudge = null, idle = null, auto = false;
+      const autoTap = () => { if (!left.length) return; auto = true; const n = aud[left[0]].pos, o = { bubbles: true };
+        n.dispatchEvent(new PointerEvent('pointerdown', o)); n.dispatchEvent(new PointerEvent('pointerup', o)); };
+      while (left.length) {
+        clearTimeout(nudge); clearTimeout(idle);
+        if (!auto) nudge = setTimeout(() => left.forEach((k, i) => setTimeout(() => aud[k].hop(18, 380), i * 110)), 5000);
+        idle = setTimeout(autoTap, auto ? 500 : 20000);
+        const o = await T.choose(left.map(k => ({ el: aud[k].pos, ok: true, k })), { prompt: '아직 안 일어난 친구를 톡 눌러 봐요!' });
+        left.splice(left.indexOf(o.k), 1);
+        aud[o.k].done();
+      }
+      clearTimeout(nudge); clearTimeout(idle);
+    }
+    await sleep(700);
     await say('와, 신나는 응원 소리!');
+    KINDS.forEach(k => { aud[k].undone(); aud[k].sit(); });
 
     /* --- 4. 준비 운동 --- */
     await scene('준비 운동', () => {
@@ -724,8 +812,8 @@
     });
     bob = rp.bobEl.animate([{ translate: '0 0' }, { translate: '0 -14px' }], { duration: 200, iterations: Infinity, direction: 'alternate' });
     every(900, () => speedLines(T, 5, 420));
-    await say('토끼는 쌩쌩 달려요! 옆으로 쓱 밀어 봐요!');
-    await T.swipe(wrap, { dir: 'right', count: 3, prompt: '화면을 옆으로 쓱 밀어 봐요!', onStep: i => {
+    await say('토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!');
+    await T.mash(wrap, { count: 3, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => { // 예전엔 '옆으로 쓱'이었지만 톡이 더 쉽다 (놀이 피드백)
       far.style.transform = `translateX(${(ART.bg_dash ? -700 : -280) * i}px)`; near.style.transform = `translateX(${-900 * i}px)`;
       AudioFX.whoosh(); speedLines(T, 16, 480); rabbit.hop(70, 500); T.pop(rabbit.x + 60, 300, '쌩!', C.persimmon);
       const cx = T.portrait() ? 370 : 490; // 세로 화면은 토끼 쪽으로
@@ -782,6 +870,8 @@
     for (let i = 0; i < 5; i++) setTimeout(() => noteShape(T, aud.owl.x - 60 - i * 30, aud.owl.y - 50, C.indigo), i * 450);
     aud.owl.wiggle(10, 1400);
     rp.sleepy(true);
+    rp.setEyes('drowsy'); // 자장가를 들으면 선 채로 눈이 스르르 감긴다 (그림: 감은 눈꺼풀을 서서히)
+    if (rp.lids && rp.lids()) T.anim(rp.lids(), [{ opacity: 0 }, { opacity: .6, offset: .5 }, { opacity: .35, offset: .65 }, { opacity: 1 }], 1500);
     await say('부엉 부엉~ 토끼 눈이 스르르 감겨요.');
     await say('마지막으로 해님을 톡! 구름이 해를 가려 줘요.');
     await T.tap(sunG, { prompt: '해님을 톡 눌러 봐요!' });
@@ -799,9 +889,10 @@
     await scene('토끼의 꿈', () => {
       bar.show(false);
       const dream = artBG(T, 'bg_dream');
-      if (dream) { // 그림 시상대 가운데 칸에 '3'이 찍혀 나와서 '1' 판을 덧댄다 (임시 도형)
-        paper(T.bg, [['rect', { x: 459, y: 348, width: 78, height: 84, rx: 3, fill: '#F4DDB4' }],
-          ['text', { x: 498, y: 410, 'text-anchor': 'middle', 'font-size': 56, fill: C.gold, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }]]);
+      if (dream) { // 그림 시상대 가운데 칸에 '3'이 찍혀 나와서 '1' 판을 덧대고, 숫자가 없는 왼쪽 초록 칸에 '2'를 찍는다 (임시 도형) → 2·1·3
+        const num = (x, y, t, size) => ['text', { x, y, 'text-anchor': 'middle', 'font-size': size, fill: C.gold, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: t }];
+        paper(T.bg, [['rect', { x: 459, y: 348, width: 78, height: 84, rx: 3, fill: '#F4DDB4' }], num(498, 410, '1', 56)]);
+        paper(T.bg, [num(413, 424, '2', 46)]);
       } else {
       sky(T, '#E6DDF2');
       for (let i = 0; i < 12; i++) el('circle', { cx: 80 + (i * 83) % 860, cy: 90 + (i * 57) % 300, r: 4, fill: C.gold }, T.bg);
@@ -924,21 +1015,27 @@
     });
     let sw = every(160, () => tp.step(Math.random() < .5 ? 1 : 0));
     await say('앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.');
-    await say('옆으로 쓱 밀어서 헤엄쳐요!');
-    await T.swipe(wrap, { dir: 'right', count: 3, prompt: '화면을 옆으로 쓱 밀어 봐요!', onStep: i => {
-      AudioFX.splash(); turtle.move(R10.x0 + i * 185, R10.y - (i % 2) * (brook ? 16 : 30), 900); follow(R10.x0 + i * 185, 900);
-      fish.forEach((f, k) => f.move(f.x + 185, f.y + (k - 1) * 8, 1000));
+    await say('화면을 톡톡 눌러서 헤엄쳐요!');
+    let swimQ = Promise.resolve(); // 빨리 여러 번 눌러도 한 번에 한 칸씩 (움직임이 겹쳐 뒤로 튀지 않게)
+    await T.mash(wrap, { count: 3, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => {
+      AudioFX.splash(); swimQ = swimQ.then(() => Promise.all([turtle.move(R10.x0 + i * 185, R10.y - (i % 2) * (brook ? 16 : 30), 800), follow(R10.x0 + i * 185, 800),
+        ...fish.map((f, k) => f.move(f.x + 185, f.y + (k - 1) * 8, 850))]));
       for (let b = 0; b < 5; b++) { const c = el('circle', { cx: turtle.x + 60, cy: turtle.y - 40, r: 5 + b * 2, fill: 'none', stroke: C.snow, 'stroke-width': 3 }, T.fx); c.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${b * 10}px,-140px)`, opacity: 0 }], { duration: 1200, delay: b * 120, fill: 'both' }).finished.then(() => c.remove()); }
       setRace(null, .2 + i * .06, 800);
-      if (i === 2) { aud.duck.cheer('꽥꽥! 힘내!'); vo('cheer_duck'); }
+      if (i === 2) { aud.duck.cheer('꽥꽥! 힘내!'); setTimeout(() => vo('cheer_duck'), 900); } // 진짜 오리 소리(꽥꽥) 다음에 오리 목소리로 '힘내'
     } });
-    await sleep(1000); clearInterval(sw); tp.step(0);
+    await swimQ; await sleep(600); clearInterval(sw); tp.step(0);
     await say('물고기랑 같이 개울을 건넜어요!');
     tp.swim(false);
 
     /* --- 11. 거북이 시점: 언덕 → 분할 화면 --- */
     const slopeY = x => 540 - .336 * (x + 50);
-    const hill = !!ART.bg_hill; // 그림 언덕: 거북이는 비탈을 비스듬히 가로질러 오른다
+    const hill = !!ART.bg_hill; // 그림 언덕: 거북이는 그림 속 풀밭 길을 따라 언덕 위(먼 곳)로 오른다
+    /* 그림 언덕은 길이 화면 아래 가운데에서 먼 언덕마루로 올라간다 → 길 위에서 출발해 멀어질수록 작아진다.
+       (예전: 옆 비탈 직선을 따라가서 오른쪽 숲속 나무 위로 올라가 버렸다) */
+    const HILL = { a: [300, 528], b: [575, 300], s0: 1.3, s1: .78, tilt: -12 };
+    const hillAt = p => hill ? [HILL.a[0] + (HILL.b[0] - HILL.a[0]) * p, HILL.a[1] + (HILL.b[1] - HILL.a[1]) * p, HILL.s0 + (HILL.s1 - HILL.s0) * p]
+      : [190 + 580 * p, slopeY(190 + 580 * p), 1.3];
     await scene('언덕', () => {
       if (hill) { artBG(T, 'bg_hill'); seat([['sheep', 885, 540, .95]]); } else {
       sky(T, '#F6D9A0');
@@ -947,7 +1044,7 @@
       tree(T, T.bg, 960, 205, .7);
       seat([['sheep', 880, 556, .95]]);
       }
-      turtleReset(); tp.tilt(-18.6); put(turtle, 190, slopeY(190), 1.3);
+      turtleReset(); tp.tilt(hill ? HILL.tilt : -18.6); put(turtle, ...hillAt(0));
       if (T.portrait()) camSnap(290, 280, 1);
       if (!hill) paper(T.fx, [['path', { d: 'M-20 560 Q0 420 30 330 Q40 440 60 560 Z', fill: C.pine }], ['path', { d: 'M40 560 Q70 450 110 400 Q90 480 100 560 Z', fill: C.leaf }]]);
       bar.show(true);
@@ -956,13 +1053,19 @@
     await say('화면을 꾹 누르고 있으면 영차영차 올라가요!');
     let lastStep = -1, cheered = false;
     const yo = new Set();
+    /* 꾹 누르는 동안 0.11초마다 한 칸씩 들어오므로, 칸마다 move()를 새로 걸면 움직임이 겹쳐 뒤로 튄다 →
+       목표 위치만 바꾸고 매 프레임 부드럽게 따라가게 한다 */
+    const climb = { tgt: 0, cur: 0, on: true };
+    const climbLoop = () => { climb.cur += (climb.tgt - climb.cur) * .14; const [x, y, s] = hillAt(climb.cur); turtle.scale = s; turtle.place(x, y); if (climb.on) requestAnimationFrame(climbLoop); };
+    requestAnimationFrame(climbLoop);
     await holdOn(T, wrap, { count: 14, prompt: '화면을 꾹 누르고 있어 봐요!', onProgress: p => {
-      const x = 190 + 580 * p; turtle.move(x, slopeY(x), 180, 'linear'); follow(x + 40, 180);
+      climb.tgt = p; const [x, y] = hillAt(p); follow(x + 40, 300);
       const s = Math.floor(p * 16); if (s !== lastStep) { lastStep = s; tp.step(s % 2); footstep(T); }
-      [.3, .7].forEach(m => { if (p >= m && !yo.has(m)) { yo.add(m); T.pop(x + 60, slopeY(x) - 160, '영차!', C.pine); } });
+      [.3, .7].forEach(m => { if (p >= m && !yo.has(m)) { yo.add(m); T.pop(x + 60, y - 160 * hillAt(p)[2] / 1.3, '영차!', C.pine); } });
       if (p > .5 && !cheered) { cheered = true; aud.sheep.cheer('힘내!'); vo('cheer_sheep'); }
       setRace(null, .38 + .17 * p, 100);
     } });
+    await sleep(500); climb.on = false; climb.cur = 1; turtle.place(...hillAt(1).slice(0, 2));
     tp.step(0);
     await say('영차! 언덕 꼭대기에 올라왔어요.');
 
@@ -971,7 +1074,12 @@
       const cp = (id, y, h) => { const c = el('clipPath', { id }, defs); el('rect', { x: 0, y, width: 1000, height: h }, c); };
       cp('splitTop', 0, 276); cp('splitBot', 284, 276);
       const top = el('g', { 'clip-path': 'url(#splitTop)' }, T.world), bot = el('g', { 'clip-path': 'url(#splitBot)' }, T.world);
-      if (ART.bg_shade) el('image', { href: A(ART.bg_shade), x: 0, y: 0, width: 1000, height: 280, preserveAspectRatio: 'xMidYMid slice' }, top); // 위: 나무 그늘 그림의 가운데 띠
+      /* 위아래가 한 곳으로 보이게: 나무 그늘 그림 한 장을 위아래에 똑같은 자리·크기로 깔고, 가운데를 종이 띠로 나눈다
+         (위 = 언덕 꼭대기 큰 나무 밑 토끼, 아래 = 같은 언덕 비탈을 지나가는 거북이). 나무 밑동(그림 1600×902의 약 765,480)이 y 255에 오게 */
+      const oneBG = ART.bg_shade ? parent => { const k = 1.15 * .675, w = 1600 * k, h = 902 * k;
+        el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: EDGE.bg_shade[1] }, parent);
+        el('image', { href: A(ART.bg_shade), x: (478 - 765 * k).toFixed(1), y: (255 - 480 * k).toFixed(1), width: w.toFixed(1), height: h.toFixed(1) }, parent); } : null;
+      if (oneBG) oneBG(top);
       else {
         el('rect', { x: 0, y: 0, width: 1000, height: 280, fill: '#F6D9A0' }, top);
         paper(top, [['rect', { x: 0, y: 230, width: 1000, height: 60, fill: C.leaf }], ['rect', { x: 600, y: 0, width: 70, height: 240, fill: C.bark }], ['circle', { cx: 630, cy: -10, r: 150, fill: C.pine }], ['circle', { cx: 440, cy: 10, r: 90, fill: C.leaf }]]);
@@ -980,12 +1088,12 @@
       put(rabbit, 520, 262, .78, top);
       paper(top, [['path', { d: 'M-100 0 Q-40 -70 100 -10 Q40 60 -100 0 Z', fill: C.leaf, transform: 'translate(525 236) rotate(-8) scale(.62)' }]]); // 대사의 '나뭇잎 이불' (그림 속 크림색 이불 위에)
       aud.owl.reset(); put(aud.owl, 790, 262, .7, top);
-      if (ART.bg_hill) el('image', { href: A(ART.bg_hill), x: 0, y: 280, width: 1000, height: 280, preserveAspectRatio: 'xMidYMid slice' }, bot); // 아래: 언덕 그림의 가운데 띠
+      if (oneBG) oneBG(bot); // 아래도 같은 그림 (위와 이어진다)
       else {
       el('rect', { x: 0, y: 280, width: 1000, height: 280, fill: C.sky }, bot);
       paper(bot, [['rect', { x: 0, y: 470, width: 1000, height: 100, fill: C.grass }], ['path', { d: 'M0 480 Q250 440 500 470 Q750 500 1000 460 V560 H0 Z', fill: C.leaf }]]);
       }
-      if (!ART.bg_hill) [180, 420, 700].forEach(x => paper(bot, [['path', { d: `M${x} 480 Q${x - 6} 420 ${x} 390`, stroke: C.pine, 'stroke-width': 5, fill: 'none' }], ['circle', { cx: x, cy: 388, r: 12, fill: C.amber }]]));
+      if (!oneBG) [180, 420, 700].forEach(x => paper(bot, [['path', { d: `M${x} 480 Q${x - 6} 420 ${x} 390`, stroke: C.pine, 'stroke-width': 5, fill: 'none' }], ['circle', { cx: x, cy: 388, r: 12, fill: C.amber }]]));
       turtleReset(); put(turtle, 110, 472, 1.05, bot);
       paper(T.world, [['rect', { x: -10, y: 274, width: 1020, height: 12, fill: C.cream, stroke: C.gold, 'stroke-width': 3 }]]);
       bar.show(true);
@@ -1161,13 +1269,29 @@
     });
     await say('밤이 되었어요. 숲속 잔치가 열렸어요!');
     await say('친구들을 톡톡 눌러서 신나게 연주해요!');
+    /* 연주: 연주자마다 음이 하나씩 (도레미솔라 5음계 — 아무렇게나 눌러도 어울린다). 악기 소리도 저마다 다르다.
+       (개구리 동화의 '밤 연못 합창'과 같은 방식) 마지막엔 모두가 한 소절을 함께 연주하고, 자기 음에서 폴짝 */
+    const cast = { ...aud, rabbit, turtle };
+    const colorOf = k => [C.bean, C.gold, C.persimmon, C.lav][(Object.keys(BAND).indexOf(k)) % 4];
+    const playNote = (k, when = 0) => {
+      const [f, ins] = BAND[k];
+      INSTR[ins](T, f, when);
+      setTimeout(() => {
+        const a = cast[k]; if (!a) return;
+        a.hop(k === 'rabbit' ? 36 : 24, 320);
+        if (k === 'turtle') tween(250, t => tp.neck(1 + Math.sin(t * Math.PI) * 1.2));
+        noteShape(T, a.x + 30, a.y - (k === 'turtle' || k === 'rabbit' ? 150 : 120) * a.scale, colorOf(k));
+      }, when * 1000);
+    };
     let beat = 0;
-    every(600, () => { T.tone(beat % 2 ? 196 : 131, .12, { type: 'triangle', vol: .07 }); if (beat++ % 2) turtle.hop(12, 300); else rabbit.hop(18, 300); });
-    await T.free([
-      ...KINDS.map(k => ({ el: aud[k].pos, onTap: () => { const a = aud[k]; PLAY[k](T); a.hop(24, 320); noteShape(T, a.x + 30, a.y - 120 * a.scale, [C.bean, C.gold, C.persimmon, C.lav][KINDS.indexOf(k) % 4]); } })),
-      { el: rabbit.pos, onTap: () => { AudioFX.boing(); rabbit.hop(50, 420); } },
-      { el: turtle.pos, onTap: () => { T.tone([200, 300], .3, { type: 'triangle', vol: .2 }); tween(250, t => tp.neck(1 + Math.sin(t * Math.PI) * 1.2)); } },
-    ], 30000);
+    every(600, () => { T.tone(beat % 2 ? 196 : 131, .12, { type: 'triangle', vol: .06 }); beat++; });
+    await T.free(Object.keys(BAND).map(k => ({ el: cast[k].pos, onTap: () => playNote(k) })), 30000);
+    stopLoops();
+    await sleep(400);
+    SONG.forEach(([k, t]) => playNote(k, t));
+    setTimeout(() => ['pig', 'dog', 'rooster', 'turtle', 'owl', 'cat'].forEach(k => cast[k].hop(30, 380)), 5300);
+    await sleep(SONG[SONG.length - 1][1] * 1000 + 1300);
+    T.confetti();
     stopLoops();
     await say('모두 함께 신나는 잔치를 했답니다.');
     await say('천천히 가도 끝까지 하면 해낼 수 있어요!');
