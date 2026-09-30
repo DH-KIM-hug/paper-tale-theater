@@ -10,7 +10,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `animals/tiger.mp3` | 439280 schots angry-tiger.wav | schots | CC0 | https://commons.wikimedia.org/wiki/File:439280_schots_angry-tiger.wav |
 | `animals/cow.mp3` | Single Cow Moo.ogg | MichaeltheFox8621 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Single_Cow_Moo.ogg |
 | `animals/pig.mp3` | Mudchute pig 1.ogg | Secretlondon | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Mudchute_pig_1.ogg |
-| `animals/duck.mp3` | Duck in Vezo.ogg | Gasybeaugosse2020 | CC0 | https://commons.wikimedia.org/wiki/File:Duck_in_Vezo.ogg |
+| `animals/duck.mp3` | Anas platyrhynchos - Mallard XC62258.mp3 (1.1~2.5초 "꽥, 꽥" 부분만 잘라 씀) | Jonathon Jongsma (xeno-canto) | **CC BY-SA 3.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_-_Mallard_XC62258.mp3 |
 | `animals/rooster.mp3` | Medium rooster crowing.ogg | alys | Public domain | https://commons.wikimedia.org/wiki/File:Medium_rooster_crowing.ogg |
 | `animals/sheep.mp3` | Sheep bleating.ogg | earthcalling | Public domain | https://commons.wikimedia.org/wiki/File:Sheep_bleating.ogg |
 | `animals/dog.mp3` | Barking of a dog.ogg | Amada44 | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Barking_of_a_dog.ogg |
