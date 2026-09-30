@@ -5,7 +5,7 @@ const NARRATION_CLIPS = {
  "자고 있는 아기 개구리를 톡 눌러 봐요!": "audio/tc/frog/nar_8820c4c773.mp3",
  "엄마 개구리가 말했어요. \"얘들아, 멀리 가면 안 된다~\"": [
   "audio/tc/frog/nar_6d18f9a33b.mp3",
-  "audio/tc/frog/mom_5d539bba79.mp3"
+  "audio/tc/frog/mom_aa42030c67.mp3"
  ],
  "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡톡 눌러서 폴짝폴짝 가 볼까요?": "audio/tc/frog/nar_50d45bc403.mp3",
  "화면을 톡톡 눌러서 폴짝폴짝!": "audio/tc/frog/nar_cf80345dbc.mp3",
@@ -27,7 +27,7 @@ const NARRATION_CLIPS = {
  "\"엄마! 산처럼 커다란 괴물을 봤어요!\"": "audio/tc/frog/baby_9a3c689640.mp3",
  "엄마 개구리가 말했어요. \"흥, 얼마나 컸는데?\"": [
   "audio/tc/frog/nar_6d18f9a33b.mp3",
-  "audio/tc/frog/mom_386a73eb0d.mp3"
+  "audio/tc/frog/mom_21fff4533c.mp3"
  ],
  "누가 더 큰지 키를 재 볼까요?": "audio/tc/frog/nar_7409c73a99.mp3",
  "개구리랑 올챙이, 누가 더 커요?": "audio/tc/frog/nar_555eba8d7a.mp3",
@@ -49,7 +49,7 @@ const NARRATION_CLIPS = {
  "황소가 더 커요! 반짝이는 친구를 눌러 봐요!": "audio/tc/frog/nar_f60384070a.mp3",
  "맞아요! 황소가 더 커요!": "audio/tc/frog/nar_7967b16a36.mp3",
  "\"흥, 나도 황소만큼 클 수 있어!\" 엄마 개구리가 숨을 크게 들이마셨어요.": [
-  "audio/tc/frog/mom_b00b7d1f4b.mp3",
+  "audio/tc/frog/mom_c0c8eea3c9.mp3",
   "audio/tc/frog/nar_304d64521f.mp3"
  ],
  "엄마 개구리를 톡톡 눌러서 부풀려 볼까요?": "audio/tc/frog/nar_db0de010f8.mp3",
@@ -74,6 +74,6 @@ const VOICE_LINES = {
  "wake_0": "audio/tc/frog/baby_7038ff6b81.mp3",
  "wake_1": "audio/tc/frog/babyb_77e24c9116.mp3",
  "wake_2": "audio/tc/frog/babyc_1e4f6111a8.mp3",
- "cut_pop": "audio/tc/frog/mom_7296f3b682.mp3",
+ "cut_pop": "audio/tc/frog/mom_fd9144dbba.mp3",
  "ox_thud": "audio/tc/frog/ox_716ec5c680.mp3"
 };

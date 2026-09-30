@@ -27,7 +27,7 @@
   };
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
-  const EDGE = { bg_pond: ['#fdf201', '#78708f'], bg_meadow: ['#a6fb33', '#002000'], bg_chart: ['#fcecaf', '#637055'], bg_night: ['#000111', '#000b23'],
+  const EDGE = { bg_pond: ['#9acbe3', '#414e3f'], bg_meadow: ['#9fcbd9', '#18270e'], bg_chart: ['#fcecaf', '#637055'], bg_night: ['#000111', '#000b23'],
     q_tail: ['#205a00', '#0e4700'], q_hoof: ['#325a04', '#076600'], q_horn: ['#1e6c00', '#352202'] };
   /* 장면 그림 한 장을 무대 전체에 (없으면 false → 임시 도형 배경) */
   function artBG(T, key, parent = T.bg) {
@@ -147,9 +147,13 @@
   /* ================= 배경 ================= */
   /* 세로 화면은 무대 양옆이 잘린다(보이는 폭 = T.viewWidth()) → 연잎을 가운데로 모아 준다. 가로는 k = 1 */
   const squeeze = T => Math.min(1, (T.viewWidth() / 2 - 60) / 250);
-  /* 그림 속 연잎 자리 (발끝). 낮: 뒷줄 다섯 장, 밤: 다섯 장. 앞줄 연잎(낮) = FRONT */
-  const PADS = { day: [[155, 372], [323, 372], [487, 376], [643, 373], [795, 372]], night: [[160, 398], [343, 406], [513, 408], [673, 416], [833, 421]] };
-  const FRONT = [[163, 432], [862, 438]];
+  /* 그림 속 연잎 자리 (발끝). 낮·밤 모두 한 줄에 다섯 장.
+     START: 폴짝 대회 출발 자리 — 그림에 앞줄 연잎이 없어 임시 도형 연잎을 깐다 */
+  const PADS = { day: [[218, 336], [362, 336], [508, 336], [655, 334], [790, 337]], night: [[160, 398], [343, 406], [513, 408], [673, 416], [833, 421]] };
+  const START = [150, 452];
+  /* 임시 도형 연잎 (연잎 그림이 없을 때 — 지금은 얼굴이 붙어 나와 null) */
+  const padAt = (T, x, y, rx = 96) => sprite(T, T.el('g', { transform: `translate(${x} ${y + 12})` }, T.world), 'lilypad', rx * 2, rx * .6)
+    || T.paper(T.world, [['ellipse', { cx: x, cy: y + 4, rx, ry: rx * .23, fill: C.lily }], ['path', { d: `M${x} ${y + 4} L${x + rx * .69} ${y - 8} L${x + rx * .76} ${y + 7} Z`, fill: '#6f9a9c' }]]);
   function pondBG(T, night = false, k = squeeze(T)) {
     if (artBG(T, night ? 'bg_night' : 'bg_pond')) return PADS[night ? 'night' : 'day'].map(p => [...p]); // 그림 속 연잎은 움직일 수 없다 — 세로 화면은 도우미가 카메라로 맞춘다
     const { el, paper } = T, b = T.bg;
@@ -331,7 +335,8 @@
         } },
       ], { prompt: '누가 더 커요? 큰 친구를 눌러 봐요!',
         where: '둘이 나란히 섰어요. 머리가 더 높은 친구는 누구지?', who: `${T.josa(ANIMALS[big].name, '이/가')} 더 커요! 반짝이는 친구를 눌러 봐요!` });
-      big === 'ox' ? moo(T) : croak(T, 500);
+      // 이긴 친구의 소리 (오리는 꽥, 양은 매애 — 개구리 울음이 아니라)
+      ({ ox: () => moo(T), frog: () => croak(T, 500), duck: () => AudioFX.animal('duck', .7), sheep: () => AudioFX.animal('sheep', .7) }[big] || (() => {}))();
       await bigA.hop(24);
       await say(`맞아요! ${T.josa(ANIMALS[big].name, '이/가')} 더 커요!`);
       A.pos.remove(); B.pos.remove();
@@ -342,13 +347,10 @@
     await T.sceneCard('연못가', () => {
       T.clear(); pondBG(T);
       actor(T.world, 520, 500, g => drawOx(T, g, { dotted: true }), { scale: 1.15 });
-      if (ART.bg_pond) { // 그림 연못: 엄마는 물 위 연잎에 (연잎 그림이 없으면 임시 도형 연잎)
-        const pad = sprite(T, T.el('g', { transform: 'translate(520 512)' }, T.world), 'lilypad', 200, 60);
-        if (!pad) T.paper(T.world, [['ellipse', { cx: 520, cy: 504, rx: 96, ry: 22, fill: C.lily }], ['path', { d: 'M520 504 L586 492 L593 507 Z', fill: C.lav }]]);
-      }
+      if (ART.bg_pond) padAt(T, 520, 500); // 그림 연못: 엄마는 물 위 연잎에 (연잎 그림이 없으면 임시 도형 연잎)
       T.world.appendChild(mom.pos); mom.place(520, 500);
       const k = squeeze(T);
-      const spots = ART.bg_pond ? [FRONT[0], PADS.day[1], FRONT[1]] : [150, 230, 860].map(x => [Math.round(500 + (x - 500) * k), 500]);
+      const spots = ART.bg_pond ? [PADS.day[0], PADS.day[1], PADS.day[4]] : [150, 230, 860].map(x => [Math.round(500 + (x - 500) * k), 500]);
       babies.forEach((b, i) => { T.world.appendChild(b.pos); b.place(...spots[i]); });
     });
     await say('"흥, 나도 황소만큼 클 수 있어!" 엄마 개구리가 숨을 크게 들이마셨어요.');
@@ -410,7 +412,8 @@
     await T.sceneCard('폴짝 대회', () => {
       T.clear(); pads = pondBG(T, false, 1); // 경주는 넓게 — 세로 화면은 카메라가 따라간다
       momArt.set('base');
-      T.world.appendChild(mom.pos); mom.place(...(ART.bg_pond ? FRONT[0] : [120, 480]));
+      if (ART.bg_pond) padAt(T, ...START, 70);
+      T.world.appendChild(mom.pos); mom.place(...(ART.bg_pond ? START : [120, 480]));
       if (T.portrait()) camSnap(mom.x, 280, 1);
       // 그림 연못: 황소는 오른쪽 앞 얕은 물에 서 있다 (몸을 낮추고 말한다)
       oxActor = actor(T.world, ART.bg_pond ? 850 : 900, ART.bg_pond ? 546 : 520, g => { oxArt = drawOx(T, g, { pose: 'kneel' }); }, { scale: .55 });
@@ -445,12 +448,18 @@
       T.world.__uncle = x;
     }, mom.pos);
     const choir = [babies[0], babies[1], mom, babies[2], T.world.__uncle];
-    const NOTES = [262, 294, 330, 392, 440]; // 도레미솔라 — 어떻게 눌러도 어울린다
+    /* 개구리 울음을 음 높이만 바꿔 부른다: 도레미솔라 (어떻게 눌러도 어울리는 5음). 아기는 높게, 삼촌은 낮게 */
+    const RATE = [1.19, 1.33, 1.0, 1.5, 0.89]; // 개굴 녹음 한 번 = '미' 로 두고 도·레·미·솔·라에 맞춘 배율
+    const sing = (i, when = 0, dur = .34) => AudioFX.animalNote('frog', RATE[i], .75, when, dur) || T.tone(330 * RATE[i], dur, { type: 'triangle', vol: .22, when });
     await say('밤이 되었어요. 개구리 가족이 노래를 불러요. 개구리를 톡톡 눌러서 합창해 봐요!');
-    AudioFX.animal('frogs', .35); // 밤 연못 개구리 합창 (실제 녹음)
-    const metro = setInterval(() => T.tone([140, 110], .5, { type: 'triangle', vol: .08 }), 1600);
-    await T.free(choir.map((f, i) => ({ el: f.pos, onTap: () => { T.tone(NOTES[i], .35, { type: 'triangle', vol: .22 }); f.hop(22, 300); } })), 20000);
+    const metro = setInterval(() => T.tone([140, 110], .5, { type: 'triangle', vol: .06 }), 1600);
+    await T.free(choir.map((f, i) => ({ el: f.pos, onTap: () => { sing(i); f.hop(22, 300); } })), 20000);
     clearInterval(metro);
+    /* 마지막에 온 가족이 한 소절 합창: 누가 어느 음을 부르는지 보이게 그 개구리가 폴짝 */
+    const SONG = [[2, .0], [2, .4], [3, .8], [4, 1.2], [3, 1.6], [2, 2.2], [1, 2.6], [0, 3.0], [1, 3.4], [2, 3.8], [0, 4.4]]; // [가수(=음), 시각(초)]
+    SONG.forEach(([i, t]) => { sing(i, t, i === 0 && t > 4 ? .6 : .34); setTimeout(() => choir[i] && choir[i].hop(26, 300), t * 1000); });
+    [0, 1.6, 3.0, 4.4].forEach(t => sing(4, t, .5)); // 삼촌 개구리의 낮은 받침음
+    await sleep(5400);
     await say('개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.');
     return '개구리는 개구리대로 멋져요!';
   }

@@ -174,6 +174,8 @@ const Tale = (() => {
         const ours = () => alive && camEpoch === epoch && $('#cutPanel').hidden && $('#iris').hidden;
         const go = (x, y, z) => {
           if (!ours() || taleMoving) return; // 동화가 카메라를 옮기는 중이면 끼어들지 않는다
+          // 가로 화면은 무대 전체가 다 보이므로 말할 때마다 카메라가 움직이면 정신없다 → 세로 화면에서만 (cfg.landscapeCam 로 켤 수 있음)
+          if (viewWidth() >= 990 && !cfg.landscapeCam) return;
           const cur = dirAnim ? dirDest : camState; // 돌아가는 중이면 가는 곳과 비교
           if (Math.abs(x - cur.x) * z < 30 && Math.abs(y - cur.y) * z < 30 && Math.abs(z - cur.z) < .1) return;
           moved = true; directing = true;

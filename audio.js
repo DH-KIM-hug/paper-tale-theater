@@ -123,13 +123,13 @@ const AudioFX = (() => {
       .catch(() => { samples[path] = false; });
   }
   /* when: 몇 초 뒤, dur: 앞부분만 (초) — 스팅에서 겹쳐 쌓을 때 쓴다 */
-  function playSample(path, vol = 0.9, when = 0, dur) {
+  function playSample(path, vol = 0.9, when = 0, dur, rate = 1) {
     const buf = samples[path];
     if (!buf) { loadSample(path); return false; }
     const c = ensure();
     const s = c.createBufferSource(), g = c.createGain();
     const t0 = c.currentTime + when;
-    s.buffer = buf; g.gain.value = vol;
+    s.buffer = buf; g.gain.value = vol; s.playbackRate.value = rate;
     s.connect(g).connect(c.destination);
     if (dur) { // 잘라 쓸 때 끝을 살짝 줄여 딸깍 소리를 막는다
       g.gain.setValueAtTime(vol, t0 + Math.max(0, dur - 0.06));
@@ -176,6 +176,8 @@ const AudioFX = (() => {
     },
     /* 동물 소리: AudioFX.animal('pig') — 실제 녹음, 없으면 false */
     animal(name, vol) { return playSample('animals/' + name + '.mp3', vol); },
+    /* 동물 소리로 음 하나 부르기: 녹음을 rate배 빠르게(=높게) 재생. 합창·멜로디용 */
+    animalNote(name, rate, vol = .7, when = 0, dur) { return playSample('animals/' + name + '.mp3', vol, when, dur, rate); },
     /* 기타 효과음: AudioFX.sfx('chop') */
     sfx(name, vol) { return playSample('sfx/' + name + '.mp3', vol); },
     /* 첫 소리가 합성음으로 새지 않게 미리 불러 둔다: AudioFX.preloadSfx(['paper_up', …]) */
