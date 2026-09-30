@@ -123,9 +123,9 @@ rabbit = [
 # ================= 해와 달이 된 오누이 =================
 P_VILLAGE = "Palette: straw gold #D9A94E, cream #F6ECD8, bark brown #6B4A32, pine green #3F6B4F, persimmon #E8703A, bean red #A93B32, lavender #8B7BB8. Old Korean mountain village. "
 P_NIGHT = "Palette: deep indigo #1F2A56, midnight navy, cream moon #F6ECD8, amber lamp light #F2B366, bark brown, straw gold. Quiet Korean night. "
-MOM = "The mother: a gentle Korean mother in a cream jeogori and lavender chima, hair in a low bun, a white headscarf. "
-BOY = "The older brother: a small Korean boy in a straw-gold jeogori and cream pants, round face, short hair tied in a small topknot. "
-GIRL = "The little sister: a small Korean girl in a pink jeogori and lavender skirt, two short braids. "
+MOM = ("The mother: a warm, kind young Korean mother with a soft oval face, gentle smiling eyes that crinkle when she smiles, a warm open smile, shoulder-length straight dark-brown hair loose (no bun, no headscarf), wearing a soft pastel-pink jeogori and a charcoal-grey chima. ")
+BOY = ("The older brother: a small Korean boy about 4 years old with a round face, soft full cheeks, straight shiny black hair cut in a neat bowl cut with blunt straight bangs across the forehead, small almond eyes, a big cheerful toothy grin, wearing a denim-blue jeogori with a tiny red heart patch and cream pants. ")
+GIRL = ("The little sister: a small Korean girl about 3 years old with a round face, chubby pink cheeks, dark-brown hair in two short high pigtails with soft wispy bangs, bright curious almond eyes, a sweet shy smile, wearing a soft pink jeogori and a fluffy pale-pink tulle-like chima skirt. ")
 TIGER = ("The tiger: a chubby persimmon-orange tiger made of flat paper pieces with dark-brown stripe pieces, cream muzzle and belly, "
          "big round eyes, pink cheeks, round ears — funny and clumsy, never scary, no fangs. ")
 sunmoon = [
