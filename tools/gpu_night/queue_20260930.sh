@@ -2,7 +2,7 @@
 # 2026-09-30 사용자가 정한 순서: 라이트 모드 썸네일 → 동화 그림 → 다크 모드 썸네일
 # 썸네일이 끝날 때마다 홈용으로 다듬어(make_thumbs.py) 바로 올린다.
 G=/Users/house_of_4k2b/projects/2026/patjuk-game
-PY=/private/tmp/claude-501/-Users-house-of-4k2b-projects-2026-wave-buysell/978ec87f-3026-4327-921b-bbc75c59d182/scratchpad/venv/bin/python
+PY=/Users/house_of_4k2b/.venvs/paper-tale/bin/python
 cd $G/tools/gpu_night
 publish() {
   cd $G && $PY tools/gpu_night/make_thumbs.py && git add assets/thumbs && \

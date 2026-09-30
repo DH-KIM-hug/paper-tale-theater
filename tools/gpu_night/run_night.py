@@ -17,7 +17,7 @@ GAME = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 RAW = os.path.join(GAME, 'assets', 'raw', 'v3')
 OUT = os.path.join(GAME, 'assets', 'v3')
 HERE = os.path.dirname(os.path.abspath(__file__))
-PY_PIL = '/private/tmp/claude-501/-Users-house-of-4k2b-projects-2026-wave-buysell/978ec87f-3026-4327-921b-bbc75c59d182/scratchpad/venv/bin/python'
+PY_PIL = '/Users/house_of_4k2b/.venvs/paper-tale/bin/python'
 
 
 def post(path, data):

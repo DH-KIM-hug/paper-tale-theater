@@ -1,7 +1,7 @@
 #!/bin/zsh
 # 순서(사용자): 라이트 썸네일(v4, 동화 컨셉 모양) → 동화 그림(초록 캐릭터 → 색 거슬린 배경 → 해님달님) → 다크 썸네일(v4)
 G=/Users/house_of_4k2b/projects/2026/patjuk-game
-PY=/private/tmp/claude-501/-Users-house-of-4k2b-projects-2026-wave-buysell/978ec87f-3026-4327-921b-bbc75c59d182/scratchpad/venv/bin/python
+PY=/Users/house_of_4k2b/.venvs/paper-tale/bin/python
 cd $G/tools/gpu_night
 publish() {
   cd $G && $PY tools/gpu_night/make_thumbs.py >/dev/null && git add assets/thumbs && \
