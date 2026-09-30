@@ -29,6 +29,17 @@ def get(path):
     return json.load(urllib.request.urlopen(API + path))
 
 
+def upload_image(path):
+    """ComfyUI input 폴더로 이미지 올리기 (multipart). 올린 이름을 돌려준다"""
+    import uuid
+    bnd = uuid.uuid4().hex
+    fn = os.path.basename(path)
+    body = (f'--{bnd}\r\nContent-Disposition: form-data; name="image"; filename="{fn}"\r\nContent-Type: image/jpeg\r\n\r\n').encode() + open(path, 'rb').read() + \
+           (f'\r\n--{bnd}\r\nContent-Disposition: form-data; name="overwrite"\r\n\r\ntrue\r\n--{bnd}--\r\n').encode()
+    req = urllib.request.Request(API + '/upload/image', body, {'Content-Type': f'multipart/form-data; boundary={bnd}'})
+    return json.load(urllib.request.urlopen(req))['name']
+
+
 def generate(base, j):
     wf = json.loads(json.dumps(base))
     wf['4']['inputs']['prompt'] = j['prompt']
@@ -39,6 +50,13 @@ def generate(base, j):
     wf['5']['inputs']['height'] = j['h']
     wf['6']['inputs']['seed'] = j.get('seed') or random.randint(1, 2**48)
     wf['8']['inputs']['filename_prefix'] = f"patjuk_v3_{j['name']}"
+    # 참고 이미지(j['refs'] = 로컬 파일 경로 목록): ComfyUI에 올리고 인코더의 images 입력에 잇는다 (Qwen-Image 2.1 참고 이미지)
+    for i, ref in enumerate(j.get('refs') or [], 1):
+        name = upload_image(ref)
+        nid = str(20 + i)
+        wf[nid] = {'class_type': 'LoadImage', 'inputs': {'image': name}}
+        wf['4']['inputs'][f'images.image_{i}'] = [nid, 0]
+        wf['4']['inputs']['vae'] = ['3', 0]
     pid = post('/prompt', {'prompt': wf})['prompt_id']
     t0 = time.time()
     print(f"[{time.strftime('%H:%M:%S')}] [{j['name']}] 시작 {j['w']}x{j['h']}", flush=True)
