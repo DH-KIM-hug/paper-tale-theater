@@ -1,4 +1,4 @@
-/* 해와 달이 된 오누이 (햇님 달님) — 임시 도형(그레이박스) 버전. 기획: TALES_PLAN.md §1 (3막 15장면)
+/* 해와 달이 된 오누이 (햇님 달님) — 배경은 페이퍼아트 그림(아래 BG 표), 배우·소품은 아직 임시 도형(그레이박스). 기획: TALES_PLAN.md §1 (3막 15장면)
    원작대로 엄마는 호랑이에게 잡아먹힌다(사용자 결정, 2026-09-29). 단, 먹는 장면은 보여주지 않고
    어둠 속 "어흥!" → 까만 화면 "꿀꺽…" 컷과 내레이션으로만 처리한다.
    호랑이는 헌 줄이 끊어져 수수밭에 엉덩방아 → 혹 달고 산으로 도망. 눈은 늘 동그랗고 순하다. */
@@ -6,6 +6,53 @@
   const C = { cream: '#F6ECD8', gold: '#D9A94E', persimmon: '#E8703A', bean: '#A93B32', bark: '#6B4A32', pine: '#3F6B4F',
     indigo: '#1F2A56', lav: '#8B7BB8', snow: '#F4F6FA', amber: '#F2B366', ink: '#2E241C', pink: '#E8A0A0', skin: '#F3D2B0',
     stripe: '#4A2F1E', hair: '#3D2B1F', leaf: '#6E9A5B', stone: '#9A9186', night: '#16204a' };
+
+  /* ================= 배경 그림 (페이퍼아트 한 장) =================
+     장면마다 한 장(assets/v3w/sm_bg_*.webp)을 무대에 꽉 채워 깐다. 깊이는 그림 속 종이 층이 맡고 무대는 2D.
+     값이 null이거나 파일을 못 불러오면 그 장면은 아래 그레이박스 도형으로 그린다.
+     - 생성 중 (나오면 여기 한 줄만 채우면 된다): sky(하늘 동아줄) · sorghum(수수밭) · heaven(해와 달)
+     - 생성됐지만 거의 까매서 못 씀 → 재생성 필요, 그레이박스 유지:
+       sm_bg_hill_night(바위·길이 없음) · sm_bg_window(문·창호지) · sm_bg_well_tree(우물가 나무) · sm_bg_well_top(우물 속)
+     - hill0 / hill2는 sm_bg_hill_dusk를 색 보정해 구운 것(금빛 / 밤). 세 고개 모두 그 그림 속 바위를 호랑이 가림막으로 쓴다(HILL_ROCK).
+     - room · backyard는 원본이 너무 어두워 밝기를 끌어올려 구웠다 (원본: assets/raw/v3). */
+  const ART = '../../assets/';
+  const BG = {
+    cottage: 'v3w/sm_bg_cottage.webp',
+    kitchen: 'v3w/sm_bg_kitchen.webp',
+    hill0: 'v3w/sm_bg_hill_dusk_gold.webp',
+    hill1: 'v3w/sm_bg_hill_dusk.webp',
+    hill2: 'v3w/sm_bg_hill_dusk_night.webp',
+    room: 'v3w/sm_bg_room.webp',
+    backyard: 'v3w/sm_bg_backyard.webp',
+    sky: null,     // 생성 중: v3w/sm_bg_sky.webp
+    sorghum: null, // 생성 중: v3w/sm_bg_sorghum.webp
+    heaven: null,  // 생성 중: v3w/sm_bg_heaven.webp
+  };
+  const bgOK = {};
+  const bgUrl = k => (BG[k] && bgOK[k] !== false ? ART + BG[k] : null);
+  /* 무대 꽉 채우기: 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992 그대로) */
+  const FULL = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
+  const place = (T, p, u, box, attrs = {}) =>
+    T.el('image', { href: u, x: box.x, y: box.y, width: box.w, height: box.h, preserveAspectRatio: 'none', ...attrs }, p);
+  function bgImage(T, p, k, { flip = false, back = '#1a120c' } = {}) {
+    const u = bgUrl(k); if (!u) return null;
+    T.el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: back }, p);
+    const g = T.el('g', flip ? { transform: 'matrix(-1,0,0,1,1000,0)' } : {}, p);
+    place(T, g, u, FULL);
+    return g;
+  }
+  /* 같은 그림을 한 번 더, 모양(poly: 원본 1760×992 픽셀 좌표)대로 오려서 배우 앞에 둔다 = 그림 속 바위·장독 뒤에 숨기 */
+  let clipN = 0;
+  function bgCutout(T, p, u, box, poly, attrs = {}) {
+    const id = 'smCut' + (++clipN), k = box.w / 1760;
+    const cp = T.el('clipPath', { id }, p);
+    T.el('polygon', { points: poly.map(([x, y]) => `${(box.x + x * k).toFixed(1)},${(box.y + y * k).toFixed(1)}`).join(' ') }, cp);
+    const g = T.el('g', attrs, p);
+    place(T, g, u, box, { 'clip-path': `url(#${id})` });
+    return g;
+  }
+  /* 고개 그림(sm_bg_hill_dusk, 좌우 뒤집어 쓴다) 속 큰 바위 + 그 아래 땅 (원본 픽셀) */
+  const HILL_ROCK = [[332, 918], [393, 846], [465, 739], [543, 696], [734, 711], [806, 786], [825, 840], [798, 905], [798, 1060], [332, 1060]];
 
   /* ================= 작은 도우미 ================= */
   const origin = (n, x, y) => { n.style.transformBox = 'view-box'; n.style.transformOrigin = `${x}px ${y}px`; return n; };
@@ -178,6 +225,7 @@
   function stars(T, p, list, r = 4) { list.forEach(([x, y]) => T.el('circle', { cx: x, cy: y, r, fill: C.cream, opacity: .9 }, p)); }
   function houseBG(T) {
     const { paper } = T, b = T.bg;
+    if (bgImage(T, b, 'cottage', { back: '#5a3a14' })) return; // 초가집·울타리·감나무가 다 그림에 있다
     sky(T, b, '#F2E3B8');
     T.el('circle', { cx: 140, cy: 110, r: 50, fill: '#F6D98A' }, b);
     paper(b, [['path', { d: 'M-300 330 Q60 170 330 290 Q620 150 1300 300 V700 H-300 Z', fill: '#8FAE82' }]]);
@@ -189,6 +237,7 @@
   }
   function kitchenBG(T) {
     const { paper, el } = T, b = T.bg;
+    if (bgImage(T, b, 'kitchen', { back: '#1e1700' })) return true; // 가마솥·부뚜막·상이 그림에 있다
     sky(T, b, '#E9D3A8');
     for (let i = 0; i < 6; i++) paper(b, [['rect', { x: -40 + i * 200, y: -20, width: 26, height: 420, fill: C.bark }]]);
     paper(b, [['rect', { x: -300, y: 60, width: 1600, height: 22, fill: C.bark }]]);
@@ -201,6 +250,14 @@
   }
   const HILL = [{ sky: '#F2C98A', far: '#C9A36A', near: '#A88A52', road: '#E6CFA0' }, { sky: '#E8906A', far: '#B06A5A', near: '#8C6048', road: '#D9B48A' },
     { sky: '#4A4A80', far: '#34386A', near: '#3E4466', road: '#8C88A8' }];
+  /* 고개 그림: 좌우를 뒤집어 바위를 오른쪽(호랑이 자리)에 둔다. 길·팻말·바위가 다 그림에 있다.
+     돌려주는 rock은 그림 속 바위를 오려 배우 앞에 둔 가림막 (호랑이가 그 뒤에서 불쑥) */
+  function hillArt(T, n) {
+    const b = T.bg, k = 'hill' + n;
+    if (!bgImage(T, b, k, { flip: true, back: n === 2 ? '#0b0d1c' : '#1a0f06' })) return null;
+    if (n === 2) { T.el('circle', { cx: 150, cy: 70, r: 34, fill: C.cream, opacity: .92 }, b); stars(T, b, [[300, 40], [460, 90], [600, 30], [840, 60], [960, 110], [60, 140]], 3.5); }
+    return bgCutout(T, T.world, bgUrl(k), FULL, HILL_ROCK, { transform: 'matrix(-1,0,0,1,1000,0)' });
+  }
   function hillBG(T, n) {
     const { paper, el } = T, b = T.bg, h = HILL[n];
     sky(T, b, h.sky);
@@ -216,6 +273,7 @@
   function drawRock(T, p) { return T.paper(p, [['path', { d: 'M700 760 L702 470 Q695 368 800 352 Q920 344 936 440 L938 760 Z', fill: '#8A8278' }], ['path', { d: 'M740 400 Q800 380 860 392', stroke: '#A8A094', 'stroke-width': 8, fill: 'none', 'stroke-linecap': 'round' }]]); }
   function roomBG(T) {
     const { paper } = T, b = T.bg;
+    if (bgImage(T, b, 'room', { back: '#191417' })) return; // 불 켜진 방·창호지 문이 그림에 있다
     sky(T, b, '#C9A77A');
     paper(b, [['rect', { x: -300, y: 430, width: 1600, height: 500, fill: '#D9A060' }], ['rect', { x: -300, y: 424, width: 1600, height: 12, fill: C.bark }]]);
     paper(b, [['rect', { x: 250, y: 90, width: 250, height: 190, fill: C.night, stroke: C.bark, 'stroke-width': 10 }],
@@ -235,6 +293,11 @@
   async function run(T) {
     const { el, sleep, say, camTo, camWide, camSnap } = T;
     const stageWrap = T.root.querySelector('#stageWrap');
+
+    /* 배경 그림 미리 불러오기: 첫 장면 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 없는 파일은 그레이박스로 */
+    const loads = {};
+    Object.keys(BG).filter(k => BG[k]).forEach(k => { loads[k] = T.preload(ART + BG[k]).then(ok => { bgOK[k] = ok; }); });
+    await Promise.race([loads.cottage || Promise.resolve(), sleep(2500)]);
 
     /* ====== 1막 — 떡 고개 ====== */
     /* --- 1. 오막살이 아침 --- */
@@ -272,12 +335,14 @@
     const TOTAL = ASKS[0] + ASKS[1] + ASKS[2];
     let plateCakes = [];
     await T.sceneCard('부잣집 부엌', () => {
-      T.clear(); kitchenBG(T);
+      T.clear();
+      // 그림 부엌: 상 위의 그림 떡 접시를 이 접시가 덮는다 (떡이 줄면 그림 떡도 안 보이게)
+      const [dx, dy, ry] = kitchenBG(T) ? [-45, -148, 34] : [0, 0, 26];
       T.world.appendChild(mom.pos); mom.setScale(1.4); mom.place(290, 545); mom.P.basket.setAttribute('opacity', 1); mom.P.setCakes(0);
       const plate = el('g', { id: 'plate' }, T.world);
-      el('rect', { x: 560, y: 300, width: 260, height: 140, fill: 'transparent' }, plate);
-      T.paper(plate, [['ellipse', { cx: 690, cy: 400, rx: 110, ry: 26, fill: C.snow, stroke: C.gold, 'stroke-width': 5 }]]);
-      plateCakes = [[630, 394], [690, 396], [750, 394], [660, 370], [720, 370]].map(([x, y]) => ({ x, y, g: drawCake(T, plate, x, y, 1.8) }));
+      el('rect', { x: 560 + dx, y: 300 + dy, width: 260, height: 140, fill: 'transparent' }, plate);
+      T.paper(plate, [['ellipse', { cx: 690 + dx, cy: 400 + dy, rx: 110, ry, fill: C.snow, stroke: C.gold, 'stroke-width': 5 }]]);
+      plateCakes = [[630, 394], [690, 396], [750, 394], [660, 370], [720, 370]].map(([x, y]) => ({ x: x + dx, y: y + dy, g: drawCake(T, plate, x + dx, y + dy, 1.8) }));
     });
     await say('엄마는 부잣집에서 하루 종일 부지런히 일했어요.');
     await say('"수고했어요. 떡 가져가요!" 떡을 톡톡 눌러서 바구니에 담아요!');
@@ -337,14 +402,24 @@
 
     /* --- 3·4. 첫째·둘째·셋째 고개: 호랑이가 달라는 만큼 떡 접시 고르기 --- */
     const tiger = mkTiger(T, T.world, 700, 610);
-    let rock, given = 0;
-    const TX = T.portrait() ? 690 : 820; // 세로 화면: 호랑이가 보이는 폭 안에서 불쑥
+    let rock, given = 0, TX = 820, hideY = 610;
     for (let n = 0; n < 3; n++) {
       await T.sceneCard(['첫째 고개', '둘째 고개', '셋째 고개'][n], () => {
-        T.clear(); hillBG(T, n); camSnap(500, 280, 1);
-        T.world.appendChild(tiger.pos); tiger.place(TX, 610);
-        rock = drawRock(T, T.world);
-        if (TX !== 820) rock.setAttribute('transform', `translate(${TX - 820} 0)`);
+        T.clear(); camSnap(500, 280, 1);
+        rock = null;
+        if (bgUrl('hill' + n)) {
+          // 그림 속 바위(무대 x 540~830, 꼭대기 y≈405) 뒤: 귀 끝까지 숨도록 조금 더 아래에서 기다린다
+          TX = 664; hideY = 662;
+          T.world.appendChild(tiger.pos); tiger.place(TX, hideY);
+          rock = hillArt(T, n);
+        }
+        if (!rock) {
+          hillBG(T, n);
+          TX = T.portrait() ? 690 : 820; hideY = 610; // 세로 화면: 호랑이가 보이는 폭 안에서 불쑥
+          T.world.appendChild(tiger.pos); tiger.place(TX, hideY);
+          rock = drawRock(T, T.world);
+          if (TX !== 820) rock.setAttribute('transform', `translate(${TX - 820} 0)`);
+        }
         T.world.appendChild(mom.pos); mom.setScale(1); mom.place(-120, 500);
       });
       if (n === 0) await say('해가 뉘엿뉘엿 지고 있어요. 엄마가 첫째 고개를 넘어요.');
@@ -566,9 +641,41 @@
 
     /* --- 10. 뒷마당 도망 --- */
     let yard, hideJar, bigJar, prowl;
+    /* 뒷마당 그림(장독대 → 빨랫줄 → 우물 → 큰 나무)을 뒷마당 긴 세트 안에 1.75배로 깐다.
+       그림 왼쪽 바깥(x<520)은 그레이박스 집 뒷문 자리. 좌표: 장독(숨는 곳) x≈575~795, 그림 끝 x=2270 */
+    const YARD = bgUrl('backyard') ? { x: 520, y: -186, w: 1750, h: 1750 * 992 / 1760 } : null;
+    const YJ = YARD ? { run1: 150, hide: [720, 660], out: [930, 850], run2: 250, prowl: [100, T.portrait() ? 760 : 840] }
+      : { run1: 320, hide: [1110, 1050], out: [1330, 1250], run2: 330, prowl: [520, 900] };
+    /* 맨 앞 큰 장독 (원본 픽셀): 뚜껑 → 어깨 → 몸통 → 밑동. 가림막은 밑동 아래 땅까지 */
+    const JAR = [[97, 452], [228, 452], [240, 488], [272, 508], [274, 530], [262, 540], [276, 595], [268, 650], [240, 705]];
+    const JAR_L = [[102, 705], [70, 650], [52, 595], [66, 540], [68, 530], [70, 508], [86, 488]];
+    const yardCam = nb => {
+      const x = T.portrait() ? nb + 40 : Math.max(500, nb + 180);
+      return YARD ? Math.min(x, YARD.x + YARD.w - T.viewWidth() / 2) : x;
+    };
     await T.sceneCard('뒷마당', () => {
       T.clear(); camSnap(500, 280, 1);
       yard = mkView(T, T.world);
+      if (YARD) {
+        // 그림 바깥 (왼쪽: 집 뒷문 자리, 오른쪽: 넓은 화면 여유) — 그림 가장자리 색에 맞춘 단색 띠
+        sky(T, yard, '#03237a');
+        T.el('path', { d: 'M-800 200 Q-420 120 -60 170 Q260 110 640 185 V700 H-800 Z', fill: '#1b2f78' }, yard);
+        T.el('path', { d: 'M-800 280 Q-300 240 200 270 Q450 250 640 280 V700 H-800 Z', fill: '#0f1c4e' }, yard);
+        T.el('rect', { x: -800, y: 360, width: 1400, height: 600, fill: '#3a1c06' }, yard);
+        T.el('rect', { x: -800, y: 468, width: 1400, height: 500, fill: '#b36a06' }, yard);
+        T.el('rect', { x: 2200, y: 150, width: 1400, height: 800, fill: '#1c0f06' }, yard);
+        T.el('rect', { x: 2200, y: 420, width: 1400, height: 520, fill: '#d98601' }, yard);
+        place(T, yard, bgUrl('backyard'), YARD);
+        drawHouse(T, yard, 0, 470, 1);
+        boy = mkBoy(T, yard, 230, 520, 1); girl = mkGirl(T, yard, 140, 520, .92);
+        // 그림 속 장독을 오려 배우 앞에: 가림막(밑동 아래 땅까지) + 누르는 장독(장독 모양만, 반짝임 테두리용)
+        const jars = el('g', {}, yard);
+        bigJar = bgCutout(T, jars, bgUrl('backyard'), YARD, [...JAR, [240, 1040], [102, 1040], ...JAR_L]);
+        hideJar = el('g', {}, jars);
+        bgCutout(T, hideJar, bgUrl('backyard'), YARD, [...JAR, ...JAR_L]);
+        if (T.portrait()) yard.to(330, 280, 1, 0); // 세로 화면: 오누이가 보이게 마당 왼쪽부터
+        return;
+      }
       sky(T, yard, C.indigo);
       el('circle', { cx: 900, cy: 90, r: 40, fill: C.cream }, yard);
       stars(T, yard, [[200, 60], [600, 120], [1300, 70], [1700, 140], [2100, 50], [2600, 110], [3000, 80]]);
@@ -595,27 +702,27 @@
     const run2 = async (dx, dur = 560) => {
       const nb = boy.x + dx, ng = girl.x + dx;
       AudioFX.whoosh();
-      await Promise.all([boy.move(nb, 520, dur), girl.move(ng, 520, dur), boy.hop(24, dur), girl.hop(24, dur), yard.to(T.portrait() ? nb + 40 : Math.max(500, nb + 180), 280, 1, dur)]);
+      await Promise.all([boy.move(nb, 520, dur), girl.move(ng, 520, dur), boy.hop(24, dur), girl.hop(24, dur), yard.to(yardCam(nb), 280, 1, dur)]);
     };
-    await T.swipe(stageWrap, { dir: 'right', count: 2, prompt: '화면을 옆으로 쓱 밀어서 달려요!', onStep: () => run2(320) });
+    await T.swipe(stageWrap, { dir: 'right', count: 2, prompt: '화면을 옆으로 쓱 밀어서 달려요!', onStep: () => run2(YJ.run1) });
     await sleep(700);
     await say('앗, 호랑이가 오는 소리! 커다란 장독을 톡 눌러서 숨어요!');
     await T.tap(hideJar, { prompt: '커다란 장독을 톡 눌러서 숨어요!' });
     AudioFX.slide();
     const jarsG = hideJar.parentNode;
     yard.insertBefore(boy.pos, jarsG); yard.insertBefore(girl.pos, jarsG);
-    await Promise.all([boy.move(1110, 510, 500), girl.move(1050, 510, 500)]);
-    prowl = mkTiger(T, yard, 520, 530, 1);
+    await Promise.all([boy.move(YJ.hide[0], 510, 500), girl.move(YJ.hide[1], 510, 500)]);
+    prowl = mkTiger(T, yard, YJ.prowl[0], 530, 1);
     prowl.P.scarf.setAttribute('opacity', 1); prowl.P.setBelly(2.4); prowl.face('right');
-    await prowl.move(900, 530, 1400);
+    await prowl.move(YJ.prowl[1], 530, 1400);
     prowl.face('left'); await sleep(350); prowl.face('right'); await sleep(350); prowl.face('left');
     T.pop(500, 170, '두리번두리번', C.bean);
     await say('"얘들아~ 어디 갔니?" 호랑이는 두리번두리번하다가 집 쪽으로 돌아갔어요.');
-    await prowl.move(400, 530, 1300);
+    await prowl.move(YJ.prowl[0] - 120, 530, 1300);
     prowl.pos.remove();
-    await Promise.all([boy.move(1330, 520, 500), girl.move(1250, 520, 500)]);
+    await Promise.all([boy.move(YJ.out[0], 520, 500), girl.move(YJ.out[1], 520, 500)]);
     await say('휴~ 이제 우물가 큰 나무로 달려가요! 쓱쓱!');
-    await T.swipe(stageWrap, { dir: 'right', count: 3, prompt: '화면을 옆으로 쓱 밀어서 달려요!', onStep: () => run2(330) });
+    await T.swipe(stageWrap, { dir: 'right', count: 3, prompt: '화면을 옆으로 쓱 밀어서 달려요!', onStep: () => run2(YJ.run2) });
     await sleep(700);
 
     /* ====== 3막 — 하늘 동아줄 ====== */
@@ -773,8 +880,11 @@
     await T.sceneCard('하늘 동아줄', () => {
       T.clear(); camSnap(500, 280, 1);
       skyV = mkView(T, T.world);
-      BANDS.forEach((c, i) => el('rect', { x: -1400, y: 700 - i * 450 - (i === BANDS.length - 1 ? 2000 : 0), width: 3800, height: i === 0 ? 1400 : 450 + (i === BANDS.length - 1 ? 2000 : 0), fill: c }, skyV));
-      stars(T, skyV, [[80, 60], [900, 120], [200, -300], [760, -500], [60, -800], [940, -900], [400, -1100], [700, 250]]);
+      // 하늘 그림이 있으면 무대 뒤(bg)에 고정해 깔고, 줄·구름·오누이만 위로 흘러간다 (색 띠·별 대신)
+      if (!bgImage(T, T.bg, 'sky', { back: C.indigo })) {
+        BANDS.forEach((c, i) => el('rect', { x: -1400, y: 700 - i * 450 - (i === BANDS.length - 1 ? 2000 : 0), width: 3800, height: i === 0 ? 1400 : 450 + (i === BANDS.length - 1 ? 2000 : 0), fill: c }, skyV));
+        stars(T, skyV, [[80, 60], [900, 120], [200, -300], [760, -500], [60, -800], [940, -900], [400, -1100], [700, 250]]);
+      }
       [[-60, -2640, 260], [1060, -2640, 260]].forEach(([x, y, r]) => el('circle', { cx: x, cy: y, r, fill: C.amber, opacity: .5 }, skyV));
       el('circle', { cx: 500, cy: -2720, r: 300, fill: '#FBE7B0', opacity: .8 }, skyV);
       T.paper(skyV, [['circle', { cx: 500, cy: 720, r: 300, fill: '#35604A' }], ['circle', { cx: 200, cy: 640, r: 160, fill: C.pine }], ['circle', { cx: 820, cy: 650, r: 170, fill: C.pine }],
@@ -853,9 +963,11 @@
     let sorg;
     await T.sceneCard('수수밭', () => {
       T.clear(); camSnap(500, 280, 1);
-      sky(T, T.bg, '#8B7BB8');
-      T.paper(T.bg, [['path', { d: 'M-300 360 Q200 200 600 300 Q850 180 1300 280 V700 H-300 Z', fill: '#4E5A70' }]]);
-      T.paper(T.bg, [['rect', { x: -300, y: 470, width: 1600, height: 500, fill: '#7A6A48' }]]);
+      if (!bgImage(T, T.bg, 'sorghum', { back: '#4E5A70' })) {
+        sky(T, T.bg, '#8B7BB8');
+        T.paper(T.bg, [['path', { d: 'M-300 360 Q200 200 600 300 Q850 180 1300 280 V700 H-300 Z', fill: '#4E5A70' }]]);
+        T.paper(T.bg, [['rect', { x: -300, y: 470, width: 1600, height: 500, fill: '#7A6A48' }]]);
+      }
       sorg = mkTiger(T, T.world, 500, 540, 1.2);
       sorg.P.bump.setAttribute('opacity', 1); sorg.P.setBelly(1.5); sorg.P.oMouth();
       const front = el('g', {}, T.world);
@@ -877,7 +989,7 @@
     await say('호랑이는 혹을 달고 산속으로 줄행랑! 다시는 오지 않았대요.');
 
     /* --- 15. 해와 달 (자유 놀이) --- */
-    let skyRect, starG, sunKid, moonKid, beam, isDay = false;
+    let skyRect, nightVeil = null, starG, sunKid, moonKid, beam, isDay = false;
     const OX = T.portrait() ? [345, 655] : [260, 740]; // 세로 화면: 해님·달님을 보이는 폭 안으로
     const drawOrb = (girlFace) => (T2, g) => {
       const P = {};
@@ -893,12 +1005,20 @@
     };
     await T.sceneCard('해와 달', () => {
       T.clear(); camSnap(500, 280, 1);
-      skyRect = sky(T, T.bg, C.indigo); skyRect.style.transition = 'fill 1s';
+      if (bgImage(T, T.bg, 'heaven', { back: C.indigo })) {
+        // 하늘 그림(낮) 위에 밤 장막: 밤이면 남색으로 덮고 별을 띄운다
+        nightVeil = el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.night, opacity: .62 }, T.bg);
+        nightVeil.style.transition = 'opacity 1s';
+      } else {
+        skyRect = sky(T, T.bg, C.indigo); skyRect.style.transition = 'fill 1s';
+      }
       starG = el('g', {}, T.bg); stars(T, starG, [[80, 60], [420, 90], [560, 40], [640, 250], [930, 300], [60, 300], [360, 260]]);
       starG.style.transition = 'opacity 1s';
-      T.paper(T.bg, [['path', { d: 'M-300 400 Q200 320 600 380 Q850 320 1300 380 V900 H-300 Z', fill: C.pine }]]);
-      T.paper(T.bg, [['rect', { x: -300, y: 480, width: 1600, height: 500, fill: C.leaf }]]);
-      drawHouse(T, T.bg, 800, 500, .6);
+      if (!nightVeil) {
+        T.paper(T.bg, [['path', { d: 'M-300 400 Q200 320 600 380 Q850 320 1300 380 V900 H-300 Z', fill: C.pine }]]);
+        T.paper(T.bg, [['rect', { x: -300, y: 480, width: 1600, height: 500, fill: C.leaf }]]);
+        drawHouse(T, T.bg, 800, 500, .6);
+      }
       sunKid = mk(T, T.world, OX[0], 170, drawOrb(false), .9);   // 오빠 (처음엔 해)
       moonKid = mk(T, T.world, OX[1], 170, drawOrb(true), .9);   // 동생 (처음엔 달)
       sunKid.P.set(true); moonKid.P.set(false);
@@ -915,7 +1035,8 @@
     const girlSun = moonKid, boyMoon = sunKid;
     const setSky = day => {
       isDay = day;
-      skyRect.style.fill = day ? '#F2DFA8' : C.indigo; starG.style.opacity = day ? 0 : 1;
+      if (nightVeil) nightVeil.style.opacity = day ? 0 : .62; else skyRect.style.fill = day ? '#F2DFA8' : C.indigo;
+      starG.style.opacity = day ? 0 : 1;
       girlSun.body.style.opacity = day ? 1 : .7; boyMoon.body.style.opacity = day ? .7 : 1;
     };
     setSky(true);

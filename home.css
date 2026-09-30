@@ -10,9 +10,9 @@
 /* ═════════ 밝은 종이 (기본) ═════════ */
 :root {
   color-scheme: light dark;
-  --sheet: #ECEFF4;        /* 종이 한 장 */
-  --sheet-up: #F9FAFC;     /* 솟은 종이(양각) */
-  --sheet-dn: #E3E7EE;     /* 눌린 자리(음각) */
+  --sheet: #F4F6F9;        /* 종이 한 장 (썸네일 종이와 같은 색: make_thumbs.py SHEET['light']) */
+  --sheet-up: #FFFFFF;     /* 솟은 종이(양각) */
+  --sheet-dn: #E8ECF2;     /* 눌린 자리(음각) */
   --deep: #D3D9E3;         /* 구멍 속 깊은 곳 */
   --text: #222B45;         /* 글자 (종이 위 13:1) */
   --text-2: #5C6784;       /* 보조 글자 (5.1:1) */
@@ -29,8 +29,9 @@
   --edge-dn: rgba(34, 43, 69, .10);
   --line-soft: rgba(92, 103, 132, .25);
   --veil: rgba(236, 239, 244, .72);
-  --vignette: rgba(120, 135, 165, .16);
-  --glow: rgba(255, 255, 255, .5);
+  --vignette: transparent; /* 밝은 모드는 종이를 평평하게: 썸네일 종이와 경계가 안 보이게 */
+  --glow: transparent;
+  --page-grain: linear-gradient(transparent, transparent); /* 밝은 모드 바탕은 매끈한 흰 종이 (썸네일 종이와 같게) */
   --grain-op: .55;
 
   /* SVG 필터(아이콘·옛 그림·물결 그늘)도 종이 색을 따른다 */
@@ -86,6 +87,7 @@
     --veil: rgba(8, 10, 22, .62);
     --vignette: rgba(6, 8, 20, .38);
     --glow: rgba(255, 255, 255, .035);
+    --page-grain: var(--grain);
 
     --f-ic: url(#duoL);
     --f-ic-on: url(#duoOn);
@@ -115,7 +117,7 @@ body {
   background:
     radial-gradient(120% 90% at 30% 20%, var(--glow), transparent 60%),
     radial-gradient(140% 120% at 50% 50%, transparent 55%, var(--vignette)),
-    var(--grain),
+    var(--page-grain),
     var(--sheet);
   font-family: var(--font);
   font-weight: 500;

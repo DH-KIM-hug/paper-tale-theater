@@ -10,7 +10,7 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RAW = os.path.join(ROOT, 'assets', 'raw', 'v3')
 OUT = os.path.join(ROOT, 'assets', 'thumbs'); os.makedirs(OUT, exist_ok=True)
-SHEET = {'dark': np.array([0x22, 0x2B, 0x45]), 'light': np.array([0xEC, 0xEF, 0xF4])}
+SHEET = {'dark': np.array([0x22, 0x2B, 0x45]), 'light': np.array([0xF4, 0xF6, 0xF9])}  # home.css --sheet 과 같아야 한다
 
 def edge_color(a):
     return np.median(np.concatenate([a[:10].reshape(-1, 3), a[-10:].reshape(-1, 3), a[:, :10].reshape(-1, 3), a[:, -10:].reshape(-1, 3)]), axis=0)
@@ -30,7 +30,14 @@ def new_style(src, dst, target):
     box = square_around(a, dist > 45, 1.18)
     # 종이 부분만 목표 색으로: 종이색에 가까울수록 많이 옮긴다 (그림자 명암은 유지)
     wgt = np.clip(1 - (dist - 25) / 35, 0, 1)[..., None]
-    a = a + wgt * (target - bg)
+    # 종이에 깔린 은은한 그라데이션(가운데 밝고 가장자리 어두움)까지 평평하게: 종이 부분만 크게 흐린 밝기 지도를 빼고 목표 색을 더한다
+    from PIL import ImageFilter
+    sheet = (dist < 30).astype(float)
+    def blur(x):
+        im = Image.fromarray(np.clip(x, 0, 255).astype('uint8')); return np.asarray(im.filter(ImageFilter.GaussianBlur(40))).astype(float)
+    num = np.stack([blur(a[..., c] * sheet) for c in range(3)], -1); den = blur(sheet * 255)[..., None] / 255
+    low = np.where(den > .05, num / np.maximum(den, 1e-3), bg)
+    a = a + wgt * (target - low)
     im = Image.fromarray(np.clip(a, 0, 255).astype('uint8')).crop(box)
     im.resize((520, 520), Image.LANCZOS).save(dst, quality=85, method=6)
 
