@@ -13,6 +13,7 @@
   --sheet: #F4F6F9;        /* 종이 한 장 (썸네일 종이와 같은 색: make_thumbs.py SHEET['light']) */
   --sheet-up: #FFFFFF;     /* 솟은 종이(양각) */
   --sheet-dn: #E8ECF2;     /* 눌린 자리(음각) */
+  --card-lift: 0 1px 0 rgba(255, 255, 255, .9) inset, 0 1px 2px rgba(34, 43, 69, .08), 0 8px 22px -6px rgba(34, 43, 69, .16);
   --deep: #D3D9E3;         /* 구멍 속 깊은 곳 */
   --text: #222B45;         /* 글자 (종이 위 13:1) */
   --text-2: #5C6784;       /* 보조 글자 (5.1:1) */
@@ -71,6 +72,7 @@
     --sheet: #222B45;
     --sheet-up: #36416A;
     --sheet-dn: #1C233A;
+    --card-lift: 0 1px 0 rgba(255, 255, 255, .05) inset, 0 1px 2px rgba(0, 0, 0, .35), 0 10px 24px -6px rgba(0, 0, 0, .45);
     --deep: #121729;
     --text: #EDE6D6;       /* 크림 (종이 위 11:1) */
     --text-2: #9098B3;     /* 5.3:1 */
@@ -329,6 +331,11 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   flex-direction: column;
   align-items: stretch;
   height: 100%;
+  /* 썸네일·제목·설명을 한 장의 카드로: 썸네일 종이와 같은 색 종이가 바탕 위로 살짝 떠 있다 (색이 같아서 구멍이 카드에 뚫린 것처럼 보인다) */
+  padding: 12px 12px 16px;
+  border-radius: 16px;
+  background: var(--sheet);
+  box-shadow: var(--card-lift);
   color: inherit;
   text-decoration: none;
   outline: none;
@@ -387,6 +394,7 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
 }
 /* 누르는 동안: 구멍 속 그림이 살짝 깊어진다 (hover 에 기대지 않는다) */
 a.card:active .art { transform: scale(.95); }
+a.card:active { box-shadow: 0 1px 2px rgba(34, 43, 69, .12); translate: 0 2px; }
 a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 5px; }
 .card.closed:focus-visible .plug { box-shadow: 0 0 0 2px var(--copper); }
 
