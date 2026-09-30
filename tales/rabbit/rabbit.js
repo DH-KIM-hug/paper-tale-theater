@@ -22,14 +22,13 @@
      null = 쓸 그림이 없어 임시 도형으로 그린다. 새 파일이 나오면 여기 한 줄만 바꾸면 된다.
      거북이·잠자는 토끼는 마젠타 배경으로 다시 뽑은 파일 (tools/gpu_night/jobs_green_redo.json).
      rabbit_sleep: 그림 속 이불은 크림색 천이지만 대사가 '나뭇잎 이불'이라 임시 도형 나뭇잎 이불을 그 위에 그대로 덮는다
-     bg_party: 지금 그림은 거의 새까맣고 사람 그림자가 들어가 있어 쓰지 않는다 (다시 뽑을 것) → 임시 도형 배경
      부엉이: aud_owl 그림에 다른 동물 둘이 같이 그려져 있어 owl_post(가방 멘 부엉이)를 관객석에도 쓴다
      메달: rab_medal 위쪽의 엉뚱한 노란 덩어리는 잘라내고 리본+메달만 webp로 만들었다 */
   const ART = {
     bg_village: 'v3w/rab_bg_village.webp', bg_alley: 'v3w/rab_bg_alley.webp', bg_stands: 'v3w/rab_bg_stands.webp', bg_start: 'v3w/rab_bg_start.webp',
     bg_map: 'v3w/rab_bg_map.webp', bg_dash: 'v3w/rab_bg_dash.webp', bg_shade: 'v3w/rab_bg_shade.webp', bg_dream: 'v3w/rab_bg_dream.webp',
     bg_grass_low: 'v3w/rab_bg_grass_low.webp', bg_stream: 'v3w/rab_bg_stream.webp', bg_hill: 'v3w/rab_bg_hill.webp', bg_finish: 'v3w/rab_bg_finish.webp',
-    bg_party: null, // 'v3w/rab_bg_party.webp' — 다시 뽑을 것
+    bg_party: 'v3w/rab_bg_party.webp',
     rabbit_stand: 'v3w/rab_rabbit_tease.webp', rabbit_run: 'v3w/rab_rabbit_run.webp', rabbit_wake: 'v3w/rab_rabbit_wake.webp', rabbit_congrats: 'v3w/rab_rabbit_congrats.webp',
     rabbit_sleep: 'v3w/rab_rabbit_sleep.webp',
     turtle_walk: 'v3w/rab_turtle_walk.webp', turtle_swim: 'v3w/rab_turtle_swim.webp', turtle_medal: 'v3w/rab_turtle_medal.webp',
@@ -43,7 +42,7 @@
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
   const EDGE = { bg_village: ['#009acb', '#3a5c0f'], bg_alley: ['#5cd5fd', '#657f1a'], bg_stands: ['#448775', '#69750d'], bg_start: ['#00aaee', '#795b25'],
     bg_map: ['#66d3fd', '#acc41c'], bg_dash: ['#67dcf5', '#855420'], bg_shade: ['#06c1f9', '#333201'], bg_dream: ['#dfd0b8', '#7d6a30'],
-    bg_grass_low: ['#1192aa', '#232101'], bg_stream: ['#71ae23', '#482b0d'], bg_hill: ['#00befd', '#346000'], bg_finish: ['#259ca5', '#635916'] };
+    bg_grass_low: ['#1192aa', '#232101'], bg_stream: ['#71ae23', '#482b0d'], bg_hill: ['#00befd', '#346000'], bg_finish: ['#259ca5', '#635916'], bg_party: ['#8ca9a9', '#343510'] };
   const BGX = { x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }; // 장면 그림 자리 (무대 1000×560 전체)
   /* 장면 그림 한 장을 무대 전체에 (없으면 false → 임시 도형 배경) */
   function artBG(T, key, parent = T.bg) {
@@ -1139,6 +1138,10 @@
 
     /* --- 15. 숲속 잔치 --- */
     await scene('숲속 잔치', () => {
+      if (artBG(T, 'bg_party')) { // 그림: 초롱·깃발·작은 무대가 있는 저녁 숲 잔치 — 모두 모래빛 마당(y 380~500) 위에
+        seat([['rooster', 190, 388, .75], ['sheep', 320, 388, .75], ['cat', 680, 388, .75], ['owl', 810, 388, .75],
+          ['duck', 140, 488, .95], ['cow', 270, 488, .95], ['pig', 730, 488, .95], ['dog', 860, 488, .95]].map(([k, x, y, s]) => [k, PX(x, .72), y, s]));
+      } else {
       sky(T, '#1c2550');
       el('circle', { cx: 880, cy: 90, r: 40, fill: C.cream }, T.bg);
       [[90, 60], [230, 120], [420, 70], [600, 130], [760, 50], [960, 170], [40, 200]].forEach(([x, y]) => el('circle', { cx: x, cy: y, r: 3.5, fill: C.cream }, T.bg));
@@ -1150,6 +1153,7 @@
       });
       seat([['rooster', 150, 340, .75], ['sheep', 320, 340, .75], ['cat', 680, 340, .75], ['owl', 850, 340, .75],
         ['duck', 100, 520, .95], ['cow', 260, 520, .95], ['pig', 740, 520, .95], ['dog', 900, 520, .95]].map(([k, x, y, s]) => [k, PX(x, .72), y, s]));
+      }
       camSnap(500, 280, fitZ(400 * .72 + 70)); // 세로 화면: 모두 보이게
       KINDS.forEach(k => show(aud[k].parts.instr, 1));
       rabbitReset(); put(rabbit, 420, 480, .95);
