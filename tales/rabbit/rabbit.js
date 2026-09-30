@@ -20,8 +20,8 @@
 
   /* ================= 완성 그림 목록 =================
      null = 쓸 그림이 없어 임시 도형으로 그린다. 새 파일이 나오면 여기 한 줄만 바꾸면 된다.
-     ⏳ 초록 캐릭터 마젠타 배경 재생성 중 (라임 키잉이 초록 몸을 먹었음, tools/gpu_night/jobs_green_redo.json):
-        turtle_walk · turtle_swim · turtle_medal · rabbit_sleep → 지금 파일은 몸이 뚫렸거나 라임 테두리가 있어 null (임시 도형)
+     거북이·잠자는 토끼는 마젠타 배경으로 다시 뽑은 파일 (tools/gpu_night/jobs_green_redo.json).
+     rabbit_sleep: 그림 속 이불은 크림색 천이지만 대사가 '나뭇잎 이불'이라 임시 도형 나뭇잎 이불을 그 위에 그대로 덮는다
      bg_party: 지금 그림은 거의 새까맣고 사람 그림자가 들어가 있어 쓰지 않는다 (다시 뽑을 것) → 임시 도형 배경
      부엉이: aud_owl 그림에 다른 동물 둘이 같이 그려져 있어 owl_post(가방 멘 부엉이)를 관객석에도 쓴다
      메달: rab_medal 위쪽의 엉뚱한 노란 덩어리는 잘라내고 리본+메달만 webp로 만들었다 */
@@ -31,8 +31,8 @@
     bg_grass_low: 'v3w/rab_bg_grass_low.webp', bg_stream: 'v3w/rab_bg_stream.webp', bg_hill: 'v3w/rab_bg_hill.webp', bg_finish: 'v3w/rab_bg_finish.webp',
     bg_party: null, // 'v3w/rab_bg_party.webp' — 다시 뽑을 것
     rabbit_stand: 'v3w/rab_rabbit_tease.webp', rabbit_run: 'v3w/rab_rabbit_run.webp', rabbit_wake: 'v3w/rab_rabbit_wake.webp', rabbit_congrats: 'v3w/rab_rabbit_congrats.webp',
-    rabbit_sleep: null, // ⏳ 'v3w/rab_rabbit_sleep.webp'
-    turtle_walk: null, turtle_swim: null, turtle_medal: null, // ⏳ 'v3w/rab_turtle_walk.webp' …
+    rabbit_sleep: 'v3w/rab_rabbit_sleep.webp',
+    turtle_walk: 'v3w/rab_turtle_walk.webp', turtle_swim: 'v3w/rab_turtle_swim.webp', turtle_medal: 'v3w/rab_turtle_medal.webp',
     raccoon: 'v3w/rab_raccoon.webp', owl_post: 'v3w/rab_owl_post.webp',
     aud_duck: 'v3w/rab_aud_duck.webp', aud_cow: 'v3w/rab_aud_cow.webp', aud_pig: 'v3w/rab_aud_pig.webp', aud_rooster: 'v3w/rab_aud_rooster.webp',
     aud_sheep: 'v3w/rab_aud_sheep.webp', aud_dog: 'v3w/rab_aud_dog.webp', aud_cat: 'v3w/rab_aud_cat.webp', aud_owl: 'v3w/rab_owl_post.webp',
@@ -140,7 +140,7 @@
   /* 토끼 그림 자세: [그림, 상자 폭, 상자 높이, 옵션] — 임시 도형 토끼(키 약 208)에 맞춘 크기 */
   const RABBIT_ART = {
     stand: ['rabbit_stand', 104, 208, { flip: true }], run: ['rabbit_run', 150, 166, { dy: -6 }], wake: ['rabbit_wake', 104, 198],
-    congrats: ['rabbit_congrats', 128, 202, { flip: true }], sleep: ['rabbit_sleep', 236, 112],
+    congrats: ['rabbit_congrats', 128, 202, { flip: true }], sleep: ['rabbit_sleep', 216, 123],
   };
 
   function drawTurtle(T, g) {
@@ -169,7 +169,7 @@
       ['text', { x: 56, y: -16, 'text-anchor': 'middle', 'font-size': 16, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }],
     ]);
     show(medal, 0);
-    /* 그림(걷기·헤엄·메달) — 오른쪽을 본다. 없으면 위 임시 도형 (⏳ 지금은 셋 다 재생성 중) */
+    /* 그림(걷기·헤엄·메달) — 걷기·헤엄은 오른쪽을 보고, 메달은 정면. 없으면 위 임시 도형 */
     const artG = el('g', {}, g), imgs = {};
     for (const [k, [key, w, h, o]] of Object.entries(TURTLE_ART)) { const s = sprite(T, artG, key, w, h, o); if (s) imgs[k] = s; }
     const st = { swim: false, medal: false, tilt: 0, step: 0, neck: 1 };
@@ -195,7 +195,7 @@
       wearMedal(on) { st.medal = on; upd(); },
     };
   }
-  const TURTLE_ART = { walk: ['turtle_walk', 196, 112], swim: ['turtle_swim', 204, 116], medal: ['turtle_medal', 124, 148] };
+  const TURTLE_ART = { walk: ['turtle_walk', 180, 123, { dx: 12 }], swim: ['turtle_swim', 190, 112, { dx: 12 }], medal: ['turtle_medal', 126, 147] }; // 임시 도형 거북이(폭 약 190)에 맞춘 크기
 
   /* 너구리 심판 — 그림에는 커다란 북이 함께 있다. 돌려주는 값: 그림 속 북 자리 [cx, cy, r] (발끝 기준) */
   function drawRaccoon(T, g) {
@@ -789,7 +789,6 @@
     AudioFX.swish();
     await tween(1200, t => { cloud.setAttribute('transform', `translate(${-420 + 420 * t} 0)`); dim.setAttribute('opacity', .22 * t); }, easeInOut);
     rp.setEyes('closed');
-    if (ART.rabbit_sleep) blanket.style.display = 'none'; // 잠자는 그림에는 나뭇잎 이불이 함께 있다
     const zzz = () => every(1000, () => floatText(T, rabbit.x - 60, rabbit.y - 230, 'Z', C.indigo, 34 + Math.random() * 14));
     zzz(); let sk = 0; every(1800, () => snore(T, sk++ % 2));
     await say('토끼가 쿨쿨 잠이 들었어요.');
@@ -980,7 +979,7 @@
       }
       rabbitReset(); rp.setEyes('closed'); rp.sleepy(true); faceL(rabbit);
       put(rabbit, 520, 262, .78, top);
-      if (!ART.rabbit_sleep) paper(top, [['path', { d: 'M-100 0 Q-40 -70 100 -10 Q40 60 -100 0 Z', fill: C.leaf, transform: 'translate(525 236) rotate(-8) scale(.62)' }]]); // 잠 그림에는 이불이 있다
+      paper(top, [['path', { d: 'M-100 0 Q-40 -70 100 -10 Q40 60 -100 0 Z', fill: C.leaf, transform: 'translate(525 236) rotate(-8) scale(.62)' }]]); // 대사의 '나뭇잎 이불' (그림 속 크림색 이불 위에)
       aud.owl.reset(); put(aud.owl, 790, 262, .7, top);
       if (ART.bg_hill) el('image', { href: A(ART.bg_hill), x: 0, y: 280, width: 1000, height: 280, preserveAspectRatio: 'xMidYMid slice' }, bot); // 아래: 언덕 그림의 가운데 띠
       else {

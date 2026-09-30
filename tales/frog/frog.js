@@ -8,21 +8,18 @@
     indigo: '#1F2A56', lav: '#8B7BB8', persimmon: '#E8703A', pink: '#E8A0A0', ink: '#2E241C', sky: '#F2DFA8', snow: '#F4F6FA' };
 
   /* ================= 완성 그림 목록 =================
-     null = 아직 쓸 그림이 없어 임시 도형으로 그린다. 새 파일이 나오면 여기 한 줄만 바꾸면 된다.
-     ⏳ 초록 캐릭터 마젠타 배경 재생성 중 (라임 키잉이 초록 몸을 먹었음, tools/gpu_night/jobs_green_redo.json):
-        mom_puffed · mom_dizzy · baby_* · tadpole · lilypad → 지금 파일은 구멍·라임 테두리가 있어 null (임시 도형)
-        mom_flying · bg_chart → 지금 파일도 멀쩡해 쓰는 중. 새 파일이 나오면 webp만 다시 만들면 된다. */
+     null = 쓸 그림이 없어 임시 도형으로 그린다. 새 파일이 나오면 여기 한 줄만 바꾸면 된다.
+     초록 캐릭터는 마젠타 배경으로 다시 뽑은 파일 (tools/gpu_night/jobs_green_redo.json).
+     lilypad: 다시 뽑은 연잎에 눈(얼굴)과 꽃이 붙어 나와 캐릭터처럼 보인다 → 임시 도형 연잎 (다시 뽑을 것)
+     baby_sleep: 그림은 눈을 뜨고 있어서, 그 위에 감은 눈꺼풀(임시 도형)을 덧댄다 (BABY_LIDS) */
   const ART = {
-    bg_pond: 'v3w/frog_bg_pond.webp', bg_meadow: 'v3w/frog_bg_meadow.webp', bg_chart: 'v3w/frog_bg_chart.webp', // ⏳ bg_chart 재생성 중
+    bg_pond: 'v3w/frog_bg_pond.webp', bg_meadow: 'v3w/frog_bg_meadow.webp', bg_chart: 'v3w/frog_bg_chart.webp',
     bg_night: 'v3w/frog_bg_pond_night.webp',
     q_tail: 'v3w/frog_q_tail.webp', q_hoof: 'v3w/frog_q_hoof.webp', q_horn: 'v3w/frog_q_horn.webp',
-    mom: 'v3w/frog_mom.webp',
-    mom_flying: 'v3w/frog_mom_flying.webp', // ⏳ 재생성 중
-    mom_puffed: null, // ⏳ 'v3w/frog_mom_puffed.webp'
-    mom_dizzy: null, // ⏳ 'v3w/frog_mom_dizzy.webp'
-    baby_sleep: null, baby_awake: null, baby_cover: null, // ⏳ 'v3w/frog_baby_sleep.webp' …
-    tadpole: null, // ⏳ 'v3w/frog_tadpole.webp'
-    lilypad: null, // ⏳ 'v3w/frog_lilypad.webp'
+    mom: 'v3w/frog_mom.webp', mom_flying: 'v3w/frog_mom_flying.webp', mom_puffed: 'v3w/frog_mom_puffed.webp', mom_dizzy: 'v3w/frog_mom_dizzy.webp',
+    baby_sleep: 'v3w/frog_baby_sleep.webp', baby_awake: 'v3w/frog_baby_awake.webp', baby_cover: 'v3w/frog_baby_cover.webp',
+    tadpole: 'v3w/frog_tadpole.webp',
+    lilypad: null, // 'v3w/frog_lilypad.webp' — 얼굴이 붙어 나와 쓰지 않음
     ox_stand: 'v3w/frog_ox_stand.webp', ox_kneel: 'v3w/frog_ox_kneel.webp', ox_jumpfail: 'v3w/frog_ox_jumpfail.webp',
     duck: 'v3w/frog_duck.webp', sheep: 'v3w/frog_sheep.webp',
     cut_monster: 'v3w/frog_cut_monster.webp', cut_pop: 'v3w/frog_cut_pop.webp', cut_fly: 'v3w/frog_cut_fly.webp',
@@ -30,7 +27,7 @@
   };
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
-  const EDGE = { bg_pond: ['#fdf201', '#78708f'], bg_meadow: ['#a6fb33', '#002000'], bg_chart: ['#fefacd', '#8e521d'], bg_night: ['#000111', '#000b23'],
+  const EDGE = { bg_pond: ['#fdf201', '#78708f'], bg_meadow: ['#a6fb33', '#002000'], bg_chart: ['#fcecaf', '#637055'], bg_night: ['#000111', '#000b23'],
     q_tail: ['#205a00', '#0e4700'], q_hoof: ['#325a04', '#076600'], q_horn: ['#1e6c00', '#352202'] };
   /* 장면 그림 한 장을 무대 전체에 (없으면 false → 임시 도형 배경) */
   function artBG(T, key, parent = T.bg) {
@@ -85,9 +82,28 @@
     [-17, 17].forEach(x => el('ellipse', { cx: x, cy: -60, rx: 13, ry: 9, fill: color, stroke: '#2f5a3f', 'stroke-width': 2 }, hands));
     return { inner, lids, mouth, hands, pupils };
   }
+  /* 아기 개구리: 자는·깬·눈 가린 그림. 코드가 쓰는 parts(lids·hands)의 opacity를 자세 바꾸기로 이어 준다.
+     자는 그림은 눈을 뜨고 있어 감은 눈꺼풀을 덧댄다 */
+  const BABY_LIDS = [[-18.4, -57], [13.4, -57]]; // frog_baby_sleep 상자(78×67) 안 눈 자리
+  function drawBaby(T, g) {
+    const p = poseArt(T, g, { awake: ['baby_awake', 73, 76], sleep: ['baby_sleep', 78, 67], cover: ['baby_cover', 71, 73] });
+    if (!p) return drawFrog(T, g, { color: C.leaf, sleepy: true });
+    const st = { lids: 1, hands: 0 };
+    const upd = () => p.set(st.hands ? 'cover' : st.lids ? 'sleep' : 'awake');
+    const lidG = T.el('g', {}, g);
+    BABY_LIDS.forEach(([x, y]) => {
+      T.el('circle', { cx: x, cy: y, r: 9.6, fill: '#C2D05E' }, lidG);
+      T.el('path', { d: `M${x - 6} ${y} Q${x} ${y + 5} ${x + 6} ${y}`, stroke: C.ink, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round' }, lidG);
+    });
+    const knob = k => ({ setAttribute(a, v) { st[k] = +v; upd(); lidG.style.display = !st.hands && st.lids ? '' : 'none'; } });
+    const parts = { lids: knob('lids'), hands: knob('hands') };
+    upd();
+    return parts;
+  }
   /* 엄마 개구리: 그림(기본·날기·부푼·어지러운)이 있으면 그림, 없으면 임시 도형. 그림은 정면이라 돌려세우지 않는다 */
   function drawMom(T, g) {
-    const p = poseArt(T, g, { base: ['mom', 76, 94], flying: ['mom_flying', 96, 76], puffed: ['mom_puffed', 96, 96], dizzy: ['mom_dizzy', 72, 100] });
+    // 상자 크기 = 원본 그림 크기 × 같은 배율 (자세를 바꿔도 몸 크기가 튀지 않게)
+    const p = poseArt(T, g, { base: ['mom', 76, 94], flying: ['mom_flying', 80, 63], puffed: ['mom_puffed', 97, 93], dizzy: ['mom_dizzy', 74, 87] });
     if (p) return p;
     drawFrog(T, g);
     return { set() {}, has: () => false };
@@ -121,7 +137,7 @@
     return { set() {}, has: () => false };
   }
   const ANIMALS = {
-    tadpole: { name: '올챙이', h: 36, draw: (T, g) => sprite(T, g, 'tadpole', 80, 40) || T.paper(g, [['path', { d: 'M18 -18 Q50 -30 60 -10 Q50 -2 18 -14', fill: '#2f4a3a' }], ['circle', { cx: 0, cy: -18, r: 18, fill: '#2f4a3a' }], ['circle', { cx: -6, cy: -22, r: 4, fill: '#fff' }]]) },
+    tadpole: { name: '올챙이', h: 36, draw: (T, g) => sprite(T, g, 'tadpole', 76, 43) || T.paper(g, [['path', { d: 'M18 -18 Q50 -30 60 -10 Q50 -2 18 -14', fill: '#2f4a3a' }], ['circle', { cx: 0, cy: -18, r: 18, fill: '#2f4a3a' }], ['circle', { cx: -6, cy: -22, r: 4, fill: '#fff' }]]) },
     frog: { name: '개구리', h: 72, draw: (T, g) => sprite(T, g, 'mom', 64, 80) || drawFrog(T, g) },
     duck: { name: '오리', h: 118, draw: (T, g) => sprite(T, g, 'duck', 116, 122) || T.paper(g, [['ellipse', { cx: 0, cy: -40, rx: 46, ry: 34, fill: C.snow }], ['circle', { cx: -30, cy: -92, r: 26, fill: C.snow }], ['path', { d: 'M-54 -92 L-80 -86 L-54 -80 Z', fill: C.persimmon }], ['circle', { cx: -36, cy: -98, r: 4, fill: C.ink }], ['rect', { x: -12, y: -8, width: 8, height: 10, fill: C.persimmon }], ['rect', { x: 8, y: -8, width: 8, height: 10, fill: C.persimmon }]]) },
     sheep: { name: '양', h: 150, draw: (T, g) => sprite(T, g, 'sheep', 190, 152) || T.paper(g, [['rect', { x: -44, y: -50, width: 14, height: 50, fill: C.ink }], ['rect', { x: 30, y: -50, width: 14, height: 50, fill: C.ink }], ['ellipse', { cx: 0, cy: -80, rx: 70, ry: 46, fill: C.cream }], ['circle', { cx: -40, cy: -110, r: 26, fill: C.cream }], ['circle', { cx: 30, cy: -112, r: 24, fill: C.cream }], ['ellipse', { cx: -70, cy: -104, rx: 22, ry: 28, fill: '#4a3a30' }], ['circle', { cx: -76, cy: -110, r: 4, fill: '#fff' }]]) },
@@ -165,7 +181,7 @@
     paper(T.bg, [['ellipse', { cx: 300, cy: 300, rx: 12, ry: 10, fill: C.bean || '#A93B32' }], ['circle', { cx: 290, cy: 297, r: 3, fill: C.ink }]]); // 무당벌레
   }
   function chartBG(T) {
-    if (artBG(T, 'bg_chart')) return 522; // 나무 바닥 윗면
+    if (artBG(T, 'bg_chart')) return 486; // 기린 키재기 앞 풀밭 윗면
     const { el, paper } = T;
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: C.cream }, T.bg);
     paper(T.bg, [['rect', { x: 200, y: 40, width: 600, height: 440, rx: 12, fill: '#efe0bd' }]]);
@@ -205,7 +221,7 @@
     const babyS = ART.bg_pond ? .8 : .6; // 그림 연잎이 커서 아기(임시 도형)도 조금 크게
     const babies = [0, 1, 3].map(i => {
       let parts;
-      const a = actor(T.world, pads[i === 3 ? 4 : i][0], pads[i === 3 ? 4 : i][1], g => { parts = drawFrog(T, g, { color: C.leaf, sleepy: true }); }, { scale: babyS });
+      const a = actor(T.world, pads[i === 3 ? 4 : i][0], pads[i === 3 ? 4 : i][1], g => { parts = drawBaby(T, g); }, { scale: babyS });
       a.parts = parts; return a;
     });
     /* 대사 연출: 목소리 주인에게 카메라가 가고 서로 마주 본다. 개구리는 정면 그림이라 돌려세우지 않는다 */
@@ -326,7 +342,7 @@
     await T.sceneCard('연못가', () => {
       T.clear(); pondBG(T);
       actor(T.world, 520, 500, g => drawOx(T, g, { dotted: true }), { scale: 1.15 });
-      if (ART.bg_pond) { // 그림 연못: 엄마는 물 위 연잎에 (⏳ 연잎 그림 재생성 중 → 지금은 임시 도형 연잎)
+      if (ART.bg_pond) { // 그림 연못: 엄마는 물 위 연잎에 (연잎 그림이 없으면 임시 도형 연잎)
         const pad = sprite(T, T.el('g', { transform: 'translate(520 512)' }, T.world), 'lilypad', 200, 60);
         if (!pad) T.paper(T.world, [['ellipse', { cx: 520, cy: 504, rx: 96, ry: 22, fill: C.lily }], ['path', { d: 'M520 504 L586 492 L593 507 Z', fill: C.lav }]]);
       }
