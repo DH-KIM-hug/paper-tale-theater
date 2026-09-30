@@ -36,8 +36,8 @@
     aud_duck: 'v3w/rab_aud_duck.webp', aud_cow: 'v3w/rab_aud_cow.webp', aud_pig: 'v3w/rab_aud_pig.webp', aud_rooster: 'v3w/rab_aud_rooster.webp',
     aud_sheep: 'v3w/rab_aud_sheep.webp', aud_dog: 'v3w/rab_aud_dog.webp', aud_cat: 'v3w/rab_aud_cat.webp', aud_owl: 'v3w/rab_owl_post.webp',
     carrot_trophy: 'v3w/rab_carrot_trophy.webp', medal: 'v3w/rab_medal.webp',
-    // cut_photo: 원본(rab_cut_photo)은 거북이가 왼쪽·토끼가 오른쪽이라 무대(토끼가 왼쪽에서 달려옴)와 반대 → 좌우로 뒤집은 파일
-    cut_wake: 'v3w/rab_cut_wake.webp', cut_dash: 'v3w/rab_cut_dash.webp', cut_photo: 'v3w/rab_cut_photo_m.webp',
+    // cut_photo: 다시 뽑은 그림 — 무대처럼 둘 다 오른쪽으로 달리고, 앞선 거북이가 결승 테이프를 끊는다
+    cut_wake: 'v3w/rab_cut_wake.webp', cut_dash: 'v3w/rab_cut_dash.webp', cut_photo: 'v3w/rab_cut_photo.webp',
   };
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */

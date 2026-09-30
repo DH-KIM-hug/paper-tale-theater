@@ -10,7 +10,7 @@
   /* ================= 완성 그림 목록 =================
      null = 쓸 그림이 없어 임시 도형으로 그린다. 새 파일이 나오면 여기 한 줄만 바꾸면 된다.
      초록 캐릭터는 마젠타 배경으로 다시 뽑은 파일 (tools/gpu_night/jobs_green_redo.json).
-     lilypad: 다시 뽑은 연잎에 눈(얼굴)과 꽃이 붙어 나와 캐릭터처럼 보인다 → 임시 도형 연잎 (다시 뽑을 것)
+     lilypad: 다시 뽑은 연잎에 붙어 나온 눈·볼을 지우고(assets/v3/frog_lilypad.png) 연꽃만 남겼다
      baby_sleep: 그림은 눈을 뜨고 있어서, 그 위에 감은 눈꺼풀(임시 도형)을 덧댄다 (BABY_LIDS) */
   const ART = {
     bg_pond: 'v3w/frog_bg_pond.webp', bg_meadow: 'v3w/frog_bg_meadow.webp', bg_chart: 'v3w/frog_bg_chart.webp',
@@ -18,7 +18,7 @@
     mom: 'v3w/frog_mom.webp', mom_flying: 'v3w/frog_mom_flying.webp', mom_puffed: 'v3w/frog_mom_puffed.webp', mom_dizzy: 'v3w/frog_mom_dizzy.webp',
     baby_sleep: 'v3w/frog_baby_sleep.webp', baby_awake: 'v3w/frog_baby_awake.webp', baby_cover: 'v3w/frog_baby_cover.webp',
     tadpole: 'v3w/frog_tadpole.webp',
-    lilypad: null, // 'v3w/frog_lilypad.webp' — 얼굴이 붙어 나와 쓰지 않음
+    lilypad: 'v3w/frog_lilypad.webp', // 위에서 본 둥근 연잎(480×354) — 물 위에 누운 모양으로 납작하게 눌러 깐다 (padAt)
     ox_stand: 'v3w/frog_ox_stand.webp', ox_kneel: 'v3w/frog_ox_kneel.webp', ox_jumpfail: 'v3w/frog_ox_jumpfail.webp',
     duck: 'v3w/frog_duck.webp', sheep: 'v3w/frog_sheep.webp',
     cut_monster: 'v3w/frog_cut_monster.webp', cut_pop: 'v3w/frog_cut_pop.webp', cut_fly: 'v3w/frog_cut_fly.webp',
@@ -181,8 +181,8 @@
      START: 폴짝 대회 출발 자리 — 그림에 앞줄 연잎이 없어 임시 도형 연잎을 깐다 */
   const PADS = { day: [[218, 336], [362, 336], [508, 336], [655, 334], [790, 337]], night: [[160, 398], [343, 406], [513, 408], [673, 416], [833, 421]] };
   const START = [150, 452];
-  /* 임시 도형 연잎 (연잎 그림이 없을 때 — 지금은 얼굴이 붙어 나와 null) */
-  const padAt = (T, x, y, rx = 96) => sprite(T, T.el('g', { transform: `translate(${x} ${y + 12})` }, T.world), 'lilypad', rx * 2, rx * .6)
+  /* 연잎: 그림(위에서 본 둥근 연잎)을 물 위에 누운 모양으로 납작하게 (발끝 x,y가 연잎 가운데). 그림이 없으면 임시 도형 */
+  const padAt = (T, x, y, rx = 96) => (ART.lilypad ? T.el('image', { href: A(ART.lilypad), x: x - rx * 1.1, y: y - rx * .36, width: rx * 2.2, height: rx * .8, preserveAspectRatio: 'none', filter: 'url(#pp)' }, T.world) : null)
     || T.paper(T.world, [['ellipse', { cx: x, cy: y + 4, rx, ry: rx * .23, fill: C.lily }], ['path', { d: `M${x} ${y + 4} L${x + rx * .69} ${y - 8} L${x + rx * .76} ${y + 7} Z`, fill: '#6f9a9c' }]]);
   function pondBG(T, night = false, k = squeeze(T)) {
     if (artBG(T, night ? 'bg_night' : 'bg_pond')) return PADS[night ? 'night' : 'day'].map(p => [...p]); // 그림 속 연잎은 움직일 수 없다 — 세로 화면은 도우미가 카메라로 맞춘다
