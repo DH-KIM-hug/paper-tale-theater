@@ -1,9 +1,66 @@
-/* 황소와 개구리 — 임시 도형(그레이박스) 버전. 기획: TALES_PLAN.md §2
+/* 황소와 개구리 — 페이퍼아트 그림 버전 (그림이 아직 없는 것은 임시 도형). 기획: TALES_PLAN.md §2
    "누가 더 커?" 비교 놀이 → 엄마 개구리 부풀리기 → 뻥! 풍선처럼 날아다니다 퐁당 → 폴짝 대회 → 밤 연못 합창.
-   3~4세 순화: 개구리는 터져 다치지 않는다 — 공기가 빠지며 날아다니다 원래 크기로 돌아온다. */
+   3~4세 순화: 개구리는 터져 다치지 않는다 — 공기가 빠지며 날아다니다 원래 크기로 돌아온다.
+   - 배경: 장면마다 한 장(assets/v3w/frog_bg_*.webp)을 무대 전체에 깐다. 깊이감은 그림 속 종이 층이 맡는다.
+   - 배우: 같은 배우 틀(발끝 = 배우 y) 안에 그림(<image>)을 넣는다. 톡 대상·크기·방향·폴짝은 그대로. */
 (() => {
   const C = { pine: '#3F6B4F', leaf: '#6E9A5B', lily: '#5E8A4A', cream: '#F6ECD8', gold: '#D9A94E', bark: '#6B4A32',
     indigo: '#1F2A56', lav: '#8B7BB8', persimmon: '#E8703A', pink: '#E8A0A0', ink: '#2E241C', sky: '#F2DFA8', snow: '#F4F6FA' };
+
+  /* ================= 완성 그림 목록 =================
+     null = 아직 쓸 그림이 없어 임시 도형으로 그린다. 새 파일이 나오면 여기 한 줄만 바꾸면 된다.
+     ⏳ 초록 캐릭터 마젠타 배경 재생성 중 (라임 키잉이 초록 몸을 먹었음, tools/gpu_night/jobs_green_redo.json):
+        mom_puffed · mom_dizzy · baby_* · tadpole · lilypad → 지금 파일은 구멍·라임 테두리가 있어 null (임시 도형)
+        mom_flying · bg_chart → 지금 파일도 멀쩡해 쓰는 중. 새 파일이 나오면 webp만 다시 만들면 된다. */
+  const ART = {
+    bg_pond: 'v3w/frog_bg_pond.webp', bg_meadow: 'v3w/frog_bg_meadow.webp', bg_chart: 'v3w/frog_bg_chart.webp', // ⏳ bg_chart 재생성 중
+    bg_night: 'v3w/frog_bg_pond_night.webp',
+    q_tail: 'v3w/frog_q_tail.webp', q_hoof: 'v3w/frog_q_hoof.webp', q_horn: 'v3w/frog_q_horn.webp',
+    mom: 'v3w/frog_mom.webp',
+    mom_flying: 'v3w/frog_mom_flying.webp', // ⏳ 재생성 중
+    mom_puffed: null, // ⏳ 'v3w/frog_mom_puffed.webp'
+    mom_dizzy: null, // ⏳ 'v3w/frog_mom_dizzy.webp'
+    baby_sleep: null, baby_awake: null, baby_cover: null, // ⏳ 'v3w/frog_baby_sleep.webp' …
+    tadpole: null, // ⏳ 'v3w/frog_tadpole.webp'
+    lilypad: null, // ⏳ 'v3w/frog_lilypad.webp'
+    ox_stand: 'v3w/frog_ox_stand.webp', ox_kneel: 'v3w/frog_ox_kneel.webp', ox_jumpfail: 'v3w/frog_ox_jumpfail.webp',
+    duck: 'v3w/frog_duck.webp', sheep: 'v3w/frog_sheep.webp',
+    cut_monster: 'v3w/frog_cut_monster.webp', cut_pop: 'v3w/frog_cut_pop.webp', cut_fly: 'v3w/frog_cut_fly.webp',
+    cut_splash: 'v3w/frog_cut_splash.webp', cut_jump: 'v3w/frog_cut_jump.webp',
+  };
+  const A = p => '../../assets/' + p;
+  /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
+  const EDGE = { bg_pond: ['#fdf201', '#78708f'], bg_meadow: ['#a6fb33', '#002000'], bg_chart: ['#fefacd', '#8e521d'], bg_night: ['#000111', '#000b23'],
+    q_tail: ['#205a00', '#0e4700'], q_hoof: ['#325a04', '#076600'], q_horn: ['#1e6c00', '#352202'] };
+  /* 장면 그림 한 장을 무대 전체에 (없으면 false → 임시 도형 배경) */
+  function artBG(T, key, parent = T.bg) {
+    if (!ART[key]) return false;
+    const [top, bot] = EDGE[key] || ['#F2DFA8', '#7c9a58'];
+    T.el('rect', { x: -1200, y: -1200, width: 3400, height: 1480, fill: top }, parent);
+    T.el('rect', { x: -1200, y: 280, width: 3400, height: 1600, fill: bot }, parent);
+    return T.el('image', { href: A(ART[key]), x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, parent);
+  }
+  /* 배우 그림: 발끝(0,0) 기준 w×h 상자 안에 아래·가운데 맞춤. flip: 그림이 코드가 가정한 쪽과 반대를 볼 때 */
+  function sprite(T, g, key, w, h, { flip = false, dx = 0 } = {}) {
+    if (!ART[key]) return null;
+    const wrap = T.el('g', { filter: 'url(#pp)', transform: `translate(${dx} 0)${flip ? ' scale(-1 1)' : ''}` }, g);
+    T.el('image', { href: A(ART[key]), x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'xMidYMax meet' }, wrap);
+    return wrap;
+  }
+  /* 여러 자세 그림을 한 배우 안에 겹쳐 두고 하나만 보인다. 없는 자세를 부르면 기본(첫 자세)으로 */
+  function poseArt(T, g, defs) {
+    const imgs = {};
+    let first = null;
+    for (const [k, [key, w, h, o]] of Object.entries(defs)) { const s = sprite(T, g, key, w, h, o); if (s) { imgs[k] = s; first = first || k; } }
+    const set = k => { if (!imgs[k]) k = first; Object.entries(imgs).forEach(([n, s]) => { s.style.display = n === k ? '' : 'none'; }); };
+    if (first) set(first);
+    return first ? { set, has: k => !!imgs[k] } : null;
+  }
+  /* 그림 컷 (없으면 false → 부른 쪽이 임시 컷) */
+  const cutArt = (T, list, hold = 2600) => {
+    const l = list.filter(([k]) => ART[k]).map(([k, sfx, h]) => ({ src: A(ART[k]), sfx, hold: h || hold }));
+    return l.length ? T.cutImage(l, { hold }) : null;
+  };
 
   /* ================= 그림 도우미 (임시 도형) ================= */
   function drawFrog(T, g, { color = C.pine, sleepy = false } = {}) {
@@ -28,8 +85,20 @@
     [-17, 17].forEach(x => el('ellipse', { cx: x, cy: -60, rx: 13, ry: 9, fill: color, stroke: '#2f5a3f', 'stroke-width': 2 }, hands));
     return { inner, lids, mouth, hands, pupils };
   }
-  function drawOx(T, g, { dotted = false } = {}) {
+  /* 엄마 개구리: 그림(기본·날기·부푼·어지러운)이 있으면 그림, 없으면 임시 도형. 그림은 정면이라 돌려세우지 않는다 */
+  function drawMom(T, g) {
+    const p = poseArt(T, g, { base: ['mom', 76, 94], flying: ['mom_flying', 96, 76], puffed: ['mom_puffed', 96, 96], dizzy: ['mom_dizzy', 72, 100] });
+    if (p) return p;
+    drawFrog(T, g);
+    return { set() {}, has: () => false };
+  }
+  /* 황소 (왼쪽을 본다, 발끝 0,0). 자세: stand · kneel · jumpfail. 크기는 임시 도형 황소(높이 약 300)에 맞춤 */
+  function drawOx(T, g, { dotted = false, pose = 'stand' } = {}) {
     const { paper, el } = T;
+    if (!dotted) {
+      const p = poseArt(T, g, { stand: ['ox_stand', 440, 300, { dx: -20 }], kneel: ['ox_kneel', 444, 244, { dx: -20 }], jumpfail: ['ox_jumpfail', 426, 314, { dx: -20 }] });
+      if (p) { p.set(pose); return p; }
+    }
     if (dotted) {
       el('path', { d: 'M-150 0 V-80 M150 0 V-80 M-110 0 V-80 M110 0 V-80 M-160 -80 Q-160 -230 0 -230 Q160 -230 160 -80 Z M-165 -190 Q-230 -200 -235 -150 Q-230 -110 -170 -120 M-215 -205 Q-225 -240 -200 -250',
         fill: 'rgba(107,74,50,.12)', stroke: C.bark, 'stroke-width': 5, 'stroke-dasharray': '14 10' }, g);
@@ -49,20 +118,24 @@
       ['circle', { cx: -250, cy: -150, r: 4, fill: C.ink }], ['circle', { cx: -226, cy: -150, r: 4, fill: C.ink }],
       ['circle', { cx: -225, cy: -205, r: 8, fill: '#fff' }], ['circle', { cx: -227, cy: -205, r: 4, fill: C.ink }],
     ]);
-    return {};
+    return { set() {}, has: () => false };
   }
   const ANIMALS = {
-    tadpole: { name: '올챙이', h: 36, draw: (T, g) => T.paper(g, [['path', { d: 'M18 -18 Q50 -30 60 -10 Q50 -2 18 -14', fill: '#2f4a3a' }], ['circle', { cx: 0, cy: -18, r: 18, fill: '#2f4a3a' }], ['circle', { cx: -6, cy: -22, r: 4, fill: '#fff' }]]) },
-    frog: { name: '개구리', h: 72, draw: (T, g) => drawFrog(T, g) },
-    duck: { name: '오리', h: 118, draw: (T, g) => T.paper(g, [['ellipse', { cx: 0, cy: -40, rx: 46, ry: 34, fill: C.snow }], ['circle', { cx: -30, cy: -92, r: 26, fill: C.snow }], ['path', { d: 'M-54 -92 L-80 -86 L-54 -80 Z', fill: C.persimmon }], ['circle', { cx: -36, cy: -98, r: 4, fill: C.ink }], ['rect', { x: -12, y: -8, width: 8, height: 10, fill: C.persimmon }], ['rect', { x: 8, y: -8, width: 8, height: 10, fill: C.persimmon }]]) },
-    sheep: { name: '양', h: 150, draw: (T, g) => T.paper(g, [['rect', { x: -44, y: -50, width: 14, height: 50, fill: C.ink }], ['rect', { x: 30, y: -50, width: 14, height: 50, fill: C.ink }], ['ellipse', { cx: 0, cy: -80, rx: 70, ry: 46, fill: C.cream }], ['circle', { cx: -40, cy: -110, r: 26, fill: C.cream }], ['circle', { cx: 30, cy: -112, r: 24, fill: C.cream }], ['ellipse', { cx: -70, cy: -104, rx: 22, ry: 28, fill: '#4a3a30' }], ['circle', { cx: -76, cy: -110, r: 4, fill: '#fff' }]]) },
+    tadpole: { name: '올챙이', h: 36, draw: (T, g) => sprite(T, g, 'tadpole', 80, 40) || T.paper(g, [['path', { d: 'M18 -18 Q50 -30 60 -10 Q50 -2 18 -14', fill: '#2f4a3a' }], ['circle', { cx: 0, cy: -18, r: 18, fill: '#2f4a3a' }], ['circle', { cx: -6, cy: -22, r: 4, fill: '#fff' }]]) },
+    frog: { name: '개구리', h: 72, draw: (T, g) => sprite(T, g, 'mom', 64, 80) || drawFrog(T, g) },
+    duck: { name: '오리', h: 118, draw: (T, g) => sprite(T, g, 'duck', 116, 122) || T.paper(g, [['ellipse', { cx: 0, cy: -40, rx: 46, ry: 34, fill: C.snow }], ['circle', { cx: -30, cy: -92, r: 26, fill: C.snow }], ['path', { d: 'M-54 -92 L-80 -86 L-54 -80 Z', fill: C.persimmon }], ['circle', { cx: -36, cy: -98, r: 4, fill: C.ink }], ['rect', { x: -12, y: -8, width: 8, height: 10, fill: C.persimmon }], ['rect', { x: 8, y: -8, width: 8, height: 10, fill: C.persimmon }]]) },
+    sheep: { name: '양', h: 150, draw: (T, g) => sprite(T, g, 'sheep', 190, 152) || T.paper(g, [['rect', { x: -44, y: -50, width: 14, height: 50, fill: C.ink }], ['rect', { x: 30, y: -50, width: 14, height: 50, fill: C.ink }], ['ellipse', { cx: 0, cy: -80, rx: 70, ry: 46, fill: C.cream }], ['circle', { cx: -40, cy: -110, r: 26, fill: C.cream }], ['circle', { cx: 30, cy: -112, r: 24, fill: C.cream }], ['ellipse', { cx: -70, cy: -104, rx: 22, ry: 28, fill: '#4a3a30' }], ['circle', { cx: -76, cy: -110, r: 4, fill: '#fff' }]]) },
     ox: { name: '황소', h: 300, draw: (T, g) => drawOx(T, g) },
   };
 
   /* ================= 배경 ================= */
   /* 세로 화면은 무대 양옆이 잘린다(보이는 폭 = T.viewWidth()) → 연잎을 가운데로 모아 준다. 가로는 k = 1 */
   const squeeze = T => Math.min(1, (T.viewWidth() / 2 - 60) / 250);
+  /* 그림 속 연잎 자리 (발끝). 낮: 뒷줄 다섯 장, 밤: 다섯 장. 앞줄 연잎(낮) = FRONT */
+  const PADS = { day: [[155, 372], [323, 372], [487, 376], [643, 373], [795, 372]], night: [[160, 398], [343, 406], [513, 408], [673, 416], [833, 421]] };
+  const FRONT = [[163, 432], [862, 438]];
   function pondBG(T, night = false, k = squeeze(T)) {
+    if (artBG(T, night ? 'bg_night' : 'bg_pond')) return PADS[night ? 'night' : 'day'].map(p => [...p]); // 그림 속 연잎은 움직일 수 없다 — 세로 화면은 도우미가 카메라로 맞춘다
     const { el, paper } = T, b = T.bg;
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: night ? '#16204a' : C.sky }, b);
     if (night) {
@@ -80,6 +153,7 @@
     });
   }
   function grassBG(T) {
+    if (artBG(T, 'bg_meadow')) return;
     const { el, paper } = T;
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: C.sky }, T.bg);
     paper(T.bg, [['rect', { x: -200, y: 440, width: 1400, height: 300, fill: '#7c9a58' }]]);
@@ -91,6 +165,7 @@
     paper(T.bg, [['ellipse', { cx: 300, cy: 300, rx: 12, ry: 10, fill: C.bean || '#A93B32' }], ['circle', { cx: 290, cy: 297, r: 3, fill: C.ink }]]); // 무당벌레
   }
   function chartBG(T) {
+    if (artBG(T, 'bg_chart')) return 522; // 나무 바닥 윗면
     const { el, paper } = T;
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: C.cream }, T.bg);
     paper(T.bg, [['rect', { x: 200, y: 40, width: 600, height: 440, rx: 12, fill: '#efe0bd' }]]);
@@ -124,15 +199,17 @@
 
     /* --- 1. 연못의 아침: 아기 개구리 깨우기 --- */
     let pads = pondBG(T);
-    const mom = actor(T.world, pads[2][0], pads[2][1], g => drawFrog(T, g), { scale: 1.2 });
+    let momArt;
+    const mom = actor(T.world, pads[2][0], pads[2][1], g => { momArt = drawMom(T, g); }, { scale: 1.2 });
     mom.parts = null;
+    const babyS = ART.bg_pond ? .8 : .6; // 그림 연잎이 커서 아기(임시 도형)도 조금 크게
     const babies = [0, 1, 3].map(i => {
       let parts;
-      const a = actor(T.world, pads[i === 3 ? 4 : i][0], pads[i === 3 ? 4 : i][1], g => { parts = drawFrog(T, g, { color: C.leaf, sleepy: true }); }, { scale: .6 });
+      const a = actor(T.world, pads[i === 3 ? 4 : i][0], pads[i === 3 ? 4 : i][1], g => { parts = drawFrog(T, g, { color: C.leaf, sleepy: true }); }, { scale: babyS });
       a.parts = parts; return a;
     });
     /* 대사 연출: 목소리 주인에게 카메라가 가고 서로 마주 본다. 개구리는 정면 그림이라 돌려세우지 않는다 */
-    let oxActor = null;
+    let oxActor = null, oxArt = null;
     T.director({
       cast: { mom, baby: babies[0], babyb: babies[1], babyc: babies[2], ox: () => oxActor },
       listener: r => (r === 'mom' ? 'baby' : 'mom'),
@@ -162,19 +239,25 @@
     await sleep(500);
 
     /* --- 3. 이건 뭐지? (부분만 보이는 황소 퀴즈) --- */
+    let quizPic = null;
     await T.sceneCard('커다란 무언가', () => {
       T.clear(); grassBG(T);
-      actor(T.world, 520, 540, g => drawOx(T, g), { scale: 1 });
-      camSnap(706, 450, 3.4);
+      actor(T.world, 520, ART.ox_stand ? 522 : 540, g => drawOx(T, g), { scale: 1 });
+      // 그림 버전: 부분 확대 그림(꼬리·발굽·뿔)을 무대 전체에 덮어 보여 준다. 없으면 카메라로 확대
+      quizPic = ART.q_tail ? artBG(T, 'q_tail', T.el('g', {}, T.world)) : null;
+      if (quizPic) camSnap(500, 280, 1); else camSnap(706, 450, 3.4);
     }, babies[1].pos);
     await say('어? 눈앞에 커다란 무언가가 있어요!');
     const quiz = [
-      { cam: [706, 450, 3.4], q: '이건 뭘까요? 꼬리일까요, 나무일까요?', ok: 'tail', no: 'tree', okName: '꼬리' },
-      { cam: [395, 505, 2.6], q: '이번엔 뭘까요? 발굽일까요, 돌멩이일까요?', ok: 'hoof', no: 'rock', okName: '발굽' },
-      { cam: [320, 280, 2.1], q: '이건 뭘까요? 뿔일까요, 나뭇가지일까요?', ok: 'horn', no: 'branch', okName: '뿔' },
+      { cam: [706, 450, 3.4], pic: 'q_tail', q: '이건 뭘까요? 꼬리일까요, 나무일까요?', ok: 'tail', no: 'tree', okName: '꼬리' },
+      { cam: [395, 505, 2.6], pic: 'q_hoof', q: '이번엔 뭘까요? 발굽일까요, 돌멩이일까요?', ok: 'hoof', no: 'rock', okName: '발굽' },
+      { cam: [320, 280, 2.1], pic: 'q_horn', q: '이건 뭘까요? 뿔일까요, 나뭇가지일까요?', ok: 'horn', no: 'branch', okName: '뿔' },
     ];
     for (const r of quiz) {
-      await camTo(...r.cam, 900);
+      if (quizPic && ART[r.pic]) {
+        const img = quizPic.parentNode.lastChild;
+        if (img.getAttribute('href') !== A(ART[r.pic])) { AudioFX.swish(); await T.anim(img, [{ opacity: 1 }, { opacity: 0 }], 250); img.setAttribute('href', A(ART[r.pic])); await T.anim(img, [{ opacity: 0 }, { opacity: 1 }], 300); }
+      } else await camTo(...r.cam, 900);
       const left = Math.random() < .5;
       // 세로 화면은 무대 양옆이 잘리므로, 실제로 보이는 폭 안쪽 끝에 배지를 둔다
       const vw = T.viewWidth ? T.viewWidth() : 1000, L = 500 - vw / 2 + 85, R = 500 + vw / 2 - 85;
@@ -186,6 +269,7 @@
       bOk.remove(); bNo.remove();
       await say(`맞아요, ${T.josa(r.okName, '이에요/예요')}!`);
     }
+    if (quizPic) { await T.anim(quizPic.parentNode, [{ opacity: 1 }, { opacity: 0 }], 900); quizPic.parentNode.remove(); quizPic = null; }
     await camTo(500, 280, 1, 1600);
     T.shake(); // 음매~는 황소 목소리로 (대사 첫 조각)
     await say('음매~! 커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.');
@@ -194,14 +278,16 @@
     await T.sceneCard('연못', () => {
       T.clear(); pads = pondBG(T);
       T.world.appendChild(mom.pos); mom.place(pads[2][0], pads[2][1]);
-      babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(.6); b.place(pads[[0, 1, 4][i]][0], pads[[0, 1, 4][i]][1]); });
+      babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(babyS); b.place(pads[[0, 1, 4][i]][0], pads[[0, 1, 4][i]][1]); });
     });
     babies.forEach(b => b.hop(30));
+    await cutArt(T, [['cut_monster', 'surprise']], 3000); // 그림 컷: 아기들이 본 '괴물' (대사와 겹치면 연출 카메라가 못 돌아온다 → 따로)
     await say('"엄마! 산처럼 커다란 괴물을 봤어요!"');
     await say('엄마 개구리가 말했어요. "흥, 얼마나 컸는데?"');
 
     /* --- 5. 누가 더 커요? (비교 놀이) --- */
-    await T.sceneCard('키재기', () => { T.clear(); chartBG(T); }, mom.pos);
+    let floor = 470;
+    await T.sceneCard('키재기', () => { T.clear(); floor = chartBG(T) || 470; }, mom.pos);
     await say('누가 더 큰지 키를 재 볼까요?');
     const pairs = [['tadpole', 'frog'], ['frog', 'duck'], ['duck', 'sheep'], ['sheep', 'ox']];
     for (const [small, big] of pairs) {
@@ -212,7 +298,7 @@
       const bigLeft = Math.random() < .5;
       const mk = (k, x) => {
         const s = k === 'ox' ? .62 : 1; // 황소는 무대에 들어오게 줄여서
-        const a = actor(T.world, x, 470, g => ANIMALS[k].draw(T, g), { scale: s });
+        const a = actor(T.world, x, floor, g => ANIMALS[k].draw(T, g), { scale: s });
         a.key = k; return a;
       };
       const A = mk(bigLeft ? big : small, 500 - d), B = mk(bigLeft ? small : big, 500 + d);
@@ -223,9 +309,9 @@
         { el: smallA.pos, ok: false, onWrong: async () => {
           // 틀리면 등을 맞대고 나란히 서서 차이를 보여준다
           const ax = A.x, bx = B.x;
-          await Promise.all([A.move(470, 470, 500), B.move(560, 470, 500)]);
+          await Promise.all([A.move(470, floor, 500), B.move(560, floor, 500)]);
           await sleep(900);
-          await Promise.all([A.move(ax, 470, 500), B.move(bx, 470, 500)]);
+          await Promise.all([A.move(ax, floor, 500), B.move(bx, floor, 500)]);
         } },
       ], { prompt: '누가 더 커요? 큰 친구를 눌러 봐요!',
         where: '둘이 나란히 섰어요. 머리가 더 높은 친구는 누구지?', who: `${T.josa(ANIMALS[big].name, '이/가')} 더 커요! 반짝이는 친구를 눌러 봐요!` });
@@ -240,9 +326,14 @@
     await T.sceneCard('연못가', () => {
       T.clear(); pondBG(T);
       actor(T.world, 520, 500, g => drawOx(T, g, { dotted: true }), { scale: 1.15 });
+      if (ART.bg_pond) { // 그림 연못: 엄마는 물 위 연잎에 (⏳ 연잎 그림 재생성 중 → 지금은 임시 도형 연잎)
+        const pad = sprite(T, T.el('g', { transform: 'translate(520 512)' }, T.world), 'lilypad', 200, 60);
+        if (!pad) T.paper(T.world, [['ellipse', { cx: 520, cy: 504, rx: 96, ry: 22, fill: C.lily }], ['path', { d: 'M520 504 L586 492 L593 507 Z', fill: C.lav }]]);
+      }
       T.world.appendChild(mom.pos); mom.place(520, 500);
       const k = squeeze(T);
-      babies.forEach((b, i) => { T.world.appendChild(b.pos); b.place(Math.round(500 + ([150, 230, 860][i] - 500) * k), 500); });
+      const spots = ART.bg_pond ? [FRONT[0], PADS.day[1], FRONT[1]] : [150, 230, 860].map(x => [Math.round(500 + (x - 500) * k), 500]);
+      babies.forEach((b, i) => { T.world.appendChild(b.pos); b.place(...spots[i]); });
     });
     await say('"흥, 나도 황소만큼 클 수 있어!" 엄마 개구리가 숨을 크게 들이마셨어요.');
     await say('엄마 개구리를 톡톡 눌러서 부풀려 볼까요?');
@@ -253,6 +344,7 @@
       mom.body.style.transition = 'transform .35s cubic-bezier(.3,1.6,.5,1)';
       mom.body.style.transform = `scale(${SIZES[i] * 1.08}, ${SIZES[i]})`;
       if (cheer[i]) Narrator.speak(cheer[i]);
+      if (i >= 5) momArt.set('puffed'); // 부푼 그림이 있으면 (없으면 기본 그림을 키운 채로)
     } });
     await sleep(500);
 
@@ -265,12 +357,13 @@
 
     /* --- 8. 뻥! → 풍선처럼 날아다니다 퐁당 --- */
     vo('cut_pop'); // 컷 속 엄마 개구리 비명 (말풍선 없음)
-    await T.cut(svg => {
+    await (cutArt(T, [['cut_pop', 'boom'], ['cut_fly', 'whoosh', 2000]]) || T.cut(svg => {
       T.el('circle', { cx: 200, cy: 150, r: 110, fill: C.pine }, svg);
       T.el('ellipse', { cx: 200, cy: 170, rx: 70, ry: 50, fill: C.cream }, svg);
       T.el('text', { x: 200, y: 175, 'text-anchor': 'middle', 'font-size': 90, fill: '#A93B32', stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '뻥!' }, svg);
-    }, { sfx: 'boom' });
+    }, { sfx: 'boom' }));
     babies.forEach(b => b.parts.hands.setAttribute('opacity', 0));
+    momArt.set('flying');
     mom.body.style.transition = 'transform 3s linear';
     mom.body.style.transform = 'scale(1.6)';
     // 세로 화면: 살짝 물러서고, 보이는 폭 안에서만 날아다닌다 (가로는 fz = fk = 1)
@@ -287,8 +380,9 @@
     clearInterval(whoosh); fly.cancel();
     if (fz < 1) camSnap(500, 280, 1);
     mom.body.style.transition = ''; mom.body.style.transform = '';
-    mom.place(500, 468);
-    AudioFX.splash(); T.pop(500, 400, '퐁당!', C.indigo);
+    mom.place(500, 468); momArt.set('dizzy');
+    await (cutArt(T, [['cut_splash', 'splash', 2200]]) || AudioFX.splash());
+    T.pop(500, 400, '퐁당!', C.indigo);
     const stars = el('g', { transform: 'translate(500,370)' }, T.fx);
     for (let k = 0; k < 3; k++) el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(28 0)` }, stars);
     stars.animate([{ transform: 'translate(500px,370px) rotate(0)' }, { transform: 'translate(500px,370px) rotate(360deg)' }], { duration: 1200, iterations: 3 });
@@ -299,11 +393,13 @@
     /* --- 9. 폴짝 대회 --- */
     await T.sceneCard('폴짝 대회', () => {
       T.clear(); pads = pondBG(T, false, 1); // 경주는 넓게 — 세로 화면은 카메라가 따라간다
-      T.world.appendChild(mom.pos); mom.place(120, 480);
-      if (T.portrait()) camSnap(120, 280, 1);
-      oxActor = actor(T.world, 900, 520, g => drawOx(T, g), { scale: .55 });
+      momArt.set('base');
+      T.world.appendChild(mom.pos); mom.place(...(ART.bg_pond ? FRONT[0] : [120, 480]));
+      if (T.portrait()) camSnap(mom.x, 280, 1);
+      // 그림 연못: 황소는 오른쪽 앞 얕은 물에 서 있다 (몸을 낮추고 말한다)
+      oxActor = actor(T.world, ART.bg_pond ? 850 : 900, ART.bg_pond ? 546 : 520, g => { oxArt = drawOx(T, g, { pose: 'kneel' }); }, { scale: .55 });
     }, mom.pos);
-    const ox = T.world.lastChild;
+    const ox = oxActor.pos;
     moo(T);
     await say('황소가 몸을 낮추고 다정하게 말했어요. "크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!"');
     let pi = 0;
@@ -313,11 +409,15 @@
       mom.place(x, y); if (T.portrait()) camTo(x, 280, 1, 420);
     } });
     await sleep(500);
+    oxArt.set('stand');
     await say('황소도 따라 뛰어 볼까요? 하나, 둘…');
-    if (T.portrait()) await camTo(900, 280, 1, 700); // 세로 화면: 황소 쪽으로
+    if (T.portrait()) await camTo(oxActor.x, 280, 1, 700); // 세로 화면: 황소 쪽으로
+    oxArt.set('jumpfail');
     await T.anim(ox, [{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], 400);
-    AudioFX.thud(); T.shake(); T.pop(900, 330, '쿵!'); vo('ox_thud');
+    AudioFX.thud(); T.shake(); T.pop(oxActor.x, oxActor.y - 190, '쿵!'); vo('ox_thud');
+    oxArt.set('stand');
     await say('쿵! 황소는 폴짝 뛰지 못했어요. 누가 더 멀리 뛸까요? 개구리!');
+    await cutArt(T, [['cut_jump', 'boing', 3000]]);
 
     /* --- 10. 밤 연못 합창 --- */
     await T.sceneCard('밤 연못', () => {
