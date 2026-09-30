@@ -69,6 +69,11 @@
   function fx(name) {
     try { if (typeof AudioFX !== 'undefined' && AudioFX[name]) AudioFX[name](); } catch (e) { /* 무시 */ }
   }
+  try { AudioFX.preloadSfx(['paper_up', 'paper_down', 'paper_turn', 'paper_tap']); } catch (e) { /* 무시 */ }
+  /* 종이 소리 (sounds/sfx/paper_*.mp3): 태그가 솟을 때 up, 눌려 들어갈 때 down, 동화로 넘어갈 때 turn, 그 밖의 톡 tap */
+  function paper(kind) {
+    try { if (typeof AudioFX === 'undefined') return; if (AudioFX.sfx('paper_' + kind) === false) AudioFX.tap(); } catch (e) { /* 무시 */ }
+  }
 
   /* ── 준비 상태: 만드는 중인 동화는 파일이 있으면 연다 ── */
   const readyNow = new Set(TALES.filter(t => t.ready).map(t => t.id));
@@ -104,7 +109,7 @@
       const b = e.target.closest('.chip');
       if (!b) return;
       const key = b.dataset.key;
-      fx('tap');
+      paper(key && !sel[row].has(key) ? 'up' : 'down'); // 고르면 양각으로 솟고, 풀면 음각으로 눌린다
       if (!key) { sel[row].clear(); say(row === 'origin' ? '이야기 전체' : '배우는 것 전체'); }
       else if (sel[row].has(key)) sel[row].delete(key);
       else { sel[row].add(key); say(TAGS[row].find(t => t.key === key).say); }
@@ -306,7 +311,7 @@
     const D = Math.hypot(vw, vh) * 1.04;
     ov.hidden = false;
     const fallback = setTimeout(go, 1200);
-    setTimeout(() => fx('swish'), 380);
+    setTimeout(() => paper('turn'), 380);
     card.classList.add('anim');
     play(.72, t => {
       card.style.scale = (1 - .04 * Math.sin(Math.PI * clamp(t / .14))).toFixed(4);
@@ -346,12 +351,12 @@
     const t = TALES.find(x => x.id === c.dataset.id);
     if (c.classList.contains('closed')) {
       e.preventDefault();
-      fx('tap');
+      paper('down');
       peek(c);
       say(`${t.title}. 곧 열려요.`);
       return;
     }
-    fx('tap');
+    paper('tap');
     try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (err) { /* 무시 */ }
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;   // 새 탭 열기는 그대로
     e.preventDefault();
@@ -362,7 +367,7 @@
   });
 
   function resetFilters() { sel.origin.clear(); sel.skill.clear(); update(); }
-  $('#emptyReset').addEventListener('click', () => { fx('tap'); resetFilters(); });
+  $('#emptyReset').addEventListener('click', () => { paper('down'); resetFilters(); });
 
   /* ── 보호자 메뉴: 톱니를 3초 동안 눌러야 열린다 ── */
   const gear = $('#parentBtn'), panel = $('#parentPanel'), hint = $('#hint'), sheet = panel.querySelector('.sheet');

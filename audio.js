@@ -149,6 +149,8 @@ const AudioFX = (() => {
     animal(name, vol) { return playSample('animals/' + name + '.mp3', vol); },
     /* 기타 효과음: AudioFX.sfx('chop') */
     sfx(name, vol) { return playSample('sfx/' + name + '.mp3', vol); },
+    /* 첫 소리가 합성음으로 새지 않게 미리 불러 둔다: AudioFX.preloadSfx(['paper_up', …]) */
+    preloadSfx(names) { names.forEach(n => loadSample('sfx/' + n + '.mp3')); },
     async playUrl(url) {
       const buf = await loadClip(url);
       const c = ensure();

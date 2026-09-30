@@ -45,6 +45,10 @@ CC BY 파일은 **출처 표시 의무가 있다** — 크레딧 화면에 "Kevi
 | `sfx/uah.mp3` | uah.mp3 | EZduzziteh | CC0 | https://opengameart.org/content/silly-sound-effects |
 | `sfx/rattle.mp3` | qubodup-wobble1.wav | qubodup | CC0 | https://opengameart.org/content/wood-wobbling-rattling |
 | `sfx/xylo_up.mp3` · `sfx/xylo_down.mp3` · `sfx/giggle_xylo.mp3` | child's_xylophone-2.wav 의 한 음을 음높이만 바꿔 이어 붙임 | AntumDeluge | CC0 | https://opengameart.org/content/childrens-xylophone |
+| `sfx/paper_up.mp3` | RPG Audio: bookFlip3.ogg (홈 태그를 고를 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
+| `sfx/paper_down.mp3` | RPG Audio: bookPlace3.ogg (태그를 풀 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
+| `sfx/paper_turn.mp3` | RPG Audio: bookFlip2.ogg (동화로 넘어갈 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
+| `sfx/paper_tap.mp3` | RPG Audio: bookPlace1.ogg (동화 카드를 누를 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
 | `sfx/tada.mp3` | Music Jingles: jingles_STEEL02.ogg | Kenney | CC0 | https://kenney.nl/assets/music-jingles |
 | `sfx/womp.mp3` | Music Jingles: jingles_SAX07.ogg | Kenney | CC0 | https://kenney.nl/assets/music-jingles |
 | `sfx/drumroll.mp3` | Drum Roll Intro.ogg | Iwan Sounds and DIY | CC0 | https://commons.wikimedia.org/wiki/File:Drum_Roll_Intro.ogg |
