@@ -590,10 +590,10 @@ const Tale = (() => {
   const PLAY_SVG = '<svg class="play" viewBox="0 0 10 11" aria-hidden="true"><path d="M1.2 1.1 Q1.2 .2 2 .6 L9.2 4.8 Q9.9 5.5 9.2 6.2 L2 10.4 Q1.2 10.8 1.2 9.9Z"/></svg>';
   /* 시작·끝 화면의 구멍 그림: 밝은 종이 = <id>_light.webp(THUMBS2L), 어두운 종이 = <id>.webp(THUMBS2). 없으면 빈 구멍 */
   function heroes() {
-    const id = taleId(), dark = matchMedia('(prefers-color-scheme: dark)');
+    const id = taleId(), dark = { matches: false, addEventListener() {} }; // 다크 모드 없음: 늘 밝은 종이
     const set = () => {
-      const has = (dark.matches ? window.THUMBS2 : window.THUMBS2L) || [];
-      const src = has.includes(id) ? `${ROOT_URL}assets/thumbs/${id}${dark.matches ? '' : '_light'}.webp` : '';
+      const has = window.THUMBS2L || [];
+      const src = has.includes(id) ? `${ROOT_URL}assets/thumbs/${id}_light.webp` : '';
       document.querySelectorAll('.hero').forEach(h => {
         const img = h.querySelector('img');
         h.classList.toggle('plain', !src);

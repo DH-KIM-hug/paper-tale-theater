@@ -179,9 +179,9 @@
 
   function holeHTML(t, open) {
     const plug = open ? '' : '<span class="plug" aria-hidden="true"><b>곧 열려요</b></span>';
+    // 밝은 종이 한 가지만 쓴다 (다크 모드 없음). 밝은 판이 없으면 남색 판이라도
     const dk = PIC2.has(t.id), lt = PIC2L.has(t.id), base = `assets/thumbs/${t.id}`;
-    if (dk && lt) return `<span class="thumb full"><picture><source media="(prefers-color-scheme: dark)" srcset="${base}.webp"><img ${imgAttrs} src="${base}_light.webp"></picture>${plug}</span>`;
-    if (dk || lt) return `<span class="thumb full"><img ${imgAttrs} src="${base}${dk ? '' : '_light'}.webp">${plug}</span>`;
+    if (lt || dk) return `<span class="thumb full"><img ${imgAttrs} src="${base}${lt ? '_light' : ''}.webp">${plug}</span>`;
     if (PIC.has(t.id)) return `<span class="thumb pic"><img class="art" src="assets/thumbs/${t.id}.webp" alt="" loading="lazy" decoding="async">${plug}</span>`;
     return `<span class="thumb svgart"><svg class="art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${t.art}</svg>${plug}</span>`;
   }

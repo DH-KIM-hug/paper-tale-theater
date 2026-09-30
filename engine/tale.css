@@ -3,7 +3,7 @@
    홈(home.css)과 같은 한 장의 무광 종이: 밝은 모드 = 매끈한 흰 종이(#F4F6F9) + 남색 글자, 어두운 모드 = 남색 판지 + 크림 글자.
    무대는 그 종이에 뚫린 네모 구멍이다 (커튼·현판·표·객석 없음). 따뜻한 색은 구리색 하나만 아껴 쓴다. */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   /* 무대 안 그림용 옛 색 (동화 그림·효과가 쓴다) */
   --cream: #F6ECD8; --gold: #D9A94E; --persimmon: #E8703A; --bean: #A93B32; --bark: #6B4A32;
   --pine: #3F6B4F; --indigo: #1F2A56; --lav: #8B7BB8; --snow: #F4F6FA; --amber: #F2B366;
@@ -34,30 +34,6 @@
   --ink: var(--text);
   --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .13 0 0 0 0 .17 0 0 0 0 .27 .5 0 0 0 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sheet: #222B45;
-    --sheet-up: #36416A;
-    --sheet-dn: #1C233A;
-    --deep: #121729;
-    --text: #EDE6D6;
-    --text-2: #9098B3;
-    --text-3: #6F789A;
-    --sh-cut: rgba(3, 5, 12, .8);
-    --sh-cut-2: rgba(3, 5, 12, .5);
-    --lip: rgba(236, 232, 255, .14);
-    --sh-drop: rgba(3, 5, 14, .62);
-    --sh-drop-2: rgba(3, 5, 14, .4);
-    --hi-top: rgba(255, 255, 255, .2);
-    --edge-dn: rgba(0, 0, 0, .3);
-    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 .01 0 0 0 0 .04 .6 0 0 0 -.22'/%3E%3C/filter%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='1' seed='21' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .92 0 0 0 0 .92 0 0 0 0 1 .5 0 0 0 -.28'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
-    --page-grain: var(--grain);
-    /* 크림 색종이 글자 */
-    --let-top: #FBF6EA; --let-bot: #E3DAC6; --let-edge: #A79C86;
-    --let-sh: rgba(3, 5, 14, .6); --let-sh-2: rgba(3, 5, 14, .36);
-    --note: #EFE8D8; --note-ink: #222B45;
-  }
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
