@@ -71,8 +71,8 @@ const NARRATION_CLIPS = {
  "마지막으로 해님을 톡! 구름이 해를 가려 줘요.": "audio/tc/rabbit/nar_1b112d16c5.mp3",
  "해님을 톡 눌러 봐요!": "audio/tc/rabbit/nar_bfdb20e590.mp3",
  "토끼가 쿨쿨 잠이 들었어요.": "audio/tc/rabbit/nar_47e5758042.mp3",
- "관객 친구들도 \"쉿!\" 조용히~": [
-  "audio/tc/rabbit/nar_6c10b2aed2.mp3",
+ "응원하던 친구들도 \"쉿!\" 조용히~": [
+  "audio/tc/rabbit/nar_c1e0f84dce.mp3",
   "audio/tc/rabbit/sheep_fc395e2f1d.mp3",
   "audio/tc/rabbit/nar_b6d606ab74.mp3"
  ],
@@ -111,13 +111,13 @@ const NARRATION_CLIPS = {
   "audio/tc/rabbit/rabbit_12a2a37bec.mp3"
  ],
  "막대를 봐요! 거북이가 결승선 코앞이에요!": "audio/tc/rabbit/nar_f69d2a79b6.mp3",
- "관객 친구들이 모두 일어났어요!": "audio/tc/rabbit/nar_3c9e869ed7.mp3",
+ "응원하던 친구들이 모두 일어났어요!": "audio/tc/rabbit/nar_2e6649b225.mp3",
  "토끼가 쌩쌩 달려와요! 거북이는 딱 한 발 남았어요.": "audio/tc/rabbit/nar_2be0109e09.mp3",
  "거북이를 톡! 마지막 한 발!": "audio/tc/rabbit/nar_fecace0915.mp3",
  "거북이를 톡 눌러서 마지막 한 발!": "audio/tc/rabbit/nar_20ad18eb9e.mp3",
  "사진을 보니… 거북이 코끝이 먼저 닿았어요!": "audio/tc/rabbit/nar_9119e711d2.mp3",
  "거북이가 1등이에요!": "audio/tc/rabbit/nar_7912219535.mp3",
- "시상식이에요! 관객 친구들이 파도타기를 해요.": "audio/tc/rabbit/nar_927f9b3a03.mp3",
+ "시상식이에요! 응원하던 친구들이 파도타기를 해요.": "audio/tc/rabbit/nar_83190c75e0.mp3",
  "메달을 톡! 거북이 목에 걸어 줘요.": "audio/tc/rabbit/nar_a5fdf0f2ae.mp3",
  "반짝반짝 메달을 톡 눌러 봐요!": "audio/tc/rabbit/nar_36d960af7f.mp3",
  "반짝반짝, 금메달이에요!": "audio/tc/rabbit/nar_0f38428c7d.mp3",

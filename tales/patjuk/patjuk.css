@@ -1,18 +1,5 @@
-/* 팥죽할멈과 호랑이 — 엔진 공용 스타일 위에 얹는 이 동화만의 무대 장치 (카드 받침·극장 틀·배우 자세) */
-body { background: #1a0f3d; }
-
-/* 극장 틀·커튼은 SVG(#pros)로 그린다 — 엔진의 CSS 틀·커튼은 쓰지 않는다 */
-#frame, #curtainL, #curtainR { display: none; }
-#pros { transform-box: view-box; transform-origin: 0 0; }
-#pjCurL, #pjCurR, #pjPlaque { transform-box: view-box; transform-origin: 0 0; }
-
-/* 관객석 실루엣 (오프닝에서만) */
-#pjAudience {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 27%; z-index: 22; pointer-events: none;
-  background-repeat: repeat-x; background-position: 50% 100%; background-size: auto 100%;
-  transition: transform 2.6s cubic-bezier(.35, 0, .25, 1);
-}
-#pjAudience.gone { transform: translateY(105%); }
+/* 팥죽할멈과 호랑이 — 엔진 공용 스타일 위에 얹는 이 동화만의 것 (카드 받침·배우 자세).
+   무대 둘레·장면 전환은 엔진의 종이 구멍·종이 조리개를 그대로 쓴다 */
 
 /* 소품: 종이 낱장 그림자 */
 .prop { filter: drop-shadow(0 6px 5px rgba(46, 36, 28, .5)); }
@@ -61,54 +48,57 @@ body { background: #1a0f3d; }
   55% { transform: translate(22px, 320px); } 100% { transform: translate(-10px, 660px); opacity: .6; }
 }
 
-/* ============ 건너뛰기 (인트로, 1초 꾹) ============ */
+/* ============ 건너뛰기 (인트로, 1초 꾹): 작은 종이 알약, 누르는 동안 구리색이 차오른다 ============ */
 #skipBtn {
   position: absolute; right: max(12px, env(safe-area-inset-right, 0px)); bottom: 14px; z-index: 42;
-  background: rgba(253,243,227,.92); border-radius: 14px 18px 12px 20px / 18px 12px 20px 14px;
-  padding: 8px 18px; font-size: 15px; color: var(--ink);
-  box-shadow: 0 3px 0 rgba(216,201,168,.9), 0 7px 10px rgba(7,3,18,.45);
-  transform: rotate(.8deg); overflow: hidden; isolation: isolate;
+  min-height: 44px; padding: 0 18px; border-radius: 999px;
+  font-size: 15px; font-weight: 650; color: var(--text);
+  background: var(--sheet-up);
+  box-shadow: inset 1px 1px 0 var(--hi-top), inset -1px -1px 0 var(--edge-dn), 2px 4px 6px var(--sh-drop), 5px 10px 18px var(--sh-drop-2);
+  overflow: hidden; isolation: isolate;
 }
 #skipBtn span { position: relative; z-index: 1; }
-#skipBtn::before { content: ''; position: absolute; inset: 0; z-index: 0; background: #f2b366; transform: scaleX(0); transform-origin: left; }
+#skipBtn::before { content: ''; position: absolute; inset: 0; z-index: 0; background: color-mix(in srgb, var(--copper) 55%, var(--sheet-up)); transform: scaleX(0); transform-origin: left; }
 #skipBtn.holding::before { transform: scaleX(1); transition: transform 1s linear; }
 
-/* ============ 친구 카드 받침 ============ */
+/* ============ 친구 카드 받침: 같은 종이 위에 도톰하게 솟은 종이 카드 ============ */
 #tray {
-  position: relative; z-index: 15; display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
-  padding: 14px 12px calc(10px + env(safe-area-inset-bottom, 0px));
-  background: linear-gradient(#241845, #150c38);
-}
-#tray::before {
-  content: ''; position: absolute; top: -12px; left: 0; right: 0; height: 13px;
-  background: radial-gradient(circle 13px at 14px 14px, #241845 97%, transparent 100%);
-  background-size: 28px 13px; background-repeat: repeat-x;
-  filter: drop-shadow(0 -3px 3px rgba(7,3,18,.5)); pointer-events: none;
+  position: relative; z-index: 15; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;
+  padding: 14px 14px calc(12px + env(safe-area-inset-bottom, 0px));
+  background: var(--page-grain), var(--sheet);
 }
 .card {
-  --tilt: 0deg; display: flex; flex-direction: column; align-items: center; gap: 2px;
-  background: #fdf3e3; border: 4px solid #d9a441; border-radius: var(--paper-radius);
-  padding: 6px 4px 4px; min-height: 96px; box-shadow: var(--paper-stack);
-  transition: transform .15s ease, opacity .2s, filter .2s; transform: rotate(var(--tilt));
+  --tilt: 0deg; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  background: var(--sheet-up); color: var(--text); border: 0;
+  border-radius: 16px 19px 15px 20px / 19px 15px 20px 16px;
+  padding: 6px 4px 5px; min-height: 96px; font-weight: 700;
+  box-shadow: inset 1px 1.2px 0 var(--hi-top), inset -1px -1px 0 var(--edge-dn), 2px 4px 6px var(--sh-drop), 5px 10px 18px var(--sh-drop-2);
+  transition: transform .18s cubic-bezier(.3, 1.6, .5, 1), opacity .2s, filter .2s, box-shadow .2s; transform: translateY(-2px) rotate(var(--tilt));
 }
 #tray .card.tap-target.armed { filter: none; } /* 엔진의 무대용 반짝임은 카드엔 쓰지 않는다 */
-.card:nth-child(3n) { --tilt: -1.3deg; }
-.card:nth-child(3n+1) { --tilt: 1.1deg; }
-.card:nth-child(5n) { --tilt: .6deg; }
-.card:active { transform: scale(.93) rotate(var(--tilt)); }
-/* 연출·대사 중: 누를 수 없다는 게 분명히 보이게 흐리고 회색으로 */
+.card:nth-child(3n) { --tilt: -1deg; }
+.card:nth-child(3n+1) { --tilt: .9deg; }
+.card:nth-child(5n) { --tilt: .5deg; }
+.card:active { transform: translateY(0) scale(.95) rotate(var(--tilt)); box-shadow: inset 1px 1px 0 var(--hi-top), 1px 2px 3px var(--sh-drop); }
+/* 연출·대사 중: 누를 수 없다는 게 분명히 보이게 종이에 눌러 앉히고 흐리게 */
 #tray.locked .card {
-  opacity: .45; filter: saturate(.3) brightness(.85); transform: scale(.97) rotate(var(--tilt));
-  transition: transform .25s ease, opacity .25s ease, filter .25s ease;
+  opacity: .5; filter: saturate(.3); transform: translateY(0) scale(.97) rotate(var(--tilt));
+  box-shadow: inset 1px 1px 0 var(--hi-top), inset -1px -1px 0 var(--edge-dn), 1px 1px 2px var(--sh-drop-2);
+  transition: transform .25s ease, opacity .25s ease, filter .25s ease, box-shadow .25s;
 }
-.card img { width: clamp(44px, 8vmin, 64px); height: clamp(44px, 8vmin, 64px); object-fit: contain; filter: drop-shadow(0 2px 2px rgba(46,36,28,.35)); pointer-events: none; }
+.card img { width: clamp(44px, 8vmin, 64px); height: clamp(44px, 8vmin, 64px); object-fit: contain; filter: drop-shadow(1px 2px 2px rgba(20, 26, 46, .3)); pointer-events: none; }
 .card span { font-size: clamp(14px, 2.2vmin, 19px); }
-.card.used { filter: grayscale(1); opacity: .5; position: relative; }
-.card.used::after { content: '✔'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 34px; color: #2e7d32; }
+/* 쓴 카드: 종이에 눌린 자리(음각)로 들어가고 구리색 표시 */
+.card.used, #tray.locked .card.used {
+  position: relative; opacity: .6; filter: grayscale(1); transform: none;
+  background: var(--sheet-dn);
+  box-shadow: inset 1.5px 2px 3px var(--sh-cut), inset .5px 1px 0 var(--sh-cut-2), inset -1px -1px 0 var(--lip);
+}
+.card.used::after { content: '✔'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 34px; color: var(--copper); filter: none; }
 .card.nudge { animation: cardNudge .35s ease-out; }
 @keyframes cardNudge { 25% { transform: translateX(-5px) rotate(var(--tilt)); } 75% { transform: translateX(5px) rotate(var(--tilt)); } }
-/* 두 번째 실수부터: 정답 카드가 반짝이며 들썩인다 */
-.card.hint { animation: cardHint 1s ease-in-out infinite; box-shadow: 0 0 0 4px #ffd54f, 0 0 22px 6px rgba(255,213,79,.75); }
+/* 두 번째 실수부터: 정답 카드가 구리색 테를 두르고 들썩인다 */
+.card.hint { animation: cardHint 1s ease-in-out infinite; box-shadow: 0 0 0 3px var(--copper), 0 0 22px 6px color-mix(in srgb, var(--copper) 55%, transparent), 2px 4px 6px var(--sh-drop); }
 @keyframes cardHint { 0%, 100% { transform: translateY(0) rotate(var(--tilt)) scale(1); } 50% { transform: translateY(-10px) rotate(var(--tilt)) scale(1.08); } }
 @media (max-width: 640px) { #tray { grid-template-columns: repeat(4, 1fr); } .card { min-height: 84px; } }
 @media (max-height: 480px) and (orientation: landscape) {
@@ -123,7 +113,6 @@ body { background: #1a0f3d; }
   .card { min-height: 104px; }
   .card img { width: 60px; height: 60px; }
   .card span { font-size: 17px; }
-  #pjAudience { height: 40%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

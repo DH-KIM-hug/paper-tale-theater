@@ -68,33 +68,19 @@
     FRIENDS.forEach(f => T.preload(cutUrl('wrong_' + f.id)));
     if (typeof NARRATION_CLIPS !== 'undefined') AudioFX.preloadAll(Object.values(NARRATION_CLIPS).flat());
 
-    /* ---------- 층: 배경(bg) · 배우(world) · 근경(fgL) · 효과(fx) · 극장 틀(pros, 카메라 밖) ---------- */
+    /* ---------- 층: 배경(bg) · 배우(world) · 근경(fgL) · 효과(fx) ----------
+       무대 둘레는 엔진의 종이 구멍(#frame)이 맡는다: 무대 바깥은 종이, 아래 가장자리는 오린 종이의 깨끗한 그늘 */
     const cam = $('#cam'), stage = $('#stage');
     $('#pjFg') && $('#pjFg').remove();
     const fgL = el('g', { id: 'pjFg', 'pointer-events': 'none' });
     cam.insertBefore(fgL, T.fx);
-    $('#pros') && $('#pros').remove();
-    const pros = buildProscenium();
-    stage.appendChild(pros);
-    // 무대턱(아래 나무 턱)은 확대해도 제자리: 틀 그림의 아래 띠만 잘라 화면에 고정한다
-    $('#pjApron') && $('#pjApron').remove();
-    const apron = el('g', { id: 'pjApron', 'pointer-events': 'none' }, stage);
-    const apClip = el('clipPath', { id: 'pjApronClip' }, apron);
-    el('rect', { x: 0, y: 517, width: 1000, height: 120 }, apClip);
-    img(el('g', { 'clip-path': 'url(#pjApronClip)' }, apron), 'v2/t_frame.png', -177, -45, 1356, 624, 'none');
 
-    /* ---------- 극장 틀 규칙: 와이드면 틀 전체, 클로즈업(1.05배 초과)이면 틀을 통째로 화면 밖으로 ---------- */
-    const S = z => `translate(500px,280px) scale(${z}) translate(-500px,-280px)`;
-    function frameFor(z, dur) {
-      pros.style.transition = dur ? `transform ${dur}ms cubic-bezier(.35,0,.25,1)` : 'none';
-      pros.style.transform = S(z > 1.05 ? 2.4 : Math.min(z, 1));
-    }
-    /* 확대해도 배우가 선 바닥선(y=520)이 화면 아래 무대턱(y≈517) 바로 위에 오도록 카메라 높이를 맞춘다.
-       그래야 가까이 가도 인형 발이 무대턱에 붙어 있다 (위로 뜨지 않는다) */
-    const GROUND = 520, APRON_TOP = 519;
+    /* 확대해도 배우가 선 바닥선(y=520)이 화면에서 늘 같은 높이(무대 구멍 아래 가장자리 조금 위, 화면 y≈EDGE)에 오도록
+       카메라 높이를 맞춘다. 와이드(1배)와 같은 높이라서 가까이 가도 인형 발이 바닥에 붙어 있다 (위로 뜨지 않는다) */
+    const GROUND = 520, EDGE = 522;
     const groundY = (y, z) => {
       if (z <= 1.05) return y;
-      const anchored = GROUND - (APRON_TOP - 280) / z;
+      const anchored = GROUND - (EDGE - 280) / z;
       // 선반 위 절구처럼 높은 곳을 비출 때 대상이 화면 밖으로 밀려나면 예외로 둔다
       return Math.abs(anchored - y) < 0.55 * 280 / z ? anchored : y;
     };
@@ -109,10 +95,10 @@
       return lo > hi ? tx : Math.min(Math.max(x, lo), hi);
     }
     const camTo = async (x, y, z = 1, dur = 800) => {
-      frameFor(z, dur); camBusy++;
+      camBusy++;
       try { await T.camTo(keepTiger(x, z), groundY(y, z), z, dur); } finally { camBusy--; }
     };
-    const camSnap = (x, y, z = 1) => { frameFor(z, 0); T.camSnap(keepTiger(x, z), groundY(y, z), z); };
+    const camSnap = (x, y, z = 1) => { T.camSnap(keepTiger(x, z), groundY(y, z), z); };
     const camWide = (dur = 800) => camTo(500, 280, 1, dur);
     /* 세로 화면: 주어진 요소들이 모두 보이도록 카메라를 맞춘다 (화면 좌표 → 무대 좌표로 바꿔 합친 상자) */
     async function fitCam(els, maxZ, pad, dur) {
@@ -125,44 +111,6 @@
       if (!isFinite(x0)) return;
       const z = Math.min(maxZ, T.viewWidth() / (x1 - x0 + 2 * pad), 560 / (y1 - y0 + 2 * pad));
       await camTo((x0 + x1) / 2, (y0 + y1) / 2, z, dur);
-    }
-
-    function buildProscenium() {
-      const g = el('g', { id: 'pros', 'pointer-events': 'none' });
-      const defs = el('defs', {}, g);
-      const pat = el('pattern', { id: 'pjHall', patternUnits: 'userSpaceOnUse', x: -452, y: -262, width: 1904, height: 1073 }, defs);
-      el('rect', { width: 1904, height: 1073, fill: '#1a0d08' }, pat);
-      img(pat, 'v3w/t3_hall.webp', 0, 0, 1904, 1073, 'none');
-      const spot = el('radialGradient', { id: 'pjSpot', gradientUnits: 'userSpaceOnUse', cx: 500, cy: 300, r: 460 }, defs);
-      [[0, 0], [.42, 0], [.7, .82], [1, .92]].forEach(([o, a]) => el('stop', { offset: o, 'stop-color': '#0b0610', 'stop-opacity': a }, spot));
-      const cl = el('g', { id: 'pjCurL' }, g);
-      img(cl, 'v2/t_curtain.png', -10, -20, 530, 600, 'none');
-      const cr = el('g', { id: 'pjCurR' }, g);
-      img(el('g', { transform: 'matrix(-1,0,0,1,1000,0)' }, cr), 'v2/t_curtain.png', -10, -20, 530, 600, 'none');
-      // 극장 벽: 틀 바깥으로 무대 배경·대기 배우가 새어 보이지 않게
-      el('path', { d: 'M-3000 -3000 H4000 V4000 H-3000 Z M-25 -20 V525 H1017 V-20 Z', 'fill-rule': 'evenodd', fill: 'url(#pjHall)' }, g);
-      img(g, 'v2/t_frame.png', -177, -45, 1356, 624, 'none');
-      el('rect', { id: 'pjSpotDark', x: -3000, y: -3000, width: 7000, height: 7000, fill: 'url(#pjSpot)', opacity: 0 }, g);
-      const pl = el('g', { id: 'pjPlaque' }, g);
-      pl.style.transform = 'translateY(-560px)';
-      img(pl, 'v3w/t3_plaque.webp', 310, -143, 380, 336);
-      el('text', { x: 500, y: 74, 'text-anchor': 'middle', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", 'font-size': 42, fill: '#f6ecd8', text: '팥죽할멈과 호랑이' }, pl);
-      el('rect', { id: 'pjHouseLight', x: -3000, y: -3000, width: 7000, height: 7000, fill: '#ffdca0', opacity: 0 }, g);
-      return g;
-    }
-
-    /* 커튼 (SVG, 극장 틀 안) */
-    let curtainShut = true;
-    async function curtain(open, dur = 1200) {
-      if (open !== curtainShut) return;
-      curtainShut = !open;
-      if (dur > 0) AudioFX.swish();
-      [['#pjCurL', -700], ['#pjCurR', 700]].forEach(([id, dx]) => {
-        const c = $(id);
-        c.style.transition = dur ? `transform ${dur}ms cubic-bezier(.5,0,.3,1)` : 'none';
-        c.style.transform = open ? `translateX(${dx}px)` : 'translateX(0px)';
-      });
-      await sleep(dur);
     }
 
     /* ---------- 배우 ---------- */
@@ -425,13 +373,6 @@
     });
     ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => skipBtn.addEventListener(ev, cancelSkip));
 
-    /* ---------- 관객석 (오프닝) ---------- */
-    $('#pjAudience') && $('#pjAudience').remove();
-    const audience = document.createElement('div');
-    audience.id = 'pjAudience';
-    audience.style.backgroundImage = `url(${A('v3w/t3_audience.webp')})`;
-    $('#stageWrap').appendChild(audience);
-
     /* ---------- 등장인물 만들기 ---------- */
     const granny = makeGranny();
     FRIENDS.forEach(f => { friends[f.id] = makeFriend(f); });
@@ -449,31 +390,14 @@
       camTo: (x, y, z, dur) => camTo(x, y, z, dur),
     });
 
-    /* ================= 공연장 오프닝 ================= */
-    async function theaterOpening() {
+    /* ================= 시작: 종이 조리개가 열리며 낮 팥밭이 보인다 ================= */
+    async function openScene() {
       setScene('A');
       grannyMood('cook');
       granny.place(POS.grannyCook, 520); parkTiger();
-      $('#pjHouseLight').setAttribute('opacity', .22);
-      camSnap(500, 300, .64);
-      await sleep(600);
-      AudioFX.bell();
-      await sleep(1000);
-      // 암전: 객석 불이 꺼지고 커튼 가운데만 스포트라이트
-      anim($('#pjHouseLight'), [{ opacity: .22 }, { opacity: 0 }], 900);
-      await anim($('#pjSpotDark'), [{ opacity: 0 }, { opacity: 1 }], { duration: 900, easing: 'ease-in' });
+      camSnap(500, 280, 1);
       await sleep(300);
-      // 돌리 인: 관객 머리 사이로 무대에 다가간다 (객석은 아래로 빠진다)
-      audience.classList.add('gone');
-      await camTo(500, 280, 1, 2600);
-      audience.hidden = true;
-      // 제목 현판이 줄에 매달려 내려온다
-      AudioFX.swish();
-      await anim($('#pjPlaque'), [{ transform: 'translateY(-560px)' }, { transform: 'translateY(14px)', offset: .75 }, { transform: 'translateY(0)' }], { duration: 850, easing: 'ease-out' });
-      await sleep(1500);
-      anim($('#pjPlaque'), [{ transform: 'translateY(0)' }, { transform: 'translateY(-560px)' }], { duration: 600, easing: 'ease-in' });
-      anim($('#pjSpotDark'), [{ opacity: 1 }, { opacity: 0 }], 1300);
-      await curtain(true, 1400);
+      await T.curtain(true);
     }
 
     /* ================= 인트로 ================= */
@@ -579,7 +503,7 @@
       stageI = 0; misses = 0;
       buildTray();
       if (replay) {
-        // 다시 보기: 닫힌 커튼 뒤에서 무대를 차려 두고 커튼을 연다
+        // 다시 보기: 덮인 종이 뒤에서 무대를 차려 두고 종이 조리개를 연다
         Object.values(friends).forEach(fr => { fr.shown = true; });
         setScene('B1');
         if (daylight) daylight.setAttribute('opacity', 0);
@@ -587,7 +511,7 @@
         parkTiger();
         camSnap(500, 280, 1);
         await sleep(300);
-        await curtain(true, 1400);
+        await T.curtain(true);
       } else {
         await T.sceneCard('깜깜한 밤', () => {
           setScene('B1');
@@ -871,24 +795,24 @@
         ...FRIENDS.map(f => ({ el: partyEl(f), onTap: () => { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); hello('hi_' + f.id); } })),
         { el: granny.pos, onTap: () => { AudioFX.jingle(); granny.hop(22, 420); hello('hi_halmi'); } },
       ], 12000);
-      await curtainCall();
+      await bowTogether();
     }
 
-    /* 커튼콜: 커튼이 닫혔다 다시 열리고, 출연진이 한 줄로 서서 차례로 인사 */
-    async function curtainCall() {
+    /* 마무리: 종이 조리개가 한 번 닫혔다 열리면 모두 한 줄로 서 있고, 차례로 꾸벅 인사한다 */
+    async function bowTogether() {
       await camWide(700);
-      await curtain(false, 1100);
-      $('#confetti').innerHTML = '';
-      Object.values(friends).forEach(fr => fr.pos.classList.remove('party'));
       const LINE_X = { jara: 235, bam: 295, ddong: 355, songgot: 420, jeolgu: 595, myeongseok: 675, jige: 770 };
-      FRIENDS.forEach(f => friendTo(f.id, LINE_X[f.id], 0, true));
-      granny.place(505, 520); granny.face('left');
-      rolled.pos.style.display = 'none';
-      pose(null); tigerEyesHurt(false); dizzy(false);
-      tiger.place(880, 520); tiger.face('left');
-      tiger.pos.style.opacity = 1;
-      await sleep(400);
-      await curtain(true, 1100);
+      await T.sceneCard('모두 꾸벅', () => {
+        $('#confetti').innerHTML = '';
+        Object.values(friends).forEach(fr => fr.pos.classList.remove('party'));
+        FRIENDS.forEach(f => friendTo(f.id, LINE_X[f.id], 0, true));
+        granny.place(505, 520); granny.face('left');
+        rolled.pos.style.display = 'none';
+        pose(null); tigerEyesHurt(false); dizzy(false);
+        tiger.place(880, 520); tiger.face('left');
+        tiger.pos.style.opacity = 1;
+        camSnap(500, 280, 1);
+      });
       await camTo(560, 440, 1.3, 900);
       // 차례로 꾸벅
       const bow = t => anim(t, [{ rotate: '0deg' }, { rotate: '-16deg' }, { rotate: '0deg' }], { duration: 520, easing: 'ease-in-out' });
@@ -904,17 +828,15 @@
       AudioFX.fanfare();
       await sleep(700);
       await camWide(700);
-      await curtain(false, 1300);
     }
 
     /* ================= 진행 ================= */
     if (!played) {
       played = true;
-      await theaterOpening();
+      await openScene();
       await playIntro();
       await beginPlay(false);
     } else {
-      audience.hidden = true;
       await beginPlay(true);
     }
     while (stageI < FRIENDS.length) {

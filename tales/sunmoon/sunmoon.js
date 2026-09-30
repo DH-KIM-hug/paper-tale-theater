@@ -503,7 +503,7 @@
     /* ====== 2막 — 문 앞의 호랑이 ====== */
     /* --- 6. 엄마 기다리기 (등잔) --- */
     let dark, lamp, flame, glow;
-    await T.sceneCard('2막 · 오누이의 밤', () => {
+    await T.sceneCard('오누이의 밤', () => {
       T.clear(); roomBG(T);
       T.world.appendChild(boy.pos); boy.setScale(1.05); boy.place(340, 520);
       T.world.appendChild(girl.pos); girl.setScale(.95); girl.place(450, 520);

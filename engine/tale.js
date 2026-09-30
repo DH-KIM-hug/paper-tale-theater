@@ -76,7 +76,9 @@ const Tale = (() => {
     return Math.min(1000, 560 * r.width / r.height);
   }
   function clampCam(x, y, z) {
-    const hx = viewWidth() / 2 / Math.max(z, 1e-3), hy = 280 / z;
+    // 가로(meet)에서는 무대 전체 폭이 늘 보인다 (위아래 남는 곳은 종이 구멍 밖) → 폭 1000으로 막는다
+    const meet = stage && /meet/.test(stage.getAttribute('preserveAspectRatio') || '');
+    const hx = (meet ? 1000 : viewWidth()) / 2 / Math.max(z, 1e-3), hy = 280 / z;
     if (z <= 1) return [hx >= 500 ? 500 : Math.min(Math.max(x, hx), 1000 - hx), 280];
     return [Math.min(Math.max(x, hx), 1000 - hx), Math.min(Math.max(y, hy), 560 - hy)];
   }
@@ -219,7 +221,7 @@ const Tale = (() => {
   }
 
   /* ---------- 손가락 안내 ---------- */
-  const HAND_SVG = '<svg viewBox="0 0 64 64"><path d="M22 30 V10 a5 5 0 0 1 10 0 V28 M32 26 a5 5 0 0 1 10 0 V30 M42 28 a5 5 0 0 1 10 0 V40 C52 52 44 60 34 60 C24 60 18 54 14 46 L8 36 a5 5 0 0 1 8 -5 L22 38 Z" fill="#F6ECD8" stroke="#6B4A32" stroke-width="3" stroke-linejoin="round"/></svg>';
+  const HAND_SVG = '<svg viewBox="0 0 64 64"><path d="M22 30 V10 a5 5 0 0 1 10 0 V28 M32 26 a5 5 0 0 1 10 0 V30 M42 28 a5 5 0 0 1 10 0 V40 C52 52 44 60 34 60 C24 60 18 54 14 46 L8 36 a5 5 0 0 1 8 -5 L22 38 Z" fill="#FFFFFF" stroke="#222B45" stroke-width="3" stroke-linejoin="round"/></svg>';
   function screenPoint(target) {
     const r = target.getBoundingClientRect(), s = root.getBoundingClientRect();
     return [r.left - s.left + r.width / 2, r.top - s.top + r.height / 2];
@@ -379,25 +381,44 @@ const Tale = (() => {
     offs.forEach(f => f());
   }
 
-  /* ---------- 무대 장치 ---------- */
-  function curtain(open) { root.classList.toggle('open', open); AudioFX.swish(); return sleep(1250); }
-  /* 동그라미 장면 전환 (옛날 만화식 아이리스). focus: 동그라미가 모일 요소(주인공). 없으면 가운데
-     닫힘 → 주인공 둘레에서 잠깐 멈춤 → 완전히 닫힘 → 장면 카드(탄력) → change() → 톡 튀며 열림 */
-  function irisTo(cx, cy, r0, r1, ms, ease) {
-    const ir = $('#iris');
+  /* ---------- 무대 장치: 종이 조리개 ----------
+     한 장의 종이(홈과 같은 색)가 동그랗게 오므라들며 무대를 덮고, 다시 벌어지며 연다.
+     구멍(.lid)의 번짐 그림자가 종이가 되고, 구멍 안쪽 가장자리에 오린 종이의 그늘이 진다. */
+  function lidTo(box, cx, cy, r0, r1, ms, ease) {
+    const lid = box.querySelector('.lid');
     return new Promise(res => {
       const t0 = performance.now();
       const f = now => {
-        const k = Math.min(1, (now - t0) / ms), r = r0 + (r1 - r0) * ease(k);
-        ir.style.setProperty('--x', cx + 'px'); ir.style.setProperty('--y', cy + 'px'); ir.style.setProperty('--r', Math.max(0, r) + 'px');
-        ir.classList.toggle('shut', r < 6); // 완전히 닫히면 금테도 숨긴다
+        const k = Math.min(1, (now - t0) / ms), r = Math.max(0, r0 + (r1 - r0) * ease(k));
+        lid.style.left = cx + 'px'; lid.style.top = cy + 'px';
+        lid.style.width = lid.style.height = (r < .5 ? 0 : 2 * r).toFixed(1) + 'px';
+        box.classList.toggle('shut', r < 1); // 완전히 닫히면 종이 한 장
         k < 1 ? requestAnimationFrame(f) : res();
       };
       requestAnimationFrame(f);
     });
   }
   const easeIn = k => k * k * k;
+  const easeInOut = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
   const easeOutBack = k => 1 + 2.4 * Math.pow(k - 1, 3) + 1.4 * Math.pow(k - 1, 2);
+  const farFrom = (W, H, x, y) => Math.hypot(Math.max(x, W - x), Math.max(y, H - y)) + 24;
+  /* 막 열기/닫기 (예전 커튼과 같은 이름·시간: 약 1.25초) */
+  let veilOpen = false;
+  function shutVeil() { const v = $('#veil'); veilOpen = false; root.classList.remove('open'); v.hidden = false; v.classList.add('shut'); v.querySelector('.lid').style.width = v.querySelector('.lid').style.height = '0px'; }
+  async function curtain(open) {
+    root.classList.toggle('open', open);
+    if (open === veilOpen) return sleep(120);
+    veilOpen = open;
+    AudioFX.swish();
+    const v = $('#veil'), w = $('#stageWrap'), W = w.clientWidth, H = w.clientHeight, far = farFrom(W, H, W / 2, H / 2);
+    v.hidden = false;
+    const t0 = performance.now();
+    if (open) { await lidTo(v, W / 2, H / 2, 0, far, 1100, easeInOut); v.hidden = true; }
+    else await lidTo(v, W / 2, H / 2, far, 0, 1000, easeInOut);
+    await sleep(Math.max(0, 1250 - (performance.now() - t0)));
+  }
+  /* 동그라미 장면 전환 (옛날 만화식 아이리스). focus: 동그라미가 모일 요소(주인공). 없으면 가운데
+     닫힘 → 주인공 둘레에서 잠깐 멈춤 → 완전히 닫힘 → 장면 이름(오린 종이 글자) → change() → 톡 튀며 열림 */
   async function sceneCard(label, change, focus) {
     const wrap = $('#stageWrap'), ir = $('#iris'), card = $('#irisCard');
     const W = wrap.clientWidth, H = wrap.clientHeight;
@@ -406,20 +427,33 @@ const Tale = (() => {
       const r = focus.getBoundingClientRect(), sr = wrap.getBoundingClientRect();
       if (r.width) { cx = r.left - sr.left + r.width / 2; cy = r.top - sr.top + r.height / 2; }
     }
-    const far = (x, y) => Math.hypot(Math.max(x, W - x), Math.max(y, H - y)) + 24;
     const hole = Math.min(W, H) * .16;
-    ir.hidden = false; card.textContent = ''; card.className = '';
+    ir.hidden = false; card.textContent = ''; card.className = 'paperword';
     AudioFX.swish();
-    await irisTo(cx, cy, far(cx, cy), hole, 520, easeIn);
+    await lidTo(ir, cx, cy, farFrom(W, H, cx, cy), hole, 520, easeIn);
     await sleep(260); // 주인공 둘레에 동그라미를 잠깐 남긴다
-    await irisTo(cx, cy, hole, 0, 180, easeIn);
-    if (label) { card.textContent = label; card.className = 'on'; tone([520, 780], .18, { type: 'triangle', vol: .12 }); }
+    await lidTo(ir, cx, cy, hole, 0, 180, easeIn);
+    if (label) { card.innerHTML = letters(label); card.className = 'paperword on'; tone([520, 780], .18, { type: 'triangle', vol: .12 }); }
     if (change) change();
     await sleep(label ? 1050 : 250);
-    card.className = '';
+    card.className = 'paperword';
     AudioFX.swish();
-    await irisTo(W / 2, H / 2, 0, far(W / 2, H / 2), 640, easeOutBack);
+    await lidTo(ir, W / 2, H / 2, 0, farFrom(W, H, W / 2, H / 2), 640, easeOutBack);
     ir.hidden = true;
+  }
+  /* 오린 종이 글자: 글자마다 살짝 기울고 들쭉날쭉 (같은 글은 늘 같은 모양). 낱말은 한 줄에서 끊기지 않는다 */
+  function letters(text) {
+    const esc = c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c] || c);
+    let k = 0, n = 0;
+    return String(text).split(/(\s+)/).map(w => {
+      if (!w) return '';
+      if (/^\s+$/.test(w)) return ' ';
+      return '<span style="display:inline-block;white-space:nowrap">' + [...w].map(ch => {
+        n++;
+        const r = ((n * 37) % 7 - 3) * .7, y = ((n * 53) % 5 - 2) * .014;
+        return `<i style="--r:${r.toFixed(1)}deg;--y:${y.toFixed(3)}em;--k:${k++}">${esc(ch)}</i>`;
+      }).join('') + '</span>';
+    }).join('');
   }
   /* 컷 효과음: 함수면 그대로, 스팅 이름('hit'·'bigHit'·'slip'·'bite'·'splash'·'laugh'·'magic'·'win'·'surprise' 등)이면
      AudioFX.sting으로 여러 소리를 겹쳐 울리고, 아니면 예전처럼 AudioFX[이름]() */
@@ -549,8 +583,71 @@ const Tale = (() => {
   function clear() { bgL.innerHTML = ''; world.innerHTML = ''; fxL.innerHTML = ''; }
 
   /* ---------- 틀 만들기 ---------- */
+  /* 저장소 뿌리(홈·썸네일 경로): 이 엔진 파일(engine/tale.js)의 한 단계 위 */
+  const ROOT_URL = (() => { try { return new URL('../', document.currentScript.src).href; } catch (e) { return '../../'; } })();
+  /* 동화 id = 폴더 이름 (tales/<id>/index.html) */
+  const taleId = () => { const m = location.pathname.match(/\/tales\/([^/]+)\//); return m ? decodeURIComponent(m[1]) : ''; };
+  const PLAY_SVG = '<svg class="play" viewBox="0 0 10 11" aria-hidden="true"><path d="M1.2 1.1 Q1.2 .2 2 .6 L9.2 4.8 Q9.9 5.5 9.2 6.2 L2 10.4 Q1.2 10.8 1.2 9.9Z"/></svg>';
+  /* 시작·끝 화면의 구멍 그림: 밝은 종이 = <id>_light.webp(THUMBS2L), 어두운 종이 = <id>.webp(THUMBS2). 없으면 빈 구멍 */
+  function heroes() {
+    const id = taleId(), dark = matchMedia('(prefers-color-scheme: dark)');
+    const set = () => {
+      const has = (dark.matches ? window.THUMBS2 : window.THUMBS2L) || [];
+      const src = has.includes(id) ? `${ROOT_URL}assets/thumbs/${id}${dark.matches ? '' : '_light'}.webp` : '';
+      document.querySelectorAll('.hero').forEach(h => {
+        const img = h.querySelector('img');
+        h.classList.toggle('plain', !src);
+        if (src && img.getAttribute('src') !== src) img.src = src;
+        if (!src) img.removeAttribute('src');
+      });
+      return src;
+    };
+    dark.addEventListener ? dark.addEventListener('change', set) : dark.addListener(set);
+    return new Promise(res => {
+      if (!id) return res();
+      const sc = document.createElement('script');
+      sc.src = ROOT_URL + 'assets/thumbs/thumbs.js';
+      sc.onload = sc.onerror = () => {
+        const src = set();
+        if (!src) return res();
+        const img = document.querySelector('#startScreen .hero img');
+        if (img.complete) return res();
+        img.addEventListener('load', res, { once: true }); img.addEventListener('error', res, { once: true });
+      };
+      document.head.appendChild(sc);
+    });
+  }
+  /* 들어올 때: 홈의 카드가 닫고 간 종이 조리개가 가운데에서 다시 열린다 */
+  function arrive(ready) {
+    const a = document.createElement('div');
+    a.id = 'arrive'; a.innerHTML = '<i class="lid"></i>';
+    document.body.appendChild(a);
+    const gone = () => a.remove();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { gone(); return; }
+    const fallback = setTimeout(gone, 2500);
+    Promise.race([ready, sleep(450)]).then(() => {
+      const lid = a.firstChild, R = Math.hypot(innerWidth, innerHeight) / 2 + 30, t0 = performance.now(), ms = 620;
+      const f = now => {
+        const k = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - k, 3);
+        lid.style.width = lid.style.height = (2 * R * e).toFixed(1) + 'px';
+        if (k < 1) requestAnimationFrame(f); else { clearTimeout(fallback); gone(); }
+      };
+      requestAnimationFrame(f);
+    });
+  }
+  /* 무대 구멍(#frame)을 무대(1000x560)가 화면에 놓인 자리에 맞춘다: 가로 = 전체 맞춤(meet), 세로 = 꽉 채움(slice) */
+  function fitFrame(portrait) {
+    const w = $('#stageWrap'), f = $('#frame'), W = w.clientWidth, H = w.clientHeight;
+    if (!W || !H) return;
+    const k = portrait ? Math.max(W / 1000, H / 560) : Math.min(W / 1000, H / 560), fw = 1000 * k, fh = 560 * k;
+    const mx = (W - fw) / 2, my = (H - fh) / 2;
+    Object.assign(f.style, { left: mx + 'px', top: my + 'px', width: fw + 'px', height: fh + 'px' });
+    f.classList.toggle('edge', Math.min(mx, my) < 6); // 화면 가장자리에 닿으면 모서리는 네모
+  }
+
   function mount({ title, subtitle, run, note = '임시 그림 버전 — 페이퍼아트 그림은 제작 중이에요', endTitle = '끝!' }) {
     document.title = title;
+    const home = ROOT_URL + 'index.html';
     document.body.insertAdjacentHTML('beforeend', `
 <div id="tale">
   <div id="stageWrap">
@@ -563,29 +660,40 @@ const Tale = (() => {
       <g id="cam"><g id="bgL"></g><g id="world"></g><g id="fxL"></g></g>
     </svg>
     <div id="frame"></div><div id="apron"></div>
-    <div id="curtainL" class="curtain"></div><div id="curtainR" class="curtain"></div>
-    <div id="iris" hidden><span id="irisCard"></span></div>
+    <div id="iris" hidden><i class="lid"></i><span id="irisCard"></span></div>
+    <div id="veil" class="shut"><i class="lid"></i></div>
     <div id="confetti"></div>
     <div id="hand" hidden>${HAND_SVG}</div>
   </div>
-  <div id="rotateHint"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3" fill="none" stroke="#A93B32" stroke-width="2.6"/><circle cx="16" cy="25" r="1.6" fill="#A93B32"/></svg>돌려서 크게 보기</div>
+  <div id="rotateHint"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3" fill="none" stroke="#C98A5B" stroke-width="2.6"/><circle cx="16" cy="25" r="1.6" fill="#C98A5B"/></svg>돌려서 크게 보기</div>
   <div id="bubble" hidden><p id="bubbleText"></p></div>
   <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
-    <div class="plaque"><h1>${title}</h1>${subtitle ? `<p>${subtitle}</p>` : ''}</div>
-    <div class="tickets"><button class="ticket" id="startBtn">공연 시작</button><a class="ticket alt" href="../../index.html" style="text-decoration:none;display:grid;place-items:center">처음으로</a></div>
-    ${note ? `<div class="greybox-note">${note}</div>` : ''}
+    <div class="hero plain"><img alt="" decoding="async"></div>
+    <div class="words">
+      <h1 class="paperword ttl">${letters(title)}</h1>
+      ${subtitle ? `<p class="sub">${subtitle}</p>` : ''}
+      <div class="pills"><button class="pill go" id="startBtn">${PLAY_SVG}이야기 시작</button><a class="pill" href="${home}">처음으로</a></div>
+      ${note ? `<p class="note">${note}</p>` : ''}
+    </div>
   </div>
   <div id="endScreen" class="screen" hidden>
-    <div class="plaque"><h2>${endTitle}</h2><p id="endMsg"></p></div>
-    <div class="tickets"><button class="ticket" id="againBtn">다시 보기</button><a class="ticket alt" href="../../index.html" style="text-decoration:none;display:grid;place-items:center">처음으로</a></div>
+    <div class="hero plain"><img alt="" decoding="async"></div>
+    <div class="words">
+      <h2 class="paperword ttl">${letters(endTitle)}</h2>
+      <p class="sub" id="endMsg"></p>
+      <div class="pills"><button class="pill go" id="againBtn">${PLAY_SVG}다시 보기</button><a class="pill" href="${home}">처음으로</a></div>
+    </div>
   </div>
 </div>`);
     root = $('#tale'); stage = $('#stage');
+    arrive(heroes());
     // 세로 화면: 무대를 크게 키워 양옆을 자른다(slice), 가로: 전체를 맞춘다(meet)
     const portraitMQ = window.matchMedia('(orientation: portrait)');
-    const fitStage = () => stage.setAttribute('preserveAspectRatio', portraitMQ.matches ? 'xMidYMid slice' : 'xMidYMid meet');
+    const fitStage = () => { stage.setAttribute('preserveAspectRatio', portraitMQ.matches ? 'xMidYMid slice' : 'xMidYMid meet'); fitFrame(portraitMQ.matches); };
     fitStage(); portraitMQ.addEventListener ? portraitMQ.addEventListener('change', fitStage) : portraitMQ.addListener(fitStage);
+    if (window.ResizeObserver) new ResizeObserver(() => fitFrame(portraitMQ.matches)).observe($('#stageWrap'));
+    else addEventListener('resize', () => fitFrame(portraitMQ.matches));
     const hint = $('#rotateHint');
     if (hint) { hint.onpointerdown = e => { e.stopPropagation(); hint.classList.add('gone'); }; setTimeout(() => hint.classList.add('gone'), 6000); } cam = $('#cam'); bgL = $('#bgL'); world = $('#world'); fxL = $('#fxL'); handEl = $('#hand');
     // 대사 건너뛰기: 무대 1초 꾹 (보호자용). 짧은 탭은 무시한다
@@ -597,7 +705,7 @@ const Tale = (() => {
     const start = async () => {
       AudioFX.unlock();
       $('#startScreen').hidden = true; $('#endScreen').hidden = true;
-      clear(); camSnap(500, 280, 1); root.classList.remove('open');
+      clear(); camSnap(500, 280, 1); shutVeil();
       busy = true;
       const msg = await run(api);
       busy = true;

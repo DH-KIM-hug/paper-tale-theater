@@ -603,7 +603,7 @@
         ['duck', 170, 505, 1.2], ['cow', 390, 505, 1.2], ['pig', 610, 505, 1.2], ['dog', 830, 505, 1.2]]
       : [['rooster', 200, 330, 1.05], ['sheep', 400, 330, 1.05], ['cat', 600, 330, 1.05], ['owl', 800, 330, 1.05],
         ['duck', 170, 480, 1.3], ['cow', 390, 480, 1.3], ['pig', 610, 480, 1.3], ['dog', 830, 480, 1.3]]).map(([k, x, y, s]) => [k, PX(x, .72), y, s]);
-    await scene('관객석', () => {
+    await scene('응원석', () => {
       standsBG(T);
       seat(SEATS.map(([k, x, y, s], i) => [k, i % 2 ? 1150 : -150, y, s]));
       camSnap(500, 280, fitZ(330 * .72 + 80));
@@ -704,7 +704,7 @@
     /* ===== 2막 — 쌩쌩 토끼, 엉금엉금 거북이 ===== */
     /* --- 6. 토끼 시점: 쌩쌩 --- */
     let far, near, bob;
-    await scene('2막 · 쌩쌩 토끼', () => {
+    await scene('쌩쌩 토끼', () => {
       far = el('g', {}, T.bg); far.style.transition = 'transform .7s cubic-bezier(.2,.8,.3,1)';
       near = el('g', {}, T.world); near.style.transition = 'transform .7s cubic-bezier(.2,.8,.3,1)';
       if (ART.bg_dash) { // 그림 숲길을 좌우로 뒤집어 가며 이어 붙여 옆으로 흘려 보낸다 (이음매가 거울처럼 맞는다)
@@ -794,7 +794,7 @@
     zzz(); let sk = 0; every(1800, () => snore(T, sk++ % 2));
     await say('토끼가 쿨쿨 잠이 들었어요.');
     aud.owl.hush(true); await sleep(300); aud.pig.hush(true); aud.sheep.hush(true);
-    await say('관객 친구들도 "쉿!" 조용히~');
+    await say('응원하던 친구들도 "쉿!" 조용히~');
 
     /* --- 8. 토끼의 꿈 --- */
     let carrot, bite, biteAt = [830, 230];
@@ -1010,7 +1010,7 @@
 
     /* ===== 3막 — 결승선 ===== */
     /* --- 12. 꼬끼오! --- */
-    await scene('3막 · 꼬끼오!', () => {
+    await scene('꼬끼오!', () => {
       sky(T, C.amber);
       el('rect', { x: -300, y: -300, width: 1600, height: 420, fill: '#F6C27A' }, T.bg);
       paper(T.bg, [['circle', { cx: 780, cy: 380, r: 90, fill: C.persimmon }]]);
@@ -1058,7 +1058,7 @@
       bar.show(true); setRace(.6, .92, 0);
     });
     KINDS.forEach((k, i) => setTimeout(() => aud[k].cheer(i % 3 ? '' : null, true), i * 120));
-    await say('관객 친구들이 모두 일어났어요!');
+    await say('응원하던 친구들이 모두 일어났어요!');
     if (ART.cut_dash) { // 그림 컷 한 장으로: 쌩(첫 효과음) … 쌩(1.8초 뒤 두 번째 효과음)
       let t2;
       await cutArt(T, 'cut_dash', 'whoosh', 3400, () => { t2 = setTimeout(() => { AudioFX.whoosh(); setRace(.8, null, 800); }, 1800); });
@@ -1117,7 +1117,7 @@
       medal = paper(T.world, [['path', { d: 'M-30 -70 L0 -10 L30 -70', stroke: C.persimmon, 'stroke-width': 12, fill: 'none' }], ['circle', { cx: 0, cy: 10, r: 44, fill: C.gold, stroke: '#b98f4a', 'stroke-width': 6 }],
         ['text', { x: 0, y: 28, 'text-anchor': 'middle', 'font-size': 48, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }]], { transform: 'translate(730 420)' });
     });
-    await say('시상식이에요! 관객 친구들이 파도타기를 해요.');
+    await say('시상식이에요! 응원하던 친구들이 파도타기를 해요.');
     for (let w = 0; w < 2; w++) for (const k of KINDS) { const a = aud[k]; a.stand(); T.tone(400 + KINDS.indexOf(k) * 60, .12, { type: 'triangle', vol: .12 }); setTimeout(() => a.sit(), 350); await sleep(140); }
     await sleep(400);
     await say('메달을 톡! 거북이 목에 걸어 줘요.');

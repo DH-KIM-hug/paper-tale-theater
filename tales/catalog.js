@@ -69,7 +69,7 @@ const TALES = (() => {
       <circle cx="40" cy="73" r="3" fill="#fff"/><circle cx="52" cy="73" r="3" fill="#fff"/>${eye(40, 73, 1.4)}${eye(52, 73, 1.4)}</g>` },
 
   { id: 'rabbit', title: '토끼와 거북이', origin: 'aesop', skills: ['sound', 'heart'], ready: true,
-    line: '관객 동물들의 울음소리로 응원하며, 느려도 끝까지 가는 달리기.',
+    line: '응원하는 동물들의 울음소리로 응원하며, 느려도 끝까지 가는 달리기.',
     art: `<rect width="160" height="110" fill="${c.am}"/>
       <g class="pc"><path d="M0 70 Q60 44 160 66 V110 H0Z" fill="${c.lf}"/><rect y="90" width="160" height="20" fill="${c.pn}"/>
       <rect x="134" y="30" width="3" height="46" fill="${c.bk}"/><path d="M137 30 h18 l-5 7 5 7 h-18z" fill="${c.rd}"/>
