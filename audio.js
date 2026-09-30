@@ -60,11 +60,18 @@ const AudioFX = (() => {
   const narBuffers = {};
   let narSrc = null, voiceSrc = null, voiceGen = 0, voiceDone = Promise.resolve();
 
+  /* 녹음 경로(audio/…)는 저장소 루트 기준이다. 동화는 tales/<이름>/ 안에서 열리므로 audio.js 위치를 기준으로 바꾼다 */
+  const ROOT_BASE = (() => {
+    const src = document.currentScript && document.currentScript.src;
+    return src ? src.replace(/audio\.js(\?.*)?$/, '') : '';
+  })();
+  const clipUrl = url => (/^(https?:|\/|\.\.?\/|blob:|data:)/.test(url) ? url : ROOT_BASE + url);
+
   async function loadClip(url) {
     const c = ensure();
     if (!c) throw new Error('no-audio-ctx');
     if (!narBuffers[url]) {
-      const res = await fetch(url);
+      const res = await fetch(clipUrl(url));
       if (!res.ok) throw new Error('fetch-fail');
       narBuffers[url] = await c.decodeAudioData(await res.arrayBuffer());
     }

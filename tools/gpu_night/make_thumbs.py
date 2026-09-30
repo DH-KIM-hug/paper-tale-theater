@@ -40,10 +40,17 @@ def old_style(src, dst):
     im.crop(box).resize((480, 480), Image.LANCZOS).save(dst, quality=84, method=6)
 
 T1, T2, T2L = [], [], []
-for src in sorted(glob.glob(os.path.join(RAW, 'thumb2_*.png'))):
-    tid = os.path.basename(src)[7:-4]; new_style(src, os.path.join(OUT, tid + '.webp'), SHEET['dark']); T2.append(tid)
-for src in sorted(glob.glob(os.path.join(RAW, 'thumb2L_*.png'))):
-    tid = os.path.basename(src)[8:-4]; new_style(src, os.path.join(OUT, tid + '_light.webp'), SHEET['light']); T2L.append(tid)
+# 같은 동화에 여러 판이 있으면 최신 판(thumb3 > thumb2)을 쓴다. thumb3 = 겹을 2~3개로 줄이고 장면을 크게
+def newest(prefixes):
+    got = {}
+    for pre in prefixes:  # 오래된 판부터 → 최신 판이 덮어씀
+        for src in sorted(glob.glob(os.path.join(RAW, pre + '*.png'))):
+            got[os.path.basename(src)[len(pre):-4]] = src
+    return got
+for tid, src in sorted(newest(['thumb2_', 'thumb3_']).items()):
+    new_style(src, os.path.join(OUT, tid + '.webp'), SHEET['dark']); T2.append(tid)
+for tid, src in sorted(newest(['thumb2L_', 'thumb3L_']).items()):
+    new_style(src, os.path.join(OUT, tid + '_light.webp'), SHEET['light']); T2L.append(tid)
 for src in sorted(glob.glob(os.path.join(RAW, 'thumb_*.png'))):
     tid = os.path.basename(src)[6:-4]
     if tid in T2: continue
