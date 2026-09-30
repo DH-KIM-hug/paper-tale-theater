@@ -1,4 +1,4 @@
-/* 해와 달이 된 오누이 (햇님 달님) — 배경은 페이퍼아트 그림(아래 BG 표), 배우·소품은 아직 임시 도형(그레이박스). 기획: TALES_PLAN.md §1 (3막 15장면)
+/* 해와 달이 된 오누이 (햇님 달님) — 배경·배우·소품·컷은 페이퍼아트 그림(아래 BG·ART 표), 그림이 없는 것만 임시 도형(그레이박스). 기획: TALES_PLAN.md §1 (3막 15장면)
    원작대로 엄마는 호랑이에게 잡아먹힌다(사용자 결정, 2026-09-29). 단, 먹는 장면은 보여주지 않고
    어둠 속 "어흥!" → 까만 화면 "꿀꺽…" 컷과 내레이션으로만 처리한다.
    호랑이는 헌 줄이 끊어져 수수밭에 엉덩방아 → 혹 달고 산으로 도망. 눈은 늘 동그랗고 순하다. */
@@ -15,7 +15,7 @@
        sm_bg_hill_night(바위·길이 없음) · sm_bg_window(문·창호지) · sm_bg_well_tree(우물가 나무) · sm_bg_well_top(우물 속)
      - hill0 / hill2는 sm_bg_hill_dusk를 색 보정해 구운 것(금빛 / 밤). 세 고개 모두 그 그림 속 바위를 호랑이 가림막으로 쓴다(HILL_ROCK).
      - room · backyard는 원본이 너무 어두워 밝기를 끌어올려 구웠다 (원본: assets/raw/v3). */
-  const ART = '../../assets/';
+  const AS = '../../assets/';
   const BG = {
     cottage: 'v3w/sm_bg_cottage.webp',
     kitchen: 'v3w/sm_bg_kitchen.webp',
@@ -28,8 +28,77 @@
     sorghum: null, // 생성 중: v3w/sm_bg_sorghum.webp
     heaven: null,  // 생성 중: v3w/sm_bg_heaven.webp
   };
+  /* ================= 배우·소품·컷 그림 (페이퍼아트, assets/v3w/sm_*.webp) =================
+     null = 쓸 그림이 없어 임시 도형(그레이박스)으로 그린다. 새 파일이 나오면 여기 한 줄만 바꾸면 된다.
+     - 오누이 나무 오르기(boy_climb·girl_climb): sm_kids_climb 한 장을 오빠·동생으로 나누고 나무 기둥을 지운 것
+       → 그레이박스 나무 기둥과 하늘 동아줄을 그대로 잡는다 (CLIMB: 기둥 자리가 발끝 x=0에 오게 옮겨 둔다)
+     - 해·달 얼굴(boy_face·girl_face): sm_boy·sm_girl에서 머리만 오린 것
+     - 참기름 병(oil): 병에 붙어 나온 얼굴(눈·볼)을 지운 것. 동아줄 두 개는 줄 아래 붙어 나온 얼굴 덩어리를 잘라낸 것
+     - 못 써서 그레이박스로 두는 것 (다시 뽑을 것):
+       kids_rope(줄을 줄다리기처럼 가로로 잡음) · sun_girl / moon_boy(해·달이 아니라 아이 몸에 얼굴이 여러 개) ·
+       lamp(초록 몸통이 배경 빼기에 반쯤 지워지고 얼굴이 붙음) · basket(떡에 얼굴, 떡 개수도 5개로 고정) ·
+       cut_eye(창호지 구멍이 아니라 호랑이 이마에 세 번째 눈) */
+  const ART = {
+    mom_wave: 'v3w/sm_mom_wave.webp', mom_basket: 'v3w/sm_mom_basket.webp',
+    boy: 'v3w/sm_boy.webp', girl: 'v3w/sm_girl.webp', kids_hug: 'v3w/sm_kids_hug.webp',
+    boy_climb: 'v3w/sm_boy_climb.webp', girl_climb: 'v3w/sm_girl_climb.webp',
+    boy_face: 'v3w/sm_boy_face.webp', girl_face: 'v3w/sm_girl_face.webp',
+    tiger: 'v3w/sm_tiger.webp', tiger_full: 'v3w/sm_tiger_full.webp', tiger_scarf: 'v3w/sm_tiger_scarf.webp',
+    tiger_axe: 'v3w/sm_tiger_axe.webp', tiger_slip: 'v3w/sm_tiger_slip.webp', tiger_bump: 'v3w/sm_tiger_bump.webp',
+    rope_good: 'v3w/sm_rope_good.webp', rope_bad: 'v3w/sm_rope_bad.webp', oil: 'v3w/sm_oil.webp',
+    kids_rope: null, sun_girl: null, moon_boy: null, lamp: null, basket: null,
+    cut_well: 'v3w/sm_cut_well.webp', cut_snap: 'v3w/sm_cut_snap.webp', cut_eye: null,
+  };
+  const artOK = {};
+  const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
+  /* 배우 그림: 발끝(0,0) 기준 w×h 상자 안에 아래·가운데 맞춤. flip: 그림이 코드가 가정한 쪽(왼쪽)과 반대를 볼 때
+     (엔진 face('right')가 좌우를 뒤집으므로, 뒤집지 않은 그림 = 왼쪽을 본다) */
+  function sprite(T, g, key, w, h, { flip = false, dx = 0, dy = 0 } = {}) {
+    const u = artUrl(key); if (!u) return null;
+    const wrap = T.el('g', { filter: 'url(#pp)', transform: `translate(${dx} ${dy})${flip ? ' scale(-1 1)' : ''}` }, g);
+    T.el('image', { href: u, x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'xMidYMax meet' }, wrap);
+    return wrap;
+  }
+  /* 여러 자세 그림을 한 배우 안에 겹쳐 두고 하나만 보인다. 없는 자세는 기본(첫 자세)으로. 그림이 하나도 없으면 null */
+  function poseArt(T, g, defs) {
+    const imgs = {};
+    let first = null;
+    for (const [k, [key, w, h, o]] of Object.entries(defs)) { const s = sprite(T, g, key, w, h, o); if (s) { imgs[k] = s; first = first || k; } }
+    if (!first) return null;
+    const pa = { cur: first, has: k => !!imgs[k], el: k => imgs[k] };
+    pa.set = k => { if (!imgs[k]) k = first; pa.cur = k; Object.entries(imgs).forEach(([n, s]) => { s.style.display = n === k ? '' : 'none'; }); };
+    pa.set(first);
+    return pa;
+  }
+  /* 그림 컷 (없으면 null → 부른 쪽이 임시 컷) */
+  const cutArt = (T, key, sfx, hold, onShow) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx, hold }], { hold, onShow }) : null);
+  /* 동아줄 그림: 줄 끝 한 장(아래)을 그대로 두고, 그 위는 같은 그림의 윗부분(꼬임 주기만큼)을 하늘 끝까지 이어 붙인다.
+     ROPE: [그림 폭, 높이, 이어 붙일 윗부분 높이(px, 꼬임 주기의 배수)] */
+  const ROPE = { rope_good: [39, 530, 316], rope_bad: [92, 531, 198] };
+  let ropeN = 0;
+  function ropeArt(T, p, key, cx, bottom, k, top = -3400) {
+    const u = artUrl(key); if (!u) return null;
+    const [iw, ih, tile] = ROPE[key], w = iw * k, h = ih * k, th = tile * k, y0 = bottom - h;
+    const id = 'smRope' + (++ropeN);
+    const pat = T.el('pattern', { id, patternUnits: 'userSpaceOnUse', x: cx - w / 2, y: y0, width: w, height: th }, T.el('defs', {}, p));
+    T.el('image', { href: u, x: 0, y: 0, width: w, height: h, preserveAspectRatio: 'none' }, pat);
+    const g = T.el('g', { filter: 'url(#pp)' }, p);
+    T.el('rect', { x: cx - w / 2, y: top, width: w, height: y0 - top + 1, fill: `url(#${id})` }, g);
+    T.el('image', { href: u, x: cx - w / 2, y: y0, width: w, height: h, preserveAspectRatio: 'none' }, g);
+    return g;
+  }
+  /* 크기 (무대 단위, 배우 scale 1): 자세가 바뀌어도 머리 크기가 튀지 않게 그림마다 맞춘 값 */
+  const SZ = {
+    mom_wave: [123, 240], mom_basket: [130, 240],
+    boy: [97, 165], girl: [105, 160], kids_hug: [140, 185],
+    boy_climb: [95, 135], girl_climb: [115, 139],
+    tiger: [150, 235], tiger_full: [192, 230], tiger_scarf: [179, 225], tiger_axe: [159, 240], tiger_slip: [218, 225], tiger_bump: [176, 205],
+  };
+  /* 나무 오르기 그림: 지운 기둥 가운데가 그림 폭의 어디였는지 (conv 결과) → 발끝 x=0이 기둥(줄) 가운데 */
+  const CLIMB = { boy_climb: .846, girl_climb: .523 };
+  const climbDx = k => SZ[k][0] * (.5 - CLIMB[k]);
   const bgOK = {};
-  const bgUrl = k => (BG[k] && bgOK[k] !== false ? ART + BG[k] : null);
+  const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
   /* 무대 꽉 채우기: 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992 그대로) */
   const FULL = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const place = (T, p, u, box, attrs = {}) =>
@@ -91,8 +160,9 @@
   }
   const cakeSpot = i => [-30 + 15 * i, -30 - (i % 2) * 9];
 
-  function drawMom(T, g, { basket = false } = {}) {
+  function drawMom(T, g0, { basket = false } = {}) {
     const { el, paper } = T, P = {};
+    const g = el('g', {}, g0); // 임시 도형 (그림이 있으면 숨긴다)
     paper(g, [
       ['path', { d: 'M-42 -112 L42 -112 L64 0 L-64 0 Z', fill: C.lav }],
       ['rect', { x: -54, y: -152, width: 18, height: 58, rx: 9, fill: C.cream }],
@@ -118,11 +188,25 @@
     paper(P.basket, [['path', { d: 'M-46 -28 H46 L36 12 H-36 Z', fill: C.gold }], ['path', { d: 'M-40 -14 H40 M-38 -2 H38', stroke: '#B88A3A', 'stroke-width': 3 }]]);
     P.setCakes = n => P.cakes.forEach((c, i) => c.setAttribute('opacity', i < n ? 1 : 0));
     P.arm = origin(paper(g, [['rect', { x: 36, y: -152, width: 18, height: 58, rx: 9, fill: C.cream }], ['circle', { cx: 45, cy: -94, r: 9, fill: C.skin }]]), 45, -146);
+    /* 그림: 손 흔드는 엄마(정면) / 떡 바구니 든 엄마(그림은 오른쪽을 봄 → 뒤집어 넣는다).
+       바구니 그림에는 떡이 늘 담겨 있어서 떡 칸(setCakes)은 임시 도형에서만 보인다 */
+    P.art = poseArt(T, g0, { wave: ['mom_wave', ...SZ.mom_wave], basket: ['mom_basket', ...SZ.mom_basket, { flip: true }] });
+    P.basketAt = [62, -96]; // 떡이 날아가 닿는 바구니 자리 (발끝 기준)
+    P.holdBasket = on => { P.basket.setAttribute('opacity', on ? 1 : 0); if (P.art) P.art.set(on ? 'basket' : 'wave'); };
+    if (P.art) {
+      g.style.display = 'none';
+      P.basketAt = [-SZ.mom_basket[0] * (.705 - .5), -SZ.mom_basket[1] * (1 - .632)]; // 그림 속 바구니 가운데 (뒤집힌 그림)
+      P.arm = el('g', {}, g0); // 팔 흔들기는 그림에 없음 → 빈 그룹 (wave()가 몸을 살랑)
+      P.holdBasket(basket);
+    }
     return P;
   }
+  /* 손 흔들기: 임시 도형은 팔을 돌리고, 그림은 몸을 살랑 */
+  const wave = (T, a) => (a.P.art ? a.wiggle(5, 900) : waveArm(T, a.P.arm));
 
-  function drawKid(T, g, girl) {
+  function drawKid(T, g0, girl) {
     const { el, paper } = T, P = {};
+    const g = el('g', {}, g0); // 임시 도형 (그림이 있으면 숨긴다)
     const top = girl ? C.pink : C.gold;
     if (girl) paper(g, [['path', { d: 'M-30 -66 L30 -66 L40 0 L-40 0 Z', fill: C.lav }]]);
     else paper(g, [['rect', { x: -26, y: -54, width: 22, height: 54, rx: 8, fill: C.cream }], ['rect', { x: 4, y: -54, width: 22, height: 54, rx: 8, fill: C.cream }],
@@ -132,11 +216,30 @@
     P.head = origin(el('g', {}, g), 0, -98);
     drawKidFace(T, P.head, girl, 0, -126, 1);
     P.arm = origin(paper(g, [['rect', { x: 28, y: -94, width: 14, height: 42, rx: 7, fill: top }], ['circle', { cx: 35, cy: -52, r: 7, fill: C.skin }]]), 35, -90);
+    /* 그림: 서서 손 흔들기(정면) / 나무·줄 오르기 / 꼭 껴안기(오빠 배우에 둘이 함께 — 그동안 동생 배우는 숨긴다) */
+    const k = girl ? 'girl' : 'boy', c = k + '_climb';
+    const defs = { stand: [k, ...SZ[k]], climb: [c, ...SZ[c], { dx: climbDx(c) }] };
+    if (!girl) defs.hug = ['kids_hug', ...SZ.kids_hug, { dx: -55 }];
+    P.art = poseArt(T, g0, defs);
+    P.pose = pk => {
+      if (!P.art) return;
+      if (girl && pk === 'hug') { g0.style.visibility = 'hidden'; return; }
+      g0.style.visibility = '';
+      P.art.set(pk);
+    };
+    if (P.art) { g.style.display = 'none'; P.arm = el('g', {}, g0); }
     return P;
   }
   /* 얼굴만 (해·달 얼굴, 우물 그림자에도 쓴다) */
   function drawKidFace(T, p, girl, cx, cy, s) {
     const f = T.el('g', { transform: `translate(${cx},${cy}) scale(${s})` }, p);
+    /* 그림 얼굴 (서 있는 그림에서 머리만 오린 것): 얼굴 가운데가 (0,0) 쯤 오게 */
+    const fu = artUrl(girl ? 'girl_face' : 'boy_face');
+    if (fu) {
+      const [w, h, y] = girl ? [110, 70, -47] : [74, 71, -46];
+      T.el('image', { href: fu, x: -w / 2, y, width: w, height: h, filter: 'url(#pp)' }, f);
+      return f;
+    }
     const shapes = [
       ['circle', { cx: 0, cy: 0, r: 30, fill: C.skin }],
       ['path', { d: 'M-31 -2 Q-30 -34 0 -34 Q30 -34 31 -2 Q16 -18 0 -16 Q-16 -18 -31 -2 Z', fill: C.hair }],
@@ -152,8 +255,9 @@
   }
 
   /* 호랑이: 감빛 통통한 아기 호랑이, 짙은 갈색 줄무늬 조각, 크림 주둥이, 동그란 큰 눈, 분홍 볼 */
-  function drawTiger(T, g) {
+  function drawTiger(T, g0) {
     const { el, paper } = T, P = {};
+    const g = el('g', {}, g0); // 임시 도형 (그림이 있으면 숨긴다)
     P.tail = paper(g, [['path', { d: 'M48 -40 Q110 -40 104 -100 Q100 -128 118 -140', stroke: C.persimmon, 'stroke-width': 16, fill: 'none', 'stroke-linecap': 'round' }],
       ['circle', { cx: 118, cy: -140, r: 10, fill: C.stripe }]]);
     paper(g, [['ellipse', { cx: -30, cy: -14, rx: 25, ry: 16, fill: C.persimmon }], ['ellipse', { cx: 30, cy: -14, rx: 25, ry: 16, fill: C.persimmon }]]);
@@ -187,6 +291,30 @@
     P.scarf.setAttribute('opacity', 0);
     P.bump = paper(P.head, [['circle', { cx: 16, cy: -226, r: 15, fill: '#F2A07A' }], ['path', { d: 'M8 -232 Q16 -240 24 -232', stroke: '#fff', 'stroke-width': 3, fill: 'none' }]]);
     P.bump.setAttribute('opacity', 0);
+    /* 차림·자세: 코드가 호랑이 모습을 바꾸는 자리(수건 쓰기·도끼·미끄러짐·혹)에서 그림도 바뀐다.
+       wear(k[, on]): 'scarf' | 'axe' | 'bump' — 임시 도형은 조각을 보이고, 그림은 자세를 고른다 */
+    const st = { scarf: 0, axe: 0, bump: 0, slip: 0, belly: 1 };
+    P.art = poseArt(T, g0, {
+      stand: ['tiger', ...SZ.tiger], full: ['tiger_full', ...SZ.tiger_full], scarf: ['tiger_scarf', ...SZ.tiger_scarf],
+      axe: ['tiger_axe', ...SZ.tiger_axe, { flip: true }], slip: ['tiger_slip', ...SZ.tiger_slip], bump: ['tiger_bump', ...SZ.tiger_bump],
+    });
+    const upd = () => {
+      if (!P.art) return;
+      const k = st.bump ? 'bump' : st.slip ? 'slip' : st.axe ? 'axe' : st.scarf ? 'scarf' : st.belly >= 3.3 ? 'full' : 'stand';
+      P.art.set(k);
+      // 떡을 먹을수록 선 그림을 옆으로 조금씩 불린다 (다 먹으면 배 볼록 그림으로)
+      const e = P.art.el('stand');
+      if (e) e.style.transform = k === 'stand' ? `scaleX(${(1 + .06 * (st.belly - 1)).toFixed(3)})` : '';
+    };
+    const part = { scarf: P.scarf, axe: P.axe, bump: P.bump };
+    P.wear = (k, on = true) => { st[k] = on ? 1 : 0; part[k].setAttribute('opacity', on ? 1 : 0); upd(); };
+    P.slip = on => { st.slip = on ? 1 : 0; upd(); };
+    const setBelly0 = P.setBelly;
+    P.setBelly = n => { setBelly0(n); st.belly = n; upd(); };
+    /* 도끼 찍기: 임시 도형은 도끼를 휘두르고, 그림은 몸째 살짝 */
+    P.chop = () => (P.art ? T.anim(P.art.el(P.art.cur), [{ rotate: '0deg' }, { rotate: '-7deg' }, { rotate: '0deg' }], 360)
+      : T.anim(P.axe, [{ transform: 'rotate(0deg)' }, { transform: 'rotate(-40deg)' }, { transform: 'rotate(0deg)' }], 360));
+    if (P.art) { g.style.display = 'none'; upd(); }
     return P;
   }
   const mk = (T, p, x, y, draw, s = 1, opt) => { let P; const a = T.actor(p, x, y, g => { P = draw(T, g, opt); }, { scale: s }); a.P = P; return a; };
@@ -296,8 +424,11 @@
 
     /* 배경 그림 미리 불러오기: 첫 장면 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 없는 파일은 그레이박스로 */
     const loads = {};
-    Object.keys(BG).filter(k => BG[k]).forEach(k => { loads[k] = T.preload(ART + BG[k]).then(ok => { bgOK[k] = ok; }); });
-    await Promise.race([loads.cottage || Promise.resolve(), sleep(2500)]);
+    Object.keys(BG).filter(k => BG[k]).forEach(k => { loads[k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
+    const artLoads = {};
+    Object.keys(ART).filter(k => ART[k]).forEach(k => { artLoads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
+    // 첫 장면 배우(엄마·오누이) 그림도 함께 기다린다 — 못 불러온 그림은 그레이박스로
+    await Promise.race([Promise.all([loads.cottage, artLoads.mom_wave, artLoads.boy, artLoads.girl].filter(Boolean)), sleep(2500)]);
 
     /* ====== 1막 — 떡 고개 ====== */
     /* --- 1. 오막살이 아침 --- */
@@ -319,11 +450,12 @@
     await say('엄마가 일하러 가요. 오누이를 톡 눌러서 인사해요!');
     for (const k of [boy, girl]) {
       await T.tap(k.pos, { prompt: '오빠랑 동생을 톡 눌러서 "다녀오세요!" 해 봐요!' });
-      AudioFX.pop(); k.hop(26); waveArm(T, k.P.arm); T.pop(k.x, k.y - 200, '안녕!', C.pine);
+      AudioFX.pop(); k.hop(26); wave(T, k); T.pop(k.x, k.y - 200, '안녕!', C.pine);
       await sleep(500);
     }
-    waveArm(T, mom.P.arm);
+    wave(T, mom);
     await say('엄마가 말했어요. "문 꼭 잠그고 엄마 기다려라~"');
+    mom.face('right');
     await mom.move(1180, 500, 1800);
 
     /* --- 2. 떡 받아 오기 (부잣집 부엌) ---
@@ -338,7 +470,7 @@
       T.clear();
       // 그림 부엌: 상 위의 그림 떡 접시를 이 접시가 덮는다 (떡이 줄면 그림 떡도 안 보이게)
       const [dx, dy, ry] = kitchenBG(T) ? [-45, -148, 34] : [0, 0, 26];
-      T.world.appendChild(mom.pos); mom.setScale(1.4); mom.place(290, 545); mom.P.basket.setAttribute('opacity', 1); mom.P.setCakes(0);
+      T.world.appendChild(mom.pos); mom.setScale(1.4); mom.place(PT && mom.P.art ? 350 : 290, 545); mom.face('right'); mom.P.holdBasket(!mom.P.art); mom.P.setCakes(0); // 그림: 첫 떡이 닿으면 바구니를 든다
       const plate = el('g', { id: 'plate' }, T.world);
       el('rect', { x: 560 + dx, y: 300 + dy, width: 260, height: 140, fill: 'transparent' }, plate);
       T.paper(plate, [['ellipse', { cx: 690 + dx, cy: 400 + dy, rx: 110, ry, fill: C.snow, stroke: C.gold, 'stroke-width': 5 }]]);
@@ -346,7 +478,10 @@
     });
     await say('엄마는 부잣집에서 하루 종일 부지런히 일했어요.');
     await say('"수고했어요. 떡 가져가요!" 떡을 톡톡 눌러서 바구니에 담아요!');
-    const toBasket = i => { const [bx, by] = cakeSpot(i); return [mom.x + (62 + bx) * mom.scale, mom.y + (-96 + by) * mom.scale]; };
+    const toBasket = i => {
+      const [bx, by] = mom.P.art ? [0, -12] : cakeSpot(i), [ax, ay] = mom.P.basketAt;
+      return [mom.x + mom.flip * (ax + bx) * mom.scale, mom.y + (ay + by) * mom.scale];
+    };
     const fly = async (x0, y0, x1, y1, s = 1.4, dur = 600) => {
       const g = el('g', {}, T.fx); drawCake(T, g, 0, 0, s);
       const mx = (x0 + x1) / 2, my = Math.min(y0, y1) - 140;
@@ -359,7 +494,7 @@
       const c = plateCakes[5 - i]; c.g.setAttribute('opacity', 0);
       const [x1, y1] = toBasket(i - 1);
       T.tone(500 + i * 90, .15, { type: 'triangle', vol: .18 });
-      fly(c.x, c.y, x1, y1, 1.8, 450).then(() => { inBasket = Math.round(TOTAL * i / 5); showBasket(); AudioFX.pop(); });
+      fly(c.x, c.y, x1, y1, 1.8, 450).then(() => { inBasket = Math.round(TOTAL * i / 5); showBasket(); mom.P.holdBasket(true); AudioFX.pop(); });
       T.pop(c.x, c.y - 90, '영차!', C.bean);
     } });
     await sleep(700);
@@ -420,7 +555,7 @@
           rock = drawRock(T, T.world);
           if (TX !== 820) rock.setAttribute('transform', `translate(${TX - 820} 0)`);
         }
-        T.world.appendChild(mom.pos); mom.setScale(1); mom.place(-120, 500);
+        T.world.appendChild(mom.pos); mom.setScale(1); mom.place(-120, 500); mom.face('right');
       });
       if (n === 0) await say('해가 뉘엿뉘엿 지고 있어요. 엄마가 첫째 고개를 넘어요.');
       else if (n === 1) await say('하늘이 붉어졌어요. 엄마가 둘째 고개를 넘어요.');
@@ -466,7 +601,7 @@
       }
       AudioFX.gulp && AudioFX.gulp();
       await say([`호랑이는 떡 ${CNT[ASKS[0] - 1]} 개를 꿀꺽! 배가 볼록해졌어요.`, `떡 ${CNT[ASKS[1] - 1]} 개를 또 꿀꺽! 배가 더 볼록해졌어요.`, '남은 떡을 몽땅 꿀꺽! 배가 빵빵해졌어요!'][n]);
-      if (n < 2) { AudioFX.whoosh(); await Promise.all([tiger.move(1250, 500, 900, 'ease-in'), tiger.hop(30, 450)]); tiger.face('left'); await mom.move(1180, 500, 1400); }
+      if (n < 2) { AudioFX.whoosh(); tiger.face('right'); await Promise.all([tiger.move(1250, 500, 900, 'ease-in'), tiger.hop(30, 450)]); tiger.face('left'); mom.face('right'); await mom.move(1180, 500, 1400); }
     }
 
     /* --- 5. 떡이 떨어지자 (원작: 엄마를 잡아먹는다 — 화면에는 보여주지 않는다) --- */
@@ -488,10 +623,10 @@
       el('text', { x: 200, y: 165, 'text-anchor': 'middle', 'font-size': 56, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '꿀꺽…' }, svg);
     }, { hold: 2200 });
     await say('호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.');
-    tiger.P.scarf.setAttribute('opacity', 1);
+    tiger.P.wear('scarf');
     await T.cut(svg => {
       const g = el('g', { transform: 'translate(200,290) scale(1)' }, svg);
-      const P = drawTiger(T, g); P.scarf.setAttribute('opacity', 1); P.setBelly(2.5);
+      const P = drawTiger(T, g); P.wear('scarf'); P.setBelly(2.5);
       el('text', { x: 200, y: 44, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '엄마 흉내 내야지~' }, svg);
       cutVoice('cut_mimic', 450);
     }, { sfx: 'whoosh', hold: 2600 });
@@ -713,7 +848,7 @@
     yard.insertBefore(boy.pos, jarsG); yard.insertBefore(girl.pos, jarsG);
     await Promise.all([boy.move(YJ.hide[0], 510, 500), girl.move(YJ.hide[1], 510, 500)]);
     prowl = mkTiger(T, yard, YJ.prowl[0], 530, 1);
-    prowl.P.scarf.setAttribute('opacity', 1); prowl.P.setBelly(2.4); prowl.face('right');
+    prowl.P.wear('scarf'); prowl.P.setBelly(2.4); prowl.face('right');
     await prowl.move(YJ.prowl[1], 530, 1400);
     prowl.face('left'); await sleep(350); prowl.face('right'); await sleep(350); prowl.face('left');
     T.pop(500, 170, '두리번두리번', C.bean);
@@ -748,8 +883,11 @@
     await say('우물가에 커다란 나무가 있어요. 톡톡 눌러서 영차영차 올라가요!');
     await T.mash(stageWrap, { count: 5, prompt: '화면을 톡톡 눌러서 나무를 올라가요!', onStep: i => {
       yeongcha(T, i);
-      const by = 560 - i * 140, gy = i === 5 ? -140 : by + 80;
-      boy.move(i === 5 ? 540 : 610, by, 420); girl.move(i === 5 ? 440 : 560, gy, 420);
+      // 그림: 오르는 동안은 나무 오르기 자세로 기둥(x 640)을 꼭 잡고, 동생은 오빠 발밑에 붙어서. 꼭대기에서 다시 선다
+      const climbArt = boy.P.art && i < 5;
+      boy.P.pose(climbArt ? 'climb' : 'stand'); girl.P.pose(climbArt ? 'climb' : 'stand');
+      const by = 560 - i * 140, gy = i === 5 ? -140 : by + (climbArt ? 128 : 80);
+      boy.move(i === 5 ? 540 : climbArt ? 656 : 610, by, 420); girl.move(i === 5 ? 440 : climbArt ? 656 : 560, gy, 420); // 656: 손이 기둥을 감싸게 기둥(640)보다 조금 오른쪽
       boy.hop(10, 420); girl.hop(10, 420);
       tree.to(560, Math.min(280, by - 60), 1, 420);
       T.pop(i % 2 ? 300 : 760, 200, '영차!', C.pine);
@@ -758,7 +896,7 @@
     await say('오누이는 나무 꼭대기까지 올라갔어요!');
     await tree.to(560, 90, .58, 1400);
     const tg = mkTiger(T, tree, -300, 560, 1.1);
-    tg.P.scarf.setAttribute('opacity', 1); tg.P.setBelly(2.4); tg.face('right');
+    tg.P.wear('scarf'); tg.P.setBelly(2.4); tg.face('right');
     await tg.move(420, 560, 1500);
     await say('호랑이가 뒷마당에 왔어요. "옳지! 우물 속에 숨었구나!"');
 
@@ -780,7 +918,7 @@
       T.paper(bucket, [['path', { d: 'M0 -600 V-30', stroke: '#C9B48A', 'stroke-width': 5, fill: 'none' }], ['path', { d: 'M-34 -30 H34 L26 20 H-26 Z', fill: C.bark }], ['path', { d: 'M-30 -30 Q0 -64 30 -30', stroke: C.ink, 'stroke-width': 4, fill: 'none' }]]);
       bucket.setAttribute('transform', 'translate(700,-120)');
       const t = mkTiger(T, T.world, 820, 800, 1.5);
-      t.P.scarf.setAttribute('opacity', 1);
+      t.P.wear('scarf');
       tHead = t;
     });
     await say('호랑이가 우물 속을 들여다봤어요. 우물 물에 오누이 얼굴이 비쳤거든요!');
@@ -793,6 +931,8 @@
     await T.tap(refl, { prompt: '우물에 비친 오누이 얼굴을 톡!' });
     giggle(T); T.pop(500, 120, '킥킥!', C.bean);
     await T.anim(refl, [{ rotate: '0deg' }, { rotate: '-6deg' }, { rotate: '6deg' }, { rotate: '-4deg' }, { rotate: '0deg' }], 700);
+    // 그림 컷: 우물을 들여다보는 호랑이 + 나무 위에서 킥킥 웃는 오누이 (그림이 없으면 건너뛴다)
+    await cutArt(T, 'cut_well', null, 2400, () => setTimeout(() => giggle(T), 300));
     await say('나무 위에서 오누이가 그만 킥킥 웃고 말았어요.');
     tHead.hop(30);
     await say('"어? 위에서 웃음소리가?" 호랑이가 고개를 번쩍 들었어요.');
@@ -804,13 +944,17 @@
       tree.to(560, 90, .58, 0);
       tiger.pos.remove();
       const t = mkTiger(T, tree, 760, 560, 1.1);
-      t.P.scarf.setAttribute('opacity', 1); t.P.setBelly(2.4);
+      t.P.wear('scarf'); t.P.setBelly(2.4);
       T.world.__t = t;
       oil = el('rect', { x: 606, y: 560, width: 70, height: 0, fill: C.amber, opacity: .75 }, tree);
       tree.insertBefore(oil, t.pos);
       bottle = el('g', {}, tree);
       el('rect', { x: 860, y: 330, width: 170, height: 240, fill: 'transparent' }, bottle);
-      T.paper(bottle, [['path', { d: 'M905 560 Q890 470 930 440 V390 H960 V440 Q1000 470 985 560 Z', fill: '#E0B560' }], ['rect', { x: 924, y: 368, width: 42, height: 26, rx: 6, fill: C.bark }],
+      if (sprite(T, el('g', { transform: 'translate(945 564)' }, bottle), 'oil', 127, 210)) {
+        // 그림 병 (얼굴 지운 자리)에 이름표
+        T.paper(bottle, [['rect', { x: 907, y: 486, width: 76, height: 36, rx: 6, fill: C.cream }],
+          ['text', { x: 945, y: 512, 'text-anchor': 'middle', 'font-size': 21, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '참기름' }]]);
+      } else T.paper(bottle, [['path', { d: 'M905 560 Q890 470 930 440 V390 H960 V440 Q1000 470 985 560 Z', fill: '#E0B560' }], ['rect', { x: 924, y: 368, width: 42, height: 26, rx: 6, fill: C.bark }],
         ['rect', { x: 905, y: 470, width: 80, height: 40, rx: 6, fill: C.cream }],
         ['text', { x: 945, y: 499, 'text-anchor': 'middle', 'font-size': 22, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '참기름' }]]);
       origin(bottle, 945, 470);
@@ -828,10 +972,12 @@
     T.pop(640, 110, '주르륵', C.gold);
     await sleep(400);
     for (let k = 0; k < 2; k++) {
+      tt.P.slip(true); // 그림: 기어오르다 미끄러지는 내내 허우적 자세 (앉은 수건 그림이 떠 있지 않게)
       await tt.move(640, 380, 700);
       AudioFX.slide(); T.pop(760, 180 + k * 30, k ? '쭈르륵!' : '미끌!', C.bean);
       await tt.move(640, 560, 380, 'ease-in');
       AudioFX.thud(); tt.wiggle(10, 300);
+      await sleep(250); tt.P.slip(false);
     }
     await say('미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.');
     await tree.to(500, -200, 1, 900);
@@ -847,32 +993,35 @@
     T.paper(top, [['circle', { cx: 500, cy: 40, r: 200, fill: '#35604A' }], ['circle', { cx: 250, cy: 90, r: 120, fill: C.pine }], ['circle', { cx: 760, cy: 100, r: 130, fill: C.pine }],
       ['path', { d: 'M180 250 H820 V282 H180 Z', fill: C.bark }]]);
     const sb = mkBoy(T, top, 560, 256, .95), sg = mkGirl(T, top, 440, 256, .88);
+    sb.P.pose('hug'); sg.P.pose('hug'); // 그림: 둘이 꼭 껴안은 한 장 (오빠 배우에)
     const tr1 = tremble(sb), tr2 = tremble(sg);
     sky(T, bot, '#2A3558');
     T.paper(bot, [['rect', { x: 430, y: 280, width: 140, height: 400, fill: C.bark }]]);
     const notches = el('g', {}, bot);
     for (let k = 0; k < 14; k++) el('path', { d: `M440 ${160 + k * 40} L470 ${172 + k * 40}`, stroke: '#4A3222', 'stroke-width': 6, 'stroke-linecap': 'round' }, notches);
     const st = mkTiger(T, bot, 470, 580, .9);
-    st.P.scarf.setAttribute('opacity', 1); st.P.setBelly(2.4); st.P.axe.setAttribute('opacity', 1);
+    st.P.wear('scarf'); st.P.setBelly(2.4); st.P.wear('axe');
     el('rect', { x: -1400, y: 274, width: 3800, height: 12, fill: C.gold }, split);
     Narrator.speak('호랑이가 도끼로 콕콕 찍으며 올라와요! 오누이는 덜덜 떨었어요.');
     let ny = 0;
     for (let k = 0; k < 7; k++) {
       kok(T); T.pop(640, 360, '콕!', C.bean);
-      T.anim(st.P.axe, [{ transform: 'rotate(0deg)' }, { transform: 'rotate(-40deg)' }, { transform: 'rotate(0deg)' }], 360);
+      st.P.chop();
       st.hop(12, 360);
       ny += 40; T.anim(notches, [{ transform: `translateY(${ny - 40}px)` }, { transform: `translateY(${ny}px)` }], 360);
       await sleep(640);
     }
     tr1.cancel(); tr2.cancel();
     split.remove();
-    tt.P.axe.setAttribute('opacity', 1);
+    tt.P.wear('axe');
     tt.place(640, 240);
     await tree.to(560, 90, .58, 900);
+    boy.P.pose('hug'); girl.P.pose('hug');
     const tr3 = tremble(boy), tr4 = tremble(girl);
     await say('호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.');
     await say('"하늘님, 튼튼한 동아줄을 내려 주세요!"');
     tr3.cancel(); tr4.cancel();
+    boy.P.pose('stand'); girl.P.pose('stand');
 
     /* --- 13. 하늘 동아줄: 줄 고르기 + 구름 뚫고 오르기 --- */
     let skyV, ropeGood, ropeBad;
@@ -896,12 +1045,14 @@
       }
       ropeGood = el('g', {}, skyV);
       el('rect', { x: 250, y: -200, width: 150, height: 700, fill: 'transparent' }, ropeGood);
-      T.paper(ropeGood, [['path', { d: 'M325 -3400 V470', stroke: C.gold, 'stroke-width': 26, fill: 'none' }], ['ellipse', { cx: 325, cy: 470, rx: 26, ry: 18, fill: C.gold }]]);
-      el('path', { d: 'M325 -3400 V460', stroke: '#B88A3A', 'stroke-width': 26, 'stroke-dasharray': '6 18', fill: 'none' }, ropeGood);
+      if (!ropeArt(T, ropeGood, 'rope_good', 325, 484, .78)) {
+        T.paper(ropeGood, [['path', { d: 'M325 -3400 V470', stroke: C.gold, 'stroke-width': 26, fill: 'none' }], ['ellipse', { cx: 325, cy: 470, rx: 26, ry: 18, fill: C.gold }]]);
+        el('path', { d: 'M325 -3400 V460', stroke: '#B88A3A', 'stroke-width': 26, 'stroke-dasharray': '6 18', fill: 'none' }, ropeGood);
+      }
       [[292, 300], [360, 200], [300, 90], [355, 380]].forEach(([x, y]) => el('path', { d: `M${x} ${y - 14} L${x + 4} ${y - 4} L${x + 14} ${y} L${x + 4} ${y + 4} L${x} ${y + 14} L${x - 4} ${y + 4} L${x - 14} ${y} L${x - 4} ${y - 4} Z`, fill: '#FFF3C4' }, ropeGood));
       ropeBad = el('g', {}, skyV);
       el('rect', { x: 600, y: -200, width: 150, height: 700, fill: 'transparent' }, ropeBad);
-      T.paper(ropeBad, [['path', { d: 'M675 -3400 V200 Q690 260 668 320 Q690 380 675 440', stroke: '#9A8466', 'stroke-width': 8, fill: 'none', 'stroke-dasharray': '40 7' }],
+      if (!ropeArt(T, ropeBad, 'rope_bad', 675, 478, .45)) T.paper(ropeBad, [['path', { d: 'M675 -3400 V200 Q690 260 668 320 Q690 380 675 440', stroke: '#9A8466', 'stroke-width': 8, fill: 'none', 'stroke-dasharray': '40 7' }],
         ['path', { d: 'M675 440 L660 470 M675 440 L676 474 M675 440 L692 468 M671 250 L650 244 M680 330 L700 324', stroke: '#9A8466', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }],
         ['rect', { x: 664, y: 120, width: 22, height: 26, rx: 4, fill: '#7A6A52' }]]);
       boy = mkBoy(T, skyV, 470, 510, 1); girl = mkGirl(T, skyV, 560, 510, .92);
@@ -922,14 +1073,17 @@
     AudioFX.jingle();
     T.anim(ropeBad, [{ transform: 'translateY(0)' }, { transform: 'translateY(-1400px)' }], { duration: 1200, easing: 'ease-in' }).then(() => ropeBad.remove());
     await say('맞아요! 굵고 반짝이는 새 동아줄이에요.');
-    await Promise.all([boy.move(360, 330, 600), girl.move(360, 470, 600)]);
+    // 그림: 줄 오르기 자세로 동아줄(x 325)을 꼭 잡는다 (동생은 오빠 발밑에)
+    const RX = boy.P.art ? 325 : 360, GAP = boy.P.art ? 128 : 140;
+    boy.P.pose('climb'); girl.P.pose('climb');
+    await Promise.all([boy.move(RX, 330, 600), girl.move(RX, 330 + GAP, 600)]);
     await say('줄을 꼭 잡고, 화면을 위로 쓱쓱 밀어서 올라가요!');
     let step = 0;
     await T.swipe(stageWrap, { dir: 'up', count: 6, prompt: '화면을 위로 쓱 밀어서 올라가요!', onStep: () => {
       step++;
       const by = 330 - step * 450;
       AudioFX.whoosh(); yeongcha(T, step);
-      boy.move(360, by, 650); girl.move(360, by + 140, 650);
+      boy.move(RX, by, 650); girl.move(RX, by + GAP, 650);
       skyV.to(500, by + 30, 1, 650);
       if (step === 3) Narrator.speak('구름을 뚫고 쑥쑥!');
     } });
@@ -941,22 +1095,22 @@
     await say('호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.');
     const cutText = (svg, t, s = 40) => el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': s, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: t }, svg);
     await T.cut(svg => {
-      el('path', { d: 'M200 0 V120 Q210 150 196 180', stroke: '#9A8466', 'stroke-width': 7, fill: 'none', 'stroke-dasharray': '30 6' }, svg);
-      const g = el('g', { transform: 'translate(200,300) scale(.85)' }, svg); const P = drawTiger(T, g); P.scarf.setAttribute('opacity', 1); P.setBelly(2.4);
+      if (!ropeArt(T, svg, 'rope_bad', 200, 150, .4, -20)) el('path', { d: 'M200 0 V120 Q210 150 196 180', stroke: '#9A8466', 'stroke-width': 7, fill: 'none', 'stroke-dasharray': '30 6' }, svg);
+      const g = el('g', { transform: 'translate(200,300) scale(.85)' }, svg); const P = drawTiger(T, g); P.wear('scarf'); P.setBelly(2.4);
       cutText(svg, '삐걱… 삐걱…', 34);
       cutVoice('cut_creak', 500);
     }, { hold: 2200 });
     creak(T);
-    await T.cut(svg => {
+    await (cutArt(T, 'cut_snap', 'pow', 2200, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
       el('path', { d: 'M200 0 V90 L190 100 M205 100 L212 92', stroke: '#9A8466', 'stroke-width': 7, fill: 'none' }, svg);
-      const g = el('g', { transform: 'translate(200,320) scale(.85) rotate(12)' }, svg); const P = drawTiger(T, g); P.scarf.setAttribute('opacity', 1); P.oMouth(); P.setBelly(2.4);
+      const g = el('g', { transform: 'translate(200,320) scale(.85) rotate(12)' }, svg); const P = drawTiger(T, g); P.wear('scarf'); P.oMouth(); P.setBelly(2.4);
       cutText(svg, '뚝!', 64);
       cutVoice('cut_snap', 250);
-    }, { sfx: 'pow', hold: 2200 });
+    }, { sfx: 'pow', hold: 2200 }));
     await T.cut(svg => {
       for (let i = 0; i < 9; i++) el('path', { d: `M${20 + i * 45} 300 V${170 + (i % 3) * 16}`, stroke: C.pine, 'stroke-width': 6 }, svg);
       for (let i = 0; i < 9; i++) el('ellipse', { cx: 20 + i * 45, cy: 164 + (i % 3) * 16, rx: 12, ry: 22, fill: '#C98A3A' }, svg);
-      const g = el('g', { transform: 'translate(200,300) scale(.8)' }, svg); const P = drawTiger(T, g); P.bump.setAttribute('opacity', 1); P.oMouth(); P.setBelly(2.4);
+      const g = el('g', { transform: 'translate(200,300) scale(.8)' }, svg); const P = drawTiger(T, g); P.wear('bump'); P.oMouth(); P.setBelly(2.4);
       cutText(svg, '쿵! 엉덩방아', 44);
       cutVoice('cut_bump', 350);
     }, { sfx: 'thud', hold: 2400 });
@@ -969,7 +1123,7 @@
         T.paper(T.bg, [['rect', { x: -300, y: 470, width: 1600, height: 500, fill: '#7A6A48' }]]);
       }
       sorg = mkTiger(T, T.world, 500, 540, 1.2);
-      sorg.P.bump.setAttribute('opacity', 1); sorg.P.setBelly(1.5); sorg.P.oMouth();
+      sorg.P.wear('bump'); sorg.P.setBelly(1.5); sorg.P.oMouth();
       const front = el('g', {}, T.world);
       for (let i = -3; i < 16; i++) {
         if (i >= 5 && i <= 9) continue;
