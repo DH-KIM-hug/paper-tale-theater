@@ -10,7 +10,6 @@
   /* ================= 배경 그림 (페이퍼아트 한 장) =================
      장면마다 한 장(assets/v3w/sm_bg_*.webp)을 무대에 꽉 채워 깐다. 깊이는 그림 속 종이 층이 맡고 무대는 2D.
      값이 null이거나 파일을 못 불러오면 그 장면은 아래 그레이박스 도형으로 그린다.
-     - 생성 중 (나오면 여기 한 줄만 채우면 된다): sky(하늘 동아줄) · sorghum(수수밭) · heaven(해와 달)
      - 거의 까맣게 나온 넷은 낮 그림으로 다시 뽑아 밤으로 구웠다 (아래 tree · wellTop · door).
        sm_bg_hill_night_day(셋째 고개)는 쓰지 않는다: 바위가 작아 호랑이가 숨지 못하고, 세 고개가 같은 그림(hill0~2)이라 셋째만 바뀌면 어색하다
      - hill0 / hill2는 sm_bg_hill_dusk를 색 보정해 구운 것(금빛 / 밤). 세 고개 모두 그 그림 속 바위를 호랑이 가림막으로 쓴다(HILL_ROCK).
@@ -24,9 +23,9 @@
     hill2: 'v3w/sm_bg_hill_dusk_night.webp',
     room: 'v3w/sm_bg_room.webp',
     backyard: 'v3w/sm_bg_backyard.webp',
-    sky: null,     // 생성 중: v3w/sm_bg_sky.webp
-    sorghum: null, // 생성 중: v3w/sm_bg_sorghum.webp
-    heaven: null,  // 생성 중: v3w/sm_bg_heaven.webp
+    sky: 'v3w/sm_bg_sky.webp',               // 구름 사이로 빛이 드는 밤하늘 (무대 뒤에 고정, 줄·구름·오누이만 위로 흐른다)
+    sorghum: 'v3w/sm_bg_sorghum_dusk.webp',  // 수수밭 — 원본은 한낮이라 해 질 녘 보랏빛으로 구움 (줄이 끊어진 건 밤)
+    heaven: 'v3w/sm_bg_heaven.webp', heavenNight: 'v3w/sm_bg_heaven_night.webp', // 밤 = 같은 그림을 푸른 밤으로 구운 것 (톡 하면 서서히 바뀜)         // 하늘 나라 — 그림 속 해·달은 지웠다 (해님·달님은 오누이 배우). 밤은 코드의 남색 장막
     /* 까맣게 나와 다시 뽑은 낮 그림(assets/raw/v3/*_day.png)을 밤으로 구운 것 (conv: 스크래치 bake_night.py).
        하늘은 푸른 밤, 종이 물건은 달빛 받은 연보라·크림 — 가장 어두운 곳도 남색(#24285a 쯤)까지만 */
     tree: 'v3w/sm_bg_well_tree_night.webp',   // 우물가 큰 나무 (왼쪽에 그림 끝 330px를 거울로 이어 붙임)
@@ -1110,12 +1109,19 @@
       }
       [[-60, -2640, 260], [1060, -2640, 260]].forEach(([x, y, r]) => el('circle', { cx: x, cy: y, r, fill: C.amber, opacity: .5 }, skyV));
       el('circle', { cx: 500, cy: -2720, r: 300, fill: '#FBE7B0', opacity: .8 }, skyV);
-      T.paper(skyV, [['circle', { cx: 500, cy: 720, r: 300, fill: '#35604A' }], ['circle', { cx: 200, cy: 640, r: 160, fill: C.pine }], ['circle', { cx: 820, cy: 650, r: 170, fill: C.pine }],
-        ['path', { d: 'M150 500 H850 V530 H150 Z', fill: C.bark }]]);
+      // 나무 꼭대기 (출발 자리): 하늘 그림이면 앞 장면 그림 나무처럼 달빛 받은 연보라 잎
+      const [lf1, lf2, br] = bgUrl('sky') ? ['#8E93C4', '#7C82B6', '#4E4868'] : ['#35604A', C.pine, C.bark];
+      T.paper(skyV, [['circle', { cx: 500, cy: 720, r: 300, fill: lf1 }], ['circle', { cx: 200, cy: 640, r: 160, fill: lf2 }], ['circle', { cx: 820, cy: 650, r: 170, fill: lf2 }],
+        ['path', { d: 'M150 500 H850 V530 H150 Z', fill: br }]]);
       // 구름 6겹 (뒤쪽)
       for (let k = 0; k < 6; k++) {
         const y = 255 - k * 450;
-        [[-120, 0], [140, -20], [660, -10], [900, 10], [1120, -20]].forEach(([x, dy], j) => el('ellipse', { cx: x, cy: y + dy, rx: 140, ry: 46, fill: j % 2 ? C.snow : '#DCD6EA', opacity: .95 }, skyV));
+        // 하늘 그림이 있으면 구름도 그림 속 구름 빛깔(크림·연보라)의 종이 구름 (둥근 윗면 + 납작한 아랫면 + 종이 그림자)
+        [[-120, 0], [140, -20], [660, -10], [900, 10], [1120, -20]].forEach(([x, dy], j) => {
+          if (!bgUrl('sky')) { el('ellipse', { cx: x, cy: y + dy, rx: 140, ry: 46, fill: j % 2 ? C.snow : '#DCD6EA', opacity: .95 }, skyV); return; }
+          const cy = y + dy, f = (j + k) % 2 ? '#F1E4C6' : '#CDBFD9';
+          T.paper(skyV, [['path', { d: `M${x - 150} ${cy + 26} Q${x - 150} ${cy - 6} ${x - 112} ${cy - 4} Q${x - 96} ${cy - 44} ${x - 46} ${cy - 30} Q${x - 10} ${cy - 66} ${x + 40} ${cy - 36} Q${x + 92} ${cy - 50} ${x + 112} ${cy - 10} Q${x + 150} ${cy - 8} ${x + 152} ${cy + 26} Z`, fill: f }]]);
+        });
       }
       ropeGood = el('g', {}, skyV);
       el('rect', { x: 250, y: -200, width: 150, height: 700, fill: 'transparent' }, ropeGood);
@@ -1191,7 +1197,8 @@
     let sorg;
     await T.sceneCard('수수밭', () => {
       T.clear(); camSnap(500, 280, 1);
-      if (!bgImage(T, T.bg, 'sorghum', { back: '#4E5A70' })) {
+      const sorgArt = bgImage(T, T.bg, 'sorghum', { back: '#301a25' });
+      if (!sorgArt) {
         sky(T, T.bg, '#8B7BB8');
         T.paper(T.bg, [['path', { d: 'M-300 360 Q200 200 600 300 Q850 180 1300 280 V700 H-300 Z', fill: '#4E5A70' }]]);
         T.paper(T.bg, [['rect', { x: -300, y: 470, width: 1600, height: 500, fill: '#7A6A48' }]]);
@@ -1199,7 +1206,7 @@
       sorg = mkTiger(T, T.world, 500, 540, 1.2);
       sorg.P.wear('bump'); sorg.P.setBelly(1.5); sorg.P.oMouth();
       const front = el('g', {}, T.world);
-      for (let i = -3; i < 16; i++) {
+      for (let i = -3; i < 16 && !sorgArt; i++) { // 그림 수수밭이면 앞줄 수수도 그림에 있다
         if (i >= 5 && i <= 9) continue;
         const x = -60 + i * 72, h = 300 + (i % 3) * 40;
         T.paper(front, [['path', { d: `M${x} 600 V${560 - h}`, stroke: C.pine, 'stroke-width': 7 }], ['path', { d: `M${x} ${520 - h / 2} Q${x + 40} ${500 - h / 2} ${x + 56} ${530 - h / 2}`, stroke: C.leaf, 'stroke-width': 8, fill: 'none' }],
@@ -1245,7 +1252,10 @@
       T.clear(); camSnap(500, 280, 1);
       if (bgImage(T, T.bg, 'heaven', { back: C.indigo })) {
         // 하늘 그림(낮) 위에 밤 장막: 밤이면 남색으로 덮고 별을 띄운다
-        nightVeil = el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.night, opacity: .62 }, T.bg);
+        // 밤 그림이 있으면 그 그림을 위에 겹쳐 두고 투명도로 낮↔밤 (없으면 남색 장막)
+        const nu = bgUrl('heavenNight');
+        nightVeil = nu ? place(T, T.bg, nu, FULL) : el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.night, opacity: .62 }, T.bg);
+        nightVeil.__full = !!nu;
         nightVeil.style.transition = 'opacity 1s';
       } else {
         skyRect = sky(T, T.bg, C.indigo); skyRect.style.transition = 'fill 1s';
@@ -1273,7 +1283,7 @@
     const girlSun = moonKid, boyMoon = sunKid;
     const setSky = day => {
       isDay = day;
-      if (nightVeil) nightVeil.style.opacity = day ? 0 : .62; else skyRect.style.fill = day ? '#F2DFA8' : C.indigo;
+      if (nightVeil) nightVeil.style.opacity = day ? 0 : nightVeil.__full ? 1 : .62; else skyRect.style.fill = day ? '#F2DFA8' : C.indigo;
       starG.style.opacity = day ? 0 : 1;
       girlSun.body.style.opacity = day ? 1 : .7; boyMoon.body.style.opacity = day ? .7 : 1;
     };
