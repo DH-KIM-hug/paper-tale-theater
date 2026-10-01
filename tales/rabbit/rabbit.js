@@ -795,8 +795,9 @@
       far = el('g', {}, T.bg); far.style.transition = 'transform .7s cubic-bezier(.2,.8,.3,1)';
       near = el('g', {}, T.world); near.style.transition = 'transform .7s cubic-bezier(.2,.8,.3,1)';
       if (ART.bg_dash) { // 그림 숲길을 좌우로 뒤집어 가며 이어 붙여 옆으로 흘려 보낸다 (이음매가 거울처럼 맞는다)
-        artBG(T, 'bg_dash', far);
-        for (let i = 1; i < 5; i++) T.el('image', { href: A(ART.bg_dash), ...BGX, transform: i % 2 ? `translate(${1080 * i + 1000} 0) scale(-1 1)` : `translate(${1080 * i} 0)` }, far); // 홀수 장은 거울 → 이음매가 맞는다
+        // 그림 한 장을 1.35배로 키워 두고 그 안에서만 옆으로 미끄러진다 (예전: 거울로 이어 붙여 이음매가 화면 분할처럼 보였다)
+        const pan = el('g', { transform: 'translate(-60 -100) scale(1.35)' }, far);
+        artBG(T, 'bg_dash', pan);
       } else {
       sky(T, '#F6E3B0');
       for (let i = 0; i < 6; i++) paper(far, [['path', { d: `M${i * 700 - 200} 380 Q${i * 700 + 100} 200 ${i * 700 + 400} 380 Z`, fill: i % 2 ? '#b9a25a' : '#a9b56a' }]]);
@@ -814,7 +815,7 @@
     every(900, () => speedLines(T, 5, 420));
     await say('토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!');
     await T.mash(wrap, { count: 3, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => { // 예전엔 '옆으로 쓱'이었지만 톡이 더 쉽다 (놀이 피드백)
-      far.style.transform = `translateX(${(ART.bg_dash ? -700 : -280) * i}px)`; near.style.transform = `translateX(${-900 * i}px)`;
+      far.style.transform = `translateX(${(ART.bg_dash ? -130 : -280) * i}px)`; // 그림: 3번 눌러 -390 → 1.35배 그림 안에 머문다 near.style.transform = `translateX(${-900 * i}px)`;
       AudioFX.whoosh(); speedLines(T, 16, 480); rabbit.hop(70, 500); T.pop(rabbit.x + 60, 300, '쌩!', C.persimmon);
       const cx = T.portrait() ? 370 : 490; // 세로 화면은 토끼 쪽으로
       camTo(cx, 300, 1.2, 180).then(() => camTo(cx - 20, 300, 1.12, 300));
