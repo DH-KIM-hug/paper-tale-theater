@@ -49,7 +49,7 @@
   const ART = {
     mom_wave: 'v3w/sm_mom_wave.webp', mom_basket: 'v3w/sm_mom_basket.webp',
     boy: 'v3w/sm_boy.webp', girl: 'v3w/sm_girl.webp', kids_hug: 'v3w/sm_kids_scared.webp', // 덜덜 떨 때: 둘이 껴안고 겁먹은 얼굴 (sm_kids_scared)
-    kids_climb: 'v3w/sm_kids_climb.webp',
+    kids_climb: 'v3w/sm_kids_climb2.webp', // 나무 오르기 (새 판): 둘이 기둥을 끌어안고 오른다 — 그림 속 기둥은 지워서 장면의 나무 기둥을 잡는다
     boy_face: 'v3w/sm_boy_face.webp', girl_face: 'v3w/sm_girl_face.webp',
     tiger: 'v3w/sm_tiger.webp', tiger_full: 'v3w/sm_tiger_full.webp', tiger_scarf: 'v3w/sm_tiger_scarf.webp',
     tiger_axe: 'v3w/sm_tiger_axe.webp', tiger_slip: 'v3w/sm_tiger_slip.webp', tiger_bump: 'v3w/sm_tiger_bump.webp',
@@ -106,12 +106,12 @@
   /* 크기 (무대 단위, 배우 scale 1): 자세가 바뀌어도 머리 크기가 튀지 않게 그림마다 맞춘 값 */
   const SZ = {
     mom_wave: [125, 240], mom_basket: [114, 240],
-    boy: [71, 150], girl: [89, 158], kids_hug: [124, 150], kids_climb: [83, 223], kids_rope: [103, 259],
+    boy: [71, 150], girl: [89, 158], kids_hug: [124, 150], kids_climb: [130, 250], kids_rope: [103, 259],
     // tiger_scarf = 엄마 옷(분홍 저고리·회색 치마) 입은 호랑이 (이름만 그대로)
     tiger: [150, 235], tiger_full: [192, 230], tiger_scarf: [175, 217], tiger_axe: [159, 240], tiger_slip: [218, 225], tiger_bump: [176, 205],
   };
   /* 나무 오르기 그림: 지운 기둥 가운데가 그림 폭의 어디였는지 (conv 결과) → 발끝 x=0이 기둥(줄) 가운데 */
-  const CLIMB = { kids_climb: .345 };
+  const CLIMB = { kids_climb: .54 }; // 지운 기둥 가운데가 그림 폭의 54% 자리
   const ROPE_GAP = 128; // 줄·나무를 오를 때 동생 발끝이 오빠 발끝보다 이만큼 아래 (둘이 한 장인 그림은 이만큼 내려 단다)
   const climbDx = k => SZ[k][0] * (.5 - CLIMB[k]);
   const bgOK = {};
