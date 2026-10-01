@@ -815,7 +815,8 @@
     every(900, () => speedLines(T, 5, 420));
     await say('토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!');
     await T.mash(wrap, { count: 3, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => { // 예전엔 '옆으로 쓱'이었지만 톡이 더 쉽다 (놀이 피드백)
-      far.style.transform = `translateX(${(ART.bg_dash ? -130 : -280) * i}px)`; // 그림: 3번 눌러 -390 → 1.35배 그림 안에 머문다 near.style.transform = `translateX(${-900 * i}px)`;
+      // 그림: 3번 눌러 -390 → 1.35배 그림 안에 머문다
+      far.style.transform = `translateX(${(ART.bg_dash ? -130 : -280) * i}px)`; near.style.transform = `translateX(${-900 * i}px)`;
       AudioFX.whoosh(); speedLines(T, 16, 480); rabbit.hop(70, 500); T.pop(rabbit.x + 60, 300, '쌩!', C.persimmon);
       const cx = T.portrait() ? 370 : 490; // 세로 화면은 토끼 쪽으로
       camTo(cx, 300, 1.2, 180).then(() => camTo(cx - 20, 300, 1.12, 300));
