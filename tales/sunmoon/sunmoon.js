@@ -35,25 +35,28 @@
   };
   /* ================= 배우·소품·컷 그림 (페이퍼아트, assets/v3w/sm_*.webp) =================
      null = 쓸 그림이 없어 임시 도형(그레이박스)으로 그린다. 새 파일이 나오면 여기 한 줄만 바꾸면 된다.
-     - 오누이 나무 오르기(boy_climb·girl_climb): sm_kids_climb 한 장을 오빠·동생으로 나누고 나무 기둥을 지운 것
-       → 그레이박스 나무 기둥과 하늘 동아줄을 그대로 잡는다 (CLIMB: 기둥 자리가 발끝 x=0에 오게 옮겨 둔다)
-     - 해·달 얼굴(boy_face·girl_face): sm_boy·sm_girl에서 머리만 오린 것
+     - 엄마·오누이는 가족 사진을 바탕으로 다시 뽑은 새 모습 (2026-10-01): 엄마(분홍 저고리·회색 바지), 오빠(바가지 머리·파란 저고리),
+       동생(양갈래·분홍 치마). 이전 모습 그림은 하나도 쓰지 않는다.
+     - 오누이 나무 오르기(kids_climb): 오빠 위·동생 아래 한 장 (오빠 배우에, 동생 배우는 숨김). 아래 나무 그루터기는 지웠다
+       → 나무 기둥과 하늘 동아줄을 그대로 잡는다 (CLIMB: 동생이 안고 있던 기둥 자리가 발끝 x=0)
+     - 얼굴(boy_face·girl_face): sm_boy·sm_girl에서 머리만 오린 것 — 우물 그림자, 끝 장면 처음(오빠 해·동생 달)
+     - 끝 장면: 바꾼 뒤 해님 = sun_girl(해 앞의 동생), 달님 = moon_boy(보름달 앞의 오빠)
      - 참기름 병(oil): 병에 붙어 나온 얼굴(눈·볼)을 지운 것. 동아줄 두 개는 줄 아래 붙어 나온 얼굴 덩어리를 잘라낸 것
-     - 다시 뽑은 것: kids_rope(둘이 세로 동아줄을 오름 → 하늘 오르기) · sun_girl(동생 얼굴 해님 → 끝 장면 해) ·
-       lamp_on / lamp_off(등잔: 얼굴 지우고, 불꽃만 지운 끈 등잔을 따로) · 동아줄 두 개(종이 공예판, 아래 얼굴 덩어리 잘라냄)
+     - 다시 뽑은 것: lamp_on / lamp_off(등잔: 얼굴 지우고, 불꽃만 지운 끈 등잔을 따로) · 동아줄 두 개(종이 공예판, 아래 얼굴 덩어리 잘라냄)
      - 못 써서 그레이박스로 두는 것:
-       moon_boy(초승달에 얼굴이 둘) · basket(떡에 얼굴, 떡 개수도 5개로 고정 — 엄마 바구니 그림으로 충분) ·
+       basket(떡에 얼굴, 떡 개수도 5개로 고정 — 엄마 바구니 그림으로 충분) ·
        cut_eye(두 번 다 호랑이 이마에 세 번째 눈) */
   const ART = {
     mom_wave: 'v3w/sm_mom_wave.webp', mom_basket: 'v3w/sm_mom_basket.webp',
     boy: 'v3w/sm_boy.webp', girl: 'v3w/sm_girl.webp', kids_hug: 'v3w/sm_kids_hug.webp',
-    boy_climb: 'v3w/sm_boy_climb.webp', girl_climb: 'v3w/sm_girl_climb.webp',
+    kids_climb: 'v3w/sm_kids_climb.webp',
     boy_face: 'v3w/sm_boy_face.webp', girl_face: 'v3w/sm_girl_face.webp',
     tiger: 'v3w/sm_tiger.webp', tiger_full: 'v3w/sm_tiger_full.webp', tiger_scarf: 'v3w/sm_tiger_scarf.webp',
     tiger_axe: 'v3w/sm_tiger_axe.webp', tiger_slip: 'v3w/sm_tiger_slip.webp', tiger_bump: 'v3w/sm_tiger_bump.webp',
     rope_good: 'v3w/sm_rope_good.webp', rope_bad: 'v3w/sm_rope_bad.webp', oil: 'v3w/sm_oil.webp',
-    kids_rope: 'v3w/sm_kids_rope.webp', sun_girl: 'v3w/sm_sun_girl.webp', lamp_on: 'v3w/sm_lamp_on.webp', lamp_off: 'v3w/sm_lamp_off.webp',
-    moon_boy: null, basket: null,
+    kids_rope: null, // 새 모습으로 다시 뽑는 중 → 그동안 줄 오르기도 kids_climb
+    sun_girl: 'v3w/sm_sun_girl.webp', moon_boy: 'v3w/sm_moon_boy.webp', lamp_on: 'v3w/sm_lamp_on.webp', lamp_off: 'v3w/sm_lamp_off.webp',
+    basket: null,
     cut_well: 'v3w/sm_cut_well.webp', cut_snap: 'v3w/sm_cut_snap.webp', cut_eye: null,
   };
   const artOK = {};
@@ -96,14 +99,13 @@
   }
   /* 크기 (무대 단위, 배우 scale 1): 자세가 바뀌어도 머리 크기가 튀지 않게 그림마다 맞춘 값 */
   const SZ = {
-    mom_wave: [123, 240], mom_basket: [130, 240],
-    boy: [97, 165], girl: [105, 160], kids_hug: [140, 185],
-    boy_climb: [95, 135], girl_climb: [115, 139], kids_rope: [158, 283],
+    mom_wave: [125, 240], mom_basket: [114, 240],
+    boy: [71, 150], girl: [89, 158], kids_hug: [116, 146], kids_climb: [83, 223], kids_rope: [158, 283],
     tiger: [150, 235], tiger_full: [192, 230], tiger_scarf: [179, 225], tiger_axe: [159, 240], tiger_slip: [218, 225], tiger_bump: [176, 205],
   };
   /* 나무 오르기 그림: 지운 기둥 가운데가 그림 폭의 어디였는지 (conv 결과) → 발끝 x=0이 기둥(줄) 가운데 */
-  const CLIMB = { boy_climb: .846, girl_climb: .523 };
-  const ROPE_GAP = 128; // 줄·나무를 오를 때 동생 발끝이 오빠 발끝보다 이만큼 아래
+  const CLIMB = { kids_climb: .345 };
+  const ROPE_GAP = 128; // 줄·나무를 오를 때 동생 발끝이 오빠 발끝보다 이만큼 아래 (둘이 한 장인 그림은 이만큼 내려 단다)
   const climbDx = k => SZ[k][0] * (.5 - CLIMB[k]);
   const bgOK = {};
   const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
@@ -227,7 +229,7 @@
     P.holdBasket = on => { P.basket.setAttribute('opacity', on ? 1 : 0); if (P.art) P.art.set(on ? 'basket' : 'wave'); };
     if (P.art) {
       g.style.display = 'none';
-      P.basketAt = [-SZ.mom_basket[0] * (.705 - .5), -SZ.mom_basket[1] * (1 - .632)]; // 그림 속 바구니 가운데 (뒤집힌 그림)
+      P.basketAt = [-SZ.mom_basket[0] * (.75 - .5), -SZ.mom_basket[1] * (1 - .60)]; // 그림 속 바구니 가운데 (뒤집힌 그림)
       P.arm = el('g', {}, g0); // 팔 흔들기는 그림에 없음 → 빈 그룹 (wave()가 몸을 살랑)
       P.holdBasket(basket);
     }
@@ -249,9 +251,10 @@
     drawKidFace(T, P.head, girl, 0, -126, 1);
     P.arm = origin(paper(g, [['rect', { x: 28, y: -94, width: 14, height: 42, rx: 7, fill: top }], ['circle', { cx: 35, cy: -52, r: 7, fill: C.skin }]]), 35, -90);
     /* 그림: 서서 손 흔들기(정면) / 나무·줄 오르기 / 꼭 껴안기(오빠 배우에 둘이 함께 — 그동안 동생 배우는 숨긴다) */
-    const k = girl ? 'girl' : 'boy', c = k + '_climb';
-    const defs = { stand: [k, ...SZ[k]], climb: [c, ...SZ[c], { dx: climbDx(c) }] };
+    const k = girl ? 'girl' : 'boy';
+    const defs = { stand: [k, ...SZ[k]] };
     if (!girl) {
+      defs.climb = ['kids_climb', ...SZ.kids_climb, { dx: climbDx('kids_climb'), dy: ROPE_GAP }];
       defs.hug = ['kids_hug', ...SZ.kids_hug, { dx: -55 }];
       // 줄 오르기: 둘이 한 장 (오빠 배우에). 그림 아래끝 = 동생 발끝 (오빠 발끝보다 ROPE_GAP 아래), 줄 가운데가 x=0
       defs.rope = ['kids_rope', ...SZ.kids_rope, { dx: SZ.kids_rope[0] * (.5 - .486), dy: ROPE_GAP }];
@@ -260,7 +263,7 @@
     P.pose = pk => {
       if (!P.art) return;
       if (pk === 'rope' && !artUrl('kids_rope')) pk = 'climb'; // 둘이 함께 오르는 그림이 없으면 따로따로 오르기 자세
-      if (girl && (pk === 'hug' || pk === 'rope')) { g0.style.visibility = 'hidden'; return; }
+      if (girl && (pk === 'hug' || pk === 'rope' || (pk === 'climb' && artUrl('kids_climb')))) { g0.style.visibility = 'hidden'; return; }
       g0.style.visibility = '';
       P.art.set(pk);
     };
@@ -273,7 +276,7 @@
     /* 그림 얼굴 (서 있는 그림에서 머리만 오린 것): 얼굴 가운데가 (0,0) 쯤 오게 */
     const fu = artUrl(girl ? 'girl_face' : 'boy_face');
     if (fu) {
-      const [w, h, y] = girl ? [110, 70, -47] : [74, 71, -46];
+      const [w, h, y] = girl ? [96, 64, -44] : [73, 74, -49];
       T.el('image', { href: fu, x: -w / 2, y, width: w, height: h, filter: 'url(#pp)' }, f);
       return f;
     }
@@ -946,7 +949,7 @@
       const climbArt = boy.P.art && i < 5;
       boy.P.pose(climbArt ? 'climb' : 'stand'); girl.P.pose(climbArt ? 'climb' : 'stand');
       const by = i === 5 ? TOP.b[1] : 560 - i * 140, gy = i === 5 ? TOP.g[1] : by + (climbArt ? ROPE_GAP : 80);
-      boy.move(i === 5 ? TOP.b[0] : climbArt ? 656 : 610, by, 420); girl.move(i === 5 ? TOP.g[0] : climbArt ? 656 : 560, gy, 420); // 656: 손이 기둥을 감싸게 기둥(640)보다 조금 오른쪽
+      boy.move(i === 5 ? TOP.b[0] : climbArt ? 640 : 610, by, 420); girl.move(i === 5 ? TOP.g[0] : climbArt ? 640 : 560, gy, 420); // 656: 손이 기둥을 감싸게 기둥(640)보다 조금 오른쪽
       boy.hop(10, 420); girl.hop(10, 420);
       tree.to(560, Math.min(280, by - 60), 1, 420);
       T.pop(i % 2 ? 300 : 760, 200, '영차!', C.pine);
@@ -1225,11 +1228,15 @@
       T.el('rect', { x: -120, y: -120, width: 240, height: 240, fill: 'transparent' }, g);
       const face = drawKidFace(T, g, girlFace, 0, 8, 1.6);
       // 그림 해님(동생 얼굴이 든 해): 동생이 해가 되면 이 한 장만 (그림 속 얼굴을 쓰니 얼굴 조각은 숨긴다)
-      const sunArt = girlFace ? sprite(T, g, 'sun_girl', 256, 250, { dy: 125 }) : null;
+      // 그림 달님(보름달 앞에 선 오빠): 오빠가 달이 되면 이 한 장만. 둘 다 얼굴·몸이 그림에 있어 얼굴 조각은 숨긴다
+      const sunArt = girlFace ? sprite(T, g, 'sun_girl', 276, 270, { dy: 135 }) : null;
+      const moonArt = girlFace ? null : sprite(T, g, 'moon_boy', 178, 310, { dy: 155 });
       P.set = s => {
-        const art = s && sunArt;
-        P.sun.setAttribute('opacity', s && !art ? 1 : 0); P.moon.setAttribute('opacity', s ? 0 : 1);
-        face.style.display = art ? 'none' : ''; if (sunArt) sunArt.style.display = art ? '' : 'none';
+        const art = s ? sunArt : moonArt;
+        P.sun.setAttribute('opacity', s && !art ? 1 : 0); P.moon.setAttribute('opacity', !s && !art ? 1 : 0);
+        face.style.display = art ? 'none' : '';
+        if (sunArt) sunArt.style.display = s ? '' : 'none';
+        if (moonArt) moonArt.style.display = s ? 'none' : '';
       };
       return P;
     };
