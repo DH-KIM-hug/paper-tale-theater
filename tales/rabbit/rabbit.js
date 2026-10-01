@@ -36,6 +36,8 @@
     aud_duck: 'v3w/rab_aud_duck.webp', aud_cow: 'v3w/rab_aud_cow.webp', aud_pig: 'v3w/rab_aud_pig.webp', aud_rooster: 'v3w/rab_aud_rooster.webp',
     aud_sheep: 'v3w/rab_aud_sheep.webp', aud_dog: 'v3w/rab_aud_dog.webp', aud_cat: 'v3w/rab_aud_cat.webp', aud_owl: 'v3w/rab_owl_post.webp',
     carrot_trophy: 'v3w/rab_carrot_trophy.webp', medal: 'v3w/rab_medal.webp',
+    // 경주 막대·지도 말: 크림색 동그란 종이 속 토끼(머리·목도리)·거북이 — 둘이 한 짝 (토끼 원판은 거북이 원판 색·크기에 맞춰 PIL로 만듦)
+    icon_rabbit: 'v3w/rab_icon_rabbit.webp', icon_turtle: 'v3w/rab_icon_turtle.webp',
     // cut_photo: 다시 뽑은 그림 — 무대처럼 둘 다 오른쪽으로 달리고, 앞선 거북이가 결승 테이프를 끊는다
     cut_wake: 'v3w/rab_cut_wake.webp', cut_dash: 'v3w/rab_cut_dash.webp', cut_photo: 'v3w/rab_cut_photo.webp',
   };
@@ -453,11 +455,20 @@
   const snore = (T, k) => T.tone(k ? [140, 210] : [210, 130], .7, { type: 'sine', vol: .07 });
 
   /* ================= 경주 지도 막대 (화면 고정, 카메라 영향 없음) ================= */
-  function iconRabbit(T, g) {
+  const ICON_D = 38; // 그림 말 지름 (막대 기준). 지도에서는 TOK.s 배로 키운다
+  const iconArt = (T, g, key, D = ICON_D) => { // 금빛 테두리를 둘러 밝은 길·막대 위에서도 또렷하게
+    if (!ART[key]) return false;
+    T.el('image', { href: A(ART[key]), x: -D / 2, y: -D / 2, width: D, height: D, filter: 'url(#pp)' }, g);
+    T.el('circle', { r: D / 2 - 1.2, fill: 'none', stroke: C.gold, 'stroke-width': 2.4 }, g);
+    return true;
+  };
+  function iconRabbit(T, g, D) {
+    if (iconArt(T, g, 'icon_rabbit', D)) return;
     T.paper(g, [['ellipse', { cx: -5, cy: -14, rx: 4, ry: 11, fill: C.snow, stroke: C.line }], ['ellipse', { cx: 5, cy: -14, rx: 4, ry: 11, fill: C.snow, stroke: C.line }],
       ['circle', { cx: 0, cy: 2, r: 11, fill: C.snow, stroke: C.line, 'stroke-width': 2 }], ['circle', { cx: 4, cy: 0, r: 2.2, fill: C.ink }], ['circle', { cx: 10, cy: 4, r: 2, fill: C.pink }]]);
   }
-  function iconTurtle(T, g) {
+  function iconTurtle(T, g, D) {
+    if (iconArt(T, g, 'icon_turtle', D)) return;
     T.paper(g, [['circle', { cx: 16, cy: 2, r: 6, fill: C.leaf }], ['path', { d: 'M-15 7 Q-15 -11 0 -11 Q15 -11 15 7 Z', fill: C.pine }], ['circle', { cx: 18, cy: 0, r: 1.6, fill: C.ink }]]);
   }
   function makeBar(T) {
@@ -472,7 +483,7 @@
     T.el('path', { d: `M${X0 - 17} 490 L${X0} 497 L${X0 - 17} 504 Z`, fill: C.leaf }, g);
     T.el('rect', { x: X1 + 18, y: 488, width: 5, height: 52, fill: C.bark }, g);
     for (let r = 0; r < 2; r++) for (let c = 0; c < 3; c++) T.el('rect', { x: X1 + 23 + c * 8, y: 488 + r * 8, width: 8, height: 8, fill: (r + c) % 2 ? C.snow : C.ink }, g);
-    const mk = (draw, y) => { const o = T.el('g', {}, g); o.style.transform = `translate(${X0}px,${y}px)`; const inner = T.el('g', {}, o); draw(T, inner); return { o, inner, y }; };
+    const mk = (draw, y) => { const o = T.el('g', {}, g); o.style.transform = `translate(${X0}px,${y}px)`; const inner = T.el('g', {}, o); draw(T, inner, T.viewWidth() < 990 ? 54 : ICON_D); return { o, inner, y }; }; // 세로 화면은 막대가 줄어드니 말을 크게
     const rb = mk(iconRabbit, Y[0]), tb = mk(iconTurtle, Y[1]);
     const place = (ic, p, dur) => { ic.o.style.transition = `transform ${dur}ms ease-out`; ic.o.style.transform = `translate(${X0 + (X1 - X0) * p}px,${ic.y}px)`; };
     return {
@@ -762,6 +773,7 @@
     const total = segL.reduce((a, b) => a + b, 0);
     const at = f => { let d = f * total; for (let i = 0; i < segL.length; i++) { if (d <= segL[i]) { const u = d / segL[i]; return [PATH[i][0] + (PATH[i + 1][0] - PATH[i][0]) * u, PATH[i][1] + (PATH[i + 1][1] - PATH[i][1]) * u]; } d -= segL[i]; } return PATH[PATH.length - 1]; };
     let tokR, tokT;
+    const TOK = !ART.icon_rabbit ? { s: 2.2, r: -22, t: 18 } : T.portrait() ? { s: 2.8, r: -56, t: 53 } : { s: 1.8, r: -36, t: 34 }; // 세로 화면은 지도 전체를 담느라 물러서므로 말을 더 크게 (토끼는 길 위, 거북이는 길 아래)
     await scene('경주 지도', () => {
       if (!artBG(T, 'bg_map')) {
       sky(T, '#e9d3a8');
@@ -776,16 +788,16 @@
       }
       tokR = el('g', {}, T.world); iconRabbit(T, tokR); tokT = el('g', {}, T.world); iconTurtle(T, tokT);
       const [rx, ry] = at(.08), [tx, ty] = at(.02);
-      tokR.style.transform = `translate(${rx}px,${ry - 22}px) scale(2.2)`; tokT.style.transform = `translate(${tx}px,${ty + 18}px) scale(2.2)`;
+      tokR.style.transform = `translate(${rx}px,${ry + TOK.r}px) scale(${TOK.s})`; tokT.style.transform = `translate(${tx}px,${ty + TOK.t}px) scale(${TOK.s})`;
       setRace(.08, .02, 0); bar.show(true);
       if (ART.bg_map) camSnap(500, T.portrait() ? 270 : 280, fitZ(420)); // 그림 지도: 길이 위쪽에 있다
       else camSnap(500, 280, fitZ(470)); // 세로 화면: 지도 전체가 보이게 물러선다
     });
-    const moveTok = (tok, f, dy, ms) => { const [x, y] = at(f); tok.style.transition = `transform ${ms}ms ease-in-out`; tok.style.transform = `translate(${x}px,${y + dy}px) scale(2.2)`; };
+    const moveTok = (tok, f, dy, ms) => { const [x, y] = at(f); tok.style.transition = `transform ${ms}ms ease-in-out`; tok.style.transform = `translate(${x}px,${y + dy}px) scale(${TOK.s})`; };
     await say('여기는 경주 지도예요. 돌멩이, 개울, 언덕을 지나 깃발까지!');
-    moveTok(tokR, .3, -22, 1200); setRace(.3, null, 1200); AudioFX.whoosh();
+    moveTok(tokR, .3, TOK.r, 1200); setRace(.3, null, 1200); AudioFX.whoosh();
     await sleep(1300);
-    moveTok(tokT, .04, 18, 1200); setRace(null, .04, 1200);
+    moveTok(tokT, .04, TOK.t, 1200); setRace(null, .04, 1200);
     await say('아래 막대를 보면 누가 앞서는지 알 수 있어요.');
 
     /* ===== 2막 — 쌩쌩 토끼, 엉금엉금 거북이 ===== */
