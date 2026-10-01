@@ -578,6 +578,7 @@
 
     /* --- 3·4. 첫째·둘째·셋째 고개: 호랑이가 달라는 만큼 떡 접시 고르기 --- */
     const tiger = mkTiger(T, T.world, 700, 610);
+    tiger.pos.remove(); // 미리 만들어만 두고, 고개 장면이 열릴 때(아래 sceneCard 안에서) 무대에 올린다 — 부엌에 호랑이가 비치지 않게
     let rock, given = 0, TX = 820, hideY = 610;
     for (let n = 0; n < 3; n++) {
       await T.sceneCard(['첫째 고개', '둘째 고개', '셋째 고개'][n], () => {
