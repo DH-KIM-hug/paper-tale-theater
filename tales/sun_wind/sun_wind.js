@@ -9,8 +9,78 @@
     sunDisk: '#F6D98A', cloudBack: '#C9D8E6', rain: '#7F93A6', road: '#D9B77A', grass: '#7c9a58' };
   const SKY = { day: '#CFE3EE', warm: '#F6D9A0', grey: '#AFC0CC', snow: '#DCE3EA', rain: '#9FB0BE', hot: '#F9E3A8' };
 
+  /* ================= 페이퍼아트 그림 (assets/v3w/sw_*.webp) =================
+     null이거나 파일을 못 불러오면 그 자리는 아래 임시 도형(그레이박스)으로 그린다. 새 그림이 나오면 여기 한 줄만 바꾸면 된다.
+     배경은 장면마다 한 장을 무대에 꽉 채워 깐다. 들길(field)은 바람·해님 차례·날씨 놀이·쨍쨍한 날·분할 화면에 같이 쓰고,
+     하늘빛은 그림 위에 곱하기(multiply)로 얹는 색 한 겹(tint)이 바꾼다. */
+  const AS = '../../assets/';
+  const BG = {
+    sky: 'v3w/sw_bg_sky.webp', high: 'v3w/sw_bg_high.webp', field: 'v3w/sw_bg_field.webp',
+    stream: 'v3w/sw_bg_stream.webp', snow: 'v3w/sw_bg_snow.webp',
+  };
+  /* 배우·소품·컷
+     - trav_walk_nohat: 걷기 그림의 머리(모자)를 '덜덜' 그림 머리로 바꿔 붙인 것 (바람에 모자가 날아간 뒤, 외투는 아직 열림)
+     - trav_sit: 신발을 살색으로 칠해 맨발로 (개울에 발을 담근다)
+     - hat: 얼굴 달린 노란 덩어리 위의 모자만 오린 것 · coat: 단추에 붙은 눈·볼을 지우고 금빛 단추로
+     - shirt(배지): 반팔 그림 몸통에서 팔·목 살색을 지운 것
+     - cloud_snow: 얼굴 달린 노란 덩어리는 버리고 아래 작은 눈구름만 · cloud_rain: 그 눈구름 몸통을 회청색으로 (빗방울은 코드)
+     - 못 써서 그레이박스로 두는 것: cut_pant(바람이 헉헉이 아니라 웃고 있고, 바닥에 초록 바지 덩어리) → 임시 컷 + 바람 그림 */
+  const ART = {
+    sun: 'v3w/sw_sun.webp', wind: 'v3w/sw_wind.webp', wind_blow: 'v3w/sw_wind_blow.webp', wind_tired: 'v3w/sw_wind_tired.webp',
+    trav_walk: 'v3w/sw_trav_walk.webp', trav_walk_nohat: 'v3w/sw_trav_walk_nohat.webp', trav_hold: 'v3w/sw_trav_hold.webp',
+    trav_fan: 'v3w/sw_trav_fan.webp', trav_shoulder: 'v3w/sw_trav_shoulder.webp', trav_shirt: 'v3w/sw_trav_shirt.webp',
+    trav_sit: 'v3w/sw_trav_sit.webp', trav_scarf: 'v3w/sw_trav_scarf.webp', trav_rain: 'v3w/sw_trav_rain.webp',
+    hat: 'v3w/sw_hat.webp', coat: 'v3w/sw_coat.webp', shirt: 'v3w/sw_shirt.webp',
+    cloud_rain: 'v3w/sw_cloud_rain.webp', cloud_snow: 'v3w/sw_cloud_snow.webp',
+    cut_hat: 'v3w/sw_cut_hat.webp', cut_hold: 'v3w/sw_cut_hold.webp', cut_pant: null, cut_off: 'v3w/sw_cut_off.webp', cut_shake: 'v3w/sw_cut_shake.webp',
+  };
+  const artOK = {}, bgOK = {};
+  const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
+  const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
+  /* 그림 한 장: (x,y)가 왼쪽 위인 w×h 상자. 바깥 g(그림자·자리) 안에 안쪽 g(움직임용, 원점 0,0)를 둔다 */
+  function pic(T, g, key, x, y, w, h, { shadow = true } = {}) {
+    const u = artUrl(key); if (!u) return null;
+    const wrap = T.el('g', shadow ? { filter: 'url(#pp)' } : {}, g);
+    const inner = T.el('g', {}, wrap); origin(inner, 0, 0);
+    T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+    wrap.inner = inner;
+    return wrap;
+  }
+  /* 나그네 자세: [폭, 높이, 발끝 x 어긋남, 눈 높이, 눈 사이(크기 기준)] — 발끝이 (0,0).
+     그림마다 머리·몸 비율이 달라서(어깨에 건 외투·반팔·우비는 머리가 크다) 머리 크기와 눈 높이 차이를 반반 나눠 맞췄다 → 자세가 바뀌어도 크게 튀지 않는다 */
+  const TRAV = {
+    trav_walk: [126, 250, 1, -182, 35], trav_walk_nohat: [126, 234.6, 1, -182, 35], trav_hold: [107, 247, 0, -185, 34.5],
+    trav_fan: [143, 254, -2, -189, 33.8], trav_shoulder: [133, 232, 1.9, -157, 40.6], trav_shirt: [159, 249, 0, -162, 39.3],
+    trav_sit: [162, 251, 1.3, -191, 33.5], trav_scarf: [129, 256, .3, -188, 34], trav_rain: [136, 232, .9, -157, 40.7],
+  };
+  const HAT_ART = [120, 57]; // 걷기 그림 속 모자와 같은 크기
+  const HOLD_HAT_Y = -226;   // '덜덜' 그림(모자 없음) 머리에 얹을 모자 가운데
+  const SIT_SEAT = 82;       // 앉은 그림: 발끝에서 엉덩이(바위 윗면)까지 (scale 1.2 기준 무대 단위)
+  /* 해: 가운데 (0,0), 햇살 끝까지 지름 224. 바람: 구름 몸통 가운데가 (0,0), 꼬리는 왼쪽 */
+  const SUN_D = 224;
+  const WIND_BOX = { wind: [-165, -63, 267, 137], wind_blow: [-154, -63, 246, 140], wind_tired: [-157, -71, 264, 156] };
+  const cutArt = (T, key, sfx, hold, onShow) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx, hold }], { hold, onShow }) : null);
+  /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). zoom: (cx, cy) 기준으로 키운다 */
+  const BG_EDGE = { sky: ['#a4c9da', '#7a807e'], high: ['#afcad2', '#474a2b'], field: ['#bedfe9', '#77693f'], stream: ['#b6d5df', '#4f827f'], snow: ['#dbeefb', '#f6f9fd'] };
+  function bgImage(T, key, { zoom = 1, cx = 500, cy = 560 } = {}) {
+    const u = bgUrl(key); if (!u) return null;
+    const w = 1080 * zoom, h = w * 992 / 1760, x = cx + (-40 - cx) * zoom, y = cy + (-24 - cy) * zoom;
+    const [top, bot] = BG_EDGE[key] || ['#cfe3ee', '#77693f']; // 그림 밖(세로 화면에서 물러설 때 보이는 위·아래)은 그림 끝 색으로 잇는다
+    T.el('rect', { x: -1400, y: -1400, width: 3800, height: 1400 + y + h / 2, fill: top }, T.bg);
+    T.el('rect', { x: -1400, y: y + h / 2, width: 3800, height: 2000, fill: bot }, T.bg);
+    return T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, T.bg);
+  }
+  /* 하늘빛: 그림 위에 곱하기로 얹는 색 한 겹. 코드가 sky.setAttribute('fill', SKY.x)로 부르던 자리에 그대로 쓰도록 같은 꼴로 */
+  const TINT = { [SKY.day]: ['#ffffff', 0], [SKY.grey]: ['#93A6B8', .5], [SKY.warm]: ['#F7C77A', .32], [SKY.hot]: ['#F9D27E', .42],
+    [SKY.rain]: ['#7F93A8', .55], [SKY.snow]: ['#DCE6F0', .3] };
+  function tintLayer(T, parent, { x = -1400, w = 3800, dur = 1.2 } = {}) {
+    const r = T.el('rect', { x, y: -1400, width: w, height: 3400, fill: '#ffffff', opacity: 0 }, parent);
+    r.style.mixBlendMode = 'multiply'; r.style.transition = `opacity ${dur}s, fill ${dur}s`; r.style.pointerEvents = 'none';
+    return { el: r, setAttribute(k, v) { if (k !== 'fill') return; const [c, o] = TINT[v] || ['#ffffff', 0]; r.setAttribute('fill', c); r.setAttribute('opacity', o); }, style: r.style };
+  }
+
   /* ================= 작은 도우미 ================= */
-  const origin = (n, x, y) => { n.style.transformBox = 'view-box'; n.style.transformOrigin = `${x}px ${y}px`; return n; };
+  function origin(n, x, y) { n.style.transformBox = 'view-box'; n.style.transformOrigin = `${x}px ${y}px`; return n; }
   const rnd = (a, b) => a + Math.random() * (b - a);
 
   /* ================= 소리 ================= */
@@ -37,6 +107,8 @@
   function drawSun(T, g) {
     const { el, paper } = T;
     const glow = el('circle', { r: 118, fill: C.amber, opacity: 0 }, g);
+    const art = pic(T, g, 'sun', -SUN_D / 2, -SUN_D / 2, SUN_D, SUN_D);
+    if (art) return { glow, rays: art.inner, mouth: el('g', {}, g), art: true };
     const rays = el('g', {}, g); origin(rays, 0, 0);
     paper(rays, Array.from({ length: 12 }, (_, i) => ['path', { d: 'M-15 -74 L0 -106 L15 -74 Z', fill: i % 2 ? C.persimmon : C.gold, transform: `rotate(${i * 30})` }]));
     paper(g, [['circle', { r: 76, fill: C.gold }], ['circle', { r: 64, fill: C.sunDisk }]]);
@@ -53,6 +125,21 @@
   };
   function drawWind(T, g) {
     const { el, paper } = T;
+    if (artUrl('wind')) { // 그림: 자세 셋(우쭐·볼 빵빵·헉헉)을 겹쳐 두고 입 모양 대신 자세를 바꾼다
+      const tail = el('g', {}, g), puff = el('g', {}, g); origin(puff, 0, 0);
+      const cheekG = el('g', {}, puff); origin(cheekG, 0, 0);
+      const poses = {};
+      Object.entries(WIND_BOX).forEach(([k, [x, y, w, h]]) => { const p = pic(T, cheekG, k, x, y, w, h); if (p) poses[k] = p; });
+      const setMouth = k => {
+        const want = k === 'blow' ? 'wind_blow' : k === 'tired' ? 'wind_tired' : 'wind';
+        const show = poses[want] ? want : 'wind';
+        Object.entries(poses).forEach(([n, p]) => { p.style.display = n === show ? '' : 'none'; });
+      };
+      setMouth('smile');
+      const puffCheeks = s => { cheekG.style.transition = 'transform .3s cubic-bezier(.3,1.6,.5,1)'; cheekG.style.transform = `scale(${(1 + (s - 1) * .08).toFixed(3)})`; };
+      // 주름·땀은 헉헉 그림에 이미 있다 → 빈 자리만 (코드가 opacity를 바꿔도 아무 일 없게)
+      return { puff, tail, wrinkles: el('g', {}, g), sweat: el('g', {}, g), cheeks: [], setMouth, puffCheeks, art: true };
+    }
     const tail = el('g', {}, g); origin(tail, -70, 10);
     [['M-72 -8 Q-120 -30 -146 -72', 12], ['M-80 18 Q-136 18 -168 -10', 11], ['M-66 44 Q-104 72 -146 62', 10]].forEach(([d, w]) =>
       el('path', { d, stroke: C.cloudBack, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round' }, tail));
@@ -83,6 +170,18 @@
   function drawTraveler(T, g, { sit = false } = {}) {
     const { el, paper } = T;
     const P = { T };
+    if (artUrl('trav_walk')) { // 그림: 자세(옷)마다 한 장씩 겹쳐 두고 setOutfit이 하나만 보인다. 발끝이 (0,0)
+      P.art = true; P.sit = sit; P.poses = {};
+      Object.keys(TRAV).forEach(k => { const [w, h, dx] = TRAV[k]; const p = pic(T, g, k, -w / 2 + dx, -h, w, h); if (p) { p.style.display = 'none'; P.poses[k] = p; } });
+      // 모자 없는 그림('덜덜')에 얹는 모자: 모자가 머리에 있을 때만 보인다
+      P.hat = el('g', {}, g);
+      hatArt(T, P.hat).setAttribute('transform', `translate(0 ${HOLD_HAT_Y}) scale(${116 / HAT_ART[0]})`);
+      P.sweat = el('g', { opacity: 0 }, g);
+      [[56, -22], [-60, -8]].forEach(([x, y]) => el('path', { d: `M${x} ${y} q-8 14 0 17 q8 -3 0 -17 Z`, fill: '#9CC7E6' }, P.sweat));
+      P.cloth = el('g', {}, g); P.mouth = el('g', {}, g);
+      P.face = k => { P.faceK = k; }; // 얼굴은 그림마다 정해져 있다
+      return P;
+    }
     const legs = el('g', {}, g);
     if (!sit) {
       [-1, 1].forEach(s => paper(legs, [['rect', { x: s < 0 ? -22 : 6, y: -76, width: 16, height: 72, rx: 6, fill: C.pants }],
@@ -110,10 +209,42 @@
   }
   const HAT_SHAPES = [['ellipse', { cx: 0, cy: 16, rx: 42, ry: 8, fill: C.bark }], ['rect', { x: -25, y: -16, width: 50, height: 34, rx: 10, fill: C.bark }],
     ['rect', { x: -25, y: 6, width: 50, height: 8, fill: C.gold }]]; // 모자 (가운데 0,0) — 날아가는 모자·부채질용
+  /* 모자 한 개 (가운데 0,0): 그림이 있으면 그림, 없으면 도형 */
+  function hatArt(T, parent) {
+    const g = T.el('g', {}, parent);
+    if (!pic(T, g, 'hat', -HAT_ART[0] / 2, -HAT_ART[1] / 2, HAT_ART[0], HAT_ART[1])) T.paper(g, HAT_SHAPES);
+    return g;
+  }
+  /* 그림 나그네: 옷·팔 → 자세 그림 고르기. 모자가 날아간 뒤의 열린 외투는 모자 없는 걷기 그림 */
+  function travKey(P, kind, arms) {
+    if (P.sit) return 'trav_sit';
+    if (arms === 'fan') return 'trav_fan';
+    if (kind === 'coatShut') return arms === 'cross' ? 'trav_hold' : 'trav_walk'; // 외투 여미고 팔 내린 그림은 없다 → 외투 입은 걷기
+    if (kind === 'coat') return P.hat.dataset.gone === '1' ? 'trav_walk_nohat' : 'trav_walk';
+    return { shirt: 'trav_shirt', rain: 'trav_rain', scarf: 'trav_scarf', shoulder: 'trav_shoulder' }[kind] || 'trav_walk';
+  }
+  function showPose(P) {
+    let k = travKey(P, P.kind, P.arms);
+    if (!P.poses[k]) k = P.poses.trav_walk ? 'trav_walk' : Object.keys(P.poses)[0];
+    if (P.sway) { P.sway.cancel(); P.sway = null; }
+    Object.entries(P.poses).forEach(([n, p]) => { p.style.display = n === k ? '' : 'none'; });
+    P.cur = k;
+    P.hat.style.display = k === 'trav_hold' && P.hat.dataset.gone !== '1' ? '' : 'none';
+    const [, , , ey, ed] = TRAV[k];
+    P.sweat.setAttribute('transform', `translate(0 ${ey}) scale(${(ed / 35).toFixed(3)})`);
+    if (k === 'trav_fan') P.sway = P.poses[k].inner.animate([{ transform: 'rotate(-2deg)' }, { transform: 'rotate(2deg)' }, { transform: 'rotate(-2deg)' }], { duration: 480, iterations: Infinity, easing: 'ease-in-out' });
+  }
+  const refreshPose = P => { if (P.art) showPose(P); };
   /* 옷 갈아입기. kind: shirt 반팔 · coat 외투(열림) · coatShut 외투(여밈) · rain 우비 · scarf 외투+목도리 · shoulder 반팔+어깨에 건 외투
      arms: down · cross(꽉 여밈) · fan(모자로 부채질). buttons: 채운 단추 수 */
   function setOutfit(P, kind, arms = 'down', { buttons = 4 } = {}) {
     const { el, paper } = P.T, g = P.cloth;
+    if (P.art) { // 그림: 단추는 그림에 있다 → 코드가 만지는 단추는 보이지 않는 빈 자리
+      P.kind = kind; P.arms = arms; P.panels = [];
+      if (!P.buttons || !P.buttons.length) P.buttons = [0, 1, 2, 3].map(() => el('g', { display: 'none' }, g));
+      showPose(P);
+      return;
+    }
     g.innerHTML = '';
     P.kind = kind; P.arms = arms; P.panels = []; P.buttons = [];
     const hasCoat = ['coat', 'coatShut', 'rain', 'scarf'].includes(kind);
@@ -159,6 +290,7 @@
   }
   function flap(P, on) { // 외투 자락 펄럭
     (P.flaps || []).forEach(a => a.cancel()); P.flaps = [];
+    if (on && P.art) { P.flaps = [P.poses[P.cur].inner.animate([{ transform: 'skewX(0deg)' }, { transform: 'skewX(-4deg)' }, { transform: 'skewX(1deg)' }, { transform: 'skewX(0deg)' }], { duration: 300, iterations: Infinity })]; return; }
     if (on) P.flaps = P.panels.map((p, i) => p.animate([{ transform: 'rotate(0deg)' }, { transform: `rotate(${i ? 10 : -10}deg)` }, { transform: 'rotate(0deg)' }], { duration: 260, iterations: Infinity, delay: i * 90 }));
   }
   function traveler(T, x, y, scale, kind = 'coat', arms = 'down', opts = {}) {
@@ -170,7 +302,10 @@
   const sun = (T, x, y, s = 1, parent = T.world) => { let p; const a = T.actor(parent, x, y, g => { p = drawSun(T, g); }, { scale: s }); a.p = p; return a; };
   const wind = (T, x, y, s = 1, parent = T.world) => { let p; const a = T.actor(parent, x, y, g => { p = drawWind(T, g); }, { scale: s }); a.p = p; return a; };
   const shiver = a => a.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 110, iterations: Infinity });
-  const spinRays = (s, dur = 1400) => s.p.rays.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], { duration: dur, easing: 'ease-in-out' });
+  // 해 그림은 얼굴까지 한 장이라 한 바퀴 돌리지 않고 갸웃·통통 (도형은 햇살만 한 바퀴)
+  const spinRays = (s, dur = 1400) => (s.p.art
+    ? s.p.rays.animate([{ transform: 'rotate(0deg) scale(1)' }, { transform: 'rotate(-12deg) scale(1.1)', offset: .3 }, { transform: 'rotate(10deg) scale(1.08)', offset: .65 }, { transform: 'rotate(0deg) scale(1)' }], { duration: Math.min(dur, 1600), easing: 'ease-in-out' })
+    : s.p.rays.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], { duration: dur, easing: 'ease-in-out' }));
 
   /* ================= 효과 ================= */
   function gust(T, n, { x0 = 120, y0 = 120, y1 = 420, len = 240, dur = 1000, alpha = .85, w = 7, dist = 760 } = {}) {
@@ -216,6 +351,7 @@
   }
   function skyBG(T) { // 1. 하늘 와이드 (구름 층)
     const b = T.bg;
+    if (bgImage(T, 'sky')) return { sky: null, drift: T.el('g', {}, b), art: true }; // 구름은 그림 속 종이 → 흐르는 구름 없음
     const sky = T.el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: SKY.day }, b);
     const drift = T.el('g', {}, b);
     [[140, 120, .8], [520, 90, .6], [860, 150, .7]].forEach(([x, y, s]) => T.paper(drift, [['ellipse', { cx: x, cy: y, rx: 70 * s, ry: 26 * s, fill: C.snow }], ['ellipse', { cx: x + 30 * s, cy: y - 16 * s, rx: 40 * s, ry: 24 * s, fill: C.snow }]]));
@@ -226,6 +362,7 @@
   }
   function highBG(T) { // 2. 하늘에서 내려다본 길
     const { el, paper } = T, b = T.bg;
+    if (bgImage(T, 'high')) return { art: true, path: [[420, 540], [446, 420], [512, 310], [507, 232]] }; // 그림 속 길을 따라 걷는다
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: C.grass }, b);
     const cols = [C.leaf, '#8fae66', C.gold, C.pine, '#b9a25a'];
     for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++)
@@ -236,9 +373,16 @@
     paper(b, [['rect', { x: 820, y: 170, width: 70, height: 56, fill: C.cream }], ['path', { d: 'M810 176 L855 140 L900 176 Z', fill: C.gold }]]); // 초가 지붕 (위에서)
     // 구름 층 사이로 내려다본다 (위쪽 모서리)
     T.paper(b, [['circle', { cx: -20, cy: -10, r: 110, fill: C.snow }], ['circle', { cx: 100, cy: -40, r: 90, fill: C.snow }], ['circle', { cx: 1020, cy: -20, r: 120, fill: C.snow }], ['circle', { cx: 900, cy: -50, r: 90, fill: C.snow }]]);
+    return { path: [[470, 520], [570, 420], [500, 330], [560, 240]] };
   }
-  function fieldBG(T) { // 3·5. 들길 와이드 (바람/해 공용 — 조명은 하늘색과 덮개로)
+  function fieldBG(T, opts) { // 3·5. 들길 와이드 (바람/해 공용 — 조명은 하늘색과 덮개로)
     const { el, paper } = T, b = T.bg;
+    if (bgImage(T, 'field', opts)) {
+      const sky = tintLayer(T, b);
+      const warm = el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.amber, opacity: 0 }, T.fx);
+      warm.style.transition = 'opacity 1s';
+      return { sky, warm, tufts: el('g', {}, b), tree: [95, 230], art: true }; // 풀은 그림 속 종이(흔들리지 않음), 나무는 왼쪽
+    }
     const sky = el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: SKY.day }, b);
     sky.style.transition = 'fill 1.2s';
     paper(b, [['path', { d: 'M-200 350 Q120 240 420 320 Q700 230 1200 330 V700 H-200 Z', fill: '#b9c98f' }]]);
@@ -257,6 +401,11 @@
   }
   function streamBG(T) { // 7. 개울가
     const { el, paper } = T, b = T.bg;
+    if (bgImage(T, 'stream')) { // 바위는 그림 왼쪽(윗면 y≈300). 개어 둔 외투는 바위 오른쪽 풀밭에
+      const cw = 84, ch = cw * 637 / 813;
+      if (!pic(T, b, 'coat', 372 - cw / 2, 352 - ch, cw, ch)) paper(b, [['path', { d: 'M330 330 L410 322 L416 348 L326 352 Z', fill: C.bean }]]);
+      return { tufts: el('g', {}, b), art: true, seat: [215, 410] };
+    }
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: SKY.day }, b);
     paper(b, [['path', { d: 'M-200 330 Q200 250 520 300 Q800 240 1200 310 V700 H-200 Z', fill: '#b9c98f' }]]);
     paper(b, [['rect', { x: -200, y: 340, width: 1400, height: 200, fill: C.grass }]]);
@@ -269,10 +418,18 @@
     paper(b, [['path', { d: 'M250 440 L330 432 L336 458 L246 462 Z', fill: C.bean }], ['path', { d: 'M262 436 L290 434 L282 446 Z', fill: C.collar }]]); // 개어 둔 외투
     const tufts = el('g', {}, b);
     [60, 560, 780, 960].forEach(x => { const t = paper(tufts, [['path', { d: `M${x} 430 l6 -34 l6 34 Z M${x + 10} 430 l8 -26 l4 26 Z M${x - 10} 430 l4 -24 l6 24 Z`, fill: C.pine }]]); origin(t, x, 430); });
-    return { tufts };
+    return { tufts, seat: [390, 520] };
   }
   function playBG(T) { // 8. 날씨 놀이 (구름 층은 들길 재사용)
     const { el, paper } = T, b = T.bg;
+    if (bgImage(T, 'field')) { // 그림: 눈 오는 날은 눈 언덕 그림으로 바꿔 끼우고, 나머지 날씨는 하늘빛 한 겹으로
+      const snowU = bgUrl('snow');
+      const snowImg = snowU && el('image', { href: snowU, x: -40, y: -24, width: 1080, height: 1080 * 992 / 1760, preserveAspectRatio: 'none', opacity: 0 }, b);
+      if (snowImg) snowImg.style.transition = 'opacity .8s';
+      const tint = tintLayer(T, b, { dur: .8 });
+      const sky = { setAttribute(k, v) { if (k !== 'fill') return; const sn = v === SKY.snow && snowImg; if (snowImg) snowImg.setAttribute('opacity', sn ? 1 : 0); tint.setAttribute('fill', sn ? SKY.day : v); } };
+      return { sky, ground: { setAttribute() {} }, art: true };
+    }
     const sky = el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: SKY.day }, b);
     sky.style.transition = 'fill .8s';
     paper(b, [['path', { d: 'M-200 360 Q120 280 420 340 Q700 270 1200 350 V700 H-200 Z', fill: '#b9c98f' }]]);
@@ -290,9 +447,9 @@
     return g;
   }
   const ICON = {
-    coat: (T, g) => T.paper(g, [['path', { d: 'M-36 -48 L-12 -54 L0 -40 L12 -54 L36 -48 L58 26 L42 32 L34 4 L38 56 L-38 56 L-34 4 L-42 32 L-58 26 Z', fill: C.bean }],
+    coat: (T, g) => pic(T, g, 'coat', -57, -45, 114, 114 * 637 / 813) || T.paper(g, [['path', { d: 'M-36 -48 L-12 -54 L0 -40 L12 -54 L36 -48 L58 26 L42 32 L34 4 L38 56 L-38 56 L-34 4 L-42 32 L-58 26 Z', fill: C.bean }],
       ['path', { d: 'M-12 -54 L0 -32 L12 -54 Z', fill: C.collar }], ...[-18, 2, 22, 42].map(y => ['circle', { cx: 0, cy: y, r: 5, fill: C.gold }])]),
-    shirt: (T, g) => T.paper(g, [['path', { d: 'M-34 -40 L-14 -48 Q0 -38 14 -48 L34 -40 L56 -12 L38 0 L32 -10 L32 46 L-32 46 L-32 -10 L-38 0 L-56 -12 Z', fill: C.shirt }]]),
+    shirt: (T, g) => pic(T, g, 'shirt', -54, -38, 108, 108 * 226 / 333) || T.paper(g, [['path', { d: 'M-34 -40 L-14 -48 Q0 -38 14 -48 L34 -40 L56 -12 L38 0 L32 -10 L32 46 L-32 46 L-32 -10 L-38 0 L-56 -12 Z', fill: C.shirt }]]),
   };
 
   /* ================= 이야기 ================= */
@@ -311,6 +468,12 @@
       noFace: ['sun', 'man'],
     });
     const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]); // 말풍선 없는 소리 대사
+
+    /* 그림 미리 불러오기: 첫 장면(하늘·해·바람) 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
+    const loads = {};
+    Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
+    Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
+    await Promise.race([Promise.all([loads.bg_sky, loads.sun, loads.wind, loads.wind_blow].filter(Boolean)), sleep(2500)]);
 
     /* --- 1. 하늘 자랑 --- */
     const sky1 = skyBG(T);
@@ -336,20 +499,21 @@
     await say('해님과 바람은 서로 자기가 최고래요.');
 
     /* --- 2. 내기 (하이앵글) --- */
-    let N;
+    let N, HB;
     await T.sceneCard('내기', () => {
-      T.clear(); highBG(T);
+      T.clear(); HB = highBG(T);
       if (T.portrait()) camSnap(500, 280, 1);
-      N = traveler(T, 470, 520, .34, 'coat');
+      N = traveler(T, HB.path[0][0], HB.path[0][1], HB.art ? .3 : .34, 'coat');
       N.P.face('smile');
       const pt = T.portrait(); // 세로 화면: 양 귀퉁이에서 빼꼼 보이게 안쪽으로
       const s = sun(T, pt ? 270 : 70, 520, 1.05), w = wind(T, pt ? 730 : 930, 520, 1.05); w.face('right');
       T.world.__sw = [s, w];
     });
     const walk = N.body.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 360, iterations: Infinity });
-    const walking = (async () => { await N.move(570, 420, 2600, 'linear'); await N.move(500, 330, 2400, 'linear'); await N.move(560, 240, 2400, 'linear'); })();
+    const [, p1, p2, p3] = HB.path;
+    const walking = (async () => { await N.move(...p1, 2600, 'linear'); await N.move(...p2, 2400, 'linear'); await N.move(...p3, 2400, 'linear'); })();
     await say('저 아래 길로 나그네가 걸어가요.');
-    await camTo(530, 300, 1.5, 1400);
+    await camTo(HB.art ? 480 : 530, HB.art ? 340 : 300, 1.5, 1400);
     await say('나그네는 두툼한 외투를 입었어요.');
     await walking; walk.cancel();
     await camWide(900);
@@ -379,31 +543,31 @@
     const steps = [
       async () => { leaves(T, 10, ...F.tree); await say('휘잉~ 나뭇잎이 날아가요!'); },
       async () => {
-        N.P.hat.style.opacity = 0; N.P.hat.dataset.gone = '1'; N.P.face('o');
+        N.P.hat.style.opacity = 0; N.P.hat.dataset.gone = '1'; N.P.face('o'); refreshPose(N.P);
         const [hx, hy] = hatHead();
-        flying = T.paper(T.fx, HAT_SHAPES);
+        flying = hatArt(T, T.fx);
         const sc = N.scale;
         flying.animate([{ transform: `translate(${hx}px,${hy}px) scale(${sc}) rotate(0deg)` }, { transform: `translate(${hx + 160}px,${hy - 120}px) scale(${sc}) rotate(200deg)`, offset: .5 },
           { transform: `translate(${hx + 520}px,${hy - 200}px) scale(${sc}) rotate(520deg)` }], { duration: 1300, easing: 'ease-out', fill: 'forwards' });
         T.pop(hx - 40, hy - 20, '앗!', C.bean);
         await sleep(900);
-        await T.cut(svg => {
+        await (cutArt(T, 'cut_hat', 'whoosh', 2200) || T.cut(svg => {
           T.paper(T.el('g', { transform: 'translate(210,150) rotate(-24) scale(2.4)' }, svg), HAT_SHAPES);
           [[60, 90], [50, 150], [70, 210]].forEach(([x, y]) => T.el('path', { d: `M${x} ${y} h80`, stroke: '#fff', 'stroke-width': 8, 'stroke-linecap': 'round' }, svg));
           T.el('text', { x: 200, y: 280, 'text-anchor': 'middle', 'font-size': 54, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '앗, 내 모자!' }, svg);
-        }, { hold: 2200, sfx: 'whoosh' });
+        }, { hold: 2200, sfx: 'whoosh' }));
         await say('"앗, 내 모자!" 모자가 훨훨 날아갔어요.');
       },
       async () => { N.P.face('cold'); flap(N.P, true); T.pop(N.x + 90, N.y - 120, '펄럭펄럭', C.bean); await say('외투 자락이 펄럭펄럭!'); },
       async () => {
         flap(N.P, false); setOutfit(N.P, 'coatShut', 'cross', { buttons: 0 }); N.P.face('cold');
         N.__shiver = shiver(N); SND.shiver(T);
-        await T.cut(svg => {
+        await (cutArt(T, 'cut_hold', null, 2200) || T.cut(svg => {
           const a = T.actor(svg, 200, 330, g => { const P = drawTraveler(T, g); setOutfit(P, 'coatShut', 'cross', { buttons: 0 }); P.face('cold'); P.hat.style.opacity = 0; }, { scale: 1.35 });
           [[-1, 1], [1, 1]].forEach(([s]) => T.el('path', { d: `M${200 + s * 80} 150 l${s * 14} 10 l${-s * 14} 10 l${s * 14} 10`, stroke: '#fff', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, svg));
           T.el('text', { x: 330, y: 80, 'text-anchor': 'middle', 'font-size': 60, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '꽉!' }, svg);
           return a;
-        }, { hold: 2200 });
+        }, { hold: 2200 }));
         await say('"으으, 추워!" 나그네는 외투를 꽉 여몄어요.');
       },
       async () => {
@@ -423,12 +587,12 @@
     await camWide(700);
     vo('cut_pant'); // 컷 속 바람의 헉헉 (말풍선 없음)
     await T.cut(svg => {
-      T.actor(svg, 200, 160, g => { const p = drawWind(T, g); p.wrinkles.setAttribute('opacity', 1); p.sweat.setAttribute('opacity', 1); p.setMouth('tired'); p.puff.style.transform = 'scale(.85,.72)'; }, { scale: 1.5 });
+      T.actor(svg, 200, 160, g => { const p = drawWind(T, g); p.wrinkles.setAttribute('opacity', 1); p.sweat.setAttribute('opacity', 1); p.setMouth('tired'); p.puff.style.transform = p.art ? 'scale(.94,.88)' : 'scale(.85,.72)'; }, { scale: 1.5 });
       T.el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 58, fill: C.indigo, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '헉헉…' }, svg);
     }, { hold: 2400 });
     W.setScale(.8); W.p.puffCheeks(.7); W.p.setMouth('tired');
     W.p.wrinkles.setAttribute('opacity', 1); W.p.sweat.setAttribute('opacity', 1);
-    W.p.puff.style.transition = 'transform .5s'; W.p.puff.style.transform = 'scale(.85,.75)';
+    W.p.puff.style.transition = 'transform .5s'; W.p.puff.style.transform = W.p.art ? 'scale(.94,.88)' : 'scale(.85,.75)';
     const pant = W.p.puff.animate([{ scale: '1 1' }, { scale: '1.06 1.1' }, { scale: '1 1' }], { duration: 700, iterations: Infinity });
     await camTo(W.x, W.y + 40, 2.1, 900);
     SND.pant(T);
@@ -438,10 +602,10 @@
     // 웃음 컷: 날아간 모자가 팔랑팔랑 다시 떨어져 머리에 쏙
     const [hx, hy] = hatHead();
     if (flying) flying.remove();
-    const back = T.paper(T.fx, HAT_SHAPES);
+    const back = hatArt(T, T.fx);
     await T.anim(back, [{ transform: `translate(${hx + 260}px,-60px) scale(${N.scale}) rotate(-40deg)` }, { transform: `translate(${hx - 120}px,${hy - 150}px) scale(${N.scale}) rotate(30deg)`, offset: .45 },
       { transform: `translate(${hx + 60}px,${hy - 70}px) scale(${N.scale}) rotate(-20deg)`, offset: .75 }, { transform: `translate(${hx}px,${hy}px) scale(${N.scale}) rotate(0deg)` }], { duration: 2200, easing: 'ease-in-out' });
-    back.remove(); N.P.hat.dataset.gone = ''; N.P.hat.style.opacity = 1; N.P.face('o');
+    back.remove(); N.P.hat.dataset.gone = ''; N.P.hat.style.opacity = 1; N.P.face('o'); refreshPose(N.P);
     AudioFX.sfx('pop') || AudioFX.pop(); T.pop(hx + 70, hy - 30, '쏙!', C.persimmon); N.hop(18);
     await say('어? 날아간 모자가 나그네 머리에 쏙 떨어졌어요!');
     pant.cancel();
@@ -493,12 +657,12 @@
     await say('한 번 더 꾹!');
     await holdOnce(2);
     vo('cut_off'); // 컷 속 나그네 한숨 (말풍선 없음)
-    await T.cut(svg => {
+    await (cutArt(T, 'cut_off', 'swish', 2400) || T.cut(svg => {
       const coat = T.el('g', { transform: 'translate(250,110) rotate(-28)' }, svg);
       ICON.coat(T, coat);
       T.actor(svg, 150, 300, g => { const P = drawTraveler(T, g); setOutfit(P, 'shirt', 'down'); P.face('big'); }, { scale: 1.05 });
       T.el('text', { x: 280, y: 280, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '훌러덩!' }, svg);
-    }, { hold: 2400, sfx: 'swish' });
+    }, { hold: 2400, sfx: 'swish' }));
     setOutfit(N.P, 'shoulder', 'down'); N.P.sweat.setAttribute('opacity', 0); N.P.face('big');
     N.hop(22); T.confetti(); AudioFX.jingle();
     await say('훌러덩! 나그네가 외투를 벗었어요!');
@@ -509,16 +673,22 @@
     let Wl, Sr;
     await T.sceneCard('누가 이겼을까?', () => {
       T.clear();
-      el('rect', { x: -200, y: -200, width: 700, height: 1000, fill: SKY.grey }, T.bg);
-      el('rect', { x: 500, y: -200, width: 700, height: 1000, fill: SKY.warm }, T.bg);
-      T.paper(T.bg, [['rect', { x: -200, y: 420, width: 1400, height: 300, fill: C.grass }]]);
+      if (bgImage(T, 'field', { zoom: 1.6, cx: 480, cy: 560 })) { // 들길 그림을 키워 모래길이 양쪽 나그네 발밑까지 오게. 왼쪽은 흐린 빛, 오른쪽은 따뜻한 빛
+        tintLayer(T, T.bg, { x: -1400, w: 1900 }).setAttribute('fill', SKY.grey);
+        tintLayer(T, T.bg, { x: 500, w: 1900 }).setAttribute('fill', SKY.warm);
+      } else {
+        el('rect', { x: -200, y: -200, width: 700, height: 1000, fill: SKY.grey }, T.bg);
+        el('rect', { x: 500, y: -200, width: 700, height: 1000, fill: SKY.warm }, T.bg);
+        T.paper(T.bg, [['rect', { x: -200, y: 420, width: 1400, height: 300, fill: C.grass }]]);
+      }
       T.paper(T.bg, [['rect', { x: 494, y: -10, width: 12, height: 600, fill: C.cream }], ['rect', { x: 498, y: -10, width: 4, height: 600, fill: C.gold }]]);
       // 세로 화면(양옆이 잘림): 양쪽 그림을 가운데 쪽으로 모으고 살짝 물러선다. 가로는 그대로
       const pt = T.portrait(), X = pt ? { L: 375, R: 625, W: 370, S: 630 } : { L: 290, R: 720, W: 130, S: 880 };
       const L = traveler(T, X.L, 510, 1.2, 'coatShut', 'cross'); L.P.face('cold'); shiver(L);
       const R = traveler(T, X.R, 510, 1.2, 'shoulder', 'down'); R.P.face('big');
-      Wl = wind(T, X.W, 170, .75); Wl.p.setMouth('blow'); Wl.p.puffCheeks(1.5);
-      Sr = sun(T, X.S, 170, .75);
+      const skyY = pt && artUrl('trav_hold') ? 128 : 170; // 세로 화면 + 그림 나그네(모자까지 더 크다): 해·바람이 머리에 겹치지 않게 조금 위로
+      Wl = wind(T, X.W, skyY, .75); Wl.p.setMouth('blow'); Wl.p.puffCheeks(1.5);
+      Sr = sun(T, X.S, skyY, .75);
       if (pt) camSnap(500, 280, Math.min(1, T.viewWidth() / 2 / 250));
       T.world.__LR = [L, R];
     });
@@ -539,12 +709,15 @@
     await say('세게 미는 것보다 다정한 게 더 힘이 세요.');
 
     /* 날씨 옷 고르기 ×2 */
-    const clothesQ = async ({ label, sky, ground, fx, q, okKey, noKey, okName, where, wrong, wear, after }) => {
+    const wrongAt = M => (M.P.art ? [M.x + 140, M.y - 262] : [M.x, M.y - 300]); // 그림 나그네는 얼굴(덜덜·땀)이 보이게 옆으로
+    const clothesQ = async ({ label, bg, sky, ground, fx, q, okKey, noKey, okName, where, wrong, wear, after }) => {
       let M, fxG, bs;
       await T.sceneCard(label, () => {
         T.clear();
-        el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: sky }, T.bg);
-        T.paper(T.bg, [['path', { d: 'M-200 380 Q200 320 520 360 Q800 310 1200 370 V700 H-200 Z', fill: ground }]]);
+        if (bgImage(T, bg)) { if (bg === 'field') tintLayer(T, T.bg).setAttribute('fill', sky); } else {
+          el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: sky }, T.bg);
+          T.paper(T.bg, [['path', { d: 'M-200 380 Q200 320 520 360 Q800 310 1200 370 V700 H-200 Z', fill: ground }]]);
+        }
         fxG = fx();
         M = traveler(T, 500, 510, 1.15, 'shirt', 'down'); M.P.face('smile');
         const left = Math.random() < .5;
@@ -560,14 +733,14 @@
       await say(after);
       return fxG;
     };
-    await clothesQ({ label: '눈 오는 날', sky: SKY.snow, ground: C.snow, fx: () => precip(T, T.bg, 'snow', 34),
+    await clothesQ({ label: '눈 오는 날', bg: 'snow', sky: SKY.snow, ground: C.snow, fx: () => precip(T, T.bg, 'snow', 34),
       q: '눈이 펑펑 오는 날엔 무엇을 입을까요?', okKey: 'coat', noKey: 'shirt', okName: '외투', where: '추운 날엔 따뜻한 옷이 좋아요.',
-      wrong: async M => { M.P.face('cold'); const s = shiver(M); T.pop(M.x, M.y - 300, '으으!', C.indigo); vo('wrong_cold'); await sleep(900); s.cancel(); M.P.face('smile'); },
+      wrong: async M => { M.P.face('cold'); const s = shiver(M); T.pop(...wrongAt(M), '으으!', C.indigo); vo('wrong_cold'); await sleep(900); s.cancel(); M.P.face('smile'); },
       wear: M => { setOutfit(M.P, 'scarf', 'down', { buttons: 4 }); M.P.face('big'); },
       after: '맞아요! 따뜻한 외투를 입으니 포근해요.' });
-    await clothesQ({ label: '쨍쨍한 날', sky: SKY.hot, ground: C.grass, fx: () => { const s = sun(T, 500, 110, .55, T.bg); spinRays(s, 3000); return s; },
+    await clothesQ({ label: '쨍쨍한 날', bg: 'field', sky: SKY.hot, ground: C.grass, fx: () => { const s = sun(T, 500, 110, .55, T.bg); spinRays(s, 3000); return s; },
       q: '해가 쨍쨍한 날엔 무엇을 입을까요?', okKey: 'shirt', noKey: 'coat', okName: '반팔', where: '더운 날엔 시원한 옷이 좋아요.',
-      wrong: async M => { setOutfit(M.P, 'coatShut', 'down'); M.P.sweat.setAttribute('opacity', 1); M.P.face('o'); T.pop(M.x, M.y - 300, '더워!', C.persimmon); vo('wrong_hot'); await sleep(1100); setOutfit(M.P, 'shirt', 'down'); M.P.sweat.setAttribute('opacity', 0); M.P.face('smile'); },
+      wrong: async M => { setOutfit(M.P, 'coatShut', 'down'); M.P.sweat.setAttribute('opacity', 1); M.P.face('o'); T.pop(...wrongAt(M), '더워!', C.persimmon); vo('wrong_hot'); await sleep(1100); setOutfit(M.P, 'shirt', 'down'); M.P.sweat.setAttribute('opacity', 0); M.P.face('smile'); },
       wear: M => { setOutfit(M.P, 'shirt', 'down'); M.P.face('big'); },
       after: '맞아요! 반팔을 입으니 시원해요.' });
     await say('추우면 입고, 더우면 벗어요.');
@@ -576,9 +749,10 @@
     let ST, WW, SS, babble;
     await T.sceneCard('개울가', () => {
       T.clear(); ST = streamBG(T);
-      if (T.portrait()) camSnap(440, 280, 1); // 앞 장면에서 물러선 카메라를 제자리로 (세로 화면만)
-      N = traveler(T, 390, 520, 1.2, 'shirt', 'down', { sit: true }); N.P.face('smile');
-      WW = wind(T, 170, 190, .7); SS = sun(T, 830, 170, .7);
+      if (T.portrait()) camSnap(ST.art ? 330 : 440, 280, 1); // 앞 장면에서 물러선 카메라를 제자리로 (세로 화면만). 그림은 바위가 왼쪽
+      N = traveler(T, ST.seat[0], ST.seat[1], 1.2, 'shirt', 'down', { sit: true }); N.P.face('smile');
+      // 그림: 나그네가 왼쪽 바위에 앉으니 바람은 가운데 위에서 시작
+      WW = ST.art ? wind(T, 520, 165, .7) : wind(T, 170, 190, .7); SS = sun(T, ST.art ? 850 : 830, ST.art ? 160 : 170, .7);
     }, null);
     babble = SND.babble(T);
     await say('나그네는 개울가에서 쉬어요.');
@@ -595,16 +769,16 @@
     } });
     await say('"아, 시원해. 고마워, 바람아!"');
     WW.hop(20);
-    await Promise.all([WW.move(400, 180, 1200), SS.move(600, 170, 1200)]);
+    await Promise.all(ST.art ? [WW.move(450, 170, 1200), SS.move(660, 165, 1200)] : [WW.move(400, 180, 1200), SS.move(600, 170, 1200)]);
     await say('해님과 바람이 마주 보고 웃었어요.');
-    await T.cut(svg => {
+    await (cutArt(T, 'cut_shake', 'ding', 2400) || T.cut(svg => {
       const w = T.actor(svg, 130, 160, g => drawWind(T, g), { scale: 1 });
       const s = T.actor(svg, 280, 150, g => drawSun(T, g), { scale: .9 });
       T.el('path', { d: 'M190 170 Q205 150 220 160', stroke: C.snow, 'stroke-width': 18, fill: 'none', 'stroke-linecap': 'round' }, svg);
       T.el('path', { d: 'M220 160 L196 176 L212 186 Z', fill: C.persimmon }, svg);
       T.el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 58, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '악수!' }, svg);
       return [w, s];
-    }, { hold: 2400, sfx: 'ding' });
+    }, { hold: 2400, sfx: 'ding' }));
     await say('"우리, 사이좋게 지내자!"');
     clearInterval(babble);
 
@@ -615,10 +789,10 @@
       T.clear(); PL = playBG(T);
       M8 = traveler(T, 500, 520, 1.15, 'shirt', 'down'); M8.P.face('smile');
       btns.sun = sun(T, 130, 200, .55);
-      btns.rain = T.actor(T.world, 370, 200, g => T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: C.rain }], ['circle', { cx: 6, cy: -18, r: 42, fill: C.rain }], ['circle', { cx: 44, cy: 6, r: 32, fill: C.rain }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: C.rain }],
+      btns.rain = T.actor(T.world, 370, 200, g => (pic(T, g, 'cloud_rain', -72, -56, 144, 144 * 94 / 140) && T.paper(g, [-30, 0, 30].map(x => ['path', { d: `M${x} 46 q-7 12 0 15 q7 -3 0 -15 Z`, fill: '#6E8FB0' }]))) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: C.rain }], ['circle', { cx: 6, cy: -18, r: 42, fill: C.rain }], ['circle', { cx: 44, cy: 6, r: 32, fill: C.rain }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: C.rain }],
         ...[-30, 0, 30].map(x => ['path', { d: `M${x} 52 q-7 12 0 15 q7 -3 0 -15 Z`, fill: '#6E8FB0' }])]));
       btns.wind = wind(T, 630, 200, .5);
-      btns.snowc = T.actor(T.world, 870, 200, g => T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: '#E6EEF4' }], ['circle', { cx: 6, cy: -18, r: 42, fill: '#E6EEF4' }], ['circle', { cx: 44, cy: 6, r: 32, fill: '#E6EEF4' }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: '#E6EEF4' }],
+      btns.snowc = T.actor(T.world, 870, 200, g => pic(T, g, 'cloud_snow', -72, -62, 144, 144 * 168 / 176) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: '#E6EEF4' }], ['circle', { cx: 6, cy: -18, r: 42, fill: '#E6EEF4' }], ['circle', { cx: 44, cy: 6, r: 32, fill: '#E6EEF4' }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: '#E6EEF4' }],
         ...[-30, 0, 30].map(x => ['circle', { cx: x, cy: 58, r: 7, fill: C.snow, stroke: C.cloudBack, 'stroke-width': 3 }])]));
       // 세로 화면: 날씨 단추 넷을 가운데로 모으고 살짝 물러서서 모두 보이게 (가로는 그대로)
       if (T.portrait()) {
