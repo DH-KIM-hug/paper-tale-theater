@@ -78,18 +78,8 @@ const NARRATION_CLIPS = {
   "audio/tc/sunmoon/tiger_87f9570420.mp3",
   "audio/tc/sunmoon/nar_18e0a7ea37.mp3"
  ],
- "엄마 목소리는 어땠지? 두 소리를 들어 봐요.": "audio/tc/sunmoon/nar_d179bed64b.mp3",
- "이건 부드러운 소리.": "audio/tc/sunmoon/nar_5a3c1ca070.mp3",
- "이건 걸걸한 소리.": "audio/tc/sunmoon/nar_3cef90766d.mp3",
- "진짜 엄마 목소리는 어느 쪽일까요?": "audio/tc/sunmoon/nar_331a6489cf.mp3",
- "\"어흥~\" 이건 걸걸한 목소리예요!": [
-  "audio/tc/sunmoon/tiger_d488e93c23.mp3",
-  "audio/tc/sunmoon/nar_7cc76dde50.mp3"
- ],
  "진짜 엄마 목소리를 톡 골라 봐요!": "audio/tc/sunmoon/nar_56d29180f3.mp3",
- "엄마 목소리는 노래처럼 부드러웠어요.": "audio/tc/sunmoon/nar_eacc422708.mp3",
  "반짝이는 쪽이 엄마 목소리예요!": "audio/tc/sunmoon/nar_5bd38cab18.mp3",
- "맞아요! 엄마 목소리는 부드러워요. 그런데 문밖 목소리는 걸걸했지요?": "audio/tc/sunmoon/nar_be161f6f50.mp3",
  "오빠가 말했어요. \"우리 엄마 목소리가 아니에요! 손을 보여 주세요!\"": [
   "audio/tc/sunmoon/nar_d5f5fabe9f.mp3",
   "audio/tc/sunmoon/boy_166ea0774c.mp3"
@@ -184,12 +174,22 @@ const NARRATION_CLIPS = {
  "\"그럼 우리 바꾸자!\"": "audio/tc/sunmoon/boy_c43c5e575b.mp3",
  "그래서 동생은 해님, 오빠는 달님이 되었답니다.": "audio/tc/sunmoon/nar_6addd44765.mp3",
  "해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.": "audio/tc/sunmoon/nar_c7e87f2f9b.mp3",
- "해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.": "audio/tc/sunmoon/nar_d29cacb72c.mp3"
+ "해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.": "audio/tc/sunmoon/nar_d29cacb72c.mp3",
+ "두 목소리를 들어 봐요. 하나는 진짜 엄마, 하나는 가짜예요.": "audio/tc/sunmoon/nar_c8ce63fd1d.mp3",
+ "1번 목소리.": "audio/tc/sunmoon/nar_cc4cb16240.mp3",
+ "2번 목소리.": "audio/tc/sunmoon/nar_3be6de2e32.mp3",
+ "진짜 엄마 목소리는 몇 번일까요?": "audio/tc/sunmoon/nar_71518c4b32.mp3",
+ "진짜 엄마 목소리를 톡 골라 봐요! 다시 들으려면 한 번 더 눌러요.": "audio/tc/sunmoon/nar_a4b2f03cc5.mp3",
+ "\"어흥~\" 이건 호랑이가 흉내 낸 목소리예요!": "audio/tc/sunmoon/nar_3e9f8058f3.mp3",
+ "엄마 목소리는 다정하고 부드러웠어요. 다시 들어 봐요.": "audio/tc/sunmoon/nar_de39d798cf.mp3",
+ "맞아요! 진짜 엄마 목소리예요. 그런데 문밖 목소리는 걸걸했지요?": "audio/tc/sunmoon/nar_6a7fdf37ad.mp3"
 };
 const VOICE_LINES = {
  "cut_roar": "audio/tc/sunmoon/tiger_7935769933.mp3",
  "cut_mimic": "audio/tc/sunmoon/tiger_60b27c13ee.mp3",
  "cut_creak": "audio/tc/sunmoon/tiger_793ff85e23.mp3",
  "cut_snap": "audio/tc/sunmoon/tiger_48752c325b.mp3",
- "cut_bump": "audio/tc/sunmoon/tiger_c34d22e6d8.mp3"
+ "cut_bump": "audio/tc/sunmoon/tiger_c34d22e6d8.mp3",
+ "call_mom": "audio/tc/sunmoon/mom_9a1f7b77d2.mp3",
+ "call_tiger": "audio/tc/sunmoon/tiger_c004618047.mp3"
 };

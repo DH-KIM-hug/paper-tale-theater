@@ -731,27 +731,33 @@
     AudioFX.thud(); await sleep(250); AudioFX.thud(); // (기계음 호랑이 소리는 뺐다: 호랑이 목소리와 겹침)
     [0, 260, 520].forEach(t => setTimeout(() => AudioFX.sfx('knock'), t));
     await say('똑똑똑. "얘들아~ 엄마 왔다. 문 열어라~" 걸걸한 목소리예요.');
-    await say('엄마 목소리는 어땠지? 두 소리를 들어 봐요.');
-    const soft = badge(T, 140, 250, 80, g => {
-      el('path', { d: 'M-46 4 Q-34 -18 -22 4 T2 4 T26 4 T50 4', stroke: C.lav, 'stroke-width': 9, fill: 'none', 'stroke-linecap': 'round' }, g);
-      el('circle', { cx: 14, cy: -34, r: 9, fill: C.pink }, g); el('rect', { x: 19, y: -64, width: 5, height: 32, fill: C.pink }, g);
-      el('circle', { cx: -22, cy: 38, r: 7, fill: C.pink }, g);
+    await say('두 목소리를 들어 봐요. 하나는 진짜 엄마, 하나는 가짜예요.');
+    /* 진짜 목소리로 고르기: 엄마(재선)와 엄마 흉내 내는 호랑이(학철)가 같은 말을 한다.
+       그림으로는 알 수 없게 두 배지는 똑같은 귀 모양 + 번호만, 엄마 쪽은 매번 섞는다. 누르면 다시 듣는다 */
+    const V = typeof VOICE_LINES !== 'undefined' ? VOICE_LINES : {};
+    const callMom = () => (V.call_mom && AudioFX.voice(V.call_mom)) || momVoice(T);
+    const callTiger = () => (V.call_tiger && AudioFX.voice(V.call_tiger)) || tigerVoice(T);
+    const earBadge = (x, num) => badge(T, x, 250, 80, g => {
+      el('path', { d: 'M-8 -40 C-40 -40 -44 -6 -30 10 C-20 22 -22 34 -8 40 C6 44 14 30 8 18 C2 8 14 0 14 -14 C14 -30 4 -40 -8 -40Z', fill: C.pink }, g);
+      el('path', { d: 'M-8 -22 C-22 -22 -24 -4 -14 6', stroke: C.bean, 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, g);
+      el('path', { d: 'M28 -18 Q40 0 28 18 M40 -28 Q58 0 40 28', stroke: C.lav, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, g);
+      el('text', { x: 0, y: 70, 'text-anchor': 'middle', 'font-size': 34, fill: C.bean, text: String(num) }, g);
     });
-    const rough = badge(T, 860, 250, 80, g => {
-      el('path', { d: 'M-48 10 L-32 -20 L-16 16 L0 -26 L16 18 L32 -22 L48 8', stroke: C.bark, 'stroke-width': 11, fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, g);
-      el('path', { d: 'M-30 36 L-18 26 L-6 38 L6 26 L18 38 L30 26', stroke: C.stripe, 'stroke-width': 6, fill: 'none' }, g);
-    });
-    T.fitRow([soft, rough]); // 세로 화면: 보이는 폭 안으로
-    const hear = (b, fn) => { fn(T); b.animate([{ scale: 1 }, { scale: 1.15 }, { scale: 1 }], { duration: 700 }); };
-    soft.addEventListener('pointerdown', () => momVoice(T)); rough.addEventListener('pointerdown', () => tigerVoice(T));
-    hear(soft, momVoice); await say('이건 부드러운 소리.');
-    hear(rough, tigerVoice); await say('이건 걸걸한 소리.');
-    await say('진짜 엄마 목소리는 어느 쪽일까요?');
+    const momFirst = Math.random() < .5;
+    const b1 = earBadge(140, 1), b2 = earBadge(860, 2);
+    const soft = momFirst ? b1 : b2, rough = momFirst ? b2 : b1;
+    T.fitRow([b1, b2]); // 세로 화면: 보이는 폭 안으로
+    const play = b => (b === soft ? callMom() : callTiger());
+    const hear = async b => { b.animate([{ scale: 1 }, { scale: 1.15 }, { scale: 1 }], { duration: 700 }); await play(b); };
+    soft.addEventListener('pointerdown', () => play(soft)); rough.addEventListener('pointerdown', () => play(rough));
+    await say('1번 목소리.'); await hear(b1);
+    await say('2번 목소리.'); await hear(b2);
+    await say('진짜 엄마 목소리는 몇 번일까요?');
     await T.choose([{ el: soft, ok: true },
-      { el: rough, ok: false, onWrong: async () => { await say('"어흥~" 이건 걸걸한 목소리예요!'); } }],
-    { prompt: '진짜 엄마 목소리를 톡 골라 봐요!', where: '엄마 목소리는 노래처럼 부드러웠어요.', who: '반짝이는 쪽이 엄마 목소리예요!' });
+      { el: rough, ok: false, onWrong: async () => { await say('"어흥~" 이건 호랑이가 흉내 낸 목소리예요!'); } }],
+    { prompt: '진짜 엄마 목소리를 톡 골라 봐요! 다시 들으려면 한 번 더 눌러요.', where: '엄마 목소리는 다정하고 부드러웠어요. 다시 들어 봐요.', who: '반짝이는 쪽이 엄마 목소리예요!' });
     soft.remove(); rough.remove();
-    await say('맞아요! 엄마 목소리는 부드러워요. 그런데 문밖 목소리는 걸걸했지요?');
+    await say('맞아요! 진짜 엄마 목소리예요. 그런데 문밖 목소리는 걸걸했지요?');
     await say('오빠가 말했어요. "우리 엄마 목소리가 아니에요! 손을 보여 주세요!"');
 
     /* --- 8. 문 앞 ② 손 --- */
