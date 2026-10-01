@@ -13,7 +13,8 @@
      - 거의 까맣게 나온 넷은 낮 그림으로 다시 뽑아 밤으로 구웠다 (아래 tree · wellTop · door).
        sm_bg_hill_night_day(셋째 고개)는 쓰지 않는다: 바위가 작아 호랑이가 숨지 못하고, 세 고개가 같은 그림(hill0~2)이라 셋째만 바뀌면 어색하다
      - hill0 / hill2는 sm_bg_hill_dusk를 색 보정해 구운 것(금빛 / 밤). 세 고개 모두 그 그림 속 바위를 호랑이 가림막으로 쓴다(HILL_ROCK).
-     - room · backyard는 원본이 너무 어두워 밝기를 끌어올려 구웠다 (원본: assets/raw/v3). */
+     - backyard는 원본이 너무 어두워 밝기를 끌어올려 구웠다 (원본: assets/raw/v3).
+     - 마지막 판(방·큰 나무·문)은 다시 뽑은 낮 그림(sm_bg_room2 · tree2 · door2)을 밤빛으로 구웠다 (스크래치 bake4.py · tree2fix.py) */
   const AS = '../../assets/';
   const BG = {
     cottage: 'v3w/sm_bg_cottage.webp',
@@ -21,16 +22,16 @@
     hill0: 'v3w/sm_bg_hill_dusk_gold.webp',
     hill1: 'v3w/sm_bg_hill_dusk.webp',
     hill2: 'v3w/sm_bg_hill_dusk_night.webp',
-    room: 'v3w/sm_bg_room.webp',
+    room: 'v3w/sm_bg_room2_lamp.webp',  // 방 안 (노란 장판·닫힌 창호지 문·반닫이·이불·등잔) — 낮 그림을 등잔불 밤으로 구움, 그림 속 등잔 불꽃은 지웠다 (코드가 켠다)
     backyard: 'v3w/sm_bg_backyard.webp',
     sky: 'v3w/sm_bg_sky.webp',               // 구름 사이로 빛이 드는 밤하늘 (무대 뒤에 고정, 줄·구름·오누이만 위로 흐른다)
     sorghum: 'v3w/sm_bg_sorghum_dusk.webp',  // 수수밭 — 원본은 한낮이라 해 질 녘 보랏빛으로 구움 (줄이 끊어진 건 밤)
     heaven: 'v3w/sm_bg_heaven.webp', heavenNight: 'v3w/sm_bg_heaven_night.webp', // 밤 = 같은 그림을 푸른 밤으로 구운 것 (톡 하면 서서히 바뀜)         // 하늘 나라 — 그림 속 해·달은 지웠다 (해님·달님은 오누이 배우). 밤은 코드의 남색 장막
     /* 까맣게 나와 다시 뽑은 낮 그림(assets/raw/v3/*_day.png)을 밤으로 구운 것 (conv: 스크래치 bake_night.py).
        하늘은 푸른 밤, 종이 물건은 달빛 받은 연보라·크림 — 가장 어두운 곳도 남색(#24285a 쯤)까지만 */
-    tree: 'v3w/sm_bg_well_tree_night.webp',   // 우물가 큰 나무 (왼쪽에 그림 끝 330px를 거울로 이어 붙임)
+    tree: 'v3w/sm_bg_tree2_night.webp',       // 큰 나무(가운데)·돌 우물(왼쪽)·초가(오른쪽) — 그림 속 아이 넷을 지우고 달밤으로 구움
     wellTop: 'v3w/sm_bg_well_top_night.webp', // 우물 속 (위에서 본 돌 우물)
-    door: 'v3w/sm_bg_window_panel.webp',      // 창호지 문 한 짝 (등잔불 색) → 여러 짝 이어 붙여 문·벽을 만든다
+    door: 'v3w/sm_bg_door2_lamp.webp',        // 닫힌 미닫이 창호지 문 (가운데 이음매에 고리) — 등잔불 색
   };
   /* ================= 배우·소품·컷 그림 (페이퍼아트, assets/v3w/sm_*.webp) =================
      null = 쓸 그림이 없어 임시 도형(그레이박스)으로 그린다. 새 파일이 나오면 여기 한 줄만 바꾸면 된다.
@@ -53,7 +54,9 @@
     tiger: 'v3w/sm_tiger.webp', tiger_full: 'v3w/sm_tiger_full.webp', tiger_scarf: 'v3w/sm_tiger_scarf.webp',
     tiger_axe: 'v3w/sm_tiger_axe.webp', tiger_slip: 'v3w/sm_tiger_slip.webp', tiger_bump: 'v3w/sm_tiger_bump.webp',
     rope_good: 'v3w/sm_rope_good.webp', rope_bad: 'v3w/sm_rope_bad.webp', oil: 'v3w/sm_oil.webp',
-    kids_rope: null, // 새 모습으로 다시 뽑는 중 → 그동안 줄 오르기도 kids_climb
+    kids_rope: 'v3w/sm_kids_rope.webp', // 새 모습 오누이가 세로 금빛 동아줄을 오른다 (하늘 오르기)
+    cake: 'v3w/sm_cake.webp', cake_pink: 'v3w/sm_cake_pink.webp', plate: 'v3w/sm_plate.webp', // 흰 떡(분홍 꽃)·분홍 떡(초록 잎)·빈 나무 접시
+    lamp_flame: 'v3w/sm_lamp_flame.webp', // 등잔 불꽃만 — 방 그림 속 등잔 심지 위에 켠다
     sun_girl: 'v3w/sm_sun_girl.webp', moon_boy: 'v3w/sm_moon_boy.webp', lamp_on: 'v3w/sm_lamp_on.webp', lamp_off: 'v3w/sm_lamp_off.webp',
     basket: null,
     cut_well: 'v3w/sm_cut_well.webp', cut_snap: 'v3w/sm_cut_snap.webp', cut_eye: null,
@@ -99,8 +102,9 @@
   /* 크기 (무대 단위, 배우 scale 1): 자세가 바뀌어도 머리 크기가 튀지 않게 그림마다 맞춘 값 */
   const SZ = {
     mom_wave: [125, 240], mom_basket: [114, 240],
-    boy: [71, 150], girl: [89, 158], kids_hug: [116, 146], kids_climb: [83, 223], kids_rope: [158, 283],
-    tiger: [150, 235], tiger_full: [192, 230], tiger_scarf: [179, 225], tiger_axe: [159, 240], tiger_slip: [218, 225], tiger_bump: [176, 205],
+    boy: [71, 150], girl: [89, 158], kids_hug: [116, 146], kids_climb: [83, 223], kids_rope: [103, 259],
+    // tiger_scarf = 엄마 옷(분홍 저고리·회색 치마) 입은 호랑이 (이름만 그대로)
+    tiger: [150, 235], tiger_full: [192, 230], tiger_scarf: [175, 217], tiger_axe: [159, 240], tiger_slip: [218, 225], tiger_bump: [176, 205],
   };
   /* 나무 오르기 그림: 지운 기둥 가운데가 그림 폭의 어디였는지 (conv 결과) → 발끝 x=0이 기둥(줄) 가운데 */
   const CLIMB = { kids_climb: .345 };
@@ -130,28 +134,17 @@
     return g;
   }
   /* 고개 그림(sm_bg_hill_dusk, 좌우 뒤집어 쓴다) 속 큰 바위 + 그 아래 땅 (원본 픽셀) */
-  /* 창호지 문 짝 그림(BG.door, 325×720)을 옆으로 이어 붙여 문·벽을 만든다.
-     xs: 짝의 왼쪽 끝 x들, k: 배율(무대 단위/px), y0: 위끝. flipAt: 이 x 이상은 좌우로 뒤집어(문살 기둥이 가운데 틈 쪽으로) */
-  const PANEL = [325, 720];
-  function panelWall(T, p, { k = 560 / 720, y0 = 0, x0 = -400, x1 = 1400, gapAt = null, gap = 20, back = '#5b4a5c' } = {}) {
-    const u = bgUrl('door'); if (!u) return null;
-    const w = PANEL[0] * k, h = PANEL[1] * k;
-    T.el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: back }, p);
-    const put = (x, flip) => place(T, T.el('g', flip ? { transform: `matrix(-1,0,0,1,${2 * x + w},0)` } : {}, p), u, { x, y: y0, w, h });
-    if (gapAt == null) { for (let x = x0; x < x1; x += w) put(x, false); return w; }
-    for (let x = gapAt - gap / 2 - w; x > x0 - w; x -= w) put(x, false);            // 틈 왼쪽: 기둥이 오른쪽(틈 쪽)
-    for (let x = gapAt + gap / 2; x < x1; x += w) put(x, true);                      // 틈 오른쪽: 뒤집어 기둥이 왼쪽
-    return w;
-  }
-  /* 우물가 나무 그림(BG.tree, 2090×992 — 왼쪽 330px는 이어 붙인 여백) 속 자리 (원본 픽셀) */
-  const TREE_PX = { trunk: [665, 665], canopyL: [555, 215], moon: [530, 90] }; // 나무 밑동(기둥 가운데·땅), 왼쪽 잎 덩어리 윗면, 달빛
+  /* 닫힌 창호지 문 그림(BG.door, 1760×992): 가운데 이음매(고리)가 무대 x≈500. 들여다보기 장면은 오른쪽 가운데 문 창호지(원본 1046,400)를 가까이 */
+  const DOOR_PEEK = (() => { const u = 1080 / 1760 * 1.6; return { x: 500 - 1046 * u, y: 300 - 400 * u, w: 1760 * u, h: 992 * u }; })();
+  /* 큰 나무 그림(BG.tree, 1760×992) 속 자리 (원본 픽셀): 기둥 가운데·땅, 오른쪽 굵은 가지 윗면(오누이 자리), 기둥 가운데쯤, 달빛 */
+  const TREE_PX = { trunk: [835, 880], branch: [1040, 445], trunkMid: [835, 650], moon: [1560, 120] };
   function treeArt(T, p, s, [px, py], [ax, ay]) {
     const u = bgUrl('tree'); if (!u) return null;
     const x = ax - px * s, y = ay - py * s;
     T.el('rect', { x: -1400, y: -1400, width: 5600, height: 3400, fill: '#34427f' }, p);   // 그림 밖: 위 하늘색
-    T.el('rect', { x: -1400, y: y + 900 * s, width: 5600, height: 3400, fill: '#5d648a' }, p); // 아래 땅색
-    place(T, p, u, { x, y, w: 2090 * s, h: 992 * s });
-    T.el('rect', { x: -1400, y: -1400, width: 5600, height: 5600, fill: '#1c2660', opacity: .24 }, p); // 가까이 볼 때 흰 잎이 눈처럼 보이지 않게 밤빛을 한 겹 더
+    T.el('rect', { x: -1400, y: y + 940 * s, width: 5600, height: 3400, fill: '#464c75' }, p); // 아래 땅색
+    place(T, p, u, { x, y, w: 1760 * s, h: 992 * s });
+    T.el('rect', { x: -1400, y: -1400, width: 5600, height: 5600, fill: '#1c2660', opacity: .14 }, p); // 가까이 볼 때 흰 잎이 눈처럼 보이지 않게 밤빛을 한 겹 더
     return { at: ([qx, qy]) => [x + qx * s, y + qy * s] };
   }
   const HILL_ROCK = [[332, 918], [393, 846], [465, 739], [543, 696], [734, 711], [806, 786], [825, 840], [798, 905], [798, 1060], [332, 1060]];
@@ -187,7 +180,15 @@
   const cutVoice = (k, delay = 300) => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && setTimeout(() => AudioFX.voice(VOICE_LINES[k]), delay);
 
   /* ================= 캐릭터 (임시 도형) ================= */
-  function drawCake(T, p, x, y, s = 1) {
+  /* 떡: 그림이면 흰 떡(분홍 꽃)·분홍 떡(초록 잎)을 i로 번갈아. (x,y)가 떡 가운데, 폭 26·s — 세기 쉽게 늘 떡 사이가 떨어지게 놓는다 */
+  const CAKE = { cake: 1.1967, cake_pink: 1.3035 };
+  function drawCake(T, p, x, y, s = 1, i = 0) {
+    const k = i % 2 ? 'cake_pink' : 'cake', u = artUrl(k);
+    if (u) {
+      const w = 26 * s, h = w / CAKE[k], g = T.el('g', { filter: 'url(#pp)' }, p);
+      T.el('image', { href: u, x: x - w / 2, y: y - h / 2, width: w, height: h }, g);
+      return g;
+    }
     return T.paper(p, [['rect', { x: x - 12 * s, y: y - 8 * s, width: 24 * s, height: 16 * s, rx: 7 * s, fill: C.snow }],
       ['circle', { cx: x, cy: y - 1 * s, r: 3.5 * s, fill: C.pink }]]);
   }
@@ -256,7 +257,7 @@
       defs.climb = ['kids_climb', ...SZ.kids_climb, { dx: climbDx('kids_climb'), dy: ROPE_GAP }];
       defs.hug = ['kids_hug', ...SZ.kids_hug, { dx: -55 }];
       // 줄 오르기: 둘이 한 장 (오빠 배우에). 그림 아래끝 = 동생 발끝 (오빠 발끝보다 ROPE_GAP 아래), 줄 가운데가 x=0
-      defs.rope = ['kids_rope', ...SZ.kids_rope, { dx: SZ.kids_rope[0] * (.5 - .486), dy: ROPE_GAP }];
+      defs.rope = ['kids_rope', ...SZ.kids_rope, { dx: SZ.kids_rope[0] * (.5 - .507), dy: ROPE_GAP }];
     }
     P.art = poseArt(T, g0, defs);
     P.pose = pk => {
@@ -326,7 +327,9 @@
     ]);
     P.mouth = el('path', { d: 'M-12 -140 Q-6 -133 0 -140 Q6 -133 12 -140', stroke: C.ink, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, P.head);
     P.oMouth = () => P.mouth.setAttribute('d', 'M-7 -138 A7 8 0 1 0 7 -138 A7 8 0 1 0 -7 -138');
-    P.scarf = paper(P.head, [['path', { d: 'M-64 -196 Q0 -262 64 -196 L66 -182 Q0 -230 -66 -182 Z', fill: C.snow }], ['path', { d: 'M56 -190 L86 -164 L66 -158 Z', fill: C.snow }]]);
+    // 엄마 옷 (분홍 저고리 + 회색 치마) — 이름은 scarf 그대로. 수건(머릿수건)은 이제 없다. 배와 함께 불어나게 몸통 안에
+    P.scarf = paper(P.torso, [['path', { d: 'M-54 -40 Q-60 -4 -50 0 H50 Q60 -4 54 -40 Z', fill: '#6B6A70' }],
+      ['path', { d: 'M-50 -118 Q0 -136 50 -118 L58 -44 H-58 Z', fill: '#F2B5B5' }], ['path', { d: 'M-4 -116 L-26 -70 M-4 -116 L14 -62', stroke: '#B03A5B', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }]]);
     P.scarf.setAttribute('opacity', 0);
     P.bump = paper(P.head, [['circle', { cx: 16, cy: -226, r: 15, fill: '#F2A07A' }], ['path', { d: 'M8 -232 Q16 -240 24 -232', stroke: '#fff', 'stroke-width': 3, fill: 'none' }]]);
     P.bump.setAttribute('opacity', 0);
@@ -440,7 +443,7 @@
   function drawRock(T, p) { return T.paper(p, [['path', { d: 'M700 760 L702 470 Q695 368 800 352 Q920 344 936 440 L938 760 Z', fill: '#8A8278' }], ['path', { d: 'M740 400 Q800 380 860 392', stroke: '#A8A094', 'stroke-width': 8, fill: 'none', 'stroke-linecap': 'round' }]]); }
   function roomBG(T) {
     const { paper } = T, b = T.bg;
-    if (bgImage(T, b, 'room', { back: '#191417' })) return; // 불 켜진 방·창호지 문이 그림에 있다
+    if (bgImage(T, b, 'room', { back: '#3a2c2a' })) return true; // 방·창호지 문·반닫이·이불·등잔이 그림에 있다
     sky(T, b, '#C9A77A');
     paper(b, [['rect', { x: -300, y: 430, width: 1600, height: 500, fill: '#D9A060' }], ['rect', { x: -300, y: 424, width: 1600, height: 12, fill: C.bark }]]);
     paper(b, [['rect', { x: 250, y: 90, width: 250, height: 190, fill: C.night, stroke: C.bark, 'stroke-width': 10 }],
@@ -448,7 +451,7 @@
   }
   function doorBG(T) {
     const { paper, el } = T, b = T.bg;
-    if (panelWall(T, b, { x0: -400 + 500 % (PANEL[0] * 560 / 720) })) return true; // 그림: 창호지 문 여러 짝 (등잔불에 비친 방 벽)
+    if (bgImage(T, b, 'door', { back: '#5a4a48' })) return true; // 그림: 닫힌 미닫이 창호지 문 (등잔불)
     sky(T, b, '#C9A77A');
     paper(b, [['rect', { x: -300, y: 470, width: 1600, height: 500, fill: '#D9A060' }]]);
     paper(b, [['rect', { x: 500, y: 60, width: 380, height: 420, fill: C.cream, stroke: C.bark, 'stroke-width': 14 }]]);
@@ -513,8 +516,10 @@
       T.world.appendChild(mom.pos); mom.setScale(1.4); mom.place(PT && mom.P.art ? 350 : 290, 545); mom.face('right'); mom.P.holdBasket(!mom.P.art); mom.P.setCakes(0); // 그림: 첫 떡이 닿으면 바구니를 든다
       const plate = el('g', { id: 'plate' }, T.world);
       el('rect', { x: 560 + dx, y: 300 + dy, width: 260, height: 140, fill: 'transparent' }, plate);
-      T.paper(plate, [['ellipse', { cx: 690 + dx, cy: 400 + dy, rx: 110, ry, fill: C.snow, stroke: C.gold, 'stroke-width': 5 }]]);
-      plateCakes = [[630, 394], [690, 396], [750, 394], [660, 370], [720, 370]].map(([x, y]) => ({ x: x + dx, y: y + dy, g: drawCake(T, plate, x + dx, y + dy, 1.8) }));
+      // 그림 나무 접시 (없으면 흰 접시)
+      if (!sprite(T, el('g', { transform: `translate(${690 + dx} ${400 + dy + 44})` }, plate), 'plate', 236, 96))
+        T.paper(plate, [['ellipse', { cx: 690 + dx, cy: 400 + dy, rx: 110, ry, fill: C.snow, stroke: C.gold, 'stroke-width': 5 }]]);
+      plateCakes = [[630, 394], [690, 396], [750, 394], [660, 370], [720, 370]].map(([x, y]) => ({ x: x + dx, y: y + dy, g: drawCake(T, plate, x + dx, y + dy, 1.8, x === 690 || x === 660 ? 1 : 0) }));
     });
     await say('엄마는 부잣집에서 하루 종일 부지런히 일했어요.');
     await say('"수고했어요. 떡 가져가요!" 떡을 톡톡 눌러서 바구니에 담아요!');
@@ -522,8 +527,8 @@
       const [bx, by] = mom.P.art ? [0, -12] : cakeSpot(i), [ax, ay] = mom.P.basketAt;
       return [mom.x + mom.flip * (ax + bx) * mom.scale, mom.y + (ay + by) * mom.scale];
     };
-    const fly = async (x0, y0, x1, y1, s = 1.4, dur = 600) => {
-      const g = el('g', {}, T.fx); drawCake(T, g, 0, 0, s);
+    const fly = async (x0, y0, x1, y1, s = 1.4, dur = 600, i = 0) => {
+      const g = el('g', {}, T.fx); drawCake(T, g, 0, 0, s, i);
       const mx = (x0 + x1) / 2, my = Math.min(y0, y1) - 140;
       await T.anim(g, [{ transform: `translate(${x0}px,${y0}px)` }, { transform: `translate(${mx}px,${my}px) rotate(180deg)` }, { transform: `translate(${x1}px,${y1}px) rotate(360deg)` }], { duration: dur, easing: 'ease-in-out' });
       g.remove();
@@ -534,7 +539,7 @@
       const c = plateCakes[5 - i]; c.g.setAttribute('opacity', 0);
       const [x1, y1] = toBasket(i - 1);
       T.tone(500 + i * 90, .15, { type: 'triangle', vol: .18 });
-      fly(c.x, c.y, x1, y1, 1.8, 450).then(() => { inBasket = Math.round(TOTAL * i / 5); showBasket(); mom.P.holdBasket(true); AudioFX.pop(); });
+      fly(c.x, c.y, x1, y1, 1.8, 450, 5 - i === 1 || 5 - i === 3 ? 1 : 0).then(() => { inBasket = Math.round(TOTAL * i / 5); showBasket(); mom.P.holdBasket(true); AudioFX.pop(); });
       T.pop(c.x, c.y - 90, '영차!', C.bean);
     } });
     await sleep(700);
@@ -544,11 +549,13 @@
     /* 접시 고르기(2지선다): 화면 고정 접시 두 개. 떡 n개를 5개씩 줄 맞춰 놓고 아래에 숫자 */
     function cakePlate(n, x, y) {
       const g = el('g', { transform: `translate(${x},${y})` }, document.getElementById('stage'));
-      T.paper(g, [['rect', { x: -150, y: -105, width: 300, height: 210, rx: 26, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }],
-                  ['ellipse', { cx: 0, cy: 8, rx: 128, ry: 70, fill: '#B9844F', stroke: C.bark, 'stroke-width': 5 }]]); // 나무 쟁반: 흰 떡이 잘 보이게
+      T.paper(g, [['rect', { x: -150, y: -105, width: 300, height: 210, rx: 26, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }]]);
+      // 나무 접시 그림 (없으면 나무 쟁반 도형): 흰 떡이 잘 보이게
+      if (!sprite(T, el('g', { transform: 'translate(0 66)' }, g), 'plate', 270, 110))
+        T.paper(g, [['ellipse', { cx: 0, cy: 8, rx: 128, ry: 70, fill: '#B9844F', stroke: C.bark, 'stroke-width': 5 }]]);
       for (let k = 0; k < n; k++) {
         const row = Math.floor(k / 5), col = k % 5, inRow = Math.min(5, n - row * 5);
-        drawCake(T, g, (col - (inRow - 1) / 2) * 48, (n > 5 ? -16 : 2) + row * 38, 1.55);
+        drawCake(T, g, (col - (inRow - 1) / 2) * 48, (n > 5 ? -16 : 2) + row * 38, 1.55, k);
       }
       el('text', { y: 92, 'text-anchor': 'middle', 'font-size': 34, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: String(n) }, g);
       return g;
@@ -558,7 +565,7 @@
       const g = el('g', {}, document.getElementById('stage'));
       const cols = Math.min(5, n), rows = Math.ceil(n / 5), w = cols * 44 + 120, h = 60 + rows * 34;
       T.paper(g, [['rect', { x: 500 - w / 2, y: 18, width: w, height: h, rx: 22, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }]]);
-      for (let k = 0; k < n; k++) drawCake(T, g, 500 - w / 2 + 48 + (k % 5) * 44, 50 + Math.floor(k / 5) * 34, 1.45);
+      for (let k = 0; k < n; k++) drawCake(T, g, 500 - w / 2 + 48 + (k % 5) * 44, 50 + Math.floor(k / 5) * 34, 1.45, k);
       el('text', { x: 500 + w / 2 - 38, y: 18 + h / 2 + 15, 'text-anchor': 'middle', 'font-size': 42, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: String(n) }, g);
       return g;
     }
@@ -625,7 +632,7 @@
         const left = el('g', {}, ui);
         const w = Math.min(5, ask) * 50 + 80;
         T.paper(left, [['path', { d: `M${500 - w / 2} 40 H${500 + w / 2} L${500 + w / 2 - 24} 150 H${500 - w / 2 + 24} Z`, fill: '#C9975E', stroke: C.bark, 'stroke-width': 5 }]]);
-        for (let k = 0; k < ask; k++) drawCake(T, left, 500 - (Math.min(5, ask) - 1) * 25 + (k % 5) * 50, 78 + Math.floor(k / 5) * 40, 1.5);
+        for (let k = 0; k < ask; k++) drawCake(T, left, 500 - (Math.min(5, ask) - 1) * 25 + (k % 5) * 50, 78 + Math.floor(k / 5) * 40, 1.5, k);
         await say('바구니에 남은 떡은 몇 개일까요? 세어 보고 접시를 골라요!');
         await pickPlate(ask, 5, '바구니에 남은 떡이랑 똑같은 개수의 접시를 골라요!');
         left.remove();
@@ -635,7 +642,7 @@
         const [x0, y0] = toBasket(Math.max(0, Math.min(4, Math.ceil((TOTAL - given) * 5 / TOTAL) - 1)));
         given++; inBasket = TOTAL - given; showBasket();
         T.pop(tiger.x - 60, tiger.y - 300, NUMS[k], C.bean);
-        await fly(x0, y0, tiger.x, tiger.y - 140, 1.4, 360);
+        await fly(x0, y0, tiger.x, tiger.y - 140, 1.4, 360, k);
         AudioFX.chomp();
         tiger.P.setBelly(1 + (given / TOTAL) * 2.4);
         tiger.wiggle(4, 220);
@@ -680,14 +687,20 @@
     /* --- 6. 엄마 기다리기 (등잔) --- */
     let dark, lamp, flame, glow;
     await T.sceneCard('오누이의 밤', () => {
-      T.clear(); roomBG(T);
+      T.clear(); const roomArt = roomBG(T);
       T.world.appendChild(boy.pos); boy.setScale(1.05); boy.place(340, 520);
       T.world.appendChild(girl.pos); girl.setScale(.95); girl.place(450, 520);
-      glow = el('circle', { cx: 760, cy: 380, r: 320, fill: C.amber, opacity: 0 }, T.fx);
+      // 방 그림이면 그림 속 등잔(작은 상 위, 무대 ≈ 770,291 심지)을 켠다. 아니면 따로 그린 등잔
+      const LAMP = roomArt && artUrl('lamp_flame') ? { x: 770, y: 293 } : null;
+      glow = el('circle', { cx: LAMP ? LAMP.x : 760, cy: LAMP ? LAMP.y : 380, r: 320, fill: C.amber, opacity: 0 }, T.fx);
       dark = el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: '#0B1030', opacity: .72 }, T.fx);
       lamp = el('g', {}, T.fx);
-      el('rect', { x: 680, y: 290, width: 160, height: 250, fill: 'transparent' }, lamp);
-      if (sprite(T, el('g', { transform: 'translate(760 522)' }, lamp), 'lamp_off', 151, 230)) {
+      if (LAMP) {
+        el('rect', { x: LAMP.x - 60, y: LAMP.y - 70, width: 120, height: 150, fill: 'transparent' }, lamp); // 누르는 자리: 그림 속 등잔
+        // 그림 속 등잔(그릇·받침)만 오려 어둠 장막 위로 올린다 → 캄캄해도 등잔이 보이고, 누를 때 반짝임도 등잔에
+        bgCutout(T, lamp, bgUrl('room'), FULL, [[1262, 508], [1378, 508], [1374, 540], [1352, 575], [1352, 600], [1290, 600], [1290, 575], [1266, 540]]);
+        flame = el('g', {}, lamp); sprite(T, el('g', { transform: `translate(${LAMP.x} ${LAMP.y + 2})` }, flame), 'lamp_flame', 30, 35);
+      } else if (el('rect', { x: 680, y: 290, width: 160, height: 250, fill: 'transparent' }, lamp) && sprite(T, el('g', { transform: 'translate(760 522)' }, lamp), 'lamp_off', 151, 230)) {
         // 그림 등잔: 끈 등잔 위에 불 켠 등잔(같은 틀)을 겹쳐 두고, 켜면 보인다
         flame = el('g', {}, lamp); sprite(T, el('g', { transform: 'translate(760 522)' }, flame), 'lamp_on', 151, 230);
       } else {
@@ -707,8 +720,9 @@
 
     /* --- 7. 문 앞 ① 목소리 --- */
     await T.sceneCard('똑똑똑', () => {
-      T.clear(); doorBG(T);
-      const sil = el('g', { opacity: .3 }, T.bg);
+      T.clear(); const doorArt = doorBG(T);
+      // 문밖 호랑이 그림자: 그림 문이면 오른쪽 가운데 문 창호지(무대 x 512~692)에 비친다
+      const sil = el('g', { opacity: .3, transform: doorArt ? 'translate(-88 0)' : '' }, T.bg);
       [['ellipse', { cx: 690, cy: 400, rx: 80, ry: 80 }], ['ellipse', { cx: 690, cy: 270, rx: 72, ry: 62 }], ['circle', { cx: 638, cy: 212, r: 20 }], ['circle', { cx: 742, cy: 212, r: 20 }], ['path', { d: 'M760 420 Q830 420 822 350 Q818 320 838 310', stroke: C.stripe, 'stroke-width': 18, fill: 'none', 'stroke-linecap': 'round' }]].forEach(([t, a]) => el(t, { fill: C.stripe, ...a }, sil));
       el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.amber, opacity: .12 }, T.fx);
       T.world.appendChild(boy.pos); boy.place(PT ? 330 : 210, 540);
@@ -744,7 +758,8 @@
     await T.sceneCard('문틈으로 쑥', () => {
       T.clear();
       // 그림: 창호지 문 두 짝이 가운데(x 500)에서 만나고 그 틈이 살짝 벌어져 있다 (조금 가까이: 배율 1)
-      if (panelWall(T, T.bg, { k: 1, y0: -80, gapAt: 500 })) { el('rect', { x: 490, y: -300, width: 20, height: 1200, fill: '#1c1830' }, T.bg); return; }
+      // 그림: 닫힌 문 — 가운데 이음매(x 500)가 살짝 벌어져 그 틈으로 손이 들어온다
+      if (bgImage(T, T.bg, 'door', { back: '#5a4a48' })) { el('rect', { x: 496, y: -6, width: 8, height: 534, fill: '#1c1830' }, T.bg); return; }
       sky(T, T.bg, '#C9A77A');
       T.paper(T.bg, [['rect', { x: -300, y: -300, width: 790, height: 1200, fill: C.cream }], ['rect', { x: 510, y: -300, width: 790, height: 1200, fill: C.cream }]]);
       for (let i = -2; i < 7; i++) { el('rect', { x: -300, y: i * 110, width: 790, height: 7, fill: C.bark }, T.bg); el('rect', { x: 510, y: i * 110, width: 790, height: 7, fill: C.bark }, T.bg); }
@@ -793,7 +808,9 @@
     await T.sceneCard('창호지 구멍', () => {
       T.clear();
       // 그림: 창호지 문에 바짝 다가간 모습 (배율 1.25, 문 한 짝 가운데가 구멍 자리 x 500)
-      if (!panelWall(T, T.bg, { k: 1.25, y0: -210, x0: 500 - 1.25 * 150 - 3 * 1.25 * 325 })) {
+      // 그림: 닫힌 문의 창호지에 바짝 다가간 모습 (구멍 자리 500,300 = 오른쪽 가운데 문 창호지)
+      if (bgUrl('door')) { el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: '#5a4a48' }, T.bg); place(T, T.bg, bgUrl('door'), DOOR_PEEK); }
+      else {
         sky(T, T.bg, C.cream);
         for (let i = -6; i < 14; i++) el('rect', { x: -300 + i * 150, y: -300, width: 9, height: 1200, fill: C.bark }, T.bg);
         for (let i = -3; i < 8; i++) el('rect', { x: -300, y: i * 150 + 40, width: 1600, height: 9, fill: C.bark }, T.bg);
@@ -915,12 +932,16 @@
     /* --- 11. 나무 오르기 + 우물 속 오누이? --- */
     let tree, well;
     /* 나무 꼭대기 오누이 자리: 그림 나무면 왼쪽 잎 덩어리 위 (무대 x 358~546, y ≈ -199) */
-    const TOP = bgUrl('tree') ? { b: [520, -196], g: [420, -196] } : { b: [540, -140], g: [440, -140] };
+    /* 나무 꼭대기 오누이 자리: 그림 나무면 오른쪽 굵은 가지 위 (TREE_PX.branch 둘레, 무대 x 800~900 · y ≈ 100) */
+    const TREE_S = 1.07; // 그림 나무 배율: 멀리서 본 나무(줌 .58)가 그림 한 장과 거의 같은 크기
+    const TOP = bgUrl('tree') ? { b: [884, 100], g: [800, 110] } : { b: [540, -140], g: [440, -140] };
+    const CLIMB_STEP = bgUrl('tree') ? 85 : 140;
+    const TREE_WIDE = bgUrl('tree') ? [640, 110] : [560, 90]; // 나무 전체를 보는 카메라 자리 (그림 밖이 안 보이게) // 한 번 톡 할 때 오르는 높이 (그림 나무는 가지가 낮다)
     const buildTree = (kidsUp) => {
       T.clear(); camSnap(500, 280, 1);
       tree = mkView(T, T.world);
-      /* 그림 나무: 나무 밑동(기둥 가운데)이 x 640·땅 y 570, 배율 1.71 → 왼쪽 잎 덩어리 윗면이 오누이가 앉는 자리(TOP) */
-      const ta = treeArt(T, tree, 1.71, TREE_PX.trunk, [640, 570]);
+      /* 그림 나무: 기둥 가운데가 x 640·땅 y 570 → 우물은 왼쪽(x 150~420), 오른쪽 굵은 가지 위가 오누이 자리(TOP) */
+      const ta = treeArt(T, tree, TREE_S, TREE_PX.trunk, [640, 570]);
       if (ta) {
         const [mx, my] = ta.at(TREE_PX.moon); el('circle', { cx: mx, cy: my, r: 40, fill: C.cream, opacity: .95 }, tree);
         well = el('g', {}, tree); // 우물은 그림 속에
@@ -948,7 +969,7 @@
       // 그림: 오르는 동안은 나무 오르기 자세로 기둥(x 640)을 꼭 잡고, 동생은 오빠 발밑에 붙어서. 꼭대기에서 다시 선다
       const climbArt = boy.P.art && i < 5;
       boy.P.pose(climbArt ? 'climb' : 'stand'); girl.P.pose(climbArt ? 'climb' : 'stand');
-      const by = i === 5 ? TOP.b[1] : 560 - i * 140, gy = i === 5 ? TOP.g[1] : by + (climbArt ? ROPE_GAP : 80);
+      const by = i === 5 ? TOP.b[1] : 560 - i * CLIMB_STEP, gy = i === 5 ? TOP.g[1] : by + (climbArt ? ROPE_GAP : 80);
       boy.move(i === 5 ? TOP.b[0] : climbArt ? 640 : 610, by, 420); girl.move(i === 5 ? TOP.g[0] : climbArt ? 640 : 560, gy, 420); // 656: 손이 기둥을 감싸게 기둥(640)보다 조금 오른쪽
       boy.hop(10, 420); girl.hop(10, 420);
       tree.to(560, Math.min(280, by - 60), 1, 420);
@@ -956,7 +977,7 @@
     } });
     await sleep(600);
     await say('오누이는 나무 꼭대기까지 올라갔어요!');
-    await tree.to(560, 90, .58, 1400);
+    await tree.to(...TREE_WIDE, .58, 1400);
     const tg = mkTiger(T, tree, -300, 560, 1.1);
     tg.P.wear('scarf'); tg.P.setBelly(2.4); tg.face('right');
     await tg.move(420, 560, 1500);
@@ -1009,7 +1030,7 @@
     let bottle, oil;
     await T.sceneCard('나무 아래 호랑이', () => {
       buildTree(true);
-      tree.to(560, 90, .58, 0);
+      tree.to(...TREE_WIDE, .58, 0);
       tiger.pos.remove();
       const t = mkTiger(T, tree, 760, 560, 1.1);
       t.P.wear('scarf'); t.P.setBelly(2.4);
@@ -1048,7 +1069,7 @@
       await sleep(250); tt.P.slip(false);
     }
     await say('미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.');
-    await tree.to(500, -200, 1, 900);
+    await (bgUrl('tree') ? tree.to(800, 140, 1, 900) : tree.to(500, -200, 1, 900)); // 가지 위 오누이 가까이
     await say('그때 동생이 깔깔 웃으며 말해 버렸어요. "도끼로 콕콕 찍고 올라왔지~"');
     await say('오빠가 "쉿!" 했지만… 벌써 들어 버렸어요!');
 
@@ -1058,7 +1079,7 @@
     const cpB = el('clipPath', { id: 'splitBot' }, split); el('rect', { x: -1400, y: 284, width: 3800, height: 1600 }, cpB);
     const top = el('g', { 'clip-path': 'url(#splitTop)' }, split), bot = el('g', { 'clip-path': 'url(#splitBot)' }, split);
     // 그림: 위 = 잎 덩어리 위의 오누이 (배율 2.2), 아래 = 나무 기둥 (배율 2.4, 기둥 가운데 x 500)
-    if (!treeArt(T, top, 2.2, TREE_PX.canopyL, [500, 262])) {
+    if (!treeArt(T, top, 1.6, TREE_PX.branch, [500, 262])) {
       sky(T, top, C.indigo); stars(T, top, [[120, 60], [880, 80], [300, 30], [760, 200]]);
       T.paper(top, [['circle', { cx: 500, cy: 40, r: 200, fill: '#35604A' }], ['circle', { cx: 250, cy: 90, r: 120, fill: C.pine }], ['circle', { cx: 760, cy: 100, r: 130, fill: C.pine }],
         ['path', { d: 'M180 250 H820 V282 H180 Z', fill: C.bark }]]);
@@ -1066,7 +1087,7 @@
     const sb = mkBoy(T, top, 560, 256, .95), sg = mkGirl(T, top, 440, 256, .88);
     sb.P.pose('hug'); sg.P.pose('hug'); // 그림: 둘이 꼭 껴안은 한 장 (오빠 배우에)
     const tr1 = tremble(sb), tr2 = tremble(sg);
-    if (!treeArt(T, bot, 2.4, [665, 450], [500, 480])) {
+    if (!treeArt(T, bot, 1.8, TREE_PX.trunkMid, [500, 480])) {
       sky(T, bot, '#2A3558');
       T.paper(bot, [['rect', { x: 430, y: 280, width: 140, height: 400, fill: C.bark }]]);
     }
@@ -1088,7 +1109,7 @@
     split.remove();
     tt.P.wear('axe');
     tt.place(640, 240);
-    await tree.to(560, 90, .58, 900);
+    await tree.to(...TREE_WIDE, .58, 900);
     boy.P.pose('hug'); girl.P.pose('hug');
     const tr3 = tremble(boy), tr4 = tremble(girl);
     await say('호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.');
