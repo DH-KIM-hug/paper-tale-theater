@@ -67,6 +67,8 @@ const Tale = (() => {
     return a;
   }
 
+  const paperTurn = () => AudioFX.sfx('paper_turn', .8) || AudioFX.swish();
+
   /* ---------- 카메라 (SVG 사용자 좌표) ---------- */
   function camT(x, y, z) { return `translate(500px,280px) scale(${z}) translate(${-x}px,${-y}px)`; }
   /* 화면에 실제로 보이는 무대 폭(사용자 좌표). 세로 화면(slice)에서는 1000보다 좁다 */
@@ -411,7 +413,7 @@ const Tale = (() => {
     root.classList.toggle('open', open);
     if (open === veilOpen) return sleep(120);
     veilOpen = open;
-    AudioFX.swish();
+    paperTurn(); // 화면 전환: 책장 넘기는 종이 소리 (없으면 합성음)
     const v = $('#veil'), w = $('#stageWrap'), W = w.clientWidth, H = w.clientHeight, far = farFrom(W, H, W / 2, H / 2);
     v.hidden = false;
     const t0 = performance.now();
@@ -431,7 +433,7 @@ const Tale = (() => {
     }
     const hole = Math.min(W, H) * .16;
     ir.hidden = false; card.textContent = ''; card.className = 'paperword';
-    AudioFX.swish();
+    paperTurn(); // 화면 전환: 책장 넘기는 종이 소리 (없으면 합성음)
     await lidTo(ir, cx, cy, farFrom(W, H, cx, cy), hole, 520, easeIn);
     await sleep(260); // 주인공 둘레에 동그라미를 잠깐 남긴다
     await lidTo(ir, cx, cy, hole, 0, 180, easeIn);
@@ -439,7 +441,7 @@ const Tale = (() => {
     if (change) change();
     await sleep(label ? 1050 : 250);
     card.className = 'paperword';
-    AudioFX.swish();
+    paperTurn(); // 화면 전환: 책장 넘기는 종이 소리 (없으면 합성음)
     await lidTo(ir, W / 2, H / 2, 0, farFrom(W, H, W / 2, H / 2), 640, easeOutBack);
     ir.hidden = true;
   }

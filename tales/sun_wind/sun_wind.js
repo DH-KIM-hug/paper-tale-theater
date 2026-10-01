@@ -126,7 +126,9 @@
   function drawWind(T, g) {
     const { el, paper } = T;
     if (artUrl('wind')) { // 그림: 자세 셋(우쭐·볼 빵빵·헉헉)을 겹쳐 두고 입 모양 대신 자세를 바꾼다
-      const tail = el('g', {}, g), puff = el('g', {}, g); origin(puff, 0, 0);
+      // 그림의 바람은 왼쪽으로 분다 → 좌우로 뒤집어 기본이 오른쪽(나그네 쪽)으로 불게. 오른쪽에 선 바람은 face('right')로 다시 왼쪽을 향한다
+      const mir = el('g', { transform: 'scale(-1 1)' }, g);
+      const tail = el('g', {}, mir), puff = el('g', {}, mir); origin(puff, 0, 0);
       const cheekG = el('g', {}, puff); origin(cheekG, 0, 0);
       const poses = {};
       Object.entries(WIND_BOX).forEach(([k, [x, y, w, h]]) => { const p = pic(T, cheekG, k, x, y, w, h); if (p) poses[k] = p; });

@@ -82,11 +82,11 @@ const NARRATION_CLIPS = {
  "반짝이는 쪽이 엄마 목소리예요!": "audio/tc/sunmoon/nar_5bd38cab18.mp3",
  "오빠가 말했어요. \"우리 엄마 목소리가 아니에요! 손을 보여 주세요!\"": [
   "audio/tc/sunmoon/nar_d5f5fabe9f.mp3",
-  "audio/tc/sunmoon/boy_166ea0774c.mp3"
+  "audio/tc/sunmoon/boy_7f4fe69e08.mp3"
  ],
  "진짜 엄마 손은 뭘까요? 잘 보고 골라 봐요!": "audio/tc/sunmoon/nar_73269ea4e3.mp3",
- "\"어? 털이 복슬복슬… 줄무늬도 있네!\"": "audio/tc/sunmoon/girl_2b1c87c00d.mp3",
- "\"어? 하얗긴 한데… 뾰족한 발톱이 있네!\"": "audio/tc/sunmoon/boy_d2613f12d6.mp3",
+ "\"어? 털이 복슬복슬… 줄무늬도 있네!\"": "audio/tc/sunmoon/girl_acaa0f1384.mp3",
+ "\"어? 하얗긴 한데… 뾰족한 발톱이 있네!\"": "audio/tc/sunmoon/boy_8a6b478fb4.mp3",
  "진짜 엄마 손을 톡 골라 봐요!": "audio/tc/sunmoon/nar_813c532075.mp3",
  "엄마 손은 손가락이 길쭉하고 떡가루가 묻어 있어요.": "audio/tc/sunmoon/nar_d6a12c0f01.mp3",
  "반짝이는 손이 엄마 손이에요!": "audio/tc/sunmoon/nar_5c95888775.mp3",
@@ -97,7 +97,7 @@ const NARRATION_CLIPS = {
  "구멍 너머에 커다랗고 동그란 눈이 깜빡깜빡! 호랑이예요!": "audio/tc/sunmoon/nar_0f585a2941.mp3",
  "오빠가 속삭였어요. \"쉿, 뒷문으로 살금살금 도망가자!\"": [
   "audio/tc/sunmoon/nar_5607668866.mp3",
-  "audio/tc/sunmoon/boy_0e2be04294.mp3"
+  "audio/tc/sunmoon/boy_bcbacf4819.mp3"
  ],
  "오누이는 뒷문으로 살금살금 나왔어요. 화면을 쓱 밀어서 달려요!": "audio/tc/sunmoon/nar_deaddb2920.mp3",
  "화면을 옆으로 쓱 밀어서 달려요!": "audio/tc/sunmoon/nar_e475aff68a.mp3",
@@ -130,27 +130,27 @@ const NARRATION_CLIPS = {
  ],
  "오빠가 꾀를 냈어요. \"참기름 바르고 올라왔지!\"": [
   "audio/tc/sunmoon/nar_87bacb1d79.mp3",
-  "audio/tc/sunmoon/boy_e51ed67001.mp3"
+  "audio/tc/sunmoon/boy_ef72a8617a.mp3"
  ],
  "참기름 병을 톡 눌러서 나무에 발라 줘요!": "audio/tc/sunmoon/nar_0c5acdd6b9.mp3",
  "참기름 병을 톡!": "audio/tc/sunmoon/nar_5d50468a42.mp3",
  "미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.": "audio/tc/sunmoon/nar_047b602d80.mp3",
  "그때 동생이 깔깔 웃으며 말해 버렸어요. \"도끼로 콕콕 찍고 올라왔지~\"": [
   "audio/tc/sunmoon/nar_211fc5a4d7.mp3",
-  "audio/tc/sunmoon/girl_e21fb8c549.mp3"
+  "audio/tc/sunmoon/girl_aec2567881.mp3"
  ],
  "오빠가 \"쉿!\" 했지만… 벌써 들어 버렸어요!": [
   "audio/tc/sunmoon/nar_5119617d8f.mp3",
-  "audio/tc/sunmoon/boy_3cdec77df7.mp3",
+  "audio/tc/sunmoon/boy_b2abcfda0c.mp3",
   "audio/tc/sunmoon/nar_63b537433e.mp3"
  ],
  "호랑이가 도끼로 콕콕 찍으며 올라와요! 오누이는 덜덜 떨었어요.": "audio/tc/sunmoon/nar_64e196adcd.mp3",
  "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.": "audio/tc/sunmoon/nar_d85b9bac35.mp3",
- "\"하늘님, 튼튼한 동아줄을 내려 주세요!\"": "audio/tc/sunmoon/boy_f481c7e5a0.mp3",
+ "\"하늘님, 튼튼한 동아줄을 내려 주세요!\"": "audio/tc/sunmoon/boy_e01752fe6f.mp3",
  "하늘에서 줄이 두 개 내려왔어요! 어떤 줄을 잡을까요?": "audio/tc/sunmoon/nar_aad08121dc.mp3",
  "삐걱… 이 줄은 낡았어!": [
   "audio/tc/sunmoon/nar_4a6873c709.mp3",
-  "audio/tc/sunmoon/boy_ae74840d8f.mp3"
+  "audio/tc/sunmoon/boy_6fb0b20131.mp3"
  ],
  "굵고 반짝이는 튼튼한 줄을 톡 골라요!": "audio/tc/sunmoon/nar_b428e11f29.mp3",
  "굵고 반짝반짝 튼튼한 줄을 찾아봐요!": "audio/tc/sunmoon/nar_28c6aecf0c.mp3",
@@ -169,9 +169,9 @@ const NARRATION_CLIPS = {
  "하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.": "audio/tc/sunmoon/nar_689af25f73.mp3",
  "동생이 말했어요. \"오빠, 나는 밤이 무서워요.\"": [
   "audio/tc/sunmoon/nar_849cf112a6.mp3",
-  "audio/tc/sunmoon/girl_4b1c648f34.mp3"
+  "audio/tc/sunmoon/girl_b9c8b67468.mp3"
  ],
- "\"그럼 우리 바꾸자!\"": "audio/tc/sunmoon/boy_c43c5e575b.mp3",
+ "\"그럼 우리 바꾸자!\"": "audio/tc/sunmoon/boy_99f33087b8.mp3",
  "그래서 동생은 해님, 오빠는 달님이 되었답니다.": "audio/tc/sunmoon/nar_6addd44765.mp3",
  "해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.": "audio/tc/sunmoon/nar_c7e87f2f9b.mp3",
  "해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.": "audio/tc/sunmoon/nar_d29cacb72c.mp3",

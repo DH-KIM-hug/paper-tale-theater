@@ -147,7 +147,7 @@ const AudioFX = (() => {
     'rattle', 'uah'];
   const EXTRA = ['sfx/knock', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door',
     ...COMIC.map(n => 'sfx/' + n),
-    ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a)];
+    ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a), 'sfx/paper_turn'];
 
   /* 스팅: [효과음, 시작(초), 음량, 앞부분만 쓸 길이(초)?] 를 겹쳐서 한 번에 "휙-딱-반짝!" 처럼 울린다.
      음량은 내레이션이 묻히지 않게 0.35~0.95 사이, 전체에 STING_VOL을 곱한다 */
