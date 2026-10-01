@@ -331,7 +331,7 @@
     P.scarf.setAttribute('opacity', 0);
     P.bump = paper(P.head, [['circle', { cx: 16, cy: -226, r: 15, fill: '#F2A07A' }], ['path', { d: 'M8 -232 Q16 -240 24 -232', stroke: '#fff', 'stroke-width': 3, fill: 'none' }]]);
     P.bump.setAttribute('opacity', 0);
-    /* 차림·자세: 코드가 호랑이 모습을 바꾸는 자리(수건 쓰기·도끼·미끄러짐·혹)에서 그림도 바뀐다.
+    /* 차림·자세: 코드가 호랑이 모습을 바꾸는 자리(엄마 옷 입기·도끼·미끄러짐·혹)에서 그림도 바뀐다.
        wear(k[, on]): 'scarf' | 'axe' | 'bump' — 임시 도형은 조각을 보이고, 그림은 자세를 고른다 */
     const st = { scarf: 0, axe: 0, bump: 0, slip: 0, belly: 1 };
     P.art = poseArt(T, g0, {
@@ -672,7 +672,7 @@
       el('text', { x: 200, y: 44, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '엄마 흉내 내야지~' }, svg);
       cutVoice('cut_mimic', 450);
     }, { sfx: 'whoosh', hold: 2600 });
-    await say('호랑이는 엄마 수건을 머리에 쓰고, 오누이가 기다리는 집으로 갔어요.');
+    await say('호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.');
     tiger.face('right');
     await tiger.move(1250, 480, 1500, 'ease-in');
     tiger.face('left');

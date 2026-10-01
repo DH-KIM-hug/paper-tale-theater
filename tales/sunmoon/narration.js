@@ -68,7 +68,7 @@ const NARRATION_CLIPS = {
   "audio/tc/sunmoon/tiger_e220d5744e.mp3"
  ],
  "호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.": "audio/tc/sunmoon/nar_8a7a623c8a.mp3",
- "호랑이는 엄마 수건을 머리에 쓰고, 오누이가 기다리는 집으로 갔어요.": "audio/tc/sunmoon/nar_e8af0c0f7a.mp3",
+ "호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.": "audio/tc/sunmoon/nar_fbb8c3d97c.mp3",
  "캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.": "audio/tc/sunmoon/nar_906993be3d.mp3",
  "등잔을 톡 눌러서 불을 켜 줄까요?": "audio/tc/sunmoon/nar_58b04662ac.mp3",
  "등잔을 톡 눌러서 불을 켜요!": "audio/tc/sunmoon/nar_4de21a01b9.mp3",
