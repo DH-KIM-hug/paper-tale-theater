@@ -96,13 +96,26 @@ const AudioFX = (() => {
   })();
   const clipUrl = url => (/^(https?:|\/|\.\.?\/|blob:|data:)/.test(url) ? url : ROOT_BASE + url);
 
+  /* 녹음 미리 받기: 동화를 시작하면 이 동화의 녹음 파일을 순서대로(동시에 4개씩) 받아 둔다.
+     받은 파일(압축된 mp3)만 들고 있다가 말할 때 풀어 쓴다 → 대사가 바로 나온다 (메모리도 적게) */
+  const prefetched = {};
+  const fetchBytes = url => (prefetched[url] = prefetched[url] || fetch(clipUrl(url)).then(r => { if (!r.ok) throw new Error('fetch-fail'); return r.arrayBuffer(); }));
+  function prefetchClips() {
+    const all = [];
+    const add = v => [].concat(v || []).forEach(u => { if (typeof u === 'string' && !all.includes(u)) all.push(u); });
+    if (typeof NARRATION_CLIPS !== 'undefined') Object.values(NARRATION_CLIPS).forEach(add);
+    if (typeof VOICE_LINES !== 'undefined') Object.values(VOICE_LINES).forEach(add);
+    let i = 0;
+    const next = () => { if (i >= all.length) return; const u = all[i++]; fetchBytes(u).catch(() => { delete prefetched[u]; }).finally(next); };
+    for (let k = 0; k < 4; k++) next();
+  }
+
   async function loadClip(url) {
     const c = ensure();
     if (!c) throw new Error('no-audio-ctx');
     if (!narBuffers[url]) {
-      const res = await fetch(clipUrl(url));
-      if (!res.ok) throw new Error('fetch-fail');
-      narBuffers[url] = await c.decodeAudioData(await res.arrayBuffer());
+      const bytes = await fetchBytes(url);
+      narBuffers[url] = await c.decodeAudioData(bytes.slice(0)); // slice: 미리 받은 원본은 다시 쓸 수 있게 남긴다
     }
     return narBuffers[url];
   }
@@ -220,6 +233,7 @@ const AudioFX = (() => {
     stopNarration() {
       if (narSrc) { try { narSrc.stop(); } catch (e) { /* 무시 */ } narSrc = null; }
     },
+    prefetchClips,
     preloadAll(urls) {
       urls.forEach(u => loadClip(u).catch(() => { /* 폴백 경로가 처리 */ }));
     },

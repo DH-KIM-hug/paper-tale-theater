@@ -708,6 +708,7 @@ const Tale = (() => {
     $('#stageWrap').addEventListener('pointerdown', () => { if (busy) AudioFX.tap(); });
     const start = async () => {
       AudioFX.unlock();
+      AudioFX.prefetchClips && AudioFX.prefetchClips(); // 이 동화의 녹음을 미리 받아 둔다 (대사가 늦게 나오지 않게)
       $('#startScreen').hidden = true; $('#endScreen').hidden = true;
       clear(); camSnap(500, 280, 1); shutVeil();
       busy = true;
