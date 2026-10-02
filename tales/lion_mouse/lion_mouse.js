@@ -21,12 +21,12 @@
      - lion_sleep: 뜬 눈으로 나와서 감은 눈(‿)으로 고쳐 칠함
      - lion_head_yawn · _laugh: 앉은 몸까지 나와서 갈기 테두리 안(얼굴·갈기)만 오림
      - lion_paw: 머리 달린 다리로 나와서 머리를 잘라 내고 기둥을 위로 늘임
-     - lion_stand: 시간 초과로 다시 뽑는 중 → null. 올 때까지 선 사자(풀려남·구멍·달리기)는 임시 도형
+     - lion_stand: 다시 뽑은 선 사자 (웃는 눈). 갈기 지름을 누운 사자와 같게, 등 위 (52,-121)에 생쥐가 탄다
      - cut_gnaw: 그물을 다 끊은 뒤 '싹둑' 컷으로 새로 넣음 (목소리 없음, 갉는 소리) */
   const ART = {
     lion_sleep: 'v3w/lm_lion_sleep.webp', lion_lie_awake: 'v3w/lm_lion_lie_awake.webp',
     lion_head_yawn: 'v3w/lm_lion_head_yawn.webp', lion_head_laugh: 'v3w/lm_lion_head_laugh.webp',
-    lion_stand: null, // 다시 뽑는 중 (위 설명)
+    lion_stand: 'v3w/lm_lion_stand.webp',
     lion_paw: 'v3w/lm_lion_paw.webp',
     mouse_walk: 'v3w/lm_mouse_walk.webp', mouse_pray: 'v3w/lm_mouse_pray.webp', mouse_run: 'v3w/lm_mouse_run.webp', mouse_gnaw: 'v3w/lm_mouse_gnaw.webp',
     cut_paw: 'v3w/lm_cut_paw.webp', cut_laugh: 'v3w/lm_cut_laugh.webp', cut_net: 'v3w/lm_cut_net.webp', cut_gnaw: 'v3w/lm_cut_gnaw.webp',
@@ -144,8 +144,17 @@
     return { ...head, hg, paws };
   }
   /* 선 사자 (왼쪽을 본다, 발끝 0). 등 위 (40,-152) */
-  function drawLionStand(T, g) { // 그림(lion_stand)은 다시 뽑는 중 → 지금은 임시 도형
+  /* 선 사자 그림 (왼쪽을 봄, 발끝 0): 폭 312, 키 241, 갈기 가운데 (-58,-128), 등 위 (52,-121) */
+  const STAND = { x: -167, y: -241, w: 312, h: 241, head: [-58, -128], back: [52, -121] };
+  function drawLionStand(T, g) {
     const { el, paper } = T;
+    if (artUrl('lion_stand')) {
+      const hg = el('g', {}, g); hg.style.transformBox = 'view-box'; hg.style.transformOrigin = '0px 0px';
+      pic(T, hg, 'lion_stand', STAND.x, STAND.y, STAND.w, STAND.h);
+      const H = el('g', {}, hg); el('circle', { cx: STAND.head[0], cy: STAND.head[1], r: 100, fill: '#fff', opacity: 0 }, H);
+      el('rect', { x: STAND.x, y: -150, width: STAND.w, height: 150, fill: '#fff', opacity: 0 }, hg); // 누를 자리 (몸)
+      return { H, hg, paws: hg, bubble: el('g', {}, g), art: true, back: STAND.back, eyes() {}, mouth() {} };
+    }
     el('path', { d: 'M140 -112 Q200 -120 204 -172', stroke: C.lion, 'stroke-width': 12, fill: 'none', 'stroke-linecap': 'round' }, g);
     paper(g, [['ellipse', { cx: 204, cy: -182, rx: 14, ry: 17, fill: C.maneDk }]]);
     paper(g, [['rect', { x: 96, y: -92, width: 26, height: 92, rx: 11, fill: C.lionDk }], ['rect', { x: -46, y: -92, width: 26, height: 92, rx: 11, fill: C.lionDk }]]);
@@ -645,7 +654,8 @@
         tufts(T, scroll, [...Array(24)].map((_, k) => 60 + k * 140), 495, C.leaf);
       }
       lion = mk(T, T.world, 380, 495, drawLionStand, 1.1); lion.face('right'); lion.parts.eyes('happy');
-      rider = mk(T, lion.body, 40, -152, drawMouse, 1.1);
+      const bk = lion.parts.back || [40, -152]; // 그림 사자: 그림 등 윗선
+      rider = mk(T, lion.body, bk[0], bk[1], drawMouse, 1.1);
     }, lion.parts.H);
     await say('다음 날 아침, 사자가 생쥐를 등에 태웠어요. "꽉 잡아!"');
     let sx = 0;

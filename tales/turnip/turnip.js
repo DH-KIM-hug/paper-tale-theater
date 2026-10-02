@@ -19,12 +19,12 @@
      - dog_jump: 원래 오른쪽을 봐서 좌우로 뒤집어 저장 · watering_can: 물방울(코드가 그림)을 지우고 주둥이가 순무 쪽(오른쪽)으로 뒤집음
      - sprout: 밑에 깔린 받침 덩어리를 잘라 내고 잎 + 흰 머리만
      - cow · pig: 고르기 배지의 틀린 답. 토끼와 거북이 관객 그림(rab_aud_*)을 같이 쓴다
-     - grandpa_sit: 시간 초과로 다시 뽑는 중 → null. 올 때까지 엉덩방아는 서 있는 그림을 코드로 눌러 앉힌다(POSE.sit)
+     - grandpa_sit: 다시 뽑은 엉덩방아 그림 (발 뻗고 앉음, 기준점 = 엉덩이)
      - cut_pop: 못 씀(순무 둘레에 얼굴 달린 순무가 잔뜩) → 슬로모션 세 컷 모두 코드 컷(순무는 그림) */
   const ART = {
     turnip: 'v3w/tn_turnip.webp', sprout: 'v3w/tn_sprout.webp', pot: 'v3w/tn_pot.webp', watering_can: 'v3w/tn_watering_can.webp',
     grandpa_stand: 'v3w/tn_grandpa_stand.webp', grandpa_pull: 'v3w/tn_grandpa_pull.webp',
-    grandpa_sit: null, // 다시 뽑는 중 (위 설명)
+    grandpa_sit: 'v3w/tn_grandpa_sit.webp',
     grandma_stand: 'v3w/tn_grandma_stand.webp', grandma_pull: 'v3w/tn_grandma_pull.webp', girl_pull: 'v3w/tn_girl_pull.webp',
     dog_pull: 'v3w/tn_dog_pull.webp', dog_jump: 'v3w/tn_dog_jump.webp', cat_pull: 'v3w/tn_cat_pull.webp', cat_sit: 'v3w/tn_cat_sit.webp',
     mouse_pull: 'v3w/tn_mouse_pull.webp', cow: 'v3w/rab_aud_cow.webp', pig: 'v3w/rab_aud_pig.webp',
@@ -45,7 +45,7 @@
      한 인물의 자세끼리는 같은 원본 배율(머리 크기)로 맞춰서 자세가 바뀌어도 튀지 않는다.
      (할아버지 당기기만 머리가 조금 커서 .95배, 고양이 앉기는 머리가 커서 머리 크기에 맞춤) */
   const SPR = {
-    grandpa_stand: [190, .58, .5022], grandpa_pull: [161, .62, .8238], grandpa_sit: [140, .5, 1], // sit 비율은 그림이 오면 고친다
+    grandpa_stand: [190, .58, .5022], grandpa_pull: [161, .62, .8238], grandpa_sit: [151, .66, 1.3028], // 모자 크기를 서기 그림에 맞춤, 엉덩이가 기준
     grandma_stand: [172, .43, .5227], grandma_pull: [146, .56, .8],
     girl_pull: [128, .44, .9118],
     dog_pull: [100, .48, .8781], dog_jump: [87, .5, 1.0833],
@@ -412,7 +412,7 @@
         Object.entries(looks).forEach(([n, p]) => { p.style.display = n === want ? '' : 'none'; });
         a.cur = want; a.h = SPR[c.key + '_' + want][0];
       };
-      /* 털썩 앉기: 앉은 그림이 있으면 그 그림, 없으면 지금 그림을 코드로 눌러 앉힌다 (할아버지 앉기 그림은 다시 뽑는 중) */
+      /* 털썩 앉기: 앉은 그림이 있으면 그 그림(할아버지·고양이), 없으면 지금 그림을 코드로 눌러 앉힌다 */
       a.sitDown = () => { a.before = a.cur; if (looks.sit) { a.look('sit'); a.pose(POSE.stand()); } else a.pose(POSE.sit(c.key)); };
       a.standUp = () => { if (a.cur === 'sit') a.look(a.before); a.pose(POSE.stand()); };
       a.look(home);
