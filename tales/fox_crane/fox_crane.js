@@ -27,9 +27,93 @@
     return d * a.flip;
   }
 
+  /* ================= 페이퍼아트 그림 (assets/v3w/fc_*.webp) =================
+     null이거나 파일을 못 불러오면 그 자리는 아래 임시 도형(그레이박스)으로 그린다. 새 그림이 나오면 여기 한 줄만 바꾸면 된다.
+     배경은 장면마다 한 장을 무대에 꽉 채워 깐다. 분할 화면은 부엌·두루미 방 그림을 반씩 잘라 쓴다.
+     - crane_head / crane_body: 서 있는 두루미를 목(머리 포함)과 몸통으로 나눈 것 (같은 캔버스). 목만 돌려서 부리로 콕·쪽쪽
+     - fox_stuck: 코 낀 여우 그림 속 호리병을 지운 것 → 장면의 긴 병에 코를 넣는다
+     - plate_empty + plate_soup: 납작 접시를 빈 접시와 국물 한 장으로 나눈 것 (핥핥 → 국물이 줄어든다)
+     - mouth_*: 입 모양 카드용 얼굴 (나비의 빨대 입은 그림에 없어서 코드로 덧그린다)
+     - 쓰지 않는 그림: crane_peck (고개를 바닥까지 숙인 자세 — 이 동화의 접시·병은 높이 있어서 목 돌리기로 대신) */
+  const AS = '../../assets/';
+  const BG = {
+    forest: 'v3w/fc_bg_forest.webp', kitchen: 'v3w/fc_bg_kitchen.webp', high: 'v3w/fc_bg_high.webp', pondhouse: 'v3w/fc_bg_pondhouse.webp',
+    crane_room: 'v3w/fc_bg_crane_room.webp', feast_day: 'v3w/fc_bg_feast_day.webp', feast_night: 'v3w/fc_bg_feast_night.webp',
+  };
+  const ART = {
+    fox_stand: 'v3w/fc_fox_stand.webp', fox_lick: 'v3w/fc_fox_lick.webp', fox_sorry: 'v3w/fc_fox_sorry.webp', fox_stuck: 'v3w/fc_fox_stuck.webp',
+    crane_head: 'v3w/fc_crane_head.webp', crane_body: 'v3w/fc_crane_body.webp', crane_sad: 'v3w/fc_crane_sad.webp', crane_sorry: 'v3w/fc_crane_sorry.webp',
+    duck: 'v3w/fc_duck.webp', butterfly: 'v3w/fc_butterfly.webp', pot: 'v3w/fc_pot.webp',
+    plate: 'v3w/fc_plate.webp', plate_empty: 'v3w/fc_plate_empty.webp', plate_soup: 'v3w/fc_plate_soup.webp',
+    bottle: 'v3w/fc_bottle.webp', bowl: 'v3w/fc_bowl.webp', flower: 'v3w/fc_flower.webp',
+    mouth_crane: 'v3w/fc_mouth_crane.webp', mouth_fox: 'v3w/fc_mouth_fox.webp', mouth_duck: 'v3w/fc_mouth_duck.webp', mouth_butterfly: 'v3w/fc_mouth_butterfly.webp',
+    cut_peck: 'v3w/fc_cut_peck.webp', cut_lick: 'v3w/fc_cut_lick.webp', cut_stuck: 'v3w/fc_cut_stuck.webp', cut_sorry: 'v3w/fc_cut_sorry.webp',
+  };
+  const artOK = {}, bgOK = {};
+  const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
+  const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
+  /* 그림 상자 [x, y, w, h] (발끝 0,0 기준, 무대 단위) — 같은 인물은 자세가 바뀌어도 머리·몸 크기가 같게 맞췄다 (변환 스크립트 conv_fc.py) */
+  const BOX = {
+    fox_stand: [-102, -168.5, 202.8, 168.5], fox_lick: [-106.2, -150, 205, 150.2], fox_sorry: [-84.5, -166, 176, 166], fox_stuck: [-67.1, -141.4, 122.6, 143.2],
+    crane_head: [-76, -249.9, 149.4, 251.7], crane_body: [-76, -249.9, 149.4, 251.7], crane_sad: [-77.3, -209.9, 146.4, 212.4], crane_sorry: [-67.6, -216.8, 135.9, 221.3],
+    duck: [-60.7, -129.4, 121.8, 130], butterfly: [-60, -129, 120, 86.2], pot: [-115.2, -219.2, 230, 219.5],
+    plate: [-90, -64.1, 180, 64.1], plate_empty: [-90, -64.1, 180, 64.1], plate_soup: [-90, -64.1, 180, 64.1],
+    bottle: [-45.1, -186, 90, 186], bowl: [-74.1, -98.3, 150, 98.2], flower: [-55.4, -135, 86.3, 135],
+  };
+  const FOX_ART_NOSE = [-101, -96.5], FOX_STUCK_NOSE = [-66.9, -93.2];
+  const CRANE_ART_PIV = [-24.2, -143.3], CRANE_ART_TIP = [-76, -221];
+  /* 그림 한 장: BOX 자리에. 바깥 g(그림자) 안에 그림 */
+  function pic(T, g, key, { shadow = true, box } = {}) {
+    const u = artUrl(key); if (!u) return null;
+    const [x, y, w, h] = box || BOX[key];
+    const wrap = T.el('g', shadow ? { filter: 'url(#pp)' } : {}, g);
+    T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
+    return wrap;
+  }
+  /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). 그림 밖(세로 화면에서 물러설 때)은 끝 색으로 */
+  const BG_EDGE = { forest: ['#f2e6bf', '#a98e62'], kitchen: ['#5a3a20', '#3e2614'], high: ['#f3e3c4', '#6b4426'], pondhouse: ['#c9e2e6', '#6f8f4a'],
+    crane_room: ['#4a3220', '#3e2a1a'], feast_day: ['#cfe3ea', '#5f7a3a'], feast_night: ['#13204a', '#2d3a22'] };
+  function bgImage(T, key, { dx = 0, parent, clip } = {}) {
+    const u = bgUrl(key); if (!u) return null;
+    const w = 1080, h = w * 992 / 1760, x = -40 + dx, y = -24;
+    const p = parent || T.bg;
+    const [top, bot] = BG_EDGE[key] || ['#cfe3ee', '#77693f'];
+    if (!parent) {
+      T.el('rect', { x: -1400, y: -1400, width: 3800, height: 1400 + y + h / 2, fill: top }, p);
+      T.el('rect', { x: -1400, y: y + h / 2, width: 3800, height: 2000, fill: bot }, p);
+    }
+    const im = T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, p);
+    if (clip) im.setAttribute('clip-path', `url(#${clip})`);
+    return im;
+  }
+  /* 기분 자세: 그림이면 자세 그림을 바꾸고, 그레이박스면 고개를 숙인다 */
+  function mood(a, m) {
+    if (a.parts.setPose) { a.parts.head.style.transform = ''; a.parts.setPose(a.key === 'fox' && m === 'sad' ? 'sorry' : (m || 'stand')); return; } // 여우는 시무룩 = 미안해 자세(앉아서 고개 숙임)
+    a.parts.head.style.transform = m ? `rotate(${a.key === 'fox' ? (m === 'sorry' ? -18 : -15) : (m === 'sorry' ? -14 : (a.parts.sadDeg || -18))}deg)` : '';
+  }
+  const clampDeg = (d, m) => (m ? Math.max(-m, Math.min(m, d)) : d);
+  const aimP = (a, target) => clampDeg(aim(a, a.parts.PIV, a.parts.TIP, target), a.parts.maxDeg);
+
   /* ================= 인물 (모두 왼쪽을 보고 선다, 발끝 0,0) ================= */
   const FOX_PIV = [-40, -75], FOX_TIP = [-132, -94];
+  function drawFoxArt(T, g) {
+    const { el } = T;
+    const all = rotO(el('g', {}, g), ...FOX_ART_NOSE);
+    const head = rotO(el('g', {}, all), -30, 0); // 몸 전체가 앞발을 축으로 살짝 숙인다
+    const poses = {};
+    ['fox_stand', 'fox_lick', 'fox_sorry'].forEach(k => { poses[k.slice(4)] = pic(T, head, k); });
+    const legs = rotO(el('g', {}, head), ...FOX_STUCK_NOSE); // 코 낀 자세: 코를 축으로 대롱대롱
+    poses.stuck = pic(T, legs, 'fox_stuck');
+    const setPose = n => Object.entries(poses).forEach(([k, p]) => { if (p) p.style.display = k === (poses[n] ? n : 'stand') ? '' : 'none'; });
+    setPose('stand');
+    hit(T, head, -110, -170, 215, 170);
+    const tail = el('g', {}, g);
+    const flag = n => ({ setAttribute: (k, v) => { if (k === 'opacity') setPose(+v ? n : 'stand'); } });
+    return { all, head, legs, tail, tongue: flag('lick'), blush: flag('sorry'), setPose, art: true,
+      PIV: [-30, 0], TIP: FOX_ART_NOSE, maxDeg: 22, kick: 6 };
+  }
   function drawFox(T, g) {
+    if (artUrl('fox_stand')) return drawFoxArt(T, g);
     const { el, paper } = T;
     const all = rotO(el('g', {}, g), -130, -94);
     const tail = rotO(el('g', {}, all), 38, -60);
@@ -57,10 +141,24 @@
     const blush = el('g', { opacity: 0 }, head);
     el('ellipse', { cx: -60, cy: -86, rx: 10, ry: 5, fill: C.pink }, blush);
     hit(T, g, -140, -170, 270, 170);
-    return { all, head, tongue, legs, tail, blush };
+    return { all, head, tongue, legs, tail, blush, PIV: FOX_PIV, TIP: FOX_TIP };
   }
   const CRANE_PIV = [-25, -135], CRANE_TIP = [-112, -220];
+  function drawCraneArt(T, g) {
+    const { el } = T;
+    const all = el('g', {}, g);
+    const stand = el('g', {}, all);
+    const head = rotO(el('g', {}, stand), ...CRANE_ART_PIV); // 목(머리 포함)만 돈다. 몸통이 위에 덮여 목 뿌리를 가린다
+    pic(T, head, 'crane_head');
+    hit(T, head, -82, -254, 100, 120);
+    pic(T, stand, 'crane_body');
+    const poses = { stand, sad: pic(T, all, 'crane_sad'), sorry: pic(T, all, 'crane_sorry') };
+    const setPose = n => Object.entries(poses).forEach(([k, p]) => { if (p) p.style.display = k === (poses[n] ? n : 'stand') ? '' : 'none'; });
+    setPose('stand');
+    return { all, head, setPose, art: true, PIV: CRANE_ART_PIV, TIP: CRANE_ART_TIP };
+  }
   function drawCrane(T, g) {
+    if (artUrl('crane_head') && artUrl('crane_body')) return drawCraneArt(T, g);
     const { el, paper } = T;
     const all = el('g', {}, g);
     paper(all, [['path', { d: 'M-8 -106 V0 M-22 0 H4 M14 -106 V0 M2 0 H28', stroke: C.ink, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }]]);
@@ -78,10 +176,15 @@
     ]);
     el('circle', { cx: -36, cy: -229, r: 3.5, fill: C.ink }, head);
     hit(T, head, -120, -250, 110, 120);
-    return { all, head };
+    return { all, head, PIV: CRANE_PIV, TIP: CRANE_TIP };
   }
   function drawDuck(T, g) {
     const { el, paper } = T;
+    if (artUrl('duck')) { // 그림: 몸 전체가 발끝 앞쪽을 축으로 꾸벅 (부리로 떠먹기)
+      const head = rotO(el('g', {}, g), -30, 0);
+      pic(T, head, 'duck'); hit(T, head, -62, -130, 124, 130);
+      return { head, nod: 14 };
+    }
     paper(g, [
       ['rect', { x: -14, y: -14, width: 9, height: 14, fill: C.persimmon }], ['rect', { x: 8, y: -14, width: 9, height: 14, fill: C.persimmon }],
       ['path', { d: 'M40 -62 L74 -78 L62 -44 Z', fill: C.snow }],
@@ -97,6 +200,13 @@
   }
   function drawButterfly(T, g) {
     const { el, paper } = T;
+    if (artUrl('butterfly')) { // 그림: 종이 나비 전체가 날갯짓 (가운데 몸통 축으로 좌우 접힘)
+      const wings = rotO(el('g', {}, g), 0, -88);
+      pic(T, wings, 'butterfly');
+      wings.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(.68)' }, { transform: 'scaleX(1)' }], { duration: 560, iterations: Infinity });
+      hit(T, g, -60, -140, 120, 100);
+      return { wings };
+    }
     const wings = rotO(el('g', {}, g), 0, -88);
     paper(wings, [
       ['ellipse', { cx: -26, cy: -108, rx: 28, ry: 32, fill: C.persimmon, transform: 'rotate(-20 -26 -108)' }],
@@ -125,12 +235,15 @@
   }
 
   /* ================= 그릇·소품 (발끝 0,0) ================= */
+  const dishArt = (T, g, k, [x, y, w, h]) => { if (!pic(T, g, k)) return false; hit(T, g, x, y, w, h); return true; };
   const DISH = {
     plate: { name: '납작 접시', top: -12, draw(T, g) {
+      if (dishArt(T, g, 'plate', [-95, -80, 190, 90])) return;
       T.paper(g, [['ellipse', { cx: 0, cy: -10, rx: 90, ry: 14, fill: C.cream, stroke: C.gold, 'stroke-width': 4 }], ['ellipse', { cx: 0, cy: -12, rx: 66, ry: 7, fill: C.amber }]]);
       hit(T, g, -95, -80, 190, 90);
     } },
     bottle: { name: '긴 병', top: -184, draw(T, g) {
+      if (dishArt(T, g, 'bottle', [-50, -190, 100, 190])) return;
       T.paper(g, [
         ['ellipse', { cx: 0, cy: -40, rx: 40, ry: 40, fill: C.pine }], ['circle', { cx: 0, cy: -96, r: 24, fill: C.pine }],
         ['rect', { x: -8, y: -178, width: 16, height: 66, fill: C.pine }], ['rect', { x: -13, y: -186, width: 26, height: 9, rx: 3, fill: C.gold }],
@@ -140,6 +253,7 @@
       hit(T, g, -50, -190, 100, 190);
     } },
     bowl: { name: '넓은 그릇', top: -50, draw(T, g) {
+      if (dishArt(T, g, 'bowl', [-80, -100, 160, 100])) return;
       T.paper(g, [
         ['path', { d: 'M-74 -54 Q-70 0 0 0 Q70 0 74 -54 Z', fill: C.bean }],
         ['ellipse', { cx: 0, cy: -54, rx: 74, ry: 12, fill: '#7d2b25' }], ['ellipse', { cx: 0, cy: -52, rx: 64, ry: 8, fill: C.leaf }],
@@ -148,6 +262,7 @@
       hit(T, g, -80, -100, 160, 100);
     } },
     flower: { name: '꽃', top: -112, draw(T, g) {
+      if (dishArt(T, g, 'flower', [-50, -150, 100, 150])) return;
       T.paper(g, [
         ['path', { d: 'M0 0 Q-6 -50 0 -98', stroke: C.pine, 'stroke-width': 7, fill: 'none' }],
         ['ellipse', { cx: -16, cy: -40, rx: 16, ry: 7, fill: C.leaf, transform: 'rotate(-30 -16 -40)' }],
@@ -164,6 +279,13 @@
   }
   function drawPot(T, g) {
     const { el, paper } = T;
+    if (artUrl('pot')) { // 그림: 국자는 그림 안에 있다 → 젓기는 냄비 전체가 살짝 흔들린다. 거품은 국물 위(-130)에서 오른다
+      const spoon = rotO(el('g', {}, g), 0, 0);
+      pic(T, spoon, 'pot');
+      const bubbles = el('g', { transform: 'translate(0,-4)' }, g);
+      hit(T, g, -115, -220, 230, 220);
+      return { spoon, bubbles, stir: 3 };
+    }
     paper(g, [['path', { d: 'M-66 0 Q-56 -34 -34 -12 Q-22 -44 0 -14 Q22 -48 34 -12 Q56 -34 66 0 Z', fill: C.amber }]]);
     const spoon = rotO(el('g', {}, g), 0, -120);
     paper(spoon, [['rect', { x: -7, y: -236, width: 14, height: 124, rx: 7, fill: C.bark }], ['ellipse', { cx: 0, cy: -118, rx: 16, ry: 8, fill: C.bark }]]);
@@ -199,6 +321,7 @@
   /* ================= 배경 (장면마다 통판 1장) ================= */
   const sky = (T, fill) => T.el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill }, T.bg);
   function forestBG(T) {
+    if (bgImage(T, 'forest')) return;
     const { el, paper } = T, b = T.bg;
     sky(T, C.sky);
     el('circle', { cx: 840, cy: 90, r: 44, fill: '#F6D98A' }, b);
@@ -215,6 +338,7 @@
     [[80, 450], [930, 455], [160, 540], [860, 545]].forEach(([x, y]) => paper(b, [['circle', { cx: x, cy: y, r: 9, fill: C.persimmon }], ['circle', { cx: x, cy: y, r: 4, fill: C.gold }]]));
   }
   function kitchenBG(T) {
+    if (bgImage(T, 'kitchen')) return;
     const { el, paper } = T, b = T.bg;
     sky(T, '#3a2519');
     paper(b, [['path', { d: 'M40 600 V210 Q40 30 500 30 Q960 30 960 210 V600 Z', fill: '#8a6344' }]]);
@@ -227,13 +351,24 @@
     paper(b, [['rect', { x: -200, y: 470, width: 1400, height: 300, fill: C.bark }]]);
   }
   function highBG(T) {
+    if (bgImage(T, 'high')) return;
     const { el, paper } = T, b = T.bg;
     sky(T, C.wood);
     for (let i = -2; i < 14; i++) el('path', { d: `M${i * 90} -20 L${i * 90 + 60} 600`, stroke: '#a67c3d', 'stroke-width': 5 }, b);
     paper(b, [['ellipse', { cx: 500, cy: 440, rx: 440, ry: 160, fill: C.bean }], ['ellipse', { cx: 500, cy: 440, rx: 410, ry: 140, fill: 'none', stroke: C.gold, 'stroke-width': 6 }]]);
   }
+  /* 그림: 탁자는 배경(부감 마루)에 있다 → 탁자 위에 빈 접시 + 국물 한 장 */
+  const HIGH_PLATE = [505, 288, 1.35];
   function highTable(T, parent) {
     const { el, paper } = T;
+    if (bgUrl('high') && artUrl('plate_empty') && artUrl('plate_soup')) {
+      const [x, y, s] = HIGH_PLATE;
+      const g = el('g', { transform: `translate(${x},${y}) scale(${s})` }, parent);
+      pic(T, g, 'plate_empty');
+      const soup = rotO(el('g', {}, g), 0, -34);
+      pic(T, soup, 'plate_soup', { shadow: false });
+      return { soup };
+    }
     const g = el('g', {}, parent);
     paper(g, [['ellipse', { cx: 500, cy: 470, rx: 250, ry: 92, fill: '#8a6344' }], ['ellipse', { cx: 500, cy: 456, rx: 250, ry: 92, fill: '#C9A26A' }]]);
     paper(g, [['ellipse', { cx: 500, cy: 450, rx: 150, ry: 45, fill: C.cream, stroke: C.gold, 'stroke-width': 5 }]]);
@@ -242,6 +377,7 @@
     return { soup };
   }
   function pondHouseBG(T) {
+    if (bgImage(T, 'pondhouse')) return;
     const { el, paper } = T, b = T.bg;
     sky(T, C.sky);
     el('circle', { cx: 150, cy: 90, r: 40, fill: '#F6D98A' }, b);
@@ -260,6 +396,7 @@
     ]);
   }
   function lowBG(T) {
+    if (bgImage(T, 'crane_room')) return;
     const { el, paper } = T, b = T.bg;
     sky(T, C.wall);
     paper(b, [['path', { d: 'M-200 -200 H1200 V150 H-200 Z', fill: '#C9A26A' }]]);
@@ -272,6 +409,7 @@
     paper(b, [['rect', { x: -200, y: 500, width: 1400, height: 300, fill: '#8a6344' }]]);
   }
   function lowTable(T, parent) {
+    if (bgUrl('crane_room')) return; // 그림: 작은 탁자는 배경에 있다
     T.paper(parent, [
       ['rect', { x: 480, y: 440, width: 14, height: 62, fill: C.bark }], ['rect', { x: 626, y: 440, width: 14, height: 62, fill: C.bark }],
       ['rect', { x: 450, y: 424, width: 220, height: 20, rx: 8, fill: '#C9A26A' }],
@@ -279,6 +417,16 @@
   }
   function splitBG(T) {
     const { el, paper } = T, b = T.bg;
+    if (bgUrl('kitchen') && bgUrl('crane_room')) { // 그림: 왼쪽 = 여우 부엌(창문 쪽), 오른쪽 = 두루미 방(창문 쪽) — 부엌의 냄비·방의 탁자는 잘려 나간다
+      sky(T, '#3e2614');
+      const cl = el('clipPath', { id: 'fcSplitL' }, b); el('rect', { x: -1400, y: -1400, width: 1900, height: 3000 }, cl);
+      const cr = el('clipPath', { id: 'fcSplitR' }, b); el('rect', { x: 500, y: -1400, width: 1900, height: 3000 }, cr);
+      bgImage(T, 'kitchen', { dx: -400, parent: b, clip: 'fcSplitL' });
+      bgImage(T, 'crane_room', { dx: 500, parent: b, clip: 'fcSplitR' });
+      el('rect', { x: 488, y: -200, width: 24, height: 1000, fill: C.cream }, b);
+      el('path', { d: 'M488 -200 V800 M512 -200 V800', stroke: C.gold, 'stroke-width': 5 }, b);
+      return;
+    }
     sky(T, C.cream);
     paper(b, [['rect', { x: -200, y: -200, width: 620, height: 1000, fill: '#8a6344' }], ['rect', { x: -200, y: 480, width: 620, height: 300, fill: C.bark }]]);
     paper(b, [['rect', { x: 580, y: -200, width: 620, height: 1000, fill: C.wall }], ['rect', { x: 580, y: 480, width: 620, height: 300, fill: C.wood }]]);
@@ -288,6 +436,7 @@
     el('path', { d: 'M420 -200 V800 M580 -200 V800', stroke: C.gold, 'stroke-width': 8 }, b);
   }
   function feastBG(T, night) {
+    if (bgImage(T, night ? 'feast_night' : 'feast_day')) return true; // 밤 그림에는 등불이 그려져 있다
     const { el, paper } = T, b = T.bg;
     sky(T, night ? C.indigo : C.sky);
     if (night) {
@@ -322,10 +471,21 @@
     return g;
   }
   const ICON = {
-    plate: (T, g) => T.paper(g, [['ellipse', { cx: 0, cy: 8, rx: 52, ry: 11, fill: C.cream, stroke: C.gold, 'stroke-width': 3 }], ['ellipse', { cx: 0, cy: 6, rx: 38, ry: 5, fill: C.amber }]]),
+    plate: (T, g) => pic(T, g, 'plate', { box: [-58, -12, 116, 41.3] }) || T.paper(g, [['ellipse', { cx: 0, cy: 8, rx: 52, ry: 11, fill: C.cream, stroke: C.gold, 'stroke-width': 3 }], ['ellipse', { cx: 0, cy: 6, rx: 38, ry: 5, fill: C.amber }]]),
     bottle: (T, g) => { const s = T.el('g', { transform: 'translate(0,50) scale(.55)' }, g); DISH.bottle.draw(T, s); },
   };
-  const MOUTH = {
+  /* 입 모양 카드: 그림이면 얼굴 그림을 동그랗게 오려 넣는다 (나비 빨대 입은 그림에 없어서 코드로 덧그린다) */
+  let clipN = 0;
+  function mouthArt(T, g, k) {
+    const u = artUrl('mouth_' + k); if (!u) return false;
+    const id = 'fcMouthClip' + (++clipN);
+    const cp = T.el('clipPath', { id }, g); T.el('circle', { r: 76 }, cp);
+    const im = T.el('image', { href: u, x: -76, y: -76, width: 152, height: 152, preserveAspectRatio: 'none' }, g);
+    im.setAttribute('clip-path', `url(#${id})`);
+    if (k === 'butterfly') [[C.cream, 11], [C.ink, 5]].forEach(([c, w]) => T.el('path', { d: 'M2 28 Q4 54 22 58 Q40 60 40 44 Q40 30 26 34', stroke: c, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round' }, g));
+    return true;
+  }
+  const MOUTH_GB = {
     crane: (T, g) => T.paper(g, [['circle', { cx: 34, cy: -6, r: 24, fill: C.snow }], ['circle', { cx: 38, cy: -26, r: 10, fill: C.bean }],
       ['path', { d: 'M16 -14 L-62 2 L16 6 Z', fill: C.gold }], ['circle', { cx: 28, cy: -8, r: 4, fill: C.ink }], ['path', { d: 'M40 16 Q44 40 36 60', stroke: C.ink, 'stroke-width': 14, fill: 'none' }]]),
     fox: (T, g) => T.paper(g, [['circle', { cx: 26, cy: -8, r: 36, fill: C.persimmon }], ['path', { d: 'M4 -26 L-48 -4 L4 16 Z', fill: C.persimmon }],
@@ -334,22 +494,24 @@
     butterfly: (T, g) => T.paper(g, [['circle', { cx: 24, cy: -36, r: 18, fill: C.ink }], ['circle', { cx: 18, cy: -40, r: 4, fill: C.cream }],
       ['path', { d: 'M16 -22 Q-14 -6 -14 22 Q-14 48 12 48 Q34 48 34 30 Q34 16 20 18', stroke: C.bark, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }]]),
   };
+  const MOUTH = Object.fromEntries(Object.keys(MOUTH_GB).map(k => [k, (T, g) => mouthArt(T, g, k) || MOUTH_GB[k](T, g)]));
 
   /* ================= 먹기 연출 ================= */
   async function eat(T, g, d) {
     if (g.key === 'crane') {
-      const deg = aim(g, CRANE_PIV, CRANE_TIP, [d.x, d.y + DISH[d.key].top * d.scale + 14]);
+      const deg = aimP(g, [d.x, d.y + DISH[d.key].top * d.scale + 14]);
       await T.anim(g.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${deg}deg)` }, { transform: `rotate(${deg * .85}deg)` }, { transform: `rotate(${deg}deg)` }, { transform: 'rotate(0deg)' }], 900);
       sipSnd(T); T.pop(g.x, g.y - 290 * g.scale, '쪽쪽', C.pine);
     } else if (g.key === 'fox') {
-      const deg = aim(g, FOX_PIV, FOX_TIP, [d.x, d.y - 10]);
+      const deg = aimP(g, [d.x, d.y - 10]);
       g.parts.tongue.setAttribute('opacity', 1);
       await T.anim(g.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${deg}deg)` }, { transform: `rotate(${deg * .8}deg)` }, { transform: `rotate(${deg}deg)` }, { transform: 'rotate(0deg)' }], 900);
       g.parts.tongue.setAttribute('opacity', 0);
       lickSnd(T); T.pop(g.x, g.y - 200 * g.scale, '핥핥', C.bean);
     } else if (g.key === 'duck') {
       AudioFX.animal('duck', .6) || T.tone([500, 380], .15, { type: 'square', vol: .12 });
-      await T.anim(g.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${-30 * g.flip}deg)` }, { transform: 'rotate(0deg)' }, { transform: `rotate(${-30 * g.flip}deg)` }, { transform: 'rotate(0deg)' }], 800);
+      const nd = -(g.parts.nod || 30) * g.flip;
+      await T.anim(g.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${nd}deg)` }, { transform: 'rotate(0deg)' }, { transform: `rotate(${nd}deg)` }, { transform: 'rotate(0deg)' }], 800);
       T.pop(g.x, g.y - 170 * g.scale, '냠냠', C.pine);
     } else {
       const x0 = g.x, y0 = g.y;
@@ -369,6 +531,15 @@
     direct(() => fox, () => crane);
     const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]); // 말풍선 없는 소리 대사
     const cutVo = k => setTimeout(() => vo(k), 380);
+    /* 그림 컷: 그림이 있으면 그림, 없으면 코드 컷 */
+    const cutArt = (key, draw, o = {}) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx: o.sfx, hold: o.hold || 2600 }], { hold: o.hold || 2600 }) : T.cut(draw, o));
+
+    /* 그림 미리 불러오기: 첫 장면(숲·여우·두루미) 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
+    const loads = {};
+    Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
+    Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
+    await Promise.race([Promise.all([loads.bg_forest, loads.fox_stand, loads.crane_head, loads.crane_body].filter(Boolean)), sleep(2500)]);
+    const ARTMODE = () => !!(artUrl('fox_stand') && artUrl('crane_head'));
 
     /* --- 1. 초대장 (숲길 와이드) --- */
     forestBG(T);
@@ -392,21 +563,29 @@
     let pot;
     await T.sceneCard('여우의 부엌', () => {
       T.clear(); kitchenBG(T);
-      fox = guest(T, T.world, 'fox', 360, 470, 1.2); fox.face('right');
-      let pp; pot = actor(T.world, 580, 470, g => { pp = drawPot(T, g); }, { scale: 1.05 }); pot.parts = pp;
-      camSnap(480, 340, 1.3);
+      let pp;
+      if (bgUrl('kitchen') && artUrl('pot')) { // 그림: 배경 안쪽 아궁이 자리(그림 속 솥)에 수프 냄비를 얹고, 여우는 앞쪽에서 냄비를 본다
+        fox = guest(T, T.world, 'fox', 500, 480, 1.2);
+        pot = actor(T.world, 262, 374, g => { pp = drawPot(T, g); }, { scale: 1.05 }); pot.parts = pp;
+        camSnap(420, 330, 1.3);
+      } else {
+        fox = guest(T, T.world, 'fox', 360, 470, 1.2); fox.face('right');
+        pot = actor(T.world, 580, 470, g => { pp = drawPot(T, g); }, { scale: 1.05 }); pot.parts = pp;
+        camSnap(480, 340, 1.3);
+      }
     }, fox.pos);
     await say('여우가 맛있는 수프를 끓여요.');
     await say('냄비를 톡톡 눌러서 저어 볼까요?');
     await T.mash(pot.pos, { count: 5, prompt: '냄비를 톡톡 눌러서 휘휘 저어요!', onStep: i => {
-      pot.parts.spoon.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-22deg)' }, { transform: 'rotate(22deg)' }, { transform: 'rotate(0deg)' }], { duration: 420 });
+      const st = pot.parts.stir || 22;
+      pot.parts.spoon.animate([{ transform: 'rotate(0deg)' }, { transform: `rotate(${-st}deg)` }, { transform: `rotate(${st}deg)` }, { transform: 'rotate(0deg)' }], { duration: 420 });
       for (let k = 0; k < 2; k++) {
         const b = el('circle', { cx: -60 + Math.random() * 120, cy: -126, r: 8 + Math.random() * 6, fill: C.cream, opacity: .9 }, pot.parts.bubbles);
         b.animate([{ transform: 'translateY(0)', opacity: .9 }, { transform: 'translateY(-60px)', opacity: 0 }], { duration: 900, delay: k * 150, fill: 'forwards' });
         setTimeout(() => b.remove(), 1200);
       }
       bubbleSnd(T);
-      if (i % 2) T.pop(600, 280, '보글', C.bean);
+      if (i % 2) T.pop(pot.x + 20, pot.y - 200, '보글', C.bean);
     } });
     await sleep(400);
     AudioFX.laugh();
@@ -417,23 +596,30 @@
     let tbl;
     await T.sceneCard('납작 접시', () => {
       T.clear(); camSnap(500, 280, 1); highBG(T);
-      fox = guest(T, T.world, 'fox', 190, 440, 1.1); fox.face('right');
-      crane = guest(T, T.world, 'crane', 730, 450, 1.2);
+      if (bgUrl('high') && ARTMODE()) { // 그림: 배경 속 둥근 탁자 위 접시 → 둘 다 조금 크게, 탁자 양옆 앞쪽에
+        fox = guest(T, T.world, 'fox', 190, 398, 1.4); fox.face('right');
+        crane = guest(T, T.world, 'crane', 770, 440, 1.3);
+      } else {
+        fox = guest(T, T.world, 'fox', 190, 440, 1.1); fox.face('right');
+        crane = guest(T, T.world, 'crane', 730, 450, 1.2);
+      }
       tbl = highTable(T, T.world);
     }, fox.pos);
     await say('두루미가 놀러 왔어요. 그런데 접시가 아주 납작해요!');
     await say('두루미 부리를 톡 눌러서 먹게 해 줘요!');
     const words = ['콕!', '딱!', '딱딱!'];
+    const HI = bgUrl('high') && ARTMODE(); // 그림: 접시가 탁자 위(무대 y≈250)에 있다
+    const peckAt = HI ? [612, 254] : [640, 418], lickAt = HI ? [400, 262] : [390, 440];
     for (let i = 0; i < 3; i++) {
       await T.tap(crane.parts.head, { prompt: '두루미 부리를 톡 눌러 봐요!' });
-      const deg = aim(crane, CRANE_PIV, CRANE_TIP, [640, 418]);
+      const deg = aimP(crane, peckAt);
       await T.anim(crane.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${deg}deg)` }], 260);
-      peckSnd(T); T.pop(640, 330, words[i], C.bean);
+      peckSnd(T); T.pop(peckAt[0] - (HI ? (T.portrait() ? 30 : 150) : 0), peckAt[1] - (HI ? 110 : 88), words[i], C.bean);
       await sleep(260);
       await T.anim(crane.parts.head, [{ transform: `rotate(${deg}deg)` }, { transform: 'rotate(0deg)' }], 320);
     }
     cutVo('cut_peck');
-    await T.cut(svg => {
+    await cutArt('cut_peck', svg => {
       el('ellipse', { cx: 200, cy: 258, rx: 170, ry: 26, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }, svg);
       el('ellipse', { cx: 200, cy: 256, rx: 130, ry: 14, fill: C.amber }, svg);
       el('path', { d: 'M290 70 L150 236 L306 104 Z', fill: C.gold }, svg);
@@ -443,18 +629,20 @@
       el('text', { x: 110, y: 120, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '딱딱!' }, svg);
     }, { sfx: 'poke' });
     await say('어머나, 부리 끝만 딱딱 닿아요. 수프를 먹을 수가 없어요.');
-    await fox.move(235, 440, 500);
+    await fox.move(HI ? 222 : 235, fox.y, 500);
+    await T.fitTo([fox.pos, tbl.soup]); // 세로 화면: 핥는 여우와 접시가 함께 보이게
     fox.parts.tongue.setAttribute('opacity', 1);
-    const fdeg = aim(fox, FOX_PIV, FOX_TIP, [390, 440]);
+    const fdeg = aimP(fox, lickAt);
     fox.parts.head.style.transform = `rotate(${fdeg}deg)`;
     const licking = fox.parts.head.animate([{ transform: `rotate(${fdeg}deg)` }, { transform: `rotate(${fdeg * .7}deg)` }, { transform: `rotate(${fdeg}deg)` }], { duration: 420, iterations: Infinity });
-    const lickT = setInterval(() => { lickSnd(T); T.pop(330, 300, '핥핥', C.bean); }, 900);
-    lickSnd(T); T.pop(330, 300, '핥핥', C.bean);
+    const lickP = HI ? [360, 150] : [330, 300];
+    const lickT = setInterval(() => { lickSnd(T); T.pop(...lickP, '핥핥', C.bean); }, 900);
+    lickSnd(T); T.pop(...lickP, '핥핥', C.bean);
     await T.anim(tbl.soup, [{ transform: 'scale(1)' }, { transform: 'scale(0)' }], 2400);
     clearInterval(lickT); licking.cancel();
     fox.parts.head.style.transform = ''; fox.parts.tongue.setAttribute('opacity', 0);
     cutVo('cut_lick');
-    await T.cut(svg => {
+    await cutArt('cut_lick', svg => {
       el('ellipse', { cx: 200, cy: 262, rx: 170, ry: 24, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }, svg);
       el('path', { d: 'M110 70 L150 20 L170 80 Z M230 80 L250 20 L290 70 Z', fill: C.persimmon }, svg);
       el('circle', { cx: 200, cy: 130, r: 90, fill: C.persimmon }, svg);
@@ -464,9 +652,9 @@
       el('ellipse', { cx: 200, cy: 222, rx: 30, ry: 36, fill: C.pink }, svg);
       el('text', { x: 330, y: 80, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '핥핥!' }, svg);
     }, { hold: 2200 });
-    crane.parts.head.style.transform = 'rotate(-18deg)';
+    mood(crane, 'sad');
     T.tone([500, 300], .5, { type: 'sine', vol: .14 });
-    T.pop(740, 120, '꼬르륵', C.indigo);
+    T.pop(740, HI ? 150 : 120, '꼬르륵', C.indigo);
     await say('여우는 혀로 핥핥, 다 먹었어요. 두루미는 배가 꼬르륵, 속상했어요.');
 
     /* --- 4. 두루미 초대 (연못가 집 와이드) --- */
@@ -489,18 +677,23 @@
     await T.sceneCard('긴 병', () => {
       T.clear(); lowBG(T);
       fox = guest(T, T.world, 'fox', 300, 500, 1.0); fox.face('right');
-      crane = guest(T, T.world, 'crane', 730, 500, 1.5);
-      lowTable(T, T.world);
-      bottle = dish(T, T.world, 'bottle', 560, 432, 1.3);
+      if (bgUrl('crane_room') && ARTMODE()) { // 그림: 병은 배경 속 작은 탁자 위, 두루미는 탁자 오른쪽 앞
+        crane = guest(T, T.world, 'crane', 820, 505, 1.55);
+        bottle = dish(T, T.world, 'bottle', 660, 358, 1.3);
+      } else {
+        crane = guest(T, T.world, 'crane', 730, 500, 1.5);
+        lowTable(T, T.world);
+        bottle = dish(T, T.world, 'bottle', 560, 432, 1.3);
+      }
     }, fox.pos);
     await say('와, 병이 탑처럼 높아요! 목이 아주 길어요.');
     await say('여우 코를 톡 눌러서 먹게 해 줘요!');
-    const mouth = [560, bottle.y + DISH.bottle.top * 1.3];
+    const mouth = [bottle.x, bottle.y + DISH.bottle.top * 1.3];
     // 1: 킁킁
     await T.tap(fox.parts.head, { prompt: '여우 코를 톡 눌러 봐요!' });
     await fox.move(360, 500, 400);
     await fox.wiggle(5, 400);
-    T.tone([1200, 900], .08, { type: 'sine', vol: .1 }); T.pop(470, 360, '킁킁', C.bark);
+    T.tone([1200, 900], .08, { type: 'sine', vol: .1 }); T.pop(fox.x + 110, 360, '킁킁', C.bark);
     await sleep(400);
     // 2: 영차
     await T.tap(fox.parts.head, { prompt: '여우 코를 한 번 더 톡!' });
@@ -509,18 +702,22 @@
     await sleep(300);
     // 3: 폴짝 → 코가 쏙
     await T.tap(fox.parts.head, { prompt: '여우 코를 톡! 폴짝 뛰어 봐요!' });
-    const sx = mouth[0] - 130 * fox.scale, sy = mouth[1] + 8 + 94 * fox.scale;
+    await T.fitTo([fox.pos, bottle.pos, crane.parts.head]); // 세로 화면: 여우·병·두루미가 함께 보이게
+    const SN = fox.parts.art ? FOX_STUCK_NOSE : [-130, -94]; // 코 낀 자세의 코끝이 병 입구에
+    const sx = mouth[0] + SN[0] * fox.scale + (fox.parts.art ? -6 : 0), sy = mouth[1] + (fox.parts.art ? 12 : 8) - SN[1] * fox.scale;
     sfx(T, 'whoosh');
     await Promise.all([
       fox.move(sx - 30, sy - 70, 380, 'ease-out'),
       T.anim(fox.parts.all, [{ transform: 'rotate(0deg)' }, { transform: 'rotate(-35deg)' }], 380),
     ]);
     await fox.move(sx, sy, 200, 'ease-in');
+    if (fox.parts.art) { fox.parts.all.style.transform = ''; fox.parts.setPose('stuck'); }
     sfx(T, 'pop'); T.shake();
-    const kick = fox.parts.legs.animate([{ transform: 'rotate(-14deg)' }, { transform: 'rotate(14deg)' }], { duration: 180, iterations: Infinity, direction: 'alternate' });
+    const kd = fox.parts.kick || 14;
+    const kick = fox.parts.legs.animate([{ transform: `rotate(${-kd}deg)` }, { transform: `rotate(${kd}deg)` }], { duration: 180, iterations: Infinity, direction: 'alternate' });
     const wag = fox.parts.tail.animate([{ transform: 'rotate(-16deg)' }, { transform: 'rotate(16deg)' }], { duration: 260, iterations: Infinity, direction: 'alternate' });
     cutVo('cut_stuck');
-    await T.cut(svg => {
+    await cutArt('cut_stuck', svg => {
       el('rect', { x: 170, y: 150, width: 60, height: 150, fill: C.pine }, svg);
       el('rect', { x: 158, y: 138, width: 84, height: 22, rx: 6, fill: C.gold }, svg);
       el('path', { d: 'M40 20 L110 0 L215 150 L185 160 Z', fill: C.persimmon }, svg);
@@ -533,6 +730,7 @@
     kick.cancel(); wag.cancel();
     sfx(T, 'pop'); T.pop(mouth[0], mouth[1] - 40, '뿅!', C.bean);
     fox.parts.all.style.transform = '';
+    if (fox.parts.art) fox.parts.setPose('stand');
     await fox.move(330, 380, 360, 'ease-out');
     await fox.move(300, 500, 320, 'ease-in');
     sfx(T, 'thud'); T.shake();
@@ -544,15 +742,15 @@
     [0, .15, .3].forEach(w => T.tone([700, 500], .12, { type: 'triangle', vol: .14, when: w }));
     await say('뿅! 코가 빠졌어요. 엉덩방아 쿵!');
     stars.remove();
-    const cdeg = aim(crane, CRANE_PIV, CRANE_TIP, [mouth[0], mouth[1] + 20]);
+    const cdeg = aimP(crane, [mouth[0] + (crane.parts.art ? 4 : 0), mouth[1] + 20]);
     for (let k = 0; k < 2; k++) {
       await T.anim(crane.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${cdeg}deg)` }], 300);
-      sipSnd(T); T.pop(760, 110, '쪽쪽', C.pine);
+      sipSnd(T); T.pop(crane.parts.art ? 800 : 760, 110, '쪽쪽', C.pine);
       await sleep(350);
       await T.anim(crane.parts.head, [{ transform: `rotate(${cdeg}deg)` }, { transform: 'rotate(0deg)' }], 300);
     }
     fox.body.style.transform = '';
-    fox.parts.head.style.transform = 'rotate(-15deg)';
+    mood(fox, 'sad');
     T.tone([500, 300], .5, { type: 'sine', vol: .14 });
     await say('두루미는 긴 부리로 쪽쪽 먹었어요. 여우는 배가 꼬르륵, 속상했어요.');
 
@@ -564,8 +762,8 @@
       plateL = dish(T, T.world, 'plate', 300, 480, .9);
       fox = guest(T, T.world, 'fox', 870, 480, 1.0);
       bottleR = dish(T, T.world, 'bottle', 700, 480, .95);
-      crane.parts.head.style.transform = 'rotate(15deg)';
-      fox.parts.head.style.transform = 'rotate(-15deg)';
+      crane.parts.sadDeg = 15; mood(crane, 'sad');
+      mood(fox, 'sad');
     }, fox.pos);
     await say('둘 다 못 먹었어요. 왜 그랬을까요?');
     const qs = [
@@ -586,7 +784,7 @@
       const nd = dish(T, T.world, r.ok, r.at[0], r.at[1], r.ok === 'bottle' ? .95 : .9);
       nd.pos.animate([{ opacity: 0 }, { opacity: 1 }], 300);
       sfx(T, 'pop');
-      r.who.parts.head.style.transform = '';
+      mood(r.who, null);
       await eat(T, r.who, nd);
       await r.who.hop(30);
       await say(`맞아요! ${josa(GUESTS[r.who.key].name, '은/는')} ${josa(DISH[r.ok].name, '이/가')} 좋아요.`);
@@ -609,10 +807,12 @@
       { key: 'butterfly', ok: 'flower', opts: ['flower', 'plate', 'bowl'], q: '나비는 입이 빨대 같아요. 무엇이 좋을까요?', where: '빨대 입으로 쪽 빨아 먹는 걸 찾아봐요!' },
     ];
     const SLOTS = [440, 630, 820];
+    // 그림: 손님은 식탁 뒤에 선다(발이 식탁보 뒤로 숨는다 — 식탁 위에 올라선 것처럼 보이지 않게)
+    const FEET = bgUrl('feast_day') && ARTMODE() ? 440 : 400;
     // 세로 화면(양옆이 잘림): 손님을 조금 안쪽에 세우고, 손님과 그릇 셋이 다 보이게 살짝 물러선다. 가로는 그대로
     const GX = T.portrait() ? 250 : 190;
     for (const r of ROUNDS) {
-      const gy = r.key === 'butterfly' ? 350 : 400;
+      const gy = r.key === 'butterfly' ? 350 : FEET;
       const g = guest(T, gL, r.key, 1150, gy);
       const name = GUESTS[r.key].name;
       const walk = setInterval(() => sfx(T, 'step_grass', () => T.tone([220, 160], .08, { type: 'triangle', vol: .1 }), .4), 400);
@@ -645,12 +845,13 @@
     const party = {};
     const plates = {};
     await T.sceneCard('함께 먹어요', () => {
-      T.clear(); feastBG(T, true);
-      [150, 390, 610, 850].forEach(x => lantern(T, T.bg, x, 110));
+      T.clear();
+      if (!feastBG(T, true)) [150, 390, 610, 850].forEach(x => lantern(T, T.bg, x, 110));
       gL = el('g', {}, T.world); tL = el('g', {}, T.world); dL = el('g', {}, T.world);
-      party.duck = guest(T, gL, 'duck', 85, 400, 1.2); party.duck.face('right');
-      party.fox = guest(T, gL, 'fox', 385, 400, 1.1); party.fox.face('right');
-      party.crane = guest(T, gL, 'crane', 725, 400, 1.1);
+      const PF = bgUrl('feast_night') && ARTMODE() ? 440 : 400; // 그림: 식탁 뒤에 선다
+      party.duck = guest(T, gL, 'duck', 85, PF, 1.2); party.duck.face('right');
+      party.fox = guest(T, gL, 'fox', 385, PF, 1.1); party.fox.face('right');
+      party.crane = guest(T, gL, 'crane', 725 + (PF - 400) * .5, PF, 1.1);
       party.butterfly = guest(T, gL, 'butterfly', 915, 340, 1.3);
       feastTable(T, tL);
       plates.duck = dish(T, dL, 'bowl', 180, 404, .9);
@@ -665,13 +866,13 @@
     direct(() => party.fox, () => party.crane);
     await say('등불이 반짝, 모두 모여 잔치를 해요.');
     party.fox.parts.blush.setAttribute('opacity', 1);
-    party.fox.parts.head.style.transform = 'rotate(-18deg)';
+    mood(party.fox, 'sorry');
     await say('여우가 말했어요. "두루미야, 미안해."');
-    party.fox.parts.head.style.transform = '';
-    party.crane.parts.head.style.transform = 'rotate(-14deg)';
+    if (!party.fox.parts.art) mood(party.fox, null); // 그림: 여우는 미안해 자세(앉음)로 두루미 말을 듣는다
+    mood(party.crane, 'sorry');
     await say('두루미도 말했어요. "여우야, 나도 미안해."');
-    party.crane.parts.head.style.transform = '';
-    await T.cut(svg => {
+    mood(party.crane, null);
+    await cutArt('cut_sorry', svg => {
       el('rect', { x: -10, y: 130, width: 200, height: 56, rx: 28, fill: C.persimmon }, svg);
       el('circle', { cx: 190, cy: 158, r: 36, fill: C.persimmon }, svg);
       el('path', { d: 'M410 120 Q300 130 216 150 Q300 200 410 196 Z', fill: C.snow }, svg);
