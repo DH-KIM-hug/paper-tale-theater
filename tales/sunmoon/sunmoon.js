@@ -37,8 +37,8 @@
      null = 쓸 그림이 없어 임시 도형(그레이박스)으로 그린다. 새 파일이 나오면 여기 한 줄만 바꾸면 된다.
      - 엄마·오누이는 가족 사진을 바탕으로 다시 뽑은 새 모습 (2026-10-01): 엄마(분홍 저고리·회색 바지), 오빠(바가지 머리·파란 저고리),
        동생(양갈래·분홍 치마). 이전 모습 그림은 하나도 쓰지 않는다.
-     - 오누이 나무 오르기(kids_climb): 오빠 위·동생 아래 한 장 (오빠 배우에, 동생 배우는 숨김). 아래 나무 그루터기는 지웠다
-       → 나무 기둥과 하늘 동아줄을 그대로 잡는다 (CLIMB: 동생이 안고 있던 기둥 자리가 발끝 x=0)
+     - 오누이 나무 오르기(boy_gecko·girl_gecko): 도마뱀처럼 팔다리를 활짝 벌리고 기둥 앞면에 붙은 뒷모습 (고개를 돌려 얼굴이 보인다).
+       오빠·동생이 따로 배우라 한 칸씩 번갈아 '영차' 하며 꼼지락꼼지락 기어오른다
      - 얼굴(boy_face·girl_face): sm_boy·sm_girl에서 머리만 오린 것 — 우물 그림자, 끝 장면 처음(오빠 해·동생 달)
      - 끝 장면: 바꾼 뒤 해님 = sun_girl(해 앞의 동생), 달님 = moon_boy(보름달 앞의 오빠)
      - 참기름 병(oil): 병에 붙어 나온 얼굴(눈·볼)을 지운 것. 동아줄 두 개는 줄 아래 붙어 나온 얼굴 덩어리를 잘라낸 것
@@ -49,7 +49,7 @@
   const ART = {
     mom_wave: 'v3w/sm_mom_wave.webp', mom_basket: 'v3w/sm_mom_basket.webp',
     boy: 'v3w/sm_boy.webp', girl: 'v3w/sm_girl.webp', kids_hug: 'v3w/sm_kids_scared.webp', // 덜덜 떨 때: 둘이 껴안고 겁먹은 얼굴 (sm_kids_scared)
-    kids_climb: 'v3w/sm_kids_climb2.webp', // 나무 오르기 (새 판): 둘이 기둥을 끌어안고 오른다 — 그림 속 기둥은 지워서 장면의 나무 기둥을 잡는다
+    boy_gecko: 'v3w/sm_boy_gecko.webp', girl_gecko: 'v3w/sm_girl_gecko.webp', // 도마뱀처럼 나무 오르기 (뒷모습)
     boy_face: 'v3w/sm_boy_face.webp', girl_face: 'v3w/sm_girl_face.webp',
     tiger: 'v3w/sm_tiger.webp', tiger_full: 'v3w/sm_tiger_full.webp', tiger_scarf: 'v3w/sm_tiger_scarf.webp',
     tiger_axe: 'v3w/sm_tiger_axe.webp', tiger_slip: 'v3w/sm_tiger_slip.webp', tiger_bump: 'v3w/sm_tiger_bump.webp',
@@ -106,14 +106,12 @@
   /* 크기 (무대 단위, 배우 scale 1): 자세가 바뀌어도 머리 크기가 튀지 않게 그림마다 맞춘 값 */
   const SZ = {
     mom_wave: [125, 240], mom_basket: [114, 240],
-    boy: [71, 150], girl: [89, 158], kids_hug: [124, 150], kids_climb: [130, 250], kids_rope: [103, 259],
+    boy: [71, 150], girl: [89, 158], kids_hug: [124, 150], boy_gecko: [100, 133], girl_gecko: [90, 142], kids_rope: [103, 259],
     // tiger_scarf = 엄마 옷(분홍 저고리·회색 치마) 입은 호랑이 (이름만 그대로)
     tiger: [150, 235], tiger_full: [192, 230], tiger_scarf: [175, 217], tiger_axe: [159, 240], tiger_slip: [218, 225], tiger_bump: [176, 205],
   };
   /* 나무 오르기 그림: 지운 기둥 가운데가 그림 폭의 어디였는지 (conv 결과) → 발끝 x=0이 기둥(줄) 가운데 */
-  const CLIMB = { kids_climb: .54 }; // 지운 기둥 가운데가 그림 폭의 54% 자리
   const ROPE_GAP = 128; // 줄·나무를 오를 때 동생 발끝이 오빠 발끝보다 이만큼 아래 (둘이 한 장인 그림은 이만큼 내려 단다)
-  const climbDx = k => SZ[k][0] * (.5 - CLIMB[k]);
   const bgOK = {};
   const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
   /* 무대 꽉 채우기: 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992 그대로) */
@@ -257,9 +255,9 @@
     P.arm = origin(paper(g, [['rect', { x: 28, y: -94, width: 14, height: 42, rx: 7, fill: top }], ['circle', { cx: 35, cy: -52, r: 7, fill: C.skin }]]), 35, -90);
     /* 그림: 서서 손 흔들기(정면) / 나무·줄 오르기 / 꼭 껴안기(오빠 배우에 둘이 함께 — 그동안 동생 배우는 숨긴다) */
     const k = girl ? 'girl' : 'boy';
-    const defs = { stand: [k, ...SZ[k]] };
+    const g2 = k + '_gecko';
+    const defs = { stand: [k, ...SZ[k]], climb: [g2, ...SZ[g2]] }; // climb: 도마뱀처럼 기둥에 붙은 뒷모습 (각자 따로)
     if (!girl) {
-      defs.climb = ['kids_climb', ...SZ.kids_climb, { dx: climbDx('kids_climb'), dy: ROPE_GAP }];
       defs.hug = ['kids_hug', ...SZ.kids_hug, { dx: -55 }];
       // 줄 오르기: 둘이 한 장 (오빠 배우에). 그림 아래끝 = 동생 발끝 (오빠 발끝보다 ROPE_GAP 아래), 줄 가운데가 x=0
       defs.rope = ['kids_rope', ...SZ.kids_rope, { dx: SZ.kids_rope[0] * (.5 - .507), dy: ROPE_GAP }];
@@ -268,7 +266,7 @@
     P.pose = pk => {
       if (!P.art) return;
       if (pk === 'rope' && !artUrl('kids_rope')) pk = 'climb'; // 둘이 함께 오르는 그림이 없으면 따로따로 오르기 자세
-      if (girl && (pk === 'hug' || pk === 'rope' || (pk === 'climb' && artUrl('kids_climb')))) { g0.style.visibility = 'hidden'; return; }
+      if (girl && (pk === 'hug' || pk === 'rope')) { g0.style.visibility = 'hidden'; return; }
       g0.style.visibility = '';
       P.art.set(pk);
     };
@@ -982,14 +980,24 @@
     };
     await T.sceneCard('우물가 큰 나무', () => buildTree(false));
     await say('우물가에 커다란 나무가 있어요. 톡톡 눌러서 영차영차 올라가요!');
+    /* 도마뱀처럼 꼼지락: 한 칸 오르며 좌우로 살랑(번갈아 몇 도) + 살짝 납작했다 펴짐. 발끝(0,0)이 기준 */
+    const scramble = (a, dir, dur = 420) => T.anim(a.body, [{ transform: 'rotate(0deg) scale(1,1)' }, { transform: `rotate(${dir * 7}deg) scale(1.07,.9)` },
+      { transform: `rotate(${-dir * 5}deg) scale(.96,1.05)` }, { transform: 'rotate(0deg) scale(1,1)' }], { duration: dur, easing: 'ease-in-out' });
+    const gecko = !!(boy.P.art && artUrl('boy_gecko'));
     await T.mash(stageWrap, { count: 5, prompt: '화면을 톡톡 눌러서 나무를 올라가요!', onStep: i => {
       yeongcha(T, i);
-      // 그림: 오르는 동안은 나무 오르기 자세로 기둥(x 640)을 꼭 잡고, 동생은 오빠 발밑에 붙어서. 꼭대기에서 다시 선다
-      const climbArt = boy.P.art && i < 5;
-      boy.P.pose(climbArt ? 'climb' : 'stand'); girl.P.pose(climbArt ? 'climb' : 'stand');
-      const by = i === 5 ? TOP.b[1] : 560 - i * CLIMB_STEP, gy = i === 5 ? TOP.g[1] : by + (climbArt ? ROPE_GAP : 80);
-      boy.move(i === 5 ? TOP.b[0] : climbArt ? 640 : 610, by, 420); girl.move(i === 5 ? TOP.g[0] : climbArt ? 640 : 560, gy, 420); // 656: 손이 기둥을 감싸게 기둥(640)보다 조금 오른쪽
-      boy.hop(10, 420); girl.hop(10, 420);
+      // 그림: 오르는 동안은 둘이 따로 기둥 앞면(x 640)에 도마뱀처럼 붙어 — 오빠가 먼저 한 칸, 동생이 조금 뒤에 따라 한 칸. 꼭대기에서 다시 선다
+      const climbArt = gecko && i < 5;
+      const by = i === 5 ? TOP.b[1] : 560 - i * CLIMB_STEP, gy = i === 5 ? TOP.g[1] : by + (climbArt ? 96 : 80);
+      if (climbArt) {
+        boy.P.pose('climb'); girl.P.pose('climb');
+        boy.move(618, by - 30, 420); scramble(boy, i % 2 ? 1 : -1);
+        setTimeout(() => { girl.move(664, gy - 30, 420); scramble(girl, i % 2 ? -1 : 1); }, 230);
+      } else {
+        boy.P.pose('stand'); girl.P.pose('stand');
+        boy.move(i === 5 ? TOP.b[0] : 610, by, 420); girl.move(i === 5 ? TOP.g[0] : 560, gy, 420);
+        boy.hop(10, 420); girl.hop(10, 420);
+      }
       tree.to(560, Math.min(280, by - 60), 1, 420);
       T.pop(i % 2 ? 300 : 760, 200, '영차!', C.pine);
     } });
