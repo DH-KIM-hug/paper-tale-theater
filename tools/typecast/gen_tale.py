@@ -10,7 +10,7 @@ voice_script.json 형식:
   ],
   "extra": {"cut_ox": [["ox", "음메에!", "angry"]]}                   # 말풍선 없는 소리 대사 → VOICE_LINES
 }
-감정: smart(기본, 앞뒤 문맥으로) | normal happy sad angry whisper toneup tonedown
+감정: smart(기본, 앞뒤 문맥으로) | normal happy sad angry whisper toneup tonedown, 세기는 'sad:1.5'처럼 (기본 1.2)
 API 키는 ~/.config/typecast/key (저장소에 두지 않음)."""
 import json, os, sys, time, hashlib, urllib.request, urllib.error
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -18,12 +18,14 @@ KEY = open(os.path.expanduser('~/.config/typecast/key')).read().strip()
 UA = 'typecast-direct/1 urllib typecast-integration/1 (source=api-docs; generated_by=claude-code)'
 
 def tts(path, voice, text, emo, prev, nxt):
+    # 감정: 'smart' (앞뒤 문맥으로) | 'happy' | 'sad:1.5' 처럼 프리셋[:세기] (세기 기본 1.2, 0.5~2.0)
     if emo in (None, 'smart'):
         p = {'emotion_type': 'smart'}
         if prev: p['previous_text'] = prev
         if nxt: p['next_text'] = nxt
     else:
-        p = {'emotion_type': 'preset', 'emotion_preset': emo, 'emotion_intensity': 1.2}
+        name, _, inten = emo.partition(':')
+        p = {'emotion_type': 'preset', 'emotion_preset': name, 'emotion_intensity': float(inten or 1.2)}
     body = {'voice_id': voice, 'text': text, 'model': 'ssfm-v30', 'language': 'kor', 'prompt': p,
             'output': {'audio_format': 'mp3', 'target_lufs': -16.0, 'remove_silence_ms': 120}}
     for attempt in range(6):
@@ -58,10 +60,13 @@ def main():
                     errs += 1; print('ERR', e.code, e.read()[:200], role, text, flush=True); return None
         return rel
     clips, seen = {}, set()
+    last_text = None
     for ln in spec['lines']:
         text = ln['text']
         if text in seen: continue
         seen.add(text)
+        if not ln.get('prev') and last_text: ln = {**ln, 'prev': last_text}  # 앞 문장을 문맥으로 (smart 감정이 이야기 흐름을 알게)
+        last_text = text
         segs = [s + [None] * (3 - len(s)) for s in ln.get('segs') or [['nar', text]]]
         urls = []
         for i, (role, s, emo) in enumerate(segs):

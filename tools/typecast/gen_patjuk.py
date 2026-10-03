@@ -74,8 +74,15 @@ def segments(text, friend=None):
             out.append(('nar', s, 'smart'))
     return out
 
+# 장면별 감정: 대사 조각(세그먼트) 글자 그대로 → 'happy' / 'sad:1.5' / 'angry:1.6' / 'whisper' / 'toneup' / 'tonedown' / 'smart'
+EMO = {}
+
 def tts(path, role, text, emo, prev, nxt):
-    p = {'emotion_type': 'smart'} if emo == 'smart' else {'emotion_type': 'preset', 'emotion_preset': emo, 'emotion_intensity': 1.2}
+    emo = EMO.get(text, emo)  # 장면별 감정 지정 (아래 EMO 표가 우선)
+    if emo == 'smart': p = {'emotion_type': 'smart'}
+    else:
+        name, _, inten = emo.partition(':')
+        p = {'emotion_type': 'preset', 'emotion_preset': name, 'emotion_intensity': float(inten or 1.2)}
     if emo == 'smart':
         if prev: p['previous_text'] = prev
         if nxt: p['next_text'] = nxt
@@ -102,7 +109,7 @@ def main():
         segs = segments(text, fid)
         urls = []
         for i, (role, s, emo) in enumerate(segs):
-            h = hashlib.md5(f'{role}|{emo}|{s}'.encode()).hexdigest()[:10]
+            h = hashlib.md5(f'{role}|{EMO.get(s, emo)}|{s}'.encode()).hexdigest()[:10]
             rel = f'audio/tc/{role}_{h}.mp3'
             path = os.path.join(ROOT, rel)
             if redo or not os.path.exists(path):
@@ -118,7 +125,7 @@ def main():
     for key, segs in EXTRA.items():
         urls = []
         for role, text, emo, prev in segs:
-            h = hashlib.md5(f'{role}|{emo}|{text}'.encode()).hexdigest()[:10]
+            h = hashlib.md5(f'{role}|{EMO.get(text, emo)}|{text}'.encode()).hexdigest()[:10]
             rel = f'audio/tc/{role}_{h}.mp3'
             if redo or not os.path.exists(os.path.join(ROOT, rel)):
                 try:
