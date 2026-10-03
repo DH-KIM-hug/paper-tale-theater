@@ -149,7 +149,8 @@ const NARRATION_CLIPS = {
   "audio/tc/ugly_duckling/mom_3356545ae3.mp3"
  ],
  "백조들을 톡톡 눌러서 함께 춤을 춰요!": "audio/tc/ugly_duckling/nar_957712d018.mp3",
- "다르게 생겼던 아기 오리는 이렇게 멋진 백조로 자랐답니다.": "audio/tc/ugly_duckling/nar_a7dcdc0dfe.mp3"
+ "다르게 생겼던 아기 오리는 이렇게 멋진 백조로 자랐답니다.": "audio/tc/ugly_duckling/nar_a7dcdc0dfe.mp3",
+ "백조 얼굴을 잘 봐요. 눈썹이랑 입이 어떻게 생겼지?": "audio/tc/ugly_duckling/nar_182ceb15de.mp3"
 };
 const VOICE_LINES = {
  "cut_purr": "audio/tc/ugly_duckling/hero_3102ea1685.mp3",
