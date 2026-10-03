@@ -467,7 +467,7 @@ const Tale = (() => {
     if (AudioFX.hasSting && AudioFX.hasSting(sfx)) return AudioFX.sting(sfx);
     if (AudioFX[sfx]) AudioFX[sfx]();
   }
-  /* 만화 컷: draw(svg 0..400 x 0..300)로 임시 그림. 탭하면 빨리 넘어간다 */
+  /* 만화 컷: draw(svg 0..400 x 0..300)로 코드가 그린다 (그림 컷은 cutImage). 탭하면 빨리 넘어간다 */
   async function cut(draw, { hold: ms = 2600, sfx } = {}) {
     const p = $('#cutPanel');
     p.innerHTML = '<div class="cut"></div>';
@@ -649,7 +649,7 @@ const Tale = (() => {
     f.classList.toggle('edge', Math.min(mx, my) < 6); // 화면 가장자리에 닿으면 모서리는 네모
   }
 
-  function mount({ title, subtitle, run, note = '임시 그림 버전 — 페이퍼아트 그림은 제작 중이에요', endTitle = '끝!' }) {
+  function mount({ title, subtitle, run, note = false, endTitle = '끝!' }) {
     document.title = title;
     const home = ROOT_URL + 'index.html';
     document.body.insertAdjacentHTML('beforeend', `
