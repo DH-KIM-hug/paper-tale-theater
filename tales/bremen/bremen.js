@@ -21,14 +21,14 @@
   };
   /* 배우·소품·컷 (모두 왼쪽을 본다)
      - donkey_sleep: 뜬 눈으로 나와서 감은 눈으로 고쳐 칠함 · robber_green: 얼굴이 셔츠 줄무늬로 나와서 얼굴은 살색, 검은 줄은 초록으로
-     - cut_monster: 못 씀(도둑 생김새가 소품 도둑과 다름: 삐죽머리 아이·모자) → 코드 컷에 그림 도둑을 넣음
-     - cut_ghost: 못 씀(가운데 파란 덩어리 괴물) → 코드 컷(네 칸)에 그림 친구들을 넣음 */
+     - cut_monster: 다시 뽑은 그림(콧수염 도둑 셋이 줄무늬 옷으로 달아남, 소품 도둑과 같은 차림) → 코드 컷 틀에 깔고 "으악, 괴물이다!" 글자는 코드가
+     - cut_ghost: 못 씀(다시 뽑은 것도 가운데 파란 덩어리 괴물) → 코드 컷(네 칸)에 그림 친구들을 넣음 */
   const ART = {
     donkey: 'v3w/br_donkey.webp', donkey_sing: 'v3w/br_donkey_sing.webp', donkey_sleep: 'v3w/br_donkey_sleep.webp',
     dog_sing: 'v3w/br_dog_sing.webp', dog_tired: 'v3w/br_dog_tired.webp', cat_sing: 'v3w/br_cat_sing.webp', cat_sad: 'v3w/br_cat_sad.webp',
     rooster: 'v3w/br_rooster.webp', rooster_sing: 'v3w/br_rooster_sing.webp', miller: 'v3w/br_miller.webp', owl: 'v3w/br_owl.webp',
     robber_red: 'v3w/br_robber_red.webp', robber_green: 'v3w/br_robber_green.webp', robber_brown: 'v3w/br_robber_brown.webp',
-    cut_crash: 'v3w/br_cut_crash.webp', cut_monster: null, cut_ghost: null,
+    cut_crash: 'v3w/br_cut_crash.webp', cut_monster: 'v3w/br_cut_monster.webp', cut_ghost: null,
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -962,8 +962,9 @@
     await sleep(900);
     const yelled = vo('cut_monster');
     await T.cut(svg => {
-      T.el('rect', { x: 0, y: 230, width: 400, height: 70, fill: '#3E5A3A' }, svg);
-      [[90, 260, C.pine, -12], [200, 250, C.bean, 8], [310, 262, C.bark, -6]].forEach(([x, y, c, r]) => {
+      if (artUrl('cut_monster')) T.el('image', { href: artUrl('cut_monster'), x: 0, y: 0, width: 400, height: 300, preserveAspectRatio: 'xMidYMid slice' }, svg);
+      else T.el('rect', { x: 0, y: 230, width: 400, height: 70, fill: '#3E5A3A' }, svg);
+      if (!artUrl('cut_monster')) [[90, 260, C.pine, -12], [200, 250, C.bean, 8], [310, 262, C.bark, -6]].forEach(([x, y, c, r]) => {
         const g = T.el('g', { transform: `translate(${x},${y}) rotate(${r}) scale(1.05)` }, svg); const p = drawLook(T, g, 'robber', 'home', c); if (p && p.mouth) p.mouth.setAttribute('ry', 9);
         T.el('path', { d: 'M-26 -176 L-10 -196 M0 -180 L0 -204 M26 -176 L10 -196', stroke: C.cream, 'stroke-width': 5, 'stroke-linecap': 'round' }, g);
       });

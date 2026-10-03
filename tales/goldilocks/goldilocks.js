@@ -19,6 +19,7 @@
      - bowl / bowl_empty: 그림 속 김은 지우고(김은 코드가 그린다) 빈 그릇은 죽 자리를 그릇 안쪽 색으로
      - chair_small_back·seat·legL·legR: 작은 의자를 네 조각으로 (뿌지직 → 와르르, 고치기)
      - bed_*_blanket: 이불만 오린 한 장 (골디락스가 침대와 이불 사이에 눕는다)
+     - bed_small: 다시 뽑은 그림(큰·중간 침대처럼 위에서 본 모습). gl_bg_bed_top 새 그림은 여전히 지평선·언덕이 보여(위에서 본 바닥 아님) 안 바꿈
      - cut_crack: 의자 등판에 붙은 눈·볼을 지운 것. 치마 걸림 컷은 코드 그림 그대로 */
   const AS = '../../assets/';
   const BG = { kitchen: 'v3w/gl_bg_kitchen.webp', forest: 'v3w/gl_bg_forest.webp', door: 'v3w/gl_bg_door.webp', table: 'v3w/gl_bg_table.webp',
@@ -41,13 +42,13 @@
     bear_dad: [-71.4, -225, 142.8, 225], bear_mom: [-73.6, -225, 147.2, 225], bear_baby: [-78.6, -225, 157.2, 225], bear_baby_cry: [-75.6, -230.3, 151.1, 230.3],
     bowl: [-85, -100.4, 170, 100.4], bowl_empty: [-85, -100.4, 170, 100.4],
     chair_big: [-79.7, -290, 159.4, 290], chair_mid: [-90.8, -290, 181.7, 290], chair_small: [-95.8, -290, 191.7, 290],
-    bed_big: [-100, -261.5, 200, 261.5], bed_mid: [-100, -205.3, 200, 205.3], bed_small: [-100, -212.7, 200, 212.7],
+    bed_big: [-100, -261.5, 200, 261.5], bed_mid: [-100, -205.3, 200, 205.3], bed_small: [-73.1, -260, 146.1, 260], // 작은 침대: 다시 뽑은 위에서 본 그림(길쭉) → 폭 대신 큰 침대 그림 높이에 맞춤 (중간 침대보다 확실히 작게)
   };
   ['back', 'seat', 'legL', 'legR'].forEach(k => { BOX['chair_small_' + k] = BOX.chair_small; });
   ['big', 'mid', 'small'].forEach(k => { BOX[`bed_${k}_blanket`] = BOX['bed_' + k]; });
   const CHAIR_SEAT = [165, 204, 176];                        // 앉는 자리 높이 (기준 크기)
   /* 침대: 베개 가운데 x · 이불 윗단 y (기준 크기). 그림 폭 200 × BED_K (세로 화면은 조금 작게) */
-  const BED_PILLOW = { big: [39.2, -195.3], mid: [-3.3, -146.1], small: [1, -146.7] };
+  const BED_PILLOW = { big: [39.2, -195.3], mid: [-3.3, -146.1], small: [-3.5, -188.5] };
   const GOLDI_LIE = .55;                                   // 침대에 누운 골디락스 크기 — 작은 침대에 쏙 들어가게
   const BOWL_RIM = () => (artUrl('bowl') ? 100 : 80);
   function pic(T, g, key, { shadow = true, box } = {}) {

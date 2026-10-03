@@ -16,6 +16,62 @@
   const rnd = (a, b) => a + Math.random() * (b - a);
   const origin = (n, x, y) => { n.style.transformBox = 'view-box'; n.style.transformOrigin = `${x}px ${y}px`; return n; };
 
+  /* ================= 페이퍼아트 그림 (assets/v3w/ag_*.webp) =================
+     null이거나 파일을 못 불러오면 그 자리는 아래 임시 도형(그레이박스)으로 그린다. 새 그림이 나오면 여기 한 줄만 바꾸면 된다.
+     배경은 장면마다 한 장을 무대에 꽉 채워 깐다. 계절 들판 셋(여름·가을·봄)은 같은 자리(개미집 오른쪽)에 계절만 바뀐다.
+     소나기는 여름 들판 위에 곱하기(multiply) 회색 한 겹 + 해를 가리는 먹구름(코드). 겨울 들판은 하이앵글 눈밭 그림. */
+  const AS = '../../assets/';
+  const BG = {
+    summer: 'v3w/ag_bg_summer.webp', autumn: 'v3w/ag_bg_autumn.webp', spring: 'v3w/ag_bg_spring.webp',
+    ant_eye: 'v3w/ag_bg_ant_eye.webp', leafstage: 'v3w/ag_bg_leafstage.webp', winter_high: 'v3w/ag_bg_winter_high.webp',
+    door: 'v3w/ag_bg_door.webp', cellar: 'v3w/ag_bg_cellar.webp', // cellar: 어두운 흙을 조금 밝혀 구움, 곡식·도토리 방은 그림 속에 이미 가득
+  };
+  /* 배우·소품·컷 (인물·곤충은 모두 왼쪽을 본다)
+     - 개미: 서기 · 나르기(밀 이삭) · 조끼 · 겨울(목도리+털모자) · 아기. 틀린 옷(반팔·외투·튜브)과 땀은 서기 그림 위 코드 덧그림
+     - 베짱이: 연주 · 흠뻑(소나기 뒤) · 덜덜(문 앞) · 겨울옷(창고) · 나르기(봄). hopper_hat = 겨울옷 그림에서 털모자만 오린 것 (음악회 연주 자세에 씌움)
+     - snail: 눈자루 끝 눈 + 얼굴 눈 = 눈이 넷 → 얼굴의 두 눈을 몸 색으로 지움
+     - 컷 3장은 코드 컷 틀(400×300) 안에 그림을 깔고 의성어 글자(에취!·오들오들·활짝!)는 코드가 얹는다
+     - 못 써서 그레이박스로 두는 것: acorns(도토리 여섯 개 더미가 아니라 도토리 모자를 쓴 탑 모양 덩어리 하나) → 코드 도토리 */
+  const ART = {
+    ant_stand: 'v3w/ag_ant_stand.webp', ant_carry: 'v3w/ag_ant_carry.webp', ant_vest: 'v3w/ag_ant_vest.webp',
+    ant_winter: 'v3w/ag_ant_winter.webp', ant_baby: 'v3w/ag_ant_baby.webp',
+    hopper_play: 'v3w/ag_hopper_play.webp', hopper_wet: 'v3w/ag_hopper_wet.webp', hopper_shiver: 'v3w/ag_hopper_shiver.webp',
+    hopper_winter: 'v3w/ag_hopper_winter.webp', hopper_carry: 'v3w/ag_hopper_carry.webp', hopper_hat: 'v3w/ag_hopper_hat.webp',
+    ladybug: 'v3w/ag_ladybug.webp', snail: 'v3w/ag_snail.webp', pillbug: 'v3w/ag_pillbug.webp', firefly: 'v3w/ag_firefly.webp',
+    leaf_umbrella: 'v3w/ag_leaf_umbrella.webp', acorns: null,
+    cut_sneeze: 'v3w/ag_cut_sneeze.webp', cut_shiver: 'v3w/ag_cut_shiver.webp', cut_door: 'v3w/ag_cut_door.webp',
+  };
+  const artOK = {}, bgOK = {};
+  const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
+  const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
+  /* 자세 그림: [폭, 높이, 발끝 가운데 x(폭 비율), 발끝 y(높이 비율)] — 발끝 가운데가 (0,0).
+     한 배우의 자세끼리는 눈 크기와 몸 높이를 반반 맞춰서 자세가 바뀌어도 머리 크기가 튀지 않는다 */
+  const SPR = {
+    ant_stand: [137.1, 124.2, .523, .974], ant_carry: [101.9, 191.4, .599, .982], ant_vest: [127.7, 141, .461, .977],
+    ant_winter: [146.5, 159.7, .621, .979], ant_baby: [148.6, 123.6, .526, .977],
+    hopper_play: [221.6, 224.1, .534, .979], hopper_wet: [236.1, 171.9, .545, .976], hopper_shiver: [187.2, 205.5, .545, .98],
+    hopper_winter: [254.1, 183.7, .46, .976], hopper_carry: [192.5, 212, .476, .98],
+    ladybug: [105.3, 67.8, .523, .972], snail: [105.9, 82, .557, .973], pillbug: [96.9, 53.7, .51, .966], firefly: [84.7, 74.2, .692, .968],
+  };
+  function pic(T, g, key, x, y, w, h, { shadow = true } = {}) {
+    const u = artUrl(key); if (!u) return null;
+    const wrap = T.el('g', shadow ? { filter: 'url(#pp)' } : {}, g);
+    T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
+    return wrap;
+  }
+  const sprite = (T, g, key) => { const s = SPR[key]; return s ? pic(T, g, key, -s[2] * s[0], -s[3] * s[1], s[0], s[1]) : null; };
+  /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). dx·dy: 그림을 통째로 옮긴다 */
+  const BG_EDGE = { summer: ['#a8d3eb', '#4a6345'], autumn: ['#fbc9a3', '#6b3209'], spring: ['#b5e6fb', '#62753d'], ant_eye: ['#95becc', '#20230e'],
+    leafstage: ['#a5cbd9', '#232011'], winter_high: ['#d0dfee', '#e4ecf7'], door: ['#d4e7fc', '#e3ecfa'], cellar: ['#cad9dd', '#341f0d'] };
+  function bgImage(T, key, { dx = 0, dy = 0 } = {}) {
+    const u = bgUrl(key); if (!u) return null;
+    const w = 1080, h = w * 992 / 1760, x = -40 + dx, y = -24 + dy;
+    const [top, bot] = BG_EDGE[key];
+    T.el('rect', { x: -1400, y: -1400, width: 3800, height: 1400 + y + h / 2, fill: top }, T.bg);
+    T.el('rect', { x: -1400, y: y + h / 2, width: 3800, height: 2000, fill: bot }, T.bg);
+    return T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, T.bg);
+  }
+
   /* ================= 소리 ================= */
   const SND = {
     violin(T, f) { T.tone(f, .5, { type: 'sawtooth', vol: .05 }); T.tone(f * 2, .45, { type: 'triangle', vol: .06 }); T.tone(f * 1.005, .5, { type: 'triangle', vol: .08 }); },
@@ -37,7 +93,33 @@
 
   /* ================= 캐릭터 (모두 왼쪽을 본다. 발끝 = 0,0) ================= */
   /* 개미 (키 ~140). 옷은 조각을 얹었다 뺐다 한다 */
-  function drawAnt(T, g, { color = C.ant } = {}) {
+  /* 그림 개미: 자세 그림을 겹쳐 두고 antLook()이 하나만 보인다. 코드가 opacity로 켜고 끄던 조각(조끼·목도리·모자·팔·짐)은
+     빈 자리로 두고, 틀린 옷(반팔·외투·튜브)과 땀만 서기 그림 몸(머리 -36,-60 · 가슴 0,-40 · 배 37,-45) 위에 덧그린다 */
+  function drawAntArt(T, g, { baby = false } = {}) {
+    const { el, paper } = T;
+    const p = { looks: {}, baby, _wear: [], _carry: false };
+    (baby ? ['ant_baby'] : ['ant_stand', 'ant_carry', 'ant_vest', 'ant_winter']).forEach(k => { const s = sprite(T, g, k); if (s) { s.style.display = 'none'; p.looks[k] = s; } });
+    const part = (shapes) => { const q = paper(g, shapes); q.setAttribute('opacity', 0); return q; };
+    const none = () => el('g', { opacity: 0 }, g);
+    p.tee = part([['path', { d: 'M-15 -56 L13 -56 L24 -46 L17 -39 L14 -42 L14 -25 L-14 -25 L-14 -42 L-17 -39 L-24 -46 Z', fill: C.cream }], ['rect', { x: -14, y: -38, width: 28, height: 5, fill: C.persimmon }]]);
+    p.coat = part([['path', { d: 'M-20 -58 Q14 -76 58 -62 Q72 -44 62 -22 L-18 -20 Q-24 -40 -20 -58 Z', fill: C.pine }], ['path', { d: 'M-20 -58 L-4 -62 L-10 -44 Z', fill: '#2f5a3f' }],
+      ...[-50, -38, -26].map(y => ['circle', { cx: -8, cy: y, r: 3.2, fill: C.gold }])]);
+    p.ring = part([['ellipse', { cx: 16, cy: -36, rx: 40, ry: 12, fill: C.persimmon }], ['rect', { x: -6, y: -48, width: 9, height: 24, fill: C.cream }], ['rect', { x: 32, y: -48, width: 9, height: 24, fill: C.cream }]]);
+    p.vest = none(); p.scarf = none(); p.hat = none(); p.armDown = none(); p.armUp = none(); p.load = none();
+    p.mouth = el('path', { d: '', opacity: 0 }, g);
+    p.sweat = el('g', { opacity: 0 }, g);
+    [[-66, -96], [-14, -104]].forEach(([x, y]) => el('path', { d: `M${x} ${y} q-5 8 0 12 q5 -4 0 -12 Z`, fill: '#9FC6DE' }, p.sweat));
+    antLook(p);
+    return p;
+  }
+  function antLook(p) {
+    if (!p.looks) return;
+    const w = p._wear, k = p.baby ? 'ant_baby' : p._carry ? 'ant_carry' : w.includes('vest') ? 'ant_vest' : (w.includes('scarf') || w.includes('hat')) ? 'ant_winter' : 'ant_stand';
+    const show = p.looks[k] ? k : Object.keys(p.looks)[0];
+    Object.entries(p.looks).forEach(([kk, s]) => { s.style.display = kk === show ? '' : 'none'; });
+  }
+  function drawAnt(T, g, { color = C.ant, baby = false } = {}) {
+    if (artUrl(baby ? 'ant_baby' : 'ant_stand')) return drawAntArt(T, g, { baby });
     const { el, paper } = T;
     const p = {};
     paper(g, [
@@ -71,11 +153,37 @@
     p.load.setAttribute('opacity', 0);
     return p;
   }
-  function carry(p, on) { p.load.setAttribute('opacity', on ? 1 : 0); p.armUp.setAttribute('opacity', on ? 1 : 0); p.armDown.setAttribute('opacity', on ? 0 : 1); }
-  function wear(p, list = []) { ['tee', 'vest', 'coat', 'scarf', 'hat', 'ring'].forEach(k => p[k].setAttribute('opacity', list.includes(k) ? 1 : 0)); }
+  function carry(p, on) { p.load.setAttribute('opacity', on ? 1 : 0); p.armUp.setAttribute('opacity', on ? 1 : 0); p.armDown.setAttribute('opacity', on ? 0 : 1); p._carry = on; antLook(p); }
+  function wear(p, list = []) { ['tee', 'vest', 'coat', 'scarf', 'hat', 'ring'].forEach(k => p[k].setAttribute('opacity', list.includes(k) ? 1 : 0)); p._wear = list; antLook(p); }
 
   /* 베짱이 (키 ~220, 더듬이 포함) */
+  /* 그림 베짱이: 자세 = 모드(play·arms·carry) + 젖음 + 겨울옷 으로 고른다 (hopLook). arms(빈손)는 떨기 그림 */
+  const HOP_HAT = [-66, -224, 62, 62.3, -8]; // 연주 그림 머리 위 털모자 상자 [x, y, w, h, 기울기]
+  function drawHopperArt(T, g) {
+    const { el } = T;
+    const p = { looks: {}, mode: 'play', wet: false, warm: false };
+    ['hopper_play', 'hopper_wet', 'hopper_shiver', 'hopper_winter', 'hopper_carry'].forEach(k => { const s = sprite(T, g, k); if (s) { s.style.display = 'none'; p.looks[k] = s; } });
+    const [hx, hy, hw, hh, hr] = HOP_HAT;
+    const hg = el('g', { transform: `rotate(${hr} ${hx + hw / 2} ${hy + hh})` }, g);
+    p.artHat = pic(T, hg, 'hopper_hat', hx, hy, hw, hh); if (p.artHat) p.artHat.style.display = 'none';
+    const none = () => el('g', { opacity: 0 }, g);
+    p.violin = none(); p.bow = el('g', {}, p.violin); p.arms = none(); p.armUp = none(); p.load = none(); p.drops = none(); p.scarf = none(); p.hat = none();
+    p.ant = el('path', { d: '', opacity: 0 }, g); p.mouth = el('path', { d: '', opacity: 0 }, g);
+    hopLook(p);
+    return p;
+  }
+  function hopLook(p) {
+    if (!p.looks) return;
+    const m = p.mode, k = m === 'carry' ? 'carry' : p.warm ? (m === 'play' ? 'play' : 'winter') : p.wet ? 'wet' : m === 'play' ? 'play' : 'shiver';
+    const show = p.looks['hopper_' + k] ? 'hopper_' + k : Object.keys(p.looks)[0];
+    Object.entries(p.looks).forEach(([kk, s]) => { s.style.display = kk === show ? '' : 'none'; });
+    if (p.artHat) p.artHat.style.display = p.warm && show === 'hopper_play' ? '' : 'none';
+  }
+  const ANT_UP = 'M-8 -156 Q-6 -204 34 -216 M-20 -154 Q-36 -202 -6 -224', ANT_DROOP = 'M-8 -156 Q10 -170 30 -150 M-20 -154 Q-40 -160 -50 -140';
+  function hopWet(p, on) { p.drops.setAttribute('opacity', on ? 1 : 0); p.ant.setAttribute('d', on ? ANT_DROOP : ANT_UP); p.wet = on; hopLook(p); }
+  function hopWarm(p, on) { p.scarf.setAttribute('opacity', on ? 1 : 0); p.hat.setAttribute('opacity', on ? 1 : 0); p.warm = on; hopLook(p); }
   function drawHopper(T, g) {
+    if (artUrl('hopper_play')) return drawHopperArt(T, g);
     const { el, paper } = T;
     const p = {};
     paper(g, [
@@ -116,6 +224,7 @@
     p.arms.setAttribute('opacity', mode === 'arms' ? 1 : 0);
     p.armUp.setAttribute('opacity', mode === 'carry' ? 1 : 0);
     p.load.setAttribute('opacity', mode === 'carry' ? 1 : 0);
+    p.mode = mode; hopLook(p);
   }
   function bowing(p) { return p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-14deg)' }, { transform: 'rotate(0deg)' }], { duration: 700, iterations: Infinity, easing: 'ease-in-out' }); }
 
@@ -154,6 +263,19 @@
     } },
   ];
 
+  /* 손님 그림: 발끝 가운데 (0,0). 반딧불이 불빛은 그림 속 꼬리 자리에서 깜빡인다 */
+  const FIREFLY_TAIL = [8.5, -11.5];
+  function friendArt(T, g, key) {
+    if (!artUrl(key)) return false;
+    if (key === 'firefly') {
+      const glow = T.el('circle', { cx: FIREFLY_TAIL[0], cy: FIREFLY_TAIL[1], r: 22, fill: C.amber, opacity: .45 }, g);
+      glow.animate([{ opacity: .2 }, { opacity: .75 }], { duration: 800, iterations: Infinity, direction: 'alternate' });
+    }
+    sprite(T, g, key);
+    return true;
+  }
+  FRIENDS.forEach(f => { const d = f.draw; f.draw = (T, g) => { if (!friendArt(T, g, f.key)) d(T, g); }; });
+
   function mk(T, parent, x, y, draw, scale = 1) {
     let parts;
     const a = T.actor(parent, x, y, g => { parts = draw(T, g); }, { scale });
@@ -183,8 +305,17 @@
     if (season === 'winter') T.paper(parent, [['path', { d: `M${x - 88} ${y - 58} Q${x} ${y - 124} ${x + 88} ${y - 58} Q${x} ${y - 84} ${x - 88} ${y - 58} Z`, fill: C.snow }]]);
   }
   /* 들판 4계절: 같은 구도 (나무 둘 · 언덕 · 개미집) */
+  const FIELD_DOOR = { summer: [915, 342], autumn: [912, 388], spring: [886, 358] }; // 그림 속 개미집 문 (무대 좌표)
   function fieldBG(T, season, { sky } = {}) {
     const { el, paper } = T, b = T.bg;
+    if (bgImage(T, season)) {
+      if (sky) { // 소나기: 그림 속 해를 먹구름으로 가리고 회색 한 겹을 곱한다
+        paper(b, [['ellipse', { cx: 70, cy: 46, rx: 120, ry: 52, fill: '#8C98A4' }]]);
+        const t = el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: '#8A9AAD', opacity: .55 }, b);
+        t.style.mixBlendMode = 'multiply'; t.style.pointerEvents = 'none';
+      }
+      return { skyR: null, sun: null, door: FIELD_DOOR[season], art: true };
+    }
     const skyR = el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: sky || SKY[season] }, b);
     let sun = null;
     if (season !== 'winter') sun = el('circle', { cx: 120, cy: 90, r: 44, fill: '#F6D98A' }, b);
@@ -198,11 +329,12 @@
     if (season === 'summer') [80, 300, 470, 660].forEach(x => paper(b, [['path', { d: `M${x} 500 L${x + 6} 468 L${x + 12} 500 Z M${x + 14} 500 L${x + 24} 474 L${x + 26} 500 Z`, fill: C.pine }]]));
     if (season === 'spring') [90, 280, 420, 640, 960].forEach((x, i) => { paper(b, [['path', { d: `M${x} 500 Q${x - 10} 484 ${x - 14} 476 M${x} 500 Q${x + 10} 484 ${x + 14} 476`, stroke: C.pine, 'stroke-width': 5, fill: 'none' }]]); if (i % 2 === 0) el('circle', { cx: x, cy: 470, r: 8, fill: C.pink }, b); });
     if (season === 'autumn') [70, 260, 420, 700].forEach((x, i) => el('ellipse', { cx: x, cy: 505 + (i % 2) * 20, rx: 12, ry: 6, fill: i % 2 ? C.persimmon : C.bean, transform: `rotate(${i * 30} ${x} 505)` }, b));
-    return { skyR, sun };
+    return { skyR, sun, door: [840, 466] };
   }
   /* 개미 눈높이: 풀잎이 나무만 하다. 오른쪽에 창고 입구와 단면(칸 10개) */
   function antEyeBG(T) {
     const { el, paper } = T, b = T.bg;
+    if (bgImage(T, 'ant_eye')) return storeBox(T, -10, -110, [712, 432]); // 그림: 창고 단면은 개미집 왼쪽 위(문 위)에
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.summer }, b);
     el('circle', { cx: 520, cy: 70, r: 50, fill: '#F6D98A' }, b);
     [[40, 420, C.leaf], [120, 540, C.pine], [330, 470, C.leaf], [440, 380, C.pine], [590, 520, C.leaf]].forEach(([x, h, c]) =>
@@ -212,23 +344,28 @@
     // 개미집 (크게) — 세로 화면에서도 창고 단면이 보이도록 가운데 가까이
     paper(b, [['path', { d: 'M470 500 Q510 220 700 214 Q900 214 1060 500 Z', fill: C.soil }],
       ['path', { d: 'M740 500 Q740 420 790 420 Q840 420 840 500 Z', fill: C.ink }]]);
-    // 창고 단면 (칸 10개)
+    return storeBox(T, 0, 0, [790, 496]);
+  }
+  /* 창고 단면 (칸 10개). ox·oy만큼 옮겨 그린다 */
+  function storeBox(T, ox, oy, door) {
+    const { el, paper } = T, b = T.bg;
     const box = el('g', {}, b);
-    paper(box, [['rect', { x: 530, y: 256, width: 180, height: 214, rx: 16, fill: C.soilDk }]]);
-    el('text', { x: 620, y: 244, 'text-anchor': 'middle', 'font-size': 26, fill: C.cream, stroke: C.bark, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '창고' }, box);
+    paper(box, [['rect', { x: 530 + ox, y: 256 + oy, width: 180, height: 214, rx: 16, fill: C.soilDk }]]);
+    el('text', { x: 620 + ox, y: 244 + oy, 'text-anchor': 'middle', 'font-size': 26, fill: C.cream, stroke: C.bark, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '창고' }, box);
     const slots = [];
     for (let r = 0; r < 5; r++) for (let c = 0; c < 2; c++) {
-      const x = 580 + c * 80, y = 440 - r * 40;
+      const x = 580 + c * 80 + ox, y = 440 - r * 40 + oy;
       el('rect', { x: x - 34, y: y - 16, width: 68, height: 32, rx: 8, fill: C.room, opacity: .55 }, box);
       const grain = T.paper(box, [['ellipse', { cx: x, cy: y, rx: 26, ry: 12, fill: C.gold }], ['ellipse', { cx: x - 8, cy: y - 3, rx: 8, ry: 3, fill: '#EBC878' }]]);
       grain.setAttribute('opacity', 0); origin(grain, x, y);
       slots.push(grain);
     }
-    return { slots, door: [790, 496] };
+    return { slots, door, pop: [620 + ox, 190 + oy] };
   }
   /* 풀잎 무대 로우앵글: 커다란 잎 위에 베짱이, 양옆에 꽃 */
   function leafStageBG(T) {
     const { el, paper } = T, b = T.bg;
+    if (bgImage(T, 'leafstage')) return true;
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.summer }, b);
     el('circle', { cx: 860, cy: 80, r: 60, fill: '#F6D98A' }, b);
     [[-40, 30], [60, 80], [940, 60], [1030, 20]].forEach(([x, top]) =>
@@ -245,6 +382,7 @@
   /* 겨울 들판 하이앵글: 땅이 화면을 채우고, 지평선은 위쪽에 */
   function winterHighBG(T) {
     const { el, paper } = T, b = T.bg;
+    if (bgImage(T, 'winter_high')) return { hole: [655, 150], far: true }; // 그림: 구멍이 멀리(위쪽) → 걸어가며 작아진다
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.winter }, b);
     paper(b, [['rect', { x: -300, y: 90, width: 1600, height: 700, fill: C.snow }]]);
     [80, 200, 330, 620, 780, 930].forEach((x, i) => { const g = T.el('g', { transform: `translate(${x},${96}) scale(.32)` }, b); T.paper(g, [['rect', { x: -10, y: -150, width: 20, height: 150, fill: C.bark }]]); T.el('path', { d: 'M0 -110 L-40 -170 M0 -90 L40 -160', stroke: C.bark, 'stroke-width': 8, fill: 'none' }, g); });
@@ -255,8 +393,20 @@
     return { hole: [640, 330] };
   }
   /* 창고 문 로우앵글: 개미 시점이라 베짱이가 커 보인다 */
+  /* 그림: 흙둑 아치 문간(무대 x 140~300, 아래 445). 세로 화면에선 그림을 오른쪽으로 200 옮겨 문간이 보이게 한다.
+     문짝은 문간 모양 그대로 코드 종이(왼쪽 경첩), 불빛은 문간 위에 screen으로 */
   function doorBG(T) {
     const { el, paper } = T, b = T.bg;
+    const DX = narrow() ? 200 : 0;
+    if (bgImage(T, 'door', { dx: DX })) {
+      const arch = `M${140 + DX} 446 V368 Q${140 + DX} 298 ${220 + DX} 298 Q${300 + DX} 298 ${300 + DX} 368 V446 Z`;
+      const glow = el('path', { d: arch, fill: '#FFD58A', opacity: .15 }, b); glow.style.mixBlendMode = 'screen';
+      const door = el('g', {}, T.world); origin(door, 140 + DX, 0);
+      paper(door, [['path', { d: arch, fill: '#8E6440' }],
+        ...[180, 220, 260].map(x => ['rect', { x: x + DX - 3, y: x === 220 ? 300 : 308, width: 6, height: x === 220 ? 145 : 137, fill: C.bark }]),
+        ['circle', { cx: 284 + DX, cy: 380, r: 8, fill: C.gold }]]);
+      return { door, glow, art: true, hopX: narrow() ? 640 : 520, hostX: 230 + DX, babyX: 175 + DX, y: 452, hopY: 474, knock: [300 + DX, 280], spark: [220 + DX, 370] };
+    }
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.winter }, b);
     paper(b, [['path', { d: 'M-300 600 L-300 40 Q300 -20 660 200 Q720 300 720 600 Z', fill: C.soil }],
       ['path', { d: 'M-300 60 Q300 0 640 190 Q520 150 -300 120 Z', fill: C.snow }]]);
@@ -268,11 +418,18 @@
     paper(door, [['path', { d: 'M316 480 V304 Q316 236 400 236 Q484 236 484 304 V480 Z', fill: '#8E6440' }],
       ['rect', { x: 356, y: 250, width: 6, height: 228, fill: C.bark }], ['rect', { x: 416, y: 240, width: 6, height: 238, fill: C.bark }],
       ['circle', { cx: 464, cy: 370, r: 9, fill: C.gold }]]);
-    return { door, glow };
+    return { door, glow, hopX: narrow() ? 626 : 650, hostX: 400, babyX: narrow() ? 352 : 335, y: 486, hopY: 500, knock: [510, 300], spark: [400, 360] };
   }
   /* 창고 단면: 위는 눈 덮인 땅, 아래로 방 셋 (곡식 방 · 큰 방 · 도토리 방) */
+  /* 그림: 120 아래로 옮겨 깐다 → 위는 하늘·눈(눈 위 y 140), 굴은 x 475로 내려가 큰 방 바닥 y 520. 곡식·도토리 더미는 그림 속에 있다 */
   function cellarBG(T, { full = true } = {}) {
     const { el, paper } = T, b = T.bg;
+    if (bgImage(T, 'cellar', { dy: 120 })) {
+      const light = el('ellipse', { cx: 495, cy: 410, rx: 200, ry: 115, fill: '#6B4E1E', opacity: 0 }, b);
+      light.style.mixBlendMode = 'screen';
+      // 그림: 큰 방이 좁아 두 줄 — 뒤(개미 가족·베짱이 y 512), 앞(손님 넷 y 548, 큰 방 앞 흙바닥)
+      return { art: true, light, door: [475, 140], snowY: 140, shaftX: 475, shaftY: 400, antY: 512, hopY: 514, seatY: [548, 550, 550, 548], cam: [495, 440] };
+    }
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.winter }, b);
     paper(b, [['rect', { x: -300, y: 196, width: 1600, height: 700, fill: C.soil }], ['rect', { x: -300, y: 186, width: 1600, height: 22, rx: 8, fill: C.snow }]]);
     // 굴
@@ -288,7 +445,7 @@
       // 도토리 방: 가득
       for (let r = 0; r < 3; r++) for (let k = 0; k < 6 - r * 2; k++) acornShape(T, b, 820 + (k - (5 - r * 2) / 2) * 34, 346 - r * 28, .9);
     }
-    return { rooms, light, door: [500, 196] };
+    return { rooms, light, door: [500, 196], snowY: 192, shaftX: 500, shaftY: 320, antY: 472, hopY: 506, seatY: [522, 522, 524, 510], cam: [500, 430] };
   }
   function acornShape(T, parent, x, y, s = 1) {
     const g = T.el('g', { transform: `translate(${x},${y}) scale(${s})` }, parent);
@@ -367,8 +524,8 @@
     return icons.map((d, i) => badge(T, xs[i], y, d));
   }
   /* 세기 판: 동그라미 n개, 하나씩 찬다 */
-  function counter(T, n, y = 508, cx = 500) {
-    if (narrow()) { y = 96; cx = 500; }
+  function counter(T, n, y = 508, cx = 500, narrowY = 96) {
+    if (narrow()) { y = narrowY; cx = 500; }
     const g = T.el('g', {}, stageUI());
     T.paper(g, [['rect', { x: cx - n * 30 - 18, y: y - 34, width: n * 60 + 36, height: 68, rx: 34, fill: C.cream, stroke: C.gold, 'stroke-width': 5 }]]);
     const dots = [];
@@ -409,6 +566,14 @@
   async function run(T) {
     const { el, sleep, say, camTo, camSnap, josa } = T;
     const HOP = '베짱이';
+
+    /* 그림 미리 불러오기: 배우와 첫 배경을 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
+    const loads = {};
+    Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
+    Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
+    await Promise.race([Promise.all([loads.bg_summer, ...Object.keys(SPR).map(k => loads[k]), loads.hopper_hat].filter(Boolean)), sleep(4000)]);
+    /* 그림 컷: 컷 틀(400×300)에 그림을 깔고 글자는 코드가. 그림이 없으면 draw(임시 그림) */
+    const cutPic = (key, draw) => svg => { const u = artUrl(key); if (u) el('image', { href: u, x: 0, y: 0, width: 400, height: 300, preserveAspectRatio: 'xMidYMid slice' }, svg); return draw(svg, !!u); };
 
     /* --- 1. 여름 들판 (와이드) --- */
     fieldBG(T, 'summer');
@@ -461,13 +626,13 @@
     await T.mash(pile, { count: 10, prompt: '노란 곡식을 톡톡 눌러 봐요!', onStep: i => {
       const a = ant(T, T.world, PX + 140, 496, .9); a.face('right'); carry(a.p, true);
       SND.yeongcha(T, 2);
-      a.move(E.door[0], 496, 1500, 'linear').then(() => a.pos.remove());
+      a.move(E.door[0], E.door[1], 1500, 'linear').then(() => a.pos.remove());
       a.body.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px)' }, { transform: 'translateY(0)' }], { duration: 320, iterations: 4 });
       setTimeout(() => {
         const s = E.slots[stored++]; if (!s) return;
         s.setAttribute('opacity', 1); s.animate([{ transform: 'scale(.2)' }, { transform: 'scale(1.3)' }, { transform: 'scale(1)' }], { duration: 400 });
         T.tone(520 + stored * 40, .15, { type: 'triangle', vol: .12 });
-        T.pop(620, 190, NUM[stored - 1] + '!', C.pine);
+        T.pop(E.pop[0], E.pop[1], NUM[stored - 1] + '!', C.pine);
       }, 1250);
     } });
     await sleep(1600);
@@ -475,11 +640,12 @@
 
     /* --- 3. 베짱이 연주 (풀잎 무대 로우앵글) --- */
     let fl;
-    const FLX = narrow() ? [348, 652] : [335, 668]; // 세로: 오른쪽 꽃이 잘리지 않게
+    const leafArt = !!(bgUrl('leafstage') && artUrl('hopper_play'));
+    const FLX = narrow() ? [348, 652] : leafArt ? [290, 730] : [335, 668]; // 세로: 오른쪽 꽃이 잘리지 않게. 그림 베짱이는 바이올린이 길어 꽃을 더 벌린다
     await T.sceneCard('풀잎 무대', () => {
       T.clear(); leafStageBG(T);
       fl = [flower(T, T.world, FLX[0], 250, C.pink), flower(T, T.world, FLX[1], 250, C.persimmon)];
-      T.world.appendChild(hop.pos); hop.face('right'); hop.setScale(1.45); hop.place(500, 470); hopperMode(hop.p, 'play');
+      T.world.appendChild(hop.pos); hop.face('right'); hop.setScale(leafArt ? 1.2 : 1.45); hop.place(500, 470); hopperMode(hop.p, 'play');
     }, pile);
     SND.tune(T);
     await sleep(900);
@@ -508,7 +674,9 @@
       T.world.appendChild(hop.pos); hop.setScale(.95); hop.place(narrow() ? 372 : 330, 494); hop.face('right'); hopperMode(hop.p, 'play'); // 세로: 젖는 베짱이가 잘리지 않게
       [545, 605, 665].forEach(x => { const a = ant(T, T.world, x, 494, .62); a.face('left'); shelterAnts.push(a); });
       leafU = el('g', {}, T.world);
-      T.paper(leafU, [['path', { d: 'M-150 0 Q0 -90 150 0 Q0 -30 -150 0 Z', fill: C.leaf }], ['path', { d: 'M-140 -2 Q0 -60 140 -2', stroke: C.pine, 'stroke-width': 5, fill: 'none' }], ['rect', { x: -4, y: -40, width: 8, height: 120, fill: C.pine }]]);
+      if (artUrl('leaf_umbrella')) { // 그림 잎 우산: 잎 가운데 아래(0,0), 폭 300, 줄기는 아래로
+        pic(T, leafU, 'leaf_umbrella', -154, -151, 309.8, 298.8);
+      } else T.paper(leafU, [['path', { d: 'M-150 0 Q0 -90 150 0 Q0 -30 -150 0 Z', fill: C.leaf }], ['path', { d: 'M-140 -2 Q0 -60 140 -2', stroke: C.pine, 'stroke-width': 5, fill: 'none' }], ['rect', { x: -4, y: -40, width: 8, height: 120, fill: C.pine }]]);
       leafU.setAttribute('transform', `translate(455,${LY}) scale(.75) rotate(-40)`);
       rain = precip(T, 'rain', 44);
     }, hop.pos);
@@ -525,27 +693,27 @@
     SND.sparkle(T); T.pop(605, 250, '펼쳐라!', C.pine);
     shelterAnts.forEach(a => { a.p.mouth.setAttribute('d', 'M-28 -82 Q-22 -76 -15 -81'); a.hop(14); });
     await say('잎 우산 아래 개미들은 뽀송뽀송해요.');
-    hop.p.drops.setAttribute('opacity', 1);
-    hop.p.ant.setAttribute('d', 'M-8 -156 Q10 -170 30 -150 M-20 -154 Q-40 -160 -50 -140');
+    hopWet(hop.p, true);
     SND.drip(T);
     await sleep(500);
     const sneezed = vo('cut_sneeze');
-    await T.cut(svg => {
+    await T.cut(cutPic('cut_sneeze', (svg, art) => {
+      if (art) return cutText(T, svg, 268, 80, '에취!', 84);
       T.paper(svg, [['ellipse', { cx: 200, cy: 190, rx: 90, ry: 80, fill: C.hop }], ['circle', { cx: 170, cy: 170, r: 16, fill: '#fff' }], ['circle', { cx: 165, cy: 170, r: 8, fill: C.ink }]]);
       [[110, 110], [260, 120], [290, 200], [120, 230]].forEach(([x, y]) => el('path', { d: `M${x} ${y} q-10 16 0 24 q10 -8 0 -24 Z`, fill: '#9FC6DE' }, svg));
       el('ellipse', { cx: 150, cy: 225, rx: 14, ry: 10, fill: C.ink }, svg);
       cutText(T, svg, 200, 90, '에취!', 84);
-    }, { hold: 2000 });
+    }), { hold: 2000 });
     if (!sneezed) SND.sneeze(T); // 목소리 재채기가 있으면 합성음은 생략
     hop.hop(24);
     await say('베짱이는 혼자 흠뻑 젖었어요. 에취! 그래도 "괜찮아~" 하고 웃었어요.');
     rain.stop();
 
     /* --- 5. 가을 (낙엽 들판) --- */
-    let leaves, acorns;
+    let leaves, acorns, AF;
     const lead = ant(T, T.world, 0, 0, 1.1);
     await T.sceneCard('가을', () => {
-      T.clear(); fieldBG(T, 'autumn');
+      T.clear(); AF = fieldBG(T, 'autumn');
       acorns = el('g', {}, T.world);
       [[0, 0], [34, 0], [68, 0], [17, -28], [51, -28], [34, -56]].forEach(([dx, dy]) => acornShape(T, acorns, 450 + dx * 1.4, 474 + dy * 1.4, 2));
       T.world.appendChild(lead.pos); lead.place(330, 496); lead.face('right'); wear(lead.p, []); carry(lead.p, false);
@@ -559,7 +727,7 @@
       const last = acorns.lastElementChild; if (last) last.remove();
       const a = acornShape(T, T.world, 0, 0, 1.4);
       SND.roll(T);
-      a.animate([{ transform: 'translate(520px,474px) rotate(0deg) scale(2)' }, { transform: 'translate(840px,470px) rotate(720deg) scale(1.1)' }], { duration: 1100, easing: 'ease-in', fill: 'forwards' }).finished.then(() => a.remove());
+      a.animate([{ transform: 'translate(520px,474px) rotate(0deg) scale(2)' }, { transform: `translate(${AF.door[0]}px,${AF.door[1]}px) rotate(720deg) scale(${AF.art ? .7 : 1.1})` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' }).finished.then(() => a.remove());
       rolled++;
       T.pop(620, 360, rolled % 2 ? '데굴!' : '데굴데굴~', C.bark);
     } });
@@ -597,7 +765,7 @@
     await T.sceneCard('첫눈', () => {
       T.clear(); W = winterHighBG(T);
       T.world.appendChild(lead.pos); lead.place(narrow() ? 350 : 330, 470); lead.setScale(1.05); lead.face('right'); wear(lead.p, []);
-      [440, 510].forEach(x => { const a = ant(T, T.world, x, 440, .8); a.face('right'); crew.push(a); });
+      (artUrl('ant_stand') ? [470, 590] : [440, 510]).forEach(x => { const a = ant(T, T.world, x, 440, .8); a.face('right'); crew.push(a); }); // 그림 개미는 옆으로 길어 간격을 벌린다
       snow = precip(T, 'snow', 40);
     }, lead.pos);
     SND.shiver(T);
@@ -616,8 +784,9 @@
     await say('개미들은 따뜻한 창고로 쏙 들어갔어요.');
     for (const a of [...crew, lead]) {
       SND.snowStep(T);
-      a.move(W.hole[0], W.hole[1] + 10, 1100).then(() => a.pos.remove());
-      a.body.animate([{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1100, fill: 'forwards' });
+      a.move(W.hole[0], W.hole[1] + 10, W.far ? 1600 : 1100).then(() => a.pos.remove());
+      a.body.animate(W.far ? [{ opacity: 1, transform: 'scale(1)' }, { opacity: 1, transform: 'scale(.5)', offset: .8 }, { opacity: 0, transform: 'scale(.4)' }] // 그림: 먼 구멍으로 갈수록 작게
+        : [{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: W.far ? 1600 : 1100, fill: 'forwards' });
       await sleep(300);
     }
     await sleep(1000);
@@ -627,28 +796,29 @@
     /* --- 7. 똑똑 베짱이 (창고 문 로우앵글) --- */
     let D, baby;
     vo('cut_shiver');
-    await T.cut(svg => {
+    await T.cut(cutPic('cut_shiver', (svg, art) => {
+      if (art) return cutText(T, svg, 290, 62, '오들오들', 56);
       el('rect', { width: 400, height: 300, fill: SKY.winter }, svg);
       for (let i = 0; i < 20; i++) el('circle', { cx: rnd(10, 390), cy: rnd(10, 290), r: rnd(4, 9), fill: '#fff' }, svg);
       T.paper(svg, [['ellipse', { cx: 200, cy: 190, rx: 80, ry: 90, fill: C.hop }], ['ellipse', { cx: 200, cy: 210, rx: 40, ry: 60, fill: C.hopBelly }], ['circle', { cx: 176, cy: 150, r: 14, fill: '#fff' }], ['circle', { cx: 173, cy: 152, r: 7, fill: C.ink }]]);
       el('path', { d: 'M120 120 l-14 -8 M120 150 l-18 0 M280 120 l14 -8 M280 150 l18 0', stroke: C.indigo, 'stroke-width': 5, 'stroke-linecap': 'round' }, svg);
       cutText(T, svg, 200, 70, '오들오들', 56);
-    }, { hold: 2000, sfx: null });
+    }), { hold: 2000, sfx: null });
     await T.sceneCard('똑똑', () => {
       T.clear(); D = doorBG(T);
-      T.world.appendChild(hop.pos); hop.setScale(1.75); hop.place(narrow() ? 626 : 650, 500); hop.face('left'); hopperMode(hop.p, 'arms');
-      hop.p.drops.setAttribute('opacity', 0); hop.p.ant.setAttribute('d', 'M-8 -156 Q-6 -204 34 -216 M-20 -154 Q-36 -202 -6 -224');
+      T.world.appendChild(hop.pos); hop.setScale(D.art ? 1.45 : 1.75); hop.place(D.hopX, D.hopY); hop.face('left'); hopperMode(hop.p, 'arms');
+      hopWet(hop.p, false);
       snow = precip(T, 'snow', 30);
     }, hop.pos);
     const shiverA = hop.body.animate([{ translate: '0 0' }, { translate: '4px 0' }, { translate: '-4px 0' }], { duration: 130, iterations: Infinity });
     SND.shiver(T);
     await say('눈 오는 날, 베짱이가 오들오들 떨며 창고 문을 두드렸어요.');
-    SND.knock(T); T.pop(510, 300, '똑똑!', C.bark);
+    SND.knock(T); T.pop(D.knock[0], D.knock[1], '똑똑!', C.bark);
     await sleep(700);
     SND.creak(T);
     await T.anim(D.door, [{ transform: 'scaleX(1)' }, { transform: 'scaleX(.45)' }], 700);
-    const host = ant(T, T.world, 400, 486, .95); host.face('right'); wear(host.p, ['scarf']);
-    baby = ant(T, T.world, narrow() ? 352 : 335, 486, .62); baby.face('right');
+    const host = ant(T, T.world, D.hostX, D.y, .95); host.face('right'); wear(host.p, ['scarf']);
+    baby = ant(T, T.world, D.babyX, D.y, .62, { baby: true }); baby.face('right');
     host.pos.parentNode.insertBefore(host.pos, hop.pos);
     await say('"개미야, 먹을 것 좀 나눠 줄 수 있니?"');
     await say('개미가 물었어요. "여름엔 뭘 했니?"');
@@ -663,12 +833,13 @@
     SND.door(T);
     await T.anim(D.door, [{ transform: 'scaleX(.85)' }, { transform: 'scaleX(.06)' }], { duration: 500, easing: 'cubic-bezier(.3,1.5,.5,1)' });
     D.glow.animate([{ opacity: .6 }, { opacity: 1 }], { duration: 600, iterations: 3, direction: 'alternate' });
-    SND.sparkle(T); sparkles(T, 400, 360, 140, 8);
-    await T.cut(svg => {
+    SND.sparkle(T); sparkles(T, D.spark[0], D.spark[1], 140, 8);
+    await T.cut(cutPic('cut_door', (svg, art) => {
+      if (art) return cutText(T, svg, 300, 286, '활짝!', 64);
       el('rect', { width: 400, height: 300, fill: '#5E4330' }, svg);
       T.paper(svg, [['path', { d: 'M110 300 V130 Q110 50 200 50 Q290 50 290 130 V300 Z', fill: C.amber }], ['path', { d: 'M110 300 V130 Q110 50 130 55 V300 Z', fill: '#8E6440' }]]);
       cutText(T, svg, 200, 190, '활짝!', 80);
-    }, { hold: 1800 });
+    }), { hold: 1800 });
     shiverA.cancel();
     host.hop(20);
     await say('"어서 들어와요! 같이 겨울을 나요."');
@@ -683,27 +854,27 @@
     await T.sceneCard('창고 가득', () => {
       T.clear(); K = cellarBG(T);
       // 개미 가족 + 베짱이는 큰 방에
-      T.world.appendChild(hop.pos); hop.setScale(.72); hop.place(500, 506); hop.face('left'); hopperMode(hop.p, 'arms');
-      hop.p.scarf.setAttribute('opacity', 1); hop.p.hat.setAttribute('opacity', 1);
-      [[380, .62], [440, .5], [600, .62]].forEach(([x, s], i) => { const a = ant(T, T.world, x, 472, s); a.face(x < 500 ? 'right' : 'left'); wear(a.p, i === 1 ? [] : ['scarf']); home.push(a); });
+      T.world.appendChild(hop.pos); hop.setScale(K.art ? .62 : .72); hop.place(500, K.hopY); hop.face('left'); hopperMode(hop.p, 'arms');
+      hopWarm(hop.p, true);
+      (K.art ? [[362, .55], [418, .45], [628, .55]] : [[380, .62], [440, .5], [600, .62]]).forEach(([x, s], i) => { const a = ant(T, T.world, x, K.antY, s); a.face(x < 500 ? 'right' : 'left'); wear(a.p, i === 1 ? [] : ['scarf']); home.push(a); });
       T.world.appendChild(hop.pos);
       // 바깥 눈밭에서 기다리는 친구들
-      FRIENDS.forEach((f, i) => { const a = mk(T, T.world, 760 + i * 72, 192, f.draw, f.s * .8); a.f = f; guests.push(a); });
+      FRIENDS.forEach((f, i) => { const a = mk(T, T.world, 760 + i * (artUrl(f.key) ? 96 : 72), K.snowY, f.draw, f.s * .8); a.f = f; guests.push(a); });
     }, hop.pos);
     await say('창고 안이 곡식이랑 도토리로 가득해요! 여름부터 미리 모은 덕분이에요.');
     await say('베짱이에게 목도리와 털모자도 나눠 줬어요.');
     await say('먹을 게 이렇게 많으니 친구들도 불러요! 문 앞에 온 친구를 톡 눌러요.');
-    const cnt = counter(T, FRIENDS.length, 470, 150);
-    const seats = narrow() ? [[352, 522], [418, 522], [590, 524], [648, 510]] : [[335, 522], [410, 522], [595, 524], [665, 510]]; // 세로: 음악회 확대에서도 다 보이게
+    const cnt = counter(T, FRIENDS.length, 470, 150, K.art ? 36 : 96); // 그림: 손님이 눈 위(y 140)에서 기다려서 세로 화면 세기 판을 더 위로
+    const seats = (narrow() ? [352, 418, 590, 648] : K.art ? [345, 425, 575, 655] : [335, 410, 595, 665]).map((x, i) => [x, K.seatY[i]]); // 세로: 음악회 확대에서도 다 보이게
     for (let i = 0; i < guests.length; i++) {
       const g = guests[i];
-      SND.step(T); await g.move(630, 192, 700);
+      SND.step(T); await g.move(630, K.snowY, 700);
       await T.tap(g.pos, { prompt: `${josa(g.f.name, '을/를')} 톡 눌러서 불러 줘요!` });
       SND.squeak(T, 1200 + i * 150);
-      await g.move(500, 200, 500);
-      await g.move(500, 320, 450, 'ease-in');
+      await g.move(K.shaftX, K.snowY + 8, 500);
+      await g.move(K.shaftX, K.shaftY, 450, 'ease-in');
       await g.move(seats[i][0], seats[i][1], 500);
-      g.face(seats[i][0] < 500 ? 'right' : 'left'); g.setScale(g.f.s * .62);
+      g.face(seats[i][0] < 500 ? 'right' : 'left'); g.setScale(g.f.s * (K.art ? .58 : .62));
       cnt.fill(i); T.tone(523 + i * 110, .2, { type: 'triangle', vol: .14 });
       T.pop(500, 300, NUM[i] + '!', C.persimmon);
       await say(`${NUM[i]}! ${josa(g.f.name, '이/가')} 왔어요.`);
@@ -713,7 +884,7 @@
 
     /* --- 9. 겨울 음악회 (큰 방 확대, 반딧불 조명) --- */
     await T.sceneCard('겨울 음악회', () => {
-      camSnap(500, 430, narrow() ? 1.1 : 2.1);
+      camSnap(K.cam[0], K.cam[1], narrow() ? 1.1 : 2.1);
       hopperMode(hop.p, 'play');
       K.light.setAttribute('opacity', .55);
       for (let i = 0; i < 7; i++) {
@@ -740,8 +911,8 @@
     await T.sceneCard('봄', () => {
       T.clear(); camSnap(narrow() ? 380 : 500, 280, 1); fieldBG(T, 'spring'); // 세로: 베짱이와 일개미가 함께 보이게
       T.world.appendChild(hop.pos); hop.setScale(.9); hop.place(300, 494); hop.face('right'); hopperMode(hop.p, 'carry');
-      hop.p.scarf.setAttribute('opacity', 0); hop.p.hat.setAttribute('opacity', 0);
-      [400, 460, 520].forEach(x => { const a = ant(T, T.world, x, 494, .6); a.face('right'); carry(a.p, true); workers.push(a); });
+      hopWarm(hop.p, false);
+      (artUrl('ant_carry') ? [420, 485, 550] : [400, 460, 520]).forEach(x => { const a = ant(T, T.world, x, 494, .6); a.face('right'); carry(a.p, true); workers.push(a); });
     }, hop.pos);
     AudioFX.animal('rooster', .3);
     await say('따뜻한 봄이 왔어요. 새싹이 쏙쏙!');
