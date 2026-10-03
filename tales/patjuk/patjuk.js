@@ -308,13 +308,18 @@
 
     /* 만화 컷 (그림): 친구마다 두 장, 틀리면 비웃는 한 장. 4초 뒤 자동, 탭하면 빨리 */
     let lastCut = Promise.resolve();
-    function showCut(id, hold = 4000) {
+    function showCut(id, hold = 4000, split = true) {
       const keys = id.startsWith('wrong_') ? [id] : [id, id + '_b'];
       const V = typeof VOICE_LINES !== 'undefined' ? VOICE_LINES : {};
-      // 컷 속 목소리: 친구의 외침 → 호랑이 비명. 헛수고 컷은 친구가 머쓱 → 호랑이가 비웃음
-      const voiceOf = key => key.startsWith('wrong_')
-        ? [].concat(V['oops_' + key.slice(6)] || [], V[Math.random() < .5 ? 'cut_wrong_1' : 'cut_wrong_2'] || [])
-        : V['cut_' + key];
+      // 컷 속 목소리: 첫 장(친구가 치는 순간) = 친구의 외침, 둘째 장(_b, 호랑이 반응) = 호랑이 비명.
+      // _b 전용 대사가 있거나(지게) 컷을 기다리지 않고 내레이션이 이어지면(split=false, 멍석) 첫 장에서 둘 다 외친다
+      // (내레이션은 이어지는 목소리 묶음이 끝나야 시작하므로, 둘째 장 목소리를 따로 내면 내레이션과 겹친다).
+      // 헛수고 컷은 친구가 머쓱 → 호랑이가 비웃음
+      const voiceOf = key => {
+        if (key.startsWith('wrong_')) return [].concat(V['oops_' + key.slice(6)] || [], V[Math.random() < .5 ? 'cut_wrong_1' : 'cut_wrong_2'] || []);
+        if (key.endsWith('_b')) return V['cut_' + key] || (split ? [].concat(V['cut_' + key.slice(0, -2)] || []).slice(1) : null);
+        return V['cut_' + key + '_b'] || !split ? V['cut_' + key] : [].concat(V['cut_' + key] || []).slice(0, 1);
+      };
       const list = keys.map(key => ({ src: cutUrl(key), sfx: key.startsWith('wrong_') ? 'laugh' : CUT_SFX[key], voice: voiceOf(key) }));
       const onShow = o => { punch(o); if (o.voice && o.voice.length) setTimeout(() => AudioFX.voice(o.voice), 380); };
       lastCut = lastCut.then(() => T.cutImage(list, { hold, onShow }));
@@ -651,7 +656,7 @@
       async myeongseok() {
         AudioFX.roll();
         impact(560, 400, '돌돌돌!');
-        showCut('myeongseok'); // 말리는 동안 컷 (기다리지 않음)
+        showCut('myeongseok', 4000, false); // 말리는 동안 컷 (기다리지 않음 → 목소리는 첫 장에 몰아서)
         await anim(act('myeongseok'), [{ transform: 'translate(0px,0px) rotate(0deg)' }, { transform: 'translate(-10px,-40px) rotate(-360deg) scale(1.25)' }, { transform: 'translate(0px,-6px) rotate(-720deg) scale(1.1)' }], { duration: 900, easing: 'ease-in-out' });
         pose(null);
         tiger.pos.style.opacity = 0;

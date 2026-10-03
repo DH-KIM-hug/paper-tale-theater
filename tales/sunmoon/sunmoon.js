@@ -63,7 +63,8 @@
     lamp_flame: 'v3w/sm_lamp_flame.webp', // 등잔 불꽃만 — 방 그림 속 등잔 심지 위에 켠다
     sun_girl: 'v3w/sm_sun_girl2.webp', moon_boy: 'v3w/sm_moon_boy2.webp', lamp_on: 'v3w/sm_lamp_on.webp', lamp_off: 'v3w/sm_lamp_off.webp',
     basket: null,
-    cut_well: 'v3w/sm_cut_well2.webp', cut_snap: 'v3w/sm_cut_snap.webp', cut_eye: null,
+    cut_well: null, // sm_cut_well2는 오누이가 우물 옆 땅에 서 있어(나무 위가 아님, 호랑이도 없음) 내레이션과 어긋나 뺌 → jobs_cuts.json의 sm_cut_well3로 다시 뽑아 연결
+    cut_snap: 'v3w/sm_cut_snap.webp', cut_eye: null,
   };
   const artOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -1238,14 +1239,14 @@
     const cutText = (svg, t, s = 40) => el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': s, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: t }, svg);
     await T.cut(svg => {
       if (!ropeArt(T, svg, 'rope_bad', 200, 150, .3, -20)) el('path', { d: 'M200 0 V120 Q210 150 196 180', stroke: '#9A8466', 'stroke-width': 7, fill: 'none', 'stroke-dasharray': '30 6' }, svg);
-      const g = el('g', { transform: 'translate(200,300) scale(.85)' }, svg); const P = drawTiger(T, g); P.wear('scarf'); P.setBelly(2.4);
+      const g = el('g', { transform: 'translate(200,300) scale(.85)' }, svg); const P = drawTiger(T, g); P.setBelly(2.4); // 나무 위(도끼)·뚝·엉덩방아 그림과 같이 엄마 옷 없이
       cutText(svg, '삐걱… 삐걱…', 34);
       cutVoice('cut_creak', 500);
     }, { hold: 2200 });
     creak(T);
     await (cutArt(T, 'cut_snap', 'pow', 2200, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
       el('path', { d: 'M200 0 V90 L190 100 M205 100 L212 92', stroke: '#9A8466', 'stroke-width': 7, fill: 'none' }, svg);
-      const g = el('g', { transform: 'translate(200,320) scale(.85) rotate(12)' }, svg); const P = drawTiger(T, g); P.wear('scarf'); P.oMouth(); P.setBelly(2.4);
+      const g = el('g', { transform: 'translate(200,320) scale(.85) rotate(12)' }, svg); const P = drawTiger(T, g); P.oMouth(); P.setBelly(2.4);
       cutText(svg, '뚝!', 64);
       cutVoice('cut_snap', 250);
     }, { sfx: 'pow', hold: 2200 }));
