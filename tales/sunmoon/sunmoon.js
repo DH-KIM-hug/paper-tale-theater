@@ -65,6 +65,15 @@
     basket: null,
     cut_well: null, // sm_cut_well2는 오누이가 우물 옆 땅에 서 있어(나무 위가 아님, 호랑이도 없음) 내레이션과 어긋나 뺌 → jobs_cuts.json의 sm_cut_well3로 다시 뽑아 연결
     cut_snap: 'v3w/sm_cut_snap.webp', cut_eye: null,
+    /* 2026-10-04 코드 도형을 대신하는 새 그림 (jobs_svg.json): 바꾸기 전 해·달 원판, 창호지 구멍 속 털·눈, 하늘 동아줄 출발 자리 나무 꼭대기(가지 위 실루엣 둘은 지움),
+       우물 물(위에서 본 우물 한 장을 타원으로 오림), 남은 떡 빈 바구니, 종이 구름 두 빛깔, 귀 배지.
+       cut_roar: 해 질 녘으로 나온 「어흥!」 컷을 셋째 고개(밤)에 맞춰 밤으로 굽고 해는 달로 (스크래치 g1).
+       안 쓰는 새 그림: sm_cut_bump(엄마 옷 입은 호랑이 — 바로 앞 뚝 컷·수수밭 무대 호랑이는 옷이 없어 튄다), sm_cut_well3(우물 옆에 오빠가 또 서 있고 호랑이가 엄마 옷을 안 입음) */
+    sun_plain: 'v3w/sm_sun_plain.webp', moon_plain: 'v3w/sm_moon_plain.webp',
+    peek_fur: 'v3w/sm_peek_fur.webp', peek_eye: 'v3w/sm_peek_eye.webp',
+    treetop: 'v3w/sm_treetop.webp', well_water: 'v3w/sm_well_water.webp', basket_empty: 'v3w/sm_basket_empty.webp',
+    cloud_cream: 'v3w/sm_cloud_cream.webp', cloud_lilac: 'v3w/sm_cloud_lilac.webp', icon_ear: 'v3w/sm_icon_ear.webp',
+    cut_roar: 'v3w/sm_cut_roar_night.webp',
   };
   const artOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -614,7 +623,7 @@
       else await say('깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.');
       await mom.move(T.portrait() ? 370 : 300, 500, 1500);
       await sleep(300);
-      AudioFX.boing(); T.pop(TX, 250, n ? '또 왔어!' : '불쑥!', C.bean);
+      AudioFX.boing(); T.pop(T.portrait() ? Math.min(TX, 590) : TX, 250, n ? '또 왔어!' : '불쑥!', C.bean); // 세로 화면: 글자가 오른쪽 가장자리에 잘리지 않게
       await tiger.move(TX, 480, 380, 'ease-out');
       await sleep(250);
       T.world.appendChild(tiger.pos); AudioFX.boing();
@@ -635,7 +644,9 @@
         const ui = document.getElementById('stage');
         const left = el('g', {}, ui);
         const w = Math.min(5, ask) * 50 + 80;
-        T.paper(left, [['path', { d: `M${500 - w / 2} 40 H${500 + w / 2} L${500 + w / 2 - 24} 150 H${500 - w / 2 + 24} Z`, fill: '#C9975E', stroke: C.bark, 'stroke-width': 5 }]]);
+        const bu = artUrl('basket_empty'); // 그림 빈 바구니 (떡은 그 안에 코드로)
+        if (bu) el('image', { href: bu, x: 500 - (w + 50) / 2, y: 28, width: w + 50, height: (w + 50) * 556 / 838, filter: 'url(#pp)' }, left);
+        else T.paper(left, [['path', { d: `M${500 - w / 2} 40 H${500 + w / 2} L${500 + w / 2 - 24} 150 H${500 - w / 2 + 24} Z`, fill: '#C9975E', stroke: C.bark, 'stroke-width': 5 }]]);
         for (let k = 0; k < ask; k++) drawCake(T, left, 500 - (Math.min(5, ask) - 1) * 25 + (k % 5) * 50, 78 + Math.floor(k / 5) * 40, 1.5, k);
         await say('바구니에 남은 떡은 몇 개일까요? 세어 보고 접시를 골라요!');
         await pickPlate(ask, 5, '바구니에 남은 떡이랑 똑같은 개수의 접시를 골라요!');
@@ -659,7 +670,7 @@
     /* --- 5. 떡이 떨어지자 (원작: 엄마를 잡아먹는다 — 화면에는 보여주지 않는다) --- */
     await say('떡이 다 떨어지자 호랑이가 말했어요. "떡이 없으면 너를 잡아먹어야지!"');
     T.shake(); // 기계음 으르렁 대신 컷의 호랑이 목소리 "어흥!"
-    await T.cut(svg => {
+    await (cutArt(T, 'cut_roar', 'boom', 2400, () => cutVoice('cut_roar')) || T.cut(svg => {
       el('rect', { width: 400, height: 300, fill: '#0b0a1a' }, svg);
       el('circle', { cx: 320, cy: 70, r: 34, fill: C.cream, opacity: .8 }, svg);
       const g = el('g', { transform: 'translate(200,300) scale(1.5)', opacity: .92 }, svg);
@@ -667,7 +678,7 @@
       el('rect', { width: 400, height: 300, fill: '#0b0a1a', opacity: .55 }, svg);
       el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 52, fill: C.persimmon, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '어흥!' }, svg);
       cutVoice('cut_roar');
-    }, { sfx: 'boom', hold: 2400 });
+    }, { sfx: 'boom', hold: 2400 }));
     mom.pos.remove();
     AudioFX.gulp && AudioFX.gulp();
     await T.cut(svg => {
@@ -742,9 +753,13 @@
     const callMom = () => (V.call_mom && AudioFX.voice(V.call_mom)) || momVoice(T);
     const callTiger = () => (V.call_tiger && AudioFX.voice(V.call_tiger)) || tigerVoice(T);
     const earBadge = (x, num) => badge(T, x, 250, 80, g => {
-      el('path', { d: 'M-8 -40 C-40 -40 -44 -6 -30 10 C-20 22 -22 34 -8 40 C6 44 14 30 8 18 C2 8 14 0 14 -14 C14 -30 4 -40 -8 -40Z', fill: C.pink }, g);
-      el('path', { d: 'M-8 -22 C-22 -22 -24 -4 -14 6', stroke: C.bean, 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, g);
-      el('path', { d: 'M28 -18 Q40 0 28 18 M40 -28 Q58 0 40 28', stroke: C.lav, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, g);
+      const eu = artUrl('icon_ear'); // 그림 귀(소리 물결까지 한 장), 번호는 코드
+      if (eu) el('image', { href: eu, x: -38, y: -72, width: 76, height: 112, filter: 'url(#pp)' }, g);
+      else {
+        el('path', { d: 'M-8 -40 C-40 -40 -44 -6 -30 10 C-20 22 -22 34 -8 40 C6 44 14 30 8 18 C2 8 14 0 14 -14 C14 -30 4 -40 -8 -40Z', fill: C.pink }, g);
+        el('path', { d: 'M-8 -22 C-22 -22 -24 -4 -14 6', stroke: C.bean, 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, g);
+        el('path', { d: 'M28 -18 Q40 0 28 18 M40 -28 Q58 0 40 28', stroke: C.lav, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, g);
+      }
       el('text', { x: 0, y: 70, 'text-anchor': 'middle', 'font-size': 34, fill: C.bean, text: String(num) }, g);
     });
     const momFirst = Math.random() < .5;
@@ -836,14 +851,22 @@
       const cp = el('clipPath', { id: 'peekHole' }, T.world);
       peekCircle = el('circle', { cx: 500, cy: 300, r: 0 }, cp);
       const inside = el('g', { 'clip-path': 'url(#peekHole)' }, T.world);
-      el('rect', { x: 0, y: 0, width: 1000, height: 600, fill: C.persimmon }, inside);
-      ['M180 60 L260 120 L170 150 Z', 'M820 60 L740 120 L830 150 Z', 'M150 380 L270 420 L160 470 Z', 'M850 380 L730 420 L840 470 Z', 'M470 30 L500 110 L530 30 Z'].forEach(d => el('path', { d, fill: C.stripe }, inside));
-      el('circle', { cx: 230, cy: 520, r: 50, fill: C.pink, opacity: .9 }, inside);
+      // 구멍 속: 그림 호랑이 털(1024² 한 장을 구멍보다 넓게 — 줄무늬 끝만 구멍 가장자리에 보인다) + 그림 눈(깜빡임은 눈 그룹의 scaleY 그대로)
+      const fu = artUrl('peek_fur'), eu = artUrl('peek_eye');
+      if (fu) el('image', { href: fu, x: -50, y: -250, width: 1100, height: 1100, preserveAspectRatio: 'none' }, inside);
+      else {
+        el('rect', { x: 0, y: 0, width: 1000, height: 600, fill: C.persimmon }, inside);
+        ['M180 60 L260 120 L170 150 Z', 'M820 60 L740 120 L830 150 Z', 'M150 380 L270 420 L160 470 Z', 'M850 380 L730 420 L840 470 Z', 'M470 30 L500 110 L530 30 Z'].forEach(d => el('path', { d, fill: C.stripe }, inside));
+        el('circle', { cx: 230, cy: 520, r: 50, fill: C.pink, opacity: .9 }, inside);
+      }
       eye = origin(el('g', {}, inside), 500, 300);
-      el('ellipse', { cx: 500, cy: 300, rx: 190, ry: 180, fill: '#fff' }, eye);
-      el('circle', { cx: 500, cy: 310, r: 110, fill: C.ink }, eye);
-      el('circle', { cx: 548, cy: 256, r: 34, fill: '#fff' }, eye);
-      el('circle', { cx: 458, cy: 358, r: 14, fill: '#fff' }, eye);
+      if (eu) el('image', { href: eu, x: 300, y: 165, width: 400, height: 270, filter: 'url(#pp)' }, eye);
+      else {
+        el('ellipse', { cx: 500, cy: 300, rx: 190, ry: 180, fill: '#fff' }, eye);
+        el('circle', { cx: 500, cy: 310, r: 110, fill: C.ink }, eye);
+        el('circle', { cx: 548, cy: 256, r: 34, fill: '#fff' }, eye);
+        el('circle', { cx: 458, cy: 358, r: 14, fill: '#fff' }, eye);
+      }
       rim = el('circle', { cx: 500, cy: 300, r: 0, fill: 'none', stroke: '#E9DCC0', 'stroke-width': 18, 'stroke-dasharray': '10 6' }, T.world);
       spot = el('g', {}, T.world);
       el('rect', { x: 330, y: 170, width: 340, height: 260, fill: 'transparent' }, spot);
@@ -1023,10 +1046,18 @@
       const cp = el('clipPath', { id: 'wellWater' }, T.world);
       if (art) el('ellipse', { cx: 500, cy: 290, rx: 292, ry: 146 }, cp); else el('circle', { cx: 500, cy: 290, r: 190 }, cp);
       const water = el('g', { 'clip-path': 'url(#wellWater)', transform: art ? 'translate(17 123)' : '' }, T.world);
-      el('rect', { x: art ? 180 : 300, y: 90, width: art ? 640 : 400, height: 400, fill: '#2E3A6E' }, water);
-      el('circle', { cx: 500, cy: 290, r: 150, fill: C.lav, opacity: .45 }, water);
-      [[380, 170, 90], [620, 180, 80], [500, 130, 70]].forEach(([x, y, r]) => el('circle', { cx: x, cy: y, r, fill: C.pine, opacity: .75 }, water));
-      stars(T, water, [[400, 360], [600, 390], [540, 420]]);
+      const wu = art && artUrl('well_water');
+      if (wu) {
+        // 그림 우물물(위에서 본 우물 1024²: 물 원 가운데 ≈ 500,537 · 반지름 ≈ 360)을 타원(500,290 · 292×146)에 맞춰 눌러 넣고(돌 테두리는 오려져 나간다) 밤빛을 한 겹
+        const kx = 292 / 360, ky = 146 / 352;
+        el('image', { href: wu, x: 500 - 500 * kx, y: 290 - 537 * ky, width: 1024 * kx, height: 1024 * ky, preserveAspectRatio: 'none' }, water);
+        el('rect', { x: 150, y: 100, width: 700, height: 380, fill: '#1c2660', opacity: .42 }, water);
+      } else {
+        el('rect', { x: art ? 180 : 300, y: 90, width: art ? 640 : 400, height: 400, fill: '#2E3A6E' }, water);
+        el('circle', { cx: 500, cy: 290, r: 150, fill: C.lav, opacity: .45 }, water);
+        [[380, 170, 90], [620, 180, 80], [500, 130, 70]].forEach(([x, y, r]) => el('circle', { cx: x, cy: y, r, fill: C.pine, opacity: .75 }, water));
+        stars(T, water, [[400, 360], [600, 390], [540, 420]]);
+      }
       refl = origin(el('g', {}, water), 500, 290);
       el('rect', { x: 380, y: 200, width: 240, height: 170, fill: 'transparent' }, refl);
       drawKidFace(T, refl, false, 450, 290, 1.5); drawKidFace(T, refl, true, 560, 296, 1.4);
@@ -1174,7 +1205,9 @@
       el('circle', { cx: 500, cy: -2720, r: 300, fill: '#FBE7B0', opacity: .8 }, skyV);
       // 나무 꼭대기 (출발 자리): 하늘 그림이면 앞 장면 그림 나무처럼 달빛 받은 연보라 잎
       const [lf1, lf2, br] = bgUrl('sky') ? ['#8E93C4', '#7C82B6', '#4E4868'] : ['#35604A', C.pine, C.bark];
-      T.paper(skyV, [['circle', { cx: 500, cy: 720, r: 300, fill: lf1 }], ['circle', { cx: 200, cy: 640, r: 160, fill: lf2 }], ['circle', { cx: 820, cy: 650, r: 170, fill: lf2 }],
+      const tu = artUrl('treetop'); // 그림 나무 꼭대기(1261×805): 가지 윗면(그림 y≈160)이 오누이 발밑 y 505에 오게
+      if (tu) el('image', { href: tu, x: -50, y: 365, width: 1100, height: 1100 * 805 / 1261, filter: 'url(#pp)' }, skyV);
+      else T.paper(skyV, [['circle', { cx: 500, cy: 720, r: 300, fill: lf1 }], ['circle', { cx: 200, cy: 640, r: 160, fill: lf2 }], ['circle', { cx: 820, cy: 650, r: 170, fill: lf2 }],
         ['path', { d: 'M150 500 H850 V530 H150 Z', fill: br }]]);
       // 구름 6겹 (뒤쪽)
       for (let k = 0; k < 6; k++) {
@@ -1182,8 +1215,10 @@
         // 하늘 그림이 있으면 구름도 그림 속 구름 빛깔(크림·연보라)의 종이 구름 (둥근 윗면 + 납작한 아랫면 + 종이 그림자)
         [[-120, 0], [140, -20], [660, -10], [900, 10], [1120, -20]].forEach(([x, dy], j) => {
           if (!bgUrl('sky')) { el('ellipse', { cx: x, cy: y + dy, rx: 140, ry: 46, fill: j % 2 ? C.snow : '#DCD6EA', opacity: .95 }, skyV); return; }
-          const cy = y + dy, f = (j + k) % 2 ? '#F1E4C6' : '#CDBFD9';
-          T.paper(skyV, [['path', { d: `M${x - 150} ${cy + 26} Q${x - 150} ${cy - 6} ${x - 112} ${cy - 4} Q${x - 96} ${cy - 44} ${x - 46} ${cy - 30} Q${x - 10} ${cy - 66} ${x + 40} ${cy - 36} Q${x + 92} ${cy - 50} ${x + 112} ${cy - 10} Q${x + 150} ${cy - 8} ${x + 152} ${cy + 26} Z`, fill: f }]]);
+          const cy = y + dy, cream = (j + k) % 2, f = cream ? '#F1E4C6' : '#CDBFD9';
+          const cu = artUrl(cream ? 'cloud_cream' : 'cloud_lilac'); // 그림 종이 구름 (크림·연보라 번갈아), 아랫면이 cy+26
+          if (cu) { const [iw, ih] = cream ? [837, 402] : [889, 485], w = 300, h = w * ih / iw; el('image', { href: cu, x: x - w / 2, y: cy + 26 - h, width: w, height: h, filter: 'url(#pp)' }, skyV); }
+          else T.paper(skyV, [['path', { d: `M${x - 150} ${cy + 26} Q${x - 150} ${cy - 6} ${x - 112} ${cy - 4} Q${x - 96} ${cy - 44} ${x - 46} ${cy - 30} Q${x - 10} ${cy - 66} ${x + 40} ${cy - 36} Q${x + 92} ${cy - 50} ${x + 112} ${cy - 10} Q${x + 150} ${cy - 8} ${x + 152} ${cy + 26} Z`, fill: f }]]);
         });
       }
       ropeGood = el('g', {}, skyV);
@@ -1292,10 +1327,15 @@
     const drawOrb = (girlFace) => (T2, g) => {
       const P = {};
       P.sun = T.el('g', {}, g);
-      for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; T.el('path', { d: `M${Math.cos(a - .12) * 84} ${Math.sin(a - .12) * 84} L${Math.cos(a) * 120} ${Math.sin(a) * 120} L${Math.cos(a + .12) * 84} ${Math.sin(a + .12) * 84} Z`, fill: C.amber }, P.sun); }
-      T.paper(P.sun, [['circle', { r: 86, fill: C.gold }]]);
+      const su = artUrl('sun_plain'), mu = artUrl('moon_plain'); // 그림 해·달 원판 (얼굴은 위에 코드로 얹는다)
+      if (su) T.el('image', { href: su, x: -124, y: -120, width: 248, height: 240, filter: 'url(#pp)' }, P.sun);
+      else {
+        for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; T.el('path', { d: `M${Math.cos(a - .12) * 84} ${Math.sin(a - .12) * 84} L${Math.cos(a) * 120} ${Math.sin(a) * 120} L${Math.cos(a + .12) * 84} ${Math.sin(a + .12) * 84} Z`, fill: C.amber }, P.sun); }
+        T.paper(P.sun, [['circle', { r: 86, fill: C.gold }]]);
+      }
       P.moon = T.el('g', {}, g);
-      T.paper(P.moon, [['circle', { r: 86, fill: C.snow }], ['circle', { cx: -50, cy: -40, r: 12, fill: '#DCD6EA' }], ['circle', { cx: 52, cy: 44, r: 9, fill: '#DCD6EA' }]]);
+      if (mu) T.el('image', { href: mu, x: -88, y: -89, width: 176, height: 179, filter: 'url(#pp)' }, P.moon);
+      else T.paper(P.moon, [['circle', { r: 86, fill: C.snow }], ['circle', { cx: -50, cy: -40, r: 12, fill: '#DCD6EA' }], ['circle', { cx: 52, cy: 44, r: 9, fill: '#DCD6EA' }]]);
       T.el('rect', { x: -120, y: -120, width: 240, height: 240, fill: 'transparent' }, g);
       const face = drawKidFace(T, g, girlFace, 0, 8, 1.6);
       // 그림 해님(동생 얼굴이 든 해): 동생이 해가 되면 이 한 장만 (그림 속 얼굴을 쓰니 얼굴 조각은 숨긴다)

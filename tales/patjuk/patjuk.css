@@ -23,6 +23,9 @@
 .pj-tiger.fallen .tbase, .pj-tiger.flat .tbase, .pj-tiger.bow .tbase,
 .pj-tiger.fallen .toverlay, .pj-tiger.flat .toverlay, .pj-tiger.bow .toverlay { display: none; }
 .pj-tiger.fallen .tpose[data-pose="fallen"], .pj-tiger.flat .tpose[data-pose="flat"], .pj-tiger.bow .tpose[data-pose="bow"] { display: inline; }
+/* 눈 다침(알밤 뒤~자라 전): 서 있을 때만 눈 감싼 그림으로 바꾼다 (넘어짐·뻗음·꾸벅 자세가 우선) */
+.pj-tiger.eyehurt:not(.fallen):not(.flat):not(.bow) .tbase, .pj-tiger.eyehurt:not(.fallen):not(.flat):not(.bow) .toverlay { display: none; }
+.pj-tiger.eyehurt:not(.fallen):not(.flat):not(.bow) .tpose[data-pose="eyehurt"] { display: inline; }
 .pj-art.shiver, .pj-art.scaredShake { animation: shiver .13s linear infinite; }
 @keyframes shiver { 0%, 100% { translate: 0 0; } 50% { translate: 5px 0; } }
 .pj-art.walking { animation: walkBob .32s ease-in-out infinite alternate; }

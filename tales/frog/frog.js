@@ -16,7 +16,12 @@
     bg_pond: 'v3w/frog_bg_pond.webp', bg_meadow: 'v3w/frog_bg_meadow.webp', bg_chart: 'v3w/frog_bg_chart.webp',
     bg_night: 'v3w/frog_bg_pond_night.webp',
     mom: 'v3w/frog_mom.webp', mom_flying: 'v3w/frog_mom_flying.webp', mom_puffed: 'v3w/frog_mom_puffed.webp', mom_dizzy: 'v3w/frog_mom_dizzy.webp',
-    baby_sleep: 'v3w/frog_baby_sleep.webp', baby_awake: 'v3w/frog_baby_awake.webp', baby_cover: 'v3w/frog_baby_cover.webp',
+    baby_sleep: 'v3w/frog_baby_sleep_shut.webp', baby_awake: 'v3w/frog_baby_awake.webp', baby_cover: 'v3w/frog_baby_cover.webp', // 2026-10-04: 눈 감은 아기 그림(코 방울) — 눈꺼풀 덧그림(BABY_LIDS)은 예전 그림(frog_baby_sleep)일 때만
+    /* 2026-10-04 코드 도형을 대신하는 새 그림 (jobs_svg.json): 삼촌 개구리(밤 합창), 퀴즈 배지 6종.
+       꼬리·발굽·뿔은 황소 전체가 그려져 나와서 그 부위만 오렸다 (스크래치 g1/conv_g1.py) */
+    uncle: 'v3w/frog_uncle.webp',
+    icon_tail: 'v3w/frog_icon_tail.webp', icon_tree: 'v3w/frog_icon_tree.webp', icon_hoof: 'v3w/frog_icon_hoof.webp',
+    icon_rock: 'v3w/frog_icon_rock.webp', icon_horn: 'v3w/frog_icon_horn.webp', icon_branch: 'v3w/frog_icon_branch.webp',
     tadpole: 'v3w/frog_tadpole.webp',
     lilypad: 'v3w/frog_lilypad.webp', // 위에서 본 둥근 연잎(480×354) — 물 위에 누운 모양으로 납작하게 눌러 깐다 (padAt)
     ox_stand: 'v3w/frog_ox_stand.webp', ox_kneel: 'v3w/frog_ox_kneel.webp', ox_jumpfail: 'v3w/frog_ox_jumpfail.webp',
@@ -84,12 +89,13 @@
      자는 그림은 눈을 뜨고 있어 감은 눈꺼풀을 덧댄다 */
   const BABY_LIDS = [[-18.4, -57], [13.4, -57]]; // frog_baby_sleep 상자(78×67) 안 눈 자리
   function drawBaby(T, g) {
-    const p = poseArt(T, g, { awake: ['baby_awake', 73, 76], sleep: ['baby_sleep', 78, 67], cover: ['baby_cover', 71, 73] });
+    const shut = /sleep_shut/.test(ART.baby_sleep || ''); // 눈 감은 그림이면 눈꺼풀 덧그림이 필요 없다 (머리 크기를 깬 그림에 맞춘 상자 69×76)
+    const p = poseArt(T, g, { awake: ['baby_awake', 73, 76], sleep: ['baby_sleep', ...(shut ? [69, 76] : [78, 67])], cover: ['baby_cover', 71, 73] });
     if (!p) return drawFrog(T, g, { color: C.leaf, sleepy: true });
     const st = { lids: 1, hands: 0 };
     const upd = () => p.set(st.hands ? 'cover' : st.lids ? 'sleep' : 'awake');
     const lidG = T.el('g', {}, g);
-    BABY_LIDS.forEach(([x, y]) => {
+    if (!shut) BABY_LIDS.forEach(([x, y]) => {
       T.el('circle', { cx: x, cy: y, r: 9.6, fill: '#C2D05E' }, lidG);
       T.el('path', { d: `M${x - 6} ${y} Q${x} ${y + 5} ${x + 6} ${y}`, stroke: C.ink, 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round' }, lidG);
     });
@@ -231,6 +237,8 @@
     drawIcon(g);
     return g;
   }
+  /* 배지 속 그림: 그림이 있으면 그림(크림 원 안 100×100), 없으면 코드 도형 */
+  const iconArt = (T, g, k) => ART['icon_' + k] && T.el('image', { href: A(ART['icon_' + k]), x: -50, y: -50, width: 100, height: 100, preserveAspectRatio: 'xMidYMid meet', filter: 'url(#pp)' }, g);
   const ICONS = {
     tail: (T, g) => T.el('path', { d: 'M-30 -40 Q20 -20 0 20 Q-10 40 10 44', stroke: C.bark, 'stroke-width': 10, fill: 'none', 'stroke-linecap': 'round' }, g) && T.el('ellipse', { cx: 12, cy: 46, rx: 12, ry: 16, fill: C.ink }, g),
     tree: (T, g) => T.el('rect', { x: -8, y: -6, width: 16, height: 50, fill: C.bark }, g) && T.el('circle', { cy: -24, r: 32, fill: C.pine }, g),
@@ -311,8 +319,8 @@
       // 세로 화면은 무대 양옆이 잘리므로, 실제로 보이는 폭 안쪽 끝에 배지를 둔다 (창 아래 줄)
       const vw = T.viewWidth ? T.viewWidth() : 1000, pt = vw < 990;
       const L = pt ? 500 - Math.min(vw / 2 - 75, 115) : 500 - vw / 2 + 85, R = 1000 - L, by = pt ? 462 : 300;
-      const bOk = badge(T, left ? L : R, by, g => ICONS[r.ok](T, g));
-      const bNo = badge(T, left ? R : L, by, g => ICONS[r.no](T, g));
+      const bOk = badge(T, left ? L : R, by, g => iconArt(T, g, r.ok) || ICONS[r.ok](T, g));
+      const bNo = badge(T, left ? R : L, by, g => iconArt(T, g, r.no) || ICONS[r.no](T, g));
       await say(r.q);
       await T.choose([{ el: bOk, ok: true }, { el: bNo, ok: false }], { prompt: r.q,
         where: '가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!', who: `${T.josa(r.okName, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });
@@ -473,7 +481,7 @@
       T.clear(); pads = pondBG(T, true); if (T.portrait()) camSnap(500, 280, 1);
       T.world.appendChild(mom.pos); mom.place(pads[2][0], pads[2][1]);
       [0, 1, 3].forEach((p, i) => { const b = babies[i]; T.world.appendChild(b.pos); b.place(pads[p][0], pads[p][1]); });
-      const x = actor(T.world, pads[4][0], pads[4][1], g => drawFrog(T, g, { color: '#58805a' }), { scale: .8 });
+      const x = actor(T.world, pads[4][0], pads[4][1], g => sprite(T, g, 'uncle', 110, 108) || drawFrog(T, g, { color: '#58805a' }), { scale: .8 }); // 삼촌 개구리 그림 (진초록·나비넥타이)
       x.pos.id = 'uncleFrog';
       T.world.__uncle = x;
     }, mom.pos);

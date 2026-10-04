@@ -48,7 +48,11 @@
   };
   const FINALE_SFX = { bam: 'pop', jara: 'chomp', ddong: 'boing', songgot: 'poke', jeolgu: 'bonk', myeongseok: 'roll', jige: 'boing' };
   const STAR_SCALE = { bam: 1.9, jara: 1.9, ddong: 1.9, songgot: 1.9, jeolgu: 1.45, myeongseok: 1.15, jige: 1.15 };
-  const cutUrl = key => A(`v2/cut_${key}.png`);
+  /* 다시 뽑은 컷 (2026-10-04): 절구 반응은 작은 혹+별, 지게는 A자 나무 지게가 멍석째 바다로, 헛수고 지게는 빈 A자 지게, 자라 반응은 입을 문 자라.
+     새 파일을 못 불러오면 예전 그림(cut_<key>.png)으로 */
+  const CUT_NEW = { jeolgu_b: 'jeolgu_b2', jige: 'jige2', wrong_jige: 'wrong_jige2', jara_b: 'jara_b2' };
+  const cutOK = {};
+  const cutUrl = key => A(`v2/cut_${CUT_NEW[key] && cutOK[key] !== false ? CUT_NEW[key] : key}.png`);
 
   let played = false; // 두 번째부터(다시 보기)는 오프닝·인트로 없이 바로 놀이
 
@@ -64,8 +68,9 @@
       Promise.all(Object.entries(SCENE_IMG).map(([k, u]) => T.preload(u).then(ok => { sceneOK[k] = ok; }))),
       sleep(2500),
     ]);
-    FRIENDS.forEach(f => ['', '_b'].forEach(s => T.preload(cutUrl(f.id + s))));
-    FRIENDS.forEach(f => T.preload(cutUrl('wrong_' + f.id)));
+    const preCut = key => T.preload(cutUrl(key)).then(ok => { cutOK[key] = ok; if (!ok && CUT_NEW[key]) T.preload(cutUrl(key)); });
+    FRIENDS.forEach(f => ['', '_b'].forEach(s => preCut(f.id + s)));
+    FRIENDS.forEach(f => preCut('wrong_' + f.id));
     if (typeof NARRATION_CLIPS !== 'undefined') AudioFX.preloadAll(Object.values(NARRATION_CLIPS).flat());
 
     /* ---------- 층: 배경(bg) · 배우(world) · 근경(fgL) · 효과(fx) ----------
@@ -137,6 +142,8 @@
         img(art, 'v3w/tiger_fallen.webp', -100, -92, 200, 92, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'fallen' });
         img(art, 'v3w/tiger_flat.webp', -112, -74, 224, 74, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'flat' });
         img(art, 'v3w/tiger_bow.webp', -80, -117, 160, 117, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'bow' });
+        // 알밤에 맞은 뒤: 한쪽 눈을 앞발로 감싸고 찡그린 그림 (예전엔 선 그림 위에 X 표시만 그렸다). 머리 크기를 선 그림에 맞춤
+        img(art, 'v3w/tiger_eyehurt.webp', -42, -112, 84, 112, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'eyehurt' });
         const ov = el('g', { class: 'toverlay' }, art);
         el('path', { id: 'pjEyeHurt', opacity: 0, d: 'M-73 -81 l14 14 M-59 -81 l-14 14', stroke: '#2c1a10', 'stroke-width': 4.5, 'stroke-linecap': 'round' }, ov);
         const band = (p, x, y, r, s = 8) => { const b = el('g', { fill: '#efe0bd', transform: `translate(${x},${y}) rotate(${r})` }, p); el('rect', { x: -s, y: -s / 3, width: s * 2, height: s * .66, rx: s / 3 }, b); el('rect', { x: -s / 3, y: -s, width: s * .66, height: s * 2, rx: s / 3 }, b); };
@@ -253,10 +260,10 @@
     }
 
     /* ---------- 배우 도우미 ---------- */
-    async function walk(a, x, speed = 260) {
+    async function walk(a, x, speed = 260, turn = true) {
       const dx = x - a.x;
       const dur = Math.max(300, Math.abs(dx) / speed * 1000);
-      if (Math.abs(dx) > 4) a.face(dx > 0 ? 'right' : 'left');
+      if (turn && Math.abs(dx) > 4) a.face(dx > 0 ? 'right' : 'left'); // turn=false: 뒷걸음질 (보던 쪽을 그대로 보며 물러난다)
       a.art && a.art.classList.add('walking');
       const moving = a.move(x, a.y, dur, 'ease-in-out');
       let follow = null;
@@ -275,7 +282,7 @@
     const parkTiger = () => { tiger.place(POS.tigerEnter, 520); tiger.pos.style.opacity = 0; };
     const faceTo = (a, b) => a.face(b.x > a.x ? 'right' : 'left');
     const pose = p => { tiger.art.classList.remove('fallen', 'flat', 'bow'); if (p) tiger.art.classList.add(p); };
-    const tigerEyesHurt = on => $('#pjEyeHurt').setAttribute('opacity', on ? 1 : 0);
+    const tigerEyesHurt = on => { $('#pjEyeHurt').setAttribute('opacity', on ? 1 : 0); tiger.art.classList.toggle('eyehurt', !!on); };
     const showWound = i => { const w = $('#pjWnd' + i); w && w.setAttribute('opacity', 1); };
     const dizzy = on => $('#pjDizzy').setAttribute('opacity', on ? 1 : 0);
     function grannyMood(m) {
@@ -697,7 +704,7 @@
     /* ===== 단계 전환: 다음 공격 지점으로 호랑이 이동 ===== */
     const ADVANCE = {
       1: async () => { tigerEyesHurt(true); await Promise.all([walk(tiger, POS.tigerStage[1], 380), camTo(...stationCam(1), 900)]); tiger.face('left'); },
-      2: async () => { tigerEyesHurt(false); await Promise.all([walk(tiger, POS.tigerStage[2], 300), camTo(...stationCam(2), 900)]); tiger.face('left'); },
+      2: async () => { tigerEyesHurt(false); tiger.face('left'); await Promise.all([walk(tiger, POS.tigerStage[2], 300, false), camTo(...stationCam(2), 900)]); }, // 물독에서 놀라 뒷걸음질: 물독(왼쪽)을 본 채로 물러난다
       3: async () => { await camTo(...stationCam(3, tiger.x), 600); /* 이미 미끄러져 넘어진 상태 */ },
       4: async () => {
         // 문 쪽으로 도망치다 구석의 할멈을 폴짝 뛰어넘는다
@@ -819,14 +826,18 @@
         camSnap(500, 280, 1);
       });
       await camTo(560, 440, 1.3, 900);
-      // 차례로 꾸벅
+      // 차례로 꾸벅. 세로 화면은 한 줄(x 235~880)이 다 안 들어오므로 꾸벅하는 쪽으로 카메라를 옮겨 간다 (엔진 camTo: 호랑이 붙잡기 없이)
       const bow = t => anim(t, [{ rotate: '0deg' }, { rotate: '-16deg' }, { rotate: '0deg' }], { duration: 520, easing: 'ease-in-out' });
+      const look = x => (portrait() ? T.camTo(x, groundY(440, 1.3), 1.3, 380) : Promise.resolve());
       for (const f of FRIENDS) {
+        await look(LINE_X[f.id]);
         const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s]();
         await bow(friends[f.id].sway);
       }
+      await look(505);
       AudioFX.jingle();
       await bow(granny.art);
+      await look(880);
       AudioFX.whimper();
       pose('bow'); // 반창고 붙인 호랑이도 꾸벅 — 무섭지 않게 끝낸다
       await bow(tiger.art);

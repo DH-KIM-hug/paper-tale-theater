@@ -40,12 +40,21 @@
     icon_rabbit: 'v3w/rab_icon_rabbit.webp', icon_turtle: 'v3w/rab_icon_turtle.webp',
     // cut_photo: 다시 뽑은 그림 — 무대처럼 둘 다 오른쪽으로 달리고, 앞선 거북이가 결승 테이프를 끊는다
     cut_wake: 'v3w/rab_cut_wake.webp', cut_dash: 'v3w/rab_cut_dash.webp', cut_photo: 'v3w/rab_cut_photo.webp',
+    /* 2026-10-04 코드 도형을 대신하는 새 그림 (jobs_svg.json): 노을 배경(그림 속 닭은 울타리로 메움 — 무대 닭은 배우), 결승 기둥+깃발(판은 비어 있어 글자는 코드),
+       시상대(숫자는 코드), 나뭇잎 이불, 해님·구름, 개울 물고기 셋, 잔치 악기 8종, 초대장 봉투 */
+    bg_dusk: 'v3w/rab_bg_dusk.webp', finish_post: 'v3w/rab_finish_post.webp', podium: 'v3w/rab_podium.webp',
+    leaf_blanket: 'v3w/rab_leaf_blanket.webp', sun_small: 'v3w/rab_sun_small.webp', cloud_small: 'v3w/rab_cloud_small.webp',
+    fish_orange: 'v3w/rab_fish_orange.webp', fish_gold: 'v3w/rab_fish_gold.webp', fish_lavender: 'v3w/rab_fish_lavender.webp',
+    ins_tambourine: 'v3w/rab_ins_tambourine.webp', ins_drum: 'v3w/rab_ins_drum.webp', ins_xylophone: 'v3w/rab_ins_xylophone.webp', ins_horn: 'v3w/rab_ins_horn.webp',
+    ins_bell: 'v3w/rab_ins_bell.webp', ins_snare: 'v3w/rab_ins_snare.webp', ins_jingle: 'v3w/rab_ins_jingle.webp', ins_flute: 'v3w/rab_ins_flute.webp',
+    envelope: 'v3w/rab_envelope.webp',
   };
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
   const EDGE = { bg_village: ['#009acb', '#3a5c0f'], bg_alley: ['#5cd5fd', '#657f1a'], bg_stands: ['#448775', '#69750d'], bg_start: ['#00aaee', '#795b25'],
     bg_map: ['#66d3fd', '#acc41c'], bg_dash: ['#67dcf5', '#855420'], bg_shade: ['#06c1f9', '#333201'], bg_dream: ['#dfd0b8', '#7d6a30'],
-    bg_grass_low: ['#1192aa', '#232101'], bg_stream: ['#71ae23', '#482b0d'], bg_hill: ['#00befd', '#346000'], bg_finish: ['#259ca5', '#635916'], bg_party: ['#8ca9a9', '#343510'] };
+    bg_grass_low: ['#1192aa', '#232101'], bg_stream: ['#71ae23', '#482b0d'], bg_hill: ['#00befd', '#346000'], bg_finish: ['#259ca5', '#635916'], bg_party: ['#8ca9a9', '#343510'],
+    bg_dusk: ['#f39f6c', '#5a4d23'] };
   const BGX = { x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }; // 장면 그림 자리 (무대 1000×560 전체)
   /* 장면 그림 한 장을 무대 전체에 (없으면 false → 임시 도형 배경) */
   function artBG(T, key, parent = T.bg) {
@@ -292,6 +301,7 @@
     cat: [['path', { d: 'M34 -70 V-40', stroke: C.bean, 'stroke-width': 2 }], ['circle', { cx: 34, cy: -40, r: 7, fill: C.gold }], ['circle', { cx: 44, cy: -48, r: 6, fill: C.gold }], ['circle', { cx: 26, cy: -50, r: 6, fill: C.gold }]],
     owl: [['rect', { x: 6, y: -70, width: 50, height: 9, rx: 4, fill: C.lav, transform: 'rotate(20 6 -70)' }]],
   };
+  const INS_ART = { duck: 'tambourine', cow: 'drum', pig: 'xylophone', rooster: 'horn', sheep: 'bell', dog: 'snare', cat: 'jingle', owl: 'flute' }; // 동물 → 악기 그림 (INS 도형과 같은 짝)
   /* 관객 그림: 손을 번쩍 든 응원 자세 한 장. 앉기/일어서기는 발끝 기준으로 살짝 키워서 (공중에 뜨지 않게) */
   function drawAnimalArt(T, g, k) {
     const { el, paper } = T;
@@ -299,7 +309,10 @@
     sprite(T, up, 'aud_' + k, k === 'owl' ? 150 : 118, k === 'owl' ? 108 : 118);
     const armsDown = el('g', {}, up), armsUp = el('g', {}, up), shh = el('g', {}, up);
     const bag = k === 'owl' ? el('g', {}, up) : null; // 그림 부엉이는 이미 가방을 멨다
-    const instr = paper(up, INS[k], { transform: 'translate(14 4)' }); // 잔치 악기는 임시 도형 그대로 (손 옆)
+    // 잔치 악기: 그림(손 옆 60×56 상자)이 있으면 그림, 없으면 임시 도형
+    const ik = 'ins_' + INS_ART[k];
+    const instr = ART[ik] ? el('g', { transform: 'translate(14 4)' }, up) : paper(up, INS[k], { transform: 'translate(14 4)' });
+    if (ART[ik]) el('image', { href: A(ART[ik]), x: 10, y: -78, width: 60, height: 56, preserveAspectRatio: 'xMidYMid meet', filter: 'url(#pp)' }, instr);
     show(instr, 0);
     return { legs, up, armsDown, armsUp, shh, bag, instr, art: true };
   }
@@ -670,7 +683,8 @@
       a.reset(); put(a, h.x, h.ay || 474, h.ay ? .95 : 1);
       a.cheer();
       await say(`${T.josa(a.name, '이었어요/였어요')}!`);
-      const env = paper(T.fx, [['rect', { x: -22, y: -15, width: 44, height: 30, rx: 3, fill: C.cream, stroke: C.bark, 'stroke-width': 2 }], ['path', { d: 'M-22 -15 L0 3 L22 -15', stroke: C.bean, 'stroke-width': 3, fill: 'none' }]]);
+      const env = ART.envelope ? el('g', {}, T.fx) : paper(T.fx, [['rect', { x: -22, y: -15, width: 44, height: 30, rx: 3, fill: C.cream, stroke: C.bark, 'stroke-width': 2 }], ['path', { d: 'M-22 -15 L0 3 L22 -15', stroke: C.bean, 'stroke-width': 3, fill: 'none' }]]);
+      if (ART.envelope) el('image', { href: A(ART.envelope), x: -26, y: -15, width: 52, height: 30, filter: 'url(#pp)' }, env); // 그림 봉투
       await T.anim(env, [{ transform: `translate(${owl.x}px,${owl.y - 60}px)` }, { transform: `translate(${a.x + 30}px,${a.y - 60}px) rotate(360deg)` }], 700);
       AudioFX.ding(); env.remove();
     }
@@ -756,7 +770,7 @@
     await say('준비~ 북을 톡 치면 출발해요!');
     await T.tap(drum, { prompt: '큰 북을 톡 쳐 봐요!' });
     AudioFX.boom(); T.shake(); T.pop(...drumAt, '땅!', C.bean);
-    ['duck', 'cow', 'dog', 'rooster'].forEach((k, i) => setTimeout(() => aud[k].cheer(null, true), i * 150));
+    ['duck', 'cow', 'dog', 'rooster'].forEach((k, i) => setTimeout(() => aud[k].cheer(i % 2 ? '' : null, true), i * 150)); // 글자는 둘만 (넷이 겹쳐 '땅!'을 가렸다)
     rp.pose('run'); AudioFX.whoosh(); speedLines(T, 14, 450); puff(T, rabbit.x - 30, 460);
     camTo(360, 330, 1.12, 250);
     walk(700);
@@ -850,21 +864,26 @@
       if (!shade) sky(T, '#F6D9A0');
       // 해님·구름은 임시 도형 (그림 배경에서는 왼쪽 위 하늘 조각에 작게)
       const skyG = shade ? el('g', { transform: 'translate(92 60) scale(.6) translate(-140 -120)' }, T.bg) : T.bg;
-      sunG = paper(skyG, [['circle', { cx: 140, cy: 120, r: 58, fill: '#F6C85A' }]]);
-      for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2; el('rect', { x: 140 + Math.cos(a) * 72 - 8, y: 120 + Math.sin(a) * 72 - 3, width: 16, height: 6, rx: 3, fill: '#F6C85A', transform: `rotate(${a * 57.3} ${140 + Math.cos(a) * 72} ${120 + Math.sin(a) * 72})` }, sunG); }
+      if (ART.sun_small) { sunG = el('g', {}, skyG); el('image', { href: A(ART.sun_small), x: 65, y: 45, width: 150, height: 150, filter: 'url(#pp)' }, sunG); } // 그림 해님 (가운데 140,120)
+      else {
+        sunG = paper(skyG, [['circle', { cx: 140, cy: 120, r: 58, fill: '#F6C85A' }]]);
+        for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2; el('rect', { x: 140 + Math.cos(a) * 72 - 8, y: 120 + Math.sin(a) * 72 - 3, width: 16, height: 6, rx: 3, fill: '#F6C85A', transform: `rotate(${a * 57.3} ${140 + Math.cos(a) * 72} ${120 + Math.sin(a) * 72})` }, sunG); }
+      }
       if (!shade) {
         paper(T.bg, [['rect', { x: -300, y: 430, width: 1600, height: 400, fill: C.grass }]]);
         paper(T.bg, [['rect', { x: 640, y: 40, width: 100, height: 440, fill: C.bark }], ['path', { d: 'M720 250 Q820 230 980 250 L980 266 Q820 250 730 272 Z', fill: C.bark }]]);
         paper(T.bg, [['circle', { cx: 700, cy: 20, r: 190, fill: C.pine }], ['circle', { cx: 480, cy: 60, r: 120, fill: C.leaf }], ['circle', { cx: 930, cy: 80, r: 140, fill: C.leaf }]]);
       }
-      cloud = paper(skyG, [['circle', { cx: 100, cy: 130, r: 44, fill: '#E7E3F0' }], ['circle', { cx: 150, cy: 105, r: 56, fill: '#E7E3F0' }], ['circle', { cx: 205, cy: 132, r: 42, fill: '#E7E3F0' }], ['rect', { x: 90, y: 128, width: 130, height: 46, rx: 22, fill: '#E7E3F0' }]]);
+      if (ART.cloud_small) { cloud = el('g', {}, skyG); el('image', { href: A(ART.cloud_small), x: 50, y: 81, width: 200, height: 97, filter: 'url(#pp)' }, cloud); } // 그림 구름 (해를 가리러 온다)
+      else cloud = paper(skyG, [['circle', { cx: 100, cy: 130, r: 44, fill: '#E7E3F0' }], ['circle', { cx: 150, cy: 105, r: 56, fill: '#E7E3F0' }], ['circle', { cx: 205, cy: 132, r: 42, fill: '#E7E3F0' }], ['rect', { x: 90, y: 128, width: 130, height: 46, rx: 22, fill: '#E7E3F0' }]]);
       cloud.setAttribute('transform', 'translate(-420 0)');
       const o = aud.owl; o.reset(); put(o, ...(shade ? [790, 175, .8] : [870, 252, .95])); // 그림: 큰 나무 가지 끝
       seat(shade ? [['pig', 905, 540, .8], ['sheep', 80, 540, .8]] : [['pig', 900, 556, .8], ['sheep', 70, 556, .8]]);
       rabbitReset(); rp.setEyes('half'); faceL(rabbit);
       put(rabbit, 520, 488, 1.5);
       blanket = el('g', { transform: 'translate(220 470)' }, T.world);
-      paper(blanket, [['path', { d: 'M-100 0 Q-40 -70 100 -10 Q40 60 -100 0 Z', fill: C.leaf }], ['path', { d: 'M-100 0 Q0 -10 100 -10 M-40 -4 L-10 -30 M0 -6 L30 -30 M-40 -4 L-10 20 M0 -6 L34 18', stroke: C.pine, 'stroke-width': 4, fill: 'none' }]]);
+      if (ART.leaf_blanket) el('image', { href: A(ART.leaf_blanket), x: -110, y: -70, width: 220, height: 129, filter: 'url(#pp)' }, blanket); // 그림 나뭇잎 이불
+      else paper(blanket, [['path', { d: 'M-100 0 Q-40 -70 100 -10 Q40 60 -100 0 Z', fill: C.leaf }], ['path', { d: 'M-100 0 Q0 -10 100 -10 M-40 -4 L-10 -30 M0 -6 L30 -30 M-40 -4 L-10 20 M0 -6 L34 18', stroke: C.pine, 'stroke-width': 4, fill: 'none' }]]);
       dim = el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: '#2E2440', opacity: 0, 'pointer-events': 'none' }, T.fx);
       if (T.portrait()) camSnap(390, 280, fitZ(290)); // 세로 화면: 이불과 토끼가 함께 보이게
     });
@@ -1019,8 +1038,10 @@
       [40, 110, 900, 960].forEach(x => paper(T.bg, [['path', { d: `M${x} 540 Q${x - 10} 380 ${x + 6} 250`, stroke: C.pine, 'stroke-width': 8, fill: 'none' }], ['ellipse', { cx: x + 6, cy: 250, rx: 7, ry: 22, fill: C.bark }]]));
       seat([['duck', 560, 256, .85]]);
       }
-      [C.persimmon, C.gold, C.lav].map((c, i) => [c, ...R10.fish[i]]).forEach(([c, x, y]) => {
-        const f = actor(T.world, x, y, g => paper(g, [['path', { d: 'M-22 0 L-38 -12 L-38 12 Z', fill: c }], ['ellipse', { cx: 0, cy: 0, rx: 24, ry: 13, fill: c }], ['circle', { cx: 12, cy: -3, r: 3, fill: C.ink }]]), { scale: 1.2 });
+      [[C.persimmon, 'orange'], [C.gold, 'gold'], [C.lav, 'lavender']].map(([c, n], i) => [c, n, ...R10.fish[i]]).forEach(([c, n, x, y]) => {
+        // 그림 물고기(오른쪽을 본다 — 도형과 같은 쪽), 없으면 임시 도형
+        const f = actor(T.world, x, y, g => (ART['fish_' + n] ? el('image', { href: A(ART['fish_' + n]), x: -34, y: -21, width: 68, height: 42, preserveAspectRatio: 'xMidYMid meet', filter: 'url(#pp)' }, g)
+          : paper(g, [['path', { d: 'M-22 0 L-38 -12 L-38 12 Z', fill: c }], ['ellipse', { cx: 0, cy: 0, rx: 24, ry: 13, fill: c }], ['circle', { cx: 12, cy: -3, r: 3, fill: C.ink }]])), { scale: 1.2 });
         fish.push(f);
       });
       turtleReset(); tp.swim(true); put(turtle, R10.x0, R10.y, 1.35);
@@ -1100,7 +1121,9 @@
       }
       rabbitReset(); rp.setEyes('closed'); rp.sleepy(true); faceL(rabbit);
       put(rabbit, 520, 262, .78, top);
-      paper(top, [['path', { d: 'M-100 0 Q-40 -70 100 -10 Q40 60 -100 0 Z', fill: C.leaf, transform: 'translate(525 236) rotate(-8) scale(.62)' }]]); // 대사의 '나뭇잎 이불' (그림 속 크림색 이불 위에)
+      const leaf2 = el('g', { transform: 'translate(525 236) rotate(-8) scale(.62)' }, top); // 대사의 '나뭇잎 이불' (그림 속 크림색 이불 위에)
+      if (ART.leaf_blanket) el('image', { href: A(ART.leaf_blanket), x: -110, y: -70, width: 220, height: 129, filter: 'url(#pp)' }, leaf2);
+      else paper(leaf2, [['path', { d: 'M-100 0 Q-40 -70 100 -10 Q40 60 -100 0 Z', fill: C.leaf }]]);
       aud.owl.reset(); put(aud.owl, 790, 262, .7, top);
       if (oneBG) oneBG(bot); // 아래도 같은 그림 (위와 이어진다)
       else {
@@ -1131,12 +1154,14 @@
     /* ===== 3막 — 결승선 ===== */
     /* --- 12. 꼬끼오! --- */
     await scene('꼬끼오!', () => {
-      sky(T, C.amber);
-      el('rect', { x: -300, y: -300, width: 1600, height: 420, fill: '#F6C27A' }, T.bg);
-      paper(T.bg, [['circle', { cx: 780, cy: 380, r: 90, fill: C.persimmon }]]);
-      paper(T.bg, [['path', { d: 'M-300 380 Q200 320 600 370 Q900 330 1300 370 V800 H-300 Z', fill: '#8a8f4a' }]]);
-      paper(T.bg, [['rect', { x: -300, y: 470, width: 1600, height: 20, fill: C.bark }], ['rect', { x: -300, y: 420, width: 1600, height: 16, fill: C.bark }], ...[60, 240, 760, 940].map(x => ['rect', { x, y: 390, width: 22, height: 170, fill: '#5a3d29' }])]);
-      paper(T.bg, [['rect', { x: -300, y: 490, width: 1600, height: 100, fill: C.grass }]]);
+      if (!artBG(T, 'bg_dusk')) { // 그림 노을(해·언덕·울타리·풀밭)이 없으면 임시 도형
+        sky(T, C.amber);
+        el('rect', { x: -300, y: -300, width: 1600, height: 420, fill: '#F6C27A' }, T.bg);
+        paper(T.bg, [['circle', { cx: 780, cy: 380, r: 90, fill: C.persimmon }]]);
+        paper(T.bg, [['path', { d: 'M-300 380 Q200 320 600 370 Q900 330 1300 370 V800 H-300 Z', fill: '#8a8f4a' }]]);
+        paper(T.bg, [['rect', { x: -300, y: 470, width: 1600, height: 20, fill: C.bark }], ['rect', { x: -300, y: 420, width: 1600, height: 16, fill: C.bark }], ...[60, 240, 760, 940].map(x => ['rect', { x, y: 390, width: 22, height: 170, fill: '#5a3d29' }])]);
+        paper(T.bg, [['rect', { x: -300, y: 490, width: 1600, height: 100, fill: C.grass }]]);
+      }
       seat([['rooster', 500, 474, 2.1]]);
       bar.show(true); setRace(race.r, .9, 0);
     });
@@ -1168,9 +1193,17 @@
       seat(KINDS.map((k, i) => [k, 70 + i * 122, 336, .55]));
       }
       for (let r = 0; r < 6; r++) el('rect', { x: 760 + (r % 2) * 14, y: 400 + r * 18, width: 14, height: 18, fill: C.snow }, T.bg);
-      paper(T.world, [['rect', { x: 800, y: 60, width: 18, height: 440, fill: C.bark }]]);
-      paper(T.world, [['rect', { x: 818, y: 70, width: 170, height: 64, fill: C.snow }], ...Array.from({ length: 24 }, (_, i) => ['rect', { x: 818 + (i % 8) * 21.25, y: 70 + Math.floor(i / 8) * 21.3, width: 21.25, height: 21.3, fill: (i + Math.floor(i / 8)) % 2 ? C.ink : C.snow }]),
-        ['rect', { x: 845, y: 84, width: 116, height: 38, rx: 8, fill: C.cream }], ['text', { x: 903, y: 113, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '결승' }]]);
+      if (ART.finish_post) {
+        /* 그림 결승 기둥+체크 깃발(770×884, 기둥이 왼쪽 끝 x 12~63, 빈 판 x 258~553 · y 115~275): 기둥 높이 440(y 60~500)에 맞추면 깃발이 383 폭이라
+           무대 오른쪽 밖으로 나가므로 좌우를 뒤집어 깃발이 길 위(왼쪽)로 나부끼게 한다. 기둥 가운데가 x 800. 글자는 빈 판에 코드로 */
+        const s = 440 / 884, w = 770 * s, x0 = 800 - 38 * s;
+        el('image', { href: A(ART.finish_post), x: x0, y: 60, width: w, height: 440, filter: 'url(#pp)' }, el('g', { transform: `matrix(-1,0,0,1,${(2 * x0 + w).toFixed(1)},0)` }, T.world));
+        el('text', { x: (x0 + w - 405 * s).toFixed(1), y: 60 + 195 * s + 11, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '결승' }, T.world);
+      } else {
+        paper(T.world, [['rect', { x: 800, y: 60, width: 18, height: 440, fill: C.bark }]]);
+        paper(T.world, [['rect', { x: 818, y: 70, width: 170, height: 64, fill: C.snow }], ...Array.from({ length: 24 }, (_, i) => ['rect', { x: 818 + (i % 8) * 21.25, y: 70 + Math.floor(i / 8) * 21.3, width: 21.25, height: 21.3, fill: (i + Math.floor(i / 8)) % 2 ? C.ink : C.snow }]),
+          ['rect', { x: 845, y: 84, width: 116, height: 38, rx: 8, fill: C.cream }], ['text', { x: 903, y: 113, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '결승' }]]);
+      }
       turtleReset(); put(turtle, 540, 476, 1.5);
       rabbitReset(); rp.pose('run'); put(rabbit, -200, 472, 1);
       tapeTop = el('rect', { x: 786, y: 376, width: 8, height: 50, fill: C.bean }, T.world);
@@ -1229,7 +1262,10 @@
       bar.show(false);
       standsBG(T);
       seat(KINDS.map((k, i) => [k, 90 + i * 117, 330, .72]));
-      paper(T.world, [['rect', { x: 410, y: 400, width: 180, height: 100, fill: C.gold }], ['text', { x: 500, y: 470, 'text-anchor': 'middle', 'font-size': 56, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }]]);
+      if (ART.podium) { // 그림 시상대(834×607: 윗면 y 12~264, 앞판 크림 x 100~720 · y 290~560) 180 폭 — 거북이 발끝 y 402가 윗면에 오게, 숫자는 앞판에 코드로
+        el('image', { href: A(ART.podium), x: 410, y: 369, width: 180, height: 131, filter: 'url(#pp)' }, T.world);
+        el('text', { x: 498, y: 478, 'text-anchor': 'middle', 'font-size': 50, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }, T.world);
+      } else paper(T.world, [['rect', { x: 410, y: 400, width: 180, height: 100, fill: C.gold }], ['text', { x: 500, y: 470, 'text-anchor': 'middle', 'font-size': 56, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }]]);
       turtleReset(); put(turtle, 490, 402, 1.25);
       rabbitReset(); put(rabbit, 150, 500, 1);
       racc = actor(T.world, 860, 500, g => drawRaccoon(T, g), { scale: ART.raccoon ? .9 : .95 });
