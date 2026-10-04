@@ -11,25 +11,32 @@
   /* ================= 페이퍼아트 그림 (assets/v3w/lm_*.webp) =================
      null이거나 파일을 못 불러오면 그 자리는 아래 임시 도형(그레이박스)으로 그린다. 새 그림이 나오면 여기 한 줄만 바꾸면 된다.
      배경은 장면마다 한 장을 무대에 꽉 채워 깐다. 밤 두 장은 그림책 밤처럼 밝게 구웠다(감마).
-     비교 판(boardBG)·발자국/이빨 카드·큰 발(발가락=생쥐)·그물 밧줄·좁은 구멍은 코드 그림 그대로. */
+     비교 판 배경(lm_bg_board)·큰 발(paw_pad + 따로 오린 발가락 paw_toe)·이빨 카드·그루터기 구멍·밤 숲 그물·아래서 본 사자 가슴은 그림. 발자국 카드·끊는 밧줄은 코드 그대로. */
   const AS = '../../assets/';
   const BG = {
     savanna: 'v3w/lm_bg_savanna.webp', grass: 'v3w/lm_bg_grass.webp', lowangle: 'v3w/lm_bg_lowangle.webp',
     night_forest: 'v3w/lm_bg_night_forest.webp', night_net: 'v3w/lm_bg_night_net.webp', morning: 'v3w/lm_bg_morning.webp',
+    board: 'v3w/lm_bg_board.webp',
   };
   /* 배우·소품·컷 (사자·생쥐는 모두 왼쪽을 본다)
      - lion_sleep: 뜬 눈으로 나와서 감은 눈(‿)으로 고쳐 칠함
      - lion_head_yawn · _laugh: 앉은 몸까지 나와서 갈기 테두리 안(얼굴·갈기)만 오림
      - lion_paw: 머리 달린 다리로 나와서 머리를 잘라 내고 기둥을 위로 늘임
      - lion_stand: 다시 뽑은 선 사자 (웃는 눈). 갈기 지름을 누운 사자와 같게, 등 위 (52,-121)에 생쥐가 탄다
-     - cut_gnaw: 그물을 다 끊은 뒤 '싹둑' 컷으로 새로 넣음 (목소리 없음, 갉는 소리) */
+     - cut_gnaw: 그물을 다 끊은 뒤 '싹둑' 컷으로 새로 넣음 (목소리 없음, 갉는 소리)
+     - cut_net2: 다시 뽑은 그물 컷(그물 아래 걱정하는 얼굴). cut_paw2는 사자 몸과 떨어진 커다란 발이 위에서 내려와 안 씀(다시 뽑기 lm_cut_paw3)
+     - lion_chest: 아래서 본 가슴(잡혔다 장면, 머리 그림 뒤) · net: 밤 숲 그물(마젠타 키잉, 밧줄색으로) · hole_stump: 그루터기 구멍
+     - paw_pad: 발가락 넷 달린 발 그림에서 오른쪽 끝 발가락을 오려 내(paw_toe) 코드가 그 자리에 따로 얹고 통통 튀게 한다
+     - tooth_lion · tooth_mouse: 연두 번짐을 상아색으로 */
   const ART = {
     lion_sleep: 'v3w/lm_lion_sleep.webp', lion_lie_awake: 'v3w/lm_lion_lie_awake.webp',
     lion_head_yawn: 'v3w/lm_lion_head_yawn.webp', lion_head_laugh: 'v3w/lm_lion_head_laugh.webp',
     lion_stand: 'v3w/lm_lion_stand.webp',
     lion_paw: 'v3w/lm_lion_paw.webp',
     mouse_walk: 'v3w/lm_mouse_walk.webp', mouse_pray: 'v3w/lm_mouse_pray.webp', mouse_run: 'v3w/lm_mouse_run.webp', mouse_gnaw: 'v3w/lm_mouse_gnaw.webp',
-    cut_paw: 'v3w/lm_cut_paw.webp', cut_laugh: 'v3w/lm_cut_laugh.webp', cut_net: 'v3w/lm_cut_net.webp', cut_gnaw: 'v3w/lm_cut_gnaw.webp',
+    cut_paw: 'v3w/lm_cut_paw.webp', cut_laugh: 'v3w/lm_cut_laugh.webp', cut_net: 'v3w/lm_cut_net2.webp', cut_gnaw: 'v3w/lm_cut_gnaw.webp',
+    lion_chest: 'v3w/lm_lion_chest.webp', net: 'v3w/lm_net.webp', hole_stump: 'v3w/lm_hole_stump.webp',
+    paw_pad: 'v3w/lm_paw_pad.webp', paw_toe: 'v3w/lm_paw_toe.webp', tooth_lion: 'v3w/lm_tooth_lion.webp', tooth_mouse: 'v3w/lm_tooth_mouse.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -42,7 +49,7 @@
     return wrap;
   }
   const BG_EDGE = { savanna: ['#bbd1cb', '#85623c'], grass: ['#cae1da', '#5d3a11'], lowangle: ['#ccdfda', '#3d250b'],
-    night_forest: ['#02506e', '#1e4d47'], night_net: ['#023a65', '#635130'], morning: ['#cadcd6', '#7f7349'] };
+    night_forest: ['#02506e', '#1e4d47'], night_net: ['#023a65', '#635130'], morning: ['#cadcd6', '#7f7349'], board: ['#c9d9d2', '#7a5a34'] };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   function bgImage(T, key, parent) {
     const u = bgUrl(key); if (!u) return null;
@@ -244,6 +251,7 @@
   }
   function boardBG(T) {
     const { el, paper } = T, b = T.bg;
+    if (bgImage(T, 'board')) return true; // 그림: 크림 판은 무대 x 139~866, y 23~514
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: C.cream }, b);
     paper(b, [['rect', { x: 60, y: 40, width: 880, height: 440, rx: 16, fill: '#EFE0BD' }]]);
     paper(b, [['rect', { x: -200, y: 470, width: 1400, height: 200, fill: '#B98F4A' }]]);
@@ -403,7 +411,12 @@
     await T.sceneCard('잡혔다!', () => {
       T.clear(); lowAngleBG(T);
       if (T.portrait()) camSnap(500, 280, 1);
-      T.paper(T.world, [['ellipse', { cx: 560, cy: 40, rx: 330, ry: 190, fill: artUrl('lion_head_yawn') ? '#E8A92C' : C.lionDk }]]); // 올려다본 사자 가슴 (그림이면 그림 몸 빛깔)
+      // 올려다본 사자 가슴: 그림(갈기 테두리+크림 배)을 타원으로 오려 넣고, 없으면 타원 (그림이면 그림 몸 빛깔)
+      if (artUrl('lion_chest')) {
+        const cid = 'lmChestClip' + Date.now(), cg = el('g', { filter: 'url(#pp)' }, T.world);
+        el('ellipse', { cx: 560, cy: 40, rx: 330, ry: 190 }, el('clipPath', { id: cid }, cg));
+        el('image', { href: artUrl('lion_chest'), x: 180, y: -230, width: 760, height: 760 * 623 / 720, preserveAspectRatio: 'none', 'clip-path': `url(#${cid})` }, cg);
+      } else T.paper(T.world, [['ellipse', { cx: 560, cy: 40, rx: 330, ry: 190, fill: artUrl('lion_head_yawn') ? '#E8A92C' : C.lionDk }]]);
       const hg = el('g', { transform: 'translate(330,175) scale(1.75)' }, T.world);
       head = drawHead(T, hg); head.eyes('sleepy');
       mouse = mk(T, T.world, 490, 520, drawMouse, 2.1);
@@ -460,10 +473,22 @@
     await T.sceneCard('누가 더 클까?', () => { T.clear(); camSnap(500, 280, 1); boardBG(T); });
     // 사자 발가락 하나 = 생쥐 한 마리
     const bigPaw = el('g', {}, T.world);
-    T.paper(bigPaw, [['ellipse', { cx: 370, cy: 400, rx: 130, ry: 80, fill: C.lion }]]);
-    const toes = [[250, 280], [325, 240], [415, 240], [490, 280]].map(([x, y]) => T.paper(bigPaw, [['circle', { cx: x, cy: y, r: 40, fill: C.lionDk }]]));
-    mouse = mk(T, T.world, 650, 322, drawMouse, 1.3);
-    el('rect', { x: 560, y: 322, width: 180, height: 14, rx: 6, fill: C.bark }, T.world);
+    let toes;
+    // 세로 화면(보이는 폭 ≈260): 발을 조금 작게, 생쥐를 가까이, 살짝 물러서서 둘 다 보이게
+    const PT = T.portrait(), PW = PT ? 280 : 320, PX = PT ? 335 : 210, PY = PT ? 130 : 140, MX = PT ? 640 : 650;
+    if (artUrl('paw_pad') && artUrl('paw_toe')) { // 그림: 발(발가락 셋) + 따로 오린 넷째 발가락 (0.8493, 0.3791 자리, 폭 .2443 높이 .2712)
+      const PH = PW * 471 / 400;
+      pic(T, bigPaw, 'paw_pad', PX, PY, PW, PH);
+      const tw = PW * .2443, th = PH * .2712, toeG = el('g', {}, bigPaw);
+      pic(T, toeG, 'paw_toe', PX + PW * .8493 - tw / 2, PY + PH * .3791 - th / 2, tw, th);
+      toes = [null, null, null, toeG];
+    } else {
+      T.paper(bigPaw, [['ellipse', { cx: 370, cy: 400, rx: 130, ry: 80, fill: C.lion }]]);
+      toes = [[250, 280], [325, 240], [415, 240], [490, 280]].map(([x, y]) => T.paper(bigPaw, [['circle', { cx: x, cy: y, r: 40, fill: C.lionDk }]]));
+    }
+    mouse = mk(T, T.world, MX, 322, drawMouse, 1.3);
+    el('rect', { x: MX - 90, y: 322, width: 180, height: 14, rx: 6, fill: C.bark }, T.world);
+    if (PT) camSnap(500, 280, .75);
     await say('사자 발과 생쥐를 나란히 놓아 볼까요?');
     const toe = toes[3]; toe.style.filter = 'url(#hintGlow)';
     toe.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 700, iterations: 2 });
@@ -472,18 +497,22 @@
     toe.style.filter = '';
     bigPaw.remove(); mouse.pos.remove(); T.world.innerHTML = '';
 
+    // 세로 화면(보이는 폭 ≈260 → 물러서도 520): 카드를 좁게(240) 가운데 가까이(500±125) 두어 둘 다 보이게
+    const CW = T.portrait() ? 240 : 300, CK = CW / 300;
     const card = (x, drawIn) => {
       const g = el('g', {}, T.world);
-      T.paper(g, [['rect', { x: x - 150, y: 110, width: 300, height: 300, rx: 24, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }]]);
-      drawIn(g, x, 260); return g;
+      T.paper(g, [['rect', { x: x - CW / 2, y: 110, width: CW, height: 300, rx: 24, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }]]);
+      const inner = CK < 1 ? el('g', { transform: `translate(${x},260) scale(${CK}) translate(${-x},-260)` }, g) : g;
+      drawIn(inner, x, 260); return g;
     };
     const lionPrint = (g, x, y) => T.paper(g, [['ellipse', { cx: x, cy: y + 30, rx: 62, ry: 48, fill: C.bark }], ...[-60, -22, 22, 60].map((dx, k) => ['ellipse', { cx: x + dx, cy: y - 42 - (k === 1 || k === 2 ? 14 : 0), rx: 20, ry: 25, fill: C.bark }])]);
     const mousePrint = (g, x, y) => T.paper(g, [['circle', { cx: x, cy: y + 10, r: 16, fill: C.bark }], ...[-18, -7, 7, 18].map(dx => ['circle', { cx: x + dx, cy: y - 16, r: 6.5, fill: C.bark }])]);
-    const lionTooth = (g, x, y) => T.paper(g, [['path', { d: `M${x - 50} ${y - 90} L${x + 50} ${y - 90} L${x} ${y + 100} Z`, fill: C.snow, stroke: C.ink, 'stroke-width': 3 }]]);
-    const mouseTooth = (g, x, y) => T.paper(g, [['rect', { x: x - 15, y: y - 18, width: 14, height: 32, rx: 3, fill: C.snow, stroke: C.ink, 'stroke-width': 2 }], ['rect', { x: x + 1, y: y - 18, width: 14, height: 32, rx: 3, fill: C.snow, stroke: C.ink, 'stroke-width': 2 }]]);
+    const lionTooth = (g, x, y) => pic(T, g, 'tooth_lion', x - 39, y - 120, 78, 240) || T.paper(g, [['path', { d: `M${x - 50} ${y - 90} L${x + 50} ${y - 90} L${x} ${y + 100} Z`, fill: C.snow, stroke: C.ink, 'stroke-width': 3 }]]);
+    const mouseTooth = (g, x, y) => pic(T, g, 'tooth_mouse', x - 40, y - 43, 80, 86) || T.paper(g, [['rect', { x: x - 15, y: y - 18, width: 14, height: 32, rx: 3, fill: C.snow, stroke: C.ink, 'stroke-width': 2 }], ['rect', { x: x + 1, y: y - 18, width: 14, height: 32, rx: 3, fill: C.snow, stroke: C.ink, 'stroke-width': 2 }]]);
+    const OX = T.portrait() ? 95 : 120; // 주인은 카드 오른쪽 아래
     const owner = (who, x) => who === LION
-      ? (() => { const g = el('g', { transform: `translate(${x + 120},390) scale(.75)` }, T.world); drawHead(T, g).eyes('happy'); return g; })()
-      : mk(T, T.world, x + 120, 450, drawMouse, 1.3).pos;
+      ? (() => { const g = el('g', { transform: `translate(${x + OX},390) scale(.75)` }, T.world); drawHead(T, g).eyes('happy'); return g; })()
+      : mk(T, T.world, x + OX, 450, drawMouse, 1.3).pos;
     const rounds = [
       { q: '더 큰 발자국은 어느 쪽일까요?', prompt: '더 큰 발자국을 톡 눌러 봐요!', ans: LION, thing: '발자국',
         draw: { [LION]: lionPrint, [MOUSE]: mousePrint }, where: '두 발자국을 잘 봐요. 어느 쪽이 더 커다랗지?' },
@@ -491,8 +520,8 @@
         draw: { [LION]: lionTooth, [MOUSE]: mouseTooth }, where: '콩알처럼 조그만 이빨을 찾아봐요!' },
     ];
     for (const r of rounds) {
-      const lionLeft = Math.random() < .5;
-      const xs = { [LION]: lionLeft ? 290 : 710, [MOUSE]: lionLeft ? 710 : 290 };
+      const lionLeft = Math.random() < .5, CL = T.portrait() ? 375 : 290, CR = T.portrait() ? 625 : 710;
+      const xs = { [LION]: lionLeft ? CL : CR, [MOUSE]: lionLeft ? CR : CL };
       const cards = { [LION]: card(xs[LION], r.draw[LION]), [MOUSE]: card(xs[MOUSE], r.draw[MOUSE]) };
       await say(r.q);
       const other = r.ans === LION ? MOUSE : LION;
@@ -506,31 +535,35 @@
       T.world.innerHTML = '';
       o1.remove(); o2.remove();
     }
-    // 좁은 구멍
-    T.paper(T.world, [['rect', { x: 430, y: 150, width: 140, height: 320, rx: 10, fill: '#8A6344' }]]);
-    el('path', { d: 'M470 470 Q470 420 500 420 Q530 420 530 470 Z', fill: C.ink }, T.world);
-    const bl = mk(T, T.world, 230, 470, drawLionStand, .8); bl.face('right'); bl.parts.eyes('open');
-    const sm = mk(T, T.world, 790, 470, drawMouse, 1.4);
+    // 좁은 구멍: 그루터기 그림(구멍은 밑동 가운데) — 세로 화면은 셋이 다 보이게 조금 모으고 물러선다
+    const HP = T.portrait(), HX = HP ? 546 : 500, LX = HP ? 280 : 230, SMX = HP ? 740 : 790;
+    if (!pic(T, T.world, 'hole_stump', HX - 126, 130, 252, 340)) {
+      T.paper(T.world, [['rect', { x: HX - 70, y: 150, width: 140, height: 320, rx: 10, fill: '#8A6344' }]]);
+      el('path', { d: `M${HX - 30} 470 Q${HX - 30} 420 ${HX} 420 Q${HX + 30} 420 ${HX + 30} 470 Z`, fill: C.ink }, T.world);
+    }
+    if (HP) camSnap(500, 280, .42);
+    const bl = mk(T, T.world, LX, 470, drawLionStand, .8); bl.face('right'); bl.parts.eyes('open');
+    const sm = mk(T, T.world, SMX, 470, drawMouse, 1.4);
     await say('좁은 구멍이 있어요. 쏙 들어갈 수 있는 건 누구일까요?');
     await T.choose([
       { el: sm.pos, ok: true },
       { el: bl.pos, ok: false, onWrong: async () => {
-        await bl.move(300, 470, 500);
-        AudioFX.sfx('bonk') || T.tone([300, 150], .2); T.shake(); T.pop(430, 250, '쿵!');
+        await bl.move(LX + 70, 470, 500);
+        AudioFX.sfx('bonk') || T.tone([300, 150], .2); T.shake(); T.pop(HX - 70, 250, '쿵!');
         bl.parts.eyes('shut');
         await sleep(700);
         bl.parts.eyes('open');
-        await bl.move(230, 470, 500);
+        await bl.move(LX, 470, 500);
       } },
     ], { prompt: '구멍에 쏙 들어갈 친구를 톡 눌러 봐요!', where: '사자는 너무 커서 코가 쿵! 부딪혀요. 작은 친구는 누구지?',
       who: `${josa(MOUSE, '이/가')} 들어갈 수 있어요. 반짝이는 친구를 눌러 봐요!` });
     squeak(T);
-    await sm.move(520, 470, 500);
+    await sm.move(HX + 20, 470, 500);
     T.tone([900, 400], .2, { type: 'sine', vol: .12 });
-    T.pop(500, 380, '쏙!', C.pine);
+    T.pop(HX, 380, '쏙!', C.pine);
     sm.pos.style.opacity = '0';
     await sleep(600);
-    sm.pos.style.opacity = '1'; await sm.move(620, 470, 400); sm.hop(20);
+    sm.pos.style.opacity = '1'; await sm.move(HX + 120, 470, 400); sm.hop(20);
     await say('맞아요! 작은 생쥐는 좁은 구멍도 쏙!');
     await say('크면 큰 대로, 작으면 작은 대로 다 쓸모가 있어요.');
 
@@ -538,12 +571,14 @@
     await T.sceneCard('밤 숲', () => {
       T.clear(); nightHighBG(T);
       lion = mk(T, T.world, 560, 420, drawLionLie, 1.3); lion.parts.eyes('open');
-      const clip = el('clipPath', { id: 'lmNetClip' }, T.fx);
-      el('ellipse', { cx: 570, cy: 330, rx: 270, ry: 150 }, clip);
-      const net = el('g', { 'clip-path': 'url(#lmNetClip)', stroke: C.rope, 'stroke-width': 5 }, T.world);
-      for (let k = -8; k < 16; k++) {
-        el('line', { x1: 200 + k * 50, y1: 150, x2: 200 + k * 50 + 300, y2: 500 }, net);
-        el('line', { x1: 200 + k * 50, y1: 150, x2: 200 + k * 50 - 300, y2: 500 }, net);
+      if (!pic(T, T.world, 'net', 250, 160, 620, 620 * 512 / 1000)) { // 그물 그림(둥근 지붕꼴)이 사자를 덮는다
+        const clip = el('clipPath', { id: 'lmNetClip' }, T.fx);
+        el('ellipse', { cx: 570, cy: 330, rx: 270, ry: 150 }, clip);
+        const net = el('g', { 'clip-path': 'url(#lmNetClip)', stroke: C.rope, 'stroke-width': 5 }, T.world);
+        for (let k = -8; k < 16; k++) {
+          el('line', { x1: 200 + k * 50, y1: 150, x2: 200 + k * 50 + 300, y2: 500 }, net);
+          el('line', { x1: 200 + k * 50, y1: 150, x2: 200 + k * 50 - 300, y2: 500 }, net);
+        }
       }
       mouse = mk(T, T.world, 120, 520, drawMouse, 1.2);
       mouse.face('right');
@@ -597,6 +632,7 @@
     const cutRope = i => {
       q = q.then(async () => {
         const x = ROPES[i];
+        if (T.portrait()) camTo(x, 280, 1, 220); // 세로 화면: 카메라가 생쥐를 따라 옆으로
         if (i > 0) { squeak(T, 1500); mouse.hop(20, 220); await mouse.move(x - 52, 545, 220); }
         mouse.parts.teeth.setAttribute('opacity', 1);
         gnaw(T); T.tone([2600, 2000], .05, { type: 'square', vol: .05, when: .1 });

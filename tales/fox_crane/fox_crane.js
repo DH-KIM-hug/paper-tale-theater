@@ -35,6 +35,7 @@
      - plate_empty + plate_soup: 납작 접시를 빈 접시와 국물 한 장으로 나눈 것 (핥핥 → 국물이 줄어든다)
      - cut_stuck: 다시 뽑은 그림(여우 코가 키 큰 병에 쏙 낌)
      - mouth_*: 입 모양 카드용 얼굴 (나비의 빨대 입은 그림에 없어서 코드로 덧그린다)
+     - feast_table: 잔치 식탁(빨간 천, 손님 앞) · invite: 초대장 봉투 — 코드 도형을 대신하는 그림
      - 쓰지 않는 그림: crane_peck (고개를 바닥까지 숙인 자세 — 이 동화의 접시·병은 높이 있어서 목 돌리기로 대신) */
   const AS = '../../assets/';
   const BG = {
@@ -49,6 +50,7 @@
     bottle: 'v3w/fc_bottle.webp', bowl: 'v3w/fc_bowl.webp', flower: 'v3w/fc_flower.webp',
     mouth_crane: 'v3w/fc_mouth_crane.webp', mouth_fox: 'v3w/fc_mouth_fox.webp', mouth_duck: 'v3w/fc_mouth_duck.webp', mouth_butterfly: 'v3w/fc_mouth_butterfly.webp',
     cut_peck: 'v3w/fc_cut_peck.webp', cut_lick: 'v3w/fc_cut_lick.webp', cut_stuck: 'v3w/fc_cut_stuck.webp', cut_sorry: 'v3w/fc_cut_sorry.webp',
+    feast_table: 'v3w/fc_feast_table.webp', invite: 'v3w/fc_invite.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -60,6 +62,7 @@
     duck: [-60.7, -129.4, 121.8, 130], butterfly: [-60, -129, 120, 86.2], pot: [-115.2, -219.2, 230, 219.5],
     plate: [-90, -64.1, 180, 64.1], plate_empty: [-90, -64.1, 180, 64.1], plate_soup: [-90, -64.1, 180, 64.1],
     bottle: [-45.1, -186, 90, 186], bowl: [-74.1, -98.3, 150, 98.2], flower: [-55.4, -135, 86.3, 135],
+    invite: [-52, -68, 104, 104 * 143 / 220], feast_table: [30, 392, 940, 940 * 284 / 1200],
   };
   const FOX_ART_NOSE = [-101, -96.5], FOX_STUCK_NOSE = [-66.9, -93.2];
   const CRANE_ART_PIV = [-24.2, -143.3], CRANE_ART_TIP = [-76, -221];
@@ -300,7 +303,7 @@
     return { spoon, bubbles };
   }
   function drawInvite(T, g) {
-    T.paper(g, [
+    if (!pic(T, g, 'invite')) T.paper(g, [
       ['rect', { x: -44, y: -60, width: 88, height: 60, rx: 5, fill: C.cream, stroke: C.gold, 'stroke-width': 3 }],
       ['path', { d: 'M-44 -60 L0 -26 L44 -60', stroke: C.gold, 'stroke-width': 3, fill: 'none' }],
       ['circle', { cx: 0, cy: -26, r: 9, fill: C.bean }],
@@ -455,6 +458,7 @@
     }
   }
   function feastTable(T, parent) {
+    if (pic(T, parent, 'feast_table')) return; // 그림: 빨간 천 식탁, 손님 발을 가린다
     T.paper(parent, [
       ['rect', { x: 30, y: 394, width: 940, height: 20, rx: 6, fill: C.wall }],
       ['rect', { x: 40, y: 412, width: 920, height: 96, fill: C.bean }],
@@ -544,19 +548,22 @@
 
     /* --- 1. 초대장 (숲길 와이드) --- */
     forestBG(T);
-    fox = guest(T, T.world, 'fox', 300, 480, 1.1); fox.face('right');
-    crane = guest(T, T.world, 'crane', 740, 480, 1.1);
-    const inv = actor(T.world, 520, 440, g => drawInvite(T, g), { scale: 1.3 });
+    // 세로 화면(보이는 폭 ≈260): 여우·두루미를 가운데로 모아 둘 다 보이게
+    const P1 = T.portrait(), FX1 = P1 ? 380 : 300, CX1 = P1 ? 640 : 740;
+    fox = guest(T, T.world, 'fox', FX1, 480, 1.1); fox.face('right');
+    crane = guest(T, T.world, 'crane', CX1, 480, 1.1);
+    const inv = actor(T.world, P1 ? 505 : 520, 440, g => drawInvite(T, g), { scale: 1.3 });
+    if (P1) camSnap(500, 280, .78);
     await T.curtain(true);
     await say('숲속에 여우랑 두루미가 살았어요.');
     await say('여우가 초대장을 가져왔어요. 초대장을 톡 눌러 봐요!');
     await T.tap(inv.pos, { prompt: '초대장을 톡 눌러서 두루미에게 줘요!' });
     sfx(T, 'whoosh');
-    await inv.move(650, 400, 700);
+    await inv.move(CX1 - 90, 400, 700);
     sfx(T, 'ding');
     craneCall(T);
     await crane.hop(80, 600);
-    T.pop(740, 180, '폴짝!', C.pine);
+    T.pop(CX1, 180, '폴짝!', C.pine);
     await crane.hop(60, 500);
     await say('"와, 고마워!" 두루미가 긴 다리로 폴짝 뛰었어요.');
 
@@ -759,19 +766,22 @@
     let plateL, bottleR;
     await T.sceneCard('왜 못 먹었을까?', () => {
       T.clear(); splitBG(T);
-      crane = guest(T, T.world, 'crane', 150, 480, .95); crane.face('right');
-      plateL = dish(T, T.world, 'plate', 300, 480, .9);
-      fox = guest(T, T.world, 'fox', 870, 480, 1.0);
-      bottleR = dish(T, T.world, 'bottle', 700, 480, .95);
+      // 세로 화면: 양쪽을 가운데로 모으고 물러서서 두루미·접시·병·여우가 다 보이게
+      const SP = T.portrait();
+      crane = guest(T, T.world, 'crane', SP ? 310 : 150, 480, .95); crane.face('right');
+      plateL = dish(T, T.world, 'plate', SP ? 405 : 300, 480, .9);
+      fox = guest(T, T.world, 'fox', SP ? 700 : 870, 480, 1.0);
+      bottleR = dish(T, T.world, 'bottle', SP ? 600 : 700, 480, .95);
+      if (SP) camSnap(500, 280, .5);
       crane.parts.sadDeg = 15; mood(crane, 'sad');
       mood(fox, 'sad');
     }, fox.pos);
     await say('둘 다 못 먹었어요. 왜 그랬을까요?');
     const qs = [
       { who: crane, q: '두루미는 부리가 길쭉해요. 어떤 그릇이 좋을까요?', ok: 'bottle', no: 'plate',
-        where: '길쭉한 부리가 쏙 들어가는 그릇을 찾아봐요!', old: () => plateL, at: [280, 480] },
+        where: '길쭉한 부리가 쏙 들어가는 그릇을 찾아봐요!', old: () => plateL, at: [T.portrait() ? 405 : 280, 480] },
       { who: fox, q: '여우는 입이 짧아요. 혀로 핥아 먹어요. 어떤 그릇이 좋을까요?', ok: 'plate', no: 'bottle',
-        where: '혀로 핥기 좋은 납작한 그릇을 찾아봐요!', old: () => bottleR, at: [720, 480] },
+        where: '혀로 핥기 좋은 납작한 그릇을 찾아봐요!', old: () => bottleR, at: [T.portrait() ? 600 : 720, 480] },
     ];
     for (const r of qs) {
       const up = Math.random() < .5;

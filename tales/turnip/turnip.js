@@ -20,15 +20,17 @@
      - sprout: 밑에 깔린 받침 덩어리를 잘라 내고 잎 + 흰 머리만
      - cow · pig: 고르기 배지의 틀린 답. 토끼와 거북이 관객 그림(rab_aud_*)을 같이 쓴다
      - grandpa_sit: 다시 뽑은 엉덩방아 그림 (발 뻗고 앉음, 기준점 = 엉덩이)
-     - cut_pop: 못 씀(순무 둘레에 얼굴 달린 순무가 잔뜩) → 슬로모션 세 컷 모두 코드 컷(순무는 그림) */
+     - cut_pop: 다시 뽑은 쑥! 컷(tn_cut_pop2 — 얼굴 없는 순무 하나가 쑥, 여섯이 벌렁). 영~·차~ 두 컷은 코드 컷(순무는 그림)
+     - bush(덤불, 마젠타 키잉) · table(잔치 상) · soup_bowl(국 그릇): 코드 도형을 대신하는 그림. 씨앗 그림(tn_seed)은 연두 덩어리로 나와 안 씀 */
   const ART = {
     turnip: 'v3w/tn_turnip.webp', sprout: 'v3w/tn_sprout.webp', pot: 'v3w/tn_pot.webp', watering_can: 'v3w/tn_watering_can.webp',
+    bush: 'v3w/tn_bush.webp', table: 'v3w/tn_table.webp', soup_bowl: 'v3w/tn_soup_bowl.webp',
     grandpa_stand: 'v3w/tn_grandpa_stand.webp', grandpa_pull: 'v3w/tn_grandpa_pull.webp',
     grandpa_sit: 'v3w/tn_grandpa_sit.webp',
     grandma_stand: 'v3w/tn_grandma_stand.webp', grandma_pull: 'v3w/tn_grandma_pull.webp', girl_pull: 'v3w/tn_girl_pull.webp',
     dog_pull: 'v3w/tn_dog_pull.webp', dog_jump: 'v3w/tn_dog_jump.webp', cat_pull: 'v3w/tn_cat_pull.webp', cat_sit: 'v3w/tn_cat_sit.webp',
     mouse_pull: 'v3w/tn_mouse_pull.webp', cow: 'v3w/rab_aud_cow.webp', pig: 'v3w/rab_aud_pig.webp',
-    cut_glare: 'v3w/tn_cut_glare.webp', cut_pop: null,
+    cut_glare: 'v3w/tn_cut_glare.webp', cut_pop: 'v3w/tn_cut_pop2.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -486,7 +488,7 @@
     const hole = el('ellipse', { cx: 430, cy: 470, rx: 40, ry: 12, fill: '#3E2A1A' }, T.world);
     const seed = el('g', {}, T.world);
     el('circle', { cx: 0, cy: 0, r: 46, fill: '#fff', opacity: 0 }, seed);
-    T.paper(seed, [['ellipse', { cx: 0, cy: 0, rx: 13, ry: 17, fill: C.bark }], ['ellipse', { cx: -4, cy: -5, rx: 4, ry: 6, fill: '#9C7550' }]]);
+    T.paper(seed, [['ellipse', { cx: 0, cy: 0, rx: 19, ry: 25, fill: C.bark }], ['ellipse', { cx: -6, cy: -8, rx: 6, ry: 9, fill: '#9C7550' }]]); // 첫 탭 목표라 눈에 띄게 크게 (씨앗 그림은 못 씀)
     seed.setAttribute('transform', 'translate(496,378)');
     camSnap(500, 360, 1.5);
     await T.curtain(true);
@@ -559,17 +561,20 @@
     await say('순무는 꿈쩍도 안 해요.');
     cast.grandpa.sitDown();
     await cast.grandpa.move(680, 500, 350, 'ease-out');
-    thud(T); T.shake(); T.pop(800, 300, '쿵!');
+    await T.fitTo([cast.grandpa.pos], { dur: 300 }); // 세로 화면: 엉덩방아 찧은 할아버지가 화면 밖으로 나가지 않게
+    thud(T); T.shake(); T.pop(cast.grandpa.x - 90, 340, '쿵!'); // 머리 왼쪽 위 (오른쪽은 세로 화면에서 잘린다)
     const st1 = stars(T, 680, 395); // (킥킥 기계음은 뺐다: 할아버지 "아이코!"와 겹침)
     await say('아이코! 할아버지가 엉덩방아를 찧었어요.');
     st1.remove();
 
     /* --- 4. 할머니~! (오두막 문 앞 → 텃밭) --- */
     let door;
+    // 세로 화면(보이는 폭 ≈260): 문(x 325~405)과 할아버지가 함께 보이게 할아버지를 가까이 두고 살짝 물러선다
+    const pt4 = T.portrait(), GPX = pt4 ? 600 : 720, GMX = pt4 ? 490 : 560;
     await T.sceneCard('할머니~!', () => {
       T.clear(); door = doorBG(T);
-      put(cast.grandpa, 720, GROUND, 1.05, 'stand');
-      camSnap(500, 280, 1);
+      put(cast.grandpa, GPX, GROUND, 1.05, 'stand');
+      if (pt4) camSnap(480, 280, .72); else camSnap(500, 280, 1);
     }, cast.grandpa.pos);
     await say('혼자서는 안 되겠어요. 할아버지를 톡 눌러서 할머니를 불러요!');
     await T.tap(cast.grandpa.pos, { prompt: '할아버지를 톡! 할머니를 불러요.' });
@@ -583,15 +588,15 @@
       put(cast.grandma, (DOOR.x0 + DOOR.x1) / 2, DOOR.y1, .82, 'stand');
       cast.grandma.face('right');
       await sleep(400);
-      const g = cast.grandma, from = `translate(${g.x}px,${g.y}px) scale(${-.82},.82)`, to = `translate(560px,${GROUND}px) scale(-1.05,1.05)`;
+      const g = cast.grandma, from = `translate(${g.x}px,${g.y}px) scale(${-.82},.82)`, to = `translate(${GMX}px,${GROUND}px) scale(-1.05,1.05)`;
       g.pos.removeAttribute('transform');
       await T.anim(g.pos, [{ transform: from }, { transform: to }], { duration: 900, easing: 'ease-in-out' });
-      g.pos.style.transform = ''; g.scale = 1.05; g.place(560, GROUND);
+      g.pos.style.transform = ''; g.scale = 1.05; g.place(GMX, GROUND);
     } else {
       put(cast.grandma, 330, GROUND, 1.05);
       T.world.insertBefore(cast.grandma.pos, T.world.firstChild);
       await sleep(400);
-      await cast.grandma.move(560, GROUND, 900);
+      await cast.grandma.move(GMX, GROUND, 900);
     }
     await say('할머니가 달려왔어요. "같이 해 봐요!"');
     await T.sceneCard(null, () => sideView(2), cast.grandma.pos);
@@ -615,13 +620,14 @@
     await T.sceneCard('멍멍!', () => {
       T.clear(); fenceBG(T);
       put(cast.dog, 520, 510, 1.8, 'jump');
-      if (bgOK.fence !== false && BG.fence) { // 그림 배경: 덤불도 배경 그림의 세이지 초록 세 겹으로 오린 종이처럼 (뒤 진하게 → 앞 연하게)
+      if (artUrl('bush')) pic(T, T.world, 'bush', 310, 345, 480, 480 * 414 / 700); // 덤불 그림(세이지 세 겹): 강아지 머리까지 다 가린다
+      else if (bgOK.fence !== false && BG.fence) { // 그림 배경: 덤불도 배경 그림의 세이지 초록 세 겹으로 오린 종이처럼 (뒤 진하게 → 앞 연하게)
         const bushG = T.el('g', {}, T.world);
         T.paper(bushG, [[ 'circle', { cx: 430, cy: 470, r: 92, fill: '#4F6B4C' }], ['circle', { cx: 560, cy: 440, r: 112, fill: '#4F6B4C' }], ['circle', { cx: 680, cy: 478, r: 84, fill: '#4F6B4C' }], ['rect', { x: 338, y: 470, width: 430, height: 160, fill: '#4F6B4C' }]]);
         T.paper(bushG, [['circle', { cx: 400, cy: 510, r: 70, fill: '#6D8A62' }], ['circle', { cx: 500, cy: 486, r: 84, fill: '#6D8A62' }], ['circle', { cx: 620, cy: 492, r: 82, fill: '#6D8A62' }], ['circle', { cx: 715, cy: 520, r: 60, fill: '#6D8A62' }], ['rect', { x: 330, y: 520, width: 445, height: 110, fill: '#6D8A62' }]]);
         T.paper(bushG, [['circle', { cx: 450, cy: 545, r: 52, fill: '#93AB80' }], ['circle', { cx: 548, cy: 530, r: 60, fill: '#93AB80' }], ['circle', { cx: 650, cy: 546, r: 54, fill: '#93AB80' }], ['rect', { x: 398, y: 545, width: 305, height: 90, fill: '#93AB80' }]]);
       } else T.paper(T.world, [['circle', { cx: 440, cy: 470, r: 90, fill: C.pine }], ['circle', { cx: 560, cy: 450, r: 110, fill: C.leaf }], ['circle', { cx: 670, cy: 480, r: 80, fill: C.pine }], ['rect', { x: 300, y: 500, width: 480, height: 80, fill: C.leaf }]]);
-      camSnap(500, 280, 1);
+      camSnap(500, 280, T.portrait() ? .85 : 1); // 세로 화면: 뛰어나온 강아지가 보이게 살짝 물러선다
     });
     const bush = T.world.lastChild;
     const rustle = () => bush.animate([{ translate: '0 0' }, { translate: '-6px 0' }, { translate: '6px 0' }, { translate: '0 0' }], { duration: 400, iterations: 2 });
@@ -631,9 +637,9 @@
     await callChoice('dog', 'cat', { q: q6, okSound: () => bark(T), noSound: () => { meow(T); setTimeout(() => { rustle(); bark(T); }, 900); },
       where: '멍멍 하고 우는 친구는 누굴까? 다시 들어 봐요.', who: '강아지예요! 반짝이는 친구를 눌러 봐요!' });
     T.world.appendChild(cast.dog.pos);
-    if (cast.dog.art) cast.dog.face('right'); // 오른쪽으로 뛰어나온다
-    await cast.dog.move(680, 300, 400, 'ease-out');
-    await cast.dog.move(840, 540, 400, 'ease-in');
+    if (cast.dog.art) cast.dog.face('right'); // 오른쪽으로 뛰어나온다 (세로 화면은 보이는 폭 안에 내려앉게 가까이)
+    await cast.dog.move(T.portrait() ? 600 : 680, 300, 400, 'ease-out');
+    await cast.dog.move(T.portrait() ? 560 : 840, 540, 400, 'ease-in');
     cast.dog.hop(30);
     await say('강아지가 뛰어나왔어요. "나도 도울게요!"');
     await T.sceneCard(null, () => sideView(4), cast.dog.pos);
@@ -647,7 +653,7 @@
       if (bgOK.barn !== false && BG.barn) put(cast.cat, 775, 152, 1.5, 'sit'); // 그림: 헛간 오른쪽 지붕 끝, 환기탑 오른쪽
       else put(cast.cat, 700, 242, 1.9);
       cast.cat.lean.style.filter = 'brightness(.15)';
-      camSnap(T.portrait() ? 620 : 500, 280, 1); // 세로 화면: 지붕 위 고양이가 보이게 오른쪽으로
+      camSnap(T.portrait() ? 700 : 500, 280, 1); // 세로 화면(보이는 폭 ≈260): 지붕 끝(x≈775) 고양이가 다 보이게 오른쪽으로
     });
     meow(T);
     const q7 = '헛간 지붕에서 야옹! 누구일까요?';
@@ -724,14 +730,16 @@
     voiceLine('cut_heave', 150);
     await T.cut(svg => cutTurnip(svg, 230, .6, '영~'), { hold: 1100 });
     await T.cut(svg => cutTurnip(svg, 190, .6, '차~'), { hold: 1100 });
-    await T.cut(svg => cutTurnip(svg, 140, .6, '쑥!'), { hold: 1500, sfx: 'pow' });
-    /* 순무가 날아가고, 생쥐부터 할아버지까지 벌렁 도미노 */
+    // 쑥! 은 그림 컷(얼굴 없는 순무가 흙을 튀기며 쑥, 여섯이 벌렁) — 없으면 코드 컷
+    await ((artUrl('cut_pop') && T.cutImage([{ src: artUrl('cut_pop'), sfx: 'pow', hold: 2000 }], { hold: 2000 })) || T.cut(svg => cutTurnip(svg, 140, .6, '쑥!'), { hold: 1500, sfx: 'pow' }));
+    /* 순무가 날아가고, 생쥐부터 할아버지까지 벌렁 도미노. 세로 화면(보이는 폭 ≈520)에선 줄 바로 왼쪽에 떨어진다 */
+    const landX = T.portrait() ? 290 : 60;
     T.world.appendChild(turnip.pos);
     turnip.pos.removeAttribute('transform');
     turnip.pos.animate([
       { transform: `translate(${TX}px,${GROUND - rise - 22}px) rotate(0deg)` },
-      { transform: `translate(110px,150px) rotate(-40deg)` },
-      { transform: `translate(60px,372px) rotate(-80deg)` },
+      { transform: `translate(${landX + 50}px,150px) rotate(-40deg)` },
+      { transform: `translate(${landX}px,372px) rotate(-80deg)` },
     ], { duration: 900, easing: 'ease-in-out', fill: 'forwards' });
     for (let k = 5; k >= 0; k--) {
       const a = line[k];
@@ -756,7 +764,8 @@
     let pot;
     await T.sceneCard('순무 잔치', () => {
       T.clear(); feastBG(T);
-      T.paper(T.world, [['rect', { x: 390, y: 400, width: 220, height: 20, rx: 6, fill: C.bark }], ['rect', { x: 410, y: 420, width: 16, height: 90, fill: C.bark }], ['rect', { x: 574, y: 420, width: 16, height: 90, fill: C.bark }]]);
+      // 잔치 상: 그림(낮은 상, 520×162)이면 윗판이 솥 밑(y≈402)에 오게, 없으면 판+다리 도형
+      if (!pic(T, T.world, 'table', 365, 398, 270, 270 * 162 / 520)) T.paper(T.world, [['rect', { x: 390, y: 400, width: 220, height: 20, rx: 6, fill: C.bark }], ['rect', { x: 410, y: 420, width: 16, height: 90, fill: C.bark }], ['rect', { x: 574, y: 420, width: 16, height: 90, fill: C.bark }]]);
       pot = artUrl('pot') ? el('g', {}, T.world) : T.paper(T.world, [['path', { d: 'M446 350 H554 Q556 400 500 402 Q444 400 446 350 Z', fill: C.ink }], ['rect', { x: 438, y: 342, width: 124, height: 12, rx: 6, fill: '#4a3a30' }], ['ellipse', { cx: 500, cy: 344, rx: 50, ry: 8, fill: C.snow }]]);
       pic(T, pot, 'pot', 425, 402 - 150 / 1.2526, 150, 150 / 1.2526); // 그림: 순무국 솥 (김은 그림 + 코드)
       el('rect', { x: 420, y: 300, width: 160, height: 110, fill: '#fff', opacity: 0 }, pot);
@@ -798,12 +807,13 @@
     await say('순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!');
     await T.mash(pot, { count: 6, prompt: '냄비를 톡 눌러서 한 그릇씩!', onStep: i => {
       const a = line[i - 1];
-      const bowl = T.paper(T.world, [['path', { d: 'M-22 -8 H22 Q20 14 0 15 Q-20 14 -22 -8 Z', fill: C.snow }], ['ellipse', { cx: 0, cy: -8, rx: 22, ry: 5, fill: C.amber }]]);
+      const bowl = T.el('g', {}, T.world);
+      if (!pic(T, bowl, 'soup_bowl', -27, -18, 54, 54 * 119 / 200)) T.paper(bowl, [['path', { d: 'M-22 -8 H22 Q20 14 0 15 Q-20 14 -22 -8 Z', fill: C.snow }], ['ellipse', { cx: 0, cy: -8, rx: 22, ry: 5, fill: C.amber }]]);
       const ty = 510 - a.h * a.scale * .55;
       bowl.animate([{ transform: 'translate(500px,330px)' }, { transform: `translate(${(500 + a.x) / 2}px,200px)` }, { transform: `translate(${a.x}px,${ty}px)` }], { duration: 600, easing: 'ease-in-out', fill: 'forwards' });
       dots[i - 1].setAttribute('fill', C.persimmon);
       T.tone(523 + i * 40, .2, { type: 'triangle', vol: .16 });
-      setTimeout(() => { a.hop(20, 300); T.pop(a.x, ty - 70, NUM[i - 1], C.pine); }, 600);
+      setTimeout(() => { a.hop(20, 300); T.pop(a.x, 510 - a.h * a.scale - 90, NUM[i - 1], C.pine); }, 600); // 머리 위 (얼굴을 가리지 않게)
     } });
     await sleep(1200);
     await say('여섯 그릇, 여섯 명! 딱 맞아요.');

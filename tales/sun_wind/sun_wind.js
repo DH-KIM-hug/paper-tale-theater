@@ -21,10 +21,10 @@
   /* 배우·소품·컷
      - trav_walk_nohat: 걷기 그림의 머리(모자)를 '덜덜' 그림 머리로 바꿔 붙인 것 (바람에 모자가 날아간 뒤, 외투는 아직 열림)
      - trav_sit: 신발을 살색으로 칠해 맨발로 (개울에 발을 담근다)
-     - hat: 얼굴 달린 노란 덩어리 위의 모자만 오린 것 · coat: 단추에 붙은 눈·볼을 지우고 금빛 단추로
+     - hat: 얼굴 달린 노란 덩어리 위의 모자만 오린 것(다시 뽑은 sw_hat은 납작한 보터 모자라 나그네 머리의 둥근 모자와 달라 안 씀) · coat: 다시 뽑은 얼굴 없는 긴 외투(360×435)
      - shirt(배지): 반팔 그림 몸통에서 팔·목 살색을 지운 것
-     - cloud_snow: 얼굴 달린 노란 덩어리는 버리고 아래 작은 눈구름만 · cloud_rain: 그 눈구름 몸통을 회청색으로 (빗방울은 코드)
-     - 못 써서 그레이박스로 두는 것: cut_pant(바람이 헉헉이 아니라 웃고 있고, 바닥에 초록 바지 덩어리) → 임시 컷 + 바람 그림 */
+     - cloud_snow: 얼굴 없는 새 눈구름(구름+눈송이 셋) · cloud_rain: 그 구름 몸통만 회청색으로 (빗방울은 코드)
+     - cut_pant: 다시 뽑은 헉헉 컷(sw_cut_pant2 — 지친 바람, 혀 내밀고 땀) */
   const ART = {
     sun: 'v3w/sw_sun.webp', wind: 'v3w/sw_wind.webp', wind_blow: 'v3w/sw_wind_blow.webp', wind_tired: 'v3w/sw_wind_tired.webp',
     trav_walk: 'v3w/sw_trav_walk.webp', trav_walk_nohat: 'v3w/sw_trav_walk_nohat.webp', trav_hold: 'v3w/sw_trav_hold.webp',
@@ -32,7 +32,7 @@
     trav_sit: 'v3w/sw_trav_sit.webp', trav_scarf: 'v3w/sw_trav_scarf.webp', trav_rain: 'v3w/sw_trav_rain.webp',
     hat: 'v3w/sw_hat.webp', coat: 'v3w/sw_coat.webp', shirt: 'v3w/sw_shirt.webp',
     cloud_rain: 'v3w/sw_cloud_rain.webp', cloud_snow: 'v3w/sw_cloud_snow.webp',
-    cut_hat: 'v3w/sw_cut_hat.webp', cut_hold: 'v3w/sw_cut_hold.webp', cut_pant: null, cut_off: 'v3w/sw_cut_off.webp', cut_shake: 'v3w/sw_cut_shake.webp',
+    cut_hat: 'v3w/sw_cut_hat.webp', cut_hold: 'v3w/sw_cut_hold.webp', cut_pant: 'v3w/sw_cut_pant2.webp', cut_off: 'v3w/sw_cut_off.webp', cut_shake: 'v3w/sw_cut_shake.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -404,7 +404,7 @@
   function streamBG(T) { // 7. 개울가
     const { el, paper } = T, b = T.bg;
     if (bgImage(T, 'stream')) { // 바위는 그림 왼쪽(윗면 y≈300). 개어 둔 외투는 바위 오른쪽 풀밭에
-      const cw = 84, ch = cw * 637 / 813;
+      const cw = 70, ch = cw * 435 / 360;
       if (!pic(T, b, 'coat', 372 - cw / 2, 352 - ch, cw, ch)) paper(b, [['path', { d: 'M330 330 L410 322 L416 348 L326 352 Z', fill: C.bean }]]);
       return { tufts: el('g', {}, b), art: true, seat: [215, 410] };
     }
@@ -449,7 +449,7 @@
     return g;
   }
   const ICON = {
-    coat: (T, g) => pic(T, g, 'coat', -57, -45, 114, 114 * 637 / 813) || T.paper(g, [['path', { d: 'M-36 -48 L-12 -54 L0 -40 L12 -54 L36 -48 L58 26 L42 32 L34 4 L38 56 L-38 56 L-34 4 L-42 32 L-58 26 Z', fill: C.bean }],
+    coat: (T, g) => pic(T, g, 'coat', -46, -58, 92, 92 * 435 / 360) || T.paper(g, [['path', { d: 'M-36 -48 L-12 -54 L0 -40 L12 -54 L36 -48 L58 26 L42 32 L34 4 L38 56 L-38 56 L-34 4 L-42 32 L-58 26 Z', fill: C.bean }],
       ['path', { d: 'M-12 -54 L0 -32 L12 -54 Z', fill: C.collar }], ...[-18, 2, 22, 42].map(y => ['circle', { cx: 0, cy: y, r: 5, fill: C.gold }])]),
     shirt: (T, g) => pic(T, g, 'shirt', -54, -38, 108, 108 * 226 / 333) || T.paper(g, [['path', { d: 'M-34 -40 L-14 -48 Q0 -38 14 -48 L34 -40 L56 -12 L38 0 L32 -10 L32 46 L-32 46 L-32 -10 L-38 0 L-56 -12 Z', fill: C.shirt }]]),
   };
@@ -494,7 +494,7 @@
     await T.tap(W1.pos, { prompt: '볼 빵빵 바람을 톡!' });
     W1.p.setMouth('blow'); W1.p.puffCheeks(1.6); SND.whoosh(T, 2); gust(T, 6, { x0: W1.x + 50, y0: 200, y1: 380, dist: 400 });
     sky1.drift.animate([{ translate: '0 0' }, { translate: '60px 0' }, { translate: '0 0' }], { duration: 1400, easing: 'ease-out' });
-    T.pop(W1.x + 10, 140, '휘잉!', C.indigo);
+    T.pop(W1.x - 30, 140, '휘잉!', C.indigo); // 세로 화면(보이는 폭 ≈500)에서 오른쪽이 잘리지 않게 조금 안쪽
     await W1.wiggle(6, 700);
     W1.p.setMouth('smile'); W1.p.puffCheeks(1);
     await say('"아니야, 내가 제일 세!"');
@@ -538,7 +538,8 @@
     await say('화면을 쓱 밀어서 바람을 불어 줘요!');
     const blow = async k => {
       W.p.setMouth('blow'); W.p.puffCheeks(1.2 + k * .18); W.setScale(.8 + k * .05);
-      SND.whoosh(T, k); gust(T, 3 + k * 2, { y0: 150, y1: 470, w: 5 + k, alpha: .6 + k * .07 });
+      // 다섯째(단추 채우기)는 바로 얼굴로 카메라가 붙는다 → 바람 줄기는 얼굴 아래로만
+      SND.whoosh(T, k); gust(T, 3 + k * 2, { y0: k === 5 ? 310 : 150, y1: 470, w: 5 + k, alpha: .6 + k * .07 });
       F.tufts.childNodes.forEach(t => t.animate([{ transform: 'rotate(0)' }, { transform: `rotate(${10 + k * 5}deg)` }, { transform: 'rotate(0)' }], 900));
       N.body.animate([{ transform: 'rotate(0)' }, { transform: `rotate(${-1 - k}deg)` }, { transform: 'rotate(0)' }], { duration: 900, easing: 'ease-in-out' });
     };
@@ -551,7 +552,7 @@
         const sc = N.scale;
         flying.animate([{ transform: `translate(${hx}px,${hy}px) scale(${sc}) rotate(0deg)` }, { transform: `translate(${hx + 160}px,${hy - 120}px) scale(${sc}) rotate(200deg)`, offset: .5 },
           { transform: `translate(${hx + 520}px,${hy - 200}px) scale(${sc}) rotate(520deg)` }], { duration: 1300, easing: 'ease-out', fill: 'forwards' });
-        T.pop(hx - 40, hy - 20, '앗!', C.bean);
+        T.pop(hx - 115, hy - 70, '앗!', C.bean); // 얼굴을 가리지 않게 머리 왼쪽 위
         await sleep(900);
         await (cutArt(T, 'cut_hat', 'whoosh', 2200) || T.cut(svg => {
           T.paper(T.el('g', { transform: 'translate(210,150) rotate(-24) scale(2.4)' }, svg), HAT_SHAPES);
@@ -560,7 +561,7 @@
         }, { hold: 2200, sfx: 'whoosh' }));
         await say('"앗, 내 모자!" 모자가 훨훨 날아갔어요.');
       },
-      async () => { N.P.face('cold'); flap(N.P, true); T.pop(N.x + 90, N.y - 120, '펄럭펄럭', C.bean); await say('외투 자락이 펄럭펄럭!'); },
+      async () => { N.P.face('cold'); flap(N.P, true); T.pop(N.x - 175, N.y - 120, '펄럭펄럭', C.bean); await say('외투 자락이 펄럭펄럭!'); }, // 바람 쪽(왼쪽) — 세로 화면에서 오른쪽은 잘린다
       async () => {
         flap(N.P, false); setOutfit(N.P, 'coatShut', 'cross', { buttons: 0 }); N.P.face('cold');
         N.__shiver = shiver(N); SND.shiver(T);
@@ -588,10 +589,10 @@
     /* --- 4. 바람 헉헉 --- */
     await camWide(700);
     vo('cut_pant'); // 컷 속 바람의 헉헉 (말풍선 없음)
-    await T.cut(svg => {
+    await (cutArt(T, 'cut_pant', null, 2400) || T.cut(svg => {
       T.actor(svg, 200, 160, g => { const p = drawWind(T, g); p.wrinkles.setAttribute('opacity', 1); p.sweat.setAttribute('opacity', 1); p.setMouth('tired'); p.puff.style.transform = p.art ? 'scale(.94,.88)' : 'scale(.85,.72)'; }, { scale: 1.5 });
       T.el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 58, fill: C.indigo, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '헉헉…' }, svg);
-    }, { hold: 2400 });
+    }, { hold: 2400 }));
     W.setScale(.8); W.p.puffCheeks(.7); W.p.setMouth('tired');
     W.p.wrinkles.setAttribute('opacity', 1); W.p.sweat.setAttribute('opacity', 1);
     W.p.puff.style.transition = 'transform .5s'; W.p.puff.style.transform = W.p.art ? 'scale(.94,.88)' : 'scale(.85,.75)';
@@ -608,7 +609,7 @@
     await T.anim(back, [{ transform: `translate(${hx + 260}px,-60px) scale(${N.scale}) rotate(-40deg)` }, { transform: `translate(${hx - 120}px,${hy - 150}px) scale(${N.scale}) rotate(30deg)`, offset: .45 },
       { transform: `translate(${hx + 60}px,${hy - 70}px) scale(${N.scale}) rotate(-20deg)`, offset: .75 }, { transform: `translate(${hx}px,${hy}px) scale(${N.scale}) rotate(0deg)` }], { duration: 2200, easing: 'ease-in-out' });
     back.remove(); N.P.hat.dataset.gone = ''; N.P.hat.style.opacity = 1; N.P.face('o'); refreshPose(N.P);
-    AudioFX.sfx('pop') || AudioFX.pop(); T.pop(hx + 70, hy - 30, '쏙!', C.persimmon); N.hop(18);
+    AudioFX.sfx('pop') || AudioFX.pop(); T.pop(hx + 130, hy - 90, '쏙!', C.persimmon); N.hop(18); // 모자·얼굴 옆 위
     await say('어? 날아간 모자가 나그네 머리에 쏙 떨어졌어요!');
     pant.cancel();
 
@@ -654,7 +655,7 @@
     await say('조금 더 꾹!');
     await holdOnce(1);
     setOutfit(N.P, 'coat', 'fan'); N.P.sweat.setAttribute('opacity', 1); N.P.face('o');
-    T.pop(N.x - 190, N.y - 230, '팔랑팔랑', C.bark);
+    T.pop(N.x + 20, N.y - 350, '팔랑팔랑', C.bark); // 부채질하는 모자 위 (세로 화면은 카메라가 오른쪽에 있어 왼쪽은 잘린다)
     await say('"아이, 더워!" 모자로 부채질을 해요.');
     await say('한 번 더 꾹!');
     await holdOnce(2);
@@ -711,7 +712,7 @@
     await say('세게 미는 것보다 다정한 게 더 힘이 세요.');
 
     /* 날씨 옷 고르기 ×2 */
-    const wrongAt = M => (M.P.art ? [M.x + 140, M.y - 262] : [M.x, M.y - 300]); // 그림 나그네는 얼굴(덜덜·땀)이 보이게 옆으로
+    const wrongAt = M => [M.x, M.y - 360]; // 머리 위 — 옆에 두면 배지(고를 대상)를 가린다(세로 화면은 통째로)
     const clothesQ = async ({ label, bg, sky, ground, fx, q, okKey, noKey, okName, where, wrong, wear, after }) => {
       let M, fxG, bs;
       await T.sceneCard(label, () => {
@@ -755,22 +756,28 @@
       N = traveler(T, ST.seat[0], ST.seat[1], 1.2, 'shirt', 'down', { sit: true }); N.P.face('smile');
       // 그림: 나그네가 왼쪽 바위에 앉으니 바람은 가운데 위에서 시작
       WW = ST.art ? wind(T, 520, 165, .7) : wind(T, 170, 190, .7); SS = sun(T, ST.art ? 850 : 830, ST.art ? 160 : 170, .7);
+      if (ST.art) WW.face('right'); // 나그네가 왼쪽 바위에 있다 → 바람은 왼쪽(나그네 쪽)으로 분다 (그림 기본은 오른쪽)
     }, null);
     babble = SND.babble(T);
     await say('나그네는 개울가에서 쉬어요.');
-    AudioFX.splash(); T.pop(N.x + 60, N.y - 20, '퐁당!', C.indigo);
+    AudioFX.splash(); T.pop(N.x + 150, N.y + 30, '퐁당!', C.indigo); // 발 옆 물 위 (다리를 가리지 않게)
     await say('시원한 물에 발을 퐁당 담갔어요.');
     await say('바람아, 이번엔 살살 불어 줄래? 쓱, 살살~');
     await T.swipe(stageWrap, { dir: 'right', count: 3, prompt: '살살 쓱 밀어 봐요!', onStep: i => {
       WW.p.setMouth('blow'); WW.p.puffCheeks(1.1); SND.breeze(T);
-      gust(T, 2, { y0: 200, y1: 420, w: 4, alpha: .55, dur: 1800, dist: 600 });
+      // 그림: 바람(가운데 위)이 왼쪽 나그네 쪽으로 분다 → 바람 줄기도 왼쪽으로. 도형: 바람이 왼쪽에 있어 오른쪽으로
+      if (ST.art) gust(T, 2, { x0: 380, y0: 220, y1: 400, w: 4, alpha: .55, dur: 1800, dist: -520 });
+      else gust(T, 2, { y0: 200, y1: 420, w: 4, alpha: .55, dur: 1800, dist: 600 });
       ST.tufts.childNodes.forEach(t => t.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(8deg)' }, { transform: 'rotate(0)' }], 1400));
-      T.pop(N.x + 30 + i * 130, N.y - 360 + (i % 2) * 40, '살랑~', C.pine);
+      // 바람과 나그네 사이, 개울 위 (바람 구름·나그네 얼굴을 가리지 않게)
+      if (ST.art) T.pop(N.x + 240 + i * 100, N.y - 100 + (i % 2) * 50, '살랑~', C.pine);
+      else T.pop(N.x + 30 + i * 130, N.y - 360 + (i % 2) * 40, '살랑~', C.pine);
       N.P.face('big');
       setTimeout(() => WW.p.setMouth('smile'), 600);
     } });
     await say('"아, 시원해. 고마워, 바람아!"');
     WW.hop(20);
+    if (ST.art) WW.face('left'); // 이제 오른쪽 해님을 마주 본다 (악수 컷과 같은 자리: 바람 왼쪽, 해 오른쪽)
     await Promise.all(ST.art ? [WW.move(450, 170, 1200), SS.move(660, 165, 1200)] : [WW.move(400, 180, 1200), SS.move(600, 170, 1200)]);
     await say('해님과 바람이 마주 보고 웃었어요.');
     await (cutArt(T, 'cut_shake', 'ding', 2400) || T.cut(svg => {
@@ -791,10 +798,11 @@
       T.clear(); PL = playBG(T);
       M8 = traveler(T, 500, 520, 1.15, 'shirt', 'down'); M8.P.face('smile');
       btns.sun = sun(T, 130, 200, .55);
-      btns.rain = T.actor(T.world, 370, 200, g => (pic(T, g, 'cloud_rain', -72, -56, 144, 144 * 94 / 140) && T.paper(g, [-30, 0, 30].map(x => ['path', { d: `M${x} 46 q-7 12 0 15 q7 -3 0 -15 Z`, fill: '#6E8FB0' }]))) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: C.rain }], ['circle', { cx: 6, cy: -18, r: 42, fill: C.rain }], ['circle', { cx: 44, cy: 6, r: 32, fill: C.rain }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: C.rain }],
+      // 비구름 그림(300×159, 구름 몸통만)은 가운데 위에, 빗방울 셋은 코드로 그 아래. 눈구름 그림(300×290)은 눈송이까지 한 장
+      btns.rain = T.actor(T.world, 370, 200, g => (pic(T, g, 'cloud_rain', -72, -52, 144, 144 * 159 / 300) && T.paper(g, [-30, 0, 30].map(x => ['path', { d: `M${x} 34 q-7 12 0 15 q7 -3 0 -15 Z`, fill: '#6E8FB0' }]))) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: C.rain }], ['circle', { cx: 6, cy: -18, r: 42, fill: C.rain }], ['circle', { cx: 44, cy: 6, r: 32, fill: C.rain }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: C.rain }],
         ...[-30, 0, 30].map(x => ['path', { d: `M${x} 52 q-7 12 0 15 q7 -3 0 -15 Z`, fill: '#6E8FB0' }])]));
       btns.wind = wind(T, 630, 200, .5);
-      btns.snowc = T.actor(T.world, 870, 200, g => pic(T, g, 'cloud_snow', -72, -62, 144, 144 * 168 / 176) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: '#E6EEF4' }], ['circle', { cx: 6, cy: -18, r: 42, fill: '#E6EEF4' }], ['circle', { cx: 44, cy: 6, r: 32, fill: '#E6EEF4' }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: '#E6EEF4' }],
+      btns.snowc = T.actor(T.world, 870, 200, g => pic(T, g, 'cloud_snow', -72, -66, 144, 144 * 290 / 300) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: '#E6EEF4' }], ['circle', { cx: 6, cy: -18, r: 42, fill: '#E6EEF4' }], ['circle', { cx: 44, cy: 6, r: 32, fill: '#E6EEF4' }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: '#E6EEF4' }],
         ...[-30, 0, 30].map(x => ['circle', { cx: x, cy: 58, r: 7, fill: C.snow, stroke: C.cloudBack, 'stroke-width': 3 }])]));
       // 세로 화면: 날씨 단추 넷을 가운데로 모으고 살짝 물러서서 모두 보이게 (가로는 그대로)
       if (T.portrait()) {
@@ -825,7 +833,7 @@
       lastKey = k;
       PL.sky.setAttribute('fill', w.sky); PL.ground.setAttribute('fill', w.ground);
       w.wear(); M8.P.face('big'); M8.hop(16);
-      T.pop(M8.x + 170, 380, w.cloth, C.bean);
+      T.pop(M8.x + 185, 380, w.cloth, C.bean); // 몸 옆 (세로 화면 보이는 폭 안)
     } })), 30000);
     if (wfx) { wfx.remove(); wfx = null; }
     PL.sky.setAttribute('fill', SKY.day); PL.ground.setAttribute('fill', C.grass); setOutfit(M8.P, 'shirt'); M8.P.face('big');
