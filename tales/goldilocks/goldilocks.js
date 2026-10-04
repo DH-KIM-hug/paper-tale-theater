@@ -29,7 +29,10 @@
     'bear_dad', 'bear_mom', 'bear_baby', 'bear_baby_cry', 'bowl', 'bowl_empty', 'chair_big', 'chair_mid', 'chair_small',
     'chair_small_back', 'chair_small_seat', 'chair_small_legL', 'chair_small_legR',
     'bed_big', 'bed_big_blanket', 'bed_mid', 'bed_mid_blanket', 'bed_small', 'bed_small_blanket',
-    'cut_hot', 'cut_cold', 'cut_crack', 'cut_eyes'].forEach(k => { ART[k] = `v3w/gl_${k}.webp`; });
+    'cut_hot', 'cut_cold', 'cut_crack', 'cut_eyes',
+    'bed_side_small', 'bed_side_blanket', 'bowl_top', 'bowl_top_empty', 'table_front', 'table', 'bear_paw', 'hammer', 'cut_skirt'].forEach(k => { ART[k] = `v3w/gl_${k}.webp`; });
+  ART.cut_eyes = 'v3w/gl_cut_eyes2.webp';   // 다시 뽑은 눈 마주침 컷: 무대 순서(골디락스 · 아기 · 엄마 · 아빠)
+  ART.butterfly = 'v3w/fc_butterfly.webp';  // 숲길 나비는 여우와 두루미 그림을 작게
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
   const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
@@ -393,6 +396,13 @@
   }
   function bowlTop(T, parent, cx, cy, r) {
     const g = T.el('g', {}, parent);
+    if (artUrl('bowl_top') && artUrl('bowl_top_empty')) { // 그림: 그릇 원(지름 2r)을 (cx,cy)에 맞춘다. 숟가락은 오른쪽으로 삐져 나온다. 다 먹으면 빈 그릇으로
+      const put = (key, d, icx, icy, iw, ih) => { const k = 2 * r / d; return pic(T, g, key, { box: [cx - icx * k, cy - icy * k, iw * k, ih * k] }); };
+      const full = put('bowl_top', 411.5, 214.2, 214.2, 520, 428), empty = put('bowl_top_empty', 453.8, 234.5, 234.5, 520, 469);
+      empty.style.display = 'none';
+      g.setEmpty = () => { full.style.display = 'none'; empty.style.display = ''; };
+      return g;
+    }
     T.paper(g, [['circle', { cx, cy, r, fill: C.cream }], ['circle', { cx, cy, r: r * .8, fill: C.porridge }]]);
     T.el('circle', { cx, cy, r: r * .9, fill: 'none', stroke: C.bean, 'stroke-width': 5 }, g);
     T.paper(g, [['rect', { x: cx + r * .9, y: cy - 6, width: r * .9, height: 12, rx: 6, fill: '#9A938C' }]]);
@@ -420,14 +430,33 @@
     windowAt(T, wx, 150, 150, 190);
     floorAt(T, 470);
   }
-  /* 옆에서 본 아기 곰 침대 (머리맡이 왼쪽) */
+  /* 옆 탁자 (부엌 그림엔 탁자가 없다). 윗면 y = top, 폭 w. 그림은 다리를 잘라 낮게 구운 것 */
+  function sideTable(T, x, top, w) {
+    if (artUrl('table')) { const h = w * 271 / 520; return pic(T, T.world, 'table', { box: [x, top - h * .032, w, h] }); }
+    return T.paper(T.world, [['rect', { x, y: top, width: w, height: 18, rx: 6, fill: C.bark }], ['rect', { x: x + 20, y: top + 18, width: 16, height: 110, fill: C.bark }], ['rect', { x: x + w - 36, y: top + 18, width: 16, height: 110, fill: C.bark }]]);
+  }
+  /* 앞쪽 식탁 (화면 폭 전체, 인물 앞에 온다). 윗단 y = top. 그림이면 윗단이 420이 아니라 440 — 그릇·곰 자리는 TABLE_TOP()으로 */
+  const TABLE_TOP = () => (artUrl('table_front') ? 440 : 420);
+  function tableFront(T, top) {
+    if (artUrl('table_front')) { const w = 1100, h = w * 535 / 1400; return pic(T, T.world, 'table_front', { box: [-50, top - h * .019, w, h] }); }
+    return T.paper(T.world, [['rect', { x: -400, y: top, width: 1800, height: 200, fill: C.bark }], ['rect', { x: -400, y: top, width: 1800, height: 14, fill: '#8E6240' }]]);
+  }
+  /* 옆에서 본 아기 곰 침대 (머리맡이 왼쪽). 그림: 매트리스 윗선 y≈398, 베개 x 359~410 */
+  const BED_SIDE_ART = () => !!artUrl('bed_side_small');
   function bedSide(T) {
     const { paper, el } = T;
+    if (BED_SIDE_ART()) return pic(T, T.world, 'bed_side_small', { box: [340, 290, 320, 198] });
     paper(T.world, [['rect', { x: 360, y: 300, width: 26, height: 190, rx: 8, fill: '#B0804F' }], ['rect', { x: 614, y: 360, width: 22, height: 130, rx: 8, fill: '#B0804F' }],
       ['rect', { x: 370, y: 396, width: 260, height: 40, rx: 8, fill: C.cream }], ['rect', { x: 366, y: 432, width: 268, height: 18, fill: '#B0804F' }],
       ['ellipse', { cx: 420, cy: 390, rx: 40, ry: 16, fill: C.snow }]]);
   }
   function blanketSide(T) {
+    if (artUrl('bed_side_blanket')) { // 그림 이불: 골디락스 가슴부터 발판 앞까지 (탭 목표)
+      const g = T.el('g', {}, T.world);
+      pic(T, g, 'bed_side_blanket', { box: [440, 308, 215, 104] });
+      T.el('rect', { x: 425, y: 285, width: 250, height: 160, fill: '#fff', opacity: 0 }, g);
+      return g;
+    }
     const g = T.paper(T.world, [['path', { d: 'M468 440 L468 380 Q540 356 630 380 L634 444 Z', fill: C.gold }], ['rect', { x: 490, y: 400, width: 130, height: 6, rx: 3, fill: C.bean }], ['rect', { x: 490, y: 420, width: 130, height: 6, rx: 3, fill: C.bean }]]);
     T.el('rect', { x: 380, y: 330, width: 260, height: 130, fill: '#fff', opacity: 0 }, g);
     return g;
@@ -444,11 +473,16 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
-    const { el, sleep, say, actor, camTo, camSnap, josa, pop } = T;
+    const { el, sleep, say, actor, camTo, camSnap, josa } = T;
     /* 세로 화면(무대 양옆이 잘림): 카메라를 조금 물리고(Z) 가로 자리를 가운데로 모은다(K) */
     const P = () => window.matchMedia('(orientation: portrait)').matches;
     const K = .7, Z = .62;
     const X = x => P() ? Math.round(500 + (x - 500) * K) : x;
+    /* 의성어: 지금 카메라가 보여 주는 폭 안에 들어오게 x를 조인다 (세로 화면에서 '딱딱해!'가 왼쪽에 잘리던 것) */
+    const pop = (x, y, w, c) => {
+      const cam = T.camera, z = Math.max(1e-3, cam.z), half = T.viewWidth() / z / 2, m = Math.min(half - 10, (30 + [...w].length * 24) / Math.max(1, z));
+      return T.pop(Math.min(cam.x + half - m, Math.max(cam.x - half + m, x)), y, w, c);
+    };
     const view = () => camSnap(500, 280, P() ? Z : 1);
     const shuffle = a => { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };
     /* 그림 미리 불러오기: 첫 장면(부엌·곰·그릇) 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
@@ -522,7 +556,7 @@
 
     /* ---------- 1. 곰 집 아침 (부엌 와이드) ---------- */
     kitchenBG(T);
-    T.paper(T.world, [['rect', { x: 680, y: 360, width: 260, height: 18, rx: 6, fill: C.bark }], ['rect', { x: 700, y: 378, width: 16, height: 100, fill: C.bark }], ['rect', { x: 904, y: 378, width: 16, height: 100, fill: C.bark }]]);
+    sideTable(T, 680, 360, 260);
     SIZE.forEach((s, i) => bowlSide(T, T.world, 730 + i * 85, 360, s * .6));
     put(bears.dad, X(280), 500); put(bears.mom, X(470), 500, SIZE[1]); put(bears.baby, X(620), 500, SIZE[2]);
     view();
@@ -540,14 +574,15 @@
     let bowlsG, steams = [];
     await T.sceneCard('앗 뜨거!', () => {
       T.clear(); kitchenBG(T);
-      put(bears.dad, X(230), 520, 1.2); put(bears.mom, 500, 470, .86); put(bears.baby, X(770), 432, .6);
-      T.paper(T.world, [['rect', { x: -400, y: 420, width: 1800, height: 200, fill: C.bark }], ['rect', { x: -400, y: 420, width: 1800, height: 14, fill: '#8E6240' }]]);
+      const TT = TABLE_TOP(), BY = TT + 30; // 식탁 윗단 · 그릇 바닥 (곰 발은 식탁 뒤에 숨는다)
+      put(bears.dad, X(230), 520, 1.2); put(bears.mom, 500, TT + 50, .86); put(bears.baby, X(770), TT + 12, .6);
+      tableFront(T, TT);
       bowlsG = el('g', {}, T.world);
-      el('rect', { x: 100, y: 180, width: 800, height: 280, fill: '#fff', opacity: 0 }, bowlsG);
+      el('rect', { x: 100, y: 160, width: 800, height: BY - 150, fill: '#fff', opacity: 0 }, bowlsG);
       steams = [];
       [230, 500, 770].map(X).forEach((x, i) => {
-        bowlSide(T, bowlsG, x, 500, SIZE[i]);
-        for (let k = 0; k < 3; k++) steams.push(steam(T, bowlsG, x + (k - 1) * 40 * SIZE[i], 500 - BOWL_RIM() * SIZE[i], SIZE[i] * 1.1));
+        bowlSide(T, bowlsG, x, BY, SIZE[i]);
+        for (let k = 0; k < 3; k++) steams.push(steam(T, bowlsG, x + (k - 1) * 40 * SIZE[i], BY - BOWL_RIM() * SIZE[i], SIZE[i] * 1.1));
       });
       view();
     }, bears.mom.pos);
@@ -573,7 +608,8 @@
       T.clear(); house = forestBG(T, X(900));
       put(goldi, X(200), 505, 1.3);
       butterfly = el('g', {}, T.world);
-      const wings = T.paper(butterfly, [['ellipse', { cx: -9, cy: 0, rx: 10, ry: 14, fill: C.persimmon }], ['ellipse', { cx: 9, cy: 0, rx: 10, ry: 14, fill: C.persimmon }], ['rect', { x: -2, y: -10, width: 4, height: 20, rx: 2, fill: C.ink }]]);
+      const wings = artUrl('butterfly') ? pic(T, butterfly, 'butterfly', { box: [-22, -16, 44, 32] })
+        : T.paper(butterfly, [['ellipse', { cx: -9, cy: 0, rx: 10, ry: 14, fill: C.persimmon }], ['ellipse', { cx: 9, cy: 0, rx: 10, ry: 14, fill: C.persimmon }], ['rect', { x: -2, y: -10, width: 4, height: 20, rx: 2, fill: C.ink }]]);
       wings.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(.3)' }, { transform: 'scaleX(1)' }], { duration: 300, iterations: Infinity });
       butterfly.style.transform = `translate(${X(120)}px,260px)`;
       forestFront(T);
@@ -654,9 +690,9 @@
     ], { prompt: q5, where: '김이 펄펄 나면 뜨겁고, 얼음이 있으면 차가워요.', who: '김이 살짝 나는 작은 그릇이에요!' });
     goldi.setFace('happy');
     for (let k = 0; k < 3; k++) { AudioFX.chomp(); pop(X(760), 130, '냠냠!', C.persimmon); await sleep(500); }
-    const inner = tops[2].querySelectorAll('circle')[1];
-    if (inner) inner.setAttribute('fill', '#C9B48E');
-    [...tops[2].querySelectorAll('path')].forEach(p => p.remove());
+    if (tops[2].setEmpty) tops[2].setEmpty();
+    else { const inner = tops[2].querySelectorAll('circle')[1]; if (inner) inner.setAttribute('fill', '#C9B48E'); }
+    [...tops[2].querySelectorAll('path')].forEach(p => p.remove()); // 김
     await say('딱 좋아요! 냠냠, 작은 그릇을 다 먹어 버렸어요.');
 
     /* ---------- 6. 의자 세 개 (거실 와이드) ---------- */
@@ -755,7 +791,7 @@
     const floor8 = 530;
     await T.sceneCard('곰 가족이 왔어요', () => {
       T.clear(); kitchenBG(T);
-      T.paper(T.world, [['rect', { x: 330, y: 330, width: 340, height: 16, rx: 6, fill: C.bark }], ['rect', { x: 350, y: 346, width: 14, height: 130, fill: C.bark }], ['rect', { x: 636, y: 346, width: 14, height: 130, fill: C.bark }]]);
+      sideTable(T, 330, 330, 340);
       shuffle([200, 500, 800].map(X)).forEach((x, i) => put(B[i], x, floor8, SIZE[i]));
       view();
     }, bears.dad.pos);
@@ -824,11 +860,12 @@
     await T.sceneCard('누가 내 침대에?', () => {
       T.clear(); bedroomSideBG(T, winX);
       bedSide(T);
-      put(goldi, 548, 386, .85);
+      put(goldi, BED_SIDE_ART() ? 505 : 548, BED_SIDE_ART() ? 385 : 386, .85); // 그림 침대: 머리가 베개(x≈385) 위에
       goldi.pose('rotate(-90deg)'); goldi.setFace('sleep');
       blanket = blanketSide(T);
       const pwx = P() ? 590 : 700;
-      paw = T.paper(T.fx, [['ellipse', { cx: pwx, cy: 560, rx: 70, ry: 60, fill: BEAR.baby.fur }], ['ellipse', { cx: pwx, cy: 540, rx: 30, ry: 22, fill: BEAR.baby.light }],
+      if (artUrl('bear_paw')) { paw = T.el('g', {}, T.fx); pic(T, paw, 'bear_paw', { box: [pwx - 60, 455, 120, 257] }); } // 그림 발: 아래에서 발가락이 쑥
+      else paw = T.paper(T.fx, [['ellipse', { cx: pwx, cy: 560, rx: 70, ry: 60, fill: BEAR.baby.fur }], ['ellipse', { cx: pwx, cy: 540, rx: 30, ry: 22, fill: BEAR.baby.light }],
         ...[-34, 0, 34].map(d => ['circle', { cx: pwx + d, cy: 506, r: 12, fill: BEAR.baby.light }])]);
       camSnap(510, 400, 1.8);
     }, goldi.pos);
@@ -855,7 +892,7 @@
     await goldi.move(winX + 75, 470, 700, 'ease-in');
     await goldi.move(winX + 75, 380, 300, 'ease-out');
     cutVo('cut_skirt');
-    await T.cut(svg => cutSkirt(T, svg), { hold: 2200 });
+    await cutArt('cut_skirt', svg => cutSkirt(T, svg), { hold: 2200 });
     pop(winX + 80, 170, '앗!', C.bean);
     giggle(T);
     await say('창문으로 나가려다 치마가 딱 걸렸어요!');
@@ -872,7 +909,9 @@
       put(goldi, lx[0], 510, 1); goldi.setFace('sorry');
       fix = chair(T, T.world, lx[1], 510, SIZE[2]); fix.setBroken(1);
       put(bears.baby, lx[2], 515, SIZE[2]); bears.baby.setFace('cry');
-      hammer = T.paper(T.fx, [['rect', { x: -5, y: -10, width: 10, height: 60, rx: 4, fill: C.bark }], ['rect', { x: -22, y: -24, width: 44, height: 18, rx: 4, fill: '#9A938C' }]]);
+      hammer = T.el('g', {}, T.fx);
+      if (artUrl('hammer')) pic(T, hammer, 'hammer', { box: [-30, -33, 60, 142] }); // 머리 가운데가 (0,-15)
+      else T.paper(hammer, [['rect', { x: -5, y: -10, width: 10, height: 60, rx: 4, fill: C.bark }], ['rect', { x: -22, y: -24, width: 44, height: 18, rx: 4, fill: '#9A938C' }]]);
       hammer.setAttribute('transform', `translate(${fix.x - 70},380) rotate(-30)`); hammer.style.opacity = '0';
       view();
     }, goldi.pos);
@@ -903,11 +942,12 @@
     let tb = [];
     await T.sceneCard(null, () => {
       T.clear(); kitchenBG(T, true);
-      put(bears.dad, X(170), 525, 1.15); put(bears.mom, X(390), 472, .82); put(goldi, X(610), 462, 1.1); put(bears.baby, X(820), 432, .6);
+      const TT = TABLE_TOP();
+      put(bears.dad, X(170), 525, 1.15); put(bears.mom, X(390), TT + 52, .82); put(goldi, X(610), TT + 42, 1.1); put(bears.baby, X(820), TT + 12, .6);
       [bears.dad, bears.mom, goldi, bears.baby].forEach(a => a.setFace('happy'));
-      T.paper(T.world, [['rect', { x: -400, y: 420, width: 1800, height: 200, fill: C.bark }], ['rect', { x: -400, y: 420, width: 1800, height: 14, fill: '#8E6240' }]]);
+      tableFront(T, TT);
       const xs = shuffle([240, 500, 760].map(X));
-      tb = SIZE.map((s, i) => Object.assign(bowlSide(T, T.world, xs[i], 510, s, { full: false }), { x: xs[i], s, i }));
+      tb = SIZE.map((s, i) => Object.assign(bowlSide(T, T.world, xs[i], TT + 70, s, { full: false }), { x: xs[i], y: TT + 70, s, i }));
       view();
     }, goldi.pos);
     await say('엄마 곰이 새 죽을 끓였어요. 다 함께 먹어요!');
@@ -924,14 +964,14 @@
       } })), { prompt: qs[k], where: `${SNAME[good.i]} 그릇을 찾아요.`, who: `${SNAME[good.i]} 그릇이 반짝반짝! 눌러 봐요.` });
       done.add(good);
       good.setFull(true);
-      steam(T, T.world, good.x, 510 - BOWL_RIM() * good.s, good.s);
-      const tag = T.paper(T.fx, [['circle', { cx: good.x - 85 * good.s - 30, cy: 470, r: 24, fill: C.cream, stroke: C.gold, 'stroke-width': 4 }]]);
-      el('text', { x: good.x - 85 * good.s - 30, y: 480, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1 }, tag);
+      steam(T, T.world, good.x, good.y - BOWL_RIM() * good.s, good.s);
+      const tag = T.paper(T.fx, [['circle', { cx: good.x - 85 * good.s - 30, cy: good.y - 40, r: 24, fill: C.cream, stroke: C.gold, 'stroke-width': 4 }]]);
+      el('text', { x: good.x - 85 * good.s - 30, y: good.y - 30, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1 }, tag);
       T.tone(440 + k * 110, .25, { type: 'triangle', vol: .16 });
     }
     await say('작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.');
     [...T.fx.children].forEach(n => n.remove());
-    const gb = bowlSide(T, T.world, X(610), 542, .55, { full: true });
+    const gb = bowlSide(T, T.world, X(610), TABLE_TOP() + 102, .55, { full: true });
     gb.g.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400 });
     await say('골디락스 그릇도 하나 더! 다 함께 냠냠.');
     [bears.dad, bears.mom, goldi, bears.baby].forEach((a, i) => setTimeout(() => { a.hop(20, 320); AudioFX.chomp(); }, i * 180));

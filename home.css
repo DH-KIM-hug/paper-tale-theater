@@ -397,7 +397,7 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
     3px 4px 8px var(--sh-drop);
 }
 /* 그림이 있는 준비 중 동화: 마개 대신 아래쪽에 작은 종이 딱지 */
-.thumb.full .plug { inset: auto 50% 6% auto; transform: translateX(50%); width: auto; height: auto; padding: 6px 12px 6px 14px; border-radius: 14px; background: var(--sheet-up); }
+.thumb.full .plug { inset: auto 50% 6% auto; transform: translateX(50%); width: auto; height: auto; padding: 6px 12px 6px 14px; border-radius: 14px; background: var(--sheet-up); white-space: nowrap; } /* 휴대폰(구멍 140px)에서 '곧 열려요'가 두 줄로 꺾이지 않게 */
 .thumb.full .plug b { font-size: 12px; letter-spacing: .14em; padding-left: 0; color: var(--text-2); }
 .plug b {
   font-size: 12.5px;

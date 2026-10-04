@@ -29,6 +29,7 @@
     rooster: 'v3w/br_rooster.webp', rooster_sing: 'v3w/br_rooster_sing.webp', miller: 'v3w/br_miller.webp', owl: 'v3w/br_owl.webp',
     robber_red: 'v3w/br_robber_red.webp', robber_green: 'v3w/br_robber_green.webp', robber_brown: 'v3w/br_robber_brown.webp',
     cut_crash: 'v3w/br_cut_crash.webp', cut_monster: 'v3w/br_cut_monster.webp', cut_ghost: null,
+    drum: 'v3w/br_drum.webp', horn: 'v3w/br_horn.webp', fiddle: 'v3w/br_fiddle.webp', bell: 'v3w/br_bell.webp', // 우리 집 악기 (바이올린 옆에 따로 그려진 리본 조각은 지움)
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -1056,12 +1057,12 @@
     await T.sceneCard('우리 집', () => {
       T.clear(); morningBG(T, hx('donkey') - 10, hx('cat'));
       band.forEach(a => put(a, ...HOME[a.key]));
-      // 악기 소품
+      // 악기 소품 (그림: 북·나팔·바이올린·종. 없으면 임시 도형)
       const dX = hx('donkey') + 60, gX = hx('dog') + 50, cX = hx('cat') + 60;
-      T.paper(T.world, [['rect', { x: dX, y: 440, width: 44, height: 40, rx: 6, fill: C.bean }], ['ellipse', { cx: dX + 22, cy: 440, rx: 22, ry: 8, fill: C.cream }]]);
-      T.paper(T.world, [['path', { d: `M${gX} 470 L${gX + 40} 450 L${gX + 40} 490 Z`, fill: C.gold }]]);
-      T.paper(T.world, [['ellipse', { cx: cX, cy: 400, rx: 10, ry: 18, fill: C.bark }], ['rect', { x: cX - 3, y: 360, width: 5, height: 30, fill: C.ink }]]);
-      T.paper(T.world, [['path', { d: 'M500 158 Q512 130 524 158 Z', fill: C.gold }]]);
+      if (!pic(T, T.world, 'drum', dX - 10, 428, 64, 52)) T.paper(T.world, [['rect', { x: dX, y: 440, width: 44, height: 40, rx: 6, fill: C.bean }], ['ellipse', { cx: dX + 22, cy: 440, rx: 22, ry: 8, fill: C.cream }]]);
+      if (!pic(T, T.world, 'horn', gX - 15, 458, 70, 29)) T.paper(T.world, [['path', { d: `M${gX} 470 L${gX + 40} 450 L${gX + 40} 490 Z`, fill: C.gold }]]);
+      if (!pic(T, T.world, 'fiddle', cX - 13, 350, 26, 62)) T.paper(T.world, [['ellipse', { cx: cX, cy: 400, rx: 10, ry: 18, fill: C.bark }], ['rect', { x: cX - 3, y: 360, width: 5, height: 30, fill: C.ink }]]);
+      if (!pic(T, T.world, 'bell', hx('rooster') + 36, 136, 22, 35)) T.paper(T.world, [['path', { d: 'M500 158 Q512 130 524 158 Z', fill: C.gold }]]);
       camSnap(500, 280, 1);
     });
     AudioFX.sfx('bell', .4);
