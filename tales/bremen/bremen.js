@@ -22,13 +22,13 @@
   /* 배우·소품·컷 (모두 왼쪽을 본다)
      - donkey_sleep: 뜬 눈으로 나와서 감은 눈으로 고쳐 칠함 · robber_green: 얼굴이 셔츠 줄무늬로 나와서 얼굴은 살색, 검은 줄은 초록으로
      - cut_monster: 다시 뽑은 그림(콧수염 도둑 셋이 줄무늬 옷으로 달아남, 소품 도둑과 같은 차림) → 코드 컷 틀에 깔고 "으악, 괴물이다!" 글자는 코드가
-     - cut_ghost: 못 씀(다시 뽑은 것도 가운데 파란 덩어리 괴물) → 코드 컷(네 칸)에 그림 친구들을 넣음 */
+     - cut_ghost: 다시 뽑은 그림(도둑 셋이 생각 구름 속 귀신·콕 찌르는 이·거인·재판관을 가리킴). 안 나오면 코드 컷(네 칸) */
   const ART = {
     donkey: 'v3w/br_donkey.webp', donkey_sing: 'v3w/br_donkey_sing.webp', donkey_sleep: 'v3w/br_donkey_sleep.webp',
     dog_sing: 'v3w/br_dog_sing.webp', dog_tired: 'v3w/br_dog_tired.webp', cat_sing: 'v3w/br_cat_sing.webp', cat_sad: 'v3w/br_cat_sad.webp',
     rooster: 'v3w/br_rooster.webp', rooster_sing: 'v3w/br_rooster_sing.webp', miller: 'v3w/br_miller.webp', owl: 'v3w/br_owl.webp',
     robber_red: 'v3w/br_robber_red.webp', robber_green: 'v3w/br_robber_green.webp', robber_brown: 'v3w/br_robber_brown.webp',
-    cut_crash: 'v3w/br_cut_crash.webp', cut_monster: 'v3w/br_cut_monster.webp', cut_ghost: null,
+    cut_crash: 'v3w/br_cut_crash.webp', cut_monster: 'v3w/br_cut_monster.webp', cut_ghost: 'v3w/br_cut_ghost3.webp',
     drum: 'v3w/br_drum.webp', horn: 'v3w/br_horn.webp', fiddle: 'v3w/br_fiddle.webp', bell: 'v3w/br_bell.webp', // 우리 집 악기 (바이올린 옆에 따로 그려진 리본 조각은 지움)
   };
   const artOK = {}, bgOK = {};
@@ -1034,7 +1034,7 @@
     rb.forEach((r, i) => walk(r, -200 - i * 60, 470, 1400, false));
     await sleep(1200);
     const told = vo('cut_ghost');
-    await T.cut(svg => {
+    await (artUrl('cut_ghost') ? T.cutImage([{ src: artUrl('cut_ghost'), hold: 3000 }], { hold: 3000 }) : T.cut(svg => {
       const cells = [['cat', 0, 0, '귀신?', 1.25], ['dog', 200, 0, '콕?', 1.2], ['donkey', 0, 150, '거인?', .6], ['rooster', 200, 150, '재판관?', 1.2]];
       T.el('rect', { x: 0, y: 0, width: 400, height: 300, fill: C.cream }, svg);
       T.el('path', { d: 'M200 0 V300 M0 150 H400', stroke: C.bark, 'stroke-width': 6 }, svg);
@@ -1042,7 +1042,7 @@
         const g = T.el('g', { transform: `translate(${x + 84},${y + 140}) scale(${s})` }, svg); drawLook(T, g, k, k === 'donkey' ? 'home' : 'sing');
         T.el('text', { x: x + 160, y: y + 38, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: w }, svg);
       });
-    }, { hold: 3000 });
+    }, { hold: 3000 }));
     if (!told) S.giggle();
     await say('사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.');
 

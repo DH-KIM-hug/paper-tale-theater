@@ -34,7 +34,7 @@
     lion_stand: 'v3w/lm_lion_stand.webp',
     lion_paw: 'v3w/lm_lion_paw.webp',
     mouse_walk: 'v3w/lm_mouse_walk.webp', mouse_pray: 'v3w/lm_mouse_pray.webp', mouse_run: 'v3w/lm_mouse_run.webp', mouse_gnaw: 'v3w/lm_mouse_gnaw.webp',
-    cut_paw: 'v3w/lm_cut_paw.webp', cut_laugh: 'v3w/lm_cut_laugh.webp', cut_net: 'v3w/lm_cut_net2.webp', cut_gnaw: 'v3w/lm_cut_gnaw.webp',
+    cut_paw: 'v3w/lm_cut_paw3.webp', cut_laugh: 'v3w/lm_cut_laugh.webp', cut_net: 'v3w/lm_cut_net2.webp', cut_gnaw: 'v3w/lm_cut_gnaw.webp',
     lion_chest: 'v3w/lm_lion_chest.webp', net: 'v3w/lm_net.webp', hole_stump: 'v3w/lm_hole_stump.webp',
     paw_pad: 'v3w/lm_paw_pad.webp', paw_toe: 'v3w/lm_paw_toe.webp', tooth_lion: 'v3w/lm_tooth_lion.webp', tooth_mouse: 'v3w/lm_tooth_mouse.webp',
   };

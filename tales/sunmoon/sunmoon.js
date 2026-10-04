@@ -64,7 +64,7 @@
     sun_girl: 'v3w/sm_sun_girl2.webp', moon_boy: 'v3w/sm_moon_boy2.webp', lamp_on: 'v3w/sm_lamp_on.webp', lamp_off: 'v3w/sm_lamp_off.webp',
     basket: null,
     cut_well: null, // sm_cut_well2는 오누이가 우물 옆 땅에 서 있어(나무 위가 아님, 호랑이도 없음) 내레이션과 어긋나 뺌 → jobs_cuts.json의 sm_cut_well3로 다시 뽑아 연결
-    cut_snap: 'v3w/sm_cut_snap.webp', cut_eye: null,
+    cut_snap: 'v3w/sm_cut_snap.webp', cut_eye: null, cut_bump: 'v3w/sm_cut_bump2.webp', // 수수밭 엉덩방아 컷 (옷 없는 호랑이, 땅에 놓인 낡은 줄)
     /* 2026-10-04 코드 도형을 대신하는 새 그림 (jobs_svg.json): 바꾸기 전 해·달 원판, 창호지 구멍 속 털·눈, 하늘 동아줄 출발 자리 나무 꼭대기(가지 위 실루엣 둘은 지움),
        우물 물(위에서 본 우물 한 장을 타원으로 오림), 남은 떡 빈 바구니, 종이 구름 두 빛깔, 귀 배지.
        cut_roar: 해 질 녘으로 나온 「어흥!」 컷을 셋째 고개(밤)에 맞춰 밤으로 굽고 해는 달로 (스크래치 g1).
@@ -1285,13 +1285,13 @@
       cutText(svg, '뚝!', 64);
       cutVoice('cut_snap', 250);
     }, { sfx: 'pow', hold: 2200 }));
-    await T.cut(svg => {
+    await (cutArt(T, 'cut_bump', 'thud', 2400, () => cutVoice('cut_bump', 350)) || T.cut(svg => {
       for (let i = 0; i < 9; i++) el('path', { d: `M${20 + i * 45} 300 V${170 + (i % 3) * 16}`, stroke: C.pine, 'stroke-width': 6 }, svg);
       for (let i = 0; i < 9; i++) el('ellipse', { cx: 20 + i * 45, cy: 164 + (i % 3) * 16, rx: 12, ry: 22, fill: '#C98A3A' }, svg);
       const g = el('g', { transform: 'translate(200,300) scale(.8)' }, svg); const P = drawTiger(T, g); P.wear('bump'); P.oMouth(); P.setBelly(2.4);
       cutText(svg, '쿵! 엉덩방아', 44);
       cutVoice('cut_bump', 350);
-    }, { sfx: 'thud', hold: 2400 });
+    }, { sfx: 'thud', hold: 2400 }));
     let sorg;
     await T.sceneCard('수수밭', () => {
       T.clear(); camSnap(500, 280, 1);

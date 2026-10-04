@@ -24,7 +24,7 @@
      - bush(덤불, 마젠타 키잉) · table(잔치 상) · soup_bowl(국 그릇): 코드 도형을 대신하는 그림. 씨앗 그림(tn_seed)은 연두 덩어리로 나와 안 씀 */
   const ART = {
     turnip: 'v3w/tn_turnip.webp', sprout: 'v3w/tn_sprout.webp', pot: 'v3w/tn_pot.webp', watering_can: 'v3w/tn_watering_can.webp',
-    bush: 'v3w/tn_bush.webp', table: 'v3w/tn_table.webp', soup_bowl: 'v3w/tn_soup_bowl.webp',
+    seed: 'v3w/tn_seed3.webp', bush: 'v3w/tn_bush.webp', table: 'v3w/tn_table.webp', soup_bowl: 'v3w/tn_soup_bowl.webp',
     grandpa_stand: 'v3w/tn_grandpa_stand.webp', grandpa_pull: 'v3w/tn_grandpa_pull.webp',
     grandpa_sit: 'v3w/tn_grandpa_sit.webp',
     grandma_stand: 'v3w/tn_grandma_stand.webp', grandma_pull: 'v3w/tn_grandma_pull.webp', girl_pull: 'v3w/tn_girl_pull.webp',
@@ -488,7 +488,7 @@
     const hole = el('ellipse', { cx: 430, cy: 470, rx: 40, ry: 12, fill: '#3E2A1A' }, T.world);
     const seed = el('g', {}, T.world);
     el('circle', { cx: 0, cy: 0, r: 46, fill: '#fff', opacity: 0 }, seed);
-    T.paper(seed, [['ellipse', { cx: 0, cy: 0, rx: 19, ry: 25, fill: C.bark }], ['ellipse', { cx: -6, cy: -8, rx: 6, ry: 9, fill: '#9C7550' }]]); // 첫 탭 목표라 눈에 띄게 크게 (씨앗 그림은 못 씀)
+    if (!pic(T, seed, 'seed', -21, -28, 42, 56)) T.paper(seed, [['ellipse', { cx: 0, cy: 0, rx: 19, ry: 25, fill: C.bark }], ['ellipse', { cx: -6, cy: -8, rx: 6, ry: 9, fill: '#9C7550' }]]); // 첫 탭 목표라 눈에 띄게 크게
     seed.setAttribute('transform', 'translate(496,378)');
     camSnap(500, 360, 1.5);
     await T.curtain(true);
