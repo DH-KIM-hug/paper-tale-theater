@@ -14,11 +14,11 @@
   /* ================= 페이퍼아트 그림 (assets/v3w/ud_*.webp) =================
      null이거나 파일을 못 불러오면 그 자리는 아래 임시 도형(그레이박스)으로 그린다. 새 그림이 나오면 여기 한 줄만 바꾸면 된다.
      배경은 장면마다 한 장을 무대에 꽉 채워 깐다. 물에 뜬 배우는 같은 배경 그림의 아래쪽을 배우 앞에 한 번 더 오려 깔아(frontCut) 몸 아래가 물에 잠긴다.
-     - nest: 둥지가 작고 위쪽에 있어 그림을 1.7배 당겨 둥지를 가운데로 (다시 뽑기 목록)
+     - nest: 다시 뽑은 nest2 — 큰 둥지가 가운데(그릇 안쪽 395~640 × 150~275, 짚 테 320~720 × 110~335)라 당기지 않는다
      - reeds: 아래쪽 진한 흙·그늘을 밝혀 구움 · autumn: 나무 그늘·검은 흙을 밝혀 구움 · reflect: 형광 하늘색 물을 차분하게 */
   const AS = '../../assets/';
   const BG = {
-    nest: 'v3w/ud_bg_nest.webp', pond: 'v3w/ud_bg_pond.webp', yard: 'v3w/ud_bg_yard.webp', reeds: 'v3w/ud_bg_reeds.webp',
+    nest: 'v3w/ud_bg_nest2.webp', pond: 'v3w/ud_bg_pond.webp', yard: 'v3w/ud_bg_yard.webp', reeds: 'v3w/ud_bg_reeds.webp',
     swamp: 'v3w/ud_bg_swamp.webp', swamp_high: 'v3w/ud_bg_swamp_high.webp', autumn: 'v3w/ud_bg_autumn.webp', winter: 'v3w/ud_bg_winter.webp',
     cabin: 'v3w/ud_bg_cabin.webp', spring: 'v3w/ud_bg_spring.webp', reflect: 'v3w/ud_bg_reflect.webp',
   };
@@ -28,12 +28,17 @@
      - 노란 형제: 형광 노랑을 차분한 병아리색으로 구움
      - 감정 카드 face_*: 머리만 동그랗게 오림. 기쁨·슬픔·무서움은 주인공 자세 그림 그대로(거울 카드 = 무대 위 주인공 얼굴),
        화남은 얼굴 그림(부리가 둘 → 옆 회색 부리를 지우고 주황 부리를 주인공 부리 색으로). 백조 넷은 얼굴 그림
-     - 못 써서 그레이박스로 두는 것: cut_reflect(어린 새와 백조가 따로 나란히 있어 '물에 비친 내가 백조'가 아니라 '백조 친구'로 읽힌다, 어린 새도 오른쪽을 봄) */
+     - 나는 자세: young_fly3(봄에 날아오르는 어린 새) · goose_fly3(쾅 소리에 날아가는 기러기) — 발을 접은 그림이라 서 있는 그림이 하늘로 올라가지 않는다
+     - 소품: eggshell(알껍데기 모자·깨진 껍데기) · basket(암탉 바구니) · egg_nest·icon_swim(잘하는 것 카드) · icon_summer/autumn/winter/spring(계절 카드)
+     - 못 써서 그레이박스로 두는 것: cut_reflect·cut_reflect2(둘 다 어린 새와 백조가 따로 나란히 있어 '물에 비친 내가 백조'가 아니라 '백조 친구'로 읽힌다 — 다시 뽑기 jobs_fix_ud2) */
   const ART = {
     egg: 'v3w/ud_egg.webp', baby: 'v3w/ud_baby.webp', baby_sad: 'v3w/ud_baby_sad.webp', baby_scared: 'v3w/ud_baby_scared.webp', baby_happy: 'v3w/ud_baby_happy.webp',
-    young: 'v3w/ud_young.webp', young_sad: 'v3w/ud_young_sad.webp', young_wings: 'v3w/ud_young_wings.webp', swan: 'v3w/ud_swan.webp', swan_fly: 'v3w/ud_swan_fly.webp',
-    duckling: 'v3w/ud_duckling.webp', mom: 'v3w/fc_duck.webp', hen: 'v3w/ud_hen.webp', rooster: 'v3w/br_rooster.webp', goose: 'v3w/ud_goose.webp',
+    young: 'v3w/ud_young.webp', young_sad: 'v3w/ud_young_sad.webp', young_wings: 'v3w/ud_young_wings.webp', young_happy: 'v3w/ud_young_happy.webp', young_fly3: 'v3w/ud_young_fly3.webp',
+    swan: 'v3w/ud_swan.webp', swan_fly: 'v3w/ud_swan_fly.webp',
+    duckling: 'v3w/ud_duckling.webp', mom: 'v3w/fc_duck.webp', hen: 'v3w/ud_hen.webp', rooster: 'v3w/br_rooster.webp', goose: 'v3w/ud_goose.webp', goose_fly3: 'v3w/ud_goose_fly3.webp',
     cat: 'v3w/tn_cat_sit.webp', grandma: 'v3w/ud_grandma.webp', farmer: 'v3w/ud_farmer.webp', reed: 'v3w/ud_reed.webp', reed_clump: 'v3w/ud_reed_clump.webp',
+    eggshell: 'v3w/ud_eggshell.webp', basket: 'v3w/ud_basket.webp', egg_nest: 'v3w/ud_egg_nest.webp', icon_swim: 'v3w/ud_icon_swim.webp',
+    icon_summer: 'v3w/ud_icon_summer.webp', icon_autumn: 'v3w/ud_icon_autumn.webp', icon_winter: 'v3w/ud_icon_winter.webp', icon_spring: 'v3w/ud_icon_spring.webp',
     face_happy: 'v3w/ud_face_happy.webp', face_sad: 'v3w/ud_face_sad.webp', face_scared: 'v3w/ud_face_scared.webp', face_angry: 'v3w/ud_face_angry.webp',
     face_swan_happy: 'v3w/ud_face_swan_happy.webp', face_swan_sad: 'v3w/ud_face_swan_sad.webp', face_swan_scared: 'v3w/ud_face_swan_scared.webp', face_swan_angry: 'v3w/ud_face_swan_angry.webp',
     cut_hatch: 'v3w/ud_cut_hatch.webp', cut_reflect: null,
@@ -44,10 +49,14 @@
   /* 자세 그림: [폭, 높이, 발끝 가운데 x(폭 비율), 발끝 y(높이 비율)] — 발끝 가운데가 (0,0). 백조는 몸 아래 가운데 */
   const SPR = {
     egg: [68.6, 95.6, .504, .978], baby: [94.6, 107.9, .483, .981], baby_sad: [89.3, 108.2, .542, .981], baby_scared: [90.5, 111.1, .422, .981], baby_happy: [94.5, 115.2, .47, .978],
-    young: [98, 146.8, .434, .983], young_sad: [87.6, 146.8, .421, .983], young_wings: [139.8, 145.5, .477, .983], swan: [167, 192.9, .489, .981],
+    young: [98, 146.8, .434, .983], young_sad: [87.6, 146.8, .421, .983], young_wings: [139.8, 145.5, .477, .983], young_happy: [99, 149.1, .44, .983], swan: [167, 192.9, .489, .981],
     duckling: [65.6, 72.4, .51, .983], mom: [66.1, 70.4, .498, .994], hen: [85.5, 95.1, .463, .983], rooster: [91.9, 100.4, .345, .996], goose: [92.9, 103.2, .464, .983],
     cat: [92.3, 80.3, .49, .997], grandma: [89.2, 170.3, .442, .983], farmer: [138, 216.4, .567, .984], reed: [93.2, 473.3, .393, .984], reed_clump: [207, 237, .488, .984],
+    /* 나는 자세: 서 있는 그림과 같은 픽셀 배율, 기준점은 몸 아래 가운데 */
+    young_fly3: [148.7, 106.7, .5, .974], goose_fly3: [117.5, 64.1, .5, .971],
   };
+  /* 소품 그림 폭/높이 비율 (카드 안에 높이 기준으로 넣을 때) */
+  const PROP_AR = { eggshell: 1.203, basket: 2.022, egg_nest: .831, icon_swim: 1.363, icon_summer: .988, icon_autumn: .927, icon_winter: .887, icon_spring: .675 };
   function pic(T, g, key, x, y, w, h, { shadow = true } = {}) {
     const u = artUrl(key); if (!u) return null;
     const wrap = T.el('g', shadow ? { filter: 'url(#pp)' } : {}, g);
@@ -55,12 +64,14 @@
     return wrap;
   }
   const sprite = (T, g, key, k = 1) => { const s = SPR[key]; return s && artUrl(key) ? pic(T, g, key, -s[2] * s[0] * k, -s[3] * s[1] * k, s[0] * k, s[1] * k) : null; };
+  /* 소품 그림을 (cx,cy) 가운데에 높이 h로 (비율은 PROP_AR). 그림이 없으면 null → 코드 도형으로 */
+  const prop = (T, g, key, cx, cy, h, opt) => { const ar = PROP_AR[key]; return ar && artUrl(key) ? pic(T, g, key, cx - ar * h / 2, cy - h / 2, ar * h, h, opt) : null; };
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992).
      BG_FIT[key] = [배율, 그림 속 점 u, v(비율), 그 점이 올 무대 x, y] — 배율 1이면 그림 전체를 무대에 맞춘다 */
-  const BG_EDGE = { nest: ['#a7cac7', '#415535'], pond: ['#bfd4d7', '#5f4326'], yard: ['#9ec8df', '#706e50'], reeds: ['#bad2d9', '#533f27'],
+  const BG_EDGE = { nest: ['#a5c4b6', '#37502d'], pond: ['#bfd4d7', '#5f4326'], yard: ['#9ec8df', '#706e50'], reeds: ['#bad2d9', '#533f27'],
     swamp: ['#b5b9ab', '#515a5c'], swamp_high: ['#a1ad95', '#5a7076'], autumn: ['#fee7c8', '#4a280f'], winter: ['#d2e4f4', '#eef3fb'],
     cabin: ['#cab18f', '#88562f'], spring: ['#c3dcdf', '#889669'], reflect: ['#c5e4ed', '#77cae2'] };
-  const BG_FIT = { nest: [1.7, .514, .425, 490, 330], reeds: [1.3, .5, .5, 500, 280] };
+  const BG_FIT = { reeds: [1.3, .5, .5, 500, 280] };
   function bgRect(key) {
     const w0 = 1080, h0 = w0 * 992 / 1760, f = BG_FIT[key];
     if (!f) return [-40, -24, w0, h0];
@@ -128,11 +139,11 @@
   /* ================= 주인공 (알 → 아기 → 어린 새 → 백조). 왼쪽을 본다, 발끝 = 0,0 ================= */
   const HERO_H = { egg: 92, baby: 104, young: 142, swan: 186 };
   /* 그림 주인공: 기분마다 자세 그림 한 장. 날개 조각(wing·wingBack)은 빈 묶음으로 두어 코드의 날개 움직임이 그대로 돌아도 아무 일이 없다.
-     'wings' = 봄에 날개를 활짝 편 어린 새(그레이박스에서는 기쁜 얼굴) */
+     'wings' = 봄에 날개를 활짝 편 어린 새, 'fly' = 날아오른 어린 새(그레이박스에서는 둘 다 기쁜 얼굴) */
   const HERO_ART = {
     egg: () => 'egg',
     baby: m => ({ sad: 'baby_sad', scared: 'baby_scared', happy: 'baby_happy' })[m] || 'baby',
-    young: m => ({ sad: 'young_sad', wings: 'young_wings' })[m] || 'young',
+    young: m => ({ sad: 'young_sad', wings: 'young_wings', happy: 'young_happy', fly: 'young_fly3' })[m] || 'young',
     swan: () => 'swan',
   };
   const HERO_PT = { egg: { shoulder: [0, -46], head: [0, -46] }, baby: { shoulder: [2, -38], head: [-12, -74] },
@@ -179,7 +190,7 @@
     },
     young(T, g, mood) {
       const A = heroArt(T, g, 'young', mood); if (A) return A;
-      if (mood === 'wings') mood = 'happy';
+      if (mood === 'wings' || mood === 'fly') mood = 'happy';
       const { paper, el } = T;
       const wingBack = el('g', {}, g);
       paper(wingBack, [['ellipse', { cx: 22, cy: -54, rx: 34, ry: 15, fill: C.youngDk }]]);
@@ -372,6 +383,14 @@
     a.body.setAttribute('clip-path', `url(#${id})`);
     const rip = T.el('ellipse', { cx: 0, cy: cut + 1, rx: s[0] * .42, ry: 4, fill: '#C9DCE4', opacity: .7 }, a.pos);
     a.pos.insertBefore(rip, a.body); a.ripple = rip;
+  }
+  /* 서 있던 배우를 나는 자세 그림으로 바꾼다 (그림이 있을 때만). 물에 잠긴 다리 가리개는 푼다 */
+  function takeOff(T, a, key) {
+    if (!artUrl(key)) return false;
+    a.body.innerHTML = ''; a.body.removeAttribute('clip-path');
+    sprite(T, a.body, key);
+    a.body.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '0 -8px', rotate: '-4deg' }, { translate: '0 0', rotate: '0deg' }], { duration: 420, iterations: Infinity });
+    return true;
   }
   /* 하늘을 나는 백조 (오른쪽 → 왼쪽으로 난다) */
   function flyingSwan(T, parent, x, y, s = 1) {
@@ -567,6 +586,8 @@
     const inner = T.el('g', { transform: `translate(${form === 'swan' ? 12 : 4},${HERO_H[form] * s / 2}) scale(${s})` }, g);
     HERO[form](T, inner, form === 'swan' ? 'happy' : 'neutral');
   };
+  /* 계절 카드: 그림(해·단풍잎·눈송이·꽃)이 있으면 그림, 없으면 코드 도형 */
+  const seasonIcon = s => (T, g) => { if (!prop(T, g, 'icon_' + s, 0, 0, 124, { shadow: false })) SEASON_ICON[s](T, g); };
   const SEASON_ICON = {
     summer: (T, g) => { T.paper(g, [['rect', { x: -60, y: 20, width: 120, height: 34, rx: 10, fill: C.leaf }], ['circle', { cy: -12, r: 30, fill: '#F2B94A' }]]); for (let k = 0; k < 8; k++) T.el('rect', { x: -4, y: -62, width: 8, height: 14, rx: 4, fill: '#F2B94A', transform: `rotate(${k * 45} 0 -12)` }, g); },
     autumn: (T, g) => T.paper(g, [['path', { d: 'M0 -56 L14 -24 L46 -32 L30 -4 L52 14 L16 18 L10 46 L0 26 L-10 46 L-16 18 L-52 14 L-30 -4 L-46 -32 L-14 -24 Z', fill: C.persimmon }], ['rect', { x: -3, y: 20, width: 6, height: 36, fill: C.bark }]]),
@@ -681,9 +702,9 @@
 
     /* ============ 1막 ============ */
     /* --- 1. 알 깨기 (둥지 하이앵글, 여름) --- */
-    const artNest = nestBG(T); // 그림: 1.7배 당긴 둥지 (가운데 490,330 · 안쪽 오목한 곳 400~580 × 280~365)
-    const mom = artNest ? (narrow() ? cast(T, 'mom', 652, 334, 1.75) : cast(T, 'mom', 712, 332, 1.95)) : cast(T, 'mom', 760, 250, 1.6); // 세로: 화면 안에 엄마가 보이게 둥지 쪽으로
-    const SMALL = artNest ? [[398, 328], [446, 286], [538, 286], [590, 330]] : [[400, 300], [480, 250], [572, 262], [420, 400]];
+    const artNest = nestBG(T); // 그림: 큰 둥지가 가운데 (그릇 안쪽 395~640 × 150~275). 엄마는 둥지 오른쪽에 앉아 알을 품고, 작은 알 넷은 안쪽, 큰 알은 앞쪽 테에
+    const mom = artNest ? cast(T, 'mom', 616, 270, 1.7) : cast(T, 'mom', 760, 250, 1.6); // 세로(보이는 폭 270~730)에서도 둥지와 엄마가 다 보인다
+    const SMALL = artNest ? [[404, 232], [444, 198], [492, 190], [538, 210]] : [[400, 300], [480, 250], [572, 262], [420, 400]];
     const eggs = SMALL.map(([x, y]) => {
       const g = el('g', { transform: `translate(${x},${y})` }, T.world);
       if (!sprite(T, g, 'egg', 62 / 92 * .97)) { // 그림: 큰 알과 같은 그림을 작게 (가운데 맞춤 위해 아래로 31)
@@ -693,7 +714,7 @@
       el('circle', { r: 46, fill: '#fff', opacity: 0 }, g);
       return { g, x, y };
     });
-    if (artNest) put(hero, 492, 432, 1.25); else put(hero, 570, 470, 1.25);
+    if (artNest) put(hero, 470, 340, 1.2); else put(hero, 570, 470, 1.25);
     hero.setForm('egg');
     const sibs = [];
     await T.curtain(true);
@@ -703,7 +724,8 @@
       await T.tap(e.g, { prompt: '알을 톡 눌러 봐요!' });
       crack(T);
       e.g.remove();
-      T.paper(T.world, [['path', { d: `M${e.x - 26} ${e.y + 20} Q${e.x - 24} ${e.y + 34} ${e.x - 6} ${e.y + 34} L${e.x - 10} ${e.y + 20} Z`, fill: '#EFE6D2' }],
+      if (artUrl('eggshell')) [-1, 1].forEach(s => prop(T, el('g', { transform: `translate(${e.x + s * 22},${e.y + 28}) scale(${s},1)` }, T.world), 'eggshell', 0, 0, 24)); // 그림: 깨진 껍데기 두 쪽
+      else T.paper(T.world, [['path', { d: `M${e.x - 26} ${e.y + 20} Q${e.x - 24} ${e.y + 34} ${e.x - 6} ${e.y + 34} L${e.x - 10} ${e.y + 20} Z`, fill: '#EFE6D2' }],
         ['path', { d: `M${e.x + 26} ${e.y + 20} Q${e.x + 24} ${e.y + 34} ${e.x + 6} ${e.y + 34} L${e.x + 10} ${e.y + 20} Z`, fill: '#EFE6D2' }]]);
       const d = cast(T, 'duckling', e.x, e.y + 30, 1.2);
       T.world.appendChild(hero.pos);
@@ -724,7 +746,9 @@
     await sleep(300);
     hero.setForm('baby'); hero.setScale(hero.art ? 1.4 : 1.1); // 그림: 노란 형제(1.2배 키 84)보다 확실히 크게
     const [hx0, hy0] = hero.headPt();
-    const hat = T.paper(T.fx, [['path', { d: 'M-30 0 Q-28 -34 0 -36 Q28 -34 30 0 L20 -6 L10 2 L0 -8 L-10 2 L-20 -6 Z', fill: '#E9E2D0' }]]);
+    const hat = el('g', {}, T.fx);
+    if (artUrl('eggshell')) prop(T, el('g', { transform: 'scale(1,-1)' }, hat), 'eggshell', 0, 22, 44); // 그림: 알껍데기를 뒤집어 모자로 (톱니가 아래, 머리 위 -44~0에 얹힌다)
+    else T.paper(hat, [['path', { d: 'M-30 0 Q-28 -34 0 -36 Q28 -34 30 0 L20 -6 L10 2 L0 -8 L-10 2 L-20 -6 Z', fill: '#E9E2D0' }]]);
     const hatY = hy0 - (hero.art ? 34 : 20); // 그림 머리는 위로 조금 더 둥글다
     hat.setAttribute('transform', `translate(${hx0},${hatY})`);
     if (artUrl('cut_hatch')) await T.cut(cutPic('cut_hatch'), { hold: 1600, sfx: 'pop' }); // 그림 컷: 알껍데기 모자를 쓰고 쩍! 나온 아기 오리
@@ -885,7 +909,7 @@
     }, { hold: 1500 });
     honk(T);
     await say('저 멀리서 큰 소리가 났어요. 깜짝 놀란 기러기들이 모두 날아가 버렸어요.');
-    geese.forEach(g => { if (g.ripple) g.ripple.remove(); }); // 날아오르면 물결은 그 자리에 남는다
+    geese.forEach((g, k) => { if (g.ripple) g.ripple.remove(); if (takeOff(T, g, 'goose_fly3')) g.face(k > 1 ? 'right' : 'left'); }); // 물결은 그 자리에 남고, 나는 자세로 가는 쪽을 본다
     await Promise.all(geese.map((g, k) => g.move(g.x + (k - 1) * 200, -260, 1200 + k * 150, 'ease-in')));
     hero.setMood('scared'); hero.pose('scale(1.08,.84)');
     const tremble = hero.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 140, iterations: Infinity });
@@ -996,7 +1020,8 @@
       grandma = cast(T, 'grandma', narrow() ? 680 : 715, 505, 1.55);
       cat = cast(T, 'cat', 480, 520, 1.7); cat.face('left');
       henIn = cast(T, 'hen', 610, 490, 1.45); henIn.face('left');
-      T.paper(T.world, [['path', { d: 'M545 516 L560 478 L670 478 L655 516 Z', fill: '#C39445' }], ['rect', { x: 556, y: 486, width: 104, height: 6, fill: C.bark }]]);
+      if (!prop(T, T.world, 'basket', 604, 501, 58)) // 그림: 바구니가 암탉 앞에 와서 다리를 가린다 → 바구니에 앉은 암탉
+        T.paper(T.world, [['path', { d: 'M545 516 L560 478 L670 478 L655 516 Z', fill: '#C39445' }], ['rect', { x: 556, y: 486, width: 104, height: 6, fill: C.bark }]]);
       put(hero, narrow() ? 385 : 355, 525, 1.25, 'right');
     }, hero.pos);
     await say('할머니 집은 난로가 있어 따뜻했어요. 고양이와 암탉도 함께 살았어요.');
@@ -1012,11 +1037,13 @@
     vo('cut_purr') || purr(T); // 목소리 흉내가 있으면 합성음은 생략
     await T.cut(svg => hugeHero(svg, '가르릉…', 'neutral'), { hold: 1500 });
     vo('cut_quack') || quack(T);
-    await T.cut(svg => hugeHero(svg, '꽥!', 'wings'), { hold: 1500, sfx: 'pop' }); // 그림: 날개 활짝 웃는 어린 새
+    await T.cut(svg => hugeHero(svg, '꽥!', 'happy'), { hold: 1500, sfx: 'pop' }); // 그림: 활짝 웃는 어린 새(young_happy)
     giggle(T);
+    hero.setMood('happy'); hero.hop(16); // "아기 오리도 웃었어요"
     [cat, henIn, grandma].forEach((a, k) => setTimeout(() => a.hop(14, 320), k * 120));
     await say('가르릉이 아니라 꽥! 모두 깔깔 웃었어요. 아기 오리도 웃었어요.');
     cluck(T); henIn.hop(14);
+    hero.setMood('neutral');
     await say('암탉이 말했어요. "꼬꼬. 그럼 알은 낳을 줄 아니?" 아기 오리는 고개를 저었어요.');
     await hero.wiggle(10);
     const q9 = '아기 오리가 잘하는 건 뭘까요?';
@@ -1025,8 +1052,8 @@
       const sl = slots(3), r = Math.min(sl.r, 72);
       const opts = shuffle([
         { k: 'purr', label: '가르릉', ok: false, icon: (T, g) => { DRAW.cat(T, T.el('g', { transform: 'translate(10,40) scale(1.1)' }, g)); T.el('path', { d: 'M-50 -40 q10 -10 20 0 t20 0', stroke: C.bark, 'stroke-width': 4, fill: 'none' }, g); } },
-        { k: 'egg', label: '알 낳기', ok: false, icon: (T, g) => { T.paper(g, [['ellipse', { cy: 34, rx: 52, ry: 14, fill: C.cattail }], ['ellipse', { cy: 30, rx: 44, ry: 10, fill: C.gold }]]); if (!sprite(T, T.el('g', { transform: 'translate(0,40)' }, g), 'egg', .95)) T.paper(g, [['ellipse', { cy: -4, rx: 30, ry: 38, fill: '#EFE6D2', stroke: C.bark, 'stroke-width': 3 }]]); } }, // 크림 카드 위 크림 알이 안 보여서: 점박이 알 그림 + 짚 둥지
-        { k: 'swim', label: '헤엄', ok: true, icon: (T, g) => { HERO.baby(T, T.el('g', { transform: 'translate(4,24) scale(.8)' }, g), 'happy'); T.paper(g, [['path', { d: 'M-66 20 Q-50 8 -34 20 Q-18 8 -2 20 Q14 8 30 20 Q46 8 62 20 V60 H-66 Z', fill: C.water }]]); } },
+        { k: 'egg', label: '알 낳기', ok: false, icon: (T, g) => { if (prop(T, g, 'egg_nest', 0, 4, 126)) return; T.paper(g, [['ellipse', { cy: 34, rx: 52, ry: 14, fill: C.cattail }], ['ellipse', { cy: 30, rx: 44, ry: 10, fill: C.gold }]]); if (!sprite(T, T.el('g', { transform: 'translate(0,40)' }, g), 'egg', .95)) T.paper(g, [['ellipse', { cy: -4, rx: 30, ry: 38, fill: '#EFE6D2', stroke: C.bark, 'stroke-width': 3 }]]); } }, // 그림: 짚 둥지 위 알 한 알. 없으면 점박이 알 그림 + 짚 둥지
+        { k: 'swim', label: '헤엄', ok: true, icon: (T, g) => { if (prop(T, g, 'icon_swim', 0, 2, 104)) return; HERO.baby(T, T.el('g', { transform: 'translate(4,24) scale(.8)' }, g), 'happy'); T.paper(g, [['path', { d: 'M-66 20 Q-50 8 -34 20 Q-18 8 -2 20 Q14 8 30 20 Q46 8 62 20 V60 H-66 Z', fill: C.water }]]); } }, // 그림: 물에 뜬 아기 오리(발은 물속 — 물색으로 메움)
       ]);
       const cards = opts.map((o, i) => ({ ...o, g: card(T, sl.xs[i], narrow() ? 190 : 158, r, g => o.icon(T, g), o.label) }));
       const pick = await T.choose(cards.map(c => ({ el: c.g, ok: c.ok, onWrong: async () => {
@@ -1060,7 +1087,11 @@
     await say('와, 날개가 이렇게 커졌어요!');
     await say('한 번 더 꾹! 훨훨 날아 볼까요?');
     const y0 = hero.y;
-    await T.hold(hero.pos, { ms: 2000, prompt: '한 번 더 꾹! 훨훨!', onProgress: p => { hero.place(hero.x, y0 - p * 120); } });
+    let flying = false;
+    await T.hold(hero.pos, { ms: 2000, prompt: '한 번 더 꾹! 훨훨!', onProgress: p => {
+      if (p > .3 && !flying && hero.art) { flying = true; hero.setMood('fly'); } // 그림: 발을 접고 나는 자세(young_fly3)로
+      hero.place(hero.x, y0 - p * 120);
+    } });
     const flap = [hero.parts.wing, hero.parts.wingBack].map((w, k) => { w.style.transition = ''; return w.animate([{ transform: `rotate(${-55 - k * 25}deg) scale(1.6)` }, { transform: `rotate(${15 + k * 10}deg) scale(1.6)` }, { transform: `rotate(${-55 - k * 25}deg) scale(1.6)` }], { duration: 420, iterations: Infinity }); });
     if (hero.art) flap.push(hero.body.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '0 -10px', rotate: '-4deg' }, { translate: '0 0', rotate: '0deg' }], { duration: 420, iterations: Infinity })); // 그림: 날갯짓 대신 몸이 살랑
     AudioFX.whoosh();
@@ -1094,8 +1125,8 @@
     ], '어떻게 자랐는지 순서대로 톡! 맨 처음은 뭐였지?', prev => `${prev.label} 다음은 뭐였지?`, '알, 아기, 어린 새, 그리고 백조! 이렇게 자랐어요.');
     await say('이번에는 아기 오리가 지나온 계절이에요.');
     await orderGame([
-      { label: '여름', icon: SEASON_ICON.summer }, { label: '가을', icon: SEASON_ICON.autumn },
-      { label: '겨울', icon: SEASON_ICON.winter }, { label: '봄', icon: SEASON_ICON.spring },
+      { label: '여름', icon: seasonIcon('summer') }, { label: '가을', icon: seasonIcon('autumn') },
+      { label: '겨울', icon: seasonIcon('winter') }, { label: '봄', icon: seasonIcon('spring') },
     ], '알에서 나온 건 해님이 쨍쨍한 계절이었어요. 어느 카드일까요?', prev => ({ 여름: '그다음, 나뭇잎이 빨갛게 물든 계절은?', 가을: '그다음, 꽁꽁 얼음이 언 계절은?', 겨울: '마지막으로 꽃이 핀 계절은?' })[prev.label],
     '여름, 가을, 겨울, 봄! 계절이 한 바퀴 돌았어요.');
 
