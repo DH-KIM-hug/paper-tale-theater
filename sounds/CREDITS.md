@@ -10,7 +10,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `animals/tiger.mp3` | 439280 schots angry-tiger.wav | schots | CC0 | https://commons.wikimedia.org/wiki/File:439280_schots_angry-tiger.wav |
 | `animals/cow.mp3` | Single Cow Moo.ogg | MichaeltheFox8621 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Single_Cow_Moo.ogg |
 | `animals/pig.mp3` | Mudchute pig 1.ogg | Secretlondon | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Mudchute_pig_1.ogg |
-| `animals/duck.mp3` | Anas platyrhynchos - Mallard XC62258.mp3 (1.1~2.5초 "꽥, 꽥" 부분만 잘라 씀) | Jonathon Jongsma (xeno-canto) | **CC BY-SA 3.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_-_Mallard_XC62258.mp3 |
+| `animals/duck.mp3` | Anas platyrhynchos - Mallard XC112828.mp3 (암컷 청둥오리 울음, 6.95~7.95초 "꽥꽥꽥" 부분만 잘라 씀) | Jonathon Jongsma (xeno-canto) | **CC BY-SA 3.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_-_Mallard_XC112828.mp3 |
 | `animals/rooster.mp3` | Medium rooster crowing.ogg | alys | Public domain | https://commons.wikimedia.org/wiki/File:Medium_rooster_crowing.ogg |
 | `animals/sheep.mp3` | Sheep bleating.ogg | earthcalling | Public domain | https://commons.wikimedia.org/wiki/File:Sheep_bleating.ogg |
 | `animals/dog.mp3` | Barking of a dog.ogg | Amada44 | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Barking_of_a_dog.ogg |
@@ -61,3 +61,7 @@ CC BY 파일은 **출처 표시 의무가 있다** — 크레딧 화면에 "Kevi
 | `sfx/gulp.mp3` | Swallowing gulp.ogg | gregoryweir | Public domain | https://commons.wikimedia.org/wiki/File:Swallowing_gulp.ogg |
 | `sfx/cymbal.mp3` | Kevin MacLeod assorted rimshots - Crasher.wav | Kevin MacLeod (incompetech.com) | **CC BY 3.0** | https://commons.wikimedia.org/wiki/File:Kevin_MacLeod_assorted_rimshots_-_Crasher.wav |
 | `sfx/slide_up.mp3` · `sfx/slide_down.mp3` | 슬라이드 휘슬 — 이 프로젝트에서 직접 합성(사인파+숨소리+비브라토) | 팥죽 게임 | CC0 | — |
+
+## 직접 만든 소리
+
+`sfx/blow.mp3`, `sfx/blow_long.mp3` — 입으로 "후~" 부는 숨소리. 잡음에 입 모양(모음 우) 울림을 입혀 코드로 만들었다. 저작권 없음.

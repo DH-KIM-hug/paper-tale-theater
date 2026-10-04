@@ -326,25 +326,39 @@ const Tale = (() => {
     n.animate([{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], { duration: 900, iterations: 4, easing: 'ease-in-out' });
   }
 
-  /* ---------- 조작 4: 쓱 (방향만 맞으면 성공, 톡도 한 걸음으로 인정) ---------- */
+  /* ---------- 조작 4: 쓱 (화면 어디서든 그 방향으로 밀면 한 걸음, 길게 밀면 여러 걸음, 톡도 한 걸음으로 인정) ---------- */
   function swipe(area, { dir = 'up', count = 3, onStep, prompt } = {}) {
     return new Promise(res => {
-      let i = 0, done = false, sx = 0, sy = 0;
+      let i = 0, done = false, down = false, moved = false, sx = 0, sy = 0, lastT = 0;
+      const wrap = $('#stageWrap') || area;
       arm(area, true);
       const h = helper({ target: area, kind: dir === 'up' ? 'swipe-up' : 'swipe-right', prompt,
         auto: async () => { while (!done) { step(); await sleep(700); } } });
-      const finish = () => { if (done) return; done = true; area.removeEventListener('pointerdown', down); window.removeEventListener('pointerup', up); arm(area, false); h.stop(); res(); };
-      const step = () => { i++; onStep && onStep(i); if (i >= count) finish(); };
-      const down = e => { e.stopPropagation(); if (busy || done) return; sx = e.clientX; sy = e.clientY; area._down = true; };
-      const up = e => {
-        if (!area._down) return; area._down = false; if (busy || done) return;
-        const dx = e.clientX - sx, dy = e.clientY - sy;
-        const okDir = dir === 'up' ? -dy > 30 : dir === 'right' ? dx > 30 : dir === 'left' ? -dx > 30 : dy > 30;
-        const isTap = Math.hypot(dx, dy) < 12;
-        if (okDir || isTap) { h.poke(); step(); }
+      const finish = () => {
+        if (done) return; done = true;
+        wrap.removeEventListener('pointerdown', begin, true);
+        ['pointermove'].forEach(ev => window.removeEventListener(ev, move));
+        ['pointerup', 'pointercancel'].forEach(ev => window.removeEventListener(ev, end));
+        arm(area, false); h.stop(); res();
       };
-      area.addEventListener('pointerdown', down);
-      window.addEventListener('pointerup', up);
+      const step = () => { i++; onStep && onStep(i); if (i >= count) finish(); };
+      const along = (dx, dy) => (dir === 'up' ? -dy : dir === 'left' ? -dx : dir === 'down' ? dy : Math.abs(dx) > Math.abs(dy) * .5 ? Math.abs(dx) : 0);
+      const begin = e => { if (busy || done) return; down = true; moved = false; sx = e.clientX; sy = e.clientY; };
+      const move = e => {
+        if (!down || busy || done) return;
+        if (along(e.clientX - sx, e.clientY - sy) > 36 && performance.now() - lastT > 280) {
+          moved = true; lastT = performance.now(); sx = e.clientX; sy = e.clientY; h.poke(); step();
+        }
+      };
+      const end = e => {
+        if (!down) return; down = false;
+        if (busy || done || moved) return;
+        const dx = e.clientX - sx, dy = e.clientY - sy;
+        if (Math.hypot(dx, dy) < 14 || along(dx, dy) > 16) { h.poke(); step(); }
+      };
+      wrap.addEventListener('pointerdown', begin, true);
+      window.addEventListener('pointermove', move);
+      ['pointerup', 'pointercancel'].forEach(ev => window.addEventListener(ev, end));
     });
   }
 

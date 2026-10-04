@@ -86,15 +86,13 @@
   /* ================= 소리 ================= */
   const SND = {
     whoosh(T, k = 1) { // 바람 세기 1~5단계
-      if (!AudioFX.sfx('whoosh', Math.min(1, .3 + k * .14))) AudioFX.whoosh();
-      T.tone([160 + k * 30, 80], .5 + k * .12, { type: 'sine', vol: .04 + k * .02 });
-      T.tone([500 + k * 80, 1400], .35 + k * .05, { type: 'sawtooth', vol: .015 + k * .006, when: .05 });
+      if (!AudioFX.sfx(k >= 3 ? 'blow_long' : 'blow', Math.min(1, .55 + k * .1))) AudioFX.whoosh(); // 입으로 후~ 부는 숨소리
     },
     warm(T, lv = 1) { // 따뜻한 합성 화음 (도미솔 → 한 음씩 쌓임)
       [262, 330, 392, 523].slice(0, 2 + lv).forEach((f, i) => T.tone(f, 1.4, { type: 'sine', vol: .07, when: i * .08 }));
     },
     sparkle(T) { [1047, 1319, 1568, 2093].forEach((f, i) => T.tone(f, .16, { type: 'triangle', vol: .12, when: i * .07 })); },
-    breeze(T) { T.tone([500, 820], .7, { type: 'sine', vol: .06 }); T.tone([760, 620], .6, { type: 'sine', vol: .04, when: .25 }); },
+    breeze(T) { if (!AudioFX.sfx('blow', .45)) T.tone([500, 820], .7, { type: 'sine', vol: .06 }); },
     pant(T) { T.tone([420, 300], .18, { type: 'sine', vol: .1 }); T.tone([400, 280], .18, { type: 'sine', vol: .1, when: .32 }); },
     shiver(T) { [0, .08, .16, .24].forEach(w => T.tone(w % .16 ? 520 : 600, .06, { type: 'square', vol: .05, when: w })); },
     babble(T) { // 개울 물소리 (졸졸)

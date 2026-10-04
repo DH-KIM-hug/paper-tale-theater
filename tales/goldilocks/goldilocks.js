@@ -469,7 +469,7 @@
   const hot = T => { T.tone([500, 1300], .25, { type: 'triangle', vol: .14 }); T.tone([1300, 900], .2, { type: 'triangle', vol: .12, when: .25 }); };
   const brr = T => { for (let i = 0; i < 8; i++) T.tone(i % 2 ? 300 : 340, .06, { type: 'square', vol: .07, when: i * .07 }); };
   const snore = T => { T.tone([140, 110], .6, { type: 'sine', vol: .12 }); T.tone([600, 900], .4, { type: 'sine', vol: .06, when: .7 }); };
-  const blow = T => AudioFX.sfx('whoosh', .5) || T.tone([900, 300], .3, { type: 'sine', vol: .1 });
+  const blow = T => AudioFX.sfx('blow', .9) || T.tone([900, 300], .3, { type: 'sine', vol: .1 });
 
   /* ================= 이야기 ================= */
   async function run(T) {

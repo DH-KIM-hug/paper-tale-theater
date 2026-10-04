@@ -158,7 +158,7 @@ const AudioFX = (() => {
   const COMIC = ['spring', 'slide_up', 'slide_down', 'zip', 'cork', 'doop', 'sparkle', 'xylo_up', 'xylo_down', 'giggle_xylo',
     'crash', 'cymbal', 'drumroll', 'tada', 'womp', 'pan', 'squeak', 'splash_big', 'bubbles', 'laugh_deep', 'giggle', 'cheer',
     'rattle', 'uah'];
-  const EXTRA = ['sfx/knock', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door',
+  const EXTRA = ['sfx/knock', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door', 'sfx/blow', 'sfx/blow_long',
     ...COMIC.map(n => 'sfx/' + n),
     ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a), 'sfx/paper_turn'];
 
