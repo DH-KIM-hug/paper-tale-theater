@@ -225,7 +225,7 @@ const Tale = (() => {
   }
 
   /* ---------- 손가락 안내 ---------- */
-  const handSvg = () => `<svg viewBox="0 0 64 64"><image href="${ROOT_URL}assets/ui/hand.webp" width="64" height="64"/></svg>`; // 종이 오려 만든 손 그림 (손끝이 누를 자리)
+  const handSvg = () => `<svg viewBox="0 0 64 64"><image href="${ROOT_URL}assets/ui/hand3.webp" x="16.6" y="4" width="30.8" height="56"/></svg>`; // 종이 오려 만든 손 그림 (손끝이 누를 자리)
   function screenPoint(target) {
     const r = target.getBoundingClientRect(), s = root.getBoundingClientRect();
     return [r.left - s.left + r.width / 2, r.top - s.top + r.height / 2];

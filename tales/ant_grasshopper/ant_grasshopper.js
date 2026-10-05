@@ -22,7 +22,7 @@
      소나기는 여름 들판 위에 곱하기(multiply) 회색 한 겹 + 해를 가리는 먹구름(코드). 겨울 들판은 하이앵글 눈밭 그림. */
   const AS = '../../assets/';
   const BG = {
-    summer: 'v3w/ag_bg_summer.webp', autumn: 'v3w/ag_bg_autumn.webp', spring: 'v3w/ag_bg_spring.webp',
+    summer: 'v3w/ag_bg_summer.webp', autumn: 'v3w/ag_bg_autumn3.webp', spring: 'v3w/ag_bg_spring.webp',
     ant_eye: 'v3w/ag_bg_ant_eye.webp', leafstage: 'v3w/ag_bg_leafstage.webp', winter_high: 'v3w/ag_bg_winter_high.webp',
     door: 'v3w/ag_bg_door.webp', cellar: 'v3w/ag_bg_cellar.webp', // cellar: 어두운 흙을 조금 밝혀 구움, 곡식·도토리 방은 그림 속에 이미 가득
   };
@@ -44,7 +44,7 @@
     ant_tee: 'v3w/ag_ant_tee.webp', ant_coat: 'v3w/ag_ant_coat.webp', ant_ring: 'v3w/ag_ant_ring.webp', hopper_winter_play: 'v3w/ag_hopper_winter_play.webp',
     icon_tee: 'v3w/ag_icon_tee.webp', icon_vest: 'v3w/ag_icon_vest.webp', icon_coat: 'v3w/ag_icon_coat.webp', icon_warm: 'v3w/ag_icon_warm.webp', icon_swim: 'v3w/ag_icon_swim.webp',
     flower_pink: 'v3w/ag_flower_pink.webp', flower_orange: 'v3w/ag_flower_orange.webp', grain_pile: 'v3w/ag_grain_pile.webp', grain: 'v3w/ag_grain.webp',
-    acorn: 'v3w/ag_acorn.webp', store10: 'v3w/ag_store10.webp', card_spring: 'v3w/ag_card_spring.webp', card_summer: 'v3w/ag_card_summer.webp', card_autumn: 'v3w/ag_card_autumn.webp', card_winter: 'v3w/ag_card_winter.webp', door_leaf: 'v3w/ag_door_leaf.webp', cloud_storm: 'v3w/ag_cloud_storm.webp',
+    acorn: 'v3w/ag_acorn.webp', store10: 'v3w/ag_store10_3.webp', card_spring: 'v3w/ag_card_spring3.webp', card_summer: 'v3w/ag_card_summer3.webp', card_autumn: 'v3w/ag_card_autumn3.webp', card_winter: 'v3w/ag_card_winter3.webp', door_leaf: 'v3w/ag_door_leaf.webp', cloud_storm: 'v3w/ag_cloud_storm.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -70,7 +70,7 @@
   }
   const sprite = (T, g, key) => { const s = SPR[key]; return s ? pic(T, g, key, -s[2] * s[0], -s[3] * s[1], s[0], s[1]) : null; };
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). dx·dy: 그림을 통째로 옮긴다 */
-  const BG_EDGE = { summer: ['#a8d3eb', '#4a6345'], autumn: ['#fbc9a3', '#6b3209'], spring: ['#b5e6fb', '#62753d'], ant_eye: ['#95becc', '#20230e'],
+  const BG_EDGE = { summer: ['#a8d3eb', '#4a6345'], autumn: ['#fbb589', '#431700'], spring: ['#b5e6fb', '#62753d'], ant_eye: ['#95becc', '#20230e'],
     leafstage: ['#a5cbd9', '#232011'], winter_high: ['#d0dfee', '#e4ecf7'], door: ['#d4e7fc', '#e3ecfa'], cellar: ['#cad9dd', '#341f0d'] };
   function bgImage(T, key, { dx = 0, dy = 0 } = {}) {
     const u = bgUrl(key); if (!u) return null;
@@ -318,7 +318,7 @@
     if (season === 'winter') T.paper(parent, [['path', { d: `M${x - 88} ${y - 58} Q${x} ${y - 124} ${x + 88} ${y - 58} Q${x} ${y - 84} ${x - 88} ${y - 58} Z`, fill: C.snow }]]);
   }
   /* 들판 4계절: 같은 구도 (나무 둘 · 언덕 · 개미집) */
-  const FIELD_DOOR = { summer: [915, 342], autumn: [912, 388], spring: [886, 358] }; // 그림 속 개미집 문 (무대 좌표)
+  const FIELD_DOOR = { summer: [915, 342], autumn: [873, 346], spring: [886, 358] }; // 그림 속 개미집 문 (무대 좌표)
   function fieldBG(T, season, { sky } = {}) {
     const { el, paper } = T, b = T.bg;
     if (bgImage(T, season)) {
@@ -368,14 +368,15 @@
   function storeBox(T, ox, oy, door) {
     const { el, paper } = T, b = T.bg;
     const box = el('g', {}, b);
-    const art = pic(T, box, 'store10', 520 + ox, 216 + oy, 200, 254);
+    const SW = 170, SH = SW * 952 / 602, SX = 620 - SW / 2, SY = 470 - SH; // 그림 창고(602×952): 칸 바닥 선이 y=883·724·564·404·244, 가운데 x=182·433
+    const art = pic(T, box, 'store10', SX + ox, SY + oy, SW, SH);
     if (!art) paper(box, [['rect', { x: 530 + ox, y: 256 + oy, width: 180, height: 214, rx: 16, fill: C.soilDk }]]);
     el('text', { x: 620 + ox, y: 244 + oy, 'text-anchor': 'middle', 'font-size': 26, fill: C.cream, stroke: C.bark, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '창고' }, box);
     const slots = [];
     for (let r = 0; r < 5; r++) for (let c = 0; c < 2; c++) {
-      const x = 580 + c * 80 + ox, y = 440 - r * 40 + oy;
+      const x = (art ? SX + [182, 433][c] * SW / 602 : 580 + c * 80) + ox, y = (art ? SY + ([883, 724, 564, 404, 244][r] - 10) * SW / 602 : 440 - r * 40) + oy;
       if (!art) el('rect', { x: x - 34, y: y - 16, width: 68, height: 32, rx: 8, fill: C.room, opacity: .55 }, box);
-      const grain = pic(T, box, 'grain', x - 28, y - 11, 56, 21) || T.paper(box, [['ellipse', { cx: x, cy: y, rx: 26, ry: 12, fill: C.gold }], ['ellipse', { cx: x - 8, cy: y - 3, rx: 8, ry: 3, fill: '#EBC878' }]]);
+      const grain = pic(T, box, 'grain', x - (art ? 20 : 28), y - (art ? 8 : 11), art ? 40 : 56, art ? 15 : 21) || T.paper(box, [['ellipse', { cx: x, cy: y, rx: 26, ry: 12, fill: C.gold }], ['ellipse', { cx: x - 8, cy: y - 3, rx: 8, ry: 3, fill: '#EBC878' }]]);
       grain.setAttribute('opacity', 0); origin(grain, x, y);
       slots.push(grain);
     }
@@ -579,7 +580,7 @@
   /* 계절 카드 (배경 축소 대신 작은 그림) */
   function seasonCard(T, x, y, season, sc = 1) {
     const g = T.el('g', { transform: `translate(${x},${y}) scale(${sc})` }, stageUI());
-    if (!pic(T, g, 'card_' + season, -92, -78, 184, 156)) {
+    if (!pic(T, g, 'card_' + season, -92, -70, 184, 184 * 416 / 640)) {
       T.paper(g, [['rect', { x: -92, y: -78, width: 184, height: 156, rx: 14, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }]]);
       const inner = T.el('g', {}, g);
       T.el('rect', { x: -80, y: -66, width: 160, height: 104, rx: 8, fill: SKY[season] }, inner);
