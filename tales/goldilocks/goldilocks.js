@@ -25,7 +25,7 @@
   const BG = { kitchen: 'v3w/gl_bg_kitchen.webp', forest: 'v3w/gl_bg_forest.webp', door: 'v3w/gl_bg_door.webp', table: 'v3w/gl_bg_table.webp',
     living: 'v3w/gl_bg_living.webp', bed_top: 'v3w/gl_bg_bed_top.webp', bed_side: 'v3w/gl_bg_bed_side.webp' };
   const ART = {};
-  ['goldi_walk', 'goldi_tongue', 'goldi_sorry', 'goldi_surprised', 'goldi_sit', 'goldi_side', 'goldi_side_sleep', 'goldi_lie', 'goldi_lie_sleep',
+  ['goldi_walk', 'goldi_walk_empty', 'goldi_pick', 'goldi_tongue', 'goldi_sorry', 'goldi_surprised', 'goldi_sit', 'goldi_side', 'goldi_side_sleep', 'goldi_lie', 'goldi_lie_sleep',
     'bear_dad', 'bear_mom', 'bear_baby', 'bear_baby_cry', 'bowl', 'bowl_empty', 'chair_big', 'chair_mid', 'chair_small',
     'chair_small_back', 'chair_small_seat', 'chair_small_legL', 'chair_small_legR',
     'bed_big', 'bed_big_blanket', 'bed_mid', 'bed_mid_blanket', 'bed_small', 'bed_small_blanket',
@@ -39,10 +39,10 @@
   const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
   /* 그림 상자 [x, y, w, h] (발끝·바닥 가운데 0,0, 무대 단위) — 변환 스크립트 conv_gl.py */
   const BOX = {
-    goldi_walk: [-46.6, -157.6, 94.6, 159], goldi_tongue: [-46.7, -145.5, 94.1, 146.2], goldi_sorry: [-46.1, -156.6, 94.5, 158.3],
+    goldi_walk: [-46.6, -157.6, 94.6, 159], goldi_walk_empty: [-32.8, -152.9, 93.7, 154.1], goldi_pick: [-38.3, -129.3, 98.8, 130.5], goldi_tongue: [-46.7, -145.5, 94.1, 146.2], goldi_sorry: [-46.1, -156.6, 94.5, 158.3],
     goldi_surprised: [-47.9, -154.6, 94.9, 154.8], goldi_sit: [-42.3, -159.6, 95.7, 160.8],
-    goldi_side: [-165, -80, 158.6, 112.1], goldi_side_sleep: [-165, -80, 158.6, 112.1], // 옆 침대: 그레이박스를 -90° 눕힌 자리(머리 왼쪽)에 맞춤
-    goldi_lie: [-52.6, -158.6, 112.1, 158.6], goldi_lie_sleep: [-52.6, -158.6, 112.1, 158.6],
+    goldi_side: [-165, -80, 213.3, 111.4], goldi_side_sleep: [-165, -76.5, 217.3, 104.4], // 옆 침대: 머리 왼쪽(베개), 머리 지름 93에 맞춤
+    goldi_lie: [-45.8, -155.5, 91.6, 155.5], goldi_lie_sleep: [-47.3, -157.3, 94.5, 157.3],
     flower_g: [-17, -52, 34, 52],
     bear_dad: [-71.4, -225, 142.8, 225], bear_mom: [-73.6, -225, 147.2, 225], bear_baby: [-78.6, -225, 157.2, 225], bear_baby_cry: [-75.6, -230.3, 151.1, 230.3],
     bowl: [-85, -100.4, 170, 100.4], bowl_empty: [-85, -100.4, 170, 100.4],
@@ -83,12 +83,12 @@
   function drawGoldiArt(T, g) {
     const { el } = T;
     const poses = {};
-    ['walk', 'tongue', 'sorry', 'surprised', 'sit', 'side', 'side_sleep', 'lie', 'lie_sleep'].forEach(k => { poses[k] = pic(T, g, 'goldi_' + k); });
-    let mode = 'stand', face = 'smile';
+    ['walk', 'walk_empty', 'pick', 'tongue', 'sorry', 'surprised', 'sit', 'side', 'side_sleep', 'lie', 'lie_sleep'].forEach(k => { poses[k] = pic(T, g, 'goldi_' + k); });
+    let mode = 'stand', face = 'smile', hold = true, bend = false;
     const STAND = { tongue: 'tongue', brr: 'surprised', o: 'surprised', sorry: 'sorry' }; // 웃음·기쁨·하품 = 걷기(꽃다발)
     const show = () => {
       const sleepy = face === 'sleep' || face === 'yawn';
-      let n = mode === 'sit' ? 'sit' : mode === 'lie' ? (sleepy ? 'lie_sleep' : 'lie') : mode === 'side' ? (face === 'sleep' ? 'side_sleep' : 'side') : (STAND[face] || 'walk');
+      let n = mode === 'sit' ? 'sit' : mode === 'lie' ? (sleepy ? 'lie_sleep' : 'lie') : mode === 'side' ? (face === 'sleep' ? 'side_sleep' : 'side') : (bend ? 'pick' : STAND[face] || (hold ? 'walk' : 'walk_empty'));
       if (!poses[n]) n = 'walk';
       Object.entries(poses).forEach(([k, p]) => { if (p) p.style.display = k === n ? '' : 'none'; });
     };
@@ -96,7 +96,7 @@
     T.el('rect', { x: -48, y: -160, width: 96, height: 160, fill: '#fff', opacity: 0 }, g);
     const legs = el('g', {}, g), arms = el('g', {}, g);
     const hand = el('g', { display: 'none' }, g); // 꽃다발은 걷기 그림에 있다
-    return { setFace: st => { face = st; show(); }, setMode: m => { mode = m; show(); }, legs, hand, arms, art: true };
+    return { setFace: st => { face = st; show(); }, setMode: m => { mode = m; show(); }, setHold: h => { hold = h; show(); }, setBend: b => { bend = b; show(); }, legs, hand, arms, art: true };
   }
   function drawGoldi(T, g) {
     if (artUrl('goldi_walk')) return drawGoldiArt(T, g);
@@ -608,7 +608,7 @@
     let area, butterfly, house, groundFlowers = [];
     await T.sceneCard('숲길', () => {
       T.clear(); house = forestBG(T, X(900));
-      put(goldi, X(200), 505, 1.3);
+      put(goldi, X(200), 505, 1.3); if (goldi.setHold) goldi.setHold(false); // 꽃을 따기 전엔 빈손
       butterfly = el('g', {}, T.world);
       const wings = artUrl('butterfly') ? pic(T, butterfly, 'butterfly', { box: [-22, -16, 44, 32] })
         : T.paper(butterfly, [['ellipse', { cx: -9, cy: 0, rx: 10, ry: 14, fill: C.persimmon }], ['ellipse', { cx: 9, cy: 0, rx: 10, ry: 14, fill: C.persimmon }], ['rect', { x: -2, y: -10, width: 4, height: 20, rx: 2, fill: C.ink }]]);
@@ -635,7 +635,8 @@
       if (!fl.isConnected) return;
       fl.animate([{ transform: tf(fx, 508, .01) }, { transform: tf(fx, 508, 1.8) }], { duration: 350, easing: 'ease-out', fill: 'forwards' });
       await sleep(250);
-      goldi.body.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(22deg)' }, { transform: 'rotate(22deg)' }, { transform: 'rotate(0)' }], { duration: 900, easing: 'ease-in-out' });
+      if (goldi.art) { goldi.setBend(true); setTimeout(() => goldi.setBend(false), 800); }
+      else goldi.body.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(22deg)' }, { transform: 'rotate(22deg)' }, { transform: 'rotate(0)' }], { duration: 900, easing: 'ease-in-out' });
       await sleep(450);
       T.tone([600, 900], .12, { type: 'sine', vol: .1 });
       fl.animate([{ transform: tf(fx, 508, 1.8) }, { transform: tf(nx + 28, 430, .9) }], { duration: 450, easing: 'ease-in', fill: 'forwards' });
@@ -649,7 +650,7 @@
       pickFlower(nx, i);
       const fl = groundFlowers[i - 1];
       setTimeout(() => { // 도착하면 허리를 숙여 꽃을 쏙 뽑는다
-        goldi.lean.style.transform = 'rotate(26deg) scale(1,.9)';
+        if (!goldi.art) goldi.lean.style.transform = 'rotate(26deg) scale(1,.9)';
         setTimeout(() => {
           fl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: 'forwards' });
           AudioFX.sfx('pop', .6) || T.tone(700, .1);
@@ -661,6 +662,7 @@
       butterfly.style.transform = `translate(${nx - 60}px,${230 - (i % 2) * 40}px)`;
     } });
     area.remove();
+    if (goldi.setHold) goldi.setHold(true);
     await sleep(700);
     goldi.setFace('o');
     const hx = house.ax != null ? house.ax : X(900), hy = house.ay != null ? house.ay : 392, hs = house.as || .55;
