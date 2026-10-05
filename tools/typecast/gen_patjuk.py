@@ -122,13 +122,8 @@ EMO = {
   '지게를 눌러 봐요!': 'happy:1.1',
 }
 
-# 배역마다 감정을 하나로 고정한다 (문장마다 감정이 달라지면 같은 목소리가 다른 사람처럼 들린다)
-ROLE_EMO = {'nar': 'happy:1.1', 'halmi': 'normal', 'tiger': 'angry:1.5'}
-for _r in ('bam', 'jara', 'ddong', 'songgot', 'jeolgu', 'myeongseok', 'jige'): ROLE_EMO[_r] = 'happy:1.4'
-def emo_of(role): return ROLE_EMO.get(role, 'happy:1.2')
-
 def tts(path, role, text, emo, prev, nxt):
-    emo = emo_of(role)
+    emo = EMO.get(text, emo)  # 장면별 감정 지정 (아래 EMO 표가 우선)
     if emo == 'smart': p = {'emotion_type': 'smart'}
     else:
         name, _, inten = emo.partition(':')
@@ -159,7 +154,7 @@ def main():
         segs = segments(text, fid)
         urls = []
         for i, (role, s, emo) in enumerate(segs):
-            h = hashlib.md5(f'{role}|{emo_of(role)}|{s}'.encode()).hexdigest()[:10]
+            h = hashlib.md5(f'{role}|{emo}|{s}'.encode()).hexdigest()[:10]
             rel = f'audio/tc/{role}_{h}.mp3'
             path = os.path.join(ROOT, rel)
             if redo or not os.path.exists(path):
@@ -175,7 +170,7 @@ def main():
     for key, segs in EXTRA.items():
         urls = []
         for role, text, emo, prev in segs:
-            h = hashlib.md5(f'{role}|{emo_of(role)}|{text}'.encode()).hexdigest()[:10]
+            h = hashlib.md5(f'{role}|{emo}|{text}'.encode()).hexdigest()[:10]
             rel = f'audio/tc/{role}_{h}.mp3'
             if redo or not os.path.exists(os.path.join(ROOT, rel)):
                 try:

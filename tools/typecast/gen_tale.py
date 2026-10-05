@@ -46,7 +46,6 @@ def main():
     spec = json.load(open(os.path.join(ROOT, 'tales', tale, 'voice_script.json')))
     V = spec['voices']
     PITCH = spec.get('pitch') or {}
-    EMO = spec.get('emo') or {}
     for r in V:
         assert r.isalpha() and r.islower(), f'배역 이름은 영어 소문자만: {r}'
     outdir = os.path.join(ROOT, 'audio', 'tc', tale); os.makedirs(outdir, exist_ok=True)
@@ -55,7 +54,6 @@ def main():
         nonlocal chars, made, errs
         assert role in V, f'목소리 없는 배역: {role}'
         pt = PITCH.get(role, 0)
-        emo = EMO.get(role, emo)
         h = hashlib.md5((f'{V[role]}|{emo}|{text}' + (f'|p{pt}' if pt else '')).encode()).hexdigest()[:10]
         rel = f'audio/tc/{tale}/{role}_{h}.mp3'
         path = os.path.join(ROOT, rel)
