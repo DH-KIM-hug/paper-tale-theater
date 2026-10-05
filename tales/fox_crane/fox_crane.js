@@ -155,8 +155,9 @@
     const head = rotO(el('g', {}, stand), ...CRANE_ART_PIV); // 목(머리 포함)만 돈다. 몸통이 위에 덮여 목 뿌리를 가린다
     pic(T, head, 'crane_head');
     hit(T, head, -82, -254, 100, 120);
-    pic(T, stand, 'crane_body');
+    const body = pic(T, stand, 'crane_body');
     const poses = { stand, sad: pic(T, all, 'crane_sad'), sorry: pic(T, all, 'crane_sorry') };
+    [body, poses.sad, poses.sorry].forEach(p => p && (p.style.pointerEvents = 'none')); // 몸통 그림이 위에서 머리·부리 터치를 가로채지 않게
     const setPose = n => Object.entries(poses).forEach(([k, p]) => { if (p) p.style.display = k === (poses[n] ? n : 'stand') ? '' : 'none'; });
     setPose('stand');
     return { all, head, setPose, art: true, PIV: CRANE_ART_PIV, TIP: CRANE_ART_TIP };

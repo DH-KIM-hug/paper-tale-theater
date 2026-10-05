@@ -225,7 +225,7 @@ const Tale = (() => {
   }
 
   /* ---------- 손가락 안내 ---------- */
-  const HAND_SVG = '<svg viewBox="0 0 64 64"><path d="M22 30 V10 a5 5 0 0 1 10 0 V28 M32 26 a5 5 0 0 1 10 0 V30 M42 28 a5 5 0 0 1 10 0 V40 C52 52 44 60 34 60 C24 60 18 54 14 46 L8 36 a5 5 0 0 1 8 -5 L22 38 Z" fill="#FFFFFF" stroke="#222B45" stroke-width="3" stroke-linejoin="round"/></svg>';
+  const handSvg = () => `<svg viewBox="0 0 64 64"><image href="${ROOT_URL}assets/ui/hand.webp" width="64" height="64"/></svg>`; // 종이 오려 만든 손 그림 (손끝이 누를 자리)
   function screenPoint(target) {
     const r = target.getBoundingClientRect(), s = root.getBoundingClientRect();
     return [r.left - s.left + r.width / 2, r.top - s.top + r.height / 2];
@@ -681,7 +681,7 @@ const Tale = (() => {
     <div id="iris" hidden><i class="lid"></i><span id="irisCard"></span></div>
     <div id="veil" class="shut"><i class="lid"></i></div>
     <div id="confetti"></div>
-    <div id="hand" hidden>${HAND_SVG}</div>
+    <div id="hand" hidden>${handSvg()}</div>
   </div>
   <div id="rotateHint"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3" fill="none" stroke="#C98A5B" stroke-width="2.6"/><circle cx="16" cy="25" r="1.6" fill="#C98A5B"/></svg>돌려서 크게 보기</div>
   <div id="bubble" hidden><p id="bubbleText"></p></div>

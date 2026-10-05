@@ -400,9 +400,12 @@
     paper(b, [['rect', { x: -300, y: 500, width: 1600, height: 300, fill: '#3E5A3A' }]]);
     return win;
   }
-  /* 그림 창 너머 방: 식탁 (215..690, 윗면 y≈295) 위에 금화·음식. 창틀도 그림 속에 있다 */
-  const POV_TABLE = [['rect', { x: 212, y: 292, width: 482, height: 74 }], ['rect', { x: 270, y: 268, width: 50, height: 30 }],
-    ['rect', { x: 365, y: 268, width: 95, height: 30 }], ['rect', { x: 500, y: 248, width: 118, height: 50 }]];
+  /* 그림 창 너머 방: 식탁 (213..710, 윗면 y≈323) 위에 금화·음식. 창틀도 그림 속에 있다 */
+  const POV_TABLE = [['rect', { x: 213, y: 323, width: 497, height: 100 }],
+    ['ellipse', { cx: 306, cy: 320, rx: 48, ry: 17 }], ['ellipse', { cx: 300, cy: 309, rx: 22, ry: 13 }],
+    ['ellipse', { cx: 408, cy: 320, rx: 52, ry: 16 }], ['ellipse', { cx: 408, cy: 309, rx: 40, ry: 10 }],
+    ['ellipse', { cx: 559, cy: 322, rx: 68, ry: 15 }], ['ellipse', { cx: 541, cy: 295, rx: 42, ry: 30 }],
+    ['ellipse', { cx: 601, cy: 306, rx: 26, ry: 22 }], ['ellipse', { cx: 556, cy: 280, rx: 22, ry: 17 }]];
   function housePOV(T) {
     const { paper, el } = T, b = T.bg;
     if (bgImage(T, 'house_pov')) return true;

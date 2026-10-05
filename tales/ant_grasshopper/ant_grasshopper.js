@@ -44,7 +44,7 @@
     ant_tee: 'v3w/ag_ant_tee.webp', ant_coat: 'v3w/ag_ant_coat.webp', ant_ring: 'v3w/ag_ant_ring.webp', hopper_winter_play: 'v3w/ag_hopper_winter_play.webp',
     icon_tee: 'v3w/ag_icon_tee.webp', icon_vest: 'v3w/ag_icon_vest.webp', icon_coat: 'v3w/ag_icon_coat.webp', icon_warm: 'v3w/ag_icon_warm.webp', icon_swim: 'v3w/ag_icon_swim.webp',
     flower_pink: 'v3w/ag_flower_pink.webp', flower_orange: 'v3w/ag_flower_orange.webp', grain_pile: 'v3w/ag_grain_pile.webp', grain: 'v3w/ag_grain.webp',
-    acorn: 'v3w/ag_acorn.webp', door_leaf: 'v3w/ag_door_leaf.webp', cloud_storm: 'v3w/ag_cloud_storm.webp',
+    acorn: 'v3w/ag_acorn.webp', store10: 'v3w/ag_store10.webp', card_spring: 'v3w/ag_card_spring.webp', card_summer: 'v3w/ag_card_summer.webp', card_autumn: 'v3w/ag_card_autumn.webp', card_winter: 'v3w/ag_card_winter.webp', door_leaf: 'v3w/ag_door_leaf.webp', cloud_storm: 'v3w/ag_cloud_storm.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -366,12 +366,13 @@
   function storeBox(T, ox, oy, door) {
     const { el, paper } = T, b = T.bg;
     const box = el('g', {}, b);
-    paper(box, [['rect', { x: 530 + ox, y: 256 + oy, width: 180, height: 214, rx: 16, fill: C.soilDk }]]);
+    const art = pic(T, box, 'store10', 520 + ox, 216 + oy, 200, 254);
+    if (!art) paper(box, [['rect', { x: 530 + ox, y: 256 + oy, width: 180, height: 214, rx: 16, fill: C.soilDk }]]);
     el('text', { x: 620 + ox, y: 244 + oy, 'text-anchor': 'middle', 'font-size': 26, fill: C.cream, stroke: C.bark, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '창고' }, box);
     const slots = [];
     for (let r = 0; r < 5; r++) for (let c = 0; c < 2; c++) {
       const x = 580 + c * 80 + ox, y = 440 - r * 40 + oy;
-      el('rect', { x: x - 34, y: y - 16, width: 68, height: 32, rx: 8, fill: C.room, opacity: .55 }, box);
+      if (!art) el('rect', { x: x - 34, y: y - 16, width: 68, height: 32, rx: 8, fill: C.room, opacity: .55 }, box);
       const grain = pic(T, box, 'grain', x - 28, y - 11, 56, 21) || T.paper(box, [['ellipse', { cx: x, cy: y, rx: 26, ry: 12, fill: C.gold }], ['ellipse', { cx: x - 8, cy: y - 3, rx: 8, ry: 3, fill: '#EBC878' }]]);
       grain.setAttribute('opacity', 0); origin(grain, x, y);
       slots.push(grain);
@@ -576,14 +577,16 @@
   /* 계절 카드 (배경 축소 대신 작은 그림) */
   function seasonCard(T, x, y, season, sc = 1) {
     const g = T.el('g', { transform: `translate(${x},${y}) scale(${sc})` }, stageUI());
-    T.paper(g, [['rect', { x: -92, y: -78, width: 184, height: 156, rx: 14, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }]]);
-    const inner = T.el('g', {}, g);
-    T.el('rect', { x: -80, y: -66, width: 160, height: 104, rx: 8, fill: SKY[season] }, inner);
-    T.el('rect', { x: -80, y: 8, width: 160, height: 30, fill: GROUND[season] }, inner);
-    if (season === 'summer') { T.el('circle', { cx: 0, cy: -24, r: 26, fill: '#F6D98A' }, inner); T.el('path', { d: 'M-40 -24 H-32 M32 -24 H40 M0 -64 V-56', stroke: C.persimmon, 'stroke-width': 5 }, inner); }
-    if (season === 'spring') { T.el('path', { d: 'M0 10 V-20 M0 -8 Q-24 -30 -30 -14 Q-20 -2 0 -8 M0 -16 Q24 -38 30 -22 Q20 -10 0 -16', stroke: C.pine, 'stroke-width': 5, fill: '#8DBA6A' }, inner); T.el('circle', { cx: -44, cy: 0, r: 10, fill: C.pink }, inner); T.el('circle', { cx: 44, cy: 4, r: 10, fill: C.pink }, inner); }
-    if (season === 'autumn') [[-30, -30, 30], [10, -10, -20], [36, -40, 60], [-6, -44, 0]].forEach(([cx, cy, r]) => T.el('ellipse', { cx, cy, rx: 16, ry: 9, fill: r > 20 ? C.persimmon : C.bean, transform: `rotate(${r} ${cx} ${cy})` }, inner));
-    if (season === 'winter') [[-40, -40], [0, -20], [36, -46], [-20, -2], [44, 0]].forEach(([cx, cy]) => T.el('circle', { cx, cy, r: 8, fill: '#fff', stroke: '#C9D0DC', 'stroke-width': 2 }, inner));
+    if (!pic(T, g, 'card_' + season, -92, -78, 184, 156)) {
+      T.paper(g, [['rect', { x: -92, y: -78, width: 184, height: 156, rx: 14, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }]]);
+      const inner = T.el('g', {}, g);
+      T.el('rect', { x: -80, y: -66, width: 160, height: 104, rx: 8, fill: SKY[season] }, inner);
+      T.el('rect', { x: -80, y: 8, width: 160, height: 30, fill: GROUND[season] }, inner);
+      if (season === 'summer') { T.el('circle', { cx: 0, cy: -24, r: 26, fill: '#F6D98A' }, inner); T.el('path', { d: 'M-40 -24 H-32 M32 -24 H40 M0 -64 V-56', stroke: C.persimmon, 'stroke-width': 5 }, inner); }
+      if (season === 'spring') { T.el('path', { d: 'M0 10 V-20 M0 -8 Q-24 -30 -30 -14 Q-20 -2 0 -8 M0 -16 Q24 -38 30 -22 Q20 -10 0 -16', stroke: C.pine, 'stroke-width': 5, fill: '#8DBA6A' }, inner); T.el('circle', { cx: -44, cy: 0, r: 10, fill: C.pink }, inner); T.el('circle', { cx: 44, cy: 4, r: 10, fill: C.pink }, inner); }
+      if (season === 'autumn') [[-30, -30, 30], [10, -10, -20], [36, -40, 60], [-6, -44, 0]].forEach(([cx, cy, r]) => T.el('ellipse', { cx, cy, rx: 16, ry: 9, fill: r > 20 ? C.persimmon : C.bean, transform: `rotate(${r} ${cx} ${cy})` }, inner));
+      if (season === 'winter') [[-40, -40], [0, -20], [36, -46], [-20, -2], [44, 0]].forEach(([cx, cy]) => T.el('circle', { cx, cy, r: 8, fill: '#fff', stroke: '#C9D0DC', 'stroke-width': 2 }, inner));
+    }
     T.el('text', { x: 0, y: 66, 'text-anchor': 'middle', 'font-size': 26, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: SEASON_KO[season] }, g);
     const check = T.el('g', { opacity: 0 }, g);
     T.el('circle', { cx: 70, cy: -62, r: 24, fill: C.pine, stroke: '#fff', 'stroke-width': 4 }, check);

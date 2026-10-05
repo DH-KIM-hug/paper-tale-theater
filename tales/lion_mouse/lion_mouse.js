@@ -680,8 +680,10 @@
         bgImage(T, 'morning', scroll); T.bg.appendChild(scroll); // 가장자리 색 띠 위로
         for (let k = 1; k < 5; k++) {
           const t = el('g', { transform: k % 2 ? `translate(${BGBOX.x * 2 + BGBOX.w * (k + 1)},0) scale(-1,1)` : `translate(${BGBOX.w * k},0)` }, scroll);
-          el('image', { href: bgUrl('morning'), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, t);
+          el('image', { href: bgUrl('morning'), x: BGBOX.x - 1, y: BGBOX.y, width: BGBOX.w + 2, height: BGBOX.h, preserveAspectRatio: 'none' }, t); // 양옆 1px 겹쳐 이음매 실선이 안 보이게
         }
+        // 해는 띠에서 지워 두고 하나만 하늘에 고정(띠를 이어 붙여도 해가 둘로 늘지 않는다)
+        el('image', { href: AS + 'v3w/lm_sun.webp', x: 81, y: 31, width: 108, height: 108, style: 'pointer-events:none' }, T.bg);
       } else {
         savannaBG(T, { morning: true });
         scroll = el('g', {}, T.bg);

@@ -201,6 +201,7 @@
     { key: 'mouse', name: '생쥐', h: 44 },
   ];
   const LINE_X = [330, 422, 502, 584, 668, 734];
+  const PULL_DEG = [22, 18, 15, 13, 11, 9];
   const GROUND = 480;
   const POSE = {
     stand: () => 'translate(0px,0px) rotate(0deg) scale(1,1)',
@@ -449,7 +450,7 @@
       T.clear(); gardenBG(T);
       putTurnip(TX, GROUND - rise, 1);
       soilFront(T);
-      for (let i = 0; i < n; i++) put(line[i], LINE_X[i], GROUND, 1, 'pull');
+      for (let i = 0; i < n; i++) { put(line[i], LINE_X[i], GROUND, 1, 'pull'); line[i].pose(POSE.pull(4)); }
       if (T.portrait()) { // 세로 화면(양옆이 잘림): 순무부터 줄 끝까지 보이게 옮기고, 넘치면 살짝 물러선다
         const x0 = TX - 150, x1 = (n ? LINE_X[n - 1] : TX) + 60, half = (x1 - x0) / 2 + 12;
         camSnap((x0 + x1) / 2, 280, Math.min(1, T.viewWidth() / 2 / half));
@@ -459,7 +460,7 @@
     async function pullRound(n, gain, prompt) {
       await T.mash(turnip.pos, { count: 5, prompt, onStep: i => {
         chorus(T, n);
-        for (let k = 0; k < n; k++) { const a = line[k]; setTimeout(() => { a.pose(POSE.pull(16)); setTimeout(() => a.pose(POSE.stand()), 260); }, k * 40); }
+        for (let k = 0; k < n; k++) { const a = line[k]; setTimeout(() => { a.pose(POSE.pull(PULL_DEG[k])); setTimeout(() => a.pose(POSE.pull(4)), 260); }, k * 70); } // 앞사람일수록 더 젖히고, 쉬는 동안에도 뒤로 기대어 붙잡고 있는다
         wobble();
         T.pop(i % 2 ? 640 : 360, 180, '영차!', C.bean);
       } });
@@ -643,8 +644,8 @@
     cast.dog.hop(30);
     await say('강아지가 뛰어나왔어요. "나도 도울게요!"');
     await T.sceneCard(null, () => sideView(4), cast.dog.pos);
-    T.pop(560, 330, '앙!', C.bean);
-    await say('강아지가 손녀 치마를 앙 물었어요. 영차!');
+    T.pop(560, 330, '꼭!', C.bean);
+    await say('강아지가 손녀 치마를 꼭 붙잡았어요. 영차!');
     await pullRound(4, 12, '순무를 톡톡 눌러서 영차!');
 
     /* --- 7. 야옹! (헛간 지붕 로우앵글) --- */

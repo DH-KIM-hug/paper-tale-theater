@@ -16,7 +16,7 @@
     bg_pond: 'v3w/frog_bg_pond.webp', bg_meadow: 'v3w/frog_bg_meadow.webp', bg_chart: 'v3w/frog_bg_chart.webp',
     bg_night: 'v3w/frog_bg_pond_night.webp',
     mom: 'v3w/frog_mom.webp', mom_flying: 'v3w/frog_mom_flying.webp', mom_puffed: 'v3w/frog_mom_puffed.webp', mom_dizzy: 'v3w/frog_mom_dizzy.webp',
-    baby_sleep: 'v3w/frog_baby_sleep_shut.webp', baby_awake: 'v3w/frog_baby_awake.webp', baby_cover: 'v3w/frog_baby_cover.webp', // 2026-10-04: 눈 감은 아기 그림(코 방울) — 눈꺼풀 덧그림(BABY_LIDS)은 예전 그림(frog_baby_sleep)일 때만
+    baby_sleep: 'v3w/frog_baby_sleep_shut2.webp', baby_awake: 'v3w/frog_baby_awake2.webp', baby_cover: 'v3w/frog_baby_cover.webp', // 2026-10-04: 눈 감은 아기 그림(코 방울) — 눈꺼풀 덧그림(BABY_LIDS)은 예전 그림(frog_baby_sleep)일 때만
     /* 2026-10-04 코드 도형을 대신하는 새 그림 (jobs_svg.json): 삼촌 개구리(밤 합창), 퀴즈 배지 6종.
        꼬리·발굽·뿔은 황소 전체가 그려져 나와서 그 부위만 오렸다 (스크래치 g1/conv_g1.py) */
     uncle: 'v3w/frog_uncle.webp',
@@ -90,7 +90,7 @@
   const BABY_LIDS = [[-18.4, -57], [13.4, -57]]; // frog_baby_sleep 상자(78×67) 안 눈 자리
   function drawBaby(T, g) {
     const shut = /sleep_shut/.test(ART.baby_sleep || ''); // 눈 감은 그림이면 눈꺼풀 덧그림이 필요 없다 (머리 크기를 깬 그림에 맞춘 상자 69×76)
-    const p = poseArt(T, g, { awake: ['baby_awake', 73, 76], sleep: ['baby_sleep', ...(shut ? [69, 76] : [78, 67])], cover: ['baby_cover', 71, 73] });
+    const p = poseArt(T, g, { awake: ['baby_awake', 69, 76], sleep: ['baby_sleep', ...(shut ? [69, 76] : [78, 67])], cover: ['baby_cover', 71, 73] });
     if (!p) return drawFrog(T, g, { color: C.leaf, sleepy: true });
     const st = { lids: 1, hands: 0 };
     const upd = () => p.set(st.hands ? 'cover' : st.lids ? 'sleep' : 'awake');
@@ -279,7 +279,7 @@
     await say('아기 개구리들을 톡 눌러서 깨워 줄까요?');
     for (const [bi, b] of babies.entries()) {
       await T.tap(b.pos, { prompt: '자고 있는 아기 개구리를 톡 눌러 봐요!' });
-      b.parts.lids.setAttribute('opacity', 0); b.hop(40); T.pop(b.x, b.y - 80, '개굴!', C.pine); vo('wake_' + bi) || croak(T, 420); // 목소리가 있으면 개굴 소리 대신
+      b.parts.lids.setAttribute('opacity', 0); b.hop(40); T.pop(b.x, b.y - 80, '개굴!', C.pine); AudioFX.animalNote('frog', [1.19, 1.0, 1.33][bi], .85) || croak(T, 420); // 깨울 때는 개구리 울음 효과음
       await sleep(300);
     }
     await say('엄마 개구리가 말했어요. "얘들아, 멀리 가면 안 된다~"');
@@ -329,8 +329,8 @@
     }
     await peek.hide();
     await camTo(500, 280, 1, 1600);
-    T.shake(); // 음매~는 황소 목소리로 (대사 첫 조각)
-    await say('음매~! 커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.');
+    T.shake(); moo(T); // 음매~는 황소 효과음으로
+    await say('커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.');
 
     /* --- 4. 엄마! 괴물이에요! --- */
     await T.sceneCard('연못', () => {
@@ -481,7 +481,7 @@
       T.clear(); pads = pondBG(T, true); if (T.portrait()) camSnap(500, 280, 1);
       T.world.appendChild(mom.pos); mom.place(pads[2][0], pads[2][1]);
       [0, 1, 3].forEach((p, i) => { const b = babies[i]; T.world.appendChild(b.pos); b.place(pads[p][0], pads[p][1]); });
-      const x = actor(T.world, pads[4][0], pads[4][1], g => sprite(T, g, 'uncle', 110, 108) || drawFrog(T, g, { color: '#58805a' }), { scale: .8 }); // 삼촌 개구리 그림 (진초록·나비넥타이)
+      const x = actor(T.world, pads[4][0], pads[4][1], g => sprite(T, g, 'uncle', 110, 108) || drawFrog(T, g, { color: '#58805a' }), { scale: 1.05 }); // 삼촌 (엄마보다는 작고 아기들보다 크게) 개구리 그림 (진초록·나비넥타이)
       x.pos.id = 'uncleFrog';
       T.world.__uncle = x;
     }, mom.pos);
@@ -489,7 +489,7 @@
     /* 개구리 울음을 음 높이만 바꿔 부른다: 도레미솔라 (어떻게 눌러도 어울리는 5음). 아기는 높게, 삼촌은 낮게 */
     const RATE = [1.19, 1.33, 1.0, 1.5, 0.89]; // 개굴 녹음 한 번 = '미' 로 두고 도·레·미·솔·라에 맞춘 배율
     const sing = (i, when = 0, dur = .34) => AudioFX.animalNote('frog', RATE[i], .75, when, dur) || T.tone(330 * RATE[i], dur, { type: 'triangle', vol: .22, when });
-    await say('밤이 되었어요. 개구리 가족이 노래를 불러요. 개구리를 톡톡 눌러서 합창해 봐요!');
+    await say('밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 개구리를 톡톡 눌러서 합창해 봐요!');
     const metro = setInterval(() => T.tone([140, 110], .5, { type: 'triangle', vol: .06 }), 1600);
     await T.free(choir.map((f, i) => ({ el: f.pos, onTap: () => { sing(i); f.hop(22, 300); } })), 20000);
     clearInterval(metro);
