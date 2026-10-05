@@ -783,15 +783,5 @@
     "도둑이 벌벌 떨며 과장해서 말해요."
    ]
   ]
- },
- "emo": {
-  "nar": "happy:1.1",
-  "donkey": "happy:1.4",
-  "dog": "normal",
-  "cat": "normal",
-  "rooster": "toneup:1.4",
-  "miller": "normal",
-  "robber": "toneup:1.6",
-  "boss": "happy:1.4"
  }
 }

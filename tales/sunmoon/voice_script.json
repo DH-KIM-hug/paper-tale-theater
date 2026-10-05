@@ -1004,13 +1004,5 @@
     "tonedown:1.5"
    ]
   ]
- },
- "emo": {
-  "nar": "happy:1.1",
-  "mom": "happy:1.0",
-  "rich": "happy:1.1",
-  "tiger": "angry:1.6",
-  "boy": "toneup:1.2",
-  "girl": "toneup:1.2"
  }
 }

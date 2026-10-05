@@ -710,12 +710,5 @@
     "happy"
    ]
   ]
- },
- "emo": {
-  "nar": "happy:1.1",
-  "fox": "happy:1.2",
-  "crane": "happy:1.2",
-  "duck": "happy:1.2",
-  "butterfly": "happy:1.2"
  }
 }
