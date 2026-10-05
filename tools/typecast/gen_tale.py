@@ -17,7 +17,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 KEY = open(os.path.expanduser('~/.config/typecast/key')).read().strip()
 UA = 'typecast-direct/1 urllib typecast-integration/1 (source=api-docs; generated_by=claude-code)'
 
-def tts(path, voice, text, emo, prev, nxt):
+def tts(path, voice, text, emo, prev, nxt, pitch=0):
     # 감정: 'smart' (앞뒤 문맥으로) | 'happy' | 'sad:1.5' 처럼 프리셋[:세기] (세기 기본 1.2, 0.5~2.0)
     if emo in (None, 'smart'):
         p = {'emotion_type': 'smart'}
@@ -28,6 +28,7 @@ def tts(path, voice, text, emo, prev, nxt):
         p = {'emotion_type': 'preset', 'emotion_preset': name, 'emotion_intensity': float(inten or 1.2)}
     body = {'voice_id': voice, 'text': text, 'model': 'ssfm-v30', 'language': 'kor', 'prompt': p,
             'output': {'audio_format': 'mp3', 'target_lufs': -16.0, 'remove_silence_ms': 120}}
+    if pitch: body['output']['audio_pitch'] = pitch
     for attempt in range(6):
         r = urllib.request.Request('https://api.typecast.ai/v1/text-to-speech', json.dumps(body).encode(),
                                    {'X-API-KEY': KEY, 'Content-Type': 'application/json', 'User-Agent': UA})
@@ -42,6 +43,7 @@ def main():
     tale = sys.argv[1]; redo = '--redo' in sys.argv; dry = '--dry' in sys.argv
     spec = json.load(open(os.path.join(ROOT, 'tales', tale, 'voice_script.json')))
     V = spec['voices']
+    PITCH = spec.get('pitch') or {}
     for r in V:
         assert r.isalpha() and r.islower(), f'배역 이름은 영어 소문자만: {r}'
     outdir = os.path.join(ROOT, 'audio', 'tc', tale); os.makedirs(outdir, exist_ok=True)
@@ -49,13 +51,14 @@ def main():
     def clip(role, text, emo, prev, nxt):
         nonlocal chars, made, errs
         assert role in V, f'목소리 없는 배역: {role}'
-        h = hashlib.md5(f'{V[role]}|{emo}|{text}'.encode()).hexdigest()[:10]
+        pt = PITCH.get(role, 0)
+        h = hashlib.md5((f'{V[role]}|{emo}|{text}' + (f'|p{pt}' if pt else '')).encode()).hexdigest()[:10]
         rel = f'audio/tc/{tale}/{role}_{h}.mp3'
         path = os.path.join(ROOT, rel)
         if redo or not os.path.exists(path):
             chars += len(text)
             if not dry:
-                try: tts(path, V[role], text, emo, prev, nxt); made += 1; print('ok', role, emo or 'smart', text, flush=True)
+                try: tts(path, V[role], text, emo, prev, nxt, pt); made += 1; print('ok', role, emo or 'smart', text, flush=True)
                 except urllib.error.HTTPError as e:
                     errs += 1; print('ERR', e.code, e.read()[:200], role, text, flush=True); return None
         return rel

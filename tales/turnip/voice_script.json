@@ -1,12 +1,12 @@
 {
  "voices": {
-  "nar": "tc_600697fd8a8ea9b977284703",
+  "nar": "tc_645b3ef82c2f52f412ede389",
   "grandpa": "tc_60ad08c829e878c3c7d73965",
-  "grandma": "tc_60ad0841061ee28740ec2e1c",
-  "girl": "tc_6699eb5749dfac016c29445c",
-  "dog": "tc_5ffda49bcba8f6d3d46fc447",
-  "cat": "tc_5ffda44bcba8f6d3d46fc41f",
-  "mouse": "tc_699d27b557c86e3f4249c051"
+  "grandma": "tc_61c2f70c343884babeed840b",
+  "girl": "tc_699d27ef573c4c4d91aa411d",
+  "dog": "tc_5f8e95eae146f10007b85f45",
+  "cat": "tc_6837dec48fc46637a9272b88",
+  "mouse": "tc_60db35d96fdc060afd157d32"
  },
  "lines": [
   {
@@ -195,7 +195,7 @@
    ]
   },
   {
-   "text": "강아지가 손녀 치마를 앙 물었어요. 영차!",
+   "text": "강아지가 손녀 치마를 꼭 붙잡았어요. 영차!",
    "segs": null
   },
   {

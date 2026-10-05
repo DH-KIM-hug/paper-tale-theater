@@ -1,11 +1,11 @@
 {
  "voices": {
-  "nar": "tc_600697fd8a8ea9b977284703",
+  "nar": "tc_627ae61ffdf53ef0bb6902cd",
   "donkey": "tc_5c3c52c95827e00008dd7f34",
-  "dog": "tc_5f8e95eae146f10007b85f45",
-  "cat": "tc_66596206b7bd6e89c3a2c54e",
-  "rooster": "tc_63a3d9da4b235ddd6541a795",
-  "miller": "tc_636b1d81b58379d5c6b6aeeb",
+  "dog": "tc_68f0727fd62a5934102f7ec0",
+  "cat": "tc_692799c46508f6b9468c54c7",
+  "rooster": "tc_618203826672d21ebf37748e",
+  "miller": "tc_660e46188b5f4761eb8e36d6",
   "robber": "tc_5c547544fcfee90007fed455",
   "boss": "tc_66860d458ca8b2dc5f72b865"
  },
