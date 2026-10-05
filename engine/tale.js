@@ -741,10 +741,63 @@ const Tale = (() => {
   /* 조작 대기 동안만 입력을 받는다 */
   const input = fn => async (...a) => { busy = false; try { return await fn(...a); } finally { busy = true; } };
 
+  /* ---------- 노래 ----------
+     곡은 '음:박' 목록 문자열. 예) 'C4:1 C4:1 G4:1 R:1' (R 은 쉼표). 박 길이는 beat(초)로 정한다. */
+  const semi = n => { const m = /^([A-G])([#b]?)(\d)$/.exec(n); return {C:0,D:2,E:4,F:5,G:7,A:9,B:11}[m[1]] + (m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0) + (+m[3] - 4) * 12; }; // C4 = 0
+  const hz = n => 261.6256 * Math.pow(2, semi(n) / 12);
+  const parseSong = str => str.trim().split(/\s+/).map(t => { const [n, b] = t.split(':'); return [n, +(b || 1)]; });
+  const TIMBRE = {
+    box: (f, d, when = 0, vol = .2) => { tone(f, d * 1.4, { type: 'sine', vol, when }); tone(f * 3, d * .5, { type: 'sine', vol: vol * .22, when }); },
+    xylo: (f, d, when = 0, vol = .2) => { tone(f, d * .8, { type: 'triangle', vol, when }); tone(f * 4, d * .25, { type: 'sine', vol: vol * .3, when }); },
+    bell: (f, d, when = 0, vol = .2) => { tone(f, d * 1.8, { type: 'sine', vol, when }); tone(f * 2.76, d * .9, { type: 'sine', vol: vol * .2, when }); },
+    horn: (f, d, when = 0, vol = .14) => { tone(f, d, { type: 'sawtooth', vol: vol * .6, when }); tone(f, d, { type: 'triangle', vol, when }); },
+    drum: (f, d, when = 0, vol = .3) => { tone([f * 1.6, f * .5], .22, { type: 'sine', vol, when }); },
+  };
+  const timbre = name => TIMBRE[name] || TIMBRE.xylo;
+  async function playMelody(notes, { beat = .5, voice, onNote } = {}) {
+    for (let i = 0; i < notes.length; i++) {
+      const [n, b] = notes[i], dur = b * beat;
+      if (n !== 'R') { voice && voice(n, dur, i); onNote && onNote(i, n, dur); }
+      await sleep(dur * 1000);
+    }
+  }
+  /* 기다려 주는 박자 누르기: 이번 음의 주인(targetFor)이 반짝이며 기다린다. 누르면 그 음이 나고 넘어간다.
+     wait 안에 안 눌러도 곡이 스스로 그 음을 연주하고 넘어간다 — 틀리는 일도 실패도 없다. others 는 눌러도 소리만 나는 소품. */
+  const followMelody = input(async (notes, { beat = .5, targetFor, voice, onNote, wait = 4500, others = [] } = {}) => {
+    const offs = others.map(t => { arm(t.el, true); const on = e => { e.stopPropagation(); if (!busy) t.onTap(); }; t.el.addEventListener('pointerdown', on); return () => { t.el.removeEventListener('pointerdown', on); arm(t.el, false); }; });
+    let first = true;
+    for (let i = 0; i < notes.length; i++) {
+      const [n, b] = notes[i], dur = b * beat;
+      if (n === 'R') { await sleep(dur * 1000); continue; }
+      const target = targetFor(i, n);
+      await new Promise(res => {
+        let done = false, th = null;
+        arm(target, true);
+        const bob = target.animate([{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], { duration: 760, iterations: Infinity, easing: 'ease-in-out' });
+        const fin = () => { if (done) return; done = true; clearTimeout(tw); clearTimeout(th); bob.cancel(); target.removeEventListener('pointerdown', on); arm(target, false); hideHand(); res(); };
+        const on = e => { e.stopPropagation(); if (busy) return; fin(); };
+        const tw = setTimeout(fin, first ? wait + 3000 : wait);
+        if (first) th = setTimeout(() => !done && showHand(target, 'tap'), 2200);
+        target.addEventListener('pointerdown', on);
+      });
+      first = false;
+      voice && voice(n, dur, i); onNote && onNote(i, n, dur);
+      await sleep(Math.max(200, Math.min(dur * 1000, 420)));
+    }
+    offs.forEach(f => f());
+  });
+  /* 가사 줄: 음절마다 불이 켜진다. set(k) = k번째 음절까지 칠한다 (공백은 세지 않는다) */
+  function lyric(text, { y = 74, size = 46, on = '#A93B32', off = '#3F6B4F' } = {}) {
+    const t = el('text', { x: 500, y, 'text-anchor': 'middle', 'font-size': size, 'font-weight': 800, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", 'paint-order': 'stroke', stroke: '#fff', 'stroke-width': 9 }, fxL);
+    const spans = [];
+    text.split(' ').forEach((w, wi) => [...w].forEach((ch, ci) => { const sp = el('tspan', { fill: off }, t); sp.textContent = (wi && !ci ? ' ' : '') + ch; spans.push(sp); }));
+    return { set(k) { spans.forEach((sp, i) => sp.setAttribute('fill', i <= k ? on : off)); }, clear() { t.remove(); }, count: spans.length };
+  }
+
   const finale = () => { const b = $('#finBtn'); if (b) b.hidden = false; };
 
   const api = {
-    finale,
+    finale, hz, semi, parseSong, timbre, playMelody, followMelody, lyric,
     el, paper, anim, actor, sleep, say, director, tone, josa, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,

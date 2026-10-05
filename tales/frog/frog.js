@@ -486,19 +486,28 @@
       T.world.__uncle = x;
     }, mom.pos);
     const choir = [babies[0], babies[1], mom, babies[2], T.world.__uncle];
-    /* 개구리 울음을 음 높이만 바꿔 부른다: 도레미솔라 (어떻게 눌러도 어울리는 5음). 아기는 높게, 삼촌은 낮게 */
-    const RATE = [1.19, 1.33, 1.0, 1.5, 0.89]; // 개굴 녹음 한 번 = '미' 로 두고 도·레·미·솔·라에 맞춘 배율
-    const sing = (i, when = 0, dur = .34) => AudioFX.animalNote('frog', RATE[i], .75, when, dur) || T.tone(330 * RATE[i], dur, { type: 'triangle', vol: .22, when });
+    /* 〈반짝반짝 작은 별〉을 개구리 울음소리로 부른다 (프랑스 전래 곡, 모차르트 변주곡으로 유명 — 작곡가 사후 70년이 지난 공개 곡).
+       개굴 녹음은 '미'(E4)로 보고 음 높이만 비례해서 바꾼다. 아기들과 엄마가 번갈아 부르고, 삼촌은 낮은 받침음 */
+    const frogs = choir.slice(0, 4), uncle = choir[4];
+    const croakNote = (n, d = .4) => { const r = Math.pow(2, (T.semi(n) - 4) / 12); AudioFX.animalNote('frog', r, .75, 0, Math.min(d, .5)) || T.tone(T.hz(n), Math.min(d, .5), { type: 'triangle', vol: .22 }); };
+    const bass = () => { AudioFX.animalNote('frog', .55, .6, 0, .6) || T.tone(130, .5, { type: 'triangle', vol: .2 }); uncle.hop(14, 300); };
+    const TWINKLE = T.parseSong('C4:1 C4:1 G4:1 G4:1 A4:1 A4:1 G4:2 F4:1 F4:1 E4:1 E4:1 D4:1 D4:1 C4:2');
+    const BAR = [0, 7]; // 받침음이 들어가는 음 번호
+    const voice = (n, d, i) => { croakNote(n, d); if (BAR.includes(i)) bass(); };
     T.finale();
-    await say('밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 개구리를 톡톡 눌러서 합창해 봐요!');
-    const metro = setInterval(() => T.tone([140, 110], .5, { type: 'triangle', vol: .06 }), 1600);
-    await T.free(choir.map((f, i) => ({ el: f.pos, onTap: () => { sing(i); f.hop(22, 300); } })), 20000);
-    clearInterval(metro);
-    /* 마지막에 온 가족이 한 소절 합창: 누가 어느 음을 부르는지 보이게 그 개구리가 폴짝 */
-    const SONG = [[2, .0], [2, .4], [3, .8], [4, 1.2], [3, 1.6], [2, 2.2], [1, 2.6], [0, 3.0], [1, 3.4], [2, 3.8], [0, 4.4]]; // [가수(=음), 시각(초)]
-    SONG.forEach(([i, t]) => { sing(i, t, i === 0 && t > 4 ? .6 : .34); setTimeout(() => choir[i] && choir[i].hop(26, 300), t * 1000); });
-    [0, 1.6, 3.0, 4.4].forEach(t => sing(4, t, .5)); // 삼촌 개구리의 낮은 받침음
-    await sleep(5400);
+    await say('밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 먼저 들어 봐요!');
+    await T.playMelody(TWINKLE, { beat: .5, voice, onNote: i => frogs[i % 4].hop(22, 300) });
+    await sleep(500);
+    await say('이번에는 개구리를 톡톡 눌러서 같이 불러요!');
+    await T.followMelody(TWINKLE, { beat: .5, targetFor: i => frogs[i % 4].pos, voice, onNote: i => frogs[i % 4].hop(26, 300), others: [{ el: uncle.pos, onTap: bass }] });
+    await sleep(400);
+    await say('잘했어요! 이제 마음대로 노래해 봐요!');
+    const RATE = [1.0, 1.189, .794, 1.335, .6]; // 자유 놀이: 도·미·솔·라(+삼촌 낮은 소리)에 어울리게
+    const sing = i => AudioFX.animalNote('frog', RATE[i], .75, 0, .4) || T.tone(330 * RATE[i], .34, { type: 'triangle', vol: .22 });
+    await T.free(choir.map((f, i) => ({ el: f.pos, onTap: () => { sing(i); f.hop(22, 300); } })), 12000);
+    /* 끝: 온 가족이 한 번 더 함께 */
+    T.playMelody(TWINKLE, { beat: .5, voice, onNote: () => choir.forEach(f => f.hop(18, 300)) });
+    await sleep(7200);
     await say('개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.');
     return '개구리는 개구리대로 멋져요!';
   }

@@ -64,7 +64,9 @@ const NARRATION_CLIPS = {
  "엄마 개구리를 톡 눌러서 폴짝!": "audio/tc/frog/nar_091405b903.mp3",
  "황소도 따라 뛰어 볼까요? 하나, 둘…": "audio/tc/frog/nar_a4c7163989.mp3",
  "쿵! 황소는 폴짝 뛰지 못했어요. 누가 더 멀리 뛸까요? 개구리!": "audio/tc/frog/nar_21b0934558.mp3",
- "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 개구리를 톡톡 눌러서 합창해 봐요!": "audio/tc/frog/nar_5d965f7c32.mp3",
+ "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 먼저 들어 봐요!": "audio/tc/frog/nar_7ecbc6c351.mp3",
+ "이번에는 개구리를 톡톡 눌러서 같이 불러요!": "audio/tc/frog/nar_6c1d9c2fc2.mp3",
+ "잘했어요! 이제 마음대로 노래해 봐요!": "audio/tc/frog/nar_9e5bb6d859.mp3",
  "개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.": "audio/tc/frog/nar_07480c6515.mp3"
 };
 const VOICE_LINES = {
