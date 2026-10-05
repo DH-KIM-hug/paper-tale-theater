@@ -1029,16 +1029,17 @@
   /* 마지막 노래: 〈곰 세 마리〉 (작사·작곡 미상의 동요). 녹음 대신 우리 소리로 직접 연주하고, 부르는 곰이 폴짝 뛴다 */
   async function gomSeMari(T, [dad, mom, baby], goldi) {
     const HZ = { 도: 261.63, 레: 293.66, 미: 329.63, 솔: 392, 라: 440 };
+    /* 음 이름:박자 (1 = 4분음표). 말하듯 짧게 붙다가 구절 끝에서 길게 늘어난다 */
     const LINES = [
-      ['곰세마리가한집에있어', '도도도도도미솔솔미도', null],
-      ['아빠곰엄마곰애기곰', '솔솔미솔솔미도도도', [dad, dad, dad, mom, mom, mom, baby, baby, baby]],
-      ['아빠곰은뚱뚱해', '솔솔미도솔솔솔', dad],
-      ['엄마곰은날씬해', '솔솔미도솔솔솔', mom],
-      ['애기곰은너무귀여워', '솔솔미도솔솔솔라솔', baby],
-      ['히쭉히쭉잘한다', '도솔도솔미레도', baby],
+      ['곰세마리가한집에있어', '도:1 도:1 도:.5 도:.5 도:1 미:.5 솔:.5 솔:.5 미:.5 도:2', null],
+      ['아빠곰엄마곰애기곰', '솔:.5 솔:.5 미:1 솔:.5 솔:.5 미:1 도:1 도:1 도:2', [dad, dad, dad, mom, mom, mom, baby, baby, baby]],
+      ['아빠곰은뚱뚱해', '솔:.5 솔:.5 미:.5 도:.5 솔:.5 솔:.5 솔:1.5', dad],
+      ['엄마곰은날씬해', '솔:.5 솔:.5 미:.5 도:.5 솔:.5 솔:.5 솔:1.5', mom],
+      ['애기곰은너무귀여워', '솔:.5 솔:.5 미:.5 도:.5 솔:.5 솔:.5 솔:.5 라:.5 솔:2', baby],
+      ['히쭉히쭉잘한다', '도:.5 솔:.5 도:.5 솔:.5 미:.5 레:.5 도:2', baby],
     ];
     const SHOW = ['곰 세 마리가 한 집에 있어', '아빠 곰 엄마 곰 애기 곰', '아빠 곰은 뚱뚱해', '엄마 곰은 날씬해', '애기 곰은 너무 귀여워', '히쭉히쭉 잘한다'];
-    const BEAT = .46;
+    const BEAT = .52;
     const svg = T.fx;
     for (let li = 0; li < LINES.length; li++) {
       const [syl, notes, who] = LINES[li];
@@ -1049,15 +1050,16 @@
       parts.forEach((w, wi) => [...w].forEach((ch, ci) => {
         const sp = T.el('tspan', { fill: C.pine }, t); sp.textContent = (wi && !ci ? ' ' : '') + ch; spans.push(sp); i++;
       }));
-      for (let k = 0; k < notes.length; k++) {
-        const hz = HZ[notes[k]];
-        const last = k === notes.length - 1;
-        const dur = last ? BEAT * 2 : BEAT;
+      const seq = notes.split(' ').map(x => x.split(':'));
+      for (let k = 0; k < seq.length; k++) {
+        const hz = HZ[seq[k][0]];
+        const last = k === seq.length - 1;
+        const dur = BEAT * +seq[k][1];
         T.tone(hz, dur * .9, { type: 'triangle', vol: .24 });
         T.tone(hz * 2, dur * .5, { type: 'sine', vol: .05 });
         if (spans[k]) spans[k].setAttribute('fill', C.bean);
         const a = Array.isArray(who) ? who[k] : who;
-        if (a) a.hop(last ? 26 : 16, 280); else if (k % 2 === 0) goldi.hop(12, 240);
+        if (a) a.hop(last ? 26 : 16, 280); else if (dur >= BEAT) goldi.hop(12, 240);
         await T.sleep(dur * 1000);
       }
     }

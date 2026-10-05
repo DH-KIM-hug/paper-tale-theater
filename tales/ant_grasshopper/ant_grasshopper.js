@@ -99,6 +99,8 @@
     squeak(T, f = 1500) { T.tone([f, f * 1.25], .09, { type: 'sine', vol: .12 }); },
   };
   const PENTA = [392, 440, 523, 587, 659, 784, 880];
+  /* 톡 누를 때마다 실제 녹음의 다음 한 조각이 이어서 나온다 (끝까지 가면 처음부터 다시) */
+  const songTap = (T, name, from, step, len, count, vol, fb) => { let i = 0; return () => { const k = i++ % count; return AudioFX.slice(name, from + k * step, len, vol) || fb(k); }; };
 
   /* ================= 캐릭터 (모두 왼쪽을 본다. 발끝 = 0,0) ================= */
   /* 개미 (키 ~140). 옷은 조각을 얹었다 뺐다 한다 */
@@ -692,20 +694,22 @@
     SND.tune(T);
     await sleep(900);
     await say('"같이 놀자~ 띠리링!" 베짱이가 노래해요.');
-    await say('베짱이를 꾹 누르고 있으면 봄 노래가 이어져요!');
-    await T.holdMelody(Array.from({ length: 24 }, () => ['C4', 1]), {
-      beat: .5, target: hop.pos, wait: 5000,
-      voice: (n, d, i) => AudioFX.slice('vivaldi_spring', 18 + i * .5, .58, .8) || SND.violin(T, PENTA[i % PENTA.length]),
-      onNote: i => { if (i % 2 === 0) { notes(T, 460, 200); hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-14deg)' }, { transform: 'rotate(0deg)' }], 900); } },
+    await say('베짱이와 꽃을 톡톡 눌러 봐요. 봄 노래가 이어져요!');
+    const springTap = songTap(T, 'vivaldi_spring', 18, .5, .58, 40, .8, k => SND.violin(T, PENTA[k % PENTA.length])); // 〈사계〉 봄 1악장의 이어지는 부분
+    const bowTap = ms => hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-14deg)' }, { transform: 'rotate(0deg)' }], ms);
+    const leafTargets = [fl[0], hop.pos, fl[1]];
+    await T.followMelody(Array.from({ length: 12 }, () => ['C4', 1]), {
+      beat: .5, wait: 5000, targetFor: i => leafTargets[i % 3],
+      voice: () => springTap(),
+      onNote: i => { notes(T, [FLX[0], 500, FLX[1]][i % 3], 200); if (i % 3 === 1) bowTap(900); else T.anim(leafTargets[i % 3], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); },
     });
     await sleep(300);
-    await say('잘했어요! 이제 꽃도 눌러서 마음대로 연주해요!');
-    let ni = 0;
+    await say('잘했어요! 계속 눌러서 봄 노래를 이어 가요!');
     await T.free([
-      { el: hop.pos, onTap: () => { SND.violin(T, PENTA[ni++ % PENTA.length]); notes(T, 460, 200); hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-16deg)' }, { transform: 'rotate(0deg)' }], 400); } },
-      { el: fl[0], onTap: () => { SND.violin(T, 330); notes(T, FLX[0], 190); T.anim(fl[0], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); } },
-      { el: fl[1], onTap: () => { SND.violin(T, 988); notes(T, FLX[1], 190); T.anim(fl[1], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); } },
-    ], 10000);
+      { el: hop.pos, onTap: () => { springTap(); notes(T, 460, 200); bowTap(400); } },
+      { el: fl[0], onTap: () => { springTap(); notes(T, FLX[0], 190); T.anim(fl[0], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); } },
+      { el: fl[1], onTap: () => { springTap(); notes(T, FLX[1], 190); T.anim(fl[1], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); } },
+    ], 12000);
     const passers = [0, 1, 2].map(i => { const a = ant(T, T.world, -60 - i * 90, 532, .62); a.face('right'); carry(a.p, true); return a; });
     passers.forEach(a => a.move(a.x + 520, 532, 3200, 'linear'));
     await say('지나가던 개미들이 말했어요. "우린 겨울 준비해야 해!"');
@@ -952,11 +956,11 @@
       const sw = setInterval(() => { notes(T, 470, 360); dancers.forEach((a, i) => setTimeout(() => a.wiggle(5, 700), i * 120)); }, 1400);
       await winter.done; clearInterval(sw); bw2.cancel();
     }
-    await say('베짱이랑 친구들을 톡톡 눌러 봐요. 음악에 맞춰 춤을 춰요!');
-    let mi = 0;
+    await say('베짱이랑 친구들을 톡톡 눌러 봐요. 겨울 노래가 이어지고 춤을 춰요!');
+    const winterTap = songTap(T, 'vivaldi_winter', 0, 1, 1.1, 24, 1, k => SND.violin(T, PENTA[k % PENTA.length])); // 〈사계〉 겨울 2악장을 처음부터 한 조각씩
     await T.free([
-      { el: hop.pos, onTap: () => { SND.violin(T, PENTA[mi++ % PENTA.length]); notes(T, 470, 360); hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-16deg)' }, { transform: 'rotate(0deg)' }], 400); } },
-      ...dancers.map((a, i) => ({ el: a.pos, onTap: () => { T.tone(PENTA[(i + 2) % PENTA.length] * 2, .2, { type: 'triangle', vol: .14 }); a.hop(20, 360); a.wiggle(10, 360); } })),
+      { el: hop.pos, onTap: () => { winterTap(); notes(T, 470, 360); hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-16deg)' }, { transform: 'rotate(0deg)' }], 400); } },
+      ...dancers.map(a => ({ el: a.pos, onTap: () => { winterTap(); a.hop(20, 360); a.wiggle(10, 360); } })),
     ], 15000);
     SND.tune(T);
     dancers.forEach((a, i) => setTimeout(() => a.hop(16, 360), i * 80));
