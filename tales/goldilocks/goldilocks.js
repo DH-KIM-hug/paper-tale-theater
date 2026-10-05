@@ -32,6 +32,7 @@
     'cut_hot', 'cut_cold', 'cut_crack', 'cut_eyes',
     'bed_side_small', 'bed_side_blanket', 'bowl_top', 'bowl_top_empty', 'table_front', 'table', 'bear_paw', 'hammer', 'cut_skirt'].forEach(k => { ART[k] = `v3w/gl_${k}.webp`; });
   ART.cut_eyes = 'v3w/gl_cut_eyes2.webp';   // 다시 뽑은 눈 마주침 컷: 무대 순서(골디락스 · 아기 · 엄마 · 아빠)
+  ART.flower_g = 'v3w/fc_flower.webp';      // 숲길 바닥에 핀 꽃 (따러 허리를 숙인다)
   ART.butterfly = 'v3w/fc_butterfly.webp';  // 숲길 나비는 여우와 두루미 그림을 작게
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -42,6 +43,7 @@
     goldi_surprised: [-47.9, -154.6, 94.9, 154.8], goldi_sit: [-42.3, -159.6, 95.7, 160.8],
     goldi_side: [-165, -80, 158.6, 112.1], goldi_side_sleep: [-165, -80, 158.6, 112.1], // 옆 침대: 그레이박스를 -90° 눕힌 자리(머리 왼쪽)에 맞춤
     goldi_lie: [-52.6, -158.6, 112.1, 158.6], goldi_lie_sleep: [-52.6, -158.6, 112.1, 158.6],
+    flower_g: [-17, -52, 34, 52],
     bear_dad: [-71.4, -225, 142.8, 225], bear_mom: [-73.6, -225, 147.2, 225], bear_baby: [-78.6, -225, 157.2, 225], bear_baby_cry: [-75.6, -230.3, 151.1, 230.3],
     bowl: [-85, -100.4, 170, 100.4], bowl_empty: [-85, -100.4, 170, 100.4],
     chair_big: [-79.7, -290, 159.4, 290], chair_mid: [-90.8, -290, 181.7, 290], chair_small: [-95.8, -290, 191.7, 290],
@@ -603,7 +605,7 @@
     await sleep(1400);
 
     /* ---------- 3. 숲길 골디락스 (눈높이) ---------- */
-    let area, butterfly, house;
+    let area, butterfly, house, groundFlowers = [];
     await T.sceneCard('숲길', () => {
       T.clear(); house = forestBG(T, X(900));
       put(goldi, X(200), 505, 1.3);
@@ -613,18 +615,48 @@
       wings.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(.3)' }, { transform: 'scaleX(1)' }], { duration: 300, iterations: Infinity });
       butterfly.style.transform = `translate(${X(120)}px,260px)`;
       forestFront(T);
+      groundFlowers = [1, 2, 3].map(i => {
+        const fg = el('g', { transform: `translate(${X(200 + i * 170) + 48},508)` }, T.world);
+        if (!pic(T, fg, 'flower_g')) bouquetFlower(T, fg, i - 1);
+        return fg;
+      });
       area = el('rect', { x: -400, y: -400, width: 1800, height: 1400, fill: '#fff', opacity: 0 }, T.world);
       view();
     }, goldi.pos);
     await say('숲속에는 금빛 머리 골디락스가 살았어요.');
     await say('옆으로 쓱 밀어서 같이 걸어요!');
     const NUM = ['하나', '둘', '셋'];
+    // 걸어와 멈추면 발치에 꽃이 피고, 허리를 숙여 꺾으면 손으로 쏙 올라간다
+    const pickFlower = async (nx, i) => {
+      const fx = nx + 85, tf = (x, y, k) => `translate(${x}px,${y}px) scale(${k})`;
+      const fl = el('g', {}, T.world); fl.style.transform = tf(fx, 508, .01);
+      bouquetFlower(T, fl, 1);
+      await sleep(650);
+      if (!fl.isConnected) return;
+      fl.animate([{ transform: tf(fx, 508, .01) }, { transform: tf(fx, 508, 1.8) }], { duration: 350, easing: 'ease-out', fill: 'forwards' });
+      await sleep(250);
+      goldi.body.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(22deg)' }, { transform: 'rotate(22deg)' }, { transform: 'rotate(0)' }], { duration: 900, easing: 'ease-in-out' });
+      await sleep(450);
+      T.tone([600, 900], .12, { type: 'sine', vol: .1 });
+      fl.animate([{ transform: tf(fx, 508, 1.8) }, { transform: tf(nx + 28, 430, .9) }], { duration: 450, easing: 'ease-in', fill: 'forwards' });
+      await sleep(450);
+      fl.remove();
+    };
     await T.swipe(area, { dir: 'right', count: 3, prompt: '옆으로 쓱! 골디락스랑 걸어요.', onStep: i => {
       const nx = X(200 + i * 170);
       goldi.move(nx, 505, 600); goldi.hop(18, 300);
       AudioFX.sfx('step_grass', .6) || T.tone(300, .1);
-      bouquetFlower(T, goldi.hand, i - 1);
-      pop(nx, 200, `꽃 ${NUM[i - 1]}!`, C.persimmon);
+      pickFlower(nx, i);
+      const fl = groundFlowers[i - 1];
+      setTimeout(() => { // 도착하면 허리를 숙여 꽃을 쏙 뽑는다
+        goldi.lean.style.transform = 'rotate(26deg) scale(1,.9)';
+        setTimeout(() => {
+          fl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: 'forwards' });
+          AudioFX.sfx('pop', .6) || T.tone(700, .1);
+          pop(nx, 200, `꽃 ${NUM[i - 1]}!`, C.persimmon);
+        }, 260);
+        setTimeout(() => { goldi.lean.style.transform = ''; }, 620);
+      }, 620);
       butterfly.animate([{ transform: butterfly.style.transform }, { transform: `translate(${nx - 60}px,${230 - (i % 2) * 40}px)` }], { duration: 900, easing: 'ease-in-out', fill: 'forwards' });
       butterfly.style.transform = `translate(${nx - 60}px,${230 - (i % 2) * 40}px)`;
     } });
