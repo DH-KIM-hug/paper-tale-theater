@@ -21,6 +21,13 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `sfx/splash.mp3` | Bathtub water splashes.ogg | gradha | Public domain | https://commons.wikimedia.org/wiki/File:Bathtub_water_splashes.ogg |
 | `animals/donkey.mp3` | 157763 felix-blume a-donkey-is-braying-in-his-enclosure-in-south-of-france.wav | felix-blume | CC0 | https://commons.wikimedia.org/wiki/File:157763_felix-blume_a-donkey-is-braying-in-his-enclosure-in-south-of-france.wav |
 
+## 클래식 녹음 (Wikimedia Commons, 비발디 〈사계〉 — 작곡은 공개 도메인, 녹음은 아래 라이선스)
+
+| 파일 | 원본 | 연주 | 라이선스 | 출처 |
+|---|---|---|---|---|
+| `music/vivaldi_spring.mp3` | Vivaldi - Four Seasons 1 Spring mvt 1 Allegro - John Harrison violin.oga (처음 40초) | John Harrison(바이올린), Robert Turizziani(지휘), Wichita State University Chamber Players, 2000년 라이브 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_1_Spring_mvt_1_Allegro_-_John_Harrison_violin.oga |
+| `music/vivaldi_winter.mp3` | 11 - Vivaldi Winter mvt 2 Largo - John Harrison violin.ogg (처음 30초, 음량 +10dB) | John Harrison(바이올린) 외, 위와 같은 녹음 모음 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:11_-_Vivaldi_Winter_mvt_2_Largo_-_John_Harrison_violin.ogg |
+
 ## 효과음 (Kenney, CC0 — 출처 표시 의무 없음)
 
 `sounds/sfx/` 의 thud·boom·pow·bonk·pop·poke·tap·ding·swish·whoosh·knock·chop·creak·bell·drum·step_grass·step_wood·door

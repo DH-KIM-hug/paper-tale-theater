@@ -16,7 +16,8 @@ const NARRATION_CLIPS = {
   "audio/tc/ant_grasshopper/hop_2f53879609.mp3",
   "audio/tc/ant_grasshopper/nar_f3c5c84420.mp3"
  ],
- "베짱이랑 꽃을 톡톡 눌러서 같이 연주해 봐요!": "audio/tc/ant_grasshopper/nar_915740d409.mp3",
+ "베짱이를 꾹 누르고 있으면 봄 노래가 이어져요!": "audio/tc/ant_grasshopper/nar_e3f52f5857.mp3",
+ "잘했어요! 이제 꽃도 눌러서 마음대로 연주해요!": "audio/tc/ant_grasshopper/nar_5bf475030a.mp3",
  "지나가던 개미들이 말했어요. \"우린 겨울 준비해야 해!\"": [
   "audio/tc/ant_grasshopper/nar_d52d7127b3.mp3",
   "audio/tc/ant_grasshopper/ants_c312a79aa2.mp3"
@@ -101,6 +102,7 @@ const NARRATION_CLIPS = {
  "넷! 반딧불이가 왔어요.": "audio/tc/ant_grasshopper/nar_e61ec0c3d8.mp3",
  "친구가 넷이나 왔어요! 먹을 게 많아서 모두 나눠 먹을 수 있어요.": "audio/tc/ant_grasshopper/nar_ec8e5fd8d5.mp3",
  "반딧불이가 불을 밝히고, 겨울 음악회가 시작됐어요!": "audio/tc/ant_grasshopper/nar_61290a713a.mp3",
+ "베짱이가 겨울 노래를 들려줘요. 가만히 들어 봐요.": "audio/tc/ant_grasshopper/nar_631c84f84c.mp3",
  "베짱이랑 친구들을 톡톡 눌러 봐요. 음악에 맞춰 춤을 춰요!": "audio/tc/ant_grasshopper/nar_ea24a0ca72.mp3",
  "띠리링~ 짝짝짝! 겨울이 하나도 춥지 않았어요.": "audio/tc/ant_grasshopper/nar_7fa1159372.mp3",
  "따뜻한 봄이 왔어요. 새싹이 쏙쏙!": "audio/tc/ant_grasshopper/nar_9e4d74c469.mp3",

@@ -599,6 +599,7 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
+    AudioFX.preloadMusic(['vivaldi_spring', 'vivaldi_winter']);
     const { el, sleep, say, camTo, camSnap, josa } = T;
     const HOP = '베짱이';
 
@@ -640,9 +641,14 @@
     await sleep(700);
     await say('이번엔 베짱이를 톡 눌러 봐요!');
     await T.tap(hop.pos, { prompt: '초록 베짱이를 톡!' });
-    SND.tune(T); const bw = bowing(hop.p); notes(T, 310, 280); notes(T, 370, 260);
+    const bw = bowing(hop.p);
     T.pop(360, 230, '띠리링~', C.pine);
-    await sleep(900); // 연주가 끝나고 베짱이가 말한다 (목소리와 겹치지 않게)
+    const spring = AudioFX.music('vivaldi_spring', { vol: .8, dur: 18 }); // 비발디 〈사계〉 '봄' 1악장 (공개 라이선스 녹음)
+    if (spring) {
+      const nt = setInterval(() => { notes(T, 300 + Math.random() * 110, 280); ants.forEach(a => a.hop(8, 260)); }, 700);
+      await spring.done; clearInterval(nt);
+    } else { SND.tune(T); notes(T, 310, 280); notes(T, 370, 260); await sleep(900); }
+    await sleep(300); // 연주가 끝나고 베짱이가 말한다 (목소리와 겹치지 않게)
     await say('"여름은 신나! 띠리링~" 베짱이는 노래를 불러요.');
     bw.cancel(); marchAnim.forEach(m => m.cancel());
 
@@ -686,7 +692,14 @@
     SND.tune(T);
     await sleep(900);
     await say('"같이 놀자~ 띠리링!" 베짱이가 노래해요.');
-    await say('베짱이랑 꽃을 톡톡 눌러서 같이 연주해 봐요!');
+    await say('베짱이를 꾹 누르고 있으면 봄 노래가 이어져요!');
+    await T.holdMelody(Array.from({ length: 24 }, () => ['C4', 1]), {
+      beat: .5, target: hop.pos, wait: 5000,
+      voice: (n, d, i) => AudioFX.slice('vivaldi_spring', 18 + i * .5, .58, .8) || SND.violin(T, PENTA[i % PENTA.length]),
+      onNote: i => { if (i % 2 === 0) { notes(T, 460, 200); hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-14deg)' }, { transform: 'rotate(0deg)' }], 900); } },
+    });
+    await sleep(300);
+    await say('잘했어요! 이제 꽃도 눌러서 마음대로 연주해요!');
     let ni = 0;
     await T.free([
       { el: hop.pos, onTap: () => { SND.violin(T, PENTA[ni++ % PENTA.length]); notes(T, 460, 200); hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-16deg)' }, { transform: 'rotate(0deg)' }], 400); } },
@@ -931,9 +944,16 @@
     }, hop.pos);
     SND.tune(T);
     await say('반딧불이가 불을 밝히고, 겨울 음악회가 시작됐어요!');
+    const dancers = [...home, ...guests];
+    await say('베짱이가 겨울 노래를 들려줘요. 가만히 들어 봐요.');
+    const winter = AudioFX.music('vivaldi_winter', { vol: .9, dur: 26, fade: 2 }); // 비발디 〈사계〉 '겨울' 2악장 (공개 라이선스 녹음)
+    if (winter) {
+      const bw2 = bowing(hop.p);
+      const sw = setInterval(() => { notes(T, 470, 360); dancers.forEach((a, i) => setTimeout(() => a.wiggle(5, 700), i * 120)); }, 1400);
+      await winter.done; clearInterval(sw); bw2.cancel();
+    }
     await say('베짱이랑 친구들을 톡톡 눌러 봐요. 음악에 맞춰 춤을 춰요!');
     let mi = 0;
-    const dancers = [...home, ...guests];
     await T.free([
       { el: hop.pos, onTap: () => { SND.violin(T, PENTA[mi++ % PENTA.length]); notes(T, 470, 360); hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-16deg)' }, { transform: 'rotate(0deg)' }], 400); } },
       ...dancers.map((a, i) => ({ el: a.pos, onTap: () => { T.tone(PENTA[(i + 2) % PENTA.length] * 2, .2, { type: 'triangle', vol: .14 }); a.hop(20, 360); a.wiggle(10, 360); } })),

@@ -136,7 +136,7 @@ const AudioFX = (() => {
       .catch(() => { samples[path] = false; });
   }
   /* when: 몇 초 뒤, dur: 앞부분만 (초) — 스팅에서 겹쳐 쌓을 때 쓴다 */
-  function playSample(path, vol = 0.9, when = 0, dur, rate = 1) {
+  function playSample(path, vol = 0.9, when = 0, dur, rate = 1, offset = 0) {
     const buf = samples[path];
     if (!buf) { loadSample(path); return false; }
     const c = ensure();
@@ -147,8 +147,8 @@ const AudioFX = (() => {
     if (dur) { // 잘라 쓸 때 끝을 살짝 줄여 딸깍 소리를 막는다
       g.gain.setValueAtTime(vol, t0 + Math.max(0, dur - 0.06));
       g.gain.linearRampToValueAtTime(0.0001, t0 + dur);
-      s.start(t0, 0, dur);
-    } else s.start(t0);
+      s.start(t0, offset, dur);
+    } else s.start(t0, offset);
     return true;
   }
   const SFX = { thud: 'sfx/thud', boom: 'sfx/boom', pow: 'sfx/pow', bonk: 'sfx/bonk', pop: 'sfx/pop', poke: 'sfx/poke',
@@ -191,6 +191,23 @@ const AudioFX = (() => {
     animal(name, vol) { return playSample('animals/' + name + '.mp3', vol); },
     /* 동물 소리로 음 하나 부르기: 녹음을 rate배 빠르게(=높게) 재생. 합창·멜로디용 */
     animalNote(name, rate, vol = .7, when = 0, dur) { return playSample('animals/' + name + '.mp3', vol, when, dur, rate); },
+    /* 클래식 녹음(sounds/music/<name>.mp3): 미리 불러 두고, music()으로 틀면 {stop(), done(Promise)}을 돌려준다.
+       못 불러왔으면 null — 부르는 쪽이 합성음으로 대신한다. slice()는 짧은 조각 하나(꾹 눌러 이어 듣기용) */
+    preloadMusic(names) { names.forEach(n => loadSample('music/' + n + '.mp3')); },
+    music(name, { vol = .7, offset = 0, dur, fade = 1.2 } = {}) {
+      const buf = samples['music/' + name + '.mp3'];
+      if (!buf) { loadSample('music/' + name + '.mp3'); return null; }
+      const c = ensure(), s = c.createBufferSource(), g = c.createGain(), t0 = c.currentTime;
+      const len = Math.min(dur || buf.duration, buf.duration - offset);
+      s.buffer = buf; s.connect(g).connect(c.destination);
+      g.gain.setValueAtTime(0.0001, t0); g.gain.linearRampToValueAtTime(vol, t0 + .3);
+      g.gain.setValueAtTime(vol, t0 + Math.max(.3, len - fade)); g.gain.linearRampToValueAtTime(0.0001, t0 + len);
+      s.start(t0, offset, len);
+      let stopped = false;
+      const done = new Promise(res => { s.onended = res; });
+      return { done, stop(f = .4) { if (stopped) return; stopped = true; const t = c.currentTime; g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0.0001, t + f); try { s.stop(t + f + .02); } catch (e) {} } };
+    },
+    slice(name, offset, dur, vol = .7) { return playSample('music/' + name + '.mp3', vol, 0, dur, 1, offset); },
     /* 기타 효과음: AudioFX.sfx('chop') */
     sfx(name, vol) { return playSample('sfx/' + name + '.mp3', vol); },
     /* 첫 소리가 합성음으로 새지 않게 미리 불러 둔다: AudioFX.preloadSfx(['paper_up', …]) */
