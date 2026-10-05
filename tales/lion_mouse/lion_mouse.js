@@ -614,10 +614,12 @@
     await T.sceneCard('사각사각', () => {
       T.clear(); nightNetBG(T);
       lion = mk(T, T.world, 560, 520, drawLionLie, 2); lion.parts.eyes('open');
-      hRopes = el('g', { stroke: C.rope, 'stroke-width': 7, 'stroke-linecap': 'round' }, T.world);
+      const defs = el('defs', {}, T.world), pat = el('pattern', { id: 'lmRopePat', width: 12, height: 12, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)' }, defs);
+      el('rect', { width: 12, height: 12, fill: C.rope }, pat); el('rect', { width: 12, height: 5, fill: '#B98F4E' }, pat);
+      hRopes = el('g', { stroke: 'url(#lmRopePat)', 'stroke-width': 9, 'stroke-linecap': 'round' }, T.world);
       [150, 250, 350, 450].forEach(y => el('line', { x1: 100, y1: y, x2: 900, y2: y }, hRopes));
       ropes = ROPES.map(x => {
-        const g = el('g', { stroke: C.rope, 'stroke-width': 10, 'stroke-linecap': 'round' }, T.world);
+        const g = el('g', { stroke: 'url(#lmRopePat)', 'stroke-width': 12, 'stroke-linecap': 'round' }, T.world);
         const top = el('line', { x1: x, y1: 70, x2: x, y2: 496 }, g);
         const bot = el('line', { x1: x, y1: 514, x2: x, y2: 540 }, g);
         el('line', { x1: x, y1: 496, x2: x, y2: 514 }, g).classList.add('mid');
@@ -709,8 +711,8 @@
     await say('바람을 가르며 초원을 달려요! 신난다!');
     await say('사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!');
     await T.free([
-      { el: rider.pos, onTap: () => { rider.hop(26, 320); T.pop(390, 220, '찍!', C.pine); vo('hi_mouse'); } },
-      { el: lion.pos, onTap: () => { vo('hi_lion'); lion.parts.mouth('open'); setTimeout(() => lion.parts.mouth('smile'), 500); lion.hop(20, 360); T.pop(560, 200, '어흥~', C.persimmon); } },
+      { el: rider.pos, onTap: () => { rider.hop(26, 320); T.pop(250, 250, '찍!', C.pine); vo('hi_mouse'); } },
+      { el: lion.pos, onTap: () => { vo('hi_lion'); lion.parts.mouth('open'); setTimeout(() => lion.parts.mouth('smile'), 500); lion.hop(20, 360); T.pop(640, 190, '어흥~', C.persimmon); } },
     ], 12000);
     await say(`그날부터 ${josa(LION, '과/와')} ${josa(MOUSE, '은/는')} 둘도 없는 친구가 되었답니다.`);
     return '작아도 큰 친구를 도울 수 있어요!';
