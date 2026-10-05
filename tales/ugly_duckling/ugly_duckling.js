@@ -1149,6 +1149,7 @@
     swanCall(T);
     await say('백조들이 헤엄쳐 왔어요. "안녕! 너도 우리 친구야. 같이 살자!"');
     await askMood('happy', ['happy', 'sad', 'scared', 'angry'], '지금 백조 마음은 어떨까요?');
+    T.finale();
     await say('맞아요! 백조는 정말 정말 기뻐요.');
     far._ducks.forEach((d, k) => setTimeout(() => { d.parts.wing && d.parts.wing.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-40deg)' }, { transform: 'rotate(0deg)' }], { duration: 500, iterations: 4 }); d.hop(10, 300); }, k * 100));
     quack(T, .4);

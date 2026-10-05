@@ -1071,6 +1071,7 @@
     AudioFX.sfx('bell', .4);
     await say('아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.');
     await say('"브레멘은 못 갔지만, 여기가 우리 집이야!"');
+    T.finale();
     await say('당나귀는 마당 짚더미, 강아지는 문 앞, 고양이는 아궁이, 닭은 지붕 위. 톡톡 눌러서 마음껏 연주해요!');
     const PLAY = {
       donkey: () => AudioFX.sfx('drum', .8) || T.tone([160, 90], .25, { type: 'sine', vol: .3 }),

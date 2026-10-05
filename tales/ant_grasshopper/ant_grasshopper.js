@@ -994,6 +994,7 @@
       T.tone(523 + k * 131, .25, { type: 'triangle', vol: .16 });
       await say(`${k + 1}번, ${name}!`);
     }
+    T.finale();
     SND.sparkle(T); T.confetti(); AudioFX.fanfare && AudioFX.fanfare();
     await say('봄, 여름, 가을, 겨울! 계절은 빙글빙글 돌아요.');
     cards.forEach(c => c.g.remove()); veil.remove();

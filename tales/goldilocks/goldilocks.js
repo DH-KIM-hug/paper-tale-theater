@@ -1001,6 +1001,7 @@
       el('text', { x: good.x - 85 * good.s - 30, y: good.y - 30, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1 }, tag);
       T.tone(440 + k * 110, .25, { type: 'triangle', vol: .16 });
     }
+    T.finale();
     await say('작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.');
     [...T.fx.children].forEach(n => n.remove());
     const gb = bowlSide(T, T.world, X(610), TABLE_TOP() + 102, .55, { full: true });
@@ -1011,7 +1012,48 @@
     T.confetti(); AudioFX.sfx('bell', .5);
     await sleep(900);
     await say('골디락스와 곰 가족은 사이좋은 친구가 되었답니다.');
+    await gomSeMari(T, [bears.dad, bears.mom, bears.baby], goldi);
     return '"미안해요" 하면 다시 친구가 될 수 있어요!';
+  }
+
+  /* 마지막 노래: 〈곰 세 마리〉 (작사·작곡 미상의 동요). 녹음 대신 우리 소리로 직접 연주하고, 부르는 곰이 폴짝 뛴다 */
+  async function gomSeMari(T, [dad, mom, baby], goldi) {
+    const HZ = { 도: 261.63, 레: 293.66, 미: 329.63, 솔: 392, 라: 440 };
+    const LINES = [
+      ['곰세마리가한집에있어', '도도도도도미솔솔미도', null],
+      ['아빠곰엄마곰애기곰', '솔솔미솔솔미도도도', [dad, dad, dad, mom, mom, mom, baby, baby, baby]],
+      ['아빠곰은뚱뚱해', '솔솔미도솔솔솔', dad],
+      ['엄마곰은날씬해', '솔솔미도솔솔솔', mom],
+      ['애기곰은너무귀여워', '솔솔미도솔솔솔라솔', baby],
+      ['히쭉히쭉잘한다', '도솔도솔미레도', baby],
+    ];
+    const SHOW = ['곰 세 마리가 한 집에 있어', '아빠 곰 엄마 곰 애기 곰', '아빠 곰은 뚱뚱해', '엄마 곰은 날씬해', '애기 곰은 너무 귀여워', '히쭉히쭉 잘한다'];
+    const BEAT = .46;
+    const svg = T.fx;
+    for (let li = 0; li < LINES.length; li++) {
+      const [syl, notes, who] = LINES[li];
+      svg.replaceChildren();
+      const parts = SHOW[li].split(' ');
+      const t = T.el('text', { x: 500, y: 74, 'text-anchor': 'middle', 'font-size': 46, 'font-weight': 800, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", 'paint-order': 'stroke', stroke: '#fff', 'stroke-width': 9 }, svg);
+      const spans = []; let i = 0;
+      parts.forEach((w, wi) => [...w].forEach((ch, ci) => {
+        const sp = T.el('tspan', { fill: C.pine }, t); sp.textContent = (wi && !ci ? ' ' : '') + ch; spans.push(sp); i++;
+      }));
+      for (let k = 0; k < notes.length; k++) {
+        const hz = HZ[notes[k]];
+        const last = k === notes.length - 1;
+        const dur = last ? BEAT * 2 : BEAT;
+        T.tone(hz, dur * .9, { type: 'triangle', vol: .24 });
+        T.tone(hz * 2, dur * .5, { type: 'sine', vol: .05 });
+        if (spans[k]) spans[k].setAttribute('fill', C.bean);
+        const a = Array.isArray(who) ? who[k] : who;
+        if (a) a.hop(last ? 26 : 16, 280); else if (k % 2 === 0) goldi.hop(12, 240);
+        await T.sleep(dur * 1000);
+      }
+    }
+    svg.replaceChildren();
+    T.confetti();
+    await T.sleep(600);
   }
 
   /* ================= 만화 컷 (400×300) ================= */

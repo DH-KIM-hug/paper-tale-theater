@@ -709,6 +709,7 @@
       } });
     await sleep(900);
     await say('바람을 가르며 초원을 달려요! 신난다!');
+    T.finale();
     await say('사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!');
     await T.free([
       { el: rider.pos, onTap: () => { rider.hop(26, 320); T.pop(250, 250, '찍!', C.pine); vo('hi_mouse'); } },

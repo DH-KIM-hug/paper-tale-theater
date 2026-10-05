@@ -895,6 +895,7 @@
     party.fox.parts.blush.setAttribute('opacity', 0);
     await Promise.all([party.fox.hop(30), party.crane.hop(30)]);
     await say('"괜찮아!" 둘은 다시 사이좋은 친구가 되었어요.');
+    T.finale();
     await say('친구들을 톡톡 눌러 봐요. 냠냠 맛있게 먹어요!');
     const busyEat = {};
     await T.free(Object.keys(party).map(k => ({ el: party[k].pos, onTap: async () => {

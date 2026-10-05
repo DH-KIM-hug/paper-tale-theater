@@ -489,6 +489,7 @@
     /* 개구리 울음을 음 높이만 바꿔 부른다: 도레미솔라 (어떻게 눌러도 어울리는 5음). 아기는 높게, 삼촌은 낮게 */
     const RATE = [1.19, 1.33, 1.0, 1.5, 0.89]; // 개굴 녹음 한 번 = '미' 로 두고 도·레·미·솔·라에 맞춘 배율
     const sing = (i, when = 0, dur = .34) => AudioFX.animalNote('frog', RATE[i], .75, when, dur) || T.tone(330 * RATE[i], dur, { type: 'triangle', vol: .22, when });
+    T.finale();
     await say('밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 개구리를 톡톡 눌러서 합창해 봐요!');
     const metro = setInterval(() => T.tone([140, 110], .5, { type: 'triangle', vol: .06 }), 1600);
     await T.free(choir.map((f, i) => ({ el: f.pos, onTap: () => { sing(i); f.hop(22, 300); } })), 20000);

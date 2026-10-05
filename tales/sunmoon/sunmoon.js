@@ -1393,6 +1393,7 @@
     };
     setSky(true);
     await say('그래서 동생은 해님, 오빠는 달님이 되었답니다.');
+    T.finale();
     await say('해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.');
     await T.free([
       { el: girlSun.pos, onTap: () => { setSky(true); AudioFX.jingle(); girlSun.hop(24); } },

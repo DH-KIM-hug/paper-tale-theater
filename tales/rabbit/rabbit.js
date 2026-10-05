@@ -1317,6 +1317,7 @@
       rabbitReset(); put(rabbit, 420, 480, .95);
       turtleReset(); tp.wearMedal(true); put(turtle, 580, 486, 1.15);
     });
+    T.finale();
     await say('밤이 되었어요. 숲속 잔치가 열렸어요!');
     await say('친구들을 톡톡 눌러서 신나게 연주해요!');
     /* 연주: 연주자마다 음이 하나씩 (도레미솔라 5음계 — 아무렇게나 눌러도 어울린다). 악기 소리도 저마다 다르다.

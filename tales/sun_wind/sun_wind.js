@@ -820,6 +820,7 @@
         fx: () => { wfx = precip(T, T.fx, 'snow', 40); [1568, 1319, 1175].forEach((f, i) => T.tone(f, .3, { type: 'sine', vol: .08, when: i * .12 })); } },
     };
     let lastKey = null;
+    T.finale();
     await say('하늘을 톡 눌러서 날씨를 바꿔 볼까요?');
     await say('옷도 저절로 바뀐대요!');
     await T.free(Object.entries(WEATHER).map(([k, w]) => ({ el: btns[k].pos, onTap: () => {

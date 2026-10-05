@@ -682,6 +682,7 @@ const Tale = (() => {
     <div id="veil" class="shut"><i class="lid"></i></div>
     <div id="confetti"></div>
     <div id="hand" hidden>${handSvg()}</div>
+    <button class="pill" id="finBtn" hidden>끝내기</button>
   </div>
   <div id="rotateHint"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3" fill="none" stroke="#C98A5B" stroke-width="2.6"/><circle cx="16" cy="25" r="1.6" fill="#C98A5B"/></svg>돌려서 크게 보기</div>
   <div id="bubble" hidden><p id="bubbleText"></p></div>
@@ -705,6 +706,7 @@ const Tale = (() => {
   </div>
 </div>`);
     root = $('#tale'); stage = $('#stage');
+    $('#finBtn').onclick = () => { Narrator.stop(); location.href = home; };
     arrive(heroes());
     // 세로 화면: 무대를 크게 키워 양옆을 자른다(slice), 가로: 전체를 맞춘다(meet)
     const portraitMQ = window.matchMedia('(orientation: portrait)');
@@ -725,9 +727,9 @@ const Tale = (() => {
       AudioFX.prefetchClips && AudioFX.prefetchClips(); // 이 동화의 녹음을 미리 받아 둔다 (대사가 늦게 나오지 않게)
       $('#startScreen').hidden = true; $('#endScreen').hidden = true;
       clear(); camSnap(500, 280, 1); shutVeil();
-      busy = true;
+      busy = true; $('#finBtn').hidden = true;
       const msg = await run(api);
-      busy = true;
+      busy = true; $('#finBtn').hidden = true;
       await curtain(false);
       $('#endMsg').textContent = msg || '';
       $('#endScreen').hidden = false;
@@ -739,7 +741,10 @@ const Tale = (() => {
   /* 조작 대기 동안만 입력을 받는다 */
   const input = fn => async (...a) => { busy = false; try { return await fn(...a); } finally { busy = true; } };
 
+  const finale = () => { const b = $('#finBtn'); if (b) b.hidden = false; };
+
   const api = {
+    finale,
     el, paper, anim, actor, sleep, say, director, tone, josa, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,

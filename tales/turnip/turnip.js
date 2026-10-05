@@ -816,6 +816,7 @@
       T.tone(523 + i * 40, .2, { type: 'triangle', vol: .16 });
       setTimeout(() => { a.hop(20, 300); T.pop(a.x, 510 - a.h * a.scale - 90, NUM[i - 1], C.pine); }, 600); // 머리 위 (얼굴을 가리지 않게)
     } });
+    T.finale();
     await sleep(1200);
     await say('여섯 그릇, 여섯 명! 딱 맞아요.');
     line.forEach((a, i) => setTimeout(() => { a.hop(18, 320); T.tone(440 + i * 30, .12, { type: 'triangle', vol: .1 }); }, i * 150));
