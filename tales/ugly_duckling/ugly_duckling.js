@@ -606,8 +606,8 @@
   const purr = T => { for (let i = 0; i < 9; i++) T.tone([95, 80], .08, { type: 'sawtooth', vol: .05, when: i * .09 }); };
   const giggle = T => [0, .12, .24, .36].forEach((w, i) => T.tone([620 - i * 40, 520 - i * 40], .1, { type: 'triangle', vol: .12, when: w }));
   const crack = T => AudioFX.sfx('poke', .6) || T.tone([1400, 700], .06, { type: 'square', vol: .1 });
-  /* 백조 소리: 녹음이 없으면 부드러운 나팔 소리를 만든다 */
-  const swanCall = T => AudioFX.animal('swan', .7) || [0, .5].forEach(w => {
+  /* 백조 소리: 녹음 파일이 없어 부드러운 나팔 소리를 만든다 */
+  const swanCall = T => [0, .5].forEach(w => {
     T.tone([466, 415], .45, { type: 'triangle', vol: .13, when: w });
     T.tone([233, 208], .45, { type: 'sine', vol: .07, when: w });
     T.tone([932, 830], .4, { type: 'sine', vol: .03, when: w + .02 });
