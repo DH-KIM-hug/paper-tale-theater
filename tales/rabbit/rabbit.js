@@ -285,11 +285,6 @@
     pluck: (T, f, w) => { T.tone([f * 1.03, f], .32, { type: 'triangle', vol: .2, when: w }); T.tone(f * 2, .12, { type: 'sine', vol: .05, when: w }); },
     bass: (T, f, w) => { T.tone(f, .45, { type: 'triangle', vol: .18, when: w }); T.tone(f / 2, .45, { type: 'sine', vol: .12, when: w }); },
   };
-  /* 마지막 한 소절: [연주자(=음), 시각(초)] — 미솔라솔 미레도레 미솔도~ 그리고 높은 미솔라, 마지막은 다 함께 */
-  const SONG = [['pig', 0], ['dog', .38], ['sheep', .76], ['dog', 1.14], ['pig', 1.52], ['turtle', 1.9], ['cow', 2.28], ['turtle', 2.66],
-    ['pig', 3.04], ['dog', 3.42], ['rabbit', 3.8], ['duck', 4.4], ['rooster', 4.6], ['cat', 4.8],
-    ...['cow', 'rabbit', 'duck', 'sheep'].map(k => [k, 5.3])]; // 마지막 화음 (도·도·미·라 — 소리는 넷만, 나머지는 함께 폴짝)
-
   /* 잔치 악기 (임시 도형) */
   const INS = {
     duck: [['circle', { cx: 36, cy: -46, r: 16, fill: C.gold }], ['circle', { cx: 36, cy: -46, r: 10, fill: C.cream }]],
@@ -896,12 +891,18 @@
     rp.mouth('yawn'); T.tone([400, 200], .8, { type: 'sine', vol: .12 });
     await say('포근포근~ 이불을 덮어 줬어요.');
     rp.mouth('smile');
-    await say('부엉이를 톡! 자장가를 불러 줘요.');
-    await T.tap(aud.owl.pos, { prompt: '나무 위 부엉이를 톡 눌러 봐요!' });
-    [392, 330, 392, 330, 294, 262].forEach((f, i) => T.tone(f, .5, { type: 'sine', vol: .22, when: i * .5 }));
+    /* 브람스 〈자장가〉(1868, 공개 곡) — 오르골 소리. 먼저 한 소절을 들려주고, 부엉이를 꾹 누르고 있는 동안 다음 소절이 흘러간다 */
+    const LULL1 = T.parseSong('E4:.5 E4:.5 G4:2 E4:.5 E4:.5 G4:2 E4:.5 G4:.5 C5:1 B4:1 A4:.5 A4:.5 G4:2');
+    const LULL2 = T.parseSong('A4:.5 A4:.5 C5:2 A4:.5 A4:.5 C5:2 A4:.5 C5:.5 F5:1 E5:1 D5:.5 D5:.5 C5:3');
+    const box = T.timbre('box');
+    const lullVoice = (n, d) => box(T.hz(n), d, 0, .22);
+    const lullNote = i => { noteShape(T, aud.owl.x - 60 - (i % 6) * 30, aud.owl.y - 50, C.indigo); if (i % 3 === 0) aud.owl.wiggle(8, 500); };
+    await say('부엉이가 자장가를 불러 줘요. 잘 들어 봐요.');
+    await T.playMelody(LULL1, { beat: .65, voice: lullVoice, onNote: lullNote });
+    await sleep(400);
+    await say('이번에는 부엉이를 꾹 누르고 있어 봐요. 자장가가 이어져요!');
+    await T.holdMelody(LULL2, { beat: .65, target: aud.owl.pos, voice: lullVoice, onNote: lullNote });
     T.pop(aud.owl.x, aud.owl.y - 130, '부엉 부엉~', C.indigo);
-    for (let i = 0; i < 5; i++) setTimeout(() => noteShape(T, aud.owl.x - 60 - i * 30, aud.owl.y - 50, C.indigo), i * 450);
-    aud.owl.wiggle(10, 1400);
     rp.sleepy(true);
     rp.setEyes('drowsy'); // 자장가를 들으면 선 채로 눈이 스르르 감긴다 (그림: 감은 눈꺼풀을 서서히)
     if (rp.lids && rp.lids()) T.anim(rp.lids(), [{ opacity: 0 }, { opacity: .6, offset: .5 }, { opacity: .35, offset: .65 }, { opacity: 1 }], 1500);
@@ -1319,29 +1320,35 @@
     });
     T.finale();
     await say('밤이 되었어요. 숲속 잔치가 열렸어요!');
-    await say('친구들을 톡톡 눌러서 신나게 연주해요!');
-    /* 연주: 연주자마다 음이 하나씩 (도레미솔라 5음계 — 아무렇게나 눌러도 어울린다). 악기 소리도 저마다 다르다.
-       (개구리 동화의 '밤 연못 합창'과 같은 방식) 마지막엔 모두가 한 소절을 함께 연주하고, 자기 음에서 폴짝 */
     const cast = { ...aud, rabbit, turtle };
     const colorOf = k => [C.bean, C.gold, C.persimmon, C.lav][(Object.keys(BAND).indexOf(k)) % 4];
-    const playNote = (k, when = 0) => {
-      const [f, ins] = BAND[k];
-      INSTR[ins](T, f, when);
-      setTimeout(() => {
-        const a = cast[k]; if (!a) return;
-        a.hop(k === 'rabbit' ? 36 : 24, 320);
-        if (k === 'turtle') tween(250, t => tp.neck(1 + Math.sin(t * Math.PI) * 1.2));
-        noteShape(T, a.x + 30, a.y - (k === 'turtle' || k === 'rabbit' ? 150 : 120) * a.scale, colorOf(k));
-      }, when * 1000);
+    const hopNote = (k, y = 120) => {
+      const a = cast[k]; if (!a) return;
+      a.hop(k === 'rabbit' ? 36 : 24, 320);
+      if (k === 'turtle') tween(250, t => tp.neck(1 + Math.sin(t * Math.PI) * 1.2));
+      noteShape(T, a.x + 30, a.y - (k === 'turtle' || k === 'rabbit' ? 150 : y) * a.scale, colorOf(k));
     };
+    const playNote = k => { const [f, ins] = BAND[k]; INSTR[ins](T, f, 0); hopNote(k); };
+    /* 모차르트 〈터키 행진곡〉 주제(1783, 공개 곡). 음마다 맡은 친구가 자기 악기로 연주한다 */
+    const MARCH = T.parseSong('B4:1 A4:1 G#4:1 A4:1 C5:4 D5:1 C5:1 B4:1 C5:1 E5:4 F5:1 E5:1 D#5:1 E5:1 B5:1 A5:1 G#5:1 A5:1 B5:1 A5:1 G#5:1 A5:1 C6:4');
+    const WHO = ['pig', 'pig', 'pig', 'pig', 'dog', 'sheep', 'sheep', 'sheep', 'sheep', 'cat', 'rooster', 'rooster', 'rooster', 'rooster', 'duck', 'duck', 'duck', 'duck', 'rabbit', 'rabbit', 'rabbit', 'rabbit', 'owl'];
+    const marchVoice = (n, d, i) => INSTR[BAND[WHO[i]][1]](T, T.hz(n), 0);
+    const marchHop = i => hopNote(WHO[i]);
+    await say('먼저 들어 봐요! 신나는 행진곡이에요.');
+    await T.playMelody(MARCH, { beat: .17, voice: marchVoice, onNote: marchHop });
+    await sleep(500);
+    await say('이번에는 친구들을 톡톡 눌러서 같이 연주해요!');
+    await T.followMelody(MARCH.slice(0, 10), { beat: .17, targetFor: i => cast[WHO[i]].pos, voice: marchVoice, onNote: marchHop });
+    await sleep(400);
+    await say('잘했어요! 이제 마음대로 신나게 연주해요!');
     let beat = 0;
     every(600, () => { T.tone(beat % 2 ? 196 : 131, .12, { type: 'triangle', vol: .06 }); beat++; });
-    await T.free(Object.keys(BAND).map(k => ({ el: cast[k].pos, onTap: () => playNote(k) })), 30000);
+    await T.free(Object.keys(BAND).map(k => ({ el: cast[k].pos, onTap: () => playNote(k) })), 15000);
     stopLoops();
     await sleep(400);
-    SONG.forEach(([k, t]) => playNote(k, t));
-    setTimeout(() => ['pig', 'dog', 'rooster', 'turtle', 'owl', 'cat'].forEach(k => cast[k].hop(30, 380)), 5300);
-    await sleep(SONG[SONG.length - 1][1] * 1000 + 1300);
+    T.playMelody(MARCH, { beat: .17, voice: marchVoice, onNote: i => { marchHop(i); if (MARCH[i][1] >= 4) ['pig', 'dog', 'rooster', 'turtle', 'owl', 'cat'].forEach(k => cast[k].hop(30, 380)); } });
+    await sleep(5800);
+    AudioFX.sfx('cheer', .6);
     T.confetti();
     stopLoops();
     await say('모두 함께 신나는 잔치를 했답니다.');

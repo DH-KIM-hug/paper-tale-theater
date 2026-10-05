@@ -56,7 +56,8 @@ const NARRATION_CLIPS = {
  "먼저 나뭇잎 이불을 톡!": "audio/tc/rabbit/nar_086b6f2df5.mp3",
  "나뭇잎 이불을 톡 눌러 봐요!": "audio/tc/rabbit/nar_65876dcc72.mp3",
  "포근포근~ 이불을 덮어 줬어요.": "audio/tc/rabbit/nar_d32309d9bb.mp3",
- "부엉이를 톡! 자장가를 불러 줘요.": "audio/tc/rabbit/nar_6b69aaec50.mp3",
+ "부엉이가 자장가를 불러 줘요. 잘 들어 봐요.": "audio/tc/rabbit/nar_e173b5db81.mp3",
+ "이번에는 부엉이를 꾹 누르고 있어 봐요. 자장가가 이어져요!": "audio/tc/rabbit/nar_fd19baadab.mp3",
  "나무 위 부엉이를 톡 눌러 봐요!": "audio/tc/rabbit/nar_b2a9e18781.mp3",
  "부엉 부엉~ 토끼 눈이 스르르 감겨요.": "audio/tc/rabbit/nar_03c0d5c935.mp3",
  "마지막으로 해님을 톡! 구름이 해를 가려 줘요.": "audio/tc/rabbit/nar_b6ef65bcca.mp3",
@@ -119,7 +120,9 @@ const NARRATION_CLIPS = {
   "audio/tc/rabbit/turtle_2105705bbf.mp3"
  ],
  "밤이 되었어요. 숲속 잔치가 열렸어요!": "audio/tc/rabbit/nar_92c297fe51.mp3",
- "친구들을 톡톡 눌러서 신나게 연주해요!": "audio/tc/rabbit/nar_db940d2336.mp3",
+ "먼저 들어 봐요! 신나는 행진곡이에요.": "audio/tc/rabbit/nar_ae1299d0d8.mp3",
+ "이번에는 친구들을 톡톡 눌러서 같이 연주해요!": "audio/tc/rabbit/nar_48920bc1c0.mp3",
+ "잘했어요! 이제 마음대로 신나게 연주해요!": "audio/tc/rabbit/nar_e3fac2d215.mp3",
  "모두 함께 신나는 잔치를 했답니다.": "audio/tc/rabbit/nar_38d0048626.mp3",
  "천천히 가도 끝까지 하면 해낼 수 있어요!": "audio/tc/rabbit/nar_03a889e3b2.mp3"
 };

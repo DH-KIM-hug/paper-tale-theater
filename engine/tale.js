@@ -786,6 +786,31 @@ const Tale = (() => {
     }
     offs.forEach(f => f());
   });
+  /* 꾹 누르기 노래: target 을 누르고 있는 동안 곡이 한 음씩 흘러간다. 떼면 기다리고, 톡톡 쳐도 조금씩 나아가며,
+     wait 동안 아무도 안 누르면 곡이 스스로 끝까지 흘러간다. 끝나면 돌아온다 */
+  const holdMelody = input((notes, { beat = .6, target, voice, onNote, wait = 6000 } = {}) => new Promise(res => {
+    const starts = []; let acc = 0;
+    notes.forEach(([n, b]) => { starts.push(acc); acc += b * beat * 1000; });
+    let held = 0, idx = 0, down = false, auto = false, idle = 0, done = false;
+    arm(target, true);
+    const bob = target.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
+    const hand = setTimeout(() => !done && showHand(target, 'hold'), 2500);
+    const fin = () => { if (done) return; done = true; clearInterval(tm); clearTimeout(hand); bob.cancel(); target.removeEventListener('pointerdown', dn); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); arm(target, false); hideHand(); res(); };
+    const dn = e => { e.stopPropagation(); if (busy || done) return; down = true; idle = 0; hideHand(); held += 250; };
+    const up = () => { down = false; };
+    const tm = setInterval(() => {
+      if (down || auto) held += 50; else idle += 50;
+      if (!auto && idle >= wait) auto = true;
+      while (idx < notes.length && held >= starts[idx]) {
+        const [n, b] = notes[idx];
+        if (n !== 'R') { voice && voice(n, b * beat, idx); onNote && onNote(idx, n, b * beat); }
+        idx++;
+      }
+      if (idx >= notes.length && held >= acc) fin();
+    }, 50);
+    target.addEventListener('pointerdown', dn);
+    window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+  }));
   /* 가사 줄: 음절마다 불이 켜진다. set(k) = k번째 음절까지 칠한다 (공백은 세지 않는다) */
   function lyric(text, { y = 74, size = 46, on = '#A93B32', off = '#3F6B4F' } = {}) {
     const t = el('text', { x: 500, y, 'text-anchor': 'middle', 'font-size': size, 'font-weight': 800, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", 'paint-order': 'stroke', stroke: '#fff', 'stroke-width': 9 }, fxL);
@@ -797,7 +822,7 @@ const Tale = (() => {
   const finale = () => { const b = $('#finBtn'); if (b) b.hidden = false; };
 
   const api = {
-    finale, hz, semi, parseSong, timbre, playMelody, followMelody, lyric,
+    finale, hz, semi, parseSong, timbre, playMelody, followMelody, holdMelody, lyric,
     el, paper, anim, actor, sleep, say, director, tone, josa, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,
