@@ -809,11 +809,21 @@
       { el: beds[2].blanket, ok: true },
     ], { prompt: q7, where: '딱딱하지도, 너무 푹신하지도 않은 침대예요.', who: '작은 침대예요! 반짝이는 침대를 눌러요.' });
     lieIn(beds[2]); goldi.setFace('happy');
-    await say('딱 좋아요! 꾹 눌러서 재워 줘요.');
+    /* 브람스 〈자장가〉(1868, 공개 곡) — 오르골 소리. 한 소절을 들려주고, 침대를 꾹 누르고 있는 동안 다음 소절이 이어진다 */
+    const LULL1 = T.parseSong('E4:.5 E4:.5 G4:2 E4:.5 E4:.5 G4:2 E4:.5 G4:.5 C5:1 B4:1 A4:.5 A4:.5 G4:2');
+    const LULL2 = T.parseSong('A4:.5 A4:.5 C5:2 A4:.5 A4:.5 C5:2 A4:.5 C5:.5 F5:1 E5:1 D5:.5 D5:.5 C5:3');
+    const box = T.timbre('box');
+    const lullVoice = (n, d) => box(T.hz(n), d, 0, .22);
+    const lullNote = i => pop(beds[2].cx - 50 + (i % 5) * 26, 150 - (i % 3) * 14, '♪', C.indigo);
+    await say('딱 좋아요! 자장가를 들려줄게요. 잘 들어 봐요.');
+    await T.playMelody(LULL1, { beat: .65, voice: lullVoice, onNote: lullNote });
+    await sleep(400);
+    await say('이번에는 침대를 꾹 누르고 있어요. 자장가가 이어져요!');
     let yawned = false, slept = false;
-    await T.hold(beds[2].blanket, { ms: 2500, prompt: '침대를 꾹 누르고 있어요. 자장자장.', onProgress: p => {
-      if (p > .3 && !yawned) { yawned = true; goldi.setFace('yawn'); pop(beds[2].cx, 180, '하암~', C.indigo); T.tone([500, 300], .8, { type: 'sine', vol: .1 }); }
-      if (p > .75 && !slept) { slept = true; goldi.setFace('sleep'); }
+    await T.holdMelody(LULL2, { beat: .65, target: beds[2].blanket, voice: lullVoice, onNote: i => {
+      lullNote(i);
+      if (i >= 3 && !yawned) { yawned = true; goldi.setFace('yawn'); pop(beds[2].cx, 180, '하암~', C.indigo); T.tone([500, 300], .8, { type: 'sine', vol: .1 }); }
+      if (i >= 9 && !slept) { slept = true; goldi.setFace('sleep'); }
     } });
     goldi.setFace('sleep');
     snore(T); pop(beds[2].cx, 200, '쿨쿨', C.indigo);

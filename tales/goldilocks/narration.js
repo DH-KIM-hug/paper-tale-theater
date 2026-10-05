@@ -57,10 +57,11 @@ const NARRATION_CLIPS = {
  "너무 푹신해요!": "audio/tc/goldilocks/goldi_7d123bbf13.mp3",
  "딱딱하지도, 너무 푹신하지도 않은 침대예요.": "audio/tc/goldilocks/nar_a11062e13f.mp3",
  "작은 침대예요! 반짝이는 침대를 눌러요.": "audio/tc/goldilocks/nar_720c699285.mp3",
- "딱 좋아요! 꾹 눌러서 재워 줘요.": [
+ "딱 좋아요! 자장가를 들려줄게요. 잘 들어 봐요.": [
   "audio/tc/goldilocks/goldi_3828524fd6.mp3",
-  "audio/tc/goldilocks/nar_e710f8b300.mp3"
+  "audio/tc/goldilocks/nar_ae7e804f6d.mp3"
  ],
+ "이번에는 침대를 꾹 누르고 있어요. 자장가가 이어져요!": "audio/tc/goldilocks/nar_b4516fc2a2.mp3",
  "침대를 꾹 누르고 있어요. 자장자장.": "audio/tc/goldilocks/nar_102c1418fe.mp3",
  "골디락스는 쿨쿨 잠이 들었어요.": "audio/tc/goldilocks/nar_3b3310ffc0.mp3",
  "그때 곰 가족이 산책에서 돌아왔어요.": "audio/tc/goldilocks/nar_e935041594.mp3",
