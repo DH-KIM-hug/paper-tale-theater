@@ -58,6 +58,8 @@ const NARRATION_CLIPS = {
  "창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.": "audio/tc/bremen/nar_ed8cb043ca.mp3",
  "도둑: \"금화가 잔뜩이다! 하하하!\"": "audio/tc/bremen/boss_a40478c5ce.mp3",
  "닭: \"우리 음악을 크게 들려주자!\"": "audio/tc/bremen/rooster_0baac30755.mp3",
+ "도둑을 놀라게 할 노래예요. 먼저 들어 봐요!": "audio/tc/bremen/nar_2fb3705e88.mp3",
+ "이번에는 노래하는 친구를 톡톡 눌러요!": "audio/tc/bremen/nar_bab5fad2f3.mp3",
  "다 같이 목청껏! 톡톡톡 눌러서 노래해요!": "audio/tc/bremen/nar_bfd287df53.mp3",
  "탑을 톡톡톡! 더 크게 노래해요!": "audio/tc/bremen/nar_823f182132.mp3",
  "도둑들은 \"괴물이다!\" 하고 숲으로 후다닥 달아났어요.": [
@@ -79,7 +81,9 @@ const NARRATION_CLIPS = {
  "사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.": "audio/tc/bremen/nar_8e80b442e9.mp3",
  "아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.": "audio/tc/bremen/nar_cfc2bdde9c.mp3",
  "\"브레멘은 못 갔지만, 여기가 우리 집이야!\"": "audio/tc/bremen/donkey_bb963ef354.mp3",
- "당나귀는 마당 짚더미, 강아지는 문 앞, 고양이는 아궁이, 닭은 지붕 위. 톡톡 눌러서 마음껏 연주해요!": "audio/tc/bremen/nar_70713b3e8e.mp3",
+ "기쁨의 노래를 연주해요! 먼저 들어 봐요.": "audio/tc/bremen/nar_e1d0350466.mp3",
+ "이번에는 친구들을 톡톡 눌러서 같이 연주해요!": "audio/tc/bremen/nar_b6fedcfbc6.mp3",
+ "잘했어요! 이제 마음대로 연주해요!": "audio/tc/bremen/nar_e3e5cdd256.mp3",
  "함께라서 행복한 브레멘 음악대였답니다.": "audio/tc/bremen/nar_7831f4e972.mp3"
 };
 const VOICE_LINES = {

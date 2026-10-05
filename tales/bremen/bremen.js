@@ -925,6 +925,33 @@
       camSnap(500, 280, 1);
     });
     const hitT = el('rect', { x: 530, y: 220, width: 170, height: 270, fill: '#fff', opacity: 0 }, T.world);
+    /* 〈프레르 자크〉(프랑스 전래 동요): 네 친구가 한 줄씩 돌아가며 노래한다 */
+    const JACQUES = [
+      ['donkey', 'C4:1 D4:1 E4:1 C4:1', '히 힝 히 힝'],
+      ['dog', 'E4:1 F4:1 G4:2', '멍 멍 멍'],
+      ['cat', 'G4:.5 A4:.5 G4:.5 F4:.5 E4:1 C4:1', '야 옹 야 옹 야 옹'],
+      ['rooster', 'C4:1 G3:1 C4:2', '꼬 끼 오'],
+    ];
+    const SING = { donkey: 'horn', dog: 'xylo', cat: 'box', rooster: 'bell' };
+    const SONG = [], LINE = [];
+    JACQUES.forEach(([k, str, ly], li) => { for (let r = 0; r < 2; r++) T.parseSong(str).forEach((n, ni) => { SONG.push(n); LINE.push({ k, li, ni, ly }); }); });
+    let lyr = null;
+    const singVoice = (n, d, i) => T.timbre(SING[LINE[i].k])(T.hz(n), d, 0, LINE[i].k === 'donkey' ? .12 : .2);
+    const singNote = i => {
+      const { k, ni, ly } = LINE[i], a = cast[k];
+      if (ni === 0) { lyr && lyr.clear(); lyr = T.lyric(ly, { y: 80 }); a.cry(.4); }
+      lyr.set(ni);
+      a.hop(12, 240);
+      note(T, a.x + 20, a.y - 110 * a.scale, [C.bean, C.gold, C.cream][i % 3]);
+    };
+    await say('도둑을 놀라게 할 노래예요. 먼저 들어 봐요!');
+    await T.playMelody(SONG, { beat: .42, voice: singVoice, onNote: (i, n, d) => singNote(i) });
+    lyr && lyr.clear(); lyr = null;
+    await sleep(400);
+    await say('이번에는 노래하는 친구를 톡톡 눌러요!');
+    await T.followMelody(SONG.slice(0, 7), { beat: .42, targetFor: i => cast[LINE[i].k].pos, voice: singVoice, onNote: (i, n, d) => singNote(i) });
+    lyr && lyr.clear(); lyr = null;
+    await sleep(400);
     await say('다 같이 목청껏! 톡톡톡 눌러서 노래해요!');
     const WORDS = ['히힝!', '멍멍!', '야옹!', '꼬끼오!'];
     await T.mash(hitT, { count: 8, prompt: '탑을 톡톡톡! 더 크게 노래해요!', onStep: i => {
@@ -1072,7 +1099,25 @@
     await say('아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.');
     await say('"브레멘은 못 갔지만, 여기가 우리 집이야!"');
     T.finale();
-    await say('당나귀는 마당 짚더미, 강아지는 문 앞, 고양이는 아궁이, 닭은 지붕 위. 톡톡 눌러서 마음껏 연주해요!');
+    /* 베토벤 〈환희의 송가〉 주제(1824, 공개 곡): 소절마다 한 친구가 자기 악기로 연주한다 */
+    const ODE = T.parseSong('E4:1 E4:1 F4:1 G4:1 G4:1 F4:1 E4:1 D4:1 C4:1 C4:1 D4:1 E4:1 E4:1.5 D4:.5 D4:2 E4:1 E4:1 F4:1 G4:1 G4:1 F4:1 E4:1 D4:1 C4:1 C4:1 D4:1 E4:1 D4:1.5 C4:.5 C4:2');
+    const BARS = [4, 4, 4, 3, 4, 4, 4, 3], ODE_ORDER = ['cat', 'dog', 'rooster', 'donkey'];
+    const WHO = []; BARS.forEach((c, bi) => { for (let i = 0; i < c; i++) WHO.push(ODE_ORDER[bi % 4]); });
+    const ODE_VOICE = {
+      donkey: (f, d) => T.tone([f * .9, f * .5], .3, { type: 'sine', vol: .32 }),
+      dog: (f, d) => T.timbre('horn')(f, d, 0, .16),
+      cat: (f, d) => { T.tone(f, d * 1.1, { type: 'sawtooth', vol: .05 }); T.tone(f, d * 1.1, { type: 'triangle', vol: .12 }); },
+      rooster: (f, d) => T.timbre('bell')(f * 2, d, 0, .17),
+    };
+    const odeVoice = (n, d, i) => ODE_VOICE[WHO[i]](T.hz(n), d);
+    const odeHop = i => { const a = cast[WHO[i]]; a.hop(18, 280); note(T, a.x + 20, a.y - 100 * a.scale, [C.bean, C.pine, C.persimmon][i % 3]); };
+    await say('기쁨의 노래를 연주해요! 먼저 들어 봐요.');
+    await T.playMelody(ODE, { beat: .4, voice: odeVoice, onNote: odeHop });
+    await sleep(500);
+    await say('이번에는 친구들을 톡톡 눌러서 같이 연주해요!');
+    await T.followMelody(ODE.slice(0, 8), { beat: .4, targetFor: i => cast[WHO[i]].pos, voice: odeVoice, onNote: odeHop });
+    await sleep(400);
+    await say('잘했어요! 이제 마음대로 연주해요!');
     const PLAY = {
       donkey: () => AudioFX.sfx('drum', .8) || T.tone([160, 90], .25, { type: 'sine', vol: .3 }),
       dog: () => [0, .15].forEach(w => T.tone(523, .14, { type: 'square', vol: .08, when: w })),
