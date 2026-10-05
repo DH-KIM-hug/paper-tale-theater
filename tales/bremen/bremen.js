@@ -25,7 +25,7 @@
      - cut_ghost: 다시 뽑은 그림(도둑 셋이 생각 구름 속 귀신·콕 찌르는 이·거인·재판관을 가리킴). 안 나오면 코드 컷(네 칸) */
   const ART = {
     donkey: 'v3w/br_donkey.webp', donkey_sing: 'v3w/br_donkey_sing.webp', donkey_sleep: 'v3w/br_donkey_sleep.webp',
-    dog_sing: 'v3w/br_dog_sing.webp', dog_tired: 'v3w/br_dog_tired.webp', cat_sing: 'v3w/br_cat_sing.webp', cat_sad: 'v3w/br_cat_sad.webp',
+    dog_sing: 'v3w/br_dog_sing3.webp', dog_tired: 'v3w/br_dog_tired3.webp', cat_sing: 'v3w/br_cat_sing.webp', cat_sad: 'v3w/br_cat_sad.webp',
     rooster: 'v3w/br_rooster.webp', rooster_sing: 'v3w/br_rooster_sing.webp', miller: 'v3w/br_miller.webp', owl: 'v3w/br_owl.webp',
     robber_red: 'v3w/br_robber_red.webp', robber_green: 'v3w/br_robber_green.webp', robber_brown: 'v3w/br_robber_brown.webp',
     cut_crash: 'v3w/br_cut_crash.webp', cut_monster: 'v3w/br_cut_monster.webp', cut_ghost: 'v3w/br_cut_ghost3.webp',
@@ -43,7 +43,7 @@
   /* 자세 그림: [키(배율 1), 발끝 가운데(폭 비율), 폭/높이]. 한 동물의 자세끼리는 같은 원본 배율(잠자는 당나귀만 머리 크기에 맞춰 줄임) */
   const SPR = {
     donkey: [210, .585, .888], donkey_sing: [231, .526, .9352], donkey_sleep: [160, .633, 1.3725],
-    dog_sing: [100, .576, 1.0808], dog_tired: [113, .614, 1.1069], cat_sing: [89, .528, 1.2261], cat_sad: [85, .553, 1.1864],
+    dog_sing: [113, .542, .9042], dog_tired: [130, .41, .924], cat_sing: [89, .528, 1.2261], cat_sad: [85, .553, 1.1864],
     rooster: [106, .389, .9154], rooster_sing: [96, .421, 1.0167], miller: [190, .486, .4591], owl: [80, .495, .84],
     robber_red: [170, .51, .8475], robber_green: [174, .49, .8073], robber_brown: [185, .504, .7409],
   };

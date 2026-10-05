@@ -34,7 +34,7 @@
     turtle_walk: 'v3w/rab_turtle_walk.webp', turtle_swim: 'v3w/rab_turtle_swim.webp', turtle_medal: 'v3w/rab_turtle_medal.webp',
     raccoon: 'v3w/rab_raccoon.webp', owl_post: 'v3w/rab_owl_post.webp',
     aud_duck: 'v3w/rab_aud_duck.webp', aud_cow: 'v3w/rab_aud_cow.webp', aud_pig: 'v3w/rab_aud_pig.webp', aud_rooster: 'v3w/rab_aud_rooster.webp',
-    aud_sheep: 'v3w/rab_aud_sheep.webp', aud_dog: 'v3w/rab_aud_dog.webp', aud_cat: 'v3w/rab_aud_cat.webp', aud_owl: 'v3w/rab_owl_post.webp',
+    aud_sheep: 'v3w/rab_aud_sheep.webp', aud_dog: 'v3w/rab_aud_dog3.webp', aud_cat: 'v3w/rab_aud_cat.webp', aud_owl: 'v3w/rab_owl_post.webp',
     carrot_trophy: 'v3w/rab_carrot_trophy.webp', medal: 'v3w/rab_medal.webp',
     // 경주 막대·지도 말: 크림색 동그란 종이 속 토끼(머리·목도리)·거북이 — 둘이 한 짝 (토끼 원판은 거북이 원판 색·크기에 맞춰 PIL로 만듦)
     icon_rabbit: 'v3w/rab_icon_rabbit.webp', icon_turtle: 'v3w/rab_icon_turtle.webp',
