@@ -11,6 +11,8 @@ voice_script.json 형식:
   "extra": {"cut_ox": [["ox", "음메에!", "angry"]]}                   # 말풍선 없는 소리 대사 → VOICE_LINES
 }
 감정: smart(기본, 앞뒤 문맥으로) | normal happy sad angry whisper toneup tonedown, 세기는 'sad:1.5'처럼 (기본 1.2)
+목소리 일관성: voice_script.json 의 "emo": {"nar": "happy:1.1", "tiger": "angry:1.5"} 에 적은 배역은 모든 대사를 그 감정 하나로 만든다.
+  (감정 프리셋·세기가 바뀌면 같은 voice_id 도 음색이 달라져 들린다. 줄마다 감정을 바꾸지 않는다.)
 API 키는 ~/.config/typecast/key (저장소에 두지 않음)."""
 import json, os, sys, time, hashlib, urllib.request, urllib.error
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -44,6 +46,7 @@ def main():
     spec = json.load(open(os.path.join(ROOT, 'tales', tale, 'voice_script.json')))
     V = spec['voices']
     PITCH = spec.get('pitch') or {}
+    EMO = spec.get('emo') or {}
     for r in V:
         assert r.isalpha() and r.islower(), f'배역 이름은 영어 소문자만: {r}'
     outdir = os.path.join(ROOT, 'audio', 'tc', tale); os.makedirs(outdir, exist_ok=True)
@@ -52,6 +55,7 @@ def main():
         nonlocal chars, made, errs
         assert role in V, f'목소리 없는 배역: {role}'
         pt = PITCH.get(role, 0)
+        emo = EMO.get(role, emo)
         h = hashlib.md5((f'{V[role]}|{emo}|{text}' + (f'|p{pt}' if pt else '')).encode()).hexdigest()[:10]
         rel = f'audio/tc/{tale}/{role}_{h}.mp3'
         path = os.path.join(ROOT, rel)

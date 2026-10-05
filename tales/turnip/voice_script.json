@@ -502,5 +502,14 @@
     "toneup:1.4"
    ]
   ]
+ },
+ "emo": {
+  "nar": "happy:1.1",
+  "grandpa": "toneup:1.4",
+  "grandma": "happy:1.2",
+  "girl": "normal",
+  "dog": "happy:1.4",
+  "cat": "angry:1.2",
+  "mouse": "toneup:1.5"
  }
 }
