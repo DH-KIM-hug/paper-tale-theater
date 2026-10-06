@@ -11,31 +11,29 @@
   /* ================= 페이퍼아트 그림 (assets/v3w/lm_*.webp) =================
      null이거나 파일을 못 불러오면 그 자리는 아래 임시 도형(그레이박스)으로 그린다. 새 그림이 나오면 여기 한 줄만 바꾸면 된다.
      배경은 장면마다 한 장을 무대에 꽉 채워 깐다. 밤 두 장은 그림책 밤처럼 밝게 구웠다(감마).
-     비교 판 배경(lm_bg_board)·큰 발(paw_pad + 따로 오린 발가락 paw_toe)·이빨 카드·그루터기 구멍·밤 숲 그물·아래서 본 사자 가슴은 그림. 발자국 카드·끊는 밧줄은 코드 그대로. */
+     비교 판 배경(lm_bg_board)·큰 발(paw_pad + 따로 오린 발가락 paw_toe)·이빨 카드·그루터기 구멍·밤 숲 그물은 그림. 발자국 카드·끊는 밧줄은 코드 그대로. */
   const AS = '../../assets/';
   const BG = {
-    savanna: 'v3w/lm_bg_savanna.webp', grass: 'v3w/lm_bg_grass.webp', lowangle: 'v3w/lm_bg_lowangle.webp',
+    savanna: 'v3w/lm_bg_savanna.webp', grass: 'v3w/lm_bg_grass.webp',
     night_forest: 'v3w/lm_bg_night_forest.webp', night_net: 'v3w/lm_bg_night_net.webp', morning: 'v3w/lm_bg_morning.webp',
     board: 'v3w/lm_bg_board.webp',
   };
   /* 배우·소품·컷 (사자·생쥐는 모두 왼쪽을 본다)
      - lion_sleep: 뜬 눈으로 나와서 감은 눈(‿)으로 고쳐 칠함
      - lion_head_yawn · _laugh: 앉은 몸까지 나와서 갈기 테두리 안(얼굴·갈기)만 오림
-     - lion_paw: 머리 달린 다리로 나와서 머리를 잘라 내고 기둥을 위로 늘임
      - lion_stand: 다시 뽑은 선 사자 (웃는 눈). 갈기 지름을 누운 사자와 같게, 등 위 (52,-121)에 생쥐가 탄다
      - cut_gnaw: 그물을 다 끊은 뒤 '싹둑' 컷으로 새로 넣음 (목소리 없음, 갉는 소리)
-     - cut_net2: 다시 뽑은 그물 컷(그물 아래 걱정하는 얼굴). cut_paw2는 사자 몸과 떨어진 커다란 발이 위에서 내려와 안 씀(다시 뽑기 lm_cut_paw3)
-     - lion_chest: 아래서 본 가슴(잡혔다 장면, 머리 그림 뒤) · net: 밤 숲 그물(마젠타 키잉, 밧줄색으로) · hole_stump: 그루터기 구멍
+     - cut_net2: 다시 뽑은 그물 컷(그물 아래 걱정하는 얼굴). cut_paw4: 사자 몸에 이어진 앞발이 생쥐 꼬리를 누름(예전 paw2·3은 몸과 떨어진 발이라 안 씀)
+     - net: 밤 숲 그물(마젠타 키잉, 밧줄색으로) · hole_stump: 그루터기 구멍
      - paw_pad: 발가락 넷 달린 발 그림에서 오른쪽 끝 발가락을 오려 내(paw_toe) 코드가 그 자리에 따로 얹고 통통 튀게 한다
      - tooth_lion · tooth_mouse: 연두 번짐을 상아색으로 */
   const ART = {
     lion_sleep: 'v3w/lm_lion_sleep.webp', lion_lie_awake: 'v3w/lm_lion_lie_awake.webp',
     lion_head_yawn: 'v3w/lm_lion_head_yawn.webp', lion_head_laugh: 'v3w/lm_lion_head_laugh.webp',
     lion_stand: 'v3w/lm_lion_stand.webp',
-    lion_paw: 'v3w/lm_lion_paw.webp',
     mouse_walk: 'v3w/lm_mouse_walk.webp', mouse_pray: 'v3w/lm_mouse_pray.webp', mouse_run: 'v3w/lm_mouse_run.webp', mouse_gnaw: 'v3w/lm_mouse_gnaw.webp',
-    cut_paw: 'v3w/lm_cut_paw3.webp', cut_laugh: 'v3w/lm_cut_laugh.webp', cut_net: 'v3w/lm_cut_net2.webp', cut_gnaw: 'v3w/lm_cut_gnaw.webp',
-    lion_chest: 'v3w/lm_lion_chest.webp', net: 'v3w/lm_net.webp', hole_stump: 'v3w/lm_hole_stump.webp',
+    cut_paw: 'v3w/lm_cut_paw4.webp', cut_laugh: 'v3w/lm_cut_laugh.webp', cut_net: 'v3w/lm_cut_net2.webp', cut_gnaw: 'v3w/lm_cut_gnaw.webp',
+    net: 'v3w/lm_net.webp', hole_stump: 'v3w/lm_hole_stump.webp',
     paw_pad: 'v3w/lm_paw_pad.webp', paw_toe: 'v3w/lm_paw_toe.webp', tooth_lion: 'v3w/lm_tooth_lion.webp', tooth_mouse: 'v3w/lm_tooth_mouse.webp',
   };
   const artOK = {}, bgOK = {};
@@ -48,8 +46,7 @@
     T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
     return wrap;
   }
-  const BG_EDGE = { savanna: ['#bbd1cb', '#85623c'], grass: ['#cae1da', '#5d3a11'], lowangle: ['#ccdfda', '#3d250b'],
-    night_forest: ['#02506e', '#1e4d47'], night_net: ['#023a65', '#635130'], morning: ['#cadcd6', '#7f7349'], board: ['#c9d9d2', '#7a5a34'] };
+  const BG_EDGE = { savanna: ['#bbd1cb', '#85623c'], grass: ['#cae1da', '#5d3a11'], night_forest: ['#02506e', '#1e4d47'], night_net: ['#023a65', '#635130'], morning: ['#cadcd6', '#7f7349'], board: ['#c9d9d2', '#7a5a34'] };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   function bgImage(T, key, parent) {
     const u = bgUrl(key); if (!u) return null;
@@ -150,6 +147,14 @@
     paper(paws, [['ellipse', { cx: -150, cy: -12, rx: 40, ry: 15, fill: C.lion }], ['ellipse', { cx: -108, cy: -10, rx: 36, ry: 14, fill: C.lionDk }]]);
     return { ...head, hg, paws };
   }
+  /* 누운 사자 얼굴 위에 하품·웃음 얼굴을 얹는다 (갈기 지름이 같음). set('yawn'|'laugh'|null) */
+  function lionFace(T, hg, art) {
+    if (!art) return { set() {} };
+    const g = T.el('g', { transform: `translate(${LIE.lion_lie_awake.head[0]},${LIE.lion_lie_awake.head[1]})` }, hg);
+    const h = drawHead(T, g);
+    g.style.display = 'none';
+    return { set(k) { if (!k) { g.style.display = 'none'; return; } g.style.display = ''; h.eyes(k === 'laugh' ? 'happy' : 'sleepy'); } };
+  }
   /* 선 사자 (왼쪽을 본다, 발끝 0). 등 위 (40,-152) */
   /* 선 사자 그림 (왼쪽을 봄, 발끝 0): 폭 312, 키 241, 갈기 가운데 (-58,-128), 등 위 (52,-121) */
   const STAND = { x: -167, y: -241, w: 312, h: 241, head: [-58, -128], back: [52, -121] };
@@ -237,17 +242,6 @@
     }
     paper(b, [['circle', { cx: 150, cy: 150, r: 34, fill: C.snow }], ['circle', { cx: 150, cy: 150, r: 13, fill: C.gold }], ['rect', { x: 147, y: 182, width: 6, height: 320, fill: C.pine }]]);
     paper(b, [['rect', { x: -200, y: 496, width: 1400, height: 200, fill: C.ground }]]);
-  }
-  /* 로우앵글: 하늘이 대부분, 땅은 아래 띠만 */
-  function lowAngleBG(T) {
-    const { el, paper } = T, b = T.bg;
-    if (bgImage(T, 'lowangle')) return true;
-    el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: '#F6E7BE' }, b);
-    for (let i = 0; i < 9; i++) {
-      const x = -60 + i * 140;
-      paper(b, [['path', { d: `M${x} 560 L${x + 30} ${40 + (i % 3) * 60} L${x + 60} 560 Z`, fill: i % 2 ? '#A9BF7E' : '#8FAE6E' }]]);
-    }
-    paper(b, [['rect', { x: -200, y: 505, width: 1400, height: 200, fill: C.ground }]]);
   }
   function boardBG(T) {
     const { el, paper } = T, b = T.bg;
@@ -343,11 +337,10 @@
 
     /* --- 2. 생쥐 산책 (생쥐 눈높이) --- */
     let mouse, head;
-    /* 대사 연출: 목소리 주인에게 카메라, 사자와 생쥐가 서로 마주 봄.
-       '잡혔다' 장면의 사자는 얼굴 그림(head)뿐이라 얼굴을 배우처럼 넘긴다 (돌려세우지 않음) */
+    /* 대사 연출: 목소리 주인에게 카메라, 사자와 생쥐가 서로 마주 봄 */
     T.director({
       cast: {
-        lion: () => (head && head.H.isConnected ? { pos: head.H, body: head.H, x: 330, y: 175, scale: 1.75 } : lion),
+        lion: () => lion,
         mouse: () => mouse,
       },
       listener: r => (r === 'lion' ? 'mouse' : 'lion'),
@@ -406,43 +399,32 @@
       el('text', { x: 90, y: 110, 'text-anchor': 'middle', 'font-size': 80, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '탁!' }, svg);
     }, { sfx: 'thud', hold: 1800 }));
 
-    /* --- 3. 잡혔다! (생쥐 시점 로우앵글) --- */
-    let paw;
+    /* --- 3. 잡혔다! (같은 풀숲, 사자 앞발이 생쥐 꼬리를 누른다) --- */
+    let pawHit;
     await T.sceneCard('잡혔다!', () => {
-      T.clear(); lowAngleBG(T);
-      if (T.portrait()) camSnap(500, 280, 1);
-      // 올려다본 사자 가슴: 그림(갈기 테두리+크림 배)을 타원으로 오려 넣고, 없으면 타원 (그림이면 그림 몸 빛깔)
-      if (artUrl('lion_chest')) {
-        const cid = 'lmChestClip' + Date.now(), cg = el('g', { filter: 'url(#pp)' }, T.world);
-        el('ellipse', { cx: 560, cy: 40, rx: 330, ry: 190 }, el('clipPath', { id: cid }, cg));
-        el('image', { href: artUrl('lion_chest'), x: 180, y: -230, width: 760, height: 760 * 623 / 720, preserveAspectRatio: 'none', 'clip-path': `url(#${cid})` }, cg);
-      } else T.paper(T.world, [['ellipse', { cx: 560, cy: 40, rx: 330, ry: 190, fill: artUrl('lion_head_yawn') ? '#E8A92C' : C.lionDk }]]);
-      const hg = el('g', { transform: 'translate(330,175) scale(1.75)' }, T.world);
-      head = drawHead(T, hg); head.eyes('sleepy');
-      mouse = mk(T, T.world, 490, 520, drawMouse, 2.1);
-      paw = el('g', {}, T.world);
-      paw.style.transformBox = 'view-box'; paw.style.transformOrigin = '0 0';
-      // 그림: 머리를 잘라 낸 앞발 기둥 (폭 170, 발바닥 아래 끝 y=520). 생쥐 꼬리 끝이 발바닥 밑에 깔린다
-      if (!pic(T, paw, 'lion_paw', 565, 520 - 170 / .31, 170, 170 / .31))
-        T.paper(paw, [['rect', { x: 600, y: -40, width: 150, height: 470, rx: 40, fill: C.lion }], ['ellipse', { cx: 670, cy: 450, rx: 120, ry: 58, fill: C.lion }],
-          ...[575, 635, 700, 760].map(x => ['circle', { cx: x, cy: 492, r: 26, fill: C.lionDk }])]);
+      T.clear(); grassForestBG(T);
+      mouse = mk(T, T.world, 884, 476, drawMouse, 1.6); mouse.face('right'); // 사자 몸 뒤에 먼저 깔아 꼬리 끝이 앞발 밑에 들어간다
+      lion = mk(T, T.world, 640, 500, drawLionLie, 1.8); lion.face('right'); lion.parts.eyes('open');
+      if (lion.parts.art) lion.place(520, 500);
+      head = lionFace(T, lion.parts.hg, lion.parts.art);
+      pawHit = T.el('circle', { cx: LIE.lion_lie_awake.x + 30, cy: -38, r: 46, fill: '#fff', opacity: 0 }, lion.parts.hg);
+      if (T.portrait()) camSnap(845, 330, 1);
     }, mouse.pos);
     squeak(T, 1800); mouse.wiggle(10);
     await say('사자가 커다란 앞발로 생쥐 꼬리를 탁! 눌렀어요.');
-    head.mouth('open'); roar(T, .2);
+    head.set('yawn'); roar(T, .2);
     await say('사자가 하품하며 말했어요. "하암~ 한입에 꿀꺽 해 버릴까?"');
-    head.mouth('smile');
+    head.set(null);
     await say('생쥐가 말했어요. "살려 주시면 꼭 은혜 갚을게요!"');
     await say('생쥐를 톡 눌러서 부탁해 봐요.');
     await T.tap(mouse.pos, { prompt: '생쥐를 톡 눌러 봐요!' });
     mouse.parts.arms.setAttribute('opacity', 0); mouse.parts.pray.setAttribute('opacity', 1);
     squeak(T, 1600); mouse.hop(16);
-    T.pop(420, 330, '제발요~', C.pine);
+    T.pop(860, 380, '제발요~', C.pine);
     await say('생쥐가 두 손을 모았어요. "제발요, 사자님~"');
 
     /* --- 4. 하하하 (사자 클로즈업 → 컷) --- */
-    await camTo(330, 200, 1.6, 900);
-    head.eyes('open');
+    await camTo(720, 300, 1.6, 900);
     await say('"네가? 나를 도와준다고?"');
     cutVo('cut_laugh');
     await (cutArt('cut_laugh', { hold: 2200 }) || T.cut(svg => {
@@ -450,24 +432,25 @@
       const h = drawHead(T, g); h.eyes('happy'); h.mouth('open');
       el('text', { x: 200, y: 290, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '하하하!' }, svg);
     }, { hold: 2200 }));
-    head.eyes('happy'); head.mouth('open');
+    head.set('laugh');
     roar(T, .15);
-    const laugh = head.H.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 300, iterations: Infinity });
-    await camTo(600, 400, 1.4, 900);
+    const laugh = lion.parts.hg.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 300, iterations: Infinity });
+    await camTo(800, 380, 1.4, 900);
     AudioFX.sfx('creak', .5);
-    await T.anim(paw, [{ translate: '0 0' }, { translate: '0 -40px' }], { duration: 1200, easing: 'ease-out' });
+    // 사자가 웃느라 몸이 뒤로 젖혀져 앞발이 들린다 (몸 전체를 뒷발 끝을 축으로 돌림)
+    await T.anim(lion.parts.hg, [{ rotate: '0deg' }, { rotate: '3deg' }], { duration: 1200, easing: 'ease-out' });
     await say('사자가 웃다가 앞발이 스르르 열렸어요. 앞발을 톡 눌러 봐요!');
-    await T.tap(paw, { prompt: '사자 앞발을 톡 눌러 봐요!' });
-    T.anim(paw, [{ translate: '0 -40px' }, { translate: '0 -140px' }], 500);
+    await T.tap(pawHit, { prompt: '사자 앞발을 톡 눌러 봐요!' });
+    T.anim(lion.parts.hg, [{ rotate: '3deg' }, { rotate: '8deg' }], 500);
     mouse.parts.arms.setAttribute('opacity', 1); mouse.parts.pray.setAttribute('opacity', 0);
     T.tone([600, 1600], .25, { type: 'sine', vol: .14 });
-    T.pop(420, 380, '쏙!', C.pine);
-    await mouse.move(250, 520, 500, 'ease-in');
-    laugh.cancel(); head.mouth('smile');
+    T.pop(860, 420, '쏙!', C.pine);
+    await mouse.move(960, 480, 500, 'ease-in');
+    laugh.cancel();
     await say('생쥐가 쏙 빠져나왔어요. "고맙습니다, 사자님!"');
     squeak(T);
     if (mouse.parts.look) mouse.parts.look('run'); // 쪼르르 달려 나간다
-    await mouse.move(-150, 520, 700, 'ease-in');
+    await mouse.move(1250, 480, 700, 'ease-in');
 
     /* --- 5. 누가 더 클까? (비교 판) --- */
     await T.sceneCard('누가 더 클까?', () => { T.clear(); camSnap(500, 280, 1); boardBG(T); });
