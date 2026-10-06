@@ -53,8 +53,8 @@ const NARRATION_CLIPS = {
  ],
  "가을엔 무엇을 입을까? 옷을 골라 봐요!": "audio/tc/ant_grasshopper/nar_c7926afcc6.mp3",
  "너무 얇지도, 너무 두껍지도 않은 옷!": "audio/tc/ant_grasshopper/nar_91dd7e39d4.mp3",
- "조끼예요! 반짝이는 걸 눌러 봐요!": "audio/tc/ant_grasshopper/nar_1d1fdd2aa9.mp3",
- "맞아요! 선선한 가을엔 조끼를 입어요.": "audio/tc/ant_grasshopper/nar_645442a788.mp3",
+ "재킷이에요! 반짝이는 걸 눌러 봐요!": "audio/tc/ant_grasshopper/nar_cfa5332a8b.mp3",
+ "맞아요! 선선한 가을엔 재킷을 입어요.": "audio/tc/ant_grasshopper/nar_9cb5061b95.mp3",
  "하얀 눈이 펑펑! 겨울이 왔어요. 호호, 추워라.": [
   "audio/tc/ant_grasshopper/nar_1dcb61bd34.mp3",
   "audio/tc/ant_grasshopper/ant_e155ea36e2.mp3"

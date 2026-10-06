@@ -27,13 +27,13 @@
     door: 'v3w/ag_bg_door.webp', cellar: 'v3w/ag_bg_cellar.webp', // cellar: 어두운 흙을 조금 밝혀 구움, 곡식·도토리 방은 그림 속에 이미 가득
   };
   /* 배우·소품·컷 (인물·곤충은 모두 왼쪽을 본다)
-     - 개미: 서기 · 나르기(밀 이삭) · 조끼 · 겨울(목도리+털모자) · 아기. 틀린 옷(반팔·외투·튜브)과 땀은 서기 그림 위 코드 덧그림
+     - 개미: 서기 · 나르기(밀 이삭) · 재킷(ant_vest 키) · 겨울(목도리+털모자) · 아기. 틀린 옷(반팔·외투·튜브)과 땀은 서기 그림 위 코드 덧그림
      - 베짱이: 연주 · 흠뻑(소나기 뒤) · 덜덜(문 앞) · 겨울옷(창고) · 나르기(봄). hopper_hat = 겨울옷 그림에서 털모자만 오린 것 (음악회 연주 자세에 씌움)
      - snail: 눈자루 끝 눈 + 얼굴 눈 = 눈이 넷 → 얼굴의 두 눈을 몸 색으로 지움
      - 컷 3장은 코드 컷 틀(400×300) 안에 그림을 깔고 의성어 글자(에취!·오들오들·활짝!)는 코드가 얹는다
      - 못 써서 그레이박스로 두는 것: acorns(도토리 여섯 개 더미가 아니라 도토리 모자를 쓴 탑 모양 덩어리 하나) → 코드 도토리 */
   const ART = {
-    ant_stand: 'v3w/ag_ant_stand.webp', ant_carry: 'v3w/ag_ant_carry.webp', ant_vest: 'v3w/ag_ant_vest.webp',
+    ant_stand: 'v3w/ag_ant_stand.webp', ant_carry: 'v3w/ag_ant_carry.webp', ant_vest: 'v3w/ag_ant_jacket3.webp',
     ant_winter: 'v3w/ag_ant_winter.webp', ant_baby: 'v3w/ag_ant_baby.webp',
     hopper_play: 'v3w/ag_hopper_play.webp', hopper_wet: 'v3w/ag_hopper_wet.webp', hopper_shiver: 'v3w/ag_hopper_shiver.webp',
     hopper_winter: 'v3w/ag_hopper_winter.webp', hopper_carry: 'v3w/ag_hopper_carry.webp', hopper_hat: 'v3w/ag_hopper_hat.webp',
@@ -42,7 +42,7 @@
     cut_sneeze: 'v3w/ag_cut_sneeze.webp', cut_shiver: 'v3w/ag_cut_shiver.webp', cut_door: 'v3w/ag_cut_door.webp',
     /* 새로 뽑은 소품: 틀린 옷 입은 개미 셋 · 겨울옷 입고 연주하는 베짱이 · 옷 배지 5 · 꽃 2 · 곡식 더미·낱알 · 도토리 하나 · 문짝 널판 · 먹구름 */
     ant_tee: 'v3w/ag_ant_tee.webp', ant_coat: 'v3w/ag_ant_coat.webp', ant_ring: 'v3w/ag_ant_ring.webp', hopper_winter_play: 'v3w/ag_hopper_winter_play.webp',
-    icon_tee: 'v3w/ag_icon_tee.webp', icon_vest: 'v3w/ag_icon_vest.webp', icon_coat: 'v3w/ag_icon_coat.webp', icon_warm: 'v3w/ag_icon_warm.webp', icon_swim: 'v3w/ag_icon_swim.webp',
+    icon_tee: 'v3w/ag_icon_tee.webp', icon_vest: 'v3w/ag_icon_jacket3.webp', icon_coat: 'v3w/ag_icon_coat.webp', icon_warm: 'v3w/ag_icon_warm.webp', icon_swim: 'v3w/ag_icon_swim.webp',
     flower_pink: 'v3w/ag_flower_pink.webp', flower_orange: 'v3w/ag_flower_orange.webp', grain_pile: 'v3w/ag_grain_pile.webp', grain: 'v3w/ag_grain.webp',
     acorn: 'v3w/ag_acorn.webp', store10: 'v3w/ag_store10_3.webp', card_spring: 'v3w/ag_card_spring3.webp', card_summer: 'v3w/ag_card_summer3.webp', card_autumn: 'v3w/ag_card_autumn3.webp', card_winter: 'v3w/ag_card_winter3.webp', door_leaf: 'v3w/ag_door_leaf.webp', cloud_storm: 'v3w/ag_cloud_storm.webp',
   };
@@ -52,7 +52,7 @@
   /* 자세 그림: [폭, 높이, 발끝 가운데 x(폭 비율), 발끝 y(높이 비율)] — 발끝 가운데가 (0,0).
      한 배우의 자세끼리는 눈 크기와 몸 높이를 반반 맞춰서 자세가 바뀌어도 머리 크기가 튀지 않는다 */
   const SPR = {
-    ant_stand: [137.1, 124.2, .523, .974], ant_carry: [101.9, 191.4, .599, .982], ant_vest: [127.7, 141, .461, .977],
+    ant_stand: [137.1, 124.2, .523, .974], ant_carry: [101.9, 191.4, .599, .982], ant_vest: [139.4, 182.4, .522, .982],
     ant_winter: [146.5, 159.7, .621, .979], ant_baby: [148.6, 123.6, .526, .977],
     hopper_play: [221.6, 224.1, .534, .979], hopper_wet: [236.1, 171.9, .545, .976], hopper_shiver: [187.2, 205.5, .545, .98],
     hopper_winter: [254.1, 183.7, .46, .976], hopper_carry: [192.5, 212, .476, .98],
@@ -61,7 +61,7 @@
     ant_tee: [132.7, 175.8, .432, 1], ant_coat: [124.5, 191.9, .4, 1], ant_ring: [129.6, 150.8, .574, 1], hopper_winter_play: [197.3, 218.4, .452, 1],
   };
   /* 옷 배지·먹구름·꽃 그림 비율 (폭/높이) */
-  const AR = { icon_tee: 1.1215, icon_vest: .9412, icon_coat: .9449, icon_warm: .646, icon_swim: 1.4861, cloud_storm: 1.6725, flower_pink: .4521, flower_orange: .4396, grain_pile: 1.7844, door_leaf: .57 };
+  const AR = { icon_tee: 1.1215, icon_vest: 1.3133, icon_coat: .9449, icon_warm: .646, icon_swim: 1.4861, cloud_storm: 1.6725, flower_pink: .4521, flower_orange: .4396, grain_pile: 1.7844, door_leaf: .57 };
   function pic(T, g, key, x, y, w, h, { shadow = true } = {}) {
     const u = artUrl(key); if (!u) return null;
     const wrap = T.el('g', shadow ? { filter: 'url(#pp)' } : {}, g);
@@ -104,7 +104,7 @@
 
   /* ================= 캐릭터 (모두 왼쪽을 본다. 발끝 = 0,0) ================= */
   /* 개미 (키 ~140). 옷은 조각을 얹었다 뺐다 한다 */
-  /* 그림 개미: 자세 그림을 겹쳐 두고 antLook()이 하나만 보인다. 코드가 opacity로 켜고 끄던 조각(조끼·목도리·모자·팔·짐)은
+  /* 그림 개미: 자세 그림을 겹쳐 두고 antLook()이 하나만 보인다. 코드가 opacity로 켜고 끄던 조각(재킷·목도리·모자·팔·짐)은
      빈 자리로 두고, 틀린 옷(반팔·외투·튜브)과 땀만 서기 그림 몸(머리 -36,-60 · 가슴 0,-40 · 배 37,-45) 위에 덧그린다 */
   function drawAntArt(T, g, { baby = false } = {}) {
     const { el, paper } = T;
@@ -800,10 +800,10 @@
       { el: bVest, ok: true },
       { el: bTee, ok: false, onWrong: () => tryOn(['tee'], on => { if (on) { SND.shiver(T); lead.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 120, iterations: 8 }); } }, '반팔은 으슬으슬~ 조금 추워요.') },
       { el: bCoat, ok: false, onWrong: () => tryOn(['coat'], on => lead.p.sweat.setAttribute('opacity', on ? 1 : 0), '두꺼운 외투는 아이 더워~ 땀이 뻘뻘!') },
-    ], { prompt: '가을엔 무엇을 입을까? 옷을 골라 봐요!', where: '너무 얇지도, 너무 두껍지도 않은 옷!', who: `${josa('조끼', '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });
+    ], { prompt: '가을엔 무엇을 입을까? 옷을 골라 봐요!', where: '너무 얇지도, 너무 두껍지도 않은 옷!', who: `${josa('재킷', '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });
     [bTee, bVest, bCoat].forEach(b => b.remove());
     wear(lead.p, ['vest']); lead.hop(24); sparkles(T, lead.x, lead.y - 80);
-    await say('맞아요! 선선한 가을엔 조끼를 입어요.');
+    await say('맞아요! 선선한 가을엔 재킷을 입어요.');
     leaves.stop();
     await camTo(500, 280, 1, 600);
 
