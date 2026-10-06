@@ -20,6 +20,7 @@ V = {  # 배역 → Typecast 목소리
   'jige': 'tc_6a98d65b0402016f616a7ac3',       # 준우
 }
 TIGER_Q = ['할멈, 잡아먹어야겠다!', '앗, 뜨거워! 눈이야!', '아야야!', '엉엉, 아파!']
+TIGER_MAX = 1.2
 HALMI_SAD = ['호랑이야, 동짓날에', '얘들아, 도와줘!']
 
 # 말풍선 없이 소리만 나는 대사: 컷신 속 호랑이 비명, 마지막 인사 (키 → [(배역, 대사, 감정, 앞 상황)])
@@ -122,8 +123,14 @@ EMO = {
   '지게를 눌러 봐요!': 'happy:1.1',
 }
 
+def final_emo(role, text, emo):
+    emo = EMO.get(text, emo)  # 장면별 감정 지정 (EMO 표가 우선)
+    if role == 'tiger' and ':' in emo:  # 세기가 너무 크면 같은 목소리가 다른 사람처럼 들린다
+        name, _, inten = emo.partition(':')
+        emo = f'{name}:{min(float(inten), TIGER_MAX)}'
+    return emo
+
 def tts(path, role, text, emo, prev, nxt):
-    emo = EMO.get(text, emo)  # 장면별 감정 지정 (아래 EMO 표가 우선)
     if emo == 'smart': p = {'emotion_type': 'smart'}
     else:
         name, _, inten = emo.partition(':')
@@ -154,6 +161,7 @@ def main():
         segs = segments(text, fid)
         urls = []
         for i, (role, s, emo) in enumerate(segs):
+            emo = final_emo(role, s, emo)
             h = hashlib.md5(f'{role}|{emo}|{s}'.encode()).hexdigest()[:10]
             rel = f'audio/tc/{role}_{h}.mp3'
             path = os.path.join(ROOT, rel)
@@ -170,6 +178,7 @@ def main():
     for key, segs in EXTRA.items():
         urls = []
         for role, text, emo, prev in segs:
+            emo = final_emo(role, text, emo)
             h = hashlib.md5(f'{role}|{emo}|{text}'.encode()).hexdigest()[:10]
             rel = f'audio/tc/{role}_{h}.mp3'
             if redo or not os.path.exists(os.path.join(ROOT, rel)):
