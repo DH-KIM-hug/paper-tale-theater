@@ -102,6 +102,7 @@ const TALES = (() => {
     line: '할아버지부터 생쥐까지, 차례대로 불러 다 함께 영차!',
     art: `<rect width="160" height="110" fill="${c.cr}"/>
       <g class="pc"><rect y="80" width="160" height="30" fill="${c.bk}"/>
+    en: { title: 'The Giant Turnip', line: 'From Grandpa all the way to the mouse, everyone is called in turn to heave-ho together!' },
       <path d="M28 44 l-8 -26 M36 42 v-30 M44 44 l8 -26" stroke="${c.pn}" stroke-width="7" stroke-linecap="round"/>
       <circle cx="36" cy="66" r="24" fill="${c.sn}"/><path d="M14 58 a24 24 0 0 1 44 0z" fill="${c.ck}"/>
       <circle cx="74" cy="60" r="11" fill="${c.sk}"/><rect x="65" y="70" width="18" height="20" rx="5" fill="${c.pn}"/>
