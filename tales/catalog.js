@@ -92,6 +92,7 @@ const TALES = (() => {
       <g class="pc"><rect y="90" width="160" height="20" fill="${c.lf}"/>
       <circle cx="34" cy="30" r="18" fill="${c.am}"/>
       <path d="M92 36 a12 12 0 0 1 22 -8 a13 13 0 0 1 24 6 a9 9 0 0 1 -2 18 h-40 a9 9 0 0 1 -4 -16z" fill="${c.sn}"/>
+    en: { title: 'The Sun and the Wind', line: 'A blustery wind and the warm sun: who can make the traveler take off the coat?' },
       <path d="M86 62 h26 M92 70 h18" stroke="${c.sn}" stroke-width="4" stroke-linecap="round"/>
       <path d="M60 94 L64 66 Q70 60 76 66 L80 94Z" fill="${c.ps}"/><circle cx="70" cy="56" r="8" fill="${c.sk}"/><path d="M61 54 h18 l-3 -7 h-12z" fill="${c.bk}"/></g>` },
 

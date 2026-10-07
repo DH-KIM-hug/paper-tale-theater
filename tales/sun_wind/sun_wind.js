@@ -467,7 +467,7 @@
       listener: r => (r === 'sun' ? 'wind' : r === 'wind' ? (sunNow() ? 'sun' : 'man') : (sunNow() ? 'sun' : 'wind')),
       noFace: ['sun', 'man'],
     });
-    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]); // 말풍선 없는 소리 대사
+    const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
 
     /* 그림 미리 불러오기: 첫 장면(하늘·해·바람) 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
     const loads = {};
@@ -555,7 +555,7 @@
         await (cutArt(T, 'cut_hat', 'whoosh', 2200) || T.cut(svg => {
           T.paper(T.el('g', { transform: 'translate(210,150) rotate(-24) scale(2.4)' }, svg), HAT_SHAPES);
           [[60, 90], [50, 150], [70, 210]].forEach(([x, y]) => T.el('path', { d: `M${x} ${y} h80`, stroke: '#fff', 'stroke-width': 8, 'stroke-linecap': 'round' }, svg));
-          T.el('text', { x: 200, y: 280, 'text-anchor': 'middle', 'font-size': 54, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '앗, 내 모자!' }, svg);
+          T.el('text', { x: 200, y: 280, 'text-anchor': 'middle', 'font-size': 54, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('앗, 내 모자!') }, svg);
         }, { hold: 2200, sfx: 'whoosh' }));
         await say('"앗, 내 모자!" 모자가 훨훨 날아갔어요.');
       },
@@ -566,7 +566,7 @@
         await (cutArt(T, 'cut_hold', null, 2200) || T.cut(svg => {
           const a = T.actor(svg, 200, 330, g => { const P = drawTraveler(T, g); setOutfit(P, 'coatShut', 'cross', { buttons: 0 }); P.face('cold'); P.hat.style.opacity = 0; }, { scale: 1.35 });
           [[-1, 1], [1, 1]].forEach(([s]) => T.el('path', { d: `M${200 + s * 80} 150 l${s * 14} 10 l${-s * 14} 10 l${s * 14} 10`, stroke: '#fff', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, svg));
-          T.el('text', { x: 330, y: 80, 'text-anchor': 'middle', 'font-size': 60, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '꽉!' }, svg);
+          T.el('text', { x: 330, y: 80, 'text-anchor': 'middle', 'font-size': 60, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('꽉!') }, svg);
           return a;
         }, { hold: 2200 }));
         await say('"으으, 추워!" 나그네는 외투를 꽉 여몄어요.');
@@ -589,7 +589,7 @@
     vo('cut_pant'); // 컷 속 바람의 헉헉 (말풍선 없음)
     await (cutArt(T, 'cut_pant', null, 2400) || T.cut(svg => {
       T.actor(svg, 200, 160, g => { const p = drawWind(T, g); p.wrinkles.setAttribute('opacity', 1); p.sweat.setAttribute('opacity', 1); p.setMouth('tired'); p.puff.style.transform = p.art ? 'scale(.94,.88)' : 'scale(.85,.72)'; }, { scale: 1.5 });
-      T.el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 58, fill: C.indigo, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '헉헉…' }, svg);
+      T.el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 58, fill: C.indigo, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('헉헉…') }, svg);
     }, { hold: 2400 }));
     W.setScale(.8); W.p.puffCheeks(.7); W.p.setMouth('tired');
     W.p.wrinkles.setAttribute('opacity', 1); W.p.sweat.setAttribute('opacity', 1);
@@ -662,7 +662,7 @@
       const coat = T.el('g', { transform: 'translate(250,110) rotate(-28)' }, svg);
       ICON.coat(T, coat);
       T.actor(svg, 150, 300, g => { const P = drawTraveler(T, g); setOutfit(P, 'shirt', 'down'); P.face('big'); }, { scale: 1.05 });
-      T.el('text', { x: 280, y: 280, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '훌러덩!' }, svg);
+      T.el('text', { x: 280, y: 280, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('훌러덩!') }, svg);
     }, { hold: 2400, sfx: 'swish' }));
     setOutfit(N.P, 'shoulder', 'down'); N.P.sweat.setAttribute('opacity', 0); N.P.face('big');
     N.hop(22); T.confetti(); AudioFX.jingle();
@@ -783,7 +783,7 @@
       const s = T.actor(svg, 280, 150, g => drawSun(T, g), { scale: .9 });
       T.el('path', { d: 'M190 170 Q205 150 220 160', stroke: C.snow, 'stroke-width': 18, fill: 'none', 'stroke-linecap': 'round' }, svg);
       T.el('path', { d: 'M220 160 L196 176 L212 186 Z', fill: C.persimmon }, svg);
-      T.el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 58, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '악수!' }, svg);
+      T.el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 58, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('악수!') }, svg);
       return [w, s];
     }, { hold: 2400, sfx: 'ding' }));
     await say('"우리, 사이좋게 지내자!"');
