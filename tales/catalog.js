@@ -59,6 +59,7 @@ const TALES = (() => {
 
   { id: 'frog', title: '황소와 개구리', origin: 'aesop', skills: ['size', 'heart'], ready: true,
     line: '누가 더 클까? 둘씩 크기를 견주고, 나는 나대로 멋지다는 걸 알아요.',
+    en: { title: 'The Ox and the Frog', line: 'Who is bigger? Compare sizes two by two, and learn that you are wonderful just as you are.' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
       <g class="pc"><rect y="78" width="160" height="32" fill="${c.pn}"/><ellipse cx="46" cy="94" rx="42" ry="10" fill="${c.lv}"/>
       <rect x="84" y="40" width="66" height="40" rx="15" fill="${c.bk}"/><rect x="92" y="72" width="9" height="16" fill="${c.bk}"/><rect x="134" y="72" width="9" height="16" fill="${c.bk}"/>

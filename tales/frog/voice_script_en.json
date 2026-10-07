@@ -1,0 +1,519 @@
+{
+ "voices": {
+  "nar": "tc_65681f1157abc7266fd4f350",
+  "mom": "tc_684a7a1446e2a628b5b07230",
+  "baby": "tc_5de781b108fd6b000882c58f",
+  "babyb": "tc_660645fb8db3e2c06ff7070b",
+  "babyc": "tc_619d7f42c14fccfc4953e159",
+  "ox": "tc_5ebea13564afaf00087fc2e7"
+ },
+ "lines": [
+  {
+   "text": "연못에 아침이 왔어요. 아기 개구리들이 아직 쿨쿨 자고 있네요.",
+   "en": "Morning came to the pond. The baby frogs are still fast asleep, zzz.",
+   "segs": [
+    [
+     "nar",
+     "Morning came to the pond. The baby frogs are still fast asleep, zzz.",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "아기 개구리들을 톡 눌러서 깨워 줄까요?",
+   "en": "Shall we tap the baby frogs to wake them up?",
+   "segs": [
+    [
+     "nar",
+     "Shall we tap the baby frogs to wake them up?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "자고 있는 아기 개구리를 톡 눌러 봐요!",
+   "en": "Tap a sleeping baby frog!"
+  },
+  {
+   "text": "엄마 개구리가 말했어요. \"얘들아, 멀리 가면 안 된다~\"",
+   "en": "Mama Frog said. \"Children, don't go far away~\"",
+   "segs": [
+    [
+     "nar",
+     "Mama Frog said."
+    ],
+    [
+     "mom",
+     "Children, don't go far away~",
+     "happy:0.9"
+    ]
+   ]
+  },
+  {
+   "text": "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡톡 눌러서 폴짝폴짝 가 볼까요?",
+   "en": "The baby frogs sneaked out to the meadow. Shall we tap, tap, and hop along?",
+   "segs": [
+    [
+     "nar",
+     "The baby frogs sneaked out to the meadow. Shall we tap, tap, and hop along?",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 폴짝폴짝!",
+   "en": "Tap the screen to hop, hop, hop!"
+  },
+  {
+   "text": "어? 눈앞에 커다란 무언가가 있어요!",
+   "en": "Oh? Something huge is right in front of us!",
+   "segs": [
+    [
+     "nar",
+     "Oh? Something huge is right in front of us!",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "이건 뭘까요? 꼬리일까요, 나무일까요?",
+   "en": "What could this be? A tail or a tree?",
+   "segs": [
+    [
+     "nar",
+     "What could this be? A tail or a tree?",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!",
+   "en": "Pick the one that looks just like the picture in the middle!"
+  },
+  {
+   "text": "꼬리예요! 반짝이는 걸 눌러 봐요!",
+   "en": "It's a tail! Tap the sparkly one!"
+  },
+  {
+   "text": "맞아요, 꼬리예요!",
+   "en": "That's right, it's a tail!",
+   "segs": [
+    [
+     "nar",
+     "That's right, it's a tail!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 뭘까요? 발굽일까요, 돌멩이일까요?",
+   "en": "What is it this time? A hoof or a pebble?"
+  },
+  {
+   "text": "가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!",
+   "en": "Pick the one that looks just like the picture in the middle!"
+  },
+  {
+   "text": "발굽이에요! 반짝이는 걸 눌러 봐요!",
+   "en": "It's a hoof! Tap the sparkly one!"
+  },
+  {
+   "text": "맞아요, 발굽이에요!",
+   "en": "That's right, it's a hoof!",
+   "segs": [
+    [
+     "nar",
+     "That's right, it's a hoof!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "이건 뭘까요? 뿔일까요, 나뭇가지일까요?",
+   "en": "What could this be? A horn or a branch?"
+  },
+  {
+   "text": "가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!",
+   "en": "Pick the one that looks just like the picture in the middle!"
+  },
+  {
+   "text": "뿔이에요! 반짝이는 걸 눌러 봐요!",
+   "en": "It's a horn! Tap the sparkly one!"
+  },
+  {
+   "text": "맞아요, 뿔이에요!",
+   "en": "That's right, it's a horn!",
+   "segs": [
+    [
+     "nar",
+     "That's right, it's a horn!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.",
+   "en": "It was a big, big ox! The baby frogs were so startled, they ran away.",
+   "segs": [
+    [
+     "nar",
+     "It was a big, big ox! The baby frogs were so startled, they ran away.",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "\"엄마! 산처럼 커다란 괴물을 봤어요!\"",
+   "en": "\"Mama! I saw a monster as big as a mountain!\"",
+   "segs": [
+    [
+     "baby",
+     "Mama! I saw a monster as big as a mountain!",
+     "toneup:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 개구리가 말했어요. \"흥, 얼마나 컸는데?\"",
+   "en": "Mama Frog said. \"Hmph, how big was it?\"",
+   "segs": [
+    [
+     "nar",
+     "Mama Frog said."
+    ],
+    [
+     "mom",
+     "Hmph, how big was it?",
+     "tonedown:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "누가 더 큰지 키를 재 볼까요?",
+   "en": "Shall we see who is bigger?"
+  },
+  {
+   "text": "개구리랑 올챙이, 누가 더 커요?",
+   "en": "Who is bigger, the frog or the tadpole?"
+  },
+  {
+   "text": "올챙이랑 개구리, 누가 더 커요?",
+   "en": "Who is bigger, the tadpole or the frog?"
+  },
+  {
+   "text": "누가 더 커요? 큰 친구를 눌러 봐요!",
+   "en": "Who is bigger? Tap the bigger friend!"
+  },
+  {
+   "text": "둘이 나란히 섰어요. 머리가 더 높은 친구는 누구지?",
+   "en": "They're standing side by side. Whose head is higher?"
+  },
+  {
+   "text": "개구리가 더 커요! 반짝이는 친구를 눌러 봐요!",
+   "en": "The frog is bigger! Tap the sparkly friend!"
+  },
+  {
+   "text": "맞아요! 개구리가 더 커요!",
+   "en": "That's right! The frog is bigger!",
+   "segs": [
+    [
+     "nar",
+     "That's right! The frog is bigger!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "오리랑 개구리, 누가 더 커요?",
+   "en": "Who is bigger, the duck or the frog?"
+  },
+  {
+   "text": "개구리랑 오리, 누가 더 커요?",
+   "en": "Who is bigger, the frog or the duck?"
+  },
+  {
+   "text": "누가 더 커요? 큰 친구를 눌러 봐요!",
+   "en": "Who is bigger? Tap the bigger friend!"
+  },
+  {
+   "text": "둘이 나란히 섰어요. 머리가 더 높은 친구는 누구지?",
+   "en": "They're standing side by side. Whose head is higher?"
+  },
+  {
+   "text": "오리가 더 커요! 반짝이는 친구를 눌러 봐요!",
+   "en": "The duck is bigger! Tap the sparkly friend!"
+  },
+  {
+   "text": "맞아요! 오리가 더 커요!",
+   "en": "That's right! The duck is bigger!",
+   "segs": [
+    [
+     "nar",
+     "That's right! The duck is bigger!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "양이랑 오리, 누가 더 커요?",
+   "en": "Who is bigger, the sheep or the duck?"
+  },
+  {
+   "text": "오리랑 양, 누가 더 커요?",
+   "en": "Who is bigger, the duck or the sheep?"
+  },
+  {
+   "text": "누가 더 커요? 큰 친구를 눌러 봐요!",
+   "en": "Who is bigger? Tap the bigger friend!"
+  },
+  {
+   "text": "둘이 나란히 섰어요. 머리가 더 높은 친구는 누구지?",
+   "en": "They're standing side by side. Whose head is higher?"
+  },
+  {
+   "text": "양이 더 커요! 반짝이는 친구를 눌러 봐요!",
+   "en": "The sheep is bigger! Tap the sparkly friend!"
+  },
+  {
+   "text": "맞아요! 양이 더 커요!",
+   "en": "That's right! The sheep is bigger!",
+   "segs": [
+    [
+     "nar",
+     "That's right! The sheep is bigger!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "황소랑 양, 누가 더 커요?",
+   "en": "Who is bigger, the ox or the sheep?"
+  },
+  {
+   "text": "양이랑 황소, 누가 더 커요?",
+   "en": "Who is bigger, the sheep or the ox?"
+  },
+  {
+   "text": "누가 더 커요? 큰 친구를 눌러 봐요!",
+   "en": "Who is bigger? Tap the bigger friend!"
+  },
+  {
+   "text": "둘이 나란히 섰어요. 머리가 더 높은 친구는 누구지?",
+   "en": "They're standing side by side. Whose head is higher?"
+  },
+  {
+   "text": "황소가 더 커요! 반짝이는 친구를 눌러 봐요!",
+   "en": "The ox is bigger! Tap the sparkly friend!"
+  },
+  {
+   "text": "맞아요! 황소가 더 커요!",
+   "en": "That's right! The ox is bigger!",
+   "segs": [
+    [
+     "nar",
+     "That's right! The ox is bigger!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "\"흥, 나도 황소만큼 클 수 있어!\" 엄마 개구리가 숨을 크게 들이마셨어요.",
+   "en": "\"I can be as big as an ox!\" Mama Frog took a deep breath.",
+   "segs": [
+    [
+     "mom",
+     "I can be as big as an ox!",
+     "angry:1.3"
+    ],
+    [
+     "nar",
+     "Mama Frog took a deep breath."
+    ]
+   ]
+  },
+  {
+   "text": "엄마 개구리를 톡톡 눌러서 부풀려 볼까요?",
+   "en": "Shall we tap, tap, and puff up Mama Frog?",
+   "segs": [
+    [
+     "nar",
+     "Shall we tap, tap, and puff up Mama Frog?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 개구리를 톡톡 눌러 봐요!",
+   "en": "Tap, tap, tap Mama Frog!"
+  },
+  {
+   "text": "\"아직 황소가 더 커요!\"",
+   "en": "\"The ox is still bigger!\"",
+   "segs": [
+    [
+     "babyb",
+     "The ox is still bigger!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "\"와, 양만큼 커졌다! 그래도 황소가 더 커요!\"",
+   "en": "\"Wow, as big as a sheep! But the ox is still bigger!\"",
+   "segs": [
+    [
+     "babyc",
+     "Wow, as big as a sheep! But the ox is still bigger!",
+     "happy:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 개구리가 부들부들 떨려요. 어어… 한 번 더 누르면 어떻게 될까?",
+   "en": "Mama Frog is trembling and wobbling. Uh-oh... what happens if we tap one more time?",
+   "segs": [
+    [
+     "nar",
+     "Mama Frog is trembling and wobbling. Uh-oh... what happens if we tap one more time?",
+     "tonedown:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "푸슈슈슉~ 엄마 개구리가 풍선처럼 날아다녀요! 톡 눌러서 잡아 줘요!",
+   "en": "Fshhhhh~ Mama Frog is flying around like a balloon! Tap to catch her!",
+   "segs": [
+    [
+     "nar",
+     "Fshhhhh~ Mama Frog is flying around like a balloon! Tap to catch her!",
+     "toneup:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "날아다니는 엄마 개구리를 톡!",
+   "en": "Tap Mama Frog as she flies!"
+  },
+  {
+   "text": "엄마 개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.",
+   "en": "Mama Frog was back to her normal size. Dizzy as she was, she laughed ha ha ha.",
+   "segs": [
+    [
+     "nar",
+     "Mama Frog was back to her normal size. Dizzy as she was, she laughed ha ha ha.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "황소가 몸을 낮추고 다정하게 말했어요. \"크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!\"",
+   "en": "The ox bent down low and said kindly. \"It's okay not to be big. You're a hopping champion!\"",
+   "segs": [
+    [
+     "nar",
+     "The ox bent down low and said kindly."
+    ],
+    [
+     "ox",
+     "It's okay not to be big. You're a hopping champion!",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 개구리를 톡 눌러서 폴짝!",
+   "en": "Tap Mama Frog to hop!"
+  },
+  {
+   "text": "황소도 따라 뛰어 볼까요? 하나, 둘…",
+   "en": "Shall the ox try hopping too? One, two..."
+  },
+  {
+   "text": "쿵! 황소는 폴짝 뛰지 못했어요. 누가 더 멀리 뛸까요? 개구리!",
+   "en": "Thud! The ox couldn't hop. Who can jump farther? The frog!",
+   "segs": [
+    [
+     "nar",
+     "Thud! The ox couldn't hop. Who can jump farther? The frog!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 먼저 들어 봐요!",
+   "en": "Night came. Uncle Frog, wearing a bow tie, came to visit. The frog family sings a song. Listen first!",
+   "segs": [
+    [
+     "nar",
+     "Night came. Uncle Frog, wearing a bow tie, came to visit. The frog family sings a song. Listen first!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 개구리를 톡톡 눌러서 같이 불러요!",
+   "en": "This time, tap the frogs and sing along!",
+   "segs": [
+    [
+     "nar",
+     "This time, tap the frogs and sing along!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "잘했어요! 이제 마음대로 노래해 봐요!",
+   "en": "Well done! Now sing however you like!",
+   "segs": [
+    [
+     "nar",
+     "Well done! Now sing however you like!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.",
+   "en": "Ribbit, ribbit~ The song faded away, and the frog family fell fast asleep.",
+   "segs": [
+    [
+     "nar",
+     "Ribbit, ribbit~ The song faded away, and the frog family fell fast asleep.",
+     "whisper"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "cut_pop": [
+   [
+    "mom",
+    "Aaaaah~!",
+    "toneup:1.6"
+   ]
+  ],
+  "ox_thud": [
+   [
+    "ox",
+    "Ugh... oops!",
+    "sad:1.3"
+   ]
+  ]
+ },
+ "ui": {
+  "황소와 개구리": "The Ox and the Frog",
+  "누가 더 클까?": "Who is bigger?",
+  "풀밭": "The Meadow",
+  "커다란 무언가": "Something Big",
+  "연못": "The Pond",
+  "키재기": "Who Is Bigger?",
+  "연못가": "By the Pond",
+  "폴짝 대회": "Hopping Contest",
+  "밤 연못": "Night Pond",
+  "개굴!": "Ribbit!",
+  "퐁당!": "Splash!",
+  "쿵!": "Thud!",
+  "뻥!": "Pop!",
+  "개구리는 개구리대로 멋져요!": "Frogs are wonderful just as they are!"
+ }
+}

@@ -273,7 +273,7 @@
       listener: r => (r === 'mom' ? 'baby' : 'mom'),
       noFace: ['mom', 'baby', 'babyb', 'babyc'],
     });
-    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]); // 말풍선 없는 소리 대사
+    const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
     await T.curtain(true);
     await say('연못에 아침이 왔어요. 아기 개구리들이 아직 쿨쿨 자고 있네요.');
     await say('아기 개구리들을 톡 눌러서 깨워 줄까요?');
@@ -416,7 +416,7 @@
     await (cutArt(T, [['cut_pop', 'boom'], ['cut_fly', 'whoosh', 2000]]) || T.cut(svg => {
       T.el('circle', { cx: 200, cy: 150, r: 110, fill: C.pine }, svg);
       T.el('ellipse', { cx: 200, cy: 170, rx: 70, ry: 50, fill: C.cream }, svg);
-      T.el('text', { x: 200, y: 175, 'text-anchor': 'middle', 'font-size': 90, fill: '#A93B32', stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '뻥!' }, svg);
+      T.el('text', { x: 200, y: 175, 'text-anchor': 'middle', 'font-size': 90, fill: '#A93B32', stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('뻥!') }, svg);
     }, { sfx: 'boom' }));
     babies.forEach(b => b.parts.hands.setAttribute('opacity', 0));
     momArt.set('flying');
