@@ -1,0 +1,1142 @@
+{
+ "voices": {
+  "nar": "tc_6699eb0f10b8e361d6a9aba1",
+  "hop": "tc_6a3350f8e5a50a4abe948fa8",
+  "ant": "tc_640997db84d8713b1114f32a",
+  "baby": "tc_66596206b7bd6e89c3a2c54e",
+  "ants": "tc_63a3d9da4b235ddd6541a795",
+  "card": "tc_699d27e0e061695d6ed39bc6"
+ },
+ "lines": [
+  {
+   "text": "여름이에요. 개미들이 줄지어 먹이를 날라요. 개미를 톡 눌러 봐요!",
+   "en": "It's summer. The ants march in a line, carrying food. Tap an ant!",
+   "segs": [
+    [
+     "nar",
+     "It's summer. The ants march in a line, carrying food. Tap an ant!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "줄지어 가는 개미들을 톡!",
+   "en": "Tap the marching ants!",
+   "segs": [
+    [
+     "nar",
+     "Tap the marching ants!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 베짱이를 톡 눌러 봐요!",
+   "en": "Now tap the grasshopper!",
+   "segs": [
+    [
+     "nar",
+     "Now tap the grasshopper!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "초록 베짱이를 톡!",
+   "en": "Tap the green grasshopper!",
+   "segs": [
+    [
+     "nar",
+     "Tap the green grasshopper!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "\"여름은 신나! 띠리링~\" 베짱이는 노래를 불러요.",
+   "en": "\"Summer is so fun! Tra-la-la~\" The grasshopper sings a song.",
+   "segs": [
+    [
+     "hop",
+     "Summer is so fun! Tra-la-la~",
+     "happy:1.4"
+    ],
+    [
+     "nar",
+     "The grasshopper sings a song."
+    ]
+   ],
+   "prev": "Tap the green grasshopper!"
+  },
+  {
+   "text": "개미 눈으로 보면 풀잎이 나무처럼 커다래요!",
+   "en": "Through an ant's eyes, blades of grass look as big as trees!",
+   "segs": [
+    [
+     "nar",
+     "Through an ant's eyes, blades of grass look as big as trees!",
+     "toneup:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "곡식을 톡톡 눌러서 창고로 날라 줘요!",
+   "en": "Tap the grain to carry it to the storeroom!",
+   "segs": [
+    [
+     "nar",
+     "Tap the grain to carry it to the storeroom!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "노란 곡식을 톡톡 눌러 봐요!",
+   "en": "Tap the yellow grain!",
+   "segs": [
+    [
+     "nar",
+     "Tap the yellow grain!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "창고 칸이 가득 찼어요! 하나부터 열까지, 열 칸!",
+   "en": "The storeroom is full! From one to ten, ten rooms!",
+   "segs": [
+    [
+     "nar",
+     "The storeroom is full! From one to ten, ten rooms!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "\"같이 놀자~ 띠리링!\" 베짱이가 노래해요.",
+   "en": "\"Let's play together~ Tra-la-la!\" the grasshopper sings.",
+   "segs": [
+    [
+     "hop",
+     "Let's play together~ Tra-la-la!",
+     "happy:1.4"
+    ],
+    [
+     "nar",
+     "the grasshopper sings."
+    ]
+   ],
+   "prev": "The storeroom is full! From one to ten, ten rooms!"
+  },
+  {
+   "text": "베짱이와 꽃을 톡톡 눌러 봐요. 봄 노래가 이어져요!",
+   "en": "Tap the grasshopper and the flowers. The spring song keeps going!",
+   "segs": [
+    [
+     "nar",
+     "Tap the grasshopper and the flowers. The spring song keeps going!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "잘했어요! 계속 눌러서 봄 노래를 이어 가요!",
+   "en": "Well done! Keep tapping to keep the spring song going!",
+   "segs": [
+    [
+     "nar",
+     "Well done! Keep tapping to keep the spring song going!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "지나가던 개미들이 말했어요. \"우린 겨울 준비해야 해!\"",
+   "en": "Some ants passing by said, \"We have to get ready for winter!\"",
+   "segs": [
+    [
+     "nar",
+     "Some ants passing by said,"
+    ],
+    [
+     "ants",
+     "We have to get ready for winter!"
+    ]
+   ]
+  },
+  {
+   "text": "\"겨울은 아직 멀었는걸~\" 베짱이는 또 노래했어요.",
+   "en": "\"Winter is still far away~\" the grasshopper sang again.",
+   "segs": [
+    [
+     "hop",
+     "Winter is still far away~",
+     "happy:1.4"
+    ],
+    [
+     "nar",
+     "the grasshopper sang again."
+    ]
+   ],
+   "prev": "Some ants passing by said, \"We have to get ready for winter!\""
+  },
+  {
+   "text": "앗, 소나기가 와요! 후두둑 후두둑!",
+   "en": "Oh no, a rain shower! Pitter-patter, pitter-patter!",
+   "segs": [
+    [
+     "nar",
+     "Oh no, a rain shower! Pitter-patter, pitter-patter!",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "큰 잎을 꾹 눌러서 개미들 우산을 펼쳐 줘요!",
+   "en": "Press the big leaf to open an umbrella for the ants!",
+   "segs": [
+    [
+     "nar",
+     "Press the big leaf to open an umbrella for the ants!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "초록 잎을 꾹 눌러 봐요!",
+   "en": "Press the green leaf!",
+   "segs": [
+    [
+     "nar",
+     "Press the green leaf!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "잎 우산 아래 개미들은 뽀송뽀송해요.",
+   "en": "Under the leaf umbrella, the ants are nice and dry.",
+   "segs": [
+    [
+     "nar",
+     "Under the leaf umbrella, the ants are nice and dry.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "베짱이는 혼자 흠뻑 젖었어요. 에취! 그래도 \"괜찮아~\" 하고 웃었어요.",
+   "en": "The grasshopper got soaking wet, all alone. Achoo! But the grasshopper said, \"It's okay~\" and smiled.",
+   "segs": [
+    [
+     "nar",
+     "The grasshopper got soaking wet, all alone.",
+     "sad:1.1"
+    ],
+    [
+     "hop",
+     "Achoo!"
+    ],
+    [
+     "nar",
+     "But the grasshopper said,"
+    ],
+    [
+     "hop",
+     "It's okay~",
+     "happy:1.2"
+    ],
+    [
+     "nar",
+     "and smiled."
+    ]
+   ]
+  },
+  {
+   "text": "가을이 왔어요. 나뭇잎이 알록달록 휘날려요.",
+   "en": "Autumn has come. Colorful leaves are fluttering down."
+  },
+  {
+   "text": "도토리를 톡톡 눌러서 창고로 데굴데굴 굴려요!",
+   "en": "Tap the acorns to roll them to the storeroom, roll, roll!",
+   "segs": [
+    [
+     "nar",
+     "Tap the acorns to roll them to the storeroom, roll, roll!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "도토리를 톡톡 눌러 봐요!",
+   "en": "Tap the acorns!",
+   "segs": [
+    [
+     "nar",
+     "Tap the acorns!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "창고가 도토리로 더 가득해졌어요!",
+   "en": "The storeroom is even fuller with acorns!",
+   "segs": [
+    [
+     "nar",
+     "The storeroom is even fuller with acorns!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "바람이 선선해요. 가을엔 무엇을 입을까?",
+   "en": "The wind is cool. What should we wear in autumn?",
+   "segs": [
+    [
+     "nar",
+     "The wind is cool. What should we wear in autumn?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "반팔은 으슬으슬~ 조금 추워요.",
+   "en": "The T-shirt? Brr, brr~ I'm a little cold.",
+   "segs": [
+    [
+     "nar",
+     "The T-shirt? Brr, brr~"
+    ],
+    [
+     "ant",
+     "I'm a little cold.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "두꺼운 외투는 아이 더워~ 땀이 뻘뻘!",
+   "en": "The thick coat? Phew, so hot! Sweat is dripping!",
+   "segs": [
+    [
+     "nar",
+     "The thick coat?"
+    ],
+    [
+     "ant",
+     "Phew, so hot!",
+     "toneup:1.2"
+    ],
+    [
+     "nar",
+     "Sweat is dripping!"
+    ]
+   ]
+  },
+  {
+   "text": "가을엔 무엇을 입을까? 옷을 골라 봐요!",
+   "en": "What should we wear in autumn? Pick some clothes!",
+   "segs": [
+    [
+     "nar",
+     "What should we wear in autumn? Pick some clothes!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "너무 얇지도, 너무 두껍지도 않은 옷!",
+   "en": "Not too thin, not too thick!",
+   "segs": [
+    [
+     "nar",
+     "Not too thin, not too thick!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "재킷이에요! 반짝이는 걸 눌러 봐요!",
+   "en": "It's the jacket! Tap the sparkly one!",
+   "segs": [
+    [
+     "nar",
+     "It's the jacket! Tap the sparkly one!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 선선한 가을엔 재킷을 입어요.",
+   "en": "That's right! A jacket is just right for cool autumn.",
+   "segs": [
+    [
+     "nar",
+     "That's right! A jacket is just right for cool autumn.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "하얀 눈이 펑펑! 겨울이 왔어요. 호호, 추워라.",
+   "en": "Big white snowflakes are falling! Winter is here. Brrr, so cold.",
+   "segs": [
+    [
+     "nar",
+     "Big white snowflakes are falling! Winter is here."
+    ],
+    [
+     "ant",
+     "Brrr, so cold."
+    ]
+   ]
+  },
+  {
+   "text": "겨울엔 무엇을 입을까?",
+   "en": "What should we wear in winter?",
+   "segs": [
+    [
+     "nar",
+     "What should we wear in winter?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "반팔은 오들오들~ 너무 추워요!",
+   "en": "The T-shirt? Brr, brr~ It's too cold!",
+   "segs": [
+    [
+     "nar",
+     "The T-shirt? Brr, brr~"
+    ],
+    [
+     "ant",
+     "It's too cold!",
+     "sad:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "하하, 수영복은 여름에 입어요~ 앗, 차가워!",
+   "en": "Ha ha, swimsuits are for summer~ Ooh, it's cold!",
+   "segs": [
+    [
+     "nar",
+     "Ha ha, swimsuits are for summer~",
+     "happy:1.3"
+    ],
+    [
+     "ant",
+     "Ooh, it's cold!",
+     "toneup:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "겨울엔 무엇을 입을까? 옷을 골라 봐요!",
+   "en": "What should we wear in winter? Pick some clothes!",
+   "segs": [
+    [
+     "nar",
+     "What should we wear in winter? Pick some clothes!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "눈이 오면 머리랑 목을 따뜻하게!",
+   "en": "When it snows, keep your head and neck warm!"
+  },
+  {
+   "text": "목도리와 털모자예요! 반짝이는 걸 눌러 봐요!",
+   "en": "It's the scarf and the fur hat! Tap the sparkly one!",
+   "segs": [
+    [
+     "nar",
+     "It's the scarf and the fur hat! Tap the sparkly one!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 목도리와 털모자를 쓰니 따뜻해요.",
+   "en": "That's right! With a scarf and a fur hat, it's warm.",
+   "segs": [
+    [
+     "nar",
+     "That's right! With a scarf and a fur hat, it's warm.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "개미들은 따뜻한 창고로 쏙 들어갔어요.",
+   "en": "The ants hurried into the warm storeroom."
+  },
+  {
+   "text": "눈 오는 날, 베짱이가 오들오들 떨며 창고 문을 두드렸어요.",
+   "en": "On a snowy day, the grasshopper came shivering and knocked on the storeroom door.",
+   "segs": [
+    [
+     "nar",
+     "On a snowy day, the grasshopper came shivering and knocked on the storeroom door.",
+     "sad:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "\"개미야, 먹을 것 좀 나눠 줄 수 있니?\"",
+   "en": "\"Ant, could you share some food with me?\"",
+   "segs": [
+    [
+     "hop",
+     "Ant, could you share some food with me?",
+     "sad:1.6"
+    ]
+   ],
+   "prev": "On a snowy day, the grasshopper came shivering and knocked on the storeroom door."
+  },
+  {
+   "text": "개미가 물었어요. \"여름엔 뭘 했니?\"",
+   "en": "The ant asked, \"What did you do in the summer?\"",
+   "segs": [
+    [
+     "nar",
+     "The ant asked,"
+    ],
+    [
+     "ant",
+     "What did you do in the summer?"
+    ]
+   ]
+  },
+  {
+   "text": "\"노래했지. 띠리링~\"",
+   "en": "\"I sang. Tra-la-la~\"",
+   "segs": [
+    [
+     "hop",
+     "I sang. Tra-la-la~",
+     "sad:1.3"
+    ]
+   ],
+   "prev": "The ant asked, \"What did you do in the summer?\""
+  },
+  {
+   "text": "\"그럼 겨울엔 춤이나 추렴!\"",
+   "en": "\"Then go dance all winter!\"",
+   "segs": [
+    [
+     "ant",
+     "Then go dance all winter!",
+     "tonedown:1.2"
+    ]
+   ],
+   "prev": "\"I sang. Tra-la-la~\""
+  },
+  {
+   "text": "그때 아기 개미가 말했어요. \"그래도 추워 보여요.\"",
+   "en": "Then the baby ant said, \"But Grasshopper looks so cold.\"",
+   "segs": [
+    [
+     "nar",
+     "Then the baby ant said,"
+    ],
+    [
+     "baby",
+     "But Grasshopper looks so cold.",
+     "sad:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "문을 톡 눌러서 활짝 열어 줄까요?",
+   "en": "Tap the door to open it wide?",
+   "segs": [
+    [
+     "nar",
+     "Tap the door to open it wide?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "창고 문을 톡!",
+   "en": "Tap the storeroom door!",
+   "segs": [
+    [
+     "nar",
+     "Tap the storeroom door!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "\"어서 들어와요! 같이 겨울을 나요.\"",
+   "en": "\"Come in, come in! Let's spend the winter together.\"",
+   "segs": [
+    [
+     "ant",
+     "Come in, come in! Let's spend the winter together.",
+     "happy:1.4"
+    ]
+   ],
+   "prev": "Tap the storeroom door!"
+  },
+  {
+   "text": "\"고마워요! 대신 내가 멋진 음악을 들려줄게요!\"",
+   "en": "\"Thank you! In return, I'll play you some wonderful music!\"",
+   "segs": [
+    [
+     "hop",
+     "Thank you! In return, I'll play you some wonderful music!",
+     "happy:1.5"
+    ]
+   ],
+   "prev": "\"Come in, come in! Let's spend the winter together.\""
+  },
+  {
+   "text": "창고 안이 곡식이랑 도토리로 가득해요! 여름부터 미리 모은 덕분이에요.",
+   "en": "The storeroom is full of grain and acorns! That's thanks to gathering ahead of time since summer.",
+   "segs": [
+    [
+     "nar",
+     "The storeroom is full of grain and acorns! That's thanks to gathering ahead of time since summer.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "베짱이에게 목도리와 털모자도 나눠 줬어요.",
+   "en": "They shared a scarf and a fur hat with the grasshopper, too.",
+   "segs": [
+    [
+     "nar",
+     "They shared a scarf and a fur hat with the grasshopper, too.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "먹을 게 이렇게 많으니 친구들도 불러요! 문 앞에 온 친구를 톡 눌러요.",
+   "en": "There's so much to eat, so let's invite friends! Tap the friend at the door.",
+   "segs": [
+    [
+     "nar",
+     "There's so much to eat, so let's invite friends! Tap the friend at the door.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "무당벌레를 톡 눌러서 불러 줘요!",
+   "en": "Tap the ladybug and invite it in!",
+   "segs": [
+    [
+     "nar",
+     "Tap the ladybug and invite it in!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "하나! 무당벌레가 왔어요.",
+   "en": "One! A ladybug has come.",
+   "segs": [
+    [
+     "nar",
+     "One! A ladybug has come.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "달팽이를 톡 눌러서 불러 줘요!",
+   "en": "Tap the snail and invite it in!",
+   "segs": [
+    [
+     "nar",
+     "Tap the snail and invite it in!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "둘! 달팽이가 왔어요.",
+   "en": "Two! A snail has come.",
+   "segs": [
+    [
+     "nar",
+     "Two! A snail has come.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "쥐며느리를 톡 눌러서 불러 줘요!",
+   "en": "Tap the pill bug and invite it in!",
+   "segs": [
+    [
+     "nar",
+     "Tap the pill bug and invite it in!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "셋! 쥐며느리가 왔어요.",
+   "en": "Three! A pill bug has come.",
+   "segs": [
+    [
+     "nar",
+     "Three! A pill bug has come.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "반딧불이를 톡 눌러서 불러 줘요!",
+   "en": "Tap the firefly and invite it in!",
+   "segs": [
+    [
+     "nar",
+     "Tap the firefly and invite it in!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "넷! 반딧불이가 왔어요.",
+   "en": "Four! A firefly has come.",
+   "segs": [
+    [
+     "nar",
+     "Four! A firefly has come.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "친구가 넷이나 왔어요! 먹을 게 많아서 모두 나눠 먹을 수 있어요.",
+   "en": "Four friends came! There's lots of food, so everyone can share.",
+   "segs": [
+    [
+     "nar",
+     "Four friends came! There's lots of food, so everyone can share.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "반딧불이가 불을 밝히고, 겨울 음악회가 시작됐어요!",
+   "en": "The firefly lit up its light, and the winter concert began!",
+   "segs": [
+    [
+     "nar",
+     "The firefly lit up its light, and the winter concert began!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "베짱이가 겨울 노래를 들려줘요. 가만히 들어 봐요.",
+   "en": "The grasshopper plays a winter song. Listen quietly.",
+   "segs": [
+    [
+     "nar",
+     "The grasshopper plays a winter song. Listen quietly.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "베짱이랑 친구들을 톡톡 눌러 봐요. 겨울 노래가 이어지고 춤을 춰요!",
+   "en": "Tap the grasshopper and friends. The winter song goes on, and everyone dances!",
+   "segs": [
+    [
+     "nar",
+     "Tap the grasshopper and friends. The winter song goes on, and everyone dances!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "띠리링~ 짝짝짝! 겨울이 하나도 춥지 않았어요.",
+   "en": "Tra-la-la~ Clap, clap, clap! Winter wasn't cold at all.",
+   "segs": [
+    [
+     "nar",
+     "Tra-la-la~ Clap, clap, clap! Winter wasn't cold at all.",
+     "happy:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "따뜻한 봄이 왔어요. 새싹이 쏙쏙!",
+   "en": "Warm spring has come. Little sprouts pop up!",
+   "segs": [
+    [
+     "nar",
+     "Warm spring has come. Little sprouts pop up!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 베짱이도 함께 날라요. 베짱이를 톡톡 눌러서 영차!",
+   "en": "This time the grasshopper carries food too. Tap the grasshopper to heave-ho!",
+   "segs": [
+    [
+     "nar",
+     "This time the grasshopper carries food too. Tap the grasshopper to heave-ho!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "베짱이를 톡톡 눌러서 영차 영차!",
+   "en": "Tap the grasshopper, heave-ho, heave-ho!",
+   "segs": [
+    [
+     "nar",
+     "Tap the grasshopper, heave-ho, heave-ho!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "\"영차! 여름엔 노래하고, 일도 함께 할래요!\"",
+   "en": "\"Heave-ho! I'll sing in summer, and work together, too!\"",
+   "segs": [
+    [
+     "hop",
+     "Heave-ho! I'll sing in summer, and work together, too!",
+     "happy:1.4"
+    ]
+   ],
+   "prev": "Tap the grasshopper, heave-ho, heave-ho!"
+  },
+  {
+   "text": "계절 카드를 봄, 여름, 가을, 겨울 순서대로 톡 눌러 봐요!",
+   "en": "Tap the season cards in order: spring, summer, autumn, winter!",
+   "segs": [
+    [
+     "nar",
+     "Tap the season cards in order: spring, summer, autumn, winter!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "봄은 어디 있을까? 봄 카드를 톡!",
+   "en": "Where is spring? Tap the spring card!",
+   "segs": [
+    [
+     "nar",
+     "Where is spring? Tap the spring card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 봄! 반짝이는 카드예요.",
+   "en": "Spring is next! It's the sparkly card.",
+   "segs": [
+    [
+     "nar",
+     "Spring is next! It's the sparkly card.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "봄 카드를 눌러 봐요!",
+   "en": "Tap the spring card!",
+   "segs": [
+    [
+     "nar",
+     "Tap the spring card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "봄 카드를 톡!",
+   "en": "Tap the spring card!",
+   "segs": [
+    [
+     "nar",
+     "Tap the spring card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "여름은 어디 있을까? 여름 카드를 톡!",
+   "en": "Where is summer? Tap the summer card!",
+   "segs": [
+    [
+     "nar",
+     "Where is summer? Tap the summer card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 여름! 반짝이는 카드예요.",
+   "en": "Summer is next! It's the sparkly card.",
+   "segs": [
+    [
+     "nar",
+     "Summer is next! It's the sparkly card.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "여름 카드를 눌러 봐요!",
+   "en": "Tap the summer card!",
+   "segs": [
+    [
+     "nar",
+     "Tap the summer card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "여름 카드를 톡!",
+   "en": "Tap the summer card!",
+   "segs": [
+    [
+     "nar",
+     "Tap the summer card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "가을은 어디 있을까? 가을 카드를 톡!",
+   "en": "Where is autumn? Tap the autumn card!",
+   "segs": [
+    [
+     "nar",
+     "Where is autumn? Tap the autumn card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 가을! 반짝이는 카드예요.",
+   "en": "Autumn is next! It's the sparkly card.",
+   "segs": [
+    [
+     "nar",
+     "Autumn is next! It's the sparkly card.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "가을 카드를 눌러 봐요!",
+   "en": "Tap the autumn card!",
+   "segs": [
+    [
+     "nar",
+     "Tap the autumn card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "가을 카드를 톡!",
+   "en": "Tap the autumn card!",
+   "segs": [
+    [
+     "nar",
+     "Tap the autumn card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "겨울은 어디 있을까? 겨울 카드를 톡!",
+   "en": "Where is winter? Tap the winter card!",
+   "segs": [
+    [
+     "nar",
+     "Where is winter? Tap the winter card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 겨울! 반짝이는 카드예요.",
+   "en": "Winter is next! It's the sparkly card.",
+   "segs": [
+    [
+     "nar",
+     "Winter is next! It's the sparkly card.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "겨울 카드를 눌러 봐요!",
+   "en": "Tap the winter card!",
+   "segs": [
+    [
+     "nar",
+     "Tap the winter card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "겨울 카드를 톡!",
+   "en": "Tap the winter card!",
+   "segs": [
+    [
+     "nar",
+     "Tap the winter card!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "\"나는 다음이야~\"",
+   "en": "\"I'm next~\"",
+   "segs": [
+    [
+     "card",
+     "I'm next~"
+    ]
+   ],
+   "prev": "A season card that is out of order was tapped. The card hops and says,"
+  },
+  {
+   "text": "1번, 봄!",
+   "en": "Number one, spring!",
+   "segs": [
+    [
+     "nar",
+     "Number one, spring!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "2번, 여름!",
+   "en": "Number two, summer!",
+   "segs": [
+    [
+     "nar",
+     "Number two, summer!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "3번, 가을!",
+   "en": "Number three, autumn!",
+   "segs": [
+    [
+     "nar",
+     "Number three, autumn!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "4번, 겨울!",
+   "en": "Number four, winter!",
+   "segs": [
+    [
+     "nar",
+     "Number four, winter!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "봄, 여름, 가을, 겨울! 계절은 빙글빙글 돌아요.",
+   "en": "Spring, summer, autumn, winter! The seasons go round and round.",
+   "segs": [
+    [
+     "nar",
+     "Spring, summer, autumn, winter! The seasons go round and round.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "미리 준비하고 함께 나누니, 겨울도 따뜻했답니다.",
+   "en": "By getting ready ahead and sharing together, even winter was warm.",
+   "segs": [
+    [
+     "nar",
+     "By getting ready ahead and sharing together, even winter was warm.",
+     "happy:1.3"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "cut_sneeze": [
+   [
+    "hop",
+    "Ah, ah, ah-choo!",
+    "toneup:1.4",
+    "The grasshopper, soaked by the rain shower, sneezes."
+   ]
+  ],
+  "cut_shiver": [
+   [
+    "hop",
+    "Brrr, so cold... and hungry too...",
+    "sad:1.6",
+    null
+   ]
+  ]
+ },
+ "ui": {
+  "개미와 베짱이": "The Ant and the Grasshopper",
+  "사계절 이야기": "A Story of Four Seasons",
+  "먹이 나르기": "Carrying Food",
+  "풀잎 무대": "Leaf Stage",
+  "소나기": "Rain Shower",
+  "가을": "Autumn",
+  "첫눈": "First Snow",
+  "똑똑": "Knock Knock",
+  "창고 가득": "Full Storeroom",
+  "겨울 음악회": "Winter Concert",
+  "봄": "Spring",
+  "여름": "Summer",
+  "겨울": "Winter",
+  "창고": "Storeroom",
+  "영차!": "Heave-ho!",
+  "띠리링~": "Tra-la-la~",
+  "펼쳐라!": "Open up!",
+  "데굴!": "Roll!",
+  "데굴데굴~": "Roll, roll~",
+  "앗, 차가워!": "Ooh, cold!",
+  "똑똑!": "Knock knock!",
+  "에취!": "Achoo!",
+  "펑펑!": "Snow, snow!",
+  "오들오들": "Shiver shiver",
+  "활짝!": "Wide open!",
+  "하나!": "One!",
+  "둘!": "Two!",
+  "셋!": "Three!",
+  "넷!": "Four!",
+  "다섯!": "Five!",
+  "여섯!": "Six!",
+  "일곱!": "Seven!",
+  "여덟!": "Eight!",
+  "아홉!": "Nine!",
+  "열!": "Ten!",
+  "미리 준비하고, 함께 나누면 모두 따뜻해요!": "Get ready ahead and share together, and everyone stays warm!"
+ }
+}

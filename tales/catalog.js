@@ -160,6 +160,7 @@ const TALES = (() => {
       <circle cx="96" cy="20" r="2" fill="#C9D3E2"/><circle cx="140" cy="16" r="2" fill="#C9D3E2"/><circle cx="118" cy="26" r="2" fill="#C9D3E2"/></g>` },
 
   { id: 'ugly_duckling', title: '미운 아기 오리', origin: 'world', skills: ['heart', 'order', 'season'], ready: false, making: true,
+    en: { title: 'The Ant and the Grasshopper', line: 'With food gathered all summer, the ants and their friends hold a winter concert.' },
     line: '놀림받던 아기 오리의 마음을 알아주고, 백조로 자라는 순서를 맞춰요.',
     art: `<rect width="160" height="110" fill="${c.cr}"/>
       <g class="pc"><rect y="70" width="160" height="40" fill="${c.lv}"/><path d="M0 70 h160" stroke="${c.pn}" stroke-width="6"/>

@@ -371,7 +371,7 @@
     const SW = 170, SH = SW * 952 / 602, SX = 620 - SW / 2, SY = 470 - SH; // 그림 창고(602×952): 칸 바닥 선이 y=883·724·564·404·244, 가운데 x=182·433
     const art = pic(T, box, 'store10', SX + ox, SY + oy, SW, SH);
     if (!art) paper(box, [['rect', { x: 530 + ox, y: 256 + oy, width: 180, height: 214, rx: 16, fill: C.soilDk }]]);
-    el('text', { x: 620 + ox, y: 244 + oy, 'text-anchor': 'middle', 'font-size': 26, fill: C.cream, stroke: C.bark, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '창고' }, box);
+    el('text', { x: 620 + ox, y: 244 + oy, 'text-anchor': 'middle', 'font-size': 26, fill: C.cream, stroke: C.bark, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('창고') }, box);
     const slots = [];
     for (let r = 0; r < 5; r++) for (let c = 0; c < 2; c++) {
       const x = (art ? SX + [182, 433][c] * SW / 602 : 580 + c * 80) + ox, y = (art ? SY + ([883, 724, 564, 404, 244][r] - 10) * SW / 602 : 440 - r * 40) + oy;
@@ -590,7 +590,7 @@
       if (season === 'autumn') [[-30, -30, 30], [10, -10, -20], [36, -40, 60], [-6, -44, 0]].forEach(([cx, cy, r]) => T.el('ellipse', { cx, cy, rx: 16, ry: 9, fill: r > 20 ? C.persimmon : C.bean, transform: `rotate(${r} ${cx} ${cy})` }, inner));
       if (season === 'winter') [[-40, -40], [0, -20], [36, -46], [-20, -2], [44, 0]].forEach(([cx, cy]) => T.el('circle', { cx, cy, r: 8, fill: '#fff', stroke: '#C9D0DC', 'stroke-width': 2 }, inner));
     }
-    T.el('text', { x: 0, y: 66, 'text-anchor': 'middle', 'font-size': 26, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: SEASON_KO[season] }, g);
+    T.el('text', { x: 0, y: 66, 'text-anchor': 'middle', 'font-size': 26, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(SEASON_KO[season]) }, g);
     const check = T.el('g', { opacity: 0 }, g);
     T.el('circle', { cx: 70, cy: -62, r: 24, fill: C.pine, stroke: '#fff', 'stroke-width': 4 }, check);
     const num = T.el('text', { x: 70, y: -52, 'text-anchor': 'middle', 'font-size': 28, fill: '#fff', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '' }, check);
@@ -598,7 +598,7 @@
   }
 
   /* 컷 그림 도우미 */
-  const cutText = (T, svg, x, y, text, size = 72) => T.el('text', { x, y, 'text-anchor': 'middle', 'font-size': size, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text }, svg);
+  const cutText = (T, svg, x, y, text, size = 72) => T.el('text', { x, y, 'text-anchor': 'middle', 'font-size': size, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(text) }, svg);
 
   /* ================= 이야기 ================= */
   async function run(T) {
@@ -627,7 +627,7 @@
        개미들은 장면마다 새로 만들어지므로 함수로 (아직 없거나 무대에 없으면 건너뜀) */
     const ref = f => () => { try { return f(); } catch (e) { return null; } };
     const onStage = (...fs) => fs.map(f => ref(f)()).find(a => a && a.pos.isConnected) || null;
-    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && setTimeout(() => AudioFX.voice(VOICE_LINES[k]), 380);
+    const vo = k => { const u = Narrator.voiceLine(k); return u && setTimeout(() => AudioFX.voice(u), 380); };
     T.director({
       cast: {
         hop: () => hop,
