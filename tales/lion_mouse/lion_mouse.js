@@ -26,7 +26,7 @@
      - cut_net2: 다시 뽑은 그물 컷(그물 아래 걱정하는 얼굴). cut_paw4: 사자 몸에 이어진 앞발이 생쥐 꼬리를 누름(예전 paw2·3은 몸과 떨어진 발이라 안 씀)
      - net: 밤 숲 그물(마젠타 키잉, 밧줄색으로) · hole_stump: 그루터기 구멍
      - paw_pad: 발가락 넷 달린 발 그림에서 오른쪽 끝 발가락을 오려 내(paw_toe) 코드가 그 자리에 따로 얹고 통통 튀게 한다
-     - tooth_lion · tooth_mouse: 연두 번짐을 상아색으로 */
+     - print_lion · print_mouse · tooth_lion · tooth_mouse: 얼굴 없는 오린 종이 그림(큰 발자국/작은 발자국, 큰 송곳니/작은 앞니). 비교 판 위에 카드 틀 없이 바로 얹는다 */
   const ART = {
     lion_sleep: 'v3w/lm_lion_sleep.webp', lion_lie_awake: 'v3w/lm_lion_lie_awake.webp',
     lion_head_yawn: 'v3w/lm_lion_head_yawn.webp', lion_head_laugh: 'v3w/lm_lion_head_laugh.webp',
@@ -34,7 +34,8 @@
     mouse_walk: 'v3w/lm_mouse_walk.webp', mouse_pray: 'v3w/lm_mouse_pray.webp', mouse_run: 'v3w/lm_mouse_run.webp', mouse_gnaw: 'v3w/lm_mouse_gnaw.webp',
     cut_paw: 'v3w/lm_cut_paw4.webp', cut_laugh: 'v3w/lm_cut_laugh.webp', cut_net: 'v3w/lm_cut_net2.webp', cut_gnaw: 'v3w/lm_cut_gnaw.webp',
     net: 'v3w/lm_net.webp', hole_stump: 'v3w/lm_hole_stump.webp',
-    paw_pad: 'v3w/lm_paw_pad.webp', paw_toe: 'v3w/lm_paw_toe.webp', tooth_lion: 'v3w/lm_tooth_lion.webp', tooth_mouse: 'v3w/lm_tooth_mouse.webp',
+    paw_pad: 'v3w/lm_paw_pad.webp', paw_toe: 'v3w/lm_paw_toe.webp', print_lion: 'v3w/lm_print_lionc.webp', print_mouse: 'v3w/lm_print_mousec.webp',
+    tooth_lion: 'v3w/lm_tooth_lionc.webp', tooth_mouse: 'v3w/lm_tooth_mousec.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -484,14 +485,14 @@
     const CW = T.portrait() ? 240 : 300, CK = CW / 300;
     const card = (x, drawIn) => {
       const g = el('g', {}, T.world);
-      T.paper(g, [['rect', { x: x - CW / 2, y: 110, width: CW, height: 300, rx: 24, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }]]);
+      el('rect', { x: x - CW / 2, y: 110, width: CW, height: 300, rx: 24, fill: '#fff', opacity: .001 }, g);
       const inner = CK < 1 ? el('g', { transform: `translate(${x},260) scale(${CK}) translate(${-x},-260)` }, g) : g;
       drawIn(inner, x, 260); return g;
     };
-    const lionPrint = (g, x, y) => T.paper(g, [['ellipse', { cx: x, cy: y + 30, rx: 62, ry: 48, fill: C.bark }], ...[-60, -22, 22, 60].map((dx, k) => ['ellipse', { cx: x + dx, cy: y - 42 - (k === 1 || k === 2 ? 14 : 0), rx: 20, ry: 25, fill: C.bark }])]);
-    const mousePrint = (g, x, y) => T.paper(g, [['circle', { cx: x, cy: y + 10, r: 16, fill: C.bark }], ...[-18, -7, 7, 18].map(dx => ['circle', { cx: x + dx, cy: y - 16, r: 6.5, fill: C.bark }])]);
-    const lionTooth = (g, x, y) => pic(T, g, 'tooth_lion', x - 39, y - 120, 78, 240) || T.paper(g, [['path', { d: `M${x - 50} ${y - 90} L${x + 50} ${y - 90} L${x} ${y + 100} Z`, fill: C.snow, stroke: C.ink, 'stroke-width': 3 }]]);
-    const mouseTooth = (g, x, y) => pic(T, g, 'tooth_mouse', x - 40, y - 43, 80, 86) || T.paper(g, [['rect', { x: x - 15, y: y - 18, width: 14, height: 32, rx: 3, fill: C.snow, stroke: C.ink, 'stroke-width': 2 }], ['rect', { x: x + 1, y: y - 18, width: 14, height: 32, rx: 3, fill: C.snow, stroke: C.ink, 'stroke-width': 2 }]]);
+    const lionPrint = (g, x, y) => pic(T, g, 'print_lion', x - 130, y - 129, 260, 257);
+    const mousePrint = (g, x, y) => pic(T, g, 'print_mouse', x - 26, y - 32, 52, 64);
+    const lionTooth = (g, x, y) => pic(T, g, 'tooth_lion', x - 50, y - 131, 100, 262);
+    const mouseTooth = (g, x, y) => pic(T, g, 'tooth_mouse', x - 34, y - 23, 68, 46);
     const OX = T.portrait() ? 95 : 120; // 주인은 카드 오른쪽 아래
     const owner = (who, x) => who === LION
       ? (() => { const g = el('g', { transform: `translate(${x + OX},390) scale(.75)` }, T.world); drawHead(T, g).eyes('happy'); return g; })()
