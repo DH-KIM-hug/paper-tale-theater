@@ -70,6 +70,7 @@ const TALES = (() => {
 
   { id: 'rabbit', title: '토끼와 거북이', origin: 'aesop', skills: ['sound', 'heart'], ready: true,
     line: '응원하는 동물들의 울음소리로 응원하며, 느려도 끝까지 가는 달리기.',
+    en: { title: 'The Rabbit and the Turtle', line: 'A race cheered on by animal calls, where slow and steady wins.' },
     art: `<rect width="160" height="110" fill="${c.am}"/>
       <g class="pc"><path d="M0 70 Q60 44 160 66 V110 H0Z" fill="${c.lf}"/><rect y="90" width="160" height="20" fill="${c.pn}"/>
       <rect x="134" y="30" width="3" height="46" fill="${c.bk}"/><path d="M137 30 h18 l-5 7 5 7 h-18z" fill="${c.rd}"/>

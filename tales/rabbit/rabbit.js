@@ -556,7 +556,7 @@
     [440, 485].forEach(y => T.el('rect', { x: -200, y, width: 1400, height: 4, fill: C.cream, opacity: .8 }, T.bg));
     T.paper(T.bg, [['rect', { x: 150, y: 170, width: 14, height: 300, fill: C.bark }], ['rect', { x: 836, y: 170, width: 14, height: 300, fill: C.bark }],
       ['rect', { x: 140, y: 176, width: 720, height: 50, rx: 10, fill: C.bean }], ['rect', { x: 430, y: 182, width: 140, height: 38, rx: 8, fill: C.cream }],
-      ['text', { x: 500, y: 212, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '출발' }]]);
+      ['text', { x: 500, y: 212, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('출발') }]]);
   }
 
   /* ================= 이야기 ================= */
@@ -581,7 +581,7 @@
       listener: r => (r === 'rabbit' ? 'turtle' : r === 'turtle' ? 'rabbit' : null),
       noFace: ['duck', 'cow', 'pig', 'dog', 'sheep'],
     });
-    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]); // 말풍선 없는 소리 대사
+    const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
     const put = (a, x, y, s = a.scale, parent = T.world) => { parent.appendChild(a.pos); a.setScale(s); a.place(x, y); return a; };
     const seat = list => list.forEach(([k, x, y, s]) => { const a = aud[k]; a.reset(); put(a, x, y, s); });
     const rabbitReset = () => { rp.pose('stand'); rp.setEyes('open'); rp.mouth('smile'); rp.sleepy(false); rp.ears(1); faceR(rabbit); };
@@ -1176,7 +1176,7 @@
     await (cutArt(T, 'cut_wake', 'boing', 2200) || T.cut(svg => {
       const g = el('g', { transform: 'translate(170 330) scale(1.35)' }, svg);
       const p = drawRabbit(T, g); p.setEyes('wide'); p.ears(1.2); p.mouth('yawn');
-      el('text', { x: 310, y: 110, 'text-anchor': 'middle', 'font-size': 80, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '앗!' }, svg);
+      el('text', { x: 310, y: 110, 'text-anchor': 'middle', 'font-size': 80, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('앗!') }, svg);
     }, { sfx: 'boing', hold: 2200 }));
     await say('토끼가 벌떡 일어났어요! "앗, 내가 잠들었네!"');
     bar.pulse('t');
@@ -1199,11 +1199,11 @@
            무대 오른쪽 밖으로 나가므로 좌우를 뒤집어 깃발이 길 위(왼쪽)로 나부끼게 한다. 기둥 가운데가 x 800. 글자는 빈 판에 코드로 */
         const s = 440 / 884, w = 770 * s, x0 = 800 - 38 * s;
         el('image', { href: A(ART.finish_post), x: x0, y: 60, width: w, height: 440, filter: 'url(#pp)' }, el('g', { transform: `matrix(-1,0,0,1,${(2 * x0 + w).toFixed(1)},0)` }, T.world));
-        el('text', { x: (x0 + w - 405 * s).toFixed(1), y: 60 + 195 * s + 11, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '결승' }, T.world);
+        el('text', { x: (x0 + w - 405 * s).toFixed(1), y: 60 + 195 * s + 11, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('결승') }, T.world);
       } else {
         paper(T.world, [['rect', { x: 800, y: 60, width: 18, height: 440, fill: C.bark }]]);
         paper(T.world, [['rect', { x: 818, y: 70, width: 170, height: 64, fill: C.snow }], ...Array.from({ length: 24 }, (_, i) => ['rect', { x: 818 + (i % 8) * 21.25, y: 70 + Math.floor(i / 8) * 21.3, width: 21.25, height: 21.3, fill: (i + Math.floor(i / 8)) % 2 ? C.ink : C.snow }]),
-          ['rect', { x: 845, y: 84, width: 116, height: 38, rx: 8, fill: C.cream }], ['text', { x: 903, y: 113, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '결승' }]]);
+          ['rect', { x: 845, y: 84, width: 116, height: 38, rx: 8, fill: C.cream }], ['text', { x: 903, y: 113, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('결승') }]]);
       }
       turtleReset(); put(turtle, 540, 476, 1.5);
       rabbitReset(); rp.pose('run'); put(rabbit, -200, 472, 1);
@@ -1221,7 +1221,7 @@
     await T.cut(svg => {
       for (let i = 0; i < 10; i++) el('rect', { x: 0, y: 30 + i * 26, width: 140 + (i % 3) * 60, height: 6, fill: C.snow }, svg);
       const g = el('g', { transform: 'translate(230 250) rotate(10)' }, svg); const p = drawRabbit(T, g); p.pose('run');
-      el('text', { x: 90, y: 90, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '쌩쌩!' }, svg);
+      el('text', { x: 90, y: 90, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('쌩쌩!') }, svg);
     }, { sfx: 'whoosh', hold: 1800 });
     setRace(.8, null, 800);
     await T.cut(svg => {
@@ -1249,7 +1249,7 @@
       el('path', { d: 'M250 60 V236', stroke: C.bean, 'stroke-width': 5, 'stroke-dasharray': '10 6' }, svg);
       const gr = el('g', { transform: 'translate(120 222) scale(.7)' }, svg); drawRabbit(T, gr).pose('run');
       const gt = el('g', { transform: 'translate(170 226) scale(.85)' }, svg); drawTurtle(T, gt);
-      el('text', { x: 200, y: 262, 'text-anchor': 'middle', 'font-size': 26, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '찰칵!' }, svg);
+      el('text', { x: 200, y: 262, 'text-anchor': 'middle', 'font-size': 26, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('찰칵!') }, svg);
     }, { sfx: 'poke', hold: 2600 }));
     await say('사진을 보니… 거북이 코끝이 먼저 닿았어요!');
     AudioFX.fanfare && AudioFX.fanfare(); T.confetti();

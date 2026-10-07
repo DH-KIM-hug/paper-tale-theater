@@ -1,0 +1,823 @@
+{
+ "voices": {
+  "nar": "tc_63be4f4f564199aab7aad258",
+  "rabbit": "tc_63edf3d68aab086d6b782a55",
+  "turtle": "tc_5ebea251fcf5110007b77d0f",
+  "duck": "tc_65a8c82a7e7bded32947497e",
+  "cow": "tc_6731b2e0855f351b98d30c48",
+  "pig": "tc_63a3d9eb4b235ddd6541a79e",
+  "dog": "tc_6075b407b8a5c6f36b877c88",
+  "sheep": "tc_6088209815f2f9881e08e815"
+ },
+ "lines": [
+  {
+   "text": "숲속 마을에 아침이 왔어요.",
+   "en": "Morning has come to the forest village.",
+   "segs": [
+    [
+     "nar",
+     "Morning has come to the forest village.",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "거북이가 엉금엉금 산책해요. 거북이를 톡!",
+   "en": "The turtle is plodding along on a walk. Tap the turtle!"
+  },
+  {
+   "text": "거북이를 톡 눌러 봐요!",
+   "en": "Tap the turtle!"
+  },
+  {
+   "text": "\"안녕! 나는 거북이야.\"",
+   "en": "\"Hi! I'm Turtle.\"",
+   "segs": [
+    [
+     "turtle",
+     "Hi! I'm Turtle.",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "깡충깡충 토끼도 왔어요. 토끼를 톡!",
+   "en": "The hop-hop rabbit is here too. Tap the rabbit!"
+  },
+  {
+   "text": "토끼를 톡 눌러 봐요!",
+   "en": "Tap the rabbit!"
+  },
+  {
+   "text": "\"안녕! 나는 깡충 토끼야!\"",
+   "en": "\"Hi! I'm Rabbit, the hoppy one!\"",
+   "segs": [
+    [
+     "rabbit",
+     "Hi! I'm Rabbit, the hoppy one!",
+     "happy:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 말했어요. \"느림보야, 나랑 달리기 할래?\"",
+   "en": "The rabbit said, \"Hey, slowpoke! Want to race me?\"",
+   "segs": [
+    [
+     "nar",
+     "The rabbit said,"
+    ],
+    [
+     "rabbit",
+     "Hey, slowpoke! Want to race me?",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "거북이가 방긋 웃었어요. \"좋아!\"",
+   "en": "The turtle gave a big smile. \"Okay!\"",
+   "segs": [
+    [
+     "nar",
+     "The turtle gave a big smile."
+    ],
+    [
+     "turtle",
+     "Okay!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "\"숲속 친구들한테 응원해 달라고 하자!\"",
+   "en": "\"Let's ask our forest friends to cheer for us!\"",
+   "segs": [
+    [
+     "rabbit",
+     "Let's ask our forest friends to cheer for us!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "부엉이 우체부가 초대장을 가져왔어요.",
+   "en": "The owl mail carrier brought the invitations."
+  },
+  {
+   "text": "문을 톡 두드려 봐요. 누가 나올까?",
+   "en": "Tap the door to knock. Who will come out?",
+   "segs": [
+    [
+     "nar",
+     "Tap the door to knock. Who will come out?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "이번 집도 문을 톡!",
+   "en": "Tap the next door too!"
+  },
+  {
+   "text": "문을 톡 두드려 봐요!",
+   "en": "Tap the door to knock!"
+  },
+  {
+   "text": "누구 목소리일까요? 둘 중에서 골라 봐요!",
+   "en": "Whose voice is it? Pick one of the two!"
+  },
+  {
+   "text": "잘 들었지요? 누구 목소리일까요?",
+   "en": "Did you hear that? Whose voice was it?"
+  },
+  {
+   "text": "오리예요! 반짝이는 친구를 눌러 봐요!",
+   "en": "It's the duck! Tap the sparkling friend!"
+  },
+  {
+   "text": "오리였어요!",
+   "en": "It was the duck!"
+  },
+  {
+   "text": "소예요! 반짝이는 친구를 눌러 봐요!",
+   "en": "It's the cow! Tap the sparkling friend!"
+  },
+  {
+   "text": "소였어요!",
+   "en": "It was the cow!"
+  },
+  {
+   "text": "돼지예요! 반짝이는 친구를 눌러 봐요!",
+   "en": "It's the pig! Tap the sparkling friend!"
+  },
+  {
+   "text": "돼지였어요!",
+   "en": "It was the pig!"
+  },
+  {
+   "text": "강아지예요! 반짝이는 친구를 눌러 봐요!",
+   "en": "It's the puppy! Tap the sparkling friend!"
+  },
+  {
+   "text": "강아지였어요!",
+   "en": "It was the puppy!"
+  },
+  {
+   "text": "닭이랑 양이랑 고양이도 초대장을 받았어요!",
+   "en": "The rooster, the sheep, and the cat got invitations too!"
+  },
+  {
+   "text": "동물 친구들이 응원하러 모였어요!",
+   "en": "The animal friends gathered to cheer!",
+   "segs": [
+    [
+     "nar",
+     "The animal friends gathered to cheer!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "친구들을 모두 톡톡 눌러 봐요! 벌떡 일어나 응원해요.",
+   "en": "Tap all the friends! They'll jump up and cheer."
+  },
+  {
+   "text": "아직 안 일어난 친구를 톡 눌러 봐요!",
+   "en": "Tap a friend who hasn't stood up yet!"
+  },
+  {
+   "text": "와, 신나는 응원 소리!",
+   "en": "Wow, what a happy cheer!",
+   "segs": [
+    [
+     "nar",
+     "Wow, what a happy cheer!",
+     "happy:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "달리기 전에 준비 운동을 해요.",
+   "en": "Before the race, let's do warm-up exercises."
+  },
+  {
+   "text": "토끼를 톡! 귀를 쭉~",
+   "en": "Tap the rabbit! Stretch those ears~"
+  },
+  {
+   "text": "한 번 더! 토끼를 톡!",
+   "en": "One more time! Tap the rabbit!"
+  },
+  {
+   "text": "이번엔 거북이를 톡! 목을 쭉~",
+   "en": "Now tap the turtle! Stretch that neck~"
+  },
+  {
+   "text": "거북이도 톡!",
+   "en": "Tap the turtle too!"
+  },
+  {
+   "text": "와, 거북이 목이 쭈욱~ 길어졌어요!",
+   "en": "Wow, the turtle's neck stretched waaay long!",
+   "segs": [
+    [
+     "nar",
+     "Wow, the turtle's neck stretched waaay long!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "너구리 심판이 커다란 북을 가져왔어요.",
+   "en": "The raccoon referee brought a big drum."
+  },
+  {
+   "text": "준비~ 북을 톡 치면 출발해요!",
+   "en": "Ready~ Tap the drum and they're off!",
+   "segs": [
+    [
+     "nar",
+     "Ready~ Tap the drum and they're off!",
+     "toneup:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "큰 북을 톡 쳐 봐요!",
+   "en": "Tap the big drum!"
+  },
+  {
+   "text": "토끼는 쌩~ 거북이는 엉금 한 발!",
+   "en": "The rabbit zooms off~ The turtle takes one slow step!",
+   "segs": [
+    [
+     "nar",
+     "The rabbit zooms off~ The turtle takes one slow step!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "여기는 경주 지도예요. 돌멩이, 개울, 언덕을 지나 깃발까지!",
+   "en": "This is the race map. Past the rocks, the stream, and the hill, all the way to the flag!"
+  },
+  {
+   "text": "아래 막대를 보면 누가 앞서는지 알 수 있어요.",
+   "en": "Look at the bar below to see who is ahead."
+  },
+  {
+   "text": "토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!",
+   "en": "The rabbit zooms along! Tap the screen again and again!",
+   "segs": [
+    [
+     "nar",
+     "The rabbit zooms along! Tap the screen again and again!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러 봐요!",
+   "en": "Tap the screen again and again!"
+  },
+  {
+   "text": "금세 언덕 위 나무 그늘까지 왔어요.",
+   "en": "Soon the rabbit reached the shady tree on the hill."
+  },
+  {
+   "text": "뒤를 돌아보니… 거북이는 안 보여요!",
+   "en": "Looking back... no turtle in sight!",
+   "segs": [
+    [
+     "nar",
+     "Looking back... no turtle in sight!",
+     "toneup:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "\"하암~ 한숨 자고 가도 되겠다~\"",
+   "en": "\"Yaaawn~ I can take a little nap~\"",
+   "segs": [
+    [
+     "rabbit",
+     "Yaaawn~ I can take a little nap~",
+     "tonedown:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "토끼를 푹 재워 줄까요?",
+   "en": "Shall we help the rabbit sleep tight?"
+  },
+  {
+   "text": "먼저 나뭇잎 이불을 톡!",
+   "en": "First, tap the leaf blanket!"
+  },
+  {
+   "text": "나뭇잎 이불을 톡 눌러 봐요!",
+   "en": "Tap the leaf blanket!"
+  },
+  {
+   "text": "포근포근~ 이불을 덮어 줬어요.",
+   "en": "Snuggle, snuggle~ The blanket is tucked in.",
+   "segs": [
+    [
+     "nar",
+     "Snuggle, snuggle~ The blanket is tucked in.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "부엉이가 자장가를 불러 줘요. 잘 들어 봐요.",
+   "en": "The owl sings a lullaby. Listen carefully.",
+   "segs": [
+    [
+     "nar",
+     "The owl sings a lullaby. Listen carefully."
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 부엉이를 꾹 누르고 있어 봐요. 자장가가 이어져요!",
+   "en": "Now press and hold the owl. The lullaby keeps going!",
+   "segs": [
+    [
+     "nar",
+     "Now press and hold the owl. The lullaby keeps going!"
+    ]
+   ]
+  },
+  {
+   "text": "나무 위 부엉이를 톡 눌러 봐요!",
+   "en": "Tap the owl in the tree!"
+  },
+  {
+   "text": "부엉 부엉~ 토끼 눈이 스르르 감겨요.",
+   "en": "Hoo hoo~ The rabbit's eyes slowly close.",
+   "segs": [
+    [
+     "nar",
+     "Hoo hoo~ The rabbit's eyes slowly close.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "마지막으로 해님을 톡! 구름이 해를 가려 줘요.",
+   "en": "Last, tap the sun! A cloud covers the sun."
+  },
+  {
+   "text": "해님을 톡 눌러 봐요!",
+   "en": "Tap the sun!"
+  },
+  {
+   "text": "토끼가 쿨쿨 잠이 들었어요.",
+   "en": "The rabbit fell fast asleep. Zzz.",
+   "segs": [
+    [
+     "nar",
+     "The rabbit fell fast asleep. Zzz.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "응원하던 친구들도 \"쉿!\" 조용히~",
+   "en": "The cheering friends whisper, \"Shh!\" Quiet now~",
+   "segs": [
+    [
+     "nar",
+     "The cheering friends whisper,",
+     "whisper"
+    ],
+    [
+     "sheep",
+     "Shh!",
+     "whisper"
+    ],
+    [
+     "nar",
+     "Quiet now~",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 꿈을 꿔요. 꿈속에서 1등을 했어요!",
+   "en": "The rabbit is dreaming. In the dream, the rabbit came in first!"
+  },
+  {
+   "text": "상으로 커다란 당근을 받았어요. 당근을 톡!",
+   "en": "As a prize, the rabbit got a giant carrot. Tap the carrot!"
+  },
+  {
+   "text": "커다란 당근을 톡 눌러 봐요!",
+   "en": "Tap the giant carrot!"
+  },
+  {
+   "text": "\"아삭! 음~ 맛있다!\"",
+   "en": "\"Crunch! Mmm, yummy!\"",
+   "segs": [
+    [
+     "rabbit",
+     "Crunch! Mmm, yummy!",
+     "happy:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~",
+   "en": "But the real rabbit is under the tree, snoring, zzz~",
+   "segs": [
+    [
+     "nar",
+     "But the real rabbit is under the tree, snoring, zzz~",
+     "tonedown:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "그동안 거북이는? 엉금엉금 걷고 있어요.",
+   "en": "Meanwhile, what about the turtle? Plod, plod, walking along."
+  },
+  {
+   "text": "화면을 톡톡 눌러서 한 발 한 발 걸어요!",
+   "en": "Tap the screen to take one step at a time!"
+  },
+  {
+   "text": "화면을 톡톡 눌러서 엉금엉금!",
+   "en": "Tap the screen to plod along!"
+  },
+  {
+   "text": "어? 커다란 돌멩이예요! 돌멩이를 톡 해서 넘어가요!",
+   "en": "Oh! A big rock! Tap the rock to climb over it!"
+  },
+  {
+   "text": "돌멩이를 톡 눌러 봐요!",
+   "en": "Tap the rock!"
+  },
+  {
+   "text": "영차! 돌멩이를 넘었어요!",
+   "en": "Heave-ho! The turtle made it over the rock!",
+   "segs": [
+    [
+     "turtle",
+     "Heave-ho!",
+     "toneup:1.3"
+    ],
+    [
+     "nar",
+     "The turtle made it over the rock!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.",
+   "en": "Oh, a stream! The turtle is a good swimmer."
+  },
+  {
+   "text": "화면을 톡톡 눌러서 헤엄쳐요!",
+   "en": "Tap the screen to swim!"
+  },
+  {
+   "text": "물고기랑 같이 개울을 건넜어요!",
+   "en": "The turtle crossed the stream with the fish!"
+  },
+  {
+   "text": "이번엔 높은 언덕이에요.",
+   "en": "Now there's a tall hill."
+  },
+  {
+   "text": "화면을 꾹 누르고 있으면 영차영차 올라가요!",
+   "en": "Press and hold the screen to climb up, heave-ho, heave-ho!"
+  },
+  {
+   "text": "화면을 꾹 누르고 있어 봐요!",
+   "en": "Press and hold the screen!"
+  },
+  {
+   "text": "영차! 언덕 꼭대기에 올라왔어요.",
+   "en": "Heave-ho! The turtle reached the top of the hill.",
+   "segs": [
+    [
+     "turtle",
+     "Heave-ho!",
+     "toneup:1.3"
+    ],
+    [
+     "nar",
+     "The turtle reached the top of the hill.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "위에는 쿨쿨 자는 토끼, 아래에는 거북이!",
+   "en": "Up above, the rabbit sleeps. Down below, the turtle!"
+  },
+  {
+   "text": "쉿, 조용히 지나가요~ 살금살금.",
+   "en": "Shh, tiptoe past quietly~ sneak, sneak.",
+   "segs": [
+    [
+     "nar",
+     "Shh, tiptoe past quietly~ sneak, sneak.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "와, 거북이가 토끼를 앞질렀어요!",
+   "en": "Wow, the turtle passed the rabbit!",
+   "segs": [
+    [
+     "nar",
+     "Wow, the turtle passed the rabbit!",
+     "happy:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "해가 뉘엿뉘엿 지고 있어요.",
+   "en": "The sun is slowly setting."
+  },
+  {
+   "text": "닭을 톡 눌러서 토끼를 깨워 줄까요?",
+   "en": "Shall we tap the rooster to wake the rabbit?"
+  },
+  {
+   "text": "닭을 톡 눌러 봐요!",
+   "en": "Tap the rooster!"
+  },
+  {
+   "text": "토끼가 벌떡 일어났어요! \"앗, 내가 잠들었네!\"",
+   "en": "The rabbit jumped right up! \"Oh no, I fell asleep!\"",
+   "segs": [
+    [
+     "nar",
+     "The rabbit jumped right up!",
+     "toneup:1.2"
+    ],
+    [
+     "rabbit",
+     "Oh no, I fell asleep!",
+     "toneup:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "막대를 봐요! 거북이가 결승선 코앞이에요!",
+   "en": "Look at the bar! The turtle is almost at the finish line!",
+   "segs": [
+    [
+     "nar",
+     "Look at the bar! The turtle is almost at the finish line!",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "응원하던 친구들이 모두 일어났어요!",
+   "en": "All the cheering friends stood up!"
+  },
+  {
+   "text": "토끼가 쌩쌩 달려와요! 거북이는 딱 한 발 남았어요.",
+   "en": "The rabbit is zooming back! The turtle has just one step left.",
+   "segs": [
+    [
+     "nar",
+     "The rabbit is zooming back! The turtle has just one step left.",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "거북이를 톡! 마지막 한 발!",
+   "en": "Tap the turtle! One last step!"
+  },
+  {
+   "text": "거북이를 톡 눌러서 마지막 한 발!",
+   "en": "Tap the turtle for one last step!"
+  },
+  {
+   "text": "사진을 보니… 거북이 코끝이 먼저 닿았어요!",
+   "en": "Look at the photo... the turtle's nose touched first!"
+  },
+  {
+   "text": "거북이가 1등이에요!",
+   "en": "The turtle is number one!",
+   "segs": [
+    [
+     "nar",
+     "The turtle is number one!",
+     "happy:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "시상식이에요! 응원하던 친구들이 파도타기를 해요.",
+   "en": "It's the award ceremony! The cheering friends do the wave."
+  },
+  {
+   "text": "메달을 톡! 거북이 목에 걸어 줘요.",
+   "en": "Tap the medal! Hang it around the turtle's neck."
+  },
+  {
+   "text": "반짝반짝 메달을 톡 눌러 봐요!",
+   "en": "Tap the sparkly medal!"
+  },
+  {
+   "text": "반짝반짝, 금메달이에요!",
+   "en": "Sparkle, sparkle, a gold medal!",
+   "segs": [
+    [
+     "nar",
+     "Sparkle, sparkle, a gold medal!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 다가와 말했어요.",
+   "en": "The rabbit came over and said,"
+  },
+  {
+   "text": "\"축하해! 다음엔 나도 쉬지 않고 열심히 할게.\"",
+   "en": "\"Congratulations! Next time I'll work hard and never stop to rest.\"",
+   "segs": [
+    [
+     "rabbit",
+     "Congratulations! Next time I'll work hard and never stop to rest.",
+     "happy:0.9"
+    ]
+   ]
+  },
+  {
+   "text": "거북이도 말했어요. \"고마워! 우리 또 같이 달리자!\"",
+   "en": "The turtle said, \"Thank you! Let's race together again!\"",
+   "segs": [
+    [
+     "nar",
+     "The turtle said,"
+    ],
+    [
+     "turtle",
+     "Thank you! Let's race together again!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되었어요. 숲속 잔치가 열렸어요!",
+   "en": "Night came. The forest party began!",
+   "segs": [
+    [
+     "nar",
+     "Night came. The forest party began!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "먼저 들어 봐요! 신나는 행진곡이에요.",
+   "en": "Listen first! It's a lively march.",
+   "segs": [
+    [
+     "nar",
+     "Listen first! It's a lively march."
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 친구들을 톡톡 눌러서 같이 연주해요!",
+   "en": "Now tap the friends to play along together!",
+   "segs": [
+    [
+     "nar",
+     "Now tap the friends to play along together!"
+    ]
+   ]
+  },
+  {
+   "text": "잘했어요! 이제 마음대로 신나게 연주해요!",
+   "en": "Well done! Now play however you like!",
+   "segs": [
+    [
+     "nar",
+     "Well done! Now play however you like!"
+    ]
+   ]
+  },
+  {
+   "text": "모두 함께 신나는 잔치를 했답니다.",
+   "en": "Everyone had a happy party together.",
+   "segs": [
+    [
+     "nar",
+     "Everyone had a happy party together.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "천천히 가도 끝까지 하면 해낼 수 있어요!",
+   "en": "Even if you go slowly, you can make it if you keep going!",
+   "segs": [
+    [
+     "nar",
+     "Even if you go slowly, you can make it if you keep going!",
+     "happy:1.2"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "laugh_pig": [
+   [
+    "pig",
+    "Ha ha ha!",
+    "happy:1.4"
+   ]
+  ],
+  "cheer_dog": [
+   [
+    "dog",
+    "Go, go!",
+    "happy:1.4"
+   ]
+  ],
+  "cheer_duck": [
+   [
+    "duck",
+    "Go, Turtle!",
+    "happy:1.4"
+   ]
+  ],
+  "cheer_sheep": [
+   [
+    "sheep",
+    "Keep going, Turtle!",
+    "happy:1.4"
+   ]
+  ],
+  "wake_rabbit": [
+   [
+    "rabbit",
+    "Oh!",
+    "toneup:1.5"
+   ]
+  ]
+ },
+ "ui": {
+  "꽥꽥!": "Quack quack!",
+  "음매~": "Moo~",
+  "꿀꿀!": "Oink oink!",
+  "꼬끼오!": "Cock-a-doodle-doo!",
+  "매애~": "Baa~",
+  "멍멍!": "Woof woof!",
+  "야옹~": "Meow~",
+  "부엉!": "Hoo!",
+  "쉿!": "Shh!",
+  "출발": "Start",
+  "똑똑!": "Knock knock!",
+  "하하!": "Ha ha!",
+  "쭉!": "Stretch!",
+  "쭈욱~": "Stretch~",
+  "땅!": "Boom!",
+  "쌩!": "Zoom!",
+  "부엉 부엉~": "Hoo hoo~",
+  "아삭!": "Crunch!",
+  "힘내!": "Go, go!",
+  "꽥꽥! 힘내!": "Quack quack! Go, go!",
+  "와아!": "Hooray!",
+  "영차!": "Heave-ho!",
+  "앗!": "Oh!",
+  "결승": "Finish",
+  "쌩쌩!": "Zoom zoom!",
+  "골인!": "Goal!",
+  "찰칵!": "Click!",
+  "짝짝짝!": "Clap clap clap!",
+  "천천히, 꾸준히, 끝까지!": "Slow, steady, all the way!",
+  "초대장 돌리기": "Delivering Invitations",
+  "응원석": "The Cheering Seats",
+  "준비 운동": "Warm-Up",
+  "요이~ 땅!": "Ready, Set, Go!",
+  "경주 지도": "The Race Map",
+  "쌩쌩 토끼": "Speedy Rabbit",
+  "나무 그늘": "Under the Tree",
+  "토끼의 꿈": "Rabbit's Dream",
+  "엉금엉금 거북이": "Plodding Turtle",
+  "개울": "The Stream",
+  "언덕": "The Hill",
+  "쉿, 살금살금": "Shh, Tiptoe",
+  "마지막 한 발": "The Last Step",
+  "시상식": "Award Ceremony",
+  "숲속 잔치": "Forest Party",
+  "토끼와 거북이": "The Rabbit and the Turtle",
+  "누가 먼저 도착할까?": "Who will get there first?"
+ }
+}
