@@ -46,6 +46,7 @@ const TALES = (() => {
   /* ───────── 공개된 동화 ───────── */
   { id: 'patjuk', title: '팥죽할멈과 호랑이', origin: 'korean', skills: ['order', 'spot', 'heart'], ready: true,
     line: '친구들을 알맞은 자리에 불러 호랑이를 혼내 줘요.',
+    en: { title: 'The Tiger and the Red Bean Porridge', line: 'Call your friends to the right spots and give the tiger a lesson.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/>
       <g class="pc"><circle cx="134" cy="22" r="11" fill="${c.cr}"/><rect y="88" width="160" height="22" fill="${c.bk}"/>
       <path d="M40 90 L45 60 Q58 53 71 60 L76 90Z" fill="${c.cr}"/>
@@ -82,28 +83,28 @@ const TALES = (() => {
 
   { id: 'sunmoon', title: '해와 달이 된 오누이', origin: 'korean', skills: ['spot', 'heart'], ready: true,
     line: '수상한 손을 알아보고, 튼튼한 동아줄을 골라 하늘로 올라가요.',
+    en: { title: 'The Sun and the Moon', line: 'Spot the tiger\'s sneaky paw, pick the strong rope, and climb up to the sky.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/>
       <g class="pc"><path d="M0 92 Q40 80 80 90 T160 86 V110 H0Z" fill="${c.lv}"/>
       <circle cx="40" cy="36" r="17" fill="${c.am}"/><circle cx="118" cy="32" r="14" fill="${c.cr}"/><circle cx="125" cy="27" r="12" fill="${c.ind}"/>
-    en: { title: 'The Sun and the Moon', line: 'Spot the tiger\'s sneaky paw, pick the strong rope, and climb up to the sky.' },
       <rect x="78" y="0" width="4" height="70" fill="${c.gd}"/>
       <circle cx="80" cy="74" r="7" fill="${c.sk}"/><path d="M72 72 a8 8 0 0 1 16 0z" fill="${c.ink}"/><rect x="74" y="80" width="12" height="14" rx="4" fill="${c.rd}"/></g>` },
 
   { id: 'sun_wind', title: '해와 바람', origin: 'aesop', skills: ['season', 'heart'], ready: true,
     line: '세게 부는 바람과 따뜻한 햇볕, 누가 외투를 벗길까요?',
+    en: { title: 'The Sun and the Wind', line: 'A blustery wind and the warm sun: who can make the traveler take off the coat?' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
       <g class="pc"><rect y="90" width="160" height="20" fill="${c.lf}"/>
       <circle cx="34" cy="30" r="18" fill="${c.am}"/>
       <path d="M92 36 a12 12 0 0 1 22 -8 a13 13 0 0 1 24 6 a9 9 0 0 1 -2 18 h-40 a9 9 0 0 1 -4 -16z" fill="${c.sn}"/>
-    en: { title: 'The Sun and the Wind', line: 'A blustery wind and the warm sun: who can make the traveler take off the coat?' },
       <path d="M86 62 h26 M92 70 h18" stroke="${c.sn}" stroke-width="4" stroke-linecap="round"/>
       <path d="M60 94 L64 66 Q70 60 76 66 L80 94Z" fill="${c.ps}"/><circle cx="70" cy="56" r="8" fill="${c.sk}"/><path d="M61 54 h18 l-3 -7 h-12z" fill="${c.bk}"/></g>` },
 
   { id: 'turnip', title: '커다란 순무', origin: 'world', skills: ['order', 'size', 'heart'], ready: true,
     line: '할아버지부터 생쥐까지, 차례대로 불러 다 함께 영차!',
+    en: { title: 'The Giant Turnip', line: 'From Grandpa all the way to the mouse, everyone is called in turn to heave-ho together!' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
       <g class="pc"><rect y="80" width="160" height="30" fill="${c.bk}"/>
-    en: { title: 'The Giant Turnip', line: 'From Grandpa all the way to the mouse, everyone is called in turn to heave-ho together!' },
       <path d="M28 44 l-8 -26 M36 42 v-30 M44 44 l8 -26" stroke="${c.pn}" stroke-width="7" stroke-linecap="round"/>
       <circle cx="36" cy="66" r="24" fill="${c.sn}"/><path d="M14 58 a24 24 0 0 1 44 0z" fill="${c.ck}"/>
       <circle cx="74" cy="60" r="11" fill="${c.sk}"/><rect x="65" y="70" width="18" height="20" rx="5" fill="${c.pn}"/>
@@ -125,9 +126,9 @@ const TALES = (() => {
 
   { id: 'fox_crane', title: '여우와 두루미', origin: 'aesop', skills: ['shape', 'heart'], ready: true,
     line: '납작한 접시와 목이 긴 병, 입 모양에 맞는 그릇을 골라 줘요.',
+    en: { title: 'The Fox and the Crane', line: 'Flat plate or tall bottle? Pick the dish that fits each mouth.' },
     art: `<rect width="160" height="110" fill="${c.pn}"/>
       <g class="pc"><rect y="84" width="160" height="26" fill="${c.bk}"/>
-    en: { title: 'The Fox and the Crane', line: 'Flat plate or tall bottle? Pick the dish that fits each mouth.' },
       <ellipse cx="44" cy="84" rx="28" ry="6" fill="${c.cr}"/>
       <path d="M104 84 V52 q0 -6 5 -8 V28 h8 v16 q5 2 5 8 V84z" fill="${c.rd}"/>
       <path d="M26 64 L34 44 L42 56 L52 44 L58 64 Q42 74 26 64Z" fill="${c.ps}"/><path d="M34 66 L42 78 L50 66Z" fill="${c.cr}"/>${eye(36, 60)}${eye(48, 60)}
@@ -137,6 +138,7 @@ const TALES = (() => {
   /* ───────── 만드는 중 (파일이 생기면 저절로 열린다) ───────── */
   { id: 'goldilocks', title: '골디락스와 곰 세 마리', origin: 'world', skills: ['size', 'shape', 'heart'], ready: false, making: true,
     line: '큰 그릇은 큰 곰, 작은 의자는 아기 곰. 크기대로 주인을 찾아 줘요.',
+    en: { title: 'Goldilocks and the Three Bears', line: 'Big bowl for the big bear, little chair for Baby Bear. Match each one by size.' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
       <g class="pc"><rect y="84" width="160" height="26" fill="${c.bk}"/>
       <path d="M8 60 h44 q0 24 -22 24 q-22 0 -22 -24z" fill="${c.rd}"/>
@@ -147,6 +149,7 @@ const TALES = (() => {
 
   { id: 'bremen', title: '브레멘 음악대', origin: 'world', skills: ['sound', 'order', 'size'], ready: false, making: true,
     line: '소리로 친구를 알아맞히고, 큰 동물부터 차례로 탑을 쌓아요.',
+    en: { title: 'The Bremen Town Musicians', line: 'Guess each friend by sound, then stack a tower from the biggest animal up.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/>
       <g class="pc"><rect x="104" y="30" width="36" height="30" fill="${c.am}"/><path d="M122 30 v30 M104 45 h36" stroke="${c.bk}" stroke-width="3"/>
       <rect y="94" width="160" height="16" fill="${c.bk}"/>
@@ -157,6 +160,7 @@ const TALES = (() => {
 
   { id: 'ant_grasshopper', title: '개미와 베짱이', origin: 'aesop', skills: ['season', 'count', 'heart'], ready: false, making: true,
     line: '여름에 부지런히 모은 먹이로, 겨울에 친구들과 음악회를 열어요.',
+    en: { title: 'The Ant and the Grasshopper', line: 'With food gathered all summer, the ants and their friends hold a winter concert.' },
     art: `<rect width="80" height="110" fill="${c.gd}"/><rect x="80" width="80" height="110" fill="${c.sn}"/>
       <g class="pc"><rect y="88" width="80" height="22" fill="${c.lf}"/><rect x="80" y="88" width="80" height="22" fill="#DDE3EC"/>
       <circle cx="18" cy="22" r="10" fill="${c.am}"/>
@@ -165,8 +169,8 @@ const TALES = (() => {
       <circle cx="96" cy="20" r="2" fill="#C9D3E2"/><circle cx="140" cy="16" r="2" fill="#C9D3E2"/><circle cx="118" cy="26" r="2" fill="#C9D3E2"/></g>` },
 
   { id: 'ugly_duckling', title: '미운 아기 오리', origin: 'world', skills: ['heart', 'order', 'season'], ready: false, making: true,
-    en: { title: 'The Ant and the Grasshopper', line: 'With food gathered all summer, the ants and their friends hold a winter concert.' },
     line: '놀림받던 아기 오리의 마음을 알아주고, 백조로 자라는 순서를 맞춰요.',
+    en: { title: 'The Ugly Duckling', line: 'Understand the teased duckling\'s feelings, then put its growing-up steps in order.' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
       <g class="pc"><rect y="70" width="160" height="40" fill="${c.lv}"/><path d="M0 70 h160" stroke="${c.pn}" stroke-width="6"/>
       <ellipse cx="48" cy="80" rx="14" ry="8" fill="${c.gy}"/><circle cx="40" cy="68" r="7" fill="${c.gy}"/><path d="M33 68 l-6 2 6 2z" fill="${c.dk}"/>${eye(39, 66, 1.3)}
@@ -174,7 +178,6 @@ const TALES = (() => {
       <path d="M112 44 l8 3 -8 3z" fill="${c.ps}"/>${eye(108, 44, 1.4)}</g>` },
 
   /* ───────── 계획된 동화 (TALES_PLAN_2) ───────── */
-    en: { title: 'The Ugly Duckling', line: 'Understand the teased duckling\'s feelings, then put its growing-up steps in order.' },
   { id: 'three_pigs', title: '아기 돼지 삼형제', origin: 'world', skills: ['count', 'order', 'size'], ready: false,
     line: '짚 집, 나무 집, 벽돌 집. 벽돌을 톡톡 쌓아 막내 집을 지켜요.',
     art: `<rect width="160" height="110" fill="${c.cr}"/>
