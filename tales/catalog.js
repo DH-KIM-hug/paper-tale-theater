@@ -108,6 +108,7 @@ const TALES = (() => {
 
   { id: 'lion_mouse', title: '사자와 생쥐', origin: 'aesop', skills: ['size', 'count', 'heart'], ready: true,
     line: '작은 생쥐가 그물을 갉아 커다란 사자를 구해요.',
+    en: { title: 'The Lion and the Mouse', line: 'A tiny mouse gnaws through the net and saves the big lion.' },
     art: `<rect width="160" height="110" fill="${c.gd}"/>
       <g class="pc"><rect y="88" width="160" height="22" fill="${c.bk}"/>
       <circle cx="58" cy="52" r="32" fill="${c.ps}"/><circle cx="58" cy="54" r="21" fill="${c.am}"/>

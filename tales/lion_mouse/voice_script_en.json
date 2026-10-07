@@ -1,0 +1,774 @@
+{
+ "voices": {
+  "nar": "tc_65571d1aa52fc0f2872045fa",
+  "lion": "tc_66a1ea9420b813b5c36197f1",
+  "mouse": "tc_619d7eb59233f1f0771197ed"
+ },
+ "lines": [
+  {
+   "text": "나무 그늘에서 사자가 쿨쿨 낮잠을 자요.",
+   "en": "The lion is taking a nap in the shade of a tree. Zzz!",
+   "segs": [
+    [
+     "nar",
+     "The lion is taking a nap in the shade of a tree. Zzz!",
+     "tonedown:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "사자 코를 톡 눌러 봐요!",
+   "en": "Tap the lion's nose!",
+   "segs": [
+    [
+     "nar",
+     "Tap the lion's nose!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "콧방울이 퐁! 그래도 사자는 쿨쿨 자요.",
+   "en": "The nose bubble goes pop! But the lion keeps on sleeping.",
+   "segs": [
+    [
+     "nar",
+     "The nose bubble goes pop! But the lion keeps on sleeping.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "작은 생쥐가 산책을 나왔어요. 풀이 숲처럼 커다래요!",
+   "en": "A little mouse comes out for a walk. The grass is as big as a forest!",
+   "segs": [
+    [
+     "nar",
+     "A little mouse comes out for a walk. The grass is as big as a forest!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 폴짝폴짝 가 볼까요?",
+   "en": "Let's tap the screen and hop along!",
+   "segs": [
+    [
+     "nar",
+     "Let's tap the screen and hop along!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 폴짝!",
+   "en": "Tap the screen to hop!",
+   "segs": [
+    [
+     "nar",
+     "Tap the screen to hop!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "어? 이건 뭐지? 폴짝!",
+   "en": "Huh? What's this? Hop!",
+   "segs": [
+    [
+     "mouse",
+     "Huh? What's this? Hop!",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "와아! 사자 갈기는 커다란 미끄럼틀이었어요. 쭈르륵~ 히히!",
+   "en": "Wheee! The lion's mane was a great big slide. Whoosh! Hee hee!",
+   "segs": [
+    [
+     "mouse",
+     "Wheee!",
+     "happy:1.5"
+    ],
+    [
+     "nar",
+     "The lion's mane was a great big slide."
+    ],
+    [
+     "mouse",
+     "Whoosh! Hee hee!",
+     "happy:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "어? 사자가 눈을 떴어요!",
+   "en": "Oh? The lion's eyes are open!",
+   "segs": [
+    [
+     "nar",
+     "Oh? The lion's eyes are open!",
+     "toneup:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "사자가 커다란 앞발로 생쥐 꼬리를 탁! 눌렀어요.",
+   "en": "The lion pressed the mouse's tail with a big paw. Thump!"
+  },
+  {
+   "text": "사자가 하품하며 말했어요. \"하암~ 한입에 꿀꺽 해 버릴까?\"",
+   "en": "The lion yawned and said, \"Haaah... shall I gobble you up in one bite?\"",
+   "segs": [
+    [
+     "nar",
+     "The lion yawned and said,"
+    ],
+    [
+     "lion",
+     "\"Haaah... shall I gobble you up in one bite?\"",
+     "tonedown:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 말했어요. \"살려 주시면 꼭 은혜 갚을게요!\"",
+   "en": "The mouse said, \"If you let me go, I promise I'll pay you back!\"",
+   "segs": [
+    [
+     "nar",
+     "The mouse said,"
+    ],
+    [
+     "mouse",
+     "\"If you let me go, I promise I'll pay you back!\"",
+     "sad:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐를 톡 눌러서 부탁해 봐요.",
+   "en": "Tap the mouse to ask nicely.",
+   "segs": [
+    [
+     "nar",
+     "Tap the mouse to ask nicely.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐를 톡 눌러 봐요!",
+   "en": "Tap the mouse!",
+   "segs": [
+    [
+     "nar",
+     "Tap the mouse!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 두 손을 모았어요. \"제발요, 사자님~\"",
+   "en": "The mouse put both hands together. \"Please, Lion, please!\"",
+   "segs": [
+    [
+     "nar",
+     "The mouse put both hands together."
+    ],
+    [
+     "mouse",
+     "\"Please, Lion, please!\"",
+     "sad:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "\"네가? 나를 도와준다고?\"",
+   "en": "\"You? You'll help me?\"",
+   "segs": [
+    [
+     "lion",
+     "\"You? You'll help me?\"",
+     "happy:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "사자가 웃다가 앞발이 스르르 열렸어요. 앞발을 톡 눌러 봐요!",
+   "en": "The lion laughed, and the big paw slowly opened. Tap the paw!",
+   "segs": [
+    [
+     "nar",
+     "The lion laughed, and the big paw slowly opened. Tap the paw!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "사자 앞발을 톡 눌러 봐요!",
+   "en": "Tap the lion's paw!",
+   "segs": [
+    [
+     "nar",
+     "Tap the lion's paw!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 쏙 빠져나왔어요. \"고맙습니다, 사자님!\"",
+   "en": "The mouse slipped right out. \"Thank you, Lion!\"",
+   "segs": [
+    [
+     "nar",
+     "The mouse slipped right out."
+    ],
+    [
+     "mouse",
+     "\"Thank you, Lion!\"",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "사자 발과 생쥐를 나란히 놓아 볼까요?",
+   "en": "Let's put the lion's paw and the mouse side by side!",
+   "segs": [
+    [
+     "nar",
+     "Let's put the lion's paw and the mouse side by side!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "사자 발가락 하나가 생쥐 한 마리만 해요!",
+   "en": "One lion toe is as big as a whole mouse!",
+   "segs": [
+    [
+     "nar",
+     "One lion toe is as big as a whole mouse!",
+     "toneup:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "더 큰 발자국은 어느 쪽일까요?",
+   "en": "Which footprint is bigger?",
+   "segs": [
+    [
+     "nar",
+     "Which footprint is bigger?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "더 큰 발자국을 톡 눌러 봐요!",
+   "en": "Tap the bigger footprint!",
+   "segs": [
+    [
+     "nar",
+     "Tap the bigger footprint!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "두 발자국을 잘 봐요. 어느 쪽이 더 커다랗지?",
+   "en": "Look at the two footprints. Which one is bigger?",
+   "segs": [
+    [
+     "nar",
+     "Look at the two footprints. Which one is bigger?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "사자가 가진 발자국이에요. 반짝이는 쪽을 눌러 봐요!",
+   "en": "That's the lion's footprint. Tap the sparkly one!",
+   "segs": [
+    [
+     "nar",
+     "That's the lion's footprint. Tap the sparkly one!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 사자 발자국이에요.",
+   "en": "That's right! It's the lion's footprint.",
+   "segs": [
+    [
+     "nar",
+     "That's right! It's the lion's footprint.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 이빨이에요. 더 작은 이빨은 어느 쪽일까요?",
+   "en": "Now it's teeth. Which tooth is smaller?",
+   "segs": [
+    [
+     "nar",
+     "Now it's teeth. Which tooth is smaller?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "더 작은 이빨을 톡 눌러 봐요!",
+   "en": "Tap the smaller tooth!",
+   "segs": [
+    [
+     "nar",
+     "Tap the smaller tooth!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "콩알처럼 조그만 이빨을 찾아봐요!",
+   "en": "Look for the teeny tiny tooth, as small as a bean!",
+   "segs": [
+    [
+     "nar",
+     "Look for the teeny tiny tooth, as small as a bean!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 가진 이빨이에요. 반짝이는 쪽을 눌러 봐요!",
+   "en": "That's the mouse's tooth. Tap the sparkly one!",
+   "segs": [
+    [
+     "nar",
+     "That's the mouse's tooth. Tap the sparkly one!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 생쥐 이빨이에요.",
+   "en": "That's right! It's the mouse's tooth.",
+   "segs": [
+    [
+     "nar",
+     "That's right! It's the mouse's tooth.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐 이빨은 작지만 아주 튼튼해요. 사각사각 뭐든 갉을 수 있지요.",
+   "en": "The mouse's teeth are small, but very strong. Nibble, nibble! They can gnaw anything."
+  },
+  {
+   "text": "좁은 구멍이 있어요. 쏙 들어갈 수 있는 건 누구일까요?",
+   "en": "There's a tiny hole. Who can squeeze right in?",
+   "segs": [
+    [
+     "nar",
+     "There's a tiny hole. Who can squeeze right in?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "구멍에 쏙 들어갈 친구를 톡 눌러 봐요!",
+   "en": "Tap the friend who can squeeze into the hole!",
+   "segs": [
+    [
+     "nar",
+     "Tap the friend who can squeeze into the hole!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "사자는 너무 커서 코가 쿵! 부딪혀요. 작은 친구는 누구지?",
+   "en": "The lion is too big. Bonk! Its nose bumps the hole. Who is the little friend?",
+   "segs": [
+    [
+     "nar",
+     "The lion is too big. Bonk! Its nose bumps the hole. Who is the little friend?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 들어갈 수 있어요. 반짝이는 친구를 눌러 봐요!",
+   "en": "The mouse can fit! Tap the sparkly friend!",
+   "segs": [
+    [
+     "nar",
+     "The mouse can fit! Tap the sparkly friend!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 작은 생쥐는 좁은 구멍도 쏙!",
+   "en": "That's right! The little mouse slips right into the tiny hole!",
+   "segs": [
+    [
+     "nar",
+     "That's right! The little mouse slips right into the tiny hole!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "크면 큰 대로, 작으면 작은 대로 다 쓸모가 있어요.",
+   "en": "Big or small, everyone is useful."
+  },
+  {
+   "text": "밤이 되었어요. 앗, 사자가 그물에 걸렸어요!",
+   "en": "Night came. Oh no, the lion is caught in a net!",
+   "segs": [
+    [
+     "nar",
+     "Night came. Oh no, the lion is caught in a net!",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "사자가 버둥버둥, 그래도 그물이 풀리지 않아요.",
+   "en": "The lion wiggles and wriggles, but the net won't come loose.",
+   "segs": [
+    [
+     "nar",
+     "The lion wiggles and wriggles, but the net won't come loose.",
+     "sad:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "쫑긋! 생쥐가 사자 목소리를 들었어요.",
+   "en": "Ears up! The mouse heard the lion's voice."
+  },
+  {
+   "text": "\"사자님, 제가 도와 드릴게요!\"",
+   "en": "\"Lion, I'll help you!\"",
+   "segs": [
+    [
+     "mouse",
+     "\"Lion, I'll help you!\"",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 작은 이빨로 그물을 갉아요. 톡톡 눌러서 한 줄씩 끊어 봐요!",
+   "en": "The mouse gnaws the net with tiny teeth. Tap, tap to cut one rope at a time!",
+   "segs": [
+    [
+     "nar",
+     "The mouse gnaws the net with tiny teeth. Tap, tap to cut one rope at a time!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "하나",
+   "en": "One",
+   "segs": [
+    [
+     "nar",
+     "One",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "둘",
+   "en": "Two",
+   "segs": [
+    [
+     "nar",
+     "Two",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "셋",
+   "en": "Three",
+   "segs": [
+    [
+     "nar",
+     "Three",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "넷",
+   "en": "Four",
+   "segs": [
+    [
+     "nar",
+     "Four",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "다섯",
+   "en": "Five",
+   "segs": [
+    [
+     "nar",
+     "Five",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "여섯",
+   "en": "Six",
+   "segs": [
+    [
+     "nar",
+     "Six",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "일곱",
+   "en": "Seven",
+   "segs": [
+    [
+     "nar",
+     "Seven",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "여덟",
+   "en": "Eight",
+   "segs": [
+    [
+     "nar",
+     "Eight",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "아홉",
+   "en": "Nine",
+   "segs": [
+    [
+     "nar",
+     "Nine",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "열",
+   "en": "Ten",
+   "segs": [
+    [
+     "nar",
+     "Ten",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "톡톡 눌러서 그물을 갉아요!",
+   "en": "Tap, tap to gnaw the net!",
+   "segs": [
+    [
+     "nar",
+     "Tap, tap to gnaw the net!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "하나, 둘, 셋… 열! 그물 줄 열 개를 다 끊었어요!",
+   "en": "One, two, three... ten! All ten ropes are cut!",
+   "segs": [
+    [
+     "nar",
+     "One, two, three... ten! All ten ropes are cut!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "와아! 사자가 풀려났어요!",
+   "en": "Hooray! The lion is free!",
+   "segs": [
+    [
+     "nar",
+     "Hooray! The lion is free!",
+     "happy:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "\"고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!\"",
+   "en": "\"Thank you, little friend. Your tiny teeth saved me!\"",
+   "segs": [
+    [
+     "lion",
+     "\"Thank you, little friend. Your tiny teeth saved me!\"",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "\"제가 은혜 갚는다고 했지요?\"",
+   "en": "\"Didn't I say I'd pay you back?\"",
+   "segs": [
+    [
+     "mouse",
+     "\"Didn't I say I'd pay you back?\"",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날 아침, 사자가 생쥐를 등에 태웠어요. \"꽉 잡아!\"",
+   "en": "The next morning, the lion put the mouse on its back. \"Hold tight!\"",
+   "segs": [
+    [
+     "nar",
+     "The next morning, the lion put the mouse on its back.",
+     "happy:1.1"
+    ],
+    [
+     "lion",
+     "\"Hold tight!\"",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "옆으로 쓱 밀어서 달려요!",
+   "en": "Swipe sideways to run!",
+   "segs": [
+    [
+     "nar",
+     "Swipe sideways to run!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "바람을 가르며 초원을 달려요! 신난다!",
+   "en": "They race across the meadow through the wind! Yippee!",
+   "segs": [
+    [
+     "nar",
+     "They race across the meadow through the wind!",
+     "happy:1.4"
+    ],
+    [
+     "mouse",
+     "Yippee!",
+     "happy:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!",
+   "en": "Tap the lion and the mouse. Let's laugh together!",
+   "segs": [
+    [
+     "nar",
+     "Tap the lion and the mouse. Let's laugh together!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "그날부터 사자와 생쥐는 둘도 없는 친구가 되었답니다.",
+   "en": "From that day on, the lion and the mouse were the best of friends.",
+   "segs": [
+    [
+     "nar",
+     "From that day on, the lion and the mouse were the best of friends.",
+     "happy:1.3"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "cut_paw": [
+   [
+    "mouse",
+    "Eek! You scared me!",
+    "toneup:1.6",
+    "The lion pressed the mouse's tail with a big paw. Thump!"
+   ]
+  ],
+  "cut_laugh": [
+   [
+    "lion",
+    "Ha ha ha! This tiny little thing?",
+    "happy:1.5",
+    "The lion laughs so hard, it holds its belly."
+   ]
+  ],
+  "cut_net": [
+   [
+    "lion",
+    "Oh no, somebody please help me!",
+    "sad:1.6",
+    "The lion is caught in the net and wriggles."
+   ]
+  ],
+  "hi_mouse": [
+   [
+    "mouse",
+    "Squeak! Yippee!",
+    "happy"
+   ]
+  ],
+  "hi_lion": [
+   [
+    "lion",
+    "Roar! Ha ha ha!",
+    "happy:1.5"
+   ]
+  ]
+ },
+ "ui": {
+  "생쥐의 산책": "The Mouse's Walk",
+  "잡혔다!": "Caught!",
+  "누가 더 클까?": "Who Is Bigger?",
+  "밤 숲": "Night Forest",
+  "사각사각": "Nibble Nibble",
+  "아침 초원": "Morning Meadow",
+  "퐁!": "Pop!",
+  "쭈르륵~": "Whoosh~",
+  "제발요~": "Please~",
+  "쏙!": "Zip!",
+  "쿵!": "Bonk!",
+  "어흥!": "Roar!",
+  "어흥~": "Roar~",
+  "톡!": "Tap!",
+  "사각!": "Nibble!",
+  "다다다!": "Zoom!",
+  "찍!": "Squeak!",
+  "탁!": "Thump!",
+  "하하하!": "Ha ha ha!",
+  "버둥버둥": "Wiggle wiggle",
+  "작아도 큰 친구를 도울 수 있어요!": "Even someone small can help a big friend!",
+  "사자와 생쥐": "The Lion and the Mouse",
+  "작은 친구의 큰 힘": "The big power of a small friend"
+ }
+}

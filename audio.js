@@ -1,5 +1,9 @@
 /* 팥죽할멈과 호랑이 — TTS 내레이션 + Web Audio 합성 효과음 */
 
+/* 화면 언어: 'ko'(기본) | 'en'. 영어 자료(NARRATION_CLIPS_EN)가 있는 동화만 영어로 나온다 */
+const siteLang = () => { try { return localStorage.getItem('lang') === 'en' ? 'en' : 'ko'; } catch (e) { return 'ko'; } };
+const englishOn = () => siteLang() === 'en' && typeof NARRATION_CLIPS_EN !== 'undefined';
+
 const AudioFX = (() => {
   let ctx = null;
 
@@ -103,8 +107,13 @@ const AudioFX = (() => {
   function prefetchClips() {
     const all = [];
     const add = v => [].concat(v || []).forEach(u => { if (typeof u === 'string' && !all.includes(u)) all.push(u); });
-    if (typeof NARRATION_CLIPS !== 'undefined') Object.values(NARRATION_CLIPS).forEach(add);
-    if (typeof VOICE_LINES !== 'undefined') Object.values(VOICE_LINES).forEach(add);
+    if (englishOn()) {
+      Object.values(NARRATION_CLIPS_EN).forEach(e => add(e.c));
+      if (typeof VOICE_LINES_EN !== 'undefined') Object.values(VOICE_LINES_EN).forEach(add);
+    } else {
+      if (typeof NARRATION_CLIPS !== 'undefined') Object.values(NARRATION_CLIPS).forEach(add);
+      if (typeof VOICE_LINES !== 'undefined') Object.values(VOICE_LINES).forEach(add);
+    }
     let i = 0;
     const next = () => { if (i >= all.length) return; const u = all[i++]; fetchBytes(u).catch(() => { delete prefetched[u]; }).finally(next); };
     for (let k = 0; k < 4; k++) next();
@@ -415,8 +424,9 @@ const Narrator = (() => {
   async function speak(text, { keep = false, onSeg } = {}) {
     const gen = ++speakGen;
     AudioFX.stopNarration(); // 겹침 방지: 진행 중인 클립 중단
-    showBubble(text);
-    const clip = (typeof NARRATION_CLIPS !== 'undefined') && NARRATION_CLIPS[text];
+    const en = englishOn() && NARRATION_CLIPS_EN[text]; // 영어 자료가 없는 문장은 한국어로
+    showBubble(en ? en.t : text);
+    const clip = en ? en.c : (typeof NARRATION_CLIPS !== 'undefined') && NARRATION_CLIPS[text];
     if (clip) {
       await AudioFX.voiceIdle(); // 컷신 대사가 끝난 뒤 이어서
       if (gen !== speakGen) return;
@@ -432,10 +442,10 @@ const Narrator = (() => {
         return;
       } catch (e) { /* 클립 실패 → 브라우저 TTS 폴백 */ }
     }
-    return speakTTS(text, keep, gen);
+    return speakTTS(en ? en.t : text, keep, gen, !!en);
   }
 
-  function speakTTS(text, keep, gen) {
+  function speakTTS(text, keep, gen, english) {
     return new Promise(resolve => {
       const fallbackMs = Math.min(9000, text.length * 145 + 900);
       let done = false;
@@ -449,8 +459,8 @@ const Narrator = (() => {
         if (!koVoice) pickVoice();
         try { speechSynthesis.cancel(); } catch (e) { /* 무시 */ }
         const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'ko-KR';
-        if (koVoice) u.voice = koVoice;
+        u.lang = english ? 'en-US' : 'ko-KR';
+        if (koVoice && !english) u.voice = koVoice;
         u.rate = 0.95;
         u.pitch = 1.1;
         u.onend = finish;
@@ -471,5 +481,8 @@ const Narrator = (() => {
     hideBubble();
   }
 
-  return { speak, stop, hideBubble };
+  /* 말풍선 없는 소리 대사(VOICE_LINES): 영어 모드면 영어 클립, 없으면 한국어 */
+  const voiceLine = k => (englishOn() && typeof VOICE_LINES_EN !== 'undefined' && VOICE_LINES_EN[k]) || (typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k]) || null;
+
+  return { speak, stop, hideBubble, voiceLine };
 })();

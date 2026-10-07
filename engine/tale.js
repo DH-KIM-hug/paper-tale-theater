@@ -451,7 +451,7 @@ const Tale = (() => {
     await lidTo(ir, cx, cy, farFrom(W, H, cx, cy), hole, 520, easeIn);
     await sleep(260); // 주인공 둘레에 동그라미를 잠깐 남긴다
     await lidTo(ir, cx, cy, hole, 0, 180, easeIn);
-    if (label) { card.innerHTML = letters(label); card.className = 'paperword on'; tone([520, 780], .18, { type: 'triangle', vol: .12 }); }
+    if (label) { card.innerHTML = letters(tr(label)); card.className = 'paperword on'; tone([520, 780], .18, { type: 'triangle', vol: .12 }); }
     if (change) change();
     await sleep(label ? 1050 : 250);
     card.className = 'paperword';
@@ -549,7 +549,7 @@ const Tale = (() => {
   function pop(x, y, word, color = '#A93B32') {
     // 카메라가 가까이 붙을수록 화면에서 커지므로 확대 배율만큼 줄여 늘 비슷한 크기로 보이게
     const g = el('g', { transform: `translate(${x},${y}) scale(${(1 / Math.max(1, camState.z)).toFixed(3)})` }, fxL);
-    const chars = [...word], size = chars.length > 3 ? 48 : 56;
+    const chars = [...tr(word)], size = chars.length > 3 ? 48 : 56;
     const cw = ch => /[!?~.…,]/.test(ch) ? size * .42 : size * .86; // 문장부호는 좁게
     const total = chars.reduce((a, ch) => a + cw(ch), 0);
     const burst = el('path', { d: 'M60 0 L36 10 L52 30 L26 26 L30 52 L10 36 L0 60 L-10 36 L-30 52 L-26 26 L-52 30 L-36 10 L-60 0 L-36 -10 L-52 -30 L-26 -26 L-30 -52 L-10 -36 L0 -60 L10 -36 L30 -52 L26 -26 L52 -30 L36 -10 Z',
@@ -663,8 +663,16 @@ const Tale = (() => {
     f.classList.toggle('edge', Math.min(mx, my) < 6); // 화면 가장자리에 닿으면 모서리는 네모
   }
 
+  /* 화면 글자 번역: 영어 모드이고 이 동화에 영어 자료(TEXT_EN·NARRATION_CLIPS_EN)가 있을 때만 영어, 아니면 한국어 그대로 */
+  const ENGINE_EN = { '끝내기': 'Exit', '돌려서 크게 보기': 'Rotate for a bigger view', '이야기 시작': 'Start story', '처음으로': 'Home', '다시 보기': 'Watch again', '끝!': 'The End!' };
+  const tr = ko => {
+    if (!englishOn()) return ko;
+    const t = typeof TEXT_EN !== 'undefined' && TEXT_EN[ko], c = NARRATION_CLIPS_EN[ko];
+    return t || (c && c.t) || ENGINE_EN[ko] || ko;
+  };
+
   function mount({ title, subtitle, run, note = false, endTitle = '끝!' }) {
-    document.title = title;
+    document.title = tr(title);
     const home = ROOT_URL + 'index.html';
     document.body.insertAdjacentHTML('beforeend', `
 <div id="tale">
@@ -682,26 +690,26 @@ const Tale = (() => {
     <div id="veil" class="shut"><i class="lid"></i></div>
     <div id="confetti"></div>
     <div id="hand" hidden>${handSvg()}</div>
-    <button class="pill" id="finBtn" hidden>끝내기</button>
+    <button class="pill" id="finBtn" hidden>${tr('끝내기')}</button>
   </div>
-  <div id="rotateHint"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3" fill="none" stroke="#C98A5B" stroke-width="2.6"/><circle cx="16" cy="25" r="1.6" fill="#C98A5B"/></svg>돌려서 크게 보기</div>
+  <div id="rotateHint"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3" fill="none" stroke="#C98A5B" stroke-width="2.6"/><circle cx="16" cy="25" r="1.6" fill="#C98A5B"/></svg>${tr('돌려서 크게 보기')}</div>
   <div id="bubble" hidden><p id="bubbleText"></p></div>
   <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
     <div class="hero plain"><img alt="" decoding="async"></div>
     <div class="words">
-      <h1 class="paperword ttl">${letters(title)}</h1>
-      ${subtitle ? `<p class="sub">${subtitle}</p>` : ''}
-      <div class="pills"><button class="pill go" id="startBtn">${PLAY_SVG}이야기 시작</button><a class="pill" href="${home}">처음으로</a></div>
+      <h1 class="paperword ttl">${letters(tr(title))}</h1>
+      ${subtitle ? `<p class="sub">${tr(subtitle)}</p>` : ''}
+      <div class="pills"><button class="pill go" id="startBtn">${PLAY_SVG}${tr('이야기 시작')}</button><a class="pill" href="${home}">${tr('처음으로')}</a></div>
       ${note ? `<p class="note">${note}</p>` : ''}
     </div>
   </div>
   <div id="endScreen" class="screen" hidden>
     <div class="hero plain"><img alt="" decoding="async"></div>
     <div class="words">
-      <h2 class="paperword ttl">${letters(endTitle)}</h2>
+      <h2 class="paperword ttl">${letters(tr(endTitle))}</h2>
       <p class="sub" id="endMsg"></p>
-      <div class="pills"><button class="pill go" id="againBtn">${PLAY_SVG}다시 보기</button><a class="pill" href="${home}">처음으로</a></div>
+      <div class="pills"><button class="pill go" id="againBtn">${PLAY_SVG}${tr('다시 보기')}</button><a class="pill" href="${home}">${tr('처음으로')}</a></div>
     </div>
   </div>
 </div>`);
@@ -731,7 +739,7 @@ const Tale = (() => {
       const msg = await run(api);
       busy = true; $('#finBtn').hidden = true;
       await curtain(false);
-      $('#endMsg').textContent = msg || '';
+      $('#endMsg').textContent = tr(msg || '');
       $('#endScreen').hidden = false;
     };
     $('#startBtn').onclick = start;
@@ -823,7 +831,7 @@ const Tale = (() => {
 
   const api = {
     finale, hz, semi, parseSong, timbre, playMelody, followMelody, holdMelody, lyric,
-    el, paper, anim, actor, sleep, say, director, tone, josa, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
+    el, paper, anim, actor, sleep, say, director, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,
     tap: input(tap), mash: input(mash), choose: input(choose), swipe: input(swipe), hold: input(hold), free: input(free),

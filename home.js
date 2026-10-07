@@ -186,7 +186,13 @@
     return `<span class="thumb svgart"><svg class="art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${t.art}</svg>${plug}</span>`;
   }
 
-  function cardHTML(t) {
+  /* 화면 언어: 영어 자료(t.en)가 있는 동화만 영어로 보인다 */
+  let lang = 'ko';
+  try { if (localStorage.getItem('lang') === 'en') lang = 'en'; } catch (e) { /* 저장소를 못 쓰면 한국어 */ }
+  const shown = t => (lang === 'en' && t.en) ? { ...t, ...t.en } : t;
+
+  function cardHTML(t0) {
+    const t = shown(t0);
     const open = readyNow.has(t.id);
     const o = ORIGIN[t.origin];
     const skills = t.skills.map(k => `<span class="sk" title="${SKILL[k].label}">${icon(k)}</span>`).join('');
@@ -280,6 +286,23 @@
     if (gridAnim && gridAnim.alive) pending = true;
     else render();
   }
+
+  /* ── 언어 바꾸기: 영어 자료가 있는 동화만 영어로 (나머지는 한국어 그대로) ── */
+  const langBtn = $('#langToggle');
+  function paintLang() {
+    langBtn.querySelector('.lg-t').textContent = lang === 'en' ? '한' : 'EN';
+    langBtn.setAttribute('aria-label', lang === 'en' ? '한국어로 보기' : 'Switch language: English');
+    langBtn.classList.toggle('on', lang === 'en');
+    document.documentElement.lang = lang;
+  }
+  langBtn.addEventListener('click', () => {
+    lang = lang === 'en' ? 'ko' : 'en';
+    try { localStorage.setItem('lang', lang); } catch (e) { /* 저장 못 해도 이 화면은 바뀐다 */ }
+    paper('down');
+    paintLang();
+    render({ anim: false });
+  });
+  paintLang();
 
   /* ── 태그 숨기기/보이기: 숨기면 격자가 화면을 넓게 쓴다. 고른 태그는 그대로 적용되고, 버튼에 개수만 표시 ── */
   const tagBtn = $('#tagToggle');

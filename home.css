@@ -140,7 +140,7 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
 .board::-webkit-scrollbar { display: none; }
 
 /* ───────── 로고: 종이에서 오려 낸 글자 ───────── */
-.brand { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 56px; }
+.brand { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 10px; min-height: 56px; }
 .logo {
   margin: 0;
   display: flex;
@@ -175,6 +175,20 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   cursor: pointer;
   transition: background .2s, box-shadow .2s, color .2s;
 }
+.langtoggle {
+  flex: none;
+  display: inline-grid; place-items: center;
+  width: 48px; height: 48px; padding: 0;
+  border: 0; border-radius: 24px;
+  font: 700 15px/1 var(--font); letter-spacing: .02em;
+  color: var(--text-2);
+  background: var(--sheet-dn);
+  box-shadow: inset 1.5px 1.5px 3px rgba(34, 43, 69, .16), inset -1px -1px 2px rgba(255, 255, 255, .7);
+  cursor: pointer;
+  transition: background .2s, box-shadow .2s, color .2s;
+}
+.langtoggle.on { color: var(--text); background: var(--sheet-up); box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset, 0 3px 8px -2px rgba(34, 43, 69, .22); }
+.langtoggle:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
 .tagtoggle svg { width: 20px; height: 20px; }
 .tagtoggle.on { color: var(--text); background: var(--sheet-up); box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset, 0 3px 8px -2px rgba(34, 43, 69, .22); }
 .tagtoggle .tt-n { min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--copper); color: #fff; font-size: 12px; line-height: 20px; text-align: center; }
