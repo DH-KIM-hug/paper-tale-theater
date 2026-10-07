@@ -317,7 +317,7 @@
     let lastCut = Promise.resolve();
     function showCut(id, hold = 4000, split = true) {
       const keys = id.startsWith('wrong_') ? [id] : [id, id + '_b'];
-      const V = typeof VOICE_LINES !== 'undefined' ? VOICE_LINES : {};
+      const V = new Proxy({}, { get: (_, k) => Narrator.voiceLine(k) || undefined });
       // 컷 속 목소리: 첫 장(친구가 치는 순간) = 친구의 외침, 둘째 장(_b, 호랑이 반응) = 호랑이 비명.
       // _b 전용 대사가 있거나(지게) 컷을 기다리지 않고 내레이션이 이어지면(split=false, 멍석) 첫 장에서 둘 다 외친다
       // (내레이션은 이어지는 목소리 묶음이 끝나야 시작하므로, 둘째 장 목소리를 따로 내면 내레이션과 겹친다).
@@ -352,7 +352,7 @@
         const f = FRIENDS[i];
         const b = document.createElement('button');
         b.type = 'button'; b.className = 'card'; b.id = 'card-' + f.id;
-        b.innerHTML = `<img src="${A('v2/c2_' + f.id + '.png')}" alt=""><span>${f.name}</span>`;
+        b.innerHTML = `<img src="${A('v2/c2_' + f.id + '.png')}" alt=""><span>${T.tr(f.name)}</span>`;
         b.addEventListener('pointerdown', e => {
           e.stopPropagation();
           if (trayLocked || !cardWaiter) {
@@ -375,7 +375,7 @@
     $('#skipBtn') && $('#skipBtn').remove();
     const skipBtn = document.createElement('button');
     skipBtn.id = 'skipBtn'; skipBtn.type = 'button'; skipBtn.hidden = true;
-    skipBtn.innerHTML = '<span>꾹 눌러 건너뛰기</span>';
+    skipBtn.innerHTML = `<span>${T.tr('꾹 눌러 건너뛰기')}</span>`;
     T.root.appendChild(skipBtn);
     let skipTimer = null;
     const cancelSkip = () => { clearTimeout(skipTimer); skipTimer = null; skipBtn.classList.remove('holding'); };
@@ -803,7 +803,7 @@
       // 잔치 자유 놀이: 친구·할멈을 톡 하면 인사한다
       await say(LINES.finaleTap);
       // 누르면 처음 등장 때와 같은 목소리로 인사
-      const hello = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]);
+      const hello = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };
       await T.free([
         ...FRIENDS.map(f => ({ el: partyEl(f), onTap: () => { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); hello('hi_' + f.id); } })),
         { el: granny.pos, onTap: () => { AudioFX.jingle(); granny.hop(22, 420); hello('hi_halmi'); } },

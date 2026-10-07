@@ -1,0 +1,943 @@
+{
+ "voices": {
+  "nar": "tc_600697fd8a8ea9b977284703",
+  "halmi": "tc_60ad0841061ee28740ec2e1c",
+  "tiger": "tc_63a3d9d14b235ddd6541a78e",
+  "bam": "tc_699d27b557c86e3f4249c051",
+  "jara": "tc_69c1f8e4f8842d80fbe7fa4f",
+  "ddong": "tc_5ffda49bcba8f6d3d46fc447",
+  "songgot": "tc_5ffda44bcba8f6d3d46fc41f",
+  "jeolgu": "tc_60db308484130840f23e6ca0",
+  "myeongseok": "tc_6699eb5749dfac016c29445c",
+  "jige": "tc_6a98d65b0402016f616a7ac3"
+ },
+ "lines": [
+  {
+   "text": "옛날 옛날, 깊은 산골에 팥죽을 아주 잘 쑤는 할멈이 살았어요.",
+   "en": "Once upon a time, deep in the mountains, there lived an old grandma who made the yummiest red bean porridge.",
+   "segs": [
+    [
+     "nar",
+     "Once upon a time, deep in the mountains, there lived an old grandma who made the yummiest red bean porridge.",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "어흥! 어느 날 커다란 호랑이가 나타났어요. \"할멈, 잡아먹어야겠다!\"",
+   "en": "Roar! One day, a big tiger appeared. Grandma, I'm going to eat you up!",
+   "segs": [
+    [
+     "nar",
+     "Roar! One day, a big tiger appeared.",
+     "tonedown:1.3"
+    ],
+    [
+     "tiger",
+     "Grandma, I'm going to eat you up!",
+     "angry:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "\"호랑이야, 동짓날에 맛있는 팥죽을 쑤어 줄게. 그때까지 기다려 다오.\" 호랑이는 어슬렁어슬렁 돌아갔어요.",
+   "en": "Tiger, on the longest night of the year, I'll cook you some yummy red bean porridge. Please wait until then. The tiger prowled away, slow and heavy.",
+   "segs": [
+    [
+     "halmi",
+     "Tiger, on the longest night of the year, I'll cook you some yummy red bean porridge. Please wait until then.",
+     "sad:1.4"
+    ],
+    [
+     "nar",
+     "The tiger prowled away, slow and heavy.",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "드디어 동짓날이 되었어요. 할멈은 팥죽을 쑤면서 훌쩍훌쩍 울었어요.",
+   "en": "At last, the longest night came. Grandma cooked the porridge, and she sniffled and cried.",
+   "segs": [
+    [
+     "nar",
+     "At last, the longest night came. Grandma cooked the porridge, and she sniffled and cried.",
+     "sad:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "깜깜한 밤이 되었어요. 어흥! 호랑이가 어슬렁어슬렁 찾아왔어요!",
+   "en": "It was a dark, dark night. Roar! The tiger came prowling back!",
+   "segs": [
+    [
+     "nar",
+     "It was a dark, dark night. Roar! The tiger came prowling back!",
+     "tonedown:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "\"얘들아, 도와줘!\" 친구들을 순서대로 눌러서 호랑이를 혼내 주세요!",
+   "en": "Friends, help me! Tap your friends, one after another, to give that tiger a lesson!",
+   "segs": [
+    [
+     "halmi",
+     "Friends, help me!",
+     "sad:1.5"
+    ],
+    [
+     "nar",
+     "Tap your friends, one after another, to give that tiger a lesson!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "데굴데굴~ 알밤이 굴러왔어요. \"할멈, 팥죽 한 그릇 주면 도와줄게!\" 알밤은 팥죽을 얻어먹고 뜨거운 아궁이 속에 쏙 숨었어요.",
+   "en": "Roll, roll, roll! Chestnut came rolling in. Grandma, give me a bowl of red bean porridge and I'll help you! Chestnut ate the porridge, then hid deep inside the hot fireplace.",
+   "segs": [
+    [
+     "nar",
+     "Roll, roll, roll! Chestnut came rolling in.",
+     "smart"
+    ],
+    [
+     "bam",
+     "Grandma, give me a bowl of red bean porridge and I'll help you!",
+     "happy:1.3"
+    ],
+    [
+     "nar",
+     "Chestnut ate the porridge, then hid deep inside the hot fireplace.",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "알밤이 아궁이에서 톡! 튀어나와 호랑이 눈을 딱 때렸어요!",
+   "en": "Chestnut popped out of the fireplace — pop! — and bonked the tiger right in the eye!",
+   "segs": [
+    [
+     "nar",
+     "Chestnut popped out of the fireplace — pop! — and bonked the tiger right in the eye!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "알밤이 톡 튀어나왔지만, 호랑이는 아궁이 앞에 없었어요!",
+   "en": "Chestnut popped out — pop! — but the tiger wasn't by the fireplace!",
+   "segs": [
+    [
+     "nar",
+     "Chestnut popped out — pop! — but the tiger wasn't by the fireplace!",
+     "sad:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "엉금엉금~ 자라가 기어왔어요. \"나도 팥죽 한 그릇 주면 도와줄게!\" 자라는 팥죽을 얻어먹고 물독 속에 퐁당 숨었어요.",
+   "en": "Slow and steady! Turtle came crawling in. Give me a bowl of red bean porridge and I'll help too! Turtle ate the porridge, then slipped into the water jar to hide.",
+   "segs": [
+    [
+     "nar",
+     "Slow and steady! Turtle came crawling in.",
+     "smart"
+    ],
+    [
+     "jara",
+     "Give me a bowl of red bean porridge and I'll help too!",
+     "happy:1.3"
+    ],
+    [
+     "nar",
+     "Turtle ate the porridge, then slipped into the water jar to hide.",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "물독 속 자라가 호랑이 입을 앙! 물었어요!",
+   "en": "Turtle, hiding in the water jar, bit the tiger's mouth — chomp!",
+   "segs": [
+    [
+     "nar",
+     "Turtle, hiding in the water jar, bit the tiger's mouth — chomp!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "자라가 물독에서 두리번두리번… 호랑이 얼굴이 없네요!",
+   "en": "Turtle peeked out of the water jar, looking this way and that... no tiger face in sight!",
+   "segs": [
+    [
+     "nar",
+     "Turtle peeked out of the water jar, looking this way and that... no tiger face in sight!",
+     "sad:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "철퍼덕! 쇠똥이 왔어요. \"팥죽 한 그릇 주면 나도 도울게!\" 쇠똥은 팥죽을 얻어먹고 부엌 바닥에 납작 엎드려 숨었어요.",
+   "en": "Splat! Cow Plop arrived. Give me a bowl of red bean porridge and I'll help too! Cow Plop ate the porridge, then lay flat on the kitchen floor to hide.",
+   "segs": [
+    [
+     "nar",
+     "Splat! Cow Plop arrived.",
+     "smart"
+    ],
+    [
+     "ddong",
+     "Give me a bowl of red bean porridge and I'll help too!",
+     "happy:1.3"
+    ],
+    [
+     "nar",
+     "Cow Plop ate the porridge, then lay flat on the kitchen floor to hide.",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 쇠똥을 밟고 쭈르륵~ 미끄러졌어요!",
+   "en": "The tiger stepped on Cow Plop and slip-slid-slipped away!",
+   "segs": [
+    [
+     "nar",
+     "The tiger stepped on Cow Plop and slip-slid-slipped away!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 쇠똥을 폴짝 뛰어넘어 버렸어요!",
+   "en": "The tiger hopped right over Cow Plop!",
+   "segs": [
+    [
+     "nar",
+     "The tiger hopped right over Cow Plop!",
+     "sad:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "콕콕! 송곳이 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 송곳은 팥죽을 얻어먹고 바닥 틈에 뾰족 숨었어요.",
+   "en": "Poke, poke! Awl arrived. Give me a bowl of red bean porridge and I'll help! Awl ate the porridge, then hid, pointy and still, in a crack in the floor.",
+   "segs": [
+    [
+     "nar",
+     "Poke, poke! Awl arrived.",
+     "smart"
+    ],
+    [
+     "songgot",
+     "Give me a bowl of red bean porridge and I'll help!",
+     "happy:1.3"
+    ],
+    [
+     "nar",
+     "Awl ate the porridge, then hid, pointy and still, in a crack in the floor.",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "송곳이 호랑이 엉덩이를 콕! 찔렀어요!",
+   "en": "Awl gave the tiger's bottom a poke!",
+   "segs": [
+    [
+     "nar",
+     "Awl gave the tiger's bottom a poke!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "송곳이 콕! 찔렀지만, 호랑이는 저쪽에 있네요.",
+   "en": "Awl poked — poke! — but the tiger was over there.",
+   "segs": [
+    [
+     "nar",
+     "Awl poked — poke! — but the tiger was over there.",
+     "sad:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "쿵더쿵! 절구가 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 절구는 팥죽을 얻어먹고 문 위로 올라가 숨었어요.",
+   "en": "Thump-a-thump! Mortar arrived. Give me a bowl of red bean porridge and I'll help! Mortar ate the porridge, then climbed up above the door to hide.",
+   "segs": [
+    [
+     "nar",
+     "Thump-a-thump! Mortar arrived.",
+     "smart"
+    ],
+    [
+     "jeolgu",
+     "Give me a bowl of red bean porridge and I'll help!",
+     "happy:1.3"
+    ],
+    [
+     "nar",
+     "Mortar ate the porridge, then climbed up above the door to hide.",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "절구가 문 위에서 쿵! 호랑이 머리 위로 떨어졌어요!",
+   "en": "Mortar fell from above the door — thump! — right on the tiger's head!",
+   "segs": [
+    [
+     "nar",
+     "Mortar fell from above the door — thump! — right on the tiger's head!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "절구가 쿵! 떨어졌지만 호랑이를 못 맞혔어요!",
+   "en": "Mortar fell — thump! — but missed the tiger!",
+   "segs": [
+    [
+     "nar",
+     "Mortar fell — thump! — but missed the tiger!",
+     "sad:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "펄럭펄럭~ 멍석이 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 멍석은 팥죽을 얻어먹고 마당에 돌돌 말려 숨었어요.",
+   "en": "Flap, flap! Straw Mat arrived. Give me a bowl of red bean porridge and I'll help! Straw Mat ate the porridge, then rolled up tight in the yard to hide.",
+   "segs": [
+    [
+     "nar",
+     "Flap, flap! Straw Mat arrived.",
+     "smart"
+    ],
+    [
+     "myeongseok",
+     "Give me a bowl of red bean porridge and I'll help!",
+     "happy:1.3"
+    ],
+    [
+     "nar",
+     "Straw Mat ate the porridge, then rolled up tight in the yard to hide.",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "멍석이 호랑이를 돌돌돌 말아 버렸어요!",
+   "en": "Straw Mat rolled the tiger up, round and round and round!",
+   "segs": [
+    [
+     "nar",
+     "Straw Mat rolled the tiger up, round and round and round!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "멍석이 펄럭펄럭… 아무것도 못 말았어요!",
+   "en": "Straw Mat flapped and flapped... and didn't roll up a thing!",
+   "segs": [
+    [
+     "nar",
+     "Straw Mat flapped and flapped... and didn't roll up a thing!",
+     "sad:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "성큼성큼! 지게가 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 지게는 팥죽을 얻어먹고 담벼락에 기대어 숨었어요.",
+   "en": "Stomp, stomp! Carrier came striding in. Give me a bowl of red bean porridge and I'll help! Carrier ate the porridge, then leaned against the garden wall to hide.",
+   "segs": [
+    [
+     "nar",
+     "Stomp, stomp! Carrier came striding in.",
+     "smart"
+    ],
+    [
+     "jige",
+     "Give me a bowl of red bean porridge and I'll help!",
+     "happy:1.3"
+    ],
+    [
+     "nar",
+     "Carrier ate the porridge, then leaned against the garden wall to hide.",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "지게가 호랑이를 번쩍 지고 가서 바다에 풍덩! 던져 버렸어요!",
+   "en": "Carrier hoisted the tiger up, carried the tiger off, and — splash! — tossed the tiger into the sea!",
+   "segs": [
+    [
+     "nar",
+     "Carrier hoisted the tiger up, carried the tiger off, and — splash! — tossed the tiger into the sea!",
+     "toneup:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "지게가 낑낑… 힘센 호랑이를 들 수가 없어요!",
+   "en": "Carrier groaned and strained... the strong tiger was too heavy to lift!",
+   "segs": [
+    [
+     "nar",
+     "Carrier groaned and strained... the strong tiger was too heavy to lift!",
+     "sad:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "\"호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.\" 할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요. 누가 먼저 혼내 줄까요?",
+   "en": "Tiger, before we eat the porridge, please watch the fire for me. At Grandma's words, the tiger squatted down by the fireplace. Who should teach the tiger a lesson first?",
+   "segs": [
+    [
+     "halmi",
+     "Tiger, before we eat the porridge, please watch the fire for me.",
+     "happy:0.9"
+    ],
+    [
+     "nar",
+     "At Grandma's words, the tiger squatted down by the fireplace. Who should teach the tiger a lesson first?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "\"앗, 뜨거워! 눈이야!\" 호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요. 다음은 누구일까요?",
+   "en": "Ow, hot! My eyes! The tiger dunked its face into the water jar to wash its eyes. Who's next?",
+   "segs": [
+    [
+     "tiger",
+     "Ow, hot! My eyes!",
+     "toneup:1.2"
+    ],
+    [
+     "nar",
+     "The tiger dunked its face into the water jar to wash its eyes. Who's next?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "\"아야야!\" 호랑이가 깜짝 놀라 뒷걸음질을 쳤어요. 다음은 누구죠?",
+   "en": "Yowch! The tiger jumped in surprise and stumbled backward. Who's next?",
+   "segs": [
+    [
+     "tiger",
+     "Yowch!",
+     "sad:1.2"
+    ],
+    [
+     "nar",
+     "The tiger jumped in surprise and stumbled backward. Who's next?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "미끌! 호랑이가 꽈당 넘어졌어요. 이번엔 누구일까요?",
+   "en": "Slip! The tiger went crash — flat on the floor! Who is it this time?",
+   "segs": [
+    [
+     "nar",
+     "Slip! The tiger went crash — flat on the floor! Who is it this time?",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "\"엉엉, 아파!\" 호랑이가 문 쪽으로 도망가요. 다음은 누구?",
+   "en": "Boo-hoo, that hurts! The tiger ran away toward the door. Who's next?",
+   "segs": [
+    [
+     "tiger",
+     "Boo-hoo, that hurts!",
+     "sad:1.2"
+    ],
+    [
+     "nar",
+     "The tiger ran away toward the door. Who's next?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "쿵! 절구에 맞은 호랑이가 마당으로 도망쳐 쭉 뻗어 버렸어요. 이제 누구 차례죠?",
+   "en": "Thump! Hit by the Mortar, the tiger ran out into the yard and stretched out flat. Whose turn is it now?",
+   "segs": [
+    [
+     "nar",
+     "Thump! Hit by the Mortar, the tiger ran out into the yard and stretched out flat. Whose turn is it now?",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "돌돌돌! 호랑이가 멍석에 꽁꽁 말렸어요. 마지막은 누구일까요?",
+   "en": "Round and round! The tiger got rolled up tight in the Straw Mat. Who's last?",
+   "segs": [
+    [
+     "nar",
+     "Round and round! The tiger got rolled up tight in the Straw Mat. Who's last?",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "만세! 호랑이를 물리쳤어요! 할멈은 친구들과 맛있는 팥죽을 나누어 먹었답니다.",
+   "en": "Hooray! The tiger was beaten! Grandma shared yummy red bean porridge with all her friends.",
+   "segs": [
+    [
+     "nar",
+     "Hooray! The tiger was beaten! Grandma shared yummy red bean porridge with all her friends.",
+     "happy:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "친구들을 톡 눌러서 인사해 봐요!",
+   "en": "Tap your friends to say hello!",
+   "segs": [
+    [
+     "nar",
+     "Tap your friends to say hello!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 아궁이 앞에 있어요. 아궁이 속에 누가 숨었지?",
+   "en": "The tiger is by the fireplace. Who is hiding inside the fireplace?",
+   "segs": [
+    [
+     "nar",
+     "The tiger is by the fireplace. Who is hiding inside the fireplace?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "알밤을 눌러 봐요!",
+   "en": "Tap Chestnut!",
+   "segs": [
+    [
+     "nar",
+     "Tap Chestnut!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 물독에 얼굴을 넣었어요. 물독 속에 누가 숨었지?",
+   "en": "The tiger dunked its face in the water jar. Who is hiding in the water jar?",
+   "segs": [
+    [
+     "nar",
+     "The tiger dunked its face in the water jar. Who is hiding in the water jar?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "자라를 눌러 봐요!",
+   "en": "Tap Turtle!",
+   "segs": [
+    [
+     "nar",
+     "Tap Turtle!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 부엌 바닥으로 뒷걸음질! 바닥에 납작 숨은 친구는 누구지?",
+   "en": "The tiger is backing up onto the kitchen floor! Who is hiding flat on the floor?",
+   "segs": [
+    [
+     "nar",
+     "The tiger is backing up onto the kitchen floor! Who is hiding flat on the floor?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "쇠똥을 눌러 봐요!",
+   "en": "Tap Cow Plop!",
+   "segs": [
+    [
+     "nar",
+     "Tap Cow Plop!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 바닥에 꽈당 넘어졌어요. 바닥 틈에 뾰족 숨은 친구는 누구지?",
+   "en": "The tiger fell flat on the floor. Who is hiding, all pointy, in a crack in the floor?",
+   "segs": [
+    [
+     "nar",
+     "The tiger fell flat on the floor. Who is hiding, all pointy, in a crack in the floor?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "송곳을 눌러 봐요!",
+   "en": "Tap Awl!",
+   "segs": [
+    [
+     "nar",
+     "Tap Awl!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 문 앞에 있어요. 문 위에 누가 숨었지?",
+   "en": "The tiger is by the door. Who is hiding above the door?",
+   "segs": [
+    [
+     "nar",
+     "The tiger is by the door. Who is hiding above the door?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "절구를 눌러 봐요!",
+   "en": "Tap Mortar!",
+   "segs": [
+    [
+     "nar",
+     "Tap Mortar!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 마당에 쭉 뻗었어요. 마당에 돌돌 말려 숨은 친구는 누구지?",
+   "en": "The tiger is stretched out in the yard. Who is hiding, rolled up, in the yard?",
+   "segs": [
+    [
+     "nar",
+     "The tiger is stretched out in the yard. Who is hiding, rolled up, in the yard?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "멍석을 눌러 봐요!",
+   "en": "Tap Straw Mat!",
+   "segs": [
+    [
+     "nar",
+     "Tap Straw Mat!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 멍석에 꽁꽁 말렸어요. 담벼락에 기대 숨은 친구는 누구지?",
+   "en": "The tiger is rolled up tight in the Straw Mat. Who is hiding against the wall?",
+   "segs": [
+    [
+     "nar",
+     "The tiger is rolled up tight in the Straw Mat. Who is hiding against the wall?",
+     "smart"
+    ]
+   ]
+  },
+  {
+   "text": "지게를 눌러 봐요!",
+   "en": "Tap Carrier!",
+   "segs": [
+    [
+     "nar",
+     "Tap Carrier!",
+     "happy:1.1"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "cut_bam": [
+   [
+    "bam",
+    "Take that! Chestnut, fire!",
+    "toneup:1.5",
+    "Chestnut pops out of the fireplace!"
+   ],
+   [
+    "tiger",
+    "Ow-ow-ow, my eyes!",
+    "sad:1.2",
+    "Chestnut popped out and bonked the tiger right in the eye!"
+   ]
+  ],
+  "cut_jara": [
+   [
+    "jara",
+    "Chomp! Got you good!",
+    "toneup:1.5",
+    "Turtle bites the tiger's mouth from the water jar!"
+   ],
+   [
+    "tiger",
+    "Ow, ow, ow! My mouth! Let go, let go!",
+    "sad:1.2",
+    "Turtle bit the tiger's mouth!"
+   ]
+  ],
+  "cut_ddong": [
+   [
+    "ddong",
+    "Watch out, it's slippery here!",
+    "happy:1.4",
+    "The tiger backs up and steps on Cow Plop!"
+   ],
+   [
+    "tiger",
+    "Whoa! So slippery!",
+    "toneup:1.2",
+    "The tiger stepped on Cow Plop and slipped!"
+   ]
+  ],
+  "cut_songgot": [
+   [
+    "songgot",
+    "Poke! Pretty prickly, huh?",
+    "happy:1.4",
+    "Awl pokes the fallen tiger!"
+   ],
+   [
+    "tiger",
+    "Ouch! My bottom!",
+    "toneup:1.2",
+    "Awl poked the tiger's bottom!"
+   ]
+  ],
+  "cut_jeolgu": [
+   [
+    "jeolgu",
+    "Thump-a-thump, here I come!",
+    "toneup:1.5",
+    "Mortar falls from above the door!"
+   ],
+   [
+    "tiger",
+    "Oh my, my head!",
+    "sad:1.2",
+    "Mortar fell right on the tiger's head!"
+   ]
+  ],
+  "cut_myeongseok": [
+   [
+    "myeongseok",
+    "Round and round, roll up tight!",
+    "toneup:1.5",
+    "Straw Mat rolls up the tiger!"
+   ],
+   [
+    "tiger",
+    "Ugh, I can't move! Let me out!",
+    "sad:1.2",
+    "Straw Mat rolled the tiger up tight!"
+   ]
+  ],
+  "cut_jige": [
+   [
+    "jige",
+    "Heave-ho! Off to the sea — splash!",
+    "toneup:1.5",
+    "Carrier throws the rolled-up tiger into the sea!"
+   ],
+   [
+    "tiger",
+    "Aaaaah!",
+    "toneup:1.2",
+    "The tiger fell into the sea with a splash!"
+   ]
+  ],
+  "cut_jige_b": [
+   [
+    "tiger",
+    "Help! Somebody help! I'll never do it again!",
+    "sad:1.2",
+    "Carrier tossed the tiger into the sea with a splash!"
+   ]
+  ],
+  "cut_wrong_1": [
+   [
+    "tiger",
+    "Ha ha ha! No way!",
+    "happy:1.2",
+    "A friend missed. The tiger laughs."
+   ]
+  ],
+  "cut_wrong_2": [
+   [
+    "tiger",
+    "Hee hee, that doesn't hurt one bit!",
+    "happy:1.2",
+    "A friend missed. The tiger teases."
+   ]
+  ],
+  "oops_bam": [
+   [
+    "bam",
+    "Huh? Where did the tiger go?",
+    "toneup:1.2",
+    null
+   ]
+  ],
+  "oops_jara": [
+   [
+    "jara",
+    "Huh? There's nothing here?",
+    "toneup:1.2",
+    null
+   ]
+  ],
+  "oops_ddong": [
+   [
+    "ddong",
+    "Aw, you didn't step on me!",
+    "sad:1.2",
+    null
+   ]
+  ],
+  "oops_songgot": [
+   [
+    "songgot",
+    "Huh? I only poked the air!",
+    "toneup:1.2",
+    null
+   ]
+  ],
+  "oops_jeolgu": [
+   [
+    "jeolgu",
+    "Oops, I missed!",
+    "sad:1.2",
+    null
+   ]
+  ],
+  "oops_myeongseok": [
+   [
+    "myeongseok",
+    "Huh? There's nobody here!",
+    "toneup:1.2",
+    null
+   ]
+  ],
+  "oops_jige": [
+   [
+    "jige",
+    "Hrrng... oh my, so heavy!",
+    "sad:1.2",
+    null
+   ]
+  ],
+  "hi_bam": [
+   [
+    "bam",
+    "Thank you, Grandma! Best porridge ever!",
+    "happy:1.4",
+    null
+   ]
+  ],
+  "hi_jara": [
+   [
+    "jara",
+    "This porridge is so yummy!",
+    "happy:1.4",
+    null
+   ]
+  ],
+  "hi_ddong": [
+   [
+    "ddong",
+    "Hee hee, I'm so excited too!",
+    "happy:1.4",
+    null
+   ]
+  ],
+  "hi_songgot": [
+   [
+    "songgot",
+    "Poke, poke! We won!",
+    "happy:1.4",
+    null
+   ]
+  ],
+  "hi_jeolgu": [
+   [
+    "jeolgu",
+    "Thump-a-thump! Hooray!",
+    "happy:1.4",
+    null
+   ]
+  ],
+  "hi_myeongseok": [
+   [
+    "myeongseok",
+    "Round and round! Thank you!",
+    "happy:1.4",
+    null
+   ]
+  ],
+  "hi_jige": [
+   [
+    "jige",
+    "Heave-ho! I'll come play again!",
+    "happy:1.4",
+    null
+   ]
+  ],
+  "hi_halmi": [
+   [
+    "halmi",
+    "Thank you, my dears! Let's all eat porridge together!",
+    "happy:1.3",
+    null
+   ]
+  ]
+ },
+ "ui": {
+  "알밤": "Chestnut",
+  "자라": "Turtle",
+  "쇠똥": "Cow Plop",
+  "송곳": "Awl",
+  "절구": "Mortar",
+  "멍석": "Straw Mat",
+  "지게": "Carrier",
+  "어흥!": "Roar!",
+  "어라?": "Huh?",
+  "톡!": "Pop!",
+  "앙!": "Chomp!",
+  "미끌~": "Slip~",
+  "꽈당!": "Crash!",
+  "콕!": "Poke!",
+  "쿵!": "Thump!",
+  "돌돌돌!": "Roll!",
+  "풍덩!": "Splash!",
+  "동짓날 저녁": "The Longest Night",
+  "마당": "The Yard",
+  "깜깜한 밤": "Dark, Dark Night",
+  "모두 꾸벅": "Everybody Bows",
+  "꾹 눌러 건너뛰기": "Hold to skip",
+  "팥죽할멈과 호랑이": "The Tiger and the Red Bean Porridge",
+  "친구들을 순서대로 불러서 호랑이를 물리쳐요!": "Call your friends in order and send the tiger packing!",
+  "만세!": "Hooray!",
+  "친구들이 힘을 모아 호랑이를 물리쳤어요!": "The friends joined forces and beat the tiger!"
+ }
+}
