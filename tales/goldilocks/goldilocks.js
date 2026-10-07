@@ -521,7 +521,7 @@
       listener: r => (r === 'goldi' ? 'baby' : goldi.pos.isConnected ? 'goldi' : r === 'baby' ? 'mom' : 'baby'),
       noFace: ['goldi', 'dad', 'mom', 'baby'],
     });
-    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]); // 말풍선 없는 소리 대사
+    const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
     const cutVo = k => setTimeout(() => vo(k), 380);
     const put = (a, x, y, s = 1, parent = T.world) => {
       parent.appendChild(a.pos); a.setScale(s); a.place(x, y); a.pose(''); a.body.style.transform = ''; a.pos.style.opacity = '';
@@ -1046,10 +1046,12 @@
     for (let li = 0; li < LINES.length; li++) {
       const [syl, notes, who] = LINES[li];
       svg.replaceChildren();
-      const parts = SHOW[li].split(' ');
+      const shown = T.tr(SHOW[li]), en = shown !== SHOW[li];
+      const parts = shown.split(' ');
       const t = T.el('text', { x: 500, y: 74, 'text-anchor': 'middle', 'font-size': 46, 'font-weight': 800, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", 'paint-order': 'stroke', stroke: '#fff', 'stroke-width': 9 }, svg);
       const spans = []; let i = 0;
-      parts.forEach((w, wi) => [...w].forEach((ch, ci) => {
+      if (en) parts.forEach((w, wi) => { const sp = T.el('tspan', { fill: C.pine }, t); sp.textContent = (wi ? ' ' : '') + w; spans.push(sp); });
+      else parts.forEach((w, wi) => [...w].forEach((ch, ci) => {
         const sp = T.el('tspan', { fill: C.pine }, t); sp.textContent = (wi && !ci ? ' ' : '') + ch; spans.push(sp); i++;
       }));
       const seq = notes.split(' ').map(x => x.split(':'));
@@ -1059,7 +1061,8 @@
         const dur = BEAT * +seq[k][1];
         T.tone(hz, dur * .9, { type: 'triangle', vol: .24 });
         T.tone(hz * 2, dur * .5, { type: 'sine', vol: .05 });
-        if (spans[k]) spans[k].setAttribute('fill', C.bean);
+        const sp = spans[en ? Math.floor(k * spans.length / seq.length) : k];
+        if (sp) sp.setAttribute('fill', C.bean);
         const a = Array.isArray(who) ? who[k] : who;
         if (a) a.hop(last ? 26 : 16, 280); else if (dur >= BEAT) goldi.hop(12, 240);
         await T.sleep(dur * 1000);
@@ -1072,7 +1075,7 @@
 
   /* ================= 만화 컷 (400×300) ================= */
   function cutText(T, svg, word, y = 62) {
-    T.el('text', { x: 200, y, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: word }, svg);
+    T.el('text', { x: 200, y, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(word) }, svg);
   }
   function cutFace(T, svg, face, word) {
     const g = T.el('g', { transform: 'translate(200,560) scale(3.3)' }, svg);

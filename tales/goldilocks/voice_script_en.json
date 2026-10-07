@@ -1,0 +1,1321 @@
+{
+ "voices": {
+  "nar": "tc_67d237aac9ac563922580832",
+  "goldi": "tc_5c547544fcfee90007fed454",
+  "dad": "tc_67512e5af2b6dbabce63f92a",
+  "mom": "tc_644a05b537254553823492fb",
+  "baby": "tc_6699eb3849dfac016c29444c",
+  "bowl": "tc_699d27d2f197c861791ac91b"
+ },
+ "lines": [
+  {
+   "text": "숲속 통나무집에 곰 세 식구가 살았어요.",
+   "en": "A family of three bears lived in a log cabin in the woods.",
+   "segs": [
+    [
+     "nar",
+     "A family of three bears lived in a log cabin in the woods."
+    ]
+   ]
+  },
+  {
+   "text": "곰 가족을 톡 눌러서 인사해요!",
+   "en": "Tap the bear family to say hello!",
+   "segs": [
+    [
+     "nar",
+     "Tap the bear family to say hello!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "곰을 톡 눌러서 안녕!",
+   "en": "Tap a bear and say hi!",
+   "segs": [
+    [
+     "nar",
+     "Tap a bear and say hi!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰은 굵은 목소리, 아기 곰은 가느다란 목소리예요.",
+   "en": "Papa Bear has a deep voice, and Baby Bear has a tiny voice.",
+   "segs": [
+    [
+     "nar",
+     "Papa Bear has a deep voice, and Baby Bear has a tiny voice."
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰이 맛있는 죽을 끓였어요. 그런데 너무 뜨거워요!",
+   "en": "Mama Bear cooked some yummy porridge. But it's too hot!",
+   "segs": [
+    [
+     "nar",
+     "Mama Bear cooked some yummy porridge. But it's too hot!",
+     "toneup:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "톡톡 눌러서 후후 불어 줘요!",
+   "en": "Tap, tap, and blow on it for me!",
+   "segs": [
+    [
+     "nar",
+     "Tap, tap, and blow on it for me!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "죽을 톡톡 눌러서 후후!",
+   "en": "Tap the porridge and blow! Whoo!",
+   "segs": [
+    [
+     "nar",
+     "Tap the porridge and blow! Whoo!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "김이 줄었지만, 아직 뜨거워요.",
+   "en": "The steam is going down, but it's still hot.",
+   "segs": [
+    [
+     "nar",
+     "The steam is going down, but it's still hot."
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"죽이 식을 동안 산책 다녀오자!\"",
+   "en": "Papa Bear: \"Let's go for a walk while the porridge cools!\"",
+   "segs": [
+    [
+     "dad",
+     "Let's go for a walk while the porridge cools!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "숲속에는 금빛 머리 골디락스가 살았어요.",
+   "en": "In the woods lived a girl with golden hair, named Goldilocks.",
+   "segs": [
+    [
+     "nar",
+     "In the woods lived a girl with golden hair, named Goldilocks."
+    ]
+   ]
+  },
+  {
+   "text": "옆으로 쓱 밀어서 같이 걸어요!",
+   "en": "Swipe sideways and walk along with her!",
+   "segs": [
+    [
+     "nar",
+     "Swipe sideways and walk along with her!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "옆으로 쓱! 골디락스랑 걸어요.",
+   "en": "Swipe sideways! Walk with Goldilocks.",
+   "segs": [
+    [
+     "nar",
+     "Swipe sideways! Walk with Goldilocks.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "꽃을 세 송이 땄어요. 어? 저기 통나무집이 있어요!",
+   "en": "She picked three flowers. Oh? Look, a log cabin!",
+   "segs": [
+    [
+     "nar",
+     "She picked three flowers."
+    ],
+    [
+     "goldi",
+     "Oh? Look, a log cabin!",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "우와, 커다란 문이에요. 문을 톡 두드려 봐요.",
+   "en": "Wow, what a big door! Give it a knock.",
+   "segs": [
+    [
+     "goldi",
+     "Wow, what a big door!",
+     "toneup:1.3"
+    ],
+    [
+     "nar",
+     "Give it a knock.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "문을 톡! 똑똑 두드려요.",
+   "en": "Tap the door! Knock, knock.",
+   "segs": [
+    [
+     "nar",
+     "Tap the door! Knock, knock.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스: \"계세요?\"",
+   "en": "Goldilocks: \"Hello? Is anyone home?\"",
+   "segs": [
+    [
+     "goldi",
+     "Hello? Is anyone home?"
+    ]
+   ]
+  },
+  {
+   "text": "아무 대답이 없어요.",
+   "en": "There is no answer.",
+   "segs": [
+    [
+     "nar",
+     "There is no answer.",
+     "tonedown:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "문이 삐걱 열렸어요. 골디락스가 살짝 들어가 봤어요.",
+   "en": "The door creaked open. Goldilocks tiptoed inside.",
+   "segs": [
+    [
+     "nar",
+     "The door creaked open. Goldilocks tiptoed inside.",
+     "whisper:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "식탁 위에 죽이 세 그릇 있어요.",
+   "en": "There are three bowls of porridge on the table.",
+   "segs": [
+    [
+     "nar",
+     "There are three bowls of porridge on the table."
+    ]
+   ]
+  },
+  {
+   "text": "딱 좋은 죽은 어느 걸까요?",
+   "en": "Which porridge is just right?",
+   "segs": [
+    [
+     "nar",
+     "Which porridge is just right?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "펄펄 너무 뜨거워요!",
+   "en": "Hot, hot! It's way too hot!",
+   "segs": [
+    [
+     "goldi",
+     "Hot, hot! It's way too hot!",
+     "toneup:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "얼음처럼 너무 차가워요!",
+   "en": "It's way too cold, like ice!",
+   "segs": [
+    [
+     "goldi",
+     "It's way too cold, like ice!",
+     "toneup:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "김이 펄펄 나면 뜨겁고, 얼음이 있으면 차가워요.",
+   "en": "Porridge with lots of steam is hot, and porridge with ice is cold.",
+   "segs": [
+    [
+     "nar",
+     "Porridge with lots of steam is hot, and porridge with ice is cold."
+    ]
+   ]
+  },
+  {
+   "text": "김이 살짝 나는 작은 그릇이에요!",
+   "en": "It's the small bowl with just a little steam!",
+   "segs": [
+    [
+     "nar",
+     "It's the small bowl with just a little steam!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "딱 좋아요! 냠냠, 작은 그릇을 다 먹어 버렸어요.",
+   "en": "Just right! Yum, yum! She ate up the whole small bowl.",
+   "segs": [
+    [
+     "goldi",
+     "Just right! Yum, yum!",
+     "happy:1.4"
+    ],
+    [
+     "nar",
+     "She ate up the whole small bowl."
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 의자가 세 개 있어요.",
+   "en": "Now there are three chairs.",
+   "segs": [
+    [
+     "nar",
+     "Now there are three chairs."
+    ]
+   ]
+  },
+  {
+   "text": "딱 맞는 의자는 어느 걸까요?",
+   "en": "Which chair is just right?",
+   "segs": [
+    [
+     "nar",
+     "Which chair is just right?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "너무 높아요! 다리가 달랑달랑.",
+   "en": "It's too high! Her legs dangle, dangle.",
+   "segs": [
+    [
+     "goldi",
+     "It's too high!",
+     "toneup:1.4"
+    ],
+    [
+     "nar",
+     "Her legs dangle, dangle.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "너무 푹신해서 쏙 파묻혔어요!",
+   "en": "It's so squishy, she sank right in!",
+   "segs": [
+    [
+     "nar",
+     "It's so squishy, she sank right in!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "너무 크지도, 너무 푹신하지도 않은 의자예요.",
+   "en": "It's the chair that's not too big and not too squishy.",
+   "segs": [
+    [
+     "nar",
+     "It's the chair that's not too big and not too squishy."
+    ]
+   ]
+  },
+  {
+   "text": "작은 의자예요! 반짝이는 의자를 눌러요.",
+   "en": "It's the small chair! Tap the sparkling chair.",
+   "segs": [
+    [
+     "nar",
+     "It's the small chair! Tap the sparkling chair.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "딱 맞아요! 그런데…",
+   "en": "Just right! But then...",
+   "segs": [
+    [
+     "goldi",
+     "Just right!",
+     "happy:1.4"
+    ],
+    [
+     "nar",
+     "But then...",
+     "whisper:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "뿌지직! 작은 의자가 부서져서 엉덩방아를 찧었어요.",
+   "en": "Crack! The little chair broke, and she plopped down on her bottom.",
+   "segs": [
+    [
+     "nar",
+     "Crack! The little chair broke, and she plopped down on her bottom.",
+     "toneup:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "하암, 졸려요. 위층에 침대가 세 개 있어요.",
+   "en": "Yaaawn, I'm sleepy. There are three beds upstairs.",
+   "segs": [
+    [
+     "goldi",
+     "Yaaawn, I'm sleepy.",
+     "tonedown:1.4"
+    ],
+    [
+     "nar",
+     "There are three beds upstairs."
+    ]
+   ]
+  },
+  {
+   "text": "딱 좋은 침대는 어느 걸까요?",
+   "en": "Which bed is just right?",
+   "segs": [
+    [
+     "nar",
+     "Which bed is just right?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "너무 딱딱해요!",
+   "en": "It's too hard!",
+   "segs": [
+    [
+     "goldi",
+     "It's too hard!",
+     "toneup:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "너무 푹신해요!",
+   "en": "It's too soft!",
+   "segs": [
+    [
+     "goldi",
+     "It's too soft!",
+     "toneup:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "딱딱하지도, 너무 푹신하지도 않은 침대예요.",
+   "en": "It's the bed that's not too hard and not too soft.",
+   "segs": [
+    [
+     "nar",
+     "It's the bed that's not too hard and not too soft."
+    ]
+   ]
+  },
+  {
+   "text": "작은 침대예요! 반짝이는 침대를 눌러요.",
+   "en": "It's the small bed! Tap the sparkling bed.",
+   "segs": [
+    [
+     "nar",
+     "It's the small bed! Tap the sparkling bed.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "딱 좋아요! 자장가를 들려줄게요. 잘 들어 봐요.",
+   "en": "Just right! Let's hear a lullaby. Listen closely.",
+   "segs": [
+    [
+     "goldi",
+     "Just right!",
+     "happy:1.4"
+    ],
+    [
+     "nar",
+     "Let's hear a lullaby. Listen closely.",
+     "whisper:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 침대를 꾹 누르고 있어요. 자장가가 이어져요!",
+   "en": "This time, press and hold the bed. The lullaby keeps going!",
+   "segs": [
+    [
+     "nar",
+     "This time, press and hold the bed. The lullaby keeps going!",
+     "whisper:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "침대를 꾹 누르고 있어요. 자장자장.",
+   "en": "Keep holding the bed. Hush-a-bye, hush-a-bye.",
+   "segs": [
+    [
+     "nar",
+     "Keep holding the bed. Hush-a-bye, hush-a-bye.",
+     "whisper:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스는 쿨쿨 잠이 들었어요.",
+   "en": "Goldilocks fell fast asleep. Zzz.",
+   "segs": [
+    [
+     "nar",
+     "Goldilocks fell fast asleep. Zzz.",
+     "whisper:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "그때 곰 가족이 산책에서 돌아왔어요.",
+   "en": "Just then, the bear family came home from their walk.",
+   "segs": [
+    [
+     "nar",
+     "Just then, the bear family came home from their walk.",
+     "tonedown:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"누가 내 죽을 먹었지?\"",
+   "en": "Papa Bear: \"Who ate my porridge?\"",
+   "segs": [
+    [
+     "dad",
+     "Who ate my porridge?",
+     "angry:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "그릇이 뒤죽박죽이에요. 주인을 찾아 줘요!",
+   "en": "The bowls are all mixed up. Help find each bowl's owner!",
+   "segs": [
+    [
+     "nar",
+     "The bowls are all mixed up. Help find each bowl's owner!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "이 큰 그릇은 누구 거예요?",
+   "en": "Whose is this big bowl?",
+   "segs": [
+    [
+     "nar",
+     "Whose is this big bowl?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "큰 그릇은 가장 큰 곰 거예요.",
+   "en": "The big bowl belongs to the biggest bear.",
+   "segs": [
+    [
+     "nar",
+     "The big bowl belongs to the biggest bear."
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰이에요! 반짝이는 곰을 눌러요.",
+   "en": "It's Papa Bear! Tap the sparkling bear.",
+   "segs": [
+    [
+     "nar",
+     "It's Papa Bear! Tap the sparkling bear.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰: \"내 그릇은 더 작아요~\"",
+   "en": "Mama Bear: \"My bowl is smaller~\"",
+   "segs": [
+    [
+     "mom",
+     "My bowl is smaller~"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"내 그릇은 더 작아요~\"",
+   "en": "Baby Bear: \"My bowl is smaller~\"",
+   "segs": [
+    [
+     "baby",
+     "My bowl is smaller~"
+    ]
+   ]
+  },
+  {
+   "text": "이 중간 그릇은 누구 거예요?",
+   "en": "Whose is this medium bowl?",
+   "segs": [
+    [
+     "nar",
+     "Whose is this medium bowl?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "중간 그릇은 중간 곰 거예요.",
+   "en": "The medium bowl belongs to the middle bear.",
+   "segs": [
+    [
+     "nar",
+     "The medium bowl belongs to the middle bear."
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰이에요! 반짝이는 곰을 눌러요.",
+   "en": "It's Mama Bear! Tap the sparkling bear.",
+   "segs": [
+    [
+     "nar",
+     "It's Mama Bear! Tap the sparkling bear.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"내 그릇은 더 커요~\"",
+   "en": "Papa Bear: \"My bowl is bigger~\"",
+   "segs": [
+    [
+     "dad",
+     "My bowl is bigger~"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"내 그릇은 더 작아요~\"",
+   "en": "Baby Bear: \"My bowl is smaller~\"",
+   "segs": [
+    [
+     "baby",
+     "My bowl is smaller~"
+    ]
+   ]
+  },
+  {
+   "text": "이 작은 그릇은 누구 거예요?",
+   "en": "Whose is this small bowl?",
+   "segs": [
+    [
+     "nar",
+     "Whose is this small bowl?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "작은 그릇은 가장 작은 곰 거예요.",
+   "en": "The small bowl belongs to the smallest bear.",
+   "segs": [
+    [
+     "nar",
+     "The small bowl belongs to the smallest bear."
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰이에요! 반짝이는 곰을 눌러요.",
+   "en": "It's Baby Bear! Tap the sparkling bear.",
+   "segs": [
+    [
+     "nar",
+     "It's Baby Bear! Tap the sparkling bear.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"내 그릇은 더 커요~\"",
+   "en": "Papa Bear: \"My bowl is bigger~\"",
+   "segs": [
+    [
+     "dad",
+     "My bowl is bigger~"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰: \"내 그릇은 더 커요~\"",
+   "en": "Mama Bear: \"My bowl is bigger~\"",
+   "segs": [
+    [
+     "mom",
+     "My bowl is bigger~"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"내 죽을 다 먹어 버렸어!\"",
+   "en": "Baby Bear: \"Someone ate up all my porridge!\"",
+   "segs": [
+    [
+     "baby",
+     "Someone ate up all my porridge!",
+     "sad:1.7"
+    ]
+   ]
+  },
+  {
+   "text": "누가 먹었을까요?",
+   "en": "Who could it have been?",
+   "segs": [
+    [
+     "nar",
+     "Who could it have been?",
+     "whisper:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "의자도 누구 건지 찾아 줘요.",
+   "en": "Now help find whose chair is whose.",
+   "segs": [
+    [
+     "nar",
+     "Now help find whose chair is whose.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "이 큰 의자는 누구 거예요?",
+   "en": "Whose is this big chair?",
+   "segs": [
+    [
+     "nar",
+     "Whose is this big chair?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "큰 의자는 가장 큰 곰 거예요.",
+   "en": "The big chair belongs to the biggest bear.",
+   "segs": [
+    [
+     "nar",
+     "The big chair belongs to the biggest bear."
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰이에요! 반짝이는 곰을 눌러요.",
+   "en": "It's Papa Bear! Tap the sparkling bear.",
+   "segs": [
+    [
+     "nar",
+     "It's Papa Bear! Tap the sparkling bear.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰: \"내 의자는 더 작아요~\"",
+   "en": "Mama Bear: \"My chair is smaller~\"",
+   "segs": [
+    [
+     "mom",
+     "My chair is smaller~"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"내 의자는 더 작아요~\"",
+   "en": "Baby Bear: \"My chair is smaller~\"",
+   "segs": [
+    [
+     "baby",
+     "My chair is smaller~"
+    ]
+   ]
+  },
+  {
+   "text": "이 중간 의자는 누구 거예요?",
+   "en": "Whose is this medium chair?",
+   "segs": [
+    [
+     "nar",
+     "Whose is this medium chair?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "중간 의자는 중간 곰 거예요.",
+   "en": "The medium chair belongs to the middle bear.",
+   "segs": [
+    [
+     "nar",
+     "The medium chair belongs to the middle bear."
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰이에요! 반짝이는 곰을 눌러요.",
+   "en": "It's Mama Bear! Tap the sparkling bear.",
+   "segs": [
+    [
+     "nar",
+     "It's Mama Bear! Tap the sparkling bear.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"내 의자는 더 커요~\"",
+   "en": "Papa Bear: \"My chair is bigger~\"",
+   "segs": [
+    [
+     "dad",
+     "My chair is bigger~"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"내 의자는 더 작아요~\"",
+   "en": "Baby Bear: \"My chair is smaller~\"",
+   "segs": [
+    [
+     "baby",
+     "My chair is smaller~"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"으앙, 내 의자가 부서졌어!\"",
+   "en": "Baby Bear: \"Waaah, my chair is broken!\"",
+   "segs": [
+    [
+     "baby",
+     "Waaah, my chair is broken!",
+     "sad:1.7"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰이 아기 곰을 꼭 안아 주었어요.",
+   "en": "Mama Bear gave Baby Bear a big, tight hug.",
+   "segs": [
+    [
+     "nar",
+     "Mama Bear gave Baby Bear a big, tight hug.",
+     "tonedown:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "그런데 위층에서 쿨쿨 소리가 나요.",
+   "en": "But then they heard a snoring sound upstairs.",
+   "segs": [
+    [
+     "nar",
+     "But then they heard a snoring sound upstairs.",
+     "whisper:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰이 살금살금 가 보니, 누가 자고 있어요!",
+   "en": "Baby Bear tiptoed over, and someone was sleeping there!",
+   "segs": [
+    [
+     "nar",
+     "Baby Bear tiptoed over, and someone was sleeping there!",
+     "whisper:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "이불을 톡 눌러 봐요.",
+   "en": "Tap the blanket.",
+   "segs": [
+    [
+     "nar",
+     "Tap the blanket.",
+     "whisper:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰이랑 이불을 톡!",
+   "en": "Tap the blanket with Baby Bear!",
+   "segs": [
+    [
+     "nar",
+     "Tap the blanket with Baby Bear!",
+     "whisper:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스와 곰 세 마리 눈이 딱 마주쳤어요!",
+   "en": "Goldilocks and the three bears looked straight at each other!",
+   "segs": [
+    [
+     "nar",
+     "Goldilocks and the three bears looked straight at each other!",
+     "toneup:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "창문으로 나가려다 치마가 딱 걸렸어요!",
+   "en": "She tried to climb out the window, but her skirt got caught!",
+   "segs": [
+    [
+     "nar",
+     "She tried to climb out the window, but her skirt got caught!",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스가 돌아서서 말했어요. \"미안해요.\"",
+   "en": "Goldilocks turned around and said, \"I'm sorry.\"",
+   "segs": [
+    [
+     "nar",
+     "Goldilocks turned around and said,"
+    ],
+    [
+     "goldi",
+     "I'm sorry.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스: \"허락 없이 들어와서 미안해요.\"",
+   "en": "Goldilocks: \"I'm sorry I came in without asking.\"",
+   "segs": [
+    [
+     "goldi",
+     "I'm sorry I came in without asking.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"괜찮아. 다음엔 똑똑 하고 기다려 줘.\"",
+   "en": "Papa Bear: \"It's okay. Next time, knock and wait for us.\"",
+   "segs": [
+    [
+     "dad",
+     "It's okay. Next time, knock and wait for us.",
+     "tonedown:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스: \"아기 곰 의자, 같이 고칠래?\"",
+   "en": "Goldilocks: \"Shall we fix Baby Bear's chair together?\"",
+   "segs": [
+    [
+     "goldi",
+     "Shall we fix Baby Bear's chair together?",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "톡톡 눌러서 뚝딱뚝딱 고쳐요!",
+   "en": "Tap, tap to hammer and fix it!",
+   "segs": [
+    [
+     "nar",
+     "Tap, tap to hammer and fix it!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "의자를 톡톡! 뚝딱뚝딱.",
+   "en": "Tap the chair! Bang, bang.",
+   "segs": [
+    [
+     "nar",
+     "Tap the chair! Bang, bang.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "짠! 의자가 다 고쳐졌어요.",
+   "en": "Ta-da! The chair is all fixed.",
+   "segs": [
+    [
+     "nar",
+     "Ta-da! The chair is all fixed.",
+     "happy:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"고마워! 우리 친구 하자!\"",
+   "en": "Baby Bear: \"Thank you! Let's be friends!\"",
+   "segs": [
+    [
+     "baby",
+     "Thank you! Let's be friends!",
+     "happy:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰이 새 죽을 끓였어요. 다 함께 먹어요!",
+   "en": "Mama Bear cooked fresh porridge. Let's all eat together!",
+   "segs": [
+    [
+     "nar",
+     "Mama Bear cooked fresh porridge. Let's all eat together!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "가장 작은 그릇부터 차례대로 톡 눌러요.",
+   "en": "Tap the bowls in order, starting with the smallest.",
+   "segs": [
+    [
+     "nar",
+     "Tap the bowls in order, starting with the smallest.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "가장 작은 그릇은 어느 걸까요?",
+   "en": "Which is the smallest bowl?",
+   "segs": [
+    [
+     "nar",
+     "Which is the smallest bowl?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "그다음은 중간 그릇!",
+   "en": "Next is the medium bowl!",
+   "segs": [
+    [
+     "nar",
+     "Next is the medium bowl!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "마지막은 가장 큰 그릇!",
+   "en": "Last is the biggest bowl!",
+   "segs": [
+    [
+     "nar",
+     "Last is the biggest bowl!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "큰 그릇을 찾아요.",
+   "en": "Find the big bowl.",
+   "segs": [
+    [
+     "nar",
+     "Find the big bowl.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "중간 그릇을 찾아요.",
+   "en": "Find the medium bowl.",
+   "segs": [
+    [
+     "nar",
+     "Find the medium bowl.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "작은 그릇을 찾아요.",
+   "en": "Find the small bowl.",
+   "segs": [
+    [
+     "nar",
+     "Find the small bowl.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "큰 그릇이 반짝반짝! 눌러 봐요.",
+   "en": "The big bowl is sparkling! Tap it.",
+   "segs": [
+    [
+     "nar",
+     "The big bowl is sparkling! Tap it.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "중간 그릇이 반짝반짝! 눌러 봐요.",
+   "en": "The medium bowl is sparkling! Tap it.",
+   "segs": [
+    [
+     "nar",
+     "The medium bowl is sparkling! Tap it.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "작은 그릇이 반짝반짝! 눌러 봐요.",
+   "en": "The small bowl is sparkling! Tap it.",
+   "segs": [
+    [
+     "nar",
+     "The small bowl is sparkling! Tap it.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "\"나는 다음이야~\"",
+   "en": "\"I'm next~\"",
+   "segs": [
+    [
+     "bowl",
+     "I'm next~"
+    ]
+   ]
+  },
+  {
+   "text": "작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.",
+   "en": "Small bowl, medium bowl, big bowl! All filled in order.",
+   "segs": [
+    [
+     "nar",
+     "Small bowl, medium bowl, big bowl! All filled in order.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스 그릇도 하나 더! 다 함께 냠냠.",
+   "en": "One more bowl for Goldilocks! Yum, yum, all together.",
+   "segs": [
+    [
+     "nar",
+     "One more bowl for Goldilocks! Yum, yum, all together.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스와 곰 가족은 사이좋은 친구가 되었답니다.",
+   "en": "Goldilocks and the bear family became good friends.",
+   "segs": [
+    [
+     "nar",
+     "Goldilocks and the bear family became good friends.",
+     "happy:1.3"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "hi_dad": [
+   [
+    "dad",
+    "Hello! Ho ho ho.",
+    "happy"
+   ]
+  ],
+  "hi_mom": [
+   [
+    "mom",
+    "Hello, nice to meet you!",
+    "happy"
+   ]
+  ],
+  "hi_baby": [
+   [
+    "baby",
+    "Hello, hello!",
+    "happy"
+   ]
+  ],
+  "mine_dad": [
+   [
+    "dad",
+    "This one's mine!",
+    "happy"
+   ]
+  ],
+  "mine_mom": [
+   [
+    "mom",
+    "Oh, this one's mine!",
+    "happy"
+   ]
+  ],
+  "chair_dad": [
+   [
+    "dad",
+    "My chair!",
+    "happy"
+   ]
+  ],
+  "chair_mom": [
+   [
+    "mom",
+    "Oh, that's my chair!",
+    "happy"
+   ]
+  ],
+  "cut_hot": [
+   [
+    "goldi",
+    "Ouch, hot! My tongue!",
+    "toneup:1.6",
+    "Goldilocks took a spoonful of the hot porridge."
+   ]
+  ],
+  "cut_cold": [
+   [
+    "goldi",
+    "Brrr, it's cold!",
+    "toneup:1.3",
+    "Goldilocks ate the icy cold porridge."
+   ]
+  ],
+  "cut_crack": [
+   [
+    "goldi",
+    "Uh-oh! Aaah!",
+    "toneup:1.6",
+    "The little chair breaks with a crack."
+   ]
+  ],
+  "cut_eyes": [
+   [
+    "goldi",
+    "Oh my goodness!",
+    "toneup:1.6",
+    "Goldilocks woke up and met the eyes of the three bears."
+   ],
+   [
+    "baby",
+    "Who are you?",
+    "toneup:1.3",
+    "There is a stranger in Baby Bear's bed."
+   ]
+  ],
+  "cut_skirt": [
+   [
+    "goldi",
+    "Oh no, my skirt is stuck!",
+    "toneup:1.4",
+    "Her skirt got caught as she tried to climb out the window."
+   ]
+  ]
+ },
+ "ui": {
+  "골디락스와 곰 세 마리": "Goldilocks and the Three Bears",
+  "크다, 중간, 작다!": "Big, medium, small!",
+  "\"미안해요\" 하면 다시 친구가 될 수 있어요!": "Say \"I'm sorry\" and you can be friends again!",
+  "앗 뜨거!": "Ouch, hot!",
+  "숲길": "Forest Path",
+  "똑똑똑": "Knock, Knock",
+  "죽 세 그릇": "Three Bowls of Porridge",
+  "의자 세 개": "Three Chairs",
+  "침대 세 개": "Three Beds",
+  "곰 가족이 왔어요": "The Bears Are Home",
+  "의자 주인": "Whose Chair?",
+  "누가 내 침대에?": "Who's in my bed?",
+  "미안해요": "I'm Sorry",
+  "안녕!": "Hello!",
+  "후~": "Whoo~",
+  "꽃 하나!": "Flower one!",
+  "꽃 둘!": "Flower two!",
+  "꽃 셋!": "Flower three!",
+  "똑똑!": "Knock, knock!",
+  "삐걱~": "Creeeak~",
+  "으 차가워!": "Brrr, cold!",
+  "냠냠!": "Yum yum!",
+  "달랑달랑~": "Dangle, dangle~",
+  "폭신~": "Squish~",
+  "쿵!": "Thud!",
+  "딱딱해!": "Hard!",
+  "푹신푹신~": "Squishy~",
+  "하암~": "Yaaawn~",
+  "쿨쿨": "Zzz",
+  "내 거!": "Mine!",
+  "으앙!": "Waaah!",
+  "내 의자!": "My chair!",
+  "깜짝!": "Surprise!",
+  "앗!": "Oh!",
+  "뚝딱!": "Bang bang!",
+  "짠!": "Ta-da!",
+  "부르르!": "Brrr!",
+  "뿌지직!": "Crack!",
+  "앗, 치마가!": "My skirt!",
+  "곰 세 마리가 한 집에 있어": "Three bears in one house",
+  "아빠 곰 엄마 곰 애기 곰": "Papa bear, mama bear, baby bear",
+  "아빠 곰은 뚱뚱해": "Papa bear is big and round",
+  "엄마 곰은 날씬해": "Mama bear is slim",
+  "애기 곰은 너무 귀여워": "Baby bear is so cute",
+  "히쭉히쭉 잘한다": "Grin, grin, well done!"
+ }
+}
