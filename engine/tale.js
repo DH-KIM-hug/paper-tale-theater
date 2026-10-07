@@ -823,7 +823,8 @@ const Tale = (() => {
   function lyric(text, { y = 74, size = 46, on = '#A93B32', off = '#3F6B4F' } = {}) {
     const t = el('text', { x: 500, y, 'text-anchor': 'middle', 'font-size': size, 'font-weight': 800, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", 'paint-order': 'stroke', stroke: '#fff', 'stroke-width': 9 }, fxL);
     const spans = [];
-    text.split(' ').forEach((w, wi) => [...w].forEach((ch, ci) => { const sp = el('tspan', { fill: off }, t); sp.textContent = (wi && !ci ? ' ' : '') + ch; spans.push(sp); }));
+    if (Array.isArray(text)) text.forEach(sy => { const sp = el('tspan', { fill: off }, t); sp.textContent = sy; spans.push(sp); }); // 영어: 음절 조각을 그대로 (한 음 = 한 조각)
+    else text.split(' ').forEach((w, wi) => [...w].forEach((ch, ci) => { const sp = el('tspan', { fill: off }, t); sp.textContent = (wi && !ci ? ' ' : '') + ch; spans.push(sp); }));
     return { set(k) { spans.forEach((sp, i) => sp.setAttribute('fill', i <= k ? on : off)); }, clear() { t.remove(); }, count: spans.length };
   }
 

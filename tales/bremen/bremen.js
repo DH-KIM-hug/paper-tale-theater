@@ -521,7 +521,7 @@
   async function run(T) {
     const { el, sleep, say, actor, camTo, camWide, camSnap, josa } = T;
     const S = makeSounds(T);
-    const pop0 = T.pop; T = { ...T, pop: (x, y, w, c) => pop0(clampX(x, 60 + [...w].length * 12), y, w, c) };
+    const pop0 = T.pop; T = { ...T, pop: (x, y, w, c) => pop0(clampX(x, 60 + [...T.tr(w)].length * 12), y, w, c) };
 
     /* 그림 미리 불러오기: 첫 장면(방앗간·당나귀·주인)과 네 친구를 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
     const loads = {};
@@ -571,7 +571,7 @@
     /* 대사 연출: 목소리 주인에게 카메라가 가고, 말하는 쪽과 듣는 쪽이 서로 마주 본다.
        주인·도둑은 뒤에서 만들어지므로 함수로 (아직 없으면 null) */
     const ref = f => () => { try { return f(); } catch (e) { return null; } };
-    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && setTimeout(() => AudioFX.voice(VOICE_LINES[k]), 380);
+    const vo = k => { const u = Narrator.voiceLine(k); return u && setTimeout(() => AudioFX.voice(u), 380); };
     T.director({
       cast: { ...cast, miller: ref(() => miller), robber: ref(() => rb[0]), boss: ref(() => rb[1]) },
       listener: (r, last) => {
@@ -939,7 +939,7 @@
     const singVoice = (n, d, i) => T.timbre(SING[LINE[i].k])(T.hz(n), d, 0, LINE[i].k === 'donkey' ? .12 : .2);
     const singNote = i => {
       const { k, ni, ly } = LINE[i], a = cast[k];
-      if (ni === 0) { lyr && lyr.clear(); lyr = T.lyric(ly, { y: 80 }); a.cry(.4); }
+      if (ni === 0) { lyr && lyr.clear(); { const en = T.tr(ly); lyr = T.lyric(en.includes('|') ? en.split('|') : ly, { y: 80 }); } a.cry(.4); }
       lyr.set(ni);
       a.hop(12, 240);
       note(T, a.x + 20, a.y - 110 * a.scale, [C.bean, C.gold, C.cream][i % 3]);
@@ -970,7 +970,7 @@
       const g2 = T.el('g', { transform: 'translate(110,150) rotate(20) scale(1.1)' }, svg); DRAW.dog(T, g2);
       const g3 = T.el('g', { transform: 'translate(300,130) rotate(-30) scale(1.2)' }, svg); DRAW.cat(T, g3);
       const g4 = T.el('g', { transform: 'translate(220,90) rotate(15) scale(1.1)' }, svg); DRAW.rooster(T, g4);
-      T.el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 60, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '와장창!' }, svg);
+      T.el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 60, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('와장창!') }, svg);
     }, { hold: 2000 }));
     // 탑째로 창문 안으로 쏙
     band.slice().reverse().forEach((a, i) => setTimeout(() => {
@@ -999,7 +999,7 @@
         const g = T.el('g', { transform: `translate(${x},${y}) rotate(${r}) scale(1.05)` }, svg); const p = drawLook(T, g, 'robber', 'home', c); if (p && p.mouth) p.mouth.setAttribute('ry', 9);
         T.el('path', { d: 'M-26 -176 L-10 -196 M0 -180 L0 -204 M26 -176 L10 -196', stroke: C.cream, 'stroke-width': 5, 'stroke-linecap': 'round' }, g);
       });
-      T.el('text', { x: 200, y: 58, 'text-anchor': 'middle', 'font-size': 50, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '으악, 괴물이다!' }, svg);
+      T.el('text', { x: 200, y: 58, 'text-anchor': 'middle', 'font-size': 50, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('으악, 괴물이다!') }, svg);
     }, { hold: 2200 });
     if (!yelled) S.giggle(); // 컷 목소리가 이어지는 동안 합성 웃음은 생략
     await say('도둑들은 "괴물이다!" 하고 숲으로 후다닥 달아났어요.');
@@ -1070,7 +1070,7 @@
       T.el('path', { d: 'M200 0 V300 M0 150 H400', stroke: C.bark, 'stroke-width': 6 }, svg);
       cells.forEach(([k, x, y, w, s]) => {
         const g = T.el('g', { transform: `translate(${x + 84},${y + 140}) scale(${s})` }, svg); drawLook(T, g, k, k === 'donkey' ? 'home' : 'sing');
-        T.el('text', { x: x + 160, y: y + 38, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: w }, svg);
+        T.el('text', { x: x + 160, y: y + 38, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(w) }, svg);
       });
     }, { hold: 3000 }));
     if (!told) S.giggle();
