@@ -83,6 +83,7 @@ const TALES = (() => {
     art: `<rect width="160" height="110" fill="${c.ind}"/>
       <g class="pc"><path d="M0 92 Q40 80 80 90 T160 86 V110 H0Z" fill="${c.lv}"/>
       <circle cx="40" cy="36" r="17" fill="${c.am}"/><circle cx="118" cy="32" r="14" fill="${c.cr}"/><circle cx="125" cy="27" r="12" fill="${c.ind}"/>
+    en: { title: 'The Sun and the Moon', line: 'Spot the tiger\'s sneaky paw, pick the strong rope, and climb up to the sky.' },
       <rect x="78" y="0" width="4" height="70" fill="${c.gd}"/>
       <circle cx="80" cy="74" r="7" fill="${c.sk}"/><path d="M72 72 a8 8 0 0 1 16 0z" fill="${c.ink}"/><rect x="74" y="80" width="12" height="14" rx="4" fill="${c.rd}"/></g>` },
 

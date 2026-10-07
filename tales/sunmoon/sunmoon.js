@@ -189,7 +189,7 @@
   const kok = T => AudioFX.sfx('chop') || (() => { T.tone([1300, 800], .06, { type: 'square', vol: .12 }); T.tone([500, 300], .08, { type: 'triangle', vol: .12, when: .04 }); })();
   const yeongcha = (T, i) => T.tone([300 + i * 50, 520 + i * 50], .18, { type: 'triangle', vol: .16 });
   /* 말풍선 없는 소리 대사 (컷신 속 외침): narration.js의 VOICE_LINES */
-  const cutVoice = (k, delay = 300) => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && setTimeout(() => AudioFX.voice(VOICE_LINES[k]), delay);
+  const cutVoice = (k, delay = 300) => { const u = Narrator.voiceLine(k); return u && setTimeout(() => AudioFX.voice(u), delay); };
 
   /* ================= 캐릭터 (임시 도형) ================= */
   /* 떡: 그림이면 흰 떡(분홍 꽃)·분홍 떡(초록 잎)을 i로 번갈아. (x,y)가 떡 가운데, 폭 26·s — 세기 쉽게 늘 떡 사이가 떨어지게 놓는다 */
@@ -451,7 +451,7 @@
     paper(b, [['path', { d: 'M-300 540 Q200 470 560 490 Q860 505 1300 470 V600 Q860 560 560 560 Q200 560 -300 610 Z', fill: h.road }]]);
     [[40, 420], [960, 420]].forEach(([x, y]) => paper(b, [['rect', { x: x - 8, y: y - 20, width: 16, height: 40, fill: C.bark }], ['path', { d: `M${x - 50} ${y - 16} L${x} ${y - 150} L${x + 50} ${y - 16} Z`, fill: n === 2 ? '#2E4A3C' : C.pine }]]));
     paper(b, [['rect', { x: 165, y: 380, width: 10, height: 90, fill: C.bark }], ['rect', { x: 115, y: 380, width: 110, height: 44, rx: 6, fill: C.cream, stroke: C.bark, 'stroke-width': 4 }],
-      ['text', { x: 170, y: 411, 'text-anchor': 'middle', 'font-size': 24, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: ['첫째 고개', '둘째 고개', '셋째 고개'][n] }]]);
+      ['text', { x: 170, y: 411, 'text-anchor': 'middle', 'font-size': 24, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(['첫째 고개', '둘째 고개', '셋째 고개'][n]) }]]);
   }
   function drawRock(T, p) { return T.paper(p, [['path', { d: 'M700 760 L702 470 Q695 368 800 352 Q920 344 936 440 L938 760 Z', fill: '#8A8278' }], ['path', { d: 'M740 400 Q800 380 860 392', stroke: '#A8A094', 'stroke-width': 8, fill: 'none', 'stroke-linecap': 'round' }]]); }
   function roomBG(T) {
@@ -676,21 +676,21 @@
       const g = el('g', { transform: 'translate(200,300) scale(1.5)', opacity: .92 }, svg);
       drawTiger(T, g);
       el('rect', { width: 400, height: 300, fill: '#0b0a1a', opacity: .55 }, svg);
-      el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 52, fill: C.persimmon, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '어흥!' }, svg);
+      el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 52, fill: C.persimmon, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('어흥!') }, svg);
       cutVoice('cut_roar');
     }, { sfx: 'boom', hold: 2400 }));
     mom.pos.remove();
     AudioFX.gulp && AudioFX.gulp();
     await T.cut(svg => {
       el('rect', { width: 400, height: 300, fill: '#0b0a1a' }, svg);
-      el('text', { x: 200, y: 165, 'text-anchor': 'middle', 'font-size': 56, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '꿀꺽…' }, svg);
+      el('text', { x: 200, y: 165, 'text-anchor': 'middle', 'font-size': 56, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('꿀꺽…') }, svg);
     }, { hold: 2200 });
     await say('호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.');
     tiger.P.wear('scarf');
     await T.cut(svg => {
       const g = el('g', { transform: 'translate(200,290) scale(1)' }, svg);
       const P = drawTiger(T, g); P.wear('scarf'); P.setBelly(2.5);
-      el('text', { x: 200, y: 44, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '엄마 흉내 내야지~' }, svg);
+      el('text', { x: 200, y: 44, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('엄마 흉내 내야지~') }, svg);
       cutVoice('cut_mimic', 450);
     }, { sfx: 'whoosh', hold: 2600 });
     await say('호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.');
@@ -749,9 +749,9 @@
     await say('두 목소리를 들어 봐요. 하나는 진짜 엄마, 하나는 가짜예요.');
     /* 진짜 목소리로 고르기: 엄마(재선)와 엄마 흉내 내는 호랑이(학철)가 같은 말을 한다.
        그림으로는 알 수 없게 두 배지는 똑같은 귀 모양 + 번호만, 엄마 쪽은 매번 섞는다. 누르면 다시 듣는다 */
-    const V = typeof VOICE_LINES !== 'undefined' ? VOICE_LINES : {};
-    const callMom = () => (V.call_mom && AudioFX.voice(V.call_mom)) || momVoice(T);
-    const callTiger = () => (V.call_tiger && AudioFX.voice(V.call_tiger)) || tigerVoice(T);
+    const callVoice = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };
+    const callMom = () => callVoice('call_mom') || momVoice(T);
+    const callTiger = () => callVoice('call_tiger') || tigerVoice(T);
     const earBadge = (x, num) => badge(T, x, 250, 80, g => {
       const eu = artUrl('icon_ear'); // 그림 귀(소리 물결까지 한 장), 번호는 코드
       if (eu) el('image', { href: eu, x: -38, y: -72, width: 76, height: 112, filter: 'url(#pp)' }, g);
@@ -1115,10 +1115,10 @@
       if (sprite(T, el('g', { transform: 'translate(945 564)' }, bottle), 'oil', 127, 210)) {
         // 그림 병 (얼굴 지운 자리)에 이름표
         T.paper(bottle, [['rect', { x: 907, y: 486, width: 76, height: 36, rx: 6, fill: C.cream }],
-          ['text', { x: 945, y: 512, 'text-anchor': 'middle', 'font-size': 21, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '참기름' }]]);
+          ['text', { x: 945, y: 512, 'text-anchor': 'middle', 'font-size': 21, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('참기름') }]]);
       } else T.paper(bottle, [['path', { d: 'M905 560 Q890 470 930 440 V390 H960 V440 Q1000 470 985 560 Z', fill: '#E0B560' }], ['rect', { x: 924, y: 368, width: 42, height: 26, rx: 6, fill: C.bark }],
         ['rect', { x: 905, y: 470, width: 80, height: 40, rx: 6, fill: C.cream }],
-        ['text', { x: 945, y: 499, 'text-anchor': 'middle', 'font-size': 22, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '참기름' }]]);
+        ['text', { x: 945, y: 499, 'text-anchor': 'middle', 'font-size': 22, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('참기름') }]]);
       origin(bottle, 945, 470);
     });
     const tt = T.world.__t;
@@ -1271,7 +1271,7 @@
 
     /* --- 14. 뚝! (컷 3장 + 수수밭) --- */
     await say('호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.');
-    const cutText = (svg, t, s = 40) => el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': s, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: t }, svg);
+    const cutText = (svg, t, s = 40) => el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': s, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(t) }, svg);
     await T.cut(svg => {
       if (!ropeArt(T, svg, 'rope_bad', 200, 150, .3, -20)) el('path', { d: 'M200 0 V120 Q210 150 196 180', stroke: '#9A8466', 'stroke-width': 7, fill: 'none', 'stroke-dasharray': '30 6' }, svg);
       const g = el('g', { transform: 'translate(200,300) scale(.85)' }, svg); const P = drawTiger(T, g); P.setBelly(2.4); // 나무 위(도끼)·뚝·엉덩방아 그림과 같이 엄마 옷 없이

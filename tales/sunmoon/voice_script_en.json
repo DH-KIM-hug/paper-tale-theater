@@ -1,0 +1,1123 @@
+{
+ "voices": {
+  "nar": "tc_6a21054564d676539427427e",
+  "mom": "tc_66504763aed05555cd12438c",
+  "rich": "tc_5ebea266728f5b00075e6215",
+  "tiger": "tc_675a73eb789ff3ea6cc80235",
+  "boy": "tc_624cccbcadcd568510764d65",
+  "girl": "tc_609a8f4362c4bdb3363bbfad"
+ },
+ "lines": [
+  {
+   "text": "옛날 옛날 산골 오막살이에 엄마와 오누이가 살았어요.",
+   "en": "Once upon a time, a mom and her two children, a brother and a sister, lived in a little hut in the mountains."
+  },
+  {
+   "text": "엄마가 일하러 가요. 오누이를 톡 눌러서 인사해요!",
+   "en": "Mom is going to work. Tap the brother and sister to say goodbye!",
+   "segs": [
+    [
+     "nar",
+     "Mom is going to work. Tap the brother and sister to say goodbye!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "오빠랑 동생을 톡 눌러서 \"다녀오세요!\" 해 봐요!",
+   "en": "Tap the brother and sister to say \"Take care, Mom!\""
+  },
+  {
+   "text": "엄마가 말했어요. \"문 꼭 잠그고 엄마 기다려라~\"",
+   "en": "Mom said, \"Lock the door tight and wait for Mom~\"",
+   "segs": [
+    [
+     "nar",
+     "Mom said,"
+    ],
+    [
+     "mom",
+     "Lock the door tight and wait for Mom~",
+     "happy:0.9"
+    ]
+   ]
+  },
+  {
+   "text": "엄마는 부잣집에서 하루 종일 부지런히 일했어요.",
+   "en": "Mom worked hard all day long at the rich family's house."
+  },
+  {
+   "text": "\"수고했어요. 떡 가져가요!\" 떡을 톡톡 눌러서 바구니에 담아요!",
+   "en": "\"Thank you for your hard work. Take these rice cakes!\" Tap the rice cakes to put them in the basket!",
+   "segs": [
+    [
+     "rich",
+     "Thank you for your hard work. Take these rice cakes!",
+     "happy:1.1"
+    ],
+    [
+     "nar",
+     "Tap the rice cakes to put them in the basket!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "떡을 톡톡 눌러서 바구니에 담아요!",
+   "en": "Tap the rice cakes to put them in the basket!",
+   "segs": [
+    [
+     "nar",
+     "Tap the rice cakes to put them in the basket!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "떡을 바구니 가득 받았어요! \"우리 아이들이 좋아하겠다!\" 엄마는 서둘러 집으로 떠났어요.",
+   "en": "The basket is full of rice cakes! \"The children will love these!\" Mom hurried off toward home.",
+   "segs": [
+    [
+     "nar",
+     "The basket is full of rice cakes!",
+     "happy:1.2"
+    ],
+    [
+     "mom",
+     "The children will love these!",
+     "happy:1.3"
+    ],
+    [
+     "nar",
+     "Mom hurried off toward home."
+    ]
+   ]
+  },
+  {
+   "text": "떡 접시를 골라 톡 눌러요!",
+   "en": "Pick a plate of rice cakes and tap it!"
+  },
+  {
+   "text": "반짝이는 접시예요! 톡 눌러 봐요!",
+   "en": "That's the sparkly plate! Give it a tap!"
+  },
+  {
+   "text": "호랑이 말풍선의 떡이랑 똑같이 생긴 접시를 골라요!",
+   "en": "Find the plate that matches the rice cakes in the tiger's speech bubble!"
+  },
+  {
+   "text": "바구니에 남은 떡이랑 똑같은 개수의 접시를 골라요!",
+   "en": "Find the plate with the same number of rice cakes as the ones left in the basket!"
+  },
+  {
+   "text": "해가 뉘엿뉘엿 지고 있어요. 엄마가 첫째 고개를 넘어요.",
+   "en": "The sun is slowly setting. Mom is crossing the first hill."
+  },
+  {
+   "text": "하늘이 붉어졌어요. 엄마가 둘째 고개를 넘어요.",
+   "en": "The sky has turned red. Mom is crossing the second hill.",
+   "segs": [
+    [
+     "nar",
+     "The sky has turned red. Mom is crossing the second hill.",
+     "tonedown:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.",
+   "en": "It is a dark, dark night. Mom is crossing the third hill.",
+   "segs": [
+    [
+     "nar",
+     "It is a dark, dark night. Mom is crossing the third hill.",
+     "tonedown:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 한 개 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me one rice cake, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me one rice cake, and I won't eat you!",
+     "angry:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 한 개를 달래요. 어느 접시를 줄까요?",
+   "en": "The tiger wants one rice cake. Which plate should we give?"
+  },
+  {
+   "text": "\"어흥! 떡 두 개 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me two rice cakes, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me two rice cakes, and I won't eat you!",
+     "angry:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 두 개를 달래요. 어느 접시를 줄까요?",
+   "en": "The tiger wants two rice cakes. Which plate should we give?"
+  },
+  {
+   "text": "\"어흥! 떡 세 개 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me three rice cakes, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me three rice cakes, and I won't eat you!",
+     "angry:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 세 개를 달래요. 어느 접시를 줄까요?",
+   "en": "The tiger wants three rice cakes. Which plate should we give?"
+  },
+  {
+   "text": "\"어흥! 떡 네 개 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me four rice cakes, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me four rice cakes, and I won't eat you!",
+     "angry:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 네 개를 달래요. 어느 접시를 줄까요?",
+   "en": "The tiger wants four rice cakes. Which plate should we give?"
+  },
+  {
+   "text": "\"어흥! 떡 다섯 개 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me five rice cakes, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me five rice cakes, and I won't eat you!",
+     "angry:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 다섯 개를 달래요. 어느 접시를 줄까요?",
+   "en": "The tiger wants five rice cakes. Which plate should we give?"
+  },
+  {
+   "text": "\"어흥! 떡 여섯 개 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me six rice cakes, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me six rice cakes, and I won't eat you!",
+     "angry:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 여섯 개를 달래요. 어느 접시를 줄까요?",
+   "en": "The tiger wants six rice cakes. Which plate should we give?"
+  },
+  {
+   "text": "\"어흥! 떡 일곱 개 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me seven rice cakes, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me seven rice cakes, and I won't eat you!",
+     "angry:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 일곱 개를 달래요. 어느 접시를 줄까요?",
+   "en": "The tiger wants seven rice cakes. Which plate should we give?"
+  },
+  {
+   "text": "\"어흥! 떡 여덟 개 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me eight rice cakes, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me eight rice cakes, and I won't eat you!",
+     "angry:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 여덟 개를 달래요. 어느 접시를 줄까요?",
+   "en": "The tiger wants eight rice cakes. Which plate should we give?"
+  },
+  {
+   "text": "\"어흥! 떡 아홉 개 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me nine rice cakes, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me nine rice cakes, and I won't eat you!",
+     "angry:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 아홉 개를 달래요. 어느 접시를 줄까요?",
+   "en": "The tiger wants nine rice cakes. Which plate should we give?"
+  },
+  {
+   "text": "\"어흥! 떡 열 개 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me ten rice cakes, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me ten rice cakes, and I won't eat you!",
+     "angry:1.6"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 열 개를 달래요. 어느 접시를 줄까요?",
+   "en": "The tiger wants ten rice cakes. Which plate should we give?"
+  },
+  {
+   "text": "호랑이는 떡 한 개를 꿀꺽! 배가 볼록해졌어요.",
+   "en": "The tiger gulps down one rice cake! What a round tummy!"
+  },
+  {
+   "text": "호랑이는 떡 두 개를 꿀꺽! 배가 볼록해졌어요.",
+   "en": "The tiger gulps down two rice cakes! What a round tummy!"
+  },
+  {
+   "text": "호랑이는 떡 세 개를 꿀꺽! 배가 볼록해졌어요.",
+   "en": "The tiger gulps down three rice cakes! What a round tummy!"
+  },
+  {
+   "text": "호랑이는 떡 네 개를 꿀꺽! 배가 볼록해졌어요.",
+   "en": "The tiger gulps down four rice cakes! What a round tummy!"
+  },
+  {
+   "text": "호랑이는 떡 다섯 개를 꿀꺽! 배가 볼록해졌어요.",
+   "en": "The tiger gulps down five rice cakes! What a round tummy!"
+  },
+  {
+   "text": "떡 한 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "en": "Gulp! One more rice cake! The tiger's tummy gets even rounder."
+  },
+  {
+   "text": "떡 두 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "en": "Gulp! Two more rice cakes! The tiger's tummy gets even rounder."
+  },
+  {
+   "text": "떡 세 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "en": "Gulp! Three more rice cakes! The tiger's tummy gets even rounder."
+  },
+  {
+   "text": "떡 네 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "en": "Gulp! Four more rice cakes! The tiger's tummy gets even rounder."
+  },
+  {
+   "text": "떡 다섯 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "en": "Gulp! Five more rice cakes! The tiger's tummy gets even rounder."
+  },
+  {
+   "text": "떡 여섯 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "en": "Gulp! Six more rice cakes! The tiger's tummy gets even rounder."
+  },
+  {
+   "text": "떡 일곱 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "en": "Gulp! Seven more rice cakes! The tiger's tummy gets even rounder."
+  },
+  {
+   "text": "떡 여덟 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "en": "Gulp! Eight more rice cakes! The tiger's tummy gets even rounder."
+  },
+  {
+   "text": "떡 아홉 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "en": "Gulp! Nine more rice cakes! The tiger's tummy gets even rounder."
+  },
+  {
+   "text": "떡 열 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "en": "Gulp! Ten more rice cakes! The tiger's tummy gets even rounder."
+  },
+  {
+   "text": "\"어흥! 남은 떡 몽땅 주면 안 잡아먹지!\"",
+   "en": "\"Roar! Give me all the leftover rice cakes, and I won't eat you!\"",
+   "segs": [
+    [
+     "tiger",
+     "Roar! Give me all the leftover rice cakes, and I won't eat you!",
+     "angry:1.7"
+    ]
+   ]
+  },
+  {
+   "text": "바구니에 남은 떡은 몇 개일까요? 세어 보고 접시를 골라요!",
+   "en": "How many rice cakes are left in the basket? Count them and pick a plate!"
+  },
+  {
+   "text": "남은 떡을 몽땅 꿀꺽! 배가 빵빵해졌어요!",
+   "en": "The tiger gulps down all the leftover rice cakes! What a big, round tummy!"
+  },
+  {
+   "text": "떡이 다 떨어지자 호랑이가 말했어요. \"떡이 없으면 너를 잡아먹어야지!\"",
+   "en": "When the rice cakes were all gone, the tiger said, \"No more rice cakes? Then I'll have to eat you!\"",
+   "segs": [
+    [
+     "nar",
+     "When the rice cakes were all gone, the tiger said,",
+     "tonedown:1.2"
+    ],
+    [
+     "tiger",
+     "No more rice cakes? Then I'll have to eat you!",
+     "angry:1.8"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.",
+   "en": "The tiger ate Mom up with one big gulp.",
+   "segs": [
+    [
+     "nar",
+     "The tiger ate Mom up with one big gulp.",
+     "sad:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.",
+   "en": "The tiger put on Mom's clothes and went to the house where the brother and sister were waiting.",
+   "segs": [
+    [
+     "nar",
+     "The tiger put on Mom's clothes and went to the house where the brother and sister were waiting.",
+     "tonedown:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.",
+   "en": "It was a pitch-dark night. Mom had not come home yet.",
+   "segs": [
+    [
+     "nar",
+     "It was a pitch-dark night. Mom had not come home yet.",
+     "tonedown:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "등잔을 톡 눌러서 불을 켜 줄까요?",
+   "en": "Shall we tap the oil lamp to light it?"
+  },
+  {
+   "text": "등잔을 톡 눌러서 불을 켜요!",
+   "en": "Tap the oil lamp to light it!"
+  },
+  {
+   "text": "반짝! 방이 환해졌어요. 오누이는 창밖을 보며 엄마를 기다렸어요.",
+   "en": "Sparkle! The room glows. The brother and sister looked out the window and waited for Mom."
+  },
+  {
+   "text": "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.",
+   "en": "Knock, knock, knock. \"Kids~ Mom's home. Open the door~\" The voice is rough and raspy.",
+   "segs": [
+    [
+     "nar",
+     "Knock, knock, knock.",
+     "whisper"
+    ],
+    [
+     "tiger",
+     "Kids~ Mom's home. Open the door~",
+     "tonedown:1.5"
+    ],
+    [
+     "nar",
+     "The voice is rough and raspy.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "진짜 엄마 목소리를 톡 골라 봐요!",
+   "en": "Tap the real Mom's voice!"
+  },
+  {
+   "text": "반짝이는 쪽이 엄마 목소리예요!",
+   "en": "The sparkly one is Mom's voice!"
+  },
+  {
+   "text": "오빠가 말했어요. \"우리 엄마 목소리가 아니에요! 손을 보여 주세요!\"",
+   "en": "The brother said, \"That is not our mom's voice! Show us your hand!\"",
+   "segs": [
+    [
+     "nar",
+     "The brother said,"
+    ],
+    [
+     "boy",
+     "That is not our mom's voice! Show us your hand!",
+     "toneup:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "진짜 엄마 손은 뭘까요? 잘 보고 골라 봐요!",
+   "en": "Which one is Mom's real hand? Look closely and pick!"
+  },
+  {
+   "text": "\"어? 털이 복슬복슬… 줄무늬도 있네!\"",
+   "en": "\"Huh? It is furry... and it has stripes!\"",
+   "segs": [
+    [
+     "girl",
+     "Huh? It is furry... and it has stripes!",
+     "toneup:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "\"어? 하얗긴 한데… 뾰족한 발톱이 있네!\"",
+   "en": "\"Huh? It is white, but... it has sharp claws!\"",
+   "segs": [
+    [
+     "boy",
+     "Huh? It is white, but... it has sharp claws!",
+     "toneup:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "진짜 엄마 손을 톡 골라 봐요!",
+   "en": "Tap the real Mom's hand!"
+  },
+  {
+   "text": "엄마 손은 손가락이 길쭉하고 떡가루가 묻어 있어요.",
+   "en": "Mom's hand has long fingers, with rice cake flour on it."
+  },
+  {
+   "text": "반짝이는 손이 엄마 손이에요!",
+   "en": "The sparkly hand is Mom's hand!"
+  },
+  {
+   "text": "맞아요! 엄마 손은 부드럽고 떡가루가 묻어 있지요.",
+   "en": "That's right! Mom's hand is soft, with rice cake flour on it.",
+   "segs": [
+    [
+     "nar",
+     "That's right! Mom's hand is soft, with rice cake flour on it.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "그런데 문틈으로 들어온 손은… 하얀 밀가루 사이로 발톱이 쏙! 엄마 손이 아니에요!",
+   "en": "But the hand through the crack in the door... Sharp claws poke out from the white flour! That is not Mom's hand!",
+   "segs": [
+    [
+     "nar",
+     "But the hand through the crack in the door... Sharp claws poke out from the white flour! That is not Mom's hand!",
+     "tonedown:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "문밖에 누가 있는지 보고 싶어요. 창호지를 손가락으로 콕 뚫어 볼까요?",
+   "en": "We want to see who is outside. Shall we poke a little hole in the paper door with a finger?",
+   "segs": [
+    [
+     "nar",
+     "We want to see who is outside. Shall we poke a little hole in the paper door with a finger?",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "창호지를 톡 눌러서 콕 뚫어 봐요!",
+   "en": "Tap the paper door to poke a hole!"
+  },
+  {
+   "text": "구멍 너머에 커다랗고 동그란 눈이 깜빡깜빡! 호랑이예요!",
+   "en": "Through the hole, a big round eye blinks and blinks! It is the tiger!",
+   "segs": [
+    [
+     "nar",
+     "Through the hole, a big round eye blinks and blinks! It is the tiger!",
+     "toneup:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "오빠가 속삭였어요. \"쉿, 뒷문으로 살금살금 도망가자!\"",
+   "en": "The brother whispered, \"Shh, let's tiptoe out the back door!\"",
+   "segs": [
+    [
+     "nar",
+     "The brother whispered,",
+     "whisper"
+    ],
+    [
+     "boy",
+     "Shh, let's tiptoe out the back door!",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "오누이는 뒷문으로 살금살금 나왔어요. 화면을 쓱 밀어서 달려요!",
+   "en": "The brother and sister tiptoed out the back door. Swipe the screen to run!",
+   "segs": [
+    [
+     "nar",
+     "The brother and sister tiptoed out the back door. Swipe the screen to run!",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 옆으로 쓱 밀어서 달려요!",
+   "en": "Swipe the screen sideways to run!"
+  },
+  {
+   "text": "앗, 호랑이가 오는 소리! 커다란 장독을 톡 눌러서 숨어요!",
+   "en": "Oh no, the tiger is coming! Tap the big jar to hide!",
+   "segs": [
+    [
+     "nar",
+     "Oh no, the tiger is coming! Tap the big jar to hide!",
+     "whisper:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "커다란 장독을 톡 눌러서 숨어요!",
+   "en": "Tap the big jar to hide!"
+  },
+  {
+   "text": "\"얘들아~ 어디 갔니?\" 호랑이는 두리번두리번하다가 집 쪽으로 돌아갔어요.",
+   "en": "\"Kids~ where did you go?\" The tiger looked around and around, then went back toward the house.",
+   "segs": [
+    [
+     "tiger",
+     "Kids~ where did you go?",
+     "tonedown:1.3"
+    ],
+    [
+     "nar",
+     "The tiger looked around and around, then went back toward the house."
+    ]
+   ]
+  },
+  {
+   "text": "휴~ 이제 우물가 큰 나무로 달려가요! 쓱쓱!",
+   "en": "Phew~ Now run to the big tree by the well! Zoom, zoom!",
+   "segs": [
+    [
+     "nar",
+     "Phew~ Now run to the big tree by the well! Zoom, zoom!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "우물가에 커다란 나무가 있어요. 톡톡 눌러서 영차영차 올라가요!",
+   "en": "There is a big tree by the well. Tap, tap, and climb up, heave-ho!"
+  },
+  {
+   "text": "화면을 톡톡 눌러서 나무를 올라가요!",
+   "en": "Tap the screen again and again to climb the tree!"
+  },
+  {
+   "text": "오누이는 나무 꼭대기까지 올라갔어요!",
+   "en": "The brother and sister climbed all the way to the top of the tree!",
+   "segs": [
+    [
+     "nar",
+     "The brother and sister climbed all the way to the top of the tree!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 뒷마당에 왔어요. \"옳지! 우물 속에 숨었구나!\"",
+   "en": "The tiger came to the backyard. \"Aha! They are hiding in the well!\"",
+   "segs": [
+    [
+     "nar",
+     "The tiger came to the backyard.",
+     "tonedown:1.2"
+    ],
+    [
+     "tiger",
+     "Aha! They are hiding in the well!",
+     "happy:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 우물 속을 들여다봤어요. 우물 물에 오누이 얼굴이 비쳤거든요!",
+   "en": "The tiger peeked into the well. The brother's and sister's faces were shining in the water!"
+  },
+  {
+   "text": "\"두레박으로 건져야지~\" 영차!",
+   "en": "\"I'll scoop them up with the bucket~\" Heave-ho!",
+   "segs": [
+    [
+     "tiger",
+     "I'll scoop them up with the bucket~ Heave-ho!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "첨벙! 두레박에는 물만 가득. 우물 속 오누이 얼굴을 톡 눌러 봐요!",
+   "en": "Splash! The bucket is full of just water. Tap the faces of the brother and sister in the well!"
+  },
+  {
+   "text": "우물에 비친 오누이 얼굴을 톡!",
+   "en": "Tap the faces in the well!"
+  },
+  {
+   "text": "나무 위에서 오누이가 그만 킥킥 웃고 말았어요.",
+   "en": "Up in the tree, the brother and sister couldn't help giggling."
+  },
+  {
+   "text": "\"어? 위에서 웃음소리가?\" 호랑이가 고개를 번쩍 들었어요.",
+   "en": "\"Huh? A laugh from up above?\" The tiger looked up with a jerk.",
+   "segs": [
+    [
+     "tiger",
+     "Huh? A laugh from up above?",
+     "toneup:1.3"
+    ],
+    [
+     "nar",
+     "The tiger looked up with a jerk."
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 올려다보며 물었어요. \"얘들아, 거기 어떻게 올라갔니?\"",
+   "en": "The tiger looked up and asked, \"Kids, how did you climb up there?\"",
+   "segs": [
+    [
+     "nar",
+     "The tiger looked up and asked,"
+    ],
+    [
+     "tiger",
+     "Kids, how did you climb up there?",
+     "tonedown:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "오빠가 꾀를 냈어요. \"참기름 바르고 올라왔지!\"",
+   "en": "The brother thought up a trick. \"We rubbed on sesame oil and climbed up!\"",
+   "segs": [
+    [
+     "nar",
+     "The brother thought up a trick."
+    ],
+    [
+     "boy",
+     "We rubbed on sesame oil and climbed up!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "참기름 병을 톡 눌러서 나무에 발라 줘요!",
+   "en": "Tap the sesame oil bottle to rub the oil on the tree!"
+  },
+  {
+   "text": "참기름 병을 톡!",
+   "en": "Tap the sesame oil bottle!"
+  },
+  {
+   "text": "미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.",
+   "en": "Slip, slide! The tiger kept on slipping down.",
+   "segs": [
+    [
+     "nar",
+     "Slip, slide! The tiger kept on slipping down.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "그때 동생이 깔깔 웃으며 말해 버렸어요. \"도끼로 콕콕 찍고 올라왔지~\"",
+   "en": "Then the sister burst out laughing and blurted, \"We chopped with an axe, chop, chop, and climbed up~\"",
+   "segs": [
+    [
+     "nar",
+     "Then the sister burst out laughing and blurted,"
+    ],
+    [
+     "girl",
+     "We chopped with an axe, chop, chop, and climbed up~",
+     "happy:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "오빠가 \"쉿!\" 했지만… 벌써 들어 버렸어요!",
+   "en": "The brother said \"Shh!\" but... it was too late! The tiger had already heard!",
+   "segs": [
+    [
+     "nar",
+     "The brother said"
+    ],
+    [
+     "boy",
+     "Shh!",
+     "whisper"
+    ],
+    [
+     "nar",
+     "but... it was too late! The tiger had already heard!",
+     "tonedown:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 도끼로 콕콕 찍으며 올라와요! 오누이는 덜덜 떨었어요.",
+   "en": "The tiger is climbing up, chopping with an axe! The brother and sister shivered and shook.",
+   "segs": [
+    [
+     "nar",
+     "The tiger is climbing up, chopping with an axe! The brother and sister shivered and shook.",
+     "tonedown:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.",
+   "en": "The tiger is getting closer and closer. The brother and sister put their hands together.",
+   "segs": [
+    [
+     "nar",
+     "The tiger is getting closer and closer. The brother and sister put their hands together.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "\"하늘님, 튼튼한 동아줄을 내려 주세요!\"",
+   "en": "\"Dear Sky, please send down a strong rope!\"",
+   "segs": [
+    [
+     "boy",
+     "Dear Sky, please send down a strong rope!",
+     "sad:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "하늘에서 줄이 두 개 내려왔어요! 어떤 줄을 잡을까요?",
+   "en": "Two ropes came down from the sky! Which rope should we grab?"
+  },
+  {
+   "text": "삐걱… 이 줄은 낡았어!",
+   "en": "Creak... This rope is old!",
+   "segs": [
+    [
+     "nar",
+     "Creak..."
+    ],
+    [
+     "boy",
+     "This rope is old!",
+     "toneup:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "굵고 반짝이는 튼튼한 줄을 톡 골라요!",
+   "en": "Tap the thick, shiny, strong rope!"
+  },
+  {
+   "text": "굵고 반짝반짝 튼튼한 줄을 찾아봐요!",
+   "en": "Look for the thick, sparkly, strong rope!"
+  },
+  {
+   "text": "반짝이는 굵은 줄이 튼튼한 동아줄이에요!",
+   "en": "The thick, shiny rope is the strong rope!"
+  },
+  {
+   "text": "맞아요! 굵고 반짝이는 새 동아줄이에요.",
+   "en": "That's right! It is the thick, shiny, new rope.",
+   "segs": [
+    [
+     "nar",
+     "That's right! It is the thick, shiny, new rope.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "줄을 꼭 잡고, 화면을 위로 쓱쓱 밀어서 올라가요!",
+   "en": "Hold the rope tight and swipe the screen up to climb!"
+  },
+  {
+   "text": "화면을 위로 쓱 밀어서 올라가요!",
+   "en": "Swipe the screen up to climb!"
+  },
+  {
+   "text": "구름을 뚫고 쑥쑥!",
+   "en": "Up through the clouds, whoosh, whoosh!",
+   "segs": [
+    [
+     "nar",
+     "Up through the clouds, whoosh, whoosh!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!",
+   "en": "Through six layers of clouds, the brother and sister reached the land in the sky!",
+   "segs": [
+    [
+     "nar",
+     "Through six layers of clouds, the brother and sister reached the land in the sky!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.",
+   "en": "The tiger prayed to the sky too. And an old rope slid slowly down."
+  },
+  {
+   "text": "\"아이코 내 엉덩이! 아이코 내 머리!\" 호랑이 머리에 동그란 혹이 났어요.",
+   "en": "\"Ouch, my bottom! Ouch, my head!\" A round bump popped up on the tiger's head.",
+   "segs": [
+    [
+     "tiger",
+     "Ouch, my bottom! Ouch, my head!",
+     "sad:1.8"
+    ],
+    [
+     "nar",
+     "A round bump popped up on the tiger's head.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 혹을 달고 산속으로 줄행랑! 다시는 오지 않았대요.",
+   "en": "The tiger ran off into the mountains with a bump on its head! And they say it never came back again.",
+   "segs": [
+    [
+     "nar",
+     "The tiger ran off into the mountains with a bump on its head! And they say it never came back again.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.",
+   "en": "In the land in the sky, the brother became the Sun, and the sister became the Moon."
+  },
+  {
+   "text": "동생이 말했어요. \"오빠, 나는 밤이 무서워요.\"",
+   "en": "The sister said, \"Big brother, I am scared of the night.\"",
+   "segs": [
+    [
+     "nar",
+     "The sister said,"
+    ],
+    [
+     "girl",
+     "Big brother, I am scared of the night.",
+     "sad:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "\"그럼 우리 바꾸자!\"",
+   "en": "\"Then let's switch!\"",
+   "segs": [
+    [
+     "boy",
+     "Then let's switch!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "그래서 동생은 해님, 오빠는 달님이 되었답니다.",
+   "en": "So the sister became the Sun, and the brother became the Moon.",
+   "segs": [
+    [
+     "nar",
+     "So the sister became the Sun, and the brother became the Moon.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.",
+   "en": "Tap the Sun or the Moon! It becomes day, and it becomes night.",
+   "segs": [
+    [
+     "nar",
+     "Tap the Sun or the Moon! It becomes day, and it becomes night.",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.",
+   "en": "Even today, the Sun and the Moon shine brightly on us from the sky.",
+   "segs": [
+    [
+     "nar",
+     "Even today, the Sun and the Moon shine brightly on us from the sky.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "두 목소리를 들어 봐요. 하나는 진짜 엄마, 하나는 가짜예요.",
+   "en": "Listen to the two voices. One is the real Mom, and one is a fake."
+  },
+  {
+   "text": "1번 목소리.",
+   "en": "Voice number one."
+  },
+  {
+   "text": "2번 목소리.",
+   "en": "Voice number two."
+  },
+  {
+   "text": "진짜 엄마 목소리는 몇 번일까요?",
+   "en": "Which number is the real Mom's voice?"
+  },
+  {
+   "text": "진짜 엄마 목소리를 톡 골라 봐요! 다시 들으려면 한 번 더 눌러요.",
+   "en": "Tap the real Mom's voice! Tap once more to hear it again."
+  },
+  {
+   "text": "\"어흥~\" 이건 호랑이가 흉내 낸 목소리예요!",
+   "en": "\"Roar~\" That is the tiger pretending to be Mom!"
+  },
+  {
+   "text": "엄마 목소리는 다정하고 부드러웠어요. 다시 들어 봐요.",
+   "en": "Mom's voice was warm and gentle. Listen again."
+  },
+  {
+   "text": "맞아요! 진짜 엄마 목소리예요. 그런데 문밖 목소리는 걸걸했지요?",
+   "en": "That's right! It is the real Mom's voice. But the voice outside the door was rough, wasn't it?"
+  }
+ ],
+ "extra": {
+  "cut_roar": [
+   [
+    "tiger",
+    "Roar!",
+    "angry:1.7"
+   ]
+  ],
+  "cut_mimic": [
+   [
+    "tiger",
+    "Ahem, I'll pretend to be Mom~",
+    "happy:1.3"
+   ]
+  ],
+  "cut_creak": [
+   [
+    "tiger",
+    "Uh... uh-oh?",
+    "toneup:1.6"
+   ]
+  ],
+  "cut_snap": [
+   [
+    "tiger",
+    "Aaaah! Help me~!",
+    "toneup:1.8"
+   ]
+  ],
+  "cut_bump": [
+   [
+    "tiger",
+    "Ouchie...",
+    "sad:1.8"
+   ]
+  ],
+  "call_mom": [
+   [
+    "mom",
+    "Kids~ Mom's home. Open the door~",
+    "happy:1.0"
+   ]
+  ],
+  "call_tiger": [
+   [
+    "tiger",
+    "Kids~ Mom's home. Open the door~",
+    "tonedown:1.5"
+   ]
+  ]
+ },
+ "ui": {
+  "해와 달이 된 오누이": "The Sun and the Moon",
+  "햇님 달님": "Brother and Sister",
+  "해님 달님이 늘 우리를 비춰 줘요!": "The Sun and the Moon always shine on us!",
+  "첫째 고개": "First Hill",
+  "둘째 고개": "Second Hill",
+  "셋째 고개": "Third Hill",
+  "부잣집 부엌": "The Rich House's Kitchen",
+  "오누이의 밤": "A Night at Home",
+  "똑똑똑": "Knock, Knock, Knock",
+  "문틈으로 쑥": "A Hand Through the Door",
+  "창호지 구멍": "A Hole in the Paper Door",
+  "뒷마당": "The Backyard",
+  "우물가 큰 나무": "The Big Tree by the Well",
+  "우물 속을 보니": "Looking Into the Well",
+  "나무 아래 호랑이": "The Tiger Under the Tree",
+  "하늘 동아줄": "The Rope from the Sky",
+  "수수밭": "The Sorghum Field",
+  "해와 달": "Sun and Moon",
+  "안녕!": "Bye!",
+  "영차!": "Heave-ho!",
+  "또 왔어!": "Here again!",
+  "불쑥!": "Boo!",
+  "콕!": "Poke!",
+  "깜빡깜빡": "Blink, blink",
+  "두리번두리번": "Peek, peek",
+  "첨벙!": "Splash!",
+  "킥킥!": "Hee hee!",
+  "주르륵": "Drip, drip",
+  "쭈르륵!": "Slip, slide!",
+  "미끌!": "Slip!",
+  "어흥!": "Roar!",
+  "꿀꺽…": "Gulp...",
+  "엄마 흉내 내야지~": "I'll pretend to be Mom~",
+  "참기름": "Sesame oil",
+  "삐걱… 삐걱…": "Creak... creak...",
+  "뚝!": "Snap!",
+  "쿵! 엉덩방아": "Thump! Plop!",
+  "하나": "One",
+  "둘": "Two",
+  "셋": "Three",
+  "넷": "Four",
+  "다섯": "Five",
+  "여섯": "Six",
+  "일곱": "Seven",
+  "여덟": "Eight",
+  "아홉": "Nine",
+  "열": "Ten"
+ }
+}
