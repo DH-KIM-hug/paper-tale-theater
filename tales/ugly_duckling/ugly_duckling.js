@@ -570,7 +570,7 @@
     T.paper(g, [['circle', { r, fill: C.cream, stroke: C.gold, 'stroke-width': Math.max(4, r * .09) }]]);
     const inner = T.el('g', { transform: `scale(${r / 84})` }, g);
     draw(inner);
-    if (label) T.el('text', { y: r + Math.max(22, r * .34), 'text-anchor': 'middle', 'font-size': Math.max(22, r * .34), fill: C.bean, stroke: C.cream, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: label }, g);
+    if (label) T.el('text', { y: r + Math.max(22, r * .34), 'text-anchor': 'middle', 'font-size': Math.max(22, r * .34), fill: C.bean, stroke: C.cream, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(label) }, g);
     g._x = x; g._y = y;
     return g;
   }
@@ -636,7 +636,7 @@
        동물들은 장면마다 새로 만들어지므로 함수로 (아직 없거나 무대에 없으면 건너뜀) */
     const ref = f => () => { try { return f(); } catch (e) { return null; } };
     const onStage = (...fs) => fs.map(f => ref(f)()).find(a => a && a.pos.isConnected) || null;
-    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && setTimeout(() => AudioFX.voice(VOICE_LINES[k]), 380);
+    const vo = k => { const u = Narrator.voiceLine(k); return u && setTimeout(() => AudioFX.voice(u), 380); };
     const momNow = () => onStage(() => far._ducks[0], () => mom); // 마지막 장면: 멀리서 손 흔드는 엄마 오리
     T.director({
       cast: {
@@ -905,7 +905,7 @@
     AudioFX.sfx('boom', .5) || AudioFX.boom();
     await T.cut(svg => {
       el('rect', { width: 400, height: 300, fill: C.indigo }, svg);
-      el('text', { x: 200, y: 180, 'text-anchor': 'middle', 'font-size': 110, fill: C.amber, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '쾅!' }, svg);
+      el('text', { x: 200, y: 180, 'text-anchor': 'middle', 'font-size': 110, fill: C.amber, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('쾅!') }, svg);
     }, { hold: 1500 });
     honk(T);
     await say('저 멀리서 큰 소리가 났어요. 깜짝 놀란 기러기들이 모두 날아가 버렸어요.');
@@ -1032,7 +1032,7 @@
       el('rect', { width: 400, height: 300, fill: '#F2DFA8' }, svg);
       const g = el('g', { transform: `translate(${mood === 'wings' ? 170 : 140},286) scale(1.7)` }, svg); // 글자와 머리가 겹치지 않게 왼쪽으로
       HERO.young(T, g, mood);
-      el('text', { x: 292, y: 70, 'text-anchor': 'middle', 'font-size': 50, fill: C.bean, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: word }, svg);
+      el('text', { x: 292, y: 70, 'text-anchor': 'middle', 'font-size': 50, fill: C.bean, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(word) }, svg);
     };
     vo('cut_purr') || purr(T); // 목소리 흉내가 있으면 합성음은 생략
     await T.cut(svg => hugeHero(svg, '가르릉…', 'neutral'), { hold: 1500 });

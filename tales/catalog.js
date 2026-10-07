@@ -170,6 +170,7 @@ const TALES = (() => {
       <path d="M112 44 l8 3 -8 3z" fill="${c.ps}"/>${eye(108, 44, 1.4)}</g>` },
 
   /* ───────── 계획된 동화 (TALES_PLAN_2) ───────── */
+    en: { title: 'The Ugly Duckling', line: 'Understand the teased duckling\'s feelings, then put its growing-up steps in order.' },
   { id: 'three_pigs', title: '아기 돼지 삼형제', origin: 'world', skills: ['count', 'order', 'size'], ready: false,
     line: '짚 집, 나무 집, 벽돌 집. 벽돌을 톡톡 쌓아 막내 집을 지켜요.',
     art: `<rect width="160" height="110" fill="${c.cr}"/>
