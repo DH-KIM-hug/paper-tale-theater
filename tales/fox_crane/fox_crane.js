@@ -535,7 +535,7 @@
     /* 대사 연출: 목소리 주인에게 카메라, 여우와 두루미가 서로 마주 봄 (장면마다 새 배우라 함수로) */
     const direct = (getFox, getCrane) => T.director({ cast: { fox: getFox, crane: getCrane }, listener: r => (r === 'fox' ? 'crane' : 'fox') });
     direct(() => fox, () => crane);
-    const vo = k => typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k] && AudioFX.voice(VOICE_LINES[k]); // 말풍선 없는 소리 대사
+    const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
     const cutVo = k => setTimeout(() => vo(k), 380);
     /* 그림 컷: 그림이 있으면 그림, 없으면 코드 컷 */
     const cutArt = (key, draw, o = {}) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx: o.sfx, hold: o.hold || 2600 }], { hold: o.hold || 2600 }) : T.cut(draw, o));
@@ -635,7 +635,7 @@
       el('circle', { cx: 320, cy: 80, r: 44, fill: C.snow }, svg);
       el('circle', { cx: 330, cy: 44, r: 18, fill: C.bean }, svg);
       el('circle', { cx: 306, cy: 78, r: 6, fill: C.ink }, svg);
-      el('text', { x: 110, y: 120, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '딱딱!' }, svg);
+      el('text', { x: 110, y: 120, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('딱딱!') }, svg);
     }, { sfx: 'poke' });
     await say('어머나, 부리 끝만 딱딱 닿아요. 수프를 먹을 수가 없어요.');
     await fox.move(HI ? 222 : 235, fox.y, 500);
@@ -659,7 +659,7 @@
       el('circle', { cx: 165, cy: 110, r: 9, fill: C.ink }, svg); el('circle', { cx: 235, cy: 110, r: 9, fill: C.ink }, svg);
       el('circle', { cx: 200, cy: 150, r: 12, fill: C.ink }, svg);
       el('ellipse', { cx: 200, cy: 222, rx: 30, ry: 36, fill: C.pink }, svg);
-      el('text', { x: 330, y: 80, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '핥핥!' }, svg);
+      el('text', { x: 330, y: 80, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('핥핥!') }, svg);
     }, { hold: 2200 });
     mood(crane, 'sad');
     T.tone([500, 300], .5, { type: 'sine', vol: .14 });
@@ -732,7 +732,7 @@
       el('path', { d: 'M40 20 L110 0 L215 150 L185 160 Z', fill: C.persimmon }, svg);
       el('circle', { cx: 70, cy: 30, r: 60, fill: C.persimmon }, svg);
       el('circle', { cx: 80, cy: 20, r: 8, fill: C.ink }, svg);
-      el('text', { x: 310, y: 110, 'text-anchor': 'middle', 'font-size': 80, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '쏙!' }, svg);
+      el('text', { x: 310, y: 110, 'text-anchor': 'middle', 'font-size': 80, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('쏙!') }, svg);
     }, { hold: 2200 });
     await say('어머나! 여우 코가 병에 쏙 끼었어요!');
     await sleep(600);
@@ -890,7 +890,7 @@
       el('path', { d: 'M410 120 Q300 130 216 150 Q300 200 410 196 Z', fill: C.snow }, svg);
       el('path', { d: 'M410 150 Q340 160 300 176', stroke: C.ink, 'stroke-width': 6, fill: 'none' }, svg);
       [[120, 70], [280, 70]].forEach(([x, y]) => el('path', { d: `M${x} ${y + 14} C${x - 30} ${y - 10} ${x - 10} ${y - 30} ${x} ${y - 12} C${x + 10} ${y - 30} ${x + 30} ${y - 10} ${x} ${y + 14} Z`, fill: C.bean }, svg));
-      el('text', { x: 200, y: 262, 'text-anchor': 'middle', 'font-size': 60, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '미안해!' }, svg);
+      el('text', { x: 200, y: 262, 'text-anchor': 'middle', 'font-size': 60, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('미안해!') }, svg);
     }, { sfx: 'ding', hold: 2600 });
     party.fox.parts.blush.setAttribute('opacity', 0);
     await Promise.all([party.fox.hop(30), party.crane.hop(30)]);

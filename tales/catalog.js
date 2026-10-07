@@ -126,6 +126,7 @@ const TALES = (() => {
     line: '납작한 접시와 목이 긴 병, 입 모양에 맞는 그릇을 골라 줘요.',
     art: `<rect width="160" height="110" fill="${c.pn}"/>
       <g class="pc"><rect y="84" width="160" height="26" fill="${c.bk}"/>
+    en: { title: 'The Fox and the Crane', line: 'Flat plate or tall bottle? Pick the dish that fits each mouth.' },
       <ellipse cx="44" cy="84" rx="28" ry="6" fill="${c.cr}"/>
       <path d="M104 84 V52 q0 -6 5 -8 V28 h8 v16 q5 2 5 8 V84z" fill="${c.rd}"/>
       <path d="M26 64 L34 44 L42 56 L52 44 L58 64 Q42 74 26 64Z" fill="${c.ps}"/><path d="M34 66 L42 78 L50 66Z" fill="${c.cr}"/>${eye(36, 60)}${eye(48, 60)}

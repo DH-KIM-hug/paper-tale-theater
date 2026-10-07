@@ -1,0 +1,768 @@
+{
+ "voices": {
+  "nar": "tc_6a4f2130d153a5cac8e19996",
+  "fox": "tc_69e0462f3e5413d26878521e",
+  "crane": "tc_6731b3ac075b04a944644234",
+  "duck": "tc_61532cab9119555d352f5c69",
+  "butterfly": "tc_65fbe54e2668bc4ddbd8b2a6"
+ },
+ "lines": [
+  {
+   "text": "숲속에 여우랑 두루미가 살았어요.",
+   "en": "In the forest lived a fox and a crane.",
+   "segs": [
+    [
+     "nar",
+     "In the forest lived a fox and a crane."
+    ]
+   ]
+  },
+  {
+   "text": "여우가 초대장을 가져왔어요. 초대장을 톡 눌러 봐요!",
+   "en": "Fox brought an invitation. Tap the invitation!",
+   "segs": [
+    [
+     "nar",
+     "Fox brought an invitation. Tap the invitation!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "초대장을 톡 눌러서 두루미에게 줘요!",
+   "en": "Tap the invitation and give it to Crane!",
+   "segs": [
+    [
+     "nar",
+     "Tap the invitation and give it to Crane!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "\"와, 고마워!\" 두루미가 긴 다리로 폴짝 뛰었어요.",
+   "en": "\"Wow, thank you!\" Crane hopped up on those long legs.",
+   "segs": [
+    [
+     "crane",
+     "Wow, thank you!",
+     "happy:1.4"
+    ],
+    [
+     "nar",
+     "Crane hopped up on those long legs."
+    ]
+   ]
+  },
+  {
+   "text": "여우가 맛있는 수프를 끓여요.",
+   "en": "Fox is cooking some yummy soup.",
+   "segs": [
+    [
+     "nar",
+     "Fox is cooking some yummy soup."
+    ]
+   ]
+  },
+  {
+   "text": "냄비를 톡톡 눌러서 저어 볼까요?",
+   "en": "Shall we tap the pot and stir it?",
+   "segs": [
+    [
+     "nar",
+     "Shall we tap the pot and stir it?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "냄비를 톡톡 눌러서 휘휘 저어요!",
+   "en": "Tap the pot and stir, stir, stir!",
+   "segs": [
+    [
+     "nar",
+     "Tap the pot and stir, stir, stir!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "여우가 킥킥 웃어요. \"납작 접시에 담아야지~\"",
+   "en": "Fox giggles. \"I'll serve it on a flat plate~\"",
+   "segs": [
+    [
+     "nar",
+     "Fox giggles."
+    ],
+    [
+     "fox",
+     "I'll serve it on a flat plate~",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "두루미가 놀러 왔어요. 그런데 접시가 아주 납작해요!",
+   "en": "Crane came to visit. But the plate is very flat!",
+   "segs": [
+    [
+     "nar",
+     "Crane came to visit. But the plate is very flat!"
+    ]
+   ]
+  },
+  {
+   "text": "두루미 부리를 톡 눌러서 먹게 해 줘요!",
+   "en": "Tap Crane's beak to help Crane eat!",
+   "segs": [
+    [
+     "nar",
+     "Tap Crane's beak to help Crane eat!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "두루미 부리를 톡 눌러 봐요!",
+   "en": "Tap Crane's beak!",
+   "segs": [
+    [
+     "nar",
+     "Tap Crane's beak!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "어머나, 부리 끝만 딱딱 닿아요. 수프를 먹을 수가 없어요.",
+   "en": "Oh dear, only the tip of the beak goes clack, clack. Crane can't eat the soup.",
+   "segs": [
+    [
+     "nar",
+     "Oh dear, only the tip of the beak goes clack, clack. Crane can't eat the soup.",
+     "sad:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "여우는 혀로 핥핥, 다 먹었어요. 두루미는 배가 꼬르륵, 속상했어요.",
+   "en": "Fox licked, lick lick, and ate it all up. Crane's tummy rumbled, and Crane felt sad.",
+   "segs": [
+    [
+     "nar",
+     "Fox licked, lick lick, and ate it all up. Crane's tummy rumbled, and Crane felt sad.",
+     "sad:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "며칠 뒤, 이번엔 두루미가 여우를 불렀어요.",
+   "en": "A few days later, Crane invited Fox over.",
+   "segs": [
+    [
+     "nar",
+     "A few days later, Crane invited Fox over."
+    ]
+   ]
+  },
+  {
+   "text": "\"여우야, 우리 집에도 놀러 와~\"",
+   "en": "\"Fox, come over to my house too~\"",
+   "segs": [
+    [
+     "crane",
+     "\"Fox, come over to my house too~\"",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "여우가 신이 났어요. \"좋아! 맛있는 거 먹어야지!\"",
+   "en": "Fox was so excited. \"Yay! I'm going to eat something yummy!\"",
+   "segs": [
+    [
+     "nar",
+     "Fox was so excited.",
+     "happy:1.2"
+    ],
+    [
+     "fox",
+     "Yay! I'm going to eat something yummy!",
+     "happy:1.5"
+    ]
+   ]
+  },
+  {
+   "text": "와, 병이 탑처럼 높아요! 목이 아주 길어요.",
+   "en": "Wow, the bottle is as tall as a tower! The neck is so long.",
+   "segs": [
+    [
+     "fox",
+     "Wow, the bottle is as tall as a tower!",
+     "toneup:1.4"
+    ],
+    [
+     "nar",
+     "The neck is so long."
+    ]
+   ]
+  },
+  {
+   "text": "여우 코를 톡 눌러서 먹게 해 줘요!",
+   "en": "Tap Fox's nose to help Fox eat!",
+   "segs": [
+    [
+     "nar",
+     "Tap Fox's nose to help Fox eat!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "여우 코를 톡 눌러 봐요!",
+   "en": "Tap Fox's nose!",
+   "segs": [
+    [
+     "nar",
+     "Tap Fox's nose!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "여우 코를 한 번 더 톡!",
+   "en": "Tap Fox's nose one more time!",
+   "segs": [
+    [
+     "nar",
+     "Tap Fox's nose one more time!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "여우 코를 톡! 폴짝 뛰어 봐요!",
+   "en": "Tap Fox's nose! Let's hop!",
+   "segs": [
+    [
+     "nar",
+     "Tap Fox's nose! Let's hop!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "어머나! 여우 코가 병에 쏙 끼었어요!",
+   "en": "Oh no! Fox's nose got stuck in the bottle!",
+   "segs": [
+    [
+     "nar",
+     "Oh no! Fox's nose got stuck in the bottle!",
+     "toneup:1.4"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 코가 빠졌어요. 엉덩방아 쿵!",
+   "en": "Pop! The nose came out. Fox landed with a thump!",
+   "segs": [
+    [
+     "nar",
+     "Pop! The nose came out. Fox landed with a thump!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "두루미는 긴 부리로 쪽쪽 먹었어요. 여우는 배가 꼬르륵, 속상했어요.",
+   "en": "Crane sipped with that long beak, sip, sip. Fox's tummy rumbled, and Fox felt sad.",
+   "segs": [
+    [
+     "nar",
+     "Crane sipped with that long beak, sip, sip. Fox's tummy rumbled, and Fox felt sad.",
+     "sad:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "둘 다 못 먹었어요. 왜 그랬을까요?",
+   "en": "Neither of them could eat. Why was that?",
+   "segs": [
+    [
+     "nar",
+     "Neither of them could eat. Why was that?",
+     "tonedown:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "두루미는 부리가 길쭉해요. 어떤 그릇이 좋을까요?",
+   "en": "Crane has a long, thin beak. Which dish is best?",
+   "segs": [
+    [
+     "nar",
+     "Crane has a long, thin beak. Which dish is best?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "길쭉한 부리가 쏙 들어가는 그릇을 찾아봐요!",
+   "en": "Find the dish where a long beak fits right in!",
+   "segs": [
+    [
+     "nar",
+     "Find the dish where a long beak fits right in!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "여우는 입이 짧아요. 혀로 핥아 먹어요. 어떤 그릇이 좋을까요?",
+   "en": "Fox has a short mouth and licks food up. Which dish is best?",
+   "segs": [
+    [
+     "nar",
+     "Fox has a short mouth and licks food up. Which dish is best?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "혀로 핥기 좋은 납작한 그릇을 찾아봐요!",
+   "en": "Find a flat dish that's good for licking!",
+   "segs": [
+    [
+     "nar",
+     "Find a flat dish that's good for licking!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "여우랑 두루미가 함께 잔치를 열었어요. 손님들도 와요!",
+   "en": "Fox and Crane are having a feast together. The guests are coming too!",
+   "segs": [
+    [
+     "nar",
+     "Fox and Crane are having a feast together. The guests are coming too!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "입 모양을 잘 보고, 알맞은 그릇을 골라 줘요!",
+   "en": "Look at each mouth, and pick the right dish!",
+   "segs": [
+    [
+     "nar",
+     "Look at each mouth, and pick the right dish!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "여우는 입이 짧아요. 어떤 그릇이 좋을까요?",
+   "en": "Fox has a short mouth. Which dish is best?",
+   "segs": [
+    [
+     "nar",
+     "Fox has a short mouth. Which dish is best?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "오리는 부리가 넓적해요. 어떤 그릇이 좋을까요?",
+   "en": "Duck has a wide, flat beak. Which dish is best?",
+   "segs": [
+    [
+     "nar",
+     "Duck has a wide, flat beak. Which dish is best?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "나비는 입이 빨대 같아요. 무엇이 좋을까요?",
+   "en": "Butterfly has a mouth like a straw. What is best?",
+   "segs": [
+    [
+     "nar",
+     "Butterfly has a mouth like a straw. What is best?",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "길쭉한 부리가 쏙 들어가는 걸 찾아봐요!",
+   "en": "Find the one where a long beak fits right in!",
+   "segs": [
+    [
+     "nar",
+     "Find the one where a long beak fits right in!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "혀로 핥기 좋은 납작한 걸 찾아봐요!",
+   "en": "Find a flat one that's good for licking!",
+   "segs": [
+    [
+     "nar",
+     "Find a flat one that's good for licking!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "넓적한 부리로 푹 떠먹기 좋은 걸 찾아봐요!",
+   "en": "Find one that's good for scooping with a wide beak!",
+   "segs": [
+    [
+     "nar",
+     "Find one that's good for scooping with a wide beak!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "빨대 입으로 쪽 빨아 먹는 걸 찾아봐요!",
+   "en": "Find one to sip from with a straw mouth!",
+   "segs": [
+    [
+     "nar",
+     "Find one to sip from with a straw mouth!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "두루미가 왔어요!",
+   "en": "Crane is here!",
+   "segs": [
+    [
+     "nar",
+     "Crane is here!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "여우가 왔어요!",
+   "en": "Fox is here!",
+   "segs": [
+    [
+     "nar",
+     "Fox is here!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "오리가 왔어요!",
+   "en": "Duck is here!",
+   "segs": [
+    [
+     "nar",
+     "Duck is here!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "나비가 왔어요!",
+   "en": "Butterfly is here!",
+   "segs": [
+    [
+     "nar",
+     "Butterfly is here!",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "납작 접시예요! 반짝이는 걸 눌러 봐요!",
+   "en": "It's the flat plate! Tap the sparkly one!",
+   "segs": [
+    [
+     "nar",
+     "It's the flat plate! Tap the sparkly one!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "긴 병이에요! 반짝이는 걸 눌러 봐요!",
+   "en": "It's the tall bottle! Tap the sparkly one!",
+   "segs": [
+    [
+     "nar",
+     "It's the tall bottle! Tap the sparkly one!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "넓은 그릇이에요! 반짝이는 걸 눌러 봐요!",
+   "en": "It's the wide bowl! Tap the sparkly one!",
+   "segs": [
+    [
+     "nar",
+     "It's the wide bowl! Tap the sparkly one!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "꽃이에요! 반짝이는 걸 눌러 봐요!",
+   "en": "It's the flower! Tap the sparkly one!",
+   "segs": [
+    [
+     "nar",
+     "It's the flower! Tap the sparkly one!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 두루미는 긴 병이 좋아요.",
+   "en": "That's right! Crane likes the tall bottle.",
+   "segs": [
+    [
+     "nar",
+     "That's right! Crane likes the tall bottle.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 여우는 납작 접시가 좋아요.",
+   "en": "That's right! Fox likes the flat plate.",
+   "segs": [
+    [
+     "nar",
+     "That's right! Fox likes the flat plate.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 오리는 넓은 그릇이 좋아요.",
+   "en": "That's right! Duck likes the wide bowl.",
+   "segs": [
+    [
+     "nar",
+     "That's right! Duck likes the wide bowl.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 나비는 꽃이 좋아요.",
+   "en": "That's right! Butterfly likes the flower.",
+   "segs": [
+    [
+     "nar",
+     "That's right! Butterfly likes the flower.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "등불이 반짝, 모두 모여 잔치를 해요.",
+   "en": "The lanterns twinkle, and everyone gathers for the feast.",
+   "segs": [
+    [
+     "nar",
+     "The lanterns twinkle, and everyone gathers for the feast.",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "여우가 말했어요. \"두루미야, 미안해.\"",
+   "en": "Fox said, \"I'm sorry, Crane.\"",
+   "segs": [
+    [
+     "nar",
+     "Fox said,"
+    ],
+    [
+     "fox",
+     "I'm sorry, Crane.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "두루미도 말했어요. \"여우야, 나도 미안해.\"",
+   "en": "Crane said, \"I'm sorry too, Fox.\"",
+   "segs": [
+    [
+     "nar",
+     "Crane said,"
+    ],
+    [
+     "crane",
+     "I'm sorry too, Fox.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "\"괜찮아!\" 둘은 다시 사이좋은 친구가 되었어요.",
+   "en": "\"It's okay!\" The two became good friends again.",
+   "segs": [
+    [
+     "fox",
+     "It's okay!",
+     "happy"
+    ],
+    [
+     "crane",
+     "It's okay!",
+     "happy"
+    ],
+    [
+     "nar",
+     "The two became good friends again.",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "친구들을 톡톡 눌러 봐요. 냠냠 맛있게 먹어요!",
+   "en": "Tap your friends. Eat up, nom nom, yummy!",
+   "segs": [
+    [
+     "nar",
+     "Tap your friends. Eat up, nom nom, yummy!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "배부르게 먹고, 모두 행복하게 웃었답니다.",
+   "en": "They ate until they were full, and everyone smiled happily.",
+   "segs": [
+    [
+     "nar",
+     "They ate until they were full, and everyone smiled happily.",
+     "happy:1.3"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "cut_peck": [
+   [
+    "crane",
+    "Oh dear, my beak won't reach!",
+    "sad:1.4",
+    "Crane pecks at the flat plate, but only the tip of the beak goes clack, clack."
+   ]
+  ],
+  "cut_lick": [
+   [
+    "fox",
+    "Mmm, yummy! Lick, lick!",
+    "happy"
+   ]
+  ],
+  "cut_stuck": [
+   [
+    "fox",
+    "Yikes, my nose is stuck!",
+    "toneup:1.6",
+    "Fox's nose got stuck in the mouth of the tall bottle."
+   ]
+  ],
+  "hi_crane": [
+   [
+    "crane",
+    "Hello! I'm here too~",
+    "happy"
+   ]
+  ],
+  "hi_fox": [
+   [
+    "fox",
+    "Heh heh, I'm hungry too!",
+    "happy"
+   ]
+  ],
+  "hi_duck": [
+   [
+    "duck",
+    "Quack quack! Hello!",
+    "happy"
+   ]
+  ],
+  "hi_butterfly": [
+   [
+    "butterfly",
+    "Flutter flutter, hello!",
+    "happy"
+   ]
+  ],
+  "yum_crane": [
+   [
+    "crane",
+    "Sip sip, yummy!",
+    "happy"
+   ]
+  ],
+  "yum_fox": [
+   [
+    "fox",
+    "Lick lick, yummy!",
+    "happy"
+   ]
+  ],
+  "yum_duck": [
+   [
+    "duck",
+    "Nom nom, quack!",
+    "happy"
+   ]
+  ],
+  "yum_butterfly": [
+   [
+    "butterfly",
+    "Sip! So sweet!",
+    "happy"
+   ]
+  ]
+ },
+ "ui": {
+  "여우와 두루미": "The Fox and the Crane",
+  "누구에게 어떤 그릇이 좋을까?": "Which dish is best for whom?",
+  "여우의 부엌": "Fox's Kitchen",
+  "납작 접시": "The Flat Plate",
+  "두루미네 집": "Crane's House",
+  "긴 병": "The Tall Bottle",
+  "왜 못 먹었을까?": "Why couldn't they eat?",
+  "알맞은 그릇": "The Right Dish",
+  "함께 먹어요": "Eating Together",
+  "폴짝!": "Hop!",
+  "쪽쪽": "Slurp slurp",
+  "핥핥": "Lick lick",
+  "냠냠": "Yum yum",
+  "쪽!": "Slurp!",
+  "보글": "Bubble",
+  "콕!": "Peck!",
+  "딱!": "Clack!",
+  "딱딱!": "Clack clack!",
+  "핥핥!": "Lick lick!",
+  "꼬르륵": "Grumble",
+  "킁킁": "Sniff sniff",
+  "영차!": "Heave-ho!",
+  "뿅!": "Pop!",
+  "쿵!": "Thud!",
+  "쏙!": "Plop!",
+  "미안해!": "Sorry!",
+  "친구 입장이 되어 보면 모두 즐거워요!": "Thinking about a friend's needs makes everyone happy!"
+ }
+}
