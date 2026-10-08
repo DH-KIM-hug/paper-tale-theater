@@ -10,8 +10,8 @@ const NARRATION_CLIPS = {
  "김이 줄었지만, 아직 뜨거워요.": "audio/tc/goldilocks/nar_3a8d5a2b52.mp3",
  "아빠 곰: \"죽이 식을 동안 산책 다녀오자!\"": "audio/tc/goldilocks/dad_8a98065740.mp3",
  "숲속에는 금빛 머리 골디락스가 살았어요.": "audio/tc/goldilocks/nar_ed5d2cd448.mp3",
- "옆으로 쓱 밀어서 같이 걸어요!": "audio/tc/goldilocks/nar_83a95f6b45.mp3",
- "옆으로 쓱! 골디락스랑 걸어요.": "audio/tc/goldilocks/nar_b13af64163.mp3",
+ "화면을 톡톡 눌러서 같이 걸어요!": "audio/tc/goldilocks/nar_75cec7b999.mp3",
+ "톡톡! 골디락스랑 걸어요.": "audio/tc/goldilocks/nar_d206407d50.mp3",
  "꽃을 세 송이 땄어요. 어? 저기 통나무집이 있어요!": [
   "audio/tc/goldilocks/nar_23098938c1.mp3",
   "audio/tc/goldilocks/goldi_103bafcaf8.mp3"
@@ -61,8 +61,7 @@ const NARRATION_CLIPS = {
   "audio/tc/goldilocks/goldi_3828524fd6.mp3",
   "audio/tc/goldilocks/nar_ae7e804f6d.mp3"
  ],
- "이번에는 침대를 꾹 누르고 있어요. 자장가가 이어져요!": "audio/tc/goldilocks/nar_b4516fc2a2.mp3",
- "침대를 꾹 누르고 있어요. 자장자장.": "audio/tc/goldilocks/nar_102c1418fe.mp3",
+ "이번에는 침대를 톡 눌러 봐요. 자장가가 이어져요!": "audio/tc/goldilocks/nar_85cf4a4b84.mp3",
  "골디락스는 쿨쿨 잠이 들었어요.": "audio/tc/goldilocks/nar_3b3310ffc0.mp3",
  "그때 곰 가족이 산책에서 돌아왔어요.": "audio/tc/goldilocks/nar_e935041594.mp3",
  "아빠 곰: \"누가 내 죽을 먹었지?\"": "audio/tc/goldilocks/dad_b0b20585e2.mp3",

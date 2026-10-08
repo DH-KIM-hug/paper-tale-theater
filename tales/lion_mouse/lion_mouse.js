@@ -683,7 +683,7 @@
     }, lion.parts.H);
     await say('다음 날 아침, 사자가 생쥐를 등에 태웠어요. "꽉 잡아!"');
     let sx = 0;
-    await T.swipe(T.root.querySelector('#stageWrap'), { dir: 'right', count: 3, prompt: '옆으로 쓱 밀어서 달려요!',
+    await T.mash(T.root.querySelector('#stageWrap'), { count: 3, prompt: '톡톡 눌러서 달려요!',
       onStep: () => {
         const from = sx; sx -= 520;
         scroll.animate([{ transform: `translateX(${from}px)` }, { transform: `translateX(${sx}px)` }], { duration: 900, easing: 'ease-in-out', fill: 'forwards' });
@@ -695,10 +695,12 @@
     await say('바람을 가르며 초원을 달려요! 신난다!');
     T.finale();
     await say('사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!');
-    await T.free([
-      { el: rider.pos, onTap: () => { rider.hop(26, 320); T.pop(250, 250, '찍!', C.pine); vo('hi_mouse'); } },
-      { el: lion.pos, onTap: () => { vo('hi_lion'); lion.parts.mouth('open'); setTimeout(() => lion.parts.mouth('smile'), 500); lion.hop(20, 360); T.pop(640, 190, '어흥~', C.persimmon); } },
-    ], 12000);
+    await T.tap(rider.pos);
+    rider.hop(26, 320); T.pop(250, 250, '찍!', C.pine); vo('hi_mouse');
+    await sleep(500);
+    await T.tap(lion.pos);
+    vo('hi_lion'); lion.parts.mouth('open'); setTimeout(() => lion.parts.mouth('smile'), 500); lion.hop(20, 360); T.pop(640, 190, '어흥~', C.persimmon);
+    await sleep(900);
     await say(`그날부터 ${josa(LION, '과/와')} ${josa(MOUSE, '은/는')} 둘도 없는 친구가 되었답니다.`);
     return '작아도 큰 친구를 도울 수 있어요!';
   }

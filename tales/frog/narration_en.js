@@ -228,10 +228,6 @@ const NARRATION_CLIPS_EN = {
   "t": "This time, tap the frogs and sing along!",
   "c": "audio/tc/frog/en/nar_f927c19114.mp3"
  },
- "잘했어요! 이제 마음대로 노래해 봐요!": {
-  "t": "Well done! Now sing however you like!",
-  "c": "audio/tc/frog/en/nar_b808beba05.mp3"
- },
  "개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.": {
   "t": "Ribbit, ribbit~ The song faded away, and the frog family fell fast asleep.",
   "c": "audio/tc/frog/en/nar_21c5fa6514.mp3"

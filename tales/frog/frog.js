@@ -501,10 +501,6 @@
     await say('이번에는 개구리를 톡톡 눌러서 같이 불러요!');
     await T.followMelody(TWINKLE, { beat: .5, targetFor: i => frogs[i % 4].pos, voice, onNote: i => frogs[i % 4].hop(26, 300), others: [{ el: uncle.pos, onTap: bass }] });
     await sleep(400);
-    await say('잘했어요! 이제 마음대로 노래해 봐요!');
-    const RATE = [1.0, 1.189, .794, 1.335, .6]; // 자유 놀이: 도·미·솔·라(+삼촌 낮은 소리)에 어울리게
-    const sing = i => AudioFX.animalNote('frog', RATE[i], .75, 0, .4) || T.tone(330 * RATE[i], .34, { type: 'triangle', vol: .22 });
-    await T.free(choir.map((f, i) => ({ el: f.pos, onTap: () => { sing(i); f.hop(22, 300); } })), 12000);
     /* 끝: 온 가족이 한 번 더 함께 */
     T.playMelody(TWINKLE, { beat: .5, voice, onNote: () => choir.forEach(f => f.hop(18, 300)) });
     await sleep(7200);

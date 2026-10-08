@@ -341,12 +341,12 @@
    ]
   },
   {
-   "text": "이번에는 부엉이를 꾹 누르고 있어 봐요. 자장가가 이어져요!",
-   "en": "Now press and hold the owl. The lullaby keeps going!",
+   "text": "이번에는 부엉이를 톡 눌러 봐요. 자장가가 이어져요!",
+   "en": "Now tap the owl. The lullaby keeps going!",
    "segs": [
     [
      "nar",
-     "Now press and hold the owl. The lullaby keeps going!"
+     "Now tap the owl. The lullaby keeps going!"
     ]
    ]
   },
@@ -492,12 +492,8 @@
    "en": "Now there's a tall hill."
   },
   {
-   "text": "화면을 꾹 누르고 있으면 영차영차 올라가요!",
-   "en": "Press and hold the screen to climb up, heave-ho, heave-ho!"
-  },
-  {
-   "text": "화면을 꾹 누르고 있어 봐요!",
-   "en": "Press and hold the screen!"
+   "text": "화면을 톡톡 누르면 영차영차 올라가요!",
+   "en": "Tap the screen and up you go, heave-ho, heave-ho!"
   },
   {
    "text": "영차! 언덕 꼭대기에 올라왔어요.",
@@ -699,16 +695,6 @@
     [
      "nar",
      "Now tap the friends to play along together!"
-    ]
-   ]
-  },
-  {
-   "text": "잘했어요! 이제 마음대로 신나게 연주해요!",
-   "en": "Well done! Now play however you like!",
-   "segs": [
-    [
-     "nar",
-     "Well done! Now play however you like!"
     ]
    ]
   },

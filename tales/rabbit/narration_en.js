@@ -210,9 +210,9 @@ const NARRATION_CLIPS_EN = {
   "t": "The owl sings a lullaby. Listen carefully.",
   "c": "audio/tc/rabbit/en/nar_f6b4e88a03.mp3"
  },
- "이번에는 부엉이를 꾹 누르고 있어 봐요. 자장가가 이어져요!": {
-  "t": "Now press and hold the owl. The lullaby keeps going!",
-  "c": "audio/tc/rabbit/en/nar_e9d30ef5ae.mp3"
+ "이번에는 부엉이를 톡 눌러 봐요. 자장가가 이어져요!": {
+  "t": "Now tap the owl. The lullaby keeps going!",
+  "c": "audio/tc/rabbit/en/nar_8ec3a7170e.mp3"
  },
  "나무 위 부엉이를 톡 눌러 봐요!": {
   "t": "Tap the owl in the tree!",
@@ -305,13 +305,9 @@ const NARRATION_CLIPS_EN = {
   "t": "Now there's a tall hill.",
   "c": "audio/tc/rabbit/en/nar_18f79c9dc6.mp3"
  },
- "화면을 꾹 누르고 있으면 영차영차 올라가요!": {
-  "t": "Press and hold the screen to climb up, heave-ho, heave-ho!",
-  "c": "audio/tc/rabbit/en/nar_259f083d4a.mp3"
- },
- "화면을 꾹 누르고 있어 봐요!": {
-  "t": "Press and hold the screen!",
-  "c": "audio/tc/rabbit/en/nar_d47126b745.mp3"
+ "화면을 톡톡 누르면 영차영차 올라가요!": {
+  "t": "Tap the screen and up you go, heave-ho, heave-ho!",
+  "c": "audio/tc/rabbit/en/nar_75a4668e8f.mp3"
  },
  "영차! 언덕 꼭대기에 올라왔어요.": {
   "t": "Heave-ho! The turtle reached the top of the hill.",
@@ -421,10 +417,6 @@ const NARRATION_CLIPS_EN = {
  "이번에는 친구들을 톡톡 눌러서 같이 연주해요!": {
   "t": "Now tap the friends to play along together!",
   "c": "audio/tc/rabbit/en/nar_26e349a17b.mp3"
- },
- "잘했어요! 이제 마음대로 신나게 연주해요!": {
-  "t": "Well done! Now play however you like!",
-  "c": "audio/tc/rabbit/en/nar_8ee5a0a237.mp3"
  },
  "모두 함께 신나는 잔치를 했답니다.": {
   "t": "Everyone had a happy party together.",

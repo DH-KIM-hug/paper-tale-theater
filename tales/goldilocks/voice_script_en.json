@@ -115,23 +115,23 @@
    ]
   },
   {
-   "text": "옆으로 쓱 밀어서 같이 걸어요!",
-   "en": "Swipe sideways and walk along with her!",
+   "text": "화면을 톡톡 눌러서 같이 걸어요!",
+   "en": "Tap, tap the screen and walk along with her!",
    "segs": [
     [
      "nar",
-     "Swipe sideways and walk along with her!",
+     "Tap, tap the screen and walk along with her!",
      "happy:1.1"
     ]
    ]
   },
   {
-   "text": "옆으로 쓱! 골디락스랑 걸어요.",
-   "en": "Swipe sideways! Walk with Goldilocks.",
+   "text": "톡톡! 골디락스랑 걸어요.",
+   "en": "Tap, tap! Walk with Goldilocks.",
    "segs": [
     [
      "nar",
-     "Swipe sideways! Walk with Goldilocks.",
+     "Tap, tap! Walk with Goldilocks.",
      "happy:1.1"
     ]
    ]
@@ -471,24 +471,13 @@
    ]
   },
   {
-   "text": "이번에는 침대를 꾹 누르고 있어요. 자장가가 이어져요!",
-   "en": "This time, press and hold the bed. The lullaby keeps going!",
+   "text": "이번에는 침대를 톡 눌러 봐요. 자장가가 이어져요!",
+   "en": "This time, tap the bed. The lullaby keeps going!",
    "segs": [
     [
      "nar",
-     "This time, press and hold the bed. The lullaby keeps going!",
+     "This time, tap the bed. The lullaby keeps going!",
      "whisper:1.2"
-    ]
-   ]
-  },
-  {
-   "text": "침대를 꾹 누르고 있어요. 자장자장.",
-   "en": "Keep holding the bed. Hush-a-bye, hush-a-bye.",
-   "segs": [
-    [
-     "nar",
-     "Keep holding the bed. Hush-a-bye, hush-a-bye.",
-     "whisper:1.3"
     ]
    ]
   },

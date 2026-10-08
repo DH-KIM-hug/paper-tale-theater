@@ -40,13 +40,13 @@ const NARRATION_CLIPS_EN = {
   "t": "In the woods lived a girl with golden hair, named Goldilocks.",
   "c": "audio/tc/goldilocks/en/nar_e50b9d2330.mp3"
  },
- "옆으로 쓱 밀어서 같이 걸어요!": {
-  "t": "Swipe sideways and walk along with her!",
-  "c": "audio/tc/goldilocks/en/nar_17d1c5339e.mp3"
+ "화면을 톡톡 눌러서 같이 걸어요!": {
+  "t": "Tap, tap the screen and walk along with her!",
+  "c": "audio/tc/goldilocks/en/nar_6bda5ba390.mp3"
  },
- "옆으로 쓱! 골디락스랑 걸어요.": {
-  "t": "Swipe sideways! Walk with Goldilocks.",
-  "c": "audio/tc/goldilocks/en/nar_b00361ae70.mp3"
+ "톡톡! 골디락스랑 걸어요.": {
+  "t": "Tap, tap! Walk with Goldilocks.",
+  "c": "audio/tc/goldilocks/en/nar_afcd1ba2eb.mp3"
  },
  "꽃을 세 송이 땄어요. 어? 저기 통나무집이 있어요!": {
   "t": "She picked three flowers. Oh? Look, a log cabin!",
@@ -181,13 +181,9 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/goldilocks/en/nar_094335e0bd.mp3"
   ]
  },
- "이번에는 침대를 꾹 누르고 있어요. 자장가가 이어져요!": {
-  "t": "This time, press and hold the bed. The lullaby keeps going!",
-  "c": "audio/tc/goldilocks/en/nar_072fb306af.mp3"
- },
- "침대를 꾹 누르고 있어요. 자장자장.": {
-  "t": "Keep holding the bed. Hush-a-bye, hush-a-bye.",
-  "c": "audio/tc/goldilocks/en/nar_e1b1a9f411.mp3"
+ "이번에는 침대를 톡 눌러 봐요. 자장가가 이어져요!": {
+  "t": "This time, tap the bed. The lullaby keeps going!",
+  "c": "audio/tc/goldilocks/en/nar_c8c5413d69.mp3"
  },
  "골디락스는 쿨쿨 잠이 들었어요.": {
   "t": "Goldilocks fell fast asleep. Zzz.",

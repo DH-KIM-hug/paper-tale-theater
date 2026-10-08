@@ -657,12 +657,12 @@
    ]
   },
   {
-   "text": "옆으로 쓱 밀어서 달려요!",
-   "en": "Swipe sideways to run!",
+   "text": "톡톡 눌러서 달려요!",
+   "en": "Tap, tap to run!",
    "segs": [
     [
      "nar",
-     "Swipe sideways to run!",
+     "Tap, tap to run!",
      "happy:1.1"
     ]
    ]

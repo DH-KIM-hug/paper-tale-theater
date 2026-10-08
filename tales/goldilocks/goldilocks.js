@@ -624,7 +624,7 @@
       view();
     }, goldi.pos);
     await say('숲속에는 금빛 머리 골디락스가 살았어요.');
-    await say('옆으로 쓱 밀어서 같이 걸어요!');
+    await say('화면을 톡톡 눌러서 같이 걸어요!');
     const NUM = ['하나', '둘', '셋'];
     // 걸어와 멈추면 발치에 꽃이 피고, 허리를 숙여 꺾으면 손으로 쏙 올라간다
     const pickFlower = async (nx, i) => {
@@ -643,7 +643,7 @@
       await sleep(450);
       fl.remove();
     };
-    await T.swipe(area, { dir: 'right', count: 3, prompt: '옆으로 쓱! 골디락스랑 걸어요.', onStep: i => {
+    await T.mash(area, { count: 3, prompt: '톡톡! 골디락스랑 걸어요.', onStep: i => {
       const nx = X(200 + i * 170);
       goldi.move(nx, 505, 600); goldi.hop(18, 300);
       AudioFX.sfx('step_grass', .6) || T.tone(300, .1);
@@ -811,7 +811,7 @@
       { el: beds[2].blanket, ok: true },
     ], { prompt: q7, where: '딱딱하지도, 너무 푹신하지도 않은 침대예요.', who: '작은 침대예요! 반짝이는 침대를 눌러요.' });
     lieIn(beds[2]); goldi.setFace('happy');
-    /* 브람스 〈자장가〉(1868, 공개 곡) — 오르골 소리. 한 소절을 들려주고, 침대를 꾹 누르고 있는 동안 다음 소절이 이어진다 */
+    /* 브람스 〈자장가〉(1868, 공개 곡) — 오르골 소리. 한 소절을 들려주고, 침대를 톡 누르면 다음 소절이 이어진다 */
     const LULL1 = T.parseSong('E4:.5 E4:.5 G4:2 E4:.5 E4:.5 G4:2 E4:.5 G4:.5 C5:1 B4:1 A4:.5 A4:.5 G4:2');
     const LULL2 = T.parseSong('A4:.5 A4:.5 C5:2 A4:.5 A4:.5 C5:2 A4:.5 C5:.5 F5:1 E5:1 D5:.5 D5:.5 C5:3');
     const box = T.timbre('box');
@@ -820,9 +820,9 @@
     await say('딱 좋아요! 자장가를 들려줄게요. 잘 들어 봐요.');
     await T.playMelody(LULL1, { beat: .65, voice: lullVoice, onNote: lullNote });
     await sleep(400);
-    await say('이번에는 침대를 꾹 누르고 있어요. 자장가가 이어져요!');
+    await say('이번에는 침대를 톡 눌러 봐요. 자장가가 이어져요!');
     let yawned = false, slept = false;
-    await T.holdMelody(LULL2, { beat: .65, target: beds[2].blanket, voice: lullVoice, onNote: i => {
+    await T.holdMelody(LULL2, { beat: .65, tapStart: true, target: beds[2].blanket, voice: lullVoice, onNote: i => {
       lullNote(i);
       if (i >= 3 && !yawned) { yawned = true; goldi.setFace('yawn'); pop(beds[2].cx, 180, '하암~', C.indigo); T.tone([500, 300], .8, { type: 'sine', vol: .1 }); }
       if (i >= 9 && !slept) { slept = true; goldi.setFace('sleep'); }

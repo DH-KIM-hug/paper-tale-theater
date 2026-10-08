@@ -436,18 +436,6 @@
     T.el('path', { d: `M${x + 8} ${y - 2} V${y - 34} Q${x + 18} ${y - 26} ${x + 22} ${y - 18}`, stroke: color, 'stroke-width': 4, fill: 'none' }, g);
     g.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${-20 + Math.random() * 40}px,-80px)`, opacity: 0 }], { duration: 1500, fill: 'forwards' }).finished.then(() => g.remove());
   }
-  /* 꾹 누르기 (로컬 도우미): 엔진 hold는 짧게 톡톡 누르면 거의 진행되지 않고, 톡이 계속되면 20초 자동 마무리도 미뤄진다.
-     그래서 mash(한 번 누를 때마다 한 칸, 20초 자동 마무리)를 바탕으로, 누르고 있는 동안에는 0.11초마다 한 칸씩 더 나아가게 한다. */
-  async function holdOn(T, target, { count = 14, onProgress, prompt } = {}) {
-    let holding = false, synth = false, h = null;
-    const down = () => { if (synth) return; holding = true; clearInterval(h);
-      h = setInterval(() => { if (!holding) return; synth = true; target.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })); synth = false; }, 110); };
-    const up = () => { holding = false; clearInterval(h); };
-    target.addEventListener('pointerdown', down);
-    window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
-    try { await T.mash(target, { count, prompt, onStep: i => onProgress && onProgress(i / count) }); }
-    finally { up(); target.removeEventListener('pointerdown', down); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); }
-  }
   /* 소리 퀴즈 카드 (화면 고정 UI — 카메라 영향 없음): 동물 그림이 든 동그란 종이. slot 0 = 왼쪽, 1 = 오른쪽.
      세로 화면은 보이는 폭이 좁아 둘이 나란히 들어가게 줄인다 */
   function voiceBadge(T, k, slot) {
@@ -890,7 +878,7 @@
     rp.mouth('yawn'); T.tone([400, 200], .8, { type: 'sine', vol: .12 });
     await say('포근포근~ 이불을 덮어 줬어요.');
     rp.mouth('smile');
-    /* 브람스 〈자장가〉(1868, 공개 곡) — 오르골 소리. 먼저 한 소절을 들려주고, 부엉이를 꾹 누르고 있는 동안 다음 소절이 흘러간다 */
+    /* 브람스 〈자장가〉(1868, 공개 곡) — 오르골 소리. 먼저 한 소절을 들려주고, 부엉이를 톡 누르면 다음 소절이 흘러간다 */
     const LULL1 = T.parseSong('E4:.5 E4:.5 G4:2 E4:.5 E4:.5 G4:2 E4:.5 G4:.5 C5:1 B4:1 A4:.5 A4:.5 G4:2');
     const LULL2 = T.parseSong('A4:.5 A4:.5 C5:2 A4:.5 A4:.5 C5:2 A4:.5 C5:.5 F5:1 E5:1 D5:.5 D5:.5 C5:3');
     const box = T.timbre('box');
@@ -899,8 +887,8 @@
     await say('부엉이가 자장가를 불러 줘요. 잘 들어 봐요.');
     await T.playMelody(LULL1, { beat: .65, voice: lullVoice, onNote: lullNote });
     await sleep(400);
-    await say('이번에는 부엉이를 꾹 누르고 있어 봐요. 자장가가 이어져요!');
-    await T.holdMelody(LULL2, { beat: .65, target: aud.owl.pos, voice: lullVoice, onNote: lullNote });
+    await say('이번에는 부엉이를 톡 눌러 봐요. 자장가가 이어져요!');
+    await T.holdMelody(LULL2, { beat: .65, tapStart: true, target: aud.owl.pos, voice: lullVoice, onNote: lullNote });
     T.pop(aud.owl.x, aud.owl.y - 130, '부엉 부엉~', C.indigo);
     rp.sleepy(true);
     rp.setEyes('drowsy'); // 자장가를 들으면 선 채로 눈이 스르르 감긴다 (그림: 감은 눈꺼풀을 서서히)
@@ -1085,15 +1073,15 @@
       bar.show(true);
     });
     await say('이번엔 높은 언덕이에요.');
-    await say('화면을 꾹 누르고 있으면 영차영차 올라가요!');
+    await say('화면을 톡톡 누르면 영차영차 올라가요!');
     let lastStep = -1, cheered = false;
     const yo = new Set();
-    /* 꾹 누르는 동안 0.11초마다 한 칸씩 들어오므로, 칸마다 move()를 새로 걸면 움직임이 겹쳐 뒤로 튄다 →
+    /* 톡 누를 때마다 한 칸씩 들어오므로, 칸마다 move()를 새로 걸면 움직임이 겹쳐 뒤로 튄다 →
        목표 위치만 바꾸고 매 프레임 부드럽게 따라가게 한다 */
     const climb = { tgt: 0, cur: 0, on: true };
     const climbLoop = () => { climb.cur += (climb.tgt - climb.cur) * .14; const [x, y, s] = hillAt(climb.cur); turtle.scale = s; turtle.place(x, y); if (climb.on) requestAnimationFrame(climbLoop); };
     requestAnimationFrame(climbLoop);
-    await holdOn(T, wrap, { count: 14, prompt: '화면을 꾹 누르고 있어 봐요!', onProgress: p => {
+    await T.mash(wrap, { count: 6, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => { const p = i / 6;
       climb.tgt = p; const [x, y] = hillAt(p); follow(x + 40, 300);
       const s = Math.floor(p * 16); if (s !== lastStep) { lastStep = s; tp.step(s % 2); footstep(T); }
       [.3, .7].forEach(m => { if (p >= m && !yo.has(m)) { yo.add(m); T.pop(x + 60, y - 160 * hillAt(p)[2] / 1.3, '영차!', C.pine); } });
@@ -1345,11 +1333,6 @@
     await say('이번에는 친구들을 톡톡 눌러서 같이 연주해요!');
     await T.followMelody(MARCH.slice(0, 10), { beat: .17, targetFor: i => cast[WHO[i]].pos, voice: marchVoice, onNote: marchHop });
     await sleep(400);
-    await say('잘했어요! 이제 마음대로 신나게 연주해요!');
-    let beat = 0;
-    every(600, () => { T.tone(beat % 2 ? 196 : 131, .12, { type: 'triangle', vol: .06 }); beat++; });
-    await T.free(Object.keys(BAND).map(k => ({ el: cast[k].pos, onTap: () => playNote(k) })), 15000);
-    stopLoops();
     await sleep(400);
     T.playMelody(MARCH, { beat: .17, voice: marchVoice, onNote: i => { marchHop(i); if (MARCH[i][1] >= 4) ['pig', 'dog', 'rooster', 'turtle', 'owl', 'cat'].forEach(k => cast[k].hop(30, 380)); } });
     await sleep(5800);

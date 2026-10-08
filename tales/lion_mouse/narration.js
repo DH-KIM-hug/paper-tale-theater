@@ -78,7 +78,7 @@ const NARRATION_CLIPS = {
   "audio/tc/lion_mouse/nar_5177bac3cc.mp3",
   "audio/tc/lion_mouse/lion_9eadbbabf9.mp3"
  ],
- "옆으로 쓱 밀어서 달려요!": "audio/tc/lion_mouse/nar_9b2c267a2e.mp3",
+ "톡톡 눌러서 달려요!": "audio/tc/lion_mouse/nar_3bd549788f.mp3",
  "바람을 가르며 초원을 달려요! 신난다!": [
   "audio/tc/lion_mouse/nar_d2590fe9b5.mp3",
   "audio/tc/lion_mouse/mouse_1f77f0984b.mp3"

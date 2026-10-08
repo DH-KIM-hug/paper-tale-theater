@@ -255,9 +255,9 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/lion_mouse/en/lion_bc684a534b.mp3"
   ]
  },
- "옆으로 쓱 밀어서 달려요!": {
-  "t": "Swipe sideways to run!",
-  "c": "audio/tc/lion_mouse/en/nar_0d0215ea19.mp3"
+ "톡톡 눌러서 달려요!": {
+  "t": "Tap, tap to run!",
+  "c": "audio/tc/lion_mouse/en/nar_08a1b05c99.mp3"
  },
  "바람을 가르며 초원을 달려요! 신난다!": {
   "t": "They race across the meadow through the wind! Yippee!",

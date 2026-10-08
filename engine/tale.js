@@ -1,4 +1,4 @@
-/* 종이 동화극장 공용 엔진 — 새 동화(tales/*)가 함께 쓴다.
+/* 톡톡 동화극장 공용 엔진 — 새 동화(tales/*)가 함께 쓴다.
    의존: ../../audio.js (AudioFX, Narrator — #bubble/#bubbleText를 쓴다)
    규칙(TALES_PLAN §0):
    - 조작 5가지: tap(톡) · mash(톡톡톡) · choose(골라요) · swipe(쓱) · hold(꾹)
@@ -796,15 +796,15 @@ const Tale = (() => {
   });
   /* 꾹 누르기 노래: target 을 누르고 있는 동안 곡이 한 음씩 흘러간다. 떼면 기다리고, 톡톡 쳐도 조금씩 나아가며,
      wait 동안 아무도 안 누르면 곡이 스스로 끝까지 흘러간다. 끝나면 돌아온다 */
-  const holdMelody = input((notes, { beat = .6, target, voice, onNote, wait = 6000 } = {}) => new Promise(res => {
+  const holdMelody = input((notes, { beat = .6, target, voice, onNote, wait = 6000, tapStart = false } = {}) => new Promise(res => {
     const starts = []; let acc = 0;
     notes.forEach(([n, b]) => { starts.push(acc); acc += b * beat * 1000; });
     let held = 0, idx = 0, down = false, auto = false, idle = 0, done = false;
     arm(target, true);
     const bob = target.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
-    const hand = setTimeout(() => !done && showHand(target, 'hold'), 2500);
+    const hand = setTimeout(() => !done && showHand(target, tapStart ? 'tap' : 'hold'), 2500);
     const fin = () => { if (done) return; done = true; clearInterval(tm); clearTimeout(hand); bob.cancel(); target.removeEventListener('pointerdown', dn); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); arm(target, false); hideHand(); res(); };
-    const dn = e => { e.stopPropagation(); if (busy || done) return; down = true; idle = 0; hideHand(); held += 250; };
+    const dn = e => { e.stopPropagation(); if (busy || done) return; down = true; idle = 0; hideHand(); held += 250; if (tapStart) auto = true; };
     const up = () => { down = false; };
     const tm = setInterval(() => {
       if (down || auto) held += 50; else idle += 50;
