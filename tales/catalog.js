@@ -178,8 +178,9 @@ const TALES = (() => {
       <path d="M112 44 l8 3 -8 3z" fill="${c.ps}"/>${eye(108, 44, 1.4)}</g>` },
 
   /* ───────── 계획된 동화 (TALES_PLAN_2) ───────── */
-  { id: 'three_pigs', title: '아기 돼지 삼형제', origin: 'world', skills: ['count', 'order', 'size'], ready: false,
+  { id: 'three_pigs', title: '아기 돼지 삼형제', origin: 'world', skills: ['count', 'order', 'size'], ready: false, making: true,
     line: '짚 집, 나무 집, 벽돌 집. 벽돌을 톡톡 쌓아 막내 집을 지켜요.',
+    en: { title: 'The Three Little Pigs', line: 'A straw house, a wood house, a brick house. Stack the bricks tap by tap to keep the youngest pig safe.' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
       <g class="pc"><rect y="88" width="160" height="22" fill="${c.lf}"/>
       <rect x="10" y="62" width="36" height="26" fill="${c.gd}"/><path d="M6 64 L28 42 L50 64Z" fill="${c.am}"/>
