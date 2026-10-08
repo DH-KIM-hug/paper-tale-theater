@@ -1,6 +1,6 @@
 {
   "appId": "com.papertale.theater",
-  "appName": "종이 동화극장",
+  "appName": "톡톡 동화극장",
   "webDir": "www",
   "ios": {
     "contentInset": "never",

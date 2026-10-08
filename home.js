@@ -1,4 +1,4 @@
-/* 종이 동화극장 — 앱 홈: 태그로 고르기 (HOME_UI_PLAN.md v2) + 움직임 (v3)
+/* 톡톡 동화극장 — 앱 홈: 태그로 고르기 (HOME_UI_PLAN.md v2) + 움직임 (v3)
    · 같은 줄 안에서 여러 개 = 또는(OR), 두 줄 사이 = 그리고(AND), 아무것도 안 고른 줄 = 전체
    · 고른 태그와 설정은 localStorage 에 기억 (막혀 있어도 정상 동작)
    · 움직임은 모두 seek(t) 방식: 장면마다 "t초일 때의 모습"만 계산한다. 건너뛰기 = 끝 시각으로 seek.
@@ -357,6 +357,13 @@
     langBtn.setAttribute('aria-label', lang === 'en' ? '한국어로 보기' : 'Switch language: English');
     langBtn.classList.toggle('on', lang === 'en');
     document.documentElement.lang = lang;
+    paintLogo();
+  }
+  function paintLogo() {
+    const logo = $('.logo'), words = lang === 'en' ? ['Tok', 'Tok', 'Tale', 'Theater'] : ['톡', '톡', '동', '화', '극', '장'], gapAt = 2;
+    logo.innerHTML = `<span class="sr">${L('톡톡 동화극장', 'Tok Tok Tale Theater')}</span>` +
+      words.map((w, i) => `<span class="lt${i === gapAt ? ' gap' : ''}${lang === 'en' && i < 3 ? ' w' : ''}" aria-hidden="true">${w}</span>`).join('');
+    document.title = L('톡톡 동화극장', 'Tok Tok Tale Theater');
   }
   langBtn.addEventListener('click', () => {
     lang = lang === 'en' ? 'ko' : 'en';
@@ -654,7 +661,7 @@
     const cast = ['tiger_stand', 'rab_rabbit_run', 'tp_pig2_base', 'lm_lion_stand'];
     sp.querySelector('.sp-cast').innerHTML = cast.map(n => `<img src="assets/v3w/${n}.webp" alt="">`).join('');
     const ttl = sp.querySelector('.sp-title');
-    ttl.innerHTML = lang === 'en' ? '<span>Paper</span> <span>Tale Theater</span>' : '<span>종이</span> <span>동화극장</span>';
+    ttl.innerHTML = lang === 'en' ? '<span>Tok Tok</span> <span>Tale Theater</span>' : '<span>톡톡</span> <span>동화극장</span>';
     sp.querySelector('.sp-tap').textContent = L('톡 눌러 시작', 'Tap to start');
     sp.hidden = false;
     const A = sp.querySelector('.sp-a'), B = sp.querySelector('.sp-b'), C = sp.querySelector('.sp-c');

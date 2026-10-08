@@ -1,4 +1,4 @@
-/* 종이 동화극장 — 앱 홈 (HOME_UI_PLAN.md v2 「태그로 고르기」 + v3 「모션」 + v5 「한 장의 종이」 + v6 「밝은 종이·어두운 종이」)
+/* 톡톡 동화극장 — 앱 홈 (HOME_UI_PLAN.md v2 「태그로 고르기」 + v3 「모션」 + v5 「한 장의 종이」 + v6 「밝은 종이·어두운 종이」)
    화면 전체가 한 장의 무광 판지. 밝은 모드 = 옅은 청회색 종이(#ECEFF4), 어두운 모드 = 남색 종이(#222B45).
    동화는 그 종이에 뚫린 구멍 속에 있다. 태그는 평소 종이에 눌러 찍힌 자리(음각)이고, 고르면 도톰하게 솟는다(양각).
    다른 재료·소품 없음. 장식은 모서리에서 차오르는 같은 색 계단의 종이 물결 하나, 따뜻한 색은 작은 구리색 하나뿐.
@@ -159,6 +159,7 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   filter: url(#cut);
 }
 .lt.gap { margin-left: calc(var(--logo) * .26); }
+.lt.w { margin-right: calc(var(--logo) * .12); }
 
 /* 보호자 톱니: 종이를 눌러 올린 톱니. 3초 누르면 둘레가 구리색으로 채워진다 */
 /* 태그 숨기기 버튼: 필터와 같은 종이 알약 (보일 때 = 솟음, 숨김 = 눌림) */
@@ -715,6 +716,27 @@ body.app .card.sel { outline: 3px solid var(--copper); outline-offset: -2px; }
 @media (orientation: portrait) and (max-width: 699px) { body.app { --tile-min: 118px; } body.app .hero-nav { width: 52px; height: 52px; top: calc(var(--hero-art) / 2 - 26px); opacity: .92; } }
 @media (orientation: landscape) and (max-height: 520px) { body.app { --hero-h: 64vh; --hero-art: calc(var(--hero-h) - 120px); --tile-min: 110px; } body.app .hero .line, body.app .hero .tags { display: none; } }
 @media (min-width: 1000px) and (min-height: 640px) and (orientation: landscape) { body.app .hero-nav { width: 88px; height: 88px; top: calc(var(--hero-art) / 2 - 44px); } body.app .hero-nav svg { width: 38px; height: 38px; } }
+
+/* ═════════ 가로로 넓지만 낮은 화면(폰 가로, 접는 폰 안쪽 화면 등): 왼쪽 큰 동화, 오른쪽 작은 목록 ═════════ */
+@media (orientation: landscape) and (min-width: 700px) and (max-height: 700px) {
+  body.app { --hero-h: calc(100vh - 86px); --hero-art: min(calc(var(--hero-h) - 112px), calc((46vw - 56px) / 1.3334)); --tile-min: 112px; }
+  body.app .shelf { flex-direction: row; align-items: stretch; gap: 14px; padding-left: max(0px, env(safe-area-inset-left)); padding-right: max(0px, env(safe-area-inset-right)); }
+  body.app .hero { width: 46%; height: 100%; flex: none; align-items: flex-start; }
+  body.app .hero .card { width: 100%; justify-content: flex-start; }
+  body.app .hero .line, body.app .hero .tags { display: none; }
+  body.app .hero .label { padding: 8px 76px 0; align-items: center; text-align: center; }
+  body.app .hero .title { font-size: calc(var(--title) * 1.25); }
+  body.app .hero-nav { width: 88px; height: 88px; top: auto; bottom: 4px; }
+  body.app .hero-nav.prev { left: 6px; }
+  body.app .hero-nav.next { right: 6px; }
+  body.app .hero-nav svg { width: 38px; height: 38px; }
+  body.app .grid { flex: 1; grid-template-columns: repeat(auto-fill, minmax(var(--tile-min), 1fr)); padding-top: 6px; }
+}
+@media (orientation: landscape) and (min-width: 700px) and (max-height: 520px) {
+  body.app { --hero-h: calc(100vh - 70px); --hero-art: min(calc(var(--hero-h) - 96px), calc((46vw - 56px) / 1.3334)); --tile-min: 100px; }
+  body.app .hero-nav { width: 64px; height: 64px; }
+  body.app .hero .label { padding: 4px 70px 0; }
+}
 
 /* ═════════ 앱 첫 화면 ═════════ */
 .splash { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: var(--sheet); display: grid; place-items: center; touch-action: manipulation; }
