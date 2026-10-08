@@ -17,8 +17,8 @@
   };
   /* 배우·소품·컷 (인물·동물은 모두 왼쪽을 본다)
      - 당기기 자세(2026-10 새 그림 *3): grandpa_pull=grab3(순무 잎을 쥠) · grandma_pull=hold3 · girl_pull=hold3(할머니 치마 자락) · dog_pull=bite3(손녀 옷자락을 묾) ·
-       cat_pull=tail3 · mouse_pull=tail3 · dog_badge=dog_pull3(배지용 앞발 내민 강아지) · cut_glare=tn_cut_glare3. 새 강아지는 크림색+파란 가슴줄
-     - dog_jump: 새 그림(jump3)이 오른쪽을 봐서 좌우로 뒤집어 저장 · watering_can: 물방울(코드가 그림)을 지우고 주둥이가 순무 쪽(오른쪽)으로 뒤집음
+       cat_pull=tail3 · mouse_pull=tail3 · dog_badge=dog_pull5(배지용 앞발 내민 강아지) · cut_glare=tn_cut_glare5. 강아지는 크림색, 한쪽 귀는 갈색(반쯤 접힘), 다른 귀는 흰색에 노란 점
+     - dog_jump: 새 그림(jump5)이 오른쪽을 봐서 좌우로 뒤집어 저장 · watering_can: 물방울(코드가 그림)을 지우고 주둥이가 순무 쪽(오른쪽)으로 뒤집음
      - sprout: 밑에 깔린 받침 덩어리를 잘라 내고 잎 + 흰 머리만
      - cow · pig: 고르기 배지의 틀린 답. 토끼와 거북이 관객 그림(rab_aud_*)을 같이 쓴다
      - grandpa_sit: 다시 뽑은 엉덩방아 그림 (발 뻗고 앉음, 기준점 = 엉덩이)
@@ -30,9 +30,9 @@
     grandpa_stand: 'v3w/tn_grandpa_stand.webp', grandpa_pull: 'v3w/tn_grandpa_grab3.webp',
     grandpa_sit: 'v3w/tn_grandpa_sit.webp',
     grandma_stand: 'v3w/tn_grandma_stand.webp', grandma_pull: 'v3w/tn_grandma_hold3.webp', girl_pull: 'v3w/tn_girl_hold3.webp',
-    dog_pull: 'v3w/tn_dog_bite3.webp', dog_badge: 'v3w/tn_dog_pull3.webp', dog_jump: 'v3w/tn_dog_jump3.webp', cat_pull: 'v3w/tn_cat_tail3.webp', cat_sit: 'v3w/tn_cat_sit.webp',
+    dog_pull: 'v3w/tn_dog_bite5.webp', dog_badge: 'v3w/tn_dog_pull5.webp', dog_jump: 'v3w/tn_dog_jump5.webp', cat_pull: 'v3w/tn_cat_tail3.webp', cat_sit: 'v3w/tn_cat_sit.webp',
     mouse_pull: 'v3w/tn_mouse_tail3.webp', cow: 'v3w/rab_aud_cow.webp', pig: 'v3w/rab_aud_pig.webp',
-    cut_glare: 'v3w/tn_cut_glare3.webp', cut_pop: 'v3w/tn_cut_pop2.webp',
+    cut_glare: 'v3w/tn_cut_glare5.webp', cut_pop: 'v3w/tn_cut_pop2.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -52,7 +52,7 @@
     grandpa_stand: [190, .58, .5022], grandpa_pull: [161, .59, 1.1049], grandpa_sit: [151, .66, 1.3028], // 모자 크기를 서기 그림에 맞춤, 엉덩이가 기준
     grandma_stand: [172, .43, .5227], grandma_pull: [142, .64, .9742],
     girl_pull: [152, .43, .8471],
-    dog_pull: [100, .64, 1.2953], dog_jump: [94, .5, 1.1226],
+    dog_pull: [100, .705, 1.3079], dog_jump: [94, .5, 1.1587],
     cat_pull: [84, .63, 1.3384], cat_sit: [66, .5, 1.15],
     mouse_pull: [52, .59, 1.4241],
   };
@@ -349,7 +349,7 @@
   }
 
   /* 화면 고정 배지 (카메라 영향 없음) */
-  const BADGE = { girl: ['girl_pull', .8471], dog: ['dog_badge', .9365], cat: ['cat_sit', 1.15], cow: ['cow', 207 / 320], pig: ['pig', 291 / 320] };
+  const BADGE = { girl: ['girl_pull', .8471], dog: ['dog_badge', .707], cat: ['cat_sit', 1.15], cow: ['cow', 207 / 320], pig: ['pig', 291 / 320] };
   function badge(T, x, y, r, key, s) {
     const g = T.el('g', { transform: `translate(${x},${y})` }, document.getElementById('stage'));
     T.paper(g, [['circle', { r, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }]]);
