@@ -26,7 +26,7 @@
      메달: rab_medal 위쪽의 엉뚱한 노란 덩어리는 잘라내고 리본+메달만 webp로 만들었다 */
   const ART = {
     bg_village: 'v3w/rab_bg_village.webp', bg_alley: 'v3w/rab_bg_alley.webp', bg_stands: 'v3w/rab_bg_stands.webp', bg_start: 'v3w/rab_bg_start.webp',
-    bg_map: 'v3w/rab_bg_map.webp', bg_dash: 'v3w/rab_bg_dash.webp', bg_shade: 'v3w/rab_bg_shade.webp', bg_dream: 'v3w/rab_bg_dream.webp',
+    bg_map: 'v3w/rab_bg_map.webp', bg_shade: 'v3w/rab_bg_shade.webp', bg_dream: 'v3w/rab_bg_dream.webp',
     bg_grass_low: 'v3w/rab_bg_grass_low.webp', bg_stream: 'v3w/rab_bg_stream.webp', bg_hill: 'v3w/rab_bg_hill.webp', bg_finish: 'v3w/rab_bg_finish.webp',
     bg_party: 'v3w/rab_bg_party.webp',
     rabbit_stand: 'v3w/rab_rabbit_tease.webp', rabbit_run: 'v3w/rab_rabbit_run.webp', rabbit_wake: 'v3w/rab_rabbit_wake.webp', rabbit_congrats: 'v3w/rab_rabbit_congrats.webp',
@@ -52,7 +52,7 @@
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
   const EDGE = { bg_village: ['#009acb', '#3a5c0f'], bg_alley: ['#5cd5fd', '#657f1a'], bg_stands: ['#448775', '#69750d'], bg_start: ['#00aaee', '#795b25'],
-    bg_map: ['#66d3fd', '#acc41c'], bg_dash: ['#67dcf5', '#855420'], bg_shade: ['#06c1f9', '#333201'], bg_dream: ['#dfd0b8', '#7d6a30'],
+    bg_map: ['#66d3fd', '#acc41c'], bg_shade: ['#06c1f9', '#333201'], bg_dream: ['#dfd0b8', '#7d6a30'],
     bg_grass_low: ['#1192aa', '#232101'], bg_stream: ['#71ae23', '#482b0d'], bg_hill: ['#00befd', '#346000'], bg_finish: ['#259ca5', '#635916'], bg_party: ['#8ca9a9', '#343510'],
     bg_dusk: ['#f39f6c', '#5a4d23'] };
   const BGX = { x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }; // 장면 그림 자리 (무대 1000×560 전체)
@@ -815,10 +815,9 @@
     await scene('쌩쌩 토끼', () => {
       far = el('g', {}, T.bg); far.style.transition = 'transform .7s cubic-bezier(.2,.8,.3,1)';
       near = el('g', {}, T.world); near.style.transition = 'transform .7s cubic-bezier(.2,.8,.3,1)';
-      if (ART.bg_dash) { // 그림 숲길을 좌우로 뒤집어 가며 이어 붙여 옆으로 흘려 보낸다 (이음매가 거울처럼 맞는다)
-        // 그림 한 장을 1.35배로 키워 두고 그 안에서만 옆으로 미끄러진다 (예전: 거울로 이어 붙여 이음매가 화면 분할처럼 보였다)
+      if (ART.bg_hill) { // 가로줄 없는 풀밭 언덕 그림을 1.35배로 키워 두고 그 안에서 옆으로 미끄러진다 (예전 숲길 그림은 가로 띠 네 장으로 나뉘어 보였다)
         const pan = el('g', { transform: 'translate(-60 -100) scale(1.35)' }, far);
-        artBG(T, 'bg_dash', pan);
+        artBG(T, 'bg_hill', pan);
       } else {
       sky(T, '#F6E3B0');
       for (let i = 0; i < 6; i++) paper(far, [['path', { d: `M${i * 700 - 200} 380 Q${i * 700 + 100} 200 ${i * 700 + 400} 380 Z`, fill: i % 2 ? '#b9a25a' : '#a9b56a' }]]);
@@ -829,7 +828,7 @@
       paper(near, [['path', { d: 'M2800 450 Q3150 250 3500 450 Z', fill: C.leaf }]]); tree(T, near, 3150, 330, 1.4);
       }
       rabbitReset(); rp.pose('run');
-      put(rabbit, ART.bg_dash ? 330 : 300, ART.bg_dash ? 505 : 468, 1.1);
+      put(rabbit, ART.bg_hill ? 330 : 300, ART.bg_hill ? 505 : 468, 1.1);
       camSnap(T.portrait() ? 360 : 470, 300, 1.12);
     });
     bob = rp.bobEl.animate([{ translate: '0 0' }, { translate: '0 -14px' }], { duration: 200, iterations: Infinity, direction: 'alternate' });
@@ -837,7 +836,7 @@
     await say('토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!');
     await T.mash(wrap, { count: 3, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => { // 예전엔 '옆으로 쓱'이었지만 톡이 더 쉽다 (놀이 피드백)
       // 그림: 3번 눌러 -390 → 1.35배 그림 안에 머문다
-      far.style.transform = `translateX(${(ART.bg_dash ? -130 : -280) * i}px)`; near.style.transform = `translateX(${-900 * i}px)`;
+      far.style.transform = `translateX(${(ART.bg_hill ? -130 : -280) * i}px)`; near.style.transform = `translateX(${-900 * i}px)`;
       AudioFX.whoosh(); speedLines(T, 16, 480); rabbit.hop(70, 500); T.pop(rabbit.x + 60, 300, '쌩!', C.persimmon);
       const cx = T.portrait() ? 370 : 490; // 세로 화면은 토끼 쪽으로
       camTo(cx, 300, 1.2, 180).then(() => camTo(cx - 20, 300, 1.12, 300));
@@ -845,7 +844,7 @@
     } });
     await sleep(900);
     stopLoops(); bob.cancel(); rp.pose('stand');
-    await rabbit.move(ART.bg_dash ? 470 : 430, ART.bg_dash ? 505 : 440, 500);
+    await rabbit.move(ART.bg_hill ? 470 : 430, ART.bg_hill ? 505 : 440, 500);
     await say('금세 언덕 위 나무 그늘까지 왔어요.');
     faceL(rabbit); rp.setEyes('open');
     await say('뒤를 돌아보니… 거북이는 안 보여요!');
@@ -1105,46 +1104,52 @@
     tp.step(0);
     await say('영차! 언덕 꼭대기에 올라왔어요.');
 
+    let guide;
     await scene('쉿, 살금살금', () => {
       const defs = el('defs', {}, T.world);
       const cp = (id, y, h) => { const c = el('clipPath', { id }, defs); el('rect', { x: 0, y, width: 1000, height: h }, c); };
-      cp('splitTop', 0, 276); cp('splitBot', 284, 276);
+      cp('splitTop', -400, 676); cp('splitBot', 284, 700); // 세로 화면에서 멀리 물러서도 칸 밖이 비지 않게 위·아래로 늘여 둔다
       const top = el('g', { 'clip-path': 'url(#splitTop)' }, T.world), bot = el('g', { 'clip-path': 'url(#splitBot)' }, T.world);
       /* 위아래가 한 곳으로 보이게: 나무 그늘 그림 한 장을 위아래에 똑같은 자리·크기로 깔고, 가운데를 종이 띠로 나눈다
          (위 = 언덕 꼭대기 큰 나무 밑 토끼, 아래 = 같은 언덕 비탈을 지나가는 거북이). 나무 밑동(그림 1600×902의 약 765,480)이 y 255에 오게 */
       const oneBG = ART.bg_shade ? parent => { const k = 1.15 * .675, w = 1600 * k, h = 902 * k;
-        el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: EDGE.bg_shade[1] }, parent);
+        el('rect', { x: -300, y: -400, width: 1600, height: 400, fill: EDGE.bg_shade[0] }, parent);
+        el('rect', { x: -300, y: 0, width: 1600, height: 900, fill: EDGE.bg_shade[1] }, parent);
         el('image', { href: A(ART.bg_shade), x: (478 - 765 * k).toFixed(1), y: (255 - 480 * k).toFixed(1), width: w.toFixed(1), height: h.toFixed(1) }, parent); } : null;
       if (oneBG) oneBG(top);
       else {
         el('rect', { x: 0, y: 0, width: 1000, height: 280, fill: '#F6D9A0' }, top);
         paper(top, [['rect', { x: 0, y: 230, width: 1000, height: 60, fill: C.leaf }], ['rect', { x: 600, y: 0, width: 70, height: 240, fill: C.bark }], ['circle', { cx: 630, cy: -10, r: 150, fill: C.pine }], ['circle', { cx: 440, cy: 10, r: 90, fill: C.leaf }]]);
       }
-      rabbitReset(); rp.setEyes('closed'); rp.sleepy(true); faceL(rabbit);
-      put(rabbit, 520, 262, .78, top);
-      const leaf2 = el('g', { transform: 'translate(525 236) rotate(-8) scale(.62)' }, top); // 대사의 '나뭇잎 이불' (그림 속 크림색 이불 위에)
+      rabbitReset(); rp.setEyes('closed'); rp.sleepy(true); faceR(rabbit);
+      put(rabbit, 500, 264, 1.45, top);
+      const leaf2 = el('g', { transform: 'translate(545 214) rotate(-6) scale(.92)' }, top); // 대사의 '나뭇잎 이불' (그림 속 크림색 이불 위에)
       if (ART.leaf_blanket) el('image', { href: A(ART.leaf_blanket), x: -110, y: -70, width: 220, height: 129, filter: 'url(#pp)' }, leaf2);
       else paper(leaf2, [['path', { d: 'M-100 0 Q-40 -70 100 -10 Q40 60 -100 0 Z', fill: C.leaf }]]);
-      aud.owl.reset(); put(aud.owl, 790, 262, .7, top);
-      if (oneBG) oneBG(bot); // 아래도 같은 그림 (위와 이어진다)
+      aud.owl.reset(); put(aud.owl, 830, 262, .75, top);
+      if (ART.bg_hill) { // 아래 칸은 거북이가 오르는 풀밭 비탈 (꽃이 있는 쪽이 보이게 그림을 아래로 내린다)
+        el('rect', { x: -300, y: 284, width: 1600, height: 600, fill: EDGE.bg_hill[1] }, bot);
+        el('image', { href: A(ART.bg_hill), x: -40, y: 98, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, bot);
+      } else if (oneBG) oneBG(bot);
       else {
       el('rect', { x: 0, y: 280, width: 1000, height: 280, fill: C.sky }, bot);
       paper(bot, [['rect', { x: 0, y: 470, width: 1000, height: 100, fill: C.grass }], ['path', { d: 'M0 480 Q250 440 500 470 Q750 500 1000 460 V560 H0 Z', fill: C.leaf }]]);
       }
-      if (!oneBG) [180, 420, 700].forEach(x => paper(bot, [['path', { d: `M${x} 480 Q${x - 6} 420 ${x} 390`, stroke: C.pine, 'stroke-width': 5, fill: 'none' }], ['circle', { cx: x, cy: 388, r: 12, fill: C.amber }]]));
-      turtleReset(); put(turtle, 110, 472, 1.05, bot);
+      if (!oneBG && !ART.bg_hill) [180, 420, 700].forEach(x => paper(bot, [['path', { d: `M${x} 480 Q${x - 6} 420 ${x} 390`, stroke: C.pine, 'stroke-width': 5, fill: 'none' }], ['circle', { cx: x, cy: 388, r: 12, fill: C.amber }]]));
+      turtleReset(); put(turtle, 110, 472, 1.2, bot);
       paper(T.world, [['rect', { x: -10, y: 274, width: 1020, height: 12, fill: C.cream, stroke: C.gold, 'stroke-width': 3 }]]);
+      /* 토끼 바로 아래를 가리키는 점선: 거북이가 이 줄을 지나는 순간이 '앞질렀다'는 뜻 */
+      guide = el('path', { d: 'M500 292 V520', stroke: C.cream, 'stroke-width': 6, 'stroke-dasharray': '1 14', 'stroke-linecap': 'round', fill: 'none', opacity: .75 }, T.world);
+      if (T.portrait()) camSnap(500, 280, fitZ(480)); // 세로 화면: 토끼와 거북이가 함께 보이게 물러서 있는다 (거북이만 따라가면 토끼가 화면 밖으로 나간다)
       bar.show(true);
     });
     const zzz2 = () => every(1100, () => floatText(T, rabbit.x - 40, rabbit.y - 150, 'Z', C.indigo, 28));
     zzz2(); let sk3 = 0; every(1800, () => snore(T, sk3++ % 2));
-    aud.owl.hush(true);
     await say('위에는 쿨쿨 자는 토끼, 아래에는 거북이!');
     await say('쉿, 조용히 지나가요~ 살금살금.');
-    await follow(250, 700); // 세로 화면: 거북이를 따라간다
     for (let i = 0; i < 5; i++) {
       tp.step(i % 2); T.tone(880 + (i % 2) * 110, .08, { type: 'triangle', vol: .12 });
-      follow(110 + (i + 1) * 150, 700);
+      if (i === 2) setTimeout(() => { guide.animate([{ opacity: .75, strokeWidth: 6 }, { opacity: 1, strokeWidth: 16 }, { opacity: .75, strokeWidth: 6 }], { duration: 700 }); }, 380); // 거북이가 토끼 바로 아래를 지나는 순간
       await turtle.move(110 + (i + 1) * 150, 472, 700, 'ease-in-out');
       setRace(null, .55 + (i + 1) * .04, 600);
       await sleep(150);
