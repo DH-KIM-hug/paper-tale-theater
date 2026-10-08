@@ -188,8 +188,9 @@ const TALES = (() => {
       <path d="M114 64 h38 M114 76 h38 M126 52 v12 M140 64 v12 M126 76 v12" stroke="${c.cr}" stroke-width="1.6"/>
       <circle cx="133" cy="94" r="9" fill="${c.ck}"/><ellipse cx="133" cy="97" rx="4" ry="3" fill="#D98888"/></g>` },
 
-  { id: 'wolf_goats', title: '늑대와 일곱 마리 아기 염소', origin: 'world', skills: ['count', 'spot', 'heart'], ready: false,
+  { id: 'wolf_goats', title: '늑대와 일곱 마리 아기 염소', origin: 'world', skills: ['count', 'spot', 'heart'], ready: false, making: true,
     line: '시계 안, 이불 밑, 커튼 뒤. 숨은 아기 염소를 하나씩 세며 찾아요.',
+    en: { title: 'The Wolf and the Seven Kids', line: 'Behind the clock, under the quilt, inside the laundry: find the hidden little goats one by one.' },
     art: `<rect width="160" height="110" fill="${c.am}"/>
       <g class="pc"><rect y="92" width="160" height="18" fill="${c.bk}"/>
       <rect x="92" y="14" width="40" height="80" rx="4" fill="${c.bk}"/><circle cx="112" cy="36" r="13" fill="${c.cr}"/><path d="M112 36 v-8 M112 36 h6" stroke="${c.ink}" stroke-width="2"/>
