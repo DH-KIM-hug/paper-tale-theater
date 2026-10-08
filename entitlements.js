@@ -7,7 +7,7 @@
 const Entitlements = (() => {
   const FREE_ALWAYS = ['rabbit', 'lion_mouse', 'patjuk', 'sunmoon', 'turnip', 'goldilocks'];
   const PER_WEEK = 2;
-  const PRICE = '$2.99';
+  let price = '$2.99';
   const OWNED_KEY = 'owned_all';
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
@@ -69,6 +69,17 @@ const Entitlements = (() => {
     if (window.Capacitor) return false;
     return owned();
   }
+  /* 실제 앱(Capacitor)이면 네이티브 StoreKit 플러그인(Store)에 연결: 스토어 거래 기록이 구매 여부의 기준 */
+  const nativeStore = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Store;
+  if (nativeStore) {
+    bridge = {
+      purchase: async () => !!(await nativeStore.purchase()).owned,
+      restore: async () => !!(await nativeStore.restore()).owned
+    };
+    nativeStore.getPrice().then(r => { if (r && r.price) price = r.price; }).catch(() => {});
+    nativeStore.isOwned().then(r => { if (r && r.owned) store.set(OWNED_KEY, '1'); }).catch(() => {});
+    nativeStore.addListener('ownedChanged', r => { if (r && r.owned) store.set(OWNED_KEY, '1'); });
+  }
   function grantAll() { store.set(OWNED_KEY, '1'); }
   function revokeAll() { try { localStorage.removeItem(OWNED_KEY); } catch (e) { /* 무시 */ } }
 
@@ -80,7 +91,7 @@ const Entitlements = (() => {
     if (!canPlay(m[1])) location.replace(here + 'index.html' + (listed(m[1]) && listed(m[1]).ready ? '?locked=' + encodeURIComponent(m[1]) : ''));
   }
 
-  const api = { FREE_ALWAYS, PRICE, appMode, weekNumber, freeThisWeek, status, canPlay, purchase, restore, grantAll, revokeAll, setBridge, guard };
+  const api = { FREE_ALWAYS, get PRICE() { return price; }, appMode, weekNumber, freeThisWeek, status, canPlay, purchase, restore, grantAll, revokeAll, setBridge, guard };
 
   if (document.currentScript && /\/tales\/[^/]+\//.test(location.pathname) && appMode()) {
     // 동화 페이지: 카탈로그를 먼저 읽은 뒤(동기) 확인한다
