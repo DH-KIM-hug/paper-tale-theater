@@ -85,7 +85,7 @@
     for (let i = 0; i < 3; i++) {
       await look(mats[i].x - 20);
       if (!portrait()) fan.move(mats[i].x - 210, GROUND, 500);
-      await T.swipe(mats[i].pos, { dir: 'right', count: 1, prompt: '손가락으로 쓱 밀어서 바람을 불어 봐요.' });
+      await T.mash(mats[i].pos, { count: 1, prompt: '손가락으로 톡 눌러서 바람을 불어 봐요.' });
       sfx('blow'); T.pop(mats[i].x - 60, 330, '후우~');
       if (i === 0) { mats[0].pos.style.transition = 'opacity 1s'; mats[0].pos.style.opacity = 0; mats[0].move(mats[0].x + 650, 250, 1100); }
       else if (i === 1) await mats[1].wiggle(14, 800);
@@ -142,7 +142,7 @@
       await say(lines[1]);
       wolf.set('wolf_puff', 200);
       let n = 0;
-      await T.swipe(house.pos, { dir: 'right', count: 3, prompt: '손가락으로 쓱 밀어서 늑대와 같이 후~ 불어요.', onStep: i => {
+      await T.mash(house.pos, { count: 3, prompt: '손가락으로 톡톡 눌러서 늑대와 같이 후~ 불어요.', onStep: i => {
         n = i; sfx('blow'); T.pop(houseX - 140, 300, '후~!'); house.wiggle(5 + i * 4, 450); wolf.hop(10, 300);
       } });
       sfx('boom'); T.shake();
@@ -207,9 +207,10 @@
     const fire = hit(420, 330, 160, 150);
     const glow = T.el('ellipse', { cx: 500, cy: 440, rx: 10, ry: 8, fill: '#FFB347', opacity: 0 }, T.world);
     await say('아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.');
-    await T.hold(fire, { ms: 2600, prompt: '불을 꾹 눌러서 크게 해 줘요.', onProgress: p => {
+    await T.mash(fire, { count: 5, prompt: '불을 톡톡 눌러서 크게 해 줘요.', onStep: i => {
+      const p = i / 5;
       glow.setAttribute('rx', 20 + 120 * p); glow.setAttribute('ry', 14 + 80 * p); glow.setAttribute('opacity', .15 + .45 * p);
-      if (Math.random() < .3) T.pop(500 + (Math.random() - .5) * 120, 300, '보글');
+      T.pop(500 + (Math.random() - .5) * 120, 300, '보글');
     } });
     sfx('ding');
     await say('보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.');

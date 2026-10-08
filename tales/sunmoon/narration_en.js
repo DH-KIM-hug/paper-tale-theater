@@ -327,13 +327,13 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/sunmoon/en/boy_4d438f24e3.mp3"
   ]
  },
- "오누이는 뒷문으로 살금살금 나왔어요. 화면을 쓱 밀어서 달려요!": {
-  "t": "The brother and sister tiptoed out the back door. Swipe the screen to run!",
-  "c": "audio/tc/sunmoon/en/nar_3030675828.mp3"
+ "오누이는 뒷문으로 살금살금 나왔어요. 화면을 톡톡 눌러서 달려요!": {
+  "t": "The brother and sister tiptoed out the back door. Tap the screen to run!",
+  "c": "audio/tc/sunmoon/en/nar_4262b5c338.mp3"
  },
- "화면을 옆으로 쓱 밀어서 달려요!": {
-  "t": "Swipe the screen sideways to run!",
-  "c": "audio/tc/sunmoon/en/nar_d3b2ed2f67.mp3"
+ "화면을 톡톡 눌러서 달려요!": {
+  "t": "Tap the screen to run!",
+  "c": "audio/tc/sunmoon/en/nar_47a24bfea3.mp3"
  },
  "앗, 호랑이가 오는 소리! 커다란 장독을 톡 눌러서 숨어요!": {
   "t": "Oh no, the tiger is coming! Tap the big jar to hide!",
@@ -350,9 +350,9 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/sunmoon/en/nar_4858e54971.mp3"
   ]
  },
- "휴~ 이제 우물가 큰 나무로 달려가요! 쓱쓱!": {
-  "t": "Phew~ Now run to the big tree by the well! Zoom, zoom!",
-  "c": "audio/tc/sunmoon/en/nar_9d9ed11206.mp3"
+ "휴~ 이제 우물가 큰 나무로 달려가요! 톡톡!": {
+  "t": "Phew~ Now run to the big tree by the well! Tap, tap!",
+  "c": "audio/tc/sunmoon/en/nar_eaf032d421.mp3"
  },
  "우물가에 커다란 나무가 있어요. 톡톡 눌러서 영차영차 올라가요!": {
   "t": "There is a big tree by the well. Tap, tap, and climb up, heave-ho!",
@@ -480,13 +480,13 @@ const NARRATION_CLIPS_EN = {
   "t": "That's right! It is the thick, shiny, new rope.",
   "c": "audio/tc/sunmoon/en/nar_2e4088bbc7.mp3"
  },
- "줄을 꼭 잡고, 화면을 위로 쓱쓱 밀어서 올라가요!": {
-  "t": "Hold the rope tight and swipe the screen up to climb!",
-  "c": "audio/tc/sunmoon/en/nar_ad4578cd47.mp3"
+ "줄을 꼭 잡고, 화면을 톡톡 눌러서 올라가요!": {
+  "t": "Hold the rope tight and tap the screen to climb!",
+  "c": "audio/tc/sunmoon/en/nar_456f2d4217.mp3"
  },
- "화면을 위로 쓱 밀어서 올라가요!": {
-  "t": "Swipe the screen up to climb!",
-  "c": "audio/tc/sunmoon/en/nar_1c5f06d870.mp3"
+ "화면을 톡톡 눌러서 올라가요!": {
+  "t": "Tap the screen to climb!",
+  "c": "audio/tc/sunmoon/en/nar_1345adf372.mp3"
  },
  "구름을 뚫고 쑥쑥!": {
   "t": "Up through the clouds, whoosh, whoosh!",

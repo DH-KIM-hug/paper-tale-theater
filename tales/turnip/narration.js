@@ -60,8 +60,8 @@ const NARRATION_CLIPS = {
   "audio/tc/turnip/mouse_1ad02088bd.mp3",
   "audio/tc/turnip/nar_9f94cd5447.mp3"
  ],
- "이번엔 여섯이 다 함께! 순무를 꾹 눌러요. 영~차!": "audio/tc/turnip/nar_24f7caf07f.mp3",
- "순무를 꾹 누르고 있어요. 영~차!": "audio/tc/turnip/nar_53edfc6850.mp3",
+ "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!": "audio/tc/turnip/nar_79888438d1.mp3",
+ "순무를 톡톡 눌러요. 영~차!": "audio/tc/turnip/nar_8530df05a9.mp3",
  "쑥! 커다란 순무가 뽑혔어요! 모두 벌렁 넘어졌어요.": "audio/tc/turnip/nar_a896e0f532.mp3",
  "작은 생쥐까지 모두 힘을 모았더니 뽑혔어요!": "audio/tc/turnip/nar_b48246ab71.mp3",
  "맛있는 순무국을 끓였어요.": "audio/tc/turnip/nar_ffd47944c6.mp3",

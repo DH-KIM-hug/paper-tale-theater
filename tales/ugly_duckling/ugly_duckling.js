@@ -775,9 +775,9 @@
       if (narrow()) camSnap(250, 280, 1); // 세로: 줄 선 오리들 쪽을 비춘다
     }, hero.pos);
     await say('엄마 오리가 아기들을 데리고 연못에 갔어요. 줄을 서서 헤엄쳐요.');
-    await say('화면을 옆으로 쓱 밀어서 헤엄쳐 볼까요?');
+    await say('화면을 톡톡 눌러서 헤엄쳐 볼까요?');
     const swimmers = [mom, ...sibs, hero];
-    await T.swipe(T.root.querySelector('#stageWrap'), { dir: 'right', count: 3, prompt: '옆으로 쓱 밀어서 헤엄쳐요!', onStep: i => {
+    await T.mash(T.root.querySelector('#stageWrap'), { count: 3, prompt: '화면을 톡톡 눌러서 헤엄쳐요!', onStep: i => {
       AudioFX.sfx('splash', .35) || AudioFX.splash();
       swimmers.forEach((a, k) => setTimeout(() => {
         if (a === hero && narrow()) camTo(a.x + 150 + 130, 280, 1, 650); // 세로: 맨 끝 회색 오리를 카메라가 따라간다
@@ -846,9 +846,9 @@
       } else fgReeds = reeds(T, T.world, list, 460, C.reedDk);
     }, hero.pos);
     await say('갈대가 아기 오리 머리보다 훨씬 높아요.');
-    await say('옆으로 쓱 밀어서 갈대를 헤치고 가 볼까요?');
+    await say('화면을 톡톡 눌러서 갈대를 헤치고 가 볼까요?');
     let off = 0;
-    await T.swipe(T.root.querySelector('#stageWrap'), { dir: 'right', count: 3, prompt: '옆으로 쓱! 갈대를 헤치고 가요.', onStep: () => {
+    await T.mash(T.root.querySelector('#stageWrap'), { count: 3, prompt: '톡톡! 갈대를 헤치고 가요.', onStep: () => {
       off += 1;
       AudioFX.sfx('step_grass', .5) || AudioFX.swish();
       T.anim(fgReeds, [{ transform: `translateX(${-(off - 1) * 260}px)` }, { transform: `translateX(${-off * 260}px)` }], { duration: 700, easing: 'ease-out' });
@@ -974,9 +974,10 @@
     }, 260);
     const shiver = hero.body.animate([{ translate: '0 0' }, { translate: '2px 0' }, { translate: '-2px 0' }], { duration: 120, iterations: Infinity });
     await say('추운 겨울이 왔어요. 호수가 꽁꽁 얼어서 발이 얼음에 붙어 버렸어요.');
-    await say('아기 오리를 꾹 눌러 봐요. 날개로 몸을 감싸서 따뜻하게!');
+    await say('아기 오리를 톡톡 눌러 봐요. 날개로 몸을 감싸서 따뜻하게!');
     let warmed = false;
-    await T.hold(hero.pos, { ms: 2400, prompt: '아기 오리를 꾹 누르고 있어요.', onProgress: p => {
+    await T.mash(hero.pos, { count: 4, prompt: '아기 오리를 톡톡 눌러 봐요.', onStep: i => {
+      const p = i / 4;
       hero.parts.wing.style.transform = `scale(${1 + p * .5},${1 + p * .9})`;
       shiver.playbackRate = Math.max(.15, 1 - p);
       if (p > .5 && !warmed) { warmed = true; T.pop(hero.x, hero.y - 220, '따뜻해', C.persimmon); T.tone([392, 523], .4, { type: 'sine', vol: .12 }); if (hero.art) hero.setMood('neutral'); } // 그림: 덜덜 자세 → 보통 자세
@@ -1076,19 +1077,21 @@
       hero.setMood('happy');
     }, hero.pos);
     await say('따뜻한 봄이 왔어요. 아기 오리는 몸이 부쩍 자랐어요.');
-    await say('아기 오리를 꾹 눌러서 날개를 활짝 펴 볼까요?');
+    await say('아기 오리를 톡톡 눌러서 날개를 활짝 펴 볼까요?');
     let spread = false;
-    await T.hold(hero.pos, { ms: 2000, prompt: '꾹 누르고 있어요. 날개를 활짝!', onProgress: p => {
+    await T.mash(hero.pos, { count: 3, prompt: '톡톡 눌러요. 날개를 활짝!', onStep: i => {
+      const p = i / 3;
       if (p > .4 && !spread && hero.art) { spread = true; hero.setMood('wings'); AudioFX.swish(); } // 그림: 날개 활짝 그림으로
       hero.parts.wing.style.transform = `rotate(${-p * 55}deg) scale(${1 + p * .6})`;
       hero.parts.wingBack.style.transform = `rotate(${-p * 80}deg) scale(${1 + p * .6})`;
     } });
     T.pop(hero.x - 170, hero.y - 250, '활짝!', C.persimmon); // 머리를 가리지 않게 옆으로 T.tone([523, 784], .35, { type: 'triangle', vol: .14 });
     await say('와, 날개가 이렇게 커졌어요!');
-    await say('한 번 더 꾹! 훨훨 날아 볼까요?');
+    await say('한 번 더 톡톡! 훨훨 날아 볼까요?');
     const y0 = hero.y;
     let flying = false;
-    await T.hold(hero.pos, { ms: 2000, prompt: '한 번 더 꾹! 훨훨!', onProgress: p => {
+    await T.mash(hero.pos, { count: 3, prompt: '한 번 더 톡톡! 훨훨!', onStep: i => {
+      const p = i / 3;
       if (p > .3 && !flying && hero.art) { flying = true; hero.setMood('fly'); } // 그림: 발을 접고 나는 자세(young_fly3)로
       hero.place(hero.x, y0 - p * 120);
     } });
@@ -1158,12 +1161,16 @@
     if (narrow()) await camTo(605, 280, Math.min(1, visW() / 610), 700);
     await say('백조들을 톡톡 눌러서 함께 춤을 춰요!');
     const NOTES = [392, 440, 523, 587];
-    await T.free([hero, ...swans].map((a, i) => ({ el: a.pos, onTap: () => {
+    const dancers = [hero, ...swans];
+    for (let i = 0; i < dancers.length; i++) { // 한 마리씩 차례로 톡 (자유 놀이 없음)
+      const a = dancers[i];
+      await T.tap(a.pos);
       T.tone(NOTES[i], .35, { type: 'triangle', vol: .18 });
       a.hop(34, 420);
       a.body.animate([{ rotate: '0deg' }, { rotate: '-10deg' }, { rotate: '10deg' }, { rotate: '0deg' }], 500);
-      if (Math.random() < .3) swanCall(T);
-    } })), 15000);
+      if (i === dancers.length - 1) swanCall(T);
+      await sleep(500);
+    }
     T.confetti(); AudioFX.sfx('bell', .5) || AudioFX.bell();
     await say('다르게 생겼던 아기 오리는 이렇게 멋진 백조로 자랐답니다.');
     return '달라도 괜찮아요. 모두 저마다 멋지게 자라요!';

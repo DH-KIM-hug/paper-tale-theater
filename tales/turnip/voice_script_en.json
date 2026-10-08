@@ -474,23 +474,23 @@
    ]
   },
   {
-   "text": "이번엔 여섯이 다 함께! 순무를 꾹 눌러요. 영~차!",
-   "en": "This time, all six together! Press and hold the turnip. Heave-ho!",
+   "text": "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!",
+   "en": "This time, all six together! Tap the turnip. Heave-ho!",
    "segs": [
     [
      "nar",
-     "This time, all six together! Press and hold the turnip. Heave-ho!",
+     "This time, all six together! Tap the turnip. Heave-ho!",
      "toneup:1.3"
     ]
    ]
   },
   {
-   "text": "순무를 꾹 누르고 있어요. 영~차!",
-   "en": "Keep pressing the turnip. Heave-ho!",
+   "text": "순무를 톡톡 눌러요. 영~차!",
+   "en": "Tap the turnip. Heave-ho!",
    "segs": [
     [
      "nar",
-     "Keep pressing the turnip. Heave-ho!",
+     "Tap the turnip. Heave-ho!",
      "happy:1.1"
     ]
    ]

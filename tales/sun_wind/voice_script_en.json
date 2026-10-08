@@ -109,20 +109,20 @@
    ]
   },
   {
-   "text": "화면을 쓱 밀어서 바람을 불어 줘요!",
-   "en": "Swipe the screen to blow the Wind!"
+   "text": "바람을 톡 눌러서 후~ 불어 줘요!",
+   "en": "Tap the Wind to blow!"
   },
   {
-   "text": "화면을 쓱 밀어서 바람을 불어 봐요!",
-   "en": "Swipe the screen and blow the Wind!"
+   "text": "바람을 톡 눌러서 불어 봐요!",
+   "en": "Tap the Wind and blow!"
   },
   {
-   "text": "더 세게, 쓱!",
-   "en": "Stronger now! Swish!",
+   "text": "더 세게, 톡!",
+   "en": "Stronger now! Tap!",
    "segs": [
     [
      "nar",
-     "Stronger now! Swish!",
+     "Stronger now! Tap!",
      "toneup:1.3"
     ]
    ]
@@ -225,12 +225,12 @@
    ]
   },
   {
-   "text": "해님을 꾹 눌러서 따뜻하게 비춰 줘요!",
-   "en": "Press and hold the Sun to shine nice and warm!"
+   "text": "해님을 톡톡 눌러서 따뜻하게 비춰 줘요!",
+   "en": "Tap the Sun to shine nice and warm!"
   },
   {
-   "text": "해님을 꾹 눌러 봐요!",
-   "en": "Press and hold the Sun!"
+   "text": "해님을 톡톡 눌러 봐요!",
+   "en": "Tap the Sun!"
   },
   {
    "text": "\"아, 따뜻하다~\" 나그네가 단추를 풀었어요.",
@@ -248,8 +248,8 @@
    ]
   },
   {
-   "text": "조금 더 꾹!",
-   "en": "Hold a little longer!"
+   "text": "조금 더 톡톡!",
+   "en": "A little more tapping!"
   },
   {
    "text": "\"아이, 더워!\" 모자로 부채질을 해요.",
@@ -267,8 +267,8 @@
    ]
   },
   {
-   "text": "한 번 더 꾹!",
-   "en": "Hold one more time!"
+   "text": "한 번 더 톡톡!",
+   "en": "Tap one more time!"
   },
   {
    "text": "훌러덩! 나그네가 외투를 벗었어요!",
@@ -401,19 +401,19 @@
    "en": "The traveler dipped both feet into the cool water, splash!"
   },
   {
-   "text": "바람아, 이번엔 살살 불어 줄래? 쓱, 살살~",
-   "en": "Wind, could you blow gently this time? Swish, gently~",
+   "text": "바람아, 이번엔 살살 불어 줄래? 톡, 살살~",
+   "en": "Wind, could you blow gently this time? Tap, gently~",
    "segs": [
     [
      "nar",
-     "Wind, could you blow gently this time? Swish, gently~",
+     "Wind, could you blow gently this time? Tap, gently~",
      "whisper"
     ]
    ]
   },
   {
-   "text": "살살 쓱 밀어 봐요!",
-   "en": "Swipe gently!"
+   "text": "바람을 살살 톡톡 눌러 봐요!",
+   "en": "Tap the Wind gently!"
   },
   {
    "text": "\"아, 시원해. 고마워, 바람아!\"",

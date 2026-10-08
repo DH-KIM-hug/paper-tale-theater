@@ -13,8 +13,8 @@ const NARRATION_CLIPS = {
   "audio/tc/ugly_duckling/mom_fc0f956985.mp3"
  ],
  "엄마 오리가 아기들을 데리고 연못에 갔어요. 줄을 서서 헤엄쳐요.": "audio/tc/ugly_duckling/nar_8944d01c57.mp3",
- "화면을 옆으로 쓱 밀어서 헤엄쳐 볼까요?": "audio/tc/ugly_duckling/nar_44474abf7b.mp3",
- "옆으로 쓱 밀어서 헤엄쳐요!": "audio/tc/ugly_duckling/nar_973207bd4d.mp3",
+ "화면을 톡톡 눌러서 헤엄쳐 볼까요?": "audio/tc/ugly_duckling/nar_f1eb345cad.mp3",
+ "화면을 톡톡 눌러서 헤엄쳐요!": "audio/tc/ugly_duckling/nar_a9be3cae28.mp3",
  "회색 아기 오리는 헤엄을 제일 잘해요! 쏙 들어갔다가 퐁!": "audio/tc/ugly_duckling/nar_0ced779d08.mp3",
  "그런데 늘 줄 맨 끝에서 혼자 따라가요.": "audio/tc/ugly_duckling/nar_6880140eff.mp3",
  "농장 마당에 닭이랑 오리들이 모여 있어요.": "audio/tc/ugly_duckling/nar_423789489a.mp3",
@@ -49,8 +49,8 @@ const NARRATION_CLIPS = {
  ],
  "그래도 아기 오리는 마음이 쓸쓸했어요. 넓은 세상을 보러 길을 떠났어요.": "audio/tc/ugly_duckling/nar_dd9e9d110c.mp3",
  "갈대가 아기 오리 머리보다 훨씬 높아요.": "audio/tc/ugly_duckling/nar_753f738acd.mp3",
- "옆으로 쓱 밀어서 갈대를 헤치고 가 볼까요?": "audio/tc/ugly_duckling/nar_9d4cd291e3.mp3",
- "옆으로 쓱! 갈대를 헤치고 가요.": "audio/tc/ugly_duckling/nar_afaa362c6d.mp3",
+ "화면을 톡톡 눌러서 갈대를 헤치고 가 볼까요?": "audio/tc/ugly_duckling/nar_11f3f30c78.mp3",
+ "톡톡! 갈대를 헤치고 가요.": "audio/tc/ugly_duckling/nar_faa837d6bf.mp3",
  "뒤뚱뒤뚱, 갈대숲을 지나 넓은 늪에 닿았어요.": "audio/tc/ugly_duckling/nar_80f38b5b55.mp3",
  "늪에는 기러기들이 살고 있었어요.": "audio/tc/ugly_duckling/nar_97923449d8.mp3",
  "기러기들이 말했어요. \"안녕! 우리랑 같이 놀자!\"": [
@@ -73,8 +73,8 @@ const NARRATION_CLIPS = {
   "audio/tc/ugly_duckling/hero_17da7f4c47.mp3"
  ],
  "추운 겨울이 왔어요. 호수가 꽁꽁 얼어서 발이 얼음에 붙어 버렸어요.": "audio/tc/ugly_duckling/nar_eb03d7c8ae.mp3",
- "아기 오리를 꾹 눌러 봐요. 날개로 몸을 감싸서 따뜻하게!": "audio/tc/ugly_duckling/nar_5cacf03261.mp3",
- "아기 오리를 꾹 누르고 있어요.": "audio/tc/ugly_duckling/nar_0d8830ac82.mp3",
+ "아기 오리를 톡톡 눌러 봐요. 날개로 몸을 감싸서 따뜻하게!": "audio/tc/ugly_duckling/nar_4445e788e7.mp3",
+ "아기 오리를 톡톡 눌러 봐요.": "audio/tc/ugly_duckling/nar_a01bad7c0b.mp3",
  "날개로 몸을 꼭 감쌌더니 조금 따뜻해졌어요.": "audio/tc/ugly_duckling/nar_eb4120344d.mp3",
  "그때 농부 할아버지가 지나가다 아기 오리를 보았어요. \"저런, 얼음에 발이 붙었구나!\"": [
   "audio/tc/ugly_duckling/nar_3c5526cc8f.mp3",
@@ -107,11 +107,11 @@ const NARRATION_CLIPS = {
   "audio/tc/ugly_duckling/hen_d0c81ed206.mp3"
  ],
  "따뜻한 봄이 왔어요. 아기 오리는 몸이 부쩍 자랐어요.": "audio/tc/ugly_duckling/nar_7de3be8ad6.mp3",
- "아기 오리를 꾹 눌러서 날개를 활짝 펴 볼까요?": "audio/tc/ugly_duckling/nar_ba762f1863.mp3",
- "꾹 누르고 있어요. 날개를 활짝!": "audio/tc/ugly_duckling/nar_fa59c351e4.mp3",
+ "아기 오리를 톡톡 눌러서 날개를 활짝 펴 볼까요?": "audio/tc/ugly_duckling/nar_fac56f1751.mp3",
+ "톡톡 눌러요. 날개를 활짝!": "audio/tc/ugly_duckling/nar_ff17a31136.mp3",
  "와, 날개가 이렇게 커졌어요!": "audio/tc/ugly_duckling/nar_76c0b5d973.mp3",
- "한 번 더 꾹! 훨훨 날아 볼까요?": "audio/tc/ugly_duckling/nar_0ab9e62537.mp3",
- "한 번 더 꾹! 훨훨!": "audio/tc/ugly_duckling/nar_29d43cb7f1.mp3",
+ "한 번 더 톡톡! 훨훨 날아 볼까요?": "audio/tc/ugly_duckling/nar_e718449cfd.mp3",
+ "한 번 더 톡톡! 훨훨!": "audio/tc/ugly_duckling/nar_dab0f06df3.mp3",
  "훨훨! 아기 오리가 하늘을 날아요!": "audio/tc/ugly_duckling/nar_0f23f40efe.mp3",
  "아기 오리가 호숫가에 내려앉았어요. 물에 누가 비쳤을까요?": "audio/tc/ugly_duckling/nar_34cd580815.mp3",
  "길고 하얀 목, 커다란 하얀 날개…": "audio/tc/ugly_duckling/nar_80fd3f24fa.mp3",

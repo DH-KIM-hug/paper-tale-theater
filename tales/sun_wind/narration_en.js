@@ -58,17 +58,17 @@ const NARRATION_CLIPS_EN = {
   "t": "The Wind puffed out big, round cheeks.",
   "c": "audio/tc/sun_wind/en/nar_70d1748c56.mp3"
  },
- "화면을 쓱 밀어서 바람을 불어 줘요!": {
-  "t": "Swipe the screen to blow the Wind!",
-  "c": "audio/tc/sun_wind/en/nar_20ac5b8c11.mp3"
+ "바람을 톡 눌러서 후~ 불어 줘요!": {
+  "t": "Tap the Wind to blow!",
+  "c": "audio/tc/sun_wind/en/nar_09caf5513c.mp3"
  },
- "화면을 쓱 밀어서 바람을 불어 봐요!": {
-  "t": "Swipe the screen and blow the Wind!",
-  "c": "audio/tc/sun_wind/en/nar_affa6b89c3.mp3"
+ "바람을 톡 눌러서 불어 봐요!": {
+  "t": "Tap the Wind and blow!",
+  "c": "audio/tc/sun_wind/en/nar_5979add8ad.mp3"
  },
- "더 세게, 쓱!": {
-  "t": "Stronger now! Swish!",
-  "c": "audio/tc/sun_wind/en/nar_da3b9d3b4e.mp3"
+ "더 세게, 톡!": {
+  "t": "Stronger now! Tap!",
+  "c": "audio/tc/sun_wind/en/nar_2dbf5d3b97.mp3"
  },
  "휘잉~ 나뭇잎이 날아가요!": {
   "t": "Whoosh~ The leaves are flying away!",
@@ -116,13 +116,13 @@ const NARRATION_CLIPS_EN = {
   "t": "Now it's the Sun's turn.",
   "c": "audio/tc/sun_wind/en/nar_db0d919bc4.mp3"
  },
- "해님을 꾹 눌러서 따뜻하게 비춰 줘요!": {
-  "t": "Press and hold the Sun to shine nice and warm!",
-  "c": "audio/tc/sun_wind/en/nar_1bece7075b.mp3"
+ "해님을 톡톡 눌러서 따뜻하게 비춰 줘요!": {
+  "t": "Tap the Sun to shine nice and warm!",
+  "c": "audio/tc/sun_wind/en/nar_7f47fcb611.mp3"
  },
- "해님을 꾹 눌러 봐요!": {
-  "t": "Press and hold the Sun!",
-  "c": "audio/tc/sun_wind/en/nar_00ada7665f.mp3"
+ "해님을 톡톡 눌러 봐요!": {
+  "t": "Tap the Sun!",
+  "c": "audio/tc/sun_wind/en/nar_7f04ef623b.mp3"
  },
  "\"아, 따뜻하다~\" 나그네가 단추를 풀었어요.": {
   "t": "\"Ahh, so warm~\" The traveler unbuttoned the coat.",
@@ -131,9 +131,9 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/sun_wind/en/nar_d8108bbd18.mp3"
   ]
  },
- "조금 더 꾹!": {
-  "t": "Hold a little longer!",
-  "c": "audio/tc/sun_wind/en/nar_41a4eb6a96.mp3"
+ "조금 더 톡톡!": {
+  "t": "A little more tapping!",
+  "c": "audio/tc/sun_wind/en/nar_23ce09108f.mp3"
  },
  "\"아이, 더워!\" 모자로 부채질을 해요.": {
   "t": "\"Phew, it's hot!\" The traveler fans with the hat.",
@@ -142,9 +142,9 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/sun_wind/en/nar_692e591c08.mp3"
   ]
  },
- "한 번 더 꾹!": {
-  "t": "Hold one more time!",
-  "c": "audio/tc/sun_wind/en/nar_24af0d663e.mp3"
+ "한 번 더 톡톡!": {
+  "t": "Tap one more time!",
+  "c": "audio/tc/sun_wind/en/nar_58d148a7b5.mp3"
  },
  "훌러덩! 나그네가 외투를 벗었어요!": {
   "t": "Off it goes! The traveler took off the coat!",
@@ -233,13 +233,13 @@ const NARRATION_CLIPS_EN = {
   "t": "The traveler dipped both feet into the cool water, splash!",
   "c": "audio/tc/sun_wind/en/nar_e65f922d93.mp3"
  },
- "바람아, 이번엔 살살 불어 줄래? 쓱, 살살~": {
-  "t": "Wind, could you blow gently this time? Swish, gently~",
-  "c": "audio/tc/sun_wind/en/nar_c66a2a0a4a.mp3"
+ "바람아, 이번엔 살살 불어 줄래? 톡, 살살~": {
+  "t": "Wind, could you blow gently this time? Tap, gently~",
+  "c": "audio/tc/sun_wind/en/nar_97a4ce11ad.mp3"
  },
- "살살 쓱 밀어 봐요!": {
-  "t": "Swipe gently!",
-  "c": "audio/tc/sun_wind/en/nar_6820d935fd.mp3"
+ "바람을 살살 톡톡 눌러 봐요!": {
+  "t": "Tap the Wind gently!",
+  "c": "audio/tc/sun_wind/en/nar_b07481e592.mp3"
  },
  "\"아, 시원해. 고마워, 바람아!\"": {
   "t": "\"Ahh, so cool. Thank you, Wind!\"",

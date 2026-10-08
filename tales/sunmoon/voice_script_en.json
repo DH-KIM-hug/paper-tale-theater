@@ -572,19 +572,19 @@
    ]
   },
   {
-   "text": "오누이는 뒷문으로 살금살금 나왔어요. 화면을 쓱 밀어서 달려요!",
-   "en": "The brother and sister tiptoed out the back door. Swipe the screen to run!",
+   "text": "오누이는 뒷문으로 살금살금 나왔어요. 화면을 톡톡 눌러서 달려요!",
+   "en": "The brother and sister tiptoed out the back door. Tap the screen to run!",
    "segs": [
     [
      "nar",
-     "The brother and sister tiptoed out the back door. Swipe the screen to run!",
+     "The brother and sister tiptoed out the back door. Tap the screen to run!",
      "whisper"
     ]
    ]
   },
   {
-   "text": "화면을 옆으로 쓱 밀어서 달려요!",
-   "en": "Swipe the screen sideways to run!"
+   "text": "화면을 톡톡 눌러서 달려요!",
+   "en": "Tap the screen to run!"
   },
   {
    "text": "앗, 호랑이가 오는 소리! 커다란 장독을 톡 눌러서 숨어요!",
@@ -617,12 +617,12 @@
    ]
   },
   {
-   "text": "휴~ 이제 우물가 큰 나무로 달려가요! 쓱쓱!",
-   "en": "Phew~ Now run to the big tree by the well! Zoom, zoom!",
+   "text": "휴~ 이제 우물가 큰 나무로 달려가요! 톡톡!",
+   "en": "Phew~ Now run to the big tree by the well! Tap, tap!",
    "segs": [
     [
      "nar",
-     "Phew~ Now run to the big tree by the well! Zoom, zoom!",
+     "Phew~ Now run to the big tree by the well! Tap, tap!",
      "happy:1.1"
     ]
    ]
@@ -864,12 +864,12 @@
    ]
   },
   {
-   "text": "줄을 꼭 잡고, 화면을 위로 쓱쓱 밀어서 올라가요!",
-   "en": "Hold the rope tight and swipe the screen up to climb!"
+   "text": "줄을 꼭 잡고, 화면을 톡톡 눌러서 올라가요!",
+   "en": "Hold the rope tight and tap the screen to climb!"
   },
   {
-   "text": "화면을 위로 쓱 밀어서 올라가요!",
-   "en": "Swipe the screen up to climb!"
+   "text": "화면을 톡톡 눌러서 올라가요!",
+   "en": "Tap the screen to climb!"
   },
   {
    "text": "구름을 뚫고 쑥쑥!",

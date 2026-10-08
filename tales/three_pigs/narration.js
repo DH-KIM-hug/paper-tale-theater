@@ -14,7 +14,7 @@ const NARRATION_CLIPS = {
  "짚은 훨훨 날아가요. 아주 가벼워요.": "audio/tc/three_pigs/nar_f8015db022.mp3",
  "나무는 흔들흔들! 조금 튼튼해요.": "audio/tc/three_pigs/nar_38200cb966.mp3",
  "벽돌은 끄떡없어요! 아주 아주 튼튼해요.": "audio/tc/three_pigs/nar_968056d342.mp3",
- "손가락으로 쓱 밀어서 바람을 불어 봐요.": "audio/tc/three_pigs/nar_a805116437.mp3",
+ "손가락으로 톡 눌러서 바람을 불어 봐요.": "audio/tc/three_pigs/nar_97ce11fbaf.mp3",
  "쌓을 것을 톡톡 눌러요.": "audio/tc/three_pigs/nar_9e9c51f273.mp3",
  "첫째는 짚으로 집을 짓기로 했어요. 짚을 톡톡톡 쌓아요!": "audio/tc/three_pigs/nar_686ef67049.mp3",
  "뚝딱! 짚 집이 완성됐어요. 첫째는 피리를 불며 놀았어요.": "audio/tc/three_pigs/nar_ebeba72939.mp3",
@@ -27,7 +27,7 @@ const NARRATION_CLIPS = {
  ],
  "셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 하나, 둘, 셋 천천히 쌓아요.": "audio/tc/three_pigs/nar_590f56d03e.mp3",
  "벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!": "audio/tc/three_pigs/nar_47c7342685.mp3",
- "손가락으로 쓱 밀어서 늑대와 같이 후~ 불어요.": "audio/tc/three_pigs/nar_0596b87029.mp3",
+ "손가락으로 톡톡 눌러서 늑대와 같이 후~ 불어요.": "audio/tc/three_pigs/nar_ed22a5f89d.mp3",
  "그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요. \"아기 돼지야, 문 열어라!\"": [
   "audio/tc/three_pigs/nar_22bfd01610.mp3",
   "audio/tc/three_pigs/wolf_521a44ef05.mp3"
@@ -73,7 +73,7 @@ const NARRATION_CLIPS = {
  "늑대는 숨이 차서 털썩 주저앉았어요.": "audio/tc/three_pigs/nar_beb8bbeded.mp3",
  "늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.": "audio/tc/three_pigs/nar_d1fdb40a58.mp3",
  "아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.": "audio/tc/three_pigs/nar_579203fe82.mp3",
- "불을 꾹 눌러서 크게 해 줘요.": "audio/tc/three_pigs/nar_e12229e28d.mp3",
+ "불을 톡톡 눌러서 크게 해 줘요.": "audio/tc/three_pigs/nar_1cc8d75667.mp3",
  "보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.": "audio/tc/three_pigs/nar_3563075954.mp3",
  "\"앗, 뜨거워!\"": "audio/tc/three_pigs/wolf_f87faa686a.mp3",
  "늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.": "audio/tc/three_pigs/nar_c3525a6c8e.mp3",

@@ -177,13 +177,13 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/turnip/en/nar_0d7e0bbf55.mp3"
   ]
  },
- "이번엔 여섯이 다 함께! 순무를 꾹 눌러요. 영~차!": {
-  "t": "This time, all six together! Press and hold the turnip. Heave-ho!",
-  "c": "audio/tc/turnip/en/nar_1106077152.mp3"
+ "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!": {
+  "t": "This time, all six together! Tap the turnip. Heave-ho!",
+  "c": "audio/tc/turnip/en/nar_8f5a635bfd.mp3"
  },
- "순무를 꾹 누르고 있어요. 영~차!": {
-  "t": "Keep pressing the turnip. Heave-ho!",
-  "c": "audio/tc/turnip/en/nar_d66d529749.mp3"
+ "순무를 톡톡 눌러요. 영~차!": {
+  "t": "Tap the turnip. Heave-ho!",
+  "c": "audio/tc/turnip/en/nar_a7a352dae5.mp3"
  },
  "쑥! 커다란 순무가 뽑혔어요! 모두 벌렁 넘어졌어요.": {
   "t": "Pop! The big turnip came out! Everyone tumbled over backwards.",

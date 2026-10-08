@@ -937,13 +937,13 @@
       bigJar = jar(1080, 200, 190); hideJar.appendChild(bigJar);
       if (T.portrait()) yard.to(330, 280, 1, 0); // 세로 화면: 오누이가 보이게 마당 왼쪽부터
     });
-    await say('오누이는 뒷문으로 살금살금 나왔어요. 화면을 쓱 밀어서 달려요!');
+    await say('오누이는 뒷문으로 살금살금 나왔어요. 화면을 톡톡 눌러서 달려요!');
     const run2 = async (dx, dur = 560) => {
       const nb = boy.x + dx, ng = girl.x + dx;
       AudioFX.whoosh();
       await Promise.all([boy.move(nb, 520, dur), girl.move(ng, 520, dur), boy.hop(24, dur), girl.hop(24, dur), yard.to(yardCam(nb), 280, 1, dur)]);
     };
-    await T.swipe(stageWrap, { dir: 'right', count: 2, prompt: '화면을 옆으로 쓱 밀어서 달려요!', onStep: () => run2(YJ.run1) });
+    await T.mash(stageWrap, { count: 2, prompt: '화면을 톡톡 눌러서 달려요!', onStep: () => run2(YJ.run1) });
     await sleep(700);
     await say('앗, 호랑이가 오는 소리! 커다란 장독을 톡 눌러서 숨어요!');
     await T.tap(hideJar, { prompt: '커다란 장독을 톡 눌러서 숨어요!' });
@@ -964,8 +964,8 @@
     boy.setScale(1); girl.setScale(.92);
     yard.appendChild(boy.pos); yard.appendChild(girl.pos); // 장독 앞으로 나온다
     await Promise.all([boy.move(YJ.out[0], 520, 500), girl.move(YJ.out[1], 520, 500), boy.hop(30, 500), girl.hop(30, 500)]);
-    await say('휴~ 이제 우물가 큰 나무로 달려가요! 쓱쓱!');
-    await T.swipe(stageWrap, { dir: 'right', count: 3, prompt: '화면을 옆으로 쓱 밀어서 달려요!', onStep: () => run2(YJ.run2) });
+    await say('휴~ 이제 우물가 큰 나무로 달려가요! 톡톡!');
+    await T.mash(stageWrap, { count: 3, prompt: '화면을 톡톡 눌러서 달려요!', onStep: () => run2(YJ.run2) });
     await sleep(700);
 
     /* ====== 3막 — 하늘 동아줄 ====== */
@@ -1255,9 +1255,9 @@
     const RX = boy.P.art ? 325 : 360, GAP = boy.P.art ? ROPE_GAP : 140;
     await Promise.all([boy.move(RX, 330, 600), girl.move(RX, 330 + GAP, 600)]);
     boy.P.pose('rope'); girl.P.pose('rope'); // 줄에 닿으면 줄 오르기 그림으로
-    await say('줄을 꼭 잡고, 화면을 위로 쓱쓱 밀어서 올라가요!');
+    await say('줄을 꼭 잡고, 화면을 톡톡 눌러서 올라가요!');
     let step = 0;
-    await T.swipe(stageWrap, { dir: 'up', count: 6, prompt: '화면을 위로 쓱 밀어서 올라가요!', onStep: () => {
+    await T.mash(stageWrap, { count: 6, prompt: '화면을 톡톡 눌러서 올라가요!', onStep: () => {
       step++;
       const by = 330 - step * 450;
       AudioFX.whoosh(); yeongcha(T, step);
@@ -1321,7 +1321,7 @@
     await Promise.all([sorg.move(1250, 380, 1800, 'ease-in'), T.anim(sorg.body, [{ transform: 'scale(1)' }, { transform: 'scale(.5)' }], 1800)]);
     await say('호랑이는 혹을 달고 산속으로 줄행랑! 다시는 오지 않았대요.');
 
-    /* --- 15. 해와 달 (자유 놀이) --- */
+    /* --- 15. 해와 달 (달님 톡 → 밤, 해님 톡 → 낮. 자유 놀이 없음) --- */
     let skyRect, nightVeil = null, starG, sunKid, moonKid, beam, isDay = false;
     const OX = T.portrait() ? [345, 655] : [260, 740]; // 세로 화면: 해님·달님을 보이는 폭 안으로
     const drawOrb = (girlFace) => (T2, g) => {
@@ -1395,10 +1395,8 @@
     await say('그래서 동생은 해님, 오빠는 달님이 되었답니다.');
     T.finale();
     await say('해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.');
-    await T.free([
-      { el: girlSun.pos, onTap: () => { setSky(true); AudioFX.jingle(); girlSun.hop(24); } },
-      { el: boyMoon.pos, onTap: () => { setSky(false); AudioFX.bell(); boyMoon.hop(24); } },
-    ], 18000);
+    await T.tap(boyMoon.pos); setSky(false); AudioFX.bell(); boyMoon.hop(24); await sleep(1800); // 달님을 톡 → 밤
+    await T.tap(girlSun.pos); setSky(true); AudioFX.jingle(); girlSun.hop(24); await sleep(1500); // 해님을 톡 → 낮
     setSky(true);
     await say('해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.');
     return '해님 달님이 늘 우리를 비춰 줘요!';

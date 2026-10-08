@@ -114,23 +114,23 @@
    "en": "Mama Duck took her babies to the pond. They swam in a line."
   },
   {
-   "text": "화면을 옆으로 쓱 밀어서 헤엄쳐 볼까요?",
-   "en": "Shall we swipe the screen sideways to swim?",
+   "text": "화면을 톡톡 눌러서 헤엄쳐 볼까요?",
+   "en": "Shall we tap the screen to swim?",
    "segs": [
     [
      "nar",
-     "Shall we swipe the screen sideways to swim?",
+     "Shall we tap the screen to swim?",
      "happy:1.1"
     ]
    ]
   },
   {
-   "text": "옆으로 쓱 밀어서 헤엄쳐요!",
-   "en": "Swipe sideways to swim!",
+   "text": "화면을 톡톡 눌러서 헤엄쳐요!",
+   "en": "Tap the screen to swim!",
    "segs": [
     [
      "nar",
-     "Swipe sideways to swim!",
+     "Tap the screen to swim!",
      "happy:1.1"
     ]
    ]
@@ -373,23 +373,23 @@
    "en": "The reeds are much taller than the duckling's head."
   },
   {
-   "text": "옆으로 쓱 밀어서 갈대를 헤치고 가 볼까요?",
-   "en": "Shall we swipe sideways and push through the reeds?",
+   "text": "화면을 톡톡 눌러서 갈대를 헤치고 가 볼까요?",
+   "en": "Shall we tap the screen and push through the reeds?",
    "segs": [
     [
      "nar",
-     "Shall we swipe sideways and push through the reeds?",
+     "Shall we tap the screen and push through the reeds?",
      "happy:1.1"
     ]
    ]
   },
   {
-   "text": "옆으로 쓱! 갈대를 헤치고 가요.",
-   "en": "Swipe! Push through the reeds.",
+   "text": "톡톡! 갈대를 헤치고 가요.",
+   "en": "Tap, tap! Push through the reeds.",
    "segs": [
     [
      "nar",
-     "Swipe! Push through the reeds.",
+     "Tap, tap! Push through the reeds.",
      "happy:1.1"
     ]
    ]
@@ -559,23 +559,23 @@
    ]
   },
   {
-   "text": "아기 오리를 꾹 눌러 봐요. 날개로 몸을 감싸서 따뜻하게!",
-   "en": "Press and hold the duckling. Wrap your wings around you to keep warm!",
+   "text": "아기 오리를 톡톡 눌러 봐요. 날개로 몸을 감싸서 따뜻하게!",
+   "en": "Tap the duckling. Wrap your wings around you to keep warm!",
    "segs": [
     [
      "nar",
-     "Press and hold the duckling. Wrap your wings around you to keep warm!",
+     "Tap the duckling. Wrap your wings around you to keep warm!",
      "happy:1.1"
     ]
    ]
   },
   {
-   "text": "아기 오리를 꾹 누르고 있어요.",
-   "en": "Keep holding the duckling.",
+   "text": "아기 오리를 톡톡 눌러 봐요.",
+   "en": "Tap the duckling.",
    "segs": [
     [
      "nar",
-     "Keep holding the duckling.",
+     "Tap the duckling.",
      "happy:1.1"
     ]
    ]
@@ -797,23 +797,23 @@
    ]
   },
   {
-   "text": "아기 오리를 꾹 눌러서 날개를 활짝 펴 볼까요?",
-   "en": "Shall we press and hold the duckling to spread its wings wide?",
+   "text": "아기 오리를 톡톡 눌러서 날개를 활짝 펴 볼까요?",
+   "en": "Shall we tap the duckling to spread its wings wide?",
    "segs": [
     [
      "nar",
-     "Shall we press and hold the duckling to spread its wings wide?",
+     "Shall we tap the duckling to spread its wings wide?",
      "happy:1.1"
     ]
    ]
   },
   {
-   "text": "꾹 누르고 있어요. 날개를 활짝!",
-   "en": "Keep holding. Wings wide open!",
+   "text": "톡톡 눌러요. 날개를 활짝!",
+   "en": "Tap, tap. Wings wide open!",
    "segs": [
     [
      "nar",
-     "Keep holding. Wings wide open!",
+     "Tap, tap. Wings wide open!",
      "happy:1.1"
     ]
    ]
@@ -830,23 +830,23 @@
    ]
   },
   {
-   "text": "한 번 더 꾹! 훨훨 날아 볼까요?",
-   "en": "Hold once more! Shall we fly, flap flap?",
+   "text": "한 번 더 톡톡! 훨훨 날아 볼까요?",
+   "en": "Tap once more! Shall we fly, flap flap?",
    "segs": [
     [
      "nar",
-     "Hold once more! Shall we fly, flap flap?",
+     "Tap once more! Shall we fly, flap flap?",
      "happy:1.2"
     ]
    ]
   },
   {
-   "text": "한 번 더 꾹! 훨훨!",
-   "en": "Hold once more! Flap flap!",
+   "text": "한 번 더 톡톡! 훨훨!",
+   "en": "Tap once more! Flap flap!",
    "segs": [
     [
      "nar",
-     "Hold once more! Flap flap!",
+     "Tap once more! Flap flap!",
      "happy:1.2"
     ]
    ]

@@ -19,9 +19,9 @@ const NARRATION_CLIPS = {
   "audio/tc/sun_wind/sun_699e38fac0.mp3"
  ],
  "바람이 볼을 빵빵하게 부풀렸어요.": "audio/tc/sun_wind/nar_19e26d0c1e.mp3",
- "화면을 쓱 밀어서 바람을 불어 줘요!": "audio/tc/sun_wind/nar_ae4095d3df.mp3",
- "화면을 쓱 밀어서 바람을 불어 봐요!": "audio/tc/sun_wind/nar_26eefb5d63.mp3",
- "더 세게, 쓱!": "audio/tc/sun_wind/nar_2f54c40ef8.mp3",
+ "바람을 톡 눌러서 후~ 불어 줘요!": "audio/tc/sun_wind/nar_90241302f6.mp3",
+ "바람을 톡 눌러서 불어 봐요!": "audio/tc/sun_wind/nar_701020aa09.mp3",
+ "더 세게, 톡!": "audio/tc/sun_wind/nar_2cc179e1a8.mp3",
  "휘잉~ 나뭇잎이 날아가요!": "audio/tc/sun_wind/nar_e0c14cfa68.mp3",
  "\"앗, 내 모자!\" 모자가 훨훨 날아갔어요.": [
   "audio/tc/sun_wind/man_5a80a3c771.mp3",
@@ -38,18 +38,18 @@ const NARRATION_CLIPS = {
  "\"에이, 안 되네!\"": "audio/tc/sun_wind/wind_54d553eb58.mp3",
  "어? 날아간 모자가 나그네 머리에 쏙 떨어졌어요!": "audio/tc/sun_wind/nar_aed6abc041.mp3",
  "이번엔 해님 차례예요.": "audio/tc/sun_wind/nar_c36d64288f.mp3",
- "해님을 꾹 눌러서 따뜻하게 비춰 줘요!": "audio/tc/sun_wind/nar_8e27dba910.mp3",
- "해님을 꾹 눌러 봐요!": "audio/tc/sun_wind/nar_5b9d6e2d6b.mp3",
+ "해님을 톡톡 눌러서 따뜻하게 비춰 줘요!": "audio/tc/sun_wind/nar_387c42aac0.mp3",
+ "해님을 톡톡 눌러 봐요!": "audio/tc/sun_wind/nar_5c44849a01.mp3",
  "\"아, 따뜻하다~\" 나그네가 단추를 풀었어요.": [
   "audio/tc/sun_wind/man_2d21813e53.mp3",
   "audio/tc/sun_wind/nar_9c5cc818eb.mp3"
  ],
- "조금 더 꾹!": "audio/tc/sun_wind/nar_9c19525128.mp3",
+ "조금 더 톡톡!": "audio/tc/sun_wind/nar_97cad3301b.mp3",
  "\"아이, 더워!\" 모자로 부채질을 해요.": [
   "audio/tc/sun_wind/man_6a9305946d.mp3",
   "audio/tc/sun_wind/nar_7a75652905.mp3"
  ],
- "한 번 더 꾹!": "audio/tc/sun_wind/nar_992cbbddd3.mp3",
+ "한 번 더 톡톡!": "audio/tc/sun_wind/nar_4a94cb7d22.mp3",
  "훌러덩! 나그네가 외투를 벗었어요!": "audio/tc/sun_wind/nar_09bcaf1c79.mp3",
  "바람이 깜짝 놀랐어요. \"우와, 해님이 해냈네!\"": [
   "audio/tc/sun_wind/nar_a6f7dca577.mp3",
@@ -74,8 +74,8 @@ const NARRATION_CLIPS = {
  "추우면 입고, 더우면 벗어요.": "audio/tc/sun_wind/nar_e2a3763b46.mp3",
  "나그네는 개울가에서 쉬어요.": "audio/tc/sun_wind/nar_2e4d91df2a.mp3",
  "시원한 물에 발을 퐁당 담갔어요.": "audio/tc/sun_wind/nar_fdbe1d89f4.mp3",
- "바람아, 이번엔 살살 불어 줄래? 쓱, 살살~": "audio/tc/sun_wind/nar_3969c7462a.mp3",
- "살살 쓱 밀어 봐요!": "audio/tc/sun_wind/nar_e8a1c53a0e.mp3",
+ "바람아, 이번엔 살살 불어 줄래? 톡, 살살~": "audio/tc/sun_wind/nar_98d4900f62.mp3",
+ "바람을 살살 톡톡 눌러 봐요!": "audio/tc/sun_wind/nar_e86108ec2c.mp3",
  "\"아, 시원해. 고마워, 바람아!\"": "audio/tc/sun_wind/man_ba624738f6.mp3",
  "해님과 바람이 마주 보고 웃었어요.": "audio/tc/sun_wind/nar_c56db122d5.mp3",
  "\"우리, 사이좋게 지내자!\"": "audio/tc/sun_wind/wind_36e42f1fed.mp3",

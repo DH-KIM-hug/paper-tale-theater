@@ -199,7 +199,9 @@
     await say('엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.');
     await hopAll(kids, 34); md.hop(30, 400); T.confetti(); AudioFX.sting('win');
     await say('아기 염소들을 톡톡 눌러 같이 춤춰 봐요!');
-    await T.free([md, ...kids].map(a => ({ el: a.pos, onTap: () => { a.hop(30, 340); AudioFX.tap(); } })), 12000);
+    // 가운데 아기 염소를 톡톡: 누를 때마다 엄마와 아기 염소들이 차례로 폴짝 (자유 놀이 없음)
+    await T.mash(kids[3].pos, { count: 3, onStep: () => { AudioFX.tap(); md.hop(30, 340); kids.forEach((k, j) => setTimeout(() => k.hop(30, 340), j * 70)); } });
+    await sleep(700);
     await say('엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.');
     return '엄마 목소리를 잘 기억해요!';
   }

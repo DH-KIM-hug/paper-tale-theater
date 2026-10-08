@@ -715,14 +715,13 @@
     for (let k = 0; k < 5; k++) line[k].standUp();
     await sleep(400);
 
-    /* --- 9. 쑥! (다 함께 꾹) --- */
-    await say('이번엔 여섯이 다 함께! 순무를 꾹 눌러요. 영~차!');
-    let lastBeat = 0;
-    await T.hold(turnip.pos, { ms: 3000, prompt: '순무를 꾹 누르고 있어요. 영~차!', onProgress: p => {
+    /* --- 9. 쑥! (다 함께 톡톡) --- */
+    await say('이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!');
+    await T.mash(turnip.pos, { count: 4, prompt: '순무를 톡톡 눌러요. 영~차!', onStep: i => {
+      const p = i / 4;
       line.forEach(a => a.pose(POSE.pull(6 + p * 20)));
       turnip.place(TX, GROUND - rise - p * 22);
-      const beat = Math.floor(p * 4);
-      if (beat > lastBeat) { lastBeat = beat; chorus(T, 6); wobble(); T.pop(460, 170, beat % 2 ? '영~' : '차!', C.bean); }
+      chorus(T, 6); wobble(); T.pop(460, 170, i % 2 ? '영~' : '차!', C.bean);
     } });
     const cutTurnip = (svg, y, s, word) => {
       T.el('rect', { x: 0, y: 220, width: 400, height: 80, fill: C.soil }, svg);
