@@ -255,8 +255,9 @@ const TALES = (() => {
       <path d="M66 32 h28 q4 30 6 40 h-40 q2 -10 6 -40z" fill="${c.gd}"/><rect x="58" y="70" width="44" height="4" fill="${c.bk}"/>
       ${[[26, 50], [130, 46], [140, 64]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="9" ry="6" fill="${c.ink}"/><ellipse cx="${x + 1}" cy="${y + 2}" rx="5" ry="3" fill="${c.sn}"/><path d="M${x + 8} ${y - 1} l10 -2 -10 5z" fill="${c.ink}"/>`).join('')}</g>` },
 
-  { id: 'magic_jar', title: '요술 항아리', origin: 'korean', skills: ['count', 'size', 'heart'], ready: false,
+  { id: 'magic_jar', title: '요술 항아리', origin: 'korean', skills: ['count', 'size', 'heart'], ready: false, making: true,
     line: '하나 넣으면 둘이 나오는 항아리! 둘, 넷, 여덟 세어 봐요.',
+    en: { title: 'The Magic Jar', line: 'Put one in and two come out! Tap the jar and count: two, four, eight.' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
       <g class="pc"><rect y="92" width="160" height="18" fill="${c.bk}"/>
       <path d="M54 44 h52 q14 18 8 40 q-4 10 -18 10 h-32 q-14 0 -18 -10 q-6 -22 8 -40z" fill="${c.bk}"/><rect x="58" y="38" width="44" height="8" rx="3" fill="${c.dk}"/>
