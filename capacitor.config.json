@@ -1,0 +1,10 @@
+{
+  "appId": "com.papertale.theater",
+  "appName": "종이 동화극장",
+  "webDir": "www",
+  "ios": {
+    "contentInset": "never",
+    "allowsLinkPreview": false,
+    "limitsNavigationsToAppBoundDomains": false
+  }
+}

@@ -15,3 +15,13 @@ venv/
 # GPU 원본(배경 제거 PNG) — 게임은 assets/v3w(webp)를 쓴다
 assets/v3/
 audio_new/
+
+# 앱 빌드
+node_modules/
+www/
+ios/App/Pods/
+ios/App/build/
+ios/DerivedData/
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/CapApp-SPM/.build/
