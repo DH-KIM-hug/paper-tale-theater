@@ -1,0 +1,610 @@
+{
+ "voices": {
+  "nar": "tc_67edd9343da73ae7896e347d",
+  "mom": "tc_66504763aed05555cd12438c",
+  "kid": "tc_609a8f4362c4bdb3363bbfad",
+  "wolf": "tc_675a73eb789ff3ea6cc80235"
+ },
+ "lines": [
+  {
+   "text": "아주 먼 옛날, 엄마 염소와 일곱 마리 아기 염소가 살았어요.",
+   "en": "Long, long ago, a mother goat and seven little kids lived together.",
+   "segs": [
+    [
+     "nar",
+     "Long, long ago, a mother goat and seven little kids lived together."
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 엄마 염소가 바구니를 들고 말했어요.",
+   "en": "One day, Mother Goat picked up a basket and said,",
+   "segs": [
+    [
+     "nar",
+     "One day, Mother Goat picked up a basket and said,"
+    ]
+   ]
+  },
+  {
+   "text": "\"엄마는 풀을 뜯으러 다녀올게. 늑대가 오면 문을 열어 주면 안 돼!\"",
+   "en": "I'm going out to eat some grass. Don't open the door if the wolf comes!",
+   "segs": [
+    [
+     "mom",
+     "I'm going out to eat some grass. Don't open the door if the wolf comes!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "\"늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!\"",
+   "en": "The wolf has a rough voice and black paws. Remember!",
+   "segs": [
+    [
+     "mom",
+     "The wolf has a rough voice and black paws. Remember!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "\"네, 엄마!\" 아기 염소들이 큰 소리로 대답했어요.",
+   "en": "Yes, Mother! The little goats answered in loud voices.",
+   "segs": [
+    [
+     "kid",
+     "Yes, Mother!",
+     "happy"
+    ],
+    [
+     "nar",
+     "The little goats answered in loud voices."
+    ]
+   ]
+  },
+  {
+   "text": "엄마가 가고 얼마 뒤, 문밖에서 소리가 났어요.",
+   "en": "Soon after Mother left, there was a sound outside the door.",
+   "segs": [
+    [
+     "nar",
+     "Soon after Mother left, there was a sound outside the door."
+    ]
+   ]
+  },
+  {
+   "text": "\"얘들아, 엄마야. 문 열어 줘!\" 걸걸한 목소리였어요.",
+   "en": "Children, it's Mother. Open the door! It was a rough voice.",
+   "segs": [
+    [
+     "wolf",
+     "Children, it's Mother. Open the door!",
+     "tonedown:1.1"
+    ],
+    [
+     "nar",
+     "It was a rough voice."
+    ]
+   ]
+  },
+  {
+   "text": "아기 염소들이 서로 쳐다보았어요.",
+   "en": "The little goats looked at each other.",
+   "segs": [
+    [
+     "nar",
+     "The little goats looked at each other."
+    ]
+   ]
+  },
+  {
+   "text": "\"목소리가 걸걸해. 우리 엄마가 아니야!\" 첫째가 말했어요.",
+   "en": "That voice is rough. You're not our mother! said the oldest kid.",
+   "segs": [
+    [
+     "kid",
+     "That voice is rough. You're not our mother!",
+     "happy"
+    ],
+    [
+     "nar",
+     "said the oldest kid."
+    ]
+   ]
+  },
+  {
+   "text": "\"저리 가요, 늑대!\" 아기 염소들이 소리쳤어요.",
+   "en": "Go away, wolf! the little goats shouted.",
+   "segs": [
+    [
+     "kid",
+     "Go away, wolf!",
+     "happy"
+    ],
+    [
+     "nar",
+     "the little goats shouted."
+    ]
+   ]
+  },
+  {
+   "text": "늑대는 곰곰이 생각했어요.",
+   "en": "The wolf thought hard.",
+   "segs": [
+    [
+     "nar",
+     "The wolf thought hard."
+    ]
+   ]
+  },
+  {
+   "text": "\"목소리를 곱게 만들어야지. 분필을 먹어 볼까?\"",
+   "en": "I need a sweet voice. Shall I eat some chalk?",
+   "segs": [
+    [
+     "wolf",
+     "I need a sweet voice. Shall I eat some chalk?",
+     "tonedown:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "늑대의 목소리가 가늘고 고와졌어요.",
+   "en": "The wolf's voice became thin and sweet.",
+   "segs": [
+    [
+     "nar",
+     "The wolf's voice became thin and sweet."
+    ]
+   ]
+  },
+  {
+   "text": "\"얘들아, 엄마야. 문 열어 줘~\"",
+   "en": "Children, it's Mother. Open the door, please~",
+   "segs": [
+    [
+     "wolf",
+     "Children, it's Mother. Open the door, please~",
+     "tonedown:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "\"그럼 문틈으로 발을 보여 주세요!\" 아기 염소들이 말했어요.",
+   "en": "Then show us your paw through the crack! said the little goats.",
+   "segs": [
+    [
+     "kid",
+     "Then show us your paw through the crack!",
+     "happy"
+    ],
+    [
+     "nar",
+     "said the little goats."
+    ]
+   ]
+  },
+  {
+   "text": "늑대는 밀가루를 발에 묻혀서, 하얀 발을 쑥 내밀었어요.",
+   "en": "The wolf dipped his paw in flour and stuck out a white paw.",
+   "segs": [
+    [
+     "nar",
+     "The wolf dipped his paw in flour and stuck out a white paw."
+    ]
+   ]
+  },
+  {
+   "text": "\"에취!\" 늑대가 밀가루 재채기를 했어요.",
+   "en": "Achoo! The wolf sneezed flour.",
+   "segs": [
+    [
+     "wolf",
+     "Achoo!",
+     "tonedown:1.1"
+    ],
+    [
+     "nar",
+     "The wolf sneezed flour."
+    ]
+   ]
+  },
+  {
+   "text": "\"어? 하얀 발이야! 엄마다!\" 아기 염소들은 깜빡 속아서 문을 열었어요.",
+   "en": "Oh? A white paw! It's Mother! The little goats were fooled and opened the door.",
+   "segs": [
+    [
+     "kid",
+     "Oh? A white paw! It's Mother!",
+     "happy"
+    ],
+    [
+     "nar",
+     "The little goats were fooled and opened the door."
+    ]
+   ]
+  },
+  {
+   "text": "그런데 들어온 건 엄마가 아니라 늑대였어요!",
+   "en": "But it was not Mother who came in. It was the wolf!",
+   "segs": [
+    [
+     "nar",
+     "But it was not Mother who came in. It was the wolf!"
+    ]
+   ]
+  },
+  {
+   "text": "\"숨자, 숨자!\" 아기 염소들이 이불 속, 빨래 바구니 속으로 쏙쏙 숨었어요.",
+   "en": "Hide, hide! The little goats hid in the blankets and in the laundry basket, pop, pop.",
+   "segs": [
+    [
+     "kid",
+     "Hide, hide!",
+     "happy"
+    ],
+    [
+     "nar",
+     "The little goats hid in the blankets and in the laundry basket, pop, pop."
+    ]
+   ]
+  },
+  {
+   "text": "막내는 어디에 숨을까요?",
+   "en": "Where will the youngest hide?",
+   "segs": [
+    [
+     "nar",
+     "Where will the youngest hide?"
+    ]
+   ]
+  },
+  {
+   "text": "막내는 키 큰 시계 속에 쏙 숨었어요. 아무도 몰랐어요.",
+   "en": "The youngest hid inside the tall clock. Nobody knew.",
+   "segs": [
+    [
+     "nar",
+     "The youngest hid inside the tall clock. Nobody knew."
+    ]
+   ]
+  },
+  {
+   "text": "\"어디 숨었나? 다 찾아낼 테다!\" 늑대가 집 안을 뒤졌어요.",
+   "en": "Where did you hide? I'll find every one of you! The wolf searched the house.",
+   "segs": [
+    [
+     "wolf",
+     "Where did you hide? I'll find every one of you!",
+     "tonedown:1.1"
+    ],
+    [
+     "nar",
+     "The wolf searched the house."
+    ]
+   ]
+  },
+  {
+   "text": "늑대는 시계 속만 빼고, 아기 염소들을 모두 찾아내서 꿀꺽 삼켜 버렸어요.",
+   "en": "The wolf found all the little goats except the one in the clock, and gulped them down.",
+   "segs": [
+    [
+     "nar",
+     "The wolf found all the little goats except the one in the clock, and gulped them down."
+    ]
+   ]
+  },
+  {
+   "text": "하지만 아기 염소들은 다치지 않았어요. 아주 따뜻하고 포근한 뱃속이었거든요.",
+   "en": "But the little goats were not hurt. It was warm and cozy inside his tummy.",
+   "segs": [
+    [
+     "nar",
+     "But the little goats were not hurt. It was warm and cozy inside his tummy."
+    ]
+   ]
+  },
+  {
+   "text": "집에 돌아온 엄마 염소는 깜짝 놀랐어요.",
+   "en": "Mother Goat came home and was very surprised.",
+   "segs": [
+    [
+     "nar",
+     "Mother Goat came home and was very surprised."
+    ]
+   ]
+  },
+  {
+   "text": "\"얘들아, 어디 있니? 엄마 왔어!\"",
+   "en": "Children, where are you? Mother is home!",
+   "segs": [
+    [
+     "mom",
+     "Children, where are you? Mother is home!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "\"엄마!\" 막내가 시계 속에서 폴짝 나왔어요.",
+   "en": "Mother! The youngest hopped out of the clock.",
+   "segs": [
+    [
+     "kid",
+     "Mother!",
+     "happy"
+    ],
+    [
+     "nar",
+     "The youngest hopped out of the clock."
+    ]
+   ]
+  },
+  {
+   "text": "\"늑대가 형들과 누나들을 꿀꺽 삼켰어요!\"",
+   "en": "The wolf gulped down my brothers and sisters!",
+   "segs": [
+    [
+     "kid",
+     "The wolf gulped down my brothers and sisters!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "\"걱정 마. 엄마가 꼭 구해 줄게!\" 엄마는 가위와 바늘을 챙겼어요.",
+   "en": "Don't worry. Mother will save them! Mother took her scissors and needle.",
+   "segs": [
+    [
+     "mom",
+     "Don't worry. Mother will save them!",
+     "happy"
+    ],
+    [
+     "nar",
+     "Mother took her scissors and needle."
+    ]
+   ]
+  },
+  {
+   "text": "늑대는 배가 불러서, 나무 아래에서 쿨쿨 자고 있었어요.",
+   "en": "The wolf was full, and he was fast asleep under a tree.",
+   "segs": [
+    [
+     "nar",
+     "The wolf was full, and he was fast asleep under a tree."
+    ]
+   ]
+  },
+  {
+   "text": "엄마와 막내는 살금살금 다가갔어요.",
+   "en": "Mother and the youngest tiptoed closer.",
+   "segs": [
+    [
+     "nar",
+     "Mother and the youngest tiptoed closer."
+    ]
+   ]
+  },
+  {
+   "text": "\"쉿! 늑대가 깨지 않게, 그림자 극장에서 아기들을 꺼내 줄게.\"",
+   "en": "Shh! So the wolf won't wake up, I'll bring the little ones out at the shadow theater.",
+   "segs": [
+    [
+     "mom",
+     "Shh! So the wolf won't wake up, I'll bring the little ones out at the shadow theater.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "하얀 종이 극장에 엄마의 그림자가 나타났어요.",
+   "en": "Mother's shadow appeared in the white paper theater.",
+   "segs": [
+    [
+     "nar",
+     "Mother's shadow appeared in the white paper theater."
+    ]
+   ]
+  },
+  {
+   "text": "슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!",
+   "en": "Snip, snip! With each cut, the little goats came out one by one!",
+   "segs": [
+    [
+     "nar",
+     "Snip, snip! With each cut, the little goats came out one by one!"
+    ]
+   ]
+  },
+  {
+   "text": "\"엄마!\" 아기 염소 여섯 마리가 모두 무사히 나왔어요.",
+   "en": "Mother! All six little goats came out safe and sound.",
+   "segs": [
+    [
+     "kid",
+     "Mother!",
+     "happy"
+    ],
+    [
+     "nar",
+     "All six little goats came out safe and sound."
+    ]
+   ]
+  },
+  {
+   "text": "\"이제 늑대 배에 돌멩이를 넣어 주자.\"",
+   "en": "Now let's put stones in the wolf's tummy.",
+   "segs": [
+    [
+     "mom",
+     "Now let's put stones in the wolf's tummy.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "엄마가 바늘로 콕콕콕 꿰맸어요. 늑대는 아무것도 몰랐어요.",
+   "en": "Mother stitched with her needle, poke, poke, poke. The wolf did not notice a thing.",
+   "segs": [
+    [
+     "nar",
+     "Mother stitched with her needle, poke, poke, poke. The wolf did not notice a thing."
+    ]
+   ]
+  },
+  {
+   "text": "잠에서 깬 늑대가 비틀비틀 일어났어요.",
+   "en": "The wolf woke up and stumbled to his feet.",
+   "segs": [
+    [
+     "nar",
+     "The wolf woke up and stumbled to his feet."
+    ]
+   ]
+  },
+  {
+   "text": "\"아이고, 배가 무거워. 목이 말라!\"",
+   "en": "Oh dear, my tummy is so heavy. I'm thirsty!",
+   "segs": [
+    [
+     "wolf",
+     "Oh dear, my tummy is so heavy. I'm thirsty!",
+     "tonedown:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "\"우물에서 물을 마셔야지.\"",
+   "en": "I must drink water from the well.",
+   "segs": [
+    [
+     "wolf",
+     "I must drink water from the well.",
+     "tonedown:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "풍덩! 늑대가 우물에 빠졌어요.",
+   "en": "Splash! The wolf fell into the well.",
+   "segs": [
+    [
+     "nar",
+     "Splash! The wolf fell into the well."
+    ]
+   ]
+  },
+  {
+   "text": "\"으악, 차가워! 다시는 안 올 거야!\"",
+   "en": "Yikes, it's cold! I'm never coming back!",
+   "segs": [
+    [
+     "wolf",
+     "Yikes, it's cold! I'm never coming back!",
+     "tonedown:1.1"
+    ]
+   ]
+  },
+  {
+   "text": "늑대는 흠뻑 젖은 채 멀리멀리 도망갔어요.",
+   "en": "The wolf ran far, far away, dripping wet.",
+   "segs": [
+    [
+     "nar",
+     "The wolf ran far, far away, dripping wet."
+    ]
+   ]
+  },
+  {
+   "text": "엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.",
+   "en": "Mother and the seven little goats held hands and danced happily.",
+   "segs": [
+    [
+     "nar",
+     "Mother and the seven little goats held hands and danced happily."
+    ]
+   ]
+  },
+  {
+   "text": "아기 염소들을 톡톡 눌러 같이 춤춰 봐요!",
+   "en": "Tap, tap the little goats to dance together!",
+   "segs": [
+    [
+     "nar",
+     "Tap, tap the little goats to dance together!"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.",
+   "en": "The little goats who knew Mother's voice well lived happily for a long, long time.",
+   "segs": [
+    [
+     "nar",
+     "The little goats who knew Mother's voice well lived happily for a long, long time."
+    ]
+   ]
+  },
+  {
+   "text": "엄마 염소를 톡 눌러 봐요!",
+   "en": "Tap Mother Goat!"
+  },
+  {
+   "text": "첫째 염소를 톡 눌러 봐요!",
+   "en": "Tap the oldest goat!"
+  },
+  {
+   "text": "늑대를 톡톡톡 눌러 봐요!",
+   "en": "Tap, tap, tap the wolf!"
+  },
+  {
+   "text": "늑대를 톡 눌러 봐요!",
+   "en": "Tap the wolf!"
+  },
+  {
+   "text": "막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!",
+   "en": "Tap the youngest goat to hide him in the clock!"
+  },
+  {
+   "text": "시계를 톡 눌러 봐요!",
+   "en": "Tap the clock!"
+  },
+  {
+   "text": "엄마 염소를 톡 눌러 봐요!",
+   "en": "Tap Mother Goat!"
+  },
+  {
+   "text": "화면을 톡톡 눌러 봐요!",
+   "en": "Tap, tap the screen!"
+  },
+  {
+   "text": "돌멩이를 톡톡톡 눌러 봐요!",
+   "en": "Tap, tap, tap the stones!"
+  },
+  {
+   "text": "늑대를 톡 눌러 봐요!",
+   "en": "Tap the wolf!"
+  }
+ ],
+ "ui": {
+  "그림자 극장": "Shadow Theater",
+  "꺄악!": "Eek!",
+  "나무 아래 늑대": "The wolf under the tree",
+  "늑대와 일곱 마리 아기 염소": "The Wolf and the Seven Kids",
+  "똑똑똑!": "Knock, knock, knock!",
+  "모두 모였어요": "All together",
+  "분필 먹은 늑대": "The wolf who ate chalk",
+  "뿅!": "Pop!",
+  "숨바꼭질": "Hide and seek",
+  "쏙!": "Pop in!",
+  "엄마 목소리는 어떤 걸까?": "Which is Mother's voice?",
+  "엄마 목소리를 잘 기억해요!": "Remember Mother's voice well!",
+  "엄마가 돌아왔어요": "Mother is back",
+  "와작!": "Crunch!",
+  "우물가": "By the well",
+  "쿨쿨~": "Zzz~",
+  "하얀 발": "White paws"
+ }
+}

@@ -1,0 +1,497 @@
+{
+ "voices": {
+  "nar": "tc_67edd9343da73ae7896e347d",
+  "hood": "tc_609a8f4362c4bdb3363bbfad",
+  "wolf": "tc_675a73eb789ff3ea6cc80235",
+  "granny": "tc_61c2f70c343884babeed840b",
+  "mama": "tc_66504763aed05555cd12438c",
+  "hunter": "tc_61945d9c2c11c2c9fd934340"
+ },
+ "lines": [
+  {
+   "text": "엄마가 빨간 모자에게 말했어요. \"할머니가 아프시단다. 맛있는 걸 가져다 드리렴.\"",
+   "en": "Mother said to Little Red Riding Hood. Grandmother is sick. Bring her something yummy.",
+   "segs": [
+    [
+     "nar",
+     "Mother said to Little Red Riding Hood."
+    ],
+    [
+     "mama",
+     "Grandmother is sick. Bring her something yummy."
+    ]
+   ]
+  },
+  {
+   "text": "빵, 우유, 사과를 바구니에 담아요!",
+   "en": "Put the bread, milk, and apple in the basket!"
+  },
+  {
+   "text": "셋! 바구니가 가득 찼어요.",
+   "en": "Three! The basket is full."
+  },
+  {
+   "text": "엄마가 빨간 모자를 머리에 씌워 주었어요. 빨간 모자가 한 번 빙글 돌았어요.",
+   "en": "Mother put the red hood on her head. Red Hood spun around once."
+  },
+  {
+   "text": "\"길에서 벗어나면 안 돼. 모르는 사람과 이야기하지도 마.\"",
+   "en": "Don't leave the path. And don't talk to strangers.",
+   "segs": [
+    [
+     "mama",
+     "Don't leave the path. And don't talk to strangers."
+    ]
+   ]
+  },
+  {
+   "text": "\"네, 엄마! 약속해요.\"",
+   "en": "Yes, Mother! I promise.",
+   "segs": [
+    [
+     "hood",
+     "Yes, Mother! I promise.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "엄마와 빨간 모자는 새끼손가락을 걸었어요.",
+   "en": "Mother and Red Hood hooked their little fingers together."
+  },
+  {
+   "text": "빨간 모자는 콧노래를 부르며 숲길을 걸어요. 빨간 모자를 톡톡 눌러서 걸어가 봐요!",
+   "en": "Red Hood hummed as she walked along the forest path. Tap, tap Red Hood to walk along!"
+  },
+  {
+   "text": "어, 나무 뒤에서 뭔가 보슬보슬한 게 살짝 보였어요. 꼬리였나 봐요!",
+   "en": "Oh, something fluffy peeked out from behind a tree. It must be a tail!"
+  },
+  {
+   "text": "나무 옆에서 늑대가 슬그머니 나왔어요. \"빨간 모자 아가씨, 어디 가니?\"",
+   "en": "The wolf slipped out from beside a tree. Little Red Riding Hood, where are you going?",
+   "segs": [
+    [
+     "nar",
+     "The wolf slipped out from beside a tree."
+    ],
+    [
+     "wolf",
+     "Little Red Riding Hood, where are you going?",
+     "normal"
+    ]
+   ]
+  },
+  {
+   "text": "\"할머니 댁에 가요.\" 빨간 모자가 대답했어요.",
+   "en": "I'm going to Grandmother's house. Red Hood answered.",
+   "segs": [
+    [
+     "hood",
+     "I'm going to Grandmother's house.",
+     "happy"
+    ],
+    [
+     "nar",
+     "Red Hood answered."
+    ]
+   ]
+  },
+  {
+   "text": "\"꽃을 따 가면 할머니가 참 좋아하실 텐데~\"",
+   "en": "Grandmother would love it if you picked some flowers~",
+   "segs": [
+    [
+     "wolf",
+     "Grandmother would love it if you picked some flowers~",
+     "normal"
+    ]
+   ]
+  },
+  {
+   "text": "\"좋은 생각이에요!\" 빨간 모자는 엄마와 한 약속을 깜빡하고 말았어요.",
+   "en": "What a good idea! Red Hood forgot her promise to Mother.",
+   "segs": [
+    [
+     "hood",
+     "What a good idea!",
+     "happy"
+    ],
+    [
+     "nar",
+     "Red Hood forgot her promise to Mother."
+    ]
+   ]
+  },
+  {
+   "text": "꽃밭에 알록달록 꽃이 가득해요. 꽃을 같은 색 꽃병에 쏙쏙 담아요!",
+   "en": "The flower field is full of colorful flowers. Put each flower in the vase of the same color!"
+  },
+  {
+   "text": "꽃병마다 꽃다발이 활짝! 빨간 모자는 꽃을 따느라 시간 가는 줄 몰랐어요.",
+   "en": "Bouquets in every vase! Red Hood was so busy picking flowers, she lost track of time."
+  },
+  {
+   "text": "위에서는 빨간 모자가 꽃을 따요. 아래에서는 늑대가 지름길로 달려가요!",
+   "en": "Up above, Red Hood picks flowers. Down below, the wolf runs along the shortcut!"
+  },
+  {
+   "text": "똑똑똑… 문이 닫히고… 꿀꺽!",
+   "en": "Knock, knock, knock... the door closes... gulp!"
+  },
+  {
+   "text": "늑대는 할머니의 잠옷을 입고 침대에 누웠어요.",
+   "en": "The wolf put on Grandmother's nightgown and lay down in her bed."
+  },
+  {
+   "text": "빨간 모자는 숲속 할머니 집에 도착했어요. 문을 톡 두드려요!",
+   "en": "Red Hood arrived at Grandmother's house in the forest. Tap to knock on the door!"
+  },
+  {
+   "text": "\"들어오렴~\" 안에서 쉰 목소리가 들렸어요.",
+   "en": "Come in~ A hoarse voice came from inside.",
+   "segs": [
+    [
+     "wolf",
+     "Come in~",
+     "normal"
+    ],
+    [
+     "nar",
+     "A hoarse voice came from inside."
+    ]
+   ]
+  },
+  {
+   "text": "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.",
+   "en": "Grandmother, are you here? But Grandmother in the bed looked a little odd.",
+   "segs": [
+    [
+     "hood",
+     "Grandmother, are you here?",
+     "happy"
+    ],
+    [
+     "nar",
+     "But Grandmother in the bed looked a little odd."
+    ]
+   ]
+  },
+  {
+   "text": "벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!",
+   "en": "Compare with the real Grandmother's picture on the wall and find what is different!"
+  },
+  {
+   "text": "빨간 모자는 고개를 갸웃했어요. 또 이상한 곳이 있나 봐요.",
+   "en": "Red Hood tilted her head. There must be something else odd."
+  },
+  {
+   "text": "빨간 모자는 깜짝 놀랐어요. 이 사람은 할머니가 아니에요!",
+   "en": "Red Hood was startled. This is not Grandmother!"
+  },
+  {
+   "text": "늑대가 벌떡 일어났어요! 빨간 모자야, 어서 숨어요! 옷장을 톡!",
+   "en": "The wolf jumped up! Red Hood, hide quickly! Tap the wardrobe!"
+  },
+  {
+   "text": "빨간 모자는 옷장 속으로 쏙! 늑대는 두리번두리번 찾았지만 보이지 않았어요.",
+   "en": "Red Hood slipped into the wardrobe! The wolf looked all around but could not see her."
+  },
+  {
+   "text": "할머니를 먹어서 배가 불렀던 늑대는 스르르 눈이 감겼어요. 쿨쿨…",
+   "en": "The wolf was full from eating Grandmother, and his eyes slowly closed. Zzz..."
+  },
+  {
+   "text": "창밖으로 지나가던 사냥꾼이 코 고는 소리를 들었어요. 창문을 톡톡 두드려 봐요!",
+   "en": "A hunter passing by the window heard the snoring. Tap, tap on the window!"
+  },
+  {
+   "text": "\"이상한 코골이네? 할머니 댁에 무슨 일이 있나?\" 사냥꾼이 방 안으로 들어왔어요.",
+   "en": "What a strange snore! Is something wrong at Grandmother's house? The hunter came into the room.",
+   "segs": [
+    [
+     "hunter",
+     "What a strange snore! Is something wrong at Grandmother's house?"
+    ],
+    [
+     "nar",
+     "The hunter came into the room."
+    ]
+   ]
+  },
+  {
+   "text": "\"늑대잖아! 이럴 땐 간질간질 간지럼이 최고지!\"",
+   "en": "It's a wolf! At a time like this, a tickle is the best!",
+   "segs": [
+    [
+     "hunter",
+     "It's a wolf! At a time like this, a tickle is the best!"
+    ]
+   ]
+  },
+  {
+   "text": "늑대가 딸꾹! 하자 할머니가 퐁! 하고 튀어나왔어요. 할머니는 다치지 않고 멀쩡했어요!",
+   "en": "The wolf hiccupped, hic! and Grandmother popped out, pop! Grandmother was not hurt at all!"
+  },
+  {
+   "text": "늑대는 깜짝 놀라서 \"걸음아 날 살려라~\" 하고 창밖으로 달아났어요.",
+   "en": "The wolf was so startled that Run for your life! and he ran away out the window.",
+   "segs": [
+    [
+     "nar",
+     "The wolf was so startled that"
+    ],
+    [
+     "wolf",
+     "Run for your life!",
+     "normal"
+    ],
+    [
+     "nar",
+     "and he ran away out the window."
+    ]
+   ]
+  },
+  {
+   "text": "빨간 모자도 옷장에서 살그머니 나왔어요. \"할머니!\"",
+   "en": "Red Hood crept out of the wardrobe too. Grandma!",
+   "segs": [
+    [
+     "nar",
+     "Red Hood crept out of the wardrobe too."
+    ],
+    [
+     "hood",
+     "Grandma!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "할머니 집 식탁에서 모두 함께 차를 마셔요. 바구니 속 간식을 한 가지씩 나눠 줘요!",
+   "en": "Everyone has tea together at Grandmother's table. Share a snack from the basket with each one!"
+  },
+  {
+   "text": "\"모두 고마워요!\" 할머니는 활짝 웃었어요.",
+   "en": "Thank you, everyone! Grandmother smiled brightly.",
+   "segs": [
+    [
+     "granny",
+     "Thank you, everyone!"
+    ],
+    [
+     "nar",
+     "Grandmother smiled brightly."
+    ]
+   ]
+  },
+  {
+   "text": "\"이제 약속을 꼭 지킬게요. 길에서 벗어나지 않고, 모르는 사람과는 이야기하지 않을래요.\"",
+   "en": "I'll keep my promise now. I won't leave the path, and I won't talk to strangers.",
+   "segs": [
+    [
+     "hood",
+     "I'll keep my promise now. I won't leave the path, and I won't talk to strangers.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "빨간 모자는 새끼손가락을 걸고, 오늘 일을 오래오래 기억했어요.",
+   "en": "Red Hood hooked her little finger again, and remembered today for a long, long time."
+  },
+  {
+   "text": "톡! 바구니에 담아요.",
+   "en": "Tap! Put it in the basket."
+  },
+  {
+   "text": "빨간 모자를 톡! 새끼손가락을 걸어요.",
+   "en": "Tap Red Hood! Hook your little finger."
+  },
+  {
+   "text": "빨간 모자를 톡톡톡! 한 걸음씩 걸어가요.",
+   "en": "Tap, tap, tap Red Hood! Walk one step at a time."
+  },
+  {
+   "text": "꽃이랑 색깔이 같은 꽃병이 어디 있을까?",
+   "en": "Where is the vase with the same color as the flower?"
+  },
+  {
+   "text": "빨간 모자를 톡! 똑똑똑 노크해요.",
+   "en": "Tap Red Hood! Knock, knock, knock."
+  },
+  {
+   "text": "\"할머니, 귀가 왜 이렇게 커요?\"",
+   "en": "Grandmother, why are your ears so big?",
+   "segs": [
+    [
+     "hood",
+     "Grandmother, why are your ears so big?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "\"네 말을 잘 들으려고 그렇지~\"",
+   "en": "All the better to hear you with~",
+   "segs": [
+    [
+     "wolf",
+     "All the better to hear you with~",
+     "normal"
+    ]
+   ]
+  },
+  {
+   "text": "\"할머니, 눈이 왜 이렇게 노랗고 커요?\"",
+   "en": "Grandmother, why are your eyes so big and yellow?",
+   "segs": [
+    [
+     "hood",
+     "Grandmother, why are your eyes so big and yellow?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "\"너를 잘 보려고 그렇지~\"",
+   "en": "All the better to see you with~",
+   "segs": [
+    [
+     "wolf",
+     "All the better to see you with~",
+     "normal"
+    ]
+   ]
+  },
+  {
+   "text": "\"할머니, 입이 왜 이렇게 길어요?\"",
+   "en": "Grandmother, why is your mouth so long?",
+   "segs": [
+    [
+     "hood",
+     "Grandmother, why is your mouth so long?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "\"그건 말이지… 어흥! 놀랐지?\"",
+   "en": "Well, you see... Roar! Did I scare you?",
+   "segs": [
+    [
+     "wolf",
+     "Well, you see... Roar! Did I scare you?",
+     "normal"
+    ]
+   ]
+  },
+  {
+   "text": "사진 속 할머니와 달라 보이는 곳을 톡!",
+   "en": "Tap what looks different from Grandmother in the picture!"
+  },
+  {
+   "text": "이불 말고, 얼굴을 자세히 봐요.",
+   "en": "Not the blanket. Look closely at the face."
+  },
+  {
+   "text": "얼굴에서 이상한 곳을 눌러 봐요!",
+   "en": "Tap the odd part of the face!"
+  },
+  {
+   "text": "옷장을 톡! 쏙 숨어요.",
+   "en": "Tap the wardrobe! Pop in and hide."
+  },
+  {
+   "text": "창문을 톡!",
+   "en": "Tap the window!"
+  },
+  {
+   "text": "늑대를 톡톡톡! 간지럼을 태워요.",
+   "en": "Tap, tap, tap the wolf! Tickle him."
+  },
+  {
+   "text": "간식을 톡! 한 사람씩 나눠 줘요.",
+   "en": "Tap the snack! Share with each one."
+  },
+  {
+   "text": "빨간 모자를 톡! 다시 약속해요.",
+   "en": "Tap Red Hood! Promise again."
+  },
+  {
+   "text": "빨간 꽃이에요! 같은 색 꽃병을 톡!",
+   "en": "A red flower! Tap the vase of the same color!"
+  },
+  {
+   "text": "빨간 꽃병이에요! 반짝이는 꽃병을 눌러 봐요!",
+   "en": "A red vase! Tap the sparkling vase!"
+  },
+  {
+   "text": "노란 꽃이에요! 같은 색 꽃병을 톡!",
+   "en": "A yellow flower! Tap the vase of the same color!"
+  },
+  {
+   "text": "노란 꽃병이에요! 반짝이는 꽃병을 눌러 봐요!",
+   "en": "A yellow vase! Tap the sparkling vase!"
+  },
+  {
+   "text": "파란 꽃이에요! 같은 색 꽃병을 톡!",
+   "en": "A blue flower! Tap the vase of the same color!"
+  },
+  {
+   "text": "파란 꽃병이에요! 반짝이는 꽃병을 눌러 봐요!",
+   "en": "A blue vase! Tap the sparkling vase!"
+  },
+  {
+   "text": "빵은 할머니께 톡!",
+   "en": "Bread goes to Grandmother. Tap!"
+  },
+  {
+   "text": "우유는 빨간 모자 톡!",
+   "en": "Milk goes to Red Hood. Tap!"
+  },
+  {
+   "text": "사과는 사냥꾼 아저씨 톡!",
+   "en": "Apple goes to Mr. Hunter. Tap!"
+  }
+ ],
+ "ui": {
+  "긴 입!": "Long mouth!",
+  "꺄르르!": "Giggle!",
+  "꽃밭": "Flower Field",
+  "넷!": "Four!",
+  "노란": "Yellow",
+  "노란 눈!": "Yellow eyes!",
+  "늑대": "Wolf",
+  "늑대가 먼저": "The wolf is first",
+  "다섯!": "Five!",
+  "둘!": "Two!",
+  "딸꾹!": "Hic!",
+  "똑!": "Knock!",
+  "똑똑!": "Knock, knock!",
+  "빨간": "Red",
+  "빨간 모자": "Little Red Riding Hood",
+  "빨간 모자!": "Red Hood!",
+  "빨간 모자가 약속을 꼭 지켜요!": "Red Hood keeps her promise!",
+  "뾰족 귀!": "Pointy ears!",
+  "사냥꾼": "Hunter",
+  "셋!": "Three!",
+  "숲길": "Forest Path",
+  "아저씨!": "Mister!",
+  "약속": "Promise",
+  "약속!": "Promise!",
+  "약속을 꼭 지켜요": "Keep your promise",
+  "여섯!": "Six!",
+  "옷장으로!": "Into the wardrobe!",
+  "이상해요": "Something is odd",
+  "차 마시기": "Tea time",
+  "쿨쿨…": "Zzz...",
+  "키득": "Hee",
+  "킥": "Heh",
+  "킥킥": "Hee hee",
+  "파란": "Blue",
+  "하나!": "One!",
+  "하하": "Ha ha",
+  "할머니!": "Grandma!"
+ }
+}
