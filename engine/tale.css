@@ -1,3 +1,4 @@
+@font-face{font-family:'Pretendard Local';font-style:normal;font-weight:45 920;font-display:swap;src:url(../assets/fonts/PretendardVariable.woff2) format('woff2')}
 /* 톡톡 동화극장 공용 엔진 스타일 — 동화(tales/*)가 함께 쓴다.
    원칙: DESIGN_SYSTEM.md (페이퍼아트), TALES_PLAN.md §0 (3~4세 조작·도움 규칙)
    홈(home.css)과 같은 한 장의 무광 종이: 밝은 모드 = 매끈한 흰 종이(#F4F6F9) + 남색 글자, 어두운 모드 = 남색 판지 + 크림 글자.
@@ -32,7 +33,7 @@
   /* 말풍선 쪽지 */
   --note: #FFFFFF; --note-ink: #222B45;
   --ink: var(--text);
-  --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font: 'Pretendard Variable', 'Pretendard Local', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .13 0 0 0 0 .17 0 0 0 0 .27 .5 0 0 0 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
 }
 * { box-sizing: border-box; }

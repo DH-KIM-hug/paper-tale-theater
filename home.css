@@ -1,3 +1,4 @@
+@font-face{font-family:'Pretendard Local';font-style:normal;font-weight:45 920;font-display:swap;src:url(assets/fonts/PretendardVariable.woff2) format('woff2')}
 /* 톡톡 동화극장 — 앱 홈 (HOME_UI_PLAN.md v2 「태그로 고르기」 + v3 「모션」 + v5 「한 장의 종이」 + v6 「밝은 종이·어두운 종이」)
    화면 전체가 한 장의 무광 판지. 밝은 모드 = 옅은 청회색 종이(#ECEFF4), 어두운 모드 = 남색 종이(#222B45).
    동화는 그 종이에 뚫린 구멍 속에 있다. 태그는 평소 종이에 눌러 찍힌 자리(음각)이고, 고르면 도톰하게 솟는다(양각).
@@ -63,7 +64,7 @@
   --line: 13px;
   --hole-k: .82;           /* 옛 썸네일(크림 여백)을 동그랗게 오려 낼 지름 비율 (반지름 44%) */
   --waves-w: min(430px, 36vw);
-  --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font: 'Pretendard Variable', 'Pretendard Local', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 }
 
 /* ═════════ 어두운 종이: 남색 판지 ═════════ */
