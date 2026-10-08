@@ -1,5 +1,5 @@
 /* 종이 동화극장 — 동화 이용권 (앱 모드에서만 잠긴다)
-   · 항상 무료 6편 + 매주 무료 2편(월요일 시작, 기기 날짜 기준 순환) + 전부 구매(4.99달러, 한 번)
+   · 항상 무료 6편 + 매주 무료 2편(월요일 시작, 기기 날짜 기준 순환) + 전부 구매(2.99달러 출시가, 한 번)
    · 앱 모드 = window.Capacitor 가 있거나, 주소에 ?store=1 이 있거나, localStorage store_mode === '1'
    · 앱 모드가 아니면(공개 웹) canPlay 는 언제나 true — 웹은 잠그지 않는다
    · 동화 페이지에 이 파일을 넣어 두면 잠긴 동화의 주소로 바로 들어와도 홈으로 돌려보낸다
@@ -7,7 +7,7 @@
 const Entitlements = (() => {
   const FREE_ALWAYS = ['rabbit', 'lion_mouse', 'patjuk', 'sunmoon', 'turnip', 'goldilocks'];
   const PER_WEEK = 2;
-  const PRICE = '$4.99';
+  const PRICE = '$2.99';
   const OWNED_KEY = 'owned_all';
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
