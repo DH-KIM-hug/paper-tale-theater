@@ -60,7 +60,10 @@
   const valid = (row, list) => (Array.isArray(list) ? list : []).filter(k => TAGS[row].some(t => t.key === k));
   const sel = { origin: new Set(valid('origin', saved.origin)), skill: new Set(valid('skill', saved.skill)) };
   let speak = saved.speak !== false;
-  let tagsOff = saved.tagsOff === true; // 태그 숨기기 (홈 첫 화면을 그림만으로)
+  /* 앱 화면(앱 모드): 큰 동화 하나 + 작은 목록. 태그는 처음엔 숨겨 두고 보호자가 켠다 */
+  const appUI = typeof Entitlements !== 'undefined' && Entitlements.appMode();
+  if (appUI) document.body.classList.add('app');
+  let tagsOff = saved.tagsOff === true || (appUI && saved.tagsOff === undefined); // 태그 숨기기 (홈 첫 화면을 그림만으로)
 
   /* ── 소리 ── */
   function say(text) {
@@ -175,11 +178,13 @@
   const PIC2 = new Set(window.THUMBS2 || []);
   const PIC2L = new Set(window.THUMBS2L || []);
   const PIC = new Set(window.THUMBS || []);
+  const TILE = new Set(window.TILES || []);
   const imgAttrs = 'class="art" alt="" loading="lazy" decoding="async"';
 
   function holeHTML(t, open, extra = '') {
     const plug = (open ? '' : '<span class="plug" aria-hidden="true"><b>곧 열려요</b></span>') + extra;
     // 밝은 종이 한 가지만 쓴다 (다크 모드 없음). 밝은 판이 없으면 남색 판이라도
+    if (TILE.has(t.id)) return `<span class="thumb full tile"><img ${imgAttrs} src="assets/thumbs/${t.id}_tile.webp">${plug}</span>`;
     const dk = PIC2.has(t.id), lt = PIC2L.has(t.id), base = `assets/thumbs/${t.id}`;
     if (lt || dk) return `<span class="thumb full"><img ${imgAttrs} src="${base}${lt ? '_light' : ''}.webp">${plug}</span>`;
     if (PIC.has(t.id)) return `<span class="thumb pic"><img class="art" src="assets/thumbs/${t.id}.webp" alt="" loading="lazy" decoding="async">${plug}</span>`;
@@ -219,6 +224,51 @@
       : `<div class="card closed" role="button" tabindex="0" aria-disabled="true" aria-label="${t.title}, 곧 열려요" ${attrs}>${inner}</div>`;
   }
 
+  /* ── 앱 화면의 큰 동화(히어로): 화살표를 톡 눌러 넘기고, 큰 카드를 톡 눌러 연다. 옆으로 밀어도 넘어간다(덤) ── */
+  let heroId = null, heroList = [], heroDir = 0;
+  const lastKey = 'paperTheater.last';
+  function renderHero() {
+    const hero = $('#hero');
+    if (!appUI) return;
+    hero.hidden = heroList.length === 0;
+    if (!heroList.length) return;
+    if (!heroList.some(t => t.id === heroId)) heroId = heroList[0].id;
+    const t = heroList.find(x => x.id === heroId);
+    const slot = $('#heroSlot');
+    slot.innerHTML = cardHTML(t);
+    const n = heroList.length;
+    $('#heroPrev').hidden = $('#heroNext').hidden = n < 2;
+    document.querySelectorAll('#grid .card').forEach(c => c.classList.toggle('sel', c.dataset.id === heroId));
+    if (heroDir && motion()) {
+      slot.firstElementChild.animate([{ transform: `translateX(${heroDir * 56}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 260, easing: 'cubic-bezier(.2,.8,.2,1)' });
+    }
+    heroDir = 0;
+  }
+  function heroStep(d) {
+    if (heroList.length < 2) return;
+    const i = heroList.findIndex(t => t.id === heroId);
+    heroId = heroList[(i + d + heroList.length) % heroList.length].id;
+    heroDir = d;
+    paper('tap');
+    renderHero();
+    const t = heroList.find(x => x.id === heroId);
+    say(t.title);
+  }
+  function heroSelect(id) {
+    heroId = id; heroDir = 0; renderHero();
+    const t = heroList.find(x => x.id === id);
+    if (t) say(t.title);
+  }
+  if (appUI) {
+    $('#heroPrev').addEventListener('click', () => heroStep(-1));
+    $('#heroNext').addEventListener('click', () => heroStep(1));
+    let sx = null;
+    const hz = $('#hero');
+    hz.addEventListener('pointerdown', e => { sx = e.clientX; });
+    hz.addEventListener('pointerup', e => { if (sx !== null && Math.abs(e.clientX - sx) > 70) { heroStep(e.clientX < sx ? 1 : -1); hz.dataset.swiped = '1'; setTimeout(() => { delete hz.dataset.swiped; }, 50); } sx = null; });
+    hz.addEventListener('click', e => { if (hz.dataset.swiped) { e.preventDefault(); e.stopPropagation(); } }, true);
+  }
+
   /* 선반 다시 그리기 + FLIP:
      · 남는 카드 = 예전 자리에서 새 자리로 스프링으로 미끄러지고, 살짝 앞으로 튀어나온다
      · 새로 들어오는 카드 = 종이에 구멍이 가운데서부터 스프링으로 뚫리며 열린다(차례로)
@@ -237,6 +287,7 @@
     const playable = t => isOpen(t) && Entitlements.canPlay(t.id);
     const sorted = [...TALES.filter(playable), ...TALES.filter(t => isOpen(t) && !playable(t)), ...TALES.filter(t => !isOpen(t))];
     let shown = 0;
+    if (appUI) { heroList = sorted.filter(match); try { if (!heroId) heroId = localStorage.getItem(lastKey); } catch (e) { /* 무시 */ } }
     grid.innerHTML = sorted.map(t => {
       const m = match(t), b = before.get(t.id);
       if (m) shown++;
@@ -246,6 +297,7 @@
       return `<li class="slot" data-id="${t.id}"${m ? '' : ' hidden'}>${cardHTML(t)}</li>`;
     }).join('');
     $('#empty').hidden = shown > 0;
+    renderHero();
     if (!animate) return;
 
     const g1 = grid.getBoundingClientRect(), vh = innerHeight, items = [];
@@ -350,6 +402,7 @@
   function openTale(card) {
     const href = card.getAttribute('href');
     if (leavingPage) return;
+    try { localStorage.setItem(lastKey, card.dataset.id); } catch (e) { /* 무시 */ }
     leavingPage = true;
     let gone = false;
     const go = () => { if (!gone) { gone = true; location.href = href; } };
@@ -401,10 +454,12 @@
     ], { duration: 650, easing: 'ease-out' });
   }
 
-  $('#grid').addEventListener('click', e => {
+  function activate(e) {
     const c = e.target.closest('.card');
     if (!c || c.closest('.leaving')) return;
     const t = TALES.find(x => x.id === c.dataset.id);
+    const inHero = !!c.closest('#hero');
+    if (appUI && !inHero && c.dataset.id !== heroId) { e.preventDefault(); paper('tap'); heroSelect(c.dataset.id); return; }
     if (c.classList.contains('closed')) {
       e.preventDefault();
       paper('down');
@@ -424,10 +479,14 @@
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;   // 새 탭 열기는 그대로
     e.preventDefault();
     openTale(c);
-  });
-  $('#grid').addEventListener('keydown', e => {
+  }
+  $('#grid').addEventListener('click', activate);
+  $('#heroSlot').addEventListener('click', activate);
+  const cardKey = e => {
     if ((e.key === 'Enter' || e.key === ' ') && (e.target.classList.contains('closed') || e.target.classList.contains('locked'))) { e.preventDefault(); e.target.click(); }
-  });
+  };
+  $('#grid').addEventListener('keydown', cardKey);
+  $('#heroSlot').addEventListener('keydown', cardKey);
 
   function resetFilters() { sel.origin.clear(); sel.skill.clear(); update(); }
   $('#emptyReset').addEventListener('click', () => { paper('down'); resetFilters(); });
@@ -589,7 +648,52 @@
      흩어진 색종이 조각이 포물선을 그리며 날아와 로고 글자 조각이 되고(파티클 로고),
      태그 칩이 차례로 붙고, 카드가 선반 위로 떨어진다(스프링 스택).
      같은 탭(세션)에서 두 번째부터는 카드만 짧게 떨어진다. */
+  /* 앱 첫 화면: 켤 때마다 한 번. 색 종이 석 장이 깔리고, 동화 친구들이 차례로 솟고, 제목이 톡 앉는다. 어디든 누르면 건너뜀 */
+  function splash(done) {
+    const sp = $('#splash');
+    const cast = ['tiger_stand', 'rab_rabbit_run', 'tp_pig2_base', 'lm_lion_stand'];
+    sp.querySelector('.sp-cast').innerHTML = cast.map(n => `<img src="assets/v3w/${n}.webp" alt="">`).join('');
+    const ttl = sp.querySelector('.sp-title');
+    ttl.innerHTML = lang === 'en' ? '<span>Paper</span> <span>Tale Theater</span>' : '<span>종이</span> <span>동화극장</span>';
+    sp.querySelector('.sp-tap').textContent = L('톡 눌러 시작', 'Tap to start');
+    sp.hidden = false;
+    const A = sp.querySelector('.sp-a'), B = sp.querySelector('.sp-b'), C = sp.querySelector('.sp-c');
+    const imgs = [...sp.querySelectorAll('.sp-cast img')], words = [...ttl.children], tap = sp.querySelector('.sp-tap');
+    let anim = null, closed = false;
+    const finish = () => { if (closed) return; closed = true; if (anim) anim.finish(); };
+    sp.addEventListener('pointerdown', finish, { once: true });
+    anim = play(2.2, t => {
+      const pa = eo(t / .5), pb = eo((t - .12) / .5), pc = eo((t - .24) / .5);
+      tf(A, 0, 100 * (1 - pa), 1, 0); A.style.opacity = clamp(pa * 2);
+      tf(B, 0, 100 * (1 - pb), 1, 0); B.style.opacity = clamp(pb * 2);
+      tf(C, 0, 100 * (1 - pc), 1, 0); C.style.opacity = clamp(pc * 2);
+      imgs.forEach((im, i) => {
+        const tt = t - .5 - i * .14, q = spring(tt, .42, 15);
+        im.style.opacity = tt > 0 ? '1' : '0';
+        im.style.translate = `0 ${((1 - q) * 160).toFixed(1)}px`;
+      });
+      words.forEach((w, i) => {
+        const tt = t - 1.05 - i * .16, q = spring(tt, .4, 16);
+        w.style.opacity = tt > 0 ? '1' : '0';
+        w.style.scale = Math.max(0, q).toFixed(3);
+      });
+      tap.style.opacity = (clamp((t - 1.6) / .3) * (.55 + .45 * Math.sin(t * 5))).toFixed(3);
+    }, () => {
+      sp.style.transition = 'opacity .35s';
+      sp.style.opacity = '0';
+      setTimeout(() => { sp.hidden = true; sp.style.opacity = sp.style.transition = ''; done(); }, 340);
+    });
+  }
+
   function intro() {
+    if (appUI) {
+      let first = true;
+      try { first = !sessionStorage.getItem('paperTheater.splash'); sessionStorage.setItem('paperTheater.splash', '1'); } catch (e) { /* 무시 */ }
+      update({ anim: false });
+      if (first && motion() && location.hash !== '#parent') splash(() => update({ intro: true, delay: .04, step: .035 }));
+      else update({ intro: true, delay: .02, step: .03 });
+      return;
+    }
     let full = true;
     try { full = !sessionStorage.getItem('paperTheater.intro'); sessionStorage.setItem('paperTheater.intro', '1'); } catch (e) { /* 무시 */ }
     if (location.hash === '#parent') full = false;

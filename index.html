@@ -109,6 +109,12 @@
   </aside>
 
   <main class="shelf" id="shelf">
+    <!-- 앱 화면: 큰 동화 하나(좌우 화살표로 넘김) + 아래 작은 목록 -->
+    <section class="hero" id="hero" aria-label="오늘의 동화" hidden>
+      <button type="button" class="hero-nav prev" id="heroPrev" aria-label="이전 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="hero-slot" id="heroSlot"></div>
+      <button type="button" class="hero-nav next" id="heroNext" aria-label="다음 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </section>
     <ul class="grid" id="grid"></ul>
     <div class="empty" id="empty" hidden>
       <p>이 조합의 이야기는 아직 없어요</p>
@@ -158,6 +164,14 @@
   </div>
 </div>
 
+<!-- 앱 첫 화면: 켤 때마다 한 번 (앱 모드에서만) -->
+<div id="splash" class="splash" hidden aria-hidden="true">
+  <div class="sp-paper sp-a"></div><div class="sp-paper sp-b"></div><div class="sp-paper sp-c"></div>
+  <div class="sp-cast"></div>
+  <h1 class="sp-title"><span>종이</span> <span>동화극장</span></h1>
+  <p class="sp-tap">톡 눌러 시작</p>
+</div>
+
 <!-- 카드 → 무대 전환 (JS 가 채운다) -->
 <div id="stageOut" class="stage-out" hidden aria-hidden="true"><div class="so-veil"></div><div class="so-box"></div><div class="so-iris"></div></div>
 
@@ -168,6 +182,7 @@
 <script src="tales/catalog.js"></script>
 <script src="entitlements.js"></script>
 <script src="assets/thumbs/thumbs.js"></script>
+<script src="assets/thumbs/tiles.js"></script>
 <script src="assets/icons/icons.js"></script>
 <script src="home.js"></script>
 </body>

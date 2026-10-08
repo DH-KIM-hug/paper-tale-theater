@@ -661,3 +661,70 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
 .gate-opts .ticket { padding: 0; font-size: 20px; font-weight: 700; }
 .buy-msg { color: var(--copper); font-weight: 600; }
 @media (max-width: 420px) { .gate-opts { grid-template-columns: repeat(2, 1fr); } }
+
+/* ═════════ 사각 종이 썸네일: 판 · 언덕 · 인물 셋뿐 ═════════ */
+.thumb.tile { aspect-ratio: 4 / 3; }
+.thumb.tile img, .so-box.tile img { -webkit-mask: none; mask: none; object-fit: cover; }
+.thumb.tile img { filter: drop-shadow(0 5px 8px rgba(34, 43, 69, .18)); }
+.so-box.tile { background: var(--sheet); }
+.card.closed .thumb.tile .art, .card.locked .thumb.tile .art { filter: saturate(.5) brightness(1.06); opacity: .8; }
+
+/* ═════════ 앱 화면: 큰 동화 하나 + 아래 작은 목록 (body.app = 앱 모드) ═════════ */
+.splash[hidden], .hero[hidden] { display: none; }
+body.app { --hero-h: 60vh; --hero-art: calc(var(--hero-h) - 150px); --tile-min: 150px; }
+body.app .waves { display: none; }
+body.app #home { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 6px; }
+body.app .board { overflow: visible; padding-bottom: 0; gap: 12px; }
+body.app .brand { justify-content: flex-start; }
+body.app .shelf { display: flex; flex-direction: column; overflow: hidden; padding: 0 0 max(14px, env(safe-area-inset-bottom)); -webkit-mask: none; mask: none; }
+body.app .hero { position: relative; flex: none; display: flex; justify-content: center; height: var(--hero-h); min-height: 0; }
+body.app .hero-slot { min-width: 0; height: 100%; width: 100%; display: flex; justify-content: center; }
+body.app .hero .slot, body.app .hero .card { height: 100%; }
+body.app .hero .card { width: min(100%, calc(var(--hero-art) * 1.3334 + 56px)); justify-content: center; padding: 14px 14px 16px; border-radius: 24px; }
+body.app .hero .thumb { width: auto; height: var(--hero-art); max-width: 100%; align-self: center; }
+body.app .hero .thumb img { border-radius: 0; }
+body.app .hero .label { padding-top: 12px; gap: 6px; justify-content: flex-start; }
+body.app .hero .title { font-size: calc(var(--title) * 1.4); }
+body.app .hero .line { font-size: calc(var(--line) * 1.15); -webkit-line-clamp: 2; }
+body.app .hero .tags { padding-top: 4px; }
+.hero-nav {
+  position: absolute; top: calc(var(--hero-art) / 2 - 28px); z-index: 4;
+  width: 64px; height: 64px; border: 0; border-radius: 50%; padding: 0; display: grid; place-items: center;
+  background: var(--sheet-up); color: var(--text); box-shadow: var(--card-lift); cursor: pointer;
+}
+.hero-nav[hidden] { display: none; }
+.hero-nav.prev { left: 2px; }
+.hero-nav.next { right: 2px; }
+.hero-nav svg { width: 30px; height: 30px; }
+.hero-nav:active { translate: 0 2px; box-shadow: 0 1px 2px rgba(34, 43, 69, .12); }
+.hero-nav:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+body.app .grid { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; align-content: start; padding: 14px 4px 6px;
+  grid-template-columns: repeat(auto-fill, minmax(var(--tile-min), 1fr)); gap: 14px 14px; }
+body.app .grid::-webkit-scrollbar { display: none; }
+body.app .grid .card { padding: 6px 6px 8px; border-radius: 16px; }
+body.app .grid .line, body.app .grid .tags { display: none; }
+body.app .grid .label { padding: 6px 2px 0; }
+body.app .grid .title { font-size: 13px; }
+body.app .grid .thumb.full .plug { padding: 3px 9px; }
+body.app .grid .thumb.full .plug b, body.app .grid .week-tag b, body.app .grid .lock-tag b { font-size: 10px; letter-spacing: .08em; }
+body.app .grid .week-tag, body.app .grid .lock-tag { padding: 3px 9px; bottom: 5%; }
+body.app .card.sel { outline: 3px solid var(--copper); outline-offset: -2px; }
+@media (min-width: 1000px) and (min-height: 640px) { body.app { --tile-min: 168px; } body.app .grid .title { font-size: 15px; } }
+@media (orientation: portrait) { body.app { --hero-h: 52vh; } }
+@media (orientation: portrait) and (min-width: 700px) { body.app { --hero-h: 54vh; --tile-min: 170px; } body.app .hero-nav { width: 88px; height: 88px; top: calc(var(--hero-art) / 2 - 44px); } body.app .hero-nav svg { width: 38px; height: 38px; } }
+@media (orientation: portrait) and (max-width: 699px) { body.app { --tile-min: 118px; } body.app .hero-nav { width: 52px; height: 52px; top: calc(var(--hero-art) / 2 - 26px); opacity: .92; } }
+@media (orientation: landscape) and (max-height: 520px) { body.app { --hero-h: 64vh; --hero-art: calc(var(--hero-h) - 120px); --tile-min: 110px; } body.app .hero .line, body.app .hero .tags { display: none; } }
+@media (min-width: 1000px) and (min-height: 640px) and (orientation: landscape) { body.app .hero-nav { width: 88px; height: 88px; top: calc(var(--hero-art) / 2 - 44px); } body.app .hero-nav svg { width: 38px; height: 38px; } }
+
+/* ═════════ 앱 첫 화면 ═════════ */
+.splash { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: var(--sheet); display: grid; place-items: center; touch-action: manipulation; }
+.sp-paper { position: absolute; left: -10%; right: -10%; border-radius: 50% 50% 0 0 / 22% 22% 0 0; opacity: 0; box-shadow: 0 -6px 18px rgba(34, 43, 69, .16); }
+.sp-a { bottom: 0; height: 56%; background: #C9D3E6; }
+.sp-b { bottom: 0; height: 42%; background: #5C6E9E; }
+.sp-c { bottom: 0; height: 28%; background: #222B45; }
+.sp-cast { position: absolute; left: 0; right: 0; bottom: 14%; height: min(32vh, 300px); display: flex; justify-content: center; align-items: flex-end; gap: clamp(4px, 2vw, 28px); padding: 0 12px; }
+.sp-cast img { height: 100%; flex: 0 1 24%; width: 24%; min-width: 0; object-fit: contain; object-position: 50% 100%; opacity: 0; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .3)); }
+.sp-cast img:first-child { height: 70%; }
+.sp-title { position: absolute; top: 15%; left: 0; right: 0; margin: 0; text-align: center; font-family: var(--font); font-weight: 800; font-size: clamp(40px, 9vw, 92px); letter-spacing: -.02em; line-height: 1.1; color: var(--logo-ink); filter: url(#cut); }
+.sp-title span { display: inline-block; opacity: 0; transform-origin: 50% 80%; margin: 0 .14em; }
+.sp-tap { position: absolute; bottom: max(4%, env(safe-area-inset-bottom)); left: 0; right: 0; margin: 0; text-align: center; font-size: 16px; font-weight: 600; letter-spacing: .2em; color: #EEF1F7; opacity: 0; }
