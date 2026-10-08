@@ -129,8 +129,31 @@
       구멍이 종이 마개로 덮인 이야기는 아직 만들고 있는 중이에요.</p>
     <label class="toggle"><input type="checkbox" id="optSpeak"> 태그와 제목을 소리로 읽어 주기</label>
     <div class="sheet-btns">
+      <button type="button" class="ticket alt" id="optRestore" hidden>구매 복원</button>
       <button type="button" class="ticket alt" id="optReset">고른 태그 지우기</button>
       <button type="button" class="ticket" id="parentClose">닫기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 보호자 확인 · 전체 열기 (앱 모드에서만 뜬다) -->
+<div id="storePanel" class="parent" hidden role="dialog" aria-modal="true" aria-labelledby="storeTitle">
+  <div class="sheet">
+    <h2 id="storeTitle"></h2>
+    <div id="storeGate">
+      <p class="how" id="gateHow"></p>
+      <p class="gate-q" id="gateQ"></p>
+      <div class="gate-opts" id="gateOpts"></div>
+    </div>
+    <div id="storeBuy" hidden>
+      <p class="how" id="buyHow"></p>
+      <p class="how" id="buyWeek"></p>
+      <p class="how buy-msg" id="buyMsg" hidden></p>
+    </div>
+    <div class="sheet-btns" id="storeBtns">
+      <button type="button" class="ticket alt" id="storeRestore" hidden></button>
+      <button type="button" class="ticket alt" id="storeClose"></button>
+      <button type="button" class="ticket" id="storeBuyBtn" hidden></button>
     </div>
   </div>
 </div>
@@ -143,6 +166,7 @@
 
 <script src="audio.js"></script>
 <script src="tales/catalog.js"></script>
+<script src="entitlements.js"></script>
 <script src="assets/thumbs/thumbs.js"></script>
 <script src="assets/icons/icons.js"></script>
 <script src="home.js"></script>

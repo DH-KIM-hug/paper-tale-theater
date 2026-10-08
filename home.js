@@ -177,8 +177,8 @@
   const PIC = new Set(window.THUMBS || []);
   const imgAttrs = 'class="art" alt="" loading="lazy" decoding="async"';
 
-  function holeHTML(t, open) {
-    const plug = open ? '' : '<span class="plug" aria-hidden="true"><b>곧 열려요</b></span>';
+  function holeHTML(t, open, extra = '') {
+    const plug = (open ? '' : '<span class="plug" aria-hidden="true"><b>곧 열려요</b></span>') + extra;
     // 밝은 종이 한 가지만 쓴다 (다크 모드 없음). 밝은 판이 없으면 남색 판이라도
     const dk = PIC2.has(t.id), lt = PIC2L.has(t.id), base = `assets/thumbs/${t.id}`;
     if (lt || dk) return `<span class="thumb full"><img ${imgAttrs} src="${base}${lt ? '_light' : ''}.webp">${plug}</span>`;
@@ -191,19 +191,29 @@
   try { if (localStorage.getItem('lang') === 'en') lang = 'en'; } catch (e) { /* 저장소를 못 쓰면 한국어 */ }
   const shown = t => (lang === 'en' && t.en) ? { ...t, ...t.en } : t;
 
+  /* ── 앱 모드 이용권: 공개 웹에서는 st 가 늘 'free' 라 아무것도 달라지지 않는다 ── */
+  const L = (ko, en) => lang === 'en' ? en : ko;
+  /* 앱에서는 카탈로그가 ready 로 공개한 동화만 열린다 (만드는 중 파일 탐지는 웹 전용) */
+  const isOpen = t => readyNow.has(t.id) && (!Entitlements.appMode() || t.ready);
   function cardHTML(t0) {
     const t = shown(t0);
-    const open = readyNow.has(t.id);
+    const open = isOpen(t);
+    const st = open ? Entitlements.status(t.id) : 'free';
+    const tag = st === 'week' ? `<span class="week-tag" aria-hidden="true"><b>${L('이번 주 무료', 'Free this week')}</b></span>`
+      : st === 'locked' ? `<span class="lock-tag" aria-hidden="true"><b>${L('잠겨 있어요', 'Locked')}</b></span>` : '';
     const o = ORIGIN[t.origin];
     const skills = t.skills.map(k => `<span class="sk" title="${SKILL[k].label}">${icon(k)}</span>`).join('');
     const inner = `
-      ${holeHTML(t, open)}
+      ${holeHTML(t, open, tag)}
       <span class="label">
         <strong class="title">${t.title}</strong>
         <span class="line">${t.line}</span>
         <span class="tags"><span class="org" title="${o.label}">${icon(t.origin)}</span>${skills}</span>
       </span>`;
     const attrs = `data-id="${t.id}" data-origin="${t.origin}"`;
+    if (st === 'locked') {
+      return `<div class="card locked" role="button" tabindex="0" aria-label="${t.title}, ${L('잠겨 있어요', 'locked')}" ${attrs}>${inner}</div>`;
+    }
     return open
       ? `<a class="card" href="tales/${t.folder || t.id}/index.html" ${attrs}>${inner}</a>`
       : `<div class="card closed" role="button" tabindex="0" aria-disabled="true" aria-label="${t.title}, 곧 열려요" ${attrs}>${inner}</div>`;
@@ -224,7 +234,8 @@
       before.set(s.dataset.id, { x: r.left - g0.left, y: r.top - g0.top, w: r.width, h: r.height, open: !!s.querySelector('a.card') });
     });
     const animate = opts.anim !== false && motion() && (before.size > 0 || opts.intro);
-    const sorted = [...TALES.filter(t => readyNow.has(t.id)), ...TALES.filter(t => !readyNow.has(t.id))];
+    const playable = t => isOpen(t) && Entitlements.canPlay(t.id);
+    const sorted = [...TALES.filter(playable), ...TALES.filter(t => isOpen(t) && !playable(t)), ...TALES.filter(t => !isOpen(t))];
     let shown = 0;
     grid.innerHTML = sorted.map(t => {
       const m = match(t), b = before.get(t.id);
@@ -401,6 +412,13 @@
       say(`${t.title}. 곧 열려요.`);
       return;
     }
+    if (c.classList.contains('locked')) {
+      e.preventDefault();
+      paper('down');
+      peek(c);
+      openStore(t.id);
+      return;
+    }
     paper('tap');
     try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (err) { /* 무시 */ }
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;   // 새 탭 열기는 그대로
@@ -408,7 +426,7 @@
     openTale(c);
   });
   $('#grid').addEventListener('keydown', e => {
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('closed')) { e.preventDefault(); e.target.click(); }
+    if ((e.key === 'Enter' || e.key === ' ') && (e.target.classList.contains('closed') || e.target.classList.contains('locked'))) { e.preventDefault(); e.target.click(); }
   });
 
   function resetFilters() { sel.origin.clear(); sel.skill.clear(); update(); }
@@ -465,6 +483,107 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) closePanel(); });
   $('#optSpeak').addEventListener('change', e => { speak = e.target.checked; save(); });
   $('#optReset').addEventListener('click', () => { resetFilters(); closePanel(); });
+
+  /* ── 보호자 확인 → 전체 열기 (앱 모드 전용) ──
+     잠긴 카드를 누르면 먼저 어른용 곱셈 문제(보기 4개)를 푼다. 풀어야 결제 쪽지가 열린다. 틀리면 새 문제 */
+  const storePanel = $('#storePanel'), storeSheet = storePanel.querySelector('.sheet');
+  const storeBuyBtn = $('#storeBuyBtn'), storeRestore = $('#storeRestore'), buyMsg = $('#buyMsg');
+  let storeAnim = null, gateAnswer = 0, storeFor = null, busyBuy = false;
+  const title = id => shown(TALES.find(x => x.id === id)).title;
+  function newGate() {
+    const a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
+    gateAnswer = a * b;
+    const opts = new Set([gateAnswer]);
+    while (opts.size < 4) {
+      const d = [-10, -9, -8, -7, -6, -4, -3, -2, 2, 3, 4, 6, 7, 8, 9, 10][Math.floor(Math.random() * 16)];
+      if (gateAnswer + d > 0) opts.add(gateAnswer + d);
+    }
+    $('#gateQ').textContent = `${a} × ${b} = ?`;
+    $('#gateOpts').innerHTML = [...opts].sort(() => Math.random() - .5)
+      .map(n => `<button type="button" class="ticket alt" data-n="${n}">${n}</button>`).join('');
+  }
+  function showStore(step) {
+    $('#storeGate').hidden = step !== 'gate';
+    $('#storeBuy').hidden = step !== 'buy';
+    storeBuyBtn.hidden = step !== 'buy';
+    storeRestore.hidden = step !== 'buy';
+    $('#storeTitle').textContent = step === 'gate' ? L('어른이 확인해 주세요', 'Grown-ups, please check')
+      : L('모든 동화 열기', 'Unlock all tales');
+    $('#storeClose').textContent = step === 'gate' ? L('닫기', 'Close') : L('다음에', 'Not now');
+    if (step === 'gate') {
+      $('#gateHow').textContent = L('결제 화면으로 가려면 아래 문제를 풀어 주세요.', 'To go on to purchase, please answer this question.');
+      newGate();
+    } else {
+      const names = Entitlements.freeThisWeek().map(title).join(', ');
+      $('#buyHow').textContent = (storeFor ? L(`'${title(storeFor)}'은(는) 잠겨 있어요. `, `"${title(storeFor)}" is locked. `) : '')
+        + L(`${Entitlements.PRICE}를 한 번만 내면 모든 동화가 열려요. 앞으로 새로 나오는 동화도 함께요.`,
+            `Pay ${Entitlements.PRICE} once to unlock every tale, including new ones to come.`);
+      $('#buyWeek').textContent = L(`이번 주 무료 동화: ${names}. 매주 월요일에 바뀌어요.`, `Free this week: ${names}. They change every Monday.`);
+      buyMsg.hidden = true;
+      storeBuyBtn.textContent = L(`모두 열기 ${Entitlements.PRICE}`, `Unlock all ${Entitlements.PRICE}`);
+      storeRestore.textContent = L('구매 복원', 'Restore purchase');
+    }
+  }
+  function openStore(id, step = 'gate') {
+    if (!Entitlements.appMode()) return;
+    storeFor = id || null;
+    if (storeAnim) storeAnim.finish();
+    showStore(step);
+    storePanel.hidden = false;
+    $('#storeClose').focus();
+    storeAnim = play(.7, t => {
+      storePanel.style.opacity = eo(t / .18).toFixed(3);
+      const s = spring(t, .48, 15);
+      tf(storeSheet, 0, 60 * (1 - s), .9 + .1 * s, -5 * (1 - s));
+    }, () => { storePanel.style.opacity = ''; untf(storeSheet); });
+  }
+  function closeStore() {
+    if (storePanel.hidden) return;
+    if (storeAnim) storeAnim.finish();
+    storeAnim = play(.2, t => {
+      const q = eio(t / .2);
+      storePanel.style.opacity = (1 - q).toFixed(3);
+      tf(storeSheet, 0, 24 * q, 1 - .06 * q, 2 * q);
+    }, () => { storePanel.hidden = true; storePanel.style.opacity = ''; untf(storeSheet); });
+  }
+  function bought(ok, failKo, failEn) {
+    busyBuy = false;
+    if (ok) { closeStore(); render({ anim: false }); say(L('모든 동화가 열렸어요!', 'All tales are unlocked!')); return; }
+    buyMsg.textContent = L(failKo, failEn);
+    buyMsg.hidden = false;
+  }
+  $('#gateOpts').addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    if (+b.dataset.n === gateAnswer) { paper('tap'); showStore('buy'); return; }
+    paper('down');
+    if (motion()) storeSheet.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(0)' }], { duration: 260 });
+    newGate();
+  });
+  storeBuyBtn.addEventListener('click', async () => {
+    if (busyBuy) return;
+    busyBuy = true; paper('tap');
+    let ok = false;
+    try { ok = await Entitlements.purchase(); } catch (err) { ok = false; }
+    bought(ok, '결제가 끝나지 않았어요. 다시 해 주세요.', 'The purchase did not go through. Please try again.');
+  });
+  async function doRestore() {
+    if (busyBuy) return;
+    busyBuy = true; paper('tap');
+    let ok = false;
+    try { ok = await Entitlements.restore(); } catch (err) { ok = false; }
+    bought(ok, '복원할 구매를 찾지 못했어요.', 'No purchase was found to restore.');
+  }
+  storeRestore.addEventListener('click', doRestore);
+  $('#storeClose').addEventListener('click', closeStore);
+  storePanel.addEventListener('click', e => { if (e.target === storePanel) closeStore(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !storePanel.hidden) closeStore(); });
+  // 보호자 메뉴(3초 꾹)에도 구매 복원 — 앱 모드에서만 보인다
+  const optRestore = $('#optRestore');
+  if (Entitlements.appMode()) {
+    optRestore.hidden = false;
+    optRestore.addEventListener('click', () => { closePanel(); openStore(null); });
+  }
 
   /* ── 여는 장면 (1.5초 안, 아무 데나 누르면 건너뜀) ──
      흩어진 색종이 조각이 포물선을 그리며 날아와 로고 글자 조각이 되고(파티클 로고),
@@ -542,4 +661,9 @@
   /* 확인용: index.html#parent 로 열면 보호자 메뉴가 바로 열린다 */
   if (location.hash === '#parent') openPanel();
   probeMaking();
+  /* 잠긴 동화 주소로 바로 들어왔다가 돌아온 경우: 보호자 확인부터 */
+  try {
+    const lk = new URLSearchParams(location.search).get('locked');
+    if (lk && TALES.some(t => t.id === lk && t.ready)) { history.replaceState(null, '', location.pathname + location.hash); setTimeout(() => openStore(lk), 600); }
+  } catch (e) { /* 무시 */ }
 })();

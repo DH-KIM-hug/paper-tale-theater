@@ -639,3 +639,25 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   a.card:active .art { transform: none; }
   .gear.holding .gear-ring circle { transition-duration: 3s; }
 }
+
+/* ───────── 앱 모드 이용권: 잠긴 동화 · 이번 주 무료 (공개 웹에서는 나타나지 않는다) ───────── */
+.week-tag, .lock-tag {
+  position: absolute; z-index: 3; left: 50%; bottom: 6%;
+  transform: translateX(-50%);
+  padding: 6px 12px 6px 14px; border-radius: 14px;
+  background: var(--sheet-up); white-space: nowrap;
+  box-shadow: inset 1px 1px 0 var(--hi-top), inset -1px -1px 0 var(--edge-dn), 2px 3px 6px var(--sh-drop);
+}
+.week-tag b, .lock-tag b { font-size: 12px; font-weight: 600; letter-spacing: .14em; }
+.week-tag b { color: var(--copper); }
+.lock-tag b { color: var(--text-2); }
+.card.locked { cursor: pointer; }
+.card.locked .thumb .art { filter: saturate(.55) brightness(1.04); opacity: .85; }
+.card.locked .title { color: var(--text-2); }
+.card.locked:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 5px; }
+.card.locked:active { box-shadow: 0 1px 2px rgba(34, 43, 69, .12); translate: 0 2px; }
+.gate-q { margin: 4px 0 14px; text-align: center; font-size: 30px; font-weight: 700; letter-spacing: .04em; color: var(--text); }
+.gate-opts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+.gate-opts .ticket { padding: 0; font-size: 20px; font-weight: 700; }
+.buy-msg { color: var(--copper); font-weight: 600; }
+@media (max-width: 420px) { .gate-opts { grid-template-columns: repeat(2, 1fr); } }
