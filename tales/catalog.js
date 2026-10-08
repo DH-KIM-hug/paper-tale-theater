@@ -237,8 +237,9 @@ const TALES = (() => {
       <path d="M38 50 q20 -20 60 -16" stroke="${c.pn}" stroke-width="2.5" fill="none"/>
       <path d="M118 18 l14 6 12 -8 -6 12 12 4 -18 2z" fill="${c.ink}"/><ellipse cx="131" cy="25" rx="5" ry="3" fill="${c.sn}"/></g>` },
 
-  { id: 'red_hood', title: '빨간 모자', origin: 'world', skills: ['spot', 'sort', 'count'], ready: false,
+  { id: 'red_hood', title: '빨간 모자', origin: 'world', skills: ['spot', 'sort', 'count'], ready: false, making: true,
     line: '침대 속 할머니가 어딘가 이상해요! 다른 곳을 찾아내요.',
+    en: { title: 'Little Red Riding Hood', line: 'Grandma looks a little strange in bed! Can you spot what is different?' },
     art: `<rect width="160" height="110" fill="${c.pn}"/>
       <g class="pc"><path d="M0 40 L14 10 L28 40Z M128 44 L144 8 L160 44Z" fill="${c.lf}"/><rect y="86" width="160" height="24" fill="${c.bk}"/>
       <path d="M56 88 L62 50 Q78 38 94 50 L100 88Z" fill="${c.rd}"/><circle cx="78" cy="42" r="15" fill="${c.rd}"/><circle cx="78" cy="46" r="10" fill="${c.sk}"/>
