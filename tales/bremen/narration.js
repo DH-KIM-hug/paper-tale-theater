@@ -39,8 +39,8 @@ const NARRATION_CLIPS = {
  "히힝, 멍멍, 꼬끼오! 멋진 노래예요!": "audio/tc/bremen/nar_fee8134e5f.mp3",
  "야옹, 꼬끼오, 히힝! 최고의 음악대예요!": "audio/tc/bremen/nar_a92b576016.mp3",
  "해가 지고 캄캄한 숲이 되었어요. 부엉이가 부엉부엉.": "audio/tc/bremen/nar_906d612909.mp3",
- "숲을 지나가요. 옆으로 쓱 밀어 줘요!": "audio/tc/bremen/nar_d62ca5351b.mp3",
- "옆으로 쓱! 숲을 지나가요.": "audio/tc/bremen/nar_c2110ba4df.mp3",
+ "숲을 지나가요. 톡톡톡 눌러 줘요!": "audio/tc/bremen/nar_72f6cfcfc6.mp3",
+ "톡톡톡! 숲을 지나가요.": "audio/tc/bremen/nar_e78292e8e4.mp3",
  "닭이 나무 꼭대기로 푸드덕 올라갔어요.": "audio/tc/bremen/nar_785525e26c.mp3",
  "닭: \"저기 불빛이 보여요! 집이 있어요!\"": "audio/tc/bremen/rooster_cf66ded0a6.mp3",
  "불빛이 새어 나오는 창문이에요. 그런데 너무 높아서 아무도 안 닿아요.": "audio/tc/bremen/nar_a42440125b.mp3",
@@ -83,7 +83,6 @@ const NARRATION_CLIPS = {
  "\"브레멘은 못 갔지만, 여기가 우리 집이야!\"": "audio/tc/bremen/donkey_bb963ef354.mp3",
  "기쁨의 노래를 연주해요! 먼저 들어 봐요.": "audio/tc/bremen/nar_e1d0350466.mp3",
  "이번에는 친구들을 톡톡 눌러서 같이 연주해요!": "audio/tc/bremen/nar_b6fedcfbc6.mp3",
- "잘했어요! 이제 마음대로 연주해요!": "audio/tc/bremen/nar_e3e5cdd256.mp3",
  "함께라서 행복한 브레멘 음악대였답니다.": "audio/tc/bremen/nar_7831f4e972.mp3"
 };
 const VOICE_LINES = {

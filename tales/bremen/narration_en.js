@@ -147,13 +147,13 @@ const NARRATION_CLIPS_EN = {
   "t": "The sun went down, and the forest grew dark. The owl went hoo, hoo.",
   "c": "audio/tc/bremen/en/nar_89f9533eeb.mp3"
  },
- "숲을 지나가요. 옆으로 쓱 밀어 줘요!": {
-  "t": "Let's pass through the forest. Swipe sideways!",
-  "c": "audio/tc/bremen/en/nar_c14f57dfce.mp3"
+ "숲을 지나가요. 톡톡톡 눌러 줘요!": {
+  "t": "Let's walk through the forest. Tap, tap, tap!",
+  "c": "audio/tc/bremen/en/nar_92647b54a3.mp3"
  },
- "옆으로 쓱! 숲을 지나가요.": {
-  "t": "Swipe sideways! Let's pass through the forest.",
-  "c": "audio/tc/bremen/en/nar_b944ae700a.mp3"
+ "톡톡톡! 숲을 지나가요.": {
+  "t": "Tap, tap, tap! Through the forest we go.",
+  "c": "audio/tc/bremen/en/nar_0283f03b67.mp3"
  },
  "닭이 나무 꼭대기로 푸드덕 올라갔어요.": {
   "t": "The rooster flapped up to the top of a tree.",
@@ -310,10 +310,6 @@ const NARRATION_CLIPS_EN = {
  "이번에는 친구들을 톡톡 눌러서 같이 연주해요!": {
   "t": "This time, tap the friends and play together!",
   "c": "audio/tc/bremen/en/nar_4767db086a.mp3"
- },
- "잘했어요! 이제 마음대로 연주해요!": {
-  "t": "Well done! Now play however you like!",
-  "c": "audio/tc/bremen/en/nar_57ccdaabb8.mp3"
  },
  "함께라서 행복한 브레멘 음악대였답니다.": {
   "t": "Together, the Bremen Town Musicians were so happy.",

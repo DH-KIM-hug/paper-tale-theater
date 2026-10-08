@@ -140,17 +140,6 @@
    ]
   },
   {
-   "text": "잘했어요! 계속 눌러서 봄 노래를 이어 가요!",
-   "en": "Well done! Keep tapping to keep the spring song going!",
-   "segs": [
-    [
-     "nar",
-     "Well done! Keep tapping to keep the spring song going!",
-     "happy:1.1"
-    ]
-   ]
-  },
-  {
    "text": "지나가던 개미들이 말했어요. \"우린 겨울 준비해야 해!\"",
    "en": "Some ants passing by said, \"We have to get ready for winter!\"",
    "segs": [
@@ -192,23 +181,23 @@
    ]
   },
   {
-   "text": "큰 잎을 꾹 눌러서 개미들 우산을 펼쳐 줘요!",
-   "en": "Press the big leaf to open an umbrella for the ants!",
+   "text": "큰 잎을 톡 눌러서 개미들 우산을 펼쳐 줘요!",
+   "en": "Tap the big leaf to open an umbrella for the ants!",
    "segs": [
     [
      "nar",
-     "Press the big leaf to open an umbrella for the ants!",
+     "Tap the big leaf to open an umbrella for the ants!",
      "happy:1.1"
     ]
    ]
   },
   {
-   "text": "초록 잎을 꾹 눌러 봐요!",
-   "en": "Press the green leaf!",
+   "text": "초록 잎을 톡 눌러 봐요!",
+   "en": "Tap the green leaf!",
    "segs": [
     [
      "nar",
-     "Press the green leaf!",
+     "Tap the green leaf!",
      "happy:1.1"
     ]
    ]

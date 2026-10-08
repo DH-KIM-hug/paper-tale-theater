@@ -50,10 +50,6 @@ const NARRATION_CLIPS_EN = {
   "t": "Tap the grasshopper and the flowers. The spring song keeps going!",
   "c": "audio/tc/ant_grasshopper/en/nar_ec680dfd67.mp3"
  },
- "잘했어요! 계속 눌러서 봄 노래를 이어 가요!": {
-  "t": "Well done! Keep tapping to keep the spring song going!",
-  "c": "audio/tc/ant_grasshopper/en/nar_efd3874e07.mp3"
- },
  "지나가던 개미들이 말했어요. \"우린 겨울 준비해야 해!\"": {
   "t": "Some ants passing by said, \"We have to get ready for winter!\"",
   "c": [
@@ -72,13 +68,13 @@ const NARRATION_CLIPS_EN = {
   "t": "Oh no, a rain shower! Pitter-patter, pitter-patter!",
   "c": "audio/tc/ant_grasshopper/en/nar_9e38979479.mp3"
  },
- "큰 잎을 꾹 눌러서 개미들 우산을 펼쳐 줘요!": {
-  "t": "Press the big leaf to open an umbrella for the ants!",
-  "c": "audio/tc/ant_grasshopper/en/nar_e94a13729f.mp3"
+ "큰 잎을 톡 눌러서 개미들 우산을 펼쳐 줘요!": {
+  "t": "Tap the big leaf to open an umbrella for the ants!",
+  "c": "audio/tc/ant_grasshopper/en/nar_d142cee985.mp3"
  },
- "초록 잎을 꾹 눌러 봐요!": {
-  "t": "Press the green leaf!",
-  "c": "audio/tc/ant_grasshopper/en/nar_a1052a4138.mp3"
+ "초록 잎을 톡 눌러 봐요!": {
+  "t": "Tap the green leaf!",
+  "c": "audio/tc/ant_grasshopper/en/nar_f9f9ed2936.mp3"
  },
  "잎 우산 아래 개미들은 뽀송뽀송해요.": {
   "t": "Under the leaf umbrella, the ants are nice and dry.",

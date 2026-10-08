@@ -785,10 +785,10 @@
     S.CRY.owl();
     T.pop(OWX, 60, '부엉~', C.cream);
     await say('해가 지고 캄캄한 숲이 되었어요. 부엉이가 부엉부엉.');
-    await say('숲을 지나가요. 옆으로 쓱 밀어 줘요!');
-    const area = el('rect', { x: 0, y: 0, width: 1000, height: 560, fill: '#fff', opacity: 0 }, T.world);
+    await say('숲을 지나가요. 톡톡톡 눌러 줘요!');
+    const area = el('rect', { x: 340, y: 150, width: 320, height: 360, fill: '#fff', opacity: 0 }, T.world); // 숲 한가운데 큼직한 톡 자리
     let tx = 0;
-    await T.swipe(area, { dir: 'right', count: 3, prompt: '옆으로 쓱! 숲을 지나가요.', onStep: i => {
+    await T.mash(area, { count: 3, prompt: '톡톡톡! 숲을 지나가요.', onStep: i => {
       tx -= fb.art ? L(170, 210) : 170; // 그림: 세로 화면은 조금 더 밀어 먼 불빛 창이 보이게
       const st = fb.art ? L(170, 210) : 170;
       fb.trees.animate([{ transform: `translateX(${tx + st}px)` }, { transform: `translateX(${tx}px)` }], { duration: 700, fill: 'forwards', easing: 'ease-in-out' });
@@ -1076,7 +1076,7 @@
     if (!told) S.giggle();
     await say('사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.');
 
-    /* ---------- 11. 우리 집 (아침 와이드 · 자유 합주) ---------- */
+    /* ---------- 11. 우리 집 (아침 와이드 · 합주) ---------- */
     const HOME = bgArt('morning') // 그림: 짚더미 앞 · 문 앞 · 아궁이 앞 · 지붕 윗선 위
       ? L({ donkey: [150, 476, .95], dog: [470, 476, 1.1], cat: [860, 462, 1.05], rooster: [520, 172, 1] },
         { donkey: [370, 476, .8], dog: [490, 476, 1], cat: [640, 462, .95], rooster: [500, 172, 1] })
@@ -1117,18 +1117,6 @@
     await say('이번에는 친구들을 톡톡 눌러서 같이 연주해요!');
     await T.followMelody(ODE.slice(0, 8), { beat: .4, targetFor: i => cast[WHO[i]].pos, voice: odeVoice, onNote: odeHop });
     await sleep(400);
-    await say('잘했어요! 이제 마음대로 연주해요!');
-    const PLAY = {
-      donkey: () => AudioFX.sfx('drum', .8) || T.tone([160, 90], .25, { type: 'sine', vol: .3 }),
-      dog: () => [0, .15].forEach(w => T.tone(523, .14, { type: 'square', vol: .08, when: w })),
-      cat: () => T.tone([660, 880], .5, { type: 'sawtooth', vol: .07 }),
-      rooster: () => AudioFX.sfx('bell', .5) || T.tone(1320, .5, { type: 'sine', vol: .12 }),
-    };
-    await T.free(band.map(a => ({ el: a.pos, onTap: () => {
-      a.cry(.8); setTimeout(PLAY[a.key], 250); a.hop(20, 340);
-      T.pop(a.x + (a.key === 'donkey' ? 40 : 0), Math.max(90, a.y - (a.key === 'donkey' ? 250 : 130) * a.scale), a.word, C.bean);
-      note(T, a.x + 20, a.y - 90 * a.scale, [C.bean, C.pine, C.persimmon][Math.floor(Math.random() * 3)]);
-    } })), 30000);
     band.forEach((a, i) => setTimeout(() => { a.cry(.6); a.hop(24, 380); }, i * 200));
     T.confetti(); S.chord(523);
     await say('함께라서 행복한 브레멘 음악대였답니다.');

@@ -705,12 +705,6 @@
       onNote: i => { notes(T, [FLX[0], 500, FLX[1]][i % 3], 200); if (i % 3 === 1) bowTap(900); else T.anim(leafTargets[i % 3], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); },
     });
     await sleep(300);
-    await say('잘했어요! 계속 눌러서 봄 노래를 이어 가요!');
-    await T.free([
-      { el: hop.pos, onTap: () => { springTap(); notes(T, 460, 200); bowTap(400); } },
-      { el: fl[0], onTap: () => { springTap(); notes(T, FLX[0], 190); T.anim(fl[0], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); } },
-      { el: fl[1], onTap: () => { springTap(); notes(T, FLX[1], 190); T.anim(fl[1], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); } },
-    ], 12000);
     const passers = [0, 1, 2].map(i => { const a = ant(T, T.world, -60 - i * 90, 532, .62); a.face('right'); carry(a.p, true); return a; });
     passers.forEach(a => a.move(a.x + 520, 532, 3200, 'linear'));
     await say('지나가던 개미들이 말했어요. "우린 겨울 준비해야 해!"');
@@ -737,11 +731,18 @@
     AudioFX.sfx('splash', .25);
     await say('앗, 소나기가 와요! 후두둑 후두둑!');
     shelterAnts.forEach(a => { a.p.mouth.setAttribute('d', 'M-26 -80 Q-21 -86 -15 -80'); a.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 160, iterations: 6 }); });
-    await say('큰 잎을 꾹 눌러서 개미들 우산을 펼쳐 줘요!');
-    await T.hold(leafU, { ms: 1600, prompt: '초록 잎을 꾹 눌러 봐요!', onProgress: p => {
-      const x = 455 + p * 150, y = LY - (LY - 330) * p, s = .75 + p * .45, r = -40 + p * 40;
-      leafU.setAttribute('transform', `translate(${x},${y}) scale(${s}) rotate(${r})`);
-    } });
+    await say('큰 잎을 톡 눌러서 개미들 우산을 펼쳐 줘요!');
+    await T.tap(leafU, { prompt: '초록 잎을 톡 눌러 봐요!' });
+    await new Promise(res => { // 톡 하면 잎이 스스로 올라가 우산이 활짝 펼쳐진다
+      const t0 = performance.now();
+      const f = now => {
+        const p = Math.min(1, (now - t0) / 1200), e = p * p * (3 - 2 * p);
+        const x = 455 + e * 150, y = LY - (LY - 330) * e, sc = .75 + e * .45, r = -40 + e * 40;
+        leafU.setAttribute('transform', `translate(${x},${y}) scale(${sc}) rotate(${r})`);
+        p < 1 ? requestAnimationFrame(f) : res();
+      };
+      requestAnimationFrame(f);
+    });
     leafU.setAttribute('transform', 'translate(605,330) scale(1.2)');
     rain.stop(); rain = precip(T, 'rain', 44, [430, 780, 300]);
     SND.sparkle(T); T.pop(605, 250, '펼쳐라!', C.pine);
@@ -959,10 +960,13 @@
     }
     await say('베짱이랑 친구들을 톡톡 눌러 봐요. 겨울 노래가 이어지고 춤을 춰요!');
     const winterTap = songTap(T, 'vivaldi_winter', 0, 1, 1.1, 24, 1, k => SND.violin(T, PENTA[k % PENTA.length])); // 〈사계〉 겨울 2악장을 처음부터 한 조각씩
-    await T.free([
-      { el: hop.pos, onTap: () => { winterTap(); notes(T, 470, 360); hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-16deg)' }, { transform: 'rotate(0deg)' }], 400); } },
-      ...dancers.map(a => ({ el: a.pos, onTap: () => { winterTap(); a.hop(20, 360); a.wiggle(10, 360); } })),
-    ], 15000);
+    for (const a of [hop, ...dancers.slice(0, 3)]) { // 한 명씩 차례로 톡 (마음대로 연주 없이)
+      await T.tap(a.pos);
+      winterTap(); notes(T, 470, 360);
+      if (a === hop) hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-16deg)' }, { transform: 'rotate(0deg)' }], 400);
+      else { a.hop(20, 360); a.wiggle(10, 360); }
+      await sleep(450);
+    }
     SND.tune(T);
     dancers.forEach((a, i) => setTimeout(() => a.hop(16, 360), i * 80));
     await say('띠리링~ 짝짝짝! 겨울이 하나도 춥지 않았어요.');

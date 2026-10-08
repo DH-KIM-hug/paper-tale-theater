@@ -800,14 +800,16 @@
       if (portrait()) await fitCam([...FRIENDS.map(partyEl), granny.pos], 1.4, 28, 800);
       T.finale();
       await say(LINES.happyEnd);
-      // 잔치 자유 놀이: 친구·할멈을 톡 하면 인사한다
+      // 잔치: 친구·할멈을 차례로 톡 하면 인사한다
       await say(LINES.finaleTap);
       // 누르면 처음 등장 때와 같은 목소리로 인사
       const hello = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };
-      await T.free([
-        ...FRIENDS.map(f => ({ el: partyEl(f), onTap: () => { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); hello('hi_' + f.id); } })),
-        { el: granny.pos, onTap: () => { AudioFX.jingle(); granny.hop(22, 420); hello('hi_halmi'); } },
-      ], 12000);
+      // 한 명씩 차례로 톡 (자유 놀이 없이): 친구들 → 할멈 순서
+      const greet = [
+        ...FRIENDS.map(f => ({ el: partyEl(f), go: () => { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); hello('hi_' + f.id); } })),
+        { el: granny.pos, go: () => { AudioFX.jingle(); granny.hop(22, 420); hello('hi_halmi'); } },
+      ];
+      for (const g of greet) { await T.tap(g.el); g.go(); await sleep(700); }
       await bowTogether();
     }
 

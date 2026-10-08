@@ -897,11 +897,10 @@
     await say('"괜찮아!" 둘은 다시 사이좋은 친구가 되었어요.');
     T.finale();
     await say('친구들을 톡톡 눌러 봐요. 냠냠 맛있게 먹어요!');
-    const busyEat = {};
-    await T.free(Object.keys(party).map(k => ({ el: party[k].pos, onTap: async () => {
-      if (busyEat[k]) return; busyEat[k] = true;
-      await eat(T, party[k], plates[k]); vo('yum_' + k); busyEat[k] = false; // 먹는 소리 뒤에 한마디
-    } })), 15000);
+    for (const k of Object.keys(party)) { // 한 친구씩 차례로 톡 → 냠냠
+      await T.tap(party[k].pos);
+      await eat(T, party[k], plates[k]); vo('yum_' + k);
+    }
     T.confetti(); AudioFX.fanfare && AudioFX.fanfare();
     await say('배부르게 먹고, 모두 행복하게 웃었답니다.');
     return '친구 입장이 되어 보면 모두 즐거워요!';

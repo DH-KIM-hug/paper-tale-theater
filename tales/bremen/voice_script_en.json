@@ -383,23 +383,23 @@
    ]
   },
   {
-   "text": "숲을 지나가요. 옆으로 쓱 밀어 줘요!",
-   "en": "Let's pass through the forest. Swipe sideways!",
+   "text": "숲을 지나가요. 톡톡톡 눌러 줘요!",
+   "en": "Let's walk through the forest. Tap, tap, tap!",
    "segs": [
     [
      "nar",
-     "Let's pass through the forest. Swipe sideways!",
+     "Let's walk through the forest. Tap, tap, tap!",
      "tonedown:1.0"
     ]
    ]
   },
   {
-   "text": "옆으로 쓱! 숲을 지나가요.",
-   "en": "Swipe sideways! Let's pass through the forest.",
+   "text": "톡톡톡! 숲을 지나가요.",
+   "en": "Tap, tap, tap! Through the forest we go.",
    "segs": [
     [
      "nar",
-     "Swipe sideways! Let's pass through the forest.",
+     "Tap, tap, tap! Through the forest we go.",
      "tonedown:1.0"
     ]
    ]
@@ -811,17 +811,6 @@
     [
      "nar",
      "This time, tap the friends and play together!",
-     "happy:1.1"
-    ]
-   ]
-  },
-  {
-   "text": "잘했어요! 이제 마음대로 연주해요!",
-   "en": "Well done! Now play however you like!",
-   "segs": [
-    [
-     "nar",
-     "Well done! Now play however you like!",
      "happy:1.1"
     ]
    ]

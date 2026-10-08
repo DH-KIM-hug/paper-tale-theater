@@ -17,7 +17,6 @@ const NARRATION_CLIPS = {
   "audio/tc/ant_grasshopper/nar_f3c5c84420.mp3"
  ],
  "베짱이와 꽃을 톡톡 눌러 봐요. 봄 노래가 이어져요!": "audio/tc/ant_grasshopper/nar_6a06f1e340.mp3",
- "잘했어요! 계속 눌러서 봄 노래를 이어 가요!": "audio/tc/ant_grasshopper/nar_0f77ad3d95.mp3",
  "지나가던 개미들이 말했어요. \"우린 겨울 준비해야 해!\"": [
   "audio/tc/ant_grasshopper/nar_d52d7127b3.mp3",
   "audio/tc/ant_grasshopper/ants_c312a79aa2.mp3"
@@ -27,8 +26,8 @@ const NARRATION_CLIPS = {
   "audio/tc/ant_grasshopper/nar_046009538b.mp3"
  ],
  "앗, 소나기가 와요! 후두둑 후두둑!": "audio/tc/ant_grasshopper/nar_a76130c3c6.mp3",
- "큰 잎을 꾹 눌러서 개미들 우산을 펼쳐 줘요!": "audio/tc/ant_grasshopper/nar_a17d14da34.mp3",
- "초록 잎을 꾹 눌러 봐요!": "audio/tc/ant_grasshopper/nar_3533e56774.mp3",
+ "큰 잎을 톡 눌러서 개미들 우산을 펼쳐 줘요!": "audio/tc/ant_grasshopper/nar_79e827b270.mp3",
+ "초록 잎을 톡 눌러 봐요!": "audio/tc/ant_grasshopper/nar_1c36c98252.mp3",
  "잎 우산 아래 개미들은 뽀송뽀송해요.": "audio/tc/ant_grasshopper/nar_cfddcd13fb.mp3",
  "베짱이는 혼자 흠뻑 젖었어요. 에취! 그래도 \"괜찮아~\" 하고 웃었어요.": [
   "audio/tc/ant_grasshopper/nar_c51f99a8e6.mp3",
