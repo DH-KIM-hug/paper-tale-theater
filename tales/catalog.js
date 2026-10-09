@@ -199,8 +199,9 @@ const TALES = (() => {
       ${[20, 34, 48, 62].map(x => `<circle cx="${x}" cy="84" r="6" fill="${c.sn}"/>`).join('')}
       <circle cx="27" cy="70" r="6" fill="${c.sn}"/><circle cx="41" cy="70" r="6" fill="${c.sn}"/><circle cx="55" cy="70" r="6" fill="${c.sn}"/></g>` },
 
-  { id: 'kongjwi', title: '콩쥐 팥쥐', origin: 'korean', skills: ['sort', 'shape', 'heart'], ready: false,
-    line: '노란 콩과 빨간 팥을 나누고, 두꺼비·참새·선녀의 도움을 받아요.',
+  { id: 'kongjwi', title: '콩쥐 팥쥐', origin: 'korean', skills: ['count', 'shape', 'heart'], ready: false, making: true,
+    line: '독 구멍을 막고, 참새를 세고, 나비 꽃신을 찾아요.',
+    en: { title: 'Kongjwi and Patjwi', line: 'Plug the jar, count the sparrows, and find the butterfly shoe.' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
       <g class="pc"><rect y="84" width="160" height="26" fill="${c.gd}"/>
       <path d="M14 62 h52 l-6 28 h-40z" fill="${c.bk}"/><path d="M94 62 h52 l-6 28 h-40z" fill="${c.bk}"/>
@@ -227,8 +228,9 @@ const TALES = (() => {
       <circle cx="34" cy="88" r="10" fill="${c.gd}"/><circle cx="86" cy="88" r="10" fill="${c.gd}"/><circle cx="34" cy="88" r="4" fill="${c.bk}"/><circle cx="86" cy="88" r="4" fill="${c.bk}"/>
       <path d="M118 80 h20 q8 0 8 8 h-34 l4 -6z" fill="${c.sn}"/><rect x="116" y="82" width="4" height="10" fill="${c.sn}"/></g>` },
 
-  { id: 'heungbu', title: '흥부와 놀부', origin: 'korean', skills: ['heart', 'shape', 'count'], ready: false,
+  { id: 'heungbu', title: '흥부와 놀부', origin: 'korean', skills: ['heart', 'shape', 'count'], ready: false, making: true,
     line: '다친 제비를 돌봐 주면, 박 속에서 좋은 일이 쏟아져요.',
+    en: { title: 'Heungbu and Nolbu', line: 'Care for a hurt swallow, and good things pour out of the gourd.' },
     art: `<rect width="160" height="110" fill="${c.am}"/>
       <g class="pc"><rect y="94" width="160" height="16" fill="${c.bk}"/>
       <rect x="20" y="62" width="120" height="32" fill="${c.cr}"/><rect x="68" y="70" width="24" height="24" fill="${c.bk}"/>

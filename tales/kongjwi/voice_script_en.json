@@ -1,0 +1,419 @@
+{
+ "voices": {
+  "nar": "tc_6a7446c19f2d7dfed990a900",
+  "kong": "tc_6699eb5749dfac016c29445c",
+  "pat": "tc_699d27b557c86e3f4249c051",
+  "step": "tc_694b51e6dc12c8f4ec1a959c",
+  "toad": "tc_6a0e85a97f7750959b970d5d",
+  "ox": "tc_69ce0c7958c6e79cc692db32",
+  "fairy": "tc_691d49ccc47926d741f15913",
+  "won": "tc_67e38d8c771b5511659c4534",
+  "sparrow": "tc_660637108db3e2c06ff6ffa7"
+ },
+ "lines": [
+  {
+   "text": "옛날 옛날에 마음씨 고운 콩쥐가 살았어요.",
+   "en": "Once upon a time, there lived a kind girl named Kongjwi."
+  },
+  {
+   "text": "콩쥐는 새엄마, 팥쥐와 함께 살았어요.",
+   "en": "She lived with her stepmother and Patjwi."
+  },
+  {
+   "text": "\"콩쥐야, 마당을 쓸어라!\" 새엄마가 말했어요.",
+   "en": "Kongjwi, sweep the yard! said her stepmother.",
+   "segs": [
+    [
+     "step",
+     "Kongjwi, sweep the yard!"
+    ],
+    [
+     "nar",
+     "said her stepmother."
+    ]
+   ]
+  },
+  {
+   "text": "콩쥐를 톡톡톡 눌러서 마당을 쓸어 봐요!",
+   "en": "Tap Kongjwi, tap tap tap, to sweep the yard!"
+  },
+  {
+   "text": "콩쥐를 톡톡톡! 마당을 쓸어요.",
+   "en": "Tap Kongjwi, tap tap tap! Sweep the yard."
+  },
+  {
+   "text": "마당이 깨끗해졌어요. 콩쥐는 방긋 웃었어요.",
+   "en": "The yard was clean. Kongjwi smiled."
+  },
+  {
+   "text": "\"이 밭을 다 갈아 놓아라!\" 새엄마가 말했어요.",
+   "en": "Plow this whole field! said her stepmother.",
+   "segs": [
+    [
+     "step",
+     "Plow this whole field!"
+    ],
+    [
+     "nar",
+     "said her stepmother."
+    ]
+   ]
+  },
+  {
+   "text": "밭은 너무 넓어서 콩쥐는 한숨이 나왔어요.",
+   "en": "The field was so big that Kongjwi sighed."
+  },
+  {
+   "text": "그때 검은 소가 나타났어요. \"음메~ 내가 도와줄게!\"",
+   "en": "Then a black ox appeared. Moo! I will help you!",
+   "segs": [
+    [
+     "nar",
+     "Then a black ox appeared."
+    ],
+    [
+     "ox",
+     "Moo! I will help you!"
+    ]
+   ]
+  },
+  {
+   "text": "소를 톡! 같이 밭을 갈아요.",
+   "en": "Tap the ox! Plow the field together."
+  },
+  {
+   "text": "소가 쑥쑥 밭을 갈아 주었어요. \"고마워, 소야!\"",
+   "en": "The ox plowed the field fast. Thank you, ox!",
+   "segs": [
+    [
+     "nar",
+     "The ox plowed the field fast."
+    ],
+    [
+     "kong",
+     "Thank you, ox!"
+    ]
+   ]
+  },
+  {
+   "text": "\"이 독에 물을 가득 채워라!\" 새엄마가 말했어요.",
+   "en": "Fill this big jar with water! said her stepmother.",
+   "segs": [
+    [
+     "step",
+     "Fill this big jar with water!"
+    ],
+    [
+     "nar",
+     "said her stepmother."
+    ]
+   ]
+  },
+  {
+   "text": "물동이를 톡톡톡 눌러서 물을 세 번 부어 봐요!",
+   "en": "Tap the bucket, tap tap tap, to pour water three times!"
+  },
+  {
+   "text": "물동이를 톡톡톡! 물을 부어요.",
+   "en": "Tap the bucket, tap tap tap! Pour the water."
+  },
+  {
+   "text": "앗! 독 밑에 구멍이 나서 물이 줄줄 새어 나왔어요.",
+   "en": "Oh no! There was a hole in the jar, and the water leaked out."
+  },
+  {
+   "text": "그때 두꺼비가 폴짝 나타났어요. \"내가 구멍을 막아 줄게!\"",
+   "en": "Then a toad hopped over. I will plug the hole!",
+   "segs": [
+    [
+     "nar",
+     "Then a toad hopped over."
+    ],
+    [
+     "toad",
+     "I will plug the hole!"
+    ]
+   ]
+  },
+  {
+   "text": "두꺼비를 톡! 구멍을 막아요.",
+   "en": "Tap the toad! Plug the hole."
+  },
+  {
+   "text": "두꺼비가 구멍에 쏙! 이제 물이 새지 않아요.",
+   "en": "The toad slipped into the hole! Now the water does not leak."
+  },
+  {
+   "text": "물동이를 톡톡톡 눌러서 다시 물을 채워 봐요!",
+   "en": "Tap the bucket, tap tap tap, to fill the jar again!"
+  },
+  {
+   "text": "물동이를 톡톡톡! 물을 가득 채워요.",
+   "en": "Tap the bucket, tap tap tap! Fill it up."
+  },
+  {
+   "text": "독이 물로 가득 찼어요. \"고마워, 두꺼비야!\"",
+   "en": "The jar was full of water. Thank you, toad!",
+   "segs": [
+    [
+     "nar",
+     "The jar was full of water."
+    ],
+    [
+     "kong",
+     "Thank you, toad!"
+    ]
+   ]
+  },
+  {
+   "text": "\"겉겨를 벗겨서 쌀을 가져오너라!\" 새엄마가 말했어요.",
+   "en": "Peel the husks and bring me the rice! said her stepmother.",
+   "segs": [
+    [
+     "step",
+     "Peel the husks and bring me the rice!"
+    ],
+    [
+     "nar",
+     "said her stepmother."
+    ]
+   ]
+  },
+  {
+   "text": "곡식이 너무 많아서 콩쥐는 걱정이 되었어요.",
+   "en": "There was so much grain that Kongjwi felt worried."
+  },
+  {
+   "text": "그때 참새들이 날아왔어요. \"짹짹! 우리가 도와줄게!\" 참새를 톡!",
+   "en": "Then sparrows flew in. Tweet tweet! We will help! Tap the sparrows!",
+   "segs": [
+    [
+     "nar",
+     "Then sparrows flew in."
+    ],
+    [
+     "sparrow",
+     "Tweet tweet! We will help!"
+    ],
+    [
+     "nar",
+     "Tap the sparrows!"
+    ]
+   ]
+  },
+  {
+   "text": "참새를 톡! 곡식을 도와줘요.",
+   "en": "Tap the sparrows! Help with the grain."
+  },
+  {
+   "text": "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!",
+   "en": "The sparrows pecked and peeled the husks. Let's count the sparrows one by one!"
+  },
+  {
+   "text": "바구니를 톡톡톡톡톡! 참새를 세어요.",
+   "en": "Tap the basket, tap tap tap tap tap! Count the sparrows."
+  },
+  {
+   "text": "참새가 하나, 둘, 셋, 넷, 다섯! 쌀이 금방 하얗게 되었어요.",
+   "en": "One, two, three, four, five sparrows! The rice soon turned white."
+  },
+  {
+   "text": "이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.",
+   "en": "Now Kongjwi had to weave cloth. She wove very hard."
+  },
+  {
+   "text": "그때 하늘에서 선녀가 내려왔어요. \"착한 콩쥐야, 선물을 줄게!\" 선녀를 톡!",
+   "en": "Then a fairy came down from the sky. Kind Kongjwi, I have a gift for you! Tap the fairy!",
+   "segs": [
+    [
+     "nar",
+     "Then a fairy came down from the sky."
+    ],
+    [
+     "fairy",
+     "Kind Kongjwi, I have a gift for you!"
+    ],
+    [
+     "nar",
+     "Tap the fairy!"
+    ]
+   ]
+  },
+  {
+   "text": "선녀를 톡! 선물을 받아요.",
+   "en": "Tap the fairy! Get your gift."
+  },
+  {
+   "text": "콩쥐는 곱디고운 옷과 나비 꽃신을 받았어요. \"고맙습니다, 선녀님!\"",
+   "en": "Kongjwi got a beautiful dress and butterfly shoes. Thank you, fairy!",
+   "segs": [
+    [
+     "nar",
+     "Kongjwi got a beautiful dress and butterfly shoes."
+    ],
+    [
+     "kong",
+     "Thank you, fairy!"
+    ]
+   ]
+  },
+  {
+   "text": "콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡톡톡 건너 봐요!",
+   "en": "Kongjwi crossed the stream to go to the feast. Tap, tap, tap across the stepping stones!"
+  },
+  {
+   "text": "콩쥐를 톡톡톡! 징검다리를 건너요.",
+   "en": "Tap Kongjwi, tap tap tap! Cross the stones."
+  },
+  {
+   "text": "풍덩! 꽃신 한 짝이 개울에 빠졌어요. 꽃신은 둥둥 떠내려갔어요.",
+   "en": "Splash! One shoe fell into the stream and floated away."
+  },
+  {
+   "text": "콩쥐는 아쉬웠지만 한 짝만 신고 잔치로 갔어요.",
+   "en": "Kongjwi felt sad, but she went to the feast with one shoe."
+  },
+  {
+   "text": "잔치에서는 북과 장구와 꽹과리 소리가 울렸어요. 북을 톡 눌러 봐요!",
+   "en": "At the feast, drums and gongs rang out. Tap the drum!"
+  },
+  {
+   "text": "북을 톡! 둥둥 소리가 나요.",
+   "en": "Tap the drum! Boom boom!"
+  },
+  {
+   "text": "장구를 톡! 덩덕 소리가 나요.",
+   "en": "Tap the hourglass drum! Dung-duk!"
+  },
+  {
+   "text": "꽹과리를 톡! 꽹 소리가 나요.",
+   "en": "Tap the gong! Clang!"
+  },
+  {
+   "text": "모두 신나게 춤을 추었어요. 새엄마와 팥쥐도 곱게 차려입고 왔어요.",
+   "en": "Everyone danced happily. Her stepmother and Patjwi came in fancy clothes too."
+  },
+  {
+   "text": "콩쥐를 본 새엄마와 팥쥐는 부끄러워서 부채로 얼굴을 가렸어요.",
+   "en": "When they saw Kongjwi, her stepmother and Patjwi felt shy and hid their faces behind fans."
+  },
+  {
+   "text": "개울에 빠진 꽃신은 원님에게 닿았어요. \"이 꽃신의 주인을 찾아요!\"",
+   "en": "The lost shoe reached the magistrate. Let's find who owns this shoe!",
+   "segs": [
+    [
+     "nar",
+     "The lost shoe reached the magistrate."
+    ],
+    [
+     "won",
+     "Let's find who owns this shoe!"
+    ]
+   ]
+  },
+  {
+   "text": "꽃신 세 켤레 중에서 나비 꽃신이 콩쥐의 꽃신이에요. 나비 꽃신을 톡!",
+   "en": "Of the three pairs of shoes, the butterfly shoe is Kongjwi's. Tap the butterfly shoe!"
+  },
+  {
+   "text": "나비 꽃신을 톡!",
+   "en": "Tap the butterfly shoe!"
+  },
+  {
+   "text": "나비가 그려진 꽃신을 찾아봐요.",
+   "en": "Look for the shoe with butterflies on it."
+  },
+  {
+   "text": "반짝이는 꽃신을 톡!",
+   "en": "Tap the sparkling shoe!"
+  },
+  {
+   "text": "원님이 콩쥐에게 꽃신을 신겨 주었어요. 꼭 맞았어요! 콩쥐를 톡!",
+   "en": "The magistrate put the shoe on Kongjwi. It fit perfectly! Tap Kongjwi!"
+  },
+  {
+   "text": "콩쥐를 톡! 꽃신을 신어요.",
+   "en": "Tap Kongjwi! Put on the shoe."
+  },
+  {
+   "text": "콩쥐와 원님은 혼례를 올렸어요. 콩쥐는 곱게 차린 신부가 되었어요.",
+   "en": "Kongjwi and the magistrate got married. Kongjwi became a lovely bride."
+  },
+  {
+   "text": "\"콩쥐야, 그동안 미안했어.\" 새엄마와 팥쥐가 고개를 숙였어요.",
+   "en": "Kongjwi, I am sorry for everything. Her stepmother and Patjwi bowed their heads.",
+   "segs": [
+    [
+     "step",
+     "Kongjwi, I am sorry for everything."
+    ],
+    [
+     "nar",
+     "Her stepmother and Patjwi bowed their heads."
+    ]
+   ]
+  },
+  {
+   "text": "콩쥐는 웃으며 말했어요. \"괜찮아요. 우리 같이 지내요.\"",
+   "en": "Kongjwi smiled and said, It's okay. Let's live together.",
+   "segs": [
+    [
+     "nar",
+     "Kongjwi smiled and said,"
+    ],
+    [
+     "kong",
+     "It's okay. Let's live together."
+    ]
+   ]
+  },
+  {
+   "text": "모두 함께 떡을 나눠 먹어요. 떡을 톡톡톡 눌러서 하나씩 나눠 줘요!",
+   "en": "Everyone shares rice cakes. Tap the cakes, tap tap tap, to give one to each person!"
+  },
+  {
+   "text": "떡을 톡톡톡! 하나씩 나눠 줘요.",
+   "en": "Tap the cakes, tap tap tap! Share them one by one."
+  },
+  {
+   "text": "모두 둘러앉아 맛있게 먹었어요. 콩쥐를 톡! 모두 함께 만세!",
+   "en": "Everyone sat around and ate happily. Tap Kongjwi! Hooray together!"
+  },
+  {
+   "text": "콩쥐를 톡! 모두 함께 만세!",
+   "en": "Tap Kongjwi! Hooray together!"
+  },
+  {
+   "text": "착한 마음은 도움을 불러와요. 콩쥐팥쥐 이야기는 이렇게 끝났어요.",
+   "en": "A kind heart brings help. And that is how the story of Kongjwi and Patjwi ended."
+  }
+ ],
+ "ui": {
+  "하나!": "One!",
+  "둘!": "Two!",
+  "셋!": "Three!",
+  "넷!": "Four!",
+  "다섯!": "Five!",
+  "쓱쓱!": "Swish swish!",
+  "싹싹!": "Sweep sweep!",
+  "깨끗!": "Clean!",
+  "밭": "The Field",
+  "우물가": "The Well",
+  "독 안": "Inside the Jar",
+  "멍석": "The Straw Mat",
+  "베틀": "The Loom",
+  "개울": "The Stream",
+  "잔치": "The Feast",
+  "둥!": "Boom!",
+  "덩!": "Dung!",
+  "꽹!": "Clang!",
+  "원님 댁": "The Magistrate's House",
+  "혼례": "The Wedding",
+  "냠냠!": "Yum yum!",
+  "쫀득!": "Chewy!",
+  "맛있다!": "Delicious!",
+  "착한 마음은 도움을 불러와요!": "A kind heart brings help!",
+  "콩쥐팥쥐": "Kongjwi and Patjwi",
+  "착한 마음은 도움을 불러와요": "A kind heart brings help"
+ }
+}
