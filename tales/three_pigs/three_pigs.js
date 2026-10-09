@@ -96,7 +96,7 @@
     /* 3~5. 집 짓기 */
     async function build({ label, bgKey, pigKey, pigX, pileKey, pileH, pileX, houseKey, houseH, houseX, taps, play, line, done, tick, tease }) {
       await T.sceneCard(label, () => { bg(bgKey); T.camSnap(pileX, 280, 1); });
-      const pig = sprite(pigKey, pigX, 230);
+      const pig = sprite(pigKey, portrait() ? pileX - 120 : pigX, 230);
       const pile = sprite(pileKey, pileX, pileH, 490);
       const house = sprite(houseKey, houseX, houseH); house.setScale(.05); house.show(false);
       await look(pileX, 200);
@@ -221,7 +221,8 @@
 
     /* 11. 벽돌 마을 */
     await T.sceneCard('벽돌 마을', () => { bg('sunset'); T.camSnap(500, 280, 1); });
-    const hs = [sprite('house_brick', 500, 240), sprite('house_brick', 250, 240), sprite('house_brick', 750, 240)];
+    const hx = portrait() ? [500, 345, 655] : [500, 250, 750];
+    const hs = hx.map(x => sprite('house_brick', x, portrait() ? 200 : 240));
     hs[1].setScale(.05); hs[1].show(false); hs[2].setScale(.05); hs[2].show(false);
     await look(500, 200);
     await say('이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.');
