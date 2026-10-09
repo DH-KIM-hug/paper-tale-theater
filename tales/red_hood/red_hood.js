@@ -82,8 +82,9 @@
 
     /* --- 1. 바구니 싸기 --- */
     scene('kitchen');
-    put(T, mama, 290, 510, { to: "right" });
-    put(T, hood, 700, 510, { look: "joy", to: "left" });
+    const P = T.viewWidth() < 990; /* 세로 화면은 약 430 폭만 보인다 */
+    put(T, mama, P ? 340 : 290, 510, { to: "right", s: P ? .8 : 1 });
+    put(T, hood, P ? 645 : 700, 510, { look: "joy", to: "left", s: P ? .8 : 1 });
     put(T, basket, 500, 505);
     const TABLE_Y = 345;
     put(T, bread, 430, TABLE_Y); put(T, milk, 510, TABLE_Y); put(T, apple, 590, TABLE_Y);
@@ -299,15 +300,15 @@
 
     /* --- 11. 차 마시기 --- */
     await T.sceneCard('차 마시기', () => {
-      scene('table', 520);
-      put(T, granny, 650, 510, { look: 'tea', to: 'left' });
-      put(T, hood, 400, 510, { look: 'joy', to: 'right' });
+      scene('table', 540);
+      put(T, granny, P ? 625 : 650, 510, { look: 'tea', to: 'left', s: P ? .8 : 1 });
+      put(T, hood, P ? 385 : 400, 510, { look: 'joy', to: 'right', s: P ? .8 : 1 });
       put(T, bread, 470, 410); put(T, milk, 530, 410); put(T, apple, 590, 410);
       [bread, milk, apple].forEach(a => T.world.appendChild(a.pos));
     }, granny.pos);
     await say('할머니 집 식탁에서 모두 함께 차를 마셔요. 바구니 속 간식을 한 가지씩 나눠 줘요!');
     const share = [[bread, granny, '할머니!'], [milk, hood, '빨간 모자!'], [apple, hunter, '아저씨!']];
-    put(T, hunter, 770, 510, { look: 'laugh', to: 'left' });
+    put(T, hunter, P ? 695 : 770, 510, { look: 'laugh', to: 'left', s: P ? .72 : 1 });
     for (const [it, who, word] of share) {
       await T.tap(it.pos, { prompt: '간식을 톡! 한 사람씩 나눠 줘요.' });
       popSfx(T); T.pop(who.x, 250, word);
