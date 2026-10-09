@@ -324,3 +324,12 @@ svg text { font-weight: 800; }
 
 /* 무대에서 옆으로 미는 동작(T.swipe)이 휴대폰에서 스크롤로 빼앗기지 않게 */
 #stageWrap { touch-action: none; }
+
+/* ─── 끝 인사와 쉬는 화면: 조용하게 ─── */
+.screen .calm { margin-top: 2px; font-size: clamp(16px, 2.6vmin, 22px); color: var(--text-2); }
+#restScreen { z-index: 90; }
+.restMore { margin-top: clamp(14px, 3vmin, 28px); min-height: 44px; padding: 0 18px; border: 0; border-radius: 22px; background: transparent; color: var(--text-3); font: inherit; font-size: 15px; font-weight: 500; text-decoration: underline; }
+.restGate { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.restGate .pill { min-width: 88px; min-height: 64px; font-size: 24px; }
+#restScreen, #restScreen .words, #restScreen .pills { align-items: center; justify-content: center; text-align: center; }
+#restScreen { flex-direction: column; }

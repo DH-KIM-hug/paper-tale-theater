@@ -751,3 +751,11 @@ body.app .card.sel { outline: 3px solid var(--copper); outline-offset: -2px; }
 .sp-title { position: absolute; top: 15%; left: 0; right: 0; margin: 0; text-align: center; font-family: var(--font); font-weight: 800; font-size: clamp(40px, 9vw, 92px); letter-spacing: -.02em; line-height: 1.1; color: var(--logo-ink); filter: url(#cut); }
 .sp-title span { display: inline-block; opacity: 0; transform-origin: 50% 80%; margin: 0 .14em; }
 .sp-tap { position: absolute; bottom: max(4%, env(safe-area-inset-bottom)); left: 0; right: 0; margin: 0; text-align: center; font-size: 16px; font-weight: 600; letter-spacing: .2em; color: #EEF1F7; opacity: 0; }
+
+/* 보호자 메뉴: 놀이 시간 알림 */
+.timerRow { margin: 14px 0 4px; }
+.timerRow > p { margin: 0 0 8px; font-weight: 600; }
+.timerOpts { display: flex; flex-wrap: wrap; gap: 8px; }
+.timerOpts button { min-height: 44px; min-width: 64px; padding: 0 14px; border: 1.5px solid var(--text-3, #7C86A0); border-radius: 22px; background: transparent; color: inherit; font: inherit; font-weight: 600; }
+.timerOpts button.on { background: var(--copper, #C98A5B); border-color: var(--copper, #C98A5B); color: #fff; }
+.timerRow .timerNote { margin: 8px 0 0; font-size: 13px; font-weight: 400; color: var(--text-3, #7C86A0); }

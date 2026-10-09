@@ -424,6 +424,7 @@ const Tale = (() => {
   let veilOpen = false;
   function shutVeil() { const v = $('#veil'); veilOpen = false; root.classList.remove('open'); v.hidden = false; v.classList.add('shut'); v.querySelector('.lid').style.width = v.querySelector('.lid').style.height = '0px'; }
   async function curtain(open) {
+    if (!open) await restIfDue();
     root.classList.toggle('open', open);
     if (open === veilOpen) return sleep(120);
     veilOpen = open;
@@ -438,6 +439,7 @@ const Tale = (() => {
   /* 동그라미 장면 전환 (옛날 만화식 아이리스). focus: 동그라미가 모일 요소(주인공). 없으면 가운데
      닫힘 → 주인공 둘레에서 잠깐 멈춤 → 완전히 닫힘 → 장면 이름(오린 종이 글자) → change() → 톡 튀며 열림 */
   async function sceneCard(label, change, focus) {
+    await restIfDue();
     const wrap = $('#stageWrap'), ir = $('#iris'), card = $('#irisCard');
     const W = wrap.clientWidth, H = wrap.clientHeight;
     let cx = W / 2, cy = H / 2;
@@ -664,12 +666,36 @@ const Tale = (() => {
   }
 
   /* 화면 글자 번역: 영어 모드이고 이 동화에 영어 자료(TEXT_EN·NARRATION_CLIPS_EN)가 있을 때만 영어, 아니면 한국어 그대로 */
-  const ENGINE_EN = { '끝내기': 'Exit', '돌려서 크게 보기': 'Rotate for a bigger view', '이야기 시작': 'Start story', '처음으로': 'Home', '다시 보기': 'Watch again', '끝!': 'The End!' };
+  const ENGINE_EN = { '끝내기': 'Exit', '돌려서 크게 보기': 'Rotate for a bigger view', '이야기 시작': 'Start story', '처음으로': 'Home', '다시 보기': 'Watch again', '끝!': 'The End!',
+    '오늘 동화 끝! 내일 또 만나요': 'The end! See you tomorrow', '한 번 더': 'Once more', '홈으로': 'Home',
+    '오늘은 여기까지! 눈을 쉬어요': 'That is enough for today. Let our eyes rest.', '어른이 +10분': 'Grown-up: +10 min', '어른이 확인해 주세요': 'Grown-ups, please check', '닫기': 'Close' };
   const tr = ko => {
     if (!englishOn()) return ko;
     const t = typeof TEXT_EN !== 'undefined' && TEXT_EN[ko], c = NARRATION_CLIPS_EN[ko];
     return t || (c && c.t) || ENGINE_EN[ko] || ko;
   };
+
+
+  /* ---------- 놀이 시간 알림 (보호자가 홈의 보호자 메뉴에서 정한다. 기본: 끔) ----------
+     동화가 열려 있고 화면이 보이는 동안만 오늘 쓴 시간을 센다. 시간이 되면 장면이 바뀌는 자리(막·동그라미 전환)에서
+     조용한 쉬는 화면을 보여 준다. 소리 알람이나 갑작스러운 종료는 없다. */
+  const PT = (() => {
+    const today = () => { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); };
+    const rd = (k, f) => { try { return JSON.parse(localStorage.getItem(k)) ?? f; } catch (e) { return f; } };
+    const wr = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* 저장 없이도 이번 실행에서는 동작 */ } };
+    const used = () => { const u = rd('play_used', null); return u && u.d === today() ? u.ms : 0; };
+    const bonus = () => { const b = rd('play_bonus', null); return b && b.d === today() ? b.min : 0; };
+    const limit = () => +rd('play_limit_min', 0) || 0;
+    let running = false;
+    setInterval(() => { if (running && document.visibilityState === 'visible') wr('play_used', { d: today(), ms: used() + 1000 }); }, 1000);
+    return {
+      run(on) { running = on; },
+      due() { const l = limit(); return l > 0 && used() >= (l + bonus()) * 60000; },
+      extend(min) { wr('play_bonus', { d: today(), min: bonus() + min }); },
+    };
+  })();
+  let restShow = null; // mount 가 채운다: 쉬는 화면을 보여 주고, 어른이 시간을 늘리면 풀려난다
+  const restIfDue = async () => { if (PT.due() && restShow) await restShow(); };
 
   function mount({ title, subtitle, run, note = false, endTitle = '끝!' }) {
     document.title = tr(title);
@@ -709,7 +735,16 @@ const Tale = (() => {
     <div class="words">
       <h2 class="paperword ttl">${letters(tr(endTitle))}</h2>
       <p class="sub" id="endMsg"></p>
-      <div class="pills"><button class="pill go" id="againBtn">${PLAY_SVG}${tr('다시 보기')}</button><a class="pill" href="${home}">${tr('처음으로')}</a></div>
+      <p class="sub calm">${tr('오늘 동화 끝! 내일 또 만나요')}</p>
+      <div class="pills"><a class="pill go" href="${home}">${tr('홈으로')}</a><button class="pill" id="againBtn">${tr('한 번 더')}</button></div>
+    </div>
+  </div>
+  <div id="restScreen" class="screen" hidden>
+    <div class="words">
+      <h2 class="paperword ttl">${letters(tr('오늘은 여기까지! 눈을 쉬어요'))}</h2>
+      <div class="pills"><a class="pill go" href="${home}">${tr('홈으로')}</a></div>
+      <div class="restGate" hidden><p class="sub" id="restQ"></p><div class="pills" id="restOpts"></div></div>
+      <button class="restMore" id="restMore" type="button">${tr('어른이 +10분')}</button>
     </div>
   </div>
 </div>`);
@@ -730,13 +765,32 @@ const Tale = (() => {
     ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => $('#stageWrap').addEventListener(ev, () => clearTimeout(ht)));
     // 잠긴 동안 누르면 톡 소리만
     $('#stageWrap').addEventListener('pointerdown', () => { if (busy) AudioFX.tap(); });
+    restShow = () => new Promise(res => {
+      const scr = $('#restScreen'), gate = scr.querySelector('.restGate');
+      Narrator.stop(); PT.run(false);
+      gate.hidden = true; scr.hidden = false;
+      $('#restMore').onclick = () => {
+        const a = 2 + Math.floor(Math.random() * 7), b = 2 + Math.floor(Math.random() * 7), ans = a * b;
+        const opts = [...new Set([ans, ans + 2, ans - 3, ans + 5])].sort(() => Math.random() - .5);
+        $('#restQ').textContent = tr('어른이 확인해 주세요') + '  ' + a + ' × ' + b + ' = ?';
+        $('#restOpts').innerHTML = opts.map(n => `<button type="button" class="pill" data-n="${n}">${n}</button>`).join('');
+        gate.hidden = false;
+        $('#restOpts').onclick = e => {
+          const bt = e.target.closest('button'); if (!bt) return;
+          if (+bt.dataset.n === ans) { PT.extend(10); scr.hidden = true; PT.run(true); res(); }
+          else gate.hidden = true;
+        };
+      };
+    });
     const start = async () => {
-      AudioFX.unlock();
+      if (PT.due()) { PT.run(false); await restShow(); }
+      AudioFX.unlock(); PT.run(true);
       AudioFX.prefetchClips && AudioFX.prefetchClips(); // 이 동화의 녹음을 미리 받아 둔다 (대사가 늦게 나오지 않게)
       $('#startScreen').hidden = true; $('#endScreen').hidden = true;
       clear(); camSnap(500, 280, 1); shutVeil();
       busy = true; $('#finBtn').hidden = true;
       const msg = await run(api);
+      PT.run(false);
       busy = true; $('#finBtn').hidden = true;
       await curtain(false);
       $('#endMsg').textContent = tr(msg || '');

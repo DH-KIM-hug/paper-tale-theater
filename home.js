@@ -526,7 +526,7 @@
   function openPanel() {
     if (panelAnim) panelAnim.finish();
     hint.hidden = true;
-    $('#optSpeak').checked = speak;
+    $('#optSpeak').checked = speak; drawTimer();
     panel.hidden = false;
     $('#parentClose').focus();
     panelAnim = play(.7, t => {
@@ -548,6 +548,20 @@
   panel.addEventListener('click', e => { if (e.target === panel) closePanel(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) closePanel(); });
   $('#optSpeak').addEventListener('change', e => { speak = e.target.checked; save(); });
+  /* 놀이 시간 알림: 보호자 메뉴에서 정한다. 시간이 되면 동화가 장면이 바뀔 때 조용히 쉬는 화면을 보여 준다 */
+  const TIMES = [0, 10, 15, 20, 30];
+  const limitNow = () => { try { return +JSON.parse(localStorage.getItem('play_limit_min')) || 0; } catch (e) { return 0; } };
+  function drawTimer() {
+    $('#timerLbl').textContent = L('놀이 시간 알림', 'Play-time reminder');
+    $('#timerNote').textContent = L('시간이 되면 소리 없이 조용히 쉬는 화면이 나와요. 하루 기준이에요.', 'When time is up, a quiet rest screen appears — no alarm. Counted per day.');
+    $('#timerOpts').innerHTML = TIMES.map(m => `<button type="button" class="chip${m === limitNow() ? ' on' : ''}" data-m="${m}" aria-pressed="${m === limitNow()}">${m ? m + L('분', ' min') : L('끄기', 'Off')}</button>`).join('');
+  }
+  $('#timerOpts').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    try { localStorage.setItem('play_limit_min', JSON.stringify(+b.dataset.m)); } catch (err) { /* 저장 없이도 동작 */ }
+    drawTimer();
+  });
+  drawTimer();
   $('#optReset').addEventListener('click', () => { resetFilters(); closePanel(); });
 
   /* ── 보호자 확인 → 전체 열기 (앱 모드 전용) ──
