@@ -7,8 +7,8 @@
     pig3_base: [353, 480], pig3_build: [416, 480], pig3_flee: [416, 480], pig3_joy: [392, 480], pig3_play: [314, 480],
     mama: [416, 480], wolf_walk: [480, 363], wolf_sniff: [480, 346], wolf_puff: [480, 325], wolf_tired: [369, 480],
     wolf_hot: [222, 480], wolf_flee: [480, 243], straw: [480, 217], wood: [480, 245], bricks: [480, 428], brick1: [480, 242],
-    house_straw: [480, 441], house_straw_ruin: [480, 308], house_wood: [480, 445], house_wood_ruin: [480, 299],
-    house_brick: [435, 480], pot: [480, 222], fan: [416, 480], instruments: [480, 237],
+    house_straw: [918, 537], house_straw_ruin: [944, 517], house_wood: [748, 671], house_wood_ruin: [889, 664],
+    house_brick: [845, 729], pot: [480, 222], fan: [416, 480], instruments: [480, 237],
   };
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const NUM = ['하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열'];
@@ -120,11 +120,11 @@
       tune(tick === 'chop' ? [392, 440, 494, 523] : [523, 494, 440, 392]); pig.hop(40, 500);
       await sleep(700);
     }
-    await build({ label: '첫째의 짚 집', bgKey: 'strawlot', pigKey: 'pig1_build', pigX: 380, pileKey: 'straw', pileH: 95, pileX: 560, houseKey: 'house_straw', houseH: 250, houseX: 720, taps: 3, play: 'pig1_play', tick: 'pop',
+    await build({ label: '첫째의 짚 집', bgKey: 'strawlot', pigKey: 'pig1_build', pigX: 380, pileKey: 'straw', pileH: 95, pileX: 560, houseKey: 'house_straw', houseH: 210, houseX: 720, taps: 3, play: 'pig1_play', tick: 'pop',
       line: '첫째는 짚으로 집을 짓기로 했어요. 짚을 톡톡톡 쌓아요!', done: '뚝딱! 짚 집이 완성됐어요. 첫째는 피리를 불며 놀았어요.' });
-    await build({ label: '둘째의 나무 집', bgKey: 'woodlot', pigKey: 'pig2_build', pigX: 380, pileKey: 'wood', pileH: 100, pileX: 560, houseKey: 'house_wood', houseH: 250, houseX: 720, taps: 5, play: 'pig2_play', tick: 'chop',
+    await build({ label: '둘째의 나무 집', bgKey: 'woodlot', pigKey: 'pig2_build', pigX: 380, pileKey: 'wood', pileH: 100, pileX: 560, houseKey: 'house_wood', houseH: 210, houseX: 720, taps: 5, play: 'pig2_play', tick: 'chop',
       line: '둘째는 나무로 집을 짓기로 했어요. 망치로 톡톡톡톡톡!', done: '쿵쾅쿵쾅! 나무 집이 완성됐어요. 둘째는 바이올린을 켜며 놀았어요.' });
-    await build({ label: '셋째의 벽돌 집', bgKey: 'bricklot', pigKey: 'pig3_build', pigX: 380, pileKey: 'bricks', pileH: 140, pileX: 560, houseKey: 'house_brick', houseH: 250, houseX: 720, taps: 10, play: 'pig3_play', tick: 'thud',
+    await build({ label: '셋째의 벽돌 집', bgKey: 'bricklot', pigKey: 'pig3_build', pigX: 380, pileKey: 'bricks', pileH: 140, pileX: 560, houseKey: 'house_brick', houseH: 210, houseX: 720, taps: 10, play: 'pig3_play', tick: 'thud',
       tease: { at: 5, line: '형들이 놀렸어요. "아직도 해? 우리랑 놀자!" 그래도 셋째는 천천히 벽돌을 쌓았어요.' },
       line: '셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 하나, 둘, 셋 천천히 쌓아요.', done: '벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!' });
 
@@ -132,7 +132,8 @@
     async function blow({ label, bgKey, houseKey, ruinKey, houseH, houseX, cutKey, lines, pigKeys }) {
       await T.sceneCard(label, () => { bg(bgKey); T.camSnap(450, 280, 1); });
       const house = sprite(houseKey, houseX, houseH);
-      const pg = pigKeys.map((k, i) => sprite(k, 760 + i * 130, 200));
+      const pg = pigKeys.map((k, i) => sprite(k, houseX - 70 + i * 140, 200));
+      pg.forEach(p => p.show(false));
       const wolf = sprite('wolf_sniff', -160, 220); wolf.face('right');
       await look(450, 200);
       wolf.move(280, GROUND, 1300); await sleep(700);
@@ -147,16 +148,17 @@
       } });
       sfx('boom'); T.shake();
       house.set(ruinKey, houseH * .7);
+      pg.forEach(p => { p.show(true); p.hop(30, 350); });
       await say(lines[2]);
       await T.cutImage([{ src: U(cutKey), hold: 3200 }]);
       pg.forEach((p, i) => { p.set(pigKeys[i].replace('base', 'flee')); p.move(1200, GROUND, 1100 + i * 150); });
       await sleep(900);
       await say(lines[3]);
     }
-    await blow({ label: '후~ 짚 집', bgKey: 'strawlot', houseKey: 'house_straw', ruinKey: 'house_straw_ruin', houseH: 250, houseX: 560, cutKey: 'cut_strawhat', pigKeys: ['pig1_base'],
+    await blow({ label: '후~ 짚 집', bgKey: 'strawlot', houseKey: 'house_straw', ruinKey: 'house_straw_ruin', houseH: 210, houseX: 560, cutKey: 'cut_strawhat', pigKeys: ['pig1_base'],
       lines: ['그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요. "아기 돼지야, 문 열어라!"', '첫째가 말했어요. "싫어요, 싫어요!" 늑대가 말했어요. "그럼 후~ 불어서 날려 버릴 테야!"',
         '짚 집이 훨훨 날아가 버렸어요!', '첫째는 둘째네 집으로 달려갔어요.'] });
-    await blow({ label: '후~ 나무 집', bgKey: 'woodlot', houseKey: 'house_wood', ruinKey: 'house_wood_ruin', houseH: 250, houseX: 560, cutKey: 'cut_planks', pigKeys: ['pig1_base', 'pig2_base'],
+    await blow({ label: '후~ 나무 집', bgKey: 'woodlot', houseKey: 'house_wood', ruinKey: 'house_wood_ruin', houseH: 210, houseX: 560, cutKey: 'cut_planks', pigKeys: ['pig1_base', 'pig2_base'],
       lines: ['늑대가 나무 집에도 왔어요. "아기 돼지야, 문 열어라!"', '첫째와 둘째가 말했어요. "싫어요, 싫어요!" 늑대가 말했어요. "그럼 후~ 후~ 불어 주지!"',
         '나무 집이 와르르 무너졌어요!', '아기 돼지 둘은 막내네 집으로 달려갔어요.'] });
 
@@ -221,8 +223,8 @@
 
     /* 11. 벽돌 마을 */
     await T.sceneCard('벽돌 마을', () => { bg('sunset'); T.camSnap(500, 280, 1); });
-    const hx = portrait() ? [500, 345, 655] : [500, 250, 750];
-    const hs = hx.map(x => sprite('house_brick', x, portrait() ? 200 : 240));
+    const hx = portrait() ? [500, 340, 660] : [500, 230, 770];
+    const hs = hx.map(x => sprite('house_brick', x, portrait() ? 130 : 200));
     hs[1].setScale(.05); hs[1].show(false); hs[2].setScale(.05); hs[2].show(false);
     await look(500, 200);
     await say('이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.');
