@@ -19,6 +19,7 @@ const Entitlements = (() => {
   function appMode() {
     try {
       if (window.Capacitor) return true;
+      if (/[?&]store=0(&|$)/.test(location.search)) { store.set('store_mode', '0'); return false; }
       if (/[?&]store=1(&|$)/.test(location.search)) { store.set('store_mode', '1'); return true; }
       return store.get('store_mode') === '1';
     } catch (e) { return false; }
