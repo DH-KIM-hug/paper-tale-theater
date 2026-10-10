@@ -123,7 +123,7 @@
   }
 
   function paintChips() {
-    document.querySelectorAll('.chip').forEach(b => {
+    document.querySelectorAll('.chip[data-row]').forEach(b => {
       const s = sel[b.dataset.row];
       const on = b.dataset.key ? s.has(b.dataset.key) : s.size === 0;
       b.classList.toggle('on', on);
@@ -395,8 +395,7 @@
   paintTagToggle();
 
   function update(opts) {
-    paintTagToggle();
-    paintChips();
+    try { paintTagToggle(); paintChips(); } catch (e) { console.error(e); } // 칩 표시가 틀어져도 동화 목록은 반드시 그린다
     render(opts);
     save();
   }
