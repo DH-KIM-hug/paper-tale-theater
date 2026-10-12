@@ -1,13 +1,13 @@
 {
  "voices": {
-  "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "cind": "EXAVITQu4vr4xnSDxMaL",
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "cind": "Lb7qkOn5hF8p7qfCDH8q",
   "step": "XrExE9yKIg1WjnnlVkGX",
   "sisa": "FGY2WhTYpPnrIDTdsKH5",
-  "sisb": "cgSgspJ2msm6clMCkdW9",
-  "fairy": "Xb7hH8MSUJpSbSDYk0k2",
-  "prince": "bIHbv24MWmeRgasZH58o",
-  "mouse": "TX3LPaxmHKxFdv7VOQHJ",
+  "sisb": "DGDjWy2CQ8Ishu0meQte",
+  "fairy": "pFZP5JQG7iQjIQuC4Bku",
+  "prince": "cjVigY5qzO86Huf0OWal",
+  "mouse": "rBkiq5ZQ43ogwd6i4uIQ",
   "footman": "onwK4e9ZLuTAKqWW03F9"
  },
  "models": {
@@ -70,7 +70,7 @@
   "mouse",
   "footman"
  ],
- "notes": "narrator Lily (velvety; calm, elegant). cind Sarah (mature, reassuring, gentle), step Matilda (haughty stepmother), sisa Laura (sassy sister), sisb Jessica (squeaky sister), fairy Alice (clear, kindly fairy godmother), prince Will (relaxed, friendly), mouse Liam (energetic small helper), footman Daniel (steady formal). All eleven_v4; villains/animals 0.3/0.5, narrator 0.45/0.35, children 0.35/0.45.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, cind=Annie, step=Matilda, sisa=Laura, sisb=Chaemong, fairy=Lily, prince=Eric, mouse=Peanut, footman=Daniel. 아기·꼬마 역(mouse)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여.",
  "lines": [
   {
    "text": "옛날 옛날에 마음씨 고운 신데렐라가 살았어요.",
@@ -223,7 +223,7 @@
      "mouse",
      "우리가 도와줄게!",
      null,
-     "[squeaky, cheerful, high-pitched, eager]"
+     "[squeaky, cheerful, high-pitched, eager, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
