@@ -196,10 +196,14 @@
       // 장면 한 장 그림: 무대(1000x560)를 꽉 채우고 가로 레터박스용으로 양옆을 조금 더 덮는다
       if (full) el('image', { href: SCENE_IMG[k], x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, bg);
       if (k === 'A') {
-        // 팥 포기: 밭 띠 위에 두 줄로 (먼 줄은 작고 흐리게, 가까운 줄은 크게). 호랑이·할멈이 걷는 바닥선(520)보다 한참 위라 겹치지 않는다
+        // 팥 포기: 밭 띠 위 두 줄 (배경 그림이라 배우는 그 앞에 선다)
         if (full) {
-          const rows = [{ y: 346, h: 40, op: .8, xs: [200, 340, 480, 620, 760] }, { y: 408, h: 70, op: 1, xs: [160, 420, 690] }];
-          rows.forEach(r => r.xs.forEach(x => img(bg, 'v3w/pj_bean_plant.webp', x - r.h * .37, r.y - r.h, r.h * .73, r.h, 'xMidYMax meet', { class: 'prop', opacity: r.op })));
+          // [x, 바닥선 y, 높이, 좌우 뒤집기, 포기 번호, 불투명도]: 가까운 띠(1.0배) 3포기 · 먼 띠(0.6배) 4포기. 장면 그림에 그려진 포기를 오려 쓴 것
+          [[120, 420, 92, 0, 1, 1], [420, 422, 88, 1, 2, 1], [820, 420, 92, 0, 2, 1],
+           [215, 345, 56, 1, 2, .85], [380, 342, 54, 0, 1, .85], [600, 344, 56, 1, 1, .85], [940, 342, 54, 0, 2, .85]].forEach(([x, y, h, fl, n, op]) => {
+            const w = h * (n === 1 ? .99 : .97);
+            img(bg, `v3w/pj_bean_cluster${n}.webp`, x - w / 2, y - h, w, h, 'xMidYMax meet', { class: 'prop', opacity: op, ...(fl ? { transform: `translate(${2 * x},0) scale(-1,1)` } : {}) });
+          });
         }
         if (!full) {
           img(bg, 'v3w/a3_sky.webp', -150, -80, 1300, 760, 'xMidYMid slice');
