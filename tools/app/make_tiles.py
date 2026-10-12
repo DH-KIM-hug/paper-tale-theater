@@ -10,7 +10,7 @@ def hx(s): return tuple(int(s[i:i + 2], 16) for i in (1, 3, 5))
 
 # id: (판 색, 언덕 색, 해·달(색, 가운데x, 가운데y, 반지름 — 화면 비율), [(그림, 가운데x, 높이 비율, 뒤집기)], 땅 높이 비율)
 SPEC = {
- 'patjuk':   ('#26325A', '#B9573A', ('#F6ECD8', .80, .22, .09), [('tiger_stand', .5, .72, 0)], .80),
+ 'patjuk':   ('#26325A', '#B9573A', ('#F6ECD8', .80, .22, .09), [('tiger_stand', .5, .90, 0)], .84),
  'frog':     ('#7FB7A4', '#4F8F6B', ('#F6ECD8', .22, .22, .08), [('frog_ox_stand', .62, .58, 0), ('frog_mom', .28, .56, 0)], .80),
  'rabbit':   ('#9CCB86', '#5E9A4F', ('#FFE08A', .84, .20, .09), [('rab_turtle_walk', .30, .34, 0), ('rab_rabbit_run', .66, .64, 0)], .78),
  'sunmoon':  ('#2E2F63', '#6E5DA8', ('#F6ECD8', .50, .26, .13), [('sm_moon_boy2', .27, .62, 0), ('sm_sun_girl2', .73, .62, 0)], .82),
@@ -19,12 +19,18 @@ SPEC = {
  'lion_mouse': ('#F2B35E', '#9A6A3C', ('#FFF1C8', .20, .22, .10), [('lm_lion_stand', .46, .82, 0), ('lm_mouse_walk', .86, .22, 1)], .84),
  'fox_crane': ('#7FB79A', '#C9824E', None, [('fc_fox_stand', .32, .62, 0), ('fc_crane_sad', .74, .84, 1)], .84),
  'goldilocks': ('#F2C9A0', '#7BA36B', ('#FFF1C8', .80, .22, .09), [('gl_goldi_walk', .34, .84, 0), ('gl_bear_baby', .72, .70, 0)], .84),
- 'bremen':   ('#24305C', '#4B6A8A', ('#F6ECD8', .78, .24, .10), [('br_donkey', .26, .80, 0), ('br_dog_sing5', .55, .54, 0), ('br_cat_sing', .76, .34, 0), ('br_rooster', .90, .42, 0)], .84),
+ 'bremen':   ('#24305C', '#4B6A8A', ('#F6ECD8', .78, .24, .10), [('br_donkey', .24, .78, 0), ('br_dog_sing5', .50, .52, 0), ('br_cat_sing', .70, .33, 0), ('br_rooster', .85, .40, 0)], .84),
  'ant_grasshopper': ('#F2D06B', '#5E9A4F', ('#FFF6D8', .82, .20, .10), [('ag_ant_stand', .30, .66, 0), ('ag_hopper_play', .72, .70, 1)], .84),
  'ugly_duckling': ('#9CC8E6', '#5E8FB4', ('#FFF6D8', .84, .20, .08), [('ud_young', .30, .56, 0), ('ud_swan', .70, .80, 0)], .84),
  'three_pigs': ('#F3C6B0', '#8BB06A', ('#FFF1C8', .82, .20, .09), [('tp_pig1_base', .22, .66, 0), ('tp_pig2_base', .50, .70, 0), ('tp_pig3_base', .78, .74, 0)], .86),
- 'wolf_goats': ('#AFC8A0', '#6B8E5B', ('#F6ECD8', .20, .22, .09), [('wg_kid1_joy', .26, .56, 0), ('wg_mama_warn', .58, .78, 0), ('wg_wolf_knock', .86, .62, 1)], .86),
+ 'wolf_goats': ('#AFC8A0', '#6B8E5B', ('#F6ECD8', .20, .22, .09), [('wg_kid1_joy', .26, .56, 0), ('wg_mama_warn', .58, .78, 0), ('wg_wolf_knock', .82, .62, 1)], .86),
  'red_hood': ('#E8A596', '#5E8F5B', ('#FFF1C8', .82, .20, .09), [('rh_hood_walk', .36, .86, 0), ('rh_wolf_peek', .78, .62, 1)], .86),
+ 'magic_jar': ('#F2D58A', '#8B6B4A', ('#FFF6D8', .82, .20, .09), [('mj_farmer_amaze', .34, .84, 0), ('mj_fwife', .70, .80, 0)], .84),
+ 'kongjwi':  ('#F3C2CF', '#7BA36B', ('#FFF1C8', .82, .20, .09), [('kj_kong_bride', .32, .86, 0), ('kj_toad_idle', .72, .46, 0)], .84),
+ 'heungbu':  ('#9CC8E6', '#8BB06A', ('#FFF6D8', .84, .20, .09), [('hb_heung_glad', .36, .86, 0), ('hb_swallow_fly', .74, .26, 0)], .84),
+ 'magpie':   ('#2F4A6B', '#6B8E5B', ('#F6ECD8', .82, .22, .10), [('mg_scholar_walk', .66, .86, 0), ('mg_mag_mom_sit', .32, .56, 1)], .84),
+ 'hansel':   ('#8FAE72', '#6B4E3A', ('#FFF1C8', .82, .20, .09), [('hg_hans_joy', .34, .84, 0), ('hg_gret_clever', .68, .82, 0)], .84),
+ 'cinderella': ('#B9A4DC', '#5E7FB4', ('#FFF6D8', .82, .20, .09), [('cd_cind_gown', .38, .88, 0), ('cd_mouse', .78, .40, 1)], .84),
 }
 
 def shadow(im, dx=0, dy=10, blur=12, op=.30):
@@ -69,3 +75,4 @@ ids = sys.argv[1:] or list(SPEC)
 for t in ids:
     tile(t); print('ok', t)
 open(os.path.join(OUT, 'tiles.js'), 'w').write('/* tools/app/make_tiles.py 가 생성: 사각 종이 썸네일(<id>_tile.webp)이 있는 동화 */\nwindow.TILES = ' + json.dumps(sorted(SPEC)) + ';\n')
+open(os.path.join(OUT, 'tiles.json'), 'w').write(json.dumps(sorted(SPEC), ensure_ascii=False))
