@@ -56,7 +56,7 @@
   const ROBBER = { '#3F6B4F': 'robber_green', '#A93B32': 'robber_red', '#6B4A32': 'robber_brown' };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const BG_EDGE = { mill: ['#a7d3e7', '#dbcca7'], road: ['#c2e4f5', '#918b68'], wall: ['#9bd1f4', '#384830'], roof: ['#fef9bf', '#795e3a'], meadow: ['#bedbe1', '#39422c'],
-    forest: ['#002552', '#4b6261'], house_low: ['#001735', '#423924'], house_pov: ['#241309', '#321e14'], house_wide: ['#003573', '#283a40'], morning: ['#aed3e7', '#a9a277'] };
+    forest: ['#002552', '#4b6261'], house_low: ['#1b2b44', '#76814f'], house_pov: ['#fdecc0', '#c79a5d'], house_wide: ['#003573', '#283a40'], morning: ['#aed3e7', '#a9a277'] };
   function bgImage(T, key, { parent, zoom = 1 } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const { x, y, w, h } = BGBOX, [top, bot] = BG_EDGE[key];
@@ -377,14 +377,14 @@
     el('rect', { x: -400, y: -400, width: 1800, height: 1400, fill: C.indigo, opacity: .45 }, b);
     return { trees, path };
   }
-  /* 그림 판자벽의 높은 창: 유리 (685..785, 45..225), 가운데 x≈735 */
-  const LOW_WIN = { x0: 685, x1: 785, y0: 45, y1: 225 };
+  /* 그림 벽의 높은 창: 유리 (724..830, 93..295), 가운데 x≈777 */
+  const LOW_WIN = { x0: 724, x1: 830, y0: 93, y1: 295 };
   function houseLowBG(T, dx = 0, dy = 0) {
     const { paper, el } = T, b = T.bg;
     if (bgImage(T, 'house_low')) { // 창 속 도둑 그림자 셋은 코드 (유리 안에만)
       const win = bgClip(T, 'house_low', b, [['rect', { x: LOW_WIN.x0, y: LOW_WIN.y0, width: LOW_WIN.x1 - LOW_WIN.x0, height: LOW_WIN.y1 - LOW_WIN.y0 }]]);
       const sh = win.lastChild;
-      [705, 735, 765].forEach((x, i) => paper(sh, [['circle', { cx: x, cy: 178 - (i % 2) * 6, r: 12, fill: '#8a5a32', opacity: .75 }], ['ellipse', { cx: x, cy: 214, rx: 16, ry: 22, fill: '#8a5a32', opacity: .75 }]]));
+      [750, 777, 804].forEach((x, i) => paper(sh, [['circle', { cx: x, cy: 248 - (i % 2) * 6, r: 12, fill: '#8a5a32', opacity: .75 }], ['ellipse', { cx: x, cy: 284, rx: 16, ry: 22, fill: '#8a5a32', opacity: .75 }]]));
       return win;
     }
     sky(T, C.indigo);
@@ -400,12 +400,10 @@
     paper(b, [['rect', { x: -300, y: 500, width: 1600, height: 300, fill: '#3E5A3A' }]]);
     return win;
   }
-  /* 그림 창 너머 방: 식탁 (213..710, 윗면 y≈323) 위에 금화·음식. 창틀도 그림 속에 있다 */
-  const POV_TABLE = [['rect', { x: 213, y: 323, width: 497, height: 100 }],
-    ['ellipse', { cx: 306, cy: 320, rx: 48, ry: 17 }], ['ellipse', { cx: 300, cy: 309, rx: 22, ry: 13 }],
-    ['ellipse', { cx: 408, cy: 320, rx: 52, ry: 16 }], ['ellipse', { cx: 408, cy: 309, rx: 40, ry: 10 }],
-    ['ellipse', { cx: 559, cy: 322, rx: 68, ry: 15 }], ['ellipse', { cx: 541, cy: 295, rx: 42, ry: 30 }],
-    ['ellipse', { cx: 601, cy: 306, rx: 26, ry: 22 }], ['ellipse', { cx: 556, cy: 280, rx: 22, ry: 17 }]];
+  /* 그림 속 방: 긴 식탁 (187..666, 윗면 y≈374) 위에 금화·음식. 벽·바닥은 평평한 한 장 */
+  const POV_TABLE = [['rect', { x: 187, y: 372, width: 480, height: 40 }],
+    ['ellipse', { cx: 336, cy: 362, rx: 56, ry: 20 }], ['ellipse', { cx: 445, cy: 362, rx: 58, ry: 18 }], ['ellipse', { cx: 445, cy: 350, rx: 46, ry: 14 }],
+    ['ellipse', { cx: 576, cy: 362, rx: 58, ry: 16 }], ['ellipse', { cx: 576, cy: 340, rx: 50, ry: 28 }]];
   function housePOV(T) {
     const { paper, el } = T, b = T.bg;
     if (bgImage(T, 'house_pov')) return true;
