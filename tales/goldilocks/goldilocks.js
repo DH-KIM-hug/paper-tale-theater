@@ -584,7 +584,7 @@
       steams = [];
       [230, 500, 770].map(X).forEach((x, i) => {
         bowlSide(T, bowlsG, x, BY, SIZE[i]);
-        for (let k = 0; k < 3; k++) steams.push(steam(T, bowlsG, x + (k - 1) * 40 * SIZE[i], BY - BOWL_RIM() * SIZE[i], SIZE[i] * 1.1));
+        for (let k = 0; k < 2; k++) steams.push(steam(T, bowlsG, x + (k ? 1 : -1) * 92 * SIZE[i], BY - BOWL_RIM() * SIZE[i], SIZE[i] * .95)); // 김은 그릇 양옆으로 (곰 얼굴을 가리지 않게)
       });
       view();
     }, bears.mom.pos);
@@ -654,7 +654,7 @@
         setTimeout(() => {
           fl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: 'forwards' });
           AudioFX.sfx('pop', .6) || T.tone(700, .1);
-          pop(nx, 200, `꽃 ${NUM[i - 1]}!`, C.persimmon);
+          pop(nx, 200 + (i % 2) * 70, `꽃 ${NUM[i - 1]}!`, C.persimmon);
         }, 260);
         setTimeout(() => { goldi.lean.style.transform = ''; }, 620);
       }, 620);
@@ -977,7 +977,7 @@
     hammer.remove();
     await sleep(400);
     AudioFX.sfx('ding') || AudioFX.ding();
-    pop(fix.x, 300, '짠!', C.persimmon);
+    pop(fix.x, 130, '짠!', C.persimmon);
     goldi.setFace('happy'); bears.baby.setFace('happy');
     await say('짠! 의자가 다 고쳐졌어요.');
     await say('아기 곰: "고마워! 우리 친구 하자!"');
