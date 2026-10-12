@@ -7,7 +7,7 @@
     snake_coil: 1.1058, snake_flee: 2.3411, lady: .7457, chick: .9185, mag_dad_sit: 1.3158, mag_mom_sit: 1.1958,
     mag_dad_fly: 1.9337, mag_mom_fly: 1.6514, mag_dad_tired: 2.2801, mag_mom_tired: 2.5926, mag_flock: 2.0173 };
   const BGS = ['path', 'bigtree', 'nest', 'night', 'porch', 'paperdoor', 'moonnest', 'belltower', 'dawn', 'morning'];
-  const CUTS = ['arrow', 'flee', 'tail', 'flock', 'ring', 'wake'];
+  const CUTS = ['flee', 'tail', 'flock', 'ring', 'wake'];
   const bgSrc = k => AS + 'mg_bg_' + k + '.webp', cutSrc = k => AS + 'mg_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
 
@@ -52,7 +52,12 @@
     const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990; /* 세로 화면은 가운데 약 260~430만 보인다 */
     /* 눈에 안 보이는 누를 자리 (그림 속 종·둥지 위) */
-    const zone = (x, y, w, h) => T.el('rect', { x: x - w / 2, y: y - h / 2, width: w, height: h, rx: 30, fill: 'transparent' }, T.world);
+    /* 아이가 어디를 눌러야 하는지 보이도록 연한 노란 빛 + 점선 테두리가 천천히 깜빡인다 */
+    const zone = (x, y, w, h) => {
+      const r = T.el('rect', { x: x - w / 2, y: y - h / 2, width: w, height: h, rx: 30, fill: 'rgba(255,213,79,.2)', stroke: '#FFD54F', 'stroke-width': 4, 'stroke-dasharray': '10 8' }, T.world);
+      r.animate([{ opacity: .45 }, { opacity: 1 }, { opacity: .45 }], { duration: 1300, iterations: Infinity, easing: 'ease-in-out' });
+      return r;
+    };
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
     await Promise.race([Promise.all(loads), sleep(4000)]);
@@ -84,14 +89,16 @@
     }, sch.pos);
     await say('나무 위에서 까치 엄마가 울었어요. "까악 까악! 도와주세요!"');
     T.pop(sch.x + 20, 230, tr('까악!'));
-    await T.cutImage([{ src: cutSrc('arrow'), sfx: 'pop', hold: 3600 }], { hold: 3600 });
-    scene('bigtree');
-    put(T, sch, P ? 470 : 440, 505, { look: 'surprise', to: 'right' });
+    await sleep(500);
+    put(T, coil, P ? 640 : 790, 505, { to: 'left', s: .55 }); fadeIn(coil, 400);
+    const climb = coil.move(P ? 625 : 735, 185, 3200, 'ease-in-out');
     await say('구렁이가 아기 까치 둥지로 스르르 올라가고 있어요!');
+    await climb;
     put(T, sch, P ? 470 : 440, 505, { look: 'shoot', to: 'right' });
     await say('선비가 말했어요. "아기 까치를 지켜 줄게!"');
     await T.tap(sch.pos, { prompt: '선비를 톡! 하늘에 활을 쏘아요.' });
     popSfx(T); sch.hop(18, 300); T.pop(sch.x + 60, sch.y - 250, tr('쉬익!'));
+    hide(coil);
     await T.cutImage([{ src: cutSrc('flee'), sfx: 'pop', hold: 3400 }], { hold: 3400 });
     await say('쉬익! 활 소리에 깜짝 놀란 구렁이는 숲으로 도망갔어요.');
 
@@ -107,7 +114,9 @@
     nestZone.remove();
     await say('아기 까치는 모두 네 마리예요. "선비님, 고맙습니다!"');
     await Promise.all(chicks.map(c => c.hop(16, 400)));
+    put(T, dad, P ? 385 : 255, P ? 300 : 345, { look: 'sit', to: 'right', s: P ? .6 : .85 }); fadeIn(dad, 400);
     await say('까치 아빠가 말했어요. "은혜는 꼭 갚을게요!"');
+    await dad.hop(14, 300);
 
     /* --- 4. 깊은 밤 --- */
     await T.sceneCard(tr('깊은 밤'), () => {
@@ -163,7 +172,7 @@
     const birds = [[dadF, P ? 420 : 340, 'right'], [momF, P ? 600 : 690, 'left']];
     await T.mash(bellZone, { count: 3, prompt: '종을 톡톡톡! 세 번 울려요.', onStep: async i => {
       const [b, hx, dir] = birds[(i - 1) % 2];
-      bellSfx(T); T.pop(475, 200, tr(NUM[i - 1])); T.pop(475, 260, tr('댕!'), '#7A4B19');
+      bellSfx(T); T.pop(475, 160, tr(NUM[i - 1])); T.pop(475 + (dir === 'right' ? -125 : 125), 320, tr('댕!'), '#7A4B19');
       b.move(hx + (dir === 'right' ? 70 : -70), 290, 160).then(() => b.move(hx, 330, 260));
       T.shake();
     } });
@@ -172,17 +181,18 @@
     await T.cutImage([{ src: cutSrc('ring'), sfx: 'pop', hold: 3600 }], { hold: 3600 });
     await say('댕, 댕, 댕! 종이 세 번 울렸어요.');
     scene('belltower');
-    put(T, dad, P ? 440 : 410, 520, { look: 'tired', to: 'right' }); put(T, mom, P ? 560 : 590, 520, { look: 'tired', to: 'left' });
+    put(T, dad, P ? 420 : 380, 485, { look: 'tired', to: 'right', s: P ? 1.2 : 1.4 }); put(T, mom, P ? 580 : 620, 485, { look: 'tired', to: 'left', s: P ? 1.2 : 1.4 });
     await say('까치들은 조금 지쳤지만 괜찮았어요.');
 
     /* --- 8. 새벽: 구렁이는 돌아가요 --- */
     await T.sceneCard(tr('새벽'), () => {
       scene('dawn');
       put(T, sch, P ? 440 : 380, 505, { look: 'surprise', to: 'right' });
-      put(T, flee, P ? 560 : 640, 520, { to: 'left', s: P ? .7 : 1 });
+      put(T, coil, P ? 560 : 640, 505, { to: 'left', s: P ? .6 : .7 });
     }, sch.pos);
     await say('새벽이 밝았어요. 구렁이가 종소리를 들었어요.');
     await say('구렁이가 말했어요. "종이 세 번 울렸네! 약속대로 보내 줄게. 놀라게 해서 미안해."');
+    hide(coil); put(T, flee, P ? 560 : 640, 520, { to: 'right', s: P ? .7 : 1 });
     await flee.move(P ? 760 : 1160, 520, 1400, 'ease-in');
     hide(flee);
     await say('구렁이는 스르르 숲으로 돌아갔어요.');
@@ -204,7 +214,7 @@
     }, sch.pos);
     await T.cutImage([{ src: cutSrc('wake'), sfx: 'pop', hold: 3600 }], { hold: 3600 });
     await say('아침 해가 떴어요. 아기 까치들도 날아왔어요.');
-    chicks.forEach((c, i) => { put(T, c, (P ? 410 : 360) + i * (P ? 70 : 60), 568, { to: 'right' }); fadeIn(c, 400); c.hop(12, 400); });
+    chicks.forEach((c, i) => { put(T, c, (P ? 410 : 360) + i * (P ? 70 : 60), 540, { to: 'right' }); fadeIn(c, 400); c.hop(12, 400); });
     await say('모두 함께 웃었어요.');
     await T.tap(sch.pos, { prompt: '선비를 톡! 모두 함께 만세!' });
     T.confetti();
