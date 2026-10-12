@@ -686,6 +686,10 @@ const Tale = (() => {
   /* 시작·끝 화면의 구멍 그림: 밝은 종이 = <id>_light.webp(THUMBS2L), 어두운 종이 = <id>.webp(THUMBS2). 없으면 빈 구멍 */
   function heroes() {
     const id = taleId(), dark = { matches: false, addEventListener() {} }; // 다크 모드 없음: 늘 밝은 종이
+    const portraitMQ = window.matchMedia('(orientation: portrait)');
+    /* 시작 화면 키아트: <id>_key_wide.webp(가로) / <id>_key_tall.webp(세로), 둘 다 있을 때만 (THUMBSKEY). 없으면 예전 구멍 배치 */
+    const keySrc = () => (window.THUMBSKEY || []).includes(id)
+      ? `${ROOT_URL}assets/thumbs/${id}_key_${portraitMQ.matches ? 'tall' : 'wide'}.webp` : '';
     const set = () => {
       const has = window.THUMBS2L || [];
       const src = has.includes(id) ? `${ROOT_URL}assets/thumbs/${id}_light.webp` : '';
@@ -695,18 +699,27 @@ const Tale = (() => {
         if (src && img.getAttribute('src') !== src) img.src = src;
         if (!src) img.removeAttribute('src');
       });
+      const ss = document.getElementById('startScreen'), ki = ss && ss.querySelector('.keyimg'), ks = keySrc();
+      if (ki) {
+        ss.classList.toggle('keyed', !!ks);
+        if (ks && ki.getAttribute('src') !== ks) ki.src = ks;
+        if (!ks) ki.removeAttribute('src');
+      }
       return src;
     };
     dark.addEventListener ? dark.addEventListener('change', set) : dark.addListener(set);
+    portraitMQ.addEventListener ? portraitMQ.addEventListener('change', set) : portraitMQ.addListener(set);
+    window.addEventListener('resize', set); window.addEventListener('orientationchange', set);
     return new Promise(res => {
       if (!id) return res();
       const sc = document.createElement('script');
       sc.src = ROOT_URL + 'assets/thumbs/thumbs.js';
       sc.onload = sc.onerror = () => {
         const src = set();
-        if (!src) return res();
-        const img = document.querySelector('#startScreen .hero img');
-        if (img.complete) return res();
+        const ki = document.querySelector('#startScreen .keyimg');
+        const img = ki && ki.getAttribute('src') ? ki : document.querySelector('#startScreen .hero img');
+        if (!src && img === ki && !ki.getAttribute('src')) return res();
+        if (!img.getAttribute('src') || img.complete) return res();
         img.addEventListener('load', res, { once: true }); img.addEventListener('error', res, { once: true });
       };
       document.head.appendChild(sc);
@@ -797,6 +810,7 @@ const Tale = (() => {
   <div id="bubble" hidden><p id="bubbleText"></p></div>
   <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
+    <img class="keyimg" alt="" decoding="async">
     <div class="hero plain"><img alt="" decoding="async"></div>
     <div class="words">
       <h1 class="paperword ttl">${letters(tr(title))}</h1>

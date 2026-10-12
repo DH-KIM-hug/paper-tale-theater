@@ -62,7 +62,9 @@ for src in sorted(glob.glob(os.path.join(RAW, 'thumb_*.png'))):
     tid = os.path.basename(src)[6:-4]
     if tid in T2: continue
     old_style(src, os.path.join(OUT, tid + '.webp')); T1.append(tid)
+KEYS = sorted(os.path.basename(f)[:-len('_key_wide.webp')] for f in glob.glob(os.path.join(OUT, '*_key_wide.webp')) if os.path.exists(f.replace('_key_wide', '_key_tall')))
 open(os.path.join(OUT, 'thumbs.js'), 'w').write(
     '/* make_thumbs.py가 생성. THUMBS: 예전 크림 여백 그림, THUMBS2: 남색 종이 구멍, THUMBS2L: 밝은 종이 구멍(<id>_light.webp) */\n'
-    f'window.THUMBS = {json.dumps(T1)};\nwindow.THUMBS2 = {json.dumps(T2)};\nwindow.THUMBS2L = {json.dumps(T2L)};\n')
+    f'window.THUMBS = {json.dumps(T1)};\nwindow.THUMBS2 = {json.dumps(T2)};\nwindow.THUMBS2L = {json.dumps(T2L)};\n'
+    f'/* THUMBSKEY: 시작 화면 키아트(<id>_key_wide.webp + <id>_key_tall.webp 둘 다 있는 동화) */\nwindow.THUMBSKEY = {json.dumps(KEYS)};\n')
 print('old', T1, 'dark', T2, 'light', T2L)
