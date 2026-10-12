@@ -373,6 +373,12 @@
 
   function makeAudience(T) {
     const A = {};
+    // 세로 화면: 응원 글자가 보이는 폭 밖(화면 양끝)으로 잘려 나가지 않게 안쪽으로 모은다
+    const inView = x => {
+      if (!T.portrait()) return x;
+      const c = T.camera, half = T.viewWidth() / 2 / Math.max(c.z, .1) - 80;
+      return Math.max(c.x - half, Math.min(c.x + half, x));
+    };
     KINDS.forEach(k => {
       let parts;
       const a = T.actor(null, 0, 0, g => { parts = drawAnimal(T, g, k); });
@@ -384,7 +390,7 @@
       a.cheer = async (word, keep) => {
         if (a.cheering) return; a.cheering = true;
         a.stand(); a.cry(); a.hop(14, 320);
-        if (word !== '') T.pop(a.x, a.y - 150 * a.scale, word || a.word, C.bean);
+        if (word !== '') T.pop(inView(a.x), a.y - 150 * a.scale, word || a.word, C.bean);
         await T.sleep(1100);
         if (!keep && !a.stay) a.sit();
         a.cheering = false;
@@ -392,7 +398,7 @@
       /* 응원 완료 표시: 일어선 채로 머리 위에 금별 (응원석에서 모두 눌러야 넘어간다) */
       a.done = () => {
         a.stay = true; a.stand(); a.cry(); a.hop(18, 340);
-        T.pop(a.x, a.y - 150 * a.scale, a.word, C.bean);
+        T.pop(inView(a.x), a.y - 150 * a.scale, a.word, C.bean);
         if (a.star) return;
         const h = k === 'owl' ? 142 : 152;
         a.star = T.el('g', { transform: `translate(0 ${-h})` }, a.body);
@@ -635,7 +641,7 @@
     const cryAt = (h, a) => { a.cry(); T.anim(h.g, [{ translate: '0 0' }, { translate: '-4px 0' }, { translate: '4px 0' }, { translate: '0 0' }], 400); };
     for (let i = 0; i < 4; i++) {
       const h = houses[i], k = guests[i], a = aud[k];
-      camTo(h.x, h.ay ? 300 : 350, 1.6, 900);
+      camTo(h.x - 40, h.ay ? 260 : 310, 1.6, 900);
       await owl.move(h.x - 120, h.ay ? 250 : 340, 900);
       await say(i === 0 ? '문을 톡 두드려 봐요. 누가 나올까?' : '이번 집도 문을 톡!');
       await T.tap(h.door, { prompt: '문을 톡 두드려 봐요!' });
@@ -753,7 +759,7 @@
     await say('준비~ 북을 톡 치면 출발해요!');
     await T.tap(drum, { prompt: '큰 북을 톡 쳐 봐요!' });
     AudioFX.boom(); T.shake(); T.pop(...drumAt, '땅!', C.bean);
-    ['duck', 'cow', 'dog', 'rooster'].forEach((k, i) => setTimeout(() => aud[k].cheer(i % 2 ? '' : null, true), i * 150)); // 글자는 둘만 (넷이 겹쳐 '땅!'을 가렸다)
+    ['duck', 'cow', 'dog', 'rooster'].forEach((k, i) => setTimeout(() => aud[k].cheer('', true), i * 150)); // 응원 글자는 없이 소리·몸짓만 ('땅!'을 가리지 않게)
     rp.pose('run'); AudioFX.whoosh(); speedLines(T, 14, 450); puff(T, rabbit.x - 30, 460);
     camTo(360, 330, 1.12, 250);
     walk(700);
