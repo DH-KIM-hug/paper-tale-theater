@@ -1,0 +1,298 @@
+{
+ "voices": {
+  "nar": "tc_6a21054564d676539427427e",
+  "sch": "tc_624cccbcadcd568510764d65",
+  "snake": "tc_675a73eb789ff3ea6cc80235",
+  "lady": "tc_644a05b537254553823492fb",
+  "mom": "tc_684a7a1446e2a628b5b07230",
+  "dad": "tc_67512e5af2b6dbabce63f92a",
+  "chick": "tc_66596206b7bd6e89c3a2c54e"
+ },
+ "lines": [
+  {
+   "text": "옛날 옛날에 마음씨 고운 선비가 길을 걸어가고 있었어요.",
+   "en": "Once upon a time, a kind scholar was walking along a road."
+  },
+  {
+   "text": "선비를 톡톡톡 눌러서 걸어가 봐요!",
+   "en": "Tap the scholar, tap tap tap, to walk along!"
+  },
+  {
+   "text": "선비를 톡톡톡! 걸어가요.",
+   "en": "Tap the scholar, tap tap tap! Walk along."
+  },
+  {
+   "text": "선비는 큰 소나무 아래에 닿았어요.",
+   "en": "The scholar came to a big pine tree."
+  },
+  {
+   "text": "나무 위에서 까치 엄마가 울었어요. \"까악 까악! 도와주세요!\"",
+   "en": "Mama Magpie cried from the tree. Caw caw! Please help!",
+   "segs": [
+    [
+     "nar",
+     "Mama Magpie cried from the tree."
+    ],
+    [
+     "mom",
+     "Caw caw! Please help!"
+    ]
+   ]
+  },
+  {
+   "text": "구렁이가 아기 까치 둥지로 스르르 올라가고 있어요!",
+   "en": "A snake was slithering up to the baby magpies' nest!"
+  },
+  {
+   "text": "선비가 말했어요. \"아기 까치를 지켜 줄게!\"",
+   "en": "The scholar said, I will keep the baby magpies safe!",
+   "segs": [
+    [
+     "nar",
+     "The scholar said,"
+    ],
+    [
+     "sch",
+     "I will keep the baby magpies safe!"
+    ]
+   ]
+  },
+  {
+   "text": "선비를 톡! 하늘에 활을 쏘아요.",
+   "en": "Tap the scholar! Shoot an arrow into the sky."
+  },
+  {
+   "text": "쉬익! 활 소리에 깜짝 놀란 구렁이는 숲으로 도망갔어요.",
+   "en": "Whoosh! The snake was so surprised by the sound that it ran into the forest."
+  },
+  {
+   "text": "아기 까치들이 짹짹 울었어요. 아기 까치를 하나씩 세어 봐요!",
+   "en": "The baby magpies chirped. Let us count them one by one!"
+  },
+  {
+   "text": "아기 까치를 톡톡톡톡! 하나씩 세어요.",
+   "en": "Tap the baby magpies, tap tap tap tap! Count them one by one."
+  },
+  {
+   "text": "아기 까치는 모두 네 마리예요. \"선비님, 고맙습니다!\"",
+   "en": "There were four baby magpies in all. Thank you, Mister Scholar!",
+   "segs": [
+    [
+     "nar",
+     "There were four baby magpies in all."
+    ],
+    [
+     "chick",
+     "Thank you, Mister Scholar!"
+    ]
+   ]
+  },
+  {
+   "text": "까치 아빠가 말했어요. \"은혜는 꼭 갚을게요!\"",
+   "en": "Papa Magpie said, We will thank you for this one day!",
+   "segs": [
+    [
+     "nar",
+     "Papa Magpie said,"
+    ],
+    [
+     "dad",
+     "We will thank you for this one day!"
+    ]
+   ]
+  },
+  {
+   "text": "선비는 컴컴한 산길을 걸었어요. 멀리 불빛이 반짝!",
+   "en": "The scholar walked a dark mountain path. Far away, a light twinkled!"
+  },
+  {
+   "text": "선비를 톡! 불빛을 따라가요.",
+   "en": "Tap the scholar! Follow the light."
+  },
+  {
+   "text": "외딴집에서 아주머니가 나왔어요. \"어서 오세요. 하룻밤 쉬어 가세요.\"",
+   "en": "A woman came out of a lonely house. Welcome. Please stay the night.",
+   "segs": [
+    [
+     "nar",
+     "A woman came out of a lonely house."
+    ],
+    [
+     "lady",
+     "Welcome. Please stay the night."
+    ]
+   ]
+  },
+  {
+   "text": "앗! 아주머니 치마 밑에 꼬리가 삐죽!",
+   "en": "Oh! A tail was poking out from under her skirt!"
+  },
+  {
+   "text": "아주머니는 낮에 만난 그 구렁이였어요.",
+   "en": "The woman was the same snake from the day before."
+  },
+  {
+   "text": "구렁이가 말했어요. \"새벽까지 종이 세 번 울리면 보내 줄게. 하지만 종은 너무 멀어서 울릴 수 없을걸!\"",
+   "en": "The snake said, If the bell rings three times by dawn, I will let you go. But the bell is too far to ring!",
+   "segs": [
+    [
+     "nar",
+     "The snake said,"
+    ],
+    [
+     "snake",
+     "If the bell rings three times by dawn, I will let you go. But the bell is too far to ring!"
+    ]
+   ]
+  },
+  {
+   "text": "선비는 걱정이 되었어요. \"어떡하지?\"",
+   "en": "The scholar was worried. What should I do?",
+   "segs": [
+    [
+     "nar",
+     "The scholar was worried."
+    ],
+    [
+     "sch",
+     "What should I do?"
+    ]
+   ]
+  },
+  {
+   "text": "달빛 아래에서 까치 아빠가 말했어요. \"이번에는 우리가 도울 차례예요!\"",
+   "en": "Under the moon, Papa Magpie said, Now it is our turn to help!",
+   "segs": [
+    [
+     "nar",
+     "Under the moon, Papa Magpie said,"
+    ],
+    [
+     "dad",
+     "Now it is our turn to help!"
+    ]
+   ]
+  },
+  {
+   "text": "까치 엄마가 말했어요. \"모두 종으로 날아가요!\"",
+   "en": "Mama Magpie said, Everyone, fly to the bell!",
+   "segs": [
+    [
+     "nar",
+     "Mama Magpie said,"
+    ],
+    [
+     "mom",
+     "Everyone, fly to the bell!"
+    ]
+   ]
+  },
+  {
+   "text": "까치 가족을 톡! 함께 날아가요.",
+   "en": "Tap the magpie family! Fly together."
+  },
+  {
+   "text": "까치들이 종이 있는 곳까지 쌩쌩 날아갔어요.",
+   "en": "The magpies flew swiftly to the bell."
+  },
+  {
+   "text": "까치들이 머리로 종을 칠 거예요. 종을 톡톡톡 눌러서 세 번 울려 봐요!",
+   "en": "The magpies will ring the bell with their heads. Tap the bell, tap tap tap, to ring it three times!"
+  },
+  {
+   "text": "종을 톡톡톡! 세 번 울려요.",
+   "en": "Tap the bell, tap tap tap! Ring it three times."
+  },
+  {
+   "text": "댕, 댕, 댕! 종이 세 번 울렸어요.",
+   "en": "Dong, dong, dong! The bell rang three times."
+  },
+  {
+   "text": "까치들은 조금 지쳤지만 괜찮았어요.",
+   "en": "The magpies were a little tired, but they were fine."
+  },
+  {
+   "text": "새벽이 밝았어요. 구렁이가 종소리를 들었어요.",
+   "en": "Dawn came. The snake heard the bell."
+  },
+  {
+   "text": "구렁이가 말했어요. \"종이 세 번 울렸네! 약속대로 보내 줄게. 놀라게 해서 미안해.\"",
+   "en": "The snake said, The bell rang three times! I will keep my promise. I am sorry I scared you.",
+   "segs": [
+    [
+     "nar",
+     "The snake said,"
+    ],
+    [
+     "snake",
+     "The bell rang three times! I will keep my promise. I am sorry I scared you."
+    ]
+   ]
+  },
+  {
+   "text": "구렁이는 스르르 숲으로 돌아갔어요.",
+   "en": "The snake slithered back into the forest."
+  },
+  {
+   "text": "지친 까치 엄마 아빠가 쉬고 있어요.",
+   "en": "Mama and Papa Magpie were resting."
+  },
+  {
+   "text": "선비를 톡! 물을 줘요.",
+   "en": "Tap the scholar! Give them water."
+  },
+  {
+   "text": "선비가 말했어요. \"고마워, 까치야. 푹 쉬렴!\"",
+   "en": "The scholar said, Thank you, magpies. Have a good rest!",
+   "segs": [
+    [
+     "nar",
+     "The scholar said,"
+    ],
+    [
+     "sch",
+     "Thank you, magpies. Have a good rest!"
+    ]
+   ]
+  },
+  {
+   "text": "아침 해가 떴어요. 아기 까치들도 날아왔어요.",
+   "en": "The morning sun rose. The baby magpies flew in too."
+  },
+  {
+   "text": "모두 함께 웃었어요.",
+   "en": "Everyone smiled together."
+  },
+  {
+   "text": "선비를 톡! 모두 함께 만세!",
+   "en": "Tap the scholar! Hooray, all together!"
+  },
+  {
+   "text": "서로 돕는 마음은 따뜻해요. 은혜 갚은 까치 이야기는 이렇게 끝났어요.",
+   "en": "Helping each other makes hearts warm. The story of the grateful magpie ended like this."
+  }
+ ],
+ "ui": {
+  "하나!": "One!",
+  "둘!": "Two!",
+  "셋!": "Three!",
+  "넷!": "Four!",
+  "댕!": "Dong!",
+  "짹!": "Chirp!",
+  "쉬익!": "Whoosh!",
+  "까악!": "Caw!",
+  "큰 소나무": "The Big Pine",
+  "둥지": "The Nest",
+  "깊은 밤": "Deep Night",
+  "외딴집": "The Lonely House",
+  "달밤": "Moonlit Night",
+  "종탑": "The Bell Tower",
+  "새벽": "Dawn",
+  "아침": "Morning",
+  "콸콸!": "Glug glug!",
+  "은혜 갚은 까치": "The Grateful Magpie",
+  "서로 돕는 마음은 따뜻해요": "Helping each other makes hearts warm",
+  "서로 돕는 마음은 따뜻해요!": "Helping each other makes hearts warm!",
+  "저벅!": "Step!"
+ }
+}
