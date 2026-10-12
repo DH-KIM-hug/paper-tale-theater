@@ -1,9 +1,9 @@
 {
  "voices": {
-  "nar": "Xb7hH8MSUJpSbSDYk0k2",
-  "sun": "EXAVITQu4vr4xnSDxMaL",
-  "wind": "IKne3meq5aSn9XLyUdCD",
-  "man": "CwhRBWXzGAHq8TQ4Fs17"
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "sun": "pFZP5JQG7iQjIQuC4Bku",
+  "wind": "N2lVS1w4EtoT3dr4eOWO",
+  "man": "cjVigY5qzO86Huf0OWal"
  },
  "lines": [
   {
@@ -766,10 +766,10 @@
   ]
  },
  "models": {
-  "wind": "eleven_v4",
+  "nar": "eleven_v4",
   "sun": "eleven_v4",
-  "man": "eleven_v4",
-  "nar": "eleven_v4"
+  "wind": "eleven_v4",
+  "man": "eleven_v4"
  },
  "settings": {
   "wind": {
@@ -795,5 +795,5 @@
   "wind",
   "man"
  ],
- "notes": "해설 Alice(맑고 또렷한 교육 해설, 날씨·옷 퀴즈에 어울림), 해님 Sarah(따뜻하고 안심시키는 여성), 바람 Charlie(깊고 힘센 장난꾸러기, 허세와 헉헉 연기), 나그네 Roger(느긋한 중년 남성, 추위·더위 연기). 모두 eleven_v4. 해설은 차분하게, 바람 장면은 약간 활기차게, 해님 장면은 포근하게."
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, sun=Lily, wind=Callum, man=Eric"
 }
