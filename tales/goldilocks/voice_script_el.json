@@ -1,12 +1,12 @@
 {
- "notes": "nar=Alice(또렷한 선생님 같은 서술, 패죽과 구분), goldi=Jessica(호기심 많은 골디락스), dad=Brian(굵고 푸근한 아빠 곰), mom=Matilda(엄마 곰), baby=Laura(가느다란 아기 곰), bowl=Will(그릇 소품). 아빠는 굵게, 아기는 가늘게; 곰은 화나도 무섭지 않고 다정하게.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, goldi=Annie, dad=Brian, mom=Bella, baby=Mithi, bowl=Chaemong. 아기·꼬마 역(baby)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여.",
  "voices": {
-  "nar": "Xb7hH8MSUJpSbSDYk0k2",
-  "goldi": "cgSgspJ2msm6clMCkdW9",
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "goldi": "Lb7qkOn5hF8p7qfCDH8q",
   "dad": "nPczCjzI2devNBz1zQrb",
-  "mom": "XrExE9yKIg1WjnnlVkGX",
-  "baby": "FGY2WhTYpPnrIDTdsKH5",
-  "bowl": "bIHbv24MWmeRgasZH58o"
+  "mom": "hpp4J3VqNfWAUOO0d1Us",
+  "baby": "MIl0Flub6Sc9KSkX2A42",
+  "bowl": "DGDjWy2CQ8Ishu0meQte"
  },
  "models": {
   "nar": "eleven_v4",
@@ -639,7 +639,7 @@
      "baby",
      "내 그릇은 더 작아요~",
      null,
-     "[small, sweet, childlike]"
+     "[small, sweet, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -694,7 +694,7 @@
      "baby",
      "내 그릇은 더 작아요~",
      null,
-     "[small, sweet, childlike]"
+     "[small, sweet, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -760,7 +760,7 @@
      "baby",
      "내 죽을 다 먹어 버렸어!",
      "sad:1.7",
-     "[sad, trembling, tearful, childlike]"
+     "[sad, trembling, tearful, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -837,7 +837,7 @@
      "baby",
      "내 의자는 더 작아요~",
      null,
-     "[small, sweet, childlike]"
+     "[small, sweet, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -892,7 +892,7 @@
      "baby",
      "내 의자는 더 작아요~",
      null,
-     "[small, sweet, childlike]"
+     "[small, sweet, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -903,7 +903,7 @@
      "baby",
      "으앙, 내 의자가 부서졌어!",
      "sad:1.7",
-     "=[gasps] 으앙, [sobbing, crying] 내 의자가 부서졌어!"
+     "=[baby voice, lisping, very young child, giggly] [childlike] [gasps] 으앙, [sobbing, crying] 내 의자가 부서졌어!"
     ]
    ]
   },
@@ -1074,7 +1074,7 @@
      "baby",
      "고마워! 우리 친구 하자!",
      "happy:1.5",
-     "[delighted, joyful, childlike]"
+     "[delighted, joyful, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -1266,7 +1266,7 @@
     "baby",
     "안녕, 안녕!",
     "happy",
-    "[cheerful, sweet, childlike, waving]"
+    "[cheerful, sweet, childlike, waving, baby voice, lisping, very young child, giggly]"
    ]
   ],
   "mine_dad": [
@@ -1336,7 +1336,7 @@
     "baby",
     "누구야?",
     "toneup:1.3",
-    "[curious, puzzled, small voice]"
+    "[curious, puzzled, small voice, childlike, baby voice, lisping, very young child, giggly]"
    ]
   ],
   "cut_skirt": [
