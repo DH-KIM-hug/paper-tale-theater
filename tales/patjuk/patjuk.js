@@ -703,7 +703,11 @@
 
     /* ===== 단계 전환: 다음 공격 지점으로 호랑이 이동 ===== */
     const ADVANCE = {
-      1: async () => { tigerEyesHurt(true); await Promise.all([walk(tiger, POS.tigerStage[1], 380), camTo(...stationCam(1), 900)]); tiger.face('left'); },
+      1: async () => { tigerEyesHurt(true); await Promise.all([walk(tiger, POS.tigerStage[1], 380), camTo(...stationCam(1), 900)]); tiger.face('left');
+        // "눈을 씻으려고 물독에 얼굴을 쏙": 물독 쪽으로 고개를 숙여 쏙 넣었다가 뺀다 (말하는 동안 두 번)
+        const dip = [{ transform: 'translate(0px,0px) rotate(0deg)' }, { transform: 'translate(-10px,14px) rotate(24deg)', offset: .35 }, { transform: 'translate(-10px,14px) rotate(24deg)', offset: .6 }, { transform: 'translate(0px,0px) rotate(0deg)' }];
+        sleep(500).then(() => anim(tiger.body, dip, { duration: 1500, easing: 'ease-in-out' })).then(() => sleep(300)).then(() => anim(tiger.body, dip, { duration: 1500, easing: 'ease-in-out' }));
+      },
       2: async () => { tigerEyesHurt(false); tiger.face('left'); await Promise.all([walk(tiger, POS.tigerStage[2], 300, false), camTo(...stationCam(2), 900)]); }, // 물독에서 놀라 뒷걸음질: 물독(왼쪽)을 본 채로 물러난다
       3: async () => { await camTo(...stationCam(3, tiger.x), 600); /* 이미 미끄러져 넘어진 상태 */ },
       4: async () => {
