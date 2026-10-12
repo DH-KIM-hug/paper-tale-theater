@@ -1,16 +1,16 @@
 {
  "voices": {
-  "nar": "JBFqnCBsd6RMkjVDRZzb",
-  "hero": "cgSgspJ2msm6clMCkdW9",
-  "mom": "XrExE9yKIg1WjnnlVkGX",
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "hero": "tapn1QwocNXk3viVSowa",
+  "mom": "hpp4J3VqNfWAUOO0d1Us",
   "rooster": "N2lVS1w4EtoT3dr4eOWO",
   "ducks": "FGY2WhTYpPnrIDTdsKH5",
-  "geese": "bIHbv24MWmeRgasZH58o",
-  "farmer": "pqHfZKP75CvOlQylNhV4",
-  "cat": "Xb7hH8MSUJpSbSDYk0k2",
-  "hen": "hpp4J3VqNfWAUOO0d1Us",
-  "swan": "EXAVITQu4vr4xnSDxMaL",
-  "card": "IKne3meq5aSn9XLyUdCD"
+  "geese": "rBkiq5ZQ43ogwd6i4uIQ",
+  "farmer": "5ON5Fnz24cnOozEQfGAm",
+  "cat": "XrExE9yKIg1WjnnlVkGX",
+  "hen": "cgSgspJ2msm6clMCkdW9",
+  "swan": "Lb7qkOn5hF8p7qfCDH8q",
+  "card": "dnZGOA54w68T7vLLPFTp"
  },
  "models": {
   "nar": "eleven_v4",
@@ -286,7 +286,7 @@
      "ducks",
      "꽥꽥! 너는 우리랑 달라!",
      "toneup:1.2",
-     "[quacking, snooty, teasing]"
+     "[quacking, snooty, teasing, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -546,7 +546,7 @@
      "geese",
      "안녕! 우리랑 같이 놀자!",
      "happy:1.4",
-     "[friendly, cheerful, welcoming]"
+     "[friendly, cheerful, welcoming, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -684,7 +684,7 @@
      "hero",
      "나도 저렇게 날고 싶다.",
      "sad:1.2",
-     "[longing, wistful, soft]"
+     "[longing, wistful, soft, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -1055,7 +1055,7 @@
      "hero",
      "어? 이게 나야?",
      "toneup:1.5",
-     "[surprised, wondering, childlike]"
+     "[surprised, wondering, childlike, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -1370,7 +1370,7 @@
     "hero",
     "가르르릉…",
     "smart",
-    "[trying to purr, cute, effortful, childlike]"
+    "[trying to purr, cute, effortful, childlike, baby voice, lisping, very young child, giggly]"
    ]
   ],
   "cut_quack": [
@@ -1378,9 +1378,9 @@
     "hero",
     "꽥!",
     "happy",
-    "[surprised, loud quack, comic, childlike]"
+    "[surprised, loud quack, comic, childlike, baby voice, lisping, very young child, giggly]"
    ]
   ]
  },
- "notes": "오리 동화: 해설 George(따뜻한 이야기꾼), 아기 오리/성장한 모습 Jessica·백조 Sarah(같은 아이의 어린 모습/자란 모습), 엄마 Matilda, 수탉 Callum(허세 부리는 걸걸한 목소리), 오리들 Laura, 기러기 Will(느긋하고 친근), 농부 할아버지 Bill(나이 든 목소리), 고양이 Alice(도도), 암탉 Bella, 카드 Charlie(통통 튀는 소리). 놀리는 장면도 부드럽게, 슬픈 장면은 낮고 따뜻하게."
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, hero=Sparkles, mom=Bella, rooster=Callum, ducks=Laura, geese=Peanut, farmer=Namchun, cat=Matilda, hen=Jessica, swan=Annie, card=Klamon. 아기·꼬마 역(hero, ducks, geese)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여."
 }
