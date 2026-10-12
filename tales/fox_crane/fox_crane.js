@@ -768,12 +768,12 @@
     await T.sceneCard('왜 못 먹었을까?', () => {
       T.clear(); splitBG(T);
       // 세로 화면: 양쪽을 가운데로 모으고 물러서서 두루미·접시·병·여우가 다 보이게
-      const SP = T.portrait();
+      const SP = P1; // 장면 카드가 도는 중엔 T.portrait()가 무대 폭을 잘못 재서 가로에서도 참이 되므로, 처음에 잰 값을 쓴다
       crane = guest(T, T.world, 'crane', SP ? 310 : 150, 480, .95); crane.face('right');
       plateL = dish(T, T.world, 'plate', SP ? 405 : 300, 480, .9);
       fox = guest(T, T.world, 'fox', SP ? 700 : 870, 480, 1.0);
       bottleR = dish(T, T.world, 'bottle', SP ? 600 : 700, 480, .95);
-      if (SP) camSnap(500, 280, .5);
+      camSnap(500, 280, SP ? .85 : 1);
       crane.parts.sadDeg = 15; mood(crane, 'sad');
       mood(fox, 'sad');
     }, fox.pos);
@@ -808,7 +808,7 @@
       T.clear(); feastBG(T, false);
       gL = el('g', {}, T.world); tL = el('g', {}, T.world); dL = el('g', {}, T.world);
       feastTable(T, tL);
-      if (T.portrait()) camSnap(557, 280, Math.min(1, T.viewWidth() / 2 / 375)); // 세로 화면: 손님과 그릇 셋이 다 보이게
+      if (P1) camSnap(557, 280, Math.min(1, T.viewWidth() / 2 / 375)); // 세로 화면: 손님과 그릇 셋이 다 보이게
     }, fox.pos);
     await say('여우랑 두루미가 함께 잔치를 열었어요. 손님들도 와요!');
     await say('입 모양을 잘 보고, 알맞은 그릇을 골라 줘요!');
@@ -870,7 +870,7 @@
       plates.fox = dish(T, dL, 'plate', 505, 404, .9);
       plates.crane = dish(T, dL, 'bottle', 612, 404, .95);
       plates.butterfly = dish(T, dL, 'flower', 840, 404, 1);
-      if (T.portrait()) { // 세로 화면(양옆이 잘림): 손님과 그릇을 가운데로 모으고 살짝 물러서서 모두 보이게
+      if (P1) { // 세로 화면(양옆이 잘림): 손님과 그릇을 가운데로 모으고 살짝 물러서서 모두 보이게
         [...Object.values(party), ...Object.values(plates)].forEach(a => a.place(Math.round(500 + (a.x - 500) * .72), a.y));
         camSnap(500, 280, Math.min(1, T.viewWidth() / 2 / 350));
       }
