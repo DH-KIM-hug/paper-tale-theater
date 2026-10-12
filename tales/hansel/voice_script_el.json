@@ -1,0 +1,740 @@
+{
+ "voices": {
+  "nar": "JBFqnCBsd6RMkjVDRZzb",
+  "hans": "bIHbv24MWmeRgasZH58o",
+  "gret": "cgSgspJ2msm6clMCkdW9",
+  "father": "cjVigY5qzO86Huf0OWal",
+  "witch": "SOYHLrjzK2X1ezoPC6cr",
+  "duck": "N2lVS1w4EtoT3dr4eOWO",
+  "bird": "FGY2WhTYpPnrIDTdsKH5"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "hans": "eleven_v4",
+  "gret": "eleven_v4",
+  "father": "eleven_v4",
+  "witch": "eleven_v4",
+  "duck": "eleven_v4",
+  "bird": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "hans": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "gret": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "father": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "witch": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "duck": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "bird": {
+   "stability": 0.3,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "nar",
+  "hans",
+  "gret",
+  "father",
+  "witch",
+  "duck",
+  "bird"
+ ],
+ "notes": "narrator George (storyteller). hans Will (brave older brother), gret Jessica (small sister), father Eric (smooth, caring), witch Harry (grumpy comic villain), duck Callum (husky trickster, silly), bird Laura (quirky chirpy). All eleven_v4; witch/animals 0.3/0.5, children 0.35/0.45, narrator 0.45/0.35. Witch is a grumpy, comic old hag, not scary.",
+ "lines": [
+  {
+   "text": "옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.",
+     null,
+     "[gentle, warm, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "\"얘들아, 숲에 산딸기 따러 가자!\" 아빠가 말했어요.",
+   "segs": [
+    [
+     "father",
+     "얘들아, 숲에 산딸기 따러 가자!",
+     null,
+     "[cheerful, kind, calling out]"
+    ],
+    [
+     "nar",
+     "아빠가 말했어요.",
+     null,
+     "[calm, matter-of-fact]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤은 빵 부스러기로 길을 표시하기로 했어요.",
+   "segs": [
+    [
+     "nar",
+     "헨젤은 빵 부스러기로 길을 표시하기로 했어요.",
+     null,
+     "[clever, calm, whispering a plan]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤을 톡! 숲으로 출발해요.",
+   "segs": [
+    [
+     "nar",
+     "헨젤을 톡! 숲으로 출발해요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤을 톡! 출발!",
+   "segs": [
+    [
+     "nar",
+     "헨젤을 톡! 출발!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!",
+     null,
+     "[playful, counting-along]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤을 톡톡톡톡톡! 부스러기를 세어요.",
+   "segs": [
+    [
+     "nar",
+     "헨젤을 톡톡톡톡톡! 부스러기를 세어요.",
+     null,
+     "[cheerful, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "빵 부스러기가 하나, 둘, 셋, 넷, 다섯! 길이 생겼어요.",
+   "segs": [
+    [
+     "nar",
+     "빵 부스러기가 하나, 둘, 셋, 넷, 다섯! 길이 생겼어요.",
+     null,
+     "[bright, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.",
+   "segs": [
+    [
+     "nar",
+     "빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.",
+     null,
+     "[delighted, yummy, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "배가 부르니 졸려서 둘은 나무 밑에서 깜빡 잠이 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "배가 부르니 졸려서 둘은 나무 밑에서 깜빡 잠이 들었어요.",
+     null,
+     "[yawning, sleepy, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "눈을 떠 보니 아빠가 보이지 않았어요. 둘은 길을 잃었어요.",
+   "segs": [
+    [
+     "nar",
+     "눈을 떠 보니 아빠가 보이지 않았어요. 둘은 길을 잃었어요.",
+     null,
+     "=[soft, worried] 눈을 떠 보니 아빠가 보이지 않았어요. [sad, small voice] 둘은 길을 잃었어요."
+    ]
+   ]
+  },
+  {
+   "text": "그레텔은 마음이 조금 무서웠어요. 그레텔을 톡! 꼭 안아 줘요.",
+   "segs": [
+    [
+     "nar",
+     "그레텔은 마음이 조금 무서웠어요. 그레텔을 톡! 꼭 안아 줘요.",
+     null,
+     "[soft, worried, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "그레텔을 톡! 꼭 안아 줘요.",
+   "segs": [
+    [
+     "nar",
+     "그레텔을 톡! 꼭 안아 줘요.",
+     null,
+     "[tender, warm, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"괜찮아, 빵 부스러기 길을 따라가자!\" 헨젤이 말했어요.",
+   "segs": [
+    [
+     "hans",
+     "괜찮아, 빵 부스러기 길을 따라가자!",
+     null,
+     "[brave, comforting, determined]"
+    ],
+    [
+     "nar",
+     "헨젤이 말했어요.",
+     null,
+     "[calm, matter-of-fact]"
+    ]
+   ]
+  },
+  {
+   "text": "그런데 이상해요. 빵 부스러기가 하나도 없어요!",
+   "segs": [
+    [
+     "nar",
+     "그런데 이상해요. 빵 부스러기가 하나도 없어요!",
+     null,
+     "=[puzzled] 그런데 이상해요. [gasps, surprised] 빵 부스러기가 하나도 없어요!"
+    ]
+   ]
+  },
+  {
+   "text": "작은 새가 빵 부스러기를 물고 있어요. 새를 톡!",
+   "segs": [
+    [
+     "nar",
+     "작은 새가 빵 부스러기를 물고 있어요. 새를 톡!",
+     null,
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "새를 톡! 어디 갔는지 물어봐요.",
+   "segs": [
+    [
+     "nar",
+     "새를 톡! 어디 갔는지 물어봐요.",
+     null,
+     "[curious, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"짹짹! 맛있어서 내가 다 먹었어!\" 새가 말했어요.",
+   "segs": [
+    [
+     "bird",
+     "짹짹! 맛있어서 내가 다 먹었어!",
+     null,
+     "[chirpy, cheeky, high-pitched, proud]"
+    ],
+    [
+     "nar",
+     "새가 말했어요.",
+     null,
+     "[calm, amused]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤은 눈물이 글썽했지만 그레텔의 손을 꼭 잡고 걸었어요.",
+   "segs": [
+    [
+     "nar",
+     "헨젤은 눈물이 글썽했지만 그레텔의 손을 꼭 잡고 걸었어요.",
+     null,
+     "[soft, brave, hopeful]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!",
+   "segs": [
+    [
+     "nar",
+     "그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!",
+     null,
+     "=[sniffs, curious] 그때 달콤한 냄새가 솔솔 났어요. [gasps, delighted] 앗, 과자 집이에요!"
+    ]
+   ]
+  },
+  {
+   "text": "벽은 쿠키, 지붕은 사탕이에요. 그레텔을 톡! 한 입 먹어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "벽은 쿠키, 지붕은 사탕이에요. 그레텔을 톡! 한 입 먹어 봐요.",
+     null,
+     "[wonder, delighted, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "그레텔을 톡! 냠냠 먹어요.",
+   "segs": [
+    [
+     "nar",
+     "그레텔을 톡! 냠냠 먹어요.",
+     null,
+     "[cheerful, yummy]"
+    ]
+   ]
+  },
+  {
+   "text": "너무 맛있어서 둘은 배가 빵빵해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "너무 맛있어서 둘은 배가 빵빵해졌어요.",
+     null,
+     "[giggling, contented]"
+    ]
+   ]
+  },
+  {
+   "text": "지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!",
+     null,
+     "[playful, counting-along]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤을 톡톡톡톡톡! 사탕을 세어요.",
+   "segs": [
+    [
+     "nar",
+     "헨젤을 톡톡톡톡톡! 사탕을 세어요.",
+     null,
+     "[cheerful, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "사탕이 하나, 둘, 셋, 넷, 다섯! 지붕이 예뻐졌어요.",
+   "segs": [
+    [
+     "nar",
+     "사탕이 하나, 둘, 셋, 넷, 다섯! 지붕이 예뻐졌어요.",
+     null,
+     "[bright, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 문이 열리고 마녀 할머니가 나왔어요.",
+   "segs": [
+    [
+     "nar",
+     "그때 문이 열리고 마녀 할머니가 나왔어요.",
+     null,
+     "[curious, slight surprise]"
+    ]
+   ]
+  },
+  {
+   "text": "\"내 과자 집을 누가 먹었니!\" 마녀가 투덜거렸어요.",
+   "segs": [
+    [
+     "witch",
+     "내 과자 집을 누가 먹었니!",
+     null,
+     "[amused, calm]"
+    ],
+    [
+     "nar",
+     "마녀가 투덜거렸어요.",
+     null,
+     "[grumpy, cranky, comically indignant]"
+    ]
+   ]
+  },
+  {
+   "text": "마녀는 과자를 아끼는 심술쟁이 할머니였어요.",
+   "segs": [
+    [
+     "nar",
+     "마녀는 과자를 아끼는 심술쟁이 할머니였어요.",
+     null,
+     "[playful, mock-gossiping, amused]"
+    ]
+   ]
+  },
+  {
+   "text": "마녀는 헨젤을 새장에 쏙 넣어 버렸어요. \"과자 값을 낼 때까지 여기 있어!\"",
+   "segs": [
+    [
+     "nar",
+     "마녀는 헨젤을 새장에 쏙 넣어 버렸어요.",
+     null,
+     "[playful, calm]"
+    ],
+    [
+     "witch",
+     "과자 값을 낼 때까지 여기 있어!",
+     null,
+     "[grumpy, bossy, comic cackle]"
+    ]
+   ]
+  },
+  {
+   "text": "그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.",
+   "segs": [
+    [
+     "nar",
+     "그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.",
+     null,
+     "[quiet, whispers, sneaky]"
+    ]
+   ]
+  },
+  {
+   "text": "새장 자물쇠에는 별 모양 구멍이 있어요. 별 모양 열쇠를 톡!",
+   "segs": [
+    [
+     "nar",
+     "새장 자물쇠에는 별 모양 구멍이 있어요. 별 모양 열쇠를 톡!",
+     null,
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "별 모양 열쇠를 톡!",
+   "segs": [
+    [
+     "nar",
+     "별 모양 열쇠를 톡!",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "열쇠 머리 모양을 잘 봐요.",
+   "segs": [
+    [
+     "nar",
+     "열쇠 머리 모양을 잘 봐요.",
+     null,
+     "[soft, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "반짝이는 별 열쇠를 톡!",
+   "segs": [
+    [
+     "nar",
+     "반짝이는 별 열쇠를 톡!",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "찰칵! 새장이 열렸어요. 헨젤이 폴짝 뛰어나왔어요!",
+   "segs": [
+    [
+     "nar",
+     "찰칵! 새장이 열렸어요. 헨젤이 폴짝 뛰어나왔어요!",
+     null,
+     "=[click] 찰칵! [delighted, bright] 새장이 열렸어요. 헨젤이 폴짝 뛰어나왔어요!"
+    ]
+   ]
+  },
+  {
+   "text": "\"고마워, 그레텔!\" 헨젤이 말했어요.",
+   "segs": [
+    [
+     "hans",
+     "고마워, 그레텔!",
+     null,
+     "[relieved, happy, grateful]"
+    ],
+    [
+     "nar",
+     "헨젤이 말했어요.",
+     null,
+     "[calm, matter-of-fact]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 마녀가 일어나 쿵쿵 걸어왔어요. 눈이 나빠서 더듬더듬 찾았어요.",
+   "segs": [
+    [
+     "nar",
+     "그때 마녀가 일어나 쿵쿵 걸어왔어요. 눈이 나빠서 더듬더듬 찾았어요.",
+     null,
+     "[hushed, playful suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "그레텔은 꾀가 났어요. \"마녀님, 화덕 안에 반짝이는 게 있어요!\"",
+   "segs": [
+    [
+     "nar",
+     "그레텔은 꾀가 났어요.",
+     null,
+     "[calm, clever]"
+    ],
+    [
+     "gret",
+     "마녀님, 화덕 안에 반짝이는 게 있어요!",
+     null,
+     "[sweet, innocent, clever, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "마녀가 화덕 안을 들여다봐요. 그레텔을 톡! 화덕 문을 쾅 밀어요.",
+   "segs": [
+    [
+     "nar",
+     "마녀가 화덕 안을 들여다봐요. 그레텔을 톡! 화덕 문을 쾅 밀어요.",
+     null,
+     "[hushed, excited, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "그레텔을 톡! 쾅 밀어요.",
+   "segs": [
+    [
+     "nar",
+     "그레텔을 톡! 쾅 밀어요.",
+     null,
+     "[urgent, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "쾅! 마녀는 깜짝 놀라 모자가 휙 날아갔어요.",
+   "segs": [
+    [
+     "nar",
+     "쾅! 마녀는 깜짝 놀라 모자가 휙 날아갔어요.",
+     null,
+     "=[loud bang] 쾅! [funny, surprised] 마녀는 깜짝 놀라 모자가 휙 날아갔어요."
+    ]
+   ]
+  },
+  {
+   "text": "마녀는 빗자루를 타고 굴뚝으로 휘리릭 날아갔어요. \"다시는 안 올게~!\"",
+   "segs": [
+    [
+     "nar",
+     "마녀는 빗자루를 타고 굴뚝으로 휘리릭 날아갔어요.",
+     null,
+     "[playful, fast, whooshing]"
+    ],
+    [
+     "witch",
+     "다시는 안 올게~!",
+     null,
+     "[panicked, comically wailing, fading away]"
+    ]
+   ]
+  },
+  {
+   "text": "집으로 가는 길에 넓은 강이 나왔어요. 다리가 없어요!",
+   "segs": [
+    [
+     "nar",
+     "집으로 가는 길에 넓은 강이 나왔어요. 다리가 없어요!",
+     null,
+     "[soft, worried, then determined]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 흰 오리가 헤엄쳐 왔어요. 오리를 톡!",
+   "segs": [
+    [
+     "nar",
+     "그때 흰 오리가 헤엄쳐 왔어요. 오리를 톡!",
+     null,
+     "[bright, hopeful]"
+    ]
+   ]
+  },
+  {
+   "text": "오리를 톡! 등에 타요.",
+   "segs": [
+    [
+     "nar",
+     "오리를 톡! 등에 타요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"꽥꽥! 내 등에 타!\" 오리가 말했어요.",
+   "segs": [
+    [
+     "duck",
+     "꽥꽥! 내 등에 타!",
+     null,
+     "[silly, quacking, cheerful]"
+    ],
+    [
+     "nar",
+     "오리가 말했어요.",
+     null,
+     "[calm, amused]"
+    ]
+   ]
+  },
+  {
+   "text": "오리가 둘을 태우고 강을 건너 주었어요. \"고마워, 오리야!\"",
+   "segs": [
+    [
+     "nar",
+     "오리가 둘을 태우고 강을 건너 주었어요.",
+     null,
+     "[warm, relaxed, gentle]"
+    ],
+    [
+     "gret",
+     "고마워, 오리야!",
+     null,
+     "[sweet, grateful, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.",
+     null,
+     "[warm, tender, hopeful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"헨젤! 그레텔!\" 아빠가 달려왔어요. 아빠를 톡!",
+   "segs": [
+    [
+     "father",
+     "헨젤! 그레텔!",
+     null,
+     "[overjoyed, calling out, emotional]"
+    ],
+    [
+     "nar",
+     "아빠가 달려왔어요. 아빠를 톡!",
+     null,
+     "[bright, hurried, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠를 톡! 꼭 안아요.",
+   "segs": [
+    [
+     "nar",
+     "아빠를 톡! 꼭 안아요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"찾았다! 보고 싶었어!\" 아빠가 말했어요.",
+   "segs": [
+    [
+     "father",
+     "찾았다! 보고 싶었어!",
+     null,
+     "[emotional, warm, relieved, loving]"
+    ],
+    [
+     "nar",
+     "아빠가 말했어요.",
+     null,
+     "[calm, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤과 그레텔은 마음이 따뜻하고 행복했어요. 여러분은 기분이 어때요? 헨젤을 톡! 만세!",
+   "segs": [
+    [
+     "nar",
+     "헨젤과 그레텔은 마음이 따뜻하고 행복했어요. 여러분은 기분이 어때요? 헨젤을 톡! 만세!",
+     null,
+     "[joyful, warm, cheering]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤을 톡! 만세!",
+   "segs": [
+    [
+     "nar",
+     "헨젤을 톡! 만세!",
+     null,
+     "[joyful, cheering]"
+    ]
+   ]
+  },
+  {
+   "text": "우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.",
+   "segs": [
+    [
+     "nar",
+     "우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.",
+     null,
+     "[gentle, warm, slow, closing storytelling]"
+    ]
+   ]
+  }
+ ],
+ "extra": {}
+}

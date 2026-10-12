@@ -1,0 +1,763 @@
+{
+ "voices": {
+  "nar": "JBFqnCBsd6RMkjVDRZzb",
+  "heung": "bIHbv24MWmeRgasZH58o",
+  "nol": "nPczCjzI2devNBz1zQrb",
+  "nwife": "XrExE9yKIg1WjnnlVkGX",
+  "dok": "SOYHLrjzK2X1ezoPC6cr"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "heung": "eleven_v4",
+  "nol": "eleven_v4",
+  "nwife": "eleven_v4",
+  "dok": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "heung": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "nol": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "nwife": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "dok": {
+   "stability": 0.3,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "nar",
+  "heung",
+  "nol",
+  "nwife",
+  "dok"
+ ],
+ "notes": "narrator George (warm storyteller, same as patjuk). heung Will (relaxed optimist, kind younger brother), nol Brian (deep, greedy villain, comic), nwife Matilda (sharp scolding sister-in-law), dok Harry (rough goblin, boomy but comic). All eleven_v4; villains 0.3/0.5, narrator 0.45/0.35.",
+ "lines": [
+  {
+   "text": "옛날 옛날에 마음씨 착한 동생 흥부와 욕심쟁이 형 놀부가 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날 옛날에 마음씨 착한 동생 흥부와 욕심쟁이 형 놀부가 살았어요.",
+     null,
+     "[gentle, warm, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부를 톡! 눌러서 인사해요.",
+   "segs": [
+    [
+     "nar",
+     "흥부를 톡! 눌러서 인사해요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부를 톡! 인사해요.",
+   "segs": [
+    [
+     "nar",
+     "흥부를 톡! 인사해요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부는 활짝 웃으며 인사했어요.",
+   "segs": [
+    [
+     "nar",
+     "흥부는 활짝 웃으며 인사했어요.",
+     null,
+     "[warm, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부는 배가 고파서 형 집으로 밥을 얻으러 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "흥부는 배가 고파서 형 집으로 밥을 얻으러 갔어요.",
+     null,
+     "[soft, a little sad]"
+    ]
+   ]
+  },
+  {
+   "text": "형수는 화가 난 얼굴로 말했어요. \"밥이 어디 있어요! 저리 가요!\"",
+   "segs": [
+    [
+     "nar",
+     "형수는 화가 난 얼굴로 말했어요.",
+     null,
+     "[calm, setting the scene]"
+    ],
+    [
+     "nwife",
+     "밥이 어디 있어요! 저리 가요!",
+     null,
+     "[irritated, comically snappy, shouting]"
+    ]
+   ]
+  },
+  {
+   "text": "형수가 주걱을 휘두르자 흥부 볼에 밥알이 붙었어요. 흥부는 그 밥알을 맛있게 먹었어요.",
+   "segs": [
+    [
+     "nar",
+     "형수가 주걱을 휘두르자 흥부 볼에 밥알이 붙었어요. 흥부는 그 밥알을 맛있게 먹었어요.",
+     null,
+     "[playful, surprised, then warm]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부는 웃으며 말했어요. \"괜찮아요. 밥알도 맛있어요!\"",
+   "segs": [
+    [
+     "nar",
+     "흥부는 웃으며 말했어요.",
+     null,
+     "[gentle, warm]"
+    ],
+    [
+     "heung",
+     "괜찮아요. 밥알도 맛있어요!",
+     null,
+     "[cheerful, kind, sweet]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부를 톡! 눌러서 집으로 돌아가요.",
+   "segs": [
+    [
+     "nar",
+     "흥부를 톡! 눌러서 집으로 돌아가요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부를 톡! 집으로 가요.",
+   "segs": [
+    [
+     "nar",
+     "흥부를 톡! 집으로 가요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부네 초가집 처마에는 제비 가족이 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "흥부네 초가집 처마에는 제비 가족이 살았어요.",
+     null,
+     "[calm, gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 제비는 몇 마리일까요? 둥지를 톡톡톡 눌러서 세어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "아기 제비는 몇 마리일까요? 둥지를 톡톡톡 눌러서 세어 봐요!",
+     null,
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "둥지를 톡톡톡! 아기 제비를 세어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "둥지를 톡톡톡! 아기 제비를 세어 봐요.",
+     null,
+     "[cheerful, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 제비가 하나, 둘, 셋! 세 마리예요.",
+   "segs": [
+    [
+     "nar",
+     "아기 제비가 하나, 둘, 셋! 세 마리예요.",
+     null,
+     "[delighted, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!",
+   "segs": [
+    [
+     "nar",
+     "앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!",
+     null,
+     "=[gasps] 앗! [worried, quick] 아기 제비 한 마리가 둥지에서 떨어졌어요!"
+    ]
+   ]
+  },
+  {
+   "text": "흥부를 톡! 눌러서 아기 제비를 받아 줘요.",
+   "segs": [
+    [
+     "nar",
+     "흥부를 톡! 눌러서 아기 제비를 받아 줘요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부를 톡! 제비를 받아 줘요.",
+   "segs": [
+    [
+     "nar",
+     "흥부를 톡! 제비를 받아 줘요.",
+     null,
+     "[urgent, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부는 아기 제비의 다친 다리에 천을 감아 주었어요. 아기 제비는 금방 나았어요.",
+   "segs": [
+    [
+     "nar",
+     "흥부는 아기 제비의 다친 다리에 천을 감아 주었어요. 아기 제비는 금방 나았어요.",
+     null,
+     "[soft, caring, relieved]"
+    ]
+   ]
+  },
+  {
+   "text": "가을이 되자 제비 가족은 따뜻한 남쪽 나라로 떠났어요.",
+   "segs": [
+    [
+     "nar",
+     "가을이 되자 제비 가족은 따뜻한 남쪽 나라로 떠났어요.",
+     null,
+     "[soft, wistful, calm]"
+    ]
+   ]
+  },
+  {
+   "text": "제비를 톡! 눌러서 배웅해요.",
+   "segs": [
+    [
+     "nar",
+     "제비를 톡! 눌러서 배웅해요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "제비를 톡! 안녕, 잘 가!",
+   "segs": [
+    [
+     "nar",
+     "제비를 톡! 안녕, 잘 가!",
+     null,
+     "[warm, cheerful, waving goodbye]"
+    ]
+   ]
+  },
+  {
+   "text": "봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.",
+   "segs": [
+    [
+     "nar",
+     "봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.",
+     null,
+     "[bright, happy, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "제비를 톡! 눌러서 박씨를 받아요.",
+   "segs": [
+    [
+     "nar",
+     "제비를 톡! 눌러서 박씨를 받아요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "제비를 톡! 박씨를 받아요.",
+   "segs": [
+    [
+     "nar",
+     "제비를 톡! 박씨를 받아요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부는 박씨를 마당에 심었어요. 흥부를 톡톡톡 눌러서 물을 줘요!",
+   "segs": [
+    [
+     "nar",
+     "흥부는 박씨를 마당에 심었어요. 흥부를 톡톡톡 눌러서 물을 줘요!",
+     null,
+     "[warm, inviting, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부를 톡톡톡! 물을 줘요.",
+   "segs": [
+    [
+     "nar",
+     "흥부를 톡톡톡! 물을 줘요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!",
+     null,
+     "[amazed, bright, growing]"
+    ]
+   ]
+  },
+  {
+   "text": "줄기를 톡톡톡! 박을 세어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "줄기를 톡톡톡! 박을 세어 봐요.",
+     null,
+     "[cheerful, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "박이 하나, 둘, 셋! 세 통이에요.",
+   "segs": [
+    [
+     "nar",
+     "박이 하나, 둘, 셋! 세 통이에요.",
+     null,
+     "[excited, counting, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부 부부는 톱으로 박을 탔어요. 박을 톡! 눌러서 슬근슬근 타 봐요.",
+   "segs": [
+    [
+     "nar",
+     "흥부 부부는 톱으로 박을 탔어요. 박을 톡! 눌러서 슬근슬근 타 봐요.",
+     null,
+     "[playful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "박을 톡! 슬근슬근 타요.",
+   "segs": [
+    [
+     "nar",
+     "박을 톡! 슬근슬근 타요.",
+     null,
+     "[rhythmic, cheerful, sawing along]"
+    ]
+   ]
+  },
+  {
+   "text": "첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.",
+   "segs": [
+    [
+     "nar",
+     "첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.",
+     null,
+     "[amazed, bursting with joy]"
+    ]
+   ]
+  },
+  {
+   "text": "쌀자루를 톡톡톡 눌러서 세어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "쌀자루를 톡톡톡 눌러서 세어 봐요!",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "쌀자루를 톡톡톡! 세어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "쌀자루를 톡톡톡! 세어 봐요.",
+     null,
+     "[cheerful, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "쌀자루가 하나, 둘, 셋! 이제 배불리 먹을 수 있어요.",
+   "segs": [
+    [
+     "nar",
+     "쌀자루가 하나, 둘, 셋! 이제 배불리 먹을 수 있어요.",
+     null,
+     "[happy, relieved, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "두 번째 박에서는 반짝반짝 금은보화가 나왔어요!",
+   "segs": [
+    [
+     "nar",
+     "두 번째 박에서는 반짝반짝 금은보화가 나왔어요!",
+     null,
+     "[awe, sparkling wonder]"
+    ]
+   ]
+  },
+  {
+   "text": "세 번째 박에서는 작은 박 요정들이 나와 멋진 새집을 지어 주었어요!",
+   "segs": [
+    [
+     "nar",
+     "세 번째 박에서는 작은 박 요정들이 나와 멋진 새집을 지어 주었어요!",
+     null,
+     "[delighted, magical, wonder]"
+    ]
+   ]
+  },
+  {
+   "text": "소문을 들은 놀부는 배가 아팠어요. \"나도 부자가 될 거야!\"",
+   "segs": [
+    [
+     "nar",
+     "소문을 들은 놀부는 배가 아팠어요.",
+     null,
+     "[calm, slightly sour]"
+    ],
+    [
+     "nol",
+     "나도 부자가 될 거야!",
+     null,
+     "[greedy, grumbling, comically envious]"
+    ]
+   ]
+  },
+  {
+   "text": "놀부는 제비집을 마구 흔들었어요. 아기 제비가 떨어졌어요!",
+   "segs": [
+    [
+     "nar",
+     "놀부는 제비집을 마구 흔들었어요. 아기 제비가 떨어졌어요!",
+     null,
+     "[mischievous, then surprised gasp]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 제비를 톡! 눌러서 받아 줘요.",
+   "segs": [
+    [
+     "nar",
+     "아기 제비를 톡! 눌러서 받아 줘요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 제비를 톡! 받아 줘요.",
+   "segs": [
+    [
+     "nar",
+     "아기 제비를 톡! 받아 줘요.",
+     null,
+     "[urgent, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "놀부는 서둘러 천을 칭칭 감아 주었어요. \"자, 이제 박씨를 가져와라!\" 제비는 다치지 않고 날아갔어요.",
+   "segs": [
+    [
+     "nar",
+     "놀부는 서둘러 천을 칭칭 감아 주었어요.",
+     null,
+     "[calm, hurried]"
+    ],
+    [
+     "nol",
+     "자, 이제 박씨를 가져와라!",
+     null,
+     "[bossy, fake sweetness, comic]"
+    ],
+    [
+     "nar",
+     "제비는 다치지 않고 날아갔어요.",
+     null,
+     "[calm, relieved]"
+    ]
+   ]
+  },
+  {
+   "text": "놀부네 마당에도 박이 세 통 열렸어요. 박을 톡톡톡 눌러서 세어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "놀부네 마당에도 박이 세 통 열렸어요. 박을 톡톡톡 눌러서 세어 봐요!",
+     null,
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "박을 톡톡톡! 세어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "박을 톡톡톡! 세어 봐요.",
+     null,
+     "[cheerful, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "박이 하나, 둘, 셋! 놀부는 기대에 부풀었어요.",
+   "segs": [
+    [
+     "nar",
+     "박이 하나, 둘, 셋! 놀부는 기대에 부풀었어요.",
+     null,
+     "[playful, building suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "첫 번째 박을 톡!",
+   "segs": [
+    [
+     "nar",
+     "첫 번째 박을 톡!",
+     null,
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.",
+   "segs": [
+    [
+     "nar",
+     "콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.",
+     null,
+     "=[big splash] 콸콸콸! [amused, playful] 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요."
+    ]
+   ]
+  },
+  {
+   "text": "두 번째 박을 톡!",
+   "segs": [
+    [
+     "nar",
+     "두 번째 박을 톡!",
+     null,
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 방망이를 든 도깨비가 쑥 나왔어요. \"이 욕심쟁이야!\" 도깨비는 놀부를 놀라게 하고 사라졌어요.",
+   "segs": [
+    [
+     "nar",
+     "이번에는 방망이를 든 도깨비가 쑥 나왔어요.",
+     null,
+     "[playful, calm]"
+    ],
+    [
+     "dok",
+     "이 욕심쟁이야!",
+     null,
+     "[booming, comically gruff, goblin]"
+    ],
+    [
+     "nar",
+     "도깨비는 놀부를 놀라게 하고 사라졌어요.",
+     null,
+     "[gentle, reassuring, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "세 번째 박을 톡!",
+   "segs": [
+    [
+     "nar",
+     "세 번째 박을 톡!",
+     null,
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.",
+   "segs": [
+    [
+     "nar",
+     "와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.",
+     null,
+     "=[big rumble] 와르르! [gentle, reassuring] 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요."
+    ]
+   ]
+  },
+  {
+   "text": "놀부는 흙투성이가 되어 흥부네 집을 찾아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "놀부는 흙투성이가 되어 흥부네 집을 찾아왔어요.",
+     null,
+     "[calm, soft, amused]"
+    ]
+   ]
+  },
+  {
+   "text": "놀부가 고개를 숙였어요. \"동생아, 내가 잘못했다. 욕심을 부려서 미안하구나.\"",
+   "segs": [
+    [
+     "nar",
+     "놀부가 고개를 숙였어요.",
+     null,
+     "[gentle, calm]"
+    ],
+    [
+     "nol",
+     "동생아, 내가 잘못했다. 욕심을 부려서 미안하구나.",
+     null,
+     "[sad, ashamed, sincere, softly]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부가 활짝 웃으며 말했어요. \"형님, 괜찮아요. 우리 함께 살아요!\"",
+   "segs": [
+    [
+     "nar",
+     "흥부가 활짝 웃으며 말했어요.",
+     null,
+     "[warm, smiling]"
+    ],
+    [
+     "heung",
+     "형님, 괜찮아요. 우리 함께 살아요!",
+     null,
+     "[cheerful, warm, forgiving]"
+    ]
+   ]
+  },
+  {
+   "text": "쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.",
+   "segs": [
+    [
+     "nar",
+     "쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "쌀자루를 톡! 형님께 보내요.",
+   "segs": [
+    [
+     "nar",
+     "쌀자루를 톡! 형님께 보내요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "쌀자루가 하나, 둘, 셋! 놀부는 눈물이 핑 돌았어요.",
+   "segs": [
+    [
+     "nar",
+     "쌀자루가 하나, 둘, 셋! 놀부는 눈물이 핑 돌았어요.",
+     null,
+     "[touched, warm, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부를 톡! 눌러서 모두 함께 만세!",
+   "segs": [
+    [
+     "nar",
+     "흥부를 톡! 눌러서 모두 함께 만세!",
+     null,
+     "[joyful, cheering]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부를 톡! 모두 만세!",
+   "segs": [
+    [
+     "nar",
+     "흥부를 톡! 모두 만세!",
+     null,
+     "[joyful, cheering]"
+    ]
+   ]
+  },
+  {
+   "text": "흥부와 놀부는 그 뒤로 사이좋게 오래오래 살았대요. 착한 마음은 복이 되어 돌아와요.",
+   "segs": [
+    [
+     "nar",
+     "흥부와 놀부는 그 뒤로 사이좋게 오래오래 살았대요. 착한 마음은 복이 되어 돌아와요.",
+     null,
+     "[gentle, warm, slow, closing storytelling]"
+    ]
+   ]
+  }
+ ],
+ "extra": {}
+}

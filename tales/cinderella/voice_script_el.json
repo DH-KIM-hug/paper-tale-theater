@@ -1,0 +1,709 @@
+{
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "cind": "EXAVITQu4vr4xnSDxMaL",
+  "step": "XrExE9yKIg1WjnnlVkGX",
+  "sisa": "FGY2WhTYpPnrIDTdsKH5",
+  "sisb": "cgSgspJ2msm6clMCkdW9",
+  "fairy": "Xb7hH8MSUJpSbSDYk0k2",
+  "prince": "bIHbv24MWmeRgasZH58o",
+  "mouse": "TX3LPaxmHKxFdv7VOQHJ",
+  "footman": "onwK4e9ZLuTAKqWW03F9"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "cind": "eleven_v4",
+  "step": "eleven_v4",
+  "sisa": "eleven_v4",
+  "sisb": "eleven_v4",
+  "fairy": "eleven_v4",
+  "prince": "eleven_v4",
+  "mouse": "eleven_v4",
+  "footman": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "cind": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "step": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "sisa": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "sisb": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "fairy": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "prince": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "mouse": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "footman": {
+   "stability": 0.3,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "nar",
+  "cind",
+  "step",
+  "sisa",
+  "sisb",
+  "fairy",
+  "prince",
+  "mouse",
+  "footman"
+ ],
+ "notes": "narrator Lily (velvety; calm, elegant). cind Sarah (mature, reassuring, gentle), step Matilda (haughty stepmother), sisa Laura (sassy sister), sisb Jessica (squeaky sister), fairy Alice (clear, kindly fairy godmother), prince Will (relaxed, friendly), mouse Liam (energetic small helper), footman Daniel (steady formal). All eleven_v4; villains/animals 0.3/0.5, narrator 0.45/0.35, children 0.35/0.45.",
+ "lines": [
+  {
+   "text": "옛날 옛날에 마음씨 고운 신데렐라가 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날 옛날에 마음씨 고운 신데렐라가 살았어요.",
+     null,
+     "[gentle, warm, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 새엄마, 두 언니와 함께 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 새엄마, 두 언니와 함께 살았어요.",
+     null,
+     "[calm, a little sad]"
+    ]
+   ]
+  },
+  {
+   "text": "\"신데렐라, 부엌을 쓸어라!\" 새엄마가 말했어요.",
+   "segs": [
+    [
+     "step",
+     "신데렐라, 부엌을 쓸어라!",
+     null,
+     "[haughty, bossy, comically sharp]"
+    ],
+    [
+     "nar",
+     "새엄마가 말했어요.",
+     null,
+     "[calm, matter-of-fact]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라를 톡톡톡 눌러서 부엌을 쓸어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "신데렐라를 톡톡톡 눌러서 부엌을 쓸어 봐요!",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라를 톡톡톡! 부엌을 쓸어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라를 톡톡톡! 부엌을 쓸어요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "부엌이 깨끗해졌어요. 그런데 일이 아직 많이 남았어요.",
+   "segs": [
+    [
+     "nar",
+     "부엌이 깨끗해졌어요. 그런데 일이 아직 많이 남았어요.",
+     null,
+     "[sighs, tired, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "일이 너무 많아서 신데렐라는 마음이 슬퍼졌어요.",
+   "segs": [
+    [
+     "nar",
+     "일이 너무 많아서 신데렐라는 마음이 슬퍼졌어요.",
+     null,
+     "[sad, softly, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라의 마음은 어떨까요? 슬픈 얼굴을 톡!",
+   "segs": [
+    [
+     "nar",
+     "신데렐라의 마음은 어떨까요? 슬픈 얼굴을 톡!",
+     null,
+     "[gentle, curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "슬픈 얼굴을 톡!",
+   "segs": [
+    [
+     "nar",
+     "슬픈 얼굴을 톡!",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "눈물이 맺힌 얼굴을 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "눈물이 맺힌 얼굴을 찾아봐요.",
+     null,
+     "[soft, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "두 손으로 눈을 가린 얼굴을 톡!",
+   "segs": [
+    [
+     "nar",
+     "두 손으로 눈을 가린 얼굴을 톡!",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 슬픈 마음이에요. 그때 쪼르르 소리가 났어요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 슬픈 마음이에요. 그때 쪼르르 소리가 났어요.",
+     null,
+     "[warm, reassuring, then quick and curious]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 생쥐들이 달려왔어요. \"우리가 도와줄게!\"",
+   "segs": [
+    [
+     "nar",
+     "그때 생쥐들이 달려왔어요.",
+     null,
+     "[bright, scurrying, lively]"
+    ],
+    [
+     "mouse",
+     "우리가 도와줄게!",
+     null,
+     "[squeaky, cheerful, high-pitched, eager]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐를 톡톡톡톡 눌러서 하나씩 세어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "생쥐를 톡톡톡톡 눌러서 하나씩 세어 봐요!",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐를 톡톡톡톡! 하나씩 세어요.",
+   "segs": [
+    [
+     "nar",
+     "생쥐를 톡톡톡톡! 하나씩 세어요.",
+     null,
+     "[cheerful, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 하나, 둘, 셋, 넷! 모두 같이 청소를 했어요.",
+   "segs": [
+    [
+     "nar",
+     "생쥐가 하나, 둘, 셋, 넷! 모두 같이 청소를 했어요.",
+     null,
+     "[delighted, bright, busy]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 방긋 웃었어요. \"고마워, 친구들!\"",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 방긋 웃었어요.",
+     null,
+     "[smiling, warm]"
+    ],
+    [
+     "cind",
+     "고마워, 친구들!",
+     null,
+     "[happy, sweet, grateful]"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 왕궁에서 무도회가 열린다는 소식이 왔어요.",
+   "segs": [
+    [
+     "nar",
+     "어느 날, 왕궁에서 무도회가 열린다는 소식이 왔어요.",
+     null,
+     "[bright, news, excited]"
+    ]
+   ]
+  },
+  {
+   "text": "언니들은 커다란 리본을 달고 빙글빙글 돌았어요.",
+   "segs": [
+    [
+     "nar",
+     "언니들은 커다란 리본을 달고 빙글빙글 돌았어요.",
+     null,
+     "[playful, amused, twirling]"
+    ]
+   ]
+  },
+  {
+   "text": "언니를 톡! 리본을 달아 줘요.",
+   "segs": [
+    [
+     "nar",
+     "언니를 톡! 리본을 달아 줘요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "쿵! 리본이 너무 커서 언니들이 서로 부딪혔어요. 신데렐라는 킥킥 웃었어요.",
+   "segs": [
+    [
+     "nar",
+     "쿵! 리본이 너무 커서 언니들이 서로 부딪혔어요. 신데렐라는 킥킥 웃었어요.",
+     null,
+     "=[bump] 쿵! [giggling, amused] 리본이 너무 커서 언니들이 서로 부딪혔어요. [laughs softly] 신데렐라는 킥킥 웃었어요."
+    ]
+   ]
+  },
+  {
+   "text": "새엄마와 언니들은 무도회에 갔어요. 신데렐라만 집에 남았어요.",
+   "segs": [
+    [
+     "nar",
+     "새엄마와 언니들은 무도회에 갔어요. 신데렐라만 집에 남았어요.",
+     null,
+     "[soft, lonely, quiet]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 정원에서 훌쩍훌쩍 울었어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 정원에서 훌쩍훌쩍 울었어요.",
+     null,
+     "[sad, soft, sniffling]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 요정 할머니가 나타났어요. \"울지 마, 내가 도와줄게!\" 요정 할머니를 톡!",
+   "segs": [
+    [
+     "nar",
+     "그때 요정 할머니가 나타났어요.",
+     null,
+     "[hushed, wonder]"
+    ],
+    [
+     "fairy",
+     "울지 마, 내가 도와줄게!",
+     null,
+     "[kind, grandmotherly, warm, comforting]"
+    ],
+    [
+     "nar",
+     "요정 할머니를 톡!",
+     null,
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "요정 할머니를 톡! 마법을 부려요.",
+   "segs": [
+    [
+     "nar",
+     "요정 할머니를 톡! 마법을 부려요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "요정 할머니가 지팡이를 휘휘! 생쥐들은 하얀 말이 되었어요.",
+   "segs": [
+    [
+     "nar",
+     "요정 할머니가 지팡이를 휘휘! 생쥐들은 하얀 말이 되었어요.",
+     null,
+     "=[magical, sparkling] 요정 할머니가 지팡이를 휘휘! [delighted, wonder] 생쥐들은 하얀 말이 되었어요."
+    ]
+   ]
+  },
+  {
+   "text": "커다란 호박은 황금 마차가 되었어요!",
+   "segs": [
+    [
+     "nar",
+     "커다란 호박은 황금 마차가 되었어요!",
+     null,
+     "[amazed, delighted, wonder]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 반짝이는 드레스를 입고 유리 구두를 신었어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 반짝이는 드레스를 입고 유리 구두를 신었어요.",
+     null,
+     "[awe, enchanted, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "\"밤 열두 시 종이 울리면 마법이 풀려요. 서둘러 돌아오렴!\"",
+   "segs": [
+    [
+     "fairy",
+     "밤 열두 시 종이 울리면 마법이 풀려요. 서둘러 돌아오렴!",
+     null,
+     "[kind, gentle, a little urgent, motherly]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 고개를 끄덕이고 마차를 탔어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 고개를 끄덕이고 마차를 탔어요.",
+     null,
+     "[warm, calm, hopeful]"
+    ]
+   ]
+  },
+  {
+   "text": "궁전에서는 왕자님이 신데렐라에게 인사했어요. \"나와 함께 춤춰요!\"",
+   "segs": [
+    [
+     "nar",
+     "궁전에서는 왕자님이 신데렐라에게 인사했어요.",
+     null,
+     "[elegant, warm, gentle]"
+    ],
+    [
+     "prince",
+     "나와 함께 춤춰요!",
+     null,
+     "[kind, polite, gentle, charming]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라를 톡톡톡 눌러서 함께 춤을 춰 봐요!",
+   "segs": [
+    [
+     "nar",
+     "신데렐라를 톡톡톡 눌러서 함께 춤을 춰 봐요!",
+     null,
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라를 톡톡톡! 함께 춤을 춰요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라를 톡톡톡! 함께 춤을 춰요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "둘은 빙글빙글 춤을 추었어요. 신데렐라는 정말 행복했어요.",
+   "segs": [
+    [
+     "nar",
+     "둘은 빙글빙글 춤을 추었어요. 신데렐라는 정말 행복했어요.",
+     null,
+     "[joyful, dreamy, waltzing]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 시계탑에서 종이 울렸어요. 신데렐라를 톡톡톡톡톡 눌러서 종소리를 세어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "그때 시계탑에서 종이 울렸어요. 신데렐라를 톡톡톡톡톡 눌러서 종소리를 세어 봐요!",
+     null,
+     "=[bell tolls] 그때 시계탑에서 종이 울렸어요. [excited, inviting] 신데렐라를 톡톡톡톡톡 눌러서 종소리를 세어 봐요!"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라를 톡톡톡톡톡! 종소리를 세어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라를 톡톡톡톡톡! 종소리를 세어요.",
+     null,
+     "[cheerful, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "종이 하나, 둘, 셋, 넷, 다섯! 마법이 풀리기 전에 달려야 해요!",
+   "segs": [
+    [
+     "nar",
+     "종이 하나, 둘, 셋, 넷, 다섯! 마법이 풀리기 전에 달려야 해요!",
+     null,
+     "[urgent, counting, hurried]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 계단을 후다닥 달려 내려갔어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 계단을 후다닥 달려 내려갔어요.",
+     null,
+     "[hurried, breathless, quick]"
+    ]
+   ]
+  },
+  {
+   "text": "앗! 유리 구두 한 짝이 계단에 떨어졌어요.",
+   "segs": [
+    [
+     "nar",
+     "앗! 유리 구두 한 짝이 계단에 떨어졌어요.",
+     null,
+     "=[gasps] 앗! [soft, concerned] 유리 구두 한 짝이 계단에 떨어졌어요."
+    ]
+   ]
+  },
+  {
+   "text": "왕자님이 구두를 주웠어요. \"이 구두의 주인을 꼭 찾을 거야!\"",
+   "segs": [
+    [
+     "nar",
+     "왕자님이 구두를 주웠어요.",
+     null,
+     "[soft, warm]"
+    ],
+    [
+     "prince",
+     "이 구두의 주인을 꼭 찾을 거야!",
+     null,
+     "[earnest, determined, tender]"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날, 시종이 집집마다 구두를 들고 찾아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "다음 날, 시종이 집집마다 구두를 들고 찾아왔어요.",
+     null,
+     "[bright, brisk, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라의 집에도 왔어요. \"이 구두가 꼭 맞는 분을 찾아요!\"",
+   "segs": [
+    [
+     "nar",
+     "신데렐라의 집에도 왔어요.",
+     null,
+     "[calm, gentle]"
+    ],
+    [
+     "footman",
+     "이 구두가 꼭 맞는 분을 찾아요!",
+     null,
+     "[formal, polite, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "언니가 발을 쏙 넣어 보았어요. 하지만 발이 너무 커서 안 들어갔어요.",
+   "segs": [
+    [
+     "nar",
+     "언니가 발을 쏙 넣어 보았어요. 하지만 발이 너무 커서 안 들어갔어요.",
+     null,
+     "[playful, amused, then gently comic]"
+    ]
+   ]
+  },
+  {
+   "text": "구두가 꼭 맞는 사람은 누굴까요? 앞치마를 입은 신데렐라를 톡!",
+   "segs": [
+    [
+     "nar",
+     "구두가 꼭 맞는 사람은 누굴까요? 앞치마를 입은 신데렐라를 톡!",
+     null,
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라를 톡!",
+   "segs": [
+    [
+     "nar",
+     "신데렐라를 톡!",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "앞치마를 입은 친구를 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "앞치마를 입은 친구를 찾아봐요.",
+     null,
+     "[curious, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "앞치마를 입은 신데렐라를 톡!",
+   "segs": [
+    [
+     "nar",
+     "앞치마를 입은 신데렐라를 톡!",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "구두가 꼭 맞았어요! 모두 깜짝 놀랐어요.",
+   "segs": [
+    [
+     "nar",
+     "구두가 꼭 맞았어요! 모두 깜짝 놀랐어요.",
+     null,
+     "[delighted, surprised, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "언니들이 말했어요. \"신데렐라, 그동안 미안해!\"",
+   "segs": [
+    [
+     "nar",
+     "언니들이 말했어요.",
+     null,
+     "[gentle, calm]"
+    ],
+    [
+     "sisa",
+     "신데렐라, 그동안 미안해!",
+     null,
+     "[sheepish, apologetic, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 웃으며 말했어요. \"괜찮아요. 우리 같이 행복해요!\"",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 웃으며 말했어요.",
+     null,
+     "[gentle, warm]"
+    ],
+    [
+     "cind",
+     "괜찮아요. 우리 같이 행복해요!",
+     null,
+     "[kind, sweet, forgiving, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라를 톡! 모두 함께 만세!",
+   "segs": [
+    [
+     "nar",
+     "신데렐라를 톡! 모두 함께 만세!",
+     null,
+     "[joyful, cheering]"
+    ]
+   ]
+  },
+  {
+   "text": "착한 마음은 행복을 불러와요. 신데렐라 이야기는 이렇게 끝났어요.",
+   "segs": [
+    [
+     "nar",
+     "착한 마음은 행복을 불러와요. 신데렐라 이야기는 이렇게 끝났어요.",
+     null,
+     "[gentle, warm, slow, closing storytelling]"
+    ]
+   ]
+  }
+ ],
+ "extra": {}
+}
