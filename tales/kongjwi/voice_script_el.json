@@ -1,14 +1,14 @@
 {
  "voices": {
-  "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "kong": "cgSgspJ2msm6clMCkdW9",
-  "pat": "EXAVITQu4vr4xnSDxMaL",
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "kong": "Lb7qkOn5hF8p7qfCDH8q",
+  "pat": "FGY2WhTYpPnrIDTdsKH5",
   "step": "XrExE9yKIg1WjnnlVkGX",
-  "toad": "N2lVS1w4EtoT3dr4eOWO",
-  "ox": "pqHfZKP75CvOlQylNhV4",
-  "fairy": "Xb7hH8MSUJpSbSDYk0k2",
+  "toad": "pqHfZKP75CvOlQylNhV4",
+  "ox": "CwhRBWXzGAHq8TQ4Fs17",
+  "fairy": "pFZP5JQG7iQjIQuC4Bku",
   "won": "onwK4e9ZLuTAKqWW03F9",
-  "sparrow": "FGY2WhTYpPnrIDTdsKH5"
+  "sparrow": "cgSgspJ2msm6clMCkdW9"
  },
  "models": {
   "nar": "eleven_v4",
@@ -70,7 +70,7 @@
   "won",
   "sparrow"
  ],
- "notes": "narrator Lily(velvety, calm; varies from patjuk's George). stepmother step Matilda (strict but comic scold), pat(unused in lines) Sarah, kong Jessica (bright child), toad Callum (husky trickster), ox Bill (old, slow, deep), fairy Alice (clear, gentle), won Daniel (steady official), sparrow Laura (quirky, chirpy). All eleven_v4; animals/villains 0.3/0.5, narrator 0.45/0.35, children 0.35/0.45. Directions kept gentle: stepmother is stern-comic, never frightening.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, kong=Annie, pat=Laura, step=Matilda, toad=Bill, ox=Roger, fairy=Lily, won=Daniel, sparrow=Jessica",
  "lines": [
   {
    "text": "옛날 옛날에 마음씨 고운 콩쥐가 살았어요.",
