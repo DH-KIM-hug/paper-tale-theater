@@ -1341,8 +1341,8 @@
       // 그림 해님(동생 얼굴이 든 해): 동생이 해가 되면 이 한 장만 (그림 속 얼굴을 쓰니 얼굴 조각은 숨긴다)
       // 그림 달님(보름달 앞에 선 오빠): 오빠가 달이 되면 이 한 장만. 둘 다 얼굴·몸이 그림에 있어 얼굴 조각은 숨긴다
       // 바꾼 뒤: 해님 = 동생 얼굴이 든 해(sun_girl2), 달님 = 오빠 얼굴이 든 보름달(moon_boy2)
-      const sunArt = girlFace ? sprite(T, g, 'sun_girl', 260, 260, { dy: 130 }) : null;
-      const moonArt = girlFace ? null : sprite(T, g, 'moon_boy', 230, 232, { dy: 116 });
+      // (바꾸기 전·후 해·달 생김새가 달라 보이지 않게, 두 번 모두 같은 해·달 원판 + 코드 얼굴을 쓴다)
+      const sunArt = null, moonArt = null;
       P.set = s => {
         const art = s ? sunArt : moonArt;
         P.sun.setAttribute('opacity', s && !art ? 1 : 0); P.moon.setAttribute('opacity', !s && !art ? 1 : 0);
