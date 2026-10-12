@@ -175,7 +175,7 @@
       const f2 = prop(T, 'flower_' + col, 70 + n * 16); put(T, f2, answer.x + (n % 2 ? 22 : -22) * (1 + n * .4), 440 - n * 6);
       bouquet.appendChild(f2.pos); answer.bq.push(f2); T.world.appendChild(answer.pos);
       answer.hop(14, 260);
-      T.pop(answer.x, 360, ['하나!', '둘!', '셋!', '넷!', '다섯!', '여섯!'][i]);
+      T.pop(answer.x + (n % 2 ? 50 : -50), 360 - (n > 1 ? 40 : 0), ['하나!', '둘!', '셋!', '넷!', '다섯!', '여섯!'][i]);
       await sleep(300);
     }
     await say('꽃병마다 꽃다발이 활짝! 빨간 모자는 꽃을 따느라 시간 가는 줄 몰랐어요.');
@@ -196,15 +196,17 @@
     await wolf.move(1200, 535, 2400, 'ease-in');
     await T.cutImage([{ src: cutSrc('dash'), sfx: 'whoosh', hold: 2400 }], { hold: 2400 });
     await T.cutImage([{ src: cutSrc('gulp'), hold: 2600 }], { hold: 2600 });
-    await T.curtain(false);
+    await T.sceneCard('', () => { T.clear(); bgImage(T, 'cottage'); camSnap(480, 310, 2.2); hide(hood); hide(wolf); }, wolf.pos);
     AudioFX.sfx('gulp') || T.tone([300, 120], .4, { vol: .2 });
     await say('똑똑똑… 문이 닫히고… 꿀꺽!');
+    await T.sceneCard('', () => { scene('bed', 590); put(T, wolf, 430, 470, { look: 'granny', to: 'left' }); }, wolf.pos);
     await say('늑대는 할머니의 잠옷을 입고 침대에 누웠어요.');
 
     /* --- 7. 할머니 집 --- */
-    T.clear(); bgImage(T, 'cottage'); camSnap(480, 310, 2.2);
-    put(T, hood, 450, 366, { look: 'knock', to: 'right', s: .34 });
-    await T.curtain(true);
+    await T.sceneCard('', () => {
+      T.clear(); bgImage(T, 'cottage'); camSnap(480, 310, 2.2);
+      put(T, hood, 450, 366, { look: 'knock', to: 'right', s: .34 });
+    }, wolf.pos);
     await say('빨간 모자는 숲속 할머니 집에 도착했어요. 문을 톡 두드려요!');
     await T.tap(hood.pos, { prompt: '빨간 모자를 톡! 똑똑똑 노크해요.' });
     for (let k = 0; k < 3; k++) { knock(T); T.pop(500, 320, '똑!'); await hood.hop(8, 200); }
@@ -237,8 +239,8 @@
       left.splice(left.indexOf(got.key), 1);
       const p = parts[got.key];
       ring(T, p.at[0], p.at[1], p.r + 8);
-      popSfx(T); T.pop(p.at[0], p.at[1] - 70, p.w);
       await T.camTo(p.at[0], p.at[1], 2, 600);
+      popSfx(T); T.pop(p.at[0], p.at[1] - 70, p.w);
       await say(p.q); await say(p.a);
       await T.camTo(590, 280, 1, 500);
       if (!left.length) break;
@@ -252,7 +254,7 @@
     await T.sceneCard('옷장으로!', () => {
       scene('room', 380);
       put(T, hood, 560, 510, { look: 'surprise', to: 'left' });
-      put(T, wolf, 800, 450, { look: 'sleep', to: 'left' }); hide(wolf);
+      put(T, wolf, 800, 450, { look: 'jump', to: 'left' });
     }, hood.pos);
     const wardrobeHot = hotRect(T, 80, 40, 215, 410);
     await say('늑대가 벌떡 일어났어요! 빨간 모자야, 어서 숨어요! 옷장을 톡!');
@@ -263,6 +265,7 @@
     hood.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' });
     await sleep(450);
     await say('빨간 모자는 옷장 속으로 쏙! 늑대는 두리번두리번 찾았지만 보이지 않았어요.');
+    wolf.look('peek', 'left'); wolf.wiggle(8, 500); await sleep(900);
     put(T, wolf, 800, 450, { look: 'sleep', to: 'left' });
     await T.camTo(640, 280, 1, 700);
     await say('할머니를 먹어서 배가 불렀던 늑대는 스르르 눈이 감겼어요. 쿨쿨…');
@@ -307,10 +310,10 @@
       [bread, milk, apple].forEach(a => T.world.appendChild(a.pos));
     }, granny.pos);
     await say('할머니 집 식탁에서 모두 함께 차를 마셔요. 바구니 속 간식을 한 가지씩 나눠 줘요!');
-    const share = [[bread, granny, '할머니!'], [milk, hood, '빨간 모자!'], [apple, hunter, '아저씨!']];
+    const share = [[bread, granny, '할머니!', '빵은 할머니께 톡!'], [milk, hood, '빨간 모자!', '우유는 빨간 모자 톡!'], [apple, hunter, '아저씨!', '사과는 사냥꾼 아저씨 톡!']];
     put(T, hunter, P ? 695 : 770, 510, { look: 'laugh', to: 'left', s: P ? .72 : 1 });
-    for (const [it, who, word] of share) {
-      await T.tap(it.pos, { prompt: '간식을 톡! 한 사람씩 나눠 줘요.' });
+    for (const [it, who, word, pr] of share) {
+      await T.tap(it.pos, { prompt: pr });
       popSfx(T); T.pop(who.x, 250, word);
       await it.move(who.x - (who === hood ? 0 : 0), who.y - 105, 520);
       who.hop(20, 300);

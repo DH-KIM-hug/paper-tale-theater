@@ -111,7 +111,7 @@
     await say('항아리를 톡톡톡 눌러서 괭이가 몇 개 나오는지 세어 봐요!');
     const hoes = [];
     await T.mash(jar.pos, { count: 3, prompt: '항아리를 톡톡톡! 괭이를 세어 봐요.', onStep: i => {
-      const h2 = prop(T, 'hoe', 62); put(T, h2, 760 + (i % 2) * 40, 330 + i * 56);
+      const h2 = prop(T, 'hoe', 78); put(T, h2, 740 + (i % 2) * 40, 300 + i * 64);
       h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); hoes.push(h2);
       jar.hop(12, 240); popSfx(T); T.pop(h2.x, h2.y - 60, tr(NUM[i - 1]));
     } });
@@ -158,7 +158,7 @@
       const sack = prop(T, 'rice', 62); put(T, sack, farmer.x, 440, { raw: true });
       popSfx(T);
       await sack.move(got.key.x, 450, 520, 'ease-in');
-      sack.hop(16, 260); T.pop(got.key.x, 350, tr(NUM[n]));
+      sack.hop(16, 260); T.pop(Math.max(got.key.x, 150), 350, tr(NUM[n]));
       farmer.hop(12, 240);
     }
     if (tight(T)) await T.camTo(500, 280, 1, 600);
@@ -190,8 +190,10 @@
     await say('항아리를 톡톡톡 눌러서 금덩이를 넣어 봐요!');
     const golds = [];
     await T.mash(jar.pos, { count: 3, prompt: '항아리를 톡톡톡! 금덩이가 나와요.', onStep: i => {
-      const g = prop(T, 'gold', 70 + i * 24); put(T, g, 560 + i * 90, 505 - i * 6);
-      g.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); golds.push(g);
+      /* 금덩이를 하나 항아리에 쏙 넣으면, 항아리에서 금이 와르르 쏟아져 쌓인다 */
+      const d = prop(T, 'gold', 46); put(T, d, jar.x, 250); d.move(jar.x, 400, 300, 'ease-in').then(() => hide(d));
+      const g = prop(T, 'gold', 70 + i * 24); put(T, g, 560 + i * 90, 505 - i * 6); g.pos.style.opacity = 0; golds.push(g);
+      setTimeout(() => { g.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250).onfinish = () => { g.pos.style.opacity = 1; }; g.pos.style.opacity = 1; }, 300);
       jar.hop(12, 240); clinkSfx(T); T.pop(g.x, g.y - 120, tr(NUM[i - 1]));
     } });
     await T.cutImage([{ src: cutSrc('buried'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
@@ -229,7 +231,10 @@
     await say('"내가 진짜 아버지다!" "아니야, 내가 진짜야!" 모두 서로 자기가 진짜라고 우겼어요.');
     olds.forEach((o, i) => o.hop(14 + (i % 3) * 4, 300));
     await T.cutImage([{ src: cutSrc('hungry'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
+    rich.look('hurry', 'right');
+    const dash = (async () => { for (const x of [150, 330, 180, 300]) { rich.turn(x > rich.x ? 'right' : 'left'); await rich.move(fx(T, x), 505, 600); } })();
     await say('"배고프다! 밥 줘라!" 부자는 쟁반을 들고 이리저리 뛰어다녔어요.');
+    await dash; rich.look('shout', 'right');
 
     /* --- 9. 항아리가 깨졌어요 --- */
     await say('부자는 지쳐서 외쳤어요. "이게 다 항아리 때문이야! 이제 그만!" 부자를 톡!');
@@ -237,7 +242,7 @@
     await T.cutImage([{ src: cutSrc('smash'), sfx: 'pow', hold: 3000 }], { hold: 3000 });
     scene('hallwide');
     olds.forEach(o => hide(o)); hide(jar);
-    put(T, cracked, 700, 505); put(T, rich, 300, 505, { look: 'hurry', to: 'right' }); put(T, father, 500, 505, { look: 'peek', to: 'right' });
+    put(T, cracked, 700, 505); put(T, rich, 300, 505, { look: 'gold', to: 'right' }); put(T, father, 500, 505, { look: 'peek', to: 'right' });
     await say('쨍그랑! 항아리가 깨지자 일곱 명은 사라지고, 진짜 아버지만 남았어요.');
     await say('"아버지, 죄송해요. 욕심을 부려서 소동이 났어요."');
     await Promise.all([rich.hop(24, 400), father.hop(20, 400)]);
