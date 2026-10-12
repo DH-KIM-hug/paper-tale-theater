@@ -1,12 +1,12 @@
 {
- "notes": "nar=Lily(벨벳 같은 서술), mom=Matilda(엄마 개구리, 패죽의 할멈과 같은 엄마 역), baby=Jessica·babyb=Laura·babyc=Will(아기 개구리 셋이 서로 다르게), ox=Brian(다정한 큰 황소, 겁주지 않게 부드럽게). 황소는 무섭지 않게 놀람 위주로.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, mom=Bella, baby=Munni, babyb=Mithi, babyc=Hopsi, ox=Roger. 아기·꼬마 역(baby, babyb, babyc)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여.",
  "voices": {
-  "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "mom": "XrExE9yKIg1WjnnlVkGX",
-  "baby": "cgSgspJ2msm6clMCkdW9",
-  "babyb": "FGY2WhTYpPnrIDTdsKH5",
-  "babyc": "bIHbv24MWmeRgasZH58o",
-  "ox": "nPczCjzI2devNBz1zQrb"
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
+  "mom": "hpp4J3VqNfWAUOO0d1Us",
+  "baby": "VOGEEZj2Kly5dP9LrQy8",
+  "babyb": "MIl0Flub6Sc9KSkX2A42",
+  "babyc": "ygoBNrnmTEdu5NtDTmAY",
+  "ox": "CwhRBWXzGAHq8TQ4Fs17"
  },
  "models": {
   "nar": "eleven_v4",
@@ -284,7 +284,7 @@
      "baby",
      "엄마! 산처럼 커다란 괴물을 봤어요!",
      "toneup:1.5",
-     "[wide-eyed, breathless, exaggerating, scared]"
+     "[wide-eyed, breathless, exaggerating, scared, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -626,7 +626,7 @@
      "babyb",
      "아직 황소가 더 커요!",
      "happy:1.2",
-     "[teasing, cheerful, childlike]"
+     "[teasing, cheerful, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -637,7 +637,7 @@
      "babyc",
      "와, 양만큼 커졌다! 그래도 황소가 더 커요!",
      "happy:1.5",
-     "[amazed, excited, childlike]"
+     "[amazed, excited, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
