@@ -421,19 +421,19 @@
     const { el, paper } = T, b = T.bg;
     const DX = narrow() ? 200 : 0;
     if (bgImage(T, 'door', { dx: DX })) {
-      const arch = `M${140 + DX} 446 V368 Q${140 + DX} 298 ${220 + DX} 298 Q${300 + DX} 298 ${300 + DX} 368 V446 Z`;
+      const arch = `M${112 + DX} 406 V330 Q${112 + DX} 286 ${150 + DX} 286 Q${188 + DX} 286 ${188 + DX} 330 V406 Z`;
       const glow = el('path', { d: arch, fill: '#FFD58A', opacity: .15 }, b); glow.style.mixBlendMode = 'screen';
-      const door = el('g', {}, T.world); origin(door, 140 + DX, 0);
+      const door = el('g', {}, T.world); origin(door, 112 + DX, 0);
       if (artUrl('door_leaf')) { // 그림 널판 문짝: 문간 아치 모양으로 오려 아래 끝에 붙인다 (위쪽 둥근 끝은 아치가 대신)
         const cp = el('clipPath', { id: 'agDoorClip', clipPathUnits: 'userSpaceOnUse' }, door); el('path', { d: arch }, cp);
         const inner = el('g', { 'clip-path': 'url(#agDoorClip)', filter: 'url(#pp)' }, door);
-        const w = 160, h = w / AR.door_leaf;
-        el('image', { href: artUrl('door_leaf'), x: 140 + DX, y: 446 - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+        const w = 76, h = Math.max(w / AR.door_leaf, 124);
+        el('image', { href: artUrl('door_leaf'), x: 112 + DX, y: 406 - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
         el('path', { d: arch, fill: '#fff', opacity: 0 }, door);
       } else paper(door, [['path', { d: arch, fill: '#8E6440' }],
         ...[180, 220, 260].map(x => ['rect', { x: x + DX - 3, y: x === 220 ? 300 : 308, width: 6, height: x === 220 ? 145 : 137, fill: C.bark }]),
         ['circle', { cx: 284 + DX, cy: 380, r: 8, fill: C.gold }]]);
-      return { door, glow, art: true, hopX: narrow() ? 640 : 520, hostX: 230 + DX, babyX: 175 + DX, y: 452, hopY: 474, knock: [300 + DX, 280], spark: [220 + DX, 370] };
+      return { door, glow, art: true, hopX: narrow() ? 640 : 520, hostX: 168 + DX, babyX: 130 + DX, y: 420, hopY: 442, knock: [190 + DX, 272], spark: [150 + DX, 340] };
     }
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.winter }, b);
     paper(b, [['path', { d: 'M-300 600 L-300 40 Q300 -20 660 200 Q720 300 720 600 Z', fill: C.soil }],
