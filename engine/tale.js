@@ -75,6 +75,7 @@ const Tale = (() => {
   function viewWidth() {
     const r = stage && stage.getBoundingClientRect();
     if (!r || !r.width || !r.height) return 1000;
+    if (/meet/.test(stage.getAttribute('preserveAspectRatio') || '')) return 1000; // 가로(meet)는 늘 무대 전체 폭이 보인다
     return Math.min(1000, 560 * r.width / r.height);
   }
   function clampCam(x, y, z) {
