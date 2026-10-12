@@ -209,7 +209,8 @@ const TALES = (() => {
       ${[[106, 58], [116, 55], [126, 58], [136, 56], [112, 50], [126, 49]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4.5" fill="${c.rd}"/>`).join('')}
       <ellipse cx="80" cy="96" rx="13" ry="8" fill="${c.pn}"/><circle cx="74" cy="88" r="4" fill="${c.pn}"/><circle cx="86" cy="88" r="4" fill="${c.pn}"/>${eye(74, 88, 1.4)}${eye(86, 88, 1.4)}</g>` },
 
-  { id: 'hansel', title: '헨젤과 그레텔', origin: 'world', skills: ['shape', 'spot', 'heart'], ready: false,
+  { id: 'hansel', title: '헨젤과 그레텔', origin: 'world', skills: ['shape', 'spot', 'heart'], ready: false, making: true,
+    en: { title: 'Hansel and Gretel', line: 'Count the crumbs and candies, find the star key, and follow the way back home.' },
     line: '과자 집 지붕 무늬를 이어 붙이고, 빵 부스러기 길을 따라 집에 와요.',
     art: `<rect width="160" height="110" fill="${c.pn}"/>
       <g class="pc"><rect y="90" width="160" height="20" fill="${c.bk}"/>
@@ -249,8 +250,9 @@ const TALES = (() => {
       <path d="M100 72 h22 l-3 14 h-16z" fill="${c.gd}"/><path d="M104 72 q7 -10 14 0" stroke="${c.gd}" stroke-width="2.5" fill="none"/>
       <circle cx="20" cy="80" r="5" fill="${c.rd}"/><circle cx="34" cy="84" r="5" fill="${c.am}"/><circle cx="138" cy="82" r="5" fill="${c.sn}"/></g>` },
 
-  { id: 'magpie', title: '은혜 갚은 까치', origin: 'korean', skills: ['sound', 'count', 'heart'], ready: false,
+  { id: 'magpie', title: '은혜 갚은 까치', origin: 'korean', skills: ['sound', 'count', 'heart'], ready: false, making: true,
     line: '종소리를 듣고 하나, 둘, 셋. 고마움을 갚는 까치 이야기.',
+    en: { title: 'The Grateful Magpie', line: 'Listen to the bell ring one, two, three, and see how the magpies say thank you.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/>
       <g class="pc"><path d="M0 90 Q50 76 100 88 T160 84 V110 H0Z" fill="${c.lv}"/>
       <path d="M40 22 H120 L112 14 H48Z" fill="${c.rd}"/><rect x="78" y="22" width="4" height="10" fill="${c.bk}"/>
