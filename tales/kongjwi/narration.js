@@ -54,7 +54,7 @@ const NARRATION_CLIPS = {
  ],
  "참새를 톡! 곡식을 도와줘요.": "audio/tc/kongjwi/nar_3dab368a65.mp3",
  "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!": "audio/tc/kongjwi/nar_54e02ea6e6.mp3",
- "바구니를 톡톡톡톡톡! 참새를 세어요.": "audio/tc/kongjwi/nar_bea243ed76.mp3",
+ "참새를 톡톡톡톡톡! 하나씩 세어요.": "audio/tc/kongjwi/nar_24c8096b9d.mp3",
  "참새가 하나, 둘, 셋, 넷, 다섯! 쌀이 금방 하얗게 되었어요.": "audio/tc/kongjwi/nar_6dff9ca4fb.mp3",
  "이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.": "audio/tc/kongjwi/nar_42eb00e1f8.mp3",
  "그때 하늘에서 선녀가 내려왔어요. \"착한 콩쥐야, 선물을 줄게!\" 선녀를 톡!": [
