@@ -1,12 +1,12 @@
 {
  "voices": {
-  "nar": "JBFqnCBsd6RMkjVDRZzb",
-  "hans": "bIHbv24MWmeRgasZH58o",
-  "gret": "cgSgspJ2msm6clMCkdW9",
-  "father": "cjVigY5qzO86Huf0OWal",
-  "witch": "SOYHLrjzK2X1ezoPC6cr",
-  "duck": "N2lVS1w4EtoT3dr4eOWO",
-  "bird": "FGY2WhTYpPnrIDTdsKH5"
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "hans": "tapn1QwocNXk3viVSowa",
+  "gret": "Lb7qkOn5hF8p7qfCDH8q",
+  "father": "5ON5Fnz24cnOozEQfGAm",
+  "witch": "XrExE9yKIg1WjnnlVkGX",
+  "duck": "XjGYkUkzth8BPs29fmcV",
+  "bird": "cgSgspJ2msm6clMCkdW9"
  },
  "models": {
   "nar": "eleven_v4",
@@ -56,7 +56,7 @@
   "duck",
   "bird"
  ],
- "notes": "narrator George (storyteller). hans Will (brave older brother), gret Jessica (small sister), father Eric (smooth, caring), witch Harry (grumpy comic villain), duck Callum (husky trickster, silly), bird Laura (quirky chirpy). All eleven_v4; witch/animals 0.3/0.5, children 0.35/0.45, narrator 0.45/0.35. Witch is a grumpy, comic old hag, not scary.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, hans=Sparkles, gret=Annie, father=Namchun, witch=Matilda, duck=Teddy, bird=Jessica. 아기·꼬마 역(duck)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여.",
  "lines": [
   {
    "text": "옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.",
@@ -619,7 +619,7 @@
      "duck",
      "꽥꽥! 내 등에 타!",
      null,
-     "[silly, quacking, cheerful]"
+     "[silly, quacking, cheerful, childlike, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
