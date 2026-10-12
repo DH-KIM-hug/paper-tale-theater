@@ -1,10 +1,10 @@
 {
  "voices": {
-  "nar": "JBFqnCBsd6RMkjVDRZzb",
-  "heung": "bIHbv24MWmeRgasZH58o",
-  "nol": "nPczCjzI2devNBz1zQrb",
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
+  "heung": "cjVigY5qzO86Huf0OWal",
+  "nol": "ZZ4xhVcc83kZBfNIlIIz",
   "nwife": "XrExE9yKIg1WjnnlVkGX",
-  "dok": "SOYHLrjzK2X1ezoPC6cr"
+  "dok": "N2lVS1w4EtoT3dr4eOWO"
  },
  "models": {
   "nar": "eleven_v4",
@@ -42,7 +42,7 @@
   "nwife",
   "dok"
  ],
- "notes": "narrator George (warm storyteller, same as patjuk). heung Will (relaxed optimist, kind younger brother), nol Brian (deep, greedy villain, comic), nwife Matilda (sharp scolding sister-in-law), dok Harry (rough goblin, boomy but comic). All eleven_v4; villains 0.3/0.5, narrator 0.45/0.35.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, heung=Eric, nol=Manbo, nwife=Matilda, dok=Callum",
  "lines": [
   {
    "text": "옛날 옛날에 마음씨 착한 동생 흥부와 욕심쟁이 형 놀부가 살았어요.",
