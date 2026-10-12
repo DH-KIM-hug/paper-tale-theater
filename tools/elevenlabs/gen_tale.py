@@ -46,13 +46,13 @@ def main():
     sub = 'en/' if en else ''
     outdir = os.path.join(ROOT, 'audio', 'el', tale, *(['en'] if en else [])); os.makedirs(outdir, exist_ok=True)
     chars, made, errs, skipped = 0, 0, 0, 0
-    TCF = os.path.join(ROOT, 'narration_tc.js' if tale == 'patjuk' else f'tales/{tale}/narration.js')  # voices 값이 'tc' 인 배역은 Typecast 클립을 그대로 쓴다
+    TCF = os.path.join(ROOT, ('tales/patjuk/narration_en.js' if en else 'narration_tc.js') if tale == 'patjuk' else f'tales/{tale}/' + ('narration_en.js' if en else 'narration.js'))  # voices 값이 'tc' 인 배역은 Typecast 클립을 그대로 쓴다
     TC = {}
     if any(v == 'tc' for v in V.values()) and os.path.exists(TCF):
         src = open(TCF).read()
         for nm in ('NARRATION_CLIPS', 'VOICE_LINES'):
-            m = re.search(r'const ' + nm + r' = (\{.*?\n\});', src, re.S)
-            if m: TC[nm] = json.loads(m.group(1))
+            m = re.search(r'const ' + nm + (r'_EN' if en else '') + r' = (\{.*?\n\});', src, re.S)
+            if m: TC[nm] = {k: (v['c'] if isinstance(v, dict) else v) for k, v in json.loads(m.group(1)).items()}  # 영어 쪽은 {t, c} 모양
     def tc_url(group, key, si, role):
         v = (TC.get(group) or {}).get(key)
         v = [v] if isinstance(v, str) else v
