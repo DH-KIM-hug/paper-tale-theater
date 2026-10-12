@@ -1,12 +1,13 @@
 /* 흥부와 놀부 — 목업. 착한 흥부가 다친 제비를 돌봐 주고 박 속에서 복을 얻고, 욕심쟁이 놀부는 소동을 겪은 뒤 흥부와 나눠 사이좋게 살아요.
    조작은 모두 톡 · 톡톡톡(세기). 쓱·꾹·자유 놀이 없음. */
 (() => {
-  const U = n => `../../assets/v3w/hb_${n}.webp`;
+  const NF = new Set(['gourd', 'gourd_open', 'rice', 'treasure', 'seed', 'vine', 'cut_house']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
+  const U = n => `../../assets/v3w/hb_${n}${NF.has(n) ? 'nf' : ''}.webp`;
   const AR = {
     heung_hello: .5598, heung_rice: .5232, heung_catch: .4434, heung_wrap: .4973, heung_plant: .8821, heung_saw: .9249, heung_glad: .7967,
     hwife: .4672, hwife_joy: .4517, nol_proud: .5465, nol_shake: .6528, nol_wrap: .7162, nol_saw: 1.0363, nol_ouch: .8198, nol_mud: .8452,
     nol_shy: .6181, nwife: .6788, nwife_smile: .6993, swallow_fly: 1.8467, swallow_hurt: .9088, swallow_band: 1.0686, swallow_seed: 2.0284,
-    chicks: 2.0323, chick_fall: 1.0697, gourd: .699, gourd_open: 1.6189, rice: .8537, treasure: 1.4239, seed: .7986, vine: .4236,
+    chicks: 2.0323, chick_fall: 1.0697, gourd: .6414, gourd_open: 1.7588, rice: .9214, treasure: 1.7677, seed: .6432, vine: .46,
   };
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const GROUND = 500;
