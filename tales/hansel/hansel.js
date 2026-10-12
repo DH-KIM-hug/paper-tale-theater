@@ -67,7 +67,7 @@
     };
     const CANDY = ['#E26D6D', '#F3C969', '#6FA8DC'];
     const candyAt = (x, y, i) => {
-      const g = T.el('g', { filter: 'url(#pp)' }, T.world), c = CANDY[i % 3], r = 17;
+      const g = T.el('g', { filter: 'url(#pp)' }, T.world), c = CANDY[i % 3], r = 16;
       if (i % 2 === 0) { T.el('circle', { cx: x, cy: y, r, fill: c }, g); T.el('circle', { cx: x - 4, cy: y - 4, r: 6, fill: '#fff', opacity: .45 }, g); }
       else { T.el('polygon', { points: `${x},${y - r} ${x + r * 1.1},${y + r * .8} ${x - r * 1.1},${y + r * .8}`, fill: c }, g); T.el('circle', { cx: x - 3, cy: y + 2, r: 4, fill: '#fff', opacity: .45 }, g); }
       return g;
@@ -107,9 +107,9 @@
 
     /* --- 1. 집 앞 --- */
     scene('cottage');
-    put(T, gret, L(340, 410), GROUND, { look: 'walk', to: 'right' });
-    put(T, hans, L(440, 480), GROUND, { look: 'walk', to: 'right' });
-    put(T, father, L(560, 560), GROUND, { look: 'wood', to: 'right' });
+    put(T, gret, L(340, 395), GROUND, { look: 'walk', to: 'right' });
+    put(T, hans, L(440, 470), GROUND, { look: 'walk', to: 'right' });
+    put(T, father, L(560, 575), GROUND, { look: 'wood', to: 'right', s: P ? .9 : 1 });
     await T.curtain(true);
     await say('옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.');
     await say('"얘들아, 숲에 산딸기 따러 가자!" 아빠가 말했어요.');
@@ -126,11 +126,11 @@
       put(T, hans, L(330, 430), GROUND, { look: 'crumb', to: 'right' });
     }, hans.pos);
     await say('헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!');
-    const stepX = L(80, 36);
+    const stepX = L(110, 36);
     let hx = hans.x, gx = gret.x;
     await T.mash(hans.pos, { count: 5, prompt: '헨젤을 톡톡톡톡톡! 부스러기를 세어요.', onStep: i => {
       const cx = hx - 14;
-      crumbAt(cx, 520); popSfx(T); T.pop(cx, 450, tr(NUM[i - 1]));
+      crumbAt(cx, 520); popSfx(T); T.pop(cx, i % 2 ? 450 : 370, tr(NUM[i - 1]));
       hx += stepX; gx += stepX;
       hans.hop(10, 220); hans.move(hx, GROUND, 360); gret.move(gx, GROUND, 360);
     } });
@@ -142,8 +142,16 @@
       put(T, hans, L(430, 445), GROUND, { look: 'walk', to: 'right' });
       put(T, gret, L(540, 555), GROUND, { look: 'walk', to: 'left' });
     }, hans.pos);
+    [L(330, 392), L(680, 612)].forEach(bx => {
+      const g = T.el('g', { filter: 'url(#pp)' }, T.world);
+      T.el('ellipse', { cx: bx, cy: GROUND - 22, rx: 54, ry: 30, fill: '#5E8A3E' }, g); T.el('ellipse', { cx: bx - 12, cy: GROUND - 32, rx: 30, ry: 16, fill: '#76A24D' }, g);
+      [[-30, -20], [-12, -34], [8, -18], [26, -32], [38, -14], [-4, -8], [16, -4], [-36, -4]].forEach(([dx, dy]) => { T.el('circle', { cx: bx + dx, cy: GROUND + dy, r: 7, fill: '#D93A3A' }, g); T.el('circle', { cx: bx + dx - 2, cy: GROUND + dy - 2, r: 2, fill: '#fff', opacity: .55 }, g); });
+      g.animate([{ opacity: 0 }, { opacity: 1 }], 500);
+    });
+    put(T, hans, L(430, 445), GROUND, { look: 'eat', to: 'right' }); put(T, gret, L(540, 555), GROUND, { look: 'eat', to: 'left' });
+    const eating = (async () => { await sleep(900); hans.hop(14, 300); gret.hop(14, 300); await sleep(900); hans.hop(14, 300); gret.hop(14, 300); })();
     await say('빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.');
-    hans.hop(14, 300); gret.hop(14, 300);
+    await eating;
     await say('배가 부르니 졸려서 둘은 나무 밑에서 깜빡 잠이 들었어요.');
     put(T, hans, L(430, 445), GROUND + 6, { look: 'doze' }); put(T, gret, L(540, 555), GROUND + 6, { look: 'doze' });
     await sleep(900);
@@ -151,7 +159,9 @@
     put(T, hans, L(430, 445), GROUND, { look: 'walk', to: 'right' }); put(T, gret, L(540, 555), GROUND, { look: 'walk', to: 'left' });
     await say('그레텔은 마음이 조금 무서웠어요. 그레텔을 톡! 꼭 안아 줘요.');
     await T.tap(gret.pos, { prompt: '그레텔을 톡! 꼭 안아 줘요.' });
-    popSfx(T); gret.hop(14, 300); hans.move(hans.x + 28, GROUND, 360); T.pop(gret.x, gret.y - 215, tr('꼭!'));
+    popSfx(T); gret.hop(14, 300); hans.move(gret.x - L(46, 40), GROUND, 420); T.pop(gret.x, gret.y - 215, tr('꼭!'));
+    [-26, 0, 26].forEach((dx, k) => { const h = T.el('path', { d: 'M0 8 C-14 -4 -12 -16 0 -9 C12 -16 14 -4 0 8 Z', fill: '#E8607A', transform: `translate(${gret.x + dx - 22},${gret.y - 150})` }, T.world);
+      h.animate([{ translate: '0 0', opacity: 0 }, { opacity: 1, offset: .2 }, { translate: `${dx / 2}px -60px`, opacity: 0 }], { duration: 1100, delay: k * 140, easing: 'ease-out', fill: 'both' }); setTimeout(() => h.remove(), 1600); });
     await say('"괜찮아, 빵 부스러기 길을 따라가자!" 헨젤이 말했어요.');
 
     /* --- 4. 땅바닥: 새가 부스러기를 먹었어요 --- */
@@ -192,11 +202,15 @@
       put(T, hans, L(500, 520), GROUND, { look: 'walk', to: 'left' });
     }, hans.pos);
     await say('지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!');
-    const rx = i => L(340 + i * 80, 396 + i * 52);
+    /* 지붕 그림의 빈 구멍 다섯 곳(세계 좌표): 위 줄 넷, 아래 한 곳 */
+    const HOLES = [[446, 108], [502, 108], [557, 108], [623, 108], [535, 150]];
+    const holeRing = HOLES.map(([x, y]) => T.el('circle', { cx: x, cy: y, r: 18, fill: 'none', stroke: '#FFD54F', 'stroke-width': 3, 'stroke-dasharray': '5 4', opacity: .0 }, T.world));
+    holeRing.forEach(c => c.animate([{ opacity: .35 }, { opacity: .95 }, { opacity: .35 }], { duration: 1200, iterations: Infinity }));
     await T.mash(hans.pos, { count: 5, prompt: '헨젤을 톡톡톡톡톡! 사탕을 세어요.', onStep: i => {
-      const x = rx(i - 1), c = candyAt(hans.x, hans.y - 150, i - 1);
-      c.animate([{ transform: 'translate(0,0) scale(.4)' }, { transform: `translate(${x - hans.x}px,${230 - hans.y + 150}px) scale(1)` }], { duration: 420, easing: 'ease-out', fill: 'forwards' });
-      hans.hop(12, 240); popSfx(T); setTimeout(() => T.pop(x, 190, tr(NUM[i - 1])), 330);
+      const [x, y] = HOLES[i - 1], sx = hans.x, sy = hans.y - 150, c = candyAt(0, 0, i - 1);
+      holeRing[i - 1].remove();
+      c.animate([{ transform: `translate(${sx}px,${sy}px) scale(.4)` }, { transform: `translate(${x}px,${y}px) scale(1)` }], { duration: 480, easing: 'ease-out', fill: 'forwards' });
+      hans.hop(12, 240); popSfx(T); setTimeout(() => T.pop(x, i === 5 ? 60 : 50 + (i % 2) * 20, tr(NUM[i - 1])), 400);
     } });
     await say('사탕이 하나, 둘, 셋, 넷, 다섯! 지붕이 예뻐졌어요.');
 
@@ -222,7 +236,7 @@
       put(T, gret, L(340, 300), GROUND, { look: 'clever', to: 'left' });
     }, hans.pos);
     hans.setScale(SC); /* 새장 그림 하나를 배경의 새장 자리에 맞춘다 */
-    const lock = lockAt(L(232, 205), 330);
+    const lock = lockAt(L(212, 190), 300);
     await say('그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.');
     await say('새장 자물쇠에는 별 모양 구멍이 있어요. 별 모양 열쇠를 톡!');
     const kc = keyAt(L(470, 160), 440, 'circle'), ks = keyAt(L(570, 225), 440, 'square'), kt = keyAt(L(670, 290), 440, 'star');
@@ -231,7 +245,7 @@
     await T.choose([{ key: 'c', el: kc, ok: false }, { key: 's', el: ks, ok: false }, { key: 't', el: kt, ok: true }],
       { prompt: '별 모양 열쇠를 톡!', where: '열쇠 머리 모양을 잘 봐요.', who: '반짝이는 별 열쇠를 톡!' });
     clinkSfx(T); kc.remove(); ks.remove(); kt.remove();
-    gret.look('key'); gret.hop(14, 300); T.pop(L(232, 205), 300, tr('찰칵!'));
+    gret.look('key'); gret.hop(14, 300); T.pop(L(232, 205), 260, tr('찰칵!'));
     await sleep(500);
     lock.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
     put(T, hans, L(250, 215), GROUND, { look: 'joy', to: 'left' });
@@ -281,7 +295,16 @@
     put(T, duck, L(640, 570), 470, { look: 'b', to: 'left' });
     put(T, hans, L(380, 420), GROUND + 12, { look: 'walk', to: 'right' }); put(T, gret, L(470, 490), GROUND + 12, { look: 'walk', to: 'right' });
     await say('"꽥꽥! 내 등에 타!" 오리가 말했어요.');
+    const cross = (async () => {
+      put(T, hans, hans.x, hans.y, { look: 'walk', to: 'right' }); put(T, gret, gret.x, gret.y, { look: 'walk', to: 'right' });
+      await Promise.all([hans.move(duck.x - 22, GROUND + 12, 700), gret.move(duck.x + 22, GROUND + 12, 700)]);
+      hans.setScale(.55 * SC); gret.setScale(.55 * SC); hans.place(hans.x, 428); gret.place(gret.x, 428);
+      const tx = L(780, 600);
+      await Promise.all([duck.move(tx, 330, 2600), hans.move(tx - 22, 290, 2600), gret.move(tx + 22, 290, 2600)]);
+      await Promise.all([hans.move(tx - 22 + 50, 250, 700), gret.move(tx + 22 + 50, 250, 700)]);
+    })();
     await say('오리가 둘을 태우고 강을 건너 주었어요. "고마워, 오리야!"');
+    await cross;
 
     /* --- 11. 우리 집: 아빠와 만나요 --- */
     await T.sceneCard(tr('우리 집'), () => {
@@ -298,7 +321,7 @@
     await T.cutImage([{ src: cutSrc('hug'), sfx: 'pop', hold: 3600 }], { hold: 3600 });
     scene('cottage');
     put(T, father, 500, GROUND, { look: 'hug', to: 'left' });
-    put(T, hans, L(400, 440), GROUND, { look: 'joy', to: 'left' }); put(T, gret, L(600, 565), GROUND, { look: 'key', to: 'left' });
+    put(T, hans, L(400, 440), GROUND, { look: 'joy', to: 'left' }); put(T, gret, L(600, 565), GROUND, { look: 'clever', to: 'left' });
     await say('"찾았다! 보고 싶었어!" 아빠가 말했어요.');
     await say('헨젤과 그레텔은 마음이 따뜻하고 행복했어요. 여러분은 기분이 어때요? 헨젤을 톡! 만세!');
     await T.tap(hans.pos, { prompt: '헨젤을 톡! 만세!' });
