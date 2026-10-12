@@ -4,12 +4,13 @@
 (() => {
   const AS = '../../assets/v3w/';
   const GROUND = 505;
-  const ASP = { apple: .9583, basket: .9604, bread: 1.2604, flower_blue: .7667, flower_red: .7542, flower_yellow: .6937, frame: .8896,
+  const ASP = { apple: .9443, basket: .9214, bread: 1.4957, flower_blue: .7429, flower_red: .6457, flower_yellow: .7857, frame: .8896,
     granny_home: .6896, granny_pop: .675, granny_tea: .6021, hood_hide: .5667, hood_joy: .7188, hood_knock: .5667, hood_pick: .7229,
     hood_surprise: .5938, hood_walk: .5792, hood_walk2: .5354, hood_wonder: .5958, hunter_laugh: .7604, hunter_tickle: .6771,
-    hunter_walk: .5458, mama: .4604, milk: .4313, vase_blue: .9458, vase_red: .9563, vase_yellow: .8938, wardrobe: .6, wolf_flee: 2.1638,
+    hunter_walk: .5458, mama: .4604, milk: .3857, vase_blue: .82, vase_red: .8589, vase_yellow: .8743, wardrobe: .5157, wolf_flee: 2.1638,
     wolf_granny: .6813, wolf_hiccup: .4854, wolf_jump: .5542, wolf_peek: .5292, wolf_run: 2.5, wolf_sleep: 2.1453, wolf_whisper: 1.5578 };
   const BGS = ['bed', 'cottage', 'door', 'flowers', 'kitchen', 'room', 'shortcut', 'table', 'trail', 'tree'];
+  const NF = new Set(['apple', 'basket', 'bread', 'flower_blue', 'flower_red', 'flower_yellow', 'milk', 'vase_blue', 'vase_red', 'vase_yellow', 'wardrobe']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
   const CUTS = ['tail', 'whisper', 'dash', 'gulp', 'granwolf', 'jumpup', 'hiccup'];
   const bgSrc = k => AS + 'rh_bg_' + k + '.webp', cutSrc = k => AS + 'rh_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
@@ -21,7 +22,7 @@
     const a = T.actor(T.world, -400, GROUND, g => {
       Object.entries(poses).forEach(([k, [f, h, nat]]) => {
         const w = h * ASP[f], wrap = T.el('g', { filter: 'url(#pp)' }, g);
-        T.el('image', { href: AS + 'rh_' + f + '.webp', x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
+        T.el('image', { href: AS + 'rh_' + f + (NF.has(f) ? 'nf' : '') + '.webp', x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
         wrap.style.display = 'none'; looks[k] = { wrap, h, nat };
       });
     });
