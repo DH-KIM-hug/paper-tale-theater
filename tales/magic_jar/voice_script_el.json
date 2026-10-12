@@ -1,10 +1,10 @@
 {
  "voices": {
-  "nar": "JBFqnCBsd6RMkjVDRZzb",
-  "farmer": "bIHbv24MWmeRgasZH58o",
-  "wife": "XrExE9yKIg1WjnnlVkGX",
-  "rich": "N2lVS1w4EtoT3dr4eOWO",
-  "father": "pqHfZKP75CvOlQylNhV4"
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "farmer": "cjVigY5qzO86Huf0OWal",
+  "wife": "hpp4J3VqNfWAUOO0d1Us",
+  "rich": "ZZ4xhVcc83kZBfNIlIIz",
+  "father": "5ON5Fnz24cnOozEQfGAm"
  },
  "models": {
   "nar": "eleven_v4",
@@ -684,5 +684,5 @@
    ]
   }
  ],
- "notes": "요술 항아리: 해설 George, 농부 Will(느긋하고 다정), 아내 Matilda, 부자 Callum(욕심 많은 허스키 장난꾸러기), 아버지 Bill(나이 든 목소리, 같은 배역이 여러 명이라 말다툼은 태그로 구분). 욕심 부린 소동은 코믹하게, 마지막은 따뜻하게."
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, farmer=Eric, wife=Bella, rich=Manbo, father=Namchun"
 }
