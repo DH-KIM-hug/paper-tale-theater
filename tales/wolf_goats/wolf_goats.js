@@ -119,6 +119,7 @@
     await wk.move(300, 540, 1600);
     await say('"어디 숨었나? 다 찾아낼 테다!" 늑대가 집 안을 뒤졌어요.');
     await cutArt(T, 'wg_cut_dark', 'bigHit');
+    wk.hop(30, 420); quilt.hop(14, 300); laundry.hop(14, 300); AudioFX.sting('surprise'); // 꿀꺽
     await say('늑대는 시계 속만 빼고, 아기 염소들을 모두 찾아내서 꿀꺽 삼켜 버렸어요.');
     await say('하지만 아기 염소들은 다치지 않았어요. 아주 따뜻하고 포근한 뱃속이었거든요.');
     await cutArt(T, 'wg_cut_belly', null);
@@ -153,14 +154,17 @@
 
     /* --- 8. 그림자 극장 --- */
     await scene('그림자 극장', () => { bg(T, 'shadow'); });
-    const mm4 = mama(T, 330, 545, 300, 'scissors');
+    const mm4 = mama(T, 200, 545, 300, 'scissors');
+    mm4.pos.style.filter = 'brightness(0)'; show(mm4.pos, 0); // 엄마는 종이 극장에 비친 까만 그림자
     await say('하얀 종이 극장에 엄마의 그림자가 나타났어요.');
+    show(mm4.pos, .72);
+    mm4.hop(10, 240); sleep(320).then(() => mm4.hop(10, 240)); // 슥삭슥삭 가위질
     await say('슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!');
     await cutArt(T, 'wg_cut_pop', 'magic');
     kids = [1, 2, 3, 4, 5, 6].map((n, i) => { const k = kid(T, n, KX(i), 520, 90); hide(k); return k; });
-    const hit = T.el('rect', { x: 300, y: 80, width: 400, height: 430, fill: '#fff', 'fill-opacity': .02 }, T.world);
+    const hit = T.el('rect', { x: 290, y: 100, width: 420, height: 360, rx: 26, fill: '#fffaf0', 'fill-opacity': .4, stroke: '#fff', 'stroke-width': 5 }, T.world); // 눌러 볼 하얀 종이 화면
     await T.mash(hit, { count: 6, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => {
-      const k = kids[i - 1]; appear(k); k.pose('joy'); k.hop(40, 420); sting('surprise'); T.pop(KX(i - 1), 380, '뿅!');
+      const k = kids[i - 1]; appear(k); k.pose('joy'); k.hop(40, 420); sting('surprise'); T.pop(KX(i - 1), 330 - (i % 2) * 90, '뿅!');
     } });
     hit.remove();
     const k7c = kid(T, 7, KX(6), 520, 90); k7c.pose('joy'); kids.push(k7c);
