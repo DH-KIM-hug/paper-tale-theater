@@ -1,8 +1,8 @@
 {
  "voices": {
-  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
   "lion": "nPczCjzI2devNBz1zQrb",
-  "mouse": "cgSgspJ2msm6clMCkdW9"
+  "mouse": "VOGEEZj2Kly5dP9LrQy8"
  },
  "lines": [
   {
@@ -78,7 +78,7 @@
      "mouse",
      "어? 이건 뭐지? 폴짝!",
      "toneup:1.3",
-     "[curious, childlike, small voice, hops]"
+     "[curious, childlike, small voice, hops, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -89,7 +89,7 @@
      "mouse",
      "와아!",
      "happy:1.5",
-     "[excited, childlike, squeals]"
+     "[excited, childlike, squeals, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -101,7 +101,7 @@
      "mouse",
      "쭈르륵~ 히히!",
      "happy:1.5",
-     "[giggles, delighted, childlike, sliding]"
+     "[giggles, delighted, childlike, sliding, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -157,7 +157,7 @@
      "mouse",
      "살려 주시면 꼭 은혜 갚을게요!",
      "sad:1.4",
-     "[frightened, trembling, small voice, pleading]"
+     "[frightened, trembling, small voice, pleading, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -196,7 +196,7 @@
      "mouse",
      "제발요, 사자님~",
      "sad:1.5",
-     "[pleading, sweet, trembling, small voice]"
+     "[pleading, sweet, trembling, small voice, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -246,7 +246,7 @@
      "mouse",
      "고맙습니다, 사자님!",
      "happy",
-     "[relieved, grateful, cheerful, childlike]"
+     "[relieved, grateful, cheerful, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -499,7 +499,7 @@
      "mouse",
      "사자님, 제가 도와 드릴게요!",
      "happy:1.3",
-     "[determined, brave, childlike, small voice]"
+     "[determined, brave, childlike, small voice, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -675,7 +675,7 @@
      "mouse",
      "제가 은혜 갚는다고 했지요?",
      "happy:1.3",
-     "[proud, cheerful, childlike, sweet]"
+     "[proud, cheerful, childlike, sweet, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -720,7 +720,7 @@
      "mouse",
      "신난다!",
      "happy:1.6",
-     "[thrilled, delighted, childlike, shouting with joy]"
+     "[thrilled, delighted, childlike, shouting with joy, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -753,7 +753,7 @@
     "mouse",
     "으앗! 깜짝이야!",
     "toneup:1.6",
-    "[startled, panicked, high-pitched squeal, small voice]"
+    "[startled, panicked, high-pitched squeal, small voice, childlike, baby voice, lisping, very young child, giggly]"
    ]
   ],
   "cut_laugh": [
@@ -777,7 +777,7 @@
     "mouse",
     "찍찍! 신난다!",
     "happy",
-    "[cheerful, childlike, delighted]"
+    "[cheerful, childlike, delighted, baby voice, lisping, very young child, giggly]"
    ]
   ],
   "hi_lion": [
@@ -790,9 +790,9 @@
   ]
  },
  "models": {
-  "mouse": "eleven_v4",
+  "nar": "eleven_v4",
   "lion": "eleven_v4",
-  "nar": "eleven_v4"
+  "mouse": "eleven_v4"
  },
  "settings": {
   "mouse": {
@@ -813,5 +813,5 @@
   "lion",
   "mouse"
  ],
- "notes": "해설 Lily(벨벳 같은 부드러운 여성, 호랑이 이야기의 George와 구분), 사자 Brian(크고 깊고 푸근한 큰 짐승), 생쥐 Jessica(작고 밝은 아이). 모든 배역 eleven_v4. 해설은 차분하게 장면별로 바꾸고 무섭지 않게, 사자는 위협보다 느긋하고 푸근한 큰 덩치, 생쥐는 아이처럼 높고 또렷하게."
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, lion=Brian, mouse=Munni. 아기·꼬마 역(mouse)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여."
 }
