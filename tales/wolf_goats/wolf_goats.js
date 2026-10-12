@@ -3,10 +3,11 @@
    - 3~4세 순화: 늑대는 우물에 빠졌다 도망갈 뿐 다치지 않고, 아기 염소들도 하나도 다치지 않는다. 틀리거나 지는 일 없음.
    - 배경은 장면마다 한 장(assets/v3w/wg_bg_*.webp), 배우는 자세마다 한 장(발끝 = 배우 y). */
 (() => {
-  const A = f => `../../assets/v3w/${f}.webp`;
+  const NF = new Set(['wg_clock', 'wg_clock_open', 'wg_laundry', 'wg_quilt', 'wg_stone', 'wg_cut_voice']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
+  const A = f => `../../assets/v3w/${f}${NF.has(f) ? 'nf' : ''}.webp`;
   /* 그림 크기 [가로, 세로] (assets/v3w, 배우 그림은 여백을 잘라 가장 긴 변 480) */
   const DIM = {
-    wg_clock: [169, 480], wg_clock_open: [187, 480], wg_laundry: [480, 335], wg_quilt: [480, 438], wg_stone: [480, 461],
+    wg_clock: [211, 700], wg_clock_open: [263, 700], wg_laundry: [700, 499], wg_quilt: [700, 490], wg_stone: [696, 665],
     wg_mama_basket: [338, 480], wg_mama_warn: [322, 480], wg_mama_surprise: [336, 480], wg_mama_scissors: [392, 480], wg_mama_dance: [354, 480],
     wg_wolf_knock: [232, 480], wg_wolf_chalk: [207, 480], wg_wolf_flour: [207, 480], wg_wolf_belly: [480, 174], wg_wolf_heavy: [445, 480],
     wg_wolf_splash: [252, 480], wg_wolf_flee: [480, 231],
