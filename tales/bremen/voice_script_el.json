@@ -1,12 +1,12 @@
 {
- "notes": "nar=George(패죽과 같은 서술자), donkey=Roger(느긋하고 듬직한 늙은 당나귀), dog=Will(무던한 강아지), cat=Sarah(차분한 고양이), rooster=Liam(활기찬 닭), miller=Bill(나이 든 방앗간 주인), robber=Callum(허스키한 겁쟁이 도둑), boss=Brian(도둑 두목, 큰 악역). 도둑 장면은 무섭지 않게 우스꽝스럽게.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, donkey=Roger, dog=Will, cat=Laura, rooster=Jessica, miller=Namchun, robber=Callum, boss=Brian",
  "voices": {
-  "nar": "JBFqnCBsd6RMkjVDRZzb",
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
   "donkey": "CwhRBWXzGAHq8TQ4Fs17",
   "dog": "bIHbv24MWmeRgasZH58o",
-  "cat": "EXAVITQu4vr4xnSDxMaL",
-  "rooster": "TX3LPaxmHKxFdv7VOQHJ",
-  "miller": "pqHfZKP75CvOlQylNhV4",
+  "cat": "FGY2WhTYpPnrIDTdsKH5",
+  "rooster": "cgSgspJ2msm6clMCkdW9",
+  "miller": "5ON5Fnz24cnOozEQfGAm",
   "robber": "N2lVS1w4EtoT3dr4eOWO",
   "boss": "nPczCjzI2devNBz1zQrb"
  },
