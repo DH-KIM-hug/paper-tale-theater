@@ -255,6 +255,8 @@
   async function run(T) {
     const { el, sleep, say, actor, camTo, camWide, camSnap } = T;
 
+    // 세로 화면: 글자가 보이는 폭 밖으로 잘려 나가지 않게 안쪽으로 모은다
+    const inV = x => { if (T.viewWidth() >= 990) return x; const c = T.camera, h = T.viewWidth() / 2 / Math.max(c.z, .1) - 70; return Math.max(c.x - h, Math.min(c.x + h, x)); };
     /* --- 1. 연못의 아침: 아기 개구리 깨우기 --- */
     let pads = pondBG(T);
     let momArt;
@@ -279,7 +281,7 @@
     await say('아기 개구리들을 톡 눌러서 깨워 줄까요?');
     for (const [bi, b] of babies.entries()) {
       await T.tap(b.pos, { prompt: '자고 있는 아기 개구리를 톡 눌러 봐요!' });
-      b.parts.lids.setAttribute('opacity', 0); b.hop(40); T.pop(b.x, b.y - 80, '개굴!', C.pine); AudioFX.animalNote('frog', [1.19, 1.0, 1.33][bi], .85) || croak(T, 420); // 깨울 때는 개구리 울음 효과음
+      b.parts.lids.setAttribute('opacity', 0); b.hop(40); T.pop(inV(b.x), b.y - 80, '개굴!', C.pine); AudioFX.animalNote('frog', [1.19, 1.0, 1.33][bi], .85) || croak(T, 420); // 깨울 때는 개구리 울음 효과음
       await sleep(300);
     }
     await say('엄마 개구리가 말했어요. "얘들아, 멀리 가면 안 된다~"');
@@ -351,11 +353,15 @@
     for (const [small, big] of pairs) {
       // 세로 화면: 둘을 가운데로 모으고, 황소 차례엔 살짝 물러서서(줌아웃) 둘 다 보이게
       const vw = T.viewWidth(), pt = vw < 990;
-      const zc = pt && big === 'ox' ? Math.min(1, vw / 680) : 1, d = pt ? Math.min(160, vw / 2 / zc - 95) : 160;
+      // 작은 친구끼리는 크게 키워 키 차이가 보이게 (황소 차례는 그대로: 황소가 무대에 들어오는 크기)
+      const hasSheep = small === 'sheep' || big === 'sheep', isOx = big === 'ox';
+      const fk = isOx ? 1 : pt ? (hasSheep ? 1 : 1.4) : hasSheep ? 1.35 : 1.8;
+      const zc = pt ? (isOx ? Math.min(1, vw / 680) : hasSheep ? .72 : 1) : 1;
+      const d = pt ? (isOx ? Math.min(160, vw / 2 / zc - 95) : hasSheep ? 85 : 70) : isOx ? 160 : hasSheep ? 200 : 230;
       if (pt) camSnap(500, 280, zc);
       const bigLeft = Math.random() < .5;
       const mk = (k, x) => {
-        const s = k === 'ox' ? .62 : 1; // 황소는 무대에 들어오게 줄여서
+        const s = k === 'ox' ? .62 : fk; // 황소는 무대에 들어오게 줄여서
         const a = actor(T.world, x, floor, g => ANIMALS[k].draw(T, g), { scale: s });
         a.key = k; return a;
       };
