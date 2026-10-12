@@ -18,7 +18,8 @@
     [
      "nar",
      "옛날 옛날, 깊은 산골에 팥죽을 아주 잘 쑤는 할멈이 살았어요.",
-     "smart"
+     "smart",
+     "[calm, warm storytelling]"
     ]
    ]
   },
@@ -28,12 +29,14 @@
     [
      "nar",
      "어흥! 어느 날 커다란 호랑이가 나타났어요.",
-     "tonedown:1.3"
+     "tonedown:1.3",
+     "[low voice, ominous]"
     ],
     [
      "tiger",
      "할멈, 잡아먹어야겠다!",
-     "angry:1.2"
+     "angry:1.2",
+     "[growls, menacing, hungry]"
     ]
    ]
   },
@@ -43,12 +46,14 @@
     [
      "halmi",
      "호랑이야, 동짓날에 맛있는 팥죽을 쑤어 줄게. 그때까지 기다려 다오.",
-     "sad:1.4"
+     "sad:1.4",
+     "[sad, trembling, pleading]"
     ],
     [
      "nar",
      "호랑이는 어슬렁어슬렁 돌아갔어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -58,7 +63,8 @@
     [
      "nar",
      "드디어 동짓날이 되었어요. 할멈은 팥죽을 쑤면서 훌쩍훌쩍 울었어요.",
-     "sad:1.1"
+     "sad:1.1",
+     "[sad, softly]"
     ]
    ]
   },
@@ -68,7 +74,8 @@
     [
      "nar",
      "깜깜한 밤이 되었어요. 어흥! 호랑이가 어슬렁어슬렁 찾아왔어요!",
-     "tonedown:1.4"
+     "tonedown:1.4",
+     "[whispers, ominous]"
     ]
    ]
   },
@@ -78,12 +85,14 @@
     [
      "halmi",
      "얘들아, 도와줘!",
-     "sad:1.5"
+     "sad:1.5",
+     "[sad, trembling, pleading]"
     ],
     [
      "nar",
      "친구들을 순서대로 눌러서 호랑이를 혼내 주세요!",
-     "happy:1.1"
+     "happy:1.1",
+     "[cheerful]"
     ]
    ]
   },
@@ -93,17 +102,20 @@
     [
      "nar",
      "데굴데굴~ 알밤이 굴러왔어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ],
     [
      "bam",
      "할멈, 팥죽 한 그릇 주면 도와줄게!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful, childlike]"
     ],
     [
      "nar",
      "알밤은 팥죽을 얻어먹고 뜨거운 아궁이 속에 쏙 숨었어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -113,7 +125,8 @@
     [
      "nar",
      "알밤이 아궁이에서 톡! 튀어나와 호랑이 눈을 딱 때렸어요!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful]"
     ]
    ]
   },
@@ -123,7 +136,8 @@
     [
      "nar",
      "알밤이 톡 튀어나왔지만, 호랑이는 아궁이 앞에 없었어요!",
-     "sad:1.0"
+     "sad:1.0",
+     "[sad, gentle]"
     ]
    ]
   },
@@ -133,17 +147,20 @@
     [
      "nar",
      "엉금엉금~ 자라가 기어왔어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ],
     [
      "jara",
      "나도 팥죽 한 그릇 주면 도와줄게!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful, childlike]"
     ],
     [
      "nar",
      "자라는 팥죽을 얻어먹고 물독 속에 퐁당 숨었어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -153,7 +170,8 @@
     [
      "nar",
      "물독 속 자라가 호랑이 입을 앙! 물었어요!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful]"
     ]
    ]
   },
@@ -163,7 +181,8 @@
     [
      "nar",
      "자라가 물독에서 두리번두리번… 호랑이 얼굴이 없네요!",
-     "sad:1.0"
+     "sad:1.0",
+     "[sad, gentle]"
     ]
    ]
   },
@@ -173,17 +192,20 @@
     [
      "nar",
      "철퍼덕! 쇠똥이 왔어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ],
     [
      "ddong",
      "팥죽 한 그릇 주면 나도 도울게!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful, childlike]"
     ],
     [
      "nar",
      "쇠똥은 팥죽을 얻어먹고 부엌 바닥에 납작 엎드려 숨었어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -193,7 +215,8 @@
     [
      "nar",
      "호랑이가 쇠똥을 밟고 쭈르륵~ 미끄러졌어요!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful]"
     ]
    ]
   },
@@ -203,7 +226,8 @@
     [
      "nar",
      "호랑이가 쇠똥을 폴짝 뛰어넘어 버렸어요!",
-     "sad:1.0"
+     "sad:1.0",
+     "[sad, disappointed]"
     ]
    ]
   },
@@ -213,17 +237,20 @@
     [
      "nar",
      "콕콕! 송곳이 왔어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ],
     [
      "songgot",
      "팥죽 한 그릇 주면 도와줄게!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful, childlike]"
     ],
     [
      "nar",
      "송곳은 팥죽을 얻어먹고 바닥 틈에 뾰족 숨었어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -233,7 +260,8 @@
     [
      "nar",
      "송곳이 호랑이 엉덩이를 콕! 찔렀어요!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful]"
     ]
    ]
   },
@@ -243,7 +271,8 @@
     [
      "nar",
      "송곳이 콕! 찔렀지만, 호랑이는 저쪽에 있네요.",
-     "sad:1.0"
+     "sad:1.0",
+     "[sad, gentle]"
     ]
    ]
   },
@@ -253,17 +282,20 @@
     [
      "nar",
      "쿵더쿵! 절구가 왔어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ],
     [
      "jeolgu",
      "팥죽 한 그릇 주면 도와줄게!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful, childlike]"
     ],
     [
      "nar",
      "절구는 팥죽을 얻어먹고 문 위로 올라가 숨었어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -273,7 +305,8 @@
     [
      "nar",
      "절구가 문 위에서 쿵! 호랑이 머리 위로 떨어졌어요!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful]"
     ]
    ]
   },
@@ -283,7 +316,8 @@
     [
      "nar",
      "절구가 쿵! 떨어졌지만 호랑이를 못 맞혔어요!",
-     "sad:1.0"
+     "sad:1.0",
+     "[sad, gentle]"
     ]
    ]
   },
@@ -293,17 +327,20 @@
     [
      "nar",
      "펄럭펄럭~ 멍석이 왔어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ],
     [
      "myeongseok",
      "팥죽 한 그릇 주면 도와줄게!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful, childlike]"
     ],
     [
      "nar",
      "멍석은 팥죽을 얻어먹고 마당에 돌돌 말려 숨었어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -313,7 +350,8 @@
     [
      "nar",
      "멍석이 호랑이를 돌돌돌 말아 버렸어요!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful]"
     ]
    ]
   },
@@ -323,7 +361,8 @@
     [
      "nar",
      "멍석이 펄럭펄럭… 아무것도 못 말았어요!",
-     "sad:1.0"
+     "sad:1.0",
+     "[sad, gentle]"
     ]
    ]
   },
@@ -333,17 +372,20 @@
     [
      "nar",
      "성큼성큼! 지게가 왔어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ],
     [
      "jige",
      "팥죽 한 그릇 주면 도와줄게!",
-     "happy:1.3"
+     "happy:1.3",
+     "[cheerful, childlike]"
     ],
     [
      "nar",
      "지게는 팥죽을 얻어먹고 담벼락에 기대어 숨었어요.",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -353,7 +395,8 @@
     [
      "nar",
      "지게가 호랑이를 번쩍 지고 가서 바다에 풍덩! 던져 버렸어요!",
-     "toneup:1.4"
+     "toneup:1.4",
+     "[excited, dramatic]"
     ]
    ]
   },
@@ -363,7 +406,8 @@
     [
      "nar",
      "지게가 낑낑… 힘센 호랑이를 들 수가 없어요!",
-     "sad:1.0"
+     "sad:1.0",
+     "[sad, gentle]"
     ]
    ]
   },
@@ -373,12 +417,14 @@
     [
      "halmi",
      "호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.",
-     "happy:0.9"
+     "happy:0.9",
+     "[sweet, pretending to be kind]"
     ],
     [
      "nar",
      "할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요. 누가 먼저 혼내 줄까요?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -388,12 +434,14 @@
     [
      "tiger",
      "앗, 뜨거워! 눈이야!",
-     "toneup:1.2"
+     "toneup:1.2",
+     "[yelps, startled, in pain]"
     ],
     [
      "nar",
      "호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요. 다음은 누구일까요?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -403,12 +451,14 @@
     [
      "tiger",
      "아야야!",
-     "sad:1.2"
+     "sad:1.2",
+     "[pained, yelping]"
     ],
     [
      "nar",
      "호랑이가 깜짝 놀라 뒷걸음질을 쳤어요. 다음은 누구죠?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -418,7 +468,8 @@
     [
      "nar",
      "미끌! 호랑이가 꽈당 넘어졌어요. 이번엔 누구일까요?",
-     "happy:1.2"
+     "happy:1.2",
+     "[cheerful]"
     ]
    ]
   },
@@ -428,12 +479,14 @@
     [
      "tiger",
      "엉엉, 아파!",
-     "sad:1.2"
+     "sad:1.2",
+     "[crying, sobbing, whimpering]"
     ],
     [
      "nar",
      "호랑이가 문 쪽으로 도망가요. 다음은 누구?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -443,7 +496,8 @@
     [
      "nar",
      "쿵! 절구에 맞은 호랑이가 마당으로 도망쳐 쭉 뻗어 버렸어요. 이제 누구 차례죠?",
-     "happy:1.2"
+     "happy:1.2",
+     "[cheerful]"
     ]
    ]
   },
@@ -453,7 +507,8 @@
     [
      "nar",
      "돌돌돌! 호랑이가 멍석에 꽁꽁 말렸어요. 마지막은 누구일까요?",
-     "happy:1.2"
+     "happy:1.2",
+     "[cheerful]"
     ]
    ]
   },
@@ -463,7 +518,8 @@
     [
      "nar",
      "만세! 호랑이를 물리쳤어요! 할멈은 친구들과 맛있는 팥죽을 나누어 먹었답니다.",
-     "happy:1.4"
+     "happy:1.4",
+     "[cheerful]"
     ]
    ]
   },
@@ -473,7 +529,8 @@
     [
      "nar",
      "친구들을 톡 눌러서 인사해 봐요!",
-     "happy:1.1"
+     "happy:1.1",
+     "[cheerful]"
     ]
    ]
   },
@@ -483,7 +540,8 @@
     [
      "nar",
      "호랑이는 아궁이 앞에 있어요. 아궁이 속에 누가 숨었지?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -493,7 +551,8 @@
     [
      "nar",
      "알밤을 눌러 봐요!",
-     "happy:1.1"
+     "happy:1.1",
+     "[cheerful]"
     ]
    ]
   },
@@ -503,7 +562,8 @@
     [
      "nar",
      "호랑이가 물독에 얼굴을 넣었어요. 물독 속에 누가 숨었지?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -513,7 +573,8 @@
     [
      "nar",
      "자라를 눌러 봐요!",
-     "happy:1.1"
+     "happy:1.1",
+     "[cheerful]"
     ]
    ]
   },
@@ -523,7 +584,8 @@
     [
      "nar",
      "호랑이가 부엌 바닥으로 뒷걸음질! 바닥에 납작 숨은 친구는 누구지?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -533,7 +595,8 @@
     [
      "nar",
      "쇠똥을 눌러 봐요!",
-     "happy:1.1"
+     "happy:1.1",
+     "[cheerful]"
     ]
    ]
   },
@@ -543,7 +606,8 @@
     [
      "nar",
      "호랑이가 바닥에 꽈당 넘어졌어요. 바닥 틈에 뾰족 숨은 친구는 누구지?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -553,7 +617,8 @@
     [
      "nar",
      "송곳을 눌러 봐요!",
-     "happy:1.1"
+     "happy:1.1",
+     "[cheerful]"
     ]
    ]
   },
@@ -563,7 +628,8 @@
     [
      "nar",
      "호랑이는 문 앞에 있어요. 문 위에 누가 숨었지?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -573,7 +639,8 @@
     [
      "nar",
      "절구를 눌러 봐요!",
-     "happy:1.1"
+     "happy:1.1",
+     "[cheerful]"
     ]
    ]
   },
@@ -583,7 +650,8 @@
     [
      "nar",
      "호랑이가 마당에 쭉 뻗었어요. 마당에 돌돌 말려 숨은 친구는 누구지?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -593,7 +661,8 @@
     [
      "nar",
      "멍석을 눌러 봐요!",
-     "happy:1.1"
+     "happy:1.1",
+     "[cheerful]"
     ]
    ]
   },
@@ -603,7 +672,8 @@
     [
      "nar",
      "호랑이가 멍석에 꽁꽁 말렸어요. 담벼락에 기대 숨은 친구는 누구지?",
-     "smart"
+     "smart",
+     "[warm storytelling]"
     ]
    ]
   },
@@ -613,7 +683,8 @@
     [
      "nar",
      "지게를 눌러 봐요!",
-     "happy:1.1"
+     "happy:1.1",
+     "[cheerful]"
     ]
    ]
   }
@@ -623,214 +694,261 @@
    [
     "bam",
     "받아라, 알밤 발사!",
-    "toneup:1.5"
+    "toneup:1.5",
+    "[cheerful, childlike, shouting]"
    ],
    [
     "tiger",
     "에구구, 내 눈이야!",
-    "sad:1.2"
+    "sad:1.2",
+    "[groaning, pained]"
    ]
   ],
   "cut_jara": [
    [
     "jara",
     "앙! 꽉 물었다!",
-    "toneup:1.5"
+    "toneup:1.5",
+    "[excited, childlike, shouting]"
    ],
    [
     "tiger",
     "아야야! 내 입! 놔라, 놔!",
-    "sad:1.2"
+    "sad:1.2",
+    "[pained, muffled, struggling]"
    ]
   ],
   "cut_ddong": [
    [
     "ddong",
     "여기 미끌미끌 조심해!",
-    "happy:1.4"
+    "happy:1.4",
+    "[cheerful, childlike]"
    ],
    [
     "tiger",
     "으악! 미끄러워!",
-    "toneup:1.2"
+    "toneup:1.2",
+    "[startled, panicked, shouting]"
    ]
   ],
   "cut_songgot": [
    [
     "songgot",
     "콕! 따끔하지?",
-    "happy:1.4"
+    "happy:1.4",
+    "[cheerful, childlike]"
    ],
    [
     "tiger",
     "아얏! 내 엉덩이!",
-    "toneup:1.2"
+    "toneup:1.2",
+    "[yelps, pained, indignant]"
    ]
   ],
   "cut_jeolgu": [
    [
     "jeolgu",
     "쿵더쿵, 내려간다!",
-    "toneup:1.5"
+    "toneup:1.5",
+    "[excited, childlike]"
    ],
    [
     "tiger",
     "아이고, 내 머리야!",
-    "sad:1.2"
+    "sad:1.2",
+    "[groaning, dazed, pained]"
    ]
   ],
   "cut_myeongseok": [
    [
     "myeongseok",
     "돌돌돌, 꽁꽁 말아라!",
-    "toneup:1.5"
+    "toneup:1.5",
+    "[excited, childlike]"
    ],
    [
     "tiger",
     "으으, 못 움직이겠다! 풀어 줘!",
-    "sad:1.2"
+    "sad:1.2",
+    "[struggling, whining, pleading]"
    ]
   ],
   "cut_jige": [
    [
     "jige",
     "영차! 바다로 풍덩!",
-    "toneup:1.5"
+    "toneup:1.5",
+    "[excited, childlike]"
    ],
    [
     "tiger",
     "으아아악!",
-    "toneup:1.2"
+    "toneup:1.2",
+    "[terrified, screaming]"
    ]
   ],
   "cut_jige_b": [
    [
     "tiger",
     "호랑이 살려! 다시는 안 그럴게요!",
-    "sad:1.2"
+    "sad:1.2",
+    "[terrified, crying, begging]"
    ]
   ],
   "cut_wrong_1": [
    [
     "tiger",
     "크하하! 어림없지!",
-    "happy:1.2"
+    "happy:1.2",
+    "[laughs, mocking, arrogant]"
    ]
   ],
   "cut_wrong_2": [
    [
     "tiger",
     "헤헤, 하나도 안 아프다!",
-    "happy:1.2"
+    "happy:1.2",
+    "[laughs, teasing, smug]"
    ]
   ],
   "oops_bam": [
    [
     "bam",
     "어라? 호랑이가 어디 갔지?",
-    "toneup:1.2"
+    "toneup:1.2",
+    "[excited, childlike]"
    ]
   ],
   "oops_jara": [
    [
     "jara",
     "어? 아무것도 없네?",
-    "toneup:1.2"
+    "toneup:1.2",
+    "[excited, childlike]"
    ]
   ],
   "oops_ddong": [
    [
     "ddong",
     "에잉, 안 밟았잖아!",
-    "sad:1.2"
+    "sad:1.2",
+    "[disappointed, childlike]"
    ]
   ],
   "oops_songgot": [
    [
     "songgot",
     "어라? 허공만 찔렀네!",
-    "toneup:1.2"
+    "toneup:1.2",
+    "[excited, childlike]"
    ]
   ],
   "oops_jeolgu": [
    [
     "jeolgu",
     "앗, 빗나갔다!",
-    "sad:1.2"
+    "sad:1.2",
+    "[disappointed, childlike]"
    ]
   ],
   "oops_myeongseok": [
    [
     "myeongseok",
     "어? 아무도 없잖아!",
-    "toneup:1.2"
+    "toneup:1.2",
+    "[excited, childlike]"
    ]
   ],
   "oops_jige": [
    [
     "jige",
     "끙차… 아이고, 무거워!",
-    "sad:1.2"
+    "sad:1.2",
+    "[disappointed, childlike]"
    ]
   ],
   "hi_bam": [
    [
     "bam",
     "고마워, 할멈! 팥죽 최고!",
-    "happy:1.4"
+    "happy:1.4",
+    "[delighted, childlike]"
    ]
   ],
   "hi_jara": [
    [
     "jara",
     "팥죽 정말 맛있어요!",
-    "happy:1.4"
+    "happy:1.4",
+    "[cheerful, childlike]"
    ]
   ],
   "hi_ddong": [
    [
     "ddong",
     "헤헤, 나도 신난다!",
-    "happy:1.4"
+    "happy:1.4",
+    "[cheerful, childlike]"
    ]
   ],
   "hi_songgot": [
    [
     "songgot",
     "콕콕! 우리가 이겼다!",
-    "happy:1.4"
+    "happy:1.4",
+    "[cheerful, childlike]"
    ]
   ],
   "hi_jeolgu": [
    [
     "jeolgu",
     "쿵더쿵! 만세!",
-    "happy:1.4"
+    "happy:1.4",
+    "[cheerful, childlike]"
    ]
   ],
   "hi_myeongseok": [
    [
     "myeongseok",
     "돌돌돌! 고마워요!",
-    "happy:1.4"
+    "happy:1.4",
+    "[cheerful, childlike]"
    ]
   ],
   "hi_jige": [
    [
     "jige",
     "영차! 또 놀러 올게!",
-    "happy:1.4"
+    "happy:1.4",
+    "[cheerful, childlike]"
    ]
   ],
   "hi_halmi": [
    [
     "halmi",
     "고맙다, 얘들아! 다 같이 팥죽 먹자!",
-    "happy:1.3"
+    "happy:1.3",
+    "[warm, delighted]"
    ]
   ]
  },
  "models": {
   "tiger": "eleven_v4"
- }
+ },
+ "settings": {
+  "tiger": {
+   "stability": 0.3,
+   "style": 0.5
+  }
+ },
+ "settings_later": {
+  "halmi": {
+   "stability": 0.3,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "tiger"
+ ]
 }

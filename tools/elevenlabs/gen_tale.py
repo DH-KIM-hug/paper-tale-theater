@@ -20,8 +20,8 @@ def tagged(text, emo, model=None):
     if not model.startswith('eleven_v') or model == 'eleven_multilingual_v2' or not emo: return text
     return TAG.get(emo.partition(':')[0], '') + text
 
-def tts(path, voice, text, model=None):
-    body = {'text': text, 'model_id': model or MODEL, 'voice_settings': SETTINGS}
+def tts(path, voice, text, model=None, settings=None):
+    body = {'text': text, 'model_id': model or MODEL, 'voice_settings': {**SETTINGS, **(settings or {})}}
     for attempt in range(6):
         r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(),
                                    {'xi-api-key': KEY, 'Content-Type': 'application/json'})
@@ -40,42 +40,47 @@ def main():
     td = os.path.join(ROOT, 'tales', tale)
     spec = json.load(open(os.path.join(td, 'voice_script_en.json' if en else 'voice_script_el.json')))
     EL = json.load(open(os.path.join(td, 'voice_script_el.json')))
-    V = EL['voices']; MODELS = EL.get('models') or {}
+    V = EL['voices']; MODELS = EL.get('models') or {}; SET = EL.get('settings') or {}; USE_DIR = EL.get('use_dir')  # None 이면 모든 배역
+    ONLY = set(sys.argv[sys.argv.index('--only') + 1].split(',')) if '--only' in sys.argv else None  # 시범: 줄 번호(L1.1, Xcut_bam.0)만 만든다
     for r in V: assert r.isalpha() and r.islower(), f'배역 이름은 영어 소문자만: {r}'
     sub = 'en/' if en else ''
     outdir = os.path.join(ROOT, 'audio', 'el', tale, *(['en'] if en else [])); os.makedirs(outdir, exist_ok=True)
     chars, made, errs, skipped = 0, 0, 0, 0
-    def clip(role, text, emo):
+    def clip(role, text, emo, dr=None, sid=None):
         nonlocal chars, made, errs
         M = MODELS.get(role, MODEL)  # 배역별 모델 (voice_script_el.json 의 "models")
-        sent = tagged(text, emo, M)
-        h = hashlib.md5(f'{V[role]}|{M}|{sent}'.encode()).hexdigest()[:10]
+        if USE_DIR is not None and role not in USE_DIR: dr = None
+        ST = SET.get(role)  # 배역별 voice_settings (예: 호랑이·할멈은 stability 를 낮춰 표정을 크게)
+        sent = (dr + ' ' + text) if dr else tagged(text, emo, M)  # dir(연기 지시 태그)이 있으면 감정 프리셋 태그 대신 쓴다
+        if ONLY and sid not in ONLY: return None
+        h = hashlib.md5((f'{V[role]}|{M}|{sent}' + (f'|{json.dumps(ST, sort_keys=True)}' if ST else '')).encode()).hexdigest()[:10]
         rel = f'audio/el/{tale}/{sub}{role}_{h}.mp3'
         path = os.path.join(ROOT, rel)
         if redo or not os.path.exists(path):
             if chars + len(sent) > cap: return None
             chars += len(sent)
             if not dry:
-                try: tts(path, V[role], sent, M); made += 1; print('ok', role, sent, flush=True)
+                try: tts(path, V[role], sent, M, ST); made += 1; print('ok', role, sent, flush=True)
                 except urllib.error.HTTPError as e:
                     errs += 1; chars -= len(sent); print('ERR', e.code, e.read()[:200], role, text, flush=True); return None
         return rel
     clips, seen = {}, set()
-    for ln in spec['lines']:
+    for ni, ln in enumerate(spec['lines']):
         text = ln['text']
         if text in seen: continue
         seen.add(text)
         shown = ln['en'] if en else text
-        segs = [s + [None] * (3 - len(s)) for s in ln.get('segs') or [['nar', shown]]]
-        urls = [clip(role, s, emo) for role, s, emo in segs]
+        segs = [s + [None] * (4 - len(s)) for s in ln.get('segs') or [['nar', shown]]]
+        urls = [clip(role, s, emo, dr, f'L{ni}.{si}') for si, (role, s, emo, dr) in enumerate(segs)]
         if not all(urls): skipped += 1; continue  # 일부만 만들어진 줄은 통째로 Typecast 에 맡김
         u = urls[0] if len(urls) == 1 else urls
         clips[text] = {'t': shown, 'c': u} if en else u
     voice = {}
     for key, segs in (spec.get('extra') or {}).items():
-        urls = [clip(s[0], s[1], s[2] if len(s) > 2 else None) for s in segs]
+        urls = [clip(s[0], s[1], s[2] if len(s) > 2 else None, s[3] if len(s) > 3 else None, f'X{key}.{si}') for si, s in enumerate(segs)]
         if not all(urls): skipped += 1; continue
         voice[key] = urls[0] if len(urls) == 1 else urls
+    if ONLY: print('시범', made, '개,', chars, '자'); return
     if dry:
         print('새로 만들 글자 수:', chars, '/ 건너뛸 줄:', skipped); return
     sfx = '_EN' if en else ''
