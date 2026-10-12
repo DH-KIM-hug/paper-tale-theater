@@ -905,7 +905,9 @@
     AudioFX.sfx('boom', .5) || AudioFX.boom();
     await T.cut(svg => {
       el('rect', { width: 400, height: 300, fill: C.indigo }, svg);
-      el('text', { x: 200, y: 180, 'text-anchor': 'middle', 'font-size': 110, fill: C.amber, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('쾅!') }, svg);
+      if (artUrl('goose_fly3')) [[30, 30, 120, -14], [150, 8, 130, -8], [270, 52, 100, -18]].forEach(([x, y, w, r]) => // 쾅 소리에 놀라 날아오르는 기러기들
+        el('image', { href: AS + ART.goose_fly3, x, y, width: w, height: w * 64.1 / 117.5, transform: `rotate(${r} ${x + w / 2} ${y + 33})` }, svg));
+      el('text', { x: 200, y: 235, 'text-anchor': 'middle', 'font-size': 100, fill: C.amber, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('쾅!') }, svg);
     }, { hold: 1500 });
     honk(T);
     await say('저 멀리서 큰 소리가 났어요. 깜짝 놀란 기러기들이 모두 날아가 버렸어요.');
