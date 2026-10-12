@@ -32,7 +32,7 @@
     grandma_stand: 'v3w/tn_grandma_stand.webp', grandma_pull: 'v3w/tn_grandma_hold3.webp', girl_pull: 'v3w/tn_girl_hold3.webp',
     dog_pull: 'v3w/tn_dog_bite5.webp', dog_badge: 'v3w/tn_dog_pull5.webp', dog_jump: 'v3w/tn_dog_jump5.webp', cat_pull: 'v3w/tn_cat_tail3.webp', cat_sit: 'v3w/tn_cat_sit.webp',
     mouse_pull: 'v3w/tn_mouse_tail3.webp', cow: 'v3w/rab_aud_cow.webp', pig: 'v3w/rab_aud_pig.webp',
-    cut_glare: 'v3w/tn_cut_glare5.webp', cut_pop: 'v3w/tn_cut_pop2.webp',
+    cut_glare: 'v3w/tn_cut_glare5.webp', cut_pop: 'v3w/tn_cut_pop2nf.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
