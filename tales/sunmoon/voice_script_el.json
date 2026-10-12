@@ -1,11 +1,11 @@
 {
  "voices": {
-  "nar": "JBFqnCBsd6RMkjVDRZzb",
-  "mom": "XrExE9yKIg1WjnnlVkGX",
-  "rich": "hpp4J3VqNfWAUOO0d1Us",
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "mom": "hpp4J3VqNfWAUOO0d1Us",
+  "rich": "XrExE9yKIg1WjnnlVkGX",
   "tiger": "nPczCjzI2devNBz1zQrb",
-  "boy": "TX3LPaxmHKxFdv7VOQHJ",
-  "girl": "cgSgspJ2msm6clMCkdW9"
+  "boy": "tapn1QwocNXk3viVSowa",
+  "girl": "Lb7qkOn5hF8p7qfCDH8q"
  },
  "lines": [
   {
@@ -1607,12 +1607,12 @@
   ]
  },
  "models": {
+  "nar": "eleven_v4",
+  "mom": "eleven_v4",
+  "rich": "eleven_v4",
   "tiger": "eleven_v4",
   "boy": "eleven_v4",
-  "rich": "eleven_v4",
-  "nar": "eleven_v4",
-  "girl": "eleven_v4",
-  "mom": "eleven_v4"
+  "girl": "eleven_v4"
  },
  "settings": {
   "tiger": {
@@ -1648,5 +1648,5 @@
   "boy",
   "girl"
  ],
- "notes": "해설 George(따뜻한 이야기꾼, 팥죽과 같은 원형), 엄마 Matilda(자애로운 엄마 원형), 부잣집 아주머니 Bella(밝고 단정한 여성), 호랑이 Brian(큰 짐승, 팥죽 호랑이와 같은 원형), 오빠 Liam(젊고 또렷한 소년 느낌), 동생 Jessica(밝고 높은 아이). 모두 eleven_v4. 호랑이는 으르렁거리되 우스꽝스럽게(먹보·엉덩방아·혹), 해설은 어두운 장면에서도 속삭이듯 낮게 하되 무섭지 않게, 하늘에 오르는 장면은 밝게."
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, mom=Bella, rich=Matilda, tiger=Brian, boy=Sparkles, girl=Annie"
 }
