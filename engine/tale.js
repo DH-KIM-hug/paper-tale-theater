@@ -484,6 +484,22 @@ const Tale = (() => {
     if (AudioFX.hasSting && AudioFX.hasSting(sfx)) return AudioFX.sting(sfx);
     if (AudioFX[sfx]) AudioFX[sfx]();
   }
+  /* 컷 그림(400x300) 안의 영어 효과 글자가 한글 4자 기준 크기 그대로라 사진 밖으로 잘리는 것을 막는다:
+     폭을 재서 먼저 안쪽으로 밀고, 그래도 넘으면 글자 크기를 줄인다 (한글은 그대로) */
+  function fitCutText(svg) {
+    svg.querySelectorAll('text').forEach(t => {
+      if (!/[A-Za-z]/.test(t.textContent)) return;
+      try {
+        let b = t.getBBox();
+        if (b.width > 376) {
+          t.setAttribute('font-size', (parseFloat(t.getAttribute('font-size')) * 376 / b.width).toFixed(1));
+          b = t.getBBox();
+        }
+        const dx = b.x < 12 ? 12 - b.x : b.x + b.width > 388 ? 388 - b.x - b.width : 0;
+        if (dx) t.setAttribute('x', (parseFloat(t.getAttribute('x') || 0) + dx).toFixed(1));
+      } catch (e) { /* 측정 불가 시 그대로 */ }
+    });
+  }
   /* 만화 컷: draw(svg 0..400 x 0..300)로 코드가 그린다 (그림 컷은 cutImage). 탭하면 빨리 넘어간다 */
   async function cut(draw, { hold: ms = 2600, sfx } = {}) {
     const p = $('#cutPanel');
@@ -495,6 +511,7 @@ const Tale = (() => {
       el('path', { d: `M200 150 L${200 + Math.cos(a) * 400} ${150 + Math.sin(a) * 400} L${200 + Math.cos(a + .16) * 400} ${150 + Math.sin(a + .16) * 400} Z`, fill: i % 2 ? '#E8703A' : '#D9A94E', opacity: .85 }, svg);
     }
     draw(svg);
+    fitCutText(svg);
     p.hidden = false;
     playSfx(sfx);
     shake();
@@ -552,24 +569,60 @@ const Tale = (() => {
   function pop(x, y, word, color = '#A93B32') {
     // 카메라가 가까이 붙을수록 화면에서 커지므로 확대 배율만큼 줄여 늘 비슷한 크기로 보이게
     const g = el('g', { transform: `translate(${x},${y}) scale(${(1 / Math.max(1, camState.z)).toFixed(3)})` }, fxL);
-    const chars = [...tr(word)], size = chars.length > 3 ? 48 : 56;
-    const cw = ch => /[!?~.…,]/.test(ch) ? size * .42 : size * .86; // 문장부호는 좁게
-    const total = chars.reduce((a, ch) => a + cw(ch), 0);
-    const burst = el('path', { d: 'M60 0 L36 10 L52 30 L26 26 L30 52 L10 36 L0 60 L-10 36 L-30 52 L-26 26 L-52 30 L-36 10 L-60 0 L-36 -10 L-52 -30 L-26 -26 L-30 -52 L-10 -36 L0 -60 L10 -36 L30 -52 L26 -26 L52 -30 L36 -10 Z',
-      fill: '#F2B366', stroke: '#E8703A', 'stroke-width': 4, transform: `scale(${Math.max(1.4, total / 70)},${1.4})` }, g);
+    const txt = tr(word), FONT = "'Pretendard Variable', Pretendard, sans-serif";
+    const latin = /[A-Za-z]/.test(txt), vw = viewWidth(), maxW = vw * .7;
+    const BURST = 'M60 0 L36 10 L52 30 L26 26 L30 52 L10 36 L0 60 L-10 36 L-30 52 L-26 26 L-52 30 L-36 10 L-60 0 L-36 -10 L-52 -30 L-26 -26 L-30 -52 L-10 -36 L0 -60 L10 -36 L30 -52 L26 -26 L52 -30 L36 -10 Z';
+    const pieces = []; // { s: 글자(또는 낱말), x, y } — 가운데 기준 배치
+    let size, burstW, burstH;
+    if (!latin) { // 한글: 한 자씩 고정 폭 (기존 모양 그대로)
+      const chars = [...txt]; size = chars.length > 3 ? 48 : 56;
+      const cw = ch => /[!?~.…,]/.test(ch) ? size * .42 : size * .86; // 문장부호는 좁게
+      const total = chars.reduce((a, ch) => a + cw(ch), 0);
+      let cursor = -total / 2;
+      chars.forEach(ch => { pieces.push({ s: ch, x: cursor + cw(ch) / 2, y: 0 }); cursor += cw(ch); });
+      burstW = Math.min(120 * Math.max(1.4, total / 70), vw * .95); burstH = 168;
+    } else { // 영어: 낱말 단위로 실제 글자 폭을 재서 놓고, 너무 길면 글자를 줄이고 두 줄 이상으로 나눈다
+      const cx = (pop.cvs = pop.cvs || document.createElement('canvas')).getContext('2d');
+      const words = txt.split(/\s+/).filter(Boolean);
+      let lines, wid, lw, sp;
+      size = words.length > 1 || txt.length > 6 ? 48 : 56;
+      for (;;) {
+        cx.font = `600 ${size}px ${FONT}`;
+        wid = words.map(w => cx.measureText(w).width); sp = cx.measureText(' ').width + size * .22; // 흰 테두리에 먹히지 않게 낱말 사이를 조금 더 띄운다
+        lines = [[]]; lw = [0];
+        words.forEach((w, i) => {
+          let L = lines.length - 1;
+          if (lines[L].length && lw[L] + sp + wid[i] > maxW) { lines.push([]); lw.push(0); L++; }
+          lw[L] += (lines[L].length ? sp : 0) + wid[i]; lines[L].push(i);
+        });
+        if ((Math.max(...lw) <= maxW && lines.length <= 3) || size <= 26) break;
+        size -= 4;
+      }
+      const lh = size * 1.08, W = Math.max(...lw);
+      lines.forEach((ln, li) => {
+        let cur = -lw[li] / 2;
+        ln.forEach(i => { pieces.push({ s: words[i], x: cur + wid[i] / 2, y: (li - (lines.length - 1) / 2) * lh }); cur += wid[i] + sp; });
+      });
+      burstW = Math.min(Math.max(168, W * 1.25 + 70), vw * .95); burstH = 168 + (lines.length - 1) * lh * 1.1;
+    }
+    { // 화면 가장자리에서 터져도 별이 잘리지 않게 보이는 폭 안으로 민다
+      const z = Math.max(1, camState.z), half = burstW / 2 / z, hv = vw / 2 / z;
+      if (hv > half) { const nx = Math.min(Math.max(x, camState.x - hv + half), camState.x + hv - half); g.setAttribute('transform', `translate(${nx.toFixed(1)},${y}) scale(${(1 / z).toFixed(3)})`); }
+    }
+    const burst = el('path', { d: BURST, fill: '#F2B366', stroke: '#E8703A', 'stroke-width': 4, transform: `scale(${(burstW / 120).toFixed(3)},${(burstH / 120).toFixed(3)})` }, g);
     const bw = el('g', {}, g); bw.appendChild(burst);
     bw.style.transformBox = 'view-box'; bw.style.transformOrigin = '0 0';
     bw.animate(springFrames(v => `scale(${v}) rotate(${(1 - v) * 40}deg)`), { duration: 620, easing: 'ease-out', fill: 'both' });
-    let cursor = -total / 2;
-    chars.forEach((ch, i) => {
-      const px = cursor + cw(ch) / 2; cursor += cw(ch);
-      const t = el('text', { 'text-anchor': 'middle', 'font-size': size, fill: color, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', text: ch }, g);
+    const step = latin ? 140 : 70;
+    pieces.forEach((pc, i) => {
+      const t = el('text', { 'text-anchor': 'middle', 'font-size': size, fill: color, 'font-family': FONT, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', text: pc.s }, g);
+      if (latin) t.setAttribute('font-weight', 600);
       t.style.transformBox = 'view-box'; t.style.transformOrigin = '0 0';
       const rot = (i % 2 ? 1 : -1) * 9;
-      t.animate(springFrames((v, k) => `translate(${px}px, ${size * .36 - (k === 0 ? 56 : 0)}px) scale(${Math.max(v, .01)}) rotate(${k < 3 ? rot : 0}deg)`),
-        { duration: 700, delay: 70 * i, easing: 'ease-out', fill: 'both' });
+      t.animate(springFrames((v, k) => `translate(${pc.x}px, ${pc.y + size * .36 - (k === 0 ? 56 : 0)}px) scale(${Math.max(v, .01)}) rotate(${k < 3 ? rot : 0}deg)`),
+        { duration: 700, delay: step * i, easing: 'ease-out', fill: 'both' });
     });
-    g.animate([{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400 + chars.length * 70 }).finished.then(() => g.remove());
+    g.animate([{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400 + pieces.length * step }).finished.then(() => g.remove());
   }
 
   /* ---------- 음 재생 (동화별 효과음: 개굴 음계, 음매 등) ---------- */
