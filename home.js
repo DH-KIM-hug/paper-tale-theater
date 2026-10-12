@@ -782,6 +782,8 @@
   buildChips('origin');
   buildChips('skill');
   intro();
+  /* 목소리 시험: ?voice=el 이면 ElevenLabs, ?voice=tc 면 원래(Typecast)로 */
+  try { const v = new URLSearchParams(location.search).get('voice'); if (v === 'el') localStorage.setItem('voice', 'el'); else if (v === 'tc') localStorage.removeItem('voice'); } catch (e) { /* 무시 */ }
   /* 확인용: index.html#parent 로 열면 보호자 메뉴가 바로 열린다 */
   if (location.hash === '#parent') openPanel();
   probeMaking();
