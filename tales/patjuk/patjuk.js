@@ -196,13 +196,16 @@
       // 장면 한 장 그림: 무대(1000x560)를 꽉 채우고 가로 레터박스용으로 양옆을 조금 더 덮는다
       if (full) el('image', { href: SCENE_IMG[k], x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, bg);
       if (k === 'A') {
+        // 팥 포기: 밭 띠 위에 두 줄로 (먼 줄은 작고 흐리게, 가까운 줄은 크게). 호랑이·할멈이 걷는 바닥선(520)보다 한참 위라 겹치지 않는다
+        if (full) {
+          const rows = [{ y: 346, h: 40, op: .8, xs: [200, 340, 480, 620, 760] }, { y: 408, h: 70, op: 1, xs: [160, 420, 690] }];
+          rows.forEach(r => r.xs.forEach(x => img(bg, 'v3w/pj_bean_plant.webp', x - r.h * .37, r.y - r.h, r.h * .73, r.h, 'xMidYMax meet', { class: 'prop', opacity: r.op })));
+        }
         if (!full) {
           img(bg, 'v3w/a3_sky.webp', -150, -80, 1300, 760, 'xMidYMid slice');
           img(bg, 'v3w/a3_cloud1.webp', 520, 30, 320, 97);
           img(bg, 'v3w/a3_cloud1.webp', 40, 50, 230, 70, 'xMidYMid meet', { transform: 'translate(310,0) scale(-1,1)' });
           img(bg, 'v3w/a3_geese.webp', 700, 140, 190, 56);
-          img(bg, 'v3w/a3_field.webp', -170, 370, 650, 250, 'xMidYMax slice', { class: 'prop' });
-          img(bg, 'v3w/a3_field.webp', 450, 360, 720, 265, 'xMidYMax slice', { class: 'prop' });
           img(fgL, 'v3w/a3_fg_branch.webp', -120, -70, 240, 338);
           img(fgL, 'v3w/a3_fg_grass.webp', -140, 250, 180, 343);
           img(fgL, 'v3w/a3_fg_grass.webp', -1150, 270, 170, 324, 'xMidYMid meet', { transform: 'scale(-1,1)' });
@@ -419,7 +422,7 @@
       // 1. 낮 — 팥밭에서 일하는 할멈 클로즈업
       beats.push(async () => {
         grannyMood('cook');
-        await camTo(240, 430, 1.55, 1100);
+        await camTo(300, 400, 1.3, 1100);
         await say(INTRO.opening[0]);
       });
       // 2. 호랑이 등장 — 와이드로 빠졌다가 호랑이 쪽으로
