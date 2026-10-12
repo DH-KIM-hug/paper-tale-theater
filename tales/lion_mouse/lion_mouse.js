@@ -490,9 +490,9 @@
       drawIn(inner, x, 260); return g;
     };
     const lionPrint = (g, x, y) => pic(T, g, 'print_lion', x - 130, y - 129, 260, 257);
-    const mousePrint = (g, x, y) => pic(T, g, 'print_mouse', x - 26, y - 32, 52, 64);
+    const mousePrint = (g, x, y) => pic(T, g, 'print_mouse', x - 36, y - 44, 72, 88);
     const lionTooth = (g, x, y) => pic(T, g, 'tooth_lion', x - 50, y - 131, 100, 262);
-    const mouseTooth = (g, x, y) => pic(T, g, 'tooth_mouse', x - 34, y - 23, 68, 46);
+    const mouseTooth = (g, x, y) => pic(T, g, 'tooth_mouse', x - 50, y - 34, 100, 68);
     const OX = T.portrait() ? 95 : 120; // 주인은 카드 오른쪽 아래
     const owner = (who, x) => who === LION
       ? (() => { const g = el('g', { transform: `translate(${x + OX},390) scale(.75)` }, T.world); drawHead(T, g).eyes('happy'); return g; })()
@@ -553,7 +553,7 @@
 
     /* --- 6. 그물 (밤 숲 하이앵글) --- */
     await T.sceneCard('밤 숲', () => {
-      T.clear(); nightHighBG(T);
+      T.clear(); camSnap(500, 280, 1); nightHighBG(T);
       lion = mk(T, T.world, 560, 420, drawLionLie, 1.3); lion.parts.eyes('open');
       if (!pic(T, T.world, 'net', 250, 160, 620, 620 * 512 / 1000)) { // 그물 그림(둥근 지붕꼴)이 사자를 덮는다
         const clip = el('clipPath', { id: 'lmNetClip' }, T.fx);
