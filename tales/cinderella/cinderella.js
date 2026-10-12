@@ -79,7 +79,7 @@
     await say('"신데렐라, 부엌을 쓸어라!" 새엄마가 말했어요.');
     await say('신데렐라를 톡톡톡 눌러서 부엌을 쓸어 봐요!');
     await T.mash(cind.pos, { count: 3, prompt: '신데렐라를 톡톡톡! 부엌을 쓸어요.', onStep: i => {
-      cind.hop(14, 300); popSfx(T); T.pop(cind.x + 20, cind.y - 250, tr(['쓱쓱!', '싹싹!', '깨끗!'][i - 1]));
+      cind.hop(14, 300); popSfx(T); T.pop(cind.x + 20 + [-1, 1, -1][i - 1] * X(100, 60), cind.y - (i === 3 ? 300 : 250), tr(['쓱쓱!', '싹싹!', '깨끗!'][i - 1]));
     } });
     await say('부엌이 깨끗해졌어요. 그런데 일이 아직 많이 남았어요.');
 
@@ -100,14 +100,14 @@
     await say('맞아요, 슬픈 마음이에요. 그때 쪼르르 소리가 났어요.');
     faces.forEach(hide);
     put(T, cind, X(380, 425), 505, { look: 'cry', to: 'left' });
-    const mx = X([520, 590, 660, 730], [495, 548, 601, 522]), my = X([505, 505, 505, 505], [505, 505, 505, 462]);
-    put(T, mice[0], mx[0], my[0], { to: 'right' }); fade(mice[0]);
+    const mx = X([520, 590, 660, 730], [455, 495, 535, 575]), my = [505, 505, 505, 505], ms = P ? .8 : 1;
+    put(T, mice[0], mx[0], my[0], { to: 'right', s: ms }); fade(mice[0]);
     await say('그때 생쥐들이 달려왔어요. "우리가 도와줄게!"');
     await say('생쥐를 톡톡톡톡 눌러서 하나씩 세어 봐요!');
     await T.mash(mice[0].pos, { count: 4, prompt: '생쥐를 톡톡톡톡! 하나씩 세어요.', onStep: i => {
       const m = mice[i - 1];
-      if (i > 1) { put(T, m, mx[i - 1], my[i - 1], { to: 'right' }); m.pos.animate([{ opacity: 0, translate: '0 -30px' }, { opacity: 1, translate: '0 0' }], 260); }
-      m.hop(14, 260); popSfx(T); T.pop(m.x, m.y - 190, tr(NUM[i - 1]));
+      if (i > 1) { put(T, m, mx[i - 1], my[i - 1], { to: 'right', s: ms }); m.pos.animate([{ opacity: 0, translate: '0 -30px' }, { opacity: 1, translate: '0 0' }], 260); }
+      m.hop(14, 260); popSfx(T); T.pop(m.x, m.y - (i % 2 ? 190 : 260), tr(NUM[i - 1]));
     } });
     cind.look('joy'); cind.hop(24, 340);
     await say('생쥐가 하나, 둘, 셋, 넷! 모두 같이 청소를 했어요.');
@@ -131,11 +131,23 @@
     await T.tap(sisA.pos, { prompt: '언니를 톡! 리본을 달아 줘요.' });
     popSfx(T); sisA.hop(26, 340);
     await T.cutImage([{ src: cutSrc('bow'), sfx: 'pop', hold: 3600 }], { hold: 3600 });
-    await say('쿵! 리본이 너무 커서 언니들이 서로 부딪혔어요. 신데렐라는 킥킥 웃었어요.');
     scene('parlor');
-    put(T, cind, X(500, 500), 505, { look: 'old', to: 'left' });
-    hide(sisA); hide(sisB); hide(step);
+    put(T, cind, X(300, 385), 505, { look: 'old', to: 'right', s: P ? .72 : 1 });
+    put(T, sisA, X(440, 460), 505, { look: 'ribbon', to: 'right' });
+    put(T, sisB, X(660, 570), 505, { look: 'ribbon', to: 'left' });
+    const bump = (async () => {
+      await sleep(400);
+      await Promise.all([sisA.move(X(520, 505), 505, 450), sisB.move(X(570, 525), 505, 450)]);
+      popSfx(T); T.shake(); T.pop(X(545, 515), 250, tr('쿵!')); sisA.hop(18, 320); sisB.hop(18, 320);
+      await sleep(500); cind.hop(16, 320);
+    })();
+    await say('쿵! 리본이 너무 커서 언니들이 서로 부딪혔어요. 신데렐라는 킥킥 웃었어요.');
+    await bump;
+    sisA.turn('right'); sisB.turn('right');
+    const leave = Promise.all([sisA.move(X(1150, 760), 505, 1100), sisB.move(X(1230, 830), 505, 1100)]);
     await say('새엄마와 언니들은 무도회에 갔어요. 신데렐라만 집에 남았어요.');
+    await leave; hide(sisA); hide(sisB); hide(step);
+    cind.look('old', 'left');
 
     /* --- 4. 밤 정원: 요정 할머니 --- */
     await T.sceneCard(tr('밤 정원'), () => {
@@ -168,7 +180,7 @@
     await say('신데렐라를 톡톡톡 눌러서 함께 춤을 춰 봐요!');
     cind.look('dance'); prince.look('dance', 'left');
     await T.mash(cind.pos, { count: 3, prompt: '신데렐라를 톡톡톡! 함께 춤을 춰요.', onStep: i => {
-      cind.hop(24, 360); prince.hop(24, 360); popSfx(T); T.pop((cind.x + prince.x) / 2, cind.y - 270, tr(['빙글!', '팔랑!', '빙글!'][i - 1]));
+      cind.hop(24, 360); prince.hop(24, 360); popSfx(T); T.pop((cind.x + prince.x) / 2 + [-1, 1, -1][i - 1] * X(110, 70), cind.y - (i === 2 ? 300 : 270), tr(['빙글!', '팔랑!', '빙글!'][i - 1]));
     } });
     await say('둘은 빙글빙글 춤을 추었어요. 신데렐라는 정말 행복했어요.');
 
@@ -180,9 +192,12 @@
     }, cind.pos);
     await say('그때 시계탑에서 종이 울렸어요. 신데렐라를 톡톡톡톡톡 눌러서 종소리를 세어 봐요!');
     await T.mash(cind.pos, { count: 5, prompt: '신데렐라를 톡톡톡톡톡! 종소리를 세어요.', onStep: i => {
-      cind.hop(14, 260); bellSfx(T); T.pop(cind.x, cind.y - 260, tr(NUM[i - 1]));
+      cind.hop(14, 260); bellSfx(T); T.shake(); T.pop(...[[400, 150], [612, 150], [410, 250], [602, 250], [506, 70]][i - 1], tr(NUM[i - 1]));
     } });
+    cind.turn('right');
+    const dash = cind.move(X(1150, 720), 520, 1600, 'ease-in');
     await say('종이 하나, 둘, 셋, 넷, 다섯! 마법이 풀리기 전에 달려야 해요!');
+    await dash;
 
     /* --- 7. 계단: 유리 구두 --- */
     await T.sceneCard(tr('계단'), () => {
@@ -218,6 +233,10 @@
       { key: 'a', el: sisA.pos, ok: false }, { key: 'b', el: sisB.pos, ok: false }, { key: 'c', el: cind.pos, ok: true }],
       { prompt: '신데렐라를 톡!', where: '앞치마를 입은 친구를 찾아봐요.', who: '앞치마를 입은 신데렐라를 톡!' });
     clinkSfx(T); cind.hop(24, 320);
+    { const sx = cind.x - X(80, 62), g = T.el('g', { filter: 'url(#pp)' }, T.world), q = T.el('g', { transform: `translate(${sx} 505) scale(1.7) translate(${-sx} -505)` }, g);
+      T.el('path', { d: `M${sx - 24} 505 v-8 q0 -20 10 -26 q6 -4 10 0 q2 14 22 18 q10 3 10 14 v2 z`, fill: '#CDEFFC', stroke: '#6DB7DB', 'stroke-width': 2.5 }, q);
+      T.el('path', { d: `M${sx - 18} 492 q2 -12 6 -16`, stroke: '#fff', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, q);
+      g.animate([{ transform: 'translateY(-30px)', opacity: 0 }, { transform: 'translateY(0)', opacity: 1 }], { duration: 400, easing: 'ease-out' }); }
     await say('구두가 꼭 맞았어요! 모두 깜짝 놀랐어요.');
 
     /* --- 9. 궁전 정원: 화해 --- */
