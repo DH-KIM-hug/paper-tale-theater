@@ -1,0 +1,817 @@
+{
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "lion": "nPczCjzI2devNBz1zQrb",
+  "mouse": "cgSgspJ2msm6clMCkdW9"
+ },
+ "lines": [
+  {
+   "text": "나무 그늘에서 사자가 쿨쿨 낮잠을 자요.",
+   "segs": [
+    [
+     "nar",
+     "나무 그늘에서 사자가 쿨쿨 낮잠을 자요.",
+     "tonedown:1.1",
+     "[soft, calm, storytelling, drowsy warmth]"
+    ]
+   ]
+  },
+  {
+   "text": "사자 코를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "사자 코를 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "콧방울이 퐁! 그래도 사자는 쿨쿨 자요.",
+   "segs": [
+    [
+     "nar",
+     "콧방울이 퐁! 그래도 사자는 쿨쿨 자요.",
+     "happy:1.2",
+     "[giggles softly, amused, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "작은 생쥐가 산책을 나왔어요. 풀이 숲처럼 커다래요!",
+   "segs": [
+    [
+     "nar",
+     "작은 생쥐가 산책을 나왔어요. 풀이 숲처럼 커다래요!",
+     "happy:1.2",
+     "[bright, curious, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 폴짝폴짝 가 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 눌러서 폴짝폴짝 가 볼까요?",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 폴짝!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 눌러서 폴짝!",
+     "happy:1.1",
+     "[cheerful, encouraging, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 이건 뭐지? 폴짝!",
+   "segs": [
+    [
+     "mouse",
+     "어? 이건 뭐지? 폴짝!",
+     "toneup:1.3",
+     "[curious, childlike, small voice, hops]"
+    ]
+   ]
+  },
+  {
+   "text": "와아! 사자 갈기는 커다란 미끄럼틀이었어요. 쭈르륵~ 히히!",
+   "segs": [
+    [
+     "mouse",
+     "와아!",
+     "happy:1.5",
+     "[excited, childlike, squeals]"
+    ],
+    [
+     "nar",
+     "사자 갈기는 커다란 미끄럼틀이었어요.",
+     null,
+     "[warm, amused, storytelling]"
+    ],
+    [
+     "mouse",
+     "쭈르륵~ 히히!",
+     "happy:1.5",
+     "[giggles, delighted, childlike, sliding]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 사자가 눈을 떴어요!",
+   "segs": [
+    [
+     "nar",
+     "어? 사자가 눈을 떴어요!",
+     "toneup:1.4",
+     "[surprised, gasps softly, light suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "사자가 커다란 앞발로 생쥐 꼬리를 탁! 눌렀어요.",
+   "segs": [
+    [
+     "nar",
+     "사자가 커다란 앞발로 생쥐 꼬리를 탁! 눌렀어요.",
+     null,
+     "[soft, tense but gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "사자가 하품하며 말했어요. \"하암~ 한입에 꿀꺽 해 버릴까?\"",
+   "segs": [
+    [
+     "nar",
+     "사자가 하품하며 말했어요.",
+     null,
+     "[warm, gentle storytelling]"
+    ],
+    [
+     "lion",
+     "하암~ 한입에 꿀꺽 해 버릴까?",
+     "tonedown:1.3",
+     "[yawning, sleepy, deep rumbling, lazy]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 말했어요. \"살려 주시면 꼭 은혜 갚을게요!\"",
+   "segs": [
+    [
+     "nar",
+     "생쥐가 말했어요.",
+     null,
+     "[warm, gentle storytelling]"
+    ],
+    [
+     "mouse",
+     "살려 주시면 꼭 은혜 갚을게요!",
+     "sad:1.4",
+     "[frightened, trembling, small voice, pleading]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐를 톡 눌러서 부탁해 봐요.",
+   "segs": [
+    [
+     "nar",
+     "생쥐를 톡 눌러서 부탁해 봐요.",
+     "happy:1.1",
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "생쥐를 톡 눌러 봐요!",
+     "happy:1.1",
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 두 손을 모았어요. \"제발요, 사자님~\"",
+   "segs": [
+    [
+     "nar",
+     "생쥐가 두 손을 모았어요.",
+     null,
+     "[soft, tender, storytelling]"
+    ],
+    [
+     "mouse",
+     "제발요, 사자님~",
+     "sad:1.5",
+     "[pleading, sweet, trembling, small voice]"
+    ]
+   ]
+  },
+  {
+   "text": "\"네가? 나를 도와준다고?\"",
+   "segs": [
+    [
+     "lion",
+     "네가? 나를 도와준다고?",
+     "happy:1.4",
+     "[amused, surprised, deep rumbling, disbelieving]"
+    ]
+   ]
+  },
+  {
+   "text": "사자가 웃다가 앞발이 스르르 열렸어요. 앞발을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "사자가 웃다가 앞발이 스르르 열렸어요. 앞발을 톡 눌러 봐요!",
+     "happy:1.1",
+     "[warm, amused, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "사자 앞발을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "사자 앞발을 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 쏙 빠져나왔어요. \"고맙습니다, 사자님!\"",
+   "segs": [
+    [
+     "nar",
+     "생쥐가 쏙 빠져나왔어요.",
+     null,
+     "[relieved, warm, storytelling]"
+    ],
+    [
+     "mouse",
+     "고맙습니다, 사자님!",
+     "happy",
+     "[relieved, grateful, cheerful, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "사자 발과 생쥐를 나란히 놓아 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "사자 발과 생쥐를 나란히 놓아 볼까요?",
+     "happy:1.1",
+     "[curious, calm, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "사자 발가락 하나가 생쥐 한 마리만 해요!",
+   "segs": [
+    [
+     "nar",
+     "사자 발가락 하나가 생쥐 한 마리만 해요!",
+     "toneup:1.2",
+     "[amazed, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "더 큰 발자국은 어느 쪽일까요?",
+   "segs": [
+    [
+     "nar",
+     "더 큰 발자국은 어느 쪽일까요?",
+     "happy:1.1",
+     "[curious, inviting, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "더 큰 발자국을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "더 큰 발자국을 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "두 발자국을 잘 봐요. 어느 쪽이 더 커다랗지?",
+   "segs": [
+    [
+     "nar",
+     "두 발자국을 잘 봐요. 어느 쪽이 더 커다랗지?",
+     "happy:1.1",
+     "[curious, gentle, thoughtful]"
+    ]
+   ]
+  },
+  {
+   "text": "사자가 가진 발자국이에요. 반짝이는 쪽을 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "사자가 가진 발자국이에요. 반짝이는 쪽을 눌러 봐요!",
+     "happy:1.1",
+     "[calm, encouraging, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 사자 발자국이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 사자 발자국이에요.",
+     "happy:1.3",
+     "[delighted, warm, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 이빨이에요. 더 작은 이빨은 어느 쪽일까요?",
+   "segs": [
+    [
+     "nar",
+     "이번엔 이빨이에요. 더 작은 이빨은 어느 쪽일까요?",
+     "happy:1.1",
+     "[curious, playful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "더 작은 이빨을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "더 작은 이빨을 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "콩알처럼 조그만 이빨을 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "콩알처럼 조그만 이빨을 찾아봐요!",
+     "happy:1.1",
+     "[playful, whimsical, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 가진 이빨이에요. 반짝이는 쪽을 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "생쥐가 가진 이빨이에요. 반짝이는 쪽을 눌러 봐요!",
+     "happy:1.1",
+     "[calm, encouraging, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 생쥐 이빨이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 생쥐 이빨이에요.",
+     "happy:1.3",
+     "[delighted, warm, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐 이빨은 작지만 아주 튼튼해요. 사각사각 뭐든 갉을 수 있지요.",
+   "segs": [
+    [
+     "nar",
+     "생쥐 이빨은 작지만 아주 튼튼해요. 사각사각 뭐든 갉을 수 있지요.",
+     null,
+     "[warm, impressed, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "좁은 구멍이 있어요. 쏙 들어갈 수 있는 건 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "좁은 구멍이 있어요. 쏙 들어갈 수 있는 건 누구일까요?",
+     "happy:1.1",
+     "[curious, mysterious, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "구멍에 쏙 들어갈 친구를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "구멍에 쏙 들어갈 친구를 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "사자는 너무 커서 코가 쿵! 부딪혀요. 작은 친구는 누구지?",
+   "segs": [
+    [
+     "nar",
+     "사자는 너무 커서 코가 쿵! 부딪혀요. 작은 친구는 누구지?",
+     "happy:1.1",
+     "[amused, playful, light humor]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 들어갈 수 있어요. 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "생쥐가 들어갈 수 있어요. 반짝이는 친구를 눌러 봐요!",
+     "happy:1.1",
+     "[calm, encouraging, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 작은 생쥐는 좁은 구멍도 쏙!",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 작은 생쥐는 좁은 구멍도 쏙!",
+     "happy:1.3",
+     "[delighted, warm, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "크면 큰 대로, 작으면 작은 대로 다 쓸모가 있어요.",
+   "segs": [
+    [
+     "nar",
+     "크면 큰 대로, 작으면 작은 대로 다 쓸모가 있어요.",
+     null,
+     "[gentle, wise, reassuring, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되었어요. 앗, 사자가 그물에 걸렸어요!",
+   "segs": [
+    [
+     "nar",
+     "밤이 되었어요. 앗, 사자가 그물에 걸렸어요!",
+     "toneup:1.3",
+     "[hushed, soft concern, storytelling, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "사자가 버둥버둥, 그래도 그물이 풀리지 않아요.",
+   "segs": [
+    [
+     "nar",
+     "사자가 버둥버둥, 그래도 그물이 풀리지 않아요.",
+     "sad:1.2",
+     "[sympathetic, soft, gentle concern]"
+    ]
+   ]
+  },
+  {
+   "text": "쫑긋! 생쥐가 사자 목소리를 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "쫑긋! 생쥐가 사자 목소리를 들었어요.",
+     null,
+     "[alert, whispers, hopeful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"사자님, 제가 도와 드릴게요!\"",
+   "segs": [
+    [
+     "mouse",
+     "사자님, 제가 도와 드릴게요!",
+     "happy:1.3",
+     "[determined, brave, childlike, small voice]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 작은 이빨로 그물을 갉아요. 톡톡 눌러서 한 줄씩 끊어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "생쥐가 작은 이빨로 그물을 갉아요. 톡톡 눌러서 한 줄씩 끊어 봐요!",
+     "happy:1.1",
+     "[encouraging, hopeful, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "하나",
+   "segs": [
+    [
+     "nar",
+     "하나",
+     "happy:1.2",
+     "[counting, bright, cheerful, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "둘",
+   "segs": [
+    [
+     "nar",
+     "둘",
+     "happy:1.2",
+     "[counting, bright, cheerful, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "셋",
+   "segs": [
+    [
+     "nar",
+     "셋",
+     "happy:1.2",
+     "[counting, bright, cheerful, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "넷",
+   "segs": [
+    [
+     "nar",
+     "넷",
+     "happy:1.2",
+     "[counting, bright, cheerful, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "다섯",
+   "segs": [
+    [
+     "nar",
+     "다섯",
+     "happy:1.2",
+     "[counting, bright, cheerful, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "여섯",
+   "segs": [
+    [
+     "nar",
+     "여섯",
+     "happy:1.2",
+     "[counting, bright, cheerful, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "일곱",
+   "segs": [
+    [
+     "nar",
+     "일곱",
+     "happy:1.2",
+     "[counting, bright, cheerful, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "여덟",
+   "segs": [
+    [
+     "nar",
+     "여덟",
+     "happy:1.2",
+     "[counting, bright, cheerful, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "아홉",
+   "segs": [
+    [
+     "nar",
+     "아홉",
+     "happy:1.2",
+     "[counting, bright, cheerful, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "열",
+   "segs": [
+    [
+     "nar",
+     "열",
+     "happy:1.2",
+     "[counting, bright, cheerful, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "톡톡 눌러서 그물을 갉아요!",
+   "segs": [
+    [
+     "nar",
+     "톡톡 눌러서 그물을 갉아요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "하나, 둘, 셋… 열! 그물 줄 열 개를 다 끊었어요!",
+   "segs": [
+    [
+     "nar",
+     "하나, 둘, 셋… 열! 그물 줄 열 개를 다 끊었어요!",
+     "happy:1.3",
+     "[joyful, proud, celebrating]"
+    ]
+   ]
+  },
+  {
+   "text": "와아! 사자가 풀려났어요!",
+   "segs": [
+    [
+     "nar",
+     "와아! 사자가 풀려났어요!",
+     "happy:1.4",
+     "[delighted, relieved, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!\"",
+   "segs": [
+    [
+     "lion",
+     "고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!",
+     "happy:1.3",
+     "[grateful, warm, deep voice, softly laughs, heartfelt]"
+    ]
+   ]
+  },
+  {
+   "text": "\"제가 은혜 갚는다고 했지요?\"",
+   "segs": [
+    [
+     "mouse",
+     "제가 은혜 갚는다고 했지요?",
+     "happy:1.3",
+     "[proud, cheerful, childlike, sweet]"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날 아침, 사자가 생쥐를 등에 태웠어요. \"꽉 잡아!\"",
+   "segs": [
+    [
+     "nar",
+     "다음 날 아침, 사자가 생쥐를 등에 태웠어요.",
+     "happy:1.1",
+     "[warm, bright, storytelling]"
+    ],
+    [
+     "lion",
+     "꽉 잡아!",
+     "toneup:1.3",
+     "[playful, cheerful, deep voice]"
+    ]
+   ]
+  },
+  {
+   "text": "톡톡 눌러서 달려요!",
+   "segs": [
+    [
+     "nar",
+     "톡톡 눌러서 달려요!",
+     "happy:1.1",
+     "[excited, encouraging, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "바람을 가르며 초원을 달려요! 신난다!",
+   "segs": [
+    [
+     "nar",
+     "바람을 가르며 초원을 달려요!",
+     "happy:1.4",
+     "[excited, breezy, storytelling]"
+    ],
+    [
+     "mouse",
+     "신난다!",
+     "happy:1.6",
+     "[thrilled, delighted, childlike, shouting with joy]"
+    ]
+   ]
+  },
+  {
+   "text": "사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!",
+   "segs": [
+    [
+     "nar",
+     "사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!",
+     "happy:1.1",
+     "[cheerful, warm, inviting, laughs softly]"
+    ]
+   ]
+  },
+  {
+   "text": "그날부터 사자와 생쥐는 둘도 없는 친구가 되었답니다.",
+   "segs": [
+    [
+     "nar",
+     "그날부터 사자와 생쥐는 둘도 없는 친구가 되었답니다.",
+     "happy:1.3",
+     "[gentle, warm, content, storytelling, slow]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "cut_paw": [
+   [
+    "mouse",
+    "으앗! 깜짝이야!",
+    "toneup:1.6",
+    "[startled, panicked, high-pitched squeal, small voice]"
+   ]
+  ],
+  "cut_laugh": [
+   [
+    "lion",
+    "하하하! 요 조그만 녀석이?",
+    "happy:1.5",
+    "[booming laughter, amused, deep, good-natured]"
+   ]
+  ],
+  "cut_net": [
+   [
+    "lion",
+    "으으, 누가 좀 도와줘!",
+    "sad:1.6",
+    "[struggling, worried, pleading, deep voice, panicked]"
+   ]
+  ],
+  "hi_mouse": [
+   [
+    "mouse",
+    "찍찍! 신난다!",
+    "happy",
+    "[cheerful, childlike, delighted]"
+   ]
+  ],
+  "hi_lion": [
+   [
+    "lion",
+    "어흥! 하하하!",
+    "happy:1.5",
+    "[laughs, jolly, deep warm roar of delight]"
+   ]
+  ]
+ },
+ "models": {
+  "mouse": "eleven_v4",
+  "lion": "eleven_v4",
+  "nar": "eleven_v4"
+ },
+ "settings": {
+  "mouse": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "lion": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  }
+ },
+ "use_dir": [
+  "nar",
+  "lion",
+  "mouse"
+ ],
+ "notes": "해설 Lily(벨벳 같은 부드러운 여성, 호랑이 이야기의 George와 구분), 사자 Brian(크고 깊고 푸근한 큰 짐승), 생쥐 Jessica(작고 밝은 아이). 모든 배역 eleven_v4. 해설은 차분하게 장면별로 바꾸고 무섭지 않게, 사자는 위협보다 느긋하고 푸근한 큰 덩치, 생쥐는 아이처럼 높고 또렷하게."
+}

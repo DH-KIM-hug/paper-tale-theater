@@ -1,0 +1,1270 @@
+{
+ "voices": {
+  "nar": "XrExE9yKIg1WjnnlVkGX",
+  "rabbit": "IKne3meq5aSn9XLyUdCD",
+  "turtle": "pqHfZKP75CvOlQylNhV4",
+  "duck": "cgSgspJ2msm6clMCkdW9",
+  "cow": "pNInz6obpgDQGcFmaJgB",
+  "pig": "iP95p4xoKVk53GoZ742B",
+  "dog": "TX3LPaxmHKxFdv7VOQHJ",
+  "sheep": "EXAVITQu4vr4xnSDxMaL"
+ },
+ "lines": [
+  {
+   "text": "숲속 마을에 아침이 왔어요.",
+   "segs": [
+    [
+     "nar",
+     "숲속 마을에 아침이 왔어요.",
+     "happy:1.0",
+     "[calm, fresh, warm storytelling, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "거북이가 엉금엉금 산책해요. 거북이를 톡!",
+   "segs": [
+    [
+     "nar",
+     "거북이가 엉금엉금 산책해요. 거북이를 톡!",
+     null,
+     "[warm, playful, storytelling, slow and steady]"
+    ]
+   ]
+  },
+  {
+   "text": "거북이를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "거북이를 톡 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"안녕! 나는 거북이야.\"",
+   "segs": [
+    [
+     "turtle",
+     "안녕! 나는 거북이야.",
+     "happy:1.0",
+     "[slow, friendly, calm, gentle, old and wise]"
+    ]
+   ]
+  },
+  {
+   "text": "깡충깡충 토끼도 왔어요. 토끼를 톡!",
+   "segs": [
+    [
+     "nar",
+     "깡충깡충 토끼도 왔어요. 토끼를 톡!",
+     null,
+     "[bouncy, lively, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "토끼를 톡 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"안녕! 나는 깡충 토끼야!\"",
+   "segs": [
+    [
+     "rabbit",
+     "안녕! 나는 깡충 토끼야!",
+     "happy:1.5",
+     "[bouncy, energetic, cocky, cheerful, young]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 말했어요. \"느림보야, 나랑 달리기 할래?\"",
+   "segs": [
+    [
+     "nar",
+     "토끼가 말했어요.",
+     null,
+     "[light, storytelling]"
+    ],
+    [
+     "rabbit",
+     "느림보야, 나랑 달리기 할래?",
+     "happy:1.3",
+     "[teasing, cocky, playful, challenging]"
+    ]
+   ]
+  },
+  {
+   "text": "거북이가 방긋 웃었어요. \"좋아!\"",
+   "segs": [
+    [
+     "nar",
+     "거북이가 방긋 웃었어요.",
+     null,
+     "[warm, smiling, storytelling]"
+    ],
+    [
+     "turtle",
+     "좋아!",
+     "happy",
+     "[calm, unbothered, smiling, slow, friendly]"
+    ]
+   ]
+  },
+  {
+   "text": "\"숲속 친구들한테 응원해 달라고 하자!\"",
+   "segs": [
+    [
+     "rabbit",
+     "숲속 친구들한테 응원해 달라고 하자!",
+     "happy:1.3",
+     "[excited, cheerful, bouncy, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "부엉이 우체부가 초대장을 가져왔어요.",
+   "segs": [
+    [
+     "nar",
+     "부엉이 우체부가 초대장을 가져왔어요.",
+     null,
+     "[bright, light, storytelling, whimsical]"
+    ]
+   ]
+  },
+  {
+   "text": "문을 톡 두드려 봐요. 누가 나올까?",
+   "segs": [
+    [
+     "nar",
+     "문을 톡 두드려 봐요. 누가 나올까?",
+     "happy:1.1",
+     "[curious, hushed, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "이번 집도 문을 톡!",
+   "segs": [
+    [
+     "nar",
+     "이번 집도 문을 톡!",
+     null,
+     "[curious, playful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "문을 톡 두드려 봐요!",
+   "segs": [
+    [
+     "nar",
+     "문을 톡 두드려 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "누구 목소리일까요? 둘 중에서 골라 봐요!",
+   "segs": [
+    [
+     "nar",
+     "누구 목소리일까요? 둘 중에서 골라 봐요!",
+     null,
+     "[curious, playful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "잘 들었지요? 누구 목소리일까요?",
+   "segs": [
+    [
+     "nar",
+     "잘 들었지요? 누구 목소리일까요?",
+     null,
+     "[curious, playful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "오리예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "오리예요! 반짝이는 친구를 눌러 봐요!",
+     null,
+     "[delighted, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "오리였어요!",
+   "segs": [
+    [
+     "nar",
+     "오리였어요!",
+     null,
+     "[delighted, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "소예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "소예요! 반짝이는 친구를 눌러 봐요!",
+     null,
+     "[delighted, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "소였어요!",
+   "segs": [
+    [
+     "nar",
+     "소였어요!",
+     null,
+     "[delighted, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "돼지예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "돼지예요! 반짝이는 친구를 눌러 봐요!",
+     null,
+     "[delighted, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "돼지였어요!",
+   "segs": [
+    [
+     "nar",
+     "돼지였어요!",
+     null,
+     "[delighted, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "강아지예요! 반짝이는 친구를 눌러 봐요!",
+     null,
+     "[delighted, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지였어요!",
+   "segs": [
+    [
+     "nar",
+     "강아지였어요!",
+     null,
+     "[delighted, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "닭이랑 양이랑 고양이도 초대장을 받았어요!",
+   "segs": [
+    [
+     "nar",
+     "닭이랑 양이랑 고양이도 초대장을 받았어요!",
+     null,
+     "[surprised, bright, storytelling, light]"
+    ]
+   ]
+  },
+  {
+   "text": "동물 친구들이 응원하러 모였어요!",
+   "segs": [
+    [
+     "nar",
+     "동물 친구들이 응원하러 모였어요!",
+     "happy:1.2",
+     "[happy, lively, excited, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "친구들을 모두 톡톡 눌러 봐요! 벌떡 일어나 응원해요.",
+   "segs": [
+    [
+     "nar",
+     "친구들을 모두 톡톡 눌러 봐요! 벌떡 일어나 응원해요.",
+     null,
+     "[excited, encouraging, lively]"
+    ]
+   ]
+  },
+  {
+   "text": "아직 안 일어난 친구를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "아직 안 일어난 친구를 톡 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "와, 신나는 응원 소리!",
+   "segs": [
+    [
+     "nar",
+     "와, 신나는 응원 소리!",
+     "happy:1.4",
+     "[delighted, excited, proud, lively]"
+    ]
+   ]
+  },
+  {
+   "text": "달리기 전에 준비 운동을 해요.",
+   "segs": [
+    [
+     "nar",
+     "달리기 전에 준비 운동을 해요.",
+     null,
+     "[bright, sporty, energetic, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼를 톡! 귀를 쭉~",
+   "segs": [
+    [
+     "nar",
+     "토끼를 톡! 귀를 쭉~",
+     null,
+     "[playful, encouraging, stretching]"
+    ]
+   ]
+  },
+  {
+   "text": "한 번 더! 토끼를 톡!",
+   "segs": [
+    [
+     "nar",
+     "한 번 더! 토끼를 톡!",
+     null,
+     "[playful, encouraging, stretching]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 거북이를 톡! 목을 쭉~",
+   "segs": [
+    [
+     "nar",
+     "이번엔 거북이를 톡! 목을 쭉~",
+     null,
+     "[playful, encouraging, slow stretching]"
+    ]
+   ]
+  },
+  {
+   "text": "거북이도 톡!",
+   "segs": [
+    [
+     "nar",
+     "거북이도 톡!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "와, 거북이 목이 쭈욱~ 길어졌어요!",
+   "segs": [
+    [
+     "nar",
+     "와, 거북이 목이 쭈욱~ 길어졌어요!",
+     "happy:1.3",
+     "[amused, delighted, giggles softly, amazed]"
+    ]
+   ]
+  },
+  {
+   "text": "너구리 심판이 커다란 북을 가져왔어요.",
+   "segs": [
+    [
+     "nar",
+     "너구리 심판이 커다란 북을 가져왔어요.",
+     null,
+     "[bright, announcing, storytelling, drum roll build-up]"
+    ]
+   ]
+  },
+  {
+   "text": "준비~ 북을 톡 치면 출발해요!",
+   "segs": [
+    [
+     "nar",
+     "준비~ 북을 톡 치면 출발해요!",
+     "toneup:1.2",
+     "[excited, building suspense, bright, whispers then rises]"
+    ]
+   ]
+  },
+  {
+   "text": "큰 북을 톡 쳐 봐요!",
+   "segs": [
+    [
+     "nar",
+     "큰 북을 톡 쳐 봐요!",
+     null,
+     "[excited, encouraging, lively]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 쌩~ 거북이는 엉금 한 발!",
+   "segs": [
+    [
+     "nar",
+     "토끼는 쌩~ 거북이는 엉금 한 발!",
+     "happy:1.2",
+     "[lively, amused, comical contrast, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "여기는 경주 지도예요. 돌멩이, 개울, 언덕을 지나 깃발까지!",
+   "segs": [
+    [
+     "nar",
+     "여기는 경주 지도예요. 돌멩이, 개울, 언덕을 지나 깃발까지!",
+     null,
+     "[curious, bright, explanatory, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "아래 막대를 보면 누가 앞서는지 알 수 있어요.",
+   "segs": [
+    [
+     "nar",
+     "아래 막대를 보면 누가 앞서는지 알 수 있어요.",
+     null,
+     "[curious, bright, explanatory]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!",
+     "happy:1.2",
+     "[excited, lively, racing, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 눌러 봐요!",
+     null,
+     "[excited, encouraging, lively]"
+    ]
+   ]
+  },
+  {
+   "text": "금세 언덕 위 나무 그늘까지 왔어요.",
+   "segs": [
+    [
+     "nar",
+     "금세 언덕 위 나무 그늘까지 왔어요.",
+     null,
+     "[calm, relaxed, storytelling, slowing down]"
+    ]
+   ]
+  },
+  {
+   "text": "뒤를 돌아보니… 거북이는 안 보여요!",
+   "segs": [
+    [
+     "nar",
+     "뒤를 돌아보니… 거북이는 안 보여요!",
+     "toneup:1.2",
+     "[curious, playful, mock surprise, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "\"하암~ 한숨 자고 가도 되겠다~\"",
+   "segs": [
+    [
+     "rabbit",
+     "하암~ 한숨 자고 가도 되겠다~",
+     "tonedown:1.2",
+     "[yawning, sleepy, smug, drowsy, slow, sighs happily]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼를 푹 재워 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "토끼를 푹 재워 줄까요?",
+     null,
+     "[soft, playful, whisper-like, coaxing]"
+    ]
+   ]
+  },
+  {
+   "text": "먼저 나뭇잎 이불을 톡!",
+   "segs": [
+    [
+     "nar",
+     "먼저 나뭇잎 이불을 톡!",
+     null,
+     "[soft, cozy, coaxing]"
+    ]
+   ]
+  },
+  {
+   "text": "나뭇잎 이불을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "나뭇잎 이불을 톡 눌러 봐요!",
+     null,
+     "[soft, gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "포근포근~ 이불을 덮어 줬어요.",
+   "segs": [
+    [
+     "nar",
+     "포근포근~ 이불을 덮어 줬어요.",
+     "whisper",
+     "[soft, cozy, sleepy, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "부엉이가 자장가를 불러 줘요. 잘 들어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "부엉이가 자장가를 불러 줘요. 잘 들어 봐요.",
+     null,
+     "[soft, hushed, lullaby, calm, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 부엉이를 톡 눌러 봐요. 자장가가 이어져요!",
+   "segs": [
+    [
+     "nar",
+     "이번에는 부엉이를 톡 눌러 봐요. 자장가가 이어져요!",
+     null,
+     "[soft, hushed, lullaby, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "나무 위 부엉이를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "나무 위 부엉이를 톡 눌러 봐요!",
+     null,
+     "[soft, gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "부엉 부엉~ 토끼 눈이 스르르 감겨요.",
+   "segs": [
+    [
+     "nar",
+     "부엉 부엉~ 토끼 눈이 스르르 감겨요.",
+     "whisper",
+     "[sleepy, slow, lullaby, whispers, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "마지막으로 해님을 톡! 구름이 해를 가려 줘요.",
+   "segs": [
+    [
+     "nar",
+     "마지막으로 해님을 톡! 구름이 해를 가려 줘요.",
+     null,
+     "[soft, sleepy, whispers, coaxing]"
+    ]
+   ]
+  },
+  {
+   "text": "해님을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "해님을 톡 눌러 봐요!",
+     null,
+     "[soft, gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 쿨쿨 잠이 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "토끼가 쿨쿨 잠이 들었어요.",
+     "whisper",
+     "[whispers, soft, very sleepy, tender, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "응원하던 친구들도 \"쉿!\" 조용히~",
+   "segs": [
+    [
+     "nar",
+     "응원하던 친구들도",
+     "whisper",
+     "[whispers, amused, soft, tender]"
+    ],
+    [
+     "sheep",
+     "쉿!",
+     "whisper",
+     "[whispers, hushed, shushing, gentle]"
+    ],
+    [
+     "nar",
+     "조용히~",
+     "whisper",
+     "[whispers, soft, tender, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 꿈을 꿔요. 꿈속에서 1등을 했어요!",
+   "segs": [
+    [
+     "nar",
+     "토끼가 꿈을 꿔요. 꿈속에서 1등을 했어요!",
+     null,
+     "[soft, dreamy, wondrous, gentle storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "상으로 커다란 당근을 받았어요. 당근을 톡!",
+   "segs": [
+    [
+     "nar",
+     "상으로 커다란 당근을 받았어요. 당근을 톡!",
+     null,
+     "[bright, delighted, storytelling, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "커다란 당근을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "커다란 당근을 톡 눌러 봐요!",
+     null,
+     "[cheerful, encouraging, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"아삭! 음~ 맛있다!\"",
+   "segs": [
+    [
+     "rabbit",
+     "아삭! 음~ 맛있다!",
+     "happy:1.5",
+     "[dreamy, delighted, munching, happy sigh, sleepy talking]"
+    ]
+   ]
+  },
+  {
+   "text": "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~",
+   "segs": [
+    [
+     "nar",
+     "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~",
+     "tonedown:1.1",
+     "[amused, soft, comical, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "그동안 거북이는? 엉금엉금 걷고 있어요.",
+   "segs": [
+    [
+     "nar",
+     "그동안 거북이는? 엉금엉금 걷고 있어요.",
+     null,
+     "[calm, steady, warm, storytelling, slow and plodding]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 한 발 한 발 걸어요!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 눌러서 한 발 한 발 걸어요!",
+     null,
+     "[encouraging, steady, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 엉금엉금!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 눌러서 엉금엉금!",
+     null,
+     "[encouraging, steady, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 커다란 돌멩이예요! 돌멩이를 톡 해서 넘어가요!",
+   "segs": [
+    [
+     "nar",
+     "어? 커다란 돌멩이예요! 돌멩이를 톡 해서 넘어가요!",
+     null,
+     "[surprised, bright, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "돌멩이를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "돌멩이를 톡 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "영차! 돌멩이를 넘었어요!",
+   "segs": [
+    [
+     "turtle",
+     "영차!",
+     "toneup:1.3",
+     "[grunts with effort, determined, slow, steady, old voice]"
+    ],
+    [
+     "nar",
+     "돌멩이를 넘었어요!",
+     "happy:1.2",
+     "[relieved, proud, cheerful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.",
+   "segs": [
+    [
+     "nar",
+     "앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.",
+     null,
+     "[surprised, bright, cheerful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 헤엄쳐요!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 눌러서 헤엄쳐요!",
+     null,
+     "[cheerful, encouraging, splashy]"
+    ]
+   ]
+  },
+  {
+   "text": "물고기랑 같이 개울을 건넜어요!",
+   "segs": [
+    [
+     "nar",
+     "물고기랑 같이 개울을 건넜어요!",
+     null,
+     "[delighted, refreshed, bright, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 높은 언덕이에요.",
+   "segs": [
+    [
+     "nar",
+     "이번엔 높은 언덕이에요.",
+     null,
+     "[thoughtful, steady, storytelling, light challenge]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 누르면 영차영차 올라가요!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 누르면 영차영차 올라가요!",
+     null,
+     "[encouraging, steady, rhythmic]"
+    ]
+   ]
+  },
+  {
+   "text": "영차! 언덕 꼭대기에 올라왔어요.",
+   "segs": [
+    [
+     "turtle",
+     "영차!",
+     "toneup:1.3",
+     "[grunts with effort, determined, steady, slow, old voice]"
+    ],
+    [
+     "nar",
+     "언덕 꼭대기에 올라왔어요.",
+     "happy:1.2",
+     "[proud, relieved, cheerful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "위에는 쿨쿨 자는 토끼, 아래에는 거북이!",
+   "segs": [
+    [
+     "nar",
+     "위에는 쿨쿨 자는 토끼, 아래에는 거북이!",
+     null,
+     "[amused, whispering, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "쉿, 조용히 지나가요~ 살금살금.",
+   "segs": [
+    [
+     "nar",
+     "쉿, 조용히 지나가요~ 살금살금.",
+     "whisper",
+     "[whispers, tiptoeing, playful, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "와, 거북이가 토끼를 앞질렀어요!",
+   "segs": [
+    [
+     "nar",
+     "와, 거북이가 토끼를 앞질렀어요!",
+     "happy:1.4",
+     "[excited, amazed, delighted, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "해가 뉘엿뉘엿 지고 있어요.",
+   "segs": [
+    [
+     "nar",
+     "해가 뉘엿뉘엿 지고 있어요.",
+     null,
+     "[soft, calm, storytelling, evening, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "닭을 톡 눌러서 토끼를 깨워 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "닭을 톡 눌러서 토끼를 깨워 줄까요?",
+     null,
+     "[curious, gentle, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "닭을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "닭을 톡 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 벌떡 일어났어요! \"앗, 내가 잠들었네!\"",
+   "segs": [
+    [
+     "nar",
+     "토끼가 벌떡 일어났어요!",
+     "toneup:1.2",
+     "[lively, surprised, storytelling]"
+    ],
+    [
+     "rabbit",
+     "앗, 내가 잠들었네!",
+     "toneup:1.5",
+     "[startled, flustered, gasps, panicked, loud]"
+    ]
+   ]
+  },
+  {
+   "text": "막대를 봐요! 거북이가 결승선 코앞이에요!",
+   "segs": [
+    [
+     "nar",
+     "막대를 봐요! 거북이가 결승선 코앞이에요!",
+     "toneup:1.3",
+     "[urgent, excited, building tension, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "응원하던 친구들이 모두 일어났어요!",
+   "segs": [
+    [
+     "nar",
+     "응원하던 친구들이 모두 일어났어요!",
+     null,
+     "[excited, bright, building, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 쌩쌩 달려와요! 거북이는 딱 한 발 남았어요.",
+   "segs": [
+    [
+     "nar",
+     "토끼가 쌩쌩 달려와요! 거북이는 딱 한 발 남았어요.",
+     "toneup:1.3",
+     "[urgent, thrilling, fast, bright, light]"
+    ]
+   ]
+  },
+  {
+   "text": "거북이를 톡! 마지막 한 발!",
+   "segs": [
+    [
+     "nar",
+     "거북이를 톡! 마지막 한 발!",
+     null,
+     "[encouraging, exciting, whispers then rises]"
+    ]
+   ]
+  },
+  {
+   "text": "거북이를 톡 눌러서 마지막 한 발!",
+   "segs": [
+    [
+     "nar",
+     "거북이를 톡 눌러서 마지막 한 발!",
+     null,
+     "[encouraging, exciting, urgent]"
+    ]
+   ]
+  },
+  {
+   "text": "사진을 보니… 거북이 코끝이 먼저 닿았어요!",
+   "segs": [
+    [
+     "nar",
+     "사진을 보니… 거북이 코끝이 먼저 닿았어요!",
+     null,
+     "[amazed, bright, delighted, breathless]"
+    ]
+   ]
+  },
+  {
+   "text": "거북이가 1등이에요!",
+   "segs": [
+    [
+     "nar",
+     "거북이가 1등이에요!",
+     "happy:1.5",
+     "[delighted, triumphant, joyful, celebrating]"
+    ]
+   ]
+  },
+  {
+   "text": "시상식이에요! 응원하던 친구들이 파도타기를 해요.",
+   "segs": [
+    [
+     "nar",
+     "시상식이에요! 응원하던 친구들이 파도타기를 해요.",
+     null,
+     "[cheerful, festive, joyful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "메달을 톡! 거북이 목에 걸어 줘요.",
+   "segs": [
+    [
+     "nar",
+     "메달을 톡! 거북이 목에 걸어 줘요.",
+     null,
+     "[proud, bright, ceremonial, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "반짝반짝 메달을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "반짝반짝 메달을 톡 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "반짝반짝, 금메달이에요!",
+   "segs": [
+    [
+     "nar",
+     "반짝반짝, 금메달이에요!",
+     "happy:1.3",
+     "[delighted, proud, ceremonial, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 다가와 말했어요.",
+   "segs": [
+    [
+     "nar",
+     "토끼가 다가와 말했어요.",
+     null,
+     "[warm, gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "\"축하해! 다음엔 나도 쉬지 않고 열심히 할게.\"",
+   "segs": [
+    [
+     "rabbit",
+     "축하해! 다음엔 나도 쉬지 않고 열심히 할게.",
+     "happy:0.9",
+     "[sincere, humble, warm, friendly, sheepish, sporty]"
+    ]
+   ]
+  },
+  {
+   "text": "거북이도 말했어요. \"고마워! 우리 또 같이 달리자!\"",
+   "segs": [
+    [
+     "nar",
+     "거북이도 말했어요.",
+     null,
+     "[warm, smiling, storytelling]"
+    ],
+    [
+     "turtle",
+     "고마워! 우리 또 같이 달리자!",
+     "happy:1.3",
+     "[happy, warm, friendly, slow, grateful, chuckles]"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되었어요. 숲속 잔치가 열렸어요!",
+   "segs": [
+    [
+     "nar",
+     "밤이 되었어요. 숲속 잔치가 열렸어요!",
+     "happy:1.2",
+     "[warm, glowing, festive, storytelling, evening]"
+    ]
+   ]
+  },
+  {
+   "text": "먼저 들어 봐요! 신나는 행진곡이에요.",
+   "segs": [
+    [
+     "nar",
+     "먼저 들어 봐요! 신나는 행진곡이에요.",
+     null,
+     "[cheerful, festive, inviting, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 친구들을 톡톡 눌러서 같이 연주해요!",
+   "segs": [
+    [
+     "nar",
+     "이번에는 친구들을 톡톡 눌러서 같이 연주해요!",
+     null,
+     "[cheerful, festive, encouraging, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "모두 함께 신나는 잔치를 했답니다.",
+   "segs": [
+    [
+     "nar",
+     "모두 함께 신나는 잔치를 했답니다.",
+     "happy:1.3",
+     "[warm, content, joyful, storytelling, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "천천히 가도 끝까지 하면 해낼 수 있어요!",
+   "segs": [
+    [
+     "nar",
+     "천천히 가도 끝까지 하면 해낼 수 있어요!",
+     "happy:1.2",
+     "[warm, gentle, wise, reassuring, slow, closing]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "laugh_pig": [
+   [
+    "pig",
+    "하하하!",
+    "happy:1.4",
+    "[laughs, jolly, warm, chuckling]"
+   ]
+  ],
+  "cheer_dog": [
+   [
+    "dog",
+    "힘내!",
+    "happy:1.4",
+    "[cheering, energetic, excited, shouting]"
+   ]
+  ],
+  "cheer_duck": [
+   [
+    "duck",
+    "힘내, 거북아!",
+    "happy:1.4",
+    "[cheering, bright, high-pitched, excited, shouting]"
+   ]
+  ],
+  "cheer_sheep": [
+   [
+    "sheep",
+    "힘내, 거북아!",
+    "happy:1.4",
+    "[cheering, sweet, gentle, enthusiastic]"
+   ]
+  ],
+  "wake_rabbit": [
+   [
+    "rabbit",
+    "앗!",
+    "toneup:1.5",
+    "[startled, gasps, loud, flustered]"
+   ]
+  ]
+ },
+ "models": {
+  "duck": "eleven_v4",
+  "pig": "eleven_v4",
+  "sheep": "eleven_v4",
+  "nar": "eleven_v4",
+  "rabbit": "eleven_v4",
+  "dog": "eleven_v4",
+  "cow": "eleven_v4",
+  "turtle": "eleven_v4"
+ },
+ "settings": {
+  "duck": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "pig": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "sheep": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "rabbit": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "dog": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "cow": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "turtle": {
+   "stability": 0.35,
+   "style": 0.45
+  }
+ },
+ "use_dir": [
+  "nar",
+  "rabbit",
+  "turtle",
+  "duck",
+  "cow",
+  "pig",
+  "dog",
+  "sheep"
+ ],
+ "notes": "해설 Matilda(밝고 또박또박한 여성, 경주 중계 같은 활기), 토끼 Charlie(깊고 활기찬 자신만만 젊은 남성, 우쭐함과 졸음 연기), 거북이 Bill(느리고 차분한 노인 목소리로 엉금엉금 성격), 오리 Jessica(밝고 높음), 소 Adam(굵고 느릿), 돼지 Chris(친근하고 푸근), 강아지 Liam(활기참), 양 Sarah(부드러움). 한 이야기 안에서 모두 다른 목소리, 모두 eleven_v4. 해설은 장면별로 활기(경주)와 차분(낮잠)을 오가되 무섭지 않게."
+}

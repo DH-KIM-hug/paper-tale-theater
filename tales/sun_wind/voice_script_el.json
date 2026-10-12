@@ -1,0 +1,799 @@
+{
+ "voices": {
+  "nar": "Xb7hH8MSUJpSbSDYk0k2",
+  "sun": "EXAVITQu4vr4xnSDxMaL",
+  "wind": "IKne3meq5aSn9XLyUdCD",
+  "man": "CwhRBWXzGAHq8TQ4Fs17"
+ },
+ "lines": [
+  {
+   "text": "하늘 높이 해님과 바람이 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "하늘 높이 해님과 바람이 살았어요.",
+     "happy:1.0",
+     "[calm, warm, storytelling, wide-eyed]"
+    ]
+   ]
+  },
+  {
+   "text": "해님을 톡 눌러 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "해님을 톡 눌러 볼까요?",
+     null,
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "웃고 있는 해님을 톡!",
+   "segs": [
+    [
+     "nar",
+     "웃고 있는 해님을 톡!",
+     null,
+     "[cheerful, warm, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "\"내가 제일 따뜻해!\"",
+   "segs": [
+    [
+     "sun",
+     "내가 제일 따뜻해!",
+     "happy:1.4",
+     "[warm, proud, gentle, sunny cheer]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 바람을 톡!",
+   "segs": [
+    [
+     "nar",
+     "이번엔 바람을 톡!",
+     null,
+     "[cheerful, playful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "볼 빵빵 바람을 톡!",
+   "segs": [
+    [
+     "nar",
+     "볼 빵빵 바람을 톡!",
+     null,
+     "[playful, giggles softly, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"아니야, 내가 제일 세!\"",
+   "segs": [
+    [
+     "wind",
+     "아니야, 내가 제일 세!",
+     "angry:1.3",
+     "[boastful, loud, cocky, puffing]"
+    ]
+   ]
+  },
+  {
+   "text": "해님과 바람은 서로 자기가 최고래요.",
+   "segs": [
+    [
+     "nar",
+     "해님과 바람은 서로 자기가 최고래요.",
+     null,
+     "[amused, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "저 아래 길로 나그네가 걸어가요.",
+   "segs": [
+    [
+     "nar",
+     "저 아래 길로 나그네가 걸어가요.",
+     null,
+     "[calm, gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "나그네는 두툼한 외투를 입었어요.",
+   "segs": [
+    [
+     "nar",
+     "나그네는 두툼한 외투를 입었어요.",
+     null,
+     "[warm, light, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "바람이 말했어요. \"저 외투를 먼저 벗기는 쪽이 이기기!\"",
+   "segs": [
+    [
+     "nar",
+     "바람이 말했어요.",
+     null,
+     "[bright, storytelling]"
+    ],
+    [
+     "wind",
+     "저 외투를 먼저 벗기는 쪽이 이기기!",
+     "toneup:1.4",
+     "[challenging, boastful, cocky, energetic]"
+    ]
+   ]
+  },
+  {
+   "text": "해님이 웃었어요. \"좋아. 바람아, 너 먼저 해 봐.\"",
+   "segs": [
+    [
+     "nar",
+     "해님이 웃었어요.",
+     null,
+     "[warm, bright, storytelling]"
+    ],
+    [
+     "sun",
+     "좋아. 바람아, 너 먼저 해 봐.",
+     "happy:1.0",
+     "[calm, kind, warm, relaxed, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "바람이 볼을 빵빵하게 부풀렸어요.",
+   "segs": [
+    [
+     "nar",
+     "바람이 볼을 빵빵하게 부풀렸어요.",
+     "toneup:1.2",
+     "[playful, amused, building anticipation]"
+    ]
+   ]
+  },
+  {
+   "text": "바람을 톡 눌러서 후~ 불어 줘요!",
+   "segs": [
+    [
+     "nar",
+     "바람을 톡 눌러서 후~ 불어 줘요!",
+     null,
+     "[cheerful, encouraging, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "바람을 톡 눌러서 불어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "바람을 톡 눌러서 불어 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "더 세게, 톡!",
+   "segs": [
+    [
+     "nar",
+     "더 세게, 톡!",
+     "toneup:1.3",
+     "[excited, encouraging, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "휘잉~ 나뭇잎이 날아가요!",
+   "segs": [
+    [
+     "nar",
+     "휘잉~ 나뭇잎이 날아가요!",
+     "toneup:1.3",
+     "[whooshing, lively, bright, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "\"앗, 내 모자!\" 모자가 훨훨 날아갔어요.",
+   "segs": [
+    [
+     "man",
+     "앗, 내 모자!",
+     "toneup:1.6",
+     "[startled, surprised, loud, comical]"
+    ],
+    [
+     "nar",
+     "모자가 훨훨 날아갔어요.",
+     null,
+     "[amused, light, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "외투 자락이 펄럭펄럭!",
+   "segs": [
+    [
+     "nar",
+     "외투 자락이 펄럭펄럭!",
+     null,
+     "[lively, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "\"으으, 추워!\" 나그네는 외투를 꽉 여몄어요.",
+   "segs": [
+    [
+     "man",
+     "으으, 추워!",
+     "sad:1.5",
+     "[shivering, cold, grumbling, hugging himself]"
+    ],
+    [
+     "nar",
+     "나그네는 외투를 꽉 여몄어요.",
+     null,
+     "[soft, amused, gentle storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "단추까지 꼭꼭 채웠어요. 외투는 꼼짝도 안 해요!",
+   "segs": [
+    [
+     "nar",
+     "단추까지 꼭꼭 채웠어요. 외투는 꼼짝도 안 해요!",
+     "tonedown:1.1",
+     "[amused, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "바람은 더 세게 불었어요. 쓱!",
+   "segs": [
+    [
+     "nar",
+     "바람은 더 세게 불었어요. 쓱!",
+     null,
+     "[determined, energetic, lively, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "바람은 숨이 차서 헉헉, 볼이 쭈글쭈글해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "바람은 숨이 차서 헉헉, 볼이 쭈글쭈글해졌어요.",
+     "sad:1.0",
+     "[tired, soft, comical, panting lightly]"
+    ]
+   ]
+  },
+  {
+   "text": "\"에이, 안 되네!\"",
+   "segs": [
+    [
+     "wind",
+     "에이, 안 되네!",
+     "sad:1.5",
+     "[panting, exhausted, disappointed, huffs]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 날아간 모자가 나그네 머리에 쏙 떨어졌어요!",
+   "segs": [
+    [
+     "nar",
+     "어? 날아간 모자가 나그네 머리에 쏙 떨어졌어요!",
+     null,
+     "[surprised, delighted, comical, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 해님 차례예요.",
+   "segs": [
+    [
+     "nar",
+     "이번엔 해님 차례예요.",
+     "happy:1.1",
+     "[warm, bright, shifting to gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "해님을 톡톡 눌러서 따뜻하게 비춰 줘요!",
+   "segs": [
+    [
+     "nar",
+     "해님을 톡톡 눌러서 따뜻하게 비춰 줘요!",
+     null,
+     "[soft, warm, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "해님을 톡톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "해님을 톡톡 눌러 봐요!",
+     null,
+     "[soft, warm, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"아, 따뜻하다~\" 나그네가 단추를 풀었어요.",
+   "segs": [
+    [
+     "man",
+     "아, 따뜻하다~",
+     "happy:1.3",
+     "[relaxed, pleased, sighs happily, warm]"
+    ],
+    [
+     "nar",
+     "나그네가 단추를 풀었어요.",
+     null,
+     "[warm, gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "조금 더 톡톡!",
+   "segs": [
+    [
+     "nar",
+     "조금 더 톡톡!",
+     null,
+     "[warm, encouraging, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "\"아이, 더워!\" 모자로 부채질을 해요.",
+   "segs": [
+    [
+     "man",
+     "아이, 더워!",
+     "toneup:1.3",
+     "[warm, uncomfortable, puffing, fanning himself, mildly hot]"
+    ],
+    [
+     "nar",
+     "모자로 부채질을 해요.",
+     null,
+     "[amused, gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "한 번 더 톡톡!",
+   "segs": [
+    [
+     "nar",
+     "한 번 더 톡톡!",
+     null,
+     "[warm, encouraging, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "훌러덩! 나그네가 외투를 벗었어요!",
+   "segs": [
+    [
+     "nar",
+     "훌러덩! 나그네가 외투를 벗었어요!",
+     "happy:1.4",
+     "[cheerful, amused, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "바람이 깜짝 놀랐어요. \"우와, 해님이 해냈네!\"",
+   "segs": [
+    [
+     "nar",
+     "바람이 깜짝 놀랐어요.",
+     null,
+     "[surprised, wide-eyed, storytelling]"
+    ],
+    [
+     "wind",
+     "우와, 해님이 해냈네!",
+     "toneup:1.5",
+     "[impressed, breathless, admiring, laughs softly]"
+    ]
+   ]
+  },
+  {
+   "text": "바람이 불 때, 나그네는 외투를 꽉 여몄어요.",
+   "segs": [
+    [
+     "nar",
+     "바람이 불 때, 나그네는 외투를 꽉 여몄어요.",
+     null,
+     "[soft, calm, storytelling, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "해님이 비출 때는 외투를 벗었지요.",
+   "segs": [
+    [
+     "nar",
+     "해님이 비출 때는 외투를 벗었지요.",
+     null,
+     "[soft, warm, storytelling, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 외투를 벗게 했을까요? 해님일까요, 바람일까요?",
+   "segs": [
+    [
+     "nar",
+     "누가 외투를 벗게 했을까요? 해님일까요, 바람일까요?",
+     null,
+     "[curious, playful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 외투를 벗게 했을까요?",
+   "segs": [
+    [
+     "nar",
+     "누가 외투를 벗게 했을까요?",
+     null,
+     "[curious, playful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "외투를 벗은 나그네 쪽 하늘을 봐요!",
+   "segs": [
+    [
+     "nar",
+     "외투를 벗은 나그네 쪽 하늘을 봐요!",
+     null,
+     "[gentle, hinting, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "해님이에요! 반짝이는 해님을 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "해님이에요! 반짝이는 해님을 눌러 봐요!",
+     null,
+     "[delighted, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 해님이에요! 따뜻한 해님이 이겼어요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 해님이에요! 따뜻한 해님이 이겼어요.",
+     "happy:1.3",
+     "[delighted, warm, praising, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "세게 미는 것보다 다정한 게 더 힘이 세요.",
+   "segs": [
+    [
+     "nar",
+     "세게 미는 것보다 다정한 게 더 힘이 세요.",
+     "happy:0.9",
+     "[gentle, wise, reassuring, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "눈이 펑펑 오는 날엔 무엇을 입을까요?",
+   "segs": [
+    [
+     "nar",
+     "눈이 펑펑 오는 날엔 무엇을 입을까요?",
+     null,
+     "[curious, playful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "추운 날엔 따뜻한 옷이 좋아요.",
+   "segs": [
+    [
+     "nar",
+     "추운 날엔 따뜻한 옷이 좋아요.",
+     null,
+     "[soft, warm, thoughtful]"
+    ]
+   ]
+  },
+  {
+   "text": "외투예요! 반짝이는 걸 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "외투예요! 반짝이는 걸 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 따뜻한 외투를 입으니 포근해요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 따뜻한 외투를 입으니 포근해요.",
+     "happy:1.2",
+     "[delighted, cozy, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "해가 쨍쨍한 날엔 무엇을 입을까요?",
+   "segs": [
+    [
+     "nar",
+     "해가 쨍쨍한 날엔 무엇을 입을까요?",
+     null,
+     "[curious, bright, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "더운 날엔 시원한 옷이 좋아요.",
+   "segs": [
+    [
+     "nar",
+     "더운 날엔 시원한 옷이 좋아요.",
+     null,
+     "[light, refreshing, thoughtful]"
+    ]
+   ]
+  },
+  {
+   "text": "반팔이에요! 반짝이는 걸 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "반팔이에요! 반짝이는 걸 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 반팔을 입으니 시원해요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 반팔을 입으니 시원해요.",
+     "happy:1.2",
+     "[delighted, refreshing, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "추우면 입고, 더우면 벗어요.",
+   "segs": [
+    [
+     "nar",
+     "추우면 입고, 더우면 벗어요.",
+     null,
+     "[gentle, wise, reassuring]"
+    ]
+   ]
+  },
+  {
+   "text": "나그네는 개울가에서 쉬어요.",
+   "segs": [
+    [
+     "nar",
+     "나그네는 개울가에서 쉬어요.",
+     null,
+     "[calm, relaxed, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "시원한 물에 발을 퐁당 담갔어요.",
+   "segs": [
+    [
+     "nar",
+     "시원한 물에 발을 퐁당 담갔어요.",
+     null,
+     "[soft, refreshing, delighted, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "바람아, 이번엔 살살 불어 줄래? 톡, 살살~",
+   "segs": [
+    [
+     "nar",
+     "바람아, 이번엔 살살 불어 줄래? 톡, 살살~",
+     "whisper",
+     "[gentle, coaxing, soft, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "바람을 살살 톡톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "바람을 살살 톡톡 눌러 봐요!",
+     null,
+     "[soft, gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"아, 시원해. 고마워, 바람아!\"",
+   "segs": [
+    [
+     "man",
+     "아, 시원해. 고마워, 바람아!",
+     "happy:1.3",
+     "[relaxed, content, sighs happily, warm, grateful]"
+    ]
+   ]
+  },
+  {
+   "text": "해님과 바람이 마주 보고 웃었어요.",
+   "segs": [
+    [
+     "nar",
+     "해님과 바람이 마주 보고 웃었어요.",
+     "happy:1.1",
+     "[warm, tender, smiling, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "\"우리, 사이좋게 지내자!\"",
+   "segs": [
+    [
+     "wind",
+     "우리, 사이좋게 지내자!",
+     "happy:1.4",
+     "[cheerful, friendly, warm, sincere]"
+    ]
+   ]
+  },
+  {
+   "text": "하늘을 톡 눌러서 날씨를 바꿔 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "하늘을 톡 눌러서 날씨를 바꿔 볼까요?",
+     null,
+     "[cheerful, inviting, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "옷도 저절로 바뀐대요!",
+   "segs": [
+    [
+     "nar",
+     "옷도 저절로 바뀐대요!",
+     null,
+     "[amazed, playful, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "해님과 바람은 오늘도 사이좋게 하늘을 지켜요.",
+   "segs": [
+    [
+     "nar",
+     "해님과 바람은 오늘도 사이좋게 하늘을 지켜요.",
+     null,
+     "[warm, content, calm, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "다정한 마음이 제일 힘이 세답니다. 끝!",
+   "segs": [
+    [
+     "nar",
+     "다정한 마음이 제일 힘이 세답니다. 끝!",
+     "happy:1.2",
+     "[gentle, warm, loving, slow, closing]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "cut_pant": [
+   [
+    "wind",
+    "헉헉… 너무 힘들어…",
+    "sad:1.5",
+    "[panting, exhausted, breathless, whining]"
+   ]
+  ],
+  "cut_off": [
+   [
+    "man",
+    "휴우~ 이제 시원하다!",
+    "happy:1.4",
+    "[relieved, happy sigh, refreshed, cheerful]"
+   ]
+  ],
+  "wrong_cold": [
+   [
+    "man",
+    "으으, 추워!",
+    "sad:1.5",
+    "[shivering, cold, grumbling]"
+   ]
+  ],
+  "wrong_hot": [
+   [
+    "man",
+    "아이, 더워!",
+    "toneup:1.3",
+    "[hot, sweaty, groaning, fanning himself]"
+   ]
+  ]
+ },
+ "models": {
+  "wind": "eleven_v4",
+  "sun": "eleven_v4",
+  "man": "eleven_v4",
+  "nar": "eleven_v4"
+ },
+ "settings": {
+  "wind": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "sun": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "man": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  }
+ },
+ "use_dir": [
+  "nar",
+  "sun",
+  "wind",
+  "man"
+ ],
+ "notes": "해설 Alice(맑고 또렷한 교육 해설, 날씨·옷 퀴즈에 어울림), 해님 Sarah(따뜻하고 안심시키는 여성), 바람 Charlie(깊고 힘센 장난꾸러기, 허세와 헉헉 연기), 나그네 Roger(느긋한 중년 남성, 추위·더위 연기). 모두 eleven_v4. 해설은 차분하게, 바람 장면은 약간 활기차게, 해님 장면은 포근하게."
+}

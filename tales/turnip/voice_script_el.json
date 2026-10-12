@@ -1,0 +1,867 @@
+{
+ "voices": {
+  "nar": "JBFqnCBsd6RMkjVDRZzb",
+  "grandpa": "pqHfZKP75CvOlQylNhV4",
+  "grandma": "XrExE9yKIg1WjnnlVkGX",
+  "girl": "cgSgspJ2msm6clMCkdW9",
+  "dog": "TX3LPaxmHKxFdv7VOQHJ",
+  "cat": "N2lVS1w4EtoT3dr4eOWO",
+  "mouse": "FGY2WhTYpPnrIDTdsKH5"
+ },
+ "lines": [
+  {
+   "text": "봄이 왔어요. 할아버지가 텃밭에 구멍을 팠어요.",
+   "segs": [
+    [
+     "nar",
+     "봄이 왔어요. 할아버지가 텃밭에 구멍을 팠어요.",
+     "happy:1.0",
+     "[calm, warm, storytelling, springtime]"
+    ]
+   ]
+  },
+  {
+   "text": "\"순무야, 크게 자라라.\" 씨앗을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "grandpa",
+     "순무야, 크게 자라라.",
+     "happy:1.0",
+     "[gentle, kind, old man, hopeful, whispers to the seed]"
+    ],
+    [
+     "nar",
+     "씨앗을 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "씨앗을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "씨앗을 톡 눌러 봐요!",
+     null,
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "씨앗이 흙 속으로 쏙 들어갔어요.",
+   "segs": [
+    [
+     "nar",
+     "씨앗이 흙 속으로 쏙 들어갔어요.",
+     null,
+     "[soft, tender, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "파란 싹이 났어요! 톡톡 눌러서 물도 주고 햇볕도 줘요.",
+   "segs": [
+    [
+     "nar",
+     "파란 싹이 났어요! 톡톡 눌러서 물도 주고 햇볕도 줘요.",
+     "happy:1.2",
+     "[bright, delighted, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "순무 싹을 톡톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "순무 싹을 톡톡 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "여름이 되었어요. 순무 잎이 할아버지 키만큼 자랐어요!",
+   "segs": [
+    [
+     "nar",
+     "여름이 되었어요. 순무 잎이 할아버지 키만큼 자랐어요!",
+     "toneup:1.2",
+     "[amazed, bright, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "할아버지가 순무 잎을 꽉 잡았어요. 톡톡 눌러서 영차!",
+   "segs": [
+    [
+     "nar",
+     "할아버지가 순무 잎을 꽉 잡았어요. 톡톡 눌러서 영차!",
+     null,
+     "[encouraging, lively, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "할아버지를 톡톡 눌러서 영차 영차!",
+   "segs": [
+    [
+     "nar",
+     "할아버지를 톡톡 눌러서 영차 영차!",
+     null,
+     "[cheerful, encouraging, lively]"
+    ]
+   ]
+  },
+  {
+   "text": "순무는 꿈쩍도 안 해요.",
+   "segs": [
+    [
+     "nar",
+     "순무는 꿈쩍도 안 해요.",
+     "tonedown:1.1",
+     "[amused, gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "혼자서는 안 되겠어요. 할아버지를 톡 눌러서 할머니를 불러요!",
+   "segs": [
+    [
+     "nar",
+     "혼자서는 안 되겠어요. 할아버지를 톡 눌러서 할머니를 불러요!",
+     null,
+     "[gentle, thoughtful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "할아버지를 톡! 할머니를 불러요.",
+   "segs": [
+    [
+     "nar",
+     "할아버지를 톡! 할머니를 불러요.",
+     null,
+     "[gentle, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "아이코! 할아버지가 엉덩방아를 찧었어요.",
+   "segs": [
+    [
+     "grandpa",
+     "아이코!",
+     "toneup:1.5",
+     "[startled, comical, old man grunts, flops]"
+    ],
+    [
+     "nar",
+     "할아버지가 엉덩방아를 찧었어요.",
+     null,
+     "[amused, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "할머니가 달려왔어요. \"같이 해 봐요!\"",
+   "segs": [
+    [
+     "nar",
+     "할머니가 달려왔어요.",
+     null,
+     "[warm, lively, storytelling]"
+    ],
+    [
+     "grandma",
+     "같이 해 봐요!",
+     "happy:1.2",
+     "[warm, cheerful, encouraging, kind]"
+    ]
+   ]
+  },
+  {
+   "text": "할머니가 할아버지 허리를 잡고, 톡톡톡 영차!",
+   "segs": [
+    [
+     "nar",
+     "할머니가 할아버지 허리를 잡고, 톡톡톡 영차!",
+     null,
+     "[lively, rhythmic, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "순무를 톡톡 눌러서 영차!",
+   "segs": [
+    [
+     "nar",
+     "순무를 톡톡 눌러서 영차!",
+     null,
+     "[encouraging, lively, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "순무가 한 뼘 올라왔어요! 그래도 안 뽑혀요.",
+   "segs": [
+    [
+     "nar",
+     "순무가 한 뼘 올라왔어요! 그래도 안 뽑혀요.",
+     "toneup:1.1",
+     "[excited, then gently disappointed, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "할머니가 누구를 부를까요?",
+   "segs": [
+    [
+     "nar",
+     "할머니가 누구를 부를까요?",
+     null,
+     "[curious, thoughtful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "음매~ 소는 풀을 먹고 있대요. 사람 친구를 먼저 불러요!",
+   "segs": [
+    [
+     "nar",
+     "음매~ 소는 풀을 먹고 있대요. 사람 친구를 먼저 불러요!",
+     null,
+     "[playful, amused, light humor]"
+    ]
+   ]
+  },
+  {
+   "text": "손녀예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "손녀예요! 반짝이는 친구를 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"손녀야~!\" 손녀가 할머니 허리를 잡았어요. 영차!",
+   "segs": [
+    [
+     "grandma",
+     "손녀야~!",
+     "toneup:1.3",
+     "[calling out, warm, loud and cheerful]"
+    ],
+    [
+     "nar",
+     "손녀가 할머니 허리를 잡았어요. 영차!",
+     null,
+     "[lively, warm, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "조금 더 올라왔어요! 누가 더 도와줄까요?",
+   "segs": [
+    [
+     "nar",
+     "조금 더 올라왔어요! 누가 더 도와줄까요?",
+     null,
+     "[bright, curious, hopeful]"
+    ]
+   ]
+  },
+  {
+   "text": "덤불 뒤에서 멍멍! 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "덤불 뒤에서 멍멍! 누구일까요?",
+     null,
+     "[mysterious, playful, curious whisper]"
+    ]
+   ]
+  },
+  {
+   "text": "멍멍 하고 우는 친구는 누굴까? 다시 들어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "멍멍 하고 우는 친구는 누굴까? 다시 들어 봐요.",
+     null,
+     "[playful, curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "강아지예요! 반짝이는 친구를 눌러 봐요!",
+     null,
+     "[delighted, cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지가 뛰어나왔어요. \"나도 도울게요!\"",
+   "segs": [
+    [
+     "nar",
+     "강아지가 뛰어나왔어요.",
+     null,
+     "[lively, warm, storytelling]"
+    ],
+    [
+     "dog",
+     "나도 도울게요!",
+     "happy:1.4",
+     "[eager, excited, panting, cheerful, playful bark]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지가 손녀 치마를 꼭 붙잡았어요. 영차!",
+   "segs": [
+    [
+     "nar",
+     "강아지가 손녀 치마를 꼭 붙잡았어요. 영차!",
+     null,
+     "[lively, encouraging, rhythmic]"
+    ]
+   ]
+  },
+  {
+   "text": "헛간 지붕에서 야옹! 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "헛간 지붕에서 야옹! 누구일까요?",
+     null,
+     "[mysterious, playful, curious whisper]"
+    ]
+   ]
+  },
+  {
+   "text": "야옹 하고 우는 친구는 누굴까? 다시 들어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "야옹 하고 우는 친구는 누굴까? 다시 들어 봐요.",
+     null,
+     "[playful, curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "고양이예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "고양이예요! 반짝이는 친구를 눌러 봐요!",
+     null,
+     "[delighted, cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "고양이가 지붕에서 폴짝 내려왔어요.",
+   "segs": [
+    [
+     "nar",
+     "고양이가 지붕에서 폴짝 내려왔어요.",
+     null,
+     "[smooth, light, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 강아지랑 고양이가 서로 째려봐요.",
+   "segs": [
+    [
+     "nar",
+     "어? 강아지랑 고양이가 서로 째려봐요.",
+     "tonedown:1.2",
+     "[amused, comical, playful, sly whisper]"
+    ]
+   ]
+  },
+  {
+   "text": "\"흥!\" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.",
+   "segs": [
+    [
+     "cat",
+     "흥!",
+     "angry:1.2",
+     "[haughty, sniffs, sulky, snooty]"
+    ],
+    [
+     "nar",
+     "그래도 고양이가 강아지 꼬리를 꼭 잡았어요.",
+     null,
+     "[amused, warm, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "휴우, 모두 지쳐서 털썩 주저앉았어요.",
+   "segs": [
+    [
+     "nar",
+     "휴우, 모두 지쳐서 털썩 주저앉았어요.",
+     "sad:1.0",
+     "[tired, soft, comical, sighs]"
+    ]
+   ]
+  },
+  {
+   "text": "흙구멍에서 찍찍 소리가 나요. 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "흙구멍에서 찍찍 소리가 나요. 톡 눌러 봐요!",
+     "whisper",
+     "[curious, hushed, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "흙구멍의 생쥐를 톡!",
+   "segs": [
+    [
+     "nar",
+     "흙구멍의 생쥐를 톡!",
+     null,
+     "[curious, gentle, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "아주 작은 생쥐가 쪼르르 나왔어요.",
+   "segs": [
+    [
+     "nar",
+     "아주 작은 생쥐가 쪼르르 나왔어요.",
+     null,
+     "[soft, tender, amused, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "\"너무 작아서 안 될 거야~\"",
+   "segs": [
+    [
+     "cat",
+     "너무 작아서 안 될 거야~",
+     "tonedown:1.2",
+     "[teasing, smug, drawling, doubtful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"나도 할래요!\" 생쥐가 고양이 꼬리를 꼭 잡았어요.",
+   "segs": [
+    [
+     "mouse",
+     "나도 할래요!",
+     "toneup:1.5",
+     "[determined, brave, small voice, squeaky, cheerful]"
+    ],
+    [
+     "nar",
+     "생쥐가 고양이 꼬리를 꼭 잡았어요.",
+     null,
+     "[warm, gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!",
+   "segs": [
+    [
+     "nar",
+     "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!",
+     "toneup:1.3",
+     "[excited, big build-up, lively, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "순무를 톡톡 눌러요. 영~차!",
+   "segs": [
+    [
+     "nar",
+     "순무를 톡톡 눌러요. 영~차!",
+     null,
+     "[excited, strained, lively, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "쑥! 커다란 순무가 뽑혔어요! 모두 벌렁 넘어졌어요.",
+   "segs": [
+    [
+     "nar",
+     "쑥! 커다란 순무가 뽑혔어요! 모두 벌렁 넘어졌어요.",
+     "happy:1.5",
+     "[exclaims, joyful, comical, lively storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "작은 생쥐까지 모두 힘을 모았더니 뽑혔어요!",
+   "segs": [
+    [
+     "nar",
+     "작은 생쥐까지 모두 힘을 모았더니 뽑혔어요!",
+     "happy:1.3",
+     "[warm, proud, delighted, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "맛있는 순무국을 끓였어요.",
+   "segs": [
+    [
+     "nar",
+     "맛있는 순무국을 끓였어요.",
+     null,
+     "[cozy, warm, delighted, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 먼저 순무를 잡았지? 차례대로 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "누가 먼저 순무를 잡았지? 차례대로 톡 눌러 봐요!",
+     null,
+     "[cheerful, encouraging, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "맨 처음은 누구였지?",
+   "segs": [
+    [
+     "nar",
+     "맨 처음은 누구였지?",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "할아버지가 잡은 다음은 누구?",
+   "segs": [
+    [
+     "nar",
+     "할아버지가 잡은 다음은 누구?",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "할머니가 잡은 다음은 누구?",
+   "segs": [
+    [
+     "nar",
+     "할머니가 잡은 다음은 누구?",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "손녀가 잡은 다음은 누구?",
+   "segs": [
+    [
+     "nar",
+     "손녀가 잡은 다음은 누구?",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지가 잡은 다음은 누구?",
+   "segs": [
+    [
+     "nar",
+     "강아지가 잡은 다음은 누구?",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "고양이가 잡은 다음은 누구?",
+   "segs": [
+    [
+     "nar",
+     "고양이가 잡은 다음은 누구?",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "할아버지예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "할아버지예요! 반짝이는 친구를 눌러 봐요!",
+     null,
+     "[delighted, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "할머니예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "할머니예요! 반짝이는 친구를 눌러 봐요!",
+     null,
+     "[delighted, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "생쥐예요! 반짝이는 친구를 눌러 봐요!",
+     null,
+     "[delighted, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "할아버지: \"나는 다음이야~\"",
+   "segs": [
+    [
+     "grandpa",
+     "나는 다음이야~",
+     null,
+     "[cheerful, old man, warm, pleased]"
+    ]
+   ]
+  },
+  {
+   "text": "할머니: \"나는 다음이야~\"",
+   "segs": [
+    [
+     "grandma",
+     "나는 다음이야~",
+     null,
+     "[cheerful, warm, kind, pleased]"
+    ]
+   ]
+  },
+  {
+   "text": "손녀: \"나는 다음이야~\"",
+   "segs": [
+    [
+     "girl",
+     "나는 다음이야~",
+     null,
+     "[cheerful, childlike, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지: \"나는 다음이야~\"",
+   "segs": [
+    [
+     "dog",
+     "나는 다음이야~",
+     null,
+     "[cheerful, eager, excited, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "고양이: \"나는 다음이야~\"",
+   "segs": [
+    [
+     "cat",
+     "나는 다음이야~",
+     null,
+     "[cheerful, smug, drawling, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐: \"나는 다음이야~\"",
+   "segs": [
+    [
+     "mouse",
+     "나는 다음이야~",
+     null,
+     "[cheerful, small voice, squeaky, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "와! 할아버지, 할머니, 손녀, 강아지, 고양이, 생쥐! 차례를 다 기억했어요.",
+   "segs": [
+    [
+     "nar",
+     "와! 할아버지, 할머니, 손녀, 강아지, 고양이, 생쥐! 차례를 다 기억했어요.",
+     "happy:1.3",
+     "[delighted, proud, warm, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!",
+   "segs": [
+    [
+     "nar",
+     "순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!",
+     null,
+     "[warm, cozy, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "냄비를 톡 눌러서 한 그릇씩!",
+   "segs": [
+    [
+     "nar",
+     "냄비를 톡 눌러서 한 그릇씩!",
+     null,
+     "[warm, cozy, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "여섯 그릇, 여섯 명! 딱 맞아요.",
+   "segs": [
+    [
+     "nar",
+     "여섯 그릇, 여섯 명! 딱 맞아요.",
+     "happy:1.2",
+     "[satisfied, warm, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "모두 함께 맛있게 먹었답니다.",
+   "segs": [
+    [
+     "nar",
+     "모두 함께 맛있게 먹었답니다.",
+     "happy:1.3",
+     "[gentle, warm, content, storytelling, slow, closing]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "call_grandma": [
+   [
+    "grandpa",
+    "할머니~!",
+    "toneup:1.3",
+    "[calling out, loud, old man, warm, strained]"
+   ]
+  ],
+  "cut_glare": [
+   [
+    "dog",
+    "으르렁!",
+    "angry",
+    "[growls, low, grumpy, playful warning]"
+   ]
+  ],
+  "squeak_mouse": [
+   [
+    "mouse",
+    "찍찍!",
+    "happy:1.3",
+    "[squeaks, tiny, cheerful, high-pitched]"
+   ]
+  ],
+  "cut_heave": [
+   [
+    "grandpa",
+    "영~차!",
+    "toneup:1.4",
+    "[grunts with effort, strained, shouting, determined]"
+   ]
+  ],
+  "flop": [
+   [
+    "mouse",
+    "으앗!",
+    "toneup:1.5",
+    "[startled, squeaks, high-pitched]"
+   ],
+   [
+    "grandpa",
+    "아이쿠!",
+    "toneup:1.4",
+    "[groans, comical, old man, flopping, surprised]"
+   ]
+  ]
+ },
+ "models": {
+  "grandpa": "eleven_v4",
+  "nar": "eleven_v4",
+  "dog": "eleven_v4",
+  "grandma": "eleven_v4",
+  "mouse": "eleven_v4",
+  "girl": "eleven_v4",
+  "cat": "eleven_v4"
+ },
+ "settings": {
+  "grandpa": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "dog": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "grandma": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "mouse": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "girl": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "cat": {
+   "stability": 0.3,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "nar",
+  "grandpa",
+  "grandma",
+  "girl",
+  "dog",
+  "cat",
+  "mouse"
+ ],
+ "notes": "해설 George(따뜻한 이야기꾼, 팥죽과 같은 원형), 할아버지 Bill(나이 많고 지혜로운 남성), 할머니 Matilda(할멈 원형), 손녀 Jessica(밝은 아이), 강아지 Liam(활기찬 젊은 목소리), 고양이 Callum(허스키한 새침 장난꾸러기), 생쥐 Laura(작고 톡톡 튀는 목소리). 모두 eleven_v4. 영차 장면은 힘을 쓰되 차분한 해설을 유지, 셈·차례 활동은 또박또박."
+}

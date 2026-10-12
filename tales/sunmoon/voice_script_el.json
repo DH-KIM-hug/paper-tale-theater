@@ -1,0 +1,1652 @@
+{
+ "voices": {
+  "nar": "JBFqnCBsd6RMkjVDRZzb",
+  "mom": "XrExE9yKIg1WjnnlVkGX",
+  "rich": "hpp4J3VqNfWAUOO0d1Us",
+  "tiger": "nPczCjzI2devNBz1zQrb",
+  "boy": "TX3LPaxmHKxFdv7VOQHJ",
+  "girl": "cgSgspJ2msm6clMCkdW9"
+ },
+ "lines": [
+  {
+   "text": "옛날 옛날 산골 오막살이에 엄마와 오누이가 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날 옛날 산골 오막살이에 엄마와 오누이가 살았어요.",
+     null,
+     "[calm, warm, storytelling, once upon a time, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마가 일하러 가요. 오누이를 톡 눌러서 인사해요!",
+   "segs": [
+    [
+     "nar",
+     "엄마가 일하러 가요. 오누이를 톡 눌러서 인사해요!",
+     "happy:1.1",
+     "[warm, cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "오빠랑 동생을 톡 눌러서 \"다녀오세요!\" 해 봐요!",
+   "segs": [
+    [
+     "nar",
+     "오빠랑 동생을 톡 눌러서 \"다녀오세요!\" 해 봐요!",
+     null,
+     "[cheerful, encouraging, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마가 말했어요. \"문 꼭 잠그고 엄마 기다려라~\"",
+   "segs": [
+    [
+     "nar",
+     "엄마가 말했어요.",
+     null,
+     "[warm, gentle storytelling]"
+    ],
+    [
+     "mom",
+     "문 꼭 잠그고 엄마 기다려라~",
+     "happy:0.9",
+     "[loving, tender, motherly, gentle, caring]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마는 부잣집에서 하루 종일 부지런히 일했어요.",
+   "segs": [
+    [
+     "nar",
+     "엄마는 부잣집에서 하루 종일 부지런히 일했어요.",
+     null,
+     "[warm, light, storytelling, busy]"
+    ]
+   ]
+  },
+  {
+   "text": "\"수고했어요. 떡 가져가요!\" 떡을 톡톡 눌러서 바구니에 담아요!",
+   "segs": [
+    [
+     "rich",
+     "수고했어요. 떡 가져가요!",
+     "happy:1.1",
+     "[kind, cheerful, friendly, thankful, appreciative]"
+    ],
+    [
+     "nar",
+     "떡을 톡톡 눌러서 바구니에 담아요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "떡을 톡톡 눌러서 바구니에 담아요!",
+   "segs": [
+    [
+     "nar",
+     "떡을 톡톡 눌러서 바구니에 담아요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "떡을 바구니 가득 받았어요! \"우리 아이들이 좋아하겠다!\" 엄마는 서둘러 집으로 떠났어요.",
+   "segs": [
+    [
+     "nar",
+     "떡을 바구니 가득 받았어요!",
+     "happy:1.2",
+     "[delighted, warm, storytelling]"
+    ],
+    [
+     "mom",
+     "우리 아이들이 좋아하겠다!",
+     "happy:1.3",
+     "[happy, loving, motherly, warm, hopeful]"
+    ],
+    [
+     "nar",
+     "엄마는 서둘러 집으로 떠났어요.",
+     null,
+     "[light, brisk, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 접시를 골라 톡 눌러요!",
+   "segs": [
+    [
+     "nar",
+     "떡 접시를 골라 톡 눌러요!",
+     null,
+     "[curious, encouraging, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "반짝이는 접시예요! 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "반짝이는 접시예요! 톡 눌러 봐요!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이 말풍선의 떡이랑 똑같이 생긴 접시를 골라요!",
+   "segs": [
+    [
+     "nar",
+     "호랑이 말풍선의 떡이랑 똑같이 생긴 접시를 골라요!",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "바구니에 남은 떡이랑 똑같은 개수의 접시를 골라요!",
+   "segs": [
+    [
+     "nar",
+     "바구니에 남은 떡이랑 똑같은 개수의 접시를 골라요!",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "해가 뉘엿뉘엿 지고 있어요. 엄마가 첫째 고개를 넘어요.",
+   "segs": [
+    [
+     "nar",
+     "해가 뉘엿뉘엿 지고 있어요. 엄마가 첫째 고개를 넘어요.",
+     null,
+     "[soft, calm, storytelling, evening, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "하늘이 붉어졌어요. 엄마가 둘째 고개를 넘어요.",
+   "segs": [
+    [
+     "nar",
+     "하늘이 붉어졌어요. 엄마가 둘째 고개를 넘어요.",
+     "tonedown:1.0",
+     "[soft, calm, storytelling, dusk, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.",
+   "segs": [
+    [
+     "nar",
+     "깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.",
+     "tonedown:1.3",
+     "[hushed, soft, storytelling, night, slow, gentle suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 한 개 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 떡 한 개 주면 안 잡아먹지!",
+     "angry:1.6",
+     "[growls, gruff, grumbling, hungry but silly, bossy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 한 개를 달래요. 어느 접시를 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 떡 한 개를 달래요. 어느 접시를 줄까요?",
+     null,
+     "[calm, clear, playful, counting, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 두 개 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 떡 두 개 주면 안 잡아먹지!",
+     "angry:1.6",
+     "[growls, gruff, grumbling, hungry but silly, bossy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 두 개를 달래요. 어느 접시를 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 떡 두 개를 달래요. 어느 접시를 줄까요?",
+     null,
+     "[calm, clear, playful, counting, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 세 개 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 떡 세 개 주면 안 잡아먹지!",
+     "angry:1.6",
+     "[growls, gruff, grumbling, hungry but silly, bossy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 세 개를 달래요. 어느 접시를 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 떡 세 개를 달래요. 어느 접시를 줄까요?",
+     null,
+     "[calm, clear, playful, counting, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 네 개 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 떡 네 개 주면 안 잡아먹지!",
+     "angry:1.6",
+     "[growls, gruff, grumbling, hungry but silly, bossy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 네 개를 달래요. 어느 접시를 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 떡 네 개를 달래요. 어느 접시를 줄까요?",
+     null,
+     "[calm, clear, playful, counting, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 다섯 개 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 떡 다섯 개 주면 안 잡아먹지!",
+     "angry:1.6",
+     "[growls, gruff, grumbling, hungry but silly, bossy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 다섯 개를 달래요. 어느 접시를 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 떡 다섯 개를 달래요. 어느 접시를 줄까요?",
+     null,
+     "[calm, clear, playful, counting, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 여섯 개 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 떡 여섯 개 주면 안 잡아먹지!",
+     "angry:1.6",
+     "[growls, gruff, grumbling, hungry but silly, bossy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 여섯 개를 달래요. 어느 접시를 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 떡 여섯 개를 달래요. 어느 접시를 줄까요?",
+     null,
+     "[calm, clear, playful, counting, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 일곱 개 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 떡 일곱 개 주면 안 잡아먹지!",
+     "angry:1.6",
+     "[growls, gruff, grumbling, hungry but silly, bossy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 일곱 개를 달래요. 어느 접시를 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 떡 일곱 개를 달래요. 어느 접시를 줄까요?",
+     null,
+     "[calm, clear, playful, counting, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 여덟 개 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 떡 여덟 개 주면 안 잡아먹지!",
+     "angry:1.6",
+     "[growls, gruff, grumbling, hungry but silly, bossy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 여덟 개를 달래요. 어느 접시를 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 떡 여덟 개를 달래요. 어느 접시를 줄까요?",
+     null,
+     "[calm, clear, playful, counting, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 아홉 개 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 떡 아홉 개 주면 안 잡아먹지!",
+     "angry:1.6",
+     "[growls, gruff, grumbling, hungry but silly, bossy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 아홉 개를 달래요. 어느 접시를 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 떡 아홉 개를 달래요. 어느 접시를 줄까요?",
+     null,
+     "[calm, clear, playful, counting, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 떡 열 개 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 떡 열 개 주면 안 잡아먹지!",
+     "angry:1.6",
+     "[growls, gruff, grumbling, hungry but silly, bossy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 떡 열 개를 달래요. 어느 접시를 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 떡 열 개를 달래요. 어느 접시를 줄까요?",
+     null,
+     "[calm, clear, playful, counting, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 떡 한 개를 꿀꺽! 배가 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이는 떡 한 개를 꿀꺽! 배가 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 떡 두 개를 꿀꺽! 배가 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이는 떡 두 개를 꿀꺽! 배가 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 떡 세 개를 꿀꺽! 배가 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이는 떡 세 개를 꿀꺽! 배가 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 떡 네 개를 꿀꺽! 배가 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이는 떡 네 개를 꿀꺽! 배가 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 떡 다섯 개를 꿀꺽! 배가 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이는 떡 다섯 개를 꿀꺽! 배가 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 한 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "떡 한 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 두 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "떡 두 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 세 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "떡 세 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 네 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "떡 네 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 다섯 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "떡 다섯 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 여섯 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "떡 여섯 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 일곱 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "떡 일곱 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 여덟 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "떡 여덟 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 아홉 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "떡 아홉 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "떡 열 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "떡 열 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     null,
+     "[amused, playful, light, belly rumbling comedy]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥! 남은 떡 몽땅 주면 안 잡아먹지!\"",
+   "segs": [
+    [
+     "tiger",
+     "어흥! 남은 떡 몽땅 주면 안 잡아먹지!",
+     "angry:1.7",
+     "[growls, gruff, grumbling, bossy, greedy]"
+    ]
+   ]
+  },
+  {
+   "text": "바구니에 남은 떡은 몇 개일까요? 세어 보고 접시를 골라요!",
+   "segs": [
+    [
+     "nar",
+     "바구니에 남은 떡은 몇 개일까요? 세어 보고 접시를 골라요!",
+     null,
+     "[curious, clear, counting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "남은 떡을 몽땅 꿀꺽! 배가 빵빵해졌어요!",
+   "segs": [
+    [
+     "nar",
+     "남은 떡을 몽땅 꿀꺽! 배가 빵빵해졌어요!",
+     null,
+     "[amused, playful, round, comically full]"
+    ]
+   ]
+  },
+  {
+   "text": "떡이 다 떨어지자 호랑이가 말했어요. \"떡이 없으면 너를 잡아먹어야지!\"",
+   "segs": [
+    [
+     "nar",
+     "떡이 다 떨어지자 호랑이가 말했어요.",
+     "tonedown:1.2",
+     "[soft, hushed, storytelling, slow]"
+    ],
+    [
+     "tiger",
+     "떡이 없으면 너를 잡아먹어야지!",
+     "angry:1.8",
+     "[growls, gruff, sly, demanding, comically sinister]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.",
+     "sad:1.0",
+     "[soft, gentle, quick, storytelling, not scary]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.",
+     "tonedown:1.2",
+     "[hushed, sly, playful, storytelling, light suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.",
+   "segs": [
+    [
+     "nar",
+     "캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.",
+     "tonedown:1.2",
+     "[soft, quiet, night, storytelling, gentle worry]"
+    ]
+   ]
+  },
+  {
+   "text": "등잔을 톡 눌러서 불을 켜 줄까요?",
+   "segs": [
+    [
+     "nar",
+     "등잔을 톡 눌러서 불을 켜 줄까요?",
+     null,
+     "[gentle, warm, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "등잔을 톡 눌러서 불을 켜요!",
+   "segs": [
+    [
+     "nar",
+     "등잔을 톡 눌러서 불을 켜요!",
+     null,
+     "[gentle, warm, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "반짝! 방이 환해졌어요. 오누이는 창밖을 보며 엄마를 기다렸어요.",
+   "segs": [
+    [
+     "nar",
+     "반짝! 방이 환해졌어요. 오누이는 창밖을 보며 엄마를 기다렸어요.",
+     null,
+     "[warm, relieved, bright, storytelling, cozy]"
+    ]
+   ]
+  },
+  {
+   "text": "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.",
+   "segs": [
+    [
+     "nar",
+     "똑똑똑.",
+     "whisper",
+     "[soft, knock-knock, hushed, storytelling]"
+    ],
+    [
+     "tiger",
+     "얘들아~ 엄마 왔다. 문 열어라~",
+     "tonedown:1.5",
+     "[fake sweet, gruff, rasping, pretending to be mom, sing-song]"
+    ],
+    [
+     "nar",
+     "걸걸한 목소리예요.",
+     "whisper",
+     "[curious, hushed, light suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "진짜 엄마 목소리를 톡 골라 봐요!",
+   "segs": [
+    [
+     "nar",
+     "진짜 엄마 목소리를 톡 골라 봐요!",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "반짝이는 쪽이 엄마 목소리예요!",
+   "segs": [
+    [
+     "nar",
+     "반짝이는 쪽이 엄마 목소리예요!",
+     null,
+     "[cheerful, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "오빠가 말했어요. \"우리 엄마 목소리가 아니에요! 손을 보여 주세요!\"",
+   "segs": [
+    [
+     "nar",
+     "오빠가 말했어요.",
+     null,
+     "[light, storytelling]"
+    ],
+    [
+     "boy",
+     "우리 엄마 목소리가 아니에요! 손을 보여 주세요!",
+     "toneup:1.3",
+     "[suspicious, firm, brave, boyish, determined]"
+    ]
+   ]
+  },
+  {
+   "text": "진짜 엄마 손은 뭘까요? 잘 보고 골라 봐요!",
+   "segs": [
+    [
+     "nar",
+     "진짜 엄마 손은 뭘까요? 잘 보고 골라 봐요!",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어? 털이 복슬복슬… 줄무늬도 있네!\"",
+   "segs": [
+    [
+     "girl",
+     "어? 털이 복슬복슬… 줄무늬도 있네!",
+     "toneup:1.2",
+     "[surprised, puzzled, sweet, childlike, wide-eyed, whispers]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어? 하얗긴 한데… 뾰족한 발톱이 있네!\"",
+   "segs": [
+    [
+     "boy",
+     "어? 하얗긴 한데… 뾰족한 발톱이 있네!",
+     "toneup:1.2",
+     "[suspicious, wary, boyish, whispers, nervous]"
+    ]
+   ]
+  },
+  {
+   "text": "진짜 엄마 손을 톡 골라 봐요!",
+   "segs": [
+    [
+     "nar",
+     "진짜 엄마 손을 톡 골라 봐요!",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 손은 손가락이 길쭉하고 떡가루가 묻어 있어요.",
+   "segs": [
+    [
+     "nar",
+     "엄마 손은 손가락이 길쭉하고 떡가루가 묻어 있어요.",
+     null,
+     "[gentle, warm, clear, explanatory]"
+    ]
+   ]
+  },
+  {
+   "text": "반짝이는 손이 엄마 손이에요!",
+   "segs": [
+    [
+     "nar",
+     "반짝이는 손이 엄마 손이에요!",
+     null,
+     "[cheerful, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 엄마 손은 부드럽고 떡가루가 묻어 있지요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 엄마 손은 부드럽고 떡가루가 묻어 있지요.",
+     "happy:1.1",
+     "[delighted, warm, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "그런데 문틈으로 들어온 손은… 하얀 밀가루 사이로 발톱이 쏙! 엄마 손이 아니에요!",
+   "segs": [
+    [
+     "nar",
+     "그런데 문틈으로 들어온 손은… 하얀 밀가루 사이로 발톱이 쏙! 엄마 손이 아니에요!",
+     "tonedown:1.3",
+     "[hushed, light suspense, storytelling, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "문밖에 누가 있는지 보고 싶어요. 창호지를 손가락으로 콕 뚫어 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "문밖에 누가 있는지 보고 싶어요. 창호지를 손가락으로 콕 뚫어 볼까요?",
+     "whisper",
+     "[hushed, curious, mischievous, whispers]"
+    ]
+   ]
+  },
+  {
+   "text": "창호지를 톡 눌러서 콕 뚫어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "창호지를 톡 눌러서 콕 뚫어 봐요!",
+     null,
+     "[hushed, playful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "구멍 너머에 커다랗고 동그란 눈이 깜빡깜빡! 호랑이예요!",
+   "segs": [
+    [
+     "nar",
+     "구멍 너머에 커다랗고 동그란 눈이 깜빡깜빡! 호랑이예요!",
+     "toneup:1.4",
+     "[hushed, wide-eyed, surprised, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "오빠가 속삭였어요. \"쉿, 뒷문으로 살금살금 도망가자!\"",
+   "segs": [
+    [
+     "nar",
+     "오빠가 속삭였어요.",
+     "whisper",
+     "[soft, hushed, storytelling]"
+    ],
+    [
+     "boy",
+     "쉿, 뒷문으로 살금살금 도망가자!",
+     "whisper",
+     "[whispers, urgent, brave, boyish, secretive]"
+    ]
+   ]
+  },
+  {
+   "text": "오누이는 뒷문으로 살금살금 나왔어요. 화면을 톡톡 눌러서 달려요!",
+   "segs": [
+    [
+     "nar",
+     "오누이는 뒷문으로 살금살금 나왔어요. 화면을 톡톡 눌러서 달려요!",
+     "whisper",
+     "[hushed, tiptoeing, playful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 달려요!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 눌러서 달려요!",
+     null,
+     "[hushed, lively, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "앗, 호랑이가 오는 소리! 커다란 장독을 톡 눌러서 숨어요!",
+   "segs": [
+    [
+     "nar",
+     "앗, 호랑이가 오는 소리! 커다란 장독을 톡 눌러서 숨어요!",
+     "whisper:1.3",
+     "[urgent, hushed, playful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "커다란 장독을 톡 눌러서 숨어요!",
+   "segs": [
+    [
+     "nar",
+     "커다란 장독을 톡 눌러서 숨어요!",
+     null,
+     "[hushed, playful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"얘들아~ 어디 갔니?\" 호랑이는 두리번두리번하다가 집 쪽으로 돌아갔어요.",
+   "segs": [
+    [
+     "tiger",
+     "얘들아~ 어디 갔니?",
+     "tonedown:1.3",
+     "[sly, gruff, puzzled, searching, fake sweet]"
+    ],
+    [
+     "nar",
+     "호랑이는 두리번두리번하다가 집 쪽으로 돌아갔어요.",
+     null,
+     "[amused, light, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "휴~ 이제 우물가 큰 나무로 달려가요! 톡톡!",
+   "segs": [
+    [
+     "nar",
+     "휴~ 이제 우물가 큰 나무로 달려가요! 톡톡!",
+     "happy:1.1",
+     "[relieved, sighs softly, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "우물가에 커다란 나무가 있어요. 톡톡 눌러서 영차영차 올라가요!",
+   "segs": [
+    [
+     "nar",
+     "우물가에 커다란 나무가 있어요. 톡톡 눌러서 영차영차 올라가요!",
+     null,
+     "[encouraging, lively, bright, rhythmic]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 나무를 올라가요!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 눌러서 나무를 올라가요!",
+     null,
+     "[encouraging, lively, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "오누이는 나무 꼭대기까지 올라갔어요!",
+   "segs": [
+    [
+     "nar",
+     "오누이는 나무 꼭대기까지 올라갔어요!",
+     "happy:1.2",
+     "[proud, delighted, bright, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 뒷마당에 왔어요. \"옳지! 우물 속에 숨었구나!\"",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 뒷마당에 왔어요.",
+     "tonedown:1.2",
+     "[light, storytelling]"
+    ],
+    [
+     "tiger",
+     "옳지! 우물 속에 숨었구나!",
+     "happy:1.4",
+     "[pleased, gruff, sly, triumphant, comical]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 우물 속을 들여다봤어요. 우물 물에 오누이 얼굴이 비쳤거든요!",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 우물 속을 들여다봤어요. 우물 물에 오누이 얼굴이 비쳤거든요!",
+     null,
+     "[amused, curious, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "\"두레박으로 건져야지~\" 영차!",
+   "segs": [
+    [
+     "tiger",
+     "두레박으로 건져야지~ 영차!",
+     "happy:1.3",
+     "[gruff, grunting, effort, fumbling, comical, heaving]"
+    ]
+   ]
+  },
+  {
+   "text": "첨벙! 두레박에는 물만 가득. 우물 속 오누이 얼굴을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "첨벙! 두레박에는 물만 가득. 우물 속 오누이 얼굴을 톡 눌러 봐요!",
+     null,
+     "[amused, playful, splashy, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "우물에 비친 오누이 얼굴을 톡!",
+   "segs": [
+    [
+     "nar",
+     "우물에 비친 오누이 얼굴을 톡!",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "나무 위에서 오누이가 그만 킥킥 웃고 말았어요.",
+   "segs": [
+    [
+     "nar",
+     "나무 위에서 오누이가 그만 킥킥 웃고 말았어요.",
+     null,
+     "[amused, giggly, playful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어? 위에서 웃음소리가?\" 호랑이가 고개를 번쩍 들었어요.",
+   "segs": [
+    [
+     "tiger",
+     "어? 위에서 웃음소리가?",
+     "toneup:1.3",
+     "[startled, puzzled, gruff, looking up]"
+    ],
+    [
+     "nar",
+     "호랑이가 고개를 번쩍 들었어요.",
+     null,
+     "[light, comical, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 올려다보며 물었어요. \"얘들아, 거기 어떻게 올라갔니?\"",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 올려다보며 물었어요.",
+     null,
+     "[light, storytelling]"
+    ],
+    [
+     "tiger",
+     "얘들아, 거기 어떻게 올라갔니?",
+     "tonedown:1.2",
+     "[curious, gruff, fake friendly, slyly curious]"
+    ]
+   ]
+  },
+  {
+   "text": "오빠가 꾀를 냈어요. \"참기름 바르고 올라왔지!\"",
+   "segs": [
+    [
+     "nar",
+     "오빠가 꾀를 냈어요.",
+     null,
+     "[playful, clever, light, storytelling]"
+    ],
+    [
+     "boy",
+     "참기름 바르고 올라왔지!",
+     "happy:1.3",
+     "[clever, proud, boyish, confident, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "참기름 병을 톡 눌러서 나무에 발라 줘요!",
+   "segs": [
+    [
+     "nar",
+     "참기름 병을 톡 눌러서 나무에 발라 줘요!",
+     null,
+     "[playful, encouraging, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "참기름 병을 톡!",
+   "segs": [
+    [
+     "nar",
+     "참기름 병을 톡!",
+     null,
+     "[playful, encouraging, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.",
+   "segs": [
+    [
+     "nar",
+     "미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.",
+     "happy:1.3",
+     "[amused, comical, bright, storytelling, slipping]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 동생이 깔깔 웃으며 말해 버렸어요. \"도끼로 콕콕 찍고 올라왔지~\"",
+   "segs": [
+    [
+     "nar",
+     "그때 동생이 깔깔 웃으며 말해 버렸어요.",
+     null,
+     "[amused, light, storytelling]"
+    ],
+    [
+     "girl",
+     "도끼로 콕콕 찍고 올라왔지~",
+     "happy:1.4",
+     "[giggles, innocent, cheerful, childlike, blurts out, laughing]"
+    ]
+   ]
+  },
+  {
+   "text": "오빠가 \"쉿!\" 했지만… 벌써 들어 버렸어요!",
+   "segs": [
+    [
+     "nar",
+     "오빠가",
+     null,
+     "[light, storytelling]"
+    ],
+    [
+     "boy",
+     "쉿!",
+     "whisper",
+     "[whispers urgently, panicked, shushing, boyish]"
+    ],
+    [
+     "nar",
+     "했지만… 벌써 들어 버렸어요!",
+     "tonedown:1.3",
+     "[comical, light, storytelling, dismayed]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 도끼로 콕콕 찍으며 올라와요! 오누이는 덜덜 떨었어요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 도끼로 콕콕 찍으며 올라와요! 오누이는 덜덜 떨었어요.",
+     "tonedown:1.4",
+     "[light suspense, soft, storytelling, trembling lightly, not scary]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.",
+     "whisper",
+     "[soft, tense but gentle, storytelling, hopeful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"하늘님, 튼튼한 동아줄을 내려 주세요!\"",
+   "segs": [
+    [
+     "boy",
+     "하늘님, 튼튼한 동아줄을 내려 주세요!",
+     "sad:1.4",
+     "[earnest, praying, trembling, hopeful, boyish, brave]"
+    ]
+   ]
+  },
+  {
+   "text": "하늘에서 줄이 두 개 내려왔어요! 어떤 줄을 잡을까요?",
+   "segs": [
+    [
+     "nar",
+     "하늘에서 줄이 두 개 내려왔어요! 어떤 줄을 잡을까요?",
+     null,
+     "[wondrous, bright, curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "삐걱… 이 줄은 낡았어!",
+   "segs": [
+    [
+     "nar",
+     "삐걱…",
+     null,
+     "[soft, creaking, storytelling]"
+    ],
+    [
+     "boy",
+     "이 줄은 낡았어!",
+     "toneup:1.2",
+     "[worried, alert, boyish, whispers, cautious]"
+    ]
+   ]
+  },
+  {
+   "text": "굵고 반짝이는 튼튼한 줄을 톡 골라요!",
+   "segs": [
+    [
+     "nar",
+     "굵고 반짝이는 튼튼한 줄을 톡 골라요!",
+     null,
+     "[encouraging, bright, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "굵고 반짝반짝 튼튼한 줄을 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "굵고 반짝반짝 튼튼한 줄을 찾아봐요!",
+     null,
+     "[encouraging, bright, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "반짝이는 굵은 줄이 튼튼한 동아줄이에요!",
+   "segs": [
+    [
+     "nar",
+     "반짝이는 굵은 줄이 튼튼한 동아줄이에요!",
+     null,
+     "[cheerful, bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 굵고 반짝이는 새 동아줄이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 굵고 반짝이는 새 동아줄이에요.",
+     "happy:1.2",
+     "[delighted, warm, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "줄을 꼭 잡고, 화면을 톡톡 눌러서 올라가요!",
+   "segs": [
+    [
+     "nar",
+     "줄을 꼭 잡고, 화면을 톡톡 눌러서 올라가요!",
+     null,
+     "[excited, encouraging, lively, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 올라가요!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 눌러서 올라가요!",
+     null,
+     "[excited, encouraging, lively, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "구름을 뚫고 쑥쑥!",
+   "segs": [
+    [
+     "nar",
+     "구름을 뚫고 쑥쑥!",
+     "happy:1.3",
+     "[bright, airy, lifting, delighted, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!",
+   "segs": [
+    [
+     "nar",
+     "구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!",
+     "happy:1.3",
+     "[wondrous, amazed, delighted, soaring, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.",
+     null,
+     "[light, gentle, storytelling, comically sad]"
+    ]
+   ]
+  },
+  {
+   "text": "\"아이코 내 엉덩이! 아이코 내 머리!\" 호랑이 머리에 동그란 혹이 났어요.",
+   "segs": [
+    [
+     "tiger",
+     "아이코 내 엉덩이! 아이코 내 머리!",
+     "sad:1.8",
+     "[groaning, comical, dazed, whining, gruff, unlucky]"
+    ],
+    [
+     "nar",
+     "호랑이 머리에 동그란 혹이 났어요.",
+     "happy:1.2",
+     "[amused, light, comical, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "호랑이는 혹을 달고 산속으로 줄행랑! 다시는 오지 않았대요.",
+   "segs": [
+    [
+     "nar",
+     "호랑이는 혹을 달고 산속으로 줄행랑! 다시는 오지 않았대요.",
+     "happy:1.3",
+     "[amused, gentle, light, comical, storytelling, wrapping up]"
+    ]
+   ]
+  },
+  {
+   "text": "하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.",
+   "segs": [
+    [
+     "nar",
+     "하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.",
+     null,
+     "[warm, gentle, wondrous, storytelling, glowing]"
+    ]
+   ]
+  },
+  {
+   "text": "동생이 말했어요. \"오빠, 나는 밤이 무서워요.\"",
+   "segs": [
+    [
+     "nar",
+     "동생이 말했어요.",
+     null,
+     "[soft, gentle, storytelling]"
+    ],
+    [
+     "girl",
+     "오빠, 나는 밤이 무서워요.",
+     "sad:1.2",
+     "[shy, sweet, small voice, a little afraid, tender, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "\"그럼 우리 바꾸자!\"",
+   "segs": [
+    [
+     "boy",
+     "그럼 우리 바꾸자!",
+     "happy:1.2",
+     "[kind, caring, warm, gentle, brotherly, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "그래서 동생은 해님, 오빠는 달님이 되었답니다.",
+   "segs": [
+    [
+     "nar",
+     "그래서 동생은 해님, 오빠는 달님이 되었답니다.",
+     "happy:1.1",
+     "[warm, cheerful, gentle, storytelling, content]"
+    ]
+   ]
+  },
+  {
+   "text": "해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.",
+   "segs": [
+    [
+     "nar",
+     "해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.",
+     "happy:1.1",
+     "[cheerful, inviting, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.",
+   "segs": [
+    [
+     "nar",
+     "해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.",
+     "happy:1.3",
+     "[warm, gentle, content, storytelling, slow, closing, loving]"
+    ]
+   ]
+  },
+  {
+   "text": "두 목소리를 들어 봐요. 하나는 진짜 엄마, 하나는 가짜예요.",
+   "segs": [
+    [
+     "nar",
+     "두 목소리를 들어 봐요. 하나는 진짜 엄마, 하나는 가짜예요.",
+     null,
+     "[curious, clear, inviting, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "1번 목소리.",
+   "segs": [
+    [
+     "nar",
+     "1번 목소리.",
+     null,
+     "[clear, calm, announcing]"
+    ]
+   ]
+  },
+  {
+   "text": "2번 목소리.",
+   "segs": [
+    [
+     "nar",
+     "2번 목소리.",
+     null,
+     "[clear, calm, announcing]"
+    ]
+   ]
+  },
+  {
+   "text": "진짜 엄마 목소리는 몇 번일까요?",
+   "segs": [
+    [
+     "nar",
+     "진짜 엄마 목소리는 몇 번일까요?",
+     null,
+     "[curious, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "진짜 엄마 목소리를 톡 골라 봐요! 다시 들으려면 한 번 더 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "진짜 엄마 목소리를 톡 골라 봐요! 다시 들으려면 한 번 더 눌러요.",
+     null,
+     "[cheerful, encouraging, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어흥~\" 이건 호랑이가 흉내 낸 목소리예요!",
+   "segs": [
+    [
+     "nar",
+     "\"어흥~\" 이건 호랑이가 흉내 낸 목소리예요!",
+     null,
+     "[playful, amused, light, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 목소리는 다정하고 부드러웠어요. 다시 들어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "엄마 목소리는 다정하고 부드러웠어요. 다시 들어 봐요.",
+     null,
+     "[gentle, warm, clear, explanatory]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 진짜 엄마 목소리예요. 그런데 문밖 목소리는 걸걸했지요?",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 진짜 엄마 목소리예요. 그런데 문밖 목소리는 걸걸했지요?",
+     null,
+     "[delighted, warm, praising, storytelling, light]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "cut_roar": [
+   [
+    "tiger",
+    "어흥!",
+    "angry:1.7",
+    "[roars, loud, growling, playful menace]"
+   ]
+  ],
+  "cut_mimic": [
+   [
+    "tiger",
+    "에헴, 엄마 흉내 내야지~",
+    "happy:1.3",
+    "[clears throat, gruff, mock sweet, sly, giggling to self, pretending to be mom]"
+   ]
+  ],
+  "cut_creak": [
+   [
+    "tiger",
+    "어, 어어?",
+    "toneup:1.6",
+    "[confused, startled, nervous, stammering, worried]"
+   ]
+  ],
+  "cut_snap": [
+   [
+    "tiger",
+    "으아악! 살려줘~!",
+    "toneup:1.8",
+    "[panicked, screaming, high-pitched, begging, falling, comical terror]"
+   ]
+  ],
+  "cut_bump": [
+   [
+    "tiger",
+    "에구구…",
+    "sad:1.8",
+    "[groaning, pained, dazed, whining, comical]"
+   ]
+  ],
+  "call_mom": [
+   [
+    "mom",
+    "얘들아~ 엄마 왔다. 문 열어라~",
+    "happy:1.0",
+    "[loving, tender, motherly, gentle, sing-song, calling softly]"
+   ]
+  ],
+  "call_tiger": [
+   [
+    "tiger",
+    "얘들아~ 엄마 왔다. 문 열어라~",
+    "tonedown:1.5",
+    "[gruff, rasping, fake sweet, sly, pretending to be mom, sing-song]"
+   ]
+  ]
+ },
+ "models": {
+  "tiger": "eleven_v4",
+  "boy": "eleven_v4",
+  "rich": "eleven_v4",
+  "nar": "eleven_v4",
+  "girl": "eleven_v4",
+  "mom": "eleven_v4"
+ },
+ "settings": {
+  "tiger": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "boy": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "rich": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "girl": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "mom": {
+   "stability": 0.35,
+   "style": 0.45
+  }
+ },
+ "use_dir": [
+  "nar",
+  "mom",
+  "rich",
+  "tiger",
+  "boy",
+  "girl"
+ ],
+ "notes": "해설 George(따뜻한 이야기꾼, 팥죽과 같은 원형), 엄마 Matilda(자애로운 엄마 원형), 부잣집 아주머니 Bella(밝고 단정한 여성), 호랑이 Brian(큰 짐승, 팥죽 호랑이와 같은 원형), 오빠 Liam(젊고 또렷한 소년 느낌), 동생 Jessica(밝고 높은 아이). 모두 eleven_v4. 호랑이는 으르렁거리되 우스꽝스럽게(먹보·엉덩방아·혹), 해설은 어두운 장면에서도 속삭이듯 낮게 하되 무섭지 않게, 하늘에 오르는 장면은 밝게."
+}
