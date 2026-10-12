@@ -1,6 +1,6 @@
 """동화 한 편의 내레이션을 Typecast(ssfm-v30)로 배역별 생성한다.
   python3 tools/typecast/gen_tale.py <tale>          # tales/<tale>/voice_script.json → audio/tc/<tale>/*.mp3 + tales/<tale>/narration.js
-  python3 tools/typecast/gen_tale.py <tale> --lang en  # tales/<tale>/voice_script_en.json → audio/tc/<tale>/en/*.mp3 + tales/<tale>/narration_en.js (같은 목소리, 영어, 속도 0.8)
+  python3 tools/typecast/gen_tale.py <tale> --lang en  # tales/<tale>/voice_script_en.json → audio/tc/<tale>/en/*.mp3 + tales/<tale>/narration_en.js (같은 목소리, 영어, 속도 0.9)
   옵션: --redo (전부 다시), --dry (글자 수만 셈)
 voice_script.json 형식:
 {
@@ -20,6 +20,7 @@ API 키는 ~/.config/typecast/key (저장소에 두지 않음)."""
 import json, os, sys, time, hashlib, urllib.request, urllib.error
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 KEY = open(os.path.expanduser('~/.config/typecast/key')).read().strip()
+EN_TEMPO = 0.9  # 영어 낭독 속도 (0.8은 짧은 감탄사·느린 배역에서 너무 늘어짐)
 UA = 'typecast-direct/1 urllib typecast-integration/1 (source=api-docs; generated_by=claude-code)'
 
 def tts(path, voice, text, emo, prev, nxt, pitch=0, lang='kor', tempo=None):
@@ -60,13 +61,13 @@ def main():
         nonlocal chars, made, errs
         assert role in V, f'목소리 없는 배역: {role}'
         pt = PITCH.get(role, 0)
-        h = hashlib.md5((f'{V[role]}|{emo}|{text}' + ('|en' if en else '') + (f'|p{pt}' if pt else '')).encode()).hexdigest()[:10]
+        h = hashlib.md5((f'{V[role]}|{emo}|{text}' + (f'|en|t{EN_TEMPO}' if en else '') + (f'|p{pt}' if pt else '')).encode()).hexdigest()[:10]
         rel = f'audio/tc/{tale}/{sub}{role}_{h}.mp3'
         path = os.path.join(ROOT, rel)
         if redo or not os.path.exists(path):
             chars += len(text)
             if not dry:
-                try: tts(path, V[role], text, emo, prev, nxt, pt, 'eng' if en else 'kor', 0.8 if en else None); made += 1; print('ok', role, emo or 'smart', text, flush=True)
+                try: tts(path, V[role], text, emo, prev, nxt, pt, 'eng' if en else 'kor', EN_TEMPO if en else None); made += 1; print('ok', role, emo or 'smart', text, flush=True)
                 except urllib.error.HTTPError as e:
                     errs += 1; print('ERR', e.code, e.read()[:200], role, text, flush=True); return None
         return rel
