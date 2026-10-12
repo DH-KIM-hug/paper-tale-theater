@@ -3,10 +3,11 @@
 (() => {
   const AS = '../../assets/v3w/';
   const GROUND = 505;
-  const ASP = { coin: .9785, farmer_amaze: .71, farmer_count: .6029, farmer_feast: .7971, farmer_hoe: .6571, farmer_pull: .6771,
+  const ASP = { coin: .9645, farmer_amaze: .71, farmer_count: .6029, farmer_feast: .7971, farmer_hoe: .6571, farmer_pull: .6771,
     farmer_share: .5886, father_fall: .9856, father_fightA: .6357, father_fightB: .6443, father_peek: .7357, fwife: .5129,
-    fwife_share: .5271, gold: 1.5695, hoe: 3.2864, jar: 1.0294, jar_cracked: 1.2797, rice: .8886, rich_gold: .6471, rich_grab: .7143,
+    fwife_share: .5271, gold: 1.7722, hoe: 3.2864, jar: .9243, jar_cracked: 1.1785, rice: .8057, rich_gold: .6471, rich_grab: .7143,
     rich_hurry: .8071, rich_pinned: 1.2238, rich_shout: .7143, table: 1.566 };
+  const NF = new Set(['coin', 'gold', 'jar', 'jar_cracked', 'rice']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
   const BGS = ['field', 'pit', 'jarfront', 'village', 'richgate', 'hall', 'hallwide', 'feast'];
   const CUTS = ['clink', 'twohoes', 'coins', 'buried', 'plop', 'eight', 'smash', 'hungry'];
   const bgSrc = k => AS + 'mj_bg_' + k + '.webp', cutSrc = k => AS + 'mj_cut_' + k + '.webp';
@@ -17,7 +18,7 @@
     const a = T.actor(T.world, -400, GROUND, g => {
       Object.entries(poses).forEach(([k, [f, h, nat]]) => {
         const w = h * ASP[f], wrap = T.el('g', { filter: 'url(#pp)' }, g);
-        T.el('image', { href: AS + 'mj_' + f + '.webp', x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
+        T.el('image', { href: AS + 'mj_' + f + (NF.has(f) ? 'nf' : '') + '.webp', x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
         wrap.style.display = 'none'; looks[k] = { wrap, h, nat };
       });
     });
