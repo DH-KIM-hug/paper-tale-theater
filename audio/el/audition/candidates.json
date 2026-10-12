@@ -1,0 +1,766 @@
+{
+ "archetypes": [
+  {
+   "code": "A",
+   "title": "내레이터(여)",
+   "line": "[warm, gentle] 옛날 옛날 깊은 산속 마을에, 팥죽을 잘 쑤는 할머니가 살았어요.",
+   "candidates": [
+    {
+     "label": "A-1",
+     "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+     "name": "Lily",
+     "origin": "premade",
+     "file": "A_lily.mp3",
+     "desc": "벨벳 같은 차분한 배우 목소리"
+    },
+    {
+     "label": "A-2",
+     "voice_id": "XrExE9yKIg1WjnnlVkGX",
+     "name": "Matilda",
+     "origin": "premade",
+     "file": "A_matilda.mp3",
+     "desc": "밝고 또렷한 이야기꾼"
+    },
+    {
+     "label": "A-3",
+     "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+     "name": "Alice",
+     "origin": "premade",
+     "file": "A_alice.mp3",
+     "desc": "선생님 같은 맑은 해설"
+    },
+    {
+     "label": "A-4",
+     "voice_id": "j3SYRikKBpDmPJsvd1rf",
+     "name": "Busan SS",
+     "origin": "library(기본 제공)",
+     "file": "A_busanss.mp3",
+     "desc": "한국어 전문, 차분한 젊은 여성"
+    },
+    {
+     "label": "A-5",
+     "voice_id": "gnWujHp24oqX3I03lRbU",
+     "name": "Huelyn",
+     "origin": "library(기본 제공)",
+     "file": "A_huelyn.mp3",
+     "desc": "한국어 전문, 살짝 허스키한 중년 여성"
+    },
+    {
+     "label": "A-6",
+     "voice_id": "Lb7qkOn5hF8p7qfCDH8q",
+     "name": "Annie",
+     "origin": "library",
+     "file": "A_annie.mp3",
+     "desc": "한국어 라이브러리, 부드럽고 사랑스러움"
+    }
+   ]
+  },
+  {
+   "code": "B",
+   "title": "내레이터(남)",
+   "line": "[warm, storyteller] 어느 추운 겨울날, 아기 돼지 삼 형제는 각자 집을 짓기 시작했어요.",
+   "candidates": [
+    {
+     "label": "B-1",
+     "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+     "name": "George",
+     "origin": "premade",
+     "file": "B_george.mp3",
+     "desc": "따뜻한 이야기꾼(현재 팥죽)"
+    },
+    {
+     "label": "B-2",
+     "voice_id": "cjVigY5qzO86Huf0OWal",
+     "name": "Eric",
+     "origin": "premade",
+     "file": "B_eric.mp3",
+     "desc": "매끈하고 믿음직한 중년"
+    },
+    {
+     "label": "B-3",
+     "voice_id": "86GErZIiGJsPO3g7QNxZ",
+     "name": "Hoon",
+     "origin": "library(기본 제공)",
+     "file": "B_hoon.mp3",
+     "desc": "한국어 전문, 차분한 30대"
+    },
+    {
+     "label": "B-4",
+     "voice_id": "4tLzQecqf3Jg3zct76Fm",
+     "name": "Austin",
+     "origin": "library(기본 제공)",
+     "file": "B_austin.mp3",
+     "desc": "한국어 전문, 편안한 중년"
+    },
+    {
+     "label": "B-5",
+     "voice_id": "8G6jifm9f1BhHXadvwOt",
+     "name": "Kang",
+     "origin": "library(기본 제공)",
+     "file": "B_kang.mp3",
+     "desc": "한국어 전문, 깊고 차분한 40대"
+    },
+    {
+     "label": "B-6",
+     "voice_id": "onwK4e9ZLuTAKqWW03F9",
+     "name": "Daniel",
+     "origin": "premade",
+     "file": "B_daniel.mp3",
+     "desc": "안정적인 방송 아나운서 톤"
+    }
+   ]
+  },
+  {
+   "code": "C",
+   "title": "할머니",
+   "line": "[warm, gentle, old woman] 아이고, 우리 강아지 왔니? 할미가 맛있는 팥죽 쑤어 줄게.",
+   "candidates": [
+    {
+     "label": "C-1",
+     "voice_id": "SrkN8J8D7m8bAtmS0uiq",
+     "name": "MJay",
+     "origin": "library",
+     "file": "C_mjay.mp3",
+     "desc": "한국어 라이브러리, 나이 든 여성 이야기꾼"
+    },
+    {
+     "label": "C-2",
+     "voice_id": "ZjAPD4f11zlnEnZpKDgo",
+     "name": "Haemi",
+     "origin": "library",
+     "file": "C_haemi.mp3",
+     "desc": "한국어 라이브러리, 인자한 어르신 목소리"
+    },
+    {
+     "label": "C-3",
+     "voice_id": "gnWujHp24oqX3I03lRbU",
+     "name": "Huelyn",
+     "origin": "library(기본 제공)",
+     "file": "C_huelyn.mp3",
+     "desc": "한국어 전문, 허스키한 중년 여성"
+    },
+    {
+     "label": "C-4",
+     "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+     "name": "Lily",
+     "origin": "premade",
+     "file": "C_lily.mp3",
+     "desc": "부드러운 벨벳 톤"
+    },
+    {
+     "label": "C-5",
+     "voice_id": "XrExE9yKIg1WjnnlVkGX",
+     "name": "Matilda",
+     "origin": "premade",
+     "file": "C_matilda.mp3",
+     "desc": "중년 여성, 또렷함"
+    }
+   ]
+  },
+  {
+   "code": "D",
+   "title": "할아버지·아버지",
+   "line": "[kind, slow] 얘들아, 다 같이 힘을 모아 당겨 보자. 영차, 영차!",
+   "candidates": [
+    {
+     "label": "D-1",
+     "voice_id": "5ON5Fnz24cnOozEQfGAm",
+     "name": "Namchun",
+     "origin": "library",
+     "file": "D_namchun.mp3",
+     "desc": "한국어 라이브러리, 인자한 할아버지"
+    },
+    {
+     "label": "D-2",
+     "voice_id": "PLfpgtLkFW07fDYbUiRJ",
+     "name": "Bongpal",
+     "origin": "library",
+     "file": "D_bongpal.mp3",
+     "desc": "한국어 라이브러리, 유쾌한 노인"
+    },
+    {
+     "label": "D-3",
+     "voice_id": "pqHfZKP75CvOlQylNhV4",
+     "name": "Bill",
+     "origin": "premade",
+     "file": "D_bill.mp3",
+     "desc": "지혜로운 노인 목소리"
+    },
+    {
+     "label": "D-4",
+     "voice_id": "CwhRBWXzGAHq8TQ4Fs17",
+     "name": "Roger",
+     "origin": "premade",
+     "file": "D_roger.mp3",
+     "desc": "느긋하고 울림 있는 중년"
+    },
+    {
+     "label": "D-5",
+     "voice_id": "8G6jifm9f1BhHXadvwOt",
+     "name": "Kang",
+     "origin": "library(기본 제공)",
+     "file": "D_kang.mp3",
+     "desc": "한국어 전문, 깊고 차분한 40대"
+    },
+    {
+     "label": "D-6",
+     "voice_id": "nPczCjzI2devNBz1zQrb",
+     "name": "Brian",
+     "origin": "premade",
+     "file": "D_brian.mp3",
+     "desc": "깊고 푸근한 아빠 목소리"
+    }
+   ]
+  },
+  {
+   "code": "E",
+   "title": "엄마",
+   "line": "[soft, caring] 아가야, 늑대가 오면 절대 문을 열어 주면 안 돼. 약속하자.",
+   "candidates": [
+    {
+     "label": "E-1",
+     "voice_id": "EXAVITQu4vr4xnSDxMaL",
+     "name": "Sarah",
+     "origin": "premade",
+     "file": "E_sarah.mp3",
+     "desc": "성숙하고 믿음직한 포근함"
+    },
+    {
+     "label": "E-2",
+     "voice_id": "XrExE9yKIg1WjnnlVkGX",
+     "name": "Matilda",
+     "origin": "premade",
+     "file": "E_matilda.mp3",
+     "desc": "따뜻하고 또렷한 엄마"
+    },
+    {
+     "label": "E-3",
+     "voice_id": "j3SYRikKBpDmPJsvd1rf",
+     "name": "Busan SS",
+     "origin": "library(기본 제공)",
+     "file": "E_busanss.mp3",
+     "desc": "한국어 전문, 차분한 젊은 여성"
+    },
+    {
+     "label": "E-4",
+     "voice_id": "Lb7qkOn5hF8p7qfCDH8q",
+     "name": "Annie",
+     "origin": "library",
+     "file": "E_annie.mp3",
+     "desc": "한국어 라이브러리, 부드러운 목소리"
+    },
+    {
+     "label": "E-5",
+     "voice_id": "gnWujHp24oqX3I03lRbU",
+     "name": "Huelyn",
+     "origin": "library(기본 제공)",
+     "file": "E_huelyn.mp3",
+     "desc": "한국어 전문, 중년 여성"
+    },
+    {
+     "label": "E-6",
+     "voice_id": "hpp4J3VqNfWAUOO0d1Us",
+     "name": "Bella",
+     "origin": "premade",
+     "file": "E_bella.mp3",
+     "desc": "밝고 단정한 따뜻함"
+    }
+   ]
+  },
+  {
+   "code": "F",
+   "title": "여자아이",
+   "line": "[excited, childlike] 엄마, 저기 좀 봐요! 빨간 꽃이 활짝 피었어요!",
+   "candidates": [
+    {
+     "label": "F-1",
+     "voice_id": "cgSgspJ2msm6clMCkdW9",
+     "name": "Jessica",
+     "origin": "premade",
+     "file": "F_jessica.mp3",
+     "desc": "밝고 귀여운 젊은 목소리"
+    },
+    {
+     "label": "F-2",
+     "voice_id": "FGY2WhTYpPnrIDTdsKH5",
+     "name": "Laura",
+     "origin": "premade",
+     "file": "F_laura.mp3",
+     "desc": "활기차고 통통 튀는 목소리"
+    },
+    {
+     "label": "F-3",
+     "voice_id": "tapn1QwocNXk3viVSowa",
+     "name": "Sparkles for Kids",
+     "origin": "library",
+     "file": "F_sparklesforkids.mp3",
+     "desc": "어린이 콘텐츠용 신나는 목소리"
+    },
+    {
+     "label": "F-4",
+     "voice_id": "DGDjWy2CQ8Ishu0meQte",
+     "name": "Chaemong",
+     "origin": "library",
+     "file": "F_chaemong.mp3",
+     "desc": "한국어 라이브러리, 젊고 당돌함"
+    },
+    {
+     "label": "F-5",
+     "voice_id": "Lb7qkOn5hF8p7qfCDH8q",
+     "name": "Annie",
+     "origin": "library",
+     "file": "F_annie.mp3",
+     "desc": "한국어 라이브러리, 사랑스러움"
+    },
+    {
+     "label": "F-6",
+     "voice_id": "j3SYRikKBpDmPJsvd1rf",
+     "name": "Busan SS",
+     "origin": "library(기본 제공)",
+     "file": "F_busanss.mp3",
+     "desc": "한국어 전문, 차분한 젊은 여성"
+    }
+   ]
+  },
+  {
+   "code": "G",
+   "title": "남자아이",
+   "line": "[cheerful, boyish] 나도 할 수 있어요! 내가 먼저 달려갈래요!",
+   "candidates": [
+    {
+     "label": "G-1",
+     "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+     "name": "Liam",
+     "origin": "premade",
+     "file": "G_liam.mp3",
+     "desc": "활기찬 젊은 목소리"
+    },
+    {
+     "label": "G-2",
+     "voice_id": "bIHbv24MWmeRgasZH58o",
+     "name": "Will",
+     "origin": "premade",
+     "file": "G_will.mp3",
+     "desc": "느긋하고 낙천적인 젊은 남성"
+    },
+    {
+     "label": "G-3",
+     "voice_id": "dnZGOA54w68T7vLLPFTp",
+     "name": "Klamon",
+     "origin": "library(기본 제공)",
+     "file": "G_klamon.mp3",
+     "desc": "한국어 전문, 밝고 따뜻한 청년"
+    },
+    {
+     "label": "G-4",
+     "voice_id": "IKne3meq5aSn9XLyUdCD",
+     "name": "Charlie",
+     "origin": "premade",
+     "file": "G_charlie.mp3",
+     "desc": "깊고 에너지 넘침"
+    },
+    {
+     "label": "G-5",
+     "voice_id": "IAETYMYM3nJvjnlkVTKI",
+     "name": "Deoksu",
+     "origin": "library",
+     "file": "G_deoksu.mp3",
+     "desc": "한국어 라이브러리, 귀엽고 통통한 캐릭터"
+    },
+    {
+     "label": "G-6",
+     "voice_id": "tapn1QwocNXk3viVSowa",
+     "name": "Sparkles for Kids",
+     "origin": "library",
+     "file": "G_sparklesforkids.mp3",
+     "desc": "어린이 콘텐츠용 목소리"
+    }
+   ]
+  },
+  {
+   "code": "H",
+   "title": "아기·꼬마 동물",
+   "line": "[tiny, squeaky, cheerful] 사자님, 제가 도와드릴게요! 저는 작지만 이빨이 튼튼해요!",
+   "candidates": [
+    {
+     "label": "H-1",
+     "voice_id": "cgSgspJ2msm6clMCkdW9",
+     "name": "Jessica",
+     "origin": "premade",
+     "file": "H_jessica.mp3",
+     "desc": "밝고 귀여운 목소리"
+    },
+    {
+     "label": "H-2",
+     "voice_id": "tapn1QwocNXk3viVSowa",
+     "name": "Sparkles for Kids",
+     "origin": "library",
+     "file": "H_sparklesforkids.mp3",
+     "desc": "어린이용 신나는 목소리"
+    },
+    {
+     "label": "H-3",
+     "voice_id": "FGY2WhTYpPnrIDTdsKH5",
+     "name": "Laura",
+     "origin": "premade",
+     "file": "H_laura.mp3",
+     "desc": "통통 튀는 활기"
+    },
+    {
+     "label": "H-4",
+     "voice_id": "IAETYMYM3nJvjnlkVTKI",
+     "name": "Deoksu",
+     "origin": "library",
+     "file": "H_deoksu.mp3",
+     "desc": "한국어 라이브러리, 귀여운 캐릭터"
+    },
+    {
+     "label": "H-5",
+     "voice_id": "DGDjWy2CQ8Ishu0meQte",
+     "name": "Chaemong",
+     "origin": "library",
+     "file": "H_chaemong.mp3",
+     "desc": "한국어 라이브러리, 젊고 당돌함"
+    },
+    {
+     "label": "H-6",
+     "voice_id": "dnZGOA54w68T7vLLPFTp",
+     "name": "Klamon",
+     "origin": "library(기본 제공)",
+     "file": "H_klamon.mp3",
+     "desc": "한국어 전문, 밝은 청년"
+    }
+   ]
+  },
+  {
+   "code": "I",
+   "title": "큰 짐승·악역",
+   "line": "[growls, menacing] 할멈, 잡아먹어야겠다! 팥죽은 내가 다 먹을 거야.",
+   "candidates": [
+    {
+     "label": "I-1",
+     "voice_id": "nPczCjzI2devNBz1zQrb",
+     "name": "Brian",
+     "origin": "premade",
+     "file": "I_brian.mp3",
+     "desc": "깊고 울림 있는 큰 짐승"
+    },
+    {
+     "label": "I-2",
+     "voice_id": "wMrz30qBeYiSkAtnZGtn",
+     "name": "Harry",
+     "origin": "library(기본 제공)",
+     "file": "I_harry.mp3",
+     "desc": "거칠고 힘센 전사"
+    },
+    {
+     "label": "I-3",
+     "voice_id": "pNInz6obpgDQGcFmaJgB",
+     "name": "Adam",
+     "origin": "premade",
+     "file": "I_adam.mp3",
+     "desc": "굵고 단단한 목소리"
+    },
+    {
+     "label": "I-4",
+     "voice_id": "N2lVS1w4EtoT3dr4eOWO",
+     "name": "Callum",
+     "origin": "premade",
+     "file": "I_callum.mp3",
+     "desc": "허스키한 장난꾸러기"
+    },
+    {
+     "label": "I-5",
+     "voice_id": "8G6jifm9f1BhHXadvwOt",
+     "name": "Kang",
+     "origin": "library(기본 제공)",
+     "file": "I_kang.mp3",
+     "desc": "한국어 전문, 낮고 깊음"
+    },
+    {
+     "label": "I-6",
+     "voice_id": "86GErZIiGJsPO3g7QNxZ",
+     "name": "Hoon",
+     "origin": "library(기본 제공)",
+     "file": "I_hoon.mp3",
+     "desc": "한국어 전문, 낮은 30대"
+    }
+   ]
+  },
+  {
+   "code": "J",
+   "title": "우스운 악역(놀부·마녀·새엄마·언니들)",
+   "line": "[mischievous, greedy cackle] 흥흥, 이 금은보화는 다 내 거다! 아무도 못 줘!",
+   "candidates": [
+    {
+     "label": "J-1",
+     "voice_id": "N2lVS1w4EtoT3dr4eOWO",
+     "name": "Callum",
+     "origin": "premade",
+     "file": "J_callum.mp3",
+     "desc": "허스키한 장난꾸러기"
+    },
+    {
+     "label": "J-2",
+     "voice_id": "wMrz30qBeYiSkAtnZGtn",
+     "name": "Harry(한국)",
+     "origin": "library(기본 제공)",
+     "file": "J_harrykr.mp3",
+     "desc": "한국어 라이브러리, 허세 있는 과장 캐릭터"
+    },
+    {
+     "label": "J-3",
+     "voice_id": "ZZ4xhVcc83kZBfNIlIIz",
+     "name": "Manbo",
+     "origin": "library",
+     "file": "J_manbo.mp3",
+     "desc": "한국어 라이브러리, 유쾌한 캐릭터"
+    },
+    {
+     "label": "J-4",
+     "voice_id": "PLfpgtLkFW07fDYbUiRJ",
+     "name": "Bongpal",
+     "origin": "library",
+     "file": "J_bongpal.mp3",
+     "desc": "한국어 라이브러리, 유쾌한 노인"
+    },
+    {
+     "label": "J-5",
+     "voice_id": "XrExE9yKIg1WjnnlVkGX",
+     "name": "Matilda",
+     "origin": "premade",
+     "file": "J_matilda.mp3",
+     "desc": "도도한 새엄마 느낌"
+    },
+    {
+     "label": "J-6",
+     "voice_id": "FGY2WhTYpPnrIDTdsKH5",
+     "name": "Laura",
+     "origin": "premade",
+     "file": "J_laura.mp3",
+     "desc": "새침한 언니 느낌"
+    }
+   ]
+  },
+  {
+   "code": "K",
+   "title": "순한 동물(거북이·오리·당나귀·두루미)",
+   "line": "[slow, gentle, easygoing] 천천히 가도 괜찮아. 나는 쉬지 않고 한 걸음씩 걸을 거야.",
+   "candidates": [
+    {
+     "label": "K-1",
+     "voice_id": "pqHfZKP75CvOlQylNhV4",
+     "name": "Bill",
+     "origin": "premade",
+     "file": "K_bill.mp3",
+     "desc": "느리고 차분한 노인"
+    },
+    {
+     "label": "K-2",
+     "voice_id": "CwhRBWXzGAHq8TQ4Fs17",
+     "name": "Roger",
+     "origin": "premade",
+     "file": "K_roger.mp3",
+     "desc": "느긋하고 듬직한 중년"
+    },
+    {
+     "label": "K-3",
+     "voice_id": "bIHbv24MWmeRgasZH58o",
+     "name": "Will",
+     "origin": "premade",
+     "file": "K_will.mp3",
+     "desc": "편안한 낙천가"
+    },
+    {
+     "label": "K-4",
+     "voice_id": "4tLzQecqf3Jg3zct76Fm",
+     "name": "Austin",
+     "origin": "library(기본 제공)",
+     "file": "K_austin.mp3",
+     "desc": "한국어 전문, 편안한 중년"
+    },
+    {
+     "label": "K-5",
+     "voice_id": "PLfpgtLkFW07fDYbUiRJ",
+     "name": "Bongpal",
+     "origin": "library",
+     "file": "K_bongpal.mp3",
+     "desc": "한국어 라이브러리, 유쾌한 노인"
+    },
+    {
+     "label": "K-6",
+     "voice_id": "ZZ4xhVcc83kZBfNIlIIz",
+     "name": "Manbo",
+     "origin": "library",
+     "file": "K_manbo.mp3",
+     "desc": "한국어 라이브러리, 유쾌한 캐릭터"
+    }
+   ]
+  },
+  {
+   "code": "L",
+   "title": "새(까치·제비·참새)",
+   "line": "[bright, chirpy] 짹짹! 박씨를 물고 왔어요. 어서 심어 보세요!",
+   "candidates": [
+    {
+     "label": "L-1",
+     "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+     "name": "Liam",
+     "origin": "premade",
+     "file": "L_liam.mp3",
+     "desc": "활기찬 젊은 목소리"
+    },
+    {
+     "label": "L-2",
+     "voice_id": "FGY2WhTYpPnrIDTdsKH5",
+     "name": "Laura",
+     "origin": "premade",
+     "file": "L_laura.mp3",
+     "desc": "통통 튀는 목소리"
+    },
+    {
+     "label": "L-3",
+     "voice_id": "DGDjWy2CQ8Ishu0meQte",
+     "name": "Chaemong",
+     "origin": "library",
+     "file": "L_chaemong.mp3",
+     "desc": "한국어 라이브러리, 당돌함"
+    },
+    {
+     "label": "L-4",
+     "voice_id": "tapn1QwocNXk3viVSowa",
+     "name": "Sparkles for Kids",
+     "origin": "library",
+     "file": "L_sparklesforkids.mp3",
+     "desc": "어린이용 신나는 목소리"
+    },
+    {
+     "label": "L-5",
+     "voice_id": "N2lVS1w4EtoT3dr4eOWO",
+     "name": "Callum",
+     "origin": "premade",
+     "file": "L_callum.mp3",
+     "desc": "장난기 있는 목소리"
+    },
+    {
+     "label": "L-6",
+     "voice_id": "cgSgspJ2msm6clMCkdW9",
+     "name": "Jessica",
+     "origin": "premade",
+     "file": "L_jessica.mp3",
+     "desc": "밝은 목소리"
+    }
+   ]
+  },
+  {
+   "code": "M",
+   "title": "요정·선녀·신비",
+   "line": "[ethereal, whispery, kind] 착한 아이야, 소원을 하나 들어 주마. 눈을 감아 보렴.",
+   "candidates": [
+    {
+     "label": "M-1",
+     "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+     "name": "Lily",
+     "origin": "premade",
+     "file": "M_lily.mp3",
+     "desc": "벨벳 같은 우아함"
+    },
+    {
+     "label": "M-2",
+     "voice_id": "EXAVITQu4vr4xnSDxMaL",
+     "name": "Sarah",
+     "origin": "premade",
+     "file": "M_sarah.mp3",
+     "desc": "성숙하고 안심시키는 톤"
+    },
+    {
+     "label": "M-3",
+     "voice_id": "hpp4J3VqNfWAUOO0d1Us",
+     "name": "Bella",
+     "origin": "premade",
+     "file": "M_bella.mp3",
+     "desc": "밝고 단정한 따뜻함"
+    },
+    {
+     "label": "M-4",
+     "voice_id": "gnWujHp24oqX3I03lRbU",
+     "name": "Huelyn",
+     "origin": "library(기본 제공)",
+     "file": "M_huelyn.mp3",
+     "desc": "한국어 전문, 신비로운 허스키"
+    },
+    {
+     "label": "M-5",
+     "voice_id": "SrkN8J8D7m8bAtmS0uiq",
+     "name": "MJay",
+     "origin": "library",
+     "file": "M_mjay.mp3",
+     "desc": "한국어 라이브러리, 고요한 이야기꾼"
+    },
+    {
+     "label": "M-6",
+     "voice_id": "Lb7qkOn5hF8p7qfCDH8q",
+     "name": "Annie",
+     "origin": "library",
+     "file": "M_annie.mp3",
+     "desc": "한국어 라이브러리, 부드러움"
+    }
+   ]
+  },
+  {
+   "code": "N",
+   "title": "젊은 남성(왕자·임금·농부)",
+   "line": "[earnest, confident] 걱정 마세요. 제가 끝까지 함께하겠습니다.",
+   "candidates": [
+    {
+     "label": "N-1",
+     "voice_id": "cjVigY5qzO86Huf0OWal",
+     "name": "Eric",
+     "origin": "premade",
+     "file": "N_eric.mp3",
+     "desc": "매끈하고 믿음직"
+    },
+    {
+     "label": "N-2",
+     "voice_id": "iP95p4xoKVk53GoZ742B",
+     "name": "Chris",
+     "origin": "premade",
+     "file": "N_chris.mp3",
+     "desc": "털털하고 다정"
+    },
+    {
+     "label": "N-3",
+     "voice_id": "bIHbv24MWmeRgasZH58o",
+     "name": "Will",
+     "origin": "premade",
+     "file": "N_will.mp3",
+     "desc": "느긋한 낙천가"
+    },
+    {
+     "label": "N-4",
+     "voice_id": "86GErZIiGJsPO3g7QNxZ",
+     "name": "Hoon",
+     "origin": "library(기본 제공)",
+     "file": "N_hoon.mp3",
+     "desc": "한국어 전문, 차분한 30대"
+    },
+    {
+     "label": "N-5",
+     "voice_id": "dnZGOA54w68T7vLLPFTp",
+     "name": "Klamon",
+     "origin": "library(기본 제공)",
+     "file": "N_klamon.mp3",
+     "desc": "한국어 전문, 밝은 청년"
+    },
+    {
+     "label": "N-6",
+     "voice_id": "onwK4e9ZLuTAKqWW03F9",
+     "name": "Daniel",
+     "origin": "premade",
+     "file": "N_daniel.mp3",
+     "desc": "안정적인 방송 톤"
+    }
+   ]
+  }
+ ]
+}
