@@ -1,0 +1,705 @@
+{
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "mom": "XrExE9yKIg1WjnnlVkGX",
+  "piga": "IKne3meq5aSn9XLyUdCD",
+  "pigb": "TX3LPaxmHKxFdv7VOQHJ",
+  "pigc": "cgSgspJ2msm6clMCkdW9",
+  "wolf": "nPczCjzI2devNBz1zQrb"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "mom": "eleven_v4",
+  "piga": "eleven_v4",
+  "pigb": "eleven_v4",
+  "pigc": "eleven_v4",
+  "wolf": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "mom": {
+   "stability": 0.4,
+   "style": 0.4
+  },
+  "piga": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "pigb": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "pigc": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "wolf": {
+   "stability": 0.3,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "nar",
+  "mom",
+  "piga",
+  "pigb",
+  "pigc",
+  "wolf"
+ ],
+ "lines": [
+  {
+   "text": "옛날 옛날에 아기 돼지 삼 형제가 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날 옛날에 아기 돼지 삼 형제가 살았어요.",
+     null,
+     "[warm, gentle storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마가 말했어요. \"이제 각자 집을 지어 보렴.\"",
+   "segs": [
+    [
+     "nar",
+     "엄마가 말했어요.",
+     null,
+     "[warm storytelling]"
+    ],
+    [
+     "mom",
+     "이제 각자 집을 지어 보렴.",
+     "happy",
+     "[warm, loving, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "첫째 돼지는 목도리를 둘렀어요.",
+   "segs": [
+    [
+     "nar",
+     "첫째 돼지는 목도리를 둘렀어요.",
+     null,
+     "[playful, light]"
+    ]
+   ]
+  },
+  {
+   "text": "둘째 돼지는 파란 멜빵바지를 입었어요.",
+   "segs": [
+    [
+     "nar",
+     "둘째 돼지는 파란 멜빵바지를 입었어요.",
+     null,
+     "[playful, light]"
+    ]
+   ]
+  },
+  {
+   "text": "셋째 돼지는 빨간 멜빵바지를 입었어요.",
+   "segs": [
+    [
+     "nar",
+     "셋째 돼지는 빨간 멜빵바지를 입었어요.",
+     null,
+     "[playful, light]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 돼지를 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "아기 돼지를 톡 눌러 봐요.",
+     null,
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "삼 형제는 엄마께 인사하고 길을 떠났어요.",
+   "segs": [
+    [
+     "nar",
+     "삼 형제는 엄마께 인사하고 길을 떠났어요.",
+     null,
+     "[warm, bright storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "가게에서 바람을 불어 보기로 했어요.",
+   "segs": [
+    [
+     "nar",
+     "가게에서 바람을 불어 보기로 했어요.",
+     null,
+     "[curious, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "짚은 훨훨 날아가요. 아주 가벼워요.",
+   "segs": [
+    [
+     "nar",
+     "짚은 훨훨 날아가요. 아주 가벼워요.",
+     null,
+     "[playful, light, breezy]"
+    ]
+   ]
+  },
+  {
+   "text": "나무는 흔들흔들! 조금 튼튼해요.",
+   "segs": [
+    [
+     "nar",
+     "나무는 흔들흔들! 조금 튼튼해요.",
+     null,
+     "[playful, wobbly]"
+    ]
+   ]
+  },
+  {
+   "text": "벽돌은 끄떡없어요! 아주 아주 튼튼해요.",
+   "segs": [
+    [
+     "nar",
+     "벽돌은 끄떡없어요! 아주 아주 튼튼해요.",
+     null,
+     "[proud, firm, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "손가락으로 톡 눌러서 바람을 불어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "손가락으로 톡 눌러서 바람을 불어 봐요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "쌓을 것을 톡톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "쌓을 것을 톡톡 눌러요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "첫째는 짚으로 집을 짓기로 했어요. 짚을 톡톡톡 쌓아요!",
+   "segs": [
+    [
+     "nar",
+     "첫째는 짚으로 집을 짓기로 했어요. 짚을 톡톡톡 쌓아요!",
+     null,
+     "[cheerful, busy]"
+    ]
+   ]
+  },
+  {
+   "text": "뚝딱! 짚 집이 완성됐어요. 첫째는 피리를 불며 놀았어요.",
+   "segs": [
+    [
+     "nar",
+     "뚝딱! 짚 집이 완성됐어요. 첫째는 피리를 불며 놀았어요.",
+     null,
+     "[cheerful, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "둘째는 나무로 집을 짓기로 했어요. 망치로 톡톡톡톡톡!",
+   "segs": [
+    [
+     "nar",
+     "둘째는 나무로 집을 짓기로 했어요. 망치로 톡톡톡톡톡!",
+     null,
+     "[cheerful, rhythmic]"
+    ]
+   ]
+  },
+  {
+   "text": "쿵쾅쿵쾅! 나무 집이 완성됐어요. 둘째는 바이올린을 켜며 놀았어요.",
+   "segs": [
+    [
+     "nar",
+     "쿵쾅쿵쾅! 나무 집이 완성됐어요. 둘째는 바이올린을 켜며 놀았어요.",
+     null,
+     "[cheerful, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "형들이 놀렸어요. \"아직도 해? 우리랑 놀자!\" 그래도 셋째는 천천히 벽돌을 쌓았어요.",
+   "segs": [
+    [
+     "nar",
+     "형들이 놀렸어요.",
+     null,
+     "[calm storytelling]"
+    ],
+    [
+     "piga",
+     "아직도 해? 우리랑 놀자!",
+     "happy",
+     "[teasing, cheeky, childlike]"
+    ],
+    [
+     "nar",
+     "그래도 셋째는 천천히 벽돌을 쌓았어요.",
+     null,
+     "[gentle, determined]"
+    ]
+   ]
+  },
+  {
+   "text": "셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 열 장을 천천히 쌓아요.",
+   "segs": [
+    [
+     "nar",
+     "셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 열 장을 천천히 쌓아요.",
+     null,
+     "[slow, steady, patient]"
+    ]
+   ]
+  },
+  {
+   "text": "벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!",
+   "segs": [
+    [
+     "nar",
+     "벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!",
+     null,
+     "[proud, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "손가락으로 톡톡 눌러서 늑대와 같이 후~ 불어요.",
+   "segs": [
+    [
+     "nar",
+     "손가락으로 톡톡 눌러서 늑대와 같이 후~ 불어요.",
+     null,
+     "[playful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요. \"아기 돼지야, 문 열어라!\"",
+   "segs": [
+    [
+     "nar",
+     "그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요.",
+     null,
+     "[playful, comic]"
+    ],
+    [
+     "wolf",
+     "아기 돼지야, 문 열어라!",
+     "angry:1.1",
+     "[comically sly, grumbling, hungry]"
+    ]
+   ]
+  },
+  {
+   "text": "첫째가 말했어요. \"싫어요, 싫어요!\" 늑대가 말했어요. \"그럼 후~ 불어서 날려 버릴 테야!\"",
+   "segs": [
+    [
+     "nar",
+     "첫째가 말했어요.",
+     null,
+     "[calm storytelling]"
+    ],
+    [
+     "piga",
+     "싫어요, 싫어요!",
+     "happy",
+     "[defiant, childlike, cheerful]"
+    ],
+    [
+     "nar",
+     "늑대가 말했어요.",
+     null,
+     "[playful]"
+    ],
+    [
+     "wolf",
+     "그럼 후~ 불어서 날려 버릴 테야!",
+     "angry:1.1",
+     "[puffing up, comically huffy]"
+    ]
+   ]
+  },
+  {
+   "text": "짚 집이 훨훨 날아가 버렸어요!",
+   "segs": [
+    [
+     "nar",
+     "짚 집이 훨훨 날아가 버렸어요!",
+     null,
+     "[playful, whoosh, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "첫째는 둘째네 집으로 달려갔어요.",
+   "segs": [
+    [
+     "nar",
+     "첫째는 둘째네 집으로 달려갔어요.",
+     null,
+     "[quick, lively]"
+    ]
+   ]
+  },
+  {
+   "text": "늑대가 나무 집에도 왔어요. \"아기 돼지야, 문 열어라!\"",
+   "segs": [
+    [
+     "nar",
+     "늑대가 나무 집에도 왔어요.",
+     null,
+     "[playful, comic]"
+    ],
+    [
+     "wolf",
+     "아기 돼지야, 문 열어라!",
+     "angry:1.1",
+     "[comically sly, grumbling, hungry]"
+    ]
+   ]
+  },
+  {
+   "text": "첫째와 둘째가 말했어요. \"싫어요, 싫어요!\" 늑대가 말했어요. \"그럼 후~ 후~ 불어 주지!\"",
+   "segs": [
+    [
+     "nar",
+     "첫째와 둘째가 말했어요.",
+     null,
+     "[calm storytelling]"
+    ],
+    [
+     "pigb",
+     "싫어요, 싫어요!",
+     "happy",
+     "[defiant, childlike, cheerful]"
+    ],
+    [
+     "nar",
+     "늑대가 말했어요.",
+     null,
+     "[playful]"
+    ],
+    [
+     "wolf",
+     "그럼 후~ 후~ 불어 주지!",
+     "angry:1.1",
+     "[puffing up, comically huffy]"
+    ]
+   ]
+  },
+  {
+   "text": "나무 집이 와르르 무너졌어요!",
+   "segs": [
+    [
+     "nar",
+     "나무 집이 와르르 무너졌어요!",
+     null,
+     "[comic, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 돼지 둘은 막내네 집으로 달려갔어요.",
+   "segs": [
+    [
+     "nar",
+     "아기 돼지 둘은 막내네 집으로 달려갔어요.",
+     null,
+     "[quick, lively]"
+    ]
+   ]
+  },
+  {
+   "text": "두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?",
+   "segs": [
+    [
+     "nar",
+     "두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?",
+     null,
+     "[panting, concerned]"
+    ]
+   ]
+  },
+  {
+   "text": "가장 튼튼한 집을 골라 봐요!",
+   "segs": [
+    [
+     "nar",
+     "가장 튼튼한 집을 골라 봐요!",
+     null,
+     "[encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "짚은 너무 가벼워요. 다시 골라 봐요.",
+   "segs": [
+    [
+     "nar",
+     "짚은 너무 가벼워요. 다시 골라 봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "벽돌 집이 가장 튼튼해요!",
+   "segs": [
+    [
+     "nar",
+     "벽돌 집이 가장 튼튼해요!",
+     null,
+     "[proud, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 가장 튼튼한 벽돌 집이에요. 삼 형제는 문을 꼭 닫았어요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 가장 튼튼한 벽돌 집이에요. 삼 형제는 문을 꼭 닫았어요.",
+     null,
+     "[relieved, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "삼 형제는 모두 모였어요. 하나, 둘, 셋을 세어 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "삼 형제는 모두 모였어요. 하나, 둘, 셋을 세어 볼까요?",
+     null,
+     "[cheerful, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 돼지를 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "아기 돼지를 톡 눌러요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"셋이서 함께라서 무섭지 않아!\"",
+   "segs": [
+    [
+     "pigc",
+     "셋이서 함께라서 무섭지 않아!",
+     "happy",
+     "[brave, cheerful, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "늑대가 벽돌 집에 왔어요. \"아기 돼지야, 문 열어라!\"",
+   "segs": [
+    [
+     "nar",
+     "늑대가 벽돌 집에 왔어요.",
+     null,
+     "[playful, comic]"
+    ],
+    [
+     "wolf",
+     "아기 돼지야, 문 열어라!",
+     "angry:1.1",
+     "[comically sly, huffy]"
+    ]
+   ]
+  },
+  {
+   "text": "\"싫어요, 싫어요!\" \"그럼 후~ 후~ 불어 주지!\"",
+   "segs": [
+    [
+     "pigc",
+     "싫어요, 싫어요!",
+     "happy",
+     "[defiant, brave, childlike]"
+    ],
+    [
+     "wolf",
+     "그럼 후~ 후~ 불어 주지!",
+     "angry:1.1",
+     "[puffing up, comically huffy]"
+    ]
+   ]
+  },
+  {
+   "text": "집을 톡톡 눌러서 몇 번 부는지 세어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "집을 톡톡 눌러서 몇 번 부는지 세어 봐요.",
+     null,
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!",
+   "segs": [
+    [
+     "nar",
+     "후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!",
+     null,
+     "[triumphant, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "늑대는 숨이 차서 털썩 주저앉았어요.",
+   "segs": [
+    [
+     "nar",
+     "늑대는 숨이 차서 털썩 주저앉았어요.",
+     null,
+     "[playful, tired]"
+    ]
+   ]
+  },
+  {
+   "text": "늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.",
+   "segs": [
+    [
+     "nar",
+     "늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.",
+     null,
+     "[whispers, sneaky, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.",
+   "segs": [
+    [
+     "nar",
+     "아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.",
+     null,
+     "[busy, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "불을 톡톡 눌러서 크게 해 줘요.",
+   "segs": [
+    [
+     "nar",
+     "불을 톡톡 눌러서 크게 해 줘요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.",
+   "segs": [
+    [
+     "nar",
+     "보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.",
+     null,
+     "[building suspense, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"앗, 뜨거워!\"",
+   "segs": [
+    [
+     "wolf",
+     "앗, 뜨거워!",
+     "angry:1.1",
+     "[yelps, startled, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.",
+   "segs": [
+    [
+     "nar",
+     "늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.",
+     null,
+     "[playful, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.",
+   "segs": [
+    [
+     "nar",
+     "이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.",
+     null,
+     "[calm, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "집을 톡 눌러서 새 집을 지어요.",
+   "segs": [
+    [
+     "nar",
+     "집을 톡 눌러서 새 집을 지어요.",
+     null,
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "하나, 둘, 셋! 튼튼한 벽돌 집이 세 채가 되었어요.",
+   "segs": [
+    [
+     "nar",
+     "하나, 둘, 셋! 튼튼한 벽돌 집이 세 채가 되었어요.",
+     null,
+     "[cheerful, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "삼 형제는 튼튼한 집에서 오래오래 행복하게 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "삼 형제는 튼튼한 집에서 오래오래 행복하게 살았어요.",
+     null,
+     "[warm, gentle, slow, conclusive]"
+    ]
+   ]
+  }
+ ],
+ "notes": "아기 돼지 삼 형제: 해설 Lily(벨벳 같은 배우 목소리), 엄마 Matilda, 첫째 Charlie, 둘째 Liam, 막내 Jessica(작지만 야무진 목소리), 늑대 Brian(세 늑대 동화 모두 같은 목소리). 늑대는 으르렁이 아니라 코믹하게 씩씩거리는 연기, 해설은 차분하고 장난스럽게."
+}
