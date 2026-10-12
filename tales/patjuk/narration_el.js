@@ -69,7 +69,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/patjuk/nar_1baeba330e.mp3"
  ],
  "\"앗, 뜨거워! 눈이야!\" 호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요. 다음은 누구일까요?": [
-  "audio/el/patjuk/tiger_a3a909d2a0.mp3",
+  "audio/el/patjuk/tiger_a8a30eb10c.mp3",
   "audio/el/patjuk/nar_34e056749a.mp3"
  ],
  "\"아야야!\" 호랑이가 깜짝 놀라 뒷걸음질을 쳤어요. 다음은 누구죠?": [

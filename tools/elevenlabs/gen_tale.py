@@ -51,7 +51,7 @@ def main():
         M = MODELS.get(role, MODEL)  # 배역별 모델 (voice_script_el.json 의 "models")
         if USE_DIR is not None and role not in USE_DIR: dr = None
         ST = SET.get(role)  # 배역별 voice_settings (예: 호랑이·할멈은 stability 를 낮춰 표정을 크게)
-        sent = (dr + ' ' + text) if dr else tagged(text, emo, M)  # dir(연기 지시 태그)이 있으면 감정 프리셋 태그 대신 쓴다
+        sent = dr[1:] if dr and dr.startswith('=') else (dr + ' ' + text) if dr else tagged(text, emo, M)  # '=' 로 시작하는 dir 은 중간 태그까지 담은 보낼 글 전체. dir(연기 지시 태그)이 있으면 감정 프리셋 태그 대신 쓴다
         if ONLY and sid not in ONLY: return None
         h = hashlib.md5((f'{V[role]}|{M}|{sent}' + (f'|{json.dumps(ST, sort_keys=True)}' if ST else '')).encode()).hexdigest()[:10]
         rel = f'audio/el/{tale}/{sub}{role}_{h}.mp3'
