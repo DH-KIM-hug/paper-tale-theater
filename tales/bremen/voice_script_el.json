@@ -1,0 +1,958 @@
+{
+ "notes": "nar=George(패죽과 같은 서술자), donkey=Roger(느긋하고 듬직한 늙은 당나귀), dog=Will(무던한 강아지), cat=Sarah(차분한 고양이), rooster=Liam(활기찬 닭), miller=Bill(나이 든 방앗간 주인), robber=Callum(허스키한 겁쟁이 도둑), boss=Brian(도둑 두목, 큰 악역). 도둑 장면은 무섭지 않게 우스꽝스럽게.",
+ "voices": {
+  "nar": "JBFqnCBsd6RMkjVDRZzb",
+  "donkey": "CwhRBWXzGAHq8TQ4Fs17",
+  "dog": "bIHbv24MWmeRgasZH58o",
+  "cat": "EXAVITQu4vr4xnSDxMaL",
+  "rooster": "TX3LPaxmHKxFdv7VOQHJ",
+  "miller": "pqHfZKP75CvOlQylNhV4",
+  "robber": "N2lVS1w4EtoT3dr4eOWO",
+  "boss": "nPczCjzI2devNBz1zQrb"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "donkey": "eleven_v4",
+  "dog": "eleven_v4",
+  "cat": "eleven_v4",
+  "rooster": "eleven_v4",
+  "miller": "eleven_v4",
+  "robber": "eleven_v4",
+  "boss": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "donkey": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "dog": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "cat": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "rooster": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "miller": {
+   "stability": 0.4,
+   "style": 0.4
+  },
+  "robber": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "boss": {
+   "stability": 0.3,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "nar",
+  "donkey",
+  "dog",
+  "cat",
+  "rooster",
+  "miller",
+  "robber",
+  "boss"
+ ],
+ "lines": [
+  {
+   "text": "옛날 옛날, 방앗간에 늙은 당나귀가 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날 옛날, 방앗간에 늙은 당나귀가 살았어요.",
+     null,
+     "[calm, warm storytelling, once upon a time]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "당나귀를 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀를 톡!",
+   "segs": [
+    [
+     "nar",
+     "당나귀를 톡!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀는 오랫동안 무거운 곡식 자루를 날랐어요. 이제는 힘이 없어요.",
+   "segs": [
+    [
+     "nar",
+     "당나귀는 오랫동안 무거운 곡식 자루를 날랐어요. 이제는 힘이 없어요.",
+     "sad:1.2",
+     "[sad, tired, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "주인: \"이제 일을 못 하겠구나. 너를 내보내야겠다.\"",
+   "segs": [
+    [
+     "miller",
+     "이제 일을 못 하겠구나. 너를 내보내야겠다.",
+     "sad",
+     "[sad, reluctant, apologetic]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀: \"괜찮아! 브레멘에 가서 음악가가 될 거야!\"",
+   "segs": [
+    [
+     "donkey",
+     "괜찮아! 브레멘에 가서 음악가가 될 거야!",
+     "happy:1.4",
+     "[cheerful, brave, hopeful]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀가 길을 가는데, 덤불이 흔들흔들.",
+   "segs": [
+    [
+     "nar",
+     "당나귀가 길을 가는데, 덤불이 흔들흔들.",
+     "tonedown:1.1",
+     "[curious, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "덤불 뒤에서 멍멍! 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "덤불 뒤에서 멍멍! 누구일까요?",
+     "happy:1.1",
+     "[playful, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "멍멍 하고 우는 친구는 누굴까? 다시 들어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "멍멍 하고 우는 친구는 누굴까? 다시 들어 봐요.",
+     null,
+     "[playful, questioning]"
+    ]
+   ]
+  },
+  {
+   "text": "야옹 하고 우는 친구는 누굴까? 다시 들어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "야옹 하고 우는 친구는 누굴까? 다시 들어 봐요.",
+     null,
+     "[playful, questioning]"
+    ]
+   ]
+  },
+  {
+   "text": "꼬끼오 하고 우는 친구는 누굴까? 다시 들어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "꼬끼오 하고 우는 친구는 누굴까? 다시 들어 봐요.",
+     null,
+     "[playful, questioning]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "당나귀예요! 반짝이는 친구를 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "강아지예요! 반짝이는 친구를 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "고양이예요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "고양이예요! 반짝이는 친구를 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "닭이에요! 반짝이는 친구를 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "닭이에요! 반짝이는 친구를 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지가 헉헉, 혀를 쭉 내밀었어요.",
+   "segs": [
+    [
+     "nar",
+     "강아지가 헉헉, 혀를 쭉 내밀었어요.",
+     null,
+     "[gentle, panting-like, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지: \"늙어서 사냥을 못 한다고 내보내졌어요.\"",
+   "segs": [
+    [
+     "dog",
+     "늙어서 사냥을 못 한다고 내보내졌어요.",
+     "sad:1.4",
+     "[sad, resigned, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀: \"그럼 우리 같이 브레멘에 가서 음악가가 되자!\"",
+   "segs": [
+    [
+     "donkey",
+     "그럼 우리 같이 브레멘에 가서 음악가가 되자!",
+     "happy:1.3",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "담장 위에서 야옹~ 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "담장 위에서 야옹~ 누구일까요?",
+     "happy:1.1",
+     "[playful, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "수염이 축 처진 고양이예요. \"쥐를 못 잡는다고 내보내졌어.\"",
+   "segs": [
+    [
+     "nar",
+     "수염이 축 처진 고양이예요.",
+     null,
+     "[gentle, sympathetic]"
+    ],
+    [
+     "cat",
+     "쥐를 못 잡는다고 내보내졌어.",
+     "sad:1.4",
+     "[sad, droopy, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지: \"우리랑 같이 가자! 브레멘에서 노래하자!\"",
+   "segs": [
+    [
+     "dog",
+     "우리랑 같이 가자! 브레멘에서 노래하자!",
+     "happy",
+     "[cheerful, excited]"
+    ]
+   ]
+  },
+  {
+   "text": "지붕 위에서 꼬끼오! 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "지붕 위에서 꼬끼오! 누구일까요?",
+     "happy:1.1",
+     "[bright, crowing, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "닭: \"이제 나는 필요 없대. 꼬끼오…\"",
+   "segs": [
+    [
+     "rooster",
+     "이제 나는 필요 없대. 꼬끼오…",
+     "sad:1.5",
+     "[sad, deflated, sighs]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀: \"우리랑 음악대 하자! 네 목소리 최고야!\"",
+   "segs": [
+    [
+     "donkey",
+     "우리랑 음악대 하자! 네 목소리 최고야!",
+     "happy",
+     "[cheerful, warm, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀, 강아지, 고양이, 닭. 네 친구가 모였어요!",
+   "segs": [
+    [
+     "nar",
+     "당나귀, 강아지, 고양이, 닭. 네 친구가 모였어요!",
+     "happy:1.4",
+     "[joyful, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "길가 풀밭에서 노래 연습을 해요. 당나귀가 먼저 들려줄게요. 잘 듣고 똑같이 톡톡!",
+   "segs": [
+    [
+     "nar",
+     "길가 풀밭에서 노래 연습을 해요. 당나귀가 먼저 들려줄게요. 잘 듣고 똑같이 톡톡!",
+     "happy:1.1",
+     "[cheerful, inviting, rhythmic]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 세 개! 잘 들어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "이번엔 세 개! 잘 들어 봐요.",
+     "happy:1.1",
+     "[excited, rhythmic]"
+    ]
+   ]
+  },
+  {
+   "text": "마지막 노래예요. 잘 들어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "마지막 노래예요. 잘 들어 봐요.",
+     "happy:1.1",
+     "[gentle, rhythmic]"
+    ]
+   ]
+  },
+  {
+   "text": "이제 똑같이 톡톡!",
+   "segs": [
+    [
+     "nar",
+     "이제 똑같이 톡톡!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "하하, 새 노래가 됐네! 한 번 더!",
+   "segs": [
+    [
+     "nar",
+     "하하, 새 노래가 됐네! 한 번 더!",
+     "happy:1.3",
+     "[laughs, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "처음은 누구 소리였지?",
+   "segs": [
+    [
+     "nar",
+     "처음은 누구 소리였지?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "다음은 누구 소리였지?",
+   "segs": [
+    [
+     "nar",
+     "다음은 누구 소리였지?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "멍멍, 야옹! 잘했어요!",
+   "segs": [
+    [
+     "nar",
+     "멍멍, 야옹! 잘했어요!",
+     "happy:1.3",
+     "[delighted, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "히힝, 멍멍, 꼬끼오! 멋진 노래예요!",
+   "segs": [
+    [
+     "nar",
+     "히힝, 멍멍, 꼬끼오! 멋진 노래예요!",
+     "happy:1.3",
+     "[delighted, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "야옹, 꼬끼오, 히힝! 최고의 음악대예요!",
+   "segs": [
+    [
+     "nar",
+     "야옹, 꼬끼오, 히힝! 최고의 음악대예요!",
+     "happy:1.3",
+     "[joyful, triumphant]"
+    ]
+   ]
+  },
+  {
+   "text": "해가 지고 캄캄한 숲이 되었어요. 부엉이가 부엉부엉.",
+   "segs": [
+    [
+     "nar",
+     "해가 지고 캄캄한 숲이 되었어요. 부엉이가 부엉부엉.",
+     "whisper:1.2",
+     "[whispers, nighttime, mysterious but gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "숲을 지나가요. 톡톡톡 눌러 줘요!",
+   "segs": [
+    [
+     "nar",
+     "숲을 지나가요. 톡톡톡 눌러 줘요!",
+     "tonedown:1.0",
+     "[hushed, tiptoeing, rhythmic]"
+    ]
+   ]
+  },
+  {
+   "text": "톡톡톡! 숲을 지나가요.",
+   "segs": [
+    [
+     "nar",
+     "톡톡톡! 숲을 지나가요.",
+     "tonedown:1.0",
+     "[hushed, tiptoeing, rhythmic]"
+    ]
+   ]
+  },
+  {
+   "text": "닭이 나무 꼭대기로 푸드덕 올라갔어요.",
+   "segs": [
+    [
+     "nar",
+     "닭이 나무 꼭대기로 푸드덕 올라갔어요.",
+     null,
+     "[gentle, fluttering]"
+    ]
+   ]
+  },
+  {
+   "text": "닭: \"저기 불빛이 보여요! 집이 있어요!\"",
+   "segs": [
+    [
+     "rooster",
+     "저기 불빛이 보여요! 집이 있어요!",
+     "toneup:1.5",
+     "[excited, whispering, thrilled]"
+    ]
+   ]
+  },
+  {
+   "text": "불빛이 새어 나오는 창문이에요. 그런데 너무 높아서 아무도 안 닿아요.",
+   "segs": [
+    [
+     "nar",
+     "불빛이 새어 나오는 창문이에요. 그런데 너무 높아서 아무도 안 닿아요.",
+     null,
+     "[hushed, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "서로 등에 올라서 탑을 쌓아요! 크고 무거운 친구가 맨 아래예요.",
+   "segs": [
+    [
+     "nar",
+     "서로 등에 올라서 탑을 쌓아요! 크고 무거운 친구가 맨 아래예요.",
+     null,
+     "[playful, building suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 맨 아래에 설까요?",
+   "segs": [
+    [
+     "nar",
+     "누가 맨 아래에 설까요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "맨 꼭대기는 누구?",
+   "segs": [
+    [
+     "nar",
+     "맨 꼭대기는 누구?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀 등에는 누가 올라갈까요?",
+   "segs": [
+    [
+     "nar",
+     "당나귀 등에는 누가 올라갈까요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지 등에는 누가 올라갈까요?",
+   "segs": [
+    [
+     "nar",
+     "강아지 등에는 누가 올라갈까요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "강아지: \"아이고, 무거워! 나는 위로 갈래~\"",
+   "segs": [
+    [
+     "dog",
+     "아이고, 무거워! 나는 위로 갈래~",
+     "toneup:1.3",
+     "[groaning, playful, puffing]"
+    ]
+   ]
+  },
+  {
+   "text": "고양이: \"아이고, 무거워! 나는 위로 갈래~\"",
+   "segs": [
+    [
+     "cat",
+     "아이고, 무거워! 나는 위로 갈래~",
+     "toneup:1.3",
+     "[groaning, playful, puffing]"
+    ]
+   ]
+  },
+  {
+   "text": "닭: \"아이고, 무거워! 나는 위로 갈래~\"",
+   "segs": [
+    [
+     "rooster",
+     "아이고, 무거워! 나는 위로 갈래~",
+     "toneup:1.3",
+     "[groaning, playful, puffing]"
+    ]
+   ]
+  },
+  {
+   "text": "흔들흔들! 더 크고 무거운 친구가 먼저예요.",
+   "segs": [
+    [
+     "nar",
+     "흔들흔들! 더 크고 무거운 친구가 먼저예요.",
+     null,
+     "[playful, wobbly]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀가 맨 아래! 튼튼해요.",
+   "segs": [
+    [
+     "nar",
+     "당나귀가 맨 아래! 튼튼해요.",
+     "happy:1.2",
+     "[proud, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "당나귀, 강아지, 고양이, 닭! 닭이 창문에 닿았어요!",
+   "segs": [
+    [
+     "nar",
+     "당나귀, 강아지, 고양이, 닭! 닭이 창문에 닿았어요!",
+     "happy:1.4",
+     "[triumphant, excited]"
+    ]
+   ]
+  },
+  {
+   "text": "창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.",
+   "segs": [
+    [
+     "nar",
+     "창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.",
+     "whisper:1.2",
+     "[whispers, hushed, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "도둑: \"금화가 잔뜩이다! 하하하!\"",
+   "segs": [
+    [
+     "boss",
+     "금화가 잔뜩이다! 하하하!",
+     "happy:1.4",
+     "[booming laugh, greedy, gloating]"
+    ]
+   ]
+  },
+  {
+   "text": "닭: \"우리 음악을 크게 들려주자!\"",
+   "segs": [
+    [
+     "rooster",
+     "우리 음악을 크게 들려주자!",
+     "happy:1.4",
+     "[whispers, mischievous, excited]"
+    ]
+   ]
+  },
+  {
+   "text": "도둑을 놀라게 할 노래예요. 먼저 들어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "도둑을 놀라게 할 노래예요. 먼저 들어 봐요!",
+     "happy:1.1",
+     "[mysterious, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 노래하는 친구를 톡톡 눌러요!",
+   "segs": [
+    [
+     "nar",
+     "이번에는 노래하는 친구를 톡톡 눌러요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "다 같이 목청껏! 톡톡톡 눌러서 노래해요!",
+   "segs": [
+    [
+     "nar",
+     "다 같이 목청껏! 톡톡톡 눌러서 노래해요!",
+     "happy:1.2",
+     "[joyful, loud, energetic]"
+    ]
+   ]
+  },
+  {
+   "text": "탑을 톡톡톡! 더 크게 노래해요!",
+   "segs": [
+    [
+     "nar",
+     "탑을 톡톡톡! 더 크게 노래해요!",
+     "happy:1.2",
+     "[joyful, loud, energetic]"
+    ]
+   ]
+  },
+  {
+   "text": "도둑들은 \"괴물이다!\" 하고 숲으로 후다닥 달아났어요.",
+   "segs": [
+    [
+     "nar",
+     "도둑들은",
+     null,
+     "[gentle, amused]"
+    ],
+    [
+     "robber",
+     "괴물이다!",
+     "toneup:1.6",
+     "[screams in panic, high-pitched]"
+    ],
+    [
+     "nar",
+     "하고 숲으로 후다닥 달아났어요.",
+     "happy:1.2",
+     "[playful, amused]"
+    ]
+   ]
+  },
+  {
+   "text": "네 친구는 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "네 친구는 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.",
+     "tonedown:1.1",
+     "[sleepy, content, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "한밤중, 도둑 하나가 살금살금 돌아왔어요. 쉿!",
+   "segs": [
+    [
+     "nar",
+     "한밤중, 도둑 하나가 살금살금 돌아왔어요. 쉿!",
+     "whisper:1.4",
+     "[whispers, tiptoeing, suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "아궁이 안에서 뭔가 반짝! 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "아궁이 안에서 뭔가 반짝! 톡 눌러 봐요.",
+     "whisper:1.1",
+     "[whispers, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "도둑: \"앗, 따가워! 불씨인 줄 알았는데!\"",
+   "segs": [
+    [
+     "robber",
+     "앗, 따가워! 불씨인 줄 알았는데!",
+     "toneup:1.5",
+     "[yelps in pain, startled, whiny]"
+    ]
+   ]
+  },
+  {
+   "text": "문 앞에 또 반짝! 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "문 앞에 또 반짝! 톡 눌러 봐요.",
+     "whisper:1.1",
+     "[whispers, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "도둑: \"아얏! 다리를 콕 찔렸어!\"",
+   "segs": [
+    [
+     "robber",
+     "아얏! 다리를 콕 찔렸어!",
+     "toneup:1.5",
+     "[yelps, startled, pained]"
+    ]
+   ]
+  },
+  {
+   "text": "짚더미에도 반짝! 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "짚더미에도 반짝! 톡 눌러 봐요.",
+     "whisper:1.1",
+     "[whispers, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "도둑: \"으악! 누가 쿵 찼어!\"",
+   "segs": [
+    [
+     "robber",
+     "으악! 누가 쿵 찼어!",
+     "toneup:1.6",
+     "[panicked, shouting, scared]"
+    ]
+   ]
+  },
+  {
+   "text": "저 위 들보에서도 반짝! 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "저 위 들보에서도 반짝! 톡 눌러 봐요.",
+     "whisper:1.1",
+     "[whispers, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "도둑: \"살려 줘~!\"",
+   "segs": [
+    [
+     "robber",
+     "살려 줘~!",
+     "toneup:1.7",
+     "[terrified, wailing]"
+    ]
+   ]
+  },
+  {
+   "text": "도둑: \"그 집엔 귀신이 할퀴고, 누가 다리를 콕 찌르고, 거인이 쿵 차고, 지붕에선 재판관이 도둑 잡아라! 소리쳤어!\"",
+   "segs": [
+    [
+     "robber",
+     "그 집엔 귀신이 할퀴고, 누가 다리를 콕 찌르고, 거인이 쿵 차고, 지붕에선 재판관이 도둑 잡아라! 소리쳤어!",
+     "toneup:1.4",
+     "=[breathless, terrified, exaggerating] 그 집엔 귀신이 할퀴고, 누가 다리를 콕 찌르고, 거인이 쿵 차고, [voice rising, frantic] 지붕에선 재판관이 도둑 잡아라! 소리쳤어!"
+    ]
+   ]
+  },
+  {
+   "text": "사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.",
+   "segs": [
+    [
+     "nar",
+     "사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.",
+     "happy:1.3",
+     "[amused, reassuring, gentle laugh]"
+    ]
+   ]
+  },
+  {
+   "text": "아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.",
+   "segs": [
+    [
+     "nar",
+     "아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.",
+     "happy:1.2",
+     "[bright, gentle, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "\"브레멘은 못 갔지만, 여기가 우리 집이야!\"",
+   "segs": [
+    [
+     "donkey",
+     "브레멘은 못 갔지만, 여기가 우리 집이야!",
+     "happy:1.4",
+     "[warm, joyful, content]"
+    ]
+   ]
+  },
+  {
+   "text": "기쁨의 노래를 연주해요! 먼저 들어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "기쁨의 노래를 연주해요! 먼저 들어 봐요.",
+     "happy:1.1",
+     "[cheerful, musical, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 친구들을 톡톡 눌러서 같이 연주해요!",
+   "segs": [
+    [
+     "nar",
+     "이번에는 친구들을 톡톡 눌러서 같이 연주해요!",
+     "happy:1.1",
+     "[cheerful, excited]"
+    ]
+   ]
+  },
+  {
+   "text": "함께라서 행복한 브레멘 음악대였답니다.",
+   "segs": [
+    [
+     "nar",
+     "함께라서 행복한 브레멘 음악대였답니다.",
+     "happy:1.3",
+     "[tender, warm, happy ending]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "cut_monster": [
+   [
+    "robber",
+    "으악! 괴물이다!",
+    "toneup:1.6",
+    "[screams in panic, terrified, shouting]"
+   ],
+   [
+    "boss",
+    "걸음아 날 살려라!",
+    "toneup:1.6",
+    "[panicked, yelling, running away]"
+   ]
+  ],
+  "cut_ghost": [
+   [
+    "robber",
+    "진짜라니까요! 귀신이랑 거인이랑 재판관이!",
+    "toneup:1.5",
+    "[trembling, breathless, exaggerating]"
+   ]
+  ]
+ }
+}

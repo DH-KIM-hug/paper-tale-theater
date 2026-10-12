@@ -1,0 +1,802 @@
+{
+ "notes": "nar=Matilda(따뜻하고 또렷한 이야기꾼, 패죽의 George와 구분), fox=Callum(능청스러운 여우), crane=Lily(우아한 두루미), duck=Charlie(굵고 시원한 오리), butterfly=Jessica(가볍고 달콤한 나비). 속상한 장면도 부드럽게, 여우 코가 낀 장면은 우스꽝스럽게.",
+ "voices": {
+  "nar": "XrExE9yKIg1WjnnlVkGX",
+  "fox": "N2lVS1w4EtoT3dr4eOWO",
+  "crane": "pFZP5JQG7iQjIQuC4Bku",
+  "duck": "IKne3meq5aSn9XLyUdCD",
+  "butterfly": "cgSgspJ2msm6clMCkdW9"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "fox": "eleven_v4",
+  "crane": "eleven_v4",
+  "duck": "eleven_v4",
+  "butterfly": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "fox": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "crane": {
+   "stability": 0.4,
+   "style": 0.4
+  },
+  "duck": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "butterfly": {
+   "stability": 0.35,
+   "style": 0.45
+  }
+ },
+ "use_dir": [
+  "nar",
+  "fox",
+  "crane",
+  "duck",
+  "butterfly"
+ ],
+ "lines": [
+  {
+   "text": "숲속에 여우랑 두루미가 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "숲속에 여우랑 두루미가 살았어요.",
+     null,
+     "[calm, warm storytelling, once upon a time]"
+    ]
+   ]
+  },
+  {
+   "text": "여우가 초대장을 가져왔어요. 초대장을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "여우가 초대장을 가져왔어요. 초대장을 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "초대장을 톡 눌러서 두루미에게 줘요!",
+   "segs": [
+    [
+     "nar",
+     "초대장을 톡 눌러서 두루미에게 줘요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"와, 고마워!\" 두루미가 긴 다리로 폴짝 뛰었어요.",
+   "segs": [
+    [
+     "crane",
+     "와, 고마워!",
+     "happy:1.4",
+     "[delighted, grateful, graceful]"
+    ],
+    [
+     "nar",
+     "두루미가 긴 다리로 폴짝 뛰었어요.",
+     null,
+     "[warm, amused]"
+    ]
+   ]
+  },
+  {
+   "text": "여우가 맛있는 수프를 끓여요.",
+   "segs": [
+    [
+     "nar",
+     "여우가 맛있는 수프를 끓여요.",
+     null,
+     "[cozy, gentle, cooking]"
+    ]
+   ]
+  },
+  {
+   "text": "냄비를 톡톡 눌러서 저어 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "냄비를 톡톡 눌러서 저어 볼까요?",
+     "happy:1.1",
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "냄비를 톡톡 눌러서 휘휘 저어요!",
+   "segs": [
+    [
+     "nar",
+     "냄비를 톡톡 눌러서 휘휘 저어요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "여우가 킥킥 웃어요. \"납작 접시에 담아야지~\"",
+   "segs": [
+    [
+     "nar",
+     "여우가 킥킥 웃어요.",
+     null,
+     "[sly, giggling softly]"
+    ],
+    [
+     "fox",
+     "납작 접시에 담아야지~",
+     "happy:1.3",
+     "[sly, giggling, mischievous]"
+    ]
+   ]
+  },
+  {
+   "text": "두루미가 놀러 왔어요. 그런데 접시가 아주 납작해요!",
+   "segs": [
+    [
+     "nar",
+     "두루미가 놀러 왔어요. 그런데 접시가 아주 납작해요!",
+     null,
+     "[worried, gently surprised]"
+    ]
+   ]
+  },
+  {
+   "text": "두루미 부리를 톡 눌러서 먹게 해 줘요!",
+   "segs": [
+    [
+     "nar",
+     "두루미 부리를 톡 눌러서 먹게 해 줘요!",
+     "happy:1.1",
+     "[hopeful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "두루미 부리를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "두루미 부리를 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "어머나, 부리 끝만 딱딱 닿아요. 수프를 먹을 수가 없어요.",
+   "segs": [
+    [
+     "nar",
+     "어머나, 부리 끝만 딱딱 닿아요. 수프를 먹을 수가 없어요.",
+     "sad:1.2",
+     "[sympathetic, soft, concerned]"
+    ]
+   ]
+  },
+  {
+   "text": "여우는 혀로 핥핥, 다 먹었어요. 두루미는 배가 꼬르륵, 속상했어요.",
+   "segs": [
+    [
+     "nar",
+     "여우는 혀로 핥핥, 다 먹었어요. 두루미는 배가 꼬르륵, 속상했어요.",
+     "sad:1.3",
+     "[sad, soft, sympathetic]"
+    ]
+   ]
+  },
+  {
+   "text": "며칠 뒤, 이번엔 두루미가 여우를 불렀어요.",
+   "segs": [
+    [
+     "nar",
+     "며칠 뒤, 이번엔 두루미가 여우를 불렀어요.",
+     null,
+     "[calm, gentle, time passing]"
+    ]
+   ]
+  },
+  {
+   "text": "\"여우야, 우리 집에도 놀러 와~\"",
+   "segs": [
+    [
+     "crane",
+     "여우야, 우리 집에도 놀러 와~",
+     "happy:1.2",
+     "[friendly, elegant, polite]"
+    ]
+   ]
+  },
+  {
+   "text": "여우가 신이 났어요. \"좋아! 맛있는 거 먹어야지!\"",
+   "segs": [
+    [
+     "nar",
+     "여우가 신이 났어요.",
+     "happy:1.2",
+     "[gleeful, bouncy]"
+    ],
+    [
+     "fox",
+     "좋아! 맛있는 거 먹어야지!",
+     "happy:1.5",
+     "[eager, greedy, excited]"
+    ]
+   ]
+  },
+  {
+   "text": "와, 병이 탑처럼 높아요! 목이 아주 길어요.",
+   "segs": [
+    [
+     "fox",
+     "와, 병이 탑처럼 높아요!",
+     "toneup:1.4",
+     "[amazed, wide-eyed]"
+    ],
+    [
+     "nar",
+     "목이 아주 길어요.",
+     null,
+     "[gently amused]"
+    ]
+   ]
+  },
+  {
+   "text": "여우 코를 톡 눌러서 먹게 해 줘요!",
+   "segs": [
+    [
+     "nar",
+     "여우 코를 톡 눌러서 먹게 해 줘요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "여우 코를 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "여우 코를 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "여우 코를 한 번 더 톡!",
+   "segs": [
+    [
+     "nar",
+     "여우 코를 한 번 더 톡!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "여우 코를 톡! 폴짝 뛰어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "여우 코를 톡! 폴짝 뛰어 봐요!",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "어머나! 여우 코가 병에 쏙 끼었어요!",
+   "segs": [
+    [
+     "nar",
+     "어머나! 여우 코가 병에 쏙 끼었어요!",
+     "toneup:1.4",
+     "[surprised, funny, excited]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 코가 빠졌어요. 엉덩방아 쿵!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 코가 빠졌어요. 엉덩방아 쿵!",
+     "happy:1.3",
+     "[comedic, delighted, laughs]"
+    ]
+   ]
+  },
+  {
+   "text": "두루미는 긴 부리로 쪽쪽 먹었어요. 여우는 배가 꼬르륵, 속상했어요.",
+   "segs": [
+    [
+     "nar",
+     "두루미는 긴 부리로 쪽쪽 먹었어요. 여우는 배가 꼬르륵, 속상했어요.",
+     "sad:1.3",
+     "[sad, soft, sympathetic]"
+    ]
+   ]
+  },
+  {
+   "text": "둘 다 못 먹었어요. 왜 그랬을까요?",
+   "segs": [
+    [
+     "nar",
+     "둘 다 못 먹었어요. 왜 그랬을까요?",
+     "tonedown:1.1",
+     "[thoughtful, calm, questioning]"
+    ]
+   ]
+  },
+  {
+   "text": "두루미는 부리가 길쭉해요. 어떤 그릇이 좋을까요?",
+   "segs": [
+    [
+     "nar",
+     "두루미는 부리가 길쭉해요. 어떤 그릇이 좋을까요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "길쭉한 부리가 쏙 들어가는 그릇을 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "길쭉한 부리가 쏙 들어가는 그릇을 찾아봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "여우는 입이 짧아요. 혀로 핥아 먹어요. 어떤 그릇이 좋을까요?",
+   "segs": [
+    [
+     "nar",
+     "여우는 입이 짧아요. 혀로 핥아 먹어요. 어떤 그릇이 좋을까요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "혀로 핥기 좋은 납작한 그릇을 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "혀로 핥기 좋은 납작한 그릇을 찾아봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "여우랑 두루미가 함께 잔치를 열었어요. 손님들도 와요!",
+   "segs": [
+    [
+     "nar",
+     "여우랑 두루미가 함께 잔치를 열었어요. 손님들도 와요!",
+     "happy:1.3",
+     "[bright, joyful, welcoming]"
+    ]
+   ]
+  },
+  {
+   "text": "입 모양을 잘 보고, 알맞은 그릇을 골라 줘요!",
+   "segs": [
+    [
+     "nar",
+     "입 모양을 잘 보고, 알맞은 그릇을 골라 줘요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "여우는 입이 짧아요. 어떤 그릇이 좋을까요?",
+   "segs": [
+    [
+     "nar",
+     "여우는 입이 짧아요. 어떤 그릇이 좋을까요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "오리는 부리가 넓적해요. 어떤 그릇이 좋을까요?",
+   "segs": [
+    [
+     "nar",
+     "오리는 부리가 넓적해요. 어떤 그릇이 좋을까요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "나비는 입이 빨대 같아요. 무엇이 좋을까요?",
+   "segs": [
+    [
+     "nar",
+     "나비는 입이 빨대 같아요. 무엇이 좋을까요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "길쭉한 부리가 쏙 들어가는 걸 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "길쭉한 부리가 쏙 들어가는 걸 찾아봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "혀로 핥기 좋은 납작한 걸 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "혀로 핥기 좋은 납작한 걸 찾아봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "넓적한 부리로 푹 떠먹기 좋은 걸 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "넓적한 부리로 푹 떠먹기 좋은 걸 찾아봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "빨대 입으로 쪽 빨아 먹는 걸 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "빨대 입으로 쪽 빨아 먹는 걸 찾아봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "두루미가 왔어요!",
+   "segs": [
+    [
+     "nar",
+     "두루미가 왔어요!",
+     "happy:1.2",
+     "[cheerful, welcoming]"
+    ]
+   ]
+  },
+  {
+   "text": "여우가 왔어요!",
+   "segs": [
+    [
+     "nar",
+     "여우가 왔어요!",
+     "happy:1.2",
+     "[cheerful, welcoming]"
+    ]
+   ]
+  },
+  {
+   "text": "오리가 왔어요!",
+   "segs": [
+    [
+     "nar",
+     "오리가 왔어요!",
+     "happy:1.2",
+     "[cheerful, welcoming]"
+    ]
+   ]
+  },
+  {
+   "text": "나비가 왔어요!",
+   "segs": [
+    [
+     "nar",
+     "나비가 왔어요!",
+     "happy:1.2",
+     "[cheerful, welcoming]"
+    ]
+   ]
+  },
+  {
+   "text": "납작 접시예요! 반짝이는 걸 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "납작 접시예요! 반짝이는 걸 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "긴 병이에요! 반짝이는 걸 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "긴 병이에요! 반짝이는 걸 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "넓은 그릇이에요! 반짝이는 걸 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "넓은 그릇이에요! 반짝이는 걸 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "꽃이에요! 반짝이는 걸 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "꽃이에요! 반짝이는 걸 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 두루미는 긴 병이 좋아요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 두루미는 긴 병이 좋아요.",
+     "happy:1.3",
+     "[delighted, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 여우는 납작 접시가 좋아요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 여우는 납작 접시가 좋아요.",
+     "happy:1.3",
+     "[delighted, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 오리는 넓은 그릇이 좋아요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 오리는 넓은 그릇이 좋아요.",
+     "happy:1.3",
+     "[delighted, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 나비는 꽃이 좋아요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 나비는 꽃이 좋아요.",
+     "happy:1.3",
+     "[delighted, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "등불이 반짝, 모두 모여 잔치를 해요.",
+   "segs": [
+    [
+     "nar",
+     "등불이 반짝, 모두 모여 잔치를 해요.",
+     "happy:1.2",
+     "[warm, glowing, festive]"
+    ]
+   ]
+  },
+  {
+   "text": "여우가 말했어요. \"두루미야, 미안해.\"",
+   "segs": [
+    [
+     "nar",
+     "여우가 말했어요.",
+     null,
+     "[gentle]"
+    ],
+    [
+     "fox",
+     "두루미야, 미안해.",
+     "sad",
+     "[sheepish, sincere, apologetic]"
+    ]
+   ]
+  },
+  {
+   "text": "두루미도 말했어요. \"여우야, 나도 미안해.\"",
+   "segs": [
+    [
+     "nar",
+     "두루미도 말했어요.",
+     null,
+     "[gentle]"
+    ],
+    [
+     "crane",
+     "여우야, 나도 미안해.",
+     "sad",
+     "[kind, sincere, apologetic]"
+    ]
+   ]
+  },
+  {
+   "text": "\"괜찮아!\" 둘은 다시 사이좋은 친구가 되었어요.",
+   "segs": [
+    [
+     "fox",
+     "괜찮아!",
+     "happy",
+     "[warm, forgiving, cheerful]"
+    ],
+    [
+     "crane",
+     "괜찮아!",
+     "happy",
+     "[warm, forgiving, cheerful]"
+    ],
+    [
+     "nar",
+     "둘은 다시 사이좋은 친구가 되었어요.",
+     "happy:1.3",
+     "[tender, happy, joyful]"
+    ]
+   ]
+  },
+  {
+   "text": "친구들을 톡톡 눌러 봐요. 냠냠 맛있게 먹어요!",
+   "segs": [
+    [
+     "nar",
+     "친구들을 톡톡 눌러 봐요. 냠냠 맛있게 먹어요!",
+     "happy:1.1",
+     "[cheerful, savoring, yummy]"
+    ]
+   ]
+  },
+  {
+   "text": "배부르게 먹고, 모두 행복하게 웃었답니다.",
+   "segs": [
+    [
+     "nar",
+     "배부르게 먹고, 모두 행복하게 웃었답니다.",
+     "happy:1.3",
+     "[content, warm, gentle closing]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "cut_peck": [
+   [
+    "crane",
+    "아이참, 부리가 안 닿아!",
+    "sad:1.4",
+    "[frustrated, whiny, sad]"
+   ]
+  ],
+  "cut_lick": [
+   [
+    "fox",
+    "음~ 맛있다! 싹싹!",
+    "happy",
+    "[delighted, slurping, savoring]"
+   ]
+  ],
+  "cut_stuck": [
+   [
+    "fox",
+    "으앗, 코가 끼었어!",
+    "toneup:1.6",
+    "=[sudden yelp] 으앗, [muffled, panicked] 코가 끼었어!"
+   ]
+  ],
+  "hi_crane": [
+   [
+    "crane",
+    "안녕! 나도 왔어~",
+    "happy",
+    "[cheerful, graceful, greeting]"
+   ]
+  ],
+  "hi_fox": [
+   [
+    "fox",
+    "헤헤, 나도 배고파!",
+    "happy",
+    "[cheerful, playful, hungry]"
+   ]
+  ],
+  "hi_duck": [
+   [
+    "duck",
+    "꽥꽥! 안녕하세요!",
+    "happy",
+    "[cheerful, quacking, loud greeting]"
+   ]
+  ],
+  "hi_butterfly": [
+   [
+    "butterfly",
+    "팔랑팔랑, 안녕!",
+    "happy",
+    "[delicate, sweet, light, cheerful]"
+   ]
+  ],
+  "yum_crane": [
+   [
+    "crane",
+    "쪽쪽, 맛있다!",
+    "happy",
+    "[delighted, satisfied]"
+   ]
+  ],
+  "yum_fox": [
+   [
+    "fox",
+    "핥핥, 맛있어!",
+    "happy",
+    "[delighted, satisfied]"
+   ]
+  ],
+  "yum_duck": [
+   [
+    "duck",
+    "냠냠, 꽥!",
+    "happy",
+    "[delighted, happy quacking]"
+   ]
+  ],
+  "yum_butterfly": [
+   [
+    "butterfly",
+    "쪽! 달콤해!",
+    "happy",
+    "[delicate, delighted, sweet]"
+   ]
+  ]
+ }
+}

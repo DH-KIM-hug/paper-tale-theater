@@ -8,7 +8,7 @@ voice_script_el.json 은 voice_script.json 과 같은 모양이고 voices 의 �
   만들지 못한 줄은 덮어쓰지 않으므로 Typecast 클립이 그대로 쓰인다.
 감정: eleven_v3 면 happy→[cheerful] sad→[sad] angry→[angry] whisper→[whispers] toneup→[excited] tonedown→[calm] 태그를 보낼 글 앞에 붙인다.
 API 키는 ~/.config/elevenlabs/key (저장소에 두지 않음)."""
-import json, os, sys, time, hashlib, urllib.request, urllib.error
+import json, os, re, sys, time, hashlib, urllib.request, urllib.error
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 KEY = open(os.path.expanduser('~/.config/elevenlabs/key')).read().strip()
 MODEL = 'eleven_v3'
@@ -64,6 +64,17 @@ def main():
                 except urllib.error.HTTPError as e:
                     errs += 1; chars -= len(sent); print('ERR', e.code, e.read()[:200], role, text, flush=True); return None
         return rel
+    def lead(dr):  # '=' 전체 글 방향에서 맨 앞 태그만 (영어는 한국어 글을 못 쓰니)
+        if not dr: return None
+        if not dr.startswith('='): return dr
+        m = re.match(r'=\s*((?:\[[^\]]*\]\s*)+)', dr)
+        return m.group(1).strip() if m else None
+    def en_dir(elsegs, role, si):  # 영어 줄의 연기 지시: 한국어 줄 같은 번호(같은 배역) → 없으면 그 줄의 같은 배역 첫 번째
+        if not elsegs: return None
+        if si < len(elsegs) and elsegs[si][0] == role: c = elsegs[si]
+        else: c = next((x for x in elsegs if x[0] == role), None)
+        return lead(c[3]) if c and len(c) > 3 else None
+    ELL = {l['text']: l['segs'] for l in EL['lines'] if l.get('segs')}
     clips, seen = {}, set()
     for ni, ln in enumerate(spec['lines']):
         text = ln['text']
@@ -71,13 +82,15 @@ def main():
         seen.add(text)
         shown = ln['en'] if en else text
         segs = [s + [None] * (4 - len(s)) for s in ln.get('segs') or [['nar', shown]]]
+        if en: segs = [[role, s, emo, en_dir(ELL.get(text), role, si)] for si, (role, s, emo, dr) in enumerate(segs)]
         urls = [clip(role, s, emo, dr, f'L{ni}.{si}') for si, (role, s, emo, dr) in enumerate(segs)]
         if not all(urls): skipped += 1; continue  # 일부만 만들어진 줄은 통째로 Typecast 에 맡김
         u = urls[0] if len(urls) == 1 else urls
         clips[text] = {'t': shown, 'c': u} if en else u
     voice = {}
     for key, segs in (spec.get('extra') or {}).items():
-        urls = [clip(s[0], s[1], s[2] if len(s) > 2 else None, s[3] if len(s) > 3 else None, f'X{key}.{si}') for si, s in enumerate(segs)]
+        eld = (EL.get('extra') or {}).get(key)
+        urls = [clip(s[0], s[1], s[2] if len(s) > 2 else None, en_dir(eld, s[0], si) if en else (s[3] if len(s) > 3 else None), f'X{key}.{si}') for si, s in enumerate(segs)]
         if not all(urls): skipped += 1; continue
         voice[key] = urls[0] if len(urls) == 1 else urls
     if ONLY: print('시범', made, '개,', chars, '자'); return

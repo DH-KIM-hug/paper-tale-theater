@@ -1,0 +1,1351 @@
+{
+ "notes": "nar=Alice(또렷한 선생님 같은 서술, 패죽과 구분), goldi=Jessica(호기심 많은 골디락스), dad=Brian(굵고 푸근한 아빠 곰), mom=Matilda(엄마 곰), baby=Laura(가느다란 아기 곰), bowl=Will(그릇 소품). 아빠는 굵게, 아기는 가늘게; 곰은 화나도 무섭지 않고 다정하게.",
+ "voices": {
+  "nar": "Xb7hH8MSUJpSbSDYk0k2",
+  "goldi": "cgSgspJ2msm6clMCkdW9",
+  "dad": "nPczCjzI2devNBz1zQrb",
+  "mom": "XrExE9yKIg1WjnnlVkGX",
+  "baby": "FGY2WhTYpPnrIDTdsKH5",
+  "bowl": "bIHbv24MWmeRgasZH58o"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "goldi": "eleven_v4",
+  "dad": "eleven_v4",
+  "mom": "eleven_v4",
+  "baby": "eleven_v4",
+  "bowl": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "goldi": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "dad": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "mom": {
+   "stability": 0.4,
+   "style": 0.4
+  },
+  "baby": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "bowl": {
+   "stability": 0.35,
+   "style": 0.45
+  }
+ },
+ "use_dir": [
+  "nar",
+  "goldi",
+  "dad",
+  "mom",
+  "baby",
+  "bowl"
+ ],
+ "lines": [
+  {
+   "text": "숲속 통나무집에 곰 세 식구가 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "숲속 통나무집에 곰 세 식구가 살았어요.",
+     null,
+     "[calm, warm storytelling, once upon a time]"
+    ]
+   ]
+  },
+  {
+   "text": "곰 가족을 톡 눌러서 인사해요!",
+   "segs": [
+    [
+     "nar",
+     "곰 가족을 톡 눌러서 인사해요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "곰을 톡 눌러서 안녕!",
+   "segs": [
+    [
+     "nar",
+     "곰을 톡 눌러서 안녕!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰은 굵은 목소리, 아기 곰은 가느다란 목소리예요.",
+   "segs": [
+    [
+     "nar",
+     "아빠 곰은 굵은 목소리, 아기 곰은 가느다란 목소리예요.",
+     null,
+     "[playful, gentle, contrasting voices]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰이 맛있는 죽을 끓였어요. 그런데 너무 뜨거워요!",
+   "segs": [
+    [
+     "nar",
+     "엄마 곰이 맛있는 죽을 끓였어요. 그런데 너무 뜨거워요!",
+     "toneup:1.2",
+     "[excited, surprised]"
+    ]
+   ]
+  },
+  {
+   "text": "톡톡 눌러서 후후 불어 줘요!",
+   "segs": [
+    [
+     "nar",
+     "톡톡 눌러서 후후 불어 줘요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "죽을 톡톡 눌러서 후후!",
+   "segs": [
+    [
+     "nar",
+     "죽을 톡톡 눌러서 후후!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "김이 줄었지만, 아직 뜨거워요.",
+   "segs": [
+    [
+     "nar",
+     "김이 줄었지만, 아직 뜨거워요.",
+     null,
+     "[gentle, patient]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"죽이 식을 동안 산책 다녀오자!\"",
+   "segs": [
+    [
+     "dad",
+     "죽이 식을 동안 산책 다녀오자!",
+     "happy:1.2",
+     "[warm, jolly, fatherly]"
+    ]
+   ]
+  },
+  {
+   "text": "숲속에는 금빛 머리 골디락스가 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "숲속에는 금빛 머리 골디락스가 살았어요.",
+     null,
+     "[bright, storytelling, introducing]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡톡 눌러서 같이 걸어요!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡톡 눌러서 같이 걸어요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "톡톡! 골디락스랑 걸어요.",
+   "segs": [
+    [
+     "nar",
+     "톡톡! 골디락스랑 걸어요.",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "꽃을 세 송이 땄어요. 어? 저기 통나무집이 있어요!",
+   "segs": [
+    [
+     "nar",
+     "꽃을 세 송이 땄어요.",
+     null,
+     "[cheerful]"
+    ],
+    [
+     "goldi",
+     "어? 저기 통나무집이 있어요!",
+     "toneup:1.3",
+     "[excited, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "우와, 커다란 문이에요. 문을 톡 두드려 봐요.",
+   "segs": [
+    [
+     "goldi",
+     "우와, 커다란 문이에요.",
+     "toneup:1.3",
+     "[awed, wide-eyed]"
+    ],
+    [
+     "nar",
+     "문을 톡 두드려 봐요.",
+     "happy:1.1",
+     "[hushed, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "문을 톡! 똑똑 두드려요.",
+   "segs": [
+    [
+     "nar",
+     "문을 톡! 똑똑 두드려요.",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스: \"계세요?\"",
+   "segs": [
+    [
+     "goldi",
+     "계세요?",
+     null,
+     "[polite, soft, calling out, shy]"
+    ]
+   ]
+  },
+  {
+   "text": "아무 대답이 없어요.",
+   "segs": [
+    [
+     "nar",
+     "아무 대답이 없어요.",
+     "tonedown:1.2",
+     "[hushed, quiet, waiting]"
+    ]
+   ]
+  },
+  {
+   "text": "문이 삐걱 열렸어요. 골디락스가 살짝 들어가 봤어요.",
+   "segs": [
+    [
+     "nar",
+     "문이 삐걱 열렸어요. 골디락스가 살짝 들어가 봤어요.",
+     "whisper:1.2",
+     "[whispers, tiptoeing, suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "식탁 위에 죽이 세 그릇 있어요.",
+   "segs": [
+    [
+     "nar",
+     "식탁 위에 죽이 세 그릇 있어요.",
+     null,
+     "[curious, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "딱 좋은 죽은 어느 걸까요?",
+   "segs": [
+    [
+     "nar",
+     "딱 좋은 죽은 어느 걸까요?",
+     "happy:1.1",
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "펄펄 너무 뜨거워요!",
+   "segs": [
+    [
+     "goldi",
+     "펄펄 너무 뜨거워요!",
+     "toneup:1.5",
+     "[gasps, hot, fanning mouth]"
+    ]
+   ]
+  },
+  {
+   "text": "얼음처럼 너무 차가워요!",
+   "segs": [
+    [
+     "goldi",
+     "얼음처럼 너무 차가워요!",
+     "toneup:1.4",
+     "[shivering, cold, brr]"
+    ]
+   ]
+  },
+  {
+   "text": "김이 펄펄 나면 뜨겁고, 얼음이 있으면 차가워요.",
+   "segs": [
+    [
+     "nar",
+     "김이 펄펄 나면 뜨겁고, 얼음이 있으면 차가워요.",
+     null,
+     "[gentle, explaining]"
+    ]
+   ]
+  },
+  {
+   "text": "김이 살짝 나는 작은 그릇이에요!",
+   "segs": [
+    [
+     "nar",
+     "김이 살짝 나는 작은 그릇이에요!",
+     "happy:1.1",
+     "[delighted, discovering]"
+    ]
+   ]
+  },
+  {
+   "text": "딱 좋아요! 냠냠, 작은 그릇을 다 먹어 버렸어요.",
+   "segs": [
+    [
+     "goldi",
+     "딱 좋아요!",
+     "happy:1.4",
+     "[delighted, content, relieved]"
+    ],
+    [
+     "nar",
+     "냠냠, 작은 그릇을 다 먹어 버렸어요.",
+     null,
+     "[playful, munching, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 의자가 세 개 있어요.",
+   "segs": [
+    [
+     "nar",
+     "이번엔 의자가 세 개 있어요.",
+     null,
+     "[curious, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "딱 맞는 의자는 어느 걸까요?",
+   "segs": [
+    [
+     "nar",
+     "딱 맞는 의자는 어느 걸까요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "너무 높아요! 다리가 달랑달랑.",
+   "segs": [
+    [
+     "goldi",
+     "너무 높아요!",
+     "toneup:1.4",
+     "[wobbly, struggling, whiny]"
+    ],
+    [
+     "nar",
+     "다리가 달랑달랑.",
+     "happy:1.2",
+     "[playful, giggling]"
+    ]
+   ]
+  },
+  {
+   "text": "너무 푹신해서 쏙 파묻혔어요!",
+   "segs": [
+    [
+     "nar",
+     "너무 푹신해서 쏙 파묻혔어요!",
+     "happy:1.2",
+     "[comedic, sinking, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "너무 크지도, 너무 푹신하지도 않은 의자예요.",
+   "segs": [
+    [
+     "nar",
+     "너무 크지도, 너무 푹신하지도 않은 의자예요.",
+     null,
+     "[warm storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "작은 의자예요! 반짝이는 의자를 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "작은 의자예요! 반짝이는 의자를 눌러요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "딱 맞아요! 그런데…",
+   "segs": [
+    [
+     "goldi",
+     "딱 맞아요!",
+     "happy:1.4",
+     "[delighted, content]"
+    ],
+    [
+     "nar",
+     "그런데…",
+     "whisper:1.2",
+     "[whispers, building suspense, ominous but gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "뿌지직! 작은 의자가 부서져서 엉덩방아를 찧었어요.",
+   "segs": [
+    [
+     "nar",
+     "뿌지직! 작은 의자가 부서져서 엉덩방아를 찧었어요.",
+     "toneup:1.4",
+     "[comedic, crash, startled, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "하암, 졸려요. 위층에 침대가 세 개 있어요.",
+   "segs": [
+    [
+     "goldi",
+     "하암, 졸려요.",
+     "tonedown:1.4",
+     "[yawning, sleepy]"
+    ],
+    [
+     "nar",
+     "위층에 침대가 세 개 있어요.",
+     null,
+     "[curious, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "딱 좋은 침대는 어느 걸까요?",
+   "segs": [
+    [
+     "nar",
+     "딱 좋은 침대는 어느 걸까요?",
+     "happy:1.1",
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "너무 딱딱해요!",
+   "segs": [
+    [
+     "goldi",
+     "너무 딱딱해요!",
+     "toneup:1.2",
+     "[wincing, uncomfortable, whiny]"
+    ]
+   ]
+  },
+  {
+   "text": "너무 푹신해요!",
+   "segs": [
+    [
+     "goldi",
+     "너무 푹신해요!",
+     "toneup:1.2",
+     "[sinking, uncomfortable, whiny]"
+    ]
+   ]
+  },
+  {
+   "text": "딱딱하지도, 너무 푹신하지도 않은 침대예요.",
+   "segs": [
+    [
+     "nar",
+     "딱딱하지도, 너무 푹신하지도 않은 침대예요.",
+     null,
+     "[gentle, explaining]"
+    ]
+   ]
+  },
+  {
+   "text": "작은 침대예요! 반짝이는 침대를 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "작은 침대예요! 반짝이는 침대를 눌러요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "딱 좋아요! 자장가를 들려줄게요. 잘 들어 봐요.",
+   "segs": [
+    [
+     "goldi",
+     "딱 좋아요!",
+     "happy:1.4",
+     "[delighted, sleepy, cozy]"
+    ],
+    [
+     "nar",
+     "자장가를 들려줄게요. 잘 들어 봐요.",
+     "whisper:1.2",
+     "[whispers, soft, lullaby]"
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 침대를 톡 눌러 봐요. 자장가가 이어져요!",
+   "segs": [
+    [
+     "nar",
+     "이번에는 침대를 톡 눌러 봐요. 자장가가 이어져요!",
+     "whisper:1.2",
+     "[whispers, soft, lullaby]"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스는 쿨쿨 잠이 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "골디락스는 쿨쿨 잠이 들었어요.",
+     "whisper:1.2",
+     "[whispers, sleepy, fading]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 곰 가족이 산책에서 돌아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "그때 곰 가족이 산책에서 돌아왔어요.",
+     "tonedown:1.2",
+     "[hushed, building suspense, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"누가 내 죽을 먹었지?\"",
+   "segs": [
+    [
+     "dad",
+     "누가 내 죽을 먹었지?",
+     "angry:1.2",
+     "[grumbling, puzzled, deep voice, gently stern]"
+    ]
+   ]
+  },
+  {
+   "text": "그릇이 뒤죽박죽이에요. 주인을 찾아 줘요!",
+   "segs": [
+    [
+     "nar",
+     "그릇이 뒤죽박죽이에요. 주인을 찾아 줘요!",
+     "happy:1.1",
+     "[playful, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "이 큰 그릇은 누구 거예요?",
+   "segs": [
+    [
+     "nar",
+     "이 큰 그릇은 누구 거예요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "큰 그릇은 가장 큰 곰 거예요.",
+   "segs": [
+    [
+     "nar",
+     "큰 그릇은 가장 큰 곰 거예요.",
+     null,
+     "[gentle, explaining]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰이에요! 반짝이는 곰을 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "아빠 곰이에요! 반짝이는 곰을 눌러요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰: \"내 그릇은 더 작아요~\"",
+   "segs": [
+    [
+     "mom",
+     "내 그릇은 더 작아요~",
+     null,
+     "[warm, motherly, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"내 그릇은 더 작아요~\"",
+   "segs": [
+    [
+     "baby",
+     "내 그릇은 더 작아요~",
+     null,
+     "[small, sweet, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "이 중간 그릇은 누구 거예요?",
+   "segs": [
+    [
+     "nar",
+     "이 중간 그릇은 누구 거예요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "중간 그릇은 중간 곰 거예요.",
+   "segs": [
+    [
+     "nar",
+     "중간 그릇은 중간 곰 거예요.",
+     null,
+     "[gentle, explaining]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰이에요! 반짝이는 곰을 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "엄마 곰이에요! 반짝이는 곰을 눌러요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"내 그릇은 더 커요~\"",
+   "segs": [
+    [
+     "dad",
+     "내 그릇은 더 커요~",
+     null,
+     "[deep, gentle, fatherly]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"내 그릇은 더 작아요~\"",
+   "segs": [
+    [
+     "baby",
+     "내 그릇은 더 작아요~",
+     null,
+     "[small, sweet, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "이 작은 그릇은 누구 거예요?",
+   "segs": [
+    [
+     "nar",
+     "이 작은 그릇은 누구 거예요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "작은 그릇은 가장 작은 곰 거예요.",
+   "segs": [
+    [
+     "nar",
+     "작은 그릇은 가장 작은 곰 거예요.",
+     null,
+     "[gentle, explaining]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰이에요! 반짝이는 곰을 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "아기 곰이에요! 반짝이는 곰을 눌러요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"내 그릇은 더 커요~\"",
+   "segs": [
+    [
+     "dad",
+     "내 그릇은 더 커요~",
+     null,
+     "[deep, gentle, fatherly]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰: \"내 그릇은 더 커요~\"",
+   "segs": [
+    [
+     "mom",
+     "내 그릇은 더 커요~",
+     null,
+     "[warm, motherly, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"내 죽을 다 먹어 버렸어!\"",
+   "segs": [
+    [
+     "baby",
+     "내 죽을 다 먹어 버렸어!",
+     "sad:1.7",
+     "[sad, trembling, tearful, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 먹었을까요?",
+   "segs": [
+    [
+     "nar",
+     "누가 먹었을까요?",
+     "whisper:1.1",
+     "[whispers, mysterious]"
+    ]
+   ]
+  },
+  {
+   "text": "의자도 누구 건지 찾아 줘요.",
+   "segs": [
+    [
+     "nar",
+     "의자도 누구 건지 찾아 줘요.",
+     "happy:1.1",
+     "[curious, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "이 큰 의자는 누구 거예요?",
+   "segs": [
+    [
+     "nar",
+     "이 큰 의자는 누구 거예요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "큰 의자는 가장 큰 곰 거예요.",
+   "segs": [
+    [
+     "nar",
+     "큰 의자는 가장 큰 곰 거예요.",
+     null,
+     "[gentle, explaining]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰이에요! 반짝이는 곰을 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "아빠 곰이에요! 반짝이는 곰을 눌러요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰: \"내 의자는 더 작아요~\"",
+   "segs": [
+    [
+     "mom",
+     "내 의자는 더 작아요~",
+     null,
+     "[warm, motherly, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"내 의자는 더 작아요~\"",
+   "segs": [
+    [
+     "baby",
+     "내 의자는 더 작아요~",
+     null,
+     "[small, sweet, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "이 중간 의자는 누구 거예요?",
+   "segs": [
+    [
+     "nar",
+     "이 중간 의자는 누구 거예요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "중간 의자는 중간 곰 거예요.",
+   "segs": [
+    [
+     "nar",
+     "중간 의자는 중간 곰 거예요.",
+     null,
+     "[warm storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰이에요! 반짝이는 곰을 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "엄마 곰이에요! 반짝이는 곰을 눌러요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"내 의자는 더 커요~\"",
+   "segs": [
+    [
+     "dad",
+     "내 의자는 더 커요~",
+     null,
+     "[deep, gentle, fatherly]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"내 의자는 더 작아요~\"",
+   "segs": [
+    [
+     "baby",
+     "내 의자는 더 작아요~",
+     null,
+     "[small, sweet, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"으앙, 내 의자가 부서졌어!\"",
+   "segs": [
+    [
+     "baby",
+     "으앙, 내 의자가 부서졌어!",
+     "sad:1.7",
+     "=[gasps] 으앙, [sobbing, crying] 내 의자가 부서졌어!"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰이 아기 곰을 꼭 안아 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "엄마 곰이 아기 곰을 꼭 안아 주었어요.",
+     "tonedown:1.1",
+     "[tender, comforting, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "그런데 위층에서 쿨쿨 소리가 나요.",
+   "segs": [
+    [
+     "nar",
+     "그런데 위층에서 쿨쿨 소리가 나요.",
+     "whisper:1.2",
+     "[whispers, hushed, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰이 살금살금 가 보니, 누가 자고 있어요!",
+   "segs": [
+    [
+     "nar",
+     "아기 곰이 살금살금 가 보니, 누가 자고 있어요!",
+     "whisper:1.3",
+     "[whispers, tiptoeing, suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "이불을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "이불을 톡 눌러 봐요.",
+     "whisper:1.0",
+     "[whispers, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰이랑 이불을 톡!",
+   "segs": [
+    [
+     "nar",
+     "아기 곰이랑 이불을 톡!",
+     "whisper:1.0",
+     "[whispers, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스와 곰 세 마리 눈이 딱 마주쳤어요!",
+   "segs": [
+    [
+     "nar",
+     "골디락스와 곰 세 마리 눈이 딱 마주쳤어요!",
+     "toneup:1.5",
+     "[surprised, dramatic, wide-eyed]"
+    ]
+   ]
+  },
+  {
+   "text": "창문으로 나가려다 치마가 딱 걸렸어요!",
+   "segs": [
+    [
+     "nar",
+     "창문으로 나가려다 치마가 딱 걸렸어요!",
+     "toneup:1.3",
+     "[panicked, comedic, hurried]"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스가 돌아서서 말했어요. \"미안해요.\"",
+   "segs": [
+    [
+     "nar",
+     "골디락스가 돌아서서 말했어요.",
+     null,
+     "[gentle]"
+    ],
+    [
+     "goldi",
+     "미안해요.",
+     "sad",
+     "[sad, sincere, apologetic, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스: \"허락 없이 들어와서 미안해요.\"",
+   "segs": [
+    [
+     "goldi",
+     "허락 없이 들어와서 미안해요.",
+     "sad",
+     "[sad, sincere, apologetic, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠 곰: \"괜찮아. 다음엔 똑똑 하고 기다려 줘.\"",
+   "segs": [
+    [
+     "dad",
+     "괜찮아. 다음엔 똑똑 하고 기다려 줘.",
+     "tonedown:1.0",
+     "[deep, kind, forgiving, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스: \"아기 곰 의자, 같이 고칠래?\"",
+   "segs": [
+    [
+     "goldi",
+     "아기 곰 의자, 같이 고칠래?",
+     "happy:1.2",
+     "[hopeful, bright, kind]"
+    ]
+   ]
+  },
+  {
+   "text": "톡톡 눌러서 뚝딱뚝딱 고쳐요!",
+   "segs": [
+    [
+     "nar",
+     "톡톡 눌러서 뚝딱뚝딱 고쳐요!",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "의자를 톡톡! 뚝딱뚝딱.",
+   "segs": [
+    [
+     "nar",
+     "의자를 톡톡! 뚝딱뚝딱.",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "짠! 의자가 다 고쳐졌어요.",
+   "segs": [
+    [
+     "nar",
+     "짠! 의자가 다 고쳐졌어요.",
+     "happy:1.4",
+     "[triumphant, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 곰: \"고마워! 우리 친구 하자!\"",
+   "segs": [
+    [
+     "baby",
+     "고마워! 우리 친구 하자!",
+     "happy:1.5",
+     "[delighted, joyful, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마 곰이 새 죽을 끓였어요. 다 함께 먹어요!",
+   "segs": [
+    [
+     "nar",
+     "엄마 곰이 새 죽을 끓였어요. 다 함께 먹어요!",
+     "happy:1.2",
+     "[warm, cozy, happy]"
+    ]
+   ]
+  },
+  {
+   "text": "가장 작은 그릇부터 차례대로 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "가장 작은 그릇부터 차례대로 톡 눌러요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "가장 작은 그릇은 어느 걸까요?",
+   "segs": [
+    [
+     "nar",
+     "가장 작은 그릇은 어느 걸까요?",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "그다음은 중간 그릇!",
+   "segs": [
+    [
+     "nar",
+     "그다음은 중간 그릇!",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "마지막은 가장 큰 그릇!",
+   "segs": [
+    [
+     "nar",
+     "마지막은 가장 큰 그릇!",
+     "happy:1.1",
+     "[cheerful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "큰 그릇을 찾아요.",
+   "segs": [
+    [
+     "nar",
+     "큰 그릇을 찾아요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "중간 그릇을 찾아요.",
+   "segs": [
+    [
+     "nar",
+     "중간 그릇을 찾아요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "작은 그릇을 찾아요.",
+   "segs": [
+    [
+     "nar",
+     "작은 그릇을 찾아요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "큰 그릇이 반짝반짝! 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "큰 그릇이 반짝반짝! 눌러 봐요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "중간 그릇이 반짝반짝! 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "중간 그릇이 반짝반짝! 눌러 봐요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "작은 그릇이 반짝반짝! 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "작은 그릇이 반짝반짝! 눌러 봐요.",
+     "happy:1.1",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "\"나는 다음이야~\"",
+   "segs": [
+    [
+     "bowl",
+     "나는 다음이야~",
+     null,
+     "[sing-song, cheerful, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.",
+   "segs": [
+    [
+     "nar",
+     "작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.",
+     "happy:1.3",
+     "[proud, delighted, counting]"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스 그릇도 하나 더! 다 함께 냠냠.",
+   "segs": [
+    [
+     "nar",
+     "골디락스 그릇도 하나 더! 다 함께 냠냠.",
+     "happy:1.3",
+     "[joyful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "골디락스와 곰 가족은 사이좋은 친구가 되었답니다.",
+   "segs": [
+    [
+     "nar",
+     "골디락스와 곰 가족은 사이좋은 친구가 되었답니다.",
+     "happy:1.3",
+     "[tender, happy ending, gently triumphant]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "hi_dad": [
+   [
+    "dad",
+    "안녕! 허허허.",
+    "happy",
+    "[warm, jolly, deep laugh, greeting]"
+   ]
+  ],
+  "hi_mom": [
+   [
+    "mom",
+    "안녕, 반가워요!",
+    "happy",
+    "[warm, cheerful, motherly, greeting]"
+   ]
+  ],
+  "hi_baby": [
+   [
+    "baby",
+    "안녕, 안녕!",
+    "happy",
+    "[cheerful, sweet, childlike, waving]"
+   ]
+  ],
+  "mine_dad": [
+   [
+    "dad",
+    "이건 내 거야!",
+    "happy",
+    "[proud, cheerful, deep]"
+   ]
+  ],
+  "mine_mom": [
+   [
+    "mom",
+    "어머, 내 거네!",
+    "happy",
+    "[pleased, cheerful, motherly]"
+   ]
+  ],
+  "chair_dad": [
+   [
+    "dad",
+    "내 의자다!",
+    "happy",
+    "[proud, cheerful, deep]"
+   ]
+  ],
+  "chair_mom": [
+   [
+    "mom",
+    "어머, 내 의자네!",
+    "happy",
+    "[pleased, cheerful, motherly]"
+   ]
+  ],
+  "cut_hot": [
+   [
+    "goldi",
+    "앗 뜨거! 혀가 데겠어!",
+    "toneup:1.6",
+    "=[sharp yelp] 앗 뜨거! [panicked, fanning mouth] 혀가 데겠어!"
+   ]
+  ],
+  "cut_cold": [
+   [
+    "goldi",
+    "으으, 차가워!",
+    "toneup:1.3",
+    "[shivering, teeth chattering, startled]"
+   ]
+  ],
+  "cut_crack": [
+   [
+    "goldi",
+    "어어? 으악!",
+    "toneup:1.6",
+    "=[startled] 어어? [panicked, high-pitched cry] 으악!"
+   ]
+  ],
+  "cut_eyes": [
+   [
+    "goldi",
+    "어머나!",
+    "toneup:1.6",
+    "[gasps, wide-eyed, frightened]"
+   ],
+   [
+    "baby",
+    "누구야?",
+    "toneup:1.3",
+    "[curious, puzzled, small voice]"
+   ]
+  ],
+  "cut_skirt": [
+   [
+    "goldi",
+    "앗, 치마가 걸렸어!",
+    "toneup:1.4",
+    "[panicked, flustered, struggling]"
+   ]
+  ]
+ }
+}
