@@ -1,8 +1,8 @@
 {
  "voices": {
-  "nar": "cjVigY5qzO86Huf0OWal",
-  "mom": "XrExE9yKIg1WjnnlVkGX",
-  "kid": "FGY2WhTYpPnrIDTdsKH5",
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "mom": "hpp4J3VqNfWAUOO0d1Us",
+  "kid": "Lb7qkOn5hF8p7qfCDH8q",
   "wolf": "nPczCjzI2devNBz1zQrb"
  },
  "models": {
@@ -87,7 +87,7 @@
      "kid",
      "네, 엄마!",
      "happy",
-     "[cheerful, childlike, chorus]"
+     "[cheerful, childlike, chorus, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -143,7 +143,7 @@
      "kid",
      "목소리가 걸걸해. 우리 엄마가 아니야!",
      "happy",
-     "[suspicious, childlike, firm]"
+     "[suspicious, childlike, firm, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -160,7 +160,7 @@
      "kid",
      "저리 가요, 늑대!",
      "happy",
-     "[shouting, brave, childlike]"
+     "[shouting, brave, childlike, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -221,7 +221,7 @@
      "kid",
      "그럼 문틈으로 발을 보여 주세요!",
      "happy",
-     "[smart, childlike, firm]"
+     "[smart, childlike, firm, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -266,7 +266,7 @@
      "kid",
      "어? 하얀 발이야! 엄마다!",
      "happy",
-     "[excited, childlike, fooled]"
+     "[excited, childlike, fooled, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -294,7 +294,7 @@
      "kid",
      "숨자, 숨자!",
      "happy",
-     "[whispers, urgent, childlike]"
+     "[whispers, urgent, childlike, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -394,7 +394,7 @@
      "kid",
      "엄마!",
      "happy",
-     "[relieved, tearful, childlike]"
+     "[relieved, tearful, childlike, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -411,7 +411,7 @@
      "kid",
      "늑대가 형들과 누나들을 꿀꺽 삼켰어요!",
      "happy",
-     "[worried, tearful, childlike]"
+     "[worried, tearful, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -494,7 +494,7 @@
      "kid",
      "엄마!",
      "happy",
-     "[joyful, relieved, childlike chorus]"
+     "[joyful, relieved, childlike chorus, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -736,5 +736,5 @@
    ]
   }
  ],
- "notes": "늑대와 일곱 아기 염소: 해설 Eric(매끈하고 믿음직한), 엄마 Matilda, 아기 염소들 Laura(활기찬 아이 목소리), 늑대 Brian(세 늑대 동화 공통). 늑대의 가짜 엄마 목소리는 걸걸하게 시작해 곱게, 삼켜지는 대목은 웃기게 가볍게, 무섭지 않게."
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, mom=Bella, kid=Annie, wolf=Brian. 아기·꼬마 역(kid)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여."
 }
