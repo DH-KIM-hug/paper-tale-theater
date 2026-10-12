@@ -219,8 +219,9 @@ const TALES = (() => {
       <rect x="70" y="66" width="20" height="26" rx="10" fill="${c.ps}"/><rect x="50" y="60" width="12" height="12" fill="${c.am}"/><rect x="98" y="60" width="12" height="12" fill="${c.am}"/>
       ${[[20, 100], [30, 96], [40, 101], [128, 98], [140, 102]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.5" fill="${c.am}"/>`).join('')}</g>` },
 
-  { id: 'cinderella', title: '신데렐라', origin: 'world', skills: ['shape', 'size', 'heart'], ready: false,
+  { id: 'cinderella', title: '신데렐라', origin: 'world', skills: ['shape', 'size', 'heart'], ready: false, making: true,
     line: '호박은 마차, 생쥐는 말. 짝을 맞추고 꼭 맞는 구두를 찾아요.',
+    en: { title: 'Cinderella', line: 'A pumpkin becomes a coach, mice become horses. Count the clock strikes and find the slipper that fits.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/>
       <g class="pc"><circle cx="134" cy="20" r="9" fill="${c.cr}"/><path d="M0 94 Q80 86 160 94 V110 H0Z" fill="${c.lv}"/>
       <path d="M56 22 q4 -8 10 -6" stroke="${c.pn}" stroke-width="4" fill="none"/>

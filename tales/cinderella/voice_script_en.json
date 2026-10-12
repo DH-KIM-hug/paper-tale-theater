@@ -1,0 +1,351 @@
+{
+ "voices": {
+  "nar": "tc_69fc0cff784968297fb45daa",
+  "cind": "tc_609a8f4362c4bdb3363bbfad",
+  "step": "tc_694b51e6dc12c8f4ec1a959c",
+  "sisa": "tc_699d27b557c86e3f4249c051",
+  "sisb": "tc_664599ee6c2fb2b4a1e4b3aa",
+  "fairy": "tc_691d49ccc47926d741f15913",
+  "prince": "tc_61532c5aed9bfa8b54d5dff6",
+  "mouse": "tc_60db35d96fdc060afd157d32",
+  "footman": "tc_660e46188b5f4761eb8e36d6"
+ },
+ "lines": [
+  {
+   "text": "옛날 옛날에 마음씨 고운 신데렐라가 살았어요.",
+   "en": "Once upon a time, there lived a kind girl named Cinderella."
+  },
+  {
+   "text": "신데렐라는 새엄마, 두 언니와 함께 살았어요.",
+   "en": "She lived with her stepmother and two stepsisters."
+  },
+  {
+   "text": "\"신데렐라, 부엌을 쓸어라!\" 새엄마가 말했어요.",
+   "en": "Cinderella, sweep the kitchen! said her stepmother.",
+   "segs": [
+    [
+     "step",
+     "Cinderella, sweep the kitchen!"
+    ],
+    [
+     "nar",
+     "said her stepmother."
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라를 톡톡톡 눌러서 부엌을 쓸어 봐요!",
+   "en": "Tap Cinderella, tap tap tap, to sweep the kitchen!"
+  },
+  {
+   "text": "신데렐라를 톡톡톡! 부엌을 쓸어요.",
+   "en": "Tap Cinderella, tap tap tap! Sweep the kitchen."
+  },
+  {
+   "text": "부엌이 깨끗해졌어요. 그런데 일이 아직 많이 남았어요.",
+   "en": "The kitchen was clean. But there was still so much work left."
+  },
+  {
+   "text": "일이 너무 많아서 신데렐라는 마음이 슬퍼졌어요.",
+   "en": "There was so much work that Cinderella felt sad."
+  },
+  {
+   "text": "신데렐라의 마음은 어떨까요? 슬픈 얼굴을 톡!",
+   "en": "How does Cinderella feel? Tap the sad face!"
+  },
+  {
+   "text": "슬픈 얼굴을 톡!",
+   "en": "Tap the sad face!"
+  },
+  {
+   "text": "눈물이 맺힌 얼굴을 찾아봐요.",
+   "en": "Find the face with tears."
+  },
+  {
+   "text": "두 손으로 눈을 가린 얼굴을 톡!",
+   "en": "Tap the face with hands over the eyes!"
+  },
+  {
+   "text": "맞아요, 슬픈 마음이에요. 그때 쪼르르 소리가 났어요.",
+   "en": "Yes, she feels sad. Then came a scurrying sound."
+  },
+  {
+   "text": "그때 생쥐들이 달려왔어요. \"우리가 도와줄게!\"",
+   "en": "Then the mice came running. We will help you!",
+   "segs": [
+    [
+     "nar",
+     "Then the mice came running."
+    ],
+    [
+     "mouse",
+     "We will help you!"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐를 톡톡톡톡 눌러서 하나씩 세어 봐요!",
+   "en": "Tap the mice, tap tap tap tap, and count them one by one!"
+  },
+  {
+   "text": "생쥐를 톡톡톡톡! 하나씩 세어요.",
+   "en": "Tap the mice, tap tap tap tap! Count them one by one."
+  },
+  {
+   "text": "생쥐가 하나, 둘, 셋, 넷! 모두 같이 청소를 했어요.",
+   "en": "One, two, three, four mice! They all cleaned together."
+  },
+  {
+   "text": "신데렐라는 방긋 웃었어요. \"고마워, 친구들!\"",
+   "en": "Cinderella smiled. Thank you, friends!",
+   "segs": [
+    [
+     "nar",
+     "Cinderella smiled."
+    ],
+    [
+     "cind",
+     "Thank you, friends!"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 왕궁에서 무도회가 열린다는 소식이 왔어요.",
+   "en": "One day, news came that there would be a ball at the palace."
+  },
+  {
+   "text": "언니들은 커다란 리본을 달고 빙글빙글 돌았어요.",
+   "en": "The stepsisters put on big ribbons and spun around."
+  },
+  {
+   "text": "언니를 톡! 리본을 달아 줘요.",
+   "en": "Tap a stepsister! Help with the ribbon."
+  },
+  {
+   "text": "쿵! 리본이 너무 커서 언니들이 서로 부딪혔어요. 신데렐라는 킥킥 웃었어요.",
+   "en": "Bonk! The ribbons were so big that the sisters bumped into each other. Cinderella giggled."
+  },
+  {
+   "text": "새엄마와 언니들은 무도회에 갔어요. 신데렐라만 집에 남았어요.",
+   "en": "Her stepmother and sisters went to the ball. Only Cinderella stayed home."
+  },
+  {
+   "text": "신데렐라는 정원에서 훌쩍훌쩍 울었어요.",
+   "en": "Cinderella sat in the garden and sniffled."
+  },
+  {
+   "text": "그때 요정 할머니가 나타났어요. \"울지 마, 내가 도와줄게!\" 요정 할머니를 톡!",
+   "en": "Then a fairy godmother appeared. Do not cry, I will help you! Tap the fairy godmother!",
+   "segs": [
+    [
+     "nar",
+     "Then a fairy godmother appeared."
+    ],
+    [
+     "fairy",
+     "Do not cry, I will help you!"
+    ],
+    [
+     "nar",
+     "Tap the fairy godmother!"
+    ]
+   ]
+  },
+  {
+   "text": "요정 할머니를 톡! 마법을 부려요.",
+   "en": "Tap the fairy godmother! Make some magic."
+  },
+  {
+   "text": "요정 할머니가 지팡이를 휘휘! 생쥐들은 하얀 말이 되었어요.",
+   "en": "The fairy godmother swished her wand! The mice became white horses."
+  },
+  {
+   "text": "커다란 호박은 황금 마차가 되었어요!",
+   "en": "The big pumpkin became a golden coach!"
+  },
+  {
+   "text": "신데렐라는 반짝이는 드레스를 입고 유리 구두를 신었어요.",
+   "en": "Cinderella wore a sparkling dress and glass slippers."
+  },
+  {
+   "text": "\"밤 열두 시 종이 울리면 마법이 풀려요. 서둘러 돌아오렴!\"",
+   "en": "When the clock strikes twelve, the magic will end. Hurry back!",
+   "segs": [
+    [
+     "fairy",
+     "When the clock strikes twelve, the magic will end. Hurry back!"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 고개를 끄덕이고 마차를 탔어요.",
+   "en": "Cinderella nodded and rode off in the coach."
+  },
+  {
+   "text": "궁전에서는 왕자님이 신데렐라에게 인사했어요. \"나와 함께 춤춰요!\"",
+   "en": "At the palace, the prince greeted Cinderella. Dance with me!",
+   "segs": [
+    [
+     "nar",
+     "At the palace, the prince greeted Cinderella."
+    ],
+    [
+     "prince",
+     "Dance with me!"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라를 톡톡톡 눌러서 함께 춤을 춰 봐요!",
+   "en": "Tap Cinderella, tap tap tap, and dance together!"
+  },
+  {
+   "text": "신데렐라를 톡톡톡! 함께 춤을 춰요.",
+   "en": "Tap Cinderella, tap tap tap! Dance together."
+  },
+  {
+   "text": "둘은 빙글빙글 춤을 추었어요. 신데렐라는 정말 행복했어요.",
+   "en": "The two of them twirled and danced. Cinderella was so happy."
+  },
+  {
+   "text": "그때 시계탑에서 종이 울렸어요. 신데렐라를 톡톡톡톡톡 눌러서 종소리를 세어 봐요!",
+   "en": "Then the clock tower bell rang. Tap Cinderella, tap tap tap tap tap, and count the bells!"
+  },
+  {
+   "text": "신데렐라를 톡톡톡톡톡! 종소리를 세어요.",
+   "en": "Tap Cinderella, tap tap tap tap tap! Count the bells."
+  },
+  {
+   "text": "종이 하나, 둘, 셋, 넷, 다섯! 마법이 풀리기 전에 달려야 해요!",
+   "en": "The bell rang one, two, three, four, five! She had to run before the magic ended!"
+  },
+  {
+   "text": "신데렐라는 계단을 후다닥 달려 내려갔어요.",
+   "en": "Cinderella ran down the stairs, pitter-patter."
+  },
+  {
+   "text": "앗! 유리 구두 한 짝이 계단에 떨어졌어요.",
+   "en": "Oh! One glass slipper fell on the stairs."
+  },
+  {
+   "text": "왕자님이 구두를 주웠어요. \"이 구두의 주인을 꼭 찾을 거야!\"",
+   "en": "The prince picked up the slipper. I will find the owner of this slipper!",
+   "segs": [
+    [
+     "nar",
+     "The prince picked up the slipper."
+    ],
+    [
+     "prince",
+     "I will find the owner of this slipper!"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날, 시종이 집집마다 구두를 들고 찾아왔어요.",
+   "en": "The next day, the royal helper visited every house with the slipper."
+  },
+  {
+   "text": "신데렐라의 집에도 왔어요. \"이 구두가 꼭 맞는 분을 찾아요!\"",
+   "en": "He came to Cinderella's house too. I am looking for the one who fits this slipper!",
+   "segs": [
+    [
+     "nar",
+     "He came to Cinderella's house too."
+    ],
+    [
+     "footman",
+     "I am looking for the one who fits this slipper!"
+    ]
+   ]
+  },
+  {
+   "text": "언니가 발을 쏙 넣어 보았어요. 하지만 발이 너무 커서 안 들어갔어요.",
+   "en": "A stepsister tried it on. But her foot was too big, and it did not fit."
+  },
+  {
+   "text": "구두가 꼭 맞는 사람은 누굴까요? 앞치마를 입은 신데렐라를 톡!",
+   "en": "Who is the one that fits the slipper? Tap Cinderella in her apron!"
+  },
+  {
+   "text": "신데렐라를 톡!",
+   "en": "Tap Cinderella!"
+  },
+  {
+   "text": "앞치마를 입은 친구를 찾아봐요.",
+   "en": "Find the girl in the apron."
+  },
+  {
+   "text": "앞치마를 입은 신데렐라를 톡!",
+   "en": "Tap Cinderella in her apron!"
+  },
+  {
+   "text": "구두가 꼭 맞았어요! 모두 깜짝 놀랐어요.",
+   "en": "The slipper fit perfectly! Everyone was so surprised."
+  },
+  {
+   "text": "언니들이 말했어요. \"신데렐라, 그동안 미안해!\"",
+   "en": "The sisters said, Cinderella, we are sorry!",
+   "segs": [
+    [
+     "nar",
+     "The sisters said,"
+    ],
+    [
+     "sisa",
+     "Cinderella, we are sorry!"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 웃으며 말했어요. \"괜찮아요. 우리 같이 행복해요!\"",
+   "en": "Cinderella smiled and said, That is okay. Let us be happy together!",
+   "segs": [
+    [
+     "nar",
+     "Cinderella smiled and said,"
+    ],
+    [
+     "cind",
+     "That is okay. Let us be happy together!"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라를 톡! 모두 함께 만세!",
+   "en": "Tap Cinderella! Hooray, all together!"
+  },
+  {
+   "text": "착한 마음은 행복을 불러와요. 신데렐라 이야기는 이렇게 끝났어요.",
+   "en": "A kind heart brings happiness. And that is how Cinderella's story ended."
+  }
+ ],
+ "ui": {
+  "쓱쓱!": "Swish swish!",
+  "싹싹!": "Sweep sweep!",
+  "깨끗!": "Clean!",
+  "하나!": "One!",
+  "둘!": "Two!",
+  "셋!": "Three!",
+  "넷!": "Four!",
+  "다섯!": "Five!",
+  "빙글!": "Twirl!",
+  "팔랑!": "Flutter!",
+  "뎅!": "Dong!",
+  "쿵!": "Bonk!",
+  "반짝!": "Sparkle!",
+  "부엌": "The Kitchen",
+  "난롯가": "By the Fireplace",
+  "거실": "The Parlor",
+  "밤 정원": "The Night Garden",
+  "무도회": "The Ball",
+  "시계탑": "The Clock Tower",
+  "계단": "The Stairs",
+  "구두 찾기": "Finding the Owner",
+  "궁전 정원": "The Palace Garden",
+  "신데렐라": "Cinderella",
+  "착한 마음은 행복을 불러와요": "A kind heart brings happiness",
+  "착한 마음은 행복을 불러와요!": "A kind heart brings happiness!",
+  "슬픈 얼굴": "Sad face"
+ }
+}
