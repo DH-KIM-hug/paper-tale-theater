@@ -3,7 +3,7 @@ Object.assign(NARRATION_CLIPS, {
  "옛날 옛날, 깊은 산골에 팥죽을 아주 잘 쑤는 할멈이 살았어요.": "audio/el/patjuk/nar_06eb3a70ae.mp3",
  "어흥! 어느 날 커다란 호랑이가 나타났어요. \"할멈, 잡아먹어야겠다!\"": [
   "audio/el/patjuk/nar_7ee5ee20a6.mp3",
-  "audio/el/patjuk/tiger_d85b0d90df.mp3"
+  "audio/el/patjuk/tiger_8ef59a2dc2.mp3"
  ],
  "\"호랑이야, 동짓날에 맛있는 팥죽을 쑤어 줄게. 그때까지 기다려 다오.\" 호랑이는 어슬렁어슬렁 돌아갔어요.": [
   "audio/el/patjuk/halmi_0fcecc65d5.mp3",
@@ -69,16 +69,16 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/patjuk/nar_1baeba330e.mp3"
  ],
  "\"앗, 뜨거워! 눈이야!\" 호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요. 다음은 누구일까요?": [
-  "audio/el/patjuk/tiger_b054e09a39.mp3",
+  "audio/el/patjuk/tiger_4d54ffa99b.mp3",
   "audio/el/patjuk/nar_34e056749a.mp3"
  ],
  "\"아야야!\" 호랑이가 깜짝 놀라 뒷걸음질을 쳤어요. 다음은 누구죠?": [
-  "audio/el/patjuk/tiger_e659b4f946.mp3",
+  "audio/el/patjuk/tiger_a15dedfcc5.mp3",
   "audio/el/patjuk/nar_e4c22cdd7e.mp3"
  ],
  "미끌! 호랑이가 꽈당 넘어졌어요. 이번엔 누구일까요?": "audio/el/patjuk/nar_e87ed4c1a3.mp3",
  "\"엉엉, 아파!\" 호랑이가 문 쪽으로 도망가요. 다음은 누구?": [
-  "audio/el/patjuk/tiger_f4df10c77e.mp3",
+  "audio/el/patjuk/tiger_4244802a45.mp3",
   "audio/el/patjuk/nar_fe96726485.mp3"
  ],
  "쿵! 절구에 맞은 호랑이가 마당으로 도망쳐 쭉 뻗어 버렸어요. 이제 누구 차례죠?": "audio/el/patjuk/nar_2ea26a6960.mp3",
@@ -103,35 +103,35 @@ Object.assign(NARRATION_CLIPS, {
 Object.assign(VOICE_LINES, {
  "cut_bam": [
   "audio/el/patjuk/bam_4dc99eda32.mp3",
-  "audio/el/patjuk/tiger_27a94b7015.mp3"
+  "audio/el/patjuk/tiger_706727e212.mp3"
  ],
  "cut_jara": [
   "audio/el/patjuk/jara_5987cbc13a.mp3",
-  "audio/el/patjuk/tiger_c2bd0f7ff3.mp3"
+  "audio/el/patjuk/tiger_23905adcb6.mp3"
  ],
  "cut_ddong": [
   "audio/el/patjuk/ddong_9401095a59.mp3",
-  "audio/el/patjuk/tiger_d23f2d5ab9.mp3"
+  "audio/el/patjuk/tiger_80f33bf454.mp3"
  ],
  "cut_songgot": [
   "audio/el/patjuk/songgot_cc80941261.mp3",
-  "audio/el/patjuk/tiger_6ab6fe02bb.mp3"
+  "audio/el/patjuk/tiger_01e2e19edb.mp3"
  ],
  "cut_jeolgu": [
   "audio/el/patjuk/jeolgu_1ac83277b3.mp3",
-  "audio/el/patjuk/tiger_02a9acdd70.mp3"
+  "audio/el/patjuk/tiger_7601d8b4bd.mp3"
  ],
  "cut_myeongseok": [
   "audio/el/patjuk/myeongseok_a67f75e63a.mp3",
-  "audio/el/patjuk/tiger_bef6d6a2f8.mp3"
+  "audio/el/patjuk/tiger_dc8837eb0b.mp3"
  ],
  "cut_jige": [
   "audio/el/patjuk/jige_93722f2727.mp3",
-  "audio/el/patjuk/tiger_06affc266f.mp3"
+  "audio/el/patjuk/tiger_5d68871b82.mp3"
  ],
- "cut_jige_b": "audio/el/patjuk/tiger_ddc1ccaaf2.mp3",
- "cut_wrong_1": "audio/el/patjuk/tiger_eee88eb058.mp3",
- "cut_wrong_2": "audio/el/patjuk/tiger_b7df8ea259.mp3",
+ "cut_jige_b": "audio/el/patjuk/tiger_1ea26e0634.mp3",
+ "cut_wrong_1": "audio/el/patjuk/tiger_98118039c5.mp3",
+ "cut_wrong_2": "audio/el/patjuk/tiger_26799c3034.mp3",
  "oops_bam": "audio/el/patjuk/bam_62eff0c054.mp3",
  "oops_jara": "audio/el/patjuk/jara_9f20263b8b.mp3",
  "oops_ddong": "audio/el/patjuk/ddong_835b4e94d8.mp3",

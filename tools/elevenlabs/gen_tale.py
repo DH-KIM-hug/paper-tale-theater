@@ -15,12 +15,13 @@ MODEL = 'eleven_v3'
 TAG = {'happy': '[cheerful] ', 'sad': '[sad] ', 'angry': '[angry] ', 'whisper': '[whispers] ', 'toneup': '[excited] ', 'tonedown': '[calm] '}
 SETTINGS = {'stability': 0.5, 'similarity_boost': 0.75, 'style': 0.3}
 
-def tagged(text, emo):
-    if not MODEL.startswith('eleven_v') or MODEL == 'eleven_multilingual_v2' or not emo: return text
+def tagged(text, emo, model=None):
+    model = model or MODEL
+    if not model.startswith('eleven_v') or model == 'eleven_multilingual_v2' or not emo: return text
     return TAG.get(emo.partition(':')[0], '') + text
 
-def tts(path, voice, text):
-    body = {'text': text, 'model_id': MODEL, 'voice_settings': SETTINGS}
+def tts(path, voice, text, model=None):
+    body = {'text': text, 'model_id': model or MODEL, 'voice_settings': SETTINGS}
     for attempt in range(6):
         r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(),
                                    {'xi-api-key': KEY, 'Content-Type': 'application/json'})
@@ -38,22 +39,24 @@ def main():
     cap = int(sys.argv[sys.argv.index('--max-chars') + 1]) if '--max-chars' in sys.argv else 10**9
     td = os.path.join(ROOT, 'tales', tale)
     spec = json.load(open(os.path.join(td, 'voice_script_en.json' if en else 'voice_script_el.json')))
-    V = json.load(open(os.path.join(td, 'voice_script_el.json')))['voices']
+    EL = json.load(open(os.path.join(td, 'voice_script_el.json')))
+    V = EL['voices']; MODELS = EL.get('models') or {}
     for r in V: assert r.isalpha() and r.islower(), f'배역 이름은 영어 소문자만: {r}'
     sub = 'en/' if en else ''
     outdir = os.path.join(ROOT, 'audio', 'el', tale, *(['en'] if en else [])); os.makedirs(outdir, exist_ok=True)
     chars, made, errs, skipped = 0, 0, 0, 0
     def clip(role, text, emo):
         nonlocal chars, made, errs
-        sent = tagged(text, emo)
-        h = hashlib.md5(f'{V[role]}|{MODEL}|{sent}'.encode()).hexdigest()[:10]
+        M = MODELS.get(role, MODEL)  # 배역별 모델 (voice_script_el.json 의 "models")
+        sent = tagged(text, emo, M)
+        h = hashlib.md5(f'{V[role]}|{M}|{sent}'.encode()).hexdigest()[:10]
         rel = f'audio/el/{tale}/{sub}{role}_{h}.mp3'
         path = os.path.join(ROOT, rel)
         if redo or not os.path.exists(path):
             if chars + len(sent) > cap: return None
             chars += len(sent)
             if not dry:
-                try: tts(path, V[role], sent); made += 1; print('ok', role, sent, flush=True)
+                try: tts(path, V[role], sent, M); made += 1; print('ok', role, sent, flush=True)
                 except urllib.error.HTTPError as e:
                     errs += 1; chars -= len(sent); print('ERR', e.code, e.read()[:200], role, text, flush=True); return None
         return rel
@@ -86,6 +89,7 @@ def main():
     used = {u for v in list(clips.values()) + list(voice.values()) for u in urls_of(v)}
     for fn in os.listdir(outdir):
         fp = os.path.join(outdir, fn)
+        if fn.partition('_')[0] in MODELS: continue  # 모델을 따로 쓰는 배역은 비교용으로 옛 클립을 남긴다
         if os.path.isfile(fp) and f'audio/el/{tale}/{sub}{fn}' not in used: os.remove(fp)
     print(f'{tale}: 새로 {made}개, {chars}자, 오류 {errs}, 문장 {len(clips)}, 소리 대사 {len(voice)}, 건너뜀 {skipped}')
 
