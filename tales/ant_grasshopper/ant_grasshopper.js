@@ -555,7 +555,7 @@
   const CLOTH = Object.fromEntries(Object.entries(CLOTH0).map(([k, fn]) => [k, (T, g) => { if (!iconArt(T, g, 'icon_' + k)) fn(T, g); }]));
   /* 옷 고르기 배지 3개: 가로는 오른쪽 줄, 세로는 위쪽 줄 (자리는 섞는다) */
   function choiceBadges(T, icons, y) {
-    if (narrow()) { const f = rowFit(3, 170); const xs = shuffle(f.xs); return icons.map((d, i) => badge(T, xs[i], 92, d, 78, f.s)); }
+    if (narrow()) { const f = rowFit(3, 170); const xs = shuffle(f.xs); return icons.map((d, i) => badge(T, xs[i], 124, d, 78, f.s)); }
     const xs = shuffle([520, 720, 900]);
     return icons.map((d, i) => badge(T, xs[i], y, d));
   }
@@ -598,7 +598,12 @@
   }
 
   /* 컷 그림 도우미 */
-  const cutText = (T, svg, x, y, text, size = 72) => T.el('text', { x, y, 'text-anchor': 'middle', 'font-size': size, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(text) }, svg);
+  const cutText = (T, svg, x, y, text, size = 72) => {
+    const t = T.tr(text);
+    // 영어처럼 글자 수가 많으면 그림(폭 400) 밖으로 잘리지 않게 글자 크기를 줄이고, 가장자리에 가까우면 안쪽으로 모은다
+    if (/[A-Za-z]/.test(t)) { size = Math.min(size, 340 / (t.length * .56)); x = Math.max(t.length * size * .28 + 12, Math.min(388 - t.length * size * .28, x)); }
+    return T.el('text', { x, y, 'text-anchor': 'middle', 'font-size': size, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: t }, svg);
+  };
 
   /* ================= 이야기 ================= */
   async function run(T) {
@@ -995,7 +1000,7 @@
 
     // 끝 놀이: 계절 카드 순서대로
     await camTo(500, 280, 1, 400);
-    const veil = el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: C.cream, opacity: .55 }, T.fx);
+    const veil = el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: C.cream, opacity: .88 }, T.fx);
     const order = ['spring', 'summer', 'autumn', 'winter'];
     let spots;
     if (narrow()) { const [a, b] = visX(), w = b - a, sc = Math.min(.9, (w - 40) / 2 / 190); spots = [[500 - w / 4 + 4, 160], [500 + w / 4 - 4, 160], [500 - w / 4 + 4, 390], [500 + w / 4 - 4, 390]].map(([x, y]) => [x, y, sc]); }
