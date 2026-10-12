@@ -1,11 +1,11 @@
 {
  "voices": {
   "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "hood": "cgSgspJ2msm6clMCkdW9",
+  "hood": "Lb7qkOn5hF8p7qfCDH8q",
   "wolf": "nPczCjzI2devNBz1zQrb",
-  "granny": "XrExE9yKIg1WjnnlVkGX",
-  "mama": "EXAVITQu4vr4xnSDxMaL",
-  "hunter": "iP95p4xoKVk53GoZ742B"
+  "granny": "gnWujHp24oqX3I03lRbU",
+  "mama": "hpp4J3VqNfWAUOO0d1Us",
+  "hunter": "cjVigY5qzO86Huf0OWal"
  },
  "models": {
   "nar": "eleven_v4",
@@ -832,5 +832,5 @@
    ]
   }
  ],
- "notes": "빨간 모자: 해설 Lily, 빨간 모자 Jessica(밝은 아이), 엄마 Sarah(믿음직하고 포근), 할머니 Matilda, 사냥꾼 Chris(털털하고 다정), 늑대 Brian(세 늑대 동화 공통). 늑대는 달콤한 척 코믹하게, 어흥 대목도 장난스럽게 한 줄 안에서 태그를 나눔."
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, hood=Annie, wolf=Brian, granny=Huelyn, mama=Bella, hunter=Eric"
 }
