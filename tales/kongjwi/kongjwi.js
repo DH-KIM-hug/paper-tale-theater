@@ -3,11 +3,12 @@
 (() => {
   const AS = '../../assets/v3w/';
   const GROUND = 505;
-  const ASP = { basket_r: 1.2797, basket_y: 1.2423, buk: .9871, drum: 1.1041, fairy_float: .65, fairy_give: .6414, gong: 1.0033,
+  const ASP = { basket_r: 1.5152, basket_y: 1.4989, buk: .9886, drum: 1.1532, fairy_float: .65, fairy_give: .6414, gong: .9726,
     hangari: 1.0324, kong_bride: .48, kong_hoe: .8914, kong_loom: .8357, kong_pour: .7186, kong_shoes: .5129, kong_sweep: .8586,
-    kong_wet: .5, loom: .9332, ox_stand: 1.1725, ox_walk: 2.0, pail: .8429, pat_dressed: .5643, pat_eat: .7057, pat_shy: .5871,
-    ricecake: 1.7995, shoe_butterfly: 2.5547, shoe_peony: 2.3973, shoe_plum: 2.1944, sparrow_flock: 2.2508, sparrow_one: 1.1778,
+    kong_wet: .5, loom: 1.6787, ox_stand: 1.1725, ox_walk: 2.0, pail: .9229, pat_dressed: .5643, pat_eat: .7057, pat_shy: .5871,
+    ricecake: 2, shoe_butterfly: 2.5547, shoe_peony: 2.5547, shoe_plum: 2.583, sparrow_flock: 2.2508, sparrow_one: 1.1778,
     step_dressed: .6129, step_order: .6286, step_shy: .5457, toad_idle: 1.1717, toad_plug: 1.3333, won_shoe: .54, won_stand: .5057 };
+  const NF = new Set(['basket_r', 'basket_y', 'buk', 'drum', 'gong', 'loom', 'pail', 'ricecake', 'shoe_peony', 'shoe_plum']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
   const BGS = ['yard', 'field', 'jar', 'jarbottom', 'mat', 'loom', 'stream', 'feast', 'gate', 'wedding'];
   const CUTS = ['ox', 'wet', 'toad', 'sparrows', 'fairy', 'splash', 'shy'];
   const bgSrc = k => AS + 'kj_bg_' + k + '.webp', cutSrc = k => AS + 'kj_cut_' + k + '.webp';
@@ -18,7 +19,7 @@
     const a = T.actor(T.world, -400, GROUND, g => {
       Object.entries(poses).forEach(([k, [f, h, nat]]) => {
         const w = h * ASP[f], wrap = T.el('g', { filter: 'url(#pp)' }, g);
-        T.el('image', { href: AS + 'kj_' + f + '.webp', x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
+        T.el('image', { href: AS + 'kj_' + f + (NF.has(f) ? 'nf' : '') + '.webp', x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
         wrap.style.display = 'none'; looks[k] = { wrap, h, nat };
       });
     });
