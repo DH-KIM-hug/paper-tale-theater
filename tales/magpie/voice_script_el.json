@@ -1,12 +1,12 @@
 {
  "voices": {
-  "nar": "XrExE9yKIg1WjnnlVkGX",
+  "nar": "gnWujHp24oqX3I03lRbU",
   "sch": "cjVigY5qzO86Huf0OWal",
   "snake": "nPczCjzI2devNBz1zQrb",
   "lady": "pFZP5JQG7iQjIQuC4Bku",
-  "mom": "Xb7hH8MSUJpSbSDYk0k2",
-  "dad": "iP95p4xoKVk53GoZ742B",
-  "chick": "cgSgspJ2msm6clMCkdW9"
+  "mom": "hpp4J3VqNfWAUOO0d1Us",
+  "dad": "5ON5Fnz24cnOozEQfGAm",
+  "chick": "rBkiq5ZQ43ogwd6i4uIQ"
  },
  "models": {
   "nar": "eleven_v4",
@@ -56,7 +56,7 @@
   "dad",
   "chick"
  ],
- "notes": "narrator Matilda (upbeat, clear; varies narrator). sch Eric (smooth, trustworthy scholar), snake Brian (deep, comic-menacing, softens at the end), lady Lily (velvety disguise of the snake), mom Alice (worried mother magpie), dad Chris (down-to-earth father magpie), chick Jessica (bright baby). All eleven_v4; snake 0.3/0.5, children 0.35/0.45, narrator 0.45/0.35.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, sch=Eric, snake=Brian, lady=Lily, mom=Bella, dad=Namchun, chick=Peanut. 아기·꼬마 역(chick)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여.",
  "lines": [
   {
    "text": "옛날 옛날에 마음씨 고운 선비가 길을 걸어가고 있었어요.",
@@ -204,7 +204,7 @@
      "chick",
      "선비님, 고맙습니다!",
      null,
-     "[cheerful, grateful, childlike]"
+     "[cheerful, grateful, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
