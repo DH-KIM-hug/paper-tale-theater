@@ -1,10 +1,10 @@
 {
  "voices": {
-  "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "mom": "XrExE9yKIg1WjnnlVkGX",
-  "piga": "IKne3meq5aSn9XLyUdCD",
-  "pigb": "TX3LPaxmHKxFdv7VOQHJ",
-  "pigc": "cgSgspJ2msm6clMCkdW9",
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
+  "mom": "hpp4J3VqNfWAUOO0d1Us",
+  "piga": "ygoBNrnmTEdu5NtDTmAY",
+  "pigb": "rBkiq5ZQ43ogwd6i4uIQ",
+  "pigc": "MIl0Flub6Sc9KSkX2A42",
   "wolf": "nPczCjzI2devNBz1zQrb"
  },
  "models": {
@@ -256,7 +256,7 @@
      "piga",
      "아직도 해? 우리랑 놀자!",
      "happy",
-     "[teasing, cheeky, childlike]"
+     "[teasing, cheeky, childlike, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -329,7 +329,7 @@
      "piga",
      "싫어요, 싫어요!",
      "happy",
-     "[defiant, childlike, cheerful]"
+     "[defiant, childlike, cheerful, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -397,7 +397,7 @@
      "pigb",
      "싫어요, 싫어요!",
      "happy",
-     "[defiant, childlike, cheerful]"
+     "[defiant, childlike, cheerful, baby voice, lisping, very young child, giggly]"
     ],
     [
      "nar",
@@ -519,7 +519,7 @@
      "pigc",
      "셋이서 함께라서 무섭지 않아!",
      "happy",
-     "[brave, cheerful, childlike]"
+     "[brave, cheerful, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -547,7 +547,7 @@
      "pigc",
      "싫어요, 싫어요!",
      "happy",
-     "[defiant, brave, childlike]"
+     "[defiant, brave, childlike, baby voice, lisping, very young child, giggly]"
     ],
     [
      "wolf",
@@ -701,5 +701,5 @@
    ]
   }
  ],
- "notes": "아기 돼지 삼 형제: 해설 Lily(벨벳 같은 배우 목소리), 엄마 Matilda, 첫째 Charlie, 둘째 Liam, 막내 Jessica(작지만 야무진 목소리), 늑대 Brian(세 늑대 동화 모두 같은 목소리). 늑대는 으르렁이 아니라 코믹하게 씩씩거리는 연기, 해설은 차분하고 장난스럽게."
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, mom=Bella, piga=Hopsi, pigb=Peanut, pigc=Mithi, wolf=Brian. 아기·꼬마 역(piga, pigb, pigc)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여."
 }
