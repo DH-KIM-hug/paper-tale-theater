@@ -1,14 +1,15 @@
 /* 아기 돼지 삼형제 — 목업 (그림 파일은 assets/v3w/tp_*.webp, 낭독 파일 없이 글자만으로 진행) */
 (() => {
-  const U = n => `../../assets/v3w/tp_${n}.webp`;
+  const NF = { bricks: 'nf', straw: 'nf', wood: 'nf', cut_splash: 'nf', cut_tired: 'v2', cut_crawl: 'v2', bg_brick_out: 'v2' }; // 얼굴 없는/통일한 새 그림(파일 이름 끝 글자)
+  const U = n => `../../assets/v3w/tp_${n}${NF[n] || ''}.webp`;
   const SZ = {
     pig1_base: [365, 480], pig1_build: [471, 480], pig1_flee: [407, 480], pig1_joy: [361, 480], pig1_play: [342, 480],
     pig2_base: [378, 480], pig2_build: [442, 480], pig2_flee: [401, 480], pig2_joy: [410, 480], pig2_play: [453, 480],
     pig3_base: [353, 480], pig3_build: [416, 480], pig3_flee: [416, 480], pig3_joy: [392, 480], pig3_play: [314, 480],
     mama: [416, 480], wolf_walk: [480, 363], wolf_sniff: [480, 346], wolf_puff: [480, 325], wolf_tired: [369, 480],
-    wolf_hot: [222, 480], wolf_flee: [480, 243], straw: [480, 217], wood: [480, 245], bricks: [480, 428], brick1: [480, 242],
+    wolf_hot: [222, 480], wolf_flee: [480, 243], straw: [700, 294], wood: [700, 289], bricks: [459, 448], brick1: [480, 242],
     house_straw: [918, 537], house_straw_ruin: [944, 517], house_wood: [748, 671], house_wood_ruin: [889, 664],
-    house_brick: [845, 729], pot: [480, 222], fan: [416, 480], instruments: [480, 237],
+    house_brick: [845, 729], pot: [480, 222], fan: [643, 700], instruments: [480, 237],
   };
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const NUM = ['하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열'];
