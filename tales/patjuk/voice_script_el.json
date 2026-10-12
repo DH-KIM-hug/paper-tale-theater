@@ -1,15 +1,15 @@
 {
  "voices": {
-  "nar": "JBFqnCBsd6RMkjVDRZzb",
-  "halmi": "XrExE9yKIg1WjnnlVkGX",
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "halmi": "gnWujHp24oqX3I03lRbU",
   "tiger": "nPczCjzI2devNBz1zQrb",
-  "bam": "cgSgspJ2msm6clMCkdW9",
-  "jara": "FGY2WhTYpPnrIDTdsKH5",
-  "ddong": "TX3LPaxmHKxFdv7VOQHJ",
-  "songgot": "bIHbv24MWmeRgasZH58o",
-  "jeolgu": "IKne3meq5aSn9XLyUdCD",
-  "myeongseok": "EXAVITQu4vr4xnSDxMaL",
-  "jige": "N2lVS1w4EtoT3dr4eOWO"
+  "bam": "tc",
+  "jara": "tc",
+  "ddong": "tc",
+  "songgot": "tc",
+  "jeolgu": "tc",
+  "myeongseok": "tc",
+  "jige": "tc"
  },
  "lines": [
   {
@@ -934,12 +934,57 @@
   ]
  },
  "models": {
-  "tiger": "eleven_v4"
+  "nar": "eleven_v4",
+  "halmi": "eleven_v4",
+  "tiger": "eleven_v4",
+  "bam": "eleven_v4",
+  "jara": "eleven_v4",
+  "ddong": "eleven_v4",
+  "songgot": "eleven_v4",
+  "jeolgu": "eleven_v4",
+  "myeongseok": "eleven_v4",
+  "jige": "eleven_v4"
  },
  "settings": {
   "tiger": {
    "stability": 0.3,
    "style": 0.5
+  },
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "halmi": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "bam": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "jara": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "ddong": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "songgot": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "jeolgu": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "myeongseok": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "jige": {
+   "stability": 0.35,
+   "style": 0.45
   }
  },
  "settings_later": {
@@ -949,6 +994,16 @@
   }
  },
  "use_dir": [
-  "tiger"
- ]
+  "nar",
+  "halmi",
+  "tiger",
+  "bam",
+  "jara",
+  "ddong",
+  "songgot",
+  "jeolgu",
+  "myeongseok",
+  "jige"
+ ],
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, halmi=Huelyn, tiger=Brian, bam=tc, jara=tc, ddong=tc, songgot=tc, jeolgu=tc, myeongseok=tc, jige=tc. tc 배역은 Typecast 클립 그대로"
 }

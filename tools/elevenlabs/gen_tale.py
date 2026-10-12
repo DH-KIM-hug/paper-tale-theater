@@ -46,8 +46,23 @@ def main():
     sub = 'en/' if en else ''
     outdir = os.path.join(ROOT, 'audio', 'el', tale, *(['en'] if en else [])); os.makedirs(outdir, exist_ok=True)
     chars, made, errs, skipped = 0, 0, 0, 0
-    def clip(role, text, emo, dr=None, sid=None):
+    TCF = os.path.join(ROOT, 'narration_tc.js' if tale == 'patjuk' else f'tales/{tale}/narration.js')  # voices 값이 'tc' 인 배역은 Typecast 클립을 그대로 쓴다
+    TC = {}
+    if any(v == 'tc' for v in V.values()) and os.path.exists(TCF):
+        src = open(TCF).read()
+        for nm in ('NARRATION_CLIPS', 'VOICE_LINES'):
+            m = re.search(r'const ' + nm + r' = (\{.*?\n\});', src, re.S)
+            if m: TC[nm] = json.loads(m.group(1))
+    def tc_url(group, key, si, role):
+        v = (TC.get(group) or {}).get(key)
+        v = [v] if isinstance(v, str) else v
+        if v and si < len(v) and os.path.basename(v[si]).startswith(role + '_'): return v[si]
+        return None
+    def clip(role, text, emo, dr=None, sid=None, tcu=None):
         nonlocal chars, made, errs
+        if V[role] == 'tc':
+            if not tcu: errs += 1; print('ERR tc 클립 없음', role, text)
+            return tcu
         M = MODELS.get(role, MODEL)  # 배역별 모델 (voice_script_el.json 의 "models")
         if USE_DIR is not None and role not in USE_DIR: dr = None
         ST = SET.get(role)  # 배역별 voice_settings (예: 호랑이·할멈은 stability 를 낮춰 표정을 크게)
@@ -83,14 +98,14 @@ def main():
         shown = ln['en'] if en else text
         segs = [s + [None] * (4 - len(s)) for s in ln.get('segs') or [['nar', shown]]]
         if en: segs = [[role, s, emo, en_dir(ELL.get(text), role, si)] for si, (role, s, emo, dr) in enumerate(segs)]
-        urls = [clip(role, s, emo, dr, f'L{ni}.{si}') for si, (role, s, emo, dr) in enumerate(segs)]
+        urls = [clip(role, s, emo, dr, f'L{ni}.{si}', tc_url('NARRATION_CLIPS', text, si, role)) for si, (role, s, emo, dr) in enumerate(segs)]
         if not all(urls): skipped += 1; continue  # 일부만 만들어진 줄은 통째로 Typecast 에 맡김
         u = urls[0] if len(urls) == 1 else urls
         clips[text] = {'t': shown, 'c': u} if en else u
     voice = {}
     for key, segs in (spec.get('extra') or {}).items():
         eld = (EL.get('extra') or {}).get(key)
-        urls = [clip(s[0], s[1], s[2] if len(s) > 2 else None, en_dir(eld, s[0], si) if en else (s[3] if len(s) > 3 else None), f'X{key}.{si}') for si, s in enumerate(segs)]
+        urls = [clip(s[0], s[1], s[2] if len(s) > 2 else None, en_dir(eld, s[0], si) if en else (s[3] if len(s) > 3 else None), f'X{key}.{si}', tc_url('VOICE_LINES', key, si, s[0])) for si, s in enumerate(segs)]
         if not all(urls): skipped += 1; continue
         voice[key] = urls[0] if len(urls) == 1 else urls
     if ONLY: print('시범', made, '개,', chars, '자'); return

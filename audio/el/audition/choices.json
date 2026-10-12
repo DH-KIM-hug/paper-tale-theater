@@ -1,0 +1,235 @@
+{
+ "narrator_rotation": [
+  "Lily",
+  "Huelyn",
+  "Annie"
+ ],
+ "archetypes": {
+  "여자 내레이터": "Lily/Huelyn/Annie 동화마다 돌아가며 (남자 내레이터 없음)",
+  "할머니": "Huelyn (이 동화 해설은 Lily 또는 Annie)",
+  "할아버지·아버지": "Namchun",
+  "엄마": "Bella",
+  "여자아이": "Annie (이 동화 해설은 Annie 아님)",
+  "남자아이": "Sparkles for Kids",
+  "큰 짐승·악역": "Brian",
+  "새": "Jessica",
+  "요정·선녀": "Lily (이 동화 해설은 Lily 아님)",
+  "젊은 남성": "Eric",
+  "아기·꼬마 동물": "팥죽 사물 친구 7명은 Typecast 클립 유지(voices 값 tc); 그 밖의 꼬마 역은 baby.html B-2~B-10 (Sparkles/Jessica/Laura/Annie/Munni/Mithi/Hopsi/Teddy/Peanut)을 한 동화 안에서 겹치지 않게 돌려 쓰고 대사 방향에 아기 말투 태그; 대사 많은 역은 한국어 되는 목소리, 짧은 역은 영어 아이 목소리(Teddy·Peanut)",
+  "우스운 악역": "놀부·부자=Manbo, 마녀·새엄마·고양이=Matilda, 베짱이·도둑·도깨비·바람·여우=Callum",
+  "순한 동물": "황소·당나귀=Roger, 거북이·오리·두꺼비=Bill, 두루미·양=Haemi, 강아지=Will/Austin",
+  "관리": "Daniel"
+ },
+ "voice_ids": {
+  "Annie": "Lb7qkOn5hF8p7qfCDH8q",
+  "Austin": "4tLzQecqf3Jg3zct76Fm",
+  "Bella": "hpp4J3VqNfWAUOO0d1Us",
+  "Bill": "pqHfZKP75CvOlQylNhV4",
+  "Brian": "nPczCjzI2devNBz1zQrb",
+  "Callum": "N2lVS1w4EtoT3dr4eOWO",
+  "Chaemong": "DGDjWy2CQ8Ishu0meQte",
+  "Daniel": "onwK4e9ZLuTAKqWW03F9",
+  "Eric": "cjVigY5qzO86Huf0OWal",
+  "Haemi": "ZjAPD4f11zlnEnZpKDgo",
+  "Hopsi": "ygoBNrnmTEdu5NtDTmAY",
+  "Huelyn": "gnWujHp24oqX3I03lRbU",
+  "Jessica": "cgSgspJ2msm6clMCkdW9",
+  "Klamon": "dnZGOA54w68T7vLLPFTp",
+  "Laura": "FGY2WhTYpPnrIDTdsKH5",
+  "Liam": "TX3LPaxmHKxFdv7VOQHJ",
+  "Lily": "pFZP5JQG7iQjIQuC4Bku",
+  "Manbo": "ZZ4xhVcc83kZBfNIlIIz",
+  "Matilda": "XrExE9yKIg1WjnnlVkGX",
+  "Mithi": "MIl0Flub6Sc9KSkX2A42",
+  "Munni": "VOGEEZj2Kly5dP9LrQy8",
+  "Namchun": "5ON5Fnz24cnOozEQfGAm",
+  "Peanut": "rBkiq5ZQ43ogwd6i4uIQ",
+  "Roger": "CwhRBWXzGAHq8TQ4Fs17",
+  "Sparkles": "tapn1QwocNXk3viVSowa",
+  "Teddy": "XjGYkUkzth8BPs29fmcV",
+  "Will": "bIHbv24MWmeRgasZH58o",
+  "tc": "tc"
+ },
+ "per_tale": {
+  "patjuk": {
+   "nar": "Lily",
+   "halmi": "Huelyn",
+   "tiger": "Brian",
+   "bam": "tc",
+   "jara": "tc",
+   "ddong": "tc",
+   "songgot": "tc",
+   "jeolgu": "tc",
+   "myeongseok": "tc",
+   "jige": "tc"
+  },
+  "ant_grasshopper": {
+   "nar": "Huelyn",
+   "hop": "Callum",
+   "ant": "Bella",
+   "baby": "Munni",
+   "ants": "Peanut",
+   "card": "Teddy"
+  },
+  "bremen": {
+   "nar": "Annie",
+   "donkey": "Roger",
+   "dog": "Will",
+   "cat": "Laura",
+   "rooster": "Jessica",
+   "miller": "Namchun",
+   "robber": "Callum",
+   "boss": "Brian"
+  },
+  "cinderella": {
+   "nar": "Huelyn",
+   "cind": "Annie",
+   "step": "Matilda",
+   "sisa": "Laura",
+   "sisb": "Chaemong",
+   "fairy": "Lily",
+   "prince": "Eric",
+   "mouse": "Peanut",
+   "footman": "Daniel"
+  },
+  "fox_crane": {
+   "nar": "Lily",
+   "fox": "Callum",
+   "crane": "Haemi",
+   "duck": "Bill",
+   "butterfly": "Mithi"
+  },
+  "frog": {
+   "nar": "Annie",
+   "mom": "Bella",
+   "baby": "Munni",
+   "babyb": "Mithi",
+   "babyc": "Hopsi",
+   "ox": "Roger"
+  },
+  "goldilocks": {
+   "nar": "Lily",
+   "goldi": "Annie",
+   "dad": "Brian",
+   "mom": "Bella",
+   "baby": "Mithi",
+   "bowl": "Chaemong"
+  },
+  "hansel": {
+   "nar": "Huelyn",
+   "hans": "Sparkles",
+   "gret": "Annie",
+   "father": "Namchun",
+   "witch": "Matilda",
+   "duck": "Teddy",
+   "bird": "Jessica"
+  },
+  "heungbu": {
+   "nar": "Annie",
+   "heung": "Eric",
+   "nol": "Manbo",
+   "nwife": "Matilda",
+   "dok": "Callum"
+  },
+  "kongjwi": {
+   "nar": "Huelyn",
+   "kong": "Annie",
+   "pat": "Laura",
+   "step": "Matilda",
+   "toad": "Bill",
+   "ox": "Roger",
+   "fairy": "Lily",
+   "won": "Daniel",
+   "sparrow": "Jessica"
+  },
+  "lion_mouse": {
+   "nar": "Annie",
+   "lion": "Brian",
+   "mouse": "Munni"
+  },
+  "magic_jar": {
+   "nar": "Lily",
+   "farmer": "Eric",
+   "wife": "Bella",
+   "rich": "Manbo",
+   "father": "Namchun"
+  },
+  "magpie": {
+   "nar": "Huelyn",
+   "sch": "Eric",
+   "snake": "Brian",
+   "lady": "Lily",
+   "mom": "Bella",
+   "dad": "Namchun",
+   "chick": "Peanut"
+  },
+  "red_hood": {
+   "nar": "Lily",
+   "hood": "Annie",
+   "wolf": "Brian",
+   "granny": "Huelyn",
+   "mama": "Bella",
+   "hunter": "Eric"
+  },
+  "rabbit": {
+   "nar": "Annie",
+   "rabbit": "Liam",
+   "turtle": "Bill",
+   "duck": "Jessica",
+   "cow": "Roger",
+   "pig": "Austin",
+   "dog": "Chaemong",
+   "sheep": "Haemi"
+  },
+  "sun_wind": {
+   "nar": "Huelyn",
+   "sun": "Lily",
+   "wind": "Callum",
+   "man": "Eric"
+  },
+  "sunmoon": {
+   "nar": "Huelyn",
+   "mom": "Bella",
+   "rich": "Matilda",
+   "tiger": "Brian",
+   "boy": "Sparkles",
+   "girl": "Annie"
+  },
+  "three_pigs": {
+   "nar": "Annie",
+   "mom": "Bella",
+   "piga": "Hopsi",
+   "pigb": "Peanut",
+   "pigc": "Mithi",
+   "wolf": "Brian"
+  },
+  "turnip": {
+   "nar": "Lily",
+   "grandpa": "Namchun",
+   "grandma": "Huelyn",
+   "girl": "Annie",
+   "dog": "Munni",
+   "cat": "Hopsi",
+   "mouse": "Teddy"
+  },
+  "ugly_duckling": {
+   "nar": "Huelyn",
+   "hero": "Sparkles",
+   "mom": "Bella",
+   "rooster": "Callum",
+   "ducks": "Laura",
+   "geese": "Peanut",
+   "farmer": "Namchun",
+   "cat": "Matilda",
+   "hen": "Jessica",
+   "swan": "Annie",
+   "card": "Klamon"
+  },
+  "wolf_goats": {
+   "nar": "Lily",
+   "mom": "Bella",
+   "kid": "Annie",
+   "wolf": "Brian"
+  }
+ }
+}
