@@ -1,13 +1,13 @@
 {
  "voices": {
-  "nar": "XrExE9yKIg1WjnnlVkGX",
-  "rabbit": "IKne3meq5aSn9XLyUdCD",
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
+  "rabbit": "TX3LPaxmHKxFdv7VOQHJ",
   "turtle": "pqHfZKP75CvOlQylNhV4",
   "duck": "cgSgspJ2msm6clMCkdW9",
-  "cow": "pNInz6obpgDQGcFmaJgB",
-  "pig": "iP95p4xoKVk53GoZ742B",
-  "dog": "TX3LPaxmHKxFdv7VOQHJ",
-  "sheep": "EXAVITQu4vr4xnSDxMaL"
+  "cow": "CwhRBWXzGAHq8TQ4Fs17",
+  "pig": "4tLzQecqf3Jg3zct76Fm",
+  "dog": "DGDjWy2CQ8Ishu0meQte",
+  "sheep": "ZjAPD4f11zlnEnZpKDgo"
  },
  "lines": [
   {
@@ -1213,14 +1213,14 @@
   ]
  },
  "models": {
-  "duck": "eleven_v4",
-  "pig": "eleven_v4",
-  "sheep": "eleven_v4",
   "nar": "eleven_v4",
   "rabbit": "eleven_v4",
-  "dog": "eleven_v4",
+  "turtle": "eleven_v4",
+  "duck": "eleven_v4",
   "cow": "eleven_v4",
-  "turtle": "eleven_v4"
+  "pig": "eleven_v4",
+  "dog": "eleven_v4",
+  "sheep": "eleven_v4"
  },
  "settings": {
   "duck": {
@@ -1266,5 +1266,5 @@
   "dog",
   "sheep"
  ],
- "notes": "해설 Matilda(밝고 또박또박한 여성, 경주 중계 같은 활기), 토끼 Charlie(깊고 활기찬 자신만만 젊은 남성, 우쭐함과 졸음 연기), 거북이 Bill(느리고 차분한 노인 목소리로 엉금엉금 성격), 오리 Jessica(밝고 높음), 소 Adam(굵고 느릿), 돼지 Chris(친근하고 푸근), 강아지 Liam(활기참), 양 Sarah(부드러움). 한 이야기 안에서 모두 다른 목소리, 모두 eleven_v4. 해설은 장면별로 활기(경주)와 차분(낮잠)을 오가되 무섭지 않게."
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, rabbit=Liam, turtle=Bill, duck=Jessica, cow=Roger, pig=Austin, dog=Chaemong, sheep=Haemi"
 }
