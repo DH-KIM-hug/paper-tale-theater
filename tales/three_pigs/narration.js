@@ -25,7 +25,7 @@ const NARRATION_CLIPS = {
   "audio/tc/three_pigs/piga_58adaaa311.mp3",
   "audio/tc/three_pigs/nar_98ccc29de5.mp3"
  ],
- "셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 하나, 둘, 셋 천천히 쌓아요.": "audio/tc/three_pigs/nar_590f56d03e.mp3",
+ "셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 열 장을 천천히 쌓아요.": "audio/tc/three_pigs/nar_3138313ae8.mp3",
  "벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!": "audio/tc/three_pigs/nar_47c7342685.mp3",
  "손가락으로 톡톡 눌러서 늑대와 같이 후~ 불어요.": "audio/tc/three_pigs/nar_ed22a5f89d.mp3",
  "그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요. \"아기 돼지야, 문 열어라!\"": [

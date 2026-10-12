@@ -126,7 +126,7 @@
       line: '둘째는 나무로 집을 짓기로 했어요. 망치로 톡톡톡톡톡!', done: '쿵쾅쿵쾅! 나무 집이 완성됐어요. 둘째는 바이올린을 켜며 놀았어요.' });
     await build({ label: '셋째의 벽돌 집', bgKey: 'bricklot', pigKey: 'pig3_build', pigX: 380, pileKey: 'bricks', pileH: 140, pileX: 560, houseKey: 'house_brick', houseH: 210, houseX: 720, taps: 10, play: 'pig3_play', tick: 'thud',
       tease: { at: 5, line: '형들이 놀렸어요. "아직도 해? 우리랑 놀자!" 그래도 셋째는 천천히 벽돌을 쌓았어요.' },
-      line: '셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 하나, 둘, 셋 천천히 쌓아요.', done: '벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!' });
+      line: '셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 열 장을 천천히 쌓아요.', done: '벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!' });
 
     /* 6~7. 늑대가 후~ */
     async function blow({ label, bgKey, houseKey, ruinKey, houseH, houseX, cutKey, lines, pigKeys }) {
@@ -165,7 +165,7 @@
     /* 8. 어느 집으로? */
     await T.sceneCard('어느 집으로?', () => { bg('field'); T.camSnap(500, 280, 1); });
     const small = portrait(), k = small ? .42 : 1, gap = small ? 90 : 260;
-    const choiceA = sprite('straw', 500 - gap, 110 * k, 470), choiceB = sprite('wood', 500, 120 * k, 470), choiceC = sprite('house_brick', 500 + gap, 230 * k, 470);
+    const choiceA = sprite('house_straw', 500 - gap, 105 * k, 470), choiceB = sprite('house_wood', 500, 150 * k, 470), choiceC = sprite('house_brick', 500 + gap, 160 * k, 470);
     const runners = [sprite('pig1_flee', 60, 120), sprite('pig2_flee', 160, 120)];
     await look(500, 200);
     await say('두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?');
@@ -226,17 +226,18 @@
     const hx = portrait() ? [500, 340, 660] : [500, 230, 770];
     const hs = hx.map(x => sprite('house_brick', x, portrait() ? 130 : 200));
     hs[1].setScale(.05); hs[1].show(false); hs[2].setScale(.05); hs[2].show(false);
+    const band = [sprite('pig1_base', 380, 140, 548), sprite('pig2_base', 500, 140, 548), sprite('pig3_base', 620, 140, 548)];
     await look(500, 200);
     await say('이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.');
     T.pop(500, 240, NUM[0]);
     for (let i = 1; i < 3; i++) {
       await look(hs[i - 1].x);
       await T.tap(hs[i - 1].pos, { prompt: '집을 톡 눌러서 새 집을 지어요.' });
-      sfx('thud'); await look(hs[i].x); hs[i].show(true); await grow(hs[i], 1, 450); T.pop(hs[i].x, 240, NUM[i]); sfx('ding');
+      sfx('thud'); band.forEach((b, j) => setTimeout(() => b.hop(24, 300), j * 100)); await look(hs[i].x); hs[i].show(true); await grow(hs[i], 1, 450); T.pop(hs[i].x, 240, NUM[i]); sfx('ding');
     }
     await look(500, 700);
     await say('하나, 둘, 셋! 튼튼한 벽돌 집이 세 채가 되었어요.');
-    const band = [sprite('pig1_play', 380, 150, 540), sprite('pig2_play', 500, 150, 540), sprite('pig3_play', 620, 150, 540)];
+    band.forEach((b, i) => b.set(['pig1_play', 'pig2_play', 'pig3_play'][i], 150));
     T.confetti();
     for (let r = 0; r < 4; r++) { tune([392, 523, 440, 587]); band.forEach((b, i) => setTimeout(() => b.hop(28, 350), i * 150)); await sleep(900); }
     await T.cutImage([{ src: U('cut_village'), hold: 3600 }]);
