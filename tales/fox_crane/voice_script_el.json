@@ -1,11 +1,11 @@
 {
- "notes": "nar=Matilda(따뜻하고 또렷한 이야기꾼, 패죽의 George와 구분), fox=Callum(능청스러운 여우), crane=Lily(우아한 두루미), duck=Charlie(굵고 시원한 오리), butterfly=Jessica(가볍고 달콤한 나비). 속상한 장면도 부드럽게, 여우 코가 낀 장면은 우스꽝스럽게.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, fox=Callum, crane=Haemi, duck=Bill, butterfly=Mithi. 아기·꼬마 역(butterfly)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여.",
  "voices": {
-  "nar": "XrExE9yKIg1WjnnlVkGX",
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
   "fox": "N2lVS1w4EtoT3dr4eOWO",
-  "crane": "pFZP5JQG7iQjIQuC4Bku",
-  "duck": "IKne3meq5aSn9XLyUdCD",
-  "butterfly": "cgSgspJ2msm6clMCkdW9"
+  "crane": "ZjAPD4f11zlnEnZpKDgo",
+  "duck": "pqHfZKP75CvOlQylNhV4",
+  "butterfly": "MIl0Flub6Sc9KSkX2A42"
  },
  "models": {
   "nar": "eleven_v4",
@@ -763,7 +763,7 @@
     "butterfly",
     "팔랑팔랑, 안녕!",
     "happy",
-    "[delicate, sweet, light, cheerful]"
+    "[delicate, sweet, light, cheerful, childlike, baby voice, lisping, very young child, giggly]"
    ]
   ],
   "yum_crane": [
@@ -795,7 +795,7 @@
     "butterfly",
     "쪽! 달콤해!",
     "happy",
-    "[delicate, delighted, sweet]"
+    "[delicate, delighted, sweet, childlike, baby voice, lisping, very young child, giggly]"
    ]
   ]
  }
