@@ -609,6 +609,16 @@ const Tale = (() => {
       const z = Math.max(1, camState.z), half = burstW / 2 / z, hv = vw / 2 / z;
       if (hv > half) { const nx = Math.min(Math.max(x, camState.x - hv + half), camState.x + hv - half); g.setAttribute('transform', `translate(${nx.toFixed(1)},${y}) scale(${(1 / z).toFixed(3)})`); }
     }
+    { // 같은 자리에서 연달아 터지면(톡톡톡 세기) 앞의 것은 비켜 사라지고, 아직 막 터진 것이면 새것을 옆으로 비킨다
+      const z = Math.max(1, camState.z), now = performance.now();
+      let cur = parseFloat((/translate\(([-\d.]+)/.exec(g.getAttribute('transform')) || [0, x])[1]);
+      const bw0 = burstW / z, bh0 = burstH / z, hit = p => now - p.t < 1000 && Math.abs(p.x - cur) < (p.w + bw0) / 2 && Math.abs(p.y - y) < (p.h + bh0) / 2;
+      const young = POPS.find(p => hit(p) && now - p.t < 250 && p.txt !== txt);
+      if (young) { cur += (pop.flip = !pop.flip) ? 80 : -80; g.setAttribute('transform', `translate(${cur.toFixed(1)},${y}) scale(${(1 / z).toFixed(3)})`); }
+      POPS.forEach((p, i) => { if (p.g.isConnected && hit({ ...p, x: p.x })) fadePop(p, Math.max(0, 250 - (now - p.t))); });
+      POPS.splice(0, POPS.length, ...POPS.filter(p => p.g.isConnected && now - p.t < 2500));
+      POPS.push({ g, x: cur, y, w: bw0, h: bh0, t: now, txt });
+    }
     const burst = el('path', { d: BURST, fill: '#F2B366', stroke: '#E8703A', 'stroke-width': 4, transform: `scale(${(burstW / 120).toFixed(3)},${(burstH / 120).toFixed(3)})` }, g);
     const bw = el('g', {}, g); bw.appendChild(burst);
     bw.style.transformBox = 'view-box'; bw.style.transformOrigin = '0 0';
@@ -622,7 +632,18 @@ const Tale = (() => {
       t.animate(springFrames((v, k) => `translate(${pc.x}px, ${pc.y + size * .36 - (k === 0 ? 56 : 0)}px) scale(${Math.max(v, .01)}) rotate(${k < 3 ? rot : 0}deg)`),
         { duration: 700, delay: step * i, easing: 'ease-out', fill: 'both' });
     });
-    g.animate([{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400 + pieces.length * step }).finished.then(() => g.remove());
+    const life = g.animate([{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400 + pieces.length * step });
+    life.finished.then(() => g.remove(), () => {});
+    POPS[POPS.length - 1].life = life;
+  }
+  const POPS = []; // 최근 pop들 (겹침 정리용)
+  function fadePop(p, wait) { // 앞 숫자를 0.15초에 걸쳐 작아지며 지운다
+    if (p.fading) return; p.fading = true;
+    setTimeout(() => {
+      if (p.life) p.life.cancel();
+      const a = p.g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 150, fill: 'forwards' });
+      a.finished.then(() => p.g.remove(), () => {});
+    }, wait);
   }
 
   /* ---------- 음 재생 (동화별 효과음: 개굴 음계, 음매 등) ---------- */
