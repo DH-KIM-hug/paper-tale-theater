@@ -208,7 +208,7 @@
   const POSE = {
     stand: () => 'translate(0px,0px) rotate(0deg) scale(1,1)',
     pull: d => `translate(0px,0px) rotate(${d}deg) scale(1,1)`,
-    sit: k => ['dog', 'cat', 'mouse'].includes(k) ? 'translate(0px,0px) rotate(8deg) scale(1.05,.8)' : 'translate(0px,0px) rotate(12deg) scale(1,.72)',
+    sit: k => ['dog', 'cat', 'mouse'].includes(k) ? 'translate(0px,0px) rotate(8deg) scale(1.05,.8)' : 'translate(0px,6px) rotate(16deg) scale(1,.66)',
     flop: k => ({ dog: 'translate(0px,-70px) rotate(180deg) scale(1,1)', cat: 'translate(0px,-58px) rotate(180deg) scale(1,1)',
       mouse: 'translate(0px,-34px) rotate(180deg) scale(1,1)' })[k] || 'translate(0px,-30px) rotate(80deg) scale(1,1)',
   };
@@ -666,7 +666,13 @@
     cast.cat.lean.style.transition = 'transform .28s ease-out, filter .6s';
     cast.cat.lean.style.filter = '';
     await cast.cat.hop(40);
+    const catDown = (async () => { // 지붕 끝에서 풀밭으로 폴짝 뛰어내린다
+      await cast.cat.move(700, 300, 320, 'ease-out');
+      await cast.cat.move(640, T.portrait() ? 470 : 480, 380, 'ease-in');
+      await cast.cat.hop(16, 260);
+    })();
     await say('고양이가 지붕에서 폴짝 내려왔어요.');
+    await catDown;
     cast.cat.lean.style.transition = 'transform .28s ease-out';
     await T.sceneCard(null, () => sideView(5), cast.cat.pos);
     await say('어? 강아지랑 고양이가 서로 째려봐요.');
@@ -683,6 +689,7 @@
 
     /* --- 8. 아주 작은 생쥐 (생쥐 눈높이) --- */
     for (let k = 0; k < 5; k++) line[k].sitDown();
+    await sleep(450);
     await say('휴우, 모두 지쳐서 털썩 주저앉았어요.');
     await T.sceneCard('아주 작은 생쥐', () => {
       T.clear(); mouseBG(T);
