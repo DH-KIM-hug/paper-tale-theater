@@ -957,7 +957,7 @@
       hammer = T.el('g', {}, T.fx);
       if (artUrl('hammer')) pic(T, hammer, 'hammer', { box: [-30, -33, 60, 142] }); // 머리 가운데가 (0,-15)
       else T.paper(hammer, [['rect', { x: -5, y: -10, width: 10, height: 60, rx: 4, fill: C.bark }], ['rect', { x: -22, y: -24, width: 44, height: 18, rx: 4, fill: '#9A938C' }]]);
-      hammer.setAttribute('transform', `translate(${fix.x - 70},380) rotate(-30)`); hammer.style.opacity = '0';
+      hammer.setAttribute('transform', `translate(${fix.x - 70},380) rotate(-30)`); hammer.style.opacity = '0'; hammer.style.pointerEvents = 'none'; // 의자 누름을 가로막지 않게
       view();
     }, goldi.pos);
     await say('골디락스: "허락 없이 들어와서 미안해요."');
