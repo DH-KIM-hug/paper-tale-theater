@@ -993,6 +993,7 @@
     await say('그때 농부 할아버지가 지나가다 아기 오리를 보았어요. "저런, 얼음에 발이 붙었구나!"');
     await say('얼음을 톡톡톡 눌러서 깨 줘요!');
     const ICR = ['M430 360 L450 380 L440 396', 'M500 350 L520 370 L540 364', 'M400 370 L380 386', 'M540 380 L560 396', 'M460 340 L470 356', 'M480 396 L500 406'];
+    hero.pos.style.pointerEvents = 'none'; // 얼음 위에 선 아기 오리가 얼음 누름을 가로막지 않게
     await T.mash(icePatch, { count: 6, prompt: '얼음을 톡톡 눌러요!', onStep: i => {
       AudioFX.sfx('chop', .6) || T.tone([900, 300], .1, { type: 'square', vol: .12 });
       farmer.parts.arm.style.transform = 'rotate(24deg)'; setTimeout(() => farmer.parts.arm.style.transform = '', 160);
@@ -1004,7 +1005,7 @@
       }
       if (i % 2 === 0) T.pop(i === 6 ? 470 : 360 + i * 30, 250 + wy * .6, '쩍!', '#4A7A96');
     } });
-    icePatch.remove();
+    icePatch.remove(); hero.pos.style.pointerEvents = '';
     quack(T); hero.hop(30);
     await say('쩍! 얼음이 깨졌어요. 발이 쏙 빠졌어요!');
     hero.parts.wing.style.transform = '';
