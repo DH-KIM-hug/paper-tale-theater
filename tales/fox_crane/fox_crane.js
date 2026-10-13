@@ -75,8 +75,8 @@
     return wrap;
   }
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). 그림 밖(세로 화면에서 물러설 때)은 끝 색으로 */
-  const BG_EDGE = { forest: ['#f2e6bf', '#a98e62'], kitchen: ['#5a3a20', '#3e2614'], high: ['#f3e3c4', '#6b4426'], pondhouse: ['#c9e2e6', '#6f8f4a'],
-    crane_room: ['#4a3220', '#3e2a1a'], feast_day: ['#cfe3ea', '#5f7a3a'], feast_night: ['#13204a', '#2d3a22'] };
+  const BG_EDGE = { forest: ['#f2e6bf', '#a98e62'], kitchen: ['#d0b078', '#a67a48'], high: ['#f3e3c4', '#6b4426'], pondhouse: ['#c9e2e6', '#6f8f4a'],
+    crane_room: ['#fdf0c8', '#d6a355'], feast_day: ['#cfe3ea', '#5f7a3a'], feast_night: ['#13204a', '#2d3a22'] };
   function bgImage(T, key, { dx = 0, parent, clip } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const w = 1080, h = w * 992 / 1760, x = -40 + dx, y = -24;
@@ -574,9 +574,9 @@
       T.clear(); kitchenBG(T);
       let pp;
       if (bgUrl('kitchen') && artUrl('pot')) { // 그림: 배경 안쪽 아궁이 자리(그림 속 솥)에 수프 냄비를 얹고, 여우는 앞쪽에서 냄비를 본다
-        fox = guest(T, T.world, 'fox', 500, 480, 1.2);
-        pot = actor(T.world, 262, 374, g => { pp = drawPot(T, g); }, { scale: 1.05 }); pot.parts = pp;
-        camSnap(420, 330, 1.3);
+        fox = guest(T, T.world, 'fox', 540, 550, 1.2);
+        pot = actor(T.world, 330, 545, g => { pp = drawPot(T, g); }, { scale: 1.05 }); pot.parts = pp;
+        camSnap(440, 400, 1.3);
       } else {
         fox = guest(T, T.world, 'fox', 360, 470, 1.2); fox.face('right');
         pot = actor(T.world, 580, 470, g => { pp = drawPot(T, g); }, { scale: 1.05 }); pot.parts = pp;
@@ -688,7 +688,7 @@
       fox = guest(T, T.world, 'fox', 300, 500, 1.0); fox.face('right');
       if (bgUrl('crane_room') && ARTMODE()) { // 그림: 병은 배경 속 작은 탁자 위, 두루미는 탁자 오른쪽 앞
         crane = guest(T, T.world, 'crane', 820, 505, 1.55);
-        bottle = dish(T, T.world, 'bottle', 660, 358, 1.3);
+        bottle = dish(T, T.world, 'bottle', 506, 374, 1.3);
       } else {
         crane = guest(T, T.world, 'crane', 730, 500, 1.5);
         lowTable(T, T.world);
