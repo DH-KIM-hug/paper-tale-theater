@@ -65,7 +65,7 @@
   }
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). 그림 밖은 끝 색으로 */
   const BG_EDGE = { kitchen: ['#dcb065', '#a77c48'], forest: ['#cfe5ee', '#3c5a3a'], door: ['#cfe0e2', '#3f5a34'], table: ['#e8d6b6', '#6b4426'],
-    living: ['#eee0c4', '#5a3a22'], bed_top: ['#f2e6cc', '#5a3a22'], bed_side: ['#f2e6cc', '#8a6440'] };
+    living: ['#eee0c4', '#5a3a22'], bed_top: ['#f2e6cc', '#5a3a22'], bed_side: ['#e3b862', '#8c6a3e'] };
   function bgImage(T, key, { dx = 0, parent } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const w = 1080, h = w * 992 / 1760, x = -40 + dx, y = -24, p = parent || T.bg;
