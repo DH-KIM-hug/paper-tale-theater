@@ -133,8 +133,10 @@
     await say('집에 돌아온 엄마 염소는 깜짝 놀랐어요.');
     await say('"얘들아, 어디 있니? 엄마 왔어!"');
     mm2.hop(16, 300);
+    if (T.viewWidth() < 990) await T.camTo(220, 280, 1, 800); // 세로 화면: 왼쪽 끝의 시계가 화면 밖이라 누를 수 없었다 → 시계 쪽으로 카메라를 옮긴다
     await T.tap(clock2.pos, { prompt: '시계를 톡 눌러 봐요!' });
     clock2.pose('open'); appear(k7); AudioFX.ding();
+    if (T.viewWidth() < 990) T.camTo(500, 280, 1, 700);
     await k7.move(480, 530, 700); clock2.pose('a'); k7.pose('joy');
     await say('"엄마!" 막내가 시계 속에서 폴짝 나왔어요.');
     await say('"늑대가 형들과 누나들을 꿀꺽 삼켰어요!"');
