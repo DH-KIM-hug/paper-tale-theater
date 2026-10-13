@@ -278,7 +278,7 @@ const Tale = (() => {
       let i = 0, done = false;
       arm(target, true);
       const finish = () => { if (done) return; done = true; target.removeEventListener('pointerdown', on); arm(target, false); h.stop(); res(); };
-      const step = () => { i++; onStep && onStep(i); if (i >= count) finish(); };
+      const step = () => { i++; if (count >= 3) AudioFX.countBeat && AudioFX.countBeat(i); onStep && onStep(i); if (i >= count) finish(); };
       const h = helper({ target, prompt, auto: async () => { while (!done) { step(); await sleep(450); } } });
       const on = e => { e.stopPropagation(); if (busy || done) return; h.poke(); step(); };
       target.addEventListener('pointerdown', on);
@@ -568,6 +568,7 @@ const Tale = (() => {
   function springFrames(fn) { return SPRING.map((v, i) => ({ transform: fn(v, i), offset: i / (SPRING.length - 1) })); }
   function pop(x, y, word, color = '#A93B32') {
     // 카메라가 가까이 붙을수록 화면에서 커지므로 확대 배율만큼 줄여 늘 비슷한 크기로 보이게
+    if (AudioFX.countPop) AudioFX.countPop(); // 세는 박자면 음이 올라가는 pop
     const g = el('g', { transform: `translate(${x},${y}) scale(${(1 / Math.max(1, camState.z)).toFixed(3)})` }, fxL);
     const txt = tr(word), FONT = "'Pretendard Variable', Pretendard, sans-serif";
     const latin = /[A-Za-z]/.test(txt), vw = viewWidth(), maxW = vw * .7;

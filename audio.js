@@ -160,6 +160,8 @@ const AudioFX = (() => {
     } else s.start(t0, offset);
     return true;
   }
+  const POP_STEPS = [0, 2, 4, 5, 7, 9, 11, 12, 14, 16];
+  let countWin = null;
   const SFX = { thud: 'sfx/thud', boom: 'sfx/boom', pow: 'sfx/pow', bonk: 'sfx/bonk', pop: 'sfx/pop', poke: 'sfx/poke',
     tap: 'sfx/tap', ding: 'sfx/ding', swish: 'sfx/swish', whoosh: 'sfx/whoosh', bell: 'sfx/bell', splash: 'sfx/splash', growl: 'animals/tiger',
     boing: 'sfx/boing', chomp: 'sfx/chomp', gulp: 'sfx/gulp', slide: 'sfx/slide_down' };
@@ -218,7 +220,15 @@ const AudioFX = (() => {
     },
     slice(name, offset, dur, vol = .7) { return playSample('music/' + name + '.mp3', vol, 0, dur, 1, offset); },
     /* 기타 효과음: AudioFX.sfx('chop') */
-    sfx(name, vol) { return playSample('sfx/' + name + '.mp3', vol); },
+    sfx(name, vol) { if (name === 'pop' && api.countPop && api.countPop()) return true; return playSample('sfx/' + name + '.mp3', vol); },
+    /* 세기 소리: 톡톡톡 n번째 박자(1부터)는 pop을 음계로 올려 울린다 (0,2,4,5,7… 반음). 한 박자에 한 번만 */
+    popStep(n, vol) { const k = Math.max(1, Math.min(POP_STEPS.length, n | 0 || 1)); return playSample('sfx/pop.mp3', vol, 0, 0, Math.pow(2, POP_STEPS[k - 1] / 12)); },
+    countBeat(n) { countWin = { n, t: Date.now(), used: false }; },
+    countPop() { // 세는 박자 안(0.6초)에서 아직 안 울렸으면 올라가는 pop을 울린다
+      if (!countWin || countWin.used || Date.now() - countWin.t > 600) return false;
+      if (!api.popStep(countWin.n)) return false;
+      countWin.used = true; return true;
+    },
     /* 첫 소리가 합성음으로 새지 않게 미리 불러 둔다: AudioFX.preloadSfx(['paper_up', …]) */
     preloadSfx(names) { names.forEach(n => loadSample('sfx/' + n + '.mp3')); },
     async playUrl(url) {
@@ -332,7 +342,7 @@ const AudioFX = (() => {
   // 녹음 파일이 있는 효과음은 녹음을 먼저 재생하고, 아직 못 불러왔으면 합성음으로 대신한다
   for (const [name, path] of Object.entries(SFX)) {
     const synth = api[name];
-    api[name] = (...a) => { if (!playSample(path + '.mp3')) synth(...a); };
+    api[name] = (...a) => { if (name === 'pop' && api.countPop()) return; if (!playSample(path + '.mp3')) synth(...a); };
   }
 
   /* 스팅 재료가 아직 없을 때의 합성음 (소리가 비지 않게) */
