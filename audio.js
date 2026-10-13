@@ -160,7 +160,7 @@ const AudioFX = (() => {
     } else s.start(t0, offset);
     return true;
   }
-  const POP_STEPS = [0, 2, 4, 5, 7, 9, 11, 12, 14, 16];
+  const POP_STEPS = [0, 2, 4, 5, 7, 9, 11, 12]; // 한 옥타브까지, 그 뒤는 맨 위 음 유지
   let countWin = null;
   const SFX = { thud: 'sfx/thud', boom: 'sfx/boom', pow: 'sfx/pow', bonk: 'sfx/bonk', pop: 'sfx/pop', poke: 'sfx/poke',
     tap: 'sfx/tap', ding: 'sfx/ding', swish: 'sfx/swish', whoosh: 'sfx/whoosh', bell: 'sfx/bell', splash: 'sfx/splash', growl: 'animals/tiger',
