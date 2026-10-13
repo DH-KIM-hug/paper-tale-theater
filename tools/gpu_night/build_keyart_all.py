@@ -101,8 +101,11 @@ for tid, (sil, pal, scene, cw, ct, band) in TALES.items():
         mid = 'The deepest centre layer, filling at least 70 percent of the whole picture, is a detailed layered paper-cut diorama of the key scene: %s. ' % scene
         orient = 'landscape' if v == 'wide' else 'portrait'
         tail = ('Composition is %s: %s. The BOTTOM %s of the frame is a calm soft low-contrast band of %s paper with only gentle texture and no detail, where a title can be placed. Elegant, harmonious, soft light from the top left. Cute Korean picture-book style for 3-4 year olds, never scary. No text.' % (orient, comp, bq, band))
+        if tid == 'frog':
+            ring = ring.replace('in the shape of a round green frog head with big eyes', 'in the shape of a smooth rounded pond-bank outline')
+            tail = tail.replace('Composition is', 'The rings are plain smooth paper bands with no eyes, no face and no pupils anywhere in them; the only eyes in the picture belong to the frog and the ox. Composition is', 1)
         j = {k: v2 for k, v2 in src.items() if k not in ('prompt', 'negative', 'name')}
-        j = {'name': f'{tid}_key_{v}_a', **j, 'negative': NEG, 'prompt': head + ring + mid + tail}
+        j = {'name': f'{tid}_key_{v}_a', **j, 'negative': NEG + (', eyes on the paper rings, face on the frame, eye shapes in the border, pupils, googly eyes, frog head frame' if tid == 'frog' else ''), 'prompt': head + ring + mid + tail}
         OUT.append(j)
 json.dump(OUT, open(os.path.join(HERE, 'jobs_keyart_all.json'), 'w'), ensure_ascii=False, indent=1)
 print(len(OUT))
