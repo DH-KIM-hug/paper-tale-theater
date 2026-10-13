@@ -136,7 +136,7 @@
       jump: ['wolf_jump', 320, 'left'] });
     const hunter = mk(T, { walk: ['hunter_walk', 290, 'left'], tickle: ['hunter_tickle', 290, 'left'], laugh: ['hunter_laugh', 290, 'left'] });
     const basket = prop(T, 'basket', 100), bread = prop(T, 'bread', 62), milk = prop(T, 'milk', 105), apple = prop(T, 'apple', 62);
-    const frame = prop(T, 'frame', 170);
+    const frame = prop(T, 'frame', 200);
 
     /* --- 1. 바구니 싸기 --- */
     scene('kitchen');
@@ -144,8 +144,8 @@
     put(T, mama, P ? 340 : 290, 510, { to: "right", s: P ? .8 : 1 });
     put(T, hood, P ? 645 : 700, 510, { look: "joy", to: "left", s: P ? .8 : 1 });
     put(T, basket, 500, 505);
-    const TABLE_Y = 345;
-    put(T, bread, 430, TABLE_Y); put(T, milk, 510, TABLE_Y); put(T, apple, 590, TABLE_Y);
+    const TABLE_Y = 336; // 그림 속 식탁 윗면(무대 x 300~570, y≈327)
+    put(T, bread, 370, TABLE_Y); put(T, milk, 440, TABLE_Y); put(T, apple, 510, TABLE_Y);
     await T.curtain(true);
     await say('엄마가 빨간 모자에게 말했어요. "할머니가 아프시단다. 맛있는 걸 가져다 드리렴."');
     await say('빵, 우유, 사과를 바구니에 담아요!');
@@ -274,13 +274,13 @@
     await T.cutImage([{ src: cutSrc('granwolf'), hold: 3000 }], { hold: 3000 });
     await T.sceneCard('이상해요', () => {
       scene('bed', P ? 510 : 590);
-      put(T, wolf, 430, 470, { look: 'granny', to: 'left' });
-      put(T, frame, 775, 215);
+      put(T, wolf, 335, 472, { look: 'granny', to: 'left' });
+      put(T, frame, 805, 278); // 그림 속 빈 액자 안에 진짜 할머니 사진
       put(T, hood, 640, 510, { look: 'wonder', to: 'left' });
     }, wolf.pos);
     await say('"할머니, 오셨어요?" 그런데 침대 속 할머니가 어딘가 이상해요.');
     await say('벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!');
-    const WX = 430, WW = 300 * ASP.wolf_granny, WG = 470;
+    const WX = 335, WW = 300 * ASP.wolf_granny, WG = 472;
     const px = f => WX - WW / 2 + f * WW, py = f => WG - 300 + f * 300;
     const parts = {
       ear: { at: [px(.25), py(.08)], r: 38, q: '"할머니, 귀가 왜 이렇게 커요?"', a: '"네 말을 잘 들으려고 그렇지~"', w: '뾰족 귀!' },
@@ -311,28 +311,28 @@
       put(T, hood, 560, 510, { look: 'surprise', to: 'left' });
       put(T, wolf, 800, 450, { look: 'jump', to: 'left' });
     }, hood.pos);
-    const wardrobeHot = hotRect(T, 80, 40, 215, 410);
+    const wardrobeHot = hotRect(T, 40, 125, 215, 345);
     await say('늑대가 벌떡 일어났어요! 빨간 모자야, 어서 숨어요! 옷장을 톡!');
     await T.tap(wardrobeHot, { prompt: '옷장을 톡! 쏙 숨어요.' });
     wardrobeHot.remove();
-    await hood.move(190, 500, 650); hood.look('hide'); await sleep(250);
+    await hood.move(145, 495, 650); hood.look('hide'); await sleep(250);
     AudioFX.sfx('door') || AudioFX.sfx('creak');
     hood.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' });
     await sleep(450);
     await say('빨간 모자는 옷장 속으로 쏙! 늑대는 두리번두리번 찾았지만 보이지 않았어요.');
     wolf.look('peek', 'left'); wolf.wiggle(8, 500); await sleep(900);
-    put(T, wolf, 800, 450, { look: 'sleep', to: 'left' });
+    put(T, wolf, 815, 415, { look: 'sleep', to: 'left' }); // 침대 위
     await T.camTo(640, 280, 1, 700);
     await say('할머니를 먹어서 배가 불렀던 늑대는 스르르 눈이 감겼어요. 쿨쿨…');
     T.pop(760, 300, '쿨쿨…', '#5C6BC0');
 
     /* --- 10. 사냥꾼 --- */
     await T.sceneCard('사냥꾼', () => { pan(620); }, wolf.pos);
-    const windowHot = hotRect(T, 375, 55, 260, 230);
+    const windowHot = hotRect(T, 420, 140, 160, 170);
     await say('창밖으로 지나가던 사냥꾼이 코 고는 소리를 들었어요. 창문을 톡톡 두드려 봐요!');
     await T.tap(windowHot, { prompt: '창문을 톡!' });
     windowHot.remove();
-    knock(T); T.pop(490, 130, '똑똑!');
+    knock(T); T.pop(500, 120, '똑똑!');
     put(T, hunter, 1150, 510, { look: 'walk', to: 'left' });
     await say('"이상한 코골이네? 할머니 댁에 무슨 일이 있나?" 사냥꾼이 방 안으로 들어왔어요.');
     await hunter.move(600, 510, 1200);
@@ -360,7 +360,7 @@
       scene('table', 540);
       put(T, granny, P ? 625 : 650, 510, { look: 'tea', to: 'left', s: P ? .8 : 1 });
       put(T, hood, P ? 385 : 400, 510, { look: 'joy', to: 'right', s: P ? .8 : 1 });
-      put(T, bread, 470, 410); put(T, milk, 530, 410); put(T, apple, 590, 410);
+      put(T, bread, 480, 296); put(T, milk, 555, 296); put(T, apple, 630, 296); // 그림 속 식탁 윗면
       [bread, milk, apple].forEach(a => T.world.appendChild(a.pos));
     }, granny.pos);
     await say('할머니 집 식탁에서 모두 함께 차를 마셔요. 바구니 속 간식을 한 가지씩 나눠 줘요!');
