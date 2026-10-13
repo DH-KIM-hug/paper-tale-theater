@@ -74,21 +74,29 @@
 
     /* 3. 제비집 */
     await T.sceneCard('흥부네 집', () => { scene('eaves', 500); });
-    const chicks = spr('chicks', 500, 140, 360);
+    const chicks = spr('chicks', 493, 112, 128); /* 배경에 그려진 작은 둥지 위에 딱 겹쳐서 둥지가 하나로 보이게 */
     const hw = spr('hwife', 300, 300), h3 = spr('heung_hello', 700, 310);
     await say('흥부네 초가집 처마에는 제비 가족이 살았어요.');
     await say('아기 제비는 몇 마리일까요? 둥지를 톡톡톡 눌러서 세어 봐요!');
     await T.mash(chicks.pos, { count: 3, prompt: '둥지를 톡톡톡! 아기 제비를 세어 봐요.', onStep: i => {
-      chicks.hop(14, 260); sfx('pop'); T.pop(chicks.x + (i - 2) * 70, chicks.y - 170, NUM[i - 1]);
+      chicks.hop(14, 260); sfx('pop'); T.pop(chicks.x + (i - 2) * 70, chicks.y + 70, NUM[i - 1]);
     } });
     await say('아기 제비가 하나, 둘, 셋! 세 마리예요.');
+    /* 강제로 떨어진다: 아이가 아무것도 안 눌러도 둥지에서 굴러떨어져 땅에 아프게 눕는다 */
+    const tumble = spr('chick_fall', 493, 90, 120);
+    const fell = say('앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!'); /* 말과 동시에 굴러떨어진다 */
+    sfx('pow'); await tumble.move(fx(560), 470, 800, 'ease-in'); tumble.hop(10, 300);
+    T.pop(tumble.x, tumble.y - 140, '아야!');
+    const tshiv = setInterval(() => tumble.hop(5, 220), 800); await sleep(1400); clearInterval(tshiv);
+    await fell;
     await cut('fall', 'pop', 3200);
-    await say('앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!');
     await T.sceneCard('마당', () => { scene('yard', 500); });
-    const hc = spr('heung_catch', 380, 340), fallen = spr('chick_fall', 560, 120, -30);
-    await fallen.move(fx(560), 470, 650, 'ease-in'); fallen.hop(10, 300); /* 마당 바닥에 톡 떨어져 앉아 있다 */
+    const hc = spr('heung_catch', 380, 340), fallen = spr('chick_fall', 560, 120, 470); /* 떨어진 채 마당 바닥에 누워 있다 */
+    fallen.hop(10, 300); T.pop(fallen.x, fallen.y - 140, '아야!');
+    const shiver = setInterval(() => fallen.hop(5, 220), 800); /* 다리를 다쳐서 바들바들 */
     await say('흥부를 톡! 눌러서 아기 제비를 받아 줘요.');
     await T.tap(hc.pos, { prompt: '흥부를 톡! 제비를 받아 줘요.' });
+    clearInterval(shiver);
     await fallen.move(fx(425), 410, 500, 'ease-out'); hc.hop(20, 300); sfx('ding');
     await cut('bandage', 'pop', 3600);
     await say('흥부는 아기 제비의 다친 다리에 천을 감아 주었어요. 아기 제비는 금방 나았어요.');

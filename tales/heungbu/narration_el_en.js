@@ -206,11 +206,11 @@ Object.assign(NARRATION_CLIPS_EN, {
   "c": "audio/el/heungbu/en/nar_d74c166795.mp3"
  },
  "이번에는 방망이를 든 도깨비가 쑥 나왔어요. \"이 욕심쟁이야!\" 도깨비는 놀부를 놀라게 하고 사라졌어요.": {
-  "t": "This time, a goblin with a club popped out. \"You greedy man!\" The goblin gave Nolbu a fright and then disappeared.",
+  "t": "This time, a Dokkaebi with a club popped out. \"You greedy man!\" The Dokkaebi gave Nolbu a fright and then disappeared.",
   "c": [
-   "audio/el/heungbu/en/nar_cac0450e43.mp3",
+   "audio/el/heungbu/en/nar_77473095b3.mp3",
    "audio/el/heungbu/en/dok_a6fc255981.mp3",
-   "audio/el/heungbu/en/nar_759572418c.mp3"
+   "audio/el/heungbu/en/nar_625df00695.mp3"
   ]
  },
  "세 번째 박을 톡!": {

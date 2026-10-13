@@ -206,11 +206,11 @@ const NARRATION_CLIPS_EN = {
   "c": "audio/tc/heungbu/en/nar_866f849c32.mp3"
  },
  "이번에는 방망이를 든 도깨비가 쑥 나왔어요. \"이 욕심쟁이야!\" 도깨비는 놀부를 놀라게 하고 사라졌어요.": {
-  "t": "This time, a goblin with a club popped out. \"You greedy man!\" The goblin gave Nolbu a fright and then disappeared.",
+  "t": "This time, a Dokkaebi with a club popped out. \"You greedy man!\" The Dokkaebi gave Nolbu a fright and then disappeared.",
   "c": [
-   "audio/tc/heungbu/en/nar_cf82d3e6ed.mp3",
+   "audio/tc/heungbu/en/nar_44a063a91b.mp3",
    "audio/tc/heungbu/en/dok_23f834ad6a.mp3",
-   "audio/tc/heungbu/en/nar_9890307445.mp3"
+   "audio/tc/heungbu/en/nar_346b98ca35.mp3"
   ]
  },
  "세 번째 박을 톡!": {
@@ -284,5 +284,6 @@ const TEXT_EN = {
  "착한 마음은 복이 되어 돌아와요": "A kind heart brings good fortune back",
  "마당": "The Yard",
  "박이 열렸어요": "Gourds Grew",
- "놀부네 마당": "Nolbu's Yard"
+ "놀부네 마당": "Nolbu's Yard",
+ "아야!": "Ouch!"
 };
