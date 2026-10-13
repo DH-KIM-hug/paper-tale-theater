@@ -134,7 +134,7 @@
       await T.sceneCard(label, () => { bg(bgKey); T.camSnap(450, 280, 1); });
       const house = sprite(houseKey, houseX, houseH);
       const pg = pigKeys.map((k, i) => sprite(k, houseX - 70 + i * 140, 200));
-      pg.forEach(p => p.show(false));
+      pg.forEach(p => { p.show(false); p.pos.style.pointerEvents = 'none'; }); // 숨은 돼지가 집 누름을 가로막지 않게
       const wolf = sprite('wolf_sniff', -160, 220); wolf.face('right');
       await look(450, 200);
       wolf.move(280, GROUND, 1300); await sleep(700);
@@ -208,7 +208,7 @@
     await say('늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.');
     await T.sceneCard('보글보글', () => { bg('chimney'); T.camSnap(500, 280, 1); });
     const fire = hit(425, 430, 150, 120);
-    const glow = T.el('ellipse', { cx: 494, cy: 515, rx: 10, ry: 8, fill: '#FFB347', opacity: 0 }, T.world);
+    const glow = T.el('ellipse', { cx: 494, cy: 515, rx: 10, ry: 8, fill: '#FFB347', opacity: 0, 'pointer-events': 'none' }, T.world);
     await say('아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.');
     await T.mash(fire, { count: 5, prompt: '불을 톡톡 눌러서 크게 해 줘요.', onStep: i => {
       const p = i / 5;
@@ -228,6 +228,7 @@
     const hs = hx.map(x => sprite('house_brick', x, portrait() ? 130 : 200));
     hs[1].setScale(.05); hs[1].show(false); hs[2].setScale(.05); hs[2].show(false);
     const band = [sprite('pig1_base', 380, 140, 548), sprite('pig2_base', 500, 140, 548), sprite('pig3_base', 620, 140, 548)];
+    band.forEach(b => { b.pos.style.pointerEvents = 'none'; }); // 앞에 선 돼지가 집 누름을 가로막지 않게
     await look(500, 200);
     await say('이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.');
     T.pop(500, 240, NUM[0]);
