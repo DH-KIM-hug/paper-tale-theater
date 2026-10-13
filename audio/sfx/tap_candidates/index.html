@@ -9,8 +9,13 @@ button:active{background:#ffe9a8}b{display:inline-block;min-width:3em}small{disp
 .row{display:flex;gap:6px}.row button{text-align:center;padding:14px 0}
 </style></head><body>
 <h1>탭 효과음 후보</h1>
-<p>눌러서 들어보세요. S-0이 지금 소리입니다.</p>
-<button data-f="s0_current"><b>S-0</b> 지금 소리<small>880Hz 삼각파 70ms, 작고 삐 하는 전자음</small></button>
+<p>눌러서 들어보세요. S-0~S-0c가 지금 소리, S-1~S-6이 대체 후보입니다.</p>
+<h2>지금 실제로 나는 소리 (자동 탭 3편 100초 측정, 아이 탭 직후 재생된 횟수)</h2>
+<button data-f="s0_pop_current"><b>S-0</b> 지금 1위: 뽕(pop) 24회<small>AudioFX.sfx('pop') = sounds/sfx/pop.mp3, 장면 그림을 누를 때 나는 소리</small></button>
+<button data-f="s0b_tap_current"><b>S-0b</b> 지금 2위: 톡(tap) 24회<small>AudioFX.tap() = sounds/sfx/tap.mp3 (0.1초), 단순 탭 조작의 소리</small></button>
+<button data-f="s0c_ding_current"><b>S-0c</b> 지금 3위: 딩(ding) 22회<small>AudioFX.ding() = sounds/sfx/ding.mp3, 고르기에서 정답을 눌렀을 때</small></button>
+<p>바꾼다면: AudioFX.tap()의 sounds/sfx/tap.mp3와 sfx('pop')의 sounds/sfx/pop.mp3 두 파일을 아래 후보로 교체합니다. 수세기(mash)는 후보를 음높이만 올려 씁니다.</p>
+<h2>후보 (S-0 또는 S-0b를 대체)</h2>
 <button data-f="s1_paper_tok"><b>S-1</b> 종이 톡<small>걸러진 종이 소리 + 아주 작은 낮은 툭</small></button>
 <button data-f="s2_woodblock"><b>S-2</b> 목탁 똑<small>900Hz 짧게 울리는 나무 소리 + 딱 하는 첫소리</small></button>
 <button data-f="s3_bubble"><b>S-3</b> 방울 뽁<small>600→300Hz로 내려가는 물방울, 120ms</small></button>
