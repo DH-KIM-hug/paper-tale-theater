@@ -420,7 +420,7 @@
   }
   function kitchenBG(T) {
     const { paper, el } = T, b = T.bg;
-    if (bgImage(T, b, 'kitchen', { back: '#1e1700' })) return true; // 가마솥·부뚜막·상이 그림에 있다
+    if (bgImage(T, b, 'kitchen', { back: '#cdb07c' })) return true; // 가마솥·부뚜막·상이 그림에 있다
     sky(T, b, '#E9D3A8');
     for (let i = 0; i < 6; i++) paper(b, [['rect', { x: -40 + i * 200, y: -20, width: 26, height: 420, fill: C.bark }]]);
     paper(b, [['rect', { x: -300, y: 60, width: 1600, height: 22, fill: C.bark }]]);
@@ -525,7 +525,7 @@
     await T.sceneCard('부잣집 부엌', () => {
       T.clear();
       // 그림 부엌: 상 위의 그림 떡 접시를 이 접시가 덮는다 (떡이 줄면 그림 떡도 안 보이게)
-      const [dx, dy, ry] = kitchenBG(T) ? [-45, -148, 34] : [0, 0, 26];
+      const [dx, dy, ry] = kitchenBG(T) ? [175, -10, 34] : [0, 0, 26];
       T.world.appendChild(mom.pos); mom.setScale(1.4); mom.place(PT && mom.P.art ? 350 : 290, 545); mom.face('right'); mom.P.holdBasket(!mom.P.art); mom.P.setCakes(0); // 그림: 첫 떡이 닿으면 바구니를 든다
       const plate = el('g', { id: 'plate' }, T.world);
       el('rect', { x: 560 + dx, y: 300 + dy, width: 260, height: 140, fill: 'transparent' }, plate);
