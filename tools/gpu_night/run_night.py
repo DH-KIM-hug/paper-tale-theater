@@ -75,7 +75,7 @@ def generate(base, j):
                 data = urllib.request.urlopen(f'{API}/view?{q}').read()
                 print(f"[{time.strftime('%H:%M:%S')}] [{j['name']}] 완료 {len(data)//1024}KB, {time.time()-t0:.0f}초", flush=True)
                 return data
-        if time.time() - t0 > 3000:
+        if time.time() - t0 > 14400:  # 여러 실행기가 큐를 나눠 쓰면 한 장에 수 시간 걸릴 수 있다
             print(f"[{j['name']}] 시간 초과", flush=True)
             return None
 
