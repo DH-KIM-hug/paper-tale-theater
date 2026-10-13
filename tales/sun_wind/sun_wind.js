@@ -61,7 +61,7 @@
   const WIND_BOX = { wind: [-165, -63, 267, 137], wind_blow: [-154, -63, 246, 140], wind_tired: [-157, -71, 264, 156] };
   const cutArt = (T, key, sfx, hold, onShow) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx, hold }], { hold, onShow }) : null);
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). zoom: (cx, cy) 기준으로 키운다 */
-  const BG_EDGE = { sky: ['#a4c9da', '#7a807e'], high: ['#afcad2', '#474a2b'], field: ['#bedfe9', '#77693f'], stream: ['#b6d5df', '#4f827f'], snow: ['#dbeefb', '#f6f9fd'] };
+  const BG_EDGE = { sky: ['#a4c9da', '#7a807e'], high: ['#bcc29a', '#bcc29a'], field: ['#bedfe9', '#77693f'], stream: ['#b6d5df', '#4f827f'], snow: ['#dbeefb', '#f6f9fd'] };
   function bgImage(T, key, { zoom = 1, cx = 500, cy = 560 } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const w = 1080 * zoom, h = w * 992 / 1760, x = cx + (-40 - cx) * zoom, y = cy + (-24 - cy) * zoom;
@@ -362,7 +362,7 @@
   }
   function highBG(T) { // 2. 하늘에서 내려다본 길
     const { el, paper } = T, b = T.bg;
-    if (bgImage(T, 'high')) return { art: true, path: [[420, 540], [446, 420], [512, 310], [507, 232]] }; // 그림 속 길을 따라 걷는다
+    if (bgImage(T, 'high')) return { art: true, path: [[490, 540], [500, 440], [497, 330], [500, 240]] }; // 그림 속 길을 따라 걷는다
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: C.grass }, b);
     const cols = [C.leaf, '#8fae66', C.gold, C.pine, '#b9a25a'];
     for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++)
