@@ -430,6 +430,7 @@
         const w = 76, h = Math.max(w / AR.door_leaf, 124);
         el('image', { href: artUrl('door_leaf'), x: 112 + DX, y: 406 - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
         el('path', { d: arch, fill: '#fff', opacity: 0 }, door);
+        el('rect', { x: 112 + DX, y: 280, width: 100, height: 126, fill: '#fff', opacity: 0 }, door); // 누르는 자리를 넉넉히 (문간이 좁아 손가락이 빗나감)
       } else paper(door, [['path', { d: arch, fill: '#8E6440' }],
         ...[180, 220, 260].map(x => ['rect', { x: x + DX - 3, y: x === 220 ? 300 : 308, width: 6, height: x === 220 ? 145 : 137, fill: C.bark }]),
         ['circle', { cx: 284 + DX, cy: 380, r: 8, fill: C.gold }]]);
@@ -889,6 +890,7 @@
     baby.hop(20);
     await say('그때 아기 개미가 말했어요. "그래도 추워 보여요."');
     await say('문을 톡 눌러서 활짝 열어 줄까요?');
+    host.pos.style.pointerEvents = 'none'; baby.pos.style.pointerEvents = 'none'; // 문 앞에 선 개미가 문 누르는 걸 가로막지 않게
     await T.tap(D.door, { prompt: '창고 문을 톡!' });
     SND.door(T);
     await T.anim(D.door, [{ transform: 'scaleX(.85)' }, { transform: 'scaleX(.06)' }], { duration: 500, easing: 'cubic-bezier(.3,1.5,.5,1)' });
