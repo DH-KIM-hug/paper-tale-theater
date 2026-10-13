@@ -809,6 +809,7 @@
       // 친구 그림(act)만 누름 대상으로 쓴다 (원래 자리에 남은 그림자까지 넣으면 누름 영역이 화면 밖으로 넓어진다)
       const partyEl = f => friends[f.id].act;
       if (portrait()) await fitCam([...FRIENDS.map(partyEl), granny.pos], 1.4, 28, 800);
+      tiger.pos.style.pointerEvents = 'none'; // 호랑이 그림이 친구 누름을 가로막지 않게
       T.finale();
       await say(LINES.happyEnd);
       // 잔치: 친구·할멈을 차례로 톡 하면 인사한다
