@@ -121,10 +121,10 @@ svg text { font-weight: 800; }
 /* ─── 말풍선: 종이 쪽지 한 장 ─── */
 #bubble {
   position: absolute; top: max(12px, env(safe-area-inset-top, 0px)); left: 50%;
-  transform: translateX(-50%) rotate(-.4deg); width: max-content; max-width: min(720px, calc(100vw - 32px));
+  transform: translateX(-50%) rotate(-.4deg); width: max-content; max-width: min(58vw, 680px, calc(100vw - 32px));
   background: var(--note); color: var(--note-ink);
   border-radius: 16px 20px 15px 21px / 19px 15px 21px 16px;
-  padding: 11px 24px 12px;
+  padding: .5em 1.15em .55em; font-size: clamp(20px, 2.45vmin, 23px);
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, .9),
     inset -1px -1px 0 rgba(34, 43, 69, .06),
@@ -133,7 +133,7 @@ svg text { font-weight: 800; }
     6px 14px 26px rgba(20, 26, 46, .18);
   z-index: 40; animation: bubblePop .28s cubic-bezier(.3, 1.5, .5, 1);
 }
-#bubble p { margin: 0; font-size: clamp(17px, 2.8vmin, 27px); font-weight: 650; line-height: 1.45; text-align: center; text-wrap: balance; }
+#bubble p { margin: 0; font-size: 1em; font-weight: 650; line-height: 1.45; text-align: center; text-wrap: balance; }
 @keyframes bubblePop { from { transform: translateX(-50%) translateY(-6px) scale(.9); opacity: 0; } }
 
 /* 손가락 안내 */
@@ -325,7 +325,7 @@ svg text { font-weight: 800; }
   #tale { --pv: 60svh; }
   #stageWrap { flex: none; height: var(--pv); margin-top: env(safe-area-inset-top, 0px); }
   #bubble { top: calc(var(--pv) + env(safe-area-inset-top, 0px) + 14px); }
-  #bubble p { font-size: clamp(18px, 5vw, 24px); }
+  #bubble { max-width: min(calc(100vw - 32px), 640px); font-size: clamp(20px, 2.6vw, 21px); }
 }
 /* 끝내기: 마지막 부분에서 무대 오른쪽 아래에 나오는 종이 알약 */
 #finBtn[hidden] { display: none; }
