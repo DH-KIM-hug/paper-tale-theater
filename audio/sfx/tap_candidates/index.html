@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>탭 효과음 후보</title>
+<style>
+body{font-family:-apple-system,"Apple SD Gothic Neo",sans-serif;margin:0;padding:16px;background:#fbf5e6;color:#3a2f20;max-width:520px;margin:auto}
+h1{font-size:20px}h2{font-size:16px;margin-top:24px}
+button{display:block;width:100%;text-align:left;font:inherit;padding:14px 16px;margin:8px 0;border:0;border-radius:14px;background:#fff;box-shadow:0 2px 0 #d8cbb0;touch-action:manipulation}
+button:active{background:#ffe9a8}b{display:inline-block;min-width:3em}small{display:block;color:#7a6a50;margin-top:2px}
+.row{display:flex;gap:6px}.row button{text-align:center;padding:14px 0}
+</style></head><body>
+<h1>탭 효과음 후보</h1>
+<p>눌러서 들어보세요. S-0이 지금 소리입니다.</p>
+<button data-f="s0_current"><b>S-0</b> 지금 소리<small>880Hz 삼각파 70ms, 작고 삐 하는 전자음</small></button>
+<button data-f="s1_paper_tok"><b>S-1</b> 종이 톡<small>걸러진 종이 소리 + 아주 작은 낮은 툭</small></button>
+<button data-f="s2_woodblock"><b>S-2</b> 목탁 똑<small>900Hz 짧게 울리는 나무 소리 + 딱 하는 첫소리</small></button>
+<button data-f="s3_bubble"><b>S-3</b> 방울 뽁<small>600→300Hz로 내려가는 물방울, 120ms</small></button>
+<button data-f="s4_kalimba"><b>S-4</b> 칼림바 도<small>도(C5) 한 음, 맑고 부드러움</small></button>
+<button data-f="s5_soft_pop"><b>S-5</b> 보송 뽕<small>부드러운 팝 + 숨소리 같은 짧은 꼬리</small></button>
+<button data-f="s6_flick_chime"><b>S-6</b> 튕김 + 종소리<small>종이 튕기는 소리 뒤에 작은 딸랑</small></button>
+<h2>수세기용: S-1이 1→5로 점점 높아짐</h2>
+<div class="row">
+<button data-f="s1_count1">1</button><button data-f="s1_count2">2</button><button data-f="s1_count3">3</button><button data-f="s1_count4">4</button><button data-f="s1_count5">5</button>
+</div>
+<button id="seq">1→5 이어서 듣기</button>
+<script>
+const C=new(window.AudioContext||window.webkitAudioContext)(),B={};
+async function get(f){if(!B[f]){const r=await fetch(f+'.mp3');B[f]=await C.decodeAudioData(await r.arrayBuffer())}return B[f]}
+async function play(f,w=0){await C.resume();const b=await get(f),s=C.createBufferSource();s.buffer=b;s.connect(C.destination);s.start(C.currentTime+w)}
+document.querySelectorAll('[data-f]').forEach(e=>e.onclick=()=>play(e.dataset.f));
+document.getElementById('seq').onclick=()=>[1,2,3,4,5].forEach((i,k)=>play('s1_count'+i,k*.35));
+</script></body></html>
