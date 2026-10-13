@@ -53,7 +53,7 @@
 
     /* --- 1. 부엌 --- */
     bg(T, 'kitchen');
-    const mm = mama(T, 500, 478); lineUp();
+    const mm = mama(T, 330, 478); lineUp();
     await T.curtain(true);
     await say('아주 먼 옛날, 엄마 염소와 일곱 마리 아기 염소가 살았어요.');
     await hopAll(kids); AudioFX.jingle();
@@ -127,9 +127,9 @@
 
     /* --- 6. 엄마가 돌아왔어요 --- */
     await scene('엄마가 돌아왔어요', () => { bg(T, 'messy'); });
-    const clock2 = figure(T, 660, 535, 330, { a: 'wg_clock', open: 'wg_clock_open' }, 'a');
+    const clock2 = figure(T, 86, 492, 450, { a: 'wg_clock', open: 'wg_clock_open' }, 'a'); // 그림 속 시계 자리에 덮는다
     const mm2 = mama(T, 340, 520, 280, 'surprise');
-    const k7 = kid(T, 7, 660, 505, 90); hide(k7);
+    const k7 = kid(T, 7, 90, 490, 90); hide(k7);
     await say('집에 돌아온 엄마 염소는 깜짝 놀랐어요.');
     await say('"얘들아, 어디 있니? 엄마 왔어!"');
     mm2.hop(16, 300);
