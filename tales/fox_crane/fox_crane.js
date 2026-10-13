@@ -75,7 +75,7 @@
     return wrap;
   }
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). 그림 밖(세로 화면에서 물러설 때)은 끝 색으로 */
-  const BG_EDGE = { forest: ['#f2e6bf', '#a98e62'], kitchen: ['#d0b078', '#a67a48'], high: ['#f3e3c4', '#6b4426'], pondhouse: ['#c9e2e6', '#6f8f4a'],
+  const BG_EDGE = { forest: ['#f2e6bf', '#a98e62'], kitchen: ['#d0b078', '#a67a48'], high: ['#efbb70', '#efbb70'], pondhouse: ['#c9e2e6', '#6f8f4a'],
     crane_room: ['#fdf0c8', '#d6a355'], feast_day: ['#cfe3ea', '#5f7a3a'], feast_night: ['#13204a', '#2d3a22'] };
   function bgImage(T, key, { dx = 0, parent, clip } = {}) {
     const u = bgUrl(key); if (!u) return null;
@@ -363,7 +363,7 @@
     paper(b, [['ellipse', { cx: 500, cy: 440, rx: 440, ry: 160, fill: C.bean }], ['ellipse', { cx: 500, cy: 440, rx: 410, ry: 140, fill: 'none', stroke: C.gold, 'stroke-width': 6 }]]);
   }
   /* 그림: 탁자는 배경(부감 마루)에 있다 → 탁자 위에 빈 접시 + 국물 한 장 */
-  const HIGH_PLATE = [505, 288, 1.35];
+  const HIGH_PLATE = [497, 314, 1.35];
   function highTable(T, parent) {
     const { el, paper } = T;
     if (bgUrl('high') && artUrl('plate_empty') && artUrl('plate_soup')) {
@@ -618,7 +618,7 @@
     await say('두루미 부리를 톡 눌러서 먹게 해 줘요!');
     const words = ['콕!', '딱!', '딱딱!'];
     const HI = bgUrl('high') && ARTMODE(); // 그림: 접시가 탁자 위(무대 y≈250)에 있다
-    const peckAt = HI ? [612, 254] : [640, 418], lickAt = HI ? [400, 262] : [390, 440];
+    const peckAt = HI ? [604, 280] : [640, 418], lickAt = HI ? [392, 288] : [390, 440];
     for (let i = 0; i < 3; i++) {
       await T.tap(crane.parts.head, { prompt: '두루미 부리를 톡 눌러 봐요!' });
       const deg = aimP(crane, peckAt);
