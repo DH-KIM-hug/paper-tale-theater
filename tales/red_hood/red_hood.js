@@ -11,7 +11,7 @@
     wolf_granny: .6813, wolf_hiccup: .4854, wolf_jump: .5542, wolf_peek: .5292, wolf_run: 2.5, wolf_sleep: 2.1453, wolf_whisper: 1.5578 };
   const BGS = ['bed', 'cottage', 'door', 'flowers', 'kitchen', 'room', 'shortcut', 'table', 'trail', 'tree'];
   const NF = new Set(['apple', 'basket', 'bread', 'flower_blue', 'flower_red', 'flower_yellow', 'milk', 'vase_blue', 'vase_red', 'vase_yellow', 'wardrobe']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
-  const CUTS = ['tail', 'whisper', 'dash', 'gulp', 'granwolf', 'jumpup', 'hiccup'];
+  const CUTS = ['tail', 'whisper', 'dash', 'gulp', 'granwolf', 'jumpup'];
   const bgSrc = k => AS + 'rh_bg_' + k + '.webp', cutSrc = k => AS + 'rh_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const C = { bean: '#A93B32', ink: '#2E241C' };
@@ -60,6 +60,63 @@
   const ring = (T, cx, cy, r) => T.el('ellipse', { cx, cy, rx: r, ry: r * .8, fill: 'none', stroke: '#E8703A', 'stroke-width': 6, 'stroke-dasharray': '14 8' }, T.world);
   const knock = T => AudioFX.sfx('knock') || T.tone([300, 200], .08, { type: 'square', vol: .12 });
   const popSfx = T => AudioFX.sfx('pop') || T.tone([500, 800], .12, { vol: .12 });
+
+
+  /* 다른 곳 찾기: 처음부터 부드럽게 빛나는 고리, 3초 멈추면 손가락, 틀리면 더 크게 튀어 오르고, 두 번 틀리면 큰 화살표 + 더 넓은 눌림 */
+  function findSpot(T, spots, prompt, onWrongTap) {
+    return new Promise(res => {
+      const g = T.el('g', { 'pointer-events': 'none' }, T.world);
+      const fx = spots.map(sp => {
+        const r = T.el('ellipse', { cx: sp.at[0], cy: sp.at[1], rx: sp.r + 12, ry: (sp.r + 12) * .85, fill: '#FFE082', 'fill-opacity': .22, stroke: '#FFB300', 'stroke-width': 5, 'stroke-opacity': .85 }, g);
+        r.style.transformBox = 'fill-box'; r.style.transformOrigin = 'center';
+        const an = r.animate([{ transform: 'scale(.92)', opacity: .55 }, { transform: 'scale(1.08)', opacity: 1 }], { duration: 900, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+        return { sp, r, an };
+      });
+      const hand = T.el('image', { href: '../../assets/ui/hand3.webp', width: 62, height: 112, opacity: 0 }, g);
+      const arrow = T.el('path', { d: 'M0 0 L34 -44 L14 -44 L14 -96 L-14 -96 L-14 -44 L-34 -44 Z', fill: '#FFC107', stroke: '#8A4B12', 'stroke-width': 6, 'stroke-linejoin': 'round', opacity: 0 }, g);
+      const hit = T.el('rect', { x: -40, y: -30, width: 1080, height: 720, fill: '#fff', 'fill-opacity': .01 }, T.world);
+      hit.classList.add('findhit');
+      hit.__spots = () => fx.map(f => f.sp.at);
+      let wrong = 0, done = false, idle, talk = false, bob = null, abob = null;
+      const target = () => fx[0];
+      const aim = () => {
+        const t = target(); if (!t) return;
+        const [x, y] = t.sp.at;
+        hand.setAttribute('x', x - 31); hand.setAttribute('y', y - 6); hand.setAttribute('opacity', 1);
+        bob && bob.cancel(); bob = hand.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(16px)' }], { duration: 650, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+        if (wrong >= 2) {
+          arrow.setAttribute('transform', `translate(${x},${y - t.sp.r - 16})`); arrow.setAttribute('opacity', 1);
+          abob && abob.cancel(); abob = arrow.animate([{ translate: '0 0' }, { translate: '0 -18px' }], { duration: 500, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+        }
+      };
+      const rearm = () => { clearTimeout(idle); hand.setAttribute('opacity', 0); bob && bob.cancel(); idle = setTimeout(() => { if (!done) aim(); }, 3000); };
+      const say2 = t => { if (talk) return; talk = true; T.say(t).finally(() => { talk = false; }); };
+      const hitR = () => wrong >= 2 ? 84 : 64;
+      rearm();
+      const promptT = setTimeout(() => !done && say2(prompt), 12000);
+      const spotsAt = (x, y) => {
+        let best = null, bd = 1e9;
+        fx.forEach(f => { const d = Math.hypot(x - f.sp.at[0], y - f.sp.at[1]); if (d < bd) { bd = d; best = f; } });
+        return best && bd <= Math.max(hitR(), best.sp.r + 10) ? best : null;
+      };
+      hit.addEventListener('pointerdown', e => {
+        e.stopPropagation(); if (done) return;
+        const m = hit.ownerSVGElement.createSVGPoint(); m.x = e.clientX; m.y = e.clientY;
+        const w = m.matrixTransform(T.world.getScreenCTM().inverse());
+        const f = spotsAt(w.x, w.y);
+        if (f) {
+          done = true; clearTimeout(idle); clearTimeout(promptT); bob && bob.cancel(); abob && abob.cancel();
+          AudioFX.ding(); g.remove(); hit.remove(); res(f.sp.key); return;
+        }
+        wrong++; AudioFX.miss(); onWrongTap && onWrongTap(); rearm();
+        fx.forEach(q => { q.an.cancel(); q.r.setAttribute('stroke-width', 8); q.r.setAttribute('fill-opacity', .4);
+          q.an = q.r.animate([{ transform: 'scale(1)', opacity: .7 }, { transform: 'scale(1.3)', opacity: 1 }], { duration: 600, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' }); });
+        const t = target(); t.r.animate([{ translate: '0 0' }, { translate: '0 -22px' }, { translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], { duration: 700 });
+        aim();
+        if (wrong === 1) say2('이불 말고, 얼굴을 자세히 봐요.'); else if (wrong === 2) say2('얼굴에서 이상한 곳을 눌러 봐요!');
+      });
+    });
+  }
 
   async function run(T) {
     const { sleep, say, camSnap } = T;
@@ -206,7 +263,7 @@
     /* --- 7. 할머니 집 --- */
     await T.sceneCard('', () => {
       T.clear(); bgImage(T, 'cottage'); camSnap(480, 310, 2.2);
-      put(T, hood, 450, 366, { look: 'knock', to: 'right', s: .34 });
+      put(T, hood, 470, 366, { look: 'knock', to: 'left', s: .34 });
     }, wolf.pos);
     await say('빨간 모자는 숲속 할머니 집에 도착했어요. 문을 톡 두드려요!');
     await T.tap(hood.pos, { prompt: '빨간 모자를 톡! 똑똑똑 노크해요.' });
@@ -216,7 +273,7 @@
     /* --- 8. 이상한 할머니 --- */
     await T.cutImage([{ src: cutSrc('granwolf'), hold: 3000 }], { hold: 3000 });
     await T.sceneCard('이상해요', () => {
-      scene('bed', 590);
+      scene('bed', P ? 510 : 590);
       put(T, wolf, 430, 470, { look: 'granny', to: 'left' });
       put(T, frame, 775, 215);
       put(T, hood, 640, 510, { look: 'wonder', to: 'left' });
@@ -230,20 +287,17 @@
       eye: { at: [px(.43), py(.37)], r: 34, q: '"할머니, 눈이 왜 이렇게 노랗고 커요?"', a: '"너를 잘 보려고 그렇지~"', w: '노란 눈!' },
       mouth: { at: [px(.6), py(.47)], r: 40, q: '"할머니, 입이 왜 이렇게 길어요?"', a: '"그건 말이지… 어흥! 놀랐지?"', w: '긴 입!' },
     };
-    const decoy = hotRect(T, px(.05), py(.7), WW * .9, 80);
     const left = Object.keys(parts);
+    const PROMPT = '사진 속 할머니와 달라 보이는 곳을 톡!';
     while (left.length) {
-      const opts = left.map(k => ({ key: k, el: hot(T, parts[k].at[0], parts[k].at[1], parts[k].r), ok: true }));
-      opts.push({ el: decoy, ok: false, onWrong: async () => { await wolf.wiggle(4, 400); } });
-      const got = await T.choose(opts, { prompt: '사진 속 할머니와 달라 보이는 곳을 톡!', where: '이불 말고, 얼굴을 자세히 봐요.', who: '얼굴에서 이상한 곳을 눌러 봐요!' });
-      opts.forEach(o => o.el.remove());
+      const p = parts[await findSpot(T, left.map(k => ({ key: k, ...parts[k] })), PROMPT, () => wolf.wiggle(4, 400))];
+      const got = { key: left.find(k => parts[k] === p) };
       left.splice(left.indexOf(got.key), 1);
-      const p = parts[got.key];
       ring(T, p.at[0], p.at[1], p.r + 8);
       await T.camTo(p.at[0], p.at[1], 2, 600);
       popSfx(T); T.pop(p.at[0], p.at[1] - 70, p.w);
       await say(p.q); await say(p.a);
-      await T.camTo(590, 280, 1, 500);
+      await T.camTo(P ? 510 : 590, 280, 1, 500);
       if (!left.length) break;
       await say('빨간 모자는 고개를 갸웃했어요. 또 이상한 곳이 있나 봐요.');
     }
@@ -288,7 +342,6 @@
       wolf.wiggle(6 + i * 2, 260); hunter.hop(12, 260); popSfx(T);
       T.pop(780, 300 - i * 6, ['킥', '킥킥', '키득', '하하', '꺄르르!'][i - 1] || '킥');
     } });
-    await T.cutImage([{ src: cutSrc('hiccup'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     hunter.look('laugh');
     wolf.look('hiccup'); wolf.place(760, 510);
     put(T, granny, 900, 510, { look: 'pop', to: 'left' });
