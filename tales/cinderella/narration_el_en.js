@@ -152,13 +152,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The two of them twirled and danced. Cinderella was so happy.",
   "c": "audio/el/cinderella/en/nar_618eb1e419.mp3"
  },
- "그때 시계탑에서 종이 울렸어요. 신데렐라를 톡톡톡톡톡 눌러서 종소리를 세어 봐요!": {
-  "t": "Then the clock tower bell rang. Tap Cinderella, tap tap tap tap tap, and count the bells!",
-  "c": "audio/el/cinderella/en/nar_18d27a6ca1.mp3"
+ "그때 시계탑에서 종이 울렸어요. 종을 톡톡톡톡톡 눌러서 종소리를 세어 봐요!": {
+  "t": "Then the clock tower bell rang. Tap the bell, tap tap tap tap tap, and count the bells!",
+  "c": "audio/el/cinderella/en/nar_5044589e8c.mp3"
  },
- "신데렐라를 톡톡톡톡톡! 종소리를 세어요.": {
-  "t": "Tap Cinderella, tap tap tap tap tap! Count the bells.",
-  "c": "audio/el/cinderella/en/nar_f133f070a9.mp3"
+ "종을 톡톡톡톡톡! 종소리를 세어요.": {
+  "t": "Tap the bell, tap tap tap tap tap! Count the bells.",
+  "c": "audio/el/cinderella/en/nar_498306c399.mp3"
  },
  "종이 하나, 둘, 셋, 넷, 다섯! 마법이 풀리기 전에 달려야 해요!": {
   "t": "The bell rang one, two, three, four, five! She had to run before the magic ended!",

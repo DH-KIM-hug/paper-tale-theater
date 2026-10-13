@@ -99,16 +99,50 @@
     clinkSfx(T); faces[0].hop(20, 320);
     await say('맞아요, 슬픈 마음이에요. 그때 쪼르르 소리가 났어요.');
     faces.forEach(hide);
-    put(T, cind, X(380, 425), 505, { look: 'cry', to: 'left' });
-    const mx = X([520, 590, 660, 730], [455, 495, 535, 575]), my = [505, 505, 505, 505], ms = P ? .8 : 1;
-    put(T, mice[0], mx[0], my[0], { to: 'right', s: ms }); fade(mice[0]);
+    put(T, cind, X(380, 350), 505, { look: 'cry', to: 'left' });
+    const spots = X([[540, 545], [640, 497], [740, 545], [840, 497]], [[445, 555], [510, 470], [575, 555], [640, 470]]), ms = P ? .8 : 1;
+    const hitR = X(40, 50) / ms, tags = [];
+    mice.forEach((m, i) => {
+      put(T, m, spots[i][0], spots[i][1], { to: i % 2 ? 'left' : 'right', s: ms });
+      if (!m.hit) m.hit = T.el('circle', { cx: 0, cy: -42, r: hitR, fill: 'transparent' }, m.pos);
+      m.hit.setAttribute('r', hitR);
+      m.pos.animate([{ opacity: 0, translate: '0 20px' }, { opacity: 1, translate: '0 0' }], { duration: 400, delay: i * 140, fill: 'backwards' });
+      m.idle = m.body.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-5px)' }, { transform: 'translateY(0)' }], { duration: 1500 + i * 230, delay: i * 300, iterations: Infinity, easing: 'ease-in-out' });
+      m.counted = false;
+    });
     await say('그때 생쥐들이 달려왔어요. "우리가 도와줄게!"');
     await say('생쥐를 톡톡톡톡 눌러서 하나씩 세어 봐요!');
-    await T.mash(mice[0].pos, { count: 4, prompt: '생쥐를 톡톡톡톡! 하나씩 세어요.', onStep: i => {
-      const m = mice[i - 1];
-      if (i > 1) { put(T, m, mx[i - 1], my[i - 1], { to: 'right', s: ms }); m.pos.animate([{ opacity: 0, translate: '0 -30px' }, { opacity: 1, translate: '0 0' }], 260); }
-      m.hop(14, 260); popSfx(T); T.pop(m.x, m.y - (i % 2 ? 190 : 260), tr(NUM[i - 1]));
-    } });
+    await new Promise(res => {
+      let n = 0, last = 0, t1, t2, t3;
+      const count = m => {
+        if (m.counted) return;
+        m.counted = true; n++; m.idle.cancel(); m.pos.classList.remove('armed');
+        const i = mice.indexOf(m), [x, y] = spots[i];
+        m.hop(22, 300); popSfx(T); T.pop(m.x, m.y - (n % 2 ? 190 : 260), tr(NUM[n - 1]));
+        const tg = T.el('g', {}, T.world); tags.push(tg);
+        T.el('circle', { cx: x, cy: y - 100 * ms, r: 14, fill: '#FFF3D6', stroke: '#B07A3A', 'stroke-width': 2.5 }, tg);
+        const tx = T.el('text', { x, y: y - 100 * ms + 6, 'text-anchor': 'middle', 'font-size': 17, 'font-weight': 700, fill: '#7A4A1E' }, tg); tx.textContent = n;
+        tg.animate([{ opacity: 0, scale: .3 }, { opacity: 1, scale: 1 }], { duration: 260, easing: 'ease-out' });
+        if (n >= 4) finish(); else arm();
+      };
+      const arm = () => {
+        clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+        t2 = setTimeout(() => Narrator.speak(tr('생쥐를 톡톡톡톡! 하나씩 세어요.')), 12000);
+        t3 = setTimeout(function auto() { const m = mice.find(q => !q.counted); if (m) { count(m); } }, 20000);
+      };
+      const offs = mice.map(m => {
+        m.pos.classList.add('tap-target', 'armed');
+        const on = e => {
+          e.stopPropagation(); const t = performance.now(); if (t - last < 120) return; last = t;
+          if (m.counted) { m.wiggle(10, 400); AudioFX.tap(); return; }
+          count(m);
+        };
+        m.pos.addEventListener('pointerdown', on);
+        return () => { m.pos.removeEventListener('pointerdown', on); m.pos.classList.remove('tap-target', 'armed'); };
+      });
+      const finish = () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); offs.forEach(f => f()); res(); };
+      arm();
+    });
     cind.look('joy'); cind.hop(24, 340);
     await say('생쥐가 하나, 둘, 셋, 넷! 모두 같이 청소를 했어요.');
     await say('신데렐라는 방긋 웃었어요. "고마워, 친구들!"');
@@ -116,7 +150,7 @@
     /* --- 3. 거실: 리본 언니들 --- */
     await T.sceneCard(tr('거실'), () => {
       scene('parlor');
-      mice.forEach(hide);
+      mice.forEach(hide); tags.forEach(t => t.remove());
       put(T, sisA, X(480, 440), 505, { look: 'ribbon', to: 'left' });
       put(T, sisB, X(580, 545), 505, { look: 'ribbon', to: 'left' });
       put(T, step, X(720, 600), 505, { look: 'pose', to: 'left' });
@@ -184,20 +218,42 @@
     } });
     await say('둘은 빙글빙글 춤을 추었어요. 신데렐라는 정말 행복했어요.');
 
-    /* --- 6. 시계탑: 종소리 세기 --- */
+    /* --- 6. 시계탑: 종소리 세기 (종을 톡톡톡톡톡, 그다음 계단 화살표를 톡) --- */
+    let clock, arrow;
     await T.sceneCard(tr('시계탑'), () => {
       scene('tower');
       hide(prince);
       put(T, cind, X(670, 500), 520, { look: 'run', to: 'left', s: X(.85, .62) });
+      const cr = X(40, 34), cx = 505, cy = X(130, 124);
+      clock = T.el('g', {}, T.world); clock.setAttribute('transform', `translate(${cx},${cy})`);
+      const face = T.el('circle', { r: cr, fill: 'none', stroke: '#FFD36B', 'stroke-width': 7, opacity: .85 }, clock); /* 배경에 그려진 큰 시계 둘레를 빛나는 종이 테로 */
+      face.style.transformBox = 'fill-box'; face.style.transformOrigin = 'center';
+      face.animate([{ opacity: .45 }, { opacity: .95 }, { opacity: .45 }], { duration: 1400, iterations: Infinity, easing: 'ease-in-out' });
+      T.el('circle', { r: Math.max(cr + 6, X(48, 50)), fill: 'transparent' }, clock);
+      clock.face = face;
+      clock.animate([{ opacity: 0 }, { opacity: 1 }], 400);
     }, cind.pos);
-    await say('그때 시계탑에서 종이 울렸어요. 신데렐라를 톡톡톡톡톡 눌러서 종소리를 세어 봐요!');
-    await T.mash(cind.pos, { count: 5, prompt: '신데렐라를 톡톡톡톡톡! 종소리를 세어요.', onStep: i => {
-      cind.hop(14, 260); bellSfx(T); T.shake(); T.pop(...[[400, 150], [612, 150], [410, 250], [602, 250], [506, 70]][i - 1], tr(NUM[i - 1]));
+    await say('그때 시계탑에서 종이 울렸어요. 종을 톡톡톡톡톡 눌러서 종소리를 세어 봐요!');
+    const idle = cind.body.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-7px)' }, { transform: 'translateY(0)' }], { duration: 700, iterations: Infinity, easing: 'ease-in-out' });
+    await T.mash(clock, { count: 5, prompt: '종을 톡톡톡톡톡! 종소리를 세어요.', onStep: i => {
+      bellSfx(T); T.shake(); T.pop(...[[400, 150], [612, 150], [410, 250], [602, 250], [506, 300]][i - 1], tr(NUM[i - 1]));
+      clock.face.animate([{ transform: 'scale(1)', strokeWidth: 9 }, { transform: 'scale(1.16)', strokeWidth: 18 }, { transform: 'scale(1)', strokeWidth: 9 }], 480);
+      clock.animate([{ translate: '0 0' }, { translate: '-5px 0' }, { translate: '5px 0' }, { translate: '0 0' }], 420);
     } });
+    const sayRun = say('종이 하나, 둘, 셋, 넷, 다섯! 마법이 풀리기 전에 달려야 해요!');
+    arrow = T.el('g', {}, T.world); arrow.setAttribute('transform', `translate(${X(520, 405)},${X(445, 470)})`);
+    const ag = T.el('g', { filter: 'url(#pp)' }, arrow);
+    T.el('circle', { r: X(40, 42), fill: '#FFF1D0', stroke: '#E8A93A', 'stroke-width': 5 }, ag);
+    T.el('path', { d: `M-16,-14 L0,2 L16,-14 M-16,2 L0,18 L16,2`, fill: 'none', stroke: '#C2552B', 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, ag);
+    T.el('circle', { r: X(48, 50), fill: 'transparent' }, arrow);
+    ag.style.transformBox = 'fill-box'; ag.style.transformOrigin = 'center';
+    ag.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
+    arrow.animate([{ opacity: 0 }, { opacity: 1 }], 400);
+    await sayRun;
+    await T.tap(arrow);
+    arrow.remove(); clock.remove(); idle.cancel();
     cind.turn('right');
-    const dash = cind.move(X(1150, 720), 520, 1600, 'ease-in');
-    await say('종이 하나, 둘, 셋, 넷, 다섯! 마법이 풀리기 전에 달려야 해요!');
-    await dash;
+    await cind.move(X(1150, 720), 520, 1500, 'ease-in');
 
     /* --- 7. 계단: 유리 구두 --- */
     await T.sceneCard(tr('계단'), () => {
