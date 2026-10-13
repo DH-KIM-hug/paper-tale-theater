@@ -64,7 +64,7 @@
     return wrap;
   }
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). 그림 밖은 끝 색으로 */
-  const BG_EDGE = { kitchen: ['#efe0c4', '#4a3220'], forest: ['#cfe5ee', '#3c5a3a'], door: ['#cfe0e2', '#3f5a34'], table: ['#e8d6b6', '#6b4426'],
+  const BG_EDGE = { kitchen: ['#dcb065', '#a77c48'], forest: ['#cfe5ee', '#3c5a3a'], door: ['#cfe0e2', '#3f5a34'], table: ['#e8d6b6', '#6b4426'],
     living: ['#eee0c4', '#5a3a22'], bed_top: ['#f2e6cc', '#5a3a22'], bed_side: ['#f2e6cc', '#8a6440'] };
   function bgImage(T, key, { dx = 0, parent } = {}) {
     const u = bgUrl(key); if (!u) return null;
@@ -558,9 +558,10 @@
 
     /* ---------- 1. 곰 집 아침 (부엌 와이드) ---------- */
     kitchenBG(T);
-    sideTable(T, 680, 360, 260);
-    SIZE.forEach((s, i) => bowlSide(T, T.world, 730 + i * 85, 360, s * .6));
-    put(bears.dad, X(280), 500); put(bears.mom, X(470), 500, SIZE[1]); put(bears.baby, X(620), 500, SIZE[2]);
+    const KY = bgUrl('kitchen') ? 26 : 0; // 그림 속 바닥선(무대 y≈523)에 발이 닿게
+    sideTable(T, 680, 360 + KY, 260);
+    SIZE.forEach((s, i) => bowlSide(T, T.world, 730 + i * 85, 360 + KY, s * .6));
+    put(bears.dad, X(280), 500 + KY); put(bears.mom, X(470), 500 + KY, SIZE[1]); put(bears.baby, X(620), 500 + KY, SIZE[2]);
     view();
     await T.curtain(true);
     await say('숲속 통나무집에 곰 세 식구가 살았어요.');
