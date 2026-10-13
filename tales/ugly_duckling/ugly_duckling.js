@@ -69,8 +69,8 @@
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992).
      BG_FIT[key] = [배율, 그림 속 점 u, v(비율), 그 점이 올 무대 x, y] — 배율 1이면 그림 전체를 무대에 맞춘다 */
   const BG_EDGE = { nest: ['#a5c4b6', '#37502d'], pond: ['#bfd4d7', '#5f4326'], yard: ['#9ec8df', '#706e50'], reeds: ['#bad2d9', '#533f27'],
-    swamp: ['#b5b9ab', '#515a5c'], swamp_high: ['#a1ad95', '#5a7076'], autumn: ['#fee7c8', '#4a280f'], winter: ['#d2e4f4', '#eef3fb'],
-    cabin: ['#cab18f', '#88562f'], spring: ['#c3dcdf', '#889669'], reflect: ['#c5e4ed', '#77cae2'] };
+    swamp: ['#b9bca8', '#8fa6ad'], swamp_high: ['#a1ad95', '#5a7076'], autumn: ['#fee7c8', '#4a280f'], winter: ['#d2e4f4', '#eef3fb'],
+    cabin: ['#c99a58', '#c9944f'], spring: ['#c3dcdf', '#889669'], reflect: ['#c5e4ed', '#77cae2'] };
   const BG_FIT = { reeds: [1.3, .5, .5, 500, 280] };
   function bgRect(key) {
     const w0 = 1080, h0 = w0 * 992 / 1760, f = BG_FIT[key];
