@@ -207,13 +207,13 @@
     await T.cutImage([{ src: U('cut_crawl'), hold: 3200 }]);
     await say('늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.');
     await T.sceneCard('보글보글', () => { bg('chimney'); T.camSnap(500, 280, 1); });
-    const fire = hit(420, 330, 160, 150);
-    const glow = T.el('ellipse', { cx: 500, cy: 440, rx: 10, ry: 8, fill: '#FFB347', opacity: 0 }, T.world);
+    const fire = hit(425, 430, 150, 120);
+    const glow = T.el('ellipse', { cx: 494, cy: 515, rx: 10, ry: 8, fill: '#FFB347', opacity: 0 }, T.world);
     await say('아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.');
     await T.mash(fire, { count: 5, prompt: '불을 톡톡 눌러서 크게 해 줘요.', onStep: i => {
       const p = i / 5;
       glow.setAttribute('rx', 20 + 120 * p); glow.setAttribute('ry', 14 + 80 * p); glow.setAttribute('opacity', .15 + .45 * p);
-      T.pop(500 + (Math.random() - .5) * 120, 300, '보글');
+      T.pop(494 + (Math.random() - .5) * 100, 400, '보글');
     } });
     sfx('ding');
     await say('보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.');
