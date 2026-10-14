@@ -43,8 +43,8 @@
       return a;
     }
 
-    await Promise.race([Promise.all(['sky_spring', 'nolkitchen', 'eaves', 'yard', 'sky_autumn', 'nol_eaves', 'nolyard']
-      .map(k => T.preload(U('bg_' + k))).concat(['rice', 'fall', 'bandage', 'south', 'seedback', 'rice_pour', 'house', 'mud', 'dokkaebi', 'collapse']
+    await Promise.race([Promise.all(['sky_spring', 'nolkitchen', 'eaves', 'yard', 'sky_autumn', 'nol_eaves', 'nolyard', 'giwa']
+      .map(k => T.preload(U('bg_' + k))).concat(['rice', 'fall', 'bandage2', 'south', 'seedback', 'rice_pour2', 'house', 'mud2', 'dokkaebi', 'collapse']
       .map(k => T.preload(U('cut_' + k))))), sleep(4000)]);
 
     /* 1. 봄 하늘 */
@@ -99,7 +99,7 @@
     await T.tap(hc.pos, { prompt: '흥부를 톡! 제비를 받아 줘요.' });
     clearInterval(shiver);
     await fallen.move(fx(425), 410, 500, 'ease-out'); hc.hop(20, 300); sfx('ding');
-    await cut('bandage', 'pop', 3600);
+    await cut('bandage2', 'pop', 3600);
     await say('흥부는 아기 제비의 다친 다리에 천을 감아 주었어요. 아기 제비는 금방 나았어요.');
 
     /* 4. 가을, 남쪽으로 */
@@ -143,7 +143,7 @@
       g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, word);
     };
     await open(gourds[0], '슬근슬근!');
-    await cut('rice_pour', 'pop', 3600);
+    await cut('rice_pour2', 'pop', 3600);
     await say('첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.');
     await say('쌀자루를 톡톡톡 눌러서 세어 봐요!');
     const sacks = [];
@@ -189,7 +189,7 @@
     };
     await say('첫 번째 박을 톡!');
     await nopen(ng[0], '슬근슬근!');
-    await cut('mud', 'pow', 3400);
+    await cut('mud2', 'pow', 3400);
     await say('콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.');
     ns.set('nol_mud');
     await say('두 번째 박을 톡!');
@@ -202,7 +202,7 @@
     await say('와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.');
 
     /* 8. 화해와 나눔 */
-    await T.sceneCard('흥부네 집', () => { scene('yard', 500); });
+    await T.sceneCard('흥부네 집', () => { scene('giwa', 500); }); /* 부자가 된 흥부네는 기와집 */
     const hg = spr('heung_glad', 380, 330), hj = spr('hwife_joy', 260, 310), ns2 = spr('nol_shy', 640, 320);
     await say('놀부는 흙투성이가 되어 흥부네 집을 찾아왔어요.');
     await say('놀부가 고개를 숙였어요. "동생아, 내가 잘못했다. 욕심을 부려서 미안하구나."');
