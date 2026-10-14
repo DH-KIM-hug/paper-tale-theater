@@ -147,7 +147,7 @@
   }
   /* 고개 그림(sm_bg_hill_dusk, 좌우 뒤집어 쓴다) 속 큰 바위 + 그 아래 땅 (원본 픽셀) */
   /* 닫힌 창호지 문 그림(BG.door, 1760×992): 가운데 이음매(고리)가 무대 x≈500. 들여다보기 장면은 오른쪽 가운데 문 창호지(원본 1046,400)를 가까이 */
-  const DOOR_PEEK = (() => { const u = 1080 / 1760 * 1.6; return { x: 500 - 1046 * u, y: 300 - 400 * u, w: 1760 * u, h: 992 * u }; })();
+  const DOOR_PEEK = (() => { const u = 1080 / 1760 * 1.6; return { x: 500 - 1050 * u, y: 300 - 500 * u, w: 1760 * u, h: 992 * u }; })();
   /* 큰 나무 그림(BG.tree, 1760×992) 속 자리 (원본 픽셀): 기둥 가운데·땅, 오른쪽 굵은 가지 윗면(오누이 자리), 기둥 가운데쯤, 달빛 */
   const TREE_PX = { trunk: [835, 880], branch: [1040, 445], trunkMid: [835, 650], moon: [1560, 120] };
   function treeArt(T, p, s, [px, py], [ax, ay]) {
@@ -464,7 +464,7 @@
   }
   function doorBG(T) {
     const { paper, el } = T, b = T.bg;
-    if (bgImage(T, b, 'door', { back: '#5a4a48' })) return true; // 그림: 닫힌 미닫이 창호지 문 (등잔불)
+    if (bgImage(T, b, 'door', { back: '#8a7660' })) return true; // 그림: 닫힌 미닫이 창호지 문 (등잔불)
     sky(T, b, '#C9A77A');
     paper(b, [['rect', { x: -300, y: 470, width: 1600, height: 500, fill: '#D9A060' }]]);
     paper(b, [['rect', { x: 500, y: 60, width: 380, height: 420, fill: C.cream, stroke: C.bark, 'stroke-width': 14 }]]);
@@ -706,14 +706,14 @@
       T.world.appendChild(boy.pos); boy.setScale(1.05); boy.place(340, 520);
       T.world.appendChild(girl.pos); girl.setScale(.95); girl.place(450, 520);
       // 방 그림이면 그림 속 등잔(작은 상 위, 무대 ≈ 770,291 심지)을 켠다. 아니면 따로 그린 등잔
-      const LAMP = roomArt && artUrl('lamp_flame') ? { x: 770, y: 293 } : null;
+      const LAMP = roomArt && artUrl('lamp_flame') ? { x: 743, y: 368 } : null;
       glow = el('circle', { cx: LAMP ? LAMP.x : 760, cy: LAMP ? LAMP.y : 380, r: 320, fill: C.amber, opacity: 0 }, T.fx);
       dark = el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: '#0B1030', opacity: .72 }, T.fx);
       lamp = el('g', {}, T.fx);
       if (LAMP) {
         el('rect', { x: LAMP.x - 60, y: LAMP.y - 70, width: 120, height: 150, fill: 'transparent' }, lamp); // 누르는 자리: 그림 속 등잔
         // 그림 속 등잔(그릇·받침)만 오려 어둠 장막 위로 올린다 → 캄캄해도 등잔이 보이고, 누를 때 반짝임도 등잔에
-        bgCutout(T, lamp, bgUrl('room'), FULL, [[1262, 508], [1378, 508], [1374, 540], [1352, 575], [1352, 600], [1290, 600], [1290, 575], [1266, 540]]);
+        bgCutout(T, lamp, bgUrl('room'), FULL, [[1205, 640], [1245, 628], [1310, 628], [1350, 640], [1352, 758], [1205, 758]]);
         flame = el('g', {}, lamp); sprite(T, el('g', { transform: `translate(${LAMP.x} ${LAMP.y + 2})` }, flame), 'lamp_flame', 30, 35);
       } else if (el('rect', { x: 680, y: 290, width: 160, height: 250, fill: 'transparent' }, lamp) && sprite(T, el('g', { transform: 'translate(760 522)' }, lamp), 'lamp_off', 151, 230)) {
         // 그림 등잔: 끈 등잔 위에 불 켠 등잔(같은 틀)을 겹쳐 두고, 켜면 보인다
@@ -784,7 +784,7 @@
       T.clear();
       // 그림: 창호지 문 두 짝이 가운데(x 500)에서 만나고 그 틈이 살짝 벌어져 있다 (조금 가까이: 배율 1)
       // 그림: 닫힌 문 — 가운데 이음매(x 500)가 살짝 벌어져 그 틈으로 손이 들어온다
-      if (bgImage(T, T.bg, 'door', { back: '#5a4a48' })) { el('rect', { x: 496, y: -6, width: 8, height: 534, fill: '#1c1830' }, T.bg); return; }
+      if (bgImage(T, T.bg, 'door', { back: '#8a7660' })) { el('rect', { x: 496, y: -6, width: 8, height: 534, fill: '#1c1830' }, T.bg); return; }
       sky(T, T.bg, '#C9A77A');
       T.paper(T.bg, [['rect', { x: -300, y: -300, width: 790, height: 1200, fill: C.cream }], ['rect', { x: 510, y: -300, width: 790, height: 1200, fill: C.cream }]]);
       for (let i = -2; i < 7; i++) { el('rect', { x: -300, y: i * 110, width: 790, height: 7, fill: C.bark }, T.bg); el('rect', { x: 510, y: i * 110, width: 790, height: 7, fill: C.bark }, T.bg); }
