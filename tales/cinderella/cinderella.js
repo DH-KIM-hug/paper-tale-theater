@@ -6,7 +6,7 @@
   const ASP = { cind_sweep: .7214, cind_cry: .4829, cind_joy: .5543, cind_surprise: .4871, cind_old: .4643, cind_gown: .75, cind_dance: .7757, cind_run: .7571,
     step_pose: .47, step_wave: .5471, sis1_ribbon: .6214, sis2_ribbon: .4743, sis1_pose: .5871, sis2_pose: .4171, sis_sorry: .9586,
     fairy_pop: .8286, fairy_wave: .8643, fairy_warn: .6986, prince_stand: .4929, prince_dance: .6143, prince_slipper: .5171, footman: .5829, mouse: .8831 };
-  const BGS = ['kitchen', 'hearth', 'parlor', 'garden', 'hall', 'tower', 'stairs_high', 'palacegarden'];
+  const BGS = ['kitchen', 'hearth', 'parlor', 'garden', 'hall', 'terrace', 'stairs_high', 'palacegarden'];
   const CUTS = ['bow', 'fairy', 'horses', 'pumpkin', 'dress', 'slipper', 'foot'];
   const bgSrc = k => AS + 'cd_bg_' + k + '.webp', cutSrc = k => AS + 'cd_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
@@ -218,30 +218,31 @@
     } });
     await say('둘은 빙글빙글 춤을 추었어요. 신데렐라는 정말 행복했어요.');
 
-    /* --- 6. 시계탑: 종소리 세기 (종을 톡톡톡톡톡, 그다음 계단 화살표를 톡) --- */
+    /* --- 6. 자정: 궁전 계단 위에서 멀리 시계탑의 종소리 세기 (시계를 톡톡톡톡톡, 그다음 계단 화살표를 톡) --- */
     let clock, arrow;
-    await T.sceneCard(tr('시계탑'), () => {
-      scene('tower');
+    await T.sceneCard(tr('자정'), () => {
+      scene('terrace');
+      if (P) camSnap(210, 280, 1); /* 세로 화면은 계단 위 신데렐라와 먼 시계탑이 함께 보이게 왼쪽으로 */
       hide(prince);
-      put(T, cind, X(670, 500), 520, { look: 'run', to: 'left', s: X(.85, .62) });
-      const cr = X(40, 34), cx = 505, cy = X(130, 124);
+      put(T, cind, X(105, 120), 200, { look: 'gown', to: 'right', s: .8 });
+      const cr = 25, cx = 266, cy = 121;
       clock = T.el('g', {}, T.world); clock.setAttribute('transform', `translate(${cx},${cy})`);
-      const face = T.el('circle', { r: cr, fill: 'none', stroke: '#FFD36B', 'stroke-width': 7, opacity: .85 }, clock); /* 배경에 그려진 큰 시계 둘레를 빛나는 종이 테로 */
+      const face = T.el('circle', { r: cr, fill: 'none', stroke: '#FFD36B', 'stroke-width': 5, opacity: .85 }, clock); /* 멀리 그려진 시계 둘레를 빛나는 종이 테로 */
       face.style.transformBox = 'fill-box'; face.style.transformOrigin = 'center';
       face.animate([{ opacity: .45 }, { opacity: .95 }, { opacity: .45 }], { duration: 1400, iterations: Infinity, easing: 'ease-in-out' });
-      T.el('circle', { r: Math.max(cr + 6, X(48, 50)), fill: 'transparent' }, clock);
+      T.el('circle', { r: 48, fill: 'transparent' }, clock); /* 눌리는 곳은 지름 96 */
       clock.face = face;
       clock.animate([{ opacity: 0 }, { opacity: 1 }], 400);
     }, cind.pos);
     await say('그때 시계탑에서 종이 울렸어요. 종을 톡톡톡톡톡 눌러서 종소리를 세어 봐요!');
     const idle = cind.body.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-7px)' }, { transform: 'translateY(0)' }], { duration: 700, iterations: Infinity, easing: 'ease-in-out' });
     await T.mash(clock, { count: 5, prompt: '종을 톡톡톡톡톡! 종소리를 세어요.', onStep: i => {
-      bellSfx(T); T.shake(); T.pop(...[[400, 150], [612, 150], [410, 250], [602, 250], [506, 300]][i - 1], tr(NUM[i - 1]));
-      clock.face.animate([{ transform: 'scale(1)', strokeWidth: 9 }, { transform: 'scale(1.16)', strokeWidth: 18 }, { transform: 'scale(1)', strokeWidth: 9 }], 480);
-      clock.animate([{ translate: '0 0' }, { translate: '-5px 0' }, { translate: '5px 0' }, { translate: '0 0' }], 420);
+      bellSfx(T); T.shake(); T.pop(...(P ? [[270, 215], [240, 235], [300, 225], [255, 205], [285, 240]] : [[390, 60], [450, 120], [390, 170], [470, 50], [420, 100]])[i - 1], tr(NUM[i - 1]));
+      clock.face.animate([{ transform: 'scale(1)', strokeWidth: 5 }, { transform: 'scale(1.3)', strokeWidth: 12 }, { transform: 'scale(1)', strokeWidth: 5 }], 480);
+      clock.animate([{ translate: '0 0' }, { translate: '-3px 0' }, { translate: '3px 0' }, { translate: '0 0' }], 420);
     } });
     const sayRun = say('종이 하나, 둘, 셋, 넷, 다섯! 마법이 풀리기 전에 달려야 해요!');
-    arrow = T.el('g', {}, T.world); arrow.setAttribute('transform', `translate(${X(520, 405)},${X(445, 470)})`);
+    arrow = T.el('g', {}, T.world); arrow.setAttribute('transform', `translate(${X(420, 285)},${X(330, 330)})`);
     const ag = T.el('g', { filter: 'url(#pp)' }, arrow);
     T.el('circle', { r: X(40, 42), fill: '#FFF1D0', stroke: '#E8A93A', 'stroke-width': 5 }, ag);
     T.el('path', { d: `M-16,-14 L0,2 L16,-14 M-16,2 L0,18 L16,2`, fill: 'none', stroke: '#C2552B', 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, ag);
@@ -252,8 +253,8 @@
     await sayRun;
     await T.tap(arrow);
     arrow.remove(); clock.remove(); idle.cancel();
-    cind.turn('right');
-    await cind.move(X(1150, 720), 520, 1500, 'ease-in');
+    cind.look('run', 'right');
+    await cind.move(X(700, 330), 420, 1500, 'ease-in');
 
     /* --- 7. 계단: 유리 구두 --- */
     await T.sceneCard(tr('계단'), () => {

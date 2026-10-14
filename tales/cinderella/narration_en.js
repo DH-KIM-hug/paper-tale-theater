@@ -258,6 +258,7 @@ const TEXT_EN = {
  "밤 정원": "The Night Garden",
  "무도회": "The Ball",
  "시계탑": "The Clock Tower",
+ "자정": "Midnight",
  "계단": "The Stairs",
  "구두 찾기": "Finding the Owner",
  "궁전 정원": "The Palace Garden",
