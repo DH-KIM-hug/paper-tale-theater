@@ -39,8 +39,16 @@
   const hide = a => { a.pos.style.display = 'none'; };
   const fadeIn = (a, ms = 400) => a.pos.animate([{ opacity: 0 }, { opacity: 1 }], ms);
 
+  /* 그림을 (dx, dy) 옮기고 s배 키워 쓴다. 옮겨서 생기는 빈틈은 그림을 거울로 뒤집어 이어 붙인다 */
+  const BG_PLACE = { belltower: { dx: 119, dy: -74 }, nest: { dx: 40, dy: 47, s: 1.25 } };
   function bgImage(T, key) {
-    return T.el('image', { href: bgSrc(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
+    const { dx = 0, dy = 0, s = 1 } = BG_PLACE[key] || {};
+    const w = BGBOX.w * s, h = BGBOX.h * s;
+    const x = s === 1 ? BGBOX.x + dx : 500 + dx - w / 2, y = s === 1 ? BGBOX.y + dy : 280 + dy - h / 2;
+    const img = (extra = {}) => T.el('image', { href: bgSrc(key), x, y, width: w, height: h, preserveAspectRatio: 'none', ...extra }, T.bg);
+    if (dx > 0 && s === 1) img({ transform: `matrix(-1,0,0,1,${2 * x},0)` });
+    if (dy < 0 && s === 1) { img({ transform: `matrix(1,0,0,-1,0,${2 * (y + h)})` }); if (dx > 0) img({ transform: `matrix(-1,0,0,-1,${2 * x},${2 * (y + h)})` }); }
+    return img();
   }
   const popSfx = T => AudioFX.sfx('pop') || T.tone([500, 800], .12, { vol: .12 });
   const bellSfx = T => { AudioFX.sfx('ding'); T.tone([330, 300], .7, { type: 'sine', vol: .2 }); };
@@ -106,7 +114,7 @@
     await T.sceneCard(tr('둥지'), () => { scene('nest'); }, null);
     await say('아기 까치들이 짹짹 울었어요. 아기 까치를 하나씩 세어 봐요!');
     const nestZone = zone(540, 330, 300, 190);
-    const spots = [[410, 395], [480, 345], [560, 345], [630, 395]];
+    const spots = [[462, 352], [512, 326], [570, 326], [620, 352]];
     await T.mash(nestZone, { count: 4, prompt: '아기 까치를 톡톡톡톡! 하나씩 세어요.', onStep: i => {
       const c = chicks[i - 1]; put(T, c, spots[i - 1][0], spots[i - 1][1] + 40, { to: 'left' });
       fadeIn(c, 260); c.hop(14, 260); popSfx(T); T.pop(c.x, c.y - 130, tr(NUM[i - 1]));
