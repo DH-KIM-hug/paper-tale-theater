@@ -1,0 +1,697 @@
+{
+  "childCount": 3,
+  "canvas": {
+    "w": 3000,
+    "h": 1500
+  },
+  "scenes": [
+    {
+      "index": 1,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "lookup",
+          "x": 0.44,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "lookup",
+          "x": 0.56,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "lookup",
+          "x": 0.68,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "sniff",
+          "x": 0.84,
+          "y": 0.88,
+          "scale": 0.16,
+          "flip": false
+        }
+      ],
+      "textBox": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 2,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "wave",
+          "x": 0.44,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "run",
+          "x": 0.56,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "run",
+          "x": 0.68,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "run",
+          "x": 0.88,
+          "y": 0.9,
+          "scale": 0.16,
+          "flip": false
+        }
+      ],
+      "textBox": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 3,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "walk",
+          "x": 0.32,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "reach",
+          "x": 0.44,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "walk",
+          "x": 0.56,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "sniff",
+          "x": 0.16,
+          "y": 0.88,
+          "scale": 0.16,
+          "flip": true
+        }
+      ],
+      "textBox": {
+        "x": 0.55,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 4,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "lookup",
+          "x": 0.44,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "lookup",
+          "x": 0.56,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "jump",
+          "x": 0.68,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "lookup",
+          "x": 0.2,
+          "y": 0.9,
+          "scale": 0.16,
+          "flip": false
+        }
+      ],
+      "textBox": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 5,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "lookup",
+          "x": 0.44,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "reach",
+          "x": 0.56,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "walk",
+          "x": 0.68,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "run",
+          "x": 0.8,
+          "y": 0.86,
+          "scale": 0.16,
+          "flip": true
+        }
+      ],
+      "textBox": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 6,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "lookup",
+          "x": 0.32,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "lookup",
+          "x": 0.44,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "jump",
+          "x": 0.56,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "lookup",
+          "x": 0.84,
+          "y": 0.88,
+          "scale": 0.16,
+          "flip": true
+        }
+      ],
+      "textBox": {
+        "x": 0.55,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 7,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "lookup",
+          "x": 0.44,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "reach",
+          "x": 0.56,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "reach",
+          "x": 0.68,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "wag",
+          "x": 0.16,
+          "y": 0.9,
+          "scale": 0.16,
+          "flip": false
+        }
+      ],
+      "textBox": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 8,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "lookup",
+          "x": 0.32,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "reach",
+          "x": 0.44,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "press",
+          "x": 0.56,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "sniff",
+          "x": 0.82,
+          "y": 0.88,
+          "scale": 0.16,
+          "flip": true
+        }
+      ],
+      "textBox": {
+        "x": 0.55,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 9,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "lookup",
+          "x": 0.44,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "back",
+          "x": 0.56,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "back",
+          "x": 0.68,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "lookup",
+          "x": 0.2,
+          "y": 0.9,
+          "scale": 0.16,
+          "flip": false
+        }
+      ],
+      "textBox": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 10,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "lookup",
+          "x": 0.44,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "lookup",
+          "x": 0.56,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "jump",
+          "x": 0.68,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "wag",
+          "x": 0.82,
+          "y": 0.88,
+          "scale": 0.16,
+          "flip": true
+        }
+      ],
+      "textBox": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 11,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "reach",
+          "x": 0.32,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "reach",
+          "x": 0.44,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "jump",
+          "x": 0.56,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "wag",
+          "x": 0.22,
+          "y": 0.9,
+          "scale": 0.16,
+          "flip": false
+        }
+      ],
+      "textBox": {
+        "x": 0.55,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 12,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "hug",
+          "x": 0.42,
+          "y": 0.86,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "hug",
+          "x": 0.5,
+          "y": 0.86,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "hug",
+          "x": 0.58,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "wag",
+          "x": 0.5,
+          "y": 0.92,
+          "scale": 0.16,
+          "flip": false
+        }
+      ],
+      "textBox": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 13,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "wave",
+          "x": 0.32,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "reach",
+          "x": 0.44,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "wave",
+          "x": 0.56,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "lookup",
+          "x": 0.8,
+          "y": 0.88,
+          "scale": 0.16,
+          "flip": true
+        }
+      ],
+      "textBox": {
+        "x": 0.55,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 14,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "lookup",
+          "x": 0.44,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "lookup",
+          "x": 0.56,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "jump",
+          "x": 0.68,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "lookup",
+          "x": 0.18,
+          "y": 0.9,
+          "scale": 0.16,
+          "flip": false
+        }
+      ],
+      "textBox": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 15,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "walk",
+          "x": 0.32,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": true
+        },
+        {
+          "who": "c2",
+          "pose": "walk",
+          "x": 0.44,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": true
+        },
+        {
+          "who": "c3",
+          "pose": "walk",
+          "x": 0.56,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "run",
+          "x": 0.14,
+          "y": 0.88,
+          "scale": 0.16,
+          "flip": true
+        }
+      ],
+      "textBox": {
+        "x": 0.55,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    },
+    {
+      "index": 16,
+      "placements": [
+        {
+          "who": "c1",
+          "pose": "back",
+          "x": 0.44,
+          "y": 0.84,
+          "scale": 0.32,
+          "flip": false
+        },
+        {
+          "who": "c2",
+          "pose": "back",
+          "x": 0.56,
+          "y": 0.8,
+          "scale": 0.28,
+          "flip": false
+        },
+        {
+          "who": "c3",
+          "pose": "back",
+          "x": 0.68,
+          "y": 0.86,
+          "scale": 0.24,
+          "flip": true
+        },
+        {
+          "who": "dog",
+          "pose": "wag",
+          "x": 0.78,
+          "y": 0.9,
+          "scale": 0.16,
+          "flip": true
+        }
+      ],
+      "textBox": {
+        "x": 0.05,
+        "y": 0.08,
+        "w": 0.4,
+        "h": 0.3
+      }
+    }
+  ]
+}

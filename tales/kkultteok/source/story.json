@@ -1,0 +1,17 @@
+{
+  "storyId": "cloud-factory",
+  "title": "퐁! 구름 공장",
+  "titleTemplate": "{{all:와}} {{dog:이}}의 구름 공장",
+  "sceneCount": 16,
+  "roles": {
+    "1": { "c1": "묻고·만지고·단추" },
+    "2": { "c1": "묻고 만짐", "c2": "따라 하고 단추" },
+    "3": { "c1": "묻는 아이", "c2": "만지는 아이", "c3": "따라 하는 막내" },
+    "4": { "c1": "묻는 아이", "c2": "만지는 아이", "c3": "따라 하는 아이", "c4": "찾는 아이 (\"저기 봐!\")" }
+  },
+  "poses": {
+    "child": ["walk", "run", "back", "reach", "press", "jump", "hug", "wave", "lookup"],
+    "pet": ["sniff", "lookup", "run", "wag"]
+  },
+  "cover": { "sceneIndex": 1 }
+}
