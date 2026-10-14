@@ -1,7 +1,7 @@
 /* 흥부와 놀부 — 목업. 착한 흥부가 다친 제비를 돌봐 주고 박 속에서 복을 얻고, 욕심쟁이 놀부는 소동을 겪은 뒤 흥부와 나눠 사이좋게 살아요.
    조작은 모두 톡 · 톡톡톡(세기). 쓱·꾹·자유 놀이 없음. */
 (() => {
-  const NF = new Set(['gourd', 'gourd_open', 'rice', 'treasure', 'seed', 'vine', 'cut_house']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
+  const NF = new Set(['gourd', 'gourd_open', 'rice', 'treasure', 'seed', 'vine']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
   const G2 = { gourd: 'gourd2_closed', gourd_open: 'gourd2_open', vine: 'gourd2_vine' }; // 새 박 그림
   const U = n => `../../assets/v3w/hb_${G2[n] || n}${!G2[n] && NF.has(n) ? 'nf' : ''}.webp`;
   const AR = {
@@ -44,7 +44,7 @@
     }
 
     await Promise.race([Promise.all(['sky_spring', 'nolkitchen', 'eaves', 'yard', 'sky_autumn', 'nol_eaves', 'nolyard', 'giwa']
-      .map(k => T.preload(U('bg_' + k))).concat(['rice', 'fall', 'bandage2', 'south', 'seedback', 'rice_pour2', 'house', 'mud2', 'dokkaebi', 'collapse']
+      .map(k => T.preload(U('bg_' + k))).concat(['rice', 'fall', 'bandage2', 'south', 'seedback', 'rice_pour2', 'house2', 'mud2', 'dokkaebi', 'collapse']
       .map(k => T.preload(U('cut_' + k))))), sleep(4000)]);
 
     /* 1. 봄 하늘 */
@@ -158,7 +158,7 @@
     const tre = spr('treasure', 640, 130, 490); tre.place(gourds[1].x, 490); tre.hop(18, 300); sfx('ding');
     await say('두 번째 박에서는 반짝반짝 금은보화가 나왔어요!');
     await open(gourds[2], '슬근슬근!');
-    await cut('house', 'pop', 3600);
+    await cut('house2', 'pop', 3600);
     await say('세 번째 박에서는 작은 박 요정들이 나와 멋진 새집을 지어 주었어요!');
     T.confetti();
 
