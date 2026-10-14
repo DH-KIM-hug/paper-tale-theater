@@ -232,11 +232,11 @@
     const CX = L(500, 215);
     await T.sceneCard(tr('새장'), () => {
       scene('cage', CX);
-      put(T, hans, 121, 433, { look: 'cage', to: 'left', s: 1 });
+      put(T, hans, 140, 490, { look: 'cage', to: 'left', s: 1 });
       put(T, gret, L(340, 300), GROUND, { look: 'clever', to: 'left' });
     }, hans.pos);
     hans.setScale(SC); /* 새장 그림 하나를 배경의 새장 자리에 맞춘다 */
-    const lock = lockAt(L(212, 190), 300);
+    const lock = lockAt(L(231, 209), 357);
     await say('그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.');
     await say('새장 자물쇠에는 별 모양 구멍이 있어요. 별 모양 열쇠를 톡!');
     const kc = keyAt(L(470, 160), 440, 'circle'), ks = keyAt(L(570, 225), 440, 'square'), kt = keyAt(L(670, 290), 440, 'star');
@@ -245,7 +245,7 @@
     await T.choose([{ key: 'c', el: kc, ok: false }, { key: 's', el: ks, ok: false }, { key: 't', el: kt, ok: true }],
       { prompt: '별 모양 열쇠를 톡!', where: '열쇠 머리 모양을 잘 봐요.', who: '반짝이는 별 열쇠를 톡!' });
     clinkSfx(T); kc.remove(); ks.remove(); kt.remove();
-    gret.look('key'); gret.hop(14, 300); T.pop(L(232, 205), 260, tr('찰칵!'));
+    gret.look('key'); gret.hop(14, 300); T.pop(L(251, 224), 317, tr('찰칵!'));
     await sleep(500);
     lock.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
     put(T, hans, L(250, 215), GROUND, { look: 'joy', to: 'left' });
