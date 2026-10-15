@@ -78,22 +78,136 @@ def band(cv, frac, strength):
     ov = Image.new('RGBA', (w, h), (40, 18, 16, 255)); ov.putalpha(Image.fromarray((a * 255).astype(np.uint8)))
     out = cv.copy(); out.alpha_composite(ov); return out
 
+def edge_light(im, px=2, mix=.55):
+    """면 가장자리 안쪽 px 두께를 밝은 종이색으로 (잘린 종이 단면)"""
+    a = im.getchannel('A'); er = a.filter(ImageFilter.MinFilter(2 * px + 1))
+    ring = ImageChops.subtract(a, er).point(lambda v: 255 if v > 40 else 0)
+    cr = Image.new('RGBA', im.size, (255, 243, 220, 255))
+    lit = Image.blend(im, cr, mix); lit.putalpha(a)
+    out = im.copy(); out.paste(lit, (0, 0), ring); return out
+
+def sheet_drop(cv, im, xy, shadow):
+    drop(cv, edge_light(im), xy, *shadow)
+
+def maple(size, col, rot=0, seed=1):
+    import math, random
+    rng = random.Random(seed); S = int(size); c = S / 2
+    pts = []
+    tips = 5
+    for k in range(tips):
+        ang = math.radians(-90 + k * 72 + rng.uniform(-6, 6)); rr = 1.0 if k != 0 else 1.0
+        if k in (1, 4): rr = .88
+        if k in (2, 3): rr = .72
+        for da, rv in ((-24, .46), (-9, .70 * rr), (0, rr), (9, .70 * rr)):
+            a2 = ang + math.radians(da); pts.append((c + math.cos(a2) * rv * c * .95, c + math.sin(a2) * rv * c * .95))
+        a3 = ang + math.radians(36); pts.append((c + math.cos(a3) * .40 * c, c + math.sin(a3) * .40 * c))
+    m = Image.new('L', (S * 2, S * 2), 0); from PIL import ImageDraw
+    d = ImageDraw.Draw(m); d.polygon([(x * 2, y * 2) for x, y in pts], fill=255)
+    d.line([(c * 2, c * 2), (c * 2, (c + c * .98) * 2)], fill=255, width=max(6, S // 22))
+    m = m.resize((S, S), Image.LANCZOS)
+    im = Image.new('RGBA', (S, S), tuple(col) + (255,)); im.putalpha(m)
+    vein = Image.new('L', (S * 2, S * 2), 0); vd = ImageDraw.Draw(vein)
+    for k in range(tips):
+        ang = math.radians(-90 + k * 72); vd.line([(c * 2, c * 2), (c * 2 + math.cos(ang) * c * 1.3, c * 2 + math.sin(ang) * c * 1.3)], fill=255, width=3)
+    vein = vein.resize((S, S), Image.LANCZOS).point(lambda v: int(v * .30))
+    dk = Image.new('RGBA', (S, S), (60, 20, 10, 255)); dk.putalpha(ImageChops.multiply(vein, m))
+    im.alpha_composite(dk)
+    im = apply_grain(im, 5, seed); im.putalpha(m)
+    return im.rotate(rot, resample=Image.BICUBIC, expand=True)
+
+def blade(h, w, col, rot=0, seed=1):
+    from PIL import ImageDraw
+    m = Image.new('L', (w * 2, h * 2), 0)
+    ImageDraw.Draw(m).polygon([(0, h * 2), (w * 2, h * 2), (w * 1.35, h * .45), (w * .8, 0)], fill=255)
+    m = m.resize((w, h), Image.LANCZOS)
+    im = Image.new('RGBA', (w, h), tuple(col) + (255,)); im.putalpha(m)
+    im = apply_grain(im, 5, seed); im.putalpha(m)
+    return im.rotate(rot, resample=Image.BICUBIC, expand=True)
+
+def place_leaf(cv, L, W, H, shadow=((6, 11), 8, .42)):
+    sz = H * L['s']
+    im = maple(sz, L['col'], L.get('rot', 0), L.get('seed', 1)) if L.get('kind', 'maple') == 'maple' else blade(int(sz), int(sz * L.get('aspect', .28)), L['col'], L.get('rot', 0), L.get('seed', 1))
+    drop(cv, edge_light(im, 1, .35), (W * L['x'] - im.width / 2, H * L['y'] - im.height / 2), *shadow)
+
+def torn_poly(W, H, box, n, seed, rough, extra=0):
+    rng = np.random.default_rng(seed)
+    x0, y0, x1, y1 = [box[0] * W, box[1] * H, box[2] * W, box[3] * H]
+    cx, cy, a, b = (x0 + x1) / 2, (y0 + y1) / 2, (x1 - x0) / 2, (y1 - y0) / 2
+    N = 1800; t = np.linspace(0, 2 * np.pi, N, endpoint=False)
+    co, si = np.cos(t), np.sin(t)
+    px = np.sign(co) * np.abs(co) ** (2 / n); py = np.sign(si) * np.abs(si) ** (2 / n)
+    coarse = sum(rng.uniform(.4, 1) * np.sin(k * t + rng.uniform(0, 6.28)) / k for k in range(2, 9)) * rough
+    walk = np.cumsum(rng.normal(0, 1, N)); walk -= np.linspace(walk[0], walk[-1], N); 
+    k = np.ones(25) / 25; walk = np.convolve(np.r_[walk[-24:], walk, walk[:24]], k, 'same')[24:-24]
+    fine = rng.normal(0, 1, N); fine = np.convolve(np.r_[fine[-4:], fine, fine[:4]], np.ones(5) / 5, 'same')[4:-4]
+    jit = coarse * min(a, b) * .035 + walk / max(1, np.abs(walk).max()) * 10 + fine * 2.4 + extra
+    ex = px * a + co * jit; ey = py * b + si * jit
+    return [(cx + ex[i], cy + ey[i]) for i in range(N)]
+
+def front_sheet(cv, F, W, H):
+    from PIL import ImageDraw
+    sheetc = solid_rgba((W, H), tuple(F['color']), 7)
+    hole = Image.new('L', (W * 2, H * 2), 0)
+    ImageDraw.Draw(hole).polygon([(x * 2, y * 2) for x, y in torn_poly(W, H, F['hole'], F.get('n', 4), F.get('seed', 5), F.get('rough', 1.0))], fill=255)
+    hole = hole.resize((W, H), Image.LANCZOS)
+    rim = Image.new('L', (W * 2, H * 2), 0)
+    ImageDraw.Draw(rim).polygon([(x * 2, y * 2) for x, y in torn_poly(W, H, F['hole'], F.get('n', 4), F.get('seed', 5), F.get('rough', 1.0), extra=5.5)], fill=255)
+    rim = rim.resize((W, H), Image.LANCZOS)
+    alpha = ImageChops.invert(rim)
+    front = sheetc.copy(); front.putalpha(alpha)
+    # 찢긴 종이 속살(연한 띠): 구멍 가장자리 바깥 3~6px
+    core = Image.new('RGBA', (W, H), (246, 226, 188, 255)); ring = ImageChops.subtract(rim, hole)
+    am = ImageChops.invert(hole)
+    # 장면 위로 앞 종이가 드리우는 그림자
+    sh = ImageChops.offset(am, 9, 16).filter(ImageFilter.GaussianBlur(15)).point(lambda v: int(v * .45))
+    cv.paste(Image.new('RGBA', (W, H), SHC + (255,)), (0, 0), sh)
+    ct = ImageChops.offset(am, 2, 4).filter(ImageFilter.GaussianBlur(1.6)).point(lambda v: int(v * .45))
+    cv.paste(Image.new('RGBA', (W, H), SHC + (255,)), (0, 0), ct)
+    cv.paste(core, (0, 0), ring)
+    cv.alpha_composite(front)
+    return cv
+
+def solid_rgba(size, col, seed): return apply_grain(Image.new('RGBA', size, tuple(col) + (255,)), 6, seed)
+
+def sky_tint(im, top, bot):
+    a = np.asarray(im.convert('RGB')).astype(np.float32); h = a.shape[0]
+    t = np.linspace(0, 1, h)[:, None, None] ** .85
+    g = (np.array(top, np.float32) * (1 - t) + np.array(bot, np.float32) * t) / 255.0
+    return Image.fromarray((a * g).clip(0, 255).astype(np.uint8)).convert('RGBA')
+
+def strip_plane(cv, S, W, H):
+    from PIL import ImageDraw
+    rng = np.random.default_rng(S.get('seed', 3)); xs = np.arange(W + 1)
+    y = H * S['y'] + sum(rng.uniform(.5, 1) * 14 * np.sin(xs / W * 6.28 * f + rng.uniform(0, 6.28)) for f in (.8, 1.7, 3.1))
+    m = Image.new('L', (W, H), 0); ImageDraw.Draw(m).polygon([(0, H)] + [(int(x), float(y[x])) for x in xs] + [(W, H)], fill=255)
+    im = solid_rgba((W, H), S['color'], 11); im.putalpha(m)
+    sheet_drop(cv, im, (0, 0), ((6, 14), 13, .42))
+
 def compose(cfg, kind):
     L = cfg['layouts'][kind]; W, H = L['size']; P = cfg['planes']
     sky = ld(P['sky']); m = 22; sky = sky.crop((m, m, sky.width - m, sky.height - m))
     sc = max(W / sky.width, H / sky.height); s2 = sky.resize((int(sky.width * sc) + 1, int(sky.height * sc) + 1), Image.LANCZOS)
     ox = int((s2.width - W) * L['sky_x']); oy = int((s2.height - H) * L.get('sky_y', 0))
     cv = s2.crop((ox, oy, ox + W, oy + H)).convert('RGBA')
-    def sheet(name, spec, shadow):
+    if 'sky_tint' in cfg: cv = sky_tint(cv, *cfg['sky_tint'])
+    PS = ((8, 15), 14, .42)
+    def sheet(name, spec):
         im = despill(bbox_crop(ld(P[name]))); im = im.crop((8, 0, im.width - 8, im.height - 44)); im = fit_w(im, W * spec['w'])
         im = extend_down(im, int(H - H * spec['y']) + 12)
-        x = -int((im.width - W) * spec['x']); drop(cv, im, (x, int(H * spec['y'])), *shadow)
-    sheet('far', L['far'], ((5, 11), 7, .5))
+        x = -int((im.width - W) * spec['x']); sheet_drop(cv, im, (x, int(H * spec['y'])), PS)
+    sheet('far', L['far'])
     for s in L.get('behind', []):
-        im = sprite_img(s, W, H); drop(cv, im, (W * s['x'] - im.width / 2, H * s['foot'] - im.height), (3, 6), 4, .5, 1)
-    sheet('ground', L['ground'], ((6, 13), 8, .55))
+        im = sprite_img(s, W, H); drop(cv, im, (W * s['x'] - im.width / 2, H * s['foot'] - im.height), (5, 10), 8, .4, 1)
+    sheet('ground', L['ground'])
     for s in L['sprites']:
-        im = sprite_img(s, W, H); drop(cv, im, (W * s['x'] - im.width / 2, H * s['foot'] - im.height), (4, 8), 5, .5, 1)
+        im = sprite_img(s, W, H); drop(cv, im, (W * s['x'] - im.width / 2, H * s['foot'] - im.height), (6, 12), 9, .42, 1)
+    if 'strip' in L:
+        strip_plane(cv, L['strip'], W, H)
+        for lf in L['strip'].get('leaves', []): place_leaf(cv, lf, W, H)
+    if 'front' in L:
+        front_sheet(cv, L['front'], W, H)
+        for lf in L['front'].get('leaves', []): place_leaf(cv, lf, W, H)
+    for lf in L.get('fg_leaves', []): place_leaf(cv, lf, W, H, ((8, 15), 11, .45))
     cv = apply_grain(cv, 6, 4)
     return band(cv, L['band'], L.get('band_strength', .45))
 
