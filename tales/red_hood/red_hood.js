@@ -11,7 +11,7 @@
     wolf_granny: .6813, wolf_hiccup: .4854, wolf_jump: .5542, wolf_peek: .5292, wolf_run: 2.5, wolf_sleep: 2.1453, wolf_whisper: 1.5578 };
   const BGS = ['bed', 'cottage', 'door', 'flowers', 'kitchen', 'room', 'shortcut', 'table', 'trail', 'tree'];
   const NF = new Set(['apple', 'basket', 'bread', 'flower_blue', 'flower_red', 'flower_yellow', 'milk', 'vase_blue', 'vase_red', 'vase_yellow', 'wardrobe']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
-  const CUTS = ['tail', 'whisper', 'dash', 'gulp', 'granwolf', 'jumpup'];
+  const CUTS = ['tail', 'whisper', 'dash', 'gulp', 'granwolf', 'jumpup', 'hiccup'];
   const bgSrc = k => AS + 'rh_bg_' + k + '.webp', cutSrc = k => AS + 'rh_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const C = { bean: '#A93B32', ink: '#2E241C' };
@@ -342,6 +342,7 @@
       wolf.wiggle(6 + i * 2, 260); hunter.hop(12, 260); popSfx(T);
       T.pop(780, 300 - i * 6, ['킥', '킥킥', '키득', '하하', '꺄르르!'][i - 1] || '킥');
     } });
+    await T.cutImage([{ src: cutSrc('hiccup'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     hunter.look('laugh');
     wolf.look('hiccup'); wolf.place(760, 510);
     put(T, granny, 900, 510, { look: 'pop', to: 'left' });
