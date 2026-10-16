@@ -306,7 +306,7 @@ def compose_plate(cfg, kind):
     pw = int(W * pl['w']) if 'w' in pl else int(plate.width * H * pl['h'] / plate.height)
     ph = int(plate.height * pw / plate.width); plate = plate.resize((pw, ph), Image.LANCZOS)
     # 가장자리를 종이색으로 풀어 바깥 종이와 이음매 없이
-    fade = int(pw * .075); m = np.ones((ph, pw), np.float32)
+    fade = int(pw * .04); m = np.ones((ph, pw), np.float32)
     ramp = np.clip(np.arange(pw) / fade, 0, 1); ramp = np.minimum(ramp, ramp[::-1]); m *= ramp[None, :]
     rampy = np.clip(np.arange(ph) / fade, 0, 1); rampy = np.minimum(rampy, rampy[::-1]); m *= rampy[:, None]
     plate.putalpha(Image.fromarray((m * 255).astype(np.uint8)))
