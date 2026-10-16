@@ -16,7 +16,7 @@ Hand-cut layered cardstock paper art in the style of the reference images. Every
 
 네거티브(컷): `torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy`
 
-참고 이미지 4장(저장소에 복사하지 않음): `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg`, `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg`, `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp`, `/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg`
+참고 이미지는 긴 변 640px 이하로 줄인 사본(`~/.paper-tale/refs/style_small/`)을 쓴다 — 원본(1080x2102 화면 캡처 등)을 4장 그대로 넣으면 ComfyUI가 샘플링 시작 직후 메모리 부족으로 꺼진다. 저장소에는 복사하지 않음. 원본 4장: `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg`, `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg`, `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp`, `/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg`
 
 ## 만드는 법
 

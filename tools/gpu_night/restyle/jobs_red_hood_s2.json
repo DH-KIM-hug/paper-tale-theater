@@ -6,10 +6,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a CLOSE-UP of a grandma's bed: a big wooden headboard, a round-edged quilt in lavender and cream, a big pillow, a wall at the back with a big EMPTY wooden picture frame on the right, a wooden night table at the left. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
@@ -21,10 +21,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a LOW-ANGLE view looking up at a little forest cottage door: a round-topped brown wooden door in the centre, a stone step, a tiny window, a thatched roof, ferns at the bottom, a pale sky. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
@@ -36,10 +36,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a country cottage front seen straight-on at the left edge with an open wooden door, a garden path leading out to the right and a tall forest edge far away, flowers and a fence, a pale sky. Open path in the middle. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
@@ -51,10 +51,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a HIGH-ANGLE view looking down on a big sunny flower meadow, a wide soft grass floor dotted with many RED, YELLOW and BLUE round-petal flowers in clear groups, a tiny path at the bottom, trees at the top edge. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
@@ -66,10 +66,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a cosy farmhouse kitchen seen straight-on: a window at the right with a sunny garden, a wooden table with a cloth in the middle, a stove on the left, a shelf with jars, a warm plank floor. Table top flat and clear. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
@@ -81,10 +81,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: grandma's whole cottage bedroom seen straight-on: a tall wooden wardrobe at the left, a bed at the right, a window in the middle, a warm plank floor, a lavender rug. Open floor in the middle. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
@@ -96,10 +96,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a forest shortcut at the bottom of a split screen: a narrow dirt track through thick paper bushes and roots going toward the right, trees in layers, a pale sky in the far top. Open track. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
@@ -111,10 +111,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: grandma's cottage at afternoon tea time seen straight-on: a table with a cloth in the middle, a window with a sunset glow, a shelf of jars on the wall, a warm plank floor. Table top clear. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
@@ -126,10 +126,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: an eye-level view of a forest trail: slim paper trunks in layers, big ferns in the left and right foreground, a winding sandy path in the middle, dappled soft sunlight, a pale sky. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
@@ -141,10 +141,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a sunny forest bend: one big old tree with a thick trunk and a hollow on the right, ferns and flowers, a path on the left, soft pine greens in layers, a pale sky. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
@@ -156,10 +156,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. The wolf dashing along a forest shortcut with huge speed lines, a little cloud of dust, a tiny cottage far away. The wolf: a long, lanky silver-grey wolf made of flat paper pieces — a long narrow snout with a big round dark-blue nose, two tall pointed ears with pink insides, big round white eyes with dark pupils under sly half-closed lids, a cream muzzle, chest and belly, thin long legs, a long bushy tail with a darker grey tip, NO teeth showing, a cheeky smirk — funny and sneaky, never scary."
@@ -171,10 +171,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. The wolf: a long, lanky silver-grey wolf made of flat paper pieces — a long narrow snout with a big round dark-blue nose, two tall pointed ears with pink insides, big round white eyes with dark pupils under sly half-closed lids, a cream muzzle, chest and belly, thin long legs, a long bushy tail with a darker grey tip, NO teeth showing, a cheeky smirk — funny and sneaky, never scary. Disguised as grandma: wearing a cream nightcap and a lavender nightgown with round glasses on his long snout, his pointed ears poking out of the cap. Smiling sweetly from a bed with a quilt, a pair of round glasses sliding down his snout, comic."
@@ -186,10 +186,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. A round-topped cottage door closes with a gentle thump, a warm window glow, a long pointed-ear wolf silhouette in the window, no faces, paper silhouettes."
@@ -201,10 +201,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. HIC! The wolf bounces from a hiccup while a hunter tickles his belly, and a little grandma pops out from his open round mouth with a star burst. The wolf: a long, lanky silver-grey wolf made of flat paper pieces — a long narrow snout with a big round dark-blue nose, two tall pointed ears with pink insides, big round white eyes with dark pupils under sly half-closed lids, a cream muzzle, chest and belly, thin long legs, a long bushy tail with a darker grey tip, NO teeth showing, a cheeky smirk — funny and sneaky, never scary. The hunter: a jolly big hunter in picture-book style — a round friendly face, a brown beard, a tall brown felt hat with a red feather, a brown vest, a belted jacket, boots. Grandma: a kind plump old grandma in picture-book style — a white bun, round glasses, closed smiling eyes, a lavender nightgown with a cream shawl, rosy cheeks."
@@ -216,10 +216,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. The wolf jumps up out of bed suddenly with the quilt flying and a small girl in a red hood hopping off to the left toward a wardrobe. The wolf: a long, lanky silver-grey wolf made of flat paper pieces — a long narrow snout with a big round dark-blue nose, two tall pointed ears with pink insides, big round white eyes with dark pupils under sly half-closed lids, a cream muzzle, chest and belly, thin long legs, a long bushy tail with a darker grey tip, NO teeth showing, a cheeky smirk — funny and sneaky, never scary. Disguised as grandma: wearing a cream nightcap and a lavender nightgown with round glasses on his long snout, his pointed ears poking out of the cap. Little Red Riding Hood: a small girl in picture-book style — a round face, brown hair in two short pigtails, big round eyes, pink cheeks, a bright poppy-red hooded cape with a cream trim and a gold clasp, a cream blouse, a bean-brown skirt, red shoes."
@@ -231,10 +231,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. A forest trail where a long bushy grey tail just peeks out behind a tree trunk while a small girl in a red hood walks happily by, unaware. Little Red Riding Hood: a small girl in picture-book style — a round face, brown hair in two short pigtails, big round eyes, pink cheeks, a bright poppy-red hooded cape with a cream trim and a gold clasp, a cream blouse, a bean-brown skirt, red shoes."
@@ -246,10 +246,10 @@
   "cfg": 3.0,
   "key": false,
   "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
-   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_rabbit_shadow.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style_small/cloud_factory_chimney_ref.jpg"
   ],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. The wolf whispers sneakily to the girl in the red hood beside a tree, a little cloud of thought flowers above her head. The wolf: a long, lanky silver-grey wolf made of flat paper pieces — a long narrow snout with a big round dark-blue nose, two tall pointed ears with pink insides, big round white eyes with dark pupils under sly half-closed lids, a cream muzzle, chest and belly, thin long legs, a long bushy tail with a darker grey tip, NO teeth showing, a cheeky smirk — funny and sneaky, never scary. Little Red Riding Hood: a small girl in picture-book style — a round face, brown hair in two short pigtails, big round eyes, pink cheeks, a bright poppy-red hooded cape with a cream trim and a gold clasp, a cream blouse, a bean-brown skirt, red shoes."

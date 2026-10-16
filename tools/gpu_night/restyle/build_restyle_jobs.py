@@ -6,8 +6,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 GN = os.path.dirname(HERE)
 GAME = os.path.dirname(os.path.dirname(GN))
 STYLE_OLD = json.load(open(os.path.join(GN, 'style_base.json')))['STYLE']
-REFS = ['/Users/house_of_4k2b/.paper-tale/refs/style/' + f for f in
-        ['keyart_ref_fox.jpg', 'keyart_ref_campfire.jpg', 'keyart_ref_rabbit_shadow.webp', 'cloud_factory_chimney_ref.jpg']]
+# 참고 이미지: 원본을 줄인 사본(~/.paper-tale/refs/style_small). 원본(큰 세로 화면)을 4장 다 넣으면 ComfyUI가 메모리 부족으로 꺼진다.
+REFS = ['/Users/house_of_4k2b/.paper-tale/refs/style_small/' + f for f in
+        ['keyart_ref_fox.jpg', 'keyart_ref_campfire.jpg', 'keyart_ref_rabbit_shadow.jpg', 'cloud_factory_chimney_ref.jpg']]
 
 S2 = ("Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock "
       "with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. "
