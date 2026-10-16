@@ -20,11 +20,12 @@
 
   /* 배우: poses = { 이름: [그림, 높이, 그림이 보는 쪽] } */
   /* shadow=false: 구름·먹구름·소품은 그림자 필터를 빼다 (Safari 가 움직이는 필터 그림을 잘라 먹는다) */
-  function mk(T, poses, shadow = true) {
+  function mk(T, poses, shadow = false) { /* shadow: 발밑 납작한 그림자 (SVG 필터는 Safari 에서 움직이는 그림을 지워 쓰지 않는다) */
     const looks = {};
     const a = T.actor(T.world, -400, G, g => {
       Object.entries(poses).forEach(([k, [f, h, nat]]) => {
-        const w = h * (ASP[f] || .7), wrap = T.el('g', shadow ? { filter: 'url(#pp)' } : {}, g);
+        const w = h * (ASP[f] || .7), wrap = T.el('g', {}, g);
+        if (shadow) T.el('ellipse', { cx: 0, cy: -3, rx: w * .32, ry: Math.max(4, w * .05), fill: 'rgba(46,36,28,.22)' }, wrap);
         T.el('image', { href: src(f), x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
         wrap.style.display = 'none'; looks[k] = { wrap, h, nat: nat || 'right' };
       });
@@ -149,10 +150,10 @@
 
     /* 배역: 쌍둥이는 같은 키, 은우는 3분의 2쯤 */
     const TW = 250, AG = 178, DG = 118;
-    const nuna = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'wave', 'blow', 'hug', 'jump', 'back', 'whisper'].map(k => [k, ['nuna_' + k, k === 'jump' ? TW + 14 : TW]])));
-    const oppa = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'reach', 'press', 'hug', 'jump', 'back'].map(k => [k, ['oppa_' + k, k === 'jump' ? TW + 14 : TW]])));
-    const agi = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'press', 'pet', 'wave', 'hug', 'jump', 'back', 'lookback'].map(k => [k, ['agi_' + k, k === 'jump' ? AG + 12 : AG, k === 'lookback' ? 'left' : 'right']])));
-    const dog = mk(T, Object.fromEntries(['sniff', 'lookup', 'run', 'wag', 'sneeze', 'lick', 'bark', 'nose'].map(k => [k, ['dog_' + k, k === 'lick' ? DG + 30 : DG]])));
+    const nuna = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'wave', 'blow', 'hug', 'jump', 'back', 'whisper'].map(k => [k, ['nuna_' + k, k === 'jump' ? TW + 14 : TW]])), true);
+    const oppa = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'reach', 'press', 'hug', 'jump', 'back'].map(k => [k, ['oppa_' + k, k === 'jump' ? TW + 14 : TW]])), true);
+    const agi = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'press', 'pet', 'wave', 'hug', 'jump', 'back', 'lookback'].map(k => [k, ['agi_' + k, k === 'jump' ? AG + 12 : AG, k === 'lookback' ? 'left' : 'right']])), true);
+    const dog = mk(T, Object.fromEntries(['sniff', 'lookup', 'run', 'wag', 'sneeze', 'lick', 'bark', 'nose'].map(k => [k, ['dog_' + k, k === 'lick' ? DG + 30 : DG]])), true);
     const baby = mk(T, { huddle: ['baby_huddle', 130], wide: ['baby_wide', 140], up: ['baby_up', 150], sorry: ['baby_sorry', 140], white: ['baby_white', 140] }, false);
     const kids = [nuna, oppa, agi];
     const allHide = () => [nuna, oppa, agi, dog, baby].forEach(hide);
