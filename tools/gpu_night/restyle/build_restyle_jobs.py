@@ -15,11 +15,11 @@ BRIGHT_INTERIOR = ('kitchen', 'room', 'hall', 'parlor', 'hearth', 'bed', 'table'
 
 
 def refs_for(name):
-    """참고 이미지는 2장까지 (메모리): 기본 여우+모닥불, 밝은 낮 실내는 모닥불 대신 토끼 그림자"""
+    """참고 이미지는 1장 (메모리: 2장이어도 ComfyUI가 43GB를 쓰며 스왑으로 장당 100분): 기본 여우, 밝은 낮 실내는 토끼 그림자"""
     n = name.lower()
     if any(k in n for k in BRIGHT_INTERIOR) and not any(k in n for k in ('night', 'lamp', 'dusk')):
-        return [FOX, RABBIT]
-    return [FOX, CAMP]
+        return [RABBIT]
+    return [FOX]
 
 
 S2 = ("Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock "
