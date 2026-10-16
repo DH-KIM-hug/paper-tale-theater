@@ -99,10 +99,10 @@
       return { im, an };
     };
     /* 연기가 길을 따라 올라가 끝에서 퐁! 종이 구름(c 배우)이 된다 */
-    const smokeToCloud = async (cloud, p0, ctl, p1, ms = 3200) => {
-      const { im, an } = puffAlong(p0, ctl, p1, { s0: .2, s1: .85, ms, op: .9, fade: false });
+    const smokeToCloud = async (cloud, p0, ctl, p1, ms = 3200, sc = 1) => {
+      const { im, an } = puffAlong(p0, ctl, p1, { s0: .25, s1: 1.25 * sc, ms, op: .9, fade: false });
       await an.finished.catch(() => {});
-      put(T, cloud, p1[0], p1[1] + 40, { s: 1 }); // 구름 배우는 발끝 기준이라 가운데보다 조금 아래
+      put(T, cloud, p1[0], p1[1] + (cloud.h || 140) * sc / 2, { s: sc }); // 구름 배우는 발끝 기준이라 가운데에서 높이 절반만큼 아래
       cloud.pos.animate([{ opacity: 0, scale: .8 }, { opacity: 1, scale: 1.08, offset: .6 }, { opacity: 1, scale: 1 }], { duration: 520, easing: 'ease-out' });
       im.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 420, fill: 'forwards' }).onfinish = () => im.remove();
       popSfx(T); puff(p1[0], p1[1], '#FBFAF6');
@@ -210,9 +210,10 @@
            그 구름 셋을 톡 하면 토끼·물고기·자동차 --- */
     S(async () => {
       const C0 = [657, 124]; // 굴뚝 꼭대기 (그림에서 잰 자리)
-      const SKY = [[X(520, 590), 78, 'rabbit', '토끼!'], [X(380, 470), 112, 'fish', '물고기!'], [X(240, 355), 82, 'car', '자동차!']];
+      const SKY = [[X(570, 610), 92, 'rabbit', '토끼!'], [X(355, 480), 140, 'fish', '물고기!'], [X(140, 350), 96, 'car', '자동차!']];
+      const CS = P ? .7 : 1; // 세로 화면은 폭이 좁아 조금 작게
       const ctl = ([tx, ty]) => [C0[0] + 10, Math.min(ty, C0[1]) - 30]; // 곧게 솟다가 왼쪽으로 눕는다
-      const cl = SKY.map(([, , shape]) => mk(T, { c: ['cloud_white', 86], s: ['cloud_' + shape, 100] }, false));
+      const cl = SKY.map(([, , shape]) => mk(T, { c: ['cloud_white', 140], s: ['cloud_' + shape, 150] }, false));
       await T.sceneCard('', () => {
         scene('03_chimney', 520);
         put(T, nuna, X(250, 390), G, { look: 'lookup', to: 'right' });
@@ -222,14 +223,14 @@
         cl.forEach(hide);
       });
       const far = [X(120, 300), 60];
-      chimneyLoop(C0, ctl(far), far);
+      chimneyLoop(C0, ctl(far), far, { s1: .6 });
       await say('언덕 너머에 커다란 굴뚝 하나.');
       await say('굴뚝에서 하얀 김이 폴폴.');
       await say('굴뚝을 톡톡톡!');
       const outs = [];
       await T.mash(hitR(C0[0] - 45, C0[1] - 20, 90, 280), { count: 3, prompt: '굴뚝을 톡톡톡!', onStep: i => {
         popSfx(T); T.pop(C0[0] + 70, C0[1] + 60, tr(['폴폴', '뭉게', '퐁!'][i - 1]));
-        const [tx, ty] = SKY[i - 1]; outs.push(smokeToCloud(cl[i - 1], C0, ctl([tx, ty]), [tx, ty], 3000 + i * 300));
+        const [tx, ty] = SKY[i - 1]; outs.push(smokeToCloud(cl[i - 1], C0, ctl([tx, ty]), [tx, ty], 3200 + i * 300, CS));
       } });
       await Promise.all(outs);
       oppa.look('clap'); agi.look('lookup');
@@ -242,7 +243,7 @@
       await say('하늘의 구름을 톡! 무엇이 될까요?');
       for (let i = 0; i < 3; i++) {
         await T.tap(cl[i].pos, { prompt: '하늘의 구름을 톡! 무엇이 될까요?' });
-        morph(cl[i], 's'); cl[i].hop(14, 360); popSfx(T); puff(cl[i].x, cl[i].y - 40); T.pop(cl[i].x, cl[i].y + 40, tr(SKY[i][3]));
+        morph(cl[i], 's'); cl[i].hop(14, 360); popSfx(T); puff(cl[i].x, cl[i].y - 70 * CS); T.pop(cl[i].x, cl[i].y + 30, tr(SKY[i][3]));
         kids[i].look('jump'); kids[i].hop(16, 320); await sleep(500); kids[i].look('lookup');
       }
       await sleep(900);
@@ -616,7 +617,7 @@
         scene('01_road', 500);
         skyDrift([[60, 170, 120, .1], [120, 120, 95, .45], [45, 100, 140, .7, .9], [150, 90, 110, .9, .85]]);
         ch = one(T, 'prop_chimney_far', 130); put(T, ch, X(880, 690), 330);
-        c2 = [0, 1].map(() => { const c = one(T, 'cloud_white', 70); hide(c); return c; });
+        c2 = [0, 1].map(() => { const c = one(T, 'cloud_white', 110); hide(c); return c; });
         put(T, dog, X(150, 360), G, { look: 'run', to: 'left' });
         put(T, nuna, X(300, 420), G, { look: 'walk', to: 'left' });
         put(T, oppa, X(400, 480), G, { look: 'walk', to: 'left' });
@@ -628,7 +629,7 @@
       await say('삼남매는 꿀떡이랑 왔던 길로 집에 가요.');
       await say('굴뚝을 톡! 안녕!');
       await T.tap(ch.pos, { prompt: '굴뚝을 톡! 안녕!' });
-      for (let k = 0; k < 2; k++) { smokeToCloud(c2[k], C0, [C0[0], C0[1] - 50], tgt[k], 2200); T.pop(C0[0] + 40, C0[1] - 30, tr('퐁!')); await sleep(700); }
+      for (let k = 0; k < 2; k++) { smokeToCloud(c2[k], C0, [C0[0], C0[1] - 50], tgt[k], 2400, P ? .75 : 1); T.pop(C0[0] + 40, C0[1] - 30, tr('퐁!')); await sleep(700); }
       await say('멀리 굴뚝에서 작은 구름이 퐁! 퐁!');
       agi.look('lookback', 'left'); agi.hop(10, 300);
       await say('은우가 뒤를 돌아보며 손을 흔들어요. "퐁!"');

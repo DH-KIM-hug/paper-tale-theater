@@ -91,6 +91,151 @@ def build(tales):
         json.dump(jobs, open(os.path.join(HERE, f'jobs_{t}.json'), 'w'), ensure_ascii=False, indent=1)
         print(t, len(jobs), '장', {k: sum(j['kind'] == k for j in jobs) for k in ('bg', 'cut', 'sprite')})
 
+# ───────── 새 프롬프트 방식 (2026-10-17 사용자 선택): 옛 그림을 참고로 쓰지 않는다 ─────────
+FACE = ('FACE (characters only): a simple cut-paper face — two round dot eyes, a tiny dot nose, a small curved paper-strip mouth, two round pale-pink paper cheeks. '
+        'No realistic eyes, no eyelashes, no glossy highlights. Objects that are not characters have NO face.')
+BOILER = [r'Cute, round, friendly[^.]*never scary\.', r'A single flat paper cut-out[^\n]*$', r'Shown whole[^\n]*$', r'A FULL-BLEED sheet[^\n]*$',
+          r'A layered paper-cut diorama scene seen straight-on:[^.]*\.[^.]*shadow-box\.', r'Leave the lower middle[^.]*\.', r'Colour mood:[^\n]*$', r'No text, no watermark\.?']
+def old_prompts():
+    """옛 GPU 작업표들(tools/gpu_night/**/jobs_*.json)에서 이름 → 설명. 나중에 만든 파일이 앞의 것을 덮는다"""
+    import glob
+    files = sorted(glob.glob(os.path.join(G, 'tools/gpu_night/jobs_*.json')) + glob.glob(os.path.join(G, 'tools/gpu_night/*/jobs_*.json')), key=os.path.getmtime)
+    out = {}
+    for f in files:
+        try: d = json.load(open(f))
+        except Exception: continue
+        for j in (d if isinstance(d, list) else d.get('jobs', [])):
+            if isinstance(j, dict) and j.get('name') and j.get('prompt'):
+                p = j['prompt']; i = p.find('never colored.'); t = p[i + 14:] if i > 0 else p
+                t = re.sub(r'Palette:[^.]*\.(\s*[A-Z][^.]{0,60}\.)?', '', t)
+                for b in BOILER: t = re.sub(b, '', t, flags=re.M | re.S)
+                t = re.sub(r'\s+', ' ', t).strip()
+                m = re.search(r'Scene:\s*(.*)', t)
+                out[j['name']] = (m.group(1) if m else t).strip()
+    return out
+def char_key(tale, name):
+    """같은 인물끼리 묶는 열쇠: 접두어 뒤 첫 낱말 (rab_rabbit_run → rabbit, frog_mom_dizzy → mom)"""
+    rest = name[len(PREFIX[tale]):]
+    rest = re.sub(r'nf$', '', rest)
+    toks = re.split(r'_', rest)
+    # 묶음용 앞말(관객 aud, 아이콘, 악기 ins, 카드, 입 mouth 등)이면 둘째 낱말까지 봐야 서로 다른 인물·물건이 섞이지 않는다
+    if len(toks) > 1 and (len(toks[0]) <= 3 or toks[0] in ('icon', 'card', 'mouth', 'plate', 'bed', 'chair', 'kkul', 'lamp', 'store', 'gourd2', 'print', 'prop', 'item', 'face', 'bowl', 'cup')):
+        return toks[0] + '_' + re.sub(r'\d+$', '', toks[1])
+    return toks[0]
+def bg_section(tale, name):
+    """PROMPTS_bg_<tale>.md 에서 이 배경의 전체 프롬프트(코드 블록)를 찾는다"""
+    p = os.path.join(G, f'tools/app/keyart/PROMPTS_bg_{tale}.md')
+    if not os.path.exists(p): return None
+    t = open(p).read(); short = re.sub(r'^[a-z]+_bg_?', '', name); short2 = re.sub(r'(nf|\d+|_v\d)$', '', short)
+    for key in (name, short, short2):
+        m = re.search(r'\(`' + re.escape(key) + r'`[^)]*\)(.*?)(?=\n## |\Z)', t, re.S)
+        if m:
+            b = re.search(r'```\n(.*?)```', m.group(1), re.S)
+            if b: return b.group(1).strip()
+    return None
+def new_prompt(tale, name, kind, desc, size):
+    w, h = size
+    if kind == 'bg':
+        sec_ = bg_section(tale, name)
+        if sec_: return sec_
+        return '\n\n'.join([HEAD, 'Create a wide 16:9 scene, rendered entirely as handcrafted paper art, a carefully assembled paper diorama of individually cut matte cardstock pieces.', STYLE,
+                            'SCENE:\nBuild the scene from layered flat paper sheets, each a flat shape cut from cardstock. ' + desc + '\nThe lower third of the frame remains mostly open ground so characters can stand there later. NO people, NO animals, NO characters.',
+                            'FRAME:\nNo decorative border. The scene fills the entire frame edge to edge.', LIGHT, '\n'.join(['NO people.', 'NO animals.', 'NO faces on objects.']) + '\n' + NO])
+    if kind == 'cut':
+        return '\n\n'.join([HEAD, f'Create a {"wide 16:9" if w >= h else "tall"} comic-panel moment for a picture book, rendered entirely as handcrafted paper art: every element is cut from matte colored cardstock and fine-grain craft paper.',
+                            STYLE, 'MOMENT:\n' + desc, FACE, 'If reference images are attached, they show the characters: match their shapes, colours, clothes and markings exactly.',
+                            'FRAME:\nNo border, no speech bubbles, no panel lines, no letters; fills the frame edge to edge.', LIGHT, NO])
+    return '\n\n'.join([HEAD, 'Create ONE character or object sprite, rendered entirely as handcrafted paper art: a figure assembled from individually cut pieces of matte colored cardstock and fine-grain craft paper.',
+                        STYLE, 'SUBJECT AND POSE:\n' + desc, FACE, 'If a reference image is attached, it shows how this character (or this family of objects) is drawn in this exact style: keep the same drawing style, body shapes, face and proportions; take the COLOURS, clothes, markings and POSE from the SUBJECT text above when it says so.',
+                        'FRAMING:\nSquare 1:1 image. The whole figure is visible and centred, filling about 80% of the frame. Background: a completely flat, uniform, solid magenta (#FF00FF) chroma-key sheet with no texture, no floor, no ground shadow, no extra props, no border. Nothing else in the image.',
+                        LIGHT, NO])
+# 옛 작업표에 설명이 없던 그림: 새로 쓴 설명 (옛 그림은 참고로 넣지 않는다)
+GOLDI = 'Goldilocks: a little girl with curly golden-yellow hair and a red bow, a red dress with a cream apron and cream collar, brown shoes.'
+TRAV = 'The traveller: a boy with messy brown hair, a long red coat with gold buttons, a green shirt and brown trousers.'
+DESC_EXTRA = {
+ 'ag_card_autumn': 'A season picture card: a rounded-rectangle frame of warm gold cardstock with a plain cream strip at the bottom; inside the frame an AUTUMN landscape — two round orange and brown trees, falling leaves, golden grass, a pale peach sky with a small sun.',
+ 'ag_card_spring': 'A season picture card: a rounded-rectangle frame of warm gold cardstock with a plain cream strip at the bottom; inside the frame a SPRING landscape — a tree covered in pink blossoms, fresh green hills, small flowers, a pale blue sky.',
+ 'ag_card_summer': 'A season picture card: a rounded-rectangle frame of warm gold cardstock with a plain cream strip at the bottom; inside the frame a SUMMER landscape — two big round dark-green trees, green hills, a bright blue sky with a small sun.',
+ 'ag_card_winter': 'A season picture card: a rounded-rectangle frame of warm gold cardstock with a plain cream strip at the bottom; inside the frame a WINTER landscape — white snowy hills, bare twigs, falling snow, a pale grey sky.',
+ 'ag_hopper_hat': 'A knitted winter beanie hat: cream knit body with vertical rib lines, a dark purple folded band, a round cream pompom on top, slightly tilted.',
+ 'ag_store10': 'A wooden food storage board for ants: a dark brown wooden frame with TEN empty square compartments in two columns and five rows, and a small blank wooden label plaque on top.',
+ 'fc_crane_body': 'The crane BODY ONLY (no neck, no head): a round white body, black tail feathers at the right, two thin black legs; the body faces LEFT and the neck would attach at the upper left.',
+ 'fc_crane_head': 'The crane NECK AND HEAD ONLY: a long curved black neck, a white face with a red cap, a long thin yellow beak pointing LEFT.',
+ 'fc_mouth_butterfly': 'A close-up of a butterfly face, front view: a brown body, two curly antennae, round eyes, small smile, big orange wings behind.',
+ 'fc_mouth_crane': 'A close-up of a crane head, side view facing LEFT: black neck, white face, red cap, a very long thin yellow beak pointing left.',
+ 'fc_mouth_duck': 'A close-up of a white duck head, three-quarter view facing LEFT, with a flat orange bill pointing left.',
+ 'fc_mouth_fox': 'A close-up of an orange fox head facing LEFT, eyes closed happily, a pink tongue licking out of its mouth.',
+ 'fc_plate_empty': 'A wide, flat, shallow cream plate with a gold rim, seen slightly from above (an oval).',
+ 'fc_plate_soup': 'Only a flat oval of warm orange soup (the soup surface that sits inside a flat plate), no plate.',
+ 'gl_bed_big_blanket': 'A big flat sage-green blanket for papa bear\'s bed: a rectangle with a folded-over top band.',
+ 'gl_bed_mid_blanket': 'A medium orange quilted blanket for mama bear\'s bed: a rectangle with rows of round quilted bumps and a folded top band.',
+ 'gl_bed_small_blanket': 'A small narrow yellow blanket with red horizontal stripes for baby bear\'s bed.',
+ 'gl_bowl_empty': 'An EMPTY cream porridge bowl with one red band around it, seen slightly from above so the empty inside shows.',
+ 'gl_chair_small_back': 'The BACKREST piece only of baby bear\'s small wooden chair: a yellow rounded rectangle with two short posts below it.',
+ 'gl_chair_small_legL': 'The LEFT LEG piece only of baby bear\'s small yellow wooden chair: one straight leg with a short crossbar to the right.',
+ 'gl_chair_small_legR': 'The RIGHT LEG piece only of baby bear\'s small yellow wooden chair: one straight leg with a short crossbar to the left.',
+ 'gl_chair_small_seat': 'The SEAT piece only of baby bear\'s small yellow wooden chair: a flat yellow seat slab with two small tabs on top.',
+ 'gl_goldi_lie': GOLDI + ' Standing straight and still, front view, hands folded in front of her apron, eyes open, calm smile (this picture is laid down in a bed by the game).',
+ 'gl_goldi_lie_sleep': GOLDI + ' Standing straight and still, front view, hands folded in front of her apron, eyes CLOSED asleep, peaceful (this picture is laid down in a bed by the game).',
+ 'gl_goldi_pick': GOLDI + ' Bending forward facing RIGHT, one hand reaching down to pick something up, curious face.',
+ 'gl_goldi_side': GOLDI + ' Lying on her side horizontally, head on the LEFT, feet on the right, eyes open.',
+ 'gl_goldi_side_sleep': GOLDI + ' Lying on her side horizontally, head on the LEFT, feet on the right, eyes CLOSED asleep.',
+ 'gl_goldi_walk_empty': GOLDI + ' Walking toward the viewer, empty hands swinging, happy.',
+ 'hb_gourd2_closed': 'A big whole pale-cream bottle gourd (bak) with a short brown stem and a curly tendril on top.',
+ 'hb_gourd2_open': 'The same big pale-cream gourd split into two halves lying side by side, showing the cream inside and a few seeds.',
+ 'hb_gourd2_vine': 'A gourd vine growing upward: a thin brown winding stem with big rounded sage-green leaves and a few small white flowers.',
+ 'lm_cut_paw4': 'A big friendly golden lion with an orange mane lying relaxed in the savanna grass, a tiny grey mouse standing beside its front paw, acacia trees and golden grass behind.',
+ 'lm_sun': 'A plain flat pale-cream sun disc (a circle of paper), no face.',
+ 'sw_shirt': 'A plain green short-sleeved shirt laid flat, front view.',
+ 'sw_trav_walk_nohat': TRAV + ' Standing facing the viewer, shivering with cold, teeth clenched, no hat.',
+ 'sm_boy_face': 'A close-up of a little boy\'s face only (round head, no body): black bowl haircut with bangs, big happy open smile, front view.',
+ 'sm_cut_roar_night': 'A friendly orange tiger roaring loudly on a mountain path at night under a big pale full moon, dark blue layered hills, flat paper speed-line strips behind it (funny, not scary).',
+ 'sm_girl_face': 'A close-up of a little girl\'s face only (round head, no body): brown hair in two pigtails with bangs, gentle smile, front view.',
+ 'sm_kkul_green': 'One dome-shaped Korean rice cake (half sphere) of pastel green, with a slightly darker thin layer at its base. No face.',
+ 'sm_kkul_pink': 'One dome-shaped Korean rice cake (half sphere) of pastel pink, with a slightly darker thin layer at its base. No face.',
+ 'sm_kkul_purple': 'One dome-shaped Korean rice cake (half sphere) of pastel lavender, with a slightly darker thin layer at its base. No face.',
+ 'sm_kkul_white': 'One dome-shaped Korean rice cake (half sphere) of creamy white, with a slightly darker thin layer at its base. No face.',
+ 'sm_kkul_yellow': 'One dome-shaped Korean rice cake (half sphere) of pastel yellow, with a slightly darker thin layer at its base. No face.',
+ 'sm_lamp_flame': 'A single flame: an orange teardrop-shaped flame with a cream inner flame.',
+ 'sm_lamp_off': 'A small Korean clay oil lamp bowl with a lid on a simple wooden stand with four legs, unlit.',
+ 'sm_lamp_on': 'The same small Korean clay oil lamp on its wooden stand, with a small orange flame burning on top.',
+}
+# 다른 동화의 강아지도 구름 공장 꿀떡이처럼 (생김새 설명 + 꿀떡이 새 그림을 참고로)
+KKUL = ('The dog looks EXACTLY like Kkulddeok in the reference image: a small cheerful dog, white coat with light tan patches on both floppy ears and a few faint tan spots '
+        'on the back, dark nose, a blue harness with white buckles.')
+KKUL_REF = 'assets/raw/char_gpt/kkultteok/dog_lookup.png'
+def is_dog(name): return bool(re.search(r'(^|_)dog(\d|_|$)', name[name.index('_') + 1:] if '_' in name else name))
+
+def build2(tales):
+    from PIL import Image
+    OP = old_prompts()
+    for t in tales:
+        names = used_names(t); jobs = []; groups = {}
+        for n in names:
+            if kind_of(n) == 'sprite': groups.setdefault(char_key(t, n), []).append(n)
+        base = {k: sorted(v, key=lambda x: (len(x), x))[0] for k, v in groups.items()}
+        main = [base[k] for k, v in sorted(groups.items(), key=lambda kv: -len(kv[1]))[:3]]
+        for n in names:
+            src = os.path.join(OLD, n + '.webp') if os.path.exists(os.path.join(OLD, n + '.webp')) else os.path.join(V3W, n + '.webp')
+            size = Image.open(src).size; k = kind_of(n); desc = DESC_EXTRA.get(n) or OP.get(n) or OP.get(re.sub(r'(nf|2|v2)$', '', n))
+            out = os.path.relpath(os.path.join(RAW, t, n + '.png'), G)
+            if not desc and not (k == 'bg' and bg_section(t, n)):
+                jobs.append({'id': n, 'kind': k, 'pass': 1, 'refs': [os.path.relpath(src, G)], 'size': size, 'out': out, 'prompt': prompt_for(t, n, size), 'mode': 'ref'}); continue
+            refs, ps = [], 1
+            if k == 'sprite' and base.get(char_key(t, n)) != n:
+                refs, ps = [os.path.relpath(os.path.join(RAW, t, base[char_key(t, n)] + '.png'), G)], 2
+            if k == 'cut':  # 컷 설명에 나오는 인물의 기본 그림만 참고로 (없으면 가장 많이 나오는 인물 둘)
+                low = (desc or '').lower() + ' ' + n.lower()
+                hit = [base[ck] for ck in base if len(ck) > 2 and re.search(r'\b' + re.escape(ck) + r's?\b', low) and ck not in ('ins', 'icon', 'aud', 'finish', 'prop', 'item', 'ui')][:3] or main[:2]
+                refs, ps = [os.path.relpath(os.path.join(RAW, t, b + '.png'), G) for b in hit], 2
+            if is_dog(n) and k == 'sprite':  # 강아지 = 꿀떡이
+                desc = KKUL + ' ' + re.sub(r'(?i)\bthe dog:[^.]*\.', '', desc or ''); refs = [KKUL_REF] + refs
+            elif k == 'cut' and re.search(r'\bdog\b|puppy', (desc or ''), re.I):
+                desc = (desc or '') + ' ' + KKUL; refs = refs + [KKUL_REF]
+            jobs.append({'id': n, 'kind': k, 'pass': ps, 'refs': refs, 'size': size, 'out': out, 'prompt': new_prompt(t, n, k, desc or '', size), 'mode': 'new'})
+        json.dump(jobs, open(os.path.join(HERE, f'jobs_{t}.json'), 'w'), ensure_ascii=False, indent=1)
+        print(t, len(jobs), '장', '새 설명', sum(j['mode'] == 'new' for j in jobs), '참고 방식', sum(j['mode'] == 'ref' for j in jobs), '2단계', sum(j['pass'] == 2 for j in jobs))
+
 def load_status():
     try: return json.load(open(STATUS))
     except Exception: return {}
@@ -115,16 +260,22 @@ def wait_until(text):
             except Exception: pass
     return now + datetime.timedelta(minutes=30)
 
+def job_refs(job):
+    return [r for r in (job.get('refs') or ([job['ref']] if job.get('ref') else [])) if os.path.exists(os.path.join(G, r))]
+
 def gen_one(job, log):
     out = os.path.join(G, job['out']); os.makedirs(os.path.dirname(out), exist_ok=True)
     aspect = 'square 1:1' if job['kind'] == 'sprite' else ('landscape 16:9' if job['size'][0] >= job['size'][1] else 'portrait 3:4')
-    pf = os.path.join(HERE, '_prompt.txt'); open(pf, 'w').write(job['prompt'])
+    pf = os.path.join(HERE, f"_prompt_{job['id']}.txt"); open(pf, 'w').write(job['prompt'])  # 작업마다 따로 (실행기 둘이 같은 파일을 덮어쓰던 것)
     inst = (f"Use your image generation tool (image_gen.imagegen) to create ONE image, {aspect}. Read the full prompt from the file {pf} and pass it VERBATIM. "
-            f"Pass this reference image in referenced_image_paths: {os.path.join(G, job['ref'])} . Save (copy) the generated image to {out} . "
+            + (f"Pass these reference images in referenced_image_paths (read-only): {' '.join(os.path.join(G, r) for r in job_refs(job))} . " if job_refs(job) else '')
+            + f"Save (copy) the generated image to {out} . "
             "Do not modify any other file, do not install anything, do not run git. Reply with only: SAVED <path> <width>x<height>, or FAILED <reason verbatim>.")
     r = subprocess.run([CODEX, 'exec', '-s', 'workspace-write', '--skip-git-repo-check', '-C', G, inst], capture_output=True, text=True, timeout=900)
     txt = (r.stdout or '') + '\n' + (r.stderr or '')
     open(log, 'a').write(f"\n===== {datetime.datetime.now():%m-%d %H:%M} {job['id']}\n{txt[-1500:]}\n")
+    try: os.remove(pf)
+    except OSError: pass
     if os.path.exists(out): return 'ok', txt
     if LIMIT_RE.search(txt): return 'limit', txt
     return 'fail', txt
@@ -137,6 +288,7 @@ def run(tales):
         jobs = json.load(open(jp)); fails = {}
         while True:
             todo = [j for j in jobs if not os.path.exists(os.path.join(G, j['out'])) and fails.get(j['id'], 0) < 3]
+            todo.sort(key=lambda j: j.get('pass', 1))  # 인물 기본 그림(1단계) 먼저, 그다음 그 그림을 참고하는 자세·컷
             st = load_status(); st[t] = {'done': len(jobs) - len([j for j in jobs if not os.path.exists(os.path.join(G, j['out']))]), 'total': len(jobs), 'state': 'running'}; save_status(st)
             if not todo: break
             j = todo[0]
@@ -163,7 +315,19 @@ from PIL import Image
 src, dst, kind, w, h = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4]), int(sys.argv[5])
 im = Image.open(src)
 if kind == 'sprite':
-    im = im.convert('RGBA'); s = min(w / im.width, h / im.height); im = im.resize((max(1, round(im.width * s)), max(1, round(im.height * s))), Image.LANCZOS)
+    im = im.convert('RGBA')
+    # 방향 맞추기: 옛 그림과 실루엣이 좌우 반대면 뒤집는다 (게임 코드가 그림이 보는 쪽을 가정한다)
+    old = sys.argv[6] if len(sys.argv) > 6 else ''
+    if old:
+        import os
+        if os.path.exists(old):
+            def mask(x):
+                a = x.convert('RGBA').getchannel('A'); bb = a.getbbox() or (0, 0, 1, 1); return a.crop(bb).resize((96, 96))
+            mo, mn = mask(Image.open(old)), mask(im)
+            def sim(a, b):
+                pa, pb = list(a.getdata()), list(b.getdata()); return sum(1 for x, y in zip(pa, pb) if (x > 128) == (y > 128)) / len(pa)
+            if sim(mo, mn.transpose(Image.FLIP_LEFT_RIGHT)) > sim(mo, mn) + .03: im = im.transpose(Image.FLIP_LEFT_RIGHT); print('flip', dst)
+    s = min(w / im.width, h / im.height); im = im.resize((max(1, round(im.width * s)), max(1, round(im.height * s))), Image.LANCZOS)
 else:
     im = im.convert('RGB'); r = w / h
     if abs(im.width / im.height - r) > .01:  # 옛 비율에 맞춰 가운데를 자른다
@@ -182,7 +346,8 @@ im.save(dst, quality=88 if kind == 'sprite' else 86, method=6)
             k = os.path.join(tmp, name + '.png')
             subprocess.run([PY_PIL, os.path.join(G, 'tools/gpu_night/chromakey.py'), src, k, '6'], check=True, capture_output=True)
             src = k
-        subprocess.run([PY_PIL, '-c', code, src, v, j['kind'], str(j['size'][0]), str(j['size'][1])], check=True)
+        r = subprocess.run([PY_PIL, '-c', code, src, v, j['kind'], str(j['size'][0]), str(j['size'][1]), o], check=True, capture_output=True, text=True)
+        if r.stdout.strip(): print(r.stdout.strip())
         n += 1
     st = load_status(); st.setdefault(tale, {})['state'] = 'posted'; save_status(st)
     print(tale, '적용', n, '장')
@@ -190,6 +355,7 @@ im.save(dst, quality=88 if kind == 'sprite' else 86, method=6)
 if __name__ == '__main__':
     cmd = sys.argv[1] if len(sys.argv) > 1 else 'status'; args = sys.argv[2:]
     if cmd == 'build': build(args or ORDER)
+    elif cmd == 'build2': build2(args or ORDER)
     elif cmd == 'run': run(args or ORDER)
     elif cmd == 'post': post(args[0])
     else: print(json.dumps(load_status(), ensure_ascii=False, indent=1))
