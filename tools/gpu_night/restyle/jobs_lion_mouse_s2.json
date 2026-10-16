@@ -1,0 +1,152 @@
+[
+ {
+  "name": "lm_bg_board_s2",
+  "w": 1760,
+  "h": 992,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+  ],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a soft savanna 'classroom': one very big EMPTY cream paper board fills the middle of the picture like a wide panel, standing on a warm wooden plank floor strip along the bottom, with a few acacia tree tops and pale sky peeking out around its edges. The board itself is completely plain and blank — cards are placed on it later. Leave every panel and plaque completely blank — no letters, no numbers, no writing of any kind. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
+ },
+ {
+  "name": "lm_bg_grass_s2",
+  "w": 1760,
+  "h": 992,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+  ],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a mouse's-eye view of tall grass that looks like a forest: many huge blades of grass in two soft greens towering up at both sides and behind, one tall white daisy with a gold centre at upper left, a strip of soft earth along the bottom. Plenty of open space across the middle. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
+ },
+ {
+  "name": "lm_bg_morning_s2",
+  "w": 1760,
+  "h": 992,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+  ],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a very wide sunny morning savanna for a happy run: a soft round morning sun at upper left, several flat-topped acacia trees spread far apart along distant hills, grass tufts, a light open ground across the bottom. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
+ },
+ {
+  "name": "lm_bg_night_forest_s2",
+  "w": 1760,
+  "h": 992,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+  ],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a TOP-DOWN view looking straight down onto a forest clearing at night: round bush clumps and tree crowns around the edges, a lighter soft-green grassy oval clearing in the middle, three grey stones. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
+ },
+ {
+  "name": "lm_bg_night_net_s2",
+  "w": 1760,
+  "h": 992,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+  ],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a quiet savanna at night: a blue sky with a round cream moon at upper right and a few paper stars, dark soft rolling hills, a grassy ground band across the lower third. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
+ },
+ {
+  "name": "lm_bg_savanna_s2",
+  "w": 1760,
+  "h": 992,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+  ],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a warm savanna afternoon: rolling tan hills, a soft round sun at upper right, ONE big flat-topped acacia tree at centre-right with a wide umbrella canopy casting cool shade on the ground below it, grass tufts at both edges. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
+ },
+ {
+  "name": "lm_cut_gnaw_s2",
+  "w": 1024,
+  "h": 768,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+  ],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. Close-up: the brave little mouse gnaws through a thick rope of the net with its two front teeth, SNAP — the rope splits with a little paper starburst, the lion's hopeful eye peeking behind. The mouse: a tiny grey-brown mouse made of flat paper pieces — round body with a cream belly, big round ears with pink insides, a small pointed snout with a black nose tip, tiny pink feet and a long thin curly pink tail, bright round eyes. The lion: a big, soft, cuddly lion made of flat paper pieces — warm honey-gold body, a big round mane of rounded persimmon-orange petal-shaped paper pieces all around its face, round ears, a cream muzzle with a small brown nose, pink cheeks, a long tail with a dark tuft. Gentle and sleepy-looking, never scary, no teeth showing."
+ },
+ {
+  "name": "lm_cut_laugh_s2",
+  "w": 1024,
+  "h": 768,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+  ],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. A close-up of the big lion's head laughing out loud, eyes squeezed shut, mouth wide open, while a tiny mouse stands bravely on the grass in front of it. The lion: a big, soft, cuddly lion made of flat paper pieces — warm honey-gold body, a big round mane of rounded persimmon-orange petal-shaped paper pieces all around its face, round ears, a cream muzzle with a small brown nose, pink cheeks, a long tail with a dark tuft. Gentle and sleepy-looking, never scary, no teeth showing. The mouse: a tiny grey-brown mouse made of flat paper pieces — round body with a cream belly, big round ears with pink insides, a small pointed snout with a black nose tip, tiny pink feet and a long thin curly pink tail, bright round eyes."
+ },
+ {
+  "name": "lm_cut_net2_s2",
+  "w": 1024,
+  "h": 768,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+  ],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. The lion is caught under a big straw-coloured rope NET at night — a real net with even diamond-shaped mesh holes draped over his whole body and pinned to the ground — pushing up against the net with his paws and wriggling. His face is clearly WORRIED: eyebrows tilted up, eyes wide, mouth a small open 'O' calling for help, one sweat drop — funny, not hurt, not scary. The lion: a big, soft, cuddly lion made of flat paper pieces — warm honey-gold body, a big round mane of rounded persimmon-orange petal-shaped paper pieces all around its face, round ears, a cream muzzle with a small brown nose, pink cheeks, a long tail with a dark tuft. Gentle, never scary, no teeth showing."
+ },
+ {
+  "name": "lm_cut_paw4_s2",
+  "w": 1024,
+  "h": 768,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp",
+   "/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg"
+  ],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. THUD! Side view, whole scene visible: ONE lion lying on its belly on the grass on the right side of the picture, facing LEFT, awake with wide-open surprised eyes and a small startled open mouth. The lion's ONE long front leg is stretched out forward along the ground toward the left, and the big round paw at the end of that SAME leg is pressed flat on the ground on the very tip of a tiny mouse's long pink tail. The paw is clearly joined to the lion's shoulder by the leg — one continuous body. The mouse stands just in front (left) of the paw, startled, tail stretched back under the paw; the mouse is not hurt, only the tail tip is under the paw; a few paper dust puffs. Only one lion, only one mouse, only one paw on the mouse's tail. The lion: a big, soft, cuddly lion made of flat paper pieces — warm honey-gold body, a big round mane of rounded persimmon-orange petal-shaped paper pieces all around its face, round ears, a cream muzzle with a small brown nose, pink cheeks, a long tail with a dark tuft. Gentle and sleepy-looking, never scary, no teeth showing. The mouse: a tiny grey-brown mouse made of flat paper pieces — round body with a cream belly, big round ears with pink insides, a small pointed snout with a black nose tip, tiny pink feet and a long thin curly pink tail, bright round eyes."
+ }
+]
