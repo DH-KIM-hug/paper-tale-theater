@@ -86,25 +86,37 @@
     };
     /* 굴뚝 연기: 바람을 따라 한쪽으로 휘어 오르는 길(2차 곡선). 김 덩이는 이 길을 따라 커지며 옅게 흐른다 */
     const qpt = (p0, c, p1, t) => [(1 - t) * (1 - t) * p0[0] + 2 * (1 - t) * t * c[0] + t * t * p1[0], (1 - t) * (1 - t) * p0[1] + 2 * (1 - t) * t * c[1] + t * t * p1[1]];
-    const smokeImg = () => { const w = 100, h = w / (ASP.cloud_white || 1.6); return el('image', { href: src('cloud_white'), x: -w / 2, y: -h / 2, width: w, height: h, preserveAspectRatio: 'none' }, T.fx); };
-    /* 김 한 덩이가 굴뚝(p0)에서 c 를 거쳐 p1 쪽으로 upto(0~1) 만큼 흘러간다. s0→s1 크기, 끝에서 옅어지면 fade */
-    const puffAlong = (p0, c, p1, { upto = 1, s0 = .18, s1 = .7, ms = 3600, op = .85, fade = true } = {}) => {
-      const im = smokeImg(), N = 12, kf = [];
+    /* 연기 한 덩이: 겹친 동그라미 셋(옅은 회백색 종이 + 아래쪽 그늘). 구름 그림이 아니라 연기 모양 */
+    const smokeBlob = () => {
+      const g = el('g', {}, T.fx);
+      [[-9, 3, 11], [6, -4, 13], [14, 6, 9]].forEach(([cx, cy, r]) => el('circle', { cx: cx + 1.5, cy: cy + 3, r, fill: '#CFCBC4', opacity: .55 }, g));
+      [[-9, 3, 11], [6, -4, 13], [14, 6, 9]].forEach(([cx, cy, r]) => el('circle', { cx, cy, r, fill: '#F3F2EE' }, g));
+      return g;
+    };
+    /* 연기 한 덩이가 굴뚝(p0)에서 c 를 거쳐 p1 쪽으로 upto(0~1) 만큼 흘러가며 커진다 */
+    const puffAlong = (p0, c, p1, { upto = 1, s0 = .4, s1 = 1.6, ms = 3600, op = .8, fade = true } = {}) => {
+      const im = smokeBlob(), N = 12, kf = [];
       for (let i = 0; i <= N; i++) {
         const t = upto * i / N, [x, y] = qpt(p0, c, p1, t), sc = s0 + (s1 - s0) * (i / N);
-        kf.push({ transform: `translate(${x}px,${y}px) scale(${sc}) rotate(${(i % 2 ? 3 : -3)}deg)`, opacity: i === 0 ? 0 : (fade && i === N ? 0 : op), offset: i / N });
+        kf.push({ transform: `translate(${x + Math.sin(i * 1.3) * 5}px,${y}px) scale(${sc})`, opacity: i === 0 ? 0 : (fade && i === N ? 0 : op), offset: i / N });
       }
       const an = im.animate(kf, { duration: ms, easing: 'ease-out', fill: 'forwards' });
       an.finished.then(() => { if (fade) im.remove(); }, () => {});
       return { im, an };
     };
-    /* 연기가 길을 따라 올라가 끝에서 퐁! 종이 구름(c 배우)이 된다 */
+    /* 굴뚝에서 연기가 뭉게뭉게 줄지어 올라가 끝자리(p1)에 모이고, 모인 연기가 퐁! 구름(c 배우)이 된다 */
     const smokeToCloud = async (cloud, p0, ctl, p1, ms = 3200, sc = 1) => {
-      const { im, an } = puffAlong(p0, ctl, p1, { s0: .25, s1: 1.25 * sc, ms, op: .9, fade: false });
-      await an.finished.catch(() => {});
+      const N = 18, blobs = []; // 풍성하게: 연기 덩이 열여덟이 줄지어 뭉게뭉게
+      for (let k = 0; k < N; k++) {
+        // 뒤로 갈수록 끝자리 둘레에 조금씩 흩어져 쌓이게 (한 점으로 몰리지 않게)
+        const ang = k * 2.4, rr = 20 + (k % 4) * 14, end = [p1[0] + Math.cos(ang) * rr * 1.6 * sc, p1[1] + Math.sin(ang) * rr * .6 * sc];
+        blobs.push(puffAlong(p0, ctl, end, { s0: .5, s1: (2.6 + (k % 4) * .45) * sc, ms: ms * .75, op: .9, fade: false }));
+        await sleep(ms * .3 / N);
+      }
+      await Promise.all(blobs.map(b => b.an.finished.catch(() => {})));
       put(T, cloud, p1[0], p1[1] + (cloud.h || 140) * sc / 2, { s: sc }); // 구름 배우는 발끝 기준이라 가운데에서 높이 절반만큼 아래
-      cloud.pos.animate([{ opacity: 0, scale: .8 }, { opacity: 1, scale: 1.08, offset: .6 }, { opacity: 1, scale: 1 }], { duration: 520, easing: 'ease-out' });
-      im.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 420, fill: 'forwards' }).onfinish = () => im.remove();
+      cloud.pos.animate([{ opacity: 0, scale: .85 }, { opacity: 1, scale: 1.08, offset: .6 }, { opacity: 1, scale: 1 }], { duration: 600, easing: 'ease-out' });
+      blobs.forEach(b => b.im.animate([{ opacity: .85 }, { opacity: 0 }], { duration: 500, fill: 'forwards' }).onfinish = () => b.im.remove());
       popSfx(T); puff(p1[0], p1[1], '#FBFAF6');
     };
     /* 하늘에 천천히 흘러가는 종이 구름. list: [y, 너비, 한 바퀴 초, 시작 위치(0~1), 투명도] */
@@ -119,7 +131,7 @@
       });
     };
     /* 굴뚝에서 쉬지 않고 피어오르는 작은 김: 길의 앞부분까지만 흐르다 옅어진다 */
-    const chimneyLoop = (p0, ctl, p1, o = {}) => { const my = sceneTok; (async () => { await sleep(500); while (my === sceneTok) { puffAlong(p0, ctl, p1, { upto: .45, s0: .14, s1: .38, ms: 4200, op: .75, ...o }); await sleep(1300); } })(); };
+    const chimneyLoop = (p0, ctl, p1, o = {}) => { const my = sceneTok; (async () => { await sleep(500); while (my === sceneTok) { puffAlong(p0, ctl, p1, { upto: .55, s0: .5, s1: 2, ms: 4600, op: .8, ...o }); await sleep(650); } })(); };
     /* 비 */
     let rainG = null;
     function startRain(x0 = 0, x1 = 1000, y0 = -20, n = 22) {
@@ -223,7 +235,7 @@
         cl.forEach(hide);
       });
       const far = [X(120, 300), 60];
-      chimneyLoop(C0, ctl(far), far, { s1: .6 });
+      chimneyLoop(C0, ctl(far), far, { s1: 2.4 });
       await say('언덕 너머에 커다란 굴뚝 하나.');
       await say('굴뚝에서 하얀 김이 폴폴.');
       await say('굴뚝을 톡톡톡!');
@@ -624,7 +636,7 @@
         put(T, agi, X(540, 560), G, { look: 'lookback', to: 'left' });
       });
       const C0 = [ch.x + 6, ch.y - 124], tgt = [[X(720, 600), 150], [X(600, 520), 120]];
-      chimneyLoop(C0, [C0[0], C0[1] - 40], [C0[0] - 160, C0[1] - 70], { s1: .3 });
+      chimneyLoop(C0, [C0[0], C0[1] - 40], [C0[0] - 160, C0[1] - 70], { s0: .25, s1: .9 });
       const home = Promise.all([dog.move(X(-60, 260), G, 3800, 'linear'), nuna.move(X(160, 340), G, 4200, 'linear'), oppa.move(X(260, 400), G, 4200, 'linear')]);
       await say('삼남매는 꿀떡이랑 왔던 길로 집에 가요.');
       await say('굴뚝을 톡! 안녕!');
