@@ -703,6 +703,8 @@ const Tale = (() => {
       const ss = document.getElementById('startScreen'), ki = ss && ss.querySelector('.keyimg'), ks = keySrc();
       if (ki) {
         ss.classList.toggle('keyed', !!ks);
+        const lp = ((window.THUMBSKEYLIGHT || {})[id]) || '';
+        ss.classList.toggle('light', !!(ks && lp)); if (lp) ss.style.setProperty('--keypaper', lp); else ss.style.removeProperty('--keypaper');
         if (ks && ki.getAttribute('src') !== ks) ki.src = ks;
         if (!ks) ki.removeAttribute('src');
       }

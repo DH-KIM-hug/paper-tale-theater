@@ -304,6 +304,15 @@ svg text { font-weight: 800; }
   #startScreen.keyed .words { padding-bottom: 0; }
 }
 
+/* 밝은 종이 판(THUMBSKEYLIGHT): 어두운 띠 없이 흰 종이 위에 어두운 글자. 그림은 잘리지 않게 contain */
+#startScreen.keyed.light { background: var(--keypaper, #f0eee9); }
+#startScreen.keyed.light .keyimg { object-fit: contain; object-position: center 34%; }
+#startScreen.keyed.light::before { display: none; }
+#startScreen.keyed.light .paperword { --let-top: #9A4222; --let-bot: #6B2A12; --let-edge: rgba(255, 252, 244, .9); --let-sh: rgba(70, 48, 40, .32); --let-sh-2: rgba(70, 48, 40, .22); }
+#startScreen.keyed.light .sub { color: #5A3A2A; text-shadow: none; }
+#startScreen.keyed.light .note { color: #7A5E4C; text-shadow: none; }
+@media (orientation: landscape) { #startScreen.keyed.light .keyimg { object-position: center top; } }
+
 /* 들어올 때: 홈에서 닫힌 종이 조리개가 다시 열린다 */
 #arrive { position: fixed; inset: 0; z-index: 90; overflow: hidden; pointer-events: none; }
 #arrive .lid {

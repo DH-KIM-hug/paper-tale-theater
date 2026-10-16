@@ -67,4 +67,9 @@ open(os.path.join(OUT, 'thumbs.js'), 'w').write(
     '/* make_thumbs.py가 생성. THUMBS: 예전 크림 여백 그림, THUMBS2: 남색 종이 구멍, THUMBS2L: 밝은 종이 구멍(<id>_light.webp) */\n'
     f'window.THUMBS = {json.dumps(T1)};\nwindow.THUMBS2 = {json.dumps(T2)};\nwindow.THUMBS2L = {json.dumps(T2L)};\n'
     f'/* THUMBSKEY: 시작 화면 키아트(<id>_key_wide.webp + <id>_key_tall.webp 둘 다 있는 동화) */\nwindow.THUMBSKEY = {json.dumps(KEYS)};\n')
+LIGHT = {}
+for jf in glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'app', 'keyart', '*.json')):
+    kj = json.load(open(jf))
+    if kj.get('light') and kj['tale'] in KEYS: LIGHT[kj['tale']] = kj['light']
+open(os.path.join(OUT, 'thumbs.js'), 'a').write('/* THUMBSKEYLIGHT: 흰 종이 판 키아트(어두운 띠 없이 어두운 글자). 값 = 종이 색. tools/app/keyart/<id>.json의 "light" */\n' + f'window.THUMBSKEYLIGHT = {json.dumps(LIGHT)};\n')
 print('old', T1, 'dark', T2, 'light', T2L)

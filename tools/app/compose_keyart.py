@@ -204,6 +204,18 @@ def compose(cfg, kind):
     if 'strip' in L:
         strip_plane(cv, L['strip'], W, H)
         for lf in L['strip'].get('leaves', []): place_leaf(cv, lf, W, H)
+    if 'fg' in L:   # GPU 전경 조각(큰 단풍잎·풀잎), 키 완료 PNG
+        F = L['fg']; im = bbox_crop(despill(ld(P['fg']))); im = fit_w(im, W * F['w'])
+        drop(cv, edge_light(im, 1, .3), (W * F['x'] - im.width / 2, H * F['bottom'] - im.height), (8, 15), 11, .45)
+    if 'frame' in L:   # GPU 앞판(찢은 종이 창), 키 완료 PNG
+        F = L['frame']; im = despill(ld(F['file'])); ins = F.get('inset', 40)
+        im = im.crop((ins, ins, im.width - ins, im.height - ins)); sc = max(W / im.width, H / im.height) * F.get('scale', 1.2)
+        im = im.resize((int(im.width * sc), int(im.height * sc)), Image.LANCZOS)
+        x = int((W - im.width) * F.get('x', .5)); y = int((H - im.height) * F.get('y', .5))
+        am = Image.new('L', (W, H), 0); am.paste(im.getchannel('A'), (x, y))
+        sh = ImageChops.offset(am, 9, 16).filter(ImageFilter.GaussianBlur(15)).point(lambda v: int(v * .45))
+        cv.paste(Image.new('RGBA', (W, H), SHC + (255,)), (0, 0), sh)
+        paste_clip(cv, im, (x, y))
     if 'front' in L:
         front_sheet(cv, L['front'], W, H)
         for lf in L['front'].get('leaves', []): place_leaf(cv, lf, W, H)
@@ -211,10 +223,118 @@ def compose(cfg, kind):
     cv = apply_grain(cv, 6, 4)
     return band(cv, L['band'], L.get('band_strength', .45))
 
+
+# ---------- 화환 방식 (mode: wreath): 질감 있는 앞 종이 + 둥근 구멍 + GPU 화환 + 안쪽 장면 + 스프라이트 ----------
+def linen(size, col, seed=1, weave=3.2):
+    """린넨 결 카드스톡: 가로세로 가는 실결 + 낮은 주파수 얼룩 + 잔 알갱이"""
+    W, H = size; rng = np.random.default_rng(seed)
+    rows = rng.normal(0, 1, H).astype(np.float32); cols = rng.normal(0, 1, W).astype(np.float32)
+    k = np.ones(2) / 2; rows = np.convolve(rows, k, 'same'); cols = np.convolve(cols, k, 'same')
+    lo = rng.normal(0, 1, (H // 24 + 2, W // 24 + 2)).astype(np.float32)
+    lo = np.asarray(Image.fromarray(((lo * 40) + 128).clip(0, 255).astype(np.uint8)).resize((W, H), Image.BICUBIC)).astype(np.float32) - 128
+    fine = rng.normal(0, 1, (H, W)).astype(np.float32)
+    n = rows[:, None] * weave + cols[None, :] * weave + lo * .012 + fine * 1.4
+    a = np.array(col, np.float32)[None, None, :] + n[..., None]
+    return Image.fromarray(a.clip(0, 255).astype(np.uint8)).convert('RGBA')
+
+def wreath_hole(alpha, W, H, shrink=9):
+    """화환 윤곽(가운데 채움)에서 앞 종이의 구멍 마스크를 만든다: 화환 가장자리가 구멍 밑에 살짝 들어가도록 안쪽으로 줄임"""
+    from PIL import ImageDraw
+    q = 4; sm = alpha.resize((W // q, H // q), Image.BILINEAR).point(lambda v: 255 if v > 60 else 0)
+    sm = sm.filter(ImageFilter.MaxFilter(9))
+    fl = sm.copy(); ImageDraw.floodfill(fl, (0, 0), 128)
+    sil = fl.point(lambda v: 255 if v != 128 else 0)
+    sil = sil.filter(ImageFilter.MinFilter(shrink)).filter(ImageFilter.GaussianBlur(2.2)).point(lambda v: 255 if v > 128 else 0)
+    return sil.resize((W, H), Image.LANCZOS).filter(ImageFilter.GaussianBlur(4)).point(lambda v: 255 if v > 128 else int(v * 2)).filter(ImageFilter.GaussianBlur(1))
+
+def compose_wreath(cfg, kind, variant):
+    global SHC
+    SHC = tuple(cfg.get('shadow_color', [52, 58, 82]))   # 살짝 푸르스름한 회색 그림자 (검정 아님)
+    L = cfg['layouts'][kind]; W, H = L['size']; P = cfg['planes']
+    off = (max(2, round(.008 * W)), max(3, round(.011 * W))); blur = round(1.4 * off[1]); op = .38   # 왼위 빛: 오른아래로 W의 1~1.5%
+    ins = ld(P['inside_' + kind]); sc = max(W / ins.width, H / ins.height)
+    ins = ins.resize((int(ins.width * sc) + 1, int(ins.height * sc) + 1), Image.LANCZOS)
+    ix = int((ins.width - W) * L.get('inside_x', .5)); iy = int((ins.height - H) * L.get('inside_y', .5))
+    cv = ins.crop((ix, iy, ix + W, iy + H)).convert('RGBA')
+    for s in L['sprites']:
+        im = sprite_img(s, W, H); drop(cv, im, (W * s['x'] - im.width / 2, H * s['foot'] - im.height), off, blur, op, 1)
+    wr = despill(ld(P['wreath_' + kind]))
+    sc = max(W / wr.width, H / wr.height) * L.get('wreath_scale', 1.0)
+    wr = wr.resize((int(wr.width * sc), int(wr.height * sc)), Image.LANCZOS)
+    wx = int((W - wr.width) * L.get('wreath_x', .5)); wy = int((H - wr.height) * L.get('wreath_y', .5))
+    wcan = Image.new('RGBA', (W, H), (0, 0, 0, 0)); paste_clip(wcan, wr, (wx, wy))
+    am = wcan.getchannel('A')
+    def shadow_of(alpha, o, bl, opa):
+        sh = ImageChops.offset(alpha, o[0], o[1]).filter(ImageFilter.GaussianBlur(bl)).point(lambda v: int(v * opa))
+        return sh
+    cv.paste(Image.new('RGBA', (W, H), SHC + (255,)), (0, 0), shadow_of(am, off, blur, op))
+    cv.alpha_composite(edge_light(wcan, 1, .25))
+    hole = wreath_hole(am, W, H, L.get('hole_shrink', 9))
+    wt = cfg.get('weave', {}).get(variant, 3.2)
+    sheet = linen((W, H), cfg['sheets'][variant], 7, wt); sheet.putalpha(ImageChops.invert(hole))
+    sh_a = sheet.getchannel('A')
+    # 구멍이 안쪽 장면에 드리우는 그림자: 왼위 안쪽에 어두운 초승달, 오른아래로 옅어짐 (구멍 가장자리 따라 폭 W의 약 10%)
+    d = int(.065 * W)
+    inner = shadow_of(sh_a, (d, int(d * .95)), int(.035 * W), .62)
+    inner = ImageChops.lighter(inner, shadow_of(sh_a, (max(3, d // 7), max(4, d // 6)), max(4, d // 12), .55))
+    cv.paste(Image.new('RGBA', (W, H), SHC + (255,)), (0, 0), inner)
+    cv.alpha_composite(edge_light(sheet, 2, .30))
+    # 화환이 구멍 가장자리 위로 넘쳐 앞 종이 위에 놓이는 부분(아래쪽)
+    sp = L.get('spill_from_y')
+    if sp is not None:
+        mk = Image.new('L', (W, H), 0); mk.paste(255, (0, int(H * sp), W, H))
+        spill = wcan.copy(); spill.putalpha(ImageChops.multiply(wcan.getchannel('A'), ImageChops.multiply(mk, ImageChops.invert(hole.filter(ImageFilter.GaussianBlur(0))).point(lambda v: 255))))
+        # 구멍 안쪽(이미 그려진 부분)과 겹쳐도 같은 그림이라 문제 없다. 앞 종이 위 그림자 추가
+        cv.paste(Image.new('RGBA', (W, H), SHC + (255,)), (0, 0), ImageChops.multiply(shadow_of(spill.getchannel('A'), off, blur, op), ImageChops.invert(hole)))
+        cv.alpha_composite(spill)
+    cv = apply_grain(cv, 4, 4)
+    return band(cv, L['band'], L.get('band_strength', .5)) if L.get('band') else cv
+
+
+# ---------- 판 방식 (mode: plate): 사용자가 만든 한 장짜리 GPT 판 + 게임 스프라이트 합성 ----------
+def paper_color(plate):
+    a = np.asarray(plate.convert('RGB').crop((0, 0, plate.width, 18))).reshape(-1, 3)
+    return tuple(int(v) for v in np.median(a, axis=0))
+
+def compose_plate(cfg, kind):
+    global SHC
+    SHC = tuple(cfg.get('shadow_color', [52, 58, 82]))        # 푸르스름한 회색 (검정 아님), 왼위 빛
+    L = cfg['layouts'][kind]; W, H = L['size']
+    plate = Image.open(os.path.join(ROOT, cfg['plate'][kind] if isinstance(cfg['plate'], dict) else cfg['plate'])).convert('RGBA')
+    paper = paper_color(plate); cfg['_paper'] = paper
+    pl = L['plate']
+    pw = int(W * pl['w']) if 'w' in pl else int(plate.width * H * pl['h'] / plate.height)
+    ph = int(plate.height * pw / plate.width); plate = plate.resize((pw, ph), Image.LANCZOS)
+    # 가장자리를 종이색으로 풀어 바깥 종이와 이음매 없이
+    fade = int(pw * .075); m = np.ones((ph, pw), np.float32)
+    ramp = np.clip(np.arange(pw) / fade, 0, 1); ramp = np.minimum(ramp, ramp[::-1]); m *= ramp[None, :]
+    rampy = np.clip(np.arange(ph) / fade, 0, 1); rampy = np.minimum(rampy, rampy[::-1]); m *= rampy[:, None]
+    plate.putalpha(Image.fromarray((m * 255).astype(np.uint8)))
+    cv = linen((W, H), paper, 5, .7)
+    x0 = int((W - pw) * pl.get('x', .5)); y0 = int(pl.get('y', 0) * H)
+    cv.alpha_composite(plate, (x0, y0)) if x0 >= 0 and y0 >= 0 else paste_clip(cv, plate, (x0, y0))
+    off = (max(2, round(.011 * pw)), max(3, round(.015 * pw))); blur = round(1.5 * off[1])
+    for s in L['sprites']:
+        im = sprite_img(dict(s, **({'h': s['h'] * ph / H} if 'h' in s else {}), **({'w': s['w'] * pw / W} if 'w' in s else {})), W, H)
+        cx = x0 + pw * s['x']; fy = y0 + ph * s['foot']
+        drop(cv, im, (cx - im.width / 2, fy - im.height), off, blur, .40, 1)
+    return apply_grain(cv, 1.5, 4)
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('config'); ap.add_argument('--out'); ap.add_argument('--no-install', action='store_true')
     a = ap.parse_args(); cfg = json.load(open(a.config))
     for kind in ('wide', 'tall'):
+        if cfg.get('mode') == 'plate':
+            im = compose_plate(cfg, kind).convert('RGB')
+            if a.out: os.makedirs(a.out, exist_ok=True); im.save(os.path.join(a.out, '%s_key_%s.png' % (cfg['tale'], kind)))
+            if not a.no_install: im.save(os.path.join(ROOT, 'assets/thumbs/%s_key_%s.webp' % (cfg['tale'], kind)), quality=90, method=6)
+            print(kind, im.size, 'paper', '#%02x%02x%02x' % cfg['_paper']); continue
+        if cfg.get('mode') == 'wreath':
+            for v in cfg['sheets']:
+                im = compose_wreath(cfg, kind, v).convert('RGB')
+                if a.out: os.makedirs(a.out, exist_ok=True); im.save(os.path.join(a.out, '%s_key_%s_%s.png' % (cfg['tale'], kind, v)))
+                if not a.no_install and v == cfg.get('install', next(iter(cfg['sheets']))): im.save(os.path.join(ROOT, 'assets/thumbs/%s_key_%s.webp' % (cfg['tale'], kind)), quality=90, method=6)
+            print(kind, 'wreath variants', list(cfg['sheets'])); continue
         im = compose(cfg, kind).convert('RGB')
         if a.out: os.makedirs(a.out, exist_ok=True); im.save(os.path.join(a.out, '%s_key_%s.png' % (cfg['tale'], kind)))
         if not a.no_install: im.save(os.path.join(ROOT, 'assets/thumbs/%s_key_%s.webp' % (cfg['tale'], kind)), quality=90, method=6)
