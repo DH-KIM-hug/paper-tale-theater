@@ -9,7 +9,7 @@ mkdir -p "$GAME/assets/raw"
 if [ -f "$LOCK" ] && kill -0 "$(cat "$LOCK" 2>/dev/null)" 2>/dev/null; then echo "이미 실행 중 (pid $(cat "$LOCK"))" >&2; exit 1; fi
 echo $$ > "$LOCK"
 trap 'rm -f "$LOCK"' EXIT
-TALES="patjuk kkultteok rabbit lion_mouse sunmoon turnip goldilocks ant_grasshopper bremen cinderella fox_crane frog hansel heungbu kongjwi magic_jar magpie red_hood sun_wind three_pigs ugly_duckling wolf_goats"
+TALES="patjuk patjuk_cuts kkultteok rabbit lion_mouse sunmoon turnip goldilocks ant_grasshopper bremen cinderella fox_crane frog hansel heungbu kongjwi magic_jar magpie red_hood sun_wind three_pigs ugly_duckling wolf_goats"
 cd "$GAME"
 for t in $TALES; do
   J="$HERE/jobs_${t}_s2.json"

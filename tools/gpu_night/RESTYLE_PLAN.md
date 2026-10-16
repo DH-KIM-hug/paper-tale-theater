@@ -31,7 +31,7 @@ Hand-cut layered cardstock paper art in the style of the reference images. Every
 
 | 순서 | 동화 | 배경 | 컷 | 합계 |
 |---|---|---|---|---|
-| 1 | patjuk | 3 | 0 | 3 |
+| 1 | patjuk | 3 | 21 | 24 |
 | 2 | kkultteok | 0 | 2 | 2 |
 | 3 | rabbit | 13 | 3 | 16 |
 | 4 | lion_mouse | 6 | 4 | 10 |
@@ -53,11 +53,13 @@ Hand-cut layered cardstock paper art in the style of the reference images. Every
 | 20 | three_pigs | 10 | 2 | 12 |
 | 21 | ugly_duckling | 11 | 1 | 12 |
 | 22 | wolf_goats | 9 | 8 | 17 |
-| | 합계 | 179 | 99 | 278 |
+| | 합계 | 179 | 120 | 299 |
 
-한 장 약 10분 기준 약 46시간.
+한 장 약 10분 기준 약 50시간 (299장).
 
 ### patjuk
+
+컷 21장은 `assets/v2/cut_*.png`(원본 작업 파일 없음)라서 `jobs_patjuk_cuts_s2.json`(build_patjuk_cuts.py)에 내용을 새로 적었다: cut_<id>_s2, cut_<id>_b_s2, cut_wrong_<id>_s2 (id = bam jara ddong songgot jeolgu myeongseok jige; 게임이 쓰는 jara_b2, jeolgu_b2, jige2, wrong_jige2 포함). 배경 3장:
 
 scene_a_field_s2, scene_b_kitchen_s2, scene_c_yard_sea_s2
 
