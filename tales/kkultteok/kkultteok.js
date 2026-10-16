@@ -13,7 +13,8 @@
     'dog_lookup', 'dog_run', 'dog_wag', 'dog_sniff'];
   const sprFile = f => (/_walk$/.test(f) || f === 'dog_sniff') ? 'kk_' + f : 'cf_' + f;
   const src = f => AS + sprFile(f) + '.webp';
-  const bgSrc = k => AS + 'cf_bg_' + k + '.webp', cutSrc = k => AS + 'cf_cut_' + k + '.webp';
+  const BG2 = ['window', 'frontdoor', 'meadow']; // 새 종이공예 배경
+  const bgSrc = k => AS + (BG2.includes(k) ? 'cf_bg2_' : 'cf_bg_') + k + '.webp', cutSrc = k => AS + 'cf_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const ASP = {}; // 그림 가로/세로 (불러온 뒤 채운다)
 
