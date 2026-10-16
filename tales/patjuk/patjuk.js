@@ -52,7 +52,7 @@
      새 파일을 못 불러오면 예전 그림(cut_<key>.png)으로 */
   const CUT_NEW = { jeolgu_b: 'jeolgu_b2', jige: 'jige2', wrong_jige: 'wrong_jige2', jara_b: 'jara_b2' };
   const cutOK = {};
-  const cutUrl = key => A(`v2/cut_${CUT_NEW[key] && cutOK[key] !== false ? CUT_NEW[key] : key}.png`);
+  const cutUrl = key => A(`v3w/pj3_cut_${key}.webp`); // 2026-10-17 새 스타일 컷 (tools/app/gen/jobs_patjuk.json)
 
   let played = false; // 두 번째부터(다시 보기)는 오프닝·인트로 없이 바로 놀이
 
@@ -124,8 +124,8 @@
       const a = T.actor(T.world, POS.grannyCook, 520, g => {
         el('ellipse', { class: 'shd', cx: 0, cy: -2, rx: 27, ry: 6 }, g);
         art = el('g', { class: 'pj-art' }, g);
-        ladle = img(art, 'v2/c2_granny.png', -32, -118, 64, 118, 'xMidYMax meet');
-        hoe = img(art, 'v2/c2_granny_hoe.png', -32, -118, 64, 118, 'xMidYMax meet');
+        ladle = img(art, 'v3w/pj3_granny_ladle.webp', -39, -118, 78, 118, 'xMidYMax meet');
+        hoe = img(art, 'v3w/pj3_granny_hoe.webp', -45, -118, 90, 118, 'xMidYMax meet');
         tears = el('g', { class: 'pj-tears', opacity: 0, fill: '#9ec8e8' }, art);
         el('path', { class: 'tear', d: 'M-12 -92 q-3 6 0 8 q3 -2 0 -8' }, tears);
         el('path', { class: 'tear t2', d: 'M12 -92 q3 6 0 8 q-3 -2 0 -8' }, tears);
@@ -138,12 +138,12 @@
       const a = T.actor(T.world, POS.tigerEnter, 520, g => {
         el('ellipse', { class: 'shd', cx: -4, cy: -3, rx: 76, ry: 10 }, g);
         art = el('g', { class: 'pj-art pj-tiger' }, g);
-        img(art, 'v3w/tiger_stand.webp', -86, -108, 172, 108, 'xMidYMax meet', { class: 'tbase' });
-        img(art, 'v3w/tiger_fallen.webp', -100, -92, 200, 92, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'fallen' });
-        img(art, 'v3w/tiger_flat.webp', -112, -74, 224, 74, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'flat' });
-        img(art, 'v3w/tiger_bow.webp', -80, -117, 160, 117, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'bow' });
+        img(art, 'v3w/pj3_tiger_stand.webp', -86, -108, 172, 108, 'xMidYMax meet', { class: 'tbase' });
+        img(art, 'v3w/pj3_tiger_fallen.webp', -100, -92, 200, 92, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'fallen' });
+        img(art, 'v3w/pj3_tiger_flat.webp', -112, -74, 224, 74, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'flat' });
+        img(art, 'v3w/pj3_tiger_bow.webp', -80, -117, 160, 117, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'bow' });
         // 알밤에 맞은 뒤: 한쪽 눈을 앞발로 감싸고 찡그린 그림 (예전엔 선 그림 위에 X 표시만 그렸다). 머리 크기를 선 그림에 맞춤
-        img(art, 'v3w/tiger_eyehurt.webp', -42, -112, 84, 112, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'eyehurt' });
+        img(art, 'v3w/pj3_tiger_eyehurt.webp', -42, -112, 84, 112, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'eyehurt' });
         const ov = el('g', { class: 'toverlay' }, art);
         el('path', { id: 'pjEyeHurt', opacity: 0, d: 'M-73 -81 l14 14 M-59 -81 l-14 14', stroke: '#2c1a10', 'stroke-width': 4.5, 'stroke-linecap': 'round' }, ov);
         const band = (p, x, y, r, s = 8) => { const b = el('g', { fill: '#efe0bd', transform: `translate(${x},${y}) rotate(${r})` }, p); el('rect', { x: -s, y: -s / 3, width: s * 2, height: s * .66, rx: s / 3 }, b); el('rect', { x: -s / 3, y: -s, width: s * .66, height: s * 2, rx: s / 3 }, b); };
@@ -168,7 +168,7 @@
         act = el('g', { class: 'fr-act' }, g);
         sway = el('g', { class: 'fr-sway' }, act);
         const [bx, by, bw, bh] = c.box;
-        img(sway, `v2/c2_${f.id}.png`, bx + bw * .02, by + bh * .02, bw * .96, bh * .96, 'xMidYMax meet');
+        img(sway, `v3w/pj3_friend_${f.id}.webp`, bx + bw * .02, by + bh * .02, bw * .96, bh * .96, 'xMidYMax meet');
       });
       a.pos.classList.add('friend', 'fr-' + f.id);
       Object.assign(a, { id: f.id, act, sway, gx: c.x, gy: c.y, h: c.box[3], by: c.box[1], shown: false });
@@ -177,7 +177,7 @@
     function makeRolled() {
       const a = T.actor(T.world, POS.rolledSpot, 520, g => {
         el('ellipse', { class: 'shd', cx: 0, cy: 0, rx: 84, ry: 10 }, g);
-        img(g, 'v2/c2_rolled.png', -105, -96, 210, 96, 'xMidYMax meet');
+        img(g, 'v3w/pj3_tiger_rolled.webp', -105, -96, 210, 96, 'xMidYMax meet');
       });
       a.pos.style.display = 'none';
       return a;
@@ -232,10 +232,10 @@
         }
         daylight = el('rect', { x: -3000, y: -3000, width: 7000, height: 7000, fill: '#f2e3c0', opacity: 0, 'pointer-events': 'none' }, bg);
         // 이야기에 쓰이는 소품: 부뚜막(알밤) · 물독(자라) · 장작 · 부엌문(절구)
-        img(bg, 'v3w/b3_door.webp', 808, 302, 153, 220, 'xMidYMax meet', { class: 'prop' });
-        img(bg, 'v3w/b3_hearth.webp', 30, 390, 222, 120, 'xMidYMax meet', { class: 'prop' });
-        img(bg, 'v2/p2_muldok.png', 258, 408, 88, 115, 'xMidYMax meet', { class: 'prop' });
-        img(bg, 'v2/p2_firewood.png', 352, 462, 78, 62, 'xMidYMax meet', { class: 'prop' });
+        img(bg, 'v3w/pj3_prop_door.webp', 808, 302, 153, 220, 'xMidYMax meet', { class: 'prop' });
+        img(bg, 'v3w/pj3_prop_hearth.webp', 30, 390, 222, 120, 'xMidYMax meet', { class: 'prop' });
+        img(bg, 'v3w/pj3_prop_muldok.webp', 258, 408, 88, 115, 'xMidYMax meet', { class: 'prop' });
+        img(bg, 'v3w/pj3_prop_firewood.webp', 352, 462, 78, 62, 'xMidYMax meet', { class: 'prop' });
         const st = el('g', { class: 'pj-steam', fill: '#f6efe2', opacity: .8 }, bg);
         [[82, 380, 9, 6, ''], [96, 370, 11, 7, 'p2'], [190, 372, 8, 5, 'p3']].forEach(([cx, cy, rx, ry, c]) => el('ellipse', { class: 'puff ' + c, cx, cy, rx, ry }, st));
         el('ellipse', { class: 'pj-fire', cx: 150, cy: 505, rx: 160, ry: 70, fill: '#ff9a4d', opacity: .18 }, bg);
@@ -254,9 +254,9 @@
           });
         }
         // 이야기에 쓰이는 소품: 집(할멈·호랑이가 드나드는 문) · 장독대 · 돌담(지게가 기댄 담벼락)
-        img(bg, 'v3w/c3_house.webp', -130, 250, 560, 275, 'xMidYMax meet', { class: 'prop' });
+        img(bg, 'v3w/pj3_prop_house.webp', -130, 250, 560, 275, 'xMidYMax meet', { class: 'prop' });
         el('ellipse', { cx: DOOR_X.B2, cy: 440, rx: 90, ry: 90, fill: '#f7d98a', opacity: .16 }, bg);
-        img(bg, 'v3w/c3_jangdok.webp', 330, 438, 140, 82, 'xMidYMax meet', { class: 'prop' });
+        img(bg, 'v3w/pj3_prop_jangdok.webp', 330, 438, 140, 82, 'xMidYMax meet', { class: 'prop' });
         if (!full) img(bg, 'v2/p2_doldam.png', 470, 440, 190, 80, 'none', { class: 'prop' }); // 장면 그림엔 돌담·사립문이 이미 있다
       }
       // 배우 크기·옷차림·보이는 친구
@@ -359,7 +359,7 @@
         const f = FRIENDS[i];
         const b = document.createElement('button');
         b.type = 'button'; b.className = 'card'; b.id = 'card-' + f.id;
-        b.innerHTML = `<img src="${A('v2/c2_' + f.id + '.png')}" alt=""><span>${T.tr(f.name)}</span>`;
+        b.innerHTML = `<img src="${A('v3w/pj3_friend_' + f.id + '.webp')}" alt=""><span>${T.tr(f.name)}</span>`;
         b.addEventListener('pointerdown', e => {
           e.stopPropagation();
           if (trayLocked || !cardWaiter) {
@@ -879,5 +879,5 @@
     return '친구들이 힘을 모아 호랑이를 물리쳤어요!';
   }
 
-  Tale.mount({ title: '팥죽할멈과 호랑이', subtitle: '친구들을 순서대로 불러서 호랑이를 물리쳐요!', note: false, endTitle: '만세!', run: T => run(Tale.api) });
+  Tale.mount({ title: '팥죽할멈과 호랑이', subtitle: '친구들을 순서대로 불러서 호랑이를 물리쳐요!', note: false, endTitle: '만세!', transition: 'page', run: T => run(Tale.api) });
 })();

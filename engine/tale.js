@@ -429,7 +429,8 @@ const Tale = (() => {
     root.classList.toggle('open', open);
     if (open === veilOpen) return sleep(120);
     veilOpen = open;
-    paperTurn(); // 화면 전환: 책장 넘기는 종이 소리 (없으면 합성음)
+    // 화면 전환 소리: 책장 넘기기 모드에서 이야기를 처음 열 때는 큰 종이 넘기는 소리, 아니면 예전 종이 소리
+    if (!(open && transitionMode === 'page' && AudioFX.sfx('page_turn_big', .9))) paperTurn();
     const v = $('#veil'), w = $('#stageWrap'), W = w.clientWidth, H = w.clientHeight, far = farFrom(W, H, W / 2, H / 2);
     v.hidden = false;
     const t0 = performance.now();
@@ -441,6 +442,7 @@ const Tale = (() => {
      닫힘 → 주인공 둘레에서 잠깐 멈춤 → 완전히 닫힘 → 장면 이름(오린 종이 글자) → change() → 톡 튀며 열림 */
   async function sceneCard(label, change, focus) {
     await restIfDue();
+    if (transitionMode === 'page') return pageTurn(change);
     const wrap = $('#stageWrap'), ir = $('#iris'), card = $('#irisCard');
     const W = wrap.clientWidth, H = wrap.clientHeight;
     let cx = W / 2, cy = H / 2;
@@ -461,6 +463,49 @@ const Tale = (() => {
     paperTurn(); // 화면 전환: 책장 넘기는 종이 소리 (없으면 합성음)
     await lidTo(ir, W / 2, H / 2, 0, farFrom(W, H, W / 2, H / 2), 640, easeOutBack);
     ir.hidden = true;
+  }
+  /* 책장 넘기기 전환: 지금 장면을 종이 한 장으로 떠서(무대 SVG 복제) 오른쪽 가장자리부터 들려 왼쪽으로 넘긴다.
+     밑에서는 이미 다음 장면이 기다린다. 넘어가는 장 뒷면은 빈 종이, 들리는 동안 밑 장면에 그림자가 드리운다 */
+  let transitionMode = 'iris';
+  async function pageTurn(change) {
+    /* 책장 넘기기: 접히는 선(f)이 오른쪽 끝에서 왼쪽 끝으로 지나간다.
+       f 왼쪽 [0, 2f-W] = 아직 안 넘어간 지금 장면, [2f-W, f] = 넘어가며 접힌 종이 뒷면(가운데로 휜 그늘),
+       f 오른쪽 = 새 장면. 접힌 선 옆에 새 장면 쪽으로 그림자. 종이 끝이 살짝 기울어(위가 먼저) 넘어간다 */
+    const wrap = $('#stageWrap'), stg = $('#stage'), W = wrap.clientWidth, H = wrap.clientHeight;
+    const book = document.createElement('div'); book.className = 'book';
+    const front = document.createElement('div'); front.className = 'front';
+    const snap = stg.cloneNode(true); snap.removeAttribute('id'); snap.querySelectorAll('[id]').forEach(n => { if (n.tagName !== 'filter') n.removeAttribute('id'); });
+    front.appendChild(snap);
+    const flap = document.createElement('div'); flap.className = 'flap';
+    const cast = document.createElement('div'); cast.className = 'cast';
+    book.append(front, cast, flap); wrap.appendChild(book);
+    if (change) change();
+    await sleep(40);
+    AudioFX.sfx('page_turn', .9) || paperTurn(); // 책장 한 장 넘기는 소리 (Mixkit 'Page turn single')
+    const D = 1300, tilt = H * .18; // 위쪽 모서리가 아래보다 tilt 만큼 앞서 간다
+    const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    const poly = pts => `polygon(${pts.map(([x, y]) => `${x.toFixed(1)}px ${y.toFixed(1)}px`).join(',')})`;
+    await new Promise(res => {
+      const t0 = performance.now();
+      const step = now => {
+        const k = Math.min(1, (now - t0) / D), e = ease(k);
+        const fb = W + tilt - (W + tilt * 2) * e; // 아래 끝의 접힌 선 x
+        const ft = fb - tilt;                      // 위 끝 (먼저 간다)
+        // 지금 장면: 접힌 선과, 그 너머로 접혀 덮인 부분을 뺀 왼쪽 조각
+        const ot = 2 * ft - W, ob = 2 * fb - W;
+        front.style.clipPath = poly([[0, 0], [Math.max(0, ot), 0], [Math.max(0, ob), H], [0, H]]);
+        // 접힌 뒷면: [2f-W, f] (위·아래 따로)
+        flap.style.clipPath = poly([[ot, 0], [ft, 0], [fb, H], [ob, H]]);
+        flap.style.setProperty('--fx', ((ft + fb) / 2 / W * 100).toFixed(2) + '%');
+        // 새 장면 위, 접힌 선 바로 오른쪽 그림자
+        cast.style.clipPath = poly([[ft, 0], [ft + 70, 0], [fb + 70, H], [fb, H]]);
+        cast.style.opacity = (k < .9 ? 1 : (1 - k) * 10).toFixed(2);
+        if (k < 1) requestAnimationFrame(step); else res();
+      };
+      requestAnimationFrame(step);
+      setTimeout(res, D + 400); // 화면이 안 보일 때(rAF 멈춤) 대비
+    });
+    book.remove();
   }
   /* 오린 종이 글자: 글자마다 살짝 기울고 들쭉날쭉 (같은 글은 늘 같은 모양). 낱말은 한 줄에서 끊기지 않는다 */
   function letters(text) {
@@ -754,6 +799,12 @@ const Tale = (() => {
     const mx = (W - fw) / 2, my = (H - fh) / 2;
     Object.assign(f.style, { left: mx + 'px', top: my + 'px', width: fw + 'px', height: fh + 'px' });
     f.classList.toggle('edge', Math.min(mx, my) < 6); // 화면 가장자리에 닿으면 모서리는 네모
+    // 종이 액자(#deco): 가로는 무대 자리에, 세로는 보이는 화면 전체에 (세로용 액자 그림을 늘려 맞춘다)
+    const d = $('#deco');
+    if (d && !d.hidden) {
+      if (portrait) Object.assign(d.style, { left: 0, top: 0, width: W + 'px', height: H + 'px', backgroundImage: `url(${d.dataset.tall})` });
+      else Object.assign(d.style, { left: mx + 'px', top: my + 'px', width: fw + 'px', height: fh + 'px', backgroundImage: `url(${d.dataset.wide})` });
+    }
   }
 
   /* 화면 글자 번역: 영어 모드이고 이 동화에 영어 자료(TEXT_EN·NARRATION_CLIPS_EN)가 있을 때만 영어, 아니면 한국어 그대로 */
@@ -788,7 +839,7 @@ const Tale = (() => {
   let restShow = null; // mount 가 채운다: 쉬는 화면을 보여 주고, 어른이 시간을 늘리면 풀려난다
   const restIfDue = async () => { if (PT.due() && restShow) await restShow(); };
 
-  function mount({ title, subtitle, run, note = false, endTitle = '끝!' }) {
+  function mount({ title, subtitle, run, note = false, endTitle = '끝!', frame = null, transition = 'iris' }) {
     document.title = tr(title);
     const home = ROOT_URL + 'index.html';
     document.body.insertAdjacentHTML('beforeend', `
@@ -802,7 +853,7 @@ const Tale = (() => {
       </defs>
       <g id="cam"><g id="bgL"></g><g id="world"></g><g id="fxL"></g></g>
     </svg>
-    <div id="frame"></div><div id="apron"></div>
+    <div id="frame"></div><div id="deco" hidden></div><div id="apron"></div>
     <div id="iris" hidden><i class="lid"></i><span id="irisCard"></span></div>
     <div id="veil" class="shut"><i class="lid"></i></div>
     <div id="confetti"></div>
@@ -841,6 +892,14 @@ const Tale = (() => {
   </div>
 </div>`);
     root = $('#tale'); stage = $('#stage');
+    transitionMode = transition;
+    try { const tq = new URLSearchParams(location.search).get('trans'); if (tq === 'page' || tq === 'iris') transitionMode = tq; } catch (e) { /* 기본 전환 */ }
+    if (transitionMode === 'page') try { AudioFX.sfx('page_turn', 0); AudioFX.sfx('page_turn_big', 0); } catch (e) { /* 미리 불러오기: 첫 넘김부터 책장 소리 */ }
+    // 종이 액자: mount({ frame: '<tale>' }) 이면 assets/frames/<tale>_wide.webp·_tall.webp 를 무대 위에 얹는다. ?frame=0 으로 끈다
+    try {
+      const fq = new URLSearchParams(location.search).get('frame');
+      if (frame && fq !== '0') { const d = $('#deco'); d.dataset.wide = ROOT_URL + 'assets/frames/' + frame + '_wide.webp'; d.dataset.tall = ROOT_URL + 'assets/frames/' + frame + '_tall.webp'; d.hidden = false; }
+    } catch (e) { /* 액자 없이 */ }
     $('#finBtn').onclick = () => { Narrator.stop(); location.href = home; };
     arrive(heroes());
     // 세로 화면: 무대를 크게 키워 양옆을 자른다(slice), 가로: 전체를 맞춘다(meet)

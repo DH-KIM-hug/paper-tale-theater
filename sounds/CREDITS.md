@@ -55,6 +55,8 @@ CC BY 파일은 **출처 표시 의무가 있다** — 크레딧 화면에 "Kevi
 | `sfx/paper_up.mp3` | RPG Audio: bookFlip3.ogg (홈 태그를 고를 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
 | `sfx/paper_down.mp3` | RPG Audio: bookPlace3.ogg (태그를 풀 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
 | `sfx/paper_turn.mp3` | RPG Audio: bookFlip2.ogg (동화로 넘어갈 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
+| `sfx/page_turn.mp3` | Page turn single (#1101), 1.6초로 자름 · 장면을 넘길 때 | Mixkit | Mixkit Sound Effects Free License (상업 이용 가능, 표기 불요) | https://mixkit.co/free-sound-effects/page/ |
+| `sfx/page_turn_big.mp3` | Big paper page turn (#1097), 1.6초로 자름 · 첫 화면에서 이야기를 열 때 | Mixkit | Mixkit Sound Effects Free License | https://mixkit.co/free-sound-effects/page/ |
 | `sfx/paper_tap.mp3` | RPG Audio: bookPlace1.ogg (동화 카드를 누를 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
 | `sfx/tada.mp3` | Music Jingles: jingles_STEEL02.ogg | Kenney | CC0 | https://kenney.nl/assets/music-jingles |
 | `sfx/womp.mp3` | Music Jingles: jingles_SAX07.ogg | Kenney | CC0 | https://kenney.nl/assets/music-jingles |
