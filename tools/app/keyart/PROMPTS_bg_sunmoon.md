@@ -12,7 +12,56 @@
 코드가 얹는 것: 엄마·오누이 배우만. 초가집·울타리·감나무는 이 판에 이미 포함. 가운데 아래 마당은 비워 둠.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. A Korean thatched farmhouse yard in late-afternoon golden light, straight-on. Central thatched cottage with paper-lattice doors and a wooden veranda, woven fence on both sides, one persimmon tree with orange fruit on the right, layered ochre and brown mountain sheets behind, pale yellow sky. Mustard, brown and orange palette. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. A Korean thatched farmhouse yard in late-afternoon golden light, straight-on. Central thatched cottage with paper-lattice doors and a wooden veranda, woven fence on both sides, one persimmon tree with orange fruit on the right, layered ochre and brown mountain sheets behind, pale yellow sky. Mustard, brown and orange palette.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 2. 부잣집 부엌 (`kitchen`)
@@ -21,7 +70,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 엄마가 일하는 자리(가운데). 밥상·솥은 이 판에 포함.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. Inside a rich family's Korean kitchen, straight-on. Plain warm orange back wall sheet, an earthen double stove with two black iron pots at the left, a small wooden shelf above it, a low wooden table with a plate of white rice cakes at the right, darker brown floor strip. Warm amber palette, quiet and empty in the middle. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open floor where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. Inside a rich family's Korean kitchen, straight-on. Plain warm orange back wall sheet, an earthen double stove with two black iron pots at the left, a small wooden shelf above it, a low wooden table with a plate of white rice cakes at the right, darker brown floor strip. Warm amber palette, quiet and empty in the middle.
+The lower third of the frame remains mostly open floor so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 3. 해 질 녘 고갯길 (둘째 고개) (`hill_dusk`)
@@ -30,7 +128,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 바위 뒤에 호랑이가 숨는 자리(왼쪽 바위), 오른쪽 이정표. 가운데 길 위는 엄마가 걷는 자리.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. A Korean mountain pass at dusk, straight-on. Violet-to-orange sunset sky sheet, two layers of rose-brown hills framing a V-shaped valley, a winding pale dirt path coming from the centre horizon toward the viewer, one big grey boulder at the left, a wooden arrow signpost at the right, olive-brown grass banks. Calm, slightly lonely mood. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. A Korean mountain pass at dusk, straight-on. Violet-to-orange sunset sky sheet, two layers of rose-brown hills framing a V-shaped valley, a winding pale dirt path coming from the centre horizon toward the viewer, one big grey boulder at the left, a wooden arrow signpost at the right, olive-brown grass banks. Calm, slightly lonely mood.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 4. 해 질 녘 고갯길 (금빛, 첫째 고개) (`hill_dusk_gold`)
@@ -39,7 +186,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 바위 뒤에 호랑이가 숨는 자리(왼쪽 바위), 오른쪽 이정표. 위 판과 같은 구도, 색만 금빛.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. A Korean mountain pass in warm golden-hour light, straight-on, same layout as the dusk pass. Amber-gold sky sheet, honey and caramel hills framing a V-shaped valley, a winding pale dirt path from the centre horizon toward the viewer, one big warm-grey boulder at the left, a wooden arrow signpost at the right. Friendly, glowing mood. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. A Korean mountain pass in warm golden-hour light, straight-on, same layout as the dusk pass. Amber-gold sky sheet, honey and caramel hills framing a V-shaped valley, a winding pale dirt path from the centre horizon toward the viewer, one big warm-grey boulder at the left, a wooden arrow signpost at the right. Friendly, glowing mood.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 5. 밤 고갯길 (셋째 고개) (`hill_dusk_night`)
@@ -48,7 +244,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 바위 뒤에 호랑이가 숨는 자리(왼쪽 바위), 오른쪽 이정표. 위 판과 같은 구도, 깊은 밤.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. A Korean mountain pass at deep night, straight-on, same layout as the dusk pass. Deep indigo sky sheet with a pale paper crescent moon and a few small paper stars, dark blue hills framing a V-shaped valley, a winding pale blue-grey path from the centre horizon toward the viewer, one big boulder at the left, a wooden arrow signpost at the right. Quiet, gentle. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. A Korean mountain pass at deep night, straight-on, same layout as the dusk pass. Deep indigo sky sheet with a pale paper crescent moon and a few small paper stars, dark blue hills framing a V-shaped valley, a winding pale blue-grey path from the centre horizon toward the viewer, one big boulder at the left, a wooden arrow signpost at the right. Quiet, gentle.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 6. 오누이 방 안 (등잔불 밤) (`room2_lamp`)
@@ -57,7 +302,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 닫힌 창호지 문 앞에 오누이·호랑이 그림자. 등잔은 코드가 켬(그림에 불꽃 없음). 이불·반닫이·세숫대야 포함.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. Inside a small Korean room at night, lit by one oil lamp (the lamp itself is not drawn). Dusky violet back wall sheet, a closed sliding paper-lattice door in the centre glowing amber, a dark wooden chest with a folded quilt at the left, a small low stool with a wash bowl at the right, warm orange floor paper. Cozy, secret mood. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open floor where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. Inside a small Korean room at night, lit by one oil lamp (the lamp itself is not drawn). Dusky violet back wall sheet, a closed sliding paper-lattice door in the centre glowing amber, a dark wooden chest with a folded quilt at the left, a small low stool with a wash bowl at the right, warm orange floor paper. Cozy, secret mood.
+The lower third of the frame remains mostly open floor so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 7. 닫힌 창호지 문 (등잔불) (`door2_lamp`)
@@ -66,7 +360,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 가운데 이음매의 고리 앞에서 문 두드리고 들여다봄. 문 구멍은 코드가 뚫음.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. Close-up of a closed two-leaf Korean sliding door covered with plain amber paper (no lattice lines), dark wooden frame, one small iron ring handle at the centre seam, dusky violet wall sheet around it, dark brown floor strip at the very bottom. Lamp light glows through the paper from behind. The door fills the middle of the picture. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open floor where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. Close-up of a closed two-leaf Korean sliding door covered with plain amber paper (no lattice lines), dark wooden frame, one small iron ring handle at the centre seam, dusky violet wall sheet around it, dark brown floor strip at the very bottom. Lamp light glows through the paper from behind. The door fills the middle of the picture.
+The lower third of the frame remains mostly open floor so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 8. 뒷마당 (달밤) (`backyard2_night`)
@@ -75,7 +418,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 오누이가 도망쳐 나오는 자리. 왼쪽 초가 모퉁이, 오른쪽 장독대·감나무는 포함. 가운데 마당은 비움.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. A Korean back yard under a bright moon, straight-on. Deep blue night sky sheet with a soft paper moon glow, a thatched house corner at the far left, a low stone wall across the back, a stone platform with many large earthen jars and a persimmon tree on the right, pale moonlit packed-earth yard. Blue and lavender palette, calm. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. A Korean back yard under a bright moon, straight-on. Deep blue night sky sheet with a soft paper moon glow, a thatched house corner at the far left, a low stone wall across the back, a stone platform with many large earthen jars and a persimmon tree on the right, pale moonlit packed-earth yard. Blue and lavender palette, calm.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 9. 우물가 큰 나무 (달밤) (`tree2_night`)
@@ -84,7 +476,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 오누이가 오르는 자리: 가운데 기둥, 오른쪽 굵은 가지. 왼쪽 돌 우물, 오른쪽 초가는 포함.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. A huge old tree beside a village well on a moonlit night, straight-on. One enormous tree in the centre with a thick trunk, a wide branch reaching right, layered cloud-shaped pale cream leaf sheets, a roofed stone well at the left, a thatched house at the far right, indigo mountain sheets, a faint moon glow at the top right. Blue and lavender palette. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. A huge old tree beside a village well on a moonlit night, straight-on. One enormous tree in the centre with a thick trunk, a wide branch reaching right, layered cloud-shaped pale cream leaf sheets, a roofed stone well at the left, a thatched house at the far right, indigo mountain sheets, a faint moon glow at the top right. Blue and lavender palette.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 10. 우물 속 (위에서 내려다봄, 달밤) (`well_top_night`)
@@ -93,7 +534,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 우물 속 물 그림자·얼굴은 코드가 그림. 가운데 타원은 비워 둠.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. High-angle view looking straight down into a Korean stone well at night, camera above. A big oval opening fills the centre, ringed by stacked layers of rounded grey-blue stones with a top rim of flat stones, the inside left as plain pale lavender paper (empty, water is added later). A strip of indigo night sky and layered misty hills at the very top. Blue and lavender palette. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. High-angle view looking straight down into a Korean stone well at night, camera above. A big oval opening fills the centre, ringed by stacked layers of rounded grey-blue stones with a top rim of flat stones, the inside left as plain pale lavender paper (empty, water is added later). A strip of indigo night sky and layered misty hills at the very top. Blue and lavender palette.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 11. 동아줄 하늘 (구름 사이 빛) (`sky`)
@@ -102,7 +592,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 무대 뒤에 고정, 줄·구름·오누이가 위로 흐름. 가운데 세로로 비워 둠.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. A night sky with a warm golden light pouring down from the top centre between layered paper clouds. Cream and pale-lilac cloud sheets stacked at both sides like curtains, leaving the centre column open, then layers of navy-blue mountain silhouettes rising from the bottom, the lowest layer deep midnight blue. Gold, lilac and navy palette, hopeful mood. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. A night sky with a warm golden light pouring down from the top centre between layered paper clouds. Cream and pale-lilac cloud sheets stacked at both sides like curtains, leaving the centre column open, then layers of navy-blue mountain silhouettes rising from the bottom, the lowest layer deep midnight blue. Gold, lilac and navy palette, hopeful mood.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 12. 수수밭 (해 질 녘) (`sorghum_dusk`)
@@ -111,7 +650,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 수수대 사이 길에서 오누이·호랑이. 줄이 끊어진 건 밤. 가운데 흙길은 비움.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. A sorghum field at dusk, straight-on. Two walls of tall sorghum plants with crimson seed heads and brown-green leaves left and right, a wide plum-brown dirt path between them running toward the horizon, layered mauve and plum hills behind, a violet-pink sky sheet. Rich crimson, plum and brown palette. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. A sorghum field at dusk, straight-on. Two walls of tall sorghum plants with crimson seed heads and brown-green leaves left and right, a wide plum-brown dirt path between them running toward the horizon, layered mauve and plum hills behind, a violet-pink sky sheet. Rich crimson, plum and brown palette.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 13. 하늘 나라 (낮) (`heaven`)
@@ -120,7 +708,56 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 해님·달님은 오누이 배우(그림에 해·달 없음). 구름·마을·들은 이 판에 포함.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. A bright sky realm looking over a far-away earth, straight-on. Golden-yellow sky sheet, white cloud sheets floating at the sides, layers of sky-blue and green hills, two small clusters of brown-roofed village houses far away at left and right, a flat bright green meadow in the middle, dark brown tree-covered ridges framing the bottom corners. No sun and no moon. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. A bright sky realm looking over a far-away earth, straight-on. Golden-yellow sky sheet, white cloud sheets floating at the sides, layers of sky-blue and green hills, two small clusters of brown-roofed village houses far away at left and right, a flat bright green meadow in the middle, dark brown tree-covered ridges framing the bottom corners. No sun and no moon.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
 
 ## 14. 하늘 나라 (밤) (`heaven_night`)
@@ -129,5 +766,54 @@ Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrin
 코드가 얹는 것: 해님·달님은 오누이 배우(그림에 해·달 없음). 위 판의 밤 버전.
 
 ```
-Hand-cut layered paper art, stop-motion paper diorama style (like Margaret Scrinkl). Full-bleed 16:9 landscape, edge to edge, no frame, no border, no round window, no white sheet. A calm night sky realm over a far-away earth, straight-on, same layout as the daytime version. Deep navy sky sheet with a few tiny stars, pale lilac cloud sheets at the sides, dark blue and teal hill layers, two small far-away village clusters with a few warm lit windows, a flat blue-green meadow in the middle, dark ridges framing the bottom corners. No sun and no moon. Flat layered paper sheets, crisp cut edges, max two tones per shape, fine paper grain, soft drop shadows from the upper-left, 4-6 depth layers. Lower third is open ground where characters will stand, no props there; key objects within the central 60% of the width. No people, no animals, no faces on objects, no text. Negative: round window, white sheet, frame, border, vignette, torn edges, painterly, gradients, 3D render, glossy, photoreal, text, characters, faces on objects.
+Hand-cut layered paper art, handcrafted stop-motion paper diorama aesthetic.
+
+Create a wide 16:9 scene, rendered entirely as handcrafted paper art. The whole image should feel like a carefully assembled paper diorama made from individually cut pieces of matte colored cardstock and fine-grain craft paper.
+
+STYLE:
+Strongly emphasize the physical nature of real paper: visible paper fibers, subtle cardstock grain, crisp cut edges, slightly imperfect hand-cut contours, and tiny natural variations in shape. Use simple, graphic silhouettes and charming handcrafted forms rather than realistic modeling. Each object should be simplified into a small number of flat paper shapes, generally using only one or two solid tones per element. Avoid excessive internal detail.
+
+Create depth primarily through PAPER LAYERING, not through realistic light-and-shadow modeling. Individual paper pieces should sit slightly above or behind neighboring layers, creating narrow, soft, clearly separated cast shadows along their cut edges, like stacked cardstock mounted with tiny spacers. Keep all shapes internally flat and evenly colored. No volumetric shading inside leaves, bean pods, soil, stones, or plants.
+
+CRITICAL STYLE RULE:
+Flat paper shapes must remain visibly FLAT.
+Do not create volume by shading the interior of a shape.
+A leaf, bean pod, cloud, stone, or plant must look like a flat silhouette cut from cardstock, not a miniature three-dimensional object.
+Depth may appear ONLY through overlapping separate sheets and the thin cast shadow underneath their cut edges.
+
+Use occasional very shallow debossed or embossed paper details for simple veins, folds, grooves, or decorative lines, but keep these extremely subtle. They should look pressed into paper rather than sculpted.
+
+SCENE:
+Build the scene from layered flat paper sheets, each a flat shape cut from cardstock. A calm night sky realm over a far-away earth, straight-on, same layout as the daytime version. Deep navy sky sheet with a few tiny stars, pale lilac cloud sheets at the sides, dark blue and teal hill layers, two small far-away village clusters with a few warm lit windows, a flat blue-green meadow in the middle, dark ridges framing the bottom corners. No sun and no moon.
+The lower third of the frame remains mostly open ground so characters can stand there later.
+Keep all major objects within the central 60% of the composition.
+
+FRAME:
+No decorative border. The scene fills the entire frame edge to edge; the composition continues naturally beyond all four edges.
+
+LIGHTING:
+Use soft, diffuse studio-style lighting from the upper-left, mainly to reveal the edges and spacing of stacked paper layers.
+Shadows should be short, soft, restrained, and consistent.
+They must feel like paper-layer shadows, NOT realistic sunlight shadows cast by natural three-dimensional objects.
+
+OVERALL FEELING:
+Warm, tactile, whimsical, handcrafted, elegant, slightly imperfect, sophisticated paper craft, photographed straight from the front.
+
+NO people.
+NO animals.
+NO text.
+NO faces on objects.
+NO photorealism.
+NO glossy surfaces.
+NO realistic 3D modeling.
+NO inflated or rounded forms.
+NO clay-like volume.
+NO gradients.
+NO painterly rendering.
+NO airbrushed shading.
+NO realistic sunlight shadows.
+NO deep ambient occlusion.
+NO thick beveled edges.
+NO plastic appearance.
+NO felt or fabric appearance.
 ```
