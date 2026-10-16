@@ -1,413 +1,446 @@
 /* kkultteok — ElevenLabs 배역 내레이션 (영어) (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS_EN, {
- "다현이와 이현이와 은우는 아침마다 창밖을 봐요.": {
-  "t": "Dahyun, Ihyun, and Eunwoo look out the window every morning.",
-  "c": "audio/el/kkultteok/en/nar_ac2b6e5471.mp3"
+ "해가 쨍쨍한 날, 다현이와 이현이와 은우는 꿀떡이랑 산책을 나가요.": {
+  "t": "On a sunny day, Dahyun, Ihyun, and Eunwoo go for a walk with Kkulddeok.",
+  "c": "audio/el/kkultteok/en/nar_c704802da6.mp3"
  },
- "하늘에 구름이 하나, 둘, 셋.": {
-  "t": "Up in the sky: one, two, three clouds.",
-  "c": "audio/el/kkultteok/en/nar_2cd3f8e5f3.mp3"
- },
- "구름을 톡톡톡 눌러서 세어 봐요!": {
-  "t": "Tap the clouds, tap tap tap, and count them!",
-  "c": "audio/el/kkultteok/en/nar_57622e0b55.mp3"
+ "하늘에 구름이 둥실둥실.": {
+  "t": "Clouds float across the sky.",
+  "c": "audio/el/kkultteok/en/nar_74827cec8b.mp3"
  },
  "\"구름은 어디서 올까?\" 다현이가 물어요.": {
-  "t": "Where do clouds come from? asked Dahyun.",
+  "t": "Where do clouds come from? asks Dahyun.",
   "c": [
    "audio/el/kkultteok/en/nuna_b193888972.mp3",
-   "audio/el/kkultteok/en/nar_f67357479c.mp3"
+   "audio/el/kkultteok/en/nar_49c2f377a8.mp3"
   ]
  },
- "\"어디서 올까?\" 은우도 따라 해요.": {
-  "t": "Where from? Eunwoo says it too.",
-  "c": [
-   "audio/el/kkultteok/en/agi_c3faa839ff.mp3",
-   "audio/el/kkultteok/en/nar_7975e0fb27.mp3"
-  ]
+ "꿀떡이를 톡! 같이 킁킁해 봐요.": {
+  "t": "Tap Kkulddeok! Let's sniff together.",
+  "c": "audio/el/kkultteok/en/nar_c3f025f882.mp3"
  },
- "꿀떡이가 코를 들고 킁킁, 킁킁.": {
-  "t": "Kkulddeok lifts his nose and sniffs, sniff, sniff.",
-  "c": "audio/el/kkultteok/en/nar_3d9143a1c4.mp3"
+ "꿀떡이는 땅에 코를 대고 킁킁.": {
+  "t": "Kkulddeok puts his nose to the ground. Sniff, sniff.",
+  "c": "audio/el/kkultteok/en/nar_11835e33e6.mp3"
  },
- "\"멍! 구름 냄새다!\"": {
-  "t": "Woof! I smell clouds!",
-  "c": "audio/el/kkultteok/en/dog_1d345f47dd.mp3"
+ "킁킁킁! 꿀떡이가 무슨 냄새를 맡았어요.": {
+  "t": "Sniff sniff sniff! Kkulddeok smells something.",
+  "c": "audio/el/kkultteok/en/nar_2e6654626e.mp3"
  },
- "꿀떡이를 톡! 달려 나가게 해 줘요.": {
-  "t": "Tap Kkulddeok to send him running!",
-  "c": "audio/el/kkultteok/en/nar_6c0cfffb0f.mp3"
+ "꿀떡이를 톡! 냄새를 따라가요.": {
+  "t": "Tap Kkulddeok! Follow the smell.",
+  "c": "audio/el/kkultteok/en/nar_bb3e83e90d.mp3"
  },
- "꿀떡이는 문밖으로 달려 나가요.": {
-  "t": "Kkulddeok runs out the door.",
-  "c": "audio/el/kkultteok/en/nar_a54e2121af.mp3"
+ "냄새를 따라 쪼르르 달려가요.": {
+  "t": "He runs off, following the smell.",
+  "c": "audio/el/kkultteok/en/nar_fea46c332b.mp3"
  },
  "\"꿀떡아, 같이 가!\"": {
   "t": "Kkulddeok, wait for us!",
-  "c": "audio/el/kkultteok/en/nuna_7b6af137e5.mp3"
+  "c": "audio/el/kkultteok/en/nuna_05273616a0.mp3"
  },
- "킁킁, 킁킁. 꿀떡이는 냄새만 따라가요.": {
-  "t": "Sniff, sniff. Kkulddeok just follows the smell.",
-  "c": "audio/el/kkultteok/en/nar_59e477feeb.mp3"
+ "삼남매는 영차, 영차 언덕을 올라요.": {
+  "t": "Heave-ho, heave-ho! The three kids climb the hill.",
+  "c": "audio/el/kkultteok/en/nar_0597e25c70.mp3"
  },
- "언덕을 넘고, 풀밭을 지나고.": {
-  "t": "Over the hill, across the meadow.",
-  "c": "audio/el/kkultteok/en/nar_ad471fd49f.mp3"
+ "언덕 너머에 커다란 굴뚝 하나.": {
+  "t": "Over the hill, there is a big chimney.",
+  "c": "audio/el/kkultteok/en/nar_8aa25ca736.mp3"
  },
- "이현이는 길가 꽃을 살짝 만져 봐요.": {
-  "t": "Ihyun gently touches the flowers by the road.",
-  "c": "audio/el/kkultteok/en/nar_549f8ddd34.mp3"
+ "굴뚝에서 하얀 김이 폴폴.": {
+  "t": "White steam puffs out of the chimney.",
+  "c": "audio/el/kkultteok/en/nar_290acad5b2.mp3"
  },
- "꽃을 톡톡톡 눌러서 향기를 맡아요!": {
-  "t": "Tap the flowers, tap tap tap, and smell them!",
-  "c": "audio/el/kkultteok/en/nar_41c7b730a7.mp3"
- },
- "\"꿀떡아, 어디까지 가?\" 다현이가 물어요.": {
-  "t": "Kkulddeok, how far are we going? asked Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_41dee86dc6.mp3",
-   "audio/el/kkultteok/en/nar_f67357479c.mp3"
-  ]
- },
- "언덕 위에 굴뚝 하나.": {
-  "t": "On top of the hill, there is one chimney.",
-  "c": "audio/el/kkultteok/en/nar_0cf5799b93.mp3"
- },
- "굴뚝을 톡톡톡 눌러요!": {
+ "굴뚝을 톡톡톡!": {
   "t": "Tap the chimney, tap tap tap!",
   "c": "audio/el/kkultteok/en/nar_1e8c834c97.mp3"
  },
- "굴뚝에서 하얀 구름이 퐁! 퐁!": {
-  "t": "White clouds go pong! pong! out of the chimney.",
-  "c": "audio/el/kkultteok/en/nar_348ac3058d.mp3"
+ "김이 뭉치고, 뭉치고… 퐁! 구름이 됐어요.": {
+  "t": "The steam rolls together, and together... Pong! It turns into a cloud.",
+  "c": "audio/el/kkultteok/en/nar_a6eb5f8490.mp3"
  },
- "\"굴뚝에서 구름이 나와?\" 다현이가 물어요.": {
-  "t": "Clouds come out of the chimney? asked Dahyun.",
+ "\"구름이 여기서 오는구나!\" 다현이가 말해요.": {
+  "t": "So this is where clouds come from! says Dahyun.",
   "c": [
-   "audio/el/kkultteok/en/nuna_461d71e909.mp3",
-   "audio/el/kkultteok/en/nar_f67357479c.mp3"
+   "audio/el/kkultteok/en/nuna_503b5b68d3.mp3",
+   "audio/el/kkultteok/en/nar_9b18d4b3df.mp3"
   ]
  },
- "\"퐁! 퐁!\" 은우가 따라 해요.": {
-  "t": "Pong! Pong! Eunwoo says it too.",
+ "\"퐁!\" 은우가 따라 해요.": {
+  "t": "Pong! Eunwoo says it too.",
   "c": [
-   "audio/el/kkultteok/en/agi_e2af73f7f6.mp3",
+   "audio/el/kkultteok/en/agi_81bf64c5a6.mp3",
    "audio/el/kkultteok/en/nar_7975e0fb27.mp3"
   ]
  },
- "굴뚝 아래, 동그란 문.": {
-  "t": "Under the chimney, a round door.",
-  "c": "audio/el/kkultteok/en/nar_8f66fa8409.mp3"
+ "하늘의 구름을 톡! 무엇이 될까요?": {
+  "t": "Tap a cloud in the sky! What will it become?",
+  "c": "audio/el/kkultteok/en/nar_6a7000281b.mp3"
  },
- "동그란 문을 톡! 같이 밀어 봐요.": {
-  "t": "Tap the round door and push it together!",
-  "c": "audio/el/kkultteok/en/nar_8c33221707.mp3"
+ "굴뚝 아래 커다란 문.": {
+  "t": "Under the chimney, there is a big door.",
+  "c": "audio/el/kkultteok/en/nar_031651706d.mp3"
  },
- "이현이가 문을 살짝 밀어요. 끼이익.": {
-  "t": "Ihyun gently pushes the door. Creeeak.",
-  "c": "audio/el/kkultteok/en/nar_1e167ce747.mp3"
+ "여기는… 어떤 공장일까요?": {
+  "t": "What kind of factory... could this be?",
+  "c": "audio/el/kkultteok/en/nar_93dbc884c7.mp3"
  },
- "\"들어가도 될까?\" 다현이가 물어요.": {
-  "t": "May we go in? asked Dahyun.",
+ "꿀떡이가 문틈에 코를 쏙 밀어 넣어요.": {
+  "t": "Kkulddeok pokes his nose into the gap in the door.",
+  "c": "audio/el/kkultteok/en/nar_23d16d3219.mp3"
+ },
+ "문틈을 톡!": {
+  "t": "Tap the gap in the door!",
+  "c": "audio/el/kkultteok/en/nar_ccb8dfcbb1.mp3"
+ },
+ "스르르… 문이 열려요.": {
+  "t": "Creeeak... the door swings open.",
+  "c": "audio/el/kkultteok/en/nar_8c63af71da.mp3"
+ },
+ "삼남매는 살금살금 따라 들어가요.": {
+  "t": "The three kids tiptoe in after him.",
+  "c": "audio/el/kkultteok/en/nar_5907722165.mp3"
+ },
+ "기다란 벨트 위로 물방울이 똑, 똑, 똑.": {
+  "t": "Water drops fall onto a long belt. Drip, drip, drip.",
+  "c": "audio/el/kkultteok/en/nar_5a529e309b.mp3"
+ },
+ "물방울을 톡톡톡!": {
+  "t": "Tap the water drops, tap tap tap!",
+  "c": "audio/el/kkultteok/en/nar_4ff205dd04.mp3"
+ },
+ "이현이가 물방울에 손을 살짝 대 봐요.": {
+  "t": "Ihyun gently touches a water drop.",
+  "c": "audio/el/kkultteok/en/nar_ec09279a1e.mp3"
+ },
+ "다현이는 후우— 바람을 불어 줘요.": {
+  "t": "Dahyun blows a big breath. Whoooo!",
+  "c": "audio/el/kkultteok/en/nar_5ea8a3e5c9.mp3"
+ },
+ "바람 나팔을 톡톡톡!": {
+  "t": "Tap the wind horn, tap tap tap!",
+  "c": "audio/el/kkultteok/en/nar_cc7e3855ca.mp3"
+ },
+ "뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!": {
+  "t": "Puff, puff puff, puff puff puff! Pong!",
+  "c": "audio/el/kkultteok/en/nar_3a99b1a995.mp3"
+ },
+ "\"여기는 구름 공장이야!\" 다현이가 외쳐요.": {
+  "t": "This is a cloud factory! shouts Dahyun.",
   "c": [
-   "audio/el/kkultteok/en/nuna_1c88a1893e.mp3",
-   "audio/el/kkultteok/en/nar_f67357479c.mp3"
+   "audio/el/kkultteok/en/nuna_9723335a54.mp3",
+   "audio/el/kkultteok/en/nar_da596b357a.mp3"
   ]
  },
- "꿀떡이가 먼저 쏙 들어가요.": {
-  "t": "Kkulddeok pops in first.",
-  "c": "audio/el/kkultteok/en/nar_8b9bfbb7c9.mp3"
+ "이현이가 모양 틀을 꾹! 눌러요.": {
+  "t": "Ihyun pushes the shape press. Push!",
+  "c": "audio/el/kkultteok/en/nar_2ad775f73f.mp3"
  },
- "여기는 구름 공장!": {
-  "t": "This is the cloud factory!",
-  "c": "audio/el/kkultteok/en/nar_7263a1781b.mp3"
+ "모양 틀을 톡톡톡!": {
+  "t": "Tap the shape press, tap tap tap!",
+  "c": "audio/el/kkultteok/en/nar_7830c475f7.mp3"
  },
- "보글보글, 구름 솥이 끓어요.": {
-  "t": "Bubble, bubble, the cloud pot is boiling.",
-  "c": "audio/el/kkultteok/en/nar_fabaa0368c.mp3"
+ "퐁! 토끼 구름. 퐁! 고래 구름.": {
+  "t": "Pong! A bunny cloud. Pong! A whale cloud.",
+  "c": "audio/el/kkultteok/en/nar_efdddbd764.mp3"
  },
- "구름 솥을 톡톡톡 눌러요!": {
-  "t": "Tap the cloud pot, tap tap tap!",
-  "c": "audio/el/kkultteok/en/nar_537398cd9e.mp3"
+ "퐁! 이번엔 강아지 구름.": {
+  "t": "Pong! And now, a puppy cloud.",
+  "c": "audio/el/kkultteok/en/nar_6b6011ccc1.mp3"
  },
- "퐁! 하얀 구름. 퐁! 뭉게구름.": {
-  "t": "Pong! A white cloud. Pong! A puffy cloud.",
-  "c": "audio/el/kkultteok/en/nar_23e36bd144.mp3"
+ "꿀떡이가 강아지 구름과 코를 맞대요.": {
+  "t": "Kkulddeok touches noses with the puppy cloud.",
+  "c": "audio/el/kkultteok/en/nar_7f47d3f83f.mp3"
  },
- "\"퐁! 퐁!\" 삼남매는 같이 외쳐요.": {
-  "t": "Pong! Pong! the three siblings shout together.",
+ "에취! 구름 조각이 사르르 날려요.": {
+  "t": "Achoo! Little bits of cloud float away.",
+  "c": "audio/el/kkultteok/en/nar_dd8dbfe18f.mp3"
+ },
+ "구석에 커다란 빨간 단추가 있어요.": {
+  "t": "In the corner, there is a big red button.",
+  "c": "audio/el/kkultteok/en/nar_a129990606.mp3"
+ },
+ "\"눌러 봐도 돼?\" 다현이가 물어요.": {
+  "t": "Can we press it? asks Dahyun.",
   "c": [
-   "audio/el/kkultteok/en/oppa_5a06d5a749.mp3",
-   "audio/el/kkultteok/en/nar_0e77264e7d.mp3"
+   "audio/el/kkultteok/en/nuna_11bde84d25.mp3",
+   "audio/el/kkultteok/en/nar_49c2f377a8.mp3"
   ]
  },
- "이현이가 구름 하나를 톡 건드려요.": {
-  "t": "Ihyun gives one cloud a tap.",
-  "c": "audio/el/kkultteok/en/nar_53b4a9eba7.mp3"
+ "빨간 단추를 톡!": {
+  "t": "Tap the red button!",
+  "c": "audio/el/kkultteok/en/nar_c605ecf8f8.mp3"
  },
- "구름을 톡! 무엇이 될까요?": {
-  "t": "Tap a cloud! What will it become?",
-  "c": "audio/el/kkultteok/en/nar_7a396e6fe0.mp3"
+ "은우가 꾹! 눌렀어요.": {
+  "t": "Eunwoo presses it. Push!",
+  "c": "audio/el/kkultteok/en/nar_090171ad1a.mp3"
  },
- "퐁! 구름이 토끼가 됐어요.": {
-  "t": "Pong! The cloud turned into a bunny.",
-  "c": "audio/el/kkultteok/en/nar_afbac41f4c.mp3"
+ "슈웅— 강아지 구름이 굴뚝으로 올라가요.": {
+  "t": "Whoosh! The puppy cloud zooms up the chimney.",
+  "c": "audio/el/kkultteok/en/nar_997935f218.mp3"
  },
- "은우도 따라서 톡.": {
-  "t": "Eunwoo taps one too.",
-  "c": "audio/el/kkultteok/en/nar_8300b1bad9.mp3"
+ "퐁! 하늘로 나갔어요.": {
+  "t": "Pong! Out into the sky it goes.",
+  "c": "audio/el/kkultteok/en/nar_b2742e8e80.mp3"
  },
- "다른 구름도 톡!": {
-  "t": "Tap another cloud!",
-  "c": "audio/el/kkultteok/en/nar_d1d1ad1894.mp3"
+ "옆방은 어두컴컴한 먹구름 방.": {
+  "t": "The next room is dark. It is the rain cloud room.",
+  "c": "audio/el/kkultteok/en/nar_433d012b2d.mp3"
  },
- "퐁! 이번엔 물고기.": {
-  "t": "Pong! This time, a fish.",
-  "c": "audio/el/kkultteok/en/nar_a2d5301013.mp3"
+ "먹구름들이 커다란 물통에서 물을 마셔요.": {
+  "t": "The rain clouds drink water from a big tank.",
+  "c": "audio/el/kkultteok/en/nar_1989a8483e.mp3"
  },
- "\"퐁! 퐁! 퐁!\" 은우는 신이 나요.": {
-  "t": "Pong! Pong! Pong! Eunwoo is so excited.",
+ "먹구름을 톡톡톡!": {
+  "t": "Tap the rain clouds, tap tap tap!",
+  "c": "audio/el/kkultteok/en/nar_6133d1538b.mp3"
+ },
+ "꿀꺽, 꿀꺽, 꿀꺽. 배가 빵빵해졌어요.": {
+  "t": "Gulp, gulp, gulp. Their tummies get big and round.",
+  "c": "audio/el/kkultteok/en/nar_e46709f8e1.mp3"
+ },
+ "\"비를 만들려나 봐.\" 다현이가 속삭여요.": {
+  "t": "I think they're making rain. whispers Dahyun.",
   "c": [
-   "audio/el/kkultteok/en/agi_55b7f96e9b.mp3",
-   "audio/el/kkultteok/en/nar_962376a3b4.mp3"
-  ]
- },
- "구석에 빨간 단추가 있어요.": {
-  "t": "There is a red button in the corner.",
-  "c": "audio/el/kkultteok/en/nar_eaf1b9a879.mp3"
- },
- "\"이건 뭐야? 눌러도 돼?\" 다현이가 물어요.": {
-  "t": "What is this? Can we press it? asked Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_81f8b7fbc9.mp3",
-   "audio/el/kkultteok/en/nar_f67357479c.mp3"
-  ]
- },
- "이현이는 손을 뻗었다가… 멈춰요.": {
-  "t": "Ihyun reaches out... and stops.",
-  "c": "audio/el/kkultteok/en/nar_0a9394b4ec.mp3"
- },
- "빨간 단추를 톡! 은우가 눌러요.": {
-  "t": "Tap the red button! Eunwoo presses it.",
-  "c": "audio/el/kkultteok/en/nar_e51fd677b3.mp3"
- },
- "은우가 꾹! 눌러 버렸어요.": {
-  "t": "Eunwoo pressed it with a big push!",
-  "c": "audio/el/kkultteok/en/nar_760693cdb5.mp3"
- },
- "덜컹! 기계가 흔들려요.": {
-  "t": "Clunk! The machine shakes.",
-  "c": "audio/el/kkultteok/en/nar_77c77bc552.mp3"
- },
- "퐁… 작은 먹구름 하나가 나왔어요.": {
-  "t": "Pong... one little dark cloud came out.",
-  "c": "audio/el/kkultteok/en/nar_7002db6aa3.mp3"
- },
- "까맣고, 조그맣고, 눈이 그렁그렁.": {
-  "t": "Dark, tiny, and eyes full of tears.",
-  "c": "audio/el/kkultteok/en/nar_bc727b10d4.mp3"
- },
- "\"왜 울어?\" 다현이가 물어요.": {
-  "t": "Why are you crying? asked Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_0a80d55bde.mp3",
-   "audio/el/kkultteok/en/nar_f67357479c.mp3"
-  ]
- },
- "먹구름은 지금 어떤 마음일까요?": {
-  "t": "How is the little cloud feeling?",
-  "c": "audio/el/kkultteok/en/nar_67ed44988c.mp3"
- },
- "\"나는 하얗지 않아.\" 아기 먹구름이 훌쩍여요.": {
-  "t": "I am not white. the little cloud sniffles.",
-  "c": [
-   "audio/el/kkultteok/en/dark_3ce4ae3798.mp3",
-   "audio/el/kkultteok/en/nar_0a5e759d43.mp3"
-  ]
- },
- "훌쩍, 훌쩍, 후두둑.": {
-  "t": "Sniffle, sniffle, pitter-patter.",
-  "c": "audio/el/kkultteok/en/nar_8763c7227a.mp3"
- },
- "먹구름 눈물이 비가 되어 떨어져요.": {
-  "t": "The cloud's tears fall down as rain.",
-  "c": "audio/el/kkultteok/en/nar_7189edd2ce.mp3"
- },
- "다현이와 이현이와 은우와 꿀떡이는 흠뻑 젖었어요.": {
-  "t": "Dahyun, Ihyun, Eunwoo, and Kkulddeok got soaking wet.",
-  "c": "audio/el/kkultteok/en/nar_f997d395e8.mp3"
- },
- "이현이가 먹구름 뺨을 살살 쓰다듬어요.": {
-  "t": "Ihyun gently strokes the little cloud's cheek.",
-  "c": "audio/el/kkultteok/en/nar_404d9cc749.mp3"
- },
- "먹구름을 톡톡톡 쓰다듬어 줘요!": {
-  "t": "Tap the little cloud, tap tap tap, and pat it gently!",
-  "c": "audio/el/kkultteok/en/nar_b6e10f14ef.mp3"
- },
- "\"비 좋아! 장화 신고 첨벙첨벙!\"": {
-  "t": "I like rain! Let's put on boots and splash splash!",
-  "c": "audio/el/kkultteok/en/oppa_75649849d5.mp3"
- },
- "\"첨벙첨벙!\" 은우가 따라 뛰어요.": {
-  "t": "Splash splash! Eunwoo jumps along.",
-  "c": [
-   "audio/el/kkultteok/en/agi_3fb253a2c3.mp3",
-   "audio/el/kkultteok/en/nar_c79d6ed176.mp3"
-  ]
- },
- "\"먹구름아, 우리랑 놀래?\" 다현이가 물어요.": {
-  "t": "Little cloud, do you want to play with us? asked Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_b4064d7121.mp3",
-   "audio/el/kkultteok/en/nar_f67357479c.mp3"
-  ]
- },
- "번개를 톡!": {
-  "t": "Tap the lightning bolt!",
-  "c": "audio/el/kkultteok/en/nar_8de4370e3d.mp3"
- },
- "번쩍! 우르르 쾅!": {
-  "t": "Flash! Rumble, boom!",
-  "c": "audio/el/kkultteok/en/nar_595994d6e7.mp3"
- },
- "먹구름이 깜짝 놀라 번개를 냈어요.": {
-  "t": "The little cloud got such a surprise that it made lightning.",
-  "c": "audio/el/kkultteok/en/nar_346d6bb8aa.mp3"
- },
- "꿀떡이를 톡! 꼭 안아 줘요.": {
-  "t": "Tap Kkulddeok and give him a big hug!",
-  "c": "audio/el/kkultteok/en/nar_7796ec5f4c.mp3"
- },
- "삼남매는 꿀떡이를 꼭 껴안아요.": {
-  "t": "The three siblings hug Kkulddeok tight.",
-  "c": "audio/el/kkultteok/en/nar_00f8fd8698.mp3"
- },
- "\"괜찮아, 괜찮아.\" 다현이가 속삭여요.": {
-  "t": "It is okay, it is okay. whispers Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_94581119ed.mp3",
+   "audio/el/kkultteok/en/nuna_c973afa680.mp3",
    "audio/el/kkultteok/en/nar_699f658a6f.mp3"
   ]
  },
- "\"괜찮아.\" 은우도 속삭여요.": {
-  "t": "It is okay. Eunwoo whispers too.",
-  "c": [
-   "audio/el/kkultteok/en/agi_c7b259f7b2.mp3",
-   "audio/el/kkultteok/en/nar_4ea1f254cd.mp3"
-  ]
+ "꿀떡이는 축축한 바닥을 킁킁.": {
+  "t": "Kkulddeok sniffs the wet floor.",
+  "c": "audio/el/kkultteok/en/nar_c597e18330.mp3"
  },
- "먹구름이 눈물을 닦아요.": {
-  "t": "The little cloud wipes its tears.",
-  "c": "audio/el/kkultteok/en/nar_940e1bb33f.mp3"
+ "종을 톡!": {
+  "t": "Tap the bell!",
+  "c": "audio/el/kkultteok/en/nar_93d15e6594.mp3"
  },
- "먹구름의 눈물을 톡! 닦아 줘요.": {
-  "t": "Tap the little cloud's tears and wipe them away!",
-  "c": "audio/el/kkultteok/en/nar_fe497068b2.mp3"
+ "땡, 땡, 땡! 종이 울려요.": {
+  "t": "Ding, ding, ding! The bell rings.",
+  "c": "audio/el/kkultteok/en/nar_94eb4a3ab6.mp3"
  },
- "\"나도… 괜찮아?\"": {
-  "t": "Am I... okay too?",
-  "c": "audio/el/kkultteok/en/dark_4c53fc9dcc.mp3"
+ "먹구름들이 줄을 서서 밖으로 나가요.": {
+  "t": "The rain clouds line up and go outside.",
+  "c": "audio/el/kkultteok/en/nar_4b777254f1.mp3"
  },
- "\"괜찮아! 비는 재밌어.\" 삼남매가 말해요.": {
-  "t": "It is okay! Rain is fun. the three siblings say.",
-  "c": [
-   "audio/el/kkultteok/en/oppa_a55c8db47d.mp3",
-   "audio/el/kkultteok/en/nar_a309ba4222.mp3"
-  ]
+ "구석에 아기 먹구름 하나가 혼자 웅크리고 있어요.": {
+  "t": "In the corner, one baby rain cloud is curled up all alone.",
+  "c": "audio/el/kkultteok/en/nar_ddf51cfb05.mp3"
  },
- "먹구름이 처음으로 방긋 웃어요.": {
-  "t": "For the first time, the little cloud smiles.",
-  "c": "audio/el/kkultteok/en/nar_84fb0a3bea.mp3"
+ "\"나는 안 나갈래. 다들 비를 싫어하잖아.\"": {
+  "t": "I don't want to go. Everybody hates rain.",
+  "c": "audio/el/kkultteok/en/dark_4598d35617.mp3"
  },
- "비가 그쳐요.": {
-  "t": "The rain stops.",
-  "c": "audio/el/kkultteok/en/nar_a1db87d7f1.mp3"
+ "아기 먹구름은 지금 어떤 마음일까요?": {
+  "t": "How does the baby rain cloud feel right now?",
+  "c": "audio/el/kkultteok/en/nar_d172d9e3aa.mp3"
  },
- "하늘에 무지개!": {
-  "t": "A rainbow in the sky!",
-  "c": "audio/el/kkultteok/en/nar_c0db2396e1.mp3"
- },
- "무지개를 톡톡톡톡 눌러서 색깔을 세어 봐요!": {
-  "t": "Tap the rainbow, tap tap tap tap, and count the colors!",
-  "c": "audio/el/kkultteok/en/nar_85ca4fb42a.mp3"
- },
- "빨강, 노랑, 초록, 파랑.": {
-  "t": "Red, yellow, green, blue.",
-  "c": "audio/el/kkultteok/en/nar_d5ebc4a693.mp3"
- },
- "\"무지개는 누가 만들어?\" 다현이가 물어요.": {
-  "t": "Who makes the rainbow? asked Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_4e27414230.mp3",
-   "audio/el/kkultteok/en/nar_f67357479c.mp3"
-  ]
- },
- "\"내가!\" 먹구름이 으쓱해요.": {
-  "t": "Me! the little cloud says proudly.",
-  "c": [
-   "audio/el/kkultteok/en/dark_091ccef163.mp3",
-   "audio/el/kkultteok/en/nar_808eb2b3e0.mp3"
-  ]
- },
- "\"퐁!\" 은우가 손뼉을 쳐요.": {
-  "t": "Pong! Eunwoo claps.",
-  "c": [
-   "audio/el/kkultteok/en/agi_81bf64c5a6.mp3",
-   "audio/el/kkultteok/en/nar_ce6ef57426.mp3"
-  ]
- },
- "해가 기울어요. 집에 갈 시간.": {
-  "t": "The sun is setting. Time to go home.",
-  "c": "audio/el/kkultteok/en/nar_6fe2bd9e72.mp3"
- },
- "\"먹구름아, 또 놀자!\"": {
-  "t": "Little cloud, let us play again!",
-  "c": "audio/el/kkultteok/en/nuna_d972f410f7.mp3"
- },
- "먹구름에게 톡! 손을 흔들어요.": {
-  "t": "Tap the little cloud and wave goodbye!",
-  "c": "audio/el/kkultteok/en/nar_9fd2d5097b.mp3"
- },
- "꿀떡이가 앞장서요. 킁킁, 집 냄새.": {
-  "t": "Kkulddeok leads the way. Sniff, sniff, the smell of home.",
-  "c": "audio/el/kkultteok/en/nar_63d1975c05.mp3"
- },
- "은우는 이현이의 손을 꼭 잡아요.": {
-  "t": "Eunwoo holds Ihyun's hand tight.",
-  "c": "audio/el/kkultteok/en/nar_f6ac5dc401.mp3"
- },
- "밤이에요. 다현이와 이현이와 은우와 꿀떡이는 창밖을 봐요.": {
-  "t": "It is night. Dahyun, Ihyun, Eunwoo, and Kkulddeok look out the window.",
-  "c": "audio/el/kkultteok/en/nar_71f3176774.mp3"
- },
- "하늘에 작은 먹구름 하나.": {
-  "t": "One little dark cloud in the sky.",
-  "c": "audio/el/kkultteok/en/nar_19dde8ed56.mp3"
- },
- "우리한테 손을 흔들어요.": {
-  "t": "It waves at us.",
-  "c": "audio/el/kkultteok/en/nar_f2e5b98010.mp3"
- },
- "먹구름에게 톡! 잘 자라고 인사해요.": {
-  "t": "Tap the little cloud and say good night!",
-  "c": "audio/el/kkultteok/en/nar_b3bd7346ca.mp3"
- },
- "\"잘 자, 먹구름아.\"": {
-  "t": "Good night, little cloud.",
-  "c": "audio/el/kkultteok/en/nuna_1fc6e160e6.mp3"
- },
- "퐁.": {
-  "t": "Pong.",
-  "c": "audio/el/kkultteok/en/nar_4f821c2f33.mp3"
- },
- "눈물이 그렁그렁해요. 슬픈 것 같아요.": {
-  "t": "Its eyes are full of tears. It looks sad.",
-  "c": "audio/el/kkultteok/en/nar_208d5bad9f.mp3"
+ "혼자 웅크리고 있어요. 슬픈 것 같아요.": {
+  "t": "It is curled up all alone. It looks sad.",
+  "c": "audio/el/kkultteok/en/nar_383a302055.mp3"
  },
  "슬퍼요를 톡!": {
   "t": "Tap sad!",
   "c": "audio/el/kkultteok/en/nar_abc29bde1d.mp3"
+ },
+ "꿀떡이가 살금살금 다가가요.": {
+  "t": "Kkulddeok tiptoes closer.",
+  "c": "audio/el/kkultteok/en/nar_9f6f39067c.mp3"
+ },
+ "은우가 아기 먹구름을 살살 쓰다듬어요.": {
+  "t": "Eunwoo gently pats the baby rain cloud.",
+  "c": "audio/el/kkultteok/en/nar_4734e6bc8b.mp3"
+ },
+ "아기 먹구름을 톡톡톡 쓰다듬어 줘요!": {
+  "t": "Pat the baby rain cloud, tap tap tap!",
+  "c": "audio/el/kkultteok/en/nar_6771df782a.mp3"
+ },
+ "\"비 좋아! 장화 신고 첨벙첨벙!\" 다현이가 말해요.": {
+  "t": "We love rain! We put on our boots and splash! says Dahyun.",
+  "c": [
+   "audio/el/kkultteok/en/nuna_8c4ab1db1c.mp3",
+   "audio/el/kkultteok/en/nar_9b18d4b3df.mp3"
+  ]
+ },
+ "\"첨벙첨벙!\" 이현이도 폴짝 뛰어요.": {
+  "t": "Splash, splash! Ihyun jumps too.",
+  "c": [
+   "audio/el/kkultteok/en/oppa_85d253e1f5.mp3",
+   "audio/el/kkultteok/en/nar_18fc001aab.mp3"
+  ]
+ },
+ "꿀떡이는 아기 먹구름 볼을 할짝.": {
+  "t": "Kkulddeok licks the baby cloud's cheek. Lick!",
+  "c": "audio/el/kkultteok/en/nar_932239228f.mp3"
+ },
+ "아기 먹구름 눈이 동그래졌어요.": {
+  "t": "The baby rain cloud's eyes go big and round.",
+  "c": "audio/el/kkultteok/en/nar_583081392f.mp3"
+ },
+ "\"정말? 그럼 나, 갈게!\"": {
+  "t": "Really? Then I'll go!",
+  "c": "audio/el/kkultteok/en/dark_8f168303f2.mp3"
+ },
+ "아기 먹구름을 톡! 힘내!": {
+  "t": "Tap the baby rain cloud! You can do it!",
+  "c": "audio/el/kkultteok/en/nar_c2b966d7a2.mp3"
+ },
+ "슈웅— 아기 먹구름이 굴뚝으로 올라가요. 퐁!": {
+  "t": "Whoosh! The baby rain cloud zooms up the chimney. Pong!",
+  "c": "audio/el/kkultteok/en/nar_a65e148b32.mp3"
+ },
+ "삼남매도 손을 흔들며 밖으로 달려 나가요.": {
+  "t": "The three kids wave and run outside.",
+  "c": "audio/el/kkultteok/en/nar_16e73f7293.mp3"
+ },
+ "꿀떡이는 하늘을 보고 멍! 멍!": {
+  "t": "Kkulddeok looks up at the sky. Woof! Woof!",
+  "c": "audio/el/kkultteok/en/nar_8420e41afa.mp3"
+ },
+ "하늘에서 아기 먹구름이 큰 먹구름과 쿵!": {
+  "t": "Up in the sky, the baby rain cloud bumps into a big rain cloud. Bump!",
+  "c": "audio/el/kkultteok/en/nar_44b6387059.mp3"
+ },
+ "번개를 톡!": {
+  "t": "Tap the lightning!",
+  "c": "audio/el/kkultteok/en/nar_d01feda6d0.mp3"
+ },
+ "번쩍! 우르릉 쾅!": {
+  "t": "Flash! Rumble, BOOM!",
+  "c": "audio/el/kkultteok/en/nar_4a820ff223.mp3"
+ },
+ "\"으악!\" 삼남매는 서로 꼭 껴안아요.": {
+  "t": "Eek! The three kids hug each other tight.",
+  "c": [
+   "audio/el/kkultteok/en/oppa_834b0bb3be.mp3",
+   "audio/el/kkultteok/en/nar_af2e950682.mp3"
+  ]
+ },
+ "\"미안, 미안! 인사한 거야!\"": {
+  "t": "Sorry, sorry! We were just saying hello!",
+  "c": "audio/el/kkultteok/en/dark_b4810dd98d.mp3"
+ },
+ "꿀떡이는 꼬리를 살랑살랑 흔들어요.": {
+  "t": "Kkulddeok wags his tail, wiggle wiggle.",
+  "c": "audio/el/kkultteok/en/nar_17dda6a748.mp3"
+ },
+ "빗방울을 톡!": {
+  "t": "Tap the raindrop!",
+  "c": "audio/el/kkultteok/en/nar_0ecacfce1a.mp3"
+ },
+ "비가 내려요!": {
+  "t": "It's raining!",
+  "c": "audio/el/kkultteok/en/nar_57235057f3.mp3"
+ },
+ "물웅덩이를 톡톡톡! 첨벙첨벙!": {
+  "t": "Tap the puddles, tap tap tap! Splash, splash!",
+  "c": "audio/el/kkultteok/en/nar_a262693f9b.mp3"
+ },
+ "삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!": {
+  "t": "The three kids and Kkulddeok splash in the puddles!",
+  "c": "audio/el/kkultteok/en/nar_6e9acd0948.mp3"
+ },
+ "\"첨벙!\" 은우가 제일 높이 뛰어요.": {
+  "t": "Splash! Eunwoo jumps the highest.",
+  "c": [
+   "audio/el/kkultteok/en/agi_1f132900f8.mp3",
+   "audio/el/kkultteok/en/nar_883fdea03e.mp3"
+  ]
+ },
+ "땅을 톡!": {
+  "t": "Tap the ground!",
+  "c": "audio/el/kkultteok/en/nar_8140e37a2e.mp3"
+ },
+ "꿀떡이는 딸기 냄새를 킁킁.": {
+  "t": "Kkulddeok sniffs the strawberry.",
+  "c": "audio/el/kkultteok/en/nar_02028ea811.mp3"
+ },
+ "아기 먹구름이 내려다봐요. \"어? 다들 웃고 있네!\"": {
+  "t": "The baby rain cloud looks down. Oh? Everyone is smiling!",
+  "c": [
+   "audio/el/kkultteok/en/nar_5d741df0c7.mp3",
+   "audio/el/kkultteok/en/dark_a4fb408b44.mp3"
+  ]
+ },
+ "하늘에 커다란 무지개! \"우와!\"": {
+  "t": "A big rainbow in the sky! Wow!",
+  "c": [
+   "audio/el/kkultteok/en/nar_677843d6fc.mp3",
+   "audio/el/kkultteok/en/nuna_21aed906e4.mp3"
+  ]
+ },
+ "무지개를 톡톡톡… 일곱 색을 세어 봐요!": {
+  "t": "Tap the rainbow... let's count all seven colors!",
+  "c": "audio/el/kkultteok/en/nar_2457016456.mp3"
+ },
+ "아기 먹구름을 톡!": {
+  "t": "Tap the baby rain cloud!",
+  "c": "audio/el/kkultteok/en/nar_de1747869d.mp3"
+ },
+ "비를 다 내린 아기 먹구름은 하얗게 변했어요.": {
+  "t": "After raining all its rain, the baby rain cloud turns white.",
+  "c": "audio/el/kkultteok/en/nar_d1e785e071.mp3"
+ },
+ "하얀 아기 구름이 방긋 웃어요. 퐁!": {
+  "t": "The little white cloud smiles. Pong!",
+  "c": "audio/el/kkultteok/en/nar_c78f7d7347.mp3"
+ },
+ "\"구름은 여기서 오는 거였어!\" 다현이가 말해요.": {
+  "t": "So this is where clouds come from! says Dahyun.",
+  "c": [
+   "audio/el/kkultteok/en/nuna_503b5b68d3.mp3",
+   "audio/el/kkultteok/en/nar_9b18d4b3df.mp3"
+  ]
+ },
+ "꿀떡이는 젖은 흙에 코를 대고 킁킁.": {
+  "t": "Kkulddeok puts his nose to the wet dirt. Sniff, sniff.",
+  "c": "audio/el/kkultteok/en/nar_5385756cc9.mp3"
+ },
+ "삼남매는 꿀떡이랑 왔던 길로 집에 가요.": {
+  "t": "The three kids and Kkulddeok walk home the way they came.",
+  "c": "audio/el/kkultteok/en/nar_32754b979d.mp3"
+ },
+ "굴뚝을 톡! 안녕!": {
+  "t": "Tap the chimney! Bye-bye!",
+  "c": "audio/el/kkultteok/en/nar_66018f7489.mp3"
+ },
+ "멀리 굴뚝에서 작은 구름이 퐁! 퐁!": {
+  "t": "Far away, little clouds pop out of the chimney. Pong! Pong!",
+  "c": "audio/el/kkultteok/en/nar_c3baad583e.mp3"
+ },
+ "은우가 뒤를 돌아보며 손을 흔들어요. \"퐁!\"": {
+  "t": "Eunwoo looks back and waves. Pong!",
+  "c": [
+   "audio/el/kkultteok/en/nar_416ffbea21.mp3",
+   "audio/el/kkultteok/en/agi_81bf64c5a6.mp3"
+  ]
+ },
+ "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.": {
+  "t": "Kkulddeok takes one last sniff of the wind from the chimney.",
+  "c": "audio/el/kkultteok/en/nar_389af75978.mp3"
+ },
+ "톡.": {
+  "t": "Plip.",
+  "c": "audio/el/kkultteok/en/nar_22bb488776.mp3"
+ },
+ "토독.": {
+  "t": "Plip, plop.",
+  "c": "audio/el/kkultteok/en/nar_dd94ae52c3.mp3"
+ },
+ "토도독.": {
+  "t": "Plip, plop, plop.",
+  "c": "audio/el/kkultteok/en/nar_f4f842a5f2.mp3"
+ },
+ "비 맞은 땅에서 새싹이 쑥!": {
+  "t": "From the rainy ground, a little sprout pops up!",
+  "c": "audio/el/kkultteok/en/nar_c72266dbeb.mp3"
+ },
+ "꽃이 활짝!": {
+  "t": "A flower opens wide!",
+  "c": "audio/el/kkultteok/en/nar_0ed1efabad.mp3"
+ },
+ "딸기가 빨갛게!": {
+  "t": "A strawberry turns red!",
+  "c": "audio/el/kkultteok/en/nar_4dedc7d5a7.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});

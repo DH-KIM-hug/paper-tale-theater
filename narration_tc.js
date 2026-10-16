@@ -103,15 +103,15 @@ const NARRATION_CLIPS = {
 /* 말풍선 없이 소리만: 컷신 호랑이 대사(cut_*), 마지막 인사(hi_*) */
 const VOICE_LINES = {
  "cut_bam": [
-  "audio/tc/bam_527fb38e76.mp3",
+  "audio/tc/bam_148b540605.mp3",
   "audio/tc/tiger_5c7eb3b787.mp3"
  ],
  "cut_jara": [
-  "audio/tc/jara_99aacbeac1.mp3",
+  "audio/tc/jara_5dbfb8bfae.mp3",
   "audio/tc/tiger_3c007a299d.mp3"
  ],
  "cut_ddong": [
-  "audio/tc/ddong_9bcfeeb88e.mp3",
+  "audio/tc/ddong_7b15139659.mp3",
   "audio/tc/tiger_a3b4ead887.mp3"
  ],
  "cut_songgot": [
@@ -119,33 +119,33 @@ const VOICE_LINES = {
   "audio/tc/tiger_edf7f591d7.mp3"
  ],
  "cut_jeolgu": [
-  "audio/tc/jeolgu_3a812f1e26.mp3",
+  "audio/tc/jeolgu_c406d218c5.mp3",
   "audio/tc/tiger_c80dfc0403.mp3"
  ],
  "cut_myeongseok": [
-  "audio/tc/myeongseok_f0aca95ae6.mp3",
+  "audio/tc/myeongseok_29dd3ec671.mp3",
   "audio/tc/tiger_51f8e798fe.mp3"
  ],
  "cut_jige": [
-  "audio/tc/jige_0d4c118cb4.mp3",
+  "audio/tc/jige_5a04a5c1e2.mp3",
   "audio/tc/tiger_ecde126e0e.mp3"
  ],
  "cut_jige_b": "audio/tc/tiger_b7d23d2d17.mp3",
  "cut_wrong_1": "audio/tc/tiger_b814e4ab4e.mp3",
  "cut_wrong_2": "audio/tc/tiger_6b7e39cce8.mp3",
- "oops_bam": "audio/tc/bam_d2ab8c3b66.mp3",
- "oops_jara": "audio/tc/jara_213f7a264d.mp3",
- "oops_ddong": "audio/tc/ddong_1b60ccabe3.mp3",
- "oops_songgot": "audio/tc/songgot_080735e21c.mp3",
+ "oops_bam": "audio/tc/bam_63bd6a4850.mp3",
+ "oops_jara": "audio/tc/jara_19f1c765ec.mp3",
+ "oops_ddong": "audio/tc/ddong_98a6a6bc92.mp3",
+ "oops_songgot": "audio/tc/songgot_65678ee926.mp3",
  "oops_jeolgu": "audio/tc/jeolgu_8ae1b3eb10.mp3",
- "oops_myeongseok": "audio/tc/myeongseok_896c2d72cf.mp3",
- "oops_jige": "audio/tc/jige_5a969308d4.mp3",
- "hi_bam": "audio/tc/bam_abf18b3427.mp3",
- "hi_jara": "audio/tc/jara_bf9284ebe9.mp3",
- "hi_ddong": "audio/tc/ddong_6103c2809c.mp3",
- "hi_songgot": "audio/tc/songgot_0bff6aa96f.mp3",
+ "oops_myeongseok": "audio/tc/myeongseok_c8818e1a76.mp3",
+ "oops_jige": "audio/tc/jige_df47961410.mp3",
+ "hi_bam": "audio/tc/bam_148bd4d8f9.mp3",
+ "hi_jara": "audio/tc/jara_e7af67dea1.mp3",
+ "hi_ddong": "audio/tc/ddong_10fdd1ccbe.mp3",
+ "hi_songgot": "audio/tc/songgot_e2443b65e5.mp3",
  "hi_jeolgu": "audio/tc/jeolgu_6842ec2a53.mp3",
  "hi_myeongseok": "audio/tc/myeongseok_7778850fee.mp3",
- "hi_jige": "audio/tc/jige_ec939861bc.mp3",
+ "hi_jige": "audio/tc/jige_070bd2ce3a.mp3",
  "hi_halmi": "audio/tc/halmi_a27207e008.mp3"
 };

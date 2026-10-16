@@ -152,23 +152,23 @@ for pose, p in {'sniff': 'Side view facing right, nose down to the ground sniffi
                 'bark': 'Standing facing right, head raised to the sky, mouth open barking.', 'nose': 'Side view facing right, low, pushing its nose forward into a narrow gap, tail up curiously.'}.items():
     J('kkultteok', f'dog_{pose}', 'sprite', sprite(DOG + ' Same dog as the reference images.', p), DREF)
 NOFACE = ['NO face, NO eyes on clouds.']
-for k, s in {'cloud_white': 'A big fluffy white paper cloud made of several overlapping round cardstock puffs in cloud white and very pale grey.',
-             'cloud_rabbit': 'A white paper cloud shaped like a sitting rabbit (two tall ears), made of round white cardstock puffs.',
-             'cloud_whale': 'A white paper cloud shaped like a whale with a small spout, made of round white cardstock puffs.',
-             'cloud_dog': 'A white paper cloud shaped like a small dog with floppy ears and a curled tail, made of round white cardstock puffs.',
-             'cloud_fish': 'A white paper cloud shaped like a plump fish with a forked tail fin, made of round white cardstock puffs.',
-             'cloud_car': 'A white paper cloud shaped like a small rounded toy car with two round cloud wheels, made of round white cardstock puffs.'}.items():
+for k, s in {'cloud_white': 'A cloud built from three stacked layers of hand-cut paper: a soft blue-grey back layer, a pale cream middle layer and a bright white top layer, each cut with a slightly different scalloped edge and offset a few millimetres so every layer edge shows, with narrow soft paper-layer shadows between them; fine visible paper fibres, crisp cut edges, completely flat (no puffy 3D shading). A big fluffy white paper cloud made of several overlapping round cardstock puffs in cloud white and very pale grey.',
+             'cloud_rabbit': 'A cloud built from three stacked layers of hand-cut paper: a soft blue-grey back layer, a pale cream middle layer and a bright white top layer, each cut with a slightly different scalloped edge and offset a few millimetres so every layer edge shows, with narrow soft paper-layer shadows between them; fine visible paper fibres, crisp cut edges, completely flat (no puffy 3D shading). A white paper cloud shaped like a sitting rabbit (two tall ears), made of round white cardstock puffs.',
+             'cloud_whale': 'A cloud built from three stacked layers of hand-cut paper: a soft blue-grey back layer, a pale cream middle layer and a bright white top layer, each cut with a slightly different scalloped edge and offset a few millimetres so every layer edge shows, with narrow soft paper-layer shadows between them; fine visible paper fibres, crisp cut edges, completely flat (no puffy 3D shading). A white paper cloud shaped like a whale with a small spout, made of round white cardstock puffs.',
+             'cloud_dog': 'A cloud built from three stacked layers of hand-cut paper: a soft blue-grey back layer, a pale cream middle layer and a bright white top layer, each cut with a slightly different scalloped edge and offset a few millimetres so every layer edge shows, with narrow soft paper-layer shadows between them; fine visible paper fibres, crisp cut edges, completely flat (no puffy 3D shading). A white paper cloud shaped like a small dog with floppy ears and a curled tail, made of round white cardstock puffs.',
+             'cloud_fish': 'A cloud built from three stacked layers of hand-cut paper: a soft blue-grey back layer, a pale cream middle layer and a bright white top layer, each cut with a slightly different scalloped edge and offset a few millimetres so every layer edge shows, with narrow soft paper-layer shadows between them; fine visible paper fibres, crisp cut edges, completely flat (no puffy 3D shading). A white paper cloud shaped like a plump fish with a forked tail fin, made of round white cardstock puffs.',
+             'cloud_car': 'A cloud built from three stacked layers of hand-cut paper: a soft blue-grey back layer, a pale cream middle layer and a bright white top layer, each cut with a slightly different scalloped edge and offset a few millimetres so every layer edge shows, with narrow soft paper-layer shadows between them; fine visible paper fibres, crisp cut edges, completely flat (no puffy 3D shading). A white paper cloud shaped like a small rounded toy car with two round cloud wheels, made of round white cardstock puffs.'}.items():
     J('kkultteok', k, 'sprite', sprite(s, 'Floating, front view.', face=False, extra_no=NOFACE))
-DARK = 'A dark rain cloud character made of layered slate-grey and navy paper puffs.'
-BABY = 'A small baby dark rain cloud character: one round fluffy body of layered slate-grey paper puffs, about half the size of a grown dark cloud, two tiny stubby cloud arms.'
-DK = {'dark_drink': (DARK + ' Big and round-bellied.', 'Sipping water through a coral paper straw, cheeks full, belly bulging, content.'),
-      'dark_march': (DARK, 'Marching to the right in a line, bouncy, cheerful.'),
+DARK = 'A dark rain cloud character made of layered slate-grey and navy paper puffs. It is just a cloud with a face: NO arms, NO hands, NO legs, NO feet. It floats in the air.'
+BABY = 'A small baby dark rain cloud character: one round fluffy body of layered slate-grey paper puffs, about half the size of a grown dark cloud. It is just a cloud with a face: NO arms, NO hands, NO legs, NO feet.'
+DK = {'dark_drink': (DARK + ' Big and round-bellied.', 'Sipping water through a coral paper straw held in its mouth, cheeks full, round and puffed up, content.'),
+      'dark_march': (DARK, 'Floating along to the right, bobbing happily, cheerful. No rain drops.'),
       'dark_bump': (DARK, 'Bumping sideways, surprised O mouth, a few tiny paper stars.'),
       'baby_huddle': (BABY, 'Curled up small and low, looking down, sad, a tiny paper tear.'),
-      'baby_wide': (BABY, 'Eyes big and round with surprise and hope, little arms raised.'),
-      'baby_up': (BABY, 'Shooting upward happily, arms up, determined smile, a few motion strips below.'),
-      'baby_sorry': (BABY, 'Sheepish embarrassed smile, one cloud-arm scratching its head, small sweat drop.'),
-      'baby_white': (BABY.replace('slate-grey', 'pure cloud-white') + ' It has turned completely white and light.', 'Beaming smile, arms open, floating happily.')}
+      'baby_wide': (BABY, 'Eyes big and round with surprise and hope, a tiny hopeful smile.'),
+      'baby_up': (BABY, 'Shooting upward happily, determined smile, a few short paper motion strips below it.'),
+      'baby_sorry': (BABY, 'Sheepish embarrassed smile, tilted a little, one small paper sweat drop beside it.'),
+      'baby_white': (BABY.replace('slate-grey', 'pure cloud-white') + ' It has turned completely white and light.', 'Beaming smile, floating happily, two tiny paper sparkles beside it.')}
 for k, (s, p) in DK.items():
     J('kkultteok', k, 'sprite', sprite(s, p), [])
 for k, s in {'prop_drop': 'A single water drop cut from pale sky-blue cardstock with a small white highlight strip.',
@@ -184,6 +184,50 @@ J('kkultteok', 'cut_hug', 'cut', cut('Lightning flashes in a dark sky: the twins
 J('kkultteok', 'cut_rainbow', 'cut', cut('A huge seven-colour paper rainbow fills the sky; beside it a small baby cloud that has turned pure white beams happily; below, the wet twins and little Eunwoo look up amazed ("wow"), the dog sniffs the wet ground.', 'Bright fresh sky and soft green hills after rain.'), KREF)
 J('kkultteok', 'key_tall', 'key', key('The twins Dahyun and Ihyun, little Eunwoo and their dog Kkulddeok stand on a green hill looking up at a tall round pale-mint chimney puffing round white paper clouds into a bright blue sky; one tiny baby dark-grey cloud peeks from behind a white cloud.', 'tall 3:4 portrait'), KREF, out=f'{RAW}/keyart_gpt/kkultteok_tall_v3.png')
 J('kkultteok', 'key_wide', 'key', key('Wide view: the twins Dahyun and Ihyun, little Eunwoo and their dog Kkulddeok on a green hill on the left looking up at a tall round pale-mint chimney on the right puffing round white paper clouds into a bright blue sky; one tiny baby dark-grey cloud peeks from behind a white cloud.', 'wide 16:9'), KREF, out=f'{RAW}/keyart_gpt/kkultteok_wide_v3.png')
+
+# 할멈 자세 더 (2026-10-17): 모두 왼쪽을 보게 (게임은 왼쪽을 보는 그림을 기준으로 뒤집는다)
+for k, ps in {'stir': 'Standing, three-quarter view facing LEFT, stirring a big pot with a long wooden paddle held in both hands (the pot is NOT drawn, only the paddle), content smile.',
+              'offer': 'Standing, three-quarter view facing LEFT, holding out a small brown bowl of red bean porridge with both hands, kind smile.',
+              'scared': 'Standing, facing LEFT, leaning back, both hands raised near her cheeks in fright, wide round eyes, small open mouth, knees a little bent.',
+              'cry': 'Standing, facing LEFT, head down, wiping tears with the back of one hand, big paper tear drops, sad.',
+              'cheer': 'Standing, facing LEFT, both arms raised high in joy, eyes closed in a big smile, one foot lifted.'}.items():
+    J('patjuk', f'pj_granny_{k}', 'sprite', sprite(GRANNY + ' Same character as the reference image (but facing LEFT).', ps), [G0])
+
+# 아이 자세 더 (2026-10-17): 장면마다 다른 몸짓
+MORE = {'point': 'Standing facing right, one arm stretched out pointing up and forward at something exciting, mouth open in wonder.',
+        'tiptoe': 'Tiptoeing to the right very quietly, knees bent, one finger on the lips (shh), sneaky curious face.',
+        'crouch': 'Crouching low facing right, hands on knees, looking closely at something small on the ground, delighted.',
+        'clap': 'Standing facing the viewer, clapping hands together above the chest, eyes closed in a big happy smile.',
+        'eek': 'Standing, startled, both hands on the cheeks, shoulders up, eyes squeezed shut, small open mouth (a little scared by thunder).',
+        'splash': 'Jumping with both feet into a puddle, little flat paper water drops splashing up around the feet, arms out, laughing. Yellow rain boots on the feet.'}
+for who in ('nuna', 'oppa', 'agi'):
+    desc, refs = KIDS[who]
+    for pose, ptxt in MORE.items():
+        J('kkultteok', f'{who}_{pose}', 'sprite', sprite(desc + ' Same child as the reference images.', ptxt), refs)
+J('kkultteok', 'ui_bubble', 'sprite', sprite('A sound-effect bubble for a picture book made of paper: a wide rounded cloud-shaped badge with soft scalloped edges (about 1.5 times wider than tall), cut from warm cream cardstock, mounted on a slightly larger second layer of pale apricot paper peeking out around the edge, with a narrow soft paper-layer shadow between the layers. Completely empty inside: NO text, NO letters, NO symbols, NO face.', 'Flat, front view, centred, filling about 80% of the frame width.', face=False), [], out=f'{RAW}/char_gpt/ui/ui_bubble.png')
+
+# ───────── 시작 화면: 크림 종이판에 둥근 창 (종이 테두리) ─────────
+def keyround(scene, ratio, rim):
+    if ratio == 'wide':
+        frame = ('The whole wide 16:9 canvas is ONE flat sheet of warm cream cardstock (#f5efe9) with fine paper grain. A large perfect circle window is cut out of it, '
+                 'centered horizontally, its top at about 4% of the height and its diameter about 74% of the canvas HEIGHT. The scene is seen THROUGH this round hole, '
+                 'built from layered paper behind the sheet; the hole edge shows the sheet thickness with a soft inner shadow. The lower 22% of the canvas below the circle and '
+                 'both side areas are plain empty cream paper with nothing on them (a title is placed there later).')
+    else:
+        frame = ('The whole tall 3:4 canvas is ONE flat sheet of warm cream cardstock (#f5efe9) with fine paper grain. A large perfect circle window is cut out of it, '
+                 'centered horizontally, its top at about 6% of the height and its diameter about 62% of the canvas WIDTH. The scene is seen THROUGH this round hole, '
+                 'built from layered paper behind the sheet; the hole edge shows the sheet thickness with a soft inner shadow. Everything below the circle (the lower 40% '
+                 'of the canvas) and the side margins are plain empty cream paper with nothing on them (a title is placed there later).')
+    return '\n\n'.join([HEAD, 'Create a title illustration for a children\'s story app, rendered entirely as handcrafted paper art.', STYLE,
+        'FRAME (most important):\n' + frame + '\nAround the rim of the circle, a few layered paper ornaments overlap the edge at the upper-left and upper-right and one at the bottom: ' + rim + ' Nothing else on the cream sheet.',
+        'SCENE INSIDE THE CIRCLE:\n' + scene, FACE, 'Match the characters in the reference images exactly. Characters may slightly overlap the lower rim of the circle.',
+        LIGHT, '\n'.join(NO_BASE + ['NO title, NO letters anywhere.'])])
+PJK = 'The kind grandmother stirring a big black pot of red bean porridge on a snowy winter-solstice night in front of her thatched cottage, steam rising; the cute orange tiger peeking from behind a snowy pine; the chestnut, soft-shell turtle and stone mortar friends peeking in at the bottom.'
+for r in ('tall', 'wide'):
+    J('patjuk', f'keyr_{r}', 'key', keyround(PJK, r, 'red maple leaves, plum blossoms and small snowy pine sprigs cut from paper.'), [G0, T0, P + 'pj_friend_bam.png', P + 'pj_friend_jara.png'], out=f'{RAW}/keyart_gpt/patjuk_{r}_round.png')
+KFK = 'The twins Dahyun and Ihyun, little Eunwoo and their dog Kkulddeok on a green hill looking up at a tall round pale-mint chimney puffing round white paper clouds into a bright blue sky; one tiny baby dark-grey cloud peeks from behind a white cloud.'
+for r in ('tall', 'wide'):
+    J('kkultteok', f'keyr_{r}', 'key', keyround(KFK, r, 'fresh green paper leaves, small white paper clouds and two tiny coral flowers.'), KREF, out=f'{RAW}/keyart_gpt/kkultteok_{r}_round.png')
 
 for t, js in jobs.items():
     p = os.path.join(G, f'tools/app/gen/jobs_{t}.json')

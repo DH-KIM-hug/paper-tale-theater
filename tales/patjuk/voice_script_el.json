@@ -693,7 +693,7 @@
   "cut_bam": [
    [
     "bam",
-    "받아라, 알밤 발사!",
+    "탁! 내가 튀었지!",
     "toneup:1.5",
     "[cheerful, childlike, shouting]"
    ],
@@ -707,7 +707,7 @@
   "cut_jara": [
    [
     "jara",
-    "앙! 꽉 물었다!",
+    "앙! 내가 물었다!",
     "toneup:1.5",
     "[excited, childlike, shouting]"
    ],
@@ -721,7 +721,7 @@
   "cut_ddong": [
    [
     "ddong",
-    "여기 미끌미끌 조심해!",
+    "쭈르륵! 미끄럼 타라!",
     "happy:1.4",
     "[cheerful, childlike]"
    ],
@@ -749,7 +749,7 @@
   "cut_jeolgu": [
    [
     "jeolgu",
-    "쿵더쿵, 내려간다!",
+    "한 대 맞아라~ 쿵!",
     "toneup:1.5",
     "[excited, childlike]"
    ],
@@ -763,7 +763,7 @@
   "cut_myeongseok": [
    [
     "myeongseok",
-    "돌돌돌, 꽁꽁 말아라!",
+    "돌돌돌~ 꽁꽁 감아라!",
     "toneup:1.5",
     "[excited, childlike]"
    ],
@@ -777,7 +777,7 @@
   "cut_jige": [
    [
     "jige",
-    "영차! 바다로 풍덩!",
+    "영차! 바다로 가자!",
     "toneup:1.5",
     "[excited, childlike]"
    ],
@@ -815,7 +815,7 @@
   "oops_bam": [
    [
     "bam",
-    "어라? 호랑이가 어디 갔지?",
+    "어? 아무도 없네!",
     "toneup:1.2",
     "[excited, childlike]"
    ]
@@ -823,7 +823,7 @@
   "oops_jara": [
    [
     "jara",
-    "어? 아무것도 없네?",
+    "어? 여기 없네?",
     "toneup:1.2",
     "[excited, childlike]"
    ]
@@ -831,7 +831,7 @@
   "oops_ddong": [
    [
     "ddong",
-    "에잉, 안 밟았잖아!",
+    "에잉, 안 밟았네!",
     "sad:1.2",
     "[disappointed, childlike]"
    ]
@@ -839,7 +839,7 @@
   "oops_songgot": [
    [
     "songgot",
-    "어라? 허공만 찔렀네!",
+    "어라, 헛찔렀다!",
     "toneup:1.2",
     "[excited, childlike]"
    ]
@@ -855,7 +855,7 @@
   "oops_myeongseok": [
    [
     "myeongseok",
-    "어? 아무도 없잖아!",
+    "어? 텅 비었네!",
     "toneup:1.2",
     "[excited, childlike]"
    ]
@@ -863,7 +863,7 @@
   "oops_jige": [
    [
     "jige",
-    "끙차… 아이고, 무거워!",
+    "끙차… 아무것도 없네!",
     "sad:1.2",
     "[disappointed, childlike]"
    ]
@@ -871,7 +871,7 @@
   "hi_bam": [
    [
     "bam",
-    "고마워, 할멈! 팥죽 최고!",
+    "팥죽 고마워요, 할머니!",
     "happy:1.4",
     "[delighted, childlike]"
    ]
@@ -879,7 +879,7 @@
   "hi_jara": [
    [
     "jara",
-    "팥죽 정말 맛있어요!",
+    "할머니, 팥죽 맛있었어요!",
     "happy:1.4",
     "[cheerful, childlike]"
    ]
@@ -887,7 +887,7 @@
   "hi_ddong": [
    [
     "ddong",
-    "헤헤, 나도 신난다!",
+    "헤헤, 우리가 이겼다!",
     "happy:1.4",
     "[cheerful, childlike]"
    ]
@@ -895,7 +895,7 @@
   "hi_songgot": [
    [
     "songgot",
-    "콕콕! 우리가 이겼다!",
+    "콕콕! 신난다!",
     "happy:1.4",
     "[cheerful, childlike]"
    ]
@@ -919,7 +919,7 @@
   "hi_jige": [
    [
     "jige",
-    "영차! 또 놀러 올게!",
+    "영차! 또 놀러 올게요!",
     "happy:1.4",
     "[cheerful, childlike]"
    ]

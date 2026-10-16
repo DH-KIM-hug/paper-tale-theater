@@ -10,7 +10,8 @@ def hx(s): return tuple(int(s[i:i + 2], 16) for i in (1, 3, 5))
 
 # id: (판 색, 언덕 색, 해·달(색, 가운데x, 가운데y, 반지름 — 화면 비율), [(그림, 가운데x, 높이 비율, 뒤집기)], 땅 높이 비율)
 SPEC = {
- 'patjuk':   ('#26325A', '#B9573A', ('#F6ECD8', .80, .22, .09), [('tiger_stand', .5, .90, 0)], .84),
+ 'patjuk':   ('#26325A', '#B9573A', ('#F6ECD8', .80, .22, .09), [('pj3_granny_stir', .30, .86, 0), ('pj3_tiger_stand', .68, .62, 0)], .84),
+ 'kkultteok': ('#9CCFEA', '#7FB46A', None, [('cf4_nuna_lookup', .24, .80, 0), ('cf4_oppa_lookup', .46, .80, 0), ('cf4_agi_lookup', .64, .58, 0), ('cf4_dog_lookup', .84, .42, 0)], .84),
  'frog':     ('#7FB7A4', '#4F8F6B', ('#F6ECD8', .22, .22, .08), [('frog_ox_stand', .62, .58, 0), ('frog_mom', .28, .56, 0)], .80),
  'rabbit':   ('#9CCB86', '#5E9A4F', ('#FFE08A', .84, .20, .09), [('rab_turtle_walk', .30, .34, 0), ('rab_rabbit_run', .66, .64, 0)], .78),
  'sunmoon':  ('#2E2F63', '#6E5DA8', ('#F6ECD8', .50, .26, .13), [('sm_moon_boy2', .27, .62, 0), ('sm_sun_girl2', .73, .62, 0)], .82),

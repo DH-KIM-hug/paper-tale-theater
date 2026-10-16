@@ -31,7 +31,7 @@
     jara: { x: 300, y: 428, box: [-24, -42, 48, 48], shd: 18 },
     ddong: { x: 432, y: 520, box: [-23, -42, 46, 46], shd: 21 },
     songgot: { x: 495, y: 520, box: [-20, -42, 40, 42], shd: 12 },
-    jeolgu: { x: 885, y: 312, box: [-27, -52, 54, 54], shd: 23 },
+    jeolgu: { x: 890, y: 212, box: [-27, -52, 54, 54], shd: 23 }, // 커진 부엌문 위
     myeongseok: { x: 560, y: 520, box: [-47, -76, 94, 80], shd: 42 },
     jige: { x: 690, y: 520, box: [-54, -118, 108, 120], shd: 40 },
   };
@@ -120,17 +120,21 @@
 
     /* ---------- 배우 ---------- */
     function makeGranny() {
-      let art, ladle, hoe, tears;
+      let art, ladle, hoe, tears, poses;
       const a = T.actor(T.world, POS.grannyCook, 520, g => {
         el('ellipse', { class: 'shd', cx: 0, cy: -2, rx: 27, ry: 6 }, g);
         art = el('g', { class: 'pj-art' }, g);
         ladle = img(art, 'v3w/pj3_granny_ladle.webp', -39, -118, 78, 118, 'xMidYMax meet');
         hoe = img(art, 'v3w/pj3_granny_hoe.webp', -45, -118, 90, 118, 'xMidYMax meet');
+        // 기분·몸짓 자세 (모두 왼쪽을 보는 그림): 죽 젓기 · 그릇 건네기 · 무서움 · 울음 · 만세
+        poses = Object.fromEntries([['stir', .59], ['offer', .61], ['scared', .53], ['cry', .58], ['cheer', .68]].map(([k, r]) => {
+          const w = 118 * r, im = img(art, `v3w/pj3_granny_${k}.webp`, -w / 2, -118, w, 118, 'xMidYMax meet'); im.style.display = 'none'; return [k, im];
+        }));
         tears = el('g', { class: 'pj-tears', opacity: 0, fill: '#9ec8e8' }, art);
         el('path', { class: 'tear', d: 'M-12 -92 q-3 6 0 8 q3 -2 0 -8' }, tears);
         el('path', { class: 'tear t2', d: 'M12 -92 q3 6 0 8 q-3 -2 0 -8' }, tears);
       });
-      Object.assign(a, { art, ladle, hoe, tears });
+      Object.assign(a, { art, ladle, hoe, tears, poses, base: 'ladle' });
       return a;
     }
     function makeTiger() {
@@ -162,16 +166,19 @@
     }
     function makeFriend(f) {
       const c = FR[f.id];
-      let act, sway;
+      let act, sway, a_hit;
       const a = T.actor(T.world, c.x, c.y, g => {
-        el('ellipse', { class: 'shd', cx: 0, cy: -2, rx: c.shd, ry: Math.max(3.5, c.shd / 5.5) }, g);
         act = el('g', { class: 'fr-act' }, g);
+        // 그림자는 친구와 함께 움직인다 (잔치 자리로 옮겨 가도 그림자가 숨었던 자리에 남지 않게)
+        el('ellipse', { class: 'shd', cx: 0, cy: -2, rx: c.shd, ry: Math.max(3.5, c.shd / 5.5) }, act);
         sway = el('g', { class: 'fr-sway' }, act);
         const [bx, by, bw, bh] = c.box;
         img(sway, `v3w/pj3_friend_${f.id}.webp`, bx + bw * .02, by + bh * .02, bw * .96, bh * .96, 'xMidYMax meet');
+        // 누르는 자리: 투명한 판 (그림 묶음에 빛 필터를 걸면 Safari에서 옮겨 간 그림이 사라진다)
+        a_hit = el('rect', { x: bx - 6, y: by - 6, width: bw + 12, height: bh + 12, rx: 10, fill: 'transparent' }, act);
       });
       a.pos.classList.add('friend', 'fr-' + f.id);
-      Object.assign(a, { id: f.id, act, sway, gx: c.x, gy: c.y, h: c.box[3], by: c.box[1], shown: false });
+      Object.assign(a, { id: f.id, act, sway, hit: a_hit, gx: c.x, gy: c.y, h: c.box[3], by: c.box[1], shown: false });
       return a;
     }
     function makeRolled() {
@@ -232,7 +239,7 @@
         }
         daylight = el('rect', { x: -3000, y: -3000, width: 7000, height: 7000, fill: '#f2e3c0', opacity: 0, 'pointer-events': 'none' }, bg);
         // 이야기에 쓰이는 소품: 부뚜막(알밤) · 물독(자라) · 장작 · 부엌문(절구)
-        img(bg, 'v3w/pj3_prop_door.webp', 808, 302, 153, 220, 'xMidYMax meet', { class: 'prop' });
+        img(bg, 'v3w/pj3_prop_door.webp', 785, 200, 210, 320, 'xMidYMax meet', { class: 'prop' }); // 사람 키보다 큰 부엌문
         img(bg, 'v3w/pj3_prop_hearth.webp', 30, 390, 222, 120, 'xMidYMax meet', { class: 'prop' });
         img(bg, 'v3w/pj3_prop_muldok.webp', 258, 408, 88, 115, 'xMidYMax meet', { class: 'prop' });
         img(bg, 'v3w/pj3_prop_firewood.webp', 352, 462, 78, 62, 'xMidYMax meet', { class: 'prop' });
@@ -261,8 +268,7 @@
       }
       // 배우 크기·옷차림·보이는 친구
       granny.setScale(ACTOR_SCALE[k]); tiger.setScale(ACTOR_SCALE[k]);
-      granny.ladle.style.display = k === 'A' ? 'none' : '';
-      granny.hoe.style.display = k === 'A' ? '' : 'none';
+      granny.base = k === 'A' ? 'hoe' : 'ladle'; grannyPose(null);
       Object.values(friends).forEach(f => { f.pos.style.display = (FRIEND_SET[f.id] === k && f.shown) ? '' : 'none'; });
     }
 
@@ -292,10 +298,18 @@
     const tigerEyesHurt = on => { $('#pjEyeHurt').setAttribute('opacity', on ? 1 : 0); tiger.art.classList.toggle('eyehurt', !!on); };
     const showWound = i => { const w = $('#pjWnd' + i); w && w.setAttribute('opacity', 1); };
     const dizzy = on => $('#pjDizzy').setAttribute('opacity', on ? 1 : 0);
+    /* 할멈 자세: null = 장면 기본(밭 = 호미, 부엌·마당 = 국자) */
+    function grannyPose(k) {
+      const show = k || granny.base;
+      granny.ladle.style.display = show === 'ladle' ? '' : 'none';
+      granny.hoe.style.display = show === 'hoe' ? '' : 'none';
+      Object.entries(granny.poses).forEach(([n, im]) => { im.style.display = n === show ? '' : 'none'; });
+    }
     function grannyMood(m) {
       granny.art.classList.remove('scaredShake');
-      granny.tears.setAttribute('opacity', m === 'cry' ? 1 : 0);
+      granny.tears.setAttribute('opacity', 0); // 우는 자세 그림에 눈물이 들어 있다
       if (m === 'scared') granny.art.classList.add('scaredShake');
+      grannyPose({ cook: 'stir', scared: 'scared', cry: 'cry', happy: 'cheer' }[m] || null);
     }
     const impact = (x, y, word, color = '#8e3b2f') => T.pop(x, y, word, color);
     const bounceFriend = id => friends[id].hop(26, 500);
@@ -493,7 +507,10 @@
         fr.act.style.transform = '';
         camFriend(f.id, 650);
         bounceFriend(f.id);
+        const was = [...Object.entries(granny.poses)].find(([, im]) => im.style.display !== 'none');
+        grannyPose('offer'); // 팥죽 한 그릇을 건넨다
         await say(f.intro);
+        grannyPose(was ? was[0] : null);
       }));
 
       for (const beat of beats) {
@@ -807,7 +824,7 @@
       await Promise.all([...FRIENDS.map(f => friendTo(f.id, GATHER[f.id], 850, true)), camTo(600, 430, 1.4, 1100)]);
       // 세로 화면: 1.4배 클로즈업이면 양 끝 친구가 잘린다 → 잔치에 모인 모두가 들어오게 카메라를 맞춘다.
       // 친구 그림(act)만 누름 대상으로 쓴다 (원래 자리에 남은 그림자까지 넣으면 누름 영역이 화면 밖으로 넓어진다)
-      const partyEl = f => friends[f.id].act;
+      const partyEl = f => friends[f.id].hit;
       if (portrait()) await fitCam([...FRIENDS.map(partyEl), granny.pos], 1.4, 28, 800);
       tiger.pos.style.pointerEvents = 'none'; // 호랑이 그림이 친구 누름을 가로막지 않게
       T.finale();

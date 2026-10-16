@@ -617,7 +617,13 @@ const Tale = (() => {
     const g = el('g', { transform: `translate(${x},${y}) scale(${(1 / Math.max(1, camState.z)).toFixed(3)})` }, fxL);
     const txt = tr(word), FONT = "'Pretendard Variable', Pretendard, sans-serif";
     const latin = /[A-Za-z]/.test(txt), vw = viewWidth(), maxW = vw * .7;
-    const BURST = 'M60 0 L36 10 L52 30 L26 26 L30 52 L10 36 L0 60 L-10 36 L-30 52 L-26 26 L-52 30 L-36 10 L-60 0 L-36 -10 L-52 -30 L-26 -26 L-30 -52 L-10 -36 L0 -60 L10 -36 L30 -52 L26 -26 L52 -30 L36 -10 Z';
+    // 말풍선: 뾰족한 별 대신 가장자리가 동글동글한 종이 구름 (120 단위 상자, 가운데 0,0)
+    const BURST = pop.shape = pop.shape || (() => {
+      const n = 11, R = 44, r = 15, P = i => { const a = i / n * Math.PI * 2 - Math.PI / 2; return [(R * Math.cos(a)).toFixed(1), (R * Math.sin(a)).toFixed(1)]; };
+      let d = 'M' + P(0).join(' ');
+      for (let i = 1; i <= n; i++) d += ` A${r} ${r} 0 0 1 ${P(i).join(' ')}`;
+      return d + ' Z';
+    })();
     const pieces = []; // { s: 글자(또는 낱말), x, y } — 가운데 기준 배치
     let size, burstW, burstH;
     if (!latin) { // 한글: 한 자씩 고정 폭 (기존 모양 그대로)
@@ -665,10 +671,12 @@ const Tale = (() => {
       POPS.splice(0, POPS.length, ...POPS.filter(p => p.g.isConnected && now - p.t < 2500));
       POPS.push({ g, x: cur, y, w: bw0, h: bh0, t: now, txt });
     }
-    const burst = el('path', { d: BURST, fill: '#F2B366', stroke: '#E8703A', 'stroke-width': 4, transform: `scale(${(burstW / 120).toFixed(3)},${(burstH / 120).toFixed(3)})` }, g);
-    const bw = el('g', {}, g); bw.appendChild(burst);
+    const sc = `scale(${(burstW / 120 * .95).toFixed(3)},${(burstH / 120 * .8).toFixed(3)})`;
+    const bw = el('g', {}, g);
+    el('path', { d: BURST, fill: 'rgba(46,36,28,.20)', transform: `translate(3,6) ${sc}` }, bw); // 종이가 살짝 뜬 그림자
+    el('path', { d: BURST, fill: '#FFF7EA', stroke: '#E9C79A', 'stroke-width': 2.2, 'vector-effect': 'non-scaling-stroke', transform: sc }, bw);
     bw.style.transformBox = 'view-box'; bw.style.transformOrigin = '0 0';
-    bw.animate(springFrames(v => `scale(${v}) rotate(${(1 - v) * 40}deg)`), { duration: 620, easing: 'ease-out', fill: 'both' });
+    bw.animate(springFrames(v => `scale(${v}) rotate(${(1 - v) * 12}deg)`), { duration: 620, easing: 'ease-out', fill: 'both' });
     const step = latin ? 140 : 70;
     pieces.forEach((pc, i) => {
       const t = el('text', { 'text-anchor': 'middle', 'font-size': size, fill: color, 'font-family': FONT, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', text: pc.s }, g);

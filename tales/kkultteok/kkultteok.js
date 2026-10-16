@@ -8,7 +8,7 @@
   const G = 520; // 발 기준선
   const src = f => AS + 'cf4_' + f + '.webp';
   const bgSrc = k => AS + 'cf4_bg_' + k + '.webp';
-  const BGS = ['01_road', '02_hill', '03_chimney', '04_door', '05_belt', '06_press', '07_button', '08_tank_room', '09_bell_room', '10_corner_close', '11_flue', '12_storm', '13_rain', '14_soil', '15_rainbow'];
+  const BGS = ['01_road', '02_hill', '03_chimney', '04_door', '05_belt', '06_press', '07_button', '08_tank_room', '09_bell_room', '10_corner_close', '12_storm', '13_rain', '14_soil', '15_rainbow'];
   const SPR = ['nuna_lookup', 'nuna_walk', 'nuna_run', 'nuna_wave', 'nuna_blow', 'nuna_hug', 'nuna_jump', 'nuna_back', 'nuna_whisper',
     'oppa_lookup', 'oppa_walk', 'oppa_run', 'oppa_reach', 'oppa_press', 'oppa_hug', 'oppa_jump', 'oppa_back',
     'agi_lookup', 'agi_walk', 'agi_run', 'agi_press', 'agi_pet', 'agi_wave', 'agi_hug', 'agi_jump', 'agi_back', 'agi_lookback',
@@ -19,11 +19,12 @@
   const ASP = {}; // 그림 가로/세로 (불러온 뒤 채운다)
 
   /* 배우: poses = { 이름: [그림, 높이, 그림이 보는 쪽] } */
-  function mk(T, poses) {
+  /* shadow=false: 구름·먹구름·소품은 그림자 필터를 빼다 (Safari 가 움직이는 필터 그림을 잘라 먹는다) */
+  function mk(T, poses, shadow = true) {
     const looks = {};
     const a = T.actor(T.world, -400, G, g => {
       Object.entries(poses).forEach(([k, [f, h, nat]]) => {
-        const w = h * (ASP[f] || .7), wrap = T.el('g', { filter: 'url(#pp)' }, g);
+        const w = h * (ASP[f] || .7), wrap = T.el('g', shadow ? { filter: 'url(#pp)' } : {}, g);
         T.el('image', { href: src(f), x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
         wrap.style.display = 'none'; looks[k] = { wrap, h, nat: nat || 'right' };
       });
@@ -37,7 +38,7 @@
     a.look(Object.keys(poses)[0]);
     return a;
   }
-  const one = (T, f, h) => mk(T, { a: [f, h] });
+  const one = (T, f, h) => mk(T, { a: [f, h] }, false);
   function put(T, a, x, y = G, { look, to, s = 1 } = {}) {
     T.world.appendChild(a.pos); a.pos.getAnimations().forEach(n => n.cancel()); a.pos.style.display = ''; a.pos.style.opacity = '';
     a.setScale(s); if (look) a.look(look, to); else if (to) a.turn(to);
@@ -82,20 +83,41 @@
       c.style.transformBox = 'fill-box'; c.style.transformOrigin = 'center';
       c.animate([{ transform: 'scale(.5)', opacity: .9 }, { transform: 'scale(2.2)', opacity: 0 }], { duration: 600, easing: 'ease-out' }).onfinish = () => c.remove();
     };
-    /* 김 한 덩이가 올라가며 둥근 구름으로 뭉친다 (연기 → 퐁 → 구름) */
-    const steamToCloud = (x, y, { rise = 120, dx = 160, k = 1, life = 5200 } = {}) => {
-      const g = el('g', {}, T.fx), pf = el('g', { filter: 'url(#pp)' }, g);
-      [[-14, 4, 15], [6, -6, 19], [22, 5, 14], [4, 9, 16]].forEach(([cx, cy, r]) => el('circle', { cx, cy, r, fill: '#F2EFEA' }, pf));
-      const cw = 96, ch = cw / (ASP.cloud_white || 1.6);
-      const cl = el('image', { href: src('cloud_white'), x: -cw / 2, y: -ch / 2, width: cw, height: ch, preserveAspectRatio: 'none' }, g); cl.style.opacity = 0;
-      const tf = (a, b, s) => `translate(${a}px,${b}px) scale(${s * k})`;
-      g.animate([{ transform: tf(x, y, .4), opacity: 0 }, { transform: tf(x + 6, y - rise * .4, .8), opacity: 1, offset: .2 }, { transform: tf(x - 4, y - rise * .8, 1.1), opacity: 1, offset: .45 },
-        { transform: tf(x + dx * .5, y - rise, 1.4), opacity: 1, offset: .75 }, { transform: tf(x + dx, y - rise - 10, 1.5), opacity: 0 }], { duration: life, fill: 'forwards' }).onfinish = () => g.remove();
-      pf.animate([{ opacity: 1 }, { opacity: 1, offset: .35 }, { opacity: 0, offset: .6 }], { duration: life, fill: 'forwards' });
-      cl.animate([{ opacity: 0 }, { opacity: 0, offset: .35 }, { opacity: 1, offset: .6 }], { duration: life, fill: 'forwards' });
-      return g;
+    /* 굴뚝 연기: 바람을 따라 한쪽으로 휘어 오르는 길(2차 곡선). 김 덩이는 이 길을 따라 커지며 옅게 흐른다 */
+    const qpt = (p0, c, p1, t) => [(1 - t) * (1 - t) * p0[0] + 2 * (1 - t) * t * c[0] + t * t * p1[0], (1 - t) * (1 - t) * p0[1] + 2 * (1 - t) * t * c[1] + t * t * p1[1]];
+    const smokeImg = () => { const w = 100, h = w / (ASP.cloud_white || 1.6); return el('image', { href: src('cloud_white'), x: -w / 2, y: -h / 2, width: w, height: h, preserveAspectRatio: 'none' }, T.fx); };
+    /* 김 한 덩이가 굴뚝(p0)에서 c 를 거쳐 p1 쪽으로 upto(0~1) 만큼 흘러간다. s0→s1 크기, 끝에서 옅어지면 fade */
+    const puffAlong = (p0, c, p1, { upto = 1, s0 = .18, s1 = .7, ms = 3600, op = .85, fade = true } = {}) => {
+      const im = smokeImg(), N = 12, kf = [];
+      for (let i = 0; i <= N; i++) {
+        const t = upto * i / N, [x, y] = qpt(p0, c, p1, t), sc = s0 + (s1 - s0) * (i / N);
+        kf.push({ transform: `translate(${x}px,${y}px) scale(${sc}) rotate(${(i % 2 ? 3 : -3)}deg)`, opacity: i === 0 ? 0 : (fade && i === N ? 0 : op), offset: i / N });
+      }
+      const an = im.animate(kf, { duration: ms, easing: 'ease-out', fill: 'forwards' });
+      an.finished.then(() => { if (fade) im.remove(); }, () => {});
+      return { im, an };
     };
-    const chimneyLoop = (x, y, o) => { const my = sceneTok; (async () => { await sleep(600); while (my === sceneTok) { steamToCloud(x, y, o); await sleep(2200); } })(); };
+    /* 연기가 길을 따라 올라가 끝에서 퐁! 종이 구름(c 배우)이 된다 */
+    const smokeToCloud = async (cloud, p0, ctl, p1, ms = 3200) => {
+      const { im, an } = puffAlong(p0, ctl, p1, { s0: .2, s1: .85, ms, op: .9, fade: false });
+      await an.finished.catch(() => {});
+      put(T, cloud, p1[0], p1[1] + 40, { s: 1 }); // 구름 배우는 발끝 기준이라 가운데보다 조금 아래
+      cloud.pos.animate([{ opacity: 0, scale: .8 }, { opacity: 1, scale: 1.08, offset: .6 }, { opacity: 1, scale: 1 }], { duration: 520, easing: 'ease-out' });
+      im.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 420, fill: 'forwards' }).onfinish = () => im.remove();
+      popSfx(T); puff(p1[0], p1[1], '#FBFAF6');
+    };
+    /* 하늘에 천천히 흘러가는 종이 구름. list: [y, 너비, 한 바퀴 초, 시작 위치(0~1), 투명도] */
+    const skyDrift = list => {
+      const g = el('g', {}, T.bg);
+      list.forEach(([y, w, dur, f, op = .95]) => {
+        const h = w / (ASP.cloud_white || 1.6);
+        const im = el('image', { href: src('cloud_white'), x: -w / 2, y: -h / 2, width: w, height: h, preserveAspectRatio: 'none' }, g);
+        im.style.opacity = op;
+        im.animate([{ transform: `translate(${-60 - w / 2}px,${y}px)` }, { transform: `translate(${1060 + w / 2}px,${y}px)` }], { duration: dur * 1000, iterations: Infinity, delay: -dur * 1000 * f });
+      });
+    };
+    /* 굴뚝에서 쉬지 않고 피어오르는 작은 김: 길의 앞부분까지만 흐르다 옅어진다 */
+    const chimneyLoop = (p0, ctl, p1, o = {}) => { const my = sceneTok; (async () => { await sleep(500); while (my === sceneTok) { puffAlong(p0, ctl, p1, { upto: .45, s0: .14, s1: .38, ms: 4200, op: .75, ...o }); await sleep(1300); } })(); };
     /* 비 */
     let rainG = null;
     function startRain(x0 = 0, x1 = 1000, y0 = -20, n = 22) {
@@ -131,7 +153,7 @@
     const oppa = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'reach', 'press', 'hug', 'jump', 'back'].map(k => [k, ['oppa_' + k, k === 'jump' ? TW + 14 : TW]])));
     const agi = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'press', 'pet', 'wave', 'hug', 'jump', 'back', 'lookback'].map(k => [k, ['agi_' + k, k === 'jump' ? AG + 12 : AG, k === 'lookback' ? 'left' : 'right']])));
     const dog = mk(T, Object.fromEntries(['sniff', 'lookup', 'run', 'wag', 'sneeze', 'lick', 'bark', 'nose'].map(k => [k, ['dog_' + k, k === 'lick' ? DG + 30 : DG]])));
-    const baby = mk(T, { huddle: ['baby_huddle', 130], wide: ['baby_wide', 140], up: ['baby_up', 150], sorry: ['baby_sorry', 140], white: ['baby_white', 140] });
+    const baby = mk(T, { huddle: ['baby_huddle', 130], wide: ['baby_wide', 140], up: ['baby_up', 150], sorry: ['baby_sorry', 140], white: ['baby_white', 140] }, false);
     const kids = [nuna, oppa, agi];
     const allHide = () => [nuna, oppa, agi, dog, baby].forEach(hide);
 
@@ -141,7 +163,7 @@
     /* --- 1. 산책길 --- */
     S(async first => {
       const go = () => {
-        scene('01_road');
+        scene('01_road'); skyDrift([[70, 150, 90, .15], [130, 110, 70, .55], [55, 90, 110, .8, .85]]);
         put(T, nuna, X(300, 330), G, { look: 'walk', to: 'right' });
         put(T, oppa, X(400, 420), G, { look: 'walk', to: 'right' });
         put(T, agi, X(490, 500), G, { look: 'walk', to: 'right' });
@@ -161,7 +183,7 @@
     S(async () => {
       let trail;
       await T.sceneCard('', () => {
-        scene('02_hill', 420);
+        scene('02_hill', 420); skyDrift([[60, 120, 95, .35], [120, 90, 75, .75, .9]]);
         put(T, nuna, X(180, 330), G, { look: 'run', to: 'right' });
         put(T, oppa, X(280, 410), G, { look: 'run', to: 'right' });
         put(T, agi, X(370, 480), G, { look: 'run', to: 'right' });
@@ -173,7 +195,8 @@
       await say('꿀떡이를 톡! 냄새를 따라가요.');
       await T.tap(dog.pos, { prompt: '꿀떡이를 톡! 냄새를 따라가요.' });
       popSfx(T); dog.look('run', 'right');
-      const run1 = dog.move(X(760, 700), 470, 1600, 'ease-in').then(() => dog.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }));
+      // 냄새 길을 따라 언덕 위까지 달려가 멈추고, 뒤돌아 꼬리를 흔들며 기다린다 (사라지지 않는다)
+      const run1 = dog.move(X(760, 640), 360, 1600, 'ease-in').then(() => { dog.setScale(.85); dog.place(dog.x, dog.y); dog.look('wag', 'left'); dog.hop(12, 300); });
       await say('냄새를 따라 쪼르르 달려가요.');
       await run1;
       await say('"꿀떡아, 같이 가!"');
@@ -181,36 +204,41 @@
       await say('삼남매는 영차, 영차 언덕을 올라요.');
       await climb;
     });
-    /* --- 3. 굴뚝에서 퐁! (+ 하늘 구름이 토끼·물고기·자동차가 된다) --- */
+    /* --- 3. 굴뚝에서 퐁! 굴뚝 김이 바람을 따라 왼쪽 위로 휘어 오르고, 톡 할 때마다 큰 김 덩이가 그 길 끝에서 종이 구름이 된다.
+           그 구름 셋을 톡 하면 토끼·물고기·자동차 --- */
     S(async () => {
-      const CX = 646, CY = 132; // 굴뚝 꼭대기
+      const C0 = [657, 124]; // 굴뚝 꼭대기 (그림에서 잰 자리)
+      const SKY = [[X(520, 590), 78, 'rabbit', '토끼!'], [X(380, 470), 112, 'fish', '물고기!'], [X(240, 355), 82, 'car', '자동차!']];
+      const ctl = ([tx, ty]) => [C0[0] + 10, Math.min(ty, C0[1]) - 30]; // 곧게 솟다가 왼쪽으로 눕는다
+      const cl = SKY.map(([, , shape]) => mk(T, { c: ['cloud_white', 86], s: ['cloud_' + shape, 100] }, false));
       await T.sceneCard('', () => {
-        scene('03_chimney', 560);
-        put(T, nuna, X(260, 400), G, { look: 'lookup', to: 'right' });
-        put(T, oppa, X(350, 470), G, { look: 'lookup', to: 'right' });
-        put(T, agi, X(440, 540), G, { look: 'lookup', to: 'right' });
-        put(T, dog, X(180, 610), G, { look: 'lookup', to: 'right' });
+        scene('03_chimney', 520);
+        put(T, nuna, X(250, 390), G, { look: 'lookup', to: 'right' });
+        put(T, oppa, X(345, 455), G, { look: 'lookup', to: 'right' });
+        put(T, agi, X(430, 525), G, { look: 'lookup', to: 'right' });
+        put(T, dog, X(160, 600), G, { look: 'lookup', to: 'right' });
+        cl.forEach(hide);
       });
-      chimneyLoop(CX, CY, { rise: 90, dx: -140, k: .8 });
+      const far = [X(120, 300), 60];
+      chimneyLoop(C0, ctl(far), far);
       await say('언덕 너머에 커다란 굴뚝 하나.');
       await say('굴뚝에서 하얀 김이 폴폴.');
       await say('굴뚝을 톡톡톡!');
-      await T.mash(hitR(CX - 40, CY - 10, 80, 250), { count: 3, prompt: '굴뚝을 톡톡톡!', onStep: i => {
-        popSfx(T); puff(CX, CY - 10, '#F2EFEA'); steamToCloud(CX, CY, { rise: 110 + i * 20, dx: -120 - i * 60, k: 1.1 + i * .15, life: 6000 });
-        T.pop(CX + 60, CY + 40, tr(['폴폴', '뭉게', '퐁!'][i - 1]));
+      const outs = [];
+      await T.mash(hitR(C0[0] - 45, C0[1] - 20, 90, 280), { count: 3, prompt: '굴뚝을 톡톡톡!', onStep: i => {
+        popSfx(T); T.pop(C0[0] + 70, C0[1] + 60, tr(['폴폴', '뭉게', '퐁!'][i - 1]));
+        const [tx, ty] = SKY[i - 1]; outs.push(smokeToCloud(cl[i - 1], C0, ctl([tx, ty]), [tx, ty], 3000 + i * 300));
       } });
+      await Promise.all(outs);
       await say('김이 뭉치고, 뭉치고… 퐁! 구름이 됐어요.');
       await say('"구름이 여기서 오는구나!" 다현이가 말해요.');
       agi.look('jump'); agi.hop(24, 380); popSfx(T);
       await say('"퐁!" 은우가 따라 해요.');
       agi.look('lookup');
-      // 놀이: 하늘의 구름 셋을 톡 → 토끼, 물고기, 자동차
-      const SK = [[X(230, 360), 90, 'rabbit', '토끼!'], [X(420, 500), 60, 'fish', '물고기!'], [X(820, 620), 90, 'car', '자동차!']];
-      const cl = SK.map(([x, y, shape]) => { const c = mk(T, { c: ['cloud_white', 70], s: ['cloud_' + shape, 82] }); put(T, c, x, y + 35); fadeIn(c, 500); return c; });
       await say('하늘의 구름을 톡! 무엇이 될까요?');
       for (let i = 0; i < 3; i++) {
         await T.tap(cl[i].pos, { prompt: '하늘의 구름을 톡! 무엇이 될까요?' });
-        morph(cl[i], 's'); cl[i].hop(14, 360); popSfx(T); puff(cl[i].x, cl[i].y - 40); T.pop(cl[i].x, cl[i].y - 110, tr(SK[i][3]));
+        morph(cl[i], 's'); cl[i].hop(14, 360); popSfx(T); puff(cl[i].x, cl[i].y - 40); T.pop(cl[i].x, cl[i].y + 40, tr(SKY[i][3]));
         kids[i].look('jump'); kids[i].hop(16, 320); await sleep(500); kids[i].look('lookup');
       }
       await sleep(900);
@@ -279,33 +307,40 @@
       nuna.look('jump'); nuna.hop(20, 360);
       await say('"여기는 구름 공장이야!" 다현이가 외쳐요.');
     });
-    /* --- 6. 모양 틀 --- */
+    /* --- 6. 모양 틀: 틀의 구멍(토끼·고래·강아지)에서 구름이 천천히 밀려 나와 벨트로 내려앉는다 --- */
     S(async () => {
-      const PX = 554, PY = 160, OUT = 345; // 틀 · 벨트 위
+      const HOLES = [[378, 206], [500, 219], [628, 219]], BELT = 343; // 그림에서 잰 구멍 가운데 · 벨트 윗면
       let shapes;
       await T.sceneCard('', () => {
-        scene('06_press', 400);
-        put(T, oppa, X(250, 330), G, { look: 'press', to: 'right' });
-        put(T, nuna, X(150, 250), G, { look: 'lookup', to: 'right' });
-        put(T, agi, X(820, 640), G, { look: 'lookup', to: 'left' });
-        put(T, dog, X(700, 560), G, { look: 'lookup', to: 'right' });
-        shapes = ['rabbit', 'whale', 'dog'].map(s => { const c = one(T, 'cloud_' + s, 110); hide(c); return c; });
+        scene('06_press', 470);
+        put(T, oppa, X(205, 330), G, { look: 'press', to: 'right' });
+        put(T, nuna, X(110, 270), G, { look: 'lookup', to: 'right' });
+        put(T, agi, X(820, 650), G, { look: 'lookup', to: 'left' });
+        put(T, dog, X(730, 600), G, { look: 'lookup', to: 'left' });
+        shapes = ['rabbit', 'whale', 'dog'].map(sh => { const c = one(T, 'cloud_' + sh, 110); hide(c); return c; });
       });
       await say('이현이가 모양 틀을 꾹! 눌러요.');
       await say('모양 틀을 톡톡톡!');
-      const XS = [440, 600, 760];
-      await T.mash(hitR(PX - 130, PY - 90, 260, 180), { count: 3, prompt: '모양 틀을 톡톡톡!', onStep: i => {
-        const c = shapes[i - 1]; put(T, c, XS[i - 1], OUT); fadeIn(c, 300); c.hop(18, 360);
-        oppa.hop(8, 220); AudioFX.sfx('bonk') || popSfx(T); puff(XS[i - 1], OUT - 50);
-        T.pop(XS[i - 1], OUT - 150, tr(['토끼!', '고래!', '강아지!'][i - 1]));
+      const outs = [];
+      await T.mash(hitR(320, 120, 380, 170), { count: 3, prompt: '모양 틀을 톡톡톡!', onStep: i => {
+        const c = shapes[i - 1], [hx, hy] = HOLES[i - 1];
+        oppa.hop(8, 220); AudioFX.sfx('bonk') || popSfx(T); T.shake();
+        put(T, c, hx, hy + 40, { s: .35 });
+        // 구멍에서 쑥 밀려 나와(커지며) 벨트 위로 툭 내려앉는다
+        outs.push(c.pos.animate([{ transform: `translate(${hx}px,${hy + 40}px) scale(.35)`, opacity: .4 }, { transform: `translate(${hx}px,${hy + 95}px) scale(.8)`, opacity: 1, offset: .55 },
+          { transform: `translate(${hx}px,${BELT}px) scale(1)`, opacity: 1 }], { duration: 1800, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'forwards' }).finished.then(() => {
+          c.pos.getAnimations().forEach(an => an.cancel()); c.setScale(1); c.place(hx, BELT); c.hop(10, 300); popSfx(T); puff(hx, BELT - 50);
+          T.pop(hx, BELT - 150, tr(['토끼!', '고래!', '강아지!'][i - 1]));
+        }).catch(() => {}));
       } });
+      await Promise.all(outs);
       await say('퐁! 토끼 구름. 퐁! 고래 구름.');
       await say('퐁! 이번엔 강아지 구름.');
-      dog.look('nose', 'right'); dog.move(XS[2] - 90, G, 900);
+      dog.look('nose', 'left'); await dog.move(HOLES[2][0] + 85, G, 900);
       await say('꿀떡이가 강아지 구름과 코를 맞대요.');
-      dog.look('sneeze', 'right'); AudioFX.sfx('cork') || popSfx(T);
-      for (let k = 0; k < 4; k++) puff(XS[2] - 30 + k * 12, OUT - 40 - k * 6);
-      T.pop(dog.x, dog.y - 150, tr('에취!'));
+      dog.look('sneeze', 'left'); AudioFX.sfx('cork') || popSfx(T);
+      for (let k = 0; k < 5; k++) puff(HOLES[2][0] + 20 - k * 10, BELT - 40 - k * 8);
+      T.pop(dog.x + 20, dog.y - 150, tr('에취!'));
       await say('에취! 구름 조각이 사르르 날려요.');
     });
     /* --- 7. 빨간 단추 --- */
@@ -327,11 +362,13 @@
       agi.look('press', 'left'); AudioFX.sfx('bonk') || popSfx(T); T.shake();
       await say('은우가 꾹! 눌렀어요.');
       dog.look('lookup', 'right'); kids.forEach(k => k.look('lookup', 'right'));
-      await dc.move(FLX, FLY - 40, 700, 'ease-in');
+      // 굴뚝 관 아래 입구로 빨려 들어가며 작아져 사라진다
       AudioFX.sfx('whoosh') || popSfx(T);
-      const up = dc.pos.animate([{ transform: `translate(${FLX}px,${FLY - 40}px)` }, { transform: `translate(${FLX}px,-200px) scale(.6)` }], { duration: 1200, easing: 'ease-in', fill: 'forwards' });
+      const sx = dc.x, sy = dc.y;
+      const up = dc.pos.animate([{ transform: `translate(${sx}px,${sy}px) scale(1)`, opacity: 1 }, { transform: `translate(${(sx + FLX) / 2}px,${sy + 10}px) scale(.8) rotate(-8deg)`, opacity: 1, offset: .45 },
+        { transform: `translate(${FLX}px,${FLY + 10}px) scale(.15)`, opacity: 0 }], { duration: 1600, easing: 'ease-in', fill: 'forwards' });
       await say('슈웅— 강아지 구름이 굴뚝으로 올라가요.');
-      await up.finished.catch(() => {});
+      await up.finished.catch(() => {}); hide(dc);
       popSfx(T); T.pop(FLX, 120, tr('퐁!'));
       await say('퐁! 하늘로 나갔어요.');
     });
@@ -418,24 +455,27 @@
       morph(baby, 'wide'); baby.hop(12, 360);
       await say('아기 먹구름 눈이 동그래졌어요.');
     });
-    /* --- 11. 나, 갈게! --- */
+    /* --- 11. 나, 갈게! (강아지 구름이 나간 그 굴뚝 관으로 들어간다) --- */
     S(async () => {
+      const FLX = 771, FLY = 400; // 7장면 그림의 굴뚝 관 입구
       await T.sceneCard('', () => {
-        scene('11_flue', 500);
-        put(T, baby, 500, 360, { look: 'wide', to: 'right', s: 1.2 });
-        put(T, nuna, X(250, 360), G, { look: 'wave', to: 'right' });
-        put(T, oppa, X(720, 640), G, { look: 'lookup', to: 'left' });
-        put(T, agi, X(360, 420), G, { look: 'wave', to: 'right' });
-        put(T, dog, X(620, 560), G, { look: 'bark', to: 'left' });
+        scene('07_button', 560);
+        put(T, baby, 520, 330, { look: 'wide', to: 'right', s: 1 });
+        put(T, nuna, X(250, 390), G, { look: 'wave', to: 'right' });
+        put(T, agi, X(340, 445), G, { look: 'wave', to: 'right' });
+        put(T, oppa, X(430, 505), G, { look: 'lookup', to: 'right' });
+        put(T, dog, X(600, 620), G, { look: 'bark', to: 'right' });
       });
       await say('"정말? 그럼 나, 갈게!"');
       await say('아기 먹구름을 톡! 힘내!');
       await T.tap(baby.pos, { prompt: '아기 먹구름을 톡! 힘내!' });
       baby.look('up', 'right'); AudioFX.sfx('whoosh') || popSfx(T);
-      const up = baby.pos.animate([{ transform: 'translate(500px,360px) scale(1.2)' }, { transform: 'translate(500px,-180px) scale(.5)' }], { duration: 1500, easing: 'ease-in', fill: 'forwards' });
+      const sx = baby.x, sy = baby.y;
+      const up = baby.pos.animate([{ transform: `translate(${sx}px,${sy}px) scale(1)`, opacity: 1 }, { transform: `translate(${(sx + FLX) / 2}px,${sy - 20}px) scale(.8)`, opacity: 1, offset: .45 },
+        { transform: `translate(${FLX}px,${FLY + 10}px) scale(.15)`, opacity: 0 }], { duration: 1600, easing: 'ease-in', fill: 'forwards' });
       await say('슈웅— 아기 먹구름이 굴뚝으로 올라가요. 퐁!');
-      await up.finished.catch(() => {}); popSfx(T); T.pop(500, 40, tr('퐁!'));
-      nuna.look('wave'); agi.look('wave'); oppa.look('lookup');
+      await up.finished.catch(() => {}); hide(baby); popSfx(T); T.pop(FLX, 110, tr('퐁!'));
+      nuna.look('run'); agi.look('run'); oppa.look('run');
       await say('삼남매도 손을 흔들며 밖으로 달려 나가요.');
       for (let k = 0; k < 2; k++) { dog.hop(10, 260); T.pop(dog.x, dog.y - 150, tr('멍!')); await sleep(420); }
       await say('꿀떡이는 하늘을 보고 멍! 멍!');
@@ -510,7 +550,7 @@
       const grow = [[['prop_sprout', 90]], [['prop_bud', 120], ['prop_flower', 130]], [['prop_berry_green', 110], ['prop_berry_red', 120]]];
       const lines = ['비 맞은 땅에서 새싹이 쑥!', '꽃이 활짝!', '딸기가 빨갛게!'], pops = ['쑥!', '활짝!', '빨갛게!'];
       for (let i = 0; i < 3; i++) {
-        const plant = mk(T, Object.fromEntries(grow[i].map(([f, h], j) => ['s' + j, [f, h]])));
+        const plant = mk(T, Object.fromEntries(grow[i].map(([f, h], j) => ['s' + j, [f, h]])), false);
         const spot = hitC(SP[i], SY - 20, 70);
         await say('땅을 톡!');
         await T.tap(spot, { prompt: '땅을 톡!' }); spot.remove();
@@ -530,7 +570,7 @@
     S(async () => {
       const COL = ['#E4573D', '#F29A38', '#F6C945', '#6FAE5A', '#4A90D9', '#3F4FA0', '#8B5CB8'], NAME = ['빨강!', '주황!', '노랑!', '초록!', '파랑!', '남색!', '보라!'];
       await T.sceneCard('', () => {
-        scene('15_rainbow', 500);
+        scene('15_rainbow', 500); skyDrift([[90, 110, 120, .2, .9], [60, 80, 150, .75, .85]]);
         put(T, baby, X(820, 640), 150, { look: 'sorry', to: 'left', s: .9 });
         put(T, nuna, X(330, 380), G, { look: 'lookup', to: 'right' });
         put(T, oppa, X(420, 440), G, { look: 'lookup', to: 'right' });
@@ -540,7 +580,7 @@
       await say('하늘에 커다란 무지개! "우와!"');
       await say('무지개를 톡톡톡… 일곱 색을 세어 봐요!');
       // 그림 속 무지개 띠를 따라 누를 자리 (타원 호)
-      const arc = el('path', { d: 'M20 380 A520 360 0 0 1 1060 380', fill: 'none', stroke: 'transparent', 'stroke-width': 120 }, T.world);
+      const arc = el('path', { d: 'M75 400 A465 330 0 0 1 1005 400', fill: 'none', stroke: 'transparent', 'stroke-width': 250 }, T.world); // 일곱 띠 전체를 덮는다
       await T.mash(arc, { count: 7, prompt: '무지개를 톡톡톡… 일곱 색을 세어 봐요!', onStep: i => {
         const t = Math.PI * (1 - (i - .5) / 7), x = 540 + 470 * Math.cos(t), y = 380 - 320 * Math.sin(t);
         popSfx(T); T.pop(X(x, Math.max(320, Math.min(680, x))), Math.max(70, y), tr(NAME[i - 1]), COL[i - 1]);
@@ -548,30 +588,41 @@
       arc.remove();
       await say('아기 먹구름을 톡!');
       await T.tap(baby.pos, { prompt: '아기 먹구름을 톡!' });
-      morph(baby, 'white', 1200); AudioFX.sfx('sparkle') || popSfx(T);
+      // 남은 비를 톡톡 다 내리면서 조금씩 작아지고 옅어져, 작은 하얀 구름만 남는다 (갑자기 하얘지지 않게)
+      startRain(baby.x - 50, baby.x + 50, baby.y - 10, 8);
+      const bx = baby.x, by = baby.y, s0 = baby.scale || .9;
+      baby.pos.animate([{ transform: `translate(${bx}px,${by}px) scale(${s0})`, opacity: 1 }, { transform: `translate(${bx}px,${by - 10}px) scale(${s0 * .55})`, opacity: .85 }],
+        { duration: 3200, easing: 'ease-in-out', fill: 'forwards' });
+      morph(baby, 'white', 3200); AudioFX.sfx('sparkle') || popSfx(T);
       await say('비를 다 내린 아기 먹구름은 하얗게 변했어요.');
+      await sleep(600); stopRain();
+      baby.pos.getAnimations().forEach(an => an.cancel()); baby.setScale(s0 * .55); baby.place(bx, by - 10); baby.pos.style.opacity = .85;
       baby.hop(16, 400); popSfx(T); T.pop(baby.x, baby.y - 140, tr('퐁!'));
       await say('하얀 아기 구름이 방긋 웃어요. 퐁!');
       await T.cutImage([{ src: src('cut_rainbow'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
       await say('"구름은 여기서 오는 거였어!" 다현이가 말해요.');
       await say('꿀떡이는 젖은 흙에 코를 대고 킁킁.');
     });
-    /* --- 16. 집으로 --- */
+    /* --- 16. 집으로: 하늘엔 종이 구름이 둥실, 먼 굴뚝 김이 바람 따라 흘러 구름이 된다 --- */
     S(async () => {
-      let ch;
+      let ch, c2;
       await T.sceneCard('', () => {
         scene('01_road', 500);
+        skyDrift([[60, 170, 120, .1], [120, 120, 95, .45], [45, 100, 140, .7, .9], [150, 90, 110, .9, .85]]);
         ch = one(T, 'prop_chimney_far', 130); put(T, ch, X(880, 690), 330);
+        c2 = [0, 1].map(() => { const c = one(T, 'cloud_white', 70); hide(c); return c; });
         put(T, dog, X(150, 360), G, { look: 'run', to: 'left' });
-        put(T, nuna, X(330, 430), G, { look: 'back', to: 'left' });
-        put(T, oppa, X(430, 490), G, { look: 'back', to: 'left' });
+        put(T, nuna, X(300, 420), G, { look: 'walk', to: 'left' });
+        put(T, oppa, X(400, 480), G, { look: 'walk', to: 'left' });
         put(T, agi, X(540, 560), G, { look: 'lookback', to: 'left' });
       });
-      const home = Promise.all([dog.move(X(-60, 260), G, 3800, 'linear'), nuna.move(X(180, 360), G, 4200, 'linear'), oppa.move(X(280, 420), G, 4200, 'linear')]);
+      const C0 = [ch.x + 6, ch.y - 124], tgt = [[X(720, 600), 150], [X(600, 520), 120]];
+      chimneyLoop(C0, [C0[0], C0[1] - 40], [C0[0] - 160, C0[1] - 70], { s1: .3 });
+      const home = Promise.all([dog.move(X(-60, 260), G, 3800, 'linear'), nuna.move(X(160, 340), G, 4200, 'linear'), oppa.move(X(260, 400), G, 4200, 'linear')]);
       await say('삼남매는 꿀떡이랑 왔던 길로 집에 가요.');
       await say('굴뚝을 톡! 안녕!');
       await T.tap(ch.pos, { prompt: '굴뚝을 톡! 안녕!' });
-      for (let k = 0; k < 2; k++) { popSfx(T); steamToCloud(ch.x, ch.y - 125, { rise: 60, dx: -60, k: .5, life: 3500 }); T.pop(ch.x + 40, ch.y - 170, tr('퐁!')); await sleep(600); }
+      for (let k = 0; k < 2; k++) { smokeToCloud(c2[k], C0, [C0[0], C0[1] - 50], tgt[k], 2200); T.pop(C0[0] + 40, C0[1] - 30, tr('퐁!')); await sleep(700); }
       await say('멀리 굴뚝에서 작은 구름이 퐁! 퐁!');
       agi.look('lookback', 'left'); agi.hop(10, 300);
       await say('은우가 뒤를 돌아보며 손을 흔들어요. "퐁!"');

@@ -5,4 +5,4 @@ window.THUMBS2L = ["ant_grasshopper", "bremen", "cinderella", "fox_crane", "frog
 /* THUMBSKEY: 시작 화면 키아트(<id>_key_wide.webp + <id>_key_tall.webp 둘 다 있는 동화) */
 window.THUMBSKEY = ["bremen", "cinderella", "fox_crane", "frog", "kkultteok", "patjuk", "rabbit", "red_hood", "sun_wind", "sunmoon", "three_pigs", "turnip"];
 /* THUMBSKEYLIGHT: 흰 종이 판 키아트(어두운 띠 없이 어두운 글자). 값 = 종이 색. tools/app/keyart/<id>.json의 "light" */
-window.THUMBSKEYLIGHT = {};
+window.THUMBSKEYLIGHT = {"patjuk": "#f5efe9", "kkultteok": "#f5efe9"};

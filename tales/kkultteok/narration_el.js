@@ -135,6 +135,12 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kkultteok/nar_0029de923a.mp3",
   "audio/el/kkultteok/agi_e139bd786a.mp3"
  ],
- "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.": "audio/el/kkultteok/nar_e88091a79e.mp3"
+ "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.": "audio/el/kkultteok/nar_e88091a79e.mp3",
+ "톡.": "audio/el/kkultteok/nar_85fe8ac902.mp3",
+ "토독.": "audio/el/kkultteok/nar_f5546b9a66.mp3",
+ "토도독.": "audio/el/kkultteok/nar_e9a4bdf0a4.mp3",
+ "비 맞은 땅에서 새싹이 쑥!": "audio/el/kkultteok/nar_75b52f50c2.mp3",
+ "꽃이 활짝!": "audio/el/kkultteok/nar_4eba70e1c1.mp3",
+ "딸기가 빨갛게!": "audio/el/kkultteok/nar_9bf428d65c.mp3"
 });
 Object.assign(VOICE_LINES, {});
