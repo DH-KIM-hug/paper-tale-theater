@@ -10,6 +10,18 @@ STYLE_OLD = json.load(open(os.path.join(GN, 'style_base.json')))['STYLE']
 REFS = ['/Users/house_of_4k2b/.paper-tale/refs/style_small/' + f for f in
         ['keyart_ref_fox.jpg', 'keyart_ref_campfire.jpg', 'keyart_ref_rabbit_shadow.jpg', 'cloud_factory_chimney_ref.jpg']]
 
+FOX, CAMP, RABBIT = REFS[0], REFS[1], REFS[2]
+BRIGHT_INTERIOR = ('kitchen', 'room', 'hall', 'parlor', 'hearth', 'bed', 'table', 'inside', 'living', 'cottage', 'morning', 'feast_day', 'barn', 'shop', 'mill')
+
+
+def refs_for(name):
+    """참고 이미지는 2장까지 (메모리): 기본 여우+모닥불, 밝은 낮 실내는 모닥불 대신 토끼 그림자"""
+    n = name.lower()
+    if any(k in n for k in BRIGHT_INTERIOR) and not any(k in n for k in ('night', 'lamp', 'dusk')):
+        return [FOX, RABBIT]
+    return [FOX, CAMP]
+
+
 S2 = ("Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock "
       "with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. "
       "Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it "
@@ -115,7 +127,7 @@ def main():
                 prompt = S2 + ' ' + CUT_HEAD + body
             else:
                 prompt = S2 + ' Scene: ' + body + ' ' + BG_TAIL
-            out.append({'name': n + '_s2', 'w': j['w'], 'h': j['h'], 'cfg': 3.0, 'key': False, 'refs': REFS,
+            out.append({'name': n + '_s2', 'w': j['w'], 'h': j['h'], 'cfg': 3.0, 'key': False, 'refs': refs_for(n),
                         'negative': NEG_CUT if is_cut else NEG_BG, 'prompt': prompt})
         json.dump(out, open(os.path.join(HERE, f'jobs_{tale}_s2.json'), 'w'), ensure_ascii=False, indent=1)
         report[tale] = (sum(1 for o in out if '_cut_' not in o['name']), sum(1 for o in out if '_cut_' in o['name']))

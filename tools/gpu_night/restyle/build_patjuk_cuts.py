@@ -6,6 +6,7 @@ src = open(os.path.join(HERE, 'build_restyle_jobs.py')).read().split('def load_j
 ns = {'__file__': __file__}
 exec(src, ns)
 S2, CUT_HEAD, NEG_CUT, REFS = ns['S2'], ns['CUT_HEAD'], ns['NEG_CUT'], ns['REFS']
+refs_for = ns['refs_for']
 TIGER = ("The tiger is a cute chubby Korean folk-tale tiger cub: flat persimmon-orange paper body with separate dark-brown stripe pieces, cream muzzle and belly patch, "
          "big round white paper eyes with dark pupils, small pink cheek circles, small rounded ears, funny and clumsy, never scary, no blood, no fangs. ")
 NOFACE = "The prop has NO face and NO eyes. "
@@ -35,7 +36,7 @@ C = {
  'wrong_myeongseok': LAUGH + "On the right a loose flat woven straw mat lying on a snowy ground, not rolled. " + NOFACE + TIGER,
  'wrong_jige2': LAUGH + "On the right the empty jige (a traditional Korean A-frame wooden back-carrier of two long straight poles leaning together in an A shape with crossbars and a small woven straw rack) stands tilted, as if it just missed. The jige has no wheels, no box body and no legs. " + NOFACE + TIGER,
 }
-out = [{'name': 'cut_' + k + '_s2', 'w': 1024, 'h': 768, 'cfg': 3.0, 'key': False, 'refs': REFS, 'negative': NEG_CUT,
+out = [{'name': 'cut_' + k + '_s2', 'w': 1024, 'h': 768, 'cfg': 3.0, 'key': False, 'refs': refs_for('cut_' + k), 'negative': NEG_CUT,
         'prompt': S2 + ' ' + CUT_HEAD + v + ' Full-bleed illustration, no text.'} for k, v in C.items()]
 json.dump(out, open(os.path.join(HERE, 'jobs_patjuk_cuts_s2.json'), 'w'), ensure_ascii=False, indent=1)
 print(len(out))
