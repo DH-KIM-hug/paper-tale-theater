@@ -206,6 +206,19 @@ for who in ('nuna', 'oppa', 'agi'):
         J('kkultteok', f'{who}_{pose}', 'sprite', sprite(desc + ' Same child as the reference images.', ptxt), refs)
 J('kkultteok', 'ui_bubble', 'sprite', sprite('A sound-effect bubble for a picture book made of paper: a wide rounded cloud-shaped badge with soft scalloped edges (about 1.5 times wider than tall), cut from warm cream cardstock, mounted on a slightly larger second layer of pale apricot paper peeking out around the edge, with a narrow soft paper-layer shadow between the layers. Completely empty inside: NO text, NO letters, NO symbols, NO face.', 'Flat, front view, centred, filling about 80% of the frame width.', face=False), [], out=f'{RAW}/char_gpt/ui/ui_bubble.png')
 
+# 구름 여러 모양 (2026-10-17): 겹이 하나·둘인 것도, 먹구름도 서로 다르게
+ONE = 'Hand-cut paper cloud, simple and flat. '
+for k, d in {'cloud_one': 'A single layer of white cardstock cut into a soft, lumpy cloud shape with three round bumps. Just ONE layer, no other layers behind it.',
+             'cloud_two': 'Two layers: a white cloud shape with four bumps over a slightly larger pale blue-grey layer peeking out at the bottom edge.',
+             'cloud_long': 'A long, low, flat cloud (about three times wider than tall) cut from two layers of cream and white paper.',
+             'cloud_small': 'A small round puff cloud cut from a single layer of white paper, slightly tilted.'}.items():
+    J('kkultteok', k, 'sprite', sprite(ONE + d, 'Floating, front view.', face=False, extra_no=NOFACE))
+for k, (d, p) in {'dark_drink2': ('A TALL, tower-shaped dark rain cloud character, two layers of slate-blue and charcoal paper, cheeky expression. It is just a cloud with a face: NO arms, NO hands, NO legs, NO feet.', 'Sipping water through a coral paper straw held in its mouth, eyes closed happily.'),
+                  'dark_drink3': ('A small, wide and flat dark rain cloud character, a single layer of dark grey paper with a lighter grey edge strip, sleepy expression. It is just a cloud with a face: NO arms, NO hands, NO legs, NO feet.', 'Slurping water through a coral paper straw held in its mouth, cheeks puffed.'),
+                  'dark_march2': ('A TALL, tower-shaped dark rain cloud character, two layers of slate-blue and charcoal paper. It is just a cloud with a face: NO arms, NO hands, NO legs, NO feet.', 'Floating along to the right, proud little smile.'),
+                  'dark_march3': ('A small, wide and flat dark rain cloud character, a single layer of dark grey paper with a lighter grey edge strip. It is just a cloud with a face: NO arms, NO hands, NO legs, NO feet.', 'Floating along to the right, humming happily, eyes closed.')}.items():
+    J('kkultteok', k, 'sprite', sprite(d, p), [])
+
 # ───────── 시작 화면: 크림 종이판에 둥근 창 (종이 테두리) ─────────
 def keyround(scene, ratio, rim):
     if ratio == 'wide':

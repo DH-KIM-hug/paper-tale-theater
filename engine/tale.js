@@ -474,7 +474,11 @@ const Tale = (() => {
     const wrap = $('#stageWrap'), stg = $('#stage'), W = wrap.clientWidth, H = wrap.clientHeight;
     const book = document.createElement('div'); book.className = 'book';
     const front = document.createElement('div'); front.className = 'front';
-    const snap = stg.cloneNode(true); snap.removeAttribute('id'); snap.querySelectorAll('[id]').forEach(n => { if (n.tagName !== 'filter') n.removeAttribute('id'); });
+    const snap = stg.cloneNode(true); snap.removeAttribute('id');
+    // 복제본 안의 id 는 모두 지운다 (filter 정의까지). 같은 id 가 둘이면 Safari 가 복제본의 #pp 를 붙잡고 있다가,
+    // 복제본이 지워진 뒤 그 필터를 쓰는 그림(인물·소품·카드)을 통째로 안 그린다. 복제본의 url(#pp) 는 원래 무대의 정의를 쓴다
+    snap.querySelector('defs') && snap.querySelector('defs').remove();
+    snap.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
     front.appendChild(snap);
     const flap = document.createElement('div'); flap.className = 'flap';
     const cast = document.createElement('div'); cast.className = 'cast';
@@ -673,8 +677,10 @@ const Tale = (() => {
     }
     const sc = `scale(${(burstW / 120 * .95).toFixed(3)},${(burstH / 120 * .8).toFixed(3)})`;
     const bw = el('g', {}, g);
-    el('path', { d: BURST, fill: 'rgba(46,36,28,.20)', transform: `translate(3,6) ${sc}` }, bw); // 종이가 살짝 뜬 그림자
-    el('path', { d: BURST, fill: '#FFF7EA', stroke: '#E9C79A', 'stroke-width': 2.2, 'vector-effect': 'non-scaling-stroke', transform: sc }, bw);
+    // 종이 공예 말풍선 그림(assets/ui/pop_bubble.webp: 크림 종이 + 살구색 받침 두 겹). 못 불러오면 그린 구름 모양
+    const bwW = burstW * .98, bwH = burstH * .82;
+    const bimg = el('image', { href: ROOT_URL + 'assets/ui/pop_bubble.webp', x: -bwW / 2, y: -bwH / 2, width: bwW, height: bwH, preserveAspectRatio: 'none' }, bw);
+    bimg.addEventListener('error', () => { bimg.remove(); el('path', { d: BURST, fill: '#FFF7EA', stroke: '#E9C79A', 'stroke-width': 2.2, 'vector-effect': 'non-scaling-stroke', transform: sc }, bw); });
     bw.style.transformBox = 'view-box'; bw.style.transformOrigin = '0 0';
     bw.animate(springFrames(v => `scale(${v}) rotate(${(1 - v) * 12}deg)`), { duration: 620, easing: 'ease-out', fill: 'both' });
     const step = latin ? 140 : 70;
