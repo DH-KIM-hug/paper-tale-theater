@@ -3,7 +3,7 @@
 (() => {
   const AS = '../../assets/v3w/';
   const GROUND = 505;
-  const ASP = { coin: .9645, farmer_amaze: .71, farmer_count: .6029, farmer_feast: .7971, farmer_hoe: .6571, farmer_pull: .6771,
+  const ASP = { coin: .9645, farmer_amaze: .71, farmer_count: .6029, farmer_feast: .7971, farmer_hoe: .72, farmer_pull: .6771,
     farmer_share: .5886, father_fall: .9856, father_fightA: .6357, father_fightB: .6443, father_peek: .7357, fwife: .5129,
     fwife_share: .5271, gold: 1.7722, hoe: 3.2864, jar: .9243, jar_cracked: 1.1785, rice: .8057, rich_gold: .6471, rich_grab: .7143,
     rich_hurry: .8071, rich_pinned: 1.2238, rich_shout: .7143, table: 1.566 };
