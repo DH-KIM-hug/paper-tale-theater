@@ -5,9 +5,7 @@
   "h": 992,
   "cfg": 3.0,
   "key": false,
-  "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg"
-  ],
+  "refs": [],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a cozy kindergarten corner by a sunny pond: in the CENTER a tall wooden measuring ruler post shaped like a giraffe neck with big round wooden tick marks, standing on a grassy bank; behind it a pale cream paper wall with a round window showing the pond and lily pads; a few paper flowers at the base. The left and right thirds of the ground stay open and empty so two animals can stand there side by side. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
  },
@@ -17,9 +15,7 @@
   "h": 992,
   "cfg": 3.0,
   "key": false,
-  "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg"
-  ],
+  "refs": [],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a frog's-eye-level view of a meadow: HUGE blades of paper grass towering in the foreground at both sides, a dandelion, a ladybug on a blade, a snail, the sky far above. No frogs, no ox. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
  },
@@ -29,9 +25,7 @@
   "h": 992,
   "cfg": 3.0,
   "key": false,
-  "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg"
-  ],
+  "refs": [],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a sunny morning pond seen straight-on: soft pale blue sky with a small round pale-gold paper sun, soft rolling hills, a wide soft teal-blue pond across the lower half with five round lily pads floating in a gentle row, cattails and reeds at both edges. No frogs. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
  },
@@ -41,9 +35,7 @@
   "h": 992,
   "cfg": 3.0,
   "key": false,
-  "refs": [
-   "/Users/house_of_4k2b/.paper-tale/refs/style_small/keyart_ref_fox.jpg"
-  ],
+  "refs": [],
   "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, round window, frame, border, vignette, people, humans, animals, characters",
   "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: the same pond at night: indigo sky with a round cream moon and paper stars, dark hills, the lavender pond with five round lily pads in a row, a few amber fireflies. No frogs. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. Keep the lower third open where characters stand; key objects within the central 60% of the width."
  },

@@ -16,7 +16,7 @@ Hand-cut layered cardstock paper art in the style of the reference images. Every
 
 네거티브(컷): `torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, frame, border, vignette, scary, creepy`
 
-참고 이미지는 1장(기본 keyart_ref_fox, 밝은 낮 실내는 keyart_ref_rabbit_shadow). 2장이어도 1760x992에서 ComfyUI가 43GB를 쓰고 스왑이 차서 단계당 260초였다, 긴 변 448px 이하로 줄인 사본(`~/.paper-tale/refs/style_small/`)을 쓴다 — 원본(1080x2102 화면 캡처 등)을 4장 그대로 넣으면 ComfyUI가 샘플링 시작 직후 메모리 부족으로 꺼진다. 4장을 다 넣거나 640px로 넣어도 1760x992 목표에서 메모리가 0까지 떨어지므로 refs ≤ 2(실제 1장), ≤ 448px. 저장소에는 복사하지 않음. 원본 4장: `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg`, `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg`, `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp`, `/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg`
+참고 이미지: 배경(1760x992)은 refs 없이 글 묘사만으로 만든다 — 1장만 넣어도 ComfyUI가 41GB를 쓰고 스왑이 차서 단계당 157초(refs 없으면 40초/장 1012초, 화풍은 글만으로 충분히 나옴, 팥죽 들판 시험으로 확인). 컷(1024x768)은 refs 1장(기본 keyart_ref_fox, 밝은 낮 실내 keyart_ref_rabbit_shadow), 긴 변 ≤448px 사본(`~/.paper-tale/refs/style_small/`), 메모리가 0이 되면 refs 없이. refs ≤ 2, ≤ 448px. 저장소에는 복사하지 않음. 원본 4장: `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_fox.jpg`, `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_campfire.jpg`, `/Users/house_of_4k2b/.paper-tale/refs/style/keyart_ref_rabbit_shadow.webp`, `/Users/house_of_4k2b/.paper-tale/refs/style/cloud_factory_chimney_ref.jpg`
 
 ## 만드는 법
 
@@ -55,7 +55,7 @@ Hand-cut layered cardstock paper art in the style of the reference images. Every
 | 22 | wolf_goats | 9 | 8 | 17 |
 | | 합계 | 179 | 120 | 299 |
 
-한 장 약 10분 기준 약 50시간 (299장).
+배경 약 17분, 컷 약 7~10분 기준 약 65시간 (배경 179 + 컷 120).
 
 ### patjuk
 

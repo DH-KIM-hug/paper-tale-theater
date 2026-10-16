@@ -127,7 +127,7 @@ def main():
                 prompt = S2 + ' ' + CUT_HEAD + body
             else:
                 prompt = S2 + ' Scene: ' + body + ' ' + BG_TAIL
-            out.append({'name': n + '_s2', 'w': j['w'], 'h': j['h'], 'cfg': 3.0, 'key': False, 'refs': refs_for(n),
+            out.append({'name': n + '_s2', 'w': j['w'], 'h': j['h'], 'cfg': 3.0, 'key': False, 'refs': refs_for(n) if is_cut else [],
                         'negative': NEG_CUT if is_cut else NEG_BG, 'prompt': prompt})
         json.dump(out, open(os.path.join(HERE, f'jobs_{tale}_s2.json'), 'w'), ensure_ascii=False, indent=1)
         report[tale] = (sum(1 for o in out if '_cut_' not in o['name']), sum(1 for o in out if '_cut_' in o['name']))
