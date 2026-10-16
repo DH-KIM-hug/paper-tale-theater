@@ -64,6 +64,16 @@ OVERRIDE = {
                         "two hanging shelves with cream meju blocks, a woven sieve and a gourd dipper on the right wall, a dark packed-earth floor filling the whole bottom third. "
                         "The left floor near the wall is open for a stove; the right wall has open space for a door. No stove, no door, no people."),
 }
+OVERRIDE['scene_a_field'] = (
+    "a Korean adzuki-bean field on a warm golden autumn afternoon, seen straight on: a big round paper sun with halo rings at the upper left, cloud-shaped scalloped sheets in a pale gold sky, "
+    "three layers of rolling ochre and rust hills with a small thatched village far away, a few tall poplar trees on the right, and in front only FIVE wide rows of adzuki plants, "
+    "few and large, with TAN / KHAKI / beige-brown bean pods hanging on thin green-brown stems (the pods are tan, NOT red; only tiny dark red beans may peek out of a few split pods, no red pods, no chili peppers), "
+    "the pods small compared with a standing person, brown soil furrows between the rows, pampas grass at both lower corners. The bottom third is wide open plain brown soil.")
+OVERRIDE['scene_b_kitchen'] = (
+    "the inside of a traditional Korean earthen kitchen at night, seen straight on, a CLOSED earthen wall filling the whole picture from edge to edge with no big opening: "
+    "ONE small wooden lattice window on the upper left of the wall showing the dark indigo night sky with a small moon, a thick dark ceiling beam across the very top edge, "
+    "a wooden shelf with a few bowls on the right, a woven sieve and a gourd dipper hanging on the right wall, a dark floor band across the bottom third. "
+    "The left floor near the wall is open for a stove; the right wall has open space for a door. No stove, no door, no people.")
 OVERRIDE['scene_c_yard_sea'] = (
     "a snowy winter night by the sea, one wide landscape that fills the whole picture from the top edge to the bottom edge: "
     "a deep indigo night sky with a small full moon with halo rings and stars across the top; snowy mountains and a small Korean village with tiny amber windows in the middle left; "
