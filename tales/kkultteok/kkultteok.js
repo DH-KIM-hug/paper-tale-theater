@@ -4,9 +4,9 @@
 (() => {
   const AS = '../../assets/v3w/';
   const GROUND = 505;
-  const BGS = ['window', 'frontdoor', 'meadow', 'hill', 'door', 'inside', 'corner', 'rain', 'rainbow', 'sunset', 'night'];
-  const CUTS = ['door', 'button', 'hug', 'rainbow'];
-  const SPR = ['cloud1', 'cloud2', 'cloud3', 'cloud_rabbit', 'cloud_fish', 'chimney', 'button', 'dark_teary', 'dark_cry', 'dark_smile',
+  const BGS = ['window', 'frontdoor', 'meadow', 'door', 'inside', 'corner', 'rain', 'rainbow', 'sunset', 'night'];
+  const CUTS = ['hug', 'rainbow'];
+  const SPR = ['cloud3', 'cloud_rabbit', 'cloud_fish', 'dark_teary', 'dark_cry', 'dark_smile',
     'nuna_lookup', 'nuna_reach', 'nuna_wave', 'nuna_jump', 'nuna_back', 'nuna_hug', 'nuna_press', 'nuna_walk',
     'oppa_lookup', 'oppa_reach', 'oppa_wave', 'oppa_jump', 'oppa_back', 'oppa_hug', 'oppa_walk',
     'agi_lookup', 'agi_reach', 'agi_wave', 'agi_jump', 'agi_back', 'agi_hug', 'agi_press', 'agi_walk',
@@ -87,7 +87,7 @@
     const BOLT = 'M18 0 L-14 44 L2 44 L-12 92 L28 36 L10 36 Z';
     /* 마음 카드 (골라요) */
     const feelCard = (cx, cy, kind, label) => {
-      const g = el('g', { transform: `translate(${cx},${cy})` }, T.fx);
+      const g = el('g', { transform: `translate(${cx},${cy}) scale(${P ? .85 : 1})` }, T.fx);
       const inner = el('g', {}, g); const body = T.paper(inner, [
         ['rect', { x: -70, y: -50, width: 140, height: 100, rx: 20, fill: '#F6ECD8', stroke: '#6B4A32', 'stroke-width': 3 }],
         ['circle', { cx: 0, cy: -8, r: 24, fill: kind === 'sad' ? '#9DB4C8' : '#F6C945' }],
@@ -111,13 +111,17 @@
       back: ['agi_back', 186, 'right'], hug: ['agi_hug', 180, 'right'], press: ['agi_press', 192, 'right'], walk: ['agi_walk', 192, 'right'] });
     const dog = mk(T, { lookup: ['dog_lookup', 144, 'right'], run: ['dog_run', 92, 'right'], wag: ['dog_wag', 126, 'right'], sniff: ['dog_sniff', 90, 'right'] });
     const dark = mk(T, { teary: ['dark_teary', 150, 'right'], cry: ['dark_cry', 165, 'right'], smile: ['dark_smile', 150, 'right'] });
-    const cloudA = mk(T, { c: ['cloud1', 76, 'right'], rabbit: ['cloud_rabbit', 92, 'right'] });
-    const cloudB = mk(T, { c: ['cloud2', 76, 'right'], fish: ['cloud_fish', 66, 'right'] });
+    const cloudA = mk(T, { c: ['cloud3', 76, 'left'], rabbit: ['cloud_rabbit', 92, 'right'] });
+    const cloudB = mk(T, { c: ['cloud3', 70, 'right'], fish: ['cloud_fish', 66, 'right'] });
     const cloudC = mk(T, { c: ['cloud3', 76, 'right'] });
     const clouds = [cloudA, cloudB, cloudC];
-    const chim = prop(T, 'chimney', 130), btn = prop(T, 'button', 104);
+    const btn = T.actor(T.world, 885, 345, g => T.paper(g, [
+      ['rect', { x: -66, y: -26, width: 132, height: 30, rx: 8, fill: '#E8D9BD', stroke: '#B79F78', 'stroke-width': 2 }],
+      ['ellipse', { cx: 0, cy: -30, rx: 52, ry: 17, fill: '#9E2A1F' }], ['ellipse', { cx: 0, cy: -38, rx: 50, ry: 16, fill: '#E8402B' }],
+      ['ellipse', { cx: -10, cy: -42, rx: 24, ry: 6, fill: '#F6806A' }], ['circle', { cx: -54, cy: -11, r: 3.5, fill: '#B79F78' }], ['circle', { cx: 54, cy: -11, r: 3.5, fill: '#B79F78' }]]));
+    T.world.removeChild(btn.pos);
     const winClouds = [0, 1, 2].map(() => prop(T, 'cloud3', 62));
-    const chimClouds = [0, 1, 2].map(() => prop(T, 'cloud3', 60));
+    const chimClouds = [0, 1, 2].map(() => prop(T, 'cloud3', 60, 'right'));
 
     /* --- 1. 아침 창가 --- */
     scene('window');
@@ -180,19 +184,20 @@
 
     /* --- 4. 언덕 위 굴뚝 --- */
     await T.sceneCard(tr('언덕'), () => {
-      scene('hill', 560);
-      put(T, chim, 672, 305);
-      put(T, nuna, X(330, 360), 520, { look: 'lookup', to: 'right' });
-      put(T, oppa, X(430, 450), 520, { look: 'lookup', to: 'right' });
-      put(T, agi, X(540, 540), 520, { look: 'jump', to: 'right' });
-      put(T, dog, X(250, 310), 532, { look: 'lookup', to: 'right' });
-    }, chim.pos);
+      scene('door');
+      put(T, nuna, X(410, 395), 530, { look: 'lookup', to: 'right' });
+      put(T, oppa, X(495, 470), 530, { look: 'lookup', to: 'right' });
+      put(T, agi, X(580, 545), 530, { look: 'jump', to: 'left' });
+      put(T, dog, X(300, 330), 540, { look: 'lookup', to: 'right' });
+    }, nuna.pos);
     await say('언덕 위에 굴뚝 하나.');
     await say('굴뚝을 톡톡톡 눌러요!');
-    await T.mash(chim.pos, { count: 3, prompt: '굴뚝을 톡톡톡 눌러요!', onStep: i => {
-      const c = put(T, chimClouds[i - 1], 672 + (i - 2) * 64, 175 - (i % 2) * 24); c.pos.animate([{ opacity: 0, translate: '0 60px' }, { opacity: 1, translate: '0 0' }], 420);
-      c.hop(10, 380); popSfx(T); chim.hop(6, 200); puff(c.x, c.y - 30); T.pop(c.x, c.y - 100, tr('퐁!'));
+    const chim = hitRect(445, 90, 110, 140);
+    await T.mash(chim, { count: 3, prompt: '굴뚝을 톡톡톡 눌러요!', onStep: i => {
+      const c = put(T, chimClouds[i - 1], 500 + (i - 2) * 66, 70 - (i % 2) * 20); c.pos.animate([{ opacity: 0, translate: '0 60px' }, { opacity: 1, translate: '0 0' }], 420);
+      c.hop(10, 380); popSfx(T); puff(c.x, c.y - 30); T.pop(c.x, c.y + 80, tr('퐁!'));
     } });
+    chim.remove();
     await say('굴뚝에서 하얀 구름이 퐁! 퐁!');
     await say('"굴뚝에서 구름이 나와?" 다현이가 물어요.');
     await say('"퐁! 퐁!" 은우가 따라 해요.');
@@ -209,8 +214,7 @@
     await say('동그란 문을 톡! 같이 밀어 봐요.');
     const door = hit(495, 365, 105);
     await T.tap(door, { prompt: '동그란 문을 톡! 같이 밀어 봐요.' });
-    popSfx(T); door.remove();
-    await T.cutImage([{ src: cutSrc('door'), sfx: 'creak', hold: 3200 }], { hold: 3200 });
+    popSfx(T); door.remove(); AudioFX.sfx('creak'); T.shake();
     el('ellipse', { cx: 470, cy: 365, rx: 16, ry: 92, fill: '#FFE9A8', opacity: .85 }, T.bg);
     await say('이현이가 문을 살짝 밀어요. 끼이익.');
     await say('"들어가도 될까?" 다현이가 물어요.');
@@ -255,19 +259,19 @@
     /* --- 7. 빨간 단추 --- */
     await T.sceneCard(tr('빨간 단추'), () => {
       scene('corner', 790);
-      put(T, btn, 885, 345);
+      T.world.appendChild(btn.pos); btn.place(885, 345);
       put(T, nuna, X(610, 615), 530, { look: 'lookup', to: 'right' });
       put(T, oppa, X(695, 695), 530, { look: 'reach', to: 'right' });
       put(T, agi, X(785, 775), 530, { look: 'press', to: 'right' });
       put(T, dog, X(525, 565), 540, { look: 'sniff', to: 'right' });
-    }, btn.pos);
+    }, agi.pos);
     await say('구석에 빨간 단추가 있어요.');
     await say('"이건 뭐야? 눌러도 돼?" 다현이가 물어요.');
     await say('이현이는 손을 뻗었다가… 멈춰요.');
     await say('빨간 단추를 톡! 은우가 눌러요.');
     await T.tap(btn.pos, { prompt: '빨간 단추를 톡! 은우가 눌러요.' });
-    btn.hop(-8, 200); popSfx(T); T.shake();
-    await T.cutImage([{ src: cutSrc('button'), sfx: 'bonk', hold: 3200 }], { hold: 3200 });
+    btn.body.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(8px)' }, { transform: 'translateY(0)' }], 260); AudioFX.sfx('bonk') || popSfx(T); T.shake(); agi.hop(8, 260);
+    for (let k = 0; k < 4; k++) { puff(780 + k * 55, 250 - (k % 2) * 40); await sleep(120); }
     await say('은우가 꾹! 눌러 버렸어요.');
 
     /* --- 8. 아기 먹구름 --- */
@@ -287,7 +291,7 @@
     await say('까맣고, 조그맣고, 눈이 그렁그렁.');
     await say('"왜 울어?" 다현이가 물어요.');
     await say('먹구름은 지금 어떤 마음일까요?');
-    const cSad = feelCard(X(330, 345), 150, 'sad', '슬퍼요'), cHappy = feelCard(X(670, 655), 150, 'happy', '기뻐요');
+    const cSad = feelCard(X(330, 362), 150, 'sad', '슬퍼요'), cHappy = feelCard(X(670, 638), 150, 'happy', '기뻐요');
     await T.choose([{ key: 'sad', el: cSad, ok: true }, { key: 'happy', el: cHappy, ok: false }],
       { prompt: '먹구름은 지금 어떤 마음일까요?', where: '눈물이 그렁그렁해요. 슬픈 것 같아요.', who: '슬퍼요를 톡!' });
     cSad.remove(); cHappy.remove();
@@ -374,6 +378,9 @@
     await say('비가 그쳐요.');
 
     /* --- 12. 무지개 --- */
+    const RC = ['#E4573D', '#F6C945', '#6FAE5A', '#4A90D9'], RN = ['빨강!', '노랑!', '초록!', '파랑!'];
+    const RR = P ? [215, 185, 155, 125] : [300, 262, 224, 186], RW = P ? 28 : 36, RY = 520;
+    let arcs;
     await T.sceneCard(tr('무지개'), () => {
       scene('rainbow');
       put(T, nuna, X(390, 395), 535, { look: 'lookup', to: 'right' });
@@ -381,17 +388,12 @@
       put(T, agi, X(550, 535), 535, { look: 'jump', to: 'left' });
       put(T, dog, X(620, 590), 540, { look: 'lookup', to: 'left' });
       put(T, dark, X(740, 640), 165, { look: 'smile', to: 'left' }); dark.setScale(.7); dark.place(dark.x, dark.y);
+      const rb = el('g', { filter: 'url(#pp)' }, T.world);
+      arcs = RR.map((r, i) => el('path', { d: `M${500 - r} ${RY} A${r} ${r} 0 0 1 ${500 + r} ${RY}`, fill: 'none', stroke: RC[i], 'stroke-width': RW, opacity: .25 }, rb));
+      T.world.insertBefore(rb, T.world.firstChild);
     }, nuna.pos);
     await say('하늘에 무지개!');
     await say('무지개를 톡톡톡톡 눌러서 색깔을 세어 봐요!');
-    const RC = ['#E4573D', '#F6C945', '#6FAE5A', '#4A90D9'], RN = ['빨강!', '노랑!', '초록!', '파랑!'];
-    const RR = P ? [215, 185, 155, 125] : [300, 262, 224, 186], RW = P ? 28 : 36, RY = 520;
-    const rb = el('g', { filter: 'url(#pp)' }, T.world);
-    const arcs = RR.map((r, i) => {
-      const p = el('path', { d: `M${500 - r} ${RY} A${r} ${r} 0 0 1 ${500 + r} ${RY}`, fill: 'none', stroke: RC[i], 'stroke-width': RW, opacity: .25 }, rb);
-      return p;
-    });
-    T.world.insertBefore(rb, T.world.firstChild);
     const rhit = el('g', {}, T.world);
     RR.forEach(r => el('path', { d: `M${500 - r} ${RY} A${r} ${r} 0 0 1 ${500 + r} ${RY}`, fill: 'none', stroke: 'transparent', 'stroke-width': RW + 14 }, rhit));
     await T.mash(rhit, { count: 4, prompt: '무지개를 톡톡톡톡 눌러서 색깔을 세어 봐요!', onStep: i => {
