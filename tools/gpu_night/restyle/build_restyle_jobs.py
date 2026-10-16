@@ -29,13 +29,13 @@ S2 = ("Hand-cut layered cardstock paper art in the style of the reference images
       "Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. "
       "Objects, buildings and props have NO faces and NO eyes. No text.")
 BG_TAIL = ("Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. "
-           "Keep the lower third open where characters stand; key objects within the central 60% of the width.")
+           "The picture runs all the way to all four edges: no white margin, no box, no cut-away stage. Keep the lower third open where characters stand; key objects within the central 60% of the width.")
 CUT_HEAD = ("One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. "
             "The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. ")
 NEG_BASE = ("torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, "
             "text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, "
             "painted texture, felt, corrugated cardboard, perspective, depth of field")
-NEG_BG = NEG_BASE + ", round window, frame, border, vignette, people, humans, animals, characters"
+NEG_BG = NEG_BASE + ", white background, white margin, diorama box, shadow box frame, stage, round window, frame, border, vignette, people, humans, animals, characters"
 NEG_CUT = NEG_BASE + ", frame, border, vignette, scary, creepy"
 
 PREFIX = {'patjuk': None, 'kkultteok': 'cf', 'rabbit': 'rab', 'lion_mouse': 'lm', 'sunmoon': 'sm', 'turnip': 'tn', 'goldilocks': 'gl',
@@ -56,6 +56,13 @@ ALIAS = {
     'sm_bg_tree2_night': ('sm_bg_tree2', 'It is night: deep blue sky, a pale moon and stars.'),
     'sm_bg_well_top_night': ('sm_bg_well_top', 'It is night: deep blue sky, a pale moon and stars.'),
     'sm_cut_roar_night': ('sm_cut_roar', 'It is night, deep blue sky with a pale moon.'),
+}
+# 내용 문장을 직접 고친 것 (원본 문장에 '틀 기둥·앞 단' 같은 말이 있어 상자 모양 디오라마로 나온 경우)
+OVERRIDE = {
+    'scene_b_kitchen': ("the inside of a traditional Korean earthen kitchen at night seen straight on, the back clay wall filling the whole picture edge to edge: "
+                        "a small wooden lattice window with moonlit indigo sky on the upper left, a thick dark ceiling beam across the very top edge, "
+                        "two hanging shelves with cream meju blocks, a woven sieve and a gourd dipper on the right wall, a dark packed-earth floor filling the whole bottom third. "
+                        "The left floor near the wall is open for a stove; the right wall has open space for a door. No stove, no door, no people."),
 }
 EXCLUDE = set()  # 이미 다른 실행기가 만드는 것 (kkultteok 배경)
 
@@ -120,7 +127,7 @@ def main():
                 print('MISSING job', tale, n, file=sys.stderr)
                 continue
             is_cut = '_cut_' in n
-            body = (cut_content if is_cut else bg_content)(j['prompt'])
+            body = OVERRIDE.get(n) or (cut_content if is_cut else bg_content)(j['prompt'])
             if extra:
                 body += ' ' + extra
             if is_cut:

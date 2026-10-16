@@ -40,3 +40,7 @@ out = [{'name': 'cut_' + k + '_s2', 'w': 1024, 'h': 768, 'cfg': 3.0, 'key': Fals
         'prompt': S2 + ' ' + CUT_HEAD + v + ' Full-bleed illustration, no text.'} for k, v in C.items()]
 json.dump(out, open(os.path.join(HERE, 'jobs_patjuk_cuts_s2.json'), 'w'), ensure_ascii=False, indent=1)
 print(len(out))
+
+# 부엌 배경 다시 뽑기(상자 모양으로 나와 내용 문장을 고침)를 컷 파일 맨 앞에 둔다 (대기열 실행기가 한 줄로 처리하도록)
+kit = [j for j in json.load(open(os.path.join(HERE, 'jobs_patjuk_s2.json'))) if j['name'] == 'scene_b_kitchen_s2']
+json.dump(kit + out, open(os.path.join(HERE, 'jobs_patjuk_cuts_s2.json'), 'w'), ensure_ascii=False, indent=1)
