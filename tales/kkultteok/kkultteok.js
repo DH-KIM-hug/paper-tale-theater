@@ -26,7 +26,7 @@
         wrap.style.display = 'none'; looks[k] = { wrap, h, nat };
       });
     });
-    a.want = 'left';
+    a.want = 'left'; a.looks = looks;
     a.turn = d => { a.want = d; a.face(looks[a.cur].nat === d ? 'left' : 'right'); };
     a.look = (k, d) => {
       Object.entries(looks).forEach(([n, l]) => { l.wrap.style.display = n === k ? '' : 'none'; });
@@ -45,6 +45,16 @@
   const hide = a => { a.pos.style.display = 'none'; };
   const fadeIn = (a, ms = 400) => a.pos.animate([{ opacity: 0 }, { opacity: 1 }], ms);
 
+  /* 모양 바꾸기: 옛 그림이 흐려지며 새 그림이 번져 나타난다 (바로 바꾸지 않는다) */
+  function morph(a, key, ms = 800) {
+    const oldW = a.looks[a.cur].wrap, nw = a.looks[key].wrap;
+    if (oldW === nw) return;
+    a.look(key); oldW.style.display = '';
+    nw.animate([{ opacity: 0 }, { opacity: 1 }], { duration: ms, easing: 'ease-in-out' });
+    const an = oldW.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ms, easing: 'ease-in-out', fill: 'forwards' });
+    an.onfinish = () => { oldW.style.display = 'none'; an.cancel(); };
+  }
+
   const popSfx = T => AudioFX.sfx('pop') || T.tone([500, 800], .12, { vol: .12 });
   const NUM = ['하나!', '둘!', '셋!', '넷!'];
 
@@ -53,11 +63,69 @@
     const tr = T.tr, el = T.el;
     const P = T.viewWidth() < 990; /* 세로 화면은 가운데 약 430만 보인다 */
     const X = (l, p) => P ? p : l;
+    let sceneTok = 0, clipN = 0;
+    const live = new Set(); /* 떠 있는 퐁 구름 (최대 8) */
     const scene = (key, cx = 500) => {
+      sceneTok++; live.clear();
       T.clear(); stopRain();
       el('image', { href: bgSrc(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
+      if (SKY[key]) skyScene(key);
       camSnap(P ? cx : 500, 280, 1);
     };
+    /* 하늘에 늘 천천히 떠가는 종이 구름. list: [y, 너비, 한 바퀴 초, 시작 위치(0~1), 투명도] · clip: 창 안에서만 보이게 */
+    const sky = (list, clip) => {
+      const g = el('g', {}, T.bg);
+      if (clip) { const id = 'cfClip' + (++clipN); el('rect', clip, el('clipPath', { id }, g)); g.setAttribute('clip-path', `url(#${id})`); }
+      list.forEach(([y, w, dur, f, op = .9]) => {
+        const h = w / (ASP.cloud3 || 1.9), x0 = (clip ? clip.x : -40) - w / 2, x1 = (clip ? clip.x + clip.width : 1040) + w / 2;
+        const im = el('image', { href: src('cloud3'), x: -w / 2, y: -h / 2, width: w, height: h, preserveAspectRatio: 'none' }, g);
+        im.style.opacity = op;
+        im.animate([{ transform: `translate(${x0}px,${y}px)` }, { transform: `translate(${x1}px,${y}px)` }], { duration: dur * 1000, iterations: Infinity, delay: -dur * 1000 * f });
+      });
+    };
+    const SKY = {
+      window: [[{ x: 301, y: 60, width: 376, height: 320 }], [[112, 72, 46, .2, .85], [335, 56, 62, .65, .7], [172, 46, 78, .9, .6]]],
+      frontdoor: [[], [[42, 110, 110, .1], [92, 70, 84, .55, .85], [66, 50, 140, .85, .8]]],
+      meadow: [[], [[60, 120, 104, .15], [150, 80, 78, .6], [228, 60, 124, .9, .8]]],
+      door: [[], [[40, 110, 104, .3], [76, 64, 84, .7, .85], [56, 46, 136, .05, .8]]],
+      rainbow: [[], [[44, 100, 112, .5], [190, 60, 84, .2, .85], [158, 44, 140, .8, .8]]],
+      sunset: [[], [[40, 120, 112, .2, .8], [112, 70, 88, .6, .75], [172, 50, 132, .9, .7]]],
+      night: [[{ x: 304, y: 35, width: 392, height: 336 }], [[92, 70, 62, .3, .35], [212, 52, 84, .7, .3], [300, 44, 104, .05, .28]]],
+    };
+    /* 연기 한 덩이가 올라가며 진짜 구름으로 번진다. to:'pipe' 는 공장 안 천장 굴뚝관으로 빠져나간다 */
+    const puffToCloud = (x, y, o = {}) => {
+      const k = o.k || 1, rise = o.rise ?? 50, dx = o.dx ?? 300, pipe = o.to === 'pipe';
+      for (const n of [...live]) if (!n.isConnected) live.delete(n);
+      while (live.size >= 8) { const old = live.values().next().value; live.delete(old); old.remove(); }
+      const g = el('g', {}, T.fx); live.add(g);
+      const pf = el('g', { filter: 'url(#pp)' }, g);
+      const L = [[-14, 4, 15], [6, -6, 19], [22, 5, 14], [4, 9, 16]];
+      L.forEach(([cx, cy, r]) => el('circle', { cx, cy: cy + 2.5, r, fill: '#C9C3BA' }, pf));
+      L.forEach(([cx, cy, r]) => el('circle', { cx, cy, r, fill: '#ECE9E4' }, pf));
+      const cw = 92, ch = cw / (ASP.cloud3 || 1.9);
+      const cl = el('image', { href: src('cloud3'), x: -cw / 2, y: -ch / 2, width: cw, height: ch, preserveAspectRatio: 'none' }, g); cl.style.opacity = 0;
+      const tf = (a, b, s) => `translate(${a}px,${b}px) scale(${s * k})`;
+      const life = pipe ? 5200 : (o.life || 9800), r = (pipe ? 1800 : 1100) / life, top = y - rise;
+      const kf = [
+        { transform: tf(x, y, .55), opacity: 0, offset: 0 },
+        { transform: tf(x + 7, y - rise * .25, .8), opacity: 1, offset: r * .2, easing: 'ease-out' },
+        { transform: tf(x - 7, y - rise * .55, 1.05), opacity: 1, offset: r * .5 },
+        { transform: tf(x + 6, y - rise * .8, 1.25), opacity: 1, offset: r * .78 },
+        { transform: tf(x, top, 1.4), opacity: 1, offset: r }];
+      if (pipe) { const [px, py] = o.dest; kf.push({ transform: tf(x + (px - x) * .75, top + (py - top) * .75, 1.15), opacity: 1, offset: .82 }, { transform: tf(px, py, .35), opacity: 0, offset: 1 }); }
+      else kf.push({ transform: tf(x + dx * .35, top + 6, 1.65), opacity: 1, offset: .35 }, { transform: tf(x + dx * .75, top + 14, 1.9), opacity: 1, offset: .82 }, { transform: tf(x + dx, top + 10, 1.95), opacity: 0, offset: 1 });
+      const fade = { duration: pipe ? 1800 : 3200, delay: 150, fill: 'forwards', easing: 'ease-in-out' };
+      pf.animate([{ opacity: 1 }, { opacity: 0 }], fade); cl.animate([{ opacity: 0 }, { opacity: 1 }], fade);
+      g.animate(kf, { duration: life, fill: 'forwards' }).onfinish = () => { live.delete(g); g.remove(); };
+      return g;
+    };
+    /* 굴뚝에서 가만히 이어지는 연기 */
+    const chimneyLoop = async () => {
+      const my = sceneTok; let i = 0;
+      await sleep(700);
+      while (my === sceneTok) { puffToCloud(497, 106, { k: .8, rise: 40 + (i % 3) * 10, dx: 260 + (i % 3) * 40, life: 9000 }); i++; await sleep(2000); }
+    };
+    const skyScene = key => { const [clip, list] = SKY[key]; sky(list, clip[0]); };
     const hit = (cx, cy, r) => el('circle', { cx, cy, r, fill: 'transparent' }, T.world);
     const hitRect = (x, y, w, h) => el('rect', { x, y, width: w, height: h, rx: 18, fill: 'transparent' }, T.world);
     /* 종이 조각이 튀는 모양 (퐁!) */
@@ -121,7 +189,6 @@
       ['ellipse', { cx: -10, cy: -42, rx: 24, ry: 6, fill: '#F6806A' }], ['circle', { cx: -54, cy: -11, r: 3.5, fill: '#B79F78' }], ['circle', { cx: 54, cy: -11, r: 3.5, fill: '#B79F78' }]]));
     T.world.removeChild(btn.pos);
     const winClouds = [0, 1, 2].map(() => prop(T, 'cloud3', 62));
-    const chimClouds = [0, 1, 2].map(() => prop(T, 'cloud3', 60, 'right'));
 
     /* --- 1. 아침 창가 --- */
     scene('window');
@@ -190,12 +257,13 @@
       put(T, agi, X(580, 545), 530, { look: 'jump', to: 'left' });
       put(T, dog, X(300, 330), 540, { look: 'lookup', to: 'right' });
     }, nuna.pos);
+    chimneyLoop();
     await say('언덕 위에 굴뚝 하나.');
     await say('굴뚝을 톡톡톡 눌러요!');
     const chim = hitRect(445, 90, 110, 140);
     await T.mash(chim, { count: 3, prompt: '굴뚝을 톡톡톡 눌러요!', onStep: i => {
-      const c = put(T, chimClouds[i - 1], 500 + (i - 2) * 66, 70 - (i % 2) * 20); c.pos.animate([{ opacity: 0, translate: '0 60px' }, { opacity: 1, translate: '0 0' }], 420);
-      c.hop(10, 380); popSfx(T); puff(c.x, c.y - 30); T.pop(c.x, c.y + 80, tr('퐁!'));
+      popSfx(T); puff(497, 100, '#ECE9E4'); puffToCloud(497, 106, { k: 1.25 + i * .12, rise: 55 + i * 8, dx: 300 + i * 30 });
+      T.pop(497, 190, tr('퐁!'));
     } });
     chim.remove();
     await say('굴뚝에서 하얀 구름이 퐁! 퐁!');
@@ -204,7 +272,7 @@
 
     /* --- 5. 동그란 문 --- */
     await T.sceneCard(tr('동그란 문'), () => {
-      scene('door');
+      scene('door'); chimneyLoop();
       put(T, nuna, X(330, 350), 530, { look: 'lookup', to: 'right' });
       put(T, oppa, X(425, 425), 530, { look: 'reach', to: 'right' });
       put(T, dog, X(590, 540), 540, { look: 'run', to: 'left' });
@@ -238,6 +306,7 @@
     await T.mash(potHit, { count: 3, prompt: '구름 솥을 톡톡톡 눌러요!', onStep: i => {
       const c = put(T, clouds[i - 1], CP[i - 1][0], CP[i - 1][1]); c.look && c.look('c');
       c.pos.animate([{ opacity: 0, translate: '0 90px' }, { opacity: 1, translate: '0 0' }], 450);
+      puffToCloud(500, 372, { k: .95, rise: 270, to: 'pipe', dest: X([885, 16], [650, -20]) });
       c.hop(14, 360); popSfx(T); puff(CP[i - 1][0], CP[i - 1][1] - 30); T.pop(CP[i - 1][0], CP[i - 1][1] - 90, tr(NUM[i - 1]));
     } });
     potHit.remove();
@@ -246,12 +315,12 @@
     await say('이현이가 구름 하나를 톡 건드려요.');
     await say('구름을 톡! 무엇이 될까요?');
     await T.tap(cloudA.pos, { prompt: '구름을 톡! 무엇이 될까요?' });
-    cloudA.look('rabbit'); cloudA.hop(18, 360); popSfx(T); puff(cloudA.x, cloudA.y - 40); T.pop(cloudA.x, cloudA.y - 120, tr('퐁!')); oppa.hop(12, 300);
+    morph(cloudA, 'rabbit'); cloudA.hop(18, 360); popSfx(T); puff(cloudA.x, cloudA.y - 40); T.pop(cloudA.x, cloudA.y - 120, tr('퐁!')); oppa.hop(12, 300);
     await say('퐁! 구름이 토끼가 됐어요.');
     await say('은우도 따라서 톡.');
     await say('다른 구름도 톡!');
     await T.tap(cloudB.pos, { prompt: '다른 구름도 톡!' });
-    cloudB.look('fish'); cloudB.hop(18, 360); popSfx(T); puff(cloudB.x, cloudB.y - 40); T.pop(cloudB.x, cloudB.y - 110, tr('퐁!')); agi.hop(14, 300);
+    morph(cloudB, 'fish'); cloudB.hop(18, 360); popSfx(T); puff(cloudB.x, cloudB.y - 40); T.pop(cloudB.x, cloudB.y - 110, tr('퐁!')); agi.hop(14, 300);
     await say('퐁! 이번엔 물고기.');
     await say('"퐁! 퐁! 퐁!" 은우는 신이 나요.');
     await agi.hop(26, 400);
