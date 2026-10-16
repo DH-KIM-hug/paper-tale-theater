@@ -13,7 +13,7 @@
     'dog_lookup', 'dog_run', 'dog_wag', 'dog_sniff'];
   const sprFile = f => (/_walk$/.test(f) || f === 'dog_sniff') ? 'kk_' + f : 'cf_' + f;
   const src = f => AS + sprFile(f) + '.webp';
-  const BG2 = ['window', 'frontdoor', 'meadow']; // 새 종이공예 배경
+  const BG2 = ['window', 'frontdoor', 'meadow', 'inside']; // 새 종이공예 배경
   const bgSrc = k => AS + (BG2.includes(k) ? 'cf_bg2_' : 'cf_bg_') + k + '.webp', cutSrc = k => AS + 'cf_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const ASP = {}; // 그림 가로/세로 (불러온 뒤 채운다)
@@ -302,12 +302,12 @@
     await say('여기는 구름 공장!');
     await say('보글보글, 구름 솥이 끓어요.');
     await say('구름 솥을 톡톡톡 눌러요!');
-    const potHit = hitRect(405, 355, 190, 155);
+    const potHit = hitRect(320, 300, 270, 150);
     const CP = [[430, 300], [570, 300], [500, 235]];
     await T.mash(potHit, { count: 3, prompt: '구름 솥을 톡톡톡 눌러요!', onStep: i => {
       const c = put(T, clouds[i - 1], CP[i - 1][0], CP[i - 1][1]); c.look && c.look('c');
       c.pos.animate([{ opacity: 0, translate: '0 90px' }, { opacity: 1, translate: '0 0' }], 450);
-      puffToCloud(500, 372, { k: .95, rise: 270, to: 'pipe', dest: X([885, 16], [650, -20]) });
+      puffToCloud(451, 322, { k: .95, rise: 200, to: 'pipe', dest: X([666, 140], [640, 140]) });
       c.hop(14, 360); popSfx(T); puff(CP[i - 1][0], CP[i - 1][1] - 30); T.pop(CP[i - 1][0], CP[i - 1][1] - 90, tr(NUM[i - 1]));
     } });
     potHit.remove();
