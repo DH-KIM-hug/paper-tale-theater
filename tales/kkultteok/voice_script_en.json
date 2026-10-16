@@ -1,0 +1,632 @@
+{
+ "voices": {
+  "nar": "tc_67d237aac9ac563922580832",
+  "nuna": "tc_699d27ef573c4c4d91aa411d",
+  "oppa": "tc_624cccbcadcd568510764d65",
+  "agi": "tc_66596206b7bd6e89c3a2c54e",
+  "dark": "tc_660637108db3e2c06ff6ffa7",
+  "dog": "tc_5f8e95eae146f10007b85f45"
+ },
+ "lines": [
+  {
+   "text": "다현이와 이현이와 은우는 아침마다 창밖을 봐요.",
+   "en": "Dahyun, Ihyun, and Eunwoo look out the window every morning."
+  },
+  {
+   "text": "하늘에 구름이 하나, 둘, 셋.",
+   "en": "Up in the sky: one, two, three clouds."
+  },
+  {
+   "text": "구름을 톡톡톡 눌러서 세어 봐요!",
+   "en": "Tap the clouds, tap tap tap, and count them!"
+  },
+  {
+   "text": "\"구름은 어디서 올까?\" 다현이가 물어요.",
+   "en": "Where do clouds come from? asked Dahyun.",
+   "segs": [
+    [
+     "nuna",
+     "Where do clouds come from?"
+    ],
+    [
+     "nar",
+     "asked Dahyun."
+    ]
+   ]
+  },
+  {
+   "text": "\"어디서 올까?\" 은우도 따라 해요.",
+   "en": "Where from? Eunwoo says it too.",
+   "segs": [
+    [
+     "agi",
+     "Where from?"
+    ],
+    [
+     "nar",
+     "Eunwoo says it too."
+    ]
+   ]
+  },
+  {
+   "text": "꿀떡이가 코를 들고 킁킁, 킁킁.",
+   "en": "Kkulddeok lifts his nose and sniffs, sniff, sniff."
+  },
+  {
+   "text": "\"멍! 구름 냄새다!\"",
+   "en": "Woof! I smell clouds!",
+   "segs": [
+    [
+     "dog",
+     "Woof! I smell clouds!"
+    ]
+   ]
+  },
+  {
+   "text": "꿀떡이를 톡! 달려 나가게 해 줘요.",
+   "en": "Tap Kkulddeok to send him running!"
+  },
+  {
+   "text": "꿀떡이는 문밖으로 달려 나가요.",
+   "en": "Kkulddeok runs out the door."
+  },
+  {
+   "text": "\"꿀떡아, 같이 가!\"",
+   "en": "Kkulddeok, wait for us!",
+   "segs": [
+    [
+     "nuna",
+     "Kkulddeok, wait for us!"
+    ]
+   ]
+  },
+  {
+   "text": "킁킁, 킁킁. 꿀떡이는 냄새만 따라가요.",
+   "en": "Sniff, sniff. Kkulddeok just follows the smell."
+  },
+  {
+   "text": "언덕을 넘고, 풀밭을 지나고.",
+   "en": "Over the hill, across the meadow."
+  },
+  {
+   "text": "이현이는 길가 꽃을 살짝 만져 봐요.",
+   "en": "Ihyun gently touches the flowers by the road."
+  },
+  {
+   "text": "꽃을 톡톡톡 눌러서 향기를 맡아요!",
+   "en": "Tap the flowers, tap tap tap, and smell them!"
+  },
+  {
+   "text": "\"꿀떡아, 어디까지 가?\" 다현이가 물어요.",
+   "en": "Kkulddeok, how far are we going? asked Dahyun.",
+   "segs": [
+    [
+     "nuna",
+     "Kkulddeok, how far are we going?"
+    ],
+    [
+     "nar",
+     "asked Dahyun."
+    ]
+   ]
+  },
+  {
+   "text": "언덕 위에 굴뚝 하나.",
+   "en": "On top of the hill, there is one chimney."
+  },
+  {
+   "text": "굴뚝을 톡톡톡 눌러요!",
+   "en": "Tap the chimney, tap tap tap!"
+  },
+  {
+   "text": "굴뚝에서 하얀 구름이 퐁! 퐁!",
+   "en": "White clouds go pong! pong! out of the chimney."
+  },
+  {
+   "text": "\"굴뚝에서 구름이 나와?\" 다현이가 물어요.",
+   "en": "Clouds come out of the chimney? asked Dahyun.",
+   "segs": [
+    [
+     "nuna",
+     "Clouds come out of the chimney?"
+    ],
+    [
+     "nar",
+     "asked Dahyun."
+    ]
+   ]
+  },
+  {
+   "text": "\"퐁! 퐁!\" 은우가 따라 해요.",
+   "en": "Pong! Pong! Eunwoo says it too.",
+   "segs": [
+    [
+     "agi",
+     "Pong! Pong!"
+    ],
+    [
+     "nar",
+     "Eunwoo says it too."
+    ]
+   ]
+  },
+  {
+   "text": "굴뚝 아래, 동그란 문.",
+   "en": "Under the chimney, a round door."
+  },
+  {
+   "text": "동그란 문을 톡! 같이 밀어 봐요.",
+   "en": "Tap the round door and push it together!"
+  },
+  {
+   "text": "이현이가 문을 살짝 밀어요. 끼이익.",
+   "en": "Ihyun gently pushes the door. Creeeak."
+  },
+  {
+   "text": "\"들어가도 될까?\" 다현이가 물어요.",
+   "en": "May we go in? asked Dahyun.",
+   "segs": [
+    [
+     "nuna",
+     "May we go in?"
+    ],
+    [
+     "nar",
+     "asked Dahyun."
+    ]
+   ]
+  },
+  {
+   "text": "꿀떡이가 먼저 쏙 들어가요.",
+   "en": "Kkulddeok pops in first."
+  },
+  {
+   "text": "여기는 구름 공장!",
+   "en": "This is the cloud factory!"
+  },
+  {
+   "text": "보글보글, 구름 솥이 끓어요.",
+   "en": "Bubble, bubble, the cloud pot is boiling."
+  },
+  {
+   "text": "구름 솥을 톡톡톡 눌러요!",
+   "en": "Tap the cloud pot, tap tap tap!"
+  },
+  {
+   "text": "퐁! 하얀 구름. 퐁! 뭉게구름.",
+   "en": "Pong! A white cloud. Pong! A puffy cloud."
+  },
+  {
+   "text": "\"퐁! 퐁!\" 삼남매는 같이 외쳐요.",
+   "en": "Pong! Pong! the three siblings shout together.",
+   "segs": [
+    [
+     "oppa",
+     "Pong! Pong!"
+    ],
+    [
+     "nar",
+     "the three siblings shout together."
+    ]
+   ]
+  },
+  {
+   "text": "이현이가 구름 하나를 톡 건드려요.",
+   "en": "Ihyun gives one cloud a tap."
+  },
+  {
+   "text": "구름을 톡! 무엇이 될까요?",
+   "en": "Tap a cloud! What will it become?"
+  },
+  {
+   "text": "퐁! 구름이 토끼가 됐어요.",
+   "en": "Pong! The cloud turned into a bunny."
+  },
+  {
+   "text": "은우도 따라서 톡.",
+   "en": "Eunwoo taps one too."
+  },
+  {
+   "text": "다른 구름도 톡!",
+   "en": "Tap another cloud!"
+  },
+  {
+   "text": "퐁! 이번엔 물고기.",
+   "en": "Pong! This time, a fish."
+  },
+  {
+   "text": "\"퐁! 퐁! 퐁!\" 은우는 신이 나요.",
+   "en": "Pong! Pong! Pong! Eunwoo is so excited.",
+   "segs": [
+    [
+     "agi",
+     "Pong! Pong! Pong!"
+    ],
+    [
+     "nar",
+     "Eunwoo is so excited."
+    ]
+   ]
+  },
+  {
+   "text": "구석에 빨간 단추가 있어요.",
+   "en": "There is a red button in the corner."
+  },
+  {
+   "text": "\"이건 뭐야? 눌러도 돼?\" 다현이가 물어요.",
+   "en": "What is this? Can we press it? asked Dahyun.",
+   "segs": [
+    [
+     "nuna",
+     "What is this? Can we press it?"
+    ],
+    [
+     "nar",
+     "asked Dahyun."
+    ]
+   ]
+  },
+  {
+   "text": "이현이는 손을 뻗었다가… 멈춰요.",
+   "en": "Ihyun reaches out... and stops."
+  },
+  {
+   "text": "빨간 단추를 톡! 은우가 눌러요.",
+   "en": "Tap the red button! Eunwoo presses it."
+  },
+  {
+   "text": "은우가 꾹! 눌러 버렸어요.",
+   "en": "Eunwoo pressed it with a big push!"
+  },
+  {
+   "text": "덜컹! 기계가 흔들려요.",
+   "en": "Clunk! The machine shakes."
+  },
+  {
+   "text": "퐁… 작은 먹구름 하나가 나왔어요.",
+   "en": "Pong... one little dark cloud came out."
+  },
+  {
+   "text": "까맣고, 조그맣고, 눈이 그렁그렁.",
+   "en": "Dark, tiny, and eyes full of tears."
+  },
+  {
+   "text": "\"왜 울어?\" 다현이가 물어요.",
+   "en": "Why are you crying? asked Dahyun.",
+   "segs": [
+    [
+     "nuna",
+     "Why are you crying?"
+    ],
+    [
+     "nar",
+     "asked Dahyun."
+    ]
+   ]
+  },
+  {
+   "text": "먹구름은 지금 어떤 마음일까요?",
+   "en": "How is the little cloud feeling?"
+  },
+  {
+   "text": "\"나는 하얗지 않아.\" 아기 먹구름이 훌쩍여요.",
+   "en": "I am not white. the little cloud sniffles.",
+   "segs": [
+    [
+     "dark",
+     "I am not white."
+    ],
+    [
+     "nar",
+     "the little cloud sniffles."
+    ]
+   ]
+  },
+  {
+   "text": "훌쩍, 훌쩍, 후두둑.",
+   "en": "Sniffle, sniffle, pitter-patter."
+  },
+  {
+   "text": "먹구름 눈물이 비가 되어 떨어져요.",
+   "en": "The cloud's tears fall down as rain."
+  },
+  {
+   "text": "다현이와 이현이와 은우와 꿀떡이는 흠뻑 젖었어요.",
+   "en": "Dahyun, Ihyun, Eunwoo, and Kkulddeok got soaking wet."
+  },
+  {
+   "text": "이현이가 먹구름 뺨을 살살 쓰다듬어요.",
+   "en": "Ihyun gently strokes the little cloud's cheek."
+  },
+  {
+   "text": "먹구름을 톡톡톡 쓰다듬어 줘요!",
+   "en": "Tap the little cloud, tap tap tap, and pat it gently!"
+  },
+  {
+   "text": "\"비 좋아! 장화 신고 첨벙첨벙!\"",
+   "en": "I like rain! Let's put on boots and splash splash!",
+   "segs": [
+    [
+     "oppa",
+     "I like rain! Let's put on boots and splash splash!"
+    ]
+   ]
+  },
+  {
+   "text": "\"첨벙첨벙!\" 은우가 따라 뛰어요.",
+   "en": "Splash splash! Eunwoo jumps along.",
+   "segs": [
+    [
+     "agi",
+     "Splash splash!"
+    ],
+    [
+     "nar",
+     "Eunwoo jumps along."
+    ]
+   ]
+  },
+  {
+   "text": "\"먹구름아, 우리랑 놀래?\" 다현이가 물어요.",
+   "en": "Little cloud, do you want to play with us? asked Dahyun.",
+   "segs": [
+    [
+     "nuna",
+     "Little cloud, do you want to play with us?"
+    ],
+    [
+     "nar",
+     "asked Dahyun."
+    ]
+   ]
+  },
+  {
+   "text": "번개를 톡!",
+   "en": "Tap the lightning bolt!"
+  },
+  {
+   "text": "번쩍! 우르르 쾅!",
+   "en": "Flash! Rumble, boom!"
+  },
+  {
+   "text": "먹구름이 깜짝 놀라 번개를 냈어요.",
+   "en": "The little cloud got such a surprise that it made lightning."
+  },
+  {
+   "text": "꿀떡이를 톡! 꼭 안아 줘요.",
+   "en": "Tap Kkulddeok and give him a big hug!"
+  },
+  {
+   "text": "삼남매는 꿀떡이를 꼭 껴안아요.",
+   "en": "The three siblings hug Kkulddeok tight."
+  },
+  {
+   "text": "\"괜찮아, 괜찮아.\" 다현이가 속삭여요.",
+   "en": "It is okay, it is okay. whispers Dahyun.",
+   "segs": [
+    [
+     "nuna",
+     "It is okay, it is okay."
+    ],
+    [
+     "nar",
+     "whispers Dahyun."
+    ]
+   ]
+  },
+  {
+   "text": "\"괜찮아.\" 은우도 속삭여요.",
+   "en": "It is okay. Eunwoo whispers too.",
+   "segs": [
+    [
+     "agi",
+     "It is okay."
+    ],
+    [
+     "nar",
+     "Eunwoo whispers too."
+    ]
+   ]
+  },
+  {
+   "text": "먹구름이 눈물을 닦아요.",
+   "en": "The little cloud wipes its tears."
+  },
+  {
+   "text": "먹구름의 눈물을 톡! 닦아 줘요.",
+   "en": "Tap the little cloud's tears and wipe them away!"
+  },
+  {
+   "text": "\"나도… 괜찮아?\"",
+   "en": "Am I... okay too?",
+   "segs": [
+    [
+     "dark",
+     "Am I... okay too?"
+    ]
+   ]
+  },
+  {
+   "text": "\"괜찮아! 비는 재밌어.\" 삼남매가 말해요.",
+   "en": "It is okay! Rain is fun. the three siblings say.",
+   "segs": [
+    [
+     "oppa",
+     "It is okay! Rain is fun."
+    ],
+    [
+     "nar",
+     "the three siblings say."
+    ]
+   ]
+  },
+  {
+   "text": "먹구름이 처음으로 방긋 웃어요.",
+   "en": "For the first time, the little cloud smiles."
+  },
+  {
+   "text": "비가 그쳐요.",
+   "en": "The rain stops."
+  },
+  {
+   "text": "하늘에 무지개!",
+   "en": "A rainbow in the sky!"
+  },
+  {
+   "text": "무지개를 톡톡톡톡 눌러서 색깔을 세어 봐요!",
+   "en": "Tap the rainbow, tap tap tap tap, and count the colors!"
+  },
+  {
+   "text": "빨강, 노랑, 초록, 파랑.",
+   "en": "Red, yellow, green, blue."
+  },
+  {
+   "text": "\"무지개는 누가 만들어?\" 다현이가 물어요.",
+   "en": "Who makes the rainbow? asked Dahyun.",
+   "segs": [
+    [
+     "nuna",
+     "Who makes the rainbow?"
+    ],
+    [
+     "nar",
+     "asked Dahyun."
+    ]
+   ]
+  },
+  {
+   "text": "\"내가!\" 먹구름이 으쓱해요.",
+   "en": "Me! the little cloud says proudly.",
+   "segs": [
+    [
+     "dark",
+     "Me!"
+    ],
+    [
+     "nar",
+     "the little cloud says proudly."
+    ]
+   ]
+  },
+  {
+   "text": "\"퐁!\" 은우가 손뼉을 쳐요.",
+   "en": "Pong! Eunwoo claps.",
+   "segs": [
+    [
+     "agi",
+     "Pong!"
+    ],
+    [
+     "nar",
+     "Eunwoo claps."
+    ]
+   ]
+  },
+  {
+   "text": "해가 기울어요. 집에 갈 시간.",
+   "en": "The sun is setting. Time to go home."
+  },
+  {
+   "text": "\"먹구름아, 또 놀자!\"",
+   "en": "Little cloud, let us play again!",
+   "segs": [
+    [
+     "nuna",
+     "Little cloud, let us play again!"
+    ]
+   ]
+  },
+  {
+   "text": "먹구름에게 톡! 손을 흔들어요.",
+   "en": "Tap the little cloud and wave goodbye!"
+  },
+  {
+   "text": "꿀떡이가 앞장서요. 킁킁, 집 냄새.",
+   "en": "Kkulddeok leads the way. Sniff, sniff, the smell of home."
+  },
+  {
+   "text": "은우는 이현이의 손을 꼭 잡아요.",
+   "en": "Eunwoo holds Ihyun's hand tight."
+  },
+  {
+   "text": "밤이에요. 다현이와 이현이와 은우와 꿀떡이는 창밖을 봐요.",
+   "en": "It is night. Dahyun, Ihyun, Eunwoo, and Kkulddeok look out the window."
+  },
+  {
+   "text": "하늘에 작은 먹구름 하나.",
+   "en": "One little dark cloud in the sky."
+  },
+  {
+   "text": "우리한테 손을 흔들어요.",
+   "en": "It waves at us."
+  },
+  {
+   "text": "먹구름에게 톡! 잘 자라고 인사해요.",
+   "en": "Tap the little cloud and say good night!"
+  },
+  {
+   "text": "\"잘 자, 먹구름아.\"",
+   "en": "Good night, little cloud.",
+   "segs": [
+    [
+     "nuna",
+     "Good night, little cloud."
+    ]
+   ]
+  },
+  {
+   "text": "퐁.",
+   "en": "Pong."
+  },
+  {
+   "text": "눈물이 그렁그렁해요. 슬픈 것 같아요.",
+   "en": "Its eyes are full of tears. It looks sad."
+  },
+  {
+   "text": "슬퍼요를 톡!",
+   "en": "Tap sad!"
+  }
+ ],
+ "ui": {
+  "하나!": "One!",
+  "둘!": "Two!",
+  "셋!": "Three!",
+  "넷!": "Four!",
+  "향긋!": "Smells good!",
+  "멍!": "Woof!",
+  "퐁!": "Pong!",
+  "끼이익": "Creeeak",
+  "덜컹!": "Clunk!",
+  "살살!": "Gently!",
+  "쓰담!": "Pat pat!",
+  "토닥!": "There, there!",
+  "번쩍!": "Flash!",
+  "쾅!": "Boom!",
+  "방긋!": "Smile!",
+  "안녕!": "Bye bye!",
+  "잘 자!": "Good night!",
+  "빨강!": "Red!",
+  "노랑!": "Yellow!",
+  "초록!": "Green!",
+  "파랑!": "Blue!",
+  "슬퍼요": "Sad",
+  "기뻐요": "Happy",
+  "꾹!": "Push!",
+  "창가": "The Window",
+  "현관": "The Front Door",
+  "풀밭": "The Meadow",
+  "언덕": "The Hill",
+  "동그란 문": "The Round Door",
+  "구름 공장": "The Cloud Factory",
+  "빨간 단추": "The Red Button",
+  "아기 먹구름": "The Little Dark Cloud",
+  "비 오는 날": "Rainy Day",
+  "방긋": "A Big Smile",
+  "무지개": "The Rainbow",
+  "노을 길": "The Sunset Road",
+  "밤": "Night",
+  "퐁! 구름 공장": "Pong! The Cloud Factory",
+  "다현이와 이현이와 은우와 꿀떡이의 구름 공장": "The Cloud Factory of Dahyun, Ihyun, Eunwoo, and Kkulddeok",
+  "다음에 또 놀자, 먹구름아!": "Let us play again, little cloud!"
+ }
+}

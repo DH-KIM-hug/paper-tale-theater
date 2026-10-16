@@ -209,6 +209,16 @@ const TALES = (() => {
       ${[[106, 58], [116, 55], [126, 58], [136, 56], [112, 50], [126, 49]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4.5" fill="${c.rd}"/>`).join('')}
       <ellipse cx="80" cy="96" rx="13" ry="8" fill="${c.pn}"/><circle cx="74" cy="88" r="4" fill="${c.pn}"/><circle cx="86" cy="88" r="4" fill="${c.pn}"/>${eye(74, 88, 1.4)}${eye(86, 88, 1.4)}</g>` },
 
+  { id: 'kkultteok', title: '퐁! 구름 공장', origin: 'korean', skills: ['count', 'heart', 'shape'], ready: false, making: true,
+    line: '구름 솥을 눌러 구름을 세고, 우는 아기 먹구름을 달래 무지개를 만들어요.',
+    en: { title: 'Pong! The Cloud Factory', line: 'Count the clouds, comfort a crying little dark cloud, and make a rainbow together.' },
+    art: `<rect width="160" height="110" fill="#BFE0EE"/>
+      <g class="pc"><rect y="88" width="160" height="22" fill="${c.lf}"/>
+      <rect x="20" y="40" width="22" height="50" fill="${c.rd}"/><rect x="16" y="36" width="30" height="8" fill="${c.bk}"/>
+      ${[[34, 24], [46, 16], [58, 24]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="9" fill="${c.sn}"/>`).join('')}
+      <path d="M80 92 a46 46 0 0 1 72 0" fill="none" stroke="${c.rd}" stroke-width="7"/><path d="M87 92 a39 39 0 0 1 58 0" fill="none" stroke="${c.gd}" stroke-width="7"/><path d="M94 92 a32 32 0 0 1 44 0" fill="none" stroke="${c.pn}" stroke-width="7"/>
+      <circle cx="104" cy="60" r="11" fill="${c.dk}"/><circle cx="118" cy="56" r="13" fill="${c.dk}"/><circle cx="130" cy="61" r="10" fill="${c.dk}"/>${eye(113, 58, 1.6)}${eye(123, 58, 1.6)}</g>` },
+
   { id: 'hansel', title: '헨젤과 그레텔', origin: 'world', skills: ['shape', 'spot', 'heart'], ready: false, making: true,
     en: { title: 'Hansel and Gretel', line: 'Count the crumbs and candies, find the star key, and follow the way back home.' },
     line: '과자 집 지붕 무늬를 이어 붙이고, 빵 부스러기 길을 따라 집에 와요.',

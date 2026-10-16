@@ -1,0 +1,1136 @@
+{
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "nuna": "Lb7qkOn5hF8p7qfCDH8q",
+  "oppa": "tapn1QwocNXk3viVSowa",
+  "agi": "VOGEEZj2Kly5dP9LrQy8",
+  "dark": "MIl0Flub6Sc9KSkX2A42",
+  "dog": "rBkiq5ZQ43ogwd6i4uIQ"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "nuna": "eleven_v4",
+  "oppa": "eleven_v4",
+  "agi": "eleven_v4",
+  "dark": "eleven_v4",
+  "dog": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "nuna": {
+   "stability": 0.35,
+   "style": 0.45
+  },
+  "oppa": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "agi": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "dark": {
+   "stability": 0.3,
+   "style": 0.5
+  },
+  "dog": {
+   "stability": 0.3,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "nuna",
+  "oppa",
+  "agi",
+  "dark",
+  "dog"
+ ],
+ "notes": "ElevenLabs 배정: nar=Lily, nuna(다현)=Annie, oppa(이현)=Sparkles, agi(은우)=Munni(아기 말투 태그), dark(아기 먹구름)=Mithi, dog(꿀떡이)=Peanut",
+ "lines": [
+  {
+   "text": "다현이와 이현이와 은우는 아침마다 창밖을 봐요.",
+   "segs": [
+    [
+     "nar",
+     "다현이와 이현이와 은우는 아침마다 창밖을 봐요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "하늘에 구름이 하나, 둘, 셋.",
+   "segs": [
+    [
+     "nar",
+     "하늘에 구름이 하나, 둘, 셋.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "구름을 톡톡톡 눌러서 세어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "구름을 톡톡톡 눌러서 세어 봐요!",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"구름은 어디서 올까?\" 다현이가 물어요.",
+   "segs": [
+    [
+     "nuna",
+     "구름은 어디서 올까?",
+     null,
+     "[cheerful]"
+    ],
+    [
+     "nar",
+     "다현이가 물어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"어디서 올까?\" 은우도 따라 해요.",
+   "segs": [
+    [
+     "agi",
+     "어디서 올까?",
+     null,
+     "[baby voice]"
+    ],
+    [
+     "nar",
+     "은우도 따라 해요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "꿀떡이가 코를 들고 킁킁, 킁킁.",
+   "segs": [
+    [
+     "nar",
+     "꿀떡이가 코를 들고 킁킁, 킁킁.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"멍! 구름 냄새다!\"",
+   "segs": [
+    [
+     "dog",
+     "멍! 구름 냄새다!",
+     "happy",
+     "[excited]"
+    ]
+   ]
+  },
+  {
+   "text": "꿀떡이를 톡! 달려 나가게 해 줘요.",
+   "segs": [
+    [
+     "nar",
+     "꿀떡이를 톡! 달려 나가게 해 줘요.",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "꿀떡이는 문밖으로 달려 나가요.",
+   "segs": [
+    [
+     "nar",
+     "꿀떡이는 문밖으로 달려 나가요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"꿀떡아, 같이 가!\"",
+   "segs": [
+    [
+     "nuna",
+     "꿀떡아, 같이 가!",
+     "happy",
+     "[cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "킁킁, 킁킁. 꿀떡이는 냄새만 따라가요.",
+   "segs": [
+    [
+     "nar",
+     "킁킁, 킁킁. 꿀떡이는 냄새만 따라가요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "언덕을 넘고, 풀밭을 지나고.",
+   "segs": [
+    [
+     "nar",
+     "언덕을 넘고, 풀밭을 지나고.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "이현이는 길가 꽃을 살짝 만져 봐요.",
+   "segs": [
+    [
+     "nar",
+     "이현이는 길가 꽃을 살짝 만져 봐요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "꽃을 톡톡톡 눌러서 향기를 맡아요!",
+   "segs": [
+    [
+     "nar",
+     "꽃을 톡톡톡 눌러서 향기를 맡아요!",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"꿀떡아, 어디까지 가?\" 다현이가 물어요.",
+   "segs": [
+    [
+     "nuna",
+     "꿀떡아, 어디까지 가?",
+     null,
+     "[cheerful]"
+    ],
+    [
+     "nar",
+     "다현이가 물어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "언덕 위에 굴뚝 하나.",
+   "segs": [
+    [
+     "nar",
+     "언덕 위에 굴뚝 하나.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "굴뚝을 톡톡톡 눌러요!",
+   "segs": [
+    [
+     "nar",
+     "굴뚝을 톡톡톡 눌러요!",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "굴뚝에서 하얀 구름이 퐁! 퐁!",
+   "segs": [
+    [
+     "nar",
+     "굴뚝에서 하얀 구름이 퐁! 퐁!",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"굴뚝에서 구름이 나와?\" 다현이가 물어요.",
+   "segs": [
+    [
+     "nuna",
+     "굴뚝에서 구름이 나와?",
+     null,
+     "[cheerful]"
+    ],
+    [
+     "nar",
+     "다현이가 물어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"퐁! 퐁!\" 은우가 따라 해요.",
+   "segs": [
+    [
+     "agi",
+     "퐁! 퐁!",
+     "happy",
+     "[baby voice]"
+    ],
+    [
+     "nar",
+     "은우가 따라 해요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "굴뚝 아래, 동그란 문.",
+   "segs": [
+    [
+     "nar",
+     "굴뚝 아래, 동그란 문.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "동그란 문을 톡! 같이 밀어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "동그란 문을 톡! 같이 밀어 봐요.",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "이현이가 문을 살짝 밀어요. 끼이익.",
+   "segs": [
+    [
+     "nar",
+     "이현이가 문을 살짝 밀어요. 끼이익.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"들어가도 될까?\" 다현이가 물어요.",
+   "segs": [
+    [
+     "nuna",
+     "들어가도 될까?",
+     null,
+     "[cheerful]"
+    ],
+    [
+     "nar",
+     "다현이가 물어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "꿀떡이가 먼저 쏙 들어가요.",
+   "segs": [
+    [
+     "nar",
+     "꿀떡이가 먼저 쏙 들어가요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "여기는 구름 공장!",
+   "segs": [
+    [
+     "nar",
+     "여기는 구름 공장!",
+     null,
+     "[excited, wondering]"
+    ]
+   ]
+  },
+  {
+   "text": "보글보글, 구름 솥이 끓어요.",
+   "segs": [
+    [
+     "nar",
+     "보글보글, 구름 솥이 끓어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "구름 솥을 톡톡톡 눌러요!",
+   "segs": [
+    [
+     "nar",
+     "구름 솥을 톡톡톡 눌러요!",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "퐁! 하얀 구름. 퐁! 뭉게구름.",
+   "segs": [
+    [
+     "nar",
+     "퐁! 하얀 구름. 퐁! 뭉게구름.",
+     null,
+     "[cheerful, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"퐁! 퐁!\" 삼남매는 같이 외쳐요.",
+   "segs": [
+    [
+     "oppa",
+     "퐁! 퐁!",
+     "happy",
+     "[playful]"
+    ],
+    [
+     "nar",
+     "삼남매는 같이 외쳐요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "이현이가 구름 하나를 톡 건드려요.",
+   "segs": [
+    [
+     "nar",
+     "이현이가 구름 하나를 톡 건드려요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "구름을 톡! 무엇이 될까요?",
+   "segs": [
+    [
+     "nar",
+     "구름을 톡! 무엇이 될까요?",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "퐁! 구름이 토끼가 됐어요.",
+   "segs": [
+    [
+     "nar",
+     "퐁! 구름이 토끼가 됐어요.",
+     null,
+     "[cheerful, surprised]"
+    ]
+   ]
+  },
+  {
+   "text": "은우도 따라서 톡.",
+   "segs": [
+    [
+     "nar",
+     "은우도 따라서 톡.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "다른 구름도 톡!",
+   "segs": [
+    [
+     "nar",
+     "다른 구름도 톡!",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "퐁! 이번엔 물고기.",
+   "segs": [
+    [
+     "nar",
+     "퐁! 이번엔 물고기.",
+     null,
+     "[cheerful, surprised]"
+    ]
+   ]
+  },
+  {
+   "text": "\"퐁! 퐁! 퐁!\" 은우는 신이 나요.",
+   "segs": [
+    [
+     "agi",
+     "퐁! 퐁! 퐁!",
+     "happy",
+     "[baby voice]"
+    ],
+    [
+     "nar",
+     "은우는 신이 나요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "구석에 빨간 단추가 있어요.",
+   "segs": [
+    [
+     "nar",
+     "구석에 빨간 단추가 있어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"이건 뭐야? 눌러도 돼?\" 다현이가 물어요.",
+   "segs": [
+    [
+     "nuna",
+     "이건 뭐야? 눌러도 돼?",
+     null,
+     "[cheerful]"
+    ],
+    [
+     "nar",
+     "다현이가 물어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "이현이는 손을 뻗었다가… 멈춰요.",
+   "segs": [
+    [
+     "nar",
+     "이현이는 손을 뻗었다가… 멈춰요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "빨간 단추를 톡! 은우가 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "빨간 단추를 톡! 은우가 눌러요.",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "은우가 꾹! 눌러 버렸어요.",
+   "segs": [
+    [
+     "nar",
+     "은우가 꾹! 눌러 버렸어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "덜컹! 기계가 흔들려요.",
+   "segs": [
+    [
+     "nar",
+     "덜컹! 기계가 흔들려요.",
+     null,
+     "[startled, then curious]"
+    ]
+   ]
+  },
+  {
+   "text": "퐁… 작은 먹구름 하나가 나왔어요.",
+   "segs": [
+    [
+     "nar",
+     "퐁… 작은 먹구름 하나가 나왔어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "까맣고, 조그맣고, 눈이 그렁그렁.",
+   "segs": [
+    [
+     "nar",
+     "까맣고, 조그맣고, 눈이 그렁그렁.",
+     null,
+     "[soft, tender]"
+    ]
+   ]
+  },
+  {
+   "text": "\"왜 울어?\" 다현이가 물어요.",
+   "segs": [
+    [
+     "nuna",
+     "왜 울어?",
+     null,
+     "[gentle]"
+    ],
+    [
+     "nar",
+     "다현이가 물어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "먹구름은 지금 어떤 마음일까요?",
+   "segs": [
+    [
+     "nar",
+     "먹구름은 지금 어떤 마음일까요?",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"나는 하얗지 않아.\" 아기 먹구름이 훌쩍여요.",
+   "segs": [
+    [
+     "dark",
+     "나는 하얗지 않아.",
+     "sad:1.3",
+     "[sad, small]"
+    ],
+    [
+     "nar",
+     "아기 먹구름이 훌쩍여요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "훌쩍, 훌쩍, 후두둑.",
+   "segs": [
+    [
+     "nar",
+     "훌쩍, 훌쩍, 후두둑.",
+     null,
+     "[soft, sad]"
+    ]
+   ]
+  },
+  {
+   "text": "먹구름 눈물이 비가 되어 떨어져요.",
+   "segs": [
+    [
+     "nar",
+     "먹구름 눈물이 비가 되어 떨어져요.",
+     null,
+     "[soft, sad]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이와 이현이와 은우와 꿀떡이는 흠뻑 젖었어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이와 이현이와 은우와 꿀떡이는 흠뻑 젖었어요.",
+     null,
+     "[gentle, a little funny]"
+    ]
+   ]
+  },
+  {
+   "text": "이현이가 먹구름 뺨을 살살 쓰다듬어요.",
+   "segs": [
+    [
+     "nar",
+     "이현이가 먹구름 뺨을 살살 쓰다듬어요.",
+     null,
+     "[tender, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "먹구름을 톡톡톡 쓰다듬어 줘요!",
+   "segs": [
+    [
+     "nar",
+     "먹구름을 톡톡톡 쓰다듬어 줘요!",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"비 좋아! 장화 신고 첨벙첨벙!\"",
+   "segs": [
+    [
+     "oppa",
+     "비 좋아! 장화 신고 첨벙첨벙!",
+     "happy",
+     "[playful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"첨벙첨벙!\" 은우가 따라 뛰어요.",
+   "segs": [
+    [
+     "agi",
+     "첨벙첨벙!",
+     "happy",
+     "[baby voice]"
+    ],
+    [
+     "nar",
+     "은우가 따라 뛰어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"먹구름아, 우리랑 놀래?\" 다현이가 물어요.",
+   "segs": [
+    [
+     "nuna",
+     "먹구름아, 우리랑 놀래?",
+     null,
+     "[cheerful]"
+    ],
+    [
+     "nar",
+     "다현이가 물어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "번개를 톡!",
+   "segs": [
+    [
+     "nar",
+     "번개를 톡!",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "번쩍! 우르르 쾅!",
+   "segs": [
+    [
+     "nar",
+     "번쩍! 우르르 쾅!",
+     null,
+     "[dramatic but playful]"
+    ]
+   ]
+  },
+  {
+   "text": "먹구름이 깜짝 놀라 번개를 냈어요.",
+   "segs": [
+    [
+     "nar",
+     "먹구름이 깜짝 놀라 번개를 냈어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "꿀떡이를 톡! 꼭 안아 줘요.",
+   "segs": [
+    [
+     "nar",
+     "꿀떡이를 톡! 꼭 안아 줘요.",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "삼남매는 꿀떡이를 꼭 껴안아요.",
+   "segs": [
+    [
+     "nar",
+     "삼남매는 꿀떡이를 꼭 껴안아요.",
+     null,
+     "[warm, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "\"괜찮아, 괜찮아.\" 다현이가 속삭여요.",
+   "segs": [
+    [
+     "nuna",
+     "괜찮아, 괜찮아.",
+     "whisper",
+     "[whispers]"
+    ],
+    [
+     "nar",
+     "다현이가 속삭여요.",
+     null,
+     "[soft]"
+    ]
+   ]
+  },
+  {
+   "text": "\"괜찮아.\" 은우도 속삭여요.",
+   "segs": [
+    [
+     "agi",
+     "괜찮아.",
+     "whisper",
+     "[whispers]"
+    ],
+    [
+     "nar",
+     "은우도 속삭여요.",
+     null,
+     "[soft]"
+    ]
+   ]
+  },
+  {
+   "text": "먹구름이 눈물을 닦아요.",
+   "segs": [
+    [
+     "nar",
+     "먹구름이 눈물을 닦아요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "먹구름의 눈물을 톡! 닦아 줘요.",
+   "segs": [
+    [
+     "nar",
+     "먹구름의 눈물을 톡! 닦아 줘요.",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"나도… 괜찮아?\"",
+   "segs": [
+    [
+     "dark",
+     "나도… 괜찮아?",
+     "sad:1.2",
+     "[sad, small]"
+    ]
+   ]
+  },
+  {
+   "text": "\"괜찮아! 비는 재밌어.\" 삼남매가 말해요.",
+   "segs": [
+    [
+     "oppa",
+     "괜찮아! 비는 재밌어.",
+     "happy",
+     "[playful]"
+    ],
+    [
+     "nar",
+     "삼남매가 말해요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "먹구름이 처음으로 방긋 웃어요.",
+   "segs": [
+    [
+     "nar",
+     "먹구름이 처음으로 방긋 웃어요.",
+     null,
+     "[joyful, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "비가 그쳐요.",
+   "segs": [
+    [
+     "nar",
+     "비가 그쳐요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "하늘에 무지개!",
+   "segs": [
+    [
+     "nar",
+     "하늘에 무지개!",
+     null,
+     "[excited, wondering]"
+    ]
+   ]
+  },
+  {
+   "text": "무지개를 톡톡톡톡 눌러서 색깔을 세어 봐요!",
+   "segs": [
+    [
+     "nar",
+     "무지개를 톡톡톡톡 눌러서 색깔을 세어 봐요!",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강, 노랑, 초록, 파랑.",
+   "segs": [
+    [
+     "nar",
+     "빨강, 노랑, 초록, 파랑.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"무지개는 누가 만들어?\" 다현이가 물어요.",
+   "segs": [
+    [
+     "nuna",
+     "무지개는 누가 만들어?",
+     null,
+     "[cheerful]"
+    ],
+    [
+     "nar",
+     "다현이가 물어요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"내가!\" 먹구름이 으쓱해요.",
+   "segs": [
+    [
+     "dark",
+     "내가!",
+     "happy",
+     "[proud]"
+    ],
+    [
+     "nar",
+     "먹구름이 으쓱해요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"퐁!\" 은우가 손뼉을 쳐요.",
+   "segs": [
+    [
+     "agi",
+     "퐁!",
+     "happy",
+     "[baby voice]"
+    ],
+    [
+     "nar",
+     "은우가 손뼉을 쳐요.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "해가 기울어요. 집에 갈 시간.",
+   "segs": [
+    [
+     "nar",
+     "해가 기울어요. 집에 갈 시간.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "\"먹구름아, 또 놀자!\"",
+   "segs": [
+    [
+     "nuna",
+     "먹구름아, 또 놀자!",
+     "happy",
+     "[cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "먹구름에게 톡! 손을 흔들어요.",
+   "segs": [
+    [
+     "nar",
+     "먹구름에게 톡! 손을 흔들어요.",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "꿀떡이가 앞장서요. 킁킁, 집 냄새.",
+   "segs": [
+    [
+     "nar",
+     "꿀떡이가 앞장서요. 킁킁, 집 냄새.",
+     null,
+     "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "은우는 이현이의 손을 꼭 잡아요.",
+   "segs": [
+    [
+     "nar",
+     "은우는 이현이의 손을 꼭 잡아요.",
+     null,
+     "[warm, tender]"
+    ]
+   ]
+  },
+  {
+   "text": "밤이에요. 다현이와 이현이와 은우와 꿀떡이는 창밖을 봐요.",
+   "segs": [
+    [
+     "nar",
+     "밤이에요. 다현이와 이현이와 은우와 꿀떡이는 창밖을 봐요.",
+     null,
+     "[calm, soft, sleepy]"
+    ]
+   ]
+  },
+  {
+   "text": "하늘에 작은 먹구름 하나.",
+   "segs": [
+    [
+     "nar",
+     "하늘에 작은 먹구름 하나.",
+     null,
+     "[calm, soft, sleepy]"
+    ]
+   ]
+  },
+  {
+   "text": "우리한테 손을 흔들어요.",
+   "segs": [
+    [
+     "nar",
+     "우리한테 손을 흔들어요.",
+     null,
+     "[calm, soft, sleepy]"
+    ]
+   ]
+  },
+  {
+   "text": "먹구름에게 톡! 잘 자라고 인사해요.",
+   "segs": [
+    [
+     "nar",
+     "먹구름에게 톡! 잘 자라고 인사해요.",
+     null,
+     "[gentle, encouraging, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "\"잘 자, 먹구름아.\"",
+   "segs": [
+    [
+     "nuna",
+     "잘 자, 먹구름아.",
+     "whisper",
+     "[whispers]"
+    ]
+   ]
+  },
+  {
+   "text": "퐁.",
+   "segs": [
+    [
+     "nar",
+     "퐁.",
+     null,
+     "[whisper, tiny]"
+    ]
+   ]
+  },
+  {
+   "text": "눈물이 그렁그렁해요. 슬픈 것 같아요.",
+   "segs": [
+    [
+     "nar",
+     "눈물이 그렁그렁해요. 슬픈 것 같아요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "슬퍼요를 톡!",
+   "segs": [
+    [
+     "nar",
+     "슬퍼요를 톡!",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  }
+ ]
+}
