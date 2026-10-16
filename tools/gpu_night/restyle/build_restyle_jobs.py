@@ -29,7 +29,7 @@ S2 = ("Hand-cut layered cardstock paper art in the style of the reference images
       "Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. "
       "Objects, buildings and props have NO faces and NO eyes. No text.")
 BG_TAIL = ("Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. "
-           "The picture runs all the way to all four edges: no white margin, no box, no cut-away stage. Keep the lower third open where characters stand; key objects within the central 60% of the width.")
+           "The picture runs all the way to all four edges: no white margin, no white background, no box, no cut-away stage; the sky sheets reach the top edge and the ground sheets reach the bottom edge, the scene fills the whole canvas. Keep the lower third open where characters stand; key objects within the central 60% of the width.")
 CUT_HEAD = ("One warm picture-book illustration filling the entire image edge to edge, no frame, no border, kid-friendly and never scary. "
             "The characters have simple friendly faces (round dot eyes, small smile, pink cheeks); objects and props have no faces or eyes. ")
 NEG_BASE = ("torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, "
@@ -64,6 +64,11 @@ OVERRIDE = {
                         "two hanging shelves with cream meju blocks, a woven sieve and a gourd dipper on the right wall, a dark packed-earth floor filling the whole bottom third. "
                         "The left floor near the wall is open for a stove; the right wall has open space for a door. No stove, no door, no people."),
 }
+OVERRIDE['scene_c_yard_sea'] = (
+    "a snowy winter night by the sea, one wide landscape that fills the whole picture from the top edge to the bottom edge: "
+    "a deep indigo night sky with a small full moon with halo rings and stars across the top; snowy mountains and a small Korean village with tiny amber windows in the middle left; "
+    "a short stone wall with an open brushwood gate at the left-center; in the bottom half a big snowy farmyard of packed brown earth on the left, a winding sandy path going down to the shore, "
+    "and the moonlit sea with layered scalloped waves and a golden moon path on the right. The left third of the ground is open for a house to be placed.")
 EXCLUDE = set()  # 이미 다른 실행기가 만드는 것 (kkultteok 배경)
 
 

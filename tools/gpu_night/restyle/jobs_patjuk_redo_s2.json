@@ -1,0 +1,12 @@
+[
+ {
+  "name": "scene_c_yard_sea_s2",
+  "w": 1760,
+  "h": 992,
+  "cfg": 3.0,
+  "key": false,
+  "refs": [],
+  "negative": "torn edges, painterly, gradient shading, gradient, 3D render, paper sculpture, origami, glossy, photorealistic, photograph, miniature model, text, letters, watermark, faces on objects, eyes on objects, wavy decorative bands, thick white outline, colored shadow, airbrushing, painted texture, felt, corrugated cardboard, perspective, depth of field, white background, white margin, diorama box, shadow box frame, stage, round window, frame, border, vignette, people, humans, animals, characters",
+  "prompt": "Hand-cut layered cardstock paper art in the style of the reference images. Every shape is cut from colored cardstock with crisp clean edges, flat saturated colors with at most two tones per shape, no gradients, no outlines. Three to five depth layers stacked one in front of another (far sky and hills, middle shapes, foreground); each sheet sits slightly above the one behind it and casts a soft realistic drop shadow toward the lower right, light coming from the upper left. Fine paper grain over everything. Sky, hills and tree masses are cut as cloud-shaped scalloped sheets. Rich but uncluttered: two to four meaningful elements only. Objects, buildings and props have NO faces and NO eyes. No text. Scene: a snowy winter night by the sea, one wide landscape that fills the whole picture from the top edge to the bottom edge: a deep indigo night sky with a small full moon with halo rings and stars across the top; snowy mountains and a small Korean village with tiny amber windows in the middle left; a short stone wall with an open brushwood gate at the left-center; in the bottom half a big snowy farmyard of packed brown earth on the left, a winding sandy path going down to the shore, and the moonlit sea with layered scalloped waves and a golden moon path on the right. The left third of the ground is open for a house to be placed. Full-bleed picture filling the entire image edge to edge, no round window, no frame, no border. No characters unless described. The picture runs all the way to all four edges: no white margin, no white background, no box, no cut-away stage; the sky sheets reach the top edge and the ground sheets reach the bottom edge, the scene fills the whole canvas. Keep the lower third open where characters stand; key objects within the central 60% of the width."
+ }
+]

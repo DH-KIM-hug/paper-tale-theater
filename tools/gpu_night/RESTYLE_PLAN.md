@@ -146,3 +146,9 @@ ud_bg_autumn_s2, ud_bg_cabin_s2, ud_bg_nest2_s2, ud_bg_pond_s2, ud_bg_reeds_s2, 
 ### wolf_goats
 
 wg_bg_door_s2, wg_bg_house_s2, wg_bg_inside_door_s2, wg_bg_kitchen_s2, wg_bg_messy_s2, wg_bg_shadow_s2, wg_bg_tree_s2, wg_bg_well_s2, wg_bg_window_s2, wg_cut_belly_s2, wg_cut_chalk_s2, wg_cut_dance_s2, wg_cut_dark_s2, wg_cut_flour_s2, wg_cut_pop_s2, wg_cut_splash_s2, wg_cut_stitch_s2
+
+## 검수 메모 (팥죽 시험에서 알게 된 것)
+
+- 원본 내용 문장에 '틀 기둥', '앞 단', '왼쪽에서 오른쪽으로 이어지는 한 장면' 같은 말이 있으면 상자 모양 디오라마나 흰 바탕 위에 뜬 띠가 나온다 (팥죽 부엌·마당·바다에서 확인). 이런 장은 `build_restyle_jobs.py`의 `OVERRIDE`에 내용 문장을 직접 적어 다시 뽑는다. 배경 꼬리말과 네거티브에 '흰 바탕·여백·상자 금지'를 넣어 두었다.
+- 그림이 도착하면 반드시 눈으로 확인: 흰 여백, 상자 모양, 물체 얼굴, 내용 틀림은 다시 뽑는다 (`run_night.py <jobs> <name> --redo`).
+- 배경 refs 없음, 컷 refs 1장. 웹피 변환은 `restyle/to_webp_s2.py <name>` (배경 가로 1600, 컷 1024x768, 품질 80).
