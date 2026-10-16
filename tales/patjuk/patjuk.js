@@ -17,7 +17,7 @@
   }
 
   /* 장면 한 장 그림 (생성 중). 없으면 폴백 조합 */
-  const SCENE_IMG = { A: A('v3w/scene_a_field.webp'), B1: A('v3w/scene_b_kitchen.webp'), B2: A('v3w/scene_c_yard_sea.webp') };
+  const SCENE_IMG = { A: A('v3w/scene_a_field_s2.webp'), B1: A('v3w/scene_b_kitchen_s2.webp'), B2: A('v3w/scene_c_yard_sea_s2.webp') };
   const sceneOK = {};
 
   /* 무대 좌표 (발 기준 y=520) */
@@ -52,7 +52,10 @@
      새 파일을 못 불러오면 예전 그림(cut_<key>.png)으로 */
   const CUT_NEW = { jeolgu_b: 'jeolgu_b2', jige: 'jige2', wrong_jige: 'wrong_jige2', jara_b: 'jara_b2' };
   const cutOK = {};
-  const cutUrl = key => A(`v2/cut_${CUT_NEW[key] && cutOK[key] !== false ? CUT_NEW[key] : key}.png`);
+  /* S2 화풍 컷(assets/v3w/cut_<이름>_s2.webp): 있으면 그것을, 없으면 예전 그림을 쓴다 */
+  const s2OK = {};
+  const s2Url = key => A(`v3w/cut_${CUT_NEW[key] || key}_s2.webp`);
+  const cutUrl = key => s2OK[key] ? s2Url(key) : A(`v2/cut_${CUT_NEW[key] && cutOK[key] !== false ? CUT_NEW[key] : key}.png`);
 
   let played = false; // 두 번째부터(다시 보기)는 오프닝·인트로 없이 바로 놀이
 
@@ -68,7 +71,8 @@
       Promise.all(Object.entries(SCENE_IMG).map(([k, u]) => T.preload(u).then(ok => { sceneOK[k] = ok; }))),
       sleep(2500),
     ]);
-    const preCut = key => T.preload(cutUrl(key)).then(ok => { cutOK[key] = ok; if (!ok && CUT_NEW[key]) T.preload(cutUrl(key)); });
+    const preCut = key => T.preload(s2Url(key)).then(ok => { s2OK[key] = ok; return T.preload(cutUrl(key)); })
+      .then(ok => { cutOK[key] = ok; if (!ok && CUT_NEW[key]) T.preload(cutUrl(key)); });
     FRIENDS.forEach(f => ['', '_b'].forEach(s => preCut(f.id + s)));
     FRIENDS.forEach(f => preCut('wrong_' + f.id));
     if (typeof NARRATION_CLIPS !== 'undefined') AudioFX.preloadAll(Object.values(NARRATION_CLIPS).flat());
@@ -197,7 +201,7 @@
       if (full) el('image', { href: SCENE_IMG[k], x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, bg);
       if (k === 'A') {
         // 팥 포기: 밭 띠 위 두 줄 (배경 그림이라 배우는 그 앞에 선다)
-        if (full) {
+        if (full && false) { // S2 밭 그림에는 팥 포기가 이미 그려져 있어 따로 오려 붙이지 않는다
           // [x, 바닥선 y, 높이, 좌우 뒤집기, 포기 번호, 불투명도]: 가까운 띠(1.0배) 3포기 · 먼 띠(0.6배) 4포기. 장면 그림에 그려진 포기를 오려 쓴 것
           [[120, 420, 84, 0, 1, 1], [420, 422, 80, 1, 2, 1], [820, 420, 84, 0, 2, 1],
            [215, 345, 50, 1, 2, .85], [380, 342, 48, 0, 1, .85], [600, 344, 50, 1, 1, .85], [940, 342, 48, 0, 2, .85]].forEach(([x, y, h, fl, n, op]) => {
