@@ -17,21 +17,21 @@
    "sprites": [
     {
      "file": "assets/v3w/tiger_stand.webp",
-     "x": 0.52,
+     "x": 0.5,
      "foot": 0.78,
      "w": 0.6
     },
     {
      "file": "assets/v2/c2_granny.png",
-     "x": 0.78,
-     "foot": 0.745,
+     "x": 0.7,
+     "foot": 0.725,
      "h": 0.42
     },
     {
      "file": "assets/v2/c2_jara.png",
-     "x": 0.2,
-     "foot": 0.855,
-     "w": 0.11
+     "x": 0.31,
+     "foot": 0.8,
+     "w": 0.09
     }
    ]
   },
@@ -48,21 +48,21 @@
    "sprites": [
     {
      "file": "assets/v3w/tiger_stand.webp",
-     "x": 0.52,
+     "x": 0.5,
      "foot": 0.78,
      "w": 0.6
     },
     {
      "file": "assets/v2/c2_granny.png",
-     "x": 0.78,
-     "foot": 0.745,
+     "x": 0.7,
+     "foot": 0.725,
      "h": 0.42
     },
     {
      "file": "assets/v2/c2_jara.png",
-     "x": 0.2,
-     "foot": 0.855,
-     "w": 0.11
+     "x": 0.31,
+     "foot": 0.8,
+     "w": 0.09
     }
    ]
   }
