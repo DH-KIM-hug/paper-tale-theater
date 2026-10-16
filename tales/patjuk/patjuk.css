@@ -121,3 +121,4 @@
 @media (prefers-reduced-motion: reduce) {
   .fr-sway, .pj-steam .puff, .pj-snow circle, .pj-fire { animation: none; }
 }
+#skipBtn { touch-action: none; -webkit-touch-callout: none; user-select: none; }

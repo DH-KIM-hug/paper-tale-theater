@@ -911,6 +911,7 @@ const Tale = (() => {
     const hint = $('#rotateHint');
     if (hint) { hint.onpointerdown = e => { e.stopPropagation(); hint.classList.add('gone'); }; setTimeout(() => hint.classList.add('gone'), 6000); } cam = $('#cam'); bgL = $('#bgL'); world = $('#world'); fxL = $('#fxL'); handEl = $('#hand');
     // 대사 건너뛰기: 무대 1초 꾹 (보호자용). 짧은 탭은 무시한다
+    $('#tale').addEventListener('contextmenu', e => e.preventDefault()); // 길게 누를 때 뜨는 메뉴(이미지 저장 등) 막기
     let ht = null;
     $('#stageWrap').addEventListener('pointerdown', () => { clearTimeout(ht); ht = setTimeout(() => Narrator.stop(), 1000); });
     ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => $('#stageWrap').addEventListener(ev, () => clearTimeout(ht)));

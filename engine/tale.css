@@ -393,3 +393,7 @@ svg text { font-weight: 800; }
 .restGate .pill { min-width: 88px; min-height: 64px; font-size: 24px; }
 #restScreen, #restScreen .words, #restScreen .pills { align-items: center; justify-content: center; text-align: center; }
 #restScreen { flex-direction: column; }
+
+/* 길게 누르기(보호자 건너뛰기) 때 휴대폰의 '이미지 저장'·글자 선택 메뉴가 뜨지 않게 */
+#tale, #tale * { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+#tale img, #tale image { -webkit-user-drag: none; }
