@@ -209,9 +209,9 @@ const TALES = (() => {
       ${[[106, 58], [116, 55], [126, 58], [136, 56], [112, 50], [126, 49]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4.5" fill="${c.rd}"/>`).join('')}
       <ellipse cx="80" cy="96" rx="13" ry="8" fill="${c.pn}"/><circle cx="74" cy="88" r="4" fill="${c.pn}"/><circle cx="86" cy="88" r="4" fill="${c.pn}"/>${eye(74, 88, 1.4)}${eye(86, 88, 1.4)}</g>` },
 
-  { id: 'kkultteok', title: '퐁! 구름 공장', origin: 'korean', skills: ['count', 'heart', 'shape'], ready: false, making: true,
-    line: '구름 솥을 눌러 구름을 세고, 우는 아기 먹구름을 달래 무지개를 만들어요.',
-    en: { title: 'Pong! The Cloud Factory', line: 'Count the clouds, comfort a crying little dark cloud, and make a rainbow together.' },
+  { id: 'kkultteok', title: '구름 공장', origin: 'korean', skills: ['count', 'heart', 'shape'], ready: false, making: true,
+    line: '구름 공장에서 구름을 만들고, 숨어 있던 아기 먹구름을 달래 무지개를 띄워요.',
+    en: { title: 'The Cloud Factory', line: 'Make clouds at the cloud factory, cheer up a shy little rain cloud, and bring out a rainbow.' },
     art: `<rect width="160" height="110" fill="#BFE0EE"/>
       <g class="pc"><rect y="88" width="160" height="22" fill="${c.lf}"/>
       <rect x="20" y="40" width="22" height="50" fill="${c.rd}"/><rect x="16" y="36" width="30" height="8" fill="${c.bk}"/>

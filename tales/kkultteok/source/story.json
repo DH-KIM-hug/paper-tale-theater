@@ -1,6 +1,6 @@
 {
   "storyId": "cloud-factory",
-  "title": "퐁! 구름 공장",
+  "title": "구름 공장",
   "titleTemplate": "{{all:와}} {{dog:이}}의 구름 공장",
   "sceneCount": 16,
   "roles": {
