@@ -144,7 +144,7 @@ def new_prompt(tale, name, kind, desc, size):
     if kind == 'cut':
         return '\n\n'.join([HEAD, f'Create a {"wide 16:9" if w >= h else "tall"} comic-panel moment for a picture book, rendered entirely as handcrafted paper art: every element is cut from matte colored cardstock and fine-grain craft paper.',
                             STYLE, 'MOMENT:\n' + desc, FACE, 'If reference images are attached, they show the characters: match their shapes, colours, clothes and markings exactly.',
-                            'FRAME:\nNo border, no speech bubbles, no panel lines, no letters; fills the frame edge to edge.', LIGHT, NO])
+                            'FRAME:\nNo border, no speech bubbles, no panel lines, no letters; fills the frame edge to edge. The panel background is the scene itself (sky, ground, burst strips) — NEVER a plain magenta or chroma-key background.', LIGHT, NO])
     return '\n\n'.join([HEAD, 'Create ONE character or object sprite, rendered entirely as handcrafted paper art: a figure assembled from individually cut pieces of matte colored cardstock and fine-grain craft paper.',
                         STYLE, 'SUBJECT AND POSE:\n' + desc, FACE, 'If a reference image is attached, it shows how this character (or this family of objects) is drawn in this exact style: keep the same drawing style, body shapes, face and proportions; take the COLOURS, clothes, markings and POSE from the SUBJECT text above when it says so.',
                         'FRAMING:\nSquare 1:1 image. The whole figure is visible and centred, filling about 80% of the frame. Background: a completely flat, uniform, solid magenta (#FF00FF) chroma-key sheet with no texture, no floor, no ground shadow, no extra props, no border. Nothing else in the image.',
@@ -213,7 +213,9 @@ def build2(tales):
         names = used_names(t); jobs = []; groups = {}
         for n in names:
             if kind_of(n) == 'sprite': groups.setdefault(char_key(t, n), []).append(n)
-        base = {k: sorted(v, key=lambda x: (len(x), x))[0] for k, v in groups.items()}
+        # 기본 그림: 서 있기·걷기 같은 보통 자세를 먼저 (헤엄·잠 같은 특별한 자세가 기본이 되면 다른 자세가 모두 그 모양을 따라간다)
+        pref = lambda x: (0 if re.search(r'(stand|idle|base|front|walk)', x) else 1 if not re.search(r'(swim|sleep|lie|fall|cry|run|dizzy|hurt|flat)', x) else 2, len(x), x)
+        base = {k: sorted(v, key=pref)[0] for k, v in groups.items()}
         main = [base[k] for k, v in sorted(groups.items(), key=lambda kv: -len(kv[1]))[:3]]
         for n in names:
             src = os.path.join(OLD, n + '.webp') if os.path.exists(os.path.join(OLD, n + '.webp')) else os.path.join(V3W, n + '.webp')
