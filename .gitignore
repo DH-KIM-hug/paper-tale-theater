@@ -25,3 +25,10 @@ ios/DerivedData/
 ios/App/App/public/
 ios/App/App/capacitor.config.json
 ios/App/CapApp-SPM/.build/
+
+# 그림 재생성 실행 기록
+tools/app/gen/restyle/*.log
+tools/app/gen/restyle/*.out
+tools/app/gen/restyle/*.pid
+tools/app/gen/restyle/status.json
+tools/app/gen/restyle/_prompt*.txt
