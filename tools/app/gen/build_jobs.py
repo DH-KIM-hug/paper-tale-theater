@@ -219,6 +219,34 @@ for k, (d, p) in {'dark_drink2': ('A TALL, tower-shaped dark rain cloud characte
                   'dark_march3': ('A small, wide and flat dark rain cloud character, a single layer of dark grey paper with a lighter grey edge strip. It is just a cloud with a face: NO arms, NO hands, NO legs, NO feet.', 'Floating along to the right, humming happily, eyes closed.')}.items():
     J('kkultteok', k, 'sprite', sprite(d, p), [])
 
+# 2026-10-17 구름은 모두 한 겹으로, 먹구름은 한 가족 디자인(기본 그림 하나를 참고로 크기·표정만 다르게)
+ONEL = ('ONE single flat layer of hand-cut matte cardstock only — no second layer, no stacked layers, no offset edge strips — '
+        'a simple soft cloud silhouette with a few round bumps and a crisp cut edge, a narrow soft shadow under the edge, visible paper fibres.')
+for k, d in {'cloud_white': 'A white cloud with four soft bumps.', 'cloud_rabbit': 'A white cloud shaped like a sitting rabbit with two tall ears.',
+             'cloud_whale': 'A white cloud shaped like a whale with a small spout.', 'cloud_dog': 'A white cloud shaped like a small dog with floppy ears and a curled tail.',
+             'cloud_fish': 'A white cloud shaped like a plump fish with a forked tail fin.', 'cloud_car': 'A white cloud shaped like a small rounded toy car with two round wheels.',
+             'cloud_two': 'A white cloud the same size, but its edge is MANY small tight bubbly bumps all around (like popcorn).', 'cloud_long': 'A white cloud the same size, with a flat bottom and a gently wavy top of three low, wide, soft bumps.',
+             'cloud_small': 'A white cloud the same size, built from two BIG round bumps side by side, one taller than the other.'}.items():
+    J('kkultteok', k + '_1l', 'sprite', sprite(d + ' ' + ONEL, 'Floating, front view.', face=False, extra_no=NOFACE), [])
+DK1 = ('A dark rain cloud character cut from ONE single flat layer of charcoal-slate paper (no stacked layers), a simple soft cloud silhouette with round bumps, '
+       'a simple cut-paper face. It is just a cloud with a face: NO arms, NO hands, NO legs, NO feet. ' + ONEL.split(' — a simple')[0] + '.')
+J('kkultteok', 'dark_base_1l', 'sprite', sprite(DK1 + ' A medium-size, round, friendly cloud.', 'Floating, calm smile, front view.'), [])
+DKREF = [f'{RAW}/char_gpt/kkultteok/dark_base_1l.png']
+FAM = ' Same cloud family as the reference image: same paper colour, same single-layer cut style, same face style and about the same size; only the bumpy outline pattern and the expression change.'
+for k, (d, p) in {'dark_drink_1l': ('A dark rain cloud whose edge is three or four BIG round bumps.', 'Sipping water through a coral paper straw held in its mouth, cheeks full, content.'),
+                  'dark_drink2_1l': ('A dark rain cloud of the same size whose edge is MANY small tight bubbly bumps all around (like popcorn).', 'Sipping water through a coral paper straw, eyes closed happily.'),
+                  'dark_drink3_1l': ('A dark rain cloud of the same size with a flat bottom and a gently wavy top of three low, wide bumps.', 'Slurping water through a coral paper straw, cheeks puffed.'),
+                  'dark_march_1l': ('A dark rain cloud whose edge is three or four BIG round bumps.', 'Floating along to the right, cheerful.'),
+                  'dark_march2_1l': ('A dark rain cloud of the same size whose edge is MANY small tight bubbly bumps all around (like popcorn).', 'Floating along to the right, proud little smile.'),
+                  'dark_march3_1l': ('A dark rain cloud of the same size with a flat bottom and a gently wavy top of three low, wide bumps.', 'Floating along to the right, humming, eyes closed.'),
+                  'dark_bump_1l': ('A dark rain cloud whose edge is three or four BIG round bumps.', 'Bumping sideways, surprised O mouth, two tiny paper stars beside it.'),
+                  'baby_huddle_1l': ('The BABY of this cloud family: much smaller and rounder, the same charcoal-slate paper.', 'Sitting low and small, looking down, sad, one tiny paper tear.'),
+                  'baby_wide_1l': ('The BABY of this cloud family: much smaller and rounder, the same charcoal-slate paper.', 'Eyes big and round with surprise and hope, tiny hopeful smile.'),
+                  'baby_up_1l': ('The BABY of this cloud family: much smaller and rounder, the same charcoal-slate paper.', 'Shooting upward happily, determined smile, a few short paper motion strips below.'),
+                  'baby_sorry_1l': ('The BABY of this cloud family: much smaller and rounder, the same charcoal-slate paper.', 'Sheepish embarrassed smile, tilted a little, one small paper sweat drop.'),
+                  'baby_white_1l': ('The BABY of this cloud family, now turned pure WHITE paper (same shape and face style).', 'Beaming smile, floating happily, two tiny paper sparkles.')}.items():
+    J('kkultteok', k, 'sprite', sprite(DK1.replace('A dark rain cloud character', 'A cloud character') + ' ' + d + FAM, p), DKREF)
+
 # ───────── 시작 화면: 크림 종이판에 둥근 창 (종이 테두리) ─────────
 def keyround(scene, ratio, rim):
     if ratio == 'wide':

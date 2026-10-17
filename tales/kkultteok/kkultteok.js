@@ -120,7 +120,7 @@
       popSfx(T); puff(p1[0], p1[1], '#FBFAF6');
     };
     /* 하늘에 천천히 흘러가는 종이 구름. list: [y, 너비, 한 바퀴 초, 시작 위치(0~1), 투명도] */
-    const SKYC = ['cloud_one', 'cloud_long', 'cloud_two', 'cloud_small', 'cloud_white']; let skyN = 0; // 겹이 하나·둘·셋인 여러 모양
+    const SKYC = ['cloud_long', 'cloud_two', 'cloud_small', 'cloud_white']; let skyN = 0; // 모두 한 겹, 뭉게 모양만 서로 다르게
     const skyDrift = list => {
       const g = el('g', {}, T.bg);
       list.forEach(([y, w, dur, f, op = .95]) => {

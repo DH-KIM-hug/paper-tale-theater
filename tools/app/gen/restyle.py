@@ -245,6 +245,8 @@ LIMIT_RE = re.compile(r'(usage limit|rate limit|limit reached|too many requests|
 def wait_until(text):
     """한도 메시지에서 풀리는 시각을 읽는다. 못 읽으면 30분 뒤"""
     now = datetime.datetime.now()
+    m = re.search(r'resets_at\\?"?:\s*(\d{10})', text)  # 429 응답 JSON 의 resets_at (유닉스 초)
+    if m: return datetime.datetime.fromtimestamp(int(m.group(1))) + datetime.timedelta(minutes=2)
     m = re.search(r'try again in\s+(?:(\d+)\s*(?:days?|d))?\s*(?:(\d+)\s*(?:hours?|h))?\s*(?:(\d+)\s*(?:minutes?|min|m))?', text, re.I)
     if m and any(m.groups()):
         d, h, mi = (int(x or 0) for x in m.groups()); return now + datetime.timedelta(days=d, hours=h, minutes=mi + 2)
@@ -294,15 +296,15 @@ def run(tales):
             j = todo[0]
             res, txt = gen_one(j, log)
             if res == 'limit':
-                until = wait_until(txt); st = load_status(); st['_wait_until'] = until.strftime('%Y-%m-%d %H:%M'); st[t]['state'] = 'waiting-limit'; save_status(st)
+                until = wait_until(txt); st = load_status(); st['_wait_until'] = until.strftime('%Y-%m-%d %H:%M'); st.setdefault(t, {})['state'] = 'waiting-limit'; save_status(st)
                 print(f'{datetime.datetime.now():%H:%M} 한도 → {until:%m-%d %H:%M} 까지 대기', flush=True)
-                time.sleep(max(60, (until - datetime.datetime.now()).total_seconds()))
+                time.sleep(min(60 * 60, max(60, (until - datetime.datetime.now()).total_seconds())))  # 안내보다 일찍 풀릴 수 있어 1시간마다 다시 시도
                 st = load_status(); st.pop('_wait_until', None); save_status(st)
             elif res == 'fail':
                 fails[j['id']] = fails.get(j['id'], 0) + 1; print('실패', j['id'], fails[j['id']], flush=True); time.sleep(20)
             else:
                 print(f'{datetime.datetime.now():%H:%M} ok {t}/{j["id"]}', flush=True)
-        st = load_status(); st[t]['state'] = 'generated'; st[t]['failed'] = [k for k, v in fails.items() if v >= 3]; save_status(st)
+        st = load_status(); st.setdefault(t, {})['state'] = 'generated'; st[t]['failed'] = [k for k, v in fails.items() if v >= 3]; save_status(st)
         print('동화 완료', t, flush=True)
 
 def post(tale):
