@@ -39,7 +39,7 @@ Object.assign(NARRATION_CLIPS, {
  "히힝, 멍멍, 꼬끼오! 멋진 노래예요!": "audio/el/bremen/nar_ae223cc8f6.mp3",
  "야옹, 꼬끼오, 히힝! 최고의 음악대예요!": "audio/el/bremen/nar_9dcf20ba0d.mp3",
  "해가 지고 캄캄한 숲이 되었어요. 부엉이가 부엉부엉.": "audio/el/bremen/nar_3c7479712f.mp3",
- "숲을 지나가요. 톡톡톡 눌러 줘요!": "audio/el/bremen/nar_efcbc8625f.mp3",
+ "숲을 지나가요.": "audio/el/bremen/nar_33bc7668f7.mp3",
  "톡톡톡! 숲을 지나가요.": "audio/el/bremen/nar_12e72145b1.mp3",
  "닭이 나무 꼭대기로 푸드덕 올라갔어요.": "audio/el/bremen/nar_9223601d07.mp3",
  "닭: \"저기 불빛이 보여요! 집이 있어요!\"": "audio/el/bremen/rooster_577c82ec17.mp3",
@@ -81,7 +81,7 @@ Object.assign(NARRATION_CLIPS, {
  "사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.": "audio/el/bremen/nar_7f6eebd2de.mp3",
  "아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.": "audio/el/bremen/nar_4eff577b89.mp3",
  "\"브레멘은 못 갔지만, 여기가 우리 집이야!\"": "audio/el/bremen/donkey_489305a337.mp3",
- "기쁨의 노래를 연주해요! 먼저 들어 봐요.": "audio/el/bremen/nar_90941e6aab.mp3",
+ "기쁨의 노래를 연주해요!": "audio/el/bremen/nar_5471b62b31.mp3",
  "이번에는 친구들을 톡톡 눌러서 같이 연주해요!": "audio/el/bremen/nar_6b1d23d62c.mp3",
  "함께라서 행복한 브레멘 음악대였답니다.": "audio/el/bremen/nar_99896ff930.mp3"
 });

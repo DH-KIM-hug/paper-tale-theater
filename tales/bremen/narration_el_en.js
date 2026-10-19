@@ -147,9 +147,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The sun went down, and the forest grew dark. The owl went hoo, hoo.",
   "c": "audio/el/bremen/en/nar_614821ab78.mp3"
  },
- "숲을 지나가요. 톡톡톡 눌러 줘요!": {
-  "t": "Let's walk through the forest. Tap, tap, tap!",
-  "c": "audio/el/bremen/en/nar_0d5f147165.mp3"
+ "숲을 지나가요.": {
+  "t": "Let's walk through the forest.",
+  "c": "audio/el/bremen/en/nar_aeea75da1c.mp3"
  },
  "톡톡톡! 숲을 지나가요.": {
   "t": "Tap, tap, tap! Through the forest we go.",
@@ -303,9 +303,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "\"We never got to Bremen, but this is our home!\"",
   "c": "audio/el/bremen/en/donkey_b33c2391c4.mp3"
  },
- "기쁨의 노래를 연주해요! 먼저 들어 봐요.": {
-  "t": "Let's play the song of joy! Listen first.",
-  "c": "audio/el/bremen/en/nar_d8aa1813b1.mp3"
+ "기쁨의 노래를 연주해요!": {
+  "t": "Let's play the song of joy!",
+  "c": "audio/el/bremen/en/nar_6a666223cf.mp3"
  },
  "이번에는 친구들을 톡톡 눌러서 같이 연주해요!": {
   "t": "This time, tap the friends and play together!",

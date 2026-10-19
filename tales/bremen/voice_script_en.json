@@ -383,12 +383,12 @@
    ]
   },
   {
-   "text": "숲을 지나가요. 톡톡톡 눌러 줘요!",
-   "en": "Let's walk through the forest. Tap, tap, tap!",
+   "text": "숲을 지나가요.",
+   "en": "Let's walk through the forest.",
    "segs": [
     [
      "nar",
-     "Let's walk through the forest. Tap, tap, tap!",
+     "Let's walk through the forest.",
      "tonedown:1.0"
     ]
    ]
@@ -794,12 +794,12 @@
    "prev": "Morning came. The four friends loved this house."
   },
   {
-   "text": "기쁨의 노래를 연주해요! 먼저 들어 봐요.",
-   "en": "Let's play the song of joy! Listen first.",
+   "text": "기쁨의 노래를 연주해요!",
+   "en": "Let's play the song of joy!",
    "segs": [
     [
      "nar",
-     "Let's play the song of joy! Listen first.",
+     "Let's play the song of joy!",
      "happy:1.1"
     ]
    ]

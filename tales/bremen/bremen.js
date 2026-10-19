@@ -613,8 +613,7 @@
     camSnap(DX, 330, 1.25);
     await T.curtain(true);
     await say('옛날 옛날, 방앗간에 늙은 당나귀가 살았어요.');
-    await say('당나귀를 톡 눌러 봐요!');
-    await T.tap(cast.donkey.pos, { prompt: '당나귀를 톡!' });
+    await sleep(300); // 당나귀 히힝은 저절로 (2026-10-19)
     cast.donkey.cry(); cast.donkey.hop(20); T.pop(DX + 40, 220, '히힝~', C.bean);
     await sleep(900);
     await camWide(700);
@@ -783,10 +782,10 @@
     S.CRY.owl();
     T.pop(OWX, 60, '부엉~', C.cream);
     await say('해가 지고 캄캄한 숲이 되었어요. 부엉이가 부엉부엉.');
-    await say('숲을 지나가요. 톡톡톡 눌러 줘요!');
+    await say('숲을 지나가요.'); // 숲길은 저절로 쓱쓱 (2026-10-19)
     const area = el('rect', { x: 340, y: 150, width: 320, height: 360, fill: '#fff', opacity: 0 }, T.world); // 숲 한가운데 큼직한 톡 자리
     let tx = 0;
-    await T.mash(area, { count: 3, prompt: '톡톡톡! 숲을 지나가요.', onStep: i => {
+    const walkStep = i => {
       tx -= fb.art ? L(170, 210) : 170; // 그림: 세로 화면은 조금 더 밀어 먼 불빛 창이 보이게
       const st = fb.art ? L(170, 210) : 170;
       fb.trees.animate([{ transform: `translateX(${tx + st}px)` }, { transform: `translateX(${tx}px)` }], { duration: 700, fill: 'forwards', easing: 'ease-in-out' });
@@ -794,7 +793,9 @@
       band.forEach(a => a.lean.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 350, iterations: 2 }));
       S.step();
       T.pop(500, 200, ['쓱!', '쓱쓱!', '쓱쓱쓱!'][i - 1], C.cream);
-    } });
+    };
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 3; i++) { await walkStep(i); await sleep(800); }
     area.remove();
     await say('닭이 나무 꼭대기로 푸드덕 올라갔어요.');
     flap(cast.rooster);
@@ -1109,11 +1110,9 @@
     };
     const odeVoice = (n, d, i) => ODE_VOICE[WHO[i]](T.hz(n), d);
     const odeHop = i => { const a = cast[WHO[i]]; a.hop(18, 280); note(T, a.x + 20, a.y - 100 * a.scale, [C.bean, C.pine, C.persimmon][i % 3]); };
-    await say('기쁨의 노래를 연주해요! 먼저 들어 봐요.');
+    await say('기쁨의 노래를 연주해요!'); // 따라 누르기 없이 들려주기만 (2026-10-19)
     await T.playMelody(ODE, { beat: .4, voice: odeVoice, onNote: odeHop });
     await sleep(500);
-    await say('이번에는 친구들을 톡톡 눌러서 같이 연주해요!');
-    await T.followMelody(ODE.slice(0, 8), { beat: .4, targetFor: i => cast[WHO[i]].pos, voice: odeVoice, onNote: odeHop });
     await sleep(400);
     band.forEach((a, i) => setTimeout(() => { a.cry(.6); a.hop(24, 380); }, i * 200));
     T.confetti(); S.chord(523);
