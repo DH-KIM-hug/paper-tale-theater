@@ -35,7 +35,7 @@
     mouse_walk: 'v3w/lm_mouse_walk.webp', mouse_pray: 'v3w/lm_mouse_pray.webp', mouse_run: 'v3w/lm_mouse_run.webp', mouse_gnaw: 'v3w/lm_mouse_gnaw.webp',
     cut_paw: 'v3w/lm_cut_paw4.webp', cut_laugh: 'v3w/lm_cut_laugh.webp', cut_net: 'v3w/lm_cut_net2.webp', cut_gnaw: 'v3w/lm_cut_gnaw.webp',
     net: 'v3w/lm_net.webp', hole_stump: 'v3w/lm_hole_stump.webp',
-    paw_pad: 'v3w/lm_paw_pad.webp', paw_toe: 'v3w/lm_paw_toe.webp', print_lion: 'v3w/lm_print_lionc.webp', print_mouse: 'v3w/lm_print_mousec.webp',
+    lion_paw: 'v3w/lm_lion_paw.webp', paw_pad: 'v3w/lm_paw_pad.webp', paw_toe: 'v3w/lm_paw_toe.webp', print_lion: 'v3w/lm_print_lionc.webp', print_mouse: 'v3w/lm_print_mousec.webp',
     tooth_lion: 'v3w/lm_tooth_lionc.webp', tooth_mouse: 'v3w/lm_tooth_mousec.webp',
   };
   const artOK = {}, bgOK = {};
@@ -327,6 +327,7 @@
       tufts(T, T.bg, [90, 180, 880, 950], 500);
       lion = mk(T, T.world, 640, 492, drawLionLie, 1.3);
     }
+    lion.face('right'); // 낮잠 내내 같은 방향 (2026-10-19: 중간에 왼쪽으로 도는 것처럼 보여서 고정)
     lion.parts.eyes('shut');
     const breathe = lion.parts.bubble.animate([{ transform: 'scale(3)' }, { transform: 'scale(9)' }], { duration: 1300, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
     const snoring = setInterval(() => snore(T), 2600);
@@ -418,7 +419,13 @@
       pawHit = T.el('circle', { cx: -129, cy: -25, r: 50, fill: '#fff', opacity: 0 }, lion.parts.hg);
       if (T.portrait()) camSnap(845, 330, 1);
     }, mouse.pos);
-    squeak(T, 1800); mouse.wiggle(10);
+    // 앞발이 위에서 내려와 꼬리를 누른다 (2026-10-19: 예전엔 누르는 움직임이 없었음)
+    const pawG = el('g', {}, T.world);
+    pawG.style.transform = 'translate(778px,150px)';
+    if (artUrl('lion_paw')) pic(T, pawG, 'lion_paw', -55, -165, 110, 165);
+    else T.paper(pawG, [['rect', { x: -30, y: -200, width: 60, height: 200, rx: 22, fill: C.lion }], ['ellipse', { cx: 0, cy: 0, rx: 52, ry: 30, fill: C.lion }]]);
+    await pawG.animate([{ transform: 'translate(778px,150px)' }, { transform: 'translate(778px,468px)' }], { duration: 520, easing: 'ease-in', fill: 'forwards' }).finished;
+    AudioFX.thud(); T.shake(); squeak(T, 1800); mouse.wiggle(10);
     await say('사자가 커다란 앞발로 생쥐 꼬리를 탁! 눌렀어요.');
     head.set('yawn'); roar(T, .2);
     await say('사자가 하품하며 말했어요. "하암~ 한입에 꿀꺽 해 버릴까?"');
@@ -426,6 +433,7 @@
     await say('생쥐가 말했어요. "살려 주시면 꼭 은혜 갚을게요!"');
     await sleep(500);
     // 부탁할 땐 사자를 돌아보며 두 손을 모은다 (앞발 바로 옆, 사자 얼굴 아래)
+    pawG.animate([{ transform: 'translate(778px,468px)' }, { transform: 'translate(778px,150px)' }], { duration: 380, easing: 'ease-out', fill: 'forwards' }).finished.then(() => pawG.remove()); // 발을 든다
     mouse.face('right'); mouse.place(868, 498);
     mouse.parts.arms.setAttribute('opacity', 0); mouse.parts.pray.setAttribute('opacity', 1);
     squeak(T, 1600); mouse.hop(16);

@@ -7,7 +7,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "씨앗을 톡 눌러 봐요!": "audio/el/turnip/nar_35ba4d1114.mp3",
  "씨앗이 흙 속으로 쏙 들어갔어요.": "audio/el/turnip/nar_a574f05455.mp3",
- "파란 싹이 났어요! 톡톡 눌러서 물도 주고 햇볕도 줘요.": "audio/el/turnip/nar_b958a379be.mp3",
+ "파란 싹이 났어요! 물도 주고 햇볕도 줘요.": "audio/el/turnip/nar_f43ccefd11.mp3",
  "순무 싹을 톡톡 눌러 봐요!": "audio/el/turnip/nar_ee6408d2c7.mp3",
  "여름이 되었어요. 순무 잎이 할아버지 키만큼 자랐어요!": "audio/el/turnip/nar_55919334e8.mp3",
  "할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!": "audio/el/turnip/nar_1ada5264f4.mp3",

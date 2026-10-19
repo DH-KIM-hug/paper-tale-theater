@@ -543,7 +543,7 @@
       T.world.appendChild(cast.grandpa.pos);
       camSnap(500, 280, 1);
     }, cast.grandpa.pos);
-    await say('파란 싹이 났어요! 톡톡 눌러서 물도 주고 햇볕도 줘요.');
+    await say('파란 싹이 났어요! 물도 주고 햇볕도 줘요.'); // 물주기는 저절로 (2026-10-19)
     const can = el('g', { opacity: 0 }, T.fx);
     const canArt = pic(T, can, 'watering_can', -60, -50, 120, 120 / 1.226); // 샤워기 머리 가운데 ≈ (46,-7). 그림 속 물방울(오른쪽 아래)은 코드 물방울과 겹치니 오려 낸다
     if (canArt) {
@@ -553,7 +553,7 @@
     }
     if (!canArt) T.paper(can, [['rect', { x: -34, y: -24, width: 60, height: 44, rx: 8, fill: C.pine }], ['path', { d: 'M24 -10 L64 -34 L68 -26 L28 0 Z', fill: C.pine }], ['path', { d: 'M-34 -14 Q-60 -4 -34 12', stroke: C.pine, 'stroke-width': 7, fill: 'none' }]]);
     const mix = (a, b, k) => '#' + [0, 2, 4].map(o => Math.round(parseInt(a.substr(1 + o, 2), 16) * (1 - k) + parseInt(b.substr(1 + o, 2), 16) * k).toString(16).padStart(2, '0')).join('');
-    await T.mash(turnip.pos, { count: 6, prompt: '순무 싹을 톡톡 눌러 봐요!', onStep: i => {
+    const waterStep = i => {
       const s = .3 + i * (.7 / 6);
       turnip.body.style.transition = 'transform .45s cubic-bezier(.3,1.6,.5,1)';
       turnip.body.style.transform = `scale(${s / .3})`;
@@ -578,7 +578,9 @@
         T.tone([520, 780], .3, { type: 'sine', vol: .12 });
         T.pop(150, 200, '반짝!', C.persimmon);
       }
-    } });
+    };
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 6; i++) { await waterStep(i); await sleep(700); }
     await sleep(600);
     turnip.body.style.transition = ''; turnip.body.style.transform = ''; turnip.setScale(1);
     await say('여름이 되었어요. 순무 잎이 할아버지 키만큼 자랐어요!');
