@@ -293,9 +293,10 @@
     }, babies[1].pos);
     if (T.portrait()) camSnap(babies[1].x, 280, 1);
     await say('아기 개구리들이 몰래 풀밭으로 나왔어요. 톡톡 눌러서 폴짝폴짝 가 볼까요?');
-    await T.mash(T.root.querySelector('#stageWrap'), { count: 5, prompt: '화면을 톡톡 눌러서 폴짝폴짝!',
-      onStep: i => { babies.forEach((b, k) => { setTimeout(() => { croak(T, 380 + k * 40); b.move(b.x + 95, 490, 420); b.hop(50, 420); }, k * 90); });
-        if (T.portrait()) camTo(babies[1].x + 95, 280, 1, 500); } }); // 세로 화면: 카메라가 아기들을 따라간다 (가로는 그대로)
+    const hopStep = () => { babies.forEach((b, k) => { setTimeout(() => { croak(T, 380 + k * 40); b.move(b.x + 95, 490, 420); b.hop(50, 420); }, k * 90); });
+      if (T.portrait()) camTo(babies[1].x + 95, 280, 1, 500); }; // 세로 화면: 카메라가 아기들을 따라간다 (가로는 그대로)
+    await T.tap(T.root.querySelector('#stageWrap'), { prompt: '화면을 톡톡 눌러서 폴짝폴짝!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 5; i++) { hopStep(i); await sleep(700); }
     await sleep(500);
 
     /* --- 3. 이건 뭐지? (부분만 보이는 황소 퀴즈) ---
@@ -434,9 +435,9 @@
     const fly = mom.pos.animate([
       { transform: `translate(${FX(520)}px,500px)` }, { transform: `translate(${FX(760)}px,220px) rotate(40deg)` }, { transform: `translate(${FX(300)}px,160px) rotate(-30deg)` },
       { transform: `translate(${FX(820)}px,380px) rotate(60deg)` }, { transform: `translate(${FX(200)}px,330px) rotate(-50deg)` }, { transform: `translate(${FX(520)}px,200px)` },
-    ], { duration: 3600, iterations: Infinity, easing: 'ease-in-out' });
+    ], { duration: 9000, iterations: Infinity, easing: 'ease-in-out' }); // 아이가 따라가 누를 수 있게 천천히 (3.6초 → 9초 한 바퀴, 2026-10-19)
     mom.pos.removeAttribute('transform');
-    const whoosh = setInterval(() => T.tone([900, 300], .35, { type: 'sawtooth', vol: .06 }), 500);
+    const whoosh = setInterval(() => T.tone([900, 300], .35, { type: 'sawtooth', vol: .06 }), 1000);
     await say('푸슈슈슉~ 엄마 개구리가 풍선처럼 날아다녀요! 톡 눌러서 잡아 줘요!');
     await T.tap(mom.pos, { prompt: '날아다니는 엄마 개구리를 톡!' });
     clearInterval(whoosh); fly.cancel();
@@ -466,11 +467,13 @@
     moo(T);
     await say('황소가 몸을 낮추고 다정하게 말했어요. "크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!"');
     let pi = 0;
-    await T.mash(mom.pos, { count: 5, prompt: '엄마 개구리를 톡 눌러서 폴짝!', onStep: () => {
+    const padStep = () => {
       const [x, y] = pads[pi++]; croak(T, 360 + pi * 30);
       mom.pos.animate([{ transform: `translate(${mom.x}px,${mom.y}px) scale(1.2)` }, { transform: `translate(${(mom.x + x) / 2}px,${y - 120}px) scale(1.2)` }, { transform: `translate(${x}px,${y}px) scale(1.2)` }], { duration: 420, easing: 'ease-out' });
       mom.place(x, y); if (T.portrait()) camTo(x, 280, 1, 420);
-    } });
+    };
+    await T.tap(mom.pos, { prompt: '엄마 개구리를 톡 눌러서 폴짝!' }); // 한 번 누르면 연잎 다섯 장을 저절로 (2026-10-19)
+    for (let i = 1; i <= 5; i++) { padStep(); await sleep(650); }
     await sleep(500);
     oxArt.set('stand');
     await say('황소도 따라 뛰어 볼까요? 하나, 둘…');
