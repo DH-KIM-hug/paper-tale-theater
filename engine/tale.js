@@ -853,7 +853,7 @@ const Tale = (() => {
   let restShow = null; // mount 가 채운다: 쉬는 화면을 보여 주고, 어른이 시간을 늘리면 풀려난다
   const restIfDue = async () => { if (PT.due() && restShow) await restShow(); };
 
-  function mount({ title, subtitle, run, note = false, endTitle = '끝!', frame = null, transition = 'iris' }) {
+  function mount({ title, subtitle, run, note = false, endTitle = '끝!', frame = null, transition = 'page' }) /* 2026-10-19: 모든 동화 기본 = 책장 넘기기 (?trans=iris 로 예전 동그라미) */ {
     document.title = tr(title);
     const home = ROOT_URL + 'index.html';
     document.body.insertAdjacentHTML('beforeend', `
