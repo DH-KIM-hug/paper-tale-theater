@@ -692,7 +692,7 @@
     await Promise.all(SEATS.map(async ([k, x, y], i) => { await sleep(i * 180); aud[k].hop(20, 400); await aud[k].move(x, y, 1100); }));
     await say('동물 친구들이 응원하러 모였어요!');
     await say('친구들이 벌떡 일어나 응원해요!');
-    for (const k of KINDS) { aud[k].done(); await sleep(260); } // 여덟 친구가 차례로 벌떡 (저절로)
+    for (const k of KINDS) { aud[k].done(); await sleep(900); } // 여덟 친구가 차례로 벌떡 (저절로) — 울음소리가 겹치지 않게 하나씩 천천히 (260→900ms, 2026-10-19)
     await sleep(700);
     await say('와, 신나는 응원 소리!');
     KINDS.forEach(k => { aud[k].undone(); aud[k].sit(); });
@@ -844,7 +844,7 @@
       else cloud = paper(skyG, [['circle', { cx: 100, cy: 130, r: 44, fill: '#E7E3F0' }], ['circle', { cx: 150, cy: 105, r: 56, fill: '#E7E3F0' }], ['circle', { cx: 205, cy: 132, r: 42, fill: '#E7E3F0' }], ['rect', { x: 90, y: 128, width: 130, height: 46, rx: 22, fill: '#E7E3F0' }]]);
       cloud.setAttribute('transform', 'translate(-420 0)');
       const o = aud.owl; o.reset(); put(o, ...(shade ? [640, 244, .8] : [870, 252, .95])); // 그림: 큰 나무 가지 끝
-      seat(shade ? [['pig', 760, 505, .8], ['sheep', 270, 495, .8]] : [['pig', 900, 556, .8], ['sheep', 70, 556, .8]]);
+      seat(shade ? [['pig', 760, 505, .8]] : [['pig', 900, 556, .8]]); // 양은 뺐다 (잠재우는 장면에 양이 있으면 '양 세기'처럼 보여 어색함, 2026-10-19)
       rabbitReset(); rp.setEyes('half'); faceL(rabbit);
       put(rabbit, 520, 488, 1.5);
       blanket = el('g', { transform: 'translate(220 470)' }, T.world);
@@ -886,7 +886,7 @@
     const zzz = () => every(1000, () => floatText(T, rabbit.x - 60, rabbit.y - 230, 'Z', C.indigo, 34 + Math.random() * 14));
     zzz(); let sk = 0; every(1800, () => snore(T, sk++ % 2));
     await say('토끼가 쿨쿨 잠이 들었어요.');
-    aud.owl.hush(true); await sleep(300); aud.pig.hush(true); aud.sheep.hush(true);
+    aud.owl.hush(true); await sleep(300); aud.pig.hush(true);
     await say('응원하던 친구들도 "쉿!" 조용히~');
 
     /* --- 8. 토끼의 꿈 --- */
