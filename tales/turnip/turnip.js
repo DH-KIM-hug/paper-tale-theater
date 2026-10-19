@@ -16,22 +16,22 @@
     barn: 'v3w/tn_bg_barn.webp', mouse: 'v3w/tn_bg_mouse.webp', feast: 'v3w/tn_bg_feast.webp',
   };
   /* 배우·소품·컷 (인물·동물은 모두 왼쪽을 본다)
-     - 당기기 자세(2026-10 새 그림 *3): grandpa_pull=grab3(순무 잎을 쥠) · grandma_pull=hold3 · girl_pull=hold3(할머니 치마 자락) · dog_pull=bite3(손녀 옷자락을 묾) ·
-       cat_pull=tail3 · mouse_pull=tail3 · dog_badge=dog_pull5(배지용 앞발 내민 강아지) · cut_glare=tn_cut_glare5. 강아지는 크림색, 한쪽 귀는 갈색(반쯤 접힘), 다른 귀는 흰색에 노란 점
+     - 인물 6명 × (stand·pull·fall·cheer) 24장(2026-10, tn2_*): pull은 두 팔(앞발)을 앞으로 뻗은 빈손 — 앞사람 허리에 닿게 LINE_X를 맞췄다. fall=엉덩방아·벌렁, cheer=뽑고 기뻐함. 배지는 stand 그림. 강아지는 크림색에 파란 멜빵
      - dog_jump: 새 그림(jump5)이 오른쪽을 봐서 좌우로 뒤집어 저장 · watering_can: 물방울(코드가 그림)을 지우고 주둥이가 순무 쪽(오른쪽)으로 뒤집음
      - sprout: 밑에 깔린 받침 덩어리를 잘라 내고 잎 + 흰 머리만
      - cow · pig: 고르기 배지의 틀린 답. 토끼와 거북이 관객 그림(rab_aud_*)을 같이 쓴다
-     - grandpa_sit: 다시 뽑은 엉덩방아 그림 (발 뻗고 앉음, 기준점 = 엉덩이)
      - cut_pop: 다시 뽑은 쑥! 컷(tn_cut_pop2 — 얼굴 없는 순무 하나가 쑥, 여섯이 벌렁). 영~·차~ 두 컷은 코드 컷(순무는 그림)
      - bush(덤불, 마젠타 키잉) · table(잔치 상) · soup_bowl(국 그릇): 코드 도형을 대신하는 그림. 씨앗 그림(tn_seed)은 연두 덩어리로 나와 안 씀 */
   const ART = {
     turnip: 'v3w/tn_turnip.webp', sprout: 'v3w/tn_sprout.webp', pot: 'v3w/tn_pot.webp', watering_can: 'v3w/tn_watering_can.webp',
     seed: 'v3w/tn_seed3.webp', bush: 'v3w/tn_bush.webp', table: 'v3w/tn_table.webp', soup_bowl: 'v3w/tn_soup_bowl.webp',
-    grandpa_stand: 'v3w/tn_grandpa_stand.webp', grandpa_pull: 'v3w/tn_grandpa_grab3.webp',
-    grandpa_sit: 'v3w/tn_grandpa_sit.webp',
-    grandma_stand: 'v3w/tn_grandma_stand.webp', grandma_pull: 'v3w/tn_grandma_hold3.webp', girl_pull: 'v3w/tn_girl_hold3.webp',
-    dog_pull: 'v3w/tn_dog_bite5.webp', dog_badge: 'v3w/tn_dog_pull5.webp', dog_jump: 'v3w/tn_dog_jump5.webp', cat_pull: 'v3w/tn_cat_tail3.webp', cat_sit: 'v3w/tn_cat_sit.webp',
-    mouse_pull: 'v3w/tn_mouse_tail3.webp', girl_badge: 'v3w/tn_girl_pull.webp', cow: 'v3w/rab_aud_cow.webp', pig: 'v3w/rab_aud_pig.webp',
+    grandpa_stand: 'v3w/tn2_grandpa_stand.webp', grandpa_pull: 'v3w/tn2_grandpa_pull.webp', grandpa_fall: 'v3w/tn2_grandpa_fall.webp', grandpa_cheer: 'v3w/tn2_grandpa_cheer.webp',
+    grandma_stand: 'v3w/tn2_grandma_stand.webp', grandma_pull: 'v3w/tn2_grandma_pull.webp', grandma_fall: 'v3w/tn2_grandma_fall.webp', grandma_cheer: 'v3w/tn2_grandma_cheer.webp',
+    girl_stand: 'v3w/tn2_girl_stand.webp', girl_pull: 'v3w/tn2_girl_pull.webp', girl_fall: 'v3w/tn2_girl_fall.webp', girl_cheer: 'v3w/tn2_girl_cheer.webp',
+    dog_stand: 'v3w/tn2_dog_stand.webp', dog_pull: 'v3w/tn2_dog_pull.webp', dog_fall: 'v3w/tn2_dog_fall.webp', dog_cheer: 'v3w/tn2_dog_cheer.webp',
+    cat_stand: 'v3w/tn2_cat_stand.webp', cat_pull: 'v3w/tn2_cat_pull.webp', cat_fall: 'v3w/tn2_cat_fall.webp', cat_cheer: 'v3w/tn2_cat_cheer.webp',
+    mouse_stand: 'v3w/tn2_mouse_stand.webp', mouse_pull: 'v3w/tn2_mouse_pull.webp', mouse_fall: 'v3w/tn2_mouse_fall.webp', mouse_cheer: 'v3w/tn2_mouse_cheer.webp',
+    dog_jump: 'v3w/tn_dog_jump5.webp', cat_sit: 'v3w/tn_cat_sit.webp', girl_badge: 'v3w/tn2_girl_stand.webp', dog_badge: 'v3w/tn2_dog_stand.webp', cow: 'v3w/rab_aud_cow.webp', pig: 'v3w/rab_aud_pig.webp',
     cut_glare: 'v3w/tn_cut_glare5.webp', cut_pop: 'v3w/tn_cut_pop2nf.webp',
   };
   const artOK = {}, bgOK = {};
@@ -49,15 +49,34 @@
      한 인물의 자세끼리는 같은 원본 배율(머리 크기)로 맞춰서 자세가 바뀌어도 튀지 않는다.
      (할아버지 당기기만 머리가 조금 커서 .95배, 고양이 앉기는 머리가 커서 머리 크기에 맞춤) */
   const SPR = {
-    grandpa_stand: [190, .52, .4739], grandpa_pull: [180, .60, .9195], grandpa_sit: [136, .55, 1.025], // 머리 크기를 서기 그림에 맞춤, 엉덩이가 기준
-    grandma_stand: [172, .50, .4591], grandma_pull: [170, .62, .8712],
-    girl_pull: [140, .58, 1.0], // 그림이 오른쪽을 봐서 뒤집어 쓴다(FLIP)
-    dog_pull: [98, .60, 1.3639], dog_jump: [96, .5, 1.2046],
-    cat_pull: [83, .63, 1.2749], cat_sit: [78, .5, .9567],
-    mouse_pull: [52, .48, 1.2468],
+    grandpa_stand: [184.0, 0.476, 0.4724],
+    grandpa_pull: [181.4, 0.546, 0.8620],
+    grandpa_fall: [148.2, 0.530, 1.2098],
+    grandpa_cheer: [183.1, 0.602, 0.7730],
+    grandma_stand: [168.0, 0.443, 0.4589],
+    grandma_pull: [162.0, 0.506, 0.7560],
+    grandma_fall: [132.2, 0.460, 1.2196],
+    grandma_cheer: [167.6, 0.434, 0.6792],
+    girl_stand: [120.0, 0.306, 0.5398],
+    girl_pull: [113.9, 0.411, 0.8253],
+    girl_fall: [88.8, 0.401, 1.3027],
+    girl_cheer: [118.0, 0.382, 0.7133],
+    dog_stand: [86.0, 0.519, 0.9443],
+    dog_pull: [79.8, 0.757, 1.0890],
+    dog_fall: [83.1, 0.523, 0.9489],
+    dog_cheer: [88.4, 0.227, 0.8734],
+    cat_stand: [82.0, 0.538, 0.9964],
+    cat_pull: [78.1, 0.554, 1.0862],
+    cat_fall: [82.3, 0.536, 1.0391],
+    cat_cheer: [83.0, 0.614, 0.9885],
+    mouse_stand: [44.0, 0.334, 0.8159],
+    mouse_pull: [42.4, 0.368, 0.9440],
+    mouse_fall: [40.1, 0.532, 1.0553],
+    mouse_cheer: [45.4, 0.679, 0.8483],
+    dog_jump: [96, .5, 1.2046], cat_sit: [78, .5, .9567],
   };
-  const FLIP = { girl_pull: 1 };
-  const LOOKS = { grandpa: ['stand', 'pull', 'sit'], grandma: ['stand', 'pull'], girl: ['pull'], dog: ['pull', 'jump'], cat: ['pull', 'sit'], mouse: ['pull'] };
+  const FLIP = {};
+  const LOOKS = { grandpa: ['stand', 'pull', 'fall', 'cheer'], grandma: ['stand', 'pull', 'fall', 'cheer'], girl: ['stand', 'pull', 'fall', 'cheer'], dog: ['stand', 'pull', 'fall', 'cheer', 'jump'], cat: ['stand', 'pull', 'fall', 'cheer', 'sit'], mouse: ['stand', 'pull', 'fall', 'cheer'] };
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992) */
   const BG_EDGE = { garden: ['#9cc5dd', '#664232'], lowangle: ['#74a090', '#5e3a2b'], door: ['#75acd8', '#59673c'], fence: ['#87badc', '#8a9d49'],
     barn: ['#6cb2d6', '#567038'], mouse: ['#dabe6e', '#cd9666'], feast: ['#f78d5a', '#9a6124'] };
@@ -203,7 +222,7 @@
     { key: 'cat', name: '고양이', h: 82 },
     { key: 'mouse', name: '생쥐', h: 44 },
   ];
-  const LINE_X = [335, 457, 541, 635, 699, 741];
+  const LINE_X = [335, 427, 490, 575, 638, 683];
   const PULL_DEG = [22, 18, 15, 13, 11, 9];
   const GROUND = 480;
   const POSE = {
@@ -350,7 +369,7 @@
   }
 
   /* 화면 고정 배지 (카메라 영향 없음) */
-  const BADGE = { girl: ['girl_badge', 281 / 340], dog: ['dog_badge', .904], cat: ['cat_sit', .9567], cow: ['cow', 207 / 271], pig: ['pig', 257 / 320] };
+  const BADGE = { girl: ['girl_badge', .54], dog: ['dog_badge', .9444], cat: ['cat_sit', .9567], cow: ['cow', 207 / 271], pig: ['pig', 257 / 320] };
   function badge(T, x, y, r, key, s) {
     const g = T.el('g', { transform: `translate(${x},${y})` }, document.getElementById('stage'));
     T.paper(g, [['circle', { r, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }]]);
@@ -420,8 +439,8 @@
         a.cur = want; a.h = SPR[c.key + '_' + want][0];
       };
       /* 털썩 앉기: 앉은 그림이 있으면 그 그림(할아버지·고양이), 없으면 지금 그림을 코드로 눌러 앉힌다 */
-      a.sitDown = () => { a.before = a.cur; if (looks.sit) { a.look('sit'); a.pose(POSE.stand()); } else a.pose(POSE.sit(c.key)); };
-      a.standUp = () => { if (a.cur === 'sit') a.look(a.before); a.pose(POSE.stand()); };
+      a.sitDown = () => { a.before = a.cur; if (looks.fall) { a.look('fall'); a.pose(POSE.stand()); } else a.pose(POSE.sit(c.key)); };
+      a.standUp = () => { if (a.cur === 'fall') a.look(a.before); a.pose(POSE.stand()); };
       a.look(home);
       a.pose(POSE.stand());
       cast[c.key] = a;
@@ -633,6 +652,7 @@
       where: '음매~ 소는 풀을 먹고 있대요. 사람 친구를 먼저 불러요!', who: '손녀예요! 반짝이는 친구를 눌러 봐요!' });
     put(cast.girl, 1080);
     await cast.girl.move(LINE_X[2], GROUND, 900);
+    cast.girl.look('pull'); cast.girl.pose(POSE.pull(4));
     await say('"손녀야~!" 손녀가 할머니 허리를 잡았어요. 영차!');
     await pullRound(3, 12, '순무를 톡 눌러서 영차!');
     await say('조금 더 올라왔어요! 누가 더 도와줄까요?');
@@ -738,6 +758,7 @@
     cast.mouse.hop(40);
     await say('"나도 할래요!" 생쥐가 고양이 꼬리를 꼭 잡았어요.');
     for (let k = 0; k < 5; k++) line[k].standUp();
+    cast.mouse.look('pull'); cast.mouse.pose(POSE.pull(4));
     await sleep(400);
 
     /* --- 9. 쑥! (다 함께 톡톡) --- */
@@ -760,6 +781,7 @@
     // 쑥! 은 그림 컷(얼굴 없는 순무가 흙을 튀기며 쑥, 여섯이 벌렁) — 없으면 코드 컷
     await ((artUrl('cut_pop') && T.cutImage([{ src: artUrl('cut_pop'), sfx: 'pow', hold: 2000 }], { hold: 2000 })) || T.cut(svg => cutTurnip(svg, 140, .6, '쑥!'), { hold: 1500, sfx: 'pow' }));
     /* 순무가 날아가고, 생쥐부터 할아버지까지 벌렁 도미노. 세로 화면(보이는 폭 ≈520)에선 줄 바로 왼쪽에 떨어진다 */
+    const SPREAD = [0, 6, 16, 32, 46, 54];
     const landX = T.portrait() ? 290 : 110;
     T.world.appendChild(turnip.pos);
     turnip.pos.removeAttribute('transform');
@@ -770,7 +792,7 @@
     ], { duration: 900, easing: 'ease-in-out', fill: 'forwards' });
     for (let k = 5; k >= 0; k--) {
       const a = line[k];
-      a.pose(POSE.flop(a.key));
+      a.look('fall'); a.pose(`translate(${SPREAD[k]}px,0px)`); // 넘어진 그림이 넓어서 뒤쪽일수록 조금씩 벌려 겹침을 줄인다
       AudioFX.sfx('bonk', .5) || T.tone([300 - k * 20, 120], .2, { type: 'triangle', vol: .15 });
       await sleep(200);
     }
@@ -780,7 +802,7 @@
     await sleep(900);
     await say('쑥! 커다란 순무가 뽑혔어요! 모두 벌렁 넘어졌어요.');
     T.confetti();
-    for (let k = 0; k < 6; k++) setTimeout(() => { line[k].pose(POSE.stand()); line[k].hop(26, 380); }, k * 110);
+    for (let k = 0; k < 6; k++) setTimeout(() => { line[k].look('cheer'); line[k].pose(`translate(${SPREAD[k]}px,0px)`); line[k].hop(26, 380); }, k * 110);
     await sleep(900);
     await say('작은 생쥐까지 모두 힘을 모았더니 뽑혔어요!');
 
