@@ -31,9 +31,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Mother and Red Hood hooked their little fingers together.",
   "c": "audio/el/red_hood/en/nar_6b698808a4.mp3"
  },
- "빨간 모자는 콧노래를 부르며 숲길을 걸어요. 빨간 모자를 톡톡 눌러서 걸어가 봐요!": {
-  "t": "Red Hood hummed as she walked along the forest path. Tap, tap Red Hood to walk along!",
-  "c": "audio/el/red_hood/en/nar_6ce020bfb1.mp3"
+ "빨간 모자는 콧노래를 부르며 숲길을 걸어요.": {
+  "t": "Red Hood hummed as she walked along the forest path.",
+  "c": "audio/el/red_hood/en/nar_62e4389759.mp3"
  },
  "어, 나무 뒤에서 뭔가 보슬보슬한 게 살짝 보였어요. 꼬리였나 봐요!": {
   "t": "Oh, something fluffy peeked out from behind a tree. It must be a tail!",

@@ -178,13 +178,15 @@
       scene('trail');
       put(T, hood, 380, 515, { look: 'walk', to: 'right', s: .95 });
     }, hood.pos);
-    await say('빨간 모자는 콧노래를 부르며 숲길을 걸어요. 빨간 모자를 톡톡 눌러서 걸어가 봐요!');
+    await say('빨간 모자는 콧노래를 부르며 숲길을 걸어요.'); // 숲길은 저절로 (2026-10-19)
     let step = 0;
-    await T.mash(hood.pos, { count: 3, prompt: '빨간 모자를 톡톡톡! 한 걸음씩 걸어가요.', onStep: () => {
+    const trailStep = _ => {
       step++; hood.look(step % 2 ? 'walk2' : 'walk');
       hood.move(hood.x + 55, 515 + step * 2, 420); hood.hop(14, 380);
       AudioFX.sfx('step_grass', .4);
-    } });
+    };
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 3; i++) { await trailStep(i); await sleep(600); }
     await sleep(500);
     await T.cutImage([{ src: cutSrc('tail'), hold: 2600 }], { hold: 2600 });
     await say('어, 나무 뒤에서 뭔가 보슬보슬한 게 살짝 보였어요. 꼬리였나 봐요!');
