@@ -532,14 +532,15 @@
       const [dx, dy, ry] = kitchenBG(T) ? [19, -140, 34] : [0, 0, 26];
       T.world.appendChild(mom.pos); mom.setScale(1.4); mom.place(PT && mom.P.art ? 350 : 290, 545); mom.face('right'); mom.P.holdBasket(!mom.P.art); mom.P.setCakes(0); // 그림: 첫 떡이 닿으면 바구니를 든다
       const plate = el('g', { id: 'plate' }, T.world);
-      el('rect', { x: 560 + dx, y: 300 + dy, width: 260, height: 140, fill: 'transparent' }, plate);
+      el('rect', { x: 530 + dx, y: 290 + dy, width: 320, height: 160, fill: 'transparent' }, plate);
       // 그림 나무 접시 (없으면 흰 접시)
-      if (!sprite(T, el('g', { transform: `translate(${690 + dx} ${400 + dy + 44})` }, plate), 'plate', 200, 90, { stretch: true }))
+      if (!sprite(T, el('g', { transform: `translate(${690 + dx} ${400 + dy + 44})` }, plate), 'plate', 300, 120, { stretch: true })) // 떡 열 개(다섯 개씩 두 줄)가 올라가게 넓게
         T.paper(plate, [['ellipse', { cx: 690 + dx, cy: 400 + dy, rx: 110, ry, fill: C.snow, stroke: C.gold, 'stroke-width': 5 }]]);
-      plateCakes = [[630, 394], [690, 396], [750, 394], [660, 370], [720, 370]].map(([x, y]) => ({ x: x + dx, y: y + dy, g: drawCake(T, plate, x + dx, y + dy, 1.8, [630, 690, 750, 660, 720].indexOf(x)) }));
+      plateCakes = [...Array(10)].map((_, k) => { const x = 590 + (k % 5) * 50 + (k >= 5 ? 0 : 0), y = k < 5 ? 404 : 372; // 열 개: 앞줄 다섯·뒷줄 다섯
+        return { x: x + dx, y: y + dy, g: drawCake(T, plate, x + dx, y + dy, 1.6, k) }; });
     });
     await say('엄마는 부잣집에서 하루 종일 부지런히 일했어요.');
-    await say('"수고했어요. 떡 가져가요!" 떡을 톡톡 눌러서 바구니에 담아요!');
+    await say('"수고했어요. 떡 가져가요!" 떡을 하나씩 톡! 세면서 담아요.');
     const toBasket = i => {
       const [bx, by] = mom.P.art ? [0, -12] : cakeSpot(i), [ax, ay] = mom.P.basketAt;
       return [mom.x + mom.flip * (ax + bx) * mom.scale, mom.y + (ay + by) * mom.scale];
@@ -552,13 +553,17 @@
     };
     let inBasket = 0;
     const showBasket = () => mom.P.setCakes(Math.min(5, Math.ceil(inBasket * 5 / TOTAL))); // 바구니 그림은 5칸 — 비율로 보여준다
-    await T.mash(T.world.querySelector('#plate'), { count: 5, prompt: '떡을 톡톡 눌러서 바구니에 담아요!', onStep: i => {
-      const c = plateCakes[5 - i]; c.g.setAttribute('opacity', 0);
+    /* 세기 (2026-10-19): 접시 위 떡을 아이가 한 개씩 골라 누른다. 누를 때마다 "하나! 둘! …" — 하나에 하나씩 짝지어 세기 */
+    const left = plateCakes.map((c, k) => ({ ...c, k }));
+    for (let i = 1; i <= 10; i++) {
+      const pick = await T.choose(left.map(c => ({ el: c.g, ok: true, c })), { prompt: '떡을 하나씩 톡 눌러 봐요!' });
+      const c = pick.c; left.splice(left.indexOf(c), 1); c.g.setAttribute('opacity', 0);
       const [x1, y1] = toBasket(i - 1);
       T.tone(500 + i * 90, .15, { type: 'triangle', vol: .18 });
-      fly(c.x, c.y, x1, y1, 1.8, 450, 5 - i).then(() => { inBasket = Math.round(TOTAL * i / 5); showBasket(); mom.P.holdBasket(true); AudioFX.pop(); });
-      T.pop(c.x, c.y - 90, '영차!', C.bean);
-    } });
+      Narrator.speak(NUMS[i - 1] + '!');
+      T.pop(c.x, c.y - 90, NUMS[i - 1] + '!', C.bean);
+      await fly(c.x, c.y, x1, y1, 1.8, 450, c.k).then(() => { inBasket = Math.round(TOTAL * i / 10); showBasket(); mom.P.holdBasket(true); AudioFX.pop(); });
+    }
     await sleep(700);
     mom.P.smile();
     await say('떡을 바구니 가득 받았어요! "우리 아이들이 좋아하겠다!" 엄마는 서둘러 집으로 떠났어요.');
@@ -940,16 +945,17 @@
       bigJar = jar(1080, 200, 190); hideJar.appendChild(bigJar);
       if (T.portrait()) yard.to(330, 280, 1, 0); // 세로 화면: 오누이가 보이게 마당 왼쪽부터
     });
-    await say('오누이는 뒷문으로 살금살금 나왔어요. 화면을 톡톡 눌러서 달려요!');
+    await say('오누이는 뒷문으로 살금살금 나왔어요.');
     const run2 = async (dx, dur = 560) => {
       const nb = boy.x + dx, ng = girl.x + dx;
       AudioFX.whoosh();
       await Promise.all([boy.move(nb, 520, dur), girl.move(ng, 520, dur), boy.hop(24, dur), girl.hop(24, dur), yard.to(yardCam(nb), 280, 1, dur)]);
     };
-    await T.mash(stageWrap, { count: 2, prompt: '화면을 톡톡 눌러서 달려요!', onStep: () => run2(YJ.run1) });
+    const runYard1 = _ => run2(YJ.run1);
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 2; i++) { await runYard1(i); await sleep(150); }
     await sleep(700);
-    await say('앗, 호랑이가 오는 소리! 커다란 장독을 톡 눌러서 숨어요!');
-    await T.tap(hideJar, { prompt: '커다란 장독을 톡 눌러서 숨어요!' });
+    await say('앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!');
     AudioFX.slide();
     const jarsG = hideJar.parentNode;
     yard.insertBefore(boy.pos, jarsG); yard.insertBefore(girl.pos, jarsG);
@@ -967,8 +973,10 @@
     boy.setScale(1); girl.setScale(.92);
     yard.appendChild(boy.pos); yard.appendChild(girl.pos); // 장독 앞으로 나온다
     await Promise.all([boy.move(YJ.out[0], 520, 500), girl.move(YJ.out[1], 520, 500), boy.hop(30, 500), girl.hop(30, 500)]);
-    await say('휴~ 이제 우물가 큰 나무로 달려가요! 톡톡!');
-    await T.mash(stageWrap, { count: 3, prompt: '화면을 톡톡 눌러서 달려요!', onStep: () => run2(YJ.run2) });
+    await say('휴~ 이제 우물가 큰 나무로 달려가요!');
+    const runYard2 = _ => run2(YJ.run2);
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 3; i++) { await runYard2(i); await sleep(150); }
     await sleep(700);
 
     /* ====== 3막 — 하늘 동아줄 ====== */
@@ -1006,12 +1014,12 @@
       girl = mkGirl(T, tree, kidsUp ? TOP.g[0] : 560, kidsUp ? TOP.g[1] : 560, .92);
     };
     await T.sceneCard('우물가 큰 나무', () => buildTree(false));
-    await say('우물가에 커다란 나무가 있어요. 톡톡 눌러서 영차영차 올라가요!');
+    await say('우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.');
     /* 도마뱀처럼 꼼지락: 한 칸 오르며 좌우로 살랑(번갈아 몇 도) + 살짝 납작했다 펴짐. 발끝(0,0)이 기준 */
     const scramble = (a, dir, dur = 420) => T.anim(a.body, [{ transform: 'rotate(0deg) scale(1,1)' }, { transform: `rotate(${dir * 7}deg) scale(1.07,.9)` },
       { transform: `rotate(${-dir * 5}deg) scale(.96,1.05)` }, { transform: 'rotate(0deg) scale(1,1)' }], { duration: dur, easing: 'ease-in-out' });
     const gecko = !!(boy.P.art && artUrl('boy_gecko'));
-    await T.mash(stageWrap, { count: 5, prompt: '화면을 톡톡 눌러서 나무를 올라가요!', onStep: i => {
+    const climbTree = i => {
       yeongcha(T, i);
       // 그림: 오르는 동안은 둘이 따로 기둥 앞면(x 640)에 도마뱀처럼 붙어 — 오빠가 먼저 한 칸, 동생이 조금 뒤에 따라 한 칸. 꼭대기에서 다시 선다
       const climbArt = gecko && i < 5;
@@ -1027,7 +1035,9 @@
       }
       tree.to(560, Math.max(bgUrl('tree') ? 112 : -1e9, Math.min(280, by - 60)), 1, 420); // 그림 나무: 그림 위끝(y≈-168) 밖이 안 보이게
       T.pop(i % 2 ? 300 : 760, 200, '영차!', C.pine);
-    } });
+    };
+    await T.tap(stageWrap, { prompt: '화면을 톡 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 5; i++) { await climbTree(i); await sleep(450); }
     await sleep(600);
     await say('오누이는 나무 꼭대기까지 올라갔어요!');
     await tree.to(...TREE_WIDE, .58, 1400);
@@ -1258,16 +1268,18 @@
     const RX = boy.P.art ? 325 : 360, GAP = boy.P.art ? ROPE_GAP : 140;
     await Promise.all([boy.move(RX, 330, 600), girl.move(RX, 330 + GAP, 600)]);
     boy.P.pose('rope'); girl.P.pose('rope'); // 줄에 닿으면 줄 오르기 그림으로
-    await say('줄을 꼭 잡고, 화면을 톡톡 눌러서 올라가요!');
+    await say('줄을 꼭 잡고, 영차영차 올라가요!');
     let step = 0;
-    await T.mash(stageWrap, { count: 6, prompt: '화면을 톡톡 눌러서 올라가요!', onStep: () => {
+    const climbRope = _ => {
       step++;
       const by = 330 - step * 450;
       AudioFX.whoosh(); yeongcha(T, step);
       boy.move(RX, by, 650); girl.move(RX, by + GAP, 650);
       skyV.to(500, by + 30, 1, 650);
       if (step === 3) Narrator.speak('구름을 뚫고 쑥쑥!');
-    } });
+    };
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 6; i++) { await climbRope(i); await sleep(700); }
     await sleep(900);
     AudioFX.fanfare();
     await say('구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!');

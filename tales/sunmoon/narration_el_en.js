@@ -569,6 +569,81 @@ Object.assign(NARRATION_CLIPS_EN, {
  "맞아요! 진짜 엄마 목소리예요. 그런데 문밖 목소리는 걸걸했지요?": {
   "t": "That's right! It is the real Mom's voice. But the voice outside the door was rough, wasn't it?",
   "c": "audio/el/sunmoon/en/nar_af1b38326d.mp3"
+ },
+ "오누이는 뒷문으로 살금살금 나왔어요.": {
+  "t": "The children tiptoed out the back door.",
+  "c": "audio/el/sunmoon/en/nar_d839caef35.mp3"
+ },
+ "앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!": {
+  "t": "Oh! The tiger is coming! Hide behind the big jar!",
+  "c": "audio/el/sunmoon/en/nar_d59b533311.mp3"
+ },
+ "휴~ 이제 우물가 큰 나무로 달려가요!": {
+  "t": "Phew! Now run to the big tree by the well!",
+  "c": "audio/el/sunmoon/en/nar_d7deae0a83.mp3"
+ },
+ "우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.": {
+  "t": "There is a big tree by the well. Tap! Heave-ho, up we climb.",
+  "c": "audio/el/sunmoon/en/nar_6c916d03f8.mp3"
+ },
+ "줄을 꼭 잡고, 영차영차 올라가요!": {
+  "t": "Hold on tight and climb, heave-ho!",
+  "c": "audio/el/sunmoon/en/nar_9276fa4640.mp3"
+ },
+ "떡을 하나씩 톡 눌러 봐요!": {
+  "t": "Tap the rice cakes one by one!",
+  "c": "audio/el/sunmoon/en/nar_ac2501ac51.mp3"
+ },
+ "화면을 톡 눌러 봐요!": {
+  "t": "Tap the screen!",
+  "c": "audio/el/sunmoon/en/nar_a5f77a0acb.mp3"
+ },
+ "\"수고했어요. 떡 가져가요!\" 떡을 하나씩 톡! 세면서 담아요.": {
+  "t": "\"Thank you for your hard work. Take these rice cakes!\" Tap them one by one and count!",
+  "c": [
+   "audio/el/sunmoon/en/rich_1c97b5af62.mp3",
+   "audio/el/sunmoon/en/nar_0f865cec68.mp3"
+  ]
+ },
+ "하나!": {
+  "t": "One!",
+  "c": "audio/el/sunmoon/en/nar_732ee05cfe.mp3"
+ },
+ "둘!": {
+  "t": "Two!",
+  "c": "audio/el/sunmoon/en/nar_ef5690c0b2.mp3"
+ },
+ "셋!": {
+  "t": "Three!",
+  "c": "audio/el/sunmoon/en/nar_a1c2b6b48c.mp3"
+ },
+ "넷!": {
+  "t": "Four!",
+  "c": "audio/el/sunmoon/en/nar_eeeefc8670.mp3"
+ },
+ "다섯!": {
+  "t": "Five!",
+  "c": "audio/el/sunmoon/en/nar_cddcb7ac4a.mp3"
+ },
+ "여섯!": {
+  "t": "Six!",
+  "c": "audio/el/sunmoon/en/nar_d95a6ff905.mp3"
+ },
+ "일곱!": {
+  "t": "Seven!",
+  "c": "audio/el/sunmoon/en/nar_2e307e49c0.mp3"
+ },
+ "여덟!": {
+  "t": "Eight!",
+  "c": "audio/el/sunmoon/en/nar_1c27e895b2.mp3"
+ },
+ "아홉!": {
+  "t": "Nine!",
+  "c": "audio/el/sunmoon/en/nar_0366ec2f8d.mp3"
+ },
+ "열!": {
+  "t": "Ten!",
+  "c": "audio/el/sunmoon/en/nar_3f70bf368d.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {

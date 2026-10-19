@@ -182,7 +182,28 @@ Object.assign(NARRATION_CLIPS, {
  "진짜 엄마 목소리를 톡 골라 봐요! 다시 들으려면 한 번 더 눌러요.": "audio/el/sunmoon/nar_319c4b5244.mp3",
  "\"어흥~\" 이건 호랑이가 흉내 낸 목소리예요!": "audio/el/sunmoon/nar_c1447168dd.mp3",
  "엄마 목소리는 다정하고 부드러웠어요. 다시 들어 봐요.": "audio/el/sunmoon/nar_b559b330db.mp3",
- "맞아요! 진짜 엄마 목소리예요. 그런데 문밖 목소리는 걸걸했지요?": "audio/el/sunmoon/nar_a041f92a02.mp3"
+ "맞아요! 진짜 엄마 목소리예요. 그런데 문밖 목소리는 걸걸했지요?": "audio/el/sunmoon/nar_a041f92a02.mp3",
+ "오누이는 뒷문으로 살금살금 나왔어요.": "audio/el/sunmoon/nar_e4711224d8.mp3",
+ "앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!": "audio/el/sunmoon/nar_aa51dc8e0d.mp3",
+ "휴~ 이제 우물가 큰 나무로 달려가요!": "audio/el/sunmoon/nar_a60238e246.mp3",
+ "우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.": "audio/el/sunmoon/nar_75f437b6f6.mp3",
+ "줄을 꼭 잡고, 영차영차 올라가요!": "audio/el/sunmoon/nar_1cec46a5f4.mp3",
+ "떡을 하나씩 톡 눌러 봐요!": "audio/el/sunmoon/nar_d67479fd16.mp3",
+ "화면을 톡 눌러 봐요!": "audio/el/sunmoon/nar_0d001f0773.mp3",
+ "\"수고했어요. 떡 가져가요!\" 떡을 하나씩 톡! 세면서 담아요.": [
+  "audio/el/sunmoon/rich_e5fa447a0f.mp3",
+  "audio/el/sunmoon/nar_5ee4ee8771.mp3"
+ ],
+ "하나!": "audio/el/sunmoon/nar_e5ca069e52.mp3",
+ "둘!": "audio/el/sunmoon/nar_d8cbfaca09.mp3",
+ "셋!": "audio/el/sunmoon/nar_b63e21d47c.mp3",
+ "넷!": "audio/el/sunmoon/nar_8af172779e.mp3",
+ "다섯!": "audio/el/sunmoon/nar_85ab7b4b39.mp3",
+ "여섯!": "audio/el/sunmoon/nar_ba00e51f40.mp3",
+ "일곱!": "audio/el/sunmoon/nar_e77134b48b.mp3",
+ "여덟!": "audio/el/sunmoon/nar_72d496ed36.mp3",
+ "아홉!": "audio/el/sunmoon/nar_7d028c0e72.mp3",
+ "열!": "audio/el/sunmoon/nar_f3c5863b2a.mp3"
 });
 Object.assign(VOICE_LINES, {
  "cut_roar": "audio/el/sunmoon/tiger_02f84ed921.mp3",

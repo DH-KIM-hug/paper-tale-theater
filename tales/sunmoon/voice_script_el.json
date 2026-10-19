@@ -1546,6 +1546,210 @@
      "[delighted, warm, praising, storytelling, light]"
     ]
    ]
+  },
+  {
+   "text": "오누이는 뒷문으로 살금살금 나왔어요.",
+   "segs": [
+    [
+     "nar",
+     "오누이는 뒷문으로 살금살금 나왔어요.",
+     "happy:1.1",
+     "[hushed, suspense, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!",
+   "segs": [
+    [
+     "nar",
+     "앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!",
+     "happy:1.1",
+     "[urgent, whisper, suspense]"
+    ]
+   ]
+  },
+  {
+   "text": "휴~ 이제 우물가 큰 나무로 달려가요!",
+   "segs": [
+    [
+     "nar",
+     "휴~ 이제 우물가 큰 나무로 달려가요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.",
+   "segs": [
+    [
+     "nar",
+     "우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "줄을 꼭 잡고, 영차영차 올라가요!",
+   "segs": [
+    [
+     "nar",
+     "줄을 꼭 잡고, 영차영차 올라가요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "떡을 하나씩 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "떡을 하나씩 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡 눌러 봐요!",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "\"수고했어요. 떡 가져가요!\" 떡을 하나씩 톡! 세면서 담아요.",
+   "segs": [
+    [
+     "rich",
+     "수고했어요. 떡 가져가요!",
+     "happy:1.1",
+     "[kind, cheerful, friendly, thankful, appreciative]"
+    ],
+    [
+     "nar",
+     "떡을 하나씩 톡! 세면서 담아요.",
+     "happy:1.1",
+     "[cheerful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "하나!",
+   "segs": [
+    [
+     "nar",
+     "하나!",
+     "happy:1.2",
+     "[bright, counting, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "둘!",
+   "segs": [
+    [
+     "nar",
+     "둘!",
+     "happy:1.2",
+     "[bright, counting, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "셋!",
+   "segs": [
+    [
+     "nar",
+     "셋!",
+     "happy:1.2",
+     "[bright, counting, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "넷!",
+   "segs": [
+    [
+     "nar",
+     "넷!",
+     "happy:1.2",
+     "[bright, counting, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "다섯!",
+   "segs": [
+    [
+     "nar",
+     "다섯!",
+     "happy:1.2",
+     "[bright, counting, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "여섯!",
+   "segs": [
+    [
+     "nar",
+     "여섯!",
+     "happy:1.2",
+     "[bright, counting, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "일곱!",
+   "segs": [
+    [
+     "nar",
+     "일곱!",
+     "happy:1.2",
+     "[bright, counting, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "여덟!",
+   "segs": [
+    [
+     "nar",
+     "여덟!",
+     "happy:1.2",
+     "[bright, counting, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "아홉!",
+   "segs": [
+    [
+     "nar",
+     "아홉!",
+     "happy:1.2",
+     "[bright, counting, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "열!",
+   "segs": [
+    [
+     "nar",
+     "열!",
+     "happy:1.2",
+     "[bright, counting, cheerful]"
+    ]
+   ]
   }
  ],
  "extra": {
