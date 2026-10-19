@@ -584,11 +584,13 @@
     await T.curtain(true);
     await say('숲속 통나무집에 곰 세 식구가 살았어요.');
     await say('곰 가족을 톡 눌러서 인사해요!');
-    await tapAll(B, { prompt: '곰을 톡 눌러서 안녕!', onTap: async b => {
+    const hiBear = async b => {
       vo('hi_' + b.key); b.setFace('happy'); b.hop(24, 420);
       pop(b.x, headY(b) - 40, '안녕!', b.key === 'dad' ? C.bark : b.key === 'mom' ? C.persimmon : C.pine);
       await sleep(700);
-    } });
+    };
+    const first = (await T.choose(B.map(a => ({ el: a.pos, ok: true, a })), { prompt: '곰을 톡 눌러서 안녕!' })).a; // 한 마리만 누르면 나머지는 저절로 (2026-10-19)
+    for (const b of [first, ...B.filter(b => b !== first)]) await hiBear(b);
     await say('아빠 곰은 굵은 목소리, 아기 곰은 가느다란 목소리예요.');
 
     /* ---------- 2. 앗 뜨거 (식탁 클로즈업) ---------- */
@@ -609,13 +611,15 @@
     }, bears.mom.pos);
     await say('엄마 곰이 맛있는 죽을 끓였어요. 그런데 너무 뜨거워요!');
     await say('톡톡 눌러서 후후 불어 줘요!');
-    await T.mash(bowlsG, { count: 6, prompt: '죽을 톡톡 눌러서 후후!', onStep: i => {
+    const blowStep = i => {
       const b = B[(i - 1) % 3];
       b.setFace('o'); setTimeout(() => b.setFace('smile'), 500);
       blow(T); pop(b.x, 300, '후~', C.pine);
       const s = steams.splice(Math.floor(Math.random() * steams.length), 1)[0];
       s && s.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
-    } });
+    };
+    await T.tap(bowlsG, { prompt: '죽을 톡톡 눌러서 후후!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 6; i++) { await blowStep(i); await sleep(450); }
     await sleep(400);
     await say('김이 줄었지만, 아직 뜨거워요.');
     await say('아빠 곰: "죽이 식을 동안 산책 다녀오자!"');
@@ -643,7 +647,6 @@
       view();
     }, goldi.pos);
     await say('숲속에는 금빛 머리 골디락스가 살았어요.');
-    await say('화면을 톡톡 눌러서 같이 걸어요!');
     const NUM = ['하나', '둘', '셋'];
     // 걸어와 멈추면 발치에 꽃이 피고, 허리를 숙여 꺾으면 손으로 쏙 올라간다
     const pickFlower = async (nx, i) => {
@@ -662,7 +665,7 @@
       await sleep(450);
       fl.remove();
     };
-    await T.mash(area, { count: 3, prompt: '톡톡! 골디락스랑 걸어요.', onStep: i => {
+    const walkStep = i => {
       const nx = X(200 + i * 170);
       goldi.move(nx, 505, 600); goldi.hop(18, 300);
       AudioFX.sfx('step_grass', .6) || T.tone(300, .1);
@@ -679,7 +682,9 @@
       }, 620);
       butterfly.animate([{ transform: butterfly.style.transform }, { transform: `translate(${nx - 60}px,${230 - (i % 2) * 40}px)` }], { duration: 900, easing: 'ease-in-out', fill: 'forwards' });
       butterfly.style.transform = `translate(${nx - 60}px,${230 - (i % 2) * 40}px)`;
-    } });
+    };
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 3; i++) { await walkStep(i); await sleep(1300); }
     area.remove();
     if (goldi.setHold) goldi.setHold(true);
     await sleep(700);
