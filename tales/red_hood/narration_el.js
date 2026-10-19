@@ -10,7 +10,7 @@ Object.assign(NARRATION_CLIPS, {
  "\"길에서 벗어나면 안 돼. 모르는 사람과 이야기하지도 마.\"": "audio/el/red_hood/mama_333b128053.mp3",
  "\"네, 엄마! 약속해요.\"": "audio/el/red_hood/hood_4e43b81bf3.mp3",
  "엄마와 빨간 모자는 새끼손가락을 걸었어요.": "audio/el/red_hood/nar_b0b08201be.mp3",
- "빨간 모자는 콧노래를 부르며 숲길을 걸어요. 빨간 모자를 톡톡 눌러서 걸어가 봐요!": "audio/el/red_hood/nar_75cd39bb6d.mp3",
+ "빨간 모자는 콧노래를 부르며 숲길을 걸어요.": "audio/el/red_hood/nar_8f1132afcf.mp3",
  "어, 나무 뒤에서 뭔가 보슬보슬한 게 살짝 보였어요. 꼬리였나 봐요!": "audio/el/red_hood/nar_3a3295cbc6.mp3",
  "나무 옆에서 늑대가 슬그머니 나왔어요. \"빨간 모자 아가씨, 어디 가니?\"": [
   "audio/el/red_hood/nar_a5e6bc1c21.mp3",
