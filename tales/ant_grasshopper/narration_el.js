@@ -1,6 +1,6 @@
 /* ant_grasshopper — ElevenLabs 배역 내레이션 (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS, {
- "여름이에요. 개미들이 줄지어 먹이를 날라요. 개미를 톡 눌러 봐요!": "audio/el/ant_grasshopper/nar_c518549e08.mp3",
+ "여름이에요. 개미들이 줄지어 먹이를 날라요.": "audio/el/ant_grasshopper/nar_699492685b.mp3",
  "줄지어 가는 개미들을 톡!": "audio/el/ant_grasshopper/nar_bcd603dba9.mp3",
  "이번엔 베짱이를 톡 눌러 봐요!": "audio/el/ant_grasshopper/nar_d2d45bbf77.mp3",
  "초록 베짱이를 톡!": "audio/el/ant_grasshopper/nar_66f8bf581a.mp3",
@@ -90,7 +90,7 @@ Object.assign(NARRATION_CLIPS, {
  "\"고마워요! 대신 내가 멋진 음악을 들려줄게요!\"": "audio/el/ant_grasshopper/hop_932c52bdad.mp3",
  "창고 안이 곡식이랑 도토리로 가득해요! 여름부터 미리 모은 덕분이에요.": "audio/el/ant_grasshopper/nar_1e546da98e.mp3",
  "베짱이에게 목도리와 털모자도 나눠 줬어요.": "audio/el/ant_grasshopper/nar_b1ff75792c.mp3",
- "먹을 게 이렇게 많으니 친구들도 불러요! 문 앞에 온 친구를 톡 눌러요.": "audio/el/ant_grasshopper/nar_04831dd6f9.mp3",
+ "먹을 게 이렇게 많으니 친구들도 불러요!": "audio/el/ant_grasshopper/nar_4134b2a8ab.mp3",
  "무당벌레를 톡 눌러서 불러 줘요!": "audio/el/ant_grasshopper/nar_3041eeda93.mp3",
  "하나! 무당벌레가 왔어요.": "audio/el/ant_grasshopper/nar_36924c84ae.mp3",
  "달팽이를 톡 눌러서 불러 줘요!": "audio/el/ant_grasshopper/nar_073b684111.mp3",
@@ -105,7 +105,7 @@ Object.assign(NARRATION_CLIPS, {
  "베짱이랑 친구들을 톡톡 눌러 봐요. 겨울 노래가 이어지고 춤을 춰요!": "audio/el/ant_grasshopper/nar_b354b82c9b.mp3",
  "띠리링~ 짝짝짝! 겨울이 하나도 춥지 않았어요.": "audio/el/ant_grasshopper/nar_2305575e1f.mp3",
  "따뜻한 봄이 왔어요. 새싹이 쏙쏙!": "audio/el/ant_grasshopper/nar_ecee8eb830.mp3",
- "이번엔 베짱이도 함께 날라요. 베짱이를 톡톡 눌러서 영차!": "audio/el/ant_grasshopper/nar_7052830f87.mp3",
+ "이번엔 베짱이도 함께 날라요.": "audio/el/ant_grasshopper/nar_b360fbe855.mp3",
  "베짱이를 톡톡 눌러서 영차 영차!": "audio/el/ant_grasshopper/nar_43fa78b0d5.mp3",
  "\"영차! 여름엔 노래하고, 일도 함께 할래요!\"": "audio/el/ant_grasshopper/hop_b20efabae2.mp3",
  "계절 카드를 봄, 여름, 가을, 겨울 순서대로 톡 눌러 봐요!": "audio/el/ant_grasshopper/nar_aec6319179.mp3",

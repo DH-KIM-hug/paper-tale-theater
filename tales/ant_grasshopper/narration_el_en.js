@@ -1,8 +1,8 @@
 /* ant_grasshopper — ElevenLabs 배역 내레이션 (영어) (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS_EN, {
- "여름이에요. 개미들이 줄지어 먹이를 날라요. 개미를 톡 눌러 봐요!": {
-  "t": "It's summer. The ants march in a line, carrying food. Tap an ant!",
-  "c": "audio/el/ant_grasshopper/en/nar_c4a51346a7.mp3"
+ "여름이에요. 개미들이 줄지어 먹이를 날라요.": {
+  "t": "It's summer. The ants march in a line, carrying food.",
+  "c": "audio/el/ant_grasshopper/en/nar_5144745a36.mp3"
  },
  "줄지어 가는 개미들을 톡!": {
   "t": "Tap the marching ants!",
@@ -240,9 +240,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "They shared a scarf and a fur hat with the grasshopper, too.",
   "c": "audio/el/ant_grasshopper/en/nar_3959de65af.mp3"
  },
- "먹을 게 이렇게 많으니 친구들도 불러요! 문 앞에 온 친구를 톡 눌러요.": {
-  "t": "There's so much to eat, so let's invite friends! Tap the friend at the door.",
-  "c": "audio/el/ant_grasshopper/en/nar_55b312e5df.mp3"
+ "먹을 게 이렇게 많으니 친구들도 불러요!": {
+  "t": "There's so much to eat, so let's invite friends!",
+  "c": "audio/el/ant_grasshopper/en/nar_19a745a1f4.mp3"
  },
  "무당벌레를 톡 눌러서 불러 줘요!": {
   "t": "Tap the ladybug and invite it in!",
@@ -300,9 +300,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Warm spring has come. Little sprouts pop up!",
   "c": "audio/el/ant_grasshopper/en/nar_689bf29ca5.mp3"
  },
- "이번엔 베짱이도 함께 날라요. 베짱이를 톡톡 눌러서 영차!": {
-  "t": "This time the grasshopper carries food too. Tap the grasshopper to heave-ho!",
-  "c": "audio/el/ant_grasshopper/en/nar_1382d2ce81.mp3"
+ "이번엔 베짱이도 함께 날라요.": {
+  "t": "This time the grasshopper carries food too.",
+  "c": "audio/el/ant_grasshopper/en/nar_d20c44fd89.mp3"
  },
  "베짱이를 톡톡 눌러서 영차 영차!": {
   "t": "Tap the grasshopper, heave-ho, heave-ho!",

@@ -643,13 +643,10 @@
       listener: (r, last) => r !== 'hop' ? 'hop' : last && last !== 'hop' && last !== 'card' ? last : onStage(() => host) ? 'ant' : 'ants',
     });
     await T.curtain(true);
-    await say('여름이에요. 개미들이 줄지어 먹이를 날라요. 개미를 톡 눌러 봐요!');
-    await T.tap(line, { prompt: '줄지어 가는 개미들을 톡!' });
+    await say('여름이에요. 개미들이 줄지어 먹이를 날라요.'); // 개미 영차·베짱이 연주는 저절로 (2026-10-19)
     SND.yeongcha(T, 3); ants.forEach((a, i) => setTimeout(() => a.hop(18, 300), i * 90));
     T.pop(605, 330, '영차!', C.bean);
     await sleep(700);
-    await say('이번엔 베짱이를 톡 눌러 봐요!');
-    await T.tap(hop.pos, { prompt: '초록 베짱이를 톡!' });
     const bw = bowing(hop.p);
     T.pop(360, 230, '띠리링~', C.pine);
     const spring = AudioFX.music('vivaldi_spring', { vol: .8, dur: 18 }); // 비발디 〈사계〉 '봄' 1악장 (공개 라이선스 녹음)
@@ -784,14 +781,16 @@
     await say('가을이 왔어요. 나뭇잎이 알록달록 휘날려요.');
     await say('도토리를 톡톡 눌러서 창고로 데굴데굴 굴려요!');
     let rolled = 0;
-    await T.mash(acorns, { count: 6, prompt: '도토리를 톡톡 눌러 봐요!', onStep: i => {
+    const rollStep = i => {
       const last = acorns.lastElementChild; if (last) last.remove();
       const a = acornShape(T, T.world, 0, 0, 1.4);
       SND.roll(T);
       a.animate([{ transform: 'translate(520px,474px) rotate(0deg) scale(2)' }, { transform: `translate(${AF.door[0]}px,${AF.door[1]}px) rotate(720deg) scale(${AF.art ? .7 : 1.1})` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' }).finished.then(() => a.remove());
       rolled++;
       T.pop(620, 360, rolled % 2 ? '데굴!' : '데굴데굴~', C.bark);
-    } });
+    };
+    await T.tap(acorns, { prompt: '도토리를 톡톡 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 6; i++) { await rollStep(i); await sleep(500); }
     await sleep(900);
     await say('창고가 도토리로 더 가득해졌어요!');
     // 가을 옷 고르기
@@ -925,13 +924,13 @@
     }, hop.pos);
     await say('창고 안이 곡식이랑 도토리로 가득해요! 여름부터 미리 모은 덕분이에요.');
     await say('베짱이에게 목도리와 털모자도 나눠 줬어요.');
-    await say('먹을 게 이렇게 많으니 친구들도 불러요! 문 앞에 온 친구를 톡 눌러요.');
+    await say('먹을 게 이렇게 많으니 친구들도 불러요!'); // 손님은 하나둘 저절로 들어온다 (2026-10-19)
     const cnt = counter(T, FRIENDS.length, 470, 150, K.art ? 36 : 96); // 그림: 손님이 눈 위(y 140)에서 기다려서 세로 화면 세기 판을 더 위로
     const seats = (narrow() ? [352, 418, 590, 648] : K.art ? [345, 425, 575, 655] : [335, 410, 595, 665]).map((x, i) => [x, K.seatY[i]]); // 세로: 음악회 확대에서도 다 보이게
     for (let i = 0; i < guests.length; i++) {
       const g = guests[i];
       SND.step(T); await g.move(630, K.snowY, 700);
-      await T.tap(g.pos, { prompt: `${josa(g.f.name, '을/를')} 톡 눌러서 불러 줘요!` });
+      await sleep(400);
       SND.squeak(T, 1200 + i * 150);
       await g.move(K.shaftX, K.snowY + 8, 500);
       await g.move(K.shaftX, K.shaftY, 450, 'ease-in');
@@ -988,15 +987,17 @@
     }, hop.pos);
     AudioFX.animal('rooster', .3);
     await say('따뜻한 봄이 왔어요. 새싹이 쏙쏙!');
-    await say('이번엔 베짱이도 함께 날라요. 베짱이를 톡톡 눌러서 영차!');
-    await T.mash(hop.pos, { count: 4, prompt: '베짱이를 톡톡 눌러서 영차 영차!', onStep: i => {
+    await say('이번엔 베짱이도 함께 날라요.');
+    const carryStep = i => {
       SND.yeongcha(T, 4); SND.step(T);
       const dx = 80;
       if (narrow()) camTo(hop.x + dx + 80, 280, 1, 420); // 세로: 걸어가는 베짱이를 카메라가 따라간다
       hop.move(hop.x + dx, 494, 420); hop.hop(16, 420);
       workers.forEach((a, k) => setTimeout(() => { a.move(a.x + dx, 494, 420); a.hop(12, 420); }, k * 70));
       T.pop(hop.x + 40, 240, '영차!', C.bean);
-    } });
+    };
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 4; i++) { await carryStep(i); await sleep(650); }
     await sleep(600);
     await say('"영차! 여름엔 노래하고, 일도 함께 할래요!"');
 
@@ -1015,7 +1016,7 @@
       const want = cards[k];
       const name = SEASON_KO[want.s];
       if (left.length === 1) { // 마지막 한 장
-        await T.tap(want.g, { prompt: `${name} 카드를 톡!` });
+        await sleep(500); // 고를 게 없으니 저절로 (2026-10-19)
       } else {
         await T.choose(left.map(c => ({ el: c.g, ok: c === want, onWrong: c === want ? null : async () => {
           await T.anim(c.g, [{ translate: '0 0' }, { translate: '0 -26px' }, { translate: '0 0' }], 420);

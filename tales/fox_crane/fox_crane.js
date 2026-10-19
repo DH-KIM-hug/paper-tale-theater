@@ -557,8 +557,8 @@
     if (P1) camSnap(500, 280, .78);
     await T.curtain(true);
     await say('숲속에 여우랑 두루미가 살았어요.');
-    await say('여우가 초대장을 가져왔어요. 초대장을 톡 눌러 봐요!');
-    await T.tap(inv.pos, { prompt: '초대장을 톡 눌러서 두루미에게 줘요!' });
+    await say('여우가 초대장을 가져왔어요.'); // 초대장은 저절로 두루미에게 (2026-10-19)
+    await sleep(300);
     sfx(T, 'whoosh');
     await inv.move(CX1 - 90, 400, 700);
     sfx(T, 'ding');
@@ -585,7 +585,7 @@
     }, fox.pos);
     await say('여우가 맛있는 수프를 끓여요.');
     await say('냄비를 톡톡 눌러서 저어 볼까요?');
-    await T.mash(pot.pos, { count: 5, prompt: '냄비를 톡톡 눌러서 휘휘 저어요!', onStep: i => {
+    const stirStep = i => {
       const st = pot.parts.stir || 22;
       pot.parts.spoon.animate([{ transform: 'rotate(0deg)' }, { transform: `rotate(${-st}deg)` }, { transform: `rotate(${st}deg)` }, { transform: 'rotate(0deg)' }], { duration: 420 });
       for (let k = 0; k < 2; k++) {
@@ -595,7 +595,9 @@
       }
       bubbleSnd(T);
       if (i % 2) T.pop(pot.x + 20, pot.y - 200, '보글', C.bean);
-    } });
+    };
+    await T.tap(pot.pos, { prompt: '냄비를 톡톡 눌러서 휘휘 저어요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 5; i++) { await stirStep(i); await sleep(450); }
     await sleep(400);
     AudioFX.laugh();
     await fox.wiggle(8, 500);
@@ -619,8 +621,8 @@
     const words = ['콕!', '딱!', '딱딱!'];
     const HI = bgUrl('high') && ARTMODE(); // 그림: 접시가 탁자 위(무대 y≈250)에 있다
     const peckAt = HI ? [604, 280] : [640, 418], lickAt = HI ? [392, 288] : [390, 440];
+    await T.tap(crane.parts.head, { prompt: '두루미 부리를 톡 눌러 봐요!' }); // 한 번 누르면 콕·딱·딱딱 세 번 저절로 (2026-10-19)
     for (let i = 0; i < 3; i++) {
-      await T.tap(crane.parts.head, { prompt: '두루미 부리를 톡 눌러 봐요!' });
       const deg = aimP(crane, peckAt);
       await T.anim(crane.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${deg}deg)` }], 260);
       peckSnd(T); T.pop(peckAt[0] - (HI ? (T.portrait() ? 30 : 150) : 0), peckAt[1] - (HI ? 110 : 88), words[i], C.bean);
@@ -699,13 +701,12 @@
     await say('여우 코를 톡 눌러서 먹게 해 줘요!');
     const mouth = [bottle.x, bottle.y + DISH.bottle.top * 1.3];
     // 1: 킁킁
-    await T.tap(fox.parts.head, { prompt: '여우 코를 톡 눌러 봐요!' });
+    await sleep(300); // 킁킁·영차는 저절로, 세 번째 폴짝만 톡 (2026-10-19)
     await fox.move(360, 500, 400);
     await fox.wiggle(5, 400);
     T.tone([1200, 900], .08, { type: 'sine', vol: .1 }); T.pop(fox.x + 110, 360, '킁킁', C.bark);
     await sleep(400);
     // 2: 영차
-    await T.tap(fox.parts.head, { prompt: '여우 코를 한 번 더 톡!' });
     await T.anim(fox.body, [{ transform: 'scale(1,1)' }, { transform: 'scale(.95,1.15)' }, { transform: 'scale(.95,1.15)' }, { transform: 'scale(1,1)' }], 800);
     T.pop(360, 250, '영차!', C.pine);
     await sleep(300);

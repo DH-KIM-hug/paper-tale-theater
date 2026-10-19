@@ -4,9 +4,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "In the forest lived a fox and a crane.",
   "c": "audio/el/fox_crane/en/nar_0930d4669f.mp3"
  },
- "여우가 초대장을 가져왔어요. 초대장을 톡 눌러 봐요!": {
-  "t": "Fox brought an invitation. Tap the invitation!",
-  "c": "audio/el/fox_crane/en/nar_daccfa5999.mp3"
+ "여우가 초대장을 가져왔어요.": {
+  "t": "Fox brought an invitation.",
+  "c": "audio/el/fox_crane/en/nar_932423934d.mp3"
  },
  "초대장을 톡 눌러서 두루미에게 줘요!": {
   "t": "Tap the invitation and give it to Crane!",

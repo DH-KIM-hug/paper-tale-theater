@@ -26,7 +26,7 @@ def tts(path, voice, text, model=None, settings=None):
         r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(),
                                    {'xi-api-key': KEY, 'Content-Type': 'application/json'})
         try:
-            open(path, 'wb').write(urllib.request.urlopen(r, timeout=120).read()); return
+            data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); return  # 실패하면 빈 파일을 남기지 않게 받은 뒤에 쓴다
         except urllib.error.HTTPError as e:
             if e.code in (429, 500, 502, 503) and attempt < 5: time.sleep(3 * (attempt + 1)); continue
             raise
@@ -78,6 +78,7 @@ def main():
                 try: tts(path, V[role], sent, M, ST); made += 1; print('ok', role, sent, flush=True)
                 except urllib.error.HTTPError as e:
                     errs += 1; chars -= len(sent); print('ERR', e.code, e.read()[:200], role, text, flush=True); return None
+            else: print('NEED', rel, '|', text, flush=True)  # --dry: 새로 만들어야 할 클립 경로 (trim_line.py 가 이 경로에 잘라 낸 녹음을 둔다)
         return rel
     def lead(dr):  # '=' 전체 글 방향에서 맨 앞 태그만 (영어는 한국어 글을 못 쓰니)
         if not dr: return None

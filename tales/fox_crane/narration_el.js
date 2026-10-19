@@ -1,7 +1,7 @@
 /* fox_crane — ElevenLabs 배역 내레이션 (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS, {
  "숲속에 여우랑 두루미가 살았어요.": "audio/el/fox_crane/nar_c4f95f8a3d.mp3",
- "여우가 초대장을 가져왔어요. 초대장을 톡 눌러 봐요!": "audio/el/fox_crane/nar_2c6f903289.mp3",
+ "여우가 초대장을 가져왔어요.": "audio/el/fox_crane/nar_5f66bf4ab6.mp3",
  "초대장을 톡 눌러서 두루미에게 줘요!": "audio/el/fox_crane/nar_fc48640de3.mp3",
  "\"와, 고마워!\" 두루미가 긴 다리로 폴짝 뛰었어요.": [
   "audio/el/fox_crane/crane_a837c42272.mp3",

@@ -9,12 +9,12 @@
  },
  "lines": [
   {
-   "text": "여름이에요. 개미들이 줄지어 먹이를 날라요. 개미를 톡 눌러 봐요!",
-   "en": "It's summer. The ants march in a line, carrying food. Tap an ant!",
+   "text": "여름이에요. 개미들이 줄지어 먹이를 날라요.",
+   "en": "It's summer. The ants march in a line, carrying food.",
    "segs": [
     [
      "nar",
-     "It's summer. The ants march in a line, carrying food. Tap an ant!",
+     "It's summer. The ants march in a line, carrying food.",
      "happy:1.1"
     ]
    ]
@@ -609,12 +609,12 @@
    ]
   },
   {
-   "text": "먹을 게 이렇게 많으니 친구들도 불러요! 문 앞에 온 친구를 톡 눌러요.",
-   "en": "There's so much to eat, so let's invite friends! Tap the friend at the door.",
+   "text": "먹을 게 이렇게 많으니 친구들도 불러요!",
+   "en": "There's so much to eat, so let's invite friends!",
    "segs": [
     [
      "nar",
-     "There's so much to eat, so let's invite friends! Tap the friend at the door.",
+     "There's so much to eat, so let's invite friends!",
      "happy:1.1"
     ]
    ]
@@ -774,12 +774,12 @@
    ]
   },
   {
-   "text": "이번엔 베짱이도 함께 날라요. 베짱이를 톡톡 눌러서 영차!",
-   "en": "This time the grasshopper carries food too. Tap the grasshopper to heave-ho!",
+   "text": "이번엔 베짱이도 함께 날라요.",
+   "en": "This time the grasshopper carries food too.",
    "segs": [
     [
      "nar",
-     "This time the grasshopper carries food too. Tap the grasshopper to heave-ho!",
+     "This time the grasshopper carries food too.",
      "happy:1.1"
     ]
    ]

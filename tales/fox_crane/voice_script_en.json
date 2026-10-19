@@ -18,12 +18,12 @@
    ]
   },
   {
-   "text": "여우가 초대장을 가져왔어요. 초대장을 톡 눌러 봐요!",
-   "en": "Fox brought an invitation. Tap the invitation!",
+   "text": "여우가 초대장을 가져왔어요.",
+   "en": "Fox brought an invitation.",
    "segs": [
     [
      "nar",
-     "Fox brought an invitation. Tap the invitation!",
+     "Fox brought an invitation.",
      "happy:1.1"
     ]
    ]
