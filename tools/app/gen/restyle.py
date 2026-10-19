@@ -196,7 +196,7 @@ DESC_EXTRA = {
  'sm_kkul_purple': 'One dome-shaped Korean rice cake (half sphere) of pastel lavender, with a slightly darker thin layer at its base. No face.',
  'sm_kkul_white': 'One dome-shaped Korean rice cake (half sphere) of creamy white, with a slightly darker thin layer at its base. No face.',
  'sm_kkul_yellow': 'One dome-shaped Korean rice cake (half sphere) of pastel yellow, with a slightly darker thin layer at its base. No face.',
- 'sm_lamp_flame': 'A single flame: an orange teardrop-shaped flame with a cream inner flame.',
+ 'sm_lamp_flame': 'A single flame: an orange teardrop-shaped flame with a cream inner flame. It is an OBJECT: NO face, NO eyes, NO mouth, NO cheeks.',
  'sm_lamp_off': 'A small Korean clay oil lamp bowl with a lid on a simple wooden stand with four legs, unlit.',
  'sm_lamp_on': 'The same small Korean clay oil lamp on its wooden stand, with a small orange flame burning on top.',
 }
@@ -275,8 +275,11 @@ def gen_one(job, log):
             + (f"Pass these reference images in referenced_image_paths (read-only): {' '.join(os.path.join(G, r) for r in job_refs(job))} . " if job_refs(job) else '')
             + f"Save (copy) the generated image to {out} . "
             "Do not modify any other file, do not install anything, do not run git. Reply with only: SAVED <path> <width>x<height>, or FAILED <reason verbatim>.")
-    r = subprocess.run([CODEX, 'exec', '-s', 'workspace-write', '--skip-git-repo-check', '-C', G, inst], capture_output=True, text=True, timeout=900)
-    txt = (r.stdout or '') + '\n' + (r.stderr or '')
+    try:
+        r = subprocess.run([CODEX, 'exec', '-s', 'workspace-write', '--skip-git-repo-check', '-C', G, inst], capture_output=True, text=True, timeout=900)
+        txt = (r.stdout or '') + '\n' + (r.stderr or '')
+    except subprocess.TimeoutExpired:
+        txt = 'TIMEOUT (codex exec 15분 무응답)'  # 실행기가 멈추지 않게 실패 한 번으로
     open(log, 'a').write(f"\n===== {datetime.datetime.now():%m-%d %H:%M} {job['id']}\n{txt[-1500:]}\n")
     try: os.remove(pf)
     except OSError: pass
