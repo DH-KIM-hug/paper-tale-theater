@@ -32,3 +32,4 @@ tools/app/gen/restyle/*.out
 tools/app/gen/restyle/*.pid
 tools/app/gen/restyle/status.json
 tools/app/gen/restyle/_prompt*.txt
+__pycache__/

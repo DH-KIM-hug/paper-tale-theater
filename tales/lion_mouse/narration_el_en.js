@@ -273,6 +273,14 @@ Object.assign(NARRATION_CLIPS_EN, {
  "그날부터 사자와 생쥐는 둘도 없는 친구가 되었답니다.": {
   "t": "From that day on, the lion and the mouse were the best of friends.",
   "c": "audio/el/lion_mouse/en/nar_438c0b84c0.mp3"
+ },
+ "사자가 웃다가 앞발이 스르르 열렸어요.": {
+  "t": "The lion laughed, and the big paw slowly opened.",
+  "c": "audio/el/lion_mouse/en/nar_6d07133cce.mp3"
+ },
+ "생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!": {
+  "t": "The mouse gnaws the net with tiny teeth. Nibble, nibble, one rope at a time!",
+  "c": "audio/el/lion_mouse/en/nar_8cb466114d.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {

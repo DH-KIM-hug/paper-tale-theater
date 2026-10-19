@@ -745,6 +745,28 @@
      "[gentle, warm, content, storytelling, slow]"
     ]
    ]
+  },
+  {
+   "text": "사자가 웃다가 앞발이 스르르 열렸어요.",
+   "segs": [
+    [
+     "nar",
+     "사자가 웃다가 앞발이 스르르 열렸어요.",
+     "happy:1.1",
+     "[warm, amused, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!",
+   "segs": [
+    [
+     "nar",
+     "생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!",
+     "happy:1.1",
+     "[encouraging, hopeful, bright]"
+    ]
+   ]
   }
  ],
  "extra": {

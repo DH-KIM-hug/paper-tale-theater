@@ -333,7 +333,7 @@
     await T.curtain(true);
     snore(T);
     await say('나무 그늘에서 사자가 쿨쿨 낮잠을 자요.');
-    await T.tap(lion.parts.H, { prompt: '사자 코를 톡 눌러 봐요!' });
+    await sleep(1600); // 콧방울은 저절로 퐁 (2026-10-19: 톡 조작 줄임)
     breathe.cancel();
     T.tone([200, 600], .9, { type: 'sine', vol: .12 });
     await T.anim(lion.parts.bubble, [{ transform: 'scale(9)' }, { transform: 'scale(30)' }], { duration: 900, easing: 'ease-out' });
@@ -366,12 +366,10 @@
     }, lion.parts.H);
     squeak(T);
     await say('작은 생쥐가 산책을 나왔어요. 풀이 숲처럼 커다래요!');
-    await say('화면을 톡톡 눌러서 폴짝폴짝 가 볼까요?');
     let q = Promise.resolve();
     const follow = (x, dur) => { if (T.portrait()) camTo(x, 280, 1, dur); };
     const hopTo = (x, y, dur = 380) => { q = q.then(() => { squeak(T, 1400 + Math.random() * 300); mouse.hop(40, dur); follow(x + 60, dur); return mouse.move(x, y, dur); }); return q; };
-    await T.mash(T.root.querySelector('#stageWrap'), { count: 4, prompt: '화면을 톡톡 눌러서 폴짝!',
-      onStep: i => { if (i < 4) hopTo(60 + i * 42, 500); } });
+    for (let i = 1; i < 4; i++) { hopTo(60 + i * 42, 500); await sleep(450); } // 저절로 폴짝폴짝
     await q;
     // 네 번째 폴짝: 꼬리 → 등 → 갈기 미끄럼틀
     await say('어? 이건 뭐지? 폴짝!');
@@ -412,7 +410,8 @@
     let pawHit;
     await T.sceneCard('잡혔다!', () => {
       T.clear(); grassForestBG(T);
-      mouse = mk(T, T.world, 884, 476, drawMouse, 1.6); mouse.face('right'); // 사자 몸 뒤에 먼저 깔아 꼬리 끝이 앞발 밑에 들어간다
+      // 생쥐는 도망치려는 쪽(오른쪽)을 보고, 꼬리 끝이 사자 오른쪽 앞발(무대 x 737~818) 밑에 깔린다. 사자보다 먼저 깔아 앞발이 꼬리를 덮는다
+      mouse = mk(T, T.world, 836, 498, drawMouse, 1.6); mouse.face('left');
       lion = mk(T, T.world, 640, 500, drawLionLie, 1.8); lion.face('right'); lion.parts.eyes('open');
       if (lion.parts.art) lion.place(520, 500);
       head = lionFace(T, lion.parts.hg, lion.parts.art);
@@ -425,11 +424,12 @@
     await say('사자가 하품하며 말했어요. "하암~ 한입에 꿀꺽 해 버릴까?"');
     head.set(null);
     await say('생쥐가 말했어요. "살려 주시면 꼭 은혜 갚을게요!"');
-    await say('생쥐를 톡 눌러서 부탁해 봐요.');
-    await T.tap(mouse.pos, { prompt: '생쥐를 톡 눌러 봐요!' });
+    await sleep(500);
+    // 부탁할 땐 사자를 돌아보며 두 손을 모은다 (앞발 바로 옆, 사자 얼굴 아래)
+    mouse.face('right'); mouse.place(868, 498);
     mouse.parts.arms.setAttribute('opacity', 0); mouse.parts.pray.setAttribute('opacity', 1);
     squeak(T, 1600); mouse.hop(16);
-    T.pop(860, 380, '제발요~', C.pine);
+    T.pop(880, 380, '제발요~', C.pine);
     await say('생쥐가 두 손을 모았어요. "제발요, 사자님~"');
 
     /* --- 4. 하하하 (사자 클로즈업 → 컷) --- */
@@ -448,18 +448,18 @@
     AudioFX.sfx('creak', .5);
     // 사자가 웃느라 몸이 뒤로 젖혀져 앞발이 들린다 (몸 전체를 뒷발 끝을 축으로 돌림)
     await T.anim(lion.parts.hg, [{ rotate: '0deg' }, { rotate: '3deg' }], { duration: 1200, easing: 'ease-out' });
-    await say('사자가 웃다가 앞발이 스르르 열렸어요. 앞발을 톡 눌러 봐요!');
-    await T.tap(pawHit, { prompt: '사자 앞발을 톡 눌러 봐요!' });
+    await say('사자가 웃다가 앞발이 스르르 열렸어요.');
     T.anim(lion.parts.hg, [{ rotate: '3deg' }, { rotate: '8deg' }], 500);
     mouse.parts.arms.setAttribute('opacity', 1); mouse.parts.pray.setAttribute('opacity', 0);
     T.tone([600, 1600], .25, { type: 'sine', vol: .14 });
     T.pop(860, 420, '쏙!', C.pine);
-    await mouse.move(960, 480, 500, 'ease-in');
+    mouse.face('left'); // 풀려나서 오른쪽으로 쏙
+    await mouse.move(960, 498, 500, 'ease-in');
     laugh.cancel();
     await say('생쥐가 쏙 빠져나왔어요. "고맙습니다, 사자님!"');
     squeak(T);
     if (mouse.parts.look) mouse.parts.look('run'); // 쪼르르 달려 나간다
-    await mouse.move(1250, 480, 700, 'ease-in');
+    await mouse.move(1250, 498, 700, 'ease-in');
 
     /* --- 5. 누가 더 클까? (비교 판) --- */
     await T.sceneCard('누가 더 클까?', () => { T.clear(); camSnap(500, 280, 1); boardBG(T); });
@@ -626,7 +626,7 @@
       mouse = mk(T, T.world, ROPES[0] - 52, 545, drawMouse, 1.5); mouse.face('right');
     }, mouse.pos);
     const cnt = counter(T, 10);
-    await say('생쥐가 작은 이빨로 그물을 갉아요. 톡톡 눌러서 한 줄씩 끊어 봐요!');
+    await say('생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!');
     q = Promise.resolve();
     const cutRope = i => {
       q = q.then(async () => {
@@ -650,7 +650,7 @@
         mouse.parts.teeth.setAttribute('opacity', 0);
       });
     };
-    await T.mash(T.root.querySelector('#stageWrap'), { count: 10, prompt: '톡톡 눌러서 그물을 갉아요!', onStep: i => cutRope(i - 1) });
+    for (let i = 0; i < 10; i++) { cutRope(i); await sleep(250); } // 하나부터 열까지 저절로 (줄마다 숫자를 세며 끊는다)
     await q;
     await sleep(500);
     cnt.remove();
@@ -697,14 +697,16 @@
     }, lion.parts.H);
     await say('다음 날 아침, 사자가 생쥐를 등에 태웠어요. "꽉 잡아!"');
     let sx = 0;
-    await T.mash(T.root.querySelector('#stageWrap'), { count: 3, prompt: '톡톡 눌러서 달려요!',
-      onStep: () => {
+    for (let k = 0; k < 3; k++) { // 저절로 다다다 세 번
+      {
         const from = sx; sx -= 520;
         scroll.animate([{ transform: `translateX(${from}px)` }, { transform: `translateX(${sx}px)` }], { duration: 900, easing: 'ease-in-out', fill: 'forwards' });
         lion.body.animate([{ translate: '0 0' }, { translate: '0 -22px' }, { translate: '0 0' }, { translate: '0 -22px' }, { translate: '0 0' }], 900);
         AudioFX.sfx('step_grass', .5) || T.tone([160, 120], .12);
         T.pop(260, 300, '다다다!', C.bark);
-      } });
+      }
+      await sleep(950);
+    }
     await sleep(900);
     await say('바람을 가르며 초원을 달려요! 신난다!');
     T.finale();
