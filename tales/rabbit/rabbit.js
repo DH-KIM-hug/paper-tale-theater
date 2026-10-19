@@ -598,16 +598,14 @@
     walk(2600);
     turtle.move(T.portrait() ? 400 : 330, gy1, 2600, 'linear');
     await say('숲속 마을에 아침이 왔어요.');
-    await say('거북이가 엉금엉금 산책해요. 거북이를 톡!');
-    await T.tap(turtle.pos, { prompt: '거북이를 톡 눌러 봐요!' });
+    await say('거북이가 엉금엉금 산책해요.');
     turtle.hop(16, 400);
     await tween(300, t => tp.neck(1 + t * .6)); // 인사는 거북이 목소리로 (겹치던 합성음 뺌)
     await say('"안녕! 나는 거북이야."');
     tp.neck(1);
     faceL(rabbit);
     for (let i = 0; i < 3; i++) { AudioFX.boing(); rabbit.hop(60, 380); await rabbit.move(rabbit.x - 150, gy1, 380); }
-    await say('깡충깡충 토끼도 왔어요. 토끼를 톡!');
-    await T.tap(rabbit.pos, { prompt: '토끼를 톡 눌러 봐요!' });
+    await say('깡충깡충 토끼도 왔어요.');
     AudioFX.boing(); rabbit.hop(50, 400);
     await say('"안녕! 나는 깡충 토끼야!"');
     rabbit.hop(30, 300);
@@ -693,24 +691,8 @@
     });
     await Promise.all(SEATS.map(async ([k, x, y], i) => { await sleep(i * 180); aud[k].hop(20, 400); await aud[k].move(x, y, 1100); }));
     await say('동물 친구들이 응원하러 모였어요!');
-    await say('친구들을 모두 톡톡 눌러 봐요! 벌떡 일어나 응원해요.');
-    /* 여덟 친구를 한 번씩 다 눌러야 넘어간다. 누른 친구는 일어선 채 머리 위에 금별.
-       막힘 방지: 5초 동안 안 누르면 남은 친구들이 들썩, 20초면 하나씩 대신 일으켜 준다 */
-    {
-      const left = [...KINDS];
-      let nudge = null, idle = null, auto = false;
-      const autoTap = () => { if (!left.length) return; auto = true; const n = aud[left[0]].pos, o = { bubbles: true };
-        n.dispatchEvent(new PointerEvent('pointerdown', o)); n.dispatchEvent(new PointerEvent('pointerup', o)); };
-      while (left.length) {
-        clearTimeout(nudge); clearTimeout(idle);
-        if (!auto) nudge = setTimeout(() => left.forEach((k, i) => setTimeout(() => aud[k].hop(18, 380), i * 110)), 5000);
-        idle = setTimeout(autoTap, auto ? 500 : 20000);
-        const o = await T.choose(left.map(k => ({ el: aud[k].pos, ok: true, k })), { prompt: '아직 안 일어난 친구를 톡 눌러 봐요!' });
-        left.splice(left.indexOf(o.k), 1);
-        aud[o.k].done();
-      }
-      clearTimeout(nudge); clearTimeout(idle);
-    }
+    await say('친구들이 벌떡 일어나 응원해요!');
+    for (const k of KINDS) { aud[k].done(); await sleep(260); } // 여덟 친구가 차례로 벌떡 (저절로)
     await sleep(700);
     await say('와, 신나는 응원 소리!');
     KINDS.forEach(k => { aud[k].undone(); aud[k].sit(); });
@@ -726,15 +708,11 @@
     await say('달리기 전에 준비 운동을 해요.');
     const stretchR = async () => { AudioFX.boing(); rabbit.hop(20, 400); await tween(300, t => rp.ears(1 + .35 * t)); T.pop(rabbit.x, 250, '쭉!', C.persimmon); await sleep(500); await tween(300, t => rp.ears(1.35 - .35 * t)); };
     const stretchT = async () => { T.tone([180, 700], .5, { type: 'triangle', vol: .2 }); await tween(500, t => tp.neck(1 + 2.4 * easeOut(t))); T.pop(turtle.x + 200, 340, '쭈욱~', C.pine); await sleep(700); AudioFX.boing(); await tween(300, t => tp.neck(3.4 - 2.4 * t)); };
-    for (let i = 0; i < 2; i++) {
-      await say(i ? '한 번 더! 토끼를 톡!' : '토끼를 톡! 귀를 쭉~');
-      await T.tap(rabbit.pos, { prompt: '토끼를 톡 눌러 봐요!' });
-      await stretchR();
-      await say(i ? '거북이도 톡!' : '이번엔 거북이를 톡! 목을 쭉~');
-      await T.tap(turtle.pos, { prompt: '거북이를 톡 눌러 봐요!' });
-      await stretchT();
-      if (!i) { aud.pig.cheer('하하!'); vo('laugh_pig'); await say('와, 거북이 목이 쭈욱~ 길어졌어요!'); }
-    }
+    await say('토끼가 귀를 쭉~');
+    await stretchR();
+    await say('거북이는 목을 쭉~');
+    await stretchT();
+    aud.pig.cheer('하하!'); vo('laugh_pig'); await say('와, 거북이 목이 쭈욱~ 길어졌어요!');
 
     /* --- 5. 요이~ 땅! --- */
     let drum, drumAt = [730, 300];
@@ -997,13 +975,15 @@
       bar.show(true); setRace(race.r, race.t, 0);
     });
     await say('그동안 거북이는? 엉금엉금 걷고 있어요.');
-    await say('화면을 톡톡 눌러서 한 발 한 발 걸어요!');
+    await say('화면을 톡! 한 발 한 발 걸어요.');
     let st = 0;
-    await T.mash(wrap, { count: 6, prompt: '화면을 톡톡 눌러서 엉금엉금!', onStep: i => {
+    const stepWalk = i => {
       tp.step(st++ % 2); footstep(T); turtle.move(R9.x0 + i * R9.dx, R9.y, 380); follow(R9.x0 + 100 + i * R9.dx, 380);
       setRace(null, .04 + i * .02, 400);
       if (i === 3) { aud.dog.cheer('힘내!'); vo('cheer_dog'); setTimeout(() => aud.cat.cheer('힘내!'), 300); }
-    } });
+    };
+    await T.tap(wrap, { prompt: '화면을 톡 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 6; i++) { stepWalk(i); await sleep(420); }
     await sleep(500); tp.step(0);
     await say('어? 커다란 돌멩이예요! 돌멩이를 톡 해서 넘어가요!');
     await T.tap(rock, { prompt: '돌멩이를 톡 눌러 봐요!' });
@@ -1045,15 +1025,17 @@
     });
     let sw = every(160, () => tp.step(Math.random() < .5 ? 1 : 0));
     await say('앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.');
-    await say('화면을 톡톡 눌러서 헤엄쳐요!');
+    await say('화면을 톡! 헤엄쳐요.');
     let swimQ = Promise.resolve(); // 빨리 여러 번 눌러도 한 번에 한 칸씩 (움직임이 겹쳐 뒤로 튀지 않게)
-    await T.mash(wrap, { count: 3, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => {
+    const stepSwim = i => {
       AudioFX.splash(); swimQ = swimQ.then(() => Promise.all([turtle.move(R10.x0 + i * 185, R10.y - (i % 2) * (brook ? 16 : 30), 800), follow(R10.x0 + i * 185, 800),
         ...fish.map((f, k) => f.move(f.x + 185, f.y + (k - 1) * 8, 850))]));
       for (let b = 0; b < 5; b++) { const c = el('circle', { cx: turtle.x + 60, cy: turtle.y - 40, r: 5 + b * 2, fill: 'none', stroke: C.snow, 'stroke-width': 3 }, T.fx); c.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${b * 10}px,-140px)`, opacity: 0 }], { duration: 1200, delay: b * 120, fill: 'both' }).finished.then(() => c.remove()); }
       setRace(null, .2 + i * .06, 800);
       if (i === 2) { aud.duck.cheer('꽥꽥! 힘내!'); setTimeout(() => vo('cheer_duck'), 900); } // 진짜 오리 소리(꽥꽥) 다음에 오리 목소리로 '힘내'
-    } });
+    };
+    await T.tap(wrap, { prompt: '화면을 톡 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 3; i++) { stepSwim(i); await sleep(700); }
     await swimQ; await sleep(600); clearInterval(sw); tp.step(0);
     await say('물고기랑 같이 개울을 건넜어요!');
     tp.swim(false);
@@ -1080,7 +1062,7 @@
       bar.show(true);
     });
     await say('이번엔 높은 언덕이에요.');
-    await say('화면을 톡톡 누르면 영차영차 올라가요!');
+    await say('화면을 톡! 영차영차 올라가요.');
     let lastStep = -1, cheered = false;
     const yo = new Set();
     /* 톡 누를 때마다 한 칸씩 들어오므로, 칸마다 move()를 새로 걸면 움직임이 겹쳐 뒤로 튄다 →
@@ -1088,13 +1070,15 @@
     const climb = { tgt: 0, cur: 0, on: true };
     const climbLoop = () => { climb.cur += (climb.tgt - climb.cur) * .14; const [x, y, s] = hillAt(climb.cur); turtle.scale = s; turtle.place(x, y); if (climb.on) requestAnimationFrame(climbLoop); };
     requestAnimationFrame(climbLoop);
-    await T.mash(wrap, { count: 6, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => { const p = i / 6;
+    const stepClimb = i => { const p = i / 6;
       climb.tgt = p; const [x, y] = hillAt(p); follow(x + 40, 300);
       const s = Math.floor(p * 16); if (s !== lastStep) { lastStep = s; tp.step(s % 2); footstep(T); }
       [.3, .7].forEach(m => { if (p >= m && !yo.has(m)) { yo.add(m); T.pop(x + 60, y - 160 * hillAt(p)[2] / 1.3, '영차!', C.pine); } });
       if (p > .5 && !cheered) { cheered = true; aud.sheep.cheer('힘내!'); vo('cheer_sheep'); }
       setRace(null, .38 + .17 * p, 100);
-    } });
+    };
+    await T.tap(wrap, { prompt: '화면을 톡 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 6; i++) { stepClimb(i); await sleep(380); }
     await sleep(500); climb.on = false; climb.cur = 1; turtle.place(...hillAt(1).slice(0, 2));
     tp.step(0);
     await say('영차! 언덕 꼭대기에 올라왔어요.');

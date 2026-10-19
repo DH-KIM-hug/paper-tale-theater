@@ -425,6 +425,42 @@ Object.assign(NARRATION_CLIPS_EN, {
  "천천히 가도 끝까지 하면 해낼 수 있어요!": {
   "t": "Even if you go slowly, you can make it if you keep going!",
   "c": "audio/el/rabbit/en/nar_c3791426fe.mp3"
+ },
+ "거북이가 엉금엉금 산책해요.": {
+  "t": "The turtle takes a slow, slow walk.",
+  "c": "audio/el/rabbit/en/nar_4c656f430a.mp3"
+ },
+ "깡충깡충 토끼도 왔어요.": {
+  "t": "Hop, hop! Here comes the rabbit too.",
+  "c": "audio/el/rabbit/en/nar_10f38ca496.mp3"
+ },
+ "친구들이 벌떡 일어나 응원해요!": {
+  "t": "All the friends jump up and cheer!",
+  "c": "audio/el/rabbit/en/nar_254571b868.mp3"
+ },
+ "토끼가 귀를 쭉~": {
+  "t": "The rabbit stretches its ears, up, up!",
+  "c": "audio/el/rabbit/en/nar_08d303c27f.mp3"
+ },
+ "거북이는 목을 쭉~": {
+  "t": "The turtle stretches its neck, long, long!",
+  "c": "audio/el/rabbit/en/nar_75d1dda695.mp3"
+ },
+ "화면을 톡! 한 발 한 발 걸어요.": {
+  "t": "Tap the screen! One step at a time.",
+  "c": "audio/el/rabbit/en/nar_4473272dab.mp3"
+ },
+ "화면을 톡! 헤엄쳐요.": {
+  "t": "Tap the screen! Swim, swim.",
+  "c": "audio/el/rabbit/en/nar_fed427403c.mp3"
+ },
+ "화면을 톡! 영차영차 올라가요.": {
+  "t": "Tap the screen! Heave-ho, up we go.",
+  "c": "audio/el/rabbit/en/nar_804bb6a0a0.mp3"
+ },
+ "화면을 톡 눌러 봐요!": {
+  "t": "Tap the screen!",
+  "c": "audio/el/rabbit/en/nar_54663fd9b4.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {

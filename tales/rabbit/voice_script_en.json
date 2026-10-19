@@ -719,6 +719,105 @@
      "happy:1.2"
     ]
    ]
+  },
+  {
+   "text": "거북이가 엉금엉금 산책해요.",
+   "en": "The turtle takes a slow, slow walk.",
+   "segs": [
+    [
+     "nar",
+     "The turtle takes a slow, slow walk.",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "깡충깡충 토끼도 왔어요.",
+   "en": "Hop, hop! Here comes the rabbit too.",
+   "segs": [
+    [
+     "nar",
+     "Hop, hop! Here comes the rabbit too.",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "친구들이 벌떡 일어나 응원해요!",
+   "en": "All the friends jump up and cheer!",
+   "segs": [
+    [
+     "nar",
+     "All the friends jump up and cheer!",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 귀를 쭉~",
+   "en": "The rabbit stretches its ears, up, up!",
+   "segs": [
+    [
+     "nar",
+     "The rabbit stretches its ears, up, up!",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "거북이는 목을 쭉~",
+   "en": "The turtle stretches its neck, long, long!",
+   "segs": [
+    [
+     "nar",
+     "The turtle stretches its neck, long, long!",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡! 한 발 한 발 걸어요.",
+   "en": "Tap the screen! One step at a time.",
+   "segs": [
+    [
+     "nar",
+     "Tap the screen! One step at a time.",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡! 헤엄쳐요.",
+   "en": "Tap the screen! Swim, swim.",
+   "segs": [
+    [
+     "nar",
+     "Tap the screen! Swim, swim.",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡! 영차영차 올라가요.",
+   "en": "Tap the screen! Heave-ho, up we go.",
+   "segs": [
+    [
+     "nar",
+     "Tap the screen! Heave-ho, up we go.",
+     "happy:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡 눌러 봐요!",
+   "en": "Tap the screen!",
+   "segs": [
+    [
+     "nar",
+     "Tap the screen!",
+     "happy:1.0"
+    ]
+   ]
   }
  ],
  "extra": {

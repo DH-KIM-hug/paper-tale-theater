@@ -1168,6 +1168,105 @@
      "[warm, gentle, wise, reassuring, slow, closing]"
     ]
    ]
+  },
+  {
+   "text": "거북이가 엉금엉금 산책해요.",
+   "segs": [
+    [
+     "nar",
+     "거북이가 엉금엉금 산책해요.",
+     "happy:1.0",
+     "[calm, fresh, warm storytelling, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "깡충깡충 토끼도 왔어요.",
+   "segs": [
+    [
+     "nar",
+     "깡충깡충 토끼도 왔어요.",
+     "happy:1.0",
+     "[calm, fresh, warm storytelling, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "친구들이 벌떡 일어나 응원해요!",
+   "segs": [
+    [
+     "nar",
+     "친구들이 벌떡 일어나 응원해요!",
+     "happy:1.0",
+     "[calm, fresh, warm storytelling, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼가 귀를 쭉~",
+   "segs": [
+    [
+     "nar",
+     "토끼가 귀를 쭉~",
+     "happy:1.0",
+     "[calm, fresh, warm storytelling, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "거북이는 목을 쭉~",
+   "segs": [
+    [
+     "nar",
+     "거북이는 목을 쭉~",
+     "happy:1.0",
+     "[calm, fresh, warm storytelling, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡! 한 발 한 발 걸어요.",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡! 한 발 한 발 걸어요.",
+     "happy:1.0",
+     "[calm, fresh, warm storytelling, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡! 헤엄쳐요.",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡! 헤엄쳐요.",
+     "happy:1.0",
+     "[calm, fresh, warm storytelling, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡! 영차영차 올라가요.",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡! 영차영차 올라가요.",
+     "happy:1.0",
+     "[calm, fresh, warm storytelling, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "화면을 톡 눌러 봐요!",
+   "segs": [
+    [
+     "nar",
+     "화면을 톡 눌러 봐요!",
+     "happy:1.0",
+     "[calm, fresh, warm storytelling, morning]"
+    ]
+   ]
   }
  ],
  "extra": {

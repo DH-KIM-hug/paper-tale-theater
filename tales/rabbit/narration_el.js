@@ -122,7 +122,16 @@ Object.assign(NARRATION_CLIPS, {
  "먼저 들어 봐요! 신나는 행진곡이에요.": "audio/el/rabbit/nar_bebec35265.mp3",
  "이번에는 친구들을 톡톡 눌러서 같이 연주해요!": "audio/el/rabbit/nar_af6bde3d90.mp3",
  "모두 함께 신나는 잔치를 했답니다.": "audio/el/rabbit/nar_6604c26c01.mp3",
- "천천히 가도 끝까지 하면 해낼 수 있어요!": "audio/el/rabbit/nar_cfab06b73b.mp3"
+ "천천히 가도 끝까지 하면 해낼 수 있어요!": "audio/el/rabbit/nar_cfab06b73b.mp3",
+ "거북이가 엉금엉금 산책해요.": "audio/el/rabbit/nar_8c672a59f8.mp3",
+ "깡충깡충 토끼도 왔어요.": "audio/el/rabbit/nar_34036f0fcc.mp3",
+ "친구들이 벌떡 일어나 응원해요!": "audio/el/rabbit/nar_1a9db8d31a.mp3",
+ "토끼가 귀를 쭉~": "audio/el/rabbit/nar_4d8eb453cd.mp3",
+ "거북이는 목을 쭉~": "audio/el/rabbit/nar_d2bad1a9b2.mp3",
+ "화면을 톡! 한 발 한 발 걸어요.": "audio/el/rabbit/nar_1895b43eb5.mp3",
+ "화면을 톡! 헤엄쳐요.": "audio/el/rabbit/nar_bcf9e839ec.mp3",
+ "화면을 톡! 영차영차 올라가요.": "audio/el/rabbit/nar_9bbb3b4f00.mp3",
+ "화면을 톡 눌러 봐요!": "audio/el/rabbit/nar_94983fae25.mp3"
 });
 Object.assign(VOICE_LINES, {
  "laugh_pig": "audio/el/rabbit/pig_4b439159ec.mp3",
