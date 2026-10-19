@@ -150,9 +150,7 @@
   "id": "cd_cind_gown",
   "kind": "sprite",
   "pass": 2,
-  "refs": [
-   "assets/raw/restyle/cinderella/cd_cind_joy.png"
-  ],
+  "refs": [],
   "size": [
    525,
    700

@@ -31,7 +31,7 @@
   };
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
-  const EDGE = { bg_pond: ['#9acbe3', '#414e3f'], bg_meadow: ['#9fcbd9', '#18270e'], bg_chart: ['#fcecaf', '#637055'], bg_night: ['#000111', '#000b23'] };
+  const EDGE = { bg_pond: ['#94c6dd', '#4a6a68'], bg_meadow: ['#84bade', '#8d9a4e'], bg_chart: ['#e7d6c0', '#a8a96b'], bg_night: ['#1a2850', '#7a5844'] };
   /* 장면 그림 한 장을 무대 전체에 (없으면 false → 임시 도형 배경) */
   function artBG(T, key, parent = T.bg) {
     if (!ART[key]) return false;
@@ -141,8 +141,8 @@
     return { set() {}, has: () => false };
   }
   /* 황소 들여다보기 창: 무대의 황소(ox_stand, 발끝 at)와 똑같은 그림·자리를 창 안에서 크게 비춘다.
-     PEEK: 부위별 [무대 좌표 가운데 x, y, 확대 배율] — 황소 그림 811×560이 발끝 기준 440×300 상자(dx -20)에 들어간 자리로 잰 값 */
-  const PEEK = { tail: [703, 385, 3.2], hoof: [440, 488, 3.0], horn: [440, 252, 3.6] };
+     PEEK: 부위별 [무대 좌표 가운데 x, y, 확대 배율] — 황소 그림 659×560이 발끝 기준 440×300 상자(dx -20)에 들어간 자리로 잰 값 */
+  const PEEK = { tail: [660, 395, 3.2], hoof: [437, 497, 3.0], horn: [394, 255, 3.6] };
   function oxPeek(T, at) {
     const { el } = T, pt = () => T.viewWidth() < 990;
     const g = el('g', {}, T.world);
@@ -174,7 +174,7 @@
   function grassCover(T, parent) { if (!artBG(T, 'bg_meadow', parent)) T.el('rect', { x: -1200, y: -1200, width: 3400, height: 2960, fill: '#7c9a58' }, parent); }
   const ANIMALS = {
     tadpole: { name: '올챙이', h: 36, draw: (T, g) => sprite(T, g, 'tadpole', 76, 43) || T.paper(g, [['path', { d: 'M18 -18 Q50 -30 60 -10 Q50 -2 18 -14', fill: '#2f4a3a' }], ['circle', { cx: 0, cy: -18, r: 18, fill: '#2f4a3a' }], ['circle', { cx: -6, cy: -22, r: 4, fill: '#fff' }]]) },
-    frog: { name: '개구리', h: 72, draw: (T, g) => sprite(T, g, 'mom', 64, 80) || drawFrog(T, g) },
+    frog: { name: '개구리', h: 72, draw: (T, g) => sprite(T, g, 'mom', 80, 75) || drawFrog(T, g) },
     duck: { name: '오리', h: 118, draw: (T, g) => sprite(T, g, 'duck', 116, 122) || T.paper(g, [['ellipse', { cx: 0, cy: -40, rx: 46, ry: 34, fill: C.snow }], ['circle', { cx: -30, cy: -92, r: 26, fill: C.snow }], ['path', { d: 'M-54 -92 L-80 -86 L-54 -80 Z', fill: C.persimmon }], ['circle', { cx: -36, cy: -98, r: 4, fill: C.ink }], ['rect', { x: -12, y: -8, width: 8, height: 10, fill: C.persimmon }], ['rect', { x: 8, y: -8, width: 8, height: 10, fill: C.persimmon }]]) },
     sheep: { name: '양', h: 150, draw: (T, g) => sprite(T, g, 'sheep', 190, 152) || T.paper(g, [['rect', { x: -44, y: -50, width: 14, height: 50, fill: C.ink }], ['rect', { x: 30, y: -50, width: 14, height: 50, fill: C.ink }], ['ellipse', { cx: 0, cy: -80, rx: 70, ry: 46, fill: C.cream }], ['circle', { cx: -40, cy: -110, r: 26, fill: C.cream }], ['circle', { cx: 30, cy: -112, r: 24, fill: C.cream }], ['ellipse', { cx: -70, cy: -104, rx: 22, ry: 28, fill: '#4a3a30' }], ['circle', { cx: -76, cy: -110, r: 4, fill: '#fff' }]]) },
     ox: { name: '황소', h: 300, draw: (T, g) => drawOx(T, g) },
@@ -185,10 +185,10 @@
   const squeeze = T => Math.min(1, (T.viewWidth() / 2 - 60) / 250);
   /* 그림 속 연잎 자리 (발끝). 낮·밤 모두 한 줄에 다섯 장.
      START: 폴짝 대회 출발 자리 — 그림에 앞줄 연잎이 없어 임시 도형 연잎을 깐다 */
-  const PADS = { day: [[218, 336], [362, 336], [508, 336], [655, 334], [790, 337]], night: [[160, 398], [343, 406], [513, 408], [673, 416], [833, 421]] };
-  const START = [150, 452];
+  const PADS = { day: [[170, 324], [333, 324], [497, 324], [661, 324], [826, 324]], night: [[236, 302], [383, 306], [524, 307], [670, 306], [813, 299]] };
+  const START = [215, 440];
   /* 연잎: 그림(위에서 본 둥근 연잎)을 물 위에 누운 모양으로 납작하게 (발끝 x,y가 연잎 가운데). 그림이 없으면 임시 도형 */
-  const padAt = (T, x, y, rx = 96) => (ART.lilypad ? T.el('image', { href: A(ART.lilypad), x: x - rx * 1.1, y: y - rx * .36, width: rx * 2.2, height: rx * .8, preserveAspectRatio: 'none', filter: 'url(#pp)' }, T.world) : null)
+  const padAt = (T, x, y, rx = 72) => (ART.lilypad ? T.el('image', { href: A(ART.lilypad), x: x - rx * 1.1, y: y - rx * .5, width: rx * 2.2, height: rx * 1.0, preserveAspectRatio: 'none', filter: 'url(#pp)' }, T.world) : null)
     || T.paper(T.world, [['ellipse', { cx: x, cy: y + 4, rx, ry: rx * .23, fill: C.lily }], ['path', { d: `M${x} ${y + 4} L${x + rx * .69} ${y - 8} L${x + rx * .76} ${y + 7} Z`, fill: '#6f9a9c' }]]);
   function pondBG(T, night = false, k = squeeze(T)) {
     if (artBG(T, night ? 'bg_night' : 'bg_pond')) return PADS[night ? 'night' : 'day'].map(p => [...p]); // 그림 속 연잎은 움직일 수 없다 — 세로 화면은 도우미가 카메라로 맞춘다
@@ -289,13 +289,13 @@
     /* --- 2. 풀밭 모험 --- */
     await T.sceneCard('풀밭', () => {
       T.clear(); grassBG(T);
-      babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(.9); b.place(120 + i * 70, 500); });
+      babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(.9); b.place(200 + i * 70, 490); });
     }, babies[1].pos);
     if (T.portrait()) camSnap(babies[1].x, 280, 1);
     await say('아기 개구리들이 몰래 풀밭으로 나왔어요. 톡톡 눌러서 폴짝폴짝 가 볼까요?');
     await T.mash(T.root.querySelector('#stageWrap'), { count: 5, prompt: '화면을 톡톡 눌러서 폴짝폴짝!',
-      onStep: i => { babies.forEach((b, k) => { setTimeout(() => { croak(T, 380 + k * 40); b.move(b.x + 110, 500, 420); b.hop(50, 420); }, k * 90); });
-        if (T.portrait()) camTo(babies[1].x + 110, 280, 1, 500); } }); // 세로 화면: 카메라가 아기들을 따라간다 (가로는 그대로)
+      onStep: i => { babies.forEach((b, k) => { setTimeout(() => { croak(T, 380 + k * 40); b.move(b.x + 95, 490, 420); b.hop(50, 420); }, k * 90); });
+        if (T.portrait()) camTo(babies[1].x + 95, 280, 1, 500); } }); // 세로 화면: 카메라가 아기들을 따라간다 (가로는 그대로)
     await sleep(500);
 
     /* --- 3. 이건 뭐지? (부분만 보이는 황소 퀴즈) ---
@@ -456,7 +456,7 @@
     await T.sceneCard('폴짝 대회', () => {
       T.clear(); pads = pondBG(T, false, 1); // 경주는 넓게 — 세로 화면은 카메라가 따라간다
       momArt.set('base');
-      if (ART.bg_pond) padAt(T, ...START, 70);
+      if (ART.bg_pond) padAt(T, ...START, 56);
       T.world.appendChild(mom.pos); mom.place(...(ART.bg_pond ? START : [120, 480]));
       if (T.portrait()) camSnap(mom.x, 280, 1);
       // 그림 연못: 황소는 오른쪽 앞 얕은 물에 서 있다 (몸을 낮추고 말한다)

@@ -40,7 +40,7 @@ KEEP = ('REFERENCE: The attached reference image is the current artwork. REDRAW 
 
 def kind_of(name):
     if '_bg' in name: return 'bg'
-    if '_cut' in name: return 'cut'
+    if '_cut' in name or '_q_' in name: return 'cut'  # _q_: 화면을 꽉 채우는 확대 퀴즈 그림
     return 'sprite'
 
 def bg_scene(tale, name):
