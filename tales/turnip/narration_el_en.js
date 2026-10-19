@@ -31,25 +31,21 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Summer came. The turnip leaves grew as tall as Grandpa!",
   "c": "audio/el/turnip/en/nar_c21edbfc5b.mp3"
  },
- "할아버지가 순무 잎을 꽉 잡았어요. 톡톡 눌러서 영차!": {
-  "t": "Grandpa grabbed the turnip leaves tight. Tap, tap and heave-ho!",
-  "c": "audio/el/turnip/en/nar_882a9e1544.mp3"
+ "할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!": {
+  "t": "Grandpa grabbed the turnip leaves tight. Tap and heave-ho!",
+  "c": "audio/el/turnip/en/nar_8402d5b59c.mp3"
  },
- "할아버지를 톡톡 눌러서 영차 영차!": {
-  "t": "Tap, tap Grandpa to heave-ho, heave-ho!",
-  "c": "audio/el/turnip/en/nar_66b8cc741a.mp3"
+ "할아버지를 톡 눌러서 영차!": {
+  "t": "Tap Grandpa to heave-ho!",
+  "c": "audio/el/turnip/en/nar_aa578d83c0.mp3"
  },
  "순무는 꿈쩍도 안 해요.": {
   "t": "The turnip won't budge.",
   "c": "audio/el/turnip/en/nar_399ceae166.mp3"
  },
- "혼자서는 안 되겠어요. 할아버지를 톡 눌러서 할머니를 불러요!": {
-  "t": "Grandpa can't do it alone. Tap Grandpa to call Grandma!",
-  "c": "audio/el/turnip/en/nar_84474cd28b.mp3"
- },
- "할아버지를 톡! 할머니를 불러요.": {
-  "t": "Tap Grandpa! Call Grandma.",
-  "c": "audio/el/turnip/en/nar_3a1b566e15.mp3"
+ "혼자서는 안 되겠어요. 할아버지가 할머니를 불러요!": {
+  "t": "Grandpa can't do it alone. Grandpa calls Grandma!",
+  "c": "audio/el/turnip/en/nar_a4b290da38.mp3"
  },
  "아이코! 할아버지가 엉덩방아를 찧었어요.": {
   "t": "Oof! Grandpa plopped down on the ground.",
@@ -65,11 +61,11 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/turnip/en/grandma_802c746d53.mp3"
   ]
  },
- "할머니가 할아버지 허리를 잡고, 톡톡톡 영차!": {
-  "t": "Grandma held on to Grandpa's waist. Tap, tap, tap, heave-ho!",
-  "c": "audio/el/turnip/en/nar_b3b6ef75ff.mp3"
+ "할머니가 할아버지 허리를 잡고, 톡! 영차!": {
+  "t": "Grandma held on to Grandpa's waist. Tap! Heave-ho!",
+  "c": "audio/el/turnip/en/nar_b60f8f5b61.mp3"
  },
- "순무를 톡톡 눌러서 영차!": {
+ "순무를 톡 눌러서 영차!": {
   "t": "Tap, tap the turnip and heave-ho!",
   "c": "audio/el/turnip/en/nar_199bce275e.mp3"
  },

@@ -470,12 +470,14 @@
     }
     /* 당기기 한 판: 톡톡톡 ×5, 끝나면 순무가 한 뼘 올라온다 */
     async function pullRound(n, gain, prompt) {
-      await T.mash(turnip.pos, { count: 5, prompt, onStep: i => {
+      const pullStep = i => {
         chorus(T, n);
         for (let k = 0; k < n; k++) { const a = line[k]; setTimeout(() => { a.pose(POSE.pull(PULL_DEG[k])); setTimeout(() => a.pose(POSE.pull(4)), 260); }, k * 70); } // 앞사람일수록 더 젖히고, 쉬는 동안에도 뒤로 기대어 붙잡고 있는다
         wobble();
         T.pop(i % 2 ? 640 : 360, 180, '영차!', C.bean);
-      } });
+      };
+      await T.tap(turnip.pos, { prompt }); // 한 번 톡 → 영차 다섯 번 저절로 (2026-10-19)
+      for (let i = 1; i <= 5; i++) { pullStep(i); await sleep(420); }
       await sleep(400);
       rise += gain;
       await turnip.move(TX, GROUND - rise, 500, 'cubic-bezier(.3,1.6,.5,1)');
@@ -569,12 +571,14 @@
       if (!bgFront(T, 'lowangle', 484)) T.paper(T.world, [['rect', { x: -300, y: 498, width: 1600, height: 300, fill: C.soil }]]);
       put(cast.grandpa, 600, 500, .7, 'pull'); // 순무 잎을 꽉 잡은 그림
     }, cast.grandpa.pos);
-    await say('할아버지가 순무 잎을 꽉 잡았어요. 톡톡 눌러서 영차!');
-    await T.mash(cast.grandpa.pos, { count: 5, prompt: '할아버지를 톡톡 눌러서 영차 영차!', onStep: i => {
+    await say('할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!');
+    const pullGrandpa = i => {
       chorus(T, 1); wobble();
       cast.grandpa.pose(POSE.pull(18)); setTimeout(() => cast.grandpa.pose(POSE.stand()), 260);
       T.pop(i % 2 ? 700 : 560, 300, '영차!', C.bean);
-    } });
+    };
+    await T.tap(cast.grandpa.pos, { prompt: '할아버지를 톡 눌러서 영차!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 5; i++) { await pullGrandpa(i); await sleep(420); }
     await sleep(300);
     await say('순무는 꿈쩍도 안 해요.');
     cast.grandpa.sitDown();
@@ -594,8 +598,7 @@
       put(cast.grandpa, GPX, DGY, DS, 'stand');
       if (pt4) camSnap(480, 280, .72); else camSnap(500, 280, 1);
     }, cast.grandpa.pos);
-    await say('혼자서는 안 되겠어요. 할아버지를 톡 눌러서 할머니를 불러요!');
-    await T.tap(cast.grandpa.pos, { prompt: '할아버지를 톡! 할머니를 불러요.' });
+    await say('혼자서는 안 되겠어요. 할아버지가 할머니를 불러요!');
     cast.grandpa.hop(20);
     T.pop(620, 230, '할머니~!', C.bean); voiceLine('call_grandma');
     await sleep(600);
@@ -618,8 +621,8 @@
     }
     await say('할머니가 달려왔어요. "같이 해 봐요!"');
     await T.sceneCard(null, () => sideView(2), cast.grandma.pos);
-    await say('할머니가 할아버지 허리를 잡고, 톡톡톡 영차!');
-    await pullRound(2, 12, '순무를 톡톡 눌러서 영차!');
+    await say('할머니가 할아버지 허리를 잡고, 톡! 영차!');
+    await pullRound(2, 12, '순무를 톡 눌러서 영차!');
     await say('순무가 한 뼘 올라왔어요! 그래도 안 뽑혀요.');
 
     /* --- 5. 손녀 (텃밭 옆 모습, 줄이 길어짐) --- */
@@ -631,7 +634,7 @@
     put(cast.girl, 1080);
     await cast.girl.move(LINE_X[2], GROUND, 900);
     await say('"손녀야~!" 손녀가 할머니 허리를 잡았어요. 영차!');
-    await pullRound(3, 12, '순무를 톡톡 눌러서 영차!');
+    await pullRound(3, 12, '순무를 톡 눌러서 영차!');
     await say('조금 더 올라왔어요! 누가 더 도와줄까요?');
 
     /* --- 6. 멍멍! (울타리 너머 강아지 눈높이) --- */
@@ -663,7 +666,7 @@
     await T.sceneCard(null, () => sideView(4), cast.dog.pos);
     T.pop(560, 330, '꼭!', C.bean);
     await say('강아지가 손녀 치마를 꼭 붙잡았어요. 영차!');
-    await pullRound(4, 12, '순무를 톡톡 눌러서 영차!');
+    await pullRound(4, 12, '순무를 톡 눌러서 영차!');
 
     /* --- 7. 야옹! (헛간 지붕 로우앵글) --- */
     await T.sceneCard('야옹!', () => {
@@ -700,7 +703,7 @@
       voiceLine('cut_glare', 300);
     }, { hold: 2200 }));
     await say('"흥!" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.');
-    await pullRound(5, 10, '순무를 톡톡 눌러서 영차!');
+    await pullRound(5, 10, '순무를 톡 눌러서 영차!');
 
     /* --- 8. 아주 작은 생쥐 (생쥐 눈높이) --- */
     for (let k = 0; k < 5; k++) line[k].sitDown();

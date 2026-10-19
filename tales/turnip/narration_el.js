@@ -10,11 +10,10 @@ Object.assign(NARRATION_CLIPS, {
  "파란 싹이 났어요! 톡톡 눌러서 물도 주고 햇볕도 줘요.": "audio/el/turnip/nar_b958a379be.mp3",
  "순무 싹을 톡톡 눌러 봐요!": "audio/el/turnip/nar_ee6408d2c7.mp3",
  "여름이 되었어요. 순무 잎이 할아버지 키만큼 자랐어요!": "audio/el/turnip/nar_55919334e8.mp3",
- "할아버지가 순무 잎을 꽉 잡았어요. 톡톡 눌러서 영차!": "audio/el/turnip/nar_f6407b89ae.mp3",
- "할아버지를 톡톡 눌러서 영차 영차!": "audio/el/turnip/nar_c0b586108a.mp3",
+ "할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!": "audio/el/turnip/nar_1ada5264f4.mp3",
+ "할아버지를 톡 눌러서 영차!": "audio/el/turnip/nar_22a0ae245a.mp3",
  "순무는 꿈쩍도 안 해요.": "audio/el/turnip/nar_ad6379c47e.mp3",
- "혼자서는 안 되겠어요. 할아버지를 톡 눌러서 할머니를 불러요!": "audio/el/turnip/nar_1b3fd9dbef.mp3",
- "할아버지를 톡! 할머니를 불러요.": "audio/el/turnip/nar_b428d22197.mp3",
+ "혼자서는 안 되겠어요. 할아버지가 할머니를 불러요!": "audio/el/turnip/nar_8992ec1f04.mp3",
  "아이코! 할아버지가 엉덩방아를 찧었어요.": [
   "audio/el/turnip/grandpa_eeef729948.mp3",
   "audio/el/turnip/nar_91554e1ea4.mp3"
@@ -23,8 +22,8 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/turnip/nar_62247242d1.mp3",
   "audio/el/turnip/grandma_2ef20b4dbc.mp3"
  ],
- "할머니가 할아버지 허리를 잡고, 톡톡톡 영차!": "audio/el/turnip/nar_ae686f364a.mp3",
- "순무를 톡톡 눌러서 영차!": "audio/el/turnip/nar_942bc9f7b6.mp3",
+ "할머니가 할아버지 허리를 잡고, 톡! 영차!": "audio/el/turnip/nar_77370e9036.mp3",
+ "순무를 톡 눌러서 영차!": "audio/el/turnip/nar_fef5ccef27.mp3",
  "순무가 한 뼘 올라왔어요! 그래도 안 뽑혀요.": "audio/el/turnip/nar_1393390fe1.mp3",
  "할머니가 누구를 부를까요?": "audio/el/turnip/nar_aac85c5588.mp3",
  "음매~ 소는 풀을 먹고 있대요. 사람 친구를 먼저 불러요!": "audio/el/turnip/nar_7e479ae626.mp3",

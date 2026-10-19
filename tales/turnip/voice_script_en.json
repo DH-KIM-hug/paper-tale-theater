@@ -92,23 +92,23 @@
    ]
   },
   {
-   "text": "할아버지가 순무 잎을 꽉 잡았어요. 톡톡 눌러서 영차!",
-   "en": "Grandpa grabbed the turnip leaves tight. Tap, tap and heave-ho!",
+   "text": "할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!",
+   "en": "Grandpa grabbed the turnip leaves tight. Tap and heave-ho!",
    "segs": [
     [
      "nar",
-     "Grandpa grabbed the turnip leaves tight. Tap, tap and heave-ho!",
+     "Grandpa grabbed the turnip leaves tight. Tap and heave-ho!",
      "happy:1.1"
     ]
    ]
   },
   {
-   "text": "할아버지를 톡톡 눌러서 영차 영차!",
-   "en": "Tap, tap Grandpa to heave-ho, heave-ho!",
+   "text": "할아버지를 톡 눌러서 영차!",
+   "en": "Tap Grandpa to heave-ho!",
    "segs": [
     [
      "nar",
-     "Tap, tap Grandpa to heave-ho, heave-ho!",
+     "Tap Grandpa to heave-ho!",
      "happy:1.1"
     ]
    ]
@@ -125,23 +125,12 @@
    ]
   },
   {
-   "text": "혼자서는 안 되겠어요. 할아버지를 톡 눌러서 할머니를 불러요!",
-   "en": "Grandpa can't do it alone. Tap Grandpa to call Grandma!",
+   "text": "혼자서는 안 되겠어요. 할아버지가 할머니를 불러요!",
+   "en": "Grandpa can't do it alone. Grandpa calls Grandma!",
    "segs": [
     [
      "nar",
-     "Grandpa can't do it alone. Tap Grandpa to call Grandma!",
-     "happy:1.1"
-    ]
-   ]
-  },
-  {
-   "text": "할아버지를 톡! 할머니를 불러요.",
-   "en": "Tap Grandpa! Call Grandma.",
-   "segs": [
-    [
-     "nar",
-     "Tap Grandpa! Call Grandma.",
+     "Grandpa can't do it alone. Grandpa calls Grandma!",
      "happy:1.1"
     ]
    ]
@@ -179,18 +168,18 @@
    ]
   },
   {
-   "text": "할머니가 할아버지 허리를 잡고, 톡톡톡 영차!",
-   "en": "Grandma held on to Grandpa's waist. Tap, tap, tap, heave-ho!",
+   "text": "할머니가 할아버지 허리를 잡고, 톡! 영차!",
+   "en": "Grandma held on to Grandpa's waist. Tap! Heave-ho!",
    "segs": [
     [
      "nar",
-     "Grandma held on to Grandpa's waist. Tap, tap, tap, heave-ho!",
+     "Grandma held on to Grandpa's waist. Tap! Heave-ho!",
      "happy:1.1"
     ]
    ]
   },
   {
-   "text": "순무를 톡톡 눌러서 영차!",
+   "text": "순무를 톡 눌러서 영차!",
    "en": "Tap, tap the turnip and heave-ho!",
    "segs": [
     [
