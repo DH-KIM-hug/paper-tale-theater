@@ -6,3 +6,5 @@ window.THUMBS2L = ["ant_grasshopper", "bremen", "cinderella", "fox_crane", "frog
 window.THUMBSKEY = ["ant_grasshopper", "bremen", "cinderella", "fox_crane", "frog", "goldilocks", "hansel", "heungbu", "kkultteok", "kongjwi", "lion_mouse", "magic_jar", "magpie", "patjuk", "rabbit", "red_hood", "snow_white", "sun_wind", "sunmoon", "three_pigs", "turnip", "ugly_duckling", "wolf_goats"];
 /* THUMBSKEYLIGHT: 흰 종이 판 키아트(어두운 띠 없이 어두운 글자). 값 = 종이 색. tools/app/keyart/<id>.json의 "light" */
 window.THUMBSKEYLIGHT = {"patjuk": "#f5efe9", "kkultteok": "#f5efe9", "goldilocks": "#f5efe9", "sunmoon": "#f5efe9", "snow_white": "#f5efe9", "frog": "#f5efe9", "rabbit": "#f5efe9", "sun_wind": "#f5efe9", "turnip": "#f5efe9", "lion_mouse": "#f5efe9", "fox_crane": "#f5efe9", "bremen": "#f5efe9", "ant_grasshopper": "#f5efe9", "ugly_duckling": "#f5efe9", "three_pigs": "#f5efe9", "wolf_goats": "#f5efe9", "hansel": "#f5efe9", "heungbu": "#f5efe9", "red_hood": "#f5efe9", "magpie": "#f5efe9", "magic_jar": "#f5efe9", "kongjwi": "#f5efe9"};
+/* BACKACCENT: 끝 화면(뒤표지) 책갈피 리본 색 */
+window.BACKACCENT = {"goldilocks": "#C0392B", "sunmoon": "#E8703A", "snow_white": "#3A6EA5"};

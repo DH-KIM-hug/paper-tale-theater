@@ -603,13 +603,14 @@ const Tale = (() => {
     p.hidden = true; p.innerHTML = '';
   }
   function shake() { const w = $('#stageWrap'); w.classList.remove('shake'); void w.offsetWidth; w.classList.add('shake'); }
-  function confetti() {
+  function confetti(host, n = 44) {
+    host = host || $('#confetti');
     const colors = ['#E8703A', '#D9A94E', '#A93B32', '#3F6B4F', '#8B7BB8', '#F6ECD8'];
-    for (let i = 0; i < 44; i++) {
+    for (let i = 0; i < n; i++) {
       const s = document.createElement('span');
       s.style.left = Math.random() * 100 + '%'; s.style.background = colors[i % colors.length];
       s.style.animationDuration = 2.4 + Math.random() * 2 + 's'; s.style.animationDelay = Math.random() * 1.2 + 's';
-      $('#confetti').appendChild(s); setTimeout(() => s.remove(), 6000);
+      host.appendChild(s); setTimeout(() => s.remove(), 6000);
     }
   }
   /* 텍스트 효과 (의성어) — 탄력: 별이 스프링처럼 튀고, 글자가 한 자씩 떨어지며 출렁이다 자리 잡는다 */
@@ -887,14 +888,20 @@ const Tale = (() => {
       ${note ? `<p class="note">${note}</p>` : ''}
     </div>
   </div>
-  <div id="endScreen" class="screen" hidden>
-    <div class="hero plain"><img alt="" decoding="async"></div>
+  <div id="endScreen" class="screen back" hidden>
+    <i class="spine" aria-hidden="true"></i><i class="stitch" aria-hidden="true"></i>
+    <button type="button" class="ribbon" id="ribbonBtn" aria-label="${tr('한 번 더')}"></button>
+    <div class="bwin"><img class="bimg" alt="" decoding="async"></div>
     <div class="words">
       <h2 class="paperword ttl">${letters(tr(endTitle))}</h2>
-      <p class="sub" id="endMsg"></p>
-      <p class="sub calm">${tr('오늘 동화 끝! 내일 또 만나요')}</p>
-      <div class="pills"><a class="pill go" href="${home}">${tr('홈으로')}</a><button class="pill" id="againBtn">${tr('한 번 더')}</button></div>
+      <p class="sub" id="endMsg" hidden></p>
+      <div class="rbtns">
+        <a class="rbtn" id="homeBtn" href="${home}" aria-label="${tr('홈으로')}"><svg viewBox="0 0 48 48" aria-hidden="true"><path class="a" d="M24 7 L43 24 H5Z"/><rect class="b" x="11" y="23" width="26" height="18" rx="1.5"/><rect class="a" x="20" y="29" width="8" height="12" rx="1"/></svg></a>
+        <button type="button" class="rbtn" id="againBtn" aria-label="${tr('한 번 더')}"><svg viewBox="0 0 48 48" aria-hidden="true"><path class="s" d="M38 24 A14 14 0 1 1 31 11.8"/><path class="a" d="M26 4 L38 11 L28 20Z"/></svg></button>
+      </div>
     </div>
+    <div class="stamp" aria-hidden="true"><img alt="" decoding="async"></div>
+    <div id="endConfetti" class="endconf"></div>
   </div>
   <div id="restScreen" class="screen" hidden>
     <div class="words">
@@ -959,9 +966,26 @@ const Tale = (() => {
       PT.run(false);
       busy = true; $('#finBtn').hidden = true;
       await curtain(false);
-      $('#endMsg').textContent = tr(msg || '');
-      $('#endScreen').hidden = false;
+      $('#endMsg').textContent = tr(msg || ''); // 교훈 문구는 화면에 보이지 않는다(숨김)
+      showEnd();
     };
+    /* 끝 화면 = 책의 뒤표지: 이야기 끝 그림 창 + 책갈피 리본(한 번 더) + 도장. 그림은 <id>_back_* → 없으면 _key_* → _tile */
+    const showEnd = () => {
+      const es = $('#endScreen'), id = taleId(), base = ROOT_URL + 'assets/thumbs/' + id;
+      const ac = (window.BACKACCENT || {})[id]; if (ac) es.style.setProperty('--accent', ac); else es.style.removeProperty('--accent');
+      const kind = () => (portraitMQ.matches ? 'tall' : 'wide');
+      const bi = es.querySelector('.bimg'); let step = 0;
+      const chain = () => [base + '_back_' + kind() + '.webp', base + '_key_' + kind() + '.webp', base + '_tile.webp'];
+      bi.onerror = () => { step++; const c = chain(); if (step < c.length) { es.classList.add('fallback'); bi.src = c[step]; } else bi.removeAttribute('src'); };
+      es.classList.toggle('fallback', false); bi.src = chain()[0];
+      const si = es.querySelector('.stamp img'); si.onerror = () => { es.querySelector('.stamp').hidden = true; };
+      es.querySelector('.stamp').hidden = false; si.src = base + '_tile.webp';
+      es.hidden = false;
+      try { AudioFX.sfx('page_turn_big', .8); } catch (e) { /* 소리 없이 */ }
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) confetti($('#endConfetti'), 26);
+    };
+    $('#ribbonBtn').onclick = start;
+    try { if (new URLSearchParams(location.search).get('endpreview') === '1') { $('#startScreen').hidden = true; showEnd(); } } catch (e) { /* 미리보기 전용 */ }
     $('#startBtn').onclick = start;
     $('#againBtn').onclick = start;
   }

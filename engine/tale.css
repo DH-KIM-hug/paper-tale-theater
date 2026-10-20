@@ -397,3 +397,69 @@ svg text { font-weight: 800; }
 /* 길게 누르기(보호자 건너뛰기) 때 휴대폰의 '이미지 저장'·글자 선택 메뉴가 뜨지 않게 */
 #tale, #tale * { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
 #tale img, #tale image { -webkit-user-drag: none; }
+
+/* ═════════ 끝 화면 = 책의 뒤표지 (앞표지 = 시작 화면) ═════════
+   앞표지와 같은 종이, 안쪽 색(조금 짙은 따뜻한 크림 한 색). 왼쪽 책등 + 박음질, 위에서 늘어진 책갈피 리본(= 한 번 더),
+   작은 창 속 "이야기 끝" 그림, 동그란 도장, 둥근 종이 아이콘 버튼 두 개 */
+#endScreen.back {
+  --accent: #C0392B; --back: #EBDFC8; --back-dn: #DCCBA8; --stitch: #A9895C; --spine-w: clamp(22px, 3.6vw, 44px);
+  background: var(--page-grain), var(--back);
+  padding-left: calc(var(--spine-w) + clamp(24px, 4vw, 56px));
+  gap: clamp(20px, 4.4vw, 64px); flex-direction: row; overflow: hidden;
+}
+#endScreen.back .spine { position: absolute; left: 0; top: 0; bottom: 0; width: var(--spine-w); background: var(--back-dn); box-shadow: 2px 0 0 rgba(70, 48, 30, .10), 3px 0 7px rgba(70, 48, 30, .22); }
+#endScreen.back .stitch { position: absolute; top: 3.5%; bottom: 3.5%; left: calc(var(--spine-w) + clamp(10px, 1.6vw, 18px)); border-left: 3px dashed var(--stitch); opacity: .85; }
+/* 책갈피 리본: 색종이 한 줄, 아래 끝은 V자로 오림 */
+#endScreen.back .ribbon {
+  position: absolute; top: -4px; right: clamp(40px, 12vw, 160px); width: clamp(48px, 6.2vmin, 68px); height: clamp(120px, 24vmin, 220px); padding: 0; border: 0; cursor: pointer;
+  background: var(--accent); z-index: 4; transform-origin: 50% 0; animation: ribbonSway 4.6s ease-in-out infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%);
+  filter: drop-shadow(2px 4px 2px rgba(60, 36, 24, .30));
+}
+#endScreen.back .ribbon:active { animation-play-state: paused; transform: translateY(3px); }
+@keyframes ribbonSway { 0%, 100% { transform: rotate(-2.4deg); } 50% { transform: rotate(2.4deg); } }
+/* 창: 뒤표지 안쪽에 뚫린 작은 창. 그림은 창 안쪽으로 한 단 내려앉아 있다 */
+#endScreen.back .bwin {
+  position: relative; flex: none; overflow: hidden; border-radius: clamp(22px, 4vmin, 40px);
+  width: min(54vw, 112vh, 760px); aspect-ratio: 3 / 2; background: #F5EFE9;
+  box-shadow: 0 0 0 clamp(5px, .9vmin, 9px) var(--back-dn), 0 0 0 clamp(6px, 1vmin, 10px) rgba(70, 48, 30, .14), 3px 7px 14px rgba(70, 48, 30, .26);
+}
+#endScreen.back .bwin::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 5px 9px rgba(46, 36, 28, .38), inset 3px 0 6px rgba(46, 36, 28, .2), inset 0 -2px 0 rgba(255, 252, 244, .55); }
+#endScreen.back .bimg { width: 100%; height: 100%; object-fit: cover; display: block; -webkit-user-drag: none; }
+#endScreen.back.fallback .bimg { object-fit: cover; object-position: 50% 36%; transform: scale(1.5); transform-origin: 50% 36%; }
+#endScreen.back .words { align-items: center; gap: clamp(14px, 3vmin, 30px); }
+#endScreen.back .ttl { font-size: clamp(54px, 11vmin, 110px); --let-top: #D0562F; --let-bot: var(--accent); --let-edge: rgba(255, 252, 244, .85); --let-sh: rgba(70, 48, 40, .32); --let-sh-2: rgba(70, 48, 40, .2); }
+#endScreen.back .rbtns { display: flex; gap: clamp(16px, 3vmin, 30px); }
+#endScreen.back .rbtn {
+  display: inline-flex; align-items: center; justify-content: center; width: clamp(64px, 11vmin, 96px); height: clamp(64px, 11vmin, 96px); padding: 0; border: 0; border-radius: 50%; cursor: pointer; text-decoration: none;
+  background: #F6ECD8; box-shadow: inset 0 1.5px 0 #FFFDF4, 2px 4px 3px rgba(70, 48, 30, .30), 4px 9px 14px rgba(70, 48, 30, .16);
+  transition: transform .18s cubic-bezier(.3, 1.6, .5, 1), box-shadow .18s;
+}
+#endScreen.back .rbtn svg { width: 56%; height: 56%; display: block; }
+#endScreen.back .rbtn .a { fill: var(--accent); } #endScreen.back .rbtn .b { fill: #A9895C; }
+#endScreen.back .rbtn .s { fill: none; stroke: var(--accent); stroke-width: 6.5; stroke-linecap: butt; }
+#endScreen.back .rbtn:active { transform: translateY(2px); box-shadow: inset 0 1.5px 0 #FFFDF4, 1px 2px 2px rgba(70, 48, 30, .3); }
+#endScreen.back .rbtn:focus-visible, #endScreen.back .ribbon:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+/* 도장: 동화 그림(tile)을 동그랗게 오려 종이 테두리를 두른 것 */
+#endScreen.back .stamp {
+  position: absolute; right: clamp(16px, 3.4vmin, 40px); bottom: clamp(16px, 3.4vmin, 40px); width: clamp(64px, 11vmin, 108px); aspect-ratio: 1; border-radius: 50%; overflow: hidden;
+  background: #F6ECD8; padding: clamp(4px, .8vmin, 8px); box-sizing: border-box; box-shadow: 2px 4px 3px rgba(70, 48, 30, .28), 3px 8px 12px rgba(70, 48, 30, .14); transform: rotate(-8deg);
+}
+#endScreen.back .stamp img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+#endScreen.back .endconf { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 6; }
+#endScreen.back .endconf span { position: absolute; top: -20px; width: 11px; height: 11px; border-radius: 2px; animation: fall linear forwards; box-shadow: 1px 2px 2px rgba(60, 36, 24, .22); }
+@media (orientation: portrait) {
+  #endScreen.back.fallback .bimg { transform: scale(1.38); transform-origin: 50% 33%; object-position: 50% 33%; }
+  #endScreen.back { flex-direction: column; justify-content: center; gap: clamp(14px, 3vh, 34px); padding-top: clamp(80px, 12vh, 150px); }
+  #endScreen.back .bwin { width: min(76vw, 40vh, 620px); aspect-ratio: 1 / 1.15; }
+  #endScreen.back .ribbon { right: clamp(30px, 14vw, 120px); }
+}
+@media (max-width: 520px) and (orientation: portrait) {
+  #endScreen.back { padding-right: 20px; }
+  #endScreen.back .bwin { width: min(72vw, 42vh); }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  #endScreen.back .bwin { width: min(54vw, 100vh); }
+  #endScreen.back .ttl { font-size: clamp(40px, 13vh, 70px); }
+}
+@media (prefers-reduced-motion: reduce) { #endScreen.back .ribbon { animation: none; } }
