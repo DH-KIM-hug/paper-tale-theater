@@ -694,7 +694,7 @@
     /* --- 7. 야옹! (헛간 지붕 로우앵글) --- */
     await T.sceneCard('야옹!', () => {
       T.clear(); barnBG(T);
-      if (bgOK.barn !== false && BG.barn) put(cast.cat, 688, 146, 1.3, 'sit'); // 그림: 헛간 지붕 윗단 오른쪽 끝(환기탑 오른쪽 아래)
+      if (bgOK.barn !== false && BG.barn) { put(cast.cat, 655, 129, 1.2, 'sit'); cast.cat.pose('translate(0px,0px) rotate(14deg) scale(1,1)'); } // 그림(2026-10-21 다시 쟀다): 지붕 윗선이 환기탑 오른쪽에서 y = 129 + .425 (x - 666) 으로 내려간다 → 그 선 위에 엉덩이, 비탈을 따라 살짝 기울인다
       else put(cast.cat, 700, 242, 1.9);
       cast.cat.lean.style.filter = 'brightness(.15)';
       camSnap(T.portrait() ? 700 : 500, 280, 1); // 세로 화면(보이는 폭 ≈260): 지붕 끝(x≈775) 고양이가 다 보이게 오른쪽으로
@@ -708,6 +708,7 @@
     cast.cat.lean.style.filter = '';
     await cast.cat.hop(40);
     const catDown = (async () => { // 지붕 끝에서 풀밭으로 폴짝 뛰어내린다
+      cast.cat.pose(POSE.stand());
       await cast.cat.move(700, 300, 320, 'ease-out');
       await cast.cat.move(640, T.portrait() ? 470 : 480, 380, 'ease-in');
       await cast.cat.hop(16, 260);
