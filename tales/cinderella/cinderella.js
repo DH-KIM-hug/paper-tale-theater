@@ -20,11 +20,15 @@
   const HT = { cind_cry: 165, cind_sit: 178, step_stand: 212, step_point: 212, prince_stand: 210, prince_dance: 210, prince_slipper: 210, fairy_appear: 205, fairy_wand: 205 };
   /* 그림이 보는 쪽 ('left' | 'right' | 'front') */
   const NAT = { cind_braid: 'right', cind_dance: 'right', cind_give: 'left', cind_run: 'left', cind_sit: 'right', step_point: 'right',
-    sis1_foot: 'right', sis2_foot: 'right', fairy_wand: 'right', prince_dance: 'left', prince_slipper: 'right' };
+    sis1_foot: 'right', sis2_foot: 'right', fairy_wand: 'right', prince_dance: 'left', prince_slipper: 'right',
+    /* 앞모습처럼 보여도 얼굴이 오른쪽으로 살짝 돌아 있는 그림 (귀가 왼쪽에 보임) — 왼쪽을 보게 하려면 뒤집어야 한다 (2026-10-20: 마지막에 가족이 신데렐라를 안 봤음) */
+    cind_stand: 'right', cind_surprise: 'right', cind_joy: 'right', step_stand: 'right', sis1_proud: 'right', sis1_sorry: 'right',
+    sis2_stand: 'right', sis2_proud: 'right', sis2_sorry: 'right', prince_stand: 'right', fairy_appear: 'right' };
   const FL = 532;            /* 바닥 */
   const BGS = ['kitchen', 'kitchen_night', 'parlor', 'garden', 'ballroom', 'stairs'];
   const bgSrc = k => AS + 'cd2_bg_' + k + '.webp', artSrc = k => AS + 'cd2_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 그림이 무대 1000×560을 덮게 */
+  const K = 1.35;            /* 집 배경이 사람에 비해 커 보여서 모든 사람·소품을 같은 비율로 키움 (2026-10-20) */
   const hOf = f => HT[f] || 200;
 
   /* 배우: 자세 그림 여러 장 중 하나만 보인다. poses = { 이름: 그림 } (사람은 높이를 얼굴로 계산) 또는 { 이름: [그림, 높이] }
@@ -33,7 +37,7 @@
     const looks = {};
     const a = T.actor(T.world, -400, FL, g => {
       Object.entries(poses).forEach(([k, v]) => {
-        const [f, h0] = Array.isArray(v) ? v : [v, null], h = h0 || hOf(f), w = h * (ASP[f] || 1);
+        const [f, h0] = Array.isArray(v) ? v : [v, null], h = (h0 || hOf(f)) * K, w = h * (ASP[f] || 1);
         const wrap = T.el('g', { filter: 'url(#pp)' }, g);
         T.el('image', { href: artSrc(f), x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
         wrap.style.display = 'none'; looks[k] = { wrap, h, w, nat: NAT[f] || 'front' };
@@ -82,11 +86,31 @@
     }
   }
 
+  /* 시계 숫자: 그림에는 12·3·6·9만 있어서, 나머지 숫자(1·2·4·5·7·8·10·11)를 코드로 그린다.
+     그림의 눈금 자리(원본 그림 픽셀 좌표)를 얼굴색 원판으로 덮고 같은 크기·색의 숫자를 얹는다. */
+  const TICKS = {
+    clock: { W: 593, H: 600, c: '#ECDAC0', dh: 59, p: { 1: [402, 122], 2: [475, 194], 4: [474, 393], 5: [403, 463], 7: [187, 462], 8: [118, 394], 10: [116, 195], 11: [189, 123] } },
+    card: { W: 520, H: 524, c: '#EEDDBA', dh: 62, p: { 1: [352, 116], 2: [410, 175], 4: [410, 345], 5: [351, 403], 7: [168, 403], 8: [110, 345], 10: [109, 174], 11: [168, 116] } } };
+  function numerals(T, g, kind, x, y, w, h) {
+    const t = TICKS[kind], sx = w / t.W, sy = h / t.H, fs = t.dh * sy / .74;
+    Object.entries(t.p).forEach(([n, [px, py]]) => {
+      const cx = x + px * sx, cy = y + py * sy;
+      T.el('circle', { cx, cy, r: 30 * sx, fill: t.c }, g);
+      /* 12 옆의 1·11은 12와 붙어 보여서 살짝 아래로·바깥으로 밀고, 두 글자(10·11)는 조금 작게 */
+      const k2 = +n > 9 ? .86 : 1, ox = n == 11 ? -9 : n == 1 ? 7 : 0, oy = n == 11 || n == 1 ? 8 : 0;
+      const f2 = fs * k2;
+      const tx = T.el('text', { x: cx + ox * sx, y: cy + oy * sy + f2 * .36, 'text-anchor': 'middle', 'font-size': f2.toFixed(1), 'font-weight': 800, fill: '#5C4332',
+        'font-family': "'Arial Rounded MT Bold','Pretendard Variable',Pretendard,sans-serif", 'letter-spacing': n > 9 ? f2 * .02 : 0, 'pointer-events': 'none' }, g);
+      tx.textContent = n;
+    });
+  }
+
   /* 큰 벽시계: 빈 시계판 그림 + 짧은 바늘·긴 바늘 그림(위를 가리키는 그림을 돌린다). 구멍(바늘 아래 끝)이 시계 가운데 */
   function wallClock(T, cx, cy, D) {
     const g = T.el('g', { filter: 'url(#pp)' }, T.world);
     const fw = D, fh = D / (ASP.clock || 1);
     T.el('image', { href: artSrc('clock'), x: cx - fw / 2, y: cy - fh / 2, width: fw, height: fh, preserveAspectRatio: 'none' }, g);
+    numerals(T, g, 'clock', cx - fw / 2, cy - fh / 2, fw, fh);
     const hand = (f, L) => {
       const w = L * (ASP[f] || .2), hg = T.el('g', {}, g);
       T.el('image', { href: artSrc(f), x: cx - w / 2, y: cy - (L - w / 2), width: w, height: L, preserveAspectRatio: 'none' }, hg);
@@ -110,6 +134,11 @@
     return { g, at, toTwelve, cx, cy, D };
   }
 
+  /* 그림 컷 (만화처럼 끼어드는 큰 그림, 2.2초). 그림 파일이 없으면 건너뛴다 */
+  const CUTS = ['coach', 'gown', 'midnight', 'stairs_slipper', 'fit'];
+  const cutOk = {};
+  const cutArt = (T, k, sfxFn) => cutOk[k] ? T.cutImage([{ src: artSrc('cut_' + k), sfx: sfxFn, hold: 2200 }], { hold: 2200 }) : Promise.resolve();
+
   async function run(T) {
     const { sleep, say, camSnap, tr } = T;
     const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
@@ -119,7 +148,8 @@
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; /* 말풍선 없는 소리 대사 (수 세기) */
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...Object.keys(ASP).map(k => T.preload(artSrc(k)))];
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    const cutLoads = CUTS.map(k => T.preload(artSrc('cut_' + k)).then(ok => { cutOk[k] = ok; }));
+    await Promise.race([Promise.all([...loads, ...cutLoads]), sleep(4000)]);
 
     /* ---- 배우 (사람은 모두 같은 얼굴 크기) ---- */
     const cind = mk(T, { stand: 'cind_stand', braid: 'cind_braid', cry: 'cind_cry', surprise: 'cind_surprise', joy: 'cind_joy',
@@ -146,8 +176,8 @@
     scene('kitchen');
     put(T, cind, X(640, 560), FL, { look: 'stand', to: 'left' });
     put(T, step, X(400, 450), FL, { look: 'point', to: 'right' });
-    put(T, sis1, X(270, 350), FL + 4, { look: 'stand' });
-    put(T, sis2, X(150, 260), FL + 8, { look: 'stand' });
+    put(T, sis1, X(270, 350), FL + 4, { look: 'stand', to: 'right' });
+    put(T, sis2, X(150, 260), FL + 8, { look: 'stand', to: 'right' });
     if (P) camSnap(520, 280, 1);
     await T.curtain(true);
     await say('옛날에 마음씨 고운 아가씨가 살았어요.');
@@ -165,9 +195,9 @@
     let hair;
     await T.sceneCard(tr('무도회 편지'), () => {
       scene('parlor');
-      put(T, sis2, X(220, 360), FL + 4, { look: 'proud' });
-      put(T, sis1, X(500, 510), FL, { look: 'stand' });
-      put(T, cind, X(585, 590), FL - 2, { look: 'braid', to: 'left' });
+      put(T, sis2, X(190, 340), FL + 4, { look: 'proud', to: 'right' });
+      put(T, sis1, X(460, 490), FL, { look: 'stand', to: 'right' });
+      put(T, cind, X(620, 610), FL - 2, { look: 'braid', to: 'left' });
       put(T, letter, X(330, 420), 300);
       if (P) camSnap(520, 280, 1);
     }, sis1.pos);
@@ -216,7 +246,7 @@
     await T.sceneCard(tr('커다란 호박'), () => {
       scene('garden');
       put(T, fairy, X(260, 400), FL, { look: 'wand', to: 'right' });
-      put(T, cind, X(400, 470), FL + 2, { look: 'joy' });
+      put(T, cind, X(400, 470), FL + 2, { look: 'joy', to: 'left' });
       put(T, pumpkin, X(660, 590), FL + 4);
       if (P) camSnap(520, 280, 1);
     }, pumpkin.pos);
@@ -230,6 +260,8 @@
     await fadeOut(T, pumpkin, 300);
     put(T, coach, X(700, 620), FL + 6, { to: 'right' }); fadeIn(coach, 500); glow(coach, 1200);
     T.pop(coach.x, FL - 260, tr('반짝!'));
+    await sleep(500);
+    await cutArt(T, 'coach', () => { sparkleSfx(T); setTimeout(() => AudioFX.sfx('whoosh'), 500); });
     cind.look('surprise', 'right');
     await say('호박이 황금 마차가 되었어요!');
     cind.look('joy'); cind.hop(12, 340);
@@ -239,8 +271,8 @@
     const MX = X([420, 500, 580, 660, 740, 820], [470, 530, 590, 470, 530, 590]), MY = X([FL, FL, FL, FL, FL, FL], [FL - 30, FL - 30, FL - 30, FL + 6, FL + 6, FL + 6]);
     await T.sceneCard(tr('생쥐 여섯 마리'), () => {
       scene('garden');
-      put(T, coach, X(150, 180), FL + 6, { to: 'right' });
-      put(T, fairy, X(300, 400), FL, { look: 'appear' });
+      put(T, coach, X(190, 190), FL + 6, { to: 'right' });
+      put(T, fairy, X(350, 400), FL, { look: 'appear', to: 'right' });
       put(T, cind, X(925, 680), FL, { look: 'joy', to: 'left' });
       put(T, trap, TX, FL - 4);
       put(T, rat, X(230, 300), FL + 10, { to: 'right' }); put(T, lizard, X(380, 420), FL + 14, { to: 'right' });
@@ -287,7 +319,7 @@
       horses.forEach(hide); hide(coachman); hide(footman);
       put(T, coach, X(820, 760), FL + 6, { to: 'right' });
       put(T, fairy, X(330, 420), FL, { look: 'wand', to: 'right' });
-      put(T, cind, X(520, 560), FL, { look: 'joy' });
+      put(T, cind, X(520, 560), FL, { look: 'joy', to: 'left' });
       if (P) camSnap(490, 280, 1);
     }, cind.pos);
     await say('이제 네 차례란다.');
@@ -295,6 +327,8 @@
     await T.anim(cind.pos, [{ opacity: 1 }, { opacity: .1 }], 400);
     cind.look('gown'); cind.pos.style.opacity = '';
     fadeIn(cind, 500); glow(cind, 1400);
+    await sleep(500);
+    await cutArt(T, 'gown', () => { sparkleSfx(T); setTimeout(() => sparkleSfx(T), 700); });
     await say('신데렐라는 은빛 드레스에 유리 구두를 신었어요.');
     cind.hop(14, 380);
     await say('와, 정말 고맙습니다!');
@@ -313,8 +347,8 @@
       clock = wallClock(T, CL.x, CL.y, CL.d); clock.at(11, 45);
       put(T, cind, X(420, 450), FL, { look: 'dance', to: 'right' });
       put(T, prince, X(560, 560), FL, { look: 'dance', to: 'left' });
-      put(T, sis1, X(820, 760), FL + 4, { look: 'stand', to: 'left' });
-      put(T, sis2, X(920, 860), FL + 6, { look: 'stand', to: 'left' });
+      put(T, sis1, X(800, 750), FL + 4, { look: 'stand', to: 'left' });
+      put(T, sis2, X(910, 860), FL + 6, { look: 'stand', to: 'left' });
       put(T, basket, X(720, 660), FL + 8);
       if (P) camSnap(500, 280, 1);
     }, cind.pos);
@@ -325,8 +359,8 @@
       await Promise.all([cind.move(cind.x - 30, FL, 600), prince.move(prince.x - 30, FL, 600)]);
       await Promise.all([cind.move(cind.x + 30, FL, 600), prince.move(prince.x + 30, FL, 600)]);
     }
-    /* 오렌지를 나눠 준다 */
-    hide(prince);
+    /* 오렌지를 나눠 준다: 왕자는 사라지지 않고 서서 지켜본다 (2026-10-20: 춤추다 갑자기 사라졌음) */
+    prince.look('stand', 'right');
     cind.look('gown', 'right');
     if (P) T.camTo(720, 280, 1, 800);
     await cind.move(X(640, 600), FL, 900);
@@ -366,13 +400,14 @@
     await say('신데렐라는 춤추느라 시간 가는 줄 몰랐어요.');
     await spin;
     /* 시계 카드 세 장 (순서는 무작위) */
-    const cardS = X(170, 96), cardY = X(380, 360);
-    const cardX = X([250, 500, 750], [500 - 104, 500, 500 + 104]);
+    const cardS = X(170, 118), cardY = X([380, 380, 380], [290, 290, 420]); /* 세로 화면: 위 두 장 + 아래 한 장 (숫자가 잘 보이게 크게) */
+    const cardX = X([250, 500, 750], [440, 560, 500]);
     const kinds = ['12', '3', '6'].sort(() => Math.random() - .5);
     const cards = kinds.map((k, i) => {
       const g = T.el('g', { filter: 'url(#pp)' }, T.world);
-      T.el('image', { href: artSrc('card_' + k), x: cardX[i] - cardS / 2, y: cardY - cardS / 2, width: cardS, height: cardS / (ASP['card_' + k] || 1), preserveAspectRatio: 'none' }, g);
+      T.el('image', { href: artSrc('card_' + k), x: cardX[i] - cardS / 2, y: cardY[i] - cardS / 2, width: cardS, height: cardS / (ASP['card_' + k] || 1), preserveAspectRatio: 'none' }, g);
       g.animate([{ opacity: 0, translate: '0 20px' }, { opacity: 1, translate: '0 0' }], { duration: 450, delay: i * 150, fill: 'backwards' });
+      numerals(T, g, 'card', cardX[i] - cardS / 2, cardY[i] - cardS / 2, cardS, cardS / (ASP['card_' + k] || 1));
       return { k, g };
     });
     cind.pos.style.opacity = '.35'; prince.pos.style.opacity = '.35';
@@ -390,6 +425,7 @@
     await say('맞아요, 열두 시!');
     cards.forEach(c => c.g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }));
     if (!hinted) await clock.toTwelve(1200);
+    await cutArt(T, 'midnight', () => { bellSfx(T); setTimeout(() => bellSfx(T), 900); });
     /* 땡, 땡, 땡… */
     for (let i = 0; i < 6; i++) {
       clock.g.style.transformOrigin = `${clock.cx}px ${clock.cy}px`;
@@ -417,6 +453,7 @@
     T.pop(ST[1][0], ST[1][1] - cind.h * SS - 20, tr('앗!'));
     for (const [x, y] of ST.slice(2)) await cind.move(x, y, 750, 'linear');
     hide(cind);
+    await cutArt(T, 'stairs_slipper', () => { sparkleSfx(T); setTimeout(() => AudioFX.sfx('ding') || popSfx(T), 400); });
     await say('신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.');
     put(T, prince, 980, ST[0][1] - 10, { look: 'stand', to: 'left', s: SS });
     if (P) T.camTo(720, 280, 1, 900);
@@ -430,9 +467,9 @@
     await T.sceneCard(tr('유리 구두'), () => {
       scene('parlor');
       put(T, prince, X(800, 640), FL, { look: 'slipper', to: 'left' });
-      put(T, sis1, X(560, 520), FL, { look: 'stand', to: 'right' });
-      put(T, sis2, X(420, 420), FL + 4, { look: 'stand', to: 'right' });
-      put(T, step, X(270, 330), FL + 6, { look: 'stand' });
+      put(T, sis1, X(580, 520), FL, { look: 'stand', to: 'right' });
+      put(T, sis2, X(430, 420), FL + 4, { look: 'stand', to: 'right' });
+      put(T, step, X(270, 330), FL + 6, { look: 'stand', to: 'right' });
       if (P) camSnap(560, 280, 1);
     }, prince.pos);
     await say('왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.');
@@ -455,10 +492,11 @@
     put(T, cind, X(530, 540), FL, { look: 'stand', to: 'right' }); fadeIn(cind, 500);
     if (P) T.camTo(560, 280, 1, 600);
     await say('저도 신어 봐도 될까요?');
-    /* 발 카드 세 장 + 위에 유리 구두 (작은 발 = 구두 길이) */
-    const FW = X(230, 200), FH = FW / 2;
-    const fx = X([230, 500, 770], [500, 500, 500]), fy = X([360, 360, 360], [210, 330, 450]);
-    const ord = ['big', 'bigger', 'small'].sort(() => Math.random() - .5);
+    /* 발 카드 두 장(큰 발·작은 발, 길이 1.9배 차이) + 위에 유리 구두 (작은 발 = 구두 길이) */
+    const FW = X(230, 180), FH = FW / 2;
+    const fx = X([320, 680], [500, 500]), fy = X([360, 360], [250, 410]);
+    const ord = ['bigger', 'small'].sort(() => Math.random() - .5);
+    const BIGK = 1.15; /* 큰 발 그림은 작은 발보다 1.66배 길어서, 판을 1.15배로 키워 1.9배 차이로 */
     const dim = T.el('rect', { x: -100, y: -100, width: 1200, height: 800, fill: '#F6ECD8', opacity: 0 }, T.world);
     dim.animate([{ opacity: 0 }, { opacity: .7 }], { duration: 400, fill: 'forwards' });
     const sw = FW * 340 / 600 * 1.0;       /* 작은 발의 길이(판 600 중 340)와 같은 길이의 구두 */
@@ -466,9 +504,9 @@
     const SLY = X(190, 95);
     T.el('image', { href: artSrc('prop_slipper'), x: 500 - sw / 2, y: SLY - sw / (ASP.prop_slipper || 2) / 2, width: sw, height: sw / (ASP.prop_slipper || 2), preserveAspectRatio: 'none' }, showSl);
     const feet = ord.map((k, i) => {
-      const g = T.el('g', { filter: 'url(#pp)' }, T.world);
-      T.el('rect', { x: fx[i] - FW / 2 - 8, y: fy[i] - FH / 2 - 8, width: FW + 16, height: FH + 16, rx: 14, fill: '#F6ECD8' }, g);
-      T.el('image', { href: artSrc('foot_' + k), x: fx[i] - FW / 2, y: fy[i] - FH / 2, width: FW, height: FH, preserveAspectRatio: 'none' }, g);
+      const g = T.el('g', { filter: 'url(#pp)' }, T.world), fw = FW * (k === 'bigger' ? BIGK : 1), fh = fw / 2;
+      T.el('rect', { x: fx[i] - fw / 2 - 8, y: fy[i] - fh / 2 - 8, width: fw + 16, height: fh + 16, rx: 14, fill: '#F6ECD8' }, g);
+      T.el('image', { href: artSrc('foot_' + k), x: fx[i] - fw / 2, y: fy[i] - fh / 2, width: fw, height: fh, preserveAspectRatio: 'none' }, g);
       g.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: i * 120, fill: 'backwards' });
       return { k, g };
     });
@@ -491,6 +529,8 @@
     await slipper.move(...toe(), 700);
     sparkle(T, toe()[0], toe()[1], 60, 8);
     T.pop(toe()[0], toe()[1] - 60, tr('쏙!'));
+    await sleep(500);
+    await cutArt(T, 'fit', () => { popSfx(T); setTimeout(() => sparkleSfx(T), 250); });
     await say('구두가 꼭 맞았어요!');
     /* 앞치마 주머니(무릎 위)에서 다른 한 짝이 쏙 나온다 */
     put(T, slipper2, cind.x + 4, FL - cind.h * .36, { to: 'right' }); fadeIn(slipper2, 300);
@@ -510,17 +550,17 @@
     /* ===== 10. 용서 (톡 3: 마지막 인사) ===== */
     await T.sceneCard(tr('함께 웃어요'), () => {
       scene('parlor');
-      put(T, prince, X(160, 340), FL, { look: 'stand' });
-      put(T, cind, X(420, 480), FL, { look: 'gown' });
-      put(T, sis1, X(600, 600), FL, { look: 'sorry' });
-      put(T, sis2, X(750, 700), FL + 4, { look: 'sorry' });
-      put(T, step, X(880, 820), FL + 6, { look: 'stand' });
+      put(T, prince, X(140, 340), FL, { look: 'stand', to: 'right' });
+      put(T, cind, X(420, 480), FL, { look: 'gown', to: 'right' });
+      put(T, sis1, X(600, 600), FL, { look: 'sorry', to: 'left' });
+      put(T, sis2, X(745, 700), FL + 4, { look: 'sorry', to: 'left' });
+      put(T, step, X(885, 820), FL + 6, { look: 'stand', to: 'left' });
       if (P) camSnap(560, 280, 1);
     }, cind.pos);
     await say('신데렐라, 그동안 미안해. 정말 미안해.');
     cind.look('hug'); cind.hop(10, 340);
     await say('괜찮아요. 우리 함께 행복해요.');
-    sis1.look('stand'); sis2.look('stand');
+    sis1.look('stand', 'left'); sis2.look('stand', 'left');
     await Promise.all([sis1.hop(12, 360), sis2.hop(12, 360)]);
     if (P) T.camTo(480, 280, 1, 500);
     await say('신데렐라에게 톡 인사해요!');
