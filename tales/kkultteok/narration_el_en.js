@@ -51,9 +51,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "White steam puffs out of the chimney.",
   "c": "audio/el/kkultteok/en/nar_290acad5b2.mp3"
  },
- "굴뚝을 톡톡톡!": {
-  "t": "Tap the chimney, tap tap tap!",
-  "c": "audio/el/kkultteok/en/nar_1e8c834c97.mp3"
+ "굴뚝을 톡!": {
+  "t": "Tap the chimney!",
+  "c": "audio/el/kkultteok/en/nar_d292591bca.mp3"
  },
  "김이 뭉치고, 뭉치고… 퐁! 구름이 됐어요.": {
   "t": "The steam rolls together, and together... Pong! It turns into a cloud.",
@@ -105,9 +105,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Water drops fall onto a long belt. Drip, drip, drip.",
   "c": "audio/el/kkultteok/en/nar_5a529e309b.mp3"
  },
- "물방울을 톡톡톡!": {
-  "t": "Tap the water drops, tap tap tap!",
-  "c": "audio/el/kkultteok/en/nar_4ff205dd04.mp3"
+ "물방울을 톡!": {
+  "t": "Tap the water drops!",
+  "c": "audio/el/kkultteok/en/nar_5440ac1cb2.mp3"
  },
  "이현이가 물방울에 손을 살짝 대 봐요.": {
   "t": "Ihyun gently touches a water drop.",
@@ -117,9 +117,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Dahyun blows a big breath. Whoooo!",
   "c": "audio/el/kkultteok/en/nar_5ea8a3e5c9.mp3"
  },
- "바람 나팔을 톡톡톡!": {
-  "t": "Tap the wind horn, tap tap tap!",
-  "c": "audio/el/kkultteok/en/nar_cc7e3855ca.mp3"
+ "바람 나팔을 톡!": {
+  "t": "Tap the wind horn!",
+  "c": "audio/el/kkultteok/en/nar_80d2feb843.mp3"
  },
  "뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!": {
   "t": "Puff, puff puff, puff puff puff! Pong!",

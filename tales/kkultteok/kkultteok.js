@@ -236,7 +236,7 @@
       chimneyLoop(C0, ctl(far), far, { s1: 2.4 });
       await say('언덕 너머에 커다란 굴뚝 하나.');
       await say('굴뚝에서 하얀 김이 폴폴.');
-      await say('굴뚝을 톡톡톡!');
+      await say('굴뚝을 톡!');
       const outs = [];
       const puffUp = i => {
         popSfx(T); T.pop(C0[0] + 70, C0[1] + 60, tr(['폴폴', '뭉게', '퐁!'][i - 1]));
@@ -296,7 +296,7 @@
       });
       const drops = [];
       await say('기다란 벨트 위로 물방울이 똑, 똑, 똑.');
-      await say('물방울을 톡톡톡!');
+      await say('물방울을 톡!');
       const dropStep = () => {
         const d = one(T, 'prop_drop', 40); put(T, d, FX, FY + 30); drops.push(d);
         d.pos.animate([{ transform: `translate(${FX}px,${FY + 30}px)` }, { transform: `translate(${FX}px,${BY}px)` }], { duration: 500, easing: 'ease-in', fill: 'forwards' });
@@ -312,7 +312,7 @@
       drops.forEach(d => d.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }));
       const cloud = one(T, 'cloud_white', 40); put(T, cloud, 680, BY + 10); hide(cloud);
       await say('다현이는 후우— 바람을 불어 줘요.');
-      await say('바람 나팔을 톡톡톡!');
+      await say('바람 나팔을 톡!');
       const sizes = [70, 110, 160];
       const blowStep = i => {
         if (i === 1) { put(T, cloud, 680, BY + 10); fadeIn(cloud, 300); }

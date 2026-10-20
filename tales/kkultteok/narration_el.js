@@ -15,7 +15,7 @@ Object.assign(NARRATION_CLIPS, {
  "삼남매는 영차, 영차 언덕을 올라요.": "audio/el/kkultteok/nar_987bb6eca8.mp3",
  "언덕 너머에 커다란 굴뚝 하나.": "audio/el/kkultteok/nar_996af454c0.mp3",
  "굴뚝에서 하얀 김이 폴폴.": "audio/el/kkultteok/nar_ced5bbe6f4.mp3",
- "굴뚝을 톡톡톡!": "audio/el/kkultteok/nar_c176e8d842.mp3",
+ "굴뚝을 톡!": "audio/el/kkultteok/nar_02151f00d2.mp3",
  "김이 뭉치고, 뭉치고… 퐁! 구름이 됐어요.": "audio/el/kkultteok/nar_a5559d15ff.mp3",
  "\"구름이 여기서 오는구나!\" 다현이가 말해요.": [
   "audio/el/kkultteok/nuna_07fc11e4c3.mp3",
@@ -33,10 +33,10 @@ Object.assign(NARRATION_CLIPS, {
  "스르르… 문이 열려요.": "audio/el/kkultteok/nar_9b99a6309e.mp3",
  "삼남매는 살금살금 따라 들어가요.": "audio/el/kkultteok/nar_077e3eeef9.mp3",
  "기다란 벨트 위로 물방울이 똑, 똑, 똑.": "audio/el/kkultteok/nar_2e6a92d5f0.mp3",
- "물방울을 톡톡톡!": "audio/el/kkultteok/nar_21db07c1bf.mp3",
+ "물방울을 톡!": "audio/el/kkultteok/nar_f669b741c3.mp3",
  "이현이가 물방울에 손을 살짝 대 봐요.": "audio/el/kkultteok/nar_9849c17142.mp3",
  "다현이는 후우— 바람을 불어 줘요.": "audio/el/kkultteok/nar_85cf90937a.mp3",
- "바람 나팔을 톡톡톡!": "audio/el/kkultteok/nar_9fbdc0366c.mp3",
+ "바람 나팔을 톡!": "audio/el/kkultteok/nar_276f412ff0.mp3",
  "뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!": "audio/el/kkultteok/nar_0ce39b366e.mp3",
  "\"여기는 구름 공장이야!\" 다현이가 외쳐요.": [
   "audio/el/kkultteok/nuna_ae460916d4.mp3",

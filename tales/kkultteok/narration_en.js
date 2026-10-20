@@ -36,8 +36,8 @@ const NARRATION_CLIPS_EN = {
  "굴뚝에서 하얀 김이 폴폴.": {
   "t": "White steam puffs out of the chimney."
  },
- "굴뚝을 톡톡톡!": {
-  "t": "Tap the chimney, tap tap tap!"
+ "굴뚝을 톡!": {
+  "t": "Tap the chimney!"
  },
  "김이 뭉치고, 뭉치고… 퐁! 구름이 됐어요.": {
   "t": "The steam rolls together, and together... Pong! It turns into a cloud."
@@ -72,8 +72,8 @@ const NARRATION_CLIPS_EN = {
  "기다란 벨트 위로 물방울이 똑, 똑, 똑.": {
   "t": "Water drops fall onto a long belt. Drip, drip, drip."
  },
- "물방울을 톡톡톡!": {
-  "t": "Tap the water drops, tap tap tap!"
+ "물방울을 톡!": {
+  "t": "Tap the water drops!"
  },
  "이현이가 물방울에 손을 살짝 대 봐요.": {
   "t": "Ihyun gently touches a water drop."
@@ -81,8 +81,8 @@ const NARRATION_CLIPS_EN = {
  "다현이는 후우— 바람을 불어 줘요.": {
   "t": "Dahyun blows a big breath. Whoooo!"
  },
- "바람 나팔을 톡톡톡!": {
-  "t": "Tap the wind horn, tap tap tap!"
+ "바람 나팔을 톡!": {
+  "t": "Tap the wind horn!"
  },
  "뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!": {
   "t": "Puff, puff puff, puff puff puff! Pong!"
