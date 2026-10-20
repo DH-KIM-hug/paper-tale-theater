@@ -198,7 +198,7 @@
     await say('이번에는 방망이를 든 도깨비가 쑥 나왔어요. "이 욕심쟁이야!" 도깨비는 놀부를 놀라게 하고 사라졌어요.');
     await say('세 번째 박을 톡!');
     await nopen(ng[2], '슬근슬근!');
-    await cut('collapse', 'pow', 3600);
+    await cut('collapse', 'crash', 3600);
     await say('와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.');
 
     /* 8. 화해와 나눔 */

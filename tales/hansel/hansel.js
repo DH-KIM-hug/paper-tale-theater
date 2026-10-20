@@ -4,9 +4,9 @@
 (() => {
   const AS = '../../assets/v3w/';
   const GROUND = 505;
-  const ASP = { father: 1.0043, father_wood: .6171, hans_walk: .4829, hans_crumb: .6579, hans_doze: .6135, hans_eat: .4886, hans_cage: .5329,
-    hans_joy: .6771, gret_walk: .5857, gret_doze: .7329, gret_eat: .67, gret_clever: .6029, gret_push: .6975, gret_duck: .6733, gret_key: .6343,
-    witch_beckon: .5486, witch_grope: .7871, witch_oven: .8157, bird_peck: 1.6627, bird_crumb: 1.1723, duck_ride: 1.2216, duck_ride2: 1.1356 };
+  const ASP = { father: .9727, father_wood: .806, hans_walk: .5838, hans_crumb: .6747, hans_doze: .8791, hans_eat: .5029, hans_cage: .6165,
+    hans_joy: .6743, gret_walk: .6396, gret_doze: .7929, gret_eat: .6471, gret_clever: .7404, gret_push: .8225, gret_duck: .7038, gret_key: .7363,
+    witch_beckon: .7515, witch_grope: .9245, witch_oven: .8086, bird_peck: 1.2067, bird_crumb: 1.1685, duck_ride: 1.1204, duck_ride2: 1.1275 };
   const BGS = ['cottage', 'trail', 'glade', 'ground', 'house', 'roof', 'cage', 'oven', 'river'];
   const CUTS = ['bird', 'eat', 'witch', 'slam', 'pop', 'duck', 'hug'];
   const bgSrc = k => AS + 'hg_bg_' + k + '.webp', cutSrc = k => AS + 'hg_cut_' + k + '.webp';
@@ -174,7 +174,7 @@
     put(T, bird, L(640, 590), GROUND + 10, { look: 'crumb', to: 'left' }); fadeIn(bird);
     await say('작은 새가 빵 부스러기를 물고 있어요. 새를 톡!');
     await T.tap(bird.pos, { prompt: '새를 톡! 어디 갔는지 물어봐요.' });
-    bird.hop(18, 300); popSfx(T); T.pop(bird.x, bird.y - 110, tr('짹짹!'));
+    bird.hop(18, 300); AudioFX.sfx('squeak') || popSfx(T); T.pop(bird.x, bird.y - 110, tr('짹짹!'));
     await T.cutImage([{ src: cutSrc('bird'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     scene('ground');
     put(T, hans, L(400, 425), GROUND, { look: 'walk', to: 'right' }); put(T, gret, L(490, 500), GROUND, { look: 'walk', to: 'right' });
@@ -191,7 +191,7 @@
     await say('그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!');
     await say('벽은 쿠키, 지붕은 사탕이에요. 그레텔을 톡! 한 입 먹어 봐요.');
     await T.tap(gret.pos, { prompt: '그레텔을 톡! 냠냠 먹어요.' });
-    gret.look('eat'); hans.look('eat'); popSfx(T); gret.hop(16, 300); T.pop(gret.x, gret.y - 215, tr('냠냠!'));
+    gret.look('eat'); hans.look('eat'); AudioFX.sfx('chomp') || popSfx(T); gret.hop(16, 300); T.pop(gret.x, gret.y - 215, tr('냠냠!'));
     await T.cutImage([{ src: cutSrc('eat'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     await say('너무 맛있어서 둘은 배가 빵빵해졌어요.');
 
@@ -267,15 +267,15 @@
     witch.look('oven', 'left'); witch.hop(10, 300);
     await say('마녀가 화덕 안을 들여다봐요. 그레텔을 톡! 화덕 문을 쾅 밀어요.');
     await T.tap(gret.pos, { prompt: '그레텔을 톡! 쾅 밀어요.' });
-    gret.look('push', 'right'); popSfx(T); T.pop(L(500, 500), 330, tr('쾅!'));
-    await T.cutImage([{ src: cutSrc('slam'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
+    gret.look('push', 'right'); AudioFX.sfx('boom', 1); AudioFX.sfx('crash'); T.shake(); T.pop(L(500, 500), 330, tr('쾅!')); /* 2026-10-20 쾅 소리 */
+    await T.cutImage([{ src: cutSrc('slam'), sfx: 'boom', hold: 3200 }], { hold: 3200 });
     await say('쾅! 마녀는 깜짝 놀라 모자가 휙 날아갔어요.');
     await T.cutImage([{ src: cutSrc('pop'), sfx: 'pop', hold: 3600 }], { hold: 3600 });
     scene('oven');
     put(T, hans, L(300, 380), GROUND, { look: 'joy', to: 'right' }); put(T, gret, L(440, 480), GROUND, { look: 'clever', to: 'right' });
     if (P) hide(hans);
     await say('마녀는 빗자루를 타고 굴뚝으로 휘리릭 날아갔어요. "다시는 안 올게~!"');
-    T.pop(L(500, 500), 300, tr('휘리릭!'));
+    AudioFX.sfx('whoosh'); T.pop(L(500, 500), 300, tr('휘리릭!'));
     gret.hop(24, 400); hans.hop(24, 400);
 
     /* --- 10. 강: 오리의 등 --- */
@@ -289,7 +289,7 @@
     await duck.move(L(640, 570), 470, 1100);
     await say('그때 흰 오리가 헤엄쳐 왔어요. 오리를 톡!');
     await T.tap(duck.pos, { prompt: '오리를 톡! 등에 타요.' });
-    duck.look('b'); duck.hop(14, 300); popSfx(T); T.pop(duck.x, duck.y - 150, tr('꽥꽥!'));
+    duck.look('b'); duck.hop(14, 300); AudioFX.sfx('squeak') || popSfx(T); T.pop(duck.x, duck.y - 150, tr('꽥꽥!'));
     await T.cutImage([{ src: cutSrc('duck'), sfx: 'pop', hold: 3400 }], { hold: 3400 });
     scene('river');
     put(T, duck, L(640, 570), 470, { look: 'b', to: 'left' });

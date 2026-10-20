@@ -3,9 +3,9 @@
 (() => {
   const AS = '../../assets/v3w/';
   const GROUND = 505;
-  const ASP = { scholar_walk: .4786, scholar_surprise: .5157, scholar_bow_shoot: .6086, scholar_water: .7214, scholar_bow: .5486,
-    snake_coil: 1.1058, snake_flee: 2.3411, lady: .7457, chick: .9185, mag_dad_sit: 1.3158, mag_mom_sit: 1.1958,
-    mag_dad_fly: 1.9337, mag_mom_fly: 1.6514, mag_dad_tired: 2.2801, mag_mom_tired: 2.5926, mag_flock: 2.0173 };
+  const ASP = { scholar_walk: .5857, scholar_surprise: .6786, scholar_bow_shoot: .7889, scholar_water: .9439, scholar_bow: .5881,
+    snake_coil: 1.0158, snake_flee: 1.4415, lady: .9, chick: .8076, mag_dad_sit: 1.2688, mag_mom_sit: 1.3506,
+    mag_dad_fly: 1.2044, mag_mom_fly: 1.2452, mag_dad_tired: 1.8827, mag_mom_tired: 1.8259, mag_flock: 1.2478 };
   const BGS = ['path', 'bigtree', 'nest', 'night', 'porch', 'paperdoor', 'moonnest', 'belltower', 'dawn', 'morning'];
   const CUTS = ['flee', 'tail', 'flock', 'ring', 'wake'];
   const bgSrc = k => AS + 'mg_bg_' + k + '.webp', cutSrc = k => AS + 'mg_cut_' + k + '.webp';
@@ -105,7 +105,7 @@
     put(T, sch, P ? 470 : 440, 505, { look: 'shoot', to: 'right' });
     await say('선비가 말했어요. "아기 까치를 지켜 줄게!"');
     await T.tap(sch.pos, { prompt: '선비를 톡! 하늘에 활을 쏘아요.' });
-    popSfx(T); sch.hop(18, 300); T.pop(sch.x + 60, sch.y - 250, tr('쉬익!'));
+    AudioFX.sfx('whoosh') || popSfx(T); sch.hop(18, 300); T.pop(sch.x + 60, sch.y - 250, tr('쉬익!'));
     hide(coil);
     await T.cutImage([{ src: cutSrc('flee'), sfx: 'pop', hold: 3400 }], { hold: 3400 });
     await say('쉬익! 활 소리에 깜짝 놀란 구렁이는 숲으로 도망갔어요.');
@@ -216,13 +216,14 @@
     /* --- 9. 아침 --- */
     await T.sceneCard(tr('아침'), () => {
       scene('morning');
-      put(T, sch, P ? 450 : 450, 505, { look: 'wonder', to: 'right' });
-      put(T, mom, P ? 560 : 580, 500, { look: 'sit', to: 'left' });
-      put(T, dad, P ? 625 : 660, 500, { look: 'sit', to: 'left' });
+      put(T, sch, P ? 420 : 450, 505, { look: 'wonder', to: 'right' });
+      /* 2026-10-20 새 까치 그림이 넓어 세로 화면에서는 줄이고 벌림 */
+      put(T, mom, P ? 565 : 580, 500, { look: 'sit', to: 'left', s: P ? .72 : 1 });
+      put(T, dad, P ? 655 : 660, 500, { look: 'sit', to: 'left', s: P ? .72 : 1 });
     }, sch.pos);
     await T.cutImage([{ src: cutSrc('wake'), sfx: 'pop', hold: 3600 }], { hold: 3600 });
     await say('아침 해가 떴어요. 아기 까치들도 날아왔어요.');
-    chicks.forEach((c, i) => { put(T, c, (P ? 410 : 360) + i * (P ? 70 : 60), 540, { to: 'right' }); fadeIn(c, 400); c.hop(12, 400); });
+    chicks.forEach((c, i) => { put(T, c, (P ? 360 : 360) + i * (P ? 52 : 60), 540, { to: 'right' }); fadeIn(c, 400); c.hop(12, 400); });
     await say('모두 함께 웃었어요.');
     await T.tap(sch.pos, { prompt: '선비를 톡! 모두 함께 만세!' });
     T.confetti();
