@@ -4,11 +4,17 @@
 (() => {
   const AS = '../../assets/v3w/';
   const GROUND = 505;
-  const ASP = { apple: .9443, basket: .9214, bread: 1.4957, flower_blue: .7429, flower_red: .6457, flower_yellow: .7857, frame: .8896,
-    granny_home: .6896, granny_pop: .675, granny_tea: .6021, hood_hide: .5667, hood_joy: .7188, hood_knock: .5667, hood_pick: .7229,
-    hood_surprise: .5938, hood_walk: .5792, hood_walk2: .5354, hood_wonder: .5958, hunter_laugh: .7604, hunter_tickle: .6771,
-    hunter_walk: .5458, mama: .4604, milk: .3857, vase_blue: .82, vase_red: .8589, vase_yellow: .8743, wardrobe: .5157, wolf_flee: 2.1638,
-    wolf_granny: .6813, wolf_hiccup: .4854, wolf_jump: .5542, wolf_peek: .5292, wolf_run: 2.5, wolf_sleep: 2.1453, wolf_whisper: 1.5578 };
+  const ASP = { apple: 0.9286, basket: 1.0222, bread: 1.2479, flower_blue: 0.7891, flower_red: 0.7875, flower_yellow: 0.7629, frame: 0.8729,
+    granny_home: 0.8575, granny_pop: 0.8640, granny_tea: 0.6613, hood_hide: 0.7705, hood_joy: 0.7599, hood_knock: 0.7253,
+    hood_pick: 0.9378, hood_surprise: 0.6674, hood_walk: 0.6526, hood_walk2: 0.6693, hood_wonder: 0.6272, hunter_laugh: 0.6687,
+    hunter_tickle: 0.7593, hunter_walk: 0.5861, mama: 0.4933, milk: 0.4470, vase_blue: 0.9068, vase_red: 0.9094, vase_yellow: 0.9067,
+    wardrobe: 0.7023, wolf_flee: 1.4077, wolf_granny: 1.0447, wolf_hiccup: 0.8826, wolf_jump: 1.1224, wolf_peek: 0.8881,
+    wolf_run: 1.5403, wolf_sleep: 1.0934, wolf_whisper: 1.2990, };
+  /* 2026-10-20 새 그림은 그림 크기(세로 픽셀)가 옛 그림과 달라서, 옛 그림과 같은 픽셀 축척이 되도록 높이에 곱하는 비율 */
+  const RS = { basket: 0.901, flower_blue: 0.941, flower_red: 0.820, granny_home: 0.804, granny_pop: 0.781, granny_tea: 0.910, hood_hide: 0.735,
+    hood_joy: 0.946, hood_knock: 0.781, hood_pick: 0.771, hood_surprise: 0.890, hood_walk: 0.887, hood_walk2: 0.800, hood_wonder: 0.950,
+    hunter_tickle: 0.892, hunter_walk: 0.931, mama: 0.933, milk: 0.863, vase_blue: 0.904, vase_red: 0.944, vase_yellow: 0.964,
+    wardrobe: 0.734, wolf_granny: 0.652, wolf_hiccup: 0.550, wolf_jump: 0.494, wolf_peek: 0.596, };
   const BGS = ['bed', 'cottage', 'door', 'flowers', 'kitchen', 'room', 'shortcut', 'table', 'trail', 'tree'];
   const NF = new Set(['apple', 'basket', 'bread', 'flower_blue', 'flower_red', 'flower_yellow', 'milk', 'vase_blue', 'vase_red', 'vase_yellow', 'wardrobe']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
   const CUTS = ['tail', 'whisper', 'dash', 'gulp', 'granwolf', 'jumpup', 'hiccup'];
@@ -21,8 +27,8 @@
     const looks = {};
     const a = T.actor(T.world, -400, GROUND, g => {
       Object.entries(poses).forEach(([k, [f, h, nat]]) => {
-        const w = h * ASP[f], wrap = T.el('g', { filter: 'url(#pp)' }, g);
-        T.el('image', { href: AS + 'rh_' + f + (NF.has(f) ? 'nf' : '') + '.webp', x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
+        const hh = h * (RS[f] || 1), w = hh * ASP[f], wrap = T.el('g', { filter: 'url(#pp)' }, g);
+        T.el('image', { href: AS + 'rh_' + f + (NF.has(f) ? 'nf' : '') + '.webp', x: -w / 2, y: -hh, width: w, height: hh, preserveAspectRatio: 'none' }, wrap);
         wrap.style.display = 'none'; looks[k] = { wrap, h, nat };
       });
     });
@@ -131,10 +137,10 @@
       surprise: ['hood_surprise', 230, 'left'], hide: ['hood_hide', 230, 'left'] });
     const mama = mk(T, { a: ['mama', 270, 'left'] });
     const granny = mk(T, { home: ['granny_home', 230, 'left'], pop: ['granny_pop', 230, 'left'], tea: ['granny_tea', 230, 'left'] });
-    const wolf = mk(T, { peek: ['wolf_peek', 320, 'left'], whisper: ['wolf_whisper', 210, 'left'], granny: ['wolf_granny', 300, 'left'],
-      run: ['wolf_run', 150, 'right'], sleep: ['wolf_sleep', 125, 'left'], hiccup: ['wolf_hiccup', 320, 'left'], flee: ['wolf_flee', 150, 'right'],
-      jump: ['wolf_jump', 320, 'left'] });
-    const hunter = mk(T, { walk: ['hunter_walk', 290, 'left'], tickle: ['hunter_tickle', 290, 'left'], laugh: ['hunter_laugh', 290, 'left'] });
+    const wolf = mk(T, { peek: ['wolf_peek', 430, 'left'], whisper: ['wolf_whisper', 210, 'left'], granny: ['wolf_granny', 405, 'left'],
+      run: ['wolf_run', 150, 'right'], sleep: ['wolf_sleep', 190, 'left'], hiccup: ['wolf_hiccup', 430, 'left'], flee: ['wolf_flee', 150, 'right'],
+      jump: ['wolf_jump', 430, 'left'] });
+    const hunter = mk(T, { walk: ['hunter_walk', 290, 'right'], tickle: ['hunter_tickle', 290, 'left'], laugh: ['hunter_laugh', 290, 'left'] });
     const basket = prop(T, 'basket', 100), bread = prop(T, 'bread', 62), milk = prop(T, 'milk', 105), apple = prop(T, 'apple', 62);
     const frame = prop(T, 'frame', 200);
 
@@ -216,7 +222,7 @@
       const v = prop(T, 'vase_' + c, 104); v.color = c; v.bq = [];
       put(T, v, 380 + i * 120, 535); return v;
     });
-    put(T, hood, 270, 330, { look: 'pick', to: 'right', s: .75 });
+    put(T, hood, P ? 340 : 270, 330, { look: 'pick', to: 'right', s: .75 }); // 2026-10-20 세로 화면에서 왼쪽 밖으로 잘리던 것
     await say('꽃밭에 알록달록 꽃이 가득해요. 꽃을 같은 색 꽃병에 쏙쏙 담아요!');
     const seq = ['red', 'yellow', 'blue', 'blue', 'red', 'yellow'];
     for (const [i, col] of seq.entries()) {
@@ -282,12 +288,12 @@
     }, wolf.pos);
     await say('"할머니, 오셨어요?" 그런데 침대 속 할머니가 어딘가 이상해요.');
     await say('벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!');
-    const WX = 335, WW = 300 * ASP.wolf_granny, WG = 472;
-    const px = f => WX - WW / 2 + f * WW, py = f => WG - 300 + f * 300;
+    const WX = 335, WHt = 405 * RS.wolf_granny, WW = WHt * ASP.wolf_granny, WG = 472; // 2026-10-20 새 늑대 그림(오른쪽을 봄)에 맞춰 귀·눈·입 자리를 다시 잡음
+    const px = f => WX - WW / 2 + f * WW, py = f => WG - WHt + f * WHt;
     const parts = {
-      ear: { at: [px(.25), py(.08)], r: 38, q: '"할머니, 귀가 왜 이렇게 커요?"', a: '"네 말을 잘 들으려고 그렇지~"', w: '뾰족 귀!' },
-      eye: { at: [px(.43), py(.37)], r: 34, q: '"할머니, 눈이 왜 이렇게 노랗고 커요?"', a: '"너를 잘 보려고 그렇지~"', w: '노란 눈!' },
-      mouth: { at: [px(.6), py(.47)], r: 40, q: '"할머니, 입이 왜 이렇게 길어요?"', a: '"그건 말이지… 어흥! 놀랐지?"', w: '긴 입!' },
+      ear: { at: [px(.35), py(.14)], r: 32, q: '"할머니, 귀가 왜 이렇게 커요?"', a: '"네 말을 잘 들으려고 그렇지~"', w: '뾰족 귀!' },
+      eye: { at: [px(.61), py(.26)], r: 28, q: '"할머니, 눈이 왜 이렇게 노랗고 커요?"', a: '"너를 잘 보려고 그렇지~"', w: '노란 눈!' },
+      mouth: { at: [px(.74), py(.37)], r: 34, q: '"할머니, 입이 왜 이렇게 길어요?"', a: '"그건 말이지… 어흥! 놀랐지?"', w: '긴 입!' },
     };
     const left = Object.keys(parts);
     const PROMPT = '사진 속 할머니와 달라 보이는 곳을 톡!';
@@ -323,7 +329,7 @@
     await sleep(450);
     await say('빨간 모자는 옷장 속으로 쏙! 늑대는 두리번두리번 찾았지만 보이지 않았어요.');
     wolf.look('peek', 'left'); wolf.wiggle(8, 500); await sleep(900);
-    put(T, wolf, 815, 415, { look: 'sleep', to: 'left' }); // 침대 위
+    put(T, wolf, 815, 430, { look: 'sleep', to: 'left' }); // 침대 위
     await T.camTo(640, 280, 1, 700);
     await say('할머니를 먹어서 배가 불렀던 늑대는 스르르 눈이 감겼어요. 쿨쿨…');
     T.pop(760, 300, '쿨쿨…', '#5C6BC0');
