@@ -73,19 +73,13 @@
    ]
   },
   {
-   "text": "\"구름은 어디서 올까?\" 다현이가 물어요.",
+   "text": "\"구름은 어디서 올까?\"",
    "segs": [
     [
      "nuna",
      "구름은 어디서 올까?",
      null,
      "[cheerful]"
-    ],
-    [
-     "nar",
-     "다현이가 물어요.",
-     null,
-     "[gentle, warm storyteller]"
     ]
    ]
   },
@@ -211,19 +205,13 @@
    ]
   },
   {
-   "text": "\"구름이 여기서 오는구나!\" 다현이가 말해요.",
+   "text": "\"구름이 여기서 오는구나!\"",
    "segs": [
     [
      "nuna",
      "구름이 여기서 오는구나!",
      null,
      "[cheerful]"
-    ],
-    [
-     "nar",
-     "다현이가 말해요.",
-     null,
-     "[gentle, warm storyteller]"
     ]
    ]
   },
@@ -382,25 +370,19 @@
     [
      "nar",
      "뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!",
-     null,
-     "[gentle, warm storyteller]"
+     "happy:0.9",
+     "[playful, bouncy, building up with excitement, each 뭉게 a little bigger and rounder, bubbly, then a happy pop at the end]"
     ]
    ]
   },
   {
-   "text": "\"여기는 구름 공장이야!\" 다현이가 외쳐요.",
+   "text": "\"여기는 구름 공장이야!\"",
    "segs": [
     [
      "nuna",
      "여기는 구름 공장이야!",
      null,
      "[cheerful]"
-    ],
-    [
-     "nar",
-     "다현이가 외쳐요.",
-     null,
-     "[gentle, warm storyteller]"
     ]
    ]
   },
@@ -482,19 +464,13 @@
    ]
   },
   {
-   "text": "\"눌러 봐도 돼?\" 다현이가 물어요.",
+   "text": "\"눌러 봐도 돼?\"",
    "segs": [
     [
      "nuna",
      "눌러 봐도 돼?",
      null,
      "[cheerful]"
-    ],
-    [
-     "nar",
-     "다현이가 물어요.",
-     null,
-     "[gentle, warm storyteller]"
     ]
    ]
   },
@@ -587,19 +563,13 @@
    ]
   },
   {
-   "text": "\"비를 만들려나 봐.\" 다현이가 속삭여요.",
+   "text": "\"비를 만들려나 봐.\"",
    "segs": [
     [
      "nuna",
      "비를 만들려나 봐.",
      null,
      "[whispers]"
-    ],
-    [
-     "nar",
-     "다현이가 속삭여요.",
-     null,
-     "[gentle, warm storyteller]"
     ]
    ]
   },
@@ -736,19 +706,13 @@
    ]
   },
   {
-   "text": "\"비 좋아! 장화 신고 첨벙첨벙!\" 다현이가 말해요.",
+   "text": "\"비 좋아! 장화 신고 첨벙첨벙!\"",
    "segs": [
     [
      "nuna",
      "비 좋아! 장화 신고 첨벙첨벙!",
      null,
      "[cheerful]"
-    ],
-    [
-     "nar",
-     "다현이가 말해요.",
-     null,
-     "[gentle, warm storyteller]"
     ]
    ]
   },
@@ -1080,19 +1044,13 @@
    ]
   },
   {
-   "text": "\"구름은 여기서 오는 거였어!\" 다현이가 말해요.",
+   "text": "\"구름은 여기서 오는 거였어!\"",
    "segs": [
     [
      "nuna",
      "구름은 여기서 오는 거였어!",
      null,
      "[cheerful]"
-    ],
-    [
-     "nar",
-     "다현이가 말해요.",
-     null,
-     "[gentle, warm storyteller]"
     ]
    ]
   },
@@ -1231,6 +1189,83 @@
      "딸기가 빨갛게!",
      null,
      "[gentle, warm storyteller]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강!",
+   "segs": [
+    [
+     "nar",
+     "빨강!",
+     null,
+     "[bright, clear, cheerful, say the colour name distinctly]"
+    ]
+   ]
+  },
+  {
+   "text": "주황!",
+   "segs": [
+    [
+     "nar",
+     "주황!",
+     null,
+     "[bright, clear, cheerful, say the colour name distinctly]"
+    ]
+   ]
+  },
+  {
+   "text": "노랑!",
+   "segs": [
+    [
+     "nar",
+     "노랑!",
+     null,
+     "[bright, clear, cheerful, say the colour name distinctly]"
+    ]
+   ]
+  },
+  {
+   "text": "초록!",
+   "segs": [
+    [
+     "nar",
+     "초록!",
+     null,
+     "[bright, clear, cheerful, say the colour name distinctly]"
+    ]
+   ]
+  },
+  {
+   "text": "파랑!",
+   "segs": [
+    [
+     "nar",
+     "파랑!",
+     null,
+     "[bright, clear, cheerful, say the colour name distinctly]"
+    ]
+   ]
+  },
+  {
+   "text": "남색!",
+   "segs": [
+    [
+     "nar",
+     "남색!",
+     null,
+     "[bright, clear, cheerful, say the colour name distinctly]"
+    ]
+   ]
+  },
+  {
+   "text": "보라!",
+   "segs": [
+    [
+     "nar",
+     "보라!",
+     null,
+     "[bright, clear, cheerful, say the colour name distinctly]"
     ]
    ]
   }

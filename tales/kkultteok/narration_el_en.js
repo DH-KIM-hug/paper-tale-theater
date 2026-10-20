@@ -8,12 +8,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Clouds float across the sky.",
   "c": "audio/el/kkultteok/en/nar_74827cec8b.mp3"
  },
- "\"구름은 어디서 올까?\" 다현이가 물어요.": {
-  "t": "Where do clouds come from? asks Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_b193888972.mp3",
-   "audio/el/kkultteok/en/nar_49c2f377a8.mp3"
-  ]
+ "\"구름은 어디서 올까?\"": {
+  "t": "Where do clouds come from?",
+  "c": "audio/el/kkultteok/en/nuna_b193888972.mp3"
  },
  "꿀떡이를 톡! 같이 킁킁해 봐요.": {
   "t": "Tap Kkulddeok! Let's sniff together.",
@@ -59,12 +56,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The steam rolls together, and together... Pong! It turns into a cloud.",
   "c": "audio/el/kkultteok/en/nar_a6eb5f8490.mp3"
  },
- "\"구름이 여기서 오는구나!\" 다현이가 말해요.": {
-  "t": "So this is where clouds come from! says Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_503b5b68d3.mp3",
-   "audio/el/kkultteok/en/nar_9b18d4b3df.mp3"
-  ]
+ "\"구름이 여기서 오는구나!\"": {
+  "t": "So this is where clouds come from!",
+  "c": "audio/el/kkultteok/en/nuna_503b5b68d3.mp3"
  },
  "\"퐁!\" 은우가 따라 해요.": {
   "t": "Pong! Eunwoo says it too.",
@@ -125,12 +119,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Puff, puff puff, puff puff puff! Pong!",
   "c": "audio/el/kkultteok/en/nar_3a99b1a995.mp3"
  },
- "\"여기는 구름 공장이야!\" 다현이가 외쳐요.": {
-  "t": "This is a cloud factory! shouts Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_9723335a54.mp3",
-   "audio/el/kkultteok/en/nar_da596b357a.mp3"
-  ]
+ "\"여기는 구름 공장이야!\"": {
+  "t": "This is a cloud factory!",
+  "c": "audio/el/kkultteok/en/nuna_9723335a54.mp3"
  },
  "이현이가 모양 틀을 꾹! 눌러요.": {
   "t": "Ihyun pushes the shape press. Push!",
@@ -160,12 +151,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "In the corner, there is a big red button.",
   "c": "audio/el/kkultteok/en/nar_a129990606.mp3"
  },
- "\"눌러 봐도 돼?\" 다현이가 물어요.": {
-  "t": "Can we press it? asks Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_11bde84d25.mp3",
-   "audio/el/kkultteok/en/nar_49c2f377a8.mp3"
-  ]
+ "\"눌러 봐도 돼?\"": {
+  "t": "Can we press it?",
+  "c": "audio/el/kkultteok/en/nuna_11bde84d25.mp3"
  },
  "빨간 단추를 톡!": {
   "t": "Tap the red button!",
@@ -199,12 +187,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Gulp, gulp, gulp. Their tummies get big and round.",
   "c": "audio/el/kkultteok/en/nar_e46709f8e1.mp3"
  },
- "\"비를 만들려나 봐.\" 다현이가 속삭여요.": {
-  "t": "I think they're making rain. whispers Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_c973afa680.mp3",
-   "audio/el/kkultteok/en/nar_699f658a6f.mp3"
-  ]
+ "\"비를 만들려나 봐.\"": {
+  "t": "I think they're making rain.",
+  "c": "audio/el/kkultteok/en/nuna_c973afa680.mp3"
  },
  "꿀떡이는 축축한 바닥을 킁킁.": {
   "t": "Kkulddeok sniffs the wet floor.",
@@ -254,12 +239,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Pat the baby rain cloud, tap tap tap!",
   "c": "audio/el/kkultteok/en/nar_6771df782a.mp3"
  },
- "\"비 좋아! 장화 신고 첨벙첨벙!\" 다현이가 말해요.": {
-  "t": "We love rain! We put on our boots and splash! says Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_8c4ab1db1c.mp3",
-   "audio/el/kkultteok/en/nar_9b18d4b3df.mp3"
-  ]
+ "\"비 좋아! 장화 신고 첨벙첨벙!\"": {
+  "t": "We love rain! We put on our boots and splash!",
+  "c": "audio/el/kkultteok/en/nuna_8c4ab1db1c.mp3"
  },
  "\"첨벙첨벙!\" 이현이도 폴짝 뛰어요.": {
   "t": "Splash, splash! Ihyun jumps too.",
@@ -384,12 +366,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The little white cloud smiles. Pong!",
   "c": "audio/el/kkultteok/en/nar_c78f7d7347.mp3"
  },
- "\"구름은 여기서 오는 거였어!\" 다현이가 말해요.": {
-  "t": "So this is where clouds come from! says Dahyun.",
-  "c": [
-   "audio/el/kkultteok/en/nuna_503b5b68d3.mp3",
-   "audio/el/kkultteok/en/nar_9b18d4b3df.mp3"
-  ]
+ "\"구름은 여기서 오는 거였어!\"": {
+  "t": "So this is where clouds come from!",
+  "c": "audio/el/kkultteok/en/nuna_503b5b68d3.mp3"
  },
  "꿀떡이는 젖은 흙에 코를 대고 킁킁.": {
   "t": "Kkulddeok puts his nose to the wet dirt. Sniff, sniff.",
@@ -441,6 +420,34 @@ Object.assign(NARRATION_CLIPS_EN, {
  "딸기가 빨갛게!": {
   "t": "A strawberry turns red!",
   "c": "audio/el/kkultteok/en/nar_4dedc7d5a7.mp3"
+ },
+ "빨강!": {
+  "t": "Red!",
+  "c": "audio/el/kkultteok/en/nar_8510aa9dc3.mp3"
+ },
+ "주황!": {
+  "t": "Orange!",
+  "c": "audio/el/kkultteok/en/nar_7471afe16d.mp3"
+ },
+ "노랑!": {
+  "t": "Yellow!",
+  "c": "audio/el/kkultteok/en/nar_cc4dc74974.mp3"
+ },
+ "초록!": {
+  "t": "Green!",
+  "c": "audio/el/kkultteok/en/nar_c57d2c44b5.mp3"
+ },
+ "파랑!": {
+  "t": "Blue!",
+  "c": "audio/el/kkultteok/en/nar_a755bb2c4f.mp3"
+ },
+ "남색!": {
+  "t": "Indigo!",
+  "c": "audio/el/kkultteok/en/nar_49dabff411.mp3"
+ },
+ "보라!": {
+  "t": "Purple!",
+  "c": "audio/el/kkultteok/en/nar_95712b3358.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});

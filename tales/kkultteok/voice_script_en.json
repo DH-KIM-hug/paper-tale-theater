@@ -17,16 +17,12 @@
    "en": "Clouds float across the sky."
   },
   {
-   "text": "\"구름은 어디서 올까?\" 다현이가 물어요.",
-   "en": "Where do clouds come from? asks Dahyun.",
+   "text": "\"구름은 어디서 올까?\"",
+   "en": "Where do clouds come from?",
    "segs": [
     [
      "nuna",
      "Where do clouds come from?"
-    ],
-    [
-     "nar",
-     "asks Dahyun."
     ]
    ]
   },
@@ -81,16 +77,12 @@
    "en": "The steam rolls together, and together... Pong! It turns into a cloud."
   },
   {
-   "text": "\"구름이 여기서 오는구나!\" 다현이가 말해요.",
-   "en": "So this is where clouds come from! says Dahyun.",
+   "text": "\"구름이 여기서 오는구나!\"",
+   "en": "So this is where clouds come from!",
    "segs": [
     [
      "nuna",
      "So this is where clouds come from!"
-    ],
-    [
-     "nar",
-     "says Dahyun."
     ]
    ]
   },
@@ -161,16 +153,12 @@
    "en": "Puff, puff puff, puff puff puff! Pong!"
   },
   {
-   "text": "\"여기는 구름 공장이야!\" 다현이가 외쳐요.",
-   "en": "This is a cloud factory! shouts Dahyun.",
+   "text": "\"여기는 구름 공장이야!\"",
+   "en": "This is a cloud factory!",
    "segs": [
     [
      "nuna",
      "This is a cloud factory!"
-    ],
-    [
-     "nar",
-     "shouts Dahyun."
     ]
    ]
   },
@@ -203,16 +191,12 @@
    "en": "In the corner, there is a big red button."
   },
   {
-   "text": "\"눌러 봐도 돼?\" 다현이가 물어요.",
-   "en": "Can we press it? asks Dahyun.",
+   "text": "\"눌러 봐도 돼?\"",
+   "en": "Can we press it?",
    "segs": [
     [
      "nuna",
      "Can we press it?"
-    ],
-    [
-     "nar",
-     "asks Dahyun."
     ]
    ]
   },
@@ -249,16 +233,12 @@
    "en": "Gulp, gulp, gulp. Their tummies get big and round."
   },
   {
-   "text": "\"비를 만들려나 봐.\" 다현이가 속삭여요.",
-   "en": "I think they're making rain. whispers Dahyun.",
+   "text": "\"비를 만들려나 봐.\"",
+   "en": "I think they're making rain.",
    "segs": [
     [
      "nuna",
      "I think they're making rain."
-    ],
-    [
-     "nar",
-     "whispers Dahyun."
     ]
    ]
   },
@@ -317,16 +297,12 @@
    "en": "Pat the baby rain cloud, tap tap tap!"
   },
   {
-   "text": "\"비 좋아! 장화 신고 첨벙첨벙!\" 다현이가 말해요.",
-   "en": "We love rain! We put on our boots and splash! says Dahyun.",
+   "text": "\"비 좋아! 장화 신고 첨벙첨벙!\"",
+   "en": "We love rain! We put on our boots and splash!",
    "segs": [
     [
      "nuna",
      "We love rain! We put on our boots and splash!"
-    ],
-    [
-     "nar",
-     "says Dahyun."
     ]
    ]
   },
@@ -501,16 +477,12 @@
    "en": "The little white cloud smiles. Pong!"
   },
   {
-   "text": "\"구름은 여기서 오는 거였어!\" 다현이가 말해요.",
-   "en": "So this is where clouds come from! says Dahyun.",
+   "text": "\"구름은 여기서 오는 거였어!\"",
+   "en": "So this is where clouds come from!",
    "segs": [
     [
      "nuna",
      "So this is where clouds come from!"
-    ],
-    [
-     "nar",
-     "says Dahyun."
     ]
    ]
   },
@@ -571,6 +543,34 @@
   {
    "text": "딸기가 빨갛게!",
    "en": "A strawberry turns red!"
+  },
+  {
+   "text": "빨강!",
+   "en": "Red!"
+  },
+  {
+   "text": "주황!",
+   "en": "Orange!"
+  },
+  {
+   "text": "노랑!",
+   "en": "Yellow!"
+  },
+  {
+   "text": "초록!",
+   "en": "Green!"
+  },
+  {
+   "text": "파랑!",
+   "en": "Blue!"
+  },
+  {
+   "text": "남색!",
+   "en": "Indigo!"
+  },
+  {
+   "text": "보라!",
+   "en": "Purple!"
   }
  ],
  "ui": {

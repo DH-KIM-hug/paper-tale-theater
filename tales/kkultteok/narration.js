@@ -3,10 +3,7 @@ const NARRATION_CLIPS = {
  "다현이와 이현이와 은우는 아침마다 창밖을 봐요.": "audio/tc/kkultteok/nar_0944ce56c7.mp3",
  "하늘에 구름이 하나, 둘, 셋.": "audio/tc/kkultteok/nar_9adc4e9804.mp3",
  "구름을 톡톡톡 눌러서 세어 봐요!": "audio/tc/kkultteok/nar_7e6f602e62.mp3",
- "\"구름은 어디서 올까?\" 다현이가 물어요.": [
-  "audio/tc/kkultteok/nuna_6ef4c68744.mp3",
-  "audio/tc/kkultteok/nar_d93f5abee8.mp3"
- ],
+ "\"구름은 어디서 올까?\"": "audio/tc/kkultteok/nuna_6ef4c68744.mp3",
  "\"어디서 올까?\" 은우도 따라 해요.": [
   "audio/tc/kkultteok/agi_353fda0a57.mp3",
   "audio/tc/kkultteok/nar_aac2b27eb3.mp3"
@@ -20,17 +17,11 @@ const NARRATION_CLIPS = {
  "언덕을 넘고, 풀밭을 지나고.": "audio/tc/kkultteok/nar_27358f39d9.mp3",
  "이현이는 길가 꽃을 살짝 만져 봐요.": "audio/tc/kkultteok/nar_d041e6ec36.mp3",
  "꽃을 톡톡톡 눌러서 향기를 맡아요!": "audio/tc/kkultteok/nar_e68ed34cf9.mp3",
- "\"꿀떡아, 어디까지 가?\" 다현이가 물어요.": [
-  "audio/tc/kkultteok/nuna_c27f04ca66.mp3",
-  "audio/tc/kkultteok/nar_d93f5abee8.mp3"
- ],
+ "\"꿀떡아, 어디까지 가?\"": "audio/tc/kkultteok/nuna_c27f04ca66.mp3",
  "언덕 위에 굴뚝 하나.": "audio/tc/kkultteok/nar_fbab7e21f8.mp3",
  "굴뚝을 톡톡톡 눌러요!": "audio/tc/kkultteok/nar_b699653e1f.mp3",
  "굴뚝에서 하얀 구름이 퐁! 퐁!": "audio/tc/kkultteok/nar_67b5ebad40.mp3",
- "\"굴뚝에서 구름이 나와?\" 다현이가 물어요.": [
-  "audio/tc/kkultteok/nuna_e5bb00d70c.mp3",
-  "audio/tc/kkultteok/nar_d93f5abee8.mp3"
- ],
+ "\"굴뚝에서 구름이 나와?\"": "audio/tc/kkultteok/nuna_e5bb00d70c.mp3",
  "\"퐁! 퐁!\" 은우가 따라 해요.": [
   "audio/tc/kkultteok/agi_d678fd0671.mp3",
   "audio/tc/kkultteok/nar_5dd60077b3.mp3"
@@ -38,10 +29,7 @@ const NARRATION_CLIPS = {
  "굴뚝 아래, 동그란 문.": "audio/tc/kkultteok/nar_d8afe69ca5.mp3",
  "동그란 문을 톡! 같이 밀어 봐요.": "audio/tc/kkultteok/nar_edf01575f0.mp3",
  "이현이가 문을 살짝 밀어요. 끼이익.": "audio/tc/kkultteok/nar_eda5208980.mp3",
- "\"들어가도 될까?\" 다현이가 물어요.": [
-  "audio/tc/kkultteok/nuna_125b56378e.mp3",
-  "audio/tc/kkultteok/nar_d93f5abee8.mp3"
- ],
+ "\"들어가도 될까?\"": "audio/tc/kkultteok/nuna_125b56378e.mp3",
  "꿀떡이가 먼저 쏙 들어가요.": "audio/tc/kkultteok/nar_cba855ebfe.mp3",
  "여기는 구름 공장!": "audio/tc/kkultteok/nar_9deb350ca2.mp3",
  "보글보글, 구름 솥이 끓어요.": "audio/tc/kkultteok/nar_39f0a3c820.mp3",
@@ -62,20 +50,14 @@ const NARRATION_CLIPS = {
   "audio/tc/kkultteok/nar_48b0041eb4.mp3"
  ],
  "구석에 빨간 단추가 있어요.": "audio/tc/kkultteok/nar_b8cc97b365.mp3",
- "\"이건 뭐야? 눌러도 돼?\" 다현이가 물어요.": [
-  "audio/tc/kkultteok/nuna_dc8ed957e4.mp3",
-  "audio/tc/kkultteok/nar_d93f5abee8.mp3"
- ],
+ "\"이건 뭐야? 눌러도 돼?\"": "audio/tc/kkultteok/nuna_dc8ed957e4.mp3",
  "이현이는 손을 뻗었다가… 멈춰요.": "audio/tc/kkultteok/nar_f6f8a55749.mp3",
  "빨간 단추를 톡! 은우가 눌러요.": "audio/tc/kkultteok/nar_3e49150eb0.mp3",
  "은우가 꾹! 눌러 버렸어요.": "audio/tc/kkultteok/nar_7a090d0ca2.mp3",
  "덜컹! 기계가 흔들려요.": "audio/tc/kkultteok/nar_a8ca8751f1.mp3",
  "퐁… 작은 먹구름 하나가 나왔어요.": "audio/tc/kkultteok/nar_ef25513e79.mp3",
  "까맣고, 조그맣고, 눈이 그렁그렁.": "audio/tc/kkultteok/nar_55512ffd6d.mp3",
- "\"왜 울어?\" 다현이가 물어요.": [
-  "audio/tc/kkultteok/nuna_4bbfa9f80d.mp3",
-  "audio/tc/kkultteok/nar_d93f5abee8.mp3"
- ],
+ "\"왜 울어?\"": "audio/tc/kkultteok/nuna_4bbfa9f80d.mp3",
  "먹구름은 지금 어떤 마음일까요?": "audio/tc/kkultteok/nar_1e401f32b8.mp3",
  "\"나는 하얗지 않아.\" 아기 먹구름이 훌쩍여요.": [
   "audio/tc/kkultteok/dark_a5c7eb2d6e.mp3",
@@ -91,19 +73,13 @@ const NARRATION_CLIPS = {
   "audio/tc/kkultteok/agi_da6e9c5b1f.mp3",
   "audio/tc/kkultteok/nar_4ecb0b156f.mp3"
  ],
- "\"먹구름아, 우리랑 놀래?\" 다현이가 물어요.": [
-  "audio/tc/kkultteok/nuna_64e169498d.mp3",
-  "audio/tc/kkultteok/nar_d93f5abee8.mp3"
- ],
+ "\"먹구름아, 우리랑 놀래?\"": "audio/tc/kkultteok/nuna_64e169498d.mp3",
  "번개를 톡!": "audio/tc/kkultteok/nar_366feacf79.mp3",
  "번쩍! 우르르 쾅!": "audio/tc/kkultteok/nar_ed043daf8f.mp3",
  "먹구름이 깜짝 놀라 번개를 냈어요.": "audio/tc/kkultteok/nar_ce44f89e68.mp3",
  "꿀떡이를 톡! 꼭 안아 줘요.": "audio/tc/kkultteok/nar_3579d395ee.mp3",
  "삼남매는 꿀떡이를 꼭 껴안아요.": "audio/tc/kkultteok/nar_cded1bcef3.mp3",
- "\"괜찮아, 괜찮아.\" 다현이가 속삭여요.": [
-  "audio/tc/kkultteok/nuna_e33718d557.mp3",
-  "audio/tc/kkultteok/nar_c1be54f377.mp3"
- ],
+ "\"괜찮아, 괜찮아.\"": "audio/tc/kkultteok/nuna_e33718d557.mp3",
  "\"괜찮아.\" 은우도 속삭여요.": [
   "audio/tc/kkultteok/agi_460de87a0a.mp3",
   "audio/tc/kkultteok/nar_c510af5ae2.mp3"
@@ -120,10 +96,7 @@ const NARRATION_CLIPS = {
  "하늘에 무지개!": "audio/tc/kkultteok/nar_4bd02ee1ad.mp3",
  "무지개를 톡톡톡톡 눌러서 색깔을 세어 봐요!": "audio/tc/kkultteok/nar_1fab46f448.mp3",
  "빨강, 노랑, 초록, 파랑.": "audio/tc/kkultteok/nar_2fe930023e.mp3",
- "\"무지개는 누가 만들어?\" 다현이가 물어요.": [
-  "audio/tc/kkultteok/nuna_bb382d25ed.mp3",
-  "audio/tc/kkultteok/nar_d93f5abee8.mp3"
- ],
+ "\"무지개는 누가 만들어?\"": "audio/tc/kkultteok/nuna_bb382d25ed.mp3",
  "\"내가!\" 먹구름이 으쓱해요.": [
   "audio/tc/kkultteok/dark_6f1f5582ac.mp3",
   "audio/tc/kkultteok/nar_0b44612411.mp3"
@@ -144,6 +117,13 @@ const NARRATION_CLIPS = {
  "\"잘 자, 먹구름아.\"": "audio/tc/kkultteok/nuna_4ee607abbb.mp3",
  "퐁.": "audio/tc/kkultteok/nar_fd1c1586d2.mp3",
  "눈물이 그렁그렁해요. 슬픈 것 같아요.": "audio/tc/kkultteok/nar_aadea60fb2.mp3",
- "슬퍼요를 톡!": "audio/tc/kkultteok/nar_e6808d2610.mp3"
+ "슬퍼요를 톡!": "audio/tc/kkultteok/nar_e6808d2610.mp3",
+ "빨강!": "audio/tc/kkultteok/nar_29b6384132.mp3",
+ "주황!": "audio/tc/kkultteok/nar_2272c22adb.mp3",
+ "노랑!": "audio/tc/kkultteok/nar_e4f3624d12.mp3",
+ "초록!": "audio/tc/kkultteok/nar_c9bcb7d20d.mp3",
+ "파랑!": "audio/tc/kkultteok/nar_9c75445bf7.mp3",
+ "남색!": "audio/tc/kkultteok/nar_e0aa164214.mp3",
+ "보라!": "audio/tc/kkultteok/nar_df40bb9dc7.mp3"
 };
 const VOICE_LINES = {};
