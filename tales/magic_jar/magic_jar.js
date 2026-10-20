@@ -8,7 +8,7 @@
     fwife_share: 0.6010, gold: 1.2430, hoe: 1., jar: 0.9759, jar_cracked: 1.1566, rice: 1.0036, rich_gold: 0.7145, rich_grab: 0.8183,
     rich_hurry: 0.7843, rich_pinned: 1.0612, rich_shout: 0.7496, table: 1.3065, };
   /* 2026-10-20 새 그림은 그림 크기(세로 픽셀)가 옛 그림과 달라서, 옛 그림과 같은 픽셀 축척이 되도록 높이에 곱하는 비율 */
-  const RS = { coin: 0.958, farmer_amaze: 0.823, farmer_count: 0.736, farmer_feast: 0.856, farmer_hoe: 0.774, farmer_pull: 0.671,
+  const RS = { coin: 0.958, farmer_amaze: 0.823, farmer_count: 0.736, farmer_feast: 0.856, farmer_hoe: 0.774, farmer_pull: 0.800, /* 2026-10-20 크기 일관성: 허리 숙인 당기기 자세가 모자 폭 기준 다른 농부보다 16% 작아서 0.671 → 0.800 */
     father_fightA: 0.969, father_fightB: 0.851, father_peek: 0.939, fwife: 0.859, fwife_share: 0.877, jar: 0.947, rice: 0.803,
     rich_gold: 0.906, rich_grab: 0.873, rich_shout: 0.953, };
   const NF = new Set(['coin', 'gold', 'jar', 'jar_cracked', 'rice']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
@@ -66,7 +66,7 @@
     await Promise.race([Promise.all(loads), sleep(4000)]);
 
     const farmer = mk(T, { hoe: ['farmer_hoe', 250, 'left'], pull: ['farmer_pull', 250, 'left'], amaze: ['farmer_amaze', 250, 'left'],
-      count: ['farmer_count', 250, 'left'], share: ['farmer_share', 250, 'left'], feast: ['farmer_feast', 250, 'left'] });
+      count: ['farmer_count', 250, 'left'], share: ['farmer_share', 200, 'left'], feast: ['farmer_feast', 250, 'left'] }); /* 2026-10-20 크기 일관성: 나눠 주기(share) 자세는 모자 폭이 다른 농부보다 22% 커서 250 → 200 */
     const wife = mk(T, { clap: ['fwife', 250, 'left'], share: ['fwife_share', 250, 'left'] });
     const rich = mk(T, { shout: ['rich_shout', 260, 'left'], grab: ['rich_grab', 260, 'left'], gold: ['rich_gold', 260, 'left'],
       pinned: ['rich_pinned', 190, 'left'], hurry: ['rich_hurry', 240, 'left'] });
