@@ -11,8 +11,8 @@
     wardrobe: 0.7023, wolf_flee: 1.4077, wolf_granny: 1.0447, wolf_hiccup: 0.8826, wolf_jump: 1.1224, wolf_peek: 0.8881,
     wolf_run: 1.5403, wolf_sleep: 1.0934, wolf_whisper: 1.2990, };
   /* 2026-10-20 새 그림은 그림 크기(세로 픽셀)가 옛 그림과 달라서, 옛 그림과 같은 픽셀 축척이 되도록 높이에 곱하는 비율 */
-  const RS = { basket: 0.901, flower_blue: 0.941, flower_red: 0.820, granny_home: 0.804, granny_pop: 0.781, granny_tea: 0.910, hood_hide: 0.735,
-    hood_joy: 0.946, hood_knock: 0.781, hood_pick: 0.771, hood_surprise: 0.890, hood_walk: 0.887, hood_walk2: 0.800, hood_wonder: 0.950,
+  const RS = { basket: 0.901, flower_blue: 0.941, flower_red: 0.820, granny_home: 0.804, granny_pop: 0.910, /* 2026-10-20 크기 일관성: 할머니 튀어나옴(pop)이 차 마실 때(tea)보다 15% 작아서 tea 와 같은 0.910 으로 */ granny_tea: 0.910, hood_hide: 0.735,
+    hood_joy: 0.946, hood_knock: 0.781, hood_pick: 0.771, hood_surprise: 0.890, hood_walk: 0.887, hood_walk2: 0.887, /* 2026-10-20 크기 일관성: walk2 는 walk 와 같은 몸 높이로 (0.800 → 0.887, 옛 0.800 은 화면에서 10% 작았다) */ hood_wonder: 0.950,
     hunter_tickle: 0.892, hunter_walk: 0.931, mama: 0.933, milk: 0.863, vase_blue: 0.904, vase_red: 0.944, vase_yellow: 0.964,
     wardrobe: 0.734, wolf_granny: 0.652, wolf_hiccup: 0.550, wolf_jump: 0.494, wolf_peek: 0.596, };
   const BGS = ['bed', 'cottage', 'door', 'flowers', 'kitchen', 'room', 'shortcut', 'table', 'trail', 'tree'];
@@ -100,6 +100,12 @@
       const hitR = () => wrong >= 2 ? 84 : 64;
       rearm();
       const promptT = setTimeout(() => !done && say2(prompt), 12000);
+      T.autoDo(1800, () => { // 자동 재생: 첫 번째 다른 곳을 대신 누른다
+        if (done) return;
+        const [x, y] = fx[0].sp.at, m = hit.ownerSVGElement.createSVGPoint(); m.x = x; m.y = y;
+        const q = m.matrixTransform(T.world.getScreenCTM());
+        hit.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, clientX: q.x, clientY: q.y, pointerId: 1, isPrimary: true }));
+      });
       const spotsAt = (x, y) => {
         let best = null, bd = 1e9;
         fx.forEach(f => { const d = Math.hypot(x - f.sp.at[0], y - f.sp.at[1]); if (d < bd) { bd = d; best = f; } });
