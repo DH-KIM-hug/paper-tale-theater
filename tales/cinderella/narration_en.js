@@ -2,6 +2,23 @@
 const NARRATION_CLIPS_EN = {};
 const VOICE_LINES_EN = {};
 const TEXT_EN = {
+ "궁전 계단": "The Palace Stairs",
+ "끙!": "Ugh!",
+ "끙끙!": "Ugh ugh!",
+ "둘째 밤": "The Second Night",
+ "땡!": "Dong!",
+ "무도회 편지": "The Ball Letter",
+ "생쥐 여섯 마리": "Six Little Mice",
+ "쏙!": "Slip!",
+ "앗!": "Oh no!",
+ "여섯!": "Six!",
+ "유리 구두": "The Glass Slipper",
+ "은빛 드레스": "The Silver Gown",
+ "첫째 밤": "The First Night",
+ "커다란 호박": "The Big Pumpkin",
+ "퐁!": "Pop!",
+ "함께 웃어요": "Laughing Together",
+ "혼자 남은 밤": "A Night Alone",
  "쓱쓱!": "Swish swish!",
  "싹싹!": "Sweep sweep!",
  "깨끗!": "Clean!",
