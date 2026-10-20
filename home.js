@@ -635,7 +635,7 @@
   }
   function bought(ok, failKo, failEn) {
     busyBuy = false;
-    if (ok) { closeStore(); render({ anim: false }); say(L('모든 동화가 열렸어요!', 'All tales are unlocked!')); return; }
+    if (ok) { closeStore(); render({ anim: false }); say('모든 동화가 열렸어요!'); return; }
     buyMsg.textContent = L(failKo, failEn);
     buyMsg.hidden = false;
   }
