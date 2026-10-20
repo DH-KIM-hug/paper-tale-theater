@@ -770,3 +770,8 @@ body.app .card.sel { outline: 3px solid var(--copper); outline-offset: -2px; }
 .timerOpts button { min-height: 44px; min-width: 64px; padding: 0 14px; border: 1.5px solid var(--text-3, #7C86A0); border-radius: 22px; background: transparent; color: inherit; font: inherit; font-weight: 600; }
 .timerOpts button.on { background: var(--copper, #C98A5B); border-color: var(--copper, #C98A5B); color: #fff; }
 .timerRow .timerNote { margin: 8px 0 0; font-size: 13px; font-weight: 400; color: var(--text-3, #7C86A0); }
+
+/* 영어 로고(Tok Tok Tale Theater)는 한글보다 길어서 폰 한 줄에서 EN 버튼과 겹친다 → 좁은 화면에서는 글자를 줄여 로고 칸 안에 넣는다 */
+@media (max-width: 520px) {
+  html[lang="en"] body.app .logo { font-size: min(var(--logo), 4.6vw); flex: 1 1 0; min-width: 0; overflow: hidden; }
+}
