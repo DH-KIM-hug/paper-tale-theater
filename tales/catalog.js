@@ -4,7 +4,10 @@
    동화 한 편:
      id      폴더 이름과 같다 (tales/<folder>/index.html)
      title   동화 제목 (탭하면 읽어 준다)
-     origin  이야기 종류 태그 하나: aesop | korean | world
+     origin  이야기 종류 태그 하나: aesop | korean | world | original(창작 동화)
+     also    (선택) 덧붙는 이야기 태그들. 예: ['princess'] = 공주 동화. origin 은 그대로 두고
+             필터에서만 함께 잡힌다. 앞으로 공주 동화(라푼젤, 인어공주, 잠자는 숲속의 공주,
+             미녀와 야수, 완두콩 공주, 개구리 왕자)는 origin 은 원작 갈래로, also: ['princess'] 를 붙인다.
      skills  배우는 것 태그 1~3개 (TAGS.skill 의 key)
      line    보호자용 한 줄 소개 (아이는 못 읽어도 된다)
      ready   true  = 공개된 동화. 바로 열린다.
@@ -17,9 +20,11 @@
 
 const TAGS = {
   origin: [
-    { key: 'aesop',  label: '이솝 우화',   say: '이솝 우화',       color: '#3F6B4F' },
-    { key: 'korean', label: '한국 전래',   say: '한국 전래동화',   color: '#A93B32' },
-    { key: 'world',  label: '외국 전래',   say: '외국 전래동화',   color: '#1F2A56' },
+    { key: 'aesop',  label: '이솝 우화',   say: '이솝 우화',       color: '#3F6B4F', en: 'Aesop' },
+    { key: 'korean', label: '한국 전래',   say: '한국 전래동화',   color: '#A93B32', en: 'Korean' },
+    { key: 'world',  label: '외국 전래',   say: '외국 전래동화',   color: '#1F2A56', en: 'World' },
+    { key: 'original', label: '창작 동화', say: '창작 동화',       color: '#E8703A', en: 'Original' },
+    { key: 'princess', label: '공주 동화', say: '공주 동화',       color: '#8B2F5A', en: 'Princess' },
   ],
   skill: [
     { key: 'count',  label: '수 세기',     say: '수 세기' },
@@ -209,7 +214,7 @@ const TALES = (() => {
       ${[[106, 58], [116, 55], [126, 58], [136, 56], [112, 50], [126, 49]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4.5" fill="${c.rd}"/>`).join('')}
       <ellipse cx="80" cy="96" rx="13" ry="8" fill="${c.pn}"/><circle cx="74" cy="88" r="4" fill="${c.pn}"/><circle cx="86" cy="88" r="4" fill="${c.pn}"/>${eye(74, 88, 1.4)}${eye(86, 88, 1.4)}</g>` },
 
-  { id: 'kkultteok', title: '구름 공장', origin: 'korean', skills: ['count', 'heart', 'shape'], ready: false, making: true,
+  { id: 'kkultteok', title: '구름 공장', origin: 'original', skills: ['count', 'heart', 'shape'], ready: false, making: true,
     line: '구름 공장에서 구름을 만들고, 숨어 있던 아기 먹구름을 달래 무지개를 띄워요.',
     en: { title: 'The Cloud Factory', line: 'Make clouds at the cloud factory, cheer up a shy little rain cloud, and bring out a rainbow.' },
     art: `<rect width="160" height="110" fill="#BFE0EE"/>
@@ -229,7 +234,7 @@ const TALES = (() => {
       <rect x="70" y="66" width="20" height="26" rx="10" fill="${c.ps}"/><rect x="50" y="60" width="12" height="12" fill="${c.am}"/><rect x="98" y="60" width="12" height="12" fill="${c.am}"/>
       ${[[20, 100], [30, 96], [40, 101], [128, 98], [140, 102]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.5" fill="${c.am}"/>`).join('')}</g>` },
 
-  { id: 'cinderella', title: '신데렐라', origin: 'world', skills: ['shape', 'size', 'heart'], ready: false, making: true,
+  { id: 'cinderella', title: '신데렐라', origin: 'world', also: ['princess'], skills: ['shape', 'size', 'heart'], ready: false, making: true,
     line: '호박은 마차, 생쥐는 말. 짝을 맞추고 꼭 맞는 구두를 찾아요.',
     en: { title: 'Cinderella', line: 'A pumpkin becomes a coach, mice become horses. Count the clock strikes and find the slipper that fits.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/>
@@ -281,7 +286,7 @@ const TALES = (() => {
       <circle cx="18" cy="84" r="6" fill="${c.am}"/><circle cx="32" cy="84" r="6" fill="${c.am}"/><circle cx="128" cy="84" r="6" fill="${c.am}"/><circle cx="142" cy="84" r="6" fill="${c.am}"/>
       <circle cx="25" cy="74" r="6" fill="${c.am}"/><circle cx="135" cy="74" r="6" fill="${c.am}"/></g>` },
 
-  { id: 'snow_white', title: '백설공주', origin: 'world', skills: ['count', 'heart'], ready: false, making: true,
+  { id: 'snow_white', title: '백설공주', origin: 'world', also: ['princess'], skills: ['count', 'heart'], ready: false, making: true,
     line: '난쟁이 집 침대를 하나부터 여덟까지 세고, 낯선 사람이 주는 건 어른에게 먼저 물어봐요.',
     en: { title: 'Snow White', line: 'Count the beds in the dwarfs\' house from one to eight, and ask a grown-up before taking things from strangers.' },
     art: `<rect width="160" height="110" fill="${c.lf}"/>

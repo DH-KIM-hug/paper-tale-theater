@@ -447,7 +447,7 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
 }
 .tags { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: auto; padding-top: 6px; }
 .tags .ic { width: 18px; height: 18px; display: block; filter: var(--f-tag); opacity: .85; }
-.tags .org { padding-right: 7px; margin-right: 1px; border-right: 1px solid var(--line-soft); }
+.tags .org { display: flex; align-items: center; gap: 3px; padding-right: 7px; margin-right: 1px; border-right: 1px solid var(--line-soft); }
 .card.closed { cursor: default; }
 .card.closed .title { color: var(--text-2); }
 .card.closed .thumb.full .art { filter: saturate(.55) brightness(1.04); opacity: .85; } /* 준비 중인 동화도 그림은 보이고, 살짝 옅게 */

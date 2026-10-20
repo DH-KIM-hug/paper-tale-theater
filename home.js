@@ -108,7 +108,7 @@
     const box = document.querySelector(`.tagrow[data-row="${row}"] .chips`);
     const chip = (key, label, ic) =>
       `<button type="button" class="chip${key ? '' : ' all'}" data-row="${row}" data-key="${key}" aria-label="${label}">${icon(ic)}<span class="lb" aria-hidden="true">${letters(label)}</span></button>`;
-    box.innerHTML = chip('', '전체', 'all') + TAGS[row].map(t => chip(t.key, t.label, t.key)).join('');
+    box.innerHTML = chip('', '전체', 'all') + TAGS[row].map(t => chip(t.key, (lang === 'en' && t.en) || t.label, t.key)).join('');
     box.addEventListener('click', e => {
       const b = e.target.closest('.chip');
       if (!b) return;
@@ -168,7 +168,7 @@
   const SKILL = Object.fromEntries(TAGS.skill.map(t => [t.key, t]));
 
   const match = t =>
-    (sel.origin.size === 0 || sel.origin.has(t.origin)) &&
+    (sel.origin.size === 0 || sel.origin.has(t.origin) || (t.also || []).some(k => sel.origin.has(k))) &&
     (sel.skill.size === 0 || t.skills.some(k => sel.skill.has(k)));
 
   /* 새 썸네일 = 종이에 모양 구멍이 이미 뚫린 그림: 네모 그대로, 가장자리만 종이 색에 녹인다.
@@ -213,7 +213,7 @@
       <span class="label">
         <strong class="title">${t.title}</strong>
         <span class="line">${t.line}</span>
-        <span class="tags"><span class="org" title="${o.label}">${icon(t.origin)}</span>${skills}</span>
+        <span class="tags"><span class="org" title="${o.label}">${icon(t.origin)}${(t.also || []).map(k => icon(k)).join('')}</span>${skills}</span>
       </span>`;
     const attrs = `data-id="${t.id}" data-origin="${t.origin}"`;
     if (st === 'locked') {
