@@ -46,17 +46,18 @@
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
   const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
-  /* 자세 그림: [폭, 높이, 발끝 가운데 x(폭 비율), 발끝 y(높이 비율)] — 발끝 가운데가 (0,0). 백조는 몸 아래 가운데 */
+  /* 2026-10-20 새 그림 크기·발끝으로 다시 맞춤(그림 속 배율은 옛 그림과 같게)
+     자세 그림: [폭, 높이, 발끝 가운데 x(폭 비율), 발끝 y(높이 비율)] — 발끝 가운데가 (0,0). 백조는 몸 아래 가운데 */
   const SPR = {
-    egg: [68.6, 95.6, .504, .978], baby: [94.6, 107.9, .483, .981], baby_sad: [89.3, 108.2, .542, .981], baby_scared: [90.5, 111.1, .422, .981], baby_happy: [94.5, 115.2, .47, .978],
-    young: [98, 146.8, .434, .983], young_sad: [87.6, 146.8, .421, .983], young_wings: [139.8, 145.5, .477, .983], young_happy: [99, 149.1, .44, .983], swan: [167, 192.9, .489, .981],
-    duckling: [65.6, 72.4, .51, .983], mom: [66.1, 70.4, .498, .994], hen: [85.5, 95.1, .463, .983], rooster: [91.9, 100.4, .345, .996], goose: [92.9, 103.2, .464, .983],
-    cat: [92.3, 80.3, .49, .997], grandma: [89.2, 170.3, .442, .983], farmer: [138, 216.4, .567, .984], reed: [93.2, 473.3, .393, .984], reed_clump: [207, 237, .488, .984],
+    egg: [68.6, 90.9, 0.502, 0.995], baby: [88.4, 107.9, 0.497, 0.995], baby_sad: [89.3, 105.9, 0.499, 0.995], baby_scared: [90.5, 96.9, 0.516, 0.995], baby_happy: [93.8, 115.2, 0.492, 0.995],
+    young: [98.0, 137.5, 0.436, 0.995], young_sad: [87.6, 125.9, 0.453, 0.996], young_wings: [137.1, 145.5, 0.479, 0.995], young_happy: [99.0, 133.0, 0.424, 0.996], swan: [163.1, 192.9, 0.427, 0.995],
+    duckling: [65.3, 72.4, 0.595, 0.995], mom: [60.7, 70.5, 0.508, 0.997], hen: [85.5, 87.0, 0.457, 0.997], rooster: [91.9, 98.1, 0.387, 0.996], goose: [92.9, 99.4, 0.438, 0.995],
+    cat: [76.8, 80.3, 0.512, 0.997], grandma: [89.2, 160.0, 0.434, 0.997], farmer: [138.0, 193.1, 0.643, 0.996], reed: [93.2, 307.0, 0.171, 0.995], reed_clump: [187.4, 237.0, 0.537, 0.995],
     /* 나는 자세: 서 있는 그림과 같은 픽셀 배율, 기준점은 몸 아래 가운데 */
-    young_fly3: [148.7, 106.7, .5, .974], goose_fly3: [117.5, 64.1, .5, .971],
+    young_fly3: [111.3, 106.6, 0.500, 0.990], goose_fly3: [81.7, 64.1, 0.500, 0.990],
   };
   /* 소품 그림 폭/높이 비율 (카드 안에 높이 기준으로 넣을 때) */
-  const PROP_AR = { eggshell: 1.203, basket: 2.022, egg_nest: .831, icon_swim: 1.363, icon_summer: .988, icon_autumn: .927, icon_winter: .887, icon_spring: .675 };
+  const PROP_AR = { eggshell: 1.352, basket: 1.513, egg_nest: 1.015, icon_swim: 1.097, icon_summer: 1, icon_autumn: .9, icon_winter: .92, icon_spring: .73 }; // 2026-10-20 새 그림 비율
   function pic(T, g, key, x, y, w, h, { shadow = true } = {}) {
     const u = artUrl(key); if (!u) return null;
     const wrap = T.el('g', shadow ? { filter: 'url(#pp)' } : {}, g);
@@ -137,7 +138,7 @@
   }
 
   /* ================= 주인공 (알 → 아기 → 어린 새 → 백조). 왼쪽을 본다, 발끝 = 0,0 ================= */
-  const HERO_H = { egg: 92, baby: 104, young: 142, swan: 186 };
+  const HERO_H = { egg: 92, baby: 104, young: 133, swan: 186 };
   /* 그림 주인공: 기분마다 자세 그림 한 장. 날개 조각(wing·wingBack)은 빈 묶음으로 두어 코드의 날개 움직임이 그대로 돌아도 아무 일이 없다.
      'wings' = 봄에 날개를 활짝 편 어린 새, 'fly' = 날아오른 어린 새(그레이박스에서는 둘 다 기쁜 얼굴) */
   const HERO_ART = {
@@ -147,7 +148,7 @@
     swan: () => 'swan',
   };
   const HERO_PT = { egg: { shoulder: [0, -46], head: [0, -46] }, baby: { shoulder: [2, -38], head: [-12, -74] },
-    young: { shoulder: [-4, -52], head: [-22, -126] }, swan: { shoulder: [-10, -52], head: [-38, -164] } };
+    young: { shoulder: [-4, -49], head: [-22, -118] }, swan: { shoulder: [-10, -52], head: [-38, -164] } };
   const heroArtKey = (form, mood) => { const k = HERO_ART[form](mood); return artUrl(k) ? k : null; };
   function heroArt(T, g, form, mood) {
     const k = heroArtKey(form, mood);
