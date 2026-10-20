@@ -8,7 +8,8 @@
      also    (선택) 덧붙는 이야기 태그들. 예: ['princess'] = 공주 동화. origin 은 그대로 두고
              필터에서만 함께 잡힌다. 앞으로 공주 동화(라푼젤, 인어공주, 잠자는 숲속의 공주,
              미녀와 야수, 완두콩 공주, 개구리 왕자)는 origin 은 원작 갈래로, also: ['princess'] 를 붙인다.
-     skills  배우는 것 태그 1~3개 (TAGS.skill 의 key)
+     skills  배우는 것 태그 1~3개 (TAGS.skill 의 key): count | size | order | sort | spot | sound | shape | season | heart | position(위치말: 위·아래·옆).
+             hideUnused: true 인 태그(position)는 그 태그를 가진 동화가 하나도 없으면 칩을 숨긴다.
      line    보호자용 한 줄 소개 (아이는 못 읽어도 된다)
      ready   true  = 공개된 동화. 바로 열린다.
              false = 아직 없음. 커튼 닫힌 카드("곧 열려요").
@@ -36,6 +37,7 @@ const TAGS = {
     { key: 'shape',  label: '모양 맞추기', say: '모양 맞추기' },
     { key: 'season', label: '날씨·계절',   say: '날씨와 계절' },
     { key: 'heart',  label: '마음·배려',   say: '마음과 배려' },
+    { key: 'position', label: '위치말',    say: '위치말', en: 'Position words', hideUnused: true },
   ],
 };
 

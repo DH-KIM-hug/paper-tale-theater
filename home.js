@@ -56,6 +56,8 @@
   function save() {
     try { localStorage.setItem(STORE, JSON.stringify({ origin: [...sel.origin], skill: [...sel.skill], speak, tagsOff })); } catch (e) { /* 무시 */ }
   }
+  /* 아직 쓰는 동화가 없는 태그(hideUnused)는 칩을 숨기고, 저장된 선택도 무시한다 */
+  TAGS.skill = TAGS.skill.filter(t => !t.hideUnused || TALES.some(x => x.skills.includes(t.key)));
   const saved = load();
   const valid = (row, list) => (Array.isArray(list) ? list : []).filter(k => TAGS[row].some(t => t.key === k));
   const sel = { origin: new Set(valid('origin', saved.origin)), skill: new Set(valid('skill', saved.skill)) };
