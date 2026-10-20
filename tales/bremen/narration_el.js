@@ -60,7 +60,7 @@ Object.assign(NARRATION_CLIPS, {
  "닭: \"우리 음악을 크게 들려주자!\"": "audio/el/bremen/rooster_1327f3113b.mp3",
  "도둑을 놀라게 할 노래예요. 먼저 들어 봐요!": "audio/el/bremen/nar_d6621018fc.mp3",
  "이번에는 노래하는 친구를 톡톡 눌러요!": "audio/el/bremen/nar_b64e450ff1.mp3",
- "다 같이 목청껏! 톡톡톡 눌러서 노래해요!": "audio/el/bremen/nar_a8d2b577e4.mp3",
+ "다 같이 목청껏!": "audio/el/bremen/nar_5d71fa109c.mp3",
  "탑을 톡톡톡! 더 크게 노래해요!": "audio/el/bremen/nar_4b9120ea91.mp3",
  "도둑들은 \"괴물이다!\" 하고 숲으로 후다닥 달아났어요.": [
   "audio/el/bremen/nar_3de586f893.mp3",

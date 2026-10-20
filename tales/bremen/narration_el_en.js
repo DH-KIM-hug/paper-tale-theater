@@ -231,9 +231,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "This time, tap the friend who is singing!",
   "c": "audio/el/bremen/en/nar_c5ec03753c.mp3"
  },
- "다 같이 목청껏! 톡톡톡 눌러서 노래해요!": {
-  "t": "All together, as loud as you can! Tap, tap, tap to sing!",
-  "c": "audio/el/bremen/en/nar_47969fa220.mp3"
+ "다 같이 목청껏!": {
+  "t": "All together, as loud as you can!",
+  "c": "audio/el/bremen/en/nar_122154cc9e.mp3"
  },
  "탑을 톡톡톡! 더 크게 노래해요!": {
   "t": "Tap, tap, tap the tower! Sing even louder!",
