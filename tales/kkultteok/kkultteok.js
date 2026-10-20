@@ -586,8 +586,9 @@
       await T.sceneCard('', () => {
         scene('14_soil', 500);
         put(T, baby, X(780, 620), 120, { look: 'sorry', to: 'left' });
-        put(T, dog, X(860, 640), G + 20, { look: 'sniff', to: 'left', s: .9 });
-        put(T, nuna, X(110, 300), G + 20, { look: 'crouch', to: 'right', s: .9 }); put(T, agi, X(170, 330), G + 30, { look: 'crouch', to: 'right', s: .8 }); put(T, oppa, X(920, 700), G + 20, { look: 'crouch', to: 'left', s: .9 });
+        // 2026-10-20 크기 일관성: 앞쪽(기준선이 더 아래)인데 0.8~0.9로 줄여져 있던 것을 1로 (다른 장면과 같은 크기)
+        put(T, dog, X(860, 640), G + 20, { look: 'sniff', to: 'left' });
+        put(T, nuna, X(110, 300), G + 20, { look: 'crouch', to: 'right' }); put(T, agi, X(170, 330), G + 30, { look: 'crouch', to: 'right' }); put(T, oppa, X(920, 700), G + 20, { look: 'crouch', to: 'left' });
         startRain(0, 1000, -20, 6);
       });
       const grow = [[['prop_sprout', 90]], [['prop_bud', 120], ['prop_flower', 130]], [['prop_berry_green', 110], ['prop_berry_red', 120]]];
