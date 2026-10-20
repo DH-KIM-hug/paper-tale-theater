@@ -1,0 +1,9 @@
+scholar_bow_ready: 0.8533
+scholar_bow_release: 0.8033
+scholar_sit_worry: 0.7117
+lady_greet: 0.725
+lady_stern: 0.7267
+lady_tail: 0.7883
+prop_arrow: 4.8649
+prop_nest_rim: 2.0045
+prop_bell: 0.615

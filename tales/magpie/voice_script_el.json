@@ -1,9 +1,9 @@
 {
+ "notes": "ElevenLabs 목소리 배정(2026-10-20 재기획): nar=Huelyn(여자 내레이터 돌려 쓰기, 느리고 숨 쉬는 낭독), sch=Eric(젊은 남성), snake=Matilda(구렁이 아내 — 반드시 여자 목소리. 낮고 느리고 부드럽고 신비롭게, 무섭게 소리치지 않음. stability 0.6으로 음색을 고정, 해설 Huelyn과 뚜렷이 다르게 들려야 하며 너무 닮게 들리면 Haemi(ZjAPD4f11zlnEnZpKDgo)로 바꾼다), mom=Bella(엄마 원형), dad=Namchun(아버지 원형), chick=Peanut(아기 까치 합창, 짧은 대사만, 아기 말투 태그). 까치 친구들·종·화살은 목소리 없음. 모델 eleven_v4, 배역별 settings. 느린 진행이 목표이므로 해설 지시에 slow/unhurried/pause를 넣었다. 수 세기(n1~n5)는 또렷하고 천천히.",
  "voices": {
   "nar": "gnWujHp24oqX3I03lRbU",
   "sch": "cjVigY5qzO86Huf0OWal",
-  "snake": "nPczCjzI2devNBz1zQrb",
-  "lady": "pFZP5JQG7iQjIQuC4Bku",
+  "snake": "XrExE9yKIg1WjnnlVkGX",
   "mom": "hpp4J3VqNfWAUOO0d1Us",
   "dad": "5ON5Fnz24cnOozEQfGAm",
   "chick": "rBkiq5ZQ43ogwd6i4uIQ"
@@ -12,35 +12,30 @@
   "nar": "eleven_v4",
   "sch": "eleven_v4",
   "snake": "eleven_v4",
-  "lady": "eleven_v4",
   "mom": "eleven_v4",
   "dad": "eleven_v4",
   "chick": "eleven_v4"
  },
  "settings": {
   "nar": {
-   "stability": 0.45,
+   "stability": 0.5,
    "style": 0.35
   },
   "sch": {
-   "stability": 0.35,
+   "stability": 0.4,
    "style": 0.45
   },
   "snake": {
-   "stability": 0.3,
-   "style": 0.5
-  },
-  "lady": {
-   "stability": 0.3,
-   "style": 0.5
+   "stability": 0.6,
+   "style": 0.3
   },
   "mom": {
-   "stability": 0.3,
+   "stability": 0.35,
    "style": 0.5
   },
   "dad": {
-   "stability": 0.3,
-   "style": 0.5
+   "stability": 0.4,
+   "style": 0.45
   },
   "chick": {
    "stability": 0.35,
@@ -51,497 +46,819 @@
   "nar",
   "sch",
   "snake",
-  "lady",
   "mom",
   "dad",
   "chick"
  ],
- "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, sch=Eric, snake=Brian, lady=Lily, mom=Bella, dad=Namchun, chick=Peanut. 아기·꼬마 역(chick)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여.",
  "lines": [
   {
-   "text": "옛날 옛날에 마음씨 고운 선비가 길을 걸어가고 있었어요.",
+   "text": "옛날 옛날, 마음씨 고운 선비가 과거를 보러 먼 길을 떠났어요.",
    "segs": [
     [
      "nar",
-     "옛날 옛날에 마음씨 고운 선비가 길을 걸어가고 있었어요.",
+     "옛날 옛날, 마음씨 고운 선비가 과거를 보러 먼 길을 떠났어요.",
      null,
-     "[gentle, warm, storytelling]"
+     "[calm, warm storytelling, slow, unhurried]"
     ]
    ]
   },
   {
-   "text": "선비를 톡톡톡 눌러서 걸어가 봐요!",
+   "text": "저벅저벅. 산 넘고 물 건너, 선비는 깊은 산속으로 들어갔어요.",
    "segs": [
     [
      "nar",
-     "선비를 톡톡톡 눌러서 걸어가 봐요!",
+     "저벅저벅. 산 넘고 물 건너, 선비는 깊은 산속으로 들어갔어요.",
      null,
-     "[cheerful, inviting, encouraging]"
+     "[gentle, slow, rhythmic like footsteps]"
     ]
    ]
   },
   {
-   "text": "선비를 톡톡톡! 걸어가요.",
+   "text": "까악, 까악! 도와주세요!",
    "segs": [
-    [
-     "nar",
-     "선비를 톡톡톡! 걸어가요.",
-     null,
-     "[cheerful, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "선비는 큰 소나무 아래에 닿았어요.",
-   "segs": [
-    [
-     "nar",
-     "선비는 큰 소나무 아래에 닿았어요.",
-     null,
-     "[calm, peaceful]"
-    ]
-   ]
-  },
-  {
-   "text": "나무 위에서 까치 엄마가 울었어요. \"까악 까악! 도와주세요!\"",
-   "segs": [
-    [
-     "nar",
-     "나무 위에서 까치 엄마가 울었어요.",
-     null,
-     "[gentle, concerned]"
-    ],
     [
      "mom",
-     "까악 까악! 도와주세요!",
-     null,
-     "[worried, high-pitched cry, pleading]"
+     "까악, 까악! 도와주세요!",
+     "sad",
+     "[frightened, high, pleading, bird-like]"
     ]
    ]
   },
   {
-   "text": "구렁이가 아기 까치 둥지로 스르르 올라가고 있어요!",
+   "text": "큰 소나무 위 둥지에 아기 까치들이 있어요. 그런데 구렁이가 스르르 올라가고 있어요!",
    "segs": [
     [
      "nar",
-     "구렁이가 아기 까치 둥지로 스르르 올라가고 있어요!",
+     "큰 소나무 위 둥지에 아기 까치들이 있어요. 그런데 구렁이가 스르르 올라가고 있어요!",
      null,
-     "[hushed, suspenseful but gentle]"
+     "[hushed, gently suspenseful, not scary, slow]"
     ]
    ]
   },
   {
-   "text": "선비가 말했어요. \"아기 까치를 지켜 줄게!\"",
+   "text": "안 돼! 내가 아기 까치들을 지켜 줄게.",
    "segs": [
-    [
-     "nar",
-     "선비가 말했어요.",
-     null,
-     "[calm, brave]"
-    ],
     [
      "sch",
-     "아기 까치를 지켜 줄게!",
+     "안 돼! 내가 아기 까치들을 지켜 줄게.",
      null,
-     "[firm, kind, brave]"
+     "[brave, kind, determined]"
     ]
    ]
   },
   {
-   "text": "선비를 톡! 하늘에 활을 쏘아요.",
+   "text": "선비가 활을 꺼냈어요. 선비를 톡 눌러 봐요.",
    "segs": [
     [
      "nar",
-     "선비를 톡! 하늘에 활을 쏘아요.",
+     "선비가 활을 꺼냈어요. 선비를 톡 눌러 봐요.",
      null,
-     "[determined, inviting]"
+     "[calm, inviting, clear]"
     ]
    ]
   },
   {
-   "text": "쉬익! 활 소리에 깜짝 놀란 구렁이는 숲으로 도망갔어요.",
+   "text": "쉬익, 탁! 화살이 구렁이 바로 옆 나무에 꽂혔어요.",
    "segs": [
     [
      "nar",
-     "쉬익! 활 소리에 깜짝 놀란 구렁이는 숲으로 도망갔어요.",
-     null,
-     "=[swish, sharp] 쉬익! [playful, lightly amused] 활 소리에 깜짝 놀란 구렁이는 숲으로 도망갔어요."
+     "쉬익, 탁! 화살이 구렁이 바로 옆 나무에 꽂혔어요.",
+     "toneup",
+     "=[swift, sharp] 쉬익, 탁! [lightly surprised, storytelling] 화살이 구렁이 바로 옆 나무에 꽂혔어요."
     ]
    ]
   },
   {
-   "text": "아기 까치들이 짹짹 울었어요. 아기 까치를 하나씩 세어 봐요!",
+   "text": "깜짝 놀란 구렁이는 스르르 숲으로 달아났어요.",
    "segs": [
     [
      "nar",
-     "아기 까치들이 짹짹 울었어요. 아기 까치를 하나씩 세어 봐요!",
+     "깜짝 놀란 구렁이는 스르르 숲으로 달아났어요.",
      null,
-     "[cheerful, lively, counting-along]"
+     "[relieved, gentle, slow]"
     ]
    ]
   },
   {
-   "text": "아기 까치를 톡톡톡톡! 하나씩 세어요.",
+   "text": "고맙습니다, 선비님! 이 은혜는 꼭 갚을게요.",
    "segs": [
     [
-     "nar",
-     "아기 까치를 톡톡톡톡! 하나씩 세어요.",
-     null,
-     "[cheerful, counting]"
-    ]
-   ]
-  },
-  {
-   "text": "아기 까치는 모두 네 마리예요. \"선비님, 고맙습니다!\"",
-   "segs": [
-    [
-     "nar",
-     "아기 까치는 모두 네 마리예요.",
-     null,
-     "[bright, counting]"
+     "mom",
+     "고맙습니다, 선비님!",
+     "happy",
+     "[grateful, bright, bird-like, relieved]"
     ],
+    [
+     "dad",
+     "이 은혜는 꼭 갚을게요.",
+     null,
+     "[earnest, warm, solemn promise]"
+    ]
+   ]
+  },
+  {
+   "text": "둥지 안에서 아기 까치들이 고개를 쏙 내밀었어요.",
+   "segs": [
+    [
+     "nar",
+     "둥지 안에서 아기 까치들이 고개를 쏙 내밀었어요.",
+     "happy",
+     "[bright, tender, playful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 까치가 몇 마리일까요? 맞는 숫자를 골라요.",
+   "segs": [
+    [
+     "nar",
+     "아기 까치가 몇 마리일까요? 맞는 숫자를 골라요.",
+     null,
+     "[clear, inviting, slow, teacher-like]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 1이에요. 다시 세어 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 1이에요. 다시 세어 볼까요?",
+     null,
+     "[kind, patient, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 2예요. 다시 세어 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 2예요. 다시 세어 볼까요?",
+     null,
+     "[kind, patient, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 3이에요. 다시 세어 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 3이에요. 다시 세어 볼까요?",
+     null,
+     "[kind, patient, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 4예요. 다시 세어 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 4예요. 다시 세어 볼까요?",
+     null,
+     "[kind, patient, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 5예요. 다시 세어 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 5예요. 다시 세어 볼까요?",
+     null,
+     "[kind, patient, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 한 마리예요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 한 마리예요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 두 마리예요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 두 마리예요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 세 마리예요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 세 마리예요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 네 마리예요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 네 마리예요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 다섯 마리예요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 다섯 마리예요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "짹짹! 선비님, 고맙습니다!",
+   "segs": [
     [
      "chick",
-     "선비님, 고맙습니다!",
-     null,
-     "[cheerful, grateful, childlike, baby voice, lisping, very young child, giggly]"
+     "짹짹! 선비님, 고맙습니다!",
+     "happy",
+     "[baby voice, lisping, very young child, giggly] [chirpy, grateful]"
     ]
    ]
   },
   {
-   "text": "까치 아빠가 말했어요. \"은혜는 꼭 갚을게요!\"",
+   "text": "선비는 빙긋 웃으며 다시 길을 떠났어요.",
    "segs": [
     [
      "nar",
-     "까치 아빠가 말했어요.",
+     "선비는 빙긋 웃으며 다시 길을 떠났어요.",
      null,
-     "[gentle, warm]"
-    ],
-    [
-     "dad",
-     "은혜는 꼭 갚을게요!",
-     null,
-     "[warm, sincere, grateful]"
+     "[warm, calm, slow]"
     ]
    ]
   },
   {
-   "text": "선비는 컴컴한 산길을 걸었어요. 멀리 불빛이 반짝!",
+   "text": "어느새 해가 지고, 산길은 캄캄해졌어요.",
    "segs": [
     [
      "nar",
-     "선비는 컴컴한 산길을 걸었어요. 멀리 불빛이 반짝!",
+     "어느새 해가 지고, 산길은 캄캄해졌어요.",
      null,
-     "[quiet, hushed, curious]"
+     "[quiet, slow, a little mysterious]"
     ]
    ]
   },
   {
-   "text": "선비를 톡! 불빛을 따라가요.",
+   "text": "오늘 밤은 어디서 자지? …어, 저기 불빛이!",
    "segs": [
-    [
-     "nar",
-     "선비를 톡! 불빛을 따라가요.",
-     null,
-     "[soft, inviting]"
-    ]
-   ]
-  },
-  {
-   "text": "외딴집에서 아주머니가 나왔어요. \"어서 오세요. 하룻밤 쉬어 가세요.\"",
-   "segs": [
-    [
-     "nar",
-     "외딴집에서 아주머니가 나왔어요.",
-     null,
-     "[calm, hushed]"
-    ],
-    [
-     "lady",
-     "어서 오세요. 하룻밤 쉬어 가세요.",
-     null,
-     "[soft, polite, slightly sly]"
-    ]
-   ]
-  },
-  {
-   "text": "앗! 아주머니 치마 밑에 꼬리가 삐죽!",
-   "segs": [
-    [
-     "nar",
-     "앗! 아주머니 치마 밑에 꼬리가 삐죽!",
-     null,
-     "=[gasps] 앗! [hushed, playful] 아주머니 치마 밑에 꼬리가 삐죽!"
-    ]
-   ]
-  },
-  {
-   "text": "아주머니는 낮에 만난 그 구렁이였어요.",
-   "segs": [
-    [
-     "nar",
-     "아주머니는 낮에 만난 그 구렁이였어요.",
-     null,
-     "[hushed, surprised, storytelling]"
-    ]
-   ]
-  },
-  {
-   "text": "구렁이가 말했어요. \"새벽까지 종이 세 번 울리면 보내 줄게. 하지만 종은 너무 멀어서 울릴 수 없을걸!\"",
-   "segs": [
-    [
-     "nar",
-     "구렁이가 말했어요.",
-     null,
-     "[calm, hushed]"
-    ],
-    [
-     "snake",
-     "새벽까지 종이 세 번 울리면 보내 줄게. 하지만 종은 너무 멀어서 울릴 수 없을걸!",
-     null,
-     "[low, slow, comically sly, taunting]"
-    ]
-   ]
-  },
-  {
-   "text": "선비는 걱정이 되었어요. \"어떡하지?\"",
-   "segs": [
-    [
-     "nar",
-     "선비는 걱정이 되었어요.",
-     null,
-     "[soft, worried]"
-    ],
     [
      "sch",
-     "어떡하지?",
+     "오늘 밤은 어디서 자지? …어, 저기 불빛이!",
      null,
-     "[worried, uncertain, sighs]"
+     "=[worried, murmuring] 오늘 밤은 어디서 자지? [pause] [surprised, hopeful] 어, 저기 불빛이!"
     ]
    ]
   },
   {
-   "text": "달빛 아래에서 까치 아빠가 말했어요. \"이번에는 우리가 도울 차례예요!\"",
+   "text": "깊은 산속 외딴집에서 한 여인이 나왔어요.",
    "segs": [
     [
      "nar",
-     "달빛 아래에서 까치 아빠가 말했어요.",
+     "깊은 산속 외딴집에서 한 여인이 나왔어요.",
      null,
-     "[soft, moonlit calm]"
-    ],
-    [
-     "dad",
-     "이번에는 우리가 도울 차례예요!",
-     null,
-     "[warm, determined, gentle]"
+     "[hushed, slow, mysterious but gentle]"
     ]
    ]
   },
   {
-   "text": "까치 엄마가 말했어요. \"모두 종으로 날아가요!\"",
+   "text": "어서 오세요, 나그네님. 하룻밤 쉬어 가세요.",
+   "segs": [
+    [
+     "snake",
+     "어서 오세요, 나그네님. 하룻밤 쉬어 가세요.",
+     null,
+     "[low, soft, slow, mysterious, gently smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "고맙습니다. 하룻밤만 신세 질게요.",
+   "segs": [
+    [
+     "sch",
+     "고맙습니다. 하룻밤만 신세 질게요.",
+     null,
+     "[polite, tired, relieved]"
+    ]
+   ]
+  },
+  {
+   "text": "선비는 따뜻한 방에서 금세 잠이 들었어요.",
    "segs": [
     [
      "nar",
-     "까치 엄마가 말했어요.",
+     "선비는 따뜻한 방에서 금세 잠이 들었어요.",
      null,
-     "[gentle, calm]"
-    ],
+     "[soft, slow, lullaby-like]"
+    ]
+   ]
+  },
+  {
+   "text": "한밤중, 선비는 으스스한 기운에 눈을 떴어요.",
+   "segs": [
+    [
+     "nar",
+     "한밤중, 선비는 으스스한 기운에 눈을 떴어요.",
+     null,
+     "[hushed, slow, suspenseful but gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "문 앞에 그 여인이 서 있었어요. 그런데… 치마 밑으로 꼬리가 삐죽!",
+   "segs": [
+    [
+     "nar",
+     "문 앞에 그 여인이 서 있었어요. 그런데… 치마 밑으로 꼬리가 삐죽!",
+     null,
+     "=[hushed, slow] 문 앞에 그 여인이 서 있었어요. [pause] [surprised, whispering] 그런데… 치마 밑으로 꼬리가 삐죽!"
+    ]
+   ]
+  },
+  {
+   "text": "나는 낮에 네가 활로 쫓아낸, 그 구렁이의 아내다.",
+   "segs": [
+    [
+     "snake",
+     "나는 낮에 네가 활로 쫓아낸, 그 구렁이의 아내다.",
+     null,
+     "[low, slow, cold but calm, mysterious, not shouting]"
+    ]
+   ]
+  },
+  {
+   "text": "내 남편을 놀라게 한 벌로, 너를 이대로 보내 줄 수는 없어.",
+   "segs": [
+    [
+     "snake",
+     "내 남편을 놀라게 한 벌로, 너를 이대로 보내 줄 수는 없어.",
+     null,
+     "[low, slow, firm, quiet menace, never loud]"
+    ]
+   ]
+  },
+  {
+   "text": "저는 그저 아기 까치들을 지키려 했을 뿐이에요. 제발 보내 주세요.",
+   "segs": [
+    [
+     "sch",
+     "저는 그저 아기 까치들을 지키려 했을 뿐이에요. 제발 보내 주세요.",
+     "sad",
+     "[pleading, earnest, trembling a little]"
+    ]
+   ]
+  },
+  {
+   "text": "좋아. 새벽이 오기 전에 저 산 위 절의 종이 세 번 울리면, 너를 놓아주마.",
+   "segs": [
+    [
+     "snake",
+     "좋아. 새벽이 오기 전에 저 산 위 절의 종이 세 번 울리면, 너를 놓아주마.",
+     null,
+     "[low, slow, deliberate, each word clear, mysterious]"
+    ]
+   ]
+  },
+  {
+   "text": "하지만 이 깊은 밤에, 누가 종을 치겠니? 후후…",
+   "segs": [
+    [
+     "snake",
+     "하지만 이 깊은 밤에, 누가 종을 치겠니? 후후…",
+     null,
+     "[low, slow, softly amused, quiet chuckle at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "종소리… 종이 울려야 해. 어떡하지…",
+   "segs": [
+    [
+     "sch",
+     "종소리… 종이 울려야 해. 어떡하지…",
+     "sad",
+     "[worried, murmuring, slow, fading]"
+    ]
+   ]
+  },
+  {
+   "text": "그때, 큰 소나무 둥지의 까치 가족은 잠들지 못하고 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "그때, 큰 소나무 둥지의 까치 가족은 잠들지 못하고 있었어요.",
+     null,
+     "[quiet, slow, concerned]"
+    ]
+   ]
+  },
+  {
+   "text": "여보, 선비님이 큰일 났어요! 외딴집의 구렁이 아내가…",
+   "segs": [
     [
      "mom",
-     "모두 종으로 날아가요!",
-     null,
-     "[urgent, brave, rallying]"
+     "여보, 선비님이 큰일 났어요! 외딴집의 구렁이 아내가…",
+     "sad",
+     "[urgent, worried, breathless]"
     ]
    ]
   },
   {
-   "text": "까치 가족을 톡! 함께 날아가요.",
+   "text": "종! 절의 종을 울리면 돼요. 우리가 날아가요!",
    "segs": [
     [
-     "nar",
-     "까치 가족을 톡! 함께 날아가요.",
+     "dad",
+     "종! 절의 종을 울리면 돼요. 우리가 날아가요!",
      null,
-     "[cheerful, inviting, encouraging]"
+     "[resolute, brave, quick]"
     ]
    ]
   },
   {
-   "text": "까치들이 종이 있는 곳까지 쌩쌩 날아갔어요.",
+   "text": "아기들아, 둥지에서 꼭 기다리렴.",
    "segs": [
     [
-     "nar",
-     "까치들이 종이 있는 곳까지 쌩쌩 날아갔어요.",
+     "mom",
+     "아기들아, 둥지에서 꼭 기다리렴.",
      null,
-     "[brisk, swooshing, excited]"
+     "[tender, motherly, gentle]"
     ]
    ]
   },
   {
-   "text": "까치들이 머리로 종을 칠 거예요. 종을 톡톡톡 눌러서 세 번 울려 봐요!",
+   "text": "까치 엄마 아빠와 숲속 까치 친구들이 밤하늘로 날아올랐어요.",
    "segs": [
     [
      "nar",
-     "까치들이 머리로 종을 칠 거예요. 종을 톡톡톡 눌러서 세 번 울려 봐요!",
+     "까치 엄마 아빠와 숲속 까치 친구들이 밤하늘로 날아올랐어요.",
      null,
-     "[playful, inviting]"
+     "[rising, hopeful, storytelling]"
     ]
    ]
   },
   {
-   "text": "종을 톡톡톡! 세 번 울려요.",
+   "text": "달빛을 가르며, 산 위 절을 향해 쌩쌩!",
    "segs": [
     [
      "nar",
-     "종을 톡톡톡! 세 번 울려요.",
-     null,
-     "[cheerful, counting, rhythmic]"
+     "달빛을 가르며, 산 위 절을 향해 쌩쌩!",
+     "toneup",
+     "[swift, bright, exciting but soft]"
     ]
    ]
   },
   {
-   "text": "댕, 댕, 댕! 종이 세 번 울렸어요.",
+   "text": "절은 고요했어요. 커다란 종이 달빛 아래 걸려 있었어요.",
    "segs": [
     [
      "nar",
-     "댕, 댕, 댕! 종이 세 번 울렸어요.",
+     "절은 고요했어요. 커다란 종이 달빛 아래 걸려 있었어요.",
      null,
-     "[ringing, joyful, slow]"
+     "[hushed, slow, awe, long pauses]"
     ]
    ]
   },
   {
-   "text": "까치들은 조금 지쳤지만 괜찮았어요.",
+   "text": "종을 쳐야 해. 우리 머리로, 온 힘을 다해!",
    "segs": [
     [
-     "nar",
-     "까치들은 조금 지쳤지만 괜찮았어요.",
+     "dad",
+     "종을 쳐야 해. 우리 머리로, 온 힘을 다해!",
      null,
-     "[soft, tired, then reassuring]"
+     "[determined, solemn, brave]"
     ]
    ]
   },
   {
-   "text": "새벽이 밝았어요. 구렁이가 종소리를 들었어요.",
+   "text": "종을 톡 눌러 봐요.",
    "segs": [
     [
      "nar",
-     "새벽이 밝았어요. 구렁이가 종소리를 들었어요.",
+     "종을 톡 눌러 봐요.",
      null,
-     "[hushed, calm, dawn breaking gently]"
+     "[calm, inviting]"
     ]
    ]
   },
   {
-   "text": "구렁이가 말했어요. \"종이 세 번 울렸네! 약속대로 보내 줄게. 놀라게 해서 미안해.\"",
+   "text": "댕—. 깊고 큰 종소리가 산을 넘어 퍼져 갔어요.",
    "segs": [
     [
      "nar",
-     "구렁이가 말했어요.",
+     "댕—. 깊고 큰 종소리가 산을 넘어 퍼져 갔어요.",
      null,
-     "[calm, gentle]"
-    ],
+     "=[deep, slow, resonant] 댕—. [pause] [awed, slow storytelling] 깊고 큰 종소리가 산을 넘어 퍼져 갔어요."
+    ]
+   ]
+  },
+  {
+   "text": "댕—. 두 번째 종소리.",
+   "segs": [
+    [
+     "nar",
+     "댕—. 두 번째 종소리.",
+     null,
+     "=[deep, slow, resonant] 댕—. [pause] [quiet, slow] 두 번째 종소리."
+    ]
+   ]
+  },
+  {
+   "text": "댕—. 세 번째 종소리가 울렸어요.",
+   "segs": [
+    [
+     "nar",
+     "댕—. 세 번째 종소리가 울렸어요.",
+     null,
+     "=[deep, slow, resonant] 댕—. [pause] [quiet, slow, moved] 세 번째 종소리가 울렸어요."
+    ]
+   ]
+  },
+  {
+   "text": "까치들은 온 힘을 다해 종을 울렸어요.",
+   "segs": [
+    [
+     "nar",
+     "까치들은 온 힘을 다해 종을 울렸어요.",
+     null,
+     "[solemn, slow, tender]"
+    ]
+   ]
+  },
+  {
+   "text": "그리고 힘이 다 빠진 까치들은, 종 아래에 스르르 쓰러져 잠이 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "그리고 힘이 다 빠진 까치들은, 종 아래에 스르르 쓰러져 잠이 들었어요.",
+     "sad",
+     "[very soft, slow, tender, hushed, a long pause before the end]"
+    ]
+   ]
+  },
+  {
+   "text": "멀리서 종소리가 들려왔어요.",
+   "segs": [
+    [
+     "nar",
+     "멀리서 종소리가 들려왔어요.",
+     null,
+     "[hushed, slow, listening]"
+    ]
+   ]
+  },
+  {
+   "text": "종이… 울렸어. 하나, 둘, 셋.",
+   "segs": [
     [
      "snake",
-     "종이 세 번 울렸네! 약속대로 보내 줄게. 놀라게 해서 미안해.",
+     "종이… 울렸어. 하나, 둘, 셋.",
      null,
-     "[surprised, softening, then kindly apologetic]"
+     "[low, slow, startled but quiet, counting under her breath]"
     ]
    ]
   },
   {
-   "text": "구렁이는 스르르 숲으로 돌아갔어요.",
+   "text": "약속은 약속. 너를 놓아주마.",
    "segs": [
     [
-     "nar",
-     "구렁이는 스르르 숲으로 돌아갔어요.",
+     "snake",
+     "약속은 약속. 너를 놓아주마.",
      null,
-     "[soft, calm, relieved]"
+     "[low, slow, resigned, calm, a soft sigh]"
     ]
    ]
   },
   {
-   "text": "지친 까치 엄마 아빠가 쉬고 있어요.",
+   "text": "여인은 스르르 구렁이로 변하더니, 새벽 숲으로 사라졌어요.",
    "segs": [
     [
      "nar",
-     "지친 까치 엄마 아빠가 쉬고 있어요.",
+     "여인은 스르르 구렁이로 변하더니, 새벽 숲으로 사라졌어요.",
      null,
-     "[soft, tired, gentle]"
+     "[mysterious, slow, relieved at the end]"
     ]
    ]
   },
   {
-   "text": "선비를 톡! 물을 줘요.",
+   "text": "종소리… 누가 종을 울렸을까? 가 봐야겠어!",
    "segs": [
-    [
-     "nar",
-     "선비를 톡! 물을 줘요.",
-     null,
-     "[cheerful, inviting, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "선비가 말했어요. \"고마워, 까치야. 푹 쉬렴!\"",
-   "segs": [
-    [
-     "nar",
-     "선비가 말했어요.",
-     null,
-     "[gentle, warm]"
-    ],
     [
      "sch",
-     "고마워, 까치야. 푹 쉬렴!",
+     "종소리… 누가 종을 울렸을까? 가 봐야겠어!",
      null,
-     "[kind, gentle, soothing]"
+     "=[wondering, quiet] 종소리… 누가 종을 울렸을까? [pause] [resolved, brisk] 가 봐야겠어!"
     ]
    ]
   },
   {
-   "text": "아침 해가 떴어요. 아기 까치들도 날아왔어요.",
+   "text": "선비는 산 위 절로 달려갔어요.",
    "segs": [
     [
      "nar",
-     "아침 해가 떴어요. 아기 까치들도 날아왔어요.",
+     "선비는 산 위 절로 달려갔어요.",
      null,
-     "[bright, warm, morning]"
+     "[brisk but gentle storytelling]"
     ]
    ]
   },
   {
-   "text": "모두 함께 웃었어요.",
+   "text": "종 아래에, 까치 엄마 아빠가 눈을 감은 채 누워 있었어요.",
    "segs": [
     [
      "nar",
-     "모두 함께 웃었어요.",
-     null,
-     "[happy, laughing softly]"
+     "종 아래에, 까치 엄마 아빠가 눈을 감은 채 누워 있었어요.",
+     "sad",
+     "[hushed, slow, tender, sorrowful but soft]"
     ]
    ]
   },
   {
-   "text": "선비를 톡! 모두 함께 만세!",
+   "text": "까치야… 너희였구나. 나를 구하려고…",
    "segs": [
     [
-     "nar",
-     "선비를 톡! 모두 함께 만세!",
-     null,
-     "[joyful, cheering]"
+     "sch",
+     "까치야… 너희였구나. 나를 구하려고…",
+     "sad",
+     "[moved, choked up, slow, whispering]"
     ]
    ]
   },
   {
-   "text": "서로 돕는 마음은 따뜻해요. 은혜 갚은 까치 이야기는 이렇게 끝났어요.",
+   "text": "선비는 까치들을 품에 안고, 시원한 물을 한 모금씩 먹여 주었어요.",
    "segs": [
     [
      "nar",
-     "서로 돕는 마음은 따뜻해요. 은혜 갚은 까치 이야기는 이렇게 끝났어요.",
+     "선비는 까치들을 품에 안고, 시원한 물을 한 모금씩 먹여 주었어요.",
      null,
-     "[gentle, warm, slow, closing storytelling]"
+     "[gentle, slow, caring]"
+    ]
+   ]
+  },
+  {
+   "text": "선비님… 무사하셨군요.",
+   "segs": [
+    [
+     "mom",
+     "선비님… 무사하셨군요.",
+     null,
+     "[weak, soft, relieved, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "은혜를 갚았으니, 이제 됐어요.",
+   "segs": [
+    [
+     "dad",
+     "은혜를 갚았으니, 이제 됐어요.",
+     null,
+     "[weak but content, warm, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 아기 까치들이 짹짹 울며 날아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "그때 아기 까치들이 짹짹 울며 날아왔어요.",
+     "happy",
+     "[bright, lifting, joyful]"
+    ]
+   ]
+  },
+  {
+   "text": "엄마! 아빠!",
+   "segs": [
+    [
+     "chick",
+     "엄마! 아빠!",
+     "happy",
+     "[baby voice, lisping, very young child, cute] [overjoyed, calling out]"
+    ]
+   ]
+  },
+  {
+   "text": "선비를 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "선비를 톡 눌러 봐요.",
+     null,
+     "[warm, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "고마워, 까치들아. 너희 마음, 평생 잊지 않을게.",
+   "segs": [
+    [
+     "sch",
+     "고마워, 까치들아. 너희 마음, 평생 잊지 않을게.",
+     "happy",
+     "[heartfelt, warm, smiling, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "은혜를 잊지 않고 갚는 마음은, 이렇게 따뜻해요.",
+   "segs": [
+    [
+     "nar",
+     "은혜를 잊지 않고 갚는 마음은, 이렇게 따뜻해요.",
+     null,
+     "[warm, slow, closing the book, gentle]"
     ]
    ]
   }
  ],
- "extra": {}
+ "extra": {
+  "n1": [
+   [
+    "nar",
+    "하나!",
+    "toneup",
+    "[bright, clear, slow counting, one word, bouncy]"
+   ]
+  ],
+  "n2": [
+   [
+    "nar",
+    "둘!",
+    "toneup",
+    "[bright, clear, slow counting, one word, bouncy]"
+   ]
+  ],
+  "n3": [
+   [
+    "nar",
+    "셋!",
+    "toneup",
+    "[bright, clear, slow counting, one word, bouncy]"
+   ]
+  ],
+  "n4": [
+   [
+    "nar",
+    "넷!",
+    "toneup",
+    "[bright, clear, slow counting, one word, bouncy]"
+   ]
+  ],
+  "n5": [
+   [
+    "nar",
+    "다섯!",
+    "toneup",
+    "[bright, clear, slow counting, one word, bouncy]"
+   ]
+  ],
+  "chirp": [
+   [
+    "chick",
+    "짹!",
+    "happy",
+    "[baby voice, lisping, very young child, cute] [one short chirp]"
+   ]
+  ],
+  "chirp2": [
+   [
+    "chick",
+    "짹짹!",
+    "happy",
+    "[baby voice, lisping, very young child, cute] [two quick chirps]"
+   ]
+  ],
+  "caw": [
+   [
+    "mom",
+    "까악!",
+    "sad",
+    "[one short frightened caw]"
+   ]
+  ]
+ }
 }

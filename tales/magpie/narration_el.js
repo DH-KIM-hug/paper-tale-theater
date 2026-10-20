@@ -1,75 +1,83 @@
 /* magpie — ElevenLabs 배역 내레이션 (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS, {
- "옛날 옛날에 마음씨 고운 선비가 길을 걸어가고 있었어요.": "audio/el/magpie/nar_993692ada3.mp3",
- "선비를 톡톡톡 눌러서 걸어가 봐요!": "audio/el/magpie/nar_4f447ffe5e.mp3",
- "선비를 톡톡톡! 걸어가요.": "audio/el/magpie/nar_83b79aa58e.mp3",
- "선비는 큰 소나무 아래에 닿았어요.": "audio/el/magpie/nar_19283fa652.mp3",
- "나무 위에서 까치 엄마가 울었어요. \"까악 까악! 도와주세요!\"": [
-  "audio/el/magpie/nar_9be7155bc1.mp3",
-  "audio/el/magpie/mom_9dc858dc56.mp3"
+ "옛날 옛날, 마음씨 고운 선비가 과거를 보러 먼 길을 떠났어요.": "audio/el/magpie/nar_1b74b7a31b.mp3",
+ "저벅저벅. 산 넘고 물 건너, 선비는 깊은 산속으로 들어갔어요.": "audio/el/magpie/nar_5352aec819.mp3",
+ "까악, 까악! 도와주세요!": "audio/el/magpie/mom_5e6b869d0d.mp3",
+ "큰 소나무 위 둥지에 아기 까치들이 있어요. 그런데 구렁이가 스르르 올라가고 있어요!": "audio/el/magpie/nar_1480a0c567.mp3",
+ "안 돼! 내가 아기 까치들을 지켜 줄게.": "audio/el/magpie/sch_e4a7c02bc5.mp3",
+ "선비가 활을 꺼냈어요. 선비를 톡 눌러 봐요.": "audio/el/magpie/nar_fa97469ba2.mp3",
+ "쉬익, 탁! 화살이 구렁이 바로 옆 나무에 꽂혔어요.": "audio/el/magpie/nar_64a56a5071.mp3",
+ "깜짝 놀란 구렁이는 스르르 숲으로 달아났어요.": "audio/el/magpie/nar_b5636d249b.mp3",
+ "고맙습니다, 선비님! 이 은혜는 꼭 갚을게요.": [
+  "audio/el/magpie/mom_9dbe88bdfa.mp3",
+  "audio/el/magpie/dad_905023549f.mp3"
  ],
- "구렁이가 아기 까치 둥지로 스르르 올라가고 있어요!": "audio/el/magpie/nar_acce1205fb.mp3",
- "선비가 말했어요. \"아기 까치를 지켜 줄게!\"": [
-  "audio/el/magpie/nar_0e1d352a89.mp3",
-  "audio/el/magpie/sch_fbfc9120d3.mp3"
- ],
- "선비를 톡! 하늘에 활을 쏘아요.": "audio/el/magpie/nar_bf40ef1d07.mp3",
- "쉬익! 활 소리에 깜짝 놀란 구렁이는 숲으로 도망갔어요.": "audio/el/magpie/nar_64dffe032c.mp3",
- "아기 까치들이 짹짹 울었어요. 아기 까치를 하나씩 세어 봐요!": "audio/el/magpie/nar_3098ad47dd.mp3",
- "아기 까치를 톡톡톡톡! 하나씩 세어요.": "audio/el/magpie/nar_9061277475.mp3",
- "아기 까치는 모두 네 마리예요. \"선비님, 고맙습니다!\"": [
-  "audio/el/magpie/nar_af97bed26a.mp3",
-  "audio/el/magpie/chick_7cd4937872.mp3"
- ],
- "까치 아빠가 말했어요. \"은혜는 꼭 갚을게요!\"": [
-  "audio/el/magpie/nar_abf65b8c72.mp3",
-  "audio/el/magpie/dad_920680241d.mp3"
- ],
- "선비는 컴컴한 산길을 걸었어요. 멀리 불빛이 반짝!": "audio/el/magpie/nar_ab3f163b49.mp3",
- "선비를 톡! 불빛을 따라가요.": "audio/el/magpie/nar_580d6a3871.mp3",
- "외딴집에서 아주머니가 나왔어요. \"어서 오세요. 하룻밤 쉬어 가세요.\"": [
-  "audio/el/magpie/nar_0f48040466.mp3",
-  "audio/el/magpie/lady_6f1c36d308.mp3"
- ],
- "앗! 아주머니 치마 밑에 꼬리가 삐죽!": "audio/el/magpie/nar_23c2390f12.mp3",
- "아주머니는 낮에 만난 그 구렁이였어요.": "audio/el/magpie/nar_e9a52ce526.mp3",
- "구렁이가 말했어요. \"새벽까지 종이 세 번 울리면 보내 줄게. 하지만 종은 너무 멀어서 울릴 수 없을걸!\"": [
-  "audio/el/magpie/nar_140389d51b.mp3",
-  "audio/el/magpie/snake_cd1b0172d5.mp3"
- ],
- "선비는 걱정이 되었어요. \"어떡하지?\"": [
-  "audio/el/magpie/nar_128ce1aaf8.mp3",
-  "audio/el/magpie/sch_06820b70b0.mp3"
- ],
- "달빛 아래에서 까치 아빠가 말했어요. \"이번에는 우리가 도울 차례예요!\"": [
-  "audio/el/magpie/nar_c9c7901930.mp3",
-  "audio/el/magpie/dad_e0fd1f36d5.mp3"
- ],
- "까치 엄마가 말했어요. \"모두 종으로 날아가요!\"": [
-  "audio/el/magpie/nar_d4446887ee.mp3",
-  "audio/el/magpie/mom_bd7611ad22.mp3"
- ],
- "까치 가족을 톡! 함께 날아가요.": "audio/el/magpie/nar_dcf742930d.mp3",
- "까치들이 종이 있는 곳까지 쌩쌩 날아갔어요.": "audio/el/magpie/nar_19e541470c.mp3",
- "까치들이 머리로 종을 칠 거예요. 종을 톡톡톡 눌러서 세 번 울려 봐요!": "audio/el/magpie/nar_79ecb34cb3.mp3",
- "종을 톡톡톡! 세 번 울려요.": "audio/el/magpie/nar_d6ba04cea5.mp3",
- "댕, 댕, 댕! 종이 세 번 울렸어요.": "audio/el/magpie/nar_58e2bad19f.mp3",
- "까치들은 조금 지쳤지만 괜찮았어요.": "audio/el/magpie/nar_fe27da184f.mp3",
- "새벽이 밝았어요. 구렁이가 종소리를 들었어요.": "audio/el/magpie/nar_b5f4f6b02b.mp3",
- "구렁이가 말했어요. \"종이 세 번 울렸네! 약속대로 보내 줄게. 놀라게 해서 미안해.\"": [
-  "audio/el/magpie/nar_ef9b7ca294.mp3",
-  "audio/el/magpie/snake_8c64fdc0f5.mp3"
- ],
- "구렁이는 스르르 숲으로 돌아갔어요.": "audio/el/magpie/nar_76e8783b0c.mp3",
- "지친 까치 엄마 아빠가 쉬고 있어요.": "audio/el/magpie/nar_61d372745f.mp3",
- "선비를 톡! 물을 줘요.": "audio/el/magpie/nar_dee40b45ce.mp3",
- "선비가 말했어요. \"고마워, 까치야. 푹 쉬렴!\"": [
-  "audio/el/magpie/nar_029eb5ebeb.mp3",
-  "audio/el/magpie/sch_3c744e133a.mp3"
- ],
- "아침 해가 떴어요. 아기 까치들도 날아왔어요.": "audio/el/magpie/nar_6781eef644.mp3",
- "모두 함께 웃었어요.": "audio/el/magpie/nar_28db562603.mp3",
- "선비를 톡! 모두 함께 만세!": "audio/el/magpie/nar_f8c1f1d930.mp3",
- "서로 돕는 마음은 따뜻해요. 은혜 갚은 까치 이야기는 이렇게 끝났어요.": "audio/el/magpie/nar_4d5481beff.mp3"
+ "둥지 안에서 아기 까치들이 고개를 쏙 내밀었어요.": "audio/el/magpie/nar_3265ae18a8.mp3",
+ "아기 까치가 몇 마리일까요? 맞는 숫자를 골라요.": "audio/el/magpie/nar_95fe2ff585.mp3",
+ "그건 1이에요. 다시 세어 볼까요?": "audio/el/magpie/nar_5e8f43d91f.mp3",
+ "그건 2예요. 다시 세어 볼까요?": "audio/el/magpie/nar_b065cf9b2c.mp3",
+ "그건 3이에요. 다시 세어 볼까요?": "audio/el/magpie/nar_ae7c90bc39.mp3",
+ "그건 4예요. 다시 세어 볼까요?": "audio/el/magpie/nar_e53d5cde71.mp3",
+ "그건 5예요. 다시 세어 볼까요?": "audio/el/magpie/nar_63f9e9a655.mp3",
+ "맞아요! 한 마리예요.": "audio/el/magpie/nar_ae08d893bc.mp3",
+ "맞아요! 두 마리예요.": "audio/el/magpie/nar_541fc8ec7e.mp3",
+ "맞아요! 세 마리예요.": "audio/el/magpie/nar_dd7e699228.mp3",
+ "맞아요! 네 마리예요.": "audio/el/magpie/nar_7bbfefb646.mp3",
+ "맞아요! 다섯 마리예요.": "audio/el/magpie/nar_23f0be64dc.mp3",
+ "짹짹! 선비님, 고맙습니다!": "audio/el/magpie/chick_94365d0435.mp3",
+ "선비는 빙긋 웃으며 다시 길을 떠났어요.": "audio/el/magpie/nar_15454179de.mp3",
+ "어느새 해가 지고, 산길은 캄캄해졌어요.": "audio/el/magpie/nar_9fd14d573c.mp3",
+ "오늘 밤은 어디서 자지? …어, 저기 불빛이!": "audio/el/magpie/sch_7d2bb2ded3.mp3",
+ "깊은 산속 외딴집에서 한 여인이 나왔어요.": "audio/el/magpie/nar_fe181a374c.mp3",
+ "어서 오세요, 나그네님. 하룻밤 쉬어 가세요.": "audio/el/magpie/snake_e63e7e8464.mp3",
+ "고맙습니다. 하룻밤만 신세 질게요.": "audio/el/magpie/sch_4b08bba9d9.mp3",
+ "선비는 따뜻한 방에서 금세 잠이 들었어요.": "audio/el/magpie/nar_f9c80a5d99.mp3",
+ "한밤중, 선비는 으스스한 기운에 눈을 떴어요.": "audio/el/magpie/nar_f000dd4a77.mp3",
+ "문 앞에 그 여인이 서 있었어요. 그런데… 치마 밑으로 꼬리가 삐죽!": "audio/el/magpie/nar_6de1953293.mp3",
+ "나는 낮에 네가 활로 쫓아낸, 그 구렁이의 아내다.": "audio/el/magpie/snake_b9b391ea1b.mp3",
+ "내 남편을 놀라게 한 벌로, 너를 이대로 보내 줄 수는 없어.": "audio/el/magpie/snake_cf1e083c2c.mp3",
+ "저는 그저 아기 까치들을 지키려 했을 뿐이에요. 제발 보내 주세요.": "audio/el/magpie/sch_3ad9916454.mp3",
+ "좋아. 새벽이 오기 전에 저 산 위 절의 종이 세 번 울리면, 너를 놓아주마.": "audio/el/magpie/snake_580f3f98a8.mp3",
+ "하지만 이 깊은 밤에, 누가 종을 치겠니? 후후…": "audio/el/magpie/snake_909d34e6dd.mp3",
+ "종소리… 종이 울려야 해. 어떡하지…": "audio/el/magpie/sch_403f1e41f5.mp3",
+ "그때, 큰 소나무 둥지의 까치 가족은 잠들지 못하고 있었어요.": "audio/el/magpie/nar_298155ab1a.mp3",
+ "여보, 선비님이 큰일 났어요! 외딴집의 구렁이 아내가…": "audio/el/magpie/mom_e93dbad02a.mp3",
+ "종! 절의 종을 울리면 돼요. 우리가 날아가요!": "audio/el/magpie/dad_412497b42d.mp3",
+ "아기들아, 둥지에서 꼭 기다리렴.": "audio/el/magpie/mom_6a7a4b531f.mp3",
+ "까치 엄마 아빠와 숲속 까치 친구들이 밤하늘로 날아올랐어요.": "audio/el/magpie/nar_1c2852d558.mp3",
+ "달빛을 가르며, 산 위 절을 향해 쌩쌩!": "audio/el/magpie/nar_0eb7015565.mp3",
+ "절은 고요했어요. 커다란 종이 달빛 아래 걸려 있었어요.": "audio/el/magpie/nar_f34ae4ea5f.mp3",
+ "종을 쳐야 해. 우리 머리로, 온 힘을 다해!": "audio/el/magpie/dad_23ca74d4cd.mp3",
+ "종을 톡 눌러 봐요.": "audio/el/magpie/nar_6be7947ded.mp3",
+ "댕—. 깊고 큰 종소리가 산을 넘어 퍼져 갔어요.": "audio/el/magpie/nar_d748bc343c.mp3",
+ "댕—. 두 번째 종소리.": "audio/el/magpie/nar_2c46ee9eaf.mp3",
+ "댕—. 세 번째 종소리가 울렸어요.": "audio/el/magpie/nar_f9f0744369.mp3",
+ "까치들은 온 힘을 다해 종을 울렸어요.": "audio/el/magpie/nar_7394f8bb55.mp3",
+ "그리고 힘이 다 빠진 까치들은, 종 아래에 스르르 쓰러져 잠이 들었어요.": "audio/el/magpie/nar_6748e30c1f.mp3",
+ "멀리서 종소리가 들려왔어요.": "audio/el/magpie/nar_01197956e6.mp3",
+ "종이… 울렸어. 하나, 둘, 셋.": "audio/el/magpie/snake_c4c65096a6.mp3",
+ "약속은 약속. 너를 놓아주마.": "audio/el/magpie/snake_106aad1a2f.mp3",
+ "여인은 스르르 구렁이로 변하더니, 새벽 숲으로 사라졌어요.": "audio/el/magpie/nar_9e303c3721.mp3",
+ "종소리… 누가 종을 울렸을까? 가 봐야겠어!": "audio/el/magpie/sch_37af5e33b1.mp3",
+ "선비는 산 위 절로 달려갔어요.": "audio/el/magpie/nar_8a3a8223bc.mp3",
+ "종 아래에, 까치 엄마 아빠가 눈을 감은 채 누워 있었어요.": "audio/el/magpie/nar_fec09c16e4.mp3",
+ "까치야… 너희였구나. 나를 구하려고…": "audio/el/magpie/sch_c776b53234.mp3",
+ "선비는 까치들을 품에 안고, 시원한 물을 한 모금씩 먹여 주었어요.": "audio/el/magpie/nar_1bfc3e33be.mp3",
+ "선비님… 무사하셨군요.": "audio/el/magpie/mom_05cca83adc.mp3",
+ "은혜를 갚았으니, 이제 됐어요.": "audio/el/magpie/dad_1dd517d907.mp3",
+ "그때 아기 까치들이 짹짹 울며 날아왔어요.": "audio/el/magpie/nar_a432feff06.mp3",
+ "엄마! 아빠!": "audio/el/magpie/chick_0b2fce3a5d.mp3",
+ "선비를 톡 눌러 봐요.": "audio/el/magpie/nar_7d2be1da0f.mp3",
+ "고마워, 까치들아. 너희 마음, 평생 잊지 않을게.": "audio/el/magpie/sch_862e98ec8a.mp3",
+ "은혜를 잊지 않고 갚는 마음은, 이렇게 따뜻해요.": "audio/el/magpie/nar_4b85fec0f6.mp3"
 });
-Object.assign(VOICE_LINES, {});
+Object.assign(VOICE_LINES, {
+ "n1": "audio/el/magpie/nar_fb0e040000.mp3",
+ "n2": "audio/el/magpie/nar_ac8f567a54.mp3",
+ "n3": "audio/el/magpie/nar_6895766606.mp3",
+ "n4": "audio/el/magpie/nar_67274fb821.mp3",
+ "n5": "audio/el/magpie/nar_b3cb014c4f.mp3",
+ "chirp": "audio/el/magpie/chick_47ee75e788.mp3",
+ "chirp2": "audio/el/magpie/chick_c52b8e4a9b.mp3",
+ "caw": "audio/el/magpie/mom_c8f36c4138.mp3"
+});

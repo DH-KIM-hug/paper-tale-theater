@@ -269,8 +269,8 @@ const TALES = (() => {
       <circle cx="20" cy="80" r="5" fill="${c.rd}"/><circle cx="34" cy="84" r="5" fill="${c.am}"/><circle cx="138" cy="82" r="5" fill="${c.sn}"/></g>` },
 
   { id: 'magpie', title: '은혜 갚은 까치', origin: 'korean', skills: ['sound', 'count', 'heart'], ready: false, making: true,
-    line: '종소리를 듣고 하나, 둘, 셋. 고마움을 갚는 까치 이야기.',
-    en: { title: 'The Grateful Magpie', line: 'Listen to the bell ring one, two, three, and see how the magpies say thank you.' },
+    line: '둥지의 아기 까치는 몇 마리? 숫자를 골라요. 밤에 종을 울려 은혜를 갚는 까치 이야기.',
+    en: { title: 'The Grateful Magpie', line: 'How many baby magpies are in the nest? Pick the number. At night the magpies ring the bell to repay a kindness.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/>
       <g class="pc"><path d="M0 90 Q50 76 100 88 T160 84 V110 H0Z" fill="${c.lv}"/>
       <path d="M40 22 H120 L112 14 H48Z" fill="${c.rd}"/><rect x="78" y="22" width="4" height="10" fill="${c.bk}"/>

@@ -79,3 +79,10 @@ CC BY 파일은 **출처 표시 의무가 있다** — 크레딧 화면에 "Kevi
 ## 직접 만든 소리
 
 `sfx/blow.mp3`, `sfx/blow_long.mp3` — 입으로 "후~" 부는 숨소리. 잡음에 입 모양(모음 우) 울림을 입혀 코드로 만들었다. 저작권 없음.
+
+## 범종 (은혜 갚은 까치)
+
+| 파일 | 원본 | 만든 이 | 라이선스 | 출처 |
+|---|---|---|---|---|
+| `sfx/beomjong_synth.mp3` | **임시 합성음**(실제 녹음이 아님). 성덕대왕신종의 배음 구조(기본음 약 64Hz 맥놀이 + 168Hz 등)를 사인파로 겹쳐 6초 감쇠로 만든 것. 실제 범종 녹음 `sfx/beomjong.mp3` 를 구하면 그쪽을 먼저 틀고 이 파일은 대비용으로만 남긴다(tales/magpie/SPEC.md §7-1) | 팥죽 게임(코드 합성) | CC0 | — |
+| `sfx/beomjong.mp3` | Freesound "2022-10-16-big-bass-zen-temple-bell.wav"(큰 저음 절 종 한 번 타종 녹음, 4분 길이 중 처음 6초를 타종 직전부터 잘라 끝 1.8초 페이드아웃, 정규화). **한국 범종이 아니라 일본식(선종) 큰 절 종 녹음이다** — 한국 범종 녹음은 공개 자료(Wikimedia Commons·Freesound·공공누리)에서 찾지 못했다. 한국 범종 녹음을 구하면 이 자리에 넣는다 | ilmari_freesound | CC0 | https://freesound.org/people/ilmari_freesound/sounds/653710/ |
