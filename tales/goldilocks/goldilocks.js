@@ -610,7 +610,7 @@
       view();
     }, bears.mom.pos);
     await say('엄마 곰이 맛있는 죽을 끓였어요. 그런데 너무 뜨거워요!');
-    await say('톡톡 눌러서 후후 불어 줘요!');
+    await say('톡 눌러서 후후 불어 줘요!');
     const blowStep = i => {
       const b = B[(i - 1) % 3];
       b.setFace('o'); setTimeout(() => b.setFace('smile'), 500);
@@ -618,7 +618,7 @@
       const s = steams.splice(Math.floor(Math.random() * steams.length), 1)[0];
       s && s.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
     };
-    await T.tap(bowlsG, { prompt: '죽을 톡톡 눌러서 후후!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await T.tap(bowlsG, { prompt: '죽을 톡! 후후!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 6; i++) { await blowStep(i); await sleep(450); }
     await sleep(400);
     await say('김이 줄었지만, 아직 뜨거워요.');

@@ -7,8 +7,8 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/frog/nar_2073418091.mp3",
   "audio/el/frog/mom_3de427a107.mp3"
  ],
- "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡톡 눌러서 폴짝폴짝 가 볼까요?": "audio/el/frog/nar_8d47c73f2c.mp3",
- "화면을 톡톡 눌러서 폴짝폴짝!": "audio/el/frog/nar_a2e2297124.mp3",
+ "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?": "audio/el/frog/nar_59964857a3.mp3",
+ "화면을 톡! 폴짝폴짝!": "audio/el/frog/nar_c7396ecffc.mp3",
  "어? 눈앞에 커다란 무언가가 있어요!": "audio/el/frog/nar_649ab75c57.mp3",
  "이건 뭘까요? 꼬리일까요, 나무일까요?": "audio/el/frog/nar_451b6259c1.mp3",
  "가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!": "audio/el/frog/nar_6bba93d374.mp3",

@@ -292,10 +292,10 @@
       babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(.9); b.place(200 + i * 70, 490); });
     }, babies[1].pos);
     if (T.portrait()) camSnap(babies[1].x, 280, 1);
-    await say('아기 개구리들이 몰래 풀밭으로 나왔어요. 톡톡 눌러서 폴짝폴짝 가 볼까요?');
+    await say('아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?');
     const hopStep = () => { babies.forEach((b, k) => { setTimeout(() => { croak(T, 380 + k * 40); b.move(b.x + 95, 490, 420); b.hop(50, 420); }, k * 90); });
       if (T.portrait()) camTo(babies[1].x + 95, 280, 1, 500); }; // 세로 화면: 카메라가 아기들을 따라간다 (가로는 그대로)
-    await T.tap(T.root.querySelector('#stageWrap'), { prompt: '화면을 톡톡 눌러서 폴짝폴짝!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await T.tap(T.root.querySelector('#stageWrap'), { prompt: '화면을 톡! 폴짝폴짝!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 5; i++) { hopStep(i); await sleep(700); }
     await sleep(500);
 

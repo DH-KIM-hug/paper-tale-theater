@@ -7,8 +7,8 @@ const NARRATION_CLIPS = {
   "audio/tc/frog/nar_1e50887557.mp3",
   "audio/tc/frog/mom_f5239ada5a.mp3"
  ],
- "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡톡 눌러서 폴짝폴짝 가 볼까요?": "audio/tc/frog/nar_6db6e5b3dc.mp3",
- "화면을 톡톡 눌러서 폴짝폴짝!": "audio/tc/frog/nar_ccb29932bc.mp3",
+ "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?": "audio/tc/frog/nar_6db6e5b3dc.mp3",
+ "화면을 톡! 폴짝폴짝!": "audio/tc/frog/nar_ccb29932bc.mp3",
  "어? 눈앞에 커다란 무언가가 있어요!": "audio/tc/frog/nar_d1264d48f3.mp3",
  "이건 뭘까요? 꼬리일까요, 나무일까요?": "audio/tc/frog/nar_2d27053925.mp3",
  "가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!": "audio/tc/frog/nar_cf05059d15.mp3",

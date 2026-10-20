@@ -19,11 +19,11 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/frog/en/mom_044083da69.mp3"
   ]
  },
- "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡톡 눌러서 폴짝폴짝 가 볼까요?": {
-  "t": "The baby frogs sneaked out to the meadow. Shall we tap, tap, and hop along?",
+ "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?": {
+  "t": "The baby frogs sneaked out to the meadow. Shall we tap and hop along?",
   "c": "audio/tc/frog/en/nar_817784362a.mp3"
  },
- "화면을 톡톡 눌러서 폴짝폴짝!": {
+ "화면을 톡! 폴짝폴짝!": {
   "t": "Tap the screen to hop, hop, hop!",
   "c": "audio/tc/frog/en/nar_957471c95a.mp3"
  },

@@ -16,14 +16,14 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Mama Frog said. \"Children, don't go far away~\"",
   "c": [
    "audio/el/frog/en/nar_7dfc39c97d.mp3",
-   "audio/el/frog/en/mom_c04fea5794.mp3"
+   "audio/el/frog/en/mom_176dacb00f.mp3"
   ]
  },
- "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡톡 눌러서 폴짝폴짝 가 볼까요?": {
-  "t": "The baby frogs sneaked out to the meadow. Shall we tap, tap, and hop along?",
-  "c": "audio/el/frog/en/nar_08a8e6ae98.mp3"
+ "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?": {
+  "t": "The baby frogs sneaked out to the meadow. Shall we tap and hop along?",
+  "c": "audio/el/frog/en/nar_dfacf06a4d.mp3"
  },
- "화면을 톡톡 눌러서 폴짝폴짝!": {
+ "화면을 톡! 폴짝폴짝!": {
   "t": "Tap the screen to hop, hop, hop!",
   "c": "audio/el/frog/en/nar_fb50f0d782.mp3"
  },

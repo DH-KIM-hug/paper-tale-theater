@@ -20,11 +20,11 @@ const NARRATION_CLIPS_EN = {
   "t": "Mama Bear cooked some yummy porridge. But it's too hot!",
   "c": "audio/tc/goldilocks/en/nar_6e8594a8b2.mp3"
  },
- "톡톡 눌러서 후후 불어 줘요!": {
-  "t": "Tap, tap, and blow on it for me!",
+ "톡 눌러서 후후 불어 줘요!": {
+  "t": "Tap once and blow on it for me!",
   "c": "audio/tc/goldilocks/en/nar_da8c43fa4c.mp3"
  },
- "죽을 톡톡 눌러서 후후!": {
+ "죽을 톡! 후후!": {
   "t": "Tap the porridge and blow! Whoo!",
   "c": "audio/tc/goldilocks/en/nar_79afcc8299.mp3"
  },
