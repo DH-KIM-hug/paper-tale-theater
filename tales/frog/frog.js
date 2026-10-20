@@ -1,5 +1,5 @@
 /* 황소와 개구리 — 페이퍼아트 그림 버전 (그림이 아직 없는 것은 임시 도형). 기획: TALES_PLAN.md §2
-   "누가 더 커?" 비교 놀이 → 엄마 개구리 부풀리기 → 뻥! 풍선처럼 날아다니다 퐁당 → 폴짝 대회 → 밤 연못 합창.
+   "누가 더 커?" 비교 놀이 → 엄마개구리 부풀리기 → 뻥! 풍선처럼 날아다니다 퐁당 → 폴짝 대회 → 밤 연못 합창.
    3~4세 순화: 개구리는 터져 다치지 않는다 — 공기가 빠지며 날아다니다 원래 크기로 돌아온다.
    - 배경: 장면마다 한 장(assets/v3w/frog_bg_*.webp)을 무대 전체에 깐다. 깊이감은 그림 속 종이 층이 맡는다.
    - 배우: 같은 배우 틀(발끝 = 배우 y) 안에 그림(<image>)을 넣는다. 톡 대상·크기·방향·폴짝은 그대로. */
@@ -104,7 +104,7 @@
     upd();
     return parts;
   }
-  /* 엄마 개구리: 그림(기본·날기·부푼·어지러운)이 있으면 그림, 없으면 임시 도형. 그림은 정면이라 돌려세우지 않는다 */
+  /* 엄마개구리: 그림(기본·날기·부푼·어지러운)이 있으면 그림, 없으면 임시 도형. 그림은 정면이라 돌려세우지 않는다 */
   function drawMom(T, g) {
     // 상자 크기 = 원본 그림 크기 × 같은 배율 (자세를 바꿔도 몸 크기가 튀지 않게)
     const p = poseArt(T, g, { base: ['mom', 76, 94], flying: ['mom_flying', 80, 63], puffed: ['mom_puffed', 97, 93], dizzy: ['mom_dizzy', 74, 87] });
@@ -284,7 +284,7 @@
       b.parts.lids.setAttribute('opacity', 0); b.hop(40); T.pop(inV(b.x), b.y - 80, '개굴!', C.pine); AudioFX.animalNote('frog', [1.19, 1.0, 1.33][bi], .85) || croak(T, 420); // 깨울 때는 개구리 울음 효과음
       await sleep(300);
     }
-    await say('엄마 개구리가 말했어요. "얘들아, 멀리 가면 안 된다~"');
+    await say('엄마개구리가 말했어요. "얘들아, 멀리 가면 안 된다~"');
 
     /* --- 2. 풀밭 모험 --- */
     await T.sceneCard('풀밭', () => {
@@ -344,7 +344,7 @@
     babies.forEach(b => b.hop(30));
     await cutArt(T, [['cut_monster', 'surprise']], 3000); // 그림 컷: 아기들이 본 '괴물' (대사와 겹치면 연출 카메라가 못 돌아온다 → 따로)
     await say('"엄마! 산처럼 커다란 괴물을 봤어요!"');
-    await say('엄마 개구리가 말했어요. "흥, 얼마나 컸는데?"');
+    await say('엄마개구리가 말했어요. "흥, 얼마나 컸는데?"');
 
     /* --- 5. 누가 더 커요? (비교 놀이) --- */
     let floor = 470;
@@ -388,7 +388,7 @@
     }
     camSnap(500, 280, 1);
 
-    /* --- 6. 엄마 개구리 부풀리기 --- */
+    /* --- 6. 엄마개구리 부풀리기 --- */
     await T.sceneCard('연못가', () => {
       T.clear(); pondBG(T);
       actor(T.world, 520, 500, g => drawOx(T, g, { dotted: true }), { scale: 1.15 });
@@ -398,11 +398,11 @@
       const spots = ART.bg_pond ? [PADS.day[0], PADS.day[1], PADS.day[4]] : [150, 230, 860].map(x => [Math.round(500 + (x - 500) * k), 500]);
       babies.forEach((b, i) => { T.world.appendChild(b.pos); b.place(...spots[i]); });
     });
-    await say('"흥, 나도 황소만큼 클 수 있어!" 엄마 개구리가 숨을 크게 들이마셨어요.');
-    await say('엄마 개구리를 톡톡 눌러서 부풀려 볼까요?');
+    await say('"흥, 나도 황소만큼 클 수 있어!" 엄마개구리가 숨을 크게 들이마셨어요.');
+    await say('엄마개구리를 톡톡 눌러서 부풀려 볼까요?');
     const SIZES = [1, 1.35, 1.7, 2.05, 2.4, 2.75, 3.1, 3.4, 3.65];
     const cheer = { 2: '"아직 황소가 더 커요!"', 5: '"와, 양만큼 커졌다! 그래도 황소가 더 커요!"' };
-    await T.mash(mom.pos, { count: 8, prompt: '엄마 개구리를 톡톡 눌러 봐요!', onStep: i => {
+    await T.mash(mom.pos, { count: 8, prompt: '엄마개구리를 톡톡 눌러 봐요!', onStep: i => {
       T.tone([200 + i * 40, 420 + i * 40], .25, { type: 'sine', vol: .18 });
       mom.body.style.transition = 'transform .35s cubic-bezier(.3,1.6,.5,1)';
       mom.body.style.transform = `scale(${SIZES[i] * 1.08}, ${SIZES[i]})`;
@@ -414,32 +414,16 @@
     /* --- 7. 부들부들 --- */
     const shiver = mom.body.animate([{ translate: '0 0' }, { translate: '4px 0' }, { translate: '-4px 0' }], { duration: 120, iterations: Infinity });
     babies.forEach(b => b.parts.hands.setAttribute('opacity', 1));
-    await say('엄마 개구리가 부들부들 떨려요. 어어… 한 번 더 누르면 어떻게 될까?');
-    await Promise.race([T.tap(mom.pos), sleep(8000)]);
-    shiver.cancel();
-
-    /* --- 8. 뻥! → 풍선처럼 날아다니다 퐁당 --- */
-    vo('cut_pop'); // 컷 속 엄마 개구리 비명 (말풍선 없음)
-    await (cutArt(T, [['cut_pop', 'boom'], ['cut_fly', 'whoosh', 2000]]) || T.cut(svg => {
-      T.el('circle', { cx: 200, cy: 150, r: 110, fill: C.pine }, svg);
-      T.el('ellipse', { cx: 200, cy: 170, rx: 70, ry: 50, fill: C.cream }, svg);
-      T.el('text', { x: 200, y: 175, 'text-anchor': 'middle', 'font-size': 90, fill: '#A93B32', stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('뻥!') }, svg);
-    }, { sfx: 'boom' }));
-    babies.forEach(b => b.parts.hands.setAttribute('opacity', 0));
-    momArt.set('flying');
-    mom.body.style.transition = 'transform 3s linear';
-    mom.body.style.transform = 'scale(1.6)';
-    // 세로 화면: 살짝 물러서고, 보이는 폭 안에서만 날아다닌다 (가로는 fz = fk = 1)
-    const fz = T.portrait() ? .72 : 1; if (fz < 1) camSnap(500, 280, fz);
-    const fk = Math.min(1, (T.viewWidth() / 2 / fz - 150) / 320), FX = x => Math.round(500 + (x - 500) * fk); // 세로 화면: 보이는 폭 안에서만 날아다닌다
-    const fly = mom.pos.animate([
-      { transform: `translate(${FX(520)}px,500px)` }, { transform: `translate(${FX(760)}px,220px) rotate(40deg)` }, { transform: `translate(${FX(300)}px,160px) rotate(-30deg)` },
-      { transform: `translate(${FX(820)}px,380px) rotate(60deg)` }, { transform: `translate(${FX(200)}px,330px) rotate(-50deg)` }, { transform: `translate(${FX(520)}px,200px)` },
-    ], { duration: 9000, iterations: Infinity, easing: 'ease-in-out' }); // 아이가 따라가 누를 수 있게 천천히 (3.6초 → 9초 한 바퀴, 2026-10-19)
-    mom.pos.removeAttribute('transform');
-    const whoosh = setInterval(() => T.tone([900, 300], .35, { type: 'sawtooth', vol: .06 }), 1000);
-    await say('푸슈슈슉~ 엄마 개구리가 풍선처럼 날아다녀요! 톡 눌러서 잡아 줘요!');
-    await T.tap(mom.pos, { prompt: '날아다니는 엄마 개구리를 톡!' });
+    await say('엄마개구리가 부들부들 떨려요. 어어… 한 번 더 누르면 어떻게 될까?');
+    const caught = T.tap(mom.pos, { prompt: '날아다니는 엄마개구리를 톡!' });
+    const near = e => {
+      const r = mom.body.getBoundingClientRect(), pad = Math.max(40, r.width * .35);
+      if (e.clientX < r.left - pad || e.clientX > r.right + pad || e.clientY < r.top - pad || e.clientY > r.bottom + pad) return;
+      mom.pos.dispatchEvent(new PointerEvent('pointerdown', { bubbles: false })); // T.tap 이 정리까지 맡는다
+    };
+    document.addEventListener('pointerdown', near, true);
+    await caught;
+    document.removeEventListener('pointerdown', near, true);
     clearInterval(whoosh); fly.cancel();
     if (fz < 1) camSnap(500, 280, 1);
     mom.body.style.transition = ''; mom.body.style.transform = '';
@@ -450,7 +434,7 @@
     for (let k = 0; k < 3; k++) el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(28 0)` }, stars);
     stars.animate([{ transform: 'translate(500px,370px) rotate(0)' }, { transform: 'translate(500px,370px) rotate(360deg)' }], { duration: 1200, iterations: 3 });
     [0, .15, .3].forEach(w => T.tone([700, 500], .12, { type: 'triangle', vol: .14, when: w }));
-    await say('엄마 개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.');
+    await say('엄마개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.');
     stars.remove();
 
     /* --- 9. 폴짝 대회 --- */
@@ -472,7 +456,7 @@
       mom.pos.animate([{ transform: `translate(${mom.x}px,${mom.y}px) scale(1.2)` }, { transform: `translate(${(mom.x + x) / 2}px,${y - 120}px) scale(1.2)` }, { transform: `translate(${x}px,${y}px) scale(1.2)` }], { duration: 420, easing: 'ease-out' });
       mom.place(x, y); if (T.portrait()) camTo(x, 280, 1, 420);
     };
-    await T.tap(mom.pos, { prompt: '엄마 개구리를 톡 눌러서 폴짝!' }); // 한 번 누르면 연잎 다섯 장을 저절로 (2026-10-19)
+    await T.tap(mom.pos, { prompt: '엄마개구리를 톡 눌러서 폴짝!' }); // 한 번 누르면 연잎 다섯 장을 저절로 (2026-10-19)
     for (let i = 1; i <= 5; i++) { padStep(); await sleep(650); }
     await sleep(500);
     oxArt.set('stand');

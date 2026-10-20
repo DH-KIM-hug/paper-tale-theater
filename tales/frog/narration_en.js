@@ -12,7 +12,7 @@ const NARRATION_CLIPS_EN = {
   "t": "Tap a sleeping baby frog!",
   "c": "audio/tc/frog/en/nar_625cbc46ec.mp3"
  },
- "엄마 개구리가 말했어요. \"얘들아, 멀리 가면 안 된다~\"": {
+ "엄마개구리가 말했어요. \"얘들아, 멀리 가면 안 된다~\"": {
   "t": "Mama Frog said. \"Children, don't go far away~\"",
   "c": [
    "audio/tc/frog/en/nar_5fa88f6754.mp3",
@@ -79,7 +79,7 @@ const NARRATION_CLIPS_EN = {
   "t": "\"Mama! I saw a monster as big as a mountain!\"",
   "c": "audio/tc/frog/en/baby_4f27daaecb.mp3"
  },
- "엄마 개구리가 말했어요. \"흥, 얼마나 컸는데?\"": {
+ "엄마개구리가 말했어요. \"흥, 얼마나 컸는데?\"": {
   "t": "Mama Frog said. \"Hmph, how big was it?\"",
   "c": [
    "audio/tc/frog/en/nar_5fa88f6754.mp3",
@@ -162,18 +162,18 @@ const NARRATION_CLIPS_EN = {
   "t": "That's right! The ox is bigger!",
   "c": "audio/tc/frog/en/nar_b45db3b6d8.mp3"
  },
- "\"흥, 나도 황소만큼 클 수 있어!\" 엄마 개구리가 숨을 크게 들이마셨어요.": {
+ "\"흥, 나도 황소만큼 클 수 있어!\" 엄마개구리가 숨을 크게 들이마셨어요.": {
   "t": "\"I can be as big as an ox!\" Mama Frog took a deep breath.",
   "c": [
    "audio/tc/frog/en/mom_1aaf0ac63c.mp3",
    "audio/tc/frog/en/nar_b18f50b00a.mp3"
   ]
  },
- "엄마 개구리를 톡톡 눌러서 부풀려 볼까요?": {
+ "엄마개구리를 톡톡 눌러서 부풀려 볼까요?": {
   "t": "Shall we tap, tap, and puff up Mama Frog?",
   "c": "audio/tc/frog/en/nar_dd4e176fcb.mp3"
  },
- "엄마 개구리를 톡톡 눌러 봐요!": {
+ "엄마개구리를 톡톡 눌러 봐요!": {
   "t": "Tap, tap, tap Mama Frog!",
   "c": "audio/tc/frog/en/nar_18ac544304.mp3"
  },
@@ -185,19 +185,19 @@ const NARRATION_CLIPS_EN = {
   "t": "\"Wow, as big as a sheep! But the ox is still bigger!\"",
   "c": "audio/tc/frog/en/babyc_04f4f92d97.mp3"
  },
- "엄마 개구리가 부들부들 떨려요. 어어… 한 번 더 누르면 어떻게 될까?": {
+ "엄마개구리가 부들부들 떨려요. 어어… 한 번 더 누르면 어떻게 될까?": {
   "t": "Mama Frog is trembling and wobbling. Uh-oh... what happens if we tap one more time?",
   "c": "audio/tc/frog/en/nar_e5a89e4b44.mp3"
  },
- "푸슈슈슉~ 엄마 개구리가 풍선처럼 날아다녀요! 톡 눌러서 잡아 줘요!": {
+ "푸슈슈슉~ 엄마개구리가 풍선처럼 날아다녀요! 톡 눌러서 잡아 줘요!": {
   "t": "Fshhhhh~ Mama Frog is flying around like a balloon! Tap to catch her!",
   "c": "audio/tc/frog/en/nar_9272ea01bd.mp3"
  },
- "날아다니는 엄마 개구리를 톡!": {
+ "날아다니는 엄마개구리를 톡!": {
   "t": "Tap Mama Frog as she flies!",
   "c": "audio/tc/frog/en/nar_133b854c08.mp3"
  },
- "엄마 개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.": {
+ "엄마개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.": {
   "t": "Mama Frog was back to her normal size. Dizzy as she was, she laughed ha ha ha.",
   "c": "audio/tc/frog/en/nar_d4b0702982.mp3"
  },
@@ -208,7 +208,7 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/frog/en/ox_1ed73c276b.mp3"
   ]
  },
- "엄마 개구리를 톡 눌러서 폴짝!": {
+ "엄마개구리를 톡 눌러서 폴짝!": {
   "t": "Tap Mama Frog to hop!",
   "c": "audio/tc/frog/en/nar_14643dd54a.mp3"
  },
