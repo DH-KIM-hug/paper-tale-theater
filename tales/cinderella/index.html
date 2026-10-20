@@ -8,9 +8,8 @@
 <link rel="stylesheet" href="../../engine/tale.css">
 </head>
 <body>
+<!-- 2026-10-20 새 기획(페로 판, 10장): 녹음은 Typecast 만 있다. 예전 ElevenLabs·영어 녹음(narration_el*.js, narration_en.js)은 옛 대사라 싣지 않는다 -->
 <script src="narration.js"></script>
-<script>try { if (localStorage.getItem('lang') === 'en') document.write('<script src="narration_en.js"><\/script>'); } catch (e) { /* 영어 자료 없이 한국어로 */ }</script>
-<script>try { const q = new URLSearchParams(location.search).get('voice'); if (q === 'tc') localStorage.setItem('voice', 'tc'); else if (q === 'el') localStorage.removeItem('voice'); if (localStorage.getItem('voice') !== 'tc') document.write('<script src="narration_el.js"><\/script>' + (localStorage.getItem('lang') === 'en' ? '<script src="narration_el_en.js"><\/script>' : '')); } catch (e) { /* ElevenLabs 없이 Typecast 로 */ }</script>
 <script src="../../entitlements.js"></script>
 <script src="../../audio.js"></script>
 <script src="../../engine/tale.js"></script>
