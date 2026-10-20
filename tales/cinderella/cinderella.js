@@ -130,7 +130,7 @@
     const fairy = mk(T, { appear: 'fairy_appear', wand: 'fairy_wand' });
     const prince = mk(T, { stand: 'prince_stand', dance: 'prince_dance', slipper: 'prince_slipper' });
     const mice = Array.from({ length: 6 }, () => prop(T, 'mouse', 44));
-    const horses = Array.from({ length: 6 }, () => prop(T, 'horse', 130));
+    const horses = Array.from({ length: 6 }, () => prop(T, 'horse', 178)); // 마차(키 230) 앞에서 작아 보여 키움 (2026-10-20)
     const rat = prop(T, 'rat', 60), lizard = prop(T, 'lizard', 40);
     const coachman = prop(T, 'coachman', hOf('cind_stand') * .95), footman = prop(T, 'footman', hOf('cind_stand') * .95);
     const pumpkin = prop(T, 'prop_pumpkin', 120), coach = prop(T, 'prop_coach', 230), trap = prop(T, 'prop_trap', 92);
@@ -266,7 +266,7 @@
     sparkle(T, X(620, 530), FL - 40, 200, 16);
     await Promise.all(mice.map(m => fadeOut(T, m, 400)));
     hide(trap);
-    const HX = X([390, 500, 610], [300, 400, 500]);
+    const HX = X([370, 500, 630], [380, 500, 620]);
     if (P) T.camTo(360, 280, 1, 700);
     horses.forEach((h, i) => { put(T, h, HX[i >> 1] + (i % 2) * 34, FL - (i % 2 ? 0 : 18), { to: 'right', s: i % 2 ? 1 : .92 }); fadeIn(h, 500); });
     /* 뒷줄(짝수) 말을 앞줄 뒤로 */
