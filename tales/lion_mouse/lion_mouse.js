@@ -669,7 +669,7 @@
     // 사자가 풀려난다
     await Promise.all([hRopes, ...ropes.map(r => r.g)].map(n => T.anim(n, [{ opacity: n.getAttribute('opacity') || 1 }, { opacity: 0 }], 600)));
     lion.pos.remove();
-    lion = mk(T, T.world, 600, 520, drawLionStand, 1.6); lion.parts.eyes('happy');
+    lion = mk(T, T.world, 600, 520, drawLionStand, 1.9); lion.parts.eyes('happy'); // 2026-10-20 크기 일관성: 바로 앞 누운 사자(2.0)와 머리 크기가 같도록 1.6 → 1.9 (선 사자 머리 약 17% 작아 보이던 것)
     T.world.appendChild(mouse.pos);
     roar(T, .35); T.pop(440, 200, '어흥~', C.persimmon);
     T.confetti();
