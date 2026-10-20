@@ -280,5 +280,16 @@ const TALES = (() => {
       <circle cx="68" cy="24" r="7" fill="${c.am}"/><circle cx="92" cy="24" r="7" fill="${c.am}"/>
       <circle cx="18" cy="84" r="6" fill="${c.am}"/><circle cx="32" cy="84" r="6" fill="${c.am}"/><circle cx="128" cy="84" r="6" fill="${c.am}"/><circle cx="142" cy="84" r="6" fill="${c.am}"/>
       <circle cx="25" cy="74" r="6" fill="${c.am}"/><circle cx="135" cy="74" r="6" fill="${c.am}"/></g>` },
+
+  { id: 'snow_white', title: '백설공주', origin: 'world', skills: ['count', 'heart'], ready: false, making: true,
+    line: '난쟁이 집 침대를 하나부터 여덟까지 세고, 낯선 사람이 주는 건 어른에게 먼저 물어봐요.',
+    en: { title: 'Snow White', line: 'Count the beds in the dwarfs\' house from one to eight, and ask a grown-up before taking things from strangers.' },
+    art: `<rect width="160" height="110" fill="${c.lf}"/>
+      <g class="pc"><rect y="88" width="160" height="22" fill="${c.pn}"/>
+      <path d="M58 92 L64 56 Q78 48 92 56 L98 92Z" fill="${c.sn}"/><rect x="62" y="64" width="32" height="5" fill="#7FA8D8"/>
+      <circle cx="78" cy="40" r="15" fill="${c.ink}"/><circle cx="78" cy="44" r="11" fill="${c.sk}"/><path d="M70 26 l3 6 5 -7 5 7 3 -6 v8 h-16z" fill="${c.gd}"/>
+      ${eye(74, 44, 1.6)}${eye(82, 44, 1.6)}<path d="M76 50 q2 1.5 4 0" stroke="${c.rd}" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <circle cx="120" cy="74" r="12" fill="${c.rd}"/><path d="M120 62 q2 -6 6 -7" stroke="${c.bk}" stroke-width="2.5" fill="none"/><path d="M122 61 q8 -6 12 0 q-6 4 -12 0z" fill="${c.pn}"/>
+      ${[[18, ''], [34, ''], [130, '']].map(([x]) => `<path d="M${x} 92 v-12 l6 -12 6 12 v12z" fill="${c.rd}"/>`).join('')}</g>` },
   ];
 })();

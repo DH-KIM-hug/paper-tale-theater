@@ -32,6 +32,7 @@ SPEC = {
  'magpie':   ('#2F4A6B', '#6B8E5B', ('#F6ECD8', .82, .22, .10), [('mg_scholar_walk', .66, .86, 0), ('mg_mag_mom_sit', .32, .56, 1)], .84),
  'hansel':   ('#8FAE72', '#6B4E3A', ('#FFF1C8', .82, .20, .09), [('hg_hans_joy', .34, .84, 0), ('hg_gret_clever', .68, .82, 0)], .84),
  'cinderella': ('#B9A4DC', '#5E7FB4', ('#FFF6D8', .82, .20, .09), [('cd_cind_gown', .38, .88, 0), ('cd_mouse', .78, .40, 1)], .84),
+ 'snow_white': ('#9CCFEA', '#7FB46A', ('#FFF6D8', .84, .20, .09), [('sw_snow_stand', .36, .86, 0), ('sw_dwarf_smile', .72, .50, 0)], .84),
 }
 
 def shadow(im, dx=0, dy=10, blur=12, op=.30):
