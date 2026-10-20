@@ -9,27 +9,26 @@
    (미리 받아 보고 있으면 쓰고, 그림의 실제 가로세로 비율은 파일에서 읽어 ASP 를 덮어쓴다). */
 (() => {
   const AS = '../../assets/v3w/';
-  /* 그림 폭/높이 비율 — 첫 값은 SPEC 기준 어림값(자리표시용). 그림이 있으면 파일의 실제 비율로 덮어쓴다 (tales/little_mermaid/ASP.txt 로 갱신 가능) */
+  /* 그림 폭/높이 비율 (ASP.txt 와 같다). 그림이 있으면 파일의 실제 비율로 한 번 더 덮어쓴다 */
   const ASP = {
-    mer_swim: .62, mer_garden: .8, mer_peek: .8, mer_hide: .9, mer_hold: 1.6, mer_worry: .6, mer_resolve: .6, mer_sit_tail: .75, mer_stand: .5,
-    mer_wobble_a: .52, mer_wobble_b: .52, mer_dance: .6, mer_sad: .5, mer_shake: .5, mer_throw: .7, mer_bubble: 1.0,
-    sisters_long: 2.4, sisters_short: 2.0, king: .75, granny_talk: .55, granny_hand: .6,
-    prince_stand: .45, prince_float: 1.5, prince_lie: 1.55, prince_wake: .75, prince_dance: .5, prince_sleep: .7,
-    witch_stand: .55, witch_hand: .6, lady_stand: .45, lady_wed: .5, lady_sleep: .7, gull: 1.3, fish_a: 1.3, fish_b: 1.3, fish_c: 1.3,
-    prop_ship_lantern: 1.8, prop_ship_tilt: 1.8, prop_ship_flower: 1.8, prop_fw_a: 1, prop_fw_b: 1, prop_fw_c: 1,
-    prop_stone: 1.1, prop_wood: 1.6, prop_anchor: .9, prop_bottle_cork: .6, prop_cauldron_dim: 1, prop_cauldron_glow: 1,
-    prop_potion_empty: .65, prop_potion_full: .65, prop_shell_pearl: 1.2,
-    item_shell: 1, item_starfish: 1, item_butterfly: 1, item_bird: 1, item_rabbit: 1, item_flower: 1, item_tree: 1, item_dog: 1,
-    prop_dagger: 2, prop_glint: 1, prop_ripple: 3, prop_bubble: 1, prop_wind: 2.9, prop_rock: 1.3, prop_cloud_dark: 2,
-    prop_wave: 8, prop_wave_big: 4, prop_sun: 1.3 };
+    mer_swim: 0.6683, mer_garden: 0.7233, mer_peek: 1.0333, mer_hide: 0.9033, mer_hold: 1.9956, mer_worry: 0.6217, mer_resolve: 0.6217,
+    mer_sit_tail: 0.7367, mer_stand: 0.6667, mer_wobble_a: 0.7883, mer_wobble_b: 0.7467, mer_dance: 0.8233, mer_sad: 0.6283, mer_shake: 0.6717,
+    mer_throw: 0.9117, mer_bubble: 0.9983, sisters_long: 2.1845, sisters_short: 3.1915, king: 0.6167, granny_talk: 0.68, granny_hand: 0.74,
+    prince_stand: 0.38, prince_float: 3.125, prince_lie: 2.8125, prince_wake: 0.9367, prince_dance: 0.54, prince_sleep: 0.76, witch_stand: 0.7133,
+    witch_hand: 0.7983, lady_stand: 0.445, lady_wed: 0.4467, lady_sleep: 0.7667, gull: 1.1417, fish_a: 1.49, fish_b: 1.4867, fish_c: 1.4867,
+    prop_ship_lantern: 1.6453, prop_ship_tilt: 1.6334, prop_ship_flower: 1.6514, prop_fw_a: 1.01, prop_fw_b: 0.91, prop_fw_c: 1.0033, prop_stone: 1.435,
+    prop_wood: 2.0785, prop_anchor: 0.8733, prop_bottle_cork: 0.5317, prop_cauldron_dim: 1.0183, prop_cauldron_glow: 0.89, prop_potion_empty: 0.6117,
+    prop_potion_full: 0.6117, prop_shell_pearl: 0.9633, item_shell: 1.085, item_starfish: 1.08, item_butterfly: 1.3583, item_bird: 1.115,
+    item_rabbit: 0.6883, item_flower: 0.705, item_tree: 0.8483, item_dog: 0.9333, prop_dagger: 5.2326, prop_glint: 0.9217, prop_ripple: 3.5019,
+    prop_bubble: 1, prop_wind: 2.6866, prop_rock: 1.5254, prop_cloud_dark: 1.9694, prop_wave: 8.7379, prop_wave_big: 3.6145, prop_sun: 1.4917 };
   /* 사람·인어 자세별 높이(px). 머리 지름이 모두 ≈80px (SPEC §3) */
-  const HT = { mer_swim: 220, mer_garden: 175, mer_peek: 125, mer_hide: 140, mer_hold: 150, mer_worry: 220, mer_resolve: 220, mer_sit_tail: 190,
-    mer_stand: 205, mer_wobble_a: 205, mer_wobble_b: 205, mer_dance: 205, mer_sad: 205, mer_shake: 205, mer_throw: 210, mer_bubble: 230,
-    sisters_long: 225, sisters_short: 130, king: 228, granny_talk: 222, granny_hand: 222,
-    prince_stand: 212, prince_float: 120, prince_lie: 115, prince_wake: 165, prince_dance: 212, prince_sleep: 150,
-    witch_stand: 228, witch_hand: 228, lady_stand: 208, lady_wed: 208, lady_sleep: 150, gull: 60, fish_a: 36, fish_b: 36, fish_c: 36 };
+  const HT = { mer_swim: 205, mer_garden: 168, mer_peek: 140, mer_hide: 145, mer_hold: 130, mer_worry: 205, mer_resolve: 205, mer_sit_tail: 190,
+    mer_stand: 205, mer_wobble_a: 205, mer_wobble_b: 205, mer_dance: 205, mer_sad: 205, mer_shake: 205, mer_throw: 210, mer_bubble: 260,
+    sisters_long: 240, sisters_short: 130, king: 228, granny_talk: 230, granny_hand: 230,
+    prince_stand: 200, prince_float: 85, prince_lie: 82, prince_wake: 150, prince_dance: 200, prince_sleep: 130,
+    witch_stand: 235, witch_hand: 235, lady_stand: 208, lady_wed: 208, lady_sleep: 150, gull: 60, fish_a: 36, fish_b: 36, fish_c: 36 };
   /* 그림이 보는 쪽 ('left' | 'right' | 'front') */
-  const NAT = { mer_swim: 'left', mer_garden: 'front', mer_peek: 'front', mer_hide: 'right', mer_hold: 'left', mer_worry: 'left', mer_resolve: 'left',
+  const NAT = { mer_swim: 'left', mer_garden: 'front', mer_peek: 'left', mer_hide: 'right', mer_hold: 'left', mer_worry: 'left', mer_resolve: 'left',
     mer_sit_tail: 'front', mer_stand: 'front', mer_wobble_a: 'front', mer_wobble_b: 'front', mer_dance: 'right', mer_sad: 'front', mer_shake: 'front',
     mer_throw: 'left', mer_bubble: 'front', sisters_long: 'front', sisters_short: 'front', king: 'front', granny_talk: 'left', granny_hand: 'left',
     prince_stand: 'front', prince_float: 'left', prince_lie: 'left', prince_wake: 'right', prince_dance: 'left', prince_sleep: 'left',
@@ -299,7 +298,7 @@
     const cauldron = mk(T, { dim: ['prop_cauldron_dim', 150], glow: ['prop_cauldron_glow', 150] });
     const potion = mk(T, { empty: ['prop_potion_empty', 44], full: ['prop_potion_full', 44] });
     const shell = prop(T, 'prop_shell_pearl', 64);
-    const dagger = prop(T, 'prop_dagger', 30), rock = prop(T, 'prop_rock', 150);
+    const dagger = prop(T, 'prop_dagger', 18), rock = prop(T, 'prop_rock', 120);
     const clouds = [prop(T, 'prop_cloud_dark', 160), prop(T, 'prop_cloud_dark', 160)];
     const wave = prop(T, 'prop_wave', 110), waves = [prop(T, 'prop_wave_big', 180), prop(T, 'prop_wave_big', 180)];
     const sun = prop(T, 'prop_sun', 120), wind = [prop(T, 'prop_wind', 90), prop(T, 'prop_wind', 90)];
@@ -313,13 +312,13 @@
 
     /* ===== 1. 바다 밑 궁전 (배움 놀이: 뜨고 가라앉기) ===== */
     scene('palace');
-    put(T, king, X(830, 700), 512, { to: 'left' });
-    put(T, granny, X(930, 790), 516, { look: 'talk', to: 'left' });
-    put(T, sisters, X(500, 430), 300, { look: 'long' });
-    put(T, mer, X(200, 440), 520, { look: 'garden' });
+    put(T, king, X(690, 700), 512, { to: 'left' });
+    put(T, granny, X(880, 810), 516, { look: 'talk', to: 'left' });
+    put(T, sisters, X(500, 430), 300, { look: 'long', s: X(1, .93) });
+    put(T, mer, X(200, 340), 520, { look: 'garden' });
     const fxs = X([120, 640, 760], [380, 560, 600]), fys = X([380, 200, 430], [380, 200, 430]);
     fish.forEach((f, i) => { put(T, f, fxs[i], fys[i], { to: i % 2 ? 'left' : 'right' }); drift(f, 24 * (i % 2 ? -1 : 1), 12, 3000 + i * 500); });
-    if (P) camSnap(500, 280, 1);
+    if (P) camSnap(440, 280, 1);
     await T.curtain(true);
     bubblesUp(T, X(520, 500), 420, 4);
     sisters.hop(8, 600); king.hop(6, 600);
@@ -329,24 +328,24 @@
     await say('막내 인어공주는 조용하고 생각이 많았어요. 정원에는 배에서 떨어진 물건을 모았어요.');
     /* 뜨고 가라앉기 두 문제 */
     const sinkRound = async (a, b, ax, bx, prompt, wrongLine, rightLine, land, ground) => {
-      [[a, ax], [b, bx]].forEach(([o, x]) => { put(T, o, x, 20); hit(T, o, 62); fadeIn(o, 900); });
-      await Promise.all([a.move(ax, 150, 900, 'ease-out'), b.move(bx, 150, 900, 'ease-out')]);
+      [[a, ax], [b, bx]].forEach(([o, x]) => { put(T, o, x, 300); hit(T, o, 62); fadeIn(o, 900); });
+      await Promise.all([a.move(ax, 400, 900, 'ease-out'), b.move(bx, 400, 900, 'ease-out')]);
       await say(prompt);
       await T.choose([{ el: a.pos, ok: true }, { el: b.pos, ok: false, onWrong: async () => {
-        b.pos.animate([{ translate: '0 0' }, { translate: '0 -70px' }, { translate: '0 0' }], 900);
-        T.pop(b.x, 60, tr('떠요'));
+        b.pos.animate([{ translate: '0 0' }, { translate: '0 -120px' }, { translate: '0 0' }], 900);
+        T.pop(b.x, 300, tr('떠요'));
         await say(wrongLine);
       } }], { prompt });
-      sfx(T, 'bubbles'); bubblesUp(T, a.x, 150, 5, 120);
-      const lift = b.move(b.x, -80, 1200).then(() => hide(b));
-      T.pop(a.x, 90, tr('가라앉아요'));
+      sfx(T, 'bubbles'); bubblesUp(T, a.x, 400, 5, 120);
+      const lift = b.move(b.x, 150, 1200).then(() => hide(b));
+      T.pop(a.x, 330, tr('가라앉아요'));
       await a.move(land[0], ground, 2400, 'ease-in');
       sfx(T, 'paper_down', () => popSfx(T)); glow(a, 1000); mer.hop(10, 360);
       await Promise.all([lift, say(rightLine)]);
     };
-    await sinkRound(stone, wood, X(300, 440), X(480, 580), '무거운 것은 가라앉고, 가벼운 것은 떠요. 어느 것이 바다 밑까지 내려올까요?',
+    await sinkRound(stone, wood, X(300, 440), X(480, 560), '무거운 것은 가라앉고, 가벼운 것은 떠요. 어느 것이 바다 밑까지 내려올까요?',
       '나무토막은 가벼워서 둥둥 떠요.', '무거운 돌이 가라앉았어요!', [X(240, 470)], 500);
-    await sinkRound(anchor, bottle, X(300, 440), X(480, 580), '이번에는 어느 것이 가라앉을까요?',
+    await sinkRound(anchor, bottle, X(300, 440), X(480, 560), '이번에는 어느 것이 가라앉을까요?',
       '코르크 병은 가벼워서 둥둥 떠요.', '무거운 닻도 가라앉았어요!', [X(300, 520)], 505);
     await sleep(300);
 
@@ -369,7 +368,7 @@
       scene('night_sea');
       put(T, ship, X(640, 560), WATER + 28, { look: 'lantern' });
       put(T, prince, ship.x + BOW_DX, ship.y + DECK_DY, { look: 'stand', to: 'left' });
-      put(T, mer, X(330, 420), WATER + 12, { look: 'peek' });
+      put(T, mer, X(330, 420), WATER + 12, { look: 'peek', to: 'right' });
       put(T, wave, 500, WATER + 70, { s: waveS() });
       if (P) camSnap(460, 280, 1);
       sky = T.el('rect', { x: X(560, 440) - 170, y: 30, width: 340, height: 200, fill: '#fff', opacity: 0 }, T.world);
@@ -422,7 +421,7 @@
     /* ===== 4. 모래밭 (자동) ===== */
     await T.sceneCard(tr('모래밭'), () => {
       scene('beach');
-      put(T, mer, X(280, 400), 530, { look: 'hide', to: 'right' });
+      put(T, mer, X(300, 420), 470, { look: 'hide', to: 'right' });
       put(T, rock, X(300, 420), 522);
       put(T, prince, X(560, 560), 512, { look: 'lie' });
       if (P) camSnap(500, 280, 1);
@@ -604,7 +603,7 @@
     }, sisters.pos);
     sfx(T, 'bubbles'); sisters.pos.style.opacity = ''; fadeIn(sisters, 900);
     await Promise.all([say('새벽, 배 옆에 언니들이 올라왔어요. 긴 머리가 짧아졌어요.'), sisters.move(250, WATER + 10, 1200, 'ease-out')]);
-    put(T, dagger, sisters.x - sisters.w * .36, WATER - 40); fadeIn(dagger, 300);
+    put(T, dagger, sisters.x - sisters.w * .40, WATER - 12); fadeIn(dagger, 300);
     sisters.hop(8, 400);
     await say('마녀에게 머리카락을 주고 이 단검을 받았어.');
     sisters.wiggle(2, 800);
@@ -642,10 +641,10 @@
       put(T, prince, ship.x - SHIP_W * .10, ship.y + DECK_DY, { look: 'stand', to: 'left' });
       put(T, lady, ship.x + 60, ship.y + DECK_DY, { look: 'wed', to: 'left' });
       put(T, wave, 500, WATER11 + 75, { s: waveS() });
-      put(T, mer, X(300, 380), 300, { look: 'bubble', s: 1 });
+      put(T, mer, X(340, 410), 300, { look: 'bubble', s: 1 });
       put(T, gulls[0], X(150, 250), 120); put(T, gulls[1], X(820, 560), 90);
       gulls.forEach((g, i) => g.pos.animate([{ translate: '-30px 0' }, { translate: '30px -10px' }], { duration: 4000, iterations: Infinity, direction: 'alternate', delay: i * 700 }));
-      if (P) camSnap(460, 280, 1);
+      if (P) camSnap(470, 280, 1);
     }, mer.pos);
     mer.pos.animate([{ translate: '0 0' }, { translate: '0 6px' }], { duration: 1600, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
     hit(T, mer, 70);
