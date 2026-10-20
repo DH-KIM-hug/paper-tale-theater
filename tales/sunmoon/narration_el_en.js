@@ -4,6 +4,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Once upon a time, a mom and her two children, a brother and a sister, lived in a little hut in the mountains.",
   "c": "audio/el/sunmoon/en/nar_1887173919.mp3"
  },
+ "엄마가 일하러 가요. 오누이를 톡 눌러서 인사해요!": {
+  "t": "Mom is going to work. Tap the brother and sister to say goodbye!",
+  "c": "audio/el/sunmoon/en/nar_c3145a505a.mp3"
+ },
  "오빠랑 동생을 톡 눌러서 \"다녀오세요!\" 해 봐요!": {
   "t": "Tap the brother and sister to say \"Take care, Mom!\"",
   "c": "audio/el/sunmoon/en/nar_0ecf32c2c9.mp3"
