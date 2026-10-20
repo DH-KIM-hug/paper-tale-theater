@@ -773,5 +773,7 @@ body.app .card.sel { outline: 3px solid var(--copper); outline-offset: -2px; }
 
 /* 영어 로고(Tok Tok Tale Theater)는 한글보다 길어서 폰 한 줄에서 EN 버튼과 겹친다 → 좁은 화면에서는 글자를 줄여 로고 칸 안에 넣는다 */
 @media (max-width: 520px) {
-  html[lang="en"] body.app .logo { font-size: min(var(--logo), 4.6vw); flex: 1 1 0; min-width: 0; overflow: hidden; }
+  html[lang="en"] body.app .logo { font-size: min(var(--logo), 3.9vw); }
 }
+
+body.app #hero { touch-action: pan-y; } /* 가로로 쓸면 큰 그림이 넘어가게(세로 스크롤은 그대로) */

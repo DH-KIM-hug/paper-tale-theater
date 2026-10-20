@@ -273,6 +273,15 @@
     const hz = $('#hero');
     hz.addEventListener('pointerdown', e => { sx = e.clientX; });
     hz.addEventListener('pointerup', e => { if (sx !== null && Math.abs(e.clientX - sx) > 70) { heroStep(e.clientX < sx ? 1 : -1); hz.dataset.swiped = '1'; setTimeout(() => { delete hz.dataset.swiped; }, 50); } sx = null; });
+    let wheelAt = 0;
+    hz.addEventListener('wheel', e => {  // 트랙패드·마우스 스크롤로도 큰 그림 넘기기
+      const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(d) < 12) return;
+      e.preventDefault();
+      const now = performance.now();
+      if (now - wheelAt < 450) return;
+      wheelAt = now; heroStep(d > 0 ? 1 : -1);
+    }, { passive: false });
     hz.addEventListener('click', e => { if (hz.dataset.swiped) { e.preventDefault(); e.stopPropagation(); } }, true);
   }
 
