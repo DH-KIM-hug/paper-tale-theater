@@ -412,9 +412,12 @@ const Narrator = (() => {
     speechSynthesis.onvoiceschanged = pickVoice;
   }
 
+  /* 보호자 메뉴에서 대사 자막을 껐으면 글 상자를 띄우지 않는다 (목소리는 그대로) */
+  const captionsOff = () => { try { return localStorage.getItem('captions_off') === '1'; } catch (e) { return false; } };
   function showBubble(text) {
     bubbleText().textContent = text;
     const b = bubble();
+    if (captionsOff()) { b.hidden = true; return; }
     b.hidden = false;
     // 재등장 애니메이션 리셋
     b.style.animation = 'none';

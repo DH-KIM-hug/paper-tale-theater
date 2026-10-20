@@ -525,7 +525,8 @@
   function openPanel() {
     if (panelAnim) panelAnim.finish();
     hint.hidden = true;
-    $('#optSpeak').checked = speak; drawTimer();
+    $('#optSpeak').checked = speak; $('#optCaption').checked = !captionsOff();
+    $('#captionLbl').textContent = L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'); drawTimer();
     panel.hidden = false;
     $('#parentClose').focus();
     panelAnim = play(.7, t => {
@@ -547,6 +548,11 @@
   panel.addEventListener('click', e => { if (e.target === panel) closePanel(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) closePanel(); });
   $('#optSpeak').addEventListener('change', e => { speak = e.target.checked; save(); });
+  /* 대사 자막(말풍선 글 상자): 끄면 동화 속에서 목소리만 나온다. 동화 쪽(audio.js showBubble)이 같은 키를 읽는다 */
+  const captionsOff = () => { try { return localStorage.getItem('captions_off') === '1'; } catch (e) { return false; } };
+  $('#optCaption').addEventListener('change', e => {
+    try { if (e.target.checked) localStorage.removeItem('captions_off'); else localStorage.setItem('captions_off', '1'); } catch (err) { /* 저장 못 하면 이번만 */ }
+  });
   /* 놀이 시간 알림: 보호자 메뉴에서 정한다. 시간이 되면 동화가 장면이 바뀔 때 조용히 쉬는 화면을 보여 준다 */
   const TIMES = [0, 10, 15, 20, 30];
   const limitNow = () => { try { return +JSON.parse(localStorage.getItem('play_limit_min')) || 0; } catch (e) { return 0; } };
