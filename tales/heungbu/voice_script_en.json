@@ -60,14 +60,6 @@
    ]
   },
   {
-   "text": "흥부를 톡! 눌러서 집으로 돌아가요.",
-   "en": "Tap Heungbu to go back home."
-  },
-  {
-   "text": "흥부를 톡! 집으로 가요.",
-   "en": "Tap Heungbu! Go home."
-  },
-  {
    "text": "흥부네 초가집 처마에는 제비 가족이 살았어요.",
    "en": "A swallow family lived under the eaves of Heungbu's little house."
   },
@@ -104,32 +96,12 @@
    "en": "When autumn came, the swallow family flew away to a warm country in the south."
   },
   {
-   "text": "제비를 톡! 눌러서 배웅해요.",
-   "en": "Tap the swallow to say goodbye."
-  },
-  {
-   "text": "제비를 톡! 안녕, 잘 가!",
-   "en": "Tap the swallow! Goodbye, take care!"
-  },
-  {
    "text": "봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.",
    "en": "When spring came, the swallow flew back and dropped one gourd seed."
   },
   {
-   "text": "제비를 톡! 눌러서 박씨를 받아요.",
-   "en": "Tap the swallow to get the seed."
-  },
-  {
-   "text": "제비를 톡! 박씨를 받아요.",
-   "en": "Tap the swallow! Get the seed."
-  },
-  {
-   "text": "흥부는 박씨를 마당에 심었어요. 흥부를 톡톡톡 눌러서 물을 줘요!",
-   "en": "Heungbu planted the seed in his yard. Tap Heungbu, tap tap tap, to water it!"
-  },
-  {
-   "text": "흥부를 톡톡톡! 물을 줘요.",
-   "en": "Tap Heungbu, tap tap tap! Water the seed."
+   "text": "흥부는 박씨를 마당에 심었어요.",
+   "en": "Heungbu planted the seed in his yard."
   },
   {
    "text": "쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!",
@@ -194,14 +166,6 @@
    "en": "Nolbu shook the swallow's nest hard. A baby swallow fell!"
   },
   {
-   "text": "아기 제비를 톡! 눌러서 받아 줘요.",
-   "en": "Tap the baby swallow to catch it."
-  },
-  {
-   "text": "아기 제비를 톡! 받아 줘요.",
-   "en": "Tap the baby swallow! Catch it."
-  },
-  {
    "text": "놀부는 서둘러 천을 칭칭 감아 주었어요. \"자, 이제 박씨를 가져와라!\" 제비는 다치지 않고 날아갔어요.",
    "en": "Nolbu hurriedly wrapped a cloth around it. \"Now bring me a gourd seed!\" The swallow was not hurt and flew away.",
    "segs": [
@@ -220,12 +184,8 @@
    ]
   },
   {
-   "text": "놀부네 마당에도 박이 세 통 열렸어요. 박을 톡톡톡 눌러서 세어 봐요!",
-   "en": "Three gourds grew in Nolbu's yard too. Tap the gourds, tap tap tap, to count them!"
-  },
-  {
-   "text": "박을 톡톡톡! 세어 봐요.",
-   "en": "Tap the gourds, tap tap tap! Count them."
+   "text": "놀부네 마당에도 박이 세 통 열렸어요.",
+   "en": "Three gourds grew in Nolbu's yard too."
   },
   {
    "text": "박이 하나, 둘, 셋! 놀부는 기대에 부풀었어요.",
@@ -238,10 +198,6 @@
   {
    "text": "콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.",
    "en": "Splash! Muddy water poured out of the gourd and Nolbu got soaked."
-  },
-  {
-   "text": "두 번째 박을 톡!",
-   "en": "Tap the second gourd!"
   },
   {
    "text": "이번에는 방망이를 든 도깨비가 쑥 나왔어요. \"이 욕심쟁이야!\" 도깨비는 놀부를 놀라게 하고 사라졌어요.",
@@ -260,10 +216,6 @@
      "The Dokkaebi gave Nolbu a fright and then disappeared."
     ]
    ]
-  },
-  {
-   "text": "세 번째 박을 톡!",
-   "en": "Tap the third gourd!"
   },
   {
    "text": "와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.",

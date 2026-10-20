@@ -38,14 +38,6 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/heungbu/en/heung_0c73491c90.mp3"
   ]
  },
- "흥부를 톡! 눌러서 집으로 돌아가요.": {
-  "t": "Tap Heungbu to go back home.",
-  "c": "audio/el/heungbu/en/nar_1214e21028.mp3"
- },
- "흥부를 톡! 집으로 가요.": {
-  "t": "Tap Heungbu! Go home.",
-  "c": "audio/el/heungbu/en/nar_483c53b866.mp3"
- },
  "흥부네 초가집 처마에는 제비 가족이 살았어요.": {
   "t": "A swallow family lived under the eaves of Heungbu's little house.",
   "c": "audio/el/heungbu/en/nar_8ab8a7ee79.mp3"
@@ -82,33 +74,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "When autumn came, the swallow family flew away to a warm country in the south.",
   "c": "audio/el/heungbu/en/nar_eab53554eb.mp3"
  },
- "제비를 톡! 눌러서 배웅해요.": {
-  "t": "Tap the swallow to say goodbye.",
-  "c": "audio/el/heungbu/en/nar_e31f287932.mp3"
- },
- "제비를 톡! 안녕, 잘 가!": {
-  "t": "Tap the swallow! Goodbye, take care!",
-  "c": "audio/el/heungbu/en/nar_9a221c97e4.mp3"
- },
  "봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.": {
   "t": "When spring came, the swallow flew back and dropped one gourd seed.",
   "c": "audio/el/heungbu/en/nar_cb1bbfb38f.mp3"
  },
- "제비를 톡! 눌러서 박씨를 받아요.": {
-  "t": "Tap the swallow to get the seed.",
-  "c": "audio/el/heungbu/en/nar_d5ac3953a7.mp3"
- },
- "제비를 톡! 박씨를 받아요.": {
-  "t": "Tap the swallow! Get the seed.",
-  "c": "audio/el/heungbu/en/nar_7f7c24213e.mp3"
- },
- "흥부는 박씨를 마당에 심었어요. 흥부를 톡톡톡 눌러서 물을 줘요!": {
-  "t": "Heungbu planted the seed in his yard. Tap Heungbu, tap tap tap, to water it!",
-  "c": "audio/el/heungbu/en/nar_971616c542.mp3"
- },
- "흥부를 톡톡톡! 물을 줘요.": {
-  "t": "Tap Heungbu, tap tap tap! Water the seed.",
-  "c": "audio/el/heungbu/en/nar_2d19f5c7db.mp3"
+ "흥부는 박씨를 마당에 심었어요.": {
+  "t": "Heungbu planted the seed in his yard.",
+  "c": "audio/el/heungbu/en/nar_9623bb5f6d.mp3"
  },
  "쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!": {
   "t": "The vine grew and grew, and gourds appeared. Tap the vine, tap tap tap, to count the gourds!",
@@ -165,14 +137,6 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Nolbu shook the swallow's nest hard. A baby swallow fell!",
   "c": "audio/el/heungbu/en/nar_ab5efdeaef.mp3"
  },
- "아기 제비를 톡! 눌러서 받아 줘요.": {
-  "t": "Tap the baby swallow to catch it.",
-  "c": "audio/el/heungbu/en/nar_e86bfd1882.mp3"
- },
- "아기 제비를 톡! 받아 줘요.": {
-  "t": "Tap the baby swallow! Catch it.",
-  "c": "audio/el/heungbu/en/nar_b789d302ca.mp3"
- },
  "놀부는 서둘러 천을 칭칭 감아 주었어요. \"자, 이제 박씨를 가져와라!\" 제비는 다치지 않고 날아갔어요.": {
   "t": "Nolbu hurriedly wrapped a cloth around it. \"Now bring me a gourd seed!\" The swallow was not hurt and flew away.",
   "c": [
@@ -181,13 +145,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/heungbu/en/nar_4277d1ef58.mp3"
   ]
  },
- "놀부네 마당에도 박이 세 통 열렸어요. 박을 톡톡톡 눌러서 세어 봐요!": {
-  "t": "Three gourds grew in Nolbu's yard too. Tap the gourds, tap tap tap, to count them!",
-  "c": "audio/el/heungbu/en/nar_3584c23476.mp3"
- },
- "박을 톡톡톡! 세어 봐요.": {
-  "t": "Tap the gourds, tap tap tap! Count them.",
-  "c": "audio/el/heungbu/en/nar_d31b3c17fe.mp3"
+ "놀부네 마당에도 박이 세 통 열렸어요.": {
+  "t": "Three gourds grew in Nolbu's yard too.",
+  "c": "audio/el/heungbu/en/nar_57ff0e8fe6.mp3"
  },
  "박이 하나, 둘, 셋! 놀부는 기대에 부풀었어요.": {
   "t": "One, two, three gourds! Nolbu was full of hope.",
@@ -201,10 +161,6 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Splash! Muddy water poured out of the gourd and Nolbu got soaked.",
   "c": "audio/el/heungbu/en/nar_6c588287e6.mp3"
  },
- "두 번째 박을 톡!": {
-  "t": "Tap the second gourd!",
-  "c": "audio/el/heungbu/en/nar_d74c166795.mp3"
- },
  "이번에는 방망이를 든 도깨비가 쑥 나왔어요. \"이 욕심쟁이야!\" 도깨비는 놀부를 놀라게 하고 사라졌어요.": {
   "t": "This time, a Dokkaebi with a club popped out. \"You greedy man!\" The Dokkaebi gave Nolbu a fright and then disappeared.",
   "c": [
@@ -212,10 +168,6 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/heungbu/en/dok_a6fc255981.mp3",
    "audio/el/heungbu/en/nar_625df00695.mp3"
   ]
- },
- "세 번째 박을 톡!": {
-  "t": "Tap the third gourd!",
-  "c": "audio/el/heungbu/en/nar_38fd6ce08f.mp3"
  },
  "와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.": {
   "t": "Crash! Nolbu's house fell down. Luckily, nobody was hurt.",

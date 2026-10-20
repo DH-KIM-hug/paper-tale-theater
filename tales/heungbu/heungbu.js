@@ -69,8 +69,6 @@
     await cut('rice', 'pop', 3600);
     await say('형수가 주걱을 휘두르자 흥부 볼에 밥알이 붙었어요. 흥부는 그 밥알을 맛있게 먹었어요.');
     await say('흥부는 웃으며 말했어요. "괜찮아요. 밥알도 맛있어요!"');
-    await say('흥부를 톡! 눌러서 집으로 돌아가요.');
-    await T.tap(h2.pos, { prompt: '흥부를 톡! 집으로 가요.' });
     await h2.move(fx(120), GROUND, 900);
 
     /* 3. 제비집 */
@@ -106,8 +104,6 @@
     await T.sceneCard('가을', () => { scene('sky_autumn', 500); });
     const fly = spr('swallow_fly', 380, 150, 300);
     await say('가을이 되자 제비 가족은 따뜻한 남쪽 나라로 떠났어요.');
-    await say('제비를 톡! 눌러서 배웅해요.');
-    await T.tap(fly.pos, { prompt: '제비를 톡! 안녕, 잘 가!' });
     await fly.move(1150, 240, 1400, 'ease-in');
     await cut('south', 'pop', 3200);
 
@@ -117,15 +113,13 @@
     await sw.move(fx(380), 280, 1300, 'ease-out'); /* 날아와서 머문다 */
     await say('봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.');
     await cut('seedback', 'pop', 3200);
-    await say('제비를 톡! 눌러서 박씨를 받아요.');
-    await T.tap(sw.pos, { prompt: '제비를 톡! 박씨를 받아요.' });
     const seed = spr('seed', 380, 70, 280); seed.place(sw.x, 280);
     await seed.move(fx(560), 470, 600, 'ease-in'); sfx('ding'); sw.hop(16, 300);
     sw.move(1150, 160, 1600, 'ease-in'); /* 박씨를 주고 날아간다 */
-    await say('흥부는 박씨를 마당에 심었어요. 흥부를 톡톡톡 눌러서 물을 줘요!');
-    await T.mash(hp.pos, { count: 3, prompt: '흥부를 톡톡톡! 물을 줘요.', onStep: i => {
-      hp.hop(14, 260); sfx('pop'); T.pop(hp.x - 60, hp.y - 280, ['쑥!', '쑥쑥!', '쑥쑥쑥!'][i - 1]);
-    } });
+    await say('흥부는 박씨를 마당에 심었어요.');
+    for (let i = 1; i <= 3; i++) { /* 저절로 물을 줘요 (2026-10-20 톡 조작 정리) */
+      hp.hop(14, 260); sfx('pop'); T.pop(hp.x - 60, hp.y - 280, ['쑥!', '쑥쑥!', '쑥쑥쑥!'][i - 1]); await sleep(600);
+    }
     await T.sceneCard('박이 열렸어요', () => { scene('yard', 560); });
     const vine = spr('vine', 560, 360), hs = spr('heung_saw', 380, 300), hw2 = spr('hwife_joy', 195, 300); /* 2026-10-20 새 그림이 더 넓어 둘이 겹치던 것 벌림 */
     await say('쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!');
@@ -143,6 +137,7 @@
       g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, word);
     };
     await open(gourds[0], '슬근슬근!');
+    const autoOpen1 = async g => { await sleep(500); g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
     await cut('rice_pour2', 'pop', 3600);
     await say('첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.');
     await say('쌀자루를 톡톡톡 눌러서 세어 봐요!');
@@ -153,11 +148,11 @@
     } });
     await say('쌀자루가 하나, 둘, 셋! 이제 배불리 먹을 수 있어요.');
     sacks.forEach(s => s.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' }));
-    await open(gourds[1], '슬근슬근!');
+    await autoOpen1(gourds[1]);
     gourds[1].set('gourd_open', 120);
     const tre = spr('treasure', 640, 130, 490); tre.place(gourds[1].x, 490); tre.hop(18, 300); sfx('ding');
     await say('두 번째 박에서는 반짝반짝 금은보화가 나왔어요!');
-    await open(gourds[2], '슬근슬근!');
+    await autoOpen1(gourds[2]);
     await cut('house2', 'pop', 3600);
     await say('세 번째 박에서는 작은 박 요정들이 나와 멋진 새집을 지어 주었어요!');
     T.confetti();
@@ -170,18 +165,17 @@
     nol.set('nol_shake'); nol.hop(18, 300);
     const chick2 = spr('chick_fall', 720, 120, -30);
     await chick2.move(fx(720), 480, 650, 'ease-in'); chick2.hop(10, 300);
-    await say('아기 제비를 톡! 눌러서 받아 줘요.');
-    await T.tap(chick2.pos, { prompt: '아기 제비를 톡! 받아 줘요.' });
+    await sleep(500); /* 저절로 받아 줘요 */
     await chick2.move(fx(480), 430, 500, 'ease-out'); sfx('ding'); chick2.hop(12, 260);
     nol.set('nol_wrap');
     setTimeout(() => { chick2.set('swallow_fly', 100); chick2.move(1150, 150, 1400, 'ease-in'); }, 3600);
     await say('놀부는 서둘러 천을 칭칭 감아 주었어요. "자, 이제 박씨를 가져와라!" 제비는 다치지 않고 날아갔어요.');
     await T.sceneCard('놀부네 마당', () => { scene('nolyard', 560); });
     const ns = spr('nol_saw', 340, 290), ng = [0, 1, 2].map(i => spr('gourd', cl(620, i, 100), 140));
-    await say('놀부네 마당에도 박이 세 통 열렸어요. 박을 톡톡톡 눌러서 세어 봐요!');
-    await T.mash(ng[0].pos, { count: 3, prompt: '박을 톡톡톡! 세어 봐요.', onStep: i => {
-      ng[i - 1].hop(14, 260); sfx('pop'); T.pop(ng[i - 1].x, ng[i - 1].y - 170, NUM[i - 1]);
-    } });
+    await say('놀부네 마당에도 박이 세 통 열렸어요.');
+    for (let i = 1; i <= 3; i++) { /* 저절로 세기 */
+      ng[i - 1].hop(14, 260); sfx('pop'); T.pop(ng[i - 1].x, ng[i - 1].y - 170, NUM[i - 1]); await sleep(600);
+    }
     await say('박이 하나, 둘, 셋! 놀부는 기대에 부풀었어요.');
     const nopen = async (g, word) => {
       await T.tap(g.pos, { prompt: '박을 톡! 슬근슬근 타요.' });
@@ -189,15 +183,14 @@
     };
     await say('첫 번째 박을 톡!');
     await nopen(ng[0], '슬근슬근!');
+    const autoOpen = async g => { await sleep(500); g.hop(18, 300); ns.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
     await cut('mud2', 'pow', 3400);
     await say('콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.');
     ns.set('nol_mud');
-    await say('두 번째 박을 톡!');
-    await nopen(ng[1], '슬근슬근!');
+    await autoOpen(ng[1]);
     await cut('dokkaebi', 'pow', 3400);
     await say('이번에는 방망이를 든 도깨비가 쑥 나왔어요. "이 욕심쟁이야!" 도깨비는 놀부를 놀라게 하고 사라졌어요.');
-    await say('세 번째 박을 톡!');
-    await nopen(ng[2], '슬근슬근!');
+    await autoOpen(ng[2]);
     await cut('collapse', 'crash', 3600);
     await say('와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.');
 
@@ -211,7 +204,7 @@
     await say('쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.');
     const bags = [0, 1, 2].map(i => spr('rice', cl(460, i, 80), 100, 500));
     for (let i = 0; i < 3; i++) {
-      await T.tap(bags[i].pos, { prompt: '쌀자루를 톡! 형님께 보내요.' });
+      if (i === 0) await T.tap(bags[i].pos, { prompt: '쌀자루를 톡! 형님께 보내요.' }); else await sleep(500); /* 한 번 누르면 나머지는 저절로 */
       sfx('pop'); await bags[i].move(ns2.x, 470, 450, 'ease-in'); bags[i].hop(12, 240); T.pop(ns2.x, 120, NUM[i]);
     }
     await say('쌀자루가 하나, 둘, 셋! 놀부는 눈물이 핑 돌았어요.');
