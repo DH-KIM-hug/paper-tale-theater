@@ -168,7 +168,7 @@ const TALES = (() => {
       <rect x="100" y="54" width="44" height="34" fill="${c.bk}"/><path d="M96 56 L122 36 L148 56Z" fill="${c.rd}"/><rect x="116" y="68" width="12" height="20" fill="${c.am}"/>
       <circle cx="96" cy="20" r="2" fill="#C9D3E2"/><circle cx="140" cy="16" r="2" fill="#C9D3E2"/><circle cx="118" cy="26" r="2" fill="#C9D3E2"/></g>` },
 
-  { id: 'ugly_duckling', title: '미운 아기 오리', origin: 'world', skills: ['heart', 'order', 'season'], ready: false, making: true,
+  { id: 'ugly_duckling', title: '미운 아기 오리', origin: 'world', skills: ['heart', 'order'], ready: false, making: true,
     line: '놀림받던 아기 오리의 마음을 알아주고, 백조로 자라는 순서를 맞춰요.',
     en: { title: 'The Ugly Duckling', line: 'Understand the teased duckling\'s feelings, then put its growing-up steps in order.' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>

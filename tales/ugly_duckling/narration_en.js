@@ -4,25 +4,17 @@ const NARRATION_CLIPS_EN = {
   "t": "On a warm summer day, Mama Duck sat on her nest, keeping her eggs warm.",
   "c": "audio/tc/ugly_duckling/en/nar_ef3c35eac8.mp3"
  },
- "알을 톡 눌러서 아기 오리를 깨워 줄까요?": {
-  "t": "Shall we tap an egg to wake up the ducklings?",
-  "c": "audio/tc/ugly_duckling/en/nar_3c64220cc9.mp3"
- },
- "알을 톡 눌러 봐요!": {
-  "t": "Tap the egg!",
-  "c": "audio/tc/ugly_duckling/en/nar_25287809cf.mp3"
- },
  "노란 아기 오리 넷이 나왔어요. 삐약삐약!": {
   "t": "Four little yellow ducklings hatched. Peep peep!",
   "c": "audio/tc/ugly_duckling/en/nar_270c3b0bea.mp3"
  },
- "어? 제일 큰 알은 아직이에요. 톡톡톡 두드려 볼까요?": {
-  "t": "Oh? The biggest egg is still waiting. Shall we tap, tap, tap it?",
-  "c": "audio/tc/ugly_duckling/en/nar_57638351ff.mp3"
+ "어? 제일 큰 알은 아직이에요. 톡! 두드려 볼까요?": {
+  "t": "Hm? The biggest egg is still waiting. Tap it!",
+  "c": "audio/tc/ugly_duckling/en/nar_3e1035de8d.mp3"
  },
- "큰 알을 톡톡 눌러 봐요!": {
-  "t": "Tap, tap the big egg!",
-  "c": "audio/tc/ugly_duckling/en/nar_d35debf043.mp3"
+ "큰 알을 톡!": {
+  "t": "Tap the big egg!",
+  "c": "audio/tc/ugly_duckling/en/nar_ffd2e60a7c.mp3"
  },
  "크고 회색인 아기 오리가 나왔어요! 머리에 알껍데기 모자를 썼네요.": {
   "t": "A big gray duckling hatched! Look, an eggshell hat on its head.",
@@ -43,13 +35,13 @@ const NARRATION_CLIPS_EN = {
   "t": "Mama Duck took her babies to the pond. They swam in a line.",
   "c": "audio/tc/ugly_duckling/en/nar_98f6ddfcc6.mp3"
  },
- "화면을 톡톡 눌러서 헤엄쳐 볼까요?": {
-  "t": "Shall we tap the screen to swim?",
-  "c": "audio/tc/ugly_duckling/en/nar_65f58fd061.mp3"
+ "톡! 눌러서 헤엄쳐 볼까요?": {
+  "t": "Shall we tap to swim?",
+  "c": "audio/tc/ugly_duckling/en/nar_cf6ec38d55.mp3"
  },
- "화면을 톡톡 눌러서 헤엄쳐요!": {
-  "t": "Tap the screen to swim!",
-  "c": "audio/tc/ugly_duckling/en/nar_1049395d57.mp3"
+ "톡! 헤엄쳐요": {
+  "t": "Tap! Swim!",
+  "c": "audio/tc/ugly_duckling/en/nar_8334570613.mp3"
  },
  "회색 아기 오리는 헤엄을 제일 잘해요! 쏙 들어갔다가 퐁!": {
   "t": "The gray duckling swims the best! Dive in, and pop up!",
@@ -151,13 +143,13 @@ const NARRATION_CLIPS_EN = {
   "t": "The reeds are much taller than the duckling's head.",
   "c": "audio/tc/ugly_duckling/en/nar_94691ed466.mp3"
  },
- "화면을 톡톡 눌러서 갈대를 헤치고 가 볼까요?": {
-  "t": "Shall we tap the screen and push through the reeds?",
-  "c": "audio/tc/ugly_duckling/en/nar_a97e7a250f.mp3"
+ "톡! 눌러서 갈대를 헤쳐 봐요.": {
+  "t": "Tap to push the reeds apart.",
+  "c": "audio/tc/ugly_duckling/en/nar_62f9d06e35.mp3"
  },
- "톡톡! 갈대를 헤치고 가요.": {
-  "t": "Tap, tap! Push through the reeds.",
-  "c": "audio/tc/ugly_duckling/en/nar_c660d864d1.mp3"
+ "톡! 갈대를 헤쳐요.": {
+  "t": "Tap! Push the reeds apart.",
+  "c": "audio/tc/ugly_duckling/en/nar_0495f13289.mp3"
  },
  "뒤뚱뒤뚱, 갈대숲을 지나 넓은 늪에 닿았어요.": {
   "t": "Waddle, waddle, past the reeds, and on to a wide marsh.",
@@ -206,13 +198,9 @@ const NARRATION_CLIPS_EN = {
   "t": "Before long, it was autumn. The duckling had grown a little and become a young bird.",
   "c": "audio/tc/ugly_duckling/en/nar_006aa10cea.mp3"
  },
- "하늘 높이 하얀 새들이 줄지어 날아가요. 톡 눌러 볼까요?": {
-  "t": "White birds are flying high in the sky, in a line. Shall we tap them?",
-  "c": "audio/tc/ugly_duckling/en/nar_494f2deb12.mp3"
- },
- "하늘의 하얀 새들을 톡!": {
-  "t": "Tap the white birds in the sky!",
-  "c": "audio/tc/ugly_duckling/en/nar_0c185dbde1.mp3"
+ "하늘 높이 하얀 새들이 줄지어 날아가요.": {
+  "t": "White birds are flying high in the sky, in a line.",
+  "c": "audio/tc/ugly_duckling/en/nar_68b1bb2e24.mp3"
  },
  "뿌우~ 나팔 같은 소리! 백조들이에요.": {
   "t": "Whoo~ A sound like a trumpet! They are swans.",
@@ -229,13 +217,9 @@ const NARRATION_CLIPS_EN = {
   "t": "Cold winter came. The lake froze solid, and the duckling's feet got stuck in the ice.",
   "c": "audio/tc/ugly_duckling/en/nar_b71c9bae35.mp3"
  },
- "아기 오리를 톡톡 눌러 봐요. 날개로 몸을 감싸서 따뜻하게!": {
-  "t": "Tap the duckling. Wrap your wings around you to keep warm!",
-  "c": "audio/tc/ugly_duckling/en/nar_582e1f85bc.mp3"
- },
- "아기 오리를 톡톡 눌러 봐요.": {
-  "t": "Tap the duckling.",
-  "c": "audio/tc/ugly_duckling/en/nar_3c9b2e0ffa.mp3"
+ "아기 오리가 날개로 몸을 감싸서 따뜻하게!": {
+  "t": "The duckling wraps its wings around itself to keep warm!",
+  "c": "audio/tc/ugly_duckling/en/nar_1761a82e9c.mp3"
  },
  "날개로 몸을 꼭 감쌌더니 조금 따뜻해졌어요.": {
   "t": "Wrapped tight in its wings, the duckling got a little warmer.",
@@ -247,14 +231,6 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/ugly_duckling/en/nar_78692c4796.mp3",
    "audio/tc/ugly_duckling/en/farmer_97574d74cd.mp3"
   ]
- },
- "얼음을 톡톡톡 눌러서 깨 줘요!": {
-  "t": "Tap, tap, tap the ice to break it!",
-  "c": "audio/tc/ugly_duckling/en/nar_342d42e8c8.mp3"
- },
- "얼음을 톡톡 눌러요!": {
-  "t": "Tap, tap the ice!",
-  "c": "audio/tc/ugly_duckling/en/nar_cee1a3b37c.mp3"
  },
  "쩍! 얼음이 깨졌어요. 발이 쏙 빠졌어요!": {
   "t": "Crack! The ice broke. The feet popped out!",
@@ -326,25 +302,17 @@ const NARRATION_CLIPS_EN = {
   "t": "Warm spring came. The duckling grew bigger and bigger.",
   "c": "audio/tc/ugly_duckling/en/nar_b41c84cc0e.mp3"
  },
- "아기 오리를 톡톡 눌러서 날개를 활짝 펴 볼까요?": {
+ "아기 오리를 톡! 눌러서 날개를 활짝 펴 볼까요?": {
   "t": "Shall we tap the duckling to spread its wings wide?",
   "c": "audio/tc/ugly_duckling/en/nar_c2d1b85cbb.mp3"
  },
- "톡톡 눌러요. 날개를 활짝!": {
-  "t": "Tap, tap. Wings wide open!",
-  "c": "audio/tc/ugly_duckling/en/nar_382903ecfa.mp3"
+ "톡! 날개를 활짝!": {
+  "t": "Tap! Wings wide open!",
+  "c": "audio/tc/ugly_duckling/en/nar_cd281923ce.mp3"
  },
  "와, 날개가 이렇게 커졌어요!": {
   "t": "Wow, the wings have grown so big!",
   "c": "audio/tc/ugly_duckling/en/nar_a235a3b19b.mp3"
- },
- "한 번 더 톡톡! 훨훨 날아 볼까요?": {
-  "t": "Tap once more! Shall we fly, flap flap?",
-  "c": "audio/tc/ugly_duckling/en/nar_15ffade406.mp3"
- },
- "한 번 더 톡톡! 훨훨!": {
-  "t": "Tap once more! Flap flap!",
-  "c": "audio/tc/ugly_duckling/en/nar_a645db8644.mp3"
  },
  "훨훨! 아기 오리가 하늘을 날아요!": {
   "t": "Flap flap! The duckling is flying in the sky!",
@@ -401,49 +369,9 @@ const NARRATION_CLIPS_EN = {
   "t": "It's the swan! Tap the sparkling card.",
   "c": "audio/tc/ugly_duckling/en/nar_5e35092db5.mp3"
  },
- "여름이에요! 반짝이는 카드를 눌러 봐요.": {
-  "t": "It's summer! Tap the sparkling card.",
-  "c": "audio/tc/ugly_duckling/en/nar_1ef6fe1783.mp3"
- },
- "가을이에요! 반짝이는 카드를 눌러 봐요.": {
-  "t": "It's autumn! Tap the sparkling card.",
-  "c": "audio/tc/ugly_duckling/en/nar_d7fe63f8e8.mp3"
- },
- "겨울이에요! 반짝이는 카드를 눌러 봐요.": {
-  "t": "It's winter! Tap the sparkling card.",
-  "c": "audio/tc/ugly_duckling/en/nar_6206cd9e29.mp3"
- },
- "봄이에요! 반짝이는 카드를 눌러 봐요.": {
-  "t": "It's spring! Tap the sparkling card.",
-  "c": "audio/tc/ugly_duckling/en/nar_9b71b1dab3.mp3"
- },
  "알, 아기, 어린 새, 그리고 백조! 이렇게 자랐어요.": {
   "t": "Egg, baby, young bird, and then swan! That's how it grew.",
   "c": "audio/tc/ugly_duckling/en/nar_b5aef2daff.mp3"
- },
- "이번에는 아기 오리가 지나온 계절이에요.": {
-  "t": "Now for the seasons the duckling went through.",
-  "c": "audio/tc/ugly_duckling/en/nar_03c57912d1.mp3"
- },
- "알에서 나온 건 해님이 쨍쨍한 계절이었어요. 어느 카드일까요?": {
-  "t": "The duckling hatched in the sunny, sunny season. Which card is it?",
-  "c": "audio/tc/ugly_duckling/en/nar_aa6f7a1124.mp3"
- },
- "그다음, 나뭇잎이 빨갛게 물든 계절은?": {
-  "t": "Next, the season when leaves turn red?",
-  "c": "audio/tc/ugly_duckling/en/nar_45c95f390c.mp3"
- },
- "그다음, 꽁꽁 얼음이 언 계절은?": {
-  "t": "Next, the season when the ice freezes solid?",
-  "c": "audio/tc/ugly_duckling/en/nar_47fe218f2e.mp3"
- },
- "마지막으로 꽃이 핀 계절은?": {
-  "t": "Last, the season when flowers bloom?",
-  "c": "audio/tc/ugly_duckling/en/nar_e5d032c406.mp3"
- },
- "여름, 가을, 겨울, 봄! 계절이 한 바퀴 돌았어요.": {
-  "t": "Summer, autumn, winter, spring! The seasons went all the way around.",
-  "c": "audio/tc/ugly_duckling/en/nar_087d59cf74.mp3"
  },
  "백조들이 헤엄쳐 왔어요. \"안녕! 너도 우리 친구야. 같이 살자!\"": {
   "t": "The swans swam over. \"Hello! You're our friend too. Let's live together!\"",

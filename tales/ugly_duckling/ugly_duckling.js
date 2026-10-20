@@ -1,6 +1,6 @@
 /* 미운 아기 오리 — 임시 도형(그레이박스) 버전. 기획: TALES_PLAN_2.md §16
    다르게 생겨 놀림받던 아기 오리가 사계절을 지나 백조로 자란다. 아이는 아기 오리의 마음을 알아주고, 자라는 순서를 맞춘다.
-   학습: 감정 얼굴(기쁨·슬픔·무서움·화남) · 성장 순서(알→아기→어린 새→백조) · 계절 순서(여름→가을→겨울→봄) · 다름 인정·위로.
+   학습: 감정 얼굴(기쁨·슬픔·무서움·화남) · 성장 순서(알→아기→어린 새→백조) · 다름 인정·위로. (계절 순서 놀이는 2026-10-20 뺐다)
    순화: 사냥꾼은 나오지 않는다(화면 밖 "쾅!" 소리 → 기러기들이 날아가 버린다). 사냥개 생략. 놀림은 말로만, 곧 다정한 말로 답한다.
    웃음 컷: 알껍데기 모자 · 헤엄치다 쏙-퐁! · 고양이 흉내 "가르릉… 꽥!"
    2막: 1~6(여름) / 7~12(가을·겨울·봄) */
@@ -98,6 +98,32 @@
     return g;
   }
 
+  /* 배경 그림의 y1~y2 가로 띠만 배우 앞에 한 번 더: 헤엄치는 배우는 몸 아래쪽이 물에 잠긴다 (2026-10-20) */
+  function frontBand(T, key, y1, y2) {
+    const u = bgUrl(key); if (!u) return null;
+    const id = 'udBand' + (++clipN), [x0, y0, w, h] = bgRect(key);
+    const g = T.el('g', { 'pointer-events': 'none' }, T.world);
+    T.el('rect', { x: -1400, y: y1, width: 3800, height: y2 - y1 }, T.el('clipPath', { id }, g));
+    T.el('image', { href: u, x: x0, y: y0, width: w, height: h, preserveAspectRatio: 'none', 'clip-path': `url(#${id})` }, g);
+    return g;
+  }
+  /* 물에 뜬 배우: 둥실둥실 위아래·살짝 기울기 + 몸 앞에 물결 한 줄과 뒤로 꼬리 물결. 발은 물 띠 조각이 가린다 */
+  function swimmersFloat(list) {
+    const undo = [];
+    list.forEach((a, k) => {
+      const s = a.scale || 1;
+      const bob = a.body.animate([{ translate: '0 -2px', rotate: '-2deg' }, { translate: '0 3px', rotate: '2deg' }], { duration: 900 + k * 90, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      const mk = (tag, at) => { const e = document.createElementNS('http://www.w3.org/2000/svg', tag); Object.entries(at).forEach(([n, v]) => e.setAttribute(n, v)); g.appendChild(e); return e; };
+      const y = -30 / s; // 물 띠 위쪽 가장자리(발끝 위 30)
+      mk('ellipse', { cx: 0, cy: y, rx: 46 / s * 1.3, ry: 3.5 / s * 1.2, fill: 'none', stroke: '#E4F1F7', 'stroke-width': 2.2 / s, opacity: .85 });
+      mk('path', { d: `M${-60 / s} ${y + 6 / s} h${-34 / s} M${-52 / s} ${y + 13 / s} h${-26 / s}`, stroke: '#E4F1F7', 'stroke-width': 2.4 / s, 'stroke-linecap': 'round', fill: 'none', opacity: .7 });
+      a.pos.appendChild(g);
+      undo.push(() => { bob.cancel(); g.remove(); });
+    });
+    return () => undo.forEach(f => f()); // 장면이 끝나면 물결·둥실거림을 걷는다 (배우는 다음 장면에도 나온다)
+  }
+
   /* ================= 표정 (정면 얼굴, 머리 반지름 26 기준) ================= */
   const MOOD_LABEL = { happy: '기뻐요', sad: '슬퍼요', scared: '무서워요', angry: '화나요' };
   const MOOD_FACE = { happy: '기쁜 얼굴', sad: '슬픈 얼굴', scared: '무서워하는 얼굴', angry: '화난 얼굴' };
@@ -157,7 +183,7 @@
     const p = { wing: T.el('g', {}, g), wingBack: T.el('g', {}, g), ...HERO_PT[form], art: k };
     if (form === 'egg') p.crack = T.el('g', {}, g);
     const s = SPR[k];
-    T.el('rect', { x: -s[2] * s[0], y: -s[3] * s[1], width: s[0], height: s[1], fill: '#fff', opacity: 0 }, g);
+    T.el('rect', { x: -s[2] * s[0] - 24, y: -s[3] * s[1] - 24, width: s[0] + 48, height: s[1] + 48, fill: '#fff', opacity: 0 }, g); // 2026-10-20 몸 전체가 넉넉한 누름 자리
     return p;
   }
   const HERO = {
@@ -399,7 +425,7 @@
     const g = el('g', { transform: `translate(${x},${y}) scale(${s})` }, parent);
     if (artUrl('swan_fly')) { // 그림: 날개를 편 옆모습 한 장이 위아래로 살랑
       const w = el('g', {}, g);
-      pic(T, w, 'swan_fly', -65, -25.5, 130, 51);
+      pic(T, w, 'swan_fly', -42, -37, 84, 74.5); // 2026-10-20 새 그림 비율(398×353)
       w.animate([{ transform: 'translateY(0) rotate(0deg)' }, { transform: 'translateY(-6px) rotate(-2deg)' }, { transform: 'translateY(0) rotate(0deg)' }], { duration: 1000 + Math.random() * 300, iterations: Infinity });
       return g;
     }
@@ -587,14 +613,6 @@
     const inner = T.el('g', { transform: `translate(${form === 'swan' ? 12 : 4},${HERO_H[form] * s / 2}) scale(${s})` }, g);
     HERO[form](T, inner, form === 'swan' ? 'happy' : 'neutral');
   };
-  /* 계절 카드: 그림(해·단풍잎·눈송이·꽃)이 있으면 그림, 없으면 코드 도형 */
-  const seasonIcon = s => (T, g) => { if (!prop(T, g, 'icon_' + s, 0, 0, 124, { shadow: false })) SEASON_ICON[s](T, g); };
-  const SEASON_ICON = {
-    summer: (T, g) => { T.paper(g, [['rect', { x: -60, y: 20, width: 120, height: 34, rx: 10, fill: C.leaf }], ['circle', { cy: -12, r: 30, fill: '#F2B94A' }]]); for (let k = 0; k < 8; k++) T.el('rect', { x: -4, y: -62, width: 8, height: 14, rx: 4, fill: '#F2B94A', transform: `rotate(${k * 45} 0 -12)` }, g); },
-    autumn: (T, g) => T.paper(g, [['path', { d: 'M0 -56 L14 -24 L46 -32 L30 -4 L52 14 L16 18 L10 46 L0 26 L-10 46 L-16 18 L-52 14 L-30 -4 L-46 -32 L-14 -24 Z', fill: C.persimmon }], ['rect', { x: -3, y: 20, width: 6, height: 36, fill: C.bark }]]),
-    winter: (T, g) => { for (let k = 0; k < 3; k++) T.el('rect', { x: -5, y: -52, width: 10, height: 104, rx: 5, fill: '#8FB8D0', transform: `rotate(${k * 60})` }, g); T.paper(g, [['circle', { r: 14, fill: C.snow, stroke: '#8FB8D0', 'stroke-width': 5 }]]); },
-    spring: (T, g) => { T.paper(g, [['rect', { x: -3, y: 6, width: 6, height: 50, fill: C.pine }], ['ellipse', { cx: 18, cy: 34, rx: 16, ry: 7, fill: C.leaf }], ...[0, 1, 2, 3, 4].map(k => ['circle', { cx: Math.cos(k * 1.256 - 1.57) * 24, cy: -14 + Math.sin(k * 1.256 - 1.57) * 24, r: 18, fill: C.pink }]), ['circle', { cy: -14, r: 12, fill: C.gold }]]); },
-  };
   const shuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 
   /* ================= 소리 ================= */
@@ -720,9 +738,8 @@
     const sibs = [];
     await T.curtain(true);
     await say('따뜻한 여름날, 엄마 오리가 둥지에서 알을 품고 있었어요.');
-    await say('알을 톡 눌러서 아기 오리를 깨워 줄까요?');
-    for (const e of eggs) {
-      await T.tap(e.g, { prompt: '알을 톡 눌러 봐요!' });
+    for (const e of eggs) { // 2026-10-20 작은 알 넷은 저절로 차례로 깨어난다 (톡 없음)
+      await sleep(600);
       crack(T);
       e.g.remove();
       if (artUrl('eggshell')) [-1, 1].forEach(s => prop(T, el('g', { transform: `translate(${e.x + s * 22},${e.y + 28}) scale(${s},1)` }, T.world), 'eggshell', 0, 0, 24)); // 그림: 깨진 껍데기 두 쪽
@@ -733,17 +750,19 @@
       sibs.push(d);
       peep(T, 1400 + sibs.length * 80); d.hop(34);
       T.pop(e.x, e.y - 60, '삐약!', C.gold);
-      await sleep(350);
     }
+    await sleep(500);
     await say('노란 아기 오리 넷이 나왔어요. 삐약삐약!');
-    await say('어? 제일 큰 알은 아직이에요. 톡톡톡 두드려 볼까요?');
+    await say('어? 제일 큰 알은 아직이에요. 톡! 두드려 볼까요?');
     const CR = ['M-10 -60 L-2 -52 L-8 -44', 'M-8 -44 L4 -38 L0 -30', 'M-2 -52 L12 -56 L20 -48', 'M20 -48 L30 -52', 'M-10 -60 L-24 -56 L-32 -62', 'M0 -30 L14 -26 L26 -30'];
-    await T.mash(hero.pos, { count: 6, prompt: '큰 알을 톡톡 눌러 봐요!', onStep: i => {
+    await T.tap(hero.pos, { prompt: '큰 알을 톡!' }); // 한 번 톡 하면 금이 저절로 간다
+    for (let i = 1; i <= 6; i++) {
       crack(T);
       el('path', { d: CR[i - 1], stroke: C.bark, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, hero.parts.crack);
       hero.wiggle(8, 300);
       if (i % 2 === 0) T.pop(hero.x + 80, hero.y - 150, '쩍!', C.bark);
-    } });
+      await sleep(450);
+    }
     await sleep(300);
     hero.setForm('baby'); hero.setScale(hero.art ? 1.4 : 1.1); // 그림: 노란 형제(1.2배 키 84)보다 확실히 크게
     const [hx0, hy0] = hero.headPt();
@@ -766,31 +785,37 @@
 
     /* --- 2. 헤엄 줄 (연못 옆 모습) --- */
     const LINE = [0, 1, 2, 3].map(k => 300 - k * 80);
+    let unfloat = () => {};
     await T.sceneCard('연못', () => {
       T.clear();
-      const art = pondSideBG(T), wy = art ? 46 : 0; // 그림: 물 띠가 265~395 → 물 위로 올리고, 앞 둑(397 아래)이 몸 아래를 가린다
-      put(mom, 390, 456 - wy, 1.8, 'right'); // 오른쪽으로 헤엄쳐 가니 모두 오른쪽을 본다 (뒷걸음 X)
-      sibs.forEach((d, k) => put(d, LINE[k], 452 - wy, 1.3, 'right'));
-      put(hero, -40, 454 - wy, 1.15, 'right');
-      water('pond', 397, 441, C.water, .92, 1);
+      const art = pondSideBG(T); // 그림: 연못 물 띠가 253~398
+      const WL = art ? 392 : 430; // 2026-10-20 새 그림은 연못(253~398) 한가운데 물 위에 뜬다: 발끝을 물 띠 안에 두고 몸 아래를 물 띠 조각이 가린다
+      put(mom, 390, WL + 3, 1.8, 'right'); // 오른쪽으로 헤엄쳐 가니 모두 오른쪽을 본다 (뒷걸음 X)
+      sibs.forEach((d, k) => put(d, LINE[k], WL, 1.3, 'right'));
+      put(hero, -40, WL + 1, 1.15, 'right');
+      unfloat = swimmersFloat([mom, ...sibs, hero]);
+      frontBand(T, 'pond', WL - 30, 398) || waterFront(T, WL - 28, C.water, .92);
       if (narrow()) camSnap(250, 280, 1); // 세로: 줄 선 오리들 쪽을 비춘다
     }, hero.pos);
     await say('엄마 오리가 아기들을 데리고 연못에 갔어요. 줄을 서서 헤엄쳐요.');
-    await say('화면을 톡톡 눌러서 헤엄쳐 볼까요?');
+    await say('톡! 눌러서 헤엄쳐 볼까요?');
     const swimmers = [mom, ...sibs, hero];
-    await T.mash(T.root.querySelector('#stageWrap'), { count: 3, prompt: '화면을 톡톡 눌러서 헤엄쳐요!', onStep: i => {
+    await T.tap(T.root.querySelector('#stageWrap'), { prompt: '톡! 헤엄쳐요' }); // 한 번 톡 하면 줄이 저절로 헤엄쳐 간다
+    for (let i = 1; i <= 3; i++) {
       AudioFX.sfx('splash', .35) || AudioFX.splash();
       swimmers.forEach((a, k) => setTimeout(() => {
         if (a === hero && narrow()) camTo(a.x + 150 + 130, 280, 1, 650); // 세로: 맨 끝 회색 오리를 카메라가 따라간다
-        a.move(a.x + 150, a.y, 650); if (a !== hero) a.hop(8, 400); }, k * 70));
-      if (i === 2) setTimeout(async () => {
+        a.move(a.x + 150, a.y, 650); }, k * 70)); // 걷는 듯한 폴짝 없이 물 위를 미끄러진다
+      if (i === 3) setTimeout(async () => { // 회색 아기 오리는 쏙 들어갔다가 퐁!
         await T.anim(hero.inner, [{ transform: 'translateY(0)' }, { transform: 'translateY(60px)' }, { transform: 'translateY(60px)' }, { transform: 'translateY(0)' }], 900);
-        T.pop(hero.x, hero.y - 130, '퐁!', C.indigo);
+        AudioFX.sfx('pop', .7); T.pop(hero.x, hero.y - 130, '퐁!', C.indigo);
       }, 500);
-    } });
+      await sleep(700);
+    }
     await sleep(900);
     await say('회색 아기 오리는 헤엄을 제일 잘해요! 쏙 들어갔다가 퐁!');
     await say('그런데 늘 줄 맨 끝에서 혼자 따라가요.');
+    unfloat();
 
     /* --- 3. 놀림 (감정 1 · 농장 마당 와이드) --- */
     let hen, rooster, ducks;
@@ -819,10 +844,10 @@
       const [hx, hy] = hero.headPt();
       const hand = el('g', {}, T.fx);
       el('path', { d: HAND_D, fill: C.cream, stroke: C.bark, 'stroke-width': 3, 'stroke-linejoin': 'round', transform: 'scale(1.6) rotate(200 32 32)' }, hand);
-      const frames = []; for (let k = 0; k < 4; k++) frames.push({ transform: `translate(${hx + 60}px,${hy - 110}px)` }, { transform: `translate(${hx + 40}px,${hy - 70}px)` });
+      const frames = []; for (let k = 0; k < 2; k++) frames.push({ transform: `translate(${hx + 60}px,${hy - 110}px)` }, { transform: `translate(${hx + 40}px,${hy - 70}px)` });
       frames.push({ transform: `translate(${hx + 60}px,${hy - 110}px)` });
       T.tone([523, 659], .3, { type: 'sine', vol: .12 }); T.tone([659, 784], .3, { type: 'sine', vol: .12, when: .4 });
-      await T.anim(hand, frames, 1800);
+      await T.anim(hand, frames, 1100); // 2026-10-20 네 번 → 두 번
       hand.remove();
     }
     hero.setMood('neutral'); hero.pose('');
@@ -847,17 +872,19 @@
       } else fgReeds = reeds(T, T.world, list, 460, C.reedDk);
     }, hero.pos);
     await say('갈대가 아기 오리 머리보다 훨씬 높아요.');
-    await say('화면을 톡톡 눌러서 갈대를 헤치고 가 볼까요?');
+    await say('톡! 눌러서 갈대를 헤쳐 봐요.');
     let off = 0;
-    await T.mash(T.root.querySelector('#stageWrap'), { count: 3, prompt: '톡톡! 갈대를 헤치고 가요.', onStep: () => {
+    await T.tap(T.root.querySelector('#stageWrap'), { prompt: '톡! 갈대를 헤쳐요.' }); // 한 번 톡 하면 나머지는 저절로
+    for (let n = 0; n < 3; n++) {
       off += 1;
       AudioFX.sfx('step_grass', .5) || AudioFX.swish();
       T.anim(fgReeds, [{ transform: `translateX(${-(off - 1) * 260}px)` }, { transform: `translateX(${-off * 260}px)` }], { duration: 700, easing: 'ease-out' });
       const bd = bgReeds.tagName === 'image' ? 40 : 90; // 그림 배경은 당겨 둔 여유(양옆 200)만큼만
       T.anim(bgReeds, [{ transform: `translateX(${-(off - 1) * bd}px)` }, { transform: `translateX(${-off * bd}px)` }], { duration: 700, easing: 'ease-out' });
       hero.hop(18, 350);
-    } });
-    await sleep(700);
+      await sleep(750);
+    }
+    await sleep(300);
     await say('뒤뚱뒤뚱, 갈대숲을 지나 넓은 늪에 닿았어요.');
 
     /* --- 5. 기러기 친구 (감정 2 · 늪 와이드) --- */
@@ -903,13 +930,12 @@
     await say('기러기들과 아기 오리는 신나게 놀았어요.');
     geese.forEach((g, k) => setTimeout(() => g.wiggle(8), k * 100));
     await sleep(600);
-    AudioFX.sfx('boom', .5) || AudioFX.boom();
     await T.cut(svg => {
       el('rect', { width: 400, height: 300, fill: C.indigo }, svg);
       if (artUrl('goose_fly3')) [[30, 30, 120, -14], [150, 8, 130, -8], [270, 52, 100, -18]].forEach(([x, y, w, r]) => // 쾅 소리에 놀라 날아오르는 기러기들
-        el('image', { href: AS + ART.goose_fly3, x, y, width: w, height: w * 64.1 / 117.5, transform: `rotate(${r} ${x + w / 2} ${y + 33})` }, svg));
+        el('image', { href: AS + ART.goose_fly3, x, y, width: w, height: w * 349 / 445, transform: `rotate(${r} ${x + w / 2} ${y + 33})` }, svg));
       el('text', { x: 200, y: 235, 'text-anchor': 'middle', 'font-size': 100, fill: C.amber, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('쾅!') }, svg);
-    }, { hold: 1500 });
+    }, { hold: 1500, sfx: () => { AudioFX.sfx('boom', 1); AudioFX.sfx('crash', .8); } }); // 2026-10-20 쾅! 컷이 뜨는 순간 크게 (컷이 흔들림도 같이 준다)
     honk(T);
     await say('저 멀리서 큰 소리가 났어요. 깜짝 놀란 기러기들이 모두 날아가 버렸어요.');
     geese.forEach((g, k) => { if (g.ripple) g.ripple.remove(); if (takeOff(T, g, 'goose_fly3')) g.face(k > 1 ? 'right' : 'left'); }); // 물결은 그 자리에 남고, 나는 자세로 가는 쪽을 본다
@@ -947,8 +973,7 @@
       flock.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 2400, iterations: Infinity });
     }, hero.pos);
     await say('어느덧 가을이 되었어요. 아기 오리는 조금 더 자라 어린 새가 되었어요.');
-    await say('하늘 높이 하얀 새들이 줄지어 날아가요. 톡 눌러 볼까요?');
-    await T.tap(flock, { prompt: '하늘의 하얀 새들을 톡!' });
+    await say('하늘 높이 하얀 새들이 줄지어 날아가요.');
     swanCall(T);
     T.pop(560, 250, '뿌우~', C.indigo);
     await sleep(600);
@@ -959,16 +984,25 @@
     hero.pose('');
 
     /* --- 8. 얼음 (겨울 호수 하이앵글) --- */
-    let icePatch, farmer, wy = 0;
+    let icePatch, iceCollar, farmer, ky = 372;
+    const poly = (g, pts, fill, extra = {}) => el('path', { d: 'M' + pts.map(q => q.join(' ')).join(' L') + ' Z', fill, ...extra }, g);
+    const SHEET = [[330, 338], [372, 322], [450, 316], [540, 320], [600, 334], [618, 352], [580, 372], [500, 380], [410, 378], [348, 366]]; // 2026-10-20 가위로 오린 납작한 얼음판(가운데 470) — 언 호수 270~388 위
     await T.sceneCard('겨울', () => {
-      T.clear(); wy = winterHighBG(T) ? -100 : 0; // 그림: 언 호수가 165~300 → 얼음판과 아기 오리를 호수 위로
-      icePatch = el('g', { transform: `translate(0,${wy})` }, T.world);
-      T.paper(icePatch, [['ellipse', { cx: 470, cy: 372, rx: 110, ry: 40, fill: C.iceDk }], ['ellipse', { cx: 470, cy: 368, rx: 90, ry: 28, fill: '#E6F1F6' }]]);
-      icePatch._cracks = el('g', {}, icePatch);
-      el('rect', { x: 350, y: 320, width: 240, height: 100, fill: '#fff', opacity: 0 }, icePatch);
-      put(hero, 470, 372 + wy, 1.35, 'left');
+      T.clear(); ky = winterHighBG(T) ? 345 : 372; // 그림: 언 호수가 270~388 → 얼음판과 아기 오리를 호수 한가운데에
+      const dy = ky - 345;
+      icePatch = el('g', { transform: `translate(0,${dy})` }, T.world);
+      poly(icePatch, SHEET.map(([x, y]) => [x, y + 7]), '#9DBBD0'); // 얼음 두께(아래 옆면)
+      poly(icePatch, SHEET, '#EAF4F9'); // 위 얼음판
+      icePatch._cracks = el('g', {}, icePatch); // 금은 얼음판 위에만 그린다
+      el('rect', { x: 330, y: 316, width: 290, height: 70, fill: '#fff', opacity: 0 }, icePatch);
+      put(hero, 470, ky, 1.35, 'left');
+      // 얼어붙은 발: 발 둘레에 얼음 조각 셋이 앞을 덮는다 (아기 오리 → 얼음 앞 테 순서)
+      iceCollar = el('g', { transform: `translate(0,${dy})` }, T.world);
+      [[[424, 348], [440, 338], [458, 343], [452, 355], [430, 357]], [[455, 346], [472, 340], [492, 345], [488, 357], [462, 358]], [[488, 348], [504, 341], [522, 348], [512, 358], [492, 358]]].forEach(pts => {
+        poly(iceCollar, pts.map(([x, y]) => [x, y + 3]), '#9DBBD0'); poly(iceCollar, pts, '#DDEBF3');
+      });
       hero.setMood('sad');
-      farmer = cast(T, 'farmer', 1200, wy ? 345 : 400, 1.2);
+      farmer = cast(T, 'farmer', 1200, ky - 20, 1.2);
     }, hero.pos);
     snowT = setInterval(() => {
       const f = el('circle', { r: 4 + Math.random() * 3, fill: '#fff', opacity: .9 }, T.fx);
@@ -977,14 +1011,15 @@
     }, 260);
     const shiver = hero.body.animate([{ translate: '0 0' }, { translate: '2px 0' }, { translate: '-2px 0' }], { duration: 120, iterations: Infinity });
     await say('추운 겨울이 왔어요. 호수가 꽁꽁 얼어서 발이 얼음에 붙어 버렸어요.');
-    await say('아기 오리를 톡톡 눌러 봐요. 날개로 몸을 감싸서 따뜻하게!');
+    await say('아기 오리가 날개로 몸을 감싸서 따뜻하게!');
     let warmed = false;
-    await T.mash(hero.pos, { count: 4, prompt: '아기 오리를 톡톡 눌러 봐요.', onStep: i => {
+    for (let i = 1; i <= 4; i++) { // 2026-10-20 톡 없이 저절로
       const p = i / 4;
       hero.parts.wing.style.transform = `scale(${1 + p * .5},${1 + p * .9})`;
       shiver.playbackRate = Math.max(.15, 1 - p);
       if (p > .5 && !warmed) { warmed = true; T.pop(hero.x, hero.y - 220, '따뜻해', C.persimmon); T.tone([392, 523], .4, { type: 'sine', vol: .12 }); if (hero.art) hero.setMood('neutral'); } // 그림: 덜덜 자세 → 보통 자세
-    } });
+      await sleep(550);
+    }
     shiver.cancel();
     hero.setMood('neutral'); hero.parts.wing.style.transform = 'scale(1.5,1.9)';
     await say('날개로 몸을 꼭 감쌌더니 조금 따뜻해졌어요.');
@@ -992,30 +1027,45 @@
     await farmer.move(640, farmer.y, 1600);
     hero.face('right'); // 다가온 농부 할아버지를 본다
     await say('그때 농부 할아버지가 지나가다 아기 오리를 보았어요. "저런, 얼음에 발이 붙었구나!"');
-    await say('얼음을 톡톡톡 눌러서 깨 줘요!');
-    const ICR = ['M430 360 L450 380 L440 396', 'M500 350 L520 370 L540 364', 'M400 370 L380 386', 'M540 380 L560 396', 'M460 340 L470 356', 'M480 396 L500 406'];
-    hero.pos.style.pointerEvents = 'none'; // 얼음 위에 선 아기 오리가 얼음 누름을 가로막지 않게
-    await T.mash(icePatch, { count: 6, prompt: '얼음을 톡톡 눌러요!', onStep: i => {
+    const ICR = ['M430 335 L450 352 L440 366', 'M520 330 L540 346 L560 340', 'M395 350 L375 362', 'M545 358 L568 368', 'M462 322 L474 338', 'M492 372 L512 376'];
+    hero.pos.style.pointerEvents = 'none';
+    for (let i = 1; i <= 6; i++) { // 2026-10-20 톡 없이 저절로: 농부가 얼음을 콩콩
       AudioFX.sfx('chop', .6) || T.tone([900, 300], .1, { type: 'square', vol: .12 });
       farmer.parts.arm.style.transform = 'rotate(24deg)'; setTimeout(() => farmer.parts.arm.style.transform = '', 160);
       el('path', { d: ICR[i - 1], stroke: '#7FA6BC', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, icePatch._cracks);
       for (let k = 0; k < 3; k++) {
         const bit = T.paper(T.fx, [['path', { d: 'M0 -8 L9 0 L2 9 L-8 4 Z', fill: '#E6F1F6' }]]);
         const x0 = 420 + Math.random() * 100, dx = (Math.random() - .5) * 180;
-        bit.animate([{ transform: `translate(${x0}px,${370 + wy}px)` }, { transform: `translate(${x0 + dx / 2}px,${300 + wy}px) rotate(90deg)` }, { transform: `translate(${x0 + dx}px,${390 + wy}px) rotate(200deg)`, opacity: 0 }], { duration: 700 }).finished.then(() => bit.remove());
+        bit.animate([{ transform: `translate(${x0}px,${ky - 2}px)` }, { transform: `translate(${x0 + dx / 2}px,${ky - 70}px) rotate(90deg)` }, { transform: `translate(${x0 + dx}px,${ky + 20}px) rotate(200deg)`, opacity: 0 }], { duration: 700 }).finished.then(() => bit.remove());
       }
-      if (i % 2 === 0) T.pop(i === 6 ? 470 : 360 + i * 30, 250 + wy * .6, '쩍!', '#4A7A96');
-    } });
-    icePatch.remove(); hero.pos.style.pointerEvents = '';
+      if (i % 2 === 0) T.pop(i === 6 ? 470 : 360 + i * 30, ky - 100, '쩍!', '#4A7A96');
+      await sleep(600);
+    }
+    // 깨진 얼음: 납작한 종이 조각 몇 장이 호수 위에 남는다 (아기 오리 뒤)
+    {
+      const dy = ky - 345, shards = el('g', { transform: `translate(0,${dy})` }, T.world);
+      T.world.insertBefore(shards, hero.pos);
+      poly(shards, SHEET.map(([x, y]) => [x + (x < 470 ? -4 : 4), y + 5]), '#8FB2C9'); // 뚫린 물
+      [[[330, 338], [372, 322], [430, 330], [410, 352], [348, 366]], [[372, 322], [450, 316], [470, 336], [430, 330]], [[450, 316], [540, 320], [520, 346], [470, 336]],
+        [[540, 320], [600, 334], [618, 352], [560, 350]], [[348, 366], [410, 352], [440, 372], [410, 378]], [[470, 336], [520, 346], [500, 380], [440, 372]], [[520, 346], [560, 350], [580, 372], [500, 380]]].forEach((pts, k) => {
+        const g = el('g', {}, shards), cx = pts.reduce((u, q) => u + q[0], 0) / pts.length, cy = pts.reduce((u, q) => u + q[1], 0) / pts.length;
+        poly(g, pts.map(([x, y]) => [x, y + 4]), '#9DBBD0'); poly(g, pts, '#EAF4F9');
+        const ang = Math.atan2(cy - 350, cx - 470);
+        g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
+        g.animate([{ transform: 'translate(0,0) rotate(0deg)' }, { transform: `translate(${Math.cos(ang) * 14}px,${Math.sin(ang) * 8}px) rotate(${(k % 2 ? 1 : -1) * (4 + k)}deg)` }], { duration: 450, easing: 'ease-out', fill: 'forwards' });
+      });
+    }
+    icePatch.remove(); iceCollar.remove(); hero.pos.style.pointerEvents = '';
+    AudioFX.sfx('crash', .5);
     quack(T); hero.hop(30);
     await say('쩍! 얼음이 깨졌어요. 발이 쏙 빠졌어요!');
     hero.parts.wing.style.transform = '';
     T.world.appendChild(hero.pos);
-    const hugY = wy ? 268 : 300; // 그림 농부: 앞으로 뻗은 두 손(발끝에서 -80,-121) 높이에 안긴다
-    hero.face('left'); hero.setScale(1); hero.move(wy ? 562 : 575, hugY, 600); // 안겨서 할아버지와 같은 쪽(가는 쪽)을 본다
+    const hugY = ky - 77; // 그림 농부: 앞으로 뻗은 두 손(발끝에서 -80,-121) 높이에 안긴다
+    hero.face('left'); hero.setScale(1); hero.move(562, hugY, 600); // 안겨서 할아버지와 같은 쪽(가는 쪽)을 본다
     await say('농부 할아버지가 아기 오리를 품에 폭 안았어요. 따뜻한 집으로 가요!');
     // 농부는 왼쪽을 보고 서 있으니 보는 쪽(왼쪽)으로 걸어 나간다 (뒷걸음 X)
-    await Promise.all([farmer.move(-260, farmer.y, 1900), hero.move((wy ? 562 : 575) - 900, hugY, 1900)]);
+    await Promise.all([farmer.move(-260, farmer.y, 1900), hero.move(562 - 900, hugY, 1900)]);
     clearInterval(snowT); snowT = null;
 
     /* --- 9. 할머니 집 (오두막 안 와이드) --- */
@@ -1081,24 +1131,26 @@
       hero.setMood('happy');
     }, hero.pos);
     await say('따뜻한 봄이 왔어요. 아기 오리는 몸이 부쩍 자랐어요.');
-    await say('아기 오리를 톡톡 눌러서 날개를 활짝 펴 볼까요?');
+    await say('아기 오리를 톡! 눌러서 날개를 활짝 펴 볼까요?');
     let spread = false;
-    await T.mash(hero.pos, { count: 3, prompt: '톡톡 눌러요. 날개를 활짝!', onStep: i => {
+    await T.tap(hero.pos, { prompt: '톡! 날개를 활짝!' }); // 한 번 톡 하면 날개가 저절로 활짝
+    for (let i = 1; i <= 3; i++) {
       const p = i / 3;
       if (p > .4 && !spread && hero.art) { spread = true; hero.setMood('wings'); AudioFX.swish(); } // 그림: 날개 활짝 그림으로
       hero.parts.wing.style.transform = `rotate(${-p * 55}deg) scale(${1 + p * .6})`;
       hero.parts.wingBack.style.transform = `rotate(${-p * 80}deg) scale(${1 + p * .6})`;
-    } });
+      await sleep(450);
+    }
     T.pop(hero.x - 170, hero.y - 250, '활짝!', C.persimmon); // 머리를 가리지 않게 옆으로 T.tone([523, 784], .35, { type: 'triangle', vol: .14 });
     await say('와, 날개가 이렇게 커졌어요!');
-    await say('한 번 더 톡톡! 훨훨 날아 볼까요?');
-    const y0 = hero.y;
+    const y0 = hero.y; // 2026-10-20 날기도 저절로 (톡 없음)
     let flying = false;
-    await T.mash(hero.pos, { count: 3, prompt: '한 번 더 톡톡! 훨훨!', onStep: i => {
+    for (let i = 1; i <= 3; i++) {
       const p = i / 3;
       if (p > .3 && !flying && hero.art) { flying = true; hero.setMood('fly'); } // 그림: 발을 접고 나는 자세(young_fly3)로
       hero.place(hero.x, y0 - p * 120);
-    } });
+      await sleep(450);
+    }
     const flap = [hero.parts.wing, hero.parts.wingBack].map((w, k) => { w.style.transition = ''; return w.animate([{ transform: `rotate(${-55 - k * 25}deg) scale(1.6)` }, { transform: `rotate(${15 + k * 10}deg) scale(1.6)` }, { transform: `rotate(${-55 - k * 25}deg) scale(1.6)` }], { duration: 420, iterations: Infinity }); });
     if (hero.art) flap.push(hero.body.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '0 -10px', rotate: '-4deg' }, { translate: '0 0', rotate: '0deg' }], { duration: 420, iterations: Infinity })); // 그림: 날갯짓 대신 몸이 살랑
     AudioFX.whoosh();
@@ -1109,18 +1161,35 @@
     flap.forEach(a => a.cancel());
 
     /* --- 11. 물에 비친 모습 (호수 반사 하이앵글, 메인) --- */
-    let refl;
+    let refl, bob;
     await T.sceneCard('물에 비친 모습', () => {
       T.clear(); reflectBG(T);
       hero.setForm('swan'); hero.setMood('happy');
-      refl = T.actor(T.world, 500, 264, g => HERO.swan(T, g, 'happy'), { scale: 1.1 });
-      refl.pos.setAttribute('transform', 'translate(500,264) scale(1.1,-1.1)');
-      refl.pos.style.opacity = .55;
+      // 2026-10-20 백조는 물에 '앉는다': 몸 아래(다리)는 물에 잠겨 안 보이고, 비친 모습은 물선(212)에서 시작한다
+      refl = T.actor(T.world, 500, 174, g => HERO.swan(T, g, 'happy'), { scale: 1.1 });
+      refl.pos.setAttribute('transform', 'translate(500,174) scale(1.1,-1.1)');
+      const rid = 'udRefl' + (++clipN);
+      T.el('rect', { x: -300, y: -600, width: 600, height: 565.5 }, T.el('clipPath', { id: rid }, refl.pos));
+      refl.body.setAttribute('clip-path', `url(#${rid})`);
+      refl.pos.style.opacity = 0;
       for (let i = 0; i < 4; i++) el('ellipse', { cx: 485 + (i % 2) * 30, cy: 302 + i * 40, rx: 70 - i * 6, ry: 2.2, fill: '#E4F1F7', opacity: .45 }, T.world); // 비친 모습 위 잔물결: 가늘고 옅게 (딱딱한 줄무늬 X)
       put(hero, 500, 250, 1.1, 'left');
-      camSnap(500, 360, 1.7);
+      wade(T, hero, 'swan', .2);
+      bob = hero.body.animate([{ translate: '0 -1px' }, { translate: '0 3px' }], { duration: 1100, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+      hero.pos.style.opacity = 0;
+      camSnap(500, 215, 1.35); // 내려앉는 모습이 보이게 위쪽을 비춘다
     });
+    // 날개를 활짝 편 채 미끄러져 내려와 배부터 물에 닿고, 퐁! 물결이 퍼지며 날개를 접고 물에 앉는다
+    const landing = (async () => {
+      const fl = el('g', {}, T.world), fw = 250, fh = fw * 353 / 398;
+      pic(T, fl, 'swan_fly', -fw / 2, -fh * .9, fw, fh);
+      await fl.animate([{ transform: 'translate(900px,20px) rotate(8deg)' }, { transform: 'translate(500px,232px) rotate(0deg)' }], { duration: 1700, easing: 'cubic-bezier(.3,.6,.4,1)', fill: 'forwards' }).finished;
+      AudioFX.sfx('splash_big', .6) || AudioFX.sfx('splash', .6);
+      [0, 160].forEach(d => { const r = el('ellipse', { cx: 500, cy: 214, rx: 30, ry: 8, fill: 'none', stroke: '#fff', 'stroke-width': 3 }, T.world); r.style.transformBox = 'fill-box'; r.style.transformOrigin = 'center'; r.animate([{ transform: 'scale(1)', opacity: .9 }, { transform: 'scale(4.5)', opacity: 0 }], { duration: 900, delay: d, easing: 'ease-out', fill: 'both' }).finished.then(() => r.remove()); });
+      fl.remove(); hero.pos.style.opacity = 1; refl.pos.animate([{ opacity: 0 }, { opacity: .55 }], { duration: 600, fill: 'forwards' });
+    })();
     await say('아기 오리가 호숫가에 내려앉았어요. 물에 누가 비쳤을까요?');
+    await landing;
     await say('길고 하얀 목, 커다란 하얀 날개…');
     await camWide(1400);
     swanCall(T); T.pop(640, 110, '백조!', C.indigo);
@@ -1130,13 +1199,7 @@
       { label: '알', icon: growthIcon('egg') }, { label: '아기', icon: growthIcon('baby') },
       { label: '어린 새', icon: growthIcon('young') }, { label: '백조', icon: growthIcon('swan') },
     ], '어떻게 자랐는지 순서대로 톡! 맨 처음은 뭐였지?', prev => `${prev.label} 다음은 뭐였지?`, '알, 아기, 어린 새, 그리고 백조! 이렇게 자랐어요.');
-    await say('이번에는 아기 오리가 지나온 계절이에요.');
-    await orderGame([
-      { label: '여름', icon: seasonIcon('summer') }, { label: '가을', icon: seasonIcon('autumn') },
-      { label: '겨울', icon: seasonIcon('winter') }, { label: '봄', icon: seasonIcon('spring') },
-    ], '알에서 나온 건 해님이 쨍쨍한 계절이었어요. 어느 카드일까요?', prev => ({ 여름: '그다음, 나뭇잎이 빨갛게 물든 계절은?', 가을: '그다음, 꽁꽁 얼음이 언 계절은?', 겨울: '마지막으로 꽃이 핀 계절은?' })[prev.label],
-    '여름, 가을, 겨울, 봄! 계절이 한 바퀴 돌았어요.');
-
+    bob.cancel(); hero.body.removeAttribute('clip-path'); if (hero.ripple) { hero.ripple.remove(); hero.ripple = null; } // 다음 장면에서는 서 있는 백조로
     /* --- 12. 백조 가족 (호수 와이드, 봄꽃) --- */
     let swans, far;
     await T.sceneCard('백조 가족', () => {

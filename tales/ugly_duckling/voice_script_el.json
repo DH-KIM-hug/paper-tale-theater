@@ -97,28 +97,6 @@
    ]
   },
   {
-   "text": "알을 톡 눌러서 아기 오리를 깨워 줄까요?",
-   "segs": [
-    [
-     "nar",
-     "알을 톡 눌러서 아기 오리를 깨워 줄까요?",
-     "happy:1.1",
-     "[cheerful, inviting, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "알을 톡 눌러 봐요!",
-   "segs": [
-    [
-     "nar",
-     "알을 톡 눌러 봐요!",
-     "happy:1.1",
-     "[cheerful, encouraging]"
-    ]
-   ]
-  },
-  {
    "text": "노란 아기 오리 넷이 나왔어요. 삐약삐약!",
    "segs": [
     [
@@ -130,22 +108,22 @@
    ]
   },
   {
-   "text": "어? 제일 큰 알은 아직이에요. 톡톡톡 두드려 볼까요?",
+   "text": "어? 제일 큰 알은 아직이에요. 톡! 두드려 볼까요?",
    "segs": [
     [
      "nar",
-     "어? 제일 큰 알은 아직이에요. 톡톡톡 두드려 볼까요?",
+     "어? 제일 큰 알은 아직이에요. 톡! 두드려 볼까요?",
      "happy:1.1",
      "[curious, playful]"
     ]
    ]
   },
   {
-   "text": "큰 알을 톡톡 눌러 봐요!",
+   "text": "큰 알을 톡!",
    "segs": [
     [
      "nar",
-     "큰 알을 톡톡 눌러 봐요!",
+     "큰 알을 톡!",
      "happy:1.1",
      "[cheerful, encouraging]"
     ]
@@ -202,22 +180,22 @@
    ]
   },
   {
-   "text": "화면을 톡톡 눌러서 헤엄쳐 볼까요?",
+   "text": "톡! 눌러서 헤엄쳐 볼까요?",
    "segs": [
     [
      "nar",
-     "화면을 톡톡 눌러서 헤엄쳐 볼까요?",
+     "톡! 눌러서 헤엄쳐 볼까요?",
      "happy:1.1",
      "[cheerful, inviting]"
     ]
    ]
   },
   {
-   "text": "화면을 톡톡 눌러서 헤엄쳐요!",
+   "text": "톡! 헤엄쳐요",
    "segs": [
     [
      "nar",
-     "화면을 톡톡 눌러서 헤엄쳐요!",
+     "톡! 헤엄쳐요",
      "happy:1.1",
      "[cheerful, encouraging]"
     ]
@@ -286,7 +264,7 @@
      "ducks",
      "꽥꽥! 너는 우리랑 달라!",
      "toneup:1.2",
-     "[quacking, snooty, teasing, childlike, baby voice, lisping, very young child, giggly]"
+     "[quacking, snooty, teasing, childlike, baby voice, lisping, very young child, giggly] [say the line exactly once, short]"
     ]
    ]
   },
@@ -490,22 +468,22 @@
    ]
   },
   {
-   "text": "화면을 톡톡 눌러서 갈대를 헤치고 가 볼까요?",
+   "text": "톡! 눌러서 갈대를 헤쳐 봐요.",
    "segs": [
     [
      "nar",
-     "화면을 톡톡 눌러서 갈대를 헤치고 가 볼까요?",
+     "톡! 눌러서 갈대를 헤쳐 봐요.",
      "happy:1.1",
      "[cheerful, encouraging]"
     ]
    ]
   },
   {
-   "text": "톡톡! 갈대를 헤치고 가요.",
+   "text": "톡! 갈대를 헤쳐요.",
    "segs": [
     [
      "nar",
-     "톡톡! 갈대를 헤치고 가요.",
+     "톡! 갈대를 헤쳐요.",
      "happy:1.1",
      "[playful, encouraging]"
     ]
@@ -546,7 +524,7 @@
      "geese",
      "안녕! 우리랑 같이 놀자!",
      "happy:1.4",
-     "[friendly, cheerful, welcoming, childlike, baby voice, lisping, very young child, giggly]"
+     "[friendly, cheerful, welcoming, childlike, baby voice, lisping, very young child, giggly] [say the line exactly once, short]"
     ]
    ]
   },
@@ -639,24 +617,13 @@
    ]
   },
   {
-   "text": "하늘 높이 하얀 새들이 줄지어 날아가요. 톡 눌러 볼까요?",
+   "text": "하늘 높이 하얀 새들이 줄지어 날아가요.",
    "segs": [
     [
      "nar",
-     "하늘 높이 하얀 새들이 줄지어 날아가요. 톡 눌러 볼까요?",
+     "하늘 높이 하얀 새들이 줄지어 날아가요.",
      "happy:1.1",
      "[wondering, cheerful]"
-    ]
-   ]
-  },
-  {
-   "text": "하늘의 하얀 새들을 톡!",
-   "segs": [
-    [
-     "nar",
-     "하늘의 하얀 새들을 톡!",
-     "happy:1.1",
-     "[cheerful, wondering]"
     ]
    ]
   },
@@ -700,22 +667,11 @@
    ]
   },
   {
-   "text": "아기 오리를 톡톡 눌러 봐요. 날개로 몸을 감싸서 따뜻하게!",
+   "text": "아기 오리가 날개로 몸을 감싸서 따뜻하게!",
    "segs": [
     [
      "nar",
-     "아기 오리를 톡톡 눌러 봐요. 날개로 몸을 감싸서 따뜻하게!",
-     "happy:1.1",
-     "[gentle, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "아기 오리를 톡톡 눌러 봐요.",
-   "segs": [
-    [
-     "nar",
-     "아기 오리를 톡톡 눌러 봐요.",
+     "아기 오리가 날개로 몸을 감싸서 따뜻하게!",
      "happy:1.1",
      "[gentle, encouraging]"
     ]
@@ -746,28 +702,6 @@
      "저런, 얼음에 발이 붙었구나!",
      "sad:1.2",
      "[old man, concerned, kind]"
-    ]
-   ]
-  },
-  {
-   "text": "얼음을 톡톡톡 눌러서 깨 줘요!",
-   "segs": [
-    [
-     "nar",
-     "얼음을 톡톡톡 눌러서 깨 줘요!",
-     "happy:1.1",
-     "[cheerful, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "얼음을 톡톡 눌러요!",
-   "segs": [
-    [
-     "nar",
-     "얼음을 톡톡 눌러요!",
-     "happy:1.1",
-     "[cheerful, encouraging]"
     ]
    ]
   },
@@ -961,22 +895,22 @@
    ]
   },
   {
-   "text": "아기 오리를 톡톡 눌러서 날개를 활짝 펴 볼까요?",
+   "text": "아기 오리를 톡! 눌러서 날개를 활짝 펴 볼까요?",
    "segs": [
     [
      "nar",
-     "아기 오리를 톡톡 눌러서 날개를 활짝 펴 볼까요?",
+     "아기 오리를 톡! 눌러서 날개를 활짝 펴 볼까요?",
      "happy:1.1",
      "[cheerful, inviting]"
     ]
    ]
   },
   {
-   "text": "톡톡 눌러요. 날개를 활짝!",
+   "text": "톡! 날개를 활짝!",
    "segs": [
     [
      "nar",
-     "톡톡 눌러요. 날개를 활짝!",
+     "톡! 날개를 활짝!",
      "happy:1.1",
      "[cheerful, encouraging]"
     ]
@@ -990,28 +924,6 @@
      "와, 날개가 이렇게 커졌어요!",
      "toneup:1.4",
      "[amazed, excited]"
-    ]
-   ]
-  },
-  {
-   "text": "한 번 더 톡톡! 훨훨 날아 볼까요?",
-   "segs": [
-    [
-     "nar",
-     "한 번 더 톡톡! 훨훨 날아 볼까요?",
-     "happy:1.2",
-     "[excited, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "한 번 더 톡톡! 훨훨!",
-   "segs": [
-    [
-     "nar",
-     "한 번 더 톡톡! 훨훨!",
-     "happy:1.2",
-     "[excited, encouraging]"
     ]
    ]
   },
@@ -1165,121 +1077,11 @@
    ]
   },
   {
-   "text": "여름이에요! 반짝이는 카드를 눌러 봐요.",
-   "segs": [
-    [
-     "nar",
-     "여름이에요! 반짝이는 카드를 눌러 봐요.",
-     "happy:1.1",
-     "[bright, cheerful]"
-    ]
-   ]
-  },
-  {
-   "text": "가을이에요! 반짝이는 카드를 눌러 봐요.",
-   "segs": [
-    [
-     "nar",
-     "가을이에요! 반짝이는 카드를 눌러 봐요.",
-     "happy:1.1",
-     "[bright, cheerful]"
-    ]
-   ]
-  },
-  {
-   "text": "겨울이에요! 반짝이는 카드를 눌러 봐요.",
-   "segs": [
-    [
-     "nar",
-     "겨울이에요! 반짝이는 카드를 눌러 봐요.",
-     "happy:1.1",
-     "[bright, cheerful]"
-    ]
-   ]
-  },
-  {
-   "text": "봄이에요! 반짝이는 카드를 눌러 봐요.",
-   "segs": [
-    [
-     "nar",
-     "봄이에요! 반짝이는 카드를 눌러 봐요.",
-     "happy:1.1",
-     "[bright, cheerful]"
-    ]
-   ]
-  },
-  {
    "text": "알, 아기, 어린 새, 그리고 백조! 이렇게 자랐어요.",
    "segs": [
     [
      "nar",
      "알, 아기, 어린 새, 그리고 백조! 이렇게 자랐어요.",
-     "happy:1.3",
-     "[proud, warm]"
-    ]
-   ]
-  },
-  {
-   "text": "이번에는 아기 오리가 지나온 계절이에요.",
-   "segs": [
-    [
-     "nar",
-     "이번에는 아기 오리가 지나온 계절이에요.",
-     "happy:1.1",
-     "[calm, curious]"
-    ]
-   ]
-  },
-  {
-   "text": "알에서 나온 건 해님이 쨍쨍한 계절이었어요. 어느 카드일까요?",
-   "segs": [
-    [
-     "nar",
-     "알에서 나온 건 해님이 쨍쨍한 계절이었어요. 어느 카드일까요?",
-     "happy:1.1",
-     "[curious, cheerful]"
-    ]
-   ]
-  },
-  {
-   "text": "그다음, 나뭇잎이 빨갛게 물든 계절은?",
-   "segs": [
-    [
-     "nar",
-     "그다음, 나뭇잎이 빨갛게 물든 계절은?",
-     "happy:1.1",
-     "[curious, cheerful]"
-    ]
-   ]
-  },
-  {
-   "text": "그다음, 꽁꽁 얼음이 언 계절은?",
-   "segs": [
-    [
-     "nar",
-     "그다음, 꽁꽁 얼음이 언 계절은?",
-     "happy:1.1",
-     "[curious, cheerful]"
-    ]
-   ]
-  },
-  {
-   "text": "마지막으로 꽃이 핀 계절은?",
-   "segs": [
-    [
-     "nar",
-     "마지막으로 꽃이 핀 계절은?",
-     "happy:1.1",
-     "[curious, cheerful]"
-    ]
-   ]
-  },
-  {
-   "text": "여름, 가을, 겨울, 봄! 계절이 한 바퀴 돌았어요.",
-   "segs": [
-    [
-     "nar",
-     "여름, 가을, 겨울, 봄! 계절이 한 바퀴 돌았어요.",
      "happy:1.3",
      "[proud, warm]"
     ]
