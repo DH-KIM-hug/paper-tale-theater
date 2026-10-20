@@ -15,13 +15,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/kongjwi/en/nar_8e73cd0ced.mp3"
   ]
  },
- "콩쥐를 톡톡톡 눌러서 마당을 쓸어 봐요!": {
-  "t": "Tap Kongjwi, tap tap tap, to sweep the yard!",
-  "c": "audio/el/kongjwi/en/nar_aab085bf4c.mp3"
- },
- "콩쥐를 톡톡톡! 마당을 쓸어요.": {
-  "t": "Tap Kongjwi, tap tap tap! Sweep the yard.",
-  "c": "audio/el/kongjwi/en/nar_077f101707.mp3"
+ "콩쥐를 톡! 눌러서 마당을 쓸어 봐요!": {
+  "t": "Tap Kongjwi to sweep the yard!",
+  "c": "audio/el/kongjwi/en/nar_bfdda20aa5.mp3"
  },
  "마당이 깨끗해졌어요. 콩쥐는 방긋 웃었어요.": {
   "t": "The yard was clean. Kongjwi smiled.",
@@ -44,10 +40,6 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/kongjwi/en/nar_750b65c979.mp3",
    "audio/el/kongjwi/en/ox_ea5e000caa.mp3"
   ]
- },
- "소를 톡! 같이 밭을 갈아요.": {
-  "t": "Tap the ox! Plow the field together.",
-  "c": "audio/el/kongjwi/en/nar_3ff8dbd3d8.mp3"
  },
  "소가 쑥쑥 밭을 갈아 주었어요. \"고마워, 소야!\"": {
   "t": "The ox plowed the field fast. Thank you, ox!",
@@ -90,14 +82,6 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The toad slipped into the hole! Now the water does not leak.",
   "c": "audio/el/kongjwi/en/nar_22fab3b022.mp3"
  },
- "물동이를 톡톡톡 눌러서 다시 물을 채워 봐요!": {
-  "t": "Tap the bucket, tap tap tap, to fill the jar again!",
-  "c": "audio/el/kongjwi/en/nar_905f1f57aa.mp3"
- },
- "물동이를 톡톡톡! 물을 가득 채워요.": {
-  "t": "Tap the bucket, tap tap tap! Fill it up.",
-  "c": "audio/el/kongjwi/en/nar_16ecec2eb0.mp3"
- },
  "독이 물로 가득 찼어요. \"고마워, 두꺼비야!\"": {
   "t": "The jar was full of water. Thank you, toad!",
   "c": [
@@ -116,17 +100,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "There was so much grain that Kongjwi felt worried.",
   "c": "audio/el/kongjwi/en/nar_22552946c4.mp3"
  },
- "그때 참새들이 날아왔어요. \"짹짹! 우리가 도와줄게!\" 참새를 톡!": {
-  "t": "Then sparrows flew in. Tweet tweet! We will help! Tap the sparrows!",
+ "그때 참새들이 날아왔어요. \"짹짹! 우리가 도와줄게!\"": {
+  "t": "Then sparrows flew in. Tweet tweet! We will help!",
   "c": [
    "audio/el/kongjwi/en/nar_06bd6beeea.mp3",
-   "audio/el/kongjwi/en/sparrow_a58793bb49.mp3",
-   "audio/el/kongjwi/en/nar_91dfafa8c0.mp3"
+   "audio/el/kongjwi/en/sparrow_a58793bb49.mp3"
   ]
- },
- "참새를 톡! 곡식을 도와줘요.": {
-  "t": "Tap the sparrows! Help with the grain.",
-  "c": "audio/el/kongjwi/en/nar_1060fe66ea.mp3"
  },
  "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!": {
   "t": "The sparrows pecked and peeled the husks. Let's count the sparrows one by one!",
@@ -144,17 +123,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Now Kongjwi had to weave cloth. She wove very hard.",
   "c": "audio/el/kongjwi/en/nar_ac5cdd1ad0.mp3"
  },
- "그때 하늘에서 선녀가 내려왔어요. \"착한 콩쥐야, 선물을 줄게!\" 선녀를 톡!": {
-  "t": "Then a fairy came down from the sky. Kind Kongjwi, I have a gift for you! Tap the fairy!",
+ "그때 하늘에서 선녀가 내려왔어요. \"착한 콩쥐야, 선물을 줄게!\"": {
+  "t": "Then a fairy came down from the sky. Kind Kongjwi, I have a gift for you!",
   "c": [
    "audio/el/kongjwi/en/nar_7cf46fc21d.mp3",
-   "audio/el/kongjwi/en/fairy_976f0296da.mp3",
-   "audio/el/kongjwi/en/nar_b22e6c6468.mp3"
+   "audio/el/kongjwi/en/fairy_976f0296da.mp3"
   ]
- },
- "선녀를 톡! 선물을 받아요.": {
-  "t": "Tap the fairy! Get your gift.",
-  "c": "audio/el/kongjwi/en/nar_3f8a1a90e2.mp3"
  },
  "콩쥐는 곱디고운 옷과 나비 꽃신을 받았어요. \"고맙습니다, 선녀님!\"": {
   "t": "Kongjwi got a beautiful dress and butterfly shoes. Thank you, fairy!",
@@ -163,13 +137,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/kongjwi/en/kong_0be2bb0fc1.mp3"
   ]
  },
- "콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡톡톡 건너 봐요!": {
-  "t": "Kongjwi crossed the stream to go to the feast. Tap, tap, tap across the stepping stones!",
-  "c": "audio/el/kongjwi/en/nar_52e26849c9.mp3"
- },
- "콩쥐를 톡톡톡! 징검다리를 건너요.": {
-  "t": "Tap Kongjwi, tap tap tap! Cross the stones.",
-  "c": "audio/el/kongjwi/en/nar_2a7d8931c2.mp3"
+ "콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!": {
+  "t": "Kongjwi crossed the stream to go to the feast. Tap to cross the stepping stones!",
+  "c": "audio/el/kongjwi/en/nar_7425076013.mp3"
  },
  "풍덩! 꽃신 한 짝이 개울에 빠졌어요. 꽃신은 둥둥 떠내려갔어요.": {
   "t": "Splash! One shoe fell into the stream and floated away.",
@@ -186,14 +156,6 @@ Object.assign(NARRATION_CLIPS_EN, {
  "북을 톡! 둥둥 소리가 나요.": {
   "t": "Tap the drum! Boom boom!",
   "c": "audio/el/kongjwi/en/nar_8cb66e329b.mp3"
- },
- "장구를 톡! 덩덕 소리가 나요.": {
-  "t": "Tap the hourglass drum! Dung-duk!",
-  "c": "audio/el/kongjwi/en/nar_1b3b6a312a.mp3"
- },
- "꽹과리를 톡! 꽹 소리가 나요.": {
-  "t": "Tap the gong! Clang!",
-  "c": "audio/el/kongjwi/en/nar_382c571c7a.mp3"
  },
  "모두 신나게 춤을 추었어요. 새엄마와 팥쥐도 곱게 차려입고 왔어요.": {
   "t": "Everyone danced happily. Her stepmother and Patjwi came in fancy clothes too.",
@@ -226,13 +188,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the sparkling shoe!",
   "c": "audio/el/kongjwi/en/nar_7c77963794.mp3"
  },
- "원님이 콩쥐에게 꽃신을 신겨 주었어요. 꼭 맞았어요! 콩쥐를 톡!": {
-  "t": "The magistrate put the shoe on Kongjwi. It fit perfectly! Tap Kongjwi!",
-  "c": "audio/el/kongjwi/en/nar_817598c6ef.mp3"
- },
- "콩쥐를 톡! 꽃신을 신어요.": {
-  "t": "Tap Kongjwi! Put on the shoe.",
-  "c": "audio/el/kongjwi/en/nar_1c8a8a716d.mp3"
+ "원님이 콩쥐에게 꽃신을 신겨 주었어요. 꼭 맞았어요!": {
+  "t": "The magistrate put the shoe on Kongjwi. It fit perfectly!",
+  "c": "audio/el/kongjwi/en/nar_e579417f41.mp3"
  },
  "콩쥐와 원님은 혼례를 올렸어요. 콩쥐는 곱게 차린 신부가 되었어요.": {
   "t": "Kongjwi and the magistrate got married. Kongjwi became a lovely bride.",
@@ -252,13 +210,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/kongjwi/en/kong_1078d18576.mp3"
   ]
  },
- "모두 함께 떡을 나눠 먹어요. 떡을 톡톡톡 눌러서 하나씩 나눠 줘요!": {
-  "t": "Everyone shares rice cakes. Tap the cakes, tap tap tap, to give one to each person!",
-  "c": "audio/el/kongjwi/en/nar_cf4b3e5b07.mp3"
- },
- "떡을 톡톡톡! 하나씩 나눠 줘요.": {
-  "t": "Tap the cakes, tap tap tap! Share them one by one.",
-  "c": "audio/el/kongjwi/en/nar_a8b3e47dbb.mp3"
+ "모두 함께 떡을 나눠 먹어요.": {
+  "t": "Everyone shares rice cakes.",
+  "c": "audio/el/kongjwi/en/nar_948ae9dbf2.mp3"
  },
  "모두 둘러앉아 맛있게 먹었어요. 콩쥐를 톡! 모두 함께 만세!": {
   "t": "Everyone sat around and ate happily. Tap Kongjwi! Hooray together!",
@@ -271,6 +225,14 @@ Object.assign(NARRATION_CLIPS_EN, {
  "착한 마음은 도움을 불러와요. 콩쥐팥쥐 이야기는 이렇게 끝났어요.": {
   "t": "A kind heart brings help. And that is how the story of Kongjwi and Patjwi ended.",
   "c": "audio/el/kongjwi/en/nar_ef7b5adb67.mp3"
+ },
+ "콩쥐를 톡! 마당을 쓸어요.": {
+  "t": "Tap Kongjwi! Sweep the yard.",
+  "c": "audio/el/kongjwi/en/nar_71e5510e06.mp3"
+ },
+ "콩쥐를 톡! 징검다리를 건너요.": {
+  "t": "Tap Kongjwi! Cross the stepping stones.",
+  "c": "audio/el/kongjwi/en/nar_0d9181f46e.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});

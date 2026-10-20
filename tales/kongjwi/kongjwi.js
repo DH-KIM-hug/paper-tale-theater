@@ -97,10 +97,12 @@
     await say('옛날 옛날에 마음씨 고운 콩쥐가 살았어요.');
     await say('콩쥐는 새엄마, 팥쥐와 함께 살았어요.');
     await say('"콩쥐야, 마당을 쓸어라!" 새엄마가 말했어요.');
-    await say('콩쥐를 톡톡톡 눌러서 마당을 쓸어 봐요!');
-    await T.mash(kong.pos, { count: 3, prompt: '콩쥐를 톡톡톡! 마당을 쓸어요.', onStep: i => {
+    await say('콩쥐를 톡! 눌러서 마당을 쓸어 봐요!');
+    const sweep = i => {
       kong.hop(14, 300); popSfx(T); T.pop(kong.x + 70, kong.y - 150, tr(['쓱쓱!', '싹싹!', '깨끗!'][i - 1]));
-    } });
+    };
+    await T.tap(kong.pos, { prompt: '콩쥐를 톡! 마당을 쓸어요.' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 3; i++) { await sweep(i); await sleep(450); }
     await say('마당이 깨끗해졌어요. 콩쥐는 방긋 웃었어요.');
 
     /* --- 2. 소가 밭을 갈아요 --- */
@@ -113,7 +115,7 @@
     await say('밭은 너무 넓어서 콩쥐는 한숨이 나왔어요.');
     put(T, ox, P ? 520 : 560, 520, { to: 'left' }); ox.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400);
     await say('그때 검은 소가 나타났어요. "음메~ 내가 도와줄게!"');
-    await T.tap(ox.pos, { prompt: '소를 톡! 같이 밭을 갈아요.' });
+    await sleep(500);
     popSfx(T); ox.hop(20, 300);
     await T.cutImage([{ src: cutSrc('ox'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     await say('소가 쑥쑥 밭을 갈아 주었어요. "고마워, 소야!"');
@@ -144,12 +146,13 @@
     await say('두꺼비가 구멍에 쏙! 이제 물이 새지 않아요.');
     scene('jar');
     put(T, kong, 400, 505, { look: 'pour', to: 'right' }); put(T, jar, 560, 505); put(T, pail, 480, 520);
-    await say('물동이를 톡톡톡 눌러서 다시 물을 채워 봐요!');
     const water = T.el('ellipse', { cx: jar.x, cy: jar.y - 150, rx: 52, ry: 11, fill: '#5FB4E8', stroke: '#fff', 'stroke-width': 3, opacity: 0 }, T.world);
-    await T.mash(pail.pos, { count: 3, prompt: '물동이를 톡톡톡! 물을 가득 채워요.', onStep: i => {
+    const refill = i => {
       pail.hop(14, 260); popSfx(T); pourDrops(pail, jar); T.pop(pail.x, pail.y - 110, tr(NUM[i - 1]));
       setTimeout(() => { water.setAttribute('opacity', (i / 3).toFixed(2)); }, 380);
-    } });
+    };
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 3; i++) { await refill(i); await sleep(500); }
     await say('독이 물로 가득 찼어요. "고마워, 두꺼비야!"');
 
     /* --- 4. 참새와 곡식 --- */
@@ -162,8 +165,8 @@
     await say('"겉겨를 벗겨서 쌀을 가져오너라!" 새엄마가 말했어요.');
     await say('곡식이 너무 많아서 콩쥐는 걱정이 되었어요.');
     put(T, flock, 500, 330); flock.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400);
-    await say('그때 참새들이 날아왔어요. "짹짹! 우리가 도와줄게!" 참새를 톡!');
-    await T.tap(flock.pos, { prompt: '참새를 톡! 곡식을 도와줘요.' });
+    await say('그때 참새들이 날아왔어요. "짹짹! 우리가 도와줄게!"');
+    await sleep(500);
     hide(flock); popSfx(T);
     await T.cutImage([{ src: cutSrc('sparrows'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     scene('mat');
@@ -185,8 +188,8 @@
     }, kong.pos);
     await say('이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.');
     put(T, fairy, 640, 400, { look: 'float', to: 'left' }); fairy.pos.animate([{ opacity: 0 }, { opacity: 1 }], 500);
-    await say('그때 하늘에서 선녀가 내려왔어요. "착한 콩쥐야, 선물을 줄게!" 선녀를 톡!');
-    await T.tap(fairy.pos, { prompt: '선녀를 톡! 선물을 받아요.' });
+    await say('그때 하늘에서 선녀가 내려왔어요. "착한 콩쥐야, 선물을 줄게!"');
+    await sleep(500);
     fairy.look('give'); popSfx(T);
     await T.cutImage([{ src: cutSrc('fairy'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     scene('loom');
@@ -199,10 +202,12 @@
       scene('stream');
       put(T, kong, 370, 505, { look: 'shoes', to: 'right' });
     }, kong.pos);
-    await say('콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡톡톡 건너 봐요!');
-    await T.mash(kong.pos, { count: 3, prompt: '콩쥐를 톡톡톡! 징검다리를 건너요.', onStep: i => {
+    await say('콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!');
+    const cross = i => {
       kong.move(370 + i * 75, 505, 380); popSfx(T); T.pop(kong.x + 40, kong.y - 190, tr(NUM[i - 1]));
-    } });
+    };
+    await T.tap(kong.pos, { prompt: '콩쥐를 톡! 징검다리를 건너요.' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 3; i++) { await cross(i); await sleep(400); }
     await T.cutImage([{ src: cutSrc('splash'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     scene('stream');
     put(T, kong, 595, 505, { look: 'shoes', to: 'right' });
@@ -223,9 +228,9 @@
     await say('잔치에서는 북과 장구와 꽹과리 소리가 울렸어요. 북을 톡 눌러 봐요!');
     await T.tap(drum.pos, { prompt: '북을 톡! 둥둥 소리가 나요.' });
     AudioFX.sfx('drum') || T.tone([140, 90], .3, { vol: .25 }); drum.hop(14, 240); T.pop(drum.x, drum.y - 120, tr('둥!'));
-    await T.tap(buk.pos, { prompt: '장구를 톡! 덩덕 소리가 나요.' });
+    await sleep(500);
     AudioFX.sfx('drum') || T.tone([200, 150], .25, { vol: .22 }); buk.hop(14, 240); T.pop(buk.x, buk.y - 120, tr('덩!'));
-    await T.tap(gong.pos, { prompt: '꽹과리를 톡! 꽹 소리가 나요.' });
+    await sleep(500);
     clinkSfx(T); gong.hop(14, 240); T.pop(gong.x, gong.y - 120, tr('꽹!'));
     await say('모두 신나게 춤을 추었어요. 새엄마와 팥쥐도 곱게 차려입고 왔어요.');
     await T.cutImage([{ src: cutSrc('shy'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
@@ -243,9 +248,9 @@
       { key: 'p', el: shoeP.pos, ok: false }, { key: 'b', el: shoeB.pos, ok: true }, { key: 'm', el: shoeM.pos, ok: false }],
       { prompt: '나비 꽃신을 톡!', where: '나비가 그려진 꽃신을 찾아봐요.', who: '반짝이는 꽃신을 톡!' });
     clinkSfx(T); shoeB.hop(24, 320);
-    await say('원님이 콩쥐에게 꽃신을 신겨 주었어요. 꼭 맞았어요! 콩쥐를 톡!');
+    await say('원님이 콩쥐에게 꽃신을 신겨 주었어요. 꼭 맞았어요!');
     put(T, kong, 640, 505, { look: 'shoes', to: 'left' });
-    await T.tap(kong.pos, { prompt: '콩쥐를 톡! 꽃신을 신어요.' });
+    await sleep(500);
     popSfx(T); kong.hop(34, 400);
 
     /* --- 9. 화해와 함께하는 잔치 --- */
@@ -260,13 +265,15 @@
     await say('"콩쥐야, 그동안 미안했어." 새엄마와 팥쥐가 고개를 숙였어요.');
     await say('콩쥐는 웃으며 말했어요. "괜찮아요. 우리 같이 지내요."');
     await Promise.all([step.hop(20, 400), pat.hop(20, 400)]);
-    await say('모두 함께 떡을 나눠 먹어요. 떡을 톡톡톡 눌러서 하나씩 나눠 줘요!');
+    await say('모두 함께 떡을 나눠 먹어요.');
     const eaters = [won, step, pat];
-    await T.mash(cakes.pos, { count: 3, prompt: '떡을 톡톡톡! 하나씩 나눠 줘요.', onStep: i => {
+    const feed = i => {
       const who = eaters[i - 1], c = prop(T, 'ricecake', 30); put(T, c, cakes.x, cakes.y - 20);
       c.move(who.x, who.y - 110, 420, 'ease-in').then(() => { hide(c); who.hop(14, 240); });
       cakes.hop(10, 220); popSfx(T); T.pop(who.x, who.y - 230, tr(['냠냠!', '쫀득!', '맛있다!'][i - 1]));
-    } });
+    };
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 3; i++) { await feed(i); await sleep(500); }
     await say('모두 둘러앉아 맛있게 먹었어요. 콩쥐를 톡! 모두 함께 만세!');
     await T.tap(kong.pos, { prompt: '콩쥐를 톡! 모두 함께 만세!' });
     T.confetti();
