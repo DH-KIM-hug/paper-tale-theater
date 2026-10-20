@@ -12,24 +12,16 @@
    "en": "Once upon a time, a kind farmer lived in a village."
   },
   {
-   "text": "농부는 밭을 열심히 갈았어요. 농부를 톡톡톡 눌러서 밭을 갈아 봐요!",
-   "en": "The farmer worked hard in his field. Tap, tap, tap the farmer to dig!"
-  },
-  {
-   "text": "농부를 톡톡톡! 괭이질을 해요.",
-   "en": "Tap, tap, tap the farmer! Dig with the hoe."
+   "text": "농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!",
+   "en": "The farmer worked hard in his field. Tap the farmer to dig!"
   },
   {
    "text": "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.",
    "en": "Clang! The hoe hit something hard."
   },
   {
-   "text": "땅속에서 둥근 뚜껑이 보여요. 농부를 톡톡톡 눌러서 힘껏 당겨 봐요!",
-   "en": "A round lid is showing in the ground. Tap, tap, tap the farmer to pull it out!"
-  },
-  {
-   "text": "농부를 톡톡톡! 영차 당겨요.",
-   "en": "Tap, tap, tap the farmer! Heave-ho, pull!"
+   "text": "땅속에서 둥근 뚜껑이 보여요.",
+   "en": "A round lid is showing in the ground."
   },
   {
    "text": "쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.",
@@ -40,12 +32,8 @@
    "en": "The farmer put the jar in his yard. His wife came out to look, too."
   },
   {
-   "text": "농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요. 괭이를 톡!",
-   "en": "The farmer tried to put his hoe beside the jar, but it fell inside. Tap the hoe!"
-  },
-  {
-   "text": "괭이를 톡! 항아리에 넣어요.",
-   "en": "Tap the hoe! Put it in the jar."
+   "text": "농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.",
+   "en": "The farmer tried to put his hoe beside the jar, but it fell inside."
   },
   {
    "text": "\"어머나! 괭이가 두 개가 되었어요!\" 아내가 깜짝 놀랐어요.",
@@ -116,8 +104,8 @@
    ]
   },
   {
-   "text": "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\" 항아리를 톡!",
-   "en": "The kind farmer said with a smile. Please use it, and bring it back! Tap the jar!",
+   "text": "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\"",
+   "en": "x",
    "segs": [
     [
      "nar",
@@ -132,10 +120,6 @@
      "Tap the jar!"
     ]
    ]
-  },
-  {
-   "text": "항아리를 톡! 부자에게 빌려줘요.",
-   "en": "Tap the jar! Lend it to the rich man."
   },
   {
    "text": "\"고맙네! 얼른 가져가야지, 헤헤.\" 부자는 항아리를 꼭 안고 달려갔어요.",
@@ -164,14 +148,6 @@
      "If I put in a gold bar, I will get a mountain of gold!"
     ]
    ]
-  },
-  {
-   "text": "항아리를 톡톡톡 눌러서 금덩이를 넣어 봐요!",
-   "en": "Tap, tap, tap the jar to put in the gold!"
-  },
-  {
-   "text": "항아리를 톡톡톡! 금덩이가 나와요.",
-   "en": "Tap, tap, tap the jar! Gold bars come out."
   },
   {
    "text": "금덩이가 와르르! 부자는 금 더미에 폭 파묻혔어요. \"사람 살려~\"",
@@ -212,14 +188,6 @@
      "What is this?"
     ]
    ]
-  },
-  {
-   "text": "아버지를 톡! 눌러서 항아리 쪽으로 가 봐요.",
-   "en": "Tap the father to walk toward the jar."
-  },
-  {
-   "text": "아버지를 톡! 항아리를 구경해요.",
-   "en": "Tap the father! Look at the jar."
   },
   {
    "text": "풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.",
@@ -280,8 +248,8 @@
    ]
   },
   {
-   "text": "부자는 지쳐서 외쳤어요. \"이게 다 항아리 때문이야! 이제 그만!\" 부자를 톡!",
-   "en": "The rich man was worn out and shouted. It is all because of this jar! Stop! Tap the rich man!",
+   "text": "부자는 지쳐서 외쳤어요. \"이게 다 항아리 때문이야! 이제 그만!\"",
+   "en": "The rich man was worn out and shouted. It is all because of this jar! Stop!",
    "segs": [
     [
      "nar",
@@ -290,16 +258,8 @@
     [
      "rich",
      "It is all because of this jar! Stop!"
-    ],
-    [
-     "nar",
-     "Tap the rich man!"
     ]
    ]
-  },
-  {
-   "text": "부자를 톡! 항아리를 그만 쓰자고 해요.",
-   "en": "Tap the rich man! Say, no more jar."
   },
   {
    "text": "쨍그랑! 항아리가 깨지자 일곱 명은 사라지고, 진짜 아버지만 남았어요.",
@@ -318,10 +278,6 @@
   {
    "text": "부자는 농부를 찾아가 사과하고, 가진 것을 마을 사람들과 나누기로 했어요. 함께 잔치를 열어요!",
    "en": "The rich man went to the farmer and said sorry. He decided to share what he had with the village. Let us have a party together!"
-  },
-  {
-   "text": "상을 톡! 맛있는 음식을 차려요.",
-   "en": "Tap the table! Set out yummy food."
   },
   {
    "text": "\"모두 고맙네!\" 모두 둘러앉아 맛있게 먹었어요.",
@@ -344,6 +300,16 @@
   {
    "text": "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.",
    "en": "Sharing makes joy grow. And that is how the story of the magic jar ended."
+  },
+  {
+   "text": "농부를 톡! 괭이질을 해요.",
+   "en": "Tap the farmer! Dig with the hoe.",
+   "segs": [
+    [
+     "nar",
+     "Tap the farmer! Dig with the hoe."
+    ]
+   ]
   }
  ],
  "ui": {

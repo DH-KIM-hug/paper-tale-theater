@@ -1,15 +1,12 @@
 /* magic_jar — Typecast 배역 내레이션 (tools/typecast/gen_tale.py가 voice_script.json에서 생성, 손으로 고치지 말 것) */
 const NARRATION_CLIPS = {
  "옛날 옛날에 마음씨 착한 농부가 살았어요.": "audio/tc/magic_jar/nar_0b4b0ccaa5.mp3",
- "농부는 밭을 열심히 갈았어요. 농부를 톡톡톡 눌러서 밭을 갈아 봐요!": "audio/tc/magic_jar/nar_919ff1692a.mp3",
- "농부를 톡톡톡! 괭이질을 해요.": "audio/tc/magic_jar/nar_4d15208e34.mp3",
+ "농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!": "audio/tc/magic_jar/nar_1bf28c67f3.mp3",
  "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.": "audio/tc/magic_jar/nar_950faa6b0c.mp3",
- "땅속에서 둥근 뚜껑이 보여요. 농부를 톡톡톡 눌러서 힘껏 당겨 봐요!": "audio/tc/magic_jar/nar_8ba167efb1.mp3",
- "농부를 톡톡톡! 영차 당겨요.": "audio/tc/magic_jar/nar_7de6599502.mp3",
+ "땅속에서 둥근 뚜껑이 보여요.": "audio/tc/magic_jar/nar_226823d880.mp3",
  "쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.": "audio/tc/magic_jar/nar_9acb047152.mp3",
  "농부는 항아리를 집 마당에 놓았어요. 아내도 구경하러 나왔어요.": "audio/tc/magic_jar/nar_fe161ea145.mp3",
- "농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요. 괭이를 톡!": "audio/tc/magic_jar/nar_b2cb7cfdcf.mp3",
- "괭이를 톡! 항아리에 넣어요.": "audio/tc/magic_jar/nar_27d29bab8a.mp3",
+ "농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.": "audio/tc/magic_jar/nar_896d263b1b.mp3",
  "\"어머나! 괭이가 두 개가 되었어요!\" 아내가 깜짝 놀랐어요.": [
   "audio/tc/magic_jar/wife_78dd048b4b.mp3",
   "audio/tc/magic_jar/nar_4bedfc5342.mp3"
@@ -28,12 +25,11 @@ const NARRATION_CLIPS = {
   "audio/tc/magic_jar/nar_f13c997a7a.mp3",
   "audio/tc/magic_jar/rich_0297536c5c.mp3"
  ],
- "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\" 항아리를 톡!": [
+ "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\"": [
   "audio/tc/magic_jar/nar_3414ecdd3b.mp3",
   "audio/tc/magic_jar/farmer_8b6c9a028a.mp3",
   "audio/tc/magic_jar/nar_c1d8fd3261.mp3"
  ],
- "항아리를 톡! 부자에게 빌려줘요.": "audio/tc/magic_jar/nar_8770f135f0.mp3",
  "\"고맙네! 얼른 가져가야지, 헤헤.\" 부자는 항아리를 꼭 안고 달려갔어요.": [
   "audio/tc/magic_jar/rich_f3f3d16665.mp3",
   "audio/tc/magic_jar/nar_dbb71e4df7.mp3"
@@ -42,8 +38,6 @@ const NARRATION_CLIPS = {
   "audio/tc/magic_jar/nar_9c44c932e1.mp3",
   "audio/tc/magic_jar/rich_1ade6c4592.mp3"
  ],
- "항아리를 톡톡톡 눌러서 금덩이를 넣어 봐요!": "audio/tc/magic_jar/nar_20c41f2856.mp3",
- "항아리를 톡톡톡! 금덩이가 나와요.": "audio/tc/magic_jar/nar_c08efd4363.mp3",
  "금덩이가 와르르! 부자는 금 더미에 폭 파묻혔어요. \"사람 살려~\"": [
   "audio/tc/magic_jar/nar_668540d7ee.mp3",
   "audio/tc/magic_jar/rich_6b99f58bda.mp3"
@@ -55,8 +49,6 @@ const NARRATION_CLIPS = {
   "audio/tc/magic_jar/nar_9597c7d571.mp3",
   "audio/tc/magic_jar/father_19c026aa6a.mp3"
  ],
- "아버지를 톡! 눌러서 항아리 쪽으로 가 봐요.": "audio/tc/magic_jar/nar_0272d60f8f.mp3",
- "아버지를 톡! 항아리를 구경해요.": "audio/tc/magic_jar/nar_d5b9324c4b.mp3",
  "풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.": "audio/tc/magic_jar/nar_f978b3906b.mp3",
  "\"아버지가 어디 계시지?\" 항아리를 톡톡톡 눌러서 아버지를 세어 봐요!": [
   "audio/tc/magic_jar/rich_13d5e6de9d.mp3",
@@ -73,21 +65,19 @@ const NARRATION_CLIPS = {
   "audio/tc/magic_jar/father_dc7dbe43a6.mp3",
   "audio/tc/magic_jar/nar_3bccb55417.mp3"
  ],
- "부자는 지쳐서 외쳤어요. \"이게 다 항아리 때문이야! 이제 그만!\" 부자를 톡!": [
+ "부자는 지쳐서 외쳤어요. \"이게 다 항아리 때문이야! 이제 그만!\"": [
   "audio/tc/magic_jar/nar_55b9a082e3.mp3",
-  "audio/tc/magic_jar/rich_7e0d85a87a.mp3",
-  "audio/tc/magic_jar/nar_c4461ef9e9.mp3"
+  "audio/tc/magic_jar/rich_7e0d85a87a.mp3"
  ],
- "부자를 톡! 항아리를 그만 쓰자고 해요.": "audio/tc/magic_jar/nar_53ce7e6aa5.mp3",
  "쨍그랑! 항아리가 깨지자 일곱 명은 사라지고, 진짜 아버지만 남았어요.": "audio/tc/magic_jar/nar_e4b5a84194.mp3",
  "\"아버지, 죄송해요. 욕심을 부려서 소동이 났어요.\"": "audio/tc/magic_jar/rich_17303e9575.mp3",
  "부자는 농부를 찾아가 사과하고, 가진 것을 마을 사람들과 나누기로 했어요. 함께 잔치를 열어요!": "audio/tc/magic_jar/nar_a55fddbb12.mp3",
- "상을 톡! 맛있는 음식을 차려요.": "audio/tc/magic_jar/nar_95ab41d572.mp3",
  "\"모두 고맙네!\" 모두 둘러앉아 맛있게 먹었어요.": [
   "audio/tc/magic_jar/rich_6142405859.mp3",
   "audio/tc/magic_jar/nar_b9aead9e6f.mp3"
  ],
  "농부를 톡! 모두 함께 만세!": "audio/tc/magic_jar/nar_d8d6370334.mp3",
- "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.": "audio/tc/magic_jar/nar_45f0b3a35e.mp3"
+ "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.": "audio/tc/magic_jar/nar_45f0b3a35e.mp3",
+ "농부를 톡! 괭이질을 해요.": "audio/tc/magic_jar/nar_47968f1bbc.mp3"
 };
 const VOICE_LINES = {};

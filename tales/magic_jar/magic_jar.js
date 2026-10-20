@@ -80,10 +80,12 @@
     put(T, farmer, 460, 480, { look: 'hoe', to: 'right' });
     await T.curtain(true);
     await say('옛날 옛날에 마음씨 착한 농부가 살았어요.');
-    await say('농부는 밭을 열심히 갈았어요. 농부를 톡톡톡 눌러서 밭을 갈아 봐요!');
-    await T.mash(farmer.pos, { count: 3, prompt: '농부를 톡톡톡! 괭이질을 해요.', onStep: i => {
+    await say('농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!');
+    const plow = i => {
       farmer.hop(16, 300); AudioFX.sfx('pop'); T.pop(farmer.x + 90, farmer.y - 190, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
-    } });
+    };
+    await T.tap(farmer.pos, { prompt: '농부를 톡! 괭이질을 해요.' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 3; i++) { await plow(i); await sleep(450); }
     await T.cutImage([{ src: cutSrc('clink'), sfx: 'pop', hold: 2800 }], { hold: 2800 });
     await say('쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.');
 
@@ -93,10 +95,12 @@
       put(T, farmer, 700, 520, { look: 'pull', to: 'left' });
       put(T, jar, 500, 430); jar.pos.style.opacity = 0;
     }, farmer.pos);
-    await say('땅속에서 둥근 뚜껑이 보여요. 농부를 톡톡톡 눌러서 힘껏 당겨 봐요!');
-    await T.mash(farmer.pos, { count: 3, prompt: '농부를 톡톡톡! 영차 당겨요.', onStep: i => {
+    await say('땅속에서 둥근 뚜껑이 보여요.');
+    const pull = i => {
       farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 220, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
-    } });
+    };
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 3; i++) { await pull(i); await sleep(450); }
     jar.pos.style.opacity = 1; jar.hop(40, 500);
     farmer.look('amaze');
     await say('쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.');
@@ -109,8 +113,8 @@
       put(T, hoe, 400, 470);
     }, jar.pos);
     await say('농부는 항아리를 집 마당에 놓았어요. 아내도 구경하러 나왔어요.');
-    await say('농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요. 괭이를 톡!');
-    await T.tap(hoe.pos, { prompt: '괭이를 톡! 항아리에 넣어요.' });
+    await say('농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.');
+    await sleep(500);
     await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260);
     await T.cutImage([{ src: cutSrc('twohoes'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     await say('"어머나! 괭이가 두 개가 되었어요!" 아내가 깜짝 놀랐어요.');
@@ -153,12 +157,14 @@
         got = { key: rest[0] };
         await Promise.all([T.camTo(got.key.x, 280, 1, 600), farmer.move(got.key.x, 540, 600)]);
         const el = hot(T, got.key.x, 400, 80);
-        await T.tap(el, { prompt: '집을 톡! 쌀을 나눠 줘요.' });
+        if (n === 0) await T.tap(el, { prompt: '집을 톡! 쌀을 나눠 줘요.' }); else await sleep(400); // 한 번 누르면 나머지는 저절로
         el.remove();
       } else {
+        if (n > 0) { got = { key: rest[0] }; await sleep(400); } else {
         const opts = rest.map(r => ({ key: r, el: hot(T, r.x, 400, 70), ok: true }));
         got = await T.choose(opts, { prompt: '집을 톡! 쌀을 나눠 줘요.' });
         opts.forEach(o => o.el.remove());
+        }
       }
       rest = rest.filter(r => r !== got.key);
       const sack = prop(T, 'rice', 62); put(T, sack, farmer.x, 440, { raw: true });
@@ -178,9 +184,9 @@
       put(T, jar, 500, 520); hide(jar);
     }, rich.pos);
     await say('소문을 들은 부잣집 주인이 농부를 불렀어요. "그 항아리를 나한테 빌려주게!"');
-    await say('마음씨 착한 농부는 웃으며 말했어요. "필요하시면 쓰세요. 잘 쓰고 돌려주세요!" 항아리를 톡!');
+    await say('마음씨 착한 농부는 웃으며 말했어요. "필요하시면 쓰세요. 잘 쓰고 돌려주세요!"');
     put(T, jar, 430, 520);
-    await T.tap(jar.pos, { prompt: '항아리를 톡! 부자에게 빌려줘요.' });
+    await sleep(500);
     await jar.move(fx(T, 700), 520, 600); hide(jar);
     rich.look('grab', 'right');
     await say('"고맙네! 얼른 가져가야지, 헤헤." 부자는 항아리를 꼭 안고 달려갔어요.');
@@ -193,15 +199,16 @@
       put(T, jar, 650, 505); jar.pos.style.display = '';
     }, jar.pos);
     await say('부자는 방에 항아리를 놓고 말했어요. "금덩이를 넣으면 금이 산더미가 되겠지!"');
-    await say('항아리를 톡톡톡 눌러서 금덩이를 넣어 봐요!');
     const golds = [];
-    await T.mash(jar.pos, { count: 3, prompt: '항아리를 톡톡톡! 금덩이가 나와요.', onStep: i => {
+    const goldIn = i => {
       /* 금덩이를 하나 항아리에 쏙 넣으면, 항아리에서 금이 와르르 쏟아져 쌓인다 */
       const d = prop(T, 'gold', 46); put(T, d, jar.x, 250); d.move(jar.x, 400, 300, 'ease-in').then(() => hide(d));
       const g = prop(T, 'gold', 70 + i * 24); put(T, g, 560 + i * 90, 505 - i * 6); g.pos.style.opacity = 0; golds.push(g);
       setTimeout(() => { g.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250).onfinish = () => { g.pos.style.opacity = 1; }; g.pos.style.opacity = 1; }, 300);
       jar.hop(12, 240); clinkSfx(T); T.pop(g.x, g.y - 120, tr(NUM[i - 1]));
-    } });
+    };
+    // 저절로 (2026-10-19 톡 조작 정리)
+    for (let i = 1; i <= 3; i++) { await goldIn(i); await sleep(500); }
     await T.cutImage([{ src: cutSrc('buried'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     scene('hall');
     put(T, jar, 650, 505); golds.forEach(g => { g.pos.style.display = ''; T.world.appendChild(g.pos); });
@@ -220,8 +227,7 @@
       put(T, father, 480, 505, { look: 'peek', to: 'right' });
     }, father.pos);
     await say('그때 부자의 아버지가 다가와 항아리 속을 들여다보았어요. "이게 뭐냐?"');
-    await say('아버지를 톡! 눌러서 항아리 쪽으로 가 봐요.');
-    await T.tap(father.pos, { prompt: '아버지를 톡! 항아리를 구경해요.' });
+    await sleep(500);
     await father.move(fx(T, 660), 505, 700);
     await T.cutImage([{ src: cutSrc('plop'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     scene('hallwide');
@@ -243,8 +249,8 @@
     await dash; rich.look('shout', 'right');
 
     /* --- 9. 항아리가 깨졌어요 --- */
-    await say('부자는 지쳐서 외쳤어요. "이게 다 항아리 때문이야! 이제 그만!" 부자를 톡!');
-    await T.tap(rich.pos, { prompt: '부자를 톡! 항아리를 그만 쓰자고 해요.' });
+    await say('부자는 지쳐서 외쳤어요. "이게 다 항아리 때문이야! 이제 그만!"');
+    await sleep(500);
     await T.cutImage([{ src: cutSrc('smash'), sfx: 'pow', hold: 3000 }], { hold: 3000 });
     scene('hallwide');
     olds.forEach(o => hide(o)); hide(jar);
@@ -264,7 +270,7 @@
     await say('부자는 농부를 찾아가 사과하고, 가진 것을 마을 사람들과 나누기로 했어요. 함께 잔치를 열어요!');
     const tables = [[170, 'table'], [820, 'table']].map(([x]) => { const t = prop(T, 'table', 80); put(T, t, x, 540); return t; });
     for (const [i, t] of tables.entries()) {
-      await T.tap(t.pos, { prompt: '상을 톡! 맛있는 음식을 차려요.' });
+      await sleep(600);
       popSfx(T); t.hop(20, 300); T.pop(t.x, t.y - 120, tr(['냠냠!', '맛있다!'][i]));
     }
     await say('"모두 고맙네!" 모두 둘러앉아 맛있게 먹었어요.');

@@ -4,25 +4,17 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Once upon a time, a kind farmer lived in a village.",
   "c": "audio/el/magic_jar/en/nar_e603270fab.mp3"
  },
- "농부는 밭을 열심히 갈았어요. 농부를 톡톡톡 눌러서 밭을 갈아 봐요!": {
-  "t": "The farmer worked hard in his field. Tap, tap, tap the farmer to dig!",
-  "c": "audio/el/magic_jar/en/nar_e9bdc23aab.mp3"
- },
- "농부를 톡톡톡! 괭이질을 해요.": {
-  "t": "Tap, tap, tap the farmer! Dig with the hoe.",
-  "c": "audio/el/magic_jar/en/nar_2701a51975.mp3"
+ "농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!": {
+  "t": "The farmer worked hard in his field. Tap the farmer to dig!",
+  "c": "audio/el/magic_jar/en/nar_9fe34f5e90.mp3"
  },
  "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.": {
   "t": "Clang! The hoe hit something hard.",
   "c": "audio/el/magic_jar/en/nar_2b57c63dff.mp3"
  },
- "땅속에서 둥근 뚜껑이 보여요. 농부를 톡톡톡 눌러서 힘껏 당겨 봐요!": {
-  "t": "A round lid is showing in the ground. Tap, tap, tap the farmer to pull it out!",
-  "c": "audio/el/magic_jar/en/nar_99ff9af89c.mp3"
- },
- "농부를 톡톡톡! 영차 당겨요.": {
-  "t": "Tap, tap, tap the farmer! Heave-ho, pull!",
-  "c": "audio/el/magic_jar/en/nar_351e61694f.mp3"
+ "땅속에서 둥근 뚜껑이 보여요.": {
+  "t": "A round lid is showing in the ground.",
+  "c": "audio/el/magic_jar/en/nar_9b008f72f3.mp3"
  },
  "쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.": {
   "t": "Pop! A big jar came out. The farmer's eyes went wide.",
@@ -32,13 +24,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The farmer put the jar in his yard. His wife came out to look, too.",
   "c": "audio/el/magic_jar/en/nar_f8cc3c9180.mp3"
  },
- "농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요. 괭이를 톡!": {
-  "t": "The farmer tried to put his hoe beside the jar, but it fell inside. Tap the hoe!",
-  "c": "audio/el/magic_jar/en/nar_3c9b8ebce4.mp3"
- },
- "괭이를 톡! 항아리에 넣어요.": {
-  "t": "Tap the hoe! Put it in the jar.",
-  "c": "audio/el/magic_jar/en/nar_8043a3690f.mp3"
+ "농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.": {
+  "t": "The farmer tried to put his hoe beside the jar, but it fell inside.",
+  "c": "audio/el/magic_jar/en/nar_9ce38bf570.mp3"
  },
  "\"어머나! 괭이가 두 개가 되었어요!\" 아내가 깜짝 놀랐어요.": {
   "t": "Oh my! There are two hoes now! His wife was so surprised.",
@@ -94,17 +82,13 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/magic_jar/en/rich_ed672d71c7.mp3"
   ]
  },
- "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\" 항아리를 톡!": {
-  "t": "The kind farmer said with a smile. Please use it, and bring it back! Tap the jar!",
+ "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\"": {
+  "t": "x",
   "c": [
    "audio/el/magic_jar/en/nar_bc2508de20.mp3",
    "audio/el/magic_jar/en/farmer_b8e10a607e.mp3",
    "audio/el/magic_jar/en/nar_fcbaeb60ba.mp3"
   ]
- },
- "항아리를 톡! 부자에게 빌려줘요.": {
-  "t": "Tap the jar! Lend it to the rich man.",
-  "c": "audio/el/magic_jar/en/nar_9973876f58.mp3"
  },
  "\"고맙네! 얼른 가져가야지, 헤헤.\" 부자는 항아리를 꼭 안고 달려갔어요.": {
   "t": "Thank you! I will take it right away, hee hee. The rich man hugged the jar and ran off.",
@@ -119,14 +103,6 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/magic_jar/en/nar_c3daa9e600.mp3",
    "audio/el/magic_jar/en/rich_659261cd9e.mp3"
   ]
- },
- "항아리를 톡톡톡 눌러서 금덩이를 넣어 봐요!": {
-  "t": "Tap, tap, tap the jar to put in the gold!",
-  "c": "audio/el/magic_jar/en/nar_d0ecf4a830.mp3"
- },
- "항아리를 톡톡톡! 금덩이가 나와요.": {
-  "t": "Tap, tap, tap the jar! Gold bars come out.",
-  "c": "audio/el/magic_jar/en/nar_044dbf83d0.mp3"
  },
  "금덩이가 와르르! 부자는 금 더미에 폭 파묻혔어요. \"사람 살려~\"": {
   "t": "Gold bars tumbled out! The rich man was buried in a pile of gold. Help me!",
@@ -153,14 +129,6 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/magic_jar/en/nar_4b95901c3a.mp3",
    "audio/el/magic_jar/en/father_52ee320ad6.mp3"
   ]
- },
- "아버지를 톡! 눌러서 항아리 쪽으로 가 봐요.": {
-  "t": "Tap the father to walk toward the jar.",
-  "c": "audio/el/magic_jar/en/nar_c7e806e85f.mp3"
- },
- "아버지를 톡! 항아리를 구경해요.": {
-  "t": "Tap the father! Look at the jar.",
-  "c": "audio/el/magic_jar/en/nar_2160f80dac.mp3"
  },
  "풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.": {
   "t": "Splash! The father fell headfirst into the jar. He was not hurt.",
@@ -196,17 +164,12 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/magic_jar/en/nar_9cd9b0bf80.mp3"
   ]
  },
- "부자는 지쳐서 외쳤어요. \"이게 다 항아리 때문이야! 이제 그만!\" 부자를 톡!": {
-  "t": "The rich man was worn out and shouted. It is all because of this jar! Stop! Tap the rich man!",
+ "부자는 지쳐서 외쳤어요. \"이게 다 항아리 때문이야! 이제 그만!\"": {
+  "t": "The rich man was worn out and shouted. It is all because of this jar! Stop!",
   "c": [
    "audio/el/magic_jar/en/nar_10afc9d418.mp3",
-   "audio/el/magic_jar/en/rich_06bf61ffd7.mp3",
-   "audio/el/magic_jar/en/nar_f5f1e09964.mp3"
+   "audio/el/magic_jar/en/rich_06bf61ffd7.mp3"
   ]
- },
- "부자를 톡! 항아리를 그만 쓰자고 해요.": {
-  "t": "Tap the rich man! Say, no more jar.",
-  "c": "audio/el/magic_jar/en/nar_8ac559da5c.mp3"
  },
  "쨍그랑! 항아리가 깨지자 일곱 명은 사라지고, 진짜 아버지만 남았어요.": {
   "t": "Crash! The jar broke. Seven fathers vanished, and only the real father was left.",
@@ -219,10 +182,6 @@ Object.assign(NARRATION_CLIPS_EN, {
  "부자는 농부를 찾아가 사과하고, 가진 것을 마을 사람들과 나누기로 했어요. 함께 잔치를 열어요!": {
   "t": "The rich man went to the farmer and said sorry. He decided to share what he had with the village. Let us have a party together!",
   "c": "audio/el/magic_jar/en/nar_91f4a75149.mp3"
- },
- "상을 톡! 맛있는 음식을 차려요.": {
-  "t": "Tap the table! Set out yummy food.",
-  "c": "audio/el/magic_jar/en/nar_a592cf3b5a.mp3"
  },
  "\"모두 고맙네!\" 모두 둘러앉아 맛있게 먹었어요.": {
   "t": "Thank you, everyone! They all sat together and ate happily.",
@@ -238,6 +197,10 @@ Object.assign(NARRATION_CLIPS_EN, {
  "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.": {
   "t": "Sharing makes joy grow. And that is how the story of the magic jar ended.",
   "c": "audio/el/magic_jar/en/nar_8711d03d6d.mp3"
+ },
+ "농부를 톡! 괭이질을 해요.": {
+  "t": "Tap the farmer! Dig with the hoe.",
+  "c": "audio/el/magic_jar/en/nar_71db7db308.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});
