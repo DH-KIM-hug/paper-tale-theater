@@ -62,52 +62,19 @@
    ]
   },
   {
-   "text": "엄마가 말했어요. \"이제 각자 집을 지어 보렴.\"",
+   "text": "엄마 돼지가 말했어요. \"이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴.\"",
    "segs": [
     [
      "nar",
-     "엄마가 말했어요.",
+     "엄마 돼지가 말했어요.",
      null,
      "[warm storytelling]"
     ],
     [
      "mom",
-     "이제 각자 집을 지어 보렴.",
+     "이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴.",
      "happy",
      "[warm, loving, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "첫째 돼지는 목도리를 둘렀어요.",
-   "segs": [
-    [
-     "nar",
-     "첫째 돼지는 목도리를 둘렀어요.",
-     null,
-     "[playful, light]"
-    ]
-   ]
-  },
-  {
-   "text": "둘째 돼지는 파란 멜빵바지를 입었어요.",
-   "segs": [
-    [
-     "nar",
-     "둘째 돼지는 파란 멜빵바지를 입었어요.",
-     null,
-     "[playful, light]"
-    ]
-   ]
-  },
-  {
-   "text": "셋째 돼지는 빨간 멜빵바지를 입었어요.",
-   "segs": [
-    [
-     "nar",
-     "셋째 돼지는 빨간 멜빵바지를 입었어요.",
-     null,
-     "[playful, light]"
     ]
    ]
   },
@@ -130,6 +97,105 @@
      "삼 형제는 엄마께 인사하고 길을 떠났어요.",
      null,
      "[warm, bright storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 돼지들의 옷을 잘 보세요.",
+   "segs": [
+    [
+     "nar",
+     "아기 돼지들의 옷을 잘 보세요.",
+     null,
+     "[warm, gentle, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "목도리를 두른 돼지는 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "목도리를 두른 돼지는 누구일까요?",
+     null,
+     "[friendly, curious question]"
+    ]
+   ]
+  },
+  {
+   "text": "노란 모자를 쓴 돼지는 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "노란 모자를 쓴 돼지는 누구일까요?",
+     null,
+     "[friendly, curious question]"
+    ]
+   ]
+  },
+  {
+   "text": "하얀 모자를 쓴 돼지는 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "하얀 모자를 쓴 돼지는 누구일까요?",
+     null,
+     "[friendly, curious question]"
+    ]
+   ]
+  },
+  {
+   "text": "파란 멜빵바지를 입은 돼지는 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "파란 멜빵바지를 입은 돼지는 누구일까요?",
+     null,
+     "[friendly, curious question]"
+    ]
+   ]
+  },
+  {
+   "text": "빨간 멜빵바지를 입은 돼지는 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "빨간 멜빵바지를 입은 돼지는 누구일까요?",
+     null,
+     "[friendly, curious question]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 이 돼지예요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 이 돼지예요.",
+     null,
+     "[warm, gentle, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "다시 한번 잘 보세요.",
+   "segs": [
+    [
+     "nar",
+     "다시 한번 잘 보세요.",
+     null,
+     "[warm, gentle, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "반짝이는 돼지를 눌러 보세요.",
+   "segs": [
+    [
+     "nar",
+     "반짝이는 돼지를 눌러 보세요.",
+     null,
+     "[warm, gentle, curious]"
     ]
    ]
   },

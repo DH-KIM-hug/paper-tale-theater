@@ -1,15 +1,21 @@
 /* three_pigs — ElevenLabs 배역 내레이션 (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS, {
  "옛날 옛날에 아기 돼지 삼 형제가 살았어요.": "audio/el/three_pigs/nar_edc4cedd8a.mp3",
- "엄마가 말했어요. \"이제 각자 집을 지어 보렴.\"": [
-  "audio/el/three_pigs/nar_80335362bc.mp3",
-  "audio/el/three_pigs/mom_727559c3e7.mp3"
+ "엄마 돼지가 말했어요. \"이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴.\"": [
+  "audio/el/three_pigs/nar_ded3b14616.mp3",
+  "audio/el/three_pigs/mom_af8eb8966f.mp3"
  ],
- "첫째 돼지는 목도리를 둘렀어요.": "audio/el/three_pigs/nar_02f0db9987.mp3",
- "둘째 돼지는 파란 멜빵바지를 입었어요.": "audio/el/three_pigs/nar_a63b383cca.mp3",
- "셋째 돼지는 빨간 멜빵바지를 입었어요.": "audio/el/three_pigs/nar_bdc21171e5.mp3",
  "아기 돼지를 톡 눌러 봐요.": "audio/el/three_pigs/nar_d7b988abee.mp3",
  "삼 형제는 엄마께 인사하고 길을 떠났어요.": "audio/el/three_pigs/nar_457e5aaa96.mp3",
+ "아기 돼지들의 옷을 잘 보세요.": "audio/el/three_pigs/nar_0cd8cc5b73.mp3",
+ "목도리를 두른 돼지는 누구일까요?": "audio/el/three_pigs/nar_5ccd882420.mp3",
+ "노란 모자를 쓴 돼지는 누구일까요?": "audio/el/three_pigs/nar_075652b17b.mp3",
+ "하얀 모자를 쓴 돼지는 누구일까요?": "audio/el/three_pigs/nar_09f81267fc.mp3",
+ "파란 멜빵바지를 입은 돼지는 누구일까요?": "audio/el/three_pigs/nar_7156da9dc4.mp3",
+ "빨간 멜빵바지를 입은 돼지는 누구일까요?": "audio/el/three_pigs/nar_dce3a4762d.mp3",
+ "맞아요! 이 돼지예요.": "audio/el/three_pigs/nar_290e46f001.mp3",
+ "다시 한번 잘 보세요.": "audio/el/three_pigs/nar_b3aa15ab02.mp3",
+ "반짝이는 돼지를 눌러 보세요.": "audio/el/three_pigs/nar_e7a641c3b8.mp3",
  "가게에서 바람을 불어 보기로 했어요.": "audio/el/three_pigs/nar_f3da155099.mp3",
  "짚은 훨훨 날아가요. 아주 가벼워요.": "audio/el/three_pigs/nar_2065533e23.mp3",
  "나무는 흔들흔들! 조금 튼튼해요.": "audio/el/three_pigs/nar_f955d7d13c.mp3",

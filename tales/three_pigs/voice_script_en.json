@@ -13,31 +13,19 @@
    "en": "Once upon a time, three little pigs lived together."
   },
   {
-   "text": "엄마가 말했어요. \"이제 각자 집을 지어 보렴.\"",
-   "en": "Mother said. Now it's time to build a house of your own.",
+   "text": "엄마 돼지가 말했어요. \"이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴.\"",
+   "en": "Mother Pig said. You are all grown up now. Go out into the world and build a house of your own.",
    "segs": [
     [
      "nar",
-     "Mother said."
+     "Mother Pig said."
     ],
     [
      "mom",
-     "Now it's time to build a house of your own.",
+     "You are all grown up now. Go out into the world and build a house of your own.",
      "happy"
     ]
    ]
-  },
-  {
-   "text": "첫째 돼지는 목도리를 둘렀어요.",
-   "en": "The first pig wore a scarf."
-  },
-  {
-   "text": "둘째 돼지는 파란 멜빵바지를 입었어요.",
-   "en": "The second pig wore blue overalls."
-  },
-  {
-   "text": "셋째 돼지는 빨간 멜빵바지를 입었어요.",
-   "en": "The third pig wore red overalls."
   },
   {
    "text": "아기 돼지를 톡 눌러 봐요.",
@@ -46,6 +34,42 @@
   {
    "text": "삼 형제는 엄마께 인사하고 길을 떠났어요.",
    "en": "The three brothers said goodbye to Mother and set off on the road."
+  },
+  {
+   "text": "아기 돼지들의 옷을 잘 보세요.",
+   "en": "Look carefully at the little pigs' clothes."
+  },
+  {
+   "text": "목도리를 두른 돼지는 누구일까요?",
+   "en": "Which pig is wearing a scarf?"
+  },
+  {
+   "text": "노란 모자를 쓴 돼지는 누구일까요?",
+   "en": "Which pig is wearing a yellow hat?"
+  },
+  {
+   "text": "하얀 모자를 쓴 돼지는 누구일까요?",
+   "en": "Which pig is wearing a white hat?"
+  },
+  {
+   "text": "파란 멜빵바지를 입은 돼지는 누구일까요?",
+   "en": "Which pig is wearing blue overalls?"
+  },
+  {
+   "text": "빨간 멜빵바지를 입은 돼지는 누구일까요?",
+   "en": "Which pig is wearing red overalls?"
+  },
+  {
+   "text": "맞아요! 이 돼지예요.",
+   "en": "That's right! This is the pig."
+  },
+  {
+   "text": "다시 한번 잘 보세요.",
+   "en": "Look once more, carefully."
+  },
+  {
+   "text": "반짝이는 돼지를 눌러 보세요.",
+   "en": "Tap the sparkling pig."
   },
   {
    "text": "가게에서 바람을 불어 보기로 했어요.",

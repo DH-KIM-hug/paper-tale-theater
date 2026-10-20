@@ -4,24 +4,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Once upon a time, three little pigs lived together.",
   "c": "audio/el/three_pigs/en/nar_35cd5dafc5.mp3"
  },
- "엄마가 말했어요. \"이제 각자 집을 지어 보렴.\"": {
-  "t": "Mother said. Now it's time to build a house of your own.",
+ "엄마 돼지가 말했어요. \"이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴.\"": {
+  "t": "Mother Pig said. You are all grown up now. Go out into the world and build a house of your own.",
   "c": [
-   "audio/el/three_pigs/en/nar_1133fa9ed4.mp3",
-   "audio/el/three_pigs/en/mom_1b58b7454e.mp3"
+   "audio/el/three_pigs/en/nar_b3cdff74af.mp3",
+   "audio/el/three_pigs/en/mom_369c39a08e.mp3"
   ]
- },
- "첫째 돼지는 목도리를 둘렀어요.": {
-  "t": "The first pig wore a scarf.",
-  "c": "audio/el/three_pigs/en/nar_c52d20006a.mp3"
- },
- "둘째 돼지는 파란 멜빵바지를 입었어요.": {
-  "t": "The second pig wore blue overalls.",
-  "c": "audio/el/three_pigs/en/nar_1f90083387.mp3"
- },
- "셋째 돼지는 빨간 멜빵바지를 입었어요.": {
-  "t": "The third pig wore red overalls.",
-  "c": "audio/el/three_pigs/en/nar_dcc9c4e590.mp3"
  },
  "아기 돼지를 톡 눌러 봐요.": {
   "t": "Tap a little pig.",
@@ -30,6 +18,42 @@ Object.assign(NARRATION_CLIPS_EN, {
  "삼 형제는 엄마께 인사하고 길을 떠났어요.": {
   "t": "The three brothers said goodbye to Mother and set off on the road.",
   "c": "audio/el/three_pigs/en/nar_7891ec36c1.mp3"
+ },
+ "아기 돼지들의 옷을 잘 보세요.": {
+  "t": "Look carefully at the little pigs' clothes.",
+  "c": "audio/el/three_pigs/en/nar_9d49630b7a.mp3"
+ },
+ "목도리를 두른 돼지는 누구일까요?": {
+  "t": "Which pig is wearing a scarf?",
+  "c": "audio/el/three_pigs/en/nar_afbeea8bf4.mp3"
+ },
+ "노란 모자를 쓴 돼지는 누구일까요?": {
+  "t": "Which pig is wearing a yellow hat?",
+  "c": "audio/el/three_pigs/en/nar_5604c66b16.mp3"
+ },
+ "하얀 모자를 쓴 돼지는 누구일까요?": {
+  "t": "Which pig is wearing a white hat?",
+  "c": "audio/el/three_pigs/en/nar_6fe6ba10a3.mp3"
+ },
+ "파란 멜빵바지를 입은 돼지는 누구일까요?": {
+  "t": "Which pig is wearing blue overalls?",
+  "c": "audio/el/three_pigs/en/nar_475314653c.mp3"
+ },
+ "빨간 멜빵바지를 입은 돼지는 누구일까요?": {
+  "t": "Which pig is wearing red overalls?",
+  "c": "audio/el/three_pigs/en/nar_e9c31129c8.mp3"
+ },
+ "맞아요! 이 돼지예요.": {
+  "t": "That's right! This is the pig.",
+  "c": "audio/el/three_pigs/en/nar_15141c171c.mp3"
+ },
+ "다시 한번 잘 보세요.": {
+  "t": "Look once more, carefully.",
+  "c": "audio/el/three_pigs/en/nar_be68e6fe11.mp3"
+ },
+ "반짝이는 돼지를 눌러 보세요.": {
+  "t": "Tap the sparkling pig.",
+  "c": "audio/el/three_pigs/en/nar_545d770bb1.mp3"
  },
  "가게에서 바람을 불어 보기로 했어요.": {
   "t": "At the shop, they decided to try blowing wind.",
