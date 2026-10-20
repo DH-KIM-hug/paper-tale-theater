@@ -604,11 +604,11 @@
    ]
   },
   {
-   "text": "아기 염소들을 톡톡 눌러 같이 춤춰 봐요!",
+   "text": "아기 염소를 톡! 눌러 같이 춤춰 봐요!",
    "segs": [
     [
      "nar",
-     "아기 염소들을 톡톡 눌러 같이 춤춰 봐요!",
+     "아기 염소를 톡! 눌러 같이 춤춰 봐요!",
      null,
      "[cheerful, encouraging]"
     ]
@@ -637,39 +637,6 @@
    ]
   },
   {
-   "text": "첫째 염소를 톡 눌러 봐요!",
-   "segs": [
-    [
-     "nar",
-     "첫째 염소를 톡 눌러 봐요!",
-     null,
-     "[cheerful, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "늑대를 톡톡톡 눌러 봐요!",
-   "segs": [
-    [
-     "nar",
-     "늑대를 톡톡톡 눌러 봐요!",
-     null,
-     "[playful, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "늑대를 톡 눌러 봐요!",
-   "segs": [
-    [
-     "nar",
-     "늑대를 톡 눌러 봐요!",
-     null,
-     "[playful, encouraging]"
-    ]
-   ]
-  },
-  {
    "text": "막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!",
    "segs": [
     [
@@ -677,17 +644,6 @@
      "막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!",
      null,
      "[whispers, playful, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "시계를 톡 눌러 봐요!",
-   "segs": [
-    [
-     "nar",
-     "시계를 톡 눌러 봐요!",
-     null,
-     "[cheerful, encouraging]"
     ]
    ]
   },
@@ -714,24 +670,24 @@
    ]
   },
   {
-   "text": "돌멩이를 톡톡톡 눌러 봐요!",
+   "text": "늑대를 톡! 눌러 봐요!",
    "segs": [
     [
      "nar",
-     "돌멩이를 톡톡톡 눌러 봐요!",
+     "늑대를 톡! 눌러 봐요!",
      null,
      "[cheerful, encouraging]"
     ]
    ]
   },
   {
-   "text": "늑대를 톡 눌러 봐요!",
+   "text": "돌멩이를 톡! 눌러 봐요!",
    "segs": [
     [
      "nar",
-     "늑대를 톡 눌러 봐요!",
+     "돌멩이를 톡! 눌러 봐요!",
      null,
-     "[playful, encouraging]"
+     "[cheerful, encouraging]"
     ]
    ]
   }

@@ -216,9 +216,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Mother and the seven little goats held hands and danced happily.",
   "c": "audio/el/wolf_goats/en/nar_7522cdb043.mp3"
  },
- "아기 염소들을 톡톡 눌러 같이 춤춰 봐요!": {
-  "t": "Tap, tap the little goats to dance together!",
-  "c": "audio/el/wolf_goats/en/nar_e6ab608501.mp3"
+ "아기 염소를 톡! 눌러 같이 춤춰 봐요!": {
+  "t": "Tap a little goat to dance together!",
+  "c": "audio/el/wolf_goats/en/nar_b82fcf8c55.mp3"
  },
  "엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.": {
   "t": "The little goats who knew Mother's voice well lived happily for a long, long time.",
@@ -228,33 +228,21 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap Mother Goat!",
   "c": "audio/el/wolf_goats/en/nar_fbc7c7aa88.mp3"
  },
- "첫째 염소를 톡 눌러 봐요!": {
-  "t": "Tap the oldest goat!",
-  "c": "audio/el/wolf_goats/en/nar_ad8cad13e3.mp3"
- },
- "늑대를 톡톡톡 눌러 봐요!": {
-  "t": "Tap, tap, tap the wolf!",
-  "c": "audio/el/wolf_goats/en/nar_2284c48d2b.mp3"
- },
- "늑대를 톡 눌러 봐요!": {
-  "t": "Tap the wolf!",
-  "c": "audio/el/wolf_goats/en/nar_b0f0925557.mp3"
- },
  "막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!": {
   "t": "Tap the youngest goat to hide him in the clock!",
   "c": "audio/el/wolf_goats/en/nar_d480125a3b.mp3"
- },
- "시계를 톡 눌러 봐요!": {
-  "t": "Tap the clock!",
-  "c": "audio/el/wolf_goats/en/nar_69ae2821f4.mp3"
  },
  "화면을 톡톡 눌러 봐요!": {
   "t": "Tap, tap the screen!",
   "c": "audio/el/wolf_goats/en/nar_b6f9fda20f.mp3"
  },
- "돌멩이를 톡톡톡 눌러 봐요!": {
-  "t": "Tap, tap, tap the stones!",
-  "c": "audio/el/wolf_goats/en/nar_1993796a7d.mp3"
+ "늑대를 톡! 눌러 봐요!": {
+  "t": "Tap the wolf!",
+  "c": "audio/el/wolf_goats/en/nar_668218caa4.mp3"
+ },
+ "돌멩이를 톡! 눌러 봐요!": {
+  "t": "Tap the stone!",
+  "c": "audio/el/wolf_goats/en/nar_418ca36711.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});

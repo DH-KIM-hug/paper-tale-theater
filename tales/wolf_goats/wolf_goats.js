@@ -74,7 +74,7 @@
     await say('"얘들아, 엄마야. 문 열어 줘!" 걸걸한 목소리였어요.');
     await cutArt(T, 'wg_cut_voice', 'surprise');
     await say('아기 염소들이 서로 쳐다보았어요.');
-    await T.tap(kids[0].pos, { prompt: '첫째 염소를 톡 눌러 봐요!' });
+    await sleep(500);
     kids[0].hop(20, 320);
     await say('"목소리가 걸걸해. 우리 엄마가 아니야!" 첫째가 말했어요.');
     await say('"저리 가요, 늑대!" 아기 염소들이 소리쳤어요.');
@@ -85,7 +85,9 @@
     const wc = figure(T, 500, 520, 200, { a: 'wg_wolf_chalk' }, 'a');
     await say('늑대는 곰곰이 생각했어요.');
     await say('"목소리를 곱게 만들어야지. 분필을 먹어 볼까?"');
-    await T.mash(wc.pos, { count: 3, prompt: '늑대를 톡톡톡 눌러 봐요!', onStep: i => { wc.hop(14, 240); T.pop(500 + (i % 2 ? 60 : -60), 170, '와작!'); AudioFX.tap(); } });
+    const chalk = i => { wc.hop(14, 240); T.pop(500 + (i % 2 ? 60 : -60), 170, '와작!'); AudioFX.tap(); };
+    await T.tap(wc.pos, { prompt: '늑대를 톡! 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 3; i++) { await chalk(i); await sleep(500); }
     await cutArt(T, 'wg_cut_chalk', 'laugh');
     await say('늑대의 목소리가 가늘고 고와졌어요.');
     knock(); T.pop(500, 120, '똑똑똑!');
@@ -97,7 +99,7 @@
     await scene('하얀 발', () => { bg(T, 'window'); });
     const wf = figure(T, 500, 545, 200, { a: 'wg_wolf_flour' }, 'a');
     await say('늑대는 밀가루를 발에 묻혀서, 하얀 발을 쑥 내밀었어요.');
-    await T.tap(wf.pos, { prompt: '늑대를 톡 눌러 봐요!' });
+    await sleep(500);
     await cutArt(T, 'wg_cut_flour', 'laugh');
     await say('"에취!" 늑대가 밀가루 재채기를 했어요.');
     await say('"어? 하얀 발이야! 엄마다!" 아기 염소들은 깜빡 속아서 문을 열었어요.');
@@ -134,7 +136,7 @@
     await say('"얘들아, 어디 있니? 엄마 왔어!"');
     mm2.hop(16, 300);
     if (T.viewWidth() < 990) await T.camTo(220, 280, 1, 800); // 세로 화면: 왼쪽 끝의 시계가 화면 밖이라 누를 수 없었다 → 시계 쪽으로 카메라를 옮긴다
-    await T.tap(clock2.pos, { prompt: '시계를 톡 눌러 봐요!' });
+    await sleep(500);
     clock2.pose('open'); appear(k7); AudioFX.ding();
     if (T.viewWidth() < 990) T.camTo(500, 280, 1, 700);
     await k7.move(480, 530, 700); clock2.pose('a'); k7.pose('joy');
@@ -151,7 +153,7 @@
     T.pop(520, 360, '쿨쿨~', '#3F6B4F');
     await Promise.all([mm3.move(340, 515, 1400), k7b.move(430, 515, 1400)]);
     await say('엄마와 막내는 살금살금 다가갔어요.');
-    await T.tap(mm3.pos, { prompt: '엄마 염소를 톡 눌러 봐요!' });
+    await sleep(500);
     mm3.hop(14, 300);
     await say('"쉿! 늑대가 깨지 않게, 그림자 극장에서 아기들을 꺼내 줄게."');
 
@@ -175,7 +177,9 @@
     await say('"엄마!" 아기 염소 여섯 마리가 모두 무사히 나왔어요.');
     await say('"이제 늑대 배에 돌멩이를 넣어 주자."');
     const stone = prop(T, 'wg_stone', 500, 400, 90);
-    await T.mash(stone.pos, { count: 3, prompt: '돌멩이를 톡톡톡 눌러 봐요!', onStep: i => { stone.hop(30, 300); T.pop(500, 250, '쏙!'); AudioFX.tap(); stone.setScale(1 - i * .25); } });
+    const drop = i => { stone.hop(30, 300); T.pop(500, 250, '쏙!'); AudioFX.tap(); stone.setScale(1 - i * .25); };
+    await T.tap(stone.pos, { prompt: '돌멩이를 톡! 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    for (let i = 1; i <= 3; i++) { await drop(i); await sleep(500); }
     await cutArt(T, 'wg_cut_stitch', 'magic');
     await say('엄마가 바늘로 콕콕콕 꿰맸어요. 늑대는 아무것도 몰랐어요.');
 
@@ -187,7 +191,7 @@
     T.camTo(700, 280, 1, 2600);
     await wh.move(700, 520, 2600);
     await say('"우물에서 물을 마셔야지."');
-    await T.tap(wh.pos, { prompt: '늑대를 톡 눌러 봐요!' });
+    await sleep(500);
     wh.pose('splash'); wh.face('left'); await wh.move(760, 470, 420);
     await cutArt(T, 'wg_cut_splash', 'splash');
     await say('풍덩! 늑대가 우물에 빠졌어요.');
@@ -205,9 +209,11 @@
     T.finale();
     await say('엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.');
     await hopAll(kids, 34); md.hop(30, 400); T.confetti(); AudioFX.sting('win');
-    await say('아기 염소들을 톡톡 눌러 같이 춤춰 봐요!');
+    await say('아기 염소를 톡! 눌러 같이 춤춰 봐요!');
     // 가운데 아기 염소를 톡톡: 누를 때마다 엄마와 아기 염소들이 차례로 폴짝 (자유 놀이 없음)
-    await T.mash(kids[3].pos, { count: 3, onStep: () => { AudioFX.tap(); md.hop(30, 340); kids.forEach((k, j) => setTimeout(() => k.hop(30, 340), j * 70)); } });
+    const dance = () => { AudioFX.tap(); md.hop(30, 340); kids.forEach((k, j) => setTimeout(() => k.hop(30, 340), j * 70)); };
+    await T.tap(kids[3].pos, { prompt: '아기 염소를 톡! 눌러 같이 춤춰 봐요!' }); // 한 번 누르면 나머지는 저절로
+    for (let i = 1; i <= 3; i++) { dance(); await sleep(700); }
     await sleep(700);
     await say('엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.');
     return '엄마 목소리를 잘 기억해요!';

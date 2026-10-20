@@ -528,12 +528,12 @@
    ]
   },
   {
-   "text": "아기 염소들을 톡톡 눌러 같이 춤춰 봐요!",
-   "en": "Tap, tap the little goats to dance together!",
+   "text": "아기 염소를 톡! 눌러 같이 춤춰 봐요!",
+   "en": "Tap a little goat to dance together!",
    "segs": [
     [
      "nar",
-     "Tap, tap the little goats to dance together!"
+     "Tap a little goat to dance together!"
     ]
    ]
   },
@@ -552,24 +552,8 @@
    "en": "Tap Mother Goat!"
   },
   {
-   "text": "첫째 염소를 톡 눌러 봐요!",
-   "en": "Tap the oldest goat!"
-  },
-  {
-   "text": "늑대를 톡톡톡 눌러 봐요!",
-   "en": "Tap, tap, tap the wolf!"
-  },
-  {
-   "text": "늑대를 톡 눌러 봐요!",
-   "en": "Tap the wolf!"
-  },
-  {
    "text": "막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!",
    "en": "Tap the youngest goat to hide him in the clock!"
-  },
-  {
-   "text": "시계를 톡 눌러 봐요!",
-   "en": "Tap the clock!"
   },
   {
    "text": "엄마 염소를 톡 눌러 봐요!",
@@ -580,12 +564,24 @@
    "en": "Tap, tap the screen!"
   },
   {
-   "text": "돌멩이를 톡톡톡 눌러 봐요!",
-   "en": "Tap, tap, tap the stones!"
+   "text": "늑대를 톡! 눌러 봐요!",
+   "en": "Tap the wolf!",
+   "segs": [
+    [
+     "nar",
+     "Tap the wolf!"
+    ]
+   ]
   },
   {
-   "text": "늑대를 톡 눌러 봐요!",
-   "en": "Tap the wolf!"
+   "text": "돌멩이를 톡! 눌러 봐요!",
+   "en": "Tap the stone!",
+   "segs": [
+    [
+     "nar",
+     "Tap the stone!"
+    ]
+   ]
   }
  ],
  "ui": {

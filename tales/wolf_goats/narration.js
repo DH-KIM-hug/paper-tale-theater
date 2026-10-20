@@ -81,15 +81,12 @@ const NARRATION_CLIPS = {
  "\"으악, 차가워! 다시는 안 올 거야!\"": "audio/tc/wolf_goats/wolf_f27d2d80b9.mp3",
  "늑대는 흠뻑 젖은 채 멀리멀리 도망갔어요.": "audio/tc/wolf_goats/nar_dad7ce514a.mp3",
  "엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.": "audio/tc/wolf_goats/nar_86299a67d7.mp3",
- "아기 염소들을 톡톡 눌러 같이 춤춰 봐요!": "audio/tc/wolf_goats/nar_9e6723d98f.mp3",
+ "아기 염소를 톡! 눌러 같이 춤춰 봐요!": "audio/tc/wolf_goats/nar_220b657ea9.mp3",
  "엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.": "audio/tc/wolf_goats/nar_2a19b1659e.mp3",
  "엄마 염소를 톡 눌러 봐요!": "audio/tc/wolf_goats/nar_df41401eae.mp3",
- "첫째 염소를 톡 눌러 봐요!": "audio/tc/wolf_goats/nar_6ae25ae09b.mp3",
- "늑대를 톡톡톡 눌러 봐요!": "audio/tc/wolf_goats/nar_06ad51b0bf.mp3",
- "늑대를 톡 눌러 봐요!": "audio/tc/wolf_goats/nar_f5ef8207ef.mp3",
  "막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!": "audio/tc/wolf_goats/nar_d9d6cefead.mp3",
- "시계를 톡 눌러 봐요!": "audio/tc/wolf_goats/nar_63fe5236f2.mp3",
  "화면을 톡톡 눌러 봐요!": "audio/tc/wolf_goats/nar_943023354c.mp3",
- "돌멩이를 톡톡톡 눌러 봐요!": "audio/tc/wolf_goats/nar_b3e225b1a0.mp3"
+ "늑대를 톡! 눌러 봐요!": "audio/tc/wolf_goats/nar_4eabc3d2e3.mp3",
+ "돌멩이를 톡! 눌러 봐요!": "audio/tc/wolf_goats/nar_6ce9ce4910.mp3"
 };
 const VOICE_LINES = {};
