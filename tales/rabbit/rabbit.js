@@ -29,15 +29,15 @@
     bg_map: 'v3w/rab_bg_map.webp', bg_shade: 'v3w/rab_bg_shade.webp', bg_dream: 'v3w/rab_bg_dream.webp',
     bg_grass_low: 'v3w/rab_bg_grass_low.webp', bg_stream: 'v3w/rab_bg_stream.webp', bg_hill: 'v3w/rab_bg_hill.webp', bg_finish: 'v3w/rab_bg_finish.webp',
     bg_party: 'v3w/rab_bg_party.webp',
-    rabbit_stand: 'v3w/rab_rabbit_tease.webp', rabbit_run: 'v3w/rab_rabbit_run.webp', rabbit_wake: 'v3w/rab_rabbit_wake.webp', rabbit_congrats: 'v3w/rab_rabbit_congrats.webp',
-    rabbit_sleep: 'v3w/rab_rabbit_sleep.webp',
+    rabbit_stand: 'v3w/rab_rabbit_tease_c.webp', rabbit_run: 'v3w/rab_rabbit_run_c.webp', rabbit_wake: 'v3w/rab_rabbit_wake_c.webp', rabbit_congrats: 'v3w/rab_rabbit_congrats_c.webp',
+    rabbit_sleep: 'v3w/rab_rabbit_sleep_c.webp',
     turtle_walk: 'v3w/rab_turtle_walk.webp', turtle_swim: 'v3w/rab_turtle_swim.webp', turtle_medal: 'v3w/rab_turtle_medal.webp',
     raccoon: 'v3w/rab_raccoon.webp', owl_post: 'v3w/rab_owl_post.webp',
     aud_duck: 'v3w/rab_aud_duck.webp', aud_cow: 'v3w/rab_aud_cow.webp', aud_pig: 'v3w/rab_aud_pig.webp', aud_rooster: 'v3w/rab_aud_rooster.webp',
     aud_sheep: 'v3w/rab_aud_sheep.webp', aud_dog: 'v3w/rab_aud_dog5.webp', aud_cat: 'v3w/rab_aud_cat.webp', aud_owl: 'v3w/rab_owl_post.webp',
     carrot_trophy: 'v3w/rab_carrot_trophy.webp', medal: 'v3w/rab_medal.webp',
     // 경주 막대·지도 말: 크림색 동그란 종이 속 토끼(머리·목도리)·거북이 — 둘이 한 짝 (토끼 원판은 거북이 원판 색·크기에 맞춰 PIL로 만듦)
-    icon_rabbit: 'v3w/rab_icon_rabbit.webp', icon_turtle: 'v3w/rab_icon_turtle.webp',
+    icon_rabbit: 'v3w/rab_icon_rabbit_c.webp', icon_turtle: 'v3w/rab_icon_turtle.webp',
     // cut_photo: 다시 뽑은 그림 — 무대처럼 둘 다 오른쪽으로 달리고, 앞선 거북이가 결승 테이프를 끊는다
     cut_wake: 'v3w/rab_cut_wake.webp', cut_dash: 'v3w/rab_cut_dash.webp', cut_photo: 'v3w/rab_cut_photo.webp',
     /* 2026-10-04 코드 도형을 대신하는 새 그림 (jobs_svg.json): 노을 배경(그림 속 닭은 울타리로 메움 — 무대 닭은 배우), 결승 기둥+깃발(판은 비어 있어 글자는 코드),
@@ -157,14 +157,11 @@
   }
   /* 토끼 그림 자세: [그림, 상자 폭, 상자 높이, 옵션] — 임시 도형 토끼(키 약 208)에 맞춘 크기 */
   const RABBIT_ART = {
-    stand: ['rabbit_stand', 104, 208, { flip: true }], run: ['rabbit_run', 150, 166, { dy: -6 }], wake: ['rabbit_wake', 104, 198],
-    congrats: ['rabbit_congrats', 128, 202, { flip: true }], sleep: ['rabbit_sleep', 216, 123],
+    stand: ['rabbit_stand', 151, 208, { flip: true }], run: ['rabbit_run', 150, 166, { dy: -6 }], wake: ['rabbit_wake', 175, 198],
+    congrats: ['rabbit_congrats', 159, 202, { flip: true }], sleep: ['rabbit_sleep', 216, 190],
   };
   /* 감은 눈꺼풀 (그림 원본 픽셀 좌표): 선 그림(tease)은 두 눈, 잠자는 그림(sleep)은 눈을 뜨고 그려져 있어 늘 덮는다 */
-  const RABBIT_LIDS = {
-    stand: { size: [267, 560], face: '#F9F5E6', line: 6, eyes: [[29, 237, 15, 21], [60, 239, 24, 28]] },
-    sleep: { size: [704, 400], face: '#F6F5F1', line: 7, eyes: [[267, 203, 32, 29], [197, 286, 30, 24]] },
-  };
+  const RABBIT_LIDS = {}; // 2026-10-20 새 토끼 그림: 눈꺼풀 좌표가 안 맞아 끔 (잠 그림은 눈이 이미 감겨 있음)
   function eyelids(T, wrap, w, h, { size: [iw, ih], face, line, eyes }) {
     const s = Math.min(w / iw, h / ih), x0 = -w / 2 + (w - iw * s) / 2, y0 = -h + (h - ih * s);
     const g = T.el('g', { transform: `translate(${x0.toFixed(2)} ${y0.toFixed(2)}) scale(${s.toFixed(4)})` }, wrap);
