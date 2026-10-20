@@ -1,0 +1,741 @@
+{
+ "notes": "ElevenLabs 목소리 배정(2026-10-21 확정): nar=Lily(여자 내레이터 돌려 쓰기, 이 편은 Lily), child=Sparkles for Kids(이현이, 남자아이 목소리 — 확정; 대사에 성별 어휘 없음), red=Munni(빨간 자동차, 작지만 용감 — 아기 말투 태그 없이 씩씩하게), police=Eric(경찰차 형아), fire=Bella(소방차 이모), amb=Namchun(구급차 삼촌), tow=Roger(견인차). 도둑 장난감·인형·나비는 목소리 없음. 사이렌(삐뽀삐뽀·위이잉·삐용삐용)과 부릉부릉은 효과음이 아니라 그 배역 목소리의 의성어(extra). \"부릉부릉, 빵빵!\"은 다섯 자동차 목소리로 따로 녹음한 extra.cheer 를 tales/red_car/mix_chorus_el.py 로 겹친다(chorus 항목). 모델 eleven_v4, 배역별 settings. 교훈은 대사로 말하지 않는다(9번 고마워 없음). 7번 사이렌 맞추기·9번 수세기 없음.",
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "child": "tapn1QwocNXk3viVSowa",
+  "red": "VOGEEZj2Kly5dP9LrQy8",
+  "police": "cjVigY5qzO86Huf0OWal",
+  "fire": "hpp4J3VqNfWAUOO0d1Us",
+  "amb": "5ON5Fnz24cnOozEQfGAm",
+  "tow": "CwhRBWXzGAHq8TQ4Fs17"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "child": "eleven_v4",
+  "red": "eleven_v4",
+  "police": "eleven_v4",
+  "fire": "eleven_v4",
+  "amb": "eleven_v4",
+  "tow": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.5,
+   "style": 0.35
+  },
+  "child": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "red": {
+   "stability": 0.4,
+   "style": 0.45
+  },
+  "police": {
+   "stability": 0.4,
+   "style": 0.45
+  },
+  "fire": {
+   "stability": 0.4,
+   "style": 0.45
+  },
+  "amb": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "tow": {
+   "stability": 0.45,
+   "style": 0.4
+  }
+ },
+ "use_dir": [
+  "nar",
+  "child",
+  "red",
+  "police",
+  "fire",
+  "amb",
+  "tow"
+ ],
+ "lines": [
+  {
+   "text": "이현이는 빨간 자동차를 참 좋아했어요.",
+   "segs": [
+    [
+     "nar",
+     "이현이는 빨간 자동차를 참 좋아했어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "빨간 것은 어디 있을까요? 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "빨간 것은 어디 있을까요? 찾아봐요.",
+     null,
+     "[calm, inviting, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 파란 블록이에요. 빨간 것을 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 파란 블록이에요. 빨간 것을 찾아봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 노란 오리예요. 빨간 것을 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 노란 오리예요. 빨간 것을 찾아봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 빨간 자동차!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 빨간 자동차!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "밥 먹을 때도 냠냠, 잠잘 때도 쌔근, 언제나 손에 꼭 쥐고 있었지요.",
+   "segs": [
+    [
+     "nar",
+     "밥 먹을 때도 냠냠, 잠잘 때도 쌔근, 언제나 손에 꼭 쥐고 있었지요.",
+     null,
+     "[warm, playful rhythm, slow, a small pause before 잠잘 때도]"
+    ]
+   ]
+  },
+  {
+   "text": "그러던 어느 날, 밖에서 놀고 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "그러던 어느 날, 밖에서 놀고 있었어요.",
+     null,
+     "[calm, light, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "어! 나비다!",
+   "segs": [
+    [
+     "child",
+     "어! 나비다!",
+     "toneup",
+     "[child, surprised and delighted, quick]"
+    ]
+   ]
+  },
+  {
+   "text": "노느라 그만 빨간 자동차를 톡, 놓고 말았어요.",
+   "segs": [
+    [
+     "nar",
+     "노느라 그만 빨간 자동차를 톡, 놓고 말았어요.",
+     null,
+     "[gentle, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "정신을 차려 보니… 어라? 빨간 자동차가 보이지 않아요!",
+   "segs": [
+    [
+     "nar",
+     "정신을 차려 보니… 어라? 빨간 자동차가 보이지 않아요!",
+     null,
+     "[slow, then lightly surprised]"
+    ]
+   ]
+  },
+  {
+   "text": "잉잉, 내 빨간 자동차 어디 갔지?",
+   "segs": [
+    [
+     "child",
+     "잉잉, 내 빨간 자동차 어디 갔지?",
+     "sad",
+     "[child, tearful, sniffling, not loud]"
+    ]
+   ]
+  },
+  {
+   "text": "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+   "segs": [
+    [
+     "nar",
+     "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+     null,
+     "[warm, building courage, slow then bright at 출발]"
+    ]
+   ]
+  },
+  {
+   "text": "부릉부릉! 이현이를 찾아 장난감 세상으로 가자!",
+   "segs": [
+    [
+     "red",
+     "부릉부릉! 이현이를 찾아 장난감 세상으로 가자!",
+     "happy",
+     "[small brave voice, cheerful, determined, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "조금 가다 보니, 삐뽀삐뽀 우렁찬 소리가 들렸어요.",
+   "segs": [
+    [
+     "nar",
+     "조금 가다 보니, 삐뽀삐뽀 우렁찬 소리가 들렸어요.",
+     null,
+     "[calm, then a lively siren imitation]"
+    ]
+   ]
+  },
+  {
+   "text": "게 멈춰라!",
+   "segs": [
+    [
+     "police",
+     "게 멈춰라!",
+     "toneup",
+     "[big brother voice, bold, commanding but friendly]"
+    ]
+   ]
+  },
+  {
+   "text": "경찰차 장난감이 도둑 장난감들을 쫓아 씽씽 달리고 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "경찰차 장난감이 도둑 장난감들을 쫓아 씽씽 달리고 있었어요.",
+     null,
+     "[lively, quick rhythm]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 너는 이현이가 잃어버렸던 경찰차 형아?!",
+   "segs": [
+    [
+     "red",
+     "어? 너는 이현이가 잃어버렸던 경찰차 형아?!",
+     "toneup",
+     "[small voice, surprised, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "우리 같이 이현이한테 가자!",
+   "segs": [
+    [
+     "red",
+     "우리 같이 이현이한테 가자!",
+     "happy",
+     "[small voice, eager, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "좋아! 도둑을 다 잡았으니 같이 가자!",
+   "segs": [
+    [
+     "police",
+     "좋아! 도둑을 다 잡았으니 같이 가자!",
+     "happy",
+     "[big brother voice, hearty, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "경찰차 형아가 앞장섰어요.",
+   "segs": [
+    [
+     "nar",
+     "경찰차 형아가 앞장섰어요.",
+     null,
+     "[warm, settled]"
+    ]
+   ]
+  },
+  {
+   "text": "가다 보니 이번엔 위이잉, 소리가 났어요.",
+   "segs": [
+    [
+     "nar",
+     "가다 보니 이번엔 위이잉, 소리가 났어요.",
+     null,
+     "[calm, then a rising siren imitation]"
+    ]
+   ]
+  },
+  {
+   "text": "조심하세요! 불을 끕니다!",
+   "segs": [
+    [
+     "fire",
+     "조심하세요! 불을 끕니다!",
+     "toneup",
+     "[warm auntie voice, firm and caring, calling out]"
+    ]
+   ]
+  },
+  {
+   "text": "소방차가 블록으로 만든 장난감 집에 난 불을 쉭쉭 끄고 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "소방차가 블록으로 만든 장난감 집에 난 불을 쉭쉭 끄고 있었어요.",
+     null,
+     "[lively, 쉭쉭 crisp]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+   "segs": [
+    [
+     "red",
+     "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+     "happy",
+     "[small voice, excited, polite]"
+    ]
+   ]
+  },
+  {
+   "text": "그래그래! 불을 다 껐으니 같이 가자!",
+   "segs": [
+    [
+     "fire",
+     "그래그래! 불을 다 껐으니 같이 가자!",
+     "happy",
+     "[warm auntie voice, cheerful, kind]"
+    ]
+   ]
+  },
+  {
+   "text": "소방차 이모도 신나게 함께했어요.",
+   "segs": [
+    [
+     "nar",
+     "소방차 이모도 신나게 함께했어요.",
+     null,
+     "[warm, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "셋이서 길을 가다 보니 삐용삐용, 바쁜 소리가 들렸어요.",
+   "segs": [
+    [
+     "nar",
+     "셋이서 길을 가다 보니 삐용삐용, 바쁜 소리가 들렸어요.",
+     null,
+     "[calm, then a quick busy siren imitation]"
+    ]
+   ]
+  },
+  {
+   "text": "구급차 삼촌이 아픈 인형들을 태우고 병원으로 가고 있었지요.",
+   "segs": [
+    [
+     "nar",
+     "구급차 삼촌이 아픈 인형들을 태우고 병원으로 가고 있었지요.",
+     null,
+     "[gentle, caring]"
+    ]
+   ]
+  },
+  {
+   "text": "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+   "segs": [
+    [
+     "red",
+     "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+     "happy",
+     "[small voice, eager, polite]"
+    ]
+   ]
+  },
+  {
+   "text": "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+   "segs": [
+    [
+     "amb",
+     "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+     "happy",
+     "[kind uncle voice, deep, reassuring, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "구급차 삼촌도 든든하게 따라나섰어요.",
+   "segs": [
+    [
+     "nar",
+     "구급차 삼촌도 든든하게 따라나섰어요.",
+     null,
+     "[warm, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "넷이서 나란히 달려요. 친구들이 소리로 인사했어요.",
+   "segs": [
+    [
+     "nar",
+     "넷이서 나란히 달려요. 친구들이 소리로 인사했어요.",
+     null,
+     "[cheerful, slow, inviting to listen]"
+    ]
+   ]
+  },
+  {
+   "text": "자, 다 같이 이현이한테 가자!",
+   "segs": [
+    [
+     "red",
+     "자, 다 같이 이현이한테 가자!",
+     "happy",
+     "[small voice, leading, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "하지만 너무 오래 달린 빨간 자동차는 그만 툭, 멈춰 서고 말았어요.",
+   "segs": [
+    [
+     "nar",
+     "하지만 너무 오래 달린 빨간 자동차는 그만 툭, 멈춰 서고 말았어요.",
+     null,
+     "[slowing down, gentle concern, pause before 툭]"
+    ]
+   ]
+  },
+  {
+   "text": "아이고, 힘들어. 더는 못 가겠어…",
+   "segs": [
+    [
+     "red",
+     "아이고, 힘들어. 더는 못 가겠어…",
+     "sad",
+     "[small voice, tired, breathless, trailing off]"
+    ]
+   ]
+  },
+  {
+   "text": "바퀴가 무거워 꼼짝할 수가 없었지요.",
+   "segs": [
+    [
+     "nar",
+     "바퀴가 무거워 꼼짝할 수가 없었지요.",
+     null,
+     "[soft, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "그때, 저 멀리서 덜컹덜컹 든든한 소리가 들렸어요.",
+   "segs": [
+    [
+     "nar",
+     "그때, 저 멀리서 덜컹덜컹 든든한 소리가 들렸어요.",
+     null,
+     "[hopeful, rhythmic 덜컹덜컹]"
+    ]
+   ]
+  },
+  {
+   "text": "걱정 마! 내가 도와줄게!",
+   "segs": [
+    [
+     "tow",
+     "걱정 마! 내가 도와줄게!",
+     "happy",
+     "[easygoing sturdy voice, warm, reassuring]"
+    ]
+   ]
+  },
+  {
+   "text": "바로 이현이가 전에 잃어버렸던 주황색 견인차였어요!",
+   "segs": [
+    [
+     "nar",
+     "바로 이현이가 전에 잃어버렸던 주황색 견인차였어요!",
+     "toneup",
+     "[bright, glad reveal]"
+    ]
+   ]
+  },
+  {
+   "text": "견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요.",
+     null,
+     "[crisp 찰칵, satisfied]"
+    ]
+   ]
+  },
+  {
+   "text": "영차, 영차!",
+   "segs": [
+    [
+     "tow",
+     "영차, 영차!",
+     "toneup",
+     "[sturdy, rhythmic effort, two pulls]"
+    ]
+   ]
+  },
+  {
+   "text": "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 경찰차, 소방차, 구급차가 든든하게 따랐어요.",
+   "segs": [
+    [
+     "nar",
+     "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 경찰차, 소방차, 구급차가 든든하게 따랐어요.",
+     null,
+     "[warm, slow, naming each one clearly]"
+    ]
+   ]
+  },
+  {
+   "text": "맨 앞에서 끌어 주는 건 누구일까요? 골라 봐요.",
+   "segs": [
+    [
+     "nar",
+     "맨 앞에서 끌어 주는 건 누구일까요? 골라 봐요.",
+     null,
+     "[calm, inviting, clear question]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 빨간 자동차예요. 맨 앞을 다시 봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 빨간 자동차예요. 맨 앞을 다시 봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 경찰차 형아예요. 맨 앞을 다시 봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 경찰차 형아예요. 맨 앞을 다시 봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 소방차 이모예요. 맨 앞을 다시 봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 소방차 이모예요. 맨 앞을 다시 봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 구급차 삼촌이에요. 맨 앞을 다시 봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 구급차 삼촌이에요. 맨 앞을 다시 봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 견인차!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 견인차!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "긴 기차처럼 한 줄로 칙칙폭폭, 붕붕붕!",
+   "segs": [
+    [
+     "nar",
+     "긴 기차처럼 한 줄로 칙칙폭폭, 붕붕붕!",
+     "toneup",
+     "[playful, rhythmic, joyful]"
+    ]
+   ]
+  },
+  {
+   "text": "마침내 놀이터에 있는 이현이를 만났어요!",
+   "segs": [
+    [
+     "nar",
+     "마침내 놀이터에 있는 이현이를 만났어요!",
+     "toneup",
+     "[bright, relieved, joyful]"
+    ]
+   ]
+  },
+  {
+   "text": "와아! 내 빨간 자동차다!",
+   "segs": [
+    [
+     "child",
+     "와아! 내 빨간 자동차다!",
+     "happy",
+     "[child, overjoyed, big]"
+    ]
+   ]
+  },
+  {
+   "text": "경찰차랑 소방차, 구급차랑 견인차도 다 여기 있네!",
+   "segs": [
+    [
+     "child",
+     "경찰차랑 소방차, 구급차랑 견인차도 다 여기 있네!",
+     "happy",
+     "[child, amazed, counting them off happily]"
+    ]
+   ]
+  },
+  {
+   "text": "이현이는 소중한 보물 자동차들을 모두 품에 안고 펄쩍펄쩍 기뻐했답니다.",
+   "segs": [
+    [
+     "nar",
+     "이현이는 소중한 보물 자동차들을 모두 품에 안고 펄쩍펄쩍 기뻐했답니다.",
+     "happy",
+     "[warm, joyful, storybook ending tone]"
+    ]
+   ]
+  },
+  {
+   "text": "이제 모두 함께 집으로 출발!",
+   "segs": [
+    [
+     "nar",
+     "이제 모두 함께 집으로 출발!",
+     "toneup",
+     "[bright send-off]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "siren_police": [
+   [
+    "police",
+    "삐뽀삐뽀!",
+    "toneup",
+    "[siren imitation with the voice, bold, two beats, no laughing]"
+   ]
+  ],
+  "siren_fire": [
+   [
+    "fire",
+    "위이잉!",
+    "toneup",
+    "[siren imitation with the voice, rising then falling, one long tone]"
+   ]
+  ],
+  "siren_amb": [
+   [
+    "amb",
+    "삐용삐용!",
+    "toneup",
+    "[siren imitation with the voice, quick and busy, two beats]"
+   ]
+  ],
+  "vroom": [
+   [
+    "red",
+    "부릉부릉!",
+    "happy",
+    "[small engine sound with the voice, cheerful, short]"
+   ]
+  ],
+  "tok": [
+   [
+    "nar",
+    "톡!",
+    null,
+    "[one short light word]"
+   ]
+  ],
+  "chalkak": [
+   [
+    "nar",
+    "찰칵!",
+    "toneup",
+    "[one crisp word]"
+   ]
+  ],
+  "cheer": [
+   [
+    "red",
+    "부릉부릉, 빵빵!",
+    "happy",
+    "[small voice, cheering, engine sound then two horn beeps]"
+   ],
+   [
+    "police",
+    "부릉부릉, 빵빵!",
+    "happy",
+    "[bold, cheering, engine sound then two horn beeps]"
+   ],
+   [
+    "fire",
+    "부릉부릉, 빵빵!",
+    "happy",
+    "[warm, cheering, engine sound then two horn beeps]"
+   ],
+   [
+    "amb",
+    "부릉부릉, 빵빵!",
+    "happy",
+    "[deep, cheering, engine sound then two horn beeps]"
+   ],
+   [
+    "tow",
+    "부릉부릉, 빵빵!",
+    "happy",
+    "[sturdy, cheering, engine sound then two horn beeps]"
+   ]
+  ]
+ },
+ "chorus": {
+  "cheer": "부릉부릉, 빵빵!"
+ }
+}

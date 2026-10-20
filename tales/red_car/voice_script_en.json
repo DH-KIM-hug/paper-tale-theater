@@ -1,0 +1,716 @@
+{
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "child": "tapn1QwocNXk3viVSowa",
+  "red": "VOGEEZj2Kly5dP9LrQy8",
+  "police": "cjVigY5qzO86Huf0OWal",
+  "fire": "hpp4J3VqNfWAUOO0d1Us",
+  "amb": "5ON5Fnz24cnOozEQfGAm",
+  "tow": "CwhRBWXzGAHq8TQ4Fs17"
+ },
+ "lines": [
+  {
+   "text": "이현이는 빨간 자동차를 참 좋아했어요.",
+   "en": "Ihyun loved the little red car very much.",
+   "segs": [
+    [
+     "nar",
+     "Ihyun loved the little red car very much.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "빨간 것은 어디 있을까요? 찾아봐요.",
+   "en": "Where is the red one? Find it!",
+   "segs": [
+    [
+     "nar",
+     "Where is the red one? Find it!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 파란 블록이에요. 빨간 것을 찾아봐요.",
+   "en": "That's the blue block. Find the red one.",
+   "segs": [
+    [
+     "nar",
+     "That's the blue block. Find the red one.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 노란 오리예요. 빨간 것을 찾아봐요.",
+   "en": "That's the yellow duck. Find the red one.",
+   "segs": [
+    [
+     "nar",
+     "That's the yellow duck. Find the red one.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 빨간 자동차!",
+   "en": "That's right, the red car!",
+   "segs": [
+    [
+     "nar",
+     "That's right, the red car!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "밥 먹을 때도 냠냠, 잠잘 때도 쌔근, 언제나 손에 꼭 쥐고 있었지요.",
+   "en": "Munch munch at mealtime, snore snore at bedtime, the red car was always in Ihyun's hand.",
+   "segs": [
+    [
+     "nar",
+     "Munch munch at mealtime, snore snore at bedtime, the red car was always in Ihyun's hand.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그러던 어느 날, 밖에서 놀고 있었어요.",
+   "en": "Then one day, Ihyun was playing outside.",
+   "segs": [
+    [
+     "nar",
+     "Then one day, Ihyun was playing outside.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어! 나비다!",
+   "en": "Oh! A butterfly!",
+   "segs": [
+    [
+     "child",
+     "Oh! A butterfly!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "노느라 그만 빨간 자동차를 톡, 놓고 말았어요.",
+   "en": "Ihyun was so busy playing that the red car slipped out, plop, onto the grass.",
+   "segs": [
+    [
+     "nar",
+     "Ihyun was so busy playing that the red car slipped out, plop, onto the grass.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "정신을 차려 보니… 어라? 빨간 자동차가 보이지 않아요!",
+   "en": "And then... huh? The red car was nowhere to be seen!",
+   "segs": [
+    [
+     "nar",
+     "And then... huh? The red car was nowhere to be seen!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "잉잉, 내 빨간 자동차 어디 갔지?",
+   "en": "Boo-hoo, where did my red car go?",
+   "segs": [
+    [
+     "child",
+     "Boo-hoo, where did my red car go?",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+   "en": "The little red car, all alone, decided to go and find Ihyun. Off it went, brave and bold!",
+   "segs": [
+    [
+     "nar",
+     "The little red car, all alone, decided to go and find Ihyun. Off it went, brave and bold!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "부릉부릉! 이현이를 찾아 장난감 세상으로 가자!",
+   "en": "Vroom vroom! Let's go to Toy Land and find Ihyun!",
+   "segs": [
+    [
+     "red",
+     "Vroom vroom! Let's go to Toy Land and find Ihyun!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "조금 가다 보니, 삐뽀삐뽀 우렁찬 소리가 들렸어요.",
+   "en": "A little way down the road, there came a loud wee-woo, wee-woo!",
+   "segs": [
+    [
+     "nar",
+     "A little way down the road, there came a loud wee-woo, wee-woo!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "게 멈춰라!",
+   "en": "Stop right there!",
+   "segs": [
+    [
+     "police",
+     "Stop right there!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "경찰차 장난감이 도둑 장난감들을 쫓아 씽씽 달리고 있었어요.",
+   "en": "A toy police car was zooming after some toy robbers.",
+   "segs": [
+    [
+     "nar",
+     "A toy police car was zooming after some toy robbers.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어? 너는 이현이가 잃어버렸던 경찰차 형아?!",
+   "en": "Huh? You're the police car Ihyun lost! Big brother police car!",
+   "segs": [
+    [
+     "red",
+     "Huh? You're the police car Ihyun lost! Big brother police car!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "우리 같이 이현이한테 가자!",
+   "en": "Let's go find Ihyun together!",
+   "segs": [
+    [
+     "red",
+     "Let's go find Ihyun together!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "좋아! 도둑을 다 잡았으니 같이 가자!",
+   "en": "Sure! I've caught all the robbers, so let's go together!",
+   "segs": [
+    [
+     "police",
+     "Sure! I've caught all the robbers, so let's go together!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "경찰차 형아가 앞장섰어요.",
+   "en": "Big brother police car led the way.",
+   "segs": [
+    [
+     "nar",
+     "Big brother police car led the way.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "가다 보니 이번엔 위이잉, 소리가 났어요.",
+   "en": "A little farther on, there came a wee-ooo sound.",
+   "segs": [
+    [
+     "nar",
+     "A little farther on, there came a wee-ooo sound.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "조심하세요! 불을 끕니다!",
+   "en": "Stand back! I'm putting out the fire!",
+   "segs": [
+    [
+     "fire",
+     "Stand back! I'm putting out the fire!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "소방차가 블록으로 만든 장난감 집에 난 불을 쉭쉭 끄고 있었어요.",
+   "en": "A fire truck was spraying water, whoosh whoosh, on a fire at a little block house.",
+   "segs": [
+    [
+     "nar",
+     "A fire truck was spraying water, whoosh whoosh, on a fire at a little block house.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+   "en": "Oh? Auntie fire truck! Come with us to find Ihyun!",
+   "segs": [
+    [
+     "red",
+     "Oh? Auntie fire truck! Come with us to find Ihyun!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그래그래! 불을 다 껐으니 같이 가자!",
+   "en": "Of course! The fire is out, so let's go together!",
+   "segs": [
+    [
+     "fire",
+     "Of course! The fire is out, so let's go together!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "소방차 이모도 신나게 함께했어요.",
+   "en": "Auntie fire truck happily joined the group.",
+   "segs": [
+    [
+     "nar",
+     "Auntie fire truck happily joined the group.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "셋이서 길을 가다 보니 삐용삐용, 바쁜 소리가 들렸어요.",
+   "en": "As the three drove on, there came a busy nee-naw, nee-naw!",
+   "segs": [
+    [
+     "nar",
+     "As the three drove on, there came a busy nee-naw, nee-naw!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "구급차 삼촌이 아픈 인형들을 태우고 병원으로 가고 있었지요.",
+   "en": "Uncle ambulance was taking some sick dolls to the hospital.",
+   "segs": [
+    [
+     "nar",
+     "Uncle ambulance was taking some sick dolls to the hospital.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+   "en": "Uncle ambulance! Come with us to find Ihyun!",
+   "segs": [
+    [
+     "red",
+     "Uncle ambulance! Come with us to find Ihyun!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+   "en": "All right, all right! I've brought the sick friends to the hospital, so now let's go to Ihyun!",
+   "segs": [
+    [
+     "amb",
+     "All right, all right! I've brought the sick friends to the hospital, so now let's go to Ihyun!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "구급차 삼촌도 든든하게 따라나섰어요.",
+   "en": "Uncle ambulance came along too, strong and steady.",
+   "segs": [
+    [
+     "nar",
+     "Uncle ambulance came along too, strong and steady.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "넷이서 나란히 달려요. 친구들이 소리로 인사했어요.",
+   "en": "The four friends drove side by side. They said hello with their sounds.",
+   "segs": [
+    [
+     "nar",
+     "The four friends drove side by side. They said hello with their sounds.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자, 다 같이 이현이한테 가자!",
+   "en": "Come on, everyone, let's go to Ihyun!",
+   "segs": [
+    [
+     "red",
+     "Come on, everyone, let's go to Ihyun!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "하지만 너무 오래 달린 빨간 자동차는 그만 툭, 멈춰 서고 말았어요.",
+   "en": "But the little red car had driven for so long that it stopped with a clunk.",
+   "segs": [
+    [
+     "nar",
+     "But the little red car had driven for so long that it stopped with a clunk.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아이고, 힘들어. 더는 못 가겠어…",
+   "en": "Oh dear, I'm so tired. I can't go any farther...",
+   "segs": [
+    [
+     "red",
+     "Oh dear, I'm so tired. I can't go any farther...",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "바퀴가 무거워 꼼짝할 수가 없었지요.",
+   "en": "Its wheels felt so heavy it couldn't move at all.",
+   "segs": [
+    [
+     "nar",
+     "Its wheels felt so heavy it couldn't move at all.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그때, 저 멀리서 덜컹덜컹 든든한 소리가 들렸어요.",
+   "en": "Just then, from far away, came a sturdy clatter, clatter sound.",
+   "segs": [
+    [
+     "nar",
+     "Just then, from far away, came a sturdy clatter, clatter sound.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "걱정 마! 내가 도와줄게!",
+   "en": "Don't worry! I'll help you!",
+   "segs": [
+    [
+     "tow",
+     "Don't worry! I'll help you!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "바로 이현이가 전에 잃어버렸던 주황색 견인차였어요!",
+   "en": "It was the orange tow truck Ihyun had lost long ago!",
+   "segs": [
+    [
+     "nar",
+     "It was the orange tow truck Ihyun had lost long ago!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요.",
+   "en": "The tow truck hooked its strong hook onto the red car. Click!",
+   "segs": [
+    [
+     "nar",
+     "The tow truck hooked its strong hook onto the red car. Click!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "영차, 영차!",
+   "en": "Heave-ho, heave-ho!",
+   "segs": [
+    [
+     "tow",
+     "Heave-ho, heave-ho!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 경찰차, 소방차, 구급차가 든든하게 따랐어요.",
+   "en": "The tow truck pulled the red car from the front, and behind them came the police car, the fire truck and the ambulance.",
+   "segs": [
+    [
+     "nar",
+     "The tow truck pulled the red car from the front, and behind them came the police car, the fire truck and the ambulance.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맨 앞에서 끌어 주는 건 누구일까요? 골라 봐요.",
+   "en": "Who is pulling at the very front? Pick one!",
+   "segs": [
+    [
+     "nar",
+     "Who is pulling at the very front? Pick one!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 빨간 자동차예요. 맨 앞을 다시 봐요.",
+   "en": "That's the red car. Look at the very front again.",
+   "segs": [
+    [
+     "nar",
+     "That's the red car. Look at the very front again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 경찰차 형아예요. 맨 앞을 다시 봐요.",
+   "en": "That's big brother police car. Look at the very front again.",
+   "segs": [
+    [
+     "nar",
+     "That's big brother police car. Look at the very front again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 소방차 이모예요. 맨 앞을 다시 봐요.",
+   "en": "That's auntie fire truck. Look at the very front again.",
+   "segs": [
+    [
+     "nar",
+     "That's auntie fire truck. Look at the very front again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 구급차 삼촌이에요. 맨 앞을 다시 봐요.",
+   "en": "That's uncle ambulance. Look at the very front again.",
+   "segs": [
+    [
+     "nar",
+     "That's uncle ambulance. Look at the very front again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 견인차!",
+   "en": "That's right, the tow truck!",
+   "segs": [
+    [
+     "nar",
+     "That's right, the tow truck!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "긴 기차처럼 한 줄로 칙칙폭폭, 붕붕붕!",
+   "en": "Like a long train, all in a row: chugga-chugga, vroom vroom vroom!",
+   "segs": [
+    [
+     "nar",
+     "Like a long train, all in a row: chugga-chugga, vroom vroom vroom!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "마침내 놀이터에 있는 이현이를 만났어요!",
+   "en": "At last, they found Ihyun at the playground!",
+   "segs": [
+    [
+     "nar",
+     "At last, they found Ihyun at the playground!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "와아! 내 빨간 자동차다!",
+   "en": "Wow! My red car!",
+   "segs": [
+    [
+     "child",
+     "Wow! My red car!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "경찰차랑 소방차, 구급차랑 견인차도 다 여기 있네!",
+   "en": "And the police car, the fire truck, the ambulance and the tow truck are all here too!",
+   "segs": [
+    [
+     "child",
+     "And the police car, the fire truck, the ambulance and the tow truck are all here too!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "이현이는 소중한 보물 자동차들을 모두 품에 안고 펄쩍펄쩍 기뻐했답니다.",
+   "en": "Ihyun hugged all the precious toy cars and jumped for joy.",
+   "segs": [
+    [
+     "nar",
+     "Ihyun hugged all the precious toy cars and jumped for joy.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "이제 모두 함께 집으로 출발!",
+   "en": "Now let's all go home together!",
+   "segs": [
+    [
+     "nar",
+     "Now let's all go home together!",
+     "toneup"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "siren_police": [
+   [
+    "police",
+    "Wee-woo, wee-woo!",
+    "toneup"
+   ]
+  ],
+  "siren_fire": [
+   [
+    "fire",
+    "Wee-ooo!",
+    "toneup"
+   ]
+  ],
+  "siren_amb": [
+   [
+    "amb",
+    "Nee-naw, nee-naw!",
+    "toneup"
+   ]
+  ],
+  "vroom": [
+   [
+    "red",
+    "Vroom vroom!",
+    "happy"
+   ]
+  ],
+  "tok": [
+   [
+    "nar",
+    "Plop!",
+    null
+   ]
+  ],
+  "chalkak": [
+   [
+    "nar",
+    "Click!",
+    "toneup"
+   ]
+  ],
+  "cheer": [
+   [
+    "red",
+    "Vroom vroom, beep beep!",
+    "happy"
+   ],
+   [
+    "police",
+    "Vroom vroom, beep beep!",
+    "happy"
+   ],
+   [
+    "fire",
+    "Vroom vroom, beep beep!",
+    "happy"
+   ],
+   [
+    "amb",
+    "Vroom vroom, beep beep!",
+    "happy"
+   ],
+   [
+    "tow",
+    "Vroom vroom, beep beep!",
+    "happy"
+   ]
+  ]
+ },
+ "ui": {
+  "나의 빨간 자동차": "My Red Car",
+  "서로 도우면 함께 갈 수 있어요": "Helping each other, we can go together",
+  "서로 도우면 함께 갈 수 있어요.": "Helping each other, we can go together.",
+  "언제나 함께": "Always Together",
+  "나비다!": "A Butterfly!",
+  "장난감 세상으로 붕붕!": "Vroom, to Toy Land!",
+  "경찰차 형아": "Big Brother Police Car",
+  "소방차 이모": "Auntie Fire Truck",
+  "구급차 삼촌": "Uncle Ambulance",
+  "나란히 달려요": "Side by Side",
+  "에구구, 지쳤어요": "Oh No, So Tired",
+  "기차처럼 한 줄로": "All in a Row Like a Train",
+  "이현이야, 안녕!": "Hello, Ihyun!",
+  "냠냠": "Munch munch",
+  "쌔근": "Zzz",
+  "톡!": "Plop!",
+  "팔랑팔랑": "Flutter flutter",
+  "잉잉": "Boo-hoo",
+  "두리번": "Hmm?",
+  "부릉부릉!": "Vroom vroom!",
+  "삐뽀삐뽀!": "Wee-woo!",
+  "위이잉!": "Wee-ooo!",
+  "삐용삐용!": "Nee-naw!",
+  "씽씽!": "Zoom zoom!",
+  "쉭쉭!": "Whoosh whoosh!",
+  "덜컹덜컹": "Clatter clatter",
+  "찰칵!": "Click!",
+  "영차!": "Heave-ho!",
+  "칙칙폭폭!": "Chugga-chugga!",
+  "붕붕붕!": "Vroom vroom vroom!",
+  "빵빵!": "Beep beep!",
+  "반짝!": "Sparkle!",
+  "툭": "Clunk",
+  "빨간 것은 어디 있을까요? 찾아봐요.": "Where is the red one? Find it!",
+  "맨 앞에서 끌어 주는 건 누구일까요? 골라 봐요.": "Who is pulling at the very front? Pick one!",
+  "부릉부릉, 빵빵!": "Vroom vroom, beep beep!"
+ }
+}
