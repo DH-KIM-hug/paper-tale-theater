@@ -9,7 +9,7 @@
 (() => {
   const AS = '../../assets/v3w/';
   /* 그림 폭/높이 비율 (사방 여백 없이 오린 그림) */
-  const ASP = { snow_stand: .43, snow_flee: .69, snow_eat: .435, snow_chair: .51, snow_bedsleep: 1.6522, snow_receive: .445,
+  const ASP = { snow_stand: .43, snow_flee: .69, snow_eat: .435, snow_chair_small: .6017, snow_chair: .51, snow_bedsleep: 1.6522, snow_receive: .445,
     snow_awake: .75, queen_mirror: .6, queen_fist: .605, hunter_shake: .52, dwarfs_row: 2.8188, dwarf_hammer: .84,
     dwarf_plank: .915, dwarf_smile: .57, dwarfs_worry: 1.03, granny_basket: .765, prince: .365,
     prop_mirror: .675, prop_apple: .925, prop_apple_bitten: .9187, prop_apple_piece: .9437, prop_coffin: 2.1875,
@@ -17,7 +17,7 @@
     prop_bed1: 1.5857, prop_bed2: 1.5857, prop_bed3: 1.5786, prop_bed4: 1.5857, prop_bed5: 1.5857, prop_bed6: 1.5857, prop_bed7: 1.5857,
     prop_bed_big: 1.5, prop_planks: 1.1938, prop_glow: .98, prop_petals: 1.0526,
     snow_bedknees: 1.5738, snow_bedtoes: 1.5786, snow_bedcurl: 1.519, prop_mirror_face: .9875, prop_lantern: .6833 };
-  const BGS = ['queen_room', 'forest', 'house_front', 'house_table', 'house_bed', 'hill'];
+  const BGS = ['queen_room', 'forest', 'house_front', 'house_table2', 'house_bed2', 'hill'];
   const bgSrc = k => AS + 'sw_bg_' + k + '.webp', artSrc = k => AS + 'sw_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 그림이 무대 1000×560을 덮게 */
   const H_SNOW = 205;  /* 백설 키 (서기 기준). 어른(왕비·사냥꾼·할머니·왕자)은 조금 더 크고, 난쟁이는 백설 허리 조금 위 */
@@ -126,7 +126,7 @@
     /* ---- 배우 ---- (높이는 자세마다 머리 크기가 서 있을 때와 같아지게 잰 값) */
     const snow = mk(T, { stand: ['snow_stand', H_SNOW, 'front'], flee: ['snow_flee', 167, 'right'], eat: ['snow_eat', H_SNOW, 'front'],
       receive: ['snow_receive', H_SNOW, 'front'], awake: ['snow_awake', 152, 'front'],
-      chair: ['snow_chair', 176, 'right'],                 /* 작은 의자째 그린 앉은 그림 (의자는 그림 왼쪽, 얼굴은 오른쪽) */
+      chair: ['snow_chair_small', 170, 'right'],                 /* 작은 의자째 그린 앉은 그림 (의자는 그림 왼쪽, 얼굴은 오른쪽) */
       /* 작은 침대째 그린 누운 그림 3장: 침대 부분이 BED_H 침대와 같은 크기가 되는 높이 */
       bedknees: ['snow_bedknees', 140, 'front'], bedtoes: ['snow_bedtoes', 140, 'front'], bedcurl: ['snow_bedcurl', 146, 'front'],
       coffin: ['snow_bedsleep', 98, 'left'] });
@@ -203,19 +203,29 @@
     door.pos.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 900, iterations: 3, easing: 'ease-in-out' });
     await say('문을 톡 두드려 볼까요?');
     await T.tap(door.pos, { prompt: '문을 톡 두드려 볼까요?' });
-    sfx(T, 'knock', () => T.tone([180, 90], .12, { type: 'square', vol: .12 })); T.pop(314, 230, tr('똑똑!'));
+    sfx(T, 'knock', () => T.tone([180, 90], .12, { type: 'square', vol: .12 })); T.pop(314, 170, tr('똑똑!'));
     await sleep(700);
     sfx(T, 'creak', () => sfx(T, 'door'));
-    door.look('open'); T.pop(314, 200, tr('삐걱!'));
+    /* 문이 왼쪽 경첩을 따라 열린다: 닫힌 문 → 반쯤 열림(뒤에 어두운 안쪽) → 활짝 열린 그림 */
+    const dark = T.el('rect', { x: 314 - 51, y: 339 - 100, width: 102, height: 100, fill: '#2B1D14' }, T.world);
+    T.world.insertBefore(dark, door.pos);
+    door.body.style.transformBox = 'fill-box'; door.body.style.transformOrigin = '0% 50%';
+    await T.anim(door.body, [{ transform: 'scaleX(1)' }, { transform: 'scaleX(.55)' }], 420);
+    door.body.style.transform = 'scaleX(.55)'; T.pop(314, 150, tr('삐걱!'));
+    await T.anim(door.body, [{ transform: 'scaleX(.55)' }, { transform: 'scaleX(.9)' }], 260);
+    door.body.style.transform = ''; door.look('open'); dark.remove();
     await say('삐걱, 문이 열렸어요. 집 안에는 아무도 없었어요.');
-    await snow.move(330, 345, 1100);
-    await T.anim(snow.pos, [{ opacity: 1 }, { opacity: 0 }], 400); hide(snow); snow.pos.style.opacity = '';
+    /* 열린 문 안쪽(어두운 방)으로 걸어 들어간다 */
+    await snow.move(314, 345, 900);
+    snow.setScale(.8 * FAR);
+    snow.body.style.filter = 'brightness(.3)';
+    await T.anim(snow.pos, [{ opacity: 1 }, { opacity: 0 }], 500); hide(snow); snow.pos.style.opacity = ''; snow.body.style.filter = '';
     await sleep(200);
 
     /* ===== 4. 작은 식탁 ===== */
     const C7 = 330, FL = 548, CHX = [450, 530, 610, 690, 770, 850];
     await T.sceneCard(tr('작은 식탁'), () => {
-      scene('house_table');
+      scene('house_table2');
       put(T, table, 640, FL - 30);
       chairs.forEach((c, i) => put(T, c, i < 6 ? CHX[i] : C7, FL));
       put(T, snow, 150, FL, { look: 'stand' });
@@ -241,7 +251,7 @@
     const sit = (async () => {
       await sleep(2600);                                   /* "영차," 에 맞춰 앉는다 */
       hide(chairs[6]);                                     /* 앉은 그림에 의자가 함께 있다 → 그 자리의 의자는 감춘다 */
-      put(T, snow, C7 + 176 * .51 * .13, FL, { look: 'chair', to: 'right' }); /* 그림 속 의자 가운데를 의자 자리에 */
+      put(T, snow, C7 + 170 * .6017 * .215, FL, { look: 'chair', to: 'right' }); /* 그림 속 의자 가운데를 의자 자리에 */
       sfx(T, 'squeak', () => popSfx(T)); snow.wiggle(4, 380); T.pop(C7, FL - 240, tr('영차!'));
     })();
     await say('의자가 정말 작네. 조금 작지만… 영차, 앉았다!');
@@ -262,7 +272,7 @@
       T.world.insertBefore(snow.pos, beds[i].pos.nextSibling); hide(beds[i]); lying = i;
     };
     await T.sceneCard(tr('작은 침대'), () => {
-      scene('house_bed');
+      scene('house_bed2');
       layBeds(); lying = -1;
       put(T, snow, X(60, 60), BY_F + 2, { look: 'stand' });
       if (P) camSnap(160, 280, 1);
@@ -282,7 +292,7 @@
     const crewN = crew(T, { lanterns: true }); hide(crewN);
     let night;
     await T.sceneCard(tr('일곱 난쟁이'), () => {
-      scene('house_bed'); night = tint(T, '#1F2A56', .45);
+      scene('house_bed2'); night = tint(T, '#1F2A56', .45);
       layBeds(); lying = -1;
       onBed(6, 'bedcurl');
       put(T, crewN, -260, 560);
@@ -314,7 +324,7 @@
     /* ===== 7. 큰 침대 ===== */
     const BIG = 190 / 150;                                 /* 큰 침대: 백설 키보다 길게 */
     await T.sceneCard(tr('큰 침대'), () => {
-      scene('house_bed');
+      scene('house_bed2');
       put(T, planks, X(500, 500), 548, { s: 1.3 });
       put(T, hammerD, X(330, 400), 548, { to: 'right' });
       put(T, plankD, X(670, 600), 548, { to: 'left' });
@@ -347,7 +357,7 @@
     const SX = [70, 160, 250, 340, 430, 520, 610], SYs = i => (i % 2 ? 552 : 496), SS = i => (i % 2 ? .82 : .74), SY = 552, BIGX = 790;
     let bedsG;
     await T.sceneCard(tr('침대 여덟 개'), () => {
-      scene('house_bed');
+      scene('house_bed2');
       hide(smileD); hide(plankD);
       put(T, dwarfs, 340, 470, { s: .8 });                /* 난쟁이들은 침대 뒤 벽 앞에 */
       put(T, snow, 930, 552, { look: 'stand' });
