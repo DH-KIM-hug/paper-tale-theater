@@ -115,7 +115,8 @@
   }
   /* 크기 (무대 단위, 배우 scale 1): 자세가 바뀌어도 머리 크기가 튀지 않게 그림마다 맞춘 값 */
   const SZ = {
-    mom_wave: [125, 240], mom_basket: [114, 181],
+    /* 2026-10-20 크기 일관성: mom_basket 몸 높이가 wave의 약 75%였다(같은 1.0 배율에서 엄마가 줄어 보임) → 몸 높이 238로 맞춤 (바구니 자리 비율은 그대로) */
+    mom_wave: [125, 240], mom_basket: [151, 240],
     boy: [71, 112], girl: [89, 140], kids_hug: [112, 131], boy_gecko: [100, 133], girl_gecko: [90, 119], kids_rope: [103, 164],
     // tiger_scarf = 엄마 옷(분홍 저고리·회색 치마) 입은 호랑이 (이름만 그대로)
     tiger: [150, 186], tiger_full: [192, 196], tiger_scarf: [175, 216], tiger_axe: [159, 196], tiger_slip: [192, 225], tiger_bump: [176, 203],
@@ -381,7 +382,9 @@
   const mkMom = (T, p, x, y, s, opt) => mk(T, p, x, y, drawMom, s, opt);
   /* 오누이는 배경(엄마·집·나무)에 비해 작아 보여서 늘 KID 배로 키운다 — 배치 크기(scale)를 만드는 곳과 setScale 에서 한꺼번에 */
   const KID = 1.6;
-  const mkKid = (T, p, x, y, s, girl) => { const a = mk(T, p, x, y, drawKid, s * KID, girl); const ss = a.setScale; a.setScale = v => ss(v * KID); return a; };
+  /* 2026-10-20 크기 일관성: 동생(누이)은 오빠보다 어리므로 키가 오빠보다 크면 안 된다. 그림 높이를 재면 동생이 약 12% 컸다 → 동생만 0.8배 */
+  const GIRL_K = .8;
+  const mkKid = (T, p, x, y, s, girl) => { const k = KID * (girl ? GIRL_K : 1); const a = mk(T, p, x, y, drawKid, s * k, girl); const ss = a.setScale; a.setScale = v => ss(v * k); return a; };
   const mkBoy = (T, p, x, y, s = 1) => mkKid(T, p, x, y, s, false);
   const mkGirl = (T, p, x, y, s = .9) => mkKid(T, p, x, y, s, true);
   const TIGERS = []; // 대사 연출용: 장면마다 새로 만든 호랑이 배우 (가장 최근에 무대에 있는 호랑이가 말한다)

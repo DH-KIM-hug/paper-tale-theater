@@ -59,7 +59,8 @@
   const SIT_SEAT = 82;       // 앉은 그림: 발끝에서 엉덩이(바위 윗면)까지 (scale 1.2 기준 무대 단위)
   /* 해: 가운데 (0,0), 햇살 끝까지 지름 224. 바람: 구름 몸통 가운데가 (0,0), 꼬리는 왼쪽 */
   const SUN_D = 224;
-  const WIND_BOX = { wind: [-135, -63, 223, 137], wind_blow: [-137, -63, 227, 140], wind_tired: [-153, -71, 253, 156] };
+  /* 2026-10-20 크기 일관성: wind_tired는 같은 구름을 1.13배로 그려 커 보였다(가로·세로 비율은 같음) → 기본 바람과 같은 상자로 맞춤 */
+  const WIND_BOX = { wind: [-135, -63, 223, 137], wind_blow: [-137, -63, 227, 140], wind_tired: [-135, -63, 223, 137] };
   const cutArt = (T, key, sfx, hold, onShow) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx, hold }], { hold, onShow }) : null);
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). zoom: (cx, cy) 기준으로 키운다 */
   const BG_EDGE = { sky: ['#a4c9da', '#7a807e'], high: ['#bcc29a', '#bcc29a'], field: ['#bedfe9', '#77693f'], stream: ['#b6d5df', '#4f827f'], snow: ['#dbeefb', '#f6f9fd'] };
