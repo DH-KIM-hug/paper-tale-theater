@@ -1,0 +1,761 @@
+{
+ "voices": {
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
+  "mer": "Ss1VfT7ri4lqnvTDWII0",
+  "granny": "gnWujHp24oqX3I03lRbU",
+  "prince": "VpI9YrC8mqZsi3NvIQzK",
+  "witch": "XrExE9yKIg1WjnnlVkGX",
+  "lady": "ZjAPD4f11zlnEnZpKDgo",
+  "sisa": "XtDNqqtU5YUpm1etgl1C",
+  "sisb": "vJ170fCwESgE1tjW39So",
+  "sisc": "FGY2WhTYpPnrIDTdsKH5",
+  "sisd": "hpp4J3VqNfWAUOO0d1Us",
+  "sise": "F9mMsBUFaCLedtYXXjLD"
+ },
+ "lines": [
+  {
+   "text": "깊고 깊은 바다 밑에 인어 나라가 있었어요. 바다 왕님과 할머니, 여섯 공주가 살았지요.",
+   "en": "Deep, deep under the sea there was a kingdom of merfolk. The Sea King, the grandmother and six princesses lived there.",
+   "segs": [
+    [
+     "nar",
+     "Deep, deep under the sea there was a kingdom of merfolk. The Sea King, the grandmother and six princesses lived there.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "막내 인어공주는 조용하고 생각이 많았어요. 정원에는 배에서 떨어진 물건을 모았어요.",
+   "en": "The youngest, the little mermaid, was quiet and thoughtful. In her garden she collected things that had fallen from ships.",
+   "segs": [
+    [
+     "nar",
+     "The youngest, the little mermaid, was quiet and thoughtful. In her garden she collected things that had fallen from ships.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "무거운 것은 가라앉고, 가벼운 것은 떠요. 어느 것이 바다 밑까지 내려올까요?",
+   "en": "Heavy things sink, and light things float. Which one will come all the way down to the sea floor?",
+   "segs": [
+    [
+     "nar",
+     "Heavy things sink, and light things float. Which one will come all the way down to the sea floor?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "나무토막은 가벼워서 둥둥 떠요.",
+   "en": "The piece of wood is light, so it floats.",
+   "segs": [
+    [
+     "nar",
+     "The piece of wood is light, so it floats.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "무거운 돌이 가라앉았어요!",
+   "en": "The heavy stone sank!",
+   "segs": [
+    [
+     "nar",
+     "The heavy stone sank!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "이번에는 어느 것이 가라앉을까요?",
+   "en": "This time, which one will sink?",
+   "segs": [
+    [
+     "nar",
+     "This time, which one will sink?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "코르크 병은 가벼워서 둥둥 떠요.",
+   "en": "The cork bottle is light, so it floats.",
+   "segs": [
+    [
+     "nar",
+     "The cork bottle is light, so it floats.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "무거운 닻도 가라앉았어요!",
+   "en": "The heavy anchor sank too!",
+   "segs": [
+    [
+     "nar",
+     "The heavy anchor sank too!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "언니들은 열다섯 살이 되면 바다 위로 올라갔어요. 드디어 막내 차례예요!",
+   "en": "When each sister turned fifteen, she was allowed to swim up above the sea. At last it was the youngest one's turn!",
+   "segs": [
+    [
+     "nar",
+     "When each sister turned fifteen, she was allowed to swim up above the sea. At last it was the youngest one's turn!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "조심해서 다녀오렴.",
+   "en": "Be careful, and come back safely.",
+   "segs": [
+    [
+     "granny",
+     "Be careful, and come back safely.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "네, 할머니. 다녀올게요!",
+   "en": "Yes, Grandmother. I will be back soon!",
+   "segs": [
+    [
+     "mer",
+     "Yes, Grandmother. I will be back soon!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "커다란 배가 있었어요. 오늘은 왕자님 생일이래요.",
+   "en": "There was a great big ship. Today was the prince's birthday.",
+   "segs": [
+    [
+     "nar",
+     "There was a great big ship. Today was the prince's birthday.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "하늘을 톡 눌러 봐요.",
+   "en": "Tap the sky!",
+   "segs": [
+    [
+     "nar",
+     "Tap the sky!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "펑! 펑! 불꽃이 하늘에 피었어요.",
+   "en": "Pop! Pop! Fireworks bloomed in the sky.",
+   "segs": [
+    [
+     "nar",
+     "Pop! Pop! Fireworks bloomed in the sky.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "저 사람이 왕자님이구나.",
+   "en": "So that is the prince.",
+   "segs": [
+    [
+     "mer",
+     "So that is the prince.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "밤이 깊자 바람이 세졌어요. 배가 기우뚱!",
+   "en": "Late at night the wind grew strong. The ship tipped over!",
+   "segs": [
+    [
+     "nar",
+     "Late at night the wind grew strong. The ship tipped over!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "왕자님이 바다에 빠졌어요.",
+   "en": "The prince fell into the sea.",
+   "segs": [
+    [
+     "nar",
+     "The prince fell into the sea.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "내가 도와줄게요!",
+   "en": "I will help you!",
+   "segs": [
+    [
+     "mer",
+     "I will help you!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "인어공주는 왕자님의 머리를 물 위로 받쳐 주었어요.",
+   "en": "The little mermaid held the prince's head above the water.",
+   "segs": [
+    [
+     "nar",
+     "The little mermaid held the prince's head above the water.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "인어공주는 왕자님을 모래밭에 눕히고, 바위 뒤에 숨었어요.",
+   "en": "The little mermaid laid the prince on the sand and hid behind a rock.",
+   "segs": [
+    [
+     "nar",
+     "The little mermaid laid the prince on the sand and hid behind a rock.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어머, 괜찮으세요?",
+   "en": "Oh my, are you all right?",
+   "segs": [
+    [
+     "lady",
+     "Oh my, are you all right?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "왕자님은 아가씨에게 웃어 주었어요. 인어공주는 보지 못했지요.",
+   "en": "The prince smiled at the young lady. He never saw the little mermaid.",
+   "segs": [
+    [
+     "nar",
+     "The prince smiled at the young lady. He never saw the little mermaid.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "왕자님이 깨어났어요. 다행이에요.",
+   "en": "The prince is awake. I am so glad.",
+   "segs": [
+    [
+     "mer",
+     "The prince is awake. I am so glad.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "할머니, 사람은 어떻게 살아요?",
+   "en": "Grandmother, how do people live?",
+   "segs": [
+    [
+     "mer",
+     "Grandmother, how do people live?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "사람은 땅 위에서 살고, 우리는 바다에서 살지. 사람에겐 별처럼 영원히 남는 마음이 있단다.",
+   "en": "People live on the land, and we live in the sea. But people have a heart that lasts forever, like a star.",
+   "segs": [
+    [
+     "granny",
+     "People live on the land, and we live in the sea. But people have a heart that lasts forever, like a star.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "나도 왕자님 곁에서 그런 마음을 갖고 싶어요.",
+   "en": "I want to have a heart like that too, beside the prince.",
+   "segs": [
+    [
+     "mer",
+     "I want to have a heart like that too, beside the prince.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "인어공주는 소용돌이 너머 바다 마녀를 찾아갔어요.",
+   "en": "The little mermaid swam past the whirlpool to find the sea witch.",
+   "segs": [
+    [
+     "nar",
+     "The little mermaid swam past the whirlpool to find the sea witch.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "다리를 갖고 싶다고? 좋아. 대신 네 고운 목소리를 다오.",
+   "en": "You want legs? Very well. But in return, give me your lovely voice.",
+   "segs": [
+    [
+     "witch",
+     "You want legs? Very well. But in return, give me your lovely voice.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "다리는 조금 흔들흔들할 거야. 그리고 왕자가 다른 사람과 결혼하면, 너는 바다 거품이 된단다.",
+   "en": "Your legs will wobble a little. And if the prince marries someone else, you will turn into sea foam.",
+   "segs": [
+    [
+     "witch",
+     "Your legs will wobble a little. And if the prince marries someone else, you will turn into sea foam.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그래도 갈래요.",
+   "en": "I will go anyway.",
+   "segs": [
+    [
+     "mer",
+     "I will go anyway.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "가마솥을 톡 눌러 봐요.",
+   "en": "Tap the cauldron!",
+   "segs": [
+    [
+     "nar",
+     "Tap the cauldron!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "마녀가 목소리를 진주처럼 가져갔어요. 이제 인어공주는 말을 할 수 없어요.",
+   "en": "The witch took her voice away like a little pearl. Now the little mermaid could not speak.",
+   "segs": [
+    [
+     "nar",
+     "The witch took her voice away like a little pearl. Now the little mermaid could not speak.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "새벽, 궁전 계단에서 인어공주는 약을 마셨어요.",
+   "en": "At dawn, on the palace steps, the little mermaid drank the potion.",
+   "segs": [
+    [
+     "nar",
+     "At dawn, on the palace steps, the little mermaid drank the potion.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.",
+   "en": "Her tail was gone and she had legs! Her steps went wobble, wobble.",
+   "segs": [
+    [
+     "nar",
+     "Her tail was gone and she had legs! Her steps went wobble, wobble.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "누구세요? 어디서 왔어요?",
+   "en": "Who are you? Where did you come from?",
+   "segs": [
+    [
+     "prince",
+     "Who are you? Where did you come from?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "인어공주는 말을 못 해요. 그저 웃었지요.",
+   "en": "The little mermaid could not speak. She only smiled.",
+   "segs": [
+    [
+     "nar",
+     "The little mermaid could not speak. She only smiled.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "우리 궁전에서 지내요.",
+   "en": "Come and stay at our palace.",
+   "segs": [
+    [
+     "prince",
+     "Come and stay at our palace.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "정원에 바다 친구가 섞였네. 바다에 사는 친구를 찾아봐요.",
+   "en": "Some sea friends got mixed into the garden. Let's find the friends that live in the sea.",
+   "segs": [
+    [
+     "prince",
+     "Some sea friends got mixed into the garden. Let's find the friends that live in the sea.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "바다에 사는 친구는 누구일까요?",
+   "en": "Which friend lives in the sea?",
+   "segs": [
+    [
+     "nar",
+     "Which friend lives in the sea?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "물고기는 바다에 살아요!",
+   "en": "The fish lives in the sea!",
+   "segs": [
+    [
+     "nar",
+     "The fish lives in the sea!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "조개는 바다에 살아요!",
+   "en": "The shell lives in the sea!",
+   "segs": [
+    [
+     "nar",
+     "The shell lives in the sea!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "불가사리는 바다에 살아요!",
+   "en": "The starfish lives in the sea!",
+   "segs": [
+    [
+     "nar",
+     "The starfish lives in the sea!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "나비는 하늘을 날아요. 땅 친구예요.",
+   "en": "The butterfly flies in the sky. It is a land friend.",
+   "segs": [
+    [
+     "nar",
+     "The butterfly flies in the sky. It is a land friend.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 땅에서 뛰어요. 땅 친구예요.",
+   "en": "The rabbit hops on the land. It is a land friend.",
+   "segs": [
+    [
+     "nar",
+     "The rabbit hops on the land. It is a land friend.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "꽃은 땅에서 피어요. 땅 친구예요.",
+   "en": "The flower blooms on the land. It is a land friend.",
+   "segs": [
+    [
+     "nar",
+     "The flower blooms on the land. It is a land friend.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "새는 하늘을 날아요. 땅 친구예요.",
+   "en": "The bird flies in the sky. It is a land friend.",
+   "segs": [
+    [
+     "nar",
+     "The bird flies in the sky. It is a land friend.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "나무는 땅에서 자라요. 땅 친구예요.",
+   "en": "The tree grows on the land. It is a land friend.",
+   "segs": [
+    [
+     "nar",
+     "The tree grows on the land. It is a land friend.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "강아지는 땅에서 뛰어요. 땅 친구예요.",
+   "en": "The puppy runs on the land. It is a land friend.",
+   "segs": [
+    [
+     "nar",
+     "The puppy runs on the land. It is a land friend.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "바다에서 온 아이 같아요. 내 귀여운 동생처럼 지내요.",
+   "en": "You seem like a child from the sea. Stay with me like my sweet little sister.",
+   "segs": [
+    [
+     "prince",
+     "You seem like a child from the sea. Stay with me like my sweet little sister.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "인어공주는 흔들흔들해도 왕자님과 함께 춤추었어요.",
+   "en": "Even with wobbly steps, the little mermaid danced with the prince.",
+   "segs": [
+    [
+     "nar",
+     "Even with wobbly steps, the little mermaid danced with the prince.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "당신이 모래밭에서 저를 구해 준 분이군요!",
+   "en": "You are the one who saved me on the beach!",
+   "segs": [
+    [
+     "prince",
+     "You are the one who saved me on the beach!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "왕자님은 이웃 나라 공주님과 결혼했어요. 인어공주는 말없이 웃었어요. 마음은 아팠지요.",
+   "en": "The prince married the princess of the neighbouring kingdom. The little mermaid smiled without a word. But her heart ached.",
+   "segs": [
+    [
+     "nar",
+     "The prince married the princess of the neighbouring kingdom. The little mermaid smiled without a word. But her heart ached.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "새벽, 배 옆에 언니들이 올라왔어요. 긴 머리가 짧아졌어요.",
+   "en": "At dawn, the sisters came up beside the ship. Their long hair had been cut short.",
+   "segs": [
+    [
+     "nar",
+     "At dawn, the sisters came up beside the ship. Their long hair had been cut short.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "인어공주는 잠든 왕자님과 공주님을 보았어요. 그리고 고개를 저었지요.",
+   "en": "The little mermaid looked at the sleeping prince and princess. Then she shook her head.",
+   "segs": [
+    [
+     "nar",
+     "The little mermaid looked at the sleeping prince and princess. Then she shook her head.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "인어공주는 단검을 칼집째 바다에 던졌어요. 물결이 붉은 금빛으로 반짝였어요. 해가 떠올랐어요.",
+   "en": "The little mermaid threw the dagger, still in its sheath, into the sea. The waves sparkled red and gold. The sun rose.",
+   "segs": [
+    [
+     "nar",
+     "The little mermaid threw the dagger, still in its sheath, into the sea. The waves sparkled red and gold. The sun rose.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "인어공주는 반짝이는 거품이 되어 하늘로 둥실 올라갔어요.",
+   "en": "The little mermaid turned into shining bubbles and floated up into the sky.",
+   "segs": [
+    [
+     "nar",
+     "The little mermaid turned into shining bubbles and floated up into the sky.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "인어공주는 부드러운 바닷바람이 되었어요. 길 잃은 배의 돛을 밀어 주고, 더운 날엔 시원한 바람을 보내지요.",
+   "en": "The little mermaid became a soft sea breeze. She pushes the sails of lost ships, and sends a cool wind on hot days.",
+   "segs": [
+    [
+     "nar",
+     "The little mermaid became a soft sea breeze. She pushes the sails of lost ships, and sends a cool wind on hot days.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "거품 빛을 톡 눌러 인사해요.",
+   "en": "Tap the bubble light to say hello!",
+   "segs": [
+    [
+     "nar",
+     "Tap the bubble light to say hello!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "사랑하는 마음은 사라지지 않아요. 안녕, 또 만나요!",
+   "en": "A loving heart never disappears. Goodbye, see you again!",
+   "segs": [
+    [
+     "mer",
+     "A loving heart never disappears. Goodbye, see you again!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.",
+   "en": "When you give way with a loving heart, that heart stays behind as something good.",
+   "segs": [
+    [
+     "nar",
+     "When you give way with a loving heart, that heart stays behind as something good.",
+     null
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "ch1": [
+   [
+    "sisa",
+    "We gave the witch our hair and got this dagger.",
+    null
+   ],
+   [
+    "sisb",
+    "We gave the witch our hair and got this dagger.",
+    null
+   ],
+   [
+    "sisc",
+    "We gave the witch our hair and got this dagger.",
+    null
+   ],
+   [
+    "sisd",
+    "We gave the witch our hair and got this dagger.",
+    null
+   ],
+   [
+    "sise",
+    "We gave the witch our hair and got this dagger.",
+    null
+   ]
+  ],
+  "ch2": [
+   [
+    "sisa",
+    "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+    null
+   ],
+   [
+    "sisb",
+    "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+    null
+   ],
+   [
+    "sisc",
+    "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+    null
+   ],
+   [
+    "sisd",
+    "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+    null
+   ],
+   [
+    "sise",
+    "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+    null
+   ]
+  ]
+ },
+ "ui": {
+  "인어공주": "The Little Mermaid",
+  "사랑하는 마음은 사라지지 않아요": "A loving heart never disappears",
+  "열다섯 살": "Fifteen Years Old",
+  "밤바다": "The Night Sea",
+  "폭풍": "The Storm",
+  "모래밭": "The Beach",
+  "할머니의 이야기": "Grandmother's Story",
+  "바다 마녀": "The Sea Witch",
+  "다리가 생겼어요": "Legs!",
+  "궁전 정원": "The Palace Garden",
+  "왕자의 결혼": "The Wedding",
+  "새벽 바다": "The Sea at Dawn",
+  "바닷바람": "The Sea Breeze",
+  "펑!": "Pop!",
+  "풍덩!": "Splash!",
+  "퐁당!": "Plop!",
+  "반짝!": "Sparkle!",
+  "보글보글": "Bubble bubble",
+  "꿀꺽!": "Gulp!",
+  "흔들흔들": "Wobble wobble",
+  "…": "...",
+  "휘잉~": "Whoosh~",
+  "둥실": "Float",
+  "가라앉아요": "It sinks",
+  "떠요": "It floats",
+  "끝!": "The End!"
+ }
+}

@@ -1,0 +1,881 @@
+{
+ "notes": "ElevenLabs 목소리 배정 (2026-10-20 SPEC): nar=Annie(여자 내레이터 순환 — 백설=Lily, 신데렐라=Leejin이라 Annie), mer=Luna(부드럽고 어린 여성, 백설·신데렐라의 루나 선택과 같은 목소리), granny=Huelyn(따뜻한 할머니), prince=Sunjun(젊은 남성, 신데렐라 왕자 계열), witch=Matilda(마녀 계열이지만 연기 지시로 신비롭고 부드럽게, 무섭지 않게), lady=Haemi(이웃 나라 공주=하얀 집 아가씨, 같은 사람), 언니 다섯=sisa Ailra(맏언니)·sisb Sena·sisc Laura·sisd Bella·sise Leejin. [언니들] 줄(ch1·ch2)은 다섯 목소리가 같은 문장을 따로 녹음하고 tales/little_mermaid/mix_chorus_el.py 가 겹친다(백설공주 mix_chorus_el.py 복사·수정). 수 세기 클립 없음. 바다 왕은 대사 없음. 목소리 없는 장면(6번 가마솥 톡 뒤 ~ 10번): 인어공주(mer) 대사 없음 — 마음은 내레이터가 말하고 화면은 표정과 \"…\" 종이 구름으로만 보인다. 허밍 효과음은 넣지 않는다(권장대로). 11번에서 바람이 되어 목소리가 돌아온다(mer 한 줄).",
+ "voices": {
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
+  "mer": "Ss1VfT7ri4lqnvTDWII0",
+  "granny": "gnWujHp24oqX3I03lRbU",
+  "prince": "VpI9YrC8mqZsi3NvIQzK",
+  "witch": "XrExE9yKIg1WjnnlVkGX",
+  "lady": "ZjAPD4f11zlnEnZpKDgo",
+  "sisa": "XtDNqqtU5YUpm1etgl1C",
+  "sisb": "vJ170fCwESgE1tjW39So",
+  "sisc": "FGY2WhTYpPnrIDTdsKH5",
+  "sisd": "hpp4J3VqNfWAUOO0d1Us",
+  "sise": "F9mMsBUFaCLedtYXXjLD"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "mer": "eleven_v4",
+  "granny": "eleven_v4",
+  "prince": "eleven_v4",
+  "witch": "eleven_v4",
+  "lady": "eleven_v4",
+  "sisa": "eleven_v4",
+  "sisb": "eleven_v4",
+  "sisc": "eleven_v4",
+  "sisd": "eleven_v4",
+  "sise": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "mer": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "granny": {
+   "stability": 0.4,
+   "style": 0.45
+  },
+  "prince": {
+   "stability": 0.4,
+   "style": 0.4
+  },
+  "witch": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "lady": {
+   "stability": 0.4,
+   "style": 0.45
+  },
+  "sisa": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "sisb": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "sisc": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "sisd": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "sise": {
+   "stability": 0.35,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "nar",
+  "mer",
+  "granny",
+  "prince",
+  "witch",
+  "lady",
+  "sisa",
+  "sisb",
+  "sisc",
+  "sisd",
+  "sise"
+ ],
+ "mute_scenes": "7-10: mer 는 말하지 않는다. 7번 왕자의 물음에는 화면에 \"…\" pop 만 뜬다. 인어공주의 마음은 nar 줄이 대신 말한다.",
+ "lines": [
+  {
+   "text": "깊고 깊은 바다 밑에 인어 나라가 있었어요. 바다 왕님과 할머니, 여섯 공주가 살았지요.",
+   "segs": [
+    [
+     "nar",
+     "깊고 깊은 바다 밑에 인어 나라가 있었어요. 바다 왕님과 할머니, 여섯 공주가 살았지요.",
+     null,
+     "[calm, warm storytelling, once upon a time, underwater wonder]"
+    ]
+   ],
+   "scene": 1
+  },
+  {
+   "text": "막내 인어공주는 조용하고 생각이 많았어요. 정원에는 배에서 떨어진 물건을 모았어요.",
+   "segs": [
+    [
+     "nar",
+     "막내 인어공주는 조용하고 생각이 많았어요. 정원에는 배에서 떨어진 물건을 모았어요.",
+     null,
+     "[gentle, soft, fond]"
+    ]
+   ],
+   "scene": 1
+  },
+  {
+   "text": "무거운 것은 가라앉고, 가벼운 것은 떠요. 어느 것이 바다 밑까지 내려올까요?",
+   "segs": [
+    [
+     "nar",
+     "무거운 것은 가라앉고, 가벼운 것은 떠요. 어느 것이 바다 밑까지 내려올까요?",
+     "happy",
+     "[bright, inviting, playful question for a small child]"
+    ]
+   ],
+   "scene": 1
+  },
+  {
+   "text": "나무토막은 가벼워서 둥둥 떠요.",
+   "segs": [
+    [
+     "nar",
+     "나무토막은 가벼워서 둥둥 떠요.",
+     null,
+     "[kind, encouraging, gently explaining, not disappointed]"
+    ]
+   ],
+   "scene": 1
+  },
+  {
+   "text": "무거운 돌이 가라앉았어요!",
+   "segs": [
+    [
+     "nar",
+     "무거운 돌이 가라앉았어요!",
+     "happy",
+     "[cheerful, praising, bright]"
+    ]
+   ],
+   "scene": 1
+  },
+  {
+   "text": "이번에는 어느 것이 가라앉을까요?",
+   "segs": [
+    [
+     "nar",
+     "이번에는 어느 것이 가라앉을까요?",
+     "happy",
+     "[bright, inviting, playful question]"
+    ]
+   ],
+   "scene": 1
+  },
+  {
+   "text": "코르크 병은 가벼워서 둥둥 떠요.",
+   "segs": [
+    [
+     "nar",
+     "코르크 병은 가벼워서 둥둥 떠요.",
+     null,
+     "[kind, encouraging, gently explaining, not disappointed]"
+    ]
+   ],
+   "scene": 1
+  },
+  {
+   "text": "무거운 닻도 가라앉았어요!",
+   "segs": [
+    [
+     "nar",
+     "무거운 닻도 가라앉았어요!",
+     "happy",
+     "[cheerful, praising, bright]"
+    ]
+   ],
+   "scene": 1
+  },
+  {
+   "text": "언니들은 열다섯 살이 되면 바다 위로 올라갔어요. 드디어 막내 차례예요!",
+   "segs": [
+    [
+     "nar",
+     "언니들은 열다섯 살이 되면 바다 위로 올라갔어요. 드디어 막내 차례예요!",
+     "toneup",
+     "[warm, building excitement, storytelling]"
+    ]
+   ],
+   "scene": 2
+  },
+  {
+   "text": "조심해서 다녀오렴.",
+   "segs": [
+    [
+     "granny",
+     "조심해서 다녀오렴.",
+     null,
+     "[warm, gentle, grandmotherly, caring]"
+    ]
+   ],
+   "scene": 2
+  },
+  {
+   "text": "네, 할머니. 다녀올게요!",
+   "segs": [
+    [
+     "mer",
+     "네, 할머니. 다녀올게요!",
+     "happy",
+     "[sweet, eager, young, bright]"
+    ]
+   ],
+   "scene": 2
+  },
+  {
+   "text": "커다란 배가 있었어요. 오늘은 왕자님 생일이래요.",
+   "segs": [
+    [
+     "nar",
+     "커다란 배가 있었어요. 오늘은 왕자님 생일이래요.",
+     null,
+     "[wondering, hushed excitement, nighttime]"
+    ]
+   ],
+   "scene": 2
+  },
+  {
+   "text": "하늘을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "하늘을 톡 눌러 봐요.",
+     "happy",
+     "[inviting, playful]"
+    ]
+   ],
+   "scene": 2
+  },
+  {
+   "text": "펑! 펑! 불꽃이 하늘에 피었어요.",
+   "segs": [
+    [
+     "nar",
+     "펑! 펑! 불꽃이 하늘에 피었어요.",
+     "toneup",
+     "[excited, delighted, bright]"
+    ]
+   ],
+   "scene": 2
+  },
+  {
+   "text": "저 사람이 왕자님이구나.",
+   "segs": [
+    [
+     "mer",
+     "저 사람이 왕자님이구나.",
+     null,
+     "[soft, wondering, a little shy, whisper-like]"
+    ]
+   ],
+   "scene": 2
+  },
+  {
+   "text": "밤이 깊자 바람이 세졌어요. 배가 기우뚱!",
+   "segs": [
+    [
+     "nar",
+     "밤이 깊자 바람이 세졌어요. 배가 기우뚱!",
+     "toneup",
+     "[dramatic but not scary, brisk, storytelling]"
+    ]
+   ],
+   "scene": 3
+  },
+  {
+   "text": "왕자님이 바다에 빠졌어요.",
+   "segs": [
+    [
+     "nar",
+     "왕자님이 바다에 빠졌어요.",
+     null,
+     "[worried, urgent, hushed]"
+    ]
+   ],
+   "scene": 3
+  },
+  {
+   "text": "내가 도와줄게요!",
+   "segs": [
+    [
+     "mer",
+     "내가 도와줄게요!",
+     "toneup",
+     "[brave, urgent but gentle, determined]"
+    ]
+   ],
+   "scene": 3
+  },
+  {
+   "text": "인어공주는 왕자님의 머리를 물 위로 받쳐 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "인어공주는 왕자님의 머리를 물 위로 받쳐 주었어요.",
+     null,
+     "[relieved, warm, calm]"
+    ]
+   ],
+   "scene": 3
+  },
+  {
+   "text": "인어공주는 왕자님을 모래밭에 눕히고, 바위 뒤에 숨었어요.",
+   "segs": [
+    [
+     "nar",
+     "인어공주는 왕자님을 모래밭에 눕히고, 바위 뒤에 숨었어요.",
+     null,
+     "[calm, morning, gentle storytelling]"
+    ]
+   ],
+   "scene": 4
+  },
+  {
+   "text": "어머, 괜찮으세요?",
+   "segs": [
+    [
+     "lady",
+     "어머, 괜찮으세요?",
+     null,
+     "[kind, surprised, gentle, caring]"
+    ]
+   ],
+   "scene": 4
+  },
+  {
+   "text": "왕자님은 아가씨에게 웃어 주었어요. 인어공주는 보지 못했지요.",
+   "segs": [
+    [
+     "nar",
+     "왕자님은 아가씨에게 웃어 주었어요. 인어공주는 보지 못했지요.",
+     null,
+     "[gentle, a touch wistful, storytelling]"
+    ]
+   ],
+   "scene": 4
+  },
+  {
+   "text": "왕자님이 깨어났어요. 다행이에요.",
+   "segs": [
+    [
+     "mer",
+     "왕자님이 깨어났어요. 다행이에요.",
+     "whisper",
+     "[relieved, soft, happy, whispering from a hiding place]"
+    ]
+   ],
+   "scene": 4
+  },
+  {
+   "text": "할머니, 사람은 어떻게 살아요?",
+   "segs": [
+    [
+     "mer",
+     "할머니, 사람은 어떻게 살아요?",
+     null,
+     "[curious, soft, thoughtful, young]"
+    ]
+   ],
+   "scene": 5
+  },
+  {
+   "text": "사람은 땅 위에서 살고, 우리는 바다에서 살지. 사람에겐 별처럼 영원히 남는 마음이 있단다.",
+   "segs": [
+    [
+     "granny",
+     "사람은 땅 위에서 살고, 우리는 바다에서 살지. 사람에겐 별처럼 영원히 남는 마음이 있단다.",
+     null,
+     "[warm, slow, wise, tender, grandmotherly]"
+    ]
+   ],
+   "scene": 5
+  },
+  {
+   "text": "나도 왕자님 곁에서 그런 마음을 갖고 싶어요.",
+   "segs": [
+    [
+     "mer",
+     "나도 왕자님 곁에서 그런 마음을 갖고 싶어요.",
+     null,
+     "[longing, quiet determination, soft]"
+    ]
+   ],
+   "scene": 5
+  },
+  {
+   "text": "인어공주는 소용돌이 너머 바다 마녀를 찾아갔어요.",
+   "segs": [
+    [
+     "nar",
+     "인어공주는 소용돌이 너머 바다 마녀를 찾아갔어요.",
+     null,
+     "[hushed, mysterious but calm, storytelling]"
+    ]
+   ],
+   "scene": 6
+  },
+  {
+   "text": "다리를 갖고 싶다고? 좋아. 대신 네 고운 목소리를 다오.",
+   "segs": [
+    [
+     "witch",
+     "다리를 갖고 싶다고? 좋아. 대신 네 고운 목소리를 다오.",
+     null,
+     "[mysterious, slow, gentle, slightly amused, NOT scary, soft low voice]"
+    ]
+   ],
+   "scene": 6
+  },
+  {
+   "text": "다리는 조금 흔들흔들할 거야. 그리고 왕자가 다른 사람과 결혼하면, 너는 바다 거품이 된단다.",
+   "segs": [
+    [
+     "witch",
+     "다리는 조금 흔들흔들할 거야. 그리고 왕자가 다른 사람과 결혼하면, 너는 바다 거품이 된단다.",
+     null,
+     "[calm, matter-of-fact, soft warning, kind, not threatening]"
+    ]
+   ],
+   "scene": 6
+  },
+  {
+   "text": "그래도 갈래요.",
+   "segs": [
+    [
+     "mer",
+     "그래도 갈래요.",
+     null,
+     "[quiet, determined, brave, small voice]"
+    ]
+   ],
+   "scene": 6
+  },
+  {
+   "text": "가마솥을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "가마솥을 톡 눌러 봐요.",
+     "happy",
+     "[inviting, playful]"
+    ]
+   ],
+   "scene": 6
+  },
+  {
+   "text": "마녀가 목소리를 진주처럼 가져갔어요. 이제 인어공주는 말을 할 수 없어요.",
+   "segs": [
+    [
+     "nar",
+     "마녀가 목소리를 진주처럼 가져갔어요. 이제 인어공주는 말을 할 수 없어요.",
+     null,
+     "[soft, hushed, a little sad, gentle]"
+    ]
+   ],
+   "scene": 6
+  },
+  {
+   "text": "새벽, 궁전 계단에서 인어공주는 약을 마셨어요.",
+   "segs": [
+    [
+     "nar",
+     "새벽, 궁전 계단에서 인어공주는 약을 마셨어요.",
+     null,
+     "[calm, early morning, hushed storytelling]"
+    ]
+   ],
+   "scene": 7
+  },
+  {
+   "text": "꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.",
+   "segs": [
+    [
+     "nar",
+     "꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.",
+     "toneup",
+     "[surprised, bright, playful on \"wobble wobble\"]"
+    ]
+   ],
+   "scene": 7
+  },
+  {
+   "text": "누구세요? 어디서 왔어요?",
+   "segs": [
+    [
+     "prince",
+     "누구세요? 어디서 왔어요?",
+     null,
+     "[kind, curious, friendly, warm]"
+    ]
+   ],
+   "scene": 7
+  },
+  {
+   "text": "인어공주는 말을 못 해요. 그저 웃었지요.",
+   "segs": [
+    [
+     "nar",
+     "인어공주는 말을 못 해요. 그저 웃었지요.",
+     null,
+     "[gentle, soft, tender]"
+    ]
+   ],
+   "scene": 7
+  },
+  {
+   "text": "우리 궁전에서 지내요.",
+   "segs": [
+    [
+     "prince",
+     "우리 궁전에서 지내요.",
+     "happy",
+     "[warm, welcoming, kind]"
+    ]
+   ],
+   "scene": 7
+  },
+  {
+   "text": "정원에 바다 친구가 섞였네. 바다에 사는 친구를 찾아봐요.",
+   "segs": [
+    [
+     "prince",
+     "정원에 바다 친구가 섞였네. 바다에 사는 친구를 찾아봐요.",
+     "happy",
+     "[playful, kind, inviting a child to play]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "바다에 사는 친구는 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "바다에 사는 친구는 누구일까요?",
+     "happy",
+     "[bright, inviting, playful question]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "물고기는 바다에 살아요!",
+   "segs": [
+    [
+     "nar",
+     "물고기는 바다에 살아요!",
+     "happy",
+     "[cheerful, praising, bright]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "조개는 바다에 살아요!",
+   "segs": [
+    [
+     "nar",
+     "조개는 바다에 살아요!",
+     "happy",
+     "[cheerful, praising, bright]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "불가사리는 바다에 살아요!",
+   "segs": [
+    [
+     "nar",
+     "불가사리는 바다에 살아요!",
+     "happy",
+     "[cheerful, praising, bright]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "나비는 하늘을 날아요. 땅 친구예요.",
+   "segs": [
+    [
+     "nar",
+     "나비는 하늘을 날아요. 땅 친구예요.",
+     null,
+     "[kind, gently explaining, encouraging]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "토끼는 땅에서 뛰어요. 땅 친구예요.",
+   "segs": [
+    [
+     "nar",
+     "토끼는 땅에서 뛰어요. 땅 친구예요.",
+     null,
+     "[kind, gently explaining, encouraging]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "꽃은 땅에서 피어요. 땅 친구예요.",
+   "segs": [
+    [
+     "nar",
+     "꽃은 땅에서 피어요. 땅 친구예요.",
+     null,
+     "[kind, gently explaining, encouraging]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "새는 하늘을 날아요. 땅 친구예요.",
+   "segs": [
+    [
+     "nar",
+     "새는 하늘을 날아요. 땅 친구예요.",
+     null,
+     "[kind, gently explaining, encouraging]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "나무는 땅에서 자라요. 땅 친구예요.",
+   "segs": [
+    [
+     "nar",
+     "나무는 땅에서 자라요. 땅 친구예요.",
+     null,
+     "[kind, gently explaining, encouraging]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "강아지는 땅에서 뛰어요. 땅 친구예요.",
+   "segs": [
+    [
+     "nar",
+     "강아지는 땅에서 뛰어요. 땅 친구예요.",
+     null,
+     "[kind, gently explaining, encouraging]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "바다에서 온 아이 같아요. 내 귀여운 동생처럼 지내요.",
+   "segs": [
+    [
+     "prince",
+     "바다에서 온 아이 같아요. 내 귀여운 동생처럼 지내요.",
+     "happy",
+     "[fond, warm, friendly, like talking to a little sister]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "인어공주는 흔들흔들해도 왕자님과 함께 춤추었어요.",
+   "segs": [
+    [
+     "nar",
+     "인어공주는 흔들흔들해도 왕자님과 함께 춤추었어요.",
+     "happy",
+     "[warm, light, happy storytelling]"
+    ]
+   ],
+   "scene": 8
+  },
+  {
+   "text": "당신이 모래밭에서 저를 구해 준 분이군요!",
+   "segs": [
+    [
+     "prince",
+     "당신이 모래밭에서 저를 구해 준 분이군요!",
+     "toneup",
+     "[joyful, grateful, bright]"
+    ]
+   ],
+   "scene": 9
+  },
+  {
+   "text": "왕자님은 이웃 나라 공주님과 결혼했어요. 인어공주는 말없이 웃었어요. 마음은 아팠지요.",
+   "segs": [
+    [
+     "nar",
+     "왕자님은 이웃 나라 공주님과 결혼했어요. 인어공주는 말없이 웃었어요. 마음은 아팠지요.",
+     null,
+     "[gentle, tender, a little sad, slow]"
+    ]
+   ],
+   "scene": 9
+  },
+  {
+   "text": "새벽, 배 옆에 언니들이 올라왔어요. 긴 머리가 짧아졌어요.",
+   "segs": [
+    [
+     "nar",
+     "새벽, 배 옆에 언니들이 올라왔어요. 긴 머리가 짧아졌어요.",
+     null,
+     "[hushed, early dawn, gentle surprise]"
+    ]
+   ],
+   "scene": 10
+  },
+  {
+   "text": "인어공주는 잠든 왕자님과 공주님을 보았어요. 그리고 고개를 저었지요.",
+   "segs": [
+    [
+     "nar",
+     "인어공주는 잠든 왕자님과 공주님을 보았어요. 그리고 고개를 저었지요.",
+     null,
+     "[soft, tender, slow, meaningful]"
+    ]
+   ],
+   "scene": 10
+  },
+  {
+   "text": "인어공주는 단검을 칼집째 바다에 던졌어요. 물결이 붉은 금빛으로 반짝였어요. 해가 떠올랐어요.",
+   "segs": [
+    [
+     "nar",
+     "인어공주는 단검을 칼집째 바다에 던졌어요. 물결이 붉은 금빛으로 반짝였어요. 해가 떠올랐어요.",
+     null,
+     "[calm, clear, gently rising hope]"
+    ]
+   ],
+   "scene": 10
+  },
+  {
+   "text": "인어공주는 반짝이는 거품이 되어 하늘로 둥실 올라갔어요.",
+   "segs": [
+    [
+     "nar",
+     "인어공주는 반짝이는 거품이 되어 하늘로 둥실 올라갔어요.",
+     null,
+     "[soft, wondering, light, uplifting]"
+    ]
+   ],
+   "scene": 10
+  },
+  {
+   "text": "인어공주는 부드러운 바닷바람이 되었어요. 길 잃은 배의 돛을 밀어 주고, 더운 날엔 시원한 바람을 보내지요.",
+   "segs": [
+    [
+     "nar",
+     "인어공주는 부드러운 바닷바람이 되었어요. 길 잃은 배의 돛을 밀어 주고, 더운 날엔 시원한 바람을 보내지요.",
+     null,
+     "[warm, bright, gentle, hopeful]"
+    ]
+   ],
+   "scene": 11
+  },
+  {
+   "text": "거품 빛을 톡 눌러 인사해요.",
+   "segs": [
+    [
+     "nar",
+     "거품 빛을 톡 눌러 인사해요.",
+     "happy",
+     "[inviting, playful, warm]"
+    ]
+   ],
+   "scene": 11
+  },
+  {
+   "text": "사랑하는 마음은 사라지지 않아요. 안녕, 또 만나요!",
+   "segs": [
+    [
+     "mer",
+     "사랑하는 마음은 사라지지 않아요. 안녕, 또 만나요!",
+     "happy",
+     "[warm, bright, free, happy farewell, voice returned]"
+    ]
+   ],
+   "scene": 11
+  },
+  {
+   "text": "사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.",
+   "segs": [
+    [
+     "nar",
+     "사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.",
+     null,
+     "[warm, gentle, closing lesson, slow]"
+    ]
+   ],
+   "scene": 11
+  }
+ ],
+ "chorus": {
+  "ch1": "마녀에게 머리카락을 주고 이 단검을 받았어.",
+  "ch2": "해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야."
+ },
+ "extra": {
+  "ch1": [
+   [
+    "sisa",
+    "마녀에게 머리카락을 주고 이 단검을 받았어.",
+    null,
+    "[urgent, loving, hushed, together, worried big sisters]"
+   ],
+   [
+    "sisb",
+    "마녀에게 머리카락을 주고 이 단검을 받았어.",
+    null,
+    "[urgent, loving, hushed, together, worried big sisters]"
+   ],
+   [
+    "sisc",
+    "마녀에게 머리카락을 주고 이 단검을 받았어.",
+    null,
+    "[urgent, loving, hushed, together, worried big sisters]"
+   ],
+   [
+    "sisd",
+    "마녀에게 머리카락을 주고 이 단검을 받았어.",
+    null,
+    "[urgent, loving, hushed, together, worried big sisters]"
+   ],
+   [
+    "sise",
+    "마녀에게 머리카락을 주고 이 단검을 받았어.",
+    null,
+    "[urgent, loving, hushed, together, worried big sisters]"
+   ]
+  ],
+  "ch2": [
+   [
+    "sisa",
+    "해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야.",
+    null,
+    "[urgent, pleading, hushed, together, loving]"
+   ],
+   [
+    "sisb",
+    "해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야.",
+    null,
+    "[urgent, pleading, hushed, together, loving]"
+   ],
+   [
+    "sisc",
+    "해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야.",
+    null,
+    "[urgent, pleading, hushed, together, loving]"
+   ],
+   [
+    "sisd",
+    "해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야.",
+    null,
+    "[urgent, pleading, hushed, together, loving]"
+   ],
+   [
+    "sise",
+    "해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야.",
+    null,
+    "[urgent, pleading, hushed, together, loving]"
+   ]
+  ]
+ }
+}
