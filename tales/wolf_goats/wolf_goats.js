@@ -22,19 +22,21 @@
     T.el('image', { href: A('wg_bg_' + key), x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, T.bg);
   }
   /* 배우: poses = { 이름: 그림 }. first 자세의 높이가 h. 발끝 = (x,y) */
-  function figure(T, x, y, h, poses, first) {
+  function figure(T, x, y, h, poses, first, mul = {}) {
     const imgs = {}, s = h / DIM[poses[first]][1];
     const a = T.actor(T.world, x, y, g => {
       const w = T.el('g', { filter: 'url(#pp)' }, g);
       for (const [k, f] of Object.entries(poses)) {
-        const [pw, ph] = DIM[f];
-        imgs[k] = T.el('image', { href: A(f), x: -pw * s / 2, y: -ph * s, width: pw * s, height: ph * s, opacity: k === first ? 1 : 0 }, w);
+        const [pw, ph] = DIM[f], ps = s * (mul[k] || 1); // mul: 자세별 배율(머리 폭 맞춤, 2026-10-20 크기 일관성)
+        imgs[k] = T.el('image', { href: A(f), x: -pw * ps / 2, y: -ph * ps, width: pw * ps, height: ph * ps, opacity: k === first ? 1 : 0 }, w);
       }
     });
     a.pose = k => Object.entries(imgs).forEach(([n, i]) => show(i, n === k));
     return a;
   }
-  const kid = (T, n, x, y, h = 90) => figure(T, x, y, h, { base: `wg_kid${n}_base`, joy: `wg_kid${n}_joy` }, 'base');
+  // 2026-10-20 크기 일관성: 1번 아기 염소의 기뻐하는 자세(joy)는 머리 폭이 기본 자세보다 약 21% 작아서 1.26배로 맞춘다 (2번은 12%라 그대로)
+  const JOY_MUL = { 1: 1.26 };
+  const kid = (T, n, x, y, h = 90) => figure(T, x, y, h, { base: `wg_kid${n}_base`, joy: `wg_kid${n}_joy` }, 'base', JOY_MUL[n] ? { joy: JOY_MUL[n] } : {});
   const mama = (T, x, y, h = 270, first = 'basket') => figure(T, x, y, h, {
     basket: 'wg_mama_basket', warn: 'wg_mama_warn', surprise: 'wg_mama_surprise', scissors: 'wg_mama_scissors', dance: 'wg_mama_dance' }, first);
   const prop = (T, f, x, y, h) => figure(T, x, y, h, { a: f }, 'a');
