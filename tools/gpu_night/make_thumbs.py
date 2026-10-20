@@ -72,6 +72,6 @@ for jf in glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..
     kj = json.load(open(jf))
     if kj.get('light') and kj['tale'] in KEYS: LIGHT[kj['tale']] = kj['light']
 open(os.path.join(OUT, 'thumbs.js'), 'a').write('/* THUMBSKEYLIGHT: 흰 종이 판 키아트(어두운 띠 없이 어두운 글자). 값 = 종이 색. tools/app/keyart/<id>.json의 "light" */\n' + f'window.THUMBSKEYLIGHT = {json.dumps(LIGHT)};\n')
-BACKACCENT = {'goldilocks': '#C0392B', 'sunmoon': '#E8703A', 'snow_white': '#3A6EA5'}  # 끝 화면(뒤표지) 책갈피 리본 색
+BACKACCENT = {'goldilocks': '#C0392B', 'sunmoon': '#E8703A', 'snow_white': '#3A6EA5', 'cinderella': '#5B4B9A'}  # 끝 화면(뒤표지) 책갈피 리본 색
 open(os.path.join(OUT, 'thumbs.js'), 'a').write('/* BACKACCENT: 끝 화면(뒤표지) 책갈피 리본 색 */\n' + f'window.BACKACCENT = {json.dumps(BACKACCENT)};\n')
 print('old', T1, 'dark', T2, 'light', T2L)
