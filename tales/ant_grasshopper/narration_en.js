@@ -1,8 +1,8 @@
 /* ant_grasshopper — Typecast 배역 내레이션 (영어) (tools/typecast/gen_tale.py가 voice_script_en.json에서 생성, 손으로 고치지 말 것) */
 const NARRATION_CLIPS_EN = {
- "여름이에요. 개미들이 줄지어 먹이를 날라요. 개미를 톡 눌러 봐요!": {
-  "t": "It's summer. The ants march in a line, carrying food. Tap an ant!",
-  "c": "audio/tc/ant_grasshopper/en/nar_c90ae36755.mp3"
+ "여름이에요. 개미들이 줄지어 먹이를 날라요.": {
+  "t": "It's summer. The ants march in a line, carrying food.",
+  "c": "audio/tc/ant_grasshopper/en/nar_356804f6c0.mp3"
  },
  "줄지어 가는 개미들을 톡!": {
   "t": "Tap the marching ants!",
@@ -34,6 +34,46 @@ const NARRATION_CLIPS_EN = {
  "노란 곡식을 톡톡 눌러 봐요!": {
   "t": "Tap the yellow grain!",
   "c": "audio/tc/ant_grasshopper/en/nar_aff8bebecd.mp3"
+ },
+ "하나": {
+  "t": "One",
+  "c": "audio/tc/ant_grasshopper/en/nar_9412fb4f0c.mp3"
+ },
+ "둘": {
+  "t": "Two",
+  "c": "audio/tc/ant_grasshopper/en/nar_7fd9ecee96.mp3"
+ },
+ "셋": {
+  "t": "Three",
+  "c": "audio/tc/ant_grasshopper/en/nar_bdca74b6b1.mp3"
+ },
+ "넷": {
+  "t": "Four",
+  "c": "audio/tc/ant_grasshopper/en/nar_fcc1441bc4.mp3"
+ },
+ "다섯": {
+  "t": "Five",
+  "c": "audio/tc/ant_grasshopper/en/nar_3247a48b72.mp3"
+ },
+ "여섯": {
+  "t": "Six",
+  "c": "audio/tc/ant_grasshopper/en/nar_f22428e44b.mp3"
+ },
+ "일곱": {
+  "t": "Seven",
+  "c": "audio/tc/ant_grasshopper/en/nar_bb1be40947.mp3"
+ },
+ "여덟": {
+  "t": "Eight",
+  "c": "audio/tc/ant_grasshopper/en/nar_d33b80e33f.mp3"
+ },
+ "아홉": {
+  "t": "Nine",
+  "c": "audio/tc/ant_grasshopper/en/nar_45adc81f0c.mp3"
+ },
+ "열": {
+  "t": "Ten",
+  "c": "audio/tc/ant_grasshopper/en/nar_05cfa138f3.mp3"
  },
  "창고 칸이 가득 찼어요! 하나부터 열까지, 열 칸!": {
   "t": "The storeroom is full! From one to ten, ten rooms!",
@@ -240,9 +280,9 @@ const NARRATION_CLIPS_EN = {
   "t": "They shared a scarf and a fur hat with the grasshopper, too.",
   "c": "audio/tc/ant_grasshopper/en/nar_5ecf2cf64a.mp3"
  },
- "먹을 게 이렇게 많으니 친구들도 불러요! 문 앞에 온 친구를 톡 눌러요.": {
-  "t": "There's so much to eat, so let's invite friends! Tap the friend at the door.",
-  "c": "audio/tc/ant_grasshopper/en/nar_885ac571c3.mp3"
+ "먹을 게 이렇게 많으니 친구들도 불러요!": {
+  "t": "There's so much to eat, so let's invite friends!",
+  "c": "audio/tc/ant_grasshopper/en/nar_767b744cc2.mp3"
  },
  "무당벌레를 톡 눌러서 불러 줘요!": {
   "t": "Tap the ladybug and invite it in!",
@@ -300,9 +340,9 @@ const NARRATION_CLIPS_EN = {
   "t": "Warm spring has come. Little sprouts pop up!",
   "c": "audio/tc/ant_grasshopper/en/nar_025843949a.mp3"
  },
- "이번엔 베짱이도 함께 날라요. 베짱이를 톡톡 눌러서 영차!": {
-  "t": "This time the grasshopper carries food too. Tap the grasshopper to heave-ho!",
-  "c": "audio/tc/ant_grasshopper/en/nar_448c3db3d1.mp3"
+ "이번엔 베짱이도 함께 날라요.": {
+  "t": "This time the grasshopper carries food too.",
+  "c": "audio/tc/ant_grasshopper/en/nar_444d375467.mp3"
  },
  "베짱이를 톡톡 눌러서 영차 영차!": {
   "t": "Tap the grasshopper, heave-ho, heave-ho!",

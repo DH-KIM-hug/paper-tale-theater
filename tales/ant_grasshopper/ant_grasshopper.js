@@ -51,17 +51,16 @@
   const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
   /* 자세 그림: [폭, 높이, 발끝 가운데 x(폭 비율), 발끝 y(높이 비율)] — 발끝 가운데가 (0,0).
      한 배우의 자세끼리는 눈 크기와 몸 높이를 반반 맞춰서 자세가 바뀌어도 머리 크기가 튀지 않는다 */
+  /* 2026-10-20 새 그림(비율이 달라짐): 옛 그림과 같은 픽셀 눈금(폭÷옛 폭)으로 폭·높이를 다시 잡고 발끝 자리는 새 그림에서 다시 쟀다 */
   const SPR = {
-    ant_stand: [137.1, 124.2, .523, .974], ant_carry: [101.9, 191.4, .599, .982], ant_vest: [139.4, 182.4, .522, .982],
-    ant_winter: [146.5, 159.7, .621, .979], ant_baby: [148.6, 123.6, .526, .977],
-    hopper_play: [221.6, 224.1, .534, .979], hopper_wet: [236.1, 171.9, .545, .976], hopper_shiver: [187.2, 205.5, .545, .98],
-    hopper_winter: [254.1, 183.7, .46, .976], hopper_carry: [192.5, 212, .476, .98],
-    ladybug: [105.3, 67.8, .523, .972], snail: [105.9, 82, .557, .973], pillbug: [96.9, 53.7, .51, .966], firefly: [84.7, 74.2, .692, .968],
-    // 틀린 옷 개미·겨울 연주 베짱이: 눈 크기로 서기·연주 그림과 배율을 맞춤 (반팔 개미는 작게 그려져 1.2배)
-    ant_tee: [132.7, 175.8, .432, 1], ant_coat: [124.5, 191.9, .4, 1], ant_ring: [129.6, 150.8, .574, 1], hopper_winter_play: [197.3, 218.4, .452, 1],
+    ant_stand: [101.9, 124.2, 0.555, 0.994], ant_carry: [101.9, 97.1, 0.435, 0.994], ant_vest: [139.4, 181.3, 0.419, 0.995], ant_winter: [135.0, 159.7, 0.522, 0.995], ant_baby: [125.4, 123.5, 0.606, 0.994],
+    hopper_play: [198.9, 224.1, 0.636, 0.995], hopper_wet: [192.2, 171.9, 0.694, 0.994], hopper_shiver: [185.9, 205.5, 0.599, 0.995], hopper_winter: [201.3, 183.8, 0.531, 0.996], hopper_carry: [192.5, 177.3, 0.53, 0.994],
+    ladybug: [91.5, 67.8, 0.549, 0.993], snail: [105.9, 81.1, 0.601, 0.994], pillbug: [87.5, 53.7, 0.476, 0.992], firefly: [82.9, 74.2, 0.602, 0.994],
+    // 틀린 옷 개미·겨울 연주 베짱이
+    ant_tee: [132.7, 160.8, 0.535, 0.995], ant_coat: [124.5, 137.4, 0.593, 0.996], ant_ring: [114.0, 150.8, 0.571, 0.995], hopper_winter_play: [194.6, 218.5, 0.626, 0.995],
   };
   /* 옷 배지·먹구름·꽃 그림 비율 (폭/높이) */
-  const AR = { icon_tee: 1.1215, icon_vest: 1.3133, icon_coat: .9449, icon_warm: .646, icon_swim: 1.4861, cloud_storm: 1.6725, flower_pink: .4521, flower_orange: .4396, grain_pile: 1.7844, door_leaf: .57 };
+  const AR = { icon_tee: 1.182, icon_vest: 1.262, icon_coat: 1.079, icon_warm: .793, icon_swim: 1.0124, cloud_storm: 1.505, flower_pink: .559, flower_orange: .564, grain_pile: 1.268, door_leaf: .76 };
   function pic(T, g, key, x, y, w, h, { shadow = true } = {}) {
     const u = artUrl(key); if (!u) return null;
     const wrap = T.el('g', shadow ? { filter: 'url(#pp)' } : {}, g);
@@ -171,7 +170,7 @@
 
   /* 베짱이 (키 ~220, 더듬이 포함) */
   /* 그림 베짱이: 자세 = 모드(play·arms·carry) + 젖음 + 겨울옷 으로 고른다 (hopLook). arms(빈손)는 떨기 그림 */
-  const HOP_HAT = [-66, -224, 62, 62.3, -8]; // 연주 그림 머리 위 털모자 상자 [x, y, w, h, 기울기]
+  const HOP_HAT = [-62.4, -224, 54.7, 62.6, -8]; // 연주 그림 머리 위 털모자 상자 [x, y, w, h, 기울기]
   function drawHopperArt(T, g) {
     const { el } = T;
     const p = { looks: {}, mode: 'play', wet: false, warm: false };
@@ -346,7 +345,7 @@
   }
   /* 먹구름 (그림, 없으면 회색 타원). 왼쪽 위 (x,y), 폭 w */
   function storm(T, parent, x, y, w) {
-    const h = w / AR.cloud_storm;
+    const h = w / 1.6725, w2 = h * AR.cloud_storm; x += (w - w2) / 2; w = w2; // 새 그림은 폭이 좁다: 높이를 지키고 가운데 맞춤
     return pic(T, parent, 'cloud_storm', x, y, w, h) || T.paper(parent, [['ellipse', { cx: x + w / 2, cy: y + h / 2, rx: w / 2, ry: h / 2.4, fill: '#8C98A4' }]]);
   }
   /* 개미 눈높이: 풀잎이 나무만 하다. 오른쪽에 창고 입구와 단면(칸 10개) */
@@ -368,15 +367,15 @@
   function storeBox(T, ox, oy, door) {
     const { el, paper } = T, b = T.bg;
     const box = el('g', {}, b);
-    const SW = 170, SH = SW * 952 / 602, SX = 620 - SW / 2, SY = 470 - SH; // 그림 창고(602×952): 칸 바닥 선이 y=883·724·564·404·244, 가운데 x=182·433
+    const SH = 268.8, SW = SH * 347 / 601, SX = 620 - SW / 2, SY = 470 - SH; // 2026-10-20 새 그림 창고(347×601): 칸 바닥 선이 y=562·470·374·278·180, 칸 가운데 x=102·245
     const art = pic(T, box, 'store10', SX + ox, SY + oy, SW, SH);
     if (!art) paper(box, [['rect', { x: 530 + ox, y: 256 + oy, width: 180, height: 214, rx: 16, fill: C.soilDk }]]);
-    el('text', { x: 620 + ox, y: 244 + oy, 'text-anchor': 'middle', 'font-size': 26, fill: C.cream, stroke: C.bark, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('창고') }, box);
+    el('text', { x: 620 + ox, y: (art ? 229 : 244) + oy, 'text-anchor': 'middle', 'font-size': art ? 21 : 26, fill: C.cream, stroke: C.bark, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('창고') }, box);
     const slots = [];
     for (let r = 0; r < 5; r++) for (let c = 0; c < 2; c++) {
-      const x = (art ? SX + [182, 433][c] * SW / 602 : 580 + c * 80) + ox, y = (art ? SY + ([883, 724, 564, 404, 244][r] - 10) * SW / 602 : 440 - r * 40) + oy;
+      const x = (art ? SX + [102, 245][c] * SW / 347 : 580 + c * 80) + ox, y = (art ? SY + ([562, 470, 374, 278, 180][r] - 8) * SH / 601 : 440 - r * 40) + oy;
       if (!art) el('rect', { x: x - 34, y: y - 16, width: 68, height: 32, rx: 8, fill: C.room, opacity: .55 }, box);
-      const grain = pic(T, box, 'grain', x - (art ? 20 : 28), y - (art ? 8 : 11), art ? 40 : 56, art ? 15 : 21) || T.paper(box, [['ellipse', { cx: x, cy: y, rx: 26, ry: 12, fill: C.gold }], ['ellipse', { cx: x - 8, cy: y - 3, rx: 8, ry: 3, fill: '#EBC878' }]]);
+      const grain = pic(T, box, 'grain', x - (art ? 14 : 28), y - (art ? 10 : 11), art ? 28 : 56, art ? 21 : 21) || T.paper(box, [['ellipse', { cx: x, cy: y, rx: 26, ry: 12, fill: C.gold }], ['ellipse', { cx: x - 8, cy: y - 3, rx: 8, ry: 3, fill: '#EBC878' }]]);
       grain.setAttribute('opacity', 0); origin(grain, x, y);
       slots.push(grain);
     }
@@ -421,20 +420,21 @@
     const { el, paper } = T, b = T.bg;
     const DX = narrow() ? 200 : 0;
     if (bgImage(T, 'door', { dx: DX })) {
-      const arch = `M${112 + DX} 406 V330 Q${112 + DX} 286 ${150 + DX} 286 Q${188 + DX} 286 ${188 + DX} 330 V406 Z`;
+      // 2026-10-20 새 배경(문틀·나무 문이 그림 속에 있다): 속 문간 x 203~325, 아치 꼭대기 y≈211, 문턱 y≈350
+      const arch = `M${203 + DX} 350 V272 A61 61 0 0 1 ${325 + DX} 272 V350 Z`;
       const glow = el('path', { d: arch, fill: '#FFD58A', opacity: .15 }, b); glow.style.mixBlendMode = 'screen';
-      const door = el('g', {}, T.world); origin(door, 112 + DX, 0);
+      const door = el('g', {}, T.world); origin(door, 203 + DX, 0);
       if (artUrl('door_leaf')) { // 그림 널판 문짝: 문간 아치 모양으로 오려 아래 끝에 붙인다 (위쪽 둥근 끝은 아치가 대신)
         const cp = el('clipPath', { id: 'agDoorClip', clipPathUnits: 'userSpaceOnUse' }, door); el('path', { d: arch }, cp);
         const inner = el('g', { 'clip-path': 'url(#agDoorClip)', filter: 'url(#pp)' }, door);
-        const w = 76, h = Math.max(w / AR.door_leaf, 124);
-        el('image', { href: artUrl('door_leaf'), x: 112 + DX, y: 406 - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+        const w = 122, h = Math.max(w / AR.door_leaf, 140);
+        el('image', { href: artUrl('door_leaf'), x: 203 + DX, y: 350 - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
         el('path', { d: arch, fill: '#fff', opacity: 0 }, door);
-        el('rect', { x: 112 + DX, y: 280, width: 100, height: 126, fill: '#fff', opacity: 0 }, door); // 누르는 자리를 넉넉히 (문간이 좁아 손가락이 빗나감)
+        el('rect', { x: 203 + DX, y: 205, width: 122, height: 150, fill: '#fff', opacity: 0 }, door); // 누르는 자리를 넉넉히 (문간이 좁아 손가락이 빗나감)
       } else paper(door, [['path', { d: arch, fill: '#8E6440' }],
         ...[180, 220, 260].map(x => ['rect', { x: x + DX - 3, y: x === 220 ? 300 : 308, width: 6, height: x === 220 ? 145 : 137, fill: C.bark }]),
         ['circle', { cx: 284 + DX, cy: 380, r: 8, fill: C.gold }]]);
-      return { door, glow, art: true, hopX: narrow() ? 640 : 520, hostX: 168 + DX, babyX: 130 + DX, y: 420, hopY: 442, knock: [190 + DX, 272], spark: [150 + DX, 340] };
+      return { door, glow, art: true, hopX: narrow() ? 640 : 520, hostX: 285 + DX, babyX: 238 + DX, y: 380, hopY: 430, knock: [304 + DX, 196], spark: [264 + DX, 290] };
     }
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.winter }, b);
     paper(b, [['path', { d: 'M-300 600 L-300 40 Q300 -20 660 200 Q720 300 720 600 Z', fill: C.soil }],
@@ -478,7 +478,7 @@
   }
   function acornShape(T, parent, x, y, s = 1) {
     const g = T.el('g', { transform: `translate(${x},${y}) scale(${s})` }, parent);
-    if (pic(T, g, 'acorn', -12.6, -23, 25.2, 40.6)) return g; // 그림 도토리 하나 (코드 도형과 같은 크기: 폭 ~26, 높이 ~40)
+    if (pic(T, g, 'acorn', -12.6, -16.1, 25.2, 33.7)) return g; // 그림 도토리 하나 (코드 도형과 같은 크기: 폭 ~26, 높이 ~40)
     T.paper(g, [['ellipse', { cx: 0, cy: 0, rx: 13, ry: 16, fill: '#B27A3A' }], ['path', { d: 'M-15 -6 Q0 -22 15 -6 Z', fill: C.bark }], ['rect', { x: -2, y: -20, width: 4, height: 7, fill: C.bark }]]);
     return g;
   }
@@ -581,7 +581,7 @@
   /* 계절 카드 (배경 축소 대신 작은 그림) */
   function seasonCard(T, x, y, season, sc = 1) {
     const g = T.el('g', { transform: `translate(${x},${y}) scale(${sc})` }, stageUI());
-    if (!pic(T, g, 'card_' + season, -92, -70, 184, 184 * 416 / 640)) {
+    if (!pic(T, g, 'card_' + season, -(119.7 * { spring: 406, summer: 446, autumn: 428, winter: 440 }[season] / 416) / 2, -70, 119.7 * { spring: 406, summer: 446, autumn: 428, winter: 440 }[season] / 416, 119.7)) {
       T.paper(g, [['rect', { x: -92, y: -78, width: 184, height: 156, rx: 14, fill: C.cream, stroke: C.gold, 'stroke-width': 6 }]]);
       const inner = T.el('g', {}, g);
       T.el('rect', { x: -80, y: -66, width: 160, height: 104, rx: 8, fill: SKY[season] }, inner);
@@ -608,7 +608,12 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
-    AudioFX.preloadMusic(['vivaldi_spring', 'vivaldi_winter']);
+    AudioFX.preloadMusic(['vivaldi_spring', 'vivaldi_spring3', 'vivaldi_summer1', 'vivaldi_summer3', 'vivaldi_autumn1', 'vivaldi_winter', 'vivaldi_winter1']);
+    /* 계절 음악 (2026-10-20): 계절 장면마다 〈사계〉 해당 곡. 한 번에 한 곡만 — 새로 틀면 앞 곡은 서서히 끈다. 목소리 밑에 깔리게 작게(vol .3) */
+    let bgm = null;
+    const stopBgm = (f = .8) => { if (bgm) { bgm.stop(f); bgm = null; } };
+    const playBgm = (name, vol = .3, dur, fade = 1.5) => { stopBgm(); bgm = AudioFX.music(name, { vol, dur, fade }); return bgm; };
+    const SEASON_MUSIC = { spring: 'vivaldi_spring', summer: 'vivaldi_summer1', autumn: 'vivaldi_autumn1', winter: 'vivaldi_winter1' };
     const { el, sleep, say, camTo, camSnap, josa } = T;
     const HOP = '베짱이';
 
@@ -649,7 +654,7 @@
     await sleep(700);
     const bw = bowing(hop.p);
     T.pop(360, 230, '띠리링~', C.pine);
-    const spring = AudioFX.music('vivaldi_spring', { vol: .8, dur: 18 }); // 비발디 〈사계〉 '봄' 1악장 (공개 라이선스 녹음)
+    const spring = AudioFX.music('vivaldi_summer1', { vol: .8, dur: 18 }); // 비발디 〈사계〉 '여름' 1악장 (공개 라이선스 녹음, 2026-10-20 여름 장면에 맞춰 교체)
     if (spring) {
       const nt = setInterval(() => { notes(T, 300 + Math.random() * 110, 280); ants.forEach(a => a.hop(8, 260)); }, 700);
       await spring.done; clearInterval(nt);
@@ -665,16 +670,20 @@
     }, ants[1].pos);
     const pile = el('g', {}, T.world);
     const PX = narrow() ? 332 : 300; // 세로: 곡식 더미 왼쪽이 잘리지 않게
-    if (pic(T, pile, 'grain_pile', PX - 40, 494 - 200 / AR.grain_pile, 200, 200 / AR.grain_pile)) el('rect', { x: PX - 44, y: 376, width: 208, height: 122, fill: '#fff', opacity: 0 }, pile);
+    if (pic(T, pile, 'grain_pile', PX - 11, 494 - 112, 142, 112)) el('rect', { x: PX - 44, y: 376, width: 208, height: 122, fill: '#fff', opacity: 0 }, pile);
     else T.paper(pile, [[0, 0], [60, 0], [120, 0], [30, -24], [90, -24], [60, -48]].map(([dx, dy]) => ['ellipse', { cx: PX + dx, cy: 478 + dy, rx: 32, ry: 16, fill: C.gold }]));
     const boss = ant(T, T.world, 190, 496, 1.05); boss.face('right');
     await say('개미 눈으로 보면 풀잎이 나무처럼 커다래요!');
     await say('곡식을 톡톡 눌러서 창고로 날라 줘요!');
     let stored = 0;
+    let numQ = Promise.resolve(); // 곡식 한 알마다 숫자를 소리로 센다 (2026-10-20): 겹치지 않게 한 개씩 차례로 끝까지 듣고 다음
+    const sayNum = k => { numQ = numQ.then(async () => { try { await Narrator.speak(NUM[k]); } catch (e) { /* 소리 없이도 진행 */ } await sleep(250); }); };
     await T.mash(pile, { count: 10, prompt: '노란 곡식을 톡톡 눌러 봐요!', onStep: i => {
+      sayNum(i - 1);
       const a = ant(T, T.world, PX + 140, 496, .9); a.face('right'); carry(a.p, true);
       SND.yeongcha(T, 2);
       a.move(E.door[0], E.door[1], 1500, 'linear').then(() => a.pos.remove());
+      a.pos.animate([{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1500, fill: 'forwards' }); // 문 안으로 들어가며 사라진다 (문 위에 덩그러니 떠 있지 않게)
       a.body.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px)' }, { transform: 'translateY(0)' }], { duration: 320, iterations: 4 });
       setTimeout(() => {
         const s = E.slots[stored++]; if (!s) return;
@@ -684,6 +693,7 @@
       }, 1250);
     } });
     await sleep(1600);
+    await numQ;
     await say('창고 칸이 가득 찼어요! 하나부터 열까지, 열 칸!');
 
     /* --- 3. 베짱이 연주 (풀잎 무대 로우앵글) --- */
@@ -698,15 +708,13 @@
     SND.tune(T);
     await sleep(900);
     await say('"같이 놀자~ 띠리링!" 베짱이가 노래해요.');
-    await say('베짱이와 꽃을 톡톡 눌러 봐요. 봄 노래가 이어져요!');
-    const springTap = songTap(T, 'vivaldi_spring', 18, .5, .58, 40, .8, k => SND.violin(T, PENTA[k % PENTA.length])); // 〈사계〉 봄 1악장의 이어지는 부분
+    // 봄 노래는 저절로 (2026-10-20 톡 없이): 〈사계〉 봄 3악장이 흐르는 동안 음표·꽃·활이 알아서 움직인다
     const bowTap = ms => hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-14deg)' }, { transform: 'rotate(0deg)' }], ms);
     const leafTargets = [fl[0], hop.pos, fl[1]];
-    await T.followMelody(Array.from({ length: 12 }, () => ['C4', 1]), {
-      beat: .5, wait: 5000, targetFor: i => leafTargets[i % 3],
-      voice: () => springTap(),
-      onNote: i => { notes(T, [FLX[0], 500, FLX[1]][i % 3], 200); if (i % 3 === 1) bowTap(900); else T.anim(leafTargets[i % 3], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); },
-    });
+    const spring3 = AudioFX.music('vivaldi_spring3', { vol: .8, dur: 20, fade: 1.5 });
+    const leafNote = i => { notes(T, [FLX[0], 500, FLX[1]][i % 3], 200); if (i % 3 === 1) bowTap(900); else T.anim(leafTargets[i % 3], [{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 300); };
+    for (let i = 0; i < (spring3 ? 30 : 12); i++) { leafNote(i); await sleep(spring3 ? 650 : 500); }
+    if (spring3) await spring3.done;
     await sleep(300);
     const passers = [0, 1, 2].map(i => { const a = ant(T, T.world, -60 - i * 90, 532, .62); a.face('right'); carry(a.p, true); return a; });
     passers.forEach(a => a.move(a.x + 520, 532, 3200, 'linear'));
@@ -732,6 +740,7 @@
       rain = precip(T, 'rain', 44);
     }, hop.pos);
     AudioFX.sfx('splash', .25);
+    playBgm('vivaldi_summer3', .3, 26, 2); // 〈사계〉 여름 3악장(폭풍)
     await say('앗, 소나기가 와요! 후두둑 후두둑!');
     shelterAnts.forEach(a => { a.p.mouth.setAttribute('d', 'M-26 -80 Q-21 -86 -15 -80'); a.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 160, iterations: 6 }); });
     await say('큰 잎을 톡 눌러서 개미들 우산을 펼쳐 줘요!');
@@ -765,7 +774,7 @@
     if (!sneezed) SND.sneeze(T); // 목소리 재채기가 있으면 합성음은 생략
     hop.hop(24);
     await say('베짱이는 혼자 흠뻑 젖었어요. 에취! 그래도 "괜찮아~" 하고 웃었어요.');
-    rain.stop();
+    rain.stop(); stopBgm(1.2);
 
     /* --- 5. 가을 (낙엽 들판) --- */
     let leaves, acorns, AF;
@@ -778,6 +787,7 @@
       leaves = precip(T, 'leaf', 22);
     }, lead.pos);
     AudioFX.whoosh();
+    playBgm('vivaldi_autumn1', .3, 22, 2); // 〈사계〉 가을 1악장
     await say('가을이 왔어요. 나뭇잎이 알록달록 휘날려요.');
     await say('도토리를 톡톡 눌러서 창고로 데굴데굴 굴려요!');
     let rolled = 0;
@@ -810,7 +820,7 @@
     [bTee, bVest, bCoat].forEach(b => b.remove());
     wear(lead.p, ['vest']); lead.hop(24); sparkles(T, lead.x, lead.y - 80);
     await say('맞아요! 선선한 가을엔 재킷을 입어요.');
-    leaves.stop();
+    leaves.stop(); stopBgm(1.2);
     await camTo(500, 280, 1, 600);
 
     /* --- 6. 첫눈 (눈 들판 하이앵글) --- */
@@ -829,6 +839,7 @@
       snow = precip(T, 'snow', 40);
     }, lead.pos);
     SND.shiver(T);
+    playBgm('vivaldi_winter1', .3, 26, 2); // 〈사계〉 겨울 1악장
     await say('하얀 눈이 펑펑! 겨울이 왔어요. 호호, 추워라.');
     await say('겨울엔 무엇을 입을까?');
     const [bWarm, bTee2, bSwim] = choiceBadges(T, [CLOTH.warm, CLOTH.tee, CLOTH.swim], 190);
@@ -849,6 +860,7 @@
         : [{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: W.far ? 1600 : 1100, fill: 'forwards' });
       await sleep(300);
     }
+    stopBgm(1);
     await sleep(1000);
     lead.body.getAnimations().forEach(x => x.cancel());
     crew.forEach(a => a.body.getAnimations().forEach(x => x.cancel()));
@@ -958,7 +970,8 @@
     await say('반딧불이가 불을 밝히고, 겨울 음악회가 시작됐어요!');
     const dancers = [...home, ...guests];
     await say('베짱이가 겨울 노래를 들려줘요. 가만히 들어 봐요.');
-    const winter = AudioFX.music('vivaldi_winter', { vol: .9, dur: 26, fade: 2 }); // 비발디 〈사계〉 '겨울' 2악장 (공개 라이선스 녹음)
+    stopBgm(.3);
+    const winter = AudioFX.music('vivaldi_winter1', { vol: .9, dur: 26, fade: 2 }); // 비발디 〈사계〉 '겨울' 1악장 (2026-10-20 유명한 첫 악장으로 교체, 공개 라이선스 녹음)
     if (winter) {
       const bw2 = bowing(hop.p);
       const sw = setInterval(() => { notes(T, 470, 360); dancers.forEach((a, i) => setTimeout(() => a.wiggle(5, 700), i * 120)); }, 1400);
@@ -986,6 +999,7 @@
       (artUrl('ant_carry') ? [420, 485, 550] : [400, 460, 520]).forEach(x => { const a = ant(T, T.world, x, 494, .6); a.face('right'); carry(a.p, true); workers.push(a); });
     }, hop.pos);
     AudioFX.animal('rooster', .3);
+    playBgm('vivaldi_spring', .3, 22, 2); // 〈사계〉 봄 1악장
     await say('따뜻한 봄이 왔어요. 새싹이 쏙쏙!');
     await say('이번엔 베짱이도 함께 날라요.');
     const carryStep = i => {
@@ -1000,6 +1014,7 @@
     for (let i = 1; i <= 4; i++) { await carryStep(i); await sleep(650); }
     await sleep(600);
     await say('"영차! 여름엔 노래하고, 일도 함께 할래요!"');
+    stopBgm(1);
 
     // 끝 놀이: 계절 카드 순서대로
     await camTo(500, 280, 1, 400);
@@ -1030,6 +1045,7 @@
       T.anim(want.g, [{ translate: '0 0' }, { translate: '0 -20px' }, { translate: '0 0' }], 380);
       T.tone(523 + k * 131, .25, { type: 'triangle', vol: .16 });
       await say(`${k + 1}번, ${name}!`);
+      if (AudioFX.slice(SEASON_MUSIC[want.s], 0, 2.4, .6)) await sleep(2500); // 그 계절의 〈사계〉 한 소절
     }
     T.finale();
     SND.sparkle(T); T.confetti(); AudioFX.fanfare && AudioFX.fanfare();

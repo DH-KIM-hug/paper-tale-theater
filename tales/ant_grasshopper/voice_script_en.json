@@ -102,6 +102,116 @@
    ]
   },
   {
+   "text": "하나",
+   "en": "One",
+   "segs": [
+    [
+     "nar",
+     "One",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "둘",
+   "en": "Two",
+   "segs": [
+    [
+     "nar",
+     "Two",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "셋",
+   "en": "Three",
+   "segs": [
+    [
+     "nar",
+     "Three",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "넷",
+   "en": "Four",
+   "segs": [
+    [
+     "nar",
+     "Four",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "다섯",
+   "en": "Five",
+   "segs": [
+    [
+     "nar",
+     "Five",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "여섯",
+   "en": "Six",
+   "segs": [
+    [
+     "nar",
+     "Six",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "일곱",
+   "en": "Seven",
+   "segs": [
+    [
+     "nar",
+     "Seven",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "여덟",
+   "en": "Eight",
+   "segs": [
+    [
+     "nar",
+     "Eight",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "아홉",
+   "en": "Nine",
+   "segs": [
+    [
+     "nar",
+     "Nine",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
+   "text": "열",
+   "en": "Ten",
+   "segs": [
+    [
+     "nar",
+     "Ten",
+     "happy:1.2"
+    ]
+   ]
+  },
+  {
    "text": "창고 칸이 가득 찼어요! 하나부터 열까지, 열 칸!",
    "en": "The storeroom is full! From one to ten, ten rooms!",
    "segs": [
