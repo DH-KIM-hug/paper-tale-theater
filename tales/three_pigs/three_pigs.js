@@ -11,6 +11,8 @@
     house_straw: [918, 537], house_straw_ruin: [944, 517], house_wood: [748, 671], house_wood_ruin: [889, 664],
     house_brick: [845, 729], pot: [480, 222], fan: [643, 700], instruments: [480, 237],
   };
+  // 2026-10-20 새 그림 실제 크기(SZ는 옛 그림 크기 = 높이 기준). 같은 픽셀 눈금으로 그려서 새 그림의 실제 비율을 따른다
+  const NW = { pig1_base: [365, 459], pig1_build: [458, 480], pig1_flee: [407, 455], pig1_play: [342, 432], pig2_base: [372, 480], pig2_build: [418, 480], pig2_flee: [367, 480], pig2_play: [422, 480], pig3_base: [345, 480], pig3_build: [394, 480], pig3_play: [314, 446], mama: [398, 480], wolf_sniff: [401, 346], wolf_puff: [395, 325], wolf_tired: [369, 376], straw: [214, 294], wood: [471, 289], bricks: [459, 351], house_straw: [551, 537], house_straw_ruin: [650, 517], house_wood: [741, 671], house_wood_ruin: [823, 664], house_brick: [803, 729], fan: [498, 623] };
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const NUM = ['하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열'];
   const GROUND = 480;
@@ -31,9 +33,9 @@
       const a = T.actor(T.world, x, y, b => { im = T.el('image', { filter: 'url(#pp)', preserveAspectRatio: 'none' }, b); });
       a.h = h;
       a.set = (n, hh = a.h) => {
-        a.h = hh; const [w0, h0] = SZ[n], w = hh * w0 / h0;
-        im.setAttribute('href', U(n)); im.setAttribute('x', -w / 2); im.setAttribute('y', -hh);
-        im.setAttribute('width', w); im.setAttribute('height', hh);
+        a.h = hh; const [, h0] = SZ[n], [nw, nh] = NW[n] || SZ[n], w = hh * nw / h0, h = hh * nh / h0;
+        im.setAttribute('href', U(n)); im.setAttribute('x', -w / 2); im.setAttribute('y', -h);
+        im.setAttribute('width', w); im.setAttribute('height', h);
       };
       a.show = on => { a.pos.style.opacity = on ? 1 : 0; };
       a.set(name, h);
@@ -207,13 +209,13 @@
     await T.cutImage([{ src: U('cut_crawl'), hold: 3200 }]);
     await say('늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.');
     await T.sceneCard('보글보글', () => { bg('chimney'); T.camSnap(500, 280, 1); });
-    const fire = hit(425, 430, 150, 120);
-    const glow = T.el('ellipse', { cx: 494, cy: 515, rx: 10, ry: 8, fill: '#FFB347', opacity: 0, 'pointer-events': 'none' }, T.world);
+    const fire = hit(425, 290, 150, 100); // 2026-10-20 새 배경: 벽난로 불이 무대 y≈345 (옛 그림은 바닥 근처였다)
+    const glow = T.el('ellipse', { cx: 500, cy: 348, rx: 10, ry: 8, fill: '#FFB347', opacity: 0, 'pointer-events': 'none' }, T.world);
     await say('아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.');
     await T.mash(fire, { count: 5, prompt: '불을 톡톡 눌러서 크게 해 줘요.', onStep: i => {
       const p = i / 5;
-      glow.setAttribute('rx', 20 + 120 * p); glow.setAttribute('ry', 14 + 80 * p); glow.setAttribute('opacity', .15 + .45 * p);
-      T.pop(494 + (Math.random() - .5) * 100, 400, '보글');
+      glow.setAttribute('rx', 14 + 40 * p); glow.setAttribute('ry', 10 + 26 * p); glow.setAttribute('opacity', .1 + .28 * p);
+      T.pop(500 + (Math.random() - .5) * 100, 250, '보글');
     } });
     sfx('ding');
     await say('보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.');
