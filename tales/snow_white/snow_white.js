@@ -1,6 +1,6 @@
 /* 백설공주 — 그림 형제 원작 그대로. 기획: tales/snow_white/PLAN.md (11장, 2026-10-20 확정)
    거울·질투 → 사냥꾼 → 난쟁이 집 문(톡) → 식탁 → 일곱 번째 침대 → 난쟁이의 당부 → 큰 침대 짜기 →
-   침대 여덟 개 세기(톡 한 번, 1~8 저절로) → 할머니와 사과 → 유리관과 왕자(덜컹, 사과 조각) → 깨어나요(손 톡).
+   침대 여덟 개 세기(톡 한 번, 1~8 저절로) → 이제 잘 시간 침대 색 찾기(고르기 3번) → 할머니와 사과 → 유리관과 왕자(덜컹, 사과 조각) → 깨어나요(손 톡).
    톡은 세 번뿐(문 · 침대 세기 시작 · 깨어남), 연타 없음. 줄거리를 바꾸는 선택 없음. 입맞춤 없음.
    교훈: 질투는 마음을 해친다. 낯선 사람이 주는 것은 어른에게 물어보고 받는다.
    그림: assets/v3w/sw_*.webp (목록은 tools/app/gen/jobs_snow_white.json — sw_ 머리글자는 해와 바람과 같이 쓰므로 그 목록에 있는 것만 쓴다) */
@@ -273,6 +273,36 @@
     if (P) T.camTo(560, 280, 1, 700);
     await say('작은 침대 일곱 개에, 큰 침대 하나 더 해서 여덟 개!');
     dwarfs.hop(14, 360); snow.hop(16, 360);
+    /* 이제 잘 시간! 침대 색 찾기 (고르기 3번, 일곱 색에서 겹치지 않게 무작위). 줄거리와 무관한 배움 놀이 */
+    await say('이제 잘 시간! 난쟁이들이 침대를 찾아요.');
+    const BCOL = ['빨간', '주황', '노란', '초록', '파란', '보라', '갈색'];   /* 침대 1~7 이불 색 */
+    let relaid = false;
+    if (P) {                                              /* 세로 화면: 일곱 침대를 두 줄씩 모아 한 화면에 */
+      await T.anim(bedsG, [{ opacity: 1 }, { opacity: 0 }], 250);
+      hide(dwarfs);
+      const GP = [[190, 200], [340, 200], [490, 200], [265, 320], [415, 320], [265, 440], [415, 440]];
+      beds.forEach((b, i) => put(T, b, GP[i][0], GP[i][1], { s: .85 }));
+      hide(bigBed); camSnap(340, 280, 1); relaid = true;
+      beds.forEach(b => fadeIn(b, 350));
+      await sleep(400);
+    }
+    const order = [0, 1, 2, 3, 4, 5, 6].sort(() => Math.random() - .5).slice(0, 3);
+    for (const k of order) {
+      const q = BCOL[k] + ' 침대를 찾아 볼까요?';
+      await say(q);
+      const opts = beds.map((b, i) => ({ el: b.pos, ok: i === k,
+        onWrong: async () => { await b.wiggle(8, 360); await say('그건 ' + BCOL[i] + ' 침대예요.'); } }));
+      await T.choose(opts, { prompt: q });
+      const b = beds[k];
+      glow(b, 1200); b.hop(14, 400); sfx(T, 'sparkle', () => popSfx(T));
+      T.pop(b.x, b.y - 100 * (relaid ? .85 : (k % 2 ? .82 : .74)) - 30, tr('쿨쿨'));
+      await say('맞아요, ' + BCOL[k] + ' 침대!');
+      await sleep(300);
+    }
+    if (relaid) {
+      [0, 2, 4, 6, 1, 3, 5].forEach(i => put(T, beds[i], SX[i], SYs(i), { s: SS(i) }));
+      put(T, bigBed, BIGX, SY + 2); put(T, dwarfs, 340, 470, { s: .8 }); T.world.insertBefore(dwarfs.pos, beds[0].pos); camSnap(560, 280, 1);
+    }
     await say('모두 함께 지내서 행복해요.');
     await sleep(400);
 
@@ -355,9 +385,10 @@
       if (P) camSnap(500, 280, 1);
     }, snow.pos);
     /* 손 자리(배 위에 모은 두 손)를 누르는 곳으로 */
-    const hand = T.el('circle', { cx: 0, cy: -96 * .5, r: 46, fill: 'transparent' }, snow.pos);
+    /* 유리 뚜껑·관 앞판이 백설 위를 덮고 있어 백설을 직접 누를 수 없다 → 맨 위에 투명한 누르는 자리를 따로 둔다 (2026-10-20) */
+    const hand = T.el('circle', { cx: snow.x, cy: snow.y - 48, r: 90, fill: '#fff', opacity: 0 }, T.world);
     snow.pos.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 1600, iterations: 3, easing: 'ease-in-out' });
-    await T.tap(snow.pos);
+    await T.tap(hand, { prompt: '백설공주의 손을 톡!' });
     hand.remove();
     glass.remove();                                        /* 유리 뚜껑을 열었다 */
     T.world.insertBefore(shine.pos, coffin.pos.nextSibling);
