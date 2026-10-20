@@ -10,7 +10,7 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RAW = os.path.join(ROOT, 'assets', 'raw', 'v3')
 OUT = os.path.join(ROOT, 'assets', 'thumbs'); os.makedirs(OUT, exist_ok=True)
-SHEET = {'dark': np.array([0x22, 0x2B, 0x45]), 'light': np.array([0xF4, 0xF6, 0xF9])}  # home.css --sheet 과 같아야 한다
+SHEET = {'dark': np.array([0x22, 0x2B, 0x45]), 'light': np.array([0xF5, 0xEF, 0xE9])}  # home.css --sheet 과 같아야 한다 (2026-10-21 크림 통일; 기존 _light.webp 는 옛 색 — 재생성 때 반영)
 
 def edge_color(a):
     return np.median(np.concatenate([a[:10].reshape(-1, 3), a[-10:].reshape(-1, 3), a[:, :10].reshape(-1, 3), a[:, -10:].reshape(-1, 3)]), axis=0)

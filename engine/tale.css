@@ -1,7 +1,7 @@
 @font-face{font-family:'Pretendard Local';font-style:normal;font-weight:45 920;font-display:swap;src:url(../assets/fonts/PretendardVariable.woff2) format('woff2')}
 /* 톡톡 동화극장 공용 엔진 스타일 — 동화(tales/*)가 함께 쓴다.
    원칙: DESIGN_SYSTEM.md (페이퍼아트), TALES_PLAN.md §0 (3~4세 조작·도움 규칙)
-   홈(home.css)과 같은 한 장의 무광 종이: 밝은 모드 = 매끈한 흰 종이(#F4F6F9) + 남색 글자, 어두운 모드 = 남색 판지 + 크림 글자.
+   홈(home.css)과 같은 한 장의 무광 종이: 밝은 모드 = 매끈한 크림 종이(#F5EFE9) + 남색 글자, 어두운 모드 = 남색 판지 + 크림 글자.
    무대는 그 종이에 뚫린 네모 구멍이다 (커튼·현판·표·객석 없음). 따뜻한 색은 구리색 하나만 아껴 쓴다. */
 :root {
   color-scheme: light;
@@ -11,10 +11,10 @@
   --paper-radius: 20px 26px 18px 28px / 26px 18px 28px 20px;
 
   /* ─── 종이 (홈과 같은 토큰) ─── */
-  --sheet: #F4F6F9;
-  --sheet-up: #FFFFFF;
-  --sheet-dn: #E8ECF2;
-  --deep: #D3D9E3;
+  --sheet: #F5EFE9;   /* 홈과 같은 크림 종이 (2026-10-21 통일) */
+  --sheet-up: #FFFCF8;
+  --sheet-dn: #EAE1D6;
+  --deep: #DDD2C4;
   --text: #222B45;
   --text-2: #5C6784;
   --text-3: #7C86A0;
@@ -33,7 +33,7 @@
   /* 말풍선 쪽지 */
   --note: #FFFFFF; --note-ink: #222B45;
   --ink: var(--text);
-  --font: 'Pretendard Variable', 'Pretendard Local', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font: 'Pretendard Local', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .13 0 0 0 0 .17 0 0 0 0 .27 .5 0 0 0 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
 }
 * { box-sizing: border-box; }
@@ -319,12 +319,39 @@ svg text { font-weight: 800; }
 
 /* 밝은 종이 판(THUMBSKEYLIGHT): 어두운 띠 없이 흰 종이 위에 어두운 글자. 그림은 잘리지 않게 contain */
 #startScreen.keyed.light { background: var(--keypaper, #f0eee9); }
-#startScreen.keyed.light .keyimg { object-fit: contain; object-position: center 34%; }
+/* 그림 판 크기를 그림 비율(세로 3:4, 가로 16:9)에 맞추고 가장자리 3%를 종이색으로 풀어, 그림 종이와 화면 종이의 미세한 색 차이가 네모 경계로 안 보이게 한다 */
+#startScreen.keyed.light .keyimg {
+  inset: auto; left: 50%; transform: translateX(-50%); width: auto; height: min(133.333vw, 100%); aspect-ratio: 3 / 4;
+  top: calc((100% - min(133.333vw, 100%)) * .34);
+  object-fit: contain;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent), linear-gradient(transparent, #000 3%, #000 97%, transparent);
+  -webkit-mask-composite: source-in;
+          mask: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent), linear-gradient(transparent, #000 3%, #000 97%, transparent);
+          mask-composite: intersect;
+}
 #startScreen.keyed.light::before { display: none; }
 #startScreen.keyed.light .paperword { --let-top: #9A4222; --let-bot: #6B2A12; --let-edge: rgba(255, 252, 244, .9); --let-sh: rgba(70, 48, 40, .32); --let-sh-2: rgba(70, 48, 40, .22); }
 #startScreen.keyed.light .sub { color: #5A3A2A; text-shadow: none; }
 #startScreen.keyed.light .note { color: #7A5E4C; text-shadow: none; }
-@media (orientation: landscape) { #startScreen.keyed.light .keyimg { object-position: center top; } }
+@media (orientation: landscape) { #startScreen.keyed.light .keyimg { top: 0; height: min(56.25vw, 100%); aspect-ratio: 16 / 9; } }
+/* 낮은 가로 화면(휴대폰 가로): 그림은 위쪽에 줄이고, 아래 종이 띠(--band)는 글자·버튼 자리로 비운다 */
+@media (orientation: landscape) and (max-height: 520px) {
+  #startScreen.keyed.light { --band: 92px; padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+  #startScreen.keyed.light .keyimg { height: min(56.25vw, calc(100% - var(--band))); }
+  #startScreen.keyed.light .words { min-height: calc(var(--band) - 12px); align-content: center; }
+}
+/* 시작 화면: 주 버튼(이야기 시작)이 분명하게 크고, 보조(처음으로)는 작고 조용하게 */
+#startScreen .pills .pill:not(.go) { min-height: 44px; min-width: 0; padding: 0 18px; font-size: clamp(14px, 2vmin, 16px); font-weight: 500; opacity: .88; }
+#startScreen .pills .pill.go { min-height: 72px; min-width: 230px; }
+#startScreen .ttl { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+@media (orientation: landscape) and (max-height: 520px) {
+  #startScreen .pills .pill.go { min-height: 56px; min-width: 168px; }
+  #startScreen.keyed .pills .pill:not(.go) { min-width: 0; padding: 0 14px; }
+}
+@media (orientation: portrait) and (max-width: 600px) {
+  #startScreen .pills .pill.go { min-height: 64px; min-width: 176px; }
+  #startScreen.keyed .pills .pill:not(.go) { min-width: 0; padding: 0 14px; }
+}
 
 /* 들어올 때: 홈에서 닫힌 종이 조리개가 다시 열린다 */
 #arrive { position: fixed; inset: 0; z-index: 90; overflow: hidden; pointer-events: none; }
@@ -463,3 +490,9 @@ svg text { font-weight: 800; }
   #endScreen.back .ttl { font-size: clamp(40px, 13vh, 70px); }
 }
 @media (prefers-reduced-motion: reduce) { #endScreen.back .ribbon { animation: none; } }
+
+/* 자동 재생이 켜져 있다는 작은 종이 표시 (글자 없음) */
+.autobadge { position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: 16px; width: 34px; height: 34px; z-index: 3; pointer-events: none; filter: drop-shadow(0 2px 2px rgba(46, 36, 28, .35)); }
+.autobadge svg { width: 100%; height: 100%; display: block; }
+.autobadge circle { fill: #F6ECD8; }
+.autobadge path { fill: #E8703A; }

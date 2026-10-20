@@ -54,7 +54,7 @@
     try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; }
   }
   function save() {
-    try { localStorage.setItem(STORE, JSON.stringify({ origin: [...sel.origin], skill: [...sel.skill], speak, tagsOff })); } catch (e) { /* 무시 */ }
+    try { localStorage.setItem(STORE, JSON.stringify({ origin: [...sel.origin], skill: [...sel.skill], speak, tagsOff, layout: 2 })); } catch (e) { /* 무시 */ }
   }
   /* 아직 쓰는 동화가 없는 태그(hideUnused)는 칩을 숨기고, 저장된 선택도 무시한다 */
   TAGS.skill = TAGS.skill.filter(t => !t.hideUnused || TALES.some(x => x.skills.includes(t.key)));
@@ -63,8 +63,13 @@
   const sel = { origin: new Set(valid('origin', saved.origin)), skill: new Set(valid('skill', saved.skill)) };
   let speak = saved.speak !== false;
   /* 앱 화면(앱 모드): 큰 동화 하나 + 작은 목록. 태그는 처음엔 숨겨 두고 보호자가 켠다 */
-  const appUI = typeof Entitlements !== 'undefined' && Entitlements.appMode();
+  /* 웹도 앱과 같은 화면(큰 동화 하나 + 작은 목록, 첫 톡 = 제목 듣기, 두 번째 톡 = 열기). 옛 선반은 ?layout=shelf 로만 본다.
+     storeMode = 앱 스토어 모드(스플래시·잠금·결제). 화면 배치와는 별개다. */
+  const storeMode = typeof Entitlements !== 'undefined' && Entitlements.appMode();
+  const appUI = !/[?&]layout=shelf(&|$)/.test(location.search);
   if (appUI) document.body.classList.add('app');
+  if (storeMode) document.body.classList.add('store');
+  if (appUI && saved.layout !== 2) saved.tagsOff = undefined; // 새 화면으로 처음 열면 태그는 접힌 채
   let tagsOff = saved.tagsOff === true || (appUI && saved.tagsOff === undefined); // 태그 숨기기 (홈 첫 화면을 그림만으로)
 
   /* ── 소리 ── */
@@ -499,7 +504,7 @@
   function resetFilters() { sel.origin.clear(); sel.skill.clear(); update(); }
   $('#emptyReset').addEventListener('click', () => { paper('down'); resetFilters(); });
 
-  /* ── 보호자 메뉴: 톱니를 3초 동안 눌러야 열린다 ── */
+  /* ── 보호자 메뉴: 톱니를 1초 동안 눌러야 열린다 ── */
   const gear = $('#parentBtn'), panel = $('#parentPanel'), hint = $('#hint'), sheet = panel.querySelector('.sheet');
   let holdTimer = 0, hintTimer = 0, opened = false, panelAnim = null;
   function holdStart(e) {
@@ -507,7 +512,7 @@
     opened = false;
     gear.classList.add('holding');
     clearTimeout(holdTimer);
-    holdTimer = setTimeout(() => { opened = true; gear.classList.remove('holding'); openPanel(); }, 3000);
+    holdTimer = setTimeout(() => { opened = true; gear.classList.remove('holding'); openPanel(); }, 1000);
   }
   function holdEnd() {
     if (!gear.classList.contains('holding')) return;
@@ -528,7 +533,9 @@
     if (panelAnim) panelAnim.finish();
     hint.hidden = true;
     $('#optSpeak').checked = speak; $('#optCaption').checked = !captionsOff();
-    $('#captionLbl').textContent = L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'); drawTimer();
+    $('#captionLbl').textContent = L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'); 
+    $('#optAuto').checked = autoOn(); $('#autoLbl').textContent = L('자동 재생 (톡·퀴즈 없이 이야기만 틀어 주기)', 'Auto-play (no taps or quizzes — just watch and listen)');
+    drawTimer();
     panel.hidden = false;
     $('#parentClose').focus();
     panelAnim = play(.7, t => {
@@ -554,6 +561,11 @@
   const captionsOff = () => { try { return localStorage.getItem('captions_off') === '1'; } catch (e) { return false; } };
   $('#optCaption').addEventListener('change', e => {
     try { if (e.target.checked) localStorage.removeItem('captions_off'); else localStorage.setItem('captions_off', '1'); } catch (err) { /* 저장 못 하면 이번만 */ }
+  });
+  /* 자동 재생: 켜면 동화가 톡·퀴즈 없이 혼자 끝까지 흘러간다. 동화 엔진(tale.js)이 같은 키 auto_play 를 읽는다 */
+  const autoOn = () => { try { return localStorage.getItem('auto_play') === '1'; } catch (e) { return false; } };
+  $('#optAuto').addEventListener('change', e => {
+    try { if (e.target.checked) localStorage.setItem('auto_play', '1'); else localStorage.removeItem('auto_play'); } catch (err) { /* 저장 못 하면 이번만 */ }
   });
   /* 놀이 시간 알림: 보호자 메뉴에서 정한다. 시간이 되면 동화가 장면이 바뀔 때 조용히 쉬는 화면을 보여 준다 */
   const TIMES = [0, 10, 15, 20, 30];
@@ -665,7 +677,7 @@
   $('#storeClose').addEventListener('click', closeStore);
   storePanel.addEventListener('click', e => { if (e.target === storePanel) closeStore(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !storePanel.hidden) closeStore(); });
-  // 보호자 메뉴(3초 꾹)에도 구매 복원 — 앱 모드에서만 보인다
+  // 보호자 메뉴(1초 꾹)에도 구매 복원 — 앱 모드에서만 보인다
   const optRestore = $('#optRestore');
   if (Entitlements.appMode()) {
     optRestore.hidden = false;
@@ -715,8 +727,9 @@
 
   function intro() {
     if (appUI) {
-      let first = true;
-      try { first = !sessionStorage.getItem('paperTheater.splash'); sessionStorage.setItem('paperTheater.splash', '1'); } catch (e) { /* 무시 */ }
+      let first = storeMode;
+      if (storeMode) try { first = !sessionStorage.getItem('paperTheater.splash'); sessionStorage.setItem('paperTheater.splash', '1'); } catch (e) { /* 무시 */ }
+      else first = false; // 웹은 스플래시 없이 바로 홈
       update({ anim: false });
       if (first && motion() && location.hash !== '#parent') splash(() => update({ intro: true, delay: .04, step: .035 }));
       else update({ intro: true, delay: .02, step: .03 });

@@ -225,6 +225,41 @@ const Tale = (() => {
     });
   }
 
+  /* ---------- 자동 재생 (보호자 메뉴 'auto_play'=1): 톡·퀴즈 없이 이야기만 흘러간다 ----------
+     조작 함수(tap/mash/choose/swipe/hold/free)는 그대로 불리고, 엔진이 알맞은 때 대신 눌러 준다. */
+  const AUTO = () => { try { return localStorage.getItem('auto_play') === '1'; } catch (e) { return false; } };
+  function firePtr(n, type = 'pointerdown', host = n) {
+    const r = n.getBoundingClientRect ? n.getBoundingClientRect() : { left: 0, top: 0, width: 0, height: 0 };
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    host.dispatchEvent(new PointerEvent(type, { bubbles: true, clientX: x, clientY: y, pointerId: 1, isPrimary: true }));
+  }
+  /* 동화 쪽 맞춤 입력용: 자동 재생일 때만 ms 뒤에 fn 을 부른다 */
+  function autoDo(ms, fn) { if (AUTO()) setTimeout(() => { try { fn(); } catch (e) { console.warn('autoDo', e); } }, ms); }
+  const autoDrive = {
+    tap: async (a, p) => { await sleep(1600); if (!p.done && a[0]) firePtr(a[0]); },
+    mash: async (a, p) => { await sleep(1000); while (!p.done && a[0]) { firePtr(a[0]); await sleep(520); } },
+    hold: async (a, p) => { await sleep(1400); if (!p.done && a[0]) firePtr(a[0]); },
+    swipe: async (a, p) => { const w = $('#stageWrap') || a[0]; await sleep(1200); while (!p.done) { firePtr(w); firePtr(w, 'pointerup', window); await sleep(700); } },
+    choose: async (a, p) => {
+      const good = (a[0] || []).find(o => o.ok); if (!good) return;
+      await sleep(500); if (p.done) return;
+      good.el.style.filter = 'url(#hintGlow)'; pulse(good.el);
+      await sleep(1200); if (!p.done) firePtr(good.el);
+    },
+    free: async (a, p) => { const ts = a[0] || []; let i = 0; await sleep(900); while (!p.done && ts.length) { firePtr(ts[i++ % ts.length].el); await sleep(900); } },
+  };
+  const autoInput = (name, fn) => {
+    const f = input(fn);
+    return (...a) => {
+      if (!AUTO()) return f(...a);
+      if (name === 'free') a = [a[0], Math.min(a[1] || 15000, 8000)];
+      const p = { done: false }, r = f(...a);
+      r.finally(() => { p.done = true; });
+      autoDrive[name](a, p).catch(e => console.warn('autoDrive', e));
+      return r;
+    };
+  };
+
   /* ---------- 손가락 안내 ---------- */
   const handSvg = () => `<svg viewBox="0 0 64 64"><image href="${ROOT_URL}assets/ui/hand3.webp" x="16.6" y="4" width="30.8" height="56"/></svg>`; // 종이 오려 만든 손 그림 (손끝이 누를 자리)
   function screenPoint(target) {
@@ -239,6 +274,7 @@ const Tale = (() => {
 
   /* 막힘 방지 공통: 입력이 오면 poke()로 타이머 리셋 */
   function helper({ target, kind = 'tap', prompt, auto }) {
+    if (AUTO()) return { poke() {}, stop() {} }; // 자동 재생: 손가락·재안내 없음 (엔진이 알아서 누른다)
     let t1, t2, t3, dead = false;
     const arm = (keepAuto = false) => {
       clearTimeout(t1); clearTimeout(t2); hideHand();
@@ -879,6 +915,7 @@ const Tale = (() => {
   <div id="bubble" hidden><p id="bubbleText"></p></div>
   <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
+    ${AUTO() ? '<i class="autobadge" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5"/><path d="M9.2 7.2 Q9.2 6.3 10 6.8 L17 11.2 Q17.6 12 17 12.8 L10 17.2 Q9.2 17.7 9.2 16.8Z"/></svg></i>' : ''}
     <img class="keyimg" alt="" decoding="async">
     <div class="hero plain"><img alt="" decoding="async"></div>
     <div class="words">
@@ -987,6 +1024,49 @@ const Tale = (() => {
     $('#ribbonBtn').onclick = start;
     try { if (new URLSearchParams(location.search).get('endpreview') === '1') { $('#startScreen').hidden = true; showEnd(); } } catch (e) { /* 미리보기 전용 */ }
     $('#startBtn').onclick = start;
+    /* 시작 화면: 제목을 톡 하면 한 번 읽어 준다 (홈 제목 녹음이 있으면 그 목소리, 없으면 브라우저 말하기) */
+    {
+      let clips = null, busyT = false;
+      const loadClips = async () => {
+        if (clips) return clips;
+        try {
+          const txt = await (await fetch(ROOT_URL + 'home_narration_el.js')).text();
+          clips = new Function(txt + '; return { ko: NARRATION_CLIPS, en: (typeof NARRATION_CLIPS_EN !== "undefined" ? NARRATION_CLIPS_EN : {}) };')();
+        } catch (e) { clips = { ko: {}, en: {} }; }
+        return clips;
+      };
+      const sayTitle = async () => {
+        if (busyT) return; busyT = true;
+        try {
+          const c = await loadClips();
+          const en = typeof englishOn === 'function' && englishOn() ? c.en[title] : null;
+          const url = en ? en.c : c.ko[title];
+          if (url && typeof url === 'string') { try { Narrator.stop(); } catch (e) { /* 무시 */ } await AudioFX.playUrl(ROOT_URL + url); }
+          else await Narrator.speak(tr(title));
+        } catch (e) { /* 소리 없이 */ }
+        busyT = false;
+      };
+      const tt = $('#startScreen .ttl');
+      if (tt) { tt.style.cursor = 'pointer'; tt.addEventListener('click', sayTitle); }
+      $('#startBtn').addEventListener('click', () => { try { AudioFX.stopNarration(); Narrator.stop(); } catch (e) { /* 무시 */ } });
+    }
+    /* 자동 재생 안전망: 4초마다 살피고, 25초 동안 아무 변화 없이 누를 곳(손가락·armed 대상)이 있으면 대신 눌러 준다 */
+    if (AUTO()) {
+      window.AUTOPLAY = true;
+      let lastSig = '', still = 0;
+      setInterval(() => {
+        const vis = n => { const r = n.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+        const armed = [...document.querySelectorAll('.tap-target.armed')].filter(vis);
+        const h = $('#hand'), handUp = h && !h.hidden && vis(h);
+        const sig = armed.length + '|' + handUp + '|' + ($('#bubbleText') || {}).textContent + '|' + [...armed].map(n => n.id || n.getAttribute('class')).join(',');
+        if (!armed.length && !handUp) { still = 0; lastSig = sig; return; }
+        still = sig === lastSig ? still + 4 : 0; lastSig = sig;
+        if (still < 25) return;
+        still = 0;
+        if (armed.length) firePtr(armed[0]);
+        else { const r = h.getBoundingClientRect(); const x = r.left + r.width * .5, y = r.top + r.height * .1; const t = document.elementFromPoint(x, y); if (t) t.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, clientX: x, clientY: y, pointerId: 1, isPrimary: true })); }
+      }, 4000);
+    }
     $('#againBtn').onclick = start;
   }
 
@@ -1028,8 +1108,8 @@ const Tale = (() => {
         const bob = target.animate([{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], { duration: 760, iterations: Infinity, easing: 'ease-in-out' });
         const fin = () => { if (done) return; done = true; clearTimeout(tw); clearTimeout(th); bob.cancel(); target.removeEventListener('pointerdown', on); arm(target, false); hideHand(); res(); };
         const on = e => { e.stopPropagation(); if (busy) return; fin(); };
-        const tw = setTimeout(fin, first ? wait + 3000 : wait);
-        if (first) th = setTimeout(() => !done && showHand(target, 'tap'), 2200);
+        const tw = setTimeout(fin, AUTO() ? 700 : first ? wait + 3000 : wait);
+        if (first && !AUTO()) th = setTimeout(() => !done && showHand(target, 'tap'), 2200);
         target.addEventListener('pointerdown', on);
       });
       first = false;
@@ -1043,10 +1123,10 @@ const Tale = (() => {
   const holdMelody = input((notes, { beat = .6, target, voice, onNote, wait = 6000, tapStart = false } = {}) => new Promise(res => {
     const starts = []; let acc = 0;
     notes.forEach(([n, b]) => { starts.push(acc); acc += b * beat * 1000; });
-    let held = 0, idx = 0, down = false, auto = false, idle = 0, done = false;
+    let held = 0, idx = 0, down = false, auto = AUTO(), idle = 0, done = false;
     arm(target, true);
     const bob = target.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
-    const hand = setTimeout(() => !done && showHand(target, tapStart ? 'tap' : 'hold'), 2500);
+    const hand = AUTO() ? 0 : setTimeout(() => !done && showHand(target, tapStart ? 'tap' : 'hold'), 2500);
     const fin = () => { if (done) return; done = true; clearInterval(tm); clearTimeout(hand); bob.cancel(); target.removeEventListener('pointerdown', dn); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); arm(target, false); hideHand(); res(); };
     const dn = e => { e.stopPropagation(); if (busy || done) return; down = true; idle = 0; hideHand(); held += 250; if (tapStart) auto = true; };
     const up = () => { down = false; };
@@ -1079,7 +1159,8 @@ const Tale = (() => {
     el, paper, anim, actor, sleep, say, director, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,
-    tap: input(tap), mash: input(mash), choose: input(choose), swipe: input(swipe), hold: input(hold), free: input(free),
+    tap: autoInput('tap', tap), mash: autoInput('mash', mash), choose: autoInput('choose', choose), swipe: autoInput('swipe', swipe), hold: autoInput('hold', hold), free: autoInput('free', free),
+    autoplay: AUTO, autoDo,
     get bg() { return bgL; }, get world() { return world; }, get fx() { return fxL; }, get root() { return root; },
   };
   return { mount, api };

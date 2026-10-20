@@ -11,11 +11,11 @@
 /* ═════════ 밝은 종이 (기본) ═════════ */
 :root {
   color-scheme: light;
-  --sheet: #F4F6F9;        /* 종이 한 장 (썸네일 종이와 같은 색: make_thumbs.py SHEET['light']) */
-  --sheet-up: #FFFFFF;     /* 솟은 종이(양각) */
-  --sheet-dn: #E8ECF2;     /* 눌린 자리(음각) */
+  --sheet: #F5EFE9;        /* 종이 한 장 = 크림. 홈·조리개·동화 시작 화면·키아트가 같은 색 (2026-10-21 통일, 옛 #F4F6F9) */
+  --sheet-up: #FFFCF8;     /* 솟은 종이(양각) */
+  --sheet-dn: #EAE1D6;     /* 눌린 자리(음각) */
   --card-lift: 0 1px 0 rgba(255, 255, 255, .9) inset, 0 1px 2px rgba(34, 43, 69, .08), 0 8px 22px -6px rgba(34, 43, 69, .16);
-  --deep: #D3D9E3;         /* 구멍 속 깊은 곳 */
+  --deep: #DDD2C4;         /* 구멍 속 깊은 곳 */
   --text: #222B45;         /* 글자 (종이 위 13:1) */
   --text-2: #5C6784;       /* 보조 글자 (5.1:1) */
   --text-3: #7C86A0;       /* 태그 줄 이름·꺼진 글자 */
@@ -30,7 +30,7 @@
   --hi-top: rgba(255, 255, 255, 1);    /* 솟은 종이 윗면의 빛 */
   --edge-dn: rgba(34, 43, 69, .10);
   --line-soft: rgba(92, 103, 132, .25);
-  --veil: rgba(236, 239, 244, .72);
+  --veil: rgba(236, 228, 217, .72);
   --vignette: transparent; /* 밝은 모드는 종이를 평평하게: 썸네일 종이와 경계가 안 보이게 */
   --glow: transparent;
   --page-grain: linear-gradient(transparent, transparent); /* 밝은 모드 바탕은 매끈한 흰 종이 (썸네일 종이와 같게) */
@@ -64,7 +64,7 @@
   --line: 13px;
   --hole-k: .82;           /* 옛 썸네일(크림 여백)을 동그랗게 오려 낼 지름 비율 (반지름 44%) */
   --waves-w: min(430px, 36vw);
-  --font: 'Pretendard Variable', 'Pretendard Local', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font: 'Pretendard Local', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 }
 
 /* ═════════ 어두운 종이: 남색 판지 ═════════ */
@@ -162,7 +162,7 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
 .lt.gap { margin-left: calc(var(--logo) * .26); }
 .lt.w { margin-right: calc(var(--logo) * .12); }
 
-/* 보호자 톱니: 종이를 눌러 올린 톱니. 3초 누르면 둘레가 구리색으로 채워진다 */
+/* 보호자 톱니: 종이를 눌러 올린 톱니. 1초 누르면 둘레가 구리색으로 채워진다 */
 /* 태그 숨기기 버튼: 필터와 같은 종이 알약 (보일 때 = 솟음, 숨김 = 눌림) */
 .brand .logo { margin-right: auto; }
 .tagtoggle {
@@ -217,7 +217,7 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   stroke-dasharray: 120; stroke-dashoffset: 120;
   transition: stroke-dashoffset .2s;
 }
-.gear.holding .gear-ring circle { stroke-dashoffset: 0; transition: stroke-dashoffset 3s linear; }
+.gear.holding .gear-ring circle { stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear; }
 .gear.holding .gear-ic { color: var(--copper); }
 
 /* ───────── 태그 줄 ───────── */
@@ -639,7 +639,7 @@ a.card:focus-visible .thumb { outline: 2px solid var(--copper); outline-offset: 
   .art { transition: none; }
   .chip { transition: none; }
   a.card:active .art { transform: none; }
-  .gear.holding .gear-ring circle { transition-duration: 3s; }
+  .gear.holding .gear-ring circle { transition-duration: 1s; }
 }
 
 /* ───────── 앱 모드 이용권: 잠긴 동화 · 이번 주 무료 (공개 웹에서는 나타나지 않는다) ───────── */
@@ -677,7 +677,18 @@ body.app { --hero-h: 60vh; --hero-art: calc(var(--hero-h) - 150px); --tile-min: 
 body.app .waves { display: none; }
 body.app #home { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 6px; }
 body.app .board { overflow: visible; padding-bottom: 0; gap: 12px; }
-body.app .brand { justify-content: flex-start; }
+body.app .brand { justify-content: flex-start; flex-wrap: nowrap; min-width: 0; } /* 한 줄 고정: 로고 | EN | 태그 | 톱니 — 화면 크기가 달라도 자리가 같다 */
+body.app .brand > * { flex: none; }
+body.app .brand .logo { flex: 0 1 auto; min-width: 0; }
+/* 태그 패널: 접혀 있다가 열면 로고줄 아래에 종이 한 장으로 내려온다(카드를 밀어내지 않는다) */
+body.app .board { position: relative; z-index: 6; }
+body.app #home:not(.tags-off) .tagrows {
+  position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 7; gap: 14px;
+  padding: 16px 14px 18px; border-radius: 22px; background: var(--sheet-up);
+  box-shadow: var(--card-lift), 0 22px 44px -12px rgba(34, 43, 69, .35);
+  max-height: calc(100vh - 110px); max-height: calc(100dvh - 110px); overflow-y: auto; scrollbar-width: none;
+}
+body.app #home:not(.tags-off) .tagrows::-webkit-scrollbar { display: none; }
 body.app .shelf { display: flex; flex-direction: column; overflow: hidden; padding: 0 0 max(14px, env(safe-area-inset-bottom)); -webkit-mask: none; mask: none; }
 body.app .hero { position: relative; flex: none; display: flex; justify-content: center; height: var(--hero-h); min-height: 0; }
 body.app .hero-slot { min-width: 0; height: 100%; width: 100%; display: flex; justify-content: center; }

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<meta name="theme-color" content="#F4F6F9">
+<meta name="theme-color" content="#F5EFE9">
 <meta name="color-scheme" content="light">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -11,7 +11,6 @@
 <meta name="apple-mobile-web-app-title" content="톡톡 동화극장">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23222B45'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23141A2C'/%3E%3Ccircle cx='17' cy='17' r='7' fill='%23EDE6D6'/%3E%3C/svg%3E">
 <title>톡톡 동화극장</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="home.css">
 </head>
 <body>
@@ -96,7 +95,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>
         <span class="tt-lb">태그</span><span class="tt-n" hidden></span>
       </button>
-      <button id="parentBtn" class="gear" type="button" aria-label="보호자 메뉴: 3초 동안 누르세요">
+      <button id="parentBtn" class="gear" type="button" aria-label="보호자 메뉴: 1초 동안 누르세요">
         <svg class="gear-ic" aria-hidden="true"><use href="#i-gear"/></svg>
         <svg class="gear-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19"/></svg>
       </button>
@@ -130,7 +129,7 @@
 </div>
 
 <!-- 짧은 안내 쪽지 (보호자 톱니를 짧게 눌렀을 때) -->
-<div id="hint" class="hint" hidden>보호자 메뉴는 3초 동안 꾹 누르세요</div>
+<div id="hint" class="hint" hidden>보호자 메뉴는 1초 동안 꾹 누르세요</div>
 
 <!-- 보호자 메뉴 -->
 <div id="parentPanel" class="parent" hidden role="dialog" aria-modal="true" aria-labelledby="parentTitle">
@@ -142,6 +141,7 @@
       구멍이 종이 마개로 덮인 이야기는 아직 만들고 있는 중이에요.</p>
     <label class="toggle"><input type="checkbox" id="optSpeak"> 태그와 제목을 소리로 읽어 주기</label>
     <label class="toggle"><input type="checkbox" id="optCaption"> <span id="captionLbl">동화 속 글 상자(대사 자막) 보여 주기</span></label>
+    <label class="toggle"><input type="checkbox" id="optAuto"> <span id="autoLbl">자동 재생 (톡·퀴즈 없이 이야기만 틀어 주기)</span></label>
     <div class="timerRow" role="group" aria-labelledby="timerLbl">
       <p id="timerLbl">놀이 시간 알림</p>
       <div class="timerOpts" id="timerOpts"></div>
