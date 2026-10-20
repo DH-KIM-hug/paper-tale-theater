@@ -415,6 +415,31 @@
     const shiver = mom.body.animate([{ translate: '0 0' }, { translate: '4px 0' }, { translate: '-4px 0' }], { duration: 120, iterations: Infinity });
     babies.forEach(b => b.parts.hands.setAttribute('opacity', 1));
     await say('엄마개구리가 부들부들 떨려요. 어어… 한 번 더 누르면 어떻게 될까?');
+    await Promise.race([T.tap(mom.pos), sleep(8000)]);
+    shiver.cancel();
+
+    /* --- 8. 뻥! → 풍선처럼 날아다니다 퐁당 --- */
+    vo('cut_pop'); // 컷 속 엄마개구리 비명 (말풍선 없음)
+    await (cutArt(T, [['cut_pop', 'boom'], ['cut_fly', 'whoosh', 2000]]) || T.cut(svg => {
+      T.el('circle', { cx: 200, cy: 150, r: 110, fill: C.pine }, svg);
+      T.el('ellipse', { cx: 200, cy: 170, rx: 70, ry: 50, fill: C.cream }, svg);
+      T.el('text', { x: 200, y: 175, 'text-anchor': 'middle', 'font-size': 90, fill: '#A93B32', stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('뻥!') }, svg);
+    }, { sfx: 'boom' }));
+    babies.forEach(b => b.parts.hands.setAttribute('opacity', 0));
+    momArt.set('flying');
+    mom.body.style.transition = 'transform 3s linear';
+    mom.body.style.transform = 'scale(1.6)';
+    // 세로 화면: 살짝 물러서고, 보이는 폭 안에서만 날아다닌다 (가로는 fz = fk = 1)
+    const fz = T.portrait() ? .72 : 1; if (fz < 1) camSnap(500, 280, fz);
+    const fk = Math.min(1, (T.viewWidth() / 2 / fz - 150) / 320), FX = x => Math.round(500 + (x - 500) * fk); // 세로 화면: 보이는 폭 안에서만 날아다닌다
+    const fly = mom.pos.animate([
+      { transform: `translate(${FX(520)}px,500px)` }, { transform: `translate(${FX(760)}px,220px) rotate(40deg)` }, { transform: `translate(${FX(300)}px,160px) rotate(-30deg)` },
+      { transform: `translate(${FX(820)}px,380px) rotate(60deg)` }, { transform: `translate(${FX(200)}px,330px) rotate(-50deg)` }, { transform: `translate(${FX(520)}px,200px)` },
+    ], { duration: 9000, iterations: Infinity, easing: 'ease-in-out' }); // 아이가 따라가 누를 수 있게 천천히 (3.6초 → 9초 한 바퀴, 2026-10-19)
+    mom.pos.removeAttribute('transform');
+    const whoosh = setInterval(() => T.tone([900, 300], .35, { type: 'sawtooth', vol: .06 }), 1000);
+    await say('푸슈슈슉~ 엄마개구리가 풍선처럼 날아다녀요! 톡 눌러서 잡아 줘요!');
+    // 움직이는 SVG 는 아이패드 Safari 에서 누른 자리 판정이 처음 자리에 남는다 → 화면 어디를 눌러도 지금 엄마개구리 자리(넉넉히)와 비교해 잡는다 (2026-10-20)
     const caught = T.tap(mom.pos, { prompt: '날아다니는 엄마개구리를 톡!' });
     const near = e => {
       const r = mom.body.getBoundingClientRect(), pad = Math.max(40, r.width * .35);
