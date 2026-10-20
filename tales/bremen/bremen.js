@@ -41,11 +41,11 @@
     return wrap;
   }
   /* 자세 그림: [키(배율 1), 발끝 가운데(폭 비율), 폭/높이]. 한 동물의 자세끼리는 같은 원본 배율(잠자는 당나귀만 머리 크기에 맞춰 줄임) */
-  const SPR = {
-    donkey: [210, .585, .888], donkey_sing: [231, .526, .9352], donkey_sleep: [160, .633, 1.3725],
-    dog_sing: [113, .56, .8085], dog_tired: [130, .58, .7979], cat_sing: [89, .528, 1.2261], cat_sad: [85, .553, 1.1864],
-    rooster: [106, .389, .9154], rooster_sing: [96, .421, 1.0167], miller: [190, .486, .4591], owl: [80, .495, .84],
-    robber_red: [170, .51, .8475], robber_green: [174, .49, .8073], robber_brown: [185, .504, .7409],
+  const SPR = { // 2026-10-20 새 그림: 옛 그림과 같은 눈금(키÷옛 높이)으로 키·비율을 다시 잡고 발끝 자리는 새 그림에서 쟀다
+    donkey: [200, 0.571, 0.9308], donkey_sing: [231, 0.569, 0.9315], donkey_sleep: [160, 0.572, 1.2125], dog_sing: [95, 0.466, 0.9568], dog_tired: [97, 0.534, 1.0742], cat_sing: [89, 0.558, 1.0696], cat_sad: [85, 0.619, 1.0364], 
+    rooster: [104, 0.427, 0.937], rooster_sing: [96, 0.462, 0.9875], 
+    miller: [183, 0.432, 0.4764], owl: [80, 0.495, 0.835], 
+    robber_red: [170, 0.535, 0.7725], robber_green: [148, 0.31, 0.9511], robber_brown: [185, 0.52, 0.7318],
   };
   /* 동물마다 자세 이름 → 그림. home = 평소 그림 (강아지·고양이는 서 있는 그림이 없어 노래 그림이 평소) */
   const LOOKS = {
@@ -1088,10 +1088,10 @@
       band.forEach(a => put(a, ...HOME[a.key]));
       // 악기 소품 (그림: 북·나팔·바이올린·종. 없으면 임시 도형)
       const dX = hx('donkey') + 60, gX = hx('dog') + 50, cX = hx('cat') + 60;
-      if (!pic(T, T.world, 'drum', dX - 10, 428, 64, 52)) T.paper(T.world, [['rect', { x: dX, y: 440, width: 44, height: 40, rx: 6, fill: C.bean }], ['ellipse', { cx: dX + 22, cy: 440, rx: 22, ry: 8, fill: C.cream }]]);
-      if (!pic(T, T.world, 'horn', gX - 15, 458, 70, 29)) T.paper(T.world, [['path', { d: `M${gX} 470 L${gX + 40} 450 L${gX + 40} 490 Z`, fill: C.gold }]]);
-      if (!pic(T, T.world, 'fiddle', cX - 13, 350, 26, 62)) T.paper(T.world, [['ellipse', { cx: cX, cy: 400, rx: 10, ry: 18, fill: C.bark }], ['rect', { x: cX - 3, y: 360, width: 5, height: 30, fill: C.ink }]]);
-      if (!pic(T, T.world, 'bell', hx('rooster') + 36, 136, 22, 35)) T.paper(T.world, [['path', { d: 'M500 158 Q512 130 524 158 Z', fill: C.gold }]]);
+      if (!pic(T, T.world, 'drum', dX - 8, 428, 60.6, 52)) T.paper(T.world, [['rect', { x: dX, y: 440, width: 44, height: 40, rx: 6, fill: C.bean }], ['ellipse', { cx: dX + 22, cy: 440, rx: 22, ry: 8, fill: C.cream }]]);
+      if (!pic(T, T.world, 'horn', gX - 7, 458.5, 53, 28.5)) T.paper(T.world, [['path', { d: `M${gX} 470 L${gX + 40} 450 L${gX + 40} 490 Z`, fill: C.gold }]]);
+      if (!pic(T, T.world, 'fiddle', cX - 13, 374.5, 26, 37.5)) T.paper(T.world, [['ellipse', { cx: cX, cy: 400, rx: 10, ry: 18, fill: C.bark }], ['rect', { x: cX - 3, y: 360, width: 5, height: 30, fill: C.ink }]]);
+      if (!pic(T, T.world, 'bell', hx('rooster') + 37, 136, 20, 35)) T.paper(T.world, [['path', { d: 'M500 158 Q512 130 524 158 Z', fill: C.gold }]]);
       camSnap(500, 280, 1);
     });
     AudioFX.sfx('bell', .4);
