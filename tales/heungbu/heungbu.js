@@ -5,10 +5,10 @@
   const G2 = { gourd: 'gourd2_closed', gourd_open: 'gourd2_open', vine: 'gourd2_vine' }; // 새 박 그림
   const U = n => `../../assets/v3w/hb_${G2[n] || n}${!G2[n] && NF.has(n) ? 'nf' : ''}.webp`;
   const AR = {
-    heung_hello: .5598, heung_rice: .5232, heung_catch: .4434, heung_wrap: .4973, heung_plant: .8821, heung_saw: .9249, heung_glad: .7967,
-    hwife: .4672, hwife_joy: .4517, nol_proud: .5465, nol_shake: .6528, nol_wrap: .7162, nol_saw: 1.0363, nol_ouch: .8198, nol_mud: .8452,
-    nol_shy: .6181, nwife: .6788, nwife_smile: .6993, swallow_fly: 1.8467, swallow_hurt: .9088, swallow_band: 1.0686, swallow_seed: 2.0284,
-    chicks: 2.0323, chick_fall: 1.0697, gourd: .6558, gourd_open: 1.8166, rice: .9214, treasure: 1.7677, seed: .6432, vine: .9281,
+    heung_hello: .6212, heung_rice: .581, heung_catch: .4806, heung_wrap: .7073, heung_plant: .8343, heung_saw: .9954, heung_glad: .8316,
+    hwife: .4429, hwife_joy: .4573, nol_proud: .5551, nol_shake: .8046, nol_wrap: .9382, nol_saw: 1.0143, nol_ouch: .6929, nol_mud: .961,
+    nol_shy: .6321, nwife: .7027, nwife_smile: .7335, swallow_fly: 1.1971, swallow_hurt: 1.136, swallow_band: 1.2842, swallow_seed: 1.2057,
+    chicks: 1.2811, chick_fall: 1.2373, gourd: .5963, gourd_open: 1.0704, rice: .9294, treasure: 1.2652, seed: .9284, vine: .5342,
   };
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const GROUND = 500;
@@ -127,7 +127,7 @@
       hp.hop(14, 260); sfx('pop'); T.pop(hp.x - 60, hp.y - 280, ['쑥!', '쑥쑥!', '쑥쑥쑥!'][i - 1]);
     } });
     await T.sceneCard('박이 열렸어요', () => { scene('yard', 560); });
-    const vine = spr('vine', 560, 360), hs = spr('heung_saw', 340, 300), hw2 = spr('hwife_joy', 230, 300);
+    const vine = spr('vine', 560, 360), hs = spr('heung_saw', 380, 300), hw2 = spr('hwife_joy', 195, 300); /* 2026-10-20 새 그림이 더 넓어 둘이 겹치던 것 벌림 */
     await say('쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!');
     const gourds = [];
     await T.mash(vine.pos, { count: 3, prompt: '줄기를 톡톡톡! 박을 세어 봐요.', onStep: i => {
@@ -203,7 +203,7 @@
 
     /* 8. 화해와 나눔 */
     await T.sceneCard('흥부네 집', () => { scene('giwa', 500); }); /* 부자가 된 흥부네는 기와집 */
-    const hg = spr('heung_glad', 380, 330), hj = spr('hwife_joy', 260, 310), ns2 = spr('nol_shy', 640, 320);
+    const hg = spr('heung_glad', 415, 330), hj = spr('hwife_joy', 225, 310), ns2 = spr('nol_shy', 650, 320); /* 2026-10-20 새 그림 폭에 맞춰 벌림 */
     await say('놀부는 흙투성이가 되어 흥부네 집을 찾아왔어요.');
     await say('놀부가 고개를 숙였어요. "동생아, 내가 잘못했다. 욕심을 부려서 미안하구나."');
     ns2.hop(10, 400);
