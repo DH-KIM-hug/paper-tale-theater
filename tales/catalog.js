@@ -298,5 +298,30 @@ const TALES = (() => {
       ${eye(74, 44, 1.6)}${eye(82, 44, 1.6)}<path d="M76 50 q2 1.5 4 0" stroke="${c.rd}" stroke-width="2" fill="none" stroke-linecap="round"/>
       <circle cx="120" cy="74" r="12" fill="${c.rd}"/><path d="M120 62 q2 -6 6 -7" stroke="${c.bk}" stroke-width="2.5" fill="none"/><path d="M122 61 q8 -6 12 0 q-6 4 -12 0z" fill="${c.pn}"/>
       ${[[18, ''], [34, ''], [130, '']].map(([x]) => `<path d="M${x} 92 v-12 l6 -12 6 12 v12z" fill="${c.rd}"/>`).join('')}</g>` },
+  { id: 'little_mermaid', title: '인어공주', origin: 'world', also: ['princess'], skills: ['size', 'sort', 'heart'], ready: false, making: true,
+    line: '무거운 건 가라앉고 가벼운 건 떠요. 바다 친구와 땅 친구를 가르고, 인어공주의 다정한 양보를 만나요.',
+    en: { title: 'The Little Mermaid', line: 'Heavy things sink and light things float. Sort sea friends from land friends, and meet the little mermaid\'s gentle gift of love.' },
+    art: `<rect width="160" height="110" fill="#2F6F6A"/>
+      <g class="pc"><rect y="92" width="160" height="18" fill="${c.sk}"/>
+      <circle cx="22" cy="90" r="9" fill="${c.ps}"/><circle cx="138" cy="88" r="11" fill="${c.rd}"/>
+      <circle cx="120" cy="24" r="4" fill="${c.cr}"/><circle cx="130" cy="14" r="2.5" fill="${c.cr}"/><circle cx="112" cy="38" r="2.5" fill="${c.cr}"/>
+      <path d="M70 62 q-18 14 -26 30 l14 -2 l2 10 q14 -16 22 -34z" fill="#7FBFB5"/><path d="M62 72 q6 4 12 0 M58 80 q6 4 12 0" stroke="#4F9A90" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M66 44 h20 l4 20 h-28z" fill="${c.cr}"/>
+      <circle cx="76" cy="34" r="14" fill="${c.sk}"/>
+      <path d="M62 32 a14 14 0 0 1 28 0 v4 q-2 -6 -8 -8 q-6 2 -12 0 q-6 2 -8 8z" fill="${c.gd}"/><path d="M88 34 q10 14 4 32 q-4 -8 -8 -12z" fill="${c.gd}"/>
+      ${eye(71, 36, 1.5)}${eye(80, 36, 1.5)}<path d="M73 42 q3 2 6 0" stroke="${c.rd}" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M86 50 q14 -10 20 -24" stroke="${c.sk}" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M118 44 v16 m-8 -6 q8 10 16 0 m-8 -22 a3 3 0 1 0 0.1 0" stroke="${c.dk}" stroke-width="3" fill="none" stroke-linecap="round"/></g>` },
+  { id: 'beauty_beast', title: '미녀와 야수', origin: 'world', also: ['princess'], skills: ['size', 'position', 'order'], ready: false, making: true,
+    line: '장미가 많은 덤불과 적은 덤불, 탁자 위·아래·옆, 아침·낮·밤. 겉모습이 아니라 마음을 봐요.',
+    en: { title: 'Beauty and the Beast', line: 'More or fewer roses, on, under and beside the table, morning, noon and night. Look at the heart, not the looks.' },
+    art: `<rect width="160" height="110" fill="${c.cr}"/>
+      <g class="pc"><rect y="84" width="160" height="26" fill="${c.sn}"/><rect y="60" width="160" height="10" fill="${c.gy}"/>
+      <circle cx="108" cy="38" r="9" fill="${c.bk}"/><circle cx="136" cy="38" r="9" fill="${c.bk}"/>
+      <rect x="96" y="52" width="52" height="40" rx="18" fill="${c.bk}"/><rect x="108" y="66" width="28" height="26" rx="8" fill="${c.ind}"/>
+      <circle cx="122" cy="46" r="20" fill="${c.bk}"/><ellipse cx="122" cy="54" rx="9" ry="6" fill="${c.sk}"/>${eye(115, 44, 2.6)}${eye(129, 44, 2.6)}
+      <path d="M36 92 L42 60 Q52 54 62 60 L68 92Z" fill="${c.pn}"/><rect x="46" y="70" width="12" height="22" fill="${c.cr}"/>
+      <circle cx="52" cy="48" r="12" fill="${c.bk}"/><circle cx="52" cy="51" r="9" fill="${c.sk}"/><circle cx="62" cy="40" r="3" fill="${c.gd}"/>${eye(49, 51, 1.4)}${eye(55, 51, 1.4)}
+      <path d="M78 92 v-22" stroke="${c.pn}" stroke-width="2.5"/><circle cx="78" cy="64" r="7" fill="${c.rd}"/><circle cx="78" cy="64" r="3" fill="#C8524A"/></g>` },
   ];
 })();
