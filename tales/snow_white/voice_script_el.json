@@ -1,8 +1,8 @@
 {
- "notes": "ElevenLabs 목소리 배정: nar=Lily(옆 동화 신데렐라·콩쥐팥쥐는 Huelyn이라 겹치지 않게 Lily), snow=Annie(여자아이), queen=Matilda(차갑고 우아하게, 무섭지 않게), mirror=Bella(고요하고 반짝이는 소리), hunter=Brian(안쓰럽고 부드럽게), granny=Huelyn(왕비의 변장 목소리라 왕비와 다른 목소리), prince=Eric, 난쟁이 일곱=dwarfa Namchun(맏이)·dwarfb Roger·dwarfc Callum·dwarfd Bill·dwarfe Manbo·dwarff Hopsi·dwarfg Peanut(막내, 꼬마 말투). 합창 줄(ch1~ch6)은 일곱 목소리가 같은 문장을 따로 녹음하고 mix_chorus_el.py가 겹친다.",
+ "notes": "ElevenLabs 목소리 배정: nar=Lily(옆 동화 신데렐라·콩쥐팥쥐는 Huelyn이라 겹치지 않게 Lily), snow=Luna(부드러운 어린 여성 목소리, 착하고 믿음직한 소녀로 가볍게), queen=Matilda(차갑고 우아하게, 무섭지 않게), mirror=Bella(고요하고 반짝이는 소리), hunter=Brian(안쓰럽고 부드럽게), granny=Huelyn(왕비의 변장 목소리라 왕비와 다른 목소리), prince=Eric, 난쟁이 일곱=dwarfa Namchun(맏이)·dwarfb Roger·dwarfc Callum·dwarfd Bill·dwarfe Manbo·dwarff Hopsi·dwarfg Peanut(막내, 꼬마 말투). 합창 줄(ch1~ch6)은 일곱 목소리가 같은 문장을 따로 녹음하고 mix_chorus_el.py가 겹친다.",
  "voices": {
   "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "snow": "Lb7qkOn5hF8p7qfCDH8q",
+  "snow": "Ss1VfT7ri4lqnvTDWII0",
   "queen": "XrExE9yKIg1WjnnlVkGX",
   "mirror": "hpp4J3VqNfWAUOO0d1Us",
   "hunter": "nPczCjzI2devNBz1zQrb",
@@ -328,22 +328,22 @@
    ]
   },
   {
-   "text": "이 침대는 발이 쑥 나와요.",
+   "text": "이 침대는 너무 짧아요. 다리가 안 펴져요.",
    "segs": [
     [
      "snow",
-     "이 침대는 발이 쑥 나와요.",
+     "이 침대는 너무 짧아요. 다리가 안 펴져요.",
      "toneup",
      "[amused, childlike, trying out the bed, giggling]"
     ]
    ]
   },
   {
-   "text": "이 침대는 머리가 삐죽…",
+   "text": "이 침대는 불편해요. 발끝이 쿵 닿아요.",
    "segs": [
     [
      "snow",
-     "이 침대는 머리가 삐죽…",
+     "이 침대는 불편해요. 발끝이 쿵 닿아요.",
      "toneup",
      "[amused, childlike, trying out the bed, giggling]"
     ]

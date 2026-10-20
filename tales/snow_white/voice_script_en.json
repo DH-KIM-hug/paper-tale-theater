@@ -237,23 +237,23 @@
    ]
   },
   {
-   "text": "이 침대는 발이 쑥 나와요.",
-   "en": "This bed makes my feet stick out.",
+   "text": "이 침대는 너무 짧아요. 다리가 안 펴져요.",
+   "en": "This bed is too short. My legs won't stretch out.",
    "segs": [
     [
      "snow",
-     "This bed makes my feet stick out.",
+     "This bed is too short. My legs won't stretch out.",
      "toneup"
     ]
    ]
   },
   {
-   "text": "이 침대는 머리가 삐죽…",
-   "en": "This bed makes my head poke out...",
+   "text": "이 침대는 불편해요. 발끝이 쿵 닿아요.",
+   "en": "This bed is uncomfortable. My toes bump the end.",
    "segs": [
     [
      "snow",
-     "This bed makes my head poke out...",
+     "This bed is uncomfortable. My toes bump the end.",
      "toneup"
     ]
    ]
@@ -1180,10 +1180,10 @@
   "사과 할머니": "The Apple Granny",
   "유리관": "Glass Coffin",
   "깨어나요": "Waking Up",
-  "쑥!": "Poke!",
+  "끙!": "Ugh!",
   "삐걱!": "Creak!",
   "똑똑!": "Knock, knock!",
-  "삐죽!": "Poke!",
+  "쿵!": "Thud!",
   "새근새근": "Zzz",
   "쏙!": "Snug!",
   "영차!": "Heave-ho!",

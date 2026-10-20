@@ -16,7 +16,7 @@
     prop_door_closed: 1.0063, prop_door_open: .9756, prop_table: 2.2556, prop_chair: .7929, prop_chair_7: .7857,
     prop_bed1: 1.5857, prop_bed2: 1.5857, prop_bed3: 1.5786, prop_bed4: 1.5857, prop_bed5: 1.5857, prop_bed6: 1.5857, prop_bed7: 1.5857,
     prop_bed_big: 1.5, prop_planks: 1.1938, prop_glow: .98, prop_petals: 1.0526,
-    snow_bedfeet: 1.6238, snow_bedhead: 1.6095, snow_bedcurl: 1.519, prop_mirror_face: .9875, prop_lantern: .6833 };
+    snow_bedknees: 1.5738, snow_bedtoes: 1.5786, snow_bedcurl: 1.519, prop_mirror_face: .9875, prop_lantern: .6833 };
   const BGS = ['queen_room', 'forest', 'house_front', 'house_table', 'house_bed', 'hill'];
   const bgSrc = k => AS + 'sw_bg_' + k + '.webp', artSrc = k => AS + 'sw_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 그림이 무대 1000×560을 덮게 */
@@ -124,14 +124,14 @@
     await Promise.race([Promise.all(loads), sleep(4000)]);
 
     /* ---- 배우 ---- (높이는 자세마다 머리 크기가 서 있을 때와 같아지게 잰 값) */
-    const snow = mk(T, { stand: ['snow_stand', H_SNOW, 'front'], flee: ['snow_flee', 167, 'left'], eat: ['snow_eat', H_SNOW, 'front'],
+    const snow = mk(T, { stand: ['snow_stand', H_SNOW, 'front'], flee: ['snow_flee', 167, 'right'], eat: ['snow_eat', H_SNOW, 'front'],
       receive: ['snow_receive', H_SNOW, 'front'], awake: ['snow_awake', 152, 'front'],
       chair: ['snow_chair', 176, 'right'],                 /* 작은 의자째 그린 앉은 그림 (의자는 그림 왼쪽, 얼굴은 오른쪽) */
       /* 작은 침대째 그린 누운 그림 3장: 침대 부분이 BED_H 침대와 같은 크기가 되는 높이 */
-      bedfeet: ['snow_bedfeet', 150, 'front'], bedhead: ['snow_bedhead', 146, 'front'], bedcurl: ['snow_bedcurl', 146, 'front'],
+      bedknees: ['snow_bedknees', 140, 'front'], bedtoes: ['snow_bedtoes', 140, 'front'], bedcurl: ['snow_bedcurl', 146, 'front'],
       coffin: ['snow_bedsleep', 98, 'left'] });
-    const BED_DX = { bedfeet: 10, bedhead: -16, bedcurl: 0 };   /* 그림 속 침대 가운데를 침대 자리에 */
-    const queen = mk(T, { mirror: ['queen_mirror', 240, 'front'], fist: ['queen_fist', 240, 'front'] });
+    const BED_DX = { bedknees: 0, bedtoes: 0, bedcurl: 0 };   /* 그림 속 침대 가운데를 침대 자리에 */
+    const queen = mk(T, { mirror: ['queen_mirror', 240, 'right'], fist: ['queen_fist', 240, 'right'] }); // 그림은 오른쪽을 본다 → 왼쪽 거울을 보게 뒤집는다 (2026-10-20)
     const hunter = prop(T, 'hunter_shake', 238);
     const dwarfs = prop(T, 'dwarfs_row', 150);
     const worry = prop(T, 'dwarfs_worry', 150);
@@ -156,7 +156,7 @@
     const mirrorRoom = () => {
       scene('queen_room');
       put(T, mirror, X(250, 385), MY);
-      put(T, queen, X(470, 560), 528, { look: 'mirror' });
+      put(T, queen, X(470, 560), 528, { look: 'mirror', to: 'left' });
       return mirrorFace(T, X(250, 385), MCY);
     };
 
@@ -254,7 +254,7 @@
     const BS = BED_H / 100, BY_B = 468, BY_F = 556;
     const BPOS = { 2: [170, BY_B], 3: [390, BY_B], 4: [610, BY_B], 5: [830, BY_B], 0: [160, BY_F], 1: [500, BY_F], 6: [840, BY_F] };
     const layBeds = () => { [2, 3, 4, 5, 0, 1, 6].forEach(i => put(T, beds[i], BPOS[i][0], BPOS[i][1], { s: BS })); };
-    /* 누운 백설: 침대째 그린 그림으로 그 침대를 바꿔 끼운다 (백설은 제 크기, 침대는 작아서 발이나 머리가 나온다) */
+    /* 누운 백설: 침대째 그린 그림으로 그 침대를 바꿔 끼운다 (침대가 짧아 무릎이 올라오고 발끝이 닿는다) */
     let lying = -1;
     const onBed = (i, look) => {
       if (lying >= 0) beds[lying].pos.style.display = '';
@@ -268,10 +268,10 @@
       if (P) camSnap(160, 280, 1);
     }, beds[0].pos);
     await say('방에는 작은 침대가 나란히 놓여 있었어요.');
-    onBed(0, 'bedfeet'); popSfx(T); snow.wiggle(3, 420); T.pop(300, BY_F - 120, tr('쑥!'));
-    await say('이 침대는 발이 쑥 나와요.');
-    follow(500, 500); onBed(1, 'bedhead'); popSfx(T); snow.wiggle(3, 420); T.pop(390, BY_F - 175, tr('삐죽!'));
-    await say('이 침대는 머리가 삐죽…');
+    onBed(0, 'bedknees'); popSfx(T); snow.wiggle(3, 420); T.pop(300, BY_F - 120, tr('끙!'));
+    await say('이 침대는 너무 짧아요. 다리가 안 펴져요.');
+    follow(500, 500); onBed(1, 'bedtoes'); popSfx(T); snow.wiggle(3, 420); T.pop(390, BY_F - 175, tr('쿵!'));
+    await say('이 침대는 불편해요. 발끝이 쿵 닿아요.');
     follow(840, 700); onBed(6, 'bedcurl'); sfx(T, 'paper_down', () => popSfx(T)); T.pop(840, BY_F - 170, tr('쏙!'));
     await say('몸을 동그랗게 웅크리면… 조금 작지만 포근해요. 잘 자요…');
     T.pop(790, BY_F - 175, tr('새근새근'));
@@ -413,38 +413,39 @@
     await say('숲속 일곱 난쟁이 집의 백설공주가 제일 예뻐요.');
     queen.look('fist'); T.shake(); sfx(T, 'thud'); queen.hop(14, 300);
     await sleep(500);
-    /* 난쟁이 집 앞. 백설은 문을 열지 않고 창문 밖으로 몸을 내밀어 사과를 받는다 (원작: 문은 열지 않음).
-       창틀(SILL) 아래는 집 벽 뒤라 보이지 않게 자른다 */
-    const WX = 157, SILL = 303;
+    /* 난쟁이 집 앞. 백설은 문을 열지 않고 집 안에서 창문으로 내다보며 사과를 받는다 (원작: 문은 열지 않음).
+       그림 속 창문 구멍(WX·SILL, 폭 약 37·높이 44)만 보이게 자르고, 몸은 집 안(어두운 방)에 있어 벽 앞으로 나오지 않는다 */
+    const WX = 162, SILL = 306, WS = .36;
     let winG;
     await T.sceneCard(tr('사과 할머니'), () => {
       scene('house_front');
       put(T, door, 314, 339, { look: 'closed' });
       winG = T.el('g', {}, T.world);
       const id = 'swWin' + (++uid);
-      T.el('rect', { x: 40, y: -40, width: 300, height: SILL + 40 }, T.el('clipPath', { id }, winG));
+      T.el('rect', { x: WX - 17, y: SILL - 44, width: 34, height: 44, rx: 15 }, T.el('clipPath', { id }, winG));
       winG.setAttribute('clip-path', `url(#${id})`);
-      put(T, snow, WX, SILL + 64, { look: 'receive', s: FAR }); winG.appendChild(snow.pos);
+      T.el('rect', { x: WX - 20, y: SILL - 48, width: 40, height: 52, fill: '#4A3626' }, winG);   /* 창 너머 어두운 방 */
+      put(T, snow, WX, SILL + 35, { look: 'receive', s: WS }); winG.appendChild(snow.pos);
       put(T, granny, 560, 356, { to: 'left', s: FAR });
       camSnap(X(280, 250), 280, P ? 1.5 : 1.7);
     }, snow.pos);
-    await Promise.all([say('왕비는 할머니로 변장하고 빨간 사과를 들고 숲으로 갔어요.'), granny.move(250, 356, 2400)]);
+    await Promise.all([say('왕비는 할머니로 변장하고 빨간 사과를 들고 숲으로 갔어요.'), granny.move(262, 356, 2400)]);
     const handX = () => granny.x - 215 * .765 * .42 * FAR, handY = 356 - 215 * .52 * FAR;
     put(T, apple, handX(), handY, { look: 'whole', s: FAR }); fadeIn(apple, 300);
     await say('사과 사세요~ 아주 맛있는 사과란다.');
     snow.wiggle(4, 500);
     await say('문은 열면 안 돼요. 난쟁이들과 약속했거든요.');
     await say('그럼 창문으로 하나만 맛보렴.');
-    await apple.move(WX + 2, SILL - 6, 800);
+    apple.setScale(.5); await apple.move(WX + 6, SILL - 8, 800);
     sfx(T, 'pop');
     await sleep(400);
-    apple.look('bitten'); sfx(T, 'chomp', () => popSfx(T)); T.pop(WX, SILL - 90, tr('아삭!'));
+    apple.look('bitten'); sfx(T, 'chomp', () => popSfx(T)); T.pop(WX, SILL - 60, tr('아삭!'));
     const fall = (async () => {
       await sleep(1600);
       hide(apple);
       sfx(T, 'slide_down');
-      await snow.move(WX, SILL + 64 + 140, 1500, 'ease-in');  /* 창 아래로 스르르 (벽 뒤로 사라진다) */
-      hide(snow);
+      await snow.move(WX, SILL + 35 + 70, 1500, 'ease-in');  /* 창틀 아래로 스르르 (구멍 밖은 잘려 안 보인다) */
+      hide(snow); winG.style.display = 'none';   /* 닫힌 창으로 돌아간다 */
       granny.turn('right');
       await granny.move(560, 356, 1600);
       hide(granny);

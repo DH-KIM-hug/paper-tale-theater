@@ -34,7 +34,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "고맙습니다, 아저씨.": {
   "t": "Thank you, mister.",
-  "c": "audio/el/snow_white/en/snow_1fd0343e86.mp3"
+  "c": "audio/el/snow_white/en/snow_a66b2c98f9.mp3"
  },
  "백설공주는 어두운 숲을 혼자 달리고 또 달렸어요.": {
   "t": "Snow White ran and ran through the dark forest, all alone.",
@@ -46,7 +46,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어머, 정말 작은 집이네. 계세요? 아무도 안 계세요?": {
   "t": "Oh, what a tiny house! Hello? Is anybody home?",
-  "c": "audio/el/snow_white/en/snow_58605faf89.mp3"
+  "c": "audio/el/snow_white/en/snow_5e980b081f.mp3"
  },
  "문을 톡 두드려 볼까요?": {
   "t": "Shall we knock on the door? Tap!",
@@ -62,7 +62,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "배가 너무 고파요. 한 접시에서 다 먹으면 미안하니까, 조금씩만 먹을게요.": {
   "t": "I am so hungry. It would be rude to eat everything from one plate, so I will only eat a little.",
-  "c": "audio/el/snow_white/en/snow_1f4d18fe89.mp3"
+  "c": "audio/el/snow_white/en/snow_f68b750ce1.mp3"
  },
  "백설공주는 접시마다 한 입씩, 컵마다 한 모금씩 먹었어요.": {
   "t": "Snow White took one bite from each plate and one sip from each cup.",
@@ -70,27 +70,27 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "의자가 정말 작네. 조금 작지만… 영차, 앉았다!": {
   "t": "Oh, the chair is so small. A little tight, but... heave-ho, I sat down!",
-  "c": "audio/el/snow_white/en/snow_77e20e2a27.mp3"
+  "c": "audio/el/snow_white/en/snow_f1d22ef1b0.mp3"
  },
  "하아암, 너무 졸려요.": {
   "t": "Haaaam, I am so sleepy.",
-  "c": "audio/el/snow_white/en/snow_a4a9e33273.mp3"
+  "c": "audio/el/snow_white/en/snow_f12739d236.mp3"
  },
  "방에는 작은 침대가 나란히 놓여 있었어요.": {
   "t": "In the next room, tiny beds stood side by side.",
   "c": "audio/el/snow_white/en/nar_952376b8d6.mp3"
  },
- "이 침대는 발이 쑥 나와요.": {
-  "t": "This bed makes my feet stick out.",
-  "c": "audio/el/snow_white/en/snow_874155d881.mp3"
+ "이 침대는 너무 짧아요. 다리가 안 펴져요.": {
+  "t": "This bed is too short. My legs won't stretch out.",
+  "c": "audio/el/snow_white/en/snow_f3e187dbe9.mp3"
  },
- "이 침대는 머리가 삐죽…": {
-  "t": "This bed makes my head poke out...",
-  "c": "audio/el/snow_white/en/snow_3e137f0bb8.mp3"
+ "이 침대는 불편해요. 발끝이 쿵 닿아요.": {
+  "t": "This bed is uncomfortable. My toes bump the end.",
+  "c": "audio/el/snow_white/en/snow_79e1fa0d03.mp3"
  },
  "몸을 동그랗게 웅크리면… 조금 작지만 포근해요. 잘 자요…": {
   "t": "If I curl up round... it is a little small, but so cozy. Good night...",
-  "c": "audio/el/snow_white/en/snow_4d42c713ce.mp3"
+  "c": "audio/el/snow_white/en/snow_aa81a4af17.mp3"
  },
  "백설공주는 스르르 잠이 들었어요.": {
   "t": "Snow White drifted off to sleep.",
@@ -134,11 +134,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "깜짝이야! 저는 백설공주예요. 갈 곳이 없어요. 여기서 지내도 될까요?": {
   "t": "Oh my! I am Snow White. I have nowhere to go. May I stay here?",
-  "c": "audio/el/snow_white/en/snow_a9d802604f.mp3"
+  "c": "audio/el/snow_white/en/snow_fd149fcbf2.mp3"
  },
  "네, 약속할게요.": {
   "t": "Yes, I promise!",
-  "c": "audio/el/snow_white/en/snow_46e2da61a5.mp3"
+  "c": "audio/el/snow_white/en/snow_20e0d3f471.mp3"
  },
  "백설공주는 집안일을 하고, 난쟁이들은 산에서 일했어요. 모두 사이좋게 지냈어요.": {
   "t": "Snow White did the housework, and the dwarfs worked in the mountains. They all got along happily.",
@@ -150,7 +150,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "와아, 고맙습니다!": {
   "t": "Wow, thank you!",
-  "c": "audio/el/snow_white/en/snow_956625da3b.mp3"
+  "c": "audio/el/snow_white/en/snow_cc0cf60ba1.mp3"
  },
  "침대가 몇 개일까요? 톡 눌러 봐요.": {
   "t": "How many beds are there? Tap to find out!",
@@ -246,7 +246,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "모두 잘 자요. 함께 지내서 행복해요.": {
   "t": "Good night, everyone. I am so happy to be together.",
-  "c": "audio/el/snow_white/en/snow_ab7209f980.mp3"
+  "c": "audio/el/snow_white/en/snow_85b0f6d65d.mp3"
  },
  "숲속 일곱 난쟁이 집의 백설공주가 제일 예뻐요.": {
   "t": "Snow White, in the seven dwarfs' house in the forest, is the fairest.",
@@ -262,7 +262,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "문은 열면 안 돼요. 난쟁이들과 약속했거든요.": {
   "t": "I must not open the door. I promised the dwarfs.",
-  "c": "audio/el/snow_white/en/snow_2648f0276b.mp3"
+  "c": "audio/el/snow_white/en/snow_843534b234.mp3"
  },
  "그럼 창문으로 하나만 맛보렴.": {
   "t": "Then just take one little taste through the window, dear.",
@@ -298,7 +298,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어머, 제가 오래 잤나 봐요.": {
   "t": "Oh my, I must have slept for a long time.",
-  "c": "audio/el/snow_white/en/snow_ebf2dfdb04.mp3"
+  "c": "audio/el/snow_white/en/snow_0b63811da3.mp3"
  },
  "이제 괜찮아요. 함께 성으로 가요.": {
   "t": "You are all right now. Let us go to the castle together.",
