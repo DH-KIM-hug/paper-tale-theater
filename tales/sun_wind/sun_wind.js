@@ -48,17 +48,18 @@
   }
   /* 나그네 자세: [폭, 높이, 발끝 x 어긋남, 눈 높이, 눈 사이(크기 기준)] — 발끝이 (0,0).
      그림마다 머리·몸 비율이 달라서(어깨에 건 외투·반팔·우비는 머리가 크다) 머리 크기와 눈 높이 차이를 반반 나눠 맞췄다 → 자세가 바뀌어도 크게 튀지 않는다 */
+  /* 2026-10-20 새 그림(머리 작고 호리호리한 나그네, 눈 사이 ~25): 키 250 통일, 폭·눈 높이는 새 그림에서 다시 잰 값 */
   const TRAV = {
-    trav_walk: [126, 250, 1, -182, 35], trav_walk_nohat: [126, 234.6, 1, -182, 35], trav_hold: [107, 247, 0, -185, 34.5],
-    trav_fan: [143, 254, -2, -189, 33.8], trav_shoulder: [133, 232, 1.9, -157, 40.6], trav_shirt: [159, 249, 0, -162, 39.3],
-    trav_sit: [162, 251, 1.3, -191, 33.5], trav_scarf: [129, 256, .3, -188, 34], trav_rain: [136, 232, .9, -157, 40.7],
+    trav_walk: [106, 250, .2, -196, 24.7], trav_walk_nohat: [86, 250, 0, -197, 25], trav_hold: [96, 250, -.7, -199, 25.7],
+    trav_fan: [141, 250, -3.8, -196, 23.4], trav_shoulder: [117, 250, 8.6, -196, 25], trav_shirt: [101, 250, .5, -196, 25],
+    trav_sit: [114, 250, .8, -194, 25.7], trav_scarf: [105, 250, .3, -196, 24.7], trav_rain: [111, 250, -.2, -196, 25],
   };
-  const HAT_ART = [120, 57]; // 걷기 그림 속 모자와 같은 크기
-  const HOLD_HAT_Y = -226;   // '덜덜' 그림(모자 없음) 머리에 얹을 모자 가운데
+  const HAT_ART = [80, 58]; // 새 모자 그림(비스듬한 중절모 171×124)
+  const HOLD_HAT_Y = -252;   // '덜덜' 그림(모자 없음) 머리에 얹을 모자 가운데
   const SIT_SEAT = 82;       // 앉은 그림: 발끝에서 엉덩이(바위 윗면)까지 (scale 1.2 기준 무대 단위)
   /* 해: 가운데 (0,0), 햇살 끝까지 지름 224. 바람: 구름 몸통 가운데가 (0,0), 꼬리는 왼쪽 */
   const SUN_D = 224;
-  const WIND_BOX = { wind: [-165, -63, 267, 137], wind_blow: [-154, -63, 246, 140], wind_tired: [-157, -71, 264, 156] };
+  const WIND_BOX = { wind: [-135, -63, 223, 137], wind_blow: [-137, -63, 227, 140], wind_tired: [-153, -71, 253, 156] };
   const cutArt = (T, key, sfx, hold, onShow) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx, hold }], { hold, onShow }) : null);
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). zoom: (cx, cy) 기준으로 키운다 */
   const BG_EDGE = { sky: ['#a4c9da', '#7a807e'], high: ['#bcc29a', '#bcc29a'], field: ['#bedfe9', '#77693f'], stream: ['#b6d5df', '#4f827f'], snow: ['#dbeefb', '#f6f9fd'] };
@@ -175,7 +176,7 @@
       Object.keys(TRAV).forEach(k => { const [w, h, dx] = TRAV[k]; const p = pic(T, g, k, -w / 2 + dx, -h, w, h); if (p) { p.style.display = 'none'; P.poses[k] = p; } });
       // 모자 없는 그림('덜덜')에 얹는 모자: 모자가 머리에 있을 때만 보인다
       P.hat = el('g', {}, g);
-      hatArt(T, P.hat).setAttribute('transform', `translate(0 ${HOLD_HAT_Y}) scale(${116 / HAT_ART[0]})`);
+      hatArt(T, P.hat).setAttribute('transform', `translate(0 ${HOLD_HAT_Y}) scale(${68 / HAT_ART[0]})`);
       P.sweat = el('g', { opacity: 0 }, g);
       [[56, -22], [-60, -8]].forEach(([x, y]) => el('path', { d: `M${x} ${y} q-8 14 0 17 q8 -3 0 -17 Z`, fill: '#9CC7E6' }, P.sweat));
       P.cloth = el('g', {}, g); P.mouth = el('g', {}, g);
@@ -402,7 +403,7 @@
   function streamBG(T) { // 7. 개울가
     const { el, paper } = T, b = T.bg;
     if (bgImage(T, 'stream')) { // 바위는 그림 왼쪽(윗면 y≈300). 개어 둔 외투는 바위 오른쪽 풀밭에
-      const cw = 70, ch = cw * 435 / 360;
+      const cw = 70, ch = cw * 360 / 360;
       if (!pic(T, b, 'coat', 372 - cw / 2, 352 - ch, cw, ch)) paper(b, [['path', { d: 'M330 330 L410 322 L416 348 L326 352 Z', fill: C.bean }]]);
       return { tufts: el('g', {}, b), art: true, seat: [215, 410] };
     }
@@ -447,9 +448,9 @@
     return g;
   }
   const ICON = {
-    coat: (T, g) => pic(T, g, 'coat', -46, -58, 92, 92 * 435 / 360) || T.paper(g, [['path', { d: 'M-36 -48 L-12 -54 L0 -40 L12 -54 L36 -48 L58 26 L42 32 L34 4 L38 56 L-38 56 L-34 4 L-42 32 L-58 26 Z', fill: C.bean }],
+    coat: (T, g) => pic(T, g, 'coat', -46, -58, 92, 92 * 360 / 360) || T.paper(g, [['path', { d: 'M-36 -48 L-12 -54 L0 -40 L12 -54 L36 -48 L58 26 L42 32 L34 4 L38 56 L-38 56 L-34 4 L-42 32 L-58 26 Z', fill: C.bean }],
       ['path', { d: 'M-12 -54 L0 -32 L12 -54 Z', fill: C.collar }], ...[-18, 2, 22, 42].map(y => ['circle', { cx: 0, cy: y, r: 5, fill: C.gold }])]),
-    shirt: (T, g) => pic(T, g, 'shirt', -54, -38, 108, 108 * 226 / 333) || T.paper(g, [['path', { d: 'M-34 -40 L-14 -48 Q0 -38 14 -48 L34 -40 L56 -12 L38 0 L32 -10 L32 46 L-32 46 L-32 -10 L-38 0 L-56 -12 Z', fill: C.shirt }]]),
+    shirt: (T, g) => pic(T, g, 'shirt', -54, -38, 108, 108 * 204 / 230) || T.paper(g, [['path', { d: 'M-34 -40 L-14 -48 Q0 -38 14 -48 L34 -40 L56 -12 L38 0 L32 -10 L32 46 L-32 46 L-32 -10 L-38 0 L-56 -12 Z', fill: C.shirt }]]),
   };
 
   /* ================= 이야기 ================= */
@@ -528,7 +529,7 @@
       W = wind(T, 150, 180, .8);
       if (T.portrait()) camSnap(395, 280, Math.min(1, T.viewWidth() / 2 / 320)); // 세로 화면: 바람과 나그네가 함께 보이게
     }, N.pos);
-    const hatHead = () => [N.x, N.y - 222 * N.scale];
+    const hatHead = () => [N.x, N.y - 228 * N.scale];
     let flying = null;
     await say('바람이 볼을 빵빵하게 부풀렸어요.');
     await say('바람을 톡 눌러서 후~ 불어 줘요!');
@@ -796,10 +797,10 @@
       M8 = traveler(T, 500, 520, 1.15, 'shirt', 'down'); M8.P.face('smile');
       btns.sun = sun(T, 130, 200, .55);
       // 비구름 그림(300×159, 구름 몸통만)은 가운데 위에, 빗방울 셋은 코드로 그 아래. 눈구름 그림(300×290)은 눈송이까지 한 장
-      btns.rain = T.actor(T.world, 370, 200, g => (pic(T, g, 'cloud_rain', -72, -52, 144, 144 * 159 / 300) && T.paper(g, [-30, 0, 30].map(x => ['path', { d: `M${x} 34 q-7 12 0 15 q7 -3 0 -15 Z`, fill: '#6E8FB0' }]))) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: C.rain }], ['circle', { cx: 6, cy: -18, r: 42, fill: C.rain }], ['circle', { cx: 44, cy: 6, r: 32, fill: C.rain }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: C.rain }],
+      btns.rain = T.actor(T.world, 370, 200, g => (pic(T, g, 'cloud_rain', -72, -52, 144, 144 * 159 / 160) && T.paper(g, [-30, 0, 30].map(x => ['path', { d: `M${x} 34 q-7 12 0 15 q7 -3 0 -15 Z`, fill: '#6E8FB0' }]))) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: C.rain }], ['circle', { cx: 6, cy: -18, r: 42, fill: C.rain }], ['circle', { cx: 44, cy: 6, r: 32, fill: C.rain }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: C.rain }],
         ...[-30, 0, 30].map(x => ['path', { d: `M${x} 52 q-7 12 0 15 q7 -3 0 -15 Z`, fill: '#6E8FB0' }])]));
       btns.wind = wind(T, 630, 200, .5);
-      btns.snowc = T.actor(T.world, 870, 200, g => pic(T, g, 'cloud_snow', -72, -66, 144, 144 * 290 / 300) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: '#E6EEF4' }], ['circle', { cx: 6, cy: -18, r: 42, fill: '#E6EEF4' }], ['circle', { cx: 44, cy: 6, r: 32, fill: '#E6EEF4' }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: '#E6EEF4' }],
+      btns.snowc = T.actor(T.world, 870, 200, g => pic(T, g, 'cloud_snow', -72, -66, 144, 144 * 281 / 300) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: '#E6EEF4' }], ['circle', { cx: 6, cy: -18, r: 42, fill: '#E6EEF4' }], ['circle', { cx: 44, cy: 6, r: 32, fill: '#E6EEF4' }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: '#E6EEF4' }],
         ...[-30, 0, 30].map(x => ['circle', { cx: x, cy: 58, r: 7, fill: C.snow, stroke: C.cloudBack, 'stroke-width': 3 }])]));
       // 세로 화면: 날씨 단추 넷을 가운데로 모으고 살짝 물러서서 모두 보이게 (가로는 그대로)
       if (T.portrait()) {
