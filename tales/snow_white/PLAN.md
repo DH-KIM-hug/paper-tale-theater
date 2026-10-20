@@ -110,3 +110,8 @@
 - 왕자의 깨움은 원작 판본(관을 옮기다 사과 조각이 빠짐), 입맞춤 없음.
 - 왕비의 마지막은 자막 "왕비는 멀리 떠났어요" 한 줄.
 - 톡은 문 열기, 침대 세기 시작, 깨어남 각 한 번, 연타 없음.
+
+## 녹음
+- 기본 목소리는 ElevenLabs(eleven_v4), `?voice=tc` 이면 Typecast. 한국어 `voice_script_el.json`, 영어 `voice_script_en.json`.
+- 녹음: `python3 tools/elevenlabs/gen_tale.py snow_white --model eleven_v4` (영어는 `--lang en` 추가). 녹음 뒤 `check_new.py`로 되풀이 여부를 점검한다.
+- 난쟁이 합창(ch1~ch6)은 일곱 목소리로 따로 녹음한 뒤 `python3 tales/snow_white/mix_chorus_el.py`로 겹쳐 `chorus_el.js`를 만든다 (Typecast 합창은 `mix_chorus.py` → `chorus.js`).

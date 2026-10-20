@@ -1,0 +1,1310 @@
+{
+ "notes": "ElevenLabs 목소리 배정: nar=Lily(옆 동화 신데렐라·콩쥐팥쥐는 Huelyn이라 겹치지 않게 Lily), snow=Annie(여자아이), queen=Matilda(차갑고 우아하게, 무섭지 않게), mirror=Bella(고요하고 반짝이는 소리), hunter=Brian(안쓰럽고 부드럽게), granny=Huelyn(왕비의 변장 목소리라 왕비와 다른 목소리), prince=Eric, 난쟁이 일곱=dwarfa Namchun(맏이)·dwarfb Roger·dwarfc Callum·dwarfd Bill·dwarfe Manbo·dwarff Hopsi·dwarfg Peanut(막내, 꼬마 말투). 합창 줄(ch1~ch6)은 일곱 목소리가 같은 문장을 따로 녹음하고 mix_chorus_el.py가 겹친다.",
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "snow": "Lb7qkOn5hF8p7qfCDH8q",
+  "queen": "XrExE9yKIg1WjnnlVkGX",
+  "mirror": "hpp4J3VqNfWAUOO0d1Us",
+  "hunter": "nPczCjzI2devNBz1zQrb",
+  "granny": "gnWujHp24oqX3I03lRbU",
+  "prince": "cjVigY5qzO86Huf0OWal",
+  "dwarfa": "5ON5Fnz24cnOozEQfGAm",
+  "dwarfb": "CwhRBWXzGAHq8TQ4Fs17",
+  "dwarfc": "N2lVS1w4EtoT3dr4eOWO",
+  "dwarfd": "pqHfZKP75CvOlQylNhV4",
+  "dwarfe": "ZZ4xhVcc83kZBfNIlIIz",
+  "dwarff": "ygoBNrnmTEdu5NtDTmAY",
+  "dwarfg": "rBkiq5ZQ43ogwd6i4uIQ"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "snow": "eleven_v4",
+  "queen": "eleven_v4",
+  "mirror": "eleven_v4",
+  "hunter": "eleven_v4",
+  "granny": "eleven_v4",
+  "prince": "eleven_v4",
+  "dwarfa": "eleven_v4",
+  "dwarfb": "eleven_v4",
+  "dwarfc": "eleven_v4",
+  "dwarfd": "eleven_v4",
+  "dwarfe": "eleven_v4",
+  "dwarff": "eleven_v4",
+  "dwarfg": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "snow": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "queen": {
+   "stability": 0.3,
+   "style": 0.55
+  },
+  "mirror": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "hunter": {
+   "stability": 0.4,
+   "style": 0.4
+  },
+  "granny": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "prince": {
+   "stability": 0.4,
+   "style": 0.4
+  },
+  "dwarfa": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "dwarfb": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "dwarfc": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "dwarfd": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "dwarfe": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "dwarff": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "dwarfg": {
+   "stability": 0.35,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "nar",
+  "snow",
+  "queen",
+  "mirror",
+  "hunter",
+  "granny",
+  "prince",
+  "dwarfa",
+  "dwarfb",
+  "dwarfc",
+  "dwarfd",
+  "dwarfe",
+  "dwarff",
+  "dwarfg"
+ ],
+ "lines": [
+  {
+   "text": "옛날 어느 나라에 눈처럼 하얀 얼굴의 공주가 살았어요. 이름은 백설공주였어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날 어느 나라에 눈처럼 하얀 얼굴의 공주가 살았어요. 이름은 백설공주였어요.",
+     null,
+     "[calm, warm storytelling, once upon a time]"
+    ]
+   ]
+  },
+  {
+   "text": "왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.",
+     null,
+     "[calm, mysterious, gentle wonder]"
+    ]
+   ]
+  },
+  {
+   "text": "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?",
+   "segs": [
+    [
+     "queen",
+     "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?",
+     null,
+     "[icy, elegant, vain, haughty, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "왕비님도 예쁘지만, 백설공주가 더 예뻐요.",
+   "segs": [
+    [
+     "mirror",
+     "왕비님도 예쁘지만, 백설공주가 더 예뻐요.",
+     null,
+     "[calm, soft, shimmering, gentle, kind]"
+    ]
+   ]
+  },
+  {
+   "text": "왕비는 샘이 나서 얼굴이 빨개졌어요.",
+   "segs": [
+    [
+     "nar",
+     "왕비는 샘이 나서 얼굴이 빨개졌어요.",
+     null,
+     "[gentle, slightly tense, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "내가 제일이어야 해! 사냥꾼을 불러라!",
+   "segs": [
+    [
+     "queen",
+     "내가 제일이어야 해! 사냥꾼을 불러라!",
+     "angry",
+     "[angry, jealous, sharp, commanding, stamping foot]"
+    ]
+   ]
+  },
+  {
+   "text": "사냥꾼은 백설공주를 깊은 숲으로 데려갔어요.",
+   "segs": [
+    [
+     "nar",
+     "사냥꾼은 백설공주를 깊은 숲으로 데려갔어요.",
+     null,
+     "[soft, slightly sad, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "공주님, 저는 도저히 못 하겠어요. 멀리멀리 달아나세요.",
+   "segs": [
+    [
+     "hunter",
+     "공주님, 저는 도저히 못 하겠어요. 멀리멀리 달아나세요.",
+     "sad",
+     "[sad, pitying, gentle, kind, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "고맙습니다, 아저씨.",
+   "segs": [
+    [
+     "snow",
+     "고맙습니다, 아저씨.",
+     "happy",
+     "[kind, grateful, sweet, childlike, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "백설공주는 어두운 숲을 혼자 달리고 또 달렸어요.",
+   "segs": [
+    [
+     "nar",
+     "백설공주는 어두운 숲을 혼자 달리고 또 달렸어요.",
+     null,
+     "[soft, gentle suspense, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "날이 저물 무렵, 백설공주는 숲속에서 아주 작은 집을 찾았어요.",
+   "segs": [
+    [
+     "nar",
+     "날이 저물 무렵, 백설공주는 숲속에서 아주 작은 집을 찾았어요.",
+     null,
+     "[calm, hopeful, warm storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "어머, 정말 작은 집이네. 계세요? 아무도 안 계세요?",
+   "segs": [
+    [
+     "snow",
+     "어머, 정말 작은 집이네. 계세요? 아무도 안 계세요?",
+     "toneup",
+     "[surprised, curious, sweet, childlike, calling out]"
+    ]
+   ]
+  },
+  {
+   "text": "문을 톡 두드려 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "문을 톡 두드려 볼까요?",
+     "happy",
+     "[cheerful, inviting, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "삐걱, 문이 열렸어요. 집 안에는 아무도 없었어요.",
+   "segs": [
+    [
+     "nar",
+     "삐걱, 문이 열렸어요. 집 안에는 아무도 없었어요.",
+     null,
+     "[calm, quiet, curious, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "작은 식탁 위에 작은 접시와 작은 컵이 나란히 놓여 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "작은 식탁 위에 작은 접시와 작은 컵이 나란히 놓여 있었어요.",
+     null,
+     "[calm, warm, gentle wonder, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "배가 너무 고파요. 한 접시에서 다 먹으면 미안하니까, 조금씩만 먹을게요.",
+   "segs": [
+    [
+     "snow",
+     "배가 너무 고파요. 한 접시에서 다 먹으면 미안하니까, 조금씩만 먹을게요.",
+     null,
+     "[sweet, shy, hungry, childlike, polite]"
+    ]
+   ]
+  },
+  {
+   "text": "백설공주는 접시마다 한 입씩, 컵마다 한 모금씩 먹었어요.",
+   "segs": [
+    [
+     "nar",
+     "백설공주는 접시마다 한 입씩, 컵마다 한 모금씩 먹었어요.",
+     null,
+     "[calm, cheerful, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "의자가 정말 작네. 조금 작지만… 영차, 앉았다!",
+   "segs": [
+    [
+     "snow",
+     "의자가 정말 작네. 조금 작지만… 영차, 앉았다!",
+     "happy",
+     "[cheerful, effortful, playful, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "하아암, 너무 졸려요.",
+   "segs": [
+    [
+     "snow",
+     "하아암, 너무 졸려요.",
+     null,
+     "[sleepy, yawning, soft, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "방에는 작은 침대가 나란히 놓여 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "방에는 작은 침대가 나란히 놓여 있었어요.",
+     null,
+     "[calm, gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "이 침대는 발이 쑥 나와요.",
+   "segs": [
+    [
+     "snow",
+     "이 침대는 발이 쑥 나와요.",
+     "toneup",
+     "[amused, childlike, trying out the bed, giggling]"
+    ]
+   ]
+  },
+  {
+   "text": "이 침대는 머리가 삐죽…",
+   "segs": [
+    [
+     "snow",
+     "이 침대는 머리가 삐죽…",
+     "toneup",
+     "[amused, childlike, trying out the bed, giggling]"
+    ]
+   ]
+  },
+  {
+   "text": "몸을 동그랗게 웅크리면… 조금 작지만 포근해요. 잘 자요…",
+   "segs": [
+    [
+     "snow",
+     "몸을 동그랗게 웅크리면… 조금 작지만 포근해요. 잘 자요…",
+     null,
+     "[sleepy, cozy, soft, drowsy, whispering goodnight]"
+    ]
+   ]
+  },
+  {
+   "text": "백설공주는 스르르 잠이 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "백설공주는 스르르 잠이 들었어요.",
+     null,
+     "[soft, calm, lullaby-like, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되자, 산에서 일하던 일곱 난쟁이가 집으로 돌아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "밤이 되자, 산에서 일하던 일곱 난쟁이가 집으로 돌아왔어요.",
+     null,
+     "[calm, warm, storytelling, nighttime]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 내 의자에 앉았지?",
+   "segs": [
+    [
+     "dwarfa",
+     "누가 내 의자에 앉았지?",
+     "toneup",
+     "[gruff, surprised, deep, puzzled]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 내 접시에서 먹었지?",
+   "segs": [
+    [
+     "dwarfb",
+     "누가 내 접시에서 먹었지?",
+     "toneup",
+     "[gruff, surprised, puzzled]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 내 빵을 먹었지?",
+   "segs": [
+    [
+     "dwarfc",
+     "누가 내 빵을 먹었지?",
+     "toneup",
+     "[surprised, puzzled, funny]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 내 숟가락을 썼지?",
+   "segs": [
+    [
+     "dwarfd",
+     "누가 내 숟가락을 썼지?",
+     "toneup",
+     "[surprised, puzzled, grumbling]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 내 포크를 썼지?",
+   "segs": [
+    [
+     "dwarfe",
+     "누가 내 포크를 썼지?",
+     "toneup",
+     "[surprised, puzzled, funny, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 내 컵으로 마셨지?",
+   "segs": [
+    [
+     "dwarff",
+     "누가 내 컵으로 마셨지?",
+     "toneup",
+     "[surprised, puzzled, childlike, funny]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 내 침대에 누가 자고 있어!",
+   "segs": [
+    [
+     "dwarfg",
+     "어? 내 침대에 누가 자고 있어!",
+     "toneup",
+     "[loud whisper, amazed, high-pitched, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "아침이 되자 백설공주가 눈을 떴어요.",
+   "segs": [
+    [
+     "nar",
+     "아침이 되자 백설공주가 눈을 떴어요.",
+     null,
+     "[calm, bright, warm storytelling, morning]"
+    ]
+   ]
+  },
+  {
+   "text": "깜짝이야! 저는 백설공주예요. 갈 곳이 없어요. 여기서 지내도 될까요?",
+   "segs": [
+    [
+     "snow",
+     "깜짝이야! 저는 백설공주예요. 갈 곳이 없어요. 여기서 지내도 될까요?",
+     "toneup",
+     "[startled, polite, sweet, childlike, shy, hopeful]"
+    ]
+   ]
+  },
+  {
+   "text": "네, 약속할게요.",
+   "segs": [
+    [
+     "snow",
+     "네, 약속할게요.",
+     "happy",
+     "[earnest, sweet, childlike, promising]"
+    ]
+   ]
+  },
+  {
+   "text": "백설공주는 집안일을 하고, 난쟁이들은 산에서 일했어요. 모두 사이좋게 지냈어요.",
+   "segs": [
+    [
+     "nar",
+     "백설공주는 집안일을 하고, 난쟁이들은 산에서 일했어요. 모두 사이좋게 지냈어요.",
+     "happy",
+     "[cheerful, warm, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "뚝딱뚝딱, 쿵쿵!",
+   "segs": [
+    [
+     "nar",
+     "뚝딱뚝딱, 쿵쿵!",
+     "toneup",
+     "[cheerful, rhythmic, playful, bouncy]"
+    ]
+   ]
+  },
+  {
+   "text": "와아, 고맙습니다!",
+   "segs": [
+    [
+     "snow",
+     "와아, 고맙습니다!",
+     "happy",
+     "[delighted, grateful, bright, childlike]"
+    ]
+   ]
+  },
+  {
+   "text": "침대가 몇 개일까요? 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "침대가 몇 개일까요? 톡 눌러 봐요.",
+     "happy",
+     "[cheerful, inviting, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "이제 잘 시간! 난쟁이들이 침대를 찾아요.",
+   "segs": [
+    [
+     "nar",
+     "이제 잘 시간! 난쟁이들이 침대를 찾아요.",
+     "happy",
+     "[cheerful, warm, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "빨간 침대를 찾아 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "빨간 침대를 찾아 볼까요?",
+     "happy",
+     "[cheerful, playful, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 빨간 침대예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 빨간 침대예요.",
+     "happy",
+     "[gentle, kind, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 빨간 침대!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 빨간 침대!",
+     "happy",
+     "[delighted, bright, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "주황 침대를 찾아 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "주황 침대를 찾아 볼까요?",
+     "happy",
+     "[cheerful, playful, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 주황 침대예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 주황 침대예요.",
+     "happy",
+     "[gentle, kind, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 주황 침대!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 주황 침대!",
+     "happy",
+     "[delighted, bright, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "노란 침대를 찾아 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "노란 침대를 찾아 볼까요?",
+     "happy",
+     "[cheerful, playful, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 노란 침대예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 노란 침대예요.",
+     "happy",
+     "[gentle, kind, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 노란 침대!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 노란 침대!",
+     "happy",
+     "[delighted, bright, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "초록 침대를 찾아 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "초록 침대를 찾아 볼까요?",
+     "happy",
+     "[cheerful, playful, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 초록 침대예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 초록 침대예요.",
+     "happy",
+     "[gentle, kind, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 초록 침대!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 초록 침대!",
+     "happy",
+     "[delighted, bright, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "파란 침대를 찾아 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "파란 침대를 찾아 볼까요?",
+     "happy",
+     "[cheerful, playful, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 파란 침대예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 파란 침대예요.",
+     "happy",
+     "[gentle, kind, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 파란 침대!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 파란 침대!",
+     "happy",
+     "[delighted, bright, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "보라 침대를 찾아 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "보라 침대를 찾아 볼까요?",
+     "happy",
+     "[cheerful, playful, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 보라 침대예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 보라 침대예요.",
+     "happy",
+     "[gentle, kind, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 보라 침대!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 보라 침대!",
+     "happy",
+     "[delighted, bright, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "갈색 침대를 찾아 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "갈색 침대를 찾아 볼까요?",
+     "happy",
+     "[cheerful, playful, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 갈색 침대예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 갈색 침대예요.",
+     "happy",
+     "[gentle, kind, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 갈색 침대!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 갈색 침대!",
+     "happy",
+     "[delighted, bright, cheerful, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "모두 잘 자요. 함께 지내서 행복해요.",
+   "segs": [
+    [
+     "snow",
+     "모두 잘 자요. 함께 지내서 행복해요.",
+     "happy",
+     "[warm, content, sleepy, sweet, childlike, happy]"
+    ]
+   ]
+  },
+  {
+   "text": "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?",
+   "segs": [
+    [
+     "queen",
+     "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?",
+     null,
+     "[icy, elegant, vain, haughty, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "숲속 일곱 난쟁이 집의 백설공주가 제일 예뻐요.",
+   "segs": [
+    [
+     "mirror",
+     "숲속 일곱 난쟁이 집의 백설공주가 제일 예뻐요.",
+     null,
+     "[calm, soft, shimmering, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "왕비는 할머니로 변장하고 빨간 사과를 들고 숲으로 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "왕비는 할머니로 변장하고 빨간 사과를 들고 숲으로 갔어요.",
+     null,
+     "[soft, slightly tense, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "사과 사세요~ 아주 맛있는 사과란다.",
+   "segs": [
+    [
+     "granny",
+     "사과 사세요~ 아주 맛있는 사과란다.",
+     null,
+     "[sweetly coaxing, old woman, warm, singsong]"
+    ]
+   ]
+  },
+  {
+   "text": "문은 열면 안 돼요. 난쟁이들과 약속했거든요.",
+   "segs": [
+    [
+     "snow",
+     "문은 열면 안 돼요. 난쟁이들과 약속했거든요.",
+     null,
+     "[kind, polite, firm, childlike, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 창문으로 하나만 맛보렴.",
+   "segs": [
+    [
+     "granny",
+     "그럼 창문으로 하나만 맛보렴.",
+     null,
+     "[sweetly coaxing, old woman, warm, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "백설공주는 사과를 한 입 베어 물고, 그만 스르르 잠이 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "백설공주는 사과를 한 입 베어 물고, 그만 스르르 잠이 들었어요.",
+     null,
+     "[soft, gentle, calm, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "저녁에 돌아온 난쟁이들은 깜짝 놀랐어요.",
+   "segs": [
+    [
+     "nar",
+     "저녁에 돌아온 난쟁이들은 깜짝 놀랐어요.",
+     null,
+     "[soft, worried, gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "난쟁이들은 백설공주를 맑은 유리관에 눕히고, 날마다 곁을 지켰어요.",
+   "segs": [
+    [
+     "nar",
+     "난쟁이들은 백설공주를 맑은 유리관에 눕히고, 날마다 곁을 지켰어요.",
+     null,
+     "[soft, gentle, tender, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 이웃 나라 왕자님이 숲을 지나가다 백설공주를 보았어요.",
+   "segs": [
+    [
+     "nar",
+     "어느 날, 이웃 나라 왕자님이 숲을 지나가다 백설공주를 보았어요.",
+     null,
+     "[calm, hopeful, warm storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "이 공주님을 제 성으로 모셔 가 정성껏 돌보고 싶어요.",
+   "segs": [
+    [
+     "prince",
+     "이 공주님을 제 성으로 모셔 가 정성껏 돌보고 싶어요.",
+     null,
+     "[kind, gentle, polite, warm, young man]"
+    ]
+   ]
+  },
+  {
+   "text": "그런데 관을 옮기다가 덜컹! 목에 걸렸던 사과 조각이 툭 빠졌어요.",
+   "segs": [
+    [
+     "nar",
+     "그런데 관을 옮기다가 덜컹! 목에 걸렸던 사과 조각이 툭 빠졌어요.",
+     null,
+     "[bright, sudden, surprised, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "백설공주의 손을 톡 눌러 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "백설공주의 손을 톡 눌러 볼까요?",
+     "happy",
+     "[gentle, hopeful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "어머, 제가 오래 잤나 봐요.",
+   "segs": [
+    [
+     "snow",
+     "어머, 제가 오래 잤나 봐요.",
+     "happy",
+     "[gentle, sweet, waking up, childlike, surprised]"
+    ]
+   ]
+  },
+  {
+   "text": "이제 괜찮아요. 함께 성으로 가요.",
+   "segs": [
+    [
+     "prince",
+     "이제 괜찮아요. 함께 성으로 가요.",
+     null,
+     "[kind, gentle, warm, relieved, young man]"
+    ]
+   ]
+  },
+  {
+   "text": "낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.",
+   "segs": [
+    [
+     "nar",
+     "낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.",
+     "happy",
+     "[calm, warm, gentle, wise, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "왕비는 멀리 떠났어요",
+   "segs": [
+    [
+     "nar",
+     "왕비는 멀리 떠났어요",
+     null,
+     "[calm, quiet, gentle, storytelling]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "n1": [
+   [
+    "nar",
+    "하나!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n2": [
+   [
+    "nar",
+    "둘!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n3": [
+   [
+    "nar",
+    "셋!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n4": [
+   [
+    "nar",
+    "넷!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n5": [
+   [
+    "nar",
+    "다섯!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n6": [
+   [
+    "nar",
+    "여섯!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n7": [
+   [
+    "nar",
+    "일곱!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n8": [
+   [
+    "nar",
+    "여덟!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "ch1": [
+   [
+    "dwarfa",
+    "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+    "whisper",
+    "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+   ],
+   [
+    "dwarfb",
+    "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+    "whisper",
+    "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+   ],
+   [
+    "dwarfc",
+    "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+    "whisper",
+    "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+   ],
+   [
+    "dwarfd",
+    "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+    "whisper",
+    "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+   ],
+   [
+    "dwarfe",
+    "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+    "whisper",
+    "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+   ],
+   [
+    "dwarff",
+    "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+    "whisper",
+    "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+   ],
+   [
+    "dwarfg",
+    "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+    "whisper",
+    "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+   ]
+  ],
+  "ch2": [
+   [
+    "dwarfa",
+    "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+    null,
+    "[firm, kind, warning, gruff-but-warm, together]"
+   ],
+   [
+    "dwarfb",
+    "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+    null,
+    "[firm, kind, warning, gruff-but-warm, together]"
+   ],
+   [
+    "dwarfc",
+    "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+    null,
+    "[firm, kind, warning, gruff-but-warm, together]"
+   ],
+   [
+    "dwarfd",
+    "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+    null,
+    "[firm, kind, warning, gruff-but-warm, together]"
+   ],
+   [
+    "dwarfe",
+    "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+    null,
+    "[firm, kind, warning, gruff-but-warm, together]"
+   ],
+   [
+    "dwarff",
+    "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+    null,
+    "[firm, kind, warning, gruff-but-warm, together]"
+   ],
+   [
+    "dwarfg",
+    "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+    null,
+    "[firm, kind, warning, gruff-but-warm, together]"
+   ]
+  ],
+  "ch3": [
+   [
+    "dwarfa",
+    "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+    "happy",
+    "[cheerful, excited, warm, gruff-but-warm]"
+   ],
+   [
+    "dwarfb",
+    "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+    "happy",
+    "[cheerful, excited, warm, gruff-but-warm]"
+   ],
+   [
+    "dwarfc",
+    "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+    "happy",
+    "[cheerful, excited, warm, gruff-but-warm]"
+   ],
+   [
+    "dwarfd",
+    "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+    "happy",
+    "[cheerful, excited, warm, gruff-but-warm]"
+   ],
+   [
+    "dwarfe",
+    "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+    "happy",
+    "[cheerful, excited, warm, gruff-but-warm]"
+   ],
+   [
+    "dwarff",
+    "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+    "happy",
+    "[cheerful, excited, warm, gruff-but-warm]"
+   ],
+   [
+    "dwarfg",
+    "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+    "happy",
+    "[cheerful, excited, warm, gruff-but-warm]"
+   ]
+  ],
+  "ch4": [
+   [
+    "dwarfa",
+    "작은 침대 일곱 개, 큰 침대 하나, 모두 여덟 개!",
+    "happy",
+    "[proud, cheerful, bright, together]"
+   ],
+   [
+    "dwarfb",
+    "작은 침대 일곱 개, 큰 침대 하나, 모두 여덟 개!",
+    "happy",
+    "[proud, cheerful, bright, together]"
+   ],
+   [
+    "dwarfc",
+    "작은 침대 일곱 개, 큰 침대 하나, 모두 여덟 개!",
+    "happy",
+    "[proud, cheerful, bright, together]"
+   ],
+   [
+    "dwarfd",
+    "작은 침대 일곱 개, 큰 침대 하나, 모두 여덟 개!",
+    "happy",
+    "[proud, cheerful, bright, together]"
+   ],
+   [
+    "dwarfe",
+    "작은 침대 일곱 개, 큰 침대 하나, 모두 여덟 개!",
+    "happy",
+    "[proud, cheerful, bright, together]"
+   ],
+   [
+    "dwarff",
+    "작은 침대 일곱 개, 큰 침대 하나, 모두 여덟 개!",
+    "happy",
+    "[proud, cheerful, bright, together]"
+   ],
+   [
+    "dwarfg",
+    "작은 침대 일곱 개, 큰 침대 하나, 모두 여덟 개!",
+    "happy",
+    "[proud, cheerful, bright, together]"
+   ]
+  ],
+  "ch5": [
+   [
+    "dwarfa",
+    "백설공주님, 일어나요! 일어나세요…",
+    "tonedown",
+    "[gentle, coaxing, soft, worried-warm]"
+   ],
+   [
+    "dwarfb",
+    "백설공주님, 일어나요! 일어나세요…",
+    "tonedown",
+    "[gentle, coaxing, soft, worried-warm]"
+   ],
+   [
+    "dwarfc",
+    "백설공주님, 일어나요! 일어나세요…",
+    "tonedown",
+    "[gentle, coaxing, soft, worried-warm]"
+   ],
+   [
+    "dwarfd",
+    "백설공주님, 일어나요! 일어나세요…",
+    "tonedown",
+    "[gentle, coaxing, soft, worried-warm]"
+   ],
+   [
+    "dwarfe",
+    "백설공주님, 일어나요! 일어나세요…",
+    "tonedown",
+    "[gentle, coaxing, soft, worried-warm]"
+   ],
+   [
+    "dwarff",
+    "백설공주님, 일어나요! 일어나세요…",
+    "tonedown",
+    "[gentle, coaxing, soft, worried-warm]"
+   ],
+   [
+    "dwarfg",
+    "백설공주님, 일어나요! 일어나세요…",
+    "tonedown",
+    "[gentle, coaxing, soft, worried-warm]"
+   ]
+  ],
+  "ch6": [
+   [
+    "dwarfa",
+    "만세! 백설공주가 깨어났다!",
+    "toneup",
+    "[joyful, loud, cheering, delighted]"
+   ],
+   [
+    "dwarfb",
+    "만세! 백설공주가 깨어났다!",
+    "toneup",
+    "[joyful, loud, cheering, delighted]"
+   ],
+   [
+    "dwarfc",
+    "만세! 백설공주가 깨어났다!",
+    "toneup",
+    "[joyful, loud, cheering, delighted]"
+   ],
+   [
+    "dwarfd",
+    "만세! 백설공주가 깨어났다!",
+    "toneup",
+    "[joyful, loud, cheering, delighted]"
+   ],
+   [
+    "dwarfe",
+    "만세! 백설공주가 깨어났다!",
+    "toneup",
+    "[joyful, loud, cheering, delighted]"
+   ],
+   [
+    "dwarff",
+    "만세! 백설공주가 깨어났다!",
+    "toneup",
+    "[joyful, loud, cheering, delighted]"
+   ],
+   [
+    "dwarfg",
+    "만세! 백설공주가 깨어났다!",
+    "toneup",
+    "[joyful, loud, cheering, delighted]"
+   ]
+  ]
+ }
+}
