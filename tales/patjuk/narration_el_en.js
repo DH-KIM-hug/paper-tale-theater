@@ -189,9 +189,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Hooray! The tiger was beaten! Grandma shared yummy red bean porridge with all her friends.",
   "c": "audio/el/patjuk/en/nar_7d6aec77a4.mp3"
  },
- "친구들을 톡 눌러서 인사해 봐요!": {
-  "t": "Tap your friends to say hello!",
-  "c": "audio/el/patjuk/en/nar_c60b841c91.mp3"
+ "친구들을 톡! 눌러서 인사해 봐요!": {
+  "t": "Tap, and say hello to your friends!",
+  "c": "audio/el/patjuk/en/nar_eeecb7738a.mp3"
  },
  "호랑이는 아궁이 앞에 있어요. 아궁이 속에 누가 숨었지?": {
   "t": "The tiger is by the fireplace. Who is hiding inside the fireplace?",

@@ -838,7 +838,7 @@
         ...FRIENDS.map(f => ({ el: partyEl(f), go: () => { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); hello('hi_' + f.id); } })),
         { el: granny.pos, go: () => { AudioFX.jingle(); granny.hop(22, 420); hello('hi_halmi'); } },
       ];
-      for (const g of greet) { await T.tap(g.el); g.go(); await sleep(700); }
+      for (let i = 0; i < greet.length; i++) { if (i === 0) await T.tap(greet[i].el); greet[i].go(); await sleep(700); } /* 한 번 누르면 나머지는 저절로 (2026-10-20 톡 조작 정리) */
       await bowTogether();
     }
 

@@ -84,7 +84,7 @@ Object.assign(NARRATION_CLIPS, {
  "쿵! 절구에 맞은 호랑이가 마당으로 도망쳐 쭉 뻗어 버렸어요. 이제 누구 차례죠?": "audio/el/patjuk/nar_fe31b45b72.mp3",
  "돌돌돌! 호랑이가 멍석에 꽁꽁 말렸어요. 마지막은 누구일까요?": "audio/el/patjuk/nar_7c6c9d40e3.mp3",
  "만세! 호랑이를 물리쳤어요! 할멈은 친구들과 맛있는 팥죽을 나누어 먹었답니다.": "audio/el/patjuk/nar_39e47fe668.mp3",
- "친구들을 톡 눌러서 인사해 봐요!": "audio/el/patjuk/nar_bd3cab6ba2.mp3",
+ "친구들을 톡! 눌러서 인사해 봐요!": "audio/el/patjuk/nar_9f8788dd6c.mp3",
  "호랑이는 아궁이 앞에 있어요. 아궁이 속에 누가 숨었지?": "audio/el/patjuk/nar_9def72b532.mp3",
  "알밤을 눌러 봐요!": "audio/el/patjuk/nar_ac0127635c.mp3",
  "호랑이가 물독에 얼굴을 넣었어요. 물독 속에 누가 숨었지?": "audio/el/patjuk/nar_20275248f6.mp3",

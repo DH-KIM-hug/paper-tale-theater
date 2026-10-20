@@ -84,7 +84,7 @@ const NARRATION_CLIPS = {
  "쿵! 절구에 맞은 호랑이가 마당으로 도망쳐 쭉 뻗어 버렸어요. 이제 누구 차례죠?": "audio/tc/nar_13f318c0c4.mp3",
  "돌돌돌! 호랑이가 멍석에 꽁꽁 말렸어요. 마지막은 누구일까요?": "audio/tc/nar_365f1dae29.mp3",
  "만세! 호랑이를 물리쳤어요! 할멈은 친구들과 맛있는 팥죽을 나누어 먹었답니다.": "audio/tc/nar_60ed2d4b14.mp3",
- "친구들을 톡 눌러서 인사해 봐요!": "audio/tc/nar_e615c2a8bf.mp3",
+ "친구들을 톡! 눌러서 인사해 봐요!": "audio/tc/nar_ac863a5190.mp3",
  "호랑이는 아궁이 앞에 있어요. 아궁이 속에 누가 숨었지?": "audio/tc/nar_1fdeb2d9c1.mp3",
  "알밤을 눌러 봐요!": "audio/tc/nar_0c6f6d1713.mp3",
  "호랑이가 물독에 얼굴을 넣었어요. 물독 속에 누가 숨었지?": "audio/tc/nar_08511ed1d2.mp3",

@@ -503,12 +503,12 @@
    ]
   },
   {
-   "text": "친구들을 톡 눌러서 인사해 봐요!",
-   "en": "Tap your friends to say hello!",
+   "text": "친구들을 톡! 눌러서 인사해 봐요!",
+   "en": "Tap, and say hello to your friends!",
    "segs": [
     [
      "nar",
-     "Tap your friends to say hello!",
+     "Tap, and say hello to your friends!",
      "happy:1.1"
     ]
    ]
