@@ -3,22 +3,27 @@
 (() => {
   const AS = '../../assets/v3w/';
   const GROUND = 505;
-  const ASP = { coin: .9645, farmer_amaze: .71, farmer_count: .6029, farmer_feast: .7971, farmer_hoe: .72, farmer_pull: .6771,
-    farmer_share: .5886, father_fall: .9856, father_fightA: .6357, father_fightB: .6443, father_peek: .7357, fwife: .5129,
-    fwife_share: .5271, gold: 1.7722, hoe: 3.2864, jar: .9243, jar_cracked: 1.1785, rice: .8057, rich_gold: .6471, rich_grab: .7143,
-    rich_hurry: .8071, rich_pinned: 1.2238, rich_shout: .7143, table: 1.566 };
+  const ASP = { coin: 1.0064, farmer_amaze: 0.8628, farmer_count: 0.8194, farmer_feast: 0.9316, farmer_hoe: 0.9299, farmer_pull: 1.0085,
+    farmer_share: 0.5386, father_fall: 0.9149, father_fightA: 0.6563, father_fightB: 0.7567, father_peek: 0.7839, fwife: 0.5973,
+    fwife_share: 0.6010, gold: 1.2430, hoe: 1., jar: 0.9759, jar_cracked: 1.1566, rice: 1.0036, rich_gold: 0.7145, rich_grab: 0.8183,
+    rich_hurry: 0.7843, rich_pinned: 1.0612, rich_shout: 0.7496, table: 1.3065, };
+  /* 2026-10-20 새 그림은 그림 크기(세로 픽셀)가 옛 그림과 달라서, 옛 그림과 같은 픽셀 축척이 되도록 높이에 곱하는 비율 */
+  const RS = { coin: 0.958, farmer_amaze: 0.823, farmer_count: 0.736, farmer_feast: 0.856, farmer_hoe: 0.774, farmer_pull: 0.671,
+    father_fightA: 0.969, father_fightB: 0.851, father_peek: 0.939, fwife: 0.859, fwife_share: 0.877, jar: 0.947, rice: 0.803,
+    rich_gold: 0.906, rich_grab: 0.873, rich_shout: 0.953, };
   const NF = new Set(['coin', 'gold', 'jar', 'jar_cracked', 'rice']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
   const BGS = ['field', 'pit', 'jarfront', 'village', 'richgate', 'hall', 'hallwide', 'feast'];
   const CUTS = ['clink', 'twohoes', 'coins', 'buried', 'plop', 'eight', 'smash', 'hungry'];
   const bgSrc = k => AS + 'mj_bg_' + k + '.webp', cutSrc = k => AS + 'mj_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
 
+  /* 2026-10-20 새 '금 넣는 부자' 그림(gold)은 그림 속에 항아리가 이미 있어 항아리가 둘로 보여서, 항아리 없는 shout 자세로 대신함 */
   function mk(T, poses) {
     const looks = {};
     const a = T.actor(T.world, -400, GROUND, g => {
       Object.entries(poses).forEach(([k, [f, h, nat]]) => {
-        const w = h * ASP[f], wrap = T.el('g', { filter: 'url(#pp)' }, g);
-        T.el('image', { href: AS + 'mj_' + f + (NF.has(f) ? 'nf' : '') + '.webp', x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
+        const hh = h * (RS[f] || 1), w = hh * ASP[f], wrap = T.el('g', { filter: 'url(#pp)' }, g);
+        T.el('image', { href: AS + 'mj_' + f + (NF.has(f) ? 'nf' : '') + '.webp', x: -w / 2, y: -hh, width: w, height: hh, preserveAspectRatio: 'none' }, wrap);
         wrap.style.display = 'none'; looks[k] = { wrap, h, nat };
       });
     });
@@ -66,7 +71,7 @@
     const rich = mk(T, { shout: ['rich_shout', 260, 'left'], grab: ['rich_grab', 260, 'left'], gold: ['rich_gold', 260, 'left'],
       pinned: ['rich_pinned', 190, 'left'], hurry: ['rich_hurry', 240, 'left'] });
     const jar = prop(T, 'jar', 170), cracked = prop(T, 'jar_cracked', 130);
-    const hoe = prop(T, 'hoe', 62);
+    const hoe = prop(T, 'hoe', 100); // 2026-10-20 새 괭이 그림은 정사각형 그림이라 높이를 키움
     const olds = Array.from({ length: 8 }, (_, i) => mk(T, { a: ['father_fightA', 180, 'left'], b: ['father_fightB', 180, 'left'] }));
     const father = mk(T, { peek: ['father_peek', 210, 'left'], fall: ['father_fall', 150, 'left'] });
 
@@ -112,7 +117,7 @@
     await say('항아리를 톡톡톡 눌러서 괭이가 몇 개 나오는지 세어 봐요!');
     const hoes = [];
     await T.mash(jar.pos, { count: 3, prompt: '항아리를 톡톡톡! 괭이를 세어 봐요.', onStep: i => {
-      const h2 = prop(T, 'hoe', 78); put(T, h2, 740 + (i % 2) * 40, 300 + i * 64);
+      const h2 = prop(T, 'hoe', 110); put(T, h2, 740 + (i % 2) * 40, 300 + i * 64);
       h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); hoes.push(h2);
       jar.hop(12, 240); popSfx(T); T.pop(h2.x, h2.y - 60, tr(NUM[i - 1]));
     } });
@@ -184,7 +189,7 @@
     /* --- 7. 금덩이 --- */
     await T.sceneCard(tr('큰 방'), () => {
       scene('hall');
-      put(T, rich, 330, 505, { look: 'gold', to: 'right' });
+      put(T, rich, 330, 505, { look: 'shout', to: 'right' });
       put(T, jar, 650, 505); jar.pos.style.display = '';
     }, jar.pos);
     await say('부자는 방에 항아리를 놓고 말했어요. "금덩이를 넣으면 금이 산더미가 되겠지!"');
@@ -224,7 +229,7 @@
     await say('풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.');
     await say('"아버지가 어디 계시지?" 항아리를 톡톡톡 눌러서 아버지를 세어 봐요!');
     await T.mash(jar.pos, { count: 8, prompt: '항아리를 톡톡톡! 아버지를 세어 봐요.', onStep: i => {
-      const o = olds[i - 1]; put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 100 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .62 : 1, raw: tight(T) });
+      const o = olds[i - 1]; put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .62 : 1, raw: tight(T) });
       o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); popSfx(T); T.pop(o.x, o.y - 200, tr(NUM[i - 1]));
     } });
     await T.cutImage([{ src: cutSrc('eight'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
@@ -243,7 +248,7 @@
     await T.cutImage([{ src: cutSrc('smash'), sfx: 'pow', hold: 3000 }], { hold: 3000 });
     scene('hallwide');
     olds.forEach(o => hide(o)); hide(jar);
-    put(T, cracked, 700, 505); put(T, rich, 300, 505, { look: 'gold', to: 'right' }); put(T, father, 500, 505, { look: 'peek', to: 'right' });
+    put(T, cracked, 700, 505); put(T, rich, 300, 505, { look: 'shout', to: 'right' }); put(T, father, 500, 505, { look: 'peek', to: 'right' });
     await say('쨍그랑! 항아리가 깨지자 일곱 명은 사라지고, 진짜 아버지만 남았어요.');
     await say('"아버지, 죄송해요. 욕심을 부려서 소동이 났어요."');
     await Promise.all([rich.hop(24, 400), father.hop(20, 400)]);
