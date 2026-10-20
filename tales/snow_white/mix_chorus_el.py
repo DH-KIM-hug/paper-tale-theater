@@ -2,13 +2,15 @@
   python3 tools/elevenlabs/gen_tale.py snow_white --model eleven_v4            # 한국어 (voice_script_el.json 의 extra.ch1… = 같은 문장 × 일곱 목소리)
   python3 tools/elevenlabs/gen_tale.py snow_white --model eleven_v4 --lang en  # 영어
   python3 tales/snow_white/mix_chorus_el.py                                    # → audio/el/snow_white/chorus/*.mp3, chorus/en/*.mp3 + tales/snow_white/chorus_el.js
-목소리마다 0~120ms 어긋나게 시작하고 음량은 0.45배로 줄인다 (Typecast 합창 mix_chorus.py 와 같은 값).
+목소리마다 0~120ms 어긋나게 시작한다. 가운데 길이의 클립이 메인(음량 1.0)이고 나머지는 메인 길이에 맞춰 빠르기를 고치고 0.30배로 깔아 말이 같이 끝나게 한다.
 chorus_el.js 는 chorus.js 뒤에 불러서 EL 합창으로 덮어쓴다 (?voice=tc 이면 불러오지 않아 Typecast 합창 유지)."""
 import json, os, re, hashlib, subprocess
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 HERE = os.path.join(ROOT, 'tales', 'snow_white')
 DELAY_MS = [0, 70, 30, 120, 50, 95, 15]
-GAIN = .45
+GAIN = .30          # 곁 목소리 음량
+MAIN_GAIN = 1.0     # 메인 목소리(길이가 가운데인 클립) 음량 — 2026-10-20: 목소리마다 말 빠르기가 달라 메인을 크게
+TEMPO = (.8, 1.25)  # 곁 목소리를 메인 길이에 맞추는 빠르기 한계
 spec = json.load(open(os.path.join(HERE, 'voice_script.json')))['chorus']          # ch키 → 한국어 문장
 en_spec = json.load(open(os.path.join(HERE, 'voice_script_en.json')))['extra']      # ch키 → [[role, 영어 문장, ...] × 7]
 def lines_of(fn, name):
@@ -16,15 +18,24 @@ def lines_of(fn, name):
 ko_v = lines_of('narration_el.js', 'VOICE_LINES')
 en_v = lines_of('narration_el_en.js', 'VOICE_LINES_EN')
 
+def dur(path):
+    return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', path], capture_output=True, text=True).stdout)
+
 def mix(urls, outdir, reldir):
     os.makedirs(os.path.join(ROOT, outdir), exist_ok=True)
-    h = hashlib.md5(('|'.join(urls) + f'|{DELAY_MS}|{GAIN}').encode()).hexdigest()[:10]
+    h = hashlib.md5(('|'.join(urls) + f'|{DELAY_MS}|{GAIN}|{MAIN_GAIN}|{TEMPO}').encode()).hexdigest()[:10]
     rel = f'{reldir}/ch_{h}.mp3'; dst = os.path.join(ROOT, rel)
     if not os.path.exists(dst):
+        ds = [dur(os.path.join(ROOT, u)) for u in urls]
+        main = sorted(range(len(urls)), key=lambda i: ds[i])[len(urls) // 2]   # 길이가 가운데인 클립 = 메인
         args = ['ffmpeg', '-loglevel', 'error', '-y']
         for u in urls: args += ['-i', os.path.join(ROOT, u)]
-        f = ''.join(f'[{i}:a]aresample=44100,adelay={DELAY_MS[i % len(DELAY_MS)]}:all=1,volume={GAIN}[a{i}];' for i in range(len(urls)))
-        f += ''.join(f'[a{i}]' for i in range(len(urls))) + f'amix=inputs={len(urls)}:duration=longest:normalize=0,alimiter=limit=0.9[out]'
+        parts = []
+        for i in range(len(urls)):
+            r = min(TEMPO[1], max(TEMPO[0], ds[i] / ds[main])) if i != main else 1.0   # >1 이면 빠르게
+            tempo = f'atempo={r:.4f},' if abs(r - 1) > .01 else ''
+            parts.append(f'[{i}:a]aresample=44100,{tempo}adelay={DELAY_MS[i % len(DELAY_MS)] if i != main else 0}:all=1,volume={MAIN_GAIN if i == main else GAIN}[a{i}];')
+        f = ''.join(parts) + ''.join(f'[a{i}]' for i in range(len(urls))) + f'amix=inputs={len(urls)}:duration=longest:normalize=0,alimiter=limit=0.9[out]'
         subprocess.run(args + ['-filter_complex', f, '-map', '[out]', '-ac', '1', '-b:a', '96k', dst], check=True)
     return rel
 
