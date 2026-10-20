@@ -7,13 +7,13 @@
   const A = f => `../../assets/v3w/${f}${NF.has(f) ? 'nf' : ''}.webp`;
   /* 그림 크기 [가로, 세로] (assets/v3w, 배우 그림은 여백을 잘라 가장 긴 변 480) */
   const DIM = {
-    wg_clock: [211, 700], wg_clock_open: [263, 700], wg_laundry: [700, 499], wg_quilt: [700, 490], wg_stone: [696, 665],
-    wg_mama_basket: [338, 480], wg_mama_warn: [322, 480], wg_mama_surprise: [336, 480], wg_mama_scissors: [392, 480], wg_mama_dance: [354, 480],
-    wg_wolf_knock: [232, 480], wg_wolf_chalk: [207, 480], wg_wolf_flour: [207, 480], wg_wolf_belly: [480, 174], wg_wolf_heavy: [445, 480],
-    wg_wolf_splash: [252, 480], wg_wolf_flee: [480, 231],
-    wg_kid1_base: [470, 480], wg_kid1_joy: [389, 480], wg_kid2_base: [479, 480], wg_kid2_joy: [445, 480], wg_kid3_base: [480, 472], wg_kid3_joy: [424, 480],
-    wg_kid4_base: [436, 480], wg_kid4_joy: [429, 480], wg_kid5_base: [441, 480], wg_kid5_joy: [421, 480], wg_kid6_base: [456, 480], wg_kid6_joy: [433, 480],
-    wg_kid7_base: [463, 480], wg_kid7_joy: [408, 480],
+    wg_clock: [211, 564], wg_clock_open: [262, 700], wg_laundry: [612, 499], wg_quilt: [572, 490], wg_stone: [696, 607],
+    wg_mama_basket: [284, 480], wg_mama_warn: [284, 480], wg_mama_surprise: [280, 480], wg_mama_scissors: [342, 480], wg_mama_dance: [354, 480],
+    wg_wolf_knock: [232, 246], wg_wolf_chalk: [207, 189], wg_wolf_flour: [207, 198], wg_wolf_belly: [262, 174], wg_wolf_heavy: [445, 434],
+    wg_wolf_splash: [252, 204], wg_wolf_flee: [362, 231],
+    wg_kid1_base: [458, 480], wg_kid1_joy: [389, 427], wg_kid2_base: [476, 480], wg_kid2_joy: [445, 443], wg_kid3_base: [464, 472], wg_kid3_joy: [424, 420],
+    wg_kid4_base: [411, 480], wg_kid4_joy: [429, 450], wg_kid5_base: [422, 480], wg_kid5_joy: [421, 454], wg_kid6_base: [446, 480], wg_kid6_joy: [433, 417],
+    wg_kid7_base: [435, 480], wg_kid7_joy: [408, 410],
   };
   const show = (n, on) => n.setAttribute('opacity', on ? 1 : 0);
   const KX = i => 320 + 60 * i; // 아기 염소 일곱이 한 줄로 설 자리 (세로 화면에서도 보이는 가운데 폭 안)
@@ -82,7 +82,7 @@
 
     /* --- 3. 분필 먹은 늑대 --- */
     await scene('분필 먹은 늑대', () => { bg(T, 'door'); });
-    const wc = figure(T, 500, 520, 330, { a: 'wg_wolf_chalk' }, 'a');
+    const wc = figure(T, 500, 520, 200, { a: 'wg_wolf_chalk' }, 'a');
     await say('늑대는 곰곰이 생각했어요.');
     await say('"목소리를 곱게 만들어야지. 분필을 먹어 볼까?"');
     await T.mash(wc.pos, { count: 3, prompt: '늑대를 톡톡톡 눌러 봐요!', onStep: i => { wc.hop(14, 240); T.pop(500 + (i % 2 ? 60 : -60), 170, '와작!'); AudioFX.tap(); } });
@@ -95,7 +95,7 @@
 
     /* --- 4. 창가: 하얀 발 --- */
     await scene('하얀 발', () => { bg(T, 'window'); });
-    const wf = figure(T, 500, 545, 340, { a: 'wg_wolf_flour' }, 'a');
+    const wf = figure(T, 500, 545, 200, { a: 'wg_wolf_flour' }, 'a');
     await say('늑대는 밀가루를 발에 묻혀서, 하얀 발을 쑥 내밀었어요.');
     await T.tap(wf.pos, { prompt: '늑대를 톡 눌러 봐요!' });
     await cutArt(T, 'wg_cut_flour', 'laugh');
@@ -116,7 +116,7 @@
     clock.pose('open');
     await kids[6].move(660, 505, 700); hide(kids[6]); clock.pose('a'); AudioFX.ding();
     await say('막내는 키 큰 시계 속에 쏙 숨었어요. 아무도 몰랐어요.');
-    const wk = figure(T, -80, 540, 330, { a: 'wg_wolf_knock' }, 'a'); wk.face('right');
+    const wk = figure(T, -80, 540, 210, { a: 'wg_wolf_knock' }, 'a'); wk.face('right');
     await wk.move(300, 540, 1600);
     await say('"어디 숨었나? 다 찾아낼 테다!" 늑대가 집 안을 뒤졌어요.');
     await cutArt(T, 'wg_cut_dark', 'bigHit');
@@ -145,7 +145,7 @@
 
     /* --- 7. 나무 아래 늑대 --- */
     await scene('나무 아래 늑대', () => { bg(T, 'tree'); });
-    const wb = figure(T, 620, 520, 150, { a: 'wg_wolf_belly' }, 'a');
+    const wb = figure(T, 620, 520, 110, { a: 'wg_wolf_belly' }, 'a');
     const mm3 = mama(T, 230, 515, 270, 'scissors'); const k7b = kid(T, 7, 350, 515, 90); k7b.pose('base');
     await say('늑대는 배가 불러서, 나무 아래에서 쿨쿨 자고 있었어요.');
     T.pop(520, 360, '쿨쿨~', '#3F6B4F');
@@ -181,7 +181,7 @@
 
     /* --- 9. 우물 --- */
     await scene('우물가', () => { bg(T, 'well'); });
-    const wh = figure(T, 260, 520, 330, { heavy: 'wg_wolf_heavy', splash: 'wg_wolf_splash' }, 'heavy'); wh.face('right');
+    const wh = figure(T, 260, 520, 230, { heavy: 'wg_wolf_heavy', splash: 'wg_wolf_splash' }, 'heavy'); wh.face('right');
     await say('잠에서 깬 늑대가 비틀비틀 일어났어요.');
     await say('"아이고, 배가 무거워. 목이 말라!"');
     T.camTo(700, 280, 1, 2600);
@@ -192,7 +192,7 @@
     await cutArt(T, 'wg_cut_splash', 'splash');
     await say('풍덩! 늑대가 우물에 빠졌어요.');
     wh.pos.remove();
-    const wf2 = figure(T, 790, 520, 200, { a: 'wg_wolf_flee' }, 'a');
+    const wf2 = figure(T, 790, 520, 130, { a: 'wg_wolf_flee' }, 'a');
     await say('"으악, 차가워! 다시는 안 올 거야!"');
     await wf2.move(1250, 520, 1500);
     await say('늑대는 흠뻑 젖은 채 멀리멀리 도망갔어요.');
