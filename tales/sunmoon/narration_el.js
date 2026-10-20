@@ -33,13 +33,10 @@ Object.assign(NARRATION_CLIPS, {
  "호랑이가 떡 세 개를 달래요. 어느 접시를 줄까요?": "audio/el/sunmoon/nar_349fcfd2dd.mp3",
  "\"어흥! 떡 네 개 주면 안 잡아먹지!\"": "audio/el/sunmoon/tiger_a33fc502a2.mp3",
  "호랑이가 떡 네 개를 달래요. 어느 접시를 줄까요?": "audio/el/sunmoon/nar_04f42ab796.mp3",
- "\"어흥! 떡 다섯 개 주면 안 잡아먹지!\"": "audio/el/sunmoon/tiger_62ecbb6268.mp3",
  "호랑이가 떡 다섯 개를 달래요. 어느 접시를 줄까요?": "audio/el/sunmoon/nar_502b6ae8e0.mp3",
  "\"어흥! 떡 여섯 개 주면 안 잡아먹지!\"": "audio/el/sunmoon/tiger_fada6905e3.mp3",
  "호랑이가 떡 여섯 개를 달래요. 어느 접시를 줄까요?": "audio/el/sunmoon/nar_645037b0f5.mp3",
- "\"어흥! 떡 일곱 개 주면 안 잡아먹지!\"": "audio/el/sunmoon/tiger_0448581236.mp3",
  "호랑이가 떡 일곱 개를 달래요. 어느 접시를 줄까요?": "audio/el/sunmoon/nar_767ab734ff.mp3",
- "\"어흥! 떡 여덟 개 주면 안 잡아먹지!\"": "audio/el/sunmoon/tiger_9b9a3349b9.mp3",
  "호랑이가 떡 여덟 개를 달래요. 어느 접시를 줄까요?": "audio/el/sunmoon/nar_b15cd82643.mp3",
  "\"어흥! 떡 아홉 개 주면 안 잡아먹지!\"": "audio/el/sunmoon/tiger_260e0563d2.mp3",
  "호랑이가 떡 아홉 개를 달래요. 어느 접시를 줄까요?": "audio/el/sunmoon/nar_9c9e19c00d.mp3",
@@ -69,10 +66,6 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.": "audio/el/sunmoon/nar_01ef9bf114.mp3",
  "호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.": "audio/el/sunmoon/nar_e3f151cd80.mp3",
- "캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.": "audio/el/sunmoon/nar_1828bcf71f.mp3",
- "등잔을 톡 눌러서 불을 켜 줄까요?": "audio/el/sunmoon/nar_2cb2f2e469.mp3",
- "등잔을 톡 눌러서 불을 켜요!": "audio/el/sunmoon/nar_1559df4a5f.mp3",
- "반짝! 방이 환해졌어요. 오누이는 창밖을 보며 엄마를 기다렸어요.": "audio/el/sunmoon/nar_0e9875a634.mp3",
  "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.": [
   "audio/el/sunmoon/nar_ebfdec0091.mp3",
   "audio/el/sunmoon/tiger_4ff847a2b8.mp3",
@@ -116,7 +109,6 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/sunmoon/tiger_86e32530b1.mp3"
  ],
  "호랑이가 우물 속을 들여다봤어요. 우물 물에 오누이 얼굴이 비쳤거든요!": "audio/el/sunmoon/nar_ff51e12d56.mp3",
- "\"두레박으로 건져야지~\" 영차!": "audio/el/sunmoon/tiger_1d15c308d4.mp3",
  "첨벙! 두레박에는 물만 가득. 우물 속 오누이 얼굴을 톡 눌러 봐요!": "audio/el/sunmoon/nar_3cdd931074.mp3",
  "우물에 비친 오누이 얼굴을 톡!": "audio/el/sunmoon/nar_4233755b48.mp3",
  "나무 위에서 오누이가 그만 킥킥 웃고 말았어요.": "audio/el/sunmoon/nar_904116490e.mp3",
@@ -139,19 +131,10 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/sunmoon/nar_2e50da0374.mp3",
   "audio/el/sunmoon/girl_92c64018a9.mp3"
  ],
- "오빠가 \"쉿!\" 했지만… 벌써 들어 버렸어요!": [
-  "audio/el/sunmoon/nar_b591d9d315.mp3",
-  "audio/el/sunmoon/boy_a5987b3dc5.mp3",
-  "audio/el/sunmoon/nar_50f03b4b93.mp3"
- ],
  "호랑이가 도끼로 콕콕 찍으며 올라와요! 오누이는 덜덜 떨었어요.": "audio/el/sunmoon/nar_62a36f0852.mp3",
  "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.": "audio/el/sunmoon/nar_3af3ac4f12.mp3",
  "\"하늘님, 튼튼한 동아줄을 내려 주세요!\"": "audio/el/sunmoon/boy_e461e44689.mp3",
  "하늘에서 줄이 두 개 내려왔어요! 어떤 줄을 잡을까요?": "audio/el/sunmoon/nar_762781a4f5.mp3",
- "삐걱… 이 줄은 낡았어!": [
-  "audio/el/sunmoon/nar_7de37d0f93.mp3",
-  "audio/el/sunmoon/boy_327ffa0de7.mp3"
- ],
  "굵고 반짝이는 튼튼한 줄을 톡 골라요!": "audio/el/sunmoon/nar_51e3d86514.mp3",
  "굵고 반짝반짝 튼튼한 줄을 찾아봐요!": "audio/el/sunmoon/nar_1d0c3a536e.mp3",
  "반짝이는 굵은 줄이 튼튼한 동아줄이에요!": "audio/el/sunmoon/nar_4f2779bb55.mp3",

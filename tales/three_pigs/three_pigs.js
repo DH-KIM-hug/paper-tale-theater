@@ -66,7 +66,7 @@
     const first = ['첫째!', '둘째!', '셋째!'];
     for (let i = 0; i < 3; i++) {
       await look(pigs[i].x - 40);
-      await T.tap(pigs[i].pos, { prompt: '아기 돼지를 톡 눌러 봐요.' });
+      await sleep(400); // 아기 돼지 소개는 저절로 (2026-10-20)
       pigs[i].hop(40); T.pop(pigs[i].x, 250, first[i]); sfx('pop');
       await say(intro[i]);
     }

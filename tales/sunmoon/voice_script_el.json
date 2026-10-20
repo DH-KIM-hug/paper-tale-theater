@@ -655,50 +655,6 @@
    ]
   },
   {
-   "text": "캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.",
-   "segs": [
-    [
-     "nar",
-     "캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.",
-     "tonedown:1.2",
-     "[soft, quiet, night, storytelling, gentle worry]"
-    ]
-   ]
-  },
-  {
-   "text": "등잔을 톡 눌러서 불을 켜 줄까요?",
-   "segs": [
-    [
-     "nar",
-     "등잔을 톡 눌러서 불을 켜 줄까요?",
-     null,
-     "[gentle, warm, inviting]"
-    ]
-   ]
-  },
-  {
-   "text": "등잔을 톡 눌러서 불을 켜요!",
-   "segs": [
-    [
-     "nar",
-     "등잔을 톡 눌러서 불을 켜요!",
-     null,
-     "[gentle, warm, encouraging]"
-    ]
-   ]
-  },
-  {
-   "text": "반짝! 방이 환해졌어요. 오누이는 창밖을 보며 엄마를 기다렸어요.",
-   "segs": [
-    [
-     "nar",
-     "반짝! 방이 환해졌어요. 오누이는 창밖을 보며 엄마를 기다렸어요.",
-     null,
-     "[warm, relieved, bright, storytelling, cozy]"
-    ]
-   ]
-  },
-  {
    "text": "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.",
    "segs": [
     [

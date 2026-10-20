@@ -233,22 +233,6 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The tiger put on Mom's clothes and went to the house where the brother and sister were waiting.",
   "c": "audio/el/sunmoon/en/nar_70f3cef25d.mp3"
  },
- "캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.": {
-  "t": "It was a pitch-dark night. Mom had not come home yet.",
-  "c": "audio/el/sunmoon/en/nar_2e7031535b.mp3"
- },
- "등잔을 톡 눌러서 불을 켜 줄까요?": {
-  "t": "Shall we tap the oil lamp to light it?",
-  "c": "audio/el/sunmoon/en/nar_7deb24b316.mp3"
- },
- "등잔을 톡 눌러서 불을 켜요!": {
-  "t": "Tap the oil lamp to light it!",
-  "c": "audio/el/sunmoon/en/nar_cd8a79f69b.mp3"
- },
- "반짝! 방이 환해졌어요. 오누이는 창밖을 보며 엄마를 기다렸어요.": {
-  "t": "Sparkle! The room glows. The brother and sister looked out the window and waited for Mom.",
-  "c": "audio/el/sunmoon/en/nar_6687e39dfe.mp3"
- },
  "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.": {
   "t": "Knock, knock, knock. \"Kids~ Mom's home. Open the door~\" The voice is rough and raspy.",
   "c": [

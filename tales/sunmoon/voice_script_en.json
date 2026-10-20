@@ -403,29 +403,6 @@
    ]
   },
   {
-   "text": "캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.",
-   "en": "It was a pitch-dark night. Mom had not come home yet.",
-   "segs": [
-    [
-     "nar",
-     "It was a pitch-dark night. Mom had not come home yet.",
-     "tonedown:1.2"
-    ]
-   ]
-  },
-  {
-   "text": "등잔을 톡 눌러서 불을 켜 줄까요?",
-   "en": "Shall we tap the oil lamp to light it?"
-  },
-  {
-   "text": "등잔을 톡 눌러서 불을 켜요!",
-   "en": "Tap the oil lamp to light it!"
-  },
-  {
-   "text": "반짝! 방이 환해졌어요. 오누이는 창밖을 보며 엄마를 기다렸어요.",
-   "en": "Sparkle! The room glows. The brother and sister looked out the window and waited for Mom."
-  },
-  {
    "text": "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.",
    "en": "Knock, knock, knock. \"Kids~ Mom's home. Open the door~\" The voice is rough and raspy.",
    "segs": [

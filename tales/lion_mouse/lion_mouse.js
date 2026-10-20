@@ -354,6 +354,7 @@
         mouse: () => mouse,
       },
       listener: r => (r === 'lion' ? 'mouse' : 'lion'),
+      noFace: ['lion'], // 엎드린 사자는 장면마다 정한 방향 그대로 (생쥐가 말할 때 왼쪽으로 돌았다가 돌아오던 것)
     });
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
     const cutVo = k => setTimeout(() => vo(k), 380);
@@ -654,7 +655,7 @@
         hRopes.setAttribute('opacity', 1 - (i + 1) / 12);
         if (i === 2) { lion.parts.paws.animate([{ translate: '0 0' }, { translate: '-10px -40px' }, { translate: '0 0' }], 700); }
         if (i === 5) { lion.parts.hg.animate([{ rotate: '0deg' }, { rotate: '-8deg' }, { rotate: '8deg' }, { rotate: '0deg' }], 700); }
-        await sleep(200);
+        await sleep(950); // 숫자 하나를 다 듣고 다음 줄로 (2026-10-20: 너무 빨랐음)
         mouse.parts.teeth.setAttribute('opacity', 0);
       });
     };

@@ -379,8 +379,11 @@
   }
   const mk = (T, p, x, y, draw, s = 1, opt) => { let P; const a = T.actor(p, x, y, g => { P = draw(T, g, opt); }, { scale: s }); a.P = P; return a; };
   const mkMom = (T, p, x, y, s, opt) => mk(T, p, x, y, drawMom, s, opt);
-  const mkBoy = (T, p, x, y, s = 1) => mk(T, p, x, y, drawKid, s, false);
-  const mkGirl = (T, p, x, y, s = .9) => mk(T, p, x, y, drawKid, s, true);
+  /* 오누이는 배경(엄마·집·나무)에 비해 작아 보여서 늘 KID 배로 키운다 — 배치 크기(scale)를 만드는 곳과 setScale 에서 한꺼번에 */
+  const KID = 1.6;
+  const mkKid = (T, p, x, y, s, girl) => { const a = mk(T, p, x, y, drawKid, s * KID, girl); const ss = a.setScale; a.setScale = v => ss(v * KID); return a; };
+  const mkBoy = (T, p, x, y, s = 1) => mkKid(T, p, x, y, s, false);
+  const mkGirl = (T, p, x, y, s = .9) => mkKid(T, p, x, y, s, true);
   const TIGERS = []; // 대사 연출용: 장면마다 새로 만든 호랑이 배우 (가장 최근에 무대에 있는 호랑이가 말한다)
   const mkTiger = (T, p, x, y, s = 1) => { const a = mk(T, p, x, y, drawTiger, s); TIGERS.push(a); return a; };
 
@@ -479,7 +482,9 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
-    const { el, sleep, say, camTo, camWide, camSnap } = T;
+    const { el, sleep, camTo, camWide, camSnap } = T;
+    /* 짧은 소리 대사(귀 배지·컷 비명)가 끝난 뒤에 내레이션을 시작한다 — 엔진은 4초만 기다려서 긴 대사는 내레이터와 겹쳤다 */
+    const say = async text => { await AudioFX.voiceIdle(10000); return T.say(text); };
     const stageWrap = T.root.querySelector('#stageWrap');
 
     /* 배경 그림 미리 불러오기: 첫 장면 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 없는 파일은 그레이박스로 */
@@ -495,7 +500,7 @@
     houseBG(T);
     const mom = mkMom(T, T.world, 610, 500, 1, { basket: false });
     const PT = T.portrait(); // 세로 화면(양옆이 잘림)이면 인물을 가운데 쪽으로
-    let boy = mkBoy(T, T.world, PT ? 330 : 250, 510), girl = mkGirl(T, T.world, PT ? 425 : 355, 510);
+    let boy = mkBoy(T, T.world, PT ? 320 : 235, 510), girl = mkGirl(T, T.world, PT ? 450 : 385, 510);
     /* 대사 연출: 목소리 주인에게 카메라가 가고 화자·청자가 마주 본다.
        mkView(뒷마당·나무·하늘) 안의 배우는 좌표계가 달라서 빼고, T.world에 바로 있는 배우만 잡는다 */
     TIGERS.length = 0;
@@ -708,39 +713,7 @@
     tiger.face('left');
 
     /* ====== 2막 — 문 앞의 호랑이 ====== */
-    /* --- 6. 엄마 기다리기 (등잔) --- */
-    let dark, lamp, flame, glow;
-    await T.sceneCard('오누이의 밤', () => {
-      T.clear(); const roomArt = roomBG(T);
-      T.world.appendChild(boy.pos); boy.setScale(1.05); boy.place(340, 520);
-      T.world.appendChild(girl.pos); girl.setScale(.95); girl.place(450, 520);
-      // 방 그림이면 그림 속 등잔(작은 상 위, 무대 ≈ 770,291 심지)을 켠다. 아니면 따로 그린 등잔
-      const LAMP = null; // 새 방 그림에는 그림 속 등잔이 없다 → 따로 그린 등잔 그림(lamp_off/on)을 바닥에 둔다
-      glow = el('circle', { cx: LAMP ? LAMP.x : 790, cy: LAMP ? LAMP.y : 400, r: 320, fill: C.amber, opacity: 0 }, T.fx);
-      dark = el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: '#0B1030', opacity: .72 }, T.fx);
-      lamp = el('g', {}, T.fx);
-      if (LAMP) {
-        el('rect', { x: LAMP.x - 60, y: LAMP.y - 70, width: 120, height: 150, fill: 'transparent' }, lamp); // 누르는 자리: 그림 속 등잔
-        // 그림 속 등잔(그릇·받침)만 오려 어둠 장막 위로 올린다 → 캄캄해도 등잔이 보이고, 누를 때 반짝임도 등잔에
-        bgCutout(T, lamp, bgUrl('room'), FULL, [[1205, 640], [1245, 628], [1310, 628], [1350, 640], [1352, 758], [1205, 758]]);
-        flame = el('g', {}, lamp); sprite(T, el('g', { transform: `translate(${LAMP.x} ${LAMP.y + 2})` }, flame), 'lamp_flame', 30, 35);
-      } else if (el('rect', { x: 700, y: 320, width: 180, height: 200, fill: 'transparent' }, lamp) && sprite(T, el('g', { transform: 'translate(790 512)' }, lamp), 'lamp_off', 151, 142)) {
-        // 그림 등잔: 끈 등잔 위에 불 켠 등잔(같은 틀)을 겹쳐 두고, 켜면 보인다
-        flame = el('g', {}, lamp); sprite(T, el('g', { transform: 'translate(790 512)' }, flame), 'lamp_on', 151, 176);
-      } else {
-        T.paper(lamp, [['rect', { x: 750, y: 380, width: 20, height: 130, fill: C.bark }], ['ellipse', { cx: 760, cy: 510, rx: 50, ry: 14, fill: C.bark }],
-          ['ellipse', { cx: 760, cy: 378, rx: 40, ry: 12, fill: C.gold }]]);
-        flame = T.paper(lamp, [['path', { d: 'M760 300 Q788 340 760 370 Q732 340 760 300 Z', fill: C.amber }], ['path', { d: 'M760 326 Q772 346 760 362 Q748 346 760 326 Z', fill: C.cream }]]);
-      }
-      flame.setAttribute('opacity', 0);
-    });
-    await say('캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.');
-    await say('등잔을 톡 눌러서 불을 켜 줄까요?');
-    await T.tap(lamp, { prompt: '등잔을 톡 눌러서 불을 켜요!' });
-    AudioFX.ding(); flame.setAttribute('opacity', 1);
-    T.anim(dark, [{ opacity: .72 }, { opacity: .1 }], 900); T.anim(glow, [{ opacity: 0 }, { opacity: .22 }], 900);
-    await sleep(900);
-    await say('반짝! 방이 환해졌어요. 오누이는 창밖을 보며 엄마를 기다렸어요.');
+    /* (등잔에 불 켜는 장면은 뺐다) */
 
     /* --- 7. 문 앞 ① 목소리 --- */
     await T.sceneCard('똑똑똑', () => {
@@ -749,8 +722,8 @@
       const sil = el('g', { opacity: .3, transform: doorArt ? 'translate(-88 0)' : '' }, T.bg);
       [['ellipse', { cx: 690, cy: 400, rx: 80, ry: 80 }], ['ellipse', { cx: 690, cy: 270, rx: 72, ry: 62 }], ['circle', { cx: 638, cy: 212, r: 20 }], ['circle', { cx: 742, cy: 212, r: 20 }], ['path', { d: 'M760 420 Q830 420 822 350 Q818 320 838 310', stroke: C.stripe, 'stroke-width': 18, fill: 'none', 'stroke-linecap': 'round' }]].forEach(([t, a]) => el(t, { fill: C.stripe, ...a }, sil));
       el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.amber, opacity: .12 }, T.fx);
-      T.world.appendChild(boy.pos); boy.place(PT ? 330 : 210, 540);
-      T.world.appendChild(girl.pos); girl.place(PT ? 430 : 320, 540);
+      T.world.appendChild(boy.pos); boy.place(PT ? 320 : 200, 540);
+      T.world.appendChild(girl.pos); girl.place(PT ? 450 : 340, 540);
     });
     AudioFX.thud(); await sleep(250); AudioFX.thud(); // (기계음 호랑이 소리는 뺐다: 호랑이 목소리와 겹침)
     [0, 260, 520].forEach(t => setTimeout(() => AudioFX.sfx('knock'), t));
@@ -775,7 +748,7 @@
     const b1 = earBadge(140, 1), b2 = earBadge(860, 2);
     const soft = momFirst ? b1 : b2, rough = momFirst ? b2 : b1;
     T.fitRow([b1, b2]); // 세로 화면: 보이는 폭 안으로
-    const play = b => (b === soft ? callMom() : callTiger());
+    const play = b => { AudioFX.stopNarration(); return b === soft ? callMom() : callTiger(); }; // 누르는 순간 내레이션을 멈춰 두 목소리가 겹치지 않게
     const hear = async b => { b.animate([{ scale: 1 }, { scale: 1.15 }, { scale: 1 }], { duration: 700 }); await play(b); };
     soft.addEventListener('pointerdown', () => play(soft)); rough.addEventListener('pointerdown', () => play(rough));
     await say('1번 목소리.'); await hear(b1);
@@ -914,7 +887,7 @@
         sky(T, yard, '#162847');
         T.el('rect', { x: -1400, y: 330, width: 4400, height: 900, fill: '#bea08c' }, yard); // 그림 밖 땅 (그림 가장자리 색)
         place(T, yard, bgUrl('backyard'), YARD);
-        boy = mkBoy(T, yard, 230, 520, 1); girl = mkGirl(T, yard, 140, 520, .92);
+        boy = mkBoy(T, yard, 260, 520, 1); girl = mkGirl(T, yard, 120, 520, .92);
         // 그림 속 장독을 오려 배우 앞에: 가림막(밑동 아래 땅까지) + 누르는 장독(장독 모양만, 반짝임 테두리용)
         const jars = el('g', {}, yard);
         bigJar = bgCutout(T, jars, bgUrl('backyard'), YARD, [...JAR, ...JAR_FOOT, ...JAR_L]);
@@ -935,7 +908,7 @@
         ['path', { d: 'M1435 262 Q1620 300 1805 262', stroke: C.cream, 'stroke-width': 3, fill: 'none' }],
         ['rect', { x: 1480, y: 270, width: 90, height: 100, fill: C.snow }], ['rect', { x: 1600, y: 280, width: 80, height: 70, fill: C.lav }], ['rect', { x: 1700, y: 272, width: 70, height: 90, fill: C.gold }]]);
       T.paper(yard, [['rect', { x: 2530, y: -200, width: 90, height: 720, fill: C.bark }], ['circle', { cx: 2575, cy: -150, r: 200, fill: C.pine }], ['circle', { cx: 2440, cy: -20, r: 120, fill: '#35604A' }], ['circle', { cx: 2710, cy: -40, r: 130, fill: '#35604A' }]]);
-      boy = mkBoy(T, yard, 230, 520, 1); girl = mkGirl(T, yard, 140, 520, .92);
+      boy = mkBoy(T, yard, 260, 520, 1); girl = mkGirl(T, yard, 120, 520, .92);
       const jars = el('g', {}, yard);
       T.paper(jars, [['rect', { x: 880, y: 500, width: 420, height: 34, rx: 8, fill: C.stone }]]);
       const jar = (x, h, w) => T.paper(jars, [['path', { d: `M${x - w * .35} 510 Q${x - w * .62} ${510 - h * .5} ${x - w * .32} ${510 - h} L${x + w * .32} ${510 - h} Q${x + w * .62} ${510 - h * .5} ${x + w * .35} 510 Z`, fill: '#7A4028' }],
@@ -985,7 +958,7 @@
     /* 나무 꼭대기 오누이 자리: 그림 나무면 왼쪽 잎 덩어리 위 (무대 x 358~546, y ≈ -199) */
     /* 나무 꼭대기 오누이 자리: 그림 나무면 오른쪽 굵은 가지 위 (TREE_PX.branch 둘레, 무대 x 838~922 · y ≈ 160) */
     const TREE_S = 1.07; // 그림 나무 배율: 멀리서 본 나무(줌 .58)가 그림 한 장과 거의 같은 크기
-    const TOP = bgUrl('tree') ? { b: [922, 154], g: [838, 164] } : { b: [540, -140], g: [440, -140] };
+    const TOP = bgUrl('tree') ? { b: [935, 154], g: [825, 164] } : { b: [540, -140], g: [440, -140] };
     const CLIMB_STEP = bgUrl('tree') ? 85 : 140;
     const TREE_WIDE = bgUrl('tree') ? [700, 320] : [560, 90]; // 나무 전체를 보는 카메라 자리 (그림 밖이 안 보이게) // 한 번 톡 할 때 오르는 높이 (그림 나무는 가지가 낮다)
     const buildTree = (kidsUp) => {
@@ -1147,12 +1120,12 @@
     T.pop(640, 110, '주르륵', C.gold);
     await sleep(400);
     for (let k = 0; k < 2; k++) {
-      tt.P.slip(true); // 그림: 기어오르다 미끄러지는 내내 허우적 자세 (앉은 수건 그림이 떠 있지 않게)
+      // 미끄러질 때도 엄마 옷 입은 그림 그대로 (옷 없는 tiger_slip 그림으로 바꾸지 않는다) — 몸 흔들기로 허우적 표현
       await tt.move(640, 380, 700);
       AudioFX.slide(); T.pop(760, 180 + k * 30, k ? '쭈르륵!' : '미끌!', C.bean);
       await tt.move(640, 560, 380, 'ease-in');
       AudioFX.thud(); tt.wiggle(10, 300);
-      await sleep(250); tt.P.slip(false);
+      await sleep(250);
     }
     await say('미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.');
     await (bgUrl('tree') ? tree.to(800, 150, 1, 900) : tree.to(500, -200, 1, 900)); // 가지 위 오누이 가까이
@@ -1246,7 +1219,7 @@
       if (!ropeArt(T, ropeBad, 'rope_bad', 675, 478, .35)) T.paper(ropeBad, [['path', { d: 'M675 -3400 V200 Q690 260 668 320 Q690 380 675 440', stroke: '#9A8466', 'stroke-width': 8, fill: 'none', 'stroke-dasharray': '40 7' }],
         ['path', { d: 'M675 440 L660 470 M675 440 L676 474 M675 440 L692 468 M671 250 L650 244 M680 330 L700 324', stroke: '#9A8466', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }],
         ['rect', { x: 664, y: 120, width: 22, height: 26, rx: 4, fill: '#7A6A52' }]]);
-      boy = mkBoy(T, skyV, 470, 510, 1); girl = mkGirl(T, skyV, 560, 510, .92);
+      boy = mkBoy(T, skyV, 440, 510, 1); girl = mkGirl(T, skyV, 580, 510, .92);
       ropeGood.style.transform = 'translateY(-900px)'; ropeBad.style.transform = 'translateY(-900px)';
       ropeBad.style.transformBox = 'fill-box'; ropeBad.style.transformOrigin = '50% 100%'; // 삐걱 흔들림이 줄 아래끝 기준으로 (멀리 휘청이지 않게)
     });
@@ -1292,21 +1265,21 @@
       const g = el('g', { transform: 'translate(200,300) scale(.85)' }, svg); const P = drawTiger(T, g); P.setBelly(2.4); // 나무 위(도끼)·뚝·엉덩방아 그림과 같이 엄마 옷 없이
       cutText(svg, '삐걱… 삐걱…', 34);
       cutVoice('cut_creak', 500);
-    }, { hold: 2200 });
+    }, { hold: 3500 });
     creak(T);
-    await (cutArt(T, 'cut_snap', 'pow', 2200, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
+    await (cutArt(T, 'cut_snap', 'pow', 3800, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
       el('path', { d: 'M200 0 V90 L190 100 M205 100 L212 92', stroke: '#9A8466', 'stroke-width': 7, fill: 'none' }, svg);
       const g = el('g', { transform: 'translate(200,320) scale(.85) rotate(12)' }, svg); const P = drawTiger(T, g); P.oMouth(); P.setBelly(2.4);
       cutText(svg, '뚝!', 64);
       cutVoice('cut_snap', 250);
-    }, { sfx: 'pow', hold: 2200 }));
-    await (cutArt(T, 'cut_bump', 'thud', 2400, () => cutVoice('cut_bump', 350)) || T.cut(svg => {
+    }, { sfx: 'pow', hold: 3800 }));
+    await (cutArt(T, 'cut_bump', 'thud', 3400, () => cutVoice('cut_bump', 350)) || T.cut(svg => {
       for (let i = 0; i < 9; i++) el('path', { d: `M${20 + i * 45} 300 V${170 + (i % 3) * 16}`, stroke: C.pine, 'stroke-width': 6 }, svg);
       for (let i = 0; i < 9; i++) el('ellipse', { cx: 20 + i * 45, cy: 164 + (i % 3) * 16, rx: 12, ry: 22, fill: '#C98A3A' }, svg);
       const g = el('g', { transform: 'translate(200,300) scale(.8)' }, svg); const P = drawTiger(T, g); P.wear('bump'); P.oMouth(); P.setBelly(2.4);
       cutText(svg, '쿵! 엉덩방아', 44);
       cutVoice('cut_bump', 350);
-    }, { sfx: 'thud', hold: 2400 }));
+    }, { sfx: 'thud', hold: 3400 }));
     let sorg;
     await T.sceneCard('수수밭', () => {
       T.clear(); camSnap(500, 280, 1);

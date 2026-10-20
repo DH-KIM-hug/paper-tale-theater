@@ -13,7 +13,7 @@ for i in ids:
     if os.path.exists(out): print('skip', i); continue
     os.makedirs(os.path.dirname(out), exist_ok=True)
     pf = os.path.join(G, 'tools/app/gen/restyle', f'_p_{i}.txt'); open(pf, 'w').write(j['prompt'])
-    asp = 'square 1:1' if j['kind'] == 'sprite' else 'landscape 16:9'
+    asp = j.get('aspect') or ('square 1:1' if j['kind'] == 'sprite' else 'landscape 16:9')
     refs = ' '.join(r if r.startswith('/') else os.path.join(G, r) for r in j.get('refs', []))
     inst = (f"Use your image generation tool (image_gen.imagegen) to create ONE image, {asp}. Read the full prompt from {pf} and pass it VERBATIM. "
             + (f"Pass these reference images in referenced_image_paths (read-only): {refs} . " if refs else '')

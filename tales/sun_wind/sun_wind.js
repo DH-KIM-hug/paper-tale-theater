@@ -483,13 +483,11 @@
     sky1.drift.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(30px)' }, { transform: 'translateX(0)' }], { duration: 6000, iterations: Infinity });
     await T.curtain(true);
     await say('하늘 높이 해님과 바람이 살았어요.');
-    await say('해님을 톡 눌러 볼까요?');
-    await T.tap(S1.pos, { prompt: '웃고 있는 해님을 톡!' });
+    await sleep(500); // 해님은 저절로 반짝 (2026-10-20)
     spinRays(S1); S1.hop(26); sparkles(T, S1.x, 280, 130, 8); T.pop(S1.x, 140, '반짝!', C.persimmon);
     S1.p.glow.animate([{ opacity: 0, transform: 'scale(.8)' }, { opacity: .6, transform: 'scale(1.1)' }, { opacity: 0, transform: 'scale(1)' }], 1200);
     await say('"내가 제일 따뜻해!"');
-    await say('이번엔 바람을 톡!');
-    await T.tap(W1.pos, { prompt: '볼 빵빵 바람을 톡!' });
+    await sleep(500); // 바람은 저절로 휘잉 (2026-10-20)
     W1.p.setMouth('blow'); W1.p.puffCheeks(1.6); SND.whoosh(T, 2); gust(T, 6, { x0: W1.x + 50, y0: 200, y1: 380, dist: 400 });
     sky1.drift.animate([{ translate: '0 0' }, { translate: '60px 0' }, { translate: '0 0' }], { duration: 1400, easing: 'ease-out' });
     T.pop(W1.x - 30, 140, '휘잉!', C.indigo); // 세로 화면(보이는 폭 ≈500)에서 오른쪽이 잘리지 않게 조금 안쪽

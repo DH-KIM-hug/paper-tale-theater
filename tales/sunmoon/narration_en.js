@@ -237,22 +237,6 @@ const NARRATION_CLIPS_EN = {
   "t": "The tiger put on Mom's clothes and went to the house where the brother and sister were waiting.",
   "c": "audio/tc/sunmoon/en/nar_5833b28462.mp3"
  },
- "캄캄한 밤이 되었어요. 엄마는 아직 안 오셨어요.": {
-  "t": "It was a pitch-dark night. Mom had not come home yet.",
-  "c": "audio/tc/sunmoon/en/nar_39a32a8cc2.mp3"
- },
- "등잔을 톡 눌러서 불을 켜 줄까요?": {
-  "t": "Shall we tap the oil lamp to light it?",
-  "c": "audio/tc/sunmoon/en/nar_5ef73049ac.mp3"
- },
- "등잔을 톡 눌러서 불을 켜요!": {
-  "t": "Tap the oil lamp to light it!",
-  "c": "audio/tc/sunmoon/en/nar_c044116c15.mp3"
- },
- "반짝! 방이 환해졌어요. 오누이는 창밖을 보며 엄마를 기다렸어요.": {
-  "t": "Sparkle! The room glows. The brother and sister looked out the window and waited for Mom.",
-  "c": "audio/tc/sunmoon/en/nar_f811fb74ac.mp3"
- },
  "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.": {
   "t": "Knock, knock, knock. \"Kids~ Mom's home. Open the door~\" The voice is rough and raspy.",
   "c": [
@@ -588,7 +572,6 @@ const TEXT_EN = {
  "둘째 고개": "Second Hill",
  "셋째 고개": "Third Hill",
  "부잣집 부엌": "The Rich House's Kitchen",
- "오누이의 밤": "A Night at Home",
  "똑똑똑": "Knock, Knock, Knock",
  "문틈으로 쑥": "A Hand Through the Door",
  "창호지 구멍": "A Hole in the Paper Door",

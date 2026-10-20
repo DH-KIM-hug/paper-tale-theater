@@ -39,8 +39,8 @@ def rewrite(fn, en):
     for l in d['lines']:
         if l['text'] == old:
             l['text'] = new
-            if en: l['en'] = l['segs'][0][1] = new_en
-            else: l['segs'][0][1] = new
+            if en: l['en'] = new_en
+            if l.get('segs'): l['segs'][0][1] = new_en if en else new  # segs 없는 줄은 text/en 만
     json.dump(d, open(p, 'w'), ensure_ascii=False, indent=1)
 
 def need(lang, txt):
