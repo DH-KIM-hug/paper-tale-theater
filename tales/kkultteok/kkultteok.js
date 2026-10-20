@@ -255,9 +255,14 @@
       await say('"퐁!" 은우가 따라 해요.');
       agi.look('lookup');
       await say('하늘의 구름을 톡! 무엇이 될까요?');
+      /* 세 구름 중 아무거나 하나를 누르면 된다: 구름 셋 위에 투명한 누르는 자리를 한 판으로 덮는다 (2026-10-20: 오른쪽 구름만 눌렸음) */
+      const anyCloud = el('g', {}, T.world);
+      const cx = cl.slice(0, 3).map(c => c.x), cy = cl.slice(0, 3).map(c => c.y - 50 * CS), R = 95 * CS;
+      el('rect', { x: Math.min(...cx) - R, y: Math.min(...cy) - R, width: Math.max(...cx) - Math.min(...cx) + 2 * R, height: Math.max(...cy) - Math.min(...cy) + 2 * R, rx: 40, fill: 'transparent' }, anyCloud); // 구름 사이 빈 곳도 눌리게 (손 힌트가 가운데를 가리킨다)
+      await T.tap(anyCloud, { prompt: '하늘의 구름을 톡! 무엇이 될까요?' }); // 한 번 누르면 나머지는 저절로
+      anyCloud.remove();
       for (let i = 0; i < 3; i++) {
-        if (i === 0) await T.tap(cl[i].pos, { prompt: '하늘의 구름을 톡! 무엇이 될까요?' }); // 한 번 누르면 나머지는 저절로 (2026-10-20)
-        else await sleep(400);
+        if (i > 0) await sleep(400);
         morph(cl[i], 's'); cl[i].hop(14, 360); popSfx(T); puff(cl[i].x, cl[i].y - 70 * CS); T.pop(cl[i].x, cl[i].y + 30, tr(SKY[i][3]));
         kids[i].look('jump'); kids[i].hop(16, 320); await sleep(500); kids[i].look('lookup');
       }
