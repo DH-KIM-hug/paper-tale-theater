@@ -11,7 +11,7 @@
     won_shoe: 0.5745, won_stand: 0.4757, };
   /* 2026-10-20 새 그림은 그림 크기(세로 픽셀)가 옛 그림과 달라서, 옛 그림과 같은 픽셀 축척이 되도록 높이에 곱하는 비율 */
   const RS = { drum: 0.918, fairy_float: 0.706, fairy_give: 0.789, gong: 0.948, kong_hoe: 0.994, kong_loom: 0.821,
-    kong_pour: 0.786, kong_sweep: 0.936, pail: 0.870, pat_dressed: 0.877, pat_eat: 0.849,
+    kong_pour: 0.940, /* 2026-10-20 크기 일관성: 물 붓기 자세가 같은 자리의 젖은 자세보다 머리 폭 17% 작아서 0.786 → 0.940 */ kong_sweep: 0.936, pail: 0.870, pat_dressed: 0.877, pat_eat: 0.849,
     step_dressed: 0.846, step_order: 0.853, step_shy: 0.757, toad_idle: 0.976, won_shoe: 0.940, };
   const NF = new Set(['basket_r', 'basket_y', 'buk', 'drum', 'gong', 'loom', 'pail', 'ricecake', 'shoe_peony', 'shoe_plum']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
   /* 서 있는 콩쥐(신부·젖은·꽃신)는 새 그림이 작게 그려져서 비율 대신 높이를 직접 정함 */
