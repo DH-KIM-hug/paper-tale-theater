@@ -55,23 +55,30 @@
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
   const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
+  /* 2026-10-20 새 그림은 비율이 달라져서 상자 폭·높이를 새 그림 크기에 맞춰 다시 계산(같은 눈금) */
   /* 그림 상자 [x, y, w, h] (발끝 0,0 기준, 무대 단위) — 같은 인물은 자세가 바뀌어도 머리·몸 크기가 같게 맞췄다 (변환 스크립트 conv_fc.py) */
   const BOX = {
-    fox_stand: [-102, -168.5, 202.8, 168.5], fox_lick: [-106.2, -150, 205, 150.2], fox_sorry: [-84.5, -166, 176, 166], fox_stuck: [-67.1, -141.4, 122.6, 143.2],
-    crane_head: [-76, -249.9, 149.4, 251.7], crane_body: [-76, -249.9, 149.4, 251.7], crane_sad: [-77.3, -209.9, 146.4, 212.4], crane_sorry: [-67.6, -216.8, 135.9, 221.3],
-    duck: [-60.7, -129.4, 121.8, 130], butterfly: [-60, -129, 120, 86.2], pot: [-115.2, -219.2, 230, 219.5],
-    plate: [-90, -64.1, 180, 64.1], plate_empty: [-90, -64.1, 180, 64.1], plate_soup: [-90, -64.1, 180, 64.1],
-    bottle: [-45.1, -186, 90, 186], bowl: [-74.1, -98.3, 150, 98.2], flower: [-55.4, -135, 86.3, 135],
-    invite: [-52, -68, 104, 104 * 143 / 220], feast_table: [30, 392, 940, 940 * 284 / 1200],
+    fox_stand: [-102, -168.4, 187.4, 168.4], fox_lick: [-106.2, -150.3, 172.9, 150.3], fox_sorry: [-84.5, -166, 166.3, 166], fox_stuck: [-108.6, -122.4, 122.6, 113.7],
+    crane_head: [-119.6, -249.8, 107.6, 139], crane_body: [-59.8, -183.4, 170.8, 183.4], crane_sad: [-100.6, -239.8, 208.3, 239.8], crane_sorry: [-99.9, -237.3, 207, 237.3], // 두루미: 새 그림은 머리(목 포함)와 몸이 따로 큰 조각 → 키 250에 맞춰 몸 배율 .369, 머리 .63배, 시무룩·미안 그림은 몸통 폭(420÷349·322 배)으로 몸 조각과 같은 크기
+    duck: [-56, -129.8, 111.9, 129.8], butterfly: [-52.9, -129, 105.8, 86.3], pot: [-112.7, -219.4, 225.3, 219.4],
+    plate: [-75, -77, 150, 77], plate_empty: [-73.8, -91, 147.6, 91], plate_soup: [-73.8, -86, 147.6, 86],
+    bottle: [-45, -184.9, 90, 184.9], bowl: [-64, -98.3, 127.9, 98.3], flower: [-55.4, -129.7, 86.3, 129.7],
+    invite: [-45, -68, 89.8, 67.6], feast_table: [30, 392, 940, 940 * 284 / 1200],
   };
-  const FOX_ART_NOSE = [-101, -96.5], FOX_STUCK_NOSE = [-66.9, -93.2];
-  const CRANE_ART_PIV = [-24.2, -143.3], CRANE_ART_TIP = [-76, -221];
+  const FOX_ART_NOSE = [-101, -115.4], FOX_STUCK_NOSE = [-66.9, -93.2];
+  const CRANE_ART_PIV = [-26.6, -138.2], CRANE_ART_TIP = [-119.6, -156.8];
   /* 그림 한 장: BOX 자리에. 바깥 g(그림자) 안에 그림 */
-  function pic(T, g, key, { shadow = true, box } = {}) {
+  let clipN = 0;
+  function pic(T, g, key, { shadow = true, box, clipX } = {}) {
     const u = artUrl(key); if (!u) return null;
     const [x, y, w, h] = box || BOX[key];
     const wrap = T.el('g', shadow ? { filter: 'url(#pp)' } : {}, g);
-    T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
+    const im = T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
+    if (clipX != null) { // 이 x(무대 단위) 왼쪽은 잘라 낸다 (새 코 낀 그림 속 작은 호리병을 빼고 장면의 긴 병에 코를 넣는다)
+      const id = 'fcClip' + (++clipN), cp = T.el('clipPath', { id }, wrap);
+      T.el('rect', { x: clipX, y: y - 5, width: x + w - clipX + 5, height: h + 10 }, cp);
+      im.setAttribute('clip-path', `url(#${id})`);
+    }
     return wrap;
   }
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). 그림 밖(세로 화면에서 물러설 때)은 끝 색으로 */
@@ -107,7 +114,7 @@
     const poses = {};
     ['fox_stand', 'fox_lick', 'fox_sorry'].forEach(k => { poses[k.slice(4)] = pic(T, head, k); });
     const legs = rotO(el('g', {}, head), ...FOX_STUCK_NOSE); // 코 낀 자세: 코를 축으로 대롱대롱
-    poses.stuck = pic(T, legs, 'fox_stuck');
+    poses.stuck = pic(T, legs, 'fox_stuck', { clipX: -108.6 + 140 * .298 }); // 2026-10-20 새 그림: 코 끝 px(140,98)을 코 자리로, 그림 속 호리병(왼쪽)은 자른다
     const setPose = n => Object.entries(poses).forEach(([k, p]) => { if (p) p.style.display = k === (poses[n] ? n : 'stand') ? '' : 'none'; });
     setPose('stand');
     hit(T, head, -110, -170, 215, 170);
@@ -154,7 +161,7 @@
     const stand = el('g', {}, all);
     const head = rotO(el('g', {}, stand), ...CRANE_ART_PIV); // 목(머리 포함)만 돈다. 몸통이 위에 덮여 목 뿌리를 가린다
     pic(T, head, 'crane_head');
-    hit(T, head, -82, -254, 100, 120);
+    hit(T, head, -122, -252, 112, 104);
     const body = pic(T, stand, 'crane_body');
     const poses = { stand, sad: pic(T, all, 'crane_sad'), sorry: pic(T, all, 'crane_sorry') };
     [body, poses.sad, poses.sorry].forEach(p => p && (p.style.pointerEvents = 'none')); // 몸통 그림이 위에서 머리·부리 터치를 가로채지 않게
@@ -370,7 +377,7 @@
       const [x, y, s] = HIGH_PLATE;
       const g = el('g', { transform: `translate(${x},${y}) scale(${s})` }, parent);
       pic(T, g, 'plate_empty');
-      const soup = rotO(el('g', {}, g), 0, -34);
+      const soup = rotO(el('g', {}, g), 0, -45);
       pic(T, soup, 'plate_soup', { shadow: false });
       return { soup };
     }
@@ -477,16 +484,15 @@
     return g;
   }
   const ICON = {
-    plate: (T, g) => pic(T, g, 'plate', { box: [-58, -12, 116, 41.3] }) || T.paper(g, [['ellipse', { cx: 0, cy: 8, rx: 52, ry: 11, fill: C.cream, stroke: C.gold, 'stroke-width': 3 }], ['ellipse', { cx: 0, cy: 6, rx: 38, ry: 5, fill: C.amber }]]),
+    plate: (T, g) => pic(T, g, 'plate', { box: [-58, -30.3, 116, 59.6] }) || T.paper(g, [['ellipse', { cx: 0, cy: 8, rx: 52, ry: 11, fill: C.cream, stroke: C.gold, 'stroke-width': 3 }], ['ellipse', { cx: 0, cy: 6, rx: 38, ry: 5, fill: C.amber }]]),
     bottle: (T, g) => { const s = T.el('g', { transform: 'translate(0,50) scale(.55)' }, g); DISH.bottle.draw(T, s); },
   };
   /* 입 모양 카드: 그림이면 얼굴 그림을 동그랗게 오려 넣는다 (나비 빨대 입은 그림에 없어서 코드로 덧그린다) */
-  let clipN = 0;
   function mouthArt(T, g, k) {
     const u = artUrl('mouth_' + k); if (!u) return false;
     const id = 'fcMouthClip' + (++clipN);
     const cp = T.el('clipPath', { id }, g); T.el('circle', { r: 76 }, cp);
-    const im = T.el('image', { href: u, x: -76, y: -76, width: 152, height: 152, preserveAspectRatio: 'none' }, g);
+    const im = T.el('image', { href: u, x: -76, y: -76, width: 152, height: 152, preserveAspectRatio: 'xMidYMid slice' }, g);
     im.setAttribute('clip-path', `url(#${id})`);
     if (k === 'butterfly') [[C.cream, 11], [C.ink, 5]].forEach(([c, w]) => T.el('path', { d: 'M2 28 Q4 54 22 58 Q40 60 40 44 Q40 30 26 34', stroke: c, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round' }, g));
     return true;
