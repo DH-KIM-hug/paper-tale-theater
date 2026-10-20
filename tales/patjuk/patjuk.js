@@ -389,7 +389,7 @@
       trayEl.hidden = false;
       lockTray(true);
     }
-    const waitCard = () => new Promise(res => { cardWaiter = res; lockTray(false); });
+    const waitCard = () => new Promise(res => { cardWaiter = res; lockTray(false); T.autoDo(1800, () => { const f = FRIENDS[stageI], c = f && document.getElementById('card-' + f.id); c && c.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerId: 1, isPrimary: true })); }); }); // 자동 재생: 차례 맞는 친구 카드를 대신 고른다
 
     /* ---------- 건너뛰기 버튼 (인트로, 1초 꾹) ---------- */
     let skipRequested = false;
