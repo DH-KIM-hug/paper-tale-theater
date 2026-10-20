@@ -1,0 +1,773 @@
+{
+ "notes": "ElevenLabs 목소리: nar=Leejin(따뜻하고 또렷한 낭독), cind=Luna(부드럽고 달콤한 젊은 여성), fairy=Haemi, step=Wisdom(우아하고 차갑지만 무섭지 않게), sisa=Ailra(큰언니, 새침하고 통통 튐), sisb=Sena(작은언니, 밝고 귀여움), prince=Sunjun. 숫자 하나~여섯은 내레이터 목소리.",
+ "voices": {
+  "nar": "F9mMsBUFaCLedtYXXjLD",
+  "cind": "Ss1VfT7ri4lqnvTDWII0",
+  "step": "Pyj2w3lxZ0VMpAJ4CmRu",
+  "sisa": "XtDNqqtU5YUpm1etgl1C",
+  "sisb": "vJ170fCwESgE1tjW39So",
+  "fairy": "ZjAPD4f11zlnEnZpKDgo",
+  "prince": "VpI9YrC8mqZsi3NvIQzK"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "cind": "eleven_v4",
+  "step": "eleven_v4",
+  "sisa": "eleven_v4",
+  "sisb": "eleven_v4",
+  "fairy": "eleven_v4",
+  "prince": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "cind": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "step": {
+   "stability": 0.3,
+   "style": 0.55
+  },
+  "sisa": {
+   "stability": 0.3,
+   "style": 0.6
+  },
+  "sisb": {
+   "stability": 0.3,
+   "style": 0.6
+  },
+  "fairy": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "prince": {
+   "stability": 0.4,
+   "style": 0.4
+  }
+ },
+ "use_dir": [
+  "nar",
+  "cind",
+  "step",
+  "sisa",
+  "sisb",
+  "fairy",
+  "prince"
+ ],
+ "lines": [
+  {
+   "text": "옛날에 마음씨 고운 아가씨가 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날에 마음씨 고운 아가씨가 살았어요.",
+     null,
+     "[warm, gentle, fairytale opening]"
+    ]
+   ]
+  },
+  {
+   "text": "넌 부엌 일을 해!",
+   "segs": [
+    [
+     "step",
+     "넌 부엌 일을 해!",
+     null,
+     "[imperious, snooty, haughty, comic, not scary]"
+    ]
+   ]
+  },
+  {
+   "text": "재투성이래요~ 재투성이래요~",
+   "segs": [
+    [
+     "sisa",
+     "재투성이래요~",
+     null,
+     "[teasing, singsong, snooty, giggling]"
+    ],
+    [
+     "sisb",
+     "재투성이래요~",
+     null,
+     "[teasing, singsong, giggling, cute]"
+    ]
+   ]
+  },
+  {
+   "text": "그래서 아가씨는 신데렐라라고 불렸어요.",
+   "segs": [
+    [
+     "nar",
+     "그래서 아가씨는 신데렐라라고 불렸어요.",
+     null,
+     "[gentle, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 궁전에서 무도회 편지가 왔어요.",
+   "segs": [
+    [
+     "nar",
+     "어느 날, 궁전에서 무도회 편지가 왔어요.",
+     null,
+     "[bright, excited, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라, 내 머리 좀 예쁘게 해 줘!",
+   "segs": [
+    [
+     "sisa",
+     "신데렐라, 내 머리 좀 예쁘게 해 줘!",
+     null,
+     "[snooty, demanding, bouncy, vain]"
+    ]
+   ]
+  },
+  {
+   "text": "네, 예쁘게 해 드릴게요.",
+   "segs": [
+    [
+     "cind",
+     "네, 예쁘게 해 드릴게요.",
+     null,
+     "[gentle, kind, soft, sweet]"
+    ]
+   ]
+  },
+  {
+   "text": "언니 머리를 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "언니 머리를 톡 눌러 봐요.",
+     null,
+     "[playful, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "어머, 예쁘다!",
+   "segs": [
+    [
+     "sisa",
+     "어머, 예쁘다!",
+     null,
+     "[delighted, vain, bouncy, giggling]"
+    ]
+   ]
+  },
+  {
+   "text": "언니들은 신이 나서 무도회에 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "언니들은 신이 나서 무도회에 갔어요.",
+     null,
+     "[lively, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "혼자 남은 신데렐라는 훌쩍훌쩍 울었어요.",
+   "segs": [
+    [
+     "nar",
+     "혼자 남은 신데렐라는 훌쩍훌쩍 울었어요.",
+     null,
+     "[sad, soft, sniffling, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "나도 무도회에 가고 싶어요.",
+   "segs": [
+    [
+     "cind",
+     "나도 무도회에 가고 싶어요.",
+     null,
+     "[sad, wistful, tearful, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 요정 대모가 나타났어요.",
+   "segs": [
+    [
+     "nar",
+     "그때 요정 대모가 나타났어요.",
+     null,
+     "[wonder, soft, glowing]"
+    ]
+   ]
+  },
+  {
+   "text": "울지 마렴. 너도 무도회에 가고 싶지? 내가 도와주마.",
+   "segs": [
+    [
+     "fairy",
+     "울지 마렴. 너도 무도회에 가고 싶지? 내가 도와주마.",
+     null,
+     "[warm, twinkling, kind grandmother, soothing]"
+    ]
+   ]
+  },
+  {
+   "text": "텃밭에서 제일 큰 호박을 가져오렴.",
+   "segs": [
+    [
+     "fairy",
+     "텃밭에서 제일 큰 호박을 가져오렴.",
+     null,
+     "[warm, twinkling, playful, kind grandmother]"
+    ]
+   ]
+  },
+  {
+   "text": "호박을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "호박을 톡 눌러 봐요.",
+     null,
+     "[playful, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "호박이 황금 마차가 되었어요!",
+   "segs": [
+    [
+     "nar",
+     "호박이 황금 마차가 되었어요!",
+     null,
+     "[wonder, bright, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "쥐덫에 생쥐가 있구나. 몇 마리일까?",
+   "segs": [
+    [
+     "fairy",
+     "쥐덫에 생쥐가 있구나. 몇 마리일까?",
+     null,
+     "[warm, twinkling, curious, kind grandmother]"
+    ]
+   ]
+  },
+  {
+   "text": "쥐덫을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "쥐덫을 톡 눌러 봐요.",
+     null,
+     "[playful, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "생쥐가 여섯 마리! 하얀 말 여섯 마리가 되었어요.",
+   "segs": [
+    [
+     "nar",
+     "생쥐가 여섯 마리! 하얀 말 여섯 마리가 되었어요.",
+     null,
+     "[bright, delighted, wonder]"
+    ]
+   ]
+  },
+  {
+   "text": "큰 쥐는 마부가, 도마뱀은 시종이 되었어요.",
+   "segs": [
+    [
+     "nar",
+     "큰 쥐는 마부가, 도마뱀은 시종이 되었어요.",
+     null,
+     "[bright, amused]"
+    ]
+   ]
+  },
+  {
+   "text": "이제 네 차례란다.",
+   "segs": [
+    [
+     "fairy",
+     "이제 네 차례란다.",
+     null,
+     "[warm, twinkling, tender, kind grandmother]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 은빛 드레스에 유리 구두를 신었어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 은빛 드레스에 유리 구두를 신었어요.",
+     null,
+     "[wonder, soft, sparkling]"
+    ]
+   ]
+  },
+  {
+   "text": "와, 정말 고맙습니다!",
+   "segs": [
+    [
+     "cind",
+     "와, 정말 고맙습니다!",
+     null,
+     "[joyful, delighted, breathless, sincere]"
+    ]
+   ]
+  },
+  {
+   "text": "꼭 기억하렴. 밤 열두 시가 되면 마법이 풀린단다.",
+   "segs": [
+    [
+     "fairy",
+     "꼭 기억하렴. 밤 열두 시가 되면 마법이 풀린단다.",
+     null,
+     "[warm, gentle, serious, kind grandmother, caring]"
+    ]
+   ]
+  },
+  {
+   "text": "네, 꼭 기억할게요!",
+   "segs": [
+    [
+     "cind",
+     "네, 꼭 기억할게요!",
+     null,
+     "[earnest, joyful, sincere, promising]"
+    ]
+   ]
+  },
+  {
+   "text": "궁전에 가니 모두 신데렐라를 바라보았어요.",
+   "segs": [
+    [
+     "nar",
+     "궁전에 가니 모두 신데렐라를 바라보았어요.",
+     null,
+     "[wonder, hushed, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "함께 춤춰요.",
+   "segs": [
+    [
+     "prince",
+     "함께 춤춰요.",
+     null,
+     "[polite, kind, gentle, young]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 언니들에게도 오렌지를 나눠 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 언니들에게도 오렌지를 나눠 주었어요.",
+     null,
+     "[warm, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "어머, 고마워요!",
+   "segs": [
+    [
+     "sisb",
+     "어머, 고마워요!",
+     null,
+     "[delighted, vain, surprised, cute, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "언니들은 신데렐라를 알아보지 못했어요.",
+   "segs": [
+    [
+     "nar",
+     "언니들은 신데렐라를 알아보지 못했어요.",
+     null,
+     "[amused, light]"
+    ]
+   ]
+  },
+  {
+   "text": "시계를 보니 열두 시가 가까워요. 신데렐라는 약속대로 집에 돌아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "시계를 보니 열두 시가 가까워요. 신데렐라는 약속대로 집에 돌아왔어요.",
+     null,
+     "[calm, gentle, slightly urgent]"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날 밤에도 무도회가 열렸어요.",
+   "segs": [
+    [
+     "nar",
+     "다음 날 밤에도 무도회가 열렸어요.",
+     null,
+     "[warm, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 춤추느라 시간 가는 줄 몰랐어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 춤추느라 시간 가는 줄 몰랐어요.",
+     null,
+     "[warm, dreamy]"
+    ]
+   ]
+  },
+  {
+   "text": "긴 바늘과 짧은 바늘이 모두 12를 가리키면 열두 시예요. 열두 시 시계를 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "긴 바늘과 짧은 바늘이 모두 12를 가리키면 열두 시예요. 열두 시 시계를 찾아봐요!",
+     null,
+     "[clear, bright, teaching, friendly]"
+    ]
+   ]
+  },
+  {
+   "text": "열두 시 시계를 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "열두 시 시계를 찾아봐요!",
+     null,
+     "[bright, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 세 시예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 세 시예요.",
+     null,
+     "[gentle, friendly]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 여섯 시예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 여섯 시예요.",
+     null,
+     "[gentle, friendly]"
+    ]
+   ]
+  },
+  {
+   "text": "바늘이 모두 위로 올라가면 열두 시예요.",
+   "segs": [
+    [
+     "nar",
+     "바늘이 모두 위로 올라가면 열두 시예요.",
+     null,
+     "[clear, friendly, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 열두 시!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 열두 시!",
+     null,
+     "[cheerful, proud, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "앗, 열두 시예요!",
+   "segs": [
+    [
+     "cind",
+     "앗, 열두 시예요!",
+     null,
+     "[startled, alarmed, breathless]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.",
+     null,
+     "[tense, quick, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "이 구두가 꼭 맞는 사람을 찾을 거예요.",
+   "segs": [
+    [
+     "prince",
+     "이 구두가 꼭 맞는 사람을 찾을 거예요.",
+     null,
+     "[polite, kind, determined, young]"
+    ]
+   ]
+  },
+  {
+   "text": "왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.",
+   "segs": [
+    [
+     "nar",
+     "왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.",
+     null,
+     "[warm, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "내 발이 들어갈 거야!",
+   "segs": [
+    [
+     "sisa",
+     "내 발이 들어갈 거야!",
+     null,
+     "[snooty, bouncy, confident, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "내 발도 들어갈 거야!",
+   "segs": [
+    [
+     "sisb",
+     "내 발도 들어갈 거야!",
+     null,
+     "[bright, cute, confident, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "언니들의 발은 너무 커서 들어가지 않았어요.",
+   "segs": [
+    [
+     "nar",
+     "언니들의 발은 너무 커서 들어가지 않았어요.",
+     null,
+     "[gentle, amused]"
+    ]
+   ]
+  },
+  {
+   "text": "저도 신어 봐도 될까요?",
+   "segs": [
+    [
+     "cind",
+     "저도 신어 봐도 될까요?",
+     null,
+     "[gentle, shy, hopeful, polite]"
+    ]
+   ]
+  },
+  {
+   "text": "구두와 크기가 같은 발을 찾아봐요!",
+   "segs": [
+    [
+     "nar",
+     "구두와 크기가 같은 발을 찾아봐요!",
+     null,
+     "[clear, bright, teaching, friendly]"
+    ]
+   ]
+  },
+  {
+   "text": "그 발은 구두보다 커요.",
+   "segs": [
+    [
+     "nar",
+     "그 발은 구두보다 커요.",
+     null,
+     "[gentle, friendly]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 작은 발!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 작은 발!",
+     null,
+     "[cheerful, proud, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "구두가 꼭 맞았어요!",
+   "segs": [
+    [
+     "nar",
+     "구두가 꼭 맞았어요!",
+     null,
+     "[joyful, wonder, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라는 주머니에서 다른 한 짝을 꺼냈어요.",
+   "segs": [
+    [
+     "nar",
+     "신데렐라는 주머니에서 다른 한 짝을 꺼냈어요.",
+     null,
+     "[warm, tender]"
+    ]
+   ]
+  },
+  {
+   "text": "요정 대모가 다시 고운 옷을 입혀 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "요정 대모가 다시 고운 옷을 입혀 주었어요.",
+     null,
+     "[warm, gentle, wonder]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라, 그동안 미안해. 정말 미안해.",
+   "segs": [
+    [
+     "sisa",
+     "신데렐라, 그동안 미안해.",
+     null,
+     "[sorry, ashamed, soft, sincere]"
+    ],
+    [
+     "sisb",
+     "정말 미안해.",
+     null,
+     "[sorry, tearful, sincere, cute]"
+    ]
+   ]
+  },
+  {
+   "text": "괜찮아요. 우리 함께 행복해요.",
+   "segs": [
+    [
+     "cind",
+     "괜찮아요. 우리 함께 행복해요.",
+     null,
+     "[sincere, warm, forgiving, gentle, kind]"
+    ]
+   ]
+  },
+  {
+   "text": "신데렐라에게 톡 인사해요!",
+   "segs": [
+    [
+     "nar",
+     "신데렐라에게 톡 인사해요!",
+     null,
+     "[warm, cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "모두 함께 웃었어요.",
+   "segs": [
+    [
+     "nar",
+     "모두 함께 웃었어요.",
+     null,
+     "[warm, happy, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.",
+   "segs": [
+    [
+     "nar",
+     "착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.",
+     null,
+     "[warm, gentle, wise, slow, concluding]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "n1": [
+   [
+    "nar",
+    "하나!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n2": [
+   [
+    "nar",
+    "둘!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n3": [
+   [
+    "nar",
+    "셋!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n4": [
+   [
+    "nar",
+    "넷!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n5": [
+   [
+    "nar",
+    "다섯!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ],
+  "n6": [
+   [
+    "nar",
+    "여섯!",
+    "toneup",
+    "[bright, clear, cheerful, counting, bouncy]"
+   ]
+  ]
+ }
+}

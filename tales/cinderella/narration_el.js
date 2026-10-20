@@ -1,84 +1,76 @@
 /* cinderella — ElevenLabs 배역 내레이션 (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS, {
- "옛날 옛날에 마음씨 고운 신데렐라가 살았어요.": "audio/el/cinderella/nar_841b940969.mp3",
- "신데렐라는 새엄마, 두 언니와 함께 살았어요.": "audio/el/cinderella/nar_ecda21ba49.mp3",
- "\"신데렐라, 부엌을 쓸어라!\" 새엄마가 말했어요.": [
-  "audio/el/cinderella/step_71bb82c8a6.mp3",
-  "audio/el/cinderella/nar_af42e95b79.mp3"
+ "옛날에 마음씨 고운 아가씨가 살았어요.": "audio/el/cinderella/nar_a0da1a76a4.mp3",
+ "넌 부엌 일을 해!": "audio/el/cinderella/step_5a9659fbeb.mp3",
+ "재투성이래요~ 재투성이래요~": [
+  "audio/el/cinderella/sisa_1dc5ae14e7.mp3",
+  "audio/el/cinderella/sisb_a8ea5022aa.mp3"
  ],
- "신데렐라를 톡톡톡 눌러서 부엌을 쓸어 봐요!": "audio/el/cinderella/nar_172a81bdde.mp3",
- "신데렐라를 톡톡톡! 부엌을 쓸어요.": "audio/el/cinderella/nar_7f136e97dd.mp3",
- "부엌이 깨끗해졌어요. 그런데 일이 아직 많이 남았어요.": "audio/el/cinderella/nar_7f4be9a300.mp3",
- "일이 너무 많아서 신데렐라는 마음이 슬퍼졌어요.": "audio/el/cinderella/nar_435181818b.mp3",
- "신데렐라의 마음은 어떨까요? 슬픈 얼굴을 톡!": "audio/el/cinderella/nar_e5da19de6c.mp3",
- "슬픈 얼굴을 톡!": "audio/el/cinderella/nar_95e9e57aa7.mp3",
- "눈물이 맺힌 얼굴을 찾아봐요.": "audio/el/cinderella/nar_828970904b.mp3",
- "두 손으로 눈을 가린 얼굴을 톡!": "audio/el/cinderella/nar_e01d444c64.mp3",
- "맞아요, 슬픈 마음이에요. 그때 쪼르르 소리가 났어요.": "audio/el/cinderella/nar_997a905e71.mp3",
- "그때 생쥐들이 달려왔어요. \"우리가 도와줄게!\"": [
-  "audio/el/cinderella/nar_68c13b08b2.mp3",
-  "audio/el/cinderella/mouse_9415a34ea6.mp3"
+ "그래서 아가씨는 신데렐라라고 불렸어요.": "audio/el/cinderella/nar_418d9af2d5.mp3",
+ "어느 날, 궁전에서 무도회 편지가 왔어요.": "audio/el/cinderella/nar_383d9f7d6a.mp3",
+ "신데렐라, 내 머리 좀 예쁘게 해 줘!": "audio/el/cinderella/sisa_c824af3aaa.mp3",
+ "네, 예쁘게 해 드릴게요.": "audio/el/cinderella/cind_03d02098f4.mp3",
+ "언니 머리를 톡 눌러 봐요.": "audio/el/cinderella/nar_380a6ed997.mp3",
+ "어머, 예쁘다!": "audio/el/cinderella/sisa_ab951f546f.mp3",
+ "언니들은 신이 나서 무도회에 갔어요.": "audio/el/cinderella/nar_77d5f287bb.mp3",
+ "혼자 남은 신데렐라는 훌쩍훌쩍 울었어요.": "audio/el/cinderella/nar_9fa381cb28.mp3",
+ "나도 무도회에 가고 싶어요.": "audio/el/cinderella/cind_1b42608190.mp3",
+ "그때 요정 대모가 나타났어요.": "audio/el/cinderella/nar_1998b91e32.mp3",
+ "울지 마렴. 너도 무도회에 가고 싶지? 내가 도와주마.": "audio/el/cinderella/fairy_383c7cf6c2.mp3",
+ "텃밭에서 제일 큰 호박을 가져오렴.": "audio/el/cinderella/fairy_050598f9b6.mp3",
+ "호박을 톡 눌러 봐요.": "audio/el/cinderella/nar_f4658341eb.mp3",
+ "호박이 황금 마차가 되었어요!": "audio/el/cinderella/nar_016a9b4385.mp3",
+ "쥐덫에 생쥐가 있구나. 몇 마리일까?": "audio/el/cinderella/fairy_3e83069be5.mp3",
+ "쥐덫을 톡 눌러 봐요.": "audio/el/cinderella/nar_97a92004ec.mp3",
+ "생쥐가 여섯 마리! 하얀 말 여섯 마리가 되었어요.": "audio/el/cinderella/nar_54502614ea.mp3",
+ "큰 쥐는 마부가, 도마뱀은 시종이 되었어요.": "audio/el/cinderella/nar_033722c51c.mp3",
+ "이제 네 차례란다.": "audio/el/cinderella/fairy_e265f7caea.mp3",
+ "신데렐라는 은빛 드레스에 유리 구두를 신었어요.": "audio/el/cinderella/nar_451f72baab.mp3",
+ "와, 정말 고맙습니다!": "audio/el/cinderella/cind_a98a98d644.mp3",
+ "꼭 기억하렴. 밤 열두 시가 되면 마법이 풀린단다.": "audio/el/cinderella/fairy_3a03e140eb.mp3",
+ "네, 꼭 기억할게요!": "audio/el/cinderella/cind_54692ca005.mp3",
+ "궁전에 가니 모두 신데렐라를 바라보았어요.": "audio/el/cinderella/nar_ad8cf5a18f.mp3",
+ "함께 춤춰요.": "audio/el/cinderella/prince_f30141288b.mp3",
+ "신데렐라는 언니들에게도 오렌지를 나눠 주었어요.": "audio/el/cinderella/nar_126042f264.mp3",
+ "어머, 고마워요!": "audio/el/cinderella/sisb_7ee343ead0.mp3",
+ "언니들은 신데렐라를 알아보지 못했어요.": "audio/el/cinderella/nar_3624bfa804.mp3",
+ "시계를 보니 열두 시가 가까워요. 신데렐라는 약속대로 집에 돌아왔어요.": "audio/el/cinderella/nar_f8d5ceac76.mp3",
+ "다음 날 밤에도 무도회가 열렸어요.": "audio/el/cinderella/nar_e38ac058eb.mp3",
+ "신데렐라는 춤추느라 시간 가는 줄 몰랐어요.": "audio/el/cinderella/nar_3817e5bacf.mp3",
+ "긴 바늘과 짧은 바늘이 모두 12를 가리키면 열두 시예요. 열두 시 시계를 찾아봐요!": "audio/el/cinderella/nar_27218eeada.mp3",
+ "열두 시 시계를 찾아봐요!": "audio/el/cinderella/nar_bfdebec5b8.mp3",
+ "그건 세 시예요.": "audio/el/cinderella/nar_09de024b48.mp3",
+ "그건 여섯 시예요.": "audio/el/cinderella/nar_af17d9b0f8.mp3",
+ "바늘이 모두 위로 올라가면 열두 시예요.": "audio/el/cinderella/nar_cee2f61b92.mp3",
+ "맞아요, 열두 시!": "audio/el/cinderella/nar_b604230866.mp3",
+ "앗, 열두 시예요!": "audio/el/cinderella/cind_ab877099f0.mp3",
+ "신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.": "audio/el/cinderella/nar_ca8a6d476c.mp3",
+ "이 구두가 꼭 맞는 사람을 찾을 거예요.": "audio/el/cinderella/prince_d39646d5db.mp3",
+ "왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.": "audio/el/cinderella/nar_5bea924f0b.mp3",
+ "내 발이 들어갈 거야!": "audio/el/cinderella/sisa_bd1f7be95f.mp3",
+ "내 발도 들어갈 거야!": "audio/el/cinderella/sisb_c270b23df9.mp3",
+ "언니들의 발은 너무 커서 들어가지 않았어요.": "audio/el/cinderella/nar_199d56e59d.mp3",
+ "저도 신어 봐도 될까요?": "audio/el/cinderella/cind_2240d87011.mp3",
+ "구두와 크기가 같은 발을 찾아봐요!": "audio/el/cinderella/nar_a433c2e838.mp3",
+ "그 발은 구두보다 커요.": "audio/el/cinderella/nar_68b5878282.mp3",
+ "맞아요, 작은 발!": "audio/el/cinderella/nar_ea5c32a094.mp3",
+ "구두가 꼭 맞았어요!": "audio/el/cinderella/nar_5d4b04c4d6.mp3",
+ "신데렐라는 주머니에서 다른 한 짝을 꺼냈어요.": "audio/el/cinderella/nar_34a7a5063e.mp3",
+ "요정 대모가 다시 고운 옷을 입혀 주었어요.": "audio/el/cinderella/nar_03d7b478c7.mp3",
+ "신데렐라, 그동안 미안해. 정말 미안해.": [
+  "audio/el/cinderella/sisa_0726819fee.mp3",
+  "audio/el/cinderella/sisb_9f05c05abe.mp3"
  ],
- "생쥐를 톡톡톡톡 눌러서 하나씩 세어 봐요!": "audio/el/cinderella/nar_4c95199322.mp3",
- "생쥐를 톡톡톡톡! 하나씩 세어요.": "audio/el/cinderella/nar_db8d549531.mp3",
- "생쥐가 하나, 둘, 셋, 넷! 모두 같이 청소를 했어요.": "audio/el/cinderella/nar_357a4b6d5d.mp3",
- "신데렐라는 방긋 웃었어요. \"고마워, 친구들!\"": [
-  "audio/el/cinderella/nar_58f827aa41.mp3",
-  "audio/el/cinderella/cind_fc21e6d63b.mp3"
- ],
- "어느 날, 왕궁에서 무도회가 열린다는 소식이 왔어요.": "audio/el/cinderella/nar_e9f943a0d1.mp3",
- "언니들은 커다란 리본을 달고 빙글빙글 돌았어요.": "audio/el/cinderella/nar_353f806ca7.mp3",
- "언니를 톡! 리본을 달아 줘요.": "audio/el/cinderella/nar_006e659183.mp3",
- "쿵! 리본이 너무 커서 언니들이 서로 부딪혔어요. 신데렐라는 킥킥 웃었어요.": "audio/el/cinderella/nar_7e4847f238.mp3",
- "새엄마와 언니들은 무도회에 갔어요. 신데렐라만 집에 남았어요.": "audio/el/cinderella/nar_74c53ef4b1.mp3",
- "신데렐라는 정원에서 훌쩍훌쩍 울었어요.": "audio/el/cinderella/nar_143d28869b.mp3",
- "그때 요정 할머니가 나타났어요. \"울지 마, 내가 도와줄게!\" 요정 할머니를 톡!": [
-  "audio/el/cinderella/nar_45d139e327.mp3",
-  "audio/el/cinderella/fairy_d551bbdad0.mp3",
-  "audio/el/cinderella/nar_69b57fcdc3.mp3"
- ],
- "요정 할머니를 톡! 마법을 부려요.": "audio/el/cinderella/nar_85ba362965.mp3",
- "요정 할머니가 지팡이를 휘휘! 생쥐들은 하얀 말이 되었어요.": "audio/el/cinderella/nar_32c97e6699.mp3",
- "커다란 호박은 황금 마차가 되었어요!": "audio/el/cinderella/nar_728f2af115.mp3",
- "신데렐라는 반짝이는 드레스를 입고 유리 구두를 신었어요.": "audio/el/cinderella/nar_1d07f866ec.mp3",
- "\"밤 열두 시 종이 울리면 마법이 풀려요. 서둘러 돌아오렴!\"": "audio/el/cinderella/fairy_8206d68a2f.mp3",
- "신데렐라는 고개를 끄덕이고 마차를 탔어요.": "audio/el/cinderella/nar_8ea2da21a6.mp3",
- "궁전에서는 왕자님이 신데렐라에게 인사했어요. \"나와 함께 춤춰요!\"": [
-  "audio/el/cinderella/nar_3dff121caf.mp3",
-  "audio/el/cinderella/prince_79dd6e47da.mp3"
- ],
- "신데렐라를 톡톡톡 눌러서 함께 춤을 춰 봐요!": "audio/el/cinderella/nar_a7a7a06705.mp3",
- "신데렐라를 톡톡톡! 함께 춤을 춰요.": "audio/el/cinderella/nar_2f6c1e01fb.mp3",
- "둘은 빙글빙글 춤을 추었어요. 신데렐라는 정말 행복했어요.": "audio/el/cinderella/nar_f0ad61efb3.mp3",
- "그때 시계탑에서 종이 울렸어요. 종을 톡톡톡톡톡 눌러서 종소리를 세어 봐요!": "audio/el/cinderella/nar_d2e0fc272b.mp3",
- "종을 톡톡톡톡톡! 종소리를 세어요.": "audio/el/cinderella/nar_cd3bf60b76.mp3",
- "종이 하나, 둘, 셋, 넷, 다섯! 마법이 풀리기 전에 달려야 해요!": "audio/el/cinderella/nar_606518a6a4.mp3",
- "신데렐라는 계단을 후다닥 달려 내려갔어요.": "audio/el/cinderella/nar_376e112011.mp3",
- "앗! 유리 구두 한 짝이 계단에 떨어졌어요.": "audio/el/cinderella/nar_892a97ff1f.mp3",
- "왕자님이 구두를 주웠어요. \"이 구두의 주인을 꼭 찾을 거야!\"": [
-  "audio/el/cinderella/nar_8a6851fe4d.mp3",
-  "audio/el/cinderella/prince_08ea518b63.mp3"
- ],
- "다음 날, 시종이 집집마다 구두를 들고 찾아왔어요.": "audio/el/cinderella/nar_1c7d7865b8.mp3",
- "신데렐라의 집에도 왔어요. \"이 구두가 꼭 맞는 분을 찾아요!\"": [
-  "audio/el/cinderella/nar_0850d5859f.mp3",
-  "audio/el/cinderella/footman_f967331362.mp3"
- ],
- "언니가 발을 쏙 넣어 보았어요. 하지만 발이 너무 커서 안 들어갔어요.": "audio/el/cinderella/nar_0c58aadf66.mp3",
- "구두가 꼭 맞는 사람은 누굴까요? 앞치마를 입은 신데렐라를 톡!": "audio/el/cinderella/nar_e1fc1c2ca3.mp3",
- "신데렐라를 톡!": "audio/el/cinderella/nar_2b1ae91dae.mp3",
- "앞치마를 입은 친구를 찾아봐요.": "audio/el/cinderella/nar_fb16f87ab1.mp3",
- "앞치마를 입은 신데렐라를 톡!": "audio/el/cinderella/nar_f40e7a66ec.mp3",
- "구두가 꼭 맞았어요! 모두 깜짝 놀랐어요.": "audio/el/cinderella/nar_088c47bd61.mp3",
- "언니들이 말했어요. \"신데렐라, 그동안 미안해!\"": [
-  "audio/el/cinderella/nar_b445f2246a.mp3",
-  "audio/el/cinderella/sisa_0a85938c36.mp3"
- ],
- "신데렐라는 웃으며 말했어요. \"괜찮아요. 우리 같이 행복해요!\"": [
-  "audio/el/cinderella/nar_4bc595b6e0.mp3",
-  "audio/el/cinderella/cind_99339c5ae9.mp3"
- ],
- "신데렐라를 톡! 모두 함께 만세!": "audio/el/cinderella/nar_a908457c41.mp3",
- "착한 마음은 행복을 불러와요. 신데렐라 이야기는 이렇게 끝났어요.": "audio/el/cinderella/nar_eab7777807.mp3"
+ "괜찮아요. 우리 함께 행복해요.": "audio/el/cinderella/cind_96b87fe20b.mp3",
+ "신데렐라에게 톡 인사해요!": "audio/el/cinderella/nar_6eb8bf1833.mp3",
+ "모두 함께 웃었어요.": "audio/el/cinderella/nar_86c5efd19a.mp3",
+ "착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.": "audio/el/cinderella/nar_a46b008eaf.mp3"
 });
-Object.assign(VOICE_LINES, {});
+Object.assign(VOICE_LINES, {
+ "n1": "audio/el/cinderella/nar_879be36bd9.mp3",
+ "n2": "audio/el/cinderella/nar_72e0abbc35.mp3",
+ "n3": "audio/el/cinderella/nar_f3e5ea1693.mp3",
+ "n4": "audio/el/cinderella/nar_0c8144e548.mp3",
+ "n5": "audio/el/cinderella/nar_45a666cb2b.mp3",
+ "n6": "audio/el/cinderella/nar_34be92c8ac.mp3"
+});
