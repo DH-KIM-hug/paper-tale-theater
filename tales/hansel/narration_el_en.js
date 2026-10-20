@@ -15,14 +15,6 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Hansel decided to mark the way with bread crumbs.",
   "c": "audio/el/hansel/en/nar_a8f97eefaa.mp3"
  },
- "헨젤을 톡! 숲으로 출발해요.": {
-  "t": "Tap Hansel! Off to the forest we go.",
-  "c": "audio/el/hansel/en/nar_af8e365495.mp3"
- },
- "헨젤을 톡! 출발!": {
-  "t": "Tap Hansel! Let's go!",
-  "c": "audio/el/hansel/en/nar_3c98c8631f.mp3"
- },
  "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!": {
   "t": "Hansel drops the crumbs one by one. Let's count them together!",
   "c": "audio/el/hansel/en/nar_6790936c26.mp3"
@@ -66,13 +58,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "But how strange! There were no crumbs left at all!",
   "c": "audio/el/hansel/en/nar_f537ecc67d.mp3"
  },
- "작은 새가 빵 부스러기를 물고 있어요. 새를 톡!": {
-  "t": "A little bird has a crumb in its beak. Tap the bird!",
-  "c": "audio/el/hansel/en/nar_25158d3189.mp3"
- },
- "새를 톡! 어디 갔는지 물어봐요.": {
-  "t": "Tap the bird! Ask where the crumbs went.",
-  "c": "audio/el/hansel/en/nar_7d6fa500ae.mp3"
+ "작은 새가 빵 부스러기를 물고 있어요.": {
+  "t": "A little bird has a crumb in its beak.",
+  "c": "audio/el/hansel/en/nar_1a274596de.mp3"
  },
  "\"짹짹! 맛있어서 내가 다 먹었어!\" 새가 말했어요.": {
   "t": "Tweet tweet! They were so yummy, I ate them all! said the bird.",
@@ -89,13 +77,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then a sweet smell drifted by. Oh! A candy house!",
   "c": "audio/el/hansel/en/nar_97d1964407.mp3"
  },
- "벽은 쿠키, 지붕은 사탕이에요. 그레텔을 톡! 한 입 먹어 봐요.": {
-  "t": "The walls are cookies and the roof is candy. Tap Gretel and take a bite!",
-  "c": "audio/el/hansel/en/nar_88cb8bee61.mp3"
- },
- "그레텔을 톡! 냠냠 먹어요.": {
-  "t": "Tap Gretel! Munch munch.",
-  "c": "audio/el/hansel/en/nar_c7ca90d9c3.mp3"
+ "벽은 쿠키, 지붕은 사탕이에요.": {
+  "t": "The walls are cookies and the roof is candy.",
+  "c": "audio/el/hansel/en/nar_8b15d1f95e.mp3"
  },
  "너무 맛있어서 둘은 배가 빵빵해졌어요.": {
   "t": "It was so yummy that their tummies got round and full.",
@@ -200,13 +184,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "On the way home, they came to a wide river. There was no bridge!",
   "c": "audio/el/hansel/en/nar_b97c9135e8.mp3"
  },
- "그때 흰 오리가 헤엄쳐 왔어요. 오리를 톡!": {
-  "t": "Then a white duck came swimming. Tap the duck!",
-  "c": "audio/el/hansel/en/nar_ef05ac78e0.mp3"
- },
- "오리를 톡! 등에 타요.": {
-  "t": "Tap the duck! Climb on its back.",
-  "c": "audio/el/hansel/en/nar_3440975480.mp3"
+ "그때 흰 오리가 헤엄쳐 왔어요.": {
+  "t": "Then a white duck came swimming.",
+  "c": "audio/el/hansel/en/nar_bfc5823984.mp3"
  },
  "\"꽥꽥! 내 등에 타!\" 오리가 말했어요.": {
   "t": "Quack quack! Hop on my back! said the duck.",
@@ -226,16 +206,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "They could see their house far away. Papa had been searching the forest for them, so worried.",
   "c": "audio/el/hansel/en/nar_b7ead2fd13.mp3"
  },
- "\"헨젤! 그레텔!\" 아빠가 달려왔어요. 아빠를 톡!": {
-  "t": "Hansel! Gretel! Papa came running. Tap Papa!",
+ "\"헨젤! 그레텔!\" 아빠가 달려왔어요.": {
+  "t": "Hansel! Gretel! Papa came running.",
   "c": [
    "audio/el/hansel/en/father_8201f33e1b.mp3",
-   "audio/el/hansel/en/nar_56a35bf301.mp3"
+   "audio/el/hansel/en/nar_5a8c6d3da2.mp3"
   ]
- },
- "아빠를 톡! 꼭 안아요.": {
-  "t": "Tap Papa! Give him a big hug.",
-  "c": "audio/el/hansel/en/nar_11e05cefe3.mp3"
  },
  "\"찾았다! 보고 싶었어!\" 아빠가 말했어요.": {
   "t": "Found you! I missed you so much! said Papa.",

@@ -114,8 +114,6 @@
     await say('옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.');
     await say('"얘들아, 숲에 산딸기 따러 가자!" 아빠가 말했어요.');
     await say('헨젤은 빵 부스러기로 길을 표시하기로 했어요.');
-    await say('헨젤을 톡! 숲으로 출발해요.');
-    await T.tap(hans.pos, { prompt: '헨젤을 톡! 출발!' });
     popSfx(T); hans.hop(20, 300);
     await Promise.all([gret.move(gret.x + 50, GROUND, 600), hans.move(hans.x + 50, GROUND, 600), father.move(father.x + 50, GROUND, 600)]);
 
@@ -172,8 +170,8 @@
     }, hans.pos);
     await say('그런데 이상해요. 빵 부스러기가 하나도 없어요!');
     put(T, bird, L(640, 590), GROUND + 10, { look: 'crumb', to: 'left' }); fadeIn(bird);
-    await say('작은 새가 빵 부스러기를 물고 있어요. 새를 톡!');
-    await T.tap(bird.pos, { prompt: '새를 톡! 어디 갔는지 물어봐요.' });
+    await say('작은 새가 빵 부스러기를 물고 있어요.');
+    await sleep(700); /* 저절로 */
     bird.hop(18, 300); AudioFX.sfx('squeak') || popSfx(T); T.pop(bird.x, bird.y - 110, tr('짹짹!'));
     await T.cutImage([{ src: cutSrc('bird'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     scene('ground');
@@ -189,8 +187,8 @@
       put(T, gret, L(500, 540), GROUND, { look: 'walk', to: 'right' });
     }, gret.pos);
     await say('그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!');
-    await say('벽은 쿠키, 지붕은 사탕이에요. 그레텔을 톡! 한 입 먹어 봐요.');
-    await T.tap(gret.pos, { prompt: '그레텔을 톡! 냠냠 먹어요.' });
+    await say('벽은 쿠키, 지붕은 사탕이에요.');
+    await sleep(700); /* 저절로 냠냠 */
     gret.look('eat'); hans.look('eat'); AudioFX.sfx('chomp') || popSfx(T); gret.hop(16, 300); T.pop(gret.x, gret.y - 215, tr('냠냠!'));
     await T.cutImage([{ src: cutSrc('eat'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     await say('너무 맛있어서 둘은 배가 빵빵해졌어요.');
@@ -287,8 +285,8 @@
     await say('집으로 가는 길에 넓은 강이 나왔어요. 다리가 없어요!');
     put(T, duck, L(820, 640), 470, { look: 'a', to: 'left' }); fadeIn(duck);
     await duck.move(L(640, 570), 470, 1100);
-    await say('그때 흰 오리가 헤엄쳐 왔어요. 오리를 톡!');
-    await T.tap(duck.pos, { prompt: '오리를 톡! 등에 타요.' });
+    await say('그때 흰 오리가 헤엄쳐 왔어요.');
+    await sleep(700); /* 저절로 */
     duck.look('b'); duck.hop(14, 300); AudioFX.sfx('squeak') || popSfx(T); T.pop(duck.x, duck.y - 150, tr('꽥꽥!'));
     await T.cutImage([{ src: cutSrc('duck'), sfx: 'pop', hold: 3400 }], { hold: 3400 });
     scene('river');
@@ -315,8 +313,8 @@
     }, hans.pos);
     await say('저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.');
     await father.move(L(450, 480), GROUND, 800);
-    await say('"헨젤! 그레텔!" 아빠가 달려왔어요. 아빠를 톡!');
-    await T.tap(father.pos, { prompt: '아빠를 톡! 꼭 안아요.' });
+    await say('"헨젤! 그레텔!" 아빠가 달려왔어요.');
+    await sleep(700); /* 저절로 */
     popSfx(T); father.hop(20, 300);
     await T.cutImage([{ src: cutSrc('hug'), sfx: 'pop', hold: 3600 }], { hold: 3600 });
     scene('cottage');

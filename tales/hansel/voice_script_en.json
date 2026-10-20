@@ -32,14 +32,6 @@
    "en": "Hansel decided to mark the way with bread crumbs."
   },
   {
-   "text": "헨젤을 톡! 숲으로 출발해요.",
-   "en": "Tap Hansel! Off to the forest we go."
-  },
-  {
-   "text": "헨젤을 톡! 출발!",
-   "en": "Tap Hansel! Let's go!"
-  },
-  {
    "text": "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!",
    "en": "Hansel drops the crumbs one by one. Let's count them together!"
   },
@@ -90,12 +82,8 @@
    "en": "But how strange! There were no crumbs left at all!"
   },
   {
-   "text": "작은 새가 빵 부스러기를 물고 있어요. 새를 톡!",
-   "en": "A little bird has a crumb in its beak. Tap the bird!"
-  },
-  {
-   "text": "새를 톡! 어디 갔는지 물어봐요.",
-   "en": "Tap the bird! Ask where the crumbs went."
+   "text": "작은 새가 빵 부스러기를 물고 있어요.",
+   "en": "A little bird has a crumb in its beak."
   },
   {
    "text": "\"짹짹! 맛있어서 내가 다 먹었어!\" 새가 말했어요.",
@@ -120,12 +108,8 @@
    "en": "Then a sweet smell drifted by. Oh! A candy house!"
   },
   {
-   "text": "벽은 쿠키, 지붕은 사탕이에요. 그레텔을 톡! 한 입 먹어 봐요.",
-   "en": "The walls are cookies and the roof is candy. Tap Gretel and take a bite!"
-  },
-  {
-   "text": "그레텔을 톡! 냠냠 먹어요.",
-   "en": "Tap Gretel! Munch munch."
+   "text": "벽은 쿠키, 지붕은 사탕이에요.",
+   "en": "The walls are cookies and the roof is candy."
   },
   {
    "text": "너무 맛있어서 둘은 배가 빵빵해졌어요.",
@@ -266,12 +250,8 @@
    "en": "On the way home, they came to a wide river. There was no bridge!"
   },
   {
-   "text": "그때 흰 오리가 헤엄쳐 왔어요. 오리를 톡!",
-   "en": "Then a white duck came swimming. Tap the duck!"
-  },
-  {
-   "text": "오리를 톡! 등에 타요.",
-   "en": "Tap the duck! Climb on its back."
+   "text": "그때 흰 오리가 헤엄쳐 왔어요.",
+   "en": "Then a white duck came swimming."
   },
   {
    "text": "\"꽥꽥! 내 등에 타!\" 오리가 말했어요.",
@@ -306,8 +286,8 @@
    "en": "They could see their house far away. Papa had been searching the forest for them, so worried."
   },
   {
-   "text": "\"헨젤! 그레텔!\" 아빠가 달려왔어요. 아빠를 톡!",
-   "en": "Hansel! Gretel! Papa came running. Tap Papa!",
+   "text": "\"헨젤! 그레텔!\" 아빠가 달려왔어요.",
+   "en": "Hansel! Gretel! Papa came running.",
    "segs": [
     [
      "father",
@@ -315,13 +295,9 @@
     ],
     [
      "nar",
-     "Papa came running. Tap Papa!"
+     "Papa came running."
     ]
    ]
-  },
-  {
-   "text": "아빠를 톡! 꼭 안아요.",
-   "en": "Tap Papa! Give him a big hug."
   },
   {
    "text": "\"찾았다! 보고 싶었어!\" 아빠가 말했어요.",

@@ -6,8 +6,6 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/hansel/nar_26756620c0.mp3"
  ],
  "헨젤은 빵 부스러기로 길을 표시하기로 했어요.": "audio/el/hansel/nar_9c5debd116.mp3",
- "헨젤을 톡! 숲으로 출발해요.": "audio/el/hansel/nar_704dd949ce.mp3",
- "헨젤을 톡! 출발!": "audio/el/hansel/nar_609f1b6063.mp3",
  "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!": "audio/el/hansel/nar_153b355d73.mp3",
  "헨젤을 톡톡톡톡톡! 부스러기를 세어요.": "audio/el/hansel/nar_4d494c69db.mp3",
  "빵 부스러기가 하나, 둘, 셋, 넷, 다섯! 길이 생겼어요.": "audio/el/hansel/nar_852d2672ea.mp3",
@@ -21,16 +19,14 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/hansel/nar_52a19d6ddb.mp3"
  ],
  "그런데 이상해요. 빵 부스러기가 하나도 없어요!": "audio/el/hansel/nar_7556e2a84f.mp3",
- "작은 새가 빵 부스러기를 물고 있어요. 새를 톡!": "audio/el/hansel/nar_c69e95e844.mp3",
- "새를 톡! 어디 갔는지 물어봐요.": "audio/el/hansel/nar_48a9f39407.mp3",
+ "작은 새가 빵 부스러기를 물고 있어요.": "audio/el/hansel/nar_25a57afb41.mp3",
  "\"짹짹! 맛있어서 내가 다 먹었어!\" 새가 말했어요.": [
   "audio/el/hansel/bird_dca4854d41.mp3",
   "audio/el/hansel/nar_a8d07e2378.mp3"
  ],
  "헨젤은 눈물이 글썽했지만 그레텔의 손을 꼭 잡고 걸었어요.": "audio/el/hansel/nar_c573a566e9.mp3",
  "그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!": "audio/el/hansel/nar_61cb63310a.mp3",
- "벽은 쿠키, 지붕은 사탕이에요. 그레텔을 톡! 한 입 먹어 봐요.": "audio/el/hansel/nar_72d35195a5.mp3",
- "그레텔을 톡! 냠냠 먹어요.": "audio/el/hansel/nar_0b5ea37725.mp3",
+ "벽은 쿠키, 지붕은 사탕이에요.": "audio/el/hansel/nar_736b14e8ec.mp3",
  "너무 맛있어서 둘은 배가 빵빵해졌어요.": "audio/el/hansel/nar_6ca303fdf8.mp3",
  "지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!": "audio/el/hansel/nar_b231dd18d7.mp3",
  "헨젤을 톡톡톡톡톡! 사탕을 세어요.": "audio/el/hansel/nar_6103e006c7.mp3",
@@ -68,8 +64,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/hansel/witch_8bb3fa7ae4.mp3"
  ],
  "집으로 가는 길에 넓은 강이 나왔어요. 다리가 없어요!": "audio/el/hansel/nar_521f7d0607.mp3",
- "그때 흰 오리가 헤엄쳐 왔어요. 오리를 톡!": "audio/el/hansel/nar_440e400b35.mp3",
- "오리를 톡! 등에 타요.": "audio/el/hansel/nar_fb5fb2ab94.mp3",
+ "그때 흰 오리가 헤엄쳐 왔어요.": "audio/el/hansel/nar_37a17da952.mp3",
  "\"꽥꽥! 내 등에 타!\" 오리가 말했어요.": [
   "audio/el/hansel/duck_e1bfa86400.mp3",
   "audio/el/hansel/nar_db6efe4485.mp3"
@@ -79,11 +74,10 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/hansel/gret_b2afa62159.mp3"
  ],
  "저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.": "audio/el/hansel/nar_aef4bd583d.mp3",
- "\"헨젤! 그레텔!\" 아빠가 달려왔어요. 아빠를 톡!": [
+ "\"헨젤! 그레텔!\" 아빠가 달려왔어요.": [
   "audio/el/hansel/father_e0cc519dcd.mp3",
-  "audio/el/hansel/nar_3bfc16f88a.mp3"
+  "audio/el/hansel/nar_9299de3b91.mp3"
  ],
- "아빠를 톡! 꼭 안아요.": "audio/el/hansel/nar_6223caa327.mp3",
  "\"찾았다! 보고 싶었어!\" 아빠가 말했어요.": [
   "audio/el/hansel/father_c3e0ae07ec.mp3",
   "audio/el/hansel/nar_ae25a8def7.mp3"

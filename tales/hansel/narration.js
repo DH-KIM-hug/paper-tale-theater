@@ -6,8 +6,6 @@ const NARRATION_CLIPS = {
   "audio/tc/hansel/nar_3d5d795f3d.mp3"
  ],
  "헨젤은 빵 부스러기로 길을 표시하기로 했어요.": "audio/tc/hansel/nar_fcc1fa67fb.mp3",
- "헨젤을 톡! 숲으로 출발해요.": "audio/tc/hansel/nar_ade2fab158.mp3",
- "헨젤을 톡! 출발!": "audio/tc/hansel/nar_650d70c916.mp3",
  "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!": "audio/tc/hansel/nar_d496da0216.mp3",
  "헨젤을 톡톡톡톡톡! 부스러기를 세어요.": "audio/tc/hansel/nar_b51e759865.mp3",
  "빵 부스러기가 하나, 둘, 셋, 넷, 다섯! 길이 생겼어요.": "audio/tc/hansel/nar_4379aea0f2.mp3",
@@ -21,16 +19,14 @@ const NARRATION_CLIPS = {
   "audio/tc/hansel/nar_be83dcb983.mp3"
  ],
  "그런데 이상해요. 빵 부스러기가 하나도 없어요!": "audio/tc/hansel/nar_f02c275c84.mp3",
- "작은 새가 빵 부스러기를 물고 있어요. 새를 톡!": "audio/tc/hansel/nar_bc65198fa7.mp3",
- "새를 톡! 어디 갔는지 물어봐요.": "audio/tc/hansel/nar_cbc9df9c71.mp3",
+ "작은 새가 빵 부스러기를 물고 있어요.": "audio/tc/hansel/nar_2a8d575215.mp3",
  "\"짹짹! 맛있어서 내가 다 먹었어!\" 새가 말했어요.": [
   "audio/tc/hansel/bird_246beca1bf.mp3",
   "audio/tc/hansel/nar_b6e0e58641.mp3"
  ],
  "헨젤은 눈물이 글썽했지만 그레텔의 손을 꼭 잡고 걸었어요.": "audio/tc/hansel/nar_44d683d0a3.mp3",
  "그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!": "audio/tc/hansel/nar_f49b1de121.mp3",
- "벽은 쿠키, 지붕은 사탕이에요. 그레텔을 톡! 한 입 먹어 봐요.": "audio/tc/hansel/nar_347a325ebf.mp3",
- "그레텔을 톡! 냠냠 먹어요.": "audio/tc/hansel/nar_777840cce4.mp3",
+ "벽은 쿠키, 지붕은 사탕이에요.": "audio/tc/hansel/nar_75697fdafc.mp3",
  "너무 맛있어서 둘은 배가 빵빵해졌어요.": "audio/tc/hansel/nar_216001b2f9.mp3",
  "지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!": "audio/tc/hansel/nar_f63b72933e.mp3",
  "헨젤을 톡톡톡톡톡! 사탕을 세어요.": "audio/tc/hansel/nar_c563f8512d.mp3",
@@ -68,8 +64,7 @@ const NARRATION_CLIPS = {
   "audio/tc/hansel/witch_78463b54ab.mp3"
  ],
  "집으로 가는 길에 넓은 강이 나왔어요. 다리가 없어요!": "audio/tc/hansel/nar_63d500afd4.mp3",
- "그때 흰 오리가 헤엄쳐 왔어요. 오리를 톡!": "audio/tc/hansel/nar_f9e5190af3.mp3",
- "오리를 톡! 등에 타요.": "audio/tc/hansel/nar_06712370c5.mp3",
+ "그때 흰 오리가 헤엄쳐 왔어요.": "audio/tc/hansel/nar_82b44b4381.mp3",
  "\"꽥꽥! 내 등에 타!\" 오리가 말했어요.": [
   "audio/tc/hansel/duck_81116613b5.mp3",
   "audio/tc/hansel/nar_092c76bf86.mp3"
@@ -79,11 +74,10 @@ const NARRATION_CLIPS = {
   "audio/tc/hansel/gret_79ce4b1a43.mp3"
  ],
  "저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.": "audio/tc/hansel/nar_3f8058212e.mp3",
- "\"헨젤! 그레텔!\" 아빠가 달려왔어요. 아빠를 톡!": [
+ "\"헨젤! 그레텔!\" 아빠가 달려왔어요.": [
   "audio/tc/hansel/father_e9f323895d.mp3",
-  "audio/tc/hansel/nar_a9206f6a6d.mp3"
+  "audio/tc/hansel/nar_6fcbc07cea.mp3"
  ],
- "아빠를 톡! 꼭 안아요.": "audio/tc/hansel/nar_b20180aba2.mp3",
  "\"찾았다! 보고 싶었어!\" 아빠가 말했어요.": [
   "audio/tc/hansel/father_84d8db24db.mp3",
   "audio/tc/hansel/nar_3d5d795f3d.mp3"
