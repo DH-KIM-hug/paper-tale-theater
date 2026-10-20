@@ -638,6 +638,7 @@
       put(cast.grandma, 330, DGY, DS);
       T.world.insertBefore(cast.grandma.pos, T.world.firstChild);
       await sleep(400);
+      cast.grandma.face('right'); // 2026-10-20 문 그림이 없을 때도 오른쪽(할아버지 쪽)을 보고 달려온다
       await cast.grandma.move(GMX, DGY, 900);
     }
     await say('할머니가 달려왔어요. "같이 해 봐요!"');
@@ -682,7 +683,7 @@
     T.world.appendChild(cast.dog.pos);
     if (cast.dog.art) cast.dog.face('right'); // 오른쪽으로 뛰어나온다 (세로 화면은 보이는 폭 안에 내려앉게 가까이)
     await cast.dog.move(T.portrait() ? 600 : 680, 300, 400, 'ease-out');
-    await cast.dog.move(T.portrait() ? 560 : 840, 540, 400, 'ease-in');
+    await cast.dog.move(T.portrait() ? 620 : 840, 540, 400, 'ease-in'); // 2026-10-20 세로: 앞 걸음(600)보다 뒤로 가지 않게 620
     cast.dog.hop(30);
     await say('강아지가 뛰어나왔어요. "나도 도울게요!"');
     await T.sceneCard(null, () => sideView(4), cast.dog.pos);
@@ -744,6 +745,7 @@
     await say('흙구멍에서 찍찍 소리가 나요. 톡 눌러 봐요!');
     await T.tap(cast.mouse.pos, { prompt: '흙구멍의 생쥐를 톡!' });
     mouseClip(false); squeak(T);
+    cast.mouse.face('right'); // 2026-10-20 쪼르르 달려 나올 때 오른쪽을 본다 (왼쪽을 보고 오른쪽으로 걷지 않게)
     T.world.appendChild(cast.mouse.pos);
     await cast.mouse.move(560, 360, 300, 'ease-out');
     await cast.mouse.move(640, 520, 300, 'ease-in');

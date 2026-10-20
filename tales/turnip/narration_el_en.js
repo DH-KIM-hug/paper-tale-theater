@@ -21,7 +21,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "파란 싹이 났어요! 톡톡 눌러서 물도 주고 햇볕도 줘요.": {
   "t": "A green sprout popped up! Tap, tap to give it water and sunshine.",
-  "c": "audio/el/turnip/en/nar_07cac143ef.mp3"
+  "c": "audio/el/turnip/en/nar_12498f6747.mp3"
  },
  "순무 싹을 톡톡 눌러 봐요!": {
   "t": "Tap, tap the turnip sprout!",
