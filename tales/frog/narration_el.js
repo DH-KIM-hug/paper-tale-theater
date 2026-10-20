@@ -5,7 +5,7 @@ Object.assign(NARRATION_CLIPS, {
  "자고 있는 아기 개구리를 톡 눌러 봐요!": "audio/el/frog/nar_535e3eeb3f.mp3",
  "엄마개구리가 말했어요. \"얘들아, 멀리 가면 안 된다~\"": [
   "audio/el/frog/nar_2073418091.mp3",
-  "audio/el/frog/mom_3de427a107.mp3"
+  "audio/el/frog/mom_d85c137f12.mp3"
  ],
  "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?": "audio/el/frog/nar_59964857a3.mp3",
  "화면을 톡! 폴짝폴짝!": "audio/el/frog/nar_c7396ecffc.mp3",
@@ -24,7 +24,7 @@ Object.assign(NARRATION_CLIPS, {
  "\"엄마! 산처럼 커다란 괴물을 봤어요!\"": "audio/el/frog/baby_9f6e0970b0.mp3",
  "엄마개구리가 말했어요. \"흥, 얼마나 컸는데?\"": [
   "audio/el/frog/nar_f86c8e9e4b.mp3",
-  "audio/el/frog/mom_8c7202bb2d.mp3"
+  "audio/el/frog/mom_854f9f3953.mp3"
  ],
  "누가 더 큰지 키를 재 볼까요?": "audio/el/frog/nar_38876ba3b1.mp3",
  "개구리랑 올챙이, 누가 더 커요?": "audio/el/frog/nar_599d015791.mp3",
@@ -46,7 +46,7 @@ Object.assign(NARRATION_CLIPS, {
  "황소가 더 커요! 반짝이는 친구를 눌러 봐요!": "audio/el/frog/nar_b52bb6b53c.mp3",
  "맞아요! 황소가 더 커요!": "audio/el/frog/nar_2a560dd693.mp3",
  "\"흥, 나도 황소만큼 클 수 있어!\" 엄마개구리가 숨을 크게 들이마셨어요.": [
-  "audio/el/frog/mom_d404aabd61.mp3",
+  "audio/el/frog/mom_ef0de5c49e.mp3",
   "audio/el/frog/nar_55da34644b.mp3"
  ],
  "엄마개구리를 톡톡 눌러서 부풀려 볼까요?": "audio/el/frog/nar_0b05dc69d6.mp3",
@@ -69,6 +69,6 @@ Object.assign(NARRATION_CLIPS, {
  "개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.": "audio/el/frog/nar_755934b71c.mp3"
 });
 Object.assign(VOICE_LINES, {
- "cut_pop": "audio/el/frog/mom_9639aa1b82.mp3",
+ "cut_pop": "audio/el/frog/mom_9f9f88c3d8.mp3",
  "ox_thud": "audio/el/frog/ox_0bda93c618.mp3"
 });

@@ -22,8 +22,8 @@
    "style": 0.35
   },
   "mom": {
-   "stability": 0.3,
-   "style": 0.5
+   "stability": 0.25,
+   "style": 0.7
   },
   "baby": {
    "stability": 0.35,
@@ -97,7 +97,7 @@
      "mom",
      "얘들아, 멀리 가면 안 된다!",
      "happy:0.9",
-     "[caring, motherly, gentle, light and short ending]"
+     "[warm, smiling, lively sing-song call to her little ones, affectionate]"
     ]
    ]
   },
@@ -301,7 +301,7 @@
      "mom",
      "흥, 얼마나 컸는데?",
      "tonedown:1.2",
-     "[skeptical, teasing, unimpressed]"
+     "[huffy playful scoff, nose in the air, comedic, very expressive]"
     ]
    ]
   },
@@ -587,7 +587,7 @@
      "mom",
      "흥, 나도 황소만큼 클 수 있어!",
      "angry:1.3",
-     "[indignant, determined, puffed up]"
+     "[very proud and boastful, puffing up, dramatic, loud, comedic determination]"
     ],
     [
      "nar",

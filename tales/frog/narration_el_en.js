@@ -16,7 +16,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Mama Frog said. \"Children, don't go far away~\"",
   "c": [
    "audio/el/frog/en/nar_7dfc39c97d.mp3",
-   "audio/el/frog/en/mom_176dacb00f.mp3"
+   "audio/el/frog/en/mom_b5c8fcff8d.mp3"
   ]
  },
  "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?": {
@@ -83,7 +83,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Mama Frog said. \"Hmph, how big was it?\"",
   "c": [
    "audio/el/frog/en/nar_ecef71d657.mp3",
-   "audio/el/frog/en/mom_5bb76ac0d4.mp3"
+   "audio/el/frog/en/mom_ef4e76baf2.mp3"
   ]
  },
  "누가 더 큰지 키를 재 볼까요?": {
@@ -165,7 +165,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"흥, 나도 황소만큼 클 수 있어!\" 엄마개구리가 숨을 크게 들이마셨어요.": {
   "t": "\"I can be as big as an ox!\" Mama Frog took a deep breath.",
   "c": [
-   "audio/el/frog/en/mom_ad568311dd.mp3",
+   "audio/el/frog/en/mom_ac28445f27.mp3",
    "audio/el/frog/en/nar_4f1f95473c.mp3"
   ]
  },
@@ -234,6 +234,6 @@ Object.assign(NARRATION_CLIPS_EN, {
  }
 });
 Object.assign(VOICE_LINES_EN, {
- "cut_pop": "audio/el/frog/en/mom_e9a04641c4.mp3",
+ "cut_pop": "audio/el/frog/en/mom_223a4d59a5.mp3",
  "ox_thud": "audio/el/frog/en/ox_5c45869568.mp3"
 });
