@@ -1,0 +1,944 @@
+{
+ "notes": "ElevenLabs 목소리 배정(2026-10-20): nar=Huelyn(여자 내레이터 돌려 쓰기 — 백설공주 Lily, 신데렐라 Leejin 다음), belle=Yun(젊고 따뜻하고 맑은 여성, 신데렐라 오디션 후보 A-1; 신데렐라·백설과 같은 Luna를 세 번 쓰지 않는다), beast=George(깊고 따뜻한 남성 이야기꾼, Brian보다 부드럽게; 느리고 정중하게), prince=George(야수가 변한 모습이라 같은 목소리를 일부러 쓴다, 연기 지시만 밝게), father=Namchun(할아버지·아버지 원형), sisa=Chaemong(큰언니, 당돌), sisb=Laura(작은언니, 새침·통통). 신데렐라 언니들(Ailra·Sena)과 겹치지 않는다. 말·거울·반지는 목소리 없음. 모델 eleven_v4, 배역별 settings.",
+ "voices": {
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "belle": "lFG74KW6EG0aRXg1kKfh",
+  "beast": "JBFqnCBsd6RMkjVDRZzb",
+  "father": "5ON5Fnz24cnOozEQfGAm",
+  "sisa": "DGDjWy2CQ8Ishu0meQte",
+  "sisb": "FGY2WhTYpPnrIDTdsKH5",
+  "prince": "JBFqnCBsd6RMkjVDRZzb"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "belle": "eleven_v4",
+  "beast": "eleven_v4",
+  "father": "eleven_v4",
+  "sisa": "eleven_v4",
+  "sisb": "eleven_v4",
+  "prince": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "belle": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "beast": {
+   "stability": 0.5,
+   "style": 0.35
+  },
+  "father": {
+   "stability": 0.4,
+   "style": 0.45
+  },
+  "sisa": {
+   "stability": 0.3,
+   "style": 0.6
+  },
+  "sisb": {
+   "stability": 0.3,
+   "style": 0.6
+  },
+  "prince": {
+   "stability": 0.45,
+   "style": 0.4
+  }
+ },
+ "use_dir": [
+  "nar",
+  "belle",
+  "beast",
+  "father",
+  "sisa",
+  "sisb",
+  "prince"
+ ],
+ "lines": [
+  {
+   "text": "옛날에 상인에게 딸이 셋 있었어요. 막내 벨은 마음이 고와서 모두 '미녀'라고 불렀어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날에 상인에게 딸이 셋 있었어요. 막내 벨은 마음이 고와서 모두 '미녀'라고 불렀어요.",
+     null,
+     "[calm, warm storytelling, once upon a time]"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날 배들이 가라앉아, 가족은 시골 작은 집으로 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "어느 날 배들이 가라앉아, 가족은 시골 작은 집으로 갔어요.",
+     "sad",
+     "[gentle, a little sad, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "괜찮아요, 제가 집안일을 할게요.",
+   "segs": [
+    [
+     "belle",
+     "괜찮아요, 제가 집안일을 할게요.",
+     "happy",
+     "[bright, kind, cheerful, reassuring]"
+    ]
+   ]
+  },
+  {
+   "text": "배 한 척이 돌아왔대요! 아버지가 도시로 떠나요.",
+   "segs": [
+    [
+     "nar",
+     "배 한 척이 돌아왔대요! 아버지가 도시로 떠나요.",
+     "toneup",
+     "[excited, bright news, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "비단옷이요! 반지랑 리본도요!",
+   "segs": [
+    [
+     "sisa",
+     "비단옷이요!",
+     "toneup",
+     "[demanding, prim, whiny, comic]"
+    ],
+    [
+     "sisb",
+     "반지랑 리본도요!",
+     "toneup",
+     "[eager, whiny, cute, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "저는 장미 한 송이면 돼요.",
+   "segs": [
+    [
+     "belle",
+     "저는 장미 한 송이면 돼요.",
+     null,
+     "[gentle, modest, warm smile]"
+    ]
+   ]
+  },
+  {
+   "text": "그래, 다녀오마.",
+   "segs": [
+    [
+     "father",
+     "그래, 다녀오마.",
+     null,
+     "[warm, kind, fatherly, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "말을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "말을 톡 눌러 봐요.",
+     "happy",
+     "[cheerful, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "따각따각, 아버지가 도시로 떠났어요.",
+   "segs": [
+    [
+     "nar",
+     "따각따각, 아버지가 도시로 떠났어요.",
+     null,
+     "[light, rhythmic, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "그런데 배의 짐은 남의 것이 되어, 아버지는 빈손으로 돌아오다 눈보라에 길을 잃었어요.",
+   "segs": [
+    [
+     "nar",
+     "그런데 배의 짐은 남의 것이 되어, 아버지는 빈손으로 돌아오다 눈보라에 길을 잃었어요.",
+     "sad",
+     "[gentle, worried, storytelling, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "멀리 불빛! 커다란 궁전에 아무도 없고, 따뜻한 저녁상만 차려져 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "멀리 불빛! 커다란 궁전에 아무도 없고, 따뜻한 저녁상만 차려져 있었어요.",
+     "toneup",
+     "[hushed wonder, relieved, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "누구 계세요? …고맙게 먹겠습니다.",
+   "segs": [
+    [
+     "father",
+     "누구 계세요? …고맙게 먹겠습니다.",
+     null,
+     "=[calling out, cautious] 누구 계세요? [pause, humble, grateful] …고맙게 먹겠습니다."
+    ]
+   ]
+  },
+  {
+   "text": "아버지는 배불리 먹고, 푹신한 의자에서 잠이 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "아버지는 배불리 먹고, 푹신한 의자에서 잠이 들었어요.",
+     "tonedown",
+     "[soft, sleepy, calm storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "아침이 되자 눈 속에 장미가 활짝 피어 있었어요!",
+   "segs": [
+    [
+     "nar",
+     "아침이 되자 눈 속에 장미가 활짝 피어 있었어요!",
+     "toneup",
+     "[bright, amazed, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "장미가 많은 덤불은 어느 쪽일까요?",
+   "segs": [
+    [
+     "nar",
+     "장미가 많은 덤불은 어느 쪽일까요?",
+     "happy",
+     "[cheerful, inviting, clear question]"
+    ]
+   ]
+  },
+  {
+   "text": "그 덤불은 장미가 두 송이예요. 적어요.",
+   "segs": [
+    [
+     "nar",
+     "그 덤불은 장미가 두 송이예요. 적어요.",
+     null,
+     "[gentle, patient, helpful]"
+    ]
+   ]
+  },
+  {
+   "text": "그 덤불은 장미가 다섯 송이예요. 많아요.",
+   "segs": [
+    [
+     "nar",
+     "그 덤불은 장미가 다섯 송이예요. 많아요.",
+     null,
+     "[gentle, patient, helpful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 다섯 송이! 장미가 많아요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 다섯 송이! 장미가 많아요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "자리를 바꿨어요. 장미가 적은 덤불은 어느 쪽일까요?",
+   "segs": [
+    [
+     "nar",
+     "자리를 바꿨어요. 장미가 적은 덤불은 어느 쪽일까요?",
+     "happy",
+     "[playful, inviting, clear question]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 두 송이! 장미가 적어요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 두 송이! 장미가 적어요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "벨에게 줄 장미 한 송이만.",
+   "segs": [
+    [
+     "father",
+     "벨에게 줄 장미 한 송이만.",
+     null,
+     "[soft, tender, to himself]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 덤불 뒤에서 커다란 야수가 천천히 나왔어요.",
+   "segs": [
+    [
+     "nar",
+     "그때 덤불 뒤에서 커다란 야수가 천천히 나왔어요.",
+     "tonedown",
+     "[hushed, slow, a little tense but gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "내 장미를 꺾었구나. 재워 주고 먹여 줬는데.",
+   "segs": [
+    [
+     "beast",
+     "내 장미를 꺾었구나. 재워 주고 먹여 줬는데.",
+     "sad",
+     "[deep, slow, hurt, sad, not angry]"
+    ]
+   ]
+  },
+  {
+   "text": "죄송해요, 나리. 막내딸이 부탁한 거예요.",
+   "segs": [
+    [
+     "father",
+     "죄송해요, 나리. 막내딸이 부탁한 거예요.",
+     "sad",
+     "[startled, apologetic, trembling a little, sincere]"
+    ]
+   ]
+  },
+  {
+   "text": "나리가 아니라 야수라고 불러라. 장미를 꺾었으니 벌을 받아야 해. 네가 돌아오든지, 딸 하나가 스스로 오든지.",
+   "segs": [
+    [
+     "beast",
+     "나리가 아니라 야수라고 불러라. 장미를 꺾었으니 벌을 받아야 해. 네가 돌아오든지, 딸 하나가 스스로 오든지.",
+     null,
+     "=[deep, firm, loud but not growling] 나리가 아니라 야수라고 불러라. [slow, serious, heavy] 장미를 꺾었으니 벌을 받아야 해. 네가 돌아오든지, 딸 하나가 스스로 오든지."
+    ]
+   ]
+  },
+  {
+   "text": "아버지는 장미를 들고 집으로 돌아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "아버지는 장미를 들고 집으로 돌아왔어요.",
+     "sad",
+     "[quiet, gentle, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "야수가… 딸 하나를 보내라고 했단다.",
+   "segs": [
+    [
+     "father",
+     "야수가… 딸 하나를 보내라고 했단다.",
+     "sad",
+     "[heavy, sad, hesitant, fatherly]"
+    ]
+   ]
+  },
+  {
+   "text": "제 장미 때문이에요. 제가 갈게요.",
+   "segs": [
+    [
+     "belle",
+     "제 장미 때문이에요. 제가 갈게요.",
+     null,
+     "[calm, brave, gentle, resolved]"
+    ]
+   ]
+  },
+  {
+   "text": "안 된다, 벨.",
+   "segs": [
+    [
+     "father",
+     "안 된다, 벨.",
+     "sad",
+     "[firm but sad, protective]"
+    ]
+   ]
+  },
+  {
+   "text": "괜찮아요. 제가 가고 싶어요.",
+   "segs": [
+    [
+     "belle",
+     "괜찮아요. 제가 가고 싶어요.",
+     null,
+     "[warm, steady, reassuring smile]"
+    ]
+   ]
+  },
+  {
+   "text": "아버지는 벨을 궁전까지 데려다주었어요.",
+   "segs": [
+    [
+     "nar",
+     "아버지는 벨을 궁전까지 데려다주었어요.",
+     null,
+     "[calm, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "스스로 온 거니?",
+   "segs": [
+    [
+     "beast",
+     "스스로 온 거니?",
+     null,
+     "[deep, slow, gentle, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "네.",
+   "segs": [
+    [
+     "belle",
+     "네.",
+     null,
+     "[small but brave, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "착하구나. 아버지는 내일 아침 집으로 가거라.",
+   "segs": [
+    [
+     "beast",
+     "착하구나. 아버지는 내일 아침 집으로 가거라.",
+     null,
+     "[deep, kind, slow, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "방 문에 '벨의 방'이라고 쓰여 있어요. 책도 많고, 장미도 있어요.",
+   "segs": [
+    [
+     "nar",
+     "방 문에 '벨의 방'이라고 쓰여 있어요. 책도 많고, 장미도 있어요.",
+     "happy",
+     "[bright, delighted, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "탁자 위에 있는 장미를 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "탁자 위에 있는 장미를 찾아봐요.",
+     "happy",
+     "[cheerful, inviting, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "탁자 아래에 있는 장미를 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "탁자 아래에 있는 장미를 찾아봐요.",
+     "happy",
+     "[cheerful, inviting, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "탁자 옆에 있는 장미를 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "탁자 옆에 있는 장미를 찾아봐요.",
+     "happy",
+     "[cheerful, inviting, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 탁자 위예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 탁자 위예요.",
+     null,
+     "[gentle, patient, helpful]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 탁자 아래예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 탁자 아래예요.",
+     null,
+     "[gentle, patient, helpful]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 탁자 옆이에요.",
+   "segs": [
+    [
+     "nar",
+     "그건 탁자 옆이에요.",
+     null,
+     "[gentle, patient, helpful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 탁자 위!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 탁자 위!",
+     "happy",
+     "[bright, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 탁자 아래!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 탁자 아래!",
+     "happy",
+     "[bright, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 탁자 옆!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 탁자 옆!",
+     "happy",
+     "[bright, praising]"
+    ]
+   ]
+  },
+  {
+   "text": "저녁마다 야수가 찾아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "저녁마다 야수가 찾아왔어요.",
+     null,
+     "[calm, warm storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "벨, 잘 지냈니? 나와 결혼해 줄래?",
+   "segs": [
+    [
+     "beast",
+     "벨, 잘 지냈니? 나와 결혼해 줄래?",
+     null,
+     "[deep, shy, gentle, hopeful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "아니요, 야수님. 하지만 친구로 좋아해요.",
+   "segs": [
+    [
+     "belle",
+     "아니요, 야수님. 하지만 친구로 좋아해요.",
+     null,
+     "[kind, gentle, honest, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 내일 저녁에 또 올게.",
+   "segs": [
+    [
+     "beast",
+     "그럼 내일 저녁에 또 올게.",
+     "sad",
+     "[deep, a little sad but accepting, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "벨은 날마다 친절하게 대답했고, 둘은 친구가 되었어요.",
+   "segs": [
+    [
+     "nar",
+     "벨은 날마다 친절하게 대답했고, 둘은 친구가 되었어요.",
+     null,
+     "[warm, gentle storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "창밖은 아침, 낮, 밤으로 바뀌어요. 아침부터 차례로 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "창밖은 아침, 낮, 밤으로 바뀌어요. 아침부터 차례로 눌러 봐요.",
+     "happy",
+     "[cheerful, inviting, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 낮이에요. 아침은 어디일까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 낮이에요. 아침은 어디일까요?",
+     null,
+     "[gentle, patient, helpful]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 밤이에요. 아침은 어디일까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 밤이에요. 아침은 어디일까요?",
+     null,
+     "[gentle, patient, helpful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 아침! 아침 다음은?",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 아침! 아침 다음은?",
+     "happy",
+     "[bright, praising, then inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 밤이에요. 아침 다음은?",
+   "segs": [
+    [
+     "nar",
+     "그건 밤이에요. 아침 다음은?",
+     null,
+     "[gentle, patient, helpful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 낮! 낮 다음은?",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 낮! 낮 다음은?",
+     "happy",
+     "[bright, praising, then inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 밤! 아침, 낮, 밤. 하루가 이렇게 지나가요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 밤! 아침, 낮, 밤. 하루가 이렇게 지나가요.",
+     "happy",
+     "[bright, praising, then calm and clear]"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 벨은 거울로 집을 보았어요.",
+   "segs": [
+    [
+     "nar",
+     "어느 날, 벨은 거울로 집을 보았어요.",
+     "tonedown",
+     "[soft, mysterious, gentle wonder]"
+    ]
+   ]
+  },
+  {
+   "text": "아버지가 아파요…",
+   "segs": [
+    [
+     "belle",
+     "아버지가 아파요…",
+     "sad",
+     "[worried, soft, trembling]"
+    ]
+   ]
+  },
+  {
+   "text": "다녀와요. 하지만 일주일 뒤엔 꼭 돌아와요. 안 오면 나는 너무 슬플 거예요.",
+   "segs": [
+    [
+     "beast",
+     "다녀와요. 하지만 일주일 뒤엔 꼭 돌아와요. 안 오면 나는 너무 슬플 거예요.",
+     "sad",
+     "[deep, gentle, caring, a little sad, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "자기 전에 이 반지를 탁자에 놓으면, 아침에 여기로 돌아와요.",
+   "segs": [
+    [
+     "beast",
+     "자기 전에 이 반지를 탁자에 놓으면, 아침에 여기로 돌아와요.",
+     null,
+     "[deep, calm, explaining kindly]"
+    ]
+   ]
+  },
+  {
+   "text": "꼭 돌아올게요, 약속해요.",
+   "segs": [
+    [
+     "belle",
+     "꼭 돌아올게요, 약속해요.",
+     null,
+     "[sincere, warm, promising]"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날 아침, 벨은 집에 와 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "다음 날 아침, 벨은 집에 와 있었어요.",
+     "happy",
+     "[bright, gentle storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "네 덕분에 다 나았다.",
+   "segs": [
+    [
+     "father",
+     "네 덕분에 다 나았다.",
+     "happy",
+     "[warm, happy, relieved, fatherly]"
+    ]
+   ]
+  },
+  {
+   "text": "조금만 더 있다 가. 응? 조금만 더.",
+   "segs": [
+    [
+     "sisa",
+     "조금만 더 있다 가.",
+     null,
+     "[coaxing, pleading, sweet, comic]"
+    ],
+    [
+     "sisb",
+     "응? 조금만 더.",
+     null,
+     "[cute, pleading, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "그럴까…",
+   "segs": [
+    [
+     "belle",
+     "그럴까…",
+     null,
+     "[hesitant, soft, torn]"
+    ]
+   ]
+  },
+  {
+   "text": "해가 뜨고 지고, 일주일이 훌쩍 지났어요. 어느 밤, 벨은 꿈을 꾸었어요.",
+   "segs": [
+    [
+     "nar",
+     "해가 뜨고 지고, 일주일이 훌쩍 지났어요. 어느 밤, 벨은 꿈을 꾸었어요.",
+     "tonedown",
+     "[calm, slow, storytelling, a touch of worry]"
+    ]
+   ]
+  },
+  {
+   "text": "야수님! 약속을 어겼어요. 돌아가야 해요.",
+   "segs": [
+    [
+     "belle",
+     "야수님! 약속을 어겼어요. 돌아가야 해요.",
+     "toneup",
+     "[waking with a gasp, worried, urgent but soft]"
+    ]
+   ]
+  },
+  {
+   "text": "벨은 반지를 탁자에 놓고 다시 잠이 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "벨은 반지를 탁자에 놓고 다시 잠이 들었어요.",
+     "tonedown",
+     "[soft, calm, sleepy storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "아침이 되자 벨은 궁전 정원에 있었어요. 야수는 샘가에 힘없이 누워 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "아침이 되자 벨은 궁전 정원에 있었어요. 야수는 샘가에 힘없이 누워 있었어요.",
+     "sad",
+     "[gentle, worried, slow storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "야수님, 일어나요!",
+   "segs": [
+    [
+     "belle",
+     "야수님, 일어나요!",
+     "toneup",
+     "[worried, calling, urgent, caring]"
+    ]
+   ]
+  },
+  {
+   "text": "샘물을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "샘물을 톡 눌러 봐요.",
+     "happy",
+     "[gentle, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "벨… 돌아왔구나.",
+   "segs": [
+    [
+     "beast",
+     "벨… 돌아왔구나.",
+     null,
+     "[deep, weak, soft, relieved, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "사랑해요, 야수님. 제 남편이 되어 주세요.",
+   "segs": [
+    [
+     "belle",
+     "사랑해요, 야수님. 제 남편이 되어 주세요.",
+     null,
+     "[tender, sincere, warm, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "그러자 반짝! 야수가 멋진 왕자님으로 변했어요.",
+   "segs": [
+    [
+     "nar",
+     "그러자 반짝! 야수가 멋진 왕자님으로 변했어요.",
+     "toneup",
+     "[amazed, bright, magical]"
+    ]
+   ]
+  },
+  {
+   "text": "고마워요, 벨. 겉모습만 보지 않고 내 마음을 봐 줬어요.",
+   "segs": [
+    [
+     "prince",
+     "고마워요, 벨. 겉모습만 보지 않고 내 마음을 봐 줬어요.",
+     "happy",
+     "[warm, bright, grateful, gentle young prince]"
+    ]
+   ]
+  },
+  {
+   "text": "요정이 건 마법이 이제 풀렸어요.",
+   "segs": [
+    [
+     "prince",
+     "요정이 건 마법이 이제 풀렸어요.",
+     "happy",
+     "[relieved, gentle, happy]"
+    ]
+   ]
+  },
+  {
+   "text": "아버지와 언니들도 달려왔어요.",
+   "segs": [
+    [
+     "nar",
+     "아버지와 언니들도 달려왔어요.",
+     "happy",
+     "[bright, cheerful storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "모두 함께 궁전에서 행복하게 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "모두 함께 궁전에서 행복하게 살았어요.",
+     "happy",
+     "[warm, happy ending, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "겉모습이 아니라 마음을 봐요.",
+   "segs": [
+    [
+     "nar",
+     "겉모습이 아니라 마음을 봐요.",
+     null,
+     "[warm, gentle, the moral, clear]"
+    ]
+   ]
+  }
+ ],
+ "extra": {}
+}

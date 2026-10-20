@@ -5,22 +5,24 @@
    파일이 생기면 코드를 고치지 않아도 그림으로 바뀐다 (ASP 표만 실제 비율로 갱신). */
 (() => {
   const AS = '../../assets/v3w/';
-  /* 그림 폭/높이 비율. 아래는 시안용 기본값(작업표 크기·사람 비율 추정) — 그림이 나온 뒤 post_beauty_beast.py 출력으로 바꾼다 */
+  /* 그림 폭/높이 비율 (tales/beauty_beast/ASP.txt 에서 옮김) */
   const ASP = {
-    belle_stand: .44, belle_broom: .5, belle_point: .55, belle_resolve: .46, belle_sit: .75, belle_worry: .5, belle_sleep: 1.86, belle_run: .8, belle_kneel: .7, belle_joy: .5,
-    beast_stand: .62, beast_sit: .8, beast_ring: .7, beast_lie: 1.75, beast_lie_eyes: 1.75,
-    prince_stand: .4, father_stand: .44, father_ride: .95, father_eat: .7, father_sleep: .75, father_shock: .46, father_rose: .46, father_bed: 1.86, father_well: .5,
-    sisa_pout: .5, sisa_plead: .5, sisa_gasp: .5, sisa_joy: .5, sisb_pout: .5, sisb_plead: .5, sisb_gasp: .5, sisb_joy: .5,
-    horse_stand: 1.05, prop_rose: .35, prop_rose_vase: .45, prop_bush5: 1.25, prop_bush2: 1.25, prop_table_small: 1.4, prop_table_long: 2.4,
-    card_morning: 1, card_noon: 1, card_night: 1, prop_mirror: .8, prop_ring: 1, prop_dream: 1.33, prop_spring: 2, prop_glow: 1, prop_hat: 1.5,
+    belle_stand: 0.465, horse_stand: 1.0867, beast_stand: 0.71, beast_ring: 0.7133, father_stand: 0.4233, sisa_pout: 0.4567, sisb_pout: 0.4783,
+    prince_stand: 0.5283, belle_broom: 0.53, belle_point: 0.5483, belle_resolve: 0.465, belle_sit: 0.475, belle_worry: 0.4967,
+    belle_sleep: 1.4367, belle_run: 0.7233, belle_kneel: 0.695, belle_joy: 0.635, beast_sit: 0.7317, beast_lie: 1.6393,
+    beast_lie_eyes: 1.6393, father_ride: 0.9717, father_eat: 0.4917, father_sleep: 0.78, father_shock: 0.47, father_rose: 0.4117,
+    father_bed: 1.3167, father_well: 0.4833, sisa_plead: 0.46, sisa_gasp: 0.4717, sisa_joy: 0.5467, sisb_plead: 0.4767,
+    sisb_gasp: 0.4783, sisb_joy: 0.5717, prop_rose: 0.6033, prop_rose_vase: 0.5733, prop_bush5: 1.1083, prop_bush2: 1.2167,
+    prop_table_small: 1.055, prop_table_long: 1.415, card_morning: 0.9067, card_noon: 0.905, card_night: 0.905, prop_mirror: 0.8267,
+    prop_ring: 0.8133, prop_dream: 1.1283, prop_spring: 1.4833, prop_glow: 0.9883, prop_hat: 1.4783,
   };
-  /* 사람 그림 높이: 자세마다 머리 크기가 같아지게 맞춘 값 (그림이 나온 뒤 SPEC §2-2 로 잰다. 지금은 시안 기본값) */
-  const HT = { beast_stand: 300, beast_sit: 245, beast_ring: 300, beast_lie: 150, beast_lie_eyes: 150,
-    father_stand: 212, father_ride: 236, father_eat: 178, father_sleep: 182, father_shock: 212, father_rose: 212, father_bed: 110, father_well: 212,
-    prince_stand: 212, sisa_pout: 206, sisa_plead: 206, sisa_gasp: 206, sisa_joy: 206, sisb_pout: 206, sisb_plead: 206, sisb_gasp: 206, sisb_joy: 206,
-    belle_sit: 178, belle_sleep: 110 };
-  /* 그림이 보는 쪽 ('left' | 'right' | 'front') */
-  const NAT = { belle_point: 'right', belle_run: 'right', belle_kneel: 'right', belle_worry: 'left', belle_sleep: 'left', father_bed: 'left',
+  /* 사람 그림 높이 (머리 크기를 벨 서기 200 과 맞춘 값. 야수는 머리 약 1.4배·키 1.15배 — 갈기가 커서 머리 1.3배를 지키면 벨보다 작아진다) */
+  const HT = { beast_stand: 235, beast_ring: 235, beast_sit: 193, beast_lie: 141, beast_lie_eyes: 141,
+    father_stand: 212, father_ride: 300, father_eat: 215, father_sleep: 192, father_shock: 205, father_rose: 212, father_bed: 130, father_well: 205,
+    prince_stand: 212, sisa_pout: 210, sisa_plead: 210, sisa_gasp: 210, sisa_joy: 204, sisb_pout: 204, sisb_plead: 204, sisb_gasp: 204, sisb_joy: 200,
+    belle_sit: 190, belle_sleep: 105, belle_kneel: 165, belle_run: 195, horse_stand: 230 };
+  /* 그림이 보는 쪽 ('left' | 'right' | 'front') — 그림을 직접 보고 정함 */
+  const NAT = { belle_point: 'right', belle_run: 'right', belle_kneel: 'right', belle_sleep: 'left', father_bed: 'left',
     beast_lie: 'left', beast_lie_eyes: 'left', beast_ring: 'left', father_ride: 'right', horse_stand: 'right' };
   const FL = 528;                    // 바닥(발끝 y)
   const BGS = ['cottage', 'cottage_front', 'snow_forest', 'dining', 'garden', 'room'];
@@ -222,11 +224,13 @@
   }
 
   /* 문패 */
-  function namePlate(T, x, y) {
-    const g = T.paper(T.world, [['rect', { x: -72, y: -26, width: 144, height: 52, rx: 9, fill: '#F6ECD8' }],
-      ['rect', { x: -64, y: -18, width: 128, height: 36, rx: 6, fill: 'none', stroke: '#6B4A32', 'stroke-width': 3 }]], { transform: `translate(${x},${y})` });
+  /* 가로 화면은 배경 문의 놋쇠 문패 위에 글자만 얹고, 세로 화면(문이 안 보임)은 종이 문패를 벽에 단다 */
+  function namePlate(T, x, y, onDoor) {
+    const g = onDoor ? T.el('g', { transform: `translate(${x},${y})` }, T.world)
+      : T.paper(T.world, [['rect', { x: -72, y: -26, width: 144, height: 52, rx: 9, fill: '#F6ECD8' }],
+        ['rect', { x: -64, y: -18, width: 128, height: 36, rx: 6, fill: 'none', stroke: '#6B4A32', 'stroke-width': 3 }]], { transform: `translate(${x},${y})` });
     const label = T.tr('벨의 방');
-    T.el('text', { x: 0, y: 9, 'text-anchor': 'middle', 'font-size': label.length > 8 ? 17 : 24, 'font-weight': 800, fill: '#A93B32', 'font-family': FONT, text: label }, g);
+    T.el('text', { x: 0, y: 9, 'text-anchor': 'middle', 'font-size': label.length > 8 ? 17 : onDoor ? 22 : 24, 'font-weight': 800, fill: onDoor ? '#5A3A22' : '#A93B32', 'font-family': FONT, text: label }, g);
     return { g, glow: ms => { g.style.filter = 'url(#hintGlow)'; setTimeout(() => { g.style.filter = ''; }, ms); } };
   }
 
@@ -259,7 +263,7 @@
       rose: 'father_rose', bed: 'father_bed', well: 'father_well' });
     const sisa = mk(T, { pout: 'sisa_pout', plead: 'sisa_plead', gasp: 'sisa_gasp', joy: 'sisa_joy' });
     const sisb = mk(T, { pout: 'sisb_pout', plead: 'sisb_plead', gasp: 'sisb_gasp', joy: 'sisb_joy' });
-    const horse = prop(T, 'horse_stand', 200);
+    const horse = prop(T, 'horse_stand', 230);
     const bush5 = prop(T, 'prop_bush5', 150), bush2 = prop(T, 'prop_bush2', 150);
     const rose = prop(T, 'prop_rose', 50);
     const vases = Array.from({ length: 3 }, () => prop(T, 'prop_rose_vase', 70));   // 위·아래·옆
@@ -453,7 +457,7 @@
       put(T, tableS, tx, FL); tableS.pos.style.pointerEvents = 'none';
       put(T, vases[0], tx, FL - 110 + 2);
       put(T, vases[2], tx + X(140, 125), FL);
-      plate = namePlate(T, X(800, 560), 240);
+      plate = P ? namePlate(T, 560, 276, false) : namePlate(T, 932, 141, true);
       if (P) camSnap(500, 280, 1);
     }, belle.pos);
     plate.glow(1500);
@@ -550,7 +554,7 @@
     await say('아버지가 아파요…');
     beast.hop(6, 500);
     await say('다녀와요. 하지만 일주일 뒤엔 꼭 돌아와요. 안 오면 나는 너무 슬플 거예요.');
-    put(T, ring, beast.x - beast.w * .38, FL - beast.h * .42); fadeIn(ring);
+    put(T, ring, beast.x - beast.w * .28, FL - beast.h * .48); fadeIn(ring);
     const rg = (async () => { await sleep(1500); const m = ring.move(belle.x + 22, FL - 100, 900); glow(ring, 1200); sparkleSfx(T); await m; })();
     await say('자기 전에 이 반지를 탁자에 놓으면, 아침에 여기로 돌아와요.');
     await rg;

@@ -1,0 +1,921 @@
+{
+ "voices": {
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "belle": "lFG74KW6EG0aRXg1kKfh",
+  "beast": "JBFqnCBsd6RMkjVDRZzb",
+  "father": "5ON5Fnz24cnOozEQfGAm",
+  "sisa": "DGDjWy2CQ8Ishu0meQte",
+  "sisb": "FGY2WhTYpPnrIDTdsKH5",
+  "prince": "JBFqnCBsd6RMkjVDRZzb"
+ },
+ "lines": [
+  {
+   "text": "옛날에 상인에게 딸이 셋 있었어요. 막내 벨은 마음이 고와서 모두 '미녀'라고 불렀어요.",
+   "en": "Once upon a time, a merchant had three daughters. The youngest, Belle, was so kind-hearted that everyone called her Beauty.",
+   "segs": [
+    [
+     "nar",
+     "Once upon a time, a merchant had three daughters. The youngest, Belle, was so kind-hearted that everyone called her Beauty.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어느 날 배들이 가라앉아, 가족은 시골 작은 집으로 갔어요.",
+   "en": "One day his ships sank, and the family moved to a small cottage in the countryside.",
+   "segs": [
+    [
+     "nar",
+     "One day his ships sank, and the family moved to a small cottage in the countryside.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "괜찮아요, 제가 집안일을 할게요.",
+   "en": "It's all right. I will do the housework.",
+   "segs": [
+    [
+     "belle",
+     "It's all right. I will do the housework.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "배 한 척이 돌아왔대요! 아버지가 도시로 떠나요.",
+   "en": "One of the ships came back! Father is leaving for the city.",
+   "segs": [
+    [
+     "nar",
+     "One of the ships came back! Father is leaving for the city.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "비단옷이요! 반지랑 리본도요!",
+   "en": "A silk dress for me! And rings and ribbons too!",
+   "segs": [
+    [
+     "sisa",
+     "A silk dress for me!",
+     "toneup"
+    ],
+    [
+     "sisb",
+     "And rings and ribbons too!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "저는 장미 한 송이면 돼요.",
+   "en": "A single rose is all I need.",
+   "segs": [
+    [
+     "belle",
+     "A single rose is all I need.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그래, 다녀오마.",
+   "en": "All right. I will be back soon.",
+   "segs": [
+    [
+     "father",
+     "All right. I will be back soon.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "말을 톡 눌러 봐요.",
+   "en": "Tap the horse.",
+   "segs": [
+    [
+     "nar",
+     "Tap the horse.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "따각따각, 아버지가 도시로 떠났어요.",
+   "en": "Clip-clop, clip-clop. Father rode off to the city.",
+   "segs": [
+    [
+     "nar",
+     "Clip-clop, clip-clop. Father rode off to the city.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그런데 배의 짐은 남의 것이 되어, 아버지는 빈손으로 돌아오다 눈보라에 길을 잃었어요.",
+   "en": "But the ship's goods now belonged to someone else. Father came home empty-handed and lost his way in a snowstorm.",
+   "segs": [
+    [
+     "nar",
+     "But the ship's goods now belonged to someone else. Father came home empty-handed and lost his way in a snowstorm.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "멀리 불빛! 커다란 궁전에 아무도 없고, 따뜻한 저녁상만 차려져 있었어요.",
+   "en": "A light far away! In a huge palace there was no one at all, only a warm supper laid out on the table.",
+   "segs": [
+    [
+     "nar",
+     "A light far away! In a huge palace there was no one at all, only a warm supper laid out on the table.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "누구 계세요? …고맙게 먹겠습니다.",
+   "en": "Is anyone here? ... Thank you, I will gladly eat.",
+   "segs": [
+    [
+     "father",
+     "Is anyone here? ... Thank you, I will gladly eat.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아버지는 배불리 먹고, 푹신한 의자에서 잠이 들었어요.",
+   "en": "Father ate his fill and fell asleep in a soft armchair.",
+   "segs": [
+    [
+     "nar",
+     "Father ate his fill and fell asleep in a soft armchair.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "text": "아침이 되자 눈 속에 장미가 활짝 피어 있었어요!",
+   "en": "In the morning, roses were blooming in the snow!",
+   "segs": [
+    [
+     "nar",
+     "In the morning, roses were blooming in the snow!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "장미가 많은 덤불은 어느 쪽일까요?",
+   "en": "Which bush has MORE roses?",
+   "segs": [
+    [
+     "nar",
+     "Which bush has MORE roses?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그 덤불은 장미가 두 송이예요. 적어요.",
+   "en": "That bush has two roses. That is fewer.",
+   "segs": [
+    [
+     "nar",
+     "That bush has two roses. That is fewer.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그 덤불은 장미가 다섯 송이예요. 많아요.",
+   "en": "That bush has five roses. That is more.",
+   "segs": [
+    [
+     "nar",
+     "That bush has five roses. That is more.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 다섯 송이! 장미가 많아요.",
+   "en": "That's right, five roses! That bush has more.",
+   "segs": [
+    [
+     "nar",
+     "That's right, five roses! That bush has more.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "자리를 바꿨어요. 장미가 적은 덤불은 어느 쪽일까요?",
+   "en": "They switched places! Which bush has FEWER roses?",
+   "segs": [
+    [
+     "nar",
+     "They switched places! Which bush has FEWER roses?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 두 송이! 장미가 적어요.",
+   "en": "That's right, two roses! That bush has fewer.",
+   "segs": [
+    [
+     "nar",
+     "That's right, two roses! That bush has fewer.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "벨에게 줄 장미 한 송이만.",
+   "en": "Just one rose, for Belle.",
+   "segs": [
+    [
+     "father",
+     "Just one rose, for Belle.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그때 덤불 뒤에서 커다란 야수가 천천히 나왔어요.",
+   "en": "Then, from behind the bush, a huge Beast slowly came out.",
+   "segs": [
+    [
+     "nar",
+     "Then, from behind the bush, a huge Beast slowly came out.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "text": "내 장미를 꺾었구나. 재워 주고 먹여 줬는데.",
+   "en": "You picked my rose. After I gave you a bed and a meal.",
+   "segs": [
+    [
+     "beast",
+     "You picked my rose. After I gave you a bed and a meal.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "죄송해요, 나리. 막내딸이 부탁한 거예요.",
+   "en": "I am sorry, my lord. My youngest daughter asked for it.",
+   "segs": [
+    [
+     "father",
+     "I am sorry, my lord. My youngest daughter asked for it.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "나리가 아니라 야수라고 불러라. 장미를 꺾었으니 벌을 받아야 해. 네가 돌아오든지, 딸 하나가 스스로 오든지.",
+   "en": "Do not call me lord. Call me Beast. You picked my rose, so you must be punished. Either you come back, or one of your daughters comes here of her own free will.",
+   "segs": [
+    [
+     "beast",
+     "Do not call me lord. Call me Beast. You picked my rose, so you must be punished. Either you come back, or one of your daughters comes here of her own free will.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아버지는 장미를 들고 집으로 돌아왔어요.",
+   "en": "Father came home holding the rose.",
+   "segs": [
+    [
+     "nar",
+     "Father came home holding the rose.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "야수가… 딸 하나를 보내라고 했단다.",
+   "en": "The Beast... said one of my daughters must go to him.",
+   "segs": [
+    [
+     "father",
+     "The Beast... said one of my daughters must go to him.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "제 장미 때문이에요. 제가 갈게요.",
+   "en": "It is because of my rose. I will go.",
+   "segs": [
+    [
+     "belle",
+     "It is because of my rose. I will go.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "안 된다, 벨.",
+   "en": "No, Belle.",
+   "segs": [
+    [
+     "father",
+     "No, Belle.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "괜찮아요. 제가 가고 싶어요.",
+   "en": "It's all right. I want to go.",
+   "segs": [
+    [
+     "belle",
+     "It's all right. I want to go.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아버지는 벨을 궁전까지 데려다주었어요.",
+   "en": "Father brought Belle all the way to the palace.",
+   "segs": [
+    [
+     "nar",
+     "Father brought Belle all the way to the palace.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "스스로 온 거니?",
+   "en": "Did you come here of your own free will?",
+   "segs": [
+    [
+     "beast",
+     "Did you come here of your own free will?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "네.",
+   "en": "Yes.",
+   "segs": [
+    [
+     "belle",
+     "Yes.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "착하구나. 아버지는 내일 아침 집으로 가거라.",
+   "en": "You are a good girl. Your father shall go home tomorrow morning.",
+   "segs": [
+    [
+     "beast",
+     "You are a good girl. Your father shall go home tomorrow morning.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "방 문에 '벨의 방'이라고 쓰여 있어요. 책도 많고, 장미도 있어요.",
+   "en": "On the door it says 'Belle's Room'. There are lots of books, and roses too.",
+   "segs": [
+    [
+     "nar",
+     "On the door it says 'Belle's Room'. There are lots of books, and roses too.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "탁자 위에 있는 장미를 찾아봐요.",
+   "en": "Find the rose ON the table.",
+   "segs": [
+    [
+     "nar",
+     "Find the rose ON the table.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "탁자 아래에 있는 장미를 찾아봐요.",
+   "en": "Find the rose UNDER the table.",
+   "segs": [
+    [
+     "nar",
+     "Find the rose UNDER the table.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "탁자 옆에 있는 장미를 찾아봐요.",
+   "en": "Find the rose BESIDE the table.",
+   "segs": [
+    [
+     "nar",
+     "Find the rose BESIDE the table.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그건 탁자 위예요.",
+   "en": "That one is on the table.",
+   "segs": [
+    [
+     "nar",
+     "That one is on the table.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 탁자 아래예요.",
+   "en": "That one is under the table.",
+   "segs": [
+    [
+     "nar",
+     "That one is under the table.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 탁자 옆이에요.",
+   "en": "That one is beside the table.",
+   "segs": [
+    [
+     "nar",
+     "That one is beside the table.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 탁자 위!",
+   "en": "That's right, on the table!",
+   "segs": [
+    [
+     "nar",
+     "That's right, on the table!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 탁자 아래!",
+   "en": "That's right, under the table!",
+   "segs": [
+    [
+     "nar",
+     "That's right, under the table!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 탁자 옆!",
+   "en": "That's right, beside the table!",
+   "segs": [
+    [
+     "nar",
+     "That's right, beside the table!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "저녁마다 야수가 찾아왔어요.",
+   "en": "Every evening, the Beast came to see her.",
+   "segs": [
+    [
+     "nar",
+     "Every evening, the Beast came to see her.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "벨, 잘 지냈니? 나와 결혼해 줄래?",
+   "en": "Belle, how are you? Will you marry me?",
+   "segs": [
+    [
+     "beast",
+     "Belle, how are you? Will you marry me?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아니요, 야수님. 하지만 친구로 좋아해요.",
+   "en": "No, Beast. But I like you very much as a friend.",
+   "segs": [
+    [
+     "belle",
+     "No, Beast. But I like you very much as a friend.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그럼 내일 저녁에 또 올게.",
+   "en": "Then I will come again tomorrow evening.",
+   "segs": [
+    [
+     "beast",
+     "Then I will come again tomorrow evening.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "벨은 날마다 친절하게 대답했고, 둘은 친구가 되었어요.",
+   "en": "Belle answered kindly every day, and the two became friends.",
+   "segs": [
+    [
+     "nar",
+     "Belle answered kindly every day, and the two became friends.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "창밖은 아침, 낮, 밤으로 바뀌어요. 아침부터 차례로 눌러 봐요.",
+   "en": "Outside the window it turns morning, day, and night. Tap them in order, starting with morning.",
+   "segs": [
+    [
+     "nar",
+     "Outside the window it turns morning, day, and night. Tap them in order, starting with morning.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그건 낮이에요. 아침은 어디일까요?",
+   "en": "That is daytime. Where is the morning?",
+   "segs": [
+    [
+     "nar",
+     "That is daytime. Where is the morning?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 밤이에요. 아침은 어디일까요?",
+   "en": "That is night. Where is the morning?",
+   "segs": [
+    [
+     "nar",
+     "That is night. Where is the morning?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 아침! 아침 다음은?",
+   "en": "That's right, morning! What comes after morning?",
+   "segs": [
+    [
+     "nar",
+     "That's right, morning! What comes after morning?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그건 밤이에요. 아침 다음은?",
+   "en": "That is night. What comes after morning?",
+   "segs": [
+    [
+     "nar",
+     "That is night. What comes after morning?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 낮! 낮 다음은?",
+   "en": "That's right, daytime! What comes after daytime?",
+   "segs": [
+    [
+     "nar",
+     "That's right, daytime! What comes after daytime?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 밤! 아침, 낮, 밤. 하루가 이렇게 지나가요.",
+   "en": "That's right, night! Morning, day, night. That is how a day goes by.",
+   "segs": [
+    [
+     "nar",
+     "That's right, night! Morning, day, night. That is how a day goes by.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 벨은 거울로 집을 보았어요.",
+   "en": "One day, Belle looked at her home through the magic mirror.",
+   "segs": [
+    [
+     "nar",
+     "One day, Belle looked at her home through the magic mirror.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "text": "아버지가 아파요…",
+   "en": "Father is ill...",
+   "segs": [
+    [
+     "belle",
+     "Father is ill...",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "다녀와요. 하지만 일주일 뒤엔 꼭 돌아와요. 안 오면 나는 너무 슬플 거예요.",
+   "en": "Go to him. But come back in one week, without fail. If you do not, I will be so very sad.",
+   "segs": [
+    [
+     "beast",
+     "Go to him. But come back in one week, without fail. If you do not, I will be so very sad.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "자기 전에 이 반지를 탁자에 놓으면, 아침에 여기로 돌아와요.",
+   "en": "Put this ring on the table before you sleep, and in the morning you will be back here.",
+   "segs": [
+    [
+     "beast",
+     "Put this ring on the table before you sleep, and in the morning you will be back here.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "꼭 돌아올게요, 약속해요.",
+   "en": "I will come back. I promise.",
+   "segs": [
+    [
+     "belle",
+     "I will come back. I promise.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "다음 날 아침, 벨은 집에 와 있었어요.",
+   "en": "The next morning, Belle was home.",
+   "segs": [
+    [
+     "nar",
+     "The next morning, Belle was home.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "네 덕분에 다 나았다.",
+   "en": "Thanks to you, I am all better.",
+   "segs": [
+    [
+     "father",
+     "Thanks to you, I am all better.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "조금만 더 있다 가. 응? 조금만 더.",
+   "en": "Stay just a little longer. Please? Just a little.",
+   "segs": [
+    [
+     "sisa",
+     "Stay just a little longer.",
+     null
+    ],
+    [
+     "sisb",
+     "Please? Just a little.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그럴까…",
+   "en": "Maybe I could...",
+   "segs": [
+    [
+     "belle",
+     "Maybe I could...",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "해가 뜨고 지고, 일주일이 훌쩍 지났어요. 어느 밤, 벨은 꿈을 꾸었어요.",
+   "en": "The sun rose and set, and a whole week slipped by. One night, Belle had a dream.",
+   "segs": [
+    [
+     "nar",
+     "The sun rose and set, and a whole week slipped by. One night, Belle had a dream.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "text": "야수님! 약속을 어겼어요. 돌아가야 해요.",
+   "en": "Beast! I broke my promise. I must go back.",
+   "segs": [
+    [
+     "belle",
+     "Beast! I broke my promise. I must go back.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "벨은 반지를 탁자에 놓고 다시 잠이 들었어요.",
+   "en": "Belle put the ring on the table and fell asleep again.",
+   "segs": [
+    [
+     "nar",
+     "Belle put the ring on the table and fell asleep again.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "text": "아침이 되자 벨은 궁전 정원에 있었어요. 야수는 샘가에 힘없이 누워 있었어요.",
+   "en": "In the morning, Belle was in the palace garden. The Beast lay by the spring, weak and still.",
+   "segs": [
+    [
+     "nar",
+     "In the morning, Belle was in the palace garden. The Beast lay by the spring, weak and still.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "야수님, 일어나요!",
+   "en": "Beast, wake up!",
+   "segs": [
+    [
+     "belle",
+     "Beast, wake up!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "샘물을 톡 눌러 봐요.",
+   "en": "Tap the spring water.",
+   "segs": [
+    [
+     "nar",
+     "Tap the spring water.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "벨… 돌아왔구나.",
+   "en": "Belle... you came back.",
+   "segs": [
+    [
+     "beast",
+     "Belle... you came back.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "사랑해요, 야수님. 제 남편이 되어 주세요.",
+   "en": "I love you, Beast. Please be my husband.",
+   "segs": [
+    [
+     "belle",
+     "I love you, Beast. Please be my husband.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그러자 반짝! 야수가 멋진 왕자님으로 변했어요.",
+   "en": "And then, a flash of light! The Beast turned into a handsome prince.",
+   "segs": [
+    [
+     "nar",
+     "And then, a flash of light! The Beast turned into a handsome prince.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "고마워요, 벨. 겉모습만 보지 않고 내 마음을 봐 줬어요.",
+   "en": "Thank you, Belle. You did not judge me by my looks. You saw my heart.",
+   "segs": [
+    [
+     "prince",
+     "Thank you, Belle. You did not judge me by my looks. You saw my heart.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "요정이 건 마법이 이제 풀렸어요.",
+   "en": "The fairy's spell is broken at last.",
+   "segs": [
+    [
+     "prince",
+     "The fairy's spell is broken at last.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "아버지와 언니들도 달려왔어요.",
+   "en": "Father and her sisters came running too.",
+   "segs": [
+    [
+     "nar",
+     "Father and her sisters came running too.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "모두 함께 궁전에서 행복하게 살았어요.",
+   "en": "And they all lived happily together in the palace.",
+   "segs": [
+    [
+     "nar",
+     "And they all lived happily together in the palace.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "겉모습이 아니라 마음을 봐요.",
+   "en": "Look at the heart, not the looks.",
+   "segs": [
+    [
+     "nar",
+     "Look at the heart, not the looks.",
+     null
+    ]
+   ]
+  }
+ ],
+ "extra": {},
+ "ui": {
+  "미녀와 야수": "Beauty and the Beast",
+  "겉모습이 아니라 마음을 봐요": "Look at the heart, not the looks",
+  "장미 한 송이": "A Single Rose",
+  "눈보라 속 궁전": "The Palace in the Snow",
+  "장미 정원": "The Rose Garden",
+  "야수": "The Beast",
+  "벨의 결심": "Belle's Choice",
+  "궁전의 손님": "A Guest at the Palace",
+  "벨의 방": "Belle's Room",
+  "저녁마다": "Every Evening",
+  "거울과 반지": "The Mirror and the Ring",
+  "집에서": "Back Home",
+  "샘가의 야수": "The Beast by the Spring",
+  "따각따각": "Clip-clop",
+  "히힝!": "Neigh!",
+  "힝…": "Hmph...",
+  "냠냠!": "Yum yum!",
+  "쿨쿨": "Zzz",
+  "새근새근": "Zzz",
+  "톡!": "Snip!",
+  "쿵": "Thump",
+  "툭!": "Plop!",
+  "반짝!": "Sparkle!",
+  "똑똑!": "Drip, drip!",
+  "야호!": "Hooray!",
+  "영차!": "Hop!"
+ }
+}
