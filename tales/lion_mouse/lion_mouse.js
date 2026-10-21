@@ -463,7 +463,7 @@
     mouse.parts.arms.setAttribute('opacity', 1); mouse.parts.pray.setAttribute('opacity', 0);
     T.tone([600, 1600], .25, { type: 'sine', vol: .14 });
     T.pop(860, 420, '쏙!', C.pine);
-    mouse.face('left'); // 풀려나서 오른쪽으로 쏙
+    mouse.face('right'); // 풀려나서 오른쪽으로 쏙
     await mouse.move(960, 498, 500, 'ease-in');
     laugh.cancel();
     await say('생쥐가 쏙 빠져나왔어요. "고맙습니다, 사자님!"');
@@ -570,7 +570,7 @@
     T.pop(HX, 380, '쏙!', C.pine);
     sm.pos.style.opacity = '0';
     await sleep(600);
-    sm.pos.style.opacity = '1'; await sm.move(HX + 120, 470, 400); sm.hop(20);
+    sm.pos.style.opacity = '1'; sm.face('right'); await sm.move(HX + 120, 470, 400); sm.hop(20);
     await say('맞아요! 작은 생쥐는 좁은 구멍도 쏙!');
     await say('크면 큰 대로, 작으면 작은 대로 다 쓸모가 있어요.');
 

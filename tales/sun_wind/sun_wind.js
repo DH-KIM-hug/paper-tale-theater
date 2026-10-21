@@ -503,14 +503,15 @@
     await T.sceneCard('내기', () => {
       T.clear(); HB = highBG(T);
       if (T.portrait()) camSnap(500, 280, 1);
-      N = traveler(T, HB.path[0][0], HB.path[0][1], HB.art ? .3 : .34, 'coat');
+      const pa = HB.path.slice().reverse(); // 정면 얼굴 그림이라 멀어지면 뒤로 걷는 모양 → 위(먼 곳)에서 아래(가까운 쪽)로 걸어 내려온다
+      N = traveler(T, pa[0][0], pa[0][1], HB.art ? .3 : .34, 'coat');
       N.P.face('smile');
       const pt = T.portrait(); // 세로 화면: 양 귀퉁이에서 빼꼼 보이게 안쪽으로
       const s = sun(T, pt ? 270 : 70, 520, 1.05), w = wind(T, pt ? 730 : 930, 520, 1.05); w.face('right');
       T.world.__sw = [s, w];
     });
     const walk = N.body.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 360, iterations: Infinity });
-    const [, p1, p2, p3] = HB.path;
+    const [, p1, p2, p3] = HB.path.slice().reverse();
     const walking = (async () => { await N.move(...p1, 2600, 'linear'); await N.move(...p2, 2400, 'linear'); await N.move(...p3, 2400, 'linear'); })();
     await say('저 아래 길로 나그네가 걸어가요.');
     await camTo(HB.art ? 480 : 530, HB.art ? 340 : 300, 1.5, 1400);

@@ -110,6 +110,7 @@
     /* 5. 이듬해 봄, 박씨 */
     await T.sceneCard('이듬해 봄', () => { scene('sky_spring', 500); });
     const sw = spr('swallow_seed', -150, 140, 280), hp = spr('heung_plant', 640, 260);
+    sw.face('right'); // seed 그림은 왼쪽이 기본 → 오른쪽으로 날아가므로 뒤집는다
     await sw.move(fx(380), 280, 1300, 'ease-out'); /* 날아와서 머문다 */
     await say('봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.');
     await cut('seedback', 'pop', 3200);

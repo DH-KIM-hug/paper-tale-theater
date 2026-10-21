@@ -747,6 +747,7 @@
     sfx(T, 'pop'); T.pop(mouth[0], mouth[1] - 40, '뿅!', C.bean);
     fox.parts.all.style.transform = '';
     if (fox.parts.art) fox.parts.setPose('stand');
+    fox.face('left'); // 뒤로 물러나는 방향(왼쪽)을 본다
     await fox.move(330, 380, 360, 'ease-out');
     await fox.move(300, 500, 320, 'ease-in');
     sfx(T, 'thud'); T.shake();
@@ -765,7 +766,7 @@
       await sleep(350);
       await T.anim(crane.parts.head, [{ transform: `rotate(${cdeg}deg)` }, { transform: 'rotate(0deg)' }], 300);
     }
-    fox.body.style.transform = '';
+    fox.body.style.transform = ''; fox.face('right'); // 다시 두루미 쪽
     mood(fox, 'sad');
     T.tone([500, 300], .5, { type: 'sine', vol: .14 });
     await say('두루미는 긴 부리로 쪽쪽 먹었어요. 여우는 배가 꼬르륵, 속상했어요.');

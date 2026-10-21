@@ -455,6 +455,7 @@
         impact(700, 330, '어흥!', '#c0392b');
         AudioFX.thud(); T.shake();
         granny.hop(26, 420);
+        granny.face('left'); // 물러나는 방향(왼쪽)을 보며 밀린다
         await granny.move(granny.x - 24, 520, 420, 'ease-out');
         granny.art.style.transition = 'rotate .22s ease-in';
         granny.art.style.rotate = '-24deg';

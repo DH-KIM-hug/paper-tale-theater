@@ -298,6 +298,7 @@
       await Promise.all([hans.move(duck.x - 22, GROUND + 12, 700), gret.move(duck.x + 22, GROUND + 12, 700)]);
       hans.setScale(.55 * SC); gret.setScale(.55 * SC); hans.place(hans.x, 428); gret.place(gret.x, 428);
       const tx = L(780, 600);
+      duck.turn('right'); // 가는 쪽(오른쪽)을 본다
       await Promise.all([duck.move(tx, 330, 2600), hans.move(tx - 22, 290, 2600), gret.move(tx + 22, 290, 2600)]);
       await Promise.all([hans.move(tx - 22 + 50, 250, 700), gret.move(tx + 22 + 50, 250, 700)]);
     })();

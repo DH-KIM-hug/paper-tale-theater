@@ -23,7 +23,7 @@
     sis1_foot: 'right', sis2_foot: 'right', fairy_wand: 'right', prince_dance: 'left', prince_slipper: 'right',
     /* 앞모습처럼 보여도 얼굴이 오른쪽으로 살짝 돌아 있는 그림 (귀가 왼쪽에 보임) — 왼쪽을 보게 하려면 뒤집어야 한다 (2026-10-20: 마지막에 가족이 신데렐라를 안 봤음) */
     cind_stand: 'right', cind_surprise: 'right', cind_joy: 'right', step_stand: 'right', sis1_proud: 'right', sis1_sorry: 'right',
-    sis2_stand: 'right', sis2_proud: 'right', sis2_sorry: 'right', prince_stand: 'right', fairy_appear: 'right' };
+    sis2_stand: 'right', sis2_proud: 'right', sis2_sorry: 'right', prince_stand: 'right', fairy_appear: 'right', mouse: 'right' };
   const FL = 532;            /* 바닥 */
   const BGS = ['kitchen', 'kitchen_night', 'parlor', 'garden', 'ballroom', 'stairs'];
   const bgSrc = k => AS + 'cd2_bg_' + k + '.webp', artSrc = k => AS + 'cd2_' + k + '.webp';
@@ -287,6 +287,7 @@
     for (let i = 0; i < 6; i++) {
       const m = mice[i];
       put(T, m, TX, FL - 20, { to: 'right' });
+      m.turn(MX[i] < TX ? 'left' : 'right'); // 가는 쪽을 본다
       AudioFX.countBeat && AudioFX.countBeat(i + 1); popSfx(T); vo('n' + (i + 1));
       await m.move(MX[i], MY[i], 420, 'ease-out');
       m.hop(12, 300); glow(m, 700);

@@ -1062,7 +1062,7 @@
     hero.parts.wing.style.transform = '';
     T.world.appendChild(hero.pos);
     const hugY = ky - 77; // 그림 농부: 앞으로 뻗은 두 손(발끝에서 -80,-121) 높이에 안긴다
-    hero.face('left'); hero.setScale(1); hero.move(562, hugY, 600); // 안겨서 할아버지와 같은 쪽(가는 쪽)을 본다
+    hero.face('right'); hero.setScale(1); hero.move(562, hugY, 600).then(() => hero.face('left')); // 가는 동안은 오른쪽(이동 방향), 안긴 뒤 할아버지와 같은 쪽(가는 쪽)을 본다
     await say('농부 할아버지가 아기 오리를 품에 폭 안았어요. 따뜻한 집으로 가요!');
     // 농부는 왼쪽을 보고 서 있으니 보는 쪽(왼쪽)으로 걸어 나간다 (뒷걸음 X)
     await Promise.all([farmer.move(-260, farmer.y, 1900), hero.move(562 - 900, hugY, 1900)]);

@@ -853,9 +853,10 @@
     const tower = () => stacked.forEach((a, i) => setTimeout(() => a.lean.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-5deg)' }, { transform: 'rotate(5deg)' }, { transform: 'rotate(0deg)' }], { duration: 500, iterations: 2 }), i * 60));
     async function climb(a, x, y, s = TS) {
       T.world.appendChild(a.pos);
-      a.face('left'); a.setScale(s);
+      a.face(x > a.x ? 'right' : 'left'); a.setScale(s); // 가는 쪽을 보며 올라간다
       await a.move((a.x + x) / 2, Math.min(a.y, y) - 70, 320, 'ease-out');
       await a.move(x, y, 260, 'ease-in');
+      a.face('left');
       S.thud();
     }
     for (let k = 0; k < 4; k++) {
