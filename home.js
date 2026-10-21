@@ -88,6 +88,9 @@
 
   /* ── 준비 상태: 만드는 중인 동화는 파일이 있으면 연다 ── */
   const readyNow = new Set(TALES.filter(t => t.ready).map(t => t.id));
+  /* 지난번에 열렸던 '만드는 중' 동화는 바로 열린 채로 그린다(확인 전에 '곧 열려요'가 잠깐 붙었다 사라지지 않게) */
+  let probed = false;
+  try { JSON.parse(localStorage.getItem('making_open') || '[]').forEach(id => { if (TALES.some(t => t.id === id && t.making)) readyNow.add(id); }); } catch (e) { /* 저장소 없음 */ }
   async function exists(url) {
     try { const r = await fetch(url, { method: 'HEAD', cache: 'no-cache' }); return r.ok; } catch (e) { return false; }
   }
@@ -97,8 +100,10 @@
       const base = `tales/${t.folder || t.id}/`;
       return (await exists(base + 'index.html')) && (await exists(base + `${t.folder || t.id}.js`)) ? t.id : null;
     }));
-    let changed = false;
+    let changed = !probed;
+    probed = true;
     hits.forEach(id => { if (id && !readyNow.has(id)) { readyNow.add(id); changed = true; } });
+    try { localStorage.setItem('making_open', JSON.stringify(hits.filter(Boolean))); } catch (e) { /* 저장소 없음 */ }
     if (changed) requestRender();
   }
 
@@ -189,7 +194,7 @@
   const imgAttrs = 'class="art" alt="" loading="lazy" decoding="async"';
 
   function holeHTML(t, open, extra = '') {
-    const plug = (open ? '' : '<span class="plug" aria-hidden="true"><b>곧 열려요</b></span>') + extra;
+    const plug = ((open || (t.making && !probed)) ? '' : '<span class="plug" aria-hidden="true"><b>곧 열려요</b></span>') + extra;   // 확인 전에는 '곧 열려요'를 붙이지 않는다
     // 밝은 종이 한 가지만 쓴다 (다크 모드 없음). 밝은 판이 없으면 남색 판이라도
     if (TILE.has(t.id)) return `<span class="thumb full tile"><img ${imgAttrs} src="assets/thumbs/${t.id}_tile.webp">${plug}</span>`;
     const dk = PIC2.has(t.id), lt = PIC2L.has(t.id), base = `assets/thumbs/${t.id}`;
