@@ -16,7 +16,7 @@
 
 | 순서 | 파일 | 만드는 방법 |
 |---|---|---|
-| 1 | `tools/app/gen/jobs_princess_pea.json` | **이미 있음**(45장: 스프라이트 35 + 배경 5 + 키아트 5, 접두어 `pp_`). 그림 생성: `python3 tools/app/gen/run_simple.py princess_pea <id ...>` 를 `pass` 1 → 2 → 3 순으로(참고 그림이 먼저 있어야 함), 키아트(`key_*`)는 맨 뒤. 작업표가 이 순서로 정렬되어 있다. 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. 받은 그림 점검은 §10. |
+| 1 | `tools/app/gen/jobs_princess_pea.json` | **이미 있음**(49장: 스프라이트 35 + 배경 5 + 컷 4 + 키아트 5, 접두어 `pp_`). 그림 생성: `python3 tools/app/gen/run_simple.py princess_pea <id ...>` 를 `pass` 1 → 2 → 3 순으로(참고 그림이 먼저 있어야 함), 컷(`pp_cut_*`)은 `pass 4`(참고 스프라이트가 다 나온 뒤), 키아트(`key_*`)는 맨 뒤. 작업표가 이 순서로 정렬되어 있다. 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. 받은 그림 점검은 §10. |
 | 2 | 후처리 | `~/.venvs/paper-tale/bin/python tools/app/gen/post_tale.py princess_pea` → `assets/v3w/pp_<id>.webp`(스프라이트는 마젠타 크로마키 → 여백 없이 오림 → 높이 600(폭 900) 안, 배경 1600×902). 끝에 ASP(폭/높이)가 `tales/princess_pea/ASP.txt` 에 나온다 → 코드 `ASP` 표에 붙인다(§2-1 의 고정 ASP 네 개는 제외). **그림이 아직 없어도 코드는 자리표시(§1-1)로 돈다.** |
 | 3 | `tales/princess_pea/index.html` | `tales/beauty_beast/index.html` 그대로 복사, `<title>완두콩 공주</title>`, 마지막 스크립트 `princess_pea.js`. 합창 로더는 넣지 않는다(합창 없음). |
 | 4 | `tales/princess_pea/narration.js` | Typecast 없음. `/* princess_pea — Typecast 없음. ElevenLabs(narration_el.js)가 채운다 */\nconst NARRATION_CLIPS = {};\nconst VOICE_LINES = {};` |
@@ -218,7 +218,7 @@ pp_prop_door_closed .55, pp_prop_door_open 1.4, pp_prop_case .5
 ### 2-7. 속도 (한 편 7분 이상이 목표)
 - `say()` 뒤 `GAP = 700`ms. 장면 끝(다음 `sceneCard` 전) `sleep(SCENE_END = 1500)`.
 - 배 항해 편도 `SAIL = 4200`ms(linear), 매트리스 세기 간격 `COUNT_A = 720`(1~10)·`COUNT_B = 680`(11~20), 사다리 오르기 `CLIMB = 3200`.
-- 대사 중 `hop`·`wiggle` 은 한 번만. 컷 그림(`cutImage`)은 이 동화에 없다.
+- 대사 중 `hop`·`wiggle` 은 한 번만. 컷 그림(`cutImage`)은 **4장**(§3 끝 "컷신" 표; `CUT_HOLD = 4200`ms, 컷 위에서 기존 대사 한 줄을 읽는다 — 까치 방식).
 - 전체 목표 7~8.5분. §11 에서 잰다. 7분이 안 되면 `SCENE_END` 를 2200, `GAP` 을 900, `SAIL` 을 5000 으로; 9분을 넘으면 `SCENE_END` 1200, `COUNT_A/B` 620/580(대사는 건드리지 않는다).
 
 ## 3. 장면별 상세
@@ -279,6 +279,20 @@ pp_prop_door_closed .55, pp_prop_door_open 1.4, pp_prop_case .5
 - **L30** → 둘 `hop(8, 320)` 같이 → **L31**(왕자) → `petals(T)` 시작(§5-5) → **L32** → **L33**(안내) → 상자 들썩임(§2-6) → `await T.tap(kase.hit, { prompt: '유리 상자를 톡 눌러 봐요.' })`.
 - 톡 뒤: `glow(peaM, 1500)` + `peaM.hop(10, 360)` + `sparkleSfx(T)` + `T.pop(kase.x, kase.y - 190, tr('반짝!'))`(상자 위) → 둘 `look('wave')`(공주 `wave` 는 앞모습, `turn` 불필요) + `hop(12, 360)` → **L34** 와 동시에 `T.confetti(); AudioFX.sfx('tada') || sparkleSfx(T);` + `T.pop(X(475, 495), FL - 290, tr('안녕!'))`(두 사람 머리 사이 위) → `T.finale(); await sleep(1500); return '느낀 것을 솔직하게 말하는 마음이 진짜 공주의 마음이에요.';`
 - 이 동화의 마지막 인사형 톡은 이 유리 상자 톡이다.
+
+### 컷신 (그림 컷) — CLAUDE.md §5-2, 까치(`tales/magpie`)·신데렐라 방식 (2026-10-21 추가)
+- 컷 **4장**. 컷은 그 사건 **직후**에만 띄우고, 컷 위에서 그 장면의 **기존 대사 한 줄**을 읽는다: `const c = T.cutImage([{ src: src('pp_cut_…'), sfx: '…', hold: CUT_HOLD }], { hold: CUT_HOLD }); await say(L); await c;` (`CUT_HOLD = 4200`ms; 대사가 홀드보다 길면 컷이 먼저 닫혀도 된다; 톡하면 바로 넘어간다 — 엔진 `cutImage`, `engine/tale.js` 619행). 컷 패널은 엔진이 4:3 흰 테두리 종이로 보여 주므로 그림도 4:3 으로 만든다.
+- 그림: `assets/v3w/pp_cut_<이름>.webp`(1200×900). 작업표 `jobs_princess_pea.json` 의 `kind: "cut"` 항목 **4장**(`pass 4`, 참고 그림 `refs` 는 그 컷에 나오는 인물의 스프라이트 — 스프라이트가 모두 나온 뒤에 만든다). 후처리: `post_tale.py` 는 sprite/bg 만 다루므로 컷은 `post_cinderella2.py` 처럼 4:3 가운데 자르기 → 1200×900 webp 로 따로 변환한다(그림·코드 작업은 뒤의 큐에서; 이 문서는 기획만).
+- 규칙: 한 장면에 한 컷, 이웃한 장면에 연달아 두지 않는다. 컷 안 인물은 스프라이트와 같은 얼굴 규칙(점 눈·점 코·띠 입·분홍 볼), 소품은 얼굴 없음, 피·눈물·아픔 없음. 컷 위 대사는 모두 §6 에 **이미 있는 줄**이라 새 녹음이 없다(영어는 `voice_script_en.json` 의 같은 줄, `TEXT_EN` 추가 없음). 컷이 닫힌 뒤 무대는 그 장면의 다음 단계부터 이어진다(컷이 대신한 애니메이션은 생략해도 된다).
+
+| 컷 id | 장면 | 앞 장면 → 뒤 장면 | 보여 줄 순간 | 그림 구도(얼굴 규칙 포함) | 컷 위 대사(한국어 / 영어) | 컷 동안 음성 | 효과음 | refs |
+|---|---|---|---|---|---|---|---|---|
+| `pp_cut_knock` | 2 폭풍우 밤 | 1 진짜 공주를 찾아서 → 3 문 앞의 아가씨 | 큰 사건: 폭풍우 밤에 누군가 성문을 두드리는 순간(번개 뒤) | 남색 빗줄기 띠가 비스듬히 크게, 왼쪽 위에 앰버 번개. 가운데 오른쪽 큰 아치 성문 앞에 흠뻑 젖은 아가씨가 **뒷모습**으로 서서 한 주먹을 들어 문을 두드린다(얼굴이 보이지 않으므로 얼굴 없음 — 누구인지는 3장에서 밝혀진다). 머리끝에서 물방울. 밤(세트 B), 무섭지 않게. | **L6** 누가 성문을 똑똑, 두드려요. / Someone was knocking at the castle gate. Knock, knock. | 있음 — 컷 음성 필요: L6 | `knock` | pp_princess_wet · pp_prop_door_closed |
+| `pp_cut_pea` | 4 왕비의 완두콩 | 3 문 앞의 아가씨 → 5 매트리스 스무 장 | 왕비가 아무도 못 본 척 침대 판자에 완두콩 한 알을 놓는 순간 | 왕비가 옆모습으로 허리를 굽혀 두 손가락으로 작은 초록 완두콩을 갈색 판자에 올린다. 다른 손은 입에 대고 "쉿", 한쪽 눈을 찡긋, 장난스러운 웃음. 옆 벽에 금색 매트리스 한 장과 베개가 기대 있다. 큰 클로즈업. | **L15** 요 조그만 완두콩 한 알을 침대 판자에 톡. 아무도 못 본 척! / This tiny little pea goes on the bed board, tap. Nobody saw a thing! | 있음 — 컷 음성 필요: L15 | `poke` | pp_queen_place · pp_prop_pea · pp_prop_bed_board |
+| `pp_cut_top` | 6 위? 아래? | 5 매트리스 스무 장 → 7 잠 못 든 밤 | 공주가 사다리를 다 올라 스무 장 탑 꼭대기에 눕는 순간(탑 전체가 한눈에) | 줄무늬 매트리스 탑이 화면을 세로로 꽉 채운다(금·크림·감 번갈아, 위에 흰 이불 넷, 오른쪽에 긴 사다리). 꼭대기 위쪽 가장자리에 공주가 머리를 왼쪽으로 하고 누워 눈 뜨고 웃으며 한 손을 아래로 흔든다. 맨 아래 판자 위 끝에 작은 완두콩 하나. 왼쪽 아래 왕비가 작게 서서 올려다본다. | **L23** 와, 높다! 잘 자요. / Wow, it's so high! Good night. | 있음 — 컷 음성 필요: L23 | `paper_down` | pp_princess_lie_a · pp_queen_smile · pp_prop_mattress_gold · pp_prop_ladder |
+| `pp_cut_hug` | 8 아침 인사 | 7 잠 못 든 밤 → 9 진짜 공주 | 결말 전: 공주가 솔직히 말하자 왕비가 "진짜 공주로구나!" 하며 안아 주는 순간 | 왕비가 두 팔로 공주를 꼭 안고 눈을 감고 웃는다. 공주는 졸린 듯 눈이 반쯤 감겼지만 행복한 웃음(눈물 없음). 오른쪽에서 왕자가 두 팔을 들고 펄쩍 뛰며 크게 웃는다. 뒤에 줄무늬 탑. | **L29** 매트리스 스무 장 아래 완두콩을 느끼다니! 진짜 공주로구나! / She felt the pea through twenty mattresses! She is a true princess! | 있음 — 컷 음성 필요: L29 | `paper_up` | pp_queen_hug · pp_princess_sleepy · pp_prince_joy |
+
+컷 음성 필요(모두 §6 의 기존 줄, 새 줄 없음): L6, L15, L23, L29.
 
 ## 4. 배움 놀이 규칙 요약 (엔진 `T.choose`·`T.tap`)
 - **4장 크기 비교**: 보기 셋(완두콩 22·베개 40·매트리스 20×240), 자리는 고정(가로 한 줄·세로 세로 한 줄), 정답 1개씩 두 문제(제일 작은 것 → 완두콩, 제일 큰 것 → 매트리스). 12초 무입력이면 `prompt` 를 다시 읽는다. 1회 오답 → `onWrong`(흔들림 + W 대사). 2회 오답부터 정답이 노랗게 빛나며 들썩이고 나머지는 흐려진다(엔진). 정답을 누르면 `AudioFX.ding()` → 반짝 → C 대사.
@@ -415,7 +429,7 @@ pp_prop_door_closed .55, pp_prop_door_open 1.4, pp_prop_case .5
 
 키아트 창 모양은 **둥근 완두콩(원)** 이고, 테두리 장식은 짧은 매트리스 띠 둘(금·감)과 작은 완두콩 하나뿐(§7-5: 소품 금지, 같은 계열 장식 최소). 창 안은 손님방의 줄무늬 탑과 큰 공주, 뒤에서 내다보는 왕비. 참고 그림은 작업표의 `refs`(princess_stand·queen_smile·mattress_gold·prop_pea / 끝 화면은 prince_hold·princess_hold·prop_case·prop_pea)라 **인물 그림이 모두 나온 뒤** 맨 마지막에 생성한다. 썸네일(타일)은 PLAN 대로 공주를 크게, 겹 3개(벽·탑·공주).
 
-## 10. 그림 목록 (작업표 `jobs_princess_pea.json` 45장과 같다)
+## 10. 그림 목록 (작업표 `jobs_princess_pea.json` 49장과 같다)
 
 사람 넷은 **머리 크기가 같다**(공주 서기가 기준). 자세 그림은 기준 그림을 `refs` 로 넣고 프롬프트에 "SAME SCALE AS THE REFERENCE SPRITE(머리·몸 크기를 기준 그림과 똑같이)"가 들어 있다(§4-1). 왕자·왕비·왕의 기준 그림도 공주 서기를 `refs` 로 받아 머리 크기를 맞춘다. 사람 얼굴은 점 눈·점 코·종이 띠 입·볼, 소품은 **얼굴 없음**(`This is an OBJECT … NO face`). 손에는 다른 인물이 없고, 손잡기 그림은 각자 빈손을 뻗은 모습이다(코드가 두 손끝을 붙인다).
 
@@ -435,9 +449,10 @@ pp_prop_door_closed .55, pp_prop_door_open 1.4, pp_prop_case .5
 | | prop_door_closed(기준) / prop_door_open | 닫힌 아치 문 / 양쪽으로 젖혀진 문짝 둘(가운데 비움) | 480×600 | 1 / 2 | 2·3 / 3 |
 | | prop_case | 받침대 + 빈 유리 상자(완두콩은 코드) | 480×600 | 1 | 9 |
 | 배경 | bg_room_day(오른쪽 큰 창: 하늘·바다) / bg_gate_night(앰버 문 자리, 비·구름 없음) / bg_guest_day(왼쪽 창·탁자, 가운데 비움) / bg_guest_night(같은 방, 달) / bg_yard_day(성벽·잔디) | 평평한 종이 한 장 + 요소 2~3개 | 1600×902 | 1 | 1 / 2·3 / 4·5·6·8 / 7 / 9 |
+| 컷 | cut_knock / cut_pea / cut_top / cut_hug | 그림 컷 4장(§3 끝 컷신 표: 2·4·6·8장). refs 는 그 컷에 나오는 인물 스프라이트. 4:3, 얼굴 규칙 같음, 소품 얼굴 없음 | 1600×1200(4:3) | 4 | 2 / 4 / 6 / 8 |
 | 키 | key_wide · key_tall · key_tile · key_backw · key_backt | 시작 화면(완두콩 모양 창)·홈 카드·끝 화면(손잡은 둘 + 유리 상자) | 16:9 · 3:4 · 4:3 · 3:2 · 4:5 | — | — |
 
-생성 순서: `pass 1`(18: princess_stand, 소품 12, 배경 5) → `pass 2`(14: 공주 자세 8, prince_sigh, queen_smile, king_lantern, mattress_cream·persimmon, door_open) → `pass 3`(8: 왕자 4, 왕비 4) → 키아트 5. 작업표가 이 순서로 정렬되어 있으므로 `run_simple.py princess_pea $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_princess_pea.json'))))")` 처럼 앞에서부터 돌리면 된다.
+생성 순서: `pass 1`(18: princess_stand, 소품 12, 배경 5) → `pass 2`(14: 공주 자세 8, prince_sigh, queen_smile, king_lantern, mattress_cream·persimmon, door_open) → `pass 3`(8: 왕자 4, 왕비 4) → `pass 4`(컷 4: cut_knock, cut_pea, cut_top, cut_hug) → 키아트 5. 작업표가 이 순서로 정렬되어 있으므로 `run_simple.py princess_pea $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_princess_pea.json'))))")` 처럼 앞에서부터 돌리면 된다.
 
 받은 그림 점검(틀린 id 만 지우고 다시 만든다): 네 귀퉁이가 마젠타인지(`restyle_check.py` 방식) · 사람 넷의 **얼굴 폭이 공주 서기와 ±12% 안**인지(왕·왕비는 키만 작아야 한다) · 소품(완두콩·매트리스·이불·베개·판자·사다리·배·먼 나라·구름·번개·문·상자)에 **얼굴이 없는지** · 매트리스 셋이 같은 모양·같은 비율(8:1 이상 가늘게)인지 · `princess_climb` 이 왼쪽을 보고 사다리가 **없는지**, `hold` 둘이 오른쪽을 보고 손이 비었는지 · `queen_place`·`queen_lift` 손에 아무것도 없는지 · `door_open` 가운데가 비어 있는지(마젠타) · `far_lands` 실루엣에 얼굴·이목구비가 없는지 · `king_lantern` 의 등불에 얼굴이 없는지 · 공주 `wet` 이 울지 않는지(씩씩한 웃음) · 배경에 사람·동물·비·문짝이 없는지.
 
@@ -460,6 +475,7 @@ pp_prop_door_closed .55, pp_prop_door_open 1.4, pp_prop_case .5
 - [ ] **위·아래**: 띠 둘이 질문 때만 보이고(opacity .22), 아래 → 완두콩 반짝, 위 → 띠 반짝. 오답 때 W 대사. 정답 뒤 띠가 사라진다.
 - [ ] **톡**: 배·문·유리 상자에 손가락 힌트가 뜨고(배·상자는 hitBox 가운데), 톡 뒤 각각 항해·문 열림·반짝 + 손 흔들기. 끝 화면에 '느낀 것을 솔직하게 말하는 마음이 진짜 공주의 마음이에요.' 와 리본(`?endpreview=1`).
 - [ ] **팝 자리**: 모든 팝 글자가 인물의 머리·몸 상자를 가리지 않는다(스크린샷에서 확인: 휴우·찡긋·꼬옥·하암·안녕!).
+- [ ] **컷 4장**이 그 사건 직후에만 뜨고(2장 `pp_cut_knock`, 4장 `pp_cut_pea`, 6장 `pp_cut_top`, 8장 `pp_cut_hug`) 각 컷 위에서 맞는 대사(L6·L15·L23·L29)가 들린다. 이웃한 장면에 컷이 연달아 없다. 컷 안 인물 얼굴이 점 눈·띠 입이고 소품에 얼굴이 없다.
 - [ ] 누르는 자리: `.tap-target.armed` 의 `getBoundingClientRect()` 짧은 변이 **화면 60px 이상**(배·비교 완두콩은 hitBox, 문·침대 구역·띠·상자).
 
 세로 390×844 (`node … 390 844 /tmp/pp_p 600 8`)
