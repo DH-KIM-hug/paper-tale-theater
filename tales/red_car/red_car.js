@@ -342,8 +342,12 @@
     [kid, ...CARS, thiefA, thiefB, bear, rabbit, bfly, block, duck, house, flame, smoke, water, hook].forEach(hide);
     T.director({ cast: { child: kid, red, police, fire, amb, tow }, noFace: ['child', 'red', 'police', 'fire', 'amb', 'tow'] });
     /* 그림에서 잰 좌표(차 가운데 x·바닥 y 기준 오프셋, 2026-10-21): 서 있는 이현이 쥔 주먹(그림 왼쪽 손) · 식탁 윗면 · 누운 손 옆 · 구급차 큰 옆창 · 호스 끝 · 견인차 사슬 끝(고리 꼭대기가 사슬과 겹치게) · 빨간 차 앞 범퍼(지침 / 걸림 자세) */
-    const HAND = { stand: [-14, -80], eat: [38, -96], sleep: [-10, -44] };
+    const HAND = { stand: [-14, -80], eat: [38, -96], sleep: [-63, -22] };
     const WIN = [[-68, -52], [-42, -52]], NOZ = [49, -56], TIP_PULL = [-90, -1], BUMPER = [60, -16], BUMPER9 = [66, -48];
+    /* 견인(8~9장, 2026-10-21 그림에서 잰 값): 견인차 사슬 끝은 견인차 그림 기준 (-90, -42) 에 매달리고, 걸림 자세 범퍼 윗면은 빨간 차 기준 (+67, -57) 이다.
+       고리가 하나의 사슬로 이어지려면 견인차 사슬 끝과 범퍼가 같은 자리에 와야 하므로 두 차의 가운데 간격을 TOWGAP(=90+67)로 두고,
+       견인차를 한 줄(LANE_T) 위로, 빨간 차를 한 줄(LANE_R) 아래로 둔다(높이차 15 = 57-42). 고리는 붐 끝에서 범퍼 윗면까지 걸리도록 .78 배(그림 높이 47)로 줄여, 위쪽이 붐 끝, 아래 갈고리가 범퍼에 걸린다 */
+    const TOWGAP = 157, LANE_T = FL - 7, LANE_R = FL + 8, HOOK_S = .78, HOOK_DX = -90, HOOK_DY = -37;
     /* 한 줄로 선 차들의 가운데 x: 맨 앞 차 가운데 x0, 간격 gap(길이 LEN 기준; LEN 을 바꿔도 줄이 어긋나지 않게 계산) */
     const chain = (x0, keys, gap, sc = 1) => { const o = {}; let edge = x0 - LEN[keys[0]] * sc / 2; o[keys[0]] = x0; keys.slice(1).forEach(k => { o[k] = edge - gap - LEN[k] * sc / 2; edge = o[k] - LEN[k] * sc / 2; }); return o; };
     const waitFor = async cond => { for (let i = 0; i < 40 && !cond(); i++) await sleep(50); };
@@ -376,7 +380,7 @@
       kid.look('eat', 'right'); toHand(HAND.eat); T.pop(kid.x + 80, FL - 300, tr('냠냠'));
       await sleep(2400);
       kid.look('sleep'); kid.place(X(330, 450), FL); toHand(HAND.sleep);
-      const t = tint(T, '#1F2A56', 0); T.anim(t, [{ opacity: 0 }, { opacity: .22 }], 900).then(() => t.setAttribute('opacity', .22));
+      const t = tint(T, '#1F2A56', 0); red.pos.parentNode.appendChild(red.pos); T.anim(t, [{ opacity: 0 }, { opacity: .22 }], 900).then(() => t.setAttribute('opacity', .22));
       T.pop(kid.x + 40, FL - 260, tr('쌔근'), '#1F2A56');
     })();
     await Promise.all([say(S.L2), cut2]);
@@ -463,9 +467,9 @@
     police.look('joy'); police.hop(8, 300); await say(S.L15);
     police.look('run');
     const l16 = say(S.L16), stopR4c = rattle(.25, 1200);
-    follow(900, DRIVE);
+    follow(800, DRIVE);
     fadeOut(T, thiefA, 700); fadeOut(T, thiefB, 700);   // 잡힌 도둑은 차들이 떠날 때 사라진다(차가 도둑 위를 지나가지 않게)
-    const go4 = [drive(police, 1200, FL, DRIVE), sleep(400).then(() => { red.look('run'); return drive(red, 1200, FL, DRIVE); })];
+    const go4 = [drive(police, 900, FL, 6000, 'ease-out'), sleep(400).then(() => { red.look('run'); return drive(red, 730, FL, 6000, 'ease-out'); })];   // 장면 끝에도 차가 화면 안에 남는다(빈 배경으로 넘어가지 않게)
     await Promise.all([...go4, l16]);
     stopR4c();
     await sleep(SCENE_END);
@@ -505,16 +509,17 @@
     fire.look('joy'); fire.hop(8, 300); await say(S.L21);
     fire.look('run');
     const l22 = say(S.L22), stopR5b = rattle(.25, 1200);
-    follow(900, DRIVE);
-    await Promise.all([drive(police, 1250, FL, DRIVE), sleep(400).then(() => drive(red, 1250, FL, DRIVE)), sleep(800).then(() => drive(fire, 1250, FL, DRIVE)), l22]);
+    follow(750, 6000);
+    const E5 = chain(900, ['fire', 'red', 'police'], 12);
+    await Promise.all([drive(police, E5.police, FL, 6000, 'ease-out'), sleep(400).then(() => drive(red, E5.red, FL, 6000, 'ease-out')), drive(fire, E5.fire, FL, 6000, 'ease-out'), l22]);
     stopR5b();
     await sleep(SCENE_END);
 
     /* ===== 6. 구급차 삼촌 (자동 — 인형 내려 주기) ===== */
     await T.sceneCard(tr('구급차 삼촌'), () => {
       scene('rc_bg_road_c');
-      put(T, amb, -250, FL, { look: 'run' });
-      put(T, bear, -250 + WIN[0][0], FL + WIN[0][1], { look: 'sit' }); put(T, rabbit, -250 + WIN[1][0], FL + WIN[1][1], { look: 'sit' });
+      put(T, amb, 40, FL, { look: 'run' });
+      put(T, bear, 40 + WIN[0][0], FL + WIN[0][1], { look: 'sit' }); put(T, rabbit, 40 + WIN[1][0], FL + WIN[1][1], { look: 'sit' });
       if (P) camSnap(600, 280, 1);
     }, amb.pos);
     const ambX = X(620, 600);
@@ -538,9 +543,10 @@
     amb.look('joy'); amb.hop(8, 300); await say(S.L26);
     amb.look('run');
     const l27 = say(S.L27), stopR6c = rattle(.25, 1200);
-    follow(900, DRIVE);
+    follow(560, 6000);
     bear.hop(8, 320); rabbit.hop(8, 320);
-    await Promise.all([drive(police, 1300, FL, DRIVE), sleep(400).then(() => drive(red, 1300, FL, DRIVE)), sleep(800).then(() => drive(fire, 1300, FL, DRIVE)), sleep(1200).then(() => drive(amb, 1300, FL, DRIVE)), l27]);
+    const E6 = chain(640, ['amb', 'red', 'police', 'fire'], 12);
+    await Promise.all([drive(police, E6.police, FL, 6000, 'ease-out'), drive(red, E6.red, FL, 6000, 'ease-out'), drive(fire, E6.fire, FL, 6000, 'ease-out'), drive(amb, E6.amb, FL, 6000, 'ease-out'), l27]);
     stopR6c();
     await sleep(SCENE_END);
 
@@ -548,7 +554,7 @@
     const C7 = chain(845, ['red', 'police', 'fire', 'amb'], 30);
     await T.sceneCard(tr('나란히 달려요'), () => {
       scene('rc_bg_road_long');
-      put(T, amb, C7.amb - 945, FL, { look: 'run' }); put(T, fire, C7.fire - 945, FL, { look: 'run' }); put(T, police, C7.police - 945, FL, { look: 'run' }); put(T, red, C7.red - 945, FL, { look: 'run' });
+      put(T, amb, C7.amb - 450, FL, { look: 'run' }); put(T, fire, C7.fire - 450, FL, { look: 'run' }); put(T, police, C7.police - 450, FL, { look: 'run' }); put(T, red, C7.red - 450, FL, { look: 'run' });
       if (P) camSnap(400, 280, 1);
     }, red.pos);
     const l28 = say(S.L28), stopR7 = rattle(.3, 1200);
@@ -565,7 +571,7 @@
     red.hop(8, 300);
     const l29 = say(S.L29), stopR7b = rattle(.3, 1200);
     follow(845);
-    await Promise.all([drive(red, C7.red + 1300, FL, DRIVE), sleep(300).then(() => drive(police, C7.police + 1300, FL, DRIVE)), sleep(600).then(() => drive(fire, C7.fire + 1300, FL, DRIVE)), sleep(900).then(() => drive(amb, C7.amb + 1300, FL, DRIVE)), l29]);
+    await Promise.all([drive(red, C7.red + 110, FL, 5000, 'ease-out'), drive(police, C7.police + 110, FL, 5000, 'ease-out'), drive(fire, C7.fire + 110, FL, 5000, 'ease-out'), drive(amb, C7.amb + 110, FL, 5000, 'ease-out'), l29]);
     stopR7b();
     await sleep(SCENE_END);
 
@@ -587,41 +593,45 @@
     await say(S.L32);
     [police, fire, amb].forEach((c, i) => setTimeout(() => c.wiggle(2, 700), i * 300));
     const l33 = say(S.L33);
-    put(T, tow, -300, FL + 14, { look: 'run' });
+    put(T, tow, -300, LANE_T, { look: 'run' });
     const stopR8b = rattle(.45, 900);
     setTimeout(() => T.pop(tow.x, FL - 150, tr('덜컹덜컹')), 0); setTimeout(() => T.pop(tow.x, FL - 150, tr('덜컹덜컹')), 3500);
     follow(TOW8 - 96, 9500);
-    await Promise.all([drive(tow, TOW8, FL + 14, 9500, 'linear', 4), l33]);
+    await Promise.all([drive(tow, TOW8, LANE_T, 9500, 'linear', 4), l33]);
     stopR8b();
     tow.hop(8, 300); await say(S.L34);
     const l35 = say(S.L35);
     tow.look('pull'); sfx('creak', .4);
-    put(T, hook, tow.x + TIP_PULL[0], FL + 14 + TIP_PULL[1], { to: 'right' }); hitBox(T, hook, 90, 90);
+    put(T, hook, tow.x + HOOK_DX, tow.y + HOOK_DY, { to: 'right', s: HOOK_S }); hitBox(T, hook, 90, 90);
     await l35;
     bob(hook.pos);
     await T.tap(hook.hit);
     unhit(hook);
-    await hook.move(red.x + BUMPER[0], FL + BUMPER[1], 450, 'ease-in');
-    sfx('knock', .6); vo('chalkak'); T.pop(hook.x, hook.y - 125, tr('찰칵!'));
-    red.look('hooked'); glow(red, 600); hook.move(red.x + BUMPER9[0], FL + BUMPER9[1], 300, 'ease-out');
+    /* 견인차가 뒤로 살짝 물러나 고리를 빨간 차 앞 범퍼 위로 가져간다(사슬은 견인차에 붙은 채) */
+    sfx('creak', .4);
+    await Promise.all([tow.move(red.x + TOWGAP, LANE_T, 700, 'ease-in-out'), hook.move(red.x + TOWGAP + HOOK_DX, hook.y, 700, 'ease-in-out')]);
+    sfx('knock', .6); vo('chalkak'); T.pop(hook.x, hook.y - 90, tr('찰칵!'));
+    red.look('hooked'); red.place(red.x, LANE_R); glow(red, 600); red.hop(4, 260);   // 코가 들려 고리에 걸린다
     await say(S.L36);
     const l37 = say(S.L37);
-    T.pop(tow.x, FL - 160, tr('영차!')); setTimeout(() => T.pop(tow.x, FL - 160, tr('영차!')), 1100);
+    T.pop(tow.x, FL - 170, tr('영차!')); setTimeout(() => T.pop(tow.x, FL - 170, tr('영차!')), 1100);
     await Promise.all([tow.move(tow.x + 60, tow.y, 3200, 'ease-in-out'), hook.move(hook.x + 60, hook.y, 3200, 'ease-in-out'), red.move(red.x + 60, red.y, 3200, 'ease-in-out'), l37]);
     await sleep(SCENE_END);
 
     /* ===== 9. 기차처럼 한 줄로 (배움 놀이 2: 맨 앞은 누구?) ===== */
     const END9 = chain(880, ['tow', 'red', 'police', 'fire', 'amb'], 10);
+    const sh9 = END9.tow - END9.red - TOWGAP;   // 고리로 이어진 두 차는 LEN 간격보다 가깝다 → 뒤 차들도 같이 당긴다
+    ['red', 'police', 'fire', 'amb'].forEach(k => { END9[k] += sh9; });
     await T.sceneCard(tr('기차처럼 한 줄로'), () => {
       scene('rc_bg_road_long');
-      put(T, amb, END9.amb - 1005, FL, { look: 'run' }); put(T, fire, END9.fire - 1005, FL, { look: 'run' }); put(T, police, END9.police - 1005, FL, { look: 'run' });
-      put(T, red, END9.red - 1005, FL, { look: 'hooked' }); put(T, tow, END9.tow - 1005, FL, { look: 'pull' }); put(T, hook, red.x + BUMPER9[0], FL + BUMPER9[1], { to: 'right' });
+      put(T, amb, END9.amb - 430, FL, { look: 'run' }); put(T, fire, END9.fire - 430, FL, { look: 'run' }); put(T, police, END9.police - 430, FL, { look: 'run' });
+      put(T, red, END9.red - 430, LANE_R, { look: 'hooked' }); put(T, tow, END9.tow - 430, LANE_T, { look: 'pull' }); put(T, hook, tow.x + HOOK_DX, tow.y + HOOK_DY, { to: 'right', s: HOOK_S });
       if (P) camSnap(400, 280, 1);
     }, tow.pos);
     const l38 = say(S.L38), stopR9 = rattle(.3, 1000);
     setTimeout(() => T.pop(tow.x, FL - 160, tr('칙칙폭폭!')), 2000); setTimeout(() => T.pop(tow.x, FL - 160, tr('칙칙폭폭!')), 5000);
     follow(END9.tow, LINE_DRIVE);
-    await Promise.all([drive(tow, END9.tow, FL, LINE_DRIVE), drive(red, END9.red, FL, LINE_DRIVE), hook.move(END9.red + BUMPER9[0], FL + BUMPER9[1], LINE_DRIVE, 'linear'),
+    await Promise.all([drive(tow, END9.tow, LANE_T, LINE_DRIVE), drive(red, END9.red, LANE_R, LINE_DRIVE), drive(hook, END9.tow + HOOK_DX, LANE_T + HOOK_DY, LINE_DRIVE),
       drive(police, END9.police, FL, LINE_DRIVE), drive(fire, END9.fire, FL, LINE_DRIVE), drive(amb, END9.amb, FL, LINE_DRIVE), l38]);
     stopR9();
     await sleep(400);
@@ -643,7 +653,7 @@
     const l40 = say(S.L40), stopR9b = rattle(.3, 1000);
     T.pop(tow.x + 40, FL - 170, tr('칙칙폭폭!')); setTimeout(() => T.pop(red.x, FL - 140, tr('붕붕붕!')), 1800);
     follow(END9.tow);
-    await Promise.all([...[tow, red, police, fire, amb].map(c => drive(c, c.x + 1100, FL, LINE_DRIVE)), hook.move(hook.x + 1100, hook.y, LINE_DRIVE, 'linear'), l40]);
+    await Promise.all([...[tow, red, police, fire, amb].map(c => drive(c, c.x + 90, c.y, 5000, 'ease-out')), drive(hook, hook.x + 90, hook.y, 5000, 'ease-out'), l40]);
     stopR9b();
     await sleep(SCENE_END);
 
@@ -652,7 +662,7 @@
     await T.sceneCard(tr('이현이야, 안녕!'), () => {
       scene('rc_bg_playground');
       put(T, kid, X(640, 600), FL, { look: 'stand' });
-      [amb, fire, police, red, tow].forEach(c => put(T, c, END10[CK10.get(c)] - 580, FL + 6, { look: 'run', s: S_TOY }));
+      [amb, fire, police, red, tow].forEach(c => put(T, c, END10[CK10.get(c)] - 330, FL + 6, { look: 'run', s: S_TOY }));
       if (P) camSnap(560, 280, 1);
     }, kid.pos);
     const endX = END10;
