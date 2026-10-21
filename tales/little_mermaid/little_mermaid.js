@@ -25,7 +25,7 @@
   const HT = { mer_swim: 205, mer_garden: 168, mer_peek: 140, mer_hide: 145, mer_hold: 130, mer_worry: 205, mer_resolve: 205, mer_sit_tail: 190,
     mer_stand: 205, mer_wobble_a: 205, mer_wobble_b: 205, mer_dance: 205, mer_sad: 205, mer_shake: 205, mer_throw: 210, mer_bubble: 260,
     sisters_long: 240, sisters_short: 130, king: 228, granny_talk: 230, granny_hand: 230,
-    prince_stand: 200, prince_float: 85, prince_lie: 82, prince_wake: 150, prince_dance: 200, prince_sleep: 130,
+    prince_stand: 200, prince_float: 85, prince_lie: 82, prince_wake: 140, prince_dance: 200, prince_sleep: 130,
     witch_stand: 235, witch_hand: 235, lady_stand: 208, lady_wed: 208, lady_sleep: 150, gull: 60, fish_a: 36, fish_b: 36, fish_c: 36 };
   /* 그림이 보는 쪽 ('left' | 'right' | 'front') */
   const NAT = { mer_swim: 'left', mer_garden: 'front', mer_peek: 'left', mer_hide: 'right', mer_hold: 'left', mer_worry: 'left', mer_resolve: 'left',
@@ -315,7 +315,7 @@
     const SHIP_W = 330 * ASP.prop_ship_lantern, DECK_DY = -330 * .30 /* 갑판 높이: SPEC 은 .42 였으나 왕자 머리가 무대 위로 잘려 .30 으로 — 그림이 나오면 갑판선에 맞춰 보정 */, BOW_DX = -SHIP_W * .30;
     const fw = ['prop_fw_a', 'prop_fw_b', 'prop_fw_c'].map(f => prop(T, f, 120));
     const stone = prop(T, 'prop_stone', 48), wood = prop(T, 'prop_wood', 44), anchor = prop(T, 'prop_anchor', 80), bottle = prop(T, 'prop_bottle_cork', 70);
-    const cauldron = mk(T, { dim: ['prop_cauldron_dim', 150], glow: ['prop_cauldron_glow', 150] });
+    const cauldron = mk(T, { dim: ['prop_cauldron_dim', 150], glow: ['prop_cauldron_glow', 172] });
     const potion = mk(T, { empty: ['prop_potion_empty', 44], full: ['prop_potion_full', 44] });
     const shell = prop(T, 'prop_shell_pearl', 64);
     const dagger = prop(T, 'prop_dagger', 18), rock = prop(T, 'prop_rock', 120);
@@ -427,9 +427,10 @@
     await sleep(1200); T.shake(); sfx(T, 'thud'); ship.wiggle(4, 900);
     await sleep(1100); T.shake(); sfx(T, 'thud'); ship.wiggle(4, 900);
     await stormSay;
-    put(T, prince, ship.x - 120, WATER - 60, { look: 'float' });
+    put(T, prince, ship.x - 120, ship.y + DECK_DY, { look: 'stand', to: 'left' });
+    await prince.move(ship.x - 120, WATER - 40, 620, 'ease-in');
     sfx(T, 'splash_big'); T.pop(prince.x, WATER - 110, tr('풍덩!'));
-    await prince.move(ship.x - 150, WATER + 10, 700, 'ease-in');
+    prince.look('float', 'left'); await prince.move(ship.x - 150, WATER + 10, 500, 'ease-out');
     await say('왕자님이 바다에 빠졌어요.');
     put(T, mer, -150, WATER + 12, { look: 'hold', to: 'right' }); sfx(T, 'bubbles');
     const HOLD_DX = mer.w * .45 + prince.w * .5 - 20;
@@ -442,9 +443,9 @@
     /* ===== 4. 모래밭 (자동) ===== */
     await T.sceneCard(tr('모래밭'), () => {
       scene('beach');
-      put(T, mer, X(300, 420), 470, { look: 'hide', to: 'right' });
-      put(T, rock, X(300, 420), 522);
-      put(T, prince, X(560, 560), 512, { look: 'lie' });
+      put(T, mer, X(360, 420), 470, { look: 'hide', to: 'right' });
+      put(T, rock, X(400, 420), 522);
+      put(T, prince, X(580, 560), 512, { look: 'lie' });
       if (P) camSnap(500, 280, 1);
     }, prince.pos);
     bob(mer, -3, 600, 3);
@@ -598,7 +599,7 @@
       scene('deck');
       put(T, prince, X(480, 480), 518, { look: 'stand', to: 'right', s: SC.deck });
       put(T, lady, X(650, 600), 518, { look: 'wed', to: 'left', s: SC.deck });
-      put(T, mer, X(210, 340), 520, { look: 'sad', to: 'right', s: SC.deck });
+      put(T, mer, X(210, 340), 520, { look: 'worry', to: 'right', s: SC.deck });   /* 왕자 쪽을 바라보는 옆모습(sad 는 정면이라 방향이 안 맞음) */
       if (P) camSnap(500, 280, 1);
     }, prince.pos);
     sfx(T, 'bell'); sleep(600).then(() => sfx(T, 'bell')); prince.hop(10, 360);
