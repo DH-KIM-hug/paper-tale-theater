@@ -30,6 +30,8 @@ TAGS = {  # 한국어 say → 영어
   '이야기 전체': 'All tales', '배우는 것 전체': 'All skills', '모든 동화가 열렸어요!': 'All tales are unlocked!',
 }
 
+ALIAS = {'콩쥐팥쥐': 'Kongjwi and Patjwi'}
+
 def tales():
     js = open(os.path.join(ROOT, 'tales/catalog.js')).read() + '\nconsole.log(JSON.stringify(TALES.map(t=>({title:t.title,en:t.en&&t.en.title}))))'
     open('/tmp/_cat.js', 'w').write('const document={},window={},localStorage={getItem(){return null}};\n' + js)
@@ -40,6 +42,7 @@ def main():
     items = dict((k, v) for k, v in TAGS.items())
     for t in tales():
         items[t['title']] = t['en']; items[SOON(t['title'])] = f"{t['en']}. Opening soon."
+    items.update(ALIAS)  # 동화 시작 화면 제목이 카탈로그와 다르게 적힌 것
     clips, clips_en, chars = {}, {}, 0
     for ko, en in items.items():
         for lang, text in (('ko', ko), ('en', en)):

@@ -67,7 +67,20 @@ const NARRATION_CLIPS = {
  "인어공주": "audio/el/home/nar_20847659b4.mp3",
  "인어공주. 곧 열려요.": "audio/el/home/nar_2da69738e0.mp3",
  "미녀와 야수": "audio/el/home/nar_e5175d9342.mp3",
- "미녀와 야수. 곧 열려요.": "audio/el/home/nar_a89978e218.mp3"
+ "미녀와 야수. 곧 열려요.": "audio/el/home/nar_a89978e218.mp3",
+ "나의 빨간 자동차": "audio/el/home/nar_ecb7ff6686.mp3",
+ "나의 빨간 자동차. 곧 열려요.": "audio/el/home/nar_43df849061.mp3",
+ "유니콘을 찾아서": "audio/el/home/nar_b1c3d5510c.mp3",
+ "유니콘을 찾아서. 곧 열려요.": "audio/el/home/nar_143d465ec2.mp3",
+ "완두콩 공주": "audio/el/home/nar_ecc7aaba23.mp3",
+ "완두콩 공주. 곧 열려요.": "audio/el/home/nar_9197f4aae8.mp3",
+ "라푼젤": "audio/el/home/nar_6606842cd1.mp3",
+ "라푼젤. 곧 열려요.": "audio/el/home/nar_b81b72917d.mp3",
+ "개구리 왕자": "audio/el/home/nar_12a3891edf.mp3",
+ "개구리 왕자. 곧 열려요.": "audio/el/home/nar_657c957fbf.mp3",
+ "잠자는 숲속의 공주": "audio/el/home/nar_d9c3d73aa9.mp3",
+ "잠자는 숲속의 공주. 곧 열려요.": "audio/el/home/nar_8c3d9e162d.mp3",
+ "콩쥐팥쥐": "audio/el/home/nar_d94d40abb6.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -341,5 +354,57 @@ const NARRATION_CLIPS_EN = {
  "미녀와 야수. 곧 열려요.": {
   "t": "Beauty and the Beast. Opening soon.",
   "c": "audio/el/home/en/nar_0d531db019.mp3"
+ },
+ "나의 빨간 자동차": {
+  "t": "My Red Car",
+  "c": "audio/el/home/en/nar_d6fecc4398.mp3"
+ },
+ "나의 빨간 자동차. 곧 열려요.": {
+  "t": "My Red Car. Opening soon.",
+  "c": "audio/el/home/en/nar_bdf08e0e64.mp3"
+ },
+ "유니콘을 찾아서": {
+  "t": "Finding the Unicorn",
+  "c": "audio/el/home/en/nar_aa0df85f45.mp3"
+ },
+ "유니콘을 찾아서. 곧 열려요.": {
+  "t": "Finding the Unicorn. Opening soon.",
+  "c": "audio/el/home/en/nar_a6acaff23a.mp3"
+ },
+ "완두콩 공주": {
+  "t": "The Princess and the Pea",
+  "c": "audio/el/home/en/nar_3dc9c584ac.mp3"
+ },
+ "완두콩 공주. 곧 열려요.": {
+  "t": "The Princess and the Pea. Opening soon.",
+  "c": "audio/el/home/en/nar_7fbaa68e18.mp3"
+ },
+ "라푼젤": {
+  "t": "Rapunzel",
+  "c": "audio/el/home/en/nar_1a0301f3a4.mp3"
+ },
+ "라푼젤. 곧 열려요.": {
+  "t": "Rapunzel. Opening soon.",
+  "c": "audio/el/home/en/nar_7db59a7623.mp3"
+ },
+ "개구리 왕자": {
+  "t": "The Frog Prince",
+  "c": "audio/el/home/en/nar_3171078982.mp3"
+ },
+ "개구리 왕자. 곧 열려요.": {
+  "t": "The Frog Prince. Opening soon.",
+  "c": "audio/el/home/en/nar_413a56556f.mp3"
+ },
+ "잠자는 숲속의 공주": {
+  "t": "The Sleeping Beauty",
+  "c": "audio/el/home/en/nar_69f0b2b235.mp3"
+ },
+ "잠자는 숲속의 공주. 곧 열려요.": {
+  "t": "The Sleeping Beauty. Opening soon.",
+  "c": "audio/el/home/en/nar_0963be9fd8.mp3"
+ },
+ "콩쥐팥쥐": {
+  "t": "Kongjwi and Patjwi",
+  "c": "audio/el/home/en/nar_fe9e8ab6d6.mp3"
  }
 };
