@@ -145,7 +145,12 @@ const Tale = (() => {
   const vGo = () => new Promise(r => { vWait = r; });
   if (VERIFY) window.addEventListener('message', e => {
     const m = e.data || {};
-    if (m.type === 'go' && vWait) { const r = vWait; vWait = null; r(); }
+    if (m.type === 'go') {
+      if (vWait) { const r = vWait; vWait = null; r(); }
+      else {   /* 움직이는 중에 다음을 누르면: 끝이 있는 애니메이션을 바로 끝내서 다음 단계로 빨리 간다(무한 반복은 그대로) */
+        try { document.getAnimations().forEach(a => { const t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState === 'running') a.finish(); }); } catch (er) { /* 무시 */ }
+      }
+    }
     if (m.type === 'replay' && vLine) { try { Narrator.speak(vLine); } catch (er) { /* 무시 */ } }
   });
   const vClipFile = text => {

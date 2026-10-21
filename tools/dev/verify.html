@@ -105,7 +105,7 @@
       d.innerHTML = `${i + 1}. ${t}${esc(s.kind === 'say' ? s.text : '(조작 대기)')}`;
       list.appendChild(d);
     });
-    const on = list.querySelector('.on'); if (on) on.scrollIntoView({ block: 'nearest' });
+    const on = list.querySelector('.on'); if (on) list.scrollTop = on.offsetTop - list.offsetTop - list.clientHeight / 2;   /* 목록 안에서만 스크롤(페이지는 그대로) */
   }
   const esc = x => String(x).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 
