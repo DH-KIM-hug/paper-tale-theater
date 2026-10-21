@@ -527,10 +527,10 @@
     sfx(T, 'sparkle'); sparkle(T, mer.x, mer.y - 100 * SC.steps, 130, 16);
     await T.anim(mer.pos, [{ opacity: 1 }, { opacity: .1 }], 400);
     mer.look('stand', 'right'); mer.pos.style.opacity = ''; fadeIn(mer, 500); glow(mer, 1400);
-    await Promise.all([say('꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.'), (async () => { await sleep(1800); T.pop(mer.x, mer.y - 250 * SC.steps, tr('흔들흔들')); await wobbleWalk(T, mer, X(640, 500), 1800, SY); })()]);
+    await Promise.all([say('꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.'), (async () => { await sleep(1800); T.pop(mer.x, mer.y - 250 * SC.steps, tr('흔들흔들')); await wobbleWalk(T, mer, X(540, 500), 1800, SY); })()]);
     put(T, prince, 1100, SY, { look: 'stand', to: 'left', s: SC.steps }); sfx(T, 'step_wood');
-    await prince.move(X(660, 640), SY, 1500);
-    follow(570);
+    await prince.move(X(740, 700), SY, 1500);
+    follow(600);
     prince.hop(8, 360);
     await say('누구세요? 어디서 왔어요?');
     sfx(T, 'doop'); T.pop(mer.x, mer.y - mer.h * SC.steps - 30, tr('…')); mer.wiggle(3, 500); mer.hop(6, 400);
