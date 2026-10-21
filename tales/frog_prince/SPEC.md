@@ -15,7 +15,7 @@
 
 | 순서 | 파일 | 만드는 방법 |
 |---|---|---|
-| 1 | `tools/app/gen/jobs_frog_prince.json` | **이미 있음**(31장: 스프라이트 22 + 배경 4 + 키아트 5, 접두어 `fp_`). 그림 생성: `python3 tools/app/gen/run_simple.py frog_prince <id ...>` 를 `pass` 1 → 2 → 3 순으로(참고 그림이 먼저 있어야 함), 키아트(`key_*`)는 맨 뒤. 작업표가 이 순서로 정렬되어 있다. 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. 받은 그림 점검은 §10. |
+| 1 | `tools/app/gen/jobs_frog_prince.json` | **이미 있음**(35장: 스프라이트 22 + 배경 4 + 컷 4 + 키아트 5, 접두어 `fp_`). 그림 생성: `python3 tools/app/gen/run_simple.py frog_prince <id ...>` 를 `pass` 1 → 2 → 3 순으로(참고 그림이 먼저 있어야 함), 컷(`fp_cut_*`)은 `pass 3`(참고 스프라이트가 다 나온 뒤), 키아트(`key_*`)는 맨 뒤. 작업표가 이 순서로 정렬되어 있다. 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. 받은 그림 점검은 §10. |
 | 2 | 후처리 | `~/.venvs/paper-tale/bin/python tools/app/gen/post_tale.py frog_prince` → `assets/v3w/fp_<id>.webp`(스프라이트는 마젠타 크로마키 → 여백 없이 오림 → 높이 600(폭 900) 안, 배경 1600×902). 끝에 ASP(폭/높이)가 `tales/frog_prince/ASP.txt` 에 나온다 → 코드 `ASP` 표에 붙인다. **그림이 아직 없어도 코드는 자리표시(§1-1)로 돈다.** |
 | 3 | `tales/frog_prince/index.html` | `tales/beauty_beast/index.html` 그대로 복사, `<title>개구리 왕자</title>`, 마지막 스크립트 `frog_prince.js`. 합창 로더는 **넣지 않는다**(이 동화에 합창 없음). |
 | 4 | `tales/frog_prince/narration.js` | Typecast 없음. `/* frog_prince — Typecast 없음. ElevenLabs(narration_el.js)가 채운다 */\nconst NARRATION_CLIPS = {};\nconst VOICE_LINES = {};` |
@@ -215,7 +215,7 @@ fp_prop_ball 1.0, fp_prop_table 3.7, fp_prop_plate 3.6, fp_prop_bread 1.2, fp_pr
 ### 2-7. 속도 (한 편 7분 이상이 목표)
 - `say()` 뒤 `GAP = 700`ms. 장면 끝(다음 `sceneCard` 전) `sleep(SCENE_END = 1500)`.
 - 걷기·달리기는 ±400px 에 1,500~2,600ms(linear). 폴짝은 한 번 420ms, 포물선 던지기 1,100ms.
-- 대사 중 `hop`·`wiggle` 은 한 번만. 컷 그림(`cutImage`)은 이 동화에 없다.
+- 대사 중 `hop`·`wiggle` 은 한 번만. 컷 그림(`cutImage`)은 **4장**(§3 끝 "컷신" 표; `CUT_HOLD = 4200`ms, 컷 위에서 기존 대사 한 줄을 읽는다 — 까치 방식).
 - 전체 목표 7~8.5분. §11 에서 잰다. 7분이 안 되면 `SCENE_END` 를 2200, `GAP` 을 900 으로; 9분을 넘으면 `SCENE_END` 1200(대사는 건드리지 않는다).
 
 ## 3. 장면별 상세
@@ -283,6 +283,20 @@ fp_prop_ball 1.0, fp_prop_table 3.7, fp_prop_plate 3.6, fp_prop_bread 1.2, fp_pr
 - 톡 뒤: `spot.remove()` → `prince.move(prince.x - 24, FL, 400, 'ease-out')`(손끝이 2px 겹친다 = 손잡음) + `sparkleSfx(T)` + `T.pop(prin.x + HAND_PRIN[0] + 11, FL - 300, tr('반짝!'))`(두 사람 머리 위 70) → 둘이 `hop(16, 360)` 두 번(같은 타이밍) → `petals(T)`(§5-9).
 - **L37**(공주) → **L38** 과 동시에 공 주고받기: `ball.move(prince.x + 30, FL - 110, 600, 'ease-out')` → `boing` .3 → `ball.move(prin.x - 30, FL - 110, 600)` → `boing` .3 → `ball.move(510, FL + 2, 600)` → `T.finale(); AudioFX.sfx('tada') || sparkleSfx(T); await sleep(1500); return '한 약속은 지켜요.';`
 - 이 동화의 마지막 인사형 톡은 이 손잡기 톡이다.
+
+### 컷신 (그림 컷) — CLAUDE.md §5-2, 까치(`tales/magpie`)·신데렐라 방식 (2026-10-21 추가)
+- 컷 **4장**. 컷은 그 사건 **직후**에만 띄우고, 컷 위에서 그 장면의 **기존 대사 한 줄**을 읽는다: `const c = T.cutImage([{ src: src('fp_cut_…'), sfx: '…', hold: CUT_HOLD }], { hold: CUT_HOLD }); await say(L); await c;` (`CUT_HOLD = 4200`ms; 대사가 홀드보다 길면 컷이 먼저 닫혀도 된다; 톡하면 바로 넘어간다 — 엔진 `cutImage`, `engine/tale.js` 619행). 컷 패널은 엔진이 4:3 흰 테두리 종이로 보여 주므로 그림도 4:3 으로 만든다.
+- 그림: `assets/v3w/fp_cut_<이름>.webp`(1200×900). 작업표 `jobs_frog_prince.json` 의 `kind: "cut"` 항목 **4장**(`pass 3`, 참고 그림 `refs` 는 그 컷에 나오는 인물의 스프라이트 — 스프라이트가 모두 나온 뒤에 만든다). 후처리: `post_tale.py` 는 sprite/bg 만 다루므로 컷은 `post_cinderella2.py` 처럼 4:3 가운데 자르기 → 1200×900 webp 로 따로 변환한다(그림·코드 작업은 뒤의 큐에서; 이 문서는 기획만).
+- 규칙: 한 장면에 한 컷, 이웃한 장면에 연달아 두지 않는다. 컷 안 인물은 스프라이트와 같은 얼굴 규칙(점 눈·점 코·띠 입·분홍 볼), 소품은 얼굴 없음, 피·눈물·아픔 없음. 컷 위 대사는 모두 §6 에 **이미 있는 줄**이라 새 녹음이 없다(영어는 `voice_script_en.json` 의 같은 줄, `TEXT_EN` 추가 없음). 컷이 닫힌 뒤 무대는 그 장면의 다음 단계부터 이어진다(컷이 대신한 애니메이션은 생략해도 된다).
+
+| 컷 id | 장면 | 앞 장면 → 뒤 장면 | 보여 줄 순간 | 그림 구도(얼굴 규칙 포함) | 컷 위 대사(한국어 / 영어) | 컷 동안 음성 | 효과음 | refs |
+|---|---|---|---|---|---|---|---|---|
+| `fp_cut_splash` | 3 풍덩 | 2 샘가(공이 높이 튀어 샘으로) → 4 개구리의 약속(개구리 등장) | 큰 사건: 금공이 샘에 풍덩 빠지는 순간(공이 물에 반쯤 잠기고 물방울·파문이 크게 튄다) | 샘이 화면 오른쪽 아래 절반, 가운데에 공과 큰 종이 물보라. 공주는 왼쪽 샘가에서 두 손을 볼에 대고 둥근 입(놀람), 얼굴은 점 눈·점 코·띠 입. 낮(세트 A). | **L5** 공이 샘 속으로 풍덩! 금공이 깊은 물속으로 가라앉았어요. / Splash! The ball fell into the spring and sank deep down into the water. | 있음 — 컷 음성 필요: L5 | `splash_big` | fp_prin_stand · fp_prop_ball |
+| `fp_cut_ball` | 5 공을 찾았어요 | 4 개구리의 약속 → 6 문 앞의 개구리 | 개구리가 물속에서 금공을 물고 솟아오르는 순간 | 개구리가 화면 가운데에서 물 위로 솟아 입에 금공을 물고 있다(눈 크고 자랑스러운 얼굴, 공 지름은 개구리 눈 폭쯤). 물방울이 둥글게 튄다. 공주는 왼쪽 샘가에서 두 손을 모으고 기뻐한다. | **L12** 개구리는 풍덩 물속으로 들어가 금공을 물고 올라왔어요. / The frog dived into the water, splash, and came back up with the golden ball in his mouth. | 있음 — 컷 음성 필요: L12 | `bubbles` | fp_frog_sit · fp_prin_stand · fp_prop_ball |
+| `fp_cut_king` | 7 아버지의 말씀 | 6 문 앞의 개구리(공주가 밀어냄) → 8 같이 먹어요 | 임금님이 들어와 공주와 문 앞의 작은 개구리를 보는 순간(이야기가 바뀌는 자리) | 오른쪽에서 들어온 임금님이 손가락 하나를 들고 공주를 본다(부드러운 얼굴, 화내지 않음). 가운데 공주는 고개를 숙이고 두 손을 모은다. 왼쪽 열린 문 앞에 개구리가 작게 앉아 둘을 올려다본다. 식당, 저녁(세트 B 분위기). | **L19** 그 모습을 본 임금님이 공주에게 물었어요. / The king saw this and asked the princess. | 있음 — 컷 음성 필요: L19 | `없음` | fp_king_stand · fp_prin_stand · fp_frog_sit |
+| `fp_cut_prince` | 9 베개 위로 폴짝 | 8 같이 먹어요 → 10 약속을 지켜요 | 변신: 번쩍 빛 속에서 개구리가 왕자로 바뀌는 순간 | 침대 앞 가운데에 큰 크림색 빛 조각과 금별이 터지고 그 안에 초록 망토 왕자가 서서 웃는다. 발치에 작은 초록 반짝 점 몇 개(개구리였음을 알리는 흔적, 개구리 몸은 없음). 왼쪽의 공주는 눈을 크게 뜨고 두 손을 볼에 댄다. 밤 방(세트 B). | **L33** 고마워요. 나는 마법에 걸린 왕자였어요. 약속을 지켜 줘서 마법이 풀렸어요. / Thank you. I was a prince under a spell. Because you kept your promise, the spell is broken. | 있음 — 컷 음성 필요: L33 | `sparkle` | fp_prince_stand · fp_prin_stand |
+
+컷 음성 필요(모두 §6 의 기존 줄, 새 줄 없음): L5, L12, L19, L33.
 
 ## 4. 배움 놀이 규칙 요약 (엔진 `T.choose` · `T.tap`)
 - **1장 모양 고르기**: 보기 셋(동그라미·네모·세모, 모두 같은 금색), 자리 무작위, 정답 1개(동그라미). 12초 무입력이면 `prompt`(L1) 를 다시 읽는다. 1회 오답 → `onWrong`(흔들림 + W_sq/W_tri). 2회 오답부터 정답이 노랗게 빛나며 들썩이고 나머지는 흐려진다(엔진). 정답을 누르면 `AudioFX.ding()` → 반짝 → C1.
@@ -434,7 +448,7 @@ return { pos: g, body, x, y, kind };
 
 키아트 창 모양은 **금공(원)** 이고, 테두리 장식은 연잎 두 장과 작은 금공 하나뿐(§7-5: 소품 금지, 같은 계열 장식 최소). 참고 그림은 작업표의 `refs`(prin_stand·frog_sit·prop_ball / 끝 화면은 prin_hand·prince_hand·prop_ball)라 **인물 스프라이트가 모두 나온 뒤** 맨 마지막에 생성한다. 썸네일(타일)은 공주를 크게(70%), 개구리는 오른쪽 아래 작게, 겹 3개. 끝 화면 뒷표지는 성 뜰에서 공주와 왕자가 손잡은 그림(개구리 없음).
 
-## 10. 그림 목록 (작업표 `jobs_frog_prince.json` 31장과 같다)
+## 10. 그림 목록 (작업표 `jobs_frog_prince.json` 35장과 같다)
 
 사람 세 명은 **같은 머리 크기**(공주 기준 그림을 `refs` 로 넣고 "SAME head size as the princess in the reference image"), 자세 그림은 기준 그림을 `refs` 로 넣고 "SAME SCALE AS THE REFERENCE SPRITE(머리·몸 크기를 기준 그림과 똑같이)"가 들어 있다(§4-1). 사람은 점 눈·점 코·종이 띠 입·분홍 볼, 개구리는 큰 흰 눈 + 점 눈동자 + 띠 입, 소품은 얼굴 없음. 던지기 관련 그림(`frog_fly`·`frog_surprise`)은 "NOT hurt, no tears, no pain lines" 가 프롬프트에 있다.
 
@@ -449,11 +463,12 @@ return { pos: g, body, x, y, kind };
 | 소품 | fp_prop_ball | 금공(크림 초승달 조각) | 480² | 1 | 1~3, 5, 10 |
 | | fp_prop_table / fp_prop_plate / fp_prop_bread / fp_prop_pillow | 긴 식탁 옆모습(빈 상판) / 빈 접시 / 빵 하나(3개 인스턴스) / 베개 | 840×480 / 840×480 / 480² / 840×480 | 1 | 6·7·8 / 8 / 8 / 9 |
 | 배경 | fp_bg_yard / fp_bg_pond / fp_bg_dining / fp_bg_room | 성 뜰(왼쪽 성·오른쪽 나무, 낮 세트 A) / 숲속 샘(가운데 오른쪽 샘·왼쪽 돌, 낮) / 성 식당(왼쪽 열린 문·가운데 창·오른쪽 촛대, 저녁 세트 B, 식탁 없음) / 공주 방(오른쪽 침대 베개 없음·왼쪽 위 창·촛불, 밤 세트 B) | 1600×902 | 1 | 1·10 / 2~5 / 6~8 / 9 |
+| 컷 | cut_splash / cut_ball / cut_king / cut_prince | 그림 컷 4장(§3 끝 컷신 표: 3·5·7·9장). refs 는 그 컷에 나오는 인물 스프라이트. 4:3, 얼굴 규칙 같음, 소품 얼굴 없음 | 1600×1200(4:3) | 3 | 3 / 5 / 7 / 9 |
 | 키 | key_wide · key_tall · key_tile · key_backw · key_backt | 시작 화면(금공 모양 창)·홈 카드·끝 화면(손잡은 공주와 왕자) | 16:9 · 3:4 · 4:3 · 3:2 · 4:5 | — | — |
 
 코드로 그리는 것(그림 아님): 도형 셋(1장), 물 파문(3장), 마법 빛(9장), 꽃잎(10장), 톡 자리(10장).
 
-생성 순서: `pass 1`(기준 그림 11: prin_stand, frog_sit, 소품 5, 배경 4) → `pass 2`(14: 공주 자세 8, king_stand, prince_stand, 개구리 자세 4) → `pass 3`(1: prince_hand) → 키아트 5. 작업표가 이 순서로 정렬되어 있으므로 `run_simple.py frog_prince $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_frog_prince.json'))))")` 처럼 앞에서부터 돌리면 된다.
+생성 순서: `pass 1`(기준 그림 11: prin_stand, frog_sit, 소품 5, 배경 4) → `pass 2`(14: 공주 자세 8, king_stand, prince_stand, 개구리 자세 4) → `pass 3`(1: prince_hand) → `pass 3`(컷 4: cut_splash, cut_ball, cut_king, cut_prince) → 키아트 5. 작업표가 이 순서로 정렬되어 있으므로 `run_simple.py frog_prince $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_frog_prince.json'))))")` 처럼 앞에서부터 돌리면 된다.
 
 받은 그림 점검(틀린 id 만 지우고 다시 만든다): 네 귀퉁이가 마젠타인지(`restyle_check.py` 방식) · 공주 `ball`·`run`·`throw` 손에 **공이 없는지**(있으면 다시) · `frog_ball` 에는 공이 **있는지** · `prin_refuse`·`prin_sit` 이 왼쪽, `prin_run`·`prin_throw`·`prin_hand`·`prince_hand`·`frog_hop`·`frog_fly` 가 오른쪽을 보는지(반대면 그림을 뒤집어 저장하지 말고 NAT 만 고친다) · `frog_fly`·`frog_surprise` 에 눈물·반창고·별·땀이 없는지 · 소품(공·식탁·접시·빵·베개)에 얼굴이 없는지 · 식탁 위에 접시·음식·의자가 없는지 · 배경 dining 에 식탁이 없고 room 에 베개가 없는지 · 공주 자세의 얼굴 폭이 stand 와 ±12% 안인지, 임금·왕자의 얼굴 폭이 공주와 ±12% 안인지 · 개구리 자세의 눈 폭이 sit 과 ±12% 안인지 · `frog_ball` 의 공 지름이 `prop_ball`(48) 과 ±15% 안인지.
 
@@ -476,6 +491,7 @@ return { pos: g, body, x, y, kind };
 - [ ] **던지기**: 개구리가 포물선으로 날아 베개 위(x = BED.x)에 내려앉고 벽·헤드보드에 닿지 않는다. 놀란 얼굴만 있고 아픈 표현이 없다. 번쩍 뒤 개구리가 사라지고 왕자가 침대 앞에 선다. 베개는 그대로.
 - [ ] **끝**: 손잡기 톡 뒤 반짝 + 꽃잎, 공 주고받기 두 번, 끝 화면에 '한 약속은 지켜요.' 와 리본(`?endpreview=1`).
 - [ ] 팝 글자가 인물 얼굴을 가리지 않는다(§7 자리: 1·2장 '통통!', 3장 '엉엉', 9장 '휙!'·'포옥'·'팡!', 10장 '반짝!').
+- [ ] **컷 4장**이 그 사건 직후에만 뜨고(3장 `fp_cut_splash`, 5장 `fp_cut_ball`, 7장 `fp_cut_king`, 9장 `fp_cut_prince`) 각 컷 위에서 맞는 대사(L5·L12·L19·L33)가 들린다. 이웃한 장면에 컷이 연달아 없다. 컷 안 인물 얼굴이 점 눈·띠 입이고 소품에 얼굴이 없다.
 - [ ] 누르는 자리: `.tap-target.armed` 의 `getBoundingClientRect()` 짧은 변이 **화면 60px 이상**(도형 셋·접시는 hitBox, 10장 톡 자리 120).
 
 세로 390×844 (`node … 390 844 /tmp/fp_p 600 8`)
