@@ -1,0 +1,1065 @@
+{
+ "mode": "read",
+ "tale": "patjuk",
+ "lang": "ko",
+ "title": "팥죽할멈과 호랑이",
+ "voices_from": "voice_script_el.json",
+ "moral": "작은 친구들이 힘을 모으면 커다란 호랑이도 물리칠 수 있어요.",
+ "notes": "읽어 주기 모드 시범 대본(docs/READ_MODE.md). 조작·퀴즈 없이 그림책처럼 읽는다. 장면 그림은 놀이판의 세트 A·B1·B2 와 배우 그림을 그대로 쓴다. src: reuse = 기존 줄·녹음 그대로, trim = 기존 줄(from)의 퀴즈·조작 꼬리를 잘라 씀(녹음은 trim_line.py 로 자름), new = 새 문장(녹음 필요). 원작과 다른 점(순화): 호랑이는 바다에 빠져 멀리 헤엄쳐 달아난다(죽지 않는다). 친구 7명(bam~jige)의 새 대사는 두지 않았다(voices 가 tc 라 ElevenLabs 로 만들 수 없음).",
+ "acts": {
+  "set:<A|B1|B2>": "장면 세트(배경·소품·배우 크기). scenes[].set 으로 장면 들어갈 때 자동 호출",
+  "daylight:<dusk|night>": "B1 부엌의 저녁 빛 겹(0.25) / 밤(0)",
+  "cam:wide | cam:<x,y,z> | cam:friend:<id> | cam:station:<0-6>": "카메라",
+  "granny:<cook|cry|scared|happy|offer|hoe|ladle|hide|show>": "할멈 자세·보임",
+  "granny:at:<cook|corner|door> | granny:walk:<x> | granny:hop": "할멈 자리·걷기·폴짝",
+  "tiger:<enter|exit|hide|hop|hop:<px>|shiver|dip|splash|rolled>": "호랑이 등장·퇴장·동작",
+  "tiger:at:<door|0-6> | tiger:walk:<0-6>": "호랑이 자리(STATION) 순간 이동·걷기",
+  "tiger:pose:<fallen|flat|bow|none> | tiger:eyehurt[:off] | tiger:dizzy[:off]": "호랑이 자세·상처",
+  "friend:<id>:<enter|hop|hide|strike|roll|carry>": "친구 한 명 (enter = 문에서 걸어와 숨는 자리로, strike = 놀이판 SUCCESS 연출)",
+  "friends:all:<hidden|party|hop>": "친구 전원",
+  "rolled:<show|hide>": "멍석에 말린 호랑이 그림",
+  "cut:<bam|jara|ddong|songgot|jeolgu|myeongseok|jige>": "만화 컷(두 장) — 컷 속 외침(VOICE_LINES cut_*) 그대로 재사용",
+  "fx:<growl|jingle|slide|thud|bonk|roll|win> | pop:<x,y,글자> | shake | confetti": "효과음·의성어·흔들기"
+ },
+ "scenes": [
+  {
+   "key": "R01_field",
+   "card": "팥밭",
+   "set": "A",
+   "enter": [
+    "granny:hoe",
+    "granny:at:cook",
+    "granny:cook",
+    "tiger:hide",
+    "cam:300,400,1.3"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날, 깊은 산골에 팥죽을 아주 잘 쑤는 할멈이 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옛날 옛날, 깊은 산골에 팥죽을 아주 잘 쑤는 할멈이 살았어요.",
+       "smart",
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "팥밭에는 빨간 팥이 주렁주렁 열렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "팥밭에는 빨간 팥이 주렁주렁 열렸어요.",
+       "smart",
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "할멈은 호미로 김을 매며 콧노래를 흥얼거렸지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할멈은 호미로 김을 매며 콧노래를 흥얼거렸지요.",
+       "smart",
+       "[gentle, slow, bedtime storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_tiger",
+   "card": "어흥!",
+   "set": "A",
+   "enter": [
+    "granny:cook",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "어흥! 어느 날 커다란 호랑이가 나타났어요. \"할멈, 잡아먹어야겠다!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "어흥! 어느 날 커다란 호랑이가 나타났어요.",
+       "tonedown:1.3",
+       "[low voice, ominous]"
+      ],
+      [
+       "tiger",
+       "할멈, 잡아먹어야겠다!",
+       "angry:1.2",
+       "[growls, menacing, hungry]"
+      ]
+     ],
+     "before": [
+      "fx:growl",
+      "tiger:enter",
+      "granny:scared",
+      "pop:730,170,어흥!",
+      "cam:690,430,1.45"
+     ]
+    },
+    {
+     "text": "할멈은 깜짝 놀라 호미를 떨어뜨렸어요. 다리가 후들후들 떨렸지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할멈은 깜짝 놀라 호미를 떨어뜨렸어요. 다리가 후들후들 떨렸지요.",
+       "smart",
+       "[low voice, a little tense]"
+      ]
+     ]
+    },
+    {
+     "text": "할멈은 떨리는 목소리로 말했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할멈은 떨리는 목소리로 말했어요.",
+       "smart",
+       "[low voice, a little tense]"
+      ]
+     ]
+    },
+    {
+     "text": "\"호랑이야, 동짓날에 맛있는 팥죽을 쑤어 줄게. 그때까지 기다려 다오.\" 호랑이는 어슬렁어슬렁 돌아갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "halmi",
+       "호랑이야, 동짓날에 맛있는 팥죽을 쑤어 줄게. 그때까지 기다려 다오.",
+       "sad:1.4",
+       "[sad, trembling, pleading]"
+      ],
+      [
+       "nar",
+       "호랑이는 어슬렁어슬렁 돌아갔어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "before": [
+      "granny:cook",
+      "cam:wide"
+     ],
+     "after": [
+      "tiger:exit"
+     ]
+    },
+    {
+     "text": "할멈은 호랑이가 사라진 산길을 한참 바라보았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할멈은 호랑이가 사라진 산길을 한참 바라보았어요.",
+       "smart",
+       "[gentle, slow, bedtime storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_solstice",
+   "card": "동짓날 저녁",
+   "set": "B1",
+   "enter": [
+    "daylight:dusk",
+    "granny:ladle",
+    "granny:at:cook",
+    "granny:cry",
+    "tiger:hide",
+    "cam:240,430,1.6"
+   ],
+   "lines": [
+    {
+     "text": "드디어 동짓날이 되었어요. 할멈은 팥죽을 쑤면서 훌쩍훌쩍 울었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "드디어 동짓날이 되었어요. 할멈은 팥죽을 쑤면서 훌쩍훌쩍 울었어요.",
+       "sad:1.1",
+       "[sad, softly]"
+      ]
+     ]
+    },
+    {
+     "text": "보글보글, 구수한 팥죽 냄새가 부엌에 가득했지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "보글보글, 구수한 팥죽 냄새가 부엌에 가득했지요.",
+       "smart",
+       "[gentle, slow, bedtime storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "\"오늘 밤 호랑이가 오면 나는 어떡하지.\"",
+     "src": "new",
+     "segs": [
+      [
+       "halmi",
+       "오늘 밤 호랑이가 오면 나는 어떡하지.",
+       "sad:1.4",
+       "[crying softly, worried]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_bam_jara",
+   "card": "알밤과 자라",
+   "set": "B1",
+   "enter": [
+    "granny:cry",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그때 부엌문 밖에서 작은 소리가 들렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그때 부엌문 밖에서 작은 소리가 들렸어요.",
+       "smart",
+       "[playful, lively storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "데굴데굴~ 알밤이 굴러왔어요. \"할멈, 팥죽 한 그릇 주면 도와줄게!\" 알밤은 팥죽을 얻어먹고 뜨거운 아궁이 속에 쏙 숨었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "데굴데굴~ 알밤이 굴러왔어요.",
+       "smart",
+       "[warm storytelling]"
+      ],
+      [
+       "bam",
+       "할멈, 팥죽 한 그릇 주면 도와줄게!",
+       "happy:1.3",
+       "[cheerful, childlike]"
+      ],
+      [
+       "nar",
+       "알밤은 팥죽을 얻어먹고 뜨거운 아궁이 속에 쏙 숨었어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:jingle",
+      "friend:bam:enter",
+      "cam:friend:bam",
+      "granny:offer"
+     ],
+     "after": [
+      "granny:cry"
+     ]
+    },
+    {
+     "text": "엉금엉금~ 자라가 기어왔어요. \"나도 팥죽 한 그릇 주면 도와줄게!\" 자라는 팥죽을 얻어먹고 물독 속에 퐁당 숨었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엉금엉금~ 자라가 기어왔어요.",
+       "smart",
+       "[warm storytelling]"
+      ],
+      [
+       "jara",
+       "나도 팥죽 한 그릇 주면 도와줄게!",
+       "happy:1.3",
+       "[cheerful, childlike]"
+      ],
+      [
+       "nar",
+       "자라는 팥죽을 얻어먹고 물독 속에 퐁당 숨었어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "before": [
+      "cam:wide",
+      "fx:jingle",
+      "friend:jara:enter",
+      "cam:friend:jara",
+      "granny:offer"
+     ],
+     "after": [
+      "granny:cry"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_three",
+   "card": "쇠똥, 송곳, 절구",
+   "set": "B1",
+   "enter": [
+    "granny:cry",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "철퍼덕! 쇠똥이 왔어요. \"팥죽 한 그릇 주면 나도 도울게!\" 쇠똥은 팥죽을 얻어먹고 부엌 바닥에 납작 엎드려 숨었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "철퍼덕! 쇠똥이 왔어요.",
+       "smart",
+       "[warm storytelling]"
+      ],
+      [
+       "ddong",
+       "팥죽 한 그릇 주면 나도 도울게!",
+       "happy:1.3",
+       "[cheerful, childlike]"
+      ],
+      [
+       "nar",
+       "쇠똥은 팥죽을 얻어먹고 부엌 바닥에 납작 엎드려 숨었어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:jingle",
+      "friend:ddong:enter",
+      "cam:friend:ddong",
+      "granny:offer"
+     ],
+     "after": [
+      "granny:cry"
+     ]
+    },
+    {
+     "text": "콕콕! 송곳이 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 송곳은 팥죽을 얻어먹고 바닥 틈에 뾰족 숨었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "콕콕! 송곳이 왔어요.",
+       "smart",
+       "[warm storytelling]"
+      ],
+      [
+       "songgot",
+       "팥죽 한 그릇 주면 도와줄게!",
+       "happy:1.3",
+       "[cheerful, childlike]"
+      ],
+      [
+       "nar",
+       "송곳은 팥죽을 얻어먹고 바닥 틈에 뾰족 숨었어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "before": [
+      "cam:wide",
+      "fx:jingle",
+      "friend:songgot:enter",
+      "cam:friend:songgot",
+      "granny:offer"
+     ],
+     "after": [
+      "granny:cry"
+     ]
+    },
+    {
+     "text": "쿵더쿵! 절구가 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 절구는 팥죽을 얻어먹고 문 위로 올라가 숨었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "쿵더쿵! 절구가 왔어요.",
+       "smart",
+       "[warm storytelling]"
+      ],
+      [
+       "jeolgu",
+       "팥죽 한 그릇 주면 도와줄게!",
+       "happy:1.3",
+       "[cheerful, childlike]"
+      ],
+      [
+       "nar",
+       "절구는 팥죽을 얻어먹고 문 위로 올라가 숨었어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "before": [
+      "cam:wide",
+      "fx:jingle",
+      "friend:jeolgu:enter",
+      "cam:friend:jeolgu",
+      "granny:offer"
+     ],
+     "after": [
+      "granny:cry"
+     ]
+    },
+    {
+     "text": "할멈은 친구들에게 팥죽을 한 그릇씩 떠 주며 조금씩 힘이 났어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할멈은 친구들에게 팥죽을 한 그릇씩 떠 주며 조금씩 힘이 났어요.",
+       "smart",
+       "[calm, warm storytelling]"
+      ]
+     ],
+     "before": [
+      "cam:wide"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_yard",
+   "card": "마당",
+   "set": "B2",
+   "enter": [
+    "granny:at:door",
+    "granny:cry",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "마당에도 친구들이 찾아왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "마당에도 친구들이 찾아왔어요.",
+       "smart",
+       "[playful, lively storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "펄럭펄럭~ 멍석이 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 멍석은 팥죽을 얻어먹고 마당에 돌돌 말려 숨었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "펄럭펄럭~ 멍석이 왔어요.",
+       "smart",
+       "[warm storytelling]"
+      ],
+      [
+       "myeongseok",
+       "팥죽 한 그릇 주면 도와줄게!",
+       "happy:1.3",
+       "[cheerful, childlike]"
+      ],
+      [
+       "nar",
+       "멍석은 팥죽을 얻어먹고 마당에 돌돌 말려 숨었어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:jingle",
+      "friend:myeongseok:enter",
+      "cam:friend:myeongseok",
+      "granny:offer"
+     ],
+     "after": [
+      "granny:cry"
+     ]
+    },
+    {
+     "text": "성큼성큼! 지게가 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 지게는 팥죽을 얻어먹고 담벼락에 기대어 숨었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "성큼성큼! 지게가 왔어요.",
+       "smart",
+       "[warm storytelling]"
+      ],
+      [
+       "jige",
+       "팥죽 한 그릇 주면 도와줄게!",
+       "happy:1.3",
+       "[cheerful, childlike]"
+      ],
+      [
+       "nar",
+       "지게는 팥죽을 얻어먹고 담벼락에 기대어 숨었어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "before": [
+      "cam:wide",
+      "fx:jingle",
+      "friend:jige:enter",
+      "cam:friend:jige",
+      "granny:offer"
+     ],
+     "after": [
+      "granny:cry"
+     ]
+    },
+    {
+     "text": "할멈은 눈물을 닦고 친구들에게 속삭였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할멈은 눈물을 닦고 친구들에게 속삭였어요.",
+       "smart",
+       "[gentle, slow, bedtime storytelling]"
+      ]
+     ],
+     "before": [
+      "cam:wide",
+      "granny:cook"
+     ]
+    },
+    {
+     "text": "\"얘들아, 도와줘!\"",
+     "src": "trim",
+     "from": "\"얘들아, 도와줘!\" 친구들을 순서대로 눌러서 호랑이를 혼내 주세요!",
+     "segs": [
+      [
+       "halmi",
+       "\"얘들아, 도와줘!\"",
+       "sad:1.5",
+       "[sad, trembling, pleading]"
+      ]
+     ]
+    },
+    {
+     "text": "\"호랑이가 오면 모두 힘을 모아 주렴.\"",
+     "src": "new",
+     "segs": [
+      [
+       "halmi",
+       "호랑이가 오면 모두 힘을 모아 주렴.",
+       "whisper",
+       "[whispering, grateful, hopeful]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_night",
+   "card": "깜깜한 밤",
+   "set": "B1",
+   "enter": [
+    "daylight:night",
+    "friends:all:hidden",
+    "granny:at:cook",
+    "granny:cook",
+    "tiger:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "깜깜한 밤이 되었어요. 어흥! 호랑이가 어슬렁어슬렁 찾아왔어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "깜깜한 밤이 되었어요. 어흥! 호랑이가 어슬렁어슬렁 찾아왔어요!",
+       "tonedown:1.4",
+       "[whispers, ominous]"
+      ]
+     ],
+     "before": [
+      "fx:growl",
+      "tiger:at:door",
+      "pop:860,340,어흥!",
+      "granny:scared"
+     ]
+    },
+    {
+     "text": "\"할멈, 약속대로 왔다. 팥죽을 먹고 나서 너를 잡아먹겠다!\"",
+     "src": "new",
+     "segs": [
+      [
+       "tiger",
+       "할멈, 약속대로 왔다. 팥죽을 먹고 나서 너를 잡아먹겠다!",
+       "angry:1.2",
+       "[growls, menacing, hungry]"
+      ]
+     ]
+    },
+    {
+     "text": "\"호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.\" 할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요.",
+     "src": "trim",
+     "from": "\"호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.\" 할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요. 누가 먼저 혼내 줄까요?",
+     "segs": [
+      [
+       "halmi",
+       "호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.",
+       "happy:0.9",
+       "[sweet, pretending to be kind]"
+      ],
+      [
+       "nar",
+       "할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "after": [
+      "tiger:walk:0",
+      "granny:at:corner",
+      "cam:station:0"
+     ]
+    },
+    {
+     "text": "알밤이 아궁이에서 톡! 튀어나와 호랑이 눈을 딱 때렸어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "알밤이 아궁이에서 톡! 튀어나와 호랑이 눈을 딱 때렸어요!",
+       "happy:1.3",
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "friend:bam:strike",
+      "cut:bam"
+     ],
+     "after": [
+      "tiger:eyehurt",
+      "tiger:hop"
+     ]
+    },
+    {
+     "text": "\"앗, 뜨거워! 눈이야!\" 호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요.",
+     "src": "trim",
+     "from": "\"앗, 뜨거워! 눈이야!\" 호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요. 다음은 누구일까요?",
+     "segs": [
+      [
+       "tiger",
+       "앗, 뜨거워! 눈이야!",
+       "toneup:1.2",
+       "=[sharp yelp of pain] 앗, 뜨거워! ... [panicked, high-pitched cry] 눈이야!"
+      ],
+      [
+       "nar",
+       "호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "after": [
+      "tiger:walk:1",
+      "cam:station:1",
+      "tiger:dip"
+     ]
+    },
+    {
+     "text": "물독 속 자라가 호랑이 입을 앙! 물었어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "물독 속 자라가 호랑이 입을 앙! 물었어요!",
+       "happy:1.3",
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "friend:jara:strike",
+      "cut:jara"
+     ],
+     "after": [
+      "tiger:shiver"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_kitchen",
+   "card": "부엌 소동",
+   "set": "B1",
+   "enter": [
+    "daylight:night",
+    "friends:all:hidden",
+    "granny:at:corner",
+    "granny:scared",
+    "tiger:at:1",
+    "cam:station:1"
+   ],
+   "lines": [
+    {
+     "text": "\"아야야!\" 호랑이가 깜짝 놀라 뒷걸음질을 쳤어요.",
+     "src": "trim",
+     "from": "\"아야야!\" 호랑이가 깜짝 놀라 뒷걸음질을 쳤어요. 다음은 누구죠?",
+     "segs": [
+      [
+       "tiger",
+       "아야야!",
+       "sad:1.2",
+       "[pained, yelping]"
+      ],
+      [
+       "nar",
+       "호랑이가 깜짝 놀라 뒷걸음질을 쳤어요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "after": [
+      "tiger:walk:2",
+      "cam:station:2"
+     ]
+    },
+    {
+     "text": "호랑이가 쇠똥을 밟고 쭈르륵~ 미끄러졌어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이가 쇠똥을 밟고 쭈르륵~ 미끄러졌어요!",
+       "happy:1.3",
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "fx:slide",
+      "tiger:walk:3",
+      "tiger:pose:fallen",
+      "fx:thud",
+      "shake",
+      "cut:ddong"
+     ]
+    },
+    {
+     "text": "미끌! 호랑이가 꽈당 넘어졌어요.",
+     "src": "trim",
+     "from": "미끌! 호랑이가 꽈당 넘어졌어요. 이번엔 누구일까요?",
+     "segs": [
+      [
+       "nar",
+       "미끌! 호랑이가 꽈당 넘어졌어요.",
+       "happy:1.2",
+       "[cheerful]"
+      ]
+     ],
+     "after": [
+      "cam:station:3"
+     ]
+    },
+    {
+     "text": "송곳이 호랑이 엉덩이를 콕! 찔렀어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "송곳이 호랑이 엉덩이를 콕! 찔렀어요!",
+       "happy:1.3",
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "friend:songgot:strike",
+      "pop:495,440,콕!",
+      "cut:songgot"
+     ],
+     "after": [
+      "tiger:pose:none",
+      "tiger:hop:100"
+     ]
+    },
+    {
+     "text": "\"엉엉, 아파!\" 호랑이가 문 쪽으로 도망가요.",
+     "src": "trim",
+     "from": "\"엉엉, 아파!\" 호랑이가 문 쪽으로 도망가요. 다음은 누구?",
+     "segs": [
+      [
+       "tiger",
+       "엉엉, 아파!",
+       "sad:1.2",
+       "[crying, sobbing, whimpering]"
+      ],
+      [
+       "nar",
+       "호랑이가 문 쪽으로 도망가요.",
+       "smart",
+       "[warm storytelling]"
+      ]
+     ],
+     "after": [
+      "tiger:walk:4",
+      "cam:station:4"
+     ]
+    },
+    {
+     "text": "절구가 문 위에서 쿵! 호랑이 머리 위로 떨어졌어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "절구가 문 위에서 쿵! 호랑이 머리 위로 떨어졌어요!",
+       "happy:1.3",
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "friend:jeolgu:strike",
+      "fx:bonk",
+      "shake",
+      "cut:jeolgu"
+     ],
+     "after": [
+      "tiger:dizzy"
+     ]
+    },
+    {
+     "text": "호랑이는 눈앞이 빙글빙글 돌아 비틀비틀 걸었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "호랑이는 눈앞이 빙글빙글 돌아 비틀비틀 걸었어요.",
+       "smart",
+       "[playful, lively storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_sea",
+   "card": "마당과 바다",
+   "set": "B2",
+   "enter": [
+    "friends:all:hidden",
+    "granny:hide",
+    "tiger:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "쿵! 절구에 맞은 호랑이가 마당으로 도망쳐 쭉 뻗어 버렸어요.",
+     "src": "trim",
+     "from": "쿵! 절구에 맞은 호랑이가 마당으로 도망쳐 쭉 뻗어 버렸어요. 이제 누구 차례죠?",
+     "segs": [
+      [
+       "nar",
+       "쿵! 절구에 맞은 호랑이가 마당으로 도망쳐 쭉 뻗어 버렸어요.",
+       "happy:1.2",
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "tiger:at:door",
+      "tiger:walk:5",
+      "cam:station:5"
+     ],
+     "after": [
+      "tiger:dizzy:off",
+      "tiger:pose:flat",
+      "fx:thud"
+     ]
+    },
+    {
+     "text": "멍석이 호랑이를 돌돌돌 말아 버렸어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "멍석이 호랑이를 돌돌돌 말아 버렸어요!",
+       "happy:1.3",
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "fx:roll",
+      "pop:560,400,돌돌돌!",
+      "cut:myeongseok"
+     ],
+     "after": [
+      "friend:myeongseok:roll",
+      "tiger:rolled"
+     ]
+    },
+    {
+     "text": "돌돌돌! 호랑이가 멍석에 꽁꽁 말렸어요.",
+     "src": "trim",
+     "from": "돌돌돌! 호랑이가 멍석에 꽁꽁 말렸어요. 마지막은 누구일까요?",
+     "segs": [
+      [
+       "nar",
+       "돌돌돌! 호랑이가 멍석에 꽁꽁 말렸어요.",
+       "happy:1.2",
+       "[cheerful]"
+      ]
+     ],
+     "after": [
+      "cam:station:6"
+     ]
+    },
+    {
+     "text": "\"으악, 답답해! 꺼내 줘!\"",
+     "src": "new",
+     "segs": [
+      [
+       "tiger",
+       "으악, 답답해! 꺼내 줘!",
+       "sad:1.2",
+       "[muffled, panicked]"
+      ]
+     ]
+    },
+    {
+     "text": "지게가 호랑이를 번쩍 지고 가서 바다에 풍덩! 던져 버렸어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "지게가 호랑이를 번쩍 지고 가서 바다에 풍덩! 던져 버렸어요!",
+       "toneup:1.4",
+       "[excited, dramatic]"
+      ]
+     ],
+     "before": [
+      "friend:jige:carry",
+      "cam:880,440,1.4"
+     ],
+     "after": [
+      "tiger:splash",
+      "cut:jige"
+     ]
+    },
+    {
+     "text": "호랑이는 허우적허우적 헤엄쳐 멀리멀리 달아났어요. 다시는 할멈 집에 오지 않았답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "호랑이는 허우적허우적 헤엄쳐 멀리멀리 달아났어요. 다시는 할멈 집에 오지 않았답니다.",
+       "smart",
+       "[gentle, slow, bedtime storytelling]"
+      ]
+     ],
+     "after": [
+      "cam:wide"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_feast",
+   "card": "팥죽 잔치",
+   "set": "B2",
+   "enter": [
+    "tiger:hide",
+    "rolled:hide",
+    "granny:at:door",
+    "granny:happy",
+    "friends:all:party",
+    "cam:600,430,1.4"
+   ],
+   "lines": [
+    {
+     "text": "만세! 호랑이를 물리쳤어요! 할멈은 친구들과 맛있는 팥죽을 나누어 먹었답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "만세! 호랑이를 물리쳤어요! 할멈은 친구들과 맛있는 팥죽을 나누어 먹었답니다.",
+       "happy:1.4",
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "fx:win",
+      "confetti",
+      "granny:walk:560"
+     ]
+    },
+    {
+     "text": "할멈은 마당으로 나와 친구들을 꼭 안아 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할멈은 마당으로 나와 친구들을 꼭 안아 주었어요.",
+       "happy",
+       "[warm, happy, relieved]"
+      ]
+     ]
+    },
+    {
+     "text": "\"고맙다, 얘들아. 너희 덕분에 살았구나.\"",
+     "src": "new",
+     "segs": [
+      [
+       "halmi",
+       "고맙다, 얘들아. 너희 덕분에 살았구나.",
+       "happy:1.3",
+       "[joyful, tearful, grateful]"
+      ]
+     ],
+     "before": [
+      "granny:hop"
+     ]
+    },
+    {
+     "text": "알밤도, 자라도, 쇠똥도, 송곳도, 절구도, 멍석도, 지게도 모두 배불리 먹었지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "알밤도, 자라도, 쇠똥도, 송곳도, 절구도, 멍석도, 지게도 모두 배불리 먹었지요.",
+       "happy",
+       "[warm, happy, relieved]"
+      ]
+     ],
+     "before": [
+      "friends:all:hop"
+     ]
+    },
+    {
+     "text": "작은 친구들이 힘을 모으면 커다란 호랑이도 물리칠 수 있답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "작은 친구들이 힘을 모으면 커다란 호랑이도 물리칠 수 있답니다.",
+       "smart",
+       "[gentle, slow, bedtime storytelling]"
+      ]
+     ],
+     "after": [
+      "cam:wide"
+     ]
+    }
+   ]
+  }
+ ]
+}
