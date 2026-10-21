@@ -4,6 +4,63 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Once upon a time, Hansel and Gretel lived in a little house beside the forest.",
   "c": "audio/el/hansel/en/nar_86dd845615.mp3"
  },
+ "어느 날 밤, 헨젤은 문틈으로 엿들었어요.": {
+  "t": "One night, Hansel listened at the crack of the door.",
+  "c": "audio/el/hansel/en/nar_df3d4bd31a.mp3"
+ },
+ "\"먹을 게 없어요. 내일 아이들을 숲에 두고 와요.\" 새엄마가 말했어요.": {
+  "t": "\"There's no food left. Tomorrow, let's leave the children in the forest,\" said the stepmother.",
+  "c": [
+   "audio/el/hansel/en/step_0acc92d9ca.mp3",
+   "audio/el/hansel/en/nar_033beeb4e5.mp3"
+  ]
+ },
+ "\"음… 아이들이 가엾은데…\" 아빠는 망설였어요.": {
+  "t": "\"Hmm... the poor children...\" Father hesitated.",
+  "c": [
+   "audio/el/hansel/en/father_ac6a07ae78.mp3",
+   "audio/el/hansel/en/nar_31e3fb4d9c.mp3"
+  ]
+ },
+ "헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!": {
+  "t": "Hansel tiptoed outside. Pebbles twinkled in the moonlight!",
+  "c": "audio/el/hansel/en/nar_a2a56324fc.mp3"
+ },
+ "헨젤을 톡! 조약돌을 주워요.": {
+  "t": "Tap Hansel! Pick up the pebbles.",
+  "c": "audio/el/hansel/en/nar_8c946e6814.mp3"
+ },
+ "헨젤은 조약돌을 주머니에 가득 채웠어요. \"이제 괜찮아.\"": {
+  "t": "Hansel filled his pockets with pebbles. \"Now we'll be fine.\"",
+  "c": [
+   "audio/el/hansel/en/nar_54579fb880.mp3",
+   "audio/el/hansel/en/hans_8990853325.mp3"
+  ]
+ },
+ "다음 날, 아빠는 둘을 데리고 숲 깊은 곳으로 갔어요.": {
+  "t": "The next day, Father took the two of them deep into the forest.",
+  "c": "audio/el/hansel/en/nar_8838e7e045.mp3"
+ },
+ "헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.": {
+  "t": "Hansel quietly dropped the pebbles one by one.",
+  "c": "audio/el/hansel/en/nar_3013e6370d.mp3"
+ },
+ "아빠는 둘을 숲에 남겨 두고 돌아갔어요.": {
+  "t": "Father left the two of them in the forest and went back.",
+  "c": "audio/el/hansel/en/nar_d052db6ed3.mp3"
+ },
+ "밤이 되자 조약돌이 달빛에 반짝반짝 빛났어요. 둘은 조약돌을 따라 집으로 돌아왔어요.": {
+  "t": "When night came, the pebbles twinkled in the moonlight. The two followed them all the way home.",
+  "c": "audio/el/hansel/en/nar_6bd151fa4e.mp3"
+ },
+ "하지만 얼마 뒤, 새엄마가 또 아이들을 숲에 두고 오자고 했어요.": {
+  "t": "But not long after, the stepmother said again to leave the children in the forest.",
+  "c": "audio/el/hansel/en/nar_5694f97680.mp3"
+ },
+ "이번엔 밤에 문이 잠겨서, 조약돌을 주울 수 없었어요.": {
+  "t": "This time the door was locked at night, so Hansel could not gather pebbles.",
+  "c": "audio/el/hansel/en/nar_cde2202207.mp3"
+ },
  "\"얘들아, 숲에 산딸기 따러 가자!\" 아빠가 말했어요.": {
   "t": "Children, let's go pick berries in the forest! said Papa.",
   "c": [
@@ -39,13 +96,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "When they woke up, Papa was nowhere to be seen. They were lost.",
   "c": "audio/el/hansel/en/nar_a16ef1001a.mp3"
  },
- "그레텔은 마음이 조금 무서웠어요. 그레텔을 톡! 꼭 안아 줘요.": {
-  "t": "Gretel felt a little scared. Tap Gretel and give her a hug.",
-  "c": "audio/el/hansel/en/nar_458f91bcdb.mp3"
- },
- "그레텔을 톡! 꼭 안아 줘요.": {
-  "t": "Tap Gretel! Give her a big hug.",
-  "c": "audio/el/hansel/en/nar_c7601b3681.mp3"
+ "그레텔은 마음이 조금 무서웠어요.": {
+  "t": "Gretel felt a little scared.",
+  "c": "audio/el/hansel/en/nar_a2c3d9108f.mp3"
  },
  "\"괜찮아, 빵 부스러기 길을 따라가자!\" 헨젤이 말했어요.": {
   "t": "It's okay, let's follow the crumb trail! said Hansel.",

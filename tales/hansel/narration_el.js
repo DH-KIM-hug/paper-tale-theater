@@ -1,6 +1,27 @@
 /* hansel — ElevenLabs 배역 내레이션 (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS, {
  "옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.": "audio/el/hansel/nar_4730989edb.mp3",
+ "어느 날 밤, 헨젤은 문틈으로 엿들었어요.": "audio/el/hansel/nar_0beec11654.mp3",
+ "\"먹을 게 없어요. 내일 아이들을 숲에 두고 와요.\" 새엄마가 말했어요.": [
+  "audio/el/hansel/step_d109b094bf.mp3",
+  "audio/el/hansel/nar_af42e95b79.mp3"
+ ],
+ "\"음… 아이들이 가엾은데…\" 아빠는 망설였어요.": [
+  "audio/el/hansel/father_a3e05834b4.mp3",
+  "audio/el/hansel/nar_4bfc42e0f8.mp3"
+ ],
+ "헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!": "audio/el/hansel/nar_3e3bf1304e.mp3",
+ "헨젤을 톡! 조약돌을 주워요.": "audio/el/hansel/nar_0afa650c2d.mp3",
+ "헨젤은 조약돌을 주머니에 가득 채웠어요. \"이제 괜찮아.\"": [
+  "audio/el/hansel/nar_2691b0de98.mp3",
+  "audio/el/hansel/hans_f3be043d9f.mp3"
+ ],
+ "다음 날, 아빠는 둘을 데리고 숲 깊은 곳으로 갔어요.": "audio/el/hansel/nar_1967eab72f.mp3",
+ "헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.": "audio/el/hansel/nar_55b9a180ce.mp3",
+ "아빠는 둘을 숲에 남겨 두고 돌아갔어요.": "audio/el/hansel/nar_6a9dc99bda.mp3",
+ "밤이 되자 조약돌이 달빛에 반짝반짝 빛났어요. 둘은 조약돌을 따라 집으로 돌아왔어요.": "audio/el/hansel/nar_e138c977e4.mp3",
+ "하지만 얼마 뒤, 새엄마가 또 아이들을 숲에 두고 오자고 했어요.": "audio/el/hansel/nar_453e5dce1b.mp3",
+ "이번엔 밤에 문이 잠겨서, 조약돌을 주울 수 없었어요.": "audio/el/hansel/nar_e4a456c944.mp3",
  "\"얘들아, 숲에 산딸기 따러 가자!\" 아빠가 말했어요.": [
   "audio/el/hansel/father_5cf68c000b.mp3",
   "audio/el/hansel/nar_26756620c0.mp3"
@@ -12,8 +33,7 @@ Object.assign(NARRATION_CLIPS, {
  "빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.": "audio/el/hansel/nar_c2ade35101.mp3",
  "배가 부르니 졸려서 둘은 나무 밑에서 깜빡 잠이 들었어요.": "audio/el/hansel/nar_0475948fb7.mp3",
  "눈을 떠 보니 아빠가 보이지 않았어요. 둘은 길을 잃었어요.": "audio/el/hansel/nar_058ac9fb1d.mp3",
- "그레텔은 마음이 조금 무서웠어요. 그레텔을 톡! 꼭 안아 줘요.": "audio/el/hansel/nar_44364de7cf.mp3",
- "그레텔을 톡! 꼭 안아 줘요.": "audio/el/hansel/nar_a3ffc846c0.mp3",
+ "그레텔은 마음이 조금 무서웠어요.": "audio/el/hansel/nar_82ab2b2be7.mp3",
  "\"괜찮아, 빵 부스러기 길을 따라가자!\" 헨젤이 말했어요.": [
   "audio/el/hansel/hans_f83167cda3.mp3",
   "audio/el/hansel/nar_52a19d6ddb.mp3"

@@ -14,6 +14,138 @@
    "en": "Once upon a time, Hansel and Gretel lived in a little house beside the forest."
   },
   {
+   "text": "어느 날 밤, 헨젤은 문틈으로 엿들었어요.",
+   "en": "One night, Hansel listened at the crack of the door.",
+   "segs": [
+    [
+     "nar",
+     "One night, Hansel listened at the crack of the door."
+    ]
+   ]
+  },
+  {
+   "text": "\"먹을 게 없어요. 내일 아이들을 숲에 두고 와요.\" 새엄마가 말했어요.",
+   "en": "\"There's no food left. Tomorrow, let's leave the children in the forest,\" said the stepmother.",
+   "segs": [
+    [
+     "step",
+     "There's no food left. Tomorrow, let's leave the children in the forest."
+    ],
+    [
+     "nar",
+     "said the stepmother."
+    ]
+   ]
+  },
+  {
+   "text": "\"음… 아이들이 가엾은데…\" 아빠는 망설였어요.",
+   "en": "\"Hmm... the poor children...\" Father hesitated.",
+   "segs": [
+    [
+     "father",
+     "Hmm... the poor children..."
+    ],
+    [
+     "nar",
+     "Father hesitated."
+    ]
+   ]
+  },
+  {
+   "text": "헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!",
+   "en": "Hansel tiptoed outside. Pebbles twinkled in the moonlight!",
+   "segs": [
+    [
+     "nar",
+     "Hansel tiptoed outside. Pebbles twinkled in the moonlight!"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤을 톡! 조약돌을 주워요.",
+   "en": "Tap Hansel! Pick up the pebbles.",
+   "segs": [
+    [
+     "nar",
+     "Tap Hansel! Pick up the pebbles."
+    ]
+   ]
+  },
+  {
+   "text": "헨젤은 조약돌을 주머니에 가득 채웠어요. \"이제 괜찮아.\"",
+   "en": "Hansel filled his pockets with pebbles. \"Now we'll be fine.\"",
+   "segs": [
+    [
+     "nar",
+     "Hansel filled his pockets with pebbles."
+    ],
+    [
+     "hans",
+     "Now we'll be fine."
+    ]
+   ]
+  },
+  {
+   "text": "다음 날, 아빠는 둘을 데리고 숲 깊은 곳으로 갔어요.",
+   "en": "The next day, Father took the two of them deep into the forest.",
+   "segs": [
+    [
+     "nar",
+     "The next day, Father took the two of them deep into the forest."
+    ]
+   ]
+  },
+  {
+   "text": "헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.",
+   "en": "Hansel quietly dropped the pebbles one by one.",
+   "segs": [
+    [
+     "nar",
+     "Hansel quietly dropped the pebbles one by one."
+    ]
+   ]
+  },
+  {
+   "text": "아빠는 둘을 숲에 남겨 두고 돌아갔어요.",
+   "en": "Father left the two of them in the forest and went back.",
+   "segs": [
+    [
+     "nar",
+     "Father left the two of them in the forest and went back."
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되자 조약돌이 달빛에 반짝반짝 빛났어요. 둘은 조약돌을 따라 집으로 돌아왔어요.",
+   "en": "When night came, the pebbles twinkled in the moonlight. The two followed them all the way home.",
+   "segs": [
+    [
+     "nar",
+     "When night came, the pebbles twinkled in the moonlight. The two followed them all the way home."
+    ]
+   ]
+  },
+  {
+   "text": "하지만 얼마 뒤, 새엄마가 또 아이들을 숲에 두고 오자고 했어요.",
+   "en": "But not long after, the stepmother said again to leave the children in the forest.",
+   "segs": [
+    [
+     "nar",
+     "But not long after, the stepmother said again to leave the children in the forest."
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 밤에 문이 잠겨서, 조약돌을 주울 수 없었어요.",
+   "en": "This time the door was locked at night, so Hansel could not gather pebbles.",
+   "segs": [
+    [
+     "nar",
+     "This time the door was locked at night, so Hansel could not gather pebbles."
+    ]
+   ]
+  },
+  {
    "text": "\"얘들아, 숲에 산딸기 따러 가자!\" 아빠가 말했어요.",
    "en": "Children, let's go pick berries in the forest! said Papa.",
    "segs": [
@@ -56,12 +188,8 @@
    "en": "When they woke up, Papa was nowhere to be seen. They were lost."
   },
   {
-   "text": "그레텔은 마음이 조금 무서웠어요. 그레텔을 톡! 꼭 안아 줘요.",
-   "en": "Gretel felt a little scared. Tap Gretel and give her a hug."
-  },
-  {
-   "text": "그레텔을 톡! 꼭 안아 줘요.",
-   "en": "Tap Gretel! Give her a big hug."
+   "text": "그레텔은 마음이 조금 무서웠어요.",
+   "en": "Gretel felt a little scared."
   },
   {
    "text": "\"괜찮아, 빵 부스러기 길을 따라가자!\" 헨젤이 말했어요.",
@@ -355,6 +483,12 @@
   "우리 집": "Home",
   "헨젤과 그레텔": "Hansel and Gretel",
   "집이 제일 포근해요": "Home is the coziest place",
-  "우리 집이 제일 포근해요!": "Home is the coziest place!"
+  "우리 집이 제일 포근해요!": "Home is the coziest place!",
+  "집 안 밤": "Night at Home",
+  "달빛 조약돌": "Moonlit Pebbles",
+  "조약돌 길": "The Pebble Path",
+  "집 앞": "The Cottage",
+  "반짝!": "Twinkle!",
+  "쏙!": "Plop!"
  }
 }

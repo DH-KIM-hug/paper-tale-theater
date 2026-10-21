@@ -259,6 +259,12 @@ const NARRATION_CLIPS_EN = {
 };
 const VOICE_LINES_EN = {};
 const TEXT_EN = {
+ "집 안 밤": "Night at Home",
+ "달빛 조약돌": "Moonlit Pebbles",
+ "조약돌 길": "The Pebble Path",
+ "집 앞": "The Cottage",
+ "반짝!": "Twinkle!",
+ "쏙!": "Plop!",
  "하나!": "One!",
  "둘!": "Two!",
  "셋!": "Three!",

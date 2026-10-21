@@ -6,7 +6,8 @@
   "father": "5ON5Fnz24cnOozEQfGAm",
   "witch": "XrExE9yKIg1WjnnlVkGX",
   "duck": "XjGYkUkzth8BPs29fmcV",
-  "bird": "cgSgspJ2msm6clMCkdW9"
+  "bird": "cgSgspJ2msm6clMCkdW9",
+  "step": "pFZP5JQG7iQjIQuC4Bku"
  },
  "models": {
   "nar": "eleven_v4",
@@ -15,7 +16,8 @@
   "father": "eleven_v4",
   "witch": "eleven_v4",
   "duck": "eleven_v4",
-  "bird": "eleven_v4"
+  "bird": "eleven_v4",
+  "step": "eleven_v4"
  },
  "settings": {
   "nar": {
@@ -45,6 +47,10 @@
   "bird": {
    "stability": 0.3,
    "style": 0.5
+  },
+  "step": {
+   "stability": 0.4,
+   "style": 0.3
   }
  },
  "use_dir": [
@@ -54,9 +60,10 @@
   "father",
   "witch",
   "duck",
-  "bird"
+  "bird",
+  "step"
  ],
- "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, hans=Sparkles, gret=Annie, father=Namchun, witch=Matilda, duck=Teddy, bird=Jessica. 아기·꼬마 역(duck)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, hans=Sparkles, gret=Annie, father=Namchun, witch=Matilda, duck=Teddy, bird=Jessica. 아기·꼬마 역(duck)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여. 새엄마(step)=Lily(2026-10-22, 마녀 Matilda와 겹치지 않게).",
  "lines": [
   {
    "text": "옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.",
@@ -66,6 +73,156 @@
      "옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.",
      null,
      "[gentle, warm, storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날 밤, 헨젤은 문틈으로 엿들었어요.",
+   "segs": [
+    [
+     "nar",
+     "어느 날 밤, 헨젤은 문틈으로 엿들었어요.",
+     null,
+     "[hushed, curious, whispering]"
+    ]
+   ]
+  },
+  {
+   "text": "\"먹을 게 없어요. 내일 아이들을 숲에 두고 와요.\" 새엄마가 말했어요.",
+   "segs": [
+    [
+     "step",
+     "먹을 게 없어요. 내일 아이들을 숲에 두고 와요.",
+     null,
+     "[tired, flat, matter-of-fact]"
+    ],
+    [
+     "nar",
+     "새엄마가 말했어요.",
+     null,
+     "[calm, matter-of-fact]"
+    ]
+   ]
+  },
+  {
+   "text": "\"음… 아이들이 가엾은데…\" 아빠는 망설였어요.",
+   "segs": [
+    [
+     "father",
+     "음… 아이들이 가엾은데…",
+     null,
+     "[hesitant, worried, soft]"
+    ],
+    [
+     "nar",
+     "아빠는 망설였어요.",
+     null,
+     "[calm, sad]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!",
+   "segs": [
+    [
+     "nar",
+     "헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!",
+     null,
+     "=[hushed, tiptoeing] 헨젤은 살금살금 밖으로 나왔어요. [wonder, delighted] 달빛에 조약돌이 반짝반짝!"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤을 톡! 조약돌을 주워요.",
+   "segs": [
+    [
+     "nar",
+     "헨젤을 톡! 조약돌을 주워요.",
+     null,
+     "[cheerful, inviting, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤은 조약돌을 주머니에 가득 채웠어요. \"이제 괜찮아.\"",
+   "segs": [
+    [
+     "nar",
+     "헨젤은 조약돌을 주머니에 가득 채웠어요.",
+     null,
+     "[warm, relieved]"
+    ],
+    [
+     "hans",
+     "이제 괜찮아.",
+     null,
+     "[hopeful, brave, quiet]"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날, 아빠는 둘을 데리고 숲 깊은 곳으로 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "다음 날, 아빠는 둘을 데리고 숲 깊은 곳으로 갔어요.",
+     null,
+     "[calm, matter-of-fact]"
+    ]
+   ]
+  },
+  {
+   "text": "헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.",
+   "segs": [
+    [
+     "nar",
+     "헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.",
+     null,
+     "[hushed, careful, secret]"
+    ]
+   ]
+  },
+  {
+   "text": "아빠는 둘을 숲에 남겨 두고 돌아갔어요.",
+   "segs": [
+    [
+     "nar",
+     "아빠는 둘을 숲에 남겨 두고 돌아갔어요.",
+     null,
+     "[soft, sad, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되자 조약돌이 달빛에 반짝반짝 빛났어요. 둘은 조약돌을 따라 집으로 돌아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "밤이 되자 조약돌이 달빛에 반짝반짝 빛났어요. 둘은 조약돌을 따라 집으로 돌아왔어요.",
+     null,
+     "[wonder, warm, relieved]"
+    ]
+   ]
+  },
+  {
+   "text": "하지만 얼마 뒤, 새엄마가 또 아이들을 숲에 두고 오자고 했어요.",
+   "segs": [
+    [
+     "nar",
+     "하지만 얼마 뒤, 새엄마가 또 아이들을 숲에 두고 오자고 했어요.",
+     null,
+     "[calm, matter-of-fact]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 밤에 문이 잠겨서, 조약돌을 주울 수 없었어요.",
+   "segs": [
+    [
+     "nar",
+     "이번엔 밤에 문이 잠겨서, 조약돌을 주울 수 없었어요.",
+     null,
+     "[soft, worried]"
     ]
    ]
   },
@@ -164,24 +321,13 @@
    ]
   },
   {
-   "text": "그레텔은 마음이 조금 무서웠어요. 그레텔을 톡! 꼭 안아 줘요.",
+   "text": "그레텔은 마음이 조금 무서웠어요.",
    "segs": [
     [
      "nar",
-     "그레텔은 마음이 조금 무서웠어요. 그레텔을 톡! 꼭 안아 줘요.",
+     "그레텔은 마음이 조금 무서웠어요.",
      null,
      "[soft, worried, gentle]"
-    ]
-   ]
-  },
-  {
-   "text": "그레텔을 톡! 꼭 안아 줘요.",
-   "segs": [
-    [
-     "nar",
-     "그레텔을 톡! 꼭 안아 줘요.",
-     null,
-     "[tender, warm, inviting]"
     ]
    ]
   },
