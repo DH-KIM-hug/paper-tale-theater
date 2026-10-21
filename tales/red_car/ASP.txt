@@ -1,5 +1,6 @@
 child_stand: 0.4683
 red_run: 1.6854
+prop_block: 0.9083
 prop_duck: 1.0867
 prop_butterfly_open: 1.2317
 prop_house: 0.8417
