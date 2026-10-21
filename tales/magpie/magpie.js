@@ -480,7 +480,10 @@
     mom.hop(10, 420); dad.hop(10, 420);
     await say(S.L50); await say(S.L51);
     const l52 = say(S.L52);
-    for (let i = 0; i < N; i++) { put(T, chicks[i], X(300 + i * 52, 392 + i * 44), 455, { to: 'right' }); fadeIn(chicks[i], 400); chicks[i].hop(12, 400); if (!i) vo('chirp2'); await sleep(120); }
+    /* 새끼는 둥지 밖 땅에 있으면 안 되므로 둥지 앞테 위에 앉힌다 */
+    { const RW7 = 150 + 36 * N, RH7 = RW7 / ASP.mg2_prop_nest_rim, C7X = 330 + (N - 1) * 26, C7Y = 455;
+      put(T, rim, C7X, C7Y, { s: RH7 / 100 });
+      for (let i = 0; i < N; i++) { const d = i - (N - 1) / 2; put(T, chicks[i], C7X + d * 54, C7Y - .45 * RH7 - Math.abs(d) * 6, { to: 'right' }); fadeIn(chicks[i], 400); chicks[i].hop(12, 400); if (!i) vo('chirp2'); await sleep(120); } }
     await l52;
     await cutSay('mg_cut_wake', S.L53);
     bob(sch.pos);
