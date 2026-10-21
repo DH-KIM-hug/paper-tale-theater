@@ -323,5 +323,14 @@ const TALES = (() => {
       <path d="M36 92 L42 60 Q52 54 62 60 L68 92Z" fill="${c.pn}"/><rect x="46" y="70" width="12" height="22" fill="${c.cr}"/>
       <circle cx="52" cy="48" r="12" fill="${c.bk}"/><circle cx="52" cy="51" r="9" fill="${c.sk}"/><circle cx="62" cy="40" r="3" fill="${c.gd}"/>${eye(49, 51, 1.4)}${eye(55, 51, 1.4)}
       <path d="M78 92 v-22" stroke="${c.pn}" stroke-width="2.5"/><circle cx="78" cy="64" r="7" fill="${c.rd}"/><circle cx="78" cy="64" r="3" fill="#C8524A"/></g>` },
+  { id: 'red_car', title: '나의 빨간 자동차', origin: 'original', skills: ['spot', 'order', 'heart'], ready: false, making: true,
+    line: '빨간 것을 찾고, 맨 앞에서 끌어 주는 자동차를 골라요. 잃어버린 빨간 자동차가 경찰차, 소방차, 구급차, 견인차와 한 줄로 이현이에게 돌아와요.',
+    en: { title: 'My Red Car', line: 'Find the red one and pick the car that pulls at the front. A lost red car comes home to Ihyun in a row with a police car, a fire truck, an ambulance and a tow truck.' },
+    art: `<rect width="160" height="110" fill="${c.cr}"/>
+      <g class="pc"><rect y="84" width="160" height="26" fill="${c.gd}"/>${[0, 40, 80, 120].map(x => `<rect x="${x + 20}" y="84" width="20" height="26" fill="${c.sn}"/>`).join('')}
+      <rect x="34" y="40" width="92" height="44" rx="16" fill="${c.rd}"/><rect x="60" y="30" width="46" height="22" rx="8" fill="${c.rd}"/>
+      <rect x="66" y="34" width="34" height="14" rx="4" fill="${c.cr}"/>${eye(90, 41, 2)}${eye(96, 41, 2)}
+      <circle cx="56" cy="86" r="11" fill="${c.ind}"/><circle cx="104" cy="86" r="11" fill="${c.ind}"/><circle cx="56" cy="86" r="4" fill="${c.cr}"/><circle cx="104" cy="86" r="4" fill="${c.cr}"/>
+      <ellipse cx="136" cy="22" rx="9" ry="6" fill="${c.gd}" transform="rotate(-20 136 22)"/><ellipse cx="146" cy="26" rx="8" ry="5" fill="${c.gd}" transform="rotate(20 146 26)"/></g>` },
   ];
 })();
