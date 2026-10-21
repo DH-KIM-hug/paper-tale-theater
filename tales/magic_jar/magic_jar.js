@@ -275,7 +275,7 @@
       popSfx(T); t.hop(20, 300); T.pop(t.x, t.y - 120, tr(['냠냠!', '맛있다!'][i]));
     }
     await say('"모두 고맙네!" 모두 둘러앉아 맛있게 먹었어요.');
-    await T.tap(farmer.pos, { prompt: '농부를 톡! 모두 함께 만세!' });
+    await sleep(600);   /* 마지막 톡 없음: 만세는 저절로 */
     T.confetti();
     await Promise.all([farmer.hop(40, 500), wife.hop(30, 500), rich.hop(30, 500), father.hop(24, 500)]);
     await say('나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.');
