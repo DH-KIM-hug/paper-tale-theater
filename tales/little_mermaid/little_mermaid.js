@@ -335,7 +335,7 @@
     put(T, king, X(690, 700), 512, { to: 'left' });
     put(T, granny, X(880, 810), 516, { look: 'talk', to: 'left' });
     put(T, sisters, X(500, 430), 300, { look: 'long', s: X(1, .93) });
-    put(T, mer, X(200, 340), 520, { look: 'garden' });
+    put(T, mer, X(200, 340), 520, { look: 'garden', to: 'right' });
     const fxs = X([120, 640, 760], [380, 560, 600]), fys = X([380, 200, 430], [380, 200, 430]);
     fish.forEach((f, i) => { put(T, f, fxs[i], fys[i], { to: i % 2 ? 'left' : 'right' }); drift(f, 24 * (i % 2 ? -1 : 1), 12, 3000 + i * 500); });
     if (P) camSnap(440, 280, 1);
@@ -526,8 +526,8 @@
     await drink;
     sfx(T, 'sparkle'); sparkle(T, mer.x, mer.y - 100 * SC.steps, 130, 16);
     await T.anim(mer.pos, [{ opacity: 1 }, { opacity: .1 }], 400);
-    mer.look('stand'); mer.pos.style.opacity = ''; fadeIn(mer, 500); glow(mer, 1400);
-    await Promise.all([say('꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.'), (async () => { await sleep(1800); T.pop(mer.x, mer.y - 250 * SC.steps, tr('흔들흔들')); await wobbleWalk(T, mer, X(500, 500), 1800, SY); })()]);
+    mer.look('stand', 'right'); mer.pos.style.opacity = ''; fadeIn(mer, 500); glow(mer, 1400);
+    await Promise.all([say('꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.'), (async () => { await sleep(1800); T.pop(mer.x, mer.y - 250 * SC.steps, tr('흔들흔들')); await wobbleWalk(T, mer, X(640, 500), 1800, SY); })()]);
     put(T, prince, 1100, SY, { look: 'stand', to: 'left', s: SC.steps }); sfx(T, 'step_wood');
     await prince.move(X(660, 640), SY, 1500);
     follow(570);
