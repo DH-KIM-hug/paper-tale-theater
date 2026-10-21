@@ -476,6 +476,7 @@ const Tale = (() => {
   }
   /* 동그라미 장면 전환 (옛날 만화식 아이리스). focus: 동그라미가 모일 요소(주인공). 없으면 가운데
      닫힘 → 주인공 둘레에서 잠깐 멈춤 → 완전히 닫힘 → 장면 이름(오린 종이 글자) → change() → 톡 튀며 열림 */
+  let cardK = 1;   /* 장면 카드 속도 배율 (cardSpeed 로 동화마다 조절, 1 = 기본) */
   async function sceneCard(label, change, focus) {
     await restIfDue();
     if (transitionMode === 'page') return pageTurn(change);
@@ -489,15 +490,15 @@ const Tale = (() => {
     const hole = Math.min(W, H) * .16;
     ir.hidden = false; card.textContent = ''; card.className = 'paperword';
     paperTurn(); // 화면 전환: 책장 넘기는 종이 소리 (없으면 합성음)
-    await lidTo(ir, cx, cy, farFrom(W, H, cx, cy), hole, 520, easeIn);
-    await sleep(260); // 주인공 둘레에 동그라미를 잠깐 남긴다
-    await lidTo(ir, cx, cy, hole, 0, 180, easeIn);
+    await lidTo(ir, cx, cy, farFrom(W, H, cx, cy), hole, 520 * cardK, easeIn);
+    await sleep(260 * cardK); // 주인공 둘레에 동그라미를 잠깐 남긴다
+    await lidTo(ir, cx, cy, hole, 0, 180 * cardK, easeIn);
     if (label) { card.innerHTML = letters(tr(label)); card.className = 'paperword on'; tone([520, 780], .18, { type: 'triangle', vol: .12 }); }
     if (change) change();
-    await sleep(label ? 1050 : 250);
+    await sleep((label ? 1050 : 250) * cardK);
     card.className = 'paperword';
     paperTurn(); // 화면 전환: 책장 넘기는 종이 소리 (없으면 합성음)
-    await lidTo(ir, W / 2, H / 2, 0, farFrom(W, H, W / 2, H / 2), 640, easeOutBack);
+    await lidTo(ir, W / 2, H / 2, 0, farFrom(W, H, W / 2, H / 2), 640 * cardK, easeOutBack);
     ir.hidden = true;
   }
   /* 책장 넘기기 전환: 지금 장면을 종이 한 장으로 떠서(무대 SVG 복제) 오른쪽 가장자리부터 들려 왼쪽으로 넘긴다.
@@ -1156,7 +1157,7 @@ const Tale = (() => {
 
   const api = {
     finale, hz, semi, parseSong, timbre, playMelody, followMelody, holdMelody, lyric,
-    el, paper, anim, actor, sleep, say, director, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
+    cardSpeed: k => { cardK = k; }, el, paper, anim, actor, sleep, say, director, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,
     tap: autoInput('tap', tap), mash: autoInput('mash', mash), choose: autoInput('choose', choose), swipe: autoInput('swipe', swipe), hold: autoInput('hold', hold), free: autoInput('free', free),

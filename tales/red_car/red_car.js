@@ -196,6 +196,17 @@
   const sparkleSfx = T => AudioFX.sfx('sparkle') || T.tone([700, 1400], .3, { vol: .15 });
 
   /* 누르는 자리 넓히기: 화면 w×h 투명 사각을 그림 뒤에 깐다(a.scale 로 나눠 화면 크기를 지킨다) */
+  /* 수풀: 앞쪽에 그려 자동차 아래쪽을 가린다. 얼굴 없음, 평평한 초록 조각 여럿 */
+  function bush(T, cx, base, w, h) {
+    const g = T.el('g', {}, T.world);
+    const blob = (dx, dy, rx, ry, fill) => T.el('ellipse', { cx: cx + dx, cy: base - dy, rx, ry, fill }, g);
+    blob(0, h * .3, w * .5, h * .42, '#3F6B4F');
+    blob(-w * .28, h * .26, w * .32, h * .3, '#3F6B4F');
+    blob(w * .3, h * .26, w * .32, h * .28, '#3F6B4F');
+    blob(-w * .1, h * .6, w * .3, h * .3, '#8FAE72');
+    blob(w * .18, h * .58, w * .24, h * .26, '#8FAE72');
+    return g;
+  }
   function hitBox(T, a, w = 100, h = 100) {
     const lw = w / a.scale, lh = h / a.scale;
     const r = T.el('rect', { x: -lw / 2, y: -lh, width: lw, height: lh, fill: '#000', 'fill-opacity': 0 }, a.pos);
@@ -302,6 +313,7 @@
 
   async function run(T) {
     const { sleep, camSnap, tr } = T;
+    T.cardSpeed(.6);   /* 장면 전환을 빠르게(기본의 60%) */
     const GAP = 1200, SCENE_END = 3200, DRIVE = 9000, LINE_DRIVE = 12000, SIREN_GAP = 4000;
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(삐뽀삐뽀!·톡!…)
@@ -361,11 +373,11 @@
     kid.hop(10, 320);
     const toHand = h => red.place(kid.x + h[0], FL + h[1]);
     const cut2 = (async () => {
-      kid.look('eat', 'right'); toHand(HAND.eat); T.pop(kid.x + 80, FL - 230, tr('냠냠'));
+      kid.look('eat', 'right'); toHand(HAND.eat); T.pop(kid.x + 80, FL - 300, tr('냠냠'));
       await sleep(2400);
       kid.look('sleep'); kid.place(X(330, 450), FL); toHand(HAND.sleep);
       const t = tint(T, '#1F2A56', 0); T.anim(t, [{ opacity: 0 }, { opacity: .22 }], 900).then(() => t.setAttribute('opacity', .22));
-      T.pop(kid.x + 40, FL - 150, tr('쌔근'), '#1F2A56');
+      T.pop(kid.x + 40, FL - 260, tr('쌔근'), '#1F2A56');
     })();
     await Promise.all([say(S.L2), cut2]);
     await sleep(SCENE_END);
@@ -390,14 +402,18 @@
     const kidGo = kid.move(X(640, 600), FL, 1800, 'linear');
     await sleep(500);
     sfx('paper_down', .5); vo('tok'); T.pop(red.x, FL - 40, tr('톡!'));
-    await red.move(kid.x + 20, FL + 6, 500, 'ease-in');
+    /* 자동차는 수풀 속에 떨어져 반쯤만 보인다 (잃어버린 느낌) */
+    const bushX = kid.x + 130;
+    red.look('tired', 'right');
+    await red.move(bushX, FL + 6, 600, 'ease-in');
+    bush(T, bushX, FL + 6, red.w * S_TOY * 1.5, red.h * S_TOY * .62);
     await Promise.all([bflyGo, kidGo]);
     hide(bfly);
     const l5 = say(S.L5);
     await l5;
     kid.look('stand'); kid.wiggle(5, 500); T.pop(kid.x, FL - 260, tr('두리번')); await sleep(500); await kid.wiggle(5, 500);
     await say(S.L6);
-    kid.look('cry'); T.pop(kid.x - 40, FL - 220, tr('잉잉'), '#1F2A56');
+    kid.look('cry'); T.pop(kid.x - 40, FL - 320, tr('잉잉'), '#1F2A56');
     await say(S.L7);
     await sleep(SCENE_END);
 
