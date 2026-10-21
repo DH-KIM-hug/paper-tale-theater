@@ -1,0 +1,694 @@
+{
+ "notes": "ElevenLabs 목소리 배정(2026-10-21 SPEC): nar=Lily(여자 내레이터 순환 — 백설 Lily·신데렐라 Leejin·미녀와 야수 Huelyn·인어공주 Annie 다음이라 Lily), pea=Yoojin Kim(밝고 친근한 젊은 표준어 여성, 씩씩한 공주 — 백설·신데렐라·인어공주의 Luna, 벨의 Yun 과 겹치지 않게 새 목소리), prince=Klamon(밝고 따뜻한 청년 — 백설 Eric·신데렐라/인어 Sunjun·야수 George 와 다름; 1번은 한숨, 9번은 환함), queen=Huelyn(늘 웃는 늙은 왕비, 할머니 원형; 시험은 장난이므로 연기 지시는 늘 따뜻하게), king=Namchun(늙은 왕, 한 줄). 한 편 안에서 다섯 목소리가 모두 다르다. 수 세기 1~20은 왕비(queen) 목소리의 extra 클립 n1~n20 으로만 나오고 화면 글자(말풍선·팝)는 없다. 이불 스무 장은 세지 않는다. 교훈은 대사로 말하지 않는다(부제·끝 화면 글자만). 왕비의 포옹(8번)은 대사 없이 동작만. 합창 없음. 모델 eleven_v4, 배역별 settings.",
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "pea": "Cm89zxZzEGaMu7ajYw2K",
+  "prince": "dnZGOA54w68T7vLLPFTp",
+  "queen": "gnWujHp24oqX3I03lRbU",
+  "king": "5ON5Fnz24cnOozEQfGAm"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "pea": "eleven_v4",
+  "prince": "eleven_v4",
+  "queen": "eleven_v4",
+  "king": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.5,
+   "style": 0.35
+  },
+  "pea": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "prince": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "queen": {
+   "stability": 0.45,
+   "style": 0.45
+  },
+  "king": {
+   "stability": 0.5,
+   "style": 0.35
+  }
+ },
+ "use_dir": [
+  "nar",
+  "pea",
+  "prince",
+  "queen",
+  "king"
+ ],
+ "lines": [
+  {
+   "text": "옛날에 진짜 공주와 결혼하고 싶은 왕자가 있었어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날에 진짜 공주와 결혼하고 싶은 왕자가 있었어요.",
+     null,
+     "[calm, warm storytelling, slow, once upon a time]"
+    ]
+   ]
+  },
+  {
+   "text": "배를 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "배를 톡 눌러 봐요.",
+     null,
+     "[inviting, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "왕자는 배를 타고 온 세상을 돌아다녔어요.",
+   "segs": [
+    [
+     "nar",
+     "왕자는 배를 타고 온 세상을 돌아다녔어요.",
+     null,
+     "[gentle, steady, a little wistful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "온 세상을 다 가 봤지만, 진짜 공주인지 알 수 없었어요.",
+   "segs": [
+    [
+     "prince",
+     "온 세상을 다 가 봤지만, 진짜 공주인지 알 수 없었어요.",
+     "sad",
+     "[young man, sighing, disappointed but gentle, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "그날 밤, 비가 쏟아지고 천둥이 우르릉!",
+   "segs": [
+    [
+     "nar",
+     "그날 밤, 비가 쏟아지고 천둥이 우르릉!",
+     null,
+     "[storytelling, a little dramatic but not scary, rumble on 우르릉]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 성문을 똑똑, 두드려요.",
+   "segs": [
+    [
+     "nar",
+     "누가 성문을 똑똑, 두드려요.",
+     null,
+     "[curious, soft, a tiny pause before 똑똑]"
+    ]
+   ]
+  },
+  {
+   "text": "성문을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "성문을 톡 눌러 봐요.",
+     null,
+     "[inviting, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "이 밤에 누구지?",
+   "segs": [
+    [
+     "king",
+     "이 밤에 누구지?",
+     null,
+     "[old king, kind, a little surprised, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "비를 맞았지만 괜찮아요. 저는 진짜 공주예요!",
+   "segs": [
+    [
+     "pea",
+     "비를 맞았지만 괜찮아요. 저는 진짜 공주예요!",
+     "happy",
+     "[young woman, brave and bright, cheerful despite being soaked, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "어서 들어와 몸을 말리렴.",
+   "segs": [
+    [
+     "queen",
+     "어서 들어와 몸을 말리렴.",
+     null,
+     "[old queen, warm, motherly, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "진짜 공주인지는… 살짝 알아볼까?",
+   "segs": [
+    [
+     "queen",
+     "진짜 공주인지는… 살짝 알아볼까?",
+     "whisper",
+     "[old queen, playful, mischievous wink, half whispering, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "왕비님은 손님방에 완두콩 한 알, 베개, 매트리스 한 장을 가져왔어요.",
+   "segs": [
+    [
+     "nar",
+     "왕비님은 손님방에 완두콩 한 알, 베개, 매트리스 한 장을 가져왔어요.",
+     null,
+     "[calm, clear, slow, listing the three things]"
+    ]
+   ]
+  },
+  {
+   "text": "셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.",
+     null,
+     "[inviting, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 베개예요. 더 작은 걸 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 베개예요. 더 작은 걸 찾아봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 매트리스예요. 더 작은 걸 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 매트리스예요. 더 작은 걸 찾아봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 완두콩이 제일 작아요!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 완두콩이 제일 작아요!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 제일 큰 것은 뭘까요? 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "그럼 제일 큰 것은 뭘까요? 눌러 봐요.",
+     null,
+     "[inviting, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 완두콩이에요. 더 큰 걸 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 완두콩이에요. 더 큰 걸 찾아봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 베개예요. 더 큰 걸 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 베개예요. 더 큰 걸 찾아봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 매트리스가 제일 커요!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 매트리스가 제일 커요!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "요 조그만 완두콩 한 알을 침대 판자에 톡. 아무도 못 본 척!",
+   "segs": [
+    [
+     "queen",
+     "요 조그만 완두콩 한 알을 침대 판자에 톡. 아무도 못 본 척!",
+     "whisper",
+     "[old queen, playful, conspiratorial, giggling softly, 톡 short and light]"
+    ]
+   ]
+  },
+  {
+   "text": "완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.",
+   "segs": [
+    [
+     "queen",
+     "완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.",
+     null,
+     "[old queen, cheerful, inviting, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "열! 아직 더 있어요. 한 번 더 톡!",
+   "segs": [
+    [
+     "queen",
+     "열! 아직 더 있어요. 한 번 더 톡!",
+     "happy",
+     "[old queen, bright, encouraging, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "스물! 매트리스가 스무 장이에요.",
+   "segs": [
+    [
+     "queen",
+     "스물! 매트리스가 스무 장이에요.",
+     "happy",
+     "[old queen, delighted, clear, slow on 스무 장]"
+    ]
+   ]
+  },
+  {
+   "text": "이불도 스무 장, 푹신푹신!",
+   "segs": [
+    [
+     "nar",
+     "이불도 스무 장, 푹신푹신!",
+     "happy",
+     "[warm, cozy, playful rhythm on 푹신푹신]"
+    ]
+   ]
+  },
+  {
+   "text": "완두콩은 어디 있을까요? 탑의 위? 아래?",
+   "segs": [
+    [
+     "nar",
+     "완두콩은 어디 있을까요? 탑의 위? 아래?",
+     null,
+     "[inviting, clear, slow, a pause between 위 and 아래]"
+    ]
+   ]
+  },
+  {
+   "text": "거긴 탑의 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "거긴 탑의 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 완두콩은 맨 아래에 있어요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 완두콩은 맨 아래에 있어요.",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "공주님은 어디서 잘까요? 위? 아래?",
+   "segs": [
+    [
+     "nar",
+     "공주님은 어디서 잘까요? 위? 아래?",
+     null,
+     "[inviting, clear, slow, a pause between 위 and 아래]"
+    ]
+   ]
+  },
+  {
+   "text": "거긴 탑의 아래예요. 공주님은 맨 위에서 자요. 위를 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "거긴 탑의 아래예요. 공주님은 맨 위에서 자요. 위를 눌러 봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 공주님은 맨 위에서 자요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요! 공주님은 맨 위에서 자요.",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "완두콩은 맨 아래, 공주님은 맨 위에서 자요.",
+   "segs": [
+    [
+     "queen",
+     "완두콩은 맨 아래, 공주님은 맨 위에서 자요.",
+     null,
+     "[old queen, warm, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "와, 높다! 잘 자요.",
+   "segs": [
+    [
+     "pea",
+     "와, 높다! 잘 자요.",
+     "happy",
+     "[young woman, amazed then sleepy and content, soft at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 깊었는데… 공주는 이리 뒤척, 저리 뒤척.",
+   "segs": [
+    [
+     "nar",
+     "밤이 깊었는데… 공주는 이리 뒤척, 저리 뒤척.",
+     null,
+     "[quiet, slow, night-time storytelling, rhythmic on 이리 뒤척 저리 뒤척]"
+    ]
+   ]
+  },
+  {
+   "text": "뭔가 딱딱한 게 있는 것 같아…",
+   "segs": [
+    [
+     "pea",
+     "뭔가 딱딱한 게 있는 것 같아…",
+     null,
+     "[young woman, sleepy, puzzled, murmuring, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "아침이 되었어요. 공주가 사다리를 내려왔어요.",
+   "segs": [
+    [
+     "nar",
+     "아침이 되었어요. 공주가 사다리를 내려왔어요.",
+     null,
+     "[calm, bright morning, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "잘 잤니?",
+   "segs": [
+    [
+     "queen",
+     "잘 잤니?",
+     null,
+     "[old queen, warm, gently curious]"
+    ]
+   ]
+  },
+  {
+   "text": "아니요, 솔직히 한숨도 못 잤어요. 뭔가 딱딱한 게 있어서 몸이 뻐근하고 졸려요.",
+   "segs": [
+    [
+     "pea",
+     "아니요, 솔직히 한숨도 못 잤어요. 뭔가 딱딱한 게 있어서 몸이 뻐근하고 졸려요.",
+     null,
+     "[young woman, honest and clear, a little tired, not whining, steady]"
+    ]
+   ]
+  },
+  {
+   "text": "매트리스 스무 장 아래 완두콩을 느끼다니! 진짜 공주로구나!",
+   "segs": [
+    [
+     "queen",
+     "매트리스 스무 장 아래 완두콩을 느끼다니! 진짜 공주로구나!",
+     "happy",
+     "[old queen, overjoyed, warm, bright on 진짜 공주]"
+    ]
+   ]
+  },
+  {
+   "text": "왕자와 공주는 손을 꼭 잡았어요.",
+   "segs": [
+    [
+     "nar",
+     "왕자와 공주는 손을 꼭 잡았어요.",
+     null,
+     "[warm, happy, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "진짜 공주님을 드디어 찾았어요!",
+   "segs": [
+    [
+     "prince",
+     "진짜 공주님을 드디어 찾았어요!",
+     "happy",
+     "[young man, joyful, bright, relieved]"
+    ]
+   ]
+  },
+  {
+   "text": "완두콩은 박물관에 갔대요.",
+   "segs": [
+    [
+     "nar",
+     "완두콩은 박물관에 갔대요.",
+     null,
+     "[warm, a little playful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "유리 상자를 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "유리 상자를 톡 눌러 봐요.",
+     null,
+     "[inviting, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "안녕!",
+   "segs": [
+    [
+     "nar",
+     "안녕!",
+     "happy",
+     "[bright, waving goodbye, warm]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "n1": [
+   [
+    "queen",
+    "하나!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n2": [
+   [
+    "queen",
+    "둘!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n3": [
+   [
+    "queen",
+    "셋!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n4": [
+   [
+    "queen",
+    "넷!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n5": [
+   [
+    "queen",
+    "다섯!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n6": [
+   [
+    "queen",
+    "여섯!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n7": [
+   [
+    "queen",
+    "일곱!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n8": [
+   [
+    "queen",
+    "여덟!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n9": [
+   [
+    "queen",
+    "아홉!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n10": [
+   [
+    "queen",
+    "열!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n11": [
+   [
+    "queen",
+    "열하나!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n12": [
+   [
+    "queen",
+    "열둘!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n13": [
+   [
+    "queen",
+    "열셋!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n14": [
+   [
+    "queen",
+    "열넷!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n15": [
+   [
+    "queen",
+    "열다섯!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n16": [
+   [
+    "queen",
+    "열여섯!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n17": [
+   [
+    "queen",
+    "열일곱!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n18": [
+   [
+    "queen",
+    "열여덟!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n19": [
+   [
+    "queen",
+    "열아홉!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ],
+  "n20": [
+   [
+    "queen",
+    "스물!",
+    "toneup",
+    "[old queen, bright, clear, cheerful counting, bouncy, one word]"
+   ]
+  ]
+ }
+}

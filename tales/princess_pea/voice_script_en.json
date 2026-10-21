@@ -1,0 +1,675 @@
+{
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "pea": "Cm89zxZzEGaMu7ajYw2K",
+  "prince": "dnZGOA54w68T7vLLPFTp",
+  "queen": "gnWujHp24oqX3I03lRbU",
+  "king": "5ON5Fnz24cnOozEQfGAm"
+ },
+ "lines": [
+  {
+   "text": "옛날에 진짜 공주와 결혼하고 싶은 왕자가 있었어요.",
+   "en": "Once upon a time, there was a prince who wanted to marry a true princess.",
+   "segs": [
+    [
+     "nar",
+     "Once upon a time, there was a prince who wanted to marry a true princess.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "배를 톡 눌러 봐요.",
+   "en": "Tap the boat.",
+   "segs": [
+    [
+     "nar",
+     "Tap the boat.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "왕자는 배를 타고 온 세상을 돌아다녔어요.",
+   "en": "The prince sailed all around the world on his boat.",
+   "segs": [
+    [
+     "nar",
+     "The prince sailed all around the world on his boat.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "온 세상을 다 가 봤지만, 진짜 공주인지 알 수 없었어요.",
+   "en": "I went all around the world, but I could never tell if a princess was a true princess.",
+   "segs": [
+    [
+     "prince",
+     "I went all around the world, but I could never tell if a princess was a true princess.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "그날 밤, 비가 쏟아지고 천둥이 우르릉!",
+   "en": "That night, the rain poured down and the thunder went rumble, rumble!",
+   "segs": [
+    [
+     "nar",
+     "That night, the rain poured down and the thunder went rumble, rumble!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "누가 성문을 똑똑, 두드려요.",
+   "en": "Someone was knocking at the castle gate. Knock, knock.",
+   "segs": [
+    [
+     "nar",
+     "Someone was knocking at the castle gate. Knock, knock.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "성문을 톡 눌러 봐요.",
+   "en": "Tap the gate.",
+   "segs": [
+    [
+     "nar",
+     "Tap the gate.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "이 밤에 누구지?",
+   "en": "Who could it be at this hour?",
+   "segs": [
+    [
+     "king",
+     "Who could it be at this hour?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "비를 맞았지만 괜찮아요. 저는 진짜 공주예요!",
+   "en": "I got caught in the rain, but I'm all right. I am a true princess!",
+   "segs": [
+    [
+     "pea",
+     "I got caught in the rain, but I'm all right. I am a true princess!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어서 들어와 몸을 말리렴.",
+   "en": "Come in, dear, and dry yourself off.",
+   "segs": [
+    [
+     "queen",
+     "Come in, dear, and dry yourself off.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "진짜 공주인지는… 살짝 알아볼까?",
+   "en": "A true princess, hmm? Let's find out... just a little.",
+   "segs": [
+    [
+     "queen",
+     "A true princess, hmm? Let's find out... just a little.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "왕비님은 손님방에 완두콩 한 알, 베개, 매트리스 한 장을 가져왔어요.",
+   "en": "The queen brought one pea, a pillow and a mattress into the guest room.",
+   "segs": [
+    [
+     "nar",
+     "The queen brought one pea, a pillow and a mattress into the guest room.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.",
+   "en": "Which of the three is the smallest? Tap it.",
+   "segs": [
+    [
+     "nar",
+     "Which of the three is the smallest? Tap it.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 베개예요. 더 작은 걸 찾아봐요.",
+   "en": "That's the pillow. Look for something smaller.",
+   "segs": [
+    [
+     "nar",
+     "That's the pillow. Look for something smaller.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 매트리스예요. 더 작은 걸 찾아봐요.",
+   "en": "That's the mattress. Look for something smaller.",
+   "segs": [
+    [
+     "nar",
+     "That's the mattress. Look for something smaller.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 완두콩이 제일 작아요!",
+   "en": "That's right, the pea is the smallest!",
+   "segs": [
+    [
+     "nar",
+     "That's right, the pea is the smallest!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 제일 큰 것은 뭘까요? 눌러 봐요.",
+   "en": "Then which one is the biggest? Tap it.",
+   "segs": [
+    [
+     "nar",
+     "Then which one is the biggest? Tap it.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 완두콩이에요. 더 큰 걸 찾아봐요.",
+   "en": "That's the pea. Look for something bigger.",
+   "segs": [
+    [
+     "nar",
+     "That's the pea. Look for something bigger.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 베개예요. 더 큰 걸 찾아봐요.",
+   "en": "That's the pillow. Look for something bigger.",
+   "segs": [
+    [
+     "nar",
+     "That's the pillow. Look for something bigger.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 매트리스가 제일 커요!",
+   "en": "That's right, the mattress is the biggest!",
+   "segs": [
+    [
+     "nar",
+     "That's right, the mattress is the biggest!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "요 조그만 완두콩 한 알을 침대 판자에 톡. 아무도 못 본 척!",
+   "en": "This tiny little pea goes on the bed board, tap. Nobody saw a thing!",
+   "segs": [
+    [
+     "queen",
+     "This tiny little pea goes on the bed board, tap. Nobody saw a thing!",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "text": "완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.",
+   "en": "Shall we pile mattresses on top of the pea? How many will there be? Tap!",
+   "segs": [
+    [
+     "queen",
+     "Shall we pile mattresses on top of the pea? How many will there be? Tap!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "열! 아직 더 있어요. 한 번 더 톡!",
+   "en": "Ten! And there are still more. Tap once more!",
+   "segs": [
+    [
+     "queen",
+     "Ten! And there are still more. Tap once more!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "스물! 매트리스가 스무 장이에요.",
+   "en": "Twenty! That makes twenty mattresses.",
+   "segs": [
+    [
+     "queen",
+     "Twenty! That makes twenty mattresses.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "이불도 스무 장, 푹신푹신!",
+   "en": "And twenty feather quilts on top, soft and fluffy!",
+   "segs": [
+    [
+     "nar",
+     "And twenty feather quilts on top, soft and fluffy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "완두콩은 어디 있을까요? 탑의 위? 아래?",
+   "en": "Where is the pea? At the top of the tower, or at the bottom?",
+   "segs": [
+    [
+     "nar",
+     "Where is the pea? At the top of the tower, or at the bottom?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "거긴 탑의 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.",
+   "en": "That's the top of the tower. The pea is at the very bottom. Tap the bottom.",
+   "segs": [
+    [
+     "nar",
+     "That's the top of the tower. The pea is at the very bottom. Tap the bottom.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 완두콩은 맨 아래에 있어요.",
+   "en": "That's right! The pea is at the very bottom.",
+   "segs": [
+    [
+     "nar",
+     "That's right! The pea is at the very bottom.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "공주님은 어디서 잘까요? 위? 아래?",
+   "en": "Where will the princess sleep? At the top, or at the bottom?",
+   "segs": [
+    [
+     "nar",
+     "Where will the princess sleep? At the top, or at the bottom?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "거긴 탑의 아래예요. 공주님은 맨 위에서 자요. 위를 눌러 봐요.",
+   "en": "That's the bottom of the tower. The princess sleeps at the very top. Tap the top.",
+   "segs": [
+    [
+     "nar",
+     "That's the bottom of the tower. The princess sleeps at the very top. Tap the top.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요! 공주님은 맨 위에서 자요.",
+   "en": "That's right! The princess sleeps at the very top.",
+   "segs": [
+    [
+     "nar",
+     "That's right! The princess sleeps at the very top.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "완두콩은 맨 아래, 공주님은 맨 위에서 자요.",
+   "en": "The pea at the very bottom, and the princess at the very top.",
+   "segs": [
+    [
+     "queen",
+     "The pea at the very bottom, and the princess at the very top.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "와, 높다! 잘 자요.",
+   "en": "Wow, it's so high! Good night.",
+   "segs": [
+    [
+     "pea",
+     "Wow, it's so high! Good night.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 깊었는데… 공주는 이리 뒤척, 저리 뒤척.",
+   "en": "Late into the night... the princess tossed this way, and turned that way.",
+   "segs": [
+    [
+     "nar",
+     "Late into the night... the princess tossed this way, and turned that way.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "뭔가 딱딱한 게 있는 것 같아…",
+   "en": "I think there's something hard in here...",
+   "segs": [
+    [
+     "pea",
+     "I think there's something hard in here...",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아침이 되었어요. 공주가 사다리를 내려왔어요.",
+   "en": "Morning came. The princess climbed down the ladder.",
+   "segs": [
+    [
+     "nar",
+     "Morning came. The princess climbed down the ladder.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "잘 잤니?",
+   "en": "Did you sleep well?",
+   "segs": [
+    [
+     "queen",
+     "Did you sleep well?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아니요, 솔직히 한숨도 못 잤어요. 뭔가 딱딱한 게 있어서 몸이 뻐근하고 졸려요.",
+   "en": "No. To be honest, I didn't sleep a wink. Something hard was in the bed, and now I'm stiff and sleepy.",
+   "segs": [
+    [
+     "pea",
+     "No. To be honest, I didn't sleep a wink. Something hard was in the bed, and now I'm stiff and sleepy.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "매트리스 스무 장 아래 완두콩을 느끼다니! 진짜 공주로구나!",
+   "en": "She felt the pea through twenty mattresses! She is a true princess!",
+   "segs": [
+    [
+     "queen",
+     "She felt the pea through twenty mattresses! She is a true princess!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "왕자와 공주는 손을 꼭 잡았어요.",
+   "en": "The prince and the princess held hands tight.",
+   "segs": [
+    [
+     "nar",
+     "The prince and the princess held hands tight.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "진짜 공주님을 드디어 찾았어요!",
+   "en": "At last, I have found a true princess!",
+   "segs": [
+    [
+     "prince",
+     "At last, I have found a true princess!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "완두콩은 박물관에 갔대요.",
+   "en": "And the pea was sent to a museum.",
+   "segs": [
+    [
+     "nar",
+     "And the pea was sent to a museum.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "유리 상자를 톡 눌러 봐요.",
+   "en": "Tap the glass case.",
+   "segs": [
+    [
+     "nar",
+     "Tap the glass case.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "안녕!",
+   "en": "Bye-bye!",
+   "segs": [
+    [
+     "nar",
+     "Bye-bye!",
+     "happy"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "n1": [
+   [
+    "queen",
+    "One!",
+    "toneup"
+   ]
+  ],
+  "n2": [
+   [
+    "queen",
+    "Two!",
+    "toneup"
+   ]
+  ],
+  "n3": [
+   [
+    "queen",
+    "Three!",
+    "toneup"
+   ]
+  ],
+  "n4": [
+   [
+    "queen",
+    "Four!",
+    "toneup"
+   ]
+  ],
+  "n5": [
+   [
+    "queen",
+    "Five!",
+    "toneup"
+   ]
+  ],
+  "n6": [
+   [
+    "queen",
+    "Six!",
+    "toneup"
+   ]
+  ],
+  "n7": [
+   [
+    "queen",
+    "Seven!",
+    "toneup"
+   ]
+  ],
+  "n8": [
+   [
+    "queen",
+    "Eight!",
+    "toneup"
+   ]
+  ],
+  "n9": [
+   [
+    "queen",
+    "Nine!",
+    "toneup"
+   ]
+  ],
+  "n10": [
+   [
+    "queen",
+    "Ten!",
+    "toneup"
+   ]
+  ],
+  "n11": [
+   [
+    "queen",
+    "Eleven!",
+    "toneup"
+   ]
+  ],
+  "n12": [
+   [
+    "queen",
+    "Twelve!",
+    "toneup"
+   ]
+  ],
+  "n13": [
+   [
+    "queen",
+    "Thirteen!",
+    "toneup"
+   ]
+  ],
+  "n14": [
+   [
+    "queen",
+    "Fourteen!",
+    "toneup"
+   ]
+  ],
+  "n15": [
+   [
+    "queen",
+    "Fifteen!",
+    "toneup"
+   ]
+  ],
+  "n16": [
+   [
+    "queen",
+    "Sixteen!",
+    "toneup"
+   ]
+  ],
+  "n17": [
+   [
+    "queen",
+    "Seventeen!",
+    "toneup"
+   ]
+  ],
+  "n18": [
+   [
+    "queen",
+    "Eighteen!",
+    "toneup"
+   ]
+  ],
+  "n19": [
+   [
+    "queen",
+    "Nineteen!",
+    "toneup"
+   ]
+  ],
+  "n20": [
+   [
+    "queen",
+    "Twenty!",
+    "toneup"
+   ]
+  ]
+ },
+ "ui": {
+  "완두콩 공주": "The Princess and the Pea",
+  "느낀 것을 솔직하게 말하는 마음이 진짜 공주의 마음이에요": "Saying honestly what you feel is the heart of a true princess",
+  "느낀 것을 솔직하게 말하는 마음이 진짜 공주의 마음이에요.": "Saying honestly what you feel is the heart of a true princess.",
+  "진짜 공주를 찾아서": "Looking for a True Princess",
+  "폭풍우 밤": "A Stormy Night",
+  "문 앞의 아가씨": "The Girl at the Gate",
+  "왕비의 완두콩": "The Queen's Pea",
+  "매트리스 스무 장": "Twenty Mattresses",
+  "위? 아래?": "Top or Bottom?",
+  "잠 못 든 밤": "A Sleepless Night",
+  "아침 인사": "Good Morning",
+  "진짜 공주": "A True Princess",
+  "출렁출렁": "Rock, rock",
+  "휴우": "Sigh...",
+  "우르릉": "Rumble!",
+  "번쩍": "Flash!",
+  "똑똑": "Knock knock",
+  "끼익": "Creak",
+  "뚝뚝": "Drip drip",
+  "찡긋": "Wink",
+  "톡": "Tap",
+  "반짝!": "Sparkle!",
+  "푹신푹신": "Fluffy fluffy",
+  "뒤척뒤척": "Toss and turn",
+  "하암": "Yawn",
+  "꼬옥": "Hug",
+  "안녕!": "Bye-bye!",
+  "배를 톡 눌러 봐요.": "Tap the boat.",
+  "성문을 톡 눌러 봐요.": "Tap the gate.",
+  "셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.": "Which of the three is the smallest? Tap it.",
+  "그럼 제일 큰 것은 뭘까요? 눌러 봐요.": "Then which one is the biggest? Tap it.",
+  "완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.": "Shall we pile mattresses on top of the pea? How many will there be? Tap!",
+  "열! 아직 더 있어요. 한 번 더 톡!": "Ten! And there are still more. Tap once more!",
+  "완두콩은 어디 있을까요? 탑의 위? 아래?": "Where is the pea? At the top of the tower, or at the bottom?",
+  "공주님은 어디서 잘까요? 위? 아래?": "Where will the princess sleep? At the top, or at the bottom?",
+  "유리 상자를 톡 눌러 봐요.": "Tap the glass case."
+ }
+}
