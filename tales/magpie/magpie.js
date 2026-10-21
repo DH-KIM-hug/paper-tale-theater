@@ -359,7 +359,10 @@
       scene('mg_bg_moonnest');
       put(T, dad, X(300, 400), FL - 160, { look: 'sit', to: 'right' });
       put(T, mom, X(470, 540), FL - 160, { look: 'sit', to: 'left' });
-      for (let i = 0; i < N; i++) put(T, chicks[i], X(560 + i * 52, 600 + i * 44), FL - 150, { to: 'left' });
+      /* 새끼는 허공에 뜨지 않게 둥지 앞테 위에 앉힌다(둥지 앞테 가운데 x 600, 윗선 기준 새끼 높이) */
+      const RW6 = 150 + 36 * N, RH6 = RW6 / ASP.mg2_prop_nest_rim, R6X = 600, R6Y = FL - 130;
+      put(T, rim, R6X, R6Y, { s: RH6 / 100 });
+      for (let i = 0; i < N; i++) { const d = i - (N - 1) / 2; put(T, chicks[i], R6X + d * 54, R6Y - .45 * RH6 - Math.abs(d) * 6, { to: 'left' }); }
       camSnap(P ? 420 : 500, 280, 1);
     }, dad.pos);
     await say(S.L27);
