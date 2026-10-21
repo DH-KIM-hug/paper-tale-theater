@@ -303,6 +303,7 @@ const NARRATION_CLIPS_EN = {
 };
 const VOICE_LINES_EN = {};
 const TEXT_EN = {
+ "톡!": "Tap!",
  "강아지!": "Puppy!",
  "고래!": "Whale!",
  "꿀꺽!": "Gulp!",
