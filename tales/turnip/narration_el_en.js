@@ -19,9 +19,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The seed slipped right into the soil.",
   "c": "audio/el/turnip/en/nar_d3af069753.mp3"
  },
- "파란 싹이 났어요! 톡톡 눌러서 물도 주고 햇볕도 줘요.": {
-  "t": "A green sprout popped up! Tap, tap to give it water and sunshine.",
-  "c": "audio/el/turnip/en/nar_12498f6747.mp3"
+ "파란 싹이 났어요! 물도 주고 햇볕도 줘요.": {
+  "t": "A green sprout popped up! It gets water and sunshine too.",
+  "c": "audio/el/turnip/en/nar_f3f0dc72f0.mp3"
  },
  "순무 싹을 톡톡 눌러 봐요!": {
   "t": "Tap, tap the turnip sprout!",

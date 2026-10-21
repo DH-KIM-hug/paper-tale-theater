@@ -19,9 +19,9 @@ const NARRATION_CLIPS_EN = {
   "t": "The seed slipped right into the soil.",
   "c": "audio/tc/turnip/en/nar_e2c0199e58.mp3"
  },
- "파란 싹이 났어요! 톡톡 눌러서 물도 주고 햇볕도 줘요.": {
-  "t": "A green sprout popped up! Tap, tap to give it water and sunshine.",
-  "c": "audio/tc/turnip/en/nar_af0fb84834.mp3"
+ "파란 싹이 났어요! 물도 주고 햇볕도 줘요.": {
+  "t": "A green sprout popped up! It gets water and sunshine too.",
+  "c": "audio/tc/turnip/en/nar_41929fc7cb.mp3"
  },
  "순무 싹을 톡톡 눌러 봐요!": {
   "t": "Tap, tap the turnip sprout!",
@@ -31,25 +31,21 @@ const NARRATION_CLIPS_EN = {
   "t": "Summer came. The turnip leaves grew as tall as Grandpa!",
   "c": "audio/tc/turnip/en/nar_3ca4629739.mp3"
  },
- "할아버지가 순무 잎을 꽉 잡았어요. 톡톡 눌러서 영차!": {
-  "t": "Grandpa grabbed the turnip leaves tight. Tap, tap and heave-ho!",
-  "c": "audio/tc/turnip/en/nar_9efbbefb23.mp3"
+ "할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!": {
+  "t": "Grandpa grabbed the turnip leaves tight. Tap and heave-ho!",
+  "c": "audio/tc/turnip/en/nar_7e148c67d9.mp3"
  },
- "할아버지를 톡톡 눌러서 영차 영차!": {
-  "t": "Tap, tap Grandpa to heave-ho, heave-ho!",
-  "c": "audio/tc/turnip/en/nar_116fa1bd5d.mp3"
+ "할아버지를 톡 눌러서 영차!": {
+  "t": "Tap Grandpa to heave-ho!",
+  "c": "audio/tc/turnip/en/nar_490a895cad.mp3"
  },
  "순무는 꿈쩍도 안 해요.": {
   "t": "The turnip won't budge.",
   "c": "audio/tc/turnip/en/nar_8a616b0b18.mp3"
  },
- "혼자서는 안 되겠어요. 할아버지를 톡 눌러서 할머니를 불러요!": {
-  "t": "Grandpa can't do it alone. Tap Grandpa to call Grandma!",
-  "c": "audio/tc/turnip/en/nar_56349eb40a.mp3"
- },
- "할아버지를 톡! 할머니를 불러요.": {
-  "t": "Tap Grandpa! Call Grandma.",
-  "c": "audio/tc/turnip/en/nar_abddfa56a4.mp3"
+ "혼자서는 안 되겠어요. 할아버지가 할머니를 불러요!": {
+  "t": "Grandpa can't do it alone. Grandpa calls Grandma!",
+  "c": "audio/tc/turnip/en/nar_d9f9465f11.mp3"
  },
  "아이코! 할아버지가 엉덩방아를 찧었어요.": {
   "t": "Oof! Grandpa plopped down on the ground.",
@@ -65,11 +61,11 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/turnip/en/grandma_5e1e01f57a.mp3"
   ]
  },
- "할머니가 할아버지 허리를 잡고, 톡톡톡 영차!": {
-  "t": "Grandma held on to Grandpa's waist. Tap, tap, tap, heave-ho!",
-  "c": "audio/tc/turnip/en/nar_2a5e4ef511.mp3"
+ "할머니가 할아버지 허리를 잡고, 톡! 영차!": {
+  "t": "Grandma held on to Grandpa's waist. Tap! Heave-ho!",
+  "c": "audio/tc/turnip/en/nar_6a847155b4.mp3"
  },
- "순무를 톡톡 눌러서 영차!": {
+ "순무를 톡 눌러서 영차!": {
   "t": "Tap, tap the turnip and heave-ho!",
   "c": "audio/tc/turnip/en/nar_b7d8775964.mp3"
  },
