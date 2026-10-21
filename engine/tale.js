@@ -8,7 +8,8 @@
 const Tale = (() => {
   const NS = 'http://www.w3.org/2000/svg';
   const $ = s => document.querySelector(s);
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  let vFast = () => false;   /* 검증 모드에서 건너뛰는 중이면 기다림을 아주 짧게 */
+  const sleep = ms => new Promise(r => setTimeout(r, vFast() ? Math.min(ms, 15) : ms));
   let root, stage, cam, bgL, world, fxL, handEl, busy = true;
   const camState = { x: 500, y: 280, z: 1 };
 
@@ -141,6 +142,17 @@ const Tale = (() => {
   const VERIFY = (() => { try { return window.parent !== window && new URLSearchParams(location.search).get('verify') === '1'; } catch (e) { return false; } })();
   const vSkip = (() => { try { return +new URLSearchParams(location.search).get('skip') || 0; } catch (e) { return 0; } })();
   let vN = 0, vWait = null, vLine = '';
+  /* ?skipto=대사 이면 그 대사가 나올 때까지 소리 없이 건너뛴다(목록에서 줄을 눌러 바로 가기) */
+  const vSkipText = (() => { try { return new URLSearchParams(location.search).get('skipto') || ''; } catch (e) { return ''; } })();
+  let vReached = !vSkipText;
+  if (VERIFY && (vSkip > 0 || vSkipText)) {
+    vFast = () => vN < vSkip || !vReached;
+    /* 건너뛰는 동안 끝이 있는 애니메이션은 바로 끝내서 빨리 지나간다 */
+    const iv = setInterval(() => {
+      if (!vFast()) { clearInterval(iv); return; }
+      try { document.getAnimations().forEach(a => { const t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState === 'running') a.finish(); }); } catch (e) { /* 무시 */ }
+    }, 60);
+  }
   const vPost = m => { try { window.parent.postMessage(Object.assign({ type: 'step' }, m), '*'); } catch (e) { /* 부모 없음 */ } };
   const vGo = () => new Promise(r => { vWait = r; });
   if (VERIFY) window.addEventListener('message', e => {
@@ -162,8 +174,10 @@ const Tale = (() => {
   };
   async function vSay(text, d) {
     const n = vN++;
-    vPost({ kind: 'say', n, text, file: vClipFile(text), skipped: n < vSkip });
-    if (n < vSkip) return;
+    if (!vReached && text === vSkipText) vReached = true;
+    const skip = n < vSkip || !vReached;
+    vPost({ kind: 'say', n, text, file: vClipFile(text), skipped: skip });
+    if (skip) return;
     vLine = text;
     const go = vGo();
     Narrator.speak(text, d ? { onSeg: d.seg } : {}).catch(() => { /* 소리 실패는 무시 */ });
@@ -173,8 +187,9 @@ const Tale = (() => {
   /* 조작 대기 단계: 부모의 go 가 실제 조작을 대신 한다 */
   function vInput(name, a, p, drive) {
     const n = vN++;
-    vPost({ kind: name, n, text: '', file: '', skipped: n < vSkip });
-    const go = n < vSkip ? Promise.resolve() : vGo();
+    const skip = n < vSkip || !vReached;
+    vPost({ kind: name, n, text: '', file: '', skipped: skip });
+    const go = skip ? Promise.resolve() : vGo();
     go.then(() => { if (!p.done) drive(a, p).catch(e => console.warn('vDrive', e)); });
   }
 
