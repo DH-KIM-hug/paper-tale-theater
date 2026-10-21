@@ -1,0 +1,736 @@
+{
+ "notes": "ElevenLabs 목소리 배정(2026-10-21, SPEC §6): nar=Annie(여자 내레이터 돌려 쓰기 Lily→Huelyn→Annie — 직전 두 편이 미녀와 야수 Huelyn·빨간 자동차 Lily 라 Annie; 부드럽고 사랑스러운 낭독), rap=Sora(신데렐라 오디션 A-2 \"Warm & Expressive Storyteller\", 젊은 서울 여성·표현이 풍부 — 허밍 \"라라라~\"와 기쁨·놀람 표정이 큰 역이라 선택. 공주 목소리로 Luna 는 백설·신데렐라·인어에 세 번, Yun 은 미녀에 써서 새 목소리를 쓴다. 허밍이 밋밋하면 Yoojin(Cm89zxZzEGaMu7ajYw2K, 밝고 친근)으로 바꾼다), gothel=Matilda(마녀·새엄마 원형, 헨젤 마녀·인어 마녀·백설 왕비와 같은 목소리 — 엄하고 투덜거리지만 소리 지르지 않게 연기 지시, stability .55 로 음색 고정. 헨젤 마녀와 너무 같게 들리면 Wisdom(Pyj2w3lxZ0VMpAJ4CmRu, 격식 있고 절제된 중년)으로), father=Namchun(할아버지·아버지 원형), mother=Bella(엄마 원형), prince=Klamon(N-5 한국어 전문 밝고 따뜻한 청년 — 백설 왕자 Eric·신데렐라·인어 왕자 Sunjun·미녀 George 와 다른 목소리; 미운 아기 오리에서 카드 한 줄만 썼던 목소리. 어색하면 Taehyun(T6CkalnggsFZDOXwglLf)). 아기·새·토끼·말은 목소리 없음. 허밍 \"라라라, 라라라~\"는 라푼젤 목소리의 extra.hum(말풍선 없음, vo). 수 세기 없음. 교훈은 대사로 읽지 않는다(끝 화면 글자만). 모델 eleven_v4, 배역별 settings.",
+ "voices": {
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
+  "rap": "JpGoUJuLFthrFkcdBy4k",
+  "gothel": "XrExE9yKIg1WjnnlVkGX",
+  "father": "5ON5Fnz24cnOozEQfGAm",
+  "mother": "hpp4J3VqNfWAUOO0d1Us",
+  "prince": "dnZGOA54w68T7vLLPFTp"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "rap": "eleven_v4",
+  "gothel": "eleven_v4",
+  "father": "eleven_v4",
+  "mother": "eleven_v4",
+  "prince": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.5,
+   "style": 0.35
+  },
+  "rap": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "gothel": {
+   "stability": 0.55,
+   "style": 0.4
+  },
+  "father": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "mother": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "prince": {
+   "stability": 0.45,
+   "style": 0.4
+  }
+ },
+ "use_dir": [
+  "nar",
+  "rap",
+  "gothel",
+  "father",
+  "mother",
+  "prince"
+ ],
+ "lines": [
+  {
+   "text": "옛날에 아기를 기다리는 부부가 살았어요. 아기가 곧 올 거예요.",
+   "segs": [
+    [
+     "nar",
+     "옛날에 아기를 기다리는 부부가 살았어요. 아기가 곧 올 거예요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "담 너머 텃밭은 마녀 고텔의 마법 텃밭이라 아무도 들어가지 못했어요.",
+   "segs": [
+    [
+     "nar",
+     "담 너머 텃밭은 마녀 고텔의 마법 텃밭이라 아무도 들어가지 못했어요.",
+     null,
+     "[calm, a little mysterious, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "저 라푼젤 풀이 너무너무 먹고 싶어요.",
+   "segs": [
+    [
+     "mother",
+     "저 라푼젤 풀이 너무너무 먹고 싶어요.",
+     "sad",
+     "[soft, longing, wishful, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "내가 가져올게요.",
+   "segs": [
+    [
+     "father",
+     "내가 가져올게요.",
+     null,
+     "[kind, a little nervous, decided]"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되자, 아버지는 살금살금 담을 넘었어요.",
+   "segs": [
+    [
+     "nar",
+     "밤이 되자, 아버지는 살금살금 담을 넘었어요.",
+     null,
+     "[hushed, sneaky, slow, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "누구냐! 내 풀을 뽑다니!",
+   "segs": [
+    [
+     "gothel",
+     "누구냐! 내 풀을 뽑다니!",
+     "toneup",
+     "[stern old witch, grumbling, sharp but NOT shouting, not scary]"
+    ]
+   ]
+  },
+  {
+   "text": "아, 아내가 너무너무 먹고 싶어 해서요.",
+   "segs": [
+    [
+     "father",
+     "아, 아내가 너무너무 먹고 싶어 해서요.",
+     "sad",
+     "[startled, apologetic, small voice]"
+    ]
+   ]
+  },
+  {
+   "text": "내 풀을 가져가도 좋다. 대신 아기가 태어나면 내가 키우마.",
+   "segs": [
+    [
+     "gothel",
+     "내 풀을 가져가도 좋다. 대신 아기가 태어나면 내가 키우마.",
+     null,
+     "[stern, slow, serious bargain, grumbling, calm]"
+    ]
+   ]
+  },
+  {
+   "text": "네… 알겠어요.",
+   "segs": [
+    [
+     "father",
+     "네… 알겠어요.",
+     "sad",
+     "[hesitant, quiet, a pause before 알겠어요]"
+    ]
+   ]
+  },
+  {
+   "text": "아기가 태어났어요. 마녀 고텔은 아기를 데려가 라푼젤이라고 이름 짓고 정성껏 키웠어요.",
+   "segs": [
+    [
+     "nar",
+     "아기가 태어났어요. 마녀 고텔은 아기를 데려가 라푼젤이라고 이름 짓고 정성껏 키웠어요.",
+     null,
+     "[gentle, matter-of-fact, warm at 정성껏]"
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤이 열두 살이 되자, 마녀는 지팡이를 톡 두드렸어요.",
+   "segs": [
+    [
+     "nar",
+     "라푼젤이 열두 살이 되자, 마녀는 지팡이를 톡 두드렸어요.",
+     null,
+     "[calm, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "숲속에 문도 계단도 없는 높은 탑이 쑥 솟았어요. 창문은 꼭대기에 하나뿐이에요.",
+   "segs": [
+    [
+     "nar",
+     "숲속에 문도 계단도 없는 높은 탑이 쑥 솟았어요. 창문은 꼭대기에 하나뿐이에요.",
+     null,
+     "[wondering, rising at 쑥, then clear and slow]"
+    ]
+   ]
+  },
+  {
+   "text": "자, 잠겨라. 밖은 위험하단다. 여기가 제일 안전해.",
+   "segs": [
+    [
+     "gothel",
+     "자, 잠겨라. 밖은 위험하단다. 여기가 제일 안전해.",
+     null,
+     "[stern but protective, low, slow, grumbling, not scary]"
+    ]
+   ]
+  },
+  {
+   "text": "지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.",
+   "segs": [
+    [
+     "nar",
+     "지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.",
+     null,
+     "[clear, slow, pointing out, a pause between the two halves]"
+    ]
+   ]
+  },
+  {
+   "text": "탑 위에 있는 새를 톡, 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "탑 위에 있는 새를 톡, 눌러 봐요.",
+     null,
+     "[inviting, clear, slow, stress on 위]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 탑 아래에 있는 토끼예요. 위를 봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 탑 아래에 있는 토끼예요. 위를 봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 탑 위에 새!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 탑 위에 새!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 탑 아래에 있는 토끼를 톡, 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "이번엔 탑 아래에 있는 토끼를 톡, 눌러 봐요.",
+     null,
+     "[inviting, clear, slow, stress on 아래]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 탑 위에 있는 새예요. 아래를 봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 탑 위에 있는 새예요. 아래를 봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 탑 아래에 토끼!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 탑 아래에 토끼!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤, 라푼젤, 머리를 내려 줘!",
+   "segs": [
+    [
+     "gothel",
+     "라푼젤, 라푼젤, 머리를 내려 줘!",
+     "toneup",
+     "[calling up loudly but not harsh, sing-song chant, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "스르르~ 금빛 머리가 탑 아래까지 닿았어요.",
+   "segs": [
+    [
+     "nar",
+     "스르르~ 금빛 머리가 탑 아래까지 닿았어요.",
+     null,
+     "[soft sliding sound on 스르르, then calm]"
+    ]
+   ]
+  },
+  {
+   "text": "고텔은 머리를 잡고 천천히 올라가요.",
+   "segs": [
+    [
+     "nar",
+     "고텔은 머리를 잡고 천천히 올라가요.",
+     null,
+     "[slow, steady, a little effortful]"
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤은 혼자 있을 때면 창가에서 노래를 불렀어요.",
+   "segs": [
+    [
+     "nar",
+     "라푼젤은 혼자 있을 때면 창가에서 노래를 불렀어요.",
+     null,
+     "[warm, gentle, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "내 노래가 숲 끝까지 닿았으면.",
+   "segs": [
+    [
+     "rap",
+     "내 노래가 숲 끝까지 닿았으면.",
+     null,
+     "[young girl, wistful, soft, dreamy]"
+    ]
+   ]
+  },
+  {
+   "text": "바닥에 리본 세 개가 있어요. 길이가 다 달라요.",
+   "segs": [
+    [
+     "nar",
+     "바닥에 리본 세 개가 있어요. 길이가 다 달라요.",
+     null,
+     "[clear, slow, pointing out]"
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤 머리를 묶을 제일 긴 리본을 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "라푼젤 머리를 묶을 제일 긴 리본을 찾아봐요.",
+     null,
+     "[inviting, clear, slow, stress on 제일 긴]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 중간 리본이에요. 더 긴 리본이 있어요.",
+   "segs": [
+    [
+     "nar",
+     "그건 중간 리본이에요. 더 긴 리본이 있어요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 제일 짧은 리본이에요. 더 긴 리본이 있어요.",
+   "segs": [
+    [
+     "nar",
+     "그건 제일 짧은 리본이에요. 더 긴 리본이 있어요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 제일 긴 리본!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 제일 긴 리본!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 제일 짧은 리본은 어디 있을까요?",
+   "segs": [
+    [
+     "nar",
+     "그럼 제일 짧은 리본은 어디 있을까요?",
+     null,
+     "[inviting, clear, slow, stress on 제일 짧은]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 중간 리본이에요. 더 짧은 리본이 있어요.",
+   "segs": [
+    [
+     "nar",
+     "그건 중간 리본이에요. 더 짧은 리본이 있어요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 제일 짧은 리본!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 제일 짧은 리본!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤은 리본을 묶은 머리를 창가에 늘어뜨리고 또 노래했어요.",
+   "segs": [
+    [
+     "nar",
+     "라푼젤은 리본을 묶은 머리를 창가에 늘어뜨리고 또 노래했어요.",
+     null,
+     "[warm, gentle, closing the scene]"
+    ]
+   ]
+  },
+  {
+   "text": "어느 해질녘, 숲을 지나던 왕자가 노랫소리를 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "어느 해질녘, 숲을 지나던 왕자가 노랫소리를 들었어요.",
+     null,
+     "[calm, a little wonder, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "어디서 이렇게 고운 노래가 들리지?",
+   "segs": [
+    [
+     "prince",
+     "어디서 이렇게 고운 노래가 들리지?",
+     null,
+     "[young man, curious, gentle, listening]"
+    ]
+   ]
+  },
+  {
+   "text": "왕자는 탑을 한 바퀴 돌았지만 문이 없었어요.",
+   "segs": [
+    [
+     "nar",
+     "왕자는 탑을 한 바퀴 돌았지만 문이 없었어요.",
+     null,
+     "[calm, slightly puzzled, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 마녀 고텔이 왔어요. 왕자는 나무 뒤에 숨었어요.",
+   "segs": [
+    [
+     "nar",
+     "그때 마녀 고텔이 왔어요. 왕자는 나무 뒤에 숨었어요.",
+     null,
+     "[hushed, quick, a little suspense but light]"
+    ]
+   ]
+  },
+  {
+   "text": "아, 저렇게 올라가는구나!",
+   "segs": [
+    [
+     "prince",
+     "아, 저렇게 올라가는구나!",
+     "toneup",
+     "[young man, whispering discovery, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날 저녁, 왕자는 탑 아래에서 외쳤어요.",
+   "segs": [
+    [
+     "nar",
+     "다음 날 저녁, 왕자는 탑 아래에서 외쳤어요.",
+     null,
+     "[calm, anticipating]"
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤, 라푼젤, 머리를 내려 줘요!",
+   "segs": [
+    [
+     "prince",
+     "라푼젤, 라푼젤, 머리를 내려 줘요!",
+     "toneup",
+     "[young man, calling up warmly, sing-song chant, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "어머, 할머니가 아니네?",
+   "segs": [
+    [
+     "rap",
+     "어머, 할머니가 아니네?",
+     "toneup",
+     "[young girl, surprised, a little giggle, not afraid]"
+    ]
+   ]
+  },
+  {
+   "text": "놀라게 해서 미안해요. 노래가 너무 고와서 왔어요. 저와 함께 성으로 가요.",
+   "segs": [
+    [
+     "prince",
+     "놀라게 해서 미안해요. 노래가 너무 고와서 왔어요. 저와 함께 성으로 가요.",
+     null,
+     "[young man, gentle, sincere, warm, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "좋아요. 비단실을 가져오면 사다리를 엮을게요.",
+   "segs": [
+    [
+     "rap",
+     "좋아요. 비단실을 가져오면 사다리를 엮을게요.",
+     "happy",
+     "[young girl, bright, hopeful, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "그날부터 왕자는 저녁마다 비단실을 가져왔어요.",
+   "segs": [
+    [
+     "nar",
+     "그날부터 왕자는 저녁마다 비단실을 가져왔어요.",
+     null,
+     "[warm, gentle, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 라푼젤이 무심코 말했어요.",
+   "segs": [
+    [
+     "nar",
+     "어느 날, 라푼젤이 무심코 말했어요.",
+     null,
+     "[calm, light, a small pause at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "할머니, 할머니는 왜 왕자님보다 훨씬 무거워요?",
+   "segs": [
+    [
+     "rap",
+     "할머니, 할머니는 왜 왕자님보다 훨씬 무거워요?",
+     null,
+     "[young girl, innocent, curious, chatty]"
+    ]
+   ]
+  },
+  {
+   "text": "뭐라고? 왕자라니!",
+   "segs": [
+    [
+     "gothel",
+     "뭐라고? 왕자라니!",
+     "toneup",
+     "[stern old witch, startled and cross, grumbling, NOT screaming, not scary]"
+    ]
+   ]
+  },
+  {
+   "text": "마녀는 가위 한 번으로 라푼젤의 머리를 자르고, 지팡이를 톡 두드려 먼 들판의 작은 오두막으로 데려갔어요.",
+   "segs": [
+    [
+     "nar",
+     "마녀는 가위 한 번으로 라푼젤의 머리를 자르고, 지팡이를 톡 두드려 먼 들판의 작은 오두막으로 데려갔어요.",
+     null,
+     "[calm, matter-of-fact, not dramatic, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "그날 저녁, 왕자는 아무것도 모르고 탑에 왔어요.",
+   "segs": [
+    [
+     "nar",
+     "그날 저녁, 왕자는 아무것도 모르고 탑에 왔어요.",
+     null,
+     "[calm, a little suspense but light]"
+    ]
+   ]
+  },
+  {
+   "text": "마녀는 잘린 머리를 고리에 걸어 내려 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "마녀는 잘린 머리를 고리에 걸어 내려 주었어요.",
+     null,
+     "[hushed, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤은 여기 없다. 다시는 못 볼 거다. 자, 내려가라.",
+   "segs": [
+    [
+     "gothel",
+     "라푼젤은 여기 없다. 다시는 못 볼 거다. 자, 내려가라.",
+     null,
+     "[stern old witch, low, firm, grumbling, slow, NOT shouting, not scary]"
+    ]
+   ]
+  },
+  {
+   "text": "휘익~ 마법 바람이 왕자를 탑 아래 풀숲에 사뿐 내려놓았어요.",
+   "segs": [
+    [
+     "nar",
+     "휘익~ 마법 바람이 왕자를 탑 아래 풀숲에 사뿐 내려놓았어요.",
+     null,
+     "[a soft whoosh on 휘익, then gentle and soft at 사뿐]"
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤… 어디로 갔을까.",
+   "segs": [
+    [
+     "prince",
+     "라푼젤… 어디로 갔을까.",
+     "sad",
+     "[young man, sad, quiet, puzzled, a pause after 라푼젤]"
+    ]
+   ]
+  },
+  {
+   "text": "왕자는 슬픈 얼굴로 숲을 걷고 또 걸었어요.",
+   "segs": [
+    [
+     "nar",
+     "왕자는 슬픈 얼굴로 숲을 걷고 또 걸었어요.",
+     "sad",
+     "[slow, gentle, a little sad, long vowels at 걷고 또 걸었어요]"
+    ]
+   ]
+  },
+  {
+   "text": "그때, 바람을 타고 노랫소리가 들려왔어요.",
+   "segs": [
+    [
+     "nar",
+     "그때, 바람을 타고 노랫소리가 들려왔어요.",
+     null,
+     "[hopeful, brightening, a pause after 그때]"
+    ]
+   ]
+  },
+  {
+   "text": "이 노래는… 라푼젤!",
+   "segs": [
+    [
+     "prince",
+     "이 노래는… 라푼젤!",
+     "toneup",
+     "[young man, realising, then joyful shout, a pause after 노래는]"
+    ]
+   ]
+  },
+  {
+   "text": "왕자님! 찾아와 줬군요.",
+   "segs": [
+    [
+     "rap",
+     "왕자님! 찾아와 줬군요.",
+     "happy",
+     "[young girl, overjoyed, bright, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "포기하지 않길 잘했어요. 이제 함께 가요.",
+   "segs": [
+    [
+     "prince",
+     "포기하지 않길 잘했어요. 이제 함께 가요.",
+     "happy",
+     "[young man, relieved, warm, gentle, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "두 사람은 손을 꼭 잡고 성으로 떠났어요.",
+   "segs": [
+    [
+     "nar",
+     "두 사람은 손을 꼭 잡고 성으로 떠났어요.",
+     "happy",
+     "[warm, joyful, storybook ending tone]"
+    ]
+   ]
+  },
+  {
+   "text": "마녀 고텔은 텃밭으로 돌아갔어요.",
+   "segs": [
+    [
+     "nar",
+     "마녀 고텔은 텃밭으로 돌아갔어요.",
+     null,
+     "[calm, quiet, final, slow]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "hum": [
+   [
+    "rap",
+    "라라라, 라라라~",
+    "happy",
+    "[softly singing a simple happy little tune, humming, gentle, slow, young girl, no words]"
+   ]
+  ]
+ }
+}

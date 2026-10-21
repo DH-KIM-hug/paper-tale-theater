@@ -1,0 +1,723 @@
+{
+ "voices": {
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
+  "rap": "JpGoUJuLFthrFkcdBy4k",
+  "gothel": "XrExE9yKIg1WjnnlVkGX",
+  "father": "5ON5Fnz24cnOozEQfGAm",
+  "mother": "hpp4J3VqNfWAUOO0d1Us",
+  "prince": "dnZGOA54w68T7vLLPFTp"
+ },
+ "lines": [
+  {
+   "text": "옛날에 아기를 기다리는 부부가 살았어요. 아기가 곧 올 거예요.",
+   "en": "Once upon a time, there lived a husband and wife who were waiting for a baby. The baby was coming soon.",
+   "segs": [
+    [
+     "nar",
+     "Once upon a time, there lived a husband and wife who were waiting for a baby. The baby was coming soon.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "담 너머 텃밭은 마녀 고텔의 마법 텃밭이라 아무도 들어가지 못했어요.",
+   "en": "Beyond the wall was the magic garden of the witch Gothel, and no one was allowed in.",
+   "segs": [
+    [
+     "nar",
+     "Beyond the wall was the magic garden of the witch Gothel, and no one was allowed in.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "저 라푼젤 풀이 너무너무 먹고 싶어요.",
+   "en": "Oh, I want to eat that rampion so, so much.",
+   "segs": [
+    [
+     "mother",
+     "Oh, I want to eat that rampion so, so much.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "내가 가져올게요.",
+   "en": "I'll go and get some for you.",
+   "segs": [
+    [
+     "father",
+     "I'll go and get some for you.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되자, 아버지는 살금살금 담을 넘었어요.",
+   "en": "When night came, the father quietly climbed over the wall.",
+   "segs": [
+    [
+     "nar",
+     "When night came, the father quietly climbed over the wall.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "누구냐! 내 풀을 뽑다니!",
+   "en": "Who's there! Pulling up my rampion!",
+   "segs": [
+    [
+     "gothel",
+     "Who's there! Pulling up my rampion!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "아, 아내가 너무너무 먹고 싶어 해서요.",
+   "en": "Oh! My wife wanted it so, so much.",
+   "segs": [
+    [
+     "father",
+     "Oh! My wife wanted it so, so much.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "내 풀을 가져가도 좋다. 대신 아기가 태어나면 내가 키우마.",
+   "en": "You may take my rampion. But when the baby is born, I shall raise it.",
+   "segs": [
+    [
+     "gothel",
+     "You may take my rampion. But when the baby is born, I shall raise it.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "네… 알겠어요.",
+   "en": "Yes... all right.",
+   "segs": [
+    [
+     "father",
+     "Yes... all right.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "아기가 태어났어요. 마녀 고텔은 아기를 데려가 라푼젤이라고 이름 짓고 정성껏 키웠어요.",
+   "en": "The baby was born. The witch Gothel took her away, named her Rapunzel, and raised her with care.",
+   "segs": [
+    [
+     "nar",
+     "The baby was born. The witch Gothel took her away, named her Rapunzel, and raised her with care.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤이 열두 살이 되자, 마녀는 지팡이를 톡 두드렸어요.",
+   "en": "When Rapunzel turned twelve, the witch tapped her stick on the ground.",
+   "segs": [
+    [
+     "nar",
+     "When Rapunzel turned twelve, the witch tapped her stick on the ground.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "숲속에 문도 계단도 없는 높은 탑이 쑥 솟았어요. 창문은 꼭대기에 하나뿐이에요.",
+   "en": "Up rose a tall tower in the forest, with no door and no stairs. There was only one window, right at the top.",
+   "segs": [
+    [
+     "nar",
+     "Up rose a tall tower in the forest, with no door and no stairs. There was only one window, right at the top.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자, 잠겨라. 밖은 위험하단다. 여기가 제일 안전해.",
+   "en": "Now, lock tight. The outside is dangerous. This is the safest place.",
+   "segs": [
+    [
+     "gothel",
+     "Now, lock tight. The outside is dangerous. This is the safest place.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.",
+   "en": "On top of the roof sits a bird, and down below the tower sits a rabbit.",
+   "segs": [
+    [
+     "nar",
+     "On top of the roof sits a bird, and down below the tower sits a rabbit.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "탑 위에 있는 새를 톡, 눌러 봐요.",
+   "en": "Tap the bird on top of the tower.",
+   "segs": [
+    [
+     "nar",
+     "Tap the bird on top of the tower.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 탑 아래에 있는 토끼예요. 위를 봐요.",
+   "en": "That's the rabbit below the tower. Look up.",
+   "segs": [
+    [
+     "nar",
+     "That's the rabbit below the tower. Look up.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 탑 위에 새!",
+   "en": "That's right, the bird on top!",
+   "segs": [
+    [
+     "nar",
+     "That's right, the bird on top!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 탑 아래에 있는 토끼를 톡, 눌러 봐요.",
+   "en": "Now tap the rabbit below the tower.",
+   "segs": [
+    [
+     "nar",
+     "Now tap the rabbit below the tower.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 탑 위에 있는 새예요. 아래를 봐요.",
+   "en": "That's the bird on top of the tower. Look down.",
+   "segs": [
+    [
+     "nar",
+     "That's the bird on top of the tower. Look down.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 탑 아래에 토끼!",
+   "en": "That's right, the rabbit below!",
+   "segs": [
+    [
+     "nar",
+     "That's right, the rabbit below!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤, 라푼젤, 머리를 내려 줘!",
+   "en": "Rapunzel, Rapunzel, let down your hair!",
+   "segs": [
+    [
+     "gothel",
+     "Rapunzel, Rapunzel, let down your hair!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "스르르~ 금빛 머리가 탑 아래까지 닿았어요.",
+   "en": "Swish... the golden hair slid all the way down to the foot of the tower.",
+   "segs": [
+    [
+     "nar",
+     "Swish... the golden hair slid all the way down to the foot of the tower.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "고텔은 머리를 잡고 천천히 올라가요.",
+   "en": "Gothel took hold of the hair and slowly climbed up.",
+   "segs": [
+    [
+     "nar",
+     "Gothel took hold of the hair and slowly climbed up.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤은 혼자 있을 때면 창가에서 노래를 불렀어요.",
+   "en": "Whenever Rapunzel was alone, she sang at the window.",
+   "segs": [
+    [
+     "nar",
+     "Whenever Rapunzel was alone, she sang at the window.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "내 노래가 숲 끝까지 닿았으면.",
+   "en": "I wish my song could reach the end of the forest.",
+   "segs": [
+    [
+     "rap",
+     "I wish my song could reach the end of the forest.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "바닥에 리본 세 개가 있어요. 길이가 다 달라요.",
+   "en": "There are three ribbons on the floor. They are all different lengths.",
+   "segs": [
+    [
+     "nar",
+     "There are three ribbons on the floor. They are all different lengths.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤 머리를 묶을 제일 긴 리본을 찾아봐요.",
+   "en": "Find the longest ribbon to tie Rapunzel's hair.",
+   "segs": [
+    [
+     "nar",
+     "Find the longest ribbon to tie Rapunzel's hair.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 중간 리본이에요. 더 긴 리본이 있어요.",
+   "en": "That's the middle ribbon. There's a longer one.",
+   "segs": [
+    [
+     "nar",
+     "That's the middle ribbon. There's a longer one.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 제일 짧은 리본이에요. 더 긴 리본이 있어요.",
+   "en": "That's the shortest ribbon. There's a longer one.",
+   "segs": [
+    [
+     "nar",
+     "That's the shortest ribbon. There's a longer one.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 제일 긴 리본!",
+   "en": "That's right, the longest ribbon!",
+   "segs": [
+    [
+     "nar",
+     "That's right, the longest ribbon!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 제일 짧은 리본은 어디 있을까요?",
+   "en": "Now, where is the shortest ribbon?",
+   "segs": [
+    [
+     "nar",
+     "Now, where is the shortest ribbon?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 중간 리본이에요. 더 짧은 리본이 있어요.",
+   "en": "That's the middle ribbon. There's a shorter one.",
+   "segs": [
+    [
+     "nar",
+     "That's the middle ribbon. There's a shorter one.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 제일 짧은 리본!",
+   "en": "That's right, the shortest ribbon!",
+   "segs": [
+    [
+     "nar",
+     "That's right, the shortest ribbon!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤은 리본을 묶은 머리를 창가에 늘어뜨리고 또 노래했어요.",
+   "en": "Rapunzel let her ribboned hair hang at the window and sang again.",
+   "segs": [
+    [
+     "nar",
+     "Rapunzel let her ribboned hair hang at the window and sang again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어느 해질녘, 숲을 지나던 왕자가 노랫소리를 들었어요.",
+   "en": "One evening at sunset, a prince riding through the forest heard the singing.",
+   "segs": [
+    [
+     "nar",
+     "One evening at sunset, a prince riding through the forest heard the singing.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어디서 이렇게 고운 노래가 들리지?",
+   "en": "Where is that lovely song coming from?",
+   "segs": [
+    [
+     "prince",
+     "Where is that lovely song coming from?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "왕자는 탑을 한 바퀴 돌았지만 문이 없었어요.",
+   "en": "The prince walked all the way around the tower, but there was no door.",
+   "segs": [
+    [
+     "nar",
+     "The prince walked all the way around the tower, but there was no door.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그때 마녀 고텔이 왔어요. 왕자는 나무 뒤에 숨었어요.",
+   "en": "Just then the witch Gothel came. The prince hid behind a tree.",
+   "segs": [
+    [
+     "nar",
+     "Just then the witch Gothel came. The prince hid behind a tree.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아, 저렇게 올라가는구나!",
+   "en": "Ah, so that's how you get up there!",
+   "segs": [
+    [
+     "prince",
+     "Ah, so that's how you get up there!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날 저녁, 왕자는 탑 아래에서 외쳤어요.",
+   "en": "The next evening, the prince called out from the foot of the tower.",
+   "segs": [
+    [
+     "nar",
+     "The next evening, the prince called out from the foot of the tower.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤, 라푼젤, 머리를 내려 줘요!",
+   "en": "Rapunzel, Rapunzel, let down your hair!",
+   "segs": [
+    [
+     "prince",
+     "Rapunzel, Rapunzel, let down your hair!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "어머, 할머니가 아니네?",
+   "en": "Oh my, you're not Grandmother?",
+   "segs": [
+    [
+     "rap",
+     "Oh my, you're not Grandmother?",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "놀라게 해서 미안해요. 노래가 너무 고와서 왔어요. 저와 함께 성으로 가요.",
+   "en": "I'm sorry I startled you. Your song was so lovely that I came. Come with me to my castle.",
+   "segs": [
+    [
+     "prince",
+     "I'm sorry I startled you. Your song was so lovely that I came. Come with me to my castle.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "좋아요. 비단실을 가져오면 사다리를 엮을게요.",
+   "en": "All right. If you bring me silk thread, I'll weave a ladder.",
+   "segs": [
+    [
+     "rap",
+     "All right. If you bring me silk thread, I'll weave a ladder.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그날부터 왕자는 저녁마다 비단실을 가져왔어요.",
+   "en": "From that day on, the prince brought silk thread every evening.",
+   "segs": [
+    [
+     "nar",
+     "From that day on, the prince brought silk thread every evening.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 라푼젤이 무심코 말했어요.",
+   "en": "One day, Rapunzel said without thinking,",
+   "segs": [
+    [
+     "nar",
+     "One day, Rapunzel said without thinking,",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "할머니, 할머니는 왜 왕자님보다 훨씬 무거워요?",
+   "en": "Grandmother, why are you so much heavier than the prince?",
+   "segs": [
+    [
+     "rap",
+     "Grandmother, why are you so much heavier than the prince?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "뭐라고? 왕자라니!",
+   "en": "What? A prince!",
+   "segs": [
+    [
+     "gothel",
+     "What? A prince!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "마녀는 가위 한 번으로 라푼젤의 머리를 자르고, 지팡이를 톡 두드려 먼 들판의 작은 오두막으로 데려갔어요.",
+   "en": "With one snip of her scissors the witch cut off Rapunzel's hair, then tapped her stick and took her away to a little cottage in a faraway meadow.",
+   "segs": [
+    [
+     "nar",
+     "With one snip of her scissors the witch cut off Rapunzel's hair, then tapped her stick and took her away to a little cottage in a faraway meadow.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그날 저녁, 왕자는 아무것도 모르고 탑에 왔어요.",
+   "en": "That evening, the prince came to the tower, knowing nothing.",
+   "segs": [
+    [
+     "nar",
+     "That evening, the prince came to the tower, knowing nothing.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "마녀는 잘린 머리를 고리에 걸어 내려 주었어요.",
+   "en": "The witch hung the cut-off braid on the hook and let it down.",
+   "segs": [
+    [
+     "nar",
+     "The witch hung the cut-off braid on the hook and let it down.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤은 여기 없다. 다시는 못 볼 거다. 자, 내려가라.",
+   "en": "Rapunzel is not here. You will never see her again. Now, down you go.",
+   "segs": [
+    [
+     "gothel",
+     "Rapunzel is not here. You will never see her again. Now, down you go.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "휘익~ 마법 바람이 왕자를 탑 아래 풀숲에 사뿐 내려놓았어요.",
+   "en": "Whoosh... a magic wind set the prince gently down in the grass below the tower.",
+   "segs": [
+    [
+     "nar",
+     "Whoosh... a magic wind set the prince gently down in the grass below the tower.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "라푼젤… 어디로 갔을까.",
+   "en": "Rapunzel... where could she be?",
+   "segs": [
+    [
+     "prince",
+     "Rapunzel... where could she be?",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "왕자는 슬픈 얼굴로 숲을 걷고 또 걸었어요.",
+   "en": "The prince walked and walked through the forest with a sad face.",
+   "segs": [
+    [
+     "nar",
+     "The prince walked and walked through the forest with a sad face.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "그때, 바람을 타고 노랫소리가 들려왔어요.",
+   "en": "Then, carried on the wind, came the sound of singing.",
+   "segs": [
+    [
+     "nar",
+     "Then, carried on the wind, came the sound of singing.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "이 노래는… 라푼젤!",
+   "en": "That song... Rapunzel!",
+   "segs": [
+    [
+     "prince",
+     "That song... Rapunzel!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "왕자님! 찾아와 줬군요.",
+   "en": "Prince! You came and found me.",
+   "segs": [
+    [
+     "rap",
+     "Prince! You came and found me.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "포기하지 않길 잘했어요. 이제 함께 가요.",
+   "en": "I'm glad I never gave up. Let's go together now.",
+   "segs": [
+    [
+     "prince",
+     "I'm glad I never gave up. Let's go together now.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "두 사람은 손을 꼭 잡고 성으로 떠났어요.",
+   "en": "The two held hands tightly and set off for the castle.",
+   "segs": [
+    [
+     "nar",
+     "The two held hands tightly and set off for the castle.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "마녀 고텔은 텃밭으로 돌아갔어요.",
+   "en": "And the witch Gothel went back to her garden.",
+   "segs": [
+    [
+     "nar",
+     "And the witch Gothel went back to her garden.",
+     null
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "hum": [
+   [
+    "rap",
+    "La la la, la la la~",
+    "happy"
+   ]
+  ]
+ },
+ "ui": {
+  "라푼젤": "Rapunzel",
+  "포기하지 않으면 다시 만날 수 있어요": "Never give up, and you will meet again",
+  "포기하지 않으면 다시 만날 수 있어요.": "Never give up, and you will meet again.",
+  "담 너머 텃밭": "The Garden Beyond the Wall",
+  "라푼젤 풀": "The Rampion",
+  "문 없는 탑": "The Tower with No Door",
+  "머리를 내려요": "Let Down Your Hair",
+  "탑 안의 노래": "A Song in the Tower",
+  "노랫소리": "The Singing",
+  "왕자가 올라와요": "The Prince Climbs Up",
+  "싹둑": "Snip!",
+  "빈 탑": "The Empty Tower",
+  "노래를 따라서": "Following the Song",
+  "쏙!": "Pop!",
+  "반짝!": "Sparkle!",
+  "톡": "Tap",
+  "쑥!": "Whoosh up!",
+  "스르르~": "Swish...",
+  "영차, 영차": "Heave-ho, heave-ho",
+  "라라라~": "La la la~",
+  "싹둑!": "Snip!",
+  "휘익~": "Whoosh...",
+  "사뿐": "Softly",
+  "톡톡": "Tap tap",
+  "팔랑": "Flutter",
+  "탑 위에 있는 새를 톡, 눌러 봐요.": "Tap the bird on top of the tower.",
+  "이번엔 탑 아래에 있는 토끼를 톡, 눌러 봐요.": "Now tap the rabbit below the tower.",
+  "라푼젤 머리를 묶을 제일 긴 리본을 찾아봐요.": "Find the longest ribbon to tie Rapunzel's hair.",
+  "그럼 제일 짧은 리본은 어디 있을까요?": "Now, where is the shortest ribbon?"
+ }
+}
