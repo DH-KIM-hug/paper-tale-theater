@@ -732,8 +732,9 @@ body.app .card.sel { outline: 3px solid var(--copper); outline-offset: -2px; }
 /* ═════════ 가로로 넓지만 낮은 화면(폰 가로, 접는 폰 안쪽 화면 등): 왼쪽 큰 동화, 오른쪽 작은 목록 ═════════ */
 @media (orientation: landscape) and (min-width: 700px) and (max-height: 700px) {
   body.app { --hero-h: calc(100vh - 86px); --hero-art: min(calc(var(--hero-h) - 112px), calc((46vw - 56px) / 1.3334)); --tile-min: 112px; }
-  body.app .shelf { flex-direction: row; align-items: stretch; gap: 14px; padding-left: max(0px, env(safe-area-inset-left)); padding-right: max(0px, env(safe-area-inset-right)); }
-  body.app .hero { width: 46%; height: 100%; flex: none; align-items: flex-start; }
+  body.app { --hero-h: 58vh; --hero-art: calc(58vh - 150px); }   /* 큰 그림이 위에서 목록과 함께 올라가게 한 줄로 쌓는다 */
+  body.app .shelf { flex-direction: column; align-items: stretch; gap: 10px; padding-left: max(0px, env(safe-area-inset-left)); padding-right: max(0px, env(safe-area-inset-right)); }
+  body.app .hero { width: 100%; height: var(--hero-h); flex: none; align-items: center; }
   body.app .hero .card { width: 100%; justify-content: flex-start; }
   body.app .hero .line, body.app .hero .tags { display: none; }
   body.app .hero .label { padding: 8px 76px 0; align-items: center; text-align: center; }
