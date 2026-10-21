@@ -599,7 +599,7 @@
       scene('deck');
       put(T, prince, X(480, 480), 518, { look: 'stand', to: 'right', s: SC.deck });
       put(T, lady, X(650, 600), 518, { look: 'wed', to: 'left', s: SC.deck });
-      put(T, mer, X(210, 340), 520, { look: 'worry', to: 'right', s: SC.deck });   /* 왕자 쪽을 바라보는 옆모습(sad 는 정면이라 방향이 안 맞음) */
+      put(T, mer, X(210, 340), 520, { look: 'sad', to: 'right', s: SC.deck });   /* 임시: worry 는 꼬리 자세라 사람 다리 모습과 안 맞음. 왕자 쪽을 보는 옆모습 그림이 생기면 교체 */
       if (P) camSnap(500, 280, 1);
     }, prince.pos);
     sfx(T, 'bell'); sleep(600).then(() => sfx(T, 'bell')); prince.hop(10, 360);
