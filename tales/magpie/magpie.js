@@ -271,7 +271,7 @@
     const CY = RIM_Y - .45 * RH;
     await T.sceneCard(tr('둥지'), () => {
       scene('mg_bg_nest');
-      put(T, mom, X(300, 440), 300, { look: 'sit', to: 'right', s: 1 });
+      put(T, mom, X(170, 440), 300, { look: 'sit', to: 'right', s: 1 });   /* 엄마는 둥지 바깥 왼쪽에 앉아 새끼와 겹치지 않게 */
       camSnap(P ? 540 : 500, P ? 235 : 280, 1);
     }, null);
     const l9 = say(S.L9);
@@ -280,7 +280,7 @@
       put(T, chicks[i], x, spotY(i), { to: 'left' }); fadeIn(chicks[i], 260); chicks[i].hop(14, 260);
       vo('chirp'); T.pop(x, spotY(i) - CH - 24, tr('짹!')); await sleep(700);
     }
-    put(T, rim, NX, RIM_Y, { s: RH / 100 });
+    /* 둥지 앞테는 쓰지 않는다: 배경 둥지 안에 작은 둥지가 한 번 더 겹쳐 보이므로. 새끼는 배경 둥지의 오목한 자리에 앉는다 */
     await l9; await sleep(300);
     const others = [1, 2, 3, 4, 5].filter(k => k !== N).sort(() => Math.random() - .5).slice(0, 2);
     const kinds = [N, ...others].sort(() => Math.random() - .5);
