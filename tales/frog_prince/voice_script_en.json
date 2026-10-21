@@ -1,0 +1,525 @@
+{
+ "voices": {
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "prin": "Lb7qkOn5hF8p7qfCDH8q",
+  "frog": "bIHbv24MWmeRgasZH58o",
+  "king": "5ON5Fnz24cnOozEQfGAm",
+  "prince": "cjVigY5qzO86Huf0OWal"
+ },
+ "lines": [
+  {
+   "text": "옛날 어느 성에 금빛 공을 가장 좋아하는 공주가 살았어요.",
+   "en": "Once upon a time, in a castle, there lived a princess who loved her golden ball more than anything.",
+   "segs": [
+    [
+     "nar",
+     "Once upon a time, in a castle, there lived a princess who loved her golden ball more than anything.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "금공은 어떤 모양일까요? 골라 봐요.",
+   "en": "What shape is the golden ball? Pick one!",
+   "segs": [
+    [
+     "nar",
+     "What shape is the golden ball? Pick one!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 네모예요. 금공 모양을 다시 찾아봐요.",
+   "en": "That's a square. Find the shape of the golden ball again.",
+   "segs": [
+    [
+     "nar",
+     "That's a square. Find the shape of the golden ball again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 세모예요. 금공 모양을 다시 찾아봐요.",
+   "en": "That's a triangle. Find the shape of the golden ball again.",
+   "segs": [
+    [
+     "nar",
+     "That's a triangle. Find the shape of the golden ball again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 동그라미! 금공은 동글동글 동그라미예요.",
+   "en": "That's right, a circle! The golden ball is round like a circle.",
+   "segs": [
+    [
+     "nar",
+     "That's right, a circle! The golden ball is round like a circle.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "통통통! 내 금공은 세상에서 제일 예뻐.",
+   "en": "Bounce, bounce! My golden ball is the prettiest in the whole world.",
+   "segs": [
+    [
+     "prin",
+     "Bounce, bounce! My golden ball is the prettiest in the whole world.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 공주는 숲속 샘가에서 공놀이를 했어요.",
+   "en": "One day, the princess played with her ball beside a spring in the forest.",
+   "segs": [
+    [
+     "nar",
+     "One day, the princess played with her ball beside a spring in the forest.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "공이 높이, 더 높이… 어머나!",
+   "en": "The ball went up high, and higher... oh my!",
+   "segs": [
+    [
+     "nar",
+     "The ball went up high, and higher... oh my!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "공이 샘 속으로 풍덩! 금공이 깊은 물속으로 가라앉았어요.",
+   "en": "Splash! The ball fell into the spring and sank deep down into the water.",
+   "segs": [
+    [
+     "nar",
+     "Splash! The ball fell into the spring and sank deep down into the water.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "엉엉, 내 금공… 내 금공이 사라졌어.",
+   "en": "Boo-hoo, my golden ball... my golden ball is gone.",
+   "segs": [
+    [
+     "prin",
+     "Boo-hoo, my golden ball... my golden ball is gone.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "그때 샘물 위로 초록 개구리가 고개를 내밀었어요.",
+   "en": "Just then, a green frog poked his head up out of the water.",
+   "segs": [
+    [
+     "nar",
+     "Just then, a green frog poked his head up out of the water.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "공주님, 왜 울어요?",
+   "en": "Princess, why are you crying?",
+   "segs": [
+    [
+     "frog",
+     "Princess, why are you crying?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "내 금공이 샘에 빠졌어. 흑흑.",
+   "en": "My golden ball fell into the spring. Sniff, sniff.",
+   "segs": [
+    [
+     "prin",
+     "My golden ball fell into the spring. Sniff, sniff.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "내가 공을 찾아 줄게. 대신 나랑 친구가 되고, 같이 먹고, 한 침대에서 자 줄래?",
+   "en": "I'll get your ball for you. But in return, will you be my friend, eat with me, and let me sleep in your bed?",
+   "segs": [
+    [
+     "frog",
+     "I'll get your ball for you. But in return, will you be my friend, eat with me, and let me sleep in your bed?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "좋아, 약속할게!",
+   "en": "Okay, I promise!",
+   "segs": [
+    [
+     "prin",
+     "Okay, I promise!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "개구리는 풍덩 물속으로 들어가 금공을 물고 올라왔어요.",
+   "en": "The frog dived into the water, splash, and came back up with the golden ball in his mouth.",
+   "segs": [
+    [
+     "nar",
+     "The frog dived into the water, splash, and came back up with the golden ball in his mouth.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "내 공이다!",
+   "en": "My ball!",
+   "segs": [
+    [
+     "prin",
+     "My ball!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "공주는 공을 받아 안고 성으로 쌩 달려갔어요.",
+   "en": "The princess grabbed the ball and ran straight home to the castle.",
+   "segs": [
+    [
+     "nar",
+     "The princess grabbed the ball and ran straight home to the castle.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "기다려, 약속했잖아!",
+   "en": "Wait! You promised!",
+   "segs": [
+    [
+     "frog",
+     "Wait! You promised!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "저녁 식사 때, 문 밖에서 폴짝폴짝 소리가 났어요. 똑똑!",
+   "en": "At supper time, there came a hop, hop sound outside the door. Knock, knock!",
+   "segs": [
+    [
+     "nar",
+     "At supper time, there came a hop, hop sound outside the door. Knock, knock!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "공주님, 약속했잖아요. 문 좀 열어 줘요.",
+   "en": "Princess, you promised. Please open the door.",
+   "segs": [
+    [
+     "frog",
+     "Princess, you promised. Please open the door.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "싫어! 저리 가!",
+   "en": "No! Go away!",
+   "segs": [
+    [
+     "prin",
+     "No! Go away!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "그 모습을 본 임금님이 공주에게 물었어요.",
+   "en": "The king saw this and asked the princess.",
+   "segs": [
+    [
+     "nar",
+     "The king saw this and asked the princess.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "공주야, 무슨 약속을 했느냐?",
+   "en": "My princess, what did you promise?",
+   "segs": [
+    [
+     "king",
+     "My princess, what did you promise?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "개구리가 금공을 찾아 주면… 친구가 되겠다고 했어요.",
+   "en": "I said that if the frog found my golden ball... I would be his friend.",
+   "segs": [
+    [
+     "prin",
+     "I said that if the frog found my golden ball... I would be his friend.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "약속은 지켜야 한단다. 도와준 친구에게는 더욱 그렇지.",
+   "en": "A promise must be kept. Even more so to a friend who helped you.",
+   "segs": [
+    [
+     "king",
+     "A promise must be kept. Even more so to a friend who helped you.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "…알겠어요, 아버지.",
+   "en": "...Yes, Father.",
+   "segs": [
+    [
+     "prin",
+     "...Yes, Father.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "공주는 개구리를 식탁으로 데려갔어요.",
+   "en": "The princess brought the frog to the table.",
+   "segs": [
+    [
+     "nar",
+     "The princess brought the frog to the table.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "약속했으니까 같이 먹자.",
+   "en": "I promised, so let's eat together.",
+   "segs": [
+    [
+     "prin",
+     "I promised, so let's eat together.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "접시에 빵이 몇 개일까요? 접시를 톡 눌러 봐요.",
+   "en": "How many buns are on the plate? Tap the plate!",
+   "segs": [
+    [
+     "nar",
+     "How many buns are on the plate? Tap the plate!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "빵이 세 개! 너 하나, 나 하나, 남은 하나는 나눠 먹자.",
+   "en": "Three buns! One for you, one for me, and we'll share the last one.",
+   "segs": [
+    [
+     "prin",
+     "Three buns! One for you, one for me, and we'll share the last one.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "냠냠, 맛있다!",
+   "en": "Yum yum, delicious!",
+   "segs": [
+    [
+     "frog",
+     "Yum yum, delicious!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되자 개구리가 공주의 방까지 따라왔어요.",
+   "en": "When night came, the frog followed the princess all the way to her room.",
+   "segs": [
+    [
+     "nar",
+     "When night came, the frog followed the princess all the way to her room.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "공주님, 같은 침대에서 자기로 했잖아요.",
+   "en": "Princess, you said I could sleep in your bed.",
+   "segs": [
+    [
+     "frog",
+     "Princess, you said I could sleep in your bed.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "으, 이제 그만!",
+   "en": "Ugh, that's enough!",
+   "segs": [
+    [
+     "prin",
+     "Ugh, that's enough!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!",
+   "en": "The princess tossed the frog toward the bed. Plop! He landed softly on the fluffy pillow!",
+   "segs": [
+    [
+     "nar",
+     "The princess tossed the frog toward the bed. Plop! He landed softly on the fluffy pillow!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "고마워요. 나는 마법에 걸린 왕자였어요. 약속을 지켜 줘서 마법이 풀렸어요.",
+   "en": "Thank you. I was a prince under a spell. Because you kept your promise, the spell is broken.",
+   "segs": [
+    [
+     "prince",
+     "Thank you. I was a prince under a spell. Because you kept your promise, the spell is broken.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어머, 개구리가… 왕자님이었구나!",
+   "en": "Oh my, the frog... was a prince!",
+   "segs": [
+    [
+     "prin",
+     "Oh my, the frog... was a prince!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날, 공주와 왕자는 성 뜰에서 함께 놀았어요.",
+   "en": "The next day, the princess and the prince played together in the castle garden.",
+   "segs": [
+    [
+     "nar",
+     "The next day, the princess and the prince played together in the castle garden.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "이제 우리는 진짜 친구예요.",
+   "en": "Now we are true friends.",
+   "segs": [
+    [
+     "prince",
+     "Now we are true friends.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "응! 우리 같이 공놀이하자!",
+   "en": "Yes! Let's play ball together!",
+   "segs": [
+    [
+     "prin",
+     "Yes! Let's play ball together!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "둘은 금공을 주고받으며 오래오래 사이좋게 지냈답니다.",
+   "en": "And the two of them tossed the golden ball back and forth and were the best of friends for a long, long time.",
+   "segs": [
+    [
+     "nar",
+     "And the two of them tossed the golden ball back and forth and were the best of friends for a long, long time.",
+     "happy"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "n1": [
+   [
+    "prin",
+    "One!",
+    "toneup"
+   ]
+  ],
+  "n2": [
+   [
+    "prin",
+    "Two!",
+    "toneup"
+   ]
+  ],
+  "n3": [
+   [
+    "prin",
+    "Three!",
+    "toneup"
+   ]
+  ]
+ },
+ "ui": {
+  "개구리 왕자": "The Frog Prince",
+  "한 약속은 지켜요": "A promise is a promise",
+  "한 약속은 지켜요.": "A promise is a promise.",
+  "성 뜰": "The Castle Garden",
+  "샘가": "By the Spring",
+  "풍덩": "Splash!",
+  "개구리의 약속": "The Frog's Promise",
+  "공을 찾았어요": "The Ball Is Back",
+  "문 앞의 개구리": "A Frog at the Door",
+  "아버지의 말씀": "Father's Words",
+  "같이 먹어요": "Eating Together",
+  "베개 위로 폴짝": "Hop onto the Pillow",
+  "약속을 지켜요": "Keeping the Promise",
+  "반짝!": "Sparkle!",
+  "통통!": "Bounce!",
+  "풍덩!": "Splash!",
+  "엉엉": "Boo-hoo",
+  "뽀글뽀글": "Bubble bubble",
+  "쌩!": "Zoom!",
+  "똑똑!": "Knock knock!",
+  "폴짝": "Hop",
+  "냠냠": "Yum yum",
+  "휙!": "Whoosh!",
+  "포옥": "Plop",
+  "팡!": "Pop!",
+  "금공은 어떤 모양일까요? 골라 봐요.": "What shape is the golden ball? Pick one!",
+  "접시에 빵이 몇 개일까요? 접시를 톡 눌러 봐요.": "How many buns are on the plate? Tap the plate!"
+ }
+}

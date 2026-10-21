@@ -1,0 +1,536 @@
+{
+ "notes": "ElevenLabs 목소리 배정(2026-10-21 확정): nar=Huelyn(여자 내레이터 돌려 쓰기 — 미녀와 야수 Huelyn·인어공주 Annie·빨간 자동차 Lily 다음 차례), prin=Annie(공주: 여자아이 원형, 가볍고 밝다가 7장부터 작아진다), frog=Will(개구리: 느긋한 낙천가 목소리를 느리고 살짝 쉰 개구리 말투로 — 연기 지시로만), king=Namchun(아버지 원형, 부드럽지만 단호), prince=Eric(젊은 남성 왕자 원형; 개구리와 다른 목소리 — 마법이 풀린 것을 목소리로도 알린다, 한 편 안에서 목소리 겹침 없음). 빵 세기 하나·둘·셋은 공주 목소리의 소리 대사(extra n1~n3)로만 나오고 글 말풍선은 없다. 합창 없음. 모델 eleven_v4, 배역별 settings. 교훈은 대사로 말하지 않는다(끝 화면 글자·부제만). 벽에 던지는 장면은 베개 위에 포옥 떨어지는 말로만(아픈 표현 없음).",
+ "voices": {
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "prin": "Lb7qkOn5hF8p7qfCDH8q",
+  "frog": "bIHbv24MWmeRgasZH58o",
+  "king": "5ON5Fnz24cnOozEQfGAm",
+  "prince": "cjVigY5qzO86Huf0OWal"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "prin": "eleven_v4",
+  "frog": "eleven_v4",
+  "king": "eleven_v4",
+  "prince": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.5,
+   "style": 0.35
+  },
+  "prin": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "frog": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "king": {
+   "stability": 0.5,
+   "style": 0.35
+  },
+  "prince": {
+   "stability": 0.45,
+   "style": 0.4
+  }
+ },
+ "use_dir": [
+  "nar",
+  "prin",
+  "frog",
+  "king",
+  "prince"
+ ],
+ "lines": [
+  {
+   "text": "옛날 어느 성에 금빛 공을 가장 좋아하는 공주가 살았어요.",
+   "segs": [
+    [
+     "nar",
+     "옛날 어느 성에 금빛 공을 가장 좋아하는 공주가 살았어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "금공은 어떤 모양일까요? 골라 봐요.",
+   "segs": [
+    [
+     "nar",
+     "금공은 어떤 모양일까요? 골라 봐요.",
+     null,
+     "[calm, inviting, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 네모예요. 금공 모양을 다시 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 네모예요. 금공 모양을 다시 찾아봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 세모예요. 금공 모양을 다시 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그건 세모예요. 금공 모양을 다시 찾아봐요.",
+     null,
+     "[gentle, encouraging, not disappointed]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 동그라미! 금공은 동글동글 동그라미예요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 동그라미! 금공은 동글동글 동그라미예요.",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "통통통! 내 금공은 세상에서 제일 예뻐.",
+   "segs": [
+    [
+     "prin",
+     "통통통! 내 금공은 세상에서 제일 예뻐.",
+     "happy",
+     "[young girl, playful, proud, bouncy]"
+    ]
+   ]
+  },
+  {
+   "text": "어느 날, 공주는 숲속 샘가에서 공놀이를 했어요.",
+   "segs": [
+    [
+     "nar",
+     "어느 날, 공주는 숲속 샘가에서 공놀이를 했어요.",
+     null,
+     "[calm, light, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "공이 높이, 더 높이… 어머나!",
+   "segs": [
+    [
+     "nar",
+     "공이 높이, 더 높이… 어머나!",
+     "toneup",
+     "[rising, then a small gasp at 어머나]"
+    ]
+   ]
+  },
+  {
+   "text": "공이 샘 속으로 풍덩! 금공이 깊은 물속으로 가라앉았어요.",
+   "segs": [
+    [
+     "nar",
+     "공이 샘 속으로 풍덩! 금공이 깊은 물속으로 가라앉았어요.",
+     null,
+     "[a small splash at 풍덩, then slow and sinking]"
+    ]
+   ]
+  },
+  {
+   "text": "엉엉, 내 금공… 내 금공이 사라졌어.",
+   "segs": [
+    [
+     "prin",
+     "엉엉, 내 금공… 내 금공이 사라졌어.",
+     "sad",
+     "[young girl, tearful, sniffling, not loud]"
+    ]
+   ]
+  },
+  {
+   "text": "그때 샘물 위로 초록 개구리가 고개를 내밀었어요.",
+   "segs": [
+    [
+     "nar",
+     "그때 샘물 위로 초록 개구리가 고개를 내밀었어요.",
+     null,
+     "[gentle, a little curious]"
+    ]
+   ]
+  },
+  {
+   "text": "공주님, 왜 울어요?",
+   "segs": [
+    [
+     "frog",
+     "공주님, 왜 울어요?",
+     null,
+     "[slow, gentle, slightly croaky frog voice, kind]"
+    ]
+   ]
+  },
+  {
+   "text": "내 금공이 샘에 빠졌어. 흑흑.",
+   "segs": [
+    [
+     "prin",
+     "내 금공이 샘에 빠졌어. 흑흑.",
+     "sad",
+     "[young girl, sad, sniffling]"
+    ]
+   ]
+  },
+  {
+   "text": "내가 공을 찾아 줄게. 대신 나랑 친구가 되고, 같이 먹고, 한 침대에서 자 줄래?",
+   "segs": [
+    [
+     "frog",
+     "내가 공을 찾아 줄게. 대신 나랑 친구가 되고, 같이 먹고, 한 침대에서 자 줄래?",
+     null,
+     "[slow, gentle, slightly croaky, earnest, a small pause before 대신]"
+    ]
+   ]
+  },
+  {
+   "text": "좋아, 약속할게!",
+   "segs": [
+    [
+     "prin",
+     "좋아, 약속할게!",
+     "happy",
+     "[young girl, quick and light, not really thinking about it]"
+    ]
+   ]
+  },
+  {
+   "text": "개구리는 풍덩 물속으로 들어가 금공을 물고 올라왔어요.",
+   "segs": [
+    [
+     "nar",
+     "개구리는 풍덩 물속으로 들어가 금공을 물고 올라왔어요.",
+     null,
+     "[lively, a small splash at 풍덩, bright at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "내 공이다!",
+   "segs": [
+    [
+     "prin",
+     "내 공이다!",
+     "toneup",
+     "[young girl, delighted, quick]"
+    ]
+   ]
+  },
+  {
+   "text": "공주는 공을 받아 안고 성으로 쌩 달려갔어요.",
+   "segs": [
+    [
+     "nar",
+     "공주는 공을 받아 안고 성으로 쌩 달려갔어요.",
+     null,
+     "[quick, light, a whoosh feeling at 쌩]"
+    ]
+   ]
+  },
+  {
+   "text": "기다려, 약속했잖아!",
+   "segs": [
+    [
+     "frog",
+     "기다려, 약속했잖아!",
+     "toneup",
+     "[slightly croaky, calling after someone, a little hurt but not angry]"
+    ]
+   ]
+  },
+  {
+   "text": "저녁 식사 때, 문 밖에서 폴짝폴짝 소리가 났어요. 똑똑!",
+   "segs": [
+    [
+     "nar",
+     "저녁 식사 때, 문 밖에서 폴짝폴짝 소리가 났어요. 똑똑!",
+     null,
+     "[calm, then two light knocks at 똑똑]"
+    ]
+   ]
+  },
+  {
+   "text": "공주님, 약속했잖아요. 문 좀 열어 줘요.",
+   "segs": [
+    [
+     "frog",
+     "공주님, 약속했잖아요. 문 좀 열어 줘요.",
+     null,
+     "[slow, gentle, slightly croaky, polite, pleading softly]"
+    ]
+   ]
+  },
+  {
+   "text": "싫어! 저리 가!",
+   "segs": [
+    [
+     "prin",
+     "싫어! 저리 가!",
+     "toneup",
+     "[young girl, grumpy, pouting, not screaming]"
+    ]
+   ]
+  },
+  {
+   "text": "그 모습을 본 임금님이 공주에게 물었어요.",
+   "segs": [
+    [
+     "nar",
+     "그 모습을 본 임금님이 공주에게 물었어요.",
+     null,
+     "[calm, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "공주야, 무슨 약속을 했느냐?",
+   "segs": [
+    [
+     "king",
+     "공주야, 무슨 약속을 했느냐?",
+     null,
+     "[kind old father, calm, gently asking]"
+    ]
+   ]
+  },
+  {
+   "text": "개구리가 금공을 찾아 주면… 친구가 되겠다고 했어요.",
+   "segs": [
+    [
+     "prin",
+     "개구리가 금공을 찾아 주면… 친구가 되겠다고 했어요.",
+     "sad",
+     "[young girl, small voice, hesitant, a pause before 친구가]"
+    ]
+   ]
+  },
+  {
+   "text": "약속은 지켜야 한단다. 도와준 친구에게는 더욱 그렇지.",
+   "segs": [
+    [
+     "king",
+     "약속은 지켜야 한단다. 도와준 친구에게는 더욱 그렇지.",
+     null,
+     "[kind old father, soft but firm, slow, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "…알겠어요, 아버지.",
+   "segs": [
+    [
+     "prin",
+     "…알겠어요, 아버지.",
+     "sad",
+     "[young girl, quiet, a little ashamed, accepting]"
+    ]
+   ]
+  },
+  {
+   "text": "공주는 개구리를 식탁으로 데려갔어요.",
+   "segs": [
+    [
+     "nar",
+     "공주는 개구리를 식탁으로 데려갔어요.",
+     null,
+     "[calm, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "약속했으니까 같이 먹자.",
+   "segs": [
+    [
+     "prin",
+     "약속했으니까 같이 먹자.",
+     null,
+     "[young girl, a little shy but kind]"
+    ]
+   ]
+  },
+  {
+   "text": "접시에 빵이 몇 개일까요? 접시를 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "접시에 빵이 몇 개일까요? 접시를 톡 눌러 봐요.",
+     null,
+     "[calm, inviting, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "빵이 세 개! 너 하나, 나 하나, 남은 하나는 나눠 먹자.",
+   "segs": [
+    [
+     "prin",
+     "빵이 세 개! 너 하나, 나 하나, 남은 하나는 나눠 먹자.",
+     "happy",
+     "[young girl, bright, counting happily, warm at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "냠냠, 맛있다!",
+   "segs": [
+    [
+     "frog",
+     "냠냠, 맛있다!",
+     "happy",
+     "[slightly croaky, happy, munching]"
+    ]
+   ]
+  },
+  {
+   "text": "밤이 되자 개구리가 공주의 방까지 따라왔어요.",
+   "segs": [
+    [
+     "nar",
+     "밤이 되자 개구리가 공주의 방까지 따라왔어요.",
+     null,
+     "[quiet, night-time, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "공주님, 같은 침대에서 자기로 했잖아요.",
+   "segs": [
+    [
+     "frog",
+     "공주님, 같은 침대에서 자기로 했잖아요.",
+     null,
+     "[slow, gentle, slightly croaky, sleepy, polite]"
+    ]
+   ]
+  },
+  {
+   "text": "으, 이제 그만!",
+   "segs": [
+    [
+     "prin",
+     "으, 이제 그만!",
+     "toneup",
+     "[young girl, exasperated, a short huff, not a scream]"
+    ]
+   ]
+  },
+  {
+   "text": "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!",
+   "segs": [
+    [
+     "nar",
+     "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!",
+     null,
+     "[quick at 휙, then soft and bouncy at 포옥, playful not alarming]"
+    ]
+   ]
+  },
+  {
+   "text": "고마워요. 나는 마법에 걸린 왕자였어요. 약속을 지켜 줘서 마법이 풀렸어요.",
+   "segs": [
+    [
+     "prince",
+     "고마워요. 나는 마법에 걸린 왕자였어요. 약속을 지켜 줘서 마법이 풀렸어요.",
+     "happy",
+     "[young prince, warm, clear, grateful, gentle smile in the voice]"
+    ]
+   ]
+  },
+  {
+   "text": "어머, 개구리가… 왕자님이었구나!",
+   "segs": [
+    [
+     "prin",
+     "어머, 개구리가… 왕자님이었구나!",
+     "toneup",
+     "[young girl, amazed, wide-eyed, a pause before 왕자님]"
+    ]
+   ]
+  },
+  {
+   "text": "다음 날, 공주와 왕자는 성 뜰에서 함께 놀았어요.",
+   "segs": [
+    [
+     "nar",
+     "다음 날, 공주와 왕자는 성 뜰에서 함께 놀았어요.",
+     "happy",
+     "[bright, warm, morning feeling]"
+    ]
+   ]
+  },
+  {
+   "text": "이제 우리는 진짜 친구예요.",
+   "segs": [
+    [
+     "prince",
+     "이제 우리는 진짜 친구예요.",
+     "happy",
+     "[young prince, warm, sincere, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "응! 우리 같이 공놀이하자!",
+   "segs": [
+    [
+     "prin",
+     "응! 우리 같이 공놀이하자!",
+     "happy",
+     "[young girl, joyful, bouncy]"
+    ]
+   ]
+  },
+  {
+   "text": "둘은 금공을 주고받으며 오래오래 사이좋게 지냈답니다.",
+   "segs": [
+    [
+     "nar",
+     "둘은 금공을 주고받으며 오래오래 사이좋게 지냈답니다.",
+     "happy",
+     "[warm, joyful, storybook ending tone, slow at the end]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "n1": [
+   [
+    "prin",
+    "하나!",
+    "toneup",
+    "[young girl, bright, clear, counting, bouncy]"
+   ]
+  ],
+  "n2": [
+   [
+    "prin",
+    "둘!",
+    "toneup",
+    "[young girl, bright, clear, counting, bouncy]"
+   ]
+  ],
+  "n3": [
+   [
+    "prin",
+    "셋!",
+    "toneup",
+    "[young girl, bright, clear, counting, bouncy]"
+   ]
+  ]
+ }
+}
