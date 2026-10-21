@@ -689,7 +689,7 @@ body.app #home:not(.tags-off) .tagrows {
   max-height: calc(100vh - 110px); max-height: calc(100dvh - 110px); overflow-y: auto; scrollbar-width: none;
 }
 body.app #home:not(.tags-off) .tagrows::-webkit-scrollbar { display: none; }
-body.app .shelf { display: flex; flex-direction: column; overflow: hidden; padding: 0 0 max(14px, env(safe-area-inset-bottom)); -webkit-mask: none; mask: none; }
+body.app .shelf { display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; padding: 0 0 max(14px, env(safe-area-inset-bottom)); -webkit-mask: none; mask: none; }
 body.app .hero { position: relative; flex: none; display: flex; justify-content: center; height: var(--hero-h); min-height: 0; }
 body.app .hero-slot { min-width: 0; height: 100%; width: 100%; display: flex; justify-content: center; }
 body.app .hero .slot, body.app .hero .card { height: 100%; }
@@ -711,7 +711,7 @@ body.app .hero .tags { padding-top: 4px; }
 .hero-nav svg { width: 30px; height: 30px; }
 .hero-nav:active { translate: 0 2px; box-shadow: 0 1px 2px rgba(34, 43, 69, .12); }
 .hero-nav:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
-body.app .grid { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; align-content: start; padding: 14px 4px 6px;
+body.app .grid { flex: none; min-height: 0; overflow: visible; align-content: start; padding: 14px 4px 6px;
   grid-template-columns: repeat(auto-fill, minmax(var(--tile-min), 1fr)); gap: 14px 14px; }
 body.app .grid::-webkit-scrollbar { display: none; }
 body.app .grid .card { padding: 6px 6px 8px; border-radius: 16px; }
@@ -777,3 +777,4 @@ body.app .card.sel { outline: 3px solid var(--copper); outline-offset: -2px; }
 }
 
 body.app #hero { touch-action: pan-y; } /* 가로로 쓸면 큰 그림이 넘어가게(세로 스크롤은 그대로) */
+body.app .shelf::-webkit-scrollbar { display: none; }   /* 큰 그림과 목록이 한 덩어리로 같이 스크롤 */
