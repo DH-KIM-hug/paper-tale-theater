@@ -17,7 +17,7 @@
 
 | 순서 | 파일 | 만드는 방법 |
 |---|---|---|
-| 1 | `tools/app/gen/jobs_sleeping_beauty.json` | **이미 있음**(92장: 스프라이트 79 + 배경 8 + 키아트 5, 접두어 `sb_`). 생성: `python3 tools/app/gen/run_simple.py sleeping_beauty <id ...>` 를 `pass` 1(30) → 2(33) → 3(24) 순으로(참고 그림이 먼저 있어야 함), 키아트(`key5_*`)는 맨 뒤. 작업표가 이미 이 순서로 정렬되어 있으므로 `run_simple.py sleeping_beauty $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_sleeping_beauty.json'))))")` 처럼 앞에서부터 돌리면 된다. 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. 받은 그림 점검은 §10. |
+| 1 | `tools/app/gen/jobs_sleeping_beauty.json` | **이미 있음**(97장: 스프라이트 79 + 배경 8 + 컷 5 + 키아트 5, 접두어 `sb_`). 생성: `python3 tools/app/gen/run_simple.py sleeping_beauty <id ...>` 를 `pass` 1(30) → 2(33) → 3(24) 순으로(참고 그림이 먼저 있어야 함), 컷(`sb_cut_*`)은 `pass 4`(참고 스프라이트가 다 나온 뒤), 키아트(`key5_*`)는 맨 뒤. 작업표가 이미 이 순서로 정렬되어 있으므로 `run_simple.py sleeping_beauty $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_sleeping_beauty.json'))))")` 처럼 앞에서부터 돌리면 된다. 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. 받은 그림 점검은 §10. |
 | 2 | 후처리 | `~/.venvs/paper-tale/bin/python tools/app/gen/post_tale.py sleeping_beauty` → `assets/v3w/sb_<id>.webp`(스프라이트는 마젠타 크로마키 → 여백 없이 오림 → 높이 600(폭 900) 안, 배경 1600×902). 끝에 ASP(폭/높이)가 `tales/sleeping_beauty/ASP.txt` 에 나온다 → 코드 `ASP` 표에 붙인다. **그림이 아직 없어도 코드는 자리표시(§1-1)로 돈다.** |
 | 3 | `tales/sleeping_beauty/index.html` | `tales/beauty_beast/index.html` 그대로 복사, `<title>잠자는 숲속의 공주</title>`, 마지막 스크립트 `sleeping_beauty.js`. 합창 로더는 넣지 않는다(합창 없음). |
 | 4 | `tales/sleeping_beauty/narration.js` | Typecast 없음. `/* sleeping_beauty — Typecast 없음. ElevenLabs(narration_el.js)가 채운다 */\nconst NARRATION_CLIPS = {};\nconst VOICE_LINES = {};` |
@@ -258,6 +258,7 @@ sb_prop_bed 1.45, sb_prop_candle_lit .35, sb_prop_candle_out .33, sb_prop_bush_c
 - `say()` 뒤 `GAP = 600`ms. 장면 끝(다음 `sceneCard` 전) `sleep(SCENE_END = 1400)`.
 - 사람이 걷는 이동은 `WALK = 2600`ms 안팎(linear) + 걷는 동안 `a.hop(4, 420)` 반복(`while` + `await hop`). 늙은 요정·할아버지는 `hop(3, 560)`(느리게).
 - 전체 목표 7~8.5분. §11 에서 잰다. 7분이 안 되면 `SCENE_END` 를 1900, `GAP` 을 800 으로; 9분을 넘으면 `SCENE_END` 1100(대사는 건드리지 않는다).
+- 컷 그림(`cutImage`)은 **5장**(§3 끝 "컷신" 표; `CUT_HOLD = 4200`ms, 컷 위에서 기존 대사 한 줄을 읽는다 — 까치 방식). 컷 홀드는 전체 길이에 약 20초를 더한다.
 
 ## 3. 장면별 상세
 
@@ -347,6 +348,21 @@ sb_prop_bed 1.45, sb_prop_candle_lit .35, sb_prop_candle_out .33, sb_prop_bush_c
 - **L43**(늙은 요정, `hop(6, 400)`) → 인사 톡: `hitRect(T, 0, 80, 1000, 480)` 로 **화면 전체**를 누르는 자리로 두고 `bob(pr.pos)` → `await T.tap(allHit)`(안내 문장 없음).
 - 톡 뒤: 공주·왕자 `look('wave')` + 모두(`fairies`, young, old, king, queen, pr, prince) `hop(10, 400)` 120ms 간격 + `T.confetti()`(꽃잎 대신 엔진 종이 조각) + `sfx(T, 'tada', .5) || sparkleSfx(T)` → **L44** → `T.finale(); await sleep(1500); return '아무도 빼놓지 않아요. 잊힌 사람의 마음은 아프답니다.';`
 - 이 동화의 마지막 인사형 톡은 이것이다.
+
+### 컷신 (그림 컷) — CLAUDE.md §5-2, 까치(`tales/magpie`)·신데렐라 방식 (2026-10-21 추가)
+- 컷 **5장**. 컷은 그 사건 **직후**에만 띄우고, 컷 위에서 그 장면의 **기존 대사 한 줄**을 읽는다: `const c = T.cutImage([{ src: src('sb_cut_…'), sfx: '…', hold: CUT_HOLD }], { hold: CUT_HOLD }); await say(L); await c;` (`CUT_HOLD = 4200`ms; 대사가 홀드보다 길면 컷이 먼저 닫혀도 된다; 톡하면 바로 넘어간다 — 엔진 `cutImage`, `engine/tale.js` 619행). 컷 패널은 엔진이 4:3 흰 테두리 종이로 보여 주므로 그림도 4:3 으로 만든다.
+- 그림: `assets/v3w/sb_cut_<이름>.webp`(1200×900). 작업표 `jobs_sleeping_beauty.json` 의 `kind: "cut"` 항목 **5장**(`pass 4`, 참고 그림 `refs` 는 그 컷에 나오는 인물의 스프라이트 — 스프라이트가 모두 나온 뒤에 만든다). 후처리: `post_tale.py` 는 sprite/bg 만 다루므로 컷은 `post_cinderella2.py` 처럼 4:3 가운데 자르기 → 1200×900 webp 로 따로 변환한다(그림·코드 작업은 뒤의 큐에서; 이 문서는 기획만).
+- 규칙: 한 장면에 한 컷, 이웃한 장면에 연달아 두지 않는다. 컷 안 인물은 스프라이트와 같은 얼굴 규칙(점 눈·점 코·띠 입·분홍 볼), 소품은 얼굴 없음, 피·눈물·아픔 없음. 컷 위 대사는 모두 §6 에 **이미 있는 줄**이라 새 녹음이 없다(영어는 `voice_script_en.json` 의 같은 줄, `TEXT_EN` 추가 없음). 컷이 닫힌 뒤 무대는 그 장면의 다음 단계부터 이어진다(컷이 대신한 애니메이션은 생략해도 된다).
+
+| 컷 id | 장면 | 앞 장면 → 뒤 장면 | 보여 줄 순간 | 그림 구도(얼굴 규칙 포함) | 컷 위 대사(한국어 / 영어) | 컷 동안 음성 | 효과음 | refs |
+|---|---|---|---|---|---|---|---|---|
+| `sb_cut_eighth` | 2 접시 일곱, 요정 여덟 | 1 기다리던 아기 → 3 잊힌 요정 | 큰 사건: 잔치에 여덟 번째 요정(잊힌 요정)이 문을 열고 들어오는 순간 | 큰 홀. 긴 식탁 위 금 접시 일곱, 그 뒤 한 줄로 선 요정 일곱이 모두 오른쪽을 돌아보며 둥근 입(놀람). 오른쪽 끝 열린 아치문으로 지팡이를 짚은 잿빛 늙은 요정이 작게 들어온다(무섭지 않게, 부드러운 얼굴). 요정 머리 크기 모두 같음. | **L5** 그런데 저기, 요정이 한 명 더 왔어요! / But look, over there! One more fairy has come! | 있음 — 컷 음성 필요: L5 | `door` | sb_fairy_red_stand · sb_old_stand · sb_prop_plate · sb_prop_door_open |
+| `sb_cut_blessing` | 5 백 년 잠 | 4 여섯 가지 선물 → 6 탑 꼭대기 물레 | 막내 요정이 저주를 되돌리는 순간("백 년이 지나면 깨어날 거예요") — 밝고 희망찬 쪽을 컷으로 잡는다 | 가운데 갈색 요람 속 잠든 아기, 그 옆 하늘색 막내 요정이 지팡이를 높이 들고 지팡이 끝에서 하늘색 종이 별과 큰 크림 별이 터진다. 왼쪽 끝 잿빛 늙은 요정은 토라져 등을 반쯤 돌리고 지팡이를 짚는다(무섭지 않음). 오른쪽에 크림 커튼. | **L19** 영영이 아니에요. 백 년이 지나면 깨어날 거예요. 그리고 왕자님이 올 거예요. / Not never. After a hundred years she will wake up. And a prince will come. | 있음 — 컷 음성 필요: L19 | `sparkle` | sb_young_wand · sb_old_sulk · sb_prop_cradle · sb_pr_baby_sleep |
+| `sb_cut_prick` | 7 콕, 스르르 | 6 탑 꼭대기 물레 → 8 모두 잠들어요 | 큰 사건: 공주가 물레 가락 끝에 손가락을 대는 순간(콕 — 피 없음, 손끝의 작은 별빛만) | 탑 꼭대기 방. 공주가 오른쪽 물레의 가락 끝으로 손가락 하나를 내밀고, 손끝에 작은 크림 별 넷(핏방울·액체 없음). 눈은 벌써 반쯤 감기고 부드러운 졸린 웃음. 오른쪽 걸상의 할머니는 두 손을 들고 깜짝(둥근 입). | **L27** 아야… 졸려요… / Ouch... I'm so sleepy... | 있음 — 컷 음성 필요: L27 | `sparkle` | sb_pr_reach · sb_granny_startle · sb_prop_wheel |
+| `sb_cut_hedge` | 9 백 년 뒤 | 8 모두 잠들어요 → 10 잠든 궁전 | 가시덤불이 왕자에게만 길을 열어 주는 순간(톡 뒤) | 초록 가시덤불이 가운데서 커튼처럼 양쪽으로 갈라져 길이 나고 분홍 꽃잎이 몇 장 날린다. 초록 옷 왕자가 틈으로 들어가는 뒷모습 반측면(한 손 들고 발끝 걸음). 멀리 뒤에 크림 성(금 지붕). 왼쪽에 큰 금색 모자 할아버지가 작게 서서 가리킨다. 낮(세트 A). | **L35** 가시덤불이 왕자님에게만 길을 열어 주었어요. / The thorn hedge opened a path, just for the prince. | 있음 — 컷 음성 필요: L35 | `swish` | sb_prince_tiptoe · sb_prop_bush_open · sb_grandpa_point |
+| `sb_cut_wake` | 11 깨어나요 | 10 잠든 궁전 → (끝: 예배당 컷·인사) | 결말: 백 년이 차서 공주가 스스로 눈을 뜨는 순간 | 침실. 천개 침대에서 공주가 상체를 일으켜 앉아 눈을 크게 뜨고 밝게 웃는다(땋은 머리 어깨 위, 두 손은 크림 이불 위). 머리 위에 앰버 종이 별이 부드럽게 터진다. 오른쪽 침대 옆에 왕자가 무릎을 꿇고 공주를 보며 환히 웃는다. 왼쪽에 켜진 촛대. | **L38** 바로 그때, 백 년이 꽉 찼어요. 공주님이 스스로 눈을 떴어요. / Just then, the hundred years were up. The princess opened her eyes all by herself. | 있음 — 컷 음성 필요: L38 | `sparkle` | sb_pr_wake · sb_prince_kneel · sb_prop_bed |
+
+컷 음성 필요(모두 §6 의 기존 줄, 새 줄 없음): L5, L19, L27, L35, L38.
 
 ## 4. 배움 놀이 규칙 요약 (엔진 `T.choose`)
 - **2장 많고 적음**: 보기는 줄 둘(요정 줄·접시 줄, 개별 요정·접시가 아니다). ① 더 많은 쪽 = 요정 줄, ② 더 적은 쪽 = 접시 줄. 짝 맞춤 띠(코드)로 "요정 한 명은 접시가 없다"를 눈으로 보이고, 세기는 `vo('count1'~'count7')` 로 해설이 작게 따라 셀 뿐 아이에게 세라고 하지 않는다. 12초 무입력이면 `prompt` 를 다시 읽는다. 2회 오답부터 정답 줄이 빛나고 나머지는 흐려진다(엔진). 어느 쪽을 눌러도 3장은 같다.
@@ -511,7 +527,7 @@ red_car.js 와 같다: 크림 종이 `rect`(x -60, y -40, 1120×660, fill `#F5EF
 
 키아트 창 모양은 **둥근 탑 창(원)** 이고, 테두리 장식은 장미 덩굴 두 가닥뿐(§7-5: 소품 금지, 같은 계열 장식 최소). 창 안은 침대에 잠든 공주 + 물레(피 없음, 눈 감음). 끝 화면 뒷표지는 예배당에서 손 흔드는 공주·왕자와 웃는 늙은 요정·막내 요정, 뒤에 접시 여덟. 참고 그림은 작업표의 `refs`(pr_stand·prince_stand·fairy_red_stand·old_sulk / 끝 화면은 pr_wave·prince_wave·old_smile·young_stand)라 **인물 스프라이트가 모두 나온 뒤** 맨 마지막에 생성한다. 썸네일(타일)은 공주를 크게, 겹 3개.
 
-## 10. 그림 목록 (작업표 `jobs_sleeping_beauty.json` 92장과 같다)
+## 10. 그림 목록 (작업표 `jobs_sleeping_beauty.json` 97장과 같다)
 
 모든 인물은 **머리 지름이 같다**(2.5등신). 자세 그림은 기준 그림을 `refs` 로 넣고 프롬프트에 "SAME SCALE AS THE REFERENCE SPRITE(머리·몸 크기를 기준 그림과 똑같이)"가 들어 있다(§4-1). 소품은 얼굴 없음(`This is an OBJECT … NO face`). 잠든 자세는 눈을 감은 선 두 개, 눈물·아픔 없음. 물레 가락은 깨끗한 끝(핏방울·액체·반짝 없음).
 
@@ -533,9 +549,10 @@ red_car.js 와 같다: 크림 종이 `rect`(x -60, y -40, 1120×660, fill `#F5EF
 | | bird_sleep(←) | 금빛 작은 새 | 480² | 1 | 10 |
 | 소품 | prop_cradle / prop_plate(1장, 7·8개 배치는 코드) / prop_door_closed → prop_door_open / prop_curtain / prop_wheel(가락 왼쪽 위, 깨끗한 끝) / prop_thread_short → _mid·_long(같은 굵기) / prop_bed(천개, 베개 왼쪽, 매트 비어 있음) / prop_candle_lit → _out / prop_bush_closed → _open(가운데 틈) / prop_tree_small → _big / prop_table(아래 비어 있음) / prop_shelf(오른쪽 비어 있음) / prop_bell / prop_gift_{mirror,heart,bubble,shoes,note,flute} | 얼굴 없음 | 600² / 480² / 480×600 / 480×600 / 600² / 480×600 / 840×480 / 480×600 / 840×480 / 480×600 / 840×480 / 840×480 / 480² / 480² | 1 (→ 짝은 2) | 1·4·5 / 2·3·11 / 2·3 / 3·5 / 5·6·7 / 6·7 / 7·8·11 / 7·8·11 / 8·9 / 8·9 / 10 / 10 / 11 / 4 |
 | 배경 | bg_room / bg_hall(식탁 윗선 38%) / bg_stairs / bg_tower / bg_bedroom / bg_outside(성 실루엣, 덤불 자리 비움) / bg_kitchen(아궁이) / bg_chapel(색유리 창, 식탁 윗선 38%) | 평평한 종이 한 장 + 요소 2~3개, 낮(세트 A, 왼쪽 위 해) | 1600×902 | 1 | 1·4·5 / 2·3 / 6 / 6·7 / 7·8·11 / 8·9 / 10 / 11 |
+| 컷 | cut_eighth / cut_blessing / cut_prick / cut_hedge / cut_wake | 그림 컷 5장(§3 끝 컷신 표: 2·5·7·9·11장). refs 는 그 컷에 나오는 인물 스프라이트. 4:3, 얼굴 규칙 같음, 소품 얼굴 없음 | 1600×1200(4:3) | 4 | 2 / 5 / 7 / 9 / 11 |
 | 키 | key5_wide · key5_tall · key5_tile · key5_backw · key5_backt | 시작 화면(둥근 탑 창)·홈 카드·끝 화면(예배당 인사) | 16:9 · 3:4 · 4:3 · 3:2 · 4:5 | — | — |
 
-생성 순서: `pass 1`(30: pr_stand, dog_sleep, bird_sleep, 소품 19, 배경 8) → `pass 2`(33: 공주 자세 8, 왕·왕비·요정 여섯·막내·늙은 요정·할머니·왕자·할아버지·시녀·경비병 둘·요리사·꼬마 기준 자세 17, dog_wag, 짝 소품 6) → `pass 3`(24: 나머지 자세) → 키아트 5. 작업표가 이 순서로 정렬되어 있다.
+생성 순서: `pass 1`(30: pr_stand, dog_sleep, bird_sleep, 소품 19, 배경 8) → `pass 2`(33: 공주 자세 8, 왕·왕비·요정 여섯·막내·늙은 요정·할머니·왕자·할아버지·시녀·경비병 둘·요리사·꼬마 기준 자세 17, dog_wag, 짝 소품 6) → `pass 3`(24: 나머지 자세) → `pass 4`(컷 5: cut_eighth, cut_blessing, cut_prick, cut_hedge, cut_wake) → 키아트 5. 작업표가 이 순서로 정렬되어 있다.
 
 받은 그림 점검(틀린 id 만 지우고 다시 만든다): 네 귀퉁이가 마젠타인지(`restyle_check.py` 방식) · 사람 자세의 **얼굴 폭이 기준과 ±12% 안**인지(여섯 요정 서기는 서로 ±5%) · 요정에 **날개가 없는지** · 늙은 요정이 무섭지 않은지(검은 옷·날카로운 눈이면 다시) · 공주 `reach` 손에 아무것도 없고 `yawn` 에 눈물이 없는지 · 물레 가락 끝에 핏방울·반짝이 없는지 · 실 셋의 굵기가 같고 길이만 다른지 · 소품에 얼굴이 없는지 · 잠든 자세의 키가 서 있을 때와 같은지 · 그림이 보는 쪽이 NAT 표와 같은지(반대면 그림을 뒤집어 저장하지 말고 NAT 만 고친다) · 배경 hall·chapel 의 식탁 윗선이 38% 근처인지(아니면 `TABLE_Y` 를 그 높이로).
 
@@ -559,6 +576,7 @@ red_car.js 와 같다: 크림 종이 `rect`(x -60, y -40, 1120×660, fill `#F5EF
 - [ ] **팝 자리**: 모든 팝이 인물 얼굴을 가리지 않는다(머리 위 45 이상). 8장 '쿨쿨' 여섯이 각자 머리 위.
 - [ ] **덤불**: 8장 끝에 바닥에서 솟고, 9장 톡 뒤 가운데가 벌어지며 왕자가 덤불 **뒤**로 들어가 사라진다. 해·달이 다섯 번 지나가고 세 번째에 나무가 커진다.
 - [ ] **끝**: 예배당에 접시 여덟·요정 여덟(늙은 요정 웃는 얼굴)이 보이고, 인사 톡 뒤 모두 들썩이며 종이 조각, 끝 화면에 '아무도 빼놓지 않아요. 잊힌 사람의 마음은 아프답니다.' 와 리본(`?endpreview=1`).
+- [ ] **컷 5장**이 그 사건 직후에만 뜨고(2장 `sb_cut_eighth`, 5장 `sb_cut_blessing`, 7장 `sb_cut_prick`, 9장 `sb_cut_hedge`, 11장 `sb_cut_wake`) 각 컷 위에서 맞는 대사(L5·L19·L27·L35·L38)가 들린다. 이웃한 장면에 컷이 연달아 없다. 컷 안 인물 얼굴이 점 눈·띠 입이고 소품에 얼굴이 없다.
 - [ ] 누르는 자리: `.tap-target.armed` 의 `getBoundingClientRect()` 짧은 변이 **화면 60px 이상**(요람·두 줄·실 셋·덤불·네 사람·동물·화면 전체).
 
 세로 390×844 (`node … 390 844 /tmp/sb_p 600 8`)
