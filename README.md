@@ -74,3 +74,6 @@ python3 -m http.server 8765
 - **코드:** 비상업적 용도로 자유롭게 보고, 고치고, 공유할 수 있습니다. 상업적 이용은 저작자와 따로 협의해야 합니다.
 - **소리:** 동물 소리·효과음은 각 파일의 라이선스를 따릅니다 (CC0 / CC BY / CC BY-SA). 출처와 조건은 [`sounds/CREDITS.md`](sounds/CREDITS.md)에 있고, CC BY·CC BY-SA 소리는 출처 표시가 필요합니다.
 - **내레이션 음성:** [Typecast](https://typecast.ai) 음성으로 합성했습니다 (Typecast 이용약관을 따름). 비상업적 용도로만 사용합니다. 예전 2.5D 버전(`legacy.html`)의 음성은 GPT-SoVITS로 합성했습니다.
+
+## 저작권
+이 프로젝트는 **오픈소스가 아닙니다.** 그림, 음성, 대본, 캐릭터, 코드의 저작권은 저작자에게 있으며, 허락 없는 복제·재배포·상업적 사용을 금지합니다. 자세한 내용은 [COPYRIGHT.md](COPYRIGHT.md)를 참고하세요.
