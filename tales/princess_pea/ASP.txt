@@ -1,6 +1,6 @@
 princess_stand: 0.44
 prop_pea: 1.0017
-prop_mattress_gold: 9.2784
+prop_mattress_gold: 12.0
 prop_duvet: 5.1724
 prop_pillow: 1.9565
 prop_bed_board: 2.795
@@ -22,8 +22,8 @@ princess_wave: 0.5267
 prince_sigh: 0.405
 queen_smile: 0.435
 king_lantern: 0.5917
-prop_mattress_cream: 9.2784
-prop_mattress_persimmon: 9.2784
+prop_mattress_cream: 12.0
+prop_mattress_persimmon: 12.0
 prop_door_open: 0.685
 prince_stand: 0.4067
 prince_surprise: 0.4683

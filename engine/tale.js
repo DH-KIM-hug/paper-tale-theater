@@ -136,6 +136,21 @@ const Tale = (() => {
     finally { if (d) d.end(); busy = was; }
   }
 
+  /* ---------- 안내 대사 + 조작 함께 (2026-10-22) ----------
+     T.ask(안내, () => T.tap(...)) — 대상을 먼저 '눌릴 수 있는 상태'로 연 뒤 안내 대사를 흘린다.
+     say 뒤에 tap 을 부르면 대사 동안(busy)과 대사 뒤 쉼 동안 누름이 버려진다(아이는 '톡 눌러 봐요'를 듣는 순간 누른다).
+     안내 도중 누르면 안내는 거기서 멈추고 바로 다음으로 간다. 자동 재생·검증 모드는 예전처럼 대사 → 조작 순서.
+     연출(director)은 쓰지 않는다: 세로 화면에서 말하는 배역 쪽으로 카메라가 가면 누르려던 대상이 화면에서 미끄러진다 */
+  async function ask(text, start) {
+    if (VERIFY || AUTO()) { await say(text); return start(); }
+    const r = start();                       // input() 이 busy=false 로 연다 — say 를 쓰면 busy 가 다시 잠긴다
+    let spoken = false;
+    Narrator.speak(text).catch(() => { /* 소리 실패는 무시 */ }).finally(() => { spoken = true; });
+    const v = await r;
+    if (!spoken) Narrator.stop();
+    return v;
+  }
+
   /* ---------- 개발자 검증 모드 (?verify=1, tools/dev/verify.html 의 iframe 에서만) ----------
      행동 단위(대사 한 줄, 톡 기다림)마다 부모에게 step 을 알리고 부모의 go 를 기다린다.
      ?skip=N 이면 앞의 N 단계는 소리 없이 곧바로 지나간다(이전 버튼용). 평소 게임에는 영향이 없다. */
@@ -336,7 +351,8 @@ const Tale = (() => {
     return [r.left - s.left + r.width / 2, r.top - s.top + r.height / 2];
   }
   function showHand(target, kind = 'tap') {
-    const [x, y] = screenPoint(target);
+    const at = target.querySelector && target.querySelector('[data-hand]');   // 대상이 여러 조각이면 손가락을 놓을 조각을 data-hand 로 고를 수 있다
+    const [x, y] = screenPoint(at || target);
     handEl.className = kind; handEl.style.left = x + 'px'; handEl.style.top = y + 'px'; handEl.hidden = false;
   }
   function hideHand() { handEl.hidden = true; }
@@ -1227,7 +1243,7 @@ const Tale = (() => {
 
   const api = {
     finale, hz, semi, parseSong, timbre, playMelody, followMelody, holdMelody, lyric,
-    cardSpeed: k => { cardK = k; }, el, paper, anim, actor, sleep, say, director, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
+    cardSpeed: k => { cardK = k; }, el, paper, anim, actor, sleep, say, ask, director, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,
     tap: autoInput('tap', tap), mash: autoInput('mash', mash), choose: autoInput('choose', choose), swipe: autoInput('swipe', swipe), hold: autoInput('hold', hold), free: autoInput('free', free),

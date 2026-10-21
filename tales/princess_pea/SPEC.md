@@ -129,7 +129,7 @@ T.director({ cast: { pea, prince, queen, king }, noFace: ['pea', 'prince', 'quee
 | `pp_queen_*` | 동그라미 머리 + 팥색 둥근 몸(조금 넓고 낮음) + 흰 머리 반원 + 머리 위 작은 흰 원(틀어 올림) + 안경(얇은 원 2). `wink` 는 한쪽 눈 호선, `place` 는 몸을 15° 기울임, `lift` 는 팔 선 둘 위로, `hug` 는 팔 선 둘 양옆으로 | 몸 `#A93B32`, 머리 `#F4F6FA` |
 | `pp_king_lantern` | 동그라미 머리 + 갈색 직사각 몸 + 흰 수염 반원 + 금색 관 + 손 옆 앰버 사각(등불) | 몸 `#6B4A32`, 등불 `#F2B366` |
 | `pp_prop_pea` | 초록 원 + 왼쪽 위 작은 연초록 원 | `#3F6B4F`, `#5c8b6a`. **얼굴 없음** |
-| `pp_prop_mattress_*` / `pp_prop_duvet` | 둥근 가로 직사각(상자 전체) / 흰 가로 직사각 + 아래 물결 | 금 `#D9A94E` · 크림 `#F6ECD8` · 감 `#E8703A` / `#F4F6FA` |
+| `pp_prop_mattress_*` / `pp_prop_duvet` | 둥근 가로 직사각 + 위·아래 갈색 테두리 띠 + 누빔선 6 + 둥근 단추 7(상자 전체) / 흰 가로 직사각 + 아래 물결 | 금 `#D9A94E` · 크림 `#F6ECD8` · 감 `#E8703A` / `#F4F6FA` |
 | `pp_prop_pillow` / `pp_prop_bed_board` / `pp_prop_ladder` | 크림 둥근 직사각 + 초록 띠 / 갈색 판 + 다리 2 + 왼쪽 머리판 / 세로 선 2 + 가로 선 7 | `#F6ECD8` / `#6B4A32` / `#6B4A32` |
 | `pp_prop_boat` / `pp_prop_far_lands` / `pp_prop_cloud` / `pp_prop_lightning` | 갈색 호 + 크림 삼각 돛 / 연보라 성 실루엣 2 + 작은 세로 타원 3 / 남색 둥근 구름 / 앰버 지그재그 선 | 팔레트 토큰. **얼굴 없음** |
 | `pp_prop_door_closed` / `pp_prop_door_open` / `pp_prop_case` | 갈색 아치 + 가운데 세로선 / 양 끝 좁은 갈색 판 둘(가운데 비움) / 갈색 받침 + 연회색 테두리 사각(속 비움) | `#6B4A32` / `#DCE3EA` |
@@ -149,7 +149,7 @@ pp_prop_pea 1.0, pp_prop_pillow 2.0, pp_prop_ladder .20, pp_prop_boat 1.1, pp_pr
 pp_prop_door_closed .55, pp_prop_door_open 1.4, pp_prop_case .5
 고정(FIXED_ASP, preload 로 덮어쓰지 않음): pp_prop_mattress_gold 12, pp_prop_mattress_cream 12, pp_prop_mattress_persimmon 12, pp_prop_duvet 12.2, pp_prop_bed_board 8.7
 ```
-고정 ASP 는 상자를 **폭·높이 둘 다** 정하기 위한 것이다(`sprite()` 가 `preserveAspectRatio: 'none'` 이라 그림이 상자에 맞춰진다). 매트리스는 프롬프트에서 10:1 로 그리게 했으므로 12:1 상자에 넣어도 눌림이 거의 없다. 받은 그림의 실제 비율이 8 보다 작으면(너무 두꺼움) 그 매트리스만 다시 생성한다.
+고정 ASP 는 상자를 **폭·높이 둘 다** 정하기 위한 것이다(`sprite()` 가 `preserveAspectRatio: 'none'` 이라 그림이 상자에 맞춰진다). 2026-10-22: 민짜 띠로는 매트리스로 안 읽힌다는 지적 → 갈색 테두리 띠·누빔선·둥근 단추를 넣어 다시 그렸다. 받은 그림이 5.8:1 이라 12:1 상자에 넣으면 단추가 반으로 눌리므로, 민짜 몸통 줄(위아래 줄과 같은 줄)만 빼서 900×75(12:1)로 만든 webp 를 쓴다(단추는 둥글게, 테두리 띠는 14줄 이상 남김). 원본은 assets/raw/_work/pp_mattress_try1.
 
 ### 2-2. 높이(HT) — 같은 인물·소품은 자세가 달라도 같은 크기 (CLAUDE.md §4-1)
 무대 1000×560, 바닥 `FL = 505`. 높이는 그림 상자가 아니라 **같은 부위의 크기**가 같아지도록 정한다.
@@ -214,6 +214,7 @@ pp_prop_door_closed .55, pp_prop_door_open 1.4, pp_prop_case .5
 ### 2-6. 누르는 자리 크기
 - 톡·고르기 대상은 화면에서 **짧은 변 60 무대 px 이상**. 작은 것(배 44, 비교 완두콩 22)은 `hitBox()`(§5-4)로 투명 사각을 뒤에 깔아 100×100 으로 넓힌다. 문(165×300)·유리 상자(75×150 → hitBox 100×150)·침대 구역(250×250)·위아래 띠(250×190, 250×175)는 그대로 충분하다. `T.tap`/`T.choose` 에는 그 `hit` 그룹(`a.pos` 또는 구역 rect)을 넘긴다.
 - 톡 대상은 기다리는 동안 살짝 들썩인다: `a.pos.animate([{translate:'0 0'},{translate:'0 -5px'},{translate:'0 0'}], {duration: 900, iterations: 3})`. 침대 구역(5장)은 대신 맨 위 매트리스(더미 꼭대기)가 들썩인다.
+- 조작 안내(2026-10-22): 안내 대사는 `T.ask(안내, () => T.tap/choose(...))` 로 부른다 — 대상을 먼저 눌릴 수 있게 연 뒤 안내를 읽는다(예전 `say` → `tap` 은 대사 동안과 대사 뒤 쉼 0.7초 동안 누름이 버려졌다). 안내 도중 누르면 안내는 멈추고 바로 다음으로. 톡 대상이 아닌 배우·소품과 효과 층(T.fx)은 `pointer-events: none`, 말풍선도 누름을 받지 않는다. 5장 톡 자리는 침대 구역 + 들썩이는 더미 둘 다(손가락은 가로=더미, 세로=침대).
 
 ### 2-7. 속도 (한 편 7분 이상이 목표)
 - `say()` 뒤 `GAP = 700`ms. 장면 끝(다음 `sceneCard` 전) `sleep(SCENE_END = 1500)`.
@@ -242,7 +243,7 @@ pp_prop_door_closed .55, pp_prop_door_open 1.4, pp_prop_case .5
 - 톡 뒤: `AudioFX.sfx('creak', .5)` + `T.pop(700, 150, tr('끼익'))` → `fadeOut(T, doorC, 300)` 와 동시에 `doorO.pos.style.display = ''` + `fadeIn(T, doorO, 300)`, 왕·왕비 `fadeIn` 400ms(왕이 앞) + `glow(king, 1200)`(등불 빛) → **L8**(왕) → 공주 `hop(10, 320)` → **L9**(공주) → 왕비 `wiggle(3, 400)` → **L10**(왕비) → `queen.look('wink')` + `T.pop(queen.x + 70, FL - 250, tr('찡긋'))`(왕비 머리 오른쪽 위; 왕은 왼쪽) → **L11**(왕비) → 빗줄기 `fadeOut` 600ms → `sleep(SCENE_END)`.
 
 ### 장면 4. 왕비의 완두콩 (배움 놀이 1: 제일 작은 것 · 제일 큰 것)
-- `sceneCard(tr('왕비의 완두콩'))`, 배경 `pp_bg_guest_day`. 침대 판자 `board` `put(T, board, X(820, 760), FL)` → `inRig(board)`(이 장면은 rig 0 고정). 왕비 `place` `put(T, queen, X(690, 620), FL)`(NAT right, 침대를 향해 굽힘). 비교 보기 셋 — **가로**: 매트리스 `matC` `put(T, matC, 180, FL)`, 베개 `pillow` `put(T, pillow, 360, FL)`, 완두콩 `peaC` `put(T, peaC, 470, FL)`; **세로**(x 500 세로 한 줄, 벽에 붙여 보여 주는 진열): `peaC` (500, 350), `pillow` (500, 420), `matC` (500, FL). 각각 `hitBox(T, a, 100, 100)`(매트리스는 `hitBox(T, matC, 250, 80)`). P: `camSnap(500)`. focus: `peaC`.
+- `sceneCard(tr('왕비의 완두콩'))`, 배경 `pp_bg_guest_day`. 침대 판자 `board` `put(T, board, X(820, 760), FL)` → `inRig(board)`(이 장면은 rig 0 고정). 왕비 `place` `put(T, queen, X(690, 620), FL)`(NAT right, 침대를 향해 굽힘). 비교 보기 셋 — **가로**: 매트리스 `matC` `put(T, matC, 180, FL)`, 베개 `pillow` `put(T, pillow, 360, FL)`, 완두콩 `peaC` `put(T, peaC, 470, FL)`; **세로**(x 500 세로 한 줄, 벽에 붙여 보여 주는 진열): `peaC` (500, 300), `pillow` (500, 400), `matC` (500, FL). 각각 `hitBox(T, a, 100, 100)`(매트리스는 `hitBox(T, matC, 250, 100)`) — 세로 화면에서도 짧은 변 90px. P: `camSnap(500)`. focus: `peaC`.
 - **L12** → **L13**(안내) → `await T.choose([ { el: peaC.hit, ok: true }, { el: pillow.hit, ok: false, onWrong: async () => { await pillow.wiggle(8, 360); await say(W13a); } }, { el: matC.hit, ok: false, onWrong: async () => { await matC.wiggle(8, 360); await say(W13b); } } ], { prompt: '셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.' })` — `W13a`·`W13b` 는 §6 과 글자 하나까지 같다. 2회 오답부터 정답이 빛나고 나머지는 흐려진다(엔진).
 - 정답: `AudioFX.ding()`(엔진) → `glow(peaC, 1200)` + `peaC.hop(14, 400)` + `sparkleSfx(T)` + `T.pop(peaC.x, peaC.y - 70, tr('반짝!'))` → **C13** → `sleep(400)`.
 - **L14**(안내) → `await T.choose([ { el: matC.hit, ok: true }, { el: peaC.hit, ok: false, onWrong: … say(W14a) }, { el: pillow.hit, ok: false, onWrong: … say(W14b) } ], { prompt: '그럼 제일 큰 것은 뭘까요? 눌러 봐요.' })` → 정답: `glow(matC, 1200)` + `matC.hop(10, 400)` + `sparkleSfx(T)` + `T.pop(matC.x, matC.y - 60, tr('반짝!'))` → **C14**.
@@ -443,7 +444,7 @@ pp_prop_door_closed .55, pp_prop_door_open 1.4, pp_prop_case .5
 | | queen_wink / place(→, 허리 굽혀 빈 손끝) / lift(두 팔 위, 빈손) / hug(두 팔 벌림) | refs queen_smile | 600² | 3 | 3·4 / 4 / 5 / 8 |
 | 인물·왕 | king_lantern | 흰 수염, 갈색 가운, 등불(얼굴 없음) 든 앞모습. refs 공주 서기 | 600² | 2 | 3 |
 | 소품 | prop_pea | 초록 원 2조각, 얼굴 없음 | 480² | 1 | 4~9 |
-| | prop_mattress_gold(기준) / cream / persimmon | 옆에서 본 아주 길고 얇은 직사각(10:1), 1조각 1색 | 1600×902 | 1 / 2 / 2 | 4~8 |
+| | prop_mattress_gold(기준) / cream / persimmon | 옆에서 본 길고 얇은 매트리스: 몸통 1색 + 갈색 테두리 띠·누빔선 + 둥근 단추(12:1 로 줄여 씀) | 1600×902 | 1 / 2 / 2 | 4~8 |
 | | prop_duvet / prop_pillow / prop_bed_board / prop_ladder | 흰 물결 이불(12:1) / 크림 베개+초록 띠 / 갈색 판·다리·머리판(8:1) / 세로 2+가로 7(1:5) | 1600×902 / 480² / 1600×902 / 480×600 | 1 | 5~8 / 4 / 4~8 / 6~8 |
 | | prop_boat(→) / prop_far_lands / prop_cloud / prop_lightning | 돛 하나 배 / 먼 성 2+공주 실루엣 3(얼굴 없음, 9:1) / 남색 구름 / 앰버 지그재그 | 480² / 1600×902 / 840×480 / 480×600 | 1 | 1 / 1 / 2·3 / 2 |
 | | prop_door_closed(기준) / prop_door_open | 닫힌 아치 문 / 양쪽으로 젖혀진 문짝 둘(가운데 비움) | 480×600 | 1 / 2 | 2·3 / 3 |

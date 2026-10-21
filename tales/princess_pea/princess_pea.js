@@ -16,7 +16,9 @@
     pp_prop_pea: 1.0, pp_prop_pillow: 2.0, pp_prop_ladder: .20, pp_prop_boat: 1.1, pp_prop_far_lands: 9.0, pp_prop_cloud: 2.0, pp_prop_lightning: .35,
     pp_prop_door_closed: .55, pp_prop_door_open: 1.4, pp_prop_case: .5,
   };
-  /* 상자를 폭·높이 둘 다 고정(preload 로 덮어쓰지 않음) */
+  /* 상자를 폭·높이 둘 다 고정(preload 로 덮어쓰지 않음).
+     매트리스(2026-10-22 다시 그림): 갈색 테두리 띠·누빔선·둥근 단추가 있는 옆모습. 받은 그림은 5.8:1 이라 240×20 에 넣으면 단추가 반으로 눌린다 →
+     민짜 몸통 줄만 빼서 12:1(900×75)로 만든 webp 를 쓴다(단추·테두리 띠는 그대로, 원본 png 는 assets/raw/_work/pp_mattress_try1) */
   const FIXED_ASP = { pp_prop_mattress_gold: 12, pp_prop_mattress_cream: 12, pp_prop_mattress_persimmon: 12, pp_prop_duvet: 12.2, pp_prop_bed_board: 8.7 };
   /* 높이 — 같은 부위(얼굴 폭) 크기가 같아지도록 정한 값. 그림이 오면 얼굴 폭을 재서 고친다(SPEC §2-2) */
   const HT = {
@@ -163,6 +165,7 @@
       });
     });
     a.want = 'left';
+    a.pos.style.pointerEvents = 'none';   // 톡 대상이 아닌 배우·소품이 대상 위를 덮어 누름을 가로채지 않게(2026-10-22). 대상은 hitBox/tapable 로 연다
     const place0 = a.place;      // 자리표시의 글자는 뒤집히지 않게 거꾸로 되돌린다
     a.place = (nx, ny) => { place0(nx, ny); a.pos.querySelectorAll('.phl').forEach(t => t.setAttribute('transform', `translate(${t.dataset.cx},${t.dataset.cy}) scale(${a.flip},1)`)); };
     a.turn = d => { a.want = d; const n = looks[a.cur].nat; a.face(n === 'front' || n === d ? 'left' : 'right'); };
@@ -191,7 +194,7 @@
   /* 누르는 자리 넓히기: 그림 뒤에 투명 사각을 깔고 a.hit = a.pos */
   function hitBox(T, a, w = 100, h = 100) {
     const r = T.el('rect', { x: -w / 2, y: -h, width: w, height: h, fill: '#000', 'fill-opacity': 0 }, a.pos);
-    a.pos.insertBefore(r, a.body); a.hit = a.pos; return a;
+    a.pos.insertBefore(r, a.body); a.hit = a.pos; a.pos.style.pointerEvents = 'auto'; return a;
   }
 
   /* ---- 세트 묶음 rig (탑 꼭대기를 볼 때 위로 보이게 아래로 내린다) ---- */
@@ -232,6 +235,7 @@
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(수 세기 n1~n20)
     const scene = key => { T.clear(); bgImage(T, key); newRig(T); camSnap(500, 280, 1); };
+    if (T.fx) T.fx.style.pointerEvents = 'none';  // 빗줄기·꽃잎·'뚝뚝' 같은 효과 조각이 톡 대상을 덮지 않게
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -263,7 +267,7 @@
     const doorC = prop(T, 'pp_prop_door_closed', HT.pp_prop_door_closed), doorO = prop(T, 'pp_prop_door_open', HT.pp_prop_door_open), kase = prop(T, 'pp_prop_case', HT.pp_prop_case);
     const ALL = [pea, prince, queen, king, ...mats, ...pile, ...duvs, peaB, peaC, peaM, matC, pillow, board, ladder, boat, lands, cloudA, cloudB, bolt, doorC, doorO, kase];
     ALL.forEach(hide);
-    hitBox(T, boat, 100, 100); hitBox(T, peaC, 100, 100); hitBox(T, pillow, 100, 70); hitBox(T, matC, 250, 80); hitBox(T, kase, 100, 150);
+    hitBox(T, boat, 100, 100); hitBox(T, peaC, 100, 100); hitBox(T, pillow, 100, 100); hitBox(T, matC, 250, 100); hitBox(T, kase, 100, 150);
     T.director({ cast: { pea, prince, queen, king }, noFace: ['pea', 'prince', 'queen', 'king'] });
 
     /* 탑 한 채를 rig 안에 세운다(6·7·8장) */
@@ -286,8 +290,7 @@
     if (P) camSnap(770, 280, 1);
     await T.curtain(true);
     await say('옛날에 진짜 공주와 결혼하고 싶은 왕자가 있었어요.');
-    await say('배를 톡 눌러 봐요.');
-    await T.tap(boat.hit, { prompt: '배를 톡 눌러 봐요.' });
+    await T.ask('배를 톡 눌러 봐요.', () => T.tap(boat.hit, { prompt: '배를 톡 눌러 봐요.' }));
     sfx(T, 'swish', .35); T.pop(754, 200, tr('출렁출렁'));
     {
       const t = boat.move(900, 300, SAIL, 'linear');
@@ -345,9 +348,9 @@
       if (P) camSnap(630, 280, 1);
     }, doorC.pos);
     T.pop(pea.x - 85, FL - 40, tr('뚝뚝'), '#1F2A56');
-    await say('성문을 톡 눌러 봐요.');
-    bob(doorC.pos);
-    await T.tap(doorC.pos, { prompt: '성문을 톡 눌러 봐요.' });
+    bob(doorC.pos); doorC.pos.style.pointerEvents = 'auto';
+    await T.ask('성문을 톡 눌러 봐요.', () => T.tap(doorC.pos, { prompt: '성문을 톡 눌러 봐요.' }));
+    doorC.pos.style.pointerEvents = 'none';
     sfx(T, 'creak', .5); T.pop(700, 150, tr('끼익'));
     fadeOut(T, doorC, 300); fadeIn(doorO, 300);
     fadeIn(queen, 400); fadeIn(king, 400); glow(king, 1200);
@@ -366,26 +369,24 @@
       scene('pp_bg_guest_day');
       put(T, board, X(820, 760), FL); inRig(board);
       put(T, queen, X(690, 620), FL, { look: 'place', to: 'right' });
-      if (P) { put(T, peaC, 500, 350); put(T, pillow, 500, 420); put(T, matC, 500, FL); }
+      if (P) { put(T, peaC, 500, 300); put(T, pillow, 500, 400); put(T, matC, 500, FL); }   // 세로: 누르는 자리 100씩(화면 90px) 겹치지 않게
       else { put(T, matC, 180, FL); put(T, pillow, 360, FL); put(T, peaC, 470, FL); }
       if (P) camSnap(500, 280, 1);
     }, peaC.pos);
     await say('왕비님은 손님방에 완두콩 한 알, 베개, 매트리스 한 장을 가져왔어요.');
-    await say('셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.');
-    await T.choose([
+    await T.ask('셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.', () => T.choose([
       { el: peaC.hit, ok: true },
       { el: pillow.hit, ok: false, onWrong: wrongSay(pillow, '그건 베개예요. 더 작은 걸 찾아봐요.') },
       { el: matC.hit, ok: false, onWrong: wrongSay(matC, '그건 매트리스예요. 더 작은 걸 찾아봐요.') },
-    ], { prompt: '셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.' });
+    ], { prompt: '셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.' }));
     reward(peaC); T.pop(peaC.x, peaC.y - 70, tr('반짝!'));
     await say('맞아요, 완두콩이 제일 작아요!');
     await sleep(1400);
-    await say('그럼 제일 큰 것은 뭘까요? 눌러 봐요.');
-    await T.choose([
+    await T.ask('그럼 제일 큰 것은 뭘까요? 눌러 봐요.', () => T.choose([
       { el: matC.hit, ok: true },
       { el: peaC.hit, ok: false, onWrong: wrongSay(peaC, '그건 완두콩이에요. 더 큰 걸 찾아봐요.') },
       { el: pillow.hit, ok: false, onWrong: wrongSay(pillow, '그건 베개예요. 더 큰 걸 찾아봐요.') },
-    ], { prompt: '그럼 제일 큰 것은 뭘까요? 눌러 봐요.' });
+    ], { prompt: '그럼 제일 큰 것은 뭘까요? 눌러 봐요.' }));
     reward(matC, 1200, 10); T.pop(matC.x, matC.y - 60, tr('반짝!'));
     await say('맞아요, 매트리스가 제일 커요!');
     follow(X(700, 700));
@@ -412,12 +413,14 @@
       put(T, peaB, TX - 60, BOARD_TOP + 4); inRig(peaB);
       pile.forEach((p, k) => put(T, p, PILE_X, FL - k * MAT_H));
       put(T, queen, X(350, 400), FL, { look: 'lift' });
-      bedHit = T.el('rect', { x: TX - 125, y: BOARD_TOP - 230, width: 250, height: 260, fill: '#000', 'fill-opacity': 0 }, rig);
+      bedHit = T.el('g', {}, rig);
+      const bedR = T.el('rect', { x: TX - 125, y: BOARD_TOP - 230, width: 250, height: 260, fill: '#000', 'fill-opacity': 0 }, bedHit);
+      const pileR = T.el('rect', { x: PILE_X - 130, y: FL - 5 * MAT_H - 60, width: 260, height: 5 * MAT_H + 60, fill: '#000', 'fill-opacity': 0 }, bedHit);   // 들썩이는 더미(5장) 자리
+      (P ? bedR : pileR).dataset.hand = '1';
       if (P) camSnap(TX, 280, 1);
     }, board.pos);
-    await say('완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.');
     bob(pile[4].pos);
-    await T.tap(bedHit, { prompt: '완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.' });
+    await T.ask('완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.', () => T.tap(bedHit, { prompt: '완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.' }));
     const stack = async (from, to, gap) => {
       for (let i = from; i < to; i++) {
         const m = mats[i];
@@ -430,9 +433,8 @@
       }
     };
     await stack(0, 10, COUNT_A);
-    await say('열! 아직 더 있어요. 한 번 더 톡!');
     bob(pile[4].pos);
-    await T.tap(bedHit, { prompt: '열! 아직 더 있어요. 한 번 더 톡!' });
+    await T.ask('열! 아직 더 있어요. 한 번 더 톡!', () => T.tap(bedHit, { prompt: '열! 아직 더 있어요. 한 번 더 톡!' }));
     await stack(10, 20, COUNT_B);
     await sleep(400);
     await say('스물! 매트리스가 스무 장이에요.');
@@ -460,18 +462,16 @@
     const showZones = () => [zTop, zBot].forEach(z => { z.animate([{ opacity: 0 }, { opacity: .22 }], { duration: 400, fill: 'forwards' }); });
     const hideZones = async () => { await Promise.all([zTop, zBot].map(z => T.anim(z, [{ opacity: .22 }, { opacity: 0 }], 300))); };
     showZones();
-    await say('완두콩은 어디 있을까요? 탑의 위? 아래?');
-    await T.choose([
+    await T.ask('완두콩은 어디 있을까요? 탑의 위? 아래?', () => T.choose([
       { el: zBot, ok: true },
       { el: zTop, ok: false, onWrong: async () => { await wiggleEl(T, zTop); await say('거긴 탑의 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.'); } },
-    ], { prompt: '완두콩은 어디 있을까요? 탑의 위? 아래?' });
+    ], { prompt: '완두콩은 어디 있을까요? 탑의 위? 아래?' }));
     glow(peaB, 1500); peaB.hop(10, 360); sparkleSfx(T); T.pop(TX, 420, tr('반짝!'));
     await say('맞아요! 완두콩은 맨 아래에 있어요.'); await sleep(1200);
-    await say('공주님은 어디서 잘까요? 위? 아래?');
-    await T.choose([
+    await T.ask('공주님은 어디서 잘까요? 위? 아래?', () => T.choose([
       { el: zTop, ok: true },
       { el: zBot, ok: false, onWrong: async () => { await wiggleEl(T, zBot); await say('거긴 탑의 아래예요. 공주님은 맨 위에서 자요. 위를 눌러 봐요.'); } },
-    ], { prompt: '공주님은 어디서 잘까요? 위? 아래?' });
+    ], { prompt: '공주님은 어디서 잘까요? 위? 아래?' }));
     zTop.style.filter = 'url(#hintGlow)'; setTimeout(() => { zTop.style.filter = ''; }, 1200); sparkleSfx(T); T.pop(TX, 110, tr('반짝!'));
     await say('맞아요! 공주님은 맨 위에서 자요.');
     await hideZones(); zTop.remove(); zBot.remove();
@@ -552,9 +552,8 @@
     await say('진짜 공주님을 드디어 찾았어요!');
     petals(T);
     await say('완두콩은 박물관에 갔대요.');
-    await say('유리 상자를 톡 눌러 봐요.');
     bob(kase.pos);
-    await T.tap(kase.hit, { prompt: '유리 상자를 톡 눌러 봐요.' });
+    await T.ask('유리 상자를 톡 눌러 봐요.', () => T.tap(kase.hit, { prompt: '유리 상자를 톡 눌러 봐요.' }));
     glow(peaM, 1500); peaM.hop(10, 360); sparkleSfx(T); T.pop(kase.x, kase.y - 190, tr('반짝!'));
     pea.look('wave'); prince.look('joy'); pea.hop(12, 360); prince.hop(12, 360);
     T.confetti(); sfx(T, 'tada', undefined, () => sparkleSfx(T));
