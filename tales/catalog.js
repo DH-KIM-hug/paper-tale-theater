@@ -332,6 +332,15 @@ const TALES = (() => {
       <rect x="66" y="34" width="34" height="14" rx="4" fill="${c.cr}"/>${eye(90, 41, 2)}${eye(96, 41, 2)}
       <circle cx="56" cy="86" r="11" fill="${c.ind}"/><circle cx="104" cy="86" r="11" fill="${c.ind}"/><circle cx="56" cy="86" r="4" fill="${c.cr}"/><circle cx="104" cy="86" r="4" fill="${c.cr}"/>
       <ellipse cx="136" cy="22" rx="9" ry="6" fill="${c.gd}" transform="rotate(-20 136 22)"/><ellipse cx="146" cy="26" rx="8" ry="5" fill="${c.gd}" transform="rotate(20 146 26)"/></g>` },
+  { id: 'unicorn', title: '유니콘을 찾아서', origin: 'original', skills: ['spot', 'count', 'heart'], ready: false, making: true,
+    line: '빨간 조각을 고르고, 사슴 다리의 가시 세 개를 세어요. 유니콘을 찾아 길을 나선 아이가 길 잃은 양과 아픈 사슴과 배고픈 말을 도우면, 뒤에서 지켜보던 진짜 유니콘이 나타나요.',
+    en: { title: 'Finding the Unicorn', line: 'Pick the red block and count three thorns in a deer\'s leg. A child sets out to find a unicorn, helps a lost sheep, a hurt deer and a hungry horse, and the real unicorn who was watching appears.' },
+    art: `<rect width="160" height="110" fill="${c.ind}"/>
+      <g class="pc"><circle cx="128" cy="26" r="14" fill="${c.cr}"/><rect y="86" width="160" height="24" fill="${c.bk}"/>
+      <rect x="50" y="52" width="58" height="30" rx="12" fill="${c.sn}"/>${[56, 66, 92, 102].map(x => `<rect x="${x}" y="76" width="5" height="20" fill="${c.sn}"/>`).join('')}
+      <rect x="40" y="30" width="24" height="30" rx="9" fill="${c.sn}" transform="rotate(-18 52 56)"/><path d="M42 30 L46 8 L52 28Z" fill="${c.cr}"/>
+      ${['#A93B32', '#E8703A', '#D9A94E', '#3F6B4F', '#3E7CB1', '#1F2A56', '#7B4F8C'].map((k, i) => `<rect x="${58 + i * 3}" y="34" width="3.4" height="22" fill="${k}"/>`).join('')}
+      ${eye(48, 42, 2.2)}</g>` },
   { id: 'princess_pea', title: '완두콩 공주', origin: 'world', also: ['princess'], skills: ['count', 'size', 'position'], ready: false, making: true,
     line: '제일 작은 것과 제일 큰 것을 고르고, 매트리스 스무 장을 세고, 위와 아래를 찾아요. 비에 젖은 아가씨가 완두콩 한 알로 진짜 공주임을 보여요.',
     en: { title: 'The Princess and the Pea', line: 'Pick the smallest and the biggest, count twenty mattresses and find top and bottom. A rain-soaked girl shows she is a true princess with a single pea.' },
