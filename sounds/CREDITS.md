@@ -87,5 +87,5 @@ CC BY 파일은 **출처 표시 의무가 있다** — 크레딧 화면에 "Kevi
 | `sfx/beomjong_synth.mp3` | **임시 합성음**(실제 녹음이 아님). 성덕대왕신종의 배음 구조(기본음 약 64Hz 맥놀이 + 168Hz 등)를 사인파로 겹쳐 6초 감쇠로 만든 것. 실제 범종 녹음 `sfx/beomjong.mp3` 를 구하면 그쪽을 먼저 틀고 이 파일은 대비용으로만 남긴다(tales/magpie/SPEC.md §7-1) | 팥죽 게임(코드 합성) | CC0 | — |
 | `sfx/beomjong.mp3` | Freesound "2022-10-16-big-bass-zen-temple-bell.wav"(큰 저음 절 종 한 번 타종 녹음, 4분 길이 중 처음 6초를 타종 직전부터 잘라 끝 1.8초 페이드아웃, 정규화). **한국 범종이 아니라 일본식(선종) 큰 절 종 녹음이다** — 한국 범종 녹음은 공개 자료(Wikimedia Commons·Freesound·공공누리)에서 찾지 못했다. 한국 범종 녹음을 구하면 이 자리에 넣는다 | ilmari_freesound | CC0 | https://freesound.org/people/ilmari_freesound/sounds/653710/ |
 | `sfx/car_drive.mp3` | BigSoundBank "Car on a Road"(#1286, 푸조 107 가솔린차 주행 녹음 1분 11초 중 일정 속도로 달리는 15~19초 4초를 잘라 앞뒤 페이드, loudnorm) | Joseph SARDIN | CC0 | https://bigsoundbank.com/car-on-a-road-s1286.html |
-| `sfx/car_horn.mp3` | BigSoundBank "Horn #3"(#3506, 야외 경적 한 번 0.94초, 끝 페이드, 음량 +4dB) | Le tiroir du fond | CC0 | https://bigsoundbank.com/horn-3-s3506.html |
+| `sfx/car_horn.mp3` | BigSoundBank "Horn #3"(#3506, 야외 경적 한 번 0.94초, 끝 페이드, 음량 -9dB로 낮춤) | Le tiroir du fond | CC0 | https://bigsoundbank.com/horn-3-s3506.html |
 | `sfx/car_brake.mp3` | BigSoundBank "Tire squeal"(#0500, 미끄러지는 차 타이어 끼익 소리 30초 중 처음 1초, 앞뒤 페이드, loudnorm) | Joseph SARDIN | CC0 | https://bigsoundbank.com/tire-squeal-s0500.html |
