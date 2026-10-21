@@ -92,6 +92,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "A fire truck was spraying water, whoosh whoosh, on a fire at a little block house.",
   "c": "audio/el/red_car/en/nar_d1f4498b31.mp3"
  },
+ "불을 톡톡 눌러서 꺼 줘요!": {
+  "t": "Tap the flames to put them out!",
+  "c": "audio/el/red_car/en/nar_dcabb631ac.mp3"
+ },
  "어? 소방차 이모! 우리 같이 이현이 만나러 가요!": {
   "t": "Oh? Auntie fire truck! Come with us to find Ihyun!",
   "c": "audio/el/red_car/en/red_aef27534d6.mp3"
@@ -164,9 +168,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Heave-ho, heave-ho!",
   "c": "audio/el/red_car/en/tow_4f940617c5.mp3"
  },
- "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 경찰차, 소방차, 구급차가 든든하게 따랐어요.": {
-  "t": "The tow truck pulled the red car from the front, and behind them came the police car, the fire truck and the ambulance.",
-  "c": "audio/el/red_car/en/nar_fd407143bc.mp3"
+ "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 다른 차들이 든든하게 따랐어요.": {
+  "t": "The tow truck pulled the red car from the front, and the other cars followed close behind.",
+  "c": "audio/el/red_car/en/nar_d04359885d.mp3"
  },
  "맨 앞에서 끌어 주는 건 누구일까요? 골라 봐요.": {
   "t": "Who is pulling at the very front? Pick one!",
@@ -191,6 +195,58 @@ Object.assign(NARRATION_CLIPS_EN, {
  "맞아요, 견인차!": {
   "t": "That's right, the tow truck!",
   "c": "audio/el/red_car/en/nar_8557035f25.mp3"
+ },
+ "가운데에서 달리는 건 누구일까요? 골라 봐요.": {
+  "t": "Who is in the middle? Pick one!",
+  "c": "audio/el/red_car/en/nar_b0530c26ba.mp3"
+ },
+ "맨 뒤에서 따라가는 건 누구일까요? 골라 봐요.": {
+  "t": "Who is at the very back? Pick one!",
+  "c": "audio/el/red_car/en/nar_539dbabd91.mp3"
+ },
+ "맞아요, 가운데는 경찰차!": {
+  "t": "That's right, the police car is in the middle!",
+  "c": "audio/el/red_car/en/nar_e32268c575.mp3"
+ },
+ "맞아요, 가운데는 소방차!": {
+  "t": "That's right, the fire truck is in the middle!",
+  "c": "audio/el/red_car/en/nar_6c4fc06f52.mp3"
+ },
+ "맞아요, 가운데는 구급차!": {
+  "t": "That's right, the ambulance is in the middle!",
+  "c": "audio/el/red_car/en/nar_aa68ac1503.mp3"
+ },
+ "맞아요, 맨 뒤는 경찰차!": {
+  "t": "That's right, the police car is at the very back!",
+  "c": "audio/el/red_car/en/nar_81b19af5d6.mp3"
+ },
+ "맞아요, 맨 뒤는 소방차!": {
+  "t": "That's right, the fire truck is at the very back!",
+  "c": "audio/el/red_car/en/nar_ab680c93f6.mp3"
+ },
+ "맞아요, 맨 뒤는 구급차!": {
+  "t": "That's right, the ambulance is at the very back!",
+  "c": "audio/el/red_car/en/nar_2a2f6d9c29.mp3"
+ },
+ "그건 빨간 자동차예요. 다시 볼까요?": {
+  "t": "That's the red car. Let's look again!",
+  "c": "audio/el/red_car/en/nar_c8d37bb8ec.mp3"
+ },
+ "그건 경찰차 형아예요. 다시 볼까요?": {
+  "t": "That's the police car. Let's look again!",
+  "c": "audio/el/red_car/en/nar_6d45766e8a.mp3"
+ },
+ "그건 소방차 이모예요. 다시 볼까요?": {
+  "t": "That's the fire truck. Let's look again!",
+  "c": "audio/el/red_car/en/nar_ec46cfcd8f.mp3"
+ },
+ "그건 구급차 삼촌이에요. 다시 볼까요?": {
+  "t": "That's the ambulance. Let's look again!",
+  "c": "audio/el/red_car/en/nar_e272d85791.mp3"
+ },
+ "그건 견인차예요. 다시 볼까요?": {
+  "t": "That's the tow truck. Let's look again!",
+  "c": "audio/el/red_car/en/nar_b53a6804c3.mp3"
  },
  "긴 기차처럼 한 줄로 칙칙폭폭, 붕붕붕!": {
   "t": "Like a long train, all in a row: chugga-chugga, vroom vroom vroom!",

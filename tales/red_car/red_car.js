@@ -1,5 +1,5 @@
 /* 나의 빨간 자동차 — 창작 동화(사용자 원고). 기획: tales/red_car/PLAN.md, 상세: SPEC.md (2026-10-21)
-   톡 3번(2장 나비 · 8장 고리 · 10장 이현이), 배움 놀이 2개(1장 빨간 것 찾기 · 9장 맨 앞은 누구), 연타 없음, 줄거리 선택 없음. 교훈 대사 없음.
+   톡 3번(5장 불꽃 3개 · 8장 고리 · 10장 이현이), 배움 놀이 2개(1장 빨간 것 찾기 · 9장 줄 순서 묻기(맨 앞·가운데·맨 뒤 중 하나)), 연타 없음, 줄거리 선택 없음. 교훈 대사 없음.
    두 세계: 사람 세계(1·2·10장)에서 자동차는 손에 쥐는 장난감(S_TOY = .32), 장난감 세상(3~9장)에서는 화면 주인공 크기(scale 1). 3장 머리에서 카메라가 자동차 눈높이로 내려간다(줌).
    크기: 같은 자동차는 자세가 달라도 바퀴 지름이 같다(HT 표). 자동차끼리는 길이 비율 red 1.0 : police 1.1 : tow 1.3 : amb 1.4 : fire 1.6.
    자동차 얼굴은 점 눈 둘뿐. 소품은 얼굴 없음. 사이렌은 효과음이 아니라 배역 목소리 의성어(vo).
@@ -277,6 +277,7 @@
     L17: "가다 보니 이번엔 위이잉, 소리가 났어요.",
     L18: "조심하세요! 불을 끕니다!",
     L19: "소방차가 블록으로 만든 장난감 집에 난 불을 쉭쉭 끄고 있었어요.",
+    L19B: "불을 톡톡 눌러서 꺼 줘요!",
     L20: "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
     L21: "그래그래! 불을 다 껐으니 같이 가자!",
     L22: "소방차 이모도 신나게 함께했어요.",
@@ -295,13 +296,19 @@
     L35: "바로 이현이가 전에 잃어버렸던 주황색 견인차였어요!",
     L36: "견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요.",
     L37: "영차, 영차!",
-    L38: "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 경찰차, 소방차, 구급차가 든든하게 따랐어요.",
+    L38: "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 다른 차들이 든든하게 따랐어요.",
     L39: "맨 앞에서 끌어 주는 건 누구일까요? 골라 봐요.",
     W_red: "그건 빨간 자동차예요. 맨 앞을 다시 봐요.",
     W_police: "그건 경찰차 형아예요. 맨 앞을 다시 봐요.",
     W_fire: "그건 소방차 이모예요. 맨 앞을 다시 봐요.",
     W_amb: "그건 구급차 삼촌이에요. 맨 앞을 다시 봐요.",
     C2: "맞아요, 견인차!",
+    Q_mid: "가운데에서 달리는 건 누구일까요? 골라 봐요.",
+    Q_back: "맨 뒤에서 따라가는 건 누구일까요? 골라 봐요.",
+    C_mid_police: "맞아요, 가운데는 경찰차!", C_mid_fire: "맞아요, 가운데는 소방차!", C_mid_amb: "맞아요, 가운데는 구급차!",
+    C_back_police: "맞아요, 맨 뒤는 경찰차!", C_back_fire: "맞아요, 맨 뒤는 소방차!", C_back_amb: "맞아요, 맨 뒤는 구급차!",
+    W2_red: "그건 빨간 자동차예요. 다시 볼까요?", W2_police: "그건 경찰차 형아예요. 다시 볼까요?", W2_fire: "그건 소방차 이모예요. 다시 볼까요?",
+    W2_amb: "그건 구급차 삼촌이에요. 다시 볼까요?", W2_tow: "그건 견인차예요. 다시 볼까요?",
     L40: "긴 기차처럼 한 줄로 칙칙폭폭, 붕붕붕!",
     L41: "마침내 놀이터에 있는 이현이를 만났어요!",
     L42: "와아! 내 빨간 자동차다!",
@@ -314,7 +321,7 @@
   async function run(T) {
     const { sleep, camSnap, tr } = T;
     T.cardSpeed(.6);   /* 장면 전환을 빠르게(기본의 60%) */
-    const GAP = 1200, SCENE_END = 3200, DRIVE = 9000, LINE_DRIVE = 12000, SIREN_GAP = 4000;
+    const GAP = 700, SCENE_END = 1500, DRIVE = 6300, LINE_DRIVE = 8400, SIREN_GAP = 4000;
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(삐뽀삐뽀!·톡!…)
     const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
@@ -337,9 +344,10 @@
     const bfly = mk(T, { open: ['rc_prop_butterfly_open', HT.rc_prop_butterfly_open], fold: ['rc_prop_butterfly_fold', HT.rc_prop_butterfly_fold] });
     const block = prop(T, 'rc_prop_block', HT.rc_prop_block), duck = prop(T, 'rc_prop_duck', HT.rc_prop_duck);
     const house = prop(T, 'rc_prop_house', HT.rc_prop_house), flame = prop(T, 'rc_prop_flame', HT.rc_prop_flame), smoke = prop(T, 'rc_prop_smoke', HT.rc_prop_smoke);
+    const flame2 = prop(T, 'rc_prop_flame', HT.rc_prop_flame), flame3 = prop(T, 'rc_prop_flame', HT.rc_prop_flame), smoke2 = prop(T, 'rc_prop_smoke', HT.rc_prop_smoke), smoke3 = prop(T, 'rc_prop_smoke', HT.rc_prop_smoke);
     const water = prop(T, 'rc_prop_water', HT.rc_prop_water), hook = prop(T, 'rc_prop_hook', HT.rc_prop_hook);
     const CARS = [red, police, fire, amb, tow];
-    [kid, ...CARS, thiefA, thiefB, bear, rabbit, bfly, block, duck, house, flame, smoke, water, hook].forEach(hide);
+    [kid, ...CARS, thiefA, thiefB, bear, rabbit, bfly, block, duck, house, flame, flame2, flame3, smoke, smoke2, smoke3, water, hook].forEach(hide);
     T.director({ cast: { child: kid, red, police, fire, amb, tow }, noFace: ['child', 'red', 'police', 'fire', 'amb', 'tow'] });
     /* 그림에서 잰 좌표(차 가운데 x·바닥 y 기준 오프셋, 2026-10-21): 서 있는 이현이 쥔 주먹(그림 왼쪽 손) · 식탁 윗면 · 누운 손 옆 · 구급차 큰 옆창 · 호스 끝 · 견인차 사슬 끝(고리 꼭대기가 사슬과 겹치게) · 빨간 차 앞 범퍼(지침 / 걸림 자세) */
     const HAND = { stand: [-14, -80], eat: [38, -96], sleep: [-63, -22] };
@@ -362,12 +370,11 @@
     await T.curtain(true);
     await say(S.L0);
     await sleep(300);
-    await say(S.L1);
     [red, block, duck].forEach(a => bob(a.pos));
-    await T.choose(kinds.map(k => ({
+    await T.ask(S.L1, () => T.choose(kinds.map(k => ({
       el: toy[k].hit, ok: k === 'red',
       onWrong: async () => { await wiggleEl(T, toy[k].hit); await say(k === 'block' ? S.W_block : S.W_duck); },
-    })), { prompt: S.L1 });
+    })), { prompt: S.L1 }));
     glow(red, 1200); sparkleSfx(T); T.pop(red.x, FL - 60, tr('반짝!'));
     await say(S.C1);
     unhit(red);
@@ -386,20 +393,18 @@
     await Promise.all([say(S.L2), cut2]);
     await sleep(SCENE_END);
 
-    /* ===== 2. 나비다! (톡 1 — 나비, 첫 톡) ===== */
+    /* ===== 2. 나비다! (자동 — 나비는 저절로 날아간다) ===== */
     await T.sceneCard(tr('나비다!'), () => {
       scene('rc_bg_yard');
       put(T, kid, X(380, 400), FL, { look: 'stand' });
       put(T, red, kid.x + HAND.stand[0], FL + HAND.stand[1], { look: 'run', s: S_TOY });
-      put(T, bfly, X(700, 640), 300, { look: 'open' }); hitBox(T, bfly, 100, 100); flutter(bfly);
+      put(T, bfly, X(700, 640), 300, { look: 'open' }); flutter(bfly);
       if (P) camSnap(560, 280, 1);
     }, bfly.pos);
     await say(S.L3);
     kid.look('point', 'right'); kid.hop(8, 300);
     await say(S.L4);
-    bob(bfly.pos);
-    await T.tap(bfly.hit);
-    unhit(bfly);
+    await sleep(1000);   // 나비가 저절로 날아가기 전 잠깐 쉼
     sfx('swish', .4); T.pop(bfly.x, bfly.y - 50, tr('팔랑팔랑'));
     const bflyGo = bfly.move(1150, 120, 2800, 'ease-in');
     kid.look('run', 'right');
@@ -474,32 +479,57 @@
     stopR4c();
     await sleep(SCENE_END);
 
-    /* ===== 5. 소방차 이모 (자동 — 불 끄기) ===== */
+    /* ===== 5. 소방차 이모 (불 3개를 아이가 톡톡 눌러 끈다 — 순서 마음대로) ===== */
+    const FL3 = [flame, flame2, flame3];
+    const FPOS = [[-42, -108], [2, -150], [44, -70]];   // 블록 집 기준: 지붕 왼쪽, 지붕 꼭대기, 창문 옆 벽
+    const WCH = { x: 0.785, y: -0.145 };                // 물줄기 그림의 시작(왼쪽 아래)에서 끝(오른쪽 위 물방울)까지, 그림 폭·높이 비율
     await T.sceneCard(tr('소방차 이모'), () => {
       scene('rc_bg_road_b');
-      put(T, house, X(800, 700), FL - 30); put(T, flame, house.x - 8, house.y - 158);
-      put(T, fire, house.x - 220, FL, { look: 'spray' });
-      put(T, water, fire.x + NOZ[0] + water.w / 2 - 4, FL + NOZ[1] + 6, { to: 'right' });
-      water.body.style.transformOrigin = `${-water.w / 2}px 0px`; water.body.style.transform = 'rotate(-40deg)';   // 호스 끝에서 지붕 쪽으로 솟는 물줄기
+      put(T, house, X(800, 640), FL - 30);
+      FL3.forEach((f, i) => { put(T, f, house.x + FPOS[i][0], house.y + FPOS[i][1]); hitBox(T, f, 84, 100); });
+      put(T, fire, house.x - X(220, 150), FL, { look: 'spray' });
       if (P) camSnap(560, 280, 1);
     }, fire.pos);
-    water.body.animate([{ translate: '0 0', opacity: 1 }, { translate: '0 -6px', opacity: .7 }, { translate: '0 0', opacity: 1 }], { duration: 360, iterations: Infinity });
-    let flameOn = true;
-    (async () => { while (flameOn) await flame.wiggle(4, 600); })();
+    const wob = [0, 1, 2].map(() => ({ on: true }));
+    FL3.forEach((f, i) => { (async () => { while (wob[i].on) await f.wiggle(4, 600 + i * 90); })(); });
     const l17 = say(S.L17);
     vo('siren_fire'); blink(T, fire); T.pop(fire.x, FL - 190, tr('위이잉!'));
     await l17;
     fire.hop(6, 300); await say(S.L18);
-    const l19 = say(S.L19);
-    sfx('splash', .35); T.pop(flame.x, flame.y - 150, tr('쉭쉭!'));
-    await sleep(1500); flameOn = false;
-    flame.body.animate([{ scale: 1 }, { scale: .56 }], { duration: 600, fill: 'forwards' }); sfx('splash', .35);
-    await sleep(1700);
-    await fadeOut(T, flame, 400); hide(water);
-    put(T, smoke, flame.x, flame.y - 10); fadeIn(smoke, 400);
+    await say(S.L19);
+    /* 호스 끝에서 불꽃 쪽으로 물줄기: 그림의 시작점(왼쪽 아래)을 호스 끝에 두고, 시작→끝 방향을 불꽃으로 돌려 길이를 맞춘다 */
+    const nz = { x: fire.x + NOZ[0], y: FL + NOZ[1] };
+    const spray = async (f) => {
+      const tx = f.x, ty = f.y - 45;
+      const w = water.w, h = water.h;
+      const ox = -.40 * w, oy = -.04 * h;                          // 그림 안 시작점(가운데 아래 기준)
+      put(T, water, nz.x - ox, nz.y - oy, { to: 'right' });
+      const cx = WCH.x * w, cy = WCH.y * h, chord = Math.hypot(cx, cy);
+      const ang = Math.atan2(ty - nz.y, tx - nz.x) - Math.atan2(cy, cx), sc = Math.min(1.7, Math.max(.45, Math.hypot(tx - nz.x, ty - nz.y) / chord));
+      water.body.style.transformOrigin = `${ox}px ${oy}px`;
+      const tr0 = `rotate(${ang}rad) scale(`;
+      const an = water.body.animate([{ transform: tr0 + '.05)', opacity: .6 }, { transform: tr0 + sc + ')', opacity: 1 }], { duration: 380, easing: 'ease-out', fill: 'forwards' });
+      sfx('splash', .35); T.pop(f.x, f.y - 110, tr('쉭쉭!'));
+      await an.finished;
+    };
+    const left = [...FL3]; let smokes = [];
+    while (left.length) {
+      const pick = () => T.choose(left.map(f => ({ el: f.hit, ok: true })), { prompt: S.L19B });
+      const o = left.length === 3 ? await T.ask(S.L19B, pick) : await pick();   // 안내가 나오는 순간부터 불꽃을 누를 수 있다
+      const f = left.find(x => x.hit === o.el); left.splice(left.indexOf(f), 1);
+      unhit(f);
+      await spray(f);
+      wob[FL3.indexOf(f)].on = false;
+      f.body.animate([{ scale: 1 }, { scale: .5 }], { duration: 800, fill: 'forwards' });
+      await sleep(850);
+      hide(water);
+      await fadeOut(T, f, 300);
+      const sm = FL3.length - left.length === 1 ? smoke : (FL3.length - left.length === 2 ? smoke2 : smoke3);
+      put(T, sm, f.x, f.y - 10); fadeIn(sm, 300);
+      smokes.push(Promise.all([sm.move(sm.x + 10, sm.y - 60, 2400, 'ease-out'), T.anim(sm.pos, [{ opacity: 1 }, { opacity: 0 }], 2400)]).then(() => hide(sm)));
+    }
     fire.look('run');
-    const smokeUp = Promise.all([smoke.move(smoke.x + 10, smoke.y - 60, 2400, 'ease-out'), T.anim(smoke.pos, [{ opacity: 1 }, { opacity: 0 }], 2400)]);
-    await Promise.all([l19, smokeUp]); hide(smoke);
+    await Promise.all(smokes);
     put(T, police, -200, FL, { look: 'run' }); put(T, red, -120, FL, { look: 'run' });
     const stopR5 = rattle(.25, 1200);
     follow(440, 3800);
@@ -600,12 +630,10 @@
     await Promise.all([drive(tow, TOW8, LANE_T, 9500, 'linear', 4), l33]);
     stopR8b();
     tow.hop(8, 300); await say(S.L34);
-    const l35 = say(S.L35);
     tow.look('pull'); sfx('creak', .4);
     put(T, hook, tow.x + HOOK_DX, tow.y + HOOK_DY, { to: 'right', s: HOOK_S }); hitBox(T, hook, 90, 90);
-    await l35;
     bob(hook.pos);
-    await T.tap(hook.hit);
+    await T.ask(S.L35, () => T.tap(hook.hit));
     unhit(hook);
     /* 견인차가 뒤로 살짝 물러나 고리를 빨간 차 앞 범퍼 위로 가져간다(사슬은 견인차에 붙은 채) */
     sfx('creak', .4);
@@ -619,9 +647,10 @@
     await sleep(SCENE_END);
 
     /* ===== 9. 기차처럼 한 줄로 (배움 놀이 2: 맨 앞은 누구?) ===== */
-    const END9 = chain(880, ['tow', 'red', 'police', 'fire', 'amb'], 10);
+    const MID3 = ['police', 'fire', 'amb'].sort(() => Math.random() - .5), ORD9 = ['tow', 'red', ...MID3];   // 줄 순서: 견인차·빨간 차는 고정, 나머지 셋은 매번 섞는다(10장도 같은 순서)
+    const END9 = chain(880, ORD9, 10);
     const sh9 = END9.tow - END9.red - TOWGAP;   // 고리로 이어진 두 차는 LEN 간격보다 가깝다 → 뒤 차들도 같이 당긴다
-    ['red', 'police', 'fire', 'amb'].forEach(k => { END9[k] += sh9; });
+    ORD9.slice(1).forEach(k => { END9[k] += sh9; });
     await T.sceneCard(tr('기차처럼 한 줄로'), () => {
       scene('rc_bg_road_long');
       put(T, amb, END9.amb - 430, FL, { look: 'run' }); put(T, fire, END9.fire - 430, FL, { look: 'run' }); put(T, police, END9.police - 430, FL, { look: 'run' });
@@ -636,20 +665,22 @@
     stopR9();
     await sleep(400);
     const CAR = { tow, red, police, fire, amb }, order = ['tow', 'red', 'police', 'fire', 'amb'].sort(() => Math.random() - .5);
+    const QK = ['front', 'mid', 'back'][Math.floor(Math.random() * 3)], ANS = { front: 'tow', mid: ORD9[2], back: ORD9[4] }[QK];   // 오늘의 질문 하나(맨 앞·가운데·맨 뒤)
+    const QLINE = { front: S.L39, mid: S.Q_mid, back: S.Q_back }[QK], CLINE = QK === 'front' ? S.C2 : S['C_' + QK + '_' + ANS];
     const CX = P ? null : [200, 350, 500, 650, 800], cs = X(1, .54);
     const posP = [[413, 110], [500, 110], [587, 110], [456, 180], [544, 180]];
     if (P) camSnap(500, 280, 1);
-    await say(S.L39);
     const cards = order.map((k, i) => carCard(T, k, P ? posP[i][0] : CX[i], P ? posP[i][1] : 150, cs));
     cards.forEach((c, i) => c.g.animate([{ opacity: 0, translate: '0 20px' }, { opacity: 1, translate: '0 0' }], { duration: 450, delay: i * 120, fill: 'backwards' }));
-    const W = { red: S.W_red, police: S.W_police, fire: S.W_fire, amb: S.W_amb };
-    await T.choose(cards.map(c => ({ el: c.g, ok: c.key === 'tow', onWrong: async () => { await wiggleEl(T, c.g); CAR[c.key].hop(10, 320); await say(W[c.key]); } })), { prompt: S.L39 });
-    cards.find(c => c.key === 'tow').g.style.filter = 'url(#hintGlow)';
-    tow.look('joy'); glow(tow, 1200); sparkleSfx(T); T.pop(tow.x, FL - 170, tr('반짝!'));
-    await say(S.C2);
+    const W = QK === 'front' ? { red: S.W_red, police: S.W_police, fire: S.W_fire, amb: S.W_amb } : { red: S.W2_red, police: S.W2_police, fire: S.W2_fire, amb: S.W2_amb, tow: S.W2_tow };
+    await T.ask(QLINE, () => T.choose(cards.map(c => ({ el: c.g, ok: c.key === ANS, onWrong: async () => { await wiggleEl(T, c.g); CAR[c.key].hop(10, 320); await say(W[c.key]); } })), { prompt: QLINE }));
+    cards.find(c => c.key === ANS).g.style.filter = 'url(#hintGlow)';
+    const winner = CAR[ANS];
+    winner.look('joy'); glow(winner, 1200); sparkleSfx(T); T.pop(winner.x, FL - 170, tr('반짝!'));
+    await say(CLINE);
     await Promise.all(cards.map(c => T.anim(c.g, [{ opacity: 1 }, { opacity: 0 }], 400)));
     cards.forEach(c => c.g.remove());
-    tow.look('pull');
+    winner.look({ tow: 'pull', red: 'hooked' }[ANS] || 'run');
     const l40 = say(S.L40), stopR9b = rattle(.3, 1000);
     T.pop(tow.x + 40, FL - 170, tr('칙칙폭폭!')); setTimeout(() => T.pop(red.x, FL - 140, tr('붕붕붕!')), 1800);
     follow(END9.tow);
@@ -658,7 +689,7 @@
     await sleep(SCENE_END);
 
     /* ===== 10. 이현이야, 안녕! (톡 3 — 마지막 인사) ===== */
-    const END10 = chain(X(520, 500), ['tow', 'red', 'police', 'fire', 'amb'], 6, S_TOY), CK10 = new Map([[tow, 'tow'], [red, 'red'], [police, 'police'], [fire, 'fire'], [amb, 'amb']]);
+    const END10 = chain(X(520, 500), ORD9, 6, S_TOY), CK10 = new Map([[tow, 'tow'], [red, 'red'], [police, 'police'], [fire, 'fire'], [amb, 'amb']]);
     await T.sceneCard(tr('이현이야, 안녕!'), () => {
       scene('rc_bg_playground');
       put(T, kid, X(640, 600), FL, { look: 'stand' });
@@ -671,9 +702,9 @@
     await Promise.all([...Object.entries({ tow, red, police, fire, amb }).map(([k, c]) => drive(c, endX[k], FL + 6, 8000, 'linear', 2)), l41]);
     stopR10();
     await say(S.L42);
-    kid.hop(8, 300); await say(S.L43);
+    kid.hop(8, 300);
     bob(kid.pos);
-    await T.tap(kid.pos);
+    await T.ask(S.L43, () => T.tap(kid.pos));
     kid.look('hug');
     const HUG = { amb: [24, -64], fire: [-18, -62], police: [26, -50], red: [-24, -50], tow: [2, -46] }, CK = { tow, red, police, fire, amb };
     ['amb', 'fire', 'police', 'red', 'tow'].forEach(k => put(T, CK[k], CK[k].x, CK[k].y, { look: 'run', s: S_TOY }));   // 견인차가 맨 앞(품 가운데)에 보이게 뒤→앞 순서

@@ -312,6 +312,17 @@
    ]
   },
   {
+   "text": "불을 톡톡 눌러서 꺼 줘요!",
+   "segs": [
+    [
+     "nar",
+     "불을 톡톡 눌러서 꺼 줘요!",
+     null,
+     "[lively, encouraging]"
+    ]
+   ]
+  },
+  {
    "text": "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
    "segs": [
     [
@@ -510,13 +521,13 @@
    ]
   },
   {
-   "text": "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 경찰차, 소방차, 구급차가 든든하게 따랐어요.",
+   "text": "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 다른 차들이 든든하게 따랐어요.",
    "segs": [
     [
      "nar",
-     "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 경찰차, 소방차, 구급차가 든든하게 따랐어요.",
+     "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 다른 차들이 든든하게 따랐어요.",
      null,
-     "[warm, slow, naming each one clearly]"
+     "[warm, slow]"
     ]
    ]
   },
@@ -583,6 +594,149 @@
      "맞아요, 견인차!",
      "happy",
      "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "가운데에서 달리는 건 누구일까요? 골라 봐요.",
+   "segs": [
+    [
+     "nar",
+     "가운데에서 달리는 건 누구일까요? 골라 봐요.",
+     null,
+     "[calm, inviting, clear question]"
+    ]
+   ]
+  },
+  {
+   "text": "맨 뒤에서 따라가는 건 누구일까요? 골라 봐요.",
+   "segs": [
+    [
+     "nar",
+     "맨 뒤에서 따라가는 건 누구일까요? 골라 봐요.",
+     null,
+     "[calm, inviting, clear question]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 가운데는 경찰차!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 가운데는 경찰차!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 가운데는 소방차!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 가운데는 소방차!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 가운데는 구급차!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 가운데는 구급차!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 맨 뒤는 경찰차!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 맨 뒤는 경찰차!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 맨 뒤는 소방차!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 맨 뒤는 소방차!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 맨 뒤는 구급차!",
+   "segs": [
+    [
+     "nar",
+     "맞아요, 맨 뒤는 구급차!",
+     "happy",
+     "[bright, warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 빨간 자동차예요. 다시 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 빨간 자동차예요. 다시 볼까요?",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 경찰차 형아예요. 다시 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 경찰차 형아예요. 다시 볼까요?",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 소방차 이모예요. 다시 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 소방차 이모예요. 다시 볼까요?",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 구급차 삼촌이에요. 다시 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 구급차 삼촌이에요. 다시 볼까요?",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 견인차예요. 다시 볼까요?",
+   "segs": [
+    [
+     "nar",
+     "그건 견인차예요. 다시 볼까요?",
+     null,
+     "[gentle, encouraging]"
     ]
    ]
   },
