@@ -13,7 +13,7 @@
 
 | 순서 | 파일 | 만드는 방법 |
 |---|---|---|
-| 1 | `tools/app/gen/jobs_red_car.json` | **이미 있음**(54장: 스프라이트 40 + 배경 9 + 키아트 5, 접두어 `rc_`). 그림 생성: `python3 tools/app/gen/run_simple.py red_car <id ...>` 를 `pass` 1 → 2 → 3 순으로(참고 그림이 먼저 있어야 함), 키아트(`key5_*`)는 맨 뒤. 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. 받은 그림 점검은 §10. |
+| 1 | `tools/app/gen/jobs_red_car.json` | **이미 있음**(58장: 스프라이트 40 + 배경 9 + 컷 4 + 키아트 5, 접두어 `rc_`). 그림 생성: `python3 tools/app/gen/run_simple.py red_car <id ...>` 를 `pass` 1 → 2 → 3 순으로(참고 그림이 먼저 있어야 함), 컷(`rc_cut_*`)은 `pass 4`(참고 스프라이트가 다 나온 뒤), 키아트(`key5_*`)는 맨 뒤. 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. 받은 그림 점검은 §10. |
 | 2 | 후처리 | `~/.venvs/paper-tale/bin/python tools/app/gen/post_tale.py red_car` → `assets/v3w/rc_<id>.webp`(스프라이트는 마젠타 크로마키 → 여백 없이 오림 → 높이 600(폭 900) 안, 배경 1600×902). 끝에 ASP(폭/높이)가 `tales/red_car/ASP.txt` 에 나온다 → 코드 `ASP` 표에 붙인다. **그림이 아직 없어도 코드는 자리표시(§1-1)로 돈다.** |
 | 3 | `tales/red_car/index.html` | `tales/beauty_beast/index.html` 그대로 복사, `<title>나의 빨간 자동차</title>`, 마지막 스크립트 `red_car.js`. 합창 로더 한 줄 추가(백설공주 `index.html` 15행과 같은 꼴): `<script>try { if (localStorage.getItem('voice') !== 'tc') document.write('<script src="chorus_el.js"><\/script>'); } catch (e) { /* 합창 없이 */ }</script>` 를 `narration_el*` 로더 **뒤**, `entitlements.js` 앞에 둔다. `chorus_el.js` 가 아직 없어도 404 만 나고 동화는 돈다. |
 | 4 | `tales/red_car/narration.js` | Typecast 없음. `/* red_car — Typecast 없음. ElevenLabs(narration_el.js)가 채운다 */\nconst NARRATION_CLIPS = {};\nconst VOICE_LINES = {};` |
@@ -206,7 +206,7 @@ rc_prop_block 1.0, rc_prop_duck 1.15, rc_prop_butterfly_open 1.45, rc_prop_butte
 - `say()` 뒤 `GAP = 700`ms. 장면 끝(다음 `sceneCard` 전) `sleep(SCENE_END = 1500)`.
 - 자동차 들어오기·나가기는 `DRIVE = 6000`ms 안팎(linear), 한 줄 기차 이동 `LINE_DRIVE = 9000`ms. 7장 사이렌 인사 사이 `SIREN_GAP = 2600`ms.
 - 달리는 동안 바퀴 대신 몸이 들썩인다: `a.hop(3, 460)` 을 이동 시간 동안 반복(`while` + `await hop`). 모든 이동 장면 공통.
-- 대사 중 `hop`·`wiggle` 은 한 번만. 컷 그림(`cutImage`)은 이 동화에 없다.
+- 대사 중 `hop`·`wiggle` 은 한 번만. 컷 그림(`cutImage`)은 **4장**(§3 끝 "컷신" 표; `CUT_HOLD = 4200`ms, 컷 위에서 기존 대사 한 줄을 읽는다 — 까치 방식).
 - 전체 목표 7~8.5분. §11 에서 잰다. 7분이 안 되면 `SCENE_END` 를 2000, `DRIVE` 를 7200 으로; 9분을 넘으면 `SCENE_END` 1200, `DRIVE` 5000(대사는 건드리지 않는다).
 
 ## 3. 장면별 상세
@@ -283,6 +283,20 @@ rc_prop_block 1.0, rc_prop_duck 1.15, rc_prop_butterfly_open 1.45, rc_prop_butte
 - **L42**(이현이) → **L43**(이현이, `hop(8, 300)`) → 이현이 들썩임(§2-6) → `await T.tap(kid.pos)`(안내 문장 없음, 손가락 힌트만).
 - 톡 뒤: 이현이 `look('hug')`; 다섯 대를 품으로(이현이 **앞**에 다시 put 해 앞에 보이게, `s: S_TOY` 유지): 목표 오프셋(이현이 중심·바닥 기준) 견인차 `[-18, -118]`, 빨간 `[+14, -126]`, 경찰차 `[-24, -104]`, 소방차 `[+10, -98]`, 구급차 `[+26, -112]` → 각 `move(kid.x + dx, FL + dy, 600, 'ease-out')`(`Promise.all`) + `AudioFX.sfx('paper_up', .5)`; 모두 `look('joy')` → `T.confetti(); AudioFX.sfx('tada') || sparkleSfx(T);` → 펄쩍펄쩍: 이현이 `hop(30, 480)` 세 번 연속(자동차는 이현이 `body` 에 붙어 있지 않으므로 같은 타이밍으로 다섯 대도 `hop(30, 480)`) → **L44** → **L45** → 합창 **CH**: `await say('부릉부릉, 빵빵!')`(§7-2 의 합창 파일이 `NARRATION_CLIPS['부릉부릉, 빵빵!']` 에 들어 있어 `say` 로 튼다; 없으면 `vo('cheer')` 로 다섯 클립이 차례로 나오므로 §11 에서 합창이 있는지 확인) + `T.pop(kid.x - 90, FL - 250, tr('빵빵!'))` + `T.pop(kid.x + 90, FL - 250, tr('부릉부릉!'))` → `T.finale(); await sleep(1500); return '서로 도우면 함께 갈 수 있어요.';`
 - 이 동화의 마지막 인사형 톡은 이 이현이 톡이다.
+
+### 컷신 (그림 컷) — CLAUDE.md §5-2, 까치(`tales/magpie`)·신데렐라 방식 (2026-10-21 추가)
+- 컷 **4장**. 컷은 그 사건 **직후**에만 띄우고, 컷 위에서 그 장면의 **기존 대사 한 줄**을 읽는다: `const c = T.cutImage([{ src: src('rc_cut_…'), sfx: '…', hold: CUT_HOLD }], { hold: CUT_HOLD }); await say(L); await c;` (`CUT_HOLD = 4200`ms; 대사가 홀드보다 길면 컷이 먼저 닫혀도 된다; 톡하면 바로 넘어간다 — 엔진 `cutImage`, `engine/tale.js` 619행). 컷 패널은 엔진이 4:3 흰 테두리 종이로 보여 주므로 그림도 4:3 으로 만든다.
+- 그림: `assets/v3w/rc_cut_<이름>.webp`(1200×900). 작업표 `jobs_red_car.json` 의 `kind: "cut"` 항목 **4장**(`pass 4`, 참고 그림 `refs` 는 그 컷에 나오는 인물의 스프라이트 — 스프라이트가 모두 나온 뒤에 만든다). 후처리: `post_tale.py` 는 sprite/bg 만 다루므로 컷은 `post_cinderella2.py` 처럼 4:3 가운데 자르기 → 1200×900 webp 로 따로 변환한다(그림·코드 작업은 뒤의 큐에서; 이 문서는 기획만).
+- 규칙: 한 장면에 한 컷, 이웃한 장면에 연달아 두지 않는다. 컷 안 인물은 스프라이트와 같은 얼굴 규칙(점 눈·점 코·띠 입·분홍 볼), 소품은 얼굴 없음, 피·눈물·아픔 없음. 컷 위 대사는 모두 §6 에 **이미 있는 줄**이라 새 녹음이 없다(영어는 `voice_script_en.json` 의 같은 줄, `TEXT_EN` 추가 없음). 컷이 닫힌 뒤 무대는 그 장면의 다음 단계부터 이어진다(컷이 대신한 애니메이션은 생략해도 된다).
+
+| 컷 id | 장면 | 앞 장면 → 뒤 장면 | 보여 줄 순간 | 그림 구도(얼굴 규칙 포함) | 컷 위 대사(한국어 / 영어) | 컷 동안 음성 | 효과음 | refs |
+|---|---|---|---|---|---|---|---|---|
+| `rc_cut_drop` | 2 나비다! | 1 언제나 함께 → 3 장난감 세상으로 붕붕! | 큰 사건: 나비를 쫓다가 빨간 자동차를 풀밭에 떨어뜨리는 순간(나비 톡 뒤) | 햇살 마당. 이현이가 오른쪽으로 달리며 두 팔을 오른쪽 위 노란 나비에게 뻗고 나비만 본다(활짝 웃음). 뒤쪽 왼쪽 아래 풀 속으로 빨간 장난감 자동차가 굴러 떨어져 반쯤 숨는다(짧은 띠 셋의 "톡" 터짐). 자동차는 점 눈 둘뿐. 아무도 못 본다. | **L5** 노느라 그만 빨간 자동차를 톡, 놓고 말았어요. / Ihyun was so busy playing that the red car slipped out, plop, onto the grass. | 있음 — 컷 음성 필요: L5 | `paper_down` | rc_child_run · rc_red_run · rc_prop_butterfly_open |
+| `rc_cut_fire` | 5 소방차 이모 | 4 경찰차 형아 → 6 구급차 삼촌 | 소방차가 블록 집의 작은 불을 물줄기로 끄는 순간 | 장난감 세상 블록 길. 소방차가 호스에서 큰 연파랑 물줄기 호를 오른쪽 블록 집으로 뿜고, 지붕의 작은 감빛·금빛 불꽃이 줄어들며 회색 연기 한 뭉치. 왼쪽에서 빨간 자동차와 경찰차가 점 눈을 크게 뜨고 본다. 장난감 불이라 무섭지 않게. | **L19** 소방차가 블록으로 만든 장난감 집에 난 불을 쉭쉭 끄고 있었어요. / A fire truck was spraying water, whoosh whoosh, on a fire at a little block house. | 있음 — 컷 음성 필요: L19 | `splash` | rc_fire_spray · rc_prop_house · rc_red_run · rc_police_run |
+| `rc_cut_hook` | 8 에구구, 지쳤어요 | 7 나란히 달려요 → 9 기차처럼 한 줄로 | 큰 사건: 견인차의 고리가 지친 빨간 자동차 범퍼에 찰칵 걸리는 순간(고리 톡 뒤) | 언덕 길. 오른쪽을 보는 주황 견인차가 팔을 뒤로 내려 회색 고리를 뒤쪽 빨간 자동차 앞 범퍼에 막 걸었다(고리 옆에 "찰칵" 띠 터짐). 빨간 자동차 앞부분이 살짝 들리고 점 눈이 다시 반짝. 뒤에 경찰차·소방차·구급차가 한 줄로 지켜본다. 모두 점 눈 둘뿐. | **L36** 견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요. / The tow truck hooked its strong hook onto the red car. Click! | 있음 — 컷 음성 필요: L36 | `knock` | rc_tow_pull · rc_red_hooked · rc_prop_hook |
+| `rc_cut_hug` | 10 이현이야, 안녕! | 9 기차처럼 한 줄로 → (끝: 합창·끝 화면) | 결말: 이현이가 돌아온 자동차 다섯 대를 모두 품에 안고 펄쩍 기뻐하는 순간(이현이 톡 뒤) | 놀이터(모래·미끄럼틀). 이현이가 두 팔로 작은 장난감 자동차 다섯 대(빨간·경찰·소방·구급·견인, 손바닥 크기)를 가슴에 안고 눈을 꼭 감고 활짝 웃는다. 공중에 작은 종이 색종이 조각. 자동차는 모두 점 눈 둘뿐. | **L44** 이현이는 소중한 보물 자동차들을 모두 품에 안고 펄쩍펄쩍 기뻐했답니다. / Ihyun hugged all the precious toy cars and jumped for joy. | 있음 — 컷 음성 필요: L44 | `paper_up` | rc_child_hug · rc_red_joy · rc_tow_joy · rc_fire_joy |
+
+컷 음성 필요(모두 §6 의 기존 줄, 새 줄 없음): L5, L19, L36, L44.
 
 ## 4. 배움 놀이 규칙 요약 (엔진 `T.choose`)
 - **1장 색 찾기**: 보기 셋(빨간 자동차·파란 블록·노란 오리), 자리 무작위, 정답 1개. 12초 무입력이면 `prompt`(L1) 를 다시 읽는다. 1회 오답 → `onWrong`(흔들림 + W_block/W_duck). 2회 오답부터 정답이 노랗게 빛나며 들썩이고 나머지는 흐려진다(엔진). 정답을 누르면 `AudioFX.ding()` → 반짝 → C1.
@@ -445,7 +459,7 @@ return { key, g, x, y };
 
 키아트 창 모양은 **둥근 바퀴(원)** 이고, 테두리 장식은 작은 블록 서너 개와 노란 나비 하나뿐(§7-5: 소품 금지, 같은 계열 장식 최소). 참고 그림은 작업표의 `refs`(child_stand·red_run·police_run·tow_run / 끝 화면은 child_hug·red_joy·fire_joy·amb_joy)라 **인물·자동차 스프라이트가 모두 나온 뒤** 맨 마지막에 생성한다. 썸네일(타일)은 PLAN 대로 자동차를 크게, 겹 3개.
 
-## 10. 그림 목록 (작업표 `jobs_red_car.json` 54장과 같다)
+## 10. 그림 목록 (작업표 `jobs_red_car.json` 58장과 같다)
 
 모든 자동차는 **옆모습, 오른쪽을 보고 달리는 방향**. 자세 그림은 기준 그림을 `refs` 로 넣고 프롬프트에 "SAME SCALE AS THE REFERENCE SPRITE(머리·몸·바퀴 크기를 기준 그림과 똑같이)"가 들어 있다(§4-1). 자동차 얼굴은 점 눈 둘뿐(`FACE OF THIS TOY VEHICLE` 단락), 단역은 점 눈만, 소품은 얼굴 없음.
 
@@ -466,9 +480,10 @@ return { key, g, x, y };
 | | prop_house / prop_flame / prop_smoke / prop_water(→) | 블록 집, 불꽃 1장(높이로 줄임), 연기, 물줄기 | 600² / 480×600 / 480² / 840×480 | 1 | 5 |
 | | prop_hook | 고리+사슬 2링크(톡 대상) | 480×600 | 3 | 8, 9 |
 | 배경 | bg_room / bg_yard / bg_gate(아치 포함) / bg_road_a / bg_road_b(빈 터) / bg_road_c(병원 포함) / bg_road_long / bg_road_hill / bg_playground(미끄럼틀 포함) | 평평한 종이 한 장 + 요소 2~3개, 낮(세트 A, 왼쪽 위 해) | 1600×902 | 1 | 1 / 2·3 / 3 / 4 / 5 / 6 / 7·9 / 8 / 10 |
+| 컷 | cut_drop / cut_fire / cut_hook / cut_hug | 그림 컷 4장(§3 끝 컷신 표: 2·5·8·10장). refs 는 그 컷에 나오는 인물 스프라이트. 4:3, 얼굴 규칙 같음, 소품 얼굴 없음 | 1600×1200(4:3) | 4 | 2 / 5 / 8 / 10 |
 | 키 | key5_wide · key5_tall · key5_tile · key5_backw · key5_backt | 시작 화면(바퀴 모양 창)·홈 카드·끝 화면(품에 안은 다섯 대) | 16:9 · 3:4 · 4:3 · 3:2 · 4:5 | — | — |
 
-생성 순서: `pass 1`(기준 그림 21: child_stand, red_run, 소품 8, thief_a_run, bear_sit, rabbit_sit, 배경 9) → `pass 2`(19: 이현이 자세 7, 빨간 자세 3, police/fire/amb/tow_run, thief_b_run, thief_a_hands, bear_off, rabbit_off, butterfly_fold) → `pass 3`(9: police_joy, fire_spray, fire_joy, amb_open, amb_joy, tow_pull, tow_joy, thief_b_hands, prop_hook) → 키아트 5. 작업표가 이 순서로 정렬되어 있으므로 `run_simple.py red_car $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_red_car.json'))))")` 처럼 앞에서부터 돌리면 된다.
+생성 순서: `pass 1`(기준 그림 21: child_stand, red_run, 소품 8, thief_a_run, bear_sit, rabbit_sit, 배경 9) → `pass 2`(19: 이현이 자세 7, 빨간 자세 3, police/fire/amb/tow_run, thief_b_run, thief_a_hands, bear_off, rabbit_off, butterfly_fold) → `pass 3`(9: police_joy, fire_spray, fire_joy, amb_open, amb_joy, tow_pull, tow_joy, thief_b_hands, prop_hook) → `pass 4`(컷 4: cut_drop, cut_fire, cut_hook, cut_hug) → 키아트 5. 작업표가 이 순서로 정렬되어 있으므로 `run_simple.py red_car $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_red_car.json'))))")` 처럼 앞에서부터 돌리면 된다.
 
 받은 그림 점검(틀린 id 만 지우고 다시 만든다): 네 귀퉁이가 마젠타인지(`restyle_check.py` 방식) · 자동차에 **입·코·볼·눈썹이 없고 점 눈 둘뿐**인지 · 자동차가 **오른쪽**을 보는지(반대면 그림을 뒤집어 저장하지 말고 NAT 만 고친다 — 단, 이 동화는 자동차를 안 뒤집으므로 결국 다시 만드는 편이 낫다) · 소품(블록·오리·나비·집·불꽃·연기·물·고리)에 얼굴이 없는지 · 견인차 사슬 끝에 고리가 **없는지**(있으면 다시) · 이현이 손에 아무것도 없는지, 옷에 글자가 없는지 · 같은 자동차 자세의 바퀴 지름이 기준과 ±12% 안인지 · 다섯 대의 바퀴 지름이 서로 ±20% 안인지 · 이현이 자세의 얼굴 폭이 stand 와 ±12% 안인지.
 
@@ -493,6 +508,7 @@ return { key, g, x, y };
 - [ ] **고리 톡**: 손가락 힌트가 고리(사슬 끝)에 뜨고, 톡 뒤 고리가 범퍼로 가서 `찰칵!`, 빨간 자동차 앞이 들리고, 셋(견인차·고리·빨간)이 같이 60 움직인다.
 - [ ] **맨 앞은 누구?**: 카드 다섯이 한 줄 위에 뜨고 순서가 무작위, 오답 때 그 차가 들썩이며 W 대사, 정답 때 견인차 반짝 + C2. 카드 그림이 자리표시여도 이름표로 구별된다.
 - [ ] **끝**: 이현이 톡 뒤 다섯 대가 품 안(이현이 앞)에 모이고, 펄쩍 세 번, 합창 한 번(`_audio.json` 에 `chorus/ch_…` 한 클립; 없으면 다섯 클립이 차례로 — 합창 전 상태). 끝 화면에 '서로 도우면 함께 갈 수 있어요.' 와 리본(`?endpreview=1`).
+- [ ] **컷 4장**이 그 사건 직후에만 뜨고(2장 `rc_cut_drop`, 5장 `rc_cut_fire`, 8장 `rc_cut_hook`, 10장 `rc_cut_hug`) 각 컷 위에서 맞는 대사(L5·L19·L36·L44)가 들린다. 이웃한 장면에 컷이 연달아 없다. 컷 안 인물 얼굴이 점 눈·띠 입이고 소품에 얼굴이 없다.
 - [ ] 누르는 자리: `.tap-target.armed` 의 `getBoundingClientRect()` 짧은 변이 **화면 60px 이상**(장난감 셋·나비·고리는 hitBox, 카드, 이현이).
 
 세로 390×844 (`node … 390 844 /tmp/rc_p 600 8`)
