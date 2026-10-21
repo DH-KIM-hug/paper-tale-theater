@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>검증용 음성 재생기 (개발자용)</title>
+<style>
+  :root { color-scheme: light; --bg:#F5EFE9; --ink:#1F2A56; --mute:#6B6F86; --card:#FFFFFF; --acc:#A93B32; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.5 system-ui, -apple-system, sans-serif; padding: env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px); }
+  header { display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:12px 0; }
+  select, button { font:inherit; padding:8px 12px; border-radius:10px; border:1px solid #d9d2c8; background:#fff; color:var(--ink); }
+  button:disabled { opacity:.4; }
+  .lang { display:flex; gap:4px; }
+  .lang button[aria-pressed="true"] { background:var(--ink); color:#fff; }
+  #stage { background:var(--card); border-radius:18px; padding:28px 20px; min-height:200px; box-shadow:0 2px 0 #e4dcd0; cursor:pointer; user-select:none; }
+  #count { color:var(--mute); font-size:13px; }
+  #line { font-size:22px; font-weight:700; margin:10px 0; line-height:1.45; word-break:keep-all; }
+  #file { color:var(--mute); font-size:12px; word-break:break-all; }
+  #hint { color:var(--mute); font-size:13px; margin-top:14px; }
+  nav { display:flex; gap:8px; margin-top:14px; }
+  nav button { flex:1; padding:14px; font-size:16px; }
+  #missing { color:var(--acc); font-weight:700; }
+  #list { margin-top:14px; max-height:40vh; overflow:auto; background:#fff; border-radius:12px; padding:6px 10px; }
+  #list div { padding:6px 4px; border-bottom:1px solid #f0ebe3; cursor:pointer; font-size:13px; }
+  #list div.on { color:var(--acc); font-weight:700; }
+</style>
+</head>
+<body>
+<header>
+  <select id="tale" aria-label="동화"></select>
+  <div class="lang">
+    <button id="ko" aria-pressed="true">한국어</button>
+    <button id="en" aria-pressed="false">English</button>
+  </div>
+  <span id="count"></span>
+</header>
+
+<div id="stage" role="button" tabindex="0" aria-label="다음 음성 재생">
+  <div id="line">동화를 고르세요</div>
+  <div id="file"></div>
+  <div id="missing"></div>
+  <div id="hint">화면을 탭하면 다음 음성이 재생됩니다. 재생 중인 음성은 멈춥니다.</div>
+</div>
+
+<nav>
+  <button id="prev">← 이전</button>
+  <button id="replay">다시 듣기</button>
+  <button id="next">다음 →</button>
+</nav>
+
+<div id="list"></div>
+
+<script>
+(() => {
+  let M = {}, lang = 'ko', taleId = '', items = [], idx = -1, audio = null, playToken = 0;
+  const $ = s => document.querySelector(s);
+
+  function stopAudio() { playToken++; if (audio) { try { audio.pause(); } catch (e) {} audio = null; } }
+
+  function play(i) {
+    if (!items.length) return;
+    idx = Math.max(0, Math.min(items.length - 1, i));
+    const it = items[idx];
+    stopAudio();
+    const tok = playToken;
+    $('#line').textContent = it.text;
+    $('#file').textContent = it.file;
+    $('#count').textContent = `${idx + 1} / ${items.length}`;
+    $('#prev').disabled = idx === 0;
+    $('#next').disabled = idx === items.length - 1;
+    markList();
+    const a = new Audio(it.file);
+    audio = a;
+    $('#missing').textContent = '';
+    a.onerror = () => { if (tok === playToken) $('#missing').textContent = '음성 파일 없음 또는 로드 실패'; };
+    a.play().catch(() => { if (tok === playToken) $('#missing').textContent = '재생 차단(화면을 한 번 탭한 뒤 다시 시도)'; });
+  }
+
+  function markList() {
+    document.querySelectorAll('#list div').forEach((d, i) => d.classList.toggle('on', i === idx));
+    const on = document.querySelector('#list div.on'); if (on) on.scrollIntoView({ block: 'nearest' });
+  }
+
+  function loadTale() {
+    stopAudio();
+    const t = M[taleId] || { ko: [], en: [] };
+    items = lang === 'en' ? t.en : t.ko;
+    idx = -1;
+    const list = $('#list'); list.innerHTML = '';
+    items.forEach((it, i) => { const d = document.createElement('div'); d.textContent = (i + 1) + '. ' + it.text; d.onclick = () => play(i); list.appendChild(d); });
+    $('#line').textContent = items.length ? '탭하거나 「다음」을 눌러 시작하세요' : '이 언어의 음성이 없습니다';
+    $('#file').textContent = ''; $('#missing').textContent = '';
+    $('#count').textContent = items.length ? `0 / ${items.length}` : '';
+    $('#prev').disabled = true; $('#next').disabled = !items.length;
+  }
+
+  function setLang(l) {
+    lang = l;
+    $('#ko').setAttribute('aria-pressed', l === 'ko'); $('#en').setAttribute('aria-pressed', l === 'en');
+    loadTale();
+  }
+
+  function init() {
+    const sel = $('#tale');
+    Object.keys(M).forEach(k => { const o = document.createElement('option'); o.value = k; o.textContent = `${k}  (ko ${M[k].ko.length} · en ${M[k].en.length})`; sel.appendChild(o); });
+    taleId = sel.value = Object.keys(M)[0] || '';
+    sel.onchange = () => { taleId = sel.value; loadTale(); };
+    $('#ko').onclick = () => setLang('ko');
+    $('#en').onclick = () => setLang('en');
+    $('#next').onclick = e => { e.stopPropagation(); play(idx + 1); };
+    $('#prev').onclick = e => { e.stopPropagation(); play(idx - 1); };
+    $('#replay').onclick = e => { e.stopPropagation(); if (idx >= 0) play(idx); };
+    const st = $('#stage');
+    st.onclick = () => play(idx + 1);
+    st.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(idx + 1); } };
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') play(idx + 1);
+      if (e.key === 'ArrowLeft') play(idx - 1);
+    });
+    loadTale();
+  }
+
+  fetch('manifest.json').then(r => r.json()).then(d => { M = d; init(); })
+    .catch(() => { $('#line').textContent = 'manifest.json 을 읽지 못했습니다(node tools/dev/make_manifest.js 로 생성)'; });
+})();
+</script>
+</body>
+</html>
