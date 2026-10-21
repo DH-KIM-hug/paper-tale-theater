@@ -38,7 +38,7 @@
   const WATER = 300;          /* 2·3·10번 수면선 */
   const WATER11 = 372;        /* 11번 수면선 */
   const BGS = ['palace', 'night_sea', 'beach', 'witch', 'steps', 'garden', 'deck', 'dawn_sea', 'morning_sea'];
-  const bgSrc = k => AS + 'mer_bg_' + k + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
+  const bgSrc = k => AS + 'mer_bg2_' + k + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 배경이 무대 1000×560 을 덮게 */
   const hOf = f => HT[f] || 200;
   const artOK = {}, bgOK = {};  /* 파일이 있으면 true — 없으면 자리표시 */
@@ -176,6 +176,19 @@
     if (bgOK[key]) return T.el('image', { href: bgSrc(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
     bgPlaceholder(T, key);
   }
+  /* 물 덮개: 새 바다 배경은 물결이 그림 안에 있다. 배·인어가 물에 잠겨 보이게, 같은 배경 그림을 y0 아래만 오려 인물 위에 한 번 더 얹는다
+     (배경과 같은 그림이라 이음새가 없다). 그림이 없으면 아무것도 하지 않는다 */
+  function waterCover(T, key, y0) {
+    if (!bgOK[key]) return null;
+    const id = 'wc' + Math.round(y0) + key, cp = T.el('clipPath', { id }, T.world);
+    T.el('rect', { x: -1400, y: y0, width: 3800, height: 3000 }, cp);
+    const g = T.el('g', { 'clip-path': `url(#${id})` }, T.world);
+    T.el('image', { href: bgSrc(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, g);
+    T._cover = g;
+    return g;
+  }
+  const GF = 514;   /* 정원 바닥 (화면 아래 가장자리에 발이 잘리지 않게) */
+  const SC = { steps: 1.3, garden: 1.2, deck: 1.5 };   /* 장면별 인물 확대 (모든 자세에 같은 배율, §4-1) */
 
   /* 배우: 자세 그림 여러 장 중 하나만 보인다. poses = { 이름: 그림 } 또는 { 이름: [그림, 높이] }
      그림 파일이 없으면 자리표시. a.look(자세, 방향) — 그림이 보는 쪽과 원하는 쪽이 다르면 뒤집는다 (앞모습은 뒤집지 않는다) */
@@ -206,6 +219,7 @@
     T.world.appendChild(a.pos); a.pos.getAnimations().forEach(n => n.cancel()); a.pos.style.display = ''; a.pos.style.opacity = '';
     a.setScale(s); if (look) a.look(look, to); else if (to) a.turn(to);
     a.place(x, y); a.body.style.transform = ''; a.body.style.filter = '';
+    if (T._cover) T.world.appendChild(T._cover);   /* 물 덮개는 늘 맨 위 */
     return a;
   }
   const hide = a => { a.pos.style.display = 'none'; };
@@ -268,7 +282,7 @@
 
   async function run(T) {
     const { sleep, say, camSnap, tr } = T;
-    const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
+    const scene = key => { T.clear(); T._cover = null; bgImage(T, key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990;   /* 세로 화면: 가운데 일부만 보인다 → 카메라가 따라간다 */
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -369,7 +383,7 @@
       put(T, ship, X(640, 560), WATER + 28, { look: 'lantern' });
       put(T, prince, ship.x + BOW_DX, ship.y + DECK_DY, { look: 'stand', to: 'left' });
       put(T, mer, X(330, 420), WATER + 12, { look: 'peek', to: 'right' });
-      put(T, wave, 500, WATER + 70, { s: waveS() });
+      waterCover(T, 'night_sea', WATER + 20);
       if (P) camSnap(460, 280, 1);
       sky = T.el('rect', { x: X(560, 440) - 170, y: 30, width: 340, height: 200, fill: '#fff', opacity: 0 }, T.world);
     }, ship.pos);
@@ -398,6 +412,7 @@
       T.bg.appendChild(clouds[0].pos); T.bg.appendChild(clouds[1].pos);
       put(T, ship, X(620, 560), WATER + 40, { look: 'tilt' });
       put(T, waves[0], X(420, 500), WATER + 95); put(T, waves[1], X(850, 760), WATER + 105);
+      { const c = waterCover(T, 'night_sea', WATER + 88); if (c) T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#1F2A56', opacity: .35 }, c); }
       waves.forEach((w, i) => w.pos.animate([{ translate: '-25px 0' }, { translate: '25px -8px' }], { duration: 2000, iterations: Infinity, direction: 'alternate', delay: i * 400 }));
       if (P) camSnap(520, 280, 1);
     }, ship.pos);
@@ -494,24 +509,24 @@
     /* ===== 7. 다리가 생겼어요 (자동) ===== */
     await T.sceneCard(tr('다리가 생겼어요'), () => {
       scene('steps');
-      put(T, mer, X(420, 470), FL, { look: 'sit_tail' });
-      put(T, potion, mer.x + 34, mer.y - 118, { look: 'full' });
+      put(T, mer, X(420, 470), FL, { look: 'sit_tail', s: SC.steps });
+      put(T, potion, mer.x + 34 * SC.steps, mer.y - 118 * SC.steps, { look: 'full', s: SC.steps });
       if (P) camSnap(500, 280, 1);
     }, mer.pos);
     const drink = say('새벽, 궁전 계단에서 인어공주는 약을 마셨어요.');
     await sleep(1500);
-    await potion.move(mer.x + 22, mer.y - 150, 500); sfx(T, 'gulp', () => popSfx(T)); T.pop(mer.x + 40, mer.y - 230, tr('꿀꺽!')); hide(potion);
+    await potion.move(mer.x + 22 * SC.steps, mer.y - 150 * SC.steps, 500); sfx(T, 'gulp', () => popSfx(T)); T.pop(mer.x + 40, mer.y - 230 * SC.steps, tr('꿀꺽!')); hide(potion);
     await drink;
-    sfx(T, 'sparkle'); sparkle(T, mer.x, mer.y - 100, 130, 16);
+    sfx(T, 'sparkle'); sparkle(T, mer.x, mer.y - 100 * SC.steps, 130, 16);
     await T.anim(mer.pos, [{ opacity: 1 }, { opacity: .1 }], 400);
     mer.look('stand'); mer.pos.style.opacity = ''; fadeIn(mer, 500); glow(mer, 1400);
-    await Promise.all([say('꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.'), (async () => { await sleep(1800); T.pop(mer.x, mer.y - 250, tr('흔들흔들')); await wobbleWalk(T, mer, X(500, 500), 1800); })()]);
-    put(T, prince, 1100, FL, { look: 'stand', to: 'left' }); sfx(T, 'step_wood');
+    await Promise.all([say('꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.'), (async () => { await sleep(1800); T.pop(mer.x, mer.y - 250 * SC.steps, tr('흔들흔들')); await wobbleWalk(T, mer, X(500, 500), 1800); })()]);
+    put(T, prince, 1100, FL, { look: 'stand', to: 'left', s: SC.steps }); sfx(T, 'step_wood');
     await prince.move(X(660, 640), FL, 1500);
     follow(570);
     prince.hop(8, 360);
     await say('누구세요? 어디서 왔어요?');
-    sfx(T, 'doop'); T.pop(mer.x, mer.y - mer.h - 30, tr('…')); mer.wiggle(3, 500); mer.hop(6, 400);
+    sfx(T, 'doop'); T.pop(mer.x, mer.y - mer.h * SC.steps - 30, tr('…')); mer.wiggle(3, 500); mer.hop(6, 400);
     await say('인어공주는 말을 못 해요. 그저 웃었지요.');
     prince.hop(10, 360);
     await say('우리 궁전에서 지내요.');
@@ -523,8 +538,8 @@
     /* ===== 8. 왕자와 함께 (배움 놀이: 바다·땅 가르기) ===== */
     await T.sceneCard(tr('궁전 정원'), () => {
       scene('garden');
-      put(T, prince, X(170, 330), FL, { look: 'stand', to: 'right' });
-      put(T, mer, X(840, 690), FL, { look: 'stand', to: 'left' });
+      put(T, prince, X(170, 330), GF, { look: 'stand', to: 'right', s: SC.garden });
+      put(T, mer, X(840, 690), GF, { look: 'stand', to: 'left', s: SC.garden });
       if (P) camSnap(500, 280, 1);
     }, prince.pos);
     prince.hop(8, 360);
@@ -560,14 +575,14 @@
     prince.look('stand');
     prince.hop(8, 360); mer.hop(6, 360);
     await say('바다에서 온 아이 같아요. 내 귀여운 동생처럼 지내요.');
-    put(T, mer, X(440, 440), FL, { look: 'dance', to: 'right' });
-    put(T, prince, X(570, 570), FL, { look: 'dance', to: 'left' });
+    put(T, mer, X(430, 430), GF, { look: 'dance', to: 'right', s: SC.garden });
+    put(T, prince, X(580, 580), GF, { look: 'dance', to: 'left', s: SC.garden });
     sfx(T, 'giggle_xylo');
     await Promise.all([say('인어공주는 흔들흔들해도 왕자님과 함께 춤추었어요.'), (async () => {
       for (let i = 0; i < 2; i++) {
-        await Promise.all([mer.move(mer.x - 30, FL, 600), prince.move(prince.x - 30, FL, 600)]);
-        await Promise.all([mer.move(mer.x + 30, FL, 600), prince.move(prince.x + 30, FL, 600)]);
-        if (!i) T.pop(mer.x, FL - 250, tr('흔들흔들'));
+        await Promise.all([mer.move(mer.x - 30, GF, 600), prince.move(prince.x - 30, GF, 600)]);
+        await Promise.all([mer.move(mer.x + 30, GF, 600), prince.move(prince.x + 30, GF, 600)]);
+        if (!i) T.pop(mer.x, GF - 250 * SC.garden, tr('흔들흔들'));
       }
     })()]);
     await sleep(300);
@@ -575,9 +590,9 @@
     /* ===== 9. 왕자의 결혼 (자동) ===== */
     await T.sceneCard(tr('왕자의 결혼'), () => {
       scene('deck');
-      put(T, prince, X(470, 470), 520, { look: 'stand', to: 'right' });
-      put(T, lady, X(610, 590), 520, { look: 'wed', to: 'left' });
-      put(T, mer, X(230, 350), 522, { look: 'sad', to: 'right' });
+      put(T, prince, X(480, 480), 518, { look: 'stand', to: 'right', s: SC.deck });
+      put(T, lady, X(650, 600), 518, { look: 'wed', to: 'left', s: SC.deck });
+      put(T, mer, X(210, 340), 520, { look: 'sad', to: 'right', s: SC.deck });
       if (P) camSnap(500, 280, 1);
     }, prince.pos);
     sfx(T, 'bell'); sleep(600).then(() => sfx(T, 'bell')); prince.hop(10, 360);
@@ -593,16 +608,16 @@
     await T.sceneCard(tr('새벽 바다'), () => {
       scene('dawn_sea');
       put(T, sun, 820, WATER + 70); T.bg.appendChild(sun.pos);
-      put(T, ship, 720, WATER + 28, { look: 'flower' });
+      put(T, ship, 720, WATER + 46, { look: 'flower' });
       put(T, prince, ship.x + 40, ship.y + DECK_DY, { look: 'sleep', to: 'left' });
       put(T, lady, ship.x + 150, ship.y + DECK_DY, { look: 'sleep', to: 'right' });
       put(T, mer, ship.x + BOW_DX, ship.y + DECK_DY, { look: 'sad', to: 'left' });
       put(T, sisters, 250, WATER + 90, { look: 'short' }); sisters.pos.style.opacity = '0';
-      put(T, wave, 500, WATER + 75, { s: waveS() });
+      waterCover(T, 'dawn_sea', WATER + 38);
       if (P) camSnap(300, 280, 1);
     }, sisters.pos);
     sfx(T, 'bubbles'); sisters.pos.style.opacity = ''; fadeIn(sisters, 900);
-    await Promise.all([say('새벽, 배 옆에 언니들이 올라왔어요. 긴 머리가 짧아졌어요.'), sisters.move(250, WATER + 10, 1200, 'ease-out')]);
+    await Promise.all([say('새벽, 배 옆에 언니들이 올라왔어요. 긴 머리가 짧아졌어요.'), sisters.move(250, WATER + 30, 1200, 'ease-out')]);
     put(T, dagger, sisters.x - sisters.w * .40, WATER - 12); fadeIn(dagger, 300);
     sisters.hop(8, 400);
     await say('마녀에게 머리카락을 주고 이 단검을 받았어.');
@@ -622,6 +637,7 @@
     sfx(T, 'splash'); T.pop(SP[0], WATER - 50, tr('풍덩!')); rippleAt(T, SP[0], WATER + 20); glints(T, SP[0], WATER + 10);
     sun.move(820, WATER - 40, 2500, 'ease-out');
     const warm = tint(T, '#F2B366', 0); T.anim(warm, [{ opacity: 0 }, { opacity: .18 }], 2500).catch(() => {}); warm.setAttribute('opacity', .18);
+    if (T._cover) { const w2 = T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#F2B366', opacity: .18 }, T._cover); T.anim(w2, [{ opacity: 0 }, { opacity: .18 }], 2500).catch(() => {}); }
     sfx(T, 'sparkle');
     mer.look('sad', 'left');
     await say('인어공주는 단검을 칼집째 바다에 던졌어요. 물결이 붉은 금빛으로 반짝였어요. 해가 떠올랐어요.');
@@ -640,7 +656,6 @@
       put(T, ship, X(640, 600), WATER11 + 28, { look: 'flower' });
       put(T, prince, ship.x - SHIP_W * .10, ship.y + DECK_DY, { look: 'stand', to: 'left' });
       put(T, lady, ship.x + 60, ship.y + DECK_DY, { look: 'wed', to: 'left' });
-      put(T, wave, 500, WATER11 + 75, { s: waveS() });
       put(T, mer, X(340, 410), 300, { look: 'bubble', s: 1 });
       put(T, gulls[0], X(150, 250), 120); put(T, gulls[1], X(820, 560), 90);
       gulls.forEach((g, i) => g.pos.animate([{ translate: '-30px 0' }, { translate: '30px -10px' }], { duration: 4000, iterations: Infinity, direction: 'alternate', delay: i * 700 }));
