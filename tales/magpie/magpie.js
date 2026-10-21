@@ -18,7 +18,7 @@
   const CUTS = ['mg_cut_arrow', 'mg_cut_flee', 'mg_cut_flock', 'mg_cut_ring', 'mg_cut_wake'];
   const src = k => AS + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
-  const BG_PLACE = { mg_bg_belltower: { dx: 119, dy: -74 }, mg_bg_nest: { dx: 40, dy: 47, s: 1.25 } };
+  const BG_PLACE = { mg_bg_belltower: { dx: 130, dy: -100, s: 1.2 }, mg_bg_nest: { dx: 40, dy: 47, s: 1.25 } };
   const artOK = {}, bgOK = {}, cutOk = {};
   const INK = '#2E241C', CR = '#F6ECD8';
   const PHC = { scholar: '#8FB4E0', lady: '#3F6B4F', snake: '#7A9A4E', mag: '#3B3B44', chick: '#D9A94E', prop: '#A47A4A' };
@@ -191,9 +191,11 @@
     const mom = mk(T, { sit: ['mg_mag_mom_sit', 154], fly: ['mg_mag_mom_fly', 197], tired: ['mg_mag_mom_tired', 133] });
     const dad = mk(T, { sit: ['mg_mag_dad_sit', 150], fly: ['mg_mag_dad_fly', 186], tired: ['mg_mag_dad_tired', 103] });
     const friends = [0, 1, 2].map(i => mk(T, { fly: [i % 2 ? 'mg_mag_mom_fly' : 'mg_mag_dad_fly', i % 2 ? 197 : 186] }));
-    const chicks = Array.from({ length: 5 }, () => prop(T, 'mg_chick', 70));
+    /* 새끼 크기: 키 88 (앉은 엄마 154 대비 1:1.75, 날개 편 엄마 197 대비 1:2.2 — 새끼는 어디서나 같은 크기) */
+    const CH = 88;
+    const chicks = Array.from({ length: 5 }, () => prop(T, 'mg_chick', CH));
     const arrow = prop(T, 'mg2_prop_arrow', 14);
-    const rim = prop(T, 'mg2_prop_nest_rim', 70);
+    const rim = prop(T, 'mg2_prop_nest_rim', 100);
     const bell = prop(T, 'mg2_prop_bell', 170);
     [sch, lady, snake, mom, dad, ...friends, ...chicks, arrow, rim, bell].forEach(hide);
     T.director({ cast: { sch, snake: lady, mom, dad }, noFace: ['sch', 'snake', 'mom', 'dad'] });
@@ -258,24 +260,29 @@
     await sleep(SCENE_END);
 
     /* ===== 3. 둥지 (숫자 알기) ===== */
-    const SPOTS = { 1: [540], 2: [500, 580], 3: [470, 540, 610], 4: [455, 510, 570, 625], 5: [440, 490, 540, 590, 640] };
-    const CY = N === 1 ? 398 : 392;
+    /* 둥지 안 새끼: 새끼는 둥지 안에 앉아 있고, 앞테(초승달 모양 둥지 조각)가 몸 아래를 가린다. 마리 수가 늘면 앞테를 넓히고 새끼는 겹쳐 앉는다.
+       배경 둥지(mg_bg_nest, 1.25배) 속 오목한 자리 중심 x≈564, 앞테 바닥 y≈272. 앞테 윗선 가운데는 그림 높이의 40% 지점이라, 새끼 발을 그보다 0.45rh 위에 둔다. */
+    const NX = 564, RIM_Y = 284, STEP = 54;
+    const RW = 150 + 36 * N, RH = RW / ASP.mg2_prop_nest_rim;
+    const spotX = i => NX + (i - (N - 1) / 2) * STEP;
+    const spotY = i => RIM_Y - .45 * RH - Math.abs(i - (N - 1) / 2) * 6 + (i % 2 ? 4 : 0);
+    const CY = RIM_Y - .45 * RH;
     await T.sceneCard(tr('둥지'), () => {
       scene('mg_bg_nest');
-      put(T, mom, X(300, 380), 300, { look: 'sit', to: 'right', s: .9 });
-      camSnap(P ? 540 : 500, 280, 1);
+      put(T, mom, X(300, 440), 300, { look: 'sit', to: 'right', s: 1 });
+      camSnap(P ? 540 : 500, P ? 235 : 280, 1);
     }, null);
     const l9 = say(S.L9);
     for (let i = 0; i < N; i++) {
-      const x = SPOTS[N][i];
-      put(T, chicks[i], x, CY, { to: 'left' }); fadeIn(chicks[i], 260); chicks[i].hop(14, 260);
-      vo('chirp'); T.pop(x, CY - 110, tr('짹!')); await sleep(700);
+      const x = spotX(i);
+      put(T, chicks[i], x, spotY(i), { to: 'left' }); fadeIn(chicks[i], 260); chicks[i].hop(14, 260);
+      vo('chirp'); T.pop(x, spotY(i) - CH - 24, tr('짹!')); await sleep(700);
     }
-    put(T, rim, 540, 412);
+    put(T, rim, NX, RIM_Y, { s: RH / 100 });
     await l9; await sleep(300);
     const others = [1, 2, 3, 4, 5].filter(k => k !== N).sort(() => Math.random() - .5).slice(0, 2);
     const kinds = [N, ...others].sort(() => Math.random() - .5);
-    const cardX = X([340, 540, 740], [460, 540, 620]), cardY = X(470, 455);
+    const cardX = X([340, 540, 740], [460, 540, 620]), cardY = X(470, 405);
     const cards = kinds.map((n, i) => numCard(T, n, cardX[i], cardY, X(1, .72)));
     cards.forEach((c, i) => c.g.animate([{ opacity: 0, translate: '0 20px' }, { opacity: 1, translate: '0 0' }], { duration: 450, delay: i * 150, fill: 'backwards' }));
     const W = { 1: '그건 1이에요. 다시 세어 볼까요?', 2: '그건 2예요. 다시 세어 볼까요?', 3: '그건 3이에요. 다시 세어 볼까요?', 4: '그건 4예요. 다시 세어 볼까요?', 5: '그건 5예요. 다시 세어 볼까요?' };
@@ -283,7 +290,7 @@
     const countChicks = async () => {
       for (let i = 0; i < N; i++) {
         const c = chicks[i];
-        c.hop(16, 320); glow(c, 700); AudioFX.popStep(i + 1); T.pop(c.x, CY - 110, tr(CN[i]));
+        c.hop(16, 320); glow(c, 700); AudioFX.popStep(i + 1); T.pop(c.x, c.y - CH - 24, tr(CN[i]));
         const u = vo('n' + (i + 1)); await (u || sleep(650)); await sleep(350);
       }
     };
