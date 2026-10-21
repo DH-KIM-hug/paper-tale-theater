@@ -20,6 +20,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kkultteok/nar_9331384ee7.mp3"
  ],
  "하늘의 구름을 톡! 무엇이 될까요?": "audio/el/kkultteok/nar_afe409ede3.mp3",
+ "구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.": "audio/el/kkultteok/nar_0d7247397b.mp3",
  "굴뚝 아래 커다란 문.": "audio/el/kkultteok/nar_3ad067a53c.mp3",
  "여기는… 어떤 공장일까요?": "audio/el/kkultteok/nar_10907a692e.mp3",
  "꿀떡이가 문틈에 코를 쏙 밀어 넣어요.": "audio/el/kkultteok/nar_83fcbceead.mp3",

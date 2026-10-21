@@ -71,6 +71,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap a cloud in the sky! What will it become?",
   "c": "audio/el/kkultteok/en/nar_6a7000281b.mp3"
  },
+ "구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.": {
+  "t": "The clouds change! A rabbit, a fish, and a car.",
+  "c": "audio/el/kkultteok/en/nar_6ed1643bc7.mp3"
+ },
  "굴뚝 아래 커다란 문.": {
   "t": "Under the chimney, there is a big door.",
   "c": "audio/el/kkultteok/en/nar_031651706d.mp3"

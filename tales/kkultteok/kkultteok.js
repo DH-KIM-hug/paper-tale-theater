@@ -57,7 +57,9 @@
     const an = oldW.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ms, easing: 'ease-in-out', fill: 'forwards' });
     an.onfinish = () => { oldW.style.display = 'none'; an.cancel(); };
   }
-  const popSfx = T => AudioFX.sfx('pop') || T.tone([500, 800], .12, { vol: .12 });
+  /* '퐁' 소리는 꼭 필요한 두 곳(첫 구름이 생길 때, 아기 구름이 하얗게 웃을 때)만 낸다 — keep=true.
+     나머지는 조용히 둔다 (2026-10-21: 구름을 만드는 아이가 주인공이 되어 퐁 소리를 줄임) */
+  const popSfx = (T, keep) => { if (keep) AudioFX.sfx('pop') || T.tone([500, 800], .12, { vol: .12 }); };
 
   async function run(T) {
     const { sleep, say, camSnap } = T;
@@ -105,7 +107,7 @@
       return { im, an };
     };
     /* 굴뚝에서 연기가 뭉게뭉게 줄지어 올라가 끝자리(p1)에 모이고, 모인 연기가 퐁! 구름(c 배우)이 된다 */
-    const smokeToCloud = async (cloud, p0, ctl, p1, ms = 3200, sc = 1) => {
+    const smokeToCloud = async (cloud, p0, ctl, p1, ms = 3200, sc = 1, loud = false) => {
       const N = 18, blobs = []; // 풍성하게: 연기 덩이 열여덟이 줄지어 뭉게뭉게
       for (let k = 0; k < N; k++) {
         // 뒤로 갈수록 끝자리 둘레에 조금씩 흩어져 쌓이게 (한 점으로 몰리지 않게)
@@ -117,7 +119,7 @@
       put(T, cloud, p1[0], p1[1] + (cloud.h || 140) * sc / 2, { s: sc }); // 구름 배우는 발끝 기준이라 가운데에서 높이 절반만큼 아래
       cloud.pos.animate([{ opacity: 0, scale: .85 }, { opacity: 1, scale: 1.08, offset: .6 }, { opacity: 1, scale: 1 }], { duration: 600, easing: 'ease-out' });
       blobs.forEach(b => b.im.animate([{ opacity: .85 }, { opacity: 0 }], { duration: 500, fill: 'forwards' }).onfinish = () => b.im.remove());
-      popSfx(T); puff(p1[0], p1[1], '#FBFAF6');
+      popSfx(T, loud); puff(p1[0], p1[1], '#FBFAF6');
     };
     /* 하늘에 천천히 흘러가는 종이 구름. list: [y, 너비, 한 바퀴 초, 시작 위치(0~1), 투명도] */
     const SKYC = ['cloud_long', 'cloud_two', 'cloud_small', 'cloud_white']; let skyN = 0; // 모두 한 겹, 뭉게 모양만 서로 다르게
@@ -163,9 +165,12 @@
 
     /* 배역: 쌍둥이는 같은 키, 은우는 3분의 2쯤 */
     const TW = 250, AG = 178, DG = 118;
-    const nuna = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'wave', 'blow', 'hug', 'jump', 'back', 'whisper', 'point', 'tiptoe', 'crouch', 'clap', 'eek', 'splash'].map(k => [k, ['nuna_' + k, k === 'jump' ? TW + 14 : TW]])), true);
-    const oppa = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'reach', 'press', 'hug', 'jump', 'back', 'point', 'tiptoe', 'crouch', 'clap', 'eek', 'splash'].map(k => [k, ['oppa_' + k, k === 'jump' ? TW + 14 : TW]])), true);
-    const agi = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'press', 'pet', 'wave', 'hug', 'jump', 'back', 'lookback', 'point', 'tiptoe', 'crouch', 'clap', 'eek', 'splash'].map(k => [k, ['agi_' + k, k === 'jump' ? AG + 12 : AG, k === 'lookback' ? 'left' : 'right']])), true);
+    /* 머리 크기 맞춤 (2026-10-21, §4-1): 머리카락 덩어리 높이를 재서 자세별 높이를 조정 (tools/app/head_width.py 계열 측정).
+       웅크린 자세는 머리가 크게 그려져 있어 줄이고, 까치발·달리기는 조금만 줄인다 */
+    const HT = { nuna: { crouch: Math.round(TW * .87), tiptoe: Math.round(TW * .92) }, oppa: { crouch: Math.round(TW * .80) }, agi: { crouch: Math.round(AG * .87), run: Math.round(AG * .93) } };
+    const nuna = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'wave', 'blow', 'hug', 'jump', 'back', 'whisper', 'point', 'tiptoe', 'crouch', 'clap', 'eek', 'splash'].map(k => [k, ['nuna_' + k, k === 'jump' ? TW + 14 : (HT.nuna[k] || TW)]])), true);
+    const oppa = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'reach', 'press', 'hug', 'jump', 'back', 'point', 'tiptoe', 'crouch', 'clap', 'eek', 'splash'].map(k => [k, ['oppa_' + k, k === 'jump' ? TW + 14 : (HT.oppa[k] || TW)]])), true);
+    const agi = mk(T, Object.fromEntries(['lookup', 'walk', 'run', 'press', 'pet', 'wave', 'hug', 'jump', 'back', 'lookback', 'point', 'tiptoe', 'crouch', 'clap', 'eek', 'splash'].map(k => [k, ['agi_' + k, k === 'jump' ? AG + 12 : (HT.agi[k] || AG), k === 'lookback' ? 'left' : 'right']])), true);
     /* 꿀떡이: 자세마다 그림 비율이 달라 높이를 똑같이 두면 크기가 널뛴다. 몸 길이(가로)가 일정하도록 자세별 높이를 맞춘다 */
     const DOGH = { sniff: 116, nose: 110, run: 114, sneeze: 128, bark: 132, lookup: 138, wag: 138, lick: 148 };
     const dog = mk(T, Object.fromEntries(Object.entries(DOGH).map(([k, h]) => [k, ['dog_' + k, h]])), true);
@@ -241,8 +246,8 @@
       await say('굴뚝을 톡!');
       const outs = [];
       const puffUp = i => {
-        popSfx(T); T.pop(C0[0] + 70, C0[1] + 60, tr(['폴폴', '뭉게', '퐁!'][i - 1]));
-        const [tx, ty] = SKY[i - 1]; outs.push(smokeToCloud(cl[i - 1], C0, ctl([tx, ty]), [tx, ty], 3200 + i * 300, CS));
+        T.pop(C0[0] + 70, C0[1] + 60, tr(['폴폴', '뭉게', '퐁!'][i - 1]));
+        const [tx, ty] = SKY[i - 1]; outs.push(smokeToCloud(cl[i - 1], C0, ctl([tx, ty]), [tx, ty], 3200 + i * 300, CS, i === 1));
       };
       await T.tap(hitR(C0[0] - 45, C0[1] - 20, 90, 280), { prompt: '톡!' }); // 한 번 누르면 나머지는 저절로 (2026-10-20)
       for (let i = 1; i <= 3; i++) { puffUp(i); await sleep(600); }
@@ -261,6 +266,7 @@
       el('rect', { x: Math.min(...cx) - R, y: Math.min(...cy) - R, width: Math.max(...cx) - Math.min(...cx) + 2 * R, height: Math.max(...cy) - Math.min(...cy) + 2 * R, rx: 40, fill: 'transparent' }, anyCloud); // 구름 사이 빈 곳도 눌리게 (손 힌트가 가운데를 가리킨다)
       await T.tap(anyCloud, { prompt: '하늘의 구름을 톡! 무엇이 될까요?' }); // 한 번 누르면 나머지는 저절로
       anyCloud.remove();
+      await say('구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.'); // 구름이 모양으로 바뀌는 첫 순간의 내레이션 (2026-10-21)
       for (let i = 0; i < 3; i++) {
         if (i > 0) await sleep(400);
         morph(cl[i], 's'); cl[i].hop(14, 360); popSfx(T); puff(cl[i].x, cl[i].y - 70 * CS); T.pop(cl[i].x, cl[i].y + 30, tr(SKY[i][3]));
@@ -544,7 +550,7 @@
       T.shake(); AudioFX.sfx('boom') || T.tone([110, 55], .6, { type: 'sawtooth', vol: .18 }); T.pop(500, 150, tr('번쩍!'), '#E8A317'); bg.remove();
       kids.forEach(k => k.look('eek'));
       await say('번쩍! 우르릉 쾅!');
-      await T.cutImage([{ src: src('cut_hug'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
+      await T.cutImage([{ src: src('cut_hug'), sfx: 'swish', hold: 3200 }], { hold: 3200 });
       put(T, nuna, X(440, 450), G, { look: 'hug', to: 'right' }); put(T, oppa, X(520, 510), G, { look: 'hug', to: 'left' }); put(T, agi, X(480, 480), G + 6, { look: 'hug', to: 'right' });
       await say('"으악!" 삼남매는 서로 꼭 껴안아요.');
       await say('"미안, 미안! 인사한 거야!"');
@@ -639,9 +645,9 @@
       await say('비를 다 내린 아기 먹구름은 하얗게 변했어요.');
       await sleep(600); stopRain();
       baby.pos.getAnimations().forEach(an => an.cancel()); baby.setScale(s0 * .55); baby.place(bx, by - 10); baby.pos.style.opacity = .85;
-      baby.hop(16, 400); popSfx(T); T.pop(baby.x, baby.y - 140, tr('퐁!'));
+      baby.hop(16, 400); popSfx(T, true); T.pop(baby.x, baby.y - 140, tr('퐁!'));
       await say('하얀 아기 구름이 방긋 웃어요. 퐁!');
-      await T.cutImage([{ src: src('cut_rainbow'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
+      await T.cutImage([{ src: src('cut_rainbow'), sfx: 'sparkle', hold: 3000 }], { hold: 3000 });
       await say('"구름은 여기서 오는 거였어!"');
       await say('꿀떡이는 젖은 흙에 코를 대고 킁킁.');
     });
@@ -656,7 +662,7 @@
         put(T, dog, X(150, 360), G, { look: 'run', to: 'left' });
         put(T, nuna, X(300, 420), G, { look: 'walk', to: 'left' });
         put(T, oppa, X(400, 480), G, { look: 'walk', to: 'left' });
-        put(T, agi, X(540, 560), G, { look: 'lookback', to: 'left' });
+        put(T, agi, X(540, 560), G, { look: 'wave', to: 'right' }); // 왼쪽으로 가는 길에 굴뚝(오른쪽)을 돌아보며 손 흔들기: 몸과 머리가 같은 쪽을 본다
       });
       const C0 = [ch.x + 6, ch.y - 124], tgt = [[X(720, 600), 150], [X(600, 520), 120]];
       chimneyLoop(C0, [C0[0], C0[1] - 40], [C0[0] - 160, C0[1] - 70], { s0: .25, s1: .9 });
@@ -666,7 +672,7 @@
       await T.tap(ch.pos, { prompt: '굴뚝을 톡! 안녕!' });
       for (let k = 0; k < 2; k++) { smokeToCloud(c2[k], C0, [C0[0], C0[1] - 50], tgt[k], 2400, P ? .75 : 1); T.pop(C0[0] + 40, C0[1] - 30, tr('퐁!')); await sleep(700); }
       await say('멀리 굴뚝에서 작은 구름이 퐁! 퐁!');
-      agi.look('lookback', 'left'); agi.hop(10, 300);
+      agi.look('wave', 'right'); agi.hop(10, 300);
       await say('은우가 뒤를 돌아보며 손을 흔들어요. "퐁!"');
       await say('꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.');
       await home;

@@ -51,6 +51,9 @@ const NARRATION_CLIPS_EN = {
  "하늘의 구름을 톡! 무엇이 될까요?": {
   "t": "Tap a cloud in the sky! What will it become?"
  },
+ "구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.": {
+  "t": "The clouds change! A rabbit, a fish, and a car."
+ },
  "굴뚝 아래 커다란 문.": {
   "t": "Under the chimney, there is a big door."
  },
@@ -316,7 +319,7 @@ const TEXT_EN = {
  "뭉게뭉게": "Puff puff",
  "뭉게뭉게뭉게!": "Puff puff puff!",
  "번쩍!": "Flash!",
- "보라!": "Violet!",
+ "보라!": "Purple!",
  "빨강!": "Red!",
  "빨갛게!": "Red!",
  "살살": "Gently",
