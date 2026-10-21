@@ -38,8 +38,12 @@
   const WATER = 300;          /* 2·3·10번 수면선 */
   const WATER11 = 372;        /* 11번 수면선 */
   const BGS = ['palace', 'night_sea', 'beach', 'witch', 'steps', 'garden', 'deck', 'dawn_sea', 'morning_sea'];
-  const bgSrc = k => AS + 'mer_bg2_' + k + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
+  const bgSrc = k => AS + (BG3[k] ? 'mer_bg3_' : 'mer_bg2_') + k + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
+  const BG3 = { witch: 1, steps: 1 };   /* 비례를 다시 그린 배경(mer_bg3_*) */
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 배경이 무대 1000×560 을 덮게 */
+  /* 장면별 배경 상자: 마녀 동굴은 조개 문이 작게 그려져 2.2배 확대(문 중심 x=680, 문 밑 y≈470) */
+  const BGBOXES = { witch: { x: -1221, y: -594, w: 1080 * 2.2, h: 1080 * 992 / 1760 * 2.2 } };
+  const bgBox = k => BGBOXES[k] || BGBOX;
   const hOf = f => HT[f] || 200;
   const artOK = {}, bgOK = {};  /* 파일이 있으면 true — 없으면 자리표시 */
 
@@ -173,7 +177,7 @@
     t.textContent = '[그림 준비 중] ' + d.name;
   }
   function bgImage(T, key) {
-    if (bgOK[key]) return T.el('image', { href: bgSrc(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
+    if (bgOK[key]) { const b = bgBox(key); return T.el('image', { href: bgSrc(key), x: b.x, y: b.y, width: b.w, height: b.h, preserveAspectRatio: 'none' }, T.bg); }
     bgPlaceholder(T, key);
   }
   /* 물 덮개: 새 바다 배경은 물결이 그림 안에 있다. 배·인어가 물에 잠겨 보이게, 같은 배경 그림을 y0 아래만 오려 인물 위에 한 번 더 얹는다
@@ -187,8 +191,10 @@
     T._cover = g;
     return g;
   }
+  const WY = 482;   /* 마녀 동굴: 마녀 발 (조개 문 앞 모래, 뒤쪽이라 원근 0.66배) */
+  const SY = 404;   /* 계단 장면: 맨 윗단 위 (기둥 밑) */
   const GF = 514;   /* 정원 바닥 (화면 아래 가장자리에 발이 잘리지 않게) */
-  const SC = { steps: 1.3, garden: 1.2, deck: 1.5 };   /* 장면별 인물 확대 (모든 자세에 같은 배율, §4-1) */
+  const SC = { steps: 0.8, garden: 1.2, deck: 1.5, witch: 0.66 };   /* 장면별 인물 확대 (모든 자세에 같은 배율, §4-1) */
 
   /* 배우: 자세 그림 여러 장 중 하나만 보인다. poses = { 이름: 그림 } 또는 { 이름: [그림, 높이] }
      그림 파일이 없으면 자리표시. a.look(자세, 방향) — 그림이 보는 쪽과 원하는 쪽이 다르면 뒤집는다 (앞모습은 뒤집지 않는다) */
@@ -259,9 +265,9 @@
     }
   }
   /* 흔들 걸음: wobble_a / wobble_b 를 300ms 마다 번갈아 보이며 x 까지 걷고, 끝나면 stand */
-  async function wobbleWalk(T, a, x, ms) {
+  async function wobbleWalk(T, a, x, ms, y = FL) {
     let k = 0; const tm = setInterval(() => a.look(k++ % 2 ? 'wobble_b' : 'wobble_a'), 300);
-    sfx(T, 'step_wood'); await a.move(x, FL, ms, 'linear'); clearInterval(tm); a.look('stand');
+    sfx(T, 'step_wood'); await a.move(x, y, ms, 'linear'); clearInterval(tm); a.look('stand');
   }
   /* 붉은 금빛 반짝: glint 5개가 (x,y) 에서 퍼졌다 사라진다 */
   function glints(T, x, y) {
@@ -476,13 +482,13 @@
     /* ===== 6. 바다 마녀 (톡: 가마솥) ===== */
     await T.sceneCard(tr('바다 마녀'), () => {
       scene('witch');
-      put(T, witch, X(680, 600), 522, { look: 'stand', to: 'left' });
-      put(T, cauldron, X(500, 480), 530, { look: 'dim' });
-      put(T, shell, X(590, 560), 540);
-      if (P) camSnap(500, 280, 1);
+      put(T, witch, X(690, 670), WY, { look: 'stand', to: 'left', s: SC.witch });
+      put(T, cauldron, X(480, 560), 526, { look: 'dim', s: .85 });
+      put(T, shell, X(780, 740), 506);
+      if (P) camSnap(600, 280, 1);
     }, cauldron.pos);
-    put(T, mer, -150, 520, { look: 'swim', to: 'right' }); sfx(T, 'bubbles');
-    await Promise.all([say('인어공주는 소용돌이 너머 바다 마녀를 찾아갔어요.'), mer.move(X(290, 380), 520, 1800)]);
+    put(T, mer, X(-150, 330), 520, { look: 'swim', to: 'right' }); sfx(T, 'bubbles');
+    await Promise.all([say('인어공주는 소용돌이 너머 바다 마녀를 찾아갔어요.'), mer.move(X(290, 490), 520, 1800)]);
     mer.look('worry', 'right');
     witch.look('hand');
     await say('다리를 갖고 싶다고? 좋아. 대신 네 고운 목소리를 다오.');
@@ -509,7 +515,7 @@
     /* ===== 7. 다리가 생겼어요 (자동) ===== */
     await T.sceneCard(tr('다리가 생겼어요'), () => {
       scene('steps');
-      put(T, mer, X(420, 470), FL, { look: 'sit_tail', s: SC.steps });
+      put(T, mer, X(520, 500), SY, { look: 'sit_tail', s: SC.steps });
       put(T, potion, mer.x + 34 * SC.steps, mer.y - 118 * SC.steps, { look: 'full', s: SC.steps });
       if (P) camSnap(500, 280, 1);
     }, mer.pos);
@@ -520,9 +526,9 @@
     sfx(T, 'sparkle'); sparkle(T, mer.x, mer.y - 100 * SC.steps, 130, 16);
     await T.anim(mer.pos, [{ opacity: 1 }, { opacity: .1 }], 400);
     mer.look('stand'); mer.pos.style.opacity = ''; fadeIn(mer, 500); glow(mer, 1400);
-    await Promise.all([say('꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.'), (async () => { await sleep(1800); T.pop(mer.x, mer.y - 250 * SC.steps, tr('흔들흔들')); await wobbleWalk(T, mer, X(500, 500), 1800); })()]);
-    put(T, prince, 1100, FL, { look: 'stand', to: 'left', s: SC.steps }); sfx(T, 'step_wood');
-    await prince.move(X(660, 640), FL, 1500);
+    await Promise.all([say('꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.'), (async () => { await sleep(1800); T.pop(mer.x, mer.y - 250 * SC.steps, tr('흔들흔들')); await wobbleWalk(T, mer, X(500, 500), 1800, SY); })()]);
+    put(T, prince, 1100, SY, { look: 'stand', to: 'left', s: SC.steps }); sfx(T, 'step_wood');
+    await prince.move(X(660, 640), SY, 1500);
     follow(570);
     prince.hop(8, 360);
     await say('누구세요? 어디서 왔어요?');
@@ -531,7 +537,7 @@
     prince.hop(10, 360);
     await say('우리 궁전에서 지내요.');
     prince.turn('right');
-    await Promise.all([prince.move(1150, FL, 1600), wobbleWalk(T, mer, 1150, 2000)]);
+    await Promise.all([prince.move(1150, SY, 1600), wobbleWalk(T, mer, 1150, 2000, SY)]);
     hide(prince); hide(mer);
     await sleep(200);
 
