@@ -28,9 +28,9 @@
     prince_stand: 200, prince_float: 85, prince_lie: 82, prince_wake: 140, prince_dance: 200, prince_sleep: 130,
     witch_stand: 235, witch_hand: 235, lady_stand: 208, lady_wed: 208, lady_sleep: 150, gull: 60, fish_a: 36, fish_b: 36, fish_c: 36 };
   /* 그림이 보는 쪽 ('left' | 'right' | 'front') */
-  const NAT = { mer_swim: 'left', mer_garden: 'front', mer_peek: 'left', mer_hide: 'right', mer_hold: 'left', mer_worry: 'left', mer_resolve: 'left',
-    mer_sit_tail: 'front', mer_stand: 'front', mer_wobble_a: 'front', mer_wobble_b: 'front', mer_dance: 'right', mer_sad: 'front', mer_shake: 'front',
-    mer_throw: 'left', mer_bubble: 'front', sisters_long: 'front', sisters_short: 'front', king: 'front', granny_talk: 'left', granny_hand: 'left',
+  const NAT = { mer_swim: 'left', mer_garden: 'left', mer_peek: 'left', mer_hide: 'right', mer_hold: 'left', mer_worry: 'left', mer_resolve: 'left',
+    mer_sit_tail: 'left', mer_stand: 'left', mer_wobble_a: 'left', mer_wobble_b: 'left', mer_dance: 'right', mer_sad: 'left', mer_shake: 'left',
+    mer_throw: 'left', mer_bubble: 'left', sisters_long: 'front', sisters_short: 'front', king: 'front', granny_talk: 'left', granny_hand: 'left',
     prince_stand: 'front', prince_float: 'left', prince_lie: 'left', prince_wake: 'right', prince_dance: 'left', prince_sleep: 'left',
     witch_stand: 'left', witch_hand: 'left', lady_stand: 'front', lady_wed: 'front', lady_sleep: 'right', gull: 'left',
     fish_a: 'left', fish_b: 'left', fish_c: 'left', prop_ship_lantern: 'left', prop_ship_tilt: 'left', prop_ship_flower: 'left' };
@@ -618,7 +618,7 @@
       put(T, ship, 720, WATER + 46, { look: 'flower' });
       put(T, prince, ship.x + 40, ship.y + DECK_DY, { look: 'sleep', to: 'left' });
       put(T, lady, ship.x + 150, ship.y + DECK_DY, { look: 'sleep', to: 'right' });
-      put(T, mer, ship.x + BOW_DX, ship.y + DECK_DY, { look: 'sad', to: 'left' });
+      put(T, mer, ship.x + BOW_DX, ship.y + DECK_DY, { look: 'sad', to: 'right' });   /* 잠든 왕자 쪽(오른쪽)을 본다 */
       put(T, sisters, 250, WATER + 90, { look: 'short' }); sisters.pos.style.opacity = '0';
       waterCover(T, 'dawn_sea', WATER + 38);
       if (P) camSnap(300, 280, 1);
