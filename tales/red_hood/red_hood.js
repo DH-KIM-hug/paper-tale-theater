@@ -281,7 +281,7 @@
     }, wolf.pos);
     await say('빨간 모자는 숲속 할머니 집에 도착했어요. 문을 톡 두드려요!');
     await T.tap(hood.pos, { prompt: '빨간 모자를 톡! 똑똑똑 노크해요.' });
-    for (let k = 0; k < 3; k++) { knock(T); T.pop(500, 320, '똑!'); await hood.hop(8, 200); }
+    for (let k = 0; k < 3; k++) { knock(T); T.pop(560, 250, '똑!'); await hood.hop(8, 200); }
     await say('"들어오렴~" 안에서 쉰 목소리가 들렸어요.');
 
     /* --- 8. 이상한 할머니 --- */

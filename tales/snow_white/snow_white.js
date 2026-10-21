@@ -278,13 +278,13 @@
       if (P) camSnap(160, 280, 1);
     }, beds[0].pos);
     await say('방에는 작은 침대가 나란히 놓여 있었어요.');
-    onBed(0, 'bedknees'); popSfx(T); snow.wiggle(3, 420); T.pop(300, BY_F - 120, tr('끙!'));
+    onBed(0, 'bedknees'); popSfx(T); snow.wiggle(3, 420); T.pop(300, BY_F - 200, tr('끙!'));
     await say('이 침대는 너무 짧아요. 다리가 안 펴져요.');
-    follow(500, 500); onBed(1, 'bedtoes'); popSfx(T); snow.wiggle(3, 420); T.pop(390, BY_F - 175, tr('쿵!'));
+    follow(500, 500); onBed(1, 'bedtoes'); popSfx(T); snow.wiggle(3, 420); T.pop(390, BY_F - 240, tr('쿵!'));
     await say('이 침대는 불편해요. 발끝이 쿵 닿아요.');
-    follow(840, 700); onBed(6, 'bedcurl'); sfx(T, 'paper_down', () => popSfx(T)); T.pop(840, BY_F - 170, tr('쏙!'));
+    follow(840, 700); onBed(6, 'bedcurl'); sfx(T, 'paper_down', () => popSfx(T)); T.pop(840, BY_F - 230, tr('쏙!'));
     await say('몸을 동그랗게 웅크리면… 조금 작지만 포근해요. 잘 자요…');
-    T.pop(790, BY_F - 175, tr('새근새근'));
+    T.pop(790, BY_F - 230, tr('새근새근'));
     await say('백설공주는 스르르 잠이 들었어요.');
     await sleep(600);
 
@@ -375,7 +375,7 @@
       if (P) T.camTo(Math.min(Math.max(b.x, SX[2]), BIGX), 280, 1, 450);
       AudioFX.countBeat && AudioFX.countBeat(i + 1); popSfx(T); vo('n' + (i + 1));
       glow(b, 800); b.hop(i === 7 ? 18 : 12, 360);
-      T.pop(b.x, i === 7 ? 330 : (i % 2 ? 420 : 360), tr(NUM[i]));
+      T.pop(b.x, i === 7 ? 220 : (i % 2 ? 250 : 190), tr(NUM[i]));
       await sleep(i === 6 ? 1300 : 950);                  /* 일곱 다음에 한 박 쉬고 큰 침대 */
     }
     if (P) T.camTo(560, 280, 1, 700);

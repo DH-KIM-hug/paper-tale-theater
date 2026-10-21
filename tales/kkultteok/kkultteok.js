@@ -191,7 +191,7 @@
       nuna.look('point'); oppa.look('lookup'); agi.look('lookup');
       await say('"구름은 어디서 올까?"');
       await sleep(600); // 저절로 (2026-10-20 톡 조작 정리)
-      popSfx(T); dog.hop(10, 260); T.pop(dog.x + 30, dog.y - 120, tr('킁킁!'));
+      popSfx(T); dog.hop(10, 260); T.pop(dog.x + 30, dog.y - 250, tr('킁킁!'));
       await say('꿀떡이는 땅에 코를 대고 킁킁.');
     });
     /* --- 2. 냄새를 따라 --- */
@@ -320,12 +320,12 @@
         if (i > 1) { d = one(T, 'prop_drop', DH); put(T, d, DX0, FY + 62); drops.push(d); }
         else first.body.getAnimations().forEach(an => an.cancel());
         fall(d, DX0);
-        AudioFX.sfx('ding') || popSfx(T); T.pop(DX0 + 70, FY + 20, tr('똑!'), '#4A90D9');
+        AudioFX.sfx('ding') || popSfx(T); T.pop(DX0 + 70, FY - 100, tr('똑!'), '#4A90D9');
       };
       await T.tap(hitC(DX0, FY + 62 - DH / 2, 80), { prompt: '물방울을 톡!' }); // 한 번 누르면 나머지는 저절로 (2026-10-20)
       for (let i = 1; i <= 3; i++) { dropStep(i); await sleep(500); }
       await say('이현이가 물방울에 손을 살짝 대 봐요.');
-      oppa.hop(8, 260); T.pop(oppa.x + 40, oppa.y - 260, tr('앗, 차가워!'), '#4A90D9');
+      oppa.hop(8, 260); T.pop(oppa.x + 40, oppa.y - 340, tr('앗, 차가워!'), '#4A90D9');
       await sleep(700);
       // 바람: 나팔을 톡톡톡 → 구름이 세 단계로 커진다
       nuna.look('blow');
@@ -381,7 +381,7 @@
       await say('꿀떡이가 강아지 구름과 코를 맞대요.');
       dog.look('sneeze', 'left'); AudioFX.sfx('cork') || popSfx(T);
       for (let k = 0; k < 5; k++) puff(HOLES[2][0] + 20 - k * 10, BELT - 40 - k * 8);
-      T.pop(dog.x + 20, dog.y - 150, tr('에취!'));
+      T.pop(dog.x + 20, dog.y - 280, tr('에취!'));
       await say('에취! 구름 조각이 사르르 날려요.');
     });
     /* --- 7. 빨간 단추 --- */
@@ -429,7 +429,7 @@
       await say('먹구름들이 커다란 물통에서 물을 마셔요.');
       const drinkStep = i => {
         const d = darks[i - 1]; d.setScale(1.05); d.place(d.x, d.y); d.hop(6, 300);
-        AudioFX.sfx('gulp') || popSfx(T); T.pop(d.x, d.y - 160, tr('꿀꺽!'));
+        AudioFX.sfx('gulp') || popSfx(T); T.pop(d.x, d.y - 200, tr('꿀꺽!'));
       };
       await sleep(500); // 저절로 (2026-10-20 톡 조작 정리)
       for (let i = 1; i <= 3; i++) { drinkStep(i); await sleep(600); }
@@ -492,7 +492,7 @@
       oppa.look('splash', 'left'); oppa.hop(28, 420); ring(oppa.x, G + 4);
       await say('"첨벙첨벙!" 이현이도 폴짝 뛰어요.');
       put(T, dog, X(580, 520), G, { look: 'lick', to: 'left' }); fadeIn(dog, 300);
-      T.pop(dog.x - 40, dog.y - 180, tr('할짝!'));
+      T.pop(dog.x - 40, dog.y - 290, tr('할짝!'));
       await say('꿀떡이는 아기 먹구름 볼을 할짝.');
       morph(baby, 'wide'); baby.hop(12, 360);
       await say('아기 먹구름 눈이 동그래졌어요.');
@@ -518,7 +518,7 @@
       await up.finished.catch(() => {}); hide(baby); popSfx(T); T.pop(FLX, 110, tr('퐁!'));
       nuna.look('run'); agi.look('run'); oppa.look('run');
       await say('삼남매도 손을 흔들며 밖으로 달려 나가요.');
-      for (let k = 0; k < 2; k++) { dog.hop(10, 260); T.pop(dog.x, dog.y - 150, tr('멍!')); await sleep(420); }
+      for (let k = 0; k < 2; k++) { dog.hop(10, 260); T.pop(dog.x, dog.y - 260, tr('멍!')); await sleep(420); }
       await say('꿀떡이는 하늘을 보고 멍! 멍!');
     });
     /* --- 12. 번쩍! 우르릉 쾅! --- */

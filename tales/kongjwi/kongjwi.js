@@ -99,7 +99,7 @@
     await say('"콩쥐야, 마당을 쓸어라!" 새엄마가 말했어요.');
     await say('콩쥐를 톡! 눌러서 마당을 쓸어 봐요!');
     const sweep = i => {
-      kong.hop(14, 300); popSfx(T); T.pop(kong.x + 70, kong.y - 150, tr(['쓱쓱!', '싹싹!', '깨끗!'][i - 1]));
+      kong.hop(14, 300); popSfx(T); T.pop(kong.x + 70, kong.y - 295, tr(['쓱쓱!', '싹싹!', '깨끗!'][i - 1]));
     };
     await T.tap(kong.pos, { prompt: '콩쥐를 톡! 마당을 쓸어요.' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { await sweep(i); await sleep(450); }
@@ -129,7 +129,7 @@
     await say('"이 독에 물을 가득 채워라!" 새엄마가 말했어요.');
     await say('물동이를 톡톡톡 눌러서 물을 세 번 부어 봐요!');
     await T.mash(pail.pos, { count: 3, prompt: '물동이를 톡톡톡! 물을 부어요.', onStep: i => {
-      pail.hop(14, 260); popSfx(T); pourDrops(pail, jar); leakDrops(jar); T.pop(pail.x, pail.y - 110, tr(NUM[i - 1]));
+      pail.hop(14, 260); popSfx(T); pourDrops(pail, jar); leakDrops(jar); T.pop(pail.x, pail.y - 290, tr(NUM[i - 1]));
     } });
     await T.cutImage([{ src: cutSrc('wet'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     scene('jar');
@@ -148,7 +148,7 @@
     put(T, kong, 400, 505, { look: 'pour', to: 'right' }); put(T, jar, 560, 505); put(T, pail, 480, 520);
     const water = T.el('ellipse', { cx: jar.x, cy: jar.y - 150, rx: 52, ry: 11, fill: '#5FB4E8', stroke: '#fff', 'stroke-width': 3, opacity: 0 }, T.world);
     const refill = i => {
-      pail.hop(14, 260); popSfx(T); pourDrops(pail, jar); T.pop(pail.x, pail.y - 110, tr(NUM[i - 1]));
+      pail.hop(14, 260); popSfx(T); pourDrops(pail, jar); T.pop(pail.x, pail.y - 290, tr(NUM[i - 1]));
       setTimeout(() => { water.setAttribute('opacity', (i / 3).toFixed(2)); }, 380);
     };
     // 저절로 (2026-10-19 톡 조작 정리)
@@ -176,7 +176,7 @@
     await T.mash(flock.pos, { count: 5, prompt: '참새를 톡톡톡톡톡! 하나씩 세어요.', onStep: i => {
       const s = sparrows[i - 1]; put(T, s, 410 + i * 52, 440 - (i % 2) * 26, { to: 'left' });
       s.pos.animate([{ opacity: 0, translate: '0 -30px' }, { opacity: 1, translate: '0 0' }], 260); s.hop(10, 240);
-      popSfx(T); T.pop(s.x, s.y - 70, tr(NUM[i - 1]));
+      popSfx(T); T.pop(s.x, s.y - 190, tr(NUM[i - 1]));
     } });
     hide(flock);
     await say('참새가 하나, 둘, 셋, 넷, 다섯! 쌀이 금방 하얗게 되었어요.');
@@ -204,7 +204,7 @@
     }, kong.pos);
     await say('콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!');
     const cross = i => {
-      kong.move(370 + i * 75, 505, 380); popSfx(T); T.pop(kong.x + 40, kong.y - 190, tr(NUM[i - 1]));
+      kong.move(370 + i * 75, 505, 380); popSfx(T); T.pop(kong.x + 40, kong.y - 295, tr(NUM[i - 1]));
     };
     await T.tap(kong.pos, { prompt: '콩쥐를 톡! 징검다리를 건너요.' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { await cross(i); await sleep(400); }
@@ -227,11 +227,11 @@
     }, kong.pos);
     await say('잔치에서는 북과 장구와 꽹과리 소리가 울렸어요. 북을 톡 눌러 봐요!');
     await T.tap(drum.pos, { prompt: '북을 톡! 둥둥 소리가 나요.' });
-    AudioFX.sfx('drum') || T.tone([140, 90], .3, { vol: .25 }); drum.hop(14, 240); T.pop(drum.x, drum.y - 120, tr('둥!'));
+    AudioFX.sfx('drum') || T.tone([140, 90], .3, { vol: .25 }); drum.hop(14, 240); T.pop(drum.x, drum.y - 360, tr('둥!'));
     await sleep(500);
-    AudioFX.sfx('drum') || T.tone([200, 150], .25, { vol: .22 }); buk.hop(14, 240); T.pop(buk.x, buk.y - 120, tr('덩!'));
+    AudioFX.sfx('drum') || T.tone([200, 150], .25, { vol: .22 }); buk.hop(14, 240); T.pop(buk.x, buk.y - 360, tr('덩!'));
     await sleep(500);
-    clinkSfx(T); gong.hop(14, 240); T.pop(gong.x, gong.y - 120, tr('꽹!'));
+    clinkSfx(T); gong.hop(14, 240); T.pop(gong.x, gong.y - 360, tr('꽹!'));
     await say('모두 신나게 춤을 추었어요. 새엄마와 팥쥐도 곱게 차려입고 왔어요.');
     await T.cutImage([{ src: cutSrc('shy'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     await say('콩쥐를 본 새엄마와 팥쥐는 부끄러워서 부채로 얼굴을 가렸어요.');
@@ -270,7 +270,7 @@
     const feed = i => {
       const who = eaters[i - 1], c = prop(T, 'ricecake', 30); put(T, c, cakes.x, cakes.y - 20);
       c.move(who.x, who.y - 110, 420, 'ease-in').then(() => { hide(c); who.hop(14, 240); });
-      cakes.hop(10, 220); popSfx(T); T.pop(who.x, who.y - 230, tr(['냠냠!', '쫀득!', '맛있다!'][i - 1]));
+      cakes.hop(10, 220); popSfx(T); T.pop(who.x, who.y - 330, tr(['냠냠!', '쫀득!', '맛있다!'][i - 1]));
     };
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await feed(i); await sleep(500); }

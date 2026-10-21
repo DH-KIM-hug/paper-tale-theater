@@ -315,8 +315,8 @@
     await T.tap(father.pos, { prompt: '말을 톡 눌러 봐요.' });
     gap = 500;
     (async () => { for (let i = 0; i < 6; i++) { AudioFX.sfx('step_grass'); father.hop(6, 420); await sleep(450); } })();
-    T.pop(father.x, FL - 260, tr('따각따각'));
-    setTimeout(() => T.pop(father.x + 300, FL - 260, tr('따각따각')), 1300);
+    T.pop(father.x, FL - 350, tr('따각따각'));
+    setTimeout(() => T.pop(father.x + 300, FL - 340, tr('따각따각')), 1300);
     belle.hop(10); sisa.wiggle(5, 500); sisb.wiggle(5, 500);
     await Promise.all([father.move(1150, FL, 2800, 'linear'), say('따각따각, 아버지가 도시로 떠났어요.')]);
     hide(father);
@@ -340,9 +340,9 @@
     put(T, tableL, X(560, 520), FL + 4);
     if (P) camSnap(520, 280, 1);
     await say('누구 계세요? …고맙게 먹겠습니다.');
-    sfx(T, 'chomp'); father.hop(8, 300); T.pop(father.x, FL - 250, tr('냠냠!'));
+    sfx(T, 'chomp'); father.hop(8, 300); T.pop(father.x, FL - 330, tr('냠냠!'));
     await sleep(700);
-    sfx(T, 'chomp'); father.hop(8, 300); T.pop(father.x, FL - 250, tr('냠냠!'));
+    sfx(T, 'chomp'); father.hop(8, 300); T.pop(father.x, FL - 330, tr('냠냠!'));
     await sleep(700);
     await fadeOut(T, father, 400);
     put(T, father, X(300, 420), FL, { look: 'sleep' }); fadeIn(father);
@@ -365,7 +365,7 @@
     await say('장미가 많은 덤불은 어느 쪽일까요?');
     await T.choose([{ el: bush5.pos, ok: true }, { el: bush2.pos, ok: false, onWrong: async () => { await bush2.wiggle(8, 360); await say('그 덤불은 장미가 두 송이예요. 적어요.'); } }],
       { prompt: '장미가 많은 덤불은 어느 쪽일까요?' });
-    glow(bush5, 1200); bush5.hop(14, 400); sparkleSfx(T); T.pop(bush5.x, FL - 190, tr('반짝!'));
+    glow(bush5, 1200); bush5.hop(14, 400); sparkleSfx(T); T.pop(bush5.x, FL - 260, tr('반짝!'));
     await say('맞아요, 다섯 송이! 장미가 많아요.');
     {
       const a5 = bush5.x, a2 = bush2.x; sfx(T, 'swish');
@@ -374,7 +374,7 @@
     await say('자리를 바꿨어요. 장미가 적은 덤불은 어느 쪽일까요?');
     await T.choose([{ el: bush2.pos, ok: true }, { el: bush5.pos, ok: false, onWrong: async () => { await bush5.wiggle(8, 360); await say('그 덤불은 장미가 다섯 송이예요. 많아요.'); } }],
       { prompt: '장미가 적은 덤불은 어느 쪽일까요?' });
-    glow(bush2, 1200); bush2.hop(14, 400); sparkleSfx(T); T.pop(bush2.x, FL - 190, tr('반짝!'));
+    glow(bush2, 1200); bush2.hop(14, 400); sparkleSfx(T); T.pop(bush2.x, FL - 260, tr('반짝!'));
     await say('맞아요, 두 송이! 장미가 적어요.');
     follow(bush5.x, 900);
     await father.move(bush5.x + 110, FL, 1200);
