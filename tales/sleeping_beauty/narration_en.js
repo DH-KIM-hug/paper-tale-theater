@@ -1,0 +1,36 @@
+/* sleeping_beauty — 영어 모드 화면 글자 (내레이션은 narration_el_en.js 가 채운다; tools/elevenlabs/gen_tale.py --lang en) */
+const NARRATION_CLIPS_EN = {};
+const VOICE_LINES_EN = {};
+const TEXT_EN = {
+ "잠자는 숲속의 공주": "The Sleeping Beauty",
+ "아무도 빼놓지 않아요": "No one is left out",
+ "아무도 빼놓지 않아요. 잊힌 사람의 마음은 아프답니다.": "No one is left out. Being forgotten hurts.",
+ "기다리던 아기": "The Long-Awaited Baby",
+ "접시 일곱, 요정 여덟": "Seven Plates, Eight Fairies",
+ "잊힌 요정": "The Forgotten Fairy",
+ "여섯 가지 선물": "Six Gifts",
+ "백 년 잠": "A Hundred-Year Sleep",
+ "탑 꼭대기 물레": "The Spindle at the Top of the Tower",
+ "콕, 스르르": "Prick, and So Sleepy",
+ "모두 잠들어요": "Everyone Falls Asleep",
+ "백 년 뒤": "A Hundred Years Later",
+ "잠든 궁전": "The Sleeping Castle",
+ "깨어나요": "She Wakes Up",
+ "까르르": "Tee-hee",
+ "딸랑": "Ding-a-ling",
+ "반짝!": "Sparkle!",
+ "콕!": "Prick!",
+ "하암": "Yawn",
+ "쿨쿨": "Zzz",
+ "덜컹": "Clatter",
+ "스르륵": "Rustle",
+ "쉿": "Shh",
+ "짝짝": "Clap clap",
+ "요정과 금 접시, 어느 쪽이 더 많아요? 더 많은 쪽을 톡 눌러요.": "Fairies or golden plates, which are there more of? Tap the side that has more.",
+ "그럼 더 적은 쪽은 어느 쪽일까요? 더 적은 쪽을 톡 눌러요.": "Then which side has fewer? Tap the side that has fewer.",
+ "할머니가 실을 잣고 있어요. 제일 긴 실은 어느 것일까요? 톡 눌러요.": "Grandma is spinning thread. Which thread is the longest? Tap it.",
+ "그럼 제일 짧은 실은 어느 것일까요? 톡 눌러요.": "Then which thread is the shortest? Tap it.",
+ "모두 쿨쿨 자요. 탁자 아래에서 자는 강아지를 찾아봐요.": "Everyone is fast asleep. Find the puppy sleeping under the table.",
+ "선반 위에서 자는 새를 찾아봐요.": "Find the bird sleeping on the shelf.",
+ "요리사 옆에서 자는 꼬마를 찾아봐요.": "Find the little boy sleeping next to the cook."
+};
