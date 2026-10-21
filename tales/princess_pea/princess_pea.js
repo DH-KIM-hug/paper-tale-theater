@@ -228,7 +228,7 @@
 
   async function run(T) {
     const { sleep, camSnap, tr } = T;
-    const GAP = 2800, SCENE_END = 5000, SAIL = 8000, COUNT_A = 1400, COUNT_B = 1300, CLIMB = 6000;   // §2-7 속도 상수
+    const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ SAIL = 8000, COUNT_A = 1400, COUNT_B = 1300, CLIMB = 6000;   // §2-7 속도 상수
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(수 세기 n1~n20)
     const scene = key => { T.clear(); bgImage(T, key); newRig(T); camSnap(500, 280, 1); };

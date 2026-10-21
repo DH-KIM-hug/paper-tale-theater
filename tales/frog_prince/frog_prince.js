@@ -290,7 +290,7 @@
 
   async function run(T) {
     const { sleep, camSnap, tr } = T;
-    const GAP = 3000, SCENE_END = 7500, LOOK = 3600;   // LOOK: 장면이 바뀐 뒤 그림을 둘러보는 쉼(목표 7분)
+    const GAP = 700, SCENE_END = 1500, LOOK = 1500;   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */   // LOOK: 장면이 바뀐 뒤 그림을 둘러보는 쉼(목표 7분)
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(하나·둘·셋)
     const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
