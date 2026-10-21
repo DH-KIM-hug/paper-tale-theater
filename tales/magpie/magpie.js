@@ -229,7 +229,8 @@
     }, sch.pos);
     const l2 = say(S.L2); mom.hop(10, 300); await sleep(500); mom.hop(10, 300); dad.wiggle(5, 500); await l2;
     snake.look('flee', 'left');   /* 똬리를 풀고 몸을 길게 뻗어 기어 올라간다 */
-    const climb = snake.move(X(735, 625), 185, 3600, 'ease-in-out');
+    /* 나무 기둥(가운데 x≈800) 위로만 기어 올라간다: 먼저 기둥 밑으로 가고, 그다음 기둥을 따라 위로 (허공으로 빗겨 가지 않게) */
+    const climb = (async () => { await snake.move(X(800, 640), 640, 500); await snake.move(X(800, 185), 185, 2800, 'ease-in-out'); })();
     await say(S.L3); await climb; snake.look('coil');   /* 나무 위에 도착해 다시 똬리를 튼다 */
     sch.look('ready', 'right'); sfx('paper_up');
     await say(S.L4); await sleep(150);
