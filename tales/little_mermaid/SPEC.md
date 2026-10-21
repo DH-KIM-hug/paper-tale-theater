@@ -3,12 +3,12 @@
 기획은 `PLAN.md`(확정), 이 문서는 **코드를 짜는 사람이 더 이상 판단하지 않아도 되게** 적은 제작 세부다. 참조 구현은 `tales/snow_white/snow_white.js`(구조·mk·put·sceneCard 흐름)와 `tales/cinderella/cinderella.js`(HT 표·director·고르기 카드·sparkle). 두 파일의 도우미를 그대로 복사해 쓴다.
 
 - 폴더 `tales/little_mermaid/`, 코드 `little_mermaid.js`, 그림 접두어 **`mer_`** (`assets/v3w/mer_*.webp`), 배경 `assets/v3w/mer_bg_*.webp`
-- 그림 작업표 `tools/app/gen/jobs_little_mermaid.json` (83장: 인물·소품 69, 배경 9, 키아트 5)
+- 그림 작업표 `tools/app/gen/jobs_little_mermaid.json` (99장: 인물·소품 69, 배경 9 + 재생성 배경 12(`bg2_*`·`bg3_*`·`bg4_*`), 컷 4(`mer_cut_*`, §6-12), 키아트 5)
 - 대본 `voice_script_el.json`(한국어, ElevenLabs eleven_v4), `voice_script_en.json`(영어). Typecast 판은 없다.
 - 교훈(끝 화면 `run()` 반환값): **`'사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.'`**
 - `Tale.mount({ title: '인어공주', subtitle: '사랑하는 마음은 사라지지 않아요', run: T => run(Tale.api) })`
 - 장면 11장, 조작 5번: 배움 놀이 2(1번 뜨고 가라앉기 2문제, 8번 바다·땅 가르기 3문제), 재미 톡 2(2번 불꽃, 6번 가마솥), 인사 톡 1(11번). 연타 없음. 첫 조작은 시작 후 약 20초(1번 해설 두 줄 + 질문 한 줄 뒤).
-- 목표 길이 7~8분. 대사 60줄 + 합창 2줄.
+- 목표 길이 7~8분. 대사 60줄 + 합창 2줄. 그림 컷 4장(3·5·7·10번, §6-12) — 컷 위 대사는 기존 줄 재사용, 새 녹음 없음.
 
 ### 확정된 판단 (권장대로, 2026-10-20)
 1. 언니들 대사 "해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야." 그대로.
@@ -307,6 +307,21 @@ function rippleAt(T, x, y) { const r = prop(T, 'prop_ripple', 60); put(T, r, x, 
 5. `say('사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.')`.
 6. `T.finale(); await sleep(1500); return '사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.';`
 
+### 6-12. 컷신 (그림 컷) — CLAUDE.md §5-2, 까치(`tales/magpie`)·신데렐라 방식 (2026-10-21 추가)
+- 컷 **4장**(3·5·7·10번). 컷은 그 사건 **직후**에만 띄우고, 컷 위에서 그 장면의 **기존 대사 한 줄**을 읽는다: `const c = T.cutImage([{ src: artSrc('cut_…'), sfx: '…', hold: CUT_HOLD }], { hold: CUT_HOLD }); await say(L); await c;` (`CUT_HOLD = 4200`ms; 대사가 홀드보다 길면 컷이 먼저 닫혀도 된다; 톡하면 바로 넘어간다 — 엔진 `cutImage`, `engine/tale.js` 619행). 컷 패널은 엔진이 4:3 흰 테두리 종이로 보여 주므로 그림도 4:3 으로 만든다. 코드(`little_mermaid.js`)·그림 생성은 뒤의 큐에서 한다(이 문서는 기획만).
+- 그림: `assets/v3w/mer_cut_<이름>.webp`(1200×900). 작업표 `jobs_little_mermaid.json` 의 `kind: "cut"` 항목 **4장**(`pass 3`, 참고 그림 `refs` 는 그 컷에 나오는 인물·소품 스프라이트 — 스프라이트가 모두 나온 뒤에 만든다). 후처리: `post_little_mermaid.py` 는 sprite/bg 만 다루므로 컷은 `post_cinderella2.py` 처럼 4:3 가운데 자르기 → 1200×900 webp 로 따로 변환한다.
+- 규칙: 한 장면에 한 컷, 이웃한 장면에 연달아 두지 않는다(3·5·7·10). 컷 안 인물은 스프라이트와 같은 얼굴 규칙(점 눈·점 코·띠 입·분홍 볼), 소품(배·파도·구름·약병·단검·별)은 얼굴 없음, 피·눈물·아픔 없음. 단검은 **칼집째**(손잡이와 칼집만, 칼날 없음 — 10번 무대와 같다). 컷 위 대사는 모두 §7 대본에 **이미 있는 줄**이라 새 녹음이 없다(영어는 `voice_script_en.json` 의 같은 줄, `ui` 추가 없음). 컷이 닫힌 뒤 무대는 그 장면의 다음 단계부터 이어진다(컷이 대신한 애니메이션은 생략해도 된다).
+- 시선(§5-1): 컷마다 누가 누구를 보는지 구도 칸에 적었다. 3번은 인어공주가 왕자(왼쪽 아래)를, 5번은 둘이 마주 보고, 7번은 자기 발을 내려다보고, 10번은 왼쪽(단검·바다)을 본다 — 한쪽만 보는 컷이 연달아 오지 않는다.
+
+| 컷 id | 장면 | 앞 장면 → 뒤 장면 | 보여 줄 순간 | 그림 구도(얼굴 규칙·시선 포함) | 컷 위 대사(한국어 / 영어) | 컷 동안 음성 | 효과음 | refs |
+|---|---|---|---|---|---|---|---|---|
+| `mer_cut_rescue` | 3 폭풍 | 2 밤바다 → 4 모래밭 | 큰 사건: 폭풍 속에서 인어공주가 바다에 빠진 왕자의 머리를 물 위로 받치는 순간(6-3 의 3 `mer.move` 가 끝난 직후; 4 의 느린 나란히 이동은 생략해도 된다) | 밤 폭풍(세트 B, 달 오른쪽 위). 가운데 인어공주가 가로로 헤엄치며 두 팔을 앞으로 뻗어 눈 감은 왕자의 머리를 받친다(왕자는 편안한 얼굴, 왕관 그대로, 다치지 않음). 양옆에 크림 거품 모자의 큰 남색 파도, 오른쪽 위에 15° 기운 배와 먹구름 둘, 그 사이 작은 달. 속도선 띠로 바람. 인어공주는 용감한 얼굴(눈 뜨고 입은 작은 일자). 시선: 인어공주 → 왕자. | 인어공주는 왕자님의 머리를 물 위로 받쳐 주었어요. / The little mermaid held the prince's head above the water. | 있음(nar, 기존 클립) | `whoosh` | mer_mer_hold · mer_prince_float · mer_prop_ship_tilt · mer_prop_wave_big |
+| `mer_cut_star` | 5 할머니의 이야기 | 4 모래밭 → 6 바다 마녀 | 마음이 정해지는 순간: 할머니가 "별처럼 영원히 남는 마음"을 이야기하고 막내가 올려다보는 순간(6-5 의 1 뒤, 2 의 대사를 컷 위에서 읽는다) | 바다 밑 궁전 정원(세트 A). 오른쪽 할머니가 왼쪽을 보며 한 손을 들어 이야기하고(따뜻한 미소), 왼쪽 막내(꼬리)가 오른쪽 할머니 쪽을 보며 두 손을 가슴에 모으고 눈을 크게 뜨고 올려다본다(입 작게 벌림). 위쪽 물 너머에 크림 종이 별들이 흩어져 빛나고(별처럼 남는 마음), 왼쪽 위에서 빛줄기 셋, 작은 거품 몇 개. 조용한 컷(속도선 대신 빛줄기). 시선: 막내 ↔ 할머니. | 사람은 땅 위에서 살고, 우리는 바다에서 살지. 사람에겐 별처럼 영원히 남는 마음이 있단다. / People live on the land, and we live in the sea. But people have a heart that lasts forever, like a star. | 있음(granny, 기존 클립; 홀드보다 길어 컷이 먼저 닫힌다) | `sparkle` | mer_granny_hand · mer_mer_worry |
+| `mer_cut_legs` | 7 다리가 생겼어요 | 6 바다 마녀 → 8 궁전 정원 | 변신: 약을 마신 뒤 꼬리가 사라지고 다리가 생겨 첫걸음이 흔들리는 순간(6-7 의 2 반짝·`mer.look('stand')` 직후; 컷 뒤 3 의 '흔들흔들' 팝 + `wobbleWalk` 를 이어 간다) | 새벽 궁전 계단(세트 A). 하얀 한지 옷에 맨발의 막내가 맨 아래 계단에서 몸이 8° 기운 첫걸음, 한 발 들고 두 팔을 벌려 균형, 놀랐지만 기쁜 얼굴로 **자기 발을 내려다본다**. 다리 둘레에 크림·짚빛 반짝 별 터짐(꼬리 없음, 바닥에 비늘 없음, 아프지 않음). 옆 계단에 빈 약병(코르크). 짧은 속도선 셋. 뒤에 크림 기둥 둘, 왼쪽 끝 연청록 바다 띠. 왕자 없음. 시선: 막내 → 자기 발. | 꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들. / Her tail was gone and she had legs! Her steps went wobble, wobble. | 있음(nar, 기존 클립) | `sparkle` | mer_mer_wobble_a · mer_prop_potion_empty |
+| `mer_cut_throw` | 10 새벽 바다 | 9 왕자의 결혼 → 11 바닷바람 | 결말 전 큰 선택: 인어공주가 단검을 칼집째 바다에 던지는 순간(6-10 의 6 던지기·'풍덩!' 직후; 7 의 해돋이·`warm` tint 는 컷이 닫힌 뒤 대사 없이 2500ms 돌리고 8 거품으로 간다) | 해 뜨기 직전 바다(세트 A, 왼쪽 위 빛). 오른쪽에 꽃 장식 배의 뱃머리(왼쪽 향함, 뱃머리 화환), 그 갑판에 하얀 옷 막내가 왼쪽을 보고 한 팔을 앞으로 뻗어 **빈손**(막 던짐). 공중 가운데 **칼집째** 단검(손잡이+칼집만, 칼날 없음)이 종이 호를 그리며 날고, 떨어질 물 위에 팥빛·짚빛 반짝 셋과 크림 파문 하나. 왼쪽 아래 짧은 머리 언니 다섯이 수면 위로 상체를 내밀고 막내를 올려다본다(걱정스럽지만 눈물 없음, 입 다묾). 왼쪽 수평선에 짚빛 반원 해와 크림 빛줄기. 막내는 차분하고 후련한 작은 미소(슬프지 않음). 잠든 왕자·공주는 넣지 않는다. 시선: 막내 → 날아가는 단검·바다, 언니들 → 막내. | 인어공주는 단검을 칼집째 바다에 던졌어요. 물결이 붉은 금빛으로 반짝였어요. 해가 떠올랐어요. / The little mermaid threw the dagger, still in its sheath, into the sea. The waves sparkled red and gold. The sun rose. | 있음(nar, 기존 클립; 홀드보다 길어 컷이 먼저 닫힌다) | `splash` | mer_mer_throw · mer_prop_dagger · mer_sisters_short · mer_prop_ship_flower |
+
+컷 음성 필요(모두 §7 대본의 기존 줄, 새 줄 없음): 3번 nar "인어공주는 왕자님의 머리를…", 5번 granny "사람은 땅 위에서 살고…", 7번 nar "꼬리가 사라지고…", 10번 nar "인어공주는 단검을 칼집째…". 컷을 두지 않은 장면: 1·2(놀이·톡 장면, 3과 이웃), 4(3과 이웃), 6(7과 이웃: 목소리 진주는 무대 애니메이션으로 충분), 8·9(8은 7과, 9는 10과 이웃), 11(10과 이웃, 인사 톡).
+
 ---
 
 ## 7. 녹음 (ElevenLabs, 처음부터)
@@ -360,10 +375,10 @@ function rippleAt(T, x, y) { const r = prop(T, 'prop_ripple', 60); put(T, r, x, 
 
 1. `jobs_little_mermaid.json` 은 `pass` 순서가 이미 참고 그림 순서다. 1단계(`pass: 1`, 참고 없음)를 먼저: `python3 tools/app/gen/run_simple.py little_mermaid mer_mer_swim mer_fish_a mer_prop_ship_lantern mer_prop_cauldron_dim mer_prop_potion_empty mer_prop_fw_a mer_prop_wave ...`(1단계 전부). 한도에 걸리면 run_simple 이 풀리는 시각까지 기다린다. **한 번에 많이 요청하지 않는다**(CLAUDE.md §6).
 2. `mer_mer_swim` 이 마음에 들어야 2단계를 돌린다(머리 크기·한지 조끼·납작 꼬리 확인). 틀리면 그 한 장만 지우고 다시.
-3. 2단계: 나머지 `pass: 2` 인물·소품, 그다음 배경 9장, 맨 끝 키아트 5장(`key5_*`는 `mer_mer_swim`·`mer_mer_stand`·`mer_prince_stand`·`mer_lady_wed`·`mer_prop_ship_flower`·`mer_mer_bubble` 이 있어야 한다).
-4. 후처리: `tools/app/gen/post_cinderella2.py` 를 `post_little_mermaid.py` 로 복사해 고친다 — 작업표 `jobs_little_mermaid.json`, 임시 폴더 `assets/raw/restyle/little_mermaid_key`, 그림은 `tools/gpu_night/chromakey.py` 로 마젠타를 빼고 `j['size']` 상자 안에 맞춰 `assets/v3w/<id>.webp`, 배경은 16:9 가운데 자르기 → 1600×902, 키아트(`kind: 'key'`)는 건너뛴다(§9). 합성 단계는 없다(시계·발 카드 코드 삭제). 끝에 **ASP 를 출력**해 `little_mermaid.js` 의 `ASP` 에 붙인다. ASP·HT·NAT 의 키는 작업표 id 에서 앞의 `mer_` 를 뗀 이름이다 (`mer_mer_swim` → `mer_swim`, `mer_prop_ship_lantern` → `prop_ship_lantern`; `artSrc(k) = AS + 'mer_' + k + '.webp'`).
+3. 2단계: 나머지 `pass: 2` 인물·소품, 그다음 배경 9장, 그다음 **컷 4장**(`pass: 3`, `mer_cut_rescue`·`mer_cut_star`·`mer_cut_legs`·`mer_cut_throw` — refs 인 `mer_mer_hold`·`mer_prince_float`·`mer_prop_ship_tilt`·`mer_prop_wave_big`·`mer_granny_hand`·`mer_mer_worry`·`mer_mer_wobble_a`·`mer_prop_potion_empty`·`mer_mer_throw`·`mer_prop_dagger`·`mer_sisters_short`·`mer_prop_ship_flower` 가 있어야 한다; §6-12), 맨 끝 키아트 5장(`key5_*`는 `mer_mer_swim`·`mer_mer_stand`·`mer_prince_stand`·`mer_lady_wed`·`mer_prop_ship_flower`·`mer_mer_bubble` 이 있어야 한다). 작업표에서 컷은 배경 뒤·키아트 앞에 있다(`bg2_*`·`bg3_*`·`bg4_*` 재생성 배경은 키아트 뒤에 따로 붙어 있다).
+4. 후처리: `tools/app/gen/post_cinderella2.py` 를 `post_little_mermaid.py` 로 복사해 고친다 — 작업표 `jobs_little_mermaid.json`, 임시 폴더 `assets/raw/restyle/little_mermaid_key`, 그림은 `tools/gpu_night/chromakey.py` 로 마젠타를 빼고 `j['size']` 상자 안에 맞춰 `assets/v3w/<id>.webp`, 배경은 16:9 가운데 자르기 → 1600×902, 컷(`kind: 'cut'`)은 크로마키 없이 4:3 가운데 자르기 → 1200×900 `assets/v3w/mer_cut_<이름>.webp`, 키아트(`kind: 'key'`)는 건너뛴다(§9). 합성 단계는 없다(시계·발 카드 코드 삭제). 끝에 **ASP 를 출력**해 `little_mermaid.js` 의 `ASP` 에 붙인다(컷은 ASP 에 넣지 않는다 — `cutImage` 가 그대로 띄운다). ASP·HT·NAT 의 키는 작업표 id 에서 앞의 `mer_` 를 뗀 이름이다 (`mer_mer_swim` → `mer_swim`, `mer_prop_ship_lantern` → `prop_ship_lantern`; `artSrc(k) = AS + 'mer_' + k + '.webp'`).
 5. 머리 지름 재기: `mer_mer_swim`·`mer_mer_stand`·`mer_prince_stand`·`mer_lady_stand`·`mer_witch_stand`·`mer_granny_talk`·`mer_king`·`mer_sisters_long` 을 HT 높이로 놓았을 때 머리 지름이 모두 80±4 가 되게 HT 를 손본다. 다른 자세(앉기·눕기·상체)는 그 인물의 머리 지름에 맞춘다.
-6. 그림 점검표: 사물(돌·닻·병·가마솥·배·단검·구름·파도)에 얼굴이 없는지, 단검에 칼날이 없는지, 마녀가 무섭지 않은지, 왕자 float/lie 가 다치지 않은 편안한 얼굴인지, 조개 브라가 아닌지. 어긋나면 그 한 장만 다시 뽑는다.
+6. 그림 점검표: 사물(돌·닻·병·가마솥·배·단검·구름·파도)에 얼굴이 없는지, 단검에 칼날이 없는지, 마녀가 무섭지 않은지, 왕자 float/lie 가 다치지 않은 편안한 얼굴인지, 조개 브라가 아닌지. 컷 4장은 더해서: 4:3 풀블리드(테두리·글자·말풍선 없음, 마젠타 없음)인지, 인물 머리 크기가 스프라이트와 같은지(막내와 할머니·언니들·왕자 머리 같음), `mer_cut_legs` 에 꼬리·비늘이 없는지, `mer_cut_throw` 의 단검이 칼집째이고 언니들이 울지 않는지, 시선이 §6-12 표와 같은지. 어긋나면 그 한 장만 다시 뽑는다.
 
 ---
 
@@ -394,3 +409,4 @@ function rippleAt(T, x, y) { const r = prop(T, 'prop_ripple', 60); put(T, r, x, 
 13. **그림 규칙**: 사물 얼굴 없음, 단검 칼날 없음, 마녀 미소, 막내는 7번부터 하얀 옷·맨발, 10번 언니들 짧은 머리.
 14. **시작·끝 화면**: 시작 화면 키아트(가로·세로) 가 뜨고 `THUMBSKEYLIGHT` 로 흰 종이 모드, 끝 화면 `_back_*` 그림 + 청록 리본, 홈 카드(SVG)와 `_tile.webp` 가 보인다. 홈에서 `공주 동화` 칩으로 잡힌다.
 15. **영어 모드**: 장면 이름·pop·말풍선이 영어, 합창 영어 파일이 `chorus/en/` 에서 울린다.
+16. **컷**(코드가 붙은 뒤): 3·5·7·10번에서 컷이 한 번씩 뜨고(사진으로 확인), 컷 위에서 §6-12 표의 줄이 울리며 `_audio.json` 에 그 클립이 **한 번만** 기록된다(컷 위와 무대에서 두 번 읽지 않는다). 컷이 없는 장면에 컷이 뜨지 않고, 이웃한 두 장면에 연달아 뜨지 않는다. 톡하면 바로 넘어간다.

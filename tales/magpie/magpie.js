@@ -228,8 +228,9 @@
       if (P) camSnap(520, 280, 1);
     }, sch.pos);
     const l2 = say(S.L2); mom.hop(10, 300); await sleep(500); mom.hop(10, 300); dad.wiggle(5, 500); await l2;
+    snake.look('flee', 'left');   /* 똬리를 풀고 몸을 길게 뻗어 기어 올라간다 */
     const climb = snake.move(X(735, 625), 185, 3600, 'ease-in-out');
-    await say(S.L3); await climb;
+    await say(S.L3); await climb; snake.look('coil');   /* 나무 위에 도착해 다시 똬리를 튼다 */
     sch.look('ready', 'right'); sfx('paper_up');
     await say(S.L4); await sleep(150);
     await say(S.L5);
@@ -342,13 +343,13 @@
     put(T, lady, X(640, 590), FL, { look: 'stern' }); fadeIn(lady, 1200);
     await sleep(1200);
     const l20 = say(S.L20); await sleep(3400);
-    lady.look('tail'); sfx('pop', .5); T.pop(lady.x + 60, FL - 40, tr('!'), '#A93B32'); sch.look('surprise'); await l20;
+    lady.look('tail'); sfx('pop', .5); T.pop(lady.x + 120, FL - 40, tr('!'), '#A93B32'); sch.look('surprise'); await l20;
     await say(S.L21);
     const l22 = say(S.L22); await sleep(700); lady.hop(3, 800); await l22;
     sch.look('sit');
     const l23 = say(S.L23); sch.wiggle(3, 500); await l23;
     await say(S.L24);
-    const l25 = say(S.L25); await sleep(3000); T.pop(lady.x, FL - 250, tr('후후…'), '#1F2A56'); await l25;
+    const l25 = say(S.L25); await sleep(3000); T.pop(lady.x, FL - 330, tr('후후…'), '#1F2A56'); await l25;
     await say(S.L26);
     await sleep(SCENE_END);
 
