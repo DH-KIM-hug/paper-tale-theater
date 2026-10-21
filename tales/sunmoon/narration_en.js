@@ -553,6 +553,81 @@ const NARRATION_CLIPS_EN = {
  "맞아요! 진짜 엄마 목소리예요. 그런데 문밖 목소리는 걸걸했지요?": {
   "t": "That's right! It is the real Mom's voice. But the voice outside the door was rough, wasn't it?",
   "c": "audio/tc/sunmoon/en/nar_b081fd2947.mp3"
+ },
+ "오누이는 뒷문으로 살금살금 나왔어요.": {
+  "t": "The children tiptoed out the back door.",
+  "c": "audio/tc/sunmoon/en/nar_0f1c3e7b70.mp3"
+ },
+ "앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!": {
+  "t": "Oh! The tiger is coming! Hide behind the big jar!",
+  "c": "audio/tc/sunmoon/en/nar_2647dc550c.mp3"
+ },
+ "휴~ 이제 우물가 큰 나무로 달려가요!": {
+  "t": "Phew! Now run to the big tree by the well!",
+  "c": "audio/tc/sunmoon/en/nar_ddd8dcc68c.mp3"
+ },
+ "우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.": {
+  "t": "There is a big tree by the well. Tap! Heave-ho, up we climb.",
+  "c": "audio/tc/sunmoon/en/nar_485efc0bae.mp3"
+ },
+ "줄을 꼭 잡고, 영차영차 올라가요!": {
+  "t": "Hold on tight and climb, heave-ho!",
+  "c": "audio/tc/sunmoon/en/nar_e1ba047719.mp3"
+ },
+ "떡을 하나씩 톡 눌러 봐요!": {
+  "t": "Tap the rice cakes one by one!",
+  "c": "audio/tc/sunmoon/en/nar_dd252ff984.mp3"
+ },
+ "화면을 톡 눌러 봐요!": {
+  "t": "Tap the screen!",
+  "c": "audio/tc/sunmoon/en/nar_27d43d427b.mp3"
+ },
+ "\"수고했어요. 떡 가져가요!\" 떡을 하나씩 톡! 세면서 담아요.": {
+  "t": "\"Thank you for your hard work. Take these rice cakes!\" Tap them one by one and count!",
+  "c": [
+   "audio/tc/sunmoon/en/rich_d9450b437e.mp3",
+   "audio/tc/sunmoon/en/nar_71d393f8da.mp3"
+  ]
+ },
+ "하나!": {
+  "t": "One!",
+  "c": "audio/tc/sunmoon/en/nar_8c2c71fd5d.mp3"
+ },
+ "둘!": {
+  "t": "Two!",
+  "c": "audio/tc/sunmoon/en/nar_d7bd2254ed.mp3"
+ },
+ "셋!": {
+  "t": "Three!",
+  "c": "audio/tc/sunmoon/en/nar_749fe8b426.mp3"
+ },
+ "넷!": {
+  "t": "Four!",
+  "c": "audio/tc/sunmoon/en/nar_0e95046819.mp3"
+ },
+ "다섯!": {
+  "t": "Five!",
+  "c": "audio/tc/sunmoon/en/nar_3e4c1685e7.mp3"
+ },
+ "여섯!": {
+  "t": "Six!",
+  "c": "audio/tc/sunmoon/en/nar_4cc2399a08.mp3"
+ },
+ "일곱!": {
+  "t": "Seven!",
+  "c": "audio/tc/sunmoon/en/nar_312caae391.mp3"
+ },
+ "여덟!": {
+  "t": "Eight!",
+  "c": "audio/tc/sunmoon/en/nar_35019d7137.mp3"
+ },
+ "아홉!": {
+  "t": "Nine!",
+  "c": "audio/tc/sunmoon/en/nar_4235e14762.mp3"
+ },
+ "열!": {
+  "t": "Ten!",
+  "c": "audio/tc/sunmoon/en/nar_20b6f3ec3f.mp3"
  }
 };
 const VOICE_LINES_EN = {
@@ -572,6 +647,7 @@ const TEXT_EN = {
  "둘째 고개": "Second Hill",
  "셋째 고개": "Third Hill",
  "부잣집 부엌": "The Rich House's Kitchen",
+ "오누이의 밤": "A Night at Home",
  "똑똑똑": "Knock, Knock, Knock",
  "문틈으로 쑥": "A Hand Through the Door",
  "창호지 구멍": "A Hole in the Paper Door",
