@@ -80,4 +80,13 @@ Object.assign(NARRATION_CLIPS, {
  "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.": "audio/el/magic_jar/nar_c91bdd904b.mp3",
  "농부를 톡! 괭이질을 해요.": "audio/el/magic_jar/nar_ffdcc9f189.mp3"
 });
-Object.assign(VOICE_LINES, {});
+Object.assign(VOICE_LINES, {
+ "n1": "audio/el/magic_jar/nar_6b62895987.mp3",
+ "n2": "audio/el/magic_jar/nar_94b81f25b1.mp3",
+ "n3": "audio/el/magic_jar/nar_96c970a9a1.mp3",
+ "n4": "audio/el/magic_jar/nar_9215e0a596.mp3",
+ "n5": "audio/el/magic_jar/nar_282add777d.mp3",
+ "n6": "audio/el/magic_jar/nar_3a053a1c02.mp3",
+ "n7": "audio/el/magic_jar/nar_41abeb3181.mp3",
+ "n8": "audio/el/magic_jar/nar_639963f6cb.mp3"
+});

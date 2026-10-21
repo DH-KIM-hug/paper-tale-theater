@@ -54,6 +54,7 @@
   const hot = (T, cx, cy, r) => T.el('circle', { cx, cy, r, fill: '#fff', 'fill-opacity': .01 }, T.world);
   const popSfx = T => AudioFX.sfx('pop') || T.tone([500, 800], .12, { vol: .12 });
   const clinkSfx = T => AudioFX.sfx('ding') || T.tone([900, 1300], .15, { vol: .12 });
+  const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   /* 세기는 말로만 (말풍선 없음) */
   const NUM = ['하나!', '둘!', '셋!', '넷!', '다섯!', '여섯!', '일곱!', '여덟!'];
 
   async function run(T) {
@@ -82,7 +83,7 @@
     await say('옛날 옛날에 마음씨 착한 농부가 살았어요.');
     await say('농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!');
     const plow = i => {
-      farmer.hop(16, 300); AudioFX.sfx('pop'); T.pop(farmer.x + 90, farmer.y - 190, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
+      farmer.hop(16, 300); AudioFX.sfx('pop'); T.pop(farmer.x + 90, farmer.y - 300, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
     };
     await T.tap(farmer.pos, { prompt: '농부를 톡! 괭이질을 해요.' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { await plow(i); await sleep(450); }
@@ -97,7 +98,7 @@
     }, farmer.pos);
     await say('땅속에서 둥근 뚜껑이 보여요.');
     const pull = i => {
-      farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 220, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
+      farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
     };
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await pull(i); await sleep(450); }
@@ -123,7 +124,7 @@
     await T.mash(jar.pos, { count: 3, prompt: '항아리를 톡톡톡! 괭이를 세어 봐요.', onStep: i => {
       const h2 = prop(T, 'hoe', 110); put(T, h2, 740 + (i % 2) * 40, 300 + i * 64);
       h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); hoes.push(h2);
-      jar.hop(12, 240); popSfx(T); T.pop(h2.x, h2.y - 60, tr(NUM[i - 1]));
+      jar.hop(12, 240); popSfx(T); vo('n' + i);
     } });
     await say('괭이가 하나, 둘, 셋! 농부와 아내는 손뼉을 쳤어요.');
     await wife.hop(30, 400);
@@ -138,7 +139,7 @@
     await T.mash(jar.pos, { count: 5, prompt: '항아리를 톡톡톡톡톡! 엽전을 세어 봐요.', onStep: i => {
       const c = prop(T, 'coin', 52); put(T, c, tight(T) ? 500 + (i - 3) * 56 : 280 + i * 90, 548, { raw: tight(T) });
       c.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 280);
-      jar.hop(10, 220); clinkSfx(T); T.pop(c.x, c.y - 70, tr(NUM[i - 1]));
+      jar.hop(10, 220); clinkSfx(T); vo('n' + i);
     } });
     await say('엽전이 하나, 둘, 셋, 넷, 다섯! 이제 쌀도 사고 옷도 살 수 있어요.');
 
@@ -170,7 +171,7 @@
       const sack = prop(T, 'rice', 62); put(T, sack, farmer.x, 440, { raw: true });
       popSfx(T);
       await sack.move(got.key.x, 450, 520, 'ease-in');
-      sack.hop(16, 260); T.pop(Math.max(got.key.x, 150), 350, tr(NUM[n]));
+      sack.hop(16, 260); vo('n' + (n + 1));
       farmer.hop(12, 240);
     }
     if (tight(T)) await T.camTo(500, 280, 1, 600);
@@ -205,7 +206,7 @@
       const d = prop(T, 'gold', 46); put(T, d, jar.x, 250); d.move(jar.x, 400, 300, 'ease-in').then(() => hide(d));
       const g = prop(T, 'gold', 70 + i * 24); put(T, g, 560 + i * 90, 505 - i * 6); g.pos.style.opacity = 0; golds.push(g);
       setTimeout(() => { g.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250).onfinish = () => { g.pos.style.opacity = 1; }; g.pos.style.opacity = 1; }, 300);
-      jar.hop(12, 240); clinkSfx(T); T.pop(g.x, g.y - 120, tr(NUM[i - 1]));
+      jar.hop(12, 240); clinkSfx(T); vo('n' + i);
     };
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await goldIn(i); await sleep(500); }
@@ -236,7 +237,7 @@
     await say('"아버지가 어디 계시지?" 항아리를 톡톡톡 눌러서 아버지를 세어 봐요!');
     await T.mash(jar.pos, { count: 8, prompt: '항아리를 톡톡톡! 아버지를 세어 봐요.', onStep: i => {
       const o = olds[i - 1]; put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .62 : 1, raw: tight(T) });
-      o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); popSfx(T); T.pop(o.x, o.y - 200, tr(NUM[i - 1]));
+      o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); popSfx(T); vo('n' + i);
     } });
     await T.cutImage([{ src: cutSrc('eight'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     await say('아버지가 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 여덟 명이나 되었어요.');

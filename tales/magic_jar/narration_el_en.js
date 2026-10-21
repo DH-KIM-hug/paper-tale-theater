@@ -203,4 +203,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "c": "audio/el/magic_jar/en/nar_71db7db308.mp3"
  }
 });
-Object.assign(VOICE_LINES_EN, {});
+Object.assign(VOICE_LINES_EN, {
+ "n1": "audio/el/magic_jar/en/nar_96bce395dd.mp3",
+ "n2": "audio/el/magic_jar/en/nar_e4c6773900.mp3",
+ "n3": "audio/el/magic_jar/en/nar_fb4fa8836e.mp3",
+ "n4": "audio/el/magic_jar/en/nar_5ae1fd03f9.mp3",
+ "n5": "audio/el/magic_jar/en/nar_a183223355.mp3",
+ "n6": "audio/el/magic_jar/en/nar_5f6f90ab6c.mp3",
+ "n7": "audio/el/magic_jar/en/nar_02af4fc850.mp3",
+ "n8": "audio/el/magic_jar/en/nar_83df7717be.mp3"
+});
