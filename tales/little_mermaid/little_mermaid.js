@@ -405,7 +405,7 @@
       await sleep(1800); await T.anim(f.pos, [{ opacity: 1 }, { opacity: 0 }], 400).catch(() => {}); hide(f);
     };
     (async () => { burst(fw[0], X(560, 440), 160, 110, 'pow', true); await sleep(700); burst(fw[1], X(700, 540), 200, 80, 'boom'); await sleep(700); burst(fw[2], X(430, 360), 130, 140, 'pow', true); })();
-    mer.hop(8, 400); prince.hop(8, 400);
+    bob(mer, -3, 600, 3); prince.hop(8, 400);   /* 인어공주는 바다에 있으니 배 위로 뛰지 않고 물결에 흔들리기만 한다 */
     await say('펑! 펑! 불꽃이 하늘에 피었어요.');
     glow(prince, 1200); mer.wiggle(2, 700);
     await say('저 사람이 왕자님이구나.');
