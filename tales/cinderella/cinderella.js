@@ -291,7 +291,7 @@
       AudioFX.countBeat && AudioFX.countBeat(i + 1); popSfx(T); vo('n' + (i + 1));
       await m.move(MX[i], MY[i], 420, 'ease-out');
       m.hop(12, 300); glow(m, 700);
-      T.pop(MX[i], MY[i] - 70, tr(NUM[i]));
+      T.pop(MX[i] - (i === 5 ? 90 : 0), MY[i] - (i === 5 ? 170 : 230), tr(NUM[i]));
       await sleep(650);
     }
     await say('생쥐가 여섯 마리! 하얀 말 여섯 마리가 되었어요.');
@@ -328,8 +328,10 @@
     await T.anim(cind.pos, [{ opacity: 1 }, { opacity: .1 }], 400);
     cind.look('gown'); cind.pos.style.opacity = '';
     fadeIn(cind, 500); glow(cind, 1400);
+    sparkle(T, cind.x - 40, FL - 90, 120, 18); setTimeout(() => sparkle(T, cind.x + 50, FL - 150, 90, 12), 900);   /* 드레스 반짝임: 별빛이 드레스 둘레에 흩어짐 */
     await sleep(500);
     await cutArt(T, 'gown', () => { sparkleSfx(T); setTimeout(() => sparkleSfx(T), 700); });
+    sparkle(T, cind.x, FL - 80, 130, 18);
     await say('신데렐라는 은빛 드레스에 유리 구두를 신었어요.');
     cind.hop(14, 380);
     await say('와, 정말 고맙습니다!');
@@ -431,7 +433,7 @@
     for (let i = 0; i < 6; i++) {
       clock.g.style.transformOrigin = `${clock.cx}px ${clock.cy}px`;
       bellSfx(T); clock.g.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-3deg)' }, { transform: 'rotate(3deg)' }, { transform: 'rotate(0)' }], { duration: 420 });
-      T.pop(clock.cx + (i % 2 ? 60 : -60), clock.cy + 40, tr('땡!'));
+      T.pop(clock.cx + (i % 2 ? 200 : 170), clock.cy + 90, tr('땡!'));
       await sleep(520);
     }
     cards.forEach(c => c.g.remove());
@@ -476,13 +478,13 @@
     await say('왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.');
     sis1.look('foot', 'right'); sis1.wiggle(5, 500);
     await say('내 발이 들어갈 거야!');
-    T.pop(sis1.x + 50, FL - sis1.h - 10, tr('끙!'));
+    T.pop(sis1.x + 50, FL - sis1.h - 80, tr('끙!'));
     await sleep(500);
     sis1.look('stand');
     if (P) T.camTo(480, 280, 1, 500);
     sis2.look('foot', 'right'); sis2.wiggle(5, 500);
     await say('내 발도 들어갈 거야!');
-    T.pop(sis2.x + 50, FL - sis2.h - 10, tr('끙끙!'));
+    T.pop(sis2.x + 50, FL - sis2.h - 80, tr('끙끙!'));
     await sleep(500);
     sis2.look('stand');
     await say('언니들의 발은 너무 커서 들어가지 않았어요.');
