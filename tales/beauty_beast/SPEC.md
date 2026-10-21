@@ -6,8 +6,8 @@
 
 | 순서 | 파일 | 만드는 방법 |
 |---|---|---|
-| 1 | `tools/app/gen/jobs_beauty_beast.json` | **이미 있음**(59장). 그림 생성: `python3 tools/app/gen/run_simple.py beauty_beast <id ...>` 를 작업표 순서대로(참고 그림이 먼저 있어야 하므로 `pass` 1 → 2 → 3 → 4 순, 키아트는 맨 뒤). 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. |
-| 2 | `tools/app/gen/post_beauty_beast.py` | `post_cinderella2.py` 를 복사해 접두어 `cd2_`→`bb_`, 작업표 `jobs_beauty_beast.json`, 시계·발 카드 합성 부분은 지운다. 스프라이트: 마젠타 크로마키(`tools/gpu_night/chromakey.py <src> <dst> 6`) → 여백 없이 오림 → 높이 600(폭 900) 안에 맞춤 → `assets/v3w/bb_<id>.webp`. 배경: 16:9 가운데 자르기 → 1600×902. 끝에 ASP(폭/높이) JSON 을 출력한다 → 코드의 `ASP` 표에 붙인다. |
+| 1 | `tools/app/gen/jobs_beauty_beast.json` | **이미 있음**(64장: 스프라이트 48 + 배경 6 + 컷 5 + 키아트 5). 그림 생성: `python3 tools/app/gen/run_simple.py beauty_beast <id ...>` 를 작업표 순서대로(참고 그림이 먼저 있어야 하므로 `pass` 1 → 2 → 3 → 4 순, 컷(`bb_cut_*`)은 `pass 5`(참고 스프라이트가 다 나온 뒤; §3 끝 컷신 표), 키아트는 맨 뒤). 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. |
+| 2 | `tools/app/gen/post_beauty_beast.py` | `post_cinderella2.py` 를 복사해 접두어 `cd2_`→`bb_`, 작업표 `jobs_beauty_beast.json`, 시계·발 카드 합성 부분은 지운다. 스프라이트: 마젠타 크로마키(`tools/gpu_night/chromakey.py <src> <dst> 6`) → 여백 없이 오림 → 높이 600(폭 900) 안에 맞춤 → `assets/v3w/bb_<id>.webp`. 배경: 16:9 가운데 자르기 → 1600×902. 컷(`kind: 'cut'`): 크로마키 없이 4:3 가운데 자르기 → 1200×900 `assets/v3w/bb_cut_<이름>.webp`(ASP 에 넣지 않는다). 끝에 ASP(폭/높이) JSON 을 출력한다 → 코드의 `ASP` 표에 붙인다. |
 | 3 | `tales/beauty_beast/index.html` | `tales/cinderella/index.html` 그대로, `<title>미녀와 야수</title>`, 마지막 스크립트 `beauty_beast.js`. (합창 없음) |
 | 4 | `tales/beauty_beast/narration.js` | Typecast 녹음이 없으므로 **빈 상수 두 개만** 손으로 쓴다: `/* beauty_beast — Typecast 없음. ElevenLabs(narration_el.js)가 채운다 */\nconst NARRATION_CLIPS = {};\nconst VOICE_LINES = {};` |
 | 5 | `tales/beauty_beast/narration_en.js` | `const NARRATION_CLIPS_EN = {}; const VOICE_LINES_EN = {}; const TEXT_EN = {…};` — `TEXT_EN` 은 `voice_script_en.json` 의 `"ui"` 를 그대로 JSON 으로 붙인다(백설공주 `narration_en.js` 와 같은 모양). |
@@ -207,6 +207,22 @@ post 가 끝나면 사람 그림마다 머리 높이(정수리~턱, px)와 그�
 - **L77** → `T.confetti(); sfx('tada', () => sparkleSfx(T));` 모두 `hop(16~20, 460)` → **L78**(교훈) → `T.finale(); await sleep(1500); return '겉모습이 아니라 마음을 봐요.';`
 - 이 동화의 **마지막 인사형 톡은 샘물 톡**이다. 끝에 따로 인사 톡을 두지 않는다(PLAN 조작 요약: 톡 2번).
 
+### 컷신 (그림 컷) — CLAUDE.md §5-2, 까치(`tales/magpie`)·신데렐라 방식 (2026-10-21 추가)
+- 컷 **5장**(3·5·7·9·11장). 컷은 그 사건 **직후**에만 띄우고, 컷 위에서 그 장면의 **기존 대사 한 줄**을 읽는다: `const c = T.cutImage([{ src: artSrc('cut_…'), sfx: '…', hold: CUT_HOLD }], { hold: CUT_HOLD }); await say(L); await c;` (`CUT_HOLD = 4200`ms; 대사가 홀드보다 길면 컷이 먼저 닫혀도 된다; 톡하면 바로 넘어간다 — 엔진 `cutImage`, `engine/tale.js` 619행). 컷 패널은 엔진이 4:3 흰 테두리 종이로 보여 주므로 그림도 4:3 으로 만든다. 코드(`beauty_beast.js`)·그림 생성은 뒤의 큐에서 한다(이 문서는 기획만).
+- 그림: `assets/v3w/bb_cut_<이름>.webp`(1200×900). 작업표 `jobs_beauty_beast.json` 의 `kind: "cut"` 항목 **5장**(`pass 5`, 참고 그림 `refs` 는 그 컷에 나오는 인물·소품 스프라이트 — 스프라이트가 모두 나온 뒤에 만든다). 후처리는 §0 의 2(4:3 가운데 자르기 → 1200×900).
+- 규칙: 한 장면에 한 컷, 이웃한 장면에 연달아 두지 않는다(3·5·7·9·11). 컷 안 인물은 스프라이트와 같은 얼굴 규칙(점 눈·점 코·띠 입·분홍 볼), 소품(말 제외: 거울·장미·덤불·샘·빛·침대)은 얼굴 없음, 피·눈물·아픔 없음. **야수는 무섭지 않게**: 스프라이트와 같이 송곳니·이빨·발톱·뿔 없음, 입 다묾, 크고 둥근 슬픈 눈, 머리는 벨의 1.3배. 컷 위 대사는 모두 §6 에 **이미 있는 줄**이라 새 녹음이 없다(영어는 `voice_script_en.json` 의 같은 줄, `TEXT_EN` 추가 없음). 컷이 닫힌 뒤 무대는 그 장면의 다음 단계부터 이어진다(컷이 대신한 애니메이션은 생략해도 된다).
+- 시선(§5-1): 3장 아버지 → 오른쪽 위 불빛, 5장 아버지 ↔ 야수(마주), 7장 벨 ↔ 야수(마주)·아버지 → 야수, 9장 벨 → 왼쪽 거울·야수 → 벨, 11장 벨 ↔ 왕자(마주). 한쪽만 보는 컷이 연달아 오지 않는다.
+
+| 컷 id | 장면 | 앞 장면 → 뒤 장면 | 보여 줄 순간 | 그림 구도(얼굴 규칙·시선 포함) | 컷 위 대사(한국어 / 영어) | 컷 동안 음성 | 효과음 | refs |
+|---|---|---|---|---|---|---|---|---|
+| `bb_cut_lights` | 3 눈보라 속 궁전 | 2 장미 한 송이 → 4 장미 정원 | 큰 사건: 눈보라에 길을 잃은 아버지가 멀리 궁전 불빛을 보는 순간(컷 A 의 L9 이동이 끝난 직후; 컷 위에서 L10 을 읽고, 닫히면 바로 배경을 `dining` 으로 바꾼다) | 밤 눈숲(세트 B, 달 오른쪽 위). 왼쪽 아래 말 탄 아버지(둘 다 오른쪽 향함, 말 다리는 걷는 중, 모자·어깨에 눈 조금). 한 손은 고삐, 한 손은 이마에 대고 오른쪽 위를 올려다보는 놀란 희망의 얼굴(입 작게 벌림, 무서워하지 않음). 오른쪽 위 멀리, 눈 얹힌 마른 나무 너머 두 탑 궁전 실루엣에 호박빛 창 셋, 창에서 아버지 쪽으로 가는 크림 빛 띠. 눈송이 점, 바람 속도선. 시선: 아버지 → 궁전 불빛. | **L10** 멀리 불빛! 커다란 궁전에 아무도 없고, 따뜻한 저녁상만 차려져 있었어요. / A light far away! In a huge palace there was no one at all, only a warm supper laid out on the table. | 있음(nar, 기존 클립) | `blow_long` | bb_father_ride |
+| `bb_cut_beast` | 5 야수 | 4 장미 정원 → 6 벨의 결심 | 큰 사건: 덤불 뒤에서 야수가 나오는 순간(장면 시작 → 야수가 올라오는 애니메이션(`thud` 쿵·쿵, 팝 '쿵')을 **대사 없이** 돌린 직후; 컷 위에서 L21 을 읽고, 닫히면 L22 부터) | 겨울 아침 장미 정원(세트 A). 왼쪽 아버지가 장미 한 송이를 가슴 높이로 들고 모자 쓴 채 눈 동그랗게·입 'o', 몸을 조금 뒤로(놀랐지만 겁먹지 않음). 오른쪽 눈 얹힌 장미 다섯 덤불 뒤에서 막 나온 큰 야수가 서서 한 손바닥을 아버지 쪽으로 들어 '잠깐' 하는 자세, 크고 슬픈 다정한 눈, 입 다묾, 송곳니·발톱 없음, 망토 가만히. 야수 둘레에 크림 별 셋과 짧은 속도선. 모자는 아직 머리에(L22 에서 떨어진다). 시선: 아버지 ↔ 야수. | **L21** 그때 덤불 뒤에서 커다란 야수가 천천히 나왔어요. / Then, from behind the bush, a huge Beast slowly came out. | 있음(nar, 기존 클립) | `thud` | bb_beast_stand · bb_father_rose · bb_prop_bush5 |
+| `bb_cut_arrive` | 7 궁전의 손님 | 6 벨의 결심 → 8 저녁마다 | 벨이 스스로 궁전에 와서 야수 앞에 서는 순간(컷 A 의 L30 이동이 끝난 직후; 컷 위에서 L31 을 읽고, 닫히면 무대에서 L32 '네.' 부터) | 겨울 낮 궁전 문 앞(세트 A). 오른쪽 열린 아치 문 앞에 야수가 조금 몸을 숙이고 두 손을 앞에 모은 채(수줍은 예의) 벨을 내려다본다, 입 다묾. 가운데 벨이 오른쪽 야수를 향해 턱을 들고 두 손을 가슴에 모은 담담하고 용감한 작은 미소. 왼쪽 한 걸음 뒤 아버지가 모자를 두 손에 들고 걱정스러운 얼굴로 야수를 본다. 벽 아래 눈 위에 작은 장미 하나. 조용한 컷(속도선 대신 빛줄기). 시선: 벨 ↔ 야수, 아버지 → 야수. | **L31** 스스로 온 거니? / Did you come here of your own free will? | 있음(beast, 기존 클립; 짧아서 홀드가 남는다 — 톡하면 바로 넘어감) | `door` | bb_beast_stand · bb_belle_stand · bb_father_stand |
+| `bb_cut_mirror` | 9 거울과 반지 | 8 저녁마다 → 10 집에서 | 큰 사건: 마법 거울에 아픈 아버지가 보이는 순간(장면 시작 → `sfx('sparkle')` + `mf.show()` 파문 직후; 컷 위에서 L56 을 읽고, 닫히면 L57 부터) | 저녁 벨의 방(세트 A, 왼쪽 위 부드러운 빛). 왼쪽 둥근 거울(남색 틀, 위 금장미, 받침) 안에 그림 속 그림처럼 침대에 누운 아버지(머리 왼쪽, 갈색 이불, 이마에 수건, 눈 감음, 편안·무섭지 않음). 거울면에 크림 파문 둘. 가운데 벨이 왼쪽 거울을 보며 한 손으로 입을 가리고 눈 크게(눈물 없음). 오른쪽 야수가 한 걸음 뒤에서 고개 숙이고 두 손 모은 채 벨을 본다. 뒤에 책장·둥근 창(밤하늘·달). 조용한 컷. 시선: 벨 → 거울 속 아버지, 야수 → 벨. | **L56** 어느 날, 벨은 거울로 집을 보았어요. / One day, Belle looked at her home through the magic mirror. | 있음(nar, 기존 클립) | `sparkle` | bb_belle_worry · bb_prop_mirror · bb_father_bed · bb_beast_stand |
+| `bb_cut_prince` | 11 샘가의 야수 | 10 집에서 → (끝: 가족 달려옴·교훈) | 변신: 야수가 왕자로 변한 순간(샘물 톡 → L71·L72 → 빛·반짝 → 야수 페이드아웃·왕자 페이드인 직후; 컷 위에서 L73 을 읽고, 닫히면 벨 `joy` 로 바꾸고 L74 부터) | 아침 정원 샘가(세트 A). 오른쪽 큰 종이 별빛 터짐(연노랑·크림·연주황 겹별, 반짝 점) 속에 왕자가 서서 한 손을 가슴에 대고 큰 눈으로 벨을 보며 웃는다. 왼쪽 벨이 두 팔을 살짝 벌리고 눈을 크게 뜨고 환하게 웃으며 왕자를 본다. 아래 가운데 둥근 돌 샘(연파랑 물·파문 둘), 오른쪽 끝 장미 다섯 덤불. 야수는 없음(이미 변했다). 시선: 벨 ↔ 왕자. | **L73** 그러자 반짝! 야수가 멋진 왕자님으로 변했어요. / And then, a flash of light! The Beast turned into a handsome prince. | 있음(nar, 기존 클립) | `sparkle`(변신 `sting('magic')` 은 무대에서 이미 울림) | bb_prince_stand · bb_belle_joy · bb_prop_glow · bb_prop_spring |
+
+컷 음성 필요(모두 §6 의 기존 줄, 새 줄 없음): L10, L21, L31, L56, L73. 컷을 두지 않은 장면: 1·2(첫 조작을 30초 안에 두려고 비움, 2는 3과 이웃), 4·8(놀이 장면), 6·10(이웃 장면에 컷이 있음).
+
 ## 4. 배움 놀이 규칙 요약 (엔진 `T.choose`)
 - 정답 위치를 먼저 알려 주지 않는다. 12초 무입력이면 `prompt` 문장을 다시 읽는다. 1회 오답 → `onWrong`(흔들림 + 자리/수 설명). 2회 오답부터 정답이 노랗게 빛나며 들썩이고 나머지는 흐려진다(엔진). 정답을 누르면 `AudioFX.ding()`.
 - 오답 설명 뒤 바로 다시 고를 수 있다(엔진 `locked` 해제). 게임오버 없음.
@@ -385,7 +401,7 @@ snow_white.js 꽃잎(533~538행)과 같은 방식. `T.world` 에 `circle r 4~7 f
 
 키아트 참고 그림은 작업표의 `refs`(벨 서기·야수 서기·장미·덤불 / 끝 화면은 벨 기쁨·왕자·아버지 기운·언니들 기쁨)라 **인물 스프라이트가 모두 나온 뒤** 맨 마지막에 생성한다.
 
-## 10. 그림 목록 (작업표 `jobs_beauty_beast.json` 59장과 같다)
+## 10. 그림 목록 (작업표 `jobs_beauty_beast.json` 64장과 같다)
 
 | 구분 | id (`assets/v3w/bb_<id>.webp`) | 설명·방향 | 작업표 크기 | 장면 |
 |---|---|---|---|---|
@@ -404,9 +420,10 @@ snow_white.js 꽃잎(533~538행)과 같은 방식. `T.world` 에 `circle r 4~7 f
 | | card_morning / card_noon / card_night | 창틀 카드 3장 | 500² | 8 |
 | | prop_mirror / prop_ring / prop_dream / prop_spring / prop_glow / prop_hat | | 480×600 / 300² / 720×540 / 720×360 / 600² / 360×240 | 9 / 9·10 / 10 / 11 / 11 / 5 |
 | 배경 | bg_cottage / bg_cottage_front / bg_snow_forest(밤, 우상단) / bg_dining(밤, 우상단) / bg_garden(왼쪽 끝 궁전 문) / bg_room(오른쪽 문, 빈 문패) | 1600×902 | | 1·6·10 / 2 / 3 / 3·8 / 4·5·7·11 / 7·9 |
+| 컷 | cut_lights / cut_beast / cut_arrive / cut_mirror / cut_prince | 그림 컷 5장(§3 끝 컷신 표: 3·5·7·9·11장, `pass 5`). refs 는 그 컷에 나오는 인물·소품 스프라이트. 4:3, 얼굴 규칙 같음, 소품 얼굴 없음, 야수 송곳니·발톱 없음, 피·눈물 없음 | 1600×1200(4:3) | 3 / 5 / 7 / 9 / 11 |
 | 키 | key5_wide · key5_tall · key5_tile · key5_backw · key5_backt | 시작 화면·홈 카드·끝 화면 | 16:9 · 3:4 · 4:3 · 3:2 · 4:5 | — |
 
-생성 순서(참고 그림 의존): `pass 1` belle_stand, horse_stand → `pass 2` beast_stand, father_stand, sisa_pout, sisb_pout, prince_stand, prop_rose_vase, prop_bush5, card_noon, card_night → `pass 3` 나머지 자세, prop_bush2 → `pass 4` beast_lie_eyes → 키아트. 작업표는 이미 이 순서로 정렬되어 있으므로 `run_simple.py beauty_beast $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_beauty_beast.json'))))")` 처럼 앞에서부터 돌리면 된다. 받은 그림은 `restyle_check.py` 방식(네 귀퉁이가 마젠타인지)으로 검사하고, 얼굴이 들어간 소품·송곳니가 생긴 야수·머리 크기가 다른 사람은 그 id 만 지우고 다시 만든다.
+생성 순서(참고 그림 의존): `pass 1` belle_stand, horse_stand → `pass 2` beast_stand, father_stand, sisa_pout, sisb_pout, prince_stand, prop_rose_vase, prop_bush5, card_noon, card_night → `pass 3` 나머지 자세, prop_bush2 → `pass 4` beast_lie_eyes → `pass 5` 컷 5장(cut_lights, cut_beast, cut_arrive, cut_mirror, cut_prince; refs 인 father_ride·beast_stand·father_rose·prop_bush5·belle_stand·father_stand·belle_worry·prop_mirror·father_bed·prince_stand·belle_joy·prop_glow·prop_spring 이 다 나온 뒤) → 키아트. 작업표는 이미 이 순서로 정렬되어 있으므로 `run_simple.py beauty_beast $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_beauty_beast.json'))))")` 처럼 앞에서부터 돌리면 된다. 받은 그림은 `restyle_check.py` 방식(네 귀퉁이가 마젠타인지)으로 검사하고, 얼굴이 들어간 소품·송곳니가 생긴 야수·머리 크기가 다른 사람은 그 id 만 지우고 다시 만든다. 컷 5장은 반대로 4:3 풀블리드(테두리·글자·말풍선·마젠타 없음)인지, 인물 머리 크기가 스프라이트와 같은지(야수 머리는 벨의 1.2~1.4배), 야수에 송곳니·발톱·뿔이 없고 입을 다물었는지, 눈물·아픔 표현이 없는지, 시선이 컷신 표와 같은지 본다.
 
 ## 11. 테스트 체크리스트 (코드가 끝난 뒤, 커밋 전)
 
@@ -426,6 +443,7 @@ snow_white.js 꽃잎(533~538행)과 같은 방식. `T.world` 에 `circle r 4~7 f
 - [ ] 고르기: 4장 2문제·7장 3문제·8장 3단계가 모두 지나가고, 오답 때 흔들림 + 설명 대사가 나오며 두 번째 오답부터 정답이 빛난다. 8장 2단계에서 아침 카드는 흐리고 눌러도 반응이 없다. 3단계는 톡.
 - [ ] 문패 글자 '벨의 방' 이 판 안에 들어간다. 영어 모드 "Belle's Room" 도.
 - [ ] 끝 화면: 교훈 문구가 `run()` 반환값으로 들어가고(화면에는 숨김), 끝 그림(`_back_wide`)과 리본 색(`BACKACCENT`)이 보인다(`?endpreview=1`).
+- [ ] 컷(코드가 붙은 뒤): 3·5·7·9·11장에서 컷이 한 번씩 뜨고(사진으로 확인), 컷 위 줄(L10·L21·L31·L56·L73)이 `_audio.json` 에 **한 번만** 기록된다(컷 위와 무대에서 두 번 읽지 않는다). 컷이 없는 장면에 컷이 뜨지 않고, 이웃한 두 장면에 연달아 뜨지 않는다. 톡하면 바로 넘어간다.
 
 세로 390×844 (`node … 390 844 /tmp/bb_p 600 8`)
 - [ ] 모든 조작 대상이 그 순간 화면 안에 있다(4장 덤불 둘, 7장 꽃병 셋, 8장 카드 셋, 2장 말, 11장 샘). 화면 밖이면 §3 의 P 좌표·`camSnap` 을 고친다.
