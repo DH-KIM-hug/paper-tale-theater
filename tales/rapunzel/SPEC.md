@@ -17,7 +17,7 @@ PLAN 확정 사항을 이 문서에 반영한 것:
 
 | 순서 | 파일 | 만드는 방법 |
 |---|---|---|
-| 1 | `tools/app/gen/jobs_rapunzel.json` | **이미 있음**(56장: 스프라이트 45 + 배경 6 + 키아트 5, 접두어 `rp_`). 그림 생성: `python3 tools/app/gen/run_simple.py rapunzel <id ...>` 를 `pass` 1 → 2 → 3 순으로(참고 그림이 먼저 있어야 함), 키아트(`key5_*`)는 맨 뒤. 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. 받은 그림 점검은 §10. |
+| 1 | `tools/app/gen/jobs_rapunzel.json` | **이미 있음**(61장: 스프라이트 45 + 배경 6 + 컷 5 + 키아트 5, 접두어 `rp_`). 그림 생성: `python3 tools/app/gen/run_simple.py rapunzel <id ...>` 를 `pass` 1 → 2 → 3 순으로(참고 그림이 먼저 있어야 함), 컷(`rp_cut_*`)은 `pass 4`(참고 스프라이트가 다 나온 뒤), 키아트(`key5_*`)는 맨 뒤. 한도에 걸리면 run_simple.py 가 풀리는 시각까지 기다렸다 이어 간다. 받은 그림 점검은 §10. |
 | 2 | 후처리 | `~/.venvs/paper-tale/bin/python tools/app/gen/post_tale.py rapunzel` → `assets/v3w/rp_<id>.webp`(스프라이트는 마젠타 크로마키 → 여백 없이 오림, 배경 1600×902). 끝에 ASP(폭/높이)가 `tales/rapunzel/ASP.txt` 에 나온다 → 코드 `ASP` 표에 붙인다. **그림이 아직 없어도 코드는 자리표시(§1-1)로 돈다.** |
 | 3 | `tales/rapunzel/index.html` | `tales/beauty_beast/index.html` 그대로 복사(합창 로더 없음), `<title>라푼젤</title>`, 마지막 스크립트 `rapunzel.js`. |
 | 4 | `tales/rapunzel/narration.js` | `/* rapunzel — Typecast 없음. ElevenLabs(narration_el.js)가 채운다 */\nconst NARRATION_CLIPS = {};\nconst VOICE_LINES = {};` |
@@ -239,7 +239,7 @@ rp_prop_ribbon_long 8.0, rp_prop_ribbon_mid 5.4, rp_prop_ribbon_short 2.7, rp_pr
 ### 2-7. 속도 (한 편 7분 이상이 목표)
 - `say()` 뒤 `GAP = 800`ms. 장면 끝(다음 `sceneCard` 전) `sleep(SCENE_END = 1600)`.
 - 머리 내려오기 `BRAID = 2200`, 오르기 `CLIMB = 4500`, 탑 솟기 `RISE = 1800`, 사람 걷기 `WALK = 3000`(약 300px), 걸을 때 `hop(4, 520)` 반복(`while` + `await hop`).
-- 대사 중 `hop`·`wiggle` 은 한 번만. 컷 그림(`cutImage`)은 이 동화에 없다.
+- 대사 중 `hop`·`wiggle` 은 한 번만. 컷 그림(`cutImage`)은 **5장**(§3 끝 "컷신" 표; `CUT_HOLD = 4200`ms, 컷 위에서 기존 대사 한 줄을 읽는다 — 까치 방식).
 - 전체 목표 7~8.5분. §11 에서 잰다. 7분이 안 되면 `SCENE_END` 를 2000, `CLIMB` 를 5500 으로; 9분을 넘으면 `SCENE_END` 1200, `CLIMB` 3800(대사는 건드리지 않는다).
 
 ### 2-8. 탑 좌표계 (3·4·6·7·9장 공통)
@@ -334,6 +334,21 @@ rp_prop_ribbon_long 8.0, rp_prop_ribbon_mid 5.4, rp_prop_ribbon_short 2.7, rp_pr
 - 손잡기 톡: 두 사람 사이 빈 곳에 보이지 않는 사각 `midHit = T.el('rect', { x: X(606, 526) - 60, y: FL - 170, width: 120, height: 120, fill: '#000', 'fill-opacity': 0 }, T.world)` → `bob(midHit)` → `await T.tap(midHit)`(안내 문장 없음, 손가락 힌트만).
 - 톡 뒤: `midHit.remove()` → 라푼젤 `look('short_hold', 'left')` + 왕자 `look('hold', 'right')`(손끝이 닿도록 라푼젤 `HOLD_R = [-34, -110]`, 왕자 `HOLD_P = [+34, -112]` — 받은 그림의 손끝 위치를 보고 두 사람의 x 간격을 ±10 고친다) + `AudioFX.sfx('pop', .4)` → `petals(T, X(480, 400), X(800, 680))`(§5-10) + `T.confetti()` + (`AudioFX.sfx('tada') || sparkleSfx(T)`) → 둘이 `hop(14, 400)` 두 번 → **L46** → **L47**(해설; 마지막 자막 — `say()` 가 글자도 보여 준다) → `T.finale(); await sleep(1500); return '포기하지 않으면 다시 만날 수 있어요.';`
 - 이 동화의 마지막 인사형 톡은 이 손잡기다. 입맞춤·결혼식 없음.
+
+### 컷신 (그림 컷) — CLAUDE.md §5-2, 까치(`tales/magpie`)·신데렐라 방식 (2026-10-21 추가)
+- 컷 **5장**. 컷은 그 사건 **직후**에만 띄우고, 컷 위에서 그 장면의 **기존 대사 한 줄**을 읽는다: `const c = T.cutImage([{ src: src('rp_cut_…'), sfx: '…', hold: CUT_HOLD }], { hold: CUT_HOLD }); await say(L); await c;` (`CUT_HOLD = 4200`ms; 대사가 홀드보다 길면 컷이 먼저 닫혀도 된다; 톡하면 바로 넘어간다 — 엔진 `cutImage`, `engine/tale.js` 619행). 컷 패널은 엔진이 4:3 흰 테두리 종이로 보여 주므로 그림도 4:3 으로 만든다.
+- 그림: `assets/v3w/rp_cut_<이름>.webp`(1200×900). 작업표 `jobs_rapunzel.json` 의 `kind: "cut"` 항목 **5장**(`pass 4`, 참고 그림 `refs` 는 그 컷에 나오는 인물의 스프라이트 — 스프라이트가 모두 나온 뒤에 만든다). 후처리: `post_tale.py` 는 sprite/bg 만 다루므로 컷은 `post_cinderella2.py` 처럼 4:3 가운데 자르기 → 1200×900 webp 로 따로 변환한다(그림·코드 작업은 뒤의 큐에서; 이 문서는 기획만).
+- 규칙: 한 장면에 한 컷, 이웃한 장면에 연달아 두지 않는다. 컷 안 인물은 스프라이트와 같은 얼굴 규칙(점 눈·점 코·띠 입·분홍 볼), 소품은 얼굴 없음, 피·눈물·아픔 없음. 컷 위 대사는 모두 §6 에 **이미 있는 줄**이라 새 녹음이 없다(영어는 `voice_script_en.json` 의 같은 줄, `TEXT_EN` 추가 없음). 컷이 닫힌 뒤 무대는 그 장면의 다음 단계부터 이어진다(컷이 대신한 애니메이션은 생략해도 된다).
+
+| 컷 id | 장면 | 앞 장면 → 뒤 장면 | 보여 줄 순간 | 그림 구도(얼굴 규칙 포함) | 컷 위 대사(한국어 / 영어) | 컷 동안 음성 | 효과음 | refs |
+|---|---|---|---|---|---|---|---|---|
+| `rp_cut_caught` | 2 라푼젤 풀 | 1 담 너머 텃밭 → 3 문 없는 탑 | 큰 사건: 밤 텃밭에서 풀을 뽑던 아버지 앞에 마녀 고텔이 나타나는 순간(톡 뒤) | 왼쪽에 아버지가 흙 위에 웅크려 뿌리 달린 라푼젤 풀을 움켜쥐고 깜짝 놀란 눈·둥근 입. 오른쪽에 고텔이 크림 별 셋 속에서 나타나 손가락으로 아버지를 가리킨다(투덜거리는 얼굴, 무섭지 않게). 뒤에 회색 담과 초승달. 밤(세트 B). | **L5** 누구냐! 내 풀을 뽑다니! / Who's there! Pulling up my rampion! | 있음 — 컷 음성 필요: L5 | `sparkle` | rp_father_shock · rp_gothel_point · rp_prop_rampion_pulled |
+| `rp_cut_climb` | 4 머리를 내려요 | 3 문 없는 탑 → 5 탑 안의 노래 | 고텔이 창문에서 내려온 긴 금빛 머리를 타고 탑을 오르는 순간(톡 뒤) | 높은 돌탑이 화면을 세로로 채운다. 꼭대기 창에서 라푼젤이 두 팔을 창턱에 얹고 내려다보며 웃는다. 고리에 걸린 긴 금빛 머리가 땅까지 늘어지고 그 중간쯤을 고텔이 두 손으로 잡고 오른다(지팡이는 겨드랑이에, 끙끙대는 투덜 얼굴). 지붕 위 작은 주황 새, 탑 발치 크림 토끼. 낮(세트 A). 창문의 라푼젤과 땅의 고텔은 머리 크기가 같다. | **L16** 고텔은 머리를 잡고 천천히 올라가요. / Gothel took hold of the hair and slowly climbed up. | 있음 — 컷 음성 필요: L16 | `paper_up` | rp_rap_window · rp_gothel_climb · rp_prop_tower · rp_prop_braid |
+| `rp_cut_peek` | 6 노랫소리 | 5 탑 안의 노래 → 7 왕자가 올라와요 | 왕자가 나무 뒤에 숨어 고텔이 머리를 타고 오르는 것을 보는 순간("아, 저렇게 올라가는구나!") | 해질녘(세트 B, 복숭아빛 하늘·오른쪽 위 낮은 해). 왼쪽 큰 짙은 초록 나무 뒤에서 팥빛 망토 왕자가 한 손을 나무에 대고 눈을 크게 뜨고 내다본다(둥근 입). 건너편 탑에서 라푼젤이 창밖을 내다보고 긴 금빛 머리를 고텔이 타고 오른다. 왼쪽 가장자리에 갈색 말. | **L25** 아, 저렇게 올라가는구나! / Ah, so that's how you get up there! | 있음 — 컷 음성 필요: L25 | `없음` | rp_prince_hide · rp_gothel_climb · rp_rap_window · rp_prop_tower |
+| `rp_cut_snip` | 8 싹둑 | 7 왕자가 올라와요 → 9 빈 탑 | 큰 사건: 고텔이 가위로 라푼젤의 머리를 자르는 순간(싹둑 한 번, 피·아픔·눈물 없음) | 탑 안. 왼쪽 고텔이 큰 회색 종이 가위를 막 닫았다(날 옆에 짧은 띠 셋의 "싹둑" 터짐). 긴 금빛 머리가 느슨한 고리로 바닥에 떨어진다. 오른쪽 라푼젤은 턱까지 오는 짧은 단발이 되어 두 손을 볼에 대고 눈만 크게 뜬다(놀람만, 울지 않음). 창가에 연파랑 비단실 더미. | **L35** 마녀는 가위 한 번으로 라푼젤의 머리를 자르고, 지팡이를 톡 두드려 먼 들판의 작은 오두막으로 데려갔어요. / With one snip of her scissors the witch cut off Rapunzel's hair, then tapped her stick and took her away to a little cottage in a faraway meadow. | 있음 — 컷 음성 필요: L35 | `chop` | rp_gothel_scissors · rp_rap_short_shock · rp_prop_braid_cut |
+| `rp_cut_reunion` | 10 노래를 따라서 | 9 빈 탑 → (끝: 손잡기 톡·마지막 자막) | 결말 전: 노래를 따라온 왕자와 단발 라푼젤이 들판에서 다시 만나 손을 잡는 순간(톡 뒤) | 햇살 들판, 오른쪽에 작은 오두막(금색 지붕). 단발 라푼젤과 왕자가 서로를 향해 팔을 뻗어 손이 닿기 직전, 둘 다 환하게 웃고 눈이 빛난다. 라푼젤 머리 위에 크림 음표 셋, 공중에 분홍 꽃잎. | **L46** 두 사람은 손을 꼭 잡고 성으로 떠났어요. / The two held hands tightly and set off for the castle. | 있음 — 컷 음성 필요: L46 | `pop` | rp_rap_short_hold · rp_prince_hold · rp_prop_note |
+
+컷 음성 필요(모두 §6 의 기존 줄, 새 줄 없음): L5, L16, L25, L35, L46.
 
 ## 4. 배움 놀이 규칙 요약 (엔진 `T.choose`)
 - **3장 위·아래**: 보기 둘(지붕 위의 새, 탑 아래의 토끼), 순서 고정(위 → 아래), 정답 1개씩. 12초 무입력이면 `prompt`(Q1/Q2)를 다시 읽는다. 1회 오답 → `onWrong`(흔들림 + W1/W2 + 화살표 힌트 §5-7). 2회 오답부터 정답이 노랗게 빛나며 들썩이고 나머지는 흐려진다(엔진). 정답을 누르면 `AudioFX.ding()` → 반짝 → C1/C2.
@@ -506,7 +521,7 @@ rp_prop_ribbon_long 8.0, rp_prop_ribbon_mid 5.4, rp_prop_ribbon_short 2.7, rp_pr
 
 키아트 창 모양은 **탑의 아치 창문**(둥근 머리의 세로 직사각)이고, 테두리 장식은 팥빛 리본 둘과 크림 별 셋뿐(§7-5: 소품 금지, 같은 계열 장식 최소). 창 안은 탑과 창가의 라푼젤, 탑 벽을 타고 땅까지 내려온 금빛 땋은 머리(마녀·왕자 없음). 참고 그림은 작업표의 `refs`(rap_window·prop_tower·prop_braid·gothel_stand / 끝 화면은 rap_short_hold·prince_hold·prop_petal)라 **인물·탑·머리 스프라이트가 모두 나온 뒤** 맨 마지막에 생성한다. 썸네일(타일)은 창가의 라푼젤을 크게, 겹 3개. 끝 화면 뒷표지는 들판에서 손잡은 단발 라푼젤과 왕자 + 꽃잎.
 
-## 10. 그림 목록 (작업표 `jobs_rapunzel.json` 56장과 같다)
+## 10. 그림 목록 (작업표 `jobs_rapunzel.json` 61장과 같다)
 
 사람은 모두 **라푼젤 서기를 기준으로 같은 머리 크기(2.5등신)**. 자세 그림은 기준 그림을 `refs` 로 넣고 프롬프트에 "SAME SCALE AS THE REFERENCE SPRITE(머리·얼굴·몸 크기를 기준 그림과 똑같이)", 어른 기준 그림에는 "HEAD SIZE: 기준 소녀와 같은 머리 크기, 키만 1/10 크게"가 들어 있다(§4-1). 소품은 얼굴 없음(요람 속 아기 얼굴만 예외). 피·상처·무서운 요소 없음(작업표 생성 스크립트가 검사).
 
@@ -530,9 +545,10 @@ rp_prop_ribbon_long 8.0, rp_prop_ribbon_mid 5.4, rp_prop_ribbon_short 2.7, rp_pr
 | | prop_note / prop_petal / prop_star / prop_wind(→) | 코드에서 복제(음표 3·꽃잎 12·별 3) | 300² / 300² / 300² / 840×480 | 1 | 5·6·10 / 10 / 2·3·8·9 / 9 |
 | | prop_tower(세로, 꼭대기 창 하나 + 오른쪽 고리, 문 없음) | 높이 445 로 씀 | 480×600 | 1 | 3·4·6·7·9 |
 | 배경 | bg_cottage(낮, 오른쪽 창 너머 담·텃밭) / bg_garden_night(밤, 왼쪽 담, 달 오른쪽 위) / bg_forest_day(낮, 가운데 비움) / bg_room(탑 안, 오른쪽 위 아치 창) / bg_forest_dusk(해질녘, 가운데 비움) / bg_field(들판, 오른쪽 오두막) | 평평한 종이 한 장 + 요소 2~3개. 세트 A(낮, 왼쪽 위 광원): cottage·forest_day·room·field, 세트 B(밤·해질녘, 오른쪽 위 광원): garden_night·forest_dusk | 1600×902 | 1 | 1·2 / 2 / 3·4 / 5·7·8·9 / 6·7·9 / 8·10 |
+| 컷 | cut_caught / cut_climb / cut_peek / cut_snip / cut_reunion | 그림 컷 5장(§3 끝 컷신 표: 2·4·6·8·10장). refs 는 그 컷에 나오는 인물 스프라이트. 4:3, 얼굴 규칙 같음, 소품 얼굴 없음 | 1600×1200(4:3) | 4 | 2 / 4 / 6 / 8 / 10 |
 | 키 | key5_wide · key5_tall · key5_tile · key5_backw · key5_backt | 시작 화면(아치 창)·홈 카드·끝 화면(손잡기) | 16:9 · 3:4 · 4:3 · 3:2 · 4:5 | — | — |
 
-생성 순서: `pass 1`(21: rap_stand, horse_stand, bird, rabbit, 소품 11, 배경 6) → `pass 2`(16: 라푼젤 자세 8, gothel/father/mother/prince 기준 4, rampion_pulled, braid_cut, ribbon_mid, ribbon_short) → `pass 3`(14: 고텔 자세 5, 아버지 자세 3, 왕자 자세 6) → 키아트 5. 작업표가 이 순서로 정렬되어 있으므로 `run_simple.py rapunzel $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_rapunzel.json'))))")` 처럼 앞에서부터 돌리면 된다.
+생성 순서: `pass 1`(21: rap_stand, horse_stand, bird, rabbit, 소품 11, 배경 6) → `pass 2`(16: 라푼젤 자세 8, gothel/father/mother/prince 기준 4, rampion_pulled, braid_cut, ribbon_mid, ribbon_short) → `pass 3`(14: 고텔 자세 5, 아버지 자세 3, 왕자 자세 6) → `pass 4`(컷 5: cut_caught, cut_climb, cut_peek, cut_snip, cut_reunion) → 키아트 5. 작업표가 이 순서로 정렬되어 있으므로 `run_simple.py rapunzel $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_rapunzel.json'))))")` 처럼 앞에서부터 돌리면 된다.
 
 받은 그림 점검(틀린 id 만 지우고 다시 만든다): 네 귀퉁이가 마젠타인지(`restyle_check.py` 방식) · 사람 자세의 **머리 폭이 기준(rap_stand)과 ±12% 안**인지(특히 반신 window·wrap) · 고텔에 뾰족 모자·보라·검정·이빨이 없는지 · 왕자 옷이 팥빛(푸른색 아님)인지 · 매달린 자세(climb)의 손에 밧줄·머리카락이 **없는지** · 고텔 뒷모습(cradle)에 얼굴·아기가 없는지 · 소품(탑·머리·고리·비단실·리본·음표·꽃잎·별·바람·풀)에 얼굴이 없는지 · 탑에 문·계단이 없고 창이 하나뿐인지, 고리가 창 오른쪽에 있는지 · 땋은 머리의 폭이 높이의 1/6 보다 좁은지 · 리본 셋의 굵기가 같고 길이가 3:2:1(±15%)인지 · 그림이 보는 쪽이 §2-3 과 같은지(반대면 NAT 만 고친다) · 피·상처·눈물이 없는지.
 
@@ -557,6 +573,7 @@ rp_prop_ribbon_long 8.0, rp_prop_ribbon_mid 5.4, rp_prop_ribbon_short 2.7, rp_pr
 - [ ] **마법 바람**: 바람 소품이 고텔에서 창문으로 날아가고 왕자가 떠서 창 밖으로 나간 뒤, 밖에서 창문에서 풀숲으로 사뿐 내려온다. 떨어지거나 다치는 느낌이 없다.
 - [ ] **손잡기**: 손가락 힌트가 두 사람 사이에 뜨고, 톡 뒤 두 자세의 손끝이 닿으며 꽃잎·색종이, 끝 화면에 '포기하지 않으면 다시 만날 수 있어요.' 와 리본(`?endpreview=1`).
 - [ ] **팝 자리**: 모든 팝 글자가 인물 얼굴 위에 겹치지 않는다(스크린샷으로 확인: 창문의 라푼젤, 땅의 고텔·왕자, 8장 두 사람).
+- [ ] **컷 5장**이 그 사건 직후에만 뜨고(2장 `rp_cut_caught`, 4장 `rp_cut_climb`, 6장 `rp_cut_peek`, 8장 `rp_cut_snip`, 10장 `rp_cut_reunion`) 각 컷 위에서 맞는 대사(L5·L16·L25·L35·L46)가 들린다. 이웃한 장면에 컷이 연달아 없다. 컷 안 인물 얼굴이 점 눈·띠 입이고 소품에 얼굴이 없다.
 - [ ] 누르는 자리: `.tap-target.armed` 의 `getBoundingClientRect()` 짧은 변이 **화면 60px 이상**(풀·새·토끼·창문·리본·손잡기 자리 모두 hitBox).
 
 세로 390×844 (`node … 390 844 /tmp/rp_p 600 8`)
