@@ -663,7 +663,7 @@
       put(T, ship, X(640, 600), WATER11 + 28, { look: 'flower' });
       put(T, prince, ship.x - SHIP_W * .10, ship.y + DECK_DY, { look: 'stand', to: 'left' });
       put(T, lady, ship.x + 60, ship.y + DECK_DY, { look: 'wed', to: 'left' });
-      put(T, mer, X(340, 410), 300, { look: 'bubble', s: 1 });
+      put(T, mer, X(340, 410), 300, { look: 'bubble', to: 'right', s: 1 });   /* 배 위 왕자 쪽(오른쪽)을 본다 */
       put(T, gulls[0], X(150, 250), 120); put(T, gulls[1], X(820, 560), 90);
       gulls.forEach((g, i) => g.pos.animate([{ translate: '-30px 0' }, { translate: '30px -10px' }], { duration: 4000, iterations: Infinity, direction: 'alternate', delay: i * 700 }));
       if (P) camSnap(470, 280, 1);
