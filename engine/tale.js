@@ -128,8 +128,49 @@ const Tale = (() => {
   async function say(text) {
     const was = busy; busy = true;
     const d = dir && dir.begin();
-    try { await Narrator.speak(text, d ? { onSeg: d.seg } : {}); }
+    try {
+      if (VERIFY) await vSay(text, d);
+      else await Narrator.speak(text, d ? { onSeg: d.seg } : {});
+    }
     finally { if (d) d.end(); busy = was; }
+  }
+
+  /* ---------- 개발자 검증 모드 (?verify=1, tools/dev/verify.html 의 iframe 에서만) ----------
+     행동 단위(대사 한 줄, 톡 기다림)마다 부모에게 step 을 알리고 부모의 go 를 기다린다.
+     ?skip=N 이면 앞의 N 단계는 소리 없이 곧바로 지나간다(이전 버튼용). 평소 게임에는 영향이 없다. */
+  const VERIFY = (() => { try { return window.parent !== window && new URLSearchParams(location.search).get('verify') === '1'; } catch (e) { return false; } })();
+  const vSkip = (() => { try { return +new URLSearchParams(location.search).get('skip') || 0; } catch (e) { return 0; } })();
+  let vN = 0, vWait = null, vLine = '';
+  const vPost = m => { try { window.parent.postMessage(Object.assign({ type: 'step' }, m), '*'); } catch (e) { /* 부모 없음 */ } };
+  const vGo = () => new Promise(r => { vWait = r; });
+  if (VERIFY) window.addEventListener('message', e => {
+    const m = e.data || {};
+    if (m.type === 'go' && vWait) { const r = vWait; vWait = null; r(); }
+    if (m.type === 'replay' && vLine) { try { Narrator.speak(vLine); } catch (er) { /* 무시 */ } }
+  });
+  const vClipFile = text => {
+    try {
+      const en = typeof englishOn === 'function' && englishOn() && NARRATION_CLIPS_EN[text];
+      const c = en ? en.c : (typeof NARRATION_CLIPS !== 'undefined' && NARRATION_CLIPS[text]);
+      return c ? [].concat(c).join(' + ') : '';
+    } catch (e) { return ''; }
+  };
+  async function vSay(text, d) {
+    const n = vN++;
+    vPost({ kind: 'say', n, text, file: vClipFile(text), skipped: n < vSkip });
+    if (n < vSkip) return;
+    vLine = text;
+    const go = vGo();
+    Narrator.speak(text, d ? { onSeg: d.seg } : {}).catch(() => { /* 소리 실패는 무시 */ });
+    await go;
+    Narrator.stop();
+  }
+  /* 조작 대기 단계: 부모의 go 가 실제 조작을 대신 한다 */
+  function vInput(name, a, p, drive) {
+    const n = vN++;
+    vPost({ kind: name, n, text: '', file: '', skipped: n < vSkip });
+    const go = n < vSkip ? Promise.resolve() : vGo();
+    go.then(() => { if (!p.done) drive(a, p).catch(e => console.warn('vDrive', e)); });
   }
 
   /* ---------- 대사 연출: 목소리를 따라가는 카메라 + 서로 바라보기 ----------
@@ -227,7 +268,7 @@ const Tale = (() => {
 
   /* ---------- 자동 재생 (보호자 메뉴 'auto_play'=1): 톡·퀴즈 없이 이야기만 흘러간다 ----------
      조작 함수(tap/mash/choose/swipe/hold/free)는 그대로 불리고, 엔진이 알맞은 때 대신 눌러 준다. */
-  const AUTO = () => { try { return localStorage.getItem('auto_play') === '1'; } catch (e) { return false; } };
+  const AUTO = () => { if (VERIFY) return false; try { return localStorage.getItem('auto_play') === '1'; } catch (e) { return false; } };
   function firePtr(n, type = 'pointerdown', host = n) {
     const r = n.getBoundingClientRect ? n.getBoundingClientRect() : { left: 0, top: 0, width: 0, height: 0 };
     const x = r.left + r.width / 2, y = r.top + r.height / 2;
@@ -235,22 +276,30 @@ const Tale = (() => {
   }
   /* 동화 쪽 맞춤 입력용: 자동 재생일 때만 ms 뒤에 fn 을 부른다 */
   function autoDo(ms, fn) { if (AUTO()) setTimeout(() => { try { fn(); } catch (e) { console.warn('autoDo', e); } }, ms); }
+  const nap = ms => sleep(VERIFY ? Math.min(ms, 250) : ms);
   const autoDrive = {
-    tap: async (a, p) => { await sleep(1600); if (!p.done && a[0]) firePtr(a[0]); },
-    mash: async (a, p) => { await sleep(1000); while (!p.done && a[0]) { firePtr(a[0]); await sleep(520); } },
-    hold: async (a, p) => { await sleep(1400); if (!p.done && a[0]) firePtr(a[0]); },
-    swipe: async (a, p) => { const w = $('#stageWrap') || a[0]; await sleep(1200); while (!p.done) { firePtr(w); firePtr(w, 'pointerup', window); await sleep(700); } },
+    tap: async (a, p) => { await nap(1600); if (!p.done && a[0]) firePtr(a[0]); },
+    mash: async (a, p) => { await nap(1000); while (!p.done && a[0]) { firePtr(a[0]); await nap(520); } },
+    hold: async (a, p) => { await nap(1400); if (!p.done && a[0]) firePtr(a[0]); },
+    swipe: async (a, p) => { const w = $('#stageWrap') || a[0]; await nap(1200); while (!p.done) { firePtr(w); firePtr(w, 'pointerup', window); await nap(700); } },
     choose: async (a, p) => {
       const good = (a[0] || []).find(o => o.ok); if (!good) return;
-      await sleep(500); if (p.done) return;
+      await nap(500); if (p.done) return;
       good.el.style.filter = 'url(#hintGlow)'; pulse(good.el);
-      await sleep(1200); if (!p.done) firePtr(good.el);
+      await nap(1200); if (!p.done) firePtr(good.el);
     },
-    free: async (a, p) => { const ts = a[0] || []; let i = 0; await sleep(900); while (!p.done && ts.length) { firePtr(ts[i++ % ts.length].el); await sleep(900); } },
+    free: async (a, p) => { const ts = a[0] || []; let i = 0; await nap(900); while (!p.done && ts.length) { firePtr(ts[i++ % ts.length].el); await nap(900); } },
   };
   const autoInput = (name, fn) => {
     const f = input(fn);
     return (...a) => {
+      if (VERIFY) {
+        if (name === 'free') a = [a[0], Math.min(a[1] || 15000, 8000)];
+        const p = { done: false }, r = f(...a);
+        r.finally(() => { p.done = true; });
+        vInput(name, a, p, autoDrive[name]);
+        return r;
+      }
       if (!AUTO()) return f(...a);
       if (name === 'free') a = [a[0], Math.min(a[1] || 15000, 8000)];
       const p = { done: false }, r = f(...a);
@@ -478,6 +527,7 @@ const Tale = (() => {
      닫힘 → 주인공 둘레에서 잠깐 멈춤 → 완전히 닫힘 → 장면 이름(오린 종이 글자) → change() → 톡 튀며 열림 */
   let cardK = 1;   /* 장면 카드 속도 배율 (cardSpeed 로 동화마다 조절, 1 = 기본) */
   async function sceneCard(label, change, focus) {
+    if (VERIFY) vPost({ type: 'scene', label: label || '' });
     await restIfDue();
     if (transitionMode === 'page') return pageTurn(change);
     const wrap = $('#stageWrap'), ir = $('#iris'), card = $('#irisCard');
