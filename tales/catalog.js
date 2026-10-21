@@ -332,5 +332,45 @@ const TALES = (() => {
       <rect x="66" y="34" width="34" height="14" rx="4" fill="${c.cr}"/>${eye(90, 41, 2)}${eye(96, 41, 2)}
       <circle cx="56" cy="86" r="11" fill="${c.ind}"/><circle cx="104" cy="86" r="11" fill="${c.ind}"/><circle cx="56" cy="86" r="4" fill="${c.cr}"/><circle cx="104" cy="86" r="4" fill="${c.cr}"/>
       <ellipse cx="136" cy="22" rx="9" ry="6" fill="${c.gd}" transform="rotate(-20 136 22)"/><ellipse cx="146" cy="26" rx="8" ry="5" fill="${c.gd}" transform="rotate(20 146 26)"/></g>` },
+  { id: 'princess_pea', title: '완두콩 공주', origin: 'world', also: ['princess'], skills: ['count', 'size', 'position'], ready: false, making: true,
+    line: '제일 작은 것과 제일 큰 것을 고르고, 매트리스 스무 장을 세고, 위와 아래를 찾아요. 비에 젖은 아가씨가 완두콩 한 알로 진짜 공주임을 보여요.',
+    en: { title: 'The Princess and the Pea', line: 'Pick the smallest and the biggest, count twenty mattresses and find top and bottom. A rain-soaked girl shows she is a true princess with a single pea.' },
+    art: `<rect width="160" height="110" fill="${c.cr}"/>
+      <g class="pc"><rect y="92" width="160" height="18" fill="${c.bk}"/>
+      ${[0, 1, 2, 3, 4, 5, 6, 7].map(i => `<rect x="86" y="${86 - i * 9}" width="66" height="8" rx="2" fill="${[c.gd, c.cr, c.ps][i % 3]}"/>`).join('')}
+      <path d="M84 12 h70 q3 0 3 3 v3 q-18 -6 -35 0 q-17 -6 -38 0 v-3 q0 -3 3 -3z" fill="${c.sn}"/>
+      <circle cx="92" cy="90" r="3" fill="${c.pn}"/>
+      <path d="M26 92 L32 58 Q42 52 52 58 L58 92Z" fill="${c.cr}"/><rect x="30" y="68" width="24" height="4" fill="${c.pn}"/>
+      <circle cx="42" cy="44" r="13" fill="#8a6a48"/><circle cx="42" cy="47" r="10" fill="${c.sk}"/><circle cx="42" cy="31" r="4" fill="#8a6a48"/>${eye(38, 47, 1.5)}${eye(46, 47, 1.5)}
+      <path d="M39 52 q3 2 6 0" stroke="${c.rd}" stroke-width="1.5" fill="none" stroke-linecap="round"/></g>` },
+  { id: 'rapunzel', title: '라푼젤', origin: 'world', also: ['princess'], skills: ['size', 'position', 'heart'], ready: false, making: true,
+    line: '탑 위에 있는 새와 탑 아래에 있는 토끼, 제일 긴 리본과 제일 짧은 리본을 찾아요. 머리를 내려 주는 라푼젤이 노래로 왕자를 다시 만나요.',
+    en: { title: 'Rapunzel', line: 'Find the bird on top of the tower and the rabbit below, the longest ribbon and the shortest. Rapunzel lets down her hair and finds the prince again through her song.' },
+    art: `<rect width="160" height="110" fill="#DCE9F2"/>
+      <g class="pc"><rect y="88" width="160" height="22" fill="${c.lf}"/>
+      <rect x="66" y="30" width="40" height="60" fill="#D8D2C4"/><path d="M60 30 L86 8 L112 30Z" fill="${c.rd}"/>
+      <rect x="78" y="38" width="16" height="18" rx="8" fill="${c.cr}"/>
+      <circle cx="86" cy="48" r="7" fill="${c.sk}"/><path d="M79 46 a7 7 0 0 1 14 0 v3 q-7 -5 -14 0z" fill="${c.gd}"/>${eye(84, 49, 1.2)}${eye(88, 49, 1.2)}
+      <path d="M94 50 q6 10 2 40" stroke="${c.gd}" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="96" cy="62" r="2" fill="${c.rd}"/><circle cx="96" cy="78" r="2" fill="${c.rd}"/>
+      <path d="M18 88 L30 56 L42 88Z" fill="${c.pn}"/><path d="M118 88 L130 60 L142 88Z" fill="${c.pn}"/></g>` },
+  { id: 'frog_prince', title: '개구리 왕자', origin: 'world', also: ['princess'], skills: ['shape', 'count', 'heart'], ready: false, making: true,
+    line: '금공 모양을 고르고 접시의 빵을 세어요. 금공을 찾아 준 개구리와 한 약속을 공주가 지키고, 개구리는 왕자가 돼요.',
+    en: { title: 'The Frog Prince', line: 'Pick the shape of the golden ball and count the buns on the plate. The princess keeps her promise to the frog who found her ball, and the frog becomes a prince.' },
+    art: `<rect width="160" height="110" fill="${c.cr}"/>
+      <g class="pc"><ellipse cx="80" cy="96" rx="90" ry="22" fill="#BFD8EE"/>
+      <ellipse cx="80" cy="74" rx="34" ry="24" fill="${c.pn}"/><circle cx="66" cy="52" r="11" fill="${c.sn}"/><circle cx="94" cy="52" r="11" fill="${c.sn}"/>${eye(66, 53, 4)}${eye(94, 53, 4)}
+      <path d="M62 80 Q80 90 98 80" stroke="#2E241C" stroke-width="3" fill="none"/>
+      <circle cx="128" cy="34" r="16" fill="${c.gd}"/><path d="M116 28 Q120 22 126 22" stroke="${c.cr}" stroke-width="3" fill="none"/></g>` },
+  { id: 'sleeping_beauty', title: '잠자는 숲속의 공주', origin: 'world', also: ['princess'], skills: ['size', 'position', 'heart'], ready: false, making: true,
+    line: '요정 줄과 접시 줄 중 더 많은 쪽, 제일 긴 실과 짧은 실, 탁자 아래·선반 위·요리사 옆. 잊힌 요정의 마음을 만나고, 아무도 빼놓지 않아요.',
+    en: { title: 'The Sleeping Beauty', line: 'More or fewer, longest and shortest, under the table, on the shelf, next to the cook. Meet the forgotten fairy, and leave no one out.' },
+    art: `<rect width="160" height="110" fill="${c.cr}"/>
+      <g class="pc"><rect y="84" width="160" height="26" fill="${c.gd}"/>
+      <rect x="30" y="62" width="100" height="26" rx="6" fill="${c.bk}"/><rect x="36" y="54" width="88" height="14" rx="5" fill="${c.sn}"/><rect x="36" y="44" width="30" height="12" rx="4" fill="${c.cr}"/>
+      <circle cx="52" cy="48" r="13" fill="${c.sk}"/><path d="M39 46 a13 13 0 0 1 26 0 v3 q-6 -7 -13 -6 q-7 -1 -13 6z" fill="${c.gd}"/><path d="M64 48 q8 6 6 18" stroke="${c.gd}" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M48 52 q2 1.5 4 0 M56 52 q-2 1.5 -4 0" stroke="${c.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M50 56 q2 1.5 4 0" stroke="${c.rd}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <rect x="72" y="56" width="52" height="12" rx="3" fill="${c.ck}"/>
+      <circle cx="136" cy="60" r="14" fill="none" stroke="${c.bk}" stroke-width="4"/>${[0, 60, 120].map(a => `<path d="M136 46 v28" stroke="${c.bk}" stroke-width="2.5" transform="rotate(${a} 136 60)"/>`).join('')}<path d="M126 48 l-10 -14" stroke="${c.gy}" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="22" cy="30" r="7" fill="${c.rd}"/><circle cx="14" cy="42" r="5" fill="${c.rd}"/><path d="M10 50 q10 -22 24 -28" stroke="${c.pn}" stroke-width="3" fill="none"/></g>` },
   ];
 })();
