@@ -1,0 +1,913 @@
+{
+ "notes": "ElevenLabs 목소리 배정(2026-10-21 확정, 한 편 안에서 겹치지 않음): nar=Huelyn(여자 내레이터 돌려 쓰기 — 빨간 자동차 Lily 다음), king=Namchun(아버지 원형), queen=Bella(엄마 원형), princess=Annie(부드럽고 사랑스러운 소녀; 백설·신데렐라·인어의 Luna 를 네 번째로 쓰지 않는다), 요정 여섯=fred Lily(요정 원형)·forange Sarah·fyellow Laura·fgreen Jessica·fblue Chaemong·fpurple Busan SS(한 줄씩), young=Yun(막내 요정, 대사가 가장 많아 또렷한 한국어 젊은 여성), old=Haemi(잊힌 요정, 인자한 어르신 — 섭섭하지만 무섭지 않게), granny=MJay(물레 할머니, 나이 든 여성 이야기꾼), prince=Eric, grandpa=Bongpal(유쾌한 노인). 시녀·경비병·요리사·꼬마·동물은 목소리 없음. 모델 eleven_v4, 배역별 settings. 교훈은 대사로 말하지 않는다(부제·끝 화면 글자만). 2번 세기 \"하나~일곱\"은 extra(count1~7) 로 해설이 작게 따라 셀 뿐 화면 글자 없음. 합창 없음. 입맞춤 없음, 피 없음.",
+ "voices": {
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "king": "5ON5Fnz24cnOozEQfGAm",
+  "queen": "hpp4J3VqNfWAUOO0d1Us",
+  "princess": "Lb7qkOn5hF8p7qfCDH8q",
+  "fred": "pFZP5JQG7iQjIQuC4Bku",
+  "forange": "EXAVITQu4vr4xnSDxMaL",
+  "fyellow": "FGY2WhTYpPnrIDTdsKH5",
+  "fgreen": "cgSgspJ2msm6clMCkdW9",
+  "fblue": "DGDjWy2CQ8Ishu0meQte",
+  "fpurple": "j3SYRikKBpDmPJsvd1rf",
+  "young": "lFG74KW6EG0aRXg1kKfh",
+  "old": "ZjAPD4f11zlnEnZpKDgo",
+  "granny": "SrkN8J8D7m8bAtmS0uiq",
+  "prince": "cjVigY5qzO86Huf0OWal",
+  "grandpa": "PLfpgtLkFW07fDYbUiRJ"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "king": "eleven_v4",
+  "queen": "eleven_v4",
+  "princess": "eleven_v4",
+  "fred": "eleven_v4",
+  "forange": "eleven_v4",
+  "fyellow": "eleven_v4",
+  "fgreen": "eleven_v4",
+  "fblue": "eleven_v4",
+  "fpurple": "eleven_v4",
+  "young": "eleven_v4",
+  "old": "eleven_v4",
+  "granny": "eleven_v4",
+  "prince": "eleven_v4",
+  "grandpa": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.5,
+   "style": 0.35
+  },
+  "king": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "queen": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "princess": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "fred": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "forange": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "fyellow": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "fgreen": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "fblue": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "fpurple": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "young": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "old": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "granny": {
+   "stability": 0.5,
+   "style": 0.3
+  },
+  "prince": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "grandpa": {
+   "stability": 0.5,
+   "style": 0.3
+  }
+ },
+ "use_dir": [
+  "nar",
+  "king",
+  "queen",
+  "princess",
+  "fred",
+  "forange",
+  "fyellow",
+  "fgreen",
+  "fblue",
+  "fpurple",
+  "young",
+  "old",
+  "granny",
+  "prince",
+  "grandpa"
+ ],
+ "lines": [
+  {
+   "text": "왕과 왕비는 오래오래 아기를 기다렸어요. 드디어 예쁜 공주님이 태어났어요!",
+   "segs": [
+    [
+     "nar",
+     "왕과 왕비는 오래오래 아기를 기다렸어요. 드디어 예쁜 공주님이 태어났어요!",
+     null,
+     "[calm, warm storytelling, slow, brightening at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "온 나라 사람들을 불러 잔치를 열자!",
+   "segs": [
+    [
+     "king",
+     "온 나라 사람들을 불러 잔치를 열자!",
+     "happy",
+     "[proud happy father, warm, hearty, not shouting]"
+    ]
+   ]
+  },
+  {
+   "text": "아기는 까르르 웃었어요.",
+   "segs": [
+    [
+     "nar",
+     "아기는 까르르 웃었어요.",
+     "happy",
+     "[light, smiling, short]"
+    ]
+   ]
+  },
+  {
+   "text": "요정 일곱 명을 아기의 대모로 모셨어요. 금 접시도 일곱 개 놓았지요.",
+   "segs": [
+    [
+     "nar",
+     "요정 일곱 명을 아기의 대모로 모셨어요. 금 접시도 일곱 개 놓았지요.",
+     null,
+     "[calm, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "그런데 저기, 요정이 한 명 더 왔어요!",
+   "segs": [
+    [
+     "nar",
+     "그런데 저기, 요정이 한 명 더 왔어요!",
+     "toneup",
+     "[lightly surprised, pointing]"
+    ]
+   ]
+  },
+  {
+   "text": "요정과 금 접시, 어느 쪽이 더 많아요? 더 많은 쪽을 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "요정과 금 접시, 어느 쪽이 더 많아요? 더 많은 쪽을 톡 눌러요.",
+     null,
+     "[calm, inviting, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "접시 하나에 요정 한 명… 어, 요정이 남았어요. 요정이 더 많아요. 다시 골라 봐요.",
+   "segs": [
+    [
+     "nar",
+     "접시 하나에 요정 한 명… 어, 요정이 남았어요. 요정이 더 많아요. 다시 골라 봐요.",
+     null,
+     "[gentle, encouraging, not disappointed, a small pause after 요정 한 명]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 요정이 더 많아요. 요정 한 명은 접시가 없네요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요. 요정이 더 많아요. 요정 한 명은 접시가 없네요.",
+     "happy",
+     "[warm praise, then a little thoughtful at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 더 적은 쪽은 어느 쪽일까요? 더 적은 쪽을 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "그럼 더 적은 쪽은 어느 쪽일까요? 더 적은 쪽을 톡 눌러요.",
+     null,
+     "[calm, inviting, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "요정은 더 많은 쪽이에요. 더 적은 쪽을 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "요정은 더 많은 쪽이에요. 더 적은 쪽을 찾아봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 접시가 더 적어요. 일곱 개뿐이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요. 접시가 더 적어요. 일곱 개뿐이에요.",
+     "happy",
+     "[warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "접시가 없는 요정은 누구일까요?",
+   "segs": [
+    [
+     "nar",
+     "접시가 없는 요정은 누구일까요?",
+     null,
+     "[soft, wondering, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "탑에 너무 오래 살아서 모두가 잊어버린 요정이었어요.",
+   "segs": [
+    [
+     "nar",
+     "탑에 너무 오래 살아서 모두가 잊어버린 요정이었어요.",
+     null,
+     "[gentle, a little sad, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "내 접시는 없구나… 나만 빼놓다니.",
+   "segs": [
+    [
+     "old",
+     "내 접시는 없구나… 나만 빼놓다니.",
+     "sad",
+     "[old woman, hurt and sulky, quiet, not angry, not scary]"
+    ]
+   ]
+  },
+  {
+   "text": "어이쿠, 깜빡했어요. 미안해요.",
+   "segs": [
+    [
+     "king",
+     "어이쿠, 깜빡했어요. 미안해요.",
+     null,
+     "[flustered, sincerely sorry, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "나는 맨 나중에 말할래.",
+   "segs": [
+    [
+     "young",
+     "나는 맨 나중에 말할래.",
+     null,
+     "[young fairy, quiet whisper, thoughtful]"
+    ]
+   ]
+  },
+  {
+   "text": "예쁜 얼굴을 줄게.",
+   "segs": [
+    [
+     "fred",
+     "예쁜 얼굴을 줄게.",
+     "happy",
+     "[fairy, gentle blessing, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "상냥한 마음을 줄게.",
+   "segs": [
+    [
+     "forange",
+     "상냥한 마음을 줄게.",
+     "happy",
+     "[fairy, gentle blessing, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "고운 말씨를 줄게.",
+   "segs": [
+    [
+     "fyellow",
+     "고운 말씨를 줄게.",
+     "happy",
+     "[fairy, gentle blessing, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "사뿐사뿐 춤을 줄게.",
+   "segs": [
+    [
+     "fgreen",
+     "사뿐사뿐 춤을 줄게.",
+     "happy",
+     "[fairy, gentle blessing, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "꾀꼬리 같은 노래를 줄게.",
+   "segs": [
+    [
+     "fblue",
+     "꾀꼬리 같은 노래를 줄게.",
+     "happy",
+     "[fairy, gentle blessing, melodic]"
+    ]
+   ]
+  },
+  {
+   "text": "피리 솜씨를 줄게.",
+   "segs": [
+    [
+     "fpurple",
+     "피리 솜씨를 줄게.",
+     "happy",
+     "[fairy, gentle blessing, calm]"
+    ]
+   ]
+  },
+  {
+   "text": "아기는 쌔근쌔근 웃었어요.",
+   "segs": [
+    [
+     "nar",
+     "아기는 쌔근쌔근 웃었어요.",
+     null,
+     "[soft, tender, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "열여섯 살이 되면 물레 바늘에 찔려 영영 깨어나지 않는 깊은 잠에 빠질 거야.",
+   "segs": [
+    [
+     "old",
+     "열여섯 살이 되면 물레 바늘에 찔려 영영 깨어나지 않는 깊은 잠에 빠질 거야.",
+     "sad",
+     "[old woman, hurt and sulky, slow, not scary, not shouting]"
+    ]
+   ]
+  },
+  {
+   "text": "영영이 아니에요. 백 년이 지나면 깨어날 거예요. 그리고 왕자님이 올 거예요.",
+   "segs": [
+    [
+     "young",
+     "영영이 아니에요. 백 년이 지나면 깨어날 거예요. 그리고 왕자님이 올 거예요.",
+     null,
+     "[young fairy, clear, kind, reassuring, firm]"
+    ]
+   ]
+  },
+  {
+   "text": "온 나라의 물레를 모두 치워라!",
+   "segs": [
+    [
+     "king",
+     "온 나라의 물레를 모두 치워라!",
+     "toneup",
+     "[king's order, firm, loud but kind]"
+    ]
+   ]
+  },
+  {
+   "text": "물레는 모두 사라졌어요.",
+   "segs": [
+    [
+     "nar",
+     "물레는 모두 사라졌어요.",
+     null,
+     "[calm, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "공주님이 열여섯 살이 되던 날, 왕과 왕비는 멀리 나들이를 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "공주님이 열여섯 살이 되던 날, 왕과 왕비는 멀리 나들이를 갔어요.",
+     null,
+     "[calm storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "공주님은 성 구석구석을 돌아다니다 탑 꼭대기까지 올라갔어요.",
+   "segs": [
+    [
+     "nar",
+     "공주님은 성 구석구석을 돌아다니다 탑 꼭대기까지 올라갔어요.",
+     null,
+     "[curious, slow, rising]"
+    ]
+   ]
+  },
+  {
+   "text": "할머니, 뭐 하세요?",
+   "segs": [
+    [
+     "princess",
+     "할머니, 뭐 하세요?",
+     "toneup",
+     "[girl, curious, polite, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "실을 잣고 있단다. 물레를 치우라는 말은 못 들었거든.",
+   "segs": [
+    [
+     "granny",
+     "실을 잣고 있단다. 물레를 치우라는 말은 못 들었거든.",
+     null,
+     "[kind old woman, slow, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "할머니가 실을 잣고 있어요. 제일 긴 실은 어느 것일까요? 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "할머니가 실을 잣고 있어요. 제일 긴 실은 어느 것일까요? 톡 눌러요.",
+     null,
+     "[calm, inviting, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "그 실은 제일 짧아요. 제일 긴 실을 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그 실은 제일 짧아요. 제일 긴 실을 찾아봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그 실보다 더 긴 실이 있어요. 다시 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그 실보다 더 긴 실이 있어요. 다시 찾아봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 이 실이 제일 길어요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요. 이 실이 제일 길어요.",
+     "happy",
+     "[warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 제일 짧은 실은 어느 것일까요? 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "그럼 제일 짧은 실은 어느 것일까요? 톡 눌러요.",
+     null,
+     "[calm, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "그 실은 제일 길어요. 제일 짧은 실을 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그 실은 제일 길어요. 제일 짧은 실을 찾아봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "그 실보다 더 짧은 실이 있어요. 다시 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "그 실보다 더 짧은 실이 있어요. 다시 찾아봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 이 실이 제일 짧아요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요. 이 실이 제일 짧아요.",
+     "happy",
+     "[warm praise]"
+    ]
+   ]
+  },
+  {
+   "text": "저도 해 볼래요!",
+   "segs": [
+    [
+     "princess",
+     "저도 해 볼래요!",
+     "happy",
+     "[girl, eager, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "아야… 졸려요…",
+   "segs": [
+    [
+     "princess",
+     "아야… 졸려요…",
+     null,
+     "[girl, small, drowsy, yawning, slow and fading, no crying]"
+    ]
+   ]
+  },
+  {
+   "text": "어머나, 큰일 났네! 누구 없어요?",
+   "segs": [
+    [
+     "granny",
+     "어머나, 큰일 났네! 누구 없어요?",
+     "toneup",
+     "[old woman, startled, calling out, worried but not panicked]"
+    ]
+   ]
+  },
+  {
+   "text": "우리 아가, 막내 요정 말대로 백 년을 자는구나.",
+   "segs": [
+    [
+     "queen",
+     "우리 아가, 막내 요정 말대로 백 년을 자는구나.",
+     "sad",
+     "[mother, tender, sad but calm, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "공주님이 혼자 깨면 외로울 거야. 모두 함께 자요.",
+   "segs": [
+    [
+     "young",
+     "공주님이 혼자 깨면 외로울 거야. 모두 함께 자요.",
+     null,
+     "[young fairy, kind, soft, decided]"
+    ]
+   ]
+  },
+  {
+   "text": "촛불도 잠들고, 성 둘레에는 가시덤불이 높이높이 자랐어요.",
+   "segs": [
+    [
+     "nar",
+     "촛불도 잠들고, 성 둘레에는 가시덤불이 높이높이 자랐어요.",
+     null,
+     "[hushed, slow, then rising with 높이높이]"
+    ]
+   ]
+  },
+  {
+   "text": "백 년이 흘렀어요. 낮과 밤이 몇 번이나 지났을까요.",
+   "segs": [
+    [
+     "nar",
+     "백 년이 흘렀어요. 낮과 밤이 몇 번이나 지났을까요.",
+     null,
+     "[slow, wondering]"
+    ]
+   ]
+  },
+  {
+   "text": "저 안에 공주님이 백 년째 자고 있대요.",
+   "segs": [
+    [
+     "grandpa",
+     "저 안에 공주님이 백 년째 자고 있대요.",
+     null,
+     "[old farmer, storytelling, friendly, a little mysterious]"
+    ]
+   ]
+  },
+  {
+   "text": "제가 가 볼게요.",
+   "segs": [
+    [
+     "prince",
+     "제가 가 볼게요.",
+     "toneup",
+     "[young prince, brave, bright, polite]"
+    ]
+   ]
+  },
+  {
+   "text": "가시덤불이 왕자님에게만 길을 열어 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "가시덤불이 왕자님에게만 길을 열어 주었어요.",
+     null,
+     "[wonder, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "쉿, 다들 자고 있어요.",
+   "segs": [
+    [
+     "prince",
+     "쉿, 다들 자고 있어요.",
+     null,
+     "[prince, whispering, careful]"
+    ]
+   ]
+  },
+  {
+   "text": "왕자님은 발소리를 죽이고 걸었어요.",
+   "segs": [
+    [
+     "nar",
+     "왕자님은 발소리를 죽이고 걸었어요.",
+     null,
+     "[hushed, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "모두 쿨쿨 자요. 탁자 아래에서 자는 강아지를 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "모두 쿨쿨 자요. 탁자 아래에서 자는 강아지를 찾아봐요.",
+     null,
+     "[hushed, inviting, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "거긴 아니에요. 탁자 아래를 봐요.",
+   "segs": [
+    [
+     "nar",
+     "거긴 아니에요. 탁자 아래를 봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 강아지가 탁자 아래에서 자요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요. 강아지가 탁자 아래에서 자요.",
+     "happy",
+     "[warm praise, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "선반 위에서 자는 새를 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "선반 위에서 자는 새를 찾아봐요.",
+     null,
+     "[hushed, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "거긴 아니에요. 선반 위를 봐요.",
+   "segs": [
+    [
+     "nar",
+     "거긴 아니에요. 선반 위를 봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 새가 선반 위에서 자요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요. 새가 선반 위에서 자요.",
+     "happy",
+     "[warm praise, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "요리사 옆에서 자는 꼬마를 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "요리사 옆에서 자는 꼬마를 찾아봐요.",
+     null,
+     "[hushed, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "거긴 아니에요. 요리사 옆을 봐요.",
+   "segs": [
+    [
+     "nar",
+     "거긴 아니에요. 요리사 옆을 봐요.",
+     null,
+     "[gentle, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 꼬마 요리사가 요리사 옆에서 자요.",
+   "segs": [
+    [
+     "nar",
+     "맞아요. 꼬마 요리사가 요리사 옆에서 자요.",
+     "happy",
+     "[warm praise, hushed]"
+    ]
+   ]
+  },
+  {
+   "text": "바로 그때, 백 년이 꽉 찼어요. 공주님이 스스로 눈을 떴어요.",
+   "segs": [
+    [
+     "nar",
+     "바로 그때, 백 년이 꽉 찼어요. 공주님이 스스로 눈을 떴어요.",
+     "toneup",
+     "[gentle wonder, brightening]"
+    ]
+   ]
+  },
+  {
+   "text": "왕자님이세요? 오래 기다렸어요.",
+   "segs": [
+    [
+     "princess",
+     "왕자님이세요? 오래 기다렸어요.",
+     "happy",
+     "[girl, just woken, soft and happy]"
+    ]
+   ]
+  },
+  {
+   "text": "안녕하세요, 공주님.",
+   "segs": [
+    [
+     "prince",
+     "안녕하세요, 공주님.",
+     "happy",
+     "[prince, warm, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "성 안의 모두가 기지개를 켰어요.",
+   "segs": [
+    [
+     "nar",
+     "성 안의 모두가 기지개를 켰어요.",
+     "happy",
+     "[bright, lively]"
+    ]
+   ]
+  },
+  {
+   "text": "그날 저녁 예배당에서 결혼식을 올렸지요. 이번에는 요정 여덟 명을 모두 불렀어요. 접시도 여덟 개!",
+   "segs": [
+    [
+     "nar",
+     "그날 저녁 예배당에서 결혼식을 올렸지요. 이번에는 요정 여덟 명을 모두 불렀어요. 접시도 여덟 개!",
+     "happy",
+     "[warm storybook ending, bright at 여덟 개]"
+    ]
+   ]
+  },
+  {
+   "text": "나도 불러 줘서 고마워.",
+   "segs": [
+    [
+     "old",
+     "나도 불러 줘서 고마워.",
+     "happy",
+     "[old woman, touched, smiling, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "모두 손을 흔들며 인사했어요. 안녕!",
+   "segs": [
+    [
+     "nar",
+     "모두 손을 흔들며 인사했어요. 안녕!",
+     "happy",
+     "[bright send-off]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "count1": [
+   [
+    "nar",
+    "하나",
+    null,
+    "[very soft, quiet counting under the breath, one word, slow]"
+   ]
+  ],
+  "count2": [
+   [
+    "nar",
+    "둘",
+    null,
+    "[very soft, quiet counting under the breath, one word, slow]"
+   ]
+  ],
+  "count3": [
+   [
+    "nar",
+    "셋",
+    null,
+    "[very soft, quiet counting under the breath, one word, slow]"
+   ]
+  ],
+  "count4": [
+   [
+    "nar",
+    "넷",
+    null,
+    "[very soft, quiet counting under the breath, one word, slow]"
+   ]
+  ],
+  "count5": [
+   [
+    "nar",
+    "다섯",
+    null,
+    "[very soft, quiet counting under the breath, one word, slow]"
+   ]
+  ],
+  "count6": [
+   [
+    "nar",
+    "여섯",
+    null,
+    "[very soft, quiet counting under the breath, one word, slow]"
+   ]
+  ],
+  "count7": [
+   [
+    "nar",
+    "일곱",
+    null,
+    "[very soft, quiet counting under the breath, one word, slow]"
+   ]
+  ]
+ }
+}

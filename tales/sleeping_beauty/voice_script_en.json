@@ -1,0 +1,842 @@
+{
+ "voices": {
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "king": "5ON5Fnz24cnOozEQfGAm",
+  "queen": "hpp4J3VqNfWAUOO0d1Us",
+  "princess": "Lb7qkOn5hF8p7qfCDH8q",
+  "fred": "pFZP5JQG7iQjIQuC4Bku",
+  "forange": "EXAVITQu4vr4xnSDxMaL",
+  "fyellow": "FGY2WhTYpPnrIDTdsKH5",
+  "fgreen": "cgSgspJ2msm6clMCkdW9",
+  "fblue": "DGDjWy2CQ8Ishu0meQte",
+  "fpurple": "j3SYRikKBpDmPJsvd1rf",
+  "young": "lFG74KW6EG0aRXg1kKfh",
+  "old": "ZjAPD4f11zlnEnZpKDgo",
+  "granny": "SrkN8J8D7m8bAtmS0uiq",
+  "prince": "cjVigY5qzO86Huf0OWal",
+  "grandpa": "PLfpgtLkFW07fDYbUiRJ"
+ },
+ "lines": [
+  {
+   "text": "왕과 왕비는 오래오래 아기를 기다렸어요. 드디어 예쁜 공주님이 태어났어요!",
+   "en": "The king and queen waited a long, long time for a baby. At last, a lovely little princess was born!",
+   "segs": [
+    [
+     "nar",
+     "The king and queen waited a long, long time for a baby. At last, a lovely little princess was born!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "온 나라 사람들을 불러 잔치를 열자!",
+   "en": "Let's invite the whole kingdom and hold a feast!",
+   "segs": [
+    [
+     "king",
+     "Let's invite the whole kingdom and hold a feast!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "아기는 까르르 웃었어요.",
+   "en": "The baby giggled, tee-hee!",
+   "segs": [
+    [
+     "nar",
+     "The baby giggled, tee-hee!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "요정 일곱 명을 아기의 대모로 모셨어요. 금 접시도 일곱 개 놓았지요.",
+   "en": "Seven fairies were invited to be the baby's godmothers. Seven golden plates were set out for them.",
+   "segs": [
+    [
+     "nar",
+     "Seven fairies were invited to be the baby's godmothers. Seven golden plates were set out for them.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그런데 저기, 요정이 한 명 더 왔어요!",
+   "en": "But look, over there! One more fairy has come!",
+   "segs": [
+    [
+     "nar",
+     "But look, over there! One more fairy has come!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "요정과 금 접시, 어느 쪽이 더 많아요? 더 많은 쪽을 톡 눌러요.",
+   "en": "Fairies or golden plates, which are there more of? Tap the side that has more.",
+   "segs": [
+    [
+     "nar",
+     "Fairies or golden plates, which are there more of? Tap the side that has more.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "접시 하나에 요정 한 명… 어, 요정이 남았어요. 요정이 더 많아요. 다시 골라 봐요.",
+   "en": "One plate for one fairy... oh, a fairy is left over. There are more fairies. Try again.",
+   "segs": [
+    [
+     "nar",
+     "One plate for one fairy... oh, a fairy is left over. There are more fairies. Try again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 요정이 더 많아요. 요정 한 명은 접시가 없네요.",
+   "en": "That's right. There are more fairies. One fairy has no plate.",
+   "segs": [
+    [
+     "nar",
+     "That's right. There are more fairies. One fairy has no plate.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 더 적은 쪽은 어느 쪽일까요? 더 적은 쪽을 톡 눌러요.",
+   "en": "Then which side has fewer? Tap the side that has fewer.",
+   "segs": [
+    [
+     "nar",
+     "Then which side has fewer? Tap the side that has fewer.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "요정은 더 많은 쪽이에요. 더 적은 쪽을 찾아봐요.",
+   "en": "The fairies are the side with more. Find the side with fewer.",
+   "segs": [
+    [
+     "nar",
+     "The fairies are the side with more. Find the side with fewer.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 접시가 더 적어요. 일곱 개뿐이에요.",
+   "en": "That's right. There are fewer plates. Only seven.",
+   "segs": [
+    [
+     "nar",
+     "That's right. There are fewer plates. Only seven.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "접시가 없는 요정은 누구일까요?",
+   "en": "Which fairy has no plate?",
+   "segs": [
+    [
+     "nar",
+     "Which fairy has no plate?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "탑에 너무 오래 살아서 모두가 잊어버린 요정이었어요.",
+   "en": "It was the fairy who had lived in a tower so long that everyone had forgotten her.",
+   "segs": [
+    [
+     "nar",
+     "It was the fairy who had lived in a tower so long that everyone had forgotten her.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "내 접시는 없구나… 나만 빼놓다니.",
+   "en": "There is no plate for me... They left me out.",
+   "segs": [
+    [
+     "old",
+     "There is no plate for me... They left me out.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "어이쿠, 깜빡했어요. 미안해요.",
+   "en": "Oh dear, I forgot. I'm sorry.",
+   "segs": [
+    [
+     "king",
+     "Oh dear, I forgot. I'm sorry.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "나는 맨 나중에 말할래.",
+   "en": "I'll speak last.",
+   "segs": [
+    [
+     "young",
+     "I'll speak last.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "예쁜 얼굴을 줄게.",
+   "en": "I give you a pretty face.",
+   "segs": [
+    [
+     "fred",
+     "I give you a pretty face.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "상냥한 마음을 줄게.",
+   "en": "I give you a kind heart.",
+   "segs": [
+    [
+     "forange",
+     "I give you a kind heart.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "고운 말씨를 줄게.",
+   "en": "I give you sweet words.",
+   "segs": [
+    [
+     "fyellow",
+     "I give you sweet words.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "사뿐사뿐 춤을 줄게.",
+   "en": "I give you light, graceful dancing.",
+   "segs": [
+    [
+     "fgreen",
+     "I give you light, graceful dancing.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "꾀꼬리 같은 노래를 줄게.",
+   "en": "I give you a song like a songbird.",
+   "segs": [
+    [
+     "fblue",
+     "I give you a song like a songbird.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "피리 솜씨를 줄게.",
+   "en": "I give you the gift of playing the flute.",
+   "segs": [
+    [
+     "fpurple",
+     "I give you the gift of playing the flute.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "아기는 쌔근쌔근 웃었어요.",
+   "en": "The baby smiled softly in her sleep.",
+   "segs": [
+    [
+     "nar",
+     "The baby smiled softly in her sleep.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "열여섯 살이 되면 물레 바늘에 찔려 영영 깨어나지 않는 깊은 잠에 빠질 거야.",
+   "en": "When she turns sixteen, she will prick her finger on a spindle and fall into a deep sleep from which she will never wake.",
+   "segs": [
+    [
+     "old",
+     "When she turns sixteen, she will prick her finger on a spindle and fall into a deep sleep from which she will never wake.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "영영이 아니에요. 백 년이 지나면 깨어날 거예요. 그리고 왕자님이 올 거예요.",
+   "en": "Not never. After a hundred years she will wake up. And a prince will come.",
+   "segs": [
+    [
+     "young",
+     "Not never. After a hundred years she will wake up. And a prince will come.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "온 나라의 물레를 모두 치워라!",
+   "en": "Take away every spindle in the whole kingdom!",
+   "segs": [
+    [
+     "king",
+     "Take away every spindle in the whole kingdom!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "물레는 모두 사라졌어요.",
+   "en": "Every spindle was gone.",
+   "segs": [
+    [
+     "nar",
+     "Every spindle was gone.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "공주님이 열여섯 살이 되던 날, 왕과 왕비는 멀리 나들이를 갔어요.",
+   "en": "On the day the princess turned sixteen, the king and queen went away on a journey.",
+   "segs": [
+    [
+     "nar",
+     "On the day the princess turned sixteen, the king and queen went away on a journey.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "공주님은 성 구석구석을 돌아다니다 탑 꼭대기까지 올라갔어요.",
+   "en": "The princess wandered all around the castle, and climbed up to the very top of the tower.",
+   "segs": [
+    [
+     "nar",
+     "The princess wandered all around the castle, and climbed up to the very top of the tower.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "할머니, 뭐 하세요?",
+   "en": "Grandma, what are you doing?",
+   "segs": [
+    [
+     "princess",
+     "Grandma, what are you doing?",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "실을 잣고 있단다. 물레를 치우라는 말은 못 들었거든.",
+   "en": "I'm spinning thread, dear. Nobody told me the spindles had to go.",
+   "segs": [
+    [
+     "granny",
+     "I'm spinning thread, dear. Nobody told me the spindles had to go.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "할머니가 실을 잣고 있어요. 제일 긴 실은 어느 것일까요? 톡 눌러요.",
+   "en": "Grandma is spinning thread. Which thread is the longest? Tap it.",
+   "segs": [
+    [
+     "nar",
+     "Grandma is spinning thread. Which thread is the longest? Tap it.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그 실은 제일 짧아요. 제일 긴 실을 찾아봐요.",
+   "en": "That thread is the shortest. Find the longest one.",
+   "segs": [
+    [
+     "nar",
+     "That thread is the shortest. Find the longest one.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그 실보다 더 긴 실이 있어요. 다시 찾아봐요.",
+   "en": "There is a thread longer than that one. Look again.",
+   "segs": [
+    [
+     "nar",
+     "There is a thread longer than that one. Look again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 이 실이 제일 길어요.",
+   "en": "That's right. This thread is the longest.",
+   "segs": [
+    [
+     "nar",
+     "That's right. This thread is the longest.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 제일 짧은 실은 어느 것일까요? 톡 눌러요.",
+   "en": "Then which thread is the shortest? Tap it.",
+   "segs": [
+    [
+     "nar",
+     "Then which thread is the shortest? Tap it.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그 실은 제일 길어요. 제일 짧은 실을 찾아봐요.",
+   "en": "That thread is the longest. Find the shortest one.",
+   "segs": [
+    [
+     "nar",
+     "That thread is the longest. Find the shortest one.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그 실보다 더 짧은 실이 있어요. 다시 찾아봐요.",
+   "en": "There is a thread shorter than that one. Look again.",
+   "segs": [
+    [
+     "nar",
+     "There is a thread shorter than that one. Look again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 이 실이 제일 짧아요.",
+   "en": "That's right. This thread is the shortest.",
+   "segs": [
+    [
+     "nar",
+     "That's right. This thread is the shortest.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "저도 해 볼래요!",
+   "en": "Let me try too!",
+   "segs": [
+    [
+     "princess",
+     "Let me try too!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "아야… 졸려요…",
+   "en": "Ouch... I'm so sleepy...",
+   "segs": [
+    [
+     "princess",
+     "Ouch... I'm so sleepy...",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어머나, 큰일 났네! 누구 없어요?",
+   "en": "Oh my, oh dear! Is anybody there?",
+   "segs": [
+    [
+     "granny",
+     "Oh my, oh dear! Is anybody there?",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "우리 아가, 막내 요정 말대로 백 년을 자는구나.",
+   "en": "My darling, just as the youngest fairy said, you will sleep a hundred years.",
+   "segs": [
+    [
+     "queen",
+     "My darling, just as the youngest fairy said, you will sleep a hundred years.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "text": "공주님이 혼자 깨면 외로울 거야. 모두 함께 자요.",
+   "en": "The princess would be lonely waking up alone. Let's all sleep together.",
+   "segs": [
+    [
+     "young",
+     "The princess would be lonely waking up alone. Let's all sleep together.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "촛불도 잠들고, 성 둘레에는 가시덤불이 높이높이 자랐어요.",
+   "en": "The candles went to sleep too, and all around the castle, a thorn hedge grew higher and higher.",
+   "segs": [
+    [
+     "nar",
+     "The candles went to sleep too, and all around the castle, a thorn hedge grew higher and higher.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "백 년이 흘렀어요. 낮과 밤이 몇 번이나 지났을까요.",
+   "en": "A hundred years went by. How many days and nights passed?",
+   "segs": [
+    [
+     "nar",
+     "A hundred years went by. How many days and nights passed?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "저 안에 공주님이 백 년째 자고 있대요.",
+   "en": "They say a princess has been sleeping in there for a hundred years.",
+   "segs": [
+    [
+     "grandpa",
+     "They say a princess has been sleeping in there for a hundred years.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "제가 가 볼게요.",
+   "en": "I'll go and see.",
+   "segs": [
+    [
+     "prince",
+     "I'll go and see.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "가시덤불이 왕자님에게만 길을 열어 주었어요.",
+   "en": "The thorn hedge opened a path, just for the prince.",
+   "segs": [
+    [
+     "nar",
+     "The thorn hedge opened a path, just for the prince.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "쉿, 다들 자고 있어요.",
+   "en": "Shh, everyone is sleeping.",
+   "segs": [
+    [
+     "prince",
+     "Shh, everyone is sleeping.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "왕자님은 발소리를 죽이고 걸었어요.",
+   "en": "The prince walked on tiptoe, as quietly as he could.",
+   "segs": [
+    [
+     "nar",
+     "The prince walked on tiptoe, as quietly as he could.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "모두 쿨쿨 자요. 탁자 아래에서 자는 강아지를 찾아봐요.",
+   "en": "Everyone is fast asleep. Find the puppy sleeping under the table.",
+   "segs": [
+    [
+     "nar",
+     "Everyone is fast asleep. Find the puppy sleeping under the table.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "거긴 아니에요. 탁자 아래를 봐요.",
+   "en": "Not there. Look under the table.",
+   "segs": [
+    [
+     "nar",
+     "Not there. Look under the table.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 강아지가 탁자 아래에서 자요.",
+   "en": "That's right. The puppy is sleeping under the table.",
+   "segs": [
+    [
+     "nar",
+     "That's right. The puppy is sleeping under the table.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "선반 위에서 자는 새를 찾아봐요.",
+   "en": "Find the bird sleeping on the shelf.",
+   "segs": [
+    [
+     "nar",
+     "Find the bird sleeping on the shelf.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "거긴 아니에요. 선반 위를 봐요.",
+   "en": "Not there. Look on the shelf.",
+   "segs": [
+    [
+     "nar",
+     "Not there. Look on the shelf.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 새가 선반 위에서 자요.",
+   "en": "That's right. The bird is sleeping on the shelf.",
+   "segs": [
+    [
+     "nar",
+     "That's right. The bird is sleeping on the shelf.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "요리사 옆에서 자는 꼬마를 찾아봐요.",
+   "en": "Find the little boy sleeping next to the cook.",
+   "segs": [
+    [
+     "nar",
+     "Find the little boy sleeping next to the cook.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "거긴 아니에요. 요리사 옆을 봐요.",
+   "en": "Not there. Look next to the cook.",
+   "segs": [
+    [
+     "nar",
+     "Not there. Look next to the cook.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요. 꼬마 요리사가 요리사 옆에서 자요.",
+   "en": "That's right. The little cook is sleeping next to the cook.",
+   "segs": [
+    [
+     "nar",
+     "That's right. The little cook is sleeping next to the cook.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "바로 그때, 백 년이 꽉 찼어요. 공주님이 스스로 눈을 떴어요.",
+   "en": "Just then, the hundred years were up. The princess opened her eyes all by herself.",
+   "segs": [
+    [
+     "nar",
+     "Just then, the hundred years were up. The princess opened her eyes all by herself.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "왕자님이세요? 오래 기다렸어요.",
+   "en": "Is that you, Prince? I've waited so long.",
+   "segs": [
+    [
+     "princess",
+     "Is that you, Prince? I've waited so long.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "안녕하세요, 공주님.",
+   "en": "Hello, Princess.",
+   "segs": [
+    [
+     "prince",
+     "Hello, Princess.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "성 안의 모두가 기지개를 켰어요.",
+   "en": "Everyone in the castle stretched and woke up.",
+   "segs": [
+    [
+     "nar",
+     "Everyone in the castle stretched and woke up.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그날 저녁 예배당에서 결혼식을 올렸지요. 이번에는 요정 여덟 명을 모두 불렀어요. 접시도 여덟 개!",
+   "en": "That evening they were married in the chapel. This time, all eight fairies were invited. And eight plates, too!",
+   "segs": [
+    [
+     "nar",
+     "That evening they were married in the chapel. This time, all eight fairies were invited. And eight plates, too!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "나도 불러 줘서 고마워.",
+   "en": "Thank you for inviting me too.",
+   "segs": [
+    [
+     "old",
+     "Thank you for inviting me too.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "모두 손을 흔들며 인사했어요. 안녕!",
+   "en": "Everyone waved and said goodbye. Bye-bye!",
+   "segs": [
+    [
+     "nar",
+     "Everyone waved and said goodbye. Bye-bye!",
+     "happy"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "count1": [
+   [
+    "nar",
+    "One",
+    null
+   ]
+  ],
+  "count2": [
+   [
+    "nar",
+    "Two",
+    null
+   ]
+  ],
+  "count3": [
+   [
+    "nar",
+    "Three",
+    null
+   ]
+  ],
+  "count4": [
+   [
+    "nar",
+    "Four",
+    null
+   ]
+  ],
+  "count5": [
+   [
+    "nar",
+    "Five",
+    null
+   ]
+  ],
+  "count6": [
+   [
+    "nar",
+    "Six",
+    null
+   ]
+  ],
+  "count7": [
+   [
+    "nar",
+    "Seven",
+    null
+   ]
+  ]
+ },
+ "ui": {
+  "잠자는 숲속의 공주": "The Sleeping Beauty",
+  "아무도 빼놓지 않아요": "No one is left out",
+  "아무도 빼놓지 않아요. 잊힌 사람의 마음은 아프답니다.": "No one is left out. Being forgotten hurts.",
+  "기다리던 아기": "The Long-Awaited Baby",
+  "접시 일곱, 요정 여덟": "Seven Plates, Eight Fairies",
+  "잊힌 요정": "The Forgotten Fairy",
+  "여섯 가지 선물": "Six Gifts",
+  "백 년 잠": "A Hundred-Year Sleep",
+  "탑 꼭대기 물레": "The Spindle at the Top of the Tower",
+  "콕, 스르르": "Prick, and So Sleepy",
+  "모두 잠들어요": "Everyone Falls Asleep",
+  "백 년 뒤": "A Hundred Years Later",
+  "잠든 궁전": "The Sleeping Castle",
+  "깨어나요": "She Wakes Up",
+  "까르르": "Tee-hee",
+  "딸랑": "Ding-a-ling",
+  "반짝!": "Sparkle!",
+  "콕!": "Prick!",
+  "하암": "Yawn",
+  "쿨쿨": "Zzz",
+  "덜컹": "Clatter",
+  "스르륵": "Rustle",
+  "쉿": "Shh",
+  "짝짝": "Clap clap",
+  "요정과 금 접시, 어느 쪽이 더 많아요? 더 많은 쪽을 톡 눌러요.": "Fairies or golden plates, which are there more of? Tap the side that has more.",
+  "그럼 더 적은 쪽은 어느 쪽일까요? 더 적은 쪽을 톡 눌러요.": "Then which side has fewer? Tap the side that has fewer.",
+  "할머니가 실을 잣고 있어요. 제일 긴 실은 어느 것일까요? 톡 눌러요.": "Grandma is spinning thread. Which thread is the longest? Tap it.",
+  "그럼 제일 짧은 실은 어느 것일까요? 톡 눌러요.": "Then which thread is the shortest? Tap it.",
+  "모두 쿨쿨 자요. 탁자 아래에서 자는 강아지를 찾아봐요.": "Everyone is fast asleep. Find the puppy sleeping under the table.",
+  "선반 위에서 자는 새를 찾아봐요.": "Find the bird sleeping on the shelf.",
+  "요리사 옆에서 자는 꼬마를 찾아봐요.": "Find the little boy sleeping next to the cook."
+ }
+}
