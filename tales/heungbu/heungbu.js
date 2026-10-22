@@ -16,6 +16,7 @@
 
   async function run(T) {
     const { sleep, say } = T;
+    if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const tr = T.tr;
     /* 세로 화면은 가운데 약 430만 보인다 → 가운데(500)를 기준으로 사람·물건 사이를 좁히고 조금 작게 */
     const P = T.viewWidth() < 990, K = P ? .82 : 1;
@@ -30,9 +31,15 @@
       T.el('image', { href: U('bg_' + key), x: BG.x, y: BG.y, width: BG.w, height: BG.h, preserveAspectRatio: 'none' }, T.bg);
       pan(cx);
     }
+    /* 누르는 대상이 아닌 그림은 누름을 받지 않고(옆 그림이 가리지 않게), 대상은 live() 로 열며 짧은 변 90단위(휴대폰 세로에서도 80px 이상)로 넓힌다 (2026-10-22) */
+    const live = (a, w = 90) => {
+      if (!a._hit) { a._hit = T.el('rect', { x: -w / 2, y: -Math.max(a.h || 0, 90), width: w, height: Math.max(a.h || 0, 90), fill: '#000', 'fill-opacity': 0 }, a.pos); a.pos.insertBefore(a._hit, a.pos.firstChild); }
+      a.pos.style.pointerEvents = 'auto'; return a.pos;
+    };
     function spr(name, x, h, y = GROUND) {
       let im;
       const a = T.actor(T.world, fx(x), y, b => { im = T.el('image', { filter: 'url(#pp)', preserveAspectRatio: 'none' }, b); });
+      a.pos.style.pointerEvents = 'none';
       a.set = (n, hh = a.h0) => {
         a.h0 = hh; hh *= K; a.h = hh; const w = hh * AR[n];
         im.setAttribute('href', U(n)); im.setAttribute('x', -w / 2); im.setAttribute('y', -hh);
@@ -52,8 +59,7 @@
     const heung = spr('heung_hello', 500, 330);
     await T.curtain(true);
     await say('옛날 옛날에 마음씨 착한 동생 흥부와 욕심쟁이 형 놀부가 살았어요.');
-    await say('흥부를 톡! 눌러서 인사해요.');
-    await T.tap(heung.pos, { prompt: '흥부를 톡! 인사해요.' });
+    await T.ask('흥부를 톡! 눌러서 인사해요.', () => T.tap(live(heung), { prompt: '흥부를 톡! 인사해요.' }));
     heung.hop(34, 400); sfx('pop'); T.pop(heung.x + 80, heung.y - 300, '안녕!');
     await say('흥부는 활짝 웃으며 인사했어요.');
 
@@ -76,10 +82,9 @@
     const chicks = spr('chicks', 493, 112, 128); /* 배경에 그려진 작은 둥지 위에 딱 겹쳐서 둥지가 하나로 보이게 */
     const hw = spr('hwife', 300, 300), h3 = spr('heung_hello', 700, 310);
     await say('흥부네 초가집 처마에는 제비 가족이 살았어요.');
-    await say('아기 제비는 몇 마리일까요? 둥지를 톡톡톡 눌러서 세어 봐요!');
-    await T.mash(chicks.pos, { count: 3, prompt: '둥지를 톡톡톡! 아기 제비를 세어 봐요.', onStep: i => {
+    await T.ask('아기 제비는 몇 마리일까요? 둥지를 톡톡톡 눌러서 세어 봐요!', () => T.mash(live(chicks), { count: 3, prompt: '둥지를 톡톡톡! 아기 제비를 세어 봐요.', onStep: i => {
       chicks.hop(14, 260); sfx('pop'); T.pop(chicks.x + (i - 2) * 70, chicks.y + 70, NUM[i - 1]);
-    } });
+    } }));
     await say('아기 제비가 하나, 둘, 셋! 세 마리예요.');
     /* 강제로 떨어진다: 아이가 아무것도 안 눌러도 둥지에서 굴러떨어져 땅에 아프게 눕는다 */
     const tumble = spr('chick_fall', 493, 90, 120);
@@ -93,8 +98,7 @@
     const hc = spr('heung_catch', 380, 340), fallen = spr('chick_fall', 560, 120, 470); /* 떨어진 채 마당 바닥에 누워 있다 */
     fallen.hop(10, 300); T.pop(fallen.x, fallen.y - 140, '아야!');
     const shiver = setInterval(() => fallen.hop(5, 220), 800); /* 다리를 다쳐서 바들바들 */
-    await say('흥부를 톡! 눌러서 아기 제비를 받아 줘요.');
-    await T.tap(hc.pos, { prompt: '흥부를 톡! 제비를 받아 줘요.' });
+    await T.ask('흥부를 톡! 눌러서 아기 제비를 받아 줘요.', () => T.tap(live(hc), { prompt: '흥부를 톡! 제비를 받아 줘요.' }));
     clearInterval(shiver);
     await fallen.move(fx(425), 410, 500, 'ease-out'); hc.hop(20, 300); sfx('ding');
     await cut('bandage2', 'pop', 3600);
@@ -123,30 +127,28 @@
     }
     await T.sceneCard('박이 열렸어요', () => { scene('yard', 560); });
     const vine = spr('vine', 560, 360), hs = spr('heung_saw', 380, 300), hw2 = spr('hwife_joy', 195, 300); /* 2026-10-20 새 그림이 더 넓어 둘이 겹치던 것 벌림 */
-    await say('쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!');
     const gourds = [];
-    await T.mash(vine.pos, { count: 3, prompt: '줄기를 톡톡톡! 박을 세어 봐요.', onStep: i => {
+    await T.ask('쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!', () => T.mash(live(vine), { count: 3, prompt: '줄기를 톡톡톡! 박을 세어 봐요.', onStep: i => {
       const g = spr('gourd', cl(640, i - 1, 100), 140); g.hop(14, 260); gourds.push(g);
       sfx('pop'); T.pop(g.x, g.y - 170, NUM[i - 1]);
-    } });
+    } }));
     await say('박이 하나, 둘, 셋! 세 통이에요.');
 
     /* 6. 박 타기 */
-    await say('흥부 부부는 톱으로 박을 탔어요. 박을 톡! 눌러서 슬근슬근 타 봐요.');
-    const open = async (g, word) => {
-      await T.tap(g.pos, { prompt: '박을 톡! 슬근슬근 타요.' });
+    const open = async (g, word, guide) => {
+      const tapIt = () => T.tap(live(g), { prompt: '박을 톡! 슬근슬근 타요.' });
+      await (guide ? T.ask(guide, tapIt) : tapIt());
       g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, word);
     };
-    await open(gourds[0], '슬근슬근!');
+    await open(gourds[0], '슬근슬근!', '흥부 부부는 톱으로 박을 탔어요. 박을 톡! 눌러서 슬근슬근 타 봐요.');
     const autoOpen1 = async g => { await sleep(500); g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
     await cut('rice_pour2', 'pop', 3600);
     await say('첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.');
-    await say('쌀자루를 톡톡톡 눌러서 세어 봐요!');
     const sacks = [];
-    await T.mash(gourds[0].pos, { count: 3, prompt: '쌀자루를 톡톡톡! 세어 봐요.', onStep: i => {
+    await T.ask('쌀자루를 톡톡톡 눌러서 세어 봐요!', () => T.mash(live(gourds[0]), { count: 3, prompt: '쌀자루를 톡톡톡! 세어 봐요.', onStep: i => {
       const s = spr('rice', cl(620, i - 1, 90), 90, 545); s.hop(14, 260); sacks.push(s);
       sfx('pop'); T.pop(s.x, s.y - 140, NUM[i - 1]);
-    } });
+    } }));
     await say('쌀자루가 하나, 둘, 셋! 이제 배불리 먹을 수 있어요.');
     sacks.forEach(s => s.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' }));
     await autoOpen1(gourds[1]);
@@ -178,12 +180,12 @@
       ng[i - 1].hop(14, 260); sfx('pop'); T.pop(ng[i - 1].x, ng[i - 1].y - 170, NUM[i - 1]); await sleep(600);
     }
     await say('박이 하나, 둘, 셋! 놀부는 기대에 부풀었어요.');
-    const nopen = async (g, word) => {
-      await T.tap(g.pos, { prompt: '박을 톡! 슬근슬근 타요.' });
+    const nopen = async (g, word, guide) => {
+      const tapIt = () => T.tap(live(g), { prompt: '박을 톡! 슬근슬근 타요.' });
+      await (guide ? T.ask(guide, tapIt) : tapIt());
       g.hop(18, 300); ns.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, word);
     };
-    await say('첫 번째 박을 톡!');
-    await nopen(ng[0], '슬근슬근!');
+    await nopen(ng[0], '슬근슬근!', '첫 번째 박을 톡!');
     const autoOpen = async g => { await sleep(500); g.hop(18, 300); ns.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
     await cut('mud2', 'pow', 3400);
     await say('콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.');
@@ -202,15 +204,14 @@
     await say('놀부가 고개를 숙였어요. "동생아, 내가 잘못했다. 욕심을 부려서 미안하구나."');
     ns2.hop(10, 400);
     await say('흥부가 활짝 웃으며 말했어요. "형님, 괜찮아요. 우리 함께 살아요!"');
-    await say('쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.');
     const bags = [0, 1, 2].map(i => spr('rice', cl(460, i, 80), 100, 500));
     for (let i = 0; i < 3; i++) {
-      if (i === 0) await T.tap(bags[i].pos, { prompt: '쌀자루를 톡! 형님께 보내요.' }); else await sleep(500); /* 한 번 누르면 나머지는 저절로 */
+      if (i === 0) await T.ask('쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.', () => T.tap(live(bags[i]), { prompt: '쌀자루를 톡! 형님께 보내요.' })); else await sleep(500); /* 한 번 누르면 나머지는 저절로 */
+      bags[i].pos.style.pointerEvents = 'none';
       sfx('pop'); await bags[i].move(ns2.x, 470, 450, 'ease-in'); bags[i].hop(12, 240); T.pop(ns2.x, 120, NUM[i]);
     }
     await say('쌀자루가 하나, 둘, 셋! 놀부는 눈물이 핑 돌았어요.');
-    await say('흥부를 톡! 눌러서 모두 함께 만세!');
-    await T.tap(hg.pos, { prompt: '흥부를 톡! 모두 만세!' });
+    await T.ask('흥부를 톡! 눌러서 모두 함께 만세!', () => T.tap(live(hg), { prompt: '흥부를 톡! 모두 만세!' }));
     T.confetti();
     await Promise.all([hg.hop(40, 500), hj.hop(30, 500), ns2.hop(30, 500)]);
     await say('흥부와 놀부는 그 뒤로 사이좋게 오래오래 살았대요. 착한 마음은 복이 되어 돌아와요.');
