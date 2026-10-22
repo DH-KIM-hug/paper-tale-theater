@@ -350,6 +350,101 @@
     T.director({ cast: { prin, frog, king, prince }, noFace: ['prin', 'frog', 'king', 'prince'] });
     const bounce = a => a.pos.animate([{ translate: '0 0' }, { translate: '0 -40px' }, { translate: '0 0' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
 
+    /* ===== 읽어 주기(read_script_el.json 동사 맵): 놀이판의 장면·자세·크기·자리를 그대로 놓고, 조작은 없다 ===== */
+    const READ_ACTS = (() => {
+      const NAVY = '#1F2A56', BROWN = '#6B4A32', POPC = { '풍덩!': NAVY, '엉엉': NAVY, '뽀글뽀글': NAVY, '포옥': NAVY, '똑똑!': BROWN, '팡!': GOLD };
+      let key = '', rbn = null, tx = 560, pend = null;
+      const num = s => String(s).split(',').map(Number);
+      const inst = () => T.readInstant();
+      const shown = a => a.pos.style.display !== 'none' && a.pos.parentNode;
+      const cancelBn = () => { if (rbn) { rbn.cancel(); rbn = null; } };
+      const actor = (a, name) => ({
+        look: (k, d) => {
+          a.look(k, d);
+          if (name === 'prin' && k === 'run' && shown(ball)) ball.place(a.x + (d === 'left' ? -1 : 1) * BALL_RUN[0], FL + BALL_RUN[1] + 24);
+        },
+        at: (xy, k, d) => { let [x, y] = num(xy); if (name === 'frog' && y === 430) y = TABLE_TOP; if (P && name === 'prin' && key === 'fp_bg_yard') x = Math.max(x, 420); put(T, a, x, y, { look: k, to: d }); if (name === 'frog' && /pond/.test(key) && y > POND.surf + 30) waterClip(T, a, POND.surf + 4); },
+        move: async xy => { const [x, y, ms = 500] = num(xy); if (inst()) return a.place(x, y); await a.move(x, y, ms, 'ease-out'); },
+        hop: () => a.hop(name === 'frog' ? 6 : 14, name === 'frog' ? 300 : 360),
+        wiggle: () => a.wiggle(name === 'frog' ? 4 : 5, 500),
+        hide: () => hide(a),
+      });
+      const A = { prin: actor(prin, 'prin'), frog: actor(frog, 'frog'), king: actor(king, 'king'), prince: actor(prince, 'prince') };
+      const call = (o, name) => (op, ...a) => { const f = o[op]; if (!f) { console.warn('[read] 모르는 동사', name, op); return; } return f(...a); };
+      const camGo = (x, y = 280, z = 1) => {
+        if (P && shown(prin)) x = Math.min(Math.max(x, prin.x - 80), prin.x + 80);
+        return inst() ? camSnap(x, y, z) : T.camTo(x, y, z, 700);
+      };
+      return {
+        set(k) { key = k.replace(/_v2$/, ''); cancelBn(); pend = null; scene(key + '_v2'); [prin, frog, king, prince, ball, table, plate, pillow, ...breads].forEach(hide); },
+        cam: a => camGo(...num(a)),
+        follow: x => (P ? T.camTo(+x, 280, 1, 700) : Promise.resolve()),
+        prin: (op, ...a) => {
+          if (op === 'run_out') { const mv = Promise.all([prin.move(-200, FL, 3600, 'ease-in'), ball.move(-200 - BALL_RUN[0], FL + BALL_RUN[1] + 24, 3600, 'ease-in')]); if (P) T.camTo(300, 280, 1, 1500); return walkFx(T, prin, mv, 'step_grass', 400, 6).then(() => { hide(prin); hide(ball); }); }
+          return call(A.prin, 'prin')(op, ...a);
+        },
+        frog: (op, ...a) => {
+          if (op === 'rise') { L.lily_pads.hop(3, 400); return frog.move(frog.x, POND.surf + 36, 900, 'ease-out'); }
+          if (op === 'dive') return (async () => { await frog.move(frog.x, POND.surf + 95, 500, 'ease-in'); await sleep(1400); frog.look('ball'); sfx('bubbles', .4); await frog.move(frog.x, POND.surf + 10, 900, 'ease-out'); })();
+          if (op === 'hops') { const [x, n] = num(a[0]); return hops(T, frog, x, n, 420); }
+          if (op === 'to_table') { hopSfx(T, .5); return arc(frog, 390, TABLE_TOP, 110, 600).then(() => frog.look('sit')); }
+          if (op === 'throw') return (async () => {
+            frog.look('fly', 'right'); follow(BED.x - 80, 1100);
+            await arc(frog, BED.x, BED.top - 62, 170, 1100);
+            sfx('paper_down', .4); frog.look('surprise');
+            pillow.body.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(.85)' }, { transform: 'scaleY(1)' }], { duration: 400 });
+          })();
+          return call(A.frog, 'frog')(op, ...a);
+        },
+        king: (op, ...a) => {
+          if (op === 'enter') { pend = walkFx(T, king, king.move(X(680, 640), FL, 3200, 'ease-out'), 'step_wood', 500, 4); return; }
+          return call(A.king, 'king')(op, ...a);
+        },
+        prince: (op, ...a) => {
+          if (op === 'appear') { hide(frog); put(T, prince, BED.x - 40, FL, { look: 'stand' }); fadeIn(prince, 400); if (!P) T.camTo(500, 280, 1, 900); return; }
+          return call(A.prince, 'prince')(op, ...a);
+        },
+        ball: async (op, a) => {
+          if (op === 'at') { const [x, y] = num(a); return put(T, ball, x, y); }
+          if (op === 'bounce') { put(T, ball, prin.x + BALL_UP[0], FL + BALL_UP[1] + 24); rbn = bounce(ball); return; }
+          if (op === 'hop') { cancelBn(); for (let i = 0; i < +a; i++) { ball.hop(90, 700); bounceSfx(T, .6); await sleep(700); } return; }
+          if (op === 'fly') { cancelBn(); ball.move(prin.x + 40, 60, 900, 'ease-out'); await sleep(900); follow(POND.x - 60, 1100); await ball.move(POND.x, POND.surf - 24, 1100, 'ease-in'); L.lily_pads.wiggle(3, 500); return; }
+          if (op === 'sink') { (async () => { await sleep(300); await L.lily_pads.hop(4, 500); await L.lily_pads.hop(4, 500); })(); ball.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 1400, fill: 'forwards' }); await ball.move(ball.x, POND.surf + 90, 1400, 'ease-in'); hide(ball); ball.pos.getAnimations().forEach(n => n.cancel()); ball.pos.style.opacity = ''; return; }
+          if (op === 'to_prin') { frog.look('sit'); put(T, ball, frog.x, frog.y - 52); await ball.move(prin.x + BALL_RUN[0], FL + BALL_RUN[1] + 24, 700, 'ease-out'); return; }
+          if (op === 'pass') { await ball.move(prince.x + 30, FL - 110, 600, 'ease-out'); bounceSfx(T, .6); await ball.move(prin.x - 30, FL - 110, 600, 'ease-in-out'); bounceSfx(T, .6); await ball.move(510, FL + 2, 600, 'ease-in'); return; }
+          if (op === 'hide') return hide(ball);
+          console.warn('[read] 모르는 동사 ball', op);
+        },
+        table(op) { if (op === 'set') { tx = 560; put(T, table, tx, FL); } },
+        plate(op) { if (op === 'set') { tx = 500; put(T, table, tx, FL); L.chandelier.place(tx, 150); put(T, plate, tx, TABLE_TOP + 8); } },
+        breads(op) { if (op === 'set') breads.forEach((b, i) => put(T, b, tx + (i - 1) * 44, TABLE_TOP - 10)); },
+        bread: async (op, who) => {
+          if (op !== 'eat') return;
+          if (who === 'frog') { await breads[0].move(frog.x + 6, TABLE_TOP - 34, 500, 'ease-in'); fadeOut(T, breads[0], 300); frog.hop(10, 320); }
+          else { await breads[1].move(prin.x - 60, FL - 150, 500, 'ease-in'); sfx('chomp', .5); fadeOut(T, breads[1], 300); prin.hop(8, 300); }
+        },
+        pillow(op) { if (op === 'set') put(T, pillow, BED.x, BED.top + 4); },
+        ripple: () => ripple(T, POND.x, POND.surf + 6),
+        flash() {
+          if (!P) T.camTo(BED.x - 80, 300, 1.12, 500);
+          const b = front(L.magic_burst, BED.x, BED.top - 100 + HT.fp_layer_magic_burst / 2); b.body.style.transformBox = 'fill-box'; b.body.style.transformOrigin = '50% 50%';
+          b.body.animate([{ transform: 'scale(.2) rotate(0deg)', opacity: 1 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 1, offset: .7 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 0 }], { duration: 700, easing: 'ease-out' }).finished.then(() => hide(b), () => hide(b));
+          flash(T, BED.x, BED.top - 100);
+        },
+        petals: () => petals(T),
+        fx(n) {
+          if (n === 'sparkle') return sparkleSfx(T);
+          if (n === 'tada') return sfx('tada') || sparkleSfx(T);
+          if (n === 'knock') { sfx('knock', .5); L.chandelier.wiggle(2, 600); return sleep(300).then(() => sfx('knock', .5)); }
+          sfx(n, n === "splash_big" ? .5 : n === "hop" ? .5 : .4);
+        },
+        pop(spec) { const [x, y, ...w] = String(spec).split(','), t = w.join(','); T.pop(+x, +y, tr(t), POPC[t]); },
+        glow(w) { glow(w === 'ball' ? ball : prince, 1200); },
+        confetti: () => T.confetti(),
+      };
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ===== 1. 성 뜰 (배움 놀이 1: 금공 모양 고르기 — 첫 조작) ===== */
     scene('fp_bg_yard_v2');
     put(T, prin, X(300, 420), FL, { look: 'ball', to: 'right' });
@@ -642,5 +737,5 @@
     return '한 약속은 지켜요.';
   }
 
-  Tale.mount({ title: '개구리 왕자', subtitle: '한 약속은 지켜요', run: T => run(Tale.api) });
+  Tale.mount({ title: '개구리 왕자', subtitle: '한 약속은 지켜요', read: true, run: T => run(Tale.api) });
 })();
