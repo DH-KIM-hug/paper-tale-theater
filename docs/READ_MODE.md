@@ -1,7 +1,7 @@
 # 읽어 주기 모드 (READ MODE) 설계서
 
-> **보류: 대본만 준비, 구현·녹음 미정 (2026-10-22)**
-> 사용자가 도입 여부를 아직 고민 중이다. 엔진 코드와 녹음은 손대지 않고, 설계서와 동화별 대본(`tales/<id>/read_script_el.json`, `read_script_en.json`)만 먼저 만들어 둔다. 시범 대본은 팥죽할멈과 호랑이 한 편.
+> **1단계 구현(엔진 + 4편) — 2026-10-22**
+> 사용자 결정 "읽어 주기 모드 앱에 넣어 줘". 엔진(`engine/tale.js` 의 `T.reading()`·`T.readPlay()`, 시작 화면 '읽어 주기' 단추)과 무료 고정 4편(팥죽 patjuk, 토끼와 거북이 rabbit, 커다란 순무 turnip, 신데렐라 cinderella)의 `READ_ACTS` 를 넣었다. 대본·한국어 녹음은 31편 모두 있고, 나머지 27편은 아래 §10 체크리스트대로 `READ_ACTS` 만 붙이면 된다. 영어 읽기 녹음은 팥죽만 있다(영어 모드에서는 영어 녹음 맵이 있는 동화만 단추가 보인다).
 
 ## 0. 한 줄 정의
 
@@ -30,8 +30,8 @@
 ```
 tales/<id>/read_script_el.json      한국어 대본 (장면 목록 + 문장 + 연출 지시)
 tales/<id>/read_script_en.json      영어 대본 (같은 장면·같은 줄 순서, en 문장)
-tales/<id>/narration_read_el.js     (생성) 신규 문장의 녹음 경로 — Object.assign(NARRATION_CLIPS, {...})
-tales/<id>/narration_read_el_en.js  (생성) 영어
+tales/<id>/read_narration_el.js     (생성) 대본 모든 줄의 녹음 경로 — Object.assign(NARRATION_CLIPS, {...})
+tales/<id>/read_narration_el_en.js  (생성) 영어 — Object.assign(NARRATION_CLIPS_EN, {키: {t, c}})
 audio/el/<id>/                      녹음 mp3 — 놀이판과 같은 폴더 (같은 문장은 같은 해시라 파일을 공유한다)
 ```
 
@@ -212,7 +212,7 @@ async function run(T) {
 - 목소리는 놀이판과 같은 배역·voice_id, eleven_v4. 신규 문장만 녹음.
 - 분량: 기존의 1.5~2배, 한 편 5~8분, 장면 8~11, 장면당 3~6줄.
 - 우선순위: 무료 고정 4편 → 창작 3편 → 나머지.
-- **구현·녹음은 보류**(2026-10-22). 대본만 쌓는다.
+- ~~구현·녹음은 보류~~ → 2026-10-22 1단계 구현(엔진 + 무료 고정 4편). §10.
 
 ## 결정 (2026-10-22)
 - **Typecast 배역도 새 대사를 받을 수 있다.** 사용자 확인: Typecast 사용량이 아직 남아 있다. 팥죽의 친구 7명처럼 Typecast(`tc`) 목소리 배역에도 신규 줄을 줄 수 있고, 녹음은 Typecast 쪽 도구(tools/typecast/gen_tale.py 에 `--read` 옵션 추가 필요)로 한다. ElevenLabs 크레딧 추정에서 Typecast 줄은 빼고 센다.
@@ -226,4 +226,38 @@ async function run(T) {
 - **Typecast**: 팥죽 신규 20줄은 모두 ElevenLabs 배역(nar·halmi·tiger)이라 Typecast 생성 0자. 사용량 조회(`/v1/users/me/subscription`)는 녹음 전후 `used_credits` 255,299 로 같다(`plan_credits` 200,000 초과 표시, 의미는 대시보드 확인 필요). 그래서 `tools/typecast/gen_tale.py --read` 는 아직 만들지 않았다(Typecast 신규 줄이 생기면 그때).
 - **31편 재추정(실측 차감률 0.44)**: 보낼 글자 합계 97,810자 → 차감 약 **43,000** 크레딧(무료 고정 4편 약 4,900 · 창작 3편 약 4,000 · 나머지 24편 약 34,100). 팥죽분 1,347 은 이미 썼으므로 남은 30편은 약 41,700 크레딧이고, 남은 44,290 안에 들어간다(여유 약 2,600, 대본이 ±20% 달라지면 넘칠 수 있음). 한국어만 먼저 만들면 나머지 24편은 보낼 29,057자 → 약 12,800 크레딧.
 - 문제 클립: 없음. 40클립 모두 첫 시도에 통과(받아쓰기 되풀이·잘림·군소리 없음, 다시 만든 것 0). 꼬리 자름 14개(한국어 7·영어 7)는 문장 사이 쉼에서 잘려 꼬리가 남지 않음을 받아쓰기로 확인했다.
+
+## 10. 구현 (2026-10-22 1단계: 엔진 + 무료 고정 4편)
+
+### 10-1. 엔진에 들어간 것 (`engine/tale.js`, `engine/tale.css`)
+- `Tale.mount({ …, read: true })`: 이 동화가 `READ_ACTS` 를 갖췄다는 표시. 없으면 단추도 안 보이고 `?read=1` 도 무시(놀이판).
+- 시작 화면 알약 줄 `이야기 시작` 다음에 **`읽어 주기`**(영어 Read to me, 펼친 책 아이콘, 보조 알약). 보이는 조건: 한국어 = `read_script_el.json` + `read_narration_el.js`, 영어 모드 = `read_script_en.json` + `read_narration_el_en.js` (HEAD 로 확인). 누르면 홈 목소리 `읽어 주기` 클립(home_narration_el.js)을 한 번 말하고 시작. 이번 회차만(`sessionStorage.read_once`, 홈으로 가면 지움). 끝 화면 `한 번 더`(리본·화살표)는 같은 모드로 다시 읽는다. 주소 `?read=1` 로도 들어간다.
+- `T.reading()`: 이번 회차가 읽기인지. `T.readPlay(acts)`: 대본(영어 모드면 en) → 녹음 맵을 `new Function` 으로 실행해 `NARRATION_CLIPS(_EN)` 에 합침 → 장면마다 첫 장면은 `curtain(true)`, 그 뒤는 `sceneCard(card, 차리기)` → 줄마다 `before` → `say` → `after` → 700ms, 장면 끝 1500ms → `moral` 반환(끝 화면 msg).
+- 동사 `'name:a:b'` → `acts.name('a','b')`. 모르는 동사·실패는 `console.warn('[read] …')` 만. Promise 는 기다린다(목록 안에서는 차례로).
+- `T.readPlay` 는 `T.readPlay(...)` 로 불리면 동화가 감싼 T(세로 보정 `portraitGuard`·`withFat` 등)의 `sceneCard`·`say`·`curtain` 을 그대로 쓴다.
+- 읽는 동안 `#tale` 에 `reading` 클래스가 붙는다(예: 팥죽은 세로 화면에서 카드 트레이 자리를 비우지 않고 무대를 기본 높이로 — `#tale.reading { --pv: 60svh }`).
+- `T.readInstant()`: 장면 차리기(`set`·`enter`) 중이면 참 — 책장이 덮인 동안이라 동사는 움직이지 말고 놓기만(카메라는 `camSnap`).
+- 클립 키 확인: 시작할 때 모든 줄의 녹음 유무를 세어 콘솔 `[read] <id> ko: N장면 M줄, 클립 없음 K` 와 `window.__READ`({lines, missing[], unknown[], said, done})에 남긴다. 클립이 없는 줄은 지금처럼 브라우저 TTS 로 떨어진다.
+- 조작 함수·손가락 힌트는 불리지 않는다. 보호자 꾹 누르기 건너뛰기·쉬는 화면(sceneCard 안)·자막 끄기·언어는 그대로. 자동 재생(`auto_play`)과 겹쳐도 읽기에는 누를 것이 없어 영향 없음.
+- 검증 도구: `tools/dev/verify.html` 에 `읽어 주기` 토글(`&read=1`), `make_manifest.js` 가 `read_ko`·`read_en` 줄 목록을 만든다(`node tools/dev/make_manifest.js`).
+
+### 10-2. 다음 동화에 READ_ACTS 붙이기 (체크리스트)
+1. `tales/<id>/read_script_el.json` 의 `acts`(설명)와 `scenes[].set/enter/lines[].before/after` 에 쓰인 **동사를 모두 뽑는다**:
+   `python3 -c "import json;d=json.load(open('tales/<id>/read_script_el.json'));import itertools;print(sorted({v.split(':')[0] for s in d['scenes'] for v in [*s.get('enter',[]), *[x for l in s['lines'] for x in l.get('before',[])+l.get('after',[])]]}))"`
+2. 동화 js 의 `run(T)` 안, **배우·소품을 만든 뒤 첫 장면을 그리기 전**에 `READ_ACTS = { set, cam, … }` 와 분기 한 줄 `if (T.reading()) return T.readPlay(READ_ACTS);` 를 넣는다. 놀이판 흐름은 바꾸지 않는다.
+3. 동사는 놀이판의 장면·배우·카메라·컷 함수를 **감싼 얇은 함수**로 쓴다(같은 크기·자리·시선). 놀이판 연출 묶음(예: 정답 연출) 안에 컷이 들어 있으면 대본이 컷을 따로 부르므로 컷을 뺀 앞부분만 쓴다(팥죽 `STRIKE`).
+4. **TDZ 주의**: 분기 뒤에서 `const` 로 만들어지는 도우미를 READ_ACTS 가 부르면 ReferenceError. 필요한 도우미는 분기 앞에 두거나 READ_ACTS 안에서 다시 만든다(팥죽은 `act` 대신 `fact`).
+5. `set` 동사는 배경을 새로 그리고 배우 크기를 맞춘다. `enter` 동사는 `T.readInstant()` 가 참이면 애니메이션 없이 놓는다(카메라는 `camSnap`).
+6. 대본 동사를 코드로 만들기 어려우면 **대본의 동사 이름은 그대로 두고** 비슷한 기존 연출로 구현한 뒤 커밋 메시지·이 문서에 적는다.
+7. `Tale.mount({ …, read: true })` 를 더한다.
+8. 놀이판에만 있는 화면 요소(카드 트레이, 건너뛰기 단추 등)는 읽기에서 숨기고, 그 자리를 비워 둔 CSS 가 있으면 `#tale.reading` 으로 되돌린다.
+9. 캐시: `tales/<id>/index.html` 의 `engine/tale.css`·`engine/tale.js`·`<id>.js` 에 `?v=날짜` 를 올린다.
+10. 확인(헤드리스, 캐시 끄기 `Network.setCacheDisabled`, 한 크롬에서는 한 번에 한 탭만 — 숨은 탭은 rAF 가 멈춰 책장 넘기기가 멈춘다): `?read=1` 로 가로 1366x1024·세로 390x844 끝까지. `window.__READ` 의 `missing`=0·`unknown`=[]·`done`=true, 예외 0, 끝 화면이 뜬다. `Narrator.speak` 를 짧은 대기로 바꿔 빠르게 돌리고, 한 번은 실제 오디오 길이로. 장면마다 사진을 보고 배우 자리·크기·시선·빈 화면을 확인. 놀이판(일반 시작)·자동 재생 회귀도 확인.
+11. 커밋은 동화별로 `git commit -- <경로>` (git add -A 금지).
+
+### 10-3. 1단계 4편 결과
+- 팥죽 patjuk: 10장면 48줄. 동사 모두 구현(`set`·`daylight`·`cam`·`granny`·`tiger`·`friend`·`friends`·`rolled`·`cut`·`fx`·`pop`·`shake`·`confetti`). 친구 공격은 놀이판 `SUCCESS` 에서 컷·호랑이 반응을 뺀 `STRIKE`, 멍석 `roll`·지게 `carry`·호랑이 `rolled`/`splash` 는 놀이판 연출을 둘로 나눈 것. 영어 읽기 녹음도 있어 영어 모드에서도 단추가 보인다.
+- 토끼와 거북이 rabbit: 11장면 77줄. 동사 모두 구현. `set` 이 놀이판처럼 무대를 비우고 세트 배경·소품을 다시 깔며, 관객은 `aud:*` 를 처음 부를 때 그 세트의 놀이판 자리에 앉는다(`start` 는 놀이판 4·5장면 자리를 합침, `dusk` 의 닭은 꼬끼오 자리 300,474). 대본 좌표를 바꾼 곳: 꿈 장면 `rabbit:at` → 시상대 1등 자리(502,314, 0.9배), `podium` 뒤 `turtle:at` → 시상대 위(490,402). 비슷한 기존 연출로 대체: `doors:open`(부엉이가 네 집을 돌며 똑똑, 소리 퀴즈 없이 동물이 나옴), `owl:lullaby`(자장가 한 소절), `party:band`(행진곡 한 번 저절로), `photo`(하얀 빛 한 번), `turtle:steps/rock/swimacross/climb/tiptoe`(누르기 없이 저절로, `tiptoe` 는 분할 화면 대신 나무 그늘 장면에서 다섯 걸음). 이불·구름·결승 테이프 상태는 같은 세트로 돌아와도 이어진다.
+- 커다란 순무 turnip: 10장면 52줄. 동사 모두 구현. 대본의 `set` 은 spring/summer/feast 뿐이라 놀이판 장면 그림으로 이어 붙였다: `cast:grandpa:at:…,pull` → 3장 로우앵글, `line:n` → 옆모습 텃밭(다른 장면에서 오면 책장 넘김), `cast:dog:hide` → 6장 덤불, `cast:cat:at:…,sit` → 7장 헛간 지붕(어두운 실루엣 → `cat:roofdown` 에서 밝아지며 내려옴), `cast:mouse:hide` → 8장 쥐구멍. `turnip:at` 은 하는 일 없음(순무 자리는 장면이 정함), `cast:at` 의 크기 .7·y500 은 크기 일관성 규칙대로 놀이판 크기 1·바닥선으로. `pull:n` 은 누르기 없는 pullRound, `water/sun/grow` 는 놀이판 물 주기 6단계를 나눈 것, `feast:soup:n` 은 냄비 톡 없이 한 그릇씩.
+- 신데렐라 cinderella: 11장면 69줄. 동사 모두 구현. `set` 은 놀이판 그 장면의 자리·자세·보는 쪽·층 소품을 그대로 놓고, 같은 배경이 여러 번 나오면 나온 순서로 구분(거실 1·2·3, 텃밭 1·2·3, 무도회장 1·2). 대본 y=470 은 바닥선이 아니라서 사람·땅 위 소품은 바닥(FL)에. 첫째 밤은 대본대로면 왕자가 신데렐라 반대쪽을 봐서 이 장면만 왕자를 왼쪽 보기로, 처음 자리 660. 비슷한 기존 연출로 대체: 계단 `prop:slipper:show` → `cut:stairs_slipper` 직전 신데렐라가 내려가며 구두를 떨어뜨림, `cut:fit` 직전 왕자가 구두를 신겨 줌, `prop:orange:show` → 신데렐라가 언니 쪽으로 걸어가 건넴, `mice:out` 은 수 세기 목소리·숫자 글자 없이, `prop:letter:show` 는 반짝인 뒤 3초쯤 뒤 저절로 사라짐(숨기는 동사가 대본에 없음), 마지막 장면의 요정 대모는 세로 화면에서는 좁아 뺌.
 

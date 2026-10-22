@@ -1331,10 +1331,12 @@ const Tale = (() => {
     } catch (e) { console.warn('[read] 녹음 맵을 읽지 못함', f, e); return false; }
   }
   async function readPlay(acts = {}) {
+    /* T.readPlay(...) 로 불리면 this = 동화가 감싼 T (세로 화면 보정 등으로 sceneCard·say 를 덮어쓴 것)를 그대로 쓴다 */
+    const W = this && typeof this.sceneCard === 'function' ? this : api;
     const en = typeof englishOn === 'function' && englishOn();
     const getJSON = async f => { try { const r = await fetch(f, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch (e) { return null; } };
     const sc = (en && await getJSON('read_script_en.json')) || await getJSON('read_script_el.json');
-    if (!sc || !Array.isArray(sc.scenes)) { console.warn('[read] 대본이 없어 끝냅니다'); await curtain(true); return ''; }
+    if (!sc || !Array.isArray(sc.scenes)) { console.warn('[read] 대본이 없어 끝냅니다'); await W.curtain(true); return ''; }
     await loadReadClips(en);
     try { AudioFX.prefetchClips && AudioFX.prefetchClips(); } catch (e) { /* 미리 받기 없이 */ }
     /* 클립 키 확인: 녹음이 없는 줄은 브라우저 TTS 로 떨어진다 → 콘솔과 window.__READ 에 남긴다 */
@@ -1372,14 +1374,14 @@ const Tale = (() => {
           for (const v of s.enter || []) { const r = verb(v); if (r) pend.push(r); }
         } finally { readInstant = false; }
       };
-      if (i === 0) { setUp(); await sleep(300); await curtain(true); }
-      else await sceneCard(s.card || '', setUp);
+      if (i === 0) { setUp(); await sleep(300); await W.curtain(true); }
+      else await W.sceneCard(s.card || '', setUp);
       if (pend.length) await Promise.all(pend);
       const lines = s.lines || [];
       for (let j = 0; j < lines.length; j++) {
         const l = lines[j];
         await runAll(l.before);
-        await say(l.text);
+        await W.say(l.text);
         log.said++;
         await runAll(l.after);
         await sleep(j === lines.length - 1 ? READ_SCENE_END : READ_GAP);
