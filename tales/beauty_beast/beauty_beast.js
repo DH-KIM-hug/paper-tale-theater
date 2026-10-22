@@ -243,7 +243,19 @@
     }
   }
 
+  /* 누르는 자리 넓히기(2026-10-22): 화면에서 짧은 변이 min px 보다 작으면 투명 사각을 대상 안에 깔아 min px 로 키운다. 눌리는 곳 크기만 바뀌고 그림은 그대로 */
+  function padHit(T, el, min = 88) {
+    try {
+      if (el.__pad) { el.__pad.remove(); el.__pad = null; }
+      const m = el.getScreenCTM(); if (!m) return;
+      const sc = Math.hypot(m.a, m.b) || 1, bb = el.getBBox();
+      const w = Math.max(bb.width, min / sc), h = Math.max(bb.height, min / sc);
+      if (w === bb.width && h === bb.height) return;
+      el.__pad = T.el('rect', { x: bb.x + bb.width / 2 - w / 2, y: bb.y + bb.height / 2 - h / 2, width: w, height: h, fill: '#000', 'fill-opacity': 0 }, el);
+    } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
+  }
   async function run(T) {
+    if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     let gap = 150;                                  // 대사 사이 숨 (첫 조작 전에는 짧게: 시작 후 30초 안에 첫 톡)
     const say = async text => { await T.say(text); await sleep(gap); };
@@ -311,8 +323,7 @@
     hide(father); hide(horse);
     put(T, father, X(640, 600), FL, { look: 'ride', to: 'right' }); sfx(T, 'paper_up');
     bob(father.pos);
-    await say('말을 톡 눌러 봐요.');
-    await T.tap(father.pos, { prompt: '말을 톡 눌러 봐요.' });
+    await T.ask('말을 톡 눌러 봐요.', () => T.tap(father.pos, { prompt: '말을 톡 눌러 봐요.' }));
     gap = 500;
     (async () => { for (let i = 0; i < 6; i++) { AudioFX.sfx('step_grass'); father.hop(6, 420); await sleep(450); } })();
     T.pop(father.x, FL - 350, tr('따각따각'));
@@ -362,18 +373,16 @@
     }, bush5.pos);
     await say('아침이 되자 눈 속에 장미가 활짝 피어 있었어요!');
     bush5.hop(8, 360); await sleep(150); bush2.hop(8, 360);
-    await say('장미가 많은 덤불은 어느 쪽일까요?');
-    await T.choose([{ el: bush5.pos, ok: true }, { el: bush2.pos, ok: false, onWrong: async () => { await bush2.wiggle(8, 360); await say('그 덤불은 장미가 두 송이예요. 적어요.'); } }],
-      { prompt: '장미가 많은 덤불은 어느 쪽일까요?' });
+    await T.ask('장미가 많은 덤불은 어느 쪽일까요?', () => T.choose([{ el: bush5.pos, ok: true }, { el: bush2.pos, ok: false, onWrong: async () => { await bush2.wiggle(8, 360); await say('그 덤불은 장미가 두 송이예요. 적어요.'); } }],
+      { prompt: '장미가 많은 덤불은 어느 쪽일까요?' }));
     glow(bush5, 1200); bush5.hop(14, 400); sparkleSfx(T); T.pop(bush5.x, FL - 260, tr('반짝!'));
     await say('맞아요, 다섯 송이! 장미가 많아요.');
     {
       const a5 = bush5.x, a2 = bush2.x; sfx(T, 'swish');
       await Promise.all([bush5.move(a2, FL - 10, 900), bush2.move(a5, FL - 10, 900)]);
     }
-    await say('자리를 바꿨어요. 장미가 적은 덤불은 어느 쪽일까요?');
-    await T.choose([{ el: bush2.pos, ok: true }, { el: bush5.pos, ok: false, onWrong: async () => { await bush5.wiggle(8, 360); await say('그 덤불은 장미가 다섯 송이예요. 많아요.'); } }],
-      { prompt: '장미가 적은 덤불은 어느 쪽일까요?' });
+    await T.ask('자리를 바꿨어요. 장미가 적은 덤불은 어느 쪽일까요?', () => T.choose([{ el: bush2.pos, ok: true }, { el: bush5.pos, ok: false, onWrong: async () => { await bush5.wiggle(8, 360); await say('그 덤불은 장미가 다섯 송이예요. 많아요.'); } }],
+      { prompt: '장미가 적은 덤불은 어느 쪽일까요?' }));
     glow(bush2, 1200); bush2.hop(14, 400); sparkleSfx(T); T.pop(bush2.x, FL - 260, tr('반짝!'));
     await say('맞아요, 두 송이! 장미가 적어요.');
     follow(bush5.x, 900);
@@ -473,8 +482,8 @@
     const WR = ['그건 탁자 위예요.', '그건 탁자 아래예요.', '그건 탁자 옆이에요.'];
     for (const k of ['on', 'under', 'beside'].sort(() => Math.random() - .5)) {
       const q = QS[k];
-      await say(q.ask);
-      await T.choose(vases.map((v, i) => ({ el: v.pos, ok: i === q.vi, onWrong: async () => { await v.wiggle(8, 360); await say(WR[i]); } })), { prompt: q.ask });
+      vases.forEach(v => padHit(T, v.pos));
+      await T.ask(q.ask, () => T.choose(vases.map((v, i) => ({ el: v.pos, ok: i === q.vi, onWrong: async () => { await v.wiggle(8, 360); await say(WR[i]); } })), { prompt: q.ask }));
       const v = vases[q.vi]; glow(v, 1200); v.hop(14, 400); sparkleSfx(T); T.pop(v.x, FL - 160, tr('반짝!'));
       await say(q.right);
       await sleep(300);
@@ -516,19 +525,16 @@
       if (end !== undefined) await T.anim(SKY, [{ opacity: peak }, { opacity: end }], 600);
     };
     const ASK = '창밖은 아침, 낮, 밤으로 바뀌어요. 아침부터 차례로 눌러 봐요.'.replace('창밖은', '창밖은');
-    await say('창밖은 아침, 낮, 밤으로 바뀌어요. 아침부터 차례로 눌러 봐요.');
     const wrongC = (k, line) => ({ el: cardOf(k).g, ok: false, onWrong: async () => { await wiggleEl(T, cardOf(k).g); await say(line); } });
-    await T.choose([{ el: cardOf('morning').g, ok: true }, wrongC('noon', '그건 낮이에요. 아침은 어디일까요?'), wrongC('night', '그건 밤이에요. 아침은 어디일까요?')], { prompt: ASK });
+    await T.ask('창밖은 아침, 낮, 밤으로 바뀌어요. 아침부터 차례로 눌러 봐요.', () => T.choose([{ el: cardOf('morning').g, ok: true }, wrongC('noon', '그건 낮이에요. 아침은 어디일까요?'), wrongC('night', '그건 밤이에요. 아침은 어디일까요?')], { prompt: ASK }));
     cardOf('morning').g.style.filter = 'url(#hintGlow)';
     flash('#F2B366', .22, 0);
-    await say('맞아요, 아침! 아침 다음은?');
-    cardOf('morning').g.style.filter = ''; cardOf('morning').g.style.opacity = '.35'; cardOf('morning').g.style.pointerEvents = 'none';
-    await T.choose([{ el: cardOf('noon').g, ok: true }, wrongC('night', '그건 밤이에요. 아침 다음은?')], { prompt: ASK });
+    setTimeout(() => { cardOf('morning').g.style.filter = ''; }, 1200); cardOf('morning').g.style.opacity = '.35'; cardOf('morning').g.style.pointerEvents = 'none';
+    await T.ask('맞아요, 아침! 아침 다음은?', () => T.choose([{ el: cardOf('noon').g, ok: true }, wrongC('night', '그건 밤이에요. 아침 다음은?')], { prompt: ASK }));
     cardOf('noon').g.style.filter = 'url(#hintGlow)';
     flash('#F6ECD8', .3, 0);
-    await say('맞아요, 낮! 낮 다음은?');
-    cardOf('noon').g.style.filter = ''; cardOf('noon').g.style.opacity = '.35'; cardOf('noon').g.style.pointerEvents = 'none';
-    await T.tap(cardOf('night').g, { prompt: ASK });
+    setTimeout(() => { cardOf('noon').g.style.filter = ''; }, 1200); cardOf('noon').g.style.opacity = '.35'; cardOf('noon').g.style.pointerEvents = 'none';
+    await T.ask('맞아요, 낮! 낮 다음은?', () => T.tap(cardOf('night').g, { prompt: ASK }));
     cardOf('night').g.style.filter = 'url(#hintGlow)';
     SKY.setAttribute('fill', '#1F2A56'); T.anim(SKY, [{ opacity: 0 }, { opacity: .35 }], 800);
     await say('맞아요, 밤! 아침, 낮, 밤. 하루가 이렇게 지나가요.');
@@ -623,8 +629,7 @@
     belle.look('kneel', 'right');
     await say('야수님, 일어나요!');
     bob(spring.pos);
-    await say('샘물을 톡 눌러 봐요.');
-    await T.tap(spring.pos, { prompt: '샘물을 톡 눌러 봐요.' });
+    await T.ask('샘물을 톡 눌러 봐요.', () => T.tap(spring.pos, { prompt: '샘물을 톡 눌러 봐요.' }));
     drops(T, belle.x + 40, FL - 85, beast.x - beast.w * .3, FL - 60);
     sfx(T, 'splash', .5); T.pop(beast.x - 60, FL - 170, tr('똑똑!'));
     await sleep(700);
