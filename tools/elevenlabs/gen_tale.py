@@ -2,6 +2,8 @@
   python3 tools/elevenlabs/gen_tale.py <tale>              # tales/<tale>/voice_script_el.json → audio/el/<tale>/*.mp3 + tales/<tale>/narration_el.js
   python3 tools/elevenlabs/gen_tale.py <tale> --lang en    # tales/<tale>/voice_script_en.json 의 영어 줄 + voice_script_el.json 의 목소리
                                                            #   → audio/el/<tale>/en/*.mp3 + tales/<tale>/narration_el_en.js
+  --read                                                   # 읽어 주기 모드: tales/<tale>/read_script_el.json(en 은 read_script_en.json) 의 모든 줄 → 같은 규칙으로 생성,
+                                                           #   맵은 tales/<tale>/read_narration_el.js / read_narration_el_en.js (기존 클립 정리·덮어쓰기 없음)
   옵션: --model eleven_v4 (기본 eleven_v3, 환경변수 EL_MODEL 도 가능; 클립 이름에 모델이 섞여 모델을 바꾸면 새로 만든다), --redo (전부 다시), --dry (글자 수만 셈), --max-chars N (이번 실행에서 새로 만들 글자 수 상한; 넘는 줄은 건너뜀)
 voice_script_el.json 은 voice_script.json 과 같은 모양이고 voices 의 값이 ElevenLabs voice_id.
 출력 js 는 이미 불러온 Typecast 쪽 상수에 Object.assign 으로 덮어쓴다 (const 라서 다시 선언할 수 없다).
@@ -38,8 +40,12 @@ def main():
     en = '--lang' in sys.argv and sys.argv[sys.argv.index('--lang') + 1] == 'en'
     cap = int(sys.argv[sys.argv.index('--max-chars') + 1]) if '--max-chars' in sys.argv else 10**9
     td = os.path.join(ROOT, 'tales', tale)
-    spec = json.load(open(os.path.join(td, 'voice_script_en.json' if en else 'voice_script_el.json')))
+    read = '--read' in sys.argv
+    def flat(f):  # 읽기 대본: 장면별 줄을 한 목록으로
+        d = json.load(open(os.path.join(td, f))); d['lines'] = [l for sc in d['scenes'] for l in sc['lines']]; return d
+    spec = flat('read_script_en.json' if en else 'read_script_el.json') if read else json.load(open(os.path.join(td, 'voice_script_en.json' if en else 'voice_script_el.json')))
     EL = json.load(open(os.path.join(td, 'voice_script_el.json')))
+    if read: EL = {**EL, 'lines': flat('read_script_el.json')['lines'], 'extra': {}}  # 영어 연기 지시는 읽기 한국어 대본에서
     V = EL['voices']; MODELS = EL.get('models') or {}; SET = EL.get('settings') or {}; USE_DIR = EL.get('use_dir')  # None 이면 모든 배역
     ONLY = set(sys.argv[sys.argv.index('--only') + 1].split(',')) if '--only' in sys.argv else None  # 시범: 줄 번호(L1.1, Xcut_bam.0)만 만든다
     for r in V: assert r.isalpha() and r.islower(), f'배역 이름은 영어 소문자만: {r}'
@@ -113,7 +119,7 @@ def main():
     if dry:
         print('새로 만들 글자 수:', chars, '/ 건너뛸 줄:', skipped); return
     sfx = '_EN' if en else ''
-    with open(os.path.join(td, 'narration_el_en.js' if en else 'narration_el.js'), 'w') as f:
+    with open(os.path.join(td, ('read_' if read else '') + ('narration_el_en.js' if en else 'narration_el.js')), 'w') as f:
         f.write(f'/* {tale} — ElevenLabs 배역 내레이션{" (영어)" if en else ""} (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */\n')
         f.write(f'Object.assign(NARRATION_CLIPS{sfx}, ' + json.dumps(clips, ensure_ascii=False, indent=1) + ');\n')
         f.write(f'Object.assign(VOICE_LINES{sfx}, ' + json.dumps(voice, ensure_ascii=False, indent=1) + ');\n')
@@ -121,7 +127,7 @@ def main():
         v = v['c'] if isinstance(v, dict) else v
         return [v] if isinstance(v, str) else v
     used = {u for v in list(clips.values()) + list(voice.values()) for u in urls_of(v)}
-    for fn in os.listdir(outdir):
+    for fn in ([] if read else os.listdir(outdir)):
         fp = os.path.join(outdir, fn)
         if fn.partition('_')[0] in MODELS: continue  # 모델을 따로 쓰는 배역은 비교용으로 옛 클립을 남긴다
         if os.path.isfile(fp) and f'audio/el/{tale}/{sub}{fn}' not in used: os.remove(fp)

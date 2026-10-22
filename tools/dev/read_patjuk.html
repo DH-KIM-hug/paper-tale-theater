@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>팥죽 읽어 주기 듣기</title>
+<style>
+  :root { color-scheme: light; --bg:#F5EFE9; --ink:#1F2A56; --mute:#6B6F86; --card:#FFFFFF; --acc:#A93B32; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.5 system-ui, -apple-system, sans-serif; padding: env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px); }
+  header { display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:12px 0; }
+  select, button { font:inherit; padding:8px 12px; border-radius:10px; border:1px solid #d9d2c8; background:#fff; color:var(--ink); }
+  button:disabled { opacity:.4; }
+  .seg { display:flex; gap:4px; }
+  .seg button[aria-pressed="true"] { background:var(--ink); color:#fff; }
+  #count { color:var(--mute); font-size:13px; }
+  #wrap { max-width:720px; margin:0 auto; }
+  .line { background:var(--card); border-radius:14px; padding:12px 16px; margin-top:10px; box-shadow:0 2px 0 #e4dcd0; cursor:pointer; border-left:6px solid transparent; }
+  .line.on { border-left-color:var(--acc); }
+  .tag { display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--mute); border-radius:8px; padding:1px 8px; margin-right:6px; }
+  .tag.new { background:var(--acc); } .tag.trim { background:var(--ink); }
+  .role { color:var(--mute); font-size:12px; }
+  #moral { color:var(--mute); margin:4px 0 12px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<header>
+  <select id="scene" aria-label="장면"></select>
+  <div class="seg"><button id="ko" aria-pressed="true">한국어</button><button id="en" aria-pressed="false">English</button></div>
+  <button id="prev">이전</button><button id="play">재생</button><button id="next">다음</button>
+  <label><input type="checkbox" id="auto" checked> 이어서 재생</label>
+  <span id="count"></span>
+</header>
+<div id="moral"></div>
+<div id="list"></div>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+let lang = 'ko', data = {}, flat = [], cur = 0, audio = new Audio(), token = 0;
+async function load() {
+  // 맵 js 는 Object.assign(NARRATION_CLIPS, …) 꼴이라 직접 실행해 값을 받는다
+  const grab = async (f, nm) => { const t = await (await fetch(f)).text(); const o = {}; new Function(nm, 'VOICE_LINES', 'VOICE_LINES_EN', 'NARRATION_CLIPS_EN', t.replace(/Object\.assign\(VOICE_LINES(_EN)?,[\s\S]*$/, ''))(o, {}, {}, o); return o; };
+  data.ko = await (await fetch('../../tales/patjuk/read_script_el.json')).json();
+  data.en = await (await fetch('../../tales/patjuk/read_script_en.json')).json();
+  data.mko = await grab('../../tales/patjuk/read_narration_el.js', 'NARRATION_CLIPS');
+  data.men = await grab('../../tales/patjuk/read_narration_el_en.js', 'NARRATION_CLIPS_EN');
+  data.ko.scenes.forEach((s, i) => { const o = document.createElement('option'); o.value = i; o.textContent = `${s.key} · ${s.card || ''}`; $('scene').appendChild(o); });
+  show();
+}
+function clipsOf(line) {
+  const m = lang === 'en' ? data.men : data.mko, v = m[line.text]; const c = v && v.c ? v.c : v;
+  return c ? [].concat(c).map(p => '../../' + p) : [];
+}
+function show() {
+  const si = +$('scene').value, sc = data[lang].scenes[si], sk = data.ko.scenes[si];
+  $('moral').textContent = lang === 'en' ? data.en.moral || '' : data.ko.moral || '';
+  flat = sc.lines.map((l, i) => ({ l, k: sk.lines[i], clips: clipsOf(l) }));
+  const L = $('list'); L.innerHTML = '';
+  flat.forEach((x, i) => {
+    const d = document.createElement('div'); d.className = 'line'; d.dataset.i = i;
+    const roles = (x.l.segs || []).map(g => g[0]).join('+');
+    d.innerHTML = `<span class="tag ${x.l.src}">${x.l.src}</span><span class="role">${roles} · 클립 ${x.clips.length}</span><div></div>`;
+    d.lastChild.textContent = lang === 'en' ? x.l.en : x.l.text;
+    d.onclick = () => { cur = i; playLine(true); };
+    L.appendChild(d);
+  });
+  cur = 0; mark();
+}
+function mark() {
+  [...$('list').children].forEach((d, i) => d.classList.toggle('on', i === cur));
+  $('count').textContent = `${cur + 1} / ${flat.length}`;
+  $('prev').disabled = $('scene').value == 0 && cur == 0;
+  $('next').disabled = +$('scene').value == $('scene').options.length - 1 && cur == flat.length - 1;
+}
+async function playLine(chain) {
+  const my = ++token; audio.pause(); mark();
+  for (const u of flat[cur].clips) {
+    if (my !== token) return;
+    audio.src = u; await audio.play().catch(() => {});
+    await new Promise(r => { audio.onended = r; audio.onerror = r; });
+  }
+  if (my !== token || !chain || !$('auto').checked) return;
+  go(1, true);
+}
+function go(d, chain) {
+  let i = cur + d, s = +$('scene').value;
+  if (i >= flat.length) { if (s + 1 >= $('scene').options.length) return; $('scene').value = s + 1; show(); i = 0; }
+  else if (i < 0) { if (s == 0) return; $('scene').value = s - 1; show(); i = flat.length - 1; }
+  cur = i; mark(); playLine(chain);
+}
+$('scene').onchange = () => { token++; audio.pause(); show(); };
+$('prev').onclick = () => go(-1, false); $('next').onclick = () => go(1, false);
+$('play').onclick = () => playLine(true);
+for (const l of ['ko', 'en']) $(l).onclick = () => { token++; audio.pause(); lang = l; $('ko').setAttribute('aria-pressed', l == 'ko'); $('en').setAttribute('aria-pressed', l == 'en'); show(); };
+load();
+</script>
+</body>
+</html>
