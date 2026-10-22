@@ -13,6 +13,8 @@
     fp_king_stand: 0.4983, fp_prince_stand: 0.4633, fp_prince_hand: 0.5817,
     fp_frog_sit: 1.0633, fp_frog_ball: 1.0633, fp_frog_hop: 1.5411, fp_frog_fly: 1.03, fp_frog_surprise: 1.0633,
     fp_prop_ball: 1.0, fp_prop_table: 3.0201, fp_prop_plate: 2.093, fp_prop_bread: 1.3033, fp_prop_pillow: 1.9438,
+    fp_layer_rose_arch: .6283, fp_layer_flowerbed: 2.2333, fp_layer_topiary: .57, fp_layer_lily_pads: 1.39, fp_layer_reeds: .6117, fp_layer_butterfly: 1.1883,
+    fp_layer_chandelier: .955, fp_layer_candelabra: .4633, fp_layer_garland: 4.3269, fp_layer_magic_burst: .9367, fp_layer_hedge_front: 2.381,
   };
   /* 높이: 사람은 얼굴 폭, 개구리는 눈 폭으로 맞춘다(SPEC §2-2). 그림이 오면 다시 잰다 */
   const HT = {
@@ -20,6 +22,9 @@
     fp_king_stand: 245, fp_prince_stand: 240, fp_prince_hand: 240,
     fp_frog_sit: 90, fp_frog_ball: 90, fp_frog_hop: 104, fp_frog_fly: 89, fp_frog_surprise: 99,
     fp_prop_ball: 48, fp_prop_table: 150, fp_prop_plate: 40, fp_prop_bread: 34, fp_prop_pillow: 70,
+    /* 레이어 소품(VISUAL_PLAN §5): 배경을 꾸미는 종이 조각. 누름을 받지 않는다 */
+    fp_layer_rose_arch: 300, fp_layer_flowerbed: 110, fp_layer_topiary: 200, fp_layer_lily_pads: 50, fp_layer_reeds: 190, fp_layer_butterfly: 34,
+    fp_layer_chandelier: 170, fp_layer_candelabra: 230, fp_layer_garland: 80, fp_layer_magic_burst: 260, fp_layer_hedge_front: 100,
   };
   /* 그림이 보는 쪽 ('left' | 'right' | 'front') */
   const NAT = { fp_prin_run: 'right', fp_prin_throw: 'right', fp_prin_hand: 'right', fp_prin_refuse: 'left', fp_prin_sit: 'left',
@@ -27,13 +32,13 @@
   const FL = 505;                       // 바닥(발끝 y)
   const POND = { x: 660, surf: 420 };   // 2~5장 샘: 가운데 x, 물 윗선 y (받은 배경 fp_bg_pond 를 보고 ±20)
   const DOOR = { x: 130 };              // 6·7장 열린 문의 가운데 x
-  const BED  = { x: 760, top: 390 };    // 9장 침대: 베개 x, 매트리스 윗선 y
+  const BED  = { x: 850, top: 272 };    // 9장 침대: 베개 x, 매트리스 윗선 y (fp_bg_room_v2 에서 잼: 매트리스 윗선 266, 머리판 앞 흰 매트리스 x 860~975)
   const TABLE_TOP = FL - 140;           // 8장 식탁 윗면 y
   const BALL_UP  = [0, -272];           // prin_ball: 들어 올린 두 손 위 공 중심(공주 발끝 기준)
   const BALL_RUN = [22, -118];          // prin_run: 품에 안은 공 중심(오른쪽 볼 때). 왼쪽을 볼 때는 x 부호를 뒤집는다
   const HAND_PRIN = [58, -118];         // prin_hand: 내민 손끝(오른쪽 볼 때)
   const HAND_PRINCE = [60, -122];       // prince_hand: 내민 손끝(오른쪽 볼 때; 왼쪽 보면 x = -60)
-  const BGS = ['fp_bg_yard', 'fp_bg_pond', 'fp_bg_dining', 'fp_bg_room'];
+  const BGS = ['fp_bg_yard_v2', 'fp_bg_pond_v2', 'fp_bg_dining_v2', 'fp_bg_room_v2'];
   const src = k => AS + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
@@ -112,10 +117,10 @@
 
   /* 배경 자리표시: 종이 한 장 + 요소 2~3개 + 장면 이름표 */
   const BGPH = {
-    fp_bg_yard:   { sky: '#EEF3F7', gnd: '#9DBB7A', name: '성 뜰', shapes: () => [['rect', { x: 60, y: 170, width: 90, height: 240, fill: CREAM }], ['rect', { x: 170, y: 220, width: 80, height: 190, fill: CREAM }], ['path', { d: 'M50 170 L105 100 L160 170Z', fill: GOLD }], ['rect', { x: 850, y: 280, width: 30, height: 130, fill: '#6B4A32' }], ['circle', { cx: 865, cy: 240, r: 70, fill: '#3F6B4F' }]] },
-    fp_bg_pond:   { sky: '#EEF3F7', gnd: '#9DBB7A', name: '숲속 샘', shapes: () => [['ellipse', { cx: 660, cy: 500, rx: 215, ry: 90, fill: '#BFD8EE' }], ['circle', { cx: 150, cy: 440, r: 30, fill: '#BDB7AE' }], ['circle', { cx: 210, cy: 460, r: 24, fill: '#BDB7AE' }], ['circle', { cx: 120, cy: 475, r: 20, fill: '#BDB7AE' }], ['circle', { cx: 60, cy: 200, r: 90, fill: '#3F6B4F' }], ['circle', { cx: 950, cy: 200, r: 90, fill: '#3F6B4F' }]] },
-    fp_bg_dining: { sky: CREAM, gnd: '#6B4A32', name: '성 식당(식탁 없음)', shapes: () => [['rect', { x: 70, y: 150, width: 120, height: 262, fill: '#6B4A32' }], ['rect', { x: 95, y: 190, width: 70, height: 110, fill: '#1F2A56' }], ['rect', { x: 440, y: 70, width: 120, height: 160, rx: 60, fill: '#1F2A56' }], ['rect', { x: 860, y: 250, width: 24, height: 160, fill: GOLD }], ['circle', { cx: 872, cy: 240, r: 18, fill: '#F2B366' }]] },
-    fp_bg_room:   { sky: CREAM, gnd: '#6B4A32', name: '공주 방(베개 없음)', shapes: () => [['rect', { x: 640, y: 400, width: 320, height: 110, fill: '#6B4A32' }], ['rect', { x: 650, y: 390, width: 300, height: 30, fill: CREAM }], ['rect', { x: 700, y: 420, width: 250, height: 80, fill: '#A93B32' }], ['rect', { x: 120, y: 90, width: 150, height: 170, fill: '#1F2A56' }], ['circle', { cx: 230, cy: 130, r: 26, fill: CREAM }]] },
+    fp_bg_yard_v2:   { sky: '#EEF3F7', gnd: '#9DBB7A', name: '성 뜰', shapes: () => [['rect', { x: 60, y: 170, width: 90, height: 240, fill: CREAM }], ['rect', { x: 170, y: 220, width: 80, height: 190, fill: CREAM }], ['path', { d: 'M50 170 L105 100 L160 170Z', fill: GOLD }], ['rect', { x: 850, y: 280, width: 30, height: 130, fill: '#6B4A32' }], ['circle', { cx: 865, cy: 240, r: 70, fill: '#3F6B4F' }]] },
+    fp_bg_pond_v2:   { sky: '#EEF3F7', gnd: '#9DBB7A', name: '숲속 샘', shapes: () => [['ellipse', { cx: 660, cy: 500, rx: 215, ry: 90, fill: '#BFD8EE' }], ['circle', { cx: 150, cy: 440, r: 30, fill: '#BDB7AE' }], ['circle', { cx: 210, cy: 460, r: 24, fill: '#BDB7AE' }], ['circle', { cx: 120, cy: 475, r: 20, fill: '#BDB7AE' }], ['circle', { cx: 60, cy: 200, r: 90, fill: '#3F6B4F' }], ['circle', { cx: 950, cy: 200, r: 90, fill: '#3F6B4F' }]] },
+    fp_bg_dining_v2: { sky: CREAM, gnd: '#6B4A32', name: '성 식당(식탁 없음)', shapes: () => [['rect', { x: 70, y: 150, width: 120, height: 262, fill: '#6B4A32' }], ['rect', { x: 95, y: 190, width: 70, height: 110, fill: '#1F2A56' }], ['rect', { x: 440, y: 70, width: 120, height: 160, rx: 60, fill: '#1F2A56' }], ['rect', { x: 860, y: 250, width: 24, height: 160, fill: GOLD }], ['circle', { cx: 872, cy: 240, r: 18, fill: '#F2B366' }]] },
+    fp_bg_room_v2:   { sky: CREAM, gnd: '#6B4A32', name: '공주 방(베개 없음)', shapes: () => [['rect', { x: 640, y: 400, width: 320, height: 110, fill: '#6B4A32' }], ['rect', { x: 650, y: 390, width: 300, height: 30, fill: CREAM }], ['rect', { x: 700, y: 420, width: 250, height: 80, fill: '#A93B32' }], ['rect', { x: 120, y: 90, width: 150, height: 170, fill: '#1F2A56' }], ['circle', { cx: 230, cy: 130, r: 26, fill: CREAM }]] },
   };
   function bgImage(T, key) {
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
@@ -294,7 +299,7 @@
     const GAP = 700, SCENE_END = 1500, LOOK = 1500;   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */   // LOOK: 장면이 바뀐 뒤 그림을 둘러보는 쉼(목표 7분)
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(하나·둘·셋)
-    const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
+    const scene = key => { T.clear(); bgImage(T, key); dress(key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -311,12 +316,41 @@
     const prince = mk(T, pz('prince', ['stand', 'hand']));
     const ball = prop(T, 'fp_prop_ball', HT.fp_prop_ball), table = prop(T, 'fp_prop_table', HT.fp_prop_table), plate = prop(T, 'fp_prop_plate', HT.fp_prop_plate), pillow = prop(T, 'fp_prop_pillow', HT.fp_prop_pillow);
     const breads = [0, 1, 2].map(() => prop(T, 'fp_prop_bread', HT.fp_prop_bread));
-    [prin, frog, king, prince, ball, table, plate, pillow, ...breads].forEach(hide);
+    /* 레이어 소품(VISUAL_PLAN §4): 중간 층은 world 맨 뒤(배우보다 먼저), 앞 가림 층은 fx(배우 위). 모두 누름 없음 */
+    const deco = k => { const a = prop(T, 'fp_layer_' + k, HT['fp_layer_' + k]); a.pos.style.pointerEvents = 'none'; return a; };
+    const L = Object.fromEntries(['rose_arch', 'flowerbed', 'topiary', 'lily_pads', 'reeds', 'chandelier', 'candelabra', 'garland', 'garland2', 'magic_burst', 'hedge_front'].map(k => [k, deco(k.replace(/2$/, ''))]));
+    const flies = [0, 1].map(() => deco('butterfly'));
+    [prin, frog, king, prince, ball, table, plate, pillow, ...breads, ...Object.values(L), ...flies].forEach(hide);
+    const mid = (a, x, y) => { put(T, a, x, y); T.world.insertBefore(a.pos, T.world.firstChild); return a; };
+    const front = (a, x, y) => { put(T, a, x, y); T.fx.appendChild(a.pos); return a; };
+    function drift(b, cx, cy, i) {     // 나비: 느린 8자(12초), 날갯짓
+      put(T, b, cx, cy); T.fx.appendChild(b.pos); b.body.getAnimations().forEach(n => n.cancel());
+      const k = i ? -1 : 1;
+      b.body.animate([0, 1, 2, 3, 4].map(t => ({ translate: `${k * 60 * Math.sin(t * Math.PI / 2)}px ${26 * Math.sin(t * Math.PI)}px` })), { duration: 12000 + i * 1500, iterations: Infinity, easing: 'ease-in-out' });
+      b.body.animate([{ scale: '1 1' }, { scale: '.55 1' }, { scale: '1 1' }], { duration: 420, iterations: Infinity });
+    }
+    const flicker = a => a.body.animate([{ opacity: 1 }, { opacity: .85 }, { opacity: 1 }], { duration: 1600, iterations: Infinity });
+    function dress(key) {
+      if (key === 'fp_bg_yard_v2') {
+        mid(L.rose_arch, X(80, 300), FL - 10);
+        front(L.hedge_front, X(40, 40), 585);
+        flies.forEach((b, i) => drift(b, X([150, 880][i], [480, 650][i]), [200, 140][i], i));
+      }
+      if (key === 'fp_bg_pond_v2') {
+        mid(L.reeds, 985, FL - 20); mid(L.lily_pads, 800, 488);
+        front(L.flowerbed, X(950, 760), 585);
+        drift(flies[0], X(200, 450), 200, 0);
+      }
+      if (key === 'fp_bg_dining_v2') {
+        flicker(mid(L.chandelier, 560, 170)); flicker(mid(L.candelabra, 940, FL - 10));
+      }
+    }
+
     T.director({ cast: { prin, frog, king, prince }, noFace: ['prin', 'frog', 'king', 'prince'] });
     const bounce = a => a.pos.animate([{ translate: '0 0' }, { translate: '0 -40px' }, { translate: '0 0' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
 
     /* ===== 1. 성 뜰 (배움 놀이 1: 금공 모양 고르기 — 첫 조작) ===== */
-    scene('fp_bg_yard');
+    scene('fp_bg_yard_v2');
     put(T, prin, X(300, 420), FL, { look: 'ball', to: 'right' });
     put(T, ball, prin.x + BALL_UP[0], FL + BALL_UP[1] + 24);
     let bn = bounce(ball);
@@ -349,7 +383,7 @@
 
     /* ===== 2. 샘가 (공이 높이 튀어 샘으로) ===== */
     await T.sceneCard(tr('샘가'), () => {
-      scene('fp_bg_pond');
+      scene('fp_bg_pond_v2');
       put(T, prin, X(380, 430), FL, { look: 'ball', to: 'right' });
       put(T, ball, prin.x + BALL_UP[0], FL + BALL_UP[1] + 24);
       bn = bounce(ball);
@@ -369,6 +403,7 @@
       await sleep(900);
       follow(POND.x - 60, 1100);
       await ball.move(POND.x, POND.surf - 24, 1100, 'ease-in');
+      L.lily_pads.wiggle(3, 500);
       prin.look('stand'); await prin.wiggle(5, 500);
     })();
     await say(S.L4); await t2;
@@ -377,7 +412,7 @@
 
     /* ===== 3. 풍덩 (공이 가라앉고 공주가 운다) ===== */
     await T.sceneCard(tr('풍덩'), () => {
-      scene('fp_bg_pond');
+      scene('fp_bg_pond_v2');
       put(T, prin, X(380, 430), FL, { look: 'stand' });
       put(T, ball, POND.x, POND.surf - 24);
       camSnap(520, 280, 1);
@@ -385,6 +420,7 @@
     await sleep(LOOK);
     const t3 = (async () => {
       sfx('splash_big', .5); T.pop(POND.x, POND.surf - 130, tr('풍덩!'), '#1F2A56'); ripple(T, POND.x, POND.surf + 6);
+      (async () => { await sleep(300); await L.lily_pads.hop(4, 500); await L.lily_pads.hop(4, 500); })();
       ball.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 1400, fill: 'forwards' });
       await ball.move(POND.x, POND.surf + 90, 1400, 'ease-in');
       hide(ball); ball.pos.getAnimations().forEach(n => n.cancel()); ball.pos.style.opacity = '';
@@ -396,14 +432,14 @@
 
     /* ===== 4. 개구리의 약속 ===== */
     await T.sceneCard(tr('개구리의 약속'), () => {
-      scene('fp_bg_pond');
+      scene('fp_bg_pond_v2');
       put(T, prin, X(380, 430), FL, { look: 'cry' });
       put(T, frog, POND.x - 60, POND.surf + 95, { look: 'sit' });
       waterClip(T, frog, POND.surf + 4);
       camSnap(520, 280, 1);
     }, prin.pos);
     await sleep(LOOK);
-    const t4 = (async () => { sfx('bubbles', .4); T.pop(POND.x + 70, POND.surf - 90, tr('뽀글뽀글'), '#1F2A56'); await frog.move(POND.x - 60, POND.surf + 36, 900, 'ease-out'); })();
+    const t4 = (async () => { L.lily_pads.hop(3, 400); sfx('bubbles', .4); T.pop(POND.x + 70, POND.surf - 90, tr('뽀글뽀글'), '#1F2A56'); await frog.move(POND.x - 60, POND.surf + 36, 900, 'ease-out'); })();
     await say(S.L7); await t4;
     frog.hop(6, 300); await say(S.L8);
     prin.look('stand'); await say(S.L9);
@@ -413,7 +449,7 @@
 
     /* ===== 5. 공을 찾았어요 ===== */
     await T.sceneCard(tr('공을 찾았어요'), () => {
-      scene('fp_bg_pond');
+      scene('fp_bg_pond_v2');
       put(T, prin, X(380, 430), FL, { look: 'stand' });
       put(T, frog, POND.x - 60, POND.surf + 36, { look: 'sit' });
       waterClip(T, frog, POND.surf + 4);
@@ -447,7 +483,7 @@
 
     /* ===== 6. 문 앞의 개구리 ===== */
     await T.sceneCard(tr('문 앞의 개구리'), () => {
-      scene('fp_bg_dining');
+      scene('fp_bg_dining_v2');
       put(T, table, 560, FL);
       put(T, prin, X(420, 420), FL, { look: 'stand', to: 'left' });
       hide(frog);
@@ -456,7 +492,7 @@
     await sleep(LOOK);
     const t6 = (async () => {
       await sleep(2000);
-      sfx('knock', .5); await sleep(300); sfx('knock', .5);
+      sfx('knock', .5); L.chandelier.wiggle(2, 600); await sleep(300); sfx('knock', .5);
       T.pop(DOOR.x + 40, 150, tr('똑똑!'), '#6B4A32');
     })();
     await say(S.L16); await t6;
@@ -472,7 +508,7 @@
 
     /* ===== 7. 아버지의 말씀 ===== */
     await T.sceneCard(tr('아버지의 말씀'), () => {
-      scene('fp_bg_dining');
+      scene('fp_bg_dining_v2');
       put(T, table, 560, FL);
       put(T, frog, DOOR.x + 60, FL, { look: 'sit' });
       put(T, prin, X(460, 440), FL, { look: 'refuse', to: 'left' });
@@ -500,8 +536,9 @@
 
     /* ===== 8. 같이 먹어요 (배움 놀이 2: 빵 세기) ===== */
     await T.sceneCard(tr('같이 먹어요'), () => {
-      scene('fp_bg_dining');
+      scene('fp_bg_dining_v2');
       const tx = X(500, 500);
+      L.chandelier.place(tx, 150);
       put(T, table, tx, FL);
       put(T, plate, tx, TABLE_TOP + 8);
       breads.forEach((b, i) => put(T, b, tx + (i - 1) * 44, TABLE_TOP - 10));
@@ -530,7 +567,7 @@
 
     /* ===== 9. 베개 위로 폴짝 ===== */
     await T.sceneCard(tr('베개 위로 폴짝'), () => {
-      scene('fp_bg_room');
+      scene('fp_bg_room_v2');
       put(T, pillow, BED.x, BED.top + 4);
       put(T, prin, X(360, 400), FL, { look: 'stand', to: 'right' });
       hide(frog);
@@ -555,17 +592,25 @@
     })();
     await say(S.L32); await t9b;
     await sleep(500);
-    sparkleSfx(T); T.pop(BED.x, BED.top - 240, tr('팡!'), GOLD); flash(T, BED.x, BED.top - 100);
+    sparkleSfx(T); T.pop(BED.x, BED.top - 240, tr('팡!'), GOLD);
+    if (!P) T.camTo(BED.x - 80, 300, 1.12, 500);
+    { const b = front(L.magic_burst, BED.x, BED.top - 100 + HT.fp_layer_magic_burst / 2); b.body.style.transformBox = 'fill-box'; b.body.style.transformOrigin = '50% 50%';
+      b.body.animate([{ transform: 'scale(.2) rotate(0deg)', opacity: 1 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 1, offset: .7 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 0 }], { duration: 700, easing: 'ease-out' }).finished.then(() => hide(b), () => hide(b)); }
+    flash(T, BED.x, BED.top - 100);
     await sleep(350);
     hide(frog);
     put(T, prince, BED.x - 40, FL, { look: 'stand' }); fadeIn(prince, 400); glow(prince, 1200);
+    if (!P) T.camTo(500, 280, 1, 900);
     await say(S.L33);
     prin.look('stand'); prin.hop(14, 360); await say(S.L34);
     await sleep(SCENE_END);
 
     /* ===== 10. 약속을 지켜요 (톡 1 — 손잡기, 마지막 인사형 톡) ===== */
     await T.sceneCard(tr('약속을 지켜요'), () => {
-      scene('fp_bg_yard');
+      scene('fp_bg_yard_v2');
+      mid(L.topiary, X(900, 760), FL - 10);
+      front(L.flowerbed, X(960, 760), 585);
+      [[L.garland, X(250, 420)], [L.garland2, X(750, 640)]].forEach(([g, x]) => { front(g, x, 92); g.body.animate([{ rotate: '-1.5deg' }, { rotate: '1.5deg' }, { rotate: '-1.5deg' }], { duration: 4000, iterations: Infinity, easing: 'ease-in-out' }); });
       put(T, ball, 510, FL + 2);
       put(T, prin, X(400, 440), FL, { look: 'stand', to: 'right' });
       put(T, prince, X(620, 620), FL, { look: 'stand', to: 'left' });
