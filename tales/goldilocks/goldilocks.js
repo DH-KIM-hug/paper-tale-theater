@@ -1045,6 +1045,7 @@
 
   /* 마지막 노래: 〈곰 세 마리〉 (작사·작곡 미상의 동요). 녹음 대신 우리 소리로 직접 연주하고, 부르는 곰이 폴짝 뛴다 */
   async function gomSeMari(T, [dad, mom, baby], goldi) {
+    const SEMI = { 도: 0, 레: 2, 미: 4, 솔: 7, 라: 9 };
     const HZ = { 도: 261.63, 레: 293.66, 미: 329.63, 솔: 392, 라: 440 };
     /* 음 이름:박자 (1 = 4분음표). 말하듯 짧게 붙다가 구절 끝에서 길게 늘어난다 */
     const LINES = [
@@ -1074,8 +1075,11 @@
         const hz = HZ[seq[k][0]];
         const last = k === seq.length - 1;
         const dur = BEAT * +seq[k][1];
-        T.tone(hz, dur * .9, { type: 'triangle', vol: .24 });
-        T.tone(hz * 2, dur * .5, { type: 'sine', vol: .05 });
+        if (!AudioFX.note(SEMI[seq[k][0]], 0, .7)) { // 샘플이 아직 안 왔으면 합성음으로
+          T.tone(hz, dur * .9, { type: 'triangle', vol: .24 });
+          T.tone(hz * 2, dur * .5, { type: 'sine', vol: .05 });
+        }
+        if (k === 0) AudioFX.note(SEMI[seq[k][0]] - 12, 0, .35); // 구절 첫 박에만 한 옥타브 아래 받침
         const sp = spans[en ? Math.floor(k * spans.length / seq.length) : k];
         if (sp) sp.setAttribute('fill', C.bean);
         const a = Array.isArray(who) ? who[k] : who;
