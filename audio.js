@@ -136,8 +136,25 @@ const AudioFX = (() => {
     return src ? src.replace(/audio\.js(\?.*)?$/, 'sounds/') : 'sounds/';
   })();
   const samples = {};
+  /* 같은 소리의 여러 버전: 기본 이름(rooster.mp3) 말고 rooster_2.mp3, rooster_3.mp3 … 가 있으면 재생할 때마다 바꿔 고른다 (버전 수는 기본 포함) */
+  const VARIANTS = { 'animals/duck': 3, 'animals/cow': 3, 'animals/pig': 3, 'animals/dog': 3, 'animals/owl': 3, 'animals/frog': 3,
+    'animals/rooster': 3, 'animals/cat': 3, 'animals/sheep': 3, 'animals/donkey': 3, 'animals/tiger': 2, 'sfx/knock': 3 };
+  const variantPath = (base, i) => i === 1 ? base + '.mp3' : base + '_' + i + '.mp3';
+  const lastVariant = {};
+  function pickVariant(path) {
+    const base = path.replace(/\.mp3$/, ''), n = VARIANTS[base];
+    if (!n) return path;
+    const ok = [];
+    for (let i = 1; i <= n; i++) if (i === 1 || samples[variantPath(base, i)]) ok.push(i);
+    if (ok.length < 2) return path;
+    let c; do { c = ok[Math.floor(Math.random() * ok.length)]; } while (c === lastVariant[base]);
+    lastVariant[base] = c;
+    return variantPath(base, c);
+  }
   function loadSample(path) {
     if (path in samples) return;
+    const vb = path.replace(/\.mp3$/, '');
+    if (VARIANTS[vb]) for (let i = 2; i <= VARIANTS[vb]; i++) loadSample(variantPath(vb, i)); // 다른 버전도 같이 받는다
     samples[path] = null;
     const c = ensure(); if (!c) return;
     fetch(SOUND_BASE + path).then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); })
@@ -145,9 +162,10 @@ const AudioFX = (() => {
       .catch(() => { samples[path] = false; });
   }
   /* when: 몇 초 뒤, dur: 앞부분만 (초) — 스팅에서 겹쳐 쌓을 때 쓴다 */
-  function playSample(path, vol = 0.9, when = 0, dur, rate = 1, offset = 0) {
-    const buf = samples[path];
+  function playSample(path, vol = 0.9, when = 0, dur, rate = 1, offset = 0, noVariant = false) {
+    let buf = samples[path];
     if (!buf) { loadSample(path); return false; }
+    if (!noVariant) buf = samples[pickVariant(path)] || buf;
     const c = ensure();
     const s = c.createBufferSource(), g = c.createGain();
     const t0 = c.currentTime + when;
@@ -171,7 +189,7 @@ const AudioFX = (() => {
     'rattle', 'uah'];
   const EXTRA = ['sfx/knock', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door', 'sfx/blow', 'sfx/blow_long',
     ...COMIC.map(n => 'sfx/' + n),
-    ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a), 'sfx/paper_turn'];
+    ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a), 'sfx/paper_turn', 'sfx/baby_cry', 'sfx/baby_giggle', 'sfx/note_xylo'];
 
   /* 스팅: [효과음, 시작(초), 음량, 앞부분만 쓸 길이(초)?] 를 겹쳐서 한 번에 "휙-딱-반짝!" 처럼 울린다.
      음량은 내레이션이 묻히지 않게 0.35~0.95 사이, 전체에 STING_VOL을 곱한다 */
@@ -200,8 +218,12 @@ const AudioFX = (() => {
     },
     /* 동물 소리: AudioFX.animal('pig') — 실제 녹음, 없으면 false */
     animal(name, vol) { return playSample('animals/' + name + '.mp3', vol); },
+    /* 실로폰 음 하나: semi = 가운데 도(C5 샘플 그대로)에서 올린 반음 수(내리면 음수). 샘플이 아직 없으면 false */
+    /* 아기 우는 소리(녹음). 샘플이 아직 없으면 합성 훌쩍임 */
+    babyCry(vol = .8) { if (playSample('sfx/baby_cry.mp3', vol)) return true; api.whimper(); return false; },
+    note(semi, dur, vol = .6, when = 0) { return playSample('sfx/note_xylo.mp3', vol, when, dur, Math.pow(2, semi / 12)); },
     /* 동물 소리로 음 하나 부르기: 녹음을 rate배 빠르게(=높게) 재생. 합창·멜로디용 */
-    animalNote(name, rate, vol = .7, when = 0, dur) { return playSample('animals/' + name + '.mp3', vol, when, dur, rate); },
+    animalNote(name, rate, vol = .7, when = 0, dur) { return playSample('animals/' + name + '.mp3', vol, when, dur, rate, 0, true); },
     /* 클래식 녹음(sounds/music/<name>.mp3): 미리 불러 두고, music()으로 틀면 {stop(), done(Promise)}을 돌려준다.
        못 불러왔으면 null — 부르는 쪽이 합성음으로 대신한다. slice()는 짧은 조각 하나(꾹 눌러 이어 듣기용) */
     preloadMusic(names) { names.forEach(n => loadSample('music/' + n + '.mp3')); },

@@ -875,7 +875,7 @@
       owner.hop(20, 360);
       if (i < 2) { owner.setFace('happy'); vo('mine_' + owner.key); pop(owner.x, headY(owner) - 30, '내 거!', C.pine); await sleep(900); }
     }
-    bears.baby.setFace('cry'); AudioFX.whimper();
+    bears.baby.setFace('cry'); AudioFX.babyCry();
     pop(bears.baby.x, headY(bears.baby) - 30, '으앙!', C.bean);
     await say('아기 곰: "내 죽을 다 먹어 버렸어!"');
     bears.mom.setFace('o');
@@ -905,7 +905,7 @@
       await sleep(900);
     }
     ch9[2].g.animate([{ translate: '0 0' }, { translate: '-6px 0' }, { translate: '6px 0' }, { translate: '0 0' }], { duration: 400, iterations: 2 });
-    bears.baby.setFace('cry'); AudioFX.whimper();
+    bears.baby.setFace('cry'); AudioFX.babyCry();
     await say('아기 곰: "으앙, 내 의자가 부서졌어!"');
     if (!P()) { bears.baby.move(530, 548, 600); bears.mom.move(595, 546, 600); }
     bears.mom.hop(20, 400); bears.mom.setFace('happy');

@@ -8,16 +8,22 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | 파일 | 원본 | 만든 이 | 라이선스 | 출처 |
 |---|---|---|---|---|
 | `animals/tiger.mp3` | 439280 schots angry-tiger.wav | schots | CC0 | https://commons.wikimedia.org/wiki/File:439280_schots_angry-tiger.wav |
-| `animals/cow.mp3` | Single Cow Moo.ogg | MichaeltheFox8621 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Single_Cow_Moo.ogg |
-| `animals/pig.mp3` | Mudchute pig 1.ogg | Secretlondon | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Mudchute_pig_1.ogg |
-| `animals/duck.mp3` | Anas platyrhynchos - Mallard XC112828.mp3 (암컷 청둥오리 울음, 6.95~7.95초 "꽥꽥꽥" 부분만 잘라 씀) | Jonathon Jongsma (xeno-canto) | **CC BY-SA 3.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_-_Mallard_XC112828.mp3 |
+| `animals/cow.mp3` | Pixabay "Sound Effect - Cow Mooing" (처음 울음 2.6초) | ScottishPerson | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/sound-effect-cow-mooing-356517/ |
+| `animals/cow_2.mp3 · `animals/cow_3.mp3` | "Cow Moo" (Universfield, 1.8초) · "cow mooing" (u_jd81cxyq22, 1.9초) | Universfield · u_jd81cxyq22 | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/cow-moo-122255/ · https://pixabay.com/ko/sound-effects/cow-mooing-343423/ |
+| `animals/pig.mp3` | Pixabay "Pig Oink" | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/pig-oink-47167/ |
+| `animals/pig_2.mp3 · `animals/pig_3.mp3` | "Pig Sound" · "Pig Squeak" | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/pig-sound-47168/ · https://pixabay.com/ko/sound-effects/pig-squeak-47166/ |
+| `animals/duck.mp3` | Pixabay "Duck Quack" (iedurodrigues, 1.0초) | iedurodrigues | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/duck-quack-112941/ |
+| `animals/duck_2.mp3 · `animals/duck_3.mp3` | "single quack from a duck" · "075176_Duck Quack" | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/single-quack-from-a-duck-14494/ · https://pixabay.com/ko/sound-effects/075176-duck-quack-40345/ |
 | `animals/rooster.mp3` | Medium rooster crowing.ogg | alys | Public domain | https://commons.wikimedia.org/wiki/File:Medium_rooster_crowing.ogg |
 | `animals/sheep.mp3` | Sheep bleating.ogg | earthcalling | Public domain | https://commons.wikimedia.org/wiki/File:Sheep_bleating.ogg |
-| `animals/dog.mp3` | Barking of a dog.ogg | Amada44 | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Barking_of_a_dog.ogg |
+| `animals/dog.mp3` | Pixabay "Free Dog Bark" | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/free-dog-bark-419014/ |
+| `animals/dog_2.mp3 · `animals/dog_3.mp3` | "Dog Bark" (DRAGON-STUDIO) · "Friendly Small dog bark (1)" | DRAGON-STUDIO · Yodguard | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/dog-bark-494308/ · https://pixabay.com/ko/sound-effects/friendly-small-dog-bark-1-535470/ |
 | `animals/cat.mp3` | Meow of a pleading cat.oga | Heismark | Public domain | https://commons.wikimedia.org/wiki/File:Meow_of_a_pleading_cat.oga |
-| `animals/owl.mp3` | Strix aluco male.oga | Vianney Bajart | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Strix_aluco_male.oga |
-| `animals/frog.mp3` | Single Frog Croak.oga | MichaeltheFox8621 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Single_Frog_Croak.oga |
-| `animals/frogs.mp3` | Frogs croak calling chorus at night.ogg | JogiAsad | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Frogs_croak_calling_chorus_at_night.ogg |
+| `animals/owl.mp3` | Pixabay "Owl Hoot" (처음 1.8초) | Universfield | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/owl-hoot-144750/ |
+| `animals/owl_2.mp3 · `animals/owl_3.mp3` | "owl hooting" · "OWL HOOTING" | LazyChillZone · TanwerAman | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/owl-hooting-223549/ · https://pixabay.com/ko/sound-effects/owl-hooting-left-to-right-stereo-240676/ |
+| `animals/frog.mp3` | Pixabay "Frog Croaking Sound Effect" (첫 개굴 한 번, 0.5초) | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/frog-croaking-sound-effect-322956/ |
+| `animals/frog_2.mp3 · `animals/frog_3.mp3` | 같은 녹음의 두 번째 개굴 · "frog croak" | DRAGON-STUDIO · freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/frog-croaking-sound-effect-322956/ · https://pixabay.com/ko/sound-effects/frog-croak-80816/ |
+| `animals/frogs.mp3` | Pixabay "Frog Chorus" (4~16초, 앞뒤 페이드) | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/frog-chorus-73633/ |
 | `sfx/splash.mp3` | Bathtub water splashes.ogg | gradha | Public domain | https://commons.wikimedia.org/wiki/File:Bathtub_water_splashes.ogg |
 | `animals/donkey.mp3` | 157763 felix-blume a-donkey-is-braying-in-his-enclosure-in-south-of-france.wav | felix-blume | CC0 | https://commons.wikimedia.org/wiki/File:157763_felix-blume_a-donkey-is-braying-in-his-enclosure-in-south-of-france.wav |
 
@@ -57,6 +63,7 @@ CC BY 파일은 **출처 표시 의무가 있다** — 크레딧 화면에 "Kevi
 | `sfx/uah.mp3` | uah.mp3 | EZduzziteh | CC0 | https://opengameart.org/content/silly-sound-effects |
 | `sfx/rattle.mp3` | qubodup-wobble1.wav | qubodup | CC0 | https://opengameart.org/content/wood-wobbling-rattling |
 | `sfx/xylo_up.mp3` · `sfx/xylo_down.mp3` · `sfx/giggle_xylo.mp3` | child's_xylophone-2.wav 의 한 음을 음높이만 바꿔 이어 붙임 | AntumDeluge | CC0 | https://opengameart.org/content/childrens-xylophone |
+| `sfx/note_xylo.mp3` | child's_xylophone-2.wav 의 첫 음(약 A6) 한 개를 잘라 C5 높이로 느리게 낮춤. 골디락스 〈곰 세 마리〉 연주용(AudioFX.note) | AntumDeluge | CC0 | https://opengameart.org/content/childrens-xylophone |
 | `sfx/paper_up.mp3` | RPG Audio: bookFlip3.ogg (홈 태그를 고를 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
 | `sfx/paper_down.mp3` | RPG Audio: bookPlace3.ogg (태그를 풀 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
 | `sfx/paper_turn.mp3` | RPG Audio: bookFlip2.ogg (동화로 넘어갈 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
@@ -85,7 +92,22 @@ CC BY 파일은 **출처 표시 의무가 있다** — 크레딧 화면에 "Kevi
 | 파일 | 원본 | 만든 이 | 라이선스 | 출처 |
 |---|---|---|---|---|
 | `sfx/beomjong_synth.mp3` | **임시 합성음**(실제 녹음이 아님). 성덕대왕신종의 배음 구조(기본음 약 64Hz 맥놀이 + 168Hz 등)를 사인파로 겹쳐 6초 감쇠로 만든 것. 실제 범종 녹음 `sfx/beomjong.mp3` 를 구하면 그쪽을 먼저 틀고 이 파일은 대비용으로만 남긴다(tales/magpie/SPEC.md §7-1) | 팥죽 게임(코드 합성) | CC0 | — |
-| `sfx/beomjong.mp3` | Freesound "2022-10-16-big-bass-zen-temple-bell.wav"(큰 저음 절 종 한 번 타종 녹음, 4분 길이 중 처음 6초를 타종 직전부터 잘라 끝 1.8초 페이드아웃, 정규화). **한국 범종이 아니라 일본식(선종) 큰 절 종 녹음이다** — 한국 범종 녹음은 공개 자료(Wikimedia Commons·Freesound·공공누리)에서 찾지 못했다. 한국 범종 녹음을 구하면 이 자리에 넣는다 | ilmari_freesound | CC0 | https://freesound.org/people/ilmari_freesound/sounds/653710/ |
+| `sfx/beomjong.mp3` | Pixabay "Big Bell(Burmese)" (큰 절 종 첫 타종 6초, 끝 1.8초 페이드). 한국 범종 녹음은 아니다 | ManDaKiMDK | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/big-bellburmese-367944/ |
 | `sfx/car_drive.mp3` | BigSoundBank "Car on a Road"(#1286, 푸조 107 가솔린차 주행 녹음 1분 11초 중 일정 속도로 달리는 15~19초 4초를 잘라 앞뒤 페이드, loudnorm) | Joseph SARDIN | CC0 | https://bigsoundbank.com/car-on-a-road-s1286.html |
 | `sfx/car_horn.mp3` | BigSoundBank "Horn #3"(#3506, 야외 경적 한 번 0.94초, 끝 페이드, 음량 -9dB로 낮춤) | Le tiroir du fond | CC0 | https://bigsoundbank.com/horn-3-s3506.html |
 | `sfx/car_brake.mp3` | BigSoundBank "Tire squeal"(#0500, 미끄러지는 차 타이어 끼익 소리 30초 중 처음 1초, 앞뒤 페이드, loudnorm) | Joseph SARDIN | CC0 | https://bigsoundbank.com/tire-squeal-s0500.html |
+
+## 효과음 · 동물 소리 여러 버전과 새 소리
+
+같은 소리를 여러 번 쓸 때 지루하지 않게 `<이름>_2`, `<이름>_3` 버전을 두고 재생할 때마다 바꿔 고른다(audio.js VARIANTS). 모두 Pixabay 에서 받아 잘라 음량을 맞췄다.
+
+| 파일 | 원본 | 올린 사람 | 라이선스 | 출처 |
+|---|---|---|---|---|
+| `animals/rooster_2.mp3 · `animals/rooster_3.mp3` | "rooster crowing" · "rooster" | RibhavAgrawal · freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/rooster-crowing-type-01-293308/ · https://pixabay.com/ko/sound-effects/rooster-106325/ |
+| `animals/cat_2.mp3 · `animals/cat_3.mp3` | "Cat Meow" · "Cat meow" | SOUND_GARAGE · freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/cat-meow-7-fx-306186/ · https://pixabay.com/ko/sound-effects/cat-meow-85175/ |
+| `animals/sheep_2.mp3 · `animals/sheep_3.mp3` | "sheep 2" · "sheep 3" | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/sheep-2-106164/ · https://pixabay.com/ko/sound-effects/sheep-3-89230/ |
+| `animals/donkey_2.mp3 · `animals/donkey_3.mp3` | "DONKEY 1" · "DONKEY" (Stu9) | Stu9 | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/donkey-1-352697/ · https://pixabay.com/ko/sound-effects/donkey-352696/ |
+| `animals/tiger_2.mp3` | "Tiger Roar Loudly" (dffdv) | dffdv | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/tiger-roar-loudly-193229/ |
+| `sfx/knock_2.mp3 · `sfx/knock_3.mp3` | "Door Knock" · "Knock on a Door" (한 번만) | freesound_community · CreatorsHome | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/door-knock-47175/ · https://pixabay.com/ko/sound-effects/knock-on-a-door-327172/ |
+| `sfx/baby_cry.mp3` | 직접 만든 소리 — ElevenLabs 효과음 생성("작게 흐앙" 아기 울음 2.4초) | 팥죽 게임 | 직접 만든 소리(ElevenLabs 효과음 생성) | — |
+| `sfx/baby_giggle.mp3` | 직접 만든 소리 — ElevenLabs 효과음 생성(아기가 까르르 웃는 소리 1.6초) | 팥죽 게임 | 직접 만든 소리(ElevenLabs 효과음 생성) | — |
