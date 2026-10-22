@@ -15,6 +15,8 @@
     rp_prince_stand: .48, rp_prince_ride: 1.05, rp_prince_hide: .85, rp_prince_climb: .42, rp_prince_sad: .50, rp_prince_float: .62, rp_prince_hold: .62,
     rp_horse_stand: 1.25, rp_bird: 1.05, rp_rabbit: .80,
     rp_prop_tower: .36, rp_prop_braid: .13, rp_prop_braid_cut: .45, rp_prop_hook: .75, rp_prop_silk: 1.1, rp_prop_cradle_baby: 1.25, rp_prop_rampion: 1.0, rp_prop_rampion_pulled: .85,
+    rp_layer_tree_front: .6867, rp_layer_bush_flower_front: 1.6304, rp_layer_wildflowers_mid: 1.7143, rp_layer_mushrooms: .9717, rp_layer_butterfly: 1.295,
+    rp_layer_tower_ivy: 1.5929, rp_layer_flower_pot: .6717, rp_layer_flowers_front_a: 1.415, rp_layer_flowers_front_b: 1.5625, rp_layer_flower_band_mid: 2.6706,
     rp_prop_ribbon_long: 8.0, rp_prop_ribbon_mid: 5.4, rp_prop_ribbon_short: 2.7, rp_prop_note: .62, rp_prop_petal: .62, rp_prop_star: 1.0, rp_prop_wind: 1.9,
   };
   /* 높이: 사람은 머리 폭으로 맞춘다(기준 rp_rap_stand 200). 그림이 오면 SPEC §2-2 대로 재서 고친다 */
@@ -25,6 +27,9 @@
     rp_prince_stand: 212, rp_prince_hold: 212, rp_prince_ride: 300, rp_prince_hide: 150, rp_prince_sad: 205, rp_prince_float: 220, rp_prince_climb: 235,
     rp_horse_stand: 230, rp_bird: 40, rp_rabbit: 56,
     rp_prop_tower: 445, rp_prop_braid: 300, rp_prop_braid_cut: 110, rp_prop_hook: 24, rp_prop_silk: 40, rp_prop_cradle_baby: 90, rp_prop_rampion: 70, rp_prop_rampion_pulled: 86,
+    /* 레이어 소품(VISUAL_PLAN §5): 배경을 꾸미는 종이 조각. 누름을 받지 않는다 */
+    rp_layer_tree_front: 520, rp_layer_bush_flower_front: 120, rp_layer_wildflowers_mid: 110, rp_layer_mushrooms: 70, rp_layer_butterfly: 34,
+    rp_layer_tower_ivy: 120, rp_layer_flower_pot: 50, rp_layer_flowers_front_a: 120, rp_layer_flowers_front_b: 120, rp_layer_flower_band_mid: 100,
     rp_prop_note: 34, rp_prop_petal: 18, rp_prop_star: 28, rp_prop_wind: 70,
   };
   /* 그림이 보는 쪽 ('left' | 'right' | 'front') */
@@ -36,7 +41,7 @@
   };
   const FL = 505;                                                    // 바닥(발끝 y)
   const TOWER_H = 445, WIN_DY = -300, HOOK_DX = 40, BRAID_H = 300;   // 탑 좌표계 (SPEC §2-8)
-  const BGS = ['rp_bg_cottage', 'rp_bg_garden_night', 'rp_bg_forest_day', 'rp_bg_room', 'rp_bg_forest_dusk', 'rp_bg_field'];
+  const BGS = ['rp_bg_cottage', 'rp_bg_garden_night_v2', 'rp_bg_forest_day_v2', 'rp_bg_room_v2', 'rp_bg_forest_dusk_v2', 'rp_bg_field_v2'];
   const src = k => AS + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};
@@ -157,11 +162,11 @@
   /* 배경 자리표시: 종이 한 장 + 바닥 띠 + 요소 2~3개 + 이름표 */
   const BGPH = {
     rp_bg_cottage:     { sky: '#F6ECD8', gnd: GOLD, name: '오두막 안', shapes: () => [['rect', { x: 600, y: 120, width: 280, height: 200, rx: 4, fill: '#E9DCC0' }], ['rect', { x: 620, y: 260, width: 240, height: 60, fill: GREEN }], ['rect', { x: 120, y: 330, width: 200, height: 80, rx: 6, fill: BROWN }]] },
-    rp_bg_garden_night: { sky: '#1F2A56', gnd: '#4A3626', name: '밤 텃밭(왼쪽 담)', shapes: () => [['rect', { x: 0, y: 220, width: 340, height: 192, fill: '#9A9A9A' }], ['circle', { cx: 860, cy: 100, r: 46, fill: CREAM }], ['path', { d: 'M700 412 L760 300 L820 412Z', fill: GREEN }]] },
-    rp_bg_forest_day:  { sky: '#DCE9F2', gnd: '#9DBB7A', name: '숲(낮, 가운데 비움)', shapes: () => [['path', { d: 'M20 412 L110 150 L200 412Z', fill: GREEN }], ['path', { d: 'M800 412 L890 170 L980 412Z', fill: GREEN }]] },
-    rp_bg_room:        { sky: '#E4DFD3', gnd: GOLD, name: '탑 안(오른쪽 위 창)', shapes: () => [['rect', { x: 673, y: 128, width: 216, height: 244, rx: 100, fill: '#BFD8EE' }], ['rect', { x: 140, y: 330, width: 140, height: 80, rx: 6, fill: BROWN }]] },
-    rp_bg_forest_dusk: { sky: '#F2B366', gnd: '#7FA06A', name: '숲(해질녘, 가운데 비움)', shapes: () => [['path', { d: 'M20 412 L110 140 L200 412Z', fill: '#2F5640' }], ['path', { d: 'M800 412 L890 160 L980 412Z', fill: '#2F5640' }], ['circle', { cx: 820, cy: 90, r: 44, fill: CREAM }]] },
-    rp_bg_field:       { sky: '#DCE9F2', gnd: '#9DBB7A', name: '들판(오른쪽 오두막)', shapes: () => [['rect', { x: 694, y: 250, width: 160, height: 140, fill: CREAM }], ['path', { d: 'M674 250 L774 170 L874 250Z', fill: GOLD }]] },
+    rp_bg_garden_night_v2: { sky: '#1F2A56', gnd: '#4A3626', name: '밤 텃밭(왼쪽 담)', shapes: () => [['rect', { x: 0, y: 220, width: 340, height: 192, fill: '#9A9A9A' }], ['circle', { cx: 860, cy: 100, r: 46, fill: CREAM }], ['path', { d: 'M700 412 L760 300 L820 412Z', fill: GREEN }]] },
+    rp_bg_forest_day_v2:  { sky: '#DCE9F2', gnd: '#9DBB7A', name: '숲(낮, 가운데 비움)', shapes: () => [['path', { d: 'M20 412 L110 150 L200 412Z', fill: GREEN }], ['path', { d: 'M800 412 L890 170 L980 412Z', fill: GREEN }]] },
+    rp_bg_room_v2:        { sky: '#E4DFD3', gnd: GOLD, name: '탑 안(오른쪽 위 창)', shapes: () => [['rect', { x: 673, y: 128, width: 216, height: 244, rx: 100, fill: '#BFD8EE' }], ['rect', { x: 140, y: 330, width: 140, height: 80, rx: 6, fill: BROWN }]] },
+    rp_bg_forest_dusk_v2: { sky: '#F2B366', gnd: '#7FA06A', name: '숲(해질녘, 가운데 비움)', shapes: () => [['path', { d: 'M20 412 L110 140 L200 412Z', fill: '#2F5640' }], ['path', { d: 'M800 412 L890 160 L980 412Z', fill: '#2F5640' }], ['circle', { cx: 820, cy: 90, r: 44, fill: CREAM }]] },
+    rp_bg_field_v2:       { sky: '#DCE9F2', gnd: '#9DBB7A', name: '들판(오른쪽 오두막)', shapes: () => [['rect', { x: 694, y: 250, width: 160, height: 140, fill: CREAM }], ['path', { d: 'M674 250 L774 170 L874 250Z', fill: GOLD }]] },
   };
   function bgImage(T, key) {
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
@@ -169,7 +174,7 @@
     T.el('rect', { x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, fill: d.sky }, g);
     T.el('rect', { x: BGBOX.x, y: 412, width: BGBOX.w, height: 200, fill: d.gnd }, g);
     d.shapes().forEach(([t, a]) => T.el(t, a, g));
-    T.el('text', { x: 500, y: 52, 'text-anchor': 'middle', 'font-size': 22, 'font-weight': 700, fill: key === 'rp_bg_garden_night' ? CREAM : BROWN, 'font-family': FONT, opacity: .85, text: '(그림 자리) 배경: ' + d.name }, g);
+    T.el('text', { x: 500, y: 52, 'text-anchor': 'middle', 'font-size': 22, 'font-weight': 700, fill: key === 'rp_bg_garden_night_v2' ? CREAM : BROWN, 'font-family': FONT, opacity: .85, text: '(그림 자리) 배경: ' + d.name }, g);
     return g;
   }
 
@@ -239,7 +244,7 @@
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ CLIMB = 6000, BRAID = 2600, RISE = 2200, WALK = 3600;   // 속도 상수 (SPEC §2-7)
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };         // 말풍선 없는 소리(허밍)
-    const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
+    const scene = key => { setBg(key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -268,9 +273,53 @@
     const rampion = mk(T, { in: ['rp_prop_rampion', HT.rp_prop_rampion], out: ['rp_prop_rampion_pulled', HT.rp_prop_rampion_pulled] });
     const ribbons = { long: prop(T, 'rp_prop_ribbon_long', HT.rp_prop_ribbon_long), mid: prop(T, 'rp_prop_ribbon_mid', HT.rp_prop_ribbon_mid), short: prop(T, 'rp_prop_ribbon_short', HT.rp_prop_ribbon_short) };
     const notes = [0, 1, 2].map(() => prop(T, 'rp_prop_note', HT.rp_prop_note)), stars = [0, 1, 2].map(() => prop(T, 'rp_prop_star', HT.rp_prop_star)), wind = prop(T, 'rp_prop_wind', HT.rp_prop_wind);
-    const ALL = [rap, gothel, father, mother, prince, horse, bird, rabbit, tower, braid, braidCut, hook, ...silks, cradle, rampion, ...Object.values(ribbons), ...notes, ...stars, wind];
+    /* 레이어 소품(VISUAL_PLAN §4): 중간 층은 world 맨 뒤(배우보다 먼저), 앞 가림 층은 fx(배우 위, 누름 없음) */
+    const deco = k => prop(T, 'rp_layer_' + k, HT['rp_layer_' + k]);
+    const L = Object.fromEntries(['tree_front', 'bush_flower_front', 'wildflowers_mid', 'wildflowers_mid2', 'mushrooms', 'tower_ivy', 'flower_pot', 'flowers_front_a', 'flowers_front_b', 'flower_band_mid', 'flower_band_mid2'].map(k => [k, deco(k.replace(/2$/, ''))]));
+    const flies = [0, 1].map(() => deco('butterfly'));
+    const ALL = [...Object.values(L), ...flies, rap, gothel, father, mother, prince, horse, bird, rabbit, tower, braid, braidCut, hook, ...silks, cradle, rampion, ...Object.values(ribbons), ...notes, ...stars, wind];
     ALL.forEach(hide);
     T.director({ cast: { rap, gothel, father, mother, prince }, noFace: ['rap', 'gothel', 'father', 'mother', 'prince'] });
+
+    /* ---- 배경 꾸밈: 중간 층·앞 가림 층·반딧불·나비 (VISUAL_PLAN §4) ---- */
+    const mid = (a, x, y) => { put(T, a, x, y); T.world.insertBefore(a.pos, T.world.firstChild); };
+    const front = (a, x, y) => { put(T, a, x, y); T.fx.appendChild(a.pos); };
+    function fireflies(spots) {
+      spots.forEach(([x, y], i) => {
+        const c = T.el('circle', { cx: x, cy: y, r: 3 + (i % 2), fill: '#F2B366' }, T.bg);
+        c.animate([{ opacity: .2 }, { opacity: .9 }, { opacity: .2 }], { duration: 2000 + (i % 3) * 450, delay: i * 230, iterations: Infinity });
+      });
+    }
+    function butterflies(box) {      // 왼쪽 위에서 천천히 8자. 탑·인물 쪽으로 가지 않는다
+      flies.forEach((b, i) => {
+        const [x0, y0, x1, y1] = box, cx = x0 + (x1 - x0) * (i ? .7 : .3), cy = y0 + (y1 - y0) * (i ? .6 : .35);
+        put(T, b, cx, cy); T.fx.appendChild(b.pos);
+        b.body.getAnimations().forEach(n => n.cancel());
+        const rx = (x1 - x0) * .25, ry = (y1 - y0) * .3, k = i ? -1 : 1;
+        b.body.animate([0, 1, 2, 3, 4].map(t => ({ translate: `${k * rx * Math.sin(t * Math.PI / 2)}px ${ry * Math.sin(t * Math.PI)}px` })), { duration: 6000 + i * 900, iterations: Infinity, easing: 'ease-in-out' });
+        b.body.animate([{ scale: '1 1' }, { scale: '.55 1' }, { scale: '1 1' }], { duration: 420, iterations: Infinity });
+      });
+    }
+    function dress(key) {
+      if (key === 'rp_bg_garden_night_v2') fireflies([[560, 330], [640, 305], [720, 345], [800, 318], [880, 340], [960, 310]].map(([x, y]) => [P ? x - 120 : x, y]));
+      if (key === 'rp_bg_forest_day_v2') {
+        mid(L.wildflowers_mid, X(150, 330), FL + 20); mid(L.wildflowers_mid2, X(960, 800), FL + 20);
+        front(L.tree_front, X(40, 250), 590); front(L.mushrooms, X(130, 330), 572); front(L.bush_flower_front, X(975, 770), 595);
+        butterflies(P ? [380, 110, 470, 170] : [130, 110, 320, 210]);
+      }
+      if (key === 'rp_bg_room_v2') mid(L.flower_pot, X(668, 668), 297);
+      if (key === 'rp_bg_forest_dusk_v2') {
+        mid(L.wildflowers_mid, X(960, 800), FL + 20); mid(L.tower_ivy, TX - 80, FL + 8);
+        front(L.tree_front, X(70, 215), P ? 640 : 590); front(L.bush_flower_front, X(975, 770), 595);   // 세로: 나무를 낮춰 왕자(350)가 잎 뒤에 숨고 말(440)은 보이게
+        fireflies([[90, 420], [160, 455], [230, 400], [60, 470], [880, 430], [940, 400], [990, 460], [840, 470]].map(([x, y]) => [P ? (x < 500 ? x + 280 : x - 220) : x, y]));
+      }
+      if (key === 'rp_bg_field_v2') {
+        if (!P) mid(L.flower_band_mid, 300, FL + 10); mid(L.flower_band_mid2, X(760, 640), FL + 10);
+        front(L.flowers_front_a, X(60, 330), 595); front(L.flowers_front_b, X(945, 760), 595);
+        butterflies(P ? [400, 100, 500, 160] : [110, 90, 330, 190]);
+      }
+    }
+    const setBg = key => { T.clear(); bgImage(T, key); dress(key); };
 
     /* ---- 코드로 그리는 연출 (SPEC §5) ---- */
     const sillPaper = () => T.paper(T.world, [['rect', { x: -40, y: -8, width: 80, height: 12, rx: 2, fill: BROWN }]], { transform: `translate(${TX},${FL + WIN_DY + 6})` });
@@ -378,7 +427,7 @@
 
     /* ===== 2. 라푼젤 풀 (톡 1 — 첫 조작) ===== */
     await T.sceneCard(tr('라푼젤 풀'), () => {
-      scene('rp_bg_garden_night');
+      scene('rp_bg_garden_night_v2');
       put(T, rampion, 470, FL, { look: 'in' }); hitBox(T, rampion, 100, 100);
       put(T, father, 230, 235, { look: 'climb', to: 'right' });
       camSnap(P ? 470 : 500, 280, 1);
@@ -406,7 +455,7 @@
     father.look('stand');
     await say('네… 알겠어요.');
     await sleep(400);
-    await veil(T, () => { T.clear(); bgImage(T, 'rp_bg_cottage'); camSnap(X(500, 470), 280, 1); put(T, cradle, X(470, 430), FL); put(T, gothel, 1150, FL, { look: 'stand' }); });
+    await veil(T, () => { setBg('rp_bg_cottage'); camSnap(X(500, 470), 280, 1); put(T, cradle, X(470, 430), FL); put(T, gothel, 1150, FL, { look: 'stand' }); });
     const walkOut = (async () => {
       const t0 = walk(gothel, X(600, 540), FL, 2200, 'ease-out');
       await t0;
@@ -421,7 +470,7 @@
 
     /* ===== 3. 문 없는 탑 (배움 놀이 1: 위·아래) ===== */
     await T.sceneCard(tr('문 없는 탑'), () => {
-      scene('rp_bg_forest_day');
+      scene('rp_bg_forest_day_v2');
       put(T, gothel, 470, FL, { look: 'wand', to: 'right' });
       camSnap(P ? 520 : 500, 280, 1);
     }, gothel.pos);
@@ -457,7 +506,7 @@
 
     /* ===== 4. 머리를 내려요 (톡 2 — 창문) ===== */
     await T.sceneCard(tr('머리를 내려요'), () => {
-      scene('rp_bg_forest_day');
+      scene('rp_bg_forest_day_v2');
       towerSet();
       put(T, rabbit, TX - 85, FL); put(T, bird, TX + 6, FL - TOWER_H + 16);
       put(T, gothel, 470, FL, { look: 'stand' });
@@ -482,7 +531,7 @@
     /* ===== 5. 탑 안의 노래 (배움 놀이 2: 긴 것·짧은 것) ===== */
     const LEFT = X(150, 250), ys = P ? [380, 460, 540] : [436, 494, 552], LEN = { long: 180, mid: 120, short: 60 };
     await T.sceneCard(tr('탑 안의 노래'), () => {
-      scene('rp_bg_room');
+      scene('rp_bg_room_v2');
       put(T, hook, HOOKX, 250);
       put(T, rap, X(760, 520), FL, { look: 'sing' });
       ['long', 'mid', 'short'].sort(() => Math.random() - .5).forEach((k, i) => {
@@ -522,19 +571,19 @@
 
     /* ===== 6. 노랫소리 (자동) ===== */
     await T.sceneCard(tr('노랫소리'), () => {
-      scene('rp_bg_forest_dusk');
+      scene('rp_bg_forest_dusk_v2');
       towerSet();
       put(T, prince, -200, FL, { look: 'ride', to: 'right' });
       camSnap(P ? 480 : 500, 280, 1);
     }, rap.pos);
     const stepper = (async () => { for (let i = 0; i < 4; i++) { AudioFX.sfx('step_grass', .3); await sleep(1000); } })();
-    const ridePromise = walk(prince, X(260, 360), FL, 3500, 'linear');
+    const ridePromise = walk(prince, X(260, 440), FL, 3500, 'linear');
     await say('어느 해질녘, 숲을 지나던 왕자가 노랫소리를 들었어요.');
     await Promise.all([ridePromise, stepper]);
     await hum(TX - 160, 140);
     prince.hop(6, 400);
     await say('어디서 이렇게 고운 노래가 들리지?');
-    hide(prince); put(T, horse, X(260, 360), FL);
+    hide(prince); put(T, horse, X(260, 440), FL);
     put(T, prince, X(330, 420), FL, { look: 'stand' }); T.world.insertBefore(prince.pos, tower.pos);
     const loop = (async () => { await walk(prince, TX + 130, FL, 1800, 'ease-in-out'); await sleep(300); await walk(prince, X(330, 420), FL, 1800, 'linear'); })();
     await say('왕자는 탑을 한 바퀴 돌았지만 문이 없었어요.');
@@ -559,7 +608,7 @@
 
     /* ===== 7. 왕자가 올라와요 (자동) ===== */
     await T.sceneCard(tr('왕자가 올라와요'), () => {
-      scene('rp_bg_forest_dusk');
+      scene('rp_bg_forest_dusk_v2');
       towerSet();
       put(T, prince, 470, FL, { look: 'stand' });
       camSnap(P ? 520 : 500, 280, 1);
@@ -575,7 +624,7 @@
     await climb(prince, true);
     await braidUp();
     await veil(T, () => {
-      T.clear(); bgImage(T, 'rp_bg_room'); camSnap(X(500, 480), 280, 1); put(T, hook, HOOKX, 250);
+      setBg('rp_bg_room_v2'); camSnap(X(500, 480), 280, 1); put(T, hook, HOOKX, 250);
       put(T, rap, X(760, 520), FL, { look: 'surprise' });
       put(T, prince, X(760, 520) + 10, FL, { look: 'stand' }); prince.pos.style.opacity = 0;
     });
@@ -597,7 +646,7 @@
 
     /* ===== 8. 싹둑 (자동) ===== */
     await T.sceneCard(tr('싹둑'), () => {
-      scene('rp_bg_room');
+      scene('rp_bg_room_v2');
       put(T, hook, HOOKX, 250);
       put(T, gothel, 560, FL, { look: 'stand' });
       put(T, rap, X(760, 520), FL, { look: 'stand' });
@@ -622,7 +671,7 @@
       await sleep(1800);
       AudioFX.sfx('knock', .5); magic(gothel.x + 40, FL - 260); T.pop(gothel.x - 70, 230, tr('톡'));
       await sleep(800);
-      await veil(T, () => { T.clear(); bgImage(T, 'rp_bg_field'); camSnap(X(500, 480), 280, 1); put(T, gothel, X(400, 400), FL, { look: 'stand' }); put(T, rap, X(560, 520), FL, { look: 'short_shock' }); });
+      await veil(T, () => { setBg('rp_bg_field_v2'); camSnap(X(500, 480), 280, 1); put(T, gothel, X(400, 400), FL, { look: 'stand' }); put(T, rap, X(560, 520), FL, { look: 'short_shock' }); });
       magic(X(480, 460), FL - 200);
     })();
     await say('마녀는 가위 한 번으로 라푼젤의 머리를 자르고, 지팡이를 톡 두드려 먼 들판의 작은 오두막으로 데려갔어요.');
@@ -632,7 +681,7 @@
 
     /* ===== 9. 빈 탑 (자동) ===== */
     await T.sceneCard(tr('빈 탑'), () => {
-      scene('rp_bg_forest_dusk');
+      scene('rp_bg_forest_dusk_v2');
       towerSet({ withRap: false });
       put(T, braidCut, TX + HOOK_DX, FL + WIN_DY - 4 + 110);
       put(T, prince, 470, FL, { look: 'stand' });
@@ -650,7 +699,7 @@
     await braidUp();
     await s37;
     await veil(T, () => {
-      T.clear(); bgImage(T, 'rp_bg_room'); camSnap(X(500, 520), 280, 1); put(T, hook, HOOKX, 250); put(T, braidCut, HOOKX, 250 + 110);
+      setBg('rp_bg_room_v2'); camSnap(X(500, 520), 280, 1); put(T, hook, HOOKX, 250); put(T, braidCut, HOOKX, 250 + 110);
       put(T, gothel, X(560, 440), FL, { look: 'point', to: 'right' }); put(T, prince, X(760, 540), FL, { look: 'stand' });
     });
     prince.hop(8, 300);
@@ -666,7 +715,7 @@
     })();
     await Promise.all([s39, sleep(100)]);
     await veil(T, () => {
-      T.clear(); bgImage(T, 'rp_bg_forest_dusk'); camSnap(X(500, 520), 280, 1);
+      setBg('rp_bg_forest_dusk_v2'); camSnap(X(500, 520), 280, 1);
       put(T, tower, TX, FL); put(T, hook, TX + HOOK_DX, FL + WIN_DY - 4);
       put(T, prince, TX + HOOK_DX, FL + WIN_DY - 40, { look: 'float' });
     });
@@ -689,7 +738,7 @@
 
     /* ===== 10. 노래를 따라서 (톡 3 — 마지막 인사: 손잡기) ===== */
     await T.sceneCard(tr('노래를 따라서'), () => {
-      scene('rp_bg_field');
+      scene('rp_bg_field_v2');
       put(T, rap, 640, FL, { look: 'short_sing' });
       put(T, prince, -120, FL, { look: 'sad', to: 'right' });
       camSnap(P ? 560 : 500, 280, 1);
