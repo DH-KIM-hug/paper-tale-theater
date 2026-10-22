@@ -200,13 +200,12 @@
   const fadeOut = async (T, a, ms = 450) => { await T.anim(a.pos, [{ opacity: 1 }, { opacity: 0 }], ms); hide(a); a.pos.style.opacity = ''; };
   const glow = (a, ms = 900) => { a.body.style.filter = 'url(#hintGlow)'; setTimeout(() => { a.body.style.filter = ''; }, ms); };
   /* 침대에서 자는 이현이(1장 '잠잘 때도 쌔근', 2026-10-22). 그림 3장은 tools/app/gen/post_red_car_bed.py 가 오린다.
-     층(뒤→앞): 배경 침대(머리판·베개) → 이현이(요·베개·주황 이불·옆 어깨를 지운 머리) → 파란 이불(배경에서 오린 앞 가림 층) → 몸 언덕(어깨→발, 침대 길이 방향)
-       → 접힌 흰 홑청 띠(어깨선을 덮는다) → 팔·손 → 빨간 자동차. 이불 층 셋은 배경과 같은 밤빛 필터를 쓴다.
+     층(뒤→앞): 배경 침대(머리판·베개) → 이현이(요·베개·주황 이불을 지운 머리와 어깨) → 파란 이불(배경에서 오린 앞 가림 층) → 팔·손 → 빨간 자동차.
      좌표는 배경 그림 픽셀(1600×902) 기준: 이불 층이 놓일 자리 = 오린 자리, 이현이 머리 가운데(그림 (190,175))는 베개 위 (1440,412).
      크기는 바닥 잠 그림(rc_child_sleep, 높이 443 → HT 130)과 같은 비율이라 다른 자세와 얼굴 크기가 같다 */
   const BED = {
-    f: { kid: 'rc_child_sleep_bed', arm: 'rc_child_sleep_arm', quilt: 'rc_layer_bed_front', hump: 'rc_layer_bed_hump', fold: 'rc_layer_bed_fold' },
-    quilt: [1313, 445, 285, 266], hump: [1379, 453, 180, 88], fold: [1362, 442, 236, 39], kid: [25, 4, 365, 402], arm: [209, 299, 138, 104],
+    f: { kid: 'rc_child_sleep_bed', arm: 'rc_child_sleep_arm', quilt: 'rc_layer_bed_front' },
+    quilt: [1313, 445, 285, 266], kid: [25, 4, 376, 402], arm: [209, 299, 138, 104],
     head: [190, 175], at: [1440, 412], rot: -4, armShift: [-6, -14], hand: [238, 372],
   };
   function bedSleep(T) {
@@ -216,7 +215,7 @@
     const defs = T.el('defs', {}, root);
     const fq = T.el('filter', { id: 'rcQuiltSh', x: '-10%', y: '-10%', width: '120%', height: '125%' }, defs);
     T.el('feDropShadow', { dx: 0, dy: 2, stdDeviation: 2.2, 'flood-color': '#2E241C', 'flood-opacity': .4 }, fq);
-    const fn = T.el('filter', { id: 'rcQuiltNight', 'color-interpolation-filters': 'sRGB' }, defs), ct = T.el('feComponentTransfer', {}, fn);   // 배경과 같은 밤빛(#1F2A56 을 .22 로 덮은 색)
+    const fn = T.el('filter', { id: 'rcQuiltNight' }, defs), ct = T.el('feComponentTransfer', {}, fn);   // 배경과 같은 밤빛(#1F2A56 을 .22 로 덮은 색)
     [['feFuncR', 31], ['feFuncG', 42], ['feFuncB', 86]].forEach(([n, c]) => T.el(n, { type: 'linear', slope: .78, intercept: +(c / 255 * .22).toFixed(4) }, ct));
     const piece = (parent, f, o, d = [0, 0], attrs = {}) => {
       const g = T.el('g', { transform: `translate(${d[0] * bs},${d[1] * bs}) rotate(${BED.rot} ${hx} ${hy})`, ...attrs }, parent);
@@ -225,8 +224,9 @@
     };
     piece(root, BED.f.kid, BED.kid, [0, 0], { filter: 'url(#pp)' });
     const breathe = T.el('g', {}, root);                       // 이불·팔·자동차가 숨 쉬듯 함께 오르내린다
-    const qg = T.el('g', { filter: 'url(#rcQuiltNight)' }, breathe);
-    ['quilt', 'hump', 'fold'].forEach(k => { const q = BED[k]; T.el('image', { href: src(BED.f[k]), x: bx(q[0]), y: by(q[1]), width: q[2] * bs, height: q[3] * BGBOX.h / 902, filter: 'url(#rcQuiltSh)' }, qg); });
+    const q = BED.quilt, quilt = (attrs) => T.el('image', { href: src(BED.f.quilt), x: bx(q[0]), y: by(q[1]), width: q[2] * bs, height: q[3] * BGBOX.h / 902, ...attrs }, breathe);
+    quilt({ filter: 'url(#rcQuiltSh)' });
+    const qn = quilt({ filter: 'url(#rcQuiltNight)', opacity: 0 });
     const armG = piece(breathe, BED.f.arm, BED.arm, BED.armShift, { filter: 'url(#pp)' });
     const r = BED.rot * Math.PI / 180, dx = (BED.hand[0] - BED.head[0]) * K, dy = (BED.hand[1] - BED.head[1]) * K;
     const hand = [hx + dx * Math.cos(r) - dy * Math.sin(r) + BED.armShift[0] * bs, hy + dx * Math.sin(r) + dy * Math.cos(r) + BED.armShift[1] * bs];
@@ -235,6 +235,7 @@
       hold(a) { breathe.insertBefore(a.pos, armG); },   // 자동차는 이불 위·손 아래(손이 지붕을 쥔다)
       show() {
         T.anim(root, [{ opacity: 0 }, { opacity: 1 }], 500).then(() => root.setAttribute('opacity', 1));
+        T.anim(qn, [{ opacity: 0 }, { opacity: 1 }], 500).then(() => qn.setAttribute('opacity', 1));
         breathe.animate([{ translate: '0 0' }, { translate: '0 -1.6px' }, { translate: '0 0' }], { duration: 2600, iterations: Infinity, easing: 'ease-in-out' });
       },
     };
