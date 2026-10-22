@@ -293,6 +293,13 @@
     let parts;
     const a = T.actor(parent, x, y, g => { parts = draw(T, g); }, { scale });
     a.p = parts || {};
+    /* 누르는 자리 넓히기: 눌러야 할 때만 부른다(작은 개미도 화면 짧은 변 80px 이상). 항상 깔면 곡식 더미 위를 걷는 개미가 누름을 가로챈다 (2026-10-22) */
+    a.widen = () => {
+      if (a._hit) return a.pos;
+      const hs = 96 / (scale || 1);
+      a._hit = T.el('rect', { x: -hs / 2, y: -hs, width: hs, height: hs, fill: '#000', 'fill-opacity': 0 }, a.pos);
+      a.pos.insertBefore(a._hit, a.pos.firstChild); return a.pos;
+    };
     return a;
   }
   const ant = (T, parent, x, y, s = 1, opts) => mk(T, parent, x, y, (T2, g) => drawAnt(T2, g, opts), s);
@@ -616,6 +623,7 @@
     const playBgm = (name, vol = .3, dur, fade = 1.5) => { stopBgm(); bgm = AudioFX.music(name, { vol, dur, fade }); return bgm; };
     const SEASON_MUSIC = { spring: 'vivaldi_spring', summer: 'vivaldi_summer1', autumn: 'vivaldi_autumn1', winter: 'vivaldi_winter1' };
     const { el, sleep, say, camTo, camSnap, josa } = T;
+    if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const HOP = '베짱이';
 
     /* 그림 미리 불러오기: 배우와 첫 배경을 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
@@ -675,11 +683,10 @@
     else T.paper(pile, [[0, 0], [60, 0], [120, 0], [30, -24], [90, -24], [60, -48]].map(([dx, dy]) => ['ellipse', { cx: PX + dx, cy: 478 + dy, rx: 32, ry: 16, fill: C.gold }]));
     const boss = ant(T, T.world, 190, 496, 1.05); boss.face('right');
     await say('개미 눈으로 보면 풀잎이 나무처럼 커다래요!');
-    await say('곡식을 톡톡 눌러서 창고로 날라 줘요!');
     let stored = 0;
     let numQ = Promise.resolve(); // 곡식 한 알마다 숫자를 소리로 센다 (2026-10-20): 겹치지 않게 한 개씩 차례로 끝까지 듣고 다음
     const sayNum = k => { numQ = numQ.then(async () => { try { await Narrator.speak(NUM[k]); } catch (e) { /* 소리 없이도 진행 */ } await sleep(250); }); };
-    await T.mash(pile, { count: 10, prompt: '노란 곡식을 톡톡 눌러 봐요!', onStep: i => {
+    await T.ask('곡식을 톡톡 눌러서 창고로 날라 줘요!', () => T.mash(pile, { count: 10, prompt: '노란 곡식을 톡톡 눌러 봐요!', onStep: i => {
       sayNum(i - 1);
       const a = ant(T, T.world, PX + 140, 496, .9); a.face('right'); carry(a.p, true);
       SND.yeongcha(T, 2);
@@ -692,7 +699,7 @@
         T.tone(520 + stored * 40, .15, { type: 'triangle', vol: .12 });
         T.pop(E.pop[0], E.pop[1], NUM[stored - 1] + '!', C.pine);
       }, 1250);
-    } });
+    } }));
     await sleep(1600);
     await numQ;
     await say('창고 칸이 가득 찼어요! 하나부터 열까지, 열 칸!');
@@ -744,8 +751,7 @@
     playBgm('vivaldi_summer3', .3, 26, 2); // 〈사계〉 여름 3악장(폭풍)
     await say('앗, 소나기가 와요! 후두둑 후두둑!');
     shelterAnts.forEach(a => { a.p.mouth.setAttribute('d', 'M-26 -80 Q-21 -86 -15 -80'); a.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 160, iterations: 6 }); });
-    await say('큰 잎을 톡 눌러서 개미들 우산을 펼쳐 줘요!');
-    await T.tap(leafU, { prompt: '초록 잎을 톡 눌러 봐요!' });
+    await T.ask('큰 잎을 톡 눌러서 개미들 우산을 펼쳐 줘요!', () => T.tap(leafU, { prompt: '초록 잎을 톡 눌러 봐요!' }));
     await new Promise(res => { // 톡 하면 잎이 스스로 올라가 우산이 활짝 펼쳐진다
       const t0 = performance.now();
       const f = now => {
@@ -790,7 +796,6 @@
     AudioFX.whoosh();
     playBgm('vivaldi_autumn1', .3, 22, 2); // 〈사계〉 가을 1악장
     await say('가을이 왔어요. 나뭇잎이 알록달록 휘날려요.');
-    await say('도토리를 톡톡 눌러서 창고로 데굴데굴 굴려요!');
     let rolled = 0;
     const rollStep = i => {
       const last = acorns.lastElementChild; if (last) last.remove();
@@ -800,24 +805,23 @@
       rolled++;
       T.pop(620, 360, rolled % 2 ? '데굴!' : '데굴데굴~', C.bark);
     };
-    await T.tap(acorns, { prompt: '도토리를 톡톡 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await T.ask('도토리를 톡톡 눌러서 창고로 데굴데굴 굴려요!', () => T.tap(acorns, { prompt: '도토리를 톡톡 눌러 봐요!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 6; i++) { await rollStep(i); await sleep(500); }
     await sleep(900);
     await say('창고가 도토리로 더 가득해졌어요!');
     // 가을 옷 고르기
     await camTo(narrow() ? lead.x : 440, 380, 1.6, 700);
-    await say('바람이 선선해요. 가을엔 무엇을 입을까?');
     const [bTee, bVest, bCoat] = choiceBadges(T, [CLOTH.tee, CLOTH.vest, CLOTH.coat], 250);
     const tryOn = async (list, fx, line) => {
       wear(lead.p, list); fx && fx(true);
       await say(line);
       wear(lead.p, []); fx && fx(false);
     };
-    await T.choose([
+    await T.ask('바람이 선선해요. 가을엔 무엇을 입을까?', () => T.choose([
       { el: bVest, ok: true },
       { el: bTee, ok: false, onWrong: () => tryOn(['tee'], on => { if (on) { SND.shiver(T); lead.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 120, iterations: 8 }); } }, '반팔은 으슬으슬~ 조금 추워요.') },
       { el: bCoat, ok: false, onWrong: () => tryOn(['coat'], on => lead.p.sweat.setAttribute('opacity', on ? 1 : 0), '두꺼운 외투는 아이 더워~ 땀이 뻘뻘!') },
-    ], { prompt: '가을엔 무엇을 입을까? 옷을 골라 봐요!', where: '너무 얇지도, 너무 두껍지도 않은 옷!', who: `${josa('재킷', '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });
+    ], { prompt: '가을엔 무엇을 입을까? 옷을 골라 봐요!', where: '너무 얇지도, 너무 두껍지도 않은 옷!', who: `${josa('재킷', '이에요/예요')}! 반짝이는 걸 눌러 봐요!` }));
     [bTee, bVest, bCoat].forEach(b => b.remove());
     wear(lead.p, ['vest']); lead.hop(24); sparkles(T, lead.x, lead.y - 80);
     await say('맞아요! 선선한 가을엔 재킷을 입어요.');
@@ -842,13 +846,12 @@
     SND.shiver(T);
     playBgm('vivaldi_winter1', .3, 26, 2); // 〈사계〉 겨울 1악장
     await say('하얀 눈이 펑펑! 겨울이 왔어요. 호호, 추워라.');
-    await say('겨울엔 무엇을 입을까?');
     const [bWarm, bTee2, bSwim] = choiceBadges(T, [CLOTH.warm, CLOTH.tee, CLOTH.swim], 190);
-    await T.choose([
+    await T.ask('겨울엔 무엇을 입을까?', () => T.choose([
       { el: bWarm, ok: true },
       { el: bTee2, ok: false, onWrong: () => tryOn(['tee'], on => { if (on) { SND.shiver(T); lead.body.animate([{ translate: '0 0' }, { translate: '4px 0' }, { translate: '-4px 0' }], { duration: 110, iterations: 10 }); } }, '반팔은 오들오들~ 너무 추워요!') },
       { el: bSwim, ok: false, onWrong: () => tryOn(['ring'], on => { if (on) { SND.shiver(T); lead.hop(40); T.pop(lead.x, lead.y - 190, '앗, 차가워!', C.indigo); } }, '하하, 수영복은 여름에 입어요~ 앗, 차가워!') },
-    ], { prompt: '겨울엔 무엇을 입을까? 옷을 골라 봐요!', where: '눈이 오면 머리랑 목을 따뜻하게!', who: '목도리와 털모자예요! 반짝이는 걸 눌러 봐요!' });
+    ], { prompt: '겨울엔 무엇을 입을까? 옷을 골라 봐요!', where: '눈이 오면 머리랑 목을 따뜻하게!', who: '목도리와 털모자예요! 반짝이는 걸 눌러 봐요!' }));
     [bWarm, bTee2, bSwim].forEach(b => b.remove());
     wear(lead.p, ['scarf', 'hat']); crew.forEach(a => wear(a.p, ['scarf', 'hat']));
     lead.hop(24); sparkles(T, lead.x, lead.y - 90);
@@ -901,9 +904,8 @@
     await T.anim(D.door, [{ transform: 'scaleX(.45)' }, { transform: 'scaleX(.85)' }], 900);
     baby.hop(20);
     await say('그때 아기 개미가 말했어요. "그래도 추워 보여요."');
-    await say('문을 톡 눌러서 활짝 열어 줄까요?');
     host.pos.style.pointerEvents = 'none'; baby.pos.style.pointerEvents = 'none'; // 문 앞에 선 개미가 문 누르는 걸 가로막지 않게
-    await T.tap(D.door, { prompt: '창고 문을 톡!' });
+    await T.ask('문을 톡 눌러서 활짝 열어 줄까요?', () => T.tap(D.door, { prompt: '창고 문을 톡!' }));
     SND.door(T);
     await T.anim(D.door, [{ transform: 'scaleX(.85)' }, { transform: 'scaleX(.06)' }], { duration: 500, easing: 'cubic-bezier(.3,1.5,.5,1)' });
     D.glow.animate([{ opacity: .6 }, { opacity: 1 }], { duration: 600, iterations: 3, direction: 'alternate' });
@@ -978,10 +980,11 @@
       const sw = setInterval(() => { notes(T, 470, 360); dancers.forEach((a, i) => setTimeout(() => a.wiggle(5, 700), i * 120)); }, 1400);
       await winter.done; clearInterval(sw); bw2.cancel();
     }
-    await say('베짱이랑 친구들을 톡톡 눌러 봐요. 겨울 노래가 이어지고 춤을 춰요!');
+    let askG1 = '베짱이랑 친구들을 톡톡 눌러 봐요. 겨울 노래가 이어지고 춤을 춰요!'; // 안내는 첫 번째 누름에만 (T.ask)
+    const askOnce1 = f => { const g = askG1; askG1 = null; return g ? T.ask(g, f) : f(); };
     const winterTap = songTap(T, 'vivaldi_winter', 0, 1, 1.1, 24, 1, k => SND.violin(T, PENTA[k % PENTA.length])); // 〈사계〉 겨울 2악장을 처음부터 한 조각씩
     for (const a of [hop, ...dancers.slice(0, 3)]) { // 한 명씩 차례로 톡 (마음대로 연주 없이)
-      await T.tap(a.pos);
+      await askOnce1(() => T.tap(a.widen ? a.widen() : a.pos));
       winterTap(); notes(T, 470, 360);
       if (a === hop) hop.p.bow.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-16deg)' }, { transform: 'rotate(0deg)' }], 400);
       else { a.hop(20, 360); a.wiggle(10, 360); }
@@ -1026,7 +1029,8 @@
     else spots = [140, 380, 620, 860].map(x => [x, 330, 1]);
     spots = shuffle(spots);
     const cards = order.map((s, i) => ({ s, ...seasonCard(T, spots[i][0], spots[i][1], s, spots[i][2]) }));
-    await say('계절 카드를 봄, 여름, 가을, 겨울 순서대로 톡 눌러 봐요!');
+    let askG2 = '계절 카드를 봄, 여름, 가을, 겨울 순서대로 톡 눌러 봐요!'; // 안내는 첫 번째 누름에만 (T.ask)
+    const askOnce2 = f => { const g = askG2; askG2 = null; return g ? T.ask(g, f) : f(); };
     const left = [...cards];
     for (let k = 0; k < order.length; k++) {
       const want = cards[k];
@@ -1034,11 +1038,11 @@
       if (left.length === 1) { // 마지막 한 장
         await sleep(500); // 고를 게 없으니 저절로 (2026-10-19)
       } else {
-        await T.choose(left.map(c => ({ el: c.g, ok: c === want, onWrong: c === want ? null : async () => {
+        await askOnce2(() => T.choose(left.map(c => ({ el: c.g, ok: c === want, onWrong: c === want ? null : async () => {
           await T.anim(c.g, [{ translate: '0 0' }, { translate: '0 -26px' }, { translate: '0 0' }], 420);
           want.g.style.filter = 'url(#hintGlow)';
           await say('"나는 다음이야~"');
-        } })), { prompt: `${josa(name, '은/는')} 어디 있을까? ${name} 카드를 톡!`, where: `이번엔 ${name}! 반짝이는 카드예요.`, who: `${name} 카드를 눌러 봐요!` });
+        } })), { prompt: `${josa(name, '은/는')} 어디 있을까? ${name} 카드를 톡!`, where: `이번엔 ${name}! 반짝이는 카드예요.`, who: `${name} 카드를 눌러 봐요!` }));
       }
       want.g.style.filter = '';
       left.splice(left.indexOf(want), 1);
