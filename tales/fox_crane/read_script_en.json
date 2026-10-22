@@ -1,0 +1,779 @@
+{
+ "mode": "read",
+ "tale": "fox_crane",
+ "lang": "en",
+ "title": "The Fox and the Crane",
+ "voices_from": "voice_script_el.json",
+ "moral": "When you think about how your friend feels, everyone has a good time.",
+ "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, new 만 새로 녹음한다(trim 없음). 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<forest|kitchen|high|pondhouse|crane_room|split|feast_day|feast_night>": "장면 배경(bgImage 키, split = 부엌·두루미 방 반반). scenes[].set 으로 자동 호출",
+  "fox:<stand|hop|giggle|lick|stuck|pop|sad|sorry|eat|at:x,y|walk:x,ms> | crane:<stand|hop|peck|sip|sad|sorry|eat|at:x,y|walk:x,ms>": "여우·두루미 자세·이동",
+  "duck:<enter|eat> | butterfly:<enter|eat> | guests:dishes": "손님 오리·나비·그릇 나눠 주기",
+  "pot:stir | pot:bubble | letter:give | plate:show | bottle:show | lanterns:on": "소품 연출",
+  "cut:<peck|lick|stuck|sorry>": "그림 컷 4장 — 컷 속 외침(VOICE_LINES cut_peck·cut_lick·cut_stuck)은 그대로 재사용",
+  "vo:<cut_peck|cut_lick|cut_stuck|hi_crane|hi_fox|hi_duck|hi_butterfly|yum_crane|yum_fox|yum_duck|yum_butterfly>": "말풍선 없는 소리 대사(기존 녹음)",
+  "fx:<boing|thud|pop|bubble|grumble> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_invite",
+   "card": "A Forest Invitation",
+   "set": "forest",
+   "enter": [
+    "fox:stand",
+    "crane:stand",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "숲속에 여우랑 두루미가 살았어요.",
+     "src": "reuse",
+     "en": "In the forest lived a fox and a crane.",
+     "segs": [
+      [
+       "nar",
+       "In the forest lived a fox and a crane."
+      ]
+     ]
+    },
+    {
+     "text": "여우는 꼬리가 복슬복슬, 두루미는 다리가 길쭉길쭉했어요.",
+     "src": "new",
+     "en": "Fox had a big, fluffy tail, and Crane had long, long legs.",
+     "segs": [
+      [
+       "nar",
+       "Fox had a big, fluffy tail, and Crane had long, long legs."
+      ]
+     ]
+    },
+    {
+     "text": "여우가 초대장을 가져왔어요.",
+     "src": "reuse",
+     "en": "Fox brought an invitation.",
+     "segs": [
+      [
+       "nar",
+       "Fox brought an invitation.",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "letter:give"
+     ]
+    },
+    {
+     "text": "\"두루미야, 내일 우리 집에 밥 먹으러 와!\"",
+     "src": "new",
+     "en": "Crane, come to my house for dinner tomorrow!",
+     "segs": [
+      [
+       "fox",
+       "Crane, come to my house for dinner tomorrow!",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "\"와, 고마워!\" 두루미가 긴 다리로 폴짝 뛰었어요.",
+     "src": "reuse",
+     "en": "\"Wow, thank you!\" Crane hopped up on those long legs.",
+     "segs": [
+      [
+       "crane",
+       "Wow, thank you!",
+       "happy:1.4"
+      ],
+      [
+       "nar",
+       "Crane hopped up on those long legs."
+      ]
+     ],
+     "before": [
+      "crane:hop",
+      "fx:boing",
+      "pop:700,250,폴짝!"
+     ]
+    },
+    {
+     "text": "\"좋아, 여우야! 내일 꼭 갈게!\"",
+     "src": "new",
+     "en": "Of course, Fox! I will be there tomorrow!",
+     "segs": [
+      [
+       "crane",
+       "Of course, Fox! I will be there tomorrow!",
+       "happy:1.3"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_kitchen",
+   "card": "Fox's Kitchen",
+   "set": "kitchen",
+   "enter": [
+    "fox:stand",
+    "crane:at:-200,470",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "여우가 맛있는 수프를 끓여요.",
+     "src": "reuse",
+     "en": "Fox is cooking some yummy soup.",
+     "segs": [
+      [
+       "nar",
+       "Fox is cooking some yummy soup."
+      ]
+     ],
+     "before": [
+      "pot:bubble",
+      "pop:500,250,보글"
+     ]
+    },
+    {
+     "text": "여우는 꼬리를 살랑살랑 흔들며 콧노래를 흥얼흥얼 불렀어요.",
+     "src": "new",
+     "en": "Fox wagged that fluffy tail, swish, swish, and hummed a happy little tune.",
+     "segs": [
+      [
+       "nar",
+       "Fox wagged that fluffy tail, swish, swish, and hummed a happy little tune."
+      ]
+     ]
+    },
+    {
+     "text": "보글보글, 구수한 냄새가 솔솔 퍼졌어요.",
+     "src": "new",
+     "en": "Bubble, bubble! A warm, tasty smell drifted all through the kitchen.",
+     "segs": [
+      [
+       "nar",
+       "Bubble, bubble! A warm, tasty smell drifted all through the kitchen."
+      ]
+     ],
+     "before": [
+      "fx:bubble"
+     ]
+    },
+    {
+     "text": "여우는 커다란 국자로 수프를 휘휘 저었어요.",
+     "src": "new",
+     "en": "Fox stirred the soup round and round with a great big ladle.",
+     "segs": [
+      [
+       "nar",
+       "Fox stirred the soup round and round with a great big ladle."
+      ]
+     ],
+     "before": [
+      "pot:stir"
+     ]
+    },
+    {
+     "text": "여우가 킥킥 웃어요. \"납작 접시에 담아야지~\"",
+     "src": "reuse",
+     "en": "Fox giggles. \"I'll serve it on a flat plate~\"",
+     "segs": [
+      [
+       "nar",
+       "Fox giggles."
+      ],
+      [
+       "fox",
+       "I'll serve it on a flat plate~",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "fox:giggle",
+      "plate:show"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_plate",
+   "card": "The Flat Plate",
+   "set": "kitchen",
+   "enter": [
+    "fox:stand",
+    "crane:stand",
+    "plate:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "두루미가 놀러 왔어요. 그런데 접시가 아주 납작해요!",
+     "src": "reuse",
+     "en": "Crane came to visit. But the plate is very flat!",
+     "segs": [
+      [
+       "nar",
+       "Crane came to visit. But the plate is very flat!"
+      ]
+     ],
+     "before": [
+      "crane:walk:650,1500",
+      "vo:hi_crane"
+     ]
+    },
+    {
+     "text": "두루미는 긴 부리를 접시에 콕, 콕, 딱딱 부딪쳐 보았어요.",
+     "src": "new",
+     "en": "Crane poked at the plate with that long beak. Peck, peck, clack, clack!",
+     "segs": [
+      [
+       "nar",
+       "Crane poked at the plate with that long beak. Peck, peck, clack, clack!"
+      ]
+     ],
+     "before": [
+      "crane:peck",
+      "pop:650,300,콕!"
+     ],
+     "after": [
+      "vo:cut_peck",
+      "cut:peck"
+     ]
+    },
+    {
+     "text": "어머나, 부리 끝만 딱딱 닿아요. 수프를 먹을 수가 없어요.",
+     "src": "reuse",
+     "en": "Oh dear, only the tip of the beak goes clack, clack. Crane can't eat the soup.",
+     "segs": [
+      [
+       "nar",
+       "Oh dear, only the tip of the beak goes clack, clack. Crane can't eat the soup.",
+       "sad:1.2"
+      ]
+     ],
+     "before": [
+      "pop:650,300,딱딱!"
+     ]
+    },
+    {
+     "text": "여우는 혀로 핥핥, 다 먹었어요. 두루미는 배가 꼬르륵, 속상했어요.",
+     "src": "reuse",
+     "en": "Fox licked, lick lick, and ate it all up. Crane's tummy rumbled, and Crane felt sad.",
+     "segs": [
+      [
+       "nar",
+       "Fox licked, lick lick, and ate it all up. Crane's tummy rumbled, and Crane felt sad.",
+       "sad:1.3"
+      ]
+     ],
+     "before": [
+      "fox:lick",
+      "vo:cut_lick",
+      "cut:lick"
+     ],
+     "after": [
+      "crane:sad",
+      "fx:grumble",
+      "pop:650,330,꼬르륵"
+     ]
+    },
+    {
+     "text": "두루미는 고개를 푹 숙이고 터덜터덜 집으로 돌아갔어요.",
+     "src": "new",
+     "en": "Crane hung that long neck down low and trudged slowly home, plod, plod.",
+     "segs": [
+      [
+       "nar",
+       "Crane hung that long neck down low and trudged slowly home, plod, plod.",
+       "sad:1.2"
+      ]
+     ],
+     "before": [
+      "crane:walk:1200,2000"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_cranehouse",
+   "card": "Crane's House",
+   "set": "pondhouse",
+   "enter": [
+    "crane:stand",
+    "fox:at:-200,470",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "며칠 뒤, 이번엔 두루미가 여우를 불렀어요.",
+     "src": "reuse",
+     "en": "A few days later, Crane invited Fox over.",
+     "segs": [
+      [
+       "nar",
+       "A few days later, Crane invited Fox over."
+      ]
+     ]
+    },
+    {
+     "text": "\"여우야, 우리 집에도 놀러 와~\"",
+     "src": "reuse",
+     "en": "\"Fox, come over to my house too~\"",
+     "segs": [
+      [
+       "crane",
+       "\"Fox, come over to my house too~\"",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "두루미는 목이 긴 병에 수프를 콸콸 부어 두었어요.",
+     "src": "new",
+     "en": "Crane poured the soup into a tall, thin bottle, glug, glug, glug.",
+     "segs": [
+      [
+       "nar",
+       "Crane poured the soup into a tall, thin bottle, glug, glug, glug."
+      ]
+     ],
+     "before": [
+      "bottle:show"
+     ]
+    },
+    {
+     "text": "여우가 신이 났어요. \"좋아! 맛있는 거 먹어야지!\"",
+     "src": "reuse",
+     "en": "Fox was so excited. \"Yay! I'm going to eat something yummy!\"",
+     "segs": [
+      [
+       "nar",
+       "Fox was so excited.",
+       "happy:1.2"
+      ],
+      [
+       "fox",
+       "Yay! I'm going to eat something yummy!",
+       "happy:1.5"
+      ]
+     ],
+     "before": [
+      "fox:walk:350,1500",
+      "vo:hi_fox"
+     ],
+     "after": [
+      "fox:hop"
+     ]
+    },
+    {
+     "text": "여우는 꼬리를 살랑살랑 흔들며 총총 달려갔어요.",
+     "src": "new",
+     "en": "Fox wagged that fluffy tail, swish, swish, and trotted off, trot, trot.",
+     "segs": [
+      [
+       "nar",
+       "Fox wagged that fluffy tail, swish, swish, and trotted off, trot, trot."
+      ]
+     ],
+     "before": [
+      "fox:walk:600,1200"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_bottle",
+   "card": "The Tall Bottle",
+   "set": "crane_room",
+   "enter": [
+    "crane:stand",
+    "fox:stand",
+    "bottle:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "와, 병이 탑처럼 높아요! 목이 아주 길어요.",
+     "src": "reuse",
+     "en": "Wow, the bottle is as tall as a tower! The neck is so long.",
+     "segs": [
+      [
+       "fox",
+       "Wow, the bottle is as tall as a tower!",
+       "toneup:1.4"
+      ],
+      [
+       "nar",
+       "The neck is so long."
+      ]
+     ]
+    },
+    {
+     "text": "여우는 긴 병을 요리조리, 빙글빙글 돌려 보았어요.",
+     "src": "new",
+     "en": "Fox turned the tall bottle this way and that, round and round.",
+     "segs": [
+      [
+       "nar",
+       "Fox turned the tall bottle this way and that, round and round."
+      ]
+     ]
+    },
+    {
+     "text": "여우는 코를 킁킁, 병 속에 코를 쏙 넣어 보았어요.",
+     "src": "new",
+     "en": "Fox sniffed, sniff, sniff, and poked that nose right into the bottle.",
+     "segs": [
+      [
+       "nar",
+       "Fox sniffed, sniff, sniff, and poked that nose right into the bottle."
+      ]
+     ],
+     "before": [
+      "pop:400,300,킁킁"
+     ],
+     "after": [
+      "fox:stuck",
+      "vo:cut_stuck",
+      "cut:stuck"
+     ]
+    },
+    {
+     "text": "어머나! 여우 코가 병에 쏙 끼었어요!",
+     "src": "reuse",
+     "en": "Oh no! Fox's nose got stuck in the bottle!",
+     "segs": [
+      [
+       "nar",
+       "Oh no! Fox's nose got stuck in the bottle!",
+       "toneup:1.4"
+      ]
+     ]
+    },
+    {
+     "text": "뿅! 코가 빠졌어요. 엉덩방아 쿵!",
+     "src": "reuse",
+     "en": "Pop! The nose came out. Fox landed with a thump!",
+     "segs": [
+      [
+       "nar",
+       "Pop! The nose came out. Fox landed with a thump!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "fox:pop",
+      "fx:pop",
+      "pop:400,250,뿅!"
+     ],
+     "after": [
+      "fx:thud",
+      "pop:400,420,쿵!"
+     ]
+    },
+    {
+     "text": "두루미는 긴 부리로 쪽쪽 먹었어요. 여우는 배가 꼬르륵, 속상했어요.",
+     "src": "reuse",
+     "en": "Crane sipped with that long beak, sip, sip. Fox's tummy rumbled, and Fox felt sad.",
+     "segs": [
+      [
+       "nar",
+       "Crane sipped with that long beak, sip, sip. Fox's tummy rumbled, and Fox felt sad.",
+       "sad:1.3"
+      ]
+     ],
+     "before": [
+      "crane:sip",
+      "pop:650,300,쪽쪽"
+     ],
+     "after": [
+      "fox:sad",
+      "fx:grumble"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_why",
+   "card": "Why Couldn't They Eat?",
+   "set": "split",
+   "enter": [
+    "fox:stand",
+    "crane:stand",
+    "plate:show",
+    "bottle:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "둘 다 못 먹었어요. 왜 그랬을까요?",
+     "src": "reuse",
+     "en": "Neither of them could eat. Why was that?",
+     "segs": [
+      [
+       "nar",
+       "Neither of them could eat. Why was that?",
+       "tonedown:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "두루미 부리는 길쭉길쭉, 납작한 접시에는 콕콕 닿지 않아요.",
+     "src": "new",
+     "en": "Crane's beak is long and thin. On a flat plate it just goes peck, peck, and reaches nothing.",
+     "segs": [
+      [
+       "nar",
+       "Crane's beak is long and thin. On a flat plate it just goes peck, peck, and reaches nothing."
+      ]
+     ]
+    },
+    {
+     "text": "여우 입은 짧고 혀로 핥핥, 목이 긴 병에는 쏙 들어가지 않지요.",
+     "src": "new",
+     "en": "Fox's mouth is short and licks, lick, lick. It can't fit down a long bottle neck.",
+     "segs": [
+      [
+       "nar",
+       "Fox's mouth is short and licks, lick, lick. It can't fit down a long bottle neck."
+      ]
+     ]
+    },
+    {
+     "text": "둘은 서로의 입 모양을 가만가만 들여다보았어요.",
+     "src": "new",
+     "en": "Quietly, the two of them looked closely at each other's mouths.",
+     "segs": [
+      [
+       "nar",
+       "Quietly, the two of them looked closely at each other's mouths."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_guests",
+   "card": "Feast Guests",
+   "set": "feast_day",
+   "enter": [
+    "fox:stand",
+    "crane:stand",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "여우랑 두루미가 함께 잔치를 열었어요. 손님들도 와요!",
+     "src": "reuse",
+     "en": "Fox and Crane are having a feast together. The guests are coming too!",
+     "segs": [
+      [
+       "nar",
+       "Fox and Crane are having a feast together. The guests are coming too!",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "꽥꽥! 오리가 뒤뚱뒤뚱, 팔랑팔랑! 나비가 사뿐사뿐 날아왔어요.",
+     "src": "new",
+     "en": "Quack, quack! Duck came waddling in, and flutter, flutter! Butterfly came floating down.",
+     "segs": [
+      [
+       "nar",
+       "Quack, quack! Duck came waddling in, and flutter, flutter! Butterfly came floating down.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "duck:enter",
+      "vo:hi_duck",
+      "butterfly:enter",
+      "vo:hi_butterfly"
+     ]
+    },
+    {
+     "text": "두루미에게는 긴 병, 여우에게는 납작 접시, 오리에게는 넓은 그릇, 나비에게는 꽃!",
+     "src": "new",
+     "en": "A tall bottle for Crane, a flat plate for Fox, a wide bowl for Duck, and a flower for Butterfly!",
+     "segs": [
+      [
+       "nar",
+       "A tall bottle for Crane, a flat plate for Fox, a wide bowl for Duck, and a flower for Butterfly!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "guests:dishes"
+     ]
+    },
+    {
+     "text": "모두 자기한테 딱 맞는 그릇을 받고 싱글벙글 웃었어요.",
+     "src": "new",
+     "en": "Everyone got a dish that was just right for them, and they all beamed with joy.",
+     "segs": [
+      [
+       "nar",
+       "Everyone got a dish that was just right for them, and they all beamed with joy.",
+       "happy:1.2"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_together",
+   "card": "Eating Together",
+   "set": "feast_night",
+   "enter": [
+    "fox:stand",
+    "crane:stand",
+    "duck:enter",
+    "butterfly:enter",
+    "guests:dishes",
+    "lanterns:on",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "등불이 반짝, 모두 모여 잔치를 해요.",
+     "src": "reuse",
+     "en": "The lanterns twinkle, and everyone gathers for the feast.",
+     "segs": [
+      [
+       "nar",
+       "The lanterns twinkle, and everyone gathers for the feast.",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "여우가 말했어요. \"두루미야, 미안해.\"",
+     "src": "reuse",
+     "en": "Fox said, \"I'm sorry, Crane.\"",
+     "segs": [
+      [
+       "nar",
+       "Fox said,"
+      ],
+      [
+       "fox",
+       "I'm sorry, Crane.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "fox:sorry"
+     ]
+    },
+    {
+     "text": "두루미도 말했어요. \"여우야, 나도 미안해.\"",
+     "src": "reuse",
+     "en": "Crane said, \"I'm sorry too, Fox.\"",
+     "segs": [
+      [
+       "nar",
+       "Crane said,"
+      ],
+      [
+       "crane",
+       "I'm sorry too, Fox.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "crane:sorry"
+     ],
+     "after": [
+      "cut:sorry"
+     ]
+    },
+    {
+     "text": "\"괜찮아!\" 둘은 다시 사이좋은 친구가 되었어요.",
+     "src": "reuse",
+     "en": "\"It's okay!\" The two became good friends again.",
+     "segs": [
+      [
+       "fox",
+       "It's okay!",
+       "happy"
+      ],
+      [
+       "crane",
+       "It's okay!",
+       "happy"
+      ],
+      [
+       "nar",
+       "The two became good friends again.",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "fox:hop",
+      "crane:hop"
+     ]
+    },
+    {
+     "text": "쪽쪽, 핥핥, 냠냠! 모두 맛있게 먹었어요.",
+     "src": "new",
+     "en": "Slurp, slurp! Lick, lick! Yum, yum! Everyone ate happily.",
+     "segs": [
+      [
+       "nar",
+       "Slurp, slurp! Lick, lick! Yum, yum! Everyone ate happily.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "crane:eat",
+      "vo:yum_crane",
+      "fox:eat",
+      "vo:yum_fox",
+      "duck:eat",
+      "vo:yum_duck",
+      "butterfly:eat",
+      "vo:yum_butterfly"
+     ]
+    },
+    {
+     "text": "배부르게 먹고, 모두 행복하게 웃었답니다.",
+     "src": "reuse",
+     "en": "They ate until they were full, and everyone smiled happily.",
+     "segs": [
+      [
+       "nar",
+       "They ate until they were full, and everyone smiled happily.",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "오리는 꽥꽥, 나비는 팔랑팔랑, 잔치는 밤늦도록 이어졌어요.",
+     "src": "new",
+     "en": "Duck went quack, quack, Butterfly went flutter, flutter, and the feast went on late into the night.",
+     "segs": [
+      [
+       "nar",
+       "Duck went quack, quack, Butterfly went flutter, flutter, and the feast went on late into the night.",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "친구 입장이 되어 보면 모두 즐겁답니다.",
+     "src": "new",
+     "en": "When you think about how your friend feels, everyone has a good time.",
+     "segs": [
+      [
+       "nar",
+       "When you think about how your friend feels, everyone has a good time.",
+       "happy:1.1"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

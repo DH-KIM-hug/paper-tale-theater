@@ -1,0 +1,902 @@
+{
+ "mode": "read",
+ "tale": "sun_wind",
+ "lang": "en",
+ "title": "The Sun and the Wind",
+ "voices_from": "voice_script_el.json",
+ "moral": "Kindness is the strongest power of all. The end!",
+ "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, trim 은 from 줄의 영어 녹음을 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<sky|high|field|stream>": "장면 배경(bgImage 키). scenes[].set 으로 자동 호출",
+  "sun:<smile|shine:<1-3>|dim> | wind:<puff|blow:<1-5>|pant|smile|gentle> | sun:at:<x,y> | wind:at:<x,y>": "해님·바람 표정·세기",
+  "man:<walk:x,ms|face:<cold|hot|happy>|hold|button|unbutton|fan|coat:off|hat:off|hat:on|sit|dip>": "나그네 걷기·표정·외투·모자·앉기",
+  "leaves:fly | flap:<on|off> | sweat | breeze": "나뭇잎 날림·외투 펄럭·땀·살랑 바람",
+  "cut:<hat|hold|pant|off|shake>": "그림 컷 5장 — 컷 속 외침(VOICE_LINES cut_pant·cut_off)은 그대로 재사용",
+  "vo:<cut_pant|cut_off|wrong_cold|wrong_hot>": "말풍선 없는 소리 대사(기존 녹음)",
+  "fx:<whoosh|swish|ding|splash> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_sky",
+   "card": "High in the Sky",
+   "set": "sky",
+   "enter": [
+    "sun:smile",
+    "wind:smile",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하늘 높이 해님과 바람이 살았어요.",
+     "src": "reuse",
+     "en": "High up in the sky lived the Sun and the Wind.",
+     "segs": [
+      [
+       "nar",
+       "High up in the sky lived the Sun and the Wind.",
+       "happy:1.0"
+      ]
+     ]
+    },
+    {
+     "text": "구름은 두둥실, 새들은 짹짹 하늘을 날아다녔어요.",
+     "src": "new",
+     "en": "Clouds floated by, bob, bob, and birds flew about, tweet, tweet.",
+     "segs": [
+      [
+       "nar",
+       "Clouds floated by, bob, bob, and birds flew about, tweet, tweet."
+      ]
+     ]
+    },
+    {
+     "text": "해님은 방긋방긋 웃고, 바람은 볼을 빵빵하게 부풀렸어요.",
+     "src": "new",
+     "en": "The Sun beamed a big, bright smile, and the Wind puffed out its cheeks, round and full.",
+     "segs": [
+      [
+       "nar",
+       "The Sun beamed a big, bright smile, and the Wind puffed out its cheeks, round and full."
+      ]
+     ],
+     "before": [
+      "wind:puff"
+     ]
+    },
+    {
+     "text": "\"내가 제일 따뜻해!\"",
+     "src": "reuse",
+     "en": "\"I'm the warmest!\"",
+     "segs": [
+      [
+       "sun",
+       "I'm the warmest!",
+       "happy:1.4"
+      ]
+     ],
+     "before": [
+      "sun:shine:1"
+     ]
+    },
+    {
+     "text": "\"아니야, 내가 제일 세!\"",
+     "src": "reuse",
+     "en": "\"No way, I'm the strongest!\"",
+     "segs": [
+      [
+       "wind",
+       "No way, I'm the strongest!",
+       "angry:1.3"
+      ]
+     ],
+     "before": [
+      "wind:puff",
+      "fx:whoosh"
+     ]
+    },
+    {
+     "text": "해님과 바람은 서로 자기가 최고래요.",
+     "src": "reuse",
+     "en": "The Sun and the Wind both say they're the best.",
+     "segs": [
+      [
+       "nar",
+       "The Sun and the Wind both say they're the best."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_bet",
+   "card": "The Bet",
+   "set": "high",
+   "enter": [
+    "man:walk:500,0",
+    "sun:at:200,120",
+    "wind:at:800,120",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "저 아래 길로 나그네가 걸어가요.",
+     "src": "reuse",
+     "en": "A traveler is walking down the road below.",
+     "segs": [
+      [
+       "nar",
+       "A traveler is walking down the road below."
+      ]
+     ],
+     "before": [
+      "man:walk:500,3000"
+     ]
+    },
+    {
+     "text": "나그네는 터벅터벅, 느릿느릿 길을 걸었어요.",
+     "src": "new",
+     "en": "The traveler trudged along, plod, plod, slow and steady.",
+     "segs": [
+      [
+       "nar",
+       "The traveler trudged along, plod, plod, slow and steady."
+      ]
+     ]
+    },
+    {
+     "text": "나그네는 두툼한 외투를 입었어요.",
+     "src": "reuse",
+     "en": "The traveler is wearing a thick coat.",
+     "segs": [
+      [
+       "nar",
+       "The traveler is wearing a thick coat."
+      ]
+     ]
+    },
+    {
+     "text": "바람이 말했어요. \"저 외투를 먼저 벗기는 쪽이 이기기!\"",
+     "src": "reuse",
+     "en": "The Wind said, \"Whoever makes that coat come off first wins!\"",
+     "segs": [
+      [
+       "nar",
+       "The Wind said,"
+      ],
+      [
+       "wind",
+       "Whoever makes that coat come off first wins!",
+       "toneup:1.4"
+      ]
+     ],
+     "before": [
+      "wind:puff"
+     ]
+    },
+    {
+     "text": "\"저 외투쯤은 내가 휙 한 방에 날려 버릴걸!\"",
+     "src": "new",
+     "en": "I will blow that coat clean off in one big puff!",
+     "segs": [
+      [
+       "wind",
+       "I will blow that coat clean off in one big puff!",
+       "toneup:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "해님이 웃었어요. \"좋아. 바람아, 너 먼저 해 봐.\"",
+     "src": "reuse",
+     "en": "The Sun smiled. \"Okay. Wind, you go first.\"",
+     "segs": [
+      [
+       "nar",
+       "The Sun smiled."
+      ],
+      [
+       "sun",
+       "Okay. Wind, you go first.",
+       "happy:1.0"
+      ]
+     ],
+     "before": [
+      "sun:smile"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_wind",
+   "card": "The Wind's Turn",
+   "set": "field",
+   "enter": [
+    "man:walk:520,0",
+    "wind:at:150,120",
+    "sun:dim",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "바람이 볼을 빵빵하게 부풀렸어요.",
+     "src": "reuse",
+     "en": "The Wind puffed out big, round cheeks.",
+     "segs": [
+      [
+       "nar",
+       "The Wind puffed out big, round cheeks.",
+       "toneup:1.2"
+      ]
+     ],
+     "before": [
+      "wind:puff"
+     ]
+    },
+    {
+     "text": "후우! 바람이 힘껏 불자 풀잎이 휘청휘청 흔들렸어요.",
+     "src": "new",
+     "en": "Whoosh! The Wind blew with all its might, and the grass swayed and swished.",
+     "segs": [
+      [
+       "nar",
+       "Whoosh! The Wind blew with all its might, and the grass swayed and swished.",
+       "toneup:1.2"
+      ]
+     ],
+     "before": [
+      "wind:blow:2",
+      "fx:whoosh"
+     ]
+    },
+    {
+     "text": "휘잉~ 나뭇잎이 날아가요!",
+     "src": "reuse",
+     "en": "Whoosh~ The leaves are flying away!",
+     "segs": [
+      [
+       "nar",
+       "Whoosh~ The leaves are flying away!",
+       "toneup:1.3"
+      ]
+     ],
+     "before": [
+      "leaves:fly",
+      "pop:400,200,휘잉!"
+     ]
+    },
+    {
+     "text": "\"앗, 내 모자!\" 모자가 훨훨 날아갔어요.",
+     "src": "reuse",
+     "en": "\"Oh no, my hat!\" The hat flew far, far away.",
+     "segs": [
+      [
+       "man",
+       "Oh no, my hat!",
+       "toneup:1.6"
+      ],
+      [
+       "nar",
+       "The hat flew far, far away."
+      ]
+     ],
+     "before": [
+      "wind:blow:3",
+      "man:hat:off",
+      "cut:hat"
+     ]
+    },
+    {
+     "text": "외투 자락이 펄럭펄럭!",
+     "src": "reuse",
+     "en": "The coat flap-flap-flaps!",
+     "segs": [
+      [
+       "nar",
+       "The coat flap-flap-flaps!"
+      ]
+     ],
+     "before": [
+      "man:face:cold",
+      "flap:on",
+      "pop:345,380,펄럭펄럭"
+     ]
+    },
+    {
+     "text": "\"으으, 추워!\" 나그네는 외투를 꽉 여몄어요.",
+     "src": "reuse",
+     "en": "\"Brrr, it's cold!\" The traveler held the coat tight.",
+     "segs": [
+      [
+       "man",
+       "Brrr, it's cold!",
+       "sad:1.5"
+      ],
+      [
+       "nar",
+       "The traveler held the coat tight."
+      ]
+     ],
+     "before": [
+      "man:hold",
+      "cut:hold"
+     ]
+    },
+    {
+     "text": "단추까지 꼭꼭 채웠어요. 외투는 꼼짝도 안 해요!",
+     "src": "reuse",
+     "en": "Every button is buttoned up tight. The coat won't budge!",
+     "segs": [
+      [
+       "nar",
+       "Every button is buttoned up tight. The coat won't budge!",
+       "tonedown:1.1"
+      ]
+     ],
+     "before": [
+      "man:button",
+      "pop:520,300,꽉!"
+     ]
+    },
+    {
+     "text": "나그네는 몸을 웅크리고 비틀비틀 걸어갔어요.",
+     "src": "new",
+     "en": "The traveler hunched over and wobbled along, this way and that.",
+     "segs": [
+      [
+       "nar",
+       "The traveler hunched over and wobbled along, this way and that."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_pant",
+   "card": "Huff, Puff",
+   "set": "field",
+   "enter": [
+    "man:walk:520,0",
+    "man:hold",
+    "wind:at:150,120",
+    "sun:dim",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "바람은 더 세게, 더 세게 후우후우 불었어요.",
+     "src": "new",
+     "en": "The Wind blew harder, and harder still. Whoosh, whoosh!",
+     "segs": [
+      [
+       "nar",
+       "The Wind blew harder, and harder still. Whoosh, whoosh!"
+      ]
+     ],
+     "before": [
+      "wind:blow:5",
+      "fx:whoosh",
+      "flap:on"
+     ]
+    },
+    {
+     "text": "하지만 나그네는 외투를 꼭 붙잡고 끄떡도 하지 않았어요.",
+     "src": "new",
+     "en": "But the traveler held his coat tight and did not budge one bit.",
+     "segs": [
+      [
+       "nar",
+       "But the traveler held his coat tight and did not budge one bit."
+      ]
+     ]
+    },
+    {
+     "text": "바람은 숨이 차서 헉헉, 볼이 쭈글쭈글해졌어요.",
+     "src": "reuse",
+     "en": "The Wind ran out of breath, huff puff, and its cheeks went all wrinkly.",
+     "segs": [
+      [
+       "nar",
+       "The Wind ran out of breath, huff puff, and its cheeks went all wrinkly.",
+       "sad:1.0"
+      ]
+     ],
+     "before": [
+      "wind:pant",
+      "cut:pant"
+     ],
+     "after": [
+      "flap:off"
+     ]
+    },
+    {
+     "text": "\"에이, 안 되네!\"",
+     "src": "reuse",
+     "en": "\"Aw, it's not working!\"",
+     "segs": [
+      [
+       "wind",
+       "Aw, it's not working!",
+       "sad:1.5"
+      ]
+     ]
+    },
+    {
+     "text": "어? 날아간 모자가 나그네 머리에 쏙 떨어졌어요!",
+     "src": "reuse",
+     "en": "Oh? The hat that flew away dropped right onto the traveler's head!",
+     "segs": [
+      [
+       "nar",
+       "Oh? The hat that flew away dropped right onto the traveler's head!"
+      ]
+     ],
+     "before": [
+      "man:hat:on",
+      "pop:520,250,쏙!"
+     ]
+    },
+    {
+     "text": "나그네는 모자를 다시 쓰고 뚜벅뚜벅 걸어갔어요.",
+     "src": "new",
+     "en": "The traveler put his hat back on and walked on, clomp, clomp.",
+     "segs": [
+      [
+       "nar",
+       "The traveler put his hat back on and walked on, clomp, clomp."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_sun",
+   "card": "The Sun's Turn",
+   "set": "field",
+   "enter": [
+    "man:walk:520,0",
+    "man:hold",
+    "sun:at:850,120",
+    "wind:at:150,120",
+    "wind:pant",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이번엔 해님 차례예요.",
+     "src": "reuse",
+     "en": "Now it's the Sun's turn.",
+     "segs": [
+      [
+       "nar",
+       "Now it's the Sun's turn.",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "sun:smile"
+     ]
+    },
+    {
+     "text": "해님이 방긋 웃으며 따스한 햇살을 반짝반짝 쏟아 주었어요.",
+     "src": "new",
+     "en": "The Sun smiled brightly and poured down warm sunshine, twinkle, twinkle.",
+     "segs": [
+      [
+       "nar",
+       "The Sun smiled brightly and poured down warm sunshine, twinkle, twinkle.",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "sun:shine:1",
+      "pop:850,120,반짝!"
+     ]
+    },
+    {
+     "text": "\"아, 따뜻하다~\" 나그네가 단추를 풀었어요.",
+     "src": "reuse",
+     "en": "\"Ahh, so warm~\" The traveler unbuttoned the coat.",
+     "segs": [
+      [
+       "man",
+       "Ahh, so warm~",
+       "happy:1.3"
+      ],
+      [
+       "nar",
+       "The traveler unbuttoned the coat."
+      ]
+     ],
+     "before": [
+      "man:face:happy",
+      "man:unbutton"
+     ]
+    },
+    {
+     "text": "햇살이 점점 쨍쨍, 나그네 이마에 땀이 송골송골 맺혔어요.",
+     "src": "new",
+     "en": "The sunshine grew hotter and hotter, blazing bright, and little beads of sweat popped up on the traveler's forehead.",
+     "segs": [
+      [
+       "nar",
+       "The sunshine grew hotter and hotter, blazing bright, and little beads of sweat popped up on the traveler's forehead."
+      ]
+     ],
+     "before": [
+      "sun:shine:2",
+      "sweat",
+      "pop:850,120,쨍쨍!"
+     ]
+    },
+    {
+     "text": "\"아이, 더워!\" 모자로 부채질을 해요.",
+     "src": "reuse",
+     "en": "\"Phew, it's hot!\" The traveler fans with the hat.",
+     "segs": [
+      [
+       "man",
+       "Phew, it's hot!",
+       "toneup:1.3"
+      ],
+      [
+       "nar",
+       "The traveler fans with the hat."
+      ]
+     ],
+     "before": [
+      "man:face:hot",
+      "man:fan"
+     ]
+    },
+    {
+     "text": "\"휴우, 햇볕이 쨍쨍하니 외투는 필요 없겠네.\"",
+     "src": "new",
+     "en": "Phew! With the sun blazing like this, I do not need this coat.",
+     "segs": [
+      [
+       "man",
+       "Phew! With the sun blazing like this, I do not need this coat.",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "훌러덩! 나그네가 외투를 벗었어요!",
+     "src": "reuse",
+     "en": "Off it goes! The traveler took off the coat!",
+     "segs": [
+      [
+       "nar",
+       "Off it goes! The traveler took off the coat!",
+       "happy:1.4"
+      ]
+     ],
+     "before": [
+      "sun:shine:3",
+      "cut:off",
+      "man:coat:off",
+      "pop:520,250,훌러덩!"
+     ]
+    },
+    {
+     "text": "바람이 깜짝 놀랐어요. \"우와, 해님이 해냈네!\"",
+     "src": "reuse",
+     "en": "The Wind was so surprised. \"Wow, the Sun did it!\"",
+     "segs": [
+      [
+       "nar",
+       "The Wind was so surprised."
+      ],
+      [
+       "wind",
+       "Wow, the Sun did it!",
+       "toneup:1.5"
+      ]
+     ],
+     "before": [
+      "wind:smile"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_who",
+   "card": "Who Won?",
+   "set": "field",
+   "enter": [
+    "man:walk:520,0",
+    "man:coat:off",
+    "sun:at:850,120",
+    "wind:at:150,120",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "바람이 불 때, 나그네는 외투를 꽉 여몄어요.",
+     "src": "reuse",
+     "en": "When the Wind blew, the traveler held the coat tight.",
+     "segs": [
+      [
+       "nar",
+       "When the Wind blew, the traveler held the coat tight."
+      ]
+     ],
+     "before": [
+      "wind:puff",
+      "flap:on"
+     ],
+     "after": [
+      "flap:off"
+     ]
+    },
+    {
+     "text": "해님이 비출 때는 외투를 벗었지요.",
+     "src": "reuse",
+     "en": "When the Sun shone, the traveler took the coat off.",
+     "segs": [
+      [
+       "nar",
+       "When the Sun shone, the traveler took the coat off."
+      ]
+     ],
+     "before": [
+      "sun:shine:2"
+     ]
+    },
+    {
+     "text": "바람은 머리를 긁적긁적, 해님은 싱글벙글 웃었어요.",
+     "src": "new",
+     "en": "The Wind scratched its head, scritch, scratch, and the Sun grinned from ear to ear.",
+     "segs": [
+      [
+       "nar",
+       "The Wind scratched its head, scritch, scratch, and the Sun grinned from ear to ear."
+      ]
+     ],
+     "before": [
+      "wind:smile",
+      "sun:smile"
+     ]
+    },
+    {
+     "text": "세게 미는 것보다 다정한 게 더 힘이 세요.",
+     "src": "reuse",
+     "en": "Being gentle is stronger than pushing hard.",
+     "segs": [
+      [
+       "nar",
+       "Being gentle is stronger than pushing hard.",
+       "happy:0.9"
+      ]
+     ]
+    },
+    {
+     "text": "나그네는 해님을 올려다보며 방긋 웃었어요.",
+     "src": "new",
+     "en": "The traveler looked up at the Sun and gave a big, happy smile.",
+     "segs": [
+      [
+       "nar",
+       "The traveler looked up at the Sun and gave a big, happy smile."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_stream",
+   "card": "By the Stream",
+   "set": "stream",
+   "enter": [
+    "man:sit",
+    "man:coat:off",
+    "sun:at:850,120",
+    "wind:at:150,120",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "나그네는 개울가에서 쉬어요.",
+     "src": "reuse",
+     "en": "The traveler is resting by the stream.",
+     "segs": [
+      [
+       "nar",
+       "The traveler is resting by the stream."
+      ]
+     ]
+    },
+    {
+     "text": "시원한 물에 발을 퐁당 담갔어요.",
+     "src": "reuse",
+     "en": "The traveler dipped both feet into the cool water, splash!",
+     "segs": [
+      [
+       "nar",
+       "The traveler dipped both feet into the cool water, splash!"
+      ]
+     ],
+     "before": [
+      "man:dip",
+      "fx:splash",
+      "pop:450,420,퐁당!"
+     ]
+    },
+    {
+     "text": "졸졸졸 흐르는 물소리에 나그네는 콧노래를 흥얼흥얼.",
+     "src": "new",
+     "en": "The stream babbled and burbled, and the traveler hummed a happy little tune.",
+     "segs": [
+      [
+       "nar",
+       "The stream babbled and burbled, and the traveler hummed a happy little tune."
+      ]
+     ]
+    },
+    {
+     "text": "바람아, 이번엔 살살 불어 줄래?",
+     "src": "trim",
+     "from": "바람아, 이번엔 살살 불어 줄래? 톡, 살살~",
+     "en": "Wind, could you blow gently this time?",
+     "segs": [
+      [
+       "nar",
+       "Wind, could you blow gently this time?",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "wind:gentle"
+     ]
+    },
+    {
+     "text": "살랑살랑~ 부드러운 바람이 나그네 뺨을 간질였어요.",
+     "src": "new",
+     "en": "Whisper, whisper~ A soft breeze tickled the traveler's cheeks.",
+     "segs": [
+      [
+       "nar",
+       "Whisper, whisper~ A soft breeze tickled the traveler's cheeks.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "breeze",
+      "pop:300,250,살랑~"
+     ]
+    },
+    {
+     "text": "\"아, 시원해. 고마워, 바람아!\"",
+     "src": "reuse",
+     "en": "\"Ahh, so cool. Thank you, Wind!\"",
+     "segs": [
+      [
+       "man",
+       "Ahh, so cool. Thank you, Wind!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "man:face:happy"
+     ]
+    },
+    {
+     "text": "나그네는 외투를 돌돌 말아 베고 벌렁 드러누웠어요.",
+     "src": "new",
+     "en": "The traveler rolled up his coat for a pillow and flopped down with a happy sigh.",
+     "segs": [
+      [
+       "nar",
+       "The traveler rolled up his coat for a pillow and flopped down with a happy sigh."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_friends",
+   "card": "Good Friends",
+   "set": "sky",
+   "enter": [
+    "sun:smile",
+    "wind:smile",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "해님과 바람이 마주 보고 웃었어요.",
+     "src": "reuse",
+     "en": "The Sun and the Wind looked at each other and smiled.",
+     "segs": [
+      [
+       "nar",
+       "The Sun and the Wind looked at each other and smiled.",
+       "happy:1.1"
+      ]
+     ],
+     "after": [
+      "cut:shake",
+      "fx:ding"
+     ]
+    },
+    {
+     "text": "둘은 손을 꼭 잡고 흔들흔들, 악수를 했어요.",
+     "src": "new",
+     "en": "They held hands tight and shook them up and down, up and down.",
+     "segs": [
+      [
+       "nar",
+       "They held hands tight and shook them up and down, up and down.",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "pop:500,250,악수!"
+     ]
+    },
+    {
+     "text": "\"우리, 사이좋게 지내자!\"",
+     "src": "reuse",
+     "en": "\"Let's be good friends!\"",
+     "segs": [
+      [
+       "wind",
+       "Let's be good friends!",
+       "happy:1.4"
+      ]
+     ]
+    },
+    {
+     "text": "\"그래! 둘이 함께라면 더 좋아!\"",
+     "src": "new",
+     "en": "Yes! Together, we are even better!",
+     "segs": [
+      [
+       "sun",
+       "Yes! Together, we are even better!",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "해님은 반짝반짝, 바람은 살랑살랑, 하늘이 환해졌어요.",
+     "src": "new",
+     "en": "The Sun twinkled, the Wind whispered softly, and the whole sky grew bright.",
+     "segs": [
+      [
+       "nar",
+       "The Sun twinkled, the Wind whispered softly, and the whole sky grew bright."
+      ]
+     ],
+     "before": [
+      "sun:shine:1",
+      "breeze"
+     ]
+    },
+    {
+     "text": "해님과 바람은 오늘도 사이좋게 하늘을 지켜요.",
+     "src": "reuse",
+     "en": "The Sun and the Wind watch over the sky together again today.",
+     "segs": [
+      [
+       "nar",
+       "The Sun and the Wind watch over the sky together again today."
+      ]
+     ]
+    },
+    {
+     "text": "다정한 마음이 제일 힘이 세답니다. 끝!",
+     "src": "reuse",
+     "en": "Kindness is the strongest power of all. The end!",
+     "segs": [
+      [
+       "nar",
+       "Kindness is the strongest power of all. The end!",
+       "happy:1.2"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

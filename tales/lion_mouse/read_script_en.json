@@ -1,0 +1,778 @@
+{
+ "mode": "read",
+ "tale": "lion_mouse",
+ "lang": "en",
+ "title": "The Lion and the Mouse",
+ "voices_from": "voice_script_el.json",
+ "moral": "Even someone small can help a big friend.",
+ "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, new 만 새로 녹음한다(trim 없음). 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<savanna|morning|grass|board|night_forest|night_net>": "장면 배경(bgImage 키). scenes[].set 으로 자동 호출",
+  "lion:<sleep|wake|paw:down|paw:up|yawn|laugh|net|free|run|at:x,y>": "사자 자세·앞발·그물",
+  "mouse:<hop:<n>|slide|plead|out|run|gnaw|ride|at:x,y|hide>": "생쥐 폴짝·미끄럼·부탁·빠져나옴·갉기·타기",
+  "bubble:pop | board:<paw|tooth|hole> | net:cut:<n> | scroll:run": "콧방울 퐁·비교 판·그물 줄 끊기·초원 달리기 배경 흐름",
+  "cut:<paw|laugh|net|gnaw>": "그림 컷 4장 — 컷 속 외침(VOICE_LINES cut_paw·cut_laugh·cut_net)은 그대로 재사용",
+  "vo:<cut_paw|cut_laugh|cut_net|hi_mouse|hi_lion>": "말풍선 없는 소리 대사(기존 녹음)",
+  "fx:<thud|boing|roar|squeak|gnaw|whoosh> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_nap",
+   "card": "Under the Tree",
+   "set": "savanna",
+   "enter": [
+    "lion:sleep",
+    "mouse:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "나무 그늘에서 사자가 쿨쿨 낮잠을 자요.",
+     "src": "reuse",
+     "en": "The lion is taking a nap in the shade of a tree. Zzz!",
+     "segs": [
+      [
+       "nar",
+       "The lion is taking a nap in the shade of a tree. Zzz!",
+       "tonedown:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "쿨쿨, 드르렁! 사자 코 고는 소리가 풀밭에 울렸어요.",
+     "src": "new",
+     "en": "Zzz, snore! The sound of the lion snoring rolled across the meadow.",
+     "segs": [
+      [
+       "nar",
+       "Zzz, snore! The sound of the lion snoring rolled across the meadow.",
+       "tonedown:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "코에서 콧방울이 푸우, 푸우, 커졌다 작아졌다 해요.",
+     "src": "new",
+     "en": "A bubble on his nose went puff, puff, growing big and then small again.",
+     "segs": [
+      [
+       "nar",
+       "A bubble on his nose went puff, puff, growing big and then small again.",
+       "tonedown:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "콧방울이 퐁! 그래도 사자는 쿨쿨 자요.",
+     "src": "reuse",
+     "en": "The nose bubble goes pop! But the lion keeps on sleeping.",
+     "segs": [
+      [
+       "nar",
+       "The nose bubble goes pop! But the lion keeps on sleeping.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "bubble:pop",
+      "pop:640,250,퐁!"
+     ]
+    },
+    {
+     "text": "사자 갈기가 바람에 살랑살랑 흔들렸어요.",
+     "src": "new",
+     "en": "The lion's mane swayed softly in the breeze, swish, swish.",
+     "segs": [
+      [
+       "nar",
+       "The lion's mane swayed softly in the breeze, swish, swish."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_walk",
+   "card": "The Mouse's Walk",
+   "set": "grass",
+   "enter": [
+    "lion:sleep",
+    "mouse:at:120,480",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "작은 생쥐가 산책을 나왔어요. 풀이 숲처럼 커다래요!",
+     "src": "reuse",
+     "en": "A little mouse comes out for a walk. The grass is as big as a forest!",
+     "segs": [
+      [
+       "nar",
+       "A little mouse comes out for a walk. The grass is as big as a forest!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "vo:hi_mouse"
+     ]
+    },
+    {
+     "text": "폴짝폴짝, 생쥐는 풀 사이를 신나게 뛰어다녔어요.",
+     "src": "new",
+     "en": "Hop, hop, hop! The little mouse bounced happily through the tall grass.",
+     "segs": [
+      [
+       "nar",
+       "Hop, hop, hop! The little mouse bounced happily through the tall grass.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "mouse:hop:4"
+     ]
+    },
+    {
+     "text": "어? 이건 뭐지? 폴짝!",
+     "src": "reuse",
+     "en": "Huh? What's this? Hop!",
+     "segs": [
+      [
+       "mouse",
+       "Huh? What's this? Hop!",
+       "toneup:1.3"
+      ]
+     ],
+     "before": [
+      "mouse:hop:1"
+     ]
+    },
+    {
+     "text": "와아! 사자 갈기는 커다란 미끄럼틀이었어요. 쭈르륵~ 히히!",
+     "src": "reuse",
+     "en": "Wheee! The lion's mane was a great big slide. Whoosh! Hee hee!",
+     "segs": [
+      [
+       "mouse",
+       "Wheee!",
+       "happy:1.5"
+      ],
+      [
+       "nar",
+       "The lion's mane was a great big slide."
+      ],
+      [
+       "mouse",
+       "Whoosh! Hee hee!",
+       "happy:1.5"
+      ]
+     ],
+     "before": [
+      "mouse:slide",
+      "pop:500,250,쭈르륵~"
+     ]
+    },
+    {
+     "text": "어? 사자가 눈을 떴어요!",
+     "src": "reuse",
+     "en": "Oh? The lion's eyes are open!",
+     "segs": [
+      [
+       "nar",
+       "Oh? The lion's eyes are open!",
+       "toneup:1.4"
+      ]
+     ],
+     "before": [
+      "lion:wake"
+     ],
+     "after": [
+      "vo:cut_paw",
+      "cut:paw"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_caught",
+   "card": "Caught!",
+   "set": "savanna",
+   "enter": [
+    "lion:wake",
+    "lion:paw:down",
+    "mouse:at:560,480",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "사자가 커다란 앞발로 생쥐 꼬리를 탁! 눌렀어요.",
+     "src": "reuse",
+     "en": "The lion pressed the mouse's tail with a big paw. Thump!",
+     "segs": [
+      [
+       "nar",
+       "The lion pressed the mouse's tail with a big paw. Thump!"
+      ]
+     ],
+     "before": [
+      "fx:thud",
+      "pop:560,350,탁!"
+     ]
+    },
+    {
+     "text": "사자가 하품하며 말했어요. \"하암~ 한입에 꿀꺽 해 버릴까?\"",
+     "src": "reuse",
+     "en": "The lion yawned and said, \"Haaah... shall I gobble you up in one bite?\"",
+     "segs": [
+      [
+       "nar",
+       "The lion yawned and said,"
+      ],
+      [
+       "lion",
+       "\"Haaah... shall I gobble you up in one bite?\"",
+       "tonedown:1.3"
+      ]
+     ],
+     "before": [
+      "lion:yawn"
+     ]
+    },
+    {
+     "text": "생쥐가 말했어요. \"살려 주시면 꼭 은혜 갚을게요!\"",
+     "src": "reuse",
+     "en": "The mouse said, \"If you let me go, I promise I'll pay you back!\"",
+     "segs": [
+      [
+       "nar",
+       "The mouse said,"
+      ],
+      [
+       "mouse",
+       "\"If you let me go, I promise I'll pay you back!\"",
+       "sad:1.4"
+      ]
+     ]
+    },
+    {
+     "text": "생쥐는 덜덜 떨면서도 또박또박 말했어요.",
+     "src": "new",
+     "en": "The mouse was shaking like a leaf, but he spoke up loud and clear.",
+     "segs": [
+      [
+       "nar",
+       "The mouse was shaking like a leaf, but he spoke up loud and clear."
+      ]
+     ]
+    },
+    {
+     "text": "생쥐가 두 손을 모았어요. \"제발요, 사자님~\"",
+     "src": "reuse",
+     "en": "The mouse put both hands together. \"Please, Lion, please!\"",
+     "segs": [
+      [
+       "nar",
+       "The mouse put both hands together."
+      ],
+      [
+       "mouse",
+       "\"Please, Lion, please!\"",
+       "sad:1.5"
+      ]
+     ],
+     "before": [
+      "mouse:plead",
+      "pop:560,330,제발요~"
+     ]
+    },
+    {
+     "text": "\"저는 작지만 이빨이 아주 튼튼하다고요!\"",
+     "src": "new",
+     "en": "I may be small, but my teeth are very, very strong!",
+     "segs": [
+      [
+       "mouse",
+       "I may be small, but my teeth are very, very strong!",
+       "toneup:1.3"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_laugh",
+   "card": "Ha Ha Ha!",
+   "set": "savanna",
+   "enter": [
+    "lion:wake",
+    "lion:paw:down",
+    "mouse:plead",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"네가? 나를 도와준다고?\"",
+     "src": "reuse",
+     "en": "\"You? You'll help me?\"",
+     "segs": [
+      [
+       "lion",
+       "\"You? You'll help me?\"",
+       "happy:1.4"
+      ]
+     ],
+     "after": [
+      "vo:cut_laugh",
+      "cut:laugh"
+     ]
+    },
+    {
+     "text": "사자는 배를 잡고 껄껄, 땅이 쿵쿵 울리도록 웃었어요.",
+     "src": "new",
+     "en": "The lion held his belly and roared with laughter, ho, ho, ho, until the ground shook.",
+     "segs": [
+      [
+       "nar",
+       "The lion held his belly and roared with laughter, ho, ho, ho, until the ground shook.",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "lion:laugh",
+      "pop:640,250,하하하!"
+     ]
+    },
+    {
+     "text": "사자가 웃다가 앞발이 스르르 열렸어요.",
+     "src": "reuse",
+     "en": "The lion laughed, and the big paw slowly opened.",
+     "segs": [
+      [
+       "nar",
+       "The lion laughed, and the big paw slowly opened.",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "lion:paw:up"
+     ]
+    },
+    {
+     "text": "생쥐가 쏙 빠져나왔어요. \"고맙습니다, 사자님!\"",
+     "src": "reuse",
+     "en": "The mouse slipped right out. \"Thank you, Lion!\"",
+     "segs": [
+      [
+       "nar",
+       "The mouse slipped right out."
+      ],
+      [
+       "mouse",
+       "\"Thank you, Lion!\"",
+       "happy"
+      ]
+     ],
+     "before": [
+      "mouse:out",
+      "pop:560,330,쏙!"
+     ]
+    },
+    {
+     "text": "생쥐는 꼬리를 흔들며 다다다, 풀숲으로 달려갔어요.",
+     "src": "new",
+     "en": "The mouse waved his tail and scurried off into the grass, pitter-patter, pitter-patter.",
+     "segs": [
+      [
+       "nar",
+       "The mouse waved his tail and scurried off into the grass, pitter-patter, pitter-patter."
+      ]
+     ],
+     "before": [
+      "mouse:run",
+      "pop:300,300,다다다!"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_bigsmall",
+   "card": "Big and Small",
+   "set": "board",
+   "enter": [
+    "board:paw",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "사자 발가락 하나가 생쥐 한 마리만 해요!",
+     "src": "reuse",
+     "en": "One lion toe is as big as a whole mouse!",
+     "segs": [
+      [
+       "nar",
+       "One lion toe is as big as a whole mouse!",
+       "toneup:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "사자 발자국은 쿵쿵 커다랗고, 생쥐 발자국은 콩콩 조그마해요.",
+     "src": "new",
+     "en": "The lion's footprints are great big thumps, and the mouse's footprints are teeny tiny taps.",
+     "segs": [
+      [
+       "nar",
+       "The lion's footprints are great big thumps, and the mouse's footprints are teeny tiny taps."
+      ]
+     ],
+     "before": [
+      "board:paw"
+     ]
+    },
+    {
+     "text": "생쥐 이빨은 작지만 아주 튼튼해요. 사각사각 뭐든 갉을 수 있지요.",
+     "src": "reuse",
+     "en": "The mouse's teeth are small, but very strong. Nibble, nibble! They can gnaw anything.",
+     "segs": [
+      [
+       "nar",
+       "The mouse's teeth are small, but very strong. Nibble, nibble! They can gnaw anything."
+      ]
+     ],
+     "before": [
+      "board:tooth",
+      "fx:gnaw"
+     ]
+    },
+    {
+     "text": "크면 큰 대로, 작으면 작은 대로 다 쓸모가 있어요.",
+     "src": "reuse",
+     "en": "Big or small, everyone is useful.",
+     "segs": [
+      [
+       "nar",
+       "Big or small, everyone is useful."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_night",
+   "card": "Night Forest",
+   "set": "night_net",
+   "enter": [
+    "lion:net",
+    "mouse:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "밤이 되었어요. 앗, 사자가 그물에 걸렸어요!",
+     "src": "reuse",
+     "en": "Night came. Oh no, the lion is caught in a net!",
+     "segs": [
+      [
+       "nar",
+       "Night came. Oh no, the lion is caught in a net!",
+       "toneup:1.3"
+      ]
+     ],
+     "after": [
+      "vo:cut_net",
+      "cut:net"
+     ]
+    },
+    {
+     "text": "사자가 버둥버둥, 그래도 그물이 풀리지 않아요.",
+     "src": "reuse",
+     "en": "The lion wiggles and wriggles, but the net won't come loose.",
+     "segs": [
+      [
+       "nar",
+       "The lion wiggles and wriggles, but the net won't come loose.",
+       "sad:1.2"
+      ]
+     ],
+     "before": [
+      "pop:500,250,버둥버둥"
+     ]
+    },
+    {
+     "text": "그물은 꽁꽁, 사자는 꼼짝달싹할 수 없었어요.",
+     "src": "new",
+     "en": "The net was tied up tight, and the lion could not move an inch.",
+     "segs": [
+      [
+       "nar",
+       "The net was tied up tight, and the lion could not move an inch.",
+       "sad:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "어흥, 어흥! 사자가 슬픈 목소리로 크게 울었어요.",
+     "src": "new",
+     "en": "Roar, roar! The lion cried out in a sad, loud voice.",
+     "segs": [
+      [
+       "nar",
+       "Roar, roar! The lion cried out in a sad, loud voice.",
+       "sad:1.2"
+      ]
+     ],
+     "before": [
+      "fx:roar",
+      "pop:500,200,어흥~"
+     ]
+    },
+    {
+     "text": "쫑긋! 생쥐가 사자 목소리를 들었어요.",
+     "src": "reuse",
+     "en": "Ears up! The mouse heard the lion's voice.",
+     "segs": [
+      [
+       "nar",
+       "Ears up! The mouse heard the lion's voice."
+      ]
+     ],
+     "before": [
+      "mouse:at:150,480"
+     ]
+    },
+    {
+     "text": "\"사자님, 제가 도와 드릴게요!\"",
+     "src": "reuse",
+     "en": "\"Lion, I'll help you!\"",
+     "segs": [
+      [
+       "mouse",
+       "\"Lion, I'll help you!\"",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "mouse:hop:3"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_gnaw",
+   "card": "Nibble Nibble",
+   "set": "night_net",
+   "enter": [
+    "lion:net",
+    "mouse:gnaw",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!",
+     "src": "reuse",
+     "en": "The mouse gnaws the net with tiny teeth. Nibble, nibble, one rope at a time!",
+     "segs": [
+      [
+       "nar",
+       "The mouse gnaws the net with tiny teeth. Nibble, nibble, one rope at a time!",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "fx:gnaw",
+      "pop:520,300,사각!"
+     ]
+    },
+    {
+     "text": "사각사각, 사각사각. 그물 줄이 하나씩 툭, 툭 끊어졌어요.",
+     "src": "new",
+     "en": "Nibble, nibble, nibble, nibble. One by one, the ropes went snap, snap.",
+     "segs": [
+      [
+       "nar",
+       "Nibble, nibble, nibble, nibble. One by one, the ropes went snap, snap.",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "net:cut:5"
+     ],
+     "after": [
+      "cut:gnaw"
+     ]
+    },
+    {
+     "text": "하나, 둘, 셋… 열! 그물 줄 열 개를 다 끊었어요!",
+     "src": "reuse",
+     "en": "One, two, three... ten! All ten ropes are cut!",
+     "segs": [
+      [
+       "nar",
+       "One, two, three... ten! All ten ropes are cut!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "net:cut:10"
+     ]
+    },
+    {
+     "text": "마지막 줄이 툭! 끊어지자 그물이 스르르 풀렸어요.",
+     "src": "new",
+     "en": "Snap! went the last rope, and the net slid loose, sliiide.",
+     "segs": [
+      [
+       "nar",
+       "Snap! went the last rope, and the net slid loose, sliiide.",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "와아! 사자가 풀려났어요!",
+     "src": "reuse",
+     "en": "Hooray! The lion is free!",
+     "segs": [
+      [
+       "nar",
+       "Hooray! The lion is free!",
+       "happy:1.4"
+      ]
+     ],
+     "before": [
+      "lion:free",
+      "fx:boing"
+     ]
+    },
+    {
+     "text": "\"고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!\"",
+     "src": "reuse",
+     "en": "\"Thank you, little friend. Your tiny teeth saved me!\"",
+     "segs": [
+      [
+       "lion",
+       "\"Thank you, little friend. Your tiny teeth saved me!\"",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "\"제가 은혜 갚는다고 했지요?\"",
+     "src": "reuse",
+     "en": "\"Didn't I say I'd pay you back?\"",
+     "segs": [
+      [
+       "mouse",
+       "\"Didn't I say I'd pay you back?\"",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "mouse:hop:1"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_morning",
+   "card": "Morning Meadow",
+   "set": "morning",
+   "enter": [
+    "lion:run",
+    "mouse:ride",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "다음 날 아침, 사자가 생쥐를 등에 태웠어요. \"꽉 잡아!\"",
+     "src": "reuse",
+     "en": "The next morning, the lion put the mouse on its back. \"Hold tight!\"",
+     "segs": [
+      [
+       "nar",
+       "The next morning, the lion put the mouse on its back.",
+       "happy:1.1"
+      ],
+      [
+       "lion",
+       "\"Hold tight!\"",
+       "toneup:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "다다다! 사자가 바람처럼 달리고, 생쥐는 갈기를 꼭 붙잡았어요.",
+     "src": "new",
+     "en": "Thump, thump, thump! The lion ran like the wind, and the mouse held on tight to his mane.",
+     "segs": [
+      [
+       "nar",
+       "Thump, thump, thump! The lion ran like the wind, and the mouse held on tight to his mane.",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "scroll:run",
+      "fx:whoosh",
+      "pop:500,250,다다다!"
+     ]
+    },
+    {
+     "text": "바람을 가르며 초원을 달려요! 신난다!",
+     "src": "reuse",
+     "en": "They race across the meadow through the wind! Yippee!",
+     "segs": [
+      [
+       "nar",
+       "They race across the meadow through the wind!",
+       "happy:1.4"
+      ],
+      [
+       "mouse",
+       "Yippee!",
+       "happy:1.6"
+      ]
+     ],
+     "before": [
+      "vo:hi_lion"
+     ]
+    },
+    {
+     "text": "둘은 깔깔, 하하 웃으며 초원을 한 바퀴 빙 돌았어요.",
+     "src": "new",
+     "en": "They giggled and laughed, tee-hee, ha-ha, as they ran one big loop around the meadow.",
+     "segs": [
+      [
+       "nar",
+       "They giggled and laughed, tee-hee, ha-ha, as they ran one big loop around the meadow.",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "그날부터 사자와 생쥐는 둘도 없는 친구가 되었답니다.",
+     "src": "reuse",
+     "en": "From that day on, the lion and the mouse were the best of friends.",
+     "segs": [
+      [
+       "nar",
+       "From that day on, the lion and the mouse were the best of friends.",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "작아도 큰 친구를 도울 수 있답니다.",
+     "src": "new",
+     "en": "Even someone small can help a big friend.",
+     "segs": [
+      [
+       "nar",
+       "Even someone small can help a big friend.",
+       "happy:1.1"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

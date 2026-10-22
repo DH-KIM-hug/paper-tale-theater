@@ -1,0 +1,799 @@
+{
+ "mode": "read",
+ "tale": "lion_mouse",
+ "lang": "ko",
+ "title": "사자와 생쥐",
+ "voices_from": "voice_script_el.json",
+ "moral": "작아도 큰 친구를 도울 수 있답니다.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 놀이판 7장면을 8장면으로(\"잡혔다!\"를 잡힘과 웃음 둘로 나눔). 사자 코 누르기, 폴짝 연타, 생쥐 부탁 누르기, 앞발 누르기, 누가 더 클까 고르기(발자국·이빨·구멍 세 문제의 안내·정답 줄), 그물 갉기 연타와 하나~열 세기, 달리기 연타, 사자·생쥐 누르기를 뺐다. 누가 더 클까 장면은 배움 놀이 전용이지만 \"크면 큰 대로…\" 교훈이 이야기에 필요해 묘사 3줄짜리 짧은 장면으로 남겼다. 그림 컷 4장(앞발·웃음·그물·갉기)은 그대로. 원작(이솝) 그대로, 사자는 생쥐를 놓아 준다. 교훈은 끝 화면 문구를 이야기 말투로 바꿔 마지막에 읽는다. 새 문장은 의성어·의태어를 장면마다 2~3개 넣었다(2026-10-22 사용자 지시).",
+ "acts": {
+  "set:<savanna|morning|grass|board|night_forest|night_net>": "장면 배경(bgImage 키). scenes[].set 으로 자동 호출",
+  "lion:<sleep|wake|paw:down|paw:up|yawn|laugh|net|free|run|at:x,y>": "사자 자세·앞발·그물",
+  "mouse:<hop:<n>|slide|plead|out|run|gnaw|ride|at:x,y|hide>": "생쥐 폴짝·미끄럼·부탁·빠져나옴·갉기·타기",
+  "bubble:pop | board:<paw|tooth|hole> | net:cut:<n> | scroll:run": "콧방울 퐁·비교 판·그물 줄 끊기·초원 달리기 배경 흐름",
+  "cut:<paw|laugh|net|gnaw>": "그림 컷 4장 — 컷 속 외침(VOICE_LINES cut_paw·cut_laugh·cut_net)은 그대로 재사용",
+  "vo:<cut_paw|cut_laugh|cut_net|hi_mouse|hi_lion>": "말풍선 없는 소리 대사(기존 녹음)",
+  "fx:<thud|boing|roar|squeak|gnaw|whoosh> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_nap",
+   "card": "나무 그늘",
+   "set": "savanna",
+   "enter": [
+    "lion:sleep",
+    "mouse:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "나무 그늘에서 사자가 쿨쿨 낮잠을 자요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "나무 그늘에서 사자가 쿨쿨 낮잠을 자요.",
+       "tonedown:1.1",
+       "[soft, calm, storytelling, drowsy warmth]"
+      ]
+     ]
+    },
+    {
+     "text": "쿨쿨, 드르렁! 사자 코 고는 소리가 풀밭에 울렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "쿨쿨, 드르렁! 사자 코 고는 소리가 풀밭에 울렸어요.",
+       "tonedown:1.1",
+       "[soft, amused, drowsy]"
+      ]
+     ]
+    },
+    {
+     "text": "코에서 콧방울이 푸우, 푸우, 커졌다 작아졌다 해요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "코에서 콧방울이 푸우, 푸우, 커졌다 작아졌다 해요.",
+       "tonedown:1.1",
+       "[soft, amused, drowsy]"
+      ]
+     ]
+    },
+    {
+     "text": "콧방울이 퐁! 그래도 사자는 쿨쿨 자요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "콧방울이 퐁! 그래도 사자는 쿨쿨 자요.",
+       "happy:1.2",
+       "[giggles softly, amused, gentle]"
+      ]
+     ],
+     "before": [
+      "bubble:pop",
+      "pop:640,250,퐁!"
+     ]
+    },
+    {
+     "text": "사자 갈기가 바람에 살랑살랑 흔들렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "사자 갈기가 바람에 살랑살랑 흔들렸어요.",
+       null,
+       "[warm, gentle storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_walk",
+   "card": "생쥐의 산책",
+   "set": "grass",
+   "enter": [
+    "lion:sleep",
+    "mouse:at:120,480",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "작은 생쥐가 산책을 나왔어요. 풀이 숲처럼 커다래요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "작은 생쥐가 산책을 나왔어요. 풀이 숲처럼 커다래요!",
+       "happy:1.2",
+       "[bright, curious, storytelling]"
+      ]
+     ],
+     "before": [
+      "vo:hi_mouse"
+     ]
+    },
+    {
+     "text": "폴짝폴짝, 생쥐는 풀 사이를 신나게 뛰어다녔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "폴짝폴짝, 생쥐는 풀 사이를 신나게 뛰어다녔어요.",
+       "happy:1.2",
+       "[bright, bouncy, storytelling]"
+      ]
+     ],
+     "before": [
+      "mouse:hop:4"
+     ]
+    },
+    {
+     "text": "어? 이건 뭐지? 폴짝!",
+     "src": "reuse",
+     "segs": [
+      [
+       "mouse",
+       "어? 이건 뭐지? 폴짝!",
+       "toneup:1.3",
+       "[curious, childlike, small voice, hops, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "mouse:hop:1"
+     ]
+    },
+    {
+     "text": "와아! 사자 갈기는 커다란 미끄럼틀이었어요. 쭈르륵~ 히히!",
+     "src": "reuse",
+     "segs": [
+      [
+       "mouse",
+       "와아!",
+       "happy:1.5",
+       "[excited, childlike, squeals, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "사자 갈기는 커다란 미끄럼틀이었어요.",
+       null,
+       "[warm, amused, storytelling]"
+      ],
+      [
+       "mouse",
+       "쭈르륵~ 히히!",
+       "happy:1.5",
+       "[giggles, delighted, childlike, sliding, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "mouse:slide",
+      "pop:500,250,쭈르륵~"
+     ]
+    },
+    {
+     "text": "어? 사자가 눈을 떴어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "어? 사자가 눈을 떴어요!",
+       "toneup:1.4",
+       "[surprised, gasps softly, light suspense]"
+      ]
+     ],
+     "before": [
+      "lion:wake"
+     ],
+     "after": [
+      "vo:cut_paw",
+      "cut:paw"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_caught",
+   "card": "잡혔다!",
+   "set": "savanna",
+   "enter": [
+    "lion:wake",
+    "lion:paw:down",
+    "mouse:at:560,480",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "사자가 커다란 앞발로 생쥐 꼬리를 탁! 눌렀어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "사자가 커다란 앞발로 생쥐 꼬리를 탁! 눌렀어요.",
+       null,
+       "[soft, tense but gentle, storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:thud",
+      "pop:560,350,탁!"
+     ]
+    },
+    {
+     "text": "사자가 하품하며 말했어요. \"하암~ 한입에 꿀꺽 해 버릴까?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "사자가 하품하며 말했어요.",
+       null,
+       "[warm, gentle storytelling]"
+      ],
+      [
+       "lion",
+       "하암~ 한입에 꿀꺽 해 버릴까?",
+       "tonedown:1.3",
+       "[yawning, sleepy, deep rumbling, lazy]"
+      ]
+     ],
+     "before": [
+      "lion:yawn"
+     ]
+    },
+    {
+     "text": "생쥐가 말했어요. \"살려 주시면 꼭 은혜 갚을게요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "생쥐가 말했어요.",
+       null,
+       "[warm, gentle storytelling]"
+      ],
+      [
+       "mouse",
+       "살려 주시면 꼭 은혜 갚을게요!",
+       "sad:1.4",
+       "[frightened, trembling, small voice, pleading, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ]
+    },
+    {
+     "text": "생쥐는 덜덜 떨면서도 또박또박 말했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "생쥐는 덜덜 떨면서도 또박또박 말했어요.",
+       null,
+       "[soft, tender, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "생쥐가 두 손을 모았어요. \"제발요, 사자님~\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "생쥐가 두 손을 모았어요.",
+       null,
+       "[soft, tender, storytelling]"
+      ],
+      [
+       "mouse",
+       "제발요, 사자님~",
+       "sad:1.5",
+       "[pleading, sweet, trembling, small voice, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "mouse:plead",
+      "pop:560,330,제발요~"
+     ]
+    },
+    {
+     "text": "\"저는 작지만 이빨이 아주 튼튼하다고요!\"",
+     "src": "new",
+     "segs": [
+      [
+       "mouse",
+       "저는 작지만 이빨이 아주 튼튼하다고요!",
+       "toneup:1.3",
+       "[earnest, brave, small voice, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_laugh",
+   "card": "하하하!",
+   "set": "savanna",
+   "enter": [
+    "lion:wake",
+    "lion:paw:down",
+    "mouse:plead",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"네가? 나를 도와준다고?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "lion",
+       "네가? 나를 도와준다고?",
+       "happy:1.4",
+       "[amused, surprised, deep rumbling, disbelieving]"
+      ]
+     ],
+     "after": [
+      "vo:cut_laugh",
+      "cut:laugh"
+     ]
+    },
+    {
+     "text": "사자는 배를 잡고 껄껄, 땅이 쿵쿵 울리도록 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "사자는 배를 잡고 껄껄, 땅이 쿵쿵 울리도록 웃었어요.",
+       "happy:1.3",
+       "[booming, amused, storytelling]"
+      ]
+     ],
+     "before": [
+      "lion:laugh",
+      "pop:640,250,하하하!"
+     ]
+    },
+    {
+     "text": "사자가 웃다가 앞발이 스르르 열렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "사자가 웃다가 앞발이 스르르 열렸어요.",
+       "happy:1.1",
+       "[warm, amused, storytelling]"
+      ]
+     ],
+     "before": [
+      "lion:paw:up"
+     ]
+    },
+    {
+     "text": "생쥐가 쏙 빠져나왔어요. \"고맙습니다, 사자님!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "생쥐가 쏙 빠져나왔어요.",
+       null,
+       "[relieved, warm, storytelling]"
+      ],
+      [
+       "mouse",
+       "고맙습니다, 사자님!",
+       "happy",
+       "[relieved, grateful, cheerful, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "mouse:out",
+      "pop:560,330,쏙!"
+     ]
+    },
+    {
+     "text": "생쥐는 꼬리를 흔들며 다다다, 풀숲으로 달려갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "생쥐는 꼬리를 흔들며 다다다, 풀숲으로 달려갔어요.",
+       null,
+       "[warm, gentle storytelling]"
+      ]
+     ],
+     "before": [
+      "mouse:run",
+      "pop:300,300,다다다!"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_bigsmall",
+   "card": "크고 작고",
+   "set": "board",
+   "enter": [
+    "board:paw",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "사자 발가락 하나가 생쥐 한 마리만 해요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "사자 발가락 하나가 생쥐 한 마리만 해요!",
+       "toneup:1.2",
+       "[amazed, playful, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "사자 발자국은 쿵쿵 커다랗고, 생쥐 발자국은 콩콩 조그마해요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "사자 발자국은 쿵쿵 커다랗고, 생쥐 발자국은 콩콩 조그마해요.",
+       null,
+       "[amazed, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "board:paw"
+     ]
+    },
+    {
+     "text": "생쥐 이빨은 작지만 아주 튼튼해요. 사각사각 뭐든 갉을 수 있지요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "생쥐 이빨은 작지만 아주 튼튼해요. 사각사각 뭐든 갉을 수 있지요.",
+       null,
+       "[warm, impressed, storytelling]"
+      ]
+     ],
+     "before": [
+      "board:tooth",
+      "fx:gnaw"
+     ]
+    },
+    {
+     "text": "크면 큰 대로, 작으면 작은 대로 다 쓸모가 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "크면 큰 대로, 작으면 작은 대로 다 쓸모가 있어요.",
+       null,
+       "[gentle, wise, reassuring, slow]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_night",
+   "card": "밤 숲",
+   "set": "night_net",
+   "enter": [
+    "lion:net",
+    "mouse:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "밤이 되었어요. 앗, 사자가 그물에 걸렸어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "밤이 되었어요. 앗, 사자가 그물에 걸렸어요!",
+       "toneup:1.3",
+       "[hushed, soft concern, storytelling, slow]"
+      ]
+     ],
+     "after": [
+      "vo:cut_net",
+      "cut:net"
+     ]
+    },
+    {
+     "text": "사자가 버둥버둥, 그래도 그물이 풀리지 않아요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "사자가 버둥버둥, 그래도 그물이 풀리지 않아요.",
+       "sad:1.2",
+       "[sympathetic, soft, gentle concern]"
+      ]
+     ],
+     "before": [
+      "pop:500,250,버둥버둥"
+     ]
+    },
+    {
+     "text": "그물은 꽁꽁, 사자는 꼼짝달싹할 수 없었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그물은 꽁꽁, 사자는 꼼짝달싹할 수 없었어요.",
+       "sad:1.2",
+       "[sympathetic, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "어흥, 어흥! 사자가 슬픈 목소리로 크게 울었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "어흥, 어흥! 사자가 슬픈 목소리로 크게 울었어요.",
+       "sad:1.2",
+       "[sympathetic, soft, deep]"
+      ]
+     ],
+     "before": [
+      "fx:roar",
+      "pop:500,200,어흥~"
+     ]
+    },
+    {
+     "text": "쫑긋! 생쥐가 사자 목소리를 들었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "쫑긋! 생쥐가 사자 목소리를 들었어요.",
+       null,
+       "[alert, whispers, hopeful]"
+      ]
+     ],
+     "before": [
+      "mouse:at:150,480"
+     ]
+    },
+    {
+     "text": "\"사자님, 제가 도와 드릴게요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "mouse",
+       "사자님, 제가 도와 드릴게요!",
+       "happy:1.3",
+       "[determined, brave, childlike, small voice, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "mouse:hop:3"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_gnaw",
+   "card": "사각사각",
+   "set": "night_net",
+   "enter": [
+    "lion:net",
+    "mouse:gnaw",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!",
+       "happy:1.1",
+       "[encouraging, hopeful, bright]"
+      ]
+     ],
+     "before": [
+      "fx:gnaw",
+      "pop:520,300,사각!"
+     ]
+    },
+    {
+     "text": "사각사각, 사각사각. 그물 줄이 하나씩 툭, 툭 끊어졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "사각사각, 사각사각. 그물 줄이 하나씩 툭, 툭 끊어졌어요.",
+       "happy:1.1",
+       "[encouraging, steady, hopeful]"
+      ]
+     ],
+     "before": [
+      "net:cut:5"
+     ],
+     "after": [
+      "cut:gnaw"
+     ]
+    },
+    {
+     "text": "하나, 둘, 셋… 열! 그물 줄 열 개를 다 끊었어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하나, 둘, 셋… 열! 그물 줄 열 개를 다 끊었어요!",
+       "happy:1.3",
+       "[joyful, proud, celebrating]"
+      ]
+     ],
+     "before": [
+      "net:cut:10"
+     ]
+    },
+    {
+     "text": "마지막 줄이 툭! 끊어지자 그물이 스르르 풀렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "마지막 줄이 툭! 끊어지자 그물이 스르르 풀렸어요.",
+       "happy:1.2",
+       "[relieved, bright]"
+      ]
+     ]
+    },
+    {
+     "text": "와아! 사자가 풀려났어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "와아! 사자가 풀려났어요!",
+       "happy:1.4",
+       "[delighted, relieved, cheerful]"
+      ]
+     ],
+     "before": [
+      "lion:free",
+      "fx:boing"
+     ]
+    },
+    {
+     "text": "\"고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "lion",
+       "고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!",
+       "happy:1.3",
+       "[grateful, warm, deep voice, softly laughs, heartfelt]"
+      ]
+     ]
+    },
+    {
+     "text": "\"제가 은혜 갚는다고 했지요?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "mouse",
+       "제가 은혜 갚는다고 했지요?",
+       "happy:1.3",
+       "[proud, cheerful, childlike, sweet, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "mouse:hop:1"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_morning",
+   "card": "아침 초원",
+   "set": "morning",
+   "enter": [
+    "lion:run",
+    "mouse:ride",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "다음 날 아침, 사자가 생쥐를 등에 태웠어요. \"꽉 잡아!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "다음 날 아침, 사자가 생쥐를 등에 태웠어요.",
+       "happy:1.1",
+       "[warm, bright, storytelling]"
+      ],
+      [
+       "lion",
+       "꽉 잡아!",
+       "toneup:1.3",
+       "[playful, cheerful, deep voice]"
+      ]
+     ]
+    },
+    {
+     "text": "다다다! 사자가 바람처럼 달리고, 생쥐는 갈기를 꼭 붙잡았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "다다다! 사자가 바람처럼 달리고, 생쥐는 갈기를 꼭 붙잡았어요.",
+       "happy:1.3",
+       "[excited, breezy, storytelling]"
+      ]
+     ],
+     "before": [
+      "scroll:run",
+      "fx:whoosh",
+      "pop:500,250,다다다!"
+     ]
+    },
+    {
+     "text": "바람을 가르며 초원을 달려요! 신난다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "바람을 가르며 초원을 달려요!",
+       "happy:1.4",
+       "[excited, breezy, storytelling]"
+      ],
+      [
+       "mouse",
+       "신난다!",
+       "happy:1.6",
+       "[thrilled, delighted, childlike, shouting with joy, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "vo:hi_lion"
+     ]
+    },
+    {
+     "text": "둘은 깔깔, 하하 웃으며 초원을 한 바퀴 빙 돌았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "둘은 깔깔, 하하 웃으며 초원을 한 바퀴 빙 돌았어요.",
+       "happy:1.2",
+       "[warm, laughing, joyful]"
+      ]
+     ]
+    },
+    {
+     "text": "그날부터 사자와 생쥐는 둘도 없는 친구가 되었답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그날부터 사자와 생쥐는 둘도 없는 친구가 되었답니다.",
+       "happy:1.3",
+       "[gentle, warm, content, storytelling, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "작아도 큰 친구를 도울 수 있답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "작아도 큰 친구를 도울 수 있답니다.",
+       "happy:1.1",
+       "[gentle, warm, slow, closing]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

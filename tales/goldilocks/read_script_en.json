@@ -1,0 +1,1133 @@
+{
+ "mode": "read",
+ "tale": "goldilocks",
+ "lang": "en",
+ "title": "Goldilocks and the Three Bears",
+ "voices_from": "voice_script_el.json",
+ "moral": "Say \"I'm sorry,\" and you can be friends again.",
+ "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, trim 은 from 줄의 영어 녹음을 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<kitchen|forest|door|table|living|bed_side>": "장면 배경(bgImage 키). scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
+  "bear:<dad|mom|baby>:<stand|wave|blow|walk:x,ms|grumble|cry|hug|peek|at:x,y|hide> | bears:<walk:x,ms|hide|show>": "곰 가족 자세·이동",
+  "goldi:<walk:x,ms|face:<smile|hot|brr|sleepy|sorry>|knock|tiptoe|eat:<big|mid|small>|sit:<big|mid|small>|lie:<big|mid|small>|sleep|wake|run|turn|at:x,y|hide>": "골디락스 자세·이동",
+  "bowls:steam:<n> | flowers:pick:<n> | door:open | chair:crack | chair:fix | blanket:lift | bowls:fill": "소품 연출",
+  "cut:<hot|cold|crack|eyes|skirt>": "그림 컷 — 컷 속 외침(VOICE_LINES cut_*)은 그대로 재사용",
+  "vo:<hi_dad|hi_mom|hi_baby|cut_hot|cut_cold|cut_crack|cut_eyes|cut_skirt>": "말풍선 없는 소리 대사(기존 녹음)",
+  "fx:<knock|creak|pow|thud|giggle|snore|hammer|ding> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_bears",
+   "card": "The Three Bears",
+   "set": "kitchen",
+   "enter": [
+    "bears:show",
+    "goldi:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "숲속 통나무집에 곰 세 식구가 살았어요.",
+     "src": "reuse",
+     "en": "A family of three bears lived in a log cabin in the woods.",
+     "segs": [
+      [
+       "nar",
+       "A family of three bears lived in a log cabin in the woods."
+      ]
+     ]
+    },
+    {
+     "text": "아빠 곰은 커다랗고 뚱뚱, 엄마 곰은 날씬, 아기 곰은 조그맣고 귀여워요.",
+     "src": "new",
+     "en": "Papa Bear is big and round, Mama Bear is slim, and Baby Bear is teeny tiny and oh so cute.",
+     "segs": [
+      [
+       "nar",
+       "Papa Bear is big and round, Mama Bear is slim, and Baby Bear is teeny tiny and oh so cute."
+      ]
+     ],
+     "before": [
+      "bear:dad:wave",
+      "vo:hi_dad",
+      "bear:mom:wave",
+      "vo:hi_mom",
+      "bear:baby:wave",
+      "vo:hi_baby"
+     ]
+    },
+    {
+     "text": "아빠 곰은 굵은 목소리, 아기 곰은 가느다란 목소리예요.",
+     "src": "reuse",
+     "en": "Papa Bear has a deep voice, and Baby Bear has a tiny voice.",
+     "segs": [
+      [
+       "nar",
+       "Papa Bear has a deep voice, and Baby Bear has a tiny voice."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_hot",
+   "card": "Ouch, Hot!",
+   "set": "kitchen",
+   "enter": [
+    "bears:show",
+    "bowls:steam:3",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "엄마 곰이 맛있는 죽을 끓였어요. 그런데 너무 뜨거워요!",
+     "src": "reuse",
+     "en": "Mama Bear cooked some yummy porridge. But it's too hot!",
+     "segs": [
+      [
+       "nar",
+       "Mama Bear cooked some yummy porridge. But it's too hot!",
+       "toneup:1.2"
+      ]
+     ],
+     "before": [
+      "pop:500,250,후~"
+     ]
+    },
+    {
+     "text": "후후, 후후! 곰 세 식구가 김이 모락모락 나는 죽을 불었어요.",
+     "src": "new",
+     "en": "Whoo, whoo! The three bears blew on the steaming hot porridge, puff, puff.",
+     "segs": [
+      [
+       "nar",
+       "Whoo, whoo! The three bears blew on the steaming hot porridge, puff, puff."
+      ]
+     ],
+     "before": [
+      "bear:dad:blow",
+      "bear:mom:blow",
+      "bear:baby:blow"
+     ]
+    },
+    {
+     "text": "김이 줄었지만, 아직 뜨거워요.",
+     "src": "reuse",
+     "en": "The steam is going down, but it's still hot.",
+     "segs": [
+      [
+       "nar",
+       "The steam is going down, but it's still hot."
+      ]
+     ],
+     "before": [
+      "bowls:steam:1"
+     ]
+    },
+    {
+     "text": "아빠 곰: \"죽이 식을 동안 산책 다녀오자!\"",
+     "src": "reuse",
+     "en": "Papa Bear: \"Let's go for a walk while the porridge cools!\"",
+     "segs": [
+      [
+       "dad",
+       "Let's go for a walk while the porridge cools!",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "곰 가족은 뚜벅뚜벅, 사이좋게 숲으로 나갔어요.",
+     "src": "new",
+     "en": "Off went the bear family into the woods, clomp, clomp, side by side.",
+     "segs": [
+      [
+       "nar",
+       "Off went the bear family into the woods, clomp, clomp, side by side."
+      ]
+     ],
+     "before": [
+      "bears:walk:1200,2500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_path",
+   "card": "Forest Path",
+   "set": "forest",
+   "enter": [
+    "bears:hide",
+    "goldi:at:150,480",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "숲속에는 금빛 머리 골디락스가 살았어요.",
+     "src": "reuse",
+     "en": "In the woods lived a girl with golden hair, named Goldilocks.",
+     "segs": [
+      [
+       "nar",
+       "In the woods lived a girl with golden hair, named Goldilocks."
+      ]
+     ]
+    },
+    {
+     "text": "골디락스는 콧노래를 흥얼흥얼, 깡충깡충 숲길을 걸었어요.",
+     "src": "new",
+     "en": "Goldilocks hummed a happy tune and skipped along the forest path, hop, skip, hop.",
+     "segs": [
+      [
+       "nar",
+       "Goldilocks hummed a happy tune and skipped along the forest path, hop, skip, hop.",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "goldi:walk:450,2000"
+     ]
+    },
+    {
+     "text": "꽃향기가 솔솔, 나비가 팔랑팔랑 날아다녔어요.",
+     "src": "new",
+     "en": "The flowers smelled sweet, and butterflies fluttered all around, flutter, flutter.",
+     "segs": [
+      [
+       "nar",
+       "The flowers smelled sweet, and butterflies fluttered all around, flutter, flutter."
+      ]
+     ],
+     "before": [
+      "flowers:pick:3"
+     ]
+    },
+    {
+     "text": "꽃을 세 송이 땄어요. 어? 저기 통나무집이 있어요!",
+     "src": "reuse",
+     "en": "She picked three flowers. Oh? Look, a log cabin!",
+     "segs": [
+      [
+       "nar",
+       "She picked three flowers."
+      ],
+      [
+       "goldi",
+       "Oh? Look, a log cabin!",
+       "toneup:1.3"
+      ]
+     ],
+     "before": [
+      "pop:300,250,꽃 셋!"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_knock",
+   "card": "Knock, Knock",
+   "set": "door",
+   "enter": [
+    "goldi:at:400,480",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "우와, 커다란 문이에요.",
+     "src": "trim",
+     "from": "우와, 커다란 문이에요. 문을 톡 두드려 봐요.",
+     "en": "Wow, what a big door!",
+     "segs": [
+      [
+       "goldi",
+       "Wow, what a big door!",
+       "toneup:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "똑똑, 똑똑! 골디락스가 문을 두드렸어요.",
+     "src": "new",
+     "en": "Knock, knock! Knock, knock! Goldilocks tapped on the door.",
+     "segs": [
+      [
+       "nar",
+       "Knock, knock! Knock, knock! Goldilocks tapped on the door."
+      ]
+     ],
+     "before": [
+      "goldi:knock",
+      "fx:knock",
+      "pop:560,250,똑똑!"
+     ]
+    },
+    {
+     "text": "골디락스: \"계세요?\"",
+     "src": "reuse",
+     "en": "Goldilocks: \"Hello? Is anyone home?\"",
+     "segs": [
+      [
+       "goldi",
+       "Hello? Is anyone home?"
+      ]
+     ]
+    },
+    {
+     "text": "아무 대답이 없어요.",
+     "src": "reuse",
+     "en": "There is no answer.",
+     "segs": [
+      [
+       "nar",
+       "There is no answer.",
+       "tonedown:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "문이 삐걱 열렸어요. 골디락스가 살짝 들어가 봤어요.",
+     "src": "reuse",
+     "en": "The door creaked open. Goldilocks tiptoed inside.",
+     "segs": [
+      [
+       "nar",
+       "The door creaked open. Goldilocks tiptoed inside.",
+       "whisper:1.2"
+      ]
+     ],
+     "before": [
+      "door:open",
+      "fx:creak",
+      "pop:560,250,삐걱~"
+     ],
+     "after": [
+      "goldi:tiptoe"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_bowls",
+   "card": "Three Bowls of Porridge",
+   "set": "table",
+   "enter": [
+    "goldi:at:300,480",
+    "bowls:steam:2",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "식탁 위에 죽이 세 그릇 있어요.",
+     "src": "reuse",
+     "en": "There are three bowls of porridge on the table.",
+     "segs": [
+      [
+       "nar",
+       "There are three bowls of porridge on the table."
+      ]
+     ]
+    },
+    {
+     "text": "골디락스는 제일 큰 그릇을 한 입 호록!",
+     "src": "new",
+     "en": "Goldilocks took a sip from the biggest bowl. Slurp!",
+     "segs": [
+      [
+       "nar",
+       "Goldilocks took a sip from the biggest bowl. Slurp!"
+      ]
+     ],
+     "before": [
+      "goldi:eat:big"
+     ],
+     "after": [
+      "vo:cut_hot",
+      "cut:hot"
+     ]
+    },
+    {
+     "text": "펄펄 너무 뜨거워요!",
+     "src": "reuse",
+     "en": "Hot, hot! It's way too hot!",
+     "segs": [
+      [
+       "goldi",
+       "Hot, hot! It's way too hot!",
+       "toneup:1.5"
+      ]
+     ],
+     "before": [
+      "goldi:face:hot",
+      "fx:giggle"
+     ],
+     "after": [
+      "goldi:face:smile"
+     ]
+    },
+    {
+     "text": "이번엔 중간 그릇을 한 입 호록!",
+     "src": "new",
+     "en": "Then a sip from the medium bowl. Slurp!",
+     "segs": [
+      [
+       "nar",
+       "Then a sip from the medium bowl. Slurp!"
+      ]
+     ],
+     "before": [
+      "goldi:eat:mid"
+     ],
+     "after": [
+      "vo:cut_cold",
+      "cut:cold"
+     ]
+    },
+    {
+     "text": "얼음처럼 너무 차가워요!",
+     "src": "reuse",
+     "en": "It's way too cold, like ice!",
+     "segs": [
+      [
+       "goldi",
+       "It's way too cold, like ice!",
+       "toneup:1.4"
+      ]
+     ],
+     "before": [
+      "goldi:face:brr",
+      "pop:500,250,부르르!"
+     ],
+     "after": [
+      "goldi:face:smile"
+     ]
+    },
+    {
+     "text": "김이 살짝 나는 작은 그릇이에요!",
+     "src": "reuse",
+     "en": "It's the small bowl with just a little steam!",
+     "segs": [
+      [
+       "nar",
+       "It's the small bowl with just a little steam!",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "goldi:eat:small"
+     ]
+    },
+    {
+     "text": "딱 좋아요! 냠냠, 작은 그릇을 다 먹어 버렸어요.",
+     "src": "reuse",
+     "en": "Just right! Yum, yum! She ate up the whole small bowl.",
+     "segs": [
+      [
+       "goldi",
+       "Just right! Yum, yum!",
+       "happy:1.4"
+      ],
+      [
+       "nar",
+       "She ate up the whole small bowl."
+      ]
+     ],
+     "before": [
+      "pop:500,250,냠냠!"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_chairs",
+   "card": "Three Chairs",
+   "set": "living",
+   "enter": [
+    "goldi:at:300,480",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이번엔 의자가 세 개 있어요.",
+     "src": "reuse",
+     "en": "Now there are three chairs.",
+     "segs": [
+      [
+       "nar",
+       "Now there are three chairs."
+      ]
+     ]
+    },
+    {
+     "text": "영차! 골디락스는 제일 큰 의자에 기어올랐어요.",
+     "src": "new",
+     "en": "Heave-ho! Goldilocks climbed up onto the biggest chair.",
+     "segs": [
+      [
+       "nar",
+       "Heave-ho! Goldilocks climbed up onto the biggest chair."
+      ]
+     ],
+     "before": [
+      "goldi:sit:big"
+     ]
+    },
+    {
+     "text": "너무 높아요! 다리가 달랑달랑.",
+     "src": "reuse",
+     "en": "It's too high! Her legs dangle, dangle.",
+     "segs": [
+      [
+       "goldi",
+       "It's too high!",
+       "toneup:1.4"
+      ],
+      [
+       "nar",
+       "Her legs dangle, dangle.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "pop:400,300,달랑달랑~"
+     ],
+     "after": [
+      "fx:giggle"
+     ]
+    },
+    {
+     "text": "중간 의자에는 털썩! 앉아 보았어요.",
+     "src": "new",
+     "en": "Then she flopped down onto the medium chair. Plop!",
+     "segs": [
+      [
+       "nar",
+       "Then she flopped down onto the medium chair. Plop!"
+      ]
+     ],
+     "before": [
+      "goldi:sit:mid"
+     ]
+    },
+    {
+     "text": "너무 푹신해서 쏙 파묻혔어요!",
+     "src": "reuse",
+     "en": "It's so squishy, she sank right in!",
+     "segs": [
+      [
+       "nar",
+       "It's so squishy, she sank right in!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "pop:500,300,폭신~"
+     ]
+    },
+    {
+     "text": "딱 맞아요! 그런데…",
+     "src": "reuse",
+     "en": "Just right! But then...",
+     "segs": [
+      [
+       "goldi",
+       "Just right!",
+       "happy:1.4"
+      ],
+      [
+       "nar",
+       "But then...",
+       "whisper:1.2"
+      ]
+     ],
+     "before": [
+      "goldi:sit:small"
+     ],
+     "after": [
+      "vo:cut_crack",
+      "cut:crack"
+     ]
+    },
+    {
+     "text": "뿌지직! 작은 의자가 부서져서 엉덩방아를 찧었어요.",
+     "src": "reuse",
+     "en": "Crack! The little chair broke, and she plopped down on her bottom.",
+     "segs": [
+      [
+       "nar",
+       "Crack! The little chair broke, and she plopped down on her bottom.",
+       "toneup:1.4"
+      ]
+     ],
+     "before": [
+      "chair:crack",
+      "fx:pow",
+      "pop:600,300,뿌지직!"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_beds",
+   "card": "Three Beds",
+   "set": "bed_side",
+   "enter": [
+    "goldi:at:300,480",
+    "goldi:face:sleepy",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하암, 졸려요. 위층에 침대가 세 개 있어요.",
+     "src": "reuse",
+     "en": "Yaaawn, I'm sleepy. There are three beds upstairs.",
+     "segs": [
+      [
+       "goldi",
+       "Yaaawn, I'm sleepy.",
+       "tonedown:1.4"
+      ],
+      [
+       "nar",
+       "There are three beds upstairs."
+      ]
+     ],
+     "before": [
+      "pop:300,250,하암~"
+     ]
+    },
+    {
+     "text": "큰 침대에 벌렁 누웠더니 등이 딱딱, 쿵!",
+     "src": "new",
+     "en": "She flopped down on the big bed. It was hard as a rock. Thud!",
+     "segs": [
+      [
+       "nar",
+       "She flopped down on the big bed. It was hard as a rock. Thud!"
+      ]
+     ],
+     "before": [
+      "goldi:lie:big",
+      "fx:thud"
+     ]
+    },
+    {
+     "text": "너무 딱딱해요!",
+     "src": "reuse",
+     "en": "It's too hard!",
+     "segs": [
+      [
+       "goldi",
+       "It's too hard!",
+       "toneup:1.2"
+      ]
+     ],
+     "before": [
+      "pop:400,300,딱딱해!"
+     ]
+    },
+    {
+     "text": "중간 침대는 푹신푹신, 몸이 쑥 파묻혔어요.",
+     "src": "new",
+     "en": "The medium bed was squishy, squashy, and she sank right in.",
+     "segs": [
+      [
+       "nar",
+       "The medium bed was squishy, squashy, and she sank right in."
+      ]
+     ],
+     "before": [
+      "goldi:lie:mid",
+      "pop:500,300,푹신푹신~"
+     ]
+    },
+    {
+     "text": "너무 푹신해요!",
+     "src": "reuse",
+     "en": "It's too soft!",
+     "segs": [
+      [
+       "goldi",
+       "It's too soft!",
+       "toneup:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "작은 침대는 포근포근, 딱 좋았어요.",
+     "src": "new",
+     "en": "The small bed was snug and cozy, just right.",
+     "segs": [
+      [
+       "nar",
+       "The small bed was snug and cozy, just right.",
+       "whisper:1.2"
+      ]
+     ],
+     "before": [
+      "goldi:lie:small"
+     ]
+    },
+    {
+     "text": "골디락스는 쿨쿨 잠이 들었어요.",
+     "src": "reuse",
+     "en": "Goldilocks fell fast asleep. Zzz.",
+     "segs": [
+      [
+       "nar",
+       "Goldilocks fell fast asleep. Zzz.",
+       "whisper:1.2"
+      ]
+     ],
+     "before": [
+      "goldi:sleep",
+      "fx:snore",
+      "pop:600,250,쿨쿨"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_home",
+   "card": "The Bears Are Home",
+   "set": "table",
+   "enter": [
+    "bears:show",
+    "goldi:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그때 곰 가족이 산책에서 돌아왔어요.",
+     "src": "reuse",
+     "en": "Just then, the bear family came home from their walk.",
+     "segs": [
+      [
+       "nar",
+       "Just then, the bear family came home from their walk.",
+       "tonedown:1.2"
+      ]
+     ],
+     "before": [
+      "bears:walk:500,2000"
+     ]
+    },
+    {
+     "text": "아빠 곰: \"누가 내 죽을 먹었지?\"",
+     "src": "reuse",
+     "en": "Papa Bear: \"Who ate my porridge?\"",
+     "segs": [
+      [
+       "dad",
+       "Who ate my porridge?",
+       "angry:1.2"
+      ]
+     ],
+     "before": [
+      "bear:dad:grumble"
+     ]
+    },
+    {
+     "text": "엄마 곰도 그릇을 들여다보며 고개를 갸웃갸웃 기울였어요.",
+     "src": "new",
+     "en": "Mama Bear peered into her bowl too and tilted her head, puzzled.",
+     "segs": [
+      [
+       "nar",
+       "Mama Bear peered into her bowl too and tilted her head, puzzled."
+      ]
+     ]
+    },
+    {
+     "text": "아기 곰: \"내 죽을 다 먹어 버렸어!\"",
+     "src": "reuse",
+     "en": "Baby Bear: \"Someone ate up all my porridge!\"",
+     "segs": [
+      [
+       "baby",
+       "Someone ate up all my porridge!",
+       "sad:1.7"
+      ]
+     ],
+     "before": [
+      "bear:baby:cry"
+     ]
+    },
+    {
+     "text": "의자도 뒤죽박죽! 아빠 곰이 으음, 눈살을 찌푸렸어요.",
+     "src": "new",
+     "en": "The chairs were all topsy-turvy, too! Papa Bear frowned. Hmmm.",
+     "segs": [
+      [
+       "nar",
+       "The chairs were all topsy-turvy, too! Papa Bear frowned. Hmmm."
+      ]
+     ],
+     "before": [
+      "set:living",
+      "bears:show",
+      "bear:dad:grumble"
+     ]
+    },
+    {
+     "text": "아기 곰: \"으앙, 내 의자가 부서졌어!\"",
+     "src": "reuse",
+     "en": "Baby Bear: \"Waaah, my chair is broken!\"",
+     "segs": [
+      [
+       "baby",
+       "Waaah, my chair is broken!",
+       "sad:1.7"
+      ]
+     ],
+     "before": [
+      "bear:baby:cry",
+      "pop:600,250,으앙!"
+     ]
+    },
+    {
+     "text": "엄마 곰이 아기 곰을 꼭 안아 주었어요.",
+     "src": "reuse",
+     "en": "Mama Bear gave Baby Bear a big, tight hug.",
+     "segs": [
+      [
+       "nar",
+       "Mama Bear gave Baby Bear a big, tight hug.",
+       "tonedown:1.1"
+      ]
+     ],
+     "before": [
+      "bear:mom:hug"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_bed",
+   "card": "Who's in My Bed?",
+   "set": "bed_side",
+   "enter": [
+    "goldi:sleep",
+    "bear:baby:at:200,480",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그런데 위층에서 쿨쿨 소리가 나요.",
+     "src": "reuse",
+     "en": "But then they heard a snoring sound upstairs.",
+     "segs": [
+      [
+       "nar",
+       "But then they heard a snoring sound upstairs.",
+       "whisper:1.2"
+      ]
+     ],
+     "before": [
+      "fx:snore",
+      "pop:600,250,쿨쿨"
+     ]
+    },
+    {
+     "text": "아기 곰이 살금살금 가 보니, 누가 자고 있어요!",
+     "src": "reuse",
+     "en": "Baby Bear tiptoed over, and someone was sleeping there!",
+     "segs": [
+      [
+       "nar",
+       "Baby Bear tiptoed over, and someone was sleeping there!",
+       "whisper:1.3"
+      ]
+     ],
+     "before": [
+      "bear:baby:walk:450,2000",
+      "bear:baby:peek"
+     ]
+    },
+    {
+     "text": "아기 곰이 이불을 살짝 들추자…",
+     "src": "new",
+     "en": "Baby Bear gently lifted the blanket, and...",
+     "segs": [
+      [
+       "nar",
+       "Baby Bear gently lifted the blanket, and...",
+       "whisper:1.2"
+      ]
+     ],
+     "before": [
+      "blanket:lift"
+     ],
+     "after": [
+      "vo:cut_eyes",
+      "cut:eyes"
+     ]
+    },
+    {
+     "text": "골디락스와 곰 세 마리 눈이 딱 마주쳤어요!",
+     "src": "reuse",
+     "en": "Goldilocks and the three bears looked straight at each other!",
+     "segs": [
+      [
+       "nar",
+       "Goldilocks and the three bears looked straight at each other!",
+       "toneup:1.5"
+      ]
+     ],
+     "before": [
+      "goldi:wake",
+      "bears:show",
+      "pop:500,250,깜짝!"
+     ]
+    },
+    {
+     "text": "깜짝! 골디락스는 후다닥 창문으로 달려갔어요.",
+     "src": "new",
+     "en": "Yikes! Goldilocks leapt up and dashed for the window, pitter-patter.",
+     "segs": [
+      [
+       "nar",
+       "Yikes! Goldilocks leapt up and dashed for the window, pitter-patter.",
+       "toneup:1.3"
+      ]
+     ],
+     "before": [
+      "goldi:run"
+     ],
+     "after": [
+      "vo:cut_skirt",
+      "cut:skirt"
+     ]
+    },
+    {
+     "text": "창문으로 나가려다 치마가 딱 걸렸어요!",
+     "src": "reuse",
+     "en": "She tried to climb out the window, but her skirt got caught!",
+     "segs": [
+      [
+       "nar",
+       "She tried to climb out the window, but her skirt got caught!",
+       "toneup:1.3"
+      ]
+     ],
+     "before": [
+      "pop:700,300,앗, 치마가!"
+     ]
+    },
+    {
+     "text": "골디락스가 돌아서서 말했어요. \"미안해요.\"",
+     "src": "reuse",
+     "en": "Goldilocks turned around and said, \"I'm sorry.\"",
+     "segs": [
+      [
+       "nar",
+       "Goldilocks turned around and said,"
+      ],
+      [
+       "goldi",
+       "I'm sorry.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "goldi:turn",
+      "goldi:face:sorry"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_sorry",
+   "card": "I'm Sorry",
+   "set": "living",
+   "enter": [
+    "bears:show",
+    "goldi:at:400,480",
+    "goldi:face:sorry",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "골디락스: \"허락 없이 들어와서 미안해요.\"",
+     "src": "reuse",
+     "en": "Goldilocks: \"I'm sorry I came in without asking.\"",
+     "segs": [
+      [
+       "goldi",
+       "I'm sorry I came in without asking.",
+       "sad"
+      ]
+     ]
+    },
+    {
+     "text": "아빠 곰: \"괜찮아. 다음엔 똑똑 하고 기다려 줘.\"",
+     "src": "reuse",
+     "en": "Papa Bear: \"It's okay. Next time, knock and wait for us.\"",
+     "segs": [
+      [
+       "dad",
+       "It's okay. Next time, knock and wait for us.",
+       "tonedown:1.0"
+      ]
+     ]
+    },
+    {
+     "text": "골디락스: \"아기 곰 의자, 같이 고칠래?\"",
+     "src": "reuse",
+     "en": "Goldilocks: \"Shall we fix Baby Bear's chair together?\"",
+     "segs": [
+      [
+       "goldi",
+       "Shall we fix Baby Bear's chair together?",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "goldi:face:smile"
+     ]
+    },
+    {
+     "text": "뚝딱뚝딱, 쿵쿵! 골디락스와 곰 가족이 함께 의자를 고쳤어요.",
+     "src": "new",
+     "en": "Bang, bang! Tap, tap! Goldilocks and the bears fixed the chair together.",
+     "segs": [
+      [
+       "nar",
+       "Bang, bang! Tap, tap! Goldilocks and the bears fixed the chair together.",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "fx:hammer",
+      "chair:fix",
+      "pop:500,250,뚝딱!"
+     ]
+    },
+    {
+     "text": "짠! 의자가 다 고쳐졌어요.",
+     "src": "reuse",
+     "en": "Ta-da! The chair is all fixed.",
+     "segs": [
+      [
+       "nar",
+       "Ta-da! The chair is all fixed.",
+       "happy:1.4"
+      ]
+     ],
+     "before": [
+      "fx:ding",
+      "pop:500,250,짠!"
+     ]
+    },
+    {
+     "text": "아기 곰: \"고마워! 우리 친구 하자!\"",
+     "src": "reuse",
+     "en": "Baby Bear: \"Thank you! Let's be friends!\"",
+     "segs": [
+      [
+       "baby",
+       "Thank you! Let's be friends!",
+       "happy:1.5"
+      ]
+     ],
+     "before": [
+      "bear:baby:hug"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_eat",
+   "card": "Yum Yum Together",
+   "set": "table",
+   "enter": [
+    "bears:show",
+    "goldi:at:300,480",
+    "bowls:steam:3",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "엄마 곰이 새 죽을 끓였어요. 다 함께 먹어요!",
+     "src": "reuse",
+     "en": "Mama Bear cooked fresh porridge. Let's all eat together!",
+     "segs": [
+      [
+       "nar",
+       "Mama Bear cooked fresh porridge. Let's all eat together!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "pop:500,250,보글보글"
+     ]
+    },
+    {
+     "text": "작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.",
+     "src": "reuse",
+     "en": "Small bowl, medium bowl, big bowl! All filled in order.",
+     "segs": [
+      [
+       "nar",
+       "Small bowl, medium bowl, big bowl! All filled in order.",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "bowls:fill"
+     ]
+    },
+    {
+     "text": "골디락스 그릇도 하나 더! 다 함께 냠냠.",
+     "src": "reuse",
+     "en": "One more bowl for Goldilocks! Yum, yum, all together.",
+     "segs": [
+      [
+       "nar",
+       "One more bowl for Goldilocks! Yum, yum, all together.",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "pop:500,250,냠냠!"
+     ]
+    },
+    {
+     "text": "호록호록, 냠냠! 네 식구가 둘러앉아 맛있게 먹었어요.",
+     "src": "new",
+     "en": "Slurp, slurp, yum, yum! The four of them sat around the table and ate happily.",
+     "segs": [
+      [
+       "nar",
+       "Slurp, slurp, yum, yum! The four of them sat around the table and ate happily.",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "골디락스와 곰 가족은 사이좋은 친구가 되었답니다.",
+     "src": "reuse",
+     "en": "Goldilocks and the bear family became good friends.",
+     "segs": [
+      [
+       "nar",
+       "Goldilocks and the bear family became good friends.",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "\"미안해요\" 하면 다시 친구가 될 수 있답니다.",
+     "src": "new",
+     "en": "Say \"I'm sorry,\" and you can be friends again.",
+     "segs": [
+      [
+       "nar",
+       "Say \"I'm sorry,\" and you can be friends again.",
+       "happy:1.1"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

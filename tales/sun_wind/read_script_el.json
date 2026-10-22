@@ -1,0 +1,939 @@
+{
+ "mode": "read",
+ "tale": "sun_wind",
+ "lang": "ko",
+ "title": "해와 바람",
+ "voices_from": "voice_script_el.json",
+ "moral": "다정한 마음이 제일 힘이 세답니다. 끝!",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 놀이판 9장면 중 해님·바람 누르기, 바람 불기 연타, 해님 비추기 연타, 누가 이겼나 고르기, 눈 오는 날·쨍쨍한 날 옷 고르기(배움 놀이 전용 2장면), 살살 불기 연타, 날씨 놀이(톡으로 날씨 바꾸기)를 뺐다. 읽기는 8장면(바람 차례를 \"바람 차례\"와 \"헉헉\" 둘로 나눔). 기존 줄 \"바람은 더 세게 불었어요. 쓱!\"은 조작 낱말 검사(쓱)에 걸려 새 문장으로 바꿨다. 꼬리 자름 1줄. 그림 컷 5장(모자·외투 여밈·헉헉·훌러덩·악수)은 그대로. 원작(이솝) 그대로, 순화할 장면 없음. 교훈은 놀이판 마지막 줄을 그대로 쓴다. 새 문장은 의성어·의태어를 장면마다 2~3개 넣었다(2026-10-22 사용자 지시).",
+ "acts": {
+  "set:<sky|high|field|stream>": "장면 배경(bgImage 키). scenes[].set 으로 자동 호출",
+  "sun:<smile|shine:<1-3>|dim> | wind:<puff|blow:<1-5>|pant|smile|gentle> | sun:at:<x,y> | wind:at:<x,y>": "해님·바람 표정·세기",
+  "man:<walk:x,ms|face:<cold|hot|happy>|hold|button|unbutton|fan|coat:off|hat:off|hat:on|sit|dip>": "나그네 걷기·표정·외투·모자·앉기",
+  "leaves:fly | flap:<on|off> | sweat | breeze": "나뭇잎 날림·외투 펄럭·땀·살랑 바람",
+  "cut:<hat|hold|pant|off|shake>": "그림 컷 5장 — 컷 속 외침(VOICE_LINES cut_pant·cut_off)은 그대로 재사용",
+  "vo:<cut_pant|cut_off|wrong_cold|wrong_hot>": "말풍선 없는 소리 대사(기존 녹음)",
+  "fx:<whoosh|swish|ding|splash> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_sky",
+   "card": "하늘 높이",
+   "set": "sky",
+   "enter": [
+    "sun:smile",
+    "wind:smile",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하늘 높이 해님과 바람이 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하늘 높이 해님과 바람이 살았어요.",
+       "happy:1.0",
+       "[calm, warm, storytelling, wide-eyed]"
+      ]
+     ]
+    },
+    {
+     "text": "구름은 두둥실, 새들은 짹짹 하늘을 날아다녔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "구름은 두둥실, 새들은 짹짹 하늘을 날아다녔어요.",
+       null,
+       "[calm, warm, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "해님은 방긋방긋 웃고, 바람은 볼을 빵빵하게 부풀렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "해님은 방긋방긋 웃고, 바람은 볼을 빵빵하게 부풀렸어요.",
+       null,
+       "[calm, warm, storytelling]"
+      ]
+     ],
+     "before": [
+      "wind:puff"
+     ]
+    },
+    {
+     "text": "\"내가 제일 따뜻해!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "sun",
+       "내가 제일 따뜻해!",
+       "happy:1.4",
+       "[warm, proud, gentle, sunny cheer]"
+      ]
+     ],
+     "before": [
+      "sun:shine:1"
+     ]
+    },
+    {
+     "text": "\"아니야, 내가 제일 세!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "wind",
+       "아니야, 내가 제일 세!",
+       "angry:1.3",
+       "[boastful, loud, cocky, puffing]"
+      ]
+     ],
+     "before": [
+      "wind:puff",
+      "fx:whoosh"
+     ]
+    },
+    {
+     "text": "해님과 바람은 서로 자기가 최고래요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "해님과 바람은 서로 자기가 최고래요.",
+       null,
+       "[amused, playful, storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_bet",
+   "card": "내기",
+   "set": "high",
+   "enter": [
+    "man:walk:500,0",
+    "sun:at:200,120",
+    "wind:at:800,120",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "저 아래 길로 나그네가 걸어가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "저 아래 길로 나그네가 걸어가요.",
+       null,
+       "[calm, gentle, storytelling]"
+      ]
+     ],
+     "before": [
+      "man:walk:500,3000"
+     ]
+    },
+    {
+     "text": "나그네는 터벅터벅, 느릿느릿 길을 걸었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "나그네는 터벅터벅, 느릿느릿 길을 걸었어요.",
+       null,
+       "[calm, warm, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "나그네는 두툼한 외투를 입었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "나그네는 두툼한 외투를 입었어요.",
+       null,
+       "[warm, light, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "바람이 말했어요. \"저 외투를 먼저 벗기는 쪽이 이기기!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "바람이 말했어요.",
+       null,
+       "[bright, storytelling]"
+      ],
+      [
+       "wind",
+       "저 외투를 먼저 벗기는 쪽이 이기기!",
+       "toneup:1.4",
+       "[challenging, boastful, cocky, energetic]"
+      ]
+     ],
+     "before": [
+      "wind:puff"
+     ]
+    },
+    {
+     "text": "\"저 외투쯤은 내가 휙 한 방에 날려 버릴걸!\"",
+     "src": "new",
+     "segs": [
+      [
+       "wind",
+       "저 외투쯤은 내가 휙 한 방에 날려 버릴걸!",
+       "toneup:1.3",
+       "[boastful, cocky, energetic]"
+      ]
+     ]
+    },
+    {
+     "text": "해님이 웃었어요. \"좋아. 바람아, 너 먼저 해 봐.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "해님이 웃었어요.",
+       null,
+       "[warm, bright, storytelling]"
+      ],
+      [
+       "sun",
+       "좋아. 바람아, 너 먼저 해 봐.",
+       "happy:1.0",
+       "[calm, kind, warm, relaxed, smiling]"
+      ]
+     ],
+     "before": [
+      "sun:smile"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_wind",
+   "card": "바람 차례",
+   "set": "field",
+   "enter": [
+    "man:walk:520,0",
+    "wind:at:150,120",
+    "sun:dim",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "바람이 볼을 빵빵하게 부풀렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "바람이 볼을 빵빵하게 부풀렸어요.",
+       "toneup:1.2",
+       "[playful, amused, building anticipation]"
+      ]
+     ],
+     "before": [
+      "wind:puff"
+     ]
+    },
+    {
+     "text": "후우! 바람이 힘껏 불자 풀잎이 휘청휘청 흔들렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "후우! 바람이 힘껏 불자 풀잎이 휘청휘청 흔들렸어요.",
+       "toneup:1.2",
+       "[lively, whooshing]"
+      ]
+     ],
+     "before": [
+      "wind:blow:2",
+      "fx:whoosh"
+     ]
+    },
+    {
+     "text": "휘잉~ 나뭇잎이 날아가요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "휘잉~ 나뭇잎이 날아가요!",
+       "toneup:1.3",
+       "[whooshing, lively, bright, storytelling]"
+      ]
+     ],
+     "before": [
+      "leaves:fly",
+      "pop:400,200,휘잉!"
+     ]
+    },
+    {
+     "text": "\"앗, 내 모자!\" 모자가 훨훨 날아갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "man",
+       "앗, 내 모자!",
+       "toneup:1.6",
+       "[startled, surprised, loud, comical]"
+      ],
+      [
+       "nar",
+       "모자가 훨훨 날아갔어요.",
+       null,
+       "[amused, light, storytelling]"
+      ]
+     ],
+     "before": [
+      "wind:blow:3",
+      "man:hat:off",
+      "cut:hat"
+     ]
+    },
+    {
+     "text": "외투 자락이 펄럭펄럭!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "외투 자락이 펄럭펄럭!",
+       null,
+       "[lively, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "man:face:cold",
+      "flap:on",
+      "pop:345,380,펄럭펄럭"
+     ]
+    },
+    {
+     "text": "\"으으, 추워!\" 나그네는 외투를 꽉 여몄어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "man",
+       "으으, 추워!",
+       "sad:1.5",
+       "[shivering, cold, grumbling, hugging himself]"
+      ],
+      [
+       "nar",
+       "나그네는 외투를 꽉 여몄어요.",
+       null,
+       "[soft, amused, gentle storytelling]"
+      ]
+     ],
+     "before": [
+      "man:hold",
+      "cut:hold"
+     ]
+    },
+    {
+     "text": "단추까지 꼭꼭 채웠어요. 외투는 꼼짝도 안 해요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "단추까지 꼭꼭 채웠어요. 외투는 꼼짝도 안 해요!",
+       "tonedown:1.1",
+       "[amused, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "man:button",
+      "pop:520,300,꽉!"
+     ]
+    },
+    {
+     "text": "나그네는 몸을 웅크리고 비틀비틀 걸어갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "나그네는 몸을 웅크리고 비틀비틀 걸어갔어요.",
+       null,
+       "[amused, gentle]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_pant",
+   "card": "헉헉",
+   "set": "field",
+   "enter": [
+    "man:walk:520,0",
+    "man:hold",
+    "wind:at:150,120",
+    "sun:dim",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "바람은 더 세게, 더 세게 후우후우 불었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "바람은 더 세게, 더 세게 후우후우 불었어요.",
+       null,
+       "[determined, energetic, lively]"
+      ]
+     ],
+     "before": [
+      "wind:blow:5",
+      "fx:whoosh",
+      "flap:on"
+     ]
+    },
+    {
+     "text": "하지만 나그네는 외투를 꼭 붙잡고 끄떡도 하지 않았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "하지만 나그네는 외투를 꼭 붙잡고 끄떡도 하지 않았어요.",
+       null,
+       "[amused, playful, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "바람은 숨이 차서 헉헉, 볼이 쭈글쭈글해졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "바람은 숨이 차서 헉헉, 볼이 쭈글쭈글해졌어요.",
+       "sad:1.0",
+       "[tired, soft, comical, panting lightly]"
+      ]
+     ],
+     "before": [
+      "wind:pant",
+      "cut:pant"
+     ],
+     "after": [
+      "flap:off"
+     ]
+    },
+    {
+     "text": "\"에이, 안 되네!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "wind",
+       "에이, 안 되네!",
+       "sad:1.5",
+       "[panting, exhausted, disappointed, huffs]"
+      ]
+     ]
+    },
+    {
+     "text": "어? 날아간 모자가 나그네 머리에 쏙 떨어졌어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "어? 날아간 모자가 나그네 머리에 쏙 떨어졌어요!",
+       null,
+       "[surprised, delighted, comical, storytelling]"
+      ]
+     ],
+     "before": [
+      "man:hat:on",
+      "pop:520,250,쏙!"
+     ]
+    },
+    {
+     "text": "나그네는 모자를 다시 쓰고 뚜벅뚜벅 걸어갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "나그네는 모자를 다시 쓰고 뚜벅뚜벅 걸어갔어요.",
+       null,
+       "[calm, warm, storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_sun",
+   "card": "해님 차례",
+   "set": "field",
+   "enter": [
+    "man:walk:520,0",
+    "man:hold",
+    "sun:at:850,120",
+    "wind:at:150,120",
+    "wind:pant",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이번엔 해님 차례예요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이번엔 해님 차례예요.",
+       "happy:1.1",
+       "[warm, bright, shifting to gentle]"
+      ]
+     ],
+     "before": [
+      "sun:smile"
+     ]
+    },
+    {
+     "text": "해님이 방긋 웃으며 따스한 햇살을 반짝반짝 쏟아 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "해님이 방긋 웃으며 따스한 햇살을 반짝반짝 쏟아 주었어요.",
+       "happy:1.1",
+       "[warm, bright, gentle]"
+      ]
+     ],
+     "before": [
+      "sun:shine:1",
+      "pop:850,120,반짝!"
+     ]
+    },
+    {
+     "text": "\"아, 따뜻하다~\" 나그네가 단추를 풀었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "man",
+       "아, 따뜻하다~",
+       "happy:1.3",
+       "[relaxed, pleased, sighs happily, warm]"
+      ],
+      [
+       "nar",
+       "나그네가 단추를 풀었어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ],
+     "before": [
+      "man:face:happy",
+      "man:unbutton"
+     ]
+    },
+    {
+     "text": "햇살이 점점 쨍쨍, 나그네 이마에 땀이 송골송골 맺혔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "햇살이 점점 쨍쨍, 나그네 이마에 땀이 송골송골 맺혔어요.",
+       null,
+       "[warm, building]"
+      ]
+     ],
+     "before": [
+      "sun:shine:2",
+      "sweat",
+      "pop:850,120,쨍쨍!"
+     ]
+    },
+    {
+     "text": "\"아이, 더워!\" 모자로 부채질을 해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "man",
+       "아이, 더워!",
+       "toneup:1.3",
+       "[warm, uncomfortable, puffing, fanning himself, mildly hot]"
+      ],
+      [
+       "nar",
+       "모자로 부채질을 해요.",
+       null,
+       "[amused, gentle, storytelling]"
+      ]
+     ],
+     "before": [
+      "man:face:hot",
+      "man:fan"
+     ]
+    },
+    {
+     "text": "\"휴우, 햇볕이 쨍쨍하니 외투는 필요 없겠네.\"",
+     "src": "new",
+     "segs": [
+      [
+       "man",
+       "휴우, 햇볕이 쨍쨍하니 외투는 필요 없겠네.",
+       "happy:1.2",
+       "[hot, relieved, fanning himself]"
+      ]
+     ]
+    },
+    {
+     "text": "훌러덩! 나그네가 외투를 벗었어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "훌러덩! 나그네가 외투를 벗었어요!",
+       "happy:1.4",
+       "[cheerful, amused, delighted]"
+      ]
+     ],
+     "before": [
+      "sun:shine:3",
+      "cut:off",
+      "man:coat:off",
+      "pop:520,250,훌러덩!"
+     ]
+    },
+    {
+     "text": "바람이 깜짝 놀랐어요. \"우와, 해님이 해냈네!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "바람이 깜짝 놀랐어요.",
+       null,
+       "[surprised, wide-eyed, storytelling]"
+      ],
+      [
+       "wind",
+       "우와, 해님이 해냈네!",
+       "toneup:1.5",
+       "[impressed, breathless, admiring, laughs softly]"
+      ]
+     ],
+     "before": [
+      "wind:smile"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_who",
+   "card": "누가 이겼을까?",
+   "set": "field",
+   "enter": [
+    "man:walk:520,0",
+    "man:coat:off",
+    "sun:at:850,120",
+    "wind:at:150,120",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "바람이 불 때, 나그네는 외투를 꽉 여몄어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "바람이 불 때, 나그네는 외투를 꽉 여몄어요.",
+       null,
+       "[soft, calm, storytelling, slow]"
+      ]
+     ],
+     "before": [
+      "wind:puff",
+      "flap:on"
+     ],
+     "after": [
+      "flap:off"
+     ]
+    },
+    {
+     "text": "해님이 비출 때는 외투를 벗었지요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "해님이 비출 때는 외투를 벗었지요.",
+       null,
+       "[soft, warm, storytelling, slow]"
+      ]
+     ],
+     "before": [
+      "sun:shine:2"
+     ]
+    },
+    {
+     "text": "바람은 머리를 긁적긁적, 해님은 싱글벙글 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "바람은 머리를 긁적긁적, 해님은 싱글벙글 웃었어요.",
+       null,
+       "[amused, warm]"
+      ]
+     ],
+     "before": [
+      "wind:smile",
+      "sun:smile"
+     ]
+    },
+    {
+     "text": "세게 미는 것보다 다정한 게 더 힘이 세요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "세게 미는 것보다 다정한 게 더 힘이 세요.",
+       "happy:0.9",
+       "[gentle, wise, reassuring, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "나그네는 해님을 올려다보며 방긋 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "나그네는 해님을 올려다보며 방긋 웃었어요.",
+       null,
+       "[calm, warm, storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_stream",
+   "card": "개울가",
+   "set": "stream",
+   "enter": [
+    "man:sit",
+    "man:coat:off",
+    "sun:at:850,120",
+    "wind:at:150,120",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "나그네는 개울가에서 쉬어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "나그네는 개울가에서 쉬어요.",
+       null,
+       "[calm, relaxed, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "시원한 물에 발을 퐁당 담갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "시원한 물에 발을 퐁당 담갔어요.",
+       null,
+       "[soft, refreshing, delighted, storytelling]"
+      ]
+     ],
+     "before": [
+      "man:dip",
+      "fx:splash",
+      "pop:450,420,퐁당!"
+     ]
+    },
+    {
+     "text": "졸졸졸 흐르는 물소리에 나그네는 콧노래를 흥얼흥얼.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "졸졸졸 흐르는 물소리에 나그네는 콧노래를 흥얼흥얼.",
+       null,
+       "[soft, relaxed, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "바람아, 이번엔 살살 불어 줄래?",
+     "src": "trim",
+     "from": "바람아, 이번엔 살살 불어 줄래? 톡, 살살~",
+     "segs": [
+      [
+       "nar",
+       "바람아, 이번엔 살살 불어 줄래?",
+       "whisper",
+       "[gentle, coaxing, soft, playful]"
+      ]
+     ],
+     "before": [
+      "wind:gentle"
+     ]
+    },
+    {
+     "text": "살랑살랑~ 부드러운 바람이 나그네 뺨을 간질였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "살랑살랑~ 부드러운 바람이 나그네 뺨을 간질였어요.",
+       "whisper",
+       "[gentle, soft, playful]"
+      ]
+     ],
+     "before": [
+      "breeze",
+      "pop:300,250,살랑~"
+     ]
+    },
+    {
+     "text": "\"아, 시원해. 고마워, 바람아!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "man",
+       "아, 시원해. 고마워, 바람아!",
+       "happy:1.3",
+       "[relaxed, content, sighs happily, warm, grateful]"
+      ]
+     ],
+     "before": [
+      "man:face:happy"
+     ]
+    },
+    {
+     "text": "나그네는 외투를 돌돌 말아 베고 벌렁 드러누웠어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "나그네는 외투를 돌돌 말아 베고 벌렁 드러누웠어요.",
+       null,
+       "[soft, relaxed]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_friends",
+   "card": "사이좋게",
+   "set": "sky",
+   "enter": [
+    "sun:smile",
+    "wind:smile",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "해님과 바람이 마주 보고 웃었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "해님과 바람이 마주 보고 웃었어요.",
+       "happy:1.1",
+       "[warm, tender, smiling, storytelling]"
+      ]
+     ],
+     "after": [
+      "cut:shake",
+      "fx:ding"
+     ]
+    },
+    {
+     "text": "둘은 손을 꼭 잡고 흔들흔들, 악수를 했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "둘은 손을 꼭 잡고 흔들흔들, 악수를 했어요.",
+       "happy:1.1",
+       "[warm, tender]"
+      ]
+     ],
+     "before": [
+      "pop:500,250,악수!"
+     ]
+    },
+    {
+     "text": "\"우리, 사이좋게 지내자!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "wind",
+       "우리, 사이좋게 지내자!",
+       "happy:1.4",
+       "[cheerful, friendly, warm, sincere]"
+      ]
+     ]
+    },
+    {
+     "text": "\"그래! 둘이 함께라면 더 좋아!\"",
+     "src": "new",
+     "segs": [
+      [
+       "sun",
+       "그래! 둘이 함께라면 더 좋아!",
+       "happy:1.3",
+       "[warm, cheerful, kind, sunny]"
+      ]
+     ]
+    },
+    {
+     "text": "해님은 반짝반짝, 바람은 살랑살랑, 하늘이 환해졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "해님은 반짝반짝, 바람은 살랑살랑, 하늘이 환해졌어요.",
+       null,
+       "[calm, warm, storytelling]"
+      ]
+     ],
+     "before": [
+      "sun:shine:1",
+      "breeze"
+     ]
+    },
+    {
+     "text": "해님과 바람은 오늘도 사이좋게 하늘을 지켜요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "해님과 바람은 오늘도 사이좋게 하늘을 지켜요.",
+       null,
+       "[warm, content, calm, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "다정한 마음이 제일 힘이 세답니다. 끝!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "다정한 마음이 제일 힘이 세답니다. 끝!",
+       "happy:1.2",
+       "[gentle, warm, loving, slow, closing]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
