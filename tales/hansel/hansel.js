@@ -145,6 +145,246 @@
     const bird = mk(T, { crumb: ['bird_crumb', 80, 'left'], peck: ['bird_peck', 70, 'left'] });
     const duck = mk(T, { a: ['duck_ride', 135, 'right'], b: ['duck_ride2', 135, 'right'] });
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
+       장면 자리·자세·크기는 놀이판 그 장면 그대로(FIX 표). 대본 좌표는 놀이판 그림과 맞지 않아 FIX 가 우선한다. */
+    const READ_ACTS = (() => {
+      const A = { hans, gret, father, step, witch, bird, duck };
+      const LOOKMAP = { hans: { sleep: 'doze' }, gret: { sleep: 'doze' }, witch: { sleep: 'oven' } };
+      const BGK = { house_night: 'house_night', cottage_night: 'cottage_night', trail: 'trail', cottage: 'cottage', glade: 'glade', ground: 'ground', house: 'house', roof: 'roof', cage: 'cage', oven: 'oven', river: 'river' };
+      const CARDS = { trail: '숲길', roof: '지붕', cage: '새장' };
+      const CXM = { house_night: L(500, 790), cage: L(500, 215) };
+      let key = '', houseN = 0, trailN = 0, cottageN = 0, pebs = [], glints = [], keys = [], lock = null, holes = [], holeRings = [];
+      const rI = () => T.readInstant();
+      const nums = s => String(s).split(',').map(Number);
+      const S = P ? .9 : 1;
+      /* 놀이판 자리 [x, y, {look, to, s}] — 같은 set 이 두 번 나오면 번호로 구분 */
+      const fixOf = (k, n) => {
+        const G = GROUND;
+        const t = {
+          house_night: { step: [L(330, 640), G, { look: 'point', to: 'right' }], father: [L(560, 775), G, { look: 'worry', to: 'left' }], hans: [DOOR.edge - 17, DOOR.sill, { look: 'walk', to: 'left', s: .9 }] },
+          cottage_night: { hans: [L(430, 400), G, { look: 'crumb', to: 'right' }] },
+          trail: trailN >= 2
+            ? { gret: [L(250, 400), G, { look: 'walk', to: 'right' }], hans: [L(330, 430), G, { look: 'crumb', to: 'right' }] }
+            : { father: [L(180, 355), G, { look: 'wood', to: 'right', s: S }], gret: [L(330, 440), G, { look: 'walk', to: 'right' }], hans: [L(450, 520), G, { look: 'crumb', to: 'right' }] },
+          cottage: cottageN >= 2 ? { hans: [L(660, 580), G, { look: 'walk', to: 'left' }], gret: [L(740, 625), G, { look: 'walk', to: 'left' }], father: [-100, G, { look: 'wood', to: 'right', s: S }] } : { step: [L(200, 345), G, { look: 'stand', to: 'right' }], gret: [L(340, 430), G, { look: 'walk', to: 'right' }], hans: [L(440, 515), G, { look: 'walk', to: 'right' }], father: [L(560, 625), G, { look: 'wood', to: 'right', s: S }] },
+          glade: { hans: [L(430, 445), G, { look: 'walk', to: 'right' }], gret: [L(540, 555), G, { look: 'walk', to: 'left' }], father: [L(700, 615), G, { look: 'wood', to: 'left', s: S }] },
+          ground: { hans: [L(400, 425), G, { look: 'walk', to: 'right' }], gret: [L(490, 500), G, { look: 'walk', to: 'right' }], bird: [L(640, 590), G + 10, { look: 'crumb', to: 'left' }] },
+          house: houseN <= 1
+            ? { hans: [L(400, 440), G, { look: 'walk', to: 'right' }], gret: [L(500, 540), G, { look: 'walk', to: 'right' }] }
+            : { hans: [L(380, 420), G, { look: 'walk', to: 'right' }], gret: [L(470, 480), G, { look: 'walk', to: 'right' }], witch: [L(640, 590), G, { look: 'beckon', to: 'left' }] },
+          roof: { gret: [L(390, 420), G, { look: 'eat', to: 'left' }], hans: [L(500, 520), G, { look: 'walk', to: 'left' }] },
+          cage: { hans: [140, 490, { look: 'cage', to: 'left' }], gret: [L(340, 300), G, { look: 'clever', to: 'left' }] },
+          oven: { hans: [L(250, 380), G, { look: 'joy', to: 'right' }], gret: [L(400, 445), G, { look: 'clever', to: 'right' }], witch: [L(760, 640), G, { look: 'grope', to: 'left' }] },
+          river: { hans: [L(380, 420), G + 12, { look: 'walk', to: 'right' }], gret: [L(470, 490), G + 12, { look: 'walk', to: 'right' }], duck: [L(820, 640), 470, { look: 'a', to: 'left' }] },
+        };
+        return t[k] && t[k][n];
+      };
+      const gone = a => !a.pos.isConnected || a.pos.style.display === 'none';
+      const build = k => {
+        key = k; pebs = []; glints = []; keys = []; lock = null;
+        if (k === 'house') houseN++;
+        if (k === 'trail') trailN++;
+        if (k === 'cottage') cottageN++;
+        scene(BGK[k], CXM[k] || 500);
+        if (k === 'house_night') { // 문틈 빛 띠
+          T.el('rect', { x: DOOR.open, y: DOOR.top, width: DOOR.edge - DOOR.open, height: DOOR.sill - DOOR.top, fill: '#F2B366', opacity: .16, 'pointer-events': 'none' }, T.world);
+        }
+        if (k === 'glade') {
+          [L(330, 392), L(680, 612)].forEach(bx => {
+            const g = T.el('g', { filter: 'url(#pp)' }, T.world);
+            T.el('ellipse', { cx: bx, cy: GROUND - 22, rx: 54, ry: 30, fill: '#5E8A3E' }, g); T.el('ellipse', { cx: bx - 12, cy: GROUND - 32, rx: 30, ry: 16, fill: '#76A24D' }, g);
+            [[-30, -20], [-12, -34], [8, -18], [26, -32], [38, -14], [-4, -8], [16, -4], [-36, -4]].forEach(([dx, dy]) => { T.el('circle', { cx: bx + dx, cy: GROUND + dy, r: 7, fill: '#D93A3A' }, g); T.el('circle', { cx: bx + dx - 2, cy: GROUND + dy - 2, r: 2, fill: '#fff', opacity: .55 }, g); });
+          });
+        }
+        if (k === 'roof') {
+          holes = [[446, 108], [502, 108], [557, 108], [623, 108], [535, 150]];
+          holeRings = holes.map(([x, y]) => T.el('circle', { cx: x, cy: y, r: 18, fill: 'none', stroke: '#FFD54F', 'stroke-width': 3, 'stroke-dasharray': '5 4', opacity: .6 }, T.world));
+        }
+        if (k === 'cage') { lock = lockAt(L(231, 209), 357); }
+      };
+      const posOf = (n, spec) => {
+        const f = fixOf(key, n);
+        if (f) return f;
+        let [x, y = GROUND] = nums(spec);
+        if (P) x = 500 + (x - 500) * .5;
+        return [x, y, {}];
+      };
+      const popAt = (x, y, w) => {
+        if (P) { const c = T.camera.x; x = Math.min(Math.max(x, c - 190), c + 190); }
+        T.pop(x, y, tr(w));
+      };
+      const actorVerb = (n, a) => (op, spec) => {
+        if (op === 'at') {
+          const [x, y, o] = posOf(n, spec);
+          put(T, a, x, y, o);
+          if (n === 'hans' && key === 'house_night') { a.pos.style.pointerEvents = 'none'; }
+          if (n === 'witch' && key === 'house' && houseN > 1) fadeIn(a);
+          if (n === 'hans' && key === 'oven' && P) hide(a);
+          return;
+        }
+        if (op === 'look') {
+          const k = (LOOKMAP[n] && LOOKMAP[n][spec]) || spec;
+          if (n === 'witch' && k === 'broom') { // 빗자루 그림이 없어 마녀 자세 그대로 하늘로 날아간다
+            a.look('beckon'); a.move(a.x + 420, 90, 1000, 'ease-in'); return;
+          }
+          if ((n === 'hans' || n === 'gret') && k === 'doze') { a.look('doze'); a.place(a.x, GROUND + 6); return; }
+          if ((n === 'hans' || n === 'gret') && k === 'walk' && key === 'glade') { a.look('walk', n === 'hans' ? 'right' : 'left'); a.place(a.x, GROUND); return; }
+          if (n === 'hans' && k === 'cage') { if (key === 'cage') a.look('cage'); return; }
+          if (n === 'father' && k === 'hug' && key === 'cottage') { a.look('hug'); return; }
+          a.look(k); return;
+        }
+        if (op === 'to') { a.turn(spec); return; }
+        if (op === 'hide') { hide(a); return; }
+        if (op === 'hop') { a.hop(20, 300); popSfx(T); return; }
+        if (op === 'fade') { fadeIn(a); return; }
+        if (op === 'walk') {
+          let [x, y = a.y] = nums(spec);
+          if (rI()) { a.place(x, y); return; }
+          if (key === 'trail' && trailN < 2 && (n === 'father' || n === 'gret' || n === 'hans')) { // 셋이 함께 뚜벅뚜벅
+            const pr = a.move(a.x + L(40, 10), GROUND, 1600);
+            return n === 'hans' ? pr : null;
+          }
+          if (key === 'trail' && n === 'father') return a.move(1150, GROUND, 2600);
+          if (key === 'ground' && n === 'hans') { a.look('walk', 'right'); a.move(1100, GROUND, 1500); return; }
+          if (key === 'ground' && n === 'gret') { a.look('walk', 'right'); return a.move(1200, GROUND, 1500); }
+          if (key === 'cottage' && n === 'father') return a.move(L(450, 480), GROUND, 800);
+          if (key === 'river' && n === 'duck') return a.move(L(640, 570), 470, 1100);
+          return a.move(P ? 500 + (x - 500) * .5 : x, y, 900);
+        }
+      };
+      const acts = {
+        set(k) {
+          if (rI()) { build(k); return; }
+          return T.sceneCard(tr(CARDS[k] || ''), () => {
+            build(k);
+            if (k === 'trail') { const f = fixOf('trail', 'gret'), g = fixOf('trail', 'hans'); put(T, gret, f[0], f[1], f[2]); put(T, hans, g[0], g[1], g[2]); }
+            if (k === 'cage') { const f = fixOf('cage', 'hans'), g = fixOf('cage', 'gret'); put(T, hans, f[0], f[1], f[2]); hans.setScale(SC); put(T, gret, g[0], g[1], g[2]); }
+          });
+        },
+        cam(a) { camSnap(CXM[key] || (a === 'wide' ? 500 : (P ? +a : 500)), 280, 1); },
+        pebbles(op, n) {
+          if (op === 'show') {
+            const PX = L([520, 575, 630, 690, 750], [470, 520, 570, 620, 660]);
+            pebs = pebbles.slice();
+            pebs.forEach((p, i) => put(T, p, PX[i], GROUND, { to: 'right' }));
+            glints = pebs.map((p, i) => sparkleAt(PX[i], GROUND, i * 300));
+            return;
+          }
+          if (op === 'pick') {
+            glints.forEach(g => g.remove()); hans.hop(10, 240);
+            pebs.forEach(async (p, i) => { await sleep(i * 180); await p.move(hans.x - 6 * SC, hans.y - 62 * SC, 320, 'ease-in'); hide(p); popSfx(T); });
+            return;
+          }
+          if (op === 'drop') { // 걸으며 하나씩 (이어서 문장을 읽는다)
+            (async () => {
+              const dx = L(60, 25);
+              for (let i = 0; i < +n; i++) {
+                const px = hans.x - 34 * SC;
+                put(T, pebbles[i], px, GROUND + 12, { to: 'right' }); fadeIn(pebbles[i], 260);
+                sparkleAt(px, GROUND + 12, 0, false); popSfx(T); hans.hop(8, 220);
+                await Promise.all([father.move(father.x + dx, GROUND, 400), gret.move(gret.x + dx, GROUND, 400), hans.move(hans.x + dx, GROUND, 400)]);
+                await sleep(450);
+              }
+            })();
+          }
+        },
+        crumbs(op, n) {
+          (async () => {
+            const stepX = L(110, 36); let hx = hans.x, gx = gret.x;
+            for (let i = 1; i <= +n; i++) {
+              crumbAt(hx - 14, 520); popSfx(T); hx += stepX; gx += stepX;
+              hans.hop(10, 220); hans.move(hx, GROUND, 360); gret.move(gx, GROUND, 360);
+              await sleep(520);
+            }
+          })();
+        },
+        berries(op) { hans.look('eat'); gret.look('eat'); return (async () => { await sleep(400); hans.hop(14, 300); gret.hop(14, 300); await sleep(900); hans.hop(14, 300); gret.hop(14, 300); })(); },
+        candy(op, n) {
+          (async () => {
+            for (let i = 1; i <= +n; i++) {
+              const [x, y] = holes[i - 1], sx = hans.x, sy = hans.y - 150, c = candyAt(0, 0, i - 1);
+              holeRings[i - 1] && holeRings[i - 1].remove();
+              c.animate([{ transform: `translate(${sx}px,${sy}px) scale(.4)` }, { transform: `translate(${x}px,${y}px) scale(1)` }], { duration: 480, easing: 'ease-out', fill: 'forwards' });
+              hans.hop(12, 240); popSfx(T); await sleep(560);
+            }
+          })();
+        },
+        keys(op) {
+          const kc = keyAt(L(470, 160), 440, 'circle'), ks = keyAt(L(570, 225), 440, 'square'), kt = keyAt(L(670, 290), 440, 'star');
+          keys = [kc, ks, kt];
+          keys.forEach(k => k.animate([{ opacity: 0, transform: 'translateY(-20px)' }, { opacity: 1, transform: 'translateY(0)' }], 350));
+        },
+        cage(op) {
+          if (op !== 'open') return;
+          clinkSfx(T); keys.forEach(k => k.remove());
+          gret.look('key'); gret.hop(14, 300);
+          return (async () => {
+            await sleep(500);
+            if (lock) lock.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
+            put(T, hans, L(250, 215), GROUND, { look: 'joy', to: 'left' });
+            hans.hop(34, 420);
+          })();
+        },
+        oven(op) { if (op === 'slam') { gret.look('push', 'right'); AudioFX.sfx('boom', 1); AudioFX.sfx('crash'); T.shake(); } },
+        hat(op) { // 모자가 휙 (오린 검은 종이 모자)
+          const g = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, T.world);
+          const x = witch.x, y = witch.y - 240;
+          T.el('polygon', { points: `${x - 34},${y} ${x + 34},${y} ${x + 6},${y - 70}`, fill: '#3A2E3F' }, g);
+          T.el('rect', { x: x - 48, y, width: 96, height: 10, fill: '#2B2230' }, g);
+          g.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: 'translate(160px,-170px) rotate(300deg)', opacity: 0 }], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
+          setTimeout(() => g.remove(), 1100);
+        },
+        door(op) { // 문짝과 기둥 (헨젤이 문틈으로 엿보도록 기둥은 헨젤 앞에)
+          const defs = T.el('defs', {}, T.world), cp = T.el('clipPath', { id: 'hgPost', clipPathUnits: 'userSpaceOnUse' }, defs);
+          T.el('rect', { x: DOOR.post, y: DOOR.top - 40, width: DOOR.open - DOOR.post, height: DOOR.sill + 20 - DOOR.top + 40 }, cp);
+          T.el('image', { href: bgSrc('house_night'), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none', 'clip-path': 'url(#hgPost)', 'pointer-events': 'none' }, T.world);
+          put(T, door, DOOR.edge + (DOOR.sill - DOOR.top) * aspOf('prop_door') / 2, DOOR.sill, { to: 'left', s: 1 / SC });
+        },
+        cut(k) {
+          const HOLD = { pebbles: 3200, bird: 3200, eat: 3200, witch: 3200, slam: 3200, duck: 3400, hug: 3600 };
+          if (k === 'eat') { gret.look('eat'); hans.look('eat'); AudioFX.sfx('crunch') || popSfx(T); gret.hop(16, 300); }
+          if (k === 'bird') bird.look('peck');
+          if (k === 'duck') duck.look('b');
+          const pr = T.cutImage([{ src: cutSrc(k), sfx: k === 'slam' ? 'boom' : 'pop', hold: HOLD[k] || 3200 }], { hold: HOLD[k] || 3200 });
+          if (k === 'hug') return pr.then(() => { // 안아 올린 뒤 모두 모인 자리
+            put(T, father, 500, GROUND, { look: 'hug', to: 'left' });
+            put(T, hans, L(400, 440), GROUND, { look: 'joy', to: 'left' }); put(T, gret, L(600, 565), GROUND, { look: 'clever', to: 'left' });
+          });
+          return pr;
+        },
+        fx(n) {
+          if (n === 'boom') AudioFX.sfx('boom', 1);
+          else if (n === 'whoosh') AudioFX.sfx('whoosh');
+          else if (n === 'click' || n === 'sparkle') clinkSfx(T);
+          else popSfx(T);
+        },
+        shake() {
+          T.shake();
+          if (key === 'oven' && witch.x > L(700, 600)) witch.move(L(640, 585), GROUND, 1000); // 마녀가 쿵쿵 걸어온다
+        },
+        pop(spec) { const a = String(spec).split(','); popAt(+a[0], +a[1], a.slice(2).join(',')); },
+      };
+      Object.keys(A).forEach(n => { acts[n] = actorVerb(n, A[n]); });
+      const dv = acts.duck;
+      acts.duck = (op, spec) => {
+        if (op === 'cross') {
+          (async () => {
+            put(T, hans, hans.x, hans.y, { look: 'walk', to: 'right' }); put(T, gret, gret.x, gret.y, { look: 'walk', to: 'right' });
+            await Promise.all([hans.move(duck.x - 22, GROUND + 12, 700), gret.move(duck.x + 22, GROUND + 12, 700)]);
+            hans.setScale(.55 * SC); gret.setScale(.55 * SC); hans.place(hans.x, 428); gret.place(gret.x, 428);
+            const tx = L(780, 600);
+            duck.turn('right');
+            await Promise.all([duck.move(tx, 330, 2600), hans.move(tx - 22, 290, 2600), gret.move(tx + 22, 290, 2600)]);
+            await Promise.all([hans.move(tx - 22 + 50, 250, 700), gret.move(tx + 22 + 50, 250, 700)]);
+          })();
+          return;
+        }
+        return dv(op, spec);
+      };
+      return acts;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* --- 1. 집 안 밤: 문틈으로 엿듣기 --- */
     scene('house_night', L(500, 790)); /* 세로 화면은 오른쪽 끝(문틀)까지 보이게 */
     put(T, step, L(330, 640), GROUND, { look: 'stand', to: 'right' }); /* 계모 ↔ 아빠 마주 봄 */
@@ -523,5 +763,5 @@
     return '우리 집이 제일 포근해요!';
   }
 
-  Tale.mount({ title: '헨젤과 그레텔', subtitle: '집이 제일 포근해요', run: T => run(Tale.api) });
+  Tale.mount({ title: '헨젤과 그레텔', subtitle: '집이 제일 포근해요', read: true, run: T => run(Tale.api) });
 })();
