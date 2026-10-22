@@ -98,6 +98,7 @@
     const inner = T.el('g', { 'clip-path': `url(#${id})` }, g);
     T.el('rect', { x: -1400, y: BGBOX.y + BGBOX.h - 2, width: 3800, height: 2000, fill: BG_EDGE[key][1] }, inner);
     T.el('image', { href: u, x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, inner);
+    g.style.pointerEvents = 'none';   // 앞에 덮는 흙 그림은 누르는 대상(쥐구멍의 생쥐 등)을 가로채지 않는다
     return g;
   }
 
@@ -402,7 +403,19 @@
   const thud = T => AudioFX.sfx('thud') || T.tone([120, 60], .25, { type: 'sine', vol: .25 });
 
   /* ================= 이야기 ================= */
+  /* 누르는 자리 넓히기(2026-10-22): 화면에서 짧은 변이 min px 보다 작으면 투명 사각을 대상 안에 깔아 min px 로 키운다. 눌리는 곳 크기만 바뀌고 그림은 그대로 */
+  function padHit(T, el, min = 88) {
+    try {
+      if (el.__pad) { el.__pad.remove(); el.__pad = null; }
+      const m = el.getScreenCTM(); if (!m) return;
+      const sc = Math.hypot(m.a, m.b) || 1, bb = el.getBBox();
+      const w = Math.max(bb.width, min / sc), h = Math.max(bb.height, min / sc);
+      if (w === bb.width && h === bb.height) return;
+      el.__pad = T.el('rect', { x: bb.x + bb.width / 2 - w / 2, y: bb.y + bb.height / 2 - h / 2, width: w, height: h, fill: '#000', 'fill-opacity': 0 }, el);
+    } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
+  }
   async function run(T) {
+    if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { el, sleep, say, actor, camTo, camWide, camSnap, josa } = T;
 
     /* 그림 미리 불러오기: 배우·순무·첫 배경을 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
@@ -488,14 +501,15 @@
       } else camSnap(500, 280, 1);
     }
     /* 당기기 한 판: 톡톡톡 ×5, 끝나면 순무가 한 뼘 올라온다 */
-    async function pullRound(n, gain, prompt) {
+    async function pullRound(n, gain, prompt, lead) {
       const pullStep = i => {
         chorus(T, n);
         for (let k = 0; k < n; k++) { const a = line[k]; setTimeout(() => { a.pose(POSE.pull(PULL_DEG[k])); setTimeout(() => a.pose(POSE.pull(4)), 260); }, k * 70); } // 앞사람일수록 더 젖히고, 쉬는 동안에도 뒤로 기대어 붙잡고 있는다
         wobble();
         T.pop(i % 2 ? 640 : 360, 180, '영차!', C.bean);
       };
-      await T.tap(turnip.pos, { prompt }); // 한 번 톡 → 영차 다섯 번 저절로 (2026-10-19)
+      const tapIt = () => T.tap(turnip.pos, { prompt });
+      await (lead ? T.ask(lead, tapIt) : tapIt()); // 한 번 톡 → 영차 다섯 번 저절로 (2026-10-19)
       for (let i = 1; i <= 5; i++) { pullStep(i); await sleep(420); }
       await sleep(400);
       rise += gain;
@@ -507,10 +521,10 @@
       const bOk = badge(T, left ? 250 : 750, 320, 92, okKey, sc[okKey]);
       const bNo = badge(T, left ? 750 : 250, 320, 92, noKey, sc[noKey]);
       T.fitRow([bOk, bNo]); // 세로 화면: 보이는 폭 안으로
-      await T.choose([
+      await T.ask(q, () => T.choose([
         { el: bOk, ok: true },
         { el: bNo, ok: false, onWrong: async () => { noSound && noSound(); await T.anim(bNo, [{ translate: '0 0' }, { translate: '-10px 0' }, { translate: '10px 0' }, { translate: '0 0' }], 400); } },
-      ], { prompt: q, where, who });
+      ], { prompt: q, where, who }));
       okSound && okSound();
       await T.anim(bOk, [{ translate: '0 0' }, { translate: '0 -24px' }, { translate: '0 0' }], 420);
       bOk.remove(); bNo.remove();
@@ -527,8 +541,7 @@
     camSnap(500, 360, 1.5);
     await T.curtain(true);
     await say('봄이 왔어요. 할아버지가 텃밭에 구멍을 팠어요.');
-    await say('"순무야, 크게 자라라." 씨앗을 톡 눌러 봐요!');
-    await T.tap(seed, { prompt: '씨앗을 톡 눌러 봐요!' });
+    await T.ask('"순무야, 크게 자라라." 씨앗을 톡 눌러 봐요!', () => T.tap(seed, { prompt: '씨앗을 톡 눌러 봐요!' }));
     await T.anim(seed, [{ transform: 'translate(496px,378px)' }, { transform: 'translate(462px,330px)' }, { transform: 'translate(430px,468px) scale(.6)' }], { duration: 600, easing: 'ease-in' });
     seed.remove();
     AudioFX.sfx('pop'); T.pop(430, 400, '쏙!', C.pine);
@@ -592,13 +605,12 @@
       if (!bgFront(T, 'lowangle', 484)) T.paper(T.world, [['rect', { x: -300, y: 498, width: 1600, height: 300, fill: C.soil }]]);
       put(cast.grandpa, 600, 500, .7, 'pull'); // 순무 잎을 꽉 잡은 그림
     }, cast.grandpa.pos);
-    await say('할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!');
     const pullGrandpa = i => {
       chorus(T, 1); wobble();
       cast.grandpa.pose(POSE.pull(18)); setTimeout(() => cast.grandpa.pose(POSE.stand()), 260);
       T.pop(i % 2 ? 700 : 560, 300, '영차!', C.bean);
     };
-    await T.tap(cast.grandpa.pos, { prompt: '할아버지를 톡 눌러서 영차!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await T.ask('할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!', () => T.tap(cast.grandpa.pos, { prompt: '할아버지를 톡 눌러서 영차!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 5; i++) { await pullGrandpa(i); await sleep(420); }
     await sleep(300);
     await say('순무는 꿈쩍도 안 해요.');
@@ -643,14 +655,12 @@
     }
     await say('할머니가 달려왔어요. "같이 해 봐요!"');
     await T.sceneCard(null, () => sideView(2), cast.grandma.pos);
-    await say('할머니가 할아버지 허리를 잡고, 톡! 영차!');
-    await pullRound(2, 12, '순무를 톡 눌러서 영차!');
+    await pullRound(2, 12, '순무를 톡 눌러서 영차!', '할머니가 할아버지 허리를 잡고, 톡! 영차!');
     await say('순무가 한 뼘 올라왔어요! 그래도 안 뽑혀요.');
 
     /* --- 5. 손녀 (텃밭 옆 모습, 줄이 길어짐) --- */
     await T.sceneCard('손녀', () => sideView(2), cast.grandma.pos);
     const q5 = '할머니가 누구를 부를까요?';
-    await say(q5);
     await callChoice('girl', 'cow', { q: q5, okSound: () => T.tone([660, 880], .2, { type: 'triangle', vol: .14 }), noSound: () => moo(T),
       where: '음매~ 소는 풀을 먹고 있대요. 사람 친구를 먼저 불러요!', who: '손녀예요! 반짝이는 친구를 눌러 봐요!' });
     put(cast.girl, 1080);
@@ -677,7 +687,6 @@
     const rustle = () => bush.animate([{ translate: '0 0' }, { translate: '-6px 0' }, { translate: '6px 0' }, { translate: '0 0' }], { duration: 400, iterations: 2 });
     rustle(); bark(T);
     const q6 = '덤불 뒤에서 멍멍! 누구일까요?';
-    await say(q6);
     await callChoice('dog', 'cat', { q: q6, okSound: () => bark(T), noSound: () => { meow(T); setTimeout(() => { rustle(); bark(T); }, 900); },
       where: '멍멍 하고 우는 친구는 누굴까? 다시 들어 봐요.', who: '강아지예요! 반짝이는 친구를 눌러 봐요!' });
     T.world.appendChild(cast.dog.pos);
@@ -701,7 +710,6 @@
     });
     meow(T);
     const q7 = '헛간 지붕에서 야옹! 누구일까요?';
-    await say(q7);
     await callChoice('cat', 'pig', { q: q7, okSound: () => meow(T), noSound: () => { oink(T); setTimeout(() => meow(T), 900); },
       where: '야옹 하고 우는 친구는 누굴까? 다시 들어 봐요.', who: '고양이예요! 반짝이는 친구를 눌러 봐요!' });
     cast.cat.lean.style.transition = 'transform .28s ease-out, filter .6s';
@@ -743,8 +751,8 @@
       camSnap(500, 280, 1);
     });
     squeak(T);
-    await say('흙구멍에서 찍찍 소리가 나요. 톡 눌러 봐요!');
-    await T.tap(cast.mouse.pos, { prompt: '흙구멍의 생쥐를 톡!' });
+    padHit(T, cast.mouse.pos);
+    await T.ask('흙구멍에서 찍찍 소리가 나요. 톡 눌러 봐요!', () => T.tap(cast.mouse.pos, { prompt: '흙구멍의 생쥐를 톡!' }));
     mouseClip(false); squeak(T);
     cast.mouse.face('right'); // 2026-10-20 쪼르르 달려 나올 때 오른쪽을 본다 (왼쪽을 보고 오른쪽으로 걷지 않게)
     T.world.appendChild(cast.mouse.pos);
@@ -767,13 +775,12 @@
     await sleep(400);
 
     /* --- 9. 쑥! (다 함께 톡톡) --- */
-    await say('이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!');
-    await T.mash(turnip.pos, { count: 4, prompt: '순무를 톡톡 눌러요. 영~차!', onStep: i => {
+    await T.ask('이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!', () => T.mash(turnip.pos, { count: 4, prompt: '순무를 톡톡 눌러요. 영~차!', onStep: i => {
       const p = i / 4;
       line.forEach(a => a.pose(POSE.pull(6 + p * 20)));
       turnip.place(TX, GROUND - rise - p * 22);
       chorus(T, 6); wobble(); T.pop(460, 170, i % 2 ? '영~' : '차!', C.bean);
-    } });
+    } }));
     const cutTurnip = (svg, y, s, word) => {
       T.el('rect', { x: 0, y: 220, width: 400, height: 80, fill: C.soil }, svg);
       const tg = T.el('g', { transform: `translate(200,${y}) scale(${s})` }, svg); drawTurnip(T, tg);
@@ -830,20 +837,18 @@
     });
     const steam = setInterval(() => { const s = el('circle', { cx: 480 + Math.random() * 40, cy: 330, r: 8, fill: C.snow, opacity: .7 }, T.fx); s.animate([{ transform: 'translateY(0)', opacity: .7 }, { transform: 'translateY(-60px)', opacity: 0 }], { duration: 1400 }).finished.then(() => s.remove()); }, 400);
     await say('맛있는 순무국을 끓였어요.');
-    await say('누가 먼저 순무를 잡았지? 차례대로 톡 눌러 봐요!');
     /* 차례대로 톡 (order): 틀리면 "나는 다음이야~" 하고 다음 차례가 반짝인다 */
     const done = new Set();
     for (let k = 0; k < 6; k++) {
       const good = line[k];
       const q = k === 0 ? '맨 처음은 누구였지?' : `${josa(line[k - 1].name, '이/가')} 잡은 다음은 누구?`;
-      if (k > 0) await say(q);
       const opts = line.filter(a => !done.has(a)).map(a => ({ el: a.pos, ok: a === good, onWrong: async () => {
         a.hop(24, 360);
         await say(`${a.name}: "나는 다음이야~"`);
         good.pos.style.filter = 'url(#hintGlow)';
         good.pos.animate([{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
       } }));
-      await T.choose(opts, { prompt: q, who: `${josa(good.name, '이에요/예요')}! 반짝이는 친구를 눌러 봐요!` });
+      await T.ask(k === 0 ? '누가 먼저 순무를 잡았지? 차례대로 톡 눌러 봐요!' : q, () => T.choose(opts, { prompt: q, who: `${josa(good.name, '이에요/예요')}! 반짝이는 친구를 눌러 봐요!` }));
       done.add(good);
       good.pos.style.filter = '';
       good.hop(30, 400);
@@ -858,8 +863,8 @@
     const ui = el('g', {}, document.getElementById('stage'));
     const dots = [0, 1, 2, 3, 4, 5].map(i => el('circle', { cx: 380 + i * 48, cy: 118, r: 17, fill: C.cream, stroke: C.gold, 'stroke-width': 5 }, ui));
     const NUM = ['하나', '둘', '셋', '넷', '다섯', '여섯'];
-    await say('순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!');
-    await T.mash(pot, { count: 6, prompt: '냄비를 톡 눌러서 한 그릇씩!', onStep: i => {
+    padHit(T, pot);
+    await T.ask('순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!', () => T.mash(pot, { count: 6, prompt: '냄비를 톡 눌러서 한 그릇씩!', onStep: i => {
       const a = line[i - 1];
       const bowl = T.el('g', {}, T.world);
       if (!pic(T, bowl, 'soup_bowl', -25, -17, 50, 50 * 119 / 153)) T.paper(bowl, [['path', { d: 'M-22 -8 H22 Q20 14 0 15 Q-20 14 -22 -8 Z', fill: C.snow }], ['ellipse', { cx: 0, cy: -8, rx: 22, ry: 5, fill: C.amber }]]);
@@ -868,7 +873,7 @@
       dots[i - 1].setAttribute('fill', C.persimmon);
       T.tone(523 + i * 40, .2, { type: 'triangle', vol: .16 });
       setTimeout(() => { a.hop(20, 300); T.pop(a.x, 510 - a.h * a.scale - 90, NUM[i - 1], C.pine); }, 600); // 머리 위 (얼굴을 가리지 않게)
-    } });
+    } }));
     T.finale();
     await sleep(1200);
     await say('여섯 그릇, 여섯 명! 딱 맞아요.');
