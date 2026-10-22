@@ -1,0 +1,944 @@
+{
+ "mode": "read",
+ "tale": "turnip",
+ "lang": "ko",
+ "title": "커다란 순무",
+ "voices_from": "voice_script_el.json",
+ "moral": "작은 힘도 모이면 커다란 힘이 돼요!",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 놀이판의 씨앗·싹·순무 누르기, 할머니가 누구를 부를지 고르기(소·돼지 오답), 멍멍·야옹 목소리 고르기, 생쥐 누르기, 차례 맞히기 여섯 문제, 냄비 누르기를 모두 뺐다. 차례 맞히기 장면의 \"나는 다음이야~\" 여섯 줄은 배움 놀이라 넣지 않았다. 꼬리 자름 8줄; \"할머니가 할아버지 허리를 잡고, 톡! 영차!\"는 가운데에 조작 낱말이 있어 자르지 못하고 새 문장으로 바꿨다. 원작(러시아 민화)대로 할아버지→할머니→손녀→강아지→고양이→생쥐 차례, 순화할 거친 장면 없음. 기존 대사가 짧은 편(퀴즈·조작 줄을 빼면 약 650자)이라 전체 1,500자 기준에는 못 미치지만 배율 1.8배로 맞췄다(한 편 약 3.5분). 교훈은 놀이판 끝 화면 문구를 마지막 줄로 읽는다.",
+ "acts": {
+  "set:<spring|summer|feast>": "텃밭 배경 계절(gardenBG season) / 잔치 식탁. scenes[].set 으로 자동 호출",
+  "seed:plant | sprout:show | water | sun | grow:<sprout|leaves|big>": "씨앗 심기·싹·물뿌리개·햇볕·순무 자라기(놀이판 연출 그대로, 누르기 없이)",
+  "turnip:at:<x,y,s> | turnip:rise:<px> | turnip:wobble | turnip:out": "순무 자리·조금 올라옴·흔들림·쑥 뽑힘",
+  "cast:<grandpa|grandma|girl|dog|cat|mouse>:<at:x,y[,s]|walk:x,y,ms|look:<stand|pull|fall|cheer|jump|sit>|sitdown|standup|hop|hide>": "인물 한 명",
+  "line:<n>": "옆모습 줄 서기(sideView n) — 앞 n 명이 순무 쪽으로 줄지어 잡는다",
+  "pull:<n>": "앞 n 명이 다섯 번 당기는 연출(pullRound 의 누르기 없는 판)",
+  "grandpa:fall | flop:all | cheer:all | sit:all": "할아버지 엉덩방아 / 전원 벌렁 / 전원 만세 / 전원 주저앉기",
+  "dog:bushout | cat:roofdown | mouse:holeout | bush:rustle": "강아지 덤불에서 뛰어나옴 / 고양이 지붕에서 내려옴 / 생쥐 흙구멍에서 나옴 / 덤불 흔들림",
+  "cut:<glare|heave|pop>": "그림 컷(강아지·고양이 째려보기, 영~차~ 두 장, 쑥!) — 컷 속 외침(VOICE_LINES cut_glare·cut_heave)은 그대로 재사용",
+  "vo:<call_grandma|cut_glare|squeak_mouse|cut_heave|flop>": "말풍선 없는 소리 대사(기존 녹음)",
+  "feast:table | feast:soup:<n> | feast:eat": "식탁·국 한 그릇씩 n 그릇·냠냠",
+  "fx:<bark|meow|pow|chorus|step> | pop:<x,y,글자> | confetti | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_seed",
+   "card": "봄",
+   "set": "spring",
+   "enter": [
+    "cast:grandpa:at:600,500,.7",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "봄이 왔어요. 할아버지가 텃밭에 구멍을 팠어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "봄이 왔어요. 할아버지가 텃밭에 구멍을 팠어요.",
+       "happy:1.0",
+       "[calm, warm, storytelling, springtime]"
+      ]
+     ]
+    },
+    {
+     "text": "할아버지 손에는 아주 작은 순무 씨앗 하나가 있었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할아버지 손에는 아주 작은 순무 씨앗 하나가 있었어요.",
+       null,
+       "[calm, warm, storytelling, springtime]"
+      ]
+     ]
+    },
+    {
+     "text": "\"순무야, 크게 자라라.\"",
+     "src": "trim",
+     "from": "\"순무야, 크게 자라라.\" 씨앗을 톡 눌러 봐요!",
+     "segs": [
+      [
+       "grandpa",
+       "순무야, 크게 자라라.",
+       "happy:1.0",
+       "[gentle, kind, old man, hopeful, whispers to the seed]"
+      ]
+     ],
+     "after": [
+      "seed:plant"
+     ]
+    },
+    {
+     "text": "씨앗이 흙 속으로 쏙 들어갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "씨앗이 흙 속으로 쏙 들어갔어요.",
+       null,
+       "[soft, tender, storytelling]"
+      ]
+     ],
+     "before": [
+      "pop:600,330,쏙!"
+     ]
+    },
+    {
+     "text": "할아버지는 흙을 살살 두드려 주고 집으로 돌아갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할아버지는 흙을 살살 두드려 주고 집으로 돌아갔어요.",
+       null,
+       "[soft, tender, storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_grow",
+   "card": "무럭무럭",
+   "set": "spring",
+   "enter": [
+    "sprout:show",
+    "cast:grandpa:at:420,500,.7",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "파란 싹이 났어요! 물도 주고 햇볕도 줘요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "파란 싹이 났어요! 물도 주고 햇볕도 줘요.",
+       "happy:1.2",
+       "[bright, delighted, storytelling]"
+      ]
+     ],
+     "before": [
+      "water",
+      "sun"
+     ]
+    },
+    {
+     "text": "할아버지는 날마다 텃밭에 나와 싹을 들여다보았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할아버지는 날마다 텃밭에 나와 싹을 들여다보았어요.",
+       null,
+       "[gentle, warm, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "싹은 쑥쑥, 잎은 넓적넓적 자라났지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "싹은 쑥쑥, 잎은 넓적넓적 자라났지요.",
+       "happy:1.2",
+       "[bright, delighted, storytelling]"
+      ]
+     ],
+     "before": [
+      "grow:leaves",
+      "pop:600,300,쑥쑥!"
+     ]
+    },
+    {
+     "text": "여름이 되었어요. 순무 잎이 할아버지 키만큼 자랐어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "여름이 되었어요. 순무 잎이 할아버지 키만큼 자랐어요!",
+       "toneup:1.2",
+       "[amazed, bright, storytelling]"
+      ]
+     ],
+     "before": [
+      "set:summer",
+      "grow:big"
+     ]
+    },
+    {
+     "text": "땅속 뿌리도 커다랗게, 커다랗게 자랐지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "땅속 뿌리도 커다랗게, 커다랗게 자랐지요.",
+       "toneup:1.1",
+       "[amazed, bright, storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_grandpa",
+   "card": "영차!",
+   "set": "summer",
+   "enter": [
+    "turnip:at:600,500,1",
+    "cast:grandpa:at:600,500,.7,pull",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"이제 뽑을 때가 되었구나.\" 할아버지가 소매를 걷었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "\"이제 뽑을 때가 되었구나.\" 할아버지가 소매를 걷었어요.",
+       null,
+       "[warm, lively, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "할아버지가 순무 잎을 꽉 잡았어요.",
+     "src": "trim",
+     "from": "할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!",
+     "segs": [
+      [
+       "nar",
+       "할아버지가 순무 잎을 꽉 잡았어요.",
+       null,
+       "[encouraging, lively, storytelling]"
+      ]
+     ],
+     "after": [
+      "pull:1",
+      "pop:600,330,영차!"
+     ]
+    },
+    {
+     "text": "순무는 꿈쩍도 안 해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "순무는 꿈쩍도 안 해요.",
+       "tonedown:1.1",
+       "[amused, gentle, storytelling]"
+      ]
+     ],
+     "before": [
+      "turnip:wobble"
+     ]
+    },
+    {
+     "text": "아이코! 할아버지가 엉덩방아를 찧었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "grandpa",
+       "아이코!",
+       "toneup:1.5",
+       "[startled, comical, old man grunts, flops]"
+      ],
+      [
+       "nar",
+       "할아버지가 엉덩방아를 찧었어요.",
+       null,
+       "[amused, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "grandpa:fall"
+     ]
+    },
+    {
+     "text": "혼자서는 안 되겠어요. 할아버지가 할머니를 불러요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "혼자서는 안 되겠어요. 할아버지가 할머니를 불러요!",
+       null,
+       "[gentle, thoughtful, inviting]"
+      ]
+     ],
+     "after": [
+      "pop:620,230,할머니~!",
+      "vo:call_grandma"
+     ]
+    },
+    {
+     "text": "할머니는 앞치마를 두른 채 부엌에서 뛰어나왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할머니는 앞치마를 두른 채 부엌에서 뛰어나왔어요.",
+       null,
+       "[warm, lively, storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_grandma",
+   "card": "할머니~!",
+   "set": "summer",
+   "enter": [
+    "turnip:at:600,500,1",
+    "cast:grandpa:at:600,500,.7,pull",
+    "cast:grandma:at:1100,500,.7",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "할머니가 달려왔어요. \"같이 해 봐요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "할머니가 달려왔어요.",
+       null,
+       "[warm, lively, storytelling]"
+      ],
+      [
+       "grandma",
+       "같이 해 봐요!",
+       "happy:1.2",
+       "[warm, cheerful, encouraging, kind]"
+      ]
+     ],
+     "before": [
+      "cast:grandma:walk:760,500,900"
+     ]
+    },
+    {
+     "text": "할머니가 할아버지 허리를 꽉 잡았어요. 영차!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할머니가 할아버지 허리를 꽉 잡았어요. 영차!",
+       null,
+       "[lively, rhythmic, storytelling]"
+      ]
+     ],
+     "before": [
+      "line:2"
+     ],
+     "after": [
+      "pull:2",
+      "turnip:rise:12"
+     ]
+    },
+    {
+     "text": "순무가 한 뼘 올라왔어요! 그래도 안 뽑혀요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "순무가 한 뼘 올라왔어요! 그래도 안 뽑혀요.",
+       "toneup:1.1",
+       "[excited, then gently disappointed, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "\"손녀야, 이리 와서 좀 도와주렴!\"",
+     "src": "new",
+     "segs": [
+      [
+       "grandma",
+       "손녀야, 이리 와서 좀 도와주렴!",
+       "toneup:1.3",
+       "[calling out, warm, loud and cheerful]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_girl",
+   "card": "손녀",
+   "set": "summer",
+   "enter": [
+    "turnip:at:600,500,1",
+    "line:2",
+    "cast:girl:at:1100,500,.7",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "마당에서 놀던 손녀가 깡충깡충 달려왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "마당에서 놀던 손녀가 깡충깡충 달려왔어요.",
+       null,
+       "[bright, lively, storytelling]"
+      ]
+     ],
+     "before": [
+      "cast:girl:walk:860,500,900"
+     ]
+    },
+    {
+     "text": "\"손녀야~!\" 손녀가 할머니 허리를 잡았어요. 영차!",
+     "src": "reuse",
+     "segs": [
+      [
+       "grandma",
+       "손녀야~!",
+       "toneup:1.3",
+       "[calling out, warm, loud and cheerful]"
+      ],
+      [
+       "nar",
+       "손녀가 할머니 허리를 잡았어요. 영차!",
+       null,
+       "[lively, warm, storytelling]"
+      ]
+     ],
+     "before": [
+      "line:3"
+     ],
+     "after": [
+      "pull:3",
+      "turnip:rise:12"
+     ]
+    },
+    {
+     "text": "조금 더 올라왔어요!",
+     "src": "trim",
+     "from": "조금 더 올라왔어요! 누가 더 도와줄까요?",
+     "segs": [
+      [
+       "nar",
+       "조금 더 올라왔어요!",
+       null,
+       "[bright, curious, hopeful]"
+      ]
+     ]
+    },
+    {
+     "text": "세 사람이 힘을 모아도 순무는 아직 땅속에 꼭 박혀 있었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "세 사람이 힘을 모아도 순무는 아직 땅속에 꼭 박혀 있었어요.",
+       "tonedown:1.1",
+       "[amused, gentle, storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_dog",
+   "card": "멍멍!",
+   "set": "summer",
+   "enter": [
+    "turnip:at:600,500,1",
+    "line:3",
+    "cast:dog:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "덤불 뒤에서 멍멍!",
+     "src": "trim",
+     "from": "덤불 뒤에서 멍멍! 누구일까요?",
+     "segs": [
+      [
+       "nar",
+       "덤불 뒤에서 멍멍!",
+       null,
+       "[mysterious, playful, curious whisper]"
+      ]
+     ],
+     "before": [
+      "bush:rustle",
+      "fx:bark"
+     ]
+    },
+    {
+     "text": "강아지가 뛰어나왔어요. \"나도 도울게요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "강아지가 뛰어나왔어요.",
+       null,
+       "[lively, warm, storytelling]"
+      ],
+      [
+       "dog",
+       "나도 도울게요!",
+       "happy:1.4",
+       "[eager, excited, panting, cheerful, playful bark, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "dog:bushout"
+     ]
+    },
+    {
+     "text": "\"멍멍! 저도 힘이 아주 세요!\"",
+     "src": "new",
+     "segs": [
+      [
+       "dog",
+       "멍멍! 저도 힘이 아주 세요!",
+       "happy:1.4",
+       "[eager, excited, cheerful, playful bark, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ]
+    },
+    {
+     "text": "강아지가 손녀 치마를 꼭 붙잡았어요. 영차!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "강아지가 손녀 치마를 꼭 붙잡았어요. 영차!",
+       null,
+       "[lively, encouraging, rhythmic]"
+      ]
+     ],
+     "before": [
+      "line:4"
+     ],
+     "after": [
+      "pull:4",
+      "turnip:rise:12"
+     ]
+    },
+    {
+     "text": "순무가 조금 더 올라왔지만, 아직도 뽑히지 않았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "순무가 조금 더 올라왔지만, 아직도 뽑히지 않았어요.",
+       null,
+       "[bright, then gently disappointed, storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_cat",
+   "card": "야옹!",
+   "set": "summer",
+   "enter": [
+    "turnip:at:600,500,1",
+    "line:4",
+    "cast:cat:at:655,129,1.2,sit",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "헛간 지붕에서 야옹!",
+     "src": "trim",
+     "from": "헛간 지붕에서 야옹! 누구일까요?",
+     "segs": [
+      [
+       "nar",
+       "헛간 지붕에서 야옹!",
+       null,
+       "[mysterious, playful, curious whisper]"
+      ]
+     ],
+     "before": [
+      "fx:meow"
+     ]
+    },
+    {
+     "text": "고양이가 지붕에서 폴짝 내려왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "고양이가 지붕에서 폴짝 내려왔어요.",
+       null,
+       "[smooth, light, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "cat:roofdown"
+     ]
+    },
+    {
+     "text": "어? 강아지랑 고양이가 서로 째려봐요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "어? 강아지랑 고양이가 서로 째려봐요.",
+       "tonedown:1.2",
+       "[amused, comical, playful, sly whisper]"
+      ]
+     ],
+     "before": [
+      "line:5"
+     ],
+     "after": [
+      "cut:glare"
+     ]
+    },
+    {
+     "text": "\"흥!\" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "cat",
+       "흥!",
+       "angry:1.2",
+       "[haughty, sniffs, sulky, snooty, childlike, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "그래도 고양이가 강아지 꼬리를 꼭 잡았어요.",
+       null,
+       "[amused, warm, storytelling]"
+      ]
+     ],
+     "after": [
+      "pull:5",
+      "turnip:rise:10"
+     ]
+    },
+    {
+     "text": "다섯이 함께 당겨도 순무는 꼼짝하지 않았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "다섯이 함께 당겨도 순무는 꼼짝하지 않았어요.",
+       null,
+       "[amused, gentle, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "휴우, 모두 지쳐서 털썩 주저앉았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "휴우, 모두 지쳐서 털썩 주저앉았어요.",
+       "sad:1.0",
+       "[tired, soft, comical, sighs]"
+      ]
+     ],
+     "before": [
+      "sit:all"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_mouse",
+   "card": "아주 작은 생쥐",
+   "set": "summer",
+   "enter": [
+    "turnip:at:600,500,1",
+    "line:5",
+    "sit:all",
+    "cast:mouse:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "흙구멍에서 찍찍 소리가 나요.",
+     "src": "trim",
+     "from": "흙구멍에서 찍찍 소리가 나요. 톡 눌러 봐요!",
+     "segs": [
+      [
+       "nar",
+       "흙구멍에서 찍찍 소리가 나요.",
+       "whisper",
+       "[curious, hushed, playful]"
+      ]
+     ],
+     "before": [
+      "vo:squeak_mouse"
+     ]
+    },
+    {
+     "text": "아주 작은 생쥐가 쪼르르 나왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아주 작은 생쥐가 쪼르르 나왔어요.",
+       null,
+       "[soft, tender, amused, storytelling]"
+      ]
+     ],
+     "before": [
+      "mouse:holeout"
+     ]
+    },
+    {
+     "text": "\"너무 작아서 안 될 거야~\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "cat",
+       "너무 작아서 안 될 거야~",
+       "tonedown:1.2",
+       "[teasing, smug, drawling, doubtful, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "cast:mouse:walk:980,500,700"
+     ]
+    },
+    {
+     "text": "\"나도 할래요!\" 생쥐가 고양이 꼬리를 꼭 잡았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "mouse",
+       "나도 할래요!",
+       "toneup:1.5",
+       "[determined, brave, small voice, squeaky, cheerful, childlike, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "생쥐가 고양이 꼬리를 꼭 잡았어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ],
+     "after": [
+      "line:6"
+     ]
+    },
+    {
+     "text": "모두 다시 일어나 앞사람을 꼭 붙잡았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "모두 다시 일어나 앞사람을 꼭 붙잡았어요.",
+       null,
+       "[warm, lively, storytelling]"
+      ]
+     ],
+     "before": [
+      "cheer:all",
+      "line:6"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_pop",
+   "card": "다 함께 영차!",
+   "set": "summer",
+   "enter": [
+    "turnip:at:600,500,1",
+    "line:6",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이번엔 여섯이 다 함께!",
+     "src": "trim",
+     "from": "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!",
+     "segs": [
+      [
+       "nar",
+       "이번엔 여섯이 다 함께!",
+       "toneup:1.3",
+       "[excited, big build-up, lively, encouraging]"
+      ]
+     ],
+     "after": [
+      "pull:6"
+     ]
+    },
+    {
+     "text": "영차, 영차! 순무가 흔들흔들 움직이기 시작했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "영차, 영차! 순무가 흔들흔들 움직이기 시작했어요.",
+       "toneup:1.3",
+       "[excited, big build-up, lively]"
+      ]
+     ],
+     "before": [
+      "turnip:wobble",
+      "vo:cut_heave",
+      "cut:heave"
+     ]
+    },
+    {
+     "text": "쑥! 커다란 순무가 뽑혔어요! 모두 벌렁 넘어졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "쑥! 커다란 순무가 뽑혔어요! 모두 벌렁 넘어졌어요.",
+       "happy:1.5",
+       "[exclaims, joyful, comical, lively storytelling]"
+      ]
+     ],
+     "before": [
+      "turnip:out",
+      "cut:pop",
+      "flop:all",
+      "pop:520,260,벌렁!",
+      "vo:flop"
+     ]
+    },
+    {
+     "text": "작은 생쥐까지 모두 힘을 모았더니 뽑혔어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "작은 생쥐까지 모두 힘을 모았더니 뽑혔어요!",
+       "happy:1.3",
+       "[warm, proud, delighted, storytelling]"
+      ]
+     ],
+     "before": [
+      "cheer:all",
+      "confetti"
+     ]
+    },
+    {
+     "text": "\"고맙다, 얘들아! 생쥐야, 너도 정말 고맙구나.\"",
+     "src": "new",
+     "segs": [
+      [
+       "grandpa",
+       "고맙다, 얘들아! 생쥐야, 너도 정말 고맙구나.",
+       "happy:1.2",
+       "[cheerful, old man, warm, grateful]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_feast",
+   "card": "순무 잔치",
+   "set": "feast",
+   "enter": [
+    "feast:table",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "할아버지는 순무를 썰고, 할머니는 커다란 냄비를 꺼냈어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "할아버지는 순무를 썰고, 할머니는 커다란 냄비를 꺼냈어요.",
+       null,
+       "[cozy, warm, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "맛있는 순무국을 끓였어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "맛있는 순무국을 끓였어요.",
+       null,
+       "[cozy, warm, delighted, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "보글보글, 구수한 냄새가 온 집 안에 퍼졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "보글보글, 구수한 냄새가 온 집 안에 퍼졌어요.",
+       null,
+       "[cozy, warm, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "순무국을 한 그릇씩 나눠 줘요.",
+     "src": "trim",
+     "from": "순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!",
+     "segs": [
+      [
+       "nar",
+       "순무국을 한 그릇씩 나눠 줘요.",
+       null,
+       "[warm, cozy, inviting]"
+      ]
+     ],
+     "after": [
+      "feast:soup:6"
+     ]
+    },
+    {
+     "text": "여섯 그릇, 여섯 명! 딱 맞아요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "여섯 그릇, 여섯 명! 딱 맞아요.",
+       "happy:1.2",
+       "[satisfied, warm, delighted]"
+      ]
+     ]
+    },
+    {
+     "text": "모두 함께 맛있게 먹었답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "모두 함께 맛있게 먹었답니다.",
+       "happy:1.3",
+       "[gentle, warm, content, storytelling, slow, closing]"
+      ]
+     ],
+     "before": [
+      "feast:eat",
+      "pop:500,260,냠냠!"
+     ]
+    },
+    {
+     "text": "작은 힘도 모이면 커다란 힘이 된답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "작은 힘도 모이면 커다란 힘이 된답니다.",
+       "happy:1.2",
+       "[gentle, warm, wise, slow, closing]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
