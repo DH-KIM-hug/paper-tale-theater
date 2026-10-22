@@ -31,24 +31,167 @@
    ]
   },
   {
-   "text": "여기 색깔 조각이 세 개 있어요. 빨간 조각을 톡, 눌러 봐요.",
-   "en": "Here are three coloured blocks. Tap the red one.",
+   "text": "유니콘에게 줄 빨간 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "en": "Let's find a red flower for the unicorn. Tap it!",
    "segs": [
     [
      "nar",
-     "Here are three coloured blocks. Tap the red one.",
+     "Let's find a red flower for the unicorn. Tap it!",
      null
     ]
    ]
   },
   {
-   "text": "맞았어요! 빨간색이에요.",
-   "en": "That is right! It is red.",
+   "text": "유니콘에게 줄 주황 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "en": "Let's find an orange flower for the unicorn. Tap it!",
    "segs": [
     [
      "nar",
-     "That is right! It is red.",
+     "Let's find an orange flower for the unicorn. Tap it!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "유니콘에게 줄 노란 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "en": "Let's find a yellow flower for the unicorn. Tap it!",
+   "segs": [
+    [
+     "nar",
+     "Let's find a yellow flower for the unicorn. Tap it!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "유니콘에게 줄 분홍 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "en": "Let's find a pink flower for the unicorn. Tap it!",
+   "segs": [
+    [
+     "nar",
+     "Let's find a pink flower for the unicorn. Tap it!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "유니콘에게 줄 보라 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "en": "Let's find a purple flower for the unicorn. Tap it!",
+   "segs": [
+    [
+     "nar",
+     "Let's find a purple flower for the unicorn. Tap it!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "유니콘에게 줄 파란 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "en": "Let's find a blue flower for the unicorn. Tap it!",
+   "segs": [
+    [
+     "nar",
+     "Let's find a blue flower for the unicorn. Tap it!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "유니콘에게 줄 하얀 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "en": "Let's find a white flower for the unicorn. Tap it!",
+   "segs": [
+    [
+     "nar",
+     "Let's find a white flower for the unicorn. Tap it!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 빨간 꽃이에요.",
+   "en": "That's right! A red flower.",
+   "segs": [
+    [
+     "nar",
+     "That's right! A red flower.",
      "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 주황 꽃이에요.",
+   "en": "That's right! An orange flower.",
+   "segs": [
+    [
+     "nar",
+     "That's right! An orange flower.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 노란 꽃이에요.",
+   "en": "That's right! A yellow flower.",
+   "segs": [
+    [
+     "nar",
+     "That's right! A yellow flower.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 분홍 꽃이에요.",
+   "en": "That's right! A pink flower.",
+   "segs": [
+    [
+     "nar",
+     "That's right! A pink flower.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 보라 꽃이에요.",
+   "en": "That's right! A purple flower.",
+   "segs": [
+    [
+     "nar",
+     "That's right! A purple flower.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 파란 꽃이에요.",
+   "en": "That's right! A blue flower.",
+   "segs": [
+    [
+     "nar",
+     "That's right! A blue flower.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 하얀 꽃이에요.",
+   "en": "That's right! A white flower.",
+   "segs": [
+    [
+     "nar",
+     "That's right! A white flower.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 꽃을 똑 꺾어 바구니에 쏙 넣었어요.",
+   "en": "Dahyun picked the flower and popped it into her basket.",
+   "segs": [
+    [
+     "nar",
+     "Dahyun picked the flower and popped it into her basket.",
+     null
     ]
    ]
   },
@@ -425,6 +568,105 @@
      "happy"
     ]
    ]
+  },
+  {
+   "text": "다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.",
+   "en": "Dahyun came back to the hill by her home with the unicorn.",
+   "segs": [
+    [
+     "nar",
+     "Dahyun came back to the hill by her home with the unicorn.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 빨간 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "en": "Dahyun tucked the red flower she picked this morning into the unicorn's mane.",
+   "segs": [
+    [
+     "nar",
+     "Dahyun tucked the red flower she picked this morning into the unicorn's mane.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 주황 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "en": "Dahyun tucked the orange flower she picked this morning into the unicorn's mane.",
+   "segs": [
+    [
+     "nar",
+     "Dahyun tucked the orange flower she picked this morning into the unicorn's mane.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 노란 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "en": "Dahyun tucked the yellow flower she picked this morning into the unicorn's mane.",
+   "segs": [
+    [
+     "nar",
+     "Dahyun tucked the yellow flower she picked this morning into the unicorn's mane.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 분홍 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "en": "Dahyun tucked the pink flower she picked this morning into the unicorn's mane.",
+   "segs": [
+    [
+     "nar",
+     "Dahyun tucked the pink flower she picked this morning into the unicorn's mane.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 보라 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "en": "Dahyun tucked the purple flower she picked this morning into the unicorn's mane.",
+   "segs": [
+    [
+     "nar",
+     "Dahyun tucked the purple flower she picked this morning into the unicorn's mane.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 파란 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "en": "Dahyun tucked the blue flower she picked this morning into the unicorn's mane.",
+   "segs": [
+    [
+     "nar",
+     "Dahyun tucked the blue flower she picked this morning into the unicorn's mane.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 하얀 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "en": "Dahyun tucked the white flower she picked this morning into the unicorn's mane.",
+   "segs": [
+    [
+     "nar",
+     "Dahyun tucked the white flower she picked this morning into the unicorn's mane.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "고마워, 정말 예뻐!",
+   "en": "Thank you. It's so pretty!",
+   "segs": [
+    [
+     "uni",
+     "Thank you. It's so pretty!",
+     "happy"
+    ]
+   ]
   }
  ],
  "extra": {
@@ -456,10 +698,52 @@
     null
    ]
   ],
-  "retry": [
+  "retry_red": [
    [
     "nar",
-    "Hmm, not that one. Look for the red one.",
+    "Hmm, not that one. Look for the red flower.",
+    null
+   ]
+  ],
+  "retry_orange": [
+   [
+    "nar",
+    "Hmm, not that one. Look for the orange flower.",
+    null
+   ]
+  ],
+  "retry_yellow": [
+   [
+    "nar",
+    "Hmm, not that one. Look for the yellow flower.",
+    null
+   ]
+  ],
+  "retry_pink": [
+   [
+    "nar",
+    "Hmm, not that one. Look for the pink flower.",
+    null
+   ]
+  ],
+  "retry_purple": [
+   [
+    "nar",
+    "Hmm, not that one. Look for the purple flower.",
+    null
+   ]
+  ],
+  "retry_blue": [
+   [
+    "nar",
+    "Hmm, not that one. Look for the blue flower.",
+    null
+   ]
+  ],
+  "retry_white": [
+   [
+    "nar",
+    "Hmm, not that one. Look for the white flower.",
     null
    ]
   ]
@@ -489,9 +773,9 @@
   "하나!": "One!",
   "둘!": "Two!",
   "셋!": "Three!",
-  "빨간 조각을 톡, 눌러 봐요.": "Tap the red block.",
   "구름을 톡, 눌러 봐요.": "Tap the cloud.",
   "가시를 톡, 눌러 봐요.": "Tap a thorn.",
-  "유니콘을 톡, 눌러 봐요.": "Tap the unicorn."
+  "유니콘을 톡, 눌러 봐요.": "Tap the unicorn.",
+  "집으로": "Back Home"
  }
 }

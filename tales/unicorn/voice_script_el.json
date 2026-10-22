@@ -74,24 +74,167 @@
    ]
   },
   {
-   "text": "여기 색깔 조각이 세 개 있어요. 빨간 조각을 톡, 눌러 봐요.",
+   "text": "유니콘에게 줄 빨간 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
    "segs": [
     [
      "nar",
-     "여기 색깔 조각이 세 개 있어요. 빨간 조각을 톡, 눌러 봐요.",
+     "유니콘에게 줄 빨간 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
      null,
      "[friendly, clear, inviting, a tiny pause before 톡]"
     ]
    ]
   },
   {
-   "text": "맞았어요! 빨간색이에요.",
+   "text": "유니콘에게 줄 주황 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
    "segs": [
     [
      "nar",
-     "맞았어요! 빨간색이에요.",
+     "유니콘에게 줄 주황 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "유니콘에게 줄 노란 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "유니콘에게 줄 노란 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "유니콘에게 줄 분홍 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "유니콘에게 줄 분홍 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "유니콘에게 줄 보라 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "유니콘에게 줄 보라 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "유니콘에게 줄 파란 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "유니콘에게 줄 파란 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "유니콘에게 줄 하얀 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "유니콘에게 줄 하얀 꽃을 찾아 볼까요? 톡, 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 빨간 꽃이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞았어요! 빨간 꽃이에요.",
      "happy",
      "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 주황 꽃이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞았어요! 주황 꽃이에요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 노란 꽃이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞았어요! 노란 꽃이에요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 분홍 꽃이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞았어요! 분홍 꽃이에요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 보라 꽃이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞았어요! 보라 꽃이에요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 파란 꽃이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞았어요! 파란 꽃이에요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "맞았어요! 하얀 꽃이에요.",
+   "segs": [
+    [
+     "nar",
+     "맞았어요! 하얀 꽃이에요.",
+     "happy",
+     "[bright, praising, cheerful]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 꽃을 똑 꺾어 바구니에 쏙 넣었어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이는 꽃을 똑 꺾어 바구니에 쏙 넣었어요.",
+     null,
+     "[warm, playful, light, storybook tone]"
     ]
    ]
   },
@@ -468,6 +611,105 @@
      "[warm, joyful, storybook ending tone, slow]"
     ]
    ]
+  },
+  {
+   "text": "다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.",
+     null,
+     "[warm, calm, gentle storybook ending tone, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 빨간 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이는 아침에 꺾은 빨간 꽃을 유니콘 갈기에 꽂아 주었어요.",
+     "happy",
+     "[warm, tender, joyful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 주황 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이는 아침에 꺾은 주황 꽃을 유니콘 갈기에 꽂아 주었어요.",
+     "happy",
+     "[warm, tender, joyful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 노란 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이는 아침에 꺾은 노란 꽃을 유니콘 갈기에 꽂아 주었어요.",
+     "happy",
+     "[warm, tender, joyful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 분홍 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이는 아침에 꺾은 분홍 꽃을 유니콘 갈기에 꽂아 주었어요.",
+     "happy",
+     "[warm, tender, joyful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 보라 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이는 아침에 꺾은 보라 꽃을 유니콘 갈기에 꽂아 주었어요.",
+     "happy",
+     "[warm, tender, joyful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 파란 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이는 아침에 꺾은 파란 꽃을 유니콘 갈기에 꽂아 주었어요.",
+     "happy",
+     "[warm, tender, joyful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 아침에 꺾은 하얀 꽃을 유니콘 갈기에 꽂아 주었어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이는 아침에 꺾은 하얀 꽃을 유니콘 갈기에 꽂아 주었어요.",
+     "happy",
+     "[warm, tender, joyful, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "고마워, 정말 예뻐!",
+   "segs": [
+    [
+     "uni",
+     "고마워, 정말 예뻐!",
+     "happy",
+     "[soft, warm, delighted, gentle]"
+    ]
+   ]
   }
  ],
  "extra": {
@@ -503,10 +745,58 @@
     "[whispered, very soft, slow, like quiet hoofsteps, two gentle beats]"
    ]
   ],
-  "retry": [
+  "retry_red": [
    [
     "nar",
-    "음, 그건 아니에요. 빨간색을 찾아봐요.",
+    "음, 그건 아니에요. 빨간 꽃을 찾아봐요.",
+    null,
+    "[kind, gentle, encouraging, no scolding]"
+   ]
+  ],
+  "retry_orange": [
+   [
+    "nar",
+    "음, 그건 아니에요. 주황 꽃을 찾아봐요.",
+    null,
+    "[kind, gentle, encouraging, no scolding]"
+   ]
+  ],
+  "retry_yellow": [
+   [
+    "nar",
+    "음, 그건 아니에요. 노란 꽃을 찾아봐요.",
+    null,
+    "[kind, gentle, encouraging, no scolding]"
+   ]
+  ],
+  "retry_pink": [
+   [
+    "nar",
+    "음, 그건 아니에요. 분홍 꽃을 찾아봐요.",
+    null,
+    "[kind, gentle, encouraging, no scolding]"
+   ]
+  ],
+  "retry_purple": [
+   [
+    "nar",
+    "음, 그건 아니에요. 보라 꽃을 찾아봐요.",
+    null,
+    "[kind, gentle, encouraging, no scolding]"
+   ]
+  ],
+  "retry_blue": [
+   [
+    "nar",
+    "음, 그건 아니에요. 파란 꽃을 찾아봐요.",
+    null,
+    "[kind, gentle, encouraging, no scolding]"
+   ]
+  ],
+  "retry_white": [
+   [
+    "nar",
+    "음, 그건 아니에요. 하얀 꽃을 찾아봐요.",
     null,
     "[kind, gentle, encouraging, no scolding]"
    ]

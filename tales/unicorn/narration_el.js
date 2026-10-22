@@ -2,8 +2,21 @@
 Object.assign(NARRATION_CLIPS, {
  "언덕 위에 다현이가 서 있어요. 하늘을 올려다보고 있어요.": "audio/el/unicorn/nar_0f24f50370.mp3",
  "진짜 유니콘을 만나고 싶어요.": "audio/el/unicorn/kid_5d812b02f6.mp3",
- "여기 색깔 조각이 세 개 있어요. 빨간 조각을 톡, 눌러 봐요.": "audio/el/unicorn/nar_91adf444cc.mp3",
- "맞았어요! 빨간색이에요.": "audio/el/unicorn/nar_3b8c44df23.mp3",
+ "유니콘에게 줄 빨간 꽃을 찾아 볼까요? 톡, 눌러 봐요.": "audio/el/unicorn/nar_ddfca0893e.mp3",
+ "유니콘에게 줄 주황 꽃을 찾아 볼까요? 톡, 눌러 봐요.": "audio/el/unicorn/nar_693edc2705.mp3",
+ "유니콘에게 줄 노란 꽃을 찾아 볼까요? 톡, 눌러 봐요.": "audio/el/unicorn/nar_23f30858c7.mp3",
+ "유니콘에게 줄 분홍 꽃을 찾아 볼까요? 톡, 눌러 봐요.": "audio/el/unicorn/nar_0586666a98.mp3",
+ "유니콘에게 줄 보라 꽃을 찾아 볼까요? 톡, 눌러 봐요.": "audio/el/unicorn/nar_82bf630603.mp3",
+ "유니콘에게 줄 파란 꽃을 찾아 볼까요? 톡, 눌러 봐요.": "audio/el/unicorn/nar_adfffdf705.mp3",
+ "유니콘에게 줄 하얀 꽃을 찾아 볼까요? 톡, 눌러 봐요.": "audio/el/unicorn/nar_8a73d0c8e2.mp3",
+ "맞았어요! 빨간 꽃이에요.": "audio/el/unicorn/nar_c5348de0a3.mp3",
+ "맞았어요! 주황 꽃이에요.": "audio/el/unicorn/nar_228b3cc35f.mp3",
+ "맞았어요! 노란 꽃이에요.": "audio/el/unicorn/nar_fd9ca84f96.mp3",
+ "맞았어요! 분홍 꽃이에요.": "audio/el/unicorn/nar_4274c5adfc.mp3",
+ "맞았어요! 보라 꽃이에요.": "audio/el/unicorn/nar_93a8bc9a6d.mp3",
+ "맞았어요! 파란 꽃이에요.": "audio/el/unicorn/nar_b573072703.mp3",
+ "맞았어요! 하얀 꽃이에요.": "audio/el/unicorn/nar_277514035a.mp3",
+ "다현이는 꽃을 똑 꺾어 바구니에 쏙 넣었어요.": "audio/el/unicorn/nar_0a9abf3ec3.mp3",
  "다현이는 구름 나라로 올라가 보기로 했어요.": "audio/el/unicorn/nar_243e196c27.mp3",
  "구름 섬에 양 한 마리가 혼자 앉아 있어요.": "audio/el/unicorn/nar_fecc1e6b65.mp3",
  "훌쩍… 집에 어떻게 가지…": "audio/el/unicorn/sheep_f72ec54853.mp3",
@@ -37,12 +50,27 @@ Object.assign(NARRATION_CLIPS, {
  "네가 친절한 걸 다 보고 있었어.": "audio/el/unicorn/uni_1cc39f7bb3.mp3",
  "유니콘…!": "audio/el/unicorn/kid_3ab07dbfa3.mp3",
  "유니콘을 톡, 눌러서 인사해요.": "audio/el/unicorn/nar_b90f280b06.mp3",
- "다현이는 유니콘을 꼭 안았어요.": "audio/el/unicorn/nar_812353b733.mp3"
+ "다현이는 유니콘을 꼭 안았어요.": "audio/el/unicorn/nar_812353b733.mp3",
+ "다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.": "audio/el/unicorn/nar_e68f11d4f4.mp3",
+ "다현이는 아침에 꺾은 빨간 꽃을 유니콘 갈기에 꽂아 주었어요.": "audio/el/unicorn/nar_4cc5a3f713.mp3",
+ "다현이는 아침에 꺾은 주황 꽃을 유니콘 갈기에 꽂아 주었어요.": "audio/el/unicorn/nar_55251ec733.mp3",
+ "다현이는 아침에 꺾은 노란 꽃을 유니콘 갈기에 꽂아 주었어요.": "audio/el/unicorn/nar_153088ab66.mp3",
+ "다현이는 아침에 꺾은 분홍 꽃을 유니콘 갈기에 꽂아 주었어요.": "audio/el/unicorn/nar_281e87ae1d.mp3",
+ "다현이는 아침에 꺾은 보라 꽃을 유니콘 갈기에 꽂아 주었어요.": "audio/el/unicorn/nar_5ef28d9702.mp3",
+ "다현이는 아침에 꺾은 파란 꽃을 유니콘 갈기에 꽂아 주었어요.": "audio/el/unicorn/nar_8cf51cc39c.mp3",
+ "다현이는 아침에 꺾은 하얀 꽃을 유니콘 갈기에 꽂아 주었어요.": "audio/el/unicorn/nar_c441a29095.mp3",
+ "고마워, 정말 예뻐!": "audio/el/unicorn/uni_2894b8feb3.mp3"
 });
 Object.assign(VOICE_LINES, {
  "n1": "audio/el/unicorn/nar_bd7ea59458.mp3",
  "n2": "audio/el/unicorn/nar_9ff96e316a.mp3",
  "n3": "audio/el/unicorn/nar_5e932cb6f0.mp3",
  "steps": "audio/el/unicorn/nar_9028431d27.mp3",
- "retry": "audio/el/unicorn/nar_9ba9af58c2.mp3"
+ "retry_red": "audio/el/unicorn/nar_dbdb2b7425.mp3",
+ "retry_orange": "audio/el/unicorn/nar_da31b2018e.mp3",
+ "retry_yellow": "audio/el/unicorn/nar_b84099b59b.mp3",
+ "retry_pink": "audio/el/unicorn/nar_8538e1456e.mp3",
+ "retry_purple": "audio/el/unicorn/nar_fa7ea5429d.mp3",
+ "retry_blue": "audio/el/unicorn/nar_e97115b083.mp3",
+ "retry_white": "audio/el/unicorn/nar_904aed2e44.mp3"
 });

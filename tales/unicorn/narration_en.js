@@ -14,6 +14,7 @@ const TEXT_EN = {
  "간식 나누기": "Sharing the Snack",
  "빈 길": "The Empty Road",
  "사박사박": "Pit-pat, Pit-pat",
+ "집으로": "Back Home",
  "진짜 유니콘": "The Real Unicorn",
  "반짝!": "Sparkle!",
  "폴짝!": "Hop!",

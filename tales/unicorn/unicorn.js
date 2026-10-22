@@ -1,5 +1,5 @@
 /* 유니콘을 찾아서 — 창작 동화. 기획: tales/unicorn/PLAN.md (2026-10-22), 그림 작업표: tools/app/gen/jobs_unicorn.json
-   조작 4번: 1장 색 찾기(고르기 1회) · 2장 구름 톡 · 4장 가시 세기(톡 1회 → 목소리만 하나·둘·셋) · 10장 유니콘 인사 톡. 연타 없음, 줄거리 선택 없음. 교훈 대사 없음(끝 글자만).
+   조작 4번: 1장 꽃 선물 고르기(7색 중 하나, 고르기 1회 — 2026-10-22 블록 대신) · 2장 구름 톡 · 4장 가시 세기(톡 1회 → 목소리만 하나·둘·셋) · 10장 유니콘 인사 톡. 연타 없음, 줄거리 선택 없음. 교훈 대사 없음(끝 글자만).
    시선(PLAN 장면표): 1 아이→구름(앞모습 위 보기) · 2 양→아이 · 3 아이→양 · 4 사슴→아이 · 5 아이→사슴 뿔 · 6 말→간식 · 7 말→아이 · 8 아이→땅(왼쪽으로 걸음) · 9 아이 뒤돌아봄(유니콘 뒷모습) · 10 유니콘→아이(정면).
    그림이 보는 쪽(NAT): 양·사슴·말·유니콘(서기)은 왼쪽, 아이 걷기·슬픔·지침은 오른쪽, 아이 서기·안기는 앞모습, 아이 돌아봄은 뒷모습(고개를 오른쪽 어깨 너머로), 유니콘 뒷모습은 오른쪽 위로 걸어가는 뒷모습.
    그래서 아이는 왼쪽, 동물은 오른쪽에 두고 서로 마주 본다. 도망·이동하는 인물은 가는 쪽을 본다(뒤집기).
@@ -26,6 +26,9 @@
     uc_mid_sheep_home: 1.3433, uc_mid_bush_corner: 1.3867, uc_mid_moon_halo: 1.085,
     uc_fg_grass_flowers: 1.3833, uc_fg_cloud_hill: 2.4862, uc_fg_cloud_bank: 0.7333, uc_fg_cloud_wisp: 2.8846, uc_fg_tree_trunk: 0.6183, uc_fg_pine_branch: 1.5,
     uc_fg_spray: 0.835, uc_fg_bare_branch: 1.5598, uc_fg_fern_night: 1.315,
+    /* 1장 꽃 선물(꿀떡이 꽃 그림 재사용, 2026-10-22) */
+    cf4_prop_flower_tulip_red: 0.4614, cf4_prop_flower_poppy_orange: 0.6114, cf4_prop_flower_tulip_yellow: 0.5243, cf4_prop_flower_cosmos_pink: 0.6257,
+    cf4_prop_flower_wild_purple: 0.8686, cf4_prop_flower_bell_blue: 0.6114, cf4_prop_flower_daisy_white: 0.5643,
   };
   /* 높이(px, scale 1). 인물·동물은 같은 부위 폭으로 맞춘다: 아이 머리 폭 기준 / 양·사슴·말·유니콘 몸통 폭 기준.
      기획 비율: 유니콘 = 말 = 조랑말(아이 어깨 높이 이상, 서면 뿔까지 아이의 1.2배), 양은 유니콘 키의 절반(등이 아이 허리), 사슴은 유니콘과 비슷한 크기.
@@ -45,20 +48,28 @@
     uc_mid_sheep_home: 280, uc_mid_bush_corner: 260, uc_mid_moon_halo: 330,
     uc_fg_grass_flowers: 240, uc_fg_cloud_hill: 125, uc_fg_cloud_bank: 300, uc_fg_cloud_wisp: 92, uc_fg_tree_trunk: 560, uc_fg_pine_branch: 240,
     uc_fg_spray: 330, uc_fg_bare_branch: 260, uc_fg_fern_night: 180,
+    /* 꽃: 아이 무릎 높이(아이 230 의 0.43). 일곱 송이 모두 같은 높이 */
+    cf4_prop_flower_tulip_red: 100, cf4_prop_flower_poppy_orange: 100, cf4_prop_flower_tulip_yellow: 100, cf4_prop_flower_cosmos_pink: 100,
+    cf4_prop_flower_wild_purple: 100, cf4_prop_flower_bell_blue: 100, cf4_prop_flower_daisy_white: 100,
   };
+  /* 꽃 선물 7색(그림 → 색 이름). 매번 하나가 정답 */
+  const FLOWER = { red: 'cf4_prop_flower_tulip_red', orange: 'cf4_prop_flower_poppy_orange', yellow: 'cf4_prop_flower_tulip_yellow', pink: 'cf4_prop_flower_cosmos_pink',
+    purple: 'cf4_prop_flower_wild_purple', blue: 'cf4_prop_flower_bell_blue', white: 'cf4_prop_flower_daisy_white' };
+  const COLOR_KO = { red: '빨간', orange: '주황', yellow: '노란', pink: '분홍', purple: '보라', blue: '파란', white: '하얀' };
   /* 그림이 보는 쪽 (PLAN §5-1 표; 실제 그림을 눈으로 본 뒤 고친다) */
   const NAT = {
     uc_kid_walk: 'right', uc_kid_sad: 'right', uc_kid_tired: 'right', uc_kid_turn: 'right', uc_kid_stand: 'front', uc_kid_hug: 'front',
     uc_unicorn_stand: 'left', uc_unicorn_back: 'right', uc_sheep_cry: 'left', uc_sheep_jump: 'left', uc_sheep_happy: 'left',
     uc_deer_hurt: 'left', uc_deer_relief: 'left', uc_horse_hungry: 'left', uc_horse_happy: 'left', uc_hint_silhouette: 'left',
-    /* 2026-10-22 새 그림(눈으로 본 쪽): 다현이 걷기·돌아봄은 오른쪽, 지침은 고개를 숙인 왼쪽, 서기·슬픔·안기·손 흔들기는 앞모습. 숨는 자세 다섯은 모두 왼쪽 */
-    uc_kid2_walk: 'right', uc_kid2_turn: 'right', uc_kid2_tired: 'left', uc_kid2_stand: 'front', uc_kid2_sad: 'front', uc_kid2_hug: 'front', uc_kid2_wave: 'front',
+    /* 2026-10-22 새 그림(눈으로 본 쪽): 다현이 걷기·돌아봄·지침(고개 숙여 오른쪽 아래를 봄, 발끝도 오른쪽 — 2026-10-22 다시 봄)은 오른쪽, 서기·슬픔·안기·손 흔들기는 앞모습. 숨는 자세 다섯은 모두 왼쪽 */
+    uc_kid2_walk: 'right', uc_kid2_turn: 'right', uc_kid2_tired: 'right', uc_kid2_stand: 'front', uc_kid2_sad: 'front', uc_kid2_hug: 'front', uc_kid2_wave: 'front',
     uc_unicorn_hide_cloud: 'left', uc_unicorn_peek_cloud_horn: 'left', uc_unicorn_peek_tree: 'left', uc_unicorn_peek_spray: 'left', uc_unicorn_hide_bush: 'left',
   };
   const FL = 490;                       // 바닥(발끝 y)
   const BGS = ['uc_bg2_hill', 'uc_bg2_cloudland', 'uc_bg2_night_forest', 'uc_bg2_waterfall', 'uc_bg2_dusk_road', 'uc_bg2_moon_night'];   // 2026-10-22 화려한 다층 배경(옛 uc_bg_* 는 쓰지 않음)
   const CUTS = ['uc_cut2_sheep_jump', 'uc_cut2_thorns', 'uc_cut2_turn', 'uc_cut2_hug'];   // 공주 옷 컷
   const src = k => AS + k + '.webp';
+  const FILL = { red: '#A93B32', orange: '#E8703A', yellow: '#D9A94E', pink: '#E79AB4', purple: '#7B4F8C', blue: '#3E7CB1', white: '#F4F6FA' };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 902 / 1600 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
   const CREAM = '#F6ECD8', INK = '#2E241C', FONT = "'Pretendard Variable', Pretendard, sans-serif";
@@ -126,7 +137,9 @@
       case 'uc_hint_tree_gap': R(w * .3, 0, w * .4, h, 2, '#F4F6FA'); RAIN.slice(0, 3).forEach((c, i) => R(w * (.34 + i * .1), 0, w * .08, h * .2, 1, c)); break;
       case 'uc_hint_spray_eye': [[.3, .6, .18], [.6, .5, .22], [.5, .8, .14]].forEach(([x, y, r]) => C(w * x, h * y, w * r, '#F4F6FA')); C(w * .55, h * .5, w * .13, '#1F2A56'); C(w * .59, h * .46, w * .035, '#F4F6FA'); break;
       case 'uc_hint_horn_tip': Pth(`M${w * .3} ${h} L${w * .5} ${h * .15} L${w * .7} ${h}Z`, CREAM); Pth(`M${w * .5} 0 L${w * .56} ${h * .1} L${w * .66} ${h * .14} L${w * .56} ${h * .2} L${w * .5} ${h * .3} L${w * .44} ${h * .2} L${w * .34} ${h * .14} L${w * .44} ${h * .1}Z`, '#D9A94E'); break;
-      default: R(0, 0, w, h, Math.min(w, h) * .2, '#D9A94E'); label(nm, w / 2, h / 2, INK, 13);
+      default:
+        if (/^cf4_prop_flower_/.test(f)) { const c = Object.keys(FLOWER).find(k => FLOWER[k] === f); R(w / 2 - 3, h * .4, 6, h * .6, 3, '#3F6B4F'); C(w / 2, h * .28, Math.min(w, h) * .28, FILL[c] || '#E8703A'); break; }
+        R(0, 0, w, h, Math.min(w, h) * .2, '#D9A94E'); label(nm, w / 2, h / 2, INK, 13);
     }
     return g;
   }
@@ -202,11 +215,41 @@
   }
   const unhit = a => { if (a.hitRect) { a.hitRect.remove(); a.hitRect = null; } a.hit = null; };
 
+  /* 무지개 폭포 배경(uc_bg2_waterfall)에서 잰 자리(월드 좌표): 물줄기 x 800~925·위 35·떨어지는 자리 y≈355, 호수 수면 위 가장자리 y≈430(물보라 밑) */
+  const FALL = { x: 862, l: 803, r: 922, top: 36, base: 356, lake: 430 };
+  function fallsAnim(T) {
+    const g = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, T.world);
+    const id = 'ucFall' + Math.random().toString(36).slice(2, 7);
+    const cp = T.el('clipPath', { id }, g); T.el('rect', { x: FALL.l, y: FALL.top, width: FALL.r - FALL.l, height: FALL.base - FALL.top }, cp);
+    const strips = T.el('g', { 'clip-path': `url(#${id})` }, g);
+    const span = FALL.base - FALL.top + 120;
+    for (let i = 0; i < 7; i++) {                       // 물줄기 띠: 세로로 긴 종이 조각이 아래로 흘러내린다(한 조각 한 색)
+      const x = FALL.l + 8 + i * 16, w = 7 + (i % 3) * 2;
+      for (let j = 0; j < 2; j++) {
+        const r = T.el('rect', { x, y: FALL.top - 90, width: w, height: 60 + (i % 2) * 24, rx: w / 2, fill: (i + j) % 2 ? '#F4F6FA' : '#D6ECF7' }, strips);
+        const dur = 1500 + (i % 4) * 180;
+        r.animate([{ transform: 'translateY(0px)' }, { transform: `translateY(${span}px)` }], { duration: dur, iterations: Infinity, delay: -(j * dur / 2 + i * 137) % dur });
+      }
+    }
+    for (let i = 0; i < 9; i++) {                       // 물보라 조각 퐁퐁: 떨어지는 자리에서 동그란 종이가 튀어 올랐다 사라진다
+      const x = FALL.l - 30 + i * 22, c = T.el('circle', { cx: x, cy: FALL.base + 30, r: 6 + (i % 3) * 3, fill: i % 2 ? '#F4F6FA' : '#CFE8F6' }, g);
+      c.style.transformBox = 'fill-box'; c.style.transformOrigin = 'center';
+      const dx = (i - 4) * 7, dur = 1100 + (i % 3) * 200;
+      c.animate([{ transform: 'translate(0px,0px) scale(.3)', opacity: 0 }, { transform: `translate(${dx * .5}px,-26px) scale(1)`, opacity: 1, offset: .45 },
+        { transform: `translate(${dx}px,-6px) scale(.8)`, opacity: 0 }], { duration: dur, iterations: Infinity, delay: -(i * 173) % dur, easing: 'ease-out' });
+    }
+    return g;
+  }
+
   const S = {
     L0: "언덕 위에 다현이가 서 있어요. 하늘을 올려다보고 있어요.",
     L1: "진짜 유니콘을 만나고 싶어요.",
-    L2: "여기 색깔 조각이 세 개 있어요. 빨간 조각을 톡, 눌러 봐요.",
-    C1: "맞았어요! 빨간색이에요.",
+    /* 1장 꽃 선물(색별): F_ASK_색 · F_OK_색, 꺾어 넣기 F_PICK. 마지막 장면 F_END_색. 오답 목소리는 extra retry_색 */
+    ...Object.fromEntries(Object.entries(COLOR_KO).flatMap(([c, k]) => [
+      ['F_ASK_' + c, `유니콘에게 줄 ${k} 꽃을 찾아 볼까요? 톡, 눌러 봐요.`],
+      ['F_OK_' + c, `맞았어요! ${k} 꽃이에요.`],
+      ['F_END_' + c, `다현이는 아침에 꺾은 ${k} 꽃을 유니콘 갈기에 꽂아 주었어요.`]])),
+    F_PICK: "다현이는 꽃을 똑 꺾어 바구니에 쏙 넣었어요.",
     L3: "다현이는 구름 나라로 올라가 보기로 했어요.",
     L4: "구름 섬에 양 한 마리가 혼자 앉아 있어요.",
     L5: "훌쩍… 집에 어떻게 가지…",
@@ -241,6 +284,8 @@
     L34: "유니콘…!",
     L35: "유니콘을 톡, 눌러서 인사해요.",
     L36: "다현이는 유니콘을 꼭 안았어요.",
+    H1: "다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.",
+    H2: "고마워, 정말 예뻐!",
   };
 
   async function run(T) {
@@ -270,7 +315,7 @@
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
     CUTS.forEach(k => T.preload(src(k)));
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);   // 진짜 4초(검증 화면 건너뛰기의 빠른 sleep 에 지지 않게 — 그림이 다 받아진 뒤 장면을 그린다)
     const pz = (who, ps, pre = who) => Object.fromEntries(ps.map(p => [p, ['uc_' + pre + '_' + p, HT['uc_' + pre + '_' + p]]]));
     const kid = mk(T, pz('kid', ['stand', 'walk', 'sad', 'tired', 'turn', 'hug', 'wave'], 'kid2'));   // 다현이(공주 옷, PLAN §13)
     /* 유니콘: 서기·뒷모습 + 장소별 숨는 자세 다섯(PLAN §8-2). 가리는 물체는 z 순서로 덮는다(반투명 없음) */
@@ -278,7 +323,7 @@
     const sheep = mk(T, pz('sheep', ['cry', 'jump', 'happy']));
     const deer = mk(T, pz('deer', ['hurt', 'relief']));
     const horse = mk(T, pz('horse', ['hungry', 'happy']));
-    const blocks = { red: prop(T, 'uc_prop_block_red'), yellow: prop(T, 'uc_prop_block_yellow'), blue: prop(T, 'uc_prop_block_blue') };
+    const flowers = Object.fromEntries(Object.entries(FLOWER).map(([c, f]) => [c, prop(T, f)]));   // 1장 꽃밭(누름: 고르기 동안만)
     const cloud = prop(T, 'uc_prop_cloud'), bush = prop(T, 'uc_prop_thorn_bush'), rainbow = prop(T, 'uc_prop_rainbow');
     const basket = prop(T, 'uc_prop_basket'), bands = prop(T, 'uc_prop_horn_bands');
     const thorns = [0, 1, 2].map(() => prop(T, 'uc_prop_thorn'));
@@ -286,7 +331,7 @@
     const deco = k => { const a = prop(T, 'uc_' + k); a.pos.style.pointerEvents = 'none'; return a; };
     const home = deco('mid_sheep_home'), cbush = deco('mid_bush_corner'), halo = deco('mid_moon_halo');
     const FG = Object.fromEntries(['grass_flowers', 'cloud_hill', 'cloud_bank', 'cloud_wisp', 'tree_trunk', 'pine_branch', 'spray', 'bare_branch', 'fern_night'].map(k => [k, deco('fg_' + k)]));
-    const ALL = [kid, uni, sheep, deer, horse, ...Object.values(blocks), cloud, bush, rainbow, basket, bands, ...thorns, home, cbush, halo, ...Object.values(FG)];
+    const ALL = [kid, uni, sheep, deer, horse, ...Object.values(flowers), cloud, bush, rainbow, basket, bands, ...thorns, home, cbush, halo, ...Object.values(FG)];
     ALL.forEach(hide);
     T.director(null);
     /* 사슴 다리의 가시 자리(사슴 가운데 x·바닥 y 기준 오프셋, 누운 사슴 그림 도착 뒤 다시 잰다) */
@@ -294,30 +339,41 @@
     const POPY = a => FL - a.h - 30;      // 말풍선 글자: 머리 위쪽 (인물 얼굴을 가리지 않는다)
     const stepTo = async (a, x, ms, h = 4) => { const st = stepSfx(.2, 600); await drive(a, x, FL, ms, 'linear', h); st(); };
 
-    /* ===== 1. 설렘 (배움 놀이: 색 찾기 — 첫 조작) — 멀리서 넓게 ===== */
-    scene('uc_bg2_hill', 400);
+    /* ===== 1. 설렘 (배움 놀이: 꽃 선물 색 고르기 — 첫 조작) — 멀리서 넓게 ===== */
+    const ANS = Object.keys(FLOWER)[Math.floor(Math.random() * 7)];   // 오늘 유니콘에게 줄 꽃 색(7색 중 하나)
+    scene('uc_bg2_hill', X(400, 430));
     /* 하늘의 구름 덩이(배경 구름 띠 아래, 지평선 위 y≈200): 다현이가 올려다보는 쪽. 유니콘은 그 구름 속에 숨어 꼬리 끝만 보인다 */
     put(T, uni, X(800, 535), 188, { look: 'hide_cloud', to: 'left', s: .6 });    // 먼 하늘(원근으로만 작게): 꼬리 끝 7줄만 구름 위로
     put(T, FG.cloud_hill, X(790, 525), 195);
-    put(T, kid, 300, FL, { look: 'stand' });
-    const kinds = ['red', 'yellow', 'blue'].sort(() => Math.random() - .5), spots = X([430, 560, 690], [380, 450, 520]);
-    kinds.forEach((k, i) => { put(T, blocks[k], spots[i], FL + 4); hitBox(T, blocks[k], H(P ? 62 : 100), H(P ? 70 : 100)); });
-    put(T, FG.grass_flowers, X(110, 230), 600);
+    put(T, kid, X(300, 260), FL, { look: 'stand' });
+    put(T, basket, kid.x + X(85, 80), FL, { look: 'a' });
+    /* 꽃: 정답 + 다른 색. 가로는 한 줄 5송이(누르는 자리 100×120 = 화면 137×164px), 세로는 2줄 4송이(누르는 자리 128 = 화면 약 82px) */
+    const others = Object.keys(FLOWER).filter(c => c !== ANS).sort(() => Math.random() - .5);
+    const picks = [ANS, ...others.slice(0, P ? 3 : 4)].sort(() => Math.random() - .5);
+    const spots = P ? [[455, FL + 12], [585, FL + 12], [520, FL - 116], [650, FL - 116]] : [470, 575, 680, 785, 890].map(x => [x, FL + 6]);
+    picks.forEach((c, i) => { put(T, flowers[c], spots[i][0], spots[i][1], { look: 'a' }); hitBox(T, flowers[c], P ? 128 : 100, P ? 128 : 120); });
+    put(T, FG.grass_flowers, X(110, 90), 600);   // 세로: 왼쪽 끝으로 비켜 다현이·바구니가 묻히지 않게
     await T.curtain(true);
     await say(S.L0);
     await sleep(300);
     await say(S.L1);
-    Object.values(blocks).forEach(a => bob(a.pos));
-    await T.ask(S.L2, () => T.choose(kinds.map(k => ({
-      el: blocks[k].hit, ok: k === 'red',
-      onWrong: async () => { await wiggleEl(T, blocks[k].hit); await voWait('retry'); },
-    })), { prompt: S.L2 }));
-    glow(blocks.red, 1200); sparkleSfx(T); T.pop(blocks.red.x, FL - 90, tr('반짝!'));
-    await say(S.C1);
-    Object.values(blocks).forEach(unhit);
-    kinds.forEach(k => { if (k !== 'red') fadeOut(T, blocks[k], 400); });
-    await sleep(500);
-    fadeOut(T, blocks.red, 400);
+    picks.forEach(c => bob(flowers[c].pos));
+    await T.ask(S['F_ASK_' + ANS], () => T.choose(picks.map(c => ({
+      el: flowers[c].hit, ok: c === ANS,
+      onWrong: async () => { await wiggleEl(T, flowers[c].hit); await voWait('retry_' + ANS); },
+    })), { prompt: S['F_ASK_' + ANS] }));
+    picks.forEach(c => unhit(flowers[c]));
+    const gift = flowers[ANS];
+    glow(gift, 1200); sparkleSfx(T); T.pop(gift.x, gift.y - 140, tr('반짝!'));
+    await say(S['F_OK_' + ANS]);
+    /* 꽃을 똑 꺾어 바구니에 쏙: 꽃이 아이 앞을 지나 바구니로 날아가 반쯤 잠긴다(바구니가 꽃 줄기를 가린다) */
+    kid.hop(8, 300); sfx('pop', .4);
+    const pickSay = say(S.F_PICK);
+    await gift.move(basket.x, FL - 150, 600, 'ease-out');
+    gift.setScale(.7); T.world.appendChild(basket.pos);
+    await gift.move(basket.x + 4, FL - 22, 450, 'ease-in');
+    T.pop(basket.x, FL - 120, tr('쏙!')); sfx('paper_down', .4);
+    await pickSay;
     kid.hop(10, 320);
     await say(S.L3);
     await sleep(SCENE_END);
@@ -426,9 +482,10 @@
     /* ===== 6. 무지개 폭포 — 옆에서 넓게. 폭포는 배경 안(PLAN §5) ===== */
     const falls = (kidX, withBasket) => {
       scene('uc_bg2_waterfall', 420, .55);
-      put(T, rainbow, X(690, 690), 400, { look: 'a' });
-      put(T, uni, X(900, 900), 472, { look: 'peek_spray', to: 'left' });     // 물보라 틈으로 갈기·뿔·목·눈
-      put(T, FG.spray, X(890, 890), 545);
+      fallsAnim(T);                                                          // 배경 폭포 물줄기 위로 흐르는 종이 띠 + 떨어지는 자리 물보라 퐁퐁
+      put(T, rainbow, 690, 400, { look: 'a' });
+      put(T, uni, FALL.x + 40, FALL.lake + 2, { look: 'peek_spray', to: 'left', s: .75 });   // 폭포 떨어지는 자리 뒤(호수 건너편이라 원근으로 작게): 물보라 틈으로 갈기·뿔·눈
+      put(T, FG.spray, FALL.x, FALL.lake + 10, { s: .85 });                   // 물보라 밑동이 호수 수면(폭포 떨어지는 자리)에 닿게
       put(T, horse, X(470, 450), FL, { look: 'hungry', to: 'left' });
       put(T, kid, kidX, FL, { look: 'walk', to: 'right' });
       put(T, basket, kid.x + 85, FL, { look: 'a' }); if (!withBasket) basket.pos.style.display = 'none';
@@ -538,7 +595,28 @@
     T.confetti(); sfx('tada') || sparkleSfx(T);
     for (let i = 0; i < 2; i++) await Promise.all([kid.hop(22, 480), uni.hop(14, 480)]);
     await say(S.L36);
-    await sleep(5000);
+    await sleep(SCENE_END);
+
+    /* ===== 11. 집으로 — 1장과 같은 집 앞 언덕. 아침에 꺾은 꽃을 유니콘 갈기에 꽂아 준다 ===== */
+    await T.sceneCard(tr('집으로'), () => {
+      scene('uc_bg2_hill', X(400, 450));
+      put(T, kid, X(360, 300), FL, { look: 'walk', to: 'right' });
+      put(T, uni, X(640, 580), FL, { look: 'stand', to: 'left' });          // 다현이를 마주 본다
+      put(T, FG.grass_flowers, X(110, 230), 600);
+    }, kid.pos);
+    await say(S.H1);
+    /* 갈기 자리(유니콘 서기 그림, 왼쪽을 봄): 그림 폭의 36%·높이의 36% — 꽃 밑동을 여기에 */
+    const MANE = [-uni.w * .14, -uni.h * .64];
+    put(T, gift, kid.x + 40, FL - 100, { look: 'a', s: .55 }); fadeIn(gift, 300);
+    kid.look('stand'); sfx('paper_up', .4);
+    const endSay = say(S['F_END_' + ANS]);
+    await gift.move(uni.x + MANE[0], FL + MANE[1], 1200, 'ease-in-out');
+    glow(uni, 1200); sparkleSfx(T); T.pop(uni.x + MANE[0], FL + MANE[1] - 70, tr('반짝!'), '#D9A94E');
+    await endSay;
+    uni.hop(10, 420);
+    await say(S.H2);
+    kid.look('wave'); kid.hop(12, 360);
+    await sleep(3000);
     T.finale(); await sleep(1500);
     return '너도 누군가에게 친절하면, 너만의 유니콘을 만날 수 있어.';
   }

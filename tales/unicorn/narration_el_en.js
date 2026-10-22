@@ -8,13 +8,65 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "I want to meet a real unicorn.",
   "c": "audio/el/unicorn/en/kid_dbd7e73074.mp3"
  },
- "여기 색깔 조각이 세 개 있어요. 빨간 조각을 톡, 눌러 봐요.": {
-  "t": "Here are three coloured blocks. Tap the red one.",
-  "c": "audio/el/unicorn/en/nar_fe99a2808e.mp3"
+ "유니콘에게 줄 빨간 꽃을 찾아 볼까요? 톡, 눌러 봐요.": {
+  "t": "Let's find a red flower for the unicorn. Tap it!",
+  "c": "audio/el/unicorn/en/nar_195ae8cc42.mp3"
  },
- "맞았어요! 빨간색이에요.": {
-  "t": "That is right! It is red.",
-  "c": "audio/el/unicorn/en/nar_8381efe7c2.mp3"
+ "유니콘에게 줄 주황 꽃을 찾아 볼까요? 톡, 눌러 봐요.": {
+  "t": "Let's find an orange flower for the unicorn. Tap it!",
+  "c": "audio/el/unicorn/en/nar_50bb718baf.mp3"
+ },
+ "유니콘에게 줄 노란 꽃을 찾아 볼까요? 톡, 눌러 봐요.": {
+  "t": "Let's find a yellow flower for the unicorn. Tap it!",
+  "c": "audio/el/unicorn/en/nar_f9f1fe045d.mp3"
+ },
+ "유니콘에게 줄 분홍 꽃을 찾아 볼까요? 톡, 눌러 봐요.": {
+  "t": "Let's find a pink flower for the unicorn. Tap it!",
+  "c": "audio/el/unicorn/en/nar_0a3ca7e762.mp3"
+ },
+ "유니콘에게 줄 보라 꽃을 찾아 볼까요? 톡, 눌러 봐요.": {
+  "t": "Let's find a purple flower for the unicorn. Tap it!",
+  "c": "audio/el/unicorn/en/nar_7b84565c7d.mp3"
+ },
+ "유니콘에게 줄 파란 꽃을 찾아 볼까요? 톡, 눌러 봐요.": {
+  "t": "Let's find a blue flower for the unicorn. Tap it!",
+  "c": "audio/el/unicorn/en/nar_ccedd03bae.mp3"
+ },
+ "유니콘에게 줄 하얀 꽃을 찾아 볼까요? 톡, 눌러 봐요.": {
+  "t": "Let's find a white flower for the unicorn. Tap it!",
+  "c": "audio/el/unicorn/en/nar_2e3a4e6d16.mp3"
+ },
+ "맞았어요! 빨간 꽃이에요.": {
+  "t": "That's right! A red flower.",
+  "c": "audio/el/unicorn/en/nar_a16409b286.mp3"
+ },
+ "맞았어요! 주황 꽃이에요.": {
+  "t": "That's right! An orange flower.",
+  "c": "audio/el/unicorn/en/nar_389436eb0c.mp3"
+ },
+ "맞았어요! 노란 꽃이에요.": {
+  "t": "That's right! A yellow flower.",
+  "c": "audio/el/unicorn/en/nar_062c6eb089.mp3"
+ },
+ "맞았어요! 분홍 꽃이에요.": {
+  "t": "That's right! A pink flower.",
+  "c": "audio/el/unicorn/en/nar_a2d0e32130.mp3"
+ },
+ "맞았어요! 보라 꽃이에요.": {
+  "t": "That's right! A purple flower.",
+  "c": "audio/el/unicorn/en/nar_ca733085d0.mp3"
+ },
+ "맞았어요! 파란 꽃이에요.": {
+  "t": "That's right! A blue flower.",
+  "c": "audio/el/unicorn/en/nar_1b2fb8894c.mp3"
+ },
+ "맞았어요! 하얀 꽃이에요.": {
+  "t": "That's right! A white flower.",
+  "c": "audio/el/unicorn/en/nar_06140795c6.mp3"
+ },
+ "다현이는 꽃을 똑 꺾어 바구니에 쏙 넣었어요.": {
+  "t": "Dahyun picked the flower and popped it into her basket.",
+  "c": "audio/el/unicorn/en/nar_8803c8aa02.mp3"
  },
  "다현이는 구름 나라로 올라가 보기로 했어요.": {
   "t": "Dahyun decided to climb up to the cloud country.",
@@ -151,6 +203,42 @@ Object.assign(NARRATION_CLIPS_EN, {
  "다현이는 유니콘을 꼭 안았어요.": {
   "t": "Dahyun hugged the unicorn tight.",
   "c": "audio/el/unicorn/en/nar_042efac988.mp3"
+ },
+ "다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.": {
+  "t": "Dahyun came back to the hill by her home with the unicorn.",
+  "c": "audio/el/unicorn/en/nar_8370cc3c38.mp3"
+ },
+ "다현이는 아침에 꺾은 빨간 꽃을 유니콘 갈기에 꽂아 주었어요.": {
+  "t": "Dahyun tucked the red flower she picked this morning into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_404980da0c.mp3"
+ },
+ "다현이는 아침에 꺾은 주황 꽃을 유니콘 갈기에 꽂아 주었어요.": {
+  "t": "Dahyun tucked the orange flower she picked this morning into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_0061ef003e.mp3"
+ },
+ "다현이는 아침에 꺾은 노란 꽃을 유니콘 갈기에 꽂아 주었어요.": {
+  "t": "Dahyun tucked the yellow flower she picked this morning into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_4ba4fa685e.mp3"
+ },
+ "다현이는 아침에 꺾은 분홍 꽃을 유니콘 갈기에 꽂아 주었어요.": {
+  "t": "Dahyun tucked the pink flower she picked this morning into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_55f6c0e272.mp3"
+ },
+ "다현이는 아침에 꺾은 보라 꽃을 유니콘 갈기에 꽂아 주었어요.": {
+  "t": "Dahyun tucked the purple flower she picked this morning into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_f6eaeeae3e.mp3"
+ },
+ "다현이는 아침에 꺾은 파란 꽃을 유니콘 갈기에 꽂아 주었어요.": {
+  "t": "Dahyun tucked the blue flower she picked this morning into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_d23bf0da9c.mp3"
+ },
+ "다현이는 아침에 꺾은 하얀 꽃을 유니콘 갈기에 꽂아 주었어요.": {
+  "t": "Dahyun tucked the white flower she picked this morning into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_9fbc2a7c9e.mp3"
+ },
+ "고마워, 정말 예뻐!": {
+  "t": "Thank you. It's so pretty!",
+  "c": "audio/el/unicorn/en/uni_486813ab01.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {
@@ -158,5 +246,11 @@ Object.assign(VOICE_LINES_EN, {
  "n2": "audio/el/unicorn/en/nar_9106d80d29.mp3",
  "n3": "audio/el/unicorn/en/nar_4bb87273c7.mp3",
  "steps": "audio/el/unicorn/en/nar_c4fb45e500.mp3",
- "retry": "audio/el/unicorn/en/nar_0d85fa09ed.mp3"
+ "retry_red": "audio/el/unicorn/en/nar_f1a1b2f292.mp3",
+ "retry_orange": "audio/el/unicorn/en/nar_4fda665842.mp3",
+ "retry_yellow": "audio/el/unicorn/en/nar_af86df1a48.mp3",
+ "retry_pink": "audio/el/unicorn/en/nar_d757c65bb1.mp3",
+ "retry_purple": "audio/el/unicorn/en/nar_04785d08e3.mp3",
+ "retry_blue": "audio/el/unicorn/en/nar_dbc40827ec.mp3",
+ "retry_white": "audio/el/unicorn/en/nar_75067b1b8f.mp3"
 });
