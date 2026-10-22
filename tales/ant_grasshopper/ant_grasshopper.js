@@ -656,6 +656,302 @@
       },
       listener: (r, last) => r !== 'hop' ? 'hop' : last && last !== 'hop' && last !== 'card' ? last : onStage(() => host) ? 'ant' : 'ants',
     });
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
+       장면 자리·크기·카메라는 놀이판 그 장면 그대로(대본 좌표는 그림과 맞지 않아 hop/ants/lead 자리는 놀이판 값). 계절 음악은 목소리 밑에 작게 깐다. */
+    const READ_ACTS = (() => {
+      const rI = () => T.readInstant();
+      const nums = s => String(s).split(',').map(v => (isNaN(+v) ? v : +v));
+      const BGMS = { summer: ['vivaldi_summer1', 26], storm: ['vivaldi_summer3', 26], autumn: ['vivaldi_autumn1', 22], winter_high: ['vivaldi_winter1', 26], spring: ['vivaldi_spring', 22] };
+      const CARDX = {};
+      let key = '', cellarN = 0, E = null, AF = null, W = null, D = null, K = null, wx = null;
+      let pile = null, boss = null, fl = [], leafU = null, rain = null, leaves = null, snow = null, acornsG = null;
+      let lead = null, crew = [], shelter = [], host = null, baby = null, passers = [], workers2 = [], homeAnts = [], guestsR = [], shiverA = null, timers = [], enteredG = 0, summerDone = false;
+      const clearAll = () => {
+        timers.forEach(t => clearInterval(t)); timers = [];
+        [rain, leaves, snow].forEach(w => w && w.stop()); rain = leaves = snow = null;
+        if (shiverA) { shiverA.cancel(); shiverA = null; }
+        stopBgm(.8);
+      };
+      const bgm = k => { const b = BGMS[k]; if (b) playBgm(b[0], .22, b[1], 2); };
+      const camW = () => camSnap(key === 'spring' && narrow() ? 380 : 500, 280, 1);
+      const build = k => {
+        const prev = key; key = k;
+        clearAll();
+        host = baby = null; passers = []; fl = []; crew = []; shelter = [];
+        if (k === 'summer') {
+          bgm('summer');
+          if (summerDone) { T.clear(); fieldBG(T, 'summer'); T.world.appendChild(hop.pos); hop.setScale(.95); hop.place(360, 494); hop.face('right'); hopperMode(hop.p, 'play'); }
+          summerDone = true; return;
+        }
+        T.clear();
+        if (k === 'ant_eye') {
+          E = antEyeBG(T);
+          pile = el('g', {}, T.world);
+          const PX = narrow() ? 332 : 300;
+          if (pic(T, pile, 'grain_pile', PX - 11, 494 - 112, 142, 112)) el('rect', { x: PX - 44, y: 376, width: 208, height: 122, fill: '#fff', opacity: 0 }, pile);
+          else T.paper(pile, [[0, 0], [60, 0], [120, 0], [30, -24], [90, -24], [60, -48]].map(([dx, dy]) => ['ellipse', { cx: PX + dx, cy: 478 + dy, rx: 32, ry: 16, fill: C.gold }]));
+          boss = ant(T, T.world, 190, 496, 1.05); boss.face('right');
+          boss.pos.style.pointerEvents = 'none'; pile.style.pointerEvents = 'none';
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'leafstage') {
+          const leafArt = !!(bgUrl('leafstage') && artUrl('hopper_play'));
+          const FLX = narrow() ? [348, 652] : leafArt ? [290, 730] : [335, 668];
+          leafStageBG(T);
+          fl = [flower(T, T.world, FLX[0], 250, C.pink), flower(T, T.world, FLX[1], 250, C.persimmon)];
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'storm') {
+          const F = fieldBG(T, 'summer', { sky: SKY.rain });
+          if (F.sun) F.sun.remove();
+          storm(T, T.bg, 80, -60, 440); storm(T, T.bg, 460, -95, 520);
+          leafU = el('g', {}, T.world);
+          if (artUrl('leaf_umbrella')) pic(T, leafU, 'leaf_umbrella', -154, -151, 309.8, 298.8);
+          else T.paper(leafU, [['path', { d: 'M-150 0 Q0 -90 150 0 Q0 -30 -150 0 Z', fill: C.leaf }], ['path', { d: 'M-140 -2 Q0 -60 140 -2', stroke: C.pine, 'stroke-width': 5, fill: 'none' }], ['rect', { x: -4, y: -40, width: 8, height: 120, fill: C.pine }]]);
+          leafU.setAttribute('transform', 'translate(455,438) scale(.75) rotate(-40)'); leafU.style.pointerEvents = 'none';
+          bgm('storm'); camSnap(500, 280, 1); return;
+        }
+        if (k === 'autumn') {
+          AF = fieldBG(T, 'autumn');
+          acornsG = el('g', {}, T.world);
+          [[0, 0], [34, 0], [68, 0], [17, -28], [51, -28], [34, -56]].forEach(([dx, dy]) => acornShape(T, acornsG, 450 + dx * 1.4, 474 + dy * 1.4, 2));
+          bgm('autumn'); camSnap(500, 280, 1); return;
+        }
+        if (k === 'winter_high') {
+          W = winterHighBG(T);
+          (artUrl('ant_stand') ? [470, 590] : [440, 510]).forEach(x => { const a = ant(T, T.world, x, 440, .8); a.face('right'); a.pos.style.pointerEvents = 'none'; crew.push(a); });
+          bgm('winter_high'); camSnap(500, 280, 1); return;
+        }
+        if (k === 'door') {
+          D = doorBG(T); camSnap(500, 280, 1); return;
+        }
+        if (k === 'cellar') {
+          cellarN++;
+          K = cellarBG(T);
+          homeAnts = []; guestsR = [];
+          (K.art ? [[362, .55], [418, .45], [628, .55]] : [[380, .62], [440, .5], [600, .62]]).forEach(([x, sc], i) => { const a = ant(T, T.world, x, K.antY, sc); a.face(x < 500 ? 'right' : 'left'); wear(a.p, i === 1 ? [] : ['scarf']); a.pos.style.pointerEvents = 'none'; homeAnts.push(a); });
+          const seats = (narrow() ? [352, 418, 590, 648] : K.art ? [345, 425, 575, 655] : [335, 410, 595, 665]).map((x, i) => [x, K.seatY[i]]);
+          FRIENDS.forEach((f, i) => {
+            const a = mk(T, T.world, 760 + i * (artUrl(f.key) ? 96 : 72), K.snowY, f.draw, f.s * .8); a.f = f; a.pos.style.pointerEvents = 'none';
+            if (cellarN > 1) { a.place(seats[i][0], seats[i][1]); a.face(seats[i][0] < 500 ? 'right' : 'left'); a.setScale(f.s * (K.art ? .58 : .62)); }
+            guestsR.push(a);
+          });
+          K.seats = seats; enteredG = 0;
+          T.world.appendChild(hop.pos);
+          return;
+        }
+        if (k === 'spring') {
+          camSnap(narrow() ? 380 : 500, 280, 1); fieldBG(T, 'spring');
+          workers2 = [];
+          (artUrl('ant_carry') ? [420, 485, 550] : [400, 460, 520]).forEach(x => { const a = ant(T, T.world, x, 494, .6); a.face('right'); carry(a.p, true); a.pos.style.pointerEvents = 'none'; workers2.push(a); });
+          bgm('spring');
+        }
+      };
+      const hopAt = (a1, a2, a3) => {
+        let x, y, sc;
+        if (key === 'door') { x = D.hopX; y = D.hopY; sc = D.art ? 1.45 : 1.75; }
+        else if (key === 'cellar') { x = 500; y = K.hopY; sc = K.art ? .62 : .72; }
+        else if (key === 'leafstage') { x = 500; y = 470; sc = (bgUrl('leafstage') && artUrl('hopper_play')) ? 1.2 : 1.45; }
+        else if (key === 'storm') { x = narrow() ? 372 : 330; y = 494; sc = .95; }
+        else if (key === 'summer') { x = 360; y = 494; sc = .95; }
+        else if (key === 'spring') { x = 300; y = 494; sc = .9; }
+        else { x = +a1; y = +a2; sc = +a3 || 1; }
+        T.world.appendChild(hop.pos); hop.setScale(sc); hop.place(x, y); hopWet(hop.p, false);
+        if (key === 'door') { shiverA = hop.body.animate([{ translate: '0 0' }, { translate: '4px 0' }, { translate: '-4px 0' }], { duration: 130, iterations: Infinity }); }
+      };
+      const seatOf = i => K.seats[i];
+      const guestGo = async (g, i) => {
+        SND.step(T); await g.move(630, K.snowY, 700);
+        await sleep(300);
+        SND.squeak(T, 1200 + i * 150);
+        await g.move(K.shaftX, K.snowY + 8, 500);
+        await g.move(K.shaftX, K.shaftY, 450, 'ease-in');
+        await g.move(K.seats[i][0], K.seats[i][1], 500);
+        g.face(K.seats[i][0] < 500 ? 'right' : 'left'); g.setScale(g.f.s * (K.art ? .58 : .62));
+        T.tone(523 + i * 110, .2, { type: 'triangle', vol: .14 });
+      };
+      const vcut = (k, draw, hold) => { const y = vo('cut_' + k); const pr = T.cut(cutPic('cut_' + k, draw), { hold }); return pr.then(() => { if (!y && k === 'sneeze') SND.sneeze(T); }); };
+      const acts = {
+        set(k) { if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
+        cam() {
+          if (key === 'cellar' && cellarN > 1) { camSnap(K.cam[0], K.cam[1], narrow() ? 1.1 : 2.1); return; }
+          camW();
+        },
+        hop(op, a1, a2) {
+          if (op === 'at') { const [x, y, sc] = [a1, a2].join(',').split(',').concat([]).map(v => v); return hopAt(...String(a1).split(',')); }
+          if (op === 'mode') { hopperMode(hop.p, a1); return; }
+          if (op === 'face') { hop.face(a1); return; }
+          if (op === 'wet') { hopWet(hop.p, a1 !== 'off'); if (a1 !== 'off') SND.drip(T); return; }
+          if (op === 'warm') { hopWarm(hop.p, a1 !== 'off'); return; }
+          if (op === 'bow') { const b = bowing(hop.p); setTimeout(() => b.cancel(), 2600); T.world.appendChild(hop.pos); return; }
+          if (op === 'hop') { hop.hop(26, 360); return; }
+          if (op === 'walk') { // 봄: 개미들과 함께 걸어 나른다
+            SND.yeongcha(T, 4); SND.step(T);
+            const dx = +a1 - hop.x;
+            if (narrow()) camTo(+a1 + 80, 280, 1, 900);
+            hop.hop(16, 600);
+            workers2.forEach((a, k) => setTimeout(() => { a.move(a.x + dx, 494, 1500); a.hop(12, 600); }, k * 70));
+            return hop.move(+a1, 494, 1500);
+          }
+        },
+        ants(op, a1) {
+          if (op === 'line') {
+            if (key === 'storm') { [545, 605, 665].forEach(x => { const a = ant(T, T.world, x, 494, .62); a.face('left'); a.pos.style.pointerEvents = 'none'; shelter.push(a); }); }
+            return;
+          }
+          if (op === 'carry') {
+            if (key === 'summer') { SND.yeongcha(T, 3); ants.forEach((a, i) => setTimeout(() => a.hop(18, 300), i * 90)); return; }
+            if (key === 'ant_eye' && +a1 >= 3 && !rI()) { // 곡식을 하나씩 창고 문으로 (말과 동시에)
+              let stored = 0;
+              for (let i = 0; i < +a1; i++) setTimeout(() => {
+                const PX = narrow() ? 332 : 300;
+                const a = ant(T, T.world, PX + 140, 496, .9); a.face('right'); carry(a.p, true); a.pos.style.pointerEvents = 'none';
+                SND.yeongcha(T, 2);
+                a.move(E.door[0], E.door[1], 1500, 'linear').then(() => a.pos.remove());
+                a.pos.animate([{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1500, fill: 'forwards' });
+                a.body.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px)' }, { transform: 'translateY(0)' }], { duration: 320, iterations: 4 });
+                setTimeout(() => {
+                  const sl = E.slots[stored++]; if (!sl) return;
+                  sl.setAttribute('opacity', 1); sl.animate([{ transform: 'scale(.2)' }, { transform: 'scale(1.3)' }, { transform: 'scale(1)' }], { duration: 400 });
+                  T.tone(520 + stored * 40, .15, { type: 'triangle', vol: .12 });
+                }, 1250);
+              }, i * 320);
+              return;
+            }
+            if (key === 'spring') { SND.yeongcha(T, 3); workers2.forEach((a, i) => setTimeout(() => a.hop(12, 420), i * 90)); return; }
+            return;
+          }
+          if (op === 'pass') {
+            passers = [0, 1, 2].map(i => { const a = ant(T, T.world, -60 - i * 90, 532, .62); a.face('right'); carry(a.p, true); a.pos.style.pointerEvents = 'none'; return a; });
+            passers.forEach(a => a.move(a.x + 520, 532, 3200, 'linear'));
+            return;
+          }
+          if (op === 'umbrella') { // 큰 잎이 스스로 올라가 우산이 활짝
+            return new Promise(res => {
+              const t0 = performance.now(), LY = 438;
+              const f = now => {
+                const p = Math.min(1, (now - t0) / 1200), e = p * p * (3 - 2 * p);
+                leafU.setAttribute('transform', `translate(${455 + e * 150},${LY - (LY - 330) * e}) scale(${.75 + e * .45}) rotate(${-40 + e * 40})`);
+                p < 1 ? requestAnimationFrame(f) : res();
+              };
+              requestAnimationFrame(f);
+            }).then(() => { leafU.setAttribute('transform', 'translate(605,330) scale(1.2)'); SND.sparkle(T); shelter.forEach(a => { a.p.mouth.setAttribute('d', 'M-28 -82 Q-22 -76 -15 -81'); a.hop(14); }); });
+          }
+          if (op === 'wear') {
+            const list = a1 === 'none' ? [] : String(a1).split(',');
+            if (lead) wear(lead.p, list);
+            crew.forEach(a => wear(a.p, list));
+            if (list.length && lead && !rI()) { lead.hop(24); sparkles(T, lead.x, lead.y - 90); }
+            return;
+          }
+          if (op === 'enter') { // 따뜻한 창고로 쏙
+            return (async () => {
+              for (const a of [...crew, lead]) {
+                SND.snowStep(T);
+                a.move(W.hole[0], W.hole[1] + 10, W.far ? 1600 : 1100).then(() => a.pos.remove());
+                a.body.animate(W.far ? [{ opacity: 1, transform: 'scale(1)' }, { opacity: 1, transform: 'scale(.5)', offset: .8 }, { opacity: 0, transform: 'scale(.4)' }] : [{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: W.far ? 1600 : 1100, fill: 'forwards' });
+                await sleep(300);
+              }
+              await sleep(900);
+            })();
+          }
+        },
+        lead(op, a1) {
+          if (op !== 'at') return;
+          if (!lead) lead = ant(T, T.world, 0, 0, 1.1);
+          lead.pos.style.pointerEvents = 'none';
+          const [x, y, sc] = String(a1).split(',').map(Number);
+          T.world.appendChild(lead.pos); lead.setScale(key === 'winter_high' ? 1.05 : 1.1);
+          lead.place(key === 'winter_high' && narrow() ? 350 : x, y); lead.face('right'); wear(lead.p, []); carry(lead.p, false);
+        },
+        host(op) {
+          if (op !== 'at') return;
+          host = ant(T, T.world, D.hostX, D.y, .95); host.face('right'); wear(host.p, ['scarf']); host.pos.style.pointerEvents = 'none';
+          host.pos.parentNode.insertBefore(host.pos, hop.pos);
+        },
+        baby(op) {
+          if (op !== 'show') return;
+          SND.creak(T); T.anim(D.door, [{ transform: 'scaleX(.45)' }, { transform: 'scaleX(.85)' }], 900);
+          baby = ant(T, T.world, D.babyX, D.y, .62, { baby: true }); baby.face('right'); baby.pos.style.pointerEvents = 'none';
+          host && host.pos.parentNode.insertBefore(baby.pos, hop.pos);
+          baby.hop(20);
+        },
+        door(op) {
+          if (op !== 'open') return;
+          SND.creak(T); return T.anim(D.door, [{ transform: 'scaleX(1)' }, { transform: 'scaleX(.45)' }], 700);
+        },
+        acorns(op) {
+          if (op !== 'roll') return;
+          (async () => {
+            for (let i = 0; i < 6; i++) {
+              const last = acornsG.lastElementChild; if (last) last.remove();
+              const a = acornShape(T, T.world, 0, 0, 1.4); SND.roll(T);
+              a.animate([{ transform: 'translate(520px,474px) rotate(0deg) scale(2)' }, { transform: `translate(${AF.door[0]}px,${AF.door[1]}px) rotate(720deg) scale(${AF.art ? .7 : 1.1})` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' }).finished.then(() => a.remove());
+              await sleep(650);
+            }
+          })();
+        },
+        store(op) {
+          if (key === 'autumn') { SND.sparkle(T); return; }
+        },
+        guests(op, a1) {
+          if (op === 'enter') {
+            const i = FRIENDS.findIndex(f => f.key === a1), g = guestsR[i]; if (!g) return;
+            const n = enteredG++;
+            setTimeout(() => guestGo(g, i), n * 1100);
+            return;
+          }
+        },
+        firefly(op) {
+          if (op !== 'glow') return;
+          K.light.setAttribute('opacity', .55);
+          for (let i = 0; i < 7; i++) {
+            const x = 330 + i * 56, y = 368 + (i % 2) * 14;
+            const l = el('circle', { cx: x, cy: y, r: 5, fill: '#FFE08A' }, T.fx);
+            l.animate([{ opacity: .3 }, { opacity: 1 }], { duration: 600 + i * 90, iterations: Infinity, direction: 'alternate' });
+          }
+          SND.tune(T);
+        },
+        band(op) {
+          if (op !== 'play') return;
+          stopBgm(.3); playBgm('vivaldi_winter1', .5, 20, 2);
+          const bw2 = bowing(hop.p), dancers = [...homeAnts, ...guestsR];
+          const sw = setInterval(() => { notes(T, 470, 360); dancers.forEach((a, i) => setTimeout(() => a.wiggle(5, 700), i * 120)); }, 1400);
+          timers.push(sw); setTimeout(() => bw2.cancel(), 12000);
+        },
+        weather(op, a1) {
+          if (op === 'rain') { if (a1 === 'side') { if (rain) rain.stop(); rain = precip(T, 'rain', 44, [430, 780, 300]); return; } rain = precip(T, 'rain', 44); AudioFX.sfx('splash', .25); return; }
+          if (op === 'leaf') { leaves = precip(T, 'leaf', 22); AudioFX.whoosh(); return; }
+          if (op === 'snow') { snow = precip(T, 'snow', key === 'door' ? 30 : 40); SND.shiver(T); return; }
+          if (op === 'stop') { [rain, leaves, snow].forEach(w => w && w.stop()); rain = leaves = snow = null; stopBgm(1.2); }
+        },
+        cut(k) {
+          if (k === 'sneeze') return vcut('sneeze', (svg, art) => art && cutText(T, svg, 268, 80, '에취!', 84), 2000);
+          if (k === 'shiver') return vcut('shiver', (svg, art) => art && cutText(T, svg, 290, 62, '오들오들', 56), 2000);
+          if (k === 'door') {
+            return (async () => { // 문이 활짝
+              SND.door(T);
+              await T.anim(D.door, [{ transform: 'scaleX(.85)' }, { transform: 'scaleX(.06)' }], { duration: 500, easing: 'cubic-bezier(.3,1.5,.5,1)' });
+              D.glow.animate([{ opacity: .6 }, { opacity: 1 }], { duration: 600, iterations: 3, direction: 'alternate' });
+              SND.sparkle(T); sparkles(T, D.spark[0], D.spark[1], 140, 8);
+              await T.cut(cutPic('cut_door', (svg, art) => art && cutText(T, svg, 300, 286, '활짝!', 64)), { hold: 1800 });
+              if (shiverA) { shiverA.cancel(); shiverA = null; }
+            })();
+          }
+        },
+        fx(n) {
+          if (n === 'knock') SND.knock(T); else if (n === 'sparkle') SND.sparkle(T); else if (n === 'jingle') SND.tune(T); else if (n === 'step') SND.step(T); else AudioFX.sfx('pop');
+        },
+        pop(spec) { const a = String(spec).split(','); T.pop(+a[0], +a[1], a.slice(2).join(','), C.bean); },
+      };
+      acts.hop = ((orig) => (op, a1, a2) => {
+        if (op === 'at') return hopAt(...String(a1).split(',').map(v => (isNaN(+v) ? v : +v)));
+        return orig(op, a1, a2);
+      })(acts.hop);
+      return acts;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     await T.curtain(true);
     await say('여름이에요. 개미들이 줄지어 먹이를 날라요.'); // 개미 영차·베짱이 연주는 저절로 (2026-10-19)
     SND.yeongcha(T, 3); ants.forEach((a, i) => setTimeout(() => a.hop(18, 300), i * 90));
@@ -1061,5 +1357,5 @@
     return '미리 준비하고, 함께 나누면 모두 따뜻해요!';
   }
 
-  Tale.mount({ title: '개미와 베짱이', subtitle: '사계절 이야기', run: T => run(Tale.api) });
+  Tale.mount({ title: '개미와 베짱이', subtitle: '사계절 이야기', read: true, run: T => run(Tale.api) });
 })();
