@@ -279,6 +279,215 @@
       noFace: ['mom', 'baby', 'babyb', 'babyc'],
     });
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 놀이판 그림·연출을 누르기 없이 감싼 얇은 함수 =================
+       set 은 놀이판 장면 배경과 배우 자리를 깐다(연못·풀밭·키재기·밤 연못). 풀밭의 황소는 놀이판처럼 어두운 그림자로 먼저 보이다 들여다보기 창으로 부위를 보이고,
+       마지막에 환히 드러난다. 엄마개구리 부풀기·날기·퐁당은 눌러서 하던 것을 저절로 한다. */
+    const inst = () => T.readInstant();
+    const rOn = a => a && a.pos.isConnected;
+    const ROX = [520, ART.ox_stand ? 522 : 540];
+    let rScene = '', rpads = pads, rMeadow = 0, rPond = 0, rSteps = 0, rMomJump = false, rox = null, rpeek = null, rPeekPart = '', runcle = null, rFly = null, rWhoosh = null, rSilh = false, rStars = null;
+    const babyPos = () => (rScene === 'night' ? [0, 1, 3] : [0, 1, 4]).map(i => rpads[i]);
+    const meadowX = i => (rMeadow >= 3 ? 120 : 20 + rSteps * 50) + i * 50;
+    const stopFly = () => { if (rFly) { rFly.cancel(); rFly = null; } if (rWhoosh) { clearInterval(rWhoosh); rWhoosh = null; } };
+    const momReset = () => { mom.body.style.transition = ''; mom.body.style.transform = ''; };
+    const oxAt = () => (rMeadow >= 3 ? [760, 530] : ROX);
+    const oxShow = pose => {
+      if (!rox) { rox = actor(T.world, ...oxAt(), g => { oxArt = drawOx(T, g, { pose: 'stand' }); }, { scale: 1 }); oxActor = rox; }
+      if (!rox.pos.isConnected) T.world.appendChild(rox.pos);
+      const [x, y] = oxAt(); rox.place(x, y);
+      if (pose && oxArt && oxArt.set) oxArt.set(pose);
+      return rox;
+    };
+    const croakBaby = i => { AudioFX.animalNote('frog', [1.19, 1.0, 1.33][i], .85) || croak(T, 420); };
+    const rCam = (x, z = 1, ms = 700) => (inst() ? camSnap(x, 280, z) : camTo(x, 280, z, ms));
+    const rFx = {
+      ribbit: () => croak(T, 400), splash: () => AudioFX.splash(), thud: () => AudioFX.thud(), whoosh: () => AudioFX.whoosh(),
+      boing: () => AudioFX.sfx('hop') || AudioFX.hop(),
+    };
+    const R = {
+      set(key) {
+        stopFly(); rScene = key; rpeek = null; rSilh = false; rMomJump = false; rStars = null; momReset();
+        if (key === 'meadow') { rMeadow++; rSteps = rMeadow >= 2 ? 3 : 0; }
+        if (key === 'pond' || key === 'night') rPond++;
+        T.clear(); camSnap(500, 280, 1);
+        momArt.set('base'); runcle = null;
+        babies.forEach(b => { b.parts.lids.setAttribute('opacity', 0); b.parts.hands.setAttribute('opacity', 0); });
+        if (key === 'pond' || key === 'night') {
+          rpads = pondBG(T, key === 'night', 1);
+          const front = key === 'pond' && rPond >= 3;   /* 연못가(부풀기)는 앞 연잎 */
+          if (front && ART.bg_pond) padAt(T, 520, 500);
+          T.world.appendChild(mom.pos); mom.place(...(front ? [520, 500] : [rpads[2][0], rpads[2][1]]));
+          babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(babyS); b.place(...babyPos()[i]); });
+        } else if (key === 'meadow') {
+          grassBG(T);
+          babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(.9); b.place(meadowX(i), 490); });
+          rCam(T.portrait() ? babies[1].x : 500, 1, 0);
+        } else if (key === 'chart') {
+          rChartFloor = chartBG(T) || 470; rChart = [];
+        }
+      },
+      babies(verb) {
+        if (verb === 'pads') { babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(babyS); b.place(...babyPos()[i]); }); return; }
+        if (verb === 'sleep') { babies.forEach(b => b.parts.lids.setAttribute('opacity', 1)); return; }
+        if (verb === 'wake') {
+          babies.forEach(b => b.parts.lids.setAttribute('opacity', 0));
+          if (inst()) return;
+          babies.forEach((b, i) => setTimeout(() => { b.hop(40); croakBaby(i); T.pop(T.portrait() ? Math.max(300, Math.min(700, b.x)) : b.x, b.y - 80, '개굴!', C.pine); }, i * 260));
+          return sleep(900);
+        }
+        if (verb === 'hide') { babies.forEach(b => { if (b.pos.isConnected) b.pos.remove(); }); return; }
+        if (verb === 'run') {   /* 황소를 보고 깜짝 놀라 왼쪽으로 도망 */
+          if (inst()) return;
+          const ps = babies.map((b, i) => { b.hop(36, 360); return b.move(-90 - i * 20, 490, 900, 'ease-in'); });
+          croak(T, 520);
+          return Promise.all(ps);
+        }
+        if (verb === 'hop') {
+          if (rScene === 'meadow' && rSteps < 3) {
+            rSteps++;
+            if (inst()) { babies.forEach((b, i) => b.place(meadowX(i), 490)); return; }
+            babies.forEach((b, k) => setTimeout(() => { croak(T, 380 + k * 40); b.move(meadowX(k), 490, 420); b.hop(40, 420); }, k * 90));
+            if (T.portrait()) camTo(meadowX(1), 280, 1, 500);
+            return sleep(800);
+          }
+          if (inst()) return;
+          babies.forEach((b, k) => setTimeout(() => { croak(T, 380 + k * 40); b.hop(rScene === 'meadow' ? 40 : 30, 420); }, k * 90));
+          return sleep(600);
+        }
+        if (verb === 'pads') return;
+        console.warn('[read] babies 동사 모름', verb);
+      },
+      baby(i, verb) { const b = babies[+i]; if (!b || verb !== 'hop') return; b.hop(32, 400); croakBaby(+i); },
+      mom(verb, n) {
+        if (verb === 'base') { stopFly(); momReset(); momArt.set('base'); mom.pos.removeAttribute('transform'); mom.place(mom.x, mom.y); return; }
+        if (verb === 'at') { const [x, y] = String(n).split(',').map(Number); T.world.appendChild(mom.pos); mom.place(x, y); return; }
+        if (verb === 'puffed') {
+          const i = +n;
+          if (i >= 5) momArt.set('puffed');
+          if (!inst()) { T.tone([200 + i * 40, 420 + i * 40], .25, { type: 'sine', vol: .18 }); mom.body.style.transition = 'transform .35s cubic-bezier(.3,1.6,.5,1)'; }
+          else mom.body.style.transition = '';
+          mom.body.style.transform = `scale(${SIZES_R[i] * 1.08}, ${SIZES_R[i]})`;
+          if (i >= 8 && !inst()) { rShiver = mom.body.animate([{ translate: '0 0' }, { translate: '4px 0' }, { translate: '-4px 0' }], { duration: 120, iterations: Infinity }); }
+          else if (i >= 8) rShiver = mom.body.animate([{ translate: '0 0' }, { translate: '4px 0' }, { translate: '-4px 0' }], { duration: 120, iterations: Infinity });
+          return;
+        }
+        if (verb === 'flying') {
+          if (rShiver) { rShiver.cancel(); rShiver = null; }
+          momArt.set('flying');
+          mom.body.style.transition = 'transform 3s linear'; mom.body.style.transform = 'scale(1.6)';
+          const fz = T.portrait() ? .72 : 1; if (fz < 1) camSnap(500, 280, fz);
+          const fk = Math.min(1, (T.viewWidth() / 2 / fz - 150) / 320), FX = x => Math.round(500 + (x - 500) * fk);
+          mom.pos.removeAttribute('transform');
+          rFly = mom.pos.animate([
+            { transform: `translate(${FX(520)}px,500px)` }, { transform: `translate(${FX(760)}px,220px) rotate(40deg)` }, { transform: `translate(${FX(300)}px,160px) rotate(-30deg)` },
+            { transform: `translate(${FX(820)}px,380px) rotate(60deg)` }, { transform: `translate(${FX(200)}px,330px) rotate(-50deg)` }, { transform: `translate(${FX(520)}px,200px)` },
+          ], { duration: 7000, iterations: Infinity, easing: 'ease-in-out' });
+          rWhoosh = setInterval(() => T.tone([900, 300], .35, { type: 'sawtooth', vol: .06 }), 1000);
+          return;
+        }
+        if (verb === 'dizzy') {
+          stopFly(); if (rShiver) { rShiver.cancel(); rShiver = null; } momReset();
+          camSnap(500, 280, 1);
+          mom.place(500, 468); momArt.set('dizzy');
+          if (!inst()) {
+            const stars = el('g', { transform: 'translate(500,370)' }, T.fx);
+            for (let k = 0; k < 3; k++) el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(28 0)` }, stars);
+            stars.animate([{ transform: 'translate(500px,370px) rotate(0)' }, { transform: 'translate(500px,370px) rotate(360deg)' }], { duration: 1200, iterations: 3 });
+            [0, .15, .3].forEach(w => T.tone([700, 500], .12, { type: 'triangle', vol: .14, when: w }));
+            setTimeout(() => stars.remove(), 3800);
+          }
+          return;
+        }
+        if (verb === 'hop') {
+          if (rScene === 'meadow' && !rMomJump) {   /* 풀밭을 가로질러 멀리멀리 */
+            rMomJump = true; croak(T, 460);
+            if (inst()) { mom.place(470, 470); return; }
+            mom.hop(90, 1000);
+            return mom.move(470, 470, 1000, 'ease-out');
+          }
+          if (inst()) return;
+          croak(T, 440); return mom.hop(36, 420);
+        }
+        console.warn('[read] mom 동사 모름', verb);
+      },
+      ox(verb, part) {
+        if (verb === 'hide') { if (rox && rox.pos.isConnected) rox.pos.remove(); return; }
+        if (verb === 'show') {
+          const o = oxShow('stand'); rSilh = true; o.body.style.filter = 'brightness(.18)';   /* 아직 무엇인지 모르는 어두운 그림자 */
+          if (!inst()) fadeInR(o.pos);
+          return;
+        }
+        if (verb === 'part') {
+          const first = !rpeek;
+          if (first) {
+            oxShow('stand'); rox.body.style.filter = 'brightness(.18)'; rSilh = true;
+            rpeek = oxPeek(T, ROX);
+            babies.forEach(b => { if (b.pos.isConnected) T.world.appendChild(b.pos); });
+          }
+          const swap = !!rPeekPart; rPeekPart = part;
+          return rpeek.show(part, swap);
+        }
+        if (verb === 'stand' || verb === 'kneel' || verb === 'jumpfail') {
+          const hadPeek = !!rpeek;
+          const o = oxShow(verb);
+          if (hadPeek) { const p = rpeek; rpeek = null; rPeekPart = ''; o.body.style.filter = ''; rSilh = false; return (async () => { await p.hide(); T.world.appendChild(o.pos); await camTo(500, 280, 1, 900); })(); }
+          if (rSilh) { o.body.style.filter = ''; rSilh = false; }
+          if (verb === 'jumpfail' && !inst()) { T.anim(o.pos, [{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], 400); }
+          return;
+        }
+        console.warn('[read] ox 동사 모름', verb);
+      },
+      chart(verb) {
+        if (verb !== 'line') return;
+        const spec = [['tadpole', 150, 1.5], ['frog', 310, 1.4], ['duck', 480, 1], ['sheep', 660, 1], ['ox', 850, .62]];
+        const pt = T.portrait(), vw = T.viewWidth(), z = Math.min(1, vw / 760);
+        if (pt) camSnap(500, 280, z);
+        return (async () => {
+          for (const [k, x, s] of spec) {
+            const a = actor(T.world, x, rChartFloor, g => ANIMALS[k].draw(T, g), { scale: s });
+            if (!inst()) { fadeInR(a.pos, 300); a.hop(18, 300); await sleep(450); }
+          }
+        })();
+      },
+      uncle(verb) {
+        if (verb !== 'show') return;
+        if (!rOn(runcle)) { runcle = actor(T.world, rpads[4][0], rpads[4][1], g => sprite(T, g, 'uncle', 110, 108) || drawFrog(T, g, { color: '#58805a' }), { scale: 1.05 }); }
+        if (!inst()) fadeInR(runcle.pos);
+      },
+      cut(k) {
+        const SF = { monster: ['cut_monster', 'surprise', 3000], pop: ['cut_pop', 'boom'], fly: ['cut_fly', 'whoosh', 2000], splash: ['cut_splash', 'splash', 2200], jump: ['cut_jump', 'boing', 3000] };
+        const c = SF[k]; if (!c) return console.warn('[read] cut 모름', k);
+        if (k === 'splash') { stopFly(); momReset(); mom.place(500, 468); camSnap(500, 280, 1); }
+        return cutArt(T, [c]);
+      },
+      vo(k) { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); },
+      fx(n) { const f = rFx[n]; if (f) return f(); },
+      pop(spec) {
+        const [x, y, ...w] = String(spec).split(','), t = w.join(',');
+        T.pop(inV(+x), +y, t, /퐁당/.test(t) ? C.indigo : /개굴/.test(t) ? C.pine : undefined);
+      },
+      cam(a) {
+        if (a === 'wide') return inst() ? camSnap(500, 280, 1) : camTo(500, 280, 1, 700);
+        const [x, y, z] = String(a).split(',').map(Number); return inst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 700);
+      },
+      chorus(verb) {
+        const frogs = [babies[0], babies[1], mom, babies[2]];
+        if (verb === 'sing') {
+          const uncle = runcle;
+          const croakNote = (n, d = .4) => { const r = Math.pow(2, (T.semi(n) - 4) / 12); AudioFX.animalNote('frog', r, .75, 0, Math.min(d, .5)) || T.tone(T.hz(n), Math.min(d, .5), { type: 'triangle', vol: .22 }); };
+          const bass = () => { AudioFX.animalNote('frog', .55, .6, 0, .6) || T.tone(130, .5, { type: 'triangle', vol: .2 }); if (uncle) uncle.hop(14, 300); };
+          const TW = T.parseSong('C4:1 C4:1 G4:1 G4:1 A4:1 A4:1 G4:2 F4:1 F4:1 E4:1 E4:1 D4:1 D4:1 C4:2');
+          return T.playMelody(TW, { beat: .5, voice: (n, d, i) => { croakNote(n, d); if (i === 0 || i === 7) bass(); }, onNote: i => frogs[i % 4].hop(22, 300) });
+        }
+        if (verb === 'fade') { babies.forEach(b => b.parts.lids.setAttribute('opacity', 1)); return; }
+      },
+    };
+    const SIZES_R = [1, 1.35, 1.7, 2.05, 2.4, 2.75, 3.1, 3.4, 3.65];
+    let rShiver = null, rChartFloor = 470, rChart = [];
+    const fadeInR = (n, ms = 500) => n.animate([{ opacity: 0 }, { opacity: 1 }], ms);
+    const READ_ACTS = { set: R.set, babies: R.babies, baby: R.baby, mom: R.mom, ox: R.ox, chart: R.chart, uncle: R.uncle, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam, chorus: R.chorus };
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     await T.curtain(true);
     await say('연못에 아침이 왔어요. 아기 개구리들이 아직 쿨쿨 자고 있네요.');
     for (const [bi, b] of babies.entries()) {
@@ -608,5 +817,5 @@
     } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
-  Tale.mount({ title: '황소와 개구리', subtitle: '누가 더 클까?', run: T => run(portraitGuard(Tale.api)) });
+  Tale.mount({ title: '황소와 개구리', subtitle: '누가 더 클까?', read: true, run: T => run(portraitGuard(Tale.api)) });
 })();
