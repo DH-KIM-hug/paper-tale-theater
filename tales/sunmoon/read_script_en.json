@@ -1,0 +1,1405 @@
+{
+ "mode": "read",
+ "tale": "sunmoon",
+ "lang": "en",
+ "title": "The Sun and the Moon",
+ "voices_from": "voice_script_el.json",
+ "moral": "When a brother and sister care for each other and stick together, they can get through even the scariest night.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md §3-4). text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 voice_script_en.json 의 en 그대로, trim 은 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<cottage|kitchen|hill0|hill1|hill2|door|backyard|tree|wellTop|sky|sorghum|heaven>": "장면 세트(BG 키). houseBG/kitchenBG/hillBG(n)/doorBG/뒷마당·나무·우물·하늘·수수밭·해와 달 sceneCard 안의 배경 코드",
+  "cam:wide | cam:<x,y,z> | cam:snap:<x,y,z>": "카메라(camWide/camTo/camSnap)",
+  "mom:at:<x,y> | mom:walk:<x,y> | mom:face:<left|right> | mom:wave | mom:basket:<on|off> | mom:hide": "엄마 자리·걷기·손 흔들기·바구니",
+  "boy:at:<x,y> | boy:pose:<stand|climb|hug|rope> | boy:hop | boy:wave | girl:…": "오누이 자리·자세(drawKid pose)",
+  "kids:run | kids:hide:jar | kids:climb | kids:top | kids:rope:up": "오누이 연출(뒷마당 달리기, 장독 뒤 숨기, 나무 오르기, 꼭대기, 동아줄 오르기)",
+  "tiger:enter:<n> | tiger:peek | tiger:at:<x,y> | tiger:walk:<x,y> | tiger:hop | tiger:belly:<k> | tiger:wear:scarf | tiger:face:<left|right> | tiger:exit": "호랑이 등장(고개 바위 뒤에서 불쑥)·자리·배 부풀기·엄마 옷·퇴장",
+  "tiger:well | tiger:bucket | tiger:lookup | tiger:oil:slip | tiger:axe:climb | tiger:rope:bad | tiger:fall": "호랑이 연출(우물 들여다보기·두레박·올려다보기·미끄러짐·도끼 오르기·낡은 줄·떨어짐)",
+  "cake:fly:<n> | cake:plate:<n>": "떡 n개가 호랑이 입으로 날아감(fly) / 접시 보이기",
+  "door:hand:<tiger|flour> | door:hole | door:eye": "문틈의 손·창호지 구멍·구멍 너머 눈",
+  "rope:good | rope:bad | rope:snap | clouds:rise | oil:pour | sky:<day|night>": "동아줄·구름·참기름·해와 달 하늘",
+  "cut:<roar|gulp|mimic|creak|snap|bump>": "만화 컷 — 컷 속 외침(VOICE_LINES cut_*)을 그대로 재사용",
+  "fx:<pop|boing|chomp|gulp|whoosh|boom|thud|bell|jingle> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
+ },
+ "scenes": [
+  {
+   "key": "R01_cottage",
+   "card": "The Little Hut",
+   "set": "cottage",
+   "enter": [
+    "mom:at:610,500",
+    "boy:at:235,510",
+    "girl:at:385,510",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날 산골 오막살이에 엄마와 오누이가 살았어요.",
+     "src": "reuse",
+     "en": "Once upon a time, a mom and her two children, a brother and a sister, lived in a little hut in the mountains.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, a mom and her two children, a brother and a sister, lived in a little hut in the mountains."
+      ]
+     ]
+    },
+    {
+     "text": "오빠는 씩씩하고, 동생은 웃음이 많았지요.",
+     "src": "new",
+     "en": "The brother was brave, and the little sister loved to giggle.",
+     "segs": [
+      [
+       "nar",
+       "The brother was brave, and the little sister loved to giggle."
+      ]
+     ]
+    },
+    {
+     "text": "아침이 되자 엄마가 일하러 나갈 채비를 했어요.",
+     "src": "new",
+     "en": "When morning came, Mom got ready to go to work.",
+     "segs": [
+      [
+       "nar",
+       "When morning came, Mom got ready to go to work."
+      ]
+     ],
+     "after": [
+      "mom:wave"
+     ]
+    },
+    {
+     "text": "\"다녀오세요!\" 오누이는 손을 흔들며 인사했어요.",
+     "src": "new",
+     "en": "\"Take care, Mom!\" The brother and sister waved goodbye.",
+     "segs": [
+      [
+       "boy",
+       "Take care, Mom!",
+       "happy:1.2"
+      ],
+      [
+       "nar",
+       "The brother and sister waved goodbye."
+      ]
+     ],
+     "before": [
+      "boy:wave",
+      "girl:wave",
+      "fx:pop"
+     ]
+    },
+    {
+     "text": "엄마가 말했어요. \"문 꼭 잠그고 엄마 기다려라~\"",
+     "src": "reuse",
+     "en": "Mom said, \"Lock the door tight and wait for Mom~\"",
+     "segs": [
+      [
+       "nar",
+       "Mom said,"
+      ],
+      [
+       "mom",
+       "Lock the door tight and wait for Mom~",
+       "happy:0.9"
+      ]
+     ],
+     "after": [
+      "mom:face:right",
+      "mom:walk:1180,500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_kitchen",
+   "card": "The Rich Family's Kitchen",
+   "set": "kitchen",
+   "enter": [
+    "mom:at:300,520",
+    "mom:basket:off",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "엄마는 부잣집에서 하루 종일 부지런히 일했어요.",
+     "src": "reuse",
+     "en": "Mom worked hard all day long at the rich family's house.",
+     "segs": [
+      [
+       "nar",
+       "Mom worked hard all day long at the rich family's house."
+      ]
+     ]
+    },
+    {
+     "text": "쌀을 씻고, 불을 때고, 떡을 찌고. 해가 기울 때까지 쉬지 않았지요.",
+     "src": "new",
+     "en": "She washed the rice, fed the fire, and steamed the rice cakes. She did not rest until the sun went down.",
+     "segs": [
+      [
+       "nar",
+       "She washed the rice, fed the fire, and steamed the rice cakes. She did not rest until the sun went down."
+      ]
+     ]
+    },
+    {
+     "text": "저녁이 되자 부잣집 주인이 떡을 한 아름 내주었어요.",
+     "src": "new",
+     "en": "When evening came, the lady of the house gave her a big armful of rice cakes.",
+     "segs": [
+      [
+       "nar",
+       "When evening came, the lady of the house gave her a big armful of rice cakes."
+      ]
+     ]
+    },
+    {
+     "text": "\"수고했어요. 떡 가져가요!\"",
+     "src": "trim",
+     "from": "\"수고했어요. 떡 가져가요!\" 떡을 하나씩 톡! 세면서 담아요.",
+     "en": "Thank you for your hard work. Take these rice cakes!",
+     "segs": [
+      [
+       "rich",
+       "Thank you for your hard work. Take these rice cakes!",
+       "happy:1.1"
+      ]
+     ],
+     "after": [
+      "cake:fly:5",
+      "mom:basket:on"
+     ]
+    },
+    {
+     "text": "떡을 바구니 가득 받았어요! \"우리 아이들이 좋아하겠다!\" 엄마는 서둘러 집으로 떠났어요.",
+     "src": "reuse",
+     "en": "The basket is full of rice cakes! \"The children will love these!\" Mom hurried off toward home.",
+     "segs": [
+      [
+       "nar",
+       "The basket is full of rice cakes!",
+       "happy:1.2"
+      ],
+      [
+       "mom",
+       "The children will love these!",
+       "happy:1.3"
+      ],
+      [
+       "nar",
+       "Mom hurried off toward home."
+      ]
+     ],
+     "after": [
+      "mom:walk:1180,500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_hill1",
+   "card": "The First Hill",
+   "set": "hill0",
+   "enter": [
+    "tiger:at:760,662",
+    "mom:at:-120,500",
+    "mom:face:right",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "해가 뉘엿뉘엿 지고 있어요. 엄마가 첫째 고개를 넘어요.",
+     "src": "reuse",
+     "en": "The sun is slowly setting. Mom is crossing the first hill.",
+     "segs": [
+      [
+       "nar",
+       "The sun is slowly setting. Mom is crossing the first hill."
+      ]
+     ],
+     "after": [
+      "mom:walk:300,500"
+     ]
+    },
+    {
+     "text": "그때 바위 뒤에서 무언가 불쑥! 커다란 호랑이였어요.",
+     "src": "new",
+     "en": "Then, from behind the rock, something popped out! It was a great big tiger.",
+     "segs": [
+      [
+       "nar",
+       "Then, from behind the rock, something popped out! It was a great big tiger."
+      ]
+     ],
+     "before": [
+      "fx:boing",
+      "pop:760,250,불쑥!",
+      "tiger:enter:0",
+      "cam:630,330,1.6"
+     ]
+    },
+    {
+     "text": "\"어흥! 떡 한 개 주면 안 잡아먹지!\"",
+     "src": "reuse",
+     "en": "\"Roar! Give me one rice cake, and I won't eat you!\"",
+     "segs": [
+      [
+       "tiger",
+       "Roar! Give me one rice cake, and I won't eat you!",
+       "angry:1.6"
+      ]
+     ],
+     "after": [
+      "cam:wide"
+     ]
+    },
+    {
+     "text": "엄마는 떨리는 손으로 떡 한 개를 꺼내 주었어요.",
+     "src": "new",
+     "en": "With a trembling hand, Mom took out one rice cake and gave it to the tiger.",
+     "segs": [
+      [
+       "nar",
+       "With a trembling hand, Mom took out one rice cake and gave it to the tiger."
+      ]
+     ],
+     "after": [
+      "cake:fly:1",
+      "fx:chomp"
+     ]
+    },
+    {
+     "text": "호랑이는 떡 한 개를 꿀꺽! 배가 볼록해졌어요.",
+     "src": "reuse",
+     "en": "The tiger gulps down one rice cake! What a round tummy!",
+     "segs": [
+      [
+       "nar",
+       "The tiger gulps down one rice cake! What a round tummy!"
+      ]
+     ],
+     "before": [
+      "tiger:belly:1.4"
+     ],
+     "after": [
+      "fx:whoosh",
+      "tiger:exit",
+      "mom:walk:1180,500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_hill2",
+   "card": "The Second Hill",
+   "set": "hill1",
+   "enter": [
+    "tiger:at:760,662",
+    "mom:at:-120,500",
+    "mom:face:right",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "하늘이 붉어졌어요. 엄마가 둘째 고개를 넘어요.",
+     "src": "reuse",
+     "en": "The sky has turned red. Mom is crossing the second hill.",
+     "segs": [
+      [
+       "nar",
+       "The sky has turned red. Mom is crossing the second hill.",
+       "tonedown:1.0"
+      ]
+     ],
+     "after": [
+      "mom:walk:300,500"
+     ]
+    },
+    {
+     "text": "그런데 또 바위 뒤에서 불쑥! 아까 그 호랑이가 또 나타났어요.",
+     "src": "new",
+     "en": "But then, from behind another rock, pop! The very same tiger appeared again.",
+     "segs": [
+      [
+       "nar",
+       "But then, from behind another rock, pop! The very same tiger appeared again."
+      ]
+     ],
+     "before": [
+      "fx:boing",
+      "pop:760,250,또 왔어!",
+      "tiger:enter:1",
+      "cam:630,330,1.6"
+     ]
+    },
+    {
+     "text": "\"어흥! 떡 두 개 주면 안 잡아먹지!\"",
+     "src": "reuse",
+     "en": "\"Roar! Give me two rice cakes, and I won't eat you!\"",
+     "segs": [
+      [
+       "tiger",
+       "Roar! Give me two rice cakes, and I won't eat you!",
+       "angry:1.6"
+      ]
+     ],
+     "after": [
+      "cam:wide"
+     ]
+    },
+    {
+     "text": "엄마는 바구니에서 떡 두 개를 꺼내 주었어요.",
+     "src": "new",
+     "en": "Mom took two rice cakes out of the basket and gave them to the tiger.",
+     "segs": [
+      [
+       "nar",
+       "Mom took two rice cakes out of the basket and gave them to the tiger."
+      ]
+     ],
+     "after": [
+      "cake:fly:2",
+      "fx:chomp"
+     ]
+    },
+    {
+     "text": "떡 두 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     "src": "reuse",
+     "en": "Gulp! Two more rice cakes! The tiger's tummy gets even rounder.",
+     "segs": [
+      [
+       "nar",
+       "Gulp! Two more rice cakes! The tiger's tummy gets even rounder."
+      ]
+     ],
+     "before": [
+      "tiger:belly:1.9"
+     ],
+     "after": [
+      "fx:whoosh",
+      "tiger:exit",
+      "mom:walk:1180,500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_hill3",
+   "card": "The Third Hill",
+   "set": "hill2",
+   "enter": [
+    "tiger:at:760,662",
+    "mom:at:-120,500",
+    "mom:face:right",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.",
+     "src": "reuse",
+     "en": "It is a dark, dark night. Mom is crossing the third hill.",
+     "segs": [
+      [
+       "nar",
+       "It is a dark, dark night. Mom is crossing the third hill.",
+       "tonedown:1.3"
+      ]
+     ],
+     "after": [
+      "mom:walk:300,500"
+     ]
+    },
+    {
+     "text": "바위 뒤에서 또다시 불쑥! 호랑이 눈이 어둠 속에서 번쩍였어요.",
+     "src": "new",
+     "en": "From behind the rock, pop, there it was again! The tiger's eyes glowed in the dark.",
+     "segs": [
+      [
+       "nar",
+       "From behind the rock, pop, there it was again! The tiger's eyes glowed in the dark."
+      ]
+     ],
+     "before": [
+      "fx:boing",
+      "tiger:enter:2",
+      "cam:630,330,1.6"
+     ]
+    },
+    {
+     "text": "\"어흥! 남은 떡 몽땅 주면 안 잡아먹지!\"",
+     "src": "reuse",
+     "en": "\"Roar! Give me all the leftover rice cakes, and I won't eat you!\"",
+     "segs": [
+      [
+       "tiger",
+       "Roar! Give me all the leftover rice cakes, and I won't eat you!",
+       "angry:1.7"
+      ]
+     ],
+     "after": [
+      "cam:wide"
+     ]
+    },
+    {
+     "text": "남은 떡을 몽땅 꿀꺽! 배가 빵빵해졌어요!",
+     "src": "reuse",
+     "en": "The tiger gulps down all the leftover rice cakes! What a big, round tummy!",
+     "segs": [
+      [
+       "nar",
+       "The tiger gulps down all the leftover rice cakes! What a big, round tummy!"
+      ]
+     ],
+     "before": [
+      "cake:fly:3",
+      "fx:chomp",
+      "tiger:belly:3.4"
+     ]
+    },
+    {
+     "text": "엄마는 텅 빈 바구니를 꼭 끌어안았어요.",
+     "src": "new",
+     "en": "Mom hugged the empty basket tight.",
+     "segs": [
+      [
+       "nar",
+       "Mom hugged the empty basket tight."
+      ]
+     ]
+    },
+    {
+     "text": "떡이 다 떨어지자 호랑이가 말했어요. \"떡이 없으면 너를 잡아먹어야지!\"",
+     "src": "reuse",
+     "en": "When the rice cakes were all gone, the tiger said, \"No more rice cakes? Then I'll have to eat you!\"",
+     "segs": [
+      [
+       "nar",
+       "When the rice cakes were all gone, the tiger said,",
+       "tonedown:1.2"
+      ],
+      [
+       "tiger",
+       "No more rice cakes? Then I'll have to eat you!",
+       "angry:1.8"
+      ]
+     ],
+     "after": [
+      "shake",
+      "cut:roar"
+     ]
+    },
+    {
+     "text": "호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.",
+     "src": "reuse",
+     "en": "The tiger ate Mom up with one big gulp.",
+     "segs": [
+      [
+       "nar",
+       "The tiger ate Mom up with one big gulp.",
+       "sad:1.0"
+      ]
+     ],
+     "before": [
+      "mom:hide",
+      "cut:gulp"
+     ]
+    },
+    {
+     "text": "호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.",
+     "src": "reuse",
+     "en": "The tiger put on Mom's clothes and went to the house where the brother and sister were waiting.",
+     "segs": [
+      [
+       "nar",
+       "The tiger put on Mom's clothes and went to the house where the brother and sister were waiting.",
+       "tonedown:1.2"
+      ]
+     ],
+     "before": [
+      "tiger:wear:scarf",
+      "cut:mimic"
+     ],
+     "after": [
+      "tiger:face:right",
+      "tiger:walk:1250,480"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_door",
+   "card": "The Tiger at the Door",
+   "set": "door",
+   "enter": [
+    "boy:at:330,520",
+    "girl:at:470,520",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "집에서는 오누이가 엄마를 기다리고 있었어요. 밤은 점점 깊어졌지요.",
+     "src": "new",
+     "en": "Back at home, the brother and sister were waiting for Mom. The night grew darker and darker.",
+     "segs": [
+      [
+       "nar",
+       "Back at home, the brother and sister were waiting for Mom. The night grew darker and darker."
+      ]
+     ]
+    },
+    {
+     "text": "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.",
+     "src": "reuse",
+     "en": "Knock, knock, knock. \"Kids~ Mom's home. Open the door~\" The voice is rough and raspy.",
+     "segs": [
+      [
+       "nar",
+       "Knock, knock, knock.",
+       "whisper"
+      ],
+      [
+       "tiger",
+       "Kids~ Mom's home. Open the door~",
+       "tonedown:1.5"
+      ],
+      [
+       "nar",
+       "The voice is rough and raspy.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "fx:knock"
+     ]
+    },
+    {
+     "text": "오누이는 고개를 갸웃했어요. 엄마 목소리는 다정하고 부드러운데 말이에요.",
+     "src": "new",
+     "en": "The children tilted their heads. Mom's voice was always warm and soft.",
+     "segs": [
+      [
+       "nar",
+       "The children tilted their heads. Mom's voice was always warm and soft."
+      ]
+     ]
+    },
+    {
+     "text": "오빠가 말했어요. \"우리 엄마 목소리가 아니에요! 손을 보여 주세요!\"",
+     "src": "reuse",
+     "en": "The brother said, \"That is not our mom's voice! Show us your hand!\"",
+     "segs": [
+      [
+       "nar",
+       "The brother said,"
+      ],
+      [
+       "boy",
+       "That is not our mom's voice! Show us your hand!",
+       "toneup:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "문틈으로 손 하나가 쑥 들어왔어요.",
+     "src": "new",
+     "en": "A hand slid in through the crack in the door.",
+     "segs": [
+      [
+       "nar",
+       "A hand slid in through the crack in the door."
+      ]
+     ],
+     "after": [
+      "door:hand:flour"
+     ]
+    },
+    {
+     "text": "그런데 문틈으로 들어온 손은… 하얀 밀가루 사이로 발톱이 쏙! 엄마 손이 아니에요!",
+     "src": "reuse",
+     "en": "But the hand through the crack in the door... Sharp claws poke out from the white flour! That is not Mom's hand!",
+     "segs": [
+      [
+       "nar",
+       "But the hand through the crack in the door... Sharp claws poke out from the white flour! That is not Mom's hand!",
+       "tonedown:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "문밖에 누가 있는지 보고 싶어요.",
+     "src": "trim",
+     "from": "문밖에 누가 있는지 보고 싶어요. 창호지를 손가락으로 콕 뚫어 볼까요?",
+     "en": "We want to see who is outside.",
+     "segs": [
+      [
+       "nar",
+       "We want to see who is outside.",
+       "whisper"
+      ]
+     ]
+    },
+    {
+     "text": "오빠가 창호지에 손가락으로 살며시 구멍을 냈어요.",
+     "src": "new",
+     "en": "The brother quietly poked a little hole in the paper door with his finger.",
+     "segs": [
+      [
+       "nar",
+       "The brother quietly poked a little hole in the paper door with his finger."
+      ]
+     ],
+     "after": [
+      "door:hole"
+     ]
+    },
+    {
+     "text": "구멍 너머에 커다랗고 동그란 눈이 깜빡깜빡! 호랑이예요!",
+     "src": "reuse",
+     "en": "Through the hole, a big round eye blinks and blinks! It is the tiger!",
+     "segs": [
+      [
+       "nar",
+       "Through the hole, a big round eye blinks and blinks! It is the tiger!",
+       "toneup:1.4"
+      ]
+     ],
+     "before": [
+      "door:eye"
+     ]
+    },
+    {
+     "text": "오빠가 속삭였어요. \"쉿, 뒷문으로 살금살금 도망가자!\"",
+     "src": "reuse",
+     "en": "The brother whispered, \"Shh, let's tiptoe out the back door!\"",
+     "segs": [
+      [
+       "nar",
+       "The brother whispered,",
+       "whisper"
+      ],
+      [
+       "boy",
+       "Shh, let's tiptoe out the back door!",
+       "whisper"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_backyard",
+   "card": "The Backyard",
+   "set": "backyard",
+   "enter": [
+    "boy:at:260,520",
+    "girl:at:120,520",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "오누이는 뒷문으로 살금살금 나왔어요.",
+     "src": "reuse",
+     "en": "The children tiptoed out the back door.",
+     "segs": [
+      [
+       "nar",
+       "The children tiptoed out the back door.",
+       "happy:1.1"
+      ]
+     ],
+     "after": [
+      "kids:run"
+     ]
+    },
+    {
+     "text": "앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!",
+     "src": "reuse",
+     "en": "Oh! The tiger is coming! Hide behind the big jar!",
+     "segs": [
+      [
+       "nar",
+       "Oh! The tiger is coming! Hide behind the big jar!",
+       "happy:1.1"
+      ]
+     ],
+     "after": [
+      "kids:hide:jar"
+     ]
+    },
+    {
+     "text": "오누이는 숨을 꼭 참고 장독 뒤에 꼭 붙어 있었어요.",
+     "src": "new",
+     "en": "The children held their breath and pressed themselves tight against the big jar.",
+     "segs": [
+      [
+       "nar",
+       "The children held their breath and pressed themselves tight against the big jar."
+      ]
+     ]
+    },
+    {
+     "text": "\"오빠, 무서워…\" 동생이 오빠 손을 꼭 잡았어요.",
+     "src": "new",
+     "en": "\"Big brother, I am scared...\" The sister held her brother's hand tight.",
+     "segs": [
+      [
+       "girl",
+       "Big brother, I am scared...",
+       "whisper"
+      ],
+      [
+       "nar",
+       "The sister held her brother's hand tight."
+      ]
+     ]
+    },
+    {
+     "text": "\"얘들아~ 어디 갔니?\" 호랑이는 두리번두리번하다가 집 쪽으로 돌아갔어요.",
+     "src": "reuse",
+     "en": "\"Kids~ where did you go?\" The tiger looked around and around, then went back toward the house.",
+     "segs": [
+      [
+       "tiger",
+       "Kids~ where did you go?",
+       "tonedown:1.3"
+      ],
+      [
+       "nar",
+       "The tiger looked around and around, then went back toward the house."
+      ]
+     ],
+     "before": [
+      "tiger:at:900,520"
+     ],
+     "after": [
+      "tiger:exit"
+     ]
+    },
+    {
+     "text": "휴~ 이제 우물가 큰 나무로 달려가요!",
+     "src": "reuse",
+     "en": "Phew! Now run to the big tree by the well!",
+     "segs": [
+      [
+       "nar",
+       "Phew! Now run to the big tree by the well!",
+       "happy:1.1"
+      ]
+     ],
+     "after": [
+      "kids:run"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_tree",
+   "card": "The Tree by the Well",
+   "set": "tree",
+   "enter": [
+    "boy:at:460,560",
+    "girl:at:560,560",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "우물가에 커다란 나무가 있어요.",
+     "src": "trim",
+     "from": "우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.",
+     "en": "There is a big tree by the well.",
+     "segs": [
+      [
+       "nar",
+       "There is a big tree by the well.",
+       "happy:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "오누이는 영차영차, 나무를 타고 올라갔어요.",
+     "src": "new",
+     "en": "Heave-ho, heave-ho, the brother and sister climbed up the tree.",
+     "segs": [
+      [
+       "nar",
+       "Heave-ho, heave-ho, the brother and sister climbed up the tree."
+      ]
+     ],
+     "before": [
+      "kids:climb"
+     ]
+    },
+    {
+     "text": "오누이는 나무 꼭대기까지 올라갔어요!",
+     "src": "reuse",
+     "en": "The brother and sister climbed all the way to the top of the tree!",
+     "segs": [
+      [
+       "nar",
+       "The brother and sister climbed all the way to the top of the tree!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "kids:top"
+     ]
+    },
+    {
+     "text": "호랑이가 뒷마당에 왔어요. \"옳지! 우물 속에 숨었구나!\"",
+     "src": "reuse",
+     "en": "The tiger came to the backyard. \"Aha! They are hiding in the well!\"",
+     "segs": [
+      [
+       "nar",
+       "The tiger came to the backyard.",
+       "tonedown:1.2"
+      ],
+      [
+       "tiger",
+       "Aha! They are hiding in the well!",
+       "happy:1.4"
+      ]
+     ],
+     "before": [
+      "tiger:enter:well"
+     ]
+    },
+    {
+     "text": "호랑이가 우물 속을 들여다봤어요. 우물 물에 오누이 얼굴이 비쳤거든요!",
+     "src": "reuse",
+     "en": "The tiger peeked into the well. The brother's and sister's faces were shining in the water!",
+     "segs": [
+      [
+       "nar",
+       "The tiger peeked into the well. The brother's and sister's faces were shining in the water!"
+      ]
+     ],
+     "before": [
+      "set:wellTop",
+      "tiger:well"
+     ]
+    },
+    {
+     "text": "\"두레박으로 건져야지~\" 영차!",
+     "src": "reuse",
+     "en": "\"I'll scoop them up with the bucket~\" Heave-ho!",
+     "segs": [
+      [
+       "tiger",
+       "I'll scoop them up with the bucket~ Heave-ho!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "tiger:bucket"
+     ]
+    },
+    {
+     "text": "첨벙! 두레박에는 물만 가득.",
+     "src": "trim",
+     "from": "첨벙! 두레박에는 물만 가득. 우물 속 오누이 얼굴을 톡 눌러 봐요!",
+     "en": "Splash! The bucket is full of just water.",
+     "segs": [
+      [
+       "nar",
+       "Splash! The bucket is full of just water."
+      ]
+     ]
+    },
+    {
+     "text": "나무 위에서 오누이가 그만 킥킥 웃고 말았어요.",
+     "src": "reuse",
+     "en": "Up in the tree, the brother and sister couldn't help giggling.",
+     "segs": [
+      [
+       "nar",
+       "Up in the tree, the brother and sister couldn't help giggling."
+      ]
+     ],
+     "before": [
+      "set:tree",
+      "kids:top"
+     ]
+    },
+    {
+     "text": "\"어? 위에서 웃음소리가?\" 호랑이가 고개를 번쩍 들었어요.",
+     "src": "reuse",
+     "en": "\"Huh? A laugh from up above?\" The tiger looked up with a jerk.",
+     "segs": [
+      [
+       "tiger",
+       "Huh? A laugh from up above?",
+       "toneup:1.3"
+      ],
+      [
+       "nar",
+       "The tiger looked up with a jerk."
+      ]
+     ],
+     "before": [
+      "tiger:lookup"
+     ]
+    },
+    {
+     "text": "호랑이가 올려다보며 물었어요. \"얘들아, 거기 어떻게 올라갔니?\"",
+     "src": "reuse",
+     "en": "The tiger looked up and asked, \"Kids, how did you climb up there?\"",
+     "segs": [
+      [
+       "nar",
+       "The tiger looked up and asked,"
+      ],
+      [
+       "tiger",
+       "Kids, how did you climb up there?",
+       "tonedown:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "오빠가 꾀를 냈어요. \"참기름 바르고 올라왔지!\"",
+     "src": "reuse",
+     "en": "The brother thought up a trick. \"We rubbed on sesame oil and climbed up!\"",
+     "segs": [
+      [
+       "nar",
+       "The brother thought up a trick."
+      ],
+      [
+       "boy",
+       "We rubbed on sesame oil and climbed up!",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "호랑이는 참기름을 나무에 잔뜩 바르고 올라가려 했어요.",
+     "src": "new",
+     "en": "The tiger rubbed sesame oil all over the tree and tried to climb.",
+     "segs": [
+      [
+       "nar",
+       "The tiger rubbed sesame oil all over the tree and tried to climb."
+      ]
+     ],
+     "before": [
+      "oil:pour"
+     ]
+    },
+    {
+     "text": "미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.",
+     "src": "reuse",
+     "en": "Slip, slide! The tiger kept on slipping down.",
+     "segs": [
+      [
+       "nar",
+       "Slip, slide! The tiger kept on slipping down.",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "tiger:oil:slip"
+     ]
+    },
+    {
+     "text": "그때 동생이 깔깔 웃으며 말해 버렸어요. \"도끼로 콕콕 찍고 올라왔지~\"",
+     "src": "reuse",
+     "en": "Then the sister burst out laughing and blurted, \"We chopped with an axe, chop, chop, and climbed up~\"",
+     "segs": [
+      [
+       "nar",
+       "Then the sister burst out laughing and blurted,"
+      ],
+      [
+       "girl",
+       "We chopped with an axe, chop, chop, and climbed up~",
+       "happy:1.4"
+      ]
+     ]
+    },
+    {
+     "text": "오빠가 \"쉿!\" 했지만… 벌써 들어 버렸어요!",
+     "src": "reuse",
+     "en": "The brother said \"Shh!\" but... it was too late! The tiger had already heard!",
+     "segs": [
+      [
+       "nar",
+       "The brother said"
+      ],
+      [
+       "boy",
+       "Shh!",
+       "whisper"
+      ],
+      [
+       "nar",
+       "but... it was too late! The tiger had already heard!",
+       "tonedown:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "호랑이가 도끼로 콕콕 찍으며 올라와요! 오누이는 덜덜 떨었어요.",
+     "src": "reuse",
+     "en": "The tiger is climbing up, chopping with an axe! The brother and sister shivered and shook.",
+     "segs": [
+      [
+       "nar",
+       "The tiger is climbing up, chopping with an axe! The brother and sister shivered and shook.",
+       "tonedown:1.4"
+      ]
+     ],
+     "before": [
+      "tiger:axe:climb"
+     ],
+     "after": [
+      "boy:pose:hug",
+      "girl:pose:hug"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_rope",
+   "card": "The Rope from the Sky",
+   "set": "sky",
+   "enter": [
+    "boy:pose:hug",
+    "girl:pose:hug",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.",
+     "src": "reuse",
+     "en": "The tiger is getting closer and closer. The brother and sister put their hands together.",
+     "segs": [
+      [
+       "nar",
+       "The tiger is getting closer and closer. The brother and sister put their hands together.",
+       "whisper"
+      ]
+     ]
+    },
+    {
+     "text": "\"하늘님, 튼튼한 동아줄을 내려 주세요!\"",
+     "src": "reuse",
+     "en": "\"Dear Sky, please send down a strong rope!\"",
+     "segs": [
+      [
+       "boy",
+       "Dear Sky, please send down a strong rope!",
+       "sad:1.4"
+      ]
+     ]
+    },
+    {
+     "text": "그러자 하늘에서 굵은 동아줄이 스르르 내려왔어요!",
+     "src": "new",
+     "en": "And then, a thick rope came slowly down from the sky!",
+     "segs": [
+      [
+       "nar",
+       "And then, a thick rope came slowly down from the sky!"
+      ]
+     ],
+     "before": [
+      "rope:good"
+     ]
+    },
+    {
+     "text": "반짝이는 굵은 줄이 튼튼한 동아줄이에요!",
+     "src": "reuse",
+     "en": "The thick, shiny rope is the strong rope!",
+     "segs": [
+      [
+       "nar",
+       "The thick, shiny rope is the strong rope!"
+      ]
+     ]
+    },
+    {
+     "text": "줄을 꼭 잡고, 영차영차 올라가요!",
+     "src": "reuse",
+     "en": "Hold on tight and climb, heave-ho!",
+     "segs": [
+      [
+       "nar",
+       "Hold on tight and climb, heave-ho!",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "boy:pose:rope",
+      "girl:pose:rope"
+     ],
+     "after": [
+      "kids:rope:up"
+     ]
+    },
+    {
+     "text": "구름을 뚫고 쑥쑥!",
+     "src": "reuse",
+     "en": "Up through the clouds, whoosh, whoosh!",
+     "segs": [
+      [
+       "nar",
+       "Up through the clouds, whoosh, whoosh!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "clouds:rise"
+     ]
+    },
+    {
+     "text": "구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!",
+     "src": "reuse",
+     "en": "Through six layers of clouds, the brother and sister reached the land in the sky!",
+     "segs": [
+      [
+       "nar",
+       "Through six layers of clouds, the brother and sister reached the land in the sky!",
+       "happy:1.3"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_sorghum",
+   "card": "The Sorghum Field",
+   "set": "sorghum",
+   "enter": [
+    "tiger:at:500,560",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.",
+     "src": "reuse",
+     "en": "The tiger prayed to the sky too. And an old rope slid slowly down.",
+     "segs": [
+      [
+       "nar",
+       "The tiger prayed to the sky too. And an old rope slid slowly down."
+      ]
+     ],
+     "before": [
+      "rope:bad"
+     ]
+    },
+    {
+     "text": "\"어흥, 나도 올라가야지!\" 호랑이는 신이 나서 줄을 덥석 잡았어요.",
+     "src": "new",
+     "en": "\"Roar! I am going up too!\" The tiger was thrilled and grabbed the rope.",
+     "segs": [
+      [
+       "tiger",
+       "Roar! I am going up too!",
+       "happy:1.3"
+      ],
+      [
+       "nar",
+       "The tiger was thrilled and grabbed the rope."
+      ]
+     ]
+    },
+    {
+     "text": "호랑이는 낡은 줄을 타고 영차영차 올라갔어요.",
+     "src": "new",
+     "en": "Heave-ho, heave-ho, the tiger climbed up the old rope.",
+     "segs": [
+      [
+       "nar",
+       "Heave-ho, heave-ho, the tiger climbed up the old rope."
+      ]
+     ],
+     "after": [
+      "tiger:rope:bad",
+      "cut:creak"
+     ]
+    },
+    {
+     "text": "삐걱삐걱… 뚝! 줄이 그만 끊어지고 말았어요.",
+     "src": "new",
+     "en": "Creak, creak... Snap! The old rope broke right in two.",
+     "segs": [
+      [
+       "nar",
+       "Creak, creak... Snap! The old rope broke right in two."
+      ]
+     ],
+     "after": [
+      "rope:snap",
+      "cut:snap",
+      "tiger:fall"
+     ]
+    },
+    {
+     "text": "호랑이는 수수밭에 쿵! 하고 떨어졌어요.",
+     "src": "new",
+     "en": "The tiger tumbled down into the sorghum field with a great big thump!",
+     "segs": [
+      [
+       "nar",
+       "The tiger tumbled down into the sorghum field with a great big thump!"
+      ]
+     ],
+     "before": [
+      "fx:thud",
+      "shake",
+      "cut:bump"
+     ]
+    },
+    {
+     "text": "\"아이코 내 엉덩이! 아이코 내 머리!\" 호랑이 머리에 동그란 혹이 났어요.",
+     "src": "reuse",
+     "en": "\"Ouch, my bottom! Ouch, my head!\" A round bump popped up on the tiger's head.",
+     "segs": [
+      [
+       "tiger",
+       "Ouch, my bottom! Ouch, my head!",
+       "sad:1.8"
+      ],
+      [
+       "nar",
+       "A round bump popped up on the tiger's head.",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "호랑이는 혹을 달고 산속으로 줄행랑! 다시는 오지 않았대요.",
+     "src": "reuse",
+     "en": "The tiger ran off into the mountains with a bump on its head! And they say it never came back again.",
+     "segs": [
+      [
+       "nar",
+       "The tiger ran off into the mountains with a bump on its head! And they say it never came back again.",
+       "happy:1.3"
+      ]
+     ],
+     "after": [
+      "tiger:exit"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_heaven",
+   "card": "The Sun and the Moon",
+   "set": "heaven",
+   "enter": [
+    "sky:day",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.",
+     "src": "reuse",
+     "en": "In the land in the sky, the brother became the Sun, and the sister became the Moon.",
+     "segs": [
+      [
+       "nar",
+       "In the land in the sky, the brother became the Sun, and the sister became the Moon."
+      ]
+     ]
+    },
+    {
+     "text": "오빠는 낮에 환하게, 동생은 밤에 은은하게 세상을 비추었지요.",
+     "src": "new",
+     "en": "The brother shone bright in the day, and the sister glowed softly at night.",
+     "segs": [
+      [
+       "nar",
+       "The brother shone bright in the day, and the sister glowed softly at night."
+      ]
+     ]
+    },
+    {
+     "text": "동생이 말했어요. \"오빠, 나는 밤이 무서워요.\"",
+     "src": "reuse",
+     "en": "The sister said, \"Big brother, I am scared of the night.\"",
+     "segs": [
+      [
+       "nar",
+       "The sister said,"
+      ],
+      [
+       "girl",
+       "Big brother, I am scared of the night.",
+       "sad:1.2"
+      ]
+     ],
+     "before": [
+      "sky:night"
+     ]
+    },
+    {
+     "text": "\"그럼 우리 바꾸자!\"",
+     "src": "reuse",
+     "en": "\"Then let's switch!\"",
+     "segs": [
+      [
+       "boy",
+       "Then let's switch!",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "오빠는 동생을 위해 기꺼이 자리를 바꿔 주었어요.",
+     "src": "new",
+     "en": "The brother gladly switched places for his little sister.",
+     "segs": [
+      [
+       "nar",
+       "The brother gladly switched places for his little sister."
+      ]
+     ],
+     "after": [
+      "sky:day",
+      "fx:jingle"
+     ]
+    },
+    {
+     "text": "그래서 동생은 해님, 오빠는 달님이 되었답니다.",
+     "src": "reuse",
+     "en": "So the sister became the Sun, and the brother became the Moon.",
+     "segs": [
+      [
+       "nar",
+       "So the sister became the Sun, and the brother became the Moon.",
+       "happy:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.",
+     "src": "reuse",
+     "en": "Even today, the Sun and the Moon shine brightly on us from the sky.",
+     "segs": [
+      [
+       "nar",
+       "Even today, the Sun and the Moon shine brightly on us from the sky.",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "오누이처럼 서로 아끼고 힘을 모으면 무서운 일도 이겨 낼 수 있답니다.",
+     "src": "new",
+     "en": "When a brother and sister care for each other and stick together, they can get through even the scariest night.",
+     "segs": [
+      [
+       "nar",
+       "When a brother and sister care for each other and stick together, they can get through even the scariest night."
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

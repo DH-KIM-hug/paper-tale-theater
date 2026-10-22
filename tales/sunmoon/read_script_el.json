@@ -1,0 +1,1475 @@
+{
+ "mode": "read",
+ "tale": "sunmoon",
+ "lang": "ko",
+ "title": "해와 달이 된 오누이",
+ "voices_from": "voice_script_el.json",
+ "moral": "오누이처럼 서로 아끼고 힘을 모으면 무서운 일도 이겨 낼 수 있어요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md §3). 놀이판 장면 15개를 11장면으로 묶었다(문 앞 목소리·손·창호지 구멍은 한 사건 \"문 앞의 호랑이\"로, 세 고개는 그대로 셋). 뺀 것: 인사 조작, 떡 담기 세기, 접시 고르기 10가지, 목소리·손 고르기 퀴즈, 참기름·창호지·장독·나무·동아줄 누르기 안내, 해·달 누르기, 세기 숫자. 세 고개의 떡 수는 한 개·두 개·몽땅으로 고정(놀이판은 무작위). 하늘 동아줄은 원작대로 한 줄만 내려온다(놀이판의 두 줄 고르기는 뺌). 순화는 놀이판 그대로: 엄마가 잡아먹히는 장면은 화면에 보이지 않고 한 줄로 지나간다, 호랑이는 수수밭에 떨어져 혹만 달고 산으로 달아난다(원작의 피 흘림은 없음). 분량: 원래 대사가 긴 동화라 한국어 상한(2,200자)을 넘기지만 배율은 1.5배 근처로 맞췄다. 배역 신규는 오빠 1·동생 1·호랑이 1줄.",
+ "acts": {
+  "set:<cottage|kitchen|hill0|hill1|hill2|door|backyard|tree|wellTop|sky|sorghum|heaven>": "장면 세트(BG 키). houseBG/kitchenBG/hillBG(n)/doorBG/뒷마당·나무·우물·하늘·수수밭·해와 달 sceneCard 안의 배경 코드",
+  "cam:wide | cam:<x,y,z> | cam:snap:<x,y,z>": "카메라(camWide/camTo/camSnap)",
+  "mom:at:<x,y> | mom:walk:<x,y> | mom:face:<left|right> | mom:wave | mom:basket:<on|off> | mom:hide": "엄마 자리·걷기·손 흔들기·바구니",
+  "boy:at:<x,y> | boy:pose:<stand|climb|hug|rope> | boy:hop | boy:wave | girl:…": "오누이 자리·자세(drawKid pose)",
+  "kids:run | kids:hide:jar | kids:climb | kids:top | kids:rope:up": "오누이 연출(뒷마당 달리기, 장독 뒤 숨기, 나무 오르기, 꼭대기, 동아줄 오르기)",
+  "tiger:enter:<n> | tiger:peek | tiger:at:<x,y> | tiger:walk:<x,y> | tiger:hop | tiger:belly:<k> | tiger:wear:scarf | tiger:face:<left|right> | tiger:exit": "호랑이 등장(고개 바위 뒤에서 불쑥)·자리·배 부풀기·엄마 옷·퇴장",
+  "tiger:well | tiger:bucket | tiger:lookup | tiger:oil:slip | tiger:axe:climb | tiger:rope:bad | tiger:fall": "호랑이 연출(우물 들여다보기·두레박·올려다보기·미끄러짐·도끼 오르기·낡은 줄·떨어짐)",
+  "cake:fly:<n> | cake:plate:<n>": "떡 n개가 호랑이 입으로 날아감(fly) / 접시 보이기",
+  "door:hand:<tiger|flour> | door:hole | door:eye": "문틈의 손·창호지 구멍·구멍 너머 눈",
+  "rope:good | rope:bad | rope:snap | clouds:rise | oil:pour | sky:<day|night>": "동아줄·구름·참기름·해와 달 하늘",
+  "cut:<roar|gulp|mimic|creak|snap|bump>": "만화 컷 — 컷 속 외침(VOICE_LINES cut_*)을 그대로 재사용",
+  "fx:<pop|boing|chomp|gulp|whoosh|boom|thud|bell|jingle> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
+ },
+ "scenes": [
+  {
+   "key": "R01_cottage",
+   "card": "오막살이",
+   "set": "cottage",
+   "enter": [
+    "mom:at:610,500",
+    "boy:at:235,510",
+    "girl:at:385,510",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날 산골 오막살이에 엄마와 오누이가 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옛날 옛날 산골 오막살이에 엄마와 오누이가 살았어요.",
+       null,
+       "[calm, warm, storytelling, once upon a time, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "오빠는 씩씩하고, 동생은 웃음이 많았지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "오빠는 씩씩하고, 동생은 웃음이 많았지요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "아침이 되자 엄마가 일하러 나갈 채비를 했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아침이 되자 엄마가 일하러 나갈 채비를 했어요.",
+       null,
+       "[warm, light, storytelling]"
+      ]
+     ],
+     "after": [
+      "mom:wave"
+     ]
+    },
+    {
+     "text": "\"다녀오세요!\" 오누이는 손을 흔들며 인사했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "boy",
+       "다녀오세요!",
+       "happy:1.2",
+       "[cheerful, bright, waving, childlike]"
+      ],
+      [
+       "nar",
+       "오누이는 손을 흔들며 인사했어요.",
+       null,
+       "[warm, cheerful, storytelling]"
+      ]
+     ],
+     "before": [
+      "boy:wave",
+      "girl:wave",
+      "fx:pop"
+     ]
+    },
+    {
+     "text": "엄마가 말했어요. \"문 꼭 잠그고 엄마 기다려라~\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마가 말했어요.",
+       null,
+       "[warm, gentle storytelling]"
+      ],
+      [
+       "mom",
+       "문 꼭 잠그고 엄마 기다려라~",
+       "happy:0.9",
+       "[loving, tender, motherly, gentle, caring]"
+      ]
+     ],
+     "after": [
+      "mom:face:right",
+      "mom:walk:1180,500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_kitchen",
+   "card": "부잣집 부엌",
+   "set": "kitchen",
+   "enter": [
+    "mom:at:300,520",
+    "mom:basket:off",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "엄마는 부잣집에서 하루 종일 부지런히 일했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마는 부잣집에서 하루 종일 부지런히 일했어요.",
+       null,
+       "[warm, light, storytelling, busy]"
+      ]
+     ]
+    },
+    {
+     "text": "쌀을 씻고, 불을 때고, 떡을 찌고. 해가 기울 때까지 쉬지 않았지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "쌀을 씻고, 불을 때고, 떡을 찌고. 해가 기울 때까지 쉬지 않았지요.",
+       null,
+       "[warm, light, storytelling, busy]"
+      ]
+     ]
+    },
+    {
+     "text": "저녁이 되자 부잣집 주인이 떡을 한 아름 내주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "저녁이 되자 부잣집 주인이 떡을 한 아름 내주었어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "\"수고했어요. 떡 가져가요!\"",
+     "src": "trim",
+     "from": "\"수고했어요. 떡 가져가요!\" 떡을 하나씩 톡! 세면서 담아요.",
+     "segs": [
+      [
+       "rich",
+       "수고했어요. 떡 가져가요!",
+       "happy:1.1",
+       "[kind, cheerful, friendly, thankful, appreciative]"
+      ]
+     ],
+     "after": [
+      "cake:fly:5",
+      "mom:basket:on"
+     ]
+    },
+    {
+     "text": "떡을 바구니 가득 받았어요! \"우리 아이들이 좋아하겠다!\" 엄마는 서둘러 집으로 떠났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "떡을 바구니 가득 받았어요!",
+       "happy:1.2",
+       "[delighted, warm, storytelling]"
+      ],
+      [
+       "mom",
+       "우리 아이들이 좋아하겠다!",
+       "happy:1.3",
+       "[happy, loving, motherly, warm, hopeful]"
+      ],
+      [
+       "nar",
+       "엄마는 서둘러 집으로 떠났어요.",
+       null,
+       "[light, brisk, storytelling]"
+      ]
+     ],
+     "after": [
+      "mom:walk:1180,500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_hill1",
+   "card": "첫째 고개",
+   "set": "hill0",
+   "enter": [
+    "tiger:at:760,662",
+    "mom:at:-120,500",
+    "mom:face:right",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "해가 뉘엿뉘엿 지고 있어요. 엄마가 첫째 고개를 넘어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "해가 뉘엿뉘엿 지고 있어요. 엄마가 첫째 고개를 넘어요.",
+       null,
+       "[soft, calm, storytelling, evening, slow]"
+      ]
+     ],
+     "after": [
+      "mom:walk:300,500"
+     ]
+    },
+    {
+     "text": "그때 바위 뒤에서 무언가 불쑥! 커다란 호랑이였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그때 바위 뒤에서 무언가 불쑥! 커다란 호랑이였어요.",
+       null,
+       "[hushed, surprised, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:boing",
+      "pop:760,250,불쑥!",
+      "tiger:enter:0",
+      "cam:630,330,1.6"
+     ]
+    },
+    {
+     "text": "\"어흥! 떡 한 개 주면 안 잡아먹지!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "tiger",
+       "어흥! 떡 한 개 주면 안 잡아먹지!",
+       "angry:1.6",
+       "[growls, gruff, grumbling, hungry but silly, bossy]"
+      ]
+     ],
+     "after": [
+      "cam:wide"
+     ]
+    },
+    {
+     "text": "엄마는 떨리는 손으로 떡 한 개를 꺼내 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "엄마는 떨리는 손으로 떡 한 개를 꺼내 주었어요.",
+       null,
+       "[soft, a little tense, storytelling]"
+      ]
+     ],
+     "after": [
+      "cake:fly:1",
+      "fx:chomp"
+     ]
+    },
+    {
+     "text": "호랑이는 떡 한 개를 꿀꺽! 배가 볼록해졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이는 떡 한 개를 꿀꺽! 배가 볼록해졌어요.",
+       null,
+       "[amused, playful, light, belly rumbling comedy]"
+      ]
+     ],
+     "before": [
+      "tiger:belly:1.4"
+     ],
+     "after": [
+      "fx:whoosh",
+      "tiger:exit",
+      "mom:walk:1180,500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_hill2",
+   "card": "둘째 고개",
+   "set": "hill1",
+   "enter": [
+    "tiger:at:760,662",
+    "mom:at:-120,500",
+    "mom:face:right",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "하늘이 붉어졌어요. 엄마가 둘째 고개를 넘어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하늘이 붉어졌어요. 엄마가 둘째 고개를 넘어요.",
+       "tonedown:1.0",
+       "[soft, calm, storytelling, dusk, slow]"
+      ]
+     ],
+     "after": [
+      "mom:walk:300,500"
+     ]
+    },
+    {
+     "text": "그런데 또 바위 뒤에서 불쑥! 아까 그 호랑이가 또 나타났어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그런데 또 바위 뒤에서 불쑥! 아까 그 호랑이가 또 나타났어요.",
+       null,
+       "[hushed, surprised, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:boing",
+      "pop:760,250,또 왔어!",
+      "tiger:enter:1",
+      "cam:630,330,1.6"
+     ]
+    },
+    {
+     "text": "\"어흥! 떡 두 개 주면 안 잡아먹지!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "tiger",
+       "어흥! 떡 두 개 주면 안 잡아먹지!",
+       "angry:1.6",
+       "[growls, gruff, grumbling, hungry but silly, bossy]"
+      ]
+     ],
+     "after": [
+      "cam:wide"
+     ]
+    },
+    {
+     "text": "엄마는 바구니에서 떡 두 개를 꺼내 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "엄마는 바구니에서 떡 두 개를 꺼내 주었어요.",
+       null,
+       "[soft, a little tense, storytelling]"
+      ]
+     ],
+     "after": [
+      "cake:fly:2",
+      "fx:chomp"
+     ]
+    },
+    {
+     "text": "떡 두 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "떡 두 개를 또 꿀꺽! 배가 더 볼록해졌어요.",
+       null,
+       "[amused, playful, light, belly rumbling comedy]"
+      ]
+     ],
+     "before": [
+      "tiger:belly:1.9"
+     ],
+     "after": [
+      "fx:whoosh",
+      "tiger:exit",
+      "mom:walk:1180,500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_hill3",
+   "card": "셋째 고개",
+   "set": "hill2",
+   "enter": [
+    "tiger:at:760,662",
+    "mom:at:-120,500",
+    "mom:face:right",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.",
+       "tonedown:1.3",
+       "[hushed, soft, storytelling, night, slow, gentle suspense]"
+      ]
+     ],
+     "after": [
+      "mom:walk:300,500"
+     ]
+    },
+    {
+     "text": "바위 뒤에서 또다시 불쑥! 호랑이 눈이 어둠 속에서 번쩍였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "바위 뒤에서 또다시 불쑥! 호랑이 눈이 어둠 속에서 번쩍였어요.",
+       null,
+       "[hushed, night, gentle suspense, storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:boing",
+      "tiger:enter:2",
+      "cam:630,330,1.6"
+     ]
+    },
+    {
+     "text": "\"어흥! 남은 떡 몽땅 주면 안 잡아먹지!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "tiger",
+       "어흥! 남은 떡 몽땅 주면 안 잡아먹지!",
+       "angry:1.7",
+       "[growls, gruff, grumbling, bossy, greedy]"
+      ]
+     ],
+     "after": [
+      "cam:wide"
+     ]
+    },
+    {
+     "text": "남은 떡을 몽땅 꿀꺽! 배가 빵빵해졌어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "남은 떡을 몽땅 꿀꺽! 배가 빵빵해졌어요!",
+       null,
+       "[amused, playful, round, comically full]"
+      ]
+     ],
+     "before": [
+      "cake:fly:3",
+      "fx:chomp",
+      "tiger:belly:3.4"
+     ]
+    },
+    {
+     "text": "엄마는 텅 빈 바구니를 꼭 끌어안았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "엄마는 텅 빈 바구니를 꼭 끌어안았어요.",
+       null,
+       "[soft, hushed, storytelling, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "떡이 다 떨어지자 호랑이가 말했어요. \"떡이 없으면 너를 잡아먹어야지!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "떡이 다 떨어지자 호랑이가 말했어요.",
+       "tonedown:1.2",
+       "[soft, hushed, storytelling, slow]"
+      ],
+      [
+       "tiger",
+       "떡이 없으면 너를 잡아먹어야지!",
+       "angry:1.8",
+       "[growls, gruff, sly, demanding, comically sinister]"
+      ]
+     ],
+     "after": [
+      "shake",
+      "cut:roar"
+     ]
+    },
+    {
+     "text": "호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.",
+       "sad:1.0",
+       "[soft, gentle, quick, storytelling, not scary]"
+      ]
+     ],
+     "before": [
+      "mom:hide",
+      "cut:gulp"
+     ]
+    },
+    {
+     "text": "호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.",
+       "tonedown:1.2",
+       "[hushed, sly, playful, storytelling, light suspense]"
+      ]
+     ],
+     "before": [
+      "tiger:wear:scarf",
+      "cut:mimic"
+     ],
+     "after": [
+      "tiger:face:right",
+      "tiger:walk:1250,480"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_door",
+   "card": "문밖의 호랑이",
+   "set": "door",
+   "enter": [
+    "boy:at:330,520",
+    "girl:at:470,520",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "집에서는 오누이가 엄마를 기다리고 있었어요. 밤은 점점 깊어졌지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "집에서는 오누이가 엄마를 기다리고 있었어요. 밤은 점점 깊어졌지요.",
+       null,
+       "[soft, hushed, storytelling, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "똑똑똑.",
+       "whisper",
+       "[soft, knock-knock, hushed, storytelling]"
+      ],
+      [
+       "tiger",
+       "얘들아~ 엄마 왔다. 문 열어라~",
+       "tonedown:1.5",
+       "[fake sweet, gruff, rasping, pretending to be mom, sing-song]"
+      ],
+      [
+       "nar",
+       "걸걸한 목소리예요.",
+       "whisper",
+       "[curious, hushed, light suspense]"
+      ]
+     ],
+     "before": [
+      "fx:knock"
+     ]
+    },
+    {
+     "text": "오누이는 고개를 갸웃했어요. 엄마 목소리는 다정하고 부드러운데 말이에요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "오누이는 고개를 갸웃했어요. 엄마 목소리는 다정하고 부드러운데 말이에요.",
+       null,
+       "[curious, hushed, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "오빠가 말했어요. \"우리 엄마 목소리가 아니에요! 손을 보여 주세요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "오빠가 말했어요.",
+       null,
+       "[light, storytelling]"
+      ],
+      [
+       "boy",
+       "우리 엄마 목소리가 아니에요! 손을 보여 주세요!",
+       "toneup:1.3",
+       "[suspicious, firm, brave, boyish, determined]"
+      ]
+     ]
+    },
+    {
+     "text": "문틈으로 손 하나가 쑥 들어왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "문틈으로 손 하나가 쑥 들어왔어요.",
+       null,
+       "[hushed, light suspense, storytelling]"
+      ]
+     ],
+     "after": [
+      "door:hand:flour"
+     ]
+    },
+    {
+     "text": "그런데 문틈으로 들어온 손은… 하얀 밀가루 사이로 발톱이 쏙! 엄마 손이 아니에요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그런데 문틈으로 들어온 손은… 하얀 밀가루 사이로 발톱이 쏙! 엄마 손이 아니에요!",
+       "tonedown:1.3",
+       "[hushed, light suspense, storytelling, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "문밖에 누가 있는지 보고 싶어요.",
+     "src": "trim",
+     "from": "문밖에 누가 있는지 보고 싶어요. 창호지를 손가락으로 콕 뚫어 볼까요?",
+     "segs": [
+      [
+       "nar",
+       "문밖에 누가 있는지 보고 싶어요.",
+       "whisper",
+       "[hushed, curious, mischievous, whispers]"
+      ]
+     ]
+    },
+    {
+     "text": "오빠가 창호지에 손가락으로 살며시 구멍을 냈어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "오빠가 창호지에 손가락으로 살며시 구멍을 냈어요.",
+       null,
+       "[hushed, careful, storytelling]"
+      ]
+     ],
+     "after": [
+      "door:hole"
+     ]
+    },
+    {
+     "text": "구멍 너머에 커다랗고 동그란 눈이 깜빡깜빡! 호랑이예요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "구멍 너머에 커다랗고 동그란 눈이 깜빡깜빡! 호랑이예요!",
+       "toneup:1.4",
+       "[hushed, wide-eyed, surprised, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "door:eye"
+     ]
+    },
+    {
+     "text": "오빠가 속삭였어요. \"쉿, 뒷문으로 살금살금 도망가자!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "오빠가 속삭였어요.",
+       "whisper",
+       "[soft, hushed, storytelling]"
+      ],
+      [
+       "boy",
+       "쉿, 뒷문으로 살금살금 도망가자!",
+       "whisper",
+       "[whispers, urgent, brave, boyish, secretive]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_backyard",
+   "card": "뒷마당",
+   "set": "backyard",
+   "enter": [
+    "boy:at:260,520",
+    "girl:at:120,520",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "오누이는 뒷문으로 살금살금 나왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "오누이는 뒷문으로 살금살금 나왔어요.",
+       "happy:1.1",
+       "[hushed, suspense, storytelling]"
+      ]
+     ],
+     "after": [
+      "kids:run"
+     ]
+    },
+    {
+     "text": "앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!",
+       "happy:1.1",
+       "[urgent, whisper, suspense]"
+      ]
+     ],
+     "after": [
+      "kids:hide:jar"
+     ]
+    },
+    {
+     "text": "오누이는 숨을 꼭 참고 장독 뒤에 꼭 붙어 있었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "오누이는 숨을 꼭 참고 장독 뒤에 꼭 붙어 있었어요.",
+       null,
+       "[whisper, hushed, suspense, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "\"오빠, 무서워…\" 동생이 오빠 손을 꼭 잡았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "girl",
+       "오빠, 무서워…",
+       "whisper",
+       "[whispers, scared, small voice, childlike]"
+      ],
+      [
+       "nar",
+       "동생이 오빠 손을 꼭 잡았어요.",
+       null,
+       "[soft, hushed, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "\"얘들아~ 어디 갔니?\" 호랑이는 두리번두리번하다가 집 쪽으로 돌아갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "tiger",
+       "얘들아~ 어디 갔니?",
+       "tonedown:1.3",
+       "[sly, gruff, puzzled, searching, fake sweet]"
+      ],
+      [
+       "nar",
+       "호랑이는 두리번두리번하다가 집 쪽으로 돌아갔어요.",
+       null,
+       "[amused, light, storytelling]"
+      ]
+     ],
+     "before": [
+      "tiger:at:900,520"
+     ],
+     "after": [
+      "tiger:exit"
+     ]
+    },
+    {
+     "text": "휴~ 이제 우물가 큰 나무로 달려가요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "휴~ 이제 우물가 큰 나무로 달려가요!",
+       "happy:1.1",
+       "[cheerful, encouraging]"
+      ]
+     ],
+     "after": [
+      "kids:run"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_tree",
+   "card": "우물가 나무",
+   "set": "tree",
+   "enter": [
+    "boy:at:460,560",
+    "girl:at:560,560",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "우물가에 커다란 나무가 있어요.",
+     "src": "trim",
+     "from": "우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.",
+     "segs": [
+      [
+       "nar",
+       "우물가에 커다란 나무가 있어요.",
+       "happy:1.1",
+       "[cheerful, encouraging]"
+      ]
+     ]
+    },
+    {
+     "text": "오누이는 영차영차, 나무를 타고 올라갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "오누이는 영차영차, 나무를 타고 올라갔어요.",
+       null,
+       "[lively, bright, rhythmic, storytelling]"
+      ]
+     ],
+     "before": [
+      "kids:climb"
+     ]
+    },
+    {
+     "text": "오누이는 나무 꼭대기까지 올라갔어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "오누이는 나무 꼭대기까지 올라갔어요!",
+       "happy:1.2",
+       "[proud, delighted, bright, storytelling]"
+      ]
+     ],
+     "before": [
+      "kids:top"
+     ]
+    },
+    {
+     "text": "호랑이가 뒷마당에 왔어요. \"옳지! 우물 속에 숨었구나!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이가 뒷마당에 왔어요.",
+       "tonedown:1.2",
+       "[light, storytelling]"
+      ],
+      [
+       "tiger",
+       "옳지! 우물 속에 숨었구나!",
+       "happy:1.4",
+       "[pleased, gruff, sly, triumphant, comical]"
+      ]
+     ],
+     "before": [
+      "tiger:enter:well"
+     ]
+    },
+    {
+     "text": "호랑이가 우물 속을 들여다봤어요. 우물 물에 오누이 얼굴이 비쳤거든요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이가 우물 속을 들여다봤어요. 우물 물에 오누이 얼굴이 비쳤거든요!",
+       null,
+       "[amused, curious, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "set:wellTop",
+      "tiger:well"
+     ]
+    },
+    {
+     "text": "\"두레박으로 건져야지~\" 영차!",
+     "src": "reuse",
+     "segs": [
+      [
+       "tiger",
+       "두레박으로 건져야지~ 영차!",
+       "happy:1.3",
+       "[gruff, grunting, effort, fumbling, comical, heaving]"
+      ]
+     ],
+     "before": [
+      "tiger:bucket"
+     ]
+    },
+    {
+     "text": "첨벙! 두레박에는 물만 가득.",
+     "src": "trim",
+     "from": "첨벙! 두레박에는 물만 가득. 우물 속 오누이 얼굴을 톡 눌러 봐요!",
+     "segs": [
+      [
+       "nar",
+       "첨벙! 두레박에는 물만 가득.",
+       null,
+       "[amused, playful, splashy, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "나무 위에서 오누이가 그만 킥킥 웃고 말았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "나무 위에서 오누이가 그만 킥킥 웃고 말았어요.",
+       null,
+       "[amused, giggly, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "set:tree",
+      "kids:top"
+     ]
+    },
+    {
+     "text": "\"어? 위에서 웃음소리가?\" 호랑이가 고개를 번쩍 들었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "tiger",
+       "어? 위에서 웃음소리가?",
+       "toneup:1.3",
+       "[startled, puzzled, gruff, looking up]"
+      ],
+      [
+       "nar",
+       "호랑이가 고개를 번쩍 들었어요.",
+       null,
+       "[light, comical, storytelling]"
+      ]
+     ],
+     "before": [
+      "tiger:lookup"
+     ]
+    },
+    {
+     "text": "호랑이가 올려다보며 물었어요. \"얘들아, 거기 어떻게 올라갔니?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이가 올려다보며 물었어요.",
+       null,
+       "[light, storytelling]"
+      ],
+      [
+       "tiger",
+       "얘들아, 거기 어떻게 올라갔니?",
+       "tonedown:1.2",
+       "[curious, gruff, fake friendly, slyly curious]"
+      ]
+     ]
+    },
+    {
+     "text": "오빠가 꾀를 냈어요. \"참기름 바르고 올라왔지!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "오빠가 꾀를 냈어요.",
+       null,
+       "[playful, clever, light, storytelling]"
+      ],
+      [
+       "boy",
+       "참기름 바르고 올라왔지!",
+       "happy:1.3",
+       "[clever, proud, boyish, confident, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "호랑이는 참기름을 나무에 잔뜩 바르고 올라가려 했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "호랑이는 참기름을 나무에 잔뜩 바르고 올라가려 했어요.",
+       null,
+       "[playful, amused, storytelling]"
+      ]
+     ],
+     "before": [
+      "oil:pour"
+     ]
+    },
+    {
+     "text": "미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.",
+       "happy:1.3",
+       "[amused, comical, bright, storytelling, slipping]"
+      ]
+     ],
+     "before": [
+      "tiger:oil:slip"
+     ]
+    },
+    {
+     "text": "그때 동생이 깔깔 웃으며 말해 버렸어요. \"도끼로 콕콕 찍고 올라왔지~\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그때 동생이 깔깔 웃으며 말해 버렸어요.",
+       null,
+       "[amused, light, storytelling]"
+      ],
+      [
+       "girl",
+       "도끼로 콕콕 찍고 올라왔지~",
+       "happy:1.4",
+       "[giggles, innocent, cheerful, childlike, blurts out, laughing]"
+      ]
+     ]
+    },
+    {
+     "text": "오빠가 \"쉿!\" 했지만… 벌써 들어 버렸어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "오빠가",
+       null,
+       "[light, storytelling]"
+      ],
+      [
+       "boy",
+       "쉿!",
+       "whisper",
+       "[whispers urgently, panicked, shushing, boyish]"
+      ],
+      [
+       "nar",
+       "했지만… 벌써 들어 버렸어요!",
+       "tonedown:1.3",
+       "[comical, light, storytelling, dismayed]"
+      ]
+     ]
+    },
+    {
+     "text": "호랑이가 도끼로 콕콕 찍으며 올라와요! 오누이는 덜덜 떨었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이가 도끼로 콕콕 찍으며 올라와요! 오누이는 덜덜 떨었어요.",
+       "tonedown:1.4",
+       "[light suspense, soft, storytelling, trembling lightly, not scary]"
+      ]
+     ],
+     "before": [
+      "tiger:axe:climb"
+     ],
+     "after": [
+      "boy:pose:hug",
+      "girl:pose:hug"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_rope",
+   "card": "하늘 동아줄",
+   "set": "sky",
+   "enter": [
+    "boy:pose:hug",
+    "girl:pose:hug",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.",
+       "whisper",
+       "[soft, tense but gentle, storytelling, hopeful]"
+      ]
+     ]
+    },
+    {
+     "text": "\"하늘님, 튼튼한 동아줄을 내려 주세요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "boy",
+       "하늘님, 튼튼한 동아줄을 내려 주세요!",
+       "sad:1.4",
+       "[earnest, praying, trembling, hopeful, boyish, brave]"
+      ]
+     ]
+    },
+    {
+     "text": "그러자 하늘에서 굵은 동아줄이 스르르 내려왔어요!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그러자 하늘에서 굵은 동아줄이 스르르 내려왔어요!",
+       null,
+       "[wondrous, bright, storytelling]"
+      ]
+     ],
+     "before": [
+      "rope:good"
+     ]
+    },
+    {
+     "text": "반짝이는 굵은 줄이 튼튼한 동아줄이에요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "반짝이는 굵은 줄이 튼튼한 동아줄이에요!",
+       null,
+       "[cheerful, bright, encouraging]"
+      ]
+     ]
+    },
+    {
+     "text": "줄을 꼭 잡고, 영차영차 올라가요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "줄을 꼭 잡고, 영차영차 올라가요!",
+       "happy:1.1",
+       "[cheerful, encouraging]"
+      ]
+     ],
+     "before": [
+      "boy:pose:rope",
+      "girl:pose:rope"
+     ],
+     "after": [
+      "kids:rope:up"
+     ]
+    },
+    {
+     "text": "구름을 뚫고 쑥쑥!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "구름을 뚫고 쑥쑥!",
+       "happy:1.3",
+       "[bright, airy, lifting, delighted, storytelling]"
+      ]
+     ],
+     "before": [
+      "clouds:rise"
+     ]
+    },
+    {
+     "text": "구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!",
+       "happy:1.3",
+       "[wondrous, amazed, delighted, soaring, storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_sorghum",
+   "card": "수수밭",
+   "set": "sorghum",
+   "enter": [
+    "tiger:at:500,560",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.",
+       null,
+       "[light, gentle, storytelling, comically sad]"
+      ]
+     ],
+     "before": [
+      "rope:bad"
+     ]
+    },
+    {
+     "text": "\"어흥, 나도 올라가야지!\" 호랑이는 신이 나서 줄을 덥석 잡았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "tiger",
+       "어흥, 나도 올라가야지!",
+       "happy:1.3",
+       "[gruff, eager, greedy, comical]"
+      ],
+      [
+       "nar",
+       "호랑이는 신이 나서 줄을 덥석 잡았어요.",
+       null,
+       "[playful, light, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "호랑이는 낡은 줄을 타고 영차영차 올라갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "호랑이는 낡은 줄을 타고 영차영차 올라갔어요.",
+       null,
+       "[playful, light, storytelling]"
+      ]
+     ],
+     "after": [
+      "tiger:rope:bad",
+      "cut:creak"
+     ]
+    },
+    {
+     "text": "삐걱삐걱… 뚝! 줄이 그만 끊어지고 말았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "삐걱삐걱… 뚝! 줄이 그만 끊어지고 말았어요.",
+       null,
+       "[comical, light suspense, storytelling]"
+      ]
+     ],
+     "after": [
+      "rope:snap",
+      "cut:snap",
+      "tiger:fall"
+     ]
+    },
+    {
+     "text": "호랑이는 수수밭에 쿵! 하고 떨어졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "호랑이는 수수밭에 쿵! 하고 떨어졌어요.",
+       null,
+       "[amused, comical, storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:thud",
+      "shake",
+      "cut:bump"
+     ]
+    },
+    {
+     "text": "\"아이코 내 엉덩이! 아이코 내 머리!\" 호랑이 머리에 동그란 혹이 났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "tiger",
+       "아이코 내 엉덩이! 아이코 내 머리!",
+       "sad:1.8",
+       "[groaning, comical, dazed, whining, gruff, unlucky]"
+      ],
+      [
+       "nar",
+       "호랑이 머리에 동그란 혹이 났어요.",
+       "happy:1.2",
+       "[amused, light, comical, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "호랑이는 혹을 달고 산속으로 줄행랑! 다시는 오지 않았대요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호랑이는 혹을 달고 산속으로 줄행랑! 다시는 오지 않았대요.",
+       "happy:1.3",
+       "[amused, gentle, light, comical, storytelling, wrapping up]"
+      ]
+     ],
+     "after": [
+      "tiger:exit"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_heaven",
+   "card": "해와 달",
+   "set": "heaven",
+   "enter": [
+    "sky:day",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.",
+       null,
+       "[warm, gentle, wondrous, storytelling, glowing]"
+      ]
+     ]
+    },
+    {
+     "text": "오빠는 낮에 환하게, 동생은 밤에 은은하게 세상을 비추었지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "오빠는 낮에 환하게, 동생은 밤에 은은하게 세상을 비추었지요.",
+       null,
+       "[warm, gentle, wondrous, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "동생이 말했어요. \"오빠, 나는 밤이 무서워요.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "동생이 말했어요.",
+       null,
+       "[soft, gentle, storytelling]"
+      ],
+      [
+       "girl",
+       "오빠, 나는 밤이 무서워요.",
+       "sad:1.2",
+       "[shy, sweet, small voice, a little afraid, tender, childlike]"
+      ]
+     ],
+     "before": [
+      "sky:night"
+     ]
+    },
+    {
+     "text": "\"그럼 우리 바꾸자!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "boy",
+       "그럼 우리 바꾸자!",
+       "happy:1.2",
+       "[kind, caring, warm, gentle, brotherly, cheerful]"
+      ]
+     ]
+    },
+    {
+     "text": "오빠는 동생을 위해 기꺼이 자리를 바꿔 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "오빠는 동생을 위해 기꺼이 자리를 바꿔 주었어요.",
+       null,
+       "[kind, warm, gentle, storytelling]"
+      ]
+     ],
+     "after": [
+      "sky:day",
+      "fx:jingle"
+     ]
+    },
+    {
+     "text": "그래서 동생은 해님, 오빠는 달님이 되었답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그래서 동생은 해님, 오빠는 달님이 되었답니다.",
+       "happy:1.1",
+       "[warm, cheerful, gentle, storytelling, content]"
+      ]
+     ]
+    },
+    {
+     "text": "해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.",
+       "happy:1.3",
+       "[warm, gentle, content, storytelling, slow, closing, loving]"
+      ]
+     ]
+    },
+    {
+     "text": "오누이처럼 서로 아끼고 힘을 모으면 무서운 일도 이겨 낼 수 있답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "오누이처럼 서로 아끼고 힘을 모으면 무서운 일도 이겨 낼 수 있답니다.",
+       null,
+       "[gentle, slow, bedtime storytelling, closing]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
