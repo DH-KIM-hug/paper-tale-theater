@@ -1,0 +1,1059 @@
+{
+ "mode": "read",
+ "tale": "magic_jar",
+ "lang": "ko",
+ "title": "요술 항아리",
+ "voices_from": "voice_script_el.json",
+ "moral": "나누면 기쁨이 커져요.",
+ "notes": "읽어 주기 모드 대본(docs/READ_MODE.md). 조작 안내(농부·집·부자 누르기)와 수 세기 연타(괭이 3·엽전 5·아버지 8)를 모두 뺐다. \"괭이가 하나, 둘, 셋!\"처럼 이야기의 결과를 말하는 줄은 남겼다(수 세기 놀이가 아니라 줄거리). 놀이판 10장(카드 없는 엽전·깨짐 포함) → 읽기 10장. src: reuse = 기존 줄·녹음 그대로, trim = 기존 줄(from)의 조작 꼬리를 자름, new = 새 문장(녹음 필요, 내레이터 위주·농부 3줄, 장면마다 의성어·의태어 2개 이상). 특이: \"마음씨 착한 농부는 웃으며 말했어요…\" 줄은 voice_script 의 세그먼트 셋째가 안내 꼬리(\"항아리를 톡!\")라 앞 두 세그먼트만 쓰는 trim 이다(text 는 그대로). 순화는 놀이판 그대로: 부자는 금 더미에 묻혀도, 아버지는 항아리에 빠져도 다치지 않고, 항아리는 깨지지만 부자가 뉘우치고 나눈다. Typecast(tc) 배역 없음.",
+ "acts": {
+  "set:<field|pit|jarfront|village|richgate|hall|hallwide|feast>": "장면 배경(scene(key)). scenes[].set 으로 자동 호출, 장면 안에서 배경을 바꿀 때는 before 에 둔다",
+  "farmer:look:<hoe|pull|amaze|count|share|feast>[:<left|right>] | farmer:at:<x,y>[:<look>[:<dir>]] | farmer:walk:<x,y,ms> | farmer:hop | farmer:hide": "농부",
+  "farmer:plow | farmer:pull3": "놀이판 plow(i)/pull(i) 세 번 저절로(영차! 영차영차! 으랏차! 팝 + 폴짝)",
+  "wife:look:<clap|share> | wife:at:<x,y>[:<look>[:<dir>]] | wife:hop | wife:hide": "아내",
+  "rich:look:<shout|grab|gold|pinned|hurry>[:<dir>] | rich:at:<x,y>[:<look>[:<dir>]] | rich:walk:<x,y,ms> | rich:hop | rich:dash | rich:hide": "부자. dash = 쟁반을 들고 이리저리 뛰어다님(놀이판 8장)",
+  "father:look:<peek|fall>[:<dir>] | father:at:<x,y>[:<look>[:<dir>]] | father:walk:<x,y,ms> | father:hop | father:hide": "아버지",
+  "jar:at:<x,y> | jar:show | jar:hide | jar:hop | jar:dig | jar:lend": "항아리. dig = 땅에서 쑥 나옴(opacity 1 + hop 40), lend = 농부 옆에서 부자에게로 옮겨 가 숨김(놀이판 6장)",
+  "hoe:drop": "괭이가 항아리 속으로 떨어짐(놀이판 3장)",
+  "hoes:out:<n> | coins:out:<n> | golds:in:<n> | fathers:out:<n>": "항아리에서 괭이·엽전·아버지가 n개 차례로 나옴 / 금덩이를 n개 넣으면 금 더미가 쌓임. 놀이판 mash onStep 연출 그대로이되 수 세기 소리(n1~n8)는 넣지 않고 팝 효과음만",
+  "hoes:hide | coins:hide | golds:hide | fathers:hop | fathers:hide | cracked:show": "정리·깨진 항아리",
+  "rice:share": "농부가 다섯 집에 쌀자루를 차례로 던져 줌(놀이판 5장, 저절로)",
+  "tables:show": "잔치 상 두 개와 냠냠!·맛있다! 팝",
+  "cut:<clink|twohoes|coins|buried|plop|eight|smash|hungry>": "만화 컷 mj_cut_*",
+  "fx:<pop|clink|pow|tada> | pop:<x,y,글자> | confetti | cam:<x,y,z>": "효과음·팝 글자·꽃가루·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_field",
+   "card": "밭",
+   "set": "field",
+   "enter": [
+    "farmer:at:460,480:hoe:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날에 마음씨 착한 농부가 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옛날 옛날에 마음씨 착한 농부가 살았어요.",
+       null,
+       "[warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "농부는 해님이 방긋 뜨면 괭이를 메고 밭으로 나갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "농부는 해님이 방긋 뜨면 괭이를 메고 밭으로 나갔어요.",
+       null,
+       "[warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "농부는 밭을 열심히 갈았어요.",
+     "src": "trim",
+     "from": "농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!",
+     "segs": [
+      [
+       "nar",
+       "농부는 밭을 열심히 갈았어요.",
+       null,
+       "[cheerful, inviting]"
+      ]
+     ],
+     "after": [
+      "farmer:plow"
+     ]
+    },
+    {
+     "text": "영차, 영차! 이마에 땀방울이 송골송골 맺혔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "영차, 영차! 이마에 땀방울이 송골송골 맺혔어요.",
+       null,
+       "[cheerful, rhythmic, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.",
+       null,
+       "[surprised, curious]"
+      ]
+     ],
+     "before": [
+      "cut:clink"
+     ]
+    },
+    {
+     "text": "\"어? 이게 무슨 소리지?\" 농부는 괭이질을 멈추고 고개를 갸웃했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "farmer",
+       "어? 이게 무슨 소리지?",
+       null,
+       "[curious, surprised]"
+      ],
+      [
+       "nar",
+       "농부는 괭이질을 멈추고 고개를 갸웃했어요.",
+       null,
+       "[curious, wondering]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_pit",
+   "card": "땅속",
+   "set": "pit",
+   "enter": [
+    "farmer:at:700,520:pull:left",
+    "jar:at:500,430",
+    "jar:hide",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "땅속에서 둥근 뚜껑이 보여요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "땅속에서 둥근 뚜껑이 보여요.",
+       null,
+       "[curious, wondering]"
+      ]
+     ]
+    },
+    {
+     "text": "농부는 흙을 살살 파내고, 뚜껑을 꼭 붙잡았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "농부는 흙을 살살 파내고, 뚜껑을 꼭 붙잡았어요.",
+       null,
+       "[curious, careful, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "영차, 영차, 으랏차! 농부는 온 힘을 다해 쭉쭉 당겼어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "영차, 영차, 으랏차! 농부는 온 힘을 다해 쭉쭉 당겼어요.",
+       null,
+       "[effortful, playful, building]"
+      ]
+     ],
+     "after": [
+      "farmer:pull3"
+     ]
+    },
+    {
+     "text": "쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.",
+       null,
+       "[amazed, wondering]"
+      ]
+     ],
+     "before": [
+      "jar:dig",
+      "farmer:look:amaze"
+     ]
+    },
+    {
+     "text": "항아리는 흙투성이였지만, 어디 하나 깨진 데가 없이 반들반들했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "항아리는 흙투성이였지만, 어디 하나 깨진 데가 없이 반들반들했어요.",
+       null,
+       "[amazed, wondering]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_hoes",
+   "card": "마당",
+   "set": "jarfront",
+   "enter": [
+    "jar:at:520,500",
+    "farmer:at:270,500:hoe:right",
+    "wife:at:780,500:clap:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "농부는 항아리를 집 마당에 놓았어요. 아내도 구경하러 나왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "농부는 항아리를 집 마당에 놓았어요. 아내도 구경하러 나왔어요.",
+       null,
+       "[calm, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "아내는 항아리를 요리조리 살펴보고, 똑똑 두드려 보았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아내는 항아리를 요리조리 살펴보고, 똑똑 두드려 보았어요.",
+       null,
+       "[curious, playful]"
+      ]
+     ],
+     "after": [
+      "jar:hop"
+     ]
+    },
+    {
+     "text": "농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.",
+       null,
+       "[oops, playful]"
+      ]
+     ],
+     "after": [
+      "hoe:drop",
+      "jar:hop",
+      "cut:twohoes"
+     ]
+    },
+    {
+     "text": "\"어머나! 괭이가 두 개가 되었어요!\" 아내가 깜짝 놀랐어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "wife",
+       "어머나! 괭이가 두 개가 되었어요!",
+       null,
+       "[amazed, delighted, surprised]"
+      ],
+      [
+       "nar",
+       "아내가 깜짝 놀랐어요.",
+       null,
+       "[warm]"
+      ]
+     ]
+    },
+    {
+     "text": "항아리에서 괭이가 쑥, 쑥, 자꾸자꾸 나왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "항아리에서 괭이가 쑥, 쑥, 자꾸자꾸 나왔어요.",
+       null,
+       "[excited, delighted]"
+      ]
+     ],
+     "after": [
+      "hoes:out:3"
+     ]
+    },
+    {
+     "text": "괭이가 하나, 둘, 셋! 농부와 아내는 손뼉을 쳤어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "괭이가 하나, 둘, 셋! 농부와 아내는 손뼉을 쳤어요.",
+       null,
+       "[joyful, clapping]"
+      ]
+     ],
+     "after": [
+      "wife:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_coins",
+   "card": "엽전",
+   "set": "jarfront",
+   "enter": [
+    "jar:at:520,500",
+    "farmer:at:270,500:count:right",
+    "wife:at:780,500:clap:left",
+    "hoes:hide",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "\"이번에는 다른 것도 넣어 볼까?\" 농부가 싱글벙글 웃으며 말했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "farmer",
+       "이번에는 다른 것도 넣어 볼까?",
+       null,
+       "[curious, cheerful]"
+      ],
+      [
+       "nar",
+       "농부가 싱글벙글 웃으며 말했어요.",
+       null,
+       "[warm, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "이번에는 엽전 하나를 넣어 봤어요. 와르르! 엽전이 쏟아져 나왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이번에는 엽전 하나를 넣어 봤어요. 와르르! 엽전이 쏟아져 나왔어요.",
+       null,
+       "[excited, delighted]"
+      ]
+     ],
+     "before": [
+      "cut:coins"
+     ],
+     "after": [
+      "coins:out:5"
+     ]
+    },
+    {
+     "text": "짤랑짤랑, 엽전이 마당에 데굴데굴 굴렀어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "짤랑짤랑, 엽전이 마당에 데굴데굴 굴렀어요.",
+       null,
+       "[delighted, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "엽전이 하나, 둘, 셋, 넷, 다섯! 이제 쌀도 사고 옷도 살 수 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엽전이 하나, 둘, 셋, 넷, 다섯! 이제 쌀도 사고 옷도 살 수 있어요.",
+       null,
+       "[delighted, counting]"
+      ]
+     ]
+    },
+    {
+     "text": "농부와 아내는 서로 마주 보고 하하 호호 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "농부와 아내는 서로 마주 보고 하하 호호 웃었어요.",
+       null,
+       "[joyful, warm]"
+      ]
+     ],
+     "after": [
+      "farmer:hop",
+      "wife:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_village",
+   "card": "이웃 마을",
+   "set": "village",
+   "enter": [
+    "farmer:at:500,540:share:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "착한 농부는 혼자만 쓰지 않았어요. 이웃 다섯 집에 쌀을 나눠 주러 갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "착한 농부는 혼자만 쓰지 않았어요. 이웃 다섯 집에 쌀을 나눠 주러 갔어요.",
+       null,
+       "[warm, kind storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "농부는 쌀자루를 둘러메고 뚜벅뚜벅 이 집 저 집 찾아갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "농부는 쌀자루를 둘러메고 뚜벅뚜벅 이 집 저 집 찾아갔어요.",
+       null,
+       "[warm, kind storytelling]"
+      ]
+     ],
+     "after": [
+      "rice:share"
+     ]
+    },
+    {
+     "text": "집집마다 \"고마워요, 농부님!\" 하는 소리가 들렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "집집마다 \"고마워요, 농부님!\" 하는 소리가 들렸어요.",
+       null,
+       "[joyful, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "다섯 집 모두 쌀을 받고 활짝 웃었어요. 마을이 함께 행복해졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "다섯 집 모두 쌀을 받고 활짝 웃었어요. 마을이 함께 행복해졌어요.",
+       null,
+       "[joyful, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "아이들은 깡충깡충 뛰고, 강아지도 멍멍 짖으며 좋아했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아이들은 깡충깡충 뛰고, 강아지도 멍멍 짖으며 좋아했어요.",
+       null,
+       "[cheerful, playful]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_rich",
+   "card": "부잣집",
+   "set": "richgate",
+   "enter": [
+    "rich:at:740,520:shout:left",
+    "farmer:at:380,520:share:right",
+    "jar:at:500,520",
+    "jar:hide",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그런데 마을에는 욕심이 산더미 같은 부자가 살고 있었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그런데 마을에는 욕심이 산더미 같은 부자가 살고 있었어요.",
+       null,
+       "[calm, a little playful]"
+      ]
+     ]
+    },
+    {
+     "text": "소문을 들은 부잣집 주인이 농부를 불렀어요. \"그 항아리를 나한테 빌려주게!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "소문을 들은 부잣집 주인이 농부를 불렀어요.",
+       null,
+       "[calm]"
+      ],
+      [
+       "rich",
+       "그 항아리를 나한테 빌려주게!",
+       null,
+       "[pompous, demanding, smug]"
+      ]
+     ],
+     "after": [
+      "rich:hop"
+     ]
+    },
+    {
+     "text": "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\"",
+     "src": "trim",
+     "from": "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\"",
+     "segs": [
+      [
+       "nar",
+       "마음씨 착한 농부는 웃으며 말했어요.",
+       null,
+       "[warm]"
+      ],
+      [
+       "farmer",
+       "필요하시면 쓰세요. 잘 쓰고 돌려주세요!",
+       null,
+       "[kind, gentle, smiling]"
+      ]
+     ],
+     "after": [
+      "jar:show",
+      "jar:lend",
+      "rich:look:grab:right"
+     ]
+    },
+    {
+     "text": "\"고맙네! 얼른 가져가야지, 헤헤.\" 부자는 항아리를 꼭 안고 달려갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "rich",
+       "고맙네! 얼른 가져가야지, 헤헤.",
+       null,
+       "[greedy, gleeful, sneaky chuckle]"
+      ],
+      [
+       "nar",
+       "부자는 항아리를 꼭 안고 달려갔어요.",
+       null,
+       "[playful]"
+      ]
+     ],
+     "after": [
+      "rich:walk:1200,520,1300"
+     ]
+    },
+    {
+     "text": "부자는 뒤도 돌아보지 않고 헐레벌떡 집으로 내달렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "부자는 뒤도 돌아보지 않고 헐레벌떡 집으로 내달렸어요.",
+       null,
+       "[playful, hurried]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_gold",
+   "card": "큰 방",
+   "set": "hall",
+   "enter": [
+    "rich:at:330,505:shout:right",
+    "jar:at:650,505",
+    "jar:show",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "부자는 방에 항아리를 놓고 말했어요. \"금덩이를 넣으면 금이 산더미가 되겠지!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "부자는 방에 항아리를 놓고 말했어요.",
+       null,
+       "[calm, curious]"
+      ],
+      [
+       "rich",
+       "금덩이를 넣으면 금이 산더미가 되겠지!",
+       null,
+       "[greedy, gleeful, dreamy]"
+      ]
+     ]
+    },
+    {
+     "text": "부자는 금덩이를 하나, 또 하나, 퐁당퐁당 항아리에 넣었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "부자는 금덩이를 하나, 또 하나, 퐁당퐁당 항아리에 넣었어요.",
+       null,
+       "[greedy, playful, building]"
+      ]
+     ],
+     "after": [
+      "golds:in:3"
+     ]
+    },
+    {
+     "text": "금덩이가 와르르! 부자는 금 더미에 폭 파묻혔어요. \"사람 살려~\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "금덩이가 와르르! 부자는 금 더미에 폭 파묻혔어요.",
+       null,
+       "[comic, tumbling]"
+      ],
+      [
+       "rich",
+       "사람 살려~",
+       null,
+       "[muffled, panicked, comic]"
+      ]
+     ],
+     "before": [
+      "cut:buried"
+     ],
+     "after": [
+      "rich:look:pinned:left"
+     ]
+    },
+    {
+     "text": "부자는 팔다리를 버둥버둥, 낑낑대며 겨우겨우 기어 나왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "부자는 팔다리를 버둥버둥, 낑낑대며 겨우겨우 기어 나왔어요.",
+       null,
+       "[comic, effortful]"
+      ]
+     ],
+     "after": [
+      "golds:hide",
+      "rich:look:shout:right",
+      "rich:hop"
+     ]
+    },
+    {
+     "text": "쏙! 부자가 빠져나왔어요. 다치지는 않았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "쏙! 부자가 빠져나왔어요. 다치지는 않았어요.",
+       null,
+       "[relieved, warm]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_fathers",
+   "card": "아버지",
+   "set": "hallwide",
+   "enter": [
+    "jar:at:700,505",
+    "rich:at:240,505:shout:right",
+    "father:at:480,505:peek:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그때 부자의 아버지가 다가와 항아리 속을 들여다보았어요. \"이게 뭐냐?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그때 부자의 아버지가 다가와 항아리 속을 들여다보았어요.",
+       null,
+       "[calm, curious]"
+      ],
+      [
+       "father",
+       "이게 뭐냐?",
+       null,
+       "[old man, curious, grumbly]"
+      ]
+     ],
+     "after": [
+      "father:walk:660,505,700"
+     ]
+    },
+    {
+     "text": "아버지는 항아리 속을 들여다보려고 발꿈치를 들고 기우뚱기우뚱했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아버지는 항아리 속을 들여다보려고 발꿈치를 들고 기우뚱기우뚱했어요.",
+       null,
+       "[comic, curious]"
+      ]
+     ]
+    },
+    {
+     "text": "풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.",
+       null,
+       "[comic, splash]"
+      ]
+     ],
+     "before": [
+      "cut:plop",
+      "father:hide"
+     ]
+    },
+    {
+     "text": "\"아버지가 어디 계시지?\"",
+     "src": "trim",
+     "from": "\"아버지가 어디 계시지?\" 항아리를 톡톡톡 눌러서 아버지를 세어 봐요!",
+     "segs": [
+      [
+       "rich",
+       "아버지가 어디 계시지?",
+       null,
+       "[bewildered, worried]"
+      ]
+     ]
+    },
+    {
+     "text": "그러자 항아리에서 아버지가 쑥, 또 쑥, 자꾸자꾸 나왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그러자 항아리에서 아버지가 쑥, 또 쑥, 자꾸자꾸 나왔어요.",
+       null,
+       "[amazed, comic]"
+      ]
+     ],
+     "after": [
+      "fathers:out:8"
+     ]
+    },
+    {
+     "text": "아버지가 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 여덟 명이나 되었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아버지가 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 여덟 명이나 되었어요.",
+       null,
+       "[amazed, counting excitedly]"
+      ]
+     ],
+     "before": [
+      "cut:eight"
+     ]
+    },
+    {
+     "text": "\"내가 진짜 아버지다!\" \"아니야, 내가 진짜야!\" 모두 서로 자기가 진짜라고 우겼어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "father",
+       "내가 진짜 아버지다!",
+       null,
+       "[stubborn, indignant, old man]"
+      ],
+      [
+       "father",
+       "아니야, 내가 진짜야!",
+       null,
+       "[stubborn, bickering, louder]"
+      ],
+      [
+       "nar",
+       "모두 서로 자기가 진짜라고 우겼어요.",
+       null,
+       "[comic, playful]"
+      ]
+     ],
+     "after": [
+      "fathers:hop"
+     ]
+    },
+    {
+     "text": "\"배고프다! 밥 줘라!\" 부자는 쟁반을 들고 이리저리 뛰어다녔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "father",
+       "배고프다! 밥 줘라!",
+       null,
+       "[grumpy, whining, old man]"
+      ],
+      [
+       "nar",
+       "부자는 쟁반을 들고 이리저리 뛰어다녔어요.",
+       null,
+       "[comic, hurried]"
+      ]
+     ],
+     "before": [
+      "cut:hungry",
+      "rich:look:hurry:right"
+     ],
+     "after": [
+      "rich:dash"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_crash",
+   "card": "쨍그랑!",
+   "set": "hallwide",
+   "enter": [
+    "jar:at:700,505",
+    "rich:at:300,505:shout:right",
+    "fathers:out:8",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "아버지 여덟 명이 우르르 몰려다니며 왁자지껄 떠들었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아버지 여덟 명이 우르르 몰려다니며 왁자지껄 떠들었어요.",
+       null,
+       "[comic, hurried]"
+      ]
+     ],
+     "before": [
+      "fathers:hop"
+     ]
+    },
+    {
+     "text": "부자는 지쳐서 외쳤어요. \"이게 다 항아리 때문이야! 이제 그만!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "부자는 지쳐서 외쳤어요.",
+       null,
+       "[tired, comic]"
+      ],
+      [
+       "rich",
+       "이게 다 항아리 때문이야! 이제 그만!",
+       null,
+       "[exhausted, fed up, shouting]"
+      ]
+     ]
+    },
+    {
+     "text": "부자는 항아리를 번쩍 들어 올렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "부자는 항아리를 번쩍 들어 올렸어요.",
+       null,
+       "[tense, comic]"
+      ]
+     ],
+     "after": [
+      "cut:smash"
+     ]
+    },
+    {
+     "text": "쨍그랑! 항아리가 깨지자 일곱 명은 사라지고, 진짜 아버지만 남았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "쨍그랑! 항아리가 깨지자 일곱 명은 사라지고, 진짜 아버지만 남았어요.",
+       null,
+       "[crash, relieved]"
+      ]
+     ],
+     "before": [
+      "fathers:hide",
+      "jar:hide",
+      "cracked:show",
+      "father:at:500,505:peek:right"
+     ]
+    },
+    {
+     "text": "방 안이 갑자기 조용해졌어요. 부자는 고개를 푹 숙였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "방 안이 갑자기 조용해졌어요. 부자는 고개를 푹 숙였어요.",
+       null,
+       "[quiet, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "\"아버지, 죄송해요. 욕심을 부려서 소동이 났어요.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "rich",
+       "아버지, 죄송해요. 욕심을 부려서 소동이 났어요.",
+       null,
+       "[remorseful, sincere, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "아버지는 부자의 어깨를 토닥토닥 두드려 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아버지는 부자의 어깨를 토닥토닥 두드려 주었어요.",
+       null,
+       "[warm, forgiving]"
+      ]
+     ],
+     "after": [
+      "father:hop",
+      "rich:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_feast",
+   "card": "잔치",
+   "set": "feast",
+   "enter": [
+    "farmer:at:450,515:feast:right",
+    "wife:at:570,515:share:left",
+    "rich:at:300,515:hurry:right",
+    "father:at:700,515:peek:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "부자는 농부를 찾아가 사과하고, 가진 것을 마을 사람들과 나누기로 했어요. 함께 잔치를 열어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "부자는 농부를 찾아가 사과하고, 가진 것을 마을 사람들과 나누기로 했어요. 함께 잔치를 열어요!",
+       null,
+       "[warm, hopeful]"
+      ]
+     ]
+    },
+    {
+     "text": "마당에 상이 차려지고, 맛있는 냄새가 솔솔 풍겼어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "마당에 상이 차려지고, 맛있는 냄새가 솔솔 풍겼어요.",
+       null,
+       "[warm, happy]"
+      ]
+     ],
+     "after": [
+      "tables:show"
+     ]
+    },
+    {
+     "text": "\"항아리는 깨졌지만, 함께 나누게 되었으니 됐어요.\" 농부가 빙그레 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "farmer",
+       "항아리는 깨졌지만, 함께 나누게 되었으니 됐어요.",
+       null,
+       "[kind, gentle, smiling]"
+      ],
+      [
+       "nar",
+       "농부가 빙그레 웃었어요.",
+       null,
+       "[warm]"
+      ]
+     ]
+    },
+    {
+     "text": "\"모두 고맙네!\" 모두 둘러앉아 맛있게 먹었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "rich",
+       "모두 고맙네!",
+       null,
+       "[grateful, warm, genial]"
+      ],
+      [
+       "nar",
+       "모두 둘러앉아 맛있게 먹었어요.",
+       null,
+       "[warm, happy]"
+      ]
+     ],
+     "after": [
+      "confetti",
+      "farmer:hop",
+      "wife:hop",
+      "rich:hop",
+      "father:hop"
+     ]
+    },
+    {
+     "text": "냠냠, 쩝쩝! 웃음소리가 마을 끝까지 울려 퍼졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "냠냠, 쩝쩝! 웃음소리가 마을 끝까지 울려 퍼졌어요.",
+       null,
+       "[joyful, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.",
+       null,
+       "[warm, gentle, slow, conclusive]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
