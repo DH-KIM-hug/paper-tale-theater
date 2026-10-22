@@ -96,6 +96,110 @@
     const drum = prop(T, 'buk', 84), buk = prop(T, 'drum', 84), gong = prop(T, 'gong', 84); [drum, buk, gong].forEach(a => widen(T, a, 100, 100)); // 2026-10-20 새 그림은 'buk'이 큰 북, 'drum'이 장구라서 파일을 맞바꿈
     const cakes = prop(T, 'ricecake', 76), loomProp = prop(T, 'loom', 190);
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 ================= */
+    const READ_ACTS = (() => {
+      const A = { kong, step, pat, ox, toad, fairy, won, flock };
+      const PR = { jar, pail, basketY, basketR, drum, buk, gong, shoeP, shoeB, shoeM, cakes };
+      const BG_OF = { yard: 'yard', field: 'field', well: 'jar', jar: 'jarbottom', mat: 'mat', loom: 'loom', stream: 'stream', feast: 'feast', office: 'gate', wedding: 'wedding' };
+      let key = '', water = null;
+      const rI = () => T.readInstant();
+      const nums = s => String(s).split(',').map(Number);
+      /* 세로 화면은 놀이판처럼 몇몇 자리를 안쪽으로 */
+      const PXMAP = { yard: { step: 600, pat: 690 }, field: { step: 660, ox: 520 }, mat: { step: 660 } };
+      const px = (n, x) => (P && PXMAP[key] && PXMAP[key][n] != null ? PXMAP[key][n] : x);
+      const fadeIn = a => a.pos.animate([{ opacity: 0 }, { opacity: 1 }], 450);
+      const CUT_HOLD = { ox: 3000, wet: 3000, toad: 3000, sparrows: 3200, fairy: 3200, splash: 3000, shy: 3200 };
+      const actorVerb = (n, a) => (op, spec) => {
+        if (op === 'at') { const [x, y = GROUND] = nums(spec); put(T, a, px(n, x), y); return; }
+        if (op === 'look') {
+          if (n === 'kong' && spec === 'shoes' && key === 'loom') put(T, a, 450, 505); // 선녀가 옷을 주는 자리 (놀이판)
+          a.look(spec); return;
+        }
+        if (op === 'to') { a.turn(spec); return; }
+        if (op === 'hide') { hide(a); return; }
+        if (op === 'hop') { a.hop(24, 320); popSfx(T); return; }
+        if (op === 'fade') { fadeIn(a); return; }
+        if (op === 'walk') {
+          const [x, y = GROUND] = nums(spec);
+          if (rI()) { a.place(x, y); return; }
+          return a.move(x, y, 900);
+        }
+        if (op === 'cross') { // 징검다리를 n 번 폴짝 (누르기 없이 저절로)
+          const n2 = +spec, x0 = a.x;
+          return (async () => { for (let i = 1; i <= n2; i++) { a.move(x0 + i * 225 / n2, 505, 380); popSfx(T); await sleep(430); } })();
+        }
+        if (op === 'peck') return null;
+      };
+      const wellScene = () => {
+        scene('jar'); water = null;
+        put(T, kong, 400, 505, { look: 'pour', to: 'right' }); put(T, jar, 560, 505); put(T, pail, 480, 520);
+      };
+      const acts = {
+        set(k) {
+          key = k;
+          if (k === 'well') { if (rI()) { wellScene(); return; } return T.sceneCard(null, wellScene); }
+          if (rI()) { scene(BG_OF[k]); water = null; return; }
+          return T.sceneCard(null, () => { scene(BG_OF[k]); water = null; });
+        },
+        cam() { camSnap(500, 280, 1); },
+        prop(id, op, spec) {
+          const a = PR[id]; if (!a) return;
+          if (op === 'at') { const [x, y] = nums(spec); put(T, a, x, y); return; }
+          if (op === 'hide') hide(a);
+        },
+        sweep() { return (async () => { for (let i = 0; i < 3; i++) { kong.hop(14, 300); popSfx(T); await sleep(450); } })(); },
+        pail(op, n) {
+          if (op !== 'pour') return;
+          return (async () => { for (let i = 0; i < +n; i++) { pail.hop(14, 260); popSfx(T); pourDrops(pail, jar); await sleep(500); } })();
+        },
+        jar(op) {
+          if (op === 'leak') { leakDrops(jar); return sleep(900); }
+          if (op === 'full') {
+            if (!water || !water.isConnected) water = T.el('ellipse', { cx: jar.x, cy: jar.y - 150, rx: 52, ry: 11, fill: '#5FB4E8', stroke: '#fff', 'stroke-width': 3, opacity: 0 }, T.world);
+            water.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, fill: 'forwards' });
+            popSfx(T); return sleep(700);
+          }
+        },
+        sparrows(op, n) {
+          const sp = sparrows.slice(0, +n);
+          return (async () => {
+            for (let i = 1; i <= sp.length; i++) {
+              const s = sp[i - 1]; put(T, s, 410 + i * 52, 440 - (i % 2) * 26, { to: 'left' });
+              s.pos.animate([{ opacity: 0, translate: '0 -30px' }, { opacity: 1, translate: '0 0' }], 260); s.hop(10, 240); popSfx(T);
+              await sleep(300);
+            }
+          })();
+        },
+        shoe(op) {
+          if (op === 'drift') { // 떠내려간다 (이어서 다음 줄을 읽는다)
+            const lost = prop(T, 'shoe_butterfly', 34); put(T, lost, 640, 540);
+            lost.move(930, 560, 3800, 'ease-in-out').then(() => hide(lost));
+            return;
+          }
+          if (op === 'fit') { clinkSfx(T); shoeB.hop(24, 320); return sleep(450).then(() => kong.hop(34, 400)); }
+        },
+        cut(k) {
+          if (k === 'sparrows') hide(flock);
+          if (k === 'toad') toad.look('plug');
+          return T.cutImage([{ src: cutSrc(k), sfx: 'pop', hold: CUT_HOLD[k] || 3000 }], { hold: CUT_HOLD[k] || 3000 });
+        },
+        fx(n) {
+          if (n === 'drum') { AudioFX.sfx('drum') || T.tone([140, 90], .3, { vol: .25 }); drum.hop(14, 240); buk.hop(14, 240); }
+          else if (n === 'gong') { clinkSfx(T); gong.hop(14, 240); }
+          else if (n === 'splash') AudioFX.sfx('pow');
+          else if (n === 'sparkle') clinkSfx(T);
+          else popSfx(T);
+        },
+        pop(spec) { const a = String(spec).split(','); T.pop(+a[0], +a[1], tr(a.slice(2).join(','))); },
+      };
+      Object.keys(A).forEach(n => { acts[n] = actorVerb(n, A[n]); });
+      acts.sparrow = acts.sparrows;
+      /* 선녀가 옷을 줄 때는 땅으로 내려온다 */
+      const fa = acts.fairy; acts.fairy = (op, spec) => { if (op === 'look' && spec === 'give' && key === 'loom') put(T, fairy, 580, 505, { to: 'left' }); return fa(op, spec); };
+      return acts;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* --- 1. 마당 쓸기 --- */
     scene('yard');
     put(T, kong, 440, 505, { look: 'sweep', to: 'right' });
@@ -284,5 +388,5 @@
     return '착한 마음은 도움을 불러와요!';
   }
 
-  Tale.mount({ title: '콩쥐팥쥐', subtitle: '착한 마음은 도움을 불러와요', run: T => run(Tale.api) });
+  Tale.mount({ title: '콩쥐팥쥐', subtitle: '착한 마음은 도움을 불러와요', read: true, run: T => run(Tale.api) });
 })();
