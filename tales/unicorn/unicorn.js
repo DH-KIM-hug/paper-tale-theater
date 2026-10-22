@@ -310,7 +310,7 @@
     const scene = (key, lx, ps) => { T.clear(); bgImage(T, key); setView(lx, ps); };
     const follow = (x, ms = 800) => (P ? T.camTo(500 + (x - VX.lx) * VX.ps, 280, 1, ms) : Promise.resolve());
     const H = n => (P ? n / VX.ps : n);               // 화면 크기를 지키는 누르는 자리
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'boing', 'ding']);
+    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding']);
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
@@ -395,7 +395,7 @@
     hitBox(T, cloud, H(P ? 180 : 260), H(P ? 140 : 160));
     bob(cloud.pos);
     await T.ask(S.L6, () => T.tap(cloud.hit, { prompt: S.L6 }));
-    unhit(cloud); AudioFX.sfx('boing', .5);
+    unhit(cloud); AudioFX.sfx('cushion', .7);
     await T.cutImage([{ src: src('uc_cut2_sheep_jump'), hold: 3600 }]);
     sheep.look('jump', 'left'); sfx('whoosh', .4);
     const land = kid.x + 150, sx = sheep.x, sy = sheep.y;     // 포물선: 위로 40(0.25초) → 아래로 210(0.65초)

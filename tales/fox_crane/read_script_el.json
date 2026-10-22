@@ -13,7 +13,7 @@
   "pot:stir | pot:bubble | letter:give | plate:show | bottle:show | lanterns:on": "소품 연출",
   "cut:<peck|lick|stuck|sorry>": "그림 컷 4장 — 컷 속 외침(VOICE_LINES cut_peck·cut_lick·cut_stuck)은 그대로 재사용",
   "vo:<cut_peck|cut_lick|cut_stuck|hi_crane|hi_fox|hi_duck|hi_butterfly|yum_crane|yum_fox|yum_duck|yum_butterfly>": "말풍선 없는 소리 대사(기존 녹음)",
-  "fx:<boing|thud|pop|bubble|grumble> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+  "fx:<hop|thud|pop|bubble|grumble> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
  },
  "scenes": [
   {
@@ -96,7 +96,7 @@
      ],
      "before": [
       "crane:hop",
-      "fx:boing",
+      "fx:hop",
       "pop:700,250,폴짝!"
      ]
     },

@@ -296,7 +296,7 @@
     await say('보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.');
     await T.cutImage([{ src: U('cut_chimney'), hold: 2600 }, { src: U('cut_splash'), hold: 3200, sfx: 'splash' }]);
     await say('"앗, 뜨거워!"');
-    await T.cutImage([{ src: U('cut_launch'), hold: 3400, sfx: 'boing' }]);
+    await T.cutImage([{ src: U('cut_launch'), hold: 3400, sfx: 'whoosh' }]);
     await say('늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.');
 
     /* 11. 벽돌 마을 */

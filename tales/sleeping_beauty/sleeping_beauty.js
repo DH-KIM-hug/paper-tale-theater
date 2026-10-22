@@ -319,7 +319,7 @@
     const S_ROW = T.viewWidth() < 300 ? .36 : .55, SGAP = S_ROW === .36 ? 32 : 50;
     const SLOT = i => 112 + 108 * i, SLOTP = i => 500 - 3.5 * SGAP + SGAP * i;
     const SX = i => X(SLOT(i), SLOTP(i)), RS = X(1, S_ROW);
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'giggle', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'boing']);
+    AudioFX.preloadSfx(['paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'giggle', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'hop']);
     const S = {
       L1: "왕과 왕비는 오래오래 아기를 기다렸어요. 드디어 예쁜 공주님이 태어났어요!",
       L2: "온 나라 사람들을 불러 잔치를 열자!",
@@ -833,7 +833,7 @@
     prince.look('stand'); prince.hop(6, 300);
     await say(S.L40);
     const l41 = say(S.L41);
-    [maid, cook, kid].forEach((a, i) => setTimeout(() => { a.look('stand'); a.hop(10, 360); sfx(T, 'boing', .3); }, i * 200));
+    [maid, cook, kid].forEach((a, i) => setTimeout(() => { a.look('stand'); a.hop(10, 360); sfx(T, 'hop', .5); }, i * 200));
     await l41;
     await sleep(300);
     await veil(T, () => {

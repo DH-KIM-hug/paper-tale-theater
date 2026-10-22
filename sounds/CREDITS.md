@@ -51,7 +51,6 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 
 | 파일 | 원본 | 만든 이 | 라이선스 | 출처 |
 |---|---|---|---|---|
-| `sfx/boing.mp3` | boing.flac | Aeva | CC0 | https://opengameart.org/content/boing |
 | `sfx/spring.mp3` | 100-CC0-SFX: spring_01.ogg | rubberduck | CC0 | https://opengameart.org/content/100-cc0-sfx |
 | `sfx/crash.mp3` | "Breaking Glass 6"(1초, 와장창) | AleXZavesa | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/breaking-glass-6-468382/ |
 | `sfx/splash_big.mp3` | 100-CC0-SFX: splash_01 + splash_02 섞음 + 18 random sfx: thump.wav | rubberduck, bart | CC0 | https://opengameart.org/content/100-cc0-sfx · https://opengameart.org/content/18-random-video-game-sound-effects |
@@ -123,3 +122,14 @@ Pixabay 검색 페이지가 자동 접속을 막아 소리 파일을 받지 못�
 |---|---|---|---|---|
 | `sfx/police_siren.mp3` (3초) · `sfx/fire_siren.mp3` (3초) · `sfx/fire_crackle.mp3` (3.9초) | 직접 만든 소리 — ElevenLabs 효과음 생성 | 팥죽 게임 | 직접 만든 소리(ElevenLabs 효과음 생성) | — |
 | `sfx/ambulance_siren.mp3` (3초) | 직접 만든 소리 — 코드 합성(ffmpeg 사인파 960Hz·770Hz 를 0.375초씩 번갈아, 한국식 삐뽀삐뽀. 2차 배음 약하게 얹고 음마다 살짝 부드럽게) | 팥죽 게임 | CC0 | — |
+
+## 효과음 · 뛰기·튀기·앉기·불쑥 (보잉 대체, 2026-10-23)
+
+만화 '보잉' 스프링 소리(`sfx/boing.mp3`)를 빼고 의미에 맞는 부드러운 소리로 바꿨다. 모두 직접 만든 소리(ElevenLabs 효과음 생성, 앞뒤 무음 자름, 모노 44.1kHz 96kbps, 피크 -2dB). Pixabay 검색은 자동 접속이 막혀 쓰지 않았다.
+
+| 파일 | 소리 | 원본 | 라이선스 |
+|---|---|---|---|
+| `sfx/hop.mp3 · sfx/hop_2.mp3 · sfx/hop_3.mp3` | 깡충·폴짝 부드러운 뛰기(0.2~0.4초, 재생마다 번갈아) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
+| `sfx/ball_bounce.mp3 · sfx/ball_bounce_2.mp3` | 공 통통(0.6초) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
+| `sfx/cushion.mp3` | 푹신한 데 앉기 '푹'(0.3초) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
+| `sfx/pop_out.mp3` | 불쑥 나타나기 쑥-뿅(0.55초) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |

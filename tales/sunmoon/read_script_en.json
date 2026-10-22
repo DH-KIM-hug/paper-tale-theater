@@ -18,7 +18,7 @@
   "door:hand:<tiger|flour> | door:hole | door:eye": "문틈의 손·창호지 구멍·구멍 너머 눈",
   "rope:good | rope:bad | rope:snap | clouds:rise | oil:pour | sky:<day|night>": "동아줄·구름·참기름·해와 달 하늘",
   "cut:<roar|gulp|mimic|creak|snap|bump>": "만화 컷 — 컷 속 외침(VOICE_LINES cut_*)을 그대로 재사용",
-  "fx:<pop|boing|chomp|gulp|whoosh|boom|thud|bell|jingle> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
+  "fx:<pop|pop_out|chomp|gulp|whoosh|boom|thud|bell|jingle> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
  },
  "scenes": [
   {
@@ -233,7 +233,7 @@
       ]
      ],
      "before": [
-      "fx:boing",
+      "fx:pop_out",
       "pop:760,250,불쑥!",
       "tiger:enter:0",
       "cam:630,330,1.6"
@@ -327,7 +327,7 @@
       ]
      ],
      "before": [
-      "fx:boing",
+      "fx:pop_out",
       "pop:760,250,또 왔어!",
       "tiger:enter:1",
       "cam:630,330,1.6"
@@ -421,7 +421,7 @@
       ]
      ],
      "before": [
-      "fx:boing",
+      "fx:pop_out",
       "tiger:enter:2",
       "cam:630,330,1.6"
      ]

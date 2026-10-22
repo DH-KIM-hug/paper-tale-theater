@@ -139,7 +139,8 @@ const AudioFX = (() => {
   /* 같은 소리의 여러 버전: 기본 이름(rooster.mp3) 말고 rooster_2.mp3, rooster_3.mp3 … 가 있으면 재생할 때마다 바꿔 고른다 (버전 수는 기본 포함) */
   const VARIANTS = { 'animals/duck': 2, 'animals/cow': 3, 'animals/pig': 2, 'animals/dog': 3, 'animals/owl': 3, 'animals/frog': 3,
     'animals/rooster': 2, 'animals/cat': 3, 'animals/sheep': 2, 'animals/donkey': 2, 'animals/tiger': 2, 'sfx/knock': 3,
-    'sfx/crunch': 2, 'sfx/chomp': 3, 'sfx/gulp': 3, 'sfx/gom_se_mari': 2 };
+    'sfx/crunch': 2, 'sfx/chomp': 3, 'sfx/gulp': 3, 'sfx/gom_se_mari': 2,
+    'sfx/hop': 3, 'sfx/ball_bounce': 2 };
   const variantPath = (base, i) => i === 1 ? base + '.mp3' : base + '_' + i + '.mp3';
   const lastVariant = {};
   function pickVariant(path) {
@@ -183,7 +184,7 @@ const AudioFX = (() => {
   let countWin = null;
   const SFX = { thud: 'sfx/thud', boom: 'sfx/boom', pow: 'sfx/pow', bonk: 'sfx/bonk', pop: 'sfx/pop', poke: 'sfx/poke',
     tap: 'sfx/tap', ding: 'sfx/ding', swish: 'sfx/swish', whoosh: 'sfx/whoosh', bell: 'sfx/bell', splash: 'sfx/splash', growl: 'animals/tiger',
-    boing: 'sfx/boing', chomp: 'sfx/chomp', gulp: 'sfx/gulp', slide: 'sfx/slide_down' };
+    hop: 'sfx/hop', ball_bounce: 'sfx/ball_bounce', cushion: 'sfx/cushion', pop_out: 'sfx/pop_out', chomp: 'sfx/chomp', gulp: 'sfx/gulp', slide: 'sfx/slide_down' };
   /* 만화 컷용 신나는 효과음 (sounds/CREDITS.md) — sting()이 여러 개를 겹쳐 쓴다 */
   const COMIC = ['spring', 'slide_up', 'slide_down', 'zip', 'cork', 'doop', 'sparkle', 'xylo_up', 'xylo_down', 'giggle_xylo',
     'crash', 'cymbal', 'drumroll', 'tada', 'womp', 'squeak', 'splash_big', 'bubbles', 'giggle', 'cheer',
@@ -199,10 +200,10 @@ const AudioFX = (() => {
     hit:      [['zip', 0, .6], ['bonk', .1, .95], ['sparkle', .22, .45]],                        // 휙-땡!-반짝
     poke:     [['zip', 0, .55], ['poke', .1, .85], ['squeak', .16, .75], ['slide_up', .38, .5]], // 휙-콕!-삑-뿅~
     bigHit:   [['drumroll', 0, .55, .42], ['boom', .4, 1], ['crash', .42, .75], ['cymbal', .46, .6]], // 두구두-쾅!와장창-챙
-    slip:     [['slide_down', 0, .6], ['thud', .62, .9], ['boing', .72, .6]],                  // 삐유~-쿵-보잉
+    slip:     [['slide_down', 0, .6], ['thud', .62, .9], ['squeak', .74, .5]],                 // 삐유~-쿵-삑
     bite:     [['zip', 0, .55], ['chomp', .1, .95], ['squeak', .2, .6], ['uah', .42, .8]],      // 휙-앙!-삑-으악
     splash:   [['whoosh', 0, .6], ['splash_big', .14, .9], ['splash', .2, .5], ['bubbles', .6, .5]], // 휙-풍덩!-보글보글
-    roll:     [['rattle', 0, .7], ['drumroll', .08, .35, .6], ['spring', .7, .55], ['boing', .78, .45]], // 달그락 돌돌-띠용
+    roll:     [['rattle', 0, .7], ['drumroll', .08, .35, .6], ['spring', .7, .55]],                       // 달그락 돌돌-띠용
     laugh:    [['giggle_xylo', 0, .45], ['giggle', .2, .8]],                                     // 또로롱-까르르
     fail:     [['womp', 0, .7]],                                                               // 빠밤빠밤~
     magic:    [['zip', 0, .35], ['sparkle', .05, .6], ['xylo_up', .3, .55]],                    // 반짝반짝-또로롱
@@ -307,7 +308,10 @@ const AudioFX = (() => {
     slide()  { tone([900, 180], 0.45, { type: 'sine', vol: 0.28 }); },
     poke()   { tone([1500, 2200], 0.06, { type: 'triangle', vol: 0.26 }); },
     thud()   { tone([120, 45], 0.3, { type: 'sine', vol: 0.4 }); noise(0.18, { freq: 200, vol: 0.28 }); },
-    boing()  { tone([200, 700], 0.18, { type: 'triangle', vol: 0.25 }); tone([700, 300], 0.2, { type: 'triangle', vol: 0.2, when: 0.18 }); },
+    hop()         { tone([260, 420], 0.1, { type: 'sine', vol: 0.2 }); tone([420, 200], 0.1, { type: 'sine', vol: 0.12, when: 0.1 }); },
+    ball_bounce() { tone([420, 160], 0.14, { type: 'sine', vol: 0.28 }); noise(0.05, { freq: 600, vol: 0.12 }); },
+    cushion()     { tone([180, 70], 0.18, { type: 'sine', vol: 0.3 }); noise(0.14, { freq: 350, q: 0.6, vol: 0.14 }); },
+    pop_out()     { noise(0.1, { freq: 1800, q: 0.4, vol: 0.12 }); tone([380, 1000], 0.1, { type: 'triangle', vol: 0.2, when: 0.08 }); },
     roll()   { for (let i = 0; i < 6; i++) tone([180 - i * 8, 90], 0.09, { type: 'square', vol: 0.16, when: i * 0.11 }); },
     splash() { noise(0.55, { freq: 1400, q: 0.6, vol: 0.4 }); tone([500, 120], 0.4, { type: 'sine', vol: 0.15, when: 0.05 }); },
     /* 만화 컷용 굵은 타격음: 퍽! */
@@ -375,7 +379,8 @@ const AudioFX = (() => {
   /* 스팅 재료가 아직 없을 때의 합성음 (소리가 비지 않게) */
   const run = (fs, gap, type = 'triangle', vol = .16, dur = .1) => fs.forEach((f, i) => tone(f, dur, { type, vol, when: i * gap }));
   const FALLBACK = {
-    spring: SYN.boing, boing: SYN.boing, slide: SYN.slide,
+    spring: () => { tone([200, 700], 0.18, { type: 'triangle', vol: 0.25 }); tone([700, 300], 0.2, { type: 'triangle', vol: 0.2, when: 0.18 }); },
+    slide: SYN.slide,
     slide_up: () => tone([420, 1700], .55, { vol: .22 }),
     slide_down: () => tone([1700, 300], .75, { vol: .22 }),
     zip: SYN.whoosh, whoosh: SYN.whoosh, cork: SYN.pop, doop: SYN.pop, pop: SYN.pop,

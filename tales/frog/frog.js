@@ -489,7 +489,7 @@
     AudioFX.thud(); T.shake(); T.pop(oxActor.x, oxActor.y - 190, '쿵!'); vo('ox_thud');
     oxArt.set('stand');
     await say('쿵! 황소는 폴짝 뛰지 못했어요. 누가 더 멀리 뛸까요? 개구리!');
-    await cutArt(T, [['cut_jump', 'boing', 3000]]);
+    await cutArt(T, [['cut_jump', 'hop', 3000]]);
 
     /* --- 10. 밤 연못 합창 --- */
     await T.sceneCard('밤 연못', () => {

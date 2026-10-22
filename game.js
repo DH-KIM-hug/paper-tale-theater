@@ -727,7 +727,7 @@ const SUCCESS = {
     impact(495, 440, '콕!');
     await showCut('songgot');
     el.tiger.classList.remove('fallen');
-    AudioFX.boing();
+    AudioFX.hop();
     await anim(el.tigerPos, [
       { transform: `translate(${el.tigerPos._x}px, 520px)` },
       { transform: `translate(${el.tigerPos._x}px, 420px)` },
@@ -780,7 +780,7 @@ const SUCCESS = {
     // 지게가 다가가 멍석말이 호랑이를 지고 강으로
     await anim(act, [{ transform: 'translate(0,0)' }, { transform: 'translate(-45px,0)' }], { duration: 500, easing: 'ease-in-out' });
     act.style.transform = 'translate(-45px, 0)';
-    AudioFX.boing();
+    AudioFX.sfx('step_wood', .8);
     // 둘이 함께 강가로 이동 — 카메라도 강가로 팬
     const rollMove = anim(el.rolled, [
       { transform: 'translate(560px, 520px)' },
@@ -876,7 +876,7 @@ const FAIL = {
   },
   async ddong() {
     await bounceFriend('ddong');
-    AudioFX.boing();
+    AudioFX.cushion();
     if (el.tigerPos.style.opacity !== '0' && !el.tiger.classList.contains('flat') && !el.tiger.classList.contains('fallen')) {
       await tigerHop([
         { transform: 'translateY(0)' }, { transform: 'translateY(-40px)' }, { transform: 'translateY(0)' },
@@ -909,7 +909,7 @@ const FAIL = {
     ], { duration: 900 });
   },
   async jige() {
-    AudioFX.boing();
+    AudioFX.sfx('step_wood', .8);
     await anim(friendAct('jige'), [
       { transform: 'rotate(0deg)' }, { transform: 'rotate(-12deg)' },
       { transform: 'rotate(10deg)' }, { transform: 'rotate(-6deg)' }, { transform: 'rotate(0deg)' },
@@ -918,7 +918,7 @@ const FAIL = {
 };
 
 /* ===== 엔딩 ===== */
-const FINALE_SFX = { bam: 'pop', jara: 'chomp', ddong: 'boing', songgot: 'poke', jeolgu: 'bonk', myeongseok: 'roll', jige: 'boing' };
+const FINALE_SFX = { bam: 'pop', jara: 'chomp', ddong: 'cushion', songgot: 'poke', jeolgu: 'bonk', myeongseok: 'roll', jige: 'step_wood' };
 
 /* 잔치·커튼콜에서 작은 친구일수록 크게 (발끝 기준) */
 const STAR_SCALE = { bam: 1.9, jara: 1.9, ddong: 1.9, songgot: 1.9, jeolgu: 1.45, myeongseok: 1.15, jige: 1.15 };

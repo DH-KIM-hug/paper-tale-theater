@@ -22,7 +22,7 @@
   "party:band": "잔치 행진곡(친구들이 저절로 연주)",
   "cut:<wake|dash|photo>": "그림 컷 — 컷 속 외침(VOICE_LINES wake_rabbit)은 그대로 재사용",
   "vo:<laugh_pig|cheer_dog|cheer_duck|cheer_sheep|wake_rabbit>": "말풍선 없는 소리 대사(기존 녹음)",
-  "fx:<boing|whoosh|splash|chomp|footstep|rooster|duck|cow|pig|sheep|dog|cat|owl|win> | pop:<x,y,글자> | speedlines | confetti | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+  "fx:<hop|whoosh|splash|chomp|footstep|rooster|duck|cow|pig|sheep|dog|cat|owl|win> | pop:<x,y,글자> | speedlines | confetti | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
  },
  "scenes": [
   {
@@ -106,7 +106,7 @@
      ],
      "before": [
       "rabbit:walk:700,500,1100",
-      "fx:boing"
+      "fx:hop"
      ],
      "after": [
       "rabbit:hop"

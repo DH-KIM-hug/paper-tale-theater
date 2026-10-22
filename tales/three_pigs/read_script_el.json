@@ -13,7 +13,7 @@
   "fan:blow:<straw|wood|brick> | pile:drop:<straw|wood|brick> | house:reveal:<straw|wood|brick> | house:ruin:<straw|wood> | house:build:<1|2|3>": "가게 바람·재료 떨어뜨리기(drop)·집 완성(reveal)·집 무너짐·마을 새 집",
   "wolf:blow:<n> | fire:big | pot:boil | pigs:run:<x>": "늑대 입김 n번·불 키우기·솥 끓기·돼지들 달리기",
   "cut:<strawhat|planks|tired|crawl|chimney|splash|launch|village>": "그림 컷(cutImage)",
-  "fx:<whoosh|thud|ding|splash|boing|crash> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
+  "fx:<whoosh|thud|ding|splash|crash> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
  },
  "scenes": [
   {
@@ -973,7 +973,7 @@
      ],
      "after": [
       "cut:launch",
-      "fx:boing"
+      "fx:whoosh"
      ]
     },
     {

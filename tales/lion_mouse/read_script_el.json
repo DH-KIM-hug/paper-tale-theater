@@ -13,7 +13,7 @@
   "bubble:pop | board:<paw|tooth|hole> | net:cut:<n> | scroll:run": "콧방울 퐁·비교 판·그물 줄 끊기·초원 달리기 배경 흐름",
   "cut:<paw|laugh|net|gnaw>": "그림 컷 4장 — 컷 속 외침(VOICE_LINES cut_paw·cut_laugh·cut_net)은 그대로 재사용",
   "vo:<cut_paw|cut_laugh|cut_net|hi_mouse|hi_lion>": "말풍선 없는 소리 대사(기존 녹음)",
-  "fx:<thud|boing|roar|squeak|gnaw|whoosh> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+  "fx:<thud|roar|squeak|gnaw|whoosh> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
  },
  "scenes": [
   {
@@ -659,7 +659,7 @@
      ],
      "before": [
       "lion:free",
-      "fx:boing"
+      "fx:thud"
      ]
     },
     {

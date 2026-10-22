@@ -15,7 +15,7 @@
   "cut:<monster|pop|fly|splash|jump>": "그림 컷 5장 — 컷 속 외침(VOICE_LINES cut_pop·ox_thud)은 그대로 재사용",
   "vo:<cut_pop|ox_thud>": "말풍선 없는 소리 대사(기존 녹음)",
   "chorus:sing | chorus:fade": "밤 합창(저절로)·잦아듦",
-  "fx:<ribbit|splash|boing|thud|whoosh|pop> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+  "fx:<ribbit|splash|hop|thud|whoosh|pop> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
  },
  "scenes": [
   {
@@ -276,7 +276,7 @@
      ],
      "after": [
       "babies:run",
-      "fx:boing"
+      "fx:hop"
      ]
     }
    ]
@@ -411,7 +411,7 @@
      ],
      "before": [
       "mom:puffed:3",
-      "fx:boing"
+      "fx:hop"
      ]
     },
     {
@@ -600,7 +600,7 @@
      ],
      "before": [
       "mom:hop",
-      "fx:boing",
+      "fx:hop",
       "pop:400,300,폴짝!"
      ]
     },

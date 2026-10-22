@@ -762,14 +762,14 @@
     const back = async () => { gmode('stand'); goldi.setFace('smile'); await goldi.move(X(640), 510, 500); };
     await T.ask(q6, () => T.choose([
       { el: chairs[0].g, ok: false, onWrong: async () => {
-        AudioFX.boing(); sitOn(chairs[0]); goldi.hop(40, 400);
+        AudioFX.hop(); sitOn(chairs[0]); goldi.hop(40, 400);
         goldi.setFace('o');
         goldi.legs.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(14deg)' }, { transform: 'rotate(-14deg)' }, { transform: 'rotate(0deg)' }], { duration: 600, iterations: 3 });
         pop(chairs[0].x, 120, '달랑달랑~', C.persimmon);
         await say('너무 높아요! 다리가 달랑달랑.'); giggle(T); await back();
       } },
       { el: chairs[1].g, ok: false, onWrong: async () => {
-        sitOn(chairs[1]); goldi.setFace('o'); AudioFX.boing();
+        sitOn(chairs[1]); goldi.setFace('o'); AudioFX.cushion();
         cushFront = T.paper(T.world, [['ellipse', { cx: chairs[1].x, cy: chairs[1].seatTop + 30, rx: 70, ry: 30, fill: chairs[1].art ? '#F28C1C' : C.persimmon }]]);
         cushFront.style.opacity = '0'; cushFront.style.transition = 'opacity .4s'; void cushFront.getBoundingClientRect(); cushFront.style.opacity = '1';
         await goldi.move(chairs[1].x, goldi.y + 46, 600, 'ease-in');
@@ -821,7 +821,7 @@
       { el: beds[1].blanket, ok: false, onWrong: async () => {
         lieIn(beds[1]); goldi.setFace('o');
         goldi.body.animate([{ transform: 'scale(1)' }, { transform: 'scale(.8)' }, { transform: 'scale(.85)' }], { duration: 700, fill: 'forwards' });
-        AudioFX.boing(); pop(beds[1].cx, 150, '푹신푹신~', C.persimmon);
+        AudioFX.cushion(); pop(beds[1].cx, 150, '푹신푹신~', C.persimmon);
         await say('너무 푹신해요!'); giggle(T);
         goldi.body.getAnimations().forEach(a => a.cancel()); await backBed();
       } },
@@ -939,7 +939,7 @@
     paw.remove();
     goldi.pose(''); goldi.setFace('o');
     goldi.place(500, 400); goldi.hop(50, 450);
-    AudioFX.boing();
+    AudioFX.pop_out();
     pop(500, 300, '깜짝!', C.bean);
     if (P()) { put(bears.dad, 738, 520, SIZE[0]); put(bears.mom, 676, 530, SIZE[1]); put(bears.baby, 626, 540, SIZE[2]); } // 세로: 아빠 곰 오른쪽 끝이 잘리지 않게
     else { put(bears.dad, 910, 520, SIZE[0]); put(bears.mom, 790, 520, SIZE[1]); put(bears.baby, 690, 520, SIZE[2]); }

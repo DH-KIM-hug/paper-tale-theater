@@ -14,7 +14,7 @@
   "thieves:run | thieves:hands | house:fire | flames:out:<n> | dolls:out | amb:door": "도둑 장난감·불난 집·불꽃 끄기(저절로)·인형 내리기",
   "hook:click | convoy:line | convoy:drive": "견인 고리 걸기·한 줄 서기·줄지어 달리기",
   "vo:<siren_police|siren_fire|siren_amb|vroom|chalkak|cheer>": "말풍선 없는 소리 대사(기존 녹음)",
-  "fx:<whoosh|boing|door|creak|click|siren> | pop:<x,y,글자> | confetti | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+  "fx:<whoosh|squeak|door|creak|click|siren> | pop:<x,y,글자> | confetti | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
  },
  "scenes": [
   {
@@ -361,7 +361,7 @@
      ],
      "before": [
       "thieves:hands",
-      "fx:boing"
+      "fx:squeak"
      ]
     },
     {

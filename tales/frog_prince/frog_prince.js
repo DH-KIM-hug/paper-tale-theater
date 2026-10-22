@@ -169,7 +169,8 @@
   const bob = n => n.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
   const sfx = (name, vol, fb) => AudioFX.sfx(name, vol) || (fb && fb());
   const sparkleSfx = T => AudioFX.sfx('sparkle') || T.tone([700, 1400], .3, { vol: .15 });
-  const boing = (T, v) => sfx('boing', v, () => T.tone([300, 600], .12, { vol: .15 }));
+  const hopSfx = (T, v) => sfx('hop', v, () => T.tone([260, 420], .1, { vol: .15 }));
+  const bounceSfx = (T, v) => sfx('ball_bounce', v, () => T.tone([420, 160], .14, { vol: .18 }));
 
   /* 누르는 자리 넓히기: 화면 w×h 투명 사각을 그림 뒤에 깐다(a.scale 로 나눠 화면 크기를 지킨다). 도형(kind)은 가운데 기준 */
   function hitBox(T, a, w = 100, h = 100) {
@@ -217,7 +218,7 @@
   /* 폴짝폴짝: n 번 */
   async function hops(T, a, toX, n, ms) {
     const step = (toX - a.x) / n;
-    for (let i = 0; i < n; i++) { boing(T, .25); await arc(a, a.x + step, a.y, 40, ms); await T.sleep(120); }
+    for (let i = 0; i < n; i++) { hopSfx(T, .5); await arc(a, a.x + step, a.y, 40, ms); await T.sleep(120); }
   }
   /* 마법 빛: 크림 원 + 금별 8개 */
   function flash(T, x, y) {
@@ -303,7 +304,7 @@
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['boing', 'splash', 'splash_big', 'bubbles', 'knock', 'door', 'step_grass', 'step_wood', 'paper_up', 'paper_down', 'swish', 'sparkle', 'tada', 'chomp', 'pop']);
+    AudioFX.preloadSfx(['hop', 'ball_bounce', 'splash', 'splash_big', 'bubbles', 'knock', 'door', 'step_grass', 'step_wood', 'paper_up', 'paper_down', 'swish', 'sparkle', 'tada', 'chomp', 'pop']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -373,7 +374,7 @@
     kinds.forEach(k => T.anim(sh[k].pos, [{ opacity: 1 }, { opacity: 0 }], 400).then(() => { sh[k].pos.style.display = 'none'; }));
     bn.cancel();
     for (let i = 0; i < 3; i++) {
-      ball.hop(90, 700); boing(T, .3);
+      ball.hop(90, 700); bounceSfx(T, .6);
       if (i === 0) T.pop(prin.x + 120, FL - 300, tr('통통!'));
       await sleep(700);
     }
@@ -393,7 +394,7 @@
     await say(S.L3);
     bn.cancel();
     for (let i = 0; i < 2; i++) {
-      ball.hop(90, 700); boing(T, .3);
+      ball.hop(90, 700); bounceSfx(T, .6);
       if (i === 1) T.pop(prin.x + 120, FL - 300, tr('통통!'));
       await sleep(700);
     }
@@ -527,7 +528,7 @@
       prin.look('stand');
       frog.look('hop', 'right');
       await hops(T, frog, 330, 2, 420);
-      boing(T, .25);
+      hopSfx(T, .5);
       await arc(frog, 390, TABLE_TOP, 110, 600);
       frog.look('sit');
     })();
@@ -631,8 +632,8 @@
     petals(T);
     await say(S.L37);
     const tb = (async () => {
-      await ball.move(prince.x + 30, FL - 110, 600, 'ease-out'); boing(T, .3);
-      await ball.move(prin.x - 30, FL - 110, 600, 'ease-in-out'); boing(T, .3);
+      await ball.move(prince.x + 30, FL - 110, 600, 'ease-out'); bounceSfx(T, .6);
+      await ball.move(prin.x - 30, FL - 110, 600, 'ease-in-out'); bounceSfx(T, .6);
       await ball.move(510, FL + 2, 600, 'ease-in');
     })();
     await say(S.L38); await tb;

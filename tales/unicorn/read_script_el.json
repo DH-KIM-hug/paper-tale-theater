@@ -18,7 +18,7 @@
   "cut:<uc_cut2_sheep_jump|uc_cut2_thorns|uc_cut2_turn|uc_cut2_hug>": "컷 그림(cutImage, 3.6~4.2초)",
   "pop:<배우>,<글> | pop:<x,y,글>": "말풍선 글자(인물 머리 위)",
   "vo:steps": "VOICE_LINES 의 '사박… 사박…' 발소리 목소리",
-  "fx:<boing|sparkle|tada|paper_up|pop|whoosh> | confetti": "효과음·색종이"
+  "fx:<hop|sparkle|tada|paper_up|pop|whoosh> | confetti": "효과음·색종이"
  },
  "scenes": [
   {
@@ -191,7 +191,7 @@
       ]
      ],
      "before": [
-      "fx:boing",
+      "fx:hop",
       "cut:uc_cut2_sheep_jump",
       "sheep:look:jump:left",
       "sheep:jump:kid+150"

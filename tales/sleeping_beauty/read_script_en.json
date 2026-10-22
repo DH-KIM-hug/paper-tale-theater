@@ -19,7 +19,7 @@
   "prince:look:<stand|tiptoe|kneel|wave>[:<dir>] | prince:at:<x,y>[:<look>[:<dir>]] | prince:walk:<x,ms> | prince:hop | prince:through | grandpa:enter": "왕자·할아버지. through = 열린 덤불 사이로 살금살금 들어가 사라짐",
   "sleepers:set | sleepers:wake | kitchen:set | candle:<lit|out> | bed:set": "잠든 사람들(강아지·하녀·병사·요리사·꼬마) / 부엌 세트(선반 위 새, 탁자 아래 강아지, 요리사 옆 꼬마) / 촛불 / 침대",
   "bush:set | bush:grow | bush:open | tree:big | sunmoon | chapel:set | bell:ring": "가시덤불 자람·열림 / 나무 커짐 / 해와 달이 여러 번 지나감 / 결혼식 세트(접시 여덟, 요정 여덟) / 종 딸랑",
-  "twinkle:<x,y,color> | glow:<old|plates|dog|bird|kid> | sparkle | petals | confetti | fx:<paper_down|paper_up|paper_tap|swish|whoosh|rattle|knock|sparkle|tada|giggle|bell|door|creak|step_wood|step_grass|blow|pop|doop|boing> | pop:<x,y,글자>": "효과"
+  "twinkle:<x,y,color> | glow:<old|plates|dog|bird|kid> | sparkle | petals | confetti | fx:<paper_down|paper_up|paper_tap|swish|whoosh|rattle|knock|sparkle|tada|giggle|bell|door|creak|step_wood|step_grass|blow|pop|doop|hop> | pop:<x,y,글자>": "효과"
  },
  "scenes": [
   {
@@ -1114,7 +1114,7 @@
      ],
      "before": [
       "sleepers:wake",
-      "fx:boing"
+      "fx:hop"
      ]
     },
     {

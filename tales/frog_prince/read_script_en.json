@@ -14,7 +14,7 @@
   "king:at:<x,y> | king:enter | king:hop | prince:at:<x,y>[:<look>] | prince:appear | prince:look:<stand|hand>[:<dir>] | prince:move:<x,y,ms> | prince:hop": "임금님·왕자. appear = 팡! 빛과 함께 개구리 자리에 나타남(9장)",
   "ball:at:<x,y> | ball:bounce | ball:hop:<n> | ball:fly | ball:sink | ball:to_prin | ball:pass | ball:hide": "금공. bounce = 손 위에서 통통, hop:n = n 번 튀기, fly = 높이 날아 샘 위로, sink = 풍덩 가라앉음, to_prin = 개구리 입에서 공주 품으로, pass = 왕자↔공주 주고받기",
   "table:set | plate:set | breads:set | bread:eat:<frog|prin> | pillow:set | ripple | flash | petals": "소품·효과",
-  "fx:<boing|splash|splash_big|bubbles|knock|door|step_grass|step_wood|paper_up|paper_down|swish|sparkle|tada|chomp|pop> | pop:<x,y,글자> | glow:<prince|ball> | confetti": "효과음·팝"
+  "fx:<hop|ball_bounce|splash|splash_big|bubbles|knock|door|step_grass|step_wood|paper_up|paper_down|swish|sparkle|tada|chomp|pop> | pop:<x,y,글자> | glow:<prince|ball> | confetti": "효과음·팝"
  },
  "scenes": [
   {
@@ -643,7 +643,7 @@
      "after": [
       "frog:look:hop:right",
       "frog:hops:330,2",
-      "fx:boing",
+      "fx:hop",
       "frog:to_table",
       "frog:look:sit"
      ]

@@ -705,7 +705,7 @@
         if (a === 'at') { const [x, y, s] = nums(b); put(rabbit, x, y, s || rabbit.scale); if (R.covered && RD.blanket && R.set === 'shade') { blanketTo(1); T.world.appendChild(RD.blanket); } return; }
         if (a === 'hide') { rabbit.pos.remove(); return; }
         if (a === 'face') { (b === 'left' ? faceL : faceR)(rabbit); return; }
-        if (a === 'hop') { AudioFX.boing(); return rabbit.hop(50, 400); }
+        if (a === 'hop') { AudioFX.hop(); return rabbit.hop(50, 400); }
         if (a === 'ears') { const to = +b, from = R.rears || 1; R.rears = to; if (instant()) return rp.ears(to); return tween(300, t => rp.ears(from + (to - from) * t)); }
         if (a === 'eyes') {
           if (b === 'open') { R.lying = false; rp.sleepy(false); rp.setEyes('open'); return; }
@@ -725,7 +725,7 @@
           if (!rabbit.pos.isConnected) put(rabbit, rabbit.x, rabbit.y);
           if (Math.abs(x - rabbit.x) > 4) (x < rabbit.x ? faceL : faceR)(rabbit);
           let hopper = null;
-          if (st0() !== 'run' && ms >= 600) { AudioFX.boing(); rabbit.hop(50, 380); hopper = setInterval(() => rabbit.hop(50, 380), 400); }
+          if (st0() !== 'run' && ms >= 600) { AudioFX.hop(); rabbit.hop(50, 380); hopper = setInterval(() => rabbit.hop(50, 380), 400); }
           return rabbit.move(x, y, ms, ms <= 500 ? 'ease-in' : 'ease-in-out').then(() => clearInterval(hopper));
         }
       },
@@ -886,7 +886,7 @@
         } });
       },
       cut(k) {
-        const spec = { wake: ['cut_wake', 'boing', 2200], dash: ['cut_dash', 'whoosh', 3400], photo: ['cut_photo', 'poke', 2600] }[k];
+        const spec = { wake: ['cut_wake', 'hop', 2200], dash: ['cut_dash', 'whoosh', 3400], photo: ['cut_photo', 'poke', 2600] }[k];
         if (!spec) return;
         return cutArt(T, ...spec, k === 'dash' ? () => setTimeout(() => AudioFX.whoosh(), 1800) : undefined);
       },
@@ -925,9 +925,9 @@
     await say('"안녕! 나는 거북이야."');
     tp.neck(1);
     faceL(rabbit);
-    for (let i = 0; i < 3; i++) { AudioFX.boing(); rabbit.hop(60, 380); await rabbit.move(rabbit.x - 150, gy1, 380); }
+    for (let i = 0; i < 3; i++) { AudioFX.hop(); rabbit.hop(60, 380); await rabbit.move(rabbit.x - 150, gy1, 380); }
     await say('깡충깡충 토끼도 왔어요.');
-    AudioFX.boing(); rabbit.hop(50, 400);
+    AudioFX.hop(); rabbit.hop(50, 400);
     await say('"안녕! 나는 깡충 토끼야!"');
     rabbit.hop(30, 300);
     await say('토끼가 말했어요. "느림보야, 나랑 달리기 할래?"');
@@ -1027,8 +1027,8 @@
       put(rabbit, 370, ART.bg_start ? 490 : 478, 1); put(turtle, 560, ART.bg_start ? 492 : 480, 1.3);
     });
     await say('달리기 전에 준비 운동을 해요.');
-    const stretchR = async () => { AudioFX.boing(); rabbit.hop(20, 400); await tween(300, t => rp.ears(1 + .35 * t)); T.pop(rabbit.x, 250, '쭉!', C.persimmon); await sleep(500); await tween(300, t => rp.ears(1.35 - .35 * t)); };
-    const stretchT = async () => { T.tone([180, 700], .5, { type: 'triangle', vol: .2 }); await tween(500, t => tp.neck(1 + 2.4 * easeOut(t))); T.pop(turtle.x + 200, 340, '쭈욱~', C.pine); await sleep(700); AudioFX.boing(); await tween(300, t => tp.neck(3.4 - 2.4 * t)); };
+    const stretchR = async () => { AudioFX.sfx('slide_up', .45); rabbit.hop(20, 400); await tween(300, t => rp.ears(1 + .35 * t)); T.pop(rabbit.x, 250, '쭉!', C.persimmon); await sleep(500); await tween(300, t => rp.ears(1.35 - .35 * t)); };
+    const stretchT = async () => { T.tone([180, 700], .5, { type: 'triangle', vol: .2 }); await tween(500, t => tp.neck(1 + 2.4 * easeOut(t))); T.pop(turtle.x + 200, 340, '쭈욱~', C.pine); await sleep(700); AudioFX.pop(); await tween(300, t => tp.neck(3.4 - 2.4 * t)); };
     await say('토끼가 귀를 쭉~');
     await stretchR();
     await say('거북이는 목을 쭉~');
@@ -1468,11 +1468,11 @@
     T.pop(500, 150, '꼬끼오!', C.bean);
     await sleep(1400); aud.rooster.sit();
     vo('wake_rabbit'); // 컷 속 토끼 외침 (말풍선 없음)
-    await (cutArt(T, 'cut_wake', 'boing', 2200) || T.cut(svg => {
+    await (cutArt(T, 'cut_wake', 'hop', 2200) || T.cut(svg => {
       const g = el('g', { transform: 'translate(170 330) scale(1.35)' }, svg);
       const p = drawRabbit(T, g); p.setEyes('wide'); p.ears(1.2); p.mouth('yawn');
       el('text', { x: 310, y: 110, 'text-anchor': 'middle', 'font-size': 80, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('앗!') }, svg);
-    }, { sfx: 'boing', hold: 2200 }));
+    }, { sfx: 'hop', hold: 2200 }));
     await say('토끼가 벌떡 일어났어요! "앗, 내가 잠들었네!"');
     bar.pulse('t');
     await say('막대를 봐요! 거북이가 결승선 코앞이에요!');

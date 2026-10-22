@@ -356,7 +356,7 @@
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'boing', 'door', 'creak', 'police_siren', 'fire_siren', 'ambulance_siren', 'fire_crackle']);
+    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'squeak', 'door', 'creak', 'police_siren', 'fire_siren', 'ambulance_siren', 'fire_crackle']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -514,7 +514,7 @@
     await Promise.all([drive(thiefA, thiefA.x + 300, FL, 4400, 'linear', 8), drive(thiefB, thiefB.x + 300, FL, 4400, 'linear', 8), drive(police, police.x + 300, FL, 4400), l10]);
     stopR4();
     await say(S.L11);
-    thiefA.look('hands'); thiefB.look('hands'); thiefA.hop(12, 320); thiefB.hop(12, 320); sfx('boing', .4);
+    thiefA.look('hands'); thiefB.look('hands'); thiefA.hop(12, 320); thiefB.hop(12, 320); sfx('squeak', .5);
     T.pop(police.x, FL - 150, tr('씽씽!'));
     await say(S.L12);
     put(T, red, -120, FL, { look: 'run' });

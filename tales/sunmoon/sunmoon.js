@@ -644,10 +644,10 @@
       else await say('깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.');
       await mom.move(T.portrait() ? 370 : 300, 500, 1500);
       await sleep(300);
-      AudioFX.boing(); T.pop(T.portrait() ? Math.min(TX, 590) : TX, 250, n ? '또 왔어!' : '불쑥!', C.bean); // 세로 화면: 글자가 오른쪽 가장자리에 잘리지 않게
+      AudioFX.pop_out(); T.pop(T.portrait() ? Math.min(TX, 590) : TX, 250, n ? '또 왔어!' : '불쑥!', C.bean); // 세로 화면: 글자가 오른쪽 가장자리에 잘리지 않게
       await tiger.move(TX, peekY, 380, 'ease-out');
       await sleep(250);
-      T.world.appendChild(tiger.pos); AudioFX.boing();
+      T.world.appendChild(tiger.pos); AudioFX.hop();
       await Promise.all([tiger.move(T.portrait() ? 610 : 630, 500, 500), tiger.hop(50, 500)]);
       await camTo(630, 330, 1.6, 600); // (기계음 으르렁은 뺐다: 호랑이 목소리 "어흥!"과 겹침)
       const ask = ASKS[n];

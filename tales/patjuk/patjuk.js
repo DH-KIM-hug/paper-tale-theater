@@ -46,7 +46,7 @@
     myeongseok: 'roll', myeongseok_b: 'ouch', // 멍석이 돌돌 → 멍석 속에서 엉엉
     jige: 'splash', jige_b: 'surprise',       // 지게째 풍덩 → 바다에서 허우적
   };
-  const FINALE_SFX = { bam: 'pop', jara: 'chomp', ddong: 'boing', songgot: 'poke', jeolgu: 'bonk', myeongseok: 'roll', jige: 'boing' };
+  const FINALE_SFX = { bam: 'pop', jara: 'chomp', ddong: 'cushion', songgot: 'poke', jeolgu: 'bonk', myeongseok: 'roll', jige: 'step_wood' };
   const STAR_SCALE = { bam: 1.9, jara: 1.9, ddong: 1.9, songgot: 1.9, jeolgu: 1.45, myeongseok: 1.15, jige: 1.15 };
   /* 다시 뽑은 컷 (2026-10-04): 절구 반응은 작은 혹+별, 지게는 A자 나무 지게가 멍석째 바다로, 헛수고 지게는 빈 A자 지게, 자라 반응은 입을 문 자라.
      새 파일을 못 불러오면 예전 그림(cut_<key>.png)으로 */
@@ -492,7 +492,7 @@
       },
       async carry(id) { // 지게가 다가가 멍석말이 호랑이를 지고 물가로 (풍덩은 tiger:splash)
         await anim(fact(id), [{ transform: 'translate(0px,0px)' }, { transform: 'translate(-45px,0px)' }], { duration: 500, easing: 'ease-in-out' });
-        AudioFX.boing();
+        AudioFX.sfx('step_wood', .8);
         if (rolled.pos.style.display === 'none') { rolled.place(POS.rolledSpot, 520); rolled.pos.style.display = ''; }
         await Promise.all([
           rolled.move(930, 475, 1700),
@@ -887,7 +887,7 @@
         impact(495, 440, '콕!');
         await showCut('songgot');
         pose(null);
-        AudioFX.boing();
+        AudioFX.hop();
         await tiger.hop(100, 550);
       },
       async jeolgu() {
@@ -919,7 +919,7 @@
       async jige() {
         // 지게가 다가가 멍석말이 호랑이를 지고 물가로
         await anim(act('jige'), [{ transform: 'translate(0px,0px)' }, { transform: 'translate(-45px,0px)' }], { duration: 500, easing: 'ease-in-out' });
-        AudioFX.boing();
+        AudioFX.sfx('step_wood', .8);
         await Promise.all([
           rolled.move(930, 475, 1700),
           anim(act('jige'), [{ transform: 'translate(-45px,0px)' }, { transform: 'translate(215px,0px)' }], { duration: 1700, easing: 'ease-in-out' }),
@@ -999,7 +999,7 @@
       },
       async ddong() {
         await bounceFriend('ddong');
-        AudioFX.boing();
+        AudioFX.cushion();
         if (tiger.pos.style.opacity !== '0' && !tiger.art.classList.contains('flat') && !tiger.art.classList.contains('fallen')) await tiger.hop(40, 450);
       },
       async songgot() {
@@ -1019,7 +1019,7 @@
         await anim(act('myeongseok'), [{ transform: 'scaleX(1)' }, { transform: 'scaleX(1.5)' }, { transform: 'scaleX(.8)' }, { transform: 'scaleX(1)' }], 900);
       },
       async jige() {
-        AudioFX.boing();
+        AudioFX.sfx('step_wood', .8);
         await anim(act('jige'), [{ transform: 'rotate(0deg)' }, { transform: 'rotate(-12deg)' }, { transform: 'rotate(10deg)' }, { transform: 'rotate(-6deg)' }, { transform: 'rotate(0deg)' }], 800);
       },
     };
