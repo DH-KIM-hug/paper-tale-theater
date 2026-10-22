@@ -279,6 +279,358 @@
     /* 세로 화면: 말하는 사람을 카메라가 잡는다 (방향은 장면에서 직접 정하므로 돌려세우지 않는다) */
     T.director({ cast: { cind, step, sisa: sis1, sisb: sis2, fairy, prince }, noFace: ['cind', 'step', 'sisa', 'sisb', 'fairy', 'prince'] });
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 아래 놀이판 연출을 감싼 얇은 함수 =================
+       장면 차리기(set)는 놀이판의 같은 장면 자리·자세·층 소품을 그대로 놓는다(같은 배경이 여러 번 나오면 나온 순서로 구분).
+       대본 좌표의 y(470)는 바닥선이 아니어서 사람·땅 위 소품은 바닥(FL)에 둔다. */
+    const RCAST = { cind, step, sis1, sis2, fairy, prince };
+    const RPROP = { pumpkin, coach, trap, coachman, footman, orange, slipper, slipper2, letter, ribbon, rat, lizard };
+    const RCL = { x: X(565, 500), y: X(118, 110), d: X(150, 120) };
+    const RST = [[860, 185], [640, 262], [430, 335], [220, 410], [-150, 440]], RSS = .75;
+    const RTX = X(600, 560);
+    const RMX = X([420, 500, 580, 660, 740, 820], [470, 530, 590, 470, 530, 590]), RMY = X([FL, FL, FL, FL, FL, FL], [FL - 30, FL - 30, FL - 30, FL + 6, FL + 6, FL + 6]);
+    const RHX = X([370, 500, 630], [380, 500, 620]);
+    const inst = () => T.readInstant();
+    const on = a => a.pos.isConnected && a.pos.style.display !== 'none';
+    const rSeen = {};
+    let rTag = '', SPOT = {}, FACE_FIX = {}, rClock = null, rBurst = false;
+    const burstAt = (x, y, before) => { put(T, L.burst, x, y + 100); T.world.insertBefore(L.burst.pos, before.pos); fadeIn(L.burst, 500); };
+    const burstOff = () => { if (on(L.burst)) T.anim(L.burst.pos, [{ opacity: 1 }, { opacity: 0 }], 1000).then(() => hide(L.burst)); };
+    const LAYOUT = {
+      kitchen1() {
+        const fire = T.el('circle', { cx: 196, cy: 372, r: 14, fill: '#F2B366', opacity: .6 }, T.world); fire.style.pointerEvents = 'none'; fire.style.transformBox = 'fill-box'; fire.style.transformOrigin = 'center';
+        fire.animate([{ opacity: .25, transform: 'scale(.9)' }, { opacity: .65, transform: 'scale(1.1)' }, { opacity: .25, transform: 'scale(.9)' }], { duration: 600, iterations: Infinity });
+        put(T, cind, X(640, 560), FL, { look: 'stand', to: 'left' });
+        put(T, step, X(400, 450), FL, { look: 'stand', to: 'right' });
+        put(T, sis1, X(270, 350), FL + 4, { look: 'stand', to: 'right' });
+        put(T, sis2, X(150, 260), FL + 8, { look: 'stand', to: 'right' });
+        put(T, L.veg, 985, 585);
+        if (P) camSnap(520, 280, 1);
+      },
+      parlor1() {
+        parlorBack(); put(T, L.vase, 40, 560);
+        put(T, sis2, X(190, 340), FL + 4, { look: 'stand', to: 'right' });
+        put(T, sis1, X(460, 490), FL, { look: 'stand', to: 'right' });
+        put(T, cind, X(620, 610), FL - 2, { look: 'stand', to: 'left' });
+        parlorFront();
+        if (P) camSnap(520, 280, 1);
+      },
+      kitchen_night1() {
+        put(T, cind, X(480, 520), FL, { look: 'cry' });
+        SPOT = { fairy: [X(700, 600), FL, 'left'] };
+        if (P) camSnap(520, 280, 1);
+      },
+      garden1() {
+        gardenBack();
+        put(T, fairy, X(260, 400), FL, { look: 'wand', to: 'right' });
+        put(T, cind, X(400, 470), FL + 2, { look: 'stand', to: 'left' });
+        put(T, pumpkin, X(880, 700), FL + 4);   /* 굴려 오기 전: 텃밭 오른쪽 (놀이판은 660에 놓고 톡) */
+        if (P) camSnap(520, 280, 1);
+      },
+      garden2() {
+        gardenBack(false);
+        put(T, coach, X(190, 190), FL + 6, { to: 'right' });
+        put(T, fairy, X(350, 400), FL, { look: 'wand', to: 'right' });
+        put(T, cind, X(925, 680), FL, { look: 'stand', to: 'left' });
+        put(T, trap, RTX, FL - 4);
+        put(T, rat, X(230, 300), FL + 10, { to: 'right' }); put(T, lizard, X(380, 420), FL + 14, { to: 'right' });
+        if (P) { hide(cind); camSnap(RTX, 280, 1); }
+      },
+      garden3() {
+        gardenBack();
+        put(T, coach, X(820, 760), FL + 6, { to: 'right' });
+        put(T, fairy, X(330, 420), FL, { look: 'wand', to: 'right' });
+        put(T, cind, X(520, 560), FL, { look: 'stand', to: 'left' });
+        if (P) camSnap(490, 280, 1);
+      },
+      ballroom1() {
+        ballBack();
+        put(T, cind, X(420, 450), FL, { look: 'gown', to: 'right' });
+        put(T, prince, X(660, 630), FL, { look: 'stand', to: 'left' });   /* 성큼성큼 다가오기 전 (놀이판은 560에서 춤) */
+        FACE_FIX = { prince: 'left' };   /* 대본 enter 의 prince:look:stand:right 는 신데렐라 반대쪽을 보게 된다 → 신데렐라 쪽으로 */
+        put(T, sis1, X(800, 750), FL + 4, { look: 'stand', to: 'left' });
+        put(T, sis2, X(910, 860), FL + 6, { look: 'stand', to: 'left' });
+        put(T, basket, X(720, 660), FL + 8);
+        T.world.insertBefore(basket.pos, prince.pos);
+        ballFront();
+        if (P) camSnap(500, 280, 1);
+      },
+      ballroom2() {
+        ballBack();
+        put(T, cind, X(440, 450), FL, { look: 'dance', to: 'right' });
+        put(T, prince, X(580, 560), FL, { look: 'dance', to: 'left' });
+        glimmer((cind.x + prince.x) / 2, cind.pos);
+        ballFront();
+        if (P) camSnap(500, 280, 1);
+      },
+      stairs1() {
+        twinkle(T, Array.from({ length: 10 }, (_, i) => [60 + (i * 67) % 640, 20 + (i * 53) % 240, 2.5 + (i % 3)]), { color: '#F4F6FA', ms: 2000 });
+        put(T, cind, RST[0][0], RST[0][1], { look: 'run', to: 'left', s: RSS });
+        put(T, L.urn, 40, 585); put(T, L.lantern, 985, 585);
+        twinkle(T, [[985, 585 - 220 * .82, 10, '#F2B366']], { ms: 1400 });
+        SPOT = { prince: [930, RST[0][1] - 10, 'left', RSS] };   /* 계단 위에서 내려다본다 */
+        if (P) camSnap(760, 280, 1);
+      },
+      parlor2() {   /* 구두 신어 보기: 놀이판에서 언니들이 비켜선 뒤의 자리 */
+        parlorBack();
+        put(T, step, X(110, 250), FL + 6, { look: 'stand', to: 'right' });
+        put(T, sis2, X(220, 330), FL + 4, { look: 'stand', to: 'right' });
+        put(T, sis1, X(330, 420), FL, { look: 'stand', to: 'right' });
+        put(T, cind, X(530, 540), FL, { look: 'stand', to: 'right' });
+        put(T, prince, X(800, 640), FL, { look: 'slipper', to: 'left' });
+        parlorFront();
+        if (P) camSnap(560, 280, 1);
+      },
+      parlor3() {
+        put(T, L.garland, 500, 80);
+        parlorBack();
+        if (!P) put(T, fairy, 275, FL, { look: 'appear', to: 'right' });   /* 대본: 요정 대모도 함께 (놀이판 마지막 장면에는 없음). 세로 화면은 좁아 겹치므로 뺀다 */
+        put(T, prince, X(140, 340), FL, { look: 'stand', to: 'right' });
+        put(T, cind, X(420, 480), FL, { look: 'gown', to: 'right' });
+        put(T, sis1, X(600, 600), FL, { look: 'sorry', to: 'left' });
+        put(T, sis2, X(745, 700), FL + 4, { look: 'sorry', to: 'left' });
+        put(T, step, X(885, 820), FL + 6, { look: 'stand', to: 'left' });
+        parlorFront();
+        if (P) camSnap(560, 280, 1);
+      },
+    };
+    const rWall = () => { if (!rClock) rClock = wallClock(T, RCL.x, RCL.y, RCL.d); rClock.g.style.display = ''; return rClock; };
+    const rAt = h => { const hr = Math.floor(+h), mn = Math.round((+h - hr) * 60); rWall().at(hr, mn); };
+    const rLook = (id, pose, dir) => {
+      const a = RCAST[id]; if (FACE_FIX[id]) dir = FACE_FIX[id];
+      if (!on(a)) {
+        const s = SPOT[id]; if (!s) { a.look(pose, dir); return; }
+        put(T, a, s[0], s[1], { look: pose, to: dir || s[2], s: s[3] || 1 }); if (!inst()) fadeIn(a, 500);
+        return;
+      }
+      if (rTag === 'stairs1' && id === 'prince' && pose === 'slipper' && on(slipper)) {   /* 계단에 남은 구두를 주워 든다 */
+        return prince.move(slipper.x + 50, slipper.y - 6, 1300).then(() => { hide(slipper); prince.look('slipper', dir || 'left'); });
+      }
+      a.look(pose, dir);
+      if (id === 'cind' && pose === 'gown' && rBurst) { rBurst = false; burstOff(); sparkle(T, cind.x, FL - 80, 130, 18); T.camTo(P ? cind.x : 500, 280, 1, 1200); }
+    };
+    const rWalk = async (a, spec) => {
+      const [x, , ms] = String(spec).split(',').map(Number);
+      if (!on(a)) return;
+      a.turn(x > a.x ? 'right' : 'left');
+      const rib = a === sis1 && on(ribbon) ? ribbon.move(x + 6, ribbon.y, ms || 1000) : null;
+      await a.move(x, a.y, ms || 1000);
+      if (rib) await rib;
+      if (x < -60 || x > 1060) { hide(a); if (rib) hide(ribbon); }
+    };
+    const PSPOT = () => ({
+      pumpkin: [X(880, 700), FL + 4], coach: rTag === 'garden2' ? [X(190, 190), FL + 6] : rTag === 'garden3' ? [X(820, 760), FL + 6] : [X(700, 620), FL + 6],
+      trap: [RTX, FL - 4], coachman: [X(770, 620), FL], footman: [X(845, 690), FL], letter: [X(330, 420), 300],
+    });
+    const rProp = {
+      async show(n) {
+        const p = RPROP[n];
+        if (n === 'letter') {
+          const [x, y] = PSPOT().letter; put(T, letter, x, y);
+          (async () => { await sleep(inst() ? 1400 : 0); letter.pos.animate([{ translate: '0 -30px', opacity: 0 }, { translate: '0 0', opacity: 1 }], 600); sfx(T, 'swish'); sparkleRing(T, letter.x, 300 - 35, 60, 6, ['#EBD08A']); await sleep(3200); if (on(letter)) fadeOut(T, letter, 400); })();
+          return;
+        }
+        if (n === 'orange') {   /* 춤 자리에서 언니 쪽으로 걸어가 오렌지를 건넨다 (놀이판 그대로) */
+          if (P) T.camTo(720, 280, 1, 800);
+          cind.look('gown', 'right'); await cind.move(X(640, 600), FL, 900); cind.look('give', 'right');
+          await sleep(500);
+          const hand = [cind.x + cind.w * .43, FL - cind.h * .47];
+          cind.look('gown', 'right'); put(T, orange, ...hand);
+          await orange.move(sis1.x - 30, FL - sis1.h * .48, 700);
+          sis1.hop(10, 300); setTimeout(() => hide(orange), 2500);
+          return;
+        }
+        if (n === 'slipper') {   /* 계단: 구두는 신데렐라가 달려 내려가며 떨어뜨린다 (cut:stairs_slipper) */
+          if (rTag === 'stairs1' && inst()) return;
+          put(T, slipper, RST[1][0] + 16, RST[1][1] - 2, { to: 'right', s: RSS }); return;
+        }
+        if (n === 'slipper2') {
+          put(T, slipper2, cind.x + 4, FL - cind.h * .36, { to: 'right' }); fadeIn(slipper2, 300);
+          await slipper2.move(cind.x + 4, FL - cind.h * .46, 500, 'ease-out'); glow(slipper2, 1200);
+          return;
+        }
+        if (n === 'clock') { rWall(); if (!inst()) rClock.g.animate([{ opacity: 0 }, { opacity: 1 }], 600); return; }
+        if (n === 'mice') return R.mice('out');
+        if (n === 'horses') return R.horses('line');
+        if ((n === 'coachman' || n === 'footman') && on(rat)) {   /* 큰 쥐·도마뱀이 반짝 → 마부·시종 */
+          sparkle(T, rat.x, FL - 30, 80, 8); sparkle(T, lizard.x, FL - 20, 70, 8);
+          fadeOut(T, rat, 400); fadeOut(T, lizard, 400);
+        }
+        const s = PSPOT()[n];
+        if (!on(p)) put(T, p, s ? s[0] : 500, s ? s[1] : FL, { to: n === 'coach' ? 'right' : undefined });
+        if (n === 'coach' && !inst()) {
+          if (rTag === 'garden1') { put(T, L.burst, coach.x, FL - 60 + 100); T.world.insertBefore(L.burst.pos, coach.pos); fadeIn(L.burst, 300); setTimeout(burstOff, 900); }
+          glow(coach, 1200); T.pop(coach.x, FL - 260, tr('반짝!'));
+        }
+        if (!inst()) fadeIn(p, 500);
+      },
+      async hide(n) {
+        if (n === 'clock') { if (rClock) rClock.g.style.display = 'none'; return; }
+        if (n === 'mice') { await Promise.all(mice.filter(on).map(m => fadeOut(T, m, 400))); return; }
+        if (n === 'horses') { horses.forEach(hide); return; }
+        const p = RPROP[n]; if (!on(p)) return;
+        if (n === 'pumpkin') { sparkle(T, pumpkin.x, FL - 60, 120, 14); pumpkin.wiggle(10, 500); await sleep(400); sparkleRing(T, pumpkin.x, FL - 70, 180, 24, ['#EBD08A', '#F2B366', '#D9A94E']); }
+        if (inst()) hide(p); else await fadeOut(T, p, 300);
+      },
+      async at(n, spec) {
+        const p = RPROP[n], [x] = String(spec).split(',').map(Number);
+        if (!on(p)) { rProp.show(n); await sleep(50); }
+        if (n === 'pumpkin') {   /* 데굴데굴 굴러 온다 */
+          const r0 = p.body.animate([{ transform: 'translateY(-60px) rotate(0deg) translateY(60px)' }, { transform: `translateY(-60px) rotate(${x < p.x ? -360 : 360}deg) translateY(60px)` }], { duration: 700, iterations: 2 });
+          await p.move(x, p.y, 1400, 'ease-out'); r0.cancel(); return;
+        }
+        if (n === 'coach') { p.turn(x > p.x ? 'right' : 'left'); sfx(T, 'whoosh'); await p.move(x, p.y, 1600, 'ease-in'); if (x > 1060 || x < -60) hide(p); return; }
+        await p.move(x, p.y, 800);
+      },
+    };
+    const R = {
+      set(key) {
+        rSeen[key] = (rSeen[key] || 0) + 1; rTag = key + rSeen[key];
+        SPOT = {}; FACE_FIX = {}; rClock = null; rBurst = false; chandDots = null; ballDots = null;
+        ALL.forEach(hide); Object.values(L).flat().forEach(hide);
+        scene(key + '_v2');
+        (LAYOUT[rTag] || (() => {}))();
+      },
+      cast(id, verb, a1, a2) {
+        const a = RCAST[id]; if (!a) return console.warn('[read] cast 모름', id);
+        if (verb === 'look') return rLook(id, a1, a2);
+        if (verb === 'hop') return a.hop(12, 340);
+        if (verb === 'hide') { hide(a); return; }
+        if (verb === 'show') { if (!on(a)) { const s = SPOT[id]; put(T, a, s ? s[0] : a.x, FL); if (!inst()) fadeIn(a); } return; }
+        if (verb === 'at') { const [x] = String(a1).split(',').map(Number); put(T, a, x, FL); return; }
+        if (verb === 'walk') return rWalk(a, a1);
+        console.warn('[read] cast 동사 모름', id, verb);
+      },
+      prop(n, verb, spec) { const f = verb === 'at' ? rProp.at : rProp[verb]; return f ? f(n, spec) : console.warn('[read] prop 동사 모름', n, verb); },
+      ribbon() {
+        const sh = sis1.h;
+        put(T, ribbon, sis1.x + 6, FL - sh + 14);
+        ribbon.pos.animate([{ transform: `translate(${sis1.x + 6}px,${FL - sh + 14}px) scale(.2)` }, { transform: `translate(${sis1.x + 6}px,${FL - sh + 14}px) scale(1.25)` }, { transform: `translate(${sis1.x + 6}px,${FL - sh + 14}px) scale(1)` }], 420);
+        cind.hop(8, 300); return sis1.hop(16, 380);
+      },
+      async mice() {   /* 쥐덫에서 생쥐 여섯 마리가 차례로 (세기 놀이 없이 — 수 세기 목소리·숫자 글자는 뺌) */
+        sfx(T, 'creak', () => popSfx(T)); trap.wiggle(6, 300);
+        await sleep(400);
+        for (let i = 0; i < 6; i++) {
+          const m = mice[i];
+          put(T, m, RTX, FL - 20, { to: 'right' }); m.turn(RMX[i] < RTX ? 'left' : 'right');
+          popSfx(T);
+          await m.move(RMX[i], RMY[i], 420, 'ease-out');
+          m.hop(12, 300);
+          await sleep(250);
+        }
+      },
+      async horses() {
+        sparkle(T, X(620, 530), FL - 40, 200, 16);
+        await Promise.all(mice.filter(on).map(m => fadeOut(T, m, 400)));
+        hide(trap);
+        if (P) T.camTo(360, 280, 1, 700);
+        horses.forEach((h, i) => { put(T, h, RHX[i >> 1] + (i % 2) * 34, FL - (i % 2 ? 0 : 18), { to: 'right', s: i % 2 ? 1 : .92 }); fadeIn(h, 500); });
+        [0, 2, 4].forEach(i => T.world.insertBefore(horses[i].pos, horses[1].pos));
+        T.world.appendChild(coach.pos);
+        await sleep(600);
+      },
+      gown() {   /* 드레스: 별빛 판 + 카메라 밀기 + 반짝 (옷이 바뀌는 것은 cast:cind:look:gown) */
+        burstAt(cind.x, FL - 130, cind); rBurst = true;
+        T.camTo(cind.x, P ? 280 : 300, P ? 1 : 1.15, 900);
+        sparkle(T, cind.x, FL - 110, 120, 16);
+        sparkleRing(T, cind.x, FL - 120, 120, 14, ['#BFD9EA', '#F4F6FA', '#F6ECD8'], 1400);
+        return sleep(500);
+      },
+      glow(id) { const a = RCAST[id] || RPROP[id]; if (a && on(a)) glow(a, 1200); },
+      async fade(id, dir) {
+        const a = RCAST[id] || RPROP[id]; if (!a) return;
+        if (dir === 'out') { if (on(a)) await fadeOut(T, a, 450); return; }
+        if (on(a)) return;
+        const s = SPOT[id] || [a.x, FL];
+        if (id === 'fairy' && rTag === 'kitchen_night1') {   /* 요정 등장: 별 비 → 별빛 판 → 반짝 (놀이판 그대로) */
+          for (let i = 0; i < 8; i++) {
+            const sx = s[0] - 140 + i * 40, st = T.el('path', { d: 'M0 -8 L2.5 -2.5 L8 0 L2.5 2.5 L0 8 L-2.5 2.5 L-8 0 L-2.5 -2.5 Z', fill: '#EBD08A' }, T.world);
+            st.style.pointerEvents = 'none';
+            st.animate([{ transform: `translate(${sx}px,150px)`, opacity: 0 }, { transform: `translate(${sx - 10}px,250px)`, opacity: 1, offset: .3 }, { transform: `translate(${sx - 25}px,400px)`, opacity: 0 }], { duration: 1400, delay: i * 90, easing: 'ease-in', fill: 'both' })
+              .finished.then(() => st.remove(), () => st.remove());
+          }
+          await sleep(500);
+          put(T, fairy, s[0], FL, { look: 'appear', to: s[2] || 'left' });
+          burstAt(s[0], FL - 130, fairy); setTimeout(burstOff, 3500);
+          fadeIn(fairy, 900); sparkle(T, fairy.x, FL - 120, 110, 12);
+          if (P) T.camTo(560, 280, 1, 700);
+          return sleep(600);
+        }
+        put(T, a, s[0], s[1], { to: s[2], s: s[3] || 1 }); fadeIn(a, 900);
+        return sleep(600);
+      },
+      async clock(verb, h) {
+        if (verb !== 'to') return;
+        const c = rWall();
+        if (inst()) { rAt(h); return; }
+        if (+h >= 12) { glow({ body: c.g }, 1500); await c.toTwelve(1500); return; }
+        await T.camTo(RCL.x, 170, 1.6, 800);
+        glow({ body: c.g }, 1500); rAt(h);
+        await sleep(1200);
+        T.camTo(P ? 600 : 500, 280, 1, 600);
+      },
+      async bell(n) {   /* 땡, 땡, 땡… 홀이 어두워지고 샹들리에가 흔들린다 */
+        const c = rWall();
+        { const nt = tint(T, '#1F2A56', 0); nt.animate([{ opacity: 0 }, { opacity: .35 }], { duration: 2500, fill: 'forwards' }); }
+        if (ballDots) ballDots.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 1500, fill: 'forwards' });
+        L.chand.forEach(ch => { if (on(ch)) jolt(T, ch); });
+        for (let i = 0; i < (+n || 3); i++) {
+          c.g.style.transformOrigin = `${c.cx}px ${c.cy}px`;
+          bellSfx(T); c.g.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-3deg)' }, { transform: 'rotate(3deg)' }, { transform: 'rotate(0)' }], { duration: 420 });
+          T.pop(c.cx + (i % 2 ? 200 : 170), c.cy + 90, tr('땡!'));
+          await sleep(520);
+        }
+      },
+      async cut(k) {
+        if (k === 'stairs_slipper' && on(cind) && cind.x === RST[0][0]) {   /* 먼저 계단을 달려 내려가며 구두 한 짝이 떨어진다 */
+          follow(520, 2400);
+          await cind.move(RST[1][0], RST[1][1], 800, 'linear');
+          put(T, slipper, RST[1][0] + 16, RST[1][1] - 2, { to: 'right', s: RSS });
+          slipper.pos.animate([{ translate: '0 -40px', rotate: '-20deg' }, { translate: '0 0', rotate: '0deg' }], 400);
+          sparkleRing(T, slipper.x, slipper.y - 10, 50, 8, ['#BFD9EA', '#F4F6FA']);
+          T.pop(RST[1][0], RST[1][1] - cind.h * RSS - 20, tr('앗!'));
+          for (const [x, y] of RST.slice(2)) await cind.move(x, y, 750, 'linear');
+          hide(cind);
+          if (P) T.camTo(720, 280, 1, 900);
+        }
+        if (k === 'fit' && on(cind) && on(prince)) {   /* 왕자가 다가와 구두를 신겨 준다 */
+          const toe = () => [cind.x + cind.w * .37, FL - cind.h * .1];
+          if (P) T.camTo(600, 280, 1, 500);
+          prince.look('slipper', 'left');
+          await prince.move(cind.x + cind.w * .5 + 70, FL, 1000);
+          prince.look('stand', 'left');
+          put(T, slipper, prince.x - 40, FL - prince.h * .45, { to: 'right' });
+          await slipper.move(...toe(), 700);
+          sparkle(T, toe()[0], toe()[1], 60, 8);
+          await sleep(400);
+        }
+        const SFX = {
+          coach: () => { sparkleSfx(T); setTimeout(() => AudioFX.sfx('whoosh'), 500); },
+          gown: () => { sparkleSfx(T); setTimeout(() => sparkleSfx(T), 700); },
+          midnight: () => { bellSfx(T); setTimeout(() => bellSfx(T), 900); },
+          stairs_slipper: () => { sparkleSfx(T); setTimeout(() => AudioFX.sfx('ding') || popSfx(T), 400); },
+          fit: () => { popSfx(T); setTimeout(() => sparkleSfx(T), 250); },
+        };
+        await cutArt(T, k, SFX[k]);
+      },
+      fx(n) {
+        if (n === 'sparkle') return sparkleSfx(T);
+        if (n === 'bell') return bellSfx(T);
+        if (n === 'pop') return popSfx(T);
+        if (n === 'ding') return AudioFX.sfx('ding') || popSfx(T);
+        return sfx(T, n);
+      },
+      pop(spec) { const [x, y, ...w] = String(spec).split(','); T.pop(+x, +y, tr(w.join(','))); },
+      cam(a) {
+        if (a === 'wide') return inst() ? camSnap(500, 280, 1) : T.camTo(500, 280, 1, 700);
+        const [x, y, z] = String(a).split(',').map(Number);
+        return inst() ? camSnap(x, y, z || 1) : T.camTo(x, y, z || 1, 800);
+      },
+    };
+    const READ_ACTS = { set: R.set, cast: R.cast, prop: R.prop, ribbon: R.ribbon, mice: R.mice, horses: R.horses, gown: R.gown,
+      glow: R.glow, fade: R.fade, clock: R.clock, bell: R.bell, cut: R.cut, fx: R.fx, pop: R.pop, cam: R.cam };
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ===== 1. 재투성이 ===== */
     scene('kitchen_v2');
     /* 아궁이 불(배경 그림 안) 위에 앰버 원을 얹어 깜빡 */
@@ -738,5 +1090,5 @@
     return '착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.';
   }
 
-  Tale.mount({ title: '신데렐라', subtitle: '착한 마음은 용서할 줄 알아요', run: T => run(Tale.api) });
+  Tale.mount({ title: '신데렐라', subtitle: '착한 마음은 용서할 줄 알아요', read: true, run: T => run(Tale.api) });
 })();
