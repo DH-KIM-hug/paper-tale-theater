@@ -199,45 +199,21 @@
   const fadeIn = (a, ms = 450) => a.pos.animate([{ opacity: 0 }, { opacity: 1 }], ms);
   const fadeOut = async (T, a, ms = 450) => { await T.anim(a.pos, [{ opacity: 1 }, { opacity: 0 }], ms); hide(a); a.pos.style.opacity = ''; };
   const glow = (a, ms = 900) => { a.body.style.filter = 'url(#hintGlow)'; setTimeout(() => { a.body.style.filter = ''; }, ms); };
-  /* 침대에서 자는 이현이(1장 '잠잘 때도 쌔근', 2026-10-22). 그림 3장은 tools/app/gen/post_red_car_bed.py 가 오린다.
-     층(뒤→앞): 배경 침대(머리판·베개) → 이현이(요·베개·주황 이불을 지운 머리와 어깨) → 파란 이불(배경에서 오린 앞 가림 층) → 팔·손 → 빨간 자동차.
-     좌표는 배경 그림 픽셀(1600×902) 기준: 이불 층이 놓일 자리 = 오린 자리, 이현이 머리 가운데(그림 (190,175))는 베개 위 (1440,412).
-     크기는 바닥 잠 그림(rc_child_sleep, 높이 443 → HT 130)과 같은 비율이라 다른 자세와 얼굴 크기가 같다 */
-  const BED = {
-    f: { kid: 'rc_child_sleep_bed', arm: 'rc_child_sleep_arm', quilt: 'rc_layer_bed_front' },
-    quilt: [1313, 445, 285, 266], kid: [25, 4, 376, 402], arm: [209, 299, 138, 104],
-    head: [190, 175], at: [1440, 412], rot: -4, armShift: [-6, -14], hand: [238, 372],
-  };
+  /* 침대에서 자는 이현이(1장 '잠잘 때도 쌔근', 2026-10-22 3차). 전용 그림 rc_child_bed 한 장(침대·베개·파란 이불·이현이·쥔 빨간 자동차)이
+     배경 침대 자리(배경 픽셀 x 1200~1600, y 250~850)를 같은 틀로 다시 그린 것이라, 그 자리에 그대로 덮으면 배경 침대가 가려지고 이불 속에 누운 모습이 된다.
+     후처리 tools/app/gen/post_red_car_bed.py. 머리 폭은 다른 자세와 같다(배경 픽셀 약 140 = 무대 약 95). 방이 밤빛(#1F2A56 .22)이라 같은 빛 필터를 건다 */
+  const BED = { f: 'rc_child_bed', box: [1200, 250, 400, 600], head: [1427, 434] };
   function bedSleep(T) {
-    const bs = BGBOX.w / 1600, bx = px => BGBOX.x + px * bs, by = py => BGBOX.y + py * BGBOX.h / 902;
-    const K = HT.rc_child_sleep / 443, hx = bx(BED.at[0]), hy = by(BED.at[1]);
+    const bs = BGBOX.w / 1600, bsy = BGBOX.h / 902, bx = px => BGBOX.x + px * bs, by = py => BGBOX.y + py * bsy;
     const root = T.el('g', { opacity: 0 }, T.world);
-    const defs = T.el('defs', {}, root);
-    const fq = T.el('filter', { id: 'rcQuiltSh', x: '-10%', y: '-10%', width: '120%', height: '125%' }, defs);
-    T.el('feDropShadow', { dx: 0, dy: 2, stdDeviation: 2.2, 'flood-color': '#2E241C', 'flood-opacity': .4 }, fq);
-    const fn = T.el('filter', { id: 'rcQuiltNight' }, defs), ct = T.el('feComponentTransfer', {}, fn);   // 배경과 같은 밤빛(#1F2A56 을 .22 로 덮은 색)
+    const fn = T.el('filter', { id: 'rcBedNight', 'color-interpolation-filters': 'sRGB' }, T.el('defs', {}, root)), ct = T.el('feComponentTransfer', {}, fn);
     [['feFuncR', 31], ['feFuncG', 42], ['feFuncB', 86]].forEach(([n, c]) => T.el(n, { type: 'linear', slope: .78, intercept: +(c / 255 * .22).toFixed(4) }, ct));
-    const piece = (parent, f, o, d = [0, 0], attrs = {}) => {
-      const g = T.el('g', { transform: `translate(${d[0] * bs},${d[1] * bs}) rotate(${BED.rot} ${hx} ${hy})`, ...attrs }, parent);
-      T.el('image', { href: src(f), x: hx + (o[0] - BED.head[0]) * K, y: hy + (o[1] - BED.head[1]) * K, width: o[2] * K, height: o[3] * K }, g);
-      return g;
-    };
-    piece(root, BED.f.kid, BED.kid, [0, 0], { filter: 'url(#pp)' });
-    const breathe = T.el('g', {}, root);                       // 이불·팔·자동차가 숨 쉬듯 함께 오르내린다
-    const q = BED.quilt, quilt = (attrs) => T.el('image', { href: src(BED.f.quilt), x: bx(q[0]), y: by(q[1]), width: q[2] * bs, height: q[3] * BGBOX.h / 902, ...attrs }, breathe);
-    quilt({ filter: 'url(#rcQuiltSh)' });
-    const qn = quilt({ filter: 'url(#rcQuiltNight)', opacity: 0 });
-    const armG = piece(breathe, BED.f.arm, BED.arm, BED.armShift, { filter: 'url(#pp)' });
-    const r = BED.rot * Math.PI / 180, dx = (BED.hand[0] - BED.head[0]) * K, dy = (BED.hand[1] - BED.head[1]) * K;
-    const hand = [hx + dx * Math.cos(r) - dy * Math.sin(r) + BED.armShift[0] * bs, hy + dx * Math.sin(r) + dy * Math.cos(r) + BED.armShift[1] * bs];
+    const [x, y, w, h] = BED.box;
+    T.el('image', { href: src(BED.f), x: bx(x), y: by(y), width: w * bs, height: h * bsy, filter: 'url(#rcBedNight)' }, root);
+    fronts.forEach(f => { if (f.pos.isConnected) T.world.appendChild(f.pos); });   // 앞 가림 층(공·장난감 상자)은 침대보다 앞
     return {
-      head: [hx, hy], hand,
-      hold(a) { breathe.insertBefore(a.pos, armG); },   // 자동차는 이불 위·손 아래(손이 지붕을 쥔다)
-      show() {
-        T.anim(root, [{ opacity: 0 }, { opacity: 1 }], 500).then(() => root.setAttribute('opacity', 1));
-        T.anim(qn, [{ opacity: 0 }, { opacity: 1 }], 500).then(() => qn.setAttribute('opacity', 1));
-        breathe.animate([{ translate: '0 0' }, { translate: '0 -1.6px' }, { translate: '0 0' }], { duration: 2600, iterations: Infinity, easing: 'ease-in-out' });
-      },
+      head: [bx(BED.head[0]), by(BED.head[1])],
+      show() { T.anim(root, [{ opacity: 0 }, { opacity: 1 }], 500).then(() => root.setAttribute('opacity', 1)); },
     };
   }
   const tint = (T, fill, op) => T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill, opacity: op }, T.bg);
@@ -383,7 +359,7 @@
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
-    Object.values(BED.f).forEach(k => loads.push(T.preload(src(k))));
+    loads.push(T.preload(src(BED.f)));
     await Promise.race([Promise.all(loads), sleep(4000)]);
     calcHT();
     const pz = (who, ps) => Object.fromEntries(ps.map(p => [p, ['rc_' + who + '_' + p, HT['rc_' + who + '_' + p]]]));
@@ -439,12 +415,11 @@
     const cut2 = (async () => {
       kid.look('eat', 'right'); toHand(HAND.eat); T.pop(kid.x + 80, FL - 300, tr('냠냠'));
       await sleep(2400);
-      /* 잠: 바닥 요가 아니라 배경 오른쪽 침대에서 잔다(2026-10-22). 깔개 위 이현이는 사라지고 카메라가 침대로 간다 */
+      /* 잠: 바닥 요가 아니라 배경 오른쪽 침대에서 잔다(2026-10-22). 깔개 위 이현이·자동차는 사라지고 카메라가 침대로 간다(침대 그림 속 이현이가 자동차를 쥐고 있다) */
       fadeOut(T, kid, 350); fadeOut(T, red, 350);
       const t = tint(T, '#1F2A56', 0); T.anim(t, [{ opacity: 0 }, { opacity: .22 }], 900).then(() => t.setAttribute('opacity', .22));
       const nightBed = bedSleep(T);
       await (P ? T.camTo(870, 300, 1.3, 900) : T.camTo(760, 310, 1.9, 900));
-      put(T, red, nightBed.hand[0] + 6, nightBed.hand[1] + 30, { look: 'run', s: S_TOY }); nightBed.hold(red);   // 이불 위로 나온 손이 자동차 지붕을 꼭 쥔다
       nightBed.show();
       T.pop(nightBed.head[0] - 40, nightBed.head[1] - 75, tr('쌔근'), '#1F2A56');
     })();
