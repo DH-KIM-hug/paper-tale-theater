@@ -165,7 +165,19 @@
     L55: "고마워, 까치들아. 너희 마음, 평생 잊지 않을게.",
     L56: "은혜를 잊지 않고 갚는 마음은, 이렇게 따뜻해요.",
   };
+  /* 누르는 자리 넓히기(2026-10-22): 화면에서 짧은 변이 min px 보다 작으면 투명 사각을 대상 안에 깔아 min px 로 키운다. 눌리는 곳 크기만 바뀌고 그림은 그대로 */
+  function padHit(T, el, min = 88) {
+    try {
+      if (el.__pad) { el.__pad.remove(); el.__pad = null; }
+      const m = el.getScreenCTM(); if (!m) return;
+      const sc = Math.hypot(m.a, m.b) || 1, bb = el.getBBox();
+      const w = Math.max(bb.width, min / sc), h = Math.max(bb.height, min / sc);
+      if (w === bb.width && h === bb.height) return;
+      el.__pad = T.el('rect', { x: bb.x + bb.width / 2 - w / 2, y: bb.y + bb.height / 2 - h / 2, width: w, height: h, fill: '#000', 'fill-opacity': 0 }, el);
+    } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
+  }
   async function run(T) {
+    if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     let GAP = 900; const SCENE_END = 2000, CUT_HOLD = 4200, STRIKE_GAP = 4500, FAINT_GAP = 2800;
     let early = true;   // 첫 조작(활 톡)까지는 숨을 짧게 (시작 30초 안에 첫 조작)
@@ -234,9 +246,8 @@
     await say(S.L3); await climb; snake.look('coil');   /* 나무 위에 도착해 다시 똬리를 튼다 */
     sch.look('ready', 'right'); sfx('paper_up');
     await say(S.L4); await sleep(150);
-    await say(S.L5);
     bob(sch.pos);
-    await T.tap(sch.pos, { prompt: '선비가 활을 꺼냈어요. 선비를 톡 눌러 봐요.' });
+    await T.ask(S.L5, () => T.tap(sch.pos, { prompt: '선비가 활을 꺼냈어요. 선비를 톡 눌러 봐요.' }));
     early = false;
     sch.look('draw', 'right'); sfx('creak', .5);
     for (let i = 0; i < 3; i++) await sch.wiggle(1.5, 400);
@@ -296,8 +307,8 @@
         const u = vo('n' + (i + 1)); await (u || sleep(650)); await sleep(350);
       }
     };
-    await say(S.L10);
-    await T.choose(cards.map(c => ({ el: c.g, ok: c.n === N, onWrong: async () => { await wiggleEl(T, c.g); await say(W[c.n]); await countChicks(); } })), { prompt: '아기 까치가 몇 마리일까요? 맞는 숫자를 골라요.' });
+    cards.forEach(c => padHit(T, c.g));
+    await T.ask(S.L10, () => T.choose(cards.map(c => ({ el: c.g, ok: c.n === N, onWrong: async () => { await wiggleEl(T, c.g); await say(W[c.n]); await countChicks(); } })), { prompt: '아기 까치가 몇 마리일까요? 맞는 숫자를 골라요.' }));
     const good = cards.find(c => c.n === N);
     good.g.style.filter = 'url(#hintGlow)'; sparkleSfx(T); T.pop(good.x, cardY - 90, tr('반짝!'));
     await countChicks();
@@ -394,8 +405,7 @@
     await say(S.L33);
     const l34 = say(S.L34); dad.hop(10, 320); await l34;
     bob(bell.pos);
-    await say(S.L35);
-    await T.tap(bell.pos, { prompt: '종을 톡 눌러 봐요.' });
+    await T.ask(S.L35, () => T.tap(bell.pos, { prompt: '종을 톡 눌러 봐요.' }));
     const hitL = 442, hitR = 558, backL = X(330, 400), backR = X(670, 600);
     const strike = async k => {
       const t0 = performance.now();
@@ -482,8 +492,7 @@
     await l52;
     await cutSay('mg_cut_wake', S.L53);
     bob(sch.pos);
-    await say(S.L54);
-    await T.tap(sch.pos, { prompt: '선비를 톡 눌러 봐요.' });
+    await T.ask(S.L54, () => T.tap(sch.pos, { prompt: '선비를 톡 눌러 봐요.' }));
     T.confetti(); sfx('tada', 1, () => sparkleSfx(T));
     sch.hop(30, 480); chicks.slice(0, N).forEach(c => c.hop(18, 460)); mom.hop(8, 460); dad.hop(8, 460);
     await say(S.L55);
