@@ -590,7 +590,6 @@
       }
     }, fox.pos);
     await say('여우가 맛있는 수프를 끓여요.');
-    await say('냄비를 톡톡 눌러서 저어 볼까요?');
     const stirStep = i => {
       const st = pot.parts.stir || 22;
       pot.parts.spoon.animate([{ transform: 'rotate(0deg)' }, { transform: `rotate(${-st}deg)` }, { transform: `rotate(${st}deg)` }, { transform: 'rotate(0deg)' }], { duration: 420 });
@@ -602,7 +601,7 @@
       bubbleSnd(T);
       if (i % 2) T.pop(pot.x + 20, pot.y - 200, '보글', C.bean);
     };
-    await T.tap(pot.pos, { prompt: '냄비를 톡톡 눌러서 휘휘 저어요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await T.ask('냄비를 톡톡 눌러서 저어 볼까요?', () => T.tap(pot.pos, { prompt: '냄비를 톡톡 눌러서 휘휘 저어요!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 5; i++) { await stirStep(i); await sleep(450); }
     await sleep(400);
     AudioFX.laugh();
@@ -623,11 +622,10 @@
       tbl = highTable(T, T.world);
     }, fox.pos);
     await say('두루미가 놀러 왔어요. 그런데 접시가 아주 납작해요!');
-    await say('두루미 부리를 톡 눌러서 먹게 해 줘요!');
     const words = ['콕!', '딱!', '딱딱!'];
     const HI = bgUrl('high') && ARTMODE(); // 그림: 접시가 탁자 위(무대 y≈250)에 있다
     const peckAt = HI ? [604, 280] : [640, 418], lickAt = HI ? [392, 288] : [390, 440];
-    await T.tap(crane.parts.head, { prompt: '두루미 부리를 톡 눌러 봐요!' }); // 한 번 누르면 콕·딱·딱딱 세 번 저절로 (2026-10-19)
+    await T.ask('두루미 부리를 톡 눌러서 먹게 해 줘요!', () => T.tap(crane.parts.head, { prompt: '두루미 부리를 톡 눌러 봐요!' })); // 한 번 누르면 콕·딱·딱딱 세 번 저절로 (2026-10-19)
     for (let i = 0; i < 3; i++) {
       const deg = aimP(crane, peckAt);
       await T.anim(crane.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${deg}deg)` }], 260);
@@ -796,9 +794,8 @@
       const up = Math.random() < .5;
       const bOk = badge(T, 500, up ? 160 : 380, g => ICON[r.ok](T, g));
       const bNo = badge(T, 500, up ? 380 : 160, g => ICON[r.no](T, g));
-      await say(r.q);
-      await T.choose([{ el: bOk, ok: true }, { el: bNo, ok: false }], { prompt: r.q, where: r.where,
-        who: `${josa(DISH[r.ok].name, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });
+      await T.ask(r.q, () => T.choose([{ el: bOk, ok: true }, { el: bNo, ok: false }], { prompt: r.q, where: r.where,
+        who: `${josa(DISH[r.ok].name, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` }));
       bOk.remove(); bNo.remove();
       const o = r.old(); await T.anim(o.pos, [{ opacity: 1 }, { opacity: 0 }], 300); o.pos.remove();
       const nd = dish(T, T.world, r.ok, r.at[0], r.at[1], r.ok === 'bottle' ? .95 : .9);
@@ -845,10 +842,9 @@
       const card = badge(T, 500, 118, gg => MOUTH[r.key](T, gg), 84, true);
       sfx(T, 'ding');
       const opts = shuffle(r.opts).map((k, i) => dish(T, dL, k, SLOTS[i], 404, 1));
-      await say(r.q);
-      const res = await T.choose(opts.map(d => ({ el: d.pos, ok: d.key === r.ok, onWrong: async () => {
+      const res = await T.ask(r.q, () => T.choose(opts.map(d => ({ el: d.pos, ok: d.key === r.ok, onWrong: async () => {
         await Promise.all([T.anim(d.pos, [{ translate: '0 0' }, { translate: '-8px 0' }, { translate: '8px 0' }, { translate: '0 0' }], 400), g.wiggle(10, 400)]);
-      } })), { prompt: r.q, where: r.where, who: `${josa(DISH[r.ok].name, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });
+      } })), { prompt: r.q, where: r.where, who: `${josa(DISH[r.ok].name, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` }));
       const good = opts.find(d => d.key === r.ok);
       await Promise.all(opts.filter(d => d !== good).map(d => T.anim(d.pos, [{ opacity: 1 }, { opacity: 0 }], 300)));
       opts.filter(d => d !== good).forEach(d => d.pos.remove());
@@ -904,9 +900,10 @@
     await Promise.all([party.fox.hop(30), party.crane.hop(30)]);
     await say('"괜찮아!" 둘은 다시 사이좋은 친구가 되었어요.');
     T.finale();
-    await say('친구들을 톡톡 눌러 봐요. 냠냠 맛있게 먹어요!');
+    let firstFriend = true;
     for (const k of Object.keys(party)) { // 한 친구씩 차례로 톡 → 냠냠
-      await T.tap(party[k].pos);
+      const tapF = () => T.tap(party[k].pos);
+      await (firstFriend ? T.ask('친구들을 톡톡 눌러 봐요. 냠냠 맛있게 먹어요!', tapF) : tapF()); firstFriend = false;
       await eat(T, party[k], plates[k]); vo('yum_' + k);
     }
     T.confetti(); AudioFX.fanfare && AudioFX.fanfare();
@@ -973,12 +970,30 @@
       guardCam = api.camera;
     };
     const targetsOf = { tap: a => a[0], mash: a => a[0], swipe: a => a[0], hold: a => a[0], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
-    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); return api[k](...a); }; });
+    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); [].concat(targetsOf[k](a)).forEach(e => fatten(e)); return api[k](...a); }; });
     T.sceneCard = (label, change, focus) => api.sceneCard(label, () => {
       if (guardCam) { const c = api.camera; if (c.x === guardCam.x && c.y === guardCam.y && c.z === guardCam.z) api.camSnap(500, 280, 1); guardCam = null; }
       change && change();
     }, focus);
     return T;
+  }
+
+  /* 누르는 자리 넓히기 (2026-10-22): 화면에서 짧은 변이 84px 보다 작은 대상(g)에 투명 사각을 덧대 84px 이상으로 만든다.
+     대상 가운데는 그대로(손가락 힌트 자리 불변). 조작을 열 때마다 지금 화면 배율로 다시 잰다. 클립된 그림 조각은 건드리지 않는다 */
+  function fatten(el, min = 84) {
+    try {
+      if (!el || !(el instanceof SVGGElement) || el.__noFat) return;
+      if (el.__fat) { el.__fat.remove(); el.__fat = null; }
+      const r = el.getBoundingClientRect(); if (!r.width || !r.height || el.getAttribute('clip-path')) return;
+      if (r.width >= min && r.height >= min) return;
+      const m = el.getScreenCTM(), bb = el.getBBox(); if (!m || !bb.width || !bb.height) return;
+      const sx = Math.hypot(m.a, m.b) || 1, sy = Math.hypot(m.c, m.d) || 1;
+      const w = Math.max(bb.width, min / sx), h = Math.max(bb.height, min / sy);
+      const rc = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rc.setAttribute('x', bb.x + bb.width / 2 - w / 2); rc.setAttribute('y', bb.y + bb.height / 2 - h / 2);
+      rc.setAttribute('width', w); rc.setAttribute('height', h); rc.setAttribute('fill', '#000'); rc.setAttribute('fill-opacity', 0);
+      el.insertBefore(rc, el.firstChild); el.__fat = rc;
+    } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
   Tale.mount({ title: '여우와 두루미', subtitle: '누구에게 어떤 그릇이 좋을까?', run: T => run(portraitGuard(Tale.api)) });
