@@ -452,7 +452,7 @@
         tiger.face('left');
         granny.face('right');
         grannyMood('scared');
-        impact(700, 330, '어흥!', '#c0392b');
+        impact(730, 170, '어흥!', '#c0392b');
         AudioFX.thud(); T.shake();
         granny.hop(26, 420);
         granny.face('left'); // 물러나는 방향(왼쪽)을 보며 밀린다
@@ -536,6 +536,7 @@
     }
 
     /* ================= 놀이 ================= */
+    let nextPrompt = null, firstLure = null;   // 다음 카드 안내(T.ask 로 읽는다) / 처음 안내 음성(걷는 동안 읽는 중)
     async function beginPlay(replay) {
       stageI = 0; misses = 0;
       buildTray();
@@ -577,7 +578,8 @@
       ]);
       tiger.face('left');
       faceTo(granny, tiger);
-      await lure;
+      // 안내가 끝나길 기다리지 않는다: 카드는 안내를 듣는 순간부터 눌린다(진행 루프의 firstLure). 자동 재생·검증은 예전처럼 끝까지 읽는다
+      if (T.autoplay() || new URLSearchParams(location.search).get('verify') === '1') await lure; else firstLure = lure;
     }
 
     async function handleCorrect(idx) {
@@ -593,7 +595,7 @@
       if (stageI >= FRIENDS.length) return;
       await ADVANCE[stageI]();
       if (scene === 'B1') faceTo(granny, tiger); // 할멈은 구석에서도 늘 호랑이 쪽을 본다
-      await say(PROMPTS[stageI]);
+      nextPrompt = PROMPTS[stageI];   // 안내는 진행 루프에서 T.ask 로: 카드를 연 채 읽는다
     }
 
     async function handleWrong(idx) {
@@ -614,13 +616,13 @@
     /* 틀릴수록 더 도와준다: 1회 = 장소 힌트, 2회부터 = 정답 카드·친구가 들썩이며 이름을 알려줌 */
     async function giveHelp() {
       const help = HELP[stageI];
-      if (misses === 1) { await say(help.where); return; }
+      if (misses === 1) { nextPrompt = help.where; return; }
       const id = FRIENDS[stageI].id;
       const card = $('#card-' + id);
       if (card) card.classList.add('hint');
       if (FRIEND_SET[id] === scene) bounceFriend(id);
       AudioFX.jingle();
-      await say(help.who);
+      nextPrompt = help.who;
     }
 
     /* ===== 정답 연출 ===== */
@@ -831,7 +833,6 @@
       T.finale();
       await say(LINES.happyEnd);
       // 잔치: 친구·할멈을 차례로 톡 하면 인사한다
-      await say(LINES.finaleTap);
       // 누르면 처음 등장 때와 같은 목소리로 인사
       const hello = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };
       // 한 명씩 차례로 톡 (자유 놀이 없이): 친구들 → 할멈 순서
@@ -839,7 +840,9 @@
         ...FRIENDS.map(f => ({ el: partyEl(f), go: () => { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); hello('hi_' + f.id); } })),
         { el: granny.pos, go: () => { AudioFX.jingle(); granny.hop(22, 420); hello('hi_halmi'); } },
       ];
-      for (let i = 0; i < greet.length; i++) { if (i === 0) await T.tap(greet[i].el); greet[i].go(); await sleep(700); } /* 한 번 누르면 나머지는 저절로 (2026-10-20 톡 조작 정리) */
+      // 잔치 친구들은 서로 겹쳐 서 있어 첫 친구(알밤) 그림이 이웃에 덮인다 → 누구를 눌러도 시작한다(choose, 모두 정답)
+      await T.ask(LINES.finaleTap, () => T.choose(greet.map(g => ({ el: g.el, ok: true }))));
+      for (let i = 0; i < greet.length; i++) { greet[i].go(); await sleep(700); } /* 한 번 누르면 나머지는 저절로 (2026-10-20 톡 조작 정리) */
       await bowTogether();
     }
 
@@ -889,7 +892,15 @@
       await beginPlay(true);
     }
     while (stageI < FRIENDS.length) {
-      const idx = await waitCard();
+      let idx;
+      const pending = nextPrompt; nextPrompt = null;
+      if (pending) idx = await T.ask(pending, waitCard);
+      else if (firstLure) {
+        const l = firstLure; firstLure = null; let spoken = false;
+        l.catch(() => {}).finally(() => { spoken = true; });
+        idx = await waitCard();
+        if (!spoken) Narrator.stop();
+      } else idx = await waitCard();
       if (idx === stageI) await handleCorrect(idx); else await handleWrong(idx);
     }
     await happyEnd();
@@ -897,5 +908,30 @@
     return '친구들이 힘을 모아 호랑이를 물리쳤어요!';
   }
 
-  Tale.mount({ title: '팥죽할멈과 호랑이', subtitle: '친구들을 순서대로 불러서 호랑이를 물리쳐요!', note: false, endTitle: '만세!', transition: 'page', run: T => run(Tale.api) });
+  /* 누르는 자리 넓히기 (2026-10-22): 화면에서 짧은 변이 84px 보다 작은 대상(g)에 투명 사각을 덧대 84px 이상으로 만든다.
+     대상 가운데는 그대로(손가락 힌트 자리 불변). 조작을 열 때마다 지금 화면 배율로 다시 잰다. 클립된 그림 조각은 건드리지 않는다 */
+  function fatten(el, min = 84) {
+    try {
+      if (!el || !(el instanceof SVGGElement) || el.__noFat) return;
+      if (el.__fat) { el.__fat.remove(); el.__fat = null; }
+      const r = el.getBoundingClientRect(); if (!r.width || !r.height || el.getAttribute('clip-path')) return;
+      if (r.width >= min && r.height >= min) return;
+      const m = el.getScreenCTM(), bb = el.getBBox(); if (!m || !bb.width || !bb.height) return;
+      const sx = Math.hypot(m.a, m.b) || 1, sy = Math.hypot(m.c, m.d) || 1;
+      const w = Math.max(bb.width, min / sx), h = Math.max(bb.height, min / sy);
+      const rc = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rc.setAttribute('x', bb.x + bb.width / 2 - w / 2); rc.setAttribute('y', bb.y + bb.height / 2 - h / 2);
+      rc.setAttribute('width', w); rc.setAttribute('height', h); rc.setAttribute('fill', '#000'); rc.setAttribute('fill-opacity', 0);
+      el.insertBefore(rc, el.firstChild); el.__fat = rc;
+    } catch (e) { /* 넓히기 실패는 무시 */ }
+  }
+
+  function withFat(api) {
+    const T = Object.create(api);
+    const of = { tap: a => [a[0]], mash: a => [a[0]], swipe: a => [a[0]], hold: a => [a[0]], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
+    Object.keys(of).forEach(k => { T[k] = (...a) => { of[k](a).forEach(e => fatten(e)); return api[k](...a); }; });
+    return T;
+  }
+
+  Tale.mount({ title: '팥죽할멈과 호랑이', subtitle: '친구들을 순서대로 불러서 호랑이를 물리쳐요!', note: false, endTitle: '만세!', transition: 'page', run: T => run(withFat(Tale.api)) });
 })();
