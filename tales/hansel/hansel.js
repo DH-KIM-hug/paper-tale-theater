@@ -341,10 +341,11 @@
     const holeRing = HOLES.map(([x, y]) => T.el('circle', { cx: x, cy: y, r: 18, fill: 'none', stroke: '#FFD54F', 'stroke-width': 3, 'stroke-dasharray': '5 4', opacity: .0 }, T.world));
     holeRing.forEach(c => c.animate([{ opacity: .35 }, { opacity: .95 }, { opacity: .35 }], { duration: 1200, iterations: Infinity }));
     await T.ask('지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!', () => T.mash(hans.pos, { count: 5, prompt: '헨젤을 톡톡톡톡톡! 사탕을 세어요.', onStep: i => {
+      try { Narrator.hideBubble(); } catch (e) { /* 자막이 지붕 사탕 자리를 가리지 않게 누르는 동안은 숨긴다 */ }
       const [x, y] = HOLES[i - 1], sx = hans.x, sy = hans.y - 150, c = candyAt(0, 0, i - 1);
       holeRing[i - 1].remove();
       c.animate([{ transform: `translate(${sx}px,${sy}px) scale(.4)` }, { transform: `translate(${x}px,${y}px) scale(1)` }], { duration: 480, easing: 'ease-out', fill: 'forwards' });
-      hans.hop(12, 240); popSfx(T); setTimeout(() => T.pop(x, i === 5 ? 60 : 50 + (i % 2) * 20, tr(NUM[i - 1])), 400);
+      hans.hop(12, 240); popSfx(T); setTimeout(() => T.pop(x + 34, y + 44, tr(NUM[i - 1])), 400);   /* 숫자는 사탕 오른쪽 아래(사탕을 가리지 않게) */
     } }));
     await say('사탕이 하나, 둘, 셋, 넷, 다섯! 지붕이 예뻐졌어요.');
 
