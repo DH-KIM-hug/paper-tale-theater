@@ -8,14 +8,19 @@
   const G = 520; // 발 기준선
   const src = f => AS + 'cf4_' + f + '.webp';
   const bgSrc = k => AS + 'cf4_bg_' + k + '.webp';
-  const BGS = ['01_road', '02_hill', '03_chimney', '04_door', '05_belt', '06_press', '07_button', '08_tank_room', '09_bell_room', '10_corner_close', '12_storm', '13_rain', '14_soil', '15_rainbow'];
+  const BGS = ['01_road', '02_hill', '03_chimney', '04_door', '05_belt_v2', '06_press_v2', '07_button_v2', '08_tank_room', '09_bell_room', '10_corner_close', '12_storm', '13_rain', '14_soil_v2', '15_rainbow_v2', '16_road_bloom']; // v2·bloom: 2026-10-22 다층 보강(VISUAL_PLAN.md)
+  /* 꽃·딸기 (2026-10-22 VISUAL_PLAN §3): 같은 종류는 어디서나 같은 높이(§4-1). 뒷줄은 한 줄 통째로 0.85배 */
+  const FLW = ['tulip_red', 'tulip_yellow', 'tulip_pink', 'sunflower', 'daisy_white', 'cosmos_pink', 'poppy_orange', 'bell_blue', 'wild_purple', 'cluster_a', 'cluster_b'];
+  const PH = { tulip_red: 120, tulip_yellow: 120, tulip_pink: 120, sunflower: 150, daisy_white: 110, cosmos_pink: 110, poppy_orange: 110, bell_blue: 100, wild_purple: 100, cluster_a: 95, cluster_b: 95,
+    bud_mix: 110, berry_bush: 120, berry_bush_b: 120, berry_single: 46, berry_flower: 60 };
   const SPR = ['nuna_lookup', 'nuna_walk', 'nuna_run', 'nuna_wave', 'nuna_blow', 'nuna_hug', 'nuna_jump', 'nuna_back', 'nuna_whisper',
     'oppa_lookup', 'oppa_walk', 'oppa_run', 'oppa_reach', 'oppa_press', 'oppa_hug', 'oppa_jump', 'oppa_back',
     'agi_lookup', 'agi_walk', 'agi_run', 'agi_press', 'agi_pet', 'agi_wave', 'agi_hug', 'agi_jump', 'agi_back', 'agi_lookback',
     'nuna_point', 'nuna_tiptoe', 'nuna_crouch', 'nuna_clap', 'nuna_eek', 'nuna_splash', 'oppa_point', 'oppa_tiptoe', 'oppa_crouch', 'oppa_clap', 'oppa_eek', 'oppa_splash', 'agi_point', 'agi_tiptoe', 'agi_crouch', 'agi_clap', 'agi_eek', 'agi_splash', 'dog_lookup', 'dog_sniff', 'dog_run', 'dog_wag', 'dog_sneeze', 'dog_lick', 'dog_bark', 'dog_nose',
     'cloud_white', 'cloud_rabbit', 'cloud_whale', 'cloud_dog', 'cloud_fish', 'cloud_car',
     'dark_drink', 'dark_drink2', 'dark_drink3', 'dark_march', 'dark_march2', 'dark_march3', 'dark_bump', 'cloud_one', 'cloud_two', 'cloud_long', 'cloud_small', 'baby_huddle', 'baby_wide', 'baby_up', 'baby_sorry', 'baby_white',
-    'prop_drop', 'prop_sprout', 'prop_bud', 'prop_flower', 'prop_berry_green', 'prop_berry_red', 'prop_chimney_far'];
+    'prop_drop', 'prop_sprout', 'prop_bud', 'prop_flower', 'prop_berry_green', 'prop_berry_red', 'prop_chimney_far',
+    ...FLW.map(k => 'prop_flower_' + k), 'prop_flower_bud_mix', 'prop_berry_bush', 'prop_berry_bush_b', 'prop_berry_single', 'prop_berry_flower'];
   const ASP = {}; // 그림 가로/세로 (불러온 뒤 채운다)
 
   /* 배우: poses = { 이름: [그림, 높이, 그림이 보는 쪽] } */
@@ -307,7 +312,7 @@
     S(async () => {
       const FX = 198, FY = 222, HX = 540, HY = 165, BY = 300; // 깔때기 끝 · 나팔 입 · 벨트 위
       await T.sceneCard('', () => {
-        scene('05_belt', 400);
+        scene('05_belt_v2', 400);
         put(T, oppa, X(240, 300), G, { look: 'reach', to: 'right' });
         put(T, nuna, X(400, 420), G, { look: 'lookup', to: 'right' });
         put(T, agi, X(520, 500), G, { look: 'clap', to: 'right' });
@@ -355,7 +360,7 @@
       const HOLES = [[378, 206], [500, 219], [628, 219]], BELT = 343; // 그림에서 잰 구멍 가운데 · 벨트 윗면
       let shapes;
       await T.sceneCard('', () => {
-        scene('06_press', 470);
+        scene('06_press_v2', 470);
         put(T, oppa, X(205, 330), G, { look: 'press', to: 'right' });
         put(T, nuna, X(110, 270), G, { look: 'clap', to: 'right' });
         put(T, agi, X(820, 650), G, { look: 'point', to: 'left' });
@@ -392,7 +397,7 @@
       const BX = 154, BYY = 300, FLX = 771, FLY = 400; // 단추 · 굴뚝 관 입구
       let dc;
       await T.sceneCard('', () => {
-        scene('07_button', 300);
+        scene('07_button_v2', 300);
         put(T, agi, X(250, 260), G, { look: 'lookup', to: 'left' });
         put(T, nuna, X(370, 360), G, { look: 'lookup', to: 'left' });
         put(T, oppa, X(460, 430), G, { look: 'lookup', to: 'left' });
@@ -502,7 +507,7 @@
     S(async () => {
       const FLX = 771, FLY = 400; // 7장면 그림의 굴뚝 관 입구
       await T.sceneCard('', () => {
-        scene('07_button', 560);
+        scene('07_button_v2', 560);
         put(T, baby, 520, 330, { look: 'wide', to: 'right', s: 1 });
         put(T, nuna, X(250, 390), G, { look: 'wave', to: 'right' });
         put(T, agi, X(340, 445), G, { look: 'wave', to: 'right' });
@@ -580,31 +585,56 @@
       agi.hop(46, 520); ring(agi.x, G + 4); AudioFX.sfx('splash_big') || popSfx(T);
       await say('"첨벙!" 은우가 제일 높이 뛰어요.');
     });
-    /* --- 14. 쑥! 활짝! 빨갛게! --- */
+    /* --- 14. 쑥! 활짝! 빨갛게! (2026-10-22 VISUAL_PLAN §3: 새싹 1→5, 꽃 1→5→15송이, 딸기 포기 3 + 조각 6) ---
+       흙 그림(14_soil_v2)의 심을 자리 7곳 중 가운데 5곳에서 새싹이 나고, 꽃은 인물 뒤(z)·양옆·발 아래 띠에만 핀다 */
     S(async () => {
-      const SP = [X(252, 380), 500, X(759, 620)], SY = 482; // 세로 화면은 가운데 430만 보여 양 끝 자리를 안쪽으로
+      const PX = x => P ? Math.round(500 + (x - 500) * .44) : x; // 세로 화면은 가운데 430만 보여 안쪽으로 모은다
+      const HOLE = 492, BACK = 452, FRONT = 546; // 심을 자리 발끝 · 뒷줄(0.85배) · 발 아래 띠
       await T.sceneCard('', () => {
-        scene('14_soil', 500);
+        scene('14_soil_v2', 500);
         put(T, baby, X(780, 620), 120, { look: 'sorry', to: 'left' });
         // 2026-10-20 크기 일관성: 앞쪽(기준선이 더 아래)인데 0.8~0.9로 줄여져 있던 것을 1로 (다른 장면과 같은 크기)
         put(T, dog, X(860, 640), G + 20, { look: 'sniff', to: 'left' });
         put(T, nuna, X(110, 300), G + 20, { look: 'crouch', to: 'right' }); put(T, agi, X(170, 330), G + 30, { look: 'crouch', to: 'right' }); put(T, oppa, X(920, 700), G + 20, { look: 'crouch', to: 'left' });
         startRain(0, 1000, -20, 6);
       });
-      const grow = [[['prop_sprout', 90]], [['prop_bud', 120], ['prop_flower', 130]], [['prop_berry_green', 110], ['prop_berry_red', 120]]];
-      const lines = ['비 맞은 땅에서 새싹이 쑥!', '꽃이 활짝!', '딸기가 빨갛게!'], pops = ['쑥!', '활짝!', '빨갛게!'];
-      for (let i = 0; i < 3; i++) {
-        const plant = mk(T, Object.fromEntries(grow[i].map(([f, h], j) => ['s' + j, [f, h]])), false);
-        await sleep(600); // 저절로 (2026-10-20 톡 조작 정리)
-        put(T, plant, SP[i], SY + 10, { look: 's0' });
-        T.world.insertBefore(plant.pos, baby.pos); // 새싹은 땅에서 자라 나오니 인물·강아지 뒤에 둔다
-        plant.body.animate([{ transform: 'scale(.2)' }, { transform: 'scale(1)' }], { duration: 600, easing: 'cubic-bezier(.3,1.6,.5,1)' });
-        popSfx(T); T.pop(SP[i], SY - 150, tr(pops[i]), '#5B9A4A');
-        if (grow[i].length > 1) { await sleep(500); morph(plant, 's1'); }
-        await say(lines[i]);
-      }
+      const behind = baby.pos; // 꽃·딸기는 땅에서 자라 나오니 인물·강아지·구름보다 뒤에 둔다
+      const sprout = (key, x, y, s = 1, ms = 600) => {
+        const p = put(T, key, PX(x), y, { s }); T.world.insertBefore(p.pos, behind);
+        p.body.animate([{ transform: 'scale(.2)' }, { transform: 'scale(1)' }], { duration: ms, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+        return p;
+      };
+      const plant = (k, x, y, s) => sprout(one(T, 'prop_' + (FLW.includes(k) ? 'flower_' + k : k), PH[k]), x, y, s);
+      // 1) 새싹 다섯: 가운데 → 양옆 → 바깥. 새싹 → 꽃봉오리 → 꽃 세 겹을 한 배우에 담아 morph
+      const ORDER = [[505, 'sunflower'], [354, 'tulip_red'], [657, 'tulip_yellow'], [203, 'daisy_white'], [809, 'cosmos_pink']];
+      const buds = ORDER.map(([x, k], i) => mk(T, { s0: ['prop_sprout', 90], s1: [i ? 'prop_flower_bud_mix' : 'prop_bud', i ? PH.bud_mix : 120], s2: ['prop_flower_' + k, PH[k]] }, false));
+      await sleep(600);
+      buds.forEach((b, i) => setTimeout(() => { sprout(b, ORDER[i][0], HOLE, 1); b.look('s0'); }, i * 120));
+      popSfx(T); T.pop(PX(505), HOLE - 150, tr('쑥!'), '#5B9A4A');
+      await say('비 맞은 땅에서 새싹이 쑥!');
+      // 2) 꽃: 꽃이 피는 순간 비가 그친다. 가운데 해바라기 먼저, 넷은 가운데에서 바깥으로
       stopRain();
-      dog.move(SP[2] + 90, G + 20, 900);
+      buds.forEach(b => morph(b, 's1', 400));
+      await sleep(450);
+      morph(buds[0], 's2');
+      buds.slice(1).forEach((b, i) => setTimeout(() => morph(b, 's2'), 300 + i * 140));
+      T.pop(PX(505), HOLE - 190, tr('활짝!'), '#E36B5C');
+      // 땅에서 바로 피는 열 송이: 뒷줄 여섯(0.85배) + 발 아래 띠 넷, 가운데에서 양옆으로 번지듯
+      const FILL = [[430, BACK, 'wild_purple', .85], [580, BACK, 'tulip_pink', .85], [280, BACK, 'bell_blue', .85], [730, BACK, 'cluster_a', .85], [130, BACK, 'poppy_orange', .85], [880, BACK, 'cluster_b', .85],
+        [430, FRONT, 'daisy_white', 1], [590, FRONT, 'cosmos_pink', 1], [30, FRONT, 'cluster_a', 1], [975, FRONT, 'cluster_b', 1]];
+      const fill = (async () => { await sleep(800); for (const [x, y, k, sc] of FILL) { plant(k, x, y, sc); await sleep(90); } })();
+      await say('꽃이 활짝!');
+      await fill;
+      // 3) 딸기: 초록 포기 셋이 빨간 딸기 포기로 익고, 낱개 딸기·딸기꽃이 포기 사이에 톡톡
+      const BUSH = [[300, 'berry_bush_b'], [700, 'berry_bush'], [880, 'berry_bush']];
+      const bushes = BUSH.map(([x, k]) => { const b = mk(T, { s0: ['prop_berry_green', 110], s1: ['prop_' + k, PH[k]] }, false); sprout(b, x, FRONT + 4, 1); b.look('s0'); return b; });
+      await sleep(500);
+      bushes.forEach(b => morph(b, 's1'));
+      const BITS = [[240, 'berry_single'], [370, 'berry_flower'], [470, 'berry_single'], [560, 'berry_flower'], [640, 'berry_single'], [770, 'berry_single']];
+      (async () => { await sleep(300); for (const [x, k] of BITS) { plant(k, x, FRONT + 6, 1); await sleep(100); } })();
+      T.pop(PX(700), FRONT - 170, tr('빨갛게!'), '#A93B32');
+      await say('딸기가 빨갛게!');
+      dog.move(X(790, 610), G + 20, 900);
       await say('꿀떡이는 딸기 냄새를 킁킁.');
       morph(baby, 'wide');
       await say('아기 먹구름이 내려다봐요. "어? 다들 웃고 있네!"');
@@ -613,7 +643,7 @@
     S(async () => {
       const COL = ['#E4573D', '#F29A38', '#F6C945', '#6FAE5A', '#4A90D9', '#3F4FA0', '#8B5CB8'], NAME = ['빨강!', '주황!', '노랑!', '초록!', '파랑!', '남색!', '보라!'];
       await T.sceneCard('', () => {
-        scene('15_rainbow', 500); skyDrift([[90, 110, 120, .2, .9], [60, 80, 150, .75, .85]]);
+        scene('15_rainbow_v2', 500); skyDrift([[90, 110, 120, .2, .9], [60, 80, 150, .75, .85]]);
         put(T, baby, X(820, 640), 150, { look: 'sorry', to: 'left' });
         put(T, nuna, X(330, 380), G, { look: 'point', to: 'right' });
         put(T, oppa, X(420, 440), G, { look: 'clap', to: 'right' });
@@ -644,11 +674,13 @@
       await say('"구름은 여기서 오는 거였어!"');
       await say('꿀떡이는 젖은 흙에 코를 대고 킁킁.');
     });
-    /* --- 16. 집으로: 하늘엔 종이 구름이 둥실, 먼 굴뚝 김이 바람 따라 흘러 구름이 된다 --- */
+    /* --- 16. 집으로: 하늘엔 종이 구름이 둥실, 먼 굴뚝 김이 바람 따라 흘러 구름이 된다 ---
+       2026-10-22 VISUAL_PLAN §4: 1장과 같은 길(01_road)로 열리고, 비가 온 뒤라 같은 화면이 꽃밭·딸기밭(16_road_bloom)으로 번진다 */
     S(async () => {
-      let ch, c2;
+      let ch, c2, bloom;
       await T.sceneCard('', () => {
         scene('01_road', 500);
+        bloom = el('image', { href: bgSrc('16_road_bloom'), x: -40, y: -24, width: 1080, height: 608, preserveAspectRatio: 'xMidYMid slice', opacity: 0 }, T.bg);
         skyDrift([[60, 170, 120, .1], [120, 120, 95, .45], [45, 100, 140, .7, .9], [150, 90, 110, .9, .85]]);
         ch = one(T, 'prop_chimney_far', 130); put(T, ch, X(880, 640), 330); el('rect', { x: -55, y: -130, width: 110, height: 130, fill: 'transparent' }, ch.pos);   // 누르는 자리 넓히기 (2026-10-22)
         c2 = [0, 1].map(() => { const c = one(T, 'cloud_white', 110); hide(c); return c; });
@@ -657,6 +689,22 @@
         put(T, oppa, X(400, 480), G, { look: 'walk', to: 'left' });
         put(T, agi, X(540, 560), G, { look: 'wave', to: 'right' }); // 왼쪽으로 가는 길에 굴뚝(오른쪽)을 돌아보며 손 흔들기: 몸과 머리가 같은 쪽을 본다
       });
+      // 꽃밭으로 번지기: 배경 크로스페이드 2.4초 + 꽃 조각 3파(공장 쪽 오른쪽 → 집 쪽 왼쪽). 길(모래색) 위는 걷는 자리라 비운다
+      (async () => {
+        const PX = x => P ? Math.round(500 + (x - 500) * .44) : x, UP = 414, LOW = 552, behind = dog.pos;
+        const plant = (k, x, y, s = 1) => {
+          const p = put(T, one(T, 'prop_' + (FLW.includes(k) ? 'flower_' + k : k), PH[k]), PX(x), y, { s }); T.world.insertBefore(p.pos, behind);
+          p.body.animate([{ transform: 'scale(.2)' }, { transform: 'scale(1)' }], { duration: 600, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+        };
+        await sleep(400);
+        bloom.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400, easing: 'ease-in-out', fill: 'forwards' });
+        const WAVES = [[[975, LOW, 'tulip_red'], [960, UP, 'cosmos_pink', .85], [790, UP, 'tulip_yellow', .85], [905, LOW, 'daisy_white'], [745, LOW, 'poppy_orange']],
+          [[690, UP, 'cluster_a', .85], [640, LOW, 'bell_blue'], [465, UP, 'tulip_pink', .85], [470, LOW, 'cluster_b'], [400, UP, 'sunflower', .85]],
+          [[330, UP, 'wild_purple', .85], [290, LOW, 'cosmos_pink'], [190, UP, 'daisy_white', .85], [90, LOW, 'tulip_yellow'], [40, UP, 'poppy_orange', .85]]];
+        for (const wave of WAVES) { for (const [x, y, k, s] of wave) { plant(k, x, y, s); await sleep(140); } await sleep(700 - 140 * 5 + 140); }
+        const BERRY = [[60, 'berry_bush_b'], [950, 'berry_bush'], [140, 'berry_single'], [870, 'berry_single'], [200, 'berry_flower'], [820, 'berry_flower'], [25, 'berry_single']];
+        for (const [x, k] of BERRY) { plant(k, x, LOW + 4); await sleep(100); }
+      })();
       const C0 = [ch.x + 6, ch.y - 124], tgt = [[X(720, 600), 150], [X(600, 520), 120]];
       chimneyLoop(C0, [C0[0], C0[1] - 40], [C0[0] - 160, C0[1] - 70], { s0: .25, s1: .9 });
       const home = Promise.all([dog.move(X(-60, 260), G, 3800, 'linear'), nuna.move(X(160, 340), G, 4200, 'linear'), oppa.move(X(260, 400), G, 4200, 'linear')]);
