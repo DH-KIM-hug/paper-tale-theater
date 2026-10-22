@@ -826,18 +826,32 @@
     await T.sceneCard('순무 잔치', () => {
       T.clear(); feastBG(T);
       // 잔치 상: 그림(낮은 상, 520×162)이면 윗판이 솥 밑(y≈402)에 오게, 없으면 판+다리 도형
-      if (!pic(T, T.world, 'table', 360, 376, 280, 280 / 2.346)) T.paper(T.world, [['rect', { x: 390, y: 400, width: 220, height: 20, rx: 6, fill: C.bark }], ['rect', { x: 410, y: 420, width: 16, height: 90, fill: C.bark }], ['rect', { x: 574, y: 420, width: 16, height: 90, fill: C.bark }]]);
+      const tbl = pic(T, T.world, 'table', 360, 376, 280, 280 / 2.346) || T.paper(T.world, [['rect', { x: 390, y: 400, width: 220, height: 20, rx: 6, fill: C.bark }], ['rect', { x: 410, y: 420, width: 16, height: 90, fill: C.bark }], ['rect', { x: 574, y: 420, width: 16, height: 90, fill: C.bark }]]);
       pot = artUrl('pot') ? el('g', {}, T.world) : T.paper(T.world, [['path', { d: 'M446 350 H554 Q556 400 500 402 Q444 400 446 350 Z', fill: C.ink }], ['rect', { x: 438, y: 342, width: 124, height: 12, rx: 6, fill: '#4a3a30' }], ['ellipse', { cx: 500, cy: 344, rx: 50, ry: 8, fill: C.snow }]]);
       pic(T, pot, 'pot', 430, 402 - 140 / 1.01, 140, 140 / 1.01); // 그림: 순무국 솥 (김은 그림 + 코드)
       el('rect', { x: 420, y: 300, width: 160, height: 110, fill: '#fff', opacity: 0 }, pot);
-      // 세로 화면: 자리를 가운데로 조금 모으고, 살짝 물러서서 여섯 명이 다 보이게 (가로는 그대로)
-      const fk = T.portrait() ? .78 : 1, fz = T.portrait() ? Math.min(1, T.viewWidth() / 2 / (390 * fk + 75)) : 1;
-      seats.forEach((a, i) => { put(a, Math.round(500 + (FX[i] - 500) * fk), 510, SEAT_S[a.key], a.key === 'cat' ? 'sit' : null); if (i < 3) a.face('right'); });
-      camSnap(500, 280, fz);
+      if (!T.portrait()) {
+        seats.forEach((a, i) => { put(a, FX[i], 510, SEAT_S[a.key], a.key === 'cat' ? 'sit' : null); if (i < 3) a.face('right'); });
+        camSnap(500, 280, 1);
+      } else {
+        /* 세로 화면(2026-10-22): 한 줄이면 누르는 자리가 36~46px 라서 3명씩 두 줄로. 카메라는 배율 1(보이는 폭 ≈430).
+           자리 0·1·2 = 뒷줄(상 뒤, 원근만큼 .9배, 상·솥보다 뒤에 깐다), 3·4·5 = 앞줄(상 앞).
+           뒷줄 가운데는 솥 뒤라 조금 높이 서고(발은 솥이 가림), 작은 동물이 솥에 묻히지 않게 키 큰 셋 중 하나가 선다 */
+        const TALL = ['grandpa', 'grandma', 'girl'];
+        if (!TALL.includes(seats[1].key)) { const j = seats.findIndex((a, i) => i !== 1 && TALL.includes(a.key)); [seats[1], seats[j]] = [seats[j], seats[1]]; }
+        const PX = [345, 500, 655, 340, 500, 660], PY = [370, 325, 370, 560, 560, 560];
+        seats.forEach((a, i) => {
+          put(a, PX[i], PY[i], SEAT_S[a.key] * (i < 3 ? .9 : 1), a.key === 'cat' ? 'sit' : null);
+          if (i === 0 || i === 3) a.face('right'); // 줄마다 왼쪽 인물은 가운데(솥)를 본다
+          if (i < 3) T.world.insertBefore(a.pos, tbl);
+        });
+        camSnap(500, 280, 1);
+      }
     });
     const steam = setInterval(() => { const s = el('circle', { cx: 480 + Math.random() * 40, cy: 330, r: 8, fill: C.snow, opacity: .7 }, T.fx); s.animate([{ transform: 'translateY(0)', opacity: .7 }, { transform: 'translateY(-60px)', opacity: 0 }], { duration: 1400 }).finished.then(() => s.remove()); }, 400);
     await say('맛있는 순무국을 끓였어요.');
     /* 차례대로 톡 (order): 틀리면 "나는 다음이야~" 하고 다음 차례가 반짝인다 */
+    if (T.portrait()) pot.style.pointerEvents = 'none'; // 세로: 뒷줄 가운데 인물이 솥 그림 상자에 막히지 않게 (나눠 주기 전에 되돌림)
     const done = new Set();
     for (let k = 0; k < 6; k++) {
       const good = line[k];
@@ -848,16 +862,23 @@
         good.pos.style.filter = 'url(#hintGlow)';
         good.pos.animate([{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
       } }));
+      /* 세로: 누르는 자리 짧은 변 88px 이상. 장면 카드가 막 걷힌 직후엔 화면 배율이 바뀌는 중일 수 있어 1초 뒤 한 번 더 잰다 */
+      const pad = () => { if (T.portrait()) opts.forEach(o => padHit(T, o.el)); }, padT = setTimeout(pad, 1000);
+      pad();
       await T.ask(k === 0 ? '누가 먼저 순무를 잡았지? 차례대로 톡 눌러 봐요!' : q, () => T.choose(opts, { prompt: q, who: `${josa(good.name, '이에요/예요')}! 반짝이는 친구를 눌러 봐요!` }));
+      clearTimeout(padT);
       done.add(good);
       good.pos.style.filter = '';
       good.hop(30, 400);
-      const tag = T.paper(T.fx, [['circle', { cx: good.x, cy: 510 - good.h * good.scale - 34, r: 22, fill: C.cream, stroke: C.gold, 'stroke-width': 4 }]]);
-      el('text', { x: good.x, y: 510 - good.h * good.scale - 25, 'text-anchor': 'middle', 'font-size': 26, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1 }, tag);
+      // 세로 앞줄은 머리 위가 솥·뒷줄이라 번호를 발 밑에 단다
+      const ty = T.portrait() && good.y > 450 ? good.y + 22 : good.y - good.h * good.scale - 34;
+      const tag = T.paper(T.fx, [['circle', { cx: good.x, cy: ty, r: 22, fill: C.cream, stroke: C.gold, 'stroke-width': 4 }]]);
+      el('text', { x: good.x, y: ty + 9, 'text-anchor': 'middle', 'font-size': 26, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1 }, tag);
       T.tone(392 + k * 60, .25, { type: 'triangle', vol: .16 });
     }
     await say('와! 할아버지, 할머니, 손녀, 강아지, 고양이, 생쥐! 차례를 다 기억했어요.');
     [...T.fx.children].forEach(n => n.remove());
+    pot.style.pointerEvents = '';
 
     /* 한 그릇씩 톡 나눠 주기 (counter: 여섯 그릇 · 여섯 명) */
     const ui = el('g', {}, document.getElementById('stage'));
@@ -868,11 +889,11 @@
       const a = line[i - 1];
       const bowl = T.el('g', {}, T.world);
       if (!pic(T, bowl, 'soup_bowl', -25, -17, 50, 50 * 119 / 153)) T.paper(bowl, [['path', { d: 'M-22 -8 H22 Q20 14 0 15 Q-20 14 -22 -8 Z', fill: C.snow }], ['ellipse', { cx: 0, cy: -8, rx: 22, ry: 5, fill: C.amber }]]);
-      const ty = 510 - a.h * a.scale * .55;
+      const ty = a.y - a.h * a.scale * .55;
       bowl.animate([{ transform: 'translate(500px,330px)' }, { transform: `translate(${(500 + a.x) / 2}px,200px)` }, { transform: `translate(${a.x}px,${ty}px)` }], { duration: 600, easing: 'ease-in-out', fill: 'forwards' });
       dots[i - 1].setAttribute('fill', C.persimmon);
       T.tone(523 + i * 40, .2, { type: 'triangle', vol: .16 });
-      setTimeout(() => { a.hop(20, 300); T.pop(a.x, 510 - a.h * a.scale - 90, NUM[i - 1], C.pine); }, 600); // 머리 위 (얼굴을 가리지 않게)
+      setTimeout(() => { a.hop(20, 300); T.pop(a.x, !T.portrait() ? a.y - a.h * a.scale - 90 : a.y > 450 ? a.y - 20 : a.y - a.h * a.scale - 50, NUM[i - 1], C.pine); }, 600); // 머리 위 (얼굴을 가리지 않게). 세로 앞줄은 발치
     } }));
     T.finale();
     await sleep(1200);
