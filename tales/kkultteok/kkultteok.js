@@ -63,6 +63,7 @@
 
   async function run(T) {
     const { sleep, say, camSnap } = T;
+    if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const tr = T.tr, el = T.el;
     const P = T.viewWidth() < 990; /* 세로 화면은 가운데 약 430만 보인다 */
     const X = (l, p) => P ? p : l;
@@ -148,7 +149,7 @@
     const BOLT = 'M18 0 L-14 44 L2 44 L-12 92 L28 36 L10 36 Z';
     /* 마음 카드 (골라요) */
     const feelCard = (cx, cy, kind, label) => {
-      const g = el('g', { transform: `translate(${cx},${cy}) scale(${P ? .85 : 1})` }, T.fx);
+      const g = el('g', { transform: `translate(${cx},${cy}) scale(1)` }, T.fx);   // 세로에서도 카드 짧은 변이 화면 80px 이상 (2026-10-22: .85→1)
       const inner = el('g', {}, g); const plain = (par, shapes) => shapes.forEach(([t, a]) => el(t, a, par)); plain(inner, [ // 필터 없이 (Safari)
         ['rect', { x: -70, y: -50, width: 140, height: 100, rx: 20, fill: '#F6ECD8', stroke: '#6B4A32', 'stroke-width': 3 }],
         ['circle', { cx: 0, cy: -8, r: 24, fill: kind === 'sad' ? '#9DB4C8' : '#F6C945' }],
@@ -243,13 +244,12 @@
       chimneyLoop(C0, ctl(far), far, { s1: 2.4 });
       await say('언덕 너머에 커다란 굴뚝 하나.');
       await say('굴뚝에서 하얀 김이 폴폴.');
-      await say('굴뚝을 톡!');
       const outs = [];
       const puffUp = i => {
         T.pop(C0[0] + 70, C0[1] + 60, tr(['폴폴', '뭉게', '퐁!'][i - 1]));
         const [tx, ty] = SKY[i - 1]; outs.push(smokeToCloud(cl[i - 1], C0, ctl([tx, ty]), [tx, ty], 3200 + i * 300, CS, i === 1));
       };
-      await T.tap(hitR(C0[0] - 45, C0[1] - 20, 90, 280), { prompt: '톡!' }); // 한 번 누르면 나머지는 저절로 (2026-10-20)
+      await T.ask('굴뚝을 톡!', () => T.tap(hitR(C0[0] - 45, C0[1] - 20, 90, 280), { prompt: '톡!' })); // 한 번 누르면 나머지는 저절로 (2026-10-20)
       for (let i = 1; i <= 3; i++) { puffUp(i); await sleep(600); }
       await Promise.all(outs);
       oppa.look('clap'); agi.look('lookup');
@@ -259,12 +259,11 @@
       agi.look('jump'); agi.hop(24, 380); popSfx(T);
       await say('"퐁!" 은우가 따라 해요.');
       agi.look('lookup');
-      await say('하늘의 구름을 톡! 무엇이 될까요?');
       /* 세 구름 중 아무거나 하나를 누르면 된다: 구름 셋 위에 투명한 누르는 자리를 한 판으로 덮는다 (2026-10-20: 오른쪽 구름만 눌렸음) */
       const anyCloud = el('g', {}, T.world);
       const cx = cl.slice(0, 3).map(c => c.x), cy = cl.slice(0, 3).map(c => c.y - 50 * CS), R = 95 * CS;
       el('rect', { x: Math.min(...cx) - R, y: Math.min(...cy) - R, width: Math.max(...cx) - Math.min(...cx) + 2 * R, height: Math.max(...cy) - Math.min(...cy) + 2 * R, rx: 40, fill: 'transparent' }, anyCloud); // 구름 사이 빈 곳도 눌리게 (손 힌트가 가운데를 가리킨다)
-      await T.tap(anyCloud, { prompt: '하늘의 구름을 톡! 무엇이 될까요?' }); // 한 번 누르면 나머지는 저절로
+      await T.ask('하늘의 구름을 톡! 무엇이 될까요?', () => T.tap(anyCloud, { prompt: '하늘의 구름을 톡! 무엇이 될까요?' })); // 한 번 누르면 나머지는 저절로
       anyCloud.remove();
       await say('구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.'); // 구름이 모양으로 바뀌는 첫 순간의 내레이션 (2026-10-21)
       for (let i = 0; i < 3; i++) {
@@ -319,7 +318,6 @@
       const first = one(T, 'prop_drop', DH); put(T, first, DX0, FY + 62); fadeIn(first, 400); drops.push(first);
       first.body.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(8px)' }, { transform: 'translateY(0)' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
       await say('기다란 벨트 위로 물방울이 똑, 똑, 똑.');
-      await say('물방울을 톡!');
       const fall = (d, x) => d.pos.animate([{ transform: `translate(${x}px,${d.y}px) scale(${d.flip * d.scale},${d.scale})` }, { transform: `translate(${x}px,${BY}px) scale(${d.flip * d.scale},${d.scale})` }], { duration: 500, easing: 'ease-in', fill: 'forwards' });
       const dropStep = i => {
         let d = first;
@@ -328,7 +326,7 @@
         fall(d, DX0);
         AudioFX.sfx('ding') || popSfx(T); T.pop(DX0 + 70, FY - 100, tr('똑!'), '#4A90D9');
       };
-      await T.tap(hitC(DX0, FY + 62 - DH / 2, 80), { prompt: '물방울을 톡!' }); // 한 번 누르면 나머지는 저절로 (2026-10-20)
+      await T.ask('물방울을 톡!', () => T.tap(hitC(DX0, FY + 62 - DH / 2, 80), { prompt: '물방울을 톡!' })); // 한 번 누르면 나머지는 저절로 (2026-10-20)
       for (let i = 1; i <= 3; i++) { dropStep(i); await sleep(500); }
       await say('이현이가 물방울에 손을 살짝 대 봐요.');
       oppa.hop(8, 260); T.pop(oppa.x + 40, oppa.y - 340, tr('앗, 차가워!'), '#4A90D9');
@@ -338,7 +336,6 @@
       drops.forEach(d => d.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }));
       const cloud = one(T, 'cloud_white', 40); put(T, cloud, 680, BY + 10); hide(cloud);
       await say('다현이는 후우— 바람을 불어 줘요.');
-      await say('바람 나팔을 톡!');
       const sizes = [70, 110, 160];
       const blowStep = i => {
         if (i === 1) { put(T, cloud, 680, BY + 10); fadeIn(cloud, 300); }
@@ -346,7 +343,7 @@
         AudioFX.sfx('blow') || T.tone([300, 200], .3, { vol: .08 });
         T.pop(680, BY - sizes[i - 1] - 30, tr(['뭉게', '뭉게뭉게', '뭉게뭉게뭉게!'][i - 1]));
       };
-      await T.tap(hitR(HX - 180, HY - 80, 200, 160), { prompt: '톡!' }); // 한 번 누르면 나머지는 저절로 (2026-10-20)
+      await T.ask('바람 나팔을 톡!', () => T.tap(hitR(HX - 180, HY - 80, 200, 160), { prompt: '톡!' })); // 한 번 누르면 나머지는 저절로 (2026-10-20)
       for (let i = 1; i <= 3; i++) { blowStep(i); await sleep(600); }
       popSfx(T); puff(680, BY - 70); T.pop(680, BY - 210, tr('퐁!'));
       await say('뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!');
@@ -404,8 +401,7 @@
       });
       await say('구석에 커다란 빨간 단추가 있어요.');
       await say('"눌러 봐도 돼?"');
-      await say('빨간 단추를 톡!');
-      await T.tap(hitC(BX, BYY, 70), { prompt: '빨간 단추를 톡!' });
+      await T.ask('빨간 단추를 톡!', () => T.tap(hitC(BX, BYY, 70), { prompt: '빨간 단추를 톡!' }));
       agi.look('press', 'left'); AudioFX.sfx('bonk') || popSfx(T); T.shake();
       await say('은우가 꾹! 눌렀어요.');
       dog.look('lookup', 'right'); kids.forEach(k => k.look('lookup', 'right'));
@@ -449,29 +445,28 @@
       const BX = 792, BYY = 100, EXIT = 1060;
       let march;
       await T.sceneCard('', () => {
-        scene('09_bell_room', 500);
-        put(T, nuna, X(430, 420), G, { look: 'lookup', to: 'right' });
-        put(T, oppa, X(520, 480), G, { look: 'lookup', to: 'right' });
-        put(T, agi, X(600, 540), G, { look: 'lookup', to: 'right' });
-        put(T, dog, X(330, 350), G, { look: 'lookup', to: 'left' });
+        scene('09_bell_room', 610);   // 세로: 종(792)이 화면 안에 오게 카메라를 오른쪽으로 (2026-10-22)
+        put(T, nuna, X(430, 500), G, { look: 'lookup', to: 'right' });
+        put(T, oppa, X(520, 560), G, { look: 'lookup', to: 'right' });
+        put(T, agi, X(600, 620), G, { look: 'lookup', to: 'right' });
+        put(T, dog, X(330, 440), G, { look: 'lookup', to: 'left' });
         march = [0, 1, 2].map(i => { const d = one(T, ['dark_march', 'dark_march2', 'dark_march3'][i], [140, 120, 105][i]); put(T, d, 640 + i * 110, 300, { s: .8 }); return d; });
         hide(baby);
       });
-      await say('종을 톡!');
-      await T.tap(hitC(BX, BYY, 60), { prompt: '종을 톡!' });
+      await T.ask('종을 톡!', () => T.tap(hitC(BX, BYY, 60), { prompt: '종을 톡!' }));
       for (let k = 0; k < 3; k++) { AudioFX.sfx('bell') || T.tone([880], .3, { vol: .1 }); T.pop(BX - 40 + k * 30, BYY + 70 + k * 10, tr('땡!'), '#C98A2B'); await sleep(380); }
       await say('땡, 땡, 땡! 종이 울려요.');
       const out = Promise.all(march.map((d, i) => d.move(EXIT + i * 60, 300, 2200 + i * 200, 'ease-in')));
       await say('먹구름들이 줄을 서서 밖으로 나가요.');
       await out; march.forEach(hide);
+      if (P) await T.camTo(500, 280, 1, 600);   // 세로: 종 쪽에서 가운데로 되돌린다
       put(T, baby, X(110, 300), G - 10, { look: 'huddle', to: 'right' }); fadeIn(baby, 600);
       nuna.look('crouch', 'left'); oppa.look('lookup', 'left'); agi.look('crouch', 'left');
       await say('구석에 아기 먹구름 하나가 혼자 웅크리고 있어요.');
       await say('"나는 안 나갈래. 다들 비를 싫어하잖아."');
-      await say('아기 먹구름은 지금 어떤 마음일까요?');
       const cSad = feelCard(X(330, 380), 140, 'sad', '슬퍼요'), cHappy = feelCard(X(670, 620), 140, 'happy', '기뻐요');
-      await T.choose([{ key: 'sad', el: cSad, ok: true }, { key: 'happy', el: cHappy, ok: false }],
-        { prompt: '아기 먹구름은 지금 어떤 마음일까요?', where: '혼자 웅크리고 있어요. 슬픈 것 같아요.', who: '슬퍼요를 톡!' });
+      await T.ask('아기 먹구름은 지금 어떤 마음일까요?', () => T.choose([{ key: 'sad', el: cSad, ok: true }, { key: 'happy', el: cHappy, ok: false }],
+        { prompt: '아기 먹구름은 지금 어떤 마음일까요?', where: '혼자 웅크리고 있어요. 슬픈 것 같아요.', who: '슬퍼요를 톡!' }));
       cSad.remove(); cHappy.remove();
       dog.look('sniff', 'left'); const near = dog.move(baby.x + 120, G, 1600, 'linear');
       await say('꿀떡이가 살금살금 다가가요.');
@@ -542,9 +537,8 @@
       });
       baby.move(620, 190, 900, 'ease-in'); await sleep(900); T.shake(); AudioFX.sfx('bonk') || popSfx(T); morph(baby, 'sorry');
       await say('하늘에서 아기 먹구름이 큰 먹구름과 쿵!');
-      const bg = el('g', { transform: 'translate(640,250) scale(.9)' }, T.world); T.paper(bg, [['path', { d: BOLT, fill: '#FFD43B', stroke: '#E8A317', 'stroke-width': 3 }]]);
-      await say('번개를 톡!');
-      await T.tap(bg, { prompt: '번개를 톡!' });
+      const bg = el('g', { transform: 'translate(640,250) scale(.9)' }, T.world); T.paper(bg, [['path', { d: BOLT, fill: '#FFD43B', stroke: '#E8A317', 'stroke-width': 3 }]]); el('circle', { cx: 8, cy: 46, r: 62, fill: 'transparent' }, bg);
+      await T.ask('번개를 톡!', () => T.tap(bg, { prompt: '번개를 톡!' }));
       const fl = el('rect', { x: -40, y: -24, width: 1080, height: 620, fill: '#fff', opacity: 0 }, T.fx);
       fl.animate([{ opacity: 0 }, { opacity: .85 }, { opacity: 0 }, { opacity: .5 }, { opacity: 0 }], { duration: 700 }).onfinish = () => fl.remove();
       T.shake(); AudioFX.sfx('boom') || T.tone([110, 55], .6, { type: 'sawtooth', vol: .18 }); T.pop(500, 150, tr('번쩍!'), '#E8A317'); bg.remove();
@@ -627,13 +621,12 @@
         put(T, dog, X(620, 580), G, { look: 'sniff', to: 'right' });
       });
       await say('하늘에 커다란 무지개! "우와!"');
-      await say('무지개를 톡톡톡… 일곱 색을 세어 봐요!');
       // 그림 속 무지개 띠를 따라 누를 자리 (타원 호)
       const arc = el('path', { d: 'M75 400 A465 330 0 0 1 1005 400', fill: 'none', stroke: 'transparent', 'stroke-width': 250 }, T.world); // 일곱 띠 전체를 덮는다
-      await T.mash(arc, { count: 7, prompt: '무지개를 톡톡톡… 일곱 색을 세어 봐요!', onStep: i => {
+      await T.ask('무지개를 톡톡톡… 일곱 색을 세어 봐요!', () => T.mash(arc, { count: 7, prompt: '무지개를 톡톡톡… 일곱 색을 세어 봐요!', onStep: i => {
         const t = Math.PI * (1 - (i - .5) / 7), x = 540 + 470 * Math.cos(t), y = 380 - 320 * Math.sin(t);
         popSfx(T); Narrator.speak(NAME[i - 1]); T.pop(X(x, Math.max(320, Math.min(680, x))), Math.max(70, y), tr(NAME[i - 1]), COL[i - 1]);
-      } });
+      } }));
       arc.remove();
       await sleep(500); // 저절로 (2026-10-20 톡 조작 정리)
       // 남은 비를 톡톡 다 내리면서 조금씩 작아지고 옅어져, 작은 하얀 구름만 남는다 (갑자기 하얘지지 않게)
@@ -657,7 +650,7 @@
       await T.sceneCard('', () => {
         scene('01_road', 500);
         skyDrift([[60, 170, 120, .1], [120, 120, 95, .45], [45, 100, 140, .7, .9], [150, 90, 110, .9, .85]]);
-        ch = one(T, 'prop_chimney_far', 130); put(T, ch, X(880, 690), 330);
+        ch = one(T, 'prop_chimney_far', 130); put(T, ch, X(880, 640), 330); el('rect', { x: -55, y: -130, width: 110, height: 130, fill: 'transparent' }, ch.pos);   // 누르는 자리 넓히기 (2026-10-22)
         c2 = [0, 1].map(() => { const c = one(T, 'cloud_white', 110); hide(c); return c; });
         put(T, dog, X(150, 360), G, { look: 'run', to: 'left' });
         put(T, nuna, X(300, 420), G, { look: 'walk', to: 'left' });
@@ -668,8 +661,7 @@
       chimneyLoop(C0, [C0[0], C0[1] - 40], [C0[0] - 160, C0[1] - 70], { s0: .25, s1: .9 });
       const home = Promise.all([dog.move(X(-60, 260), G, 3800, 'linear'), nuna.move(X(160, 340), G, 4200, 'linear'), oppa.move(X(260, 400), G, 4200, 'linear')]);
       await say('삼남매는 꿀떡이랑 왔던 길로 집에 가요.');
-      await say('굴뚝을 톡! 안녕!');
-      await T.tap(ch.pos, { prompt: '굴뚝을 톡! 안녕!' });
+      await T.ask('굴뚝을 톡! 안녕!', () => T.tap(ch.pos, { prompt: '굴뚝을 톡! 안녕!' }));
       for (let k = 0; k < 2; k++) { smokeToCloud(c2[k], C0, [C0[0], C0[1] - 50], tgt[k], 2400, P ? .75 : 1); T.pop(C0[0] + 40, C0[1] - 30, tr('퐁!')); await sleep(700); }
       await say('멀리 굴뚝에서 작은 구름이 퐁! 퐁!');
       agi.look('wave', 'right'); agi.hop(10, 300);
