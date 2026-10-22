@@ -1,0 +1,1189 @@
+{
+ "mode": "read",
+ "tale": "sleeping_beauty",
+ "lang": "en",
+ "title": "The Sleeping Beauty",
+ "voices_from": "voice_script_el.json",
+ "moral": "Leave no one out. Being forgotten hurts.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md). text 는 한국어 줄(키), en 이 읽는 문장. src=reuse 는 narration_el_en.js 의 영어 녹음 그대로, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<sb_bg_room|sb_bg_hall|sb_bg_stairs|sb_bg_tower|sb_bg_bedroom|sb_bg_outside|sb_bg_kitchen|sb_bg_chapel> | veil:<bg>": "장면 배경(scene(key)) / 가림막으로 배경 바꾸기",
+  "cam:<x,y,z> | follow:<x>": "카메라",
+  "pr:look:<stand|climb|reach|yawn|lie|wake|wave>[:<dir>] | pr:at:<x,y>[:<look>[:<dir>]] | pr:hop | pr:climb_stairs | pr:prick | pr:wake": "공주. climb_stairs = 계단 네 칸 오르기(6장), prick = 물레에 손을 뻗어 콕!(별빛 한 점), wake = 반짝이며 일어나 앉기",
+  "baby:look:<sleep|giggle> | baby:hop | cradle:set | cradle:rock": "아기·요람(끼익 흔들림, 방울 딸랑)",
+  "king:look:<joy|surprise|command|worry> | king:at:<x,y>[:<look>[:<dir>]] | king:hop | queen:look:<joy|surprise|worry> | queen:at:<x,y>[:<look>[:<dir>]] | queen:wiggle | parents:rush": "왕·왕비. rush = 둘이 허둥지둥 달려옴(7장)",
+  "fairies:row[:<n>] | fairy:gift:<0-5> | plates:<7|8>": "요정 여섯+막내 줄 세우기(2·11장) / i 번 요정이 걸어와 지팡이 반짝, 선물이 떠오름, 물러남(4장) / 금 접시 n개",
+  "young:look:<stand|peek|wand> | young:at:<x,y>[:<look>[:<dir>]] | young:hop | young:hide | young:step_out | young:sleep_all": "막내 요정. hide = 커튼 뒤로 숨어 빼꼼, step_out = 커튼에서 나와 지팡이 반짝, sleep_all = 강아지·하녀·병사·요리사·꼬마를 차례로 재움(쿨쿨 팝)",
+  "old:look:<stand|sulk|smile> | old:at:<x,y>[:<look>[:<dir>]] | old:enter | old:wiggle | old:hop | match:strips | match:clear": "잊힌 요정. enter = 문이 열리고 걸어 들어와 줄 끝에 섬 / 접시-요정 잇기 줄(한 줄씩, 수 세기 소리 없음)",
+  "granny:look:<spin|startle> | granny:wiggle | granny:hop | wheel:set | wheel:exit | threads:set | tower:set": "물레 할머니·물레(덜컹 실려 나감)·실 세 가닥·탑 꼭대기 세트",
+  "prince:look:<stand|tiptoe|kneel|wave>[:<dir>] | prince:at:<x,y>[:<look>[:<dir>]] | prince:walk:<x,ms> | prince:hop | prince:through | grandpa:enter": "왕자·할아버지. through = 열린 덤불 사이로 살금살금 들어가 사라짐",
+  "sleepers:set | sleepers:wake | kitchen:set | candle:<lit|out> | bed:set": "잠든 사람들(강아지·하녀·병사·요리사·꼬마) / 부엌 세트(선반 위 새, 탁자 아래 강아지, 요리사 옆 꼬마) / 촛불 / 침대",
+  "bush:set | bush:grow | bush:open | tree:big | sunmoon | chapel:set | bell:ring": "가시덤불 자람·열림 / 나무 커짐 / 해와 달이 여러 번 지나감 / 결혼식 세트(접시 여덟, 요정 여덟) / 종 딸랑",
+  "twinkle:<x,y,color> | glow:<old|plates|dog|bird|kid> | sparkle | petals | confetti | fx:<paper_down|paper_up|paper_tap|swish|whoosh|rattle|knock|sparkle|tada|giggle|bell|door|creak|step_wood|step_grass|blow|pop|doop|boing> | pop:<x,y,글자>": "효과"
+ },
+ "scenes": [
+  {
+   "key": "R01_baby",
+   "card": "The Long-Awaited Baby",
+   "set": "sb_bg_room",
+   "enter": [
+    "king:at:360,505:joy",
+    "queen:at:640,505:joy",
+    "cradle:set",
+    "baby:look:sleep",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "왕과 왕비는 오래오래 아기를 기다렸어요. 드디어 예쁜 공주님이 태어났어요!",
+     "src": "reuse",
+     "en": "The king and queen waited a long, long time for a baby. At last, a lovely little princess was born!",
+     "segs": [
+      [
+       "nar",
+       "The king and queen waited a long, long time for a baby. At last, a lovely little princess was born!",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "온 나라 사람들을 불러 잔치를 열자!",
+     "src": "reuse",
+     "en": "Let's invite the whole kingdom and hold a feast!",
+     "segs": [
+      [
+       "king",
+       "Let's invite the whole kingdom and hold a feast!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "king:hop"
+     ]
+    },
+    {
+     "text": "요람이 흔들흔들, 방울이 딸랑딸랑 울렸어요.",
+     "src": "new",
+     "en": "The cradle rocked to and fro, and the little bell went ting-a-ling.",
+     "segs": [
+      [
+       "nar",
+       "The cradle rocked to and fro, and the little bell went ting-a-ling.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:creak",
+      "cradle:rock",
+      "pop:560,245,딸랑"
+     ]
+    },
+    {
+     "text": "아기는 까르르 웃었어요.",
+     "src": "reuse",
+     "en": "The baby giggled, tee-hee!",
+     "segs": [
+      [
+       "nar",
+       "The baby giggled, tee-hee!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "baby:look:giggle",
+      "fx:giggle",
+      "pop:500,275,까르르"
+     ]
+    },
+    {
+     "text": "왕비는 아기의 볼을 살살 쓰다듬으며 방긋 웃었어요.",
+     "src": "new",
+     "en": "The queen gently stroked the baby's cheek, soft, soft, and smiled a sweet smile.",
+     "segs": [
+      [
+       "nar",
+       "The queen gently stroked the baby's cheek, soft, soft, and smiled a sweet smile.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_plates",
+   "card": "Seven Plates, Eight Fairies",
+   "set": "sb_bg_hall",
+   "enter": [
+    "plates:7",
+    "fairies:row",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "요정 일곱 명을 아기의 대모로 모셨어요. 금 접시도 일곱 개 놓았지요.",
+     "src": "reuse",
+     "en": "Seven fairies were invited to be the baby's godmothers. Seven golden plates were set out for them.",
+     "segs": [
+      [
+       "nar",
+       "Seven fairies were invited to be the baby's godmothers. Seven golden plates were set out for them.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "요정들은 알록달록 고운 옷을 입고 나란히 서 있었어요.",
+     "src": "new",
+     "en": "The fairies stood side by side in their pretty dresses, every color of the rainbow.",
+     "segs": [
+      [
+       "nar",
+       "The fairies stood side by side in their pretty dresses, every color of the rainbow.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "그런데 저기, 요정이 한 명 더 왔어요!",
+     "src": "reuse",
+     "en": "But look, over there! One more fairy has come!",
+     "segs": [
+      [
+       "nar",
+       "But look, over there! One more fairy has come!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "fx:door"
+     ],
+     "after": [
+      "old:enter"
+     ]
+    },
+    {
+     "text": "접시 하나에 요정 한 명씩 서자, 요정 한 명이 남았어요.",
+     "src": "new",
+     "en": "One fairy stood by each plate, and one fairy was left over.",
+     "segs": [
+      [
+       "nar",
+       "One fairy stood by each plate, and one fairy was left over.",
+       null
+      ]
+     ],
+     "before": [
+      "match:strips"
+     ],
+     "after": [
+      "glow:old",
+      "old:hop",
+      "match:clear"
+     ]
+    },
+    {
+     "text": "접시가 없는 요정은 누구일까요?",
+     "src": "reuse",
+     "en": "Which fairy has no plate?",
+     "segs": [
+      [
+       "nar",
+       "Which fairy has no plate?",
+       null
+      ]
+     ],
+     "before": [
+      "glow:old"
+     ]
+    },
+    {
+     "text": "탑에 너무 오래 살아서 모두가 잊어버린 요정이었어요.",
+     "src": "reuse",
+     "en": "It was the fairy who had lived in a tower so long that everyone had forgotten her.",
+     "segs": [
+      [
+       "nar",
+       "It was the fairy who had lived in a tower so long that everyone had forgotten her.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_forgotten",
+   "card": "The Forgotten Fairy",
+   "set": "sb_bg_hall",
+   "enter": [
+    "plates:7",
+    "queen:at:300,505:surprise:right",
+    "king:at:420,505:surprise:right",
+    "young:at:580,505:stand",
+    "old:at:870,505:sulk:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "늙은 요정은 입을 삐죽 내밀고 접시를 두리번두리번 찾았어요.",
+     "src": "new",
+     "en": "The old fairy pouted and looked all around, this way and that, for her plate.",
+     "segs": [
+      [
+       "nar",
+       "The old fairy pouted and looked all around, this way and that, for her plate.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "내 접시는 없구나… 나만 빼놓다니.",
+     "src": "reuse",
+     "en": "There is no plate for me... They left me out.",
+     "segs": [
+      [
+       "old",
+       "There is no plate for me... They left me out.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "old:wiggle"
+     ]
+    },
+    {
+     "text": "어이쿠, 깜빡했어요. 미안해요.",
+     "src": "reuse",
+     "en": "Oh dear, I forgot. I'm sorry.",
+     "segs": [
+      [
+       "king",
+       "Oh dear, I forgot. I'm sorry.",
+       null
+      ]
+     ],
+     "before": [
+      "king:hop"
+     ]
+    },
+    {
+     "text": "막내 요정은 살금살금 커튼 뒤로 숨었어요.",
+     "src": "new",
+     "en": "The youngest fairy tiptoed, creep, creep, and hid behind the curtain.",
+     "segs": [
+      [
+       "nar",
+       "The youngest fairy tiptoed, creep, creep, and hid behind the curtain.",
+       null
+      ]
+     ],
+     "after": [
+      "young:hide"
+     ]
+    },
+    {
+     "text": "나는 맨 나중에 말할래.",
+     "src": "reuse",
+     "en": "I'll speak last.",
+     "segs": [
+      [
+       "young",
+       "I'll speak last.",
+       null
+      ]
+     ],
+     "after": [
+      "young:look:peek:left"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_gifts",
+   "card": "Six Gifts",
+   "set": "sb_bg_room",
+   "enter": [
+    "cradle:set",
+    "baby:look:sleep",
+    "king:at:720,505:joy",
+    "queen:at:820,505:joy",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "요정들이 한 명씩 다가와 지팡이를 반짝 흔들었어요.",
+     "src": "new",
+     "en": "One by one the fairies came forward and waved their wands, twinkle, twinkle.",
+     "segs": [
+      [
+       "nar",
+       "One by one the fairies came forward and waved their wands, twinkle, twinkle.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "예쁜 얼굴을 줄게.",
+     "src": "reuse",
+     "en": "I give you a pretty face.",
+     "segs": [
+      [
+       "fred",
+       "I give you a pretty face.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "fairy:gift:0"
+     ]
+    },
+    {
+     "text": "상냥한 마음을 줄게.",
+     "src": "reuse",
+     "en": "I give you a kind heart.",
+     "segs": [
+      [
+       "forange",
+       "I give you a kind heart.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "fairy:gift:1"
+     ]
+    },
+    {
+     "text": "고운 말씨를 줄게.",
+     "src": "reuse",
+     "en": "I give you sweet words.",
+     "segs": [
+      [
+       "fyellow",
+       "I give you sweet words.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "fairy:gift:2"
+     ]
+    },
+    {
+     "text": "사뿐사뿐 춤을 줄게.",
+     "src": "reuse",
+     "en": "I give you light, graceful dancing.",
+     "segs": [
+      [
+       "fgreen",
+       "I give you light, graceful dancing.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "fairy:gift:3"
+     ]
+    },
+    {
+     "text": "꾀꼬리 같은 노래를 줄게.",
+     "src": "reuse",
+     "en": "I give you a song like a songbird.",
+     "segs": [
+      [
+       "fblue",
+       "I give you a song like a songbird.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "fairy:gift:4"
+     ]
+    },
+    {
+     "text": "피리 솜씨를 줄게.",
+     "src": "reuse",
+     "en": "I give you the gift of playing the flute.",
+     "segs": [
+      [
+       "fpurple",
+       "I give you the gift of playing the flute.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "fairy:gift:5"
+     ]
+    },
+    {
+     "text": "아기는 쌔근쌔근 웃었어요.",
+     "src": "reuse",
+     "en": "The baby smiled softly in her sleep.",
+     "segs": [
+      [
+       "nar",
+       "The baby smiled softly in her sleep.",
+       null
+      ]
+     ],
+     "before": [
+      "baby:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_hundred_sleep",
+   "card": "A Hundred Years of Sleep",
+   "set": "sb_bg_room",
+   "enter": [
+    "wheel:set",
+    "cradle:set",
+    "baby:look:sleep",
+    "king:at:640,505:worry",
+    "queen:at:730,505:worry",
+    "young:at:900,505:peek:left",
+    "old:at:380,505:sulk:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "열여섯 살이 되면 물레 바늘에 찔려 영영 깨어나지 않는 깊은 잠에 빠질 거야.",
+     "src": "reuse",
+     "en": "When she turns sixteen, she will prick her finger on a spindle and fall into a deep sleep from which she will never wake.",
+     "segs": [
+      [
+       "old",
+       "When she turns sixteen, she will prick her finger on a spindle and fall into a deep sleep from which she will never wake.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "old:wiggle"
+     ]
+    },
+    {
+     "text": "왕과 왕비는 깜짝 놀라 부들부들 떨었어요.",
+     "src": "new",
+     "en": "The king and queen gasped, and they trembled, shiver, shiver.",
+     "segs": [
+      [
+       "nar",
+       "The king and queen gasped, and they trembled, shiver, shiver.",
+       null
+      ]
+     ],
+     "before": [
+      "queen:wiggle"
+     ]
+    },
+    {
+     "text": "영영이 아니에요. 백 년이 지나면 깨어날 거예요. 그리고 왕자님이 올 거예요.",
+     "src": "reuse",
+     "en": "Not never. After a hundred years she will wake up. And a prince will come.",
+     "segs": [
+      [
+       "young",
+       "Not never. After a hundred years she will wake up. And a prince will come.",
+       null
+      ]
+     ],
+     "before": [
+      "young:step_out",
+      "twinkle:620,355,#9CC7DD",
+      "sparkle"
+     ]
+    },
+    {
+     "text": "온 나라의 물레를 모두 치워라!",
+     "src": "reuse",
+     "en": "Take away every spindle in the whole kingdom!",
+     "segs": [
+      [
+       "king",
+       "Take away every spindle in the whole kingdom!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "king:look:command",
+      "king:hop"
+     ]
+    },
+    {
+     "text": "덜컹덜컹, 물레들이 수레에 실려 멀리멀리 떠났어요.",
+     "src": "new",
+     "en": "Rattle, rattle! The spinning wheels were loaded onto carts and taken far, far away.",
+     "segs": [
+      [
+       "nar",
+       "Rattle, rattle! The spinning wheels were loaded onto carts and taken far, far away.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:rattle",
+      "pop:150,310,덜컹"
+     ],
+     "after": [
+      "wheel:exit"
+     ]
+    },
+    {
+     "text": "물레는 모두 사라졌어요.",
+     "src": "reuse",
+     "en": "Every spindle was gone.",
+     "segs": [
+      [
+       "nar",
+       "Every spindle was gone.",
+       null
+      ]
+     ],
+     "after": [
+      "king:look:worry"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_tower",
+   "card": "The Spinning Wheel in the Tower",
+   "set": "sb_bg_stairs",
+   "enter": [
+    "pr:at:140,505:climb:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "공주님이 열여섯 살이 되던 날, 왕과 왕비는 멀리 나들이를 갔어요.",
+     "src": "reuse",
+     "en": "On the day the princess turned sixteen, the king and queen went away on a journey.",
+     "segs": [
+      [
+       "nar",
+       "On the day the princess turned sixteen, the king and queen went away on a journey.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "공주님은 성 구석구석을 돌아다니다 탑 꼭대기까지 올라갔어요.",
+     "src": "reuse",
+     "en": "The princess wandered all around the castle, and climbed up to the very top of the tower.",
+     "segs": [
+      [
+       "nar",
+       "The princess wandered all around the castle, and climbed up to the very top of the tower.",
+       null
+      ]
+     ],
+     "after": [
+      "pr:climb_stairs"
+     ]
+    },
+    {
+     "text": "계단은 빙글빙글, 끝없이 위로 이어졌어요.",
+     "src": "new",
+     "en": "The stairs wound round and round, up and up, as if they would never end.",
+     "segs": [
+      [
+       "nar",
+       "The stairs wound round and round, up and up, as if they would never end.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "할머니, 뭐 하세요?",
+     "src": "reuse",
+     "en": "Grandma, what are you doing?",
+     "segs": [
+      [
+       "princess",
+       "Grandma, what are you doing?",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "veil:sb_bg_tower",
+      "tower:set",
+      "threads:set"
+     ]
+    },
+    {
+     "text": "실을 잣고 있단다. 물레를 치우라는 말은 못 들었거든.",
+     "src": "reuse",
+     "en": "I'm spinning thread, dear. Nobody told me the spindles had to go.",
+     "segs": [
+      [
+       "granny",
+       "I'm spinning thread, dear. Nobody told me the spindles had to go.",
+       null
+      ]
+     ],
+     "before": [
+      "granny:wiggle"
+     ]
+    },
+    {
+     "text": "물레가 빙글빙글 돌고, 실이 길게 짧게 늘어졌어요.",
+     "src": "new",
+     "en": "The spinning wheel whirred round and round, and threads hung down, some long, some short.",
+     "segs": [
+      [
+       "nar",
+       "The spinning wheel whirred round and round, and threads hung down, some long, some short.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_prick",
+   "card": "Prick... and Drifting Off",
+   "set": "sb_bg_tower",
+   "enter": [
+    "tower:set",
+    "threads:set",
+    "pr:at:380,505:stand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "저도 해 볼래요!",
+     "src": "reuse",
+     "en": "Let me try too!",
+     "segs": [
+      [
+       "princess",
+       "Let me try too!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "pr:hop"
+     ]
+    },
+    {
+     "text": "공주님이 손을 쑥 내민 순간, 바늘 끝이 손가락을 콕!",
+     "src": "new",
+     "en": "The moment the princess reached out her hand, the tip of the spindle pricked her finger, prick!",
+     "segs": [
+      [
+       "nar",
+       "The moment the princess reached out her hand, the tip of the spindle pricked her finger, prick!",
+       null
+      ]
+     ],
+     "before": [
+      "pr:look:reach:right"
+     ],
+     "after": [
+      "pr:prick",
+      "pop:470,220,콕!"
+     ]
+    },
+    {
+     "text": "아야… 졸려요…",
+     "src": "reuse",
+     "en": "Ouch... I'm so sleepy...",
+     "segs": [
+      [
+       "princess",
+       "Ouch... I'm so sleepy...",
+       null
+      ]
+     ],
+     "before": [
+      "pr:look:yawn",
+      "pop:540,220,하암"
+     ]
+    },
+    {
+     "text": "어머나, 큰일 났네! 누구 없어요?",
+     "src": "reuse",
+     "en": "Oh my, oh dear! Is anybody there?",
+     "segs": [
+      [
+       "granny",
+       "Oh my, oh dear! Is anybody there?",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "granny:look:startle",
+      "granny:hop"
+     ]
+    },
+    {
+     "text": "왕과 왕비가 허둥지둥 달려왔어요.",
+     "src": "new",
+     "en": "The king and queen came running, hurry-scurry.",
+     "segs": [
+      [
+       "nar",
+       "The king and queen came running, hurry-scurry.",
+       null
+      ]
+     ],
+     "before": [
+      "parents:rush"
+     ]
+    },
+    {
+     "text": "우리 아가, 막내 요정 말대로 백 년을 자는구나.",
+     "src": "reuse",
+     "en": "My darling, just as the youngest fairy said, you will sleep a hundred years.",
+     "segs": [
+      [
+       "queen",
+       "My darling, just as the youngest fairy said, you will sleep a hundred years.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "veil:sb_bg_bedroom",
+      "candle:lit",
+      "bed:set",
+      "pr:look:lie:left",
+      "queen:at:700,505:worry",
+      "king:at:800,505:worry"
+     ],
+     "after": [
+      "queen:wiggle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_everyone",
+   "card": "Everyone Falls Asleep",
+   "set": "sb_bg_bedroom",
+   "enter": [
+    "candle:lit",
+    "bed:set",
+    "pr:look:lie:left",
+    "sleepers:set",
+    "young:at:300,505:wand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "공주님이 혼자 깨면 외로울 거야. 모두 함께 자요.",
+     "src": "reuse",
+     "en": "The princess would be lonely waking up alone. Let's all sleep together.",
+     "segs": [
+      [
+       "young",
+       "The princess would be lonely waking up alone. Let's all sleep together.",
+       null
+      ]
+     ],
+     "before": [
+      "young:hop"
+     ]
+    },
+    {
+     "text": "막내 요정이 지팡이를 살랑 흔들자, 강아지도 요리사도 쿨쿨 잠들었어요.",
+     "src": "new",
+     "en": "The youngest fairy gave her wand a little wave, and the puppy and the cook and everyone fell fast asleep, zzz.",
+     "segs": [
+      [
+       "nar",
+       "The youngest fairy gave her wand a little wave, and the puppy and the cook and everyone fell fast asleep, zzz.",
+       null
+      ]
+     ],
+     "after": [
+      "young:sleep_all"
+     ]
+    },
+    {
+     "text": "촛불이 후 꺼지고, 성 안이 조용조용해졌어요.",
+     "src": "new",
+     "en": "The candle went out, whoo, and the whole castle grew hushed and still.",
+     "segs": [
+      [
+       "nar",
+       "The candle went out, whoo, and the whole castle grew hushed and still.",
+       null
+      ]
+     ],
+     "before": [
+      "candle:out",
+      "fx:blow"
+     ]
+    },
+    {
+     "text": "촛불도 잠들고, 성 둘레에는 가시덤불이 높이높이 자랐어요.",
+     "src": "reuse",
+     "en": "The candles went to sleep too, and all around the castle, a thorn hedge grew higher and higher.",
+     "segs": [
+      [
+       "nar",
+       "The candles went to sleep too, and all around the castle, a thorn hedge grew higher and higher.",
+       null
+      ]
+     ],
+     "before": [
+      "veil:sb_bg_outside",
+      "tree:small",
+      "bush:set"
+     ],
+     "after": [
+      "bush:grow",
+      "fx:whoosh",
+      "pop:700,160,스르륵"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_hundred",
+   "card": "A Hundred Years Later",
+   "set": "sb_bg_outside",
+   "enter": [
+    "tree:small",
+    "bush:set",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "백 년이 흘렀어요. 낮과 밤이 몇 번이나 지났을까요.",
+     "src": "reuse",
+     "en": "A hundred years went by. How many days and nights passed?",
+     "segs": [
+      [
+       "nar",
+       "A hundred years went by. How many days and nights passed?",
+       null
+      ]
+     ],
+     "after": [
+      "sunmoon",
+      "tree:big"
+     ]
+    },
+    {
+     "text": "나무는 쑥쑥 자라고, 가시덤불은 더욱 빽빽해졌어요.",
+     "src": "new",
+     "en": "The tree grew tall, up, up, up, and the thorn hedge grew thicker and thicker.",
+     "segs": [
+      [
+       "nar",
+       "The tree grew tall, up, up, up, and the thorn hedge grew thicker and thicker.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "저 안에 공주님이 백 년째 자고 있대요.",
+     "src": "reuse",
+     "en": "They say a princess has been sleeping in there for a hundred years.",
+     "segs": [
+      [
+       "grandpa",
+       "They say a princess has been sleeping in there for a hundred years.",
+       null
+      ]
+     ],
+     "before": [
+      "grandpa:enter",
+      "prince:at:-200,505:tiptoe:right",
+      "prince:walk:340,3000",
+      "prince:look:stand"
+     ]
+    },
+    {
+     "text": "제가 가 볼게요.",
+     "src": "reuse",
+     "en": "I'll go and see.",
+     "segs": [
+      [
+       "prince",
+       "I'll go and see.",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "왕자님이 다가가자 가시덤불이 스르륵 움직였어요.",
+     "src": "new",
+     "en": "As the prince came near, the thorn hedge began to stir, rustle, rustle.",
+     "segs": [
+      [
+       "nar",
+       "As the prince came near, the thorn hedge began to stir, rustle, rustle.",
+       null
+      ]
+     ],
+     "after": [
+      "bush:open",
+      "fx:swish",
+      "pop:700,160,스르륵"
+     ]
+    },
+    {
+     "text": "가시덤불이 왕자님에게만 길을 열어 주었어요.",
+     "src": "reuse",
+     "en": "The thorn hedge opened a path, just for the prince.",
+     "segs": [
+      [
+       "nar",
+       "The thorn hedge opened a path, just for the prince.",
+       null
+      ]
+     ],
+     "after": [
+      "prince:through"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_palace",
+   "card": "The Sleeping Palace",
+   "set": "sb_bg_kitchen",
+   "enter": [
+    "kitchen:set",
+    "prince:at:-80,505:tiptoe:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "쉿, 다들 자고 있어요.",
+     "src": "reuse",
+     "en": "Shh, everyone is sleeping.",
+     "segs": [
+      [
+       "prince",
+       "Shh, everyone is sleeping.",
+       null
+      ]
+     ],
+     "before": [
+      "prince:walk:150,2000",
+      "pop:150,210,쉿"
+     ]
+    },
+    {
+     "text": "왕자님은 발소리를 죽이고 걸었어요.",
+     "src": "reuse",
+     "en": "The prince walked on tiptoe, as quietly as he could.",
+     "segs": [
+      [
+       "nar",
+       "The prince walked on tiptoe, as quietly as he could.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "탁자 아래에서는 강아지가 쿨쿨, 선반 위에서는 새가 꾸벅꾸벅 졸았어요.",
+     "src": "new",
+     "en": "Under the table the puppy snored, zzz, and up on the shelf the bird nodded, nod, nod.",
+     "segs": [
+      [
+       "nar",
+       "Under the table the puppy snored, zzz, and up on the shelf the bird nodded, nod, nod.",
+       null
+      ]
+     ],
+     "before": [
+      "glow:dog"
+     ],
+     "after": [
+      "glow:bird"
+     ]
+    },
+    {
+     "text": "요리사 옆에서는 꼬마 요리사가 국자를 든 채 드르렁 코를 골았어요.",
+     "src": "new",
+     "en": "Next to the cook, the little cook snored, zzz, still holding his ladle.",
+     "segs": [
+      [
+       "nar",
+       "Next to the cook, the little cook snored, zzz, still holding his ladle.",
+       null
+      ]
+     ],
+     "before": [
+      "glow:kid"
+     ]
+    },
+    {
+     "text": "왕자님은 살금살금, 공주님의 방을 찾아 올라갔어요.",
+     "src": "new",
+     "en": "The prince crept, creep, creep, up the stairs to find the princess's room.",
+     "segs": [
+      [
+       "nar",
+       "The prince crept, creep, creep, up the stairs to find the princess's room.",
+       null
+      ]
+     ],
+     "after": [
+      "prince:walk:1100,2000"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_awake",
+   "card": "Awake",
+   "set": "sb_bg_bedroom",
+   "enter": [
+    "candle:lit",
+    "bed:set",
+    "pr:look:lie:left",
+    "prince:at:660,505:kneel:left",
+    "sleepers:set",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "왕자님은 공주님 곁에 조용히 무릎을 꿇고 기다렸어요.",
+     "src": "new",
+     "en": "The prince knelt quietly beside the princess and waited.",
+     "segs": [
+      [
+       "nar",
+       "The prince knelt quietly beside the princess and waited.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "바로 그때, 백 년이 꽉 찼어요. 공주님이 스스로 눈을 떴어요.",
+     "src": "reuse",
+     "en": "Just then, the hundred years were up. The princess opened her eyes all by herself.",
+     "segs": [
+      [
+       "nar",
+       "Just then, the hundred years were up. The princess opened her eyes all by herself.",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "twinkle:500,400,#F2B366",
+      "sparkle"
+     ],
+     "after": [
+      "pr:wake"
+     ]
+    },
+    {
+     "text": "왕자님이세요? 오래 기다렸어요.",
+     "src": "reuse",
+     "en": "Is that you, Prince? I've waited so long.",
+     "segs": [
+      [
+       "princess",
+       "Is that you, Prince? I've waited so long.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "안녕하세요, 공주님.",
+     "src": "reuse",
+     "en": "Hello, Princess.",
+     "segs": [
+      [
+       "prince",
+       "Hello, Princess.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "prince:look:stand",
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "성 안의 모두가 기지개를 켰어요.",
+     "src": "reuse",
+     "en": "Everyone in the castle stretched and woke up.",
+     "segs": [
+      [
+       "nar",
+       "Everyone in the castle stretched and woke up.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "sleepers:wake",
+      "fx:boing"
+     ]
+    },
+    {
+     "text": "그날 저녁 예배당에서 결혼식을 올렸지요. 이번에는 요정 여덟 명을 모두 불렀어요. 접시도 여덟 개!",
+     "src": "reuse",
+     "en": "That evening they were married in the chapel. This time, all eight fairies were invited. And eight plates, too!",
+     "segs": [
+      [
+       "nar",
+       "That evening they were married in the chapel. This time, all eight fairies were invited. And eight plates, too!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "veil:sb_bg_chapel",
+      "chapel:set",
+      "bell:ring",
+      "pop:500,60,딸랑"
+     ],
+     "after": [
+      "glow:plates"
+     ]
+    },
+    {
+     "text": "나도 불러 줘서 고마워.",
+     "src": "reuse",
+     "en": "Thank you for inviting me too.",
+     "segs": [
+      [
+       "old",
+       "Thank you for inviting me too.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "old:hop"
+     ]
+    },
+    {
+     "text": "모두 손을 흔들며 인사했어요. 안녕!",
+     "src": "reuse",
+     "en": "Everyone waved and said goodbye. Bye-bye!",
+     "segs": [
+      [
+       "nar",
+       "Everyone waved and said goodbye. Bye-bye!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "pr:look:wave",
+      "prince:look:wave",
+      "confetti",
+      "fx:tada"
+     ]
+    },
+    {
+     "text": "아무도 빼놓지 않아야 해요. 잊힌 사람의 마음은 아프답니다.",
+     "src": "new",
+     "en": "Never leave anyone out. Being forgotten makes a heart ache.",
+     "segs": [
+      [
+       "nar",
+       "Never leave anyone out. Being forgotten makes a heart ache.",
+       null
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
