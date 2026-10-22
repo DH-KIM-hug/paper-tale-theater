@@ -5,6 +5,7 @@
    6번 가마솥 뒤부터 10번 끝까지 인어공주는 말하지 않는다(내레이터가 마음을 말하고, 7번 '…' 구름 + doop 소리만).
    교훈: 사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.
    그림: assets/v3w/mer_*.webp (목록 tools/app/gen/jobs_little_mermaid.json, 후처리 tools/app/gen/post_tale.py little_mermaid).
+   화려하게 다시 그리기(VISUAL_PLAN.md, 2026-10-22): 배경 bg5 5장 + 층 소품 mer_layer_*(누름 없음, 후처리 post_v2.py), 불꽃 한 번 톡에 7발.
    ★ 목업: 그림 파일(webp)이 아직 없으면 종이 조각 자리표시(PH)와 평평한 종이 배경이 대신 그려진다. 그림이 생기면 코드 변경 없이 바뀐다
    (미리 받아 보고 있으면 쓰고, 그림의 실제 가로세로 비율은 파일에서 읽어 ASP 를 덮어쓴다). */
 (() => {
@@ -20,7 +21,11 @@
     prop_wood: 2.0785, prop_anchor: 0.8733, prop_bottle_cork: 0.5317, prop_cauldron_dim: 1.0183, prop_cauldron_glow: 0.89, prop_potion_empty: 0.6117,
     prop_potion_full: 0.6117, prop_shell_pearl: 0.9633, item_shell: 1.085, item_starfish: 1.08, item_butterfly: 1.3583, item_bird: 1.115,
     item_rabbit: 0.6883, item_flower: 0.705, item_tree: 0.8483, item_dog: 0.9333, prop_dagger: 5.2326, prop_glint: 0.9217, prop_ripple: 3.5019,
-    prop_bubble: 1, prop_wind: 2.6866, prop_rock: 1.5254, prop_cloud_dark: 1.9694, prop_wave: 8.7379, prop_wave_big: 3.6145, prop_sun: 1.4917 };
+    prop_bubble: 1, prop_wind: 2.6866, prop_rock: 1.5254, prop_cloud_dark: 1.9694, prop_wave: 8.7379, prop_wave_big: 3.6145, prop_sun: 1.4917,
+    /* 화려하게 다시 그리기(VISUAL_PLAN.md, 2026-10-22): 중간 층·앞 가림 층 소품·불꽃 2종 (tools/app/gen/post_v2.py 로 오림) */
+    layer_coral_front_a: 1.5789, layer_coral_front_b: 1.5789, layer_kelp_front: 0.395, layer_fish_school: 1.7544, layer_anemone: 1.1067,
+    layer_jelly_a: 0.6783, layer_jelly_b: 0.68, layer_fw_d: 0.9917, layer_fw_e: 1.015, layer_rosebush: 1.395, layer_topiary: 0.4417,
+    layer_flower_arch: 0.7483, layer_bunting: 3.75, layer_petal: 0.7 };
   /* 사람·인어 자세별 높이(px). 머리 지름이 모두 ≈80px (SPEC §3) */
   const HT = { mer_swim: 205, mer_garden: 168, mer_peek: 140, mer_hide: 145, mer_hold: 130, mer_worry: 205, mer_resolve: 205, mer_sit_tail: 190,
     mer_stand: 205, mer_wobble_a: 205, mer_wobble_b: 205, mer_dance: 205, mer_sad: 205, mer_shake: 205, mer_throw: 210, mer_bubble: 260,
@@ -38,8 +43,9 @@
   const WATER = 300;          /* 2·3·10번 수면선 */
   const WATER11 = 372;        /* 11번 수면선 */
   const BGS = ['palace', 'night_sea', 'beach', 'witch', 'steps', 'garden', 'deck', 'dawn_sea', 'morning_sea'];
-  const bgSrc = k => AS + (BG3[k] ? 'mer_bg3_' : 'mer_bg2_') + k + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
-  const BG3 = { witch: 1, steps: 1 };   /* 비례를 다시 그린 배경(mer_bg3_*) */
+  const bgSrc = k => AS + (BG5[k] ? 'mer_bg5_' : BG3[k] ? 'mer_bg3_' : 'mer_bg2_') + k + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
+  const BG3 = { steps: 1 };   /* 비례를 다시 그린 배경(mer_bg3_*) */
+  const BG5 = { palace: 1, night_sea: 1, witch: 1, garden: 1, deck: 1 };   /* 화려하게 다시 그린 다층 배경(mer_bg5_*, 같은 구도: VISUAL_PLAN) */
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 배경이 무대 1000×560 을 덮게 */
   /* 장면별 배경 상자: 마녀 동굴은 조개 문이 작게 그려져 2.2배 확대(문 중심 x=680, 문 밑 y≈470) */
   const BGBOXES = { witch: { x: -1221, y: -594, w: 1080 * 2.2, h: 1080 * 992 / 1760 * 2.2 } };
@@ -239,8 +245,8 @@
   const sparkleSfx = T => sfx(T, 'sparkle', () => T.tone([700, 1400], .4, { vol: .12 }));
 
   /* 반짝이: 종이 마름모가 퍼졌다 사라진다 */
-  function sparkle(T, x, y, r = 90, n = 10) {
-    sparkleSfx(T);
+  function sparkle(T, x, y, r = 90, n = 10, quiet = false) {
+    if (!quiet) sparkleSfx(T);
     for (let i = 0; i < n; i++) {
       const a = (i / n) * Math.PI * 2, d = r * (.6 + (i % 3) * .2);
       const p = T.el('path', { d: 'M0 -9 L5 0 L0 9 L-5 0 Z', fill: i % 2 ? '#F6ECD8' : '#F2B366', transform: `translate(${x},${y})` }, T.world);
@@ -270,14 +276,25 @@
     sfx(T, 'step_wood'); await a.move(x, y, ms, 'linear'); clearInterval(tm); a.look('stand');
   }
   /* 붉은 금빛 반짝: glint 5개가 (x,y) 에서 퍼졌다 사라진다 */
-  function glints(T, x, y) {
-    for (let i = 0; i < 5; i++) {
-      const g = prop(T, 'prop_glint', 22 + (i % 2) * 8), a = i / 5 * Math.PI * 2;
+  function glints(T, x, y, n = 12) {   /* 5 → 12조각 (VISUAL_PLAN §4 10장) */
+    for (let i = 0; i < n; i++) {
+      const g = prop(T, 'prop_glint', 22 + (i % 2) * 8), a = i / n * Math.PI * 2, d = 70 + (i % 3) * 25;
       put(T, g, x, y);
       g.pos.animate([{ transform: `translate(${x}px,${y}px) scale(.3)`, opacity: 0 },
-        { transform: `translate(${x + Math.cos(a) * 35}px,${y + Math.sin(a) * 35}px) scale(1.2)`, opacity: 1, offset: .4 },
-        { transform: `translate(${x + Math.cos(a) * 70}px,${y + Math.sin(a) * 70}px) scale(.4)`, opacity: 0 }], { duration: 1300, delay: i * 40, fill: 'backwards' })
+        { transform: `translate(${x + Math.cos(a) * d / 2}px,${y + Math.sin(a) * d / 4}px) scale(1.2)`, opacity: 1, offset: .4 },
+        { transform: `translate(${x + Math.cos(a) * d}px,${y + Math.sin(a) * d / 2}px) scale(.4)`, opacity: 0 }], { duration: 1000, delay: i * 25, fill: 'backwards' })
         .finished.then(() => g.pos.remove(), () => g.pos.remove());
+    }
+  }
+  /* 꽃잎 흩날림: 위에서 n 장이 팔랑팔랑 (얼굴 자리 x0~x1 은 피해 양옆에서만) */
+  function petals(T, n, xs, ms = 4000) {
+    for (let i = 0; i < n; i++) {
+      const p = prop(T, 'layer_petal', 16 + (i % 3) * 3); p.pos.style.pointerEvents = 'none';
+      const x = xs[i % xs.length] + (i * 37) % 60 - 30;
+      put(T, p, x, -20);
+      p.pos.animate([{ transform: `translate(${x}px,-20px) rotate(0deg)`, opacity: 0 }, { transform: `translate(${x - 30}px,200px) rotate(150deg)`, opacity: 1, offset: .4 },
+        { transform: `translate(${x + 20}px,560px) rotate(320deg)`, opacity: 0 }], { duration: ms + (i % 4) * 500, delay: i * 300, fill: 'both', easing: 'ease-in-out' })
+        .finished.then(() => p.pos.remove(), () => p.pos.remove());
     }
   }
   /* 잔물결 */
@@ -326,6 +343,21 @@
     const ALL = [mer, sisters, king, granny, prince, witch, lady, ...gulls, ...fish, ship, ...fw, stone, wood, anchor, bottle, cauldron, potion, shell, dagger, rock,
       ...clouds, wave, ...waves, sun, ...wind];
     ALL.forEach(hide);
+    /* ---- 층 소품 (VISUAL_PLAN §4): 누름을 받지 않는다. 같은 소품은 어느 장면이든 같은 높이 ---- */
+    const D = (f, h) => { const a = prop(T, 'layer_' + f, h); a.pos.style.pointerEvents = 'none'; return a; };
+    const L = { coralA: D('coral_front_a', 160), coralB: D('coral_front_b', 160), kelp: D('kelp_front', 220), school: D('fish_school', 90), anemone: D('anemone', 90),
+      jellyA: D('jelly_a', 110), jellyB: D('jelly_b', 110), rose: [D('rosebush', 140), D('rosebush', 140)], topiary: D('topiary', 200), arch: D('flower_arch', 300),
+      bunting: D('bunting', 70) };
+    Object.values(L).flat().forEach(hide);
+    const fwD = [prop(T, 'layer_fw_d', 120), prop(T, 'layer_fw_d', 120)], fwE = prop(T, 'layer_fw_e', 120), fwA2 = prop(T, 'prop_fw_a', 120);
+    [...fwD, fwE, fwA2].forEach(hide);
+    const front = (...as) => { as.forEach(a => { if (a.pos.style.display !== 'none') T.world.appendChild(a.pos); }); if (T._cover) T.world.appendChild(T._cover); };
+    /* 바다 밑 궁전(1·2앞·5장): 물고기 떼·말미잘(중간) → 배우 → 산호 둘·다시마(앞) */
+    const palaceBack = () => {
+      put(T, L.school, X(820, 700), 150); L.school.pos.animate([{ translate: '-40px 0' }, { translate: '40px 0' }], { duration: 6000, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+      put(T, L.anemone, 60, 512);
+    };
+    const palaceFront = () => { put(T, L.coralA, 40, 548); put(T, L.coralB, 1035, 548, { to: 'right' }); put(T, L.kelp, 975, 560);   /* 할머니(880) 꼬리를 덮지 않게 오른쪽 끝으로 */ front(L.coralA, L.coralB, L.kelp); };
     const waveS = () => 1100 / (110 * ASP.prop_wave);
     T.director({ cast: { mer, granny, prince, lady, witch }, noFace: ['mer', 'granny', 'prince', 'lady', 'witch'] });
     const drift = (a, dx, dy, ms) => a.pos.animate([{ translate: '0 0' }, { translate: `${dx}px ${dy}px` }], { duration: ms, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
@@ -333,15 +365,17 @@
 
     /* ===== 1. 바다 밑 궁전 (배움 놀이: 뜨고 가라앉기) ===== */
     scene('palace');
+    palaceBack();
     put(T, king, X(690, 700), 512, { to: 'left' });
     put(T, granny, X(880, 810), 516, { look: 'talk', to: 'left' });
     put(T, sisters, X(500, 430), 300, { look: 'long', s: X(1, .93) });
     put(T, mer, X(200, 340), 520, { look: 'garden', to: 'right' });
     const fxs = X([120, 640, 760], [380, 560, 600]), fys = X([380, 200, 430], [380, 200, 430]);
     fish.forEach((f, i) => { put(T, f, fxs[i], fys[i], { to: i % 2 ? 'left' : 'right' }); drift(f, 24 * (i % 2 ? -1 : 1), 12, 3000 + i * 500); });
+    palaceFront();
     if (P) camSnap(440, 280, 1);
     await T.curtain(true);
-    bubblesUp(T, X(520, 500), 420, 4);
+    bubblesUp(T, X(520, 500), 420, 8);
     sisters.hop(8, 600); king.hop(6, 600);
     await say('깊고 깊은 바다 밑에 인어 나라가 있었어요. 바다 왕님과 할머니, 여섯 공주가 살았지요.');
     glow(mer, 1200);
@@ -372,8 +406,10 @@
     /* ===== 2. 열다섯 살, 바다 위로 (톡: 불꽃) ===== */
     await T.sceneCard(tr('열다섯 살'), () => {
       scene('palace');
+      palaceBack();
       put(T, granny, X(560, 560), 516, { look: 'hand', to: 'left' });
       put(T, mer, X(400, 430), 512, { look: 'swim', to: 'right' });
+      palaceFront();
       camSnap(X(480, 500), 330, 1.3);
     }, mer.pos);
     mer.hop(12, 400);
@@ -399,11 +435,27 @@
     sky.remove();
     const burst = async (f, x, y, h, snd, word) => {
       put(T, f, x, y + h / 2); f.setScale(h / 120);
-      sfx(T, snd); if (word) T.pop(x + 60, y - h / 2, tr('펑!'));
+      if (snd) sfx(T, snd); if (word) T.pop(x + 60, y - h / 2, tr('펑!'));
       f.body.animate([{ transform: 'scale(.2)' }, { transform: 'scale(1.15)' }, { transform: 'scale(1)' }], 500);
       await sleep(1800); await T.anim(f.pos, [{ opacity: 1 }, { opacity: 0 }], 400).catch(() => {}); hide(f);
     };
-    (async () => { burst(fw[0], X(560, 440), 160, 110, 'pow', true); await sleep(700); burst(fw[1], X(700, 540), 200, 80, 'boom'); await sleep(700); burst(fw[2], X(430, 360), 130, 140, 'pow', true); })();
+    /* 한 번 톡 → 7발이 저절로 (VISUAL_PLAN §4): 같은 종류는 같은 높이 120. 효과음은 1·4·7발, '펑!' 은 1·7발. 발마다 수면에 같은 색 반사 조각 */
+    const FWC = { prop_fw_a: '#F2C94E', prop_fw_b: '#E8A0B8', prop_fw_c: '#8FC1E3', layer_fw_d: '#EBD08A', layer_fw_e: '#F2A7B5' };
+    const reflect = (x, c) => [-30, 25].forEach((dx, i) => {
+      const e = T.el('ellipse', { cx: x + dx, cy: WATER + 30 + i * 22, rx: 26, ry: 5, fill: c, opacity: 0 }, T._cover || T.world); e.style.pointerEvents = 'none';   /* 물 덮개 안(수면 위)에 */
+      e.animate([{ opacity: 0 }, { opacity: .5 }, { opacity: 0 }], { duration: 900, delay: 200 }).finished.then(() => e.remove(), () => e.remove());
+    });
+    const fx = x => X(x, 460 + (x - 560) * .55);
+    /* 뱃머리 왕자 얼굴(x 430~530, y 0~130)은 피한다 */
+    const SHOW = [[fw[0], 640, 100, 'pow', true], [fw[1], 780, 70], [fw[2], 300, 130], [fwD[0], 700, 160, 'boom'], [fwE, 230, 70], [fwD[1], 870, 130], [fwA2, 610, 60, 'pow', true]];
+    const GAP = [700, 700, 600, 600, 500, 500];
+    (async () => {
+      for (let i = 0; i < SHOW.length; i++) {
+        const [f, x, y, snd, word] = SHOW[i], key = f === fwA2 ? 'prop_fw_a' : f === fwE ? 'layer_fw_e' : fwD.includes(f) ? 'layer_fw_d' : ['prop_fw_a', 'prop_fw_b', 'prop_fw_c'][fw.indexOf(f)];
+        burst(f, fx(x), y, 120, snd || null, word); reflect(fx(x), FWC[key]);
+        if (i < GAP.length) await sleep(GAP[i]);
+      }
+    })();
     bob(mer, -3, 600, 3); prince.hop(8, 400);   /* 인어공주는 바다에 있으니 배 위로 뛰지 않고 물결에 흔들리기만 한다 */
     await say('펑! 펑! 불꽃이 하늘에 피었어요.');
     glow(prince, 1200); mer.wiggle(2, 700);
@@ -467,8 +519,10 @@
     /* ===== 5. 할머니의 이야기 (자동) ===== */
     await T.sceneCard(tr('할머니의 이야기'), () => {
       scene('palace');
+      palaceBack();
       put(T, granny, X(590, 580), 516, { look: 'talk', to: 'left' });
       put(T, mer, X(400, 430), 514, { look: 'worry', to: 'right' });
+      palaceFront();
       camSnap(X(490, 500), 330, 1.3);
     }, granny.pos);
     mer.hop(6, 400);
@@ -482,12 +536,15 @@
     /* ===== 6. 바다 마녀 (톡: 가마솥) ===== */
     await T.sceneCard(tr('바다 마녀'), () => {
       scene('witch');
+      put(T, L.jellyA, X(150, 400), 130); put(T, L.jellyB, X(880, 800), 200);
+      [L.jellyA, L.jellyB].forEach((j, i) => j.pos.animate([{ translate: '0 -14px' }, { translate: '0 14px' }], { duration: 3200, delay: i * 900, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' }));
       put(T, witch, X(690, 670), WY, { look: 'stand', to: 'left', s: SC.witch });
       put(T, cauldron, X(480, 560), 526, { look: 'dim', s: .85 });
       put(T, shell, X(780, 740), 506);
+      put(T, L.coralB, 30, 552);
       if (P) camSnap(600, 280, 1);
     }, cauldron.pos);
-    put(T, mer, X(-150, 330), 520, { look: 'swim', to: 'right' }); sfx(T, 'bubbles');
+    put(T, mer, X(-150, 330), 520, { look: 'swim', to: 'right' }); sfx(T, 'bubbles'); front(L.coralB);
     await Promise.all([say('인어공주는 소용돌이 너머 바다 마녀를 찾아갔어요.'), mer.move(X(290, 490), 520, 1800)]);
     mer.look('worry', 'right');
     witch.look('hand');
@@ -499,7 +556,7 @@
     cauldron.pos.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
     await T.ask('가마솥을 톡 눌러 봐요.', () => T.tap(cauldron.pos, { prompt: '가마솥을 톡 눌러 봐요.' }));
     cauldron.look('glow'); sfx(T, 'bubbles'); T.pop(cauldron.x, cauldron.y - 200, tr('보글보글'));
-    sparkle(T, cauldron.x, cauldron.y - 120, 110, 12);
+    sparkle(T, cauldron.x, cauldron.y - 120, 110, 20);
     put(T, potion, cauldron.x + 44, cauldron.y - 150, { look: 'empty' }); fadeIn(potion, 400);
     sleep(600).then(() => { potion.look('full'); glow(potion, 1000); sfx(T, 'sparkle'); });
     const pearl = T.el('circle', { cx: 0, cy: 0, r: 8, fill: '#F6ECD8', stroke: '#F2B366', 'stroke-width': 2 }, T.world);
@@ -543,8 +600,10 @@
     /* ===== 8. 왕자와 함께 (배움 놀이: 바다·땅 가르기) ===== */
     await T.sceneCard(tr('궁전 정원'), () => {
       scene('garden');
+      put(T, L.arch, 960, GF); put(T, L.topiary, 70, GF);
       put(T, prince, X(170, 330), GF, { look: 'stand', to: 'right', s: SC.garden });
       put(T, mer, X(840, 690), GF, { look: 'stand', to: 'left', s: SC.garden });
+      put(T, L.rose[0], 40, 560); put(T, L.rose[1], 975, 560, { to: 'right' });
       if (P) camSnap(500, 280, 1);
     }, prince.pos);
     prince.hop(8, 360);
@@ -581,6 +640,8 @@
     await say('바다에서 온 아이 같아요. 내 귀여운 동생처럼 지내요.');
     put(T, mer, X(430, 430), GF, { look: 'dance', to: 'right', s: SC.garden });
     put(T, prince, X(580, 580), GF, { look: 'dance', to: 'left', s: SC.garden });
+    front(...L.rose);
+    petals(T, 6, X([120, 220, 800, 900], [330, 370, 640, 680]));   /* 얼굴 위는 지나지 않게 양옆에서만 */
     sfx(T, 'giggle_xylo');
     await Promise.all([say('인어공주는 흔들흔들해도 왕자님과 함께 춤추었어요.'), (async () => {
       for (let i = 0; i < 2; i++) {
@@ -594,12 +655,13 @@
     /* ===== 9. 왕자의 결혼 (자동) ===== */
     await T.sceneCard(tr('왕자의 결혼'), () => {
       scene('deck');
+      put(T, L.arch, X(565, 540), 520);                    /* 꽃 아치: 왕자와 공주 사이 뒤 */
       put(T, prince, X(480, 480), 518, { look: 'stand', to: 'right', s: SC.deck });
       put(T, lady, X(650, 600), 518, { look: 'wed', to: 'left', s: SC.deck });
       put(T, mer, X(210, 340), 520, { look: 'sad', to: 'right', s: SC.deck });   /* 임시: worry 는 꼬리 자세라 사람 다리 모습과 안 맞음. 왕자 쪽을 보는 옆모습 그림이 생기면 교체 */
       if (P) camSnap(500, 280, 1);
     }, prince.pos);
-    sfx(T, 'bell'); sleep(600).then(() => sfx(T, 'bell')); prince.hop(10, 360);
+    sfx(T, 'bell'); sleep(600).then(() => { sfx(T, 'bell'); petals(T, 8, X([60, 150, 260, 880, 960], [300, 360, 420, 640, 700]), 5000); }); prince.hop(10, 360);
     lady.hop(8, 360);
     await say('당신이 모래밭에서 저를 구해 준 분이군요!');
     follow(400);
@@ -640,6 +702,13 @@
     await dagger.move(SP[0], SP[1], 650, 'ease-in'); hide(dagger);
     sfx(T, 'splash'); T.pop(SP[0], WATER - 50, tr('풍덩!')); rippleAt(T, SP[0], WATER + 20); glints(T, SP[0], WATER + 10);
     sun.move(820, WATER - 40, 2500, 'ease-out');
+    /* 해돋이 햇살 쐐기 5개 (해 뒤, 앰버 한 장씩) */
+    [-60, -30, 0, 30, 60].forEach((deg, i) => {
+      const a = (deg - 90) * Math.PI / 180, a1 = a - .06, a2 = a + .06, cx = 820, cy = WATER - 40, Rr = 420;
+      const w = T.el('polygon', { points: `${cx},${cy} ${cx + Math.cos(a1) * Rr},${cy + Math.sin(a1) * Rr} ${cx + Math.cos(a2) * Rr},${cy + Math.sin(a2) * Rr}`, fill: '#F2B366', opacity: 0 }, T.bg);
+      T.bg.insertBefore(w, sun.pos);
+      w.animate([{ opacity: 0 }, { opacity: .18 }], { duration: 2500, delay: i * 120, fill: 'forwards' });
+    });
     const warm = tint(T, '#F2B366', 0); T.anim(warm, [{ opacity: 0 }, { opacity: .18 }], 2500).catch(() => {}); warm.setAttribute('opacity', .18);
     if (T._cover) { const w2 = T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#F2B366', opacity: .18 }, T._cover); T.anim(w2, [{ opacity: 0 }, { opacity: .18 }], 2500).catch(() => {}); }
     sfx(T, 'sparkle');
@@ -648,7 +717,7 @@
     const bx = mer.x, by = mer.y;
     await fadeOut(T, mer, 500);
     put(T, mer, bx, by, { look: 'bubble', s: .6 }); fadeIn(mer, 600);
-    sfx(T, 'slide_up'); bubblesUp(T, bx, by - 80, 8, 260); sparkle(T, bx, by - 110, 120, 12);
+    sfx(T, 'slide_up'); bubblesUp(T, bx, by - 80, 8, 260); sparkle(T, bx, by - 110, 120, 12); sleep(250).then(() => sparkle(T, bx, by - 150, 160, 12, true));   /* 거품 반짝 2배 */
     sleep(1200).then(() => T.pop(bx + 40, 230, tr('둥실')));
     await Promise.all([say('인어공주는 반짝이는 거품이 되어 하늘로 둥실 올라갔어요.'), mer.move(bx + 40, 90, 3200, 'ease-in-out')]);
     fadeOut(T, sisters, 800); await fadeOut(T, mer, 600);

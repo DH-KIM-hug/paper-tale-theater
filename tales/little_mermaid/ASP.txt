@@ -67,3 +67,17 @@ prop_cloud_dark: 1.9694
 prop_wave: 8.7379
 prop_wave_big: 3.6145
 prop_sun: 1.4917
+layer_anemone: 1.1067
+layer_bunting: 3.75
+layer_coral_front_a: 1.5789
+layer_coral_front_b: 1.5789
+layer_fish_school: 1.7544
+layer_flower_arch: 0.7483
+layer_fw_d: 0.9917
+layer_fw_e: 1.015
+layer_jelly_a: 0.6783
+layer_jelly_b: 0.68
+layer_kelp_front: 0.395
+layer_petal: 0.7
+layer_rosebush: 1.395
+layer_topiary: 0.4417
