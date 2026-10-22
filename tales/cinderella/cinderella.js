@@ -141,6 +141,7 @@
 
   async function run(T) {
     const { sleep, say, camSnap, tr } = T;
+    if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990; /* 세로 화면: 가운데 일부만 보인다 → 카메라가 주인공을 따라간다 */
     const X = (l, p) => (P ? p : l);
@@ -211,8 +212,7 @@
     /* 언니 머리 자리를 누르는 곳으로 */
     const sh = sis1.h;
     hair = T.el('circle', { cx: 0, cy: -sh * .8, r: sh * .25, fill: 'transparent' }, sis1.pos);
-    await say('언니 머리를 톡 눌러 봐요.');
-    await T.tap(sis1.pos, { prompt: '언니 머리를 톡 눌러 봐요.' });
+    await T.ask('언니 머리를 톡 눌러 봐요.', () => T.tap(sis1.pos, { prompt: '언니 머리를 톡 눌러 봐요.' }));
     hair.remove();
     put(T, ribbon, sis1.x + 6, FL - sh + 14); ribbon.pos.animate([{ transform: `translate(${sis1.x + 6}px,${FL - sh + 14}px) scale(.2)` }, { transform: `translate(${sis1.x + 6}px,${FL - sh + 14}px) scale(1.25)` }, { transform: `translate(${sis1.x + 6}px,${FL - sh + 14}px) scale(1)` }], 420);
     popSfx(T); T.pop(sis1.x, FL - sh - 30, tr('퐁!'));
@@ -252,8 +252,7 @@
     }, pumpkin.pos);
     await say('텃밭에서 제일 큰 호박을 가져오렴.');
     pumpkin.pos.animate([{ translate: '0 0' }, { translate: '0 -6px' }, { translate: '0 0' }], { duration: 900, iterations: 3, easing: 'ease-in-out' });
-    await say('호박을 톡 눌러 봐요.');
-    await T.tap(pumpkin.pos, { prompt: '호박을 톡 눌러 봐요.' });
+    await T.ask('호박을 톡 눌러 봐요.', () => T.tap(pumpkin.pos, { prompt: '호박을 톡 눌러 봐요.' }));
     sparkle(T, pumpkin.x, FL - 60, 120, 14);
     pumpkin.wiggle(10, 500);
     await sleep(500);
@@ -280,8 +279,7 @@
     }, trap.pos);
     await say('쥐덫에 생쥐가 있구나. 몇 마리일까?');
     trap.pos.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 700, iterations: 4 });
-    await say('쥐덫을 톡 눌러 봐요.');
-    await T.tap(trap.pos, { prompt: '쥐덫을 톡 눌러 봐요.' });
+    await T.ask('쥐덫을 톡 눌러 봐요.', () => T.tap(trap.pos, { prompt: '쥐덫을 톡 눌러 봐요.' }));
     sfx(T, 'creak', () => popSfx(T)); trap.wiggle(6, 300);
     await sleep(400);
     for (let i = 0; i < 6; i++) {
@@ -415,14 +413,13 @@
     });
     cind.pos.style.opacity = '.35'; prince.pos.style.opacity = '.35';
     if (P) camSnap(500, 250, 1);
-    await say('긴 바늘과 짧은 바늘이 모두 12를 가리키면 열두 시예요. 열두 시 시계를 찾아봐요!');
     let hinted = false;
     const NAME = { 3: '그건 세 시예요.', 6: '그건 여섯 시예요.' };
-    await T.choose(cards.map(c => ({ el: c.g, ok: c.k === '12',
+    await T.ask('긴 바늘과 짧은 바늘이 모두 12를 가리키면 열두 시예요. 열두 시 시계를 찾아봐요!', () => T.choose(cards.map(c => ({ el: c.g, ok: c.k === '12',
       onWrong: async () => {
         await say(NAME[c.k]);
         if (!hinted) { hinted = true; glow({ body: clock.g }, 2600); await Promise.all([clock.toTwelve(2600), say('바늘이 모두 위로 올라가면 열두 시예요.')]); }
-      } })), { prompt: '열두 시 시계를 찾아봐요!' });
+      } })), { prompt: '열두 시 시계를 찾아봐요!' }));
     const good = cards.find(c => c.k === '12');
     good.g.style.filter = 'url(#hintGlow)';
     await say('맞아요, 열두 시!');
@@ -514,8 +511,7 @@
       return { k, g };
     });
     if (P) camSnap(500, 280, 1);
-    await say('구두와 크기가 같은 발을 찾아봐요!');
-    await T.choose(feet.map(f => ({ el: f.g, ok: f.k === 'small', onWrong: async () => { await say('그 발은 구두보다 커요.'); } })), { prompt: '구두와 크기가 같은 발을 찾아봐요!' });
+    await T.ask('구두와 크기가 같은 발을 찾아봐요!', () => T.choose(feet.map(f => ({ el: f.g, ok: f.k === 'small', onWrong: async () => { await say('그 발은 구두보다 커요.'); } })), { prompt: '구두와 크기가 같은 발을 찾아봐요!' }));
     const right = feet.find(f => f.k === 'small');
     right.g.style.filter = 'url(#hintGlow)'; sparkleSfx(T);
     await say('맞아요, 작은 발!');
@@ -566,8 +562,7 @@
     sis1.look('stand', 'left'); sis2.look('stand', 'left');
     await Promise.all([sis1.hop(12, 360), sis2.hop(12, 360)]);
     if (P) T.camTo(480, 280, 1, 500);
-    await say('신데렐라에게 톡 인사해요!');
-    await T.tap(cind.pos, { prompt: '신데렐라에게 톡 인사해요!' });
+    await T.ask('신데렐라에게 톡 인사해요!', () => T.tap(cind.pos, { prompt: '신데렐라에게 톡 인사해요!' }));
     T.confetti(); sfx(T, 'tada', () => sparkleSfx(T));
     glow(cind, 1200);
     await Promise.all([cind.hop(20, 460), sis1.hop(16, 460), sis2.hop(16, 460), prince.hop(12, 460)]);
