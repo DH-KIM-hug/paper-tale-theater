@@ -502,7 +502,7 @@
     const mirror = get => () => { const a = get(); return a && new Proxy(a, { get: (o, k) => (k === 'face' ? d => o.face(d === 'right' ? 'left' : 'right') : o[k]) }); };
     const sunNow = live(() => S1, () => T.world.__sw[0], () => SN, () => Sr, () => SS, () => btns.sun);
     T.director({
-      cast: { sun: sunNow, wind: mirror(live(() => W1, () => T.world.__sw[1], () => W, () => Wl, () => WW, () => btns.wind)), man: live(() => N, () => M8) },
+      cast: { sun: sunNow, wind: mirror(live(() => W1, () => T.world.__sw[1], () => W, () => Wl, () => WW, () => btns.wind)), man: live(() => N, () => M8, () => T.world.__man) },
       listener: r => (r === 'sun' ? 'wind' : r === 'wind' ? (sunNow() ? 'sun' : 'man') : (sunNow() ? 'sun' : 'wind')),
       noFace: ['sun', 'man'],
     });
@@ -513,6 +513,243 @@
     Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
     Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
     await Promise.race([Promise.all([loads.bg_sky, loads.sun, loads.wind, loads.wind_blow].filter(Boolean)), sleep(2500)]);
+
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 놀이판 그림·연출을 누르기 없이 감싼 얇은 함수 =================
+       set 은 놀이판 장면 배경과 카메라를 깐다(하늘·하이앵글 길·들길·개울가). 해님·바람·나그네는 동사가 처음 부를 때 그 장면 자리에 놓는다.
+       바람·해님으로 외투를 벗기는 흐름(단추·땀·부채질·훌러덩)은 눌러서 하던 단계를 대본 줄에 맞춰 하나씩 한다. */
+    const inst = () => T.readInstant();
+    const rPt = () => T.portrait();
+    let rScene = '', rFieldN = 0, rS = null, rW = null, rN = null, rF = null, rHB = null, rST = null, rFlying = null, rPant = null, rBabble = null, rHatGone = false, rButtoned = false, rWalkBob = null, rFlapShut = false;
+    const rOn = a => a && a.pos.isConnected;
+    const rAim = () => { if (rOn(rW)) aimWind(rW, rOn(rN) ? rN : rOn(rS) ? rS : 500); };
+    const rSync = () => { T.world.__sw = [rS, rW]; T.world.__man = rN; };
+    const inV = x => { if (!rPt()) return x; const c = T.camera, h = T.viewWidth() / 2 / Math.max(c.z, .1) - 60; return Math.max(c.x - h, Math.min(c.x + h, x)); };
+    const POPC = { '반짝!': C.persimmon, '쨍쨍!': C.persimmon, '훌러덩!': C.bean, '꽉!': C.bean, '쏙!': C.persimmon, '퐁당!': C.indigo, '살랑~': C.pine, '휘잉!': C.indigo, '펄럭펄럭': C.bean, '악수!': C.bean };
+    const fieldCam = () => {
+      if (!rPt()) { camSnap(500, 280, 1); return; }
+      const vw = T.viewWidth();
+      if (rFieldN <= 2) camSnap(395, 280, Math.min(1, vw / 2 / 320));
+      else if (rFieldN === 3) camSnap(672, 280, Math.min(1, vw / 2 / 270));
+      else camSnap(500, 280, Math.min(1, vw / 2 / 400));
+    };
+    const mkSun = (x, y, s) => { if (rOn(rS)) rS.pos.remove(); rS = sun(T, x, y, s); rS.pos.style.opacity = ''; rSync(); return rS; };
+    const mkWind = (x, y, s) => { if (rOn(rW)) rW.pos.remove(); rW = wind(T, x, y, s); rSync(); rAim(); return rW; };
+    const mkMan = (x, kind = 'coat', arms = 'down', opts = {}) => {
+      if (rOn(rN)) rN.pos.remove();
+      const f = rScene === 'field';
+      rN = traveler(T, x, f ? 500 : 510, f ? 1.25 : 1.2, kind, arms, opts);
+      if (rHatGone && !opts.sit) { rN.P.hat.style.opacity = 0; rN.P.hat.dataset.gone = '1'; refreshPose(rN.P); }
+      rN.P.face('smile'); rSync(); rAim();
+      return rN;
+    };
+    const needMan = () => rOn(rN) ? rN : mkMan(520);
+    const sway = (el, deg) => el.animate([{ transform: 'rotate(0)' }, { transform: `rotate(${deg}deg)` }, { transform: 'rotate(0)' }], 900);
+    const rWarmLv = [[SKY.day, .08], [SKY.warm, .16], [SKY.hot, .26]];
+    const R = {
+      set(key) {
+        if (rBabble) { clearInterval(rBabble); rBabble = null; }
+        if (rPant) { rPant.cancel(); rPant = null; }
+        rScene = key; rS = rW = rN = rF = rHB = rST = rFlying = null; rFlapShut = false; rSync();
+        T.clear();
+        if (key === 'sky') {
+          const sky1 = skyBG(T), pt = rPt();
+          rS = sun(T, pt ? 335 : 290, 250, 1); rW = aimWind(wind(T, pt ? 610 : 720, 255, 1), pt ? 335 : 290); rSync();
+          if (pt) camSnap(510, 280, Math.min(1, T.viewWidth() / 2 / 300)); else camSnap(500, 280, 1);
+          sky1.drift.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(30px)' }, { transform: 'translateX(0)' }], { duration: 6000, iterations: Infinity });
+        } else if (key === 'high') {
+          rHB = highBG(T); camSnap(500, 280, 1);
+        } else if (key === 'field') {
+          rFieldN++; rF = fieldBG(T); rButtoned = rButtoned && rFieldN > 1;
+          if (rFieldN === 3) rF.sky.setAttribute('fill', SKY.grey);
+          fieldCam();
+        } else if (key === 'stream') {
+          rST = streamBG(T); camSnap(rPt() ? (rST.art ? 330 : 440) : 500, 280, 1);
+          rBabble = SND.babble(T);
+        }
+      },
+      sun(verb, a, b) {
+        if (verb === 'at') {
+          const [x, y] = String(a).split(',').map(Number);
+          const hi = rScene === 'high', st = rScene === 'stream', pt = rPt();
+          const fd = rScene === 'field', sx = hi ? (pt ? 300 : x) : x, sy = st ? 160 : fd ? 190 : y, s = hi ? .8 : st ? .7 : .85;
+          mkSun(sx, sy, s); return;
+        }
+        if (verb === 'dim') { if (!rOn(rS)) mkSun(850, 120, .85); rS.pos.style.opacity = .4; return; }
+        if (!rOn(rS)) return;
+        if (verb === 'smile') { if (!inst()) rS.hop(14, 400); return; }
+        if (verb === 'shine') {
+          const lv = +a;
+          if (inst()) return;
+          rS.pos.style.opacity = '';
+          spinRays(rS); SND.warm(T, lv); sparkles(T, rS.x, rS.y, 120, 8); rS.hop(16, 500);
+          rS.p.glow.animate([{ opacity: 0, transform: 'scale(.8)' }, { opacity: .6, transform: 'scale(1.1)' }, { opacity: 0, transform: 'scale(1)' }], 1200);
+          if (rF && rF.sky && rFieldN >= 3 && lv >= 1) { const [c, o] = rWarmLv[Math.min(lv, 3) - 1]; rF.sky.setAttribute('fill', c); rF.warm.setAttribute('opacity', o); }
+          for (let i = 0; i < 5; i++) {
+            const bm = el('path', { d: 'M0 0 L-16 0 L-60 260 L40 260 Z', fill: '#FFE9A8', opacity: 0, transform: `translate(${rS.x},${rS.y}) rotate(${40 + i * 12})` }, T.fx);
+            bm.animate([{ opacity: 0 }, { opacity: .45 }, { opacity: 0 }], { duration: 1400, delay: i * 80 }).finished.then(() => bm.remove());
+          }
+          return;
+        }
+        console.warn('[read] sun 동사 모름', verb);
+      },
+      wind(verb, a) {
+        if (verb === 'at') {
+          const [x, y] = String(a).split(',').map(Number);
+          const hi = rScene === 'high', st = rScene === 'stream', pt = rPt();
+          const wx = hi ? (pt ? 700 : x) : st ? (rST && rST.art ? 520 : 400) : x, wy = st ? 165 : rScene === 'field' ? 190 : y, s = hi ? .8 : st ? .7 : .8;
+          mkWind(wx, wy, s); return;
+        }
+        if (!rOn(rW)) return;
+        rAim();
+        if (verb === 'smile') { rW.p.setMouth('smile'); rW.p.puffCheeks(1); rW.p.puff.style.transform = ''; rW.p.wrinkles.setAttribute('opacity', 0); rW.p.sweat.setAttribute('opacity', 0); if (rPant) { rPant.cancel(); rPant = null; } return; }
+        if (verb === 'puff') {
+          rW.p.setMouth('blow'); rW.p.puffCheeks(rScene === 'sky' ? 1.6 : 1.3);
+          if (inst()) return;
+          SND.whoosh(T, 2); if (rScene === 'sky') windGust(T, rW, 6, { y0: 180, y1: 340, dist: 400 });
+          rW.wiggle(6, 600); return;
+        }
+        if (verb === 'gentle') { rW.p.setMouth('blow'); rW.p.puffCheeks(1.1); return; }
+        if (verb === 'blow') {
+          const k = +a;
+          rW.p.setMouth('blow'); rW.p.puffCheeks(1.2 + k * .18); rW.setScale(.8 + k * .05);
+          if (inst()) return;
+          SND.whoosh(T, k); windGust(T, rW, 3 + k * 2, { y0: k === 5 ? 310 : 150, y1: 470, w: 5 + k, alpha: .6 + k * .07 });
+          if (rF) rF.tufts.childNodes.forEach(t => t.animate([{ transform: 'rotate(0)' }, { transform: `rotate(${10 + k * 5}deg)` }, { transform: 'rotate(0)' }], 900));
+          if (rOn(rN)) sway(rN.body, -1 - k);
+          return;
+        }
+        if (verb === 'pant') {
+          rW.setScale(.8); rW.p.puffCheeks(.7); rW.p.setMouth('tired');
+          rW.p.wrinkles.setAttribute('opacity', 1); rW.p.sweat.setAttribute('opacity', 1);
+          rW.p.puff.style.transition = 'transform .5s'; rW.p.puff.style.transform = rW.p.art ? 'scale(.94,.88)' : 'scale(.85,.75)';
+          if (rPant) rPant.cancel();
+          rPant = rW.p.puff.animate([{ scale: '1 1' }, { scale: '1.06 1.1' }, { scale: '1 1' }], { duration: 700, iterations: Infinity });
+          if (!inst()) SND.pant(T);
+          return;
+        }
+        console.warn('[read] wind 동사 모름', verb);
+      },
+      man(verb, a, b) {
+        if (verb === 'walk') {
+          const [x, ms] = String(a).split(',').map(Number), msx = b != null ? +b : ms;
+          if (rScene === 'high') {   /* 하이앵글: 길 위쪽에서 아래로 걸어 내려온다 */
+            const p0 = rHB.path[0];
+            if (!rOn(rN)) { rN = traveler(T, p0[0], p0[1], pathScale(p0[1]), 'coat'); rN.P.face('smile'); rSync(); }
+            if (!(msx > 0) || inst()) return;
+            rWalkBob = rN.body.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 360, iterations: Infinity });
+            const tok = rScene + rFieldN, a = rN;
+            walkPath(T, rN, rHB.path, 7400).then(() => { if (rWalkBob) { rWalkBob.cancel(); rWalkBob = null; } if (rScene === 'high' && rN === a) camTo(500, 280, 1, 900); });
+            camTo(rHB.art ? 510 : 530, rHB.art ? 340 : 300, 1.5, 1400);
+            return;
+          }
+          if (!rOn(rN)) { mkMan(x); return; }
+          if (msx > 0 && !inst()) return rN.move(x, rN.y, msx);
+          rN.place(x, rN.y); return;
+        }
+        if (verb === 'sit') {
+          if (rOn(rN)) rN.pos.remove();
+          rN = traveler(T, rST.seat[0], rST.seat[1], 1.2, 'shirt', 'down', { sit: true }); rN.P.face('smile'); rSync(); rAim(); return;
+        }
+        const N = needMan();
+        if (verb === 'hat') {
+          if (a === 'off') {
+            rHatGone = true; N.P.hat.style.opacity = 0; N.P.hat.dataset.gone = '1'; N.P.face('o'); refreshPose(N.P);
+            if (inst()) return;
+            const hx = N.x, hy = N.y - 228 * N.scale;
+            rFlying = hatArt(T, T.fx);
+            rFlying.animate([{ transform: `translate(${hx}px,${hy}px) scale(${N.scale}) rotate(0deg)` }, { transform: `translate(${hx + 160}px,${hy - 120}px) scale(${N.scale}) rotate(200deg)`, offset: .5 },
+              { transform: `translate(${hx + 520}px,${hy - 200}px) scale(${N.scale}) rotate(520deg)` }], { duration: 1300, easing: 'ease-out', fill: 'forwards' });
+            T.pop(inV(hx - 115), hy - 70, '앗!', C.bean);
+            return sleep(900);
+          }
+          if (a === 'on') {
+            const hx = N.x, hy = N.y - 228 * N.scale;
+            const done = () => { if (rFlying) { rFlying.remove(); rFlying = null; } rHatGone = false; N.P.hat.dataset.gone = ''; N.P.hat.style.opacity = 1; N.P.face('o'); refreshPose(N.P); };
+            if (inst()) { done(); return; }
+            if (rFlying) { rFlying.remove(); rFlying = null; }
+            const back = hatArt(T, T.fx);
+            return (async () => {
+              await T.anim(back, [{ transform: `translate(${hx + 260}px,-60px) scale(${N.scale}) rotate(-40deg)` }, { transform: `translate(${hx - 120}px,${hy - 150}px) scale(${N.scale}) rotate(30deg)`, offset: .45 },
+                { transform: `translate(${hx + 60}px,${hy - 70}px) scale(${N.scale}) rotate(-20deg)`, offset: .75 }, { transform: `translate(${hx}px,${hy}px) scale(${N.scale}) rotate(0deg)` }], { duration: 2200, easing: 'ease-in-out' });
+              back.remove(); done(); AudioFX.sfx('pop') || AudioFX.pop(); N.hop(18);
+            })();
+          }
+        }
+        if (verb === 'face') { N.P.face({ cold: 'cold', hot: 'o', happy: 'big' }[a] || 'smile'); return; }
+        if (verb === 'hold') {
+          setOutfit(N.P, 'coatShut', 'cross', { buttons: rButtoned ? 4 : 0 }); N.P.face('cold');
+          if (!N.__shiver) N.__shiver = shiver(N);
+          if (!inst()) SND.shiver(T);
+          return;
+        }
+        if (verb === 'button') {
+          rButtoned = true;
+          if (inst()) return;
+          return (async () => {
+            await camTo(N.x, N.y - 150, 1.7, 800);
+            for (let i = 0; i < 4; i++) { if (N.P.buttons[i]) N.P.buttons[i].setAttribute('opacity', 1); AudioFX.sfx('pop', .5) || AudioFX.pop(); await sleep(260); }
+          })();
+        }
+        if (verb === 'unbutton') {
+          if (N.__shiver) { N.__shiver.cancel(); N.__shiver = null; }
+          N.P.face('smile'); setOutfit(N.P, 'coatShut', 'down', { buttons: 4 }); rButtoned = false;
+          return (async () => {
+            for (let i = 3; i >= 0; i--) { if (N.P.buttons[i]) N.P.buttons[i].setAttribute('opacity', 0); T.tone(700 + i * 90, .1, { type: 'triangle', vol: .12 }); await sleep(inst() ? 0 : 220); }
+            setOutfit(N.P, 'coat', 'down');
+          })();
+        }
+        if (verb === 'fan') { setOutfit(N.P, 'coat', 'fan'); N.P.sweat.setAttribute('opacity', 1); N.P.face('o'); if (!inst()) T.pop(inV(N.x + 20), N.y - 350, '팔랑팔랑', C.bark); return; }
+        if (verb === 'coat') {
+          if (N.__shiver) { N.__shiver.cancel(); N.__shiver = null; }
+          setOutfit(N.P, 'shoulder', 'down'); N.P.sweat.setAttribute('opacity', 0); N.P.face('big'); rFlapShut = false;
+          if (!inst()) { N.hop(22); T.confetti(); AudioFX.jingle(); }
+          return;
+        }
+        if (verb === 'sit') return;
+        if (verb === 'dip') { if (!inst()) { N.hop(10, 500); } return; }
+        console.warn('[read] man 동사 모름', verb, a);
+      },
+      leaves() { if (rF) leaves(T, 10, ...rF.tree, rOn(rW) ? windDir(rW) : 1); },
+      flap(onoff) {
+        const N = needMan(), on = onoff === 'on';
+        if (rScene === 'field' && rFieldN === 4) {   /* 누가 이겼을까: 바람이 불면 외투를 꽉 여미고, 해님이 비추면 벗는다 */
+          if (on) { rFlapShut = true; setOutfit(N.P, 'coatShut', 'cross', { buttons: 4 }); N.P.face('cold'); if (!N.__shiver) N.__shiver = shiver(N); }
+          else { if (N.__shiver) { N.__shiver.cancel(); N.__shiver = null; } }
+          return;
+        }
+        flap(N.P, on);
+      },
+      sweat() { const N = needMan(); N.P.sweat.setAttribute('opacity', 1); },
+      breeze() {
+        if (inst()) return;
+        SND.breeze(T);
+        if (rOn(rW)) { rW.p.setMouth('blow'); rW.p.puffCheeks(1.1); windGust(T, rW, 2, { y0: 220, y1: 400, w: 4, alpha: .55, dur: 1800, dist: rST && rST.art ? 520 : 600 }); setTimeout(() => rW.p.setMouth('smile'), 700); }
+        if (rST) rST.tufts.childNodes.forEach(t => t.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(8deg)' }, { transform: 'rotate(0)' }], 1400));
+        if (rOn(rN)) rN.P.face('big');
+      },
+      cut(k) {
+        const C5 = { hat: ['cut_hat', 'whoosh', 2200], hold: ['cut_hold', null, 2200], pant: ['cut_pant', null, 2400], off: ['cut_off', 'swish', 2400], shake: ['cut_shake', 'ding', 2400] };
+        const c = C5[k]; if (!c) return console.warn('[read] cut 모름', k);
+        if (k === 'pant') vo('cut_pant'); if (k === 'off') vo('cut_off');
+        return cutArt(T, ...c);
+      },
+      vo(k) { return vo(k); },
+      fx(n) {
+        if (n === 'whoosh') return SND.whoosh(T, 3);
+        if (n === 'swish') return AudioFX.swish();
+        if (n === 'ding') return AudioFX.sfx('ding') || AudioFX.ding();
+        if (n === 'splash') return AudioFX.splash();
+      },
+      pop(spec) {
+        let [x, y, ...w] = String(spec).split(','); x = +x; y = +y; const t = w.join(',');
+        if (rScene === 'field' && rOn(rN) && Math.abs(x - rN.x) < 100 && y > 200) x = rN.x + 185;   /* 나그네 얼굴을 가리지 않게 옆으로 */
+        T.pop(inV(x), y, t, POPC[t]);
+      },
+      cam(a) { if (a === 'wide') return; const [x, y, z] = String(a).split(',').map(Number); return inst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 700); },
+    };
+    const READ_ACTS = { set: R.set, sun: R.sun, wind: R.wind, man: R.man, leaves: R.leaves, flap: R.flap, sweat: R.sweat, breeze: R.breeze, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam };
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
 
     /* --- 1. 하늘 자랑 --- */
     const sky1 = skyBG(T);
@@ -959,5 +1196,5 @@
     } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
-  Tale.mount({ title: '해와 바람', subtitle: '누가 외투를 벗길까?', run: () => run(portraitGuard(Tale.api)) });
+  Tale.mount({ title: '해와 바람', subtitle: '누가 외투를 벗길까?', read: true, run: () => run(portraitGuard(Tale.api)) });
 })();
