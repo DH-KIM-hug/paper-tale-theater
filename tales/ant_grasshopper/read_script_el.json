@@ -1,0 +1,1008 @@
+{
+ "mode": "read",
+ "tale": "ant_grasshopper",
+ "lang": "ko",
+ "title": "개미와 베짱이",
+ "voices_from": "voice_script_el.json",
+ "moral": "미리 준비하고 함께 나누면 모두 따뜻해요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md §3). 놀이판 11장면 중 계절 카드 순서 맞추기(배움 전용)는 빼고 10장면. 뺀 것: 개미·베짱이 누르기, 곡식·도토리 나르기 조작, 잎 우산 누르기, 가을·겨울 옷 고르기 퀴즈와 오답 대사, 문 누르기, 손님 부르기 세기(하나~넷), 음악회 누르기, 계절 카드 세기. 옷 고르기 장면의 그림(재킷·목도리·털모자)은 묘사 한 줄씩으로 남겼다. 원작의 결말(개미가 베짱이를 돌려보냄)은 놀이판대로 아기 개미의 말에 문을 열어 함께 겨울을 난다. 배역 신규는 아기 개미 1줄. 컷 3장(재채기·오들오들·문 앞)은 그대로.",
+ "acts": {
+  "set:<summer|ant_eye|leafstage|storm|autumn|winter_high|door|cellar|spring>": "장면 세트(fieldBG(season)/antEyeBG/leafStageBG/소나기=fieldBG summer+storm/winterHighBG/doorBG/cellarBG)",
+  "cam:wide | cam:<x,y,z>": "카메라",
+  "hop:at:<x,y[,scale]> | hop:face:<left|right> | hop:mode:<play|arms|carry> | hop:wet[:off] | hop:warm[:off] | hop:bow | hop:hop | hop:walk:<x>": "베짱이 자리·그림(hopperMode)·젖음(hopWet)·겨울옷(hopWarm)·연주(bowing)",
+  "ants:line | ants:pass | ants:carry:<n> | ants:umbrella | ants:wear:<vest|scarf,hat|none> | ants:enter:store | lead:at:<x,y> | host:at:<x,y> | baby:show": "개미 줄·지나가기·나르기(곡식→창고)·잎 우산·옷 입기(wear)·창고로 들어가기·대장 개미·집주인 개미·아기 개미",
+  "acorns:roll | store:fill:<n> | guests:enter:<ladybug|snail|pillbug|firefly> | guests:all | door:open | firefly:glow | band:play": "도토리 굴리기·창고 채우기·손님 입장·문 열기·반딧불·음악회",
+  "weather:<rain|rain:side|leaf|snow|stop>": "비·낙엽·눈(precip)",
+  "cut:<sneeze|shiver|door>": "만화 컷 — 컷 속 외침(VOICE_LINES cut_*)을 그대로 재사용",
+  "fx:<step|pop|jingle|sparkle|knock> | pop:<x,y,글자>": "효과음·의성어"
+ },
+ "scenes": [
+  {
+   "key": "R01_summer",
+   "card": "여름",
+   "set": "summer",
+   "enter": [
+    "ants:line",
+    "hop:at:300,470",
+    "hop:mode:play",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "여름이에요. 개미들이 줄지어 먹이를 날라요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "여름이에요. 개미들이 줄지어 먹이를 날라요.",
+       "happy:1.1",
+       "[bright, summery, warm storytelling]"
+      ]
+     ],
+     "after": [
+      "ants:carry:3"
+     ]
+    },
+    {
+     "text": "영차영차! 개미들은 땀을 뻘뻘 흘리며 곡식을 날랐어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "영차영차! 개미들은 땀을 뻘뻘 흘리며 곡식을 날랐어요.",
+       "happy:1.1",
+       "[bright, lively, rhythmic]"
+      ]
+     ],
+     "before": [
+      "pop:600,380,영차!"
+     ]
+    },
+    {
+     "text": "그 옆에서 베짱이는 풀잎 그늘에 벌렁 누워 있었지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그 옆에서 베짱이는 풀잎 그늘에 벌렁 누워 있었지요.",
+       null,
+       "[warm, gently amused]"
+      ]
+     ],
+     "before": [
+      "hop:bow"
+     ]
+    },
+    {
+     "text": "\"여름은 신나! 띠리링~\" 베짱이는 노래를 불러요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "hop",
+       "여름은 신나! 띠리링~",
+       "happy:1.4",
+       "[cheerful, carefree, singing]"
+      ],
+      [
+       "nar",
+       "베짱이는 노래를 불러요.",
+       null,
+       "[warm, gently amused]"
+      ]
+     ],
+     "before": [
+      "pop:300,300,띠리링~"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_carry",
+   "card": "먹이 나르기",
+   "set": "ant_eye",
+   "enter": [
+    "ants:carry:1",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "개미 눈으로 보면 풀잎이 나무처럼 커다래요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "개미 눈으로 보면 풀잎이 나무처럼 커다래요!",
+       "toneup:1.2",
+       "[excited, full of wonder]"
+      ]
+     ]
+    },
+    {
+     "text": "노란 곡식 알갱이도 개미한테는 커다란 바위 같았지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "노란 곡식 알갱이도 개미한테는 커다란 바위 같았지요.",
+       null,
+       "[full of wonder, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "개미들은 하나씩 번쩍 들어 창고로 뚜벅뚜벅 날랐어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개미들은 하나씩 번쩍 들어 창고로 뚜벅뚜벅 날랐어요.",
+       "happy:1.1",
+       "[cheerful, rhythmic]"
+      ]
+     ],
+     "before": [
+      "ants:carry:10",
+      "store:fill:10"
+     ]
+    },
+    {
+     "text": "창고 칸이 가득 찼어요! 하나부터 열까지, 열 칸!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "창고 칸이 가득 찼어요! 하나부터 열까지, 열 칸!",
+       "happy:1.3",
+       "[proud, delighted]"
+      ]
+     ],
+     "before": [
+      "fx:sparkle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_leaf",
+   "card": "풀잎 무대",
+   "set": "leafstage",
+   "enter": [
+    "hop:at:500,470,1.2",
+    "hop:mode:play",
+    "hop:face:right",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"같이 놀자~ 띠리링!\" 베짱이가 노래해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "hop",
+       "같이 놀자~ 띠리링!",
+       "happy:1.4",
+       "[cheerful, playful, singing]"
+      ],
+      [
+       "nar",
+       "베짱이가 노래해요.",
+       null,
+       "[warm, smiling]"
+      ]
+     ],
+     "before": [
+      "hop:bow"
+     ]
+    },
+    {
+     "text": "꽃들이 살랑살랑, 나비가 팔랑팔랑 춤을 췄어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "꽃들이 살랑살랑, 나비가 팔랑팔랑 춤을 췄어요.",
+       "happy:1.1",
+       "[tender, spring-like, musical]"
+      ]
+     ]
+    },
+    {
+     "text": "지나가던 개미들이 말했어요. \"우린 겨울 준비해야 해!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "지나가던 개미들이 말했어요.",
+       null,
+       "[matter-of-fact, gentle]"
+      ],
+      [
+       "ants",
+       "우린 겨울 준비해야 해!",
+       null,
+       "[busy, earnest, in unison, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "ants:pass"
+     ]
+    },
+    {
+     "text": "\"겨울은 아직 멀었는걸~\" 베짱이는 또 노래했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "hop",
+       "겨울은 아직 멀었는걸~",
+       "happy:1.4",
+       "[lazy, carefree, cheerful]"
+      ],
+      [
+       "nar",
+       "베짱이는 또 노래했어요.",
+       null,
+       "[gently amused]"
+      ]
+     ]
+    },
+    {
+     "text": "개미들은 고개를 절레절레 흔들며 지나갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개미들은 고개를 절레절레 흔들며 지나갔어요.",
+       null,
+       "[gently amused, matter-of-fact]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_rain",
+   "card": "소나기",
+   "set": "storm",
+   "enter": [
+    "hop:at:330,494,0.95",
+    "hop:mode:play",
+    "ants:line",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "앗, 소나기가 와요! 후두둑 후두둑!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "앗, 소나기가 와요! 후두둑 후두둑!",
+       "toneup:1.3",
+       "[excited, surprised]"
+      ]
+     ],
+     "before": [
+      "weather:rain"
+     ]
+    },
+    {
+     "text": "개미들은 커다란 잎을 번쩍 들어 우산처럼 펼쳤어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개미들은 커다란 잎을 번쩍 들어 우산처럼 펼쳤어요.",
+       "happy:1.1",
+       "[quick, cheerful]"
+      ]
+     ],
+     "before": [
+      "ants:umbrella",
+      "pop:600,330,펼쳐라!"
+     ],
+     "after": [
+      "weather:rain:side"
+     ]
+    },
+    {
+     "text": "잎 우산 아래 개미들은 뽀송뽀송해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "잎 우산 아래 개미들은 뽀송뽀송해요.",
+       "happy:1.2",
+       "[relieved, cozy]"
+      ]
+     ]
+    },
+    {
+     "text": "빗방울이 베짱이 머리 위로 주룩주룩 쏟아졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "빗방울이 베짱이 머리 위로 주룩주룩 쏟아졌어요.",
+       "sad:1.1",
+       "[sympathetic, playful]"
+      ]
+     ],
+     "before": [
+      "hop:wet"
+     ],
+     "after": [
+      "cut:sneeze"
+     ]
+    },
+    {
+     "text": "베짱이는 혼자 흠뻑 젖었어요. 에취! 그래도 \"괜찮아~\" 하고 웃었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "베짱이는 혼자 흠뻑 젖었어요.",
+       "sad:1.1",
+       "[sympathetic, soft]"
+      ],
+      [
+       "hop",
+       "에취!",
+       null,
+       "[sneezes]"
+      ],
+      [
+       "nar",
+       "그래도",
+       null,
+       "[gentle]"
+      ],
+      [
+       "hop",
+       "괜찮아~",
+       "happy:1.2",
+       "[cheerful, brave, sniffling]"
+      ],
+      [
+       "nar",
+       "하고 웃었어요.",
+       null,
+       "[warm, smiling]"
+      ]
+     ],
+     "after": [
+      "weather:stop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_autumn",
+   "card": "가을",
+   "set": "autumn",
+   "enter": [
+    "lead:at:330,496",
+    "ants:wear:none",
+    "weather:leaf",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "가을이 왔어요. 나뭇잎이 알록달록 휘날려요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "가을이 왔어요. 나뭇잎이 알록달록 휘날려요.",
+       null,
+       "[calm, soft, autumnal]"
+      ]
+     ]
+    },
+    {
+     "text": "개미들은 도토리를 데굴데굴 굴려 창고로 날랐어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개미들은 도토리를 데굴데굴 굴려 창고로 날랐어요.",
+       "happy:1.1",
+       "[cheerful, rhythmic]"
+      ]
+     ],
+     "before": [
+      "acorns:roll",
+      "pop:520,420,데굴데굴~"
+     ]
+    },
+    {
+     "text": "창고가 도토리로 더 가득해졌어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "창고가 도토리로 더 가득해졌어요!",
+       "happy:1.3",
+       "[proud, content]"
+      ]
+     ],
+     "before": [
+      "store:fill:10"
+     ]
+    },
+    {
+     "text": "바람이 선선해요.",
+     "src": "trim",
+     "from": "바람이 선선해요. 가을엔 무엇을 입을까?",
+     "segs": [
+      [
+       "nar",
+       "바람이 선선해요.",
+       "happy:1.1",
+       "[breezy, curious]"
+      ]
+     ]
+    },
+    {
+     "text": "개미들은 으슬으슬 추울까 봐 가벼운 재킷을 걸쳤어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개미들은 으슬으슬 추울까 봐 가벼운 재킷을 걸쳤어요.",
+       null,
+       "[breezy, cozy]"
+      ]
+     ],
+     "before": [
+      "ants:wear:vest",
+      "fx:sparkle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_snow",
+   "card": "첫눈",
+   "set": "winter_high",
+   "enter": [
+    "lead:at:330,470,1.05",
+    "ants:wear:none",
+    "weather:snow",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하얀 눈이 펑펑! 겨울이 왔어요. 호호, 추워라.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하얀 눈이 펑펑! 겨울이 왔어요.",
+       null,
+       "[hushed, wonder]"
+      ],
+      [
+       "ant",
+       "호호, 추워라.",
+       null,
+       "[shivers, cozy]"
+      ]
+     ],
+     "before": [
+      "pop:500,200,펑펑!"
+     ]
+    },
+    {
+     "text": "개미들은 오들오들 떨며 서로 꼭 붙었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개미들은 오들오들 떨며 서로 꼭 붙었어요.",
+       null,
+       "[hushed, shivering, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "눈이 오면 머리랑 목을 따뜻하게!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "눈이 오면 머리랑 목을 따뜻하게!",
+       null,
+       "[gentle, caring]"
+      ]
+     ]
+    },
+    {
+     "text": "개미들은 폭신한 목도리와 털모자를 쓰고 방긋 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개미들은 폭신한 목도리와 털모자를 쓰고 방긋 웃었어요.",
+       "happy:1.2",
+       "[cozy, delighted]"
+      ]
+     ],
+     "before": [
+      "ants:wear:scarf,hat",
+      "fx:sparkle"
+     ]
+    },
+    {
+     "text": "개미들은 따뜻한 창고로 쏙 들어갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "개미들은 따뜻한 창고로 쏙 들어갔어요.",
+       null,
+       "[cozy, hushed]"
+      ]
+     ],
+     "after": [
+      "ants:enter:store",
+      "cut:shiver"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_knock",
+   "card": "똑똑",
+   "set": "door",
+   "enter": [
+    "hop:at:door",
+    "hop:mode:arms",
+    "hop:face:left",
+    "weather:snow",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "눈 오는 날, 베짱이가 오들오들 떨며 창고 문을 두드렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "눈 오는 날, 베짱이가 오들오들 떨며 창고 문을 두드렸어요.",
+       "sad:1.3",
+       "[sad, soft, sympathetic]"
+      ]
+     ],
+     "before": [
+      "fx:knock",
+      "pop:500,260,똑똑!"
+     ]
+    },
+    {
+     "text": "\"개미야, 먹을 것 좀 나눠 줄 수 있니?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "hop",
+       "개미야, 먹을 것 좀 나눠 줄 수 있니?",
+       "sad:1.6",
+       "[weak, shivering, pleading]"
+      ]
+     ],
+     "before": [
+      "door:open",
+      "host:at:door"
+     ]
+    },
+    {
+     "text": "개미가 물었어요. \"여름엔 뭘 했니?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "개미가 물었어요.",
+       null,
+       "[gentle]"
+      ],
+      [
+       "ant",
+       "여름엔 뭘 했니?",
+       null,
+       "[stern, cool, questioning]"
+      ]
+     ]
+    },
+    {
+     "text": "\"노래했지. 띠리링~\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "hop",
+       "노래했지. 띠리링~",
+       "sad:1.3",
+       "[sheepish, small voice]"
+      ]
+     ]
+    },
+    {
+     "text": "\"그럼 겨울엔 춤이나 추렴!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "ant",
+       "그럼 겨울엔 춤이나 추렴!",
+       "tonedown:1.2",
+       "[dry, teasing, firm]"
+      ]
+     ]
+    },
+    {
+     "text": "베짱이는 고개를 푹 숙이고 훌쩍훌쩍 울었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "베짱이는 고개를 푹 숙이고 훌쩍훌쩍 울었어요.",
+       "sad:1.3",
+       "[sad, soft, sympathetic]"
+      ]
+     ]
+    },
+    {
+     "text": "그때 아기 개미가 말했어요. \"그래도 추워 보여요.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그때 아기 개미가 말했어요.",
+       null,
+       "[gentle]"
+      ],
+      [
+       "baby",
+       "그래도 추워 보여요.",
+       "sad:1.3",
+       "[soft, worried, innocent, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "baby:show"
+     ]
+    },
+    {
+     "text": "\"우리 창고엔 먹을 게 아주 많잖아요.\" 개미는 잠깐 생각하다가 빙긋 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "baby",
+       "우리 창고엔 먹을 게 아주 많잖아요.",
+       null,
+       "[soft, earnest, innocent, childlike, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "개미는 잠깐 생각하다가 빙긋 웃었어요.",
+       null,
+       "[gentle, warming]"
+      ]
+     ]
+    },
+    {
+     "text": "\"어서 들어와요! 같이 겨울을 나요.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "ant",
+       "어서 들어와요! 같이 겨울을 나요.",
+       "happy:1.4",
+       "[warm, kind, welcoming]"
+      ]
+     ],
+     "before": [
+      "cut:door"
+     ]
+    },
+    {
+     "text": "\"고마워요! 대신 내가 멋진 음악을 들려줄게요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "hop",
+       "고마워요! 대신 내가 멋진 음악을 들려줄게요!",
+       "happy:1.5",
+       "[grateful, relieved, joyful]"
+      ]
+     ],
+     "after": [
+      "hop:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_store",
+   "card": "창고 가득",
+   "set": "cellar",
+   "enter": [
+    "hop:at:500,store,0.62",
+    "hop:mode:arms",
+    "hop:warm",
+    "ants:line",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "창고 안이 곡식이랑 도토리로 가득해요! 여름부터 미리 모은 덕분이에요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "창고 안이 곡식이랑 도토리로 가득해요! 여름부터 미리 모은 덕분이에요.",
+       "happy:1.2",
+       "[warm, content, amazed]"
+      ]
+     ]
+    },
+    {
+     "text": "베짱이에게 목도리와 털모자도 나눠 줬어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "베짱이에게 목도리와 털모자도 나눠 줬어요.",
+       "happy:1.1",
+       "[tender, kind]"
+      ]
+     ],
+     "before": [
+      "hop:warm"
+     ]
+    },
+    {
+     "text": "베짱이는 따뜻한 수프를 후루룩 마시고 배를 통통 두드렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "베짱이는 따뜻한 수프를 후루룩 마시고 배를 통통 두드렸어요.",
+       "happy:1.2",
+       "[cozy, content, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "먹을 게 이렇게 많으니 친구들도 불러요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "먹을 게 이렇게 많으니 친구들도 불러요!",
+       "happy:1.1",
+       "[excited, inviting]"
+      ]
+     ]
+    },
+    {
+     "text": "무당벌레, 달팽이, 쥐며느리, 반딧불이가 줄줄이 찾아왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "무당벌레, 달팽이, 쥐며느리, 반딧불이가 줄줄이 찾아왔어요.",
+       "happy:1.2",
+       "[cheerful, welcoming]"
+      ]
+     ],
+     "before": [
+      "guests:enter:ladybug",
+      "guests:enter:snail",
+      "guests:enter:pillbug",
+      "guests:enter:firefly"
+     ]
+    },
+    {
+     "text": "친구가 넷이나 왔어요! 먹을 게 많아서 모두 나눠 먹을 수 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "친구가 넷이나 왔어요! 먹을 게 많아서 모두 나눠 먹을 수 있어요.",
+       "happy:1.3",
+       "[joyful, welcoming]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_concert",
+   "card": "겨울 음악회",
+   "set": "cellar",
+   "enter": [
+    "hop:mode:play",
+    "guests:all",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "반딧불이가 불을 밝히고, 겨울 음악회가 시작됐어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "반딧불이가 불을 밝히고, 겨울 음악회가 시작됐어요!",
+       "happy:1.3",
+       "[hushed, magical, excited]"
+      ]
+     ],
+     "before": [
+      "firefly:glow"
+     ]
+    },
+    {
+     "text": "베짱이가 겨울 노래를 들려줘요. 가만히 들어 봐요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "베짱이가 겨울 노래를 들려줘요. 가만히 들어 봐요.",
+       "happy:1.1",
+       "[soft, listening, tender]"
+      ]
+     ],
+     "before": [
+      "hop:bow",
+      "band:play"
+     ]
+    },
+    {
+     "text": "띠리링~ 친구들은 어깨를 들썩들썩, 발을 콩콩 굴렀어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "띠리링~ 친구들은 어깨를 들썩들썩, 발을 콩콩 굴렀어요.",
+       "happy:1.2",
+       "[joyful, playful, musical]"
+      ]
+     ]
+    },
+    {
+     "text": "창고 밖엔 눈이 펑펑 내렸지만, 안은 포근포근했지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "창고 밖엔 눈이 펑펑 내렸지만, 안은 포근포근했지요.",
+       "happy:1.1",
+       "[tender, cozy]"
+      ]
+     ]
+    },
+    {
+     "text": "띠리링~ 짝짝짝! 겨울이 하나도 춥지 않았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "띠리링~ 짝짝짝! 겨울이 하나도 춥지 않았어요.",
+       "happy:1.4",
+       "[joyful, applauding, warm]"
+      ]
+     ],
+     "before": [
+      "pop:500,250,짝짝짝!"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_spring",
+   "card": "봄",
+   "set": "spring",
+   "enter": [
+    "hop:at:300,494,0.9",
+    "hop:mode:carry",
+    "hop:warm:off",
+    "ants:line",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "따뜻한 봄이 왔어요. 새싹이 쏙쏙!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "따뜻한 봄이 왔어요. 새싹이 쏙쏙!",
+       "happy:1.2",
+       "[bright, fresh, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "개미들은 다시 뚜벅뚜벅 줄지어 먹이를 날랐어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개미들은 다시 뚜벅뚜벅 줄지어 먹이를 날랐어요.",
+       "happy:1.1",
+       "[bright, fresh, rhythmic]"
+      ]
+     ],
+     "before": [
+      "ants:carry:3"
+     ]
+    },
+    {
+     "text": "이번엔 베짱이도 함께 날라요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이번엔 베짱이도 함께 날라요.",
+       "happy:1.1",
+       "[cheerful, encouraging]"
+      ]
+     ],
+     "after": [
+      "hop:walk:500",
+      "hop:hop"
+     ]
+    },
+    {
+     "text": "\"영차! 여름엔 노래하고, 일도 함께 할래요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "hop",
+       "영차! 여름엔 노래하고, 일도 함께 할래요!",
+       "happy:1.4",
+       "[cheerful, determined, working hard]"
+      ]
+     ],
+     "before": [
+      "pop:300,330,영차!"
+     ]
+    },
+    {
+     "text": "개미들은 베짱이를 보고 방긋방긋 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개미들은 베짱이를 보고 방긋방긋 웃었어요.",
+       "happy:1.1",
+       "[warm, smiling]"
+      ]
+     ]
+    },
+    {
+     "text": "봄, 여름, 가을, 겨울! 계절은 빙글빙글 돌아요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "봄, 여름, 가을, 겨울! 계절은 빙글빙글 돌아요.",
+       "happy:1.2",
+       "[flowing, dreamy, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "미리 준비하고 함께 나누니, 겨울도 따뜻했답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "미리 준비하고 함께 나누니, 겨울도 따뜻했답니다.",
+       "happy:1.3",
+       "[tender, content, gentle conclusion]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
