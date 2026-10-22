@@ -60,7 +60,7 @@
     await T.curtain(true);
     await say('옛날 옛날에 마음씨 착한 동생 흥부와 욕심쟁이 형 놀부가 살았어요.');
     await T.ask('흥부를 톡! 눌러서 인사해요.', () => T.tap(live(heung), { prompt: '흥부를 톡! 인사해요.' }));
-    heung.hop(34, 400); sfx('pop'); T.pop(heung.x + 80, heung.y - 300, '안녕!');
+    heung.hop(34, 400); sfx('pop'); T.pop(heung.x + 80, heung.y - 390, '안녕!');
     await say('흥부는 활짝 웃으며 인사했어요.');
 
     /* 2. 형 집 */
