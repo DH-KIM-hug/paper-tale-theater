@@ -423,6 +423,223 @@
       camTo: (x, y, z, dur) => camTo(x, y, z, dur),
     });
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 ================= */
+    const num = v => +v;
+    let readDusk = null;
+    const fact = id => friends[id].act; // (아래 놀이판의 act 는 이 분기 뒤에 만들어진다)
+    const atGranny = { cook: () => POS.grannyCook, corner: () => POS.grannyCorner, door: () => DOOR_X[scene] ?? POS.grannyCook };
+    const tigerShow = () => { tiger.pos.style.opacity = 1; };
+    const grannyFacesTiger = () => { if (scene === 'B1' && granny.x === POS.grannyCorner && tiger.pos.style.opacity !== '0') faceTo(granny, tiger); };
+    const friendHome = fr => { fr.act.style.transform = ''; fr.pos.classList.remove('party'); fr.shown = true; fr.pos.style.display = FRIEND_SET[fr.id] === scene ? '' : 'none'; };
+    const enterFriend = async id => {
+      const fr = friends[id], set = FRIEND_SET[id];
+      fr.shown = true; fr.pos.style.display = '';
+      const doorDx = DOOR_X[set] - fr.gx, groundDy = Math.max(0, 520 - fr.gy);
+      await anim(fr.act, [{ transform: `translate(${doorDx}px, ${groundDy}px)` }, { transform: `translate(0px, ${groundDy}px)` }],
+        { duration: Math.max(500, Math.abs(doorDx) * 3), easing: 'ease-out' });
+      if (groundDy > 4) {
+        AudioFX.tap();
+        await anim(fr.act, [{ transform: `translate(0px, ${groundDy}px)` }, { transform: `translate(0px, ${groundDy * .4 - 24}px)` }, { transform: 'translate(0px, 0px)' }],
+          { duration: Math.max(420, groundDy * 2.2), easing: 'ease-in-out' });
+      }
+      fr.act.style.transform = '';
+      bounceFriend(id);
+    };
+    /* 친구가 치는 순간 (놀이판 SUCCESS 에서 컷·호랑이 반응을 뺀 앞부분 — 컷과 반응은 대본의 cut:·tiger: 동사가 맡는다) */
+    const STRIKE = {
+      async bam() {
+        const dx = (tiger.x - 58) - FR.bam.x;
+        AudioFX.pop();
+        await anim(fact('bam'), [{ transform: 'translate(0px,0px)' }, { transform: `translate(${dx * .5}px,-120px) rotate(180deg)` }, { transform: `translate(${dx}px,-80px) rotate(360deg)` }], { duration: 550, easing: 'ease-out' });
+        AudioFX.bonk();
+        impact(tiger.x - 58, 390, '톡!');
+        // 알밤은 컷이 떠 있는 동안 제자리로 돌아간다
+        sleep(600).then(() => anim(fact('bam'), [{ transform: `translate(${dx}px,-80px)` }, { transform: `translate(${dx * .4}px,-140px) rotate(-180deg)` }, { transform: 'translate(0px,0px) rotate(-360deg)' }], { duration: 500, easing: 'ease-in' })).then(() => { fact('bam').style.transform = ''; });
+      },
+      async jara() {
+        AudioFX.chomp();
+        await anim(fact('jara'), [{ transform: 'translate(0px,0px)' }, { transform: 'translate(-8px,-30px) rotate(-20deg)' }, { transform: 'translate(0px,0px)' }], { duration: 450, easing: 'ease-out' });
+        impact(300, 380, '앙!');
+      },
+      async ddong() {
+        AudioFX.slide();
+        impact(440, 440, '미끌~', '#4f7d46');
+        await tiger.move(POS.tigerStage[3], 520, 500, 'ease-in');
+      },
+      async songgot() {
+        AudioFX.poke();
+        await anim(fact('songgot'), [{ transform: 'translate(0px,0px)' }, { transform: 'translate(0px,-18px)' }, { transform: 'translate(0px,0px)' }], 260);
+      },
+      async jeolgu() {
+        const dx = (tiger.x - 58) - FR.jeolgu.x, dy = 150;
+        AudioFX.slide();
+        await anim(fact('jeolgu'), [{ transform: 'translate(0px,0px)' }, { transform: `translate(${dx}px,${dy}px) rotate(14deg)` }], { duration: 420, easing: 'ease-in' });
+        impact(tiger.x - 40, 370, '쿵!');
+        anim(tiger.body, [{ transform: 'translateY(0px)' }, { transform: 'translateY(10px) scaleY(.9)' }, { transform: 'translateY(0px)' }], 380);
+        sleep(900).then(() => anim(fact('jeolgu'), [{ transform: `translate(${dx}px,${dy}px)` }, { transform: 'translate(0px,0px)' }], { duration: 450, easing: 'ease-out' })).then(() => { fact('jeolgu').style.transform = ''; });
+      },
+      myeongseok: () => FRIEND_ACT.roll('myeongseok'),
+      jige: () => FRIEND_ACT.carry('jige'),
+    };
+    const FRIEND_ACT = {
+      enter: id => enterFriend(id),
+      hop: id => bounceFriend(id),
+      hide: id => { const fr = friends[id]; fr.shown = false; fr.pos.style.display = 'none'; },
+      strike: id => STRIKE[id] && STRIKE[id](),
+      async roll(id) { // 멍석이 돌돌 말린다 (호랑이를 감싸는 것은 tiger:rolled)
+        AudioFX.roll();
+        await anim(fact(id), [{ transform: 'translate(0px,0px) rotate(0deg)' }, { transform: 'translate(-10px,-40px) rotate(-360deg) scale(1.25)' }, { transform: 'translate(0px,-6px) rotate(-720deg) scale(1.1)' }], { duration: 900, easing: 'ease-in-out' });
+      },
+      async carry(id) { // 지게가 다가가 멍석말이 호랑이를 지고 물가로 (풍덩은 tiger:splash)
+        await anim(fact(id), [{ transform: 'translate(0px,0px)' }, { transform: 'translate(-45px,0px)' }], { duration: 500, easing: 'ease-in-out' });
+        AudioFX.boing();
+        if (rolled.pos.style.display === 'none') { rolled.place(POS.rolledSpot, 520); rolled.pos.style.display = ''; }
+        await Promise.all([
+          rolled.move(930, 475, 1700),
+          anim(fact(id), [{ transform: 'translate(-45px,0px)' }, { transform: 'translate(215px,0px)' }], { duration: 1700, easing: 'ease-in-out' }),
+          camTo(880, 440, 1.4, 1700),
+        ]);
+      },
+    };
+    const TIGER_WALK = {
+      0: () => Promise.all([
+        walk(tiger, POS.tigerStage[0], 240),
+        walk(granny, POS.grannyCorner, 300).then(() => grannyMood('scared')), // 그 틈에 할멈은 반대편 구석으로
+      ]),
+      1: async () => { tigerEyesHurt(true); await walk(tiger, POS.tigerStage[1], 380); },
+      2: async () => { tigerEyesHurt(false); tiger.face('left'); await walk(tiger, POS.tigerStage[2], 300, false); }, // 물독을 본 채 뒷걸음질
+      3: () => tiger.move(POS.tigerStage[3], 520, 500, 'ease-in'), // 쇠똥을 밟고 쭈르륵
+      4: async () => { // 문 쪽으로 도망치다 구석의 할멈을 폴짝 뛰어넘는다
+        const over = sleep(Math.max(0, (POS.grannyCorner - 60 - tiger.x) / 360 * 1000)).then(() => {
+          if (granny.pos.style.display !== 'none') grannyMood('scared');
+          return anim(tiger.body, [{ transform: 'translateY(0px)' }, { transform: 'translateY(-120px)', offset: .5 }, { transform: 'translateY(0px)' }], { duration: 520, easing: 'ease-in-out' });
+        });
+        await Promise.all([walk(tiger, POS.tigerStage[4], 360), over]);
+      },
+      5: () => walk(tiger, POS.tigerStage[5], 260),
+      6: () => walk(tiger, POS.tigerStage[6], 260),
+    };
+    const READ_ACTS = {
+      set: k => { setScene(k); if (daylight && readDusk != null) daylight.setAttribute('opacity', readDusk); }, // 부엌 저녁 빛은 다음 부엌 장면에도 이어진다
+      daylight: m => { readDusk = m === 'dusk' ? .25 : 0; if (daylight) daylight.setAttribute('opacity', readDusk); },
+      cam(a, b) {
+        const go = (x, y, z) => (T.readInstant() ? camSnap(x, y, z) : camTo(x, y, z, 800));
+        if (a === 'wide') return T.readInstant() ? camSnap(500, 280, 1) : camWide(700);
+        if (a === 'friend') { if (T.readInstant()) { const f = friends[b]; return camSnap(f.gx, f.gy + f.by + f.h / 2 - 20, Math.min(2.6, Math.max(1.6, (560 * .3) / f.h))); } return camFriend(b, 650); }
+        if (a === 'station') return go(...stationCam(+b, tiger.x));
+        const [x, y, z] = String(a).split(',').map(num);
+        return go(x, y, z || 1);
+      },
+      granny(a, b) {
+        if (a === 'at') { granny.place(atGranny[b] ? atGranny[b]() : num(b), 520); granny.pos.style.display = ''; granny.pos.style.opacity = 1; granny.face('left'); grannyFacesTiger(); return; }
+        if (a === 'walk') return walk(granny, num(b), 260).then(() => granny.face('left'));
+        if (a === 'hop') return granny.hop(22, 420);
+        if (a === 'hide') { granny.pos.style.display = 'none'; return; }
+        if (a === 'show') { granny.pos.style.display = ''; granny.pos.style.opacity = 1; return; }
+        if (a === 'hoe' || a === 'ladle') { granny.base = a; grannyPose(null); return; }
+        if (a === 'offer') { grannyPose('offer'); return; }
+        if (a === 'scared' && scene === 'B1' && tiger.pos.style.opacity !== '0') faceTo(granny, tiger);
+        grannyMood(a); // cook · cry · scared · happy
+      },
+      async tiger(a, b) {
+        if (a === 'hide') { parkTiger(); return; }
+        if (a === 'enter') { // 팥밭: 오른쪽에서 걸어 들어와 할멈 앞에 버틴다
+          tiger.place(POS.tigerEnter, 520); tigerShow();
+          await walk(tiger, 700, 340);
+          tiger.face('left'); granny.face('right');
+          AudioFX.thud(); T.shake(); granny.hop(26, 420);
+          return;
+        }
+        if (a === 'exit') { await walk(tiger, POS.tigerEnter, 340); parkTiger(); granny.face('left'); return; }
+        if (a === 'at') {
+          if (b === 'door') {
+            tiger.pos.style.opacity = 0;
+            tiger.place(scene === 'B2' ? DOOR_X.B2 + 30 : DOOR_X.B1 - 25, 520); tiger.face('left');
+            if (!T.readInstant()) { await sleep(150); tigerShow(); T.shake(); } else tigerShow();
+            if (scene === 'B1' && granny.pos.style.display !== 'none') granny.face('right');
+            return;
+          }
+          tiger.place(POS.tigerStage[+b], 520); tiger.face('left'); tigerShow(); grannyFacesTiger();
+          return;
+        }
+        if (a === 'walk') {
+          const w = TIGER_WALK[+b];
+          if (w) await w(); else await walk(tiger, POS.tigerStage[+b] ?? num(b), 300);
+          if (+b !== 2) tiger.face('left');
+          grannyFacesTiger();
+          return;
+        }
+        if (a === 'hop') return tiger.hop(b ? num(b) : 34, b ? 550 : 400);
+        if (a === 'shiver') {
+          AudioFX.whimper();
+          tiger.art.classList.add('shiver');
+          tiger.hop(20, 420);
+          await tiger.move(tiger.x + 26, 520, 420);
+          await sleep(350);
+          tiger.art.classList.remove('shiver');
+          return;
+        }
+        if (a === 'dip') { // 눈을 씻으려고 물독에 얼굴을 쏙 (두 번)
+          const dip = [{ transform: 'translate(0px,0px) rotate(0deg)' }, { transform: 'translate(-10px,14px) rotate(24deg)', offset: .35 }, { transform: 'translate(-10px,14px) rotate(24deg)', offset: .6 }, { transform: 'translate(0px,0px) rotate(0deg)' }];
+          await anim(tiger.body, dip, { duration: 1500, easing: 'ease-in-out' });
+          await sleep(300);
+          await anim(tiger.body, dip, { duration: 1500, easing: 'ease-in-out' });
+          return;
+        }
+        if (a === 'rolled') { // 멍석이 호랑이를 감쌌다: 호랑이 그림 대신 멍석말이 그림
+          pose(null); tiger.pos.style.opacity = 0;
+          const m = friends.myeongseok; m.pos.style.display = 'none'; m.shown = false; m.act.style.transform = '';
+          rolled.place(POS.rolledSpot, 520); rolled.pos.style.display = '';
+          await anim(rolled.body, [{ transform: 'rotate(-6deg)' }, { transform: 'rotate(6deg)' }, { transform: 'rotate(-4deg)' }, { transform: 'rotate(0deg)' }], 700);
+          return;
+        }
+        if (a === 'splash') { // 지게가 멍석째 바다에 풍덩
+          rolled.pos.removeAttribute('transform');
+          await anim(rolled.pos, [
+            { transform: `translate(${rolled.x}px,${rolled.y}px) rotate(0deg)` },
+            { transform: 'translate(965px,405px) rotate(160deg)' },
+            { transform: 'translate(970px,505px) rotate(340deg) scale(.55)' },
+          ], { duration: 800, easing: 'ease-in' });
+          rolled.pos.style.display = 'none'; rolled.pos.style.transform = ''; rolled.place(POS.rolledSpot, 520);
+          AudioFX.splash();
+          impact(950, 420, '풍덩!', '#3e6a8a');
+          const sp = el('g', { transform: 'translate(962,478)' }, T.fx);
+          el('path', { d: 'M0 0 Q-16 -34 -30 -10 M0 0 Q0 -44 14 -14 M0 0 Q20 -30 30 -6', stroke: '#8fb8dd', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, sp);
+          [[-22, -30, 5], [8, -40, 6], [28, -24, 4.6]].forEach(([cx, cy, r]) => el('circle', { cx, cy, r, fill: '#bcd8ee' }, sp));
+          anim(sp, [{ opacity: 0 }, { opacity: 1 }, { opacity: 1 }, { opacity: 0 }], 900).then(() => sp.remove());
+          anim(fact('jige'), [{ transform: 'translate(215px,0px)' }, { transform: 'translate(0px,0px)' }], { duration: 900, easing: 'ease-in-out' }).then(() => { fact('jige').style.transform = ''; });
+          return;
+        }
+        if (a === 'pose') { pose(b === 'none' ? null : b); return; }
+        if (a === 'eyehurt') { tigerEyesHurt(b !== 'off'); return; }
+        if (a === 'dizzy') { dizzy(b !== 'off'); return; }
+        console.warn('[read] tiger 동사 모름:', a, b);
+      },
+      friend: (id, a) => (FRIEND_ACT[a] ? FRIEND_ACT[a](id) : console.warn('[read] friend 동사 모름:', id, a)),
+      async friends(all, a) {
+        if (a === 'hidden') { Object.values(friends).forEach(friendHome); return; }
+        if (a === 'party') {
+          const GATHER = { jara: 395, bam: 445, ddong: 495, songgot: 625, jeolgu: 670, myeongseok: 735, jige: 810 };
+          Object.values(friends).forEach(fr => fr.pos.classList.add('party'));
+          FRIENDS.forEach(f => friendTo(f.id, GATHER[f.id], 0, true));
+          return;
+        }
+        if (a === 'hop') {
+          for (const f of FRIENDS) { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); await sleep(260); }
+        }
+      },
+      rolled: a => { rolled.pos.style.display = a === 'show' ? '' : 'none'; },
+      cut: id => showCut(id, 4000, id !== 'myeongseok'),
+      fx: n => (n === 'win' ? AudioFX.sting('win') : AudioFX[n] && AudioFX[n]()),
+      pop(spec) {
+        const [x, y, ...w] = String(spec).split(','), word = w.join(',');
+        impact(num(x), num(y), word, word === '어흥!' ? '#c0392b' : undefined);
+      },
+      shake: () => T.shake(),
+      confetti: () => T.confetti(),
+    };
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ================= 시작: 종이 조리개가 열리며 낮 팥밭이 보인다 ================= */
     async function openScene() {
       setScene('A');
@@ -933,5 +1150,5 @@
     return T;
   }
 
-  Tale.mount({ title: '팥죽할멈과 호랑이', subtitle: '친구들을 순서대로 불러서 호랑이를 물리쳐요!', note: false, endTitle: '만세!', transition: 'page', run: T => run(withFat(Tale.api)) });
+  Tale.mount({ title: '팥죽할멈과 호랑이', subtitle: '친구들을 순서대로 불러서 호랑이를 물리쳐요!', note: false, endTitle: '만세!', transition: 'page', read: true, run: T => run(withFat(Tale.api)) });
 })();
