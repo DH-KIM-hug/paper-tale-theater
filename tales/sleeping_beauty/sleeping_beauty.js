@@ -319,7 +319,7 @@
     const S_ROW = T.viewWidth() < 300 ? .36 : .55, SGAP = S_ROW === .36 ? 32 : 50;
     const SLOT = i => 112 + 108 * i, SLOTP = i => 500 - 3.5 * SGAP + SGAP * i;
     const SX = i => X(SLOT(i), SLOTP(i)), RS = X(1, S_ROW);
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'giggle', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'hop']);
+    AudioFX.preloadSfx(['paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'hop']);
     const S = {
       L1: "왕과 왕비는 오래오래 아기를 기다렸어요. 드디어 예쁜 공주님이 태어났어요!",
       L2: "온 나라 사람들을 불러 잔치를 열자!",
@@ -694,7 +694,7 @@
           if (n === 'sparkle') return sparkleSfx(T);
           if (n === 'bell') return sfx(T, 'bell', .5, () => T.tone([1320, 1760], .25, { type: 'sine', vol: .12 }));
           if (n === 'tada') return sfx(T, 'tada', .5, () => sparkleSfx(T));
-          if (n === 'giggle') return sfx(T, 'baby_giggle', .6, () => AudioFX.sfx('giggle', .6));
+          if (n === 'giggle') return sfx(T, 'baby_giggle', .6, () => AudioFX.sfx('baby_giggle', .6));
           if (n === 'boing' || n === 'hop') return sfx(T, 'hop', .5);
           return sfx(T, n, .4);
         },
@@ -728,7 +728,7 @@
     sfx(T, 'creak', .3);
     await cradle.wiggle(5, 700); cradle.wiggle(5, 700);
     await sleep(400);
-    baby.look('giggle'); sfx(T, 'baby_giggle', .6, () => AudioFX.sfx('giggle', .6)); sfx(T, 'bell', .35, () => T.tone([1320, 1760], .25, { type: 'sine', vol: .12 }));
+    baby.look('giggle'); sfx(T, 'baby_giggle', .6, () => AudioFX.sfx('baby_giggle', .6)); sfx(T, 'bell', .35, () => T.tone([1320, 1760], .25, { type: 'sine', vol: .12 }));
     T.pop(500, FL - 232, tr('까르르')); T.pop(560, FL - 262, tr('딸랑'), '#D9A94E');
     await say(S.L3);
     await sleep(SCENE_END);

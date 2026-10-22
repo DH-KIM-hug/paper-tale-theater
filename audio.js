@@ -137,10 +137,10 @@ const AudioFX = (() => {
   })();
   const samples = {};
   /* 같은 소리의 여러 버전: 기본 이름(rooster.mp3) 말고 rooster_2.mp3, rooster_3.mp3 … 가 있으면 재생할 때마다 바꿔 고른다 (버전 수는 기본 포함) */
-  const VARIANTS = { 'animals/duck': 2, 'animals/cow': 3, 'animals/pig': 2, 'animals/dog': 3, 'animals/owl': 3, 'animals/frog': 3,
-    'animals/rooster': 2, 'animals/cat': 3, 'animals/sheep': 2, 'animals/donkey': 2, 'animals/tiger': 2, 'sfx/knock': 3,
+  const VARIANTS = { 'animals/cow': 3, 'animals/pig': 2, 'animals/dog': 3, 'animals/owl': 3, 'animals/frog': 3,
+    'animals/rooster': 2, 'animals/cat': 3, 'animals/sheep': 2, 'animals/donkey': 2, 'animals/tiger': 2, 'sfx/knock': 2,
     'sfx/crunch': 2, 'sfx/chomp': 3, 'sfx/gulp': 3, 'sfx/gom_se_mari': 2,
-    'sfx/hop': 3, 'sfx/ball_bounce': 2 };
+    'sfx/hop': 2, 'sfx/ball_bounce': 2 };
   const variantPath = (base, i) => i === 1 ? base + '.mp3' : base + '_' + i + '.mp3';
   const lastVariant = {};
   function pickVariant(path) {
@@ -187,8 +187,8 @@ const AudioFX = (() => {
     hop: 'sfx/hop', ball_bounce: 'sfx/ball_bounce', cushion: 'sfx/cushion', pop_out: 'sfx/pop_out', chomp: 'sfx/chomp', gulp: 'sfx/gulp', slide: 'sfx/slide_down' };
   /* 만화 컷용 신나는 효과음 (sounds/CREDITS.md) — sting()이 여러 개를 겹쳐 쓴다 */
   const COMIC = ['spring', 'slide_up', 'slide_down', 'zip', 'cork', 'doop', 'sparkle', 'xylo_up', 'xylo_down', 'giggle_xylo',
-    'crash', 'cymbal', 'drumroll', 'tada', 'womp', 'squeak', 'splash_big', 'bubbles', 'giggle', 'cheer',
-    'rattle', 'uah'];
+    'crash', 'cymbal', 'drumroll', 'tada', 'womp', 'squeak', 'splash_big', 'bubbles', 'baby_giggle', 'cheer',
+    'rattle'];
   const EXTRA = ['sfx/knock', 'sfx/crunch', 'sfx/chomp', 'sfx/gulp', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door', 'sfx/blow', 'sfx/blow_long',
     ...COMIC.map(n => 'sfx/' + n),
     ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a), 'sfx/paper_turn', 'sfx/baby_cry', 'sfx/baby_giggle', 'sfx/gom_se_mari'];
@@ -201,16 +201,16 @@ const AudioFX = (() => {
     poke:     [['zip', 0, .55], ['poke', .1, .85], ['squeak', .16, .75], ['slide_up', .38, .5]], // 휙-콕!-삑-뿅~
     bigHit:   [['drumroll', 0, .55, .42], ['boom', .4, 1], ['crash', .42, .75], ['cymbal', .46, .6]], // 두구두-쾅!와장창-챙
     slip:     [['slide_down', 0, .6], ['thud', .62, .9], ['squeak', .74, .5]],                 // 삐유~-쿵-삑
-    bite:     [['zip', 0, .55], ['chomp', .1, .95], ['squeak', .2, .6], ['uah', .42, .8]],      // 휙-앙!-삑-으악
+    bite:     [['zip', 0, .55], ['chomp', .1, .95], ['squeak', .2, .6], ['xylo_down', .42, .45]], // 휙-앙!-삑-또로롱↓
     splash:   [['whoosh', 0, .6], ['splash_big', .14, .9], ['splash', .2, .5], ['bubbles', .6, .5]], // 휙-풍덩!-보글보글
     roll:     [['rattle', 0, .7], ['drumroll', .08, .35, .6], ['spring', .7, .55]],                       // 달그락 돌돌-띠용
-    laugh:    [['giggle_xylo', 0, .45], ['giggle', .2, .8]],                                     // 또로롱-까르르
+    laugh:    [['giggle_xylo', 0, .45], ['baby_giggle', .2, .8]],                                     // 또로롱-까르르
     fail:     [['womp', 0, .7]],                                                               // 빠밤빠밤~
     magic:    [['zip', 0, .35], ['sparkle', .05, .6], ['xylo_up', .3, .55]],                    // 반짝반짝-또로롱
     win:      [['drumroll', 0, .55, .7], ['tada', .62, .85], ['cymbal', .64, .4], ['cheer', .8, .45]], // 두구두구-짜잔!-와아
     surprise: [['slide_up', 0, .55], ['cork', .5, .9], ['sparkle', .55, .35]],                 // 삐융~-뽕!
     dizzy:    [['xylo_down', 0, .5], ['sparkle', .15, .45], ['spring', .9, .45]],              // 또로롱↓-반짝-띠요옹
-    ouch:     [['uah', 0, .8], ['squeak', .15, .5], ['xylo_down', .3, .4]],                     // 으악-삑-또로롱↓
+    ouch:     [['squeak', 0, .8], ['xylo_down', .12, .5], ['sparkle', .35, .3]],                // 삑-또로롱↓-반짝
   };
 
   const api = {
@@ -396,9 +396,9 @@ const AudioFX = (() => {
     squeak: () => { tone([1600, 2500], .12, { vol: .18 }); tone([2500, 1700], .14, { vol: .16, when: .13 }); },
     splash_big: SYN.splash, splash: SYN.splash,
     bubbles: () => run([600, 900, 700, 1100, 800], .12, 'sine', .14, .07),
-    giggle: SYN.laugh,
+    baby_giggle: SYN.laugh,
     cheer: () => noise(1.6, { freq: 1500, q: .5, vol: .15 }),
-    rattle: SYN.roll, chomp: SYN.chomp, crunch: SYN.chomp, gulp: SYN.gulp, uah: SYN.yelp,
+    rattle: SYN.roll, chomp: SYN.chomp, crunch: SYN.chomp, gulp: SYN.gulp,
   };
   function layer(name, when, vol, dur) {
     if (playSample('sfx/' + name + '.mp3', vol * STING_VOL, when, dur)) return true;

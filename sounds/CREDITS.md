@@ -12,8 +12,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `animals/cow_2.mp3 · `animals/cow_3.mp3` | "Cow Moo" (Universfield, 1.8초) · "cow mooing" (u_jd81cxyq22, 1.9초) | Universfield · u_jd81cxyq22 | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/cow-moo-122255/ · https://pixabay.com/ko/sound-effects/cow-mooing-343423/ |
 | `animals/pig.mp3` | Pixabay "oink" (1초, 꿀꿀꿀 연속) | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/oink-40664/ |
 | `animals/pig_2.mp3` | "Pig Squeak" | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/pig-squeak-47166/ |
-| `animals/duck.mp3` | Pixabay "duck quacking type 1" 에서 꽥 세 번(1.75초) | RibhavAgrawal | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/duck-quacking-type-1-293316/ |
-| `animals/duck_2.mp3` | "075176_Duck Quack"(3번 이어 붙임) | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/075176-duck-quack-40345/ |
+| `animals/duck.mp3` | "075176_Duck Quack"(3번 이어 붙임) | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/075176-duck-quack-40345/ |
 | `animals/rooster.mp3` | Medium rooster crowing.ogg | alys | Public domain | https://commons.wikimedia.org/wiki/File:Medium_rooster_crowing.ogg |
 | `animals/sheep.mp3` | Pixabay "Sheep Bleat" (1.65초) | Universfield | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/sheep-bleat-122256/ |
 | `animals/dog.mp3` | Pixabay "Free Dog Bark" | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/free-dog-bark-419014/ |
@@ -25,7 +24,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `animals/frog_2.mp3 · `animals/frog_3.mp3` | 같은 녹음의 두 번째 개굴 · "frog croak"(0.8배 느리게 늘려 1.2초) | DRAGON-STUDIO · freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/frog-croaking-sound-effect-322956/ · https://pixabay.com/ko/sound-effects/frog-croak-80816/ |
 | `animals/frogs.mp3` | Pixabay "Frogs and insects at Night" (0.4~11.8초, 앞뒤 페이드) | TanwerAman | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/frogs-and-insects-at-night-271298/ |
 | `sfx/splash.mp3` | Bathtub water splashes.ogg | gradha | Public domain | https://commons.wikimedia.org/wiki/File:Bathtub_water_splashes.ogg |
-| `animals/donkey.mp3` | Pixabay "DONKEY" | Stu9 | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/donkey-352696/ |
+| `animals/donkey.mp3` | Pixabay "DONKEY" 에서 '이-아' 한 번만 남기도록 자름(1.1초, 앞뒤 페이드) | Stu9 | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/donkey-352696/ |
 
 ## 클래식 녹음 (Wikimedia Commons, 비발디 〈사계〉 — 작곡은 공개 도메인, 녹음은 아래 라이선스)
 
@@ -58,7 +57,6 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `sfx/bubbles.mp3` | "Bubbles"(물방울 보글보글 1.2초) | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/bubbles-72783/ |
 | `sfx/squeak.mp3` | squeak toy - squeak1.wav | bart (Bart Kelsey) | CC0 | https://opengameart.org/content/squeak-toy-sounds |
 | `sfx/cork.mp3` | plup.mp3 | EZduzziteh | CC0 | https://opengameart.org/content/silly-sound-effects |
-| `sfx/uah.mp3` | 직접 만든 소리 — ElevenLabs 효과음 생성(아이가 깜짝 놀라 "으악" 0.7초) | 팥죽 게임 | 직접 만든 소리(ElevenLabs 효과음 생성) | — |
 | `sfx/rattle.mp3` | "Shake rattle once"(0.8초, 달그락) | spinopel | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/shake-rattle-once-492019/ |
 | `sfx/xylo_up.mp3` · `sfx/xylo_down.mp3` · `sfx/giggle_xylo.mp3` | child's_xylophone-2.wav 의 한 음을 음높이만 바꿔 이어 붙임 | AntumDeluge | CC0 | https://opengameart.org/content/childrens-xylophone |
 | `sfx/gom_se_mari.mp3` · `sfx/gom_se_mari_2.mp3` | 〈곰 세 마리〉(동요, 작자 미상) 멜로디 연주를 미리 렌더한 두 곡(약 25초, 재생마다 번갈아 랜덤). 앞은 피아노(Piano mf 단음 C4·G3·C5·D5·E5·G5·A5·C6), 뒤는 마림바(Marimba yarn mallet mf, 옥타브 녹음에서 잘라 쓴 G3·C4·C5·D5·E5·G5·A5·C6). 만드는 법: tools/dev/render_gom_se_mari.py (--clips). 음 시작 시각은 goldilocks.js 의 ONS 표(두 곡 같음) | The University of Iowa Musical Instrument Samples (Lawrence Fritts, Electronic Music Studios) | 사이트 원문: "freely available on this website and may be downloaded and used for any projects, without restrictions" (응용 프로그램 개발자도 사용자로 명시). 별도 라이선스 문서는 없고 출처 표기 의무 언급 없음 | https://theremin.music.uiowa.edu/MIS.html |
@@ -71,11 +69,11 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `sfx/tada.mp3` | Music Jingles: jingles_STEEL02.ogg | Kenney | CC0 | https://kenney.nl/assets/music-jingles |
 | `sfx/womp.mp3` | Music Jingles: jingles_SAX07.ogg | Kenney | CC0 | https://kenney.nl/assets/music-jingles |
 | `sfx/drumroll.mp3` | Drum Roll Intro.ogg | Iwan Sounds and DIY | CC0 | https://commons.wikimedia.org/wiki/File:Drum_Roll_Intro.ogg |
-| `sfx/giggle.mp3` | "Cute Child Giggle"(아이 까르르 1.85초) | Virtual_Vibes | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/cute-child-giggle-383731/ |
 | `sfx/sparkle.mp3` | "Magic Twinkle"(마법 반짝임 차임 1.6초) | Universfield | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/magic-twinkle-244951/ |
 | `sfx/doop.mp3` | Cute doop.ogg | stephan | Public domain | https://commons.wikimedia.org/wiki/File:Cute_doop.ogg |
 | `sfx/cheer.mp3` | "Applause, small audience"(박수만 2.3초, 목소리 없음) | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/applause-small-audience-97257/ |
-| `sfx/chomp.mp3 · `sfx/chomp_2.mp3 · `sfx/chomp_3.mp3` | "Munching Food"(냠냠 1.2초) · "Biting an Apple 3" · "Eating a sandwich"(냠냠 1.3초, 목소리 없음) | freesound_community · XpMonster · freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/munching-food-73994/ · https://pixabay.com/ko/sound-effects/biting-an-apple-3-595362/ · https://pixabay.com/ko/sound-effects/eating-a-sandwich-102449/ |
+| `sfx/chomp.mp3 · `sfx/chomp_2.mp3` | "Munching Food"(냠냠 1.2초) · "Biting an Apple 3" | freesound_community · XpMonster | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/munching-food-73994/ · https://pixabay.com/ko/sound-effects/biting-an-apple-3-595362/ |
+| `sfx/chomp_3.mp3` | 직접 만든 소리 — ElevenLabs 효과음 생성(만화풍 냠냠·앙 1.15초, 목소리 없음) | 팥죽 게임 | 직접 만든 소리(ElevenLabs 효과음 생성) | — |
 | `sfx/crunch.mp3 · `sfx/crunch_2.mp3` | "Chip Crunch Bite 2" · "Chip Crunch Bite 1" (와작와작, 각 1초) | AppleHillStudios | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/chip-crunch-bite-2-543566/ · https://pixabay.com/ko/sound-effects/chip-crunch-bite-1-543565/ |
 | `sfx/gulp.mp3 · `sfx/gulp_2.mp3 · `sfx/gulp_3.mp3` | Pixabay "Gulp"(103200 앞부분) · "gulps"(91631 두 곳) — 꿀꺽 한 번씩 0.6~0.7초 | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/gulp-103200/ · https://pixabay.com/ko/sound-effects/gulps-91631/ |
 | `sfx/cymbal.mp3` | Pixabay "Crash Cymbal Hit" (처음 1.58초, 끝 페이드아웃) | Universfield | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/crash-cymbal-hit-140577/ |
@@ -83,7 +81,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 
 ## 직접 만든 소리
 
-`sfx/blow.mp3`(1초), `sfx/blow_long.mp3`(2.7초) — 입으로 "후~" 부는 숨소리. ElevenLabs 효과음 생성(직접 만든 소리, 출처 표기 불필요). 앞서 코드로 합성했던 소리를 바꿨다.
+`sfx/blow.mp3`(1.1초, 촛불 끄는 짧은 후~; 2차 결정으로 새로 생성), `sfx/blow_long.mp3`(2.7초) — 입으로 "후~" 부는 숨소리. ElevenLabs 효과음 생성(직접 만든 소리, 출처 표기 불필요). 앞서 코드로 합성했던 소리를 바꿨다.
 
 ## 범종 (은혜 갚은 까치)
 
@@ -106,7 +104,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `animals/sheep_2.mp3` | "sheep 3" | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/sheep-3-89230/ |
 | `animals/donkey_2.mp3` | "DONKEY 1" | Stu9 | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/donkey-1-352697/ |
 | `animals/tiger_2.mp3` | "Tiger Roar Loudly" (dffdv) | dffdv | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/tiger-roar-loudly-193229/ |
-| `sfx/knock.mp3 · `sfx/knock_2.mp3 · `sfx/knock_3.mp3` | "Fast Knocking on Door"(똑똑똑 3번) · "Knocking Door - 1"(처음 3~4번) · "Knocking 3 TimesV2 Deeper"(3번) | Universfield · DRAGON-STUDIO · freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/fast-knocking-on-door-352704/ · https://pixabay.com/ko/sound-effects/knocking-door-1-397992/ · https://pixabay.com/ko/sound-effects/knocking-3-timesv2-deeper-102952/ |
+| `sfx/knock.mp3 · `sfx/knock_2.mp3` | 직접 만든 소리 — ElevenLabs 효과음 생성(똑똑똑 세 번 0.95초 · 똑똑 두 번 0.7초, 두드림 횟수 확인) | 팥죽 게임 | 직접 만든 소리(ElevenLabs 효과음 생성) | — |
 | `sfx/creak.mp3` | "Old Wooden Door"(문 삐걱 1.05초) | Universfield | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/old-wooden-door-402153/ |
 | `sfx/drum.mp3` | "Bass Drum Sample 1"(북 둥 0.7초) | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/bass-drum-sample-1-89204/ |
 | `sfx/bell.mp3` | "Servant Bell Ring 1"(작은 종 딸랑 1.3초) | floraphonic | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/servant-bell-ring-1-211684/ |
@@ -129,7 +127,7 @@ Pixabay 검색 페이지가 자동 접속을 막아 소리 파일을 받지 못�
 
 | 파일 | 소리 | 원본 | 라이선스 |
 |---|---|---|---|
-| `sfx/hop.mp3 · sfx/hop_2.mp3 · sfx/hop_3.mp3` | 깡충·폴짝 부드러운 뛰기(0.2~0.4초, 재생마다 번갈아) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
+| `sfx/hop.mp3 · sfx/hop_2.mp3` | 깡충·폴짝 부드러운 뛰기(0.2~0.4초, 재생마다 번갈아) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
 | `sfx/ball_bounce.mp3 · sfx/ball_bounce_2.mp3` | 공 통통(0.6초) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
 | `sfx/cushion.mp3` | 푹신한 데 앉기 '푹'(0.3초) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
 | `sfx/pop_out.mp3` | 불쑥 나타나기 쑥-뿅(0.55초) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
