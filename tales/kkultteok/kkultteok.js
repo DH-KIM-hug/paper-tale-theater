@@ -184,6 +184,389 @@
     const kids = [nuna, oppa, agi];
     const allHide = () => [nuna, oppa, agi, dog, baby].forEach(hide);
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 아래 놀이판 연출을 누르기 없이 감싼 얇은 함수 =================
+       장면 차리기(set)는 놀이판 그 장면의 자리·자세·소품을 그대로 놓는다. 같은 배경이 두 번 나오면(길·단추 방) 나온 차례로 구분.
+       대본 y=470 은 바닥선이 아니라서 사람·강아지는 바닥(G)에 둔다. */
+    const RK = { nuna, oppa, agi };
+    const inst = () => T.readInstant();
+    const RCX = { '01_road': 500, '02_hill': 420, '03_chimney': 520, '04_door': 700, '05_belt_v2': 400, '06_press_v2': 470, '07_button_v2': 300, '08_tank_room': 560, '09_bell_room': 610, '10_corner_close': 480, '12_storm': 520, '13_rain': 500, '14_soil_v2': 500, '15_rainbow_v2': 500 };
+    const rSeen = {}; let rTag = '', RS = {};
+    const live = () => { const t = sceneTok; return () => t === sceneTok; };   // 장면이 바뀌면 늦게 도는 연출은 멈춘다
+    const onS = a => a.pos.isConnected && a.pos.style.display !== 'none';
+    const C0R = [657, 124];
+    const SKYR = [[X(570, 610), 92, 'rabbit', '토끼!'], [X(355, 480), 140, 'fish', '물고기!'], [X(140, 350), 96, 'car', '자동차!']];
+    const CSR = P ? .7 : 1;
+    const ctlR = ([, ty]) => [C0R[0] + 10, Math.min(ty, C0R[1]) - 30];
+    const FARR = [X(120, 300), 60];
+    const RLAY = {
+      '01_road'(n) {
+        if (n === 1) {
+          skyDrift([[70, 150, 90, .15], [130, 110, 70, .55], [55, 90, 110, .8, .85]]);
+          put(T, nuna, X(300, 330), G, { look: 'walk', to: 'right' }); put(T, oppa, X(400, 420), G, { look: 'walk', to: 'right' });
+          put(T, agi, X(490, 500), G, { look: 'walk', to: 'right' }); put(T, dog, X(640, 600), G, { look: 'sniff', to: 'right' });
+          return;
+        }
+        skyDrift([[60, 170, 120, .1], [120, 120, 95, .45], [45, 100, 140, .7, .9], [150, 90, 110, .9, .85]]);
+        const ch = one(T, 'prop_chimney_far', 130); put(T, ch, X(880, 640), 330); RS.ch = ch;
+        RS.c2 = [0, 1].map(() => { const c = one(T, 'cloud_white', 110); hide(c); return c; });
+        put(T, dog, X(150, 360), G, { look: 'run', to: 'left' }); put(T, nuna, X(300, 420), G, { look: 'walk', to: 'left' });
+        put(T, oppa, X(400, 480), G, { look: 'walk', to: 'left' }); put(T, agi, X(540, 560), G, { look: 'wave', to: 'right' });
+        const C0 = [ch.x + 6, ch.y - 124]; RS.C0 = C0;
+        chimneyLoop(C0, [C0[0], C0[1] - 40], [C0[0] - 160, C0[1] - 70], { s0: .25, s1: .9 });
+      },
+      '02_hill'() {
+        skyDrift([[60, 120, 95, .35], [120, 90, 75, .75, .9]]);
+        put(T, nuna, X(180, 330), G, { look: 'run', to: 'right' }); put(T, oppa, X(280, 410), G, { look: 'run', to: 'right' });
+        put(T, agi, X(370, 480), G, { look: 'run', to: 'right' }); put(T, dog, X(500, 560), G, { look: 'nose', to: 'right' });
+        const trail = el('path', { d: 'M520 410 C600 360 640 300 720 260 S860 170 920 150', fill: 'none', stroke: '#E87FA8', 'stroke-width': 7, 'stroke-linecap': 'round', 'stroke-dasharray': '2 16', opacity: .85 }, T.bg);
+        trail.animate([{ strokeDashoffset: 0 }, { strokeDashoffset: -72 }], { duration: 1200, iterations: Infinity });
+      },
+      '03_chimney'() {
+        RS.cl = SKYR.map(([, , shape]) => mk(T, { c: ['cloud_white', 140], s: ['cloud_' + shape, 150] }, false));
+        put(T, nuna, X(250, 390), G, { look: 'lookup', to: 'right' }); put(T, oppa, X(345, 455), G, { look: 'lookup', to: 'right' });
+        put(T, agi, X(430, 525), G, { look: 'point', to: 'right' }); put(T, dog, X(160, 600), G, { look: 'lookup', to: 'right' });
+        RS.cl.forEach(hide);
+      },
+      '04_door'() {
+        put(T, nuna, X(330, 520), G, { look: 'lookup', to: 'right' }); put(T, oppa, X(430, 590), G, { look: 'lookup', to: 'right' });
+        put(T, agi, X(520, 650), G, { look: 'lookup', to: 'right' }); put(T, dog, X(700, 760), G, { look: 'nose', to: 'right' });
+      },
+      '05_belt_v2'() {
+        put(T, oppa, X(240, 300), G, { look: 'reach', to: 'right' }); put(T, nuna, X(400, 420), G, { look: 'lookup', to: 'right' });
+        put(T, agi, X(520, 500), G, { look: 'clap', to: 'right' }); put(T, dog, X(130, 230), G, { look: 'sniff', to: 'right' });
+        RS.drops = [];
+      },
+      '06_press_v2'() {
+        put(T, oppa, X(205, 330), G, { look: 'press', to: 'right' }); put(T, nuna, X(110, 270), G, { look: 'clap', to: 'right' });
+        put(T, agi, X(820, 650), G, { look: 'point', to: 'left' }); put(T, dog, X(730, 600), G, { look: 'lookup', to: 'left' });
+        RS.shapes = ['rabbit', 'whale', 'dog'].map(sh => { const c = one(T, 'cloud_' + sh, 110); hide(c); return c; });
+      },
+      '07_button_v2'(n) {
+        if (n === 1) {
+          put(T, agi, X(250, 260), G, { look: 'lookup', to: 'left' }); put(T, nuna, X(370, 360), G, { look: 'lookup', to: 'left' });
+          put(T, oppa, X(460, 430), G, { look: 'lookup', to: 'left' }); put(T, dog, X(600, 500), G, { look: 'wag', to: 'right' });
+          RS.dc = one(T, 'cloud_dog', 120); put(T, RS.dc, X(660, 560), 360);
+          return;
+        }
+        put(T, baby, 520, 330, { look: 'wide', to: 'right', s: 1 });
+        put(T, nuna, X(250, 390), G, { look: 'wave', to: 'right' }); put(T, agi, X(340, 445), G, { look: 'wave', to: 'right' });
+        put(T, oppa, X(430, 505), G, { look: 'lookup', to: 'right' }); put(T, dog, X(600, 620), G, { look: 'bark', to: 'right' });
+      },
+      '08_tank_room'() {
+        put(T, nuna, X(110, 400), G, { look: 'tiptoe', to: 'right' }); put(T, oppa, X(200, 455), G, { look: 'tiptoe', to: 'right' });
+        put(T, agi, X(280, 505), G, { look: 'lookup', to: 'right' }); put(T, dog, X(380, 380), G, { look: 'sniff', to: 'right' });
+        RS.darks = [650, 760, 870].map((x, i) => { const d = one(T, ['dark_drink', 'dark_drink2', 'dark_drink3'][i], [150, 130, 115][i]); put(T, d, x, 222, { s: .85 }); return d; });
+      },
+      '09_bell_room'(n) {
+        put(T, nuna, X(430, 500), G, { look: 'lookup', to: 'right' }); put(T, oppa, X(520, 560), G, { look: 'lookup', to: 'right' });
+        put(T, agi, X(600, 620), G, { look: 'lookup', to: 'right' }); put(T, dog, X(330, 440), G, { look: 'lookup', to: 'left' });
+        if (n === 1) RS.march = [0, 1, 2].map(i => { const d = one(T, ['dark_march', 'dark_march2', 'dark_march3'][i], [140, 120, 105][i]); put(T, d, 640 + i * 110, 300, { s: .8 }); return d; });
+        else put(T, baby, X(110, 300), G - 10, { look: 'huddle', to: 'right' });
+      },
+      '10_corner_close'() {
+        put(T, baby, 470, 330, { look: 'huddle', to: 'right', s: 1.2 }); put(T, agi, X(330, 360), G, { look: 'pet', to: 'right' });
+        put(T, nuna, X(680, 600), G, { look: 'lookup', to: 'left' }); put(T, oppa, X(800, 640), G, { look: 'lookup', to: 'left' });
+      },
+      '12_storm'() {
+        const big = one(T, 'dark_bump', 150); put(T, big, 760, 210);
+        put(T, baby, 420, 170, { look: 'up', to: 'right' });
+        put(T, nuna, X(380, 430), G, { look: 'lookup', to: 'right' }); put(T, oppa, X(470, 490), G, { look: 'lookup', to: 'right' });
+        put(T, agi, X(550, 545), G, { look: 'lookup', to: 'right' }); put(T, dog, X(680, 600), G, { look: 'wag', to: 'left' });
+        startRain(0, 1000, -20, 14);
+      },
+      '13_rain'() {
+        put(T, nuna, X(250, 380), G, { look: 'lookup', to: 'right' }); put(T, oppa, X(420, 450), G, { look: 'lookup', to: 'right' });
+        put(T, agi, X(580, 520), G, { look: 'lookup', to: 'right' }); put(T, dog, X(740, 610), G, { look: 'lookup', to: 'left' });
+        RS.rd = 0;
+      },
+      '14_soil_v2'() {
+        put(T, baby, X(780, 620), 120, { look: 'sorry', to: 'left' });
+        put(T, dog, X(860, 640), G + 20, { look: 'sniff', to: 'left' });
+        put(T, nuna, X(110, 300), G + 20, { look: 'crouch', to: 'right' }); put(T, agi, X(170, 330), G + 30, { look: 'crouch', to: 'right' }); put(T, oppa, X(920, 700), G + 20, { look: 'crouch', to: 'left' });
+        startRain(0, 1000, -20, 6);
+      },
+      '15_rainbow_v2'() {
+        skyDrift([[90, 110, 120, .2, .9], [60, 80, 150, .75, .85]]);
+        put(T, baby, X(820, 640), 150, { look: 'sorry', to: 'left' });
+        put(T, nuna, X(330, 380), G, { look: 'point', to: 'right' }); put(T, oppa, X(420, 440), G, { look: 'clap', to: 'right' });
+        put(T, agi, X(500, 500), G, { look: 'jump', to: 'right' }); put(T, dog, X(620, 580), G, { look: 'sniff', to: 'right' });
+      },
+    };
+    const RA = {
+      set(key) {
+        const n = rSeen[key] = (rSeen[key] || 0) + 1; rTag = key + n; RS = {};
+        allHide();
+        let cx = RCX[key] || 500;
+        if (key === '09_bell_room' && n === 2 && P) cx = 500;
+        if (key === '07_button_v2' && n === 2) cx = 560;
+        scene(key === '01_road' && n === 2 ? '16_road_bloom' : key, cx);
+        (RLAY[key] || (() => {}))(n);
+      },
+      cam(a) { if (a === 'wide') { if (inst()) camSnap(P ? (RCX[rTag.replace(/\d$/, '')] || 500) : 500, 280, 1); } else { const [x, y, z] = String(a).split(',').map(Number); inst() ? camSnap(x, y, z || 1) : T.camTo(x, y, z || 1, 800); } },
+      kid(id, verb, a1, a2) {
+        const k = RK[id]; if (!k) return console.warn('[read] kid 모름', id);
+        if (verb === 'look') return k.look(k.looks[a1] ? a1 : 'lookup', a2);
+        if (verb === 'hop') return k.hop(id === 'agi' ? 24 : 18, 340);
+        console.warn('[read] kid 동사 모름', verb);
+      },
+      kids(verb, a1, a2) {
+        if (verb === 'look') { kids.forEach(k => k.look(k.looks[a1] ? a1 : (a1 === 'wave' ? 'clap' : 'lookup'), a2)); return; }   // 이현이는 손 흔들기 그림이 없어 손뼉으로
+        if (verb !== 'walk') return console.warn('[read] kids 동사 모름', verb);
+        const [x, ms] = String(a1).split(',').map(Number);
+        if (rTag === '02_hill1') { return Promise.all(kids.map(k => k.move(k.x + 200, G - 40, ms || 2000, 'linear'))); }
+        if (rTag === '04_door1') {   // 열린 문 틈으로 걸어 들어가 어둠 속으로 사라진다 (개는 먼저)
+          const DX = 723, DOORY = 428, my = live();
+          const enter = async (k, xx, wait) => {
+            await sleep(wait); if (!my()) return; await k.move(xx, G - 6, 1500, 'ease-in-out'); if (!my()) return;
+            const x0 = k.x, y0 = k.y, f = k.flip, s0 = k.scale;
+            await k.pos.animate([{ transform: `translate(${x0}px,${y0}px) scale(${f * s0},${s0})`, opacity: 1 }, { transform: `translate(${DX}px,${DOORY + 20}px) scale(${f * s0 * .6},${s0 * .6})`, opacity: 1, offset: .6 },
+              { transform: `translate(${DX}px,${DOORY}px) scale(${f * s0 * .5},${s0 * .5})`, opacity: 0 }], { duration: 1300, easing: 'ease-in', fill: 'forwards' }).finished;
+            hide(k);
+          };
+          enter(dog, DX - 10, 0); kids.forEach((k, i) => enter(k, DX - 25 + i * 22, 900 + i * 450));
+          return;
+        }
+        if (rTag === '07_button_v21' || rTag === '07_button_v22') {   // 단추 방 두 번째: 삼남매가 밖으로 달려 나간다
+          const my = live(); kids.forEach((k, i) => k.move(1100 + i * 60, G, 1500 + i * 150, 'ease-in').then(() => { if (my()) hide(k); })); return;
+        }
+        if (rTag === '01_road2') {   // 왔던 길로 집에: 꿀떡이는 앞서 달리고 다현·이현이 뒤따른다 (은우는 손 흔들며 서 있다)
+          dog.move(X(-60, 260), G, 3800, 'linear'); nuna.move(X(160, 340), G, ms || 2500, 'linear'); oppa.move(X(260, 400), G, ms || 2500, 'linear'); return;
+        }
+        kids.forEach(k => k.move(x, G, ms || 1500));
+      },
+      dog(verb, a1, a2) {
+        if (!onS(dog) && verb === 'look') { put(T, dog, X(580, 520), G, { look: a1, to: a2 || 'left' }); if (!inst()) fadeIn(dog, 300); return; }
+        if (verb === 'look') return dog.look(a1, a2);
+        if (verb === 'hop') return dog.hop(10, 260);
+        if (verb === 'sneeze') { const hx = RS.HOLE3 || 700; for (let k = 0; k < 5; k++) puff(hx + 20 - k * 10, 303 - k * 8); T.pop(dog.x + 20, dog.y - 280, tr('에취!')); return; }
+        if (verb === 'walk') {
+          const [x, , ms] = String(a1).split(',').map(Number);
+          if (rTag === '02_hill1') { const my = live(); dog.move(X(1180, 780), 330, ms + 400, 'ease-in').then(() => { if (my()) hide(dog); }); return; }
+          if (rTag === '06_press_v21') { RS.HOLE3 = 628; return dog.move(628 + 85, G, ms || 900); }
+          if (rTag === '09_bell_room2') return dog.move(baby.x + 120, G, ms || 1600, 'linear');
+          return dog.move(x, G, ms || 1000);
+        }
+        console.warn('[read] dog 동사 모름', verb);
+      },
+      sky() { /* 하늘 구름은 장면을 차릴 때 이미 떠다닌다 */ },
+      chimney(verb) {
+        if (verb === 'steam') {
+          if (RS.steam) return; RS.steam = 1;
+          chimneyLoop(C0R, ctlR(FARR), FARR, { s1: 2.4 }); return;
+        }
+        if (verb === 'cloud') {   // 김 덩이가 줄지어 올라 하늘 세 곳에서 구름이 된다 (한 번 눌러 둔 것처럼 저절로)
+          if (!RS.cl) return;
+          const my = live();
+          (async () => { for (let i = 1; i <= 3 && my(); i++) { T.pop(C0R[0] + 70, C0R[1] + 60, tr(['폴폴', '뭉게', '퐁!'][i - 1])); const [tx, ty] = SKYR[i - 1]; smokeToCloud(RS.cl[i - 1], C0R, ctlR([tx, ty]), [tx, ty], 3200 + i * 300, CSR, i === 1); await sleep(600); } })();
+          return;
+        }
+      },
+      clouds(verb) {
+        if (verb !== 'shapes' || !RS.cl) return;
+        const my = live();
+        (async () => {
+          for (let i = 0; i < 3 && my(); i++) {
+            if (i > 0) await sleep(400);
+            const c = RS.cl[i]; morph(c, 's'); c.hop(14, 360); popSfx(T); puff(c.x, c.y - 70 * CSR); T.pop(c.x, c.y + 30, tr(SKYR[i][3]));
+            kids[i].look('jump'); kids[i].hop(16, 320); await sleep(500); kids[i].look('lookup');
+          }
+        })();
+      },
+      door() { AudioFX.sfx('creak') || popSfx(T); },
+      belt(verb) {
+        if (verb !== 'drops') return;
+        const my = live(), FX = 198, FY = 222, BY = 300, DX0 = X(FX, 250), DH = 100;
+        (async () => {
+          for (let i = 1; i <= 3 && my(); i++) {
+            const d = one(T, 'prop_drop', DH); put(T, d, DX0, FY + 62); fadeIn(d, 300); RS.drops.push(d);
+            await sleep(450); if (!my()) return;
+            d.pos.animate([{ transform: `translate(${DX0}px,${d.y}px) scale(${d.flip * d.scale},${d.scale})` }, { transform: `translate(${DX0}px,${BY}px) scale(${d.flip * d.scale},${d.scale})` }], { duration: 500, easing: 'ease-in', fill: 'forwards' });
+            AudioFX.sfx('ding') || popSfx(T); T.pop(DX0 + 70, FY - 100, tr('똑!'), '#4A90D9');
+            await sleep(500);
+          }
+        })();
+      },
+      horn(verb) {
+        if (verb !== 'blow') return;
+        (RS.drops || []).forEach(d => d.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }));
+        const cloud = one(T, 'cloud_white', 40); put(T, cloud, 680, 310); hide(cloud); RS.cloud = cloud;
+        AudioFX.sfx('blow') || T.tone([300, 200], .3, { vol: .08 });
+      },
+      cloud(verb, n) {
+        if (verb !== 'grow') return;
+        const cloud = RS.cloud, sizes = [70, 110, 160], BY = 300; if (!cloud) return;
+        const step = i => {
+          if (i === 1) { put(T, cloud, 680, BY + 10); fadeIn(cloud, 300); }
+          cloud.setScale(sizes[i - 1] / 40); cloud.place(680, BY + 10); cloud.hop(10, 300);
+          AudioFX.sfx('blow') || T.tone([300, 200], .3, { vol: .08 });
+          T.pop(680, BY - sizes[i - 1] - 30, tr(['뭉게', '뭉게뭉게', '뭉게뭉게뭉게!'][i - 1]));
+        };
+        if (+n === 1) {   // 한 줄을 읽는 동안 세 단계로 커진다 (2·3 은 시간 맞춰 저절로)
+          const my = live(); step(1);
+          setTimeout(() => { if (my()) step(2); }, 1100); setTimeout(() => { if (my()) step(3); }, 2200);
+          setTimeout(() => { if (my()) { popSfx(T); puff(680, 230); T.pop(680, 90, tr('퐁!')); } }, 3200);
+        }
+      },
+      press(shape) {
+        const i = { rabbit: 1, whale: 2, puppy: 3 }[shape]; if (!i || !RS.shapes) return;
+        const HOLES = [[378, 206], [500, 219], [628, 219]], BELT = 343, c = RS.shapes[i - 1], [hx, hy] = HOLES[i - 1], my = live();
+        oppa.hop(8, 220); AudioFX.sfx('bonk') || popSfx(T); T.shake();
+        put(T, c, hx, hy + 40, { s: .35 });
+        c.pos.animate([{ transform: `translate(${hx}px,${hy + 40}px) scale(.35)`, opacity: .4 }, { transform: `translate(${hx}px,${hy + 95}px) scale(.8)`, opacity: 1, offset: .55 },
+          { transform: `translate(${hx}px,${BELT}px) scale(1)`, opacity: 1 }], { duration: 1800, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'forwards' }).finished.then(() => {
+          if (!my()) return;
+          c.pos.getAnimations().forEach(an => an.cancel()); c.setScale(1); c.place(hx, BELT); c.hop(10, 300); popSfx(T); puff(hx, BELT - 50);
+          T.pop(hx, BELT - 150, tr(['토끼!', '고래!', '강아지!'][i - 1]));
+        }).catch(() => {});
+      },
+      button() { agi.look('press', 'left'); AudioFX.sfx('bonk') || popSfx(T); T.shake(); },
+      flue(verb, who) {
+        const FLX = 771, FLY = 400, my = live();
+        if (verb !== 'up') return;
+        if (who === 'puppy' && RS.dc) {
+          const dc = RS.dc, sx = dc.x, sy = dc.y; AudioFX.sfx('whoosh') || popSfx(T);
+          dc.pos.animate([{ transform: `translate(${sx}px,${sy}px) scale(1)`, opacity: 1 }, { transform: `translate(${(sx + FLX) / 2}px,${sy + 10}px) scale(.8) rotate(-8deg)`, opacity: 1, offset: .45 },
+            { transform: `translate(${FLX}px,${FLY + 10}px) scale(.15)`, opacity: 0 }], { duration: 1600, easing: 'ease-in', fill: 'forwards' }).finished.then(() => { if (my()) { hide(dc); T.pop(FLX, 120, tr('퐁!')); } }, () => {});
+        }
+        if (who === 'baby') {
+          baby.look('up', 'right'); AudioFX.sfx('whoosh') || popSfx(T);
+          const sx = baby.x, sy = baby.y;
+          baby.pos.animate([{ transform: `translate(${sx}px,${sy}px) scale(1)`, opacity: 1 }, { transform: `translate(${(sx + FLX) / 2}px,${sy - 20}px) scale(.8)`, opacity: 1, offset: .45 },
+            { transform: `translate(${FLX}px,${FLY + 10}px) scale(.15)`, opacity: 0 }], { duration: 1600, easing: 'ease-in', fill: 'forwards' }).finished.then(() => { if (my()) hide(baby); }, () => {});
+        }
+      },
+      tank(verb) {
+        if (verb !== 'drink' || !RS.darks) return;
+        const my = live();
+        (async () => { for (let i = 0; i < 3 && my(); i++) { const d = RS.darks[i]; d.setScale(1.05); d.place(d.x, d.y); d.hop(6, 300); AudioFX.sfx('gulp') || popSfx(T); await sleep(600); } })();
+      },
+      bell() {
+        const my = live();
+        (async () => { for (let k = 0; k < 3 && my(); k++) { AudioFX.sfx('bell') || T.tone([880], .3, { vol: .1 }); await sleep(380); } })();
+      },
+      darks(verb) {
+        if (verb !== 'lineout' || !RS.march) return;
+        const my = live();
+        RS.march.forEach((d, i) => d.move(1060 + i * 60, 300, 2200 + i * 200, 'ease-in').then(() => { if (my()) hide(d); }));
+      },
+      baby(verb) {
+        if (verb === 'curl') { if (!onS(baby)) { put(T, baby, X(110, 300), G - 10, { look: 'huddle', to: 'right' }); } else baby.look('huddle'); return; }
+        if (verb === 'eyes') { morph(baby, 'wide'); baby.hop(12, 360); return; }
+        if (verb === 'up') { baby.look('up', 'right'); return; }
+        if (verb === 'pet') {
+          const my = live();
+          (async () => { for (let i = 1; i <= 3 && my(); i++) { baby.hop(6, 260); agi.hop(8, 260); popSfx(T); T.pop(baby.x + 30, baby.y - 230, tr(['살살', '쓰담', '토닥'][i - 1])); await sleep(600); } })();
+          return;
+        }
+        if (verb === 'white') {   // 남은 비를 톡톡 내리며 조금씩 작아지고 옅어져 하얀 아기 구름만 남는다
+          const my = live();
+          startRain(baby.x - 50, baby.x + 50, baby.y - 10, 8);
+          const bx = baby.x, by = baby.y, s0 = baby.scale || 1;
+          baby.pos.animate([{ transform: `translate(${bx}px,${by}px) scale(${s0})`, opacity: 1 }, { transform: `translate(${bx}px,${by - 10}px) scale(${s0 * .55})`, opacity: .85 }], { duration: 3200, easing: 'ease-in-out', fill: 'forwards' });
+          morph(baby, 'white', 3200); AudioFX.sfx('sparkle') || popSfx(T);
+          setTimeout(() => { if (!my()) return; stopRain(); baby.pos.getAnimations().forEach(an => an.cancel()); baby.setScale(s0 * .55); baby.place(bx, by - 10); baby.pos.style.opacity = .85; RS.white = true; }, 3400);
+        }
+      },
+      storm(verb) {
+        if (verb === 'bump') {
+          baby.move(620, 190, 900, 'ease-in'); const my = live();
+          setTimeout(() => { if (my()) { T.shake(); AudioFX.sfx('bonk') || popSfx(T); morph(baby, 'sorry'); } }, 900);
+          return;
+        }
+        if (verb === 'flash') {
+          const fl = el('rect', { x: -40, y: -24, width: 1080, height: 620, fill: '#fff', opacity: 0 }, T.fx);
+          fl.animate([{ opacity: 0 }, { opacity: .85 }, { opacity: 0 }, { opacity: .5 }, { opacity: 0 }], { duration: 700 }).onfinish = () => fl.remove();
+          T.shake(); T.pop(500, 150, tr('번쩍!'), '#E8A317');
+        }
+      },
+      async cut(k) {
+        if (k === 'hug') {
+          await T.cutImage([{ src: src('cut_hug'), sfx: 'swish', hold: 3200 }], { hold: 3200 });
+          put(T, nuna, X(440, 450), G, { look: 'hug', to: 'right' }); put(T, oppa, X(520, 510), G, { look: 'hug', to: 'left' }); put(T, agi, X(480, 480), G + 6, { look: 'hug', to: 'right' });
+          return;
+        }
+        if (k === 'rainbow') await T.cutImage([{ src: src('cut_rainbow'), sfx: 'sparkle', hold: 3000 }], { hold: 3000 });
+      },
+      rain(verb) {
+        if (verb === 'start') { RS.rd = 0; return; }
+        if (verb !== 'drops') return;
+        const i = RS.rd = (RS.rd || 0) + 1, d = one(T, 'prop_drop', 46), x = X(330 + (i - 1) * 170, 400 + (i - 1) * 50);
+        put(T, d, x, 160); fadeIn(d, 300);
+        setTimeout(() => { d.pos.animate([{ transform: `translate(${x}px,160px)` }, { transform: `translate(${x}px,${G}px)`, opacity: 0 }], { duration: 600, easing: 'ease-in', fill: 'forwards' }); }, 300);
+        AudioFX.sfx('ding') || popSfx(T); startRain(0, 1000, -20, [4, 10, 24][Math.min(i, 3) - 1]);
+      },
+      puddle() {
+        const my = live();
+        (async () => { for (let i = 0; i < 3 && my(); i++) { const k = kids[i]; k.hop(30, 420); ring(k.x, G + 4); ring(k.x + 30, G + 8); AudioFX.sfx('splash') || popSfx(T); await sleep(600); } })();
+      },
+      soil(verb) {
+        const my = live();
+        const PX = x => P ? Math.round(500 + (x - 500) * .44) : x;
+        const HOLE = 492, BACK = 452, FRONT = 546;
+        const behind = baby.pos;
+        const sprout = (key, x, y, s = 1, ms = 600) => {
+          const p = put(T, key, PX(x), y, { s }); T.world.insertBefore(p.pos, behind);
+          p.body.animate([{ transform: 'scale(.2)' }, { transform: 'scale(1)' }], { duration: ms, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+          return p;
+        };
+        const plant = (k, x, y, s) => sprout(one(T, 'prop_' + (FLW.includes(k) ? 'flower_' + k : k), PH[k]), x, y, s);
+        if (verb === 'sprout') {
+          const ORDER = [[505, 'sunflower'], [354, 'tulip_red'], [657, 'tulip_yellow'], [203, 'daisy_white'], [809, 'cosmos_pink']];
+          const buds = RS.buds = ORDER.map(([, k], i) => mk(T, { s0: ['prop_sprout', 90], s1: [i ? 'prop_flower_bud_mix' : 'prop_bud', i ? PH.bud_mix : 120], s2: ['prop_flower_' + k, PH[k]] }, false));
+          buds.forEach((b, i) => setTimeout(() => { if (my()) { sprout(b, ORDER[i][0], HOLE, 1); b.look('s0'); } }, i * 120));
+          popSfx(T); return;
+        }
+        if (verb === 'flower') {
+          const buds = RS.buds; if (!buds) return;
+          stopRain();
+          buds.forEach(b => morph(b, 's1', 400));
+          setTimeout(() => { if (!my()) return; morph(buds[0], 's2'); buds.slice(1).forEach((b, i) => setTimeout(() => { if (my()) morph(b, 's2'); }, 300 + i * 140)); }, 450);
+          const FILL = [[430, BACK, 'wild_purple', .85], [580, BACK, 'tulip_pink', .85], [280, BACK, 'bell_blue', .85], [730, BACK, 'cluster_a', .85], [130, BACK, 'poppy_orange', .85], [880, BACK, 'cluster_b', .85],
+            [430, FRONT, 'daisy_white', 1], [590, FRONT, 'cosmos_pink', 1], [30, FRONT, 'cluster_a', 1], [975, FRONT, 'cluster_b', 1]];
+          (async () => { await sleep(800); for (const [x, y, k, sc] of FILL) { if (!my()) return; plant(k, x, y, sc); await sleep(90); } })();
+          return;
+        }
+        if (verb === 'berry') {
+          const BUSH = [[300, 'berry_bush_b'], [700, 'berry_bush'], [880, 'berry_bush']];
+          const bushes = BUSH.map(([x, k]) => { const b = mk(T, { s0: ['prop_berry_green', 110], s1: ['prop_' + k, PH[k]] }, false); sprout(b, x, FRONT + 4, 1); b.look('s0'); return b; });
+          setTimeout(() => { if (my()) bushes.forEach(b => morph(b, 's1')); }, 500);
+          const BITS = [[240, 'berry_single'], [370, 'berry_flower'], [470, 'berry_single'], [560, 'berry_flower'], [640, 'berry_single'], [770, 'berry_single']];
+          (async () => { await sleep(300); for (const [x, k] of BITS) { if (!my()) return; plant(k, x, FRONT + 6, 1); await sleep(100); } })();
+          dog.move(X(790, 610), G + 20, 900);
+          setTimeout(() => { if (my()) morph(baby, 'wide'); }, 2600);
+        }
+      },
+      rainbow(verb) {
+        if (verb !== 'count') return;
+        const COL = ['#E4573D', '#F29A38', '#F6C945', '#6FAE5A', '#4A90D9', '#3F4FA0', '#8B5CB8'], NAME = ['빨강!', '주황!', '노랑!', '초록!', '파랑!', '남색!', '보라!'], my = live();
+        (async () => {
+          for (let i = 1; i <= 7 && my(); i++) {
+            const t = Math.PI * (1 - (i - .5) / 7), x = 540 + 470 * Math.cos(t), y = 380 - 320 * Math.sin(t);
+            popSfx(T); T.pop(X(x, Math.max(320, Math.min(680, x))), Math.max(70, y), tr(NAME[i - 1]), COL[i - 1]); await sleep(520);
+          }
+        })();
+      },
+      fx(n) {
+        if (n === 'pong') {
+          popSfx(T, true);
+          if (rTag === '15_rainbow_v21' && RS.white) { baby.hop(16, 400); T.pop(baby.x, baby.y - 140, tr('퐁!')); }
+          if (rTag === '01_road2' && RS.c2) { const my = live(); (async () => { for (let k = 0; k < 2 && my(); k++) { const C0 = RS.C0; smokeToCloud(RS.c2[k], C0, [C0[0], C0[1] - 50], [[X(720, 600), 150], [X(600, 520), 120]][k], 2400, P ? .75 : 1); await sleep(700); } })(); }
+          return;
+        }
+        if (n === 'ding') return AudioFX.sfx('ding') || popSfx(T);
+        if (n === 'splash') return AudioFX.sfx('splash') || popSfx(T);
+        if (n === 'whoosh') return AudioFX.sfx('whoosh') || popSfx(T);
+        if (n === 'thunder') return AudioFX.sfx('boom') || T.tone([110, 55], .6, { type: 'sawtooth', vol: .18 });
+        if (n === 'sneeze') return AudioFX.sfx('cork') || popSfx(T);
+        if (n === 'woof') { dog.hop(10, 260); T.pop(dog.x, dog.y - 260, tr('멍!')); return; }
+        if (n === 'sniff') { popSfx(T); dog.hop(10, 260); T.pop(dog.x + 30, dog.y - 250, tr('킁킁!')); return; }
+        console.warn('[read] fx 모름', n);
+      },
+      pop(spec) { const [x, y, ...w] = String(spec).split(','); const px = P ? Math.max(RCX[rTag.replace(/\d$/, '')] - 170 || 330, Math.min((RCX[rTag.replace(/\d$/, '')] || 500) + 170, +x)) : +x; T.pop(px, +y, tr(w.join(','))); },
+    };
+    const READ_ACTS = RA;
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     const SCENES = [];
     const S = f => SCENES.push(f);
 
@@ -727,5 +1110,5 @@
     return '또 놀러 와, 아기 구름아!';
   }
 
-  Tale.mount({ title: '구름 공장', subtitle: '다현이와 이현이와 은우와 꿀떡이의 구름 공장', transition: 'page', run: T => run(Tale.api) });
+  Tale.mount({ title: '구름 공장', subtitle: '다현이와 이현이와 은우와 꿀떡이의 구름 공장', transition: 'page', read: true, run: T => run(Tale.api) });
 })();
