@@ -204,9 +204,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Dahyun hugged the unicorn tight.",
   "c": "audio/el/unicorn/en/nar_042efac988.mp3"
  },
- "다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.": {
-  "t": "Dahyun came back to the hill by her home with the unicorn.",
-  "c": "audio/el/unicorn/en/nar_8370cc3c38.mp3"
+ "다음 날 아침, 다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.": {
+  "t": "The next morning, Dahyun came back to the hill by her home with the unicorn.",
+  "c": "audio/el/unicorn/en/nar_ff0d8ed59c.mp3"
  },
  "다현이는 아침에 꺾은 빨간 꽃을 유니콘 갈기에 꽂아 주었어요.": {
   "t": "Dahyun tucked the red flower she picked this morning into the unicorn's mane.",

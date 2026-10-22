@@ -51,7 +51,7 @@ Object.assign(NARRATION_CLIPS, {
  "유니콘…!": "audio/el/unicorn/kid_3ab07dbfa3.mp3",
  "유니콘을 톡, 눌러서 인사해요.": "audio/el/unicorn/nar_b90f280b06.mp3",
  "다현이는 유니콘을 꼭 안았어요.": "audio/el/unicorn/nar_812353b733.mp3",
- "다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.": "audio/el/unicorn/nar_e68f11d4f4.mp3",
+ "다음 날 아침, 다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.": "audio/el/unicorn/nar_3a05f82ba3.mp3",
  "다현이는 아침에 꺾은 빨간 꽃을 유니콘 갈기에 꽂아 주었어요.": "audio/el/unicorn/nar_4cc5a3f713.mp3",
  "다현이는 아침에 꺾은 주황 꽃을 유니콘 갈기에 꽂아 주었어요.": "audio/el/unicorn/nar_55251ec733.mp3",
  "다현이는 아침에 꺾은 노란 꽃을 유니콘 갈기에 꽂아 주었어요.": "audio/el/unicorn/nar_153088ab66.mp3",
