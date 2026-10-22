@@ -337,6 +337,325 @@
       sway(L.chand, 1.5, 6000);
     };
 
+    /* ===== 읽어 주기 (docs/READ_MODE.md §10): 놀이판 연출 함수를 동사 이름으로 묶은 맵. 놀이판 흐름은 아래 그대로 ===== */
+    if (T.reading()) {
+      const inst = () => T.readInstant();
+      const R = { set: '', mf: null, night: null, ffly: null, bedsG: null, winG: null, glass: null, tinted: false, fr: [], laid: false, worryHill: false, crewN: null, crewE: null };
+      const FAR = .62, FL = 548, C7 = 330, CHX = [450, 530, 610, 690, 770, 850];
+      const SETS = { queen_room: 'queen_room_v2', forest: 'forest_v2', house_front: 'house_front_v2', house_table2: 'house_table2', house_bed2: 'house_bed2', hill: 'hill_v2' };
+      const CARD = { house_front: '사과 할머니', hill: '유리관' };
+      /* 세로 화면에서 가로와 다르게 놓던 자리 (놀이판의 X(가로, 세로) 값) */
+      const PM = { forest: { 400: 440, 610: 575, '-120': 240 }, house_table2: { 230: 300 }, house_bed2: { 860: 640, 330: 460 }, hill: { 205: 360, 195: 330, 770: 650 } };
+      const px = x => { x = +x; return P && PM[R.set] && PM[R.set][x] != null ? PM[R.set][x] : x; };
+      const xy = s => String(s).split(',').map(Number);
+      const fr = () => front(...R.fr);
+      const crewN = crew(T, { lanterns: true }), crewE = crew(T); hide(crewN); hide(crewE);
+      const crewCur = () => (R.set === 'hill' ? crewE : crewN);
+      /* 작은 침대 (놀이판 5장과 같은 자리) */
+      const BS = BED_H / 100, BY_B = 468, BY_F = 556;
+      const BPOS = { 2: [170, BY_B], 3: [390, BY_B], 4: [610, BY_B], 5: [830, BY_B], 0: [160, BY_F], 1: [500, BY_F], 6: [840, BY_F] };
+      const layBeds = () => { [2, 3, 4, 5, 0, 1, 6].forEach(i => put(T, beds[i], BPOS[i][0], BPOS[i][1], { s: BS })); };
+      let lying = -1;
+      const onBed = (i, look) => {
+        if (lying >= 0) beds[lying].pos.style.display = '';
+        put(T, snow, BPOS[i][0], BPOS[i][1], { look });
+        T.world.insertBefore(snow.pos, beds[i].pos.nextSibling); hide(beds[i]); lying = i;
+      };
+      /* 빈터 (놀이판 10·11장과 같은 층) */
+      const CX = 500, CY = 530, CW = 150 * ASP.prop_coffin;
+      const inCoffin = () => {
+        put(T, snow, CX + 4, CY - 150 * .24, { look: 'coffin', to: 'left' });
+        const glass = R.glass = T.el('g', {}, T.world);
+        const href = artSrc('prop_coffin'), box = { x: CX - CW / 2, y: CY - 150, width: CW, height: 150, preserveAspectRatio: 'none' };
+        T.el('image', { href, ...box, opacity: .3 }, glass);
+        const cid = 'swBase' + (++uid);
+        T.el('rect', { x: CX - CW / 2, y: CY - 150 * .27, width: CW, height: 150 * .27 }, T.el('clipPath', { id: cid }, glass));
+        T.el('image', { href, ...box, 'clip-path': `url(#${cid})` }, glass);
+        glass.style.transformBox = 'view-box';
+      };
+      const BIRD = { blue: [X(70, 640), X(122, 118)], robin: [X(930, 742), X(118, 112)] };
+      const meadowBack = () => {
+        [170, 500, 830].forEach((x, i) => put(T, L.fmid[i], x, 556, { to: i === 1 ? 'right' : 'left' }));
+        put(T, L.fawn, X(960, 770), 548, { to: 'left' });
+        put(T, L.rabbit, X(880, 700), 556);
+      };
+      const meadowFront = (fast = false) => {
+        put(T, L.branch[0], X(940, 700), 156); sway(L.branch[0], 1, 8000);
+        if (!P) { put(T, L.branch[1], 60, 156, { to: 'right' }); sway(L.branch[1], 1, 8600); }
+        put(T, L.blue, BIRD.blue[0], BIRD.blue[1], { to: 'right' }); put(T, L.robin, BIRD.robin[0], BIRD.robin[1], { to: 'left' });
+        if (P) hide(L.blue);
+        const bx = X([140, 880, 960], [330, 660, 600]), by = [250, 300, 220];
+        L.bf.forEach((b, i) => { if (i < (fast ? 3 : 2)) { put(T, b, bx[i], by[i]); flutter(b, fast); } else hide(b); });
+        put(T, L.ffront[0], 985, 600); put(T, L.ffront[1], 25, 618, { to: 'right' });
+        R.fr = [L.branch[0], L.branch[1], L.blue, L.robin, ...L.bf, ...L.ffront]; fr();
+      };
+      const wake = async () => {
+        sfx(T, 'sparkle', () => T.tone([700, 1400], .4, { vol: .12 }));
+        sparkleRing(T, CX, CY - 80, 190, 18, ['#EBD08A', '#F6ECD8']);
+        if (!P) T.camTo(500, 300, 1.08, 900).then(() => T.camTo(500, 280, 1, 1400));
+        const land = async (b, x, ms, d) => {
+          await sleep(d); b.pos.style.display = ''; T.world.appendChild(b.pos);
+          const x0 = b.x, y0 = b.y, y1 = CY - 150 + 12, mx = (x0 + x) / 2, my = Math.min(y0, y1) - 60;
+          b.pos.removeAttribute('transform');
+          const t = (xx, yy) => `translate(${xx}px,${yy}px) scale(${b.flip * b.scale},${b.scale})`;
+          await T.anim(b.pos, [{ transform: t(x0, y0) }, { transform: t(mx, my) }, { transform: t(x, y1) }], { duration: ms, easing: 'ease-in-out' });
+          b.pos.style.transform = ''; b.place(x, y1); await b.hop(6, 300);
+        };
+        land(L.blue, CX - 150, 900, 300); land(L.robin, CX + 150, 900, 600);
+        (async () => { await sleep(800); popSfx(T); L.rabbit.hop(14, 400).then(() => L.rabbit.hop(14, 400)); L.fawn.hop(8, 420); })();
+        (async () => { await sleep(1000); L.bf.forEach((b, i) => { const bx = X([140, 880, 960], [330, 660, 600]), by = [250, 300, 220]; put(T, b, bx[i], by[i]); flutter(b, true); }); fr(); })();
+      };
+      /* 창문 속 백설 (놀이판 9장) */
+      const WX = 162, SILL = 306, WS = .36;
+      const handX = () => granny.x - 215 * .765 * .42 * FAR, handY = 356 - 215 * .52 * FAR;
+      /* 문 안으로 들어간다 (놀이판 3장 그대로) */
+      const enterDoor = async () => {
+        const EX = 325, SILL3 = 336.5;
+        const tf = (x, y, s) => `translate(${x}px,${y}px) scale(${s},${s})`;
+        const stepTo = async (x, y, s, ms, extra) => {
+          const from = tf(snow.x, snow.y, snow.scale), to = tf(x, y, s);
+          snow.pos.removeAttribute('transform');
+          await Promise.all([T.anim(snow.pos, [{ transform: from }, { transform: to }], { duration: ms, easing: 'ease-in-out' }), extra && extra()]);
+          snow.pos.style.transform = ''; snow.scale = s; snow.place(x, y);
+        };
+        await snow.move(EX, 350, 900);
+        await stepTo(EX, SILL3, .44, 600);
+        door.wall.style.display = ''; door.slot.appendChild(snow.pos);
+        await stepTo(EX + 2, SILL3 - 6, .3, 1000, () => T.anim(snow.body, [{ filter: 'brightness(1)', opacity: 1 }, { filter: 'brightness(.35)', opacity: 1, offset: .6 }, { filter: 'brightness(.2)', opacity: 0 }], { duration: 1000, easing: 'ease-in' }));
+        hide(snow); snow.body.style.filter = ''; snow.body.style.opacity = ''; door.wall.style.display = 'none';
+        T.world.appendChild(snow.pos);
+      };
+      let building = null;
+
+      const READ_ACTS = {
+        set: key => {
+          const build = () => {
+            scene(SETS[key]); R.set = key; R.tinted = false; R.fr = []; R.mf = null; R.night = null; R.laid = false; R.worryHill = false; lying = -1;
+            if (key === 'forest') {
+              put(T, L.vine[0], X(120, 300), 196); sway(L.vine[0], 1.5, 7000);
+              put(T, L.vine[1], X(900, 720), 196, { to: 'right' }); sway(L.vine[1], 1.5, 7600);
+              put(T, L.mush, X(130, 290), 556); put(T, L.bells, X(900, 720), 556);
+              put(T, L.fern[0], 40, 590); put(T, L.fern[1], 980, 590, { to: 'right' });
+              R.fr = [L.fern[0], L.fern[1]];
+              R.ffly = fireflies(T, 14, P);
+            } else if (key === 'house_front') {
+              if (!P) { put(T, L.fern[0], 110, 448, { s: FAR }); R.fr = [L.fern[0]]; }
+            } else if (key === 'hill') {
+              meadowBack(); meadowFront();
+            }
+          };
+          if (inst()) { build(); return null; }
+          return T.sceneCard(tr(CARD[key] || ''), build);
+        },
+        cam: s => {
+          let [x, y, z] = xy(s);
+          if (P) {
+            if (R.set === 'house_front' && z === 1.7) { z = 1.5; x = x === 370 ? 380 : x === 280 ? 250 : x; }
+            else if (R.set === 'house_table2' && x === 500) x = 380;
+            else if (R.set === 'house_bed2' && x === 500 && R.laid) x = 160;
+            else if (R.set === 'hill' && x === 500 && R.worryHill) x = 430;
+          }
+          camSnap(x, y, z);
+        },
+        tint: s => { const [c, o] = s.split(','); tint(T, c, +o); R.tinted = true; },
+        night: m => {
+          if (m === 'on') { R.night = tint(T, '#1F2A56', .45); return null; }
+          const n = R.night; if (!n) return null;
+          if (inst()) { n.setAttribute('opacity', 0); return null; }
+          return T.anim(n, [{ opacity: .45 }, { opacity: 0 }], 1200).then(() => n.setAttribute('opacity', 0));
+        },
+        mirror: (a, b) => {
+          if (a === 'room') { R.mf = mirrorRoom(); return; }
+          if (a === 'face' && R.mf) { if (b === 'show') R.mf.show(); else R.mf.hide(); }
+        },
+        queen: (a, b) => {
+          if (a === 'look') queen.look(b === 'fist' ? 'fist' : 'mirror');
+          else if (a === 'hop') queen.hop(16, 320);
+        },
+        snow: (a, b, c, d) => {
+          if (a === 'look') {
+            if (b === 'awake' && lying >= 0 && R.set === 'house_bed2') {
+              beds[lying].pos.style.display = ''; const i = lying; lying = -1;
+              put(T, snow, BPOS[i][0] + 6, BPOS[i][1] - 34, { look: 'awake' }); T.world.insertBefore(snow.pos, beds[i].pos.nextSibling);
+            } else if (b === 'awake' && R.set === 'hill') {
+              put(T, snow, CX + 10, CY - 30, { look: 'awake' }); fadeIn(snow, 500);
+              T.world.appendChild(prince.pos); T.world.appendChild(crewE.pos); fr();
+            } else snow.look(b, c);
+          } else if (a === 'at') {
+            const [x, y] = xy(b); put(T, snow, px(x), y, { look: c || undefined, s: d ? +d : 1 }); fr();
+          } else if (a === 'move') {
+            const [x, y, ms] = xy(b); if (P) follow(px(x), ms);
+            return snow.move(px(x), y, ms);
+          } else if (a === 'hop') snow.hop(12, 320);
+          else if (a === 'wiggle') snow.wiggle(4, 450);
+          else if (a === 'hide') hide(snow);
+          else if (a === 'enter_door') return enterDoor();
+          else if (a === 'eat3') {
+            return (async () => {
+              for (const [x, w] of [[500, '냠!'], [640, '꿀꺽!'], [780, '냠냠!']]) {
+                follow(x); await snow.move(x, FL, 650);
+                sfx(T, w === '꿀꺽!' ? 'gulp' : 'chomp', () => popSfx(T)); snow.hop(10, 300); T.pop(x, FL - 250, tr(w));
+                await sleep(700);
+              }
+            })();
+          } else if (a === 'sit7') {
+            hide(chairs[6]);
+            put(T, snow, C7 + 170 * .6017 * .215, FL, { look: 'chair', to: 'right' });
+            sfx(T, 'squeak', () => popSfx(T)); snow.wiggle(4, 380); T.pop(C7, FL - 240, tr('영차!'));
+          } else if (a === 'onbed') {
+            const i = +b;
+            if (P && !inst()) follow(BPOS[i][0], 500);
+            onBed(i, c);
+            if (!inst() && c !== 'bedcurl') { popSfx(T); snow.wiggle(3, 420); }
+          } else if (a === 'window') {
+            const winG = R.winG = T.el('g', {}, T.world);
+            const id = 'swWin' + (++uid);
+            T.el('rect', { x: WX - 17, y: SILL - 44, width: 34, height: 44, rx: 15 }, T.el('clipPath', { id }, winG));
+            winG.setAttribute('clip-path', `url(#${id})`);
+            T.el('rect', { x: WX - 20, y: SILL - 48, width: 40, height: 52, fill: '#4A3626' }, winG);
+            put(T, snow, WX, SILL + 35, { look: 'receive', s: WS }); winG.appendChild(snow.pos);
+          } else if (a === 'fall') {
+            hide(apple); sfx(T, 'slide_down');
+            return snow.move(WX, SILL + 35 + 70, 1500, 'ease-in').then(() => { hide(snow); if (R.winG) R.winG.style.display = 'none'; });
+          }
+          return null;
+        },
+        hunter: (a, b) => {
+          if (a === 'at') { const [x, y] = xy(b); put(T, hunter, px(x), y); fr(); }
+          else if (a === 'shake') (async () => { await sleep(200); for (let i = 0; i < 3; i++) await hunter.wiggle(5, 520); })();
+        },
+        door: a => {
+          if (a === 'reset') door.reset(R.tinted);
+          else if (a === 'knock') {
+            door.front.animate([{ translate: '0 0' }, { translate: '0 -3px' }, { translate: '0 0' }], { duration: 300, iterations: 3, easing: 'ease-in-out' });
+            [0, 330, 660].forEach(d => setTimeout(() => sfx(T, 'knock', () => T.tone([180, 90], .12, { type: 'square', vol: .12 })), d));
+            return sleep(950);
+          } else if (a === 'open') { door.front.getAnimations().forEach(n => n.cancel()); return door.open(); }
+          return null;
+        },
+        table: a => {
+          if (a === 'set') { put(T, table, 640, FL - 30); chairs.forEach((c, i) => put(T, c, i < 6 ? CHX[i] : C7, FL)); }
+        },
+        beds: a => {
+          if (a === 'lay') { layBeds(); lying = -1; R.laid = true; }
+          else if (a === 'eight') {
+            return (async () => {
+              if (building) await building;
+              hide(hammerD); hide(plankD); hide(smileD);
+              const SX = [70, 160, 250, 340, 430, 520, 610], SYs = i => (i % 2 ? 552 : 496), SS = i => (i % 2 ? .82 : .74), BIGX = 790;
+              put(T, dwarfs, 340, 470, { s: .8 });
+              [0, 2, 4, 6, 1, 3, 5].forEach(i => put(T, beds[i], SX[i], SYs(i), { s: SS(i) }));
+              put(T, bigBed, BIGX, 554); fadeIn(bigBed, 500);
+              put(T, snow, P ? 700 : 930, 552, { look: 'stand' });
+              if (P) T.camTo(560, 280, 1, 700);
+            })();
+          }
+          return null;
+        },
+        dwarfs: a => {
+          if (a !== 'build') return null;
+          const X5 = X(500, 500);
+          building = (async () => {
+            put(T, planks, X5, 548, { s: 1.3 });
+            put(T, hammerD, X(330, 400), 548, { to: 'right' });
+            put(T, plankD, X(670, 600), 548, { to: 'left' });
+            for (let i = 0; i < 3; i++) {
+              hammerD.wiggle(10, 360); plankD.hop(10, 360);
+              sfx(T, 'knock', () => T.tone([180, 90], .12, { type: 'square', vol: .12 }));
+              T.pop(X5 + [-60, 50, -10][i], 330, tr(['뚝딱!', '쿵쿵!', '뚝딱!'][i]));
+              await sleep(700);
+            }
+            await fadeOut(T, planks, 300);
+            hide(hammerD); put(T, smileD, X(330, 400), 548); smileD.hop(14, 340);
+          })();
+          return building;
+        },
+        crew: (a, b, c) => {
+          const cw = crewCur();
+          if (a === 'enter') return cw.move(X(330, 460), 560, 2200);
+          if (a === 'at') { const [x, y] = xy(b); put(T, cw, px(x), y, { s: cw === crewE ? .85 : 1 }); fr(); }
+          else if (a === 'hopOne') {
+            const i = +b;
+            if (P) { const dx = cw.x - 150 * ASP.dwarfs_row / 2 + 150 * ASP.dwarfs_row / 7 * (i + .5); T.camTo(i < 6 ? dx : 740, 280, 1, 450); }
+            cw.hopOne(i);
+          } else if (a === 'hopAll') cw.hopAll(cw === crewE ? 18 : 12, 400);
+          else if (a === 'hide') { hide(crewN); hide(crewE); }
+          return null;
+        },
+        worry: (a, b) => {
+          if (a === 'at') {
+            const [x, y] = xy(b); put(T, worry, px(x), y, { s: R.set === 'house_front' ? FAR : 1 });
+            if (R.set === 'hill') R.worryHill = true; fr();
+          } else if (a === 'enter') return worry.move(X(360, 290), 360, 1400);
+          return null;
+        },
+        granny: (a, b, c) => {
+          if (a === 'at') { const [x, y] = xy(b); put(T, granny, x, y, { to: 'left', s: FAR }); fr(); }
+          else if (a === 'move') { const [x, y, ms] = xy(b); return granny.move(x, y, ms); }
+          else if (a === 'leave') { granny.turn('right'); return granny.move(560, 356, 1600).then(() => hide(granny)); }
+          return null;
+        },
+        apple: a => {
+          if (a === 'show') { put(T, apple, handX(), handY, { look: 'whole', s: FAR }); fadeIn(apple, 300); }
+          else if (a === 'give') {
+            return (async () => {
+              apple.setScale(.5); await apple.move(WX + 6, SILL - 8, 800);
+              sfx(T, 'pop'); await sleep(400); apple.look('bitten');
+            })();
+          }
+          return null;
+        },
+        coffin: a => {
+          if (a === 'set') {
+            put(T, coffin, CX, CY); put(T, shine, CX, CY - 40); hide(shine); inCoffin(); fr();
+          } else if (a === 'jolt') {
+            return (async () => {
+              sfx(T, 'thud'); T.shake(); T.pop(CX, CY - 220, tr('덜컹!'));
+              const j = [{ translate: '0 0', rotate: '0deg' }, { translate: '0 -14px', rotate: '-1.5deg' }, { translate: '0 0', rotate: '1deg' }, { translate: '0 0', rotate: '0deg' }];
+              await Promise.all([coffin.pos, snow.pos, R.glass].map(n => { n.style.transformOrigin = `${CX}px ${CY}px`; return n.animate(j, 650).finished; }));
+              const mouthX = snow.x - 98 * ASP.snow_bedsleep * .27, mouthY = snow.y - 98 * .55;
+              put(T, piece, mouthX, mouthY); sfx(T, 'pop');
+              await piece.move(mouthX - 70, 560, 700, 'ease-in');
+              T.pop(mouthX - 70, 470, tr('툭!'));
+            })();
+          }
+          return null;
+        },
+        glass: a => { if (a === 'open' && R.glass) R.glass.remove(); },
+        shine: () => {
+          T.world.insertBefore(shine.pos, coffin.pos.nextSibling);
+          shine.pos.style.display = ''; fadeIn(shine, 700);
+          shine.body.animate([{ transform: 'scale(.9)' }, { transform: 'scale(1.08)' }, { transform: 'scale(.9)' }], { duration: 1600, iterations: Infinity, easing: 'ease-in-out' });
+        },
+        petals: () => {
+          for (let i = 0; i < 9; i++) {
+            const p = prop(T, 'prop_petals', 44 + (i % 3) * 14); p.pos.style.pointerEvents = 'none';
+            put(T, p, P ? 600 + (i % 5) * 30 : (i < 5 ? 880 + i * 30 : 20 + (i - 5) * 45), 60);
+            p.body.animate([{ transform: 'translate(0,0) rotate(0deg)', opacity: 0 }, { transform: 'translate(-30px,240px) rotate(160deg)', opacity: 1, offset: .5 }, { transform: 'translate(20px,560px) rotate(320deg)', opacity: 0 }],
+              { duration: 5200 + (i % 4) * 700, delay: i * 260, iterations: 2, easing: 'ease-in-out' });
+          }
+        },
+        prince: (a, b) => {
+          if (a === 'enter') { put(T, prince, X(1100, 900), 540); prince.face('left'); fr(); if (P) follow(560, 2200); return prince.move(X(770, 640), 540, 2200); }
+          if (a === 'at') { const [x, y] = xy(b); put(T, prince, px(x), y); fr(); }
+          else if (a === 'hop') prince.hop(10, 360);
+          return null;
+        },
+        glow: w => {
+          if (w === 'snow') glow(snow, 1200); else if (w === 'prince') glow(prince, 1000); else if (w === 'bigbed') glow(bigBed, 1200);
+        },
+        sparkle: () => {
+          if (R.set === 'queen_room') { sfx(T, 'sparkle'); mirrorShine(); } else if (R.set === 'hill') wake();
+          else sfx(T, 'sparkle');
+        },
+        shake: () => { T.shake(); if (R.set === 'queen_room') chandJolt(); },
+        confetti: () => T.confetti(),
+        fx: n => { sfx(T, n, () => popSfx(T)); },
+        pop: s => { const m = String(s).split(','); T.pop(+m[0], +m[1], tr(m.slice(2).join(','))); },
+      };
+      return T.readPlay(READ_ACTS);
+    }
+
     /* ===== 1. 거울 앞의 왕비 ===== */
     let mf = mirrorRoom();
     await T.curtain(true);
@@ -800,5 +1119,5 @@
     return '낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.';
   }
 
-  Tale.mount({ title: '백설공주', subtitle: '질투는 마음을 해쳐요', run: T => run(Tale.api) });
+  Tale.mount({ title: '백설공주', subtitle: '질투는 마음을 해쳐요', read: true, run: T => run(Tale.api) });
 })();
