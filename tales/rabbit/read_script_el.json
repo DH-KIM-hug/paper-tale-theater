@@ -5,7 +5,7 @@
  "title": "토끼와 거북이",
  "voices_from": "voice_script_el.json",
  "moral": "천천히 가도 끝까지 하면 해낼 수 있어요!",
- "notes": "읽어 주기 대본(docs/READ_MODE.md). 놀이판 17장면을 11장면으로 묶었다: 초대장 돌리기(문 두드리기·목소리 고르기 퀴즈)와 응원석·준비 운동의 누르기, 경주 지도 설명, 토끼·거북이 몰기, 이불·부엉이·해님·당근·닭·메달 누르기, 잔치 악기 연주를 모두 뺐다. 초대장 장면의 그림은 응원석 장면 앞에 묘사 두 줄로만 남겼다. 교훈은 놀이판 마지막 줄 \"천천히 가도 끝까지 하면 해낼 수 있어요!\"를 그대로 쓴다. 순화할 거친 장면 없음. 원작(이솝)대로 토끼가 낮잠을 자고 거북이가 꾸준히 걸어 이긴다. 한 장면 안에서 배경이 바뀌는 곳(개울→언덕, 언덕→나무 그늘, 노을→결승, 시상식→잔치)은 before 의 set 동사로 바꾼다.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 놀이판 17장면을 11장면으로 묶었다: 초대장 돌리기(문 두드리기·목소리 고르기 퀴즈)와 응원석·준비 운동의 누르기, 경주 지도 설명, 토끼·거북이 몰기, 이불·부엉이·해님·당근·닭·메달 누르기, 잔치 악기 연주를 모두 뺐다. 초대장 장면의 그림은 응원석 장면 앞에 묘사 두 줄로만 남겼다. 교훈은 놀이판 마지막 줄 \"천천히 가도 끝까지 하면 해낼 수 있어요!\"를 그대로 쓴다. 순화할 거친 장면 없음. 원작(이솝)대로 토끼가 낮잠을 자고 거북이가 꾸준히 걸어 이긴다. 한 장면 안에서 배경이 바뀌는 곳(개울→언덕, 언덕→나무 그늘, 노을→결승, 시상식→잔치)은 before 의 set 동사로 바꾼다. 2026-10-23 사용자 지시: 중간중간 응원하는 동물을 모두 뺐다. 나무 그늘의 돼지 자리, 돌멩이 길의 강아지·고양이, 개울의 오리, 언덕의 양 응원(자리·글자·소리 vo:cheer_*)과 줄 \"응원하던 친구들도 쉿!\"·\"꿈속 친구들이 모두 토끼에게 짝짝짝 박수를 쳤어요.\"(대본에서만 제외, 녹음 클립은 그대로)를 뺐다. 출발 전 초대장·응원석 소개, 출발선 구경, 결승과 시상식·잔치의 동물은 남겼다.",
  "acts": {
   "set:<village|alley|stands|start|map|grass_low|shade|dream|stream|hill|dusk|finish|party>": "장면 배경(ART bg_*)·관객 자리. scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
   "rabbit:pose:<stand|run|sleep|wake|congrats> | rabbit:eyes:<open|drowsy|sleep> | rabbit:ears:<n>": "토끼 자세·눈·귀",
@@ -86,7 +86,7 @@
        "turtle",
        "안녕! 나는 거북이야.",
        "happy:1.0",
-       "[slow, friendly, calm, gentle, old and wise]"
+       "[slow, friendly, calm, gentle, gentle warm older woman]"
       ]
      ],
      "after": [
@@ -610,7 +610,6 @@
     "rabbit:eyes:drowsy",
     "rabbit:at:390,500,1",
     "aud:owl:sit",
-    "aud:pig:sit",
     "cam:wide"
    ],
    "lines": [
@@ -699,34 +698,6 @@
       "rabbit:eyes:sleep",
       "zzz:on"
      ]
-    },
-    {
-     "text": "응원하던 친구들도 \"쉿!\" 조용히~",
-     "src": "reuse",
-     "segs": [
-      [
-       "nar",
-       "응원하던 친구들도",
-       "whisper",
-       "[whispers, amused, soft, tender]"
-      ],
-      [
-       "sheep",
-       "쉿!",
-       "whisper",
-       "[whispers, hushed, shushing, gentle]"
-      ],
-      [
-       "nar",
-       "조용히~",
-       "whisper",
-       "[whispers, soft, tender, slow]"
-      ]
-     ],
-     "before": [
-      "aud:owl:hush",
-      "aud:pig:hush"
-     ]
     }
    ]
   },
@@ -792,21 +763,6 @@
      ]
     },
     {
-     "text": "꿈속 친구들이 모두 토끼에게 짝짝짝 박수를 쳤어요.",
-     "src": "new",
-     "segs": [
-      [
-       "nar",
-       "꿈속 친구들이 모두 토끼에게 짝짝짝 박수를 쳤어요.",
-       null,
-       "[soft, dreamy, cheerful storytelling]"
-      ]
-     ],
-     "before": [
-      "aud:all:cheer"
-     ]
-    },
-    {
      "text": "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~",
      "src": "reuse",
      "segs": [
@@ -834,8 +790,6 @@
    "enter": [
     "rabbit:hide",
     "turtle:at:120,470,1.25",
-    "aud:dog:sit",
-    "aud:cat:sit",
     "bar:show",
     "race:0.6,0.04",
     "cam:300,280,1"
@@ -868,9 +822,7 @@
       ]
      ],
      "before": [
-      "turtle:steps:4",
-      "aud:dog:cheer:힘내!",
-      "vo:cheer_dog"
+      "turtle:steps:4"
      ]
     },
     {
@@ -897,7 +849,7 @@
        "turtle",
        "영차!",
        "toneup:1.3",
-       "[grunts with effort, determined, slow, steady, old voice]"
+       "[grunts with effort, determined, slow, steady, warm woman]"
       ],
       [
        "nar",
@@ -910,9 +862,7 @@
       "pop:620,330,영차!"
      ],
      "after": [
-      "race:0.6,0.2",
-      "aud:dog:cheer:와아!",
-      "aud:cat:cheer:야옹~"
+      "race:0.6,0.2"
      ]
     },
     {
@@ -930,7 +880,6 @@
       "set:stream",
       "turtle:swim:on",
       "turtle:at:120,430,1.35",
-      "aud:duck:sit",
       "cam:270,280,1"
      ]
     },
@@ -946,9 +895,7 @@
       ]
      ],
      "before": [
-      "turtle:swimacross",
-      "aud:duck:cheer:꽥꽥! 힘내!",
-      "vo:cheer_duck"
+      "turtle:swimacross"
      ]
     },
     {
@@ -981,7 +928,6 @@
       "set:hill",
       "turtle:swim:off",
       "turtle:at:120,470,1.3",
-      "aud:sheep:sit",
       "cam:290,280,1"
      ]
     },
@@ -997,9 +943,7 @@
       ]
      ],
      "before": [
-      "turtle:climb",
-      "aud:sheep:cheer:힘내!",
-      "vo:cheer_sheep"
+      "turtle:climb"
      ]
     },
     {
@@ -1010,7 +954,7 @@
        "turtle",
        "영차!",
        "toneup:1.3",
-       "[grunts with effort, determined, steady, slow, old voice]"
+       "[grunts with effort, determined, steady, slow, warm woman]"
       ],
       [
        "nar",
@@ -1210,7 +1154,7 @@
        "turtle",
        "영차, 조금만 더. 조금만 더 가면 돼.",
        "toneup:1.2",
-       "[grunts with effort, determined, slow, steady, old voice]"
+       "[grunts with effort, determined, slow, steady, warm woman]"
       ]
      ]
     },

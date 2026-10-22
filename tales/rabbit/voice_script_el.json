@@ -2,7 +2,7 @@
  "voices": {
   "nar": "Lb7qkOn5hF8p7qfCDH8q",
   "rabbit": "TX3LPaxmHKxFdv7VOQHJ",
-  "turtle": "pqHfZKP75CvOlQylNhV4",
+  "turtle": "cBOtnpVZNlQ5VJygXGB8",
   "duck": "cgSgspJ2msm6clMCkdW9",
   "cow": "CwhRBWXzGAHq8TQ4Fs17",
   "pig": "4tLzQecqf3Jg3zct76Fm",
@@ -50,7 +50,7 @@
      "turtle",
      "안녕! 나는 거북이야.",
      "happy:1.0",
-     "[slow, friendly, calm, gentle, old and wise]"
+     "[slow, friendly, calm, gentle, gentle warm older woman]"
     ]
    ]
   },
@@ -789,7 +789,7 @@
      "turtle",
      "영차!",
      "toneup:1.3",
-     "[grunts with effort, determined, slow, steady, old voice]"
+     "[grunts with effort, determined, slow, steady, warm woman]"
     ],
     [
      "nar",
@@ -861,7 +861,7 @@
      "turtle",
      "영차!",
      "toneup:1.3",
-     "[grunts with effort, determined, steady, slow, old voice]"
+     "[grunts with effort, determined, steady, slow, warm woman]"
     ],
     [
      "nar",
@@ -1365,5 +1365,5 @@
   "dog",
   "sheep"
  ],
- "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, rabbit=Liam, turtle=Bill, duck=Jessica, cow=Roger, pig=Austin, dog=Chaemong, sheep=Haemi"
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, rabbit=Liam, turtle=Eunha, duck=Jessica, cow=Roger, pig=Austin, dog=Chaemong, sheep=Haemi"
 }

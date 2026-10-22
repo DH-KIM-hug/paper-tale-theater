@@ -14,7 +14,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"안녕! 나는 거북이야.\"": {
   "t": "\"Hi! I'm Turtle.\"",
-  "c": "audio/el/rabbit/en/turtle_9c09074fa4.mp3"
+  "c": "audio/el/rabbit/en/turtle_e9a3ad40d6.mp3"
  },
  "깡충깡충 토끼도 왔어요. 토끼를 톡!": {
   "t": "The hop-hop rabbit is here too. Tap the rabbit!",
@@ -39,7 +39,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The turtle gave a big smile. \"Okay!\"",
   "c": [
    "audio/el/rabbit/en/nar_884913201e.mp3",
-   "audio/el/rabbit/en/turtle_1e79fb57ad.mp3"
+   "audio/el/rabbit/en/turtle_d30b9ad317.mp3"
   ]
  },
  "\"숲속 친구들한테 응원해 달라고 하자!\"": {
@@ -285,7 +285,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "영차! 돌멩이를 넘었어요!": {
   "t": "Heave-ho! The turtle made it over the rock!",
   "c": [
-   "audio/el/rabbit/en/turtle_71ac5ef56b.mp3",
+   "audio/el/rabbit/en/turtle_1126a904da.mp3",
    "audio/el/rabbit/en/nar_27036a99c9.mp3"
   ]
  },
@@ -312,7 +312,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "영차! 언덕 꼭대기에 올라왔어요.": {
   "t": "Heave-ho! The turtle reached the top of the hill.",
   "c": [
-   "audio/el/rabbit/en/turtle_67e928854f.mp3",
+   "audio/el/rabbit/en/turtle_a2e78ae09a.mp3",
    "audio/el/rabbit/en/nar_99818703b4.mp3"
   ]
  },
@@ -403,7 +403,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The turtle said, \"Thank you! Let's race together again!\"",
   "c": [
    "audio/el/rabbit/en/nar_bd28a3a47a.mp3",
-   "audio/el/rabbit/en/turtle_80f9a641a3.mp3"
+   "audio/el/rabbit/en/turtle_a9b49772bf.mp3"
   ]
  },
  "밤이 되었어요. 숲속 잔치가 열렸어요!": {

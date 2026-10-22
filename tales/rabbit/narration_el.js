@@ -3,7 +3,7 @@ Object.assign(NARRATION_CLIPS, {
  "숲속 마을에 아침이 왔어요.": "audio/el/rabbit/nar_1c1d4ad825.mp3",
  "거북이가 엉금엉금 산책해요. 거북이를 톡!": "audio/el/rabbit/nar_7303e1aa9e.mp3",
  "거북이를 톡 눌러 봐요!": "audio/el/rabbit/nar_f62d050aba.mp3",
- "\"안녕! 나는 거북이야.\"": "audio/el/rabbit/turtle_c832ea7a04.mp3",
+ "\"안녕! 나는 거북이야.\"": "audio/el/rabbit/turtle_c08eaa6bda.mp3",
  "깡충깡충 토끼도 왔어요. 토끼를 톡!": "audio/el/rabbit/nar_62b9330e8a.mp3",
  "토끼를 톡 눌러 봐요!": "audio/el/rabbit/nar_e9b9d23530.mp3",
  "\"안녕! 나는 깡충 토끼야!\"": "audio/el/rabbit/rabbit_a004e555a2.mp3",
@@ -13,7 +13,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "거북이가 방긋 웃었어요. \"좋아!\"": [
   "audio/el/rabbit/nar_19bbba6642.mp3",
-  "audio/el/rabbit/turtle_f6198a4c46.mp3"
+  "audio/el/rabbit/turtle_457d440d71.mp3"
  ],
  "\"숲속 친구들한테 응원해 달라고 하자!\"": "audio/el/rabbit/rabbit_1b0de6498d.mp3",
  "부엉이 우체부가 초대장을 가져왔어요.": "audio/el/rabbit/nar_9d0c5a80d2.mp3",
@@ -79,7 +79,7 @@ Object.assign(NARRATION_CLIPS, {
  "어? 커다란 돌멩이예요! 돌멩이를 톡 해서 넘어가요!": "audio/el/rabbit/nar_186fee8eab.mp3",
  "돌멩이를 톡 눌러 봐요!": "audio/el/rabbit/nar_7556b6112c.mp3",
  "영차! 돌멩이를 넘었어요!": [
-  "audio/el/rabbit/turtle_c038311c47.mp3",
+  "audio/el/rabbit/turtle_1cd342825f.mp3",
   "audio/el/rabbit/nar_3d39246555.mp3"
  ],
  "앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.": "audio/el/rabbit/nar_a0ff01e569.mp3",
@@ -88,7 +88,7 @@ Object.assign(NARRATION_CLIPS, {
  "이번엔 높은 언덕이에요.": "audio/el/rabbit/nar_af5dc13974.mp3",
  "화면을 톡톡 누르면 영차영차 올라가요!": "audio/el/rabbit/nar_ae2f8c70a0.mp3",
  "영차! 언덕 꼭대기에 올라왔어요.": [
-  "audio/el/rabbit/turtle_9a82f30c24.mp3",
+  "audio/el/rabbit/turtle_b51dbfea93.mp3",
   "audio/el/rabbit/nar_1c2583cbc1.mp3"
  ],
  "위에는 쿨쿨 자는 토끼, 아래에는 거북이!": "audio/el/rabbit/nar_380f0ae76e.mp3",
@@ -116,7 +116,7 @@ Object.assign(NARRATION_CLIPS, {
  "\"축하해! 다음엔 나도 쉬지 않고 열심히 할게.\"": "audio/el/rabbit/rabbit_c8b177bbc3.mp3",
  "거북이도 말했어요. \"고마워! 우리 또 같이 달리자!\"": [
   "audio/el/rabbit/nar_4e9a586f9a.mp3",
-  "audio/el/rabbit/turtle_1c35964cfd.mp3"
+  "audio/el/rabbit/turtle_3288d0fe06.mp3"
  ],
  "밤이 되었어요. 숲속 잔치가 열렸어요!": "audio/el/rabbit/nar_a50713cf23.mp3",
  "먼저 들어 봐요! 신나는 행진곡이에요.": "audio/el/rabbit/nar_bebec35265.mp3",
