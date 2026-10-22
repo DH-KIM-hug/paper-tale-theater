@@ -303,7 +303,9 @@ const Tale = (() => {
 
   /* ---------- 자동 재생 (보호자 메뉴 'auto_play'=1): 톡·퀴즈 없이 이야기만 흘러간다 ----------
      조작 함수(tap/mash/choose/swipe/hold/free)는 그대로 불리고, 엔진이 알맞은 때 대신 눌러 준다. */
-  const AUTO = () => { if (VERIFY) return false; try { return localStorage.getItem('auto_play') === '1'; } catch (e) { return false; } };
+  const AUTO = () => { if (VERIFY) return false; try { return localStorage.getItem('auto_play') === '1' || sessionStorage.getItem('auto_once') === '1'; } catch (e) { return false; } };
+  /* 시작 화면 '자동 재생' 버튼: 이번 회차만 자동 재생 (sessionStorage 'auto_once'). 동화를 떠나면 지운다 */
+  try { addEventListener('pagehide', () => { try { sessionStorage.removeItem('auto_once'); } catch (e) { /* 무시 */ } }); } catch (e) { /* 무시 */ }
   function firePtr(n, type = 'pointerdown', host = n) {
     const r = n.getBoundingClientRect ? n.getBoundingClientRect() : { left: 0, top: 0, width: 0, height: 0 };
     const x = r.left + r.width / 2, y = r.top + r.height / 2;
@@ -947,7 +949,7 @@ const Tale = (() => {
 
   /* 화면 글자 번역: 영어 모드이고 이 동화에 영어 자료(TEXT_EN·NARRATION_CLIPS_EN)가 있을 때만 영어, 아니면 한국어 그대로 */
   const ENGINE_EN = { '끝내기': 'Exit', '돌려서 크게 보기': 'Rotate for a bigger view', '이야기 시작': 'Start story', '처음으로': 'Home', '다시 보기': 'Watch again', '끝!': 'The End!',
-    '오늘 동화 끝! 내일 또 만나요': 'The end! See you tomorrow', '한 번 더': 'Once more', '홈으로': 'Home',
+    '자동 재생': 'Auto play', '오늘 동화 끝! 내일 또 만나요': 'The end! See you tomorrow', '한 번 더': 'Once more', '홈으로': 'Home',
     '오늘은 여기까지! 눈을 쉬어요': 'That is enough for today. Let our eyes rest.', '어른이 +10분': 'Grown-up: +10 min', '어른이 확인해 주세요': 'Grown-ups, please check', '닫기': 'Close' };
   const tr = ko => {
     if (!englishOn()) return ko;
@@ -1008,7 +1010,7 @@ const Tale = (() => {
     <div class="words">
       <h1 class="paperword ttl">${letters(tr(title))}</h1>
       ${subtitle ? `<p class="sub">${tr(subtitle)}</p>` : ''}
-      <div class="pills"><button class="pill go" id="startBtn">${PLAY_SVG}${tr('이야기 시작')}</button><a class="pill" href="${home}">${tr('처음으로')}</a></div>
+      <div class="pills"><button class="pill go" id="startBtn">${PLAY_SVG}${tr('이야기 시작')}</button><a class="pill" href="${home}">${tr('처음으로')}</a>${AUTO() ? '' : `<button class="pill auto" id="autoBtn" type="button">${tr('자동 재생')}</button>`}</div>
       ${note ? `<p class="note">${note}</p>` : ''}
     </div>
   </div>
@@ -1138,7 +1140,9 @@ const Tale = (() => {
       $('#startBtn').addEventListener('click', () => { try { AudioFX.stopNarration(); Narrator.stop(); } catch (e) { /* 무시 */ } });
     }
     /* 자동 재생 안전망: 4초마다 살피고, 25초 동안 아무 변화 없이 누를 곳(손가락·armed 대상)이 있으면 대신 눌러 준다 */
-    if (AUTO()) {
+    let netOn = false;
+    const autoNet = () => {
+      if (netOn) return; netOn = true;
       window.AUTOPLAY = true;
       let lastSig = '', still = 0;
       setInterval(() => {
@@ -1153,7 +1157,13 @@ const Tale = (() => {
         if (armed.length) firePtr(armed[0]);
         else { const r = h.getBoundingClientRect(); const x = r.left + r.width * .5, y = r.top + r.height * .1; const t = document.elementFromPoint(x, y); if (t) t.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, clientX: x, clientY: y, pointerId: 1, isPrimary: true })); }
       }, 4000);
-    }
+    };
+    if (AUTO()) autoNet();
+    { const ab = $('#autoBtn'); if (ab) ab.addEventListener('click', () => {
+      try { sessionStorage.setItem('auto_once', '1'); } catch (e) { /* 저장 못 하면 이 판은 그냥 시작 */ }
+      try { AudioFX.stopNarration(); Narrator.stop(); } catch (e) { /* 무시 */ }
+      autoNet(); start();
+    }); }
     $('#againBtn').onclick = start;
   }
 

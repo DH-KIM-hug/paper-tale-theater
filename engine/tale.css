@@ -497,3 +497,8 @@ svg text { font-weight: 800; }
 .autobadge svg { width: 100%; height: 100%; display: block; }
 .autobadge circle { fill: #F6ECD8; }
 .autobadge path { fill: #E8703A; }
+
+/* 시작 화면 '자동 재생': 보호자용이라 주 버튼보다 작고 조용하게, 좁으면 줄바꿈 */
+#startScreen .pills .pill.auto { min-height: 36px; min-width: 0; padding: 0 14px; font-size: clamp(12px, 1.7vmin, 14px); font-weight: 500; opacity: .75; }
+#startScreen.keyed .pills { flex-wrap: wrap; }
+@media (orientation: landscape) { #startScreen.keyed .pills { justify-content: flex-end; max-width: 360px; } }
