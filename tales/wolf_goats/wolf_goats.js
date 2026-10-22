@@ -32,6 +32,13 @@
       }
     });
     a.pose = k => Object.entries(imgs).forEach(([n, i]) => show(i, n === k));
+    /* 누르는 자리 넓히기: 눌러야 할 때만 부른다(작은 아기 염소도 화면 짧은 변 80px 이상). 항상 깔면 옆 그림이 누름을 가로챈다 (2026-10-22) */
+    a.widen = () => {
+      if (a._hit) return a.pos;
+      const hh = Math.max(h, 96);
+      a._hit = T.el('rect', { x: -56, y: -hh, width: 112, height: hh, fill: '#000', 'fill-opacity': 0 }, a.pos);
+      a.pos.insertBefore(a._hit, a.pos.firstChild); return a.pos;
+    };
     return a;
   }
   // 2026-10-20 크기 일관성: 1번 아기 염소의 기뻐하는 자세(joy)는 머리 폭이 기본 자세보다 약 21% 작아서 1.26배로 맞춘다 (2번은 12%라 그대로)
@@ -116,7 +123,7 @@
     await hopAll(kids, 30);
     await say('"숨자, 숨자!" 아기 염소들이 이불 속, 빨래 바구니 속으로 쏙쏙 숨었어요.');
     await Promise.all(kids.slice(0, 6).map((k, i) => sleep(i * 120).then(async () => { await k.move(i < 3 ? 360 : 540, 520, 600); hide(k); })));
-    await T.ask('막내는 어디에 숨을까요?', () => T.tap(kids[6].pos, { prompt: '막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!' }));
+    await T.ask('막내는 어디에 숨을까요?', () => T.tap(kids[6].widen(), { prompt: '막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!' }));
     clock.pose('open');
     await kids[6].move(660, 505, 700); hide(kids[6]); clock.pose('a'); AudioFX.ding();
     await say('막내는 키 큰 시계 속에 쏙 숨었어요. 아무도 몰랐어요.');
@@ -214,7 +221,7 @@
     await hopAll(kids, 34); md.hop(30, 400); T.confetti(); AudioFX.sting('win');
     // 가운데 아기 염소를 톡톡: 누를 때마다 엄마와 아기 염소들이 차례로 폴짝 (자유 놀이 없음)
     const dance = () => { AudioFX.tap(); md.hop(30, 340); kids.forEach((k, j) => setTimeout(() => k.hop(30, 340), j * 70)); };
-    await T.ask('아기 염소를 톡! 눌러 같이 춤춰 봐요!', () => T.tap(kids[3].pos, { prompt: '아기 염소를 톡! 눌러 같이 춤춰 봐요!' })); // 한 번 누르면 나머지는 저절로
+    await T.ask('아기 염소를 톡! 눌러 같이 춤춰 봐요!', () => T.tap(kids[3].widen(), { prompt: '아기 염소를 톡! 눌러 같이 춤춰 봐요!' })); // 한 번 누르면 나머지는 저절로
     for (let i = 1; i <= 3; i++) { dance(); await sleep(700); }
     await sleep(700);
     await say('엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.');
