@@ -1,0 +1,1090 @@
+{
+ "mode": "read",
+ "tale": "three_pigs",
+ "lang": "ko",
+ "title": "아기 돼지 삼형제",
+ "voices_from": "voice_script_el.json",
+ "moral": "튼튼한 집은 하나씩 정성껏 쌓아서 만들어요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md §3). 놀이판 13장면 중 옷 고르기 퀴즈(누구일까요?)와 집 고르기(어느 집으로?)는 빼고 11장면. 뺀 것: 돼지 누르기, 바람 불기·재료 쌓기·불 키우기·새 집 짓기 조작, 삼 형제 세기, 늑대가 부는 횟수 세기. 순화는 놀이판 그대로: 형들은 집이 무너져도 다치지 않고 막내네로 달려가고, 늑대는 솥물에 데어 굴뚝으로 튀어 나가 멀리 도망친다(잡아먹히지 않음). 배역 신규는 엄마 돼지 1·늑대 1·셋째 1줄. 컷 7장(밀짚모자·널빤지·지침·기어오름·굴뚝·풍덩·발사·마을)은 그대로.",
+ "acts": {
+  "set:<meadow|shop|strawlot|woodlot|bricklot|field|brick_in|brick_out|chimney|sunset>": "장면 세트(bg(key))",
+  "cam:wide | cam:snap:<x,y,z>": "카메라(camSnap)",
+  "<mom|pig1|pig2|pig3|wolf>:at:<x,y> | :walk:<x,y> | :set:<base|build|play|flee|blow|tired> | :hop | :hide": "배우 자리·걷기(move)·그림 바꾸기(set)·폴짝",
+  "fan:blow:<straw|wood|brick> | pile:drop:<straw|wood|brick> | house:reveal:<straw|wood|brick> | house:ruin:<straw|wood> | house:build:<1|2|3>": "가게 바람·재료 떨어뜨리기(drop)·집 완성(reveal)·집 무너짐·마을 새 집",
+  "wolf:blow:<n> | fire:big | pot:boil | pigs:run:<x>": "늑대 입김 n번·불 키우기·솥 끓기·돼지들 달리기",
+  "cut:<strawhat|planks|tired|crawl|chimney|splash|launch|village>": "그림 컷(cutImage)",
+  "fx:<whoosh|thud|ding|splash|boing|crash> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
+ },
+ "scenes": [
+  {
+   "key": "R01_meadow",
+   "card": "삼 형제",
+   "set": "meadow",
+   "enter": [
+    "mom:at:300,520",
+    "pig1:at:520,540",
+    "pig2:at:640,540",
+    "pig3:at:760,540",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날에 아기 돼지 삼 형제가 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옛날 옛날에 아기 돼지 삼 형제가 살았어요.",
+       null,
+       "[warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "첫째는 피리를 삐리리, 둘째는 바이올린을 깽깽, 셋째는 책을 읽는 걸 좋아했지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "첫째는 피리를 삐리리, 둘째는 바이올린을 깽깽, 셋째는 책을 읽는 걸 좋아했지요.",
+       null,
+       "[warm, playful storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "엄마 돼지가 말했어요. \"이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마 돼지가 말했어요.",
+       null,
+       "[warm storytelling]"
+      ],
+      [
+       "mom",
+       "이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴.",
+       "happy",
+       "[warm, loving, encouraging]"
+      ]
+     ]
+    },
+    {
+     "text": "\"튼튼하게 지어야 한다!\" 엄마 돼지는 삼 형제를 꼭 안아 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "mom",
+       "튼튼하게 지어야 한다!",
+       "happy",
+       "[warm, loving, encouraging]"
+      ],
+      [
+       "nar",
+       "엄마 돼지는 삼 형제를 꼭 안아 주었어요.",
+       null,
+       "[warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "삼 형제는 엄마께 인사하고 길을 떠났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "삼 형제는 엄마께 인사하고 길을 떠났어요.",
+       null,
+       "[warm, bright storytelling]"
+      ]
+     ],
+     "after": [
+      "pig1:walk:1200,540",
+      "pig2:walk:1200,540",
+      "pig3:walk:1200,540"
+     ]
+    },
+    {
+     "text": "셋은 나란히 총총, 신나게 걸어갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "셋은 나란히 총총, 신나게 걸어갔어요.",
+       null,
+       "[bright, lively]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_shop",
+   "card": "무엇으로?",
+   "set": "shop",
+   "enter": [
+    "pig1:at:200,540",
+    "pig2:at:300,540",
+    "pig3:at:400,540",
+    "cam:snap:300,280,1"
+   ],
+   "lines": [
+    {
+     "text": "삼 형제는 집 지을 재료를 사러 가게에 갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "삼 형제는 집 지을 재료를 사러 가게에 갔어요.",
+       null,
+       "[calm, curious]"
+      ]
+     ]
+    },
+    {
+     "text": "짚 한 묶음, 나무 한 더미, 벽돌 한 무더기가 나란히 있었지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "짚 한 묶음, 나무 한 더미, 벽돌 한 무더기가 나란히 있었지요.",
+       null,
+       "[curious, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "가게에서 바람을 불어 보기로 했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "가게에서 바람을 불어 보기로 했어요.",
+       null,
+       "[curious, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "짚은 훨훨 날아가요. 아주 가벼워요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "짚은 훨훨 날아가요. 아주 가벼워요.",
+       null,
+       "[playful, light, breezy]"
+      ]
+     ],
+     "before": [
+      "fan:blow:straw",
+      "fx:whoosh"
+     ]
+    },
+    {
+     "text": "나무는 흔들흔들! 조금 튼튼해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "나무는 흔들흔들! 조금 튼튼해요.",
+       null,
+       "[playful, wobbly]"
+      ]
+     ],
+     "before": [
+      "fan:blow:wood"
+     ]
+    },
+    {
+     "text": "벽돌은 끄떡없어요! 아주 아주 튼튼해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "벽돌은 끄떡없어요! 아주 아주 튼튼해요.",
+       null,
+       "[proud, firm, cheerful]"
+      ]
+     ],
+     "before": [
+      "fan:blow:brick",
+      "pop:600,300,끄떡없어!"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_straw",
+   "card": "첫째 짚 집",
+   "set": "strawlot",
+   "enter": [
+    "pig1:at:360,540",
+    "pig1:set:build",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "첫째는 짚으로 집을 짓기로 했어요.",
+     "src": "trim",
+     "from": "첫째는 짚으로 집을 짓기로 했어요. 짚을 톡톡톡 쌓아요!",
+     "segs": [
+      [
+       "nar",
+       "첫째는 짚으로 집을 짓기로 했어요.",
+       null,
+       "[cheerful, busy]"
+      ]
+     ]
+    },
+    {
+     "text": "사락사락, 짚을 휘리릭 얹으니 금방이었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "사락사락, 짚을 휘리릭 얹으니 금방이었어요.",
+       null,
+       "[cheerful, quick, light]"
+      ]
+     ],
+     "before": [
+      "pile:drop:straw"
+     ],
+     "after": [
+      "house:reveal:straw"
+     ]
+    },
+    {
+     "text": "뚝딱! 짚 집이 완성됐어요. 첫째는 피리를 불며 놀았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "뚝딱! 짚 집이 완성됐어요. 첫째는 피리를 불며 놀았어요.",
+       null,
+       "[cheerful, playful]"
+      ]
+     ],
+     "before": [
+      "pig1:set:play",
+      "pop:500,300,삐리리~"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_wood",
+   "card": "둘째 나무 집",
+   "set": "woodlot",
+   "enter": [
+    "pig2:at:360,540",
+    "pig2:set:build",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "둘째는 나무로 집을 짓기로 했어요.",
+     "src": "trim",
+     "from": "둘째는 나무로 집을 짓기로 했어요. 망치로 톡톡톡톡톡!",
+     "segs": [
+      [
+       "nar",
+       "둘째는 나무로 집을 짓기로 했어요.",
+       null,
+       "[cheerful, rhythmic]"
+      ]
+     ]
+    },
+    {
+     "text": "뚝딱뚝딱, 망치질 몇 번에 나무 집이 뚝딱 섰어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "뚝딱뚝딱, 망치질 몇 번에 나무 집이 뚝딱 섰어요.",
+       null,
+       "[cheerful, rhythmic]"
+      ]
+     ],
+     "before": [
+      "pile:drop:wood"
+     ],
+     "after": [
+      "house:reveal:wood"
+     ]
+    },
+    {
+     "text": "쿵쾅쿵쾅! 나무 집이 완성됐어요. 둘째는 바이올린을 켜며 놀았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "쿵쾅쿵쾅! 나무 집이 완성됐어요. 둘째는 바이올린을 켜며 놀았어요.",
+       null,
+       "[cheerful, playful]"
+      ]
+     ],
+     "before": [
+      "pig2:set:play",
+      "pop:500,300,깽깽~"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_brick",
+   "card": "셋째 벽돌 집",
+   "set": "bricklot",
+   "enter": [
+    "pig3:at:360,540",
+    "pig3:set:build",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 열 장을 천천히 쌓아요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 열 장을 천천히 쌓아요.",
+       null,
+       "[slow, steady, patient]"
+      ]
+     ]
+    },
+    {
+     "text": "영차, 영차. 셋째는 땀을 뻘뻘 흘리며 벽돌을 한 장씩 쌓았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "영차, 영차. 셋째는 땀을 뻘뻘 흘리며 벽돌을 한 장씩 쌓았어요.",
+       null,
+       "[slow, steady, patient]"
+      ]
+     ],
+     "before": [
+      "pile:drop:brick",
+      "pop:400,330,영차!"
+     ]
+    },
+    {
+     "text": "형들이 놀렸어요. \"아직도 해? 우리랑 놀자!\" 그래도 셋째는 천천히 벽돌을 쌓았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "형들이 놀렸어요.",
+       null,
+       "[calm storytelling]"
+      ],
+      [
+       "piga",
+       "아직도 해? 우리랑 놀자!",
+       "happy",
+       "[teasing, cheeky, childlike, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "그래도 셋째는 천천히 벽돌을 쌓았어요.",
+       null,
+       "[gentle, determined]"
+      ]
+     ],
+     "before": [
+      "pig1:at:700,540",
+      "pig2:at:800,540"
+     ]
+    },
+    {
+     "text": "\"튼튼하게 짓는 게 제일 중요해!\" 셋째는 씩씩하게 말했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "pigc",
+       "튼튼하게 짓는 게 제일 중요해!",
+       "happy",
+       "[earnest, determined, childlike, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "셋째는 씩씩하게 말했어요.",
+       null,
+       "[gentle, determined]"
+      ]
+     ]
+    },
+    {
+     "text": "벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!",
+       null,
+       "[proud, cheerful]"
+      ]
+     ],
+     "before": [
+      "house:reveal:brick",
+      "fx:ding"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_huff_straw",
+   "card": "후~ 짚 집",
+   "set": "strawlot",
+   "enter": [
+    "house:reveal:straw",
+    "pig1:at:560,540",
+    "wolf:hide",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요. \"아기 돼지야, 문 열어라!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요.",
+       null,
+       "[playful, comic]"
+      ],
+      [
+       "wolf",
+       "아기 돼지야, 문 열어라!",
+       "angry:1.1",
+       "[comically sly, grumbling, hungry]"
+      ]
+     ],
+     "before": [
+      "wolf:at:-100,540",
+      "wolf:walk:300,540"
+     ]
+    },
+    {
+     "text": "첫째가 말했어요. \"싫어요, 싫어요!\" 늑대가 말했어요. \"그럼 후~ 불어서 날려 버릴 테야!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "첫째가 말했어요.",
+       null,
+       "[calm storytelling]"
+      ],
+      [
+       "piga",
+       "싫어요, 싫어요!",
+       "happy",
+       "[defiant, childlike, cheerful, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "늑대가 말했어요.",
+       null,
+       "[playful]"
+      ],
+      [
+       "wolf",
+       "그럼 후~ 불어서 날려 버릴 테야!",
+       "angry:1.1",
+       "[puffing up, comically huffy]"
+      ]
+     ]
+    },
+    {
+     "text": "늑대는 볼을 빵빵하게 부풀렸어요. 후우~!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "늑대는 볼을 빵빵하게 부풀렸어요. 후우~!",
+       null,
+       "[playful, building up]"
+      ]
+     ],
+     "before": [
+      "wolf:set:blow"
+     ],
+     "after": [
+      "wolf:blow:1",
+      "fx:whoosh",
+      "pop:300,300,후우~"
+     ]
+    },
+    {
+     "text": "짚 집이 훨훨 날아가 버렸어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "짚 집이 훨훨 날아가 버렸어요!",
+       null,
+       "[playful, whoosh, comic]"
+      ]
+     ],
+     "before": [
+      "house:ruin:straw",
+      "cut:strawhat"
+     ]
+    },
+    {
+     "text": "첫째는 둘째네 집으로 달려갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "첫째는 둘째네 집으로 달려갔어요.",
+       null,
+       "[quick, lively]"
+      ]
+     ],
+     "before": [
+      "pig1:set:flee"
+     ],
+     "after": [
+      "pig1:walk:1200,540"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_huff_wood",
+   "card": "후~ 나무 집",
+   "set": "woodlot",
+   "enter": [
+    "house:reveal:wood",
+    "pig1:at:520,540",
+    "pig2:at:620,540",
+    "wolf:hide",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "늑대가 나무 집에도 왔어요. \"아기 돼지야, 문 열어라!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대가 나무 집에도 왔어요.",
+       null,
+       "[playful, comic]"
+      ],
+      [
+       "wolf",
+       "아기 돼지야, 문 열어라!",
+       "angry:1.1",
+       "[comically sly, grumbling, hungry]"
+      ]
+     ],
+     "before": [
+      "wolf:at:-100,540",
+      "wolf:walk:300,540"
+     ]
+    },
+    {
+     "text": "첫째와 둘째가 말했어요. \"싫어요, 싫어요!\" 늑대가 말했어요. \"그럼 후~ 후~ 불어 주지!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "첫째와 둘째가 말했어요.",
+       null,
+       "[calm storytelling]"
+      ],
+      [
+       "pigb",
+       "싫어요, 싫어요!",
+       "happy",
+       "[defiant, childlike, cheerful, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "늑대가 말했어요.",
+       null,
+       "[playful]"
+      ],
+      [
+       "wolf",
+       "그럼 후~ 후~ 불어 주지!",
+       "angry:1.1",
+       "[puffing up, comically huffy]"
+      ]
+     ]
+    },
+    {
+     "text": "후~ 후~! 나무 집이 삐걱삐걱 흔들리더니…",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "후~ 후~! 나무 집이 삐걱삐걱 흔들리더니…",
+       null,
+       "[building suspense, playful]"
+      ]
+     ],
+     "before": [
+      "wolf:set:blow"
+     ],
+     "after": [
+      "wolf:blow:2",
+      "fx:whoosh",
+      "shake"
+     ]
+    },
+    {
+     "text": "나무 집이 와르르 무너졌어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "나무 집이 와르르 무너졌어요!",
+       null,
+       "[comic, playful]"
+      ]
+     ],
+     "before": [
+      "house:ruin:wood",
+      "fx:crash",
+      "cut:planks"
+     ]
+    },
+    {
+     "text": "아기 돼지 둘은 막내네 집으로 달려갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아기 돼지 둘은 막내네 집으로 달려갔어요.",
+       null,
+       "[quick, lively]"
+      ]
+     ],
+     "before": [
+      "pig1:set:flee",
+      "pig2:set:flee"
+     ],
+     "after": [
+      "pigs:run:1200"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_inside",
+   "card": "벽돌 집 안",
+   "set": "brick_in",
+   "enter": [
+    "pig1:at:350,540",
+    "pig2:at:450,540",
+    "pig3:at:550,540",
+    "cam:snap:450,280,1"
+   ],
+   "lines": [
+    {
+     "text": "두 형은 숨이 차서 헉헉!",
+     "src": "trim",
+     "from": "두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?",
+     "segs": [
+      [
+       "nar",
+       "두 형은 숨이 차서 헉헉!",
+       null,
+       "[panting, concerned]"
+      ]
+     ]
+    },
+    {
+     "text": "셋째가 문을 활짝 열어 주었어요. 형들은 후다닥 뛰어 들어갔지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "셋째가 문을 활짝 열어 주었어요. 형들은 후다닥 뛰어 들어갔지요.",
+       null,
+       "[quick, relieved]"
+      ]
+     ]
+    },
+    {
+     "text": "삼 형제는 문을 꼭 닫고 빗장을 철컥 걸었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "삼 형제는 문을 꼭 닫고 빗장을 철컥 걸었어요.",
+       null,
+       "[relieved, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "삼 형제는 모두 모였어요.",
+     "src": "trim",
+     "from": "삼 형제는 모두 모였어요. 하나, 둘, 셋을 세어 볼까요?",
+     "segs": [
+      [
+       "nar",
+       "삼 형제는 모두 모였어요.",
+       null,
+       "[cheerful, counting]"
+      ]
+     ]
+    },
+    {
+     "text": "\"셋이서 함께라서 무섭지 않아!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "pigc",
+       "셋이서 함께라서 무섭지 않아!",
+       "happy",
+       "[brave, cheerful, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "pig3:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_knock",
+   "card": "쿵쿵쿵!",
+   "set": "brick_out",
+   "enter": [
+    "house:reveal:brick",
+    "wolf:at:300,540",
+    "cam:snap:450,280,1"
+   ],
+   "lines": [
+    {
+     "text": "늑대가 벽돌 집에 왔어요. \"아기 돼지야, 문 열어라!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대가 벽돌 집에 왔어요.",
+       null,
+       "[playful, comic]"
+      ],
+      [
+       "wolf",
+       "아기 돼지야, 문 열어라!",
+       "angry:1.1",
+       "[comically sly, huffy]"
+      ]
+     ],
+     "before": [
+      "pop:450,250,쿵쿵쿵!"
+     ]
+    },
+    {
+     "text": "\"싫어요, 싫어요!\" \"그럼 후~ 후~ 불어 주지!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "pigc",
+       "싫어요, 싫어요!",
+       "happy",
+       "[defiant, brave, childlike, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "wolf",
+       "그럼 후~ 후~ 불어 주지!",
+       "angry:1.1",
+       "[puffing up, comically huffy]"
+      ]
+     ]
+    },
+    {
+     "text": "후~ 후~ 후~! 늑대는 얼굴이 새빨개지도록 불고 또 불었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "후~ 후~ 후~! 늑대는 얼굴이 새빨개지도록 불고 또 불었어요.",
+       null,
+       "[playful, effortful]"
+      ]
+     ],
+     "before": [
+      "wolf:set:blow"
+     ],
+     "after": [
+      "wolf:blow:8"
+     ]
+    },
+    {
+     "text": "후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!",
+       null,
+       "[triumphant, playful]"
+      ]
+     ],
+     "before": [
+      "pop:600,300,끄떡없어!"
+     ],
+     "after": [
+      "cut:tired"
+     ]
+    },
+    {
+     "text": "늑대는 숨이 차서 털썩 주저앉았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대는 숨이 차서 털썩 주저앉았어요.",
+       null,
+       "[playful, tired]"
+      ]
+     ],
+     "before": [
+      "wolf:set:tired",
+      "fx:thud"
+     ]
+    },
+    {
+     "text": "\"흥, 그럼 다른 수를 써야지!\" 늑대는 눈을 데굴데굴 굴렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "wolf",
+       "흥, 그럼 다른 수를 써야지!",
+       "angry:1.1",
+       "[comically sly, scheming]"
+      ],
+      [
+       "nar",
+       "늑대는 눈을 데굴데굴 굴렸어요.",
+       null,
+       "[playful, sneaky]"
+      ]
+     ],
+     "after": [
+      "cut:crawl"
+     ]
+    },
+    {
+     "text": "늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.",
+       null,
+       "[whispers, sneaky, playful]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_pot",
+   "card": "보글보글",
+   "set": "chimney",
+   "enter": [
+    "pig1:at:350,540",
+    "pig2:at:450,540",
+    "pig3:at:550,540",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "지붕에서 바스락바스락 소리가 났어요. 삼 형제는 귀를 쫑긋 세웠지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "지붕에서 바스락바스락 소리가 났어요. 삼 형제는 귀를 쫑긋 세웠지요.",
+       null,
+       "[hushed, suspense]"
+      ]
+     ]
+    },
+    {
+     "text": "아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.",
+       null,
+       "[busy, cheerful]"
+      ]
+     ],
+     "before": [
+      "fire:big",
+      "pot:boil"
+     ]
+    },
+    {
+     "text": "장작을 넣자 불이 활활 타올랐어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "장작을 넣자 불이 활활 타올랐어요.",
+       null,
+       "[busy, cheerful]"
+      ]
+     ]
+    },
+    {
+     "text": "보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.",
+       null,
+       "[building suspense, playful]"
+      ]
+     ],
+     "before": [
+      "pop:500,300,보글보글"
+     ],
+     "after": [
+      "cut:chimney",
+      "cut:splash"
+     ]
+    },
+    {
+     "text": "\"앗, 뜨거워!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "wolf",
+       "앗, 뜨거워!",
+       "angry:1.1",
+       "[yelps, startled, comic]"
+      ]
+     ],
+     "after": [
+      "cut:launch",
+      "fx:boing"
+     ]
+    },
+    {
+     "text": "늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.",
+       null,
+       "[playful, comic]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_village",
+   "card": "벽돌 마을",
+   "set": "sunset",
+   "enter": [
+    "pig1:at:300,540",
+    "pig2:at:500,540",
+    "pig3:at:700,540",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.",
+       null,
+       "[calm, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "첫째도 둘째도 영차영차, 이번엔 벽돌을 한 장씩 차곡차곡 쌓았지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "첫째도 둘째도 영차영차, 이번엔 벽돌을 한 장씩 차곡차곡 쌓았지요.",
+       null,
+       "[cheerful, steady]"
+      ]
+     ],
+     "before": [
+      "house:build:1",
+      "house:build:2",
+      "house:build:3"
+     ]
+    },
+    {
+     "text": "하나, 둘, 셋! 튼튼한 벽돌 집이 세 채가 되었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하나, 둘, 셋! 튼튼한 벽돌 집이 세 채가 되었어요.",
+       null,
+       "[cheerful, counting]"
+      ]
+     ],
+     "before": [
+      "fx:ding"
+     ],
+     "after": [
+      "cut:village"
+     ]
+    },
+    {
+     "text": "저녁 해가 뉘엿뉘엿, 굴뚝에서는 연기가 모락모락 피어올랐어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "저녁 해가 뉘엿뉘엿, 굴뚝에서는 연기가 모락모락 피어올랐어요.",
+       null,
+       "[warm, gentle, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "삼 형제는 튼튼한 집에서 오래오래 행복하게 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "삼 형제는 튼튼한 집에서 오래오래 행복하게 살았어요.",
+       null,
+       "[warm, gentle, slow, conclusive]"
+      ]
+     ]
+    },
+    {
+     "text": "튼튼한 집은 하나씩 정성껏 쌓아서 만든답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "튼튼한 집은 하나씩 정성껏 쌓아서 만든답니다.",
+       null,
+       "[warm, gentle, slow, closing]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

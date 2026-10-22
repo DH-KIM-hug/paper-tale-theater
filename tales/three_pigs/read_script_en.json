@@ -1,0 +1,1017 @@
+{
+ "mode": "read",
+ "tale": "three_pigs",
+ "lang": "en",
+ "title": "The Three Little Pigs",
+ "voices_from": "voice_script_el.json",
+ "moral": "A strong house is built carefully, one piece at a time.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md §3-4). text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 voice_script_en.json 의 en 그대로, trim 은 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<meadow|shop|strawlot|woodlot|bricklot|field|brick_in|brick_out|chimney|sunset>": "장면 세트(bg(key))",
+  "cam:wide | cam:snap:<x,y,z>": "카메라(camSnap)",
+  "<mom|pig1|pig2|pig3|wolf>:at:<x,y> | :walk:<x,y> | :set:<base|build|play|flee|blow|tired> | :hop | :hide": "배우 자리·걷기(move)·그림 바꾸기(set)·폴짝",
+  "fan:blow:<straw|wood|brick> | pile:drop:<straw|wood|brick> | house:reveal:<straw|wood|brick> | house:ruin:<straw|wood> | house:build:<1|2|3>": "가게 바람·재료 떨어뜨리기(drop)·집 완성(reveal)·집 무너짐·마을 새 집",
+  "wolf:blow:<n> | fire:big | pot:boil | pigs:run:<x>": "늑대 입김 n번·불 키우기·솥 끓기·돼지들 달리기",
+  "cut:<strawhat|planks|tired|crawl|chimney|splash|launch|village>": "그림 컷(cutImage)",
+  "fx:<whoosh|thud|ding|splash|boing|crash> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
+ },
+ "scenes": [
+  {
+   "key": "R01_meadow",
+   "card": "Three Brothers",
+   "set": "meadow",
+   "enter": [
+    "mom:at:300,520",
+    "pig1:at:520,540",
+    "pig2:at:640,540",
+    "pig3:at:760,540",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날에 아기 돼지 삼 형제가 살았어요.",
+     "src": "reuse",
+     "en": "Once upon a time, three little pigs lived together.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, three little pigs lived together."
+      ]
+     ]
+    },
+    {
+     "text": "첫째는 피리를 삐리리, 둘째는 바이올린을 깽깽, 셋째는 책을 읽는 걸 좋아했지요.",
+     "src": "new",
+     "en": "The first pig loved to toot his flute, the second loved to scrape his violin, and the third loved to read.",
+     "segs": [
+      [
+       "nar",
+       "The first pig loved to toot his flute, the second loved to scrape his violin, and the third loved to read."
+      ]
+     ]
+    },
+    {
+     "text": "엄마 돼지가 말했어요. \"이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴.\"",
+     "src": "reuse",
+     "en": "Mother Pig said. You are all grown up now. Go out into the world and build a house of your own.",
+     "segs": [
+      [
+       "nar",
+       "Mother Pig said."
+      ],
+      [
+       "mom",
+       "You are all grown up now. Go out into the world and build a house of your own.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "\"튼튼하게 지어야 한다!\" 엄마 돼지는 삼 형제를 꼭 안아 주었어요.",
+     "src": "new",
+     "en": "\"Build them strong, my dears!\" Mother Pig gave her three little pigs a big, tight hug.",
+     "segs": [
+      [
+       "mom",
+       "Build them strong, my dears!",
+       "happy"
+      ],
+      [
+       "nar",
+       "Mother Pig gave her three little pigs a big, tight hug."
+      ]
+     ]
+    },
+    {
+     "text": "삼 형제는 엄마께 인사하고 길을 떠났어요.",
+     "src": "reuse",
+     "en": "The three brothers said goodbye to Mother and set off on the road.",
+     "segs": [
+      [
+       "nar",
+       "The three brothers said goodbye to Mother and set off on the road."
+      ]
+     ],
+     "after": [
+      "pig1:walk:1200,540",
+      "pig2:walk:1200,540",
+      "pig3:walk:1200,540"
+     ]
+    },
+    {
+     "text": "셋은 나란히 총총, 신나게 걸어갔어요.",
+     "src": "new",
+     "en": "Off they went, side by side, trot, trot, trot, happy as could be.",
+     "segs": [
+      [
+       "nar",
+       "Off they went, side by side, trot, trot, trot, happy as could be."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_shop",
+   "card": "What to Build With?",
+   "set": "shop",
+   "enter": [
+    "pig1:at:200,540",
+    "pig2:at:300,540",
+    "pig3:at:400,540",
+    "cam:snap:300,280,1"
+   ],
+   "lines": [
+    {
+     "text": "삼 형제는 집 지을 재료를 사러 가게에 갔어요.",
+     "src": "new",
+     "en": "The three brothers went to the shop to buy things to build with.",
+     "segs": [
+      [
+       "nar",
+       "The three brothers went to the shop to buy things to build with."
+      ]
+     ]
+    },
+    {
+     "text": "짚 한 묶음, 나무 한 더미, 벽돌 한 무더기가 나란히 있었지요.",
+     "src": "new",
+     "en": "There was a bundle of straw, a pile of wood, and a heap of bricks, all in a row.",
+     "segs": [
+      [
+       "nar",
+       "There was a bundle of straw, a pile of wood, and a heap of bricks, all in a row."
+      ]
+     ]
+    },
+    {
+     "text": "가게에서 바람을 불어 보기로 했어요.",
+     "src": "reuse",
+     "en": "At the shop, they decided to try blowing wind.",
+     "segs": [
+      [
+       "nar",
+       "At the shop, they decided to try blowing wind."
+      ]
+     ]
+    },
+    {
+     "text": "짚은 훨훨 날아가요. 아주 가벼워요.",
+     "src": "reuse",
+     "en": "Straw flies away. It is very light.",
+     "segs": [
+      [
+       "nar",
+       "Straw flies away. It is very light."
+      ]
+     ],
+     "before": [
+      "fan:blow:straw",
+      "fx:whoosh"
+     ]
+    },
+    {
+     "text": "나무는 흔들흔들! 조금 튼튼해요.",
+     "src": "reuse",
+     "en": "Wood wobbles! It is a little bit strong.",
+     "segs": [
+      [
+       "nar",
+       "Wood wobbles! It is a little bit strong."
+      ]
+     ],
+     "before": [
+      "fan:blow:wood"
+     ]
+    },
+    {
+     "text": "벽돌은 끄떡없어요! 아주 아주 튼튼해요.",
+     "src": "reuse",
+     "en": "Bricks don't budge! They are very, very strong.",
+     "segs": [
+      [
+       "nar",
+       "Bricks don't budge! They are very, very strong."
+      ]
+     ],
+     "before": [
+      "fan:blow:brick",
+      "pop:600,300,끄떡없어!"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_straw",
+   "card": "First Pig's Straw House",
+   "set": "strawlot",
+   "enter": [
+    "pig1:at:360,540",
+    "pig1:set:build",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "첫째는 짚으로 집을 짓기로 했어요.",
+     "src": "trim",
+     "from": "첫째는 짚으로 집을 짓기로 했어요. 짚을 톡톡톡 쌓아요!",
+     "en": "The first pig decided to build with straw.",
+     "segs": [
+      [
+       "nar",
+       "The first pig decided to build with straw."
+      ]
+     ]
+    },
+    {
+     "text": "사락사락, 짚을 휘리릭 얹으니 금방이었어요.",
+     "src": "new",
+     "en": "Swish, swish, he tossed the straw on, and it was done in a jiffy.",
+     "segs": [
+      [
+       "nar",
+       "Swish, swish, he tossed the straw on, and it was done in a jiffy."
+      ]
+     ],
+     "before": [
+      "pile:drop:straw"
+     ],
+     "after": [
+      "house:reveal:straw"
+     ]
+    },
+    {
+     "text": "뚝딱! 짚 집이 완성됐어요. 첫째는 피리를 불며 놀았어요.",
+     "src": "reuse",
+     "en": "Ta-da! The straw house is done. The first pig played his flute.",
+     "segs": [
+      [
+       "nar",
+       "Ta-da! The straw house is done. The first pig played his flute."
+      ]
+     ],
+     "before": [
+      "pig1:set:play",
+      "pop:500,300,삐리리~"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_wood",
+   "card": "Second Pig's Wood House",
+   "set": "woodlot",
+   "enter": [
+    "pig2:at:360,540",
+    "pig2:set:build",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "둘째는 나무로 집을 짓기로 했어요.",
+     "src": "trim",
+     "from": "둘째는 나무로 집을 짓기로 했어요. 망치로 톡톡톡톡톡!",
+     "en": "The second pig decided to build with wood.",
+     "segs": [
+      [
+       "nar",
+       "The second pig decided to build with wood."
+      ]
+     ]
+    },
+    {
+     "text": "뚝딱뚝딱, 망치질 몇 번에 나무 집이 뚝딱 섰어요.",
+     "src": "new",
+     "en": "Tap, tap, bang, bang, a few swings of the hammer and up went the wood house.",
+     "segs": [
+      [
+       "nar",
+       "Tap, tap, bang, bang, a few swings of the hammer and up went the wood house."
+      ]
+     ],
+     "before": [
+      "pile:drop:wood"
+     ],
+     "after": [
+      "house:reveal:wood"
+     ]
+    },
+    {
+     "text": "쿵쾅쿵쾅! 나무 집이 완성됐어요. 둘째는 바이올린을 켜며 놀았어요.",
+     "src": "reuse",
+     "en": "Bang, bang! The wood house is done. The second pig played his violin.",
+     "segs": [
+      [
+       "nar",
+       "Bang, bang! The wood house is done. The second pig played his violin."
+      ]
+     ],
+     "before": [
+      "pig2:set:play",
+      "pop:500,300,깽깽~"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_brick",
+   "card": "Third Pig's Brick House",
+   "set": "bricklot",
+   "enter": [
+    "pig3:at:360,540",
+    "pig3:set:build",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 열 장을 천천히 쌓아요.",
+     "src": "reuse",
+     "en": "The third pig decided to build with bricks. Bricks are heavy, so stack ten of them slowly.",
+     "segs": [
+      [
+       "nar",
+       "The third pig decided to build with bricks. Bricks are heavy, so stack ten of them slowly."
+      ]
+     ]
+    },
+    {
+     "text": "영차, 영차. 셋째는 땀을 뻘뻘 흘리며 벽돌을 한 장씩 쌓았어요.",
+     "src": "new",
+     "en": "Heave-ho, heave-ho. The third pig stacked the bricks one at a time, dripping with sweat.",
+     "segs": [
+      [
+       "nar",
+       "Heave-ho, heave-ho. The third pig stacked the bricks one at a time, dripping with sweat."
+      ]
+     ],
+     "before": [
+      "pile:drop:brick",
+      "pop:400,330,영차!"
+     ]
+    },
+    {
+     "text": "형들이 놀렸어요. \"아직도 해? 우리랑 놀자!\" 그래도 셋째는 천천히 벽돌을 쌓았어요.",
+     "src": "reuse",
+     "en": "His brothers teased him. Still building? Come and play with us! But the third pig kept stacking bricks, slowly.",
+     "segs": [
+      [
+       "nar",
+       "His brothers teased him."
+      ],
+      [
+       "piga",
+       "Still building? Come and play with us!",
+       "happy"
+      ],
+      [
+       "nar",
+       "But the third pig kept stacking bricks, slowly."
+      ]
+     ],
+     "before": [
+      "pig1:at:700,540",
+      "pig2:at:800,540"
+     ]
+    },
+    {
+     "text": "\"튼튼하게 짓는 게 제일 중요해!\" 셋째는 씩씩하게 말했어요.",
+     "src": "new",
+     "en": "\"Building it strong is what matters most!\" the third pig said bravely.",
+     "segs": [
+      [
+       "pigc",
+       "Building it strong is what matters most!",
+       "happy"
+      ],
+      [
+       "nar",
+       "the third pig said bravely."
+      ]
+     ]
+    },
+    {
+     "text": "벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!",
+     "src": "reuse",
+     "en": "He stacked all ten bricks. A strong brick house is done!",
+     "segs": [
+      [
+       "nar",
+       "He stacked all ten bricks. A strong brick house is done!"
+      ]
+     ],
+     "before": [
+      "house:reveal:brick",
+      "fx:ding"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_huff_straw",
+   "card": "Huff! Straw House",
+   "set": "strawlot",
+   "enter": [
+    "house:reveal:straw",
+    "pig1:at:560,540",
+    "wolf:hide",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요. \"아기 돼지야, 문 열어라!\"",
+     "src": "reuse",
+     "en": "Then a hungry wolf came along, sniff, sniff. Little pig, little pig, open the door!",
+     "segs": [
+      [
+       "nar",
+       "Then a hungry wolf came along, sniff, sniff."
+      ],
+      [
+       "wolf",
+       "Little pig, little pig, open the door!",
+       "angry:1.1"
+      ]
+     ],
+     "before": [
+      "wolf:at:-100,540",
+      "wolf:walk:300,540"
+     ]
+    },
+    {
+     "text": "첫째가 말했어요. \"싫어요, 싫어요!\" 늑대가 말했어요. \"그럼 후~ 불어서 날려 버릴 테야!\"",
+     "src": "reuse",
+     "en": "The first pig said. No, no, no! The wolf said. Then I'll huff and puff and blow it away!",
+     "segs": [
+      [
+       "nar",
+       "The first pig said."
+      ],
+      [
+       "piga",
+       "No, no, no!",
+       "happy"
+      ],
+      [
+       "nar",
+       "The wolf said."
+      ],
+      [
+       "wolf",
+       "Then I'll huff and puff and blow it away!",
+       "angry:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "늑대는 볼을 빵빵하게 부풀렸어요. 후우~!",
+     "src": "new",
+     "en": "The wolf puffed up his cheeks, big and round. Whoosh~!",
+     "segs": [
+      [
+       "nar",
+       "The wolf puffed up his cheeks, big and round. Whoosh~!"
+      ]
+     ],
+     "before": [
+      "wolf:set:blow"
+     ],
+     "after": [
+      "wolf:blow:1",
+      "fx:whoosh",
+      "pop:300,300,후우~"
+     ]
+    },
+    {
+     "text": "짚 집이 훨훨 날아가 버렸어요!",
+     "src": "reuse",
+     "en": "The straw house flew away!",
+     "segs": [
+      [
+       "nar",
+       "The straw house flew away!"
+      ]
+     ],
+     "before": [
+      "house:ruin:straw",
+      "cut:strawhat"
+     ]
+    },
+    {
+     "text": "첫째는 둘째네 집으로 달려갔어요.",
+     "src": "reuse",
+     "en": "The first pig ran to his brother's house.",
+     "segs": [
+      [
+       "nar",
+       "The first pig ran to his brother's house."
+      ]
+     ],
+     "before": [
+      "pig1:set:flee"
+     ],
+     "after": [
+      "pig1:walk:1200,540"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_huff_wood",
+   "card": "Huff! Wood House",
+   "set": "woodlot",
+   "enter": [
+    "house:reveal:wood",
+    "pig1:at:520,540",
+    "pig2:at:620,540",
+    "wolf:hide",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "늑대가 나무 집에도 왔어요. \"아기 돼지야, 문 열어라!\"",
+     "src": "reuse",
+     "en": "Then the wolf came to the wood house too. Little pig, little pig, open the door!",
+     "segs": [
+      [
+       "nar",
+       "Then the wolf came to the wood house too."
+      ],
+      [
+       "wolf",
+       "Little pig, little pig, open the door!",
+       "angry:1.1"
+      ]
+     ],
+     "before": [
+      "wolf:at:-100,540",
+      "wolf:walk:300,540"
+     ]
+    },
+    {
+     "text": "첫째와 둘째가 말했어요. \"싫어요, 싫어요!\" 늑대가 말했어요. \"그럼 후~ 후~ 불어 주지!\"",
+     "src": "reuse",
+     "en": "The first and second pigs said. No, no, no! The wolf said. Then I'll huff and puff and blow it down!",
+     "segs": [
+      [
+       "nar",
+       "The first and second pigs said."
+      ],
+      [
+       "pigb",
+       "No, no, no!",
+       "happy"
+      ],
+      [
+       "nar",
+       "The wolf said."
+      ],
+      [
+       "wolf",
+       "Then I'll huff and puff and blow it down!",
+       "angry:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "후~ 후~! 나무 집이 삐걱삐걱 흔들리더니…",
+     "src": "new",
+     "en": "Huff! Puff! The wood house creaked and wobbled, and then...",
+     "segs": [
+      [
+       "nar",
+       "Huff! Puff! The wood house creaked and wobbled, and then..."
+      ]
+     ],
+     "before": [
+      "wolf:set:blow"
+     ],
+     "after": [
+      "wolf:blow:2",
+      "fx:whoosh",
+      "shake"
+     ]
+    },
+    {
+     "text": "나무 집이 와르르 무너졌어요!",
+     "src": "reuse",
+     "en": "The wood house tumbled down!",
+     "segs": [
+      [
+       "nar",
+       "The wood house tumbled down!"
+      ]
+     ],
+     "before": [
+      "house:ruin:wood",
+      "fx:crash",
+      "cut:planks"
+     ]
+    },
+    {
+     "text": "아기 돼지 둘은 막내네 집으로 달려갔어요.",
+     "src": "reuse",
+     "en": "The two little pigs ran to their youngest brother's house.",
+     "segs": [
+      [
+       "nar",
+       "The two little pigs ran to their youngest brother's house."
+      ]
+     ],
+     "before": [
+      "pig1:set:flee",
+      "pig2:set:flee"
+     ],
+     "after": [
+      "pigs:run:1200"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_inside",
+   "card": "Inside the Brick House",
+   "set": "brick_in",
+   "enter": [
+    "pig1:at:350,540",
+    "pig2:at:450,540",
+    "pig3:at:550,540",
+    "cam:snap:450,280,1"
+   ],
+   "lines": [
+    {
+     "text": "두 형은 숨이 차서 헉헉!",
+     "src": "trim",
+     "from": "두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?",
+     "en": "The two brothers were out of breath, huff, puff!",
+     "segs": [
+      [
+       "nar",
+       "The two brothers were out of breath, huff, puff!"
+      ]
+     ]
+    },
+    {
+     "text": "셋째가 문을 활짝 열어 주었어요. 형들은 후다닥 뛰어 들어갔지요.",
+     "src": "new",
+     "en": "The third pig flung the door open wide. His brothers dashed inside, quick as a wink.",
+     "segs": [
+      [
+       "nar",
+       "The third pig flung the door open wide. His brothers dashed inside, quick as a wink."
+      ]
+     ]
+    },
+    {
+     "text": "삼 형제는 문을 꼭 닫고 빗장을 철컥 걸었어요.",
+     "src": "new",
+     "en": "The three brothers shut the door tight and slid the bolt, click, clack.",
+     "segs": [
+      [
+       "nar",
+       "The three brothers shut the door tight and slid the bolt, click, clack."
+      ]
+     ]
+    },
+    {
+     "text": "삼 형제는 모두 모였어요.",
+     "src": "trim",
+     "from": "삼 형제는 모두 모였어요. 하나, 둘, 셋을 세어 볼까요?",
+     "en": "All three brothers were together.",
+     "segs": [
+      [
+       "nar",
+       "All three brothers were together."
+      ]
+     ]
+    },
+    {
+     "text": "\"셋이서 함께라서 무섭지 않아!\"",
+     "src": "reuse",
+     "en": "We're together, all three. I'm not scared!",
+     "segs": [
+      [
+       "pigc",
+       "We're together, all three. I'm not scared!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "pig3:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_knock",
+   "card": "Knock, Knock!",
+   "set": "brick_out",
+   "enter": [
+    "house:reveal:brick",
+    "wolf:at:300,540",
+    "cam:snap:450,280,1"
+   ],
+   "lines": [
+    {
+     "text": "늑대가 벽돌 집에 왔어요. \"아기 돼지야, 문 열어라!\"",
+     "src": "reuse",
+     "en": "The wolf came to the brick house. Little pig, little pig, open the door!",
+     "segs": [
+      [
+       "nar",
+       "The wolf came to the brick house."
+      ],
+      [
+       "wolf",
+       "Little pig, little pig, open the door!",
+       "angry:1.1"
+      ]
+     ],
+     "before": [
+      "pop:450,250,쿵쿵쿵!"
+     ]
+    },
+    {
+     "text": "\"싫어요, 싫어요!\" \"그럼 후~ 후~ 불어 주지!\"",
+     "src": "reuse",
+     "en": "No, no, no! Then I'll huff and puff and blow!",
+     "segs": [
+      [
+       "pigc",
+       "No, no, no!",
+       "happy"
+      ],
+      [
+       "wolf",
+       "Then I'll huff and puff and blow!",
+       "angry:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "후~ 후~ 후~! 늑대는 얼굴이 새빨개지도록 불고 또 불었어요.",
+     "src": "new",
+     "en": "Huff, puff, huff, puff! The wolf blew and blew until his face turned bright red.",
+     "segs": [
+      [
+       "nar",
+       "Huff, puff, huff, puff! The wolf blew and blew until his face turned bright red."
+      ]
+     ],
+     "before": [
+      "wolf:set:blow"
+     ],
+     "after": [
+      "wolf:blow:8"
+     ]
+    },
+    {
+     "text": "후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!",
+     "src": "reuse",
+     "en": "Huff, puff! He blew eight times, but the brick house did not budge!",
+     "segs": [
+      [
+       "nar",
+       "Huff, puff! He blew eight times, but the brick house did not budge!"
+      ]
+     ],
+     "before": [
+      "pop:600,300,끄떡없어!"
+     ],
+     "after": [
+      "cut:tired"
+     ]
+    },
+    {
+     "text": "늑대는 숨이 차서 털썩 주저앉았어요.",
+     "src": "reuse",
+     "en": "The wolf was out of breath and plopped down.",
+     "segs": [
+      [
+       "nar",
+       "The wolf was out of breath and plopped down."
+      ]
+     ],
+     "before": [
+      "wolf:set:tired",
+      "fx:thud"
+     ]
+    },
+    {
+     "text": "\"흥, 그럼 다른 수를 써야지!\" 늑대는 눈을 데굴데굴 굴렸어요.",
+     "src": "new",
+     "en": "\"Hmph! Then I will try another way!\" The wolf rolled his eyes around and around, thinking.",
+     "segs": [
+      [
+       "wolf",
+       "Hmph! Then I will try another way!",
+       "angry:1.1"
+      ],
+      [
+       "nar",
+       "The wolf rolled his eyes around and around, thinking."
+      ]
+     ],
+     "after": [
+      "cut:crawl"
+     ]
+    },
+    {
+     "text": "늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.",
+     "src": "reuse",
+     "en": "The wolf crept up onto the roof. He wanted to sneak in through the chimney.",
+     "segs": [
+      [
+       "nar",
+       "The wolf crept up onto the roof. He wanted to sneak in through the chimney."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_pot",
+   "card": "Bubble, Bubble",
+   "set": "chimney",
+   "enter": [
+    "pig1:at:350,540",
+    "pig2:at:450,540",
+    "pig3:at:550,540",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "지붕에서 바스락바스락 소리가 났어요. 삼 형제는 귀를 쫑긋 세웠지요.",
+     "src": "new",
+     "en": "Rustle, rustle, came a sound from the roof. The three brothers pricked up their ears.",
+     "segs": [
+      [
+       "nar",
+       "Rustle, rustle, came a sound from the roof. The three brothers pricked up their ears."
+      ]
+     ]
+    },
+    {
+     "text": "아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.",
+     "src": "reuse",
+     "en": "The little pigs boiled water in a big pot.",
+     "segs": [
+      [
+       "nar",
+       "The little pigs boiled water in a big pot."
+      ]
+     ],
+     "before": [
+      "fire:big",
+      "pot:boil"
+     ]
+    },
+    {
+     "text": "장작을 넣자 불이 활활 타올랐어요.",
+     "src": "new",
+     "en": "They tossed in more wood, and the fire blazed, crackle, crackle.",
+     "segs": [
+      [
+       "nar",
+       "They tossed in more wood, and the fire blazed, crackle, crackle."
+      ]
+     ]
+    },
+    {
+     "text": "보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.",
+     "src": "reuse",
+     "en": "Bubble, bubble, the water is boiling! Then the wolf slid down the chimney.",
+     "segs": [
+      [
+       "nar",
+       "Bubble, bubble, the water is boiling! Then the wolf slid down the chimney."
+      ]
+     ],
+     "before": [
+      "pop:500,300,보글보글"
+     ],
+     "after": [
+      "cut:chimney",
+      "cut:splash"
+     ]
+    },
+    {
+     "text": "\"앗, 뜨거워!\"",
+     "src": "reuse",
+     "en": "Ouch, it's hot!",
+     "segs": [
+      [
+       "wolf",
+       "Ouch, it's hot!",
+       "angry:1.1"
+      ]
+     ],
+     "after": [
+      "cut:launch",
+      "fx:boing"
+     ]
+    },
+    {
+     "text": "늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.",
+     "src": "reuse",
+     "en": "The wolf whooshed up the chimney and ran far, far away. He never came back.",
+     "segs": [
+      [
+       "nar",
+       "The wolf whooshed up the chimney and ran far, far away. He never came back."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_village",
+   "card": "Brick Village",
+   "set": "sunset",
+   "enter": [
+    "pig1:at:300,540",
+    "pig2:at:500,540",
+    "pig3:at:700,540",
+    "cam:snap:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.",
+     "src": "reuse",
+     "en": "The wolf never came again. The little pigs built more brick houses.",
+     "segs": [
+      [
+       "nar",
+       "The wolf never came again. The little pigs built more brick houses."
+      ]
+     ]
+    },
+    {
+     "text": "첫째도 둘째도 영차영차, 이번엔 벽돌을 한 장씩 차곡차곡 쌓았지요.",
+     "src": "new",
+     "en": "The first and second pigs went heave-ho, heave-ho, stacking bricks one by one, neat and tidy.",
+     "segs": [
+      [
+       "nar",
+       "The first and second pigs went heave-ho, heave-ho, stacking bricks one by one, neat and tidy."
+      ]
+     ],
+     "before": [
+      "house:build:1",
+      "house:build:2",
+      "house:build:3"
+     ]
+    },
+    {
+     "text": "하나, 둘, 셋! 튼튼한 벽돌 집이 세 채가 되었어요.",
+     "src": "reuse",
+     "en": "One, two, three! Now there were three strong brick houses.",
+     "segs": [
+      [
+       "nar",
+       "One, two, three! Now there were three strong brick houses."
+      ]
+     ],
+     "before": [
+      "fx:ding"
+     ],
+     "after": [
+      "cut:village"
+     ]
+    },
+    {
+     "text": "저녁 해가 뉘엿뉘엿, 굴뚝에서는 연기가 모락모락 피어올랐어요.",
+     "src": "new",
+     "en": "The evening sun sank low, and smoke curled up, puff, puff, from the chimneys.",
+     "segs": [
+      [
+       "nar",
+       "The evening sun sank low, and smoke curled up, puff, puff, from the chimneys."
+      ]
+     ]
+    },
+    {
+     "text": "삼 형제는 튼튼한 집에서 오래오래 행복하게 살았어요.",
+     "src": "reuse",
+     "en": "The three brothers lived happily in their strong houses for a long, long time.",
+     "segs": [
+      [
+       "nar",
+       "The three brothers lived happily in their strong houses for a long, long time."
+      ]
+     ]
+    },
+    {
+     "text": "튼튼한 집은 하나씩 정성껏 쌓아서 만든답니다.",
+     "src": "new",
+     "en": "A strong house is built carefully, one piece at a time.",
+     "segs": [
+      [
+       "nar",
+       "A strong house is built carefully, one piece at a time."
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
