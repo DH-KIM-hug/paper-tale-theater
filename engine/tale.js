@@ -1162,7 +1162,17 @@ const Tale = (() => {
     { const ab = $('#autoBtn'); if (ab) ab.addEventListener('click', () => {
       try { sessionStorage.setItem('auto_once', '1'); } catch (e) { /* 저장 못 하면 이 판은 그냥 시작 */ }
       try { AudioFX.stopNarration(); Narrator.stop(); } catch (e) { /* 무시 */ }
-      autoNet(); start();
+      /* '자동 재생'을 홈 목소리로 한 번 말한 뒤 시작한다(녹음이 없으면 바로 시작) */
+      (async () => {
+        try {
+          const txt = await (await fetch(ROOT_URL + 'home_narration_el.js')).text();
+          const c = new Function(txt + '; return { ko: NARRATION_CLIPS, en: (typeof NARRATION_CLIPS_EN !== "undefined" ? NARRATION_CLIPS_EN : {}) };')();
+          const en = typeof englishOn === 'function' && englishOn() ? c.en['자동 재생'] : null;
+          const url = en ? en.c : c.ko['자동 재생'];
+          if (url && typeof url === 'string') await AudioFX.playUrl(ROOT_URL + url);
+        } catch (e) { /* 소리 없이 시작 */ }
+        autoNet(); start();
+      })();
     }); }
     $('#againBtn').onclick = start;
   }

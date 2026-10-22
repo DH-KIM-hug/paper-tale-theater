@@ -18,6 +18,7 @@ const NARRATION_CLIPS = {
  "이야기 전체": "audio/el/home/nar_98671a6390.mp3",
  "배우는 것 전체": "audio/el/home/nar_af10150d2c.mp3",
  "모든 동화가 열렸어요!": "audio/el/home/nar_db9e858c5c.mp3",
+ "자동 재생": "audio/el/home/nar_871b7f4a38.mp3",
  "팥죽할멈과 호랑이": "audio/el/home/nar_ee3ff7bca7.mp3",
  "팥죽할멈과 호랑이. 곧 열려요.": "audio/el/home/nar_815dc46b31.mp3",
  "황소와 개구리": "audio/el/home/nar_bb78391d04.mp3",
@@ -154,6 +155,10 @@ const NARRATION_CLIPS_EN = {
  "모든 동화가 열렸어요!": {
   "t": "All tales are unlocked!",
   "c": "audio/el/home/en/nar_31722cc234.mp3"
+ },
+ "자동 재생": {
+  "t": "Auto play",
+  "c": "audio/el/home/en/nar_cadc3e4423.mp3"
  },
  "팥죽할멈과 호랑이": {
   "t": "The Tiger and the Red Bean Porridge",
