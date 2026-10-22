@@ -9,12 +9,12 @@
  },
  "lines": [
   {
-   "text": "언덕 위에 작은 아이가 서 있어요. 하늘을 올려다보고 있어요.",
-   "en": "On a hill stands a little child, looking up at the sky.",
+   "text": "언덕 위에 다현이가 서 있어요. 하늘을 올려다보고 있어요.",
+   "en": "On a hill stands Dahyun, looking up at the sky.",
    "segs": [
     [
      "nar",
-     "On a hill stands a little child, looking up at the sky.",
+     "On a hill stands Dahyun, looking up at the sky.",
      null
     ]
    ]
@@ -53,12 +53,12 @@
    ]
   },
   {
-   "text": "아이는 구름 나라로 올라가 보기로 했어요.",
-   "en": "The child decided to climb up to the cloud country.",
+   "text": "다현이는 구름 나라로 올라가 보기로 했어요.",
+   "en": "Dahyun decided to climb up to the cloud country.",
    "segs": [
     [
      "nar",
-     "The child decided to climb up to the cloud country.",
+     "Dahyun decided to climb up to the cloud country.",
      null
     ]
    ]
@@ -119,12 +119,12 @@
    ]
   },
   {
-   "text": "아이와 양은 손을 잡고 구름 길을 걸었어요.",
-   "en": "The child and the sheep walked the cloud path hand in hand.",
+   "text": "다현이와 양은 손을 잡고 구름 길을 걸었어요.",
+   "en": "Dahyun and the sheep walked the cloud path hand in hand.",
    "segs": [
     [
      "nar",
-     "The child and the sheep walked the cloud path hand in hand.",
+     "Dahyun and the sheep walked the cloud path hand in hand.",
      null
     ]
    ]
@@ -152,12 +152,12 @@
    ]
   },
   {
-   "text": "밤이 되자, 아이는 별빛 숲으로 들어갔어요.",
-   "en": "When night came, the child walked into the starlight forest.",
+   "text": "밤이 되자, 다현이는 별빛 숲으로 들어갔어요.",
+   "en": "When night came, Dahyun walked into the starlight forest.",
    "segs": [
     [
      "nar",
-     "When night came, the child walked into the starlight forest.",
+     "When night came, Dahyun walked into the starlight forest.",
      null
     ]
    ]
@@ -207,12 +207,12 @@
    ]
   },
   {
-   "text": "아이는 사슴의 작은 뿔을 가만히 보았어요.",
-   "en": "The child looked quietly at the deer's little antlers.",
+   "text": "다현이는 사슴의 작은 뿔을 가만히 보았어요.",
+   "en": "Dahyun looked quietly at the deer's little antlers.",
    "segs": [
     [
      "nar",
-     "The child looked quietly at the deer's little antlers.",
+     "Dahyun looked quietly at the deer's little antlers.",
      null
     ]
    ]
@@ -251,12 +251,12 @@
    ]
   },
   {
-   "text": "말은 아이의 간식 바구니를 보고 있어요.",
-   "en": "The horse was looking at the child's snack basket.",
+   "text": "말은 다현이의 간식 바구니를 보고 있어요.",
+   "en": "The horse was looking at Dahyun's snack basket.",
    "segs": [
     [
      "nar",
-     "The horse was looking at the child's snack basket.",
+     "The horse was looking at Dahyun's snack basket.",
      null
     ]
    ]
@@ -328,12 +328,12 @@
    ]
   },
   {
-   "text": "아이는 땅만 보며 터벅터벅 걸었어요.",
-   "en": "The child trudged along, looking only at the ground.",
+   "text": "다현이는 땅만 보며 터벅터벅 걸었어요.",
+   "en": "Dahyun trudged along, looking only at the ground.",
    "segs": [
     [
      "nar",
-     "The child trudged along, looking only at the ground.",
+     "Dahyun trudged along, looking only at the ground.",
      null
     ]
    ]
@@ -350,12 +350,12 @@
    ]
   },
   {
-   "text": "아이가 천천히 뒤를 돌아보았어요.",
-   "en": "The child slowly turned around.",
+   "text": "다현이가 천천히 뒤를 돌아보았어요.",
+   "en": "Dahyun slowly turned around.",
    "segs": [
     [
      "nar",
-     "The child slowly turned around.",
+     "Dahyun slowly turned around.",
      null
     ]
    ]
@@ -416,12 +416,12 @@
    ]
   },
   {
-   "text": "아이는 유니콘을 꼭 안았어요.",
-   "en": "The child hugged the unicorn tight.",
+   "text": "다현이는 유니콘을 꼭 안았어요.",
+   "en": "Dahyun hugged the unicorn tight.",
    "segs": [
     [
      "nar",
-     "The child hugged the unicorn tight.",
+     "Dahyun hugged the unicorn tight.",
      "happy"
     ]
    ]

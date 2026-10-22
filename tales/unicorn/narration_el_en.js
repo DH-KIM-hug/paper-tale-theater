@@ -1,8 +1,8 @@
 /* unicorn — ElevenLabs 배역 내레이션 (영어) (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS_EN, {
- "언덕 위에 작은 아이가 서 있어요. 하늘을 올려다보고 있어요.": {
-  "t": "On a hill stands a little child, looking up at the sky.",
-  "c": "audio/el/unicorn/en/nar_4a3c4b8c47.mp3"
+ "언덕 위에 다현이가 서 있어요. 하늘을 올려다보고 있어요.": {
+  "t": "On a hill stands Dahyun, looking up at the sky.",
+  "c": "audio/el/unicorn/en/nar_4cf8bbc119.mp3"
  },
  "진짜 유니콘을 만나고 싶어요.": {
   "t": "I want to meet a real unicorn.",
@@ -16,9 +16,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "That is right! It is red.",
   "c": "audio/el/unicorn/en/nar_8381efe7c2.mp3"
  },
- "아이는 구름 나라로 올라가 보기로 했어요.": {
-  "t": "The child decided to climb up to the cloud country.",
-  "c": "audio/el/unicorn/en/nar_0b751e4a32.mp3"
+ "다현이는 구름 나라로 올라가 보기로 했어요.": {
+  "t": "Dahyun decided to climb up to the cloud country.",
+  "c": "audio/el/unicorn/en/nar_6bd104d5cb.mp3"
  },
  "구름 섬에 양 한 마리가 혼자 앉아 있어요.": {
   "t": "On a cloud island, a little sheep sat all alone.",
@@ -40,9 +40,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Let's go together!",
   "c": "audio/el/unicorn/en/kid_dbcf53ef9e.mp3"
  },
- "아이와 양은 손을 잡고 구름 길을 걸었어요.": {
-  "t": "The child and the sheep walked the cloud path hand in hand.",
-  "c": "audio/el/unicorn/en/nar_38a655bc9d.mp3"
+ "다현이와 양은 손을 잡고 구름 길을 걸었어요.": {
+  "t": "Dahyun and the sheep walked the cloud path hand in hand.",
+  "c": "audio/el/unicorn/en/nar_0bc0eecf28.mp3"
  },
  "고마워! 이제 집이 보여!": {
   "t": "Thank you! I can see my home now!",
@@ -52,9 +52,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The sheep went home. The unicorn was still nowhere to be seen.",
   "c": "audio/el/unicorn/en/nar_193b42b5e8.mp3"
  },
- "밤이 되자, 아이는 별빛 숲으로 들어갔어요.": {
-  "t": "When night came, the child walked into the starlight forest.",
-  "c": "audio/el/unicorn/en/nar_1e2eb8b888.mp3"
+ "밤이 되자, 다현이는 별빛 숲으로 들어갔어요.": {
+  "t": "When night came, Dahyun walked into the starlight forest.",
+  "c": "audio/el/unicorn/en/nar_5b107dfeba.mp3"
  },
  "아야, 아야…": {
   "t": "Ouch, ouch...",
@@ -72,9 +72,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Thank you! It doesn't hurt at all now.",
   "c": "audio/el/unicorn/en/deer_14be33fde4.mp3"
  },
- "아이는 사슴의 작은 뿔을 가만히 보았어요.": {
-  "t": "The child looked quietly at the deer's little antlers.",
-  "c": "audio/el/unicorn/en/nar_a6959c0699.mp3"
+ "다현이는 사슴의 작은 뿔을 가만히 보았어요.": {
+  "t": "Dahyun looked quietly at the deer's little antlers.",
+  "c": "audio/el/unicorn/en/nar_b6525af233.mp3"
  },
  "유니콘은… 아니구나.": {
   "t": "You're... not a unicorn.",
@@ -88,9 +88,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Grrrumble...",
   "c": "audio/el/unicorn/en/horse_d1899d043d.mp3"
  },
- "말은 아이의 간식 바구니를 보고 있어요.": {
-  "t": "The horse was looking at the child's snack basket.",
-  "c": "audio/el/unicorn/en/nar_4fb4a00ca9.mp3"
+ "말은 다현이의 간식 바구니를 보고 있어요.": {
+  "t": "The horse was looking at Dahyun's snack basket.",
+  "c": "audio/el/unicorn/en/nar_5b6a16052a.mp3"
  },
  "자, 같이 먹자.": {
   "t": "Here, let's share.",
@@ -116,17 +116,17 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Maybe... there is no real unicorn.",
   "c": "audio/el/unicorn/en/kid_3d01e57d04.mp3"
  },
- "아이는 땅만 보며 터벅터벅 걸었어요.": {
-  "t": "The child trudged along, looking only at the ground.",
-  "c": "audio/el/unicorn/en/nar_e7e6e91ac4.mp3"
+ "다현이는 땅만 보며 터벅터벅 걸었어요.": {
+  "t": "Dahyun trudged along, looking only at the ground.",
+  "c": "audio/el/unicorn/en/nar_812765a19f.mp3"
  },
  "그때, 뒤에서 작은 소리가 났어요.": {
   "t": "Just then, a small sound came from behind.",
   "c": "audio/el/unicorn/en/nar_ace91c6d46.mp3"
  },
- "아이가 천천히 뒤를 돌아보았어요.": {
-  "t": "The child slowly turned around.",
-  "c": "audio/el/unicorn/en/nar_6d2bb9839e.mp3"
+ "다현이가 천천히 뒤를 돌아보았어요.": {
+  "t": "Dahyun slowly turned around.",
+  "c": "audio/el/unicorn/en/nar_f9b15ad578.mp3"
  },
  "달빛 아래, 하얀 유니콘이 서 있었어요.": {
   "t": "There in the moonlight stood a white unicorn.",
@@ -148,9 +148,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the unicorn to say hello.",
   "c": "audio/el/unicorn/en/nar_ff76dba6b1.mp3"
  },
- "아이는 유니콘을 꼭 안았어요.": {
-  "t": "The child hugged the unicorn tight.",
-  "c": "audio/el/unicorn/en/nar_4245dd3b46.mp3"
+ "다현이는 유니콘을 꼭 안았어요.": {
+  "t": "Dahyun hugged the unicorn tight.",
+  "c": "audio/el/unicorn/en/nar_042efac988.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {
