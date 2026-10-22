@@ -138,7 +138,8 @@ const AudioFX = (() => {
   const samples = {};
   /* 같은 소리의 여러 버전: 기본 이름(rooster.mp3) 말고 rooster_2.mp3, rooster_3.mp3 … 가 있으면 재생할 때마다 바꿔 고른다 (버전 수는 기본 포함) */
   const VARIANTS = { 'animals/duck': 3, 'animals/cow': 3, 'animals/pig': 3, 'animals/dog': 3, 'animals/owl': 3, 'animals/frog': 3,
-    'animals/rooster': 3, 'animals/cat': 3, 'animals/sheep': 3, 'animals/donkey': 3, 'animals/tiger': 2, 'sfx/knock': 3 };
+    'animals/rooster': 3, 'animals/cat': 3, 'animals/sheep': 3, 'animals/donkey': 3, 'animals/tiger': 2, 'sfx/knock': 3,
+    'sfx/crunch': 3, 'sfx/chomp': 3, 'sfx/gulp': 3 };
   const variantPath = (base, i) => i === 1 ? base + '.mp3' : base + '_' + i + '.mp3';
   const lastVariant = {};
   function pickVariant(path) {
@@ -187,7 +188,7 @@ const AudioFX = (() => {
   const COMIC = ['spring', 'slide_up', 'slide_down', 'zip', 'cork', 'doop', 'sparkle', 'xylo_up', 'xylo_down', 'giggle_xylo',
     'crash', 'cymbal', 'drumroll', 'tada', 'womp', 'pan', 'squeak', 'splash_big', 'bubbles', 'laugh_deep', 'giggle', 'cheer',
     'rattle', 'uah'];
-  const EXTRA = ['sfx/knock', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door', 'sfx/blow', 'sfx/blow_long',
+  const EXTRA = ['sfx/knock', 'sfx/crunch', 'sfx/chomp', 'sfx/gulp', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door', 'sfx/blow', 'sfx/blow_long',
     ...COMIC.map(n => 'sfx/' + n),
     ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a), 'sfx/paper_turn', 'sfx/baby_cry', 'sfx/baby_giggle', 'sfx/note_xylo', 'sfx/gom_se_mari'];
 
@@ -388,7 +389,7 @@ const AudioFX = (() => {
     bubbles: () => run([600, 900, 700, 1100, 800], .12, 'sine', .14, .07),
     laugh_deep: SYN.laugh, giggle: SYN.laugh,
     cheer: () => noise(1.6, { freq: 1500, q: .5, vol: .15 }),
-    rattle: SYN.roll, chomp: SYN.chomp, gulp: SYN.gulp, uah: SYN.yelp,
+    rattle: SYN.roll, chomp: SYN.chomp, crunch: SYN.chomp, gulp: SYN.gulp, uah: SYN.yelp,
   };
   function layer(name, when, vol, dur) {
     if (playSample('sfx/' + name + '.mp3', vol * STING_VOL, when, dur)) return true;

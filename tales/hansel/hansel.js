@@ -352,7 +352,7 @@
     await say('그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!');
     await say('벽은 쿠키, 지붕은 사탕이에요.');
     await sleep(700); /* 저절로 냠냠 */
-    gret.look('eat'); hans.look('eat'); AudioFX.sfx('chomp') || popSfx(T); gret.hop(16, 300); T.pop(gret.x, gret.y - 215, tr('냠냠!'));
+    gret.look('eat'); hans.look('eat'); AudioFX.sfx('crunch') || popSfx(T); gret.hop(16, 300); T.pop(gret.x, gret.y - 215, tr('냠냠!'));
     await T.cutImage([{ src: cutSrc('eat'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     hans.hop(12, 300); setTimeout(() => gret.hop(12, 300), 500);
     await say('헨젤은 쿠키 벽을 와삭, 그레텔은 사탕 지붕을 오도독 깨물었어요.');
