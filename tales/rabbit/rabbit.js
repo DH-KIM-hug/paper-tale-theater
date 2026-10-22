@@ -584,6 +584,330 @@
     const PX = (x, k) => T.portrait() ? Math.round(500 + (x - 500) * k) : x;
     const fitZ = half => T.portrait() ? Math.min(1, T.viewWidth() / 2 / half) : 1;
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 그림·배우·관객·막대를 감싼 얇은 함수 =================
+       조작(톡·고르기)은 없다. 장면 세트(set)는 놀이판 scene() 처럼 무대를 비우고 배경을 새로 깐다. 관객은 세트마다 놀이판 자리(RSEAT)에 앉는다 */
+    const R = { set: '', lying: false, covered: false, clouded: false, tapeBroken: false, podium: false, zzz: [], tneck: 1 };
+    const RD = {}; // 세트마다 새로 그리는 것: houses, blanket, cloud, dim, carrot, bite, tapeTop, tapeBot, fish, sunG
+    const nums = s => String(s).split(',').map(Number);
+    const instant = () => T.readInstant();
+    const PART = [['rooster', 190, 388, .75], ['sheep', 320, 388, .75], ['cat', 680, 388, .75], ['owl', 810, 388, .75],
+      ['duck', 140, 488, .95], ['cow', 270, 488, .95], ['pig', 730, 488, .95], ['dog', 860, 488, .95]];
+    const RSEAT = { // 세트별 관객 자리 [x, y, s] — 놀이판 장면과 같은 자리
+      stands: Object.fromEntries([['rooster', 185, 330, .95], ['sheep', 315, 330, .95], ['cat', 700, 330, .95], ['owl', 830, 330, .95],
+        ['duck', 170, 505, 1.2], ['cow', 390, 505, 1.2], ['pig', 610, 505, 1.2], ['dog', 830, 505, 1.2]].map(([k, x, y, s]) => [k, [PX(x, .72), y, s]])),
+      start: { duck: [45, 408, .55], cow: [120, 392, .55], pig: [195, 400, .55], cat: [868, 400, .55], dog: [925, 395, .55], rooster: [985, 415, .55] },
+      shade: { owl: [640, 244, .8], pig: [760, 505, .8] },
+      grass_low: { dog: [285, 445, .5], cat: [745, 440, .5] },
+      stream: { duck: [720, 436, .7] },
+      hill: { sheep: [830, 490, .95] },
+      dusk: { rooster: [300, 474, 1.5] },
+      finish: Object.fromEntries(KINDS.map((k, i) => [k, [[50, 125, 200, 275, 655, 725, 875, 945][i], 408, .5]])),
+      party: Object.fromEntries(PART.map(([k, x, y, s]) => [k, [PX(x, .72), y, s]])),
+    };
+    const audHere = k => aud[k].pos.isConnected;
+    const seatOne = k => { // 이 세트의 자리에 앉힌다 (이미 있으면 그대로)
+      if (audHere(k)) return true;
+      const p = (RSEAT[R.set] || {})[k]; if (!p) return false;
+      const a = aud[k]; a.reset(); put(a, ...p);
+      if (R.set === 'party') show(a.parts.instr, 1);
+      return true;
+    };
+    const audList = k => (k === 'all' ? KINDS.filter(n => audHere(n) || (RSEAT[R.set] || {})[n]) : [k]);
+    const zzzOff = () => { R.zzz.forEach(clearInterval); R.zzz = []; };
+    const zzzOn = () => {
+      zzzOff();
+      R.zzz.push(setInterval(() => floatText(T, rabbit.x - 60, rabbit.y - 150 * rabbit.scale, 'Z', C.indigo, 30 + Math.random() * 12), 1000));
+      let k = 0; R.zzz.push(setInterval(() => snore(T, k++ % 2), 1800));
+    };
+    /* 나뭇잎 이불: 덮으면 토끼 몸 위로 (놀이판: 220,470 → 토끼 발끝 근처, 1.3배) */
+    const blanketTo = (t, s0 = 1) => {
+      const k = rabbit.scale / 1.5, ex = rabbit.x + 5 * k, ey = rabbit.y - 48 * k, es = 1.3 * k; // 토끼 크기에 비례 (놀이판 1.5배 토끼 = 이불 1.3배)
+      RD.blanket.setAttribute('transform', `translate(${220 + (ex - 220) * t} ${470 + (ey - 470) * t}) rotate(${-8 * t}) scale(${s0 + (es - s0) * t})`);
+    };
+    const DRAW = {
+      village: () => villageBG(T),
+      alley: () => {
+        artBG(T, 'bg_alley');
+        RD.houses = [[193, 316], [392, 316], [601, 316], [807, 316]].map(([x, y]) => {
+          T.el('ellipse', { cx: x, cy: y, rx: 24, ry: 28, fill: C.ink }, T.bg);
+          const door = artPiece(T, 'bg_alley', ['ellipse', { cx: x, cy: y, rx: 27, ry: 31 }], T.bg);
+          return { door, x, hinge: x - 27, ay: 400, ky: 280 };
+        });
+      },
+      stands: () => standsBG(T),
+      start: () => {
+        startBG(T);
+        let dr = null;
+        actor(T.world, ART.raccoon ? 745 : 900, ART.raccoon ? 492 : 474, g => { dr = drawRaccoon(T, g); }, { scale: ART.raccoon ? 1 : .95 });
+        RD.drumAt = dr ? [745 + dr[0], 492 + dr[1] - dr[2] - 20] : [730, 300];
+      },
+      map: () => { artBG(T, 'bg_map'); },
+      hill: () => artBG(T, 'bg_hill'),
+      grass_low: () => { artBG(T, 'bg_grass_low'); RD.rock = artPiece(T, 'bg_grass_low', ['ellipse', { cx: 515, cy: 322, rx: 158, ry: 82 }]); },
+      stream: () => {
+        artBG(T, 'bg_stream');
+        RD.fish = [['orange', 130, 470], ['gold', 90, 500], ['lavender', 330, 520]].map(([n, x, y]) =>
+          actor(T.world, x, y, g => el('image', { href: A(ART['fish_' + n]), x: -34, y: -21, width: 68, height: 42, preserveAspectRatio: 'xMidYMid meet', filter: 'url(#pp)' }, g), { scale: 1.2 }));
+      },
+      shade: () => {
+        artBG(T, 'bg_shade');
+        const skyG = el('g', { transform: 'translate(238 55) scale(.6) translate(-140 -120)' }, T.bg);
+        RD.sunG = el('g', {}, skyG); el('image', { href: A(ART.sun_small), x: 65, y: 45, width: 150, height: 150, filter: 'url(#pp)' }, RD.sunG);
+        RD.cloud = el('g', {}, skyG); el('image', { href: A(ART.cloud_small), x: 50, y: 81, width: 200, height: 97, filter: 'url(#pp)' }, RD.cloud);
+        RD.cloud.setAttribute('transform', `translate(${R.clouded ? 0 : -420} 0)`);
+        RD.dim = el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: '#2E2440', opacity: R.clouded ? .22 : 0, 'pointer-events': 'none' }, T.fx);
+      },
+      dream: () => {
+        artBG(T, 'bg_dream');
+        const num = (x, y, t, size) => ['text', { x, y, 'text-anchor': 'middle', 'font-size': size, fill: C.gold, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: t }];
+        paper(T.bg, [num(502, 372, '1', 56)]); paper(T.bg, [num(429, 372, '2', 46)]); paper(T.bg, [num(575, 376, '3', 42)]);
+        RD.carrot = el('g', { transform: 'translate(790 474)', opacity: 0 }, T.world);
+        const m = el('mask', { id: 'biteMaskR', maskUnits: 'userSpaceOnUse', x: -300, y: -600, width: 600, height: 700 }, el('defs', {}, RD.carrot));
+        el('rect', { x: -300, y: -600, width: 600, height: 700, fill: '#fff' }, m);
+        RD.bite = el('g', { opacity: 0 }, m);
+        [[74, -330, 28], [66, -300, 20], [78, -358, 18]].forEach(([cx, cy, r]) => el('circle', { cx, cy, r, fill: '#000' }, RD.bite));
+        sprite(T, el('g', { mask: 'url(#biteMaskR)' }, RD.carrot), 'carrot_trophy', 164, 404);
+      },
+      dusk: () => artBG(T, 'bg_dusk'),
+      finish: () => {
+        artBG(T, 'bg_finish');
+        for (let r = 0; r < 6; r++) el('rect', { x: 760 + (r % 2) * 14, y: 400 + r * 18, width: 14, height: 18, fill: C.snow }, T.bg);
+        const s = 440 / 884, w = 770 * s, x0 = 800 - 38 * s;
+        el('image', { href: A(ART.finish_post), x: x0, y: 60, width: w, height: 440, filter: 'url(#pp)' }, el('g', { transform: `matrix(-1,0,0,1,${(2 * x0 + w).toFixed(1)},0)` }, T.world));
+        el('text', { x: (x0 + w - 405 * s).toFixed(1), y: 60 + 195 * s + 11, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('결승') }, T.world);
+        RD.tapeTop = el('rect', { x: 786, y: 376, width: 8, height: 50, fill: C.bean }, T.world);
+        RD.tapeBot = el('rect', { x: 786, y: 426, width: 8, height: 50, fill: C.bean }, T.world);
+        if (R.tapeBroken) { RD.tapeTop.setAttribute('transform', 'rotate(-70 790 376)'); RD.tapeBot.setAttribute('transform', 'rotate(70 790 476)'); }
+      },
+      party: () => artBG(T, 'bg_party'),
+    };
+    const NO_BAR = ['village', 'alley', 'stands', 'start', 'dream', 'party'];
+    const aim = (x, y, z, dur = 800) => (instant() ? camSnap(x, y, z) : camTo(x, y, z, dur));
+    const READ_ACTS = {
+      set(k) {
+        stopLoops(); zzzOff(); T.clear(); camSnap(500, 280, 1);
+        Object.keys(RD).forEach(n => delete RD[n]);
+        rabbit.pos.remove(); turtle.pos.remove();
+        rabbitReset(); turtleReset(); R.lying = false; R.podium = false; R.tneck = 1;
+        R.set = k;
+        (DRAW[k] || (() => artBG(T, 'bg_' + k)))();
+        if (k === 'shade') { // 이불은 배우보다 앞, 덮은 뒤라면 덮인 자리로
+          RD.blanket = el('g', { transform: 'translate(220 470)' }, T.world);
+          el('image', { href: A(ART.leaf_blanket), x: -110, y: -70, width: 220, height: 129, filter: 'url(#pp)' }, RD.blanket);
+        }
+        if (NO_BAR.includes(k)) bar.show(false);
+      },
+      cam(a) {
+        if (a === 'wide') return instant() ? camSnap(500, 280, 1) : camWide(700);
+        const [x, y, z] = nums(a); return aim(x, y, z || 1);
+      },
+      rabbit(a, b) {
+        if (a === 'at') { const [x, y, s] = nums(b); put(rabbit, x, y, s || rabbit.scale); if (R.covered && RD.blanket && R.set === 'shade') { blanketTo(1); T.world.appendChild(RD.blanket); } return; }
+        if (a === 'hide') { rabbit.pos.remove(); return; }
+        if (a === 'face') { (b === 'left' ? faceL : faceR)(rabbit); return; }
+        if (a === 'hop') { AudioFX.boing(); return rabbit.hop(50, 400); }
+        if (a === 'ears') { const to = +b, from = R.rears || 1; R.rears = to; if (instant()) return rp.ears(to); return tween(300, t => rp.ears(from + (to - from) * t)); }
+        if (a === 'eyes') {
+          if (b === 'open') { R.lying = false; rp.sleepy(false); rp.setEyes('open'); return; }
+          if (R.lying || b === 'sleep') { rp.setEyes('closed'); return; }
+          rp.setEyes('drowsy'); return;
+        }
+        if (a === 'pose') {
+          rp.congrats && rp.congrats(false);
+          if (b === 'run') { R.lying = false; rp.pose('run'); return; }
+          if (b === 'sleep') { R.lying = true; rp.pose('stand'); rp.setEyes('closed'); rp.sleepy(true); return; }
+          if (b === 'wake') { R.lying = false; rp.pose('stand'); rp.sleepy(false); rp.setEyes('wide'); rabbit.hop(40, 400); return; }
+          if (b === 'congrats') { R.lying = false; rp.pose('stand'); rp.setEyes('open'); rp.congrats && rp.congrats(true); return; }
+          R.lying = false; rp.pose('stand'); rp.sleepy(false); rp.setEyes('open'); return;
+        }
+        if (a === 'walk') {
+          const [x, y, ms] = nums(b);
+          if (!rabbit.pos.isConnected) put(rabbit, rabbit.x, rabbit.y);
+          if (Math.abs(x - rabbit.x) > 4) (x < rabbit.x ? faceL : faceR)(rabbit);
+          let hopper = null;
+          if (st0() !== 'run' && ms >= 600) { AudioFX.boing(); rabbit.hop(50, 380); hopper = setInterval(() => rabbit.hop(50, 380), 400); }
+          return rabbit.move(x, y, ms, ms <= 500 ? 'ease-in' : 'ease-in-out').then(() => clearInterval(hopper));
+        }
+      },
+      turtle(a, b) {
+        if (a === 'at') { const [x, y, s] = nums(b); put(turtle, x, y, s || turtle.scale); return; }
+        if (a === 'hide') { turtle.pos.remove(); return; }
+        if (a === 'face') { (b === 'left' ? faceL : faceR)(turtle); return; }
+        if (a === 'hop') return turtle.hop(16, 400);
+        if (a === 'neck') { const to = +b, from = R.tneck; R.tneck = to; if (instant()) return tp.neck(to); if (to > 2) T.tone([180, 700], .5, { type: 'triangle', vol: .2 }); return tween(to > from ? 500 : 300, t => tp.neck(from + (to - from) * easeOut(t))); }
+        if (a === 'tilt') { tp.tilt(+b); return; }
+        if (a === 'swim') { tp.swim(b !== 'off'); return; }
+        if (a === 'medal') { tp.wearMedal(true); return; }
+        if (a === 'walk') { const [x, y, ms] = nums(b); if (!turtle.pos.isConnected) put(turtle, turtle.x, turtle.y); walk(ms); return turtle.move(x, y, ms, 'linear'); }
+        if (a === 'steps') { // 놀이판 '한 발 한 발' (누르기 없이 저절로)
+          return (async () => {
+            const n = +b || 4, dx = R.set === 'grass_low' ? 22 : 36;
+            for (let i = 0; i < n; i++) {
+              tp.step(i % 2); footstep(T);
+              turtle.move(turtle.x + dx, turtle.y, 380); follow(turtle.x + dx + 100, 380);
+              setRace(null, Math.min(.19, race.t + .01), 400);
+              await sleep(420);
+            }
+            tp.step(0);
+          })();
+        }
+        if (a === 'rock') { // 돌멩이 넘기 (놀이판 R9 그대로)
+          return (async () => {
+            const top = [540, 300], down = [720, 505];
+            tp.tilt(-22); walk(1800, 200); follow(down[0] - 90, 1700);
+            await turtle.move(...top, 900);
+            tp.tilt(18);
+            await turtle.move(...down, 800);
+            tp.tilt(0);
+          })();
+        }
+        if (a === 'swimacross') { // 개울 세 번 헤엄 (물고기와 함께)
+          return (async () => {
+            const sw = setInterval(() => tp.step(Math.random() < .5 ? 1 : 0), 160), x0 = turtle.x, y0 = turtle.y;
+            for (let i = 1; i <= 3; i++) {
+              AudioFX.splash();
+              for (let k = 0; k < 5; k++) { const c = el('circle', { cx: turtle.x + 60, cy: turtle.y - 40, r: 5 + k * 2, fill: 'none', stroke: C.snow, 'stroke-width': 3 }, T.fx); c.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${k * 10}px,-140px)`, opacity: 0 }], { duration: 1200, delay: k * 120, fill: 'both' }).finished.then(() => c.remove()); }
+              await Promise.all([turtle.move(x0 + i * 185, y0 - (i % 2) * 16, 800), follow(x0 + i * 185, 800), ...(RD.fish || []).map((f, k) => f.move(f.x + 185, f.y + (k - 1) * 8, 850))]);
+            }
+            clearInterval(sw); tp.step(0);
+          })();
+        }
+        if (a === 'climb') { // 언덕 오르기: 그림 길을 따라 언덕마루로, 멀어질수록 작아진다
+          return (async () => {
+            const x0 = turtle.x, y0 = turtle.y, s0 = turtle.scale, B = [560, 272], s1 = .78;
+            tp.tilt(-12);
+            await tween(2600, p => { turtle.scale = s0 + (s1 - s0) * p; turtle.place(x0 + (B[0] - x0) * p, y0 + (B[1] - y0) * p); const s = Math.floor(p * 14); if (s !== R.cstep) { R.cstep = s; tp.step(s % 2); footstep(T); } });
+            tp.step(0); tp.tilt(0);
+          })();
+        }
+        if (a === 'tiptoe') { // 쉿, 살금살금: 자는 토끼 앞을 다섯 걸음
+          return (async () => {
+            for (let i = 0; i < 5; i++) {
+              tp.step(i % 2); T.tone(880 + (i % 2) * 110, .08, { type: 'triangle', vol: .12 });
+              await turtle.move(turtle.x + 100, turtle.y, 700, 'ease-in-out');
+              await sleep(150);
+            }
+            tp.step(0); bar.pulse('t');
+          })();
+        }
+      },
+      aud(k, a, w) {
+        const list = audList(k).filter(seatOne);
+        if (a === 'sit') { list.forEach(n => { aud[n].undone(); aud[n].stood = false; aud[n].sit(); show(aud[n].parts.shh, 0); }); return; }
+        if (a === 'stand') { list.forEach(n => { aud[n].stood = true; aud[n].stand(); }); return; }
+        if (a === 'hush') { list.forEach(n => aud[n].hush(true)); return; }
+        if (a === 'cry') { list.forEach(n => { aud[n].cry(); aud[n].hop(20, 400); }); return; }
+        if (a === 'cheer') {
+          if (k === 'all') list.forEach((n, i) => setTimeout(() => aud[n].cheer(i % 3 ? '' : null, aud[n].stood), i * 140));
+          else list.forEach(n => aud[n].cheer(w, aud[n].stood));
+          return;
+        }
+        if (a === 'wave') { // 파도타기 두 바퀴
+          return (async () => { for (let r = 0; r < 2; r++) for (const n of list) { const x = aud[n]; x.stand(); T.tone(400 + KINDS.indexOf(n) * 60, .12, { type: 'triangle', vol: .12 }); setTimeout(() => x.sit(), 350); await sleep(140); } await sleep(400); })();
+        }
+      },
+      owl(a) {
+        const o = aud.owl;
+        if (a === 'post') { o.reset(); o.stand(); show(o.parts.bag, 1); put(o, instant() ? 70 : -80, 283, .85); if (!instant()) return o.move(70, 283, 900); return; }
+        if (a === 'lullaby') { // 브람스 자장가 한 소절 (오르골), 음표가 부엉이 둘레로
+          seatOne('owl');
+          const box = T.timbre('box');
+          return T.playMelody(T.parseSong('E4:.5 E4:.5 G4:2 E4:.5 E4:.5 G4:2 E4:.5 G4:.5 C5:1 B4:1 A4:.5 A4:.5 G4:2'), { beat: .65,
+            voice: (n, d) => box(T.hz(n), d, 0, .22), onNote: i => { noteShape(T, o.x - 60 - (i % 6) * 30, o.y - 50, C.indigo); if (i % 3 === 0) o.wiggle(8, 500); } });
+        }
+      },
+      doors(a) { // 골목 네 집: 부엉이가 날아가 똑똑, 문이 열리며 동물이 얼굴을 내민다
+        if (a !== 'open' || !RD.houses) return;
+        const o = aud.owl;
+        return (async () => {
+          for (let i = 0; i < 4; i++) {
+            const h = RD.houses[i], an = aud[['duck', 'cow', 'pig', 'dog'][i]];
+            await o.move(h.x - 120, 283, 500);
+            if (!AudioFX.sfx('knock')) T.tone([200, 130], .08, { type: 'square', vol: .25 });
+            T.pop(h.x, h.ky, '똑똑!', C.bark);
+            await tween(300, t => h.door.setAttribute('transform', `translate(${h.hinge} 0) scale(${1 - .8 * t} 1) translate(${-h.hinge} 0)`));
+            an.reset(); put(an, h.x, h.ay, .95); an.cheer('');
+            await sleep(350);
+          }
+        })();
+      },
+      blanket(a) {
+        if (!RD.blanket) return;
+        R.covered = true; T.world.appendChild(RD.blanket);
+        if (instant()) return blanketTo(1);
+        AudioFX.slide();
+        return tween(900, t => blanketTo(t), easeInOut);
+      },
+      cloud(a) {
+        if (!RD.cloud) return;
+        R.clouded = true; AudioFX.swish();
+        return tween(1200, t => { RD.cloud.setAttribute('transform', `translate(${-420 + 420 * t} 0)`); RD.dim.setAttribute('opacity', .22 * t); }, easeInOut);
+      },
+      zzz: a => (a === 'off' ? zzzOff() : zzzOn()),
+      dream(a) {
+        if (!RD.carrot) return;
+        if (a === 'carrot') { AudioFX.bell(); return T.anim(RD.carrot, [{ opacity: 0, transform: 'translate(790px,520px) scale(.6)' }, { opacity: 1, transform: 'translate(790px,474px) scale(1)' }], 600).then(() => { RD.carrot.setAttribute('opacity', 1); }); }
+        if (a === 'bite') { show(RD.bite, 1); rabbit.hop(40, 400); }
+      },
+      drum: () => { AudioFX.boom(); T.shake(); },
+      race: s => { const [r, t] = nums(s); setRace(r, t, instant() ? 0 : 700); },
+      bar: a => bar.show(a === 'show'),
+      tape: () => {
+        R.tapeBroken = true; if (!RD.tapeTop) return;
+        AudioFX.pop();
+        return tween(500, t => { RD.tapeTop.setAttribute('transform', `rotate(${-70 * t} 790 376)`); RD.tapeBot.setAttribute('transform', `rotate(${70 * t} 790 476)`); });
+      },
+      photo: () => { // 찰칵! 하얀 빛 한 번
+        T.tone([1800, 900], .06, { type: 'square', vol: .12 });
+        const f = el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: '#fff', 'pointer-events': 'none' }, T.fx);
+        return T.anim(f, [{ opacity: .9 }, { opacity: 0 }], 450).then(() => f.remove());
+      },
+      podium: () => {
+        R.podium = true;
+        el('image', { href: A(ART.podium), x: 410, y: 369, width: 180, height: 131, filter: 'url(#pp)' }, T.world);
+        el('text', { x: 498, y: 478, 'text-anchor': 'middle', 'font-size': 50, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: '1' }, T.world);
+      },
+      medal: () => { // 메달이 날아와 거북이 목에
+        const m = el('g', { transform: 'translate(730 420)' }, T.world); sprite(T, m, 'medal', 100, 130, { dy: 56 });
+        const ex = turtle.x + 73 * turtle.scale / 1.25, ey = turtle.y - 28 * turtle.scale / 1.25;
+        AudioFX.jingle();
+        return tween(900, t => m.setAttribute('transform', `translate(${730 + (ex - 730) * t} ${420 + (ey - 420) * t - Math.sin(t * Math.PI) * 120}) scale(${1 - .65 * t})`), easeInOut)
+          .then(() => { m.remove(); AudioFX.ding(); T.confetti(); });
+      },
+      party: () => { // 터키 행진곡: 음마다 맡은 친구가 자기 악기로 (누르기 없이)
+        const cast = { ...aud, rabbit, turtle };
+        const colorOf = k => [C.bean, C.gold, C.persimmon, C.lav][(Object.keys(BAND).indexOf(k)) % 4];
+        const MARCH = T.parseSong('B4:1 A4:1 G#4:1 A4:1 C5:4 D5:1 C5:1 B4:1 C5:1 E5:4 F5:1 E5:1 D#5:1 E5:1 B5:1 A5:1 G#5:1 A5:1 B5:1 A5:1 G#5:1 A5:1 C6:4');
+        const WHO = ['pig', 'pig', 'pig', 'pig', 'dog', 'sheep', 'sheep', 'sheep', 'sheep', 'cat', 'rooster', 'rooster', 'rooster', 'rooster', 'duck', 'duck', 'duck', 'duck', 'rabbit', 'rabbit', 'rabbit', 'rabbit', 'owl'];
+        return T.playMelody(MARCH, { beat: .17, voice: (n, d, i) => INSTR[BAND[WHO[i]][1]](T, T.hz(n), 0), onNote: i => {
+          const k = WHO[i], a = cast[k]; if (!a || !a.pos.isConnected) return;
+          a.hop(k === 'rabbit' ? 36 : 24, 320);
+          noteShape(T, a.x + 30, a.y - (k === 'rabbit' ? 150 : 120) * a.scale, colorOf(k));
+        } });
+      },
+      cut(k) {
+        const spec = { wake: ['cut_wake', 'boing', 2200], dash: ['cut_dash', 'whoosh', 3400], photo: ['cut_photo', 'poke', 2600] }[k];
+        if (!spec) return;
+        return cutArt(T, ...spec, k === 'dash' ? () => setTimeout(() => AudioFX.whoosh(), 1800) : undefined);
+      },
+      vo: k => { vo(k); },
+      fx(n) {
+        if (n === 'footstep') return footstep(T);
+        if (KINDS.includes(n) || n === 'rooster') return AudioFX.animal(n) || (CRY[n] && CRY[n](T));
+        if (n === 'win') return AudioFX.fanfare ? AudioFX.fanfare() : AudioFX.sting('win');
+        AudioFX[n] && AudioFX[n]();
+      },
+      pop(spec) { const [x, y, ...w] = String(spec).split(','); T.pop(+x, +y, w.join(','), /영차|쭈욱/.test(w.join(',')) ? C.pine : C.bean); },
+      speedlines: () => { speedLines(T, 14, 450); puff(T, rabbit.x - 30, rabbit.y - 10); },
+      confetti: () => T.confetti(),
+    };
+    const st0 = () => (rp.root.getAttribute('transform') === 'rotate(12)' ? 'run' : 'stand');
+    /* 시상대가 있으면 거북이는 시상대 위 (놀이판 자리) */
+    { const at0 = READ_ACTS.turtle; READ_ACTS.turtle = (a, b) => (a === 'at' && R.podium ? put(turtle, 490, 402, 1.25) : at0(a, b)); }
+    /* 꿈속 토끼는 시상대 1등 자리 (놀이판 자리) */
+    { const at0 = READ_ACTS.rabbit; READ_ACTS.rabbit = (a, b) => (a === 'at' && R.set === 'dream' ? put(rabbit, 502, 314, .9) : at0(a, b)); }
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ===== 1막 — 경주를 열자 ===== */
     /* --- 1. 숲속 마을 아침 --- */
     villageBG(T);
@@ -1407,5 +1731,5 @@
     } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
-  Tale.mount({ title: '토끼와 거북이', subtitle: '누가 먼저 도착할까?', run: T => run(portraitGuard(Tale.api)) });
+  Tale.mount({ title: '토끼와 거북이', subtitle: '누가 먼저 도착할까?', read: true, run: T => run(portraitGuard(Tale.api)) });
 })();
