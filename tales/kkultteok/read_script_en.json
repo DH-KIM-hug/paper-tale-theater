@@ -1,0 +1,1575 @@
+{
+ "mode": "read",
+ "tale": "kkultteok",
+ "lang": "en",
+ "title": "The Cloud Factory",
+ "voices_from": "voice_script_el.json",
+ "moral": "Rainy days and sunny days are all precious. Come play again, little cloud!",
+ "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, new 만 새로 녹음한다(trim 없음). 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<01_road|02_hill|03_chimney|04_door|05_belt_v2|06_press_v2|07_button_v2|08_tank_room|09_bell_room|10_corner_close|12_storm|13_rain|14_soil_v2|15_rainbow_v2>": "장면 배경(scene 키). scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
+  "kid:<nuna|oppa|agi>:look:<자세>[:<left|right>] | kid:<id>:at:<x,y> | kid:<id>:walk:<x,y,ms> | kid:<id>:hop | kids:look:<자세> | kids:walk:<x,ms>": "삼남매 자세(lookup·walk·run·wave·blow·hug·jump·back·whisper·point·tiptoe·crouch·clap·eek·splash·press·pet·reach·lookback)·이동",
+  "dog:look:<자세>[:<dir>] | dog:at:<x,y> | dog:walk:<x,y,ms> | dog:hop": "꿀떡이 자세(nose·run·sniff·sneeze·lookup·wag·lick 등)·이동",
+  "sky:drift | chimney:steam | chimney:cloud | clouds:shapes": "하늘 구름 떠다님·굴뚝 김·김이 뭉쳐 구름·구름이 토끼·물고기·자동차로",
+  "door:open | belt:drops | horn:blow | cloud:grow:<1|2|3> | press:<rabbit|whale|puppy> | dog:sneeze | button:push | flue:up:<puppy|baby>": "공장 연출(놀이판의 누르기 뒤 연출을 저절로)",
+  "tank:drink | bell:ring | darks:lineout | baby:<curl|eyes|up|white> | baby:pet": "먹구름 방·종·아기 먹구름",
+  "storm:bump | storm:flash | rain:start | rain:drops | puddle:splash | soil:<sprout|flower|berry> | rainbow:show | rainbow:count": "하늘·비·땅·무지개 연출",
+  "cut:<hug|rainbow>": "그림 컷 2장",
+  "fx:<pong|ding|splash|whoosh|thunder|sneeze|woof|sniff> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_walk",
+   "card": "A Walk",
+   "set": "01_road",
+   "enter": [
+    "kids:look:walk",
+    "dog:look:nose",
+    "sky:drift",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "해가 쨍쨍한 날, 다현이와 이현이와 은우는 꿀떡이랑 산책을 나가요.",
+     "src": "reuse",
+     "en": "On a sunny day, Dahyun, Ihyun, and Eunwoo go for a walk with Kkulddeok.",
+     "segs": [
+      [
+       "nar",
+       "On a sunny day, Dahyun, Ihyun, and Eunwoo go for a walk with Kkulddeok."
+      ]
+     ]
+    },
+    {
+     "text": "하늘에 구름이 둥실둥실.",
+     "src": "reuse",
+     "en": "Clouds float across the sky.",
+     "segs": [
+      [
+       "nar",
+       "Clouds float across the sky."
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:point",
+      "kid:oppa:look:lookup",
+      "kid:agi:look:lookup"
+     ]
+    },
+    {
+     "text": "햇살은 따끈따끈, 바람은 살랑살랑 기분 좋은 날이에요.",
+     "src": "new",
+     "en": "The sunshine is toasty warm, the breeze is soft and gentle. What a lovely day.",
+     "segs": [
+      [
+       "nar",
+       "The sunshine is toasty warm, the breeze is soft and gentle. What a lovely day."
+      ]
+     ]
+    },
+    {
+     "text": "\"구름은 어디서 올까?\"",
+     "src": "reuse",
+     "en": "Where do clouds come from?",
+     "segs": [
+      [
+       "nuna",
+       "Where do clouds come from?"
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이는 땅에 코를 대고 킁킁.",
+     "src": "reuse",
+     "en": "Kkulddeok puts his nose to the ground. Sniff, sniff.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok puts his nose to the ground. Sniff, sniff."
+      ]
+     ],
+     "before": [
+      "dog:look:nose",
+      "fx:sniff"
+     ]
+    },
+    {
+     "text": "킁킁킁! 꿀떡이가 무슨 냄새를 맡았어요.",
+     "src": "reuse",
+     "en": "Sniff sniff sniff! Kkulddeok smells something.",
+     "segs": [
+      [
+       "nar",
+       "Sniff sniff sniff! Kkulddeok smells something."
+      ]
+     ],
+     "before": [
+      "set:02_hill",
+      "kids:look:walk",
+      "dog:look:nose"
+     ]
+    },
+    {
+     "text": "꿀떡이 꼬리가 살랑살랑, 귀가 쫑긋!",
+     "src": "new",
+     "en": "Kkulddeok's tail goes swish, swish, and his ears perk right up!",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok's tail goes swish, swish, and his ears perk right up!"
+      ]
+     ],
+     "before": [
+      "dog:look:wag"
+     ]
+    },
+    {
+     "text": "냄새를 따라 쪼르르 달려가요.",
+     "src": "reuse",
+     "en": "He runs off, following the smell.",
+     "segs": [
+      [
+       "nar",
+       "He runs off, following the smell."
+      ]
+     ],
+     "before": [
+      "dog:look:run:right",
+      "dog:walk:900,470,1200"
+     ]
+    },
+    {
+     "text": "\"꿀떡아, 같이 가!\"",
+     "src": "reuse",
+     "en": "Kkulddeok, wait for us!",
+     "segs": [
+      [
+       "nuna",
+       "Kkulddeok, wait for us!"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:wave"
+     ]
+    },
+    {
+     "text": "삼남매는 영차, 영차 언덕을 올라요.",
+     "src": "reuse",
+     "en": "Heave-ho, heave-ho! The three kids climb the hill.",
+     "segs": [
+      [
+       "nar",
+       "Heave-ho, heave-ho! The three kids climb the hill."
+      ]
+     ],
+     "before": [
+      "kids:look:walk",
+      "kids:walk:700,2000"
+     ]
+    },
+    {
+     "text": "다현이는 성큼성큼, 이현이는 씩씩하게, 은우는 아장아장 따라가요.",
+     "src": "new",
+     "en": "Dahyun takes big strides, Ihyun marches bravely, and Eunwoo toddles along behind.",
+     "segs": [
+      [
+       "nar",
+       "Dahyun takes big strides, Ihyun marches bravely, and Eunwoo toddles along behind."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_chimney",
+   "card": "The Chimney",
+   "set": "03_chimney",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "chimney:steam",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "언덕 너머에 커다란 굴뚝 하나.",
+     "src": "reuse",
+     "en": "Over the hill, there is a big chimney.",
+     "segs": [
+      [
+       "nar",
+       "Over the hill, there is a big chimney."
+      ]
+     ]
+    },
+    {
+     "text": "굴뚝에서 하얀 김이 폴폴.",
+     "src": "reuse",
+     "en": "White steam puffs out of the chimney.",
+     "segs": [
+      [
+       "nar",
+       "White steam puffs out of the chimney."
+      ]
+     ],
+     "before": [
+      "chimney:steam"
+     ]
+    },
+    {
+     "text": "삼남매는 눈을 동그랗게 뜨고 굴뚝을 올려다봐요.",
+     "src": "new",
+     "en": "The three kids look up at the chimney with big, round eyes.",
+     "segs": [
+      [
+       "nar",
+       "The three kids look up at the chimney with big, round eyes."
+      ]
+     ]
+    },
+    {
+     "text": "김이 뭉치고, 뭉치고… 퐁! 구름이 됐어요.",
+     "src": "reuse",
+     "en": "The steam rolls together, and together... Pong! It turns into a cloud.",
+     "segs": [
+      [
+       "nar",
+       "The steam rolls together, and together... Pong! It turns into a cloud."
+      ]
+     ],
+     "before": [
+      "chimney:cloud",
+      "fx:pong",
+      "pop:500,200,퐁!"
+     ]
+    },
+    {
+     "text": "\"구름이 여기서 오는구나!\"",
+     "src": "reuse",
+     "en": "So this is where clouds come from!",
+     "segs": [
+      [
+       "nuna",
+       "So this is where clouds come from!"
+      ]
+     ],
+     "before": [
+      "kid:oppa:look:clap",
+      "kid:nuna:look:point"
+     ]
+    },
+    {
+     "text": "\"퐁!\" 은우가 따라 해요.",
+     "src": "reuse",
+     "en": "Pong! Eunwoo says it too.",
+     "segs": [
+      [
+       "agi",
+       "Pong!"
+      ],
+      [
+       "nar",
+       "Eunwoo says it too."
+      ]
+     ],
+     "before": [
+      "kid:agi:look:jump",
+      "kid:agi:hop"
+     ]
+    },
+    {
+     "text": "구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.",
+     "src": "reuse",
+     "en": "The clouds change! A rabbit, a fish, and a car.",
+     "segs": [
+      [
+       "nar",
+       "The clouds change! A rabbit, a fish, and a car."
+      ]
+     ],
+     "before": [
+      "clouds:shapes"
+     ]
+    },
+    {
+     "text": "꿀떡이는 구름을 보고 멍멍! 짖었어요.",
+     "src": "new",
+     "en": "Kkulddeok looks at the clouds and barks, woof, woof!",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok looks at the clouds and barks, woof, woof!"
+      ]
+     ],
+     "before": [
+      "dog:look:lookup",
+      "fx:woof"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_door",
+   "card": "The Big Door",
+   "set": "04_door",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:nose",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "굴뚝 아래 커다란 문.",
+     "src": "reuse",
+     "en": "Under the chimney, there is a big door.",
+     "segs": [
+      [
+       "nar",
+       "Under the chimney, there is a big door."
+      ]
+     ]
+    },
+    {
+     "text": "여기는… 어떤 공장일까요?",
+     "src": "reuse",
+     "en": "What kind of factory... could this be?",
+     "segs": [
+      [
+       "nar",
+       "What kind of factory... could this be?"
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이가 문틈에 코를 쏙 밀어 넣어요.",
+     "src": "reuse",
+     "en": "Kkulddeok pokes his nose into the gap in the door.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok pokes his nose into the gap in the door."
+      ]
+     ],
+     "before": [
+      "dog:look:nose:right"
+     ]
+    },
+    {
+     "text": "꿀떡이 코가 문틈에서 킁킁, 꼬리가 흔들흔들.",
+     "src": "new",
+     "en": "Kkulddeok's nose goes sniff, sniff at the gap, and his tail wags back and forth.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok's nose goes sniff, sniff at the gap, and his tail wags back and forth."
+      ]
+     ]
+    },
+    {
+     "text": "스르르… 문이 열려요.",
+     "src": "reuse",
+     "en": "Creeeak... the door swings open.",
+     "segs": [
+      [
+       "nar",
+       "Creeeak... the door swings open."
+      ]
+     ],
+     "before": [
+      "door:open"
+     ]
+    },
+    {
+     "text": "삼남매는 살금살금 따라 들어가요.",
+     "src": "reuse",
+     "en": "The three kids tiptoe in after him.",
+     "segs": [
+      [
+       "nar",
+       "The three kids tiptoe in after him."
+      ]
+     ],
+     "before": [
+      "kids:look:tiptoe:right",
+      "kids:walk:900,2000"
+     ]
+    },
+    {
+     "text": "안에서 쿵덕쿵덕, 신기한 소리가 들려와요.",
+     "src": "new",
+     "en": "From inside comes a strange, wonderful sound. Clunk-a-clunk, clunk-a-clunk.",
+     "segs": [
+      [
+       "nar",
+       "From inside comes a strange, wonderful sound. Clunk-a-clunk, clunk-a-clunk."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_belt",
+   "card": "The Belt and the Horn",
+   "set": "05_belt_v2",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "기다란 벨트 위로 물방울이 똑, 똑, 똑.",
+     "src": "reuse",
+     "en": "Water drops fall onto a long belt. Drip, drip, drip.",
+     "segs": [
+      [
+       "nar",
+       "Water drops fall onto a long belt. Drip, drip, drip."
+      ]
+     ],
+     "before": [
+      "belt:drops"
+     ]
+    },
+    {
+     "text": "물방울들이 벨트를 따라 또르르, 또르르 굴러가요.",
+     "src": "new",
+     "en": "The water drops roll along the belt, roly-poly, roly-poly.",
+     "segs": [
+      [
+       "nar",
+       "The water drops roll along the belt, roly-poly, roly-poly."
+      ]
+     ]
+    },
+    {
+     "text": "이현이가 물방울에 손을 살짝 대 봐요.",
+     "src": "reuse",
+     "en": "Ihyun gently touches a water drop.",
+     "segs": [
+      [
+       "nar",
+       "Ihyun gently touches a water drop."
+      ]
+     ],
+     "before": [
+      "kid:oppa:look:reach"
+     ]
+    },
+    {
+     "text": "\"앗, 차가워! 진짜 물방울이야!\"",
+     "src": "new",
+     "en": "Ooh, cold! It is a real water drop!",
+     "segs": [
+      [
+       "oppa",
+       "Ooh, cold! It is a real water drop!"
+      ]
+     ],
+     "before": [
+      "pop:400,300,앗, 차가워!"
+     ]
+    },
+    {
+     "text": "다현이는 후우— 바람을 불어 줘요.",
+     "src": "reuse",
+     "en": "Dahyun blows a big breath. Whoooo!",
+     "segs": [
+      [
+       "nar",
+       "Dahyun blows a big breath. Whoooo!"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:blow",
+      "horn:blow"
+     ]
+    },
+    {
+     "text": "뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!",
+     "src": "reuse",
+     "en": "Puff, puff puff, puff puff puff! Pong!",
+     "segs": [
+      [
+       "nar",
+       "Puff, puff puff, puff puff puff! Pong!"
+      ]
+     ],
+     "before": [
+      "cloud:grow:1",
+      "cloud:grow:2",
+      "cloud:grow:3",
+      "fx:pong"
+     ]
+    },
+    {
+     "text": "하얀 구름이 둥실, 벨트 위로 떠올라요.",
+     "src": "new",
+     "en": "A white cloud floats up, bobbing gently over the belt.",
+     "segs": [
+      [
+       "nar",
+       "A white cloud floats up, bobbing gently over the belt."
+      ]
+     ]
+    },
+    {
+     "text": "\"여기는 구름 공장이야!\"",
+     "src": "reuse",
+     "en": "This is a cloud factory!",
+     "segs": [
+      [
+       "nuna",
+       "This is a cloud factory!"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:jump",
+      "kid:nuna:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_press",
+   "card": "The Shape Press",
+   "set": "06_press_v2",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이현이가 모양 틀을 힘껏, 쿵! 내리찍어요.",
+     "src": "new",
+     "en": "Ihyun pushes the shape press down with all his might. Clunk!",
+     "segs": [
+      [
+       "nar",
+       "Ihyun pushes the shape press down with all his might. Clunk!"
+      ]
+     ],
+     "before": [
+      "kid:oppa:look:press",
+      "press:rabbit"
+     ]
+    },
+    {
+     "text": "퐁! 토끼 구름. 퐁! 고래 구름.",
+     "src": "reuse",
+     "en": "Pong! A bunny cloud. Pong! A whale cloud.",
+     "segs": [
+      [
+       "nar",
+       "Pong! A bunny cloud. Pong! A whale cloud."
+      ]
+     ],
+     "before": [
+      "fx:pong",
+      "press:whale",
+      "pop:600,250,퐁!"
+     ]
+    },
+    {
+     "text": "퐁! 이번엔 강아지 구름.",
+     "src": "reuse",
+     "en": "Pong! And now, a puppy cloud.",
+     "segs": [
+      [
+       "nar",
+       "Pong! And now, a puppy cloud."
+      ]
+     ],
+     "before": [
+      "press:puppy",
+      "fx:pong"
+     ]
+    },
+    {
+     "text": "토끼 구름은 깡충, 고래 구름은 출렁, 강아지 구름은 멍멍!",
+     "src": "new",
+     "en": "The bunny cloud goes hop, the whale cloud goes splash, and the puppy cloud goes woof!",
+     "segs": [
+      [
+       "nar",
+       "The bunny cloud goes hop, the whale cloud goes splash, and the puppy cloud goes woof!"
+      ]
+     ]
+    },
+    {
+     "text": "구름들이 둥실둥실, 공장 안을 떠다녀요.",
+     "src": "new",
+     "en": "The clouds bob and float, drifting all around the factory.",
+     "segs": [
+      [
+       "nar",
+       "The clouds bob and float, drifting all around the factory."
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이가 강아지 구름과 코를 맞대요.",
+     "src": "reuse",
+     "en": "Kkulddeok touches noses with the puppy cloud.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok touches noses with the puppy cloud."
+      ]
+     ],
+     "before": [
+      "dog:look:nose:left",
+      "dog:walk:640,470,900"
+     ]
+    },
+    {
+     "text": "에취! 구름 조각이 사르르 날려요.",
+     "src": "reuse",
+     "en": "Achoo! Little bits of cloud float away.",
+     "segs": [
+      [
+       "nar",
+       "Achoo! Little bits of cloud float away."
+      ]
+     ],
+     "before": [
+      "dog:look:sneeze:left",
+      "fx:sneeze",
+      "dog:sneeze"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_button",
+   "card": "The Red Button",
+   "set": "07_button_v2",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "구석에 커다란 빨간 단추가 있어요.",
+     "src": "reuse",
+     "en": "In the corner, there is a big red button.",
+     "segs": [
+      [
+       "nar",
+       "In the corner, there is a big red button."
+      ]
+     ]
+    },
+    {
+     "text": "\"저 빨간 단추는 뭘까? 궁금해!\"",
+     "src": "new",
+     "en": "What is that red button for? I want to know!",
+     "segs": [
+      [
+       "nuna",
+       "What is that red button for? I want to know!"
+      ]
+     ]
+    },
+    {
+     "text": "은우가 아장아장 다가가 단추를 꾸욱 눌렀어요.",
+     "src": "new",
+     "en": "Eunwoo toddles over and pushes the button down, pu-u-ush!",
+     "segs": [
+      [
+       "nar",
+       "Eunwoo toddles over and pushes the button down, pu-u-ush!"
+      ]
+     ],
+     "before": [
+      "kid:agi:look:press:left",
+      "button:push",
+      "pop:300,300,쿵!"
+     ]
+    },
+    {
+     "text": "슈웅— 강아지 구름이 굴뚝으로 올라가요.",
+     "src": "reuse",
+     "en": "Whoosh! The puppy cloud zooms up the chimney.",
+     "segs": [
+      [
+       "nar",
+       "Whoosh! The puppy cloud zooms up the chimney."
+      ]
+     ],
+     "before": [
+      "flue:up:puppy",
+      "fx:whoosh",
+      "dog:look:lookup:right",
+      "kids:look:lookup:right"
+     ]
+    },
+    {
+     "text": "퐁! 하늘로 나갔어요.",
+     "src": "reuse",
+     "en": "Pong! Out into the sky it goes.",
+     "segs": [
+      [
+       "nar",
+       "Pong! Out into the sky it goes."
+      ]
+     ],
+     "before": [
+      "fx:pong"
+     ]
+    },
+    {
+     "text": "삼남매는 짝짝짝, 손뼉을 쳤어요.",
+     "src": "new",
+     "en": "The three kids clapped and clapped. Clap, clap, clap!",
+     "segs": [
+      [
+       "nar",
+       "The three kids clapped and clapped. Clap, clap, clap!"
+      ]
+     ],
+     "before": [
+      "kids:look:clap"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_tank",
+   "card": "The Rain Cloud Room",
+   "set": "08_tank_room",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:nose",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옆방은 어두컴컴한 먹구름 방.",
+     "src": "reuse",
+     "en": "The next room is dark. It is the rain cloud room.",
+     "segs": [
+      [
+       "nar",
+       "The next room is dark. It is the rain cloud room."
+      ]
+     ]
+    },
+    {
+     "text": "먹구름들이 커다란 물통에서 물을 마셔요.",
+     "src": "reuse",
+     "en": "The rain clouds drink water from a big tank.",
+     "segs": [
+      [
+       "nar",
+       "The rain clouds drink water from a big tank."
+      ]
+     ],
+     "before": [
+      "tank:drink"
+     ]
+    },
+    {
+     "text": "꿀꺽, 꿀꺽, 꿀꺽. 배가 빵빵해졌어요.",
+     "src": "reuse",
+     "en": "Gulp, gulp, gulp. Their tummies get big and round.",
+     "segs": [
+      [
+       "nar",
+       "Gulp, gulp, gulp. Their tummies get big and round."
+      ]
+     ],
+     "before": [
+      "pop:600,250,꿀꺽!"
+     ]
+    },
+    {
+     "text": "물통 속 물은 출렁출렁, 먹구름 배는 볼록볼록.",
+     "src": "new",
+     "en": "The water in the tank goes slosh, slosh, and the rain clouds' tummies go bulge, bulge.",
+     "segs": [
+      [
+       "nar",
+       "The water in the tank goes slosh, slosh, and the rain clouds' tummies go bulge, bulge."
+      ]
+     ]
+    },
+    {
+     "text": "\"비를 만들려나 봐.\"",
+     "src": "reuse",
+     "en": "I think they're making rain.",
+     "segs": [
+      [
+       "nuna",
+       "I think they're making rain."
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:whisper:right"
+     ]
+    },
+    {
+     "text": "꿀떡이는 축축한 바닥을 킁킁.",
+     "src": "reuse",
+     "en": "Kkulddeok sniffs the wet floor.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok sniffs the wet floor."
+      ]
+     ],
+     "before": [
+      "dog:look:sniff",
+      "fx:sniff"
+     ]
+    },
+    {
+     "text": "땡, 땡, 땡! 종이 울려요.",
+     "src": "reuse",
+     "en": "Ding, ding, ding! The bell rings.",
+     "segs": [
+      [
+       "nar",
+       "Ding, ding, ding! The bell rings."
+      ]
+     ],
+     "before": [
+      "set:09_bell_room",
+      "bell:ring",
+      "fx:ding",
+      "pop:792,200,땡!"
+     ]
+    },
+    {
+     "text": "먹구름들이 줄을 서서 밖으로 나가요.",
+     "src": "reuse",
+     "en": "The rain clouds line up and go outside.",
+     "segs": [
+      [
+       "nar",
+       "The rain clouds line up and go outside."
+      ]
+     ],
+     "before": [
+      "darks:lineout"
+     ]
+    },
+    {
+     "text": "먹구름들은 뭉게뭉게, 줄줄이 굴뚝으로 올라가요.",
+     "src": "new",
+     "en": "The puffy rain clouds go up the chimney, one after another, in a long, long line.",
+     "segs": [
+      [
+       "nar",
+       "The puffy rain clouds go up the chimney, one after another, in a long, long line."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_baby",
+   "card": "The Baby Rain Cloud",
+   "set": "09_bell_room",
+   "enter": [
+    "kids:look:lookup:left",
+    "dog:look:nose",
+    "baby:curl",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "구석에 아기 먹구름 하나가 혼자 웅크리고 있어요.",
+     "src": "reuse",
+     "en": "In the corner, one baby rain cloud is curled up all alone.",
+     "segs": [
+      [
+       "nar",
+       "In the corner, one baby rain cloud is curled up all alone."
+      ]
+     ]
+    },
+    {
+     "text": "\"나는 안 나갈래. 다들 비를 싫어하잖아.\"",
+     "src": "reuse",
+     "en": "I don't want to go. Everybody hates rain.",
+     "segs": [
+      [
+       "dark",
+       "I don't want to go. Everybody hates rain."
+      ]
+     ]
+    },
+    {
+     "text": "혼자 웅크리고 있어요. 슬픈 것 같아요.",
+     "src": "reuse",
+     "en": "It is curled up all alone. It looks sad.",
+     "segs": [
+      [
+       "nar",
+       "It is curled up all alone. It looks sad."
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:crouch:left",
+      "kid:oppa:look:lookup:left",
+      "kid:agi:look:crouch:left"
+     ]
+    },
+    {
+     "text": "아기 먹구름 눈에서 눈물이 또르르.",
+     "src": "new",
+     "en": "A tear rolls down the baby rain cloud's cheek, drip, drop.",
+     "segs": [
+      [
+       "nar",
+       "A tear rolls down the baby rain cloud's cheek, drip, drop."
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이가 살금살금 다가가요.",
+     "src": "reuse",
+     "en": "Kkulddeok tiptoes closer.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok tiptoes closer."
+      ]
+     ],
+     "before": [
+      "dog:look:sniff:left",
+      "dog:walk:600,470,1600"
+     ]
+    },
+    {
+     "text": "은우가 아기 먹구름을 살살 쓰다듬어요.",
+     "src": "reuse",
+     "en": "Eunwoo gently pats the baby rain cloud.",
+     "segs": [
+      [
+       "nar",
+       "Eunwoo gently pats the baby rain cloud."
+      ]
+     ],
+     "before": [
+      "set:10_corner_close",
+      "kid:agi:look:pet",
+      "baby:pet"
+     ]
+    },
+    {
+     "text": "토닥토닥, 쓰담쓰담. 아기 먹구름이 조금씩 고개를 들어요.",
+     "src": "new",
+     "en": "Pat, pat. Stroke, stroke. Little by little, the baby rain cloud lifts its head.",
+     "segs": [
+      [
+       "nar",
+       "Pat, pat. Stroke, stroke. Little by little, the baby rain cloud lifts its head."
+      ]
+     ]
+    },
+    {
+     "text": "\"비 좋아! 장화 신고 첨벙첨벙!\"",
+     "src": "reuse",
+     "en": "We love rain! We put on our boots and splash!",
+     "segs": [
+      [
+       "nuna",
+       "We love rain! We put on our boots and splash!"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:splash:left",
+      "kid:nuna:hop"
+     ]
+    },
+    {
+     "text": "\"첨벙첨벙!\" 이현이도 폴짝 뛰어요.",
+     "src": "reuse",
+     "en": "Splash, splash! Ihyun jumps too.",
+     "segs": [
+      [
+       "oppa",
+       "Splash, splash!"
+      ],
+      [
+       "nar",
+       "Ihyun jumps too."
+      ]
+     ],
+     "before": [
+      "kid:oppa:look:splash:left",
+      "kid:oppa:hop"
+     ]
+    },
+    {
+     "text": "꿀떡이는 아기 먹구름 볼을 할짝.",
+     "src": "reuse",
+     "en": "Kkulddeok licks the baby cloud's cheek. Lick!",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok licks the baby cloud's cheek. Lick!"
+      ]
+     ],
+     "before": [
+      "dog:look:lick:left",
+      "pop:560,320,할짝!"
+     ]
+    },
+    {
+     "text": "아기 먹구름 눈이 동그래졌어요.",
+     "src": "reuse",
+     "en": "The baby rain cloud's eyes go big and round.",
+     "segs": [
+      [
+       "nar",
+       "The baby rain cloud's eyes go big and round."
+      ]
+     ],
+     "before": [
+      "baby:eyes"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_storm",
+   "card": "Flash!",
+   "set": "07_button_v2",
+   "enter": [
+    "kids:look:wave",
+    "dog:look:lookup",
+    "baby:up",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"정말? 그럼 나, 갈게!\"",
+     "src": "reuse",
+     "en": "Really? Then I'll go!",
+     "segs": [
+      [
+       "dark",
+       "Really? Then I'll go!"
+      ]
+     ]
+    },
+    {
+     "text": "슈웅— 아기 먹구름이 굴뚝으로 올라가요. 퐁!",
+     "src": "reuse",
+     "en": "Whoosh! The baby rain cloud zooms up the chimney. Pong!",
+     "segs": [
+      [
+       "nar",
+       "Whoosh! The baby rain cloud zooms up the chimney. Pong!"
+      ]
+     ],
+     "before": [
+      "flue:up:baby",
+      "fx:whoosh",
+      "fx:pong"
+     ]
+    },
+    {
+     "text": "삼남매도 손을 흔들며 밖으로 달려 나가요.",
+     "src": "reuse",
+     "en": "The three kids wave and run outside.",
+     "segs": [
+      [
+       "nar",
+       "The three kids wave and run outside."
+      ]
+     ],
+     "before": [
+      "kids:look:run",
+      "kids:walk:1100,1500"
+     ]
+    },
+    {
+     "text": "꿀떡이는 하늘을 보고 멍! 멍!",
+     "src": "reuse",
+     "en": "Kkulddeok looks up at the sky. Woof! Woof!",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok looks up at the sky. Woof! Woof!"
+      ]
+     ],
+     "before": [
+      "set:12_storm",
+      "kids:look:lookup",
+      "dog:look:lookup",
+      "fx:woof"
+     ]
+    },
+    {
+     "text": "하늘에서 아기 먹구름이 큰 먹구름과 쿵!",
+     "src": "reuse",
+     "en": "Up in the sky, the baby rain cloud bumps into a big rain cloud. Bump!",
+     "segs": [
+      [
+       "nar",
+       "Up in the sky, the baby rain cloud bumps into a big rain cloud. Bump!"
+      ]
+     ],
+     "before": [
+      "storm:bump",
+      "pop:500,150,쿵!"
+     ]
+    },
+    {
+     "text": "번쩍! 우르릉 쾅!",
+     "src": "reuse",
+     "en": "Flash! Rumble, BOOM!",
+     "segs": [
+      [
+       "nar",
+       "Flash! Rumble, BOOM!"
+      ]
+     ],
+     "before": [
+      "storm:flash",
+      "fx:thunder"
+     ]
+    },
+    {
+     "text": "하늘은 우르릉, 삼남매 가슴은 두근두근.",
+     "src": "new",
+     "en": "The sky goes rumble, rumble, and the kids' hearts go thump, thump.",
+     "segs": [
+      [
+       "nar",
+       "The sky goes rumble, rumble, and the kids' hearts go thump, thump."
+      ]
+     ]
+    },
+    {
+     "text": "\"으악!\" 삼남매는 서로 꼭 껴안아요.",
+     "src": "reuse",
+     "en": "Eek! The three kids hug each other tight.",
+     "segs": [
+      [
+       "oppa",
+       "Eek!"
+      ],
+      [
+       "nar",
+       "The three kids hug each other tight."
+      ]
+     ],
+     "before": [
+      "kids:look:eek",
+      "cut:hug"
+     ]
+    },
+    {
+     "text": "\"미안, 미안! 인사한 거야!\"",
+     "src": "reuse",
+     "en": "Sorry, sorry! We were just saying hello!",
+     "segs": [
+      [
+       "dark",
+       "Sorry, sorry! We were just saying hello!"
+      ]
+     ]
+    },
+    {
+     "text": "삼남매는 휴우, 가슴을 쓸어내리고 까르르 웃었어요.",
+     "src": "new",
+     "en": "The three kids let out a big sigh, phew, and then burst out giggling.",
+     "segs": [
+      [
+       "nar",
+       "The three kids let out a big sigh, phew, and then burst out giggling."
+      ]
+     ],
+     "before": [
+      "kids:look:clap"
+     ]
+    },
+    {
+     "text": "꿀떡이는 꼬리를 살랑살랑 흔들어요.",
+     "src": "reuse",
+     "en": "Kkulddeok wags his tail, wiggle wiggle.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok wags his tail, wiggle wiggle."
+      ]
+     ],
+     "before": [
+      "dog:look:wag"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_rain",
+   "card": "Rain and Sprouts",
+   "set": "13_rain",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "rain:start",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "토독, 토도독. 빗방울이 하나, 둘 떨어져요.",
+     "src": "new",
+     "en": "Plip, plop, plip-plop. The raindrops fall, one, then two.",
+     "segs": [
+      [
+       "nar",
+       "Plip, plop, plip-plop. The raindrops fall, one, then two."
+      ]
+     ],
+     "before": [
+      "rain:drops"
+     ]
+    },
+    {
+     "text": "비가 내려요!",
+     "src": "reuse",
+     "en": "It's raining!",
+     "segs": [
+      [
+       "nar",
+       "It's raining!"
+      ]
+     ]
+    },
+    {
+     "text": "삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
+     "src": "reuse",
+     "en": "The three kids and Kkulddeok splash in the puddles!",
+     "segs": [
+      [
+       "nar",
+       "The three kids and Kkulddeok splash in the puddles!"
+      ]
+     ],
+     "before": [
+      "kids:look:splash",
+      "dog:look:run:left",
+      "puddle:splash",
+      "pop:500,420,첨벙!"
+     ]
+    },
+    {
+     "text": "\"첨벙!\" 은우가 제일 높이 뛰어요.",
+     "src": "reuse",
+     "en": "Splash! Eunwoo jumps the highest.",
+     "segs": [
+      [
+       "agi",
+       "Splash!"
+      ],
+      [
+       "nar",
+       "Eunwoo jumps the highest."
+      ]
+     ],
+     "before": [
+      "kid:agi:hop"
+     ]
+    },
+    {
+     "text": "장화 속까지 철벅철벅, 그래도 신이 나요.",
+     "src": "new",
+     "en": "Their boots go squelch, squelch, soaking wet, but they are having so much fun.",
+     "segs": [
+      [
+       "nar",
+       "Their boots go squelch, squelch, soaking wet, but they are having so much fun."
+      ]
+     ]
+    },
+    {
+     "text": "비 맞은 땅에서 새싹이 쑥!",
+     "src": "reuse",
+     "en": "From the rainy ground, a little sprout pops up!",
+     "segs": [
+      [
+       "nar",
+       "From the rainy ground, a little sprout pops up!"
+      ]
+     ],
+     "before": [
+      "set:14_soil_v2",
+      "soil:sprout",
+      "pop:400,380,쑥!"
+     ]
+    },
+    {
+     "text": "꽃이 활짝!",
+     "src": "reuse",
+     "en": "A flower opens wide!",
+     "segs": [
+      [
+       "nar",
+       "A flower opens wide!"
+      ]
+     ],
+     "before": [
+      "soil:flower",
+      "pop:520,360,활짝!"
+     ]
+    },
+    {
+     "text": "딸기가 빨갛게!",
+     "src": "reuse",
+     "en": "A strawberry turns red!",
+     "segs": [
+      [
+       "nar",
+       "A strawberry turns red!"
+      ]
+     ],
+     "before": [
+      "soil:berry",
+      "pop:640,380,빨갛게!"
+     ]
+    },
+    {
+     "text": "새싹은 쑥쑥, 꽃은 방긋, 딸기는 반질반질 윤이 나요.",
+     "src": "new",
+     "en": "The sprouts shoot up, the flowers smile, and the strawberries shine, glossy and bright.",
+     "segs": [
+      [
+       "nar",
+       "The sprouts shoot up, the flowers smile, and the strawberries shine, glossy and bright."
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이는 딸기 냄새를 킁킁.",
+     "src": "reuse",
+     "en": "Kkulddeok sniffs the strawberry.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok sniffs the strawberry."
+      ]
+     ],
+     "before": [
+      "dog:look:sniff",
+      "fx:sniff"
+     ]
+    },
+    {
+     "text": "아기 먹구름이 내려다봐요. \"어? 다들 웃고 있네!\"",
+     "src": "reuse",
+     "en": "The baby rain cloud looks down. Oh? Everyone is smiling!",
+     "segs": [
+      [
+       "nar",
+       "The baby rain cloud looks down."
+      ],
+      [
+       "dark",
+       "Oh? Everyone is smiling!"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_rainbow",
+   "card": "The Rainbow",
+   "set": "15_rainbow_v2",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "sky:drift",
+    "rainbow:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하늘에 커다란 무지개! \"우와!\"",
+     "src": "reuse",
+     "en": "A big rainbow in the sky! Wow!",
+     "segs": [
+      [
+       "nar",
+       "A big rainbow in the sky!"
+      ],
+      [
+       "nuna",
+       "Wow!"
+      ]
+     ],
+     "before": [
+      "kids:look:point"
+     ]
+    },
+    {
+     "text": "빨강, 주황, 노랑, 초록, 파랑, 남색, 보라. 일곱 색이 반짝반짝 빛나요.",
+     "src": "new",
+     "en": "Red, orange, yellow, green, blue, indigo, violet. Seven colors sparkle and shine.",
+     "segs": [
+      [
+       "nar",
+       "Red, orange, yellow, green, blue, indigo, violet. Seven colors sparkle and shine."
+      ]
+     ],
+     "before": [
+      "rainbow:count"
+     ]
+    },
+    {
+     "text": "비를 다 내린 아기 먹구름은 하얗게 변했어요.",
+     "src": "reuse",
+     "en": "After raining all its rain, the baby rain cloud turns white.",
+     "segs": [
+      [
+       "nar",
+       "After raining all its rain, the baby rain cloud turns white."
+      ]
+     ],
+     "before": [
+      "baby:white"
+     ]
+    },
+    {
+     "text": "하얀 아기 구름이 방긋 웃어요. 퐁!",
+     "src": "reuse",
+     "en": "The little white cloud smiles. Pong!",
+     "segs": [
+      [
+       "nar",
+       "The little white cloud smiles. Pong!"
+      ]
+     ],
+     "before": [
+      "fx:pong"
+     ],
+     "after": [
+      "cut:rainbow"
+     ]
+    },
+    {
+     "text": "\"구름은 여기서 오는 거였어!\"",
+     "src": "reuse",
+     "en": "So this is where clouds come from!",
+     "segs": [
+      [
+       "nuna",
+       "So this is where clouds come from!"
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이는 젖은 흙에 코를 대고 킁킁.",
+     "src": "reuse",
+     "en": "Kkulddeok puts his nose to the wet dirt. Sniff, sniff.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok puts his nose to the wet dirt. Sniff, sniff."
+      ]
+     ],
+     "before": [
+      "dog:look:nose",
+      "fx:sniff"
+     ]
+    },
+    {
+     "text": "삼남매는 꿀떡이랑 왔던 길로 집에 가요.",
+     "src": "reuse",
+     "en": "The three kids and Kkulddeok walk home the way they came.",
+     "segs": [
+      [
+       "nar",
+       "The three kids and Kkulddeok walk home the way they came."
+      ]
+     ],
+     "before": [
+      "set:01_road",
+      "kids:look:walk:left",
+      "dog:look:run:left",
+      "kids:walk:200,2500"
+     ]
+    },
+    {
+     "text": "멀리 굴뚝에서 작은 구름이 퐁! 퐁!",
+     "src": "reuse",
+     "en": "Far away, little clouds pop out of the chimney. Pong! Pong!",
+     "segs": [
+      [
+       "nar",
+       "Far away, little clouds pop out of the chimney. Pong! Pong!"
+      ]
+     ],
+     "before": [
+      "fx:pong",
+      "pop:860,160,퐁!"
+     ]
+    },
+    {
+     "text": "은우가 뒤를 돌아보며 손을 흔들어요. \"퐁!\"",
+     "src": "reuse",
+     "en": "Eunwoo looks back and waves. Pong!",
+     "segs": [
+      [
+       "nar",
+       "Eunwoo looks back and waves."
+      ],
+      [
+       "agi",
+       "Pong!"
+      ]
+     ],
+     "before": [
+      "kid:agi:look:lookback",
+      "kid:agi:look:wave"
+     ]
+    },
+    {
+     "text": "\"또 놀러 와, 아기 구름아!\"",
+     "src": "new",
+     "en": "Come play again, little cloud!",
+     "segs": [
+      [
+       "nuna",
+       "Come play again, little cloud!"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:wave"
+     ]
+    },
+    {
+     "text": "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.",
+     "src": "reuse",
+     "en": "Kkulddeok takes one last sniff of the wind from the chimney.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok takes one last sniff of the wind from the chimney."
+      ]
+     ],
+     "before": [
+      "dog:look:nose"
+     ]
+    },
+    {
+     "text": "비 오는 날도, 해 뜨는 날도 모두 소중하답니다.",
+     "src": "new",
+     "en": "Rainy days and sunny days, every one of them is precious.",
+     "segs": [
+      [
+       "nar",
+       "Rainy days and sunny days, every one of them is precious."
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

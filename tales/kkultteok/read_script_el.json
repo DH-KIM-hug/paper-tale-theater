@@ -1,0 +1,1690 @@
+{
+ "mode": "read",
+ "tale": "kkultteok",
+ "lang": "ko",
+ "title": "구름 공장",
+ "voices_from": "voice_script_el.json",
+ "moral": "비 오는 날도, 해 뜨는 날도 모두 소중하답니다. 또 놀러 와, 아기 구름아!",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 창작 동화(가족 주인공, family-tale 메모): 이름은 기존 대본의 다현·이현·은우·꿀떡이만 쓰고 새 정보는 넣지 않았다. 놀이판 16장면을 11장면으로 묶었다(한 장면 안에서 배경이 바뀌면 before 의 set 동사). 꿀떡이·굴뚝·구름·문틈·물방울·나팔·모양 틀·단추·먹구름·종·쓰다듬기·번개·빗방울·웅덩이·땅·무지개·굴뚝 누르기와 마음 고르기(슬퍼요/기뻐요)를 모두 뺐다. 기존 줄 중 조작 낱말이 든 \"이현이가 모양 틀을 꾹! 눌러요\", \"은우가 꾹! 눌렀어요\", 다현이의 \"눌러 봐도 돼?\", 빗방울 \"톡./토독./토도독.\"은 새 문장으로 바꿨고, 무지개 일곱 색 세기(빨강!~보라!)는 한 줄 묘사로 묶었다. 그림 컷 2장(껴안기·무지개)은 그대로. 원래 대사가 짧은 시 같은 문장이라 장면당 줄 수가 많지만(최대 10줄) 글자 수는 적다. 교훈은 끝 화면 문구 \"또 놀러 와, 아기 구름아!\"에 한 줄을 붙여 읽는다. 새 문장은 의성어·의태어를 장면마다 2~3개 넣었다(2026-10-22 사용자 지시).",
+ "acts": {
+  "set:<01_road|02_hill|03_chimney|04_door|05_belt_v2|06_press_v2|07_button_v2|08_tank_room|09_bell_room|10_corner_close|12_storm|13_rain|14_soil_v2|15_rainbow_v2>": "장면 배경(scene 키). scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
+  "kid:<nuna|oppa|agi>:look:<자세>[:<left|right>] | kid:<id>:at:<x,y> | kid:<id>:walk:<x,y,ms> | kid:<id>:hop | kids:look:<자세> | kids:walk:<x,ms>": "삼남매 자세(lookup·walk·run·wave·blow·hug·jump·back·whisper·point·tiptoe·crouch·clap·eek·splash·press·pet·reach·lookback)·이동",
+  "dog:look:<자세>[:<dir>] | dog:at:<x,y> | dog:walk:<x,y,ms> | dog:hop": "꿀떡이 자세(nose·run·sniff·sneeze·lookup·wag·lick 등)·이동",
+  "sky:drift | chimney:steam | chimney:cloud | clouds:shapes": "하늘 구름 떠다님·굴뚝 김·김이 뭉쳐 구름·구름이 토끼·물고기·자동차로",
+  "door:open | belt:drops | horn:blow | cloud:grow:<1|2|3> | press:<rabbit|whale|puppy> | dog:sneeze | button:push | flue:up:<puppy|baby>": "공장 연출(놀이판의 누르기 뒤 연출을 저절로)",
+  "tank:drink | bell:ring | darks:lineout | baby:<curl|eyes|up|white> | baby:pet": "먹구름 방·종·아기 먹구름",
+  "storm:bump | storm:flash | rain:start | rain:drops | puddle:splash | soil:<sprout|flower|berry> | rainbow:show | rainbow:count": "하늘·비·땅·무지개 연출",
+  "cut:<hug|rainbow>": "그림 컷 2장",
+  "fx:<pong|ding|splash|whoosh|thunder|sneeze|woof|sniff> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_walk",
+   "card": "산책",
+   "set": "01_road",
+   "enter": [
+    "kids:look:walk",
+    "dog:look:nose",
+    "sky:drift",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "해가 쨍쨍한 날, 다현이와 이현이와 은우는 꿀떡이랑 산책을 나가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "해가 쨍쨍한 날, 다현이와 이현이와 은우는 꿀떡이랑 산책을 나가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "하늘에 구름이 둥실둥실.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하늘에 구름이 둥실둥실.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:point",
+      "kid:oppa:look:lookup",
+      "kid:agi:look:lookup"
+     ]
+    },
+    {
+     "text": "햇살은 따끈따끈, 바람은 살랑살랑 기분 좋은 날이에요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "햇살은 따끈따끈, 바람은 살랑살랑 기분 좋은 날이에요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "\"구름은 어디서 올까?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nuna",
+       "구름은 어디서 올까?",
+       null,
+       "[cheerful]"
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이는 땅에 코를 대고 킁킁.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이는 땅에 코를 대고 킁킁.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:nose",
+      "fx:sniff"
+     ]
+    },
+    {
+     "text": "킁킁킁! 꿀떡이가 무슨 냄새를 맡았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "킁킁킁! 꿀떡이가 무슨 냄새를 맡았어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "set:02_hill",
+      "kids:look:walk",
+      "dog:look:nose"
+     ]
+    },
+    {
+     "text": "꿀떡이 꼬리가 살랑살랑, 귀가 쫑긋!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이 꼬리가 살랑살랑, 귀가 쫑긋!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:wag"
+     ]
+    },
+    {
+     "text": "냄새를 따라 쪼르르 달려가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "냄새를 따라 쪼르르 달려가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:run:right",
+      "dog:walk:900,470,1200"
+     ]
+    },
+    {
+     "text": "\"꿀떡아, 같이 가!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nuna",
+       "꿀떡아, 같이 가!",
+       null,
+       "[cheerful, calling out]"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:wave"
+     ]
+    },
+    {
+     "text": "삼남매는 영차, 영차 언덕을 올라요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "삼남매는 영차, 영차 언덕을 올라요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kids:look:walk",
+      "kids:walk:700,2000"
+     ]
+    },
+    {
+     "text": "다현이는 성큼성큼, 이현이는 씩씩하게, 은우는 아장아장 따라가요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "다현이는 성큼성큼, 이현이는 씩씩하게, 은우는 아장아장 따라가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_chimney",
+   "card": "굴뚝",
+   "set": "03_chimney",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "chimney:steam",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "언덕 너머에 커다란 굴뚝 하나.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "언덕 너머에 커다란 굴뚝 하나.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "굴뚝에서 하얀 김이 폴폴.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "굴뚝에서 하얀 김이 폴폴.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "chimney:steam"
+     ]
+    },
+    {
+     "text": "삼남매는 눈을 동그랗게 뜨고 굴뚝을 올려다봐요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "삼남매는 눈을 동그랗게 뜨고 굴뚝을 올려다봐요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "김이 뭉치고, 뭉치고… 퐁! 구름이 됐어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "김이 뭉치고, 뭉치고… 퐁! 구름이 됐어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "chimney:cloud",
+      "fx:pong",
+      "pop:500,200,퐁!"
+     ]
+    },
+    {
+     "text": "\"구름이 여기서 오는구나!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nuna",
+       "구름이 여기서 오는구나!",
+       null,
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "kid:oppa:look:clap",
+      "kid:nuna:look:point"
+     ]
+    },
+    {
+     "text": "\"퐁!\" 은우가 따라 해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "agi",
+       "퐁!",
+       null,
+       "[baby voice]"
+      ],
+      [
+       "nar",
+       "은우가 따라 해요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kid:agi:look:jump",
+      "kid:agi:hop"
+     ]
+    },
+    {
+     "text": "구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "clouds:shapes"
+     ]
+    },
+    {
+     "text": "꿀떡이는 구름을 보고 멍멍! 짖었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이는 구름을 보고 멍멍! 짖었어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:lookup",
+      "fx:woof"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_door",
+   "card": "커다란 문",
+   "set": "04_door",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:nose",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "굴뚝 아래 커다란 문.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "굴뚝 아래 커다란 문.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "여기는… 어떤 공장일까요?",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "여기는… 어떤 공장일까요?",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이가 문틈에 코를 쏙 밀어 넣어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이가 문틈에 코를 쏙 밀어 넣어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:nose:right"
+     ]
+    },
+    {
+     "text": "꿀떡이 코가 문틈에서 킁킁, 꼬리가 흔들흔들.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이 코가 문틈에서 킁킁, 꼬리가 흔들흔들.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "스르르… 문이 열려요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "스르르… 문이 열려요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "door:open"
+     ]
+    },
+    {
+     "text": "삼남매는 살금살금 따라 들어가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "삼남매는 살금살금 따라 들어가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kids:look:tiptoe:right",
+      "kids:walk:900,2000"
+     ]
+    },
+    {
+     "text": "안에서 쿵덕쿵덕, 신기한 소리가 들려와요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "안에서 쿵덕쿵덕, 신기한 소리가 들려와요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_belt",
+   "card": "벨트와 나팔",
+   "set": "05_belt_v2",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "기다란 벨트 위로 물방울이 똑, 똑, 똑.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "기다란 벨트 위로 물방울이 똑, 똑, 똑.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "belt:drops"
+     ]
+    },
+    {
+     "text": "물방울들이 벨트를 따라 또르르, 또르르 굴러가요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "물방울들이 벨트를 따라 또르르, 또르르 굴러가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "이현이가 물방울에 손을 살짝 대 봐요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이현이가 물방울에 손을 살짝 대 봐요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kid:oppa:look:reach"
+     ]
+    },
+    {
+     "text": "\"앗, 차가워! 진짜 물방울이야!\"",
+     "src": "new",
+     "segs": [
+      [
+       "oppa",
+       "앗, 차가워! 진짜 물방울이야!",
+       null,
+       "[excited]"
+      ]
+     ],
+     "before": [
+      "pop:400,300,앗, 차가워!"
+     ]
+    },
+    {
+     "text": "다현이는 후우— 바람을 불어 줘요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "다현이는 후우— 바람을 불어 줘요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:blow",
+      "horn:blow"
+     ]
+    },
+    {
+     "text": "뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!",
+       "happy:0.9",
+       "[playful, bouncy, building up with excitement, each 뭉게 a little bigger and rounder, bubbly, then a happy pop at the end]"
+      ]
+     ],
+     "before": [
+      "cloud:grow:1",
+      "cloud:grow:2",
+      "cloud:grow:3",
+      "fx:pong"
+     ]
+    },
+    {
+     "text": "하얀 구름이 둥실, 벨트 위로 떠올라요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "하얀 구름이 둥실, 벨트 위로 떠올라요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "\"여기는 구름 공장이야!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nuna",
+       "여기는 구름 공장이야!",
+       null,
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:jump",
+      "kid:nuna:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_press",
+   "card": "모양 틀",
+   "set": "06_press_v2",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이현이가 모양 틀을 힘껏, 쿵! 내리찍어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "이현이가 모양 틀을 힘껏, 쿵! 내리찍어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kid:oppa:look:press",
+      "press:rabbit"
+     ]
+    },
+    {
+     "text": "퐁! 토끼 구름. 퐁! 고래 구름.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "퐁! 토끼 구름. 퐁! 고래 구름.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "fx:pong",
+      "press:whale",
+      "pop:600,250,퐁!"
+     ]
+    },
+    {
+     "text": "퐁! 이번엔 강아지 구름.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "퐁! 이번엔 강아지 구름.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "press:puppy",
+      "fx:pong"
+     ]
+    },
+    {
+     "text": "토끼 구름은 깡충, 고래 구름은 출렁, 강아지 구름은 멍멍!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "토끼 구름은 깡충, 고래 구름은 출렁, 강아지 구름은 멍멍!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "구름들이 둥실둥실, 공장 안을 떠다녀요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "구름들이 둥실둥실, 공장 안을 떠다녀요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이가 강아지 구름과 코를 맞대요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이가 강아지 구름과 코를 맞대요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:nose:left",
+      "dog:walk:640,470,900"
+     ]
+    },
+    {
+     "text": "에취! 구름 조각이 사르르 날려요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "에취! 구름 조각이 사르르 날려요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:sneeze:left",
+      "fx:sneeze",
+      "dog:sneeze"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_button",
+   "card": "빨간 단추",
+   "set": "07_button_v2",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "구석에 커다란 빨간 단추가 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "구석에 커다란 빨간 단추가 있어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "\"저 빨간 단추는 뭘까? 궁금해!\"",
+     "src": "new",
+     "segs": [
+      [
+       "nuna",
+       "저 빨간 단추는 뭘까? 궁금해!",
+       null,
+       "[cheerful]"
+      ]
+     ]
+    },
+    {
+     "text": "은우가 아장아장 다가가 단추를 꾸욱 눌렀어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "은우가 아장아장 다가가 단추를 꾸욱 눌렀어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kid:agi:look:press:left",
+      "button:push",
+      "pop:300,300,쿵!"
+     ]
+    },
+    {
+     "text": "슈웅— 강아지 구름이 굴뚝으로 올라가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "슈웅— 강아지 구름이 굴뚝으로 올라가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "flue:up:puppy",
+      "fx:whoosh",
+      "dog:look:lookup:right",
+      "kids:look:lookup:right"
+     ]
+    },
+    {
+     "text": "퐁! 하늘로 나갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "퐁! 하늘로 나갔어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "fx:pong"
+     ]
+    },
+    {
+     "text": "삼남매는 짝짝짝, 손뼉을 쳤어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "삼남매는 짝짝짝, 손뼉을 쳤어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kids:look:clap"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_tank",
+   "card": "먹구름 방",
+   "set": "08_tank_room",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:nose",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옆방은 어두컴컴한 먹구름 방.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옆방은 어두컴컴한 먹구름 방.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "먹구름들이 커다란 물통에서 물을 마셔요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "먹구름들이 커다란 물통에서 물을 마셔요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "tank:drink"
+     ]
+    },
+    {
+     "text": "꿀꺽, 꿀꺽, 꿀꺽. 배가 빵빵해졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀꺽, 꿀꺽, 꿀꺽. 배가 빵빵해졌어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "pop:600,250,꿀꺽!"
+     ]
+    },
+    {
+     "text": "물통 속 물은 출렁출렁, 먹구름 배는 볼록볼록.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "물통 속 물은 출렁출렁, 먹구름 배는 볼록볼록.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "\"비를 만들려나 봐.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nuna",
+       "비를 만들려나 봐.",
+       null,
+       "[whispers]"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:whisper:right"
+     ]
+    },
+    {
+     "text": "꿀떡이는 축축한 바닥을 킁킁.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이는 축축한 바닥을 킁킁.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:sniff",
+      "fx:sniff"
+     ]
+    },
+    {
+     "text": "땡, 땡, 땡! 종이 울려요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "땡, 땡, 땡! 종이 울려요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "set:09_bell_room",
+      "bell:ring",
+      "fx:ding",
+      "pop:792,200,땡!"
+     ]
+    },
+    {
+     "text": "먹구름들이 줄을 서서 밖으로 나가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "먹구름들이 줄을 서서 밖으로 나가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "darks:lineout"
+     ]
+    },
+    {
+     "text": "먹구름들은 뭉게뭉게, 줄줄이 굴뚝으로 올라가요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "먹구름들은 뭉게뭉게, 줄줄이 굴뚝으로 올라가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_baby",
+   "card": "아기 먹구름",
+   "set": "09_bell_room",
+   "enter": [
+    "kids:look:lookup:left",
+    "dog:look:nose",
+    "baby:curl",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "구석에 아기 먹구름 하나가 혼자 웅크리고 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "구석에 아기 먹구름 하나가 혼자 웅크리고 있어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "\"나는 안 나갈래. 다들 비를 싫어하잖아.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "dark",
+       "나는 안 나갈래. 다들 비를 싫어하잖아.",
+       null,
+       "[sad, small shy voice]"
+      ]
+     ]
+    },
+    {
+     "text": "혼자 웅크리고 있어요. 슬픈 것 같아요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "혼자 웅크리고 있어요. 슬픈 것 같아요.",
+       null,
+       "[gentle, encouraging, cheerful]"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:crouch:left",
+      "kid:oppa:look:lookup:left",
+      "kid:agi:look:crouch:left"
+     ]
+    },
+    {
+     "text": "아기 먹구름 눈에서 눈물이 또르르.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아기 먹구름 눈에서 눈물이 또르르.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이가 살금살금 다가가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이가 살금살금 다가가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:sniff:left",
+      "dog:walk:600,470,1600"
+     ]
+    },
+    {
+     "text": "은우가 아기 먹구름을 살살 쓰다듬어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "은우가 아기 먹구름을 살살 쓰다듬어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "set:10_corner_close",
+      "kid:agi:look:pet",
+      "baby:pet"
+     ]
+    },
+    {
+     "text": "토닥토닥, 쓰담쓰담. 아기 먹구름이 조금씩 고개를 들어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "토닥토닥, 쓰담쓰담. 아기 먹구름이 조금씩 고개를 들어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "\"비 좋아! 장화 신고 첨벙첨벙!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nuna",
+       "비 좋아! 장화 신고 첨벙첨벙!",
+       null,
+       "[cheerful]"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:splash:left",
+      "kid:nuna:hop"
+     ]
+    },
+    {
+     "text": "\"첨벙첨벙!\" 이현이도 폴짝 뛰어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "oppa",
+       "첨벙첨벙!",
+       null,
+       "[excited]"
+      ],
+      [
+       "nar",
+       "이현이도 폴짝 뛰어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kid:oppa:look:splash:left",
+      "kid:oppa:hop"
+     ]
+    },
+    {
+     "text": "꿀떡이는 아기 먹구름 볼을 할짝.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이는 아기 먹구름 볼을 할짝.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:lick:left",
+      "pop:560,320,할짝!"
+     ]
+    },
+    {
+     "text": "아기 먹구름 눈이 동그래졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아기 먹구름 눈이 동그래졌어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "baby:eyes"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_storm",
+   "card": "번쩍!",
+   "set": "07_button_v2",
+   "enter": [
+    "kids:look:wave",
+    "dog:look:lookup",
+    "baby:up",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"정말? 그럼 나, 갈게!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "dark",
+       "정말? 그럼 나, 갈게!",
+       null,
+       "[excited, hopeful]"
+      ]
+     ]
+    },
+    {
+     "text": "슈웅— 아기 먹구름이 굴뚝으로 올라가요. 퐁!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "슈웅— 아기 먹구름이 굴뚝으로 올라가요. 퐁!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "flue:up:baby",
+      "fx:whoosh",
+      "fx:pong"
+     ]
+    },
+    {
+     "text": "삼남매도 손을 흔들며 밖으로 달려 나가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "삼남매도 손을 흔들며 밖으로 달려 나가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kids:look:run",
+      "kids:walk:1100,1500"
+     ]
+    },
+    {
+     "text": "꿀떡이는 하늘을 보고 멍! 멍!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이는 하늘을 보고 멍! 멍!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "set:12_storm",
+      "kids:look:lookup",
+      "dog:look:lookup",
+      "fx:woof"
+     ]
+    },
+    {
+     "text": "하늘에서 아기 먹구름이 큰 먹구름과 쿵!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하늘에서 아기 먹구름이 큰 먹구름과 쿵!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "storm:bump",
+      "pop:500,150,쿵!"
+     ]
+    },
+    {
+     "text": "번쩍! 우르릉 쾅!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "번쩍! 우르릉 쾅!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "storm:flash",
+      "fx:thunder"
+     ]
+    },
+    {
+     "text": "하늘은 우르릉, 삼남매 가슴은 두근두근.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "하늘은 우르릉, 삼남매 가슴은 두근두근.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "\"으악!\" 삼남매는 서로 꼭 껴안아요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "oppa",
+       "으악!",
+       null,
+       "[excited]"
+      ],
+      [
+       "nar",
+       "삼남매는 서로 꼭 껴안아요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kids:look:eek",
+      "cut:hug"
+     ]
+    },
+    {
+     "text": "\"미안, 미안! 인사한 거야!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "dark",
+       "미안, 미안! 인사한 거야!",
+       null,
+       "[sheepish, giggling]"
+      ]
+     ]
+    },
+    {
+     "text": "삼남매는 휴우, 가슴을 쓸어내리고 까르르 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "삼남매는 휴우, 가슴을 쓸어내리고 까르르 웃었어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kids:look:clap"
+     ]
+    },
+    {
+     "text": "꿀떡이는 꼬리를 살랑살랑 흔들어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이는 꼬리를 살랑살랑 흔들어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:wag"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_rain",
+   "card": "비와 새싹",
+   "set": "13_rain",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "rain:start",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "토독, 토도독. 빗방울이 하나, 둘 떨어져요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "토독, 토도독. 빗방울이 하나, 둘 떨어져요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "rain:drops"
+     ]
+    },
+    {
+     "text": "비가 내려요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "비가 내려요!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kids:look:splash",
+      "dog:look:run:left",
+      "puddle:splash",
+      "pop:500,420,첨벙!"
+     ]
+    },
+    {
+     "text": "\"첨벙!\" 은우가 제일 높이 뛰어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "agi",
+       "첨벙!",
+       null,
+       "[baby voice]"
+      ],
+      [
+       "nar",
+       "은우가 제일 높이 뛰어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "kid:agi:hop"
+     ]
+    },
+    {
+     "text": "장화 속까지 철벅철벅, 그래도 신이 나요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "장화 속까지 철벅철벅, 그래도 신이 나요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "비 맞은 땅에서 새싹이 쑥!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "비 맞은 땅에서 새싹이 쑥!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "set:14_soil_v2",
+      "soil:sprout",
+      "pop:400,380,쑥!"
+     ]
+    },
+    {
+     "text": "꽃이 활짝!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꽃이 활짝!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "soil:flower",
+      "pop:520,360,활짝!"
+     ]
+    },
+    {
+     "text": "딸기가 빨갛게!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "딸기가 빨갛게!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "soil:berry",
+      "pop:640,380,빨갛게!"
+     ]
+    },
+    {
+     "text": "새싹은 쑥쑥, 꽃은 방긋, 딸기는 반질반질 윤이 나요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "새싹은 쑥쑥, 꽃은 방긋, 딸기는 반질반질 윤이 나요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이는 딸기 냄새를 킁킁.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이는 딸기 냄새를 킁킁.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:sniff",
+      "fx:sniff"
+     ]
+    },
+    {
+     "text": "아기 먹구름이 내려다봐요. \"어? 다들 웃고 있네!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아기 먹구름이 내려다봐요.",
+       null,
+       "[gentle, warm storyteller]"
+      ],
+      [
+       "dark",
+       "어? 다들 웃고 있네!",
+       null,
+       "[surprised, delighted]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_rainbow",
+   "card": "무지개",
+   "set": "15_rainbow_v2",
+   "enter": [
+    "kids:look:lookup",
+    "dog:look:lookup",
+    "sky:drift",
+    "rainbow:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하늘에 커다란 무지개! \"우와!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하늘에 커다란 무지개!",
+       null,
+       "[gentle, warm storyteller]"
+      ],
+      [
+       "nuna",
+       "우와!",
+       null,
+       "[amazed]"
+      ]
+     ],
+     "before": [
+      "kids:look:point"
+     ]
+    },
+    {
+     "text": "빨강, 주황, 노랑, 초록, 파랑, 남색, 보라. 일곱 색이 반짝반짝 빛나요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "빨강, 주황, 노랑, 초록, 파랑, 남색, 보라. 일곱 색이 반짝반짝 빛나요.",
+       null,
+       "[bright, clear, cheerful]"
+      ]
+     ],
+     "before": [
+      "rainbow:count"
+     ]
+    },
+    {
+     "text": "비를 다 내린 아기 먹구름은 하얗게 변했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "비를 다 내린 아기 먹구름은 하얗게 변했어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "baby:white"
+     ]
+    },
+    {
+     "text": "하얀 아기 구름이 방긋 웃어요. 퐁!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하얀 아기 구름이 방긋 웃어요. 퐁!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "fx:pong"
+     ],
+     "after": [
+      "cut:rainbow"
+     ]
+    },
+    {
+     "text": "\"구름은 여기서 오는 거였어!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nuna",
+       "구름은 여기서 오는 거였어!",
+       null,
+       "[cheerful]"
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이는 젖은 흙에 코를 대고 킁킁.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이는 젖은 흙에 코를 대고 킁킁.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:nose",
+      "fx:sniff"
+     ]
+    },
+    {
+     "text": "삼남매는 꿀떡이랑 왔던 길로 집에 가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "삼남매는 꿀떡이랑 왔던 길로 집에 가요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "set:01_road",
+      "kids:look:walk:left",
+      "dog:look:run:left",
+      "kids:walk:200,2500"
+     ]
+    },
+    {
+     "text": "멀리 굴뚝에서 작은 구름이 퐁! 퐁!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "멀리 굴뚝에서 작은 구름이 퐁! 퐁!",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "fx:pong",
+      "pop:860,160,퐁!"
+     ]
+    },
+    {
+     "text": "은우가 뒤를 돌아보며 손을 흔들어요. \"퐁!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "은우가 뒤를 돌아보며 손을 흔들어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ],
+      [
+       "agi",
+       "퐁!",
+       null,
+       "[baby voice]"
+      ]
+     ],
+     "before": [
+      "kid:agi:look:lookback",
+      "kid:agi:look:wave"
+     ]
+    },
+    {
+     "text": "\"또 놀러 와, 아기 구름아!\"",
+     "src": "new",
+     "segs": [
+      [
+       "nuna",
+       "또 놀러 와, 아기 구름아!",
+       null,
+       "[cheerful, calling out]"
+      ]
+     ],
+     "before": [
+      "kid:nuna:look:wave"
+     ]
+    },
+    {
+     "text": "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "dog:look:nose"
+     ]
+    },
+    {
+     "text": "비 오는 날도, 해 뜨는 날도 모두 소중하답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "비 오는 날도, 해 뜨는 날도 모두 소중하답니다.",
+       null,
+       "[gentle, warm, slow, closing]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
