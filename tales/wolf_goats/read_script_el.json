@@ -1,0 +1,1150 @@
+{
+ "mode": "read",
+ "tale": "wolf_goats",
+ "lang": "ko",
+ "title": "늑대와 일곱 마리 아기 염소",
+ "voices_from": "voice_script_el.json",
+ "moral": "엄마 말을 잘 기억하고, 낯선 이에게 문을 열어 주지 않아요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md §3). 놀이판 10장면 그대로 10장면. 뺀 것: 엄마 염소·늑대·돌멩이·아기 염소 누르기, 막내 숨기기 조작, 그림자 극장 연타(한 번 누르면 저절로)와 마지막 춤 누르기. 순화는 놀이판 그대로: 삼켜진 아기 염소들은 다치지 않고 따뜻한 뱃속에 있다가 그림자 극장(종이 그림자)에서 가위로 꺼내지며, 늑대는 우물에 빠져 젖은 채 멀리 달아난다(죽지 않음). 배역 신규는 아기 염소 1·늑대 1줄.",
+ "acts": {
+  "set:<kitchen|inside_door|door|window|house|messy|tree|shadow|well>": "장면 세트(bg(T,key) + T.clear + camSnap)",
+  "cam:wide": "카메라",
+  "mama:at:<x,y> | mama:walk:<x,y> | mama:pose:<basket|scissors|joy> | kids:lineup | kids:hop | kids:hide | kid7:at:<x,y> | kid7:walk:<x,y> | kid7:pose:<base|joy> | kids:dance": "엄마 염소·아기 염소 자리·걷기·자세(figure.pose)",
+  "wolf:show:<chalk|flour|knock|belly|heavy|splash|flee> | wolf:at:<x,y> | wolf:walk:<x,y> | wolf:hide | wolf:sneeze": "늑대 그림·자리·걷기",
+  "clock:open | clock:close | quilt:hide | laundry:hide | shadow:cut:<n> | stone:drop | needle:stitch": "시계·이불·빨래 바구니·그림자 극장 가위질·돌멩이·바느질",
+  "cut:<chalk|flour|gulp|shadow|splash>": "그림 컷(cutImage)",
+  "fx:<knock|ding|splash|snore|snip|pop> | pop:<x,y,글자>": "효과음·의성어"
+ },
+ "scenes": [
+  {
+   "key": "R01_kitchen",
+   "card": "엄마의 당부",
+   "set": "kitchen",
+   "enter": [
+    "mama:at:300,478",
+    "mama:pose:basket",
+    "kids:lineup",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "아주 먼 옛날, 엄마 염소와 일곱 마리 아기 염소가 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아주 먼 옛날, 엄마 염소와 일곱 마리 아기 염소가 살았어요.",
+       null,
+       "[warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "아기 염소들은 날마다 깡충깡충, 집 안을 뛰어다녔지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아기 염소들은 날마다 깡충깡충, 집 안을 뛰어다녔지요.",
+       null,
+       "[warm, playful storytelling]"
+      ]
+     ],
+     "before": [
+      "kids:hop"
+     ]
+    },
+    {
+     "text": "어느 날, 엄마 염소가 바구니를 들고 말했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "어느 날, 엄마 염소가 바구니를 들고 말했어요.",
+       null,
+       "[calm, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "\"엄마는 풀을 뜯으러 다녀올게. 늑대가 오면 문을 열어 주면 안 돼!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "mom",
+       "엄마는 풀을 뜯으러 다녀올게. 늑대가 오면 문을 열어 주면 안 돼!",
+       "happy",
+       "[warm, caring, gently firm]"
+      ]
+     ]
+    },
+    {
+     "text": "\"늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "mom",
+       "늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!",
+       "happy",
+       "[serious, caring, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "\"네, 엄마!\" 아기 염소들이 큰 소리로 대답했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "kid",
+       "네, 엄마!",
+       "happy",
+       "[cheerful, childlike, chorus, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "아기 염소들이 큰 소리로 대답했어요.",
+       null,
+       "[warm]"
+      ]
+     ],
+     "after": [
+      "mama:walk:1120,478"
+     ]
+    },
+    {
+     "text": "엄마는 문을 꼭 닫고, 터벅터벅 들판으로 나갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "엄마는 문을 꼭 닫고, 터벅터벅 들판으로 나갔어요.",
+       null,
+       "[calm, gentle]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_knock",
+   "card": "똑똑똑!",
+   "set": "inside_door",
+   "enter": [
+    "kids:lineup",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "엄마가 가고 얼마 뒤, 문밖에서 소리가 났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마가 가고 얼마 뒤, 문밖에서 소리가 났어요.",
+       null,
+       "[hushed, curious]"
+      ]
+     ],
+     "before": [
+      "fx:knock",
+      "pop:500,250,똑똑똑!"
+     ]
+    },
+    {
+     "text": "\"얘들아, 엄마야. 문 열어 줘!\" 걸걸한 목소리였어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "wolf",
+       "얘들아, 엄마야. 문 열어 줘!",
+       "tonedown:1.1",
+       "[gruff, hoarse, fake-sweet, comically sly]"
+      ],
+      [
+       "nar",
+       "걸걸한 목소리였어요.",
+       null,
+       "[playful, hushed]"
+      ]
+     ]
+    },
+    {
+     "text": "아기 염소들이 서로 쳐다보았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아기 염소들이 서로 쳐다보았어요.",
+       null,
+       "[curious, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "귀를 쫑긋, 눈을 깜빡깜빡. 뭔가 이상했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "귀를 쫑긋, 눈을 깜빡깜빡. 뭔가 이상했어요.",
+       null,
+       "[hushed, curious]"
+      ]
+     ]
+    },
+    {
+     "text": "\"목소리가 걸걸해. 우리 엄마가 아니야!\" 첫째가 말했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "kid",
+       "목소리가 걸걸해. 우리 엄마가 아니야!",
+       "happy",
+       "[suspicious, childlike, firm, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "첫째가 말했어요.",
+       null,
+       "[calm]"
+      ]
+     ]
+    },
+    {
+     "text": "\"저리 가요, 늑대!\" 아기 염소들이 소리쳤어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "kid",
+       "저리 가요, 늑대!",
+       "happy",
+       "[shouting, brave, childlike, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "아기 염소들이 소리쳤어요.",
+       null,
+       "[calm]"
+      ]
+     ],
+     "before": [
+      "kids:hop"
+     ]
+    },
+    {
+     "text": "문은 꽁꽁 잠긴 채 꼼짝도 하지 않았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "문은 꽁꽁 잠긴 채 꼼짝도 하지 않았어요.",
+       null,
+       "[calm, firm]"
+      ]
+     ]
+    },
+    {
+     "text": "늑대는 투덜투덜, 문 앞에서 발길을 돌렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "늑대는 투덜투덜, 문 앞에서 발길을 돌렸어요.",
+       null,
+       "[comic, grumbling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_chalk",
+   "card": "분필과 늑대",
+   "set": "door",
+   "enter": [
+    "wolf:show:chalk",
+    "wolf:at:500,520",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "늑대는 곰곰이 생각했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대는 곰곰이 생각했어요.",
+       null,
+       "[comic, thoughtful]"
+      ]
+     ]
+    },
+    {
+     "text": "\"목소리를 곱게 만들어야지. 분필을 먹어 볼까?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "wolf",
+       "목소리를 곱게 만들어야지. 분필을 먹어 볼까?",
+       "tonedown:1.1",
+       "[muttering, scheming, comic]"
+      ]
+     ]
+    },
+    {
+     "text": "와작와작, 늑대는 분필을 우적우적 씹어 먹었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "와작와작, 늑대는 분필을 우적우적 씹어 먹었어요.",
+       null,
+       "[comic, crunching]"
+      ]
+     ],
+     "before": [
+      "pop:500,300,와작!",
+      "cut:chalk"
+     ]
+    },
+    {
+     "text": "늑대의 목소리가 가늘고 고와졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대의 목소리가 가늘고 고와졌어요.",
+       null,
+       "[playful, comic]"
+      ]
+     ],
+     "after": [
+      "wolf:walk:300,520"
+     ]
+    },
+    {
+     "text": "\"얘들아, 엄마야. 문 열어 줘~\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "wolf",
+       "얘들아, 엄마야. 문 열어 줘~",
+       "tonedown:1.1",
+       "[sweet, fake-sweet voice, comic]"
+      ]
+     ],
+     "before": [
+      "fx:knock"
+     ]
+    },
+    {
+     "text": "\"그럼 문틈으로 발을 보여 주세요!\" 아기 염소들이 말했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "kid",
+       "그럼 문틈으로 발을 보여 주세요!",
+       "happy",
+       "[smart, childlike, firm, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "아기 염소들이 말했어요.",
+       null,
+       "[calm]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_paw",
+   "card": "하얀 발",
+   "set": "window",
+   "enter": [
+    "wolf:show:flour",
+    "wolf:at:500,545",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "늑대는 방앗간으로 쪼르르 달려가 밀가루 자루를 찾았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "늑대는 방앗간으로 쪼르르 달려가 밀가루 자루를 찾았어요.",
+       null,
+       "[playful, sneaky]"
+      ]
+     ]
+    },
+    {
+     "text": "늑대는 밀가루를 발에 묻혀서, 하얀 발을 쑥 내밀었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대는 밀가루를 발에 묻혀서, 하얀 발을 쑥 내밀었어요.",
+       null,
+       "[playful, sneaky]"
+      ]
+     ],
+     "before": [
+      "cut:flour"
+     ]
+    },
+    {
+     "text": "\"에취!\" 늑대가 밀가루 재채기를 했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "wolf",
+       "에취!",
+       "tonedown:1.1",
+       "[sneezes loudly, comic]"
+      ],
+      [
+       "nar",
+       "늑대가 밀가루 재채기를 했어요.",
+       null,
+       "[playful]"
+      ]
+     ],
+     "before": [
+      "wolf:sneeze",
+      "pop:500,300,에취!"
+     ]
+    },
+    {
+     "text": "밀가루가 폴폴 날려 늑대 코가 간질간질했거든요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "밀가루가 폴폴 날려 늑대 코가 간질간질했거든요.",
+       null,
+       "[playful, comic]"
+      ]
+     ]
+    },
+    {
+     "text": "\"어? 하얀 발이야! 엄마다!\" 아기 염소들은 깜빡 속아서 문을 열었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "kid",
+       "어? 하얀 발이야! 엄마다!",
+       "happy",
+       "[excited, childlike, fooled, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "아기 염소들은 깜빡 속아서 문을 열었어요.",
+       null,
+       "[uh-oh, gentle]"
+      ]
+     ],
+     "before": [
+      "fx:ding"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_hide",
+   "card": "숨바꼭질",
+   "set": "house",
+   "enter": [
+    "kids:lineup",
+    "wolf:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그런데 들어온 건 엄마가 아니라 늑대였어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그런데 들어온 건 엄마가 아니라 늑대였어요!",
+       null,
+       "[surprised, comic]"
+      ]
+     ],
+     "before": [
+      "wolf:show:knock",
+      "wolf:at:300,540"
+     ]
+    },
+    {
+     "text": "\"숨자, 숨자!\" 아기 염소들이 이불 속, 빨래 바구니 속으로 쏙쏙 숨었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "kid",
+       "숨자, 숨자!",
+       "happy",
+       "[whispers, urgent, childlike, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "아기 염소들이 이불 속, 빨래 바구니 속으로 쏙쏙 숨었어요.",
+       null,
+       "[quick, playful]"
+      ]
+     ],
+     "before": [
+      "kids:hide",
+      "quilt:hide",
+      "laundry:hide"
+     ]
+    },
+    {
+     "text": "막내는 두리번두리번하다가 키 큰 시계를 보았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "막내는 두리번두리번하다가 키 큰 시계를 보았어요.",
+       null,
+       "[whispers, curious]"
+      ]
+     ],
+     "before": [
+      "kid7:walk:660,505"
+     ]
+    },
+    {
+     "text": "막내는 키 큰 시계 속에 쏙 숨었어요. 아무도 몰랐어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "막내는 키 큰 시계 속에 쏙 숨었어요. 아무도 몰랐어요.",
+       null,
+       "[whispers, playful]"
+      ]
+     ],
+     "before": [
+      "clock:open",
+      "fx:ding"
+     ],
+     "after": [
+      "clock:close"
+     ]
+    },
+    {
+     "text": "\"어디 숨었나? 다 찾아낼 테다!\" 늑대가 집 안을 뒤졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "wolf",
+       "어디 숨었나? 다 찾아낼 테다!",
+       "tonedown:1.1",
+       "[growly, comic, searching]"
+      ],
+      [
+       "nar",
+       "늑대가 집 안을 뒤졌어요.",
+       null,
+       "[playful]"
+      ]
+     ],
+     "before": [
+      "wolf:walk:500,540"
+     ]
+    },
+    {
+     "text": "이불을 휙, 바구니를 뒤적뒤적. 늑대는 킁킁 냄새를 맡았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "이불을 휙, 바구니를 뒤적뒤적. 늑대는 킁킁 냄새를 맡았어요.",
+       null,
+       "[playful, sneaky]"
+      ]
+     ]
+    },
+    {
+     "text": "늑대는 시계 속만 빼고, 아기 염소들을 모두 찾아내서 꿀꺽 삼켜 버렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대는 시계 속만 빼고, 아기 염소들을 모두 찾아내서 꿀꺽 삼켜 버렸어요.",
+       null,
+       "[comic, gentle]"
+      ]
+     ],
+     "after": [
+      "cut:gulp"
+     ]
+    },
+    {
+     "text": "하지만 아기 염소들은 다치지 않았어요. 아주 따뜻하고 포근한 뱃속이었거든요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하지만 아기 염소들은 다치지 않았어요. 아주 따뜻하고 포근한 뱃속이었거든요.",
+       null,
+       "[reassuring, warm, gentle]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_mother",
+   "card": "엄마가 왔어요",
+   "set": "messy",
+   "enter": [
+    "mama:at:-100,515",
+    "kid7:at:86,492",
+    "clock:close",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "집에 돌아온 엄마 염소는 깜짝 놀랐어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "집에 돌아온 엄마 염소는 깜짝 놀랐어요.",
+       null,
+       "[surprised, gentle]"
+      ]
+     ],
+     "before": [
+      "mama:walk:400,515"
+     ]
+    },
+    {
+     "text": "이불은 엉망진창, 의자는 와르르 넘어져 있었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "이불은 엉망진창, 의자는 와르르 넘어져 있었어요.",
+       null,
+       "[surprised, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "\"얘들아, 어디 있니? 엄마 왔어!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "mom",
+       "얘들아, 어디 있니? 엄마 왔어!",
+       "happy",
+       "[worried, gentle, calling]"
+      ]
+     ]
+    },
+    {
+     "text": "\"엄마!\" 막내가 시계 속에서 폴짝 나왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "kid",
+       "엄마!",
+       "happy",
+       "[relieved, tearful, childlike, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "막내가 시계 속에서 폴짝 나왔어요.",
+       null,
+       "[happy]"
+      ]
+     ],
+     "before": [
+      "clock:open",
+      "kid7:walk:480,530",
+      "kid7:pose:joy"
+     ]
+    },
+    {
+     "text": "\"늑대가 형들과 누나들을 꿀꺽 삼켰어요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "kid",
+       "늑대가 형들과 누나들을 꿀꺽 삼켰어요!",
+       "happy",
+       "[worried, tearful, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ]
+    },
+    {
+     "text": "막내는 엄마 품에 안겨 훌쩍훌쩍 울었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "막내는 엄마 품에 안겨 훌쩍훌쩍 울었어요.",
+       "sad:1.1",
+       "[tender, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "\"걱정 마. 엄마가 꼭 구해 줄게!\" 엄마는 가위와 바늘을 챙겼어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "mom",
+       "걱정 마. 엄마가 꼭 구해 줄게!",
+       "happy",
+       "[calm, determined, reassuring]"
+      ],
+      [
+       "nar",
+       "엄마는 가위와 바늘을 챙겼어요.",
+       null,
+       "[calm]"
+      ]
+     ],
+     "before": [
+      "mama:pose:scissors"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_tree",
+   "card": "나무 아래",
+   "set": "tree",
+   "enter": [
+    "wolf:show:belly",
+    "wolf:at:620,520",
+    "mama:at:-100,515",
+    "kid7:at:-60,515",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "늑대는 배가 불러서, 나무 아래에서 쿨쿨 자고 있었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대는 배가 불러서, 나무 아래에서 쿨쿨 자고 있었어요.",
+       null,
+       "[sleepy, comic, snoring]"
+      ]
+     ],
+     "before": [
+      "fx:snore",
+      "pop:620,330,쿨쿨~"
+     ]
+    },
+    {
+     "text": "드르렁 드르렁, 배가 불룩불룩 오르락내리락했지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "드르렁 드르렁, 배가 불룩불룩 오르락내리락했지요.",
+       null,
+       "[comic, snoring]"
+      ]
+     ]
+    },
+    {
+     "text": "엄마와 막내는 살금살금 다가갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마와 막내는 살금살금 다가갔어요.",
+       null,
+       "[whispers, tiptoeing]"
+      ]
+     ],
+     "before": [
+      "mama:walk:340,515",
+      "kid7:walk:430,515"
+     ]
+    },
+    {
+     "text": "\"쉿! 늑대가 깨지 않게, 그림자 극장에서 아기들을 꺼내 줄게.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "mom",
+       "쉿! 늑대가 깨지 않게, 그림자 극장에서 아기들을 꺼내 줄게.",
+       "happy",
+       "[whispers, soft, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "\"엄마, 조심조심이요.\" 막내가 소곤소곤 속삭였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "kid",
+       "엄마, 조심조심이요.",
+       "happy",
+       "[whispers, worried, childlike, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "막내가 소곤소곤 속삭였어요.",
+       null,
+       "[whispers, soft]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_shadow",
+   "card": "그림자 극장",
+   "set": "shadow",
+   "enter": [
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하얀 종이 극장에 엄마의 그림자가 나타났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하얀 종이 극장에 엄마의 그림자가 나타났어요.",
+       null,
+       "[wondering, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "가위가 반짝반짝, 엄마는 조심조심 늑대 배를 열었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "가위가 반짝반짝, 엄마는 조심조심 늑대 배를 열었어요.",
+       null,
+       "[whispers, careful]"
+      ]
+     ]
+    },
+    {
+     "text": "슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!",
+       null,
+       "[playful, snip snip]"
+      ]
+     ],
+     "before": [
+      "fx:snip"
+     ],
+     "after": [
+      "shadow:cut:6"
+     ]
+    },
+    {
+     "text": "하나, 둘, 셋… 아기 염소들이 폴짝폴짝 뛰어나왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "하나, 둘, 셋… 아기 염소들이 폴짝폴짝 뛰어나왔어요.",
+       null,
+       "[playful, counting-free, bright]"
+      ]
+     ]
+    },
+    {
+     "text": "\"엄마!\" 아기 염소 여섯 마리가 모두 무사히 나왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "kid",
+       "엄마!",
+       "happy",
+       "[joyful, relieved, childlike chorus, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "아기 염소 여섯 마리가 모두 무사히 나왔어요.",
+       null,
+       "[happy]"
+      ]
+     ],
+     "before": [
+      "fx:pop"
+     ]
+    },
+    {
+     "text": "\"이제 늑대 배에 돌멩이를 넣어 주자.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "mom",
+       "이제 늑대 배에 돌멩이를 넣어 주자.",
+       "happy",
+       "[whispers, playful, sly]"
+      ]
+     ]
+    },
+    {
+     "text": "아기 염소들은 돌멩이를 데굴데굴 굴려 왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아기 염소들은 돌멩이를 데굴데굴 굴려 왔어요.",
+       null,
+       "[whispers, playful]"
+      ]
+     ],
+     "before": [
+      "stone:drop"
+     ]
+    },
+    {
+     "text": "엄마가 바늘로 콕콕콕 꿰맸어요. 늑대는 아무것도 몰랐어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마가 바늘로 콕콕콕 꿰맸어요. 늑대는 아무것도 몰랐어요.",
+       null,
+       "[whispers, playful]"
+      ]
+     ],
+     "before": [
+      "needle:stitch"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_well",
+   "card": "우물가",
+   "set": "well",
+   "enter": [
+    "wolf:show:heavy",
+    "wolf:at:260,520",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "잠에서 깬 늑대가 비틀비틀 일어났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "잠에서 깬 늑대가 비틀비틀 일어났어요.",
+       null,
+       "[sleepy, comic, yawning]"
+      ]
+     ]
+    },
+    {
+     "text": "\"아이고, 배가 무거워. 목이 말라!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "wolf",
+       "아이고, 배가 무거워. 목이 말라!",
+       "tonedown:1.1",
+       "[groaning, comic, thirsty]"
+      ]
+     ],
+     "after": [
+      "wolf:walk:700,520"
+     ]
+    },
+    {
+     "text": "뒤뚱뒤뚱, 늑대는 무거운 배를 안고 우물로 갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "뒤뚱뒤뚱, 늑대는 무거운 배를 안고 우물로 갔어요.",
+       null,
+       "[comic, heavy steps]"
+      ]
+     ]
+    },
+    {
+     "text": "\"우물에서 물을 마셔야지.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "wolf",
+       "우물에서 물을 마셔야지.",
+       "tonedown:1.1",
+       "[grumbling, comic]"
+      ]
+     ],
+     "after": [
+      "wolf:show:splash",
+      "wolf:walk:760,470"
+     ]
+    },
+    {
+     "text": "\"으으, 돌멩이가 왜 이리 무겁지?\" 늑대는 우물 안을 기웃기웃 들여다봤어요.",
+     "src": "new",
+     "segs": [
+      [
+       "wolf",
+       "으으, 돌멩이가 왜 이리 무겁지?",
+       "tonedown:1.1",
+       "[groaning, puzzled, comic]"
+      ],
+      [
+       "nar",
+       "늑대는 우물 안을 기웃기웃 들여다봤어요.",
+       null,
+       "[playful, suspense]"
+      ]
+     ]
+    },
+    {
+     "text": "풍덩! 늑대가 우물에 빠졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "풍덩! 늑대가 우물에 빠졌어요.",
+       null,
+       "[splash, playful]"
+      ]
+     ],
+     "before": [
+      "fx:splash",
+      "cut:splash"
+     ],
+     "after": [
+      "wolf:show:flee",
+      "wolf:at:790,520"
+     ]
+    },
+    {
+     "text": "\"으악, 차가워! 다시는 안 올 거야!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "wolf",
+       "으악, 차가워! 다시는 안 올 거야!",
+       "tonedown:1.1",
+       "[yelps, shivering, comic]"
+      ]
+     ],
+     "after": [
+      "wolf:walk:1250,520"
+     ]
+    },
+    {
+     "text": "늑대는 흠뻑 젖은 채 멀리멀리 도망갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "늑대는 흠뻑 젖은 채 멀리멀리 도망갔어요.",
+       null,
+       "[playful, comic]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_together",
+   "card": "모두 모였어요",
+   "set": "well",
+   "enter": [
+    "mama:at:500,515",
+    "mama:pose:joy",
+    "kids:lineup",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.",
+       null,
+       "[joyful, warm]"
+      ]
+     ],
+     "before": [
+      "kids:dance",
+      "fx:ding"
+     ]
+    },
+    {
+     "text": "빙글빙글, 깡충깡충! 웃음소리가 까르르 울려 퍼졌지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "빙글빙글, 깡충깡충! 웃음소리가 까르르 울려 퍼졌지요.",
+       "happy:1.2",
+       "[joyful, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "\"이제 엄마 목소리는 절대 안 잊을래요!\" 아기 염소들이 입을 모았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "kid",
+       "이제 엄마 목소리는 절대 안 잊을래요!",
+       "happy",
+       "[cheerful, childlike, chorus, baby voice, lisping, very young child, giggly]"
+      ],
+      [
+       "nar",
+       "아기 염소들이 입을 모았어요.",
+       null,
+       "[warm]"
+      ]
+     ]
+    },
+    {
+     "text": "엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.",
+       null,
+       "[warm, gentle, conclusive]"
+      ]
+     ]
+    },
+    {
+     "text": "엄마 말을 잘 기억하고, 낯선 이에게는 문을 열어 주지 않는답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "엄마 말을 잘 기억하고, 낯선 이에게는 문을 열어 주지 않는답니다.",
+       null,
+       "[warm, gentle, closing]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
