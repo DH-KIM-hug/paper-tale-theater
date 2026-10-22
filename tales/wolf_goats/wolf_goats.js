@@ -48,6 +48,7 @@
 
   async function run(T) {
     const { sleep, say } = T;
+    if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const scene = (label, fn) => T.sceneCard(label, () => { T.clear(); T.camSnap(500, 280, 1); fn(); });
     const hopAll = (list, h = 24) => Promise.all(list.map((a, i) => sleep(i * 70).then(() => a.hop(h, 360))));
     let kids;
@@ -61,7 +62,7 @@
     await hopAll(kids); AudioFX.jingle();
     await say('어느 날, 엄마 염소가 바구니를 들고 말했어요.');
     await say('"엄마는 풀을 뜯으러 다녀올게. 늑대가 오면 문을 열어 주면 안 돼!"');
-    await T.tap(mm.pos, { prompt: '엄마 염소를 톡 눌러 봐요!' });
+    await sleep(500);   /* 2026-10-22: 이유 없는 엄마 염소 톡을 뺌. 엄마는 저절로 당부한다 */
     mm.pose('warn'); mm.hop(14, 300);
     await say('"늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!"');
     await say('"네, 엄마!" 아기 염소들이 큰 소리로 대답했어요.');
@@ -115,8 +116,7 @@
     await hopAll(kids, 30);
     await say('"숨자, 숨자!" 아기 염소들이 이불 속, 빨래 바구니 속으로 쏙쏙 숨었어요.');
     await Promise.all(kids.slice(0, 6).map((k, i) => sleep(i * 120).then(async () => { await k.move(i < 3 ? 360 : 540, 520, 600); hide(k); })));
-    await say('막내는 어디에 숨을까요?');
-    await T.tap(kids[6].pos, { prompt: '막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!' });
+    await T.ask('막내는 어디에 숨을까요?', () => T.tap(kids[6].pos, { prompt: '막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!' }));
     clock.pose('open');
     await kids[6].move(660, 505, 700); hide(kids[6]); clock.pose('a'); AudioFX.ding();
     await say('막내는 키 큰 시계 속에 쏙 숨었어요. 아무도 몰랐어요.');
@@ -168,7 +168,8 @@
     mm4.hop(10, 240); sleep(320).then(() => mm4.hop(10, 240)); // 슥삭슥삭 가위질
     await say('슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!');
     await cutArt(T, 'wg_cut_pop', 'magic');
-    kids = [1, 2, 3, 4, 5, 6].map((n, i) => { const k = kid(T, n, KX(i), 520, 90); hide(k); return k; });
+    kids = [1, 2, 3, 4, 5, 6].map((n, i) => { const k = kid(T, n, KX(i), 520, 90); hide(k); k.pos.style.pointerEvents = 'none'; return k; });
+    mm4.pos.style.pointerEvents = 'none'; // 하얀 종이 화면 위의 그림이 누름을 가로채지 않게 (2026-10-22)
     const hit = T.el('rect', { x: 290, y: 100, width: 420, height: 360, rx: 26, fill: '#fffaf0', 'fill-opacity': .4, stroke: '#fff', 'stroke-width': 5 }, T.world); // 눌러 볼 하얀 종이 화면
     await T.mash(hit, { count: 6, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => {
       const k = kids[i - 1]; appear(k); k.pose('joy'); k.hop(40, 420); sting('surprise'); T.pop(KX(i - 1), 330 - (i % 2) * 90, '뿅!');
@@ -211,10 +212,9 @@
     T.finale();
     await say('엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.');
     await hopAll(kids, 34); md.hop(30, 400); T.confetti(); AudioFX.sting('win');
-    await say('아기 염소를 톡! 눌러 같이 춤춰 봐요!');
     // 가운데 아기 염소를 톡톡: 누를 때마다 엄마와 아기 염소들이 차례로 폴짝 (자유 놀이 없음)
     const dance = () => { AudioFX.tap(); md.hop(30, 340); kids.forEach((k, j) => setTimeout(() => k.hop(30, 340), j * 70)); };
-    await T.tap(kids[3].pos, { prompt: '아기 염소를 톡! 눌러 같이 춤춰 봐요!' }); // 한 번 누르면 나머지는 저절로
+    await T.ask('아기 염소를 톡! 눌러 같이 춤춰 봐요!', () => T.tap(kids[3].pos, { prompt: '아기 염소를 톡! 눌러 같이 춤춰 봐요!' })); // 한 번 누르면 나머지는 저절로
     for (let i = 1; i <= 3; i++) { dance(); await sleep(700); }
     await sleep(700);
     await say('엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.');
