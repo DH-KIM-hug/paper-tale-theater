@@ -1,0 +1,1345 @@
+{
+ "mode": "read",
+ "tale": "magpie",
+ "lang": "en",
+ "title": "The Grateful Magpie",
+ "voices_from": "voice_script_el.json",
+ "moral": "Remember kindness and give it back.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md). text 는 한국어 줄(키), en 이 읽는 문장. src=reuse 는 narration_el_en.js 의 영어 녹음 그대로, trim 은 from 줄의 영어 녹음을 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<mg_bg_path|mg_bg_bigtree|mg_bg_nest|mg_bg_night|mg_bg_porch|mg_bg_paperdoor|mg_bg_moonnest|mg2_bg_belltower_night|mg_bg_belltower|mg_bg_dawn>": "장면 배경(scene(key)). scenes[].set 으로 자동 호출, 장면 안에서 배경을 바꿀 때는 before 에 둔다",
+  "tint:<op>": "밤 겹(남색) 불투명도 (tint(T,'#1F2A56',op))",
+  "dawn:<on|off>": "새벽 겹(0.28) 켜기 / 2초에 걷기",
+  "cam:<x,y,z>": "camSnap(x,y,z)",
+  "sch:look:<walk|wonder|surprise|ready|draw|release|sit|water>[:<left|right>]": "선비 자세·방향",
+  "sch:at:<x,y>[:<look>[:<dir>]] | sch:walk:<x,y,ms> | sch:hop | sch:wiggle | sch:hide": "선비 놓기·걷기(발소리 stepLoop 포함)·폴짝·떨기·숨기기",
+  "lady:look:<greet|stern|tail> | lady:at:<x,y>[:<look>] | lady:fade:<in|out> | lady:hop | lady:hide": "여인(구렁이 아내)",
+  "snake:look:<coil|flee>[:<dir>] | snake:at:<x,y>[:<look>[:<s>]] | snake:climb | snake:flee | snake:fade:in | snake:hide": "구렁이. climb = 기둥 밑으로 간 뒤 나무 위로 기어오름(놀이판 2장), flee = 오른쪽으로 스르르 달아나 숨음",
+  "mom:look:<sit|fly|tired>[:<dir>] | mom:at:<x,y>[:<look>[:<dir>[:<s>]]] | mom:hop | mom:fade:in | mom:hide": "엄마 까치 (dad 도 같음)",
+  "dad:look:<sit|fly|tired>[:<dir>] | dad:at:<x,y>[:<look>[:<dir>[:<s>]]] | dad:hop | dad:fade:in | dad:hide": "아빠 까치",
+  "parents:land": "놀이판 2장 끝: 엄마·아빠가 나무에서 선비 옆 땅으로 내려와 앉음",
+  "parents:collapse": "놀이판 7장 끝: 엄마·아빠 tired 자세로 종 아래에 스르르 내려앉음(fadeIn + move + paper_down)",
+  "chicks:nest | chicks:hop | chicks:hide": "아기 까치 N 마리를 배경 둥지의 오목한 자리에 앉힘(놀이판 3장 spotX/spotY, 짹! 팝 포함). 새끼는 둥지 안에서만 보인다",
+  "flock:fly | flock:hide": "엄마·아빠·친구 까치 3마리가 왼쪽에서 오른쪽 밤하늘로 날아감(놀이판 6장)",
+  "arrow:shoot": "선비 draw → wiggle → release, 화살이 구렁이 옆 나무로 날아가 탁!(놀이판 2장 연출 그대로)",
+  "bell:show | bell:strike:<1|2|3> | bell:far": "범종 놓기 / 놀이판 strike(k): 아빠(1)·엄마(2)·둘(3)이 머리로 종을 치고 댕— / far = 새벽 장면의 멀리서 들리는 종소리 3번(여인이 흠칫)",
+  "water:drops": "선비가 까치에게 물을 먹이는 물방울 4개와 똑똑! 팝(놀이판 9장)",
+  "cut:<arrow|flee|flock|ring|wake>": "만화 컷 mg_cut_* (컷 안 외침 없음)",
+  "fx:<caw|chirp|chirp2|door|whoosh|thud|swish|paper_up|paper_down|splash|tada> | pop:<x,y,글자> | sparkle | confetti | shake": "효과음·팝 글자·반짝·꽃가루·흔들기"
+ },
+ "scenes": [
+  {
+   "key": "R01_path",
+   "card": "The Mountain Path",
+   "set": "mg_bg_path",
+   "enter": [
+    "sch:at:-120,505:walk:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날, 마음씨 고운 선비가 과거를 보러 먼 길을 떠났어요.",
+     "src": "reuse",
+     "en": "Once upon a time, a kind young scholar set off on a long journey to take the royal exam.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, a kind young scholar set off on a long journey to take the royal exam.",
+       null
+      ]
+     ],
+     "before": [
+      "sch:walk:300,505,3000",
+      "pop:300,235,저벅저벅"
+     ]
+    },
+    {
+     "text": "봄 햇살이 따뜻하고, 길가에는 들꽃이 피어 있었어요.",
+     "src": "new",
+     "en": "The spring sun was warm, and wildflowers bloomed along the path.",
+     "segs": [
+      [
+       "nar",
+       "The spring sun was warm, and wildflowers bloomed along the path.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "저벅저벅. 산 넘고 물 건너, 선비는 깊은 산속으로 들어갔어요.",
+     "src": "reuse",
+     "en": "Step, step. Over hills and across streams, the scholar walked deep into the mountains.",
+     "segs": [
+      [
+       "nar",
+       "Step, step. Over hills and across streams, the scholar walked deep into the mountains.",
+       null
+      ]
+     ],
+     "before": [
+      "sch:walk:520,505,3000",
+      "pop:520,235,저벅저벅"
+     ]
+    },
+    {
+     "text": "나무가 빽빽해지고, 새소리가 점점 가까워졌어요.",
+     "src": "new",
+     "en": "The trees grew thick, and the birdsong came closer and closer.",
+     "segs": [
+      [
+       "nar",
+       "The trees grew thick, and the birdsong came closer and closer.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "그때 어디선가 다급한 까치 소리가 들렸어요.",
+     "src": "new",
+     "en": "Then, from somewhere, came the frantic cry of a magpie.",
+     "segs": [
+      [
+       "nar",
+       "Then, from somewhere, came the frantic cry of a magpie.",
+       null
+      ]
+     ],
+     "after": [
+      "fx:caw",
+      "pop:900,230,까악!",
+      "sch:look:surprise",
+      "sch:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_pine",
+   "card": "The Big Pine",
+   "set": "mg_bg_bigtree",
+   "enter": [
+    "snake:at:790,505:coil:.8",
+    "mom:at:650,168:sit:left:.8",
+    "dad:at:540,215:fly:right:.8",
+    "sch:at:440,505:surprise",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "까악, 까악! 도와주세요!",
+     "src": "reuse",
+     "en": "Caw, caw! Please help us!",
+     "segs": [
+      [
+       "mom",
+       "Caw, caw! Please help us!",
+       "sad"
+      ]
+     ],
+     "before": [
+      "mom:hop"
+     ],
+     "after": [
+      "dad:wiggle"
+     ]
+    },
+    {
+     "text": "큰 소나무 위 둥지에 아기 까치들이 있어요. 그런데 구렁이가 스르르 올라가고 있어요!",
+     "src": "reuse",
+     "en": "High in the big pine tree was a nest of baby magpies. And a big snake was slithering up toward it!",
+     "segs": [
+      [
+       "nar",
+       "High in the big pine tree was a nest of baby magpies. And a big snake was slithering up toward it!",
+       null
+      ]
+     ],
+     "before": [
+      "snake:look:flee:left"
+     ],
+     "after": [
+      "snake:climb"
+     ]
+    },
+    {
+     "text": "엄마 까치는 둥지를 지키고, 아빠 까치는 둥지 둘레를 빙빙 돌며 울었어요.",
+     "src": "new",
+     "en": "Mama Magpie guarded the nest, while Papa Magpie circled round and round it, crying out.",
+     "segs": [
+      [
+       "nar",
+       "Mama Magpie guarded the nest, while Papa Magpie circled round and round it, crying out.",
+       null
+      ]
+     ],
+     "after": [
+      "dad:hop"
+     ]
+    },
+    {
+     "text": "안 돼! 내가 아기 까치들을 지켜 줄게.",
+     "src": "reuse",
+     "en": "Oh no! I will keep the baby magpies safe.",
+     "segs": [
+      [
+       "sch",
+       "Oh no! I will keep the baby magpies safe.",
+       null
+      ]
+     ],
+     "before": [
+      "sch:look:ready:right",
+      "fx:paper_up"
+     ]
+    },
+    {
+     "text": "선비가 활을 꺼냈어요.",
+     "src": "trim",
+     "from": "선비가 활을 꺼냈어요. 선비를 톡 눌러 봐요.",
+     "en": "The scholar took out his bow.",
+     "segs": [
+      [
+       "nar",
+       "The scholar took out his bow.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "선비는 숨을 고르고, 활시위를 힘껏 당겼어요.",
+     "src": "new",
+     "en": "The scholar took a deep breath and pulled the bowstring back with all his might.",
+     "segs": [
+      [
+       "nar",
+       "The scholar took a deep breath and pulled the bowstring back with all his might.",
+       null
+      ]
+     ],
+     "after": [
+      "arrow:shoot"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_arrow",
+   "card": "Whoosh, Thunk!",
+   "set": "mg_bg_bigtree",
+   "enter": [
+    "snake:at:800,185:coil:.8",
+    "mom:at:650,168:sit:left:.8",
+    "dad:at:540,215:fly:right:.8",
+    "sch:at:440,505:release:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "쉬익, 탁! 화살이 구렁이 바로 옆 나무에 꽂혔어요.",
+     "src": "reuse",
+     "en": "Whoosh, thunk! The arrow struck the tree right beside the snake.",
+     "segs": [
+      [
+       "nar",
+       "Whoosh, thunk! The arrow struck the tree right beside the snake.",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "cut:arrow"
+     ]
+    },
+    {
+     "text": "깜짝 놀란 구렁이는 스르르 숲으로 달아났어요.",
+     "src": "reuse",
+     "en": "The startled snake slithered away into the forest.",
+     "segs": [
+      [
+       "nar",
+       "The startled snake slithered away into the forest.",
+       null
+      ]
+     ],
+     "before": [
+      "snake:flee"
+     ],
+     "after": [
+      "cut:flee"
+     ]
+    },
+    {
+     "text": "선비는 활을 내려놓고, 후유 하고 긴 숨을 쉬었어요.",
+     "src": "new",
+     "en": "The scholar lowered his bow and let out a long, deep breath.",
+     "segs": [
+      [
+       "nar",
+       "The scholar lowered his bow and let out a long, deep breath.",
+       null
+      ]
+     ],
+     "before": [
+      "sch:look:wonder"
+     ]
+    },
+    {
+     "text": "고맙습니다, 선비님! 이 은혜는 꼭 갚을게요.",
+     "src": "reuse",
+     "en": "Thank you, kind scholar! We will repay your kindness, we promise.",
+     "segs": [
+      [
+       "mom",
+       "Thank you, kind scholar!",
+       "happy"
+      ],
+      [
+       "dad",
+       "We will repay your kindness, we promise.",
+       null
+      ]
+     ],
+     "before": [
+      "parents:land"
+     ],
+     "after": [
+      "mom:hop",
+      "dad:hop"
+     ]
+    },
+    {
+     "text": "까치 부부는 선비 앞에 내려와 고개를 깊이 숙였어요.",
+     "src": "new",
+     "en": "The magpie couple came down before the scholar and bowed their heads low.",
+     "segs": [
+      [
+       "nar",
+       "The magpie couple came down before the scholar and bowed their heads low.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_nest",
+   "card": "The Nest",
+   "set": "mg_bg_nest",
+   "enter": [
+    "mom:at:170,300:sit:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "둥지 안에서 아기 까치들이 고개를 쏙 내밀었어요.",
+     "src": "reuse",
+     "en": "The baby magpies popped their heads up out of the nest.",
+     "segs": [
+      [
+       "nar",
+       "The baby magpies popped their heads up out of the nest.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "chicks:nest"
+     ]
+    },
+    {
+     "text": "노란 부리를 벌리고, 아기 까치들이 짹짹 노래했어요.",
+     "src": "new",
+     "en": "The baby magpies opened their little yellow beaks and sang, chirp, chirp.",
+     "segs": [
+      [
+       "nar",
+       "The baby magpies opened their little yellow beaks and sang, chirp, chirp.",
+       null
+      ]
+     ],
+     "before": [
+      "chicks:hop",
+      "fx:chirp2"
+     ]
+    },
+    {
+     "text": "짹짹! 선비님, 고맙습니다!",
+     "src": "reuse",
+     "en": "Chirp chirp! Thank you, scholar!",
+     "segs": [
+      [
+       "chick",
+       "Chirp chirp! Thank you, scholar!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "chicks:hop"
+     ],
+     "after": [
+      "mom:hop"
+     ]
+    },
+    {
+     "text": "엄마 까치는 아기들을 날개로 폭 감싸 주었어요.",
+     "src": "new",
+     "en": "Mama Magpie wrapped her babies snugly under her wings.",
+     "segs": [
+      [
+       "nar",
+       "Mama Magpie wrapped her babies snugly under her wings.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "선비는 아기 까치들을 보며 빙그레 웃었어요.",
+     "src": "new",
+     "en": "The scholar looked at the baby magpies and smiled a gentle smile.",
+     "segs": [
+      [
+       "nar",
+       "The scholar looked at the baby magpies and smiled a gentle smile.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "선비는 빙긋 웃으며 다시 길을 떠났어요.",
+     "src": "reuse",
+     "en": "The scholar smiled and went on his way.",
+     "segs": [
+      [
+       "nar",
+       "The scholar smiled and went on his way.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "까치 가족은 선비가 산길 너머로 사라질 때까지 바라보았어요.",
+     "src": "new",
+     "en": "The magpie family watched until the scholar disappeared over the mountain path.",
+     "segs": [
+      [
+       "nar",
+       "The magpie family watched until the scholar disappeared over the mountain path.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_night",
+   "card": "Deep Night",
+   "set": "mg_bg_night",
+   "enter": [
+    "sch:at:300,505:walk:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "어느새 해가 지고, 산길은 캄캄해졌어요.",
+     "src": "reuse",
+     "en": "Soon the sun went down, and the mountain path grew dark.",
+     "segs": [
+      [
+       "nar",
+       "Soon the sun went down, and the mountain path grew dark.",
+       null
+      ]
+     ],
+     "after": [
+      "sch:walk:560,505,4000"
+     ]
+    },
+    {
+     "text": "바람이 쏴아 불고, 선비는 조금 무서웠어요.",
+     "src": "new",
+     "en": "The wind went whoosh, and the scholar felt a little bit scared.",
+     "segs": [
+      [
+       "nar",
+       "The wind went whoosh, and the scholar felt a little bit scared.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "오늘 밤은 어디서 자지? …어, 저기 불빛이!",
+     "src": "reuse",
+     "en": "Where will I sleep tonight? ...Oh, a light over there!",
+     "segs": [
+      [
+       "sch",
+       "Where will I sleep tonight? ...Oh, a light over there!",
+       null
+      ]
+     ],
+     "after": [
+      "pop:790,290,반짝!",
+      "sparkle",
+      "sch:hop",
+      "sch:walk:700,505,2000"
+     ]
+    },
+    {
+     "text": "깊은 산속 외딴집에서 한 여인이 나왔어요.",
+     "src": "reuse",
+     "en": "A woman came out of a lonely house deep in the mountains.",
+     "segs": [
+      [
+       "nar",
+       "A woman came out of a lonely house deep in the mountains.",
+       null
+      ]
+     ],
+     "before": [
+      "set:mg_bg_porch",
+      "sch:at:380,505:wonder",
+      "fx:door",
+      "lady:at:640,505:greet",
+      "lady:fade:in"
+     ]
+    },
+    {
+     "text": "어서 오세요, 나그네님. 하룻밤 쉬어 가세요.",
+     "src": "reuse",
+     "en": "Welcome, traveler. Come in and rest for the night.",
+     "segs": [
+      [
+       "snake",
+       "Welcome, traveler. Come in and rest for the night.",
+       null
+      ]
+     ],
+     "after": [
+      "lady:hop"
+     ]
+    },
+    {
+     "text": "고맙습니다. 하룻밤만 신세 질게요.",
+     "src": "reuse",
+     "en": "Thank you. Just for one night, if I may.",
+     "segs": [
+      [
+       "sch",
+       "Thank you. Just for one night, if I may.",
+       null
+      ]
+     ],
+     "after": [
+      "sch:hop"
+     ]
+    },
+    {
+     "text": "선비는 따뜻한 방에서 금세 잠이 들었어요.",
+     "src": "reuse",
+     "en": "In the warm room, the scholar soon fell asleep.",
+     "segs": [
+      [
+       "nar",
+       "In the warm room, the scholar soon fell asleep.",
+       null
+      ]
+     ],
+     "before": [
+      "tint:.3",
+      "pop:380,245,쿨쿨"
+     ]
+    },
+    {
+     "text": "꿈속에서도 아기 까치들이 짹짹 웃고 있었지요.",
+     "src": "new",
+     "en": "Even in his dreams, the baby magpies were chirping and laughing.",
+     "segs": [
+      [
+       "nar",
+       "Even in his dreams, the baby magpies were chirping and laughing.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_house",
+   "card": "The Snake's Wife",
+   "set": "mg_bg_paperdoor",
+   "enter": [
+    "tint:.35",
+    "sch:at:380,505:sit",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "한밤중, 선비는 으스스한 기운에 눈을 떴어요.",
+     "src": "reuse",
+     "en": "In the middle of the night, the scholar woke with a shiver.",
+     "segs": [
+      [
+       "nar",
+       "In the middle of the night, the scholar woke with a shiver.",
+       null
+      ]
+     ],
+     "before": [
+      "sch:wiggle"
+     ]
+    },
+    {
+     "text": "방 안은 조용하고, 창호문 너머로 달빛만 희미했어요.",
+     "src": "new",
+     "en": "The room was silent, and only a faint moonlight glowed through the paper door.",
+     "segs": [
+      [
+       "nar",
+       "The room was silent, and only a faint moonlight glowed through the paper door.",
+       null
+      ]
+     ],
+     "after": [
+      "lady:at:640,505:stern",
+      "lady:fade:in"
+     ]
+    },
+    {
+     "text": "문 앞에 그 여인이 서 있었어요. 그런데… 치마 밑으로 꼬리가 삐죽!",
+     "src": "reuse",
+     "en": "The woman was standing by the door. But... a tail was peeking out from under her skirt!",
+     "segs": [
+      [
+       "nar",
+       "The woman was standing by the door. But... a tail was peeking out from under her skirt!",
+       null
+      ]
+     ],
+     "after": [
+      "lady:look:tail",
+      "fx:pop",
+      "pop:760,465,!",
+      "sch:look:surprise"
+     ]
+    },
+    {
+     "text": "나는 낮에 네가 활로 쫓아낸, 그 구렁이의 아내다.",
+     "src": "reuse",
+     "en": "I am the wife of the snake you chased away with your arrow today.",
+     "segs": [
+      [
+       "snake",
+       "I am the wife of the snake you chased away with your arrow today.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "내 남편을 놀라게 한 벌로, 너를 이대로 보내 줄 수는 없어.",
+     "src": "reuse",
+     "en": "You frightened my husband. I cannot let you go just like that.",
+     "segs": [
+      [
+       "snake",
+       "You frightened my husband. I cannot let you go just like that.",
+       null
+      ]
+     ],
+     "after": [
+      "lady:hop"
+     ]
+    },
+    {
+     "text": "저는 그저 아기 까치들을 지키려 했을 뿐이에요. 제발 보내 주세요.",
+     "src": "reuse",
+     "en": "I only wanted to protect the baby magpies. Please, let me go.",
+     "segs": [
+      [
+       "sch",
+       "I only wanted to protect the baby magpies. Please, let me go.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "sch:look:sit",
+      "sch:wiggle"
+     ]
+    },
+    {
+     "text": "좋아. 새벽이 오기 전에 저 산 위 절의 종이 세 번 울리면, 너를 놓아주마.",
+     "src": "reuse",
+     "en": "Very well. If the temple bell on the mountain rings three times before dawn, I will let you go.",
+     "segs": [
+      [
+       "snake",
+       "Very well. If the temple bell on the mountain rings three times before dawn, I will let you go.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "하지만 이 깊은 밤에, 누가 종을 치겠니? 후후…",
+     "src": "reuse",
+     "en": "But in the deep of night, who would ring the bell? Hmm hmm...",
+     "segs": [
+      [
+       "snake",
+       "But in the deep of night, who would ring the bell? Hmm hmm...",
+       null
+      ]
+     ],
+     "after": [
+      "pop:640,175,후후…"
+     ]
+    },
+    {
+     "text": "종소리… 종이 울려야 해. 어떡하지…",
+     "src": "reuse",
+     "en": "The bell... the bell has to ring. What can I do...",
+     "segs": [
+      [
+       "sch",
+       "The bell... the bell has to ring. What can I do...",
+       "sad"
+      ]
+     ]
+    },
+    {
+     "text": "선비는 무릎을 끌어안고, 캄캄한 창밖만 바라보았어요.",
+     "src": "new",
+     "en": "The scholar hugged his knees and stared out at the pitch-dark night.",
+     "segs": [
+      [
+       "nar",
+       "The scholar hugged his knees and stared out at the pitch-dark night.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_moon",
+   "card": "Magpies in the Moonlight",
+   "set": "mg_bg_moonnest",
+   "enter": [
+    "dad:at:300,345:sit:right",
+    "mom:at:470,345:sit:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그때, 큰 소나무 둥지의 까치 가족은 잠들지 못하고 있었어요.",
+     "src": "reuse",
+     "en": "Meanwhile, in the nest in the big pine tree, the magpie family could not sleep.",
+     "segs": [
+      [
+       "nar",
+       "Meanwhile, in the nest in the big pine tree, the magpie family could not sleep.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "여보, 선비님이 큰일 났어요! 외딴집의 구렁이 아내가…",
+     "src": "reuse",
+     "en": "Dear, the scholar is in danger! The snake's wife at the lonely house...",
+     "segs": [
+      [
+       "mom",
+       "Dear, the scholar is in danger! The snake's wife at the lonely house...",
+       "sad"
+      ]
+     ],
+     "before": [
+      "mom:hop"
+     ]
+    },
+    {
+     "text": "종! 절의 종을 울리면 돼요. 우리가 날아가요!",
+     "src": "reuse",
+     "en": "The bell! We just have to ring the temple bell. Let's fly!",
+     "segs": [
+      [
+       "dad",
+       "The bell! We just have to ring the temple bell. Let's fly!",
+       null
+      ]
+     ],
+     "before": [
+      "dad:hop"
+     ]
+    },
+    {
+     "text": "아기들아, 둥지에서 꼭 기다리렴.",
+     "src": "reuse",
+     "en": "Little ones, wait right here in the nest.",
+     "segs": [
+      [
+       "mom",
+       "Little ones, wait right here in the nest.",
+       null
+      ]
+     ],
+     "before": [
+      "mom:look:sit:right"
+     ],
+     "after": [
+      "fx:chirp2",
+      "pop:560,245,짹짹!"
+     ]
+    },
+    {
+     "text": "아기 까치들은 둥지 안에서 몸을 꼭 붙이고 고개를 끄덕였어요.",
+     "src": "new",
+     "en": "The baby magpies snuggled close together in the nest and nodded their little heads.",
+     "segs": [
+      [
+       "nar",
+       "The baby magpies snuggled close together in the nest and nodded their little heads.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "까치 엄마 아빠와 숲속 까치 친구들이 밤하늘로 날아올랐어요.",
+     "src": "reuse",
+     "en": "Mama and Papa Magpie and their magpie friends rose into the night sky.",
+     "segs": [
+      [
+       "nar",
+       "Mama and Papa Magpie and their magpie friends rose into the night sky.",
+       null
+      ]
+     ],
+     "before": [
+      "mom:hide",
+      "dad:hide",
+      "flock:fly",
+      "fx:whoosh"
+     ]
+    },
+    {
+     "text": "달님이 까치들의 길을 환하게 비춰 주었어요.",
+     "src": "new",
+     "en": "The moon lit the way for the magpies, bright and clear.",
+     "segs": [
+      [
+       "nar",
+       "The moon lit the way for the magpies, bright and clear.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "달빛을 가르며, 산 위 절을 향해 쌩쌩!",
+     "src": "reuse",
+     "en": "Through the moonlight, swish, swish, toward the temple on the mountain!",
+     "segs": [
+      [
+       "nar",
+       "Through the moonlight, swish, swish, toward the temple on the mountain!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "cut:flock"
+     ],
+     "after": [
+      "flock:hide"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_bell",
+   "card": "The Bell Tower",
+   "set": "mg2_bg_belltower_night",
+   "enter": [
+    "bell:show",
+    "dad:at:250,300:fly:right",
+    "mom:at:750,300:fly:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "절은 고요했어요. 커다란 종이 달빛 아래 걸려 있었어요.",
+     "src": "reuse",
+     "en": "The temple was silent. A great bell hung in the moonlight.",
+     "segs": [
+      [
+       "nar",
+       "The temple was silent. A great bell hung in the moonlight.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "종을 쳐야 해. 우리 머리로, 온 힘을 다해!",
+     "src": "reuse",
+     "en": "We must strike the bell. With our heads, with all our might!",
+     "segs": [
+      [
+       "dad",
+       "We must strike the bell. With our heads, with all our might!",
+       null
+      ]
+     ],
+     "before": [
+      "dad:hop"
+     ]
+    },
+    {
+     "text": "엄마 까치와 아빠 까치는 서로를 바라보고, 날개를 활짝 폈어요.",
+     "src": "new",
+     "en": "Mama and Papa Magpie looked at each other and spread their wings wide.",
+     "segs": [
+      [
+       "nar",
+       "Mama and Papa Magpie looked at each other and spread their wings wide.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "댕—. 깊고 큰 종소리가 산을 넘어 퍼져 갔어요.",
+     "src": "reuse",
+     "en": "Dong... The deep, great sound of the bell rolled over the mountains.",
+     "segs": [
+      [
+       "nar",
+       "Dong... The deep, great sound of the bell rolled over the mountains.",
+       null
+      ]
+     ],
+     "before": [
+      "bell:strike:1"
+     ]
+    },
+    {
+     "text": "댕—. 두 번째 종소리.",
+     "src": "reuse",
+     "en": "Dong... The second ring.",
+     "segs": [
+      [
+       "nar",
+       "Dong... The second ring.",
+       null
+      ]
+     ],
+     "before": [
+      "bell:strike:2"
+     ]
+    },
+    {
+     "text": "댕—. 세 번째 종소리가 울렸어요.",
+     "src": "reuse",
+     "en": "Dong... The third ring sounded.",
+     "segs": [
+      [
+       "nar",
+       "Dong... The third ring sounded.",
+       null
+      ]
+     ],
+     "before": [
+      "bell:strike:3"
+     ]
+    },
+    {
+     "text": "까치들은 온 힘을 다해 종을 울렸어요.",
+     "src": "reuse",
+     "en": "The magpies had rung the bell with all their might.",
+     "segs": [
+      [
+       "nar",
+       "The magpies had rung the bell with all their might.",
+       null
+      ]
+     ],
+     "before": [
+      "cut:ring"
+     ]
+    },
+    {
+     "text": "그리고 힘이 다 빠진 까치들은, 종 아래에 스르르 쓰러져 잠이 들었어요.",
+     "src": "reuse",
+     "en": "And then, with no strength left, the magpies sank down beneath the bell and fell asleep.",
+     "segs": [
+      [
+       "nar",
+       "And then, with no strength left, the magpies sank down beneath the bell and fell asleep.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "parents:collapse"
+     ]
+    },
+    {
+     "text": "달빛이 잠든 까치들을 포근히 감싸 주었어요.",
+     "src": "new",
+     "en": "The moonlight wrapped the sleeping magpies in its soft, gentle glow.",
+     "segs": [
+      [
+       "nar",
+       "The moonlight wrapped the sleeping magpies in its soft, gentle glow.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_dawn",
+   "card": "Dawn",
+   "set": "mg_bg_paperdoor",
+   "enter": [
+    "dawn:on",
+    "sch:at:380,505:sit",
+    "lady:at:640,505:stern",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "멀리서 종소리가 들려왔어요.",
+     "src": "reuse",
+     "en": "From far away came the sound of the bell.",
+     "segs": [
+      [
+       "nar",
+       "From far away came the sound of the bell.",
+       null
+      ]
+     ],
+     "before": [
+      "bell:far"
+     ],
+     "after": [
+      "sch:look:surprise"
+     ]
+    },
+    {
+     "text": "종이… 울렸어. 하나, 둘, 셋.",
+     "src": "reuse",
+     "en": "The bell... it rang. One, two, three.",
+     "segs": [
+      [
+       "snake",
+       "The bell... it rang. One, two, three.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "여인의 목소리가 조금 부드러워졌어요.",
+     "src": "new",
+     "en": "The woman's voice grew just a little softer.",
+     "segs": [
+      [
+       "nar",
+       "The woman's voice grew just a little softer.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "약속은 약속. 너를 놓아주마.",
+     "src": "reuse",
+     "en": "A promise is a promise. I will let you go.",
+     "segs": [
+      [
+       "snake",
+       "A promise is a promise. I will let you go.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "여인은 스르르 구렁이로 변하더니, 새벽 숲으로 사라졌어요.",
+     "src": "reuse",
+     "en": "The woman turned back into a snake and slipped away into the dawn forest.",
+     "segs": [
+      [
+       "nar",
+       "The woman turned back into a snake and slipped away into the dawn forest.",
+       null
+      ]
+     ],
+     "before": [
+      "lady:fade:out",
+      "snake:at:640,505:coil",
+      "snake:fade:in",
+      "sparkle"
+     ],
+     "after": [
+      "snake:flee",
+      "dawn:off"
+     ]
+    },
+    {
+     "text": "창밖이 조금씩 환해지고, 새들이 지저귀기 시작했어요.",
+     "src": "new",
+     "en": "Outside, the sky slowly grew light, and the birds began to sing.",
+     "segs": [
+      [
+       "nar",
+       "Outside, the sky slowly grew light, and the birds began to sing.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "종소리… 누가 종을 울렸을까? 가 봐야겠어!",
+     "src": "reuse",
+     "en": "The bell... who could have rung it? I must go and see!",
+     "segs": [
+      [
+       "sch",
+       "The bell... who could have rung it? I must go and see!",
+       null
+      ]
+     ],
+     "before": [
+      "sch:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_morning",
+   "card": "Morning",
+   "set": "mg_bg_dawn",
+   "enter": [
+    "sch:at:-120,505:walk:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "선비는 산 위 절로 달려갔어요.",
+     "src": "reuse",
+     "en": "The scholar ran up to the temple on the mountain.",
+     "segs": [
+      [
+       "nar",
+       "The scholar ran up to the temple on the mountain.",
+       null
+      ]
+     ],
+     "after": [
+      "sch:walk:1150,505,4200"
+     ]
+    },
+    {
+     "text": "종 아래에, 까치 엄마 아빠가 눈을 감은 채 누워 있었어요.",
+     "src": "reuse",
+     "en": "Beneath the bell, Mama and Papa Magpie lay with their eyes closed.",
+     "segs": [
+      [
+       "nar",
+       "Beneath the bell, Mama and Papa Magpie lay with their eyes closed.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "set:mg_bg_belltower",
+      "dad:at:430,480:tired",
+      "mom:at:560,480:tired",
+      "sch:at:1100,505:walk:left",
+      "sch:walk:720,505,2600"
+     ]
+    },
+    {
+     "text": "선비는 숨이 턱 막혀, 그 자리에 우뚝 멈춰 섰어요.",
+     "src": "new",
+     "en": "The scholar's breath caught in his throat, and he stopped right where he stood.",
+     "segs": [
+      [
+       "nar",
+       "The scholar's breath caught in his throat, and he stopped right where he stood.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "까치야… 너희였구나. 나를 구하려고…",
+     "src": "reuse",
+     "en": "Magpies... it was you. You did this to save me...",
+     "segs": [
+      [
+       "sch",
+       "Magpies... it was you. You did this to save me...",
+       "sad"
+      ]
+     ],
+     "before": [
+      "sch:look:surprise"
+     ]
+    },
+    {
+     "text": "선비는 까치들을 품에 안고, 시원한 물을 한 모금씩 먹여 주었어요.",
+     "src": "reuse",
+     "en": "The scholar held the magpies gently and gave them each a sip of cool water.",
+     "segs": [
+      [
+       "nar",
+       "The scholar held the magpies gently and gave them each a sip of cool water.",
+       null
+      ]
+     ],
+     "before": [
+      "sch:look:water:left",
+      "fx:splash",
+      "water:drops"
+     ]
+    },
+    {
+     "text": "까치들의 날개가 파르르 떨리더니, 살며시 눈을 떴어요.",
+     "src": "new",
+     "en": "The magpies' wings gave a little flutter, and slowly, they opened their eyes.",
+     "segs": [
+      [
+       "nar",
+       "The magpies' wings gave a little flutter, and slowly, they opened their eyes.",
+       null
+      ]
+     ],
+     "before": [
+      "sparkle",
+      "mom:hop",
+      "dad:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_family",
+   "card": "Together Again",
+   "set": "mg_bg_belltower",
+   "enter": [
+    "dad:at:430,480:tired",
+    "mom:at:560,480:tired",
+    "sch:at:720,505:water:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "선비님… 무사하셨군요.",
+     "src": "reuse",
+     "en": "Scholar... you are safe.",
+     "segs": [
+      [
+       "mom",
+       "Scholar... you are safe.",
+       null
+      ]
+     ],
+     "before": [
+      "mom:hop"
+     ]
+    },
+    {
+     "text": "은혜를 갚았으니, 이제 됐어요.",
+     "src": "reuse",
+     "en": "We have repaid your kindness. That is enough.",
+     "segs": [
+      [
+       "dad",
+       "We have repaid your kindness. That is enough.",
+       null
+      ]
+     ],
+     "before": [
+      "dad:hop"
+     ]
+    },
+    {
+     "text": "\"너희가 무사해서 정말 다행이야.\"",
+     "src": "new",
+     "en": "I am so glad that you are both safe.",
+     "segs": [
+      [
+       "sch",
+       "I am so glad that you are both safe.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "그때 아기 까치들이 짹짹 울며 날아왔어요.",
+     "src": "reuse",
+     "en": "Just then, the baby magpies came flying, chirping all the way.",
+     "segs": [
+      [
+       "nar",
+       "Just then, the baby magpies came flying, chirping all the way.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "fx:chirp2"
+     ]
+    },
+    {
+     "text": "엄마! 아빠!",
+     "src": "reuse",
+     "en": "Mama! Papa!",
+     "segs": [
+      [
+       "chick",
+       "Mama! Papa!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "cut:wake"
+     ]
+    },
+    {
+     "text": "선비는 까치 가족을 보며 환하게 웃었어요.",
+     "src": "new",
+     "en": "The scholar looked at the magpie family and smiled a big, bright smile.",
+     "segs": [
+      [
+       "nar",
+       "The scholar looked at the magpie family and smiled a big, bright smile.",
+       null
+      ]
+     ],
+     "before": [
+      "sch:look:wonder"
+     ]
+    },
+    {
+     "text": "고마워, 까치들아. 너희 마음, 평생 잊지 않을게.",
+     "src": "reuse",
+     "en": "Thank you, magpies. I will never forget what you did for me.",
+     "segs": [
+      [
+       "sch",
+       "Thank you, magpies. I will never forget what you did for me.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "confetti",
+      "fx:tada",
+      "sch:hop",
+      "mom:hop",
+      "dad:hop"
+     ]
+    },
+    {
+     "text": "은혜를 잊지 않고 갚는 마음은, 이렇게 따뜻해요.",
+     "src": "reuse",
+     "en": "A heart that remembers kindness and gives it back is as warm as this.",
+     "segs": [
+      [
+       "nar",
+       "A heart that remembers kindness and gives it back is as warm as this.",
+       null
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
