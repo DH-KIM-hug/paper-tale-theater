@@ -244,12 +244,12 @@
   const S = {
     L0: "언덕 위에 다현이가 서 있어요. 하늘을 올려다보고 있어요.",
     L1: "진짜 유니콘을 만나고 싶어요.",
-    /* 1장 꽃 선물(색별): F_ASK_색 · F_OK_색, 꺾어 넣기 F_PICK. 마지막 장면 F_END_색. 오답 목소리는 extra retry_색 */
+    /* 1장 꽃 선물(색별): F_ASK_색 · F_OK_색, 주워 넣기 F_PICK. 마지막 장면 F_END_색. 오답 목소리는 extra retry_색 */
     ...Object.fromEntries(Object.entries(COLOR_KO).flatMap(([c, k]) => [
       ['F_ASK_' + c, `유니콘에게 줄 ${k} 꽃을 찾아 볼까요? 톡, 눌러 봐요.`],
       ['F_OK_' + c, `맞았어요! ${k} 꽃이에요.`],
-      ['F_END_' + c, `다현이는 아침에 꺾은 ${k} 꽃을 유니콘 갈기에 꽂아 주었어요.`]])),
-    F_PICK: "다현이는 꽃을 똑 꺾어 바구니에 쏙 넣었어요.",
+      ['F_END_' + c, `다현이는 바구니 속 ${k} 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.`]])),
+    F_PICK: "다현이는 바람에 떨어진 꽃 한 송이를 살며시 주워 바구니에 쏙 넣었어요.",
     L3: "다현이는 구름 나라로 올라가 보기로 했어요.",
     L4: "구름 섬에 양 한 마리가 혼자 앉아 있어요.",
     L5: "훌쩍… 집에 어떻게 가지…",
@@ -366,7 +366,7 @@
     const gift = flowers[ANS];
     glow(gift, 1200); sparkleSfx(T); T.pop(gift.x, gift.y - 140, tr('반짝!'));
     await say(S['F_OK_' + ANS]);
-    /* 꽃을 똑 꺾어 바구니에 쏙: 꽃이 아이 앞을 지나 바구니로 날아가 반쯤 잠긴다(바구니가 꽃 줄기를 가린다) */
+    /* 떨어진 꽃을 주워 바구니에 쏙: 꽃이 아이 앞을 지나 바구니로 날아가 반쯤 잠긴다(바구니가 꽃 줄기를 가린다) */
     kid.hop(8, 300); sfx('pop', .4);
     const pickSay = say(S.F_PICK);
     await gift.move(basket.x, FL - 150, 600, 'ease-out');
@@ -597,7 +597,7 @@
     await say(S.L36);
     await sleep(SCENE_END);
 
-    /* ===== 11. 집으로 — 1장과 같은 집 앞 언덕. 아침에 꺾은 꽃을 유니콘 갈기에 꽂아 준다 ===== */
+    /* ===== 11. 집으로 — 1장과 같은 집 앞 언덕. 바구니 속 꽃을 유니콘 갈기에 꽂아 준다 ===== */
     await T.sceneCard(tr('집으로'), () => {
       scene('uc_bg2_hill', X(400, 450));
       put(T, kid, X(360, 300), FL, { look: 'walk', to: 'right' });

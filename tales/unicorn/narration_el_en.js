@@ -64,9 +64,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "That's right! A white flower.",
   "c": "audio/el/unicorn/en/nar_06140795c6.mp3"
  },
- "다현이는 꽃을 똑 꺾어 바구니에 쏙 넣었어요.": {
-  "t": "Dahyun picked the flower and popped it into her basket.",
-  "c": "audio/el/unicorn/en/nar_8803c8aa02.mp3"
+ "다현이는 바람에 떨어진 꽃 한 송이를 살며시 주워 바구니에 쏙 넣었어요.": {
+  "t": "Dahyun gently picked up a flower the wind had dropped and popped it into her basket.",
+  "c": "audio/el/unicorn/en/nar_460bb92e32.mp3"
  },
  "다현이는 구름 나라로 올라가 보기로 했어요.": {
   "t": "Dahyun decided to climb up to the cloud country.",
@@ -208,33 +208,33 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The next morning, Dahyun came back to the hill by her home with the unicorn.",
   "c": "audio/el/unicorn/en/nar_ff0d8ed59c.mp3"
  },
- "다현이는 아침에 꺾은 빨간 꽃을 유니콘 갈기에 꽂아 주었어요.": {
-  "t": "Dahyun tucked the red flower she picked this morning into the unicorn's mane.",
-  "c": "audio/el/unicorn/en/nar_404980da0c.mp3"
+ "다현이는 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": {
+  "t": "Dahyun gently tucked the red flower from her basket into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_0a5fc08422.mp3"
  },
- "다현이는 아침에 꺾은 주황 꽃을 유니콘 갈기에 꽂아 주었어요.": {
-  "t": "Dahyun tucked the orange flower she picked this morning into the unicorn's mane.",
-  "c": "audio/el/unicorn/en/nar_0061ef003e.mp3"
+ "다현이는 바구니 속 주황 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": {
+  "t": "Dahyun gently tucked the orange flower from her basket into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_f6ceda9f5b.mp3"
  },
- "다현이는 아침에 꺾은 노란 꽃을 유니콘 갈기에 꽂아 주었어요.": {
-  "t": "Dahyun tucked the yellow flower she picked this morning into the unicorn's mane.",
-  "c": "audio/el/unicorn/en/nar_4ba4fa685e.mp3"
+ "다현이는 바구니 속 노란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": {
+  "t": "Dahyun gently tucked the yellow flower from her basket into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_a7d8d01aaa.mp3"
  },
- "다현이는 아침에 꺾은 분홍 꽃을 유니콘 갈기에 꽂아 주었어요.": {
-  "t": "Dahyun tucked the pink flower she picked this morning into the unicorn's mane.",
-  "c": "audio/el/unicorn/en/nar_55f6c0e272.mp3"
+ "다현이는 바구니 속 분홍 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": {
+  "t": "Dahyun gently tucked the pink flower from her basket into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_f89b66680d.mp3"
  },
- "다현이는 아침에 꺾은 보라 꽃을 유니콘 갈기에 꽂아 주었어요.": {
-  "t": "Dahyun tucked the purple flower she picked this morning into the unicorn's mane.",
-  "c": "audio/el/unicorn/en/nar_f6eaeeae3e.mp3"
+ "다현이는 바구니 속 보라 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": {
+  "t": "Dahyun gently tucked the purple flower from her basket into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_846df812bb.mp3"
  },
- "다현이는 아침에 꺾은 파란 꽃을 유니콘 갈기에 꽂아 주었어요.": {
-  "t": "Dahyun tucked the blue flower she picked this morning into the unicorn's mane.",
-  "c": "audio/el/unicorn/en/nar_d23bf0da9c.mp3"
+ "다현이는 바구니 속 파란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": {
+  "t": "Dahyun gently tucked the blue flower from her basket into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_117739689a.mp3"
  },
- "다현이는 아침에 꺾은 하얀 꽃을 유니콘 갈기에 꽂아 주었어요.": {
-  "t": "Dahyun tucked the white flower she picked this morning into the unicorn's mane.",
-  "c": "audio/el/unicorn/en/nar_9fbc2a7c9e.mp3"
+ "다현이는 바구니 속 하얀 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": {
+  "t": "Dahyun gently tucked the white flower from her basket into the unicorn's mane.",
+  "c": "audio/el/unicorn/en/nar_2e441e8afe.mp3"
  },
  "고마워, 정말 예뻐!": {
   "t": "Thank you. It's so pretty!",

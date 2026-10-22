@@ -185,12 +185,12 @@
    ]
   },
   {
-   "text": "다현이는 꽃을 똑 꺾어 바구니에 쏙 넣었어요.",
-   "en": "Dahyun picked the flower and popped it into her basket.",
+   "text": "다현이는 바람에 떨어진 꽃 한 송이를 살며시 주워 바구니에 쏙 넣었어요.",
+   "en": "Dahyun gently picked up a flower the wind had dropped and popped it into her basket.",
    "segs": [
     [
      "nar",
-     "Dahyun picked the flower and popped it into her basket.",
+     "Dahyun gently picked up a flower the wind had dropped and popped it into her basket.",
      null
     ]
    ]
@@ -581,78 +581,78 @@
    ]
   },
   {
-   "text": "다현이는 아침에 꺾은 빨간 꽃을 유니콘 갈기에 꽂아 주었어요.",
-   "en": "Dahyun tucked the red flower she picked this morning into the unicorn's mane.",
+   "text": "다현이는 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
+   "en": "Dahyun gently tucked the red flower from her basket into the unicorn's mane.",
    "segs": [
     [
      "nar",
-     "Dahyun tucked the red flower she picked this morning into the unicorn's mane.",
+     "Dahyun gently tucked the red flower from her basket into the unicorn's mane.",
      "happy"
     ]
    ]
   },
   {
-   "text": "다현이는 아침에 꺾은 주황 꽃을 유니콘 갈기에 꽂아 주었어요.",
-   "en": "Dahyun tucked the orange flower she picked this morning into the unicorn's mane.",
+   "text": "다현이는 바구니 속 주황 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
+   "en": "Dahyun gently tucked the orange flower from her basket into the unicorn's mane.",
    "segs": [
     [
      "nar",
-     "Dahyun tucked the orange flower she picked this morning into the unicorn's mane.",
+     "Dahyun gently tucked the orange flower from her basket into the unicorn's mane.",
      "happy"
     ]
    ]
   },
   {
-   "text": "다현이는 아침에 꺾은 노란 꽃을 유니콘 갈기에 꽂아 주었어요.",
-   "en": "Dahyun tucked the yellow flower she picked this morning into the unicorn's mane.",
+   "text": "다현이는 바구니 속 노란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
+   "en": "Dahyun gently tucked the yellow flower from her basket into the unicorn's mane.",
    "segs": [
     [
      "nar",
-     "Dahyun tucked the yellow flower she picked this morning into the unicorn's mane.",
+     "Dahyun gently tucked the yellow flower from her basket into the unicorn's mane.",
      "happy"
     ]
    ]
   },
   {
-   "text": "다현이는 아침에 꺾은 분홍 꽃을 유니콘 갈기에 꽂아 주었어요.",
-   "en": "Dahyun tucked the pink flower she picked this morning into the unicorn's mane.",
+   "text": "다현이는 바구니 속 분홍 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
+   "en": "Dahyun gently tucked the pink flower from her basket into the unicorn's mane.",
    "segs": [
     [
      "nar",
-     "Dahyun tucked the pink flower she picked this morning into the unicorn's mane.",
+     "Dahyun gently tucked the pink flower from her basket into the unicorn's mane.",
      "happy"
     ]
    ]
   },
   {
-   "text": "다현이는 아침에 꺾은 보라 꽃을 유니콘 갈기에 꽂아 주었어요.",
-   "en": "Dahyun tucked the purple flower she picked this morning into the unicorn's mane.",
+   "text": "다현이는 바구니 속 보라 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
+   "en": "Dahyun gently tucked the purple flower from her basket into the unicorn's mane.",
    "segs": [
     [
      "nar",
-     "Dahyun tucked the purple flower she picked this morning into the unicorn's mane.",
+     "Dahyun gently tucked the purple flower from her basket into the unicorn's mane.",
      "happy"
     ]
    ]
   },
   {
-   "text": "다현이는 아침에 꺾은 파란 꽃을 유니콘 갈기에 꽂아 주었어요.",
-   "en": "Dahyun tucked the blue flower she picked this morning into the unicorn's mane.",
+   "text": "다현이는 바구니 속 파란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
+   "en": "Dahyun gently tucked the blue flower from her basket into the unicorn's mane.",
    "segs": [
     [
      "nar",
-     "Dahyun tucked the blue flower she picked this morning into the unicorn's mane.",
+     "Dahyun gently tucked the blue flower from her basket into the unicorn's mane.",
      "happy"
     ]
    ]
   },
   {
-   "text": "다현이는 아침에 꺾은 하얀 꽃을 유니콘 갈기에 꽂아 주었어요.",
-   "en": "Dahyun tucked the white flower she picked this morning into the unicorn's mane.",
+   "text": "다현이는 바구니 속 하얀 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
+   "en": "Dahyun gently tucked the white flower from her basket into the unicorn's mane.",
    "segs": [
     [
      "nar",
-     "Dahyun tucked the white flower she picked this morning into the unicorn's mane.",
+     "Dahyun gently tucked the white flower from her basket into the unicorn's mane.",
      "happy"
     ]
    ]
