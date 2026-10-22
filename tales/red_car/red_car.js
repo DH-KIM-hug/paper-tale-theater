@@ -220,6 +220,8 @@
   const wiggleEl = (T, n) => T.anim(n, [{ translate: '0 0' }, { translate: '-8px 0' }, { translate: '8px 0' }, { translate: '0 0' }], 360);
   const bob = n => n.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
   const sfx = (name, vol, fb) => AudioFX.sfx(name, vol) || (fb && fb());
+  /* 불 타닥 소리: 크로스페이드로 이음매를 없앤 3.9초 파일을 3.5초마다 겹쳐 틀어 반복한다. 반환한 함수를 부르면 멈춘다 */
+  const fireLoop = vol => { const go = () => AudioFX.sfx('fire_crackle', vol); go(); const id = setInterval(go, 3500); return () => clearInterval(id); };
   const sparkleSfx = T => AudioFX.sfx('sparkle') || T.tone([700, 1400], .3, { vol: .15 });
 
   /* 누르는 자리 넓히기: 화면 w×h 투명 사각을 그림 뒤에 깐다(a.scale 로 나눠 화면 크기를 지킨다) */
@@ -354,7 +356,7 @@
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'boing', 'door', 'creak']);
+    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'boing', 'door', 'creak', 'police_siren', 'fire_siren', 'ambulance_siren', 'fire_crackle']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -506,7 +508,7 @@
       if (P) camSnap(520, 280, 1);
     }, police.pos);
     const l10 = say(S.L10);
-    const u4 = vo('siren_police'); blink(T, police); T.pop(police.x, FL - 150, tr('삐뽀삐뽀!'));
+    sfx('police_siren', .3); const u4 = vo('siren_police'); blink(T, police); T.pop(police.x, FL - 150, tr('삐뽀삐뽀!'));
     const stopR4 = rattle(.25, 1200);
     follow(620, 4400);
     await Promise.all([drive(thiefA, thiefA.x + 300, FL, 4400, 'linear', 8), drive(thiefB, thiefB.x + 300, FL, 4400, 'linear', 8), drive(police, police.x + 300, FL, 4400), l10]);
@@ -548,6 +550,7 @@
     const wob = [0, 1, 2].map(() => ({ on: true }));
     FL3.forEach((f, i) => { (async () => { while (wob[i].on) await f.wiggle(4, 600 + i * 90); })(); });
     const l17 = say(S.L17);
+    const stopFire = fireLoop(.2); sfx('fire_siren', .3);
     vo('siren_fire'); blink(T, fire); T.pop(fire.x, FL - 190, tr('위이잉!'));
     await l17;
     fire.hop(6, 300); await say(S.L18);
@@ -583,6 +586,7 @@
       put(T, sm, f.x, f.y - 10); fadeIn(sm, 300);
       smokes.push(Promise.all([sm.move(sm.x + 10, sm.y - 60, 2400, 'ease-out'), T.anim(sm.pos, [{ opacity: 1 }, { opacity: 0 }], 2400)]).then(() => hide(sm)));
     }
+    stopFire();   // 불이 다 꺼지면 타닥 소리도 멈춘다
     fire.look('run');
     await Promise.all(smokes);
     put(T, police, -200, FL, { look: 'run' }); put(T, red, -120, FL, { look: 'run' });
@@ -628,7 +632,7 @@
     const ambX = X(620, 600), DOOR = 738, STEP = 406;   // 병원 문(배경 그림 1108~1195px → 화면 x 708~767), 문턱 y
     const l23 = say(S.L23), stopR6 = rattle(.25, 1200);
     follow(600, DRIVE);
-    setTimeout(() => { vo('siren_amb'); blink(T, amb); T.pop(amb.x, FL - 170, tr('삐용삐용!')); }, 800);
+    setTimeout(() => { sfx('ambulance_siren', .3); vo('siren_amb'); blink(T, amb); T.pop(amb.x, FL - 170, tr('삐용삐용!')); }, 800);
     await Promise.all([drive(amb, ambX - 90, FL, DRIVE), l23]);
     const l24 = say(S.L24);   // 아직 병원으로 가는 중: 창 안의 인형을 태운 채 병원 문 앞까지
     follow(650, 2600);
@@ -682,6 +686,7 @@
     await sleep(400);
     for (const [c, k, word] of [[police, 'siren_police', '삐뽀삐뽀!'], [fire, 'siren_fire', '위이잉!'], [amb, 'siren_amb', '삐용삐용!'], [red, 'vroom', '부릉부릉!']]) {
       follow(c.x);
+      if (k !== 'vroom') sfx({ siren_police: 'police_siren', siren_fire: 'fire_siren', siren_amb: 'ambulance_siren' }[k], .45);
       const u = vo(k); if (c === red) glow(red, 700); else blink(T, c);
       c.hop(10, 320); T.pop(c.x, FL - c.h - 40, tr(word));
       await (u || sleep(1200)); await sleep(SIREN_GAP - 1200);

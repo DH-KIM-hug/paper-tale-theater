@@ -116,8 +116,9 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 
 ## 효과음 · 빨간 자동차 사이렌과 불 소리
 
-Pixabay 검색 페이지가 자동 접속을 막아 소리 파일을 받지 못해, 네 개 모두 ElevenLabs 효과음 생성으로 직접 만들었다(ffmpeg loudnorm I=-18, 모노 44.1kHz 96kbps, 사이렌은 앞뒤 페이드, 불 소리는 앞뒤 크로스페이드로 반복 이음매 제거).
+Pixabay 검색 페이지가 자동 접속을 막아 소리 파일을 받지 못해, 구급차를 뺀 세 개는 ElevenLabs 효과음 생성으로, 구급차는 두 음 교대가 분명하도록 합성해서 직접 만들었다(ffmpeg loudnorm I=-18, 모노 44.1kHz 96kbps, 사이렌은 앞뒤 페이드, 불 소리는 앞뒤 크로스페이드로 반복 이음매 제거).
 
 | 파일 | 원본 | 올린 사람 | 라이선스 | 출처 |
 |---|---|---|---|---|
-| `sfx/police_siren.mp3` (3초) · `sfx/fire_siren.mp3` (3초) · `sfx/ambulance_siren.mp3` (3초, 두 음 교대) · `sfx/fire_crackle.mp3` (3.9초) | 직접 만든 소리 — ElevenLabs 효과음 생성 | 팥죽 게임 | 직접 만든 소리(ElevenLabs 효과음 생성) | — |
+| `sfx/police_siren.mp3` (3초) · `sfx/fire_siren.mp3` (3초) · `sfx/fire_crackle.mp3` (3.9초) | 직접 만든 소리 — ElevenLabs 효과음 생성 | 팥죽 게임 | 직접 만든 소리(ElevenLabs 효과음 생성) | — |
+| `sfx/ambulance_siren.mp3` (3초) | 직접 만든 소리 — 코드 합성(ffmpeg 사인파 960Hz·770Hz 를 0.375초씩 번갈아, 한국식 삐뽀삐뽀. 2차 배음 약하게 얹고 음마다 살짝 부드럽게) | 팥죽 게임 | CC0 | — |
