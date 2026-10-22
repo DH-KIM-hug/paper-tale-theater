@@ -1,0 +1,1171 @@
+{
+ "mode": "read",
+ "tale": "cinderella",
+ "lang": "en",
+ "title": "Cinderella",
+ "voices_from": "voice_script_el.json",
+ "moral": "A kind heart can forgive even those who were unkind to us.",
+ "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, trim 은 from 줄의 영어 녹음을 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<kitchen|parlor|kitchen_night|garden|ballroom|stairs>": "장면 배경(bgImage 키). scenes[].set 으로 자동 호출",
+  "cast:<cind|step|sis1|sis2|fairy|prince>:look:<자세>[:<left|right>] | cast:<id>:at:<x,y> | cast:<id>:walk:<x,y,ms> | cast:<id>:hop | cast:<id>:hide | cast:<id>:show": "인물 자세(cind: stand·braid·cry·surprise·joy·gown·give·run·sit·hug / step: stand·point / sis: stand·proud·foot·sorry / fairy: appear·wand / prince: stand·dance·slipper)·자리·이동",
+  "prop:<pumpkin|coach|trap|mice|horses|coachman|footman|orange|slipper|slipper2|clock|letter|ribbon>:<show|hide|at:x,y>": "소품",
+  "ribbon:pop | mice:out | horses:line | gown:sparkle | glow:<id> | fade:<id>:<in|out>": "놀이판 연출(리본 퐁, 생쥐가 하나씩 나와 말이 됨, 드레스 반짝, 빛나기, 나타남·사라짐)",
+  "clock:to:<h> | bell:<n>": "벽시계 바늘·종소리",
+  "cut:<coach|gown|midnight|stairs_slipper|fit>": "그림 컷 5장",
+  "fx:<sparkle|bell|pop|whoosh|ding> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_cinders",
+   "card": "Cinder Girl",
+   "set": "kitchen",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:step:look:stand",
+    "cast:sis1:look:stand",
+    "cast:sis2:look:stand",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옛날에 마음씨 고운 아가씨가 살았어요.",
+     "src": "reuse",
+     "en": "Once upon a time, there lived a kind-hearted girl.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, there lived a kind-hearted girl.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "아가씨는 새엄마와 두 언니와 함께 살았지요.",
+     "src": "new",
+     "en": "She lived with her stepmother and her two stepsisters.",
+     "segs": [
+      [
+       "nar",
+       "She lived with her stepmother and her two stepsisters."
+      ]
+     ]
+    },
+    {
+     "text": "넌 부엌 일을 해!",
+     "src": "reuse",
+     "en": "You work in the kitchen!",
+     "segs": [
+      [
+       "step",
+       "You work in the kitchen!",
+       null
+      ]
+     ],
+     "before": [
+      "cast:step:look:point"
+     ]
+    },
+    {
+     "text": "아가씨는 날마다 아궁이 옆에서 재를 싹싹 쓸고, 바닥을 박박 닦았어요.",
+     "src": "new",
+     "en": "Every day she swept up the ashes by the fireplace, swish, swish, and scrubbed the floor, scrub, scrub.",
+     "segs": [
+      [
+       "nar",
+       "Every day she swept up the ashes by the fireplace, swish, swish, and scrubbed the floor, scrub, scrub."
+      ]
+     ]
+    },
+    {
+     "text": "재투성이래요~ 재투성이래요~",
+     "src": "reuse",
+     "en": "Ashy girl! Ashy girl!",
+     "segs": [
+      [
+       "sisa",
+       "Ashy girl!",
+       null
+      ],
+      [
+       "sisb",
+       "Ashy girl!",
+       null
+      ]
+     ],
+     "before": [
+      "cast:sis1:hop",
+      "cast:sis2:hop"
+     ]
+    },
+    {
+     "text": "그래서 아가씨는 신데렐라라고 불렸어요.",
+     "src": "reuse",
+     "en": "So the girl was called Cinderella.",
+     "segs": [
+      [
+       "nar",
+       "So the girl was called Cinderella.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_letter",
+   "card": "The Ball Letter",
+   "set": "parlor",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:sis1:look:stand",
+    "cast:sis2:look:stand",
+    "prop:letter:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "어느 날, 궁전에서 무도회 편지가 왔어요.",
+     "src": "reuse",
+     "en": "One day, a letter came from the palace. There was a ball!",
+     "segs": [
+      [
+       "nar",
+       "One day, a letter came from the palace. There was a ball!",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "언니들은 신이 나서 폴짝폴짝 뛰며 호들갑을 떨었어요.",
+     "src": "new",
+     "en": "The sisters were so excited that they hopped and bounced and made a great big fuss.",
+     "segs": [
+      [
+       "nar",
+       "The sisters were so excited that they hopped and bounced and made a great big fuss."
+      ]
+     ],
+     "before": [
+      "cast:sis1:look:proud",
+      "cast:sis2:look:proud",
+      "cast:sis1:hop",
+      "cast:sis2:hop"
+     ]
+    },
+    {
+     "text": "신데렐라, 내 머리 좀 예쁘게 해 줘!",
+     "src": "reuse",
+     "en": "Cinderella, do my hair nicely!",
+     "segs": [
+      [
+       "sisa",
+       "Cinderella, do my hair nicely!",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "네, 예쁘게 해 드릴게요.",
+     "src": "reuse",
+     "en": "Yes, I will make it pretty.",
+     "segs": [
+      [
+       "cind",
+       "Yes, I will make it pretty.",
+       null
+      ]
+     ],
+     "before": [
+      "cast:cind:look:braid"
+     ]
+    },
+    {
+     "text": "신데렐라는 언니 머리를 정성껏 땋고, 리본을 퐁 달아 주었어요.",
+     "src": "new",
+     "en": "Cinderella braided her sister's hair ever so carefully and popped a ribbon on top. Pop!",
+     "segs": [
+      [
+       "nar",
+       "Cinderella braided her sister's hair ever so carefully and popped a ribbon on top. Pop!"
+      ]
+     ],
+     "after": [
+      "ribbon:pop",
+      "fx:pop",
+      "pop:420,230,퐁!"
+     ]
+    },
+    {
+     "text": "어머, 예쁘다!",
+     "src": "reuse",
+     "en": "Oh, how pretty!",
+     "segs": [
+      [
+       "sisa",
+       "Oh, how pretty!",
+       null
+      ]
+     ],
+     "before": [
+      "cast:sis1:hop"
+     ]
+    },
+    {
+     "text": "언니들은 신이 나서 무도회에 갔어요.",
+     "src": "reuse",
+     "en": "The sisters happily went off to the ball.",
+     "segs": [
+      [
+       "nar",
+       "The sisters happily went off to the ball.",
+       null
+      ]
+     ],
+     "after": [
+      "cast:sis1:walk:1150,470,1200",
+      "cast:sis2:walk:1150,470,1200"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_alone",
+   "card": "A Night Alone",
+   "set": "kitchen_night",
+   "enter": [
+    "cast:cind:look:cry",
+    "cast:fairy:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "혼자 남은 신데렐라는 훌쩍훌쩍 울었어요.",
+     "src": "reuse",
+     "en": "Cinderella, left all alone, sobbed and sobbed.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella, left all alone, sobbed and sobbed.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "나도 무도회에 가고 싶어요.",
+     "src": "reuse",
+     "en": "I wish I could go to the ball, too.",
+     "segs": [
+      [
+       "cind",
+       "I wish I could go to the ball, too.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "그때 부엌에 환한 빛이 반짝반짝 비치더니, 누군가 사뿐 내려섰어요.",
+     "src": "new",
+     "en": "Just then a bright light twinkled and sparkled in the kitchen, and someone floated gently down.",
+     "segs": [
+      [
+       "nar",
+       "Just then a bright light twinkled and sparkled in the kitchen, and someone floated gently down."
+      ]
+     ],
+     "before": [
+      "fx:sparkle",
+      "fade:fairy:in",
+      "glow:fairy"
+     ]
+    },
+    {
+     "text": "그때 요정 대모가 나타났어요.",
+     "src": "reuse",
+     "en": "Then her fairy godmother appeared.",
+     "segs": [
+      [
+       "nar",
+       "Then her fairy godmother appeared.",
+       null
+      ]
+     ],
+     "before": [
+      "cast:fairy:look:appear"
+     ],
+     "after": [
+      "cast:cind:look:surprise:right"
+     ]
+    },
+    {
+     "text": "울지 마렴. 너도 무도회에 가고 싶지? 내가 도와주마.",
+     "src": "reuse",
+     "en": "Don't cry, dear. You want to go to the ball, don't you? I will help you.",
+     "segs": [
+      [
+       "fairy",
+       "Don't cry, dear. You want to go to the ball, don't you? I will help you.",
+       null
+      ]
+     ],
+     "after": [
+      "cast:cind:look:joy",
+      "cast:cind:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_pumpkin",
+   "card": "The Big Pumpkin",
+   "set": "garden",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:fairy:look:wand",
+    "prop:pumpkin:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "텃밭에서 제일 큰 호박을 가져오렴.",
+     "src": "reuse",
+     "en": "Bring me the biggest pumpkin from the garden.",
+     "segs": [
+      [
+       "fairy",
+       "Bring me the biggest pumpkin from the garden.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "신데렐라는 커다란 호박을 데굴데굴 굴려 왔어요.",
+     "src": "new",
+     "en": "Cinderella rolled the big round pumpkin over, roly-poly, roly-poly.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella rolled the big round pumpkin over, roly-poly, roly-poly."
+      ]
+     ],
+     "before": [
+      "prop:pumpkin:at:560,470"
+     ]
+    },
+    {
+     "text": "\"자, 지팡이를 한 번 휘두르면!\"",
+     "src": "new",
+     "en": "Now, one little wave of my wand!",
+     "segs": [
+      [
+       "fairy",
+       "Now, one little wave of my wand!"
+      ]
+     ],
+     "after": [
+      "fx:sparkle",
+      "cut:coach"
+     ]
+    },
+    {
+     "text": "호박이 황금 마차가 되었어요!",
+     "src": "reuse",
+     "en": "The pumpkin turned into a golden coach!",
+     "segs": [
+      [
+       "nar",
+       "The pumpkin turned into a golden coach!",
+       null
+      ]
+     ],
+     "before": [
+      "prop:pumpkin:hide",
+      "prop:coach:show",
+      "fx:whoosh"
+     ],
+     "after": [
+      "cast:cind:look:surprise:right",
+      "cast:cind:look:joy",
+      "cast:cind:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_mice",
+   "card": "Six Little Mice",
+   "set": "garden",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:fairy:look:wand",
+    "prop:coach:show",
+    "prop:trap:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "쥐덫에 생쥐가 있구나.",
+     "src": "trim",
+     "from": "쥐덫에 생쥐가 있구나. 몇 마리일까?",
+     "en": "There are mice in the trap.",
+     "segs": [
+      [
+       "fairy",
+       "There are mice in the trap.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "요정 대모가 지팡이로 쥐덫을 똑똑 두드렸어요.",
+     "src": "new",
+     "en": "The fairy godmother tapped the mousetrap with her wand, knock, knock.",
+     "segs": [
+      [
+       "nar",
+       "The fairy godmother tapped the mousetrap with her wand, knock, knock."
+      ]
+     ],
+     "after": [
+      "fx:sparkle",
+      "mice:out"
+     ]
+    },
+    {
+     "text": "생쥐가 여섯 마리! 하얀 말 여섯 마리가 되었어요.",
+     "src": "reuse",
+     "en": "Six mice! They became six white horses.",
+     "segs": [
+      [
+       "nar",
+       "Six mice! They became six white horses.",
+       null
+      ]
+     ],
+     "after": [
+      "horses:line"
+     ]
+    },
+    {
+     "text": "하얀 말들이 히힝! 마차 앞에 나란히 섰어요.",
+     "src": "new",
+     "en": "The white horses whinnied, neigh! and lined up in front of the coach.",
+     "segs": [
+      [
+       "nar",
+       "The white horses whinnied, neigh! and lined up in front of the coach."
+      ]
+     ]
+    },
+    {
+     "text": "큰 쥐는 마부가, 도마뱀은 시종이 되었어요.",
+     "src": "reuse",
+     "en": "The big rat became the coachman, and the lizards became footmen.",
+     "segs": [
+      [
+       "nar",
+       "The big rat became the coachman, and the lizards became footmen.",
+       null
+      ]
+     ],
+     "before": [
+      "prop:coachman:show",
+      "prop:footman:show"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_gown",
+   "card": "The Silver Gown",
+   "set": "garden",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:fairy:look:wand",
+    "prop:coach:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이제 네 차례란다.",
+     "src": "reuse",
+     "en": "Now it is your turn, dear.",
+     "segs": [
+      [
+       "fairy",
+       "Now it is your turn, dear.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "반짝반짝, 재 묻은 옷이 환한 빛에 포근히 감싸였어요.",
+     "src": "new",
+     "en": "Twinkle, twinkle! Her ashy dress was wrapped up in a soft, shining light.",
+     "segs": [
+      [
+       "nar",
+       "Twinkle, twinkle! Her ashy dress was wrapped up in a soft, shining light."
+      ]
+     ],
+     "before": [
+      "gown:sparkle",
+      "fx:sparkle"
+     ],
+     "after": [
+      "cut:gown"
+     ]
+    },
+    {
+     "text": "신데렐라는 은빛 드레스에 유리 구두를 신었어요.",
+     "src": "reuse",
+     "en": "Cinderella wore a silver gown and glass slippers.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella wore a silver gown and glass slippers.",
+       null
+      ]
+     ],
+     "before": [
+      "cast:cind:look:gown",
+      "glow:cind"
+     ]
+    },
+    {
+     "text": "와, 정말 고맙습니다!",
+     "src": "reuse",
+     "en": "Oh, thank you so much!",
+     "segs": [
+      [
+       "cind",
+       "Oh, thank you so much!",
+       null
+      ]
+     ],
+     "before": [
+      "cast:cind:hop"
+     ]
+    },
+    {
+     "text": "꼭 기억하렴. 밤 열두 시가 되면 마법이 풀린단다.",
+     "src": "reuse",
+     "en": "Remember, dear. At midnight, the magic will end.",
+     "segs": [
+      [
+       "fairy",
+       "Remember, dear. At midnight, the magic will end.",
+       null
+      ]
+     ],
+     "before": [
+      "cast:fairy:look:appear"
+     ]
+    },
+    {
+     "text": "네, 꼭 기억할게요!",
+     "src": "reuse",
+     "en": "Yes, I will remember!",
+     "segs": [
+      [
+       "cind",
+       "Yes, I will remember!",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "황금 마차가 달그락달그락, 궁전으로 달려갔어요.",
+     "src": "new",
+     "en": "The golden coach rattled off to the palace, clip-clop, clip-clop.",
+     "segs": [
+      [
+       "nar",
+       "The golden coach rattled off to the palace, clip-clop, clip-clop."
+      ]
+     ],
+     "after": [
+      "prop:coach:at:1200,470",
+      "cast:cind:hide"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_night1",
+   "card": "The First Night",
+   "set": "ballroom",
+   "enter": [
+    "cast:cind:look:gown:right",
+    "cast:prince:look:stand:right",
+    "cast:sis1:look:stand",
+    "cast:sis2:look:stand",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "궁전에 가니 모두 신데렐라를 바라보았어요.",
+     "src": "reuse",
+     "en": "When she arrived at the palace, everyone stared at Cinderella.",
+     "segs": [
+      [
+       "nar",
+       "When she arrived at the palace, everyone stared at Cinderella.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "왕자님이 성큼성큼 다가와 손을 내밀었어요.",
+     "src": "new",
+     "en": "The prince strode right over, step, step, step, and held out his hand.",
+     "segs": [
+      [
+       "nar",
+       "The prince strode right over, step, step, step, and held out his hand."
+      ]
+     ],
+     "before": [
+      "cast:prince:walk:560,470,900"
+     ]
+    },
+    {
+     "text": "함께 춤춰요.",
+     "src": "reuse",
+     "en": "Please, dance with me.",
+     "segs": [
+      [
+       "prince",
+       "Please, dance with me.",
+       null
+      ]
+     ],
+     "before": [
+      "cast:prince:look:dance"
+     ]
+    },
+    {
+     "text": "둘은 음악에 맞춰 빙글빙글, 사뿐사뿐 춤을 추었어요.",
+     "src": "new",
+     "en": "Round and round they twirled, light as feathers, dancing to the music.",
+     "segs": [
+      [
+       "nar",
+       "Round and round they twirled, light as feathers, dancing to the music."
+      ]
+     ],
+     "before": [
+      "pop:560,230,빙글!"
+     ]
+    },
+    {
+     "text": "신데렐라는 언니들에게도 오렌지를 나눠 주었어요.",
+     "src": "reuse",
+     "en": "Cinderella shared oranges with her sisters, too.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella shared oranges with her sisters, too.",
+       null
+      ]
+     ],
+     "before": [
+      "cast:cind:look:give:right",
+      "prop:orange:show"
+     ]
+    },
+    {
+     "text": "어머, 고마워요!",
+     "src": "reuse",
+     "en": "Oh, thank you!",
+     "segs": [
+      [
+       "sisb",
+       "Oh, thank you!",
+       null
+      ]
+     ],
+     "after": [
+      "cast:cind:look:gown:right"
+     ]
+    },
+    {
+     "text": "언니들은 신데렐라를 알아보지 못했어요.",
+     "src": "reuse",
+     "en": "The sisters did not know who she was.",
+     "segs": [
+      [
+       "nar",
+       "The sisters did not know who she was.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "시계를 보니 열두 시가 가까워요. 신데렐라는 약속대로 집에 돌아왔어요.",
+     "src": "reuse",
+     "en": "The clock said it was almost midnight. Cinderella went home, just as she promised.",
+     "segs": [
+      [
+       "nar",
+       "The clock said it was almost midnight. Cinderella went home, just as she promised.",
+       null
+      ]
+     ],
+     "before": [
+      "prop:clock:show",
+      "clock:to:11.7",
+      "cast:cind:look:gown:left"
+     ],
+     "after": [
+      "cast:cind:walk:-200,470,1200"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_night2",
+   "card": "The Second Night",
+   "set": "ballroom",
+   "enter": [
+    "cast:cind:look:gown:right",
+    "cast:prince:look:dance",
+    "prop:clock:show",
+    "clock:to:11",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "다음 날 밤에도 무도회가 열렸어요.",
+     "src": "reuse",
+     "en": "The next night, there was another ball.",
+     "segs": [
+      [
+       "nar",
+       "The next night, there was another ball.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "신데렐라는 춤추느라 시간 가는 줄 몰랐어요.",
+     "src": "reuse",
+     "en": "Cinderella was dancing so happily that she forgot the time.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella was dancing so happily that she forgot the time.",
+       null
+      ]
+     ],
+     "before": [
+      "pop:560,230,빙글!"
+     ]
+    },
+    {
+     "text": "그때 커다란 시계가 뎅, 뎅, 울리기 시작했어요.",
+     "src": "new",
+     "en": "Just then the great big clock began to ring. Dong! Dong!",
+     "segs": [
+      [
+       "nar",
+       "Just then the great big clock began to ring. Dong! Dong!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "clock:to:12",
+      "fx:bell",
+      "bell:3"
+     ],
+     "after": [
+      "cut:midnight"
+     ]
+    },
+    {
+     "text": "앗, 열두 시예요!",
+     "src": "reuse",
+     "en": "Oh no, it's twelve o'clock!",
+     "segs": [
+      [
+       "cind",
+       "Oh no, it's twelve o'clock!",
+       null
+      ]
+     ],
+     "before": [
+      "cast:cind:look:run:left"
+     ]
+    },
+    {
+     "text": "신데렐라는 왕자님의 손을 놓고 후다닥 달려 나갔어요.",
+     "src": "new",
+     "en": "Cinderella let go of the prince's hand and dashed away, pitter-patter, as fast as she could.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella let go of the prince's hand and dashed away, pitter-patter, as fast as she could."
+      ]
+     ],
+     "after": [
+      "cast:cind:walk:-200,470,900"
+     ]
+    },
+    {
+     "text": "\"잠깐만요! 가지 마세요!\"",
+     "src": "new",
+     "en": "Wait! Please do not go!",
+     "segs": [
+      [
+       "prince",
+       "Wait! Please do not go!"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_stairs",
+   "card": "The Palace Stairs",
+   "set": "stairs",
+   "enter": [
+    "cast:cind:look:run:left",
+    "cast:prince:look:stand:left",
+    "prop:slipper:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.",
+     "src": "reuse",
+     "en": "Cinderella ran down the stairs and lost one glass slipper.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella ran down the stairs and lost one glass slipper.",
+       null
+      ]
+     ],
+     "before": [
+      "cut:stairs_slipper",
+      "fx:ding"
+     ]
+    },
+    {
+     "text": "열두 시가 지나자 황금 마차는 펑! 다시 호박이 되었어요.",
+     "src": "new",
+     "en": "When midnight passed, the golden coach went poof! and turned back into a pumpkin.",
+     "segs": [
+      [
+       "nar",
+       "When midnight passed, the golden coach went poof! and turned back into a pumpkin."
+      ]
+     ],
+     "before": [
+      "fx:pop"
+     ]
+    },
+    {
+     "text": "왕자님은 계단에 남은 유리 구두를 살며시 주워 들었어요.",
+     "src": "new",
+     "en": "The prince gently picked up the glass slipper left on the stairs.",
+     "segs": [
+      [
+       "nar",
+       "The prince gently picked up the glass slipper left on the stairs."
+      ]
+     ],
+     "before": [
+      "cast:prince:look:slipper:left",
+      "glow:prince"
+     ]
+    },
+    {
+     "text": "구두는 달빛에 반짝반짝 빛났지요.",
+     "src": "new",
+     "en": "The slipper twinkled and sparkled in the moonlight.",
+     "segs": [
+      [
+       "nar",
+       "The slipper twinkled and sparkled in the moonlight."
+      ]
+     ]
+    },
+    {
+     "text": "이 구두가 꼭 맞는 사람을 찾을 거예요.",
+     "src": "reuse",
+     "en": "I will find the person this slipper fits.",
+     "segs": [
+      [
+       "prince",
+       "I will find the person this slipper fits.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_slipper",
+   "card": "The Glass Slipper",
+   "set": "parlor",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:sis1:look:stand",
+    "cast:sis2:look:stand",
+    "cast:prince:look:slipper:left",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.",
+     "src": "reuse",
+     "en": "The prince carried the glass slipper from house to house.",
+     "segs": [
+      [
+       "nar",
+       "The prince carried the glass slipper from house to house.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "내 발이 들어갈 거야!",
+     "src": "reuse",
+     "en": "My foot will fit!",
+     "segs": [
+      [
+       "sisa",
+       "My foot will fit!",
+       null
+      ]
+     ],
+     "before": [
+      "cast:sis1:look:foot:right"
+     ]
+    },
+    {
+     "text": "내 발도 들어갈 거야!",
+     "src": "reuse",
+     "en": "My foot will fit, too!",
+     "segs": [
+      [
+       "sisb",
+       "My foot will fit, too!",
+       null
+      ]
+     ],
+     "before": [
+      "cast:sis1:look:stand",
+      "cast:sis2:look:foot:right"
+     ]
+    },
+    {
+     "text": "언니들의 발은 너무 커서 들어가지 않았어요.",
+     "src": "reuse",
+     "en": "The sisters' feet were too big, and the slipper would not fit.",
+     "segs": [
+      [
+       "nar",
+       "The sisters' feet were too big, and the slipper would not fit.",
+       null
+      ]
+     ],
+     "before": [
+      "cast:sis2:look:stand",
+      "pop:520,250,끙끙!"
+     ]
+    },
+    {
+     "text": "저도 신어 봐도 될까요?",
+     "src": "reuse",
+     "en": "May I try it on, too?",
+     "segs": [
+      [
+       "cind",
+       "May I try it on, too?",
+       null
+      ]
+     ],
+     "before": [
+      "cast:cind:look:sit:right"
+     ]
+    },
+    {
+     "text": "언니들은 피식 코웃음을 쳤지만, 왕자님은 고개를 끄덕였어요.",
+     "src": "new",
+     "en": "The sisters snickered, tee-hee, but the prince nodded his head.",
+     "segs": [
+      [
+       "nar",
+       "The sisters snickered, tee-hee, but the prince nodded his head."
+      ]
+     ]
+    },
+    {
+     "text": "왕자님이 무릎을 꿇자, 작은 발이 유리 구두에 쏙 들어갔어요.",
+     "src": "new",
+     "en": "The prince knelt down, and her little foot slipped right into the glass slipper. Slip!",
+     "segs": [
+      [
+       "nar",
+       "The prince knelt down, and her little foot slipped right into the glass slipper. Slip!"
+      ]
+     ],
+     "before": [
+      "pop:520,250,쏙!"
+     ],
+     "after": [
+      "cut:fit"
+     ]
+    },
+    {
+     "text": "구두가 꼭 맞았어요!",
+     "src": "reuse",
+     "en": "The slipper fit perfectly!",
+     "segs": [
+      [
+       "nar",
+       "The slipper fit perfectly!",
+       null
+      ]
+     ],
+     "before": [
+      "fx:sparkle"
+     ]
+    },
+    {
+     "text": "신데렐라는 주머니에서 다른 한 짝을 꺼냈어요.",
+     "src": "reuse",
+     "en": "Cinderella took the other slipper out of her pocket.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella took the other slipper out of her pocket.",
+       null
+      ]
+     ],
+     "before": [
+      "prop:slipper2:show"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_forgive",
+   "card": "Laughing Together",
+   "set": "parlor",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:sis1:look:sorry",
+    "cast:sis2:look:sorry",
+    "cast:prince:look:stand",
+    "cast:fairy:look:appear",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "요정 대모가 다시 고운 옷을 입혀 주었어요.",
+     "src": "reuse",
+     "en": "Her fairy godmother dressed her in a beautiful gown again.",
+     "segs": [
+      [
+       "nar",
+       "Her fairy godmother dressed her in a beautiful gown again.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:sparkle",
+      "cast:cind:look:gown",
+      "glow:cind"
+     ]
+    },
+    {
+     "text": "신데렐라, 그동안 미안해. 정말 미안해.",
+     "src": "reuse",
+     "en": "Cinderella, we are sorry for all that time. We are truly sorry.",
+     "segs": [
+      [
+       "sisa",
+       "Cinderella, we are sorry for all that time.",
+       null
+      ],
+      [
+       "sisb",
+       "We are truly sorry.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "신데렐라는 언니들을 꼬옥 안아 주었어요.",
+     "src": "new",
+     "en": "Cinderella gave her sisters a great big hug, squeeze, squeeze.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella gave her sisters a great big hug, squeeze, squeeze."
+      ]
+     ],
+     "before": [
+      "cast:cind:look:hug",
+      "cast:cind:hop"
+     ]
+    },
+    {
+     "text": "괜찮아요. 우리 함께 행복해요.",
+     "src": "reuse",
+     "en": "It's all right. Let's be happy together.",
+     "segs": [
+      [
+       "cind",
+       "It's all right. Let's be happy together.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "\"언니들, 이제 우리 사이좋게 지내요.\"",
+     "src": "new",
+     "en": "Sisters, from now on, let us be kind to one another.",
+     "segs": [
+      [
+       "cind",
+       "Sisters, from now on, let us be kind to one another."
+      ]
+     ]
+    },
+    {
+     "text": "모두 함께 웃었어요.",
+     "src": "reuse",
+     "en": "Everyone laughed together.",
+     "segs": [
+      [
+       "nar",
+       "Everyone laughed together.",
+       null
+      ]
+     ],
+     "before": [
+      "cast:sis1:look:stand:left",
+      "cast:sis2:look:stand:left",
+      "pop:500,230,하하!"
+     ]
+    },
+    {
+     "text": "착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.",
+     "src": "reuse",
+     "en": "A kind heart can forgive even those who were unkind to us.",
+     "segs": [
+      [
+       "nar",
+       "A kind heart can forgive even those who were unkind to us.",
+       null
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

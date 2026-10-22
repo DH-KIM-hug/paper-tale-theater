@@ -1,0 +1,1195 @@
+{
+ "mode": "read",
+ "tale": "cinderella",
+ "lang": "ko",
+ "title": "신데렐라",
+ "voices_from": "voice_script_el.json",
+ "moral": "착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 페로 판(PLAN.md)을 그대로 따른다. 놀이판의 언니 머리 누르기, 호박 누르기, 쥐덫 누르기(생쥐 세기), 열두 시 시계 고르기, 구두와 같은 크기 발 고르기, 인사 누르기를 모두 뺐다. 세기·시계·크기 비교의 안내 줄(\"몇 마리일까?\", \"열두 시 시계를 찾아봐요!\", \"구두와 크기가 같은 발을 찾아봐요!\", 오답·정답 줄)은 빼고, \"쥐덫에 생쥐가 있구나.\"만 꼬리를 잘라 남겼다. 그림 컷 5장(마차·드레스·열두 시·계단 구두·구두 맞음)은 그대로 쓴다. 디즈니 요소 없음(요정 대모·호박 마차·생쥐 말은 페로 원작). 원작 끝의 언니들 결혼·교훈 시는 놀이판처럼 \"모두 함께 웃었어요\"로 줄였다. 교훈은 놀이판 마지막 줄을 그대로 쓴다. 새 문장은 의성어·의태어를 장면마다 2~3개 넣었다(2026-10-22 사용자 지시).",
+ "acts": {
+  "set:<kitchen|parlor|kitchen_night|garden|ballroom|stairs>": "장면 배경(bgImage 키). scenes[].set 으로 자동 호출",
+  "cast:<cind|step|sis1|sis2|fairy|prince>:look:<자세>[:<left|right>] | cast:<id>:at:<x,y> | cast:<id>:walk:<x,y,ms> | cast:<id>:hop | cast:<id>:hide | cast:<id>:show": "인물 자세(cind: stand·braid·cry·surprise·joy·gown·give·run·sit·hug / step: stand·point / sis: stand·proud·foot·sorry / fairy: appear·wand / prince: stand·dance·slipper)·자리·이동",
+  "prop:<pumpkin|coach|trap|mice|horses|coachman|footman|orange|slipper|slipper2|clock|letter|ribbon>:<show|hide|at:x,y>": "소품",
+  "ribbon:pop | mice:out | horses:line | gown:sparkle | glow:<id> | fade:<id>:<in|out>": "놀이판 연출(리본 퐁, 생쥐가 하나씩 나와 말이 됨, 드레스 반짝, 빛나기, 나타남·사라짐)",
+  "clock:to:<h> | bell:<n>": "벽시계 바늘·종소리",
+  "cut:<coach|gown|midnight|stairs_slipper|fit>": "그림 컷 5장",
+  "fx:<sparkle|bell|pop|whoosh|ding> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_cinders",
+   "card": "재투성이",
+   "set": "kitchen",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:step:look:stand",
+    "cast:sis1:look:stand",
+    "cast:sis2:look:stand",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옛날에 마음씨 고운 아가씨가 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옛날에 마음씨 고운 아가씨가 살았어요.",
+       null,
+       "[warm, gentle, fairytale opening]"
+      ]
+     ]
+    },
+    {
+     "text": "아가씨는 새엄마와 두 언니와 함께 살았지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아가씨는 새엄마와 두 언니와 함께 살았지요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "넌 부엌 일을 해!",
+     "src": "reuse",
+     "segs": [
+      [
+       "step",
+       "넌 부엌 일을 해!",
+       null,
+       "[imperious, snooty, haughty, comic, not scary]"
+      ]
+     ],
+     "before": [
+      "cast:step:look:point"
+     ]
+    },
+    {
+     "text": "아가씨는 날마다 아궁이 옆에서 재를 싹싹 쓸고, 바닥을 박박 닦았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아가씨는 날마다 아궁이 옆에서 재를 싹싹 쓸고, 바닥을 박박 닦았어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "재투성이래요~ 재투성이래요~",
+     "src": "reuse",
+     "segs": [
+      [
+       "sisa",
+       "재투성이래요~",
+       null,
+       "[teasing, singsong, snooty, giggling]"
+      ],
+      [
+       "sisb",
+       "재투성이래요~",
+       null,
+       "[teasing, singsong, giggling, cute]"
+      ]
+     ],
+     "before": [
+      "cast:sis1:hop",
+      "cast:sis2:hop"
+     ]
+    },
+    {
+     "text": "그래서 아가씨는 신데렐라라고 불렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그래서 아가씨는 신데렐라라고 불렸어요.",
+       null,
+       "[gentle, soft]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_letter",
+   "card": "무도회 편지",
+   "set": "parlor",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:sis1:look:stand",
+    "cast:sis2:look:stand",
+    "prop:letter:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "어느 날, 궁전에서 무도회 편지가 왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "어느 날, 궁전에서 무도회 편지가 왔어요.",
+       null,
+       "[bright, excited, curious]"
+      ]
+     ]
+    },
+    {
+     "text": "언니들은 신이 나서 폴짝폴짝 뛰며 호들갑을 떨었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "언니들은 신이 나서 폴짝폴짝 뛰며 호들갑을 떨었어요.",
+       null,
+       "[lively, amused, storytelling]"
+      ]
+     ],
+     "before": [
+      "cast:sis1:look:proud",
+      "cast:sis2:look:proud",
+      "cast:sis1:hop",
+      "cast:sis2:hop"
+     ]
+    },
+    {
+     "text": "신데렐라, 내 머리 좀 예쁘게 해 줘!",
+     "src": "reuse",
+     "segs": [
+      [
+       "sisa",
+       "신데렐라, 내 머리 좀 예쁘게 해 줘!",
+       null,
+       "[snooty, demanding, bouncy, vain]"
+      ]
+     ]
+    },
+    {
+     "text": "네, 예쁘게 해 드릴게요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "cind",
+       "네, 예쁘게 해 드릴게요.",
+       null,
+       "[gentle, kind, soft, sweet]"
+      ]
+     ],
+     "before": [
+      "cast:cind:look:braid"
+     ]
+    },
+    {
+     "text": "신데렐라는 언니 머리를 정성껏 땋고, 리본을 퐁 달아 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "신데렐라는 언니 머리를 정성껏 땋고, 리본을 퐁 달아 주었어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ],
+     "after": [
+      "ribbon:pop",
+      "fx:pop",
+      "pop:420,230,퐁!"
+     ]
+    },
+    {
+     "text": "어머, 예쁘다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "sisa",
+       "어머, 예쁘다!",
+       null,
+       "[delighted, vain, bouncy, giggling]"
+      ]
+     ],
+     "before": [
+      "cast:sis1:hop"
+     ]
+    },
+    {
+     "text": "언니들은 신이 나서 무도회에 갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "언니들은 신이 나서 무도회에 갔어요.",
+       null,
+       "[lively, bright]"
+      ]
+     ],
+     "after": [
+      "cast:sis1:walk:1150,470,1200",
+      "cast:sis2:walk:1150,470,1200"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_alone",
+   "card": "혼자 남은 밤",
+   "set": "kitchen_night",
+   "enter": [
+    "cast:cind:look:cry",
+    "cast:fairy:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "혼자 남은 신데렐라는 훌쩍훌쩍 울었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "혼자 남은 신데렐라는 훌쩍훌쩍 울었어요.",
+       null,
+       "[sad, soft, sniffling, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "나도 무도회에 가고 싶어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "cind",
+       "나도 무도회에 가고 싶어요.",
+       null,
+       "[sad, wistful, tearful, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "그때 부엌에 환한 빛이 반짝반짝 비치더니, 누군가 사뿐 내려섰어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그때 부엌에 환한 빛이 반짝반짝 비치더니, 누군가 사뿐 내려섰어요.",
+       null,
+       "[wonder, soft, glowing]"
+      ]
+     ],
+     "before": [
+      "fx:sparkle",
+      "fade:fairy:in",
+      "glow:fairy"
+     ]
+    },
+    {
+     "text": "그때 요정 대모가 나타났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그때 요정 대모가 나타났어요.",
+       null,
+       "[wonder, soft, glowing]"
+      ]
+     ],
+     "before": [
+      "cast:fairy:look:appear"
+     ],
+     "after": [
+      "cast:cind:look:surprise:right"
+     ]
+    },
+    {
+     "text": "울지 마렴. 너도 무도회에 가고 싶지? 내가 도와주마.",
+     "src": "reuse",
+     "segs": [
+      [
+       "fairy",
+       "울지 마렴. 너도 무도회에 가고 싶지? 내가 도와주마.",
+       null,
+       "[warm, twinkling, kind grandmother, soothing]"
+      ]
+     ],
+     "after": [
+      "cast:cind:look:joy",
+      "cast:cind:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_pumpkin",
+   "card": "커다란 호박",
+   "set": "garden",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:fairy:look:wand",
+    "prop:pumpkin:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "텃밭에서 제일 큰 호박을 가져오렴.",
+     "src": "reuse",
+     "segs": [
+      [
+       "fairy",
+       "텃밭에서 제일 큰 호박을 가져오렴.",
+       null,
+       "[warm, twinkling, playful, kind grandmother]"
+      ]
+     ]
+    },
+    {
+     "text": "신데렐라는 커다란 호박을 데굴데굴 굴려 왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "신데렐라는 커다란 호박을 데굴데굴 굴려 왔어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ],
+     "before": [
+      "prop:pumpkin:at:560,470"
+     ]
+    },
+    {
+     "text": "\"자, 지팡이를 한 번 휘두르면!\"",
+     "src": "new",
+     "segs": [
+      [
+       "fairy",
+       "자, 지팡이를 한 번 휘두르면!",
+       null,
+       "[warm, twinkling, playful, kind grandmother]"
+      ]
+     ],
+     "after": [
+      "fx:sparkle",
+      "cut:coach"
+     ]
+    },
+    {
+     "text": "호박이 황금 마차가 되었어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "호박이 황금 마차가 되었어요!",
+       null,
+       "[wonder, bright, delighted]"
+      ]
+     ],
+     "before": [
+      "prop:pumpkin:hide",
+      "prop:coach:show",
+      "fx:whoosh"
+     ],
+     "after": [
+      "cast:cind:look:surprise:right",
+      "cast:cind:look:joy",
+      "cast:cind:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_mice",
+   "card": "생쥐 여섯 마리",
+   "set": "garden",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:fairy:look:wand",
+    "prop:coach:show",
+    "prop:trap:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "쥐덫에 생쥐가 있구나.",
+     "src": "trim",
+     "from": "쥐덫에 생쥐가 있구나. 몇 마리일까?",
+     "segs": [
+      [
+       "fairy",
+       "쥐덫에 생쥐가 있구나.",
+       null,
+       "[warm, twinkling, curious, kind grandmother]"
+      ]
+     ]
+    },
+    {
+     "text": "요정 대모가 지팡이로 쥐덫을 똑똑 두드렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "요정 대모가 지팡이로 쥐덫을 똑똑 두드렸어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ],
+     "after": [
+      "fx:sparkle",
+      "mice:out"
+     ]
+    },
+    {
+     "text": "생쥐가 여섯 마리! 하얀 말 여섯 마리가 되었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "생쥐가 여섯 마리! 하얀 말 여섯 마리가 되었어요.",
+       null,
+       "[bright, delighted, wonder]"
+      ]
+     ],
+     "after": [
+      "horses:line"
+     ]
+    },
+    {
+     "text": "하얀 말들이 히힝! 마차 앞에 나란히 섰어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "하얀 말들이 히힝! 마차 앞에 나란히 섰어요.",
+       null,
+       "[bright, delighted, wonder]"
+      ]
+     ]
+    },
+    {
+     "text": "큰 쥐는 마부가, 도마뱀은 시종이 되었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "큰 쥐는 마부가, 도마뱀은 시종이 되었어요.",
+       null,
+       "[bright, amused]"
+      ]
+     ],
+     "before": [
+      "prop:coachman:show",
+      "prop:footman:show"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_gown",
+   "card": "은빛 드레스",
+   "set": "garden",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:fairy:look:wand",
+    "prop:coach:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이제 네 차례란다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "fairy",
+       "이제 네 차례란다.",
+       null,
+       "[warm, twinkling, tender, kind grandmother]"
+      ]
+     ]
+    },
+    {
+     "text": "반짝반짝, 재 묻은 옷이 환한 빛에 포근히 감싸였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "반짝반짝, 재 묻은 옷이 환한 빛에 포근히 감싸였어요.",
+       null,
+       "[wonder, soft, sparkling]"
+      ]
+     ],
+     "before": [
+      "gown:sparkle",
+      "fx:sparkle"
+     ],
+     "after": [
+      "cut:gown"
+     ]
+    },
+    {
+     "text": "신데렐라는 은빛 드레스에 유리 구두를 신었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "신데렐라는 은빛 드레스에 유리 구두를 신었어요.",
+       null,
+       "[wonder, soft, sparkling]"
+      ]
+     ],
+     "before": [
+      "cast:cind:look:gown",
+      "glow:cind"
+     ]
+    },
+    {
+     "text": "와, 정말 고맙습니다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "cind",
+       "와, 정말 고맙습니다!",
+       null,
+       "[joyful, delighted, breathless, sincere]"
+      ]
+     ],
+     "before": [
+      "cast:cind:hop"
+     ]
+    },
+    {
+     "text": "꼭 기억하렴. 밤 열두 시가 되면 마법이 풀린단다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "fairy",
+       "꼭 기억하렴. 밤 열두 시가 되면 마법이 풀린단다.",
+       null,
+       "[warm, gentle, serious, kind grandmother, caring]"
+      ]
+     ],
+     "before": [
+      "cast:fairy:look:appear"
+     ]
+    },
+    {
+     "text": "네, 꼭 기억할게요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "cind",
+       "네, 꼭 기억할게요!",
+       null,
+       "[earnest, joyful, sincere, promising]"
+      ]
+     ]
+    },
+    {
+     "text": "황금 마차가 달그락달그락, 궁전으로 달려갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "황금 마차가 달그락달그락, 궁전으로 달려갔어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ],
+     "after": [
+      "prop:coach:at:1200,470",
+      "cast:cind:hide"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_night1",
+   "card": "첫째 밤",
+   "set": "ballroom",
+   "enter": [
+    "cast:cind:look:gown:right",
+    "cast:prince:look:stand:right",
+    "cast:sis1:look:stand",
+    "cast:sis2:look:stand",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "궁전에 가니 모두 신데렐라를 바라보았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "궁전에 가니 모두 신데렐라를 바라보았어요.",
+       null,
+       "[wonder, hushed, bright]"
+      ]
+     ]
+    },
+    {
+     "text": "왕자님이 성큼성큼 다가와 손을 내밀었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "왕자님이 성큼성큼 다가와 손을 내밀었어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ],
+     "before": [
+      "cast:prince:walk:560,470,900"
+     ]
+    },
+    {
+     "text": "함께 춤춰요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prince",
+       "함께 춤춰요.",
+       null,
+       "[polite, kind, gentle, young]"
+      ]
+     ],
+     "before": [
+      "cast:prince:look:dance"
+     ]
+    },
+    {
+     "text": "둘은 음악에 맞춰 빙글빙글, 사뿐사뿐 춤을 추었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "둘은 음악에 맞춰 빙글빙글, 사뿐사뿐 춤을 추었어요.",
+       null,
+       "[warm, dreamy]"
+      ]
+     ],
+     "before": [
+      "pop:560,230,빙글!"
+     ]
+    },
+    {
+     "text": "신데렐라는 언니들에게도 오렌지를 나눠 주었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "신데렐라는 언니들에게도 오렌지를 나눠 주었어요.",
+       null,
+       "[warm, gentle]"
+      ]
+     ],
+     "before": [
+      "cast:cind:look:give:right",
+      "prop:orange:show"
+     ]
+    },
+    {
+     "text": "어머, 고마워요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "sisb",
+       "어머, 고마워요!",
+       null,
+       "[delighted, vain, surprised, cute, comic]"
+      ]
+     ],
+     "after": [
+      "cast:cind:look:gown:right"
+     ]
+    },
+    {
+     "text": "언니들은 신데렐라를 알아보지 못했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "언니들은 신데렐라를 알아보지 못했어요.",
+       null,
+       "[amused, light]"
+      ]
+     ]
+    },
+    {
+     "text": "시계를 보니 열두 시가 가까워요. 신데렐라는 약속대로 집에 돌아왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "시계를 보니 열두 시가 가까워요. 신데렐라는 약속대로 집에 돌아왔어요.",
+       null,
+       "[calm, gentle, slightly urgent]"
+      ]
+     ],
+     "before": [
+      "prop:clock:show",
+      "clock:to:11.7",
+      "cast:cind:look:gown:left"
+     ],
+     "after": [
+      "cast:cind:walk:-200,470,1200"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_night2",
+   "card": "둘째 밤",
+   "set": "ballroom",
+   "enter": [
+    "cast:cind:look:gown:right",
+    "cast:prince:look:dance",
+    "prop:clock:show",
+    "clock:to:11",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "다음 날 밤에도 무도회가 열렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "다음 날 밤에도 무도회가 열렸어요.",
+       null,
+       "[warm, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "신데렐라는 춤추느라 시간 가는 줄 몰랐어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "신데렐라는 춤추느라 시간 가는 줄 몰랐어요.",
+       null,
+       "[warm, dreamy]"
+      ]
+     ],
+     "before": [
+      "pop:560,230,빙글!"
+     ]
+    },
+    {
+     "text": "그때 커다란 시계가 뎅, 뎅, 울리기 시작했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그때 커다란 시계가 뎅, 뎅, 울리기 시작했어요.",
+       "toneup",
+       "[tense, hushed, building]"
+      ]
+     ],
+     "before": [
+      "clock:to:12",
+      "fx:bell",
+      "bell:3"
+     ],
+     "after": [
+      "cut:midnight"
+     ]
+    },
+    {
+     "text": "앗, 열두 시예요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "cind",
+       "앗, 열두 시예요!",
+       null,
+       "[startled, alarmed, breathless]"
+      ]
+     ],
+     "before": [
+      "cast:cind:look:run:left"
+     ]
+    },
+    {
+     "text": "신데렐라는 왕자님의 손을 놓고 후다닥 달려 나갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "신데렐라는 왕자님의 손을 놓고 후다닥 달려 나갔어요.",
+       null,
+       "[tense, quick, soft]"
+      ]
+     ],
+     "after": [
+      "cast:cind:walk:-200,470,900"
+     ]
+    },
+    {
+     "text": "\"잠깐만요! 가지 마세요!\"",
+     "src": "new",
+     "segs": [
+      [
+       "prince",
+       "잠깐만요! 가지 마세요!",
+       null,
+       "[polite, kind, calling out, young]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_stairs",
+   "card": "궁전 계단",
+   "set": "stairs",
+   "enter": [
+    "cast:cind:look:run:left",
+    "cast:prince:look:stand:left",
+    "prop:slipper:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.",
+       null,
+       "[tense, quick, soft]"
+      ]
+     ],
+     "before": [
+      "cut:stairs_slipper",
+      "fx:ding"
+     ]
+    },
+    {
+     "text": "열두 시가 지나자 황금 마차는 펑! 다시 호박이 되었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "열두 시가 지나자 황금 마차는 펑! 다시 호박이 되었어요.",
+       null,
+       "[soft, quick, wonder]"
+      ]
+     ],
+     "before": [
+      "fx:pop"
+     ]
+    },
+    {
+     "text": "왕자님은 계단에 남은 유리 구두를 살며시 주워 들었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "왕자님은 계단에 남은 유리 구두를 살며시 주워 들었어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ],
+     "before": [
+      "cast:prince:look:slipper:left",
+      "glow:prince"
+     ]
+    },
+    {
+     "text": "구두는 달빛에 반짝반짝 빛났지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "구두는 달빛에 반짝반짝 빛났지요.",
+       null,
+       "[warm, tender]"
+      ]
+     ]
+    },
+    {
+     "text": "이 구두가 꼭 맞는 사람을 찾을 거예요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prince",
+       "이 구두가 꼭 맞는 사람을 찾을 거예요.",
+       null,
+       "[polite, kind, determined, young]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_slipper",
+   "card": "유리 구두",
+   "set": "parlor",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:sis1:look:stand",
+    "cast:sis2:look:stand",
+    "cast:prince:look:slipper:left",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.",
+       null,
+       "[warm, bright]"
+      ]
+     ]
+    },
+    {
+     "text": "내 발이 들어갈 거야!",
+     "src": "reuse",
+     "segs": [
+      [
+       "sisa",
+       "내 발이 들어갈 거야!",
+       null,
+       "[snooty, bouncy, confident, comic]"
+      ]
+     ],
+     "before": [
+      "cast:sis1:look:foot:right"
+     ]
+    },
+    {
+     "text": "내 발도 들어갈 거야!",
+     "src": "reuse",
+     "segs": [
+      [
+       "sisb",
+       "내 발도 들어갈 거야!",
+       null,
+       "[bright, cute, confident, comic]"
+      ]
+     ],
+     "before": [
+      "cast:sis1:look:stand",
+      "cast:sis2:look:foot:right"
+     ]
+    },
+    {
+     "text": "언니들의 발은 너무 커서 들어가지 않았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "언니들의 발은 너무 커서 들어가지 않았어요.",
+       null,
+       "[gentle, amused]"
+      ]
+     ],
+     "before": [
+      "cast:sis2:look:stand",
+      "pop:520,250,끙끙!"
+     ]
+    },
+    {
+     "text": "저도 신어 봐도 될까요?",
+     "src": "reuse",
+     "segs": [
+      [
+       "cind",
+       "저도 신어 봐도 될까요?",
+       null,
+       "[gentle, shy, hopeful, polite]"
+      ]
+     ],
+     "before": [
+      "cast:cind:look:sit:right"
+     ]
+    },
+    {
+     "text": "언니들은 피식 코웃음을 쳤지만, 왕자님은 고개를 끄덕였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "언니들은 피식 코웃음을 쳤지만, 왕자님은 고개를 끄덕였어요.",
+       null,
+       "[gentle, amused]"
+      ]
+     ]
+    },
+    {
+     "text": "왕자님이 무릎을 꿇자, 작은 발이 유리 구두에 쏙 들어갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "왕자님이 무릎을 꿇자, 작은 발이 유리 구두에 쏙 들어갔어요.",
+       null,
+       "[joyful, wonder, bright]"
+      ]
+     ],
+     "before": [
+      "pop:520,250,쏙!"
+     ],
+     "after": [
+      "cut:fit"
+     ]
+    },
+    {
+     "text": "구두가 꼭 맞았어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "구두가 꼭 맞았어요!",
+       null,
+       "[joyful, wonder, bright]"
+      ]
+     ],
+     "before": [
+      "fx:sparkle"
+     ]
+    },
+    {
+     "text": "신데렐라는 주머니에서 다른 한 짝을 꺼냈어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "신데렐라는 주머니에서 다른 한 짝을 꺼냈어요.",
+       null,
+       "[warm, tender]"
+      ]
+     ],
+     "before": [
+      "prop:slipper2:show"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_forgive",
+   "card": "함께 웃어요",
+   "set": "parlor",
+   "enter": [
+    "cast:cind:look:stand",
+    "cast:sis1:look:sorry",
+    "cast:sis2:look:sorry",
+    "cast:prince:look:stand",
+    "cast:fairy:look:appear",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "요정 대모가 다시 고운 옷을 입혀 주었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "요정 대모가 다시 고운 옷을 입혀 주었어요.",
+       null,
+       "[warm, gentle, wonder]"
+      ]
+     ],
+     "before": [
+      "fx:sparkle",
+      "cast:cind:look:gown",
+      "glow:cind"
+     ]
+    },
+    {
+     "text": "신데렐라, 그동안 미안해. 정말 미안해.",
+     "src": "reuse",
+     "segs": [
+      [
+       "sisa",
+       "신데렐라, 그동안 미안해.",
+       null,
+       "[sorry, ashamed, soft, sincere]"
+      ],
+      [
+       "sisb",
+       "정말 미안해.",
+       null,
+       "[sorry, tearful, sincere, cute]"
+      ]
+     ]
+    },
+    {
+     "text": "신데렐라는 언니들을 꼬옥 안아 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "신데렐라는 언니들을 꼬옥 안아 주었어요.",
+       null,
+       "[warm, tender]"
+      ]
+     ],
+     "before": [
+      "cast:cind:look:hug",
+      "cast:cind:hop"
+     ]
+    },
+    {
+     "text": "괜찮아요. 우리 함께 행복해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "cind",
+       "괜찮아요. 우리 함께 행복해요.",
+       null,
+       "[sincere, warm, forgiving, gentle, kind]"
+      ]
+     ]
+    },
+    {
+     "text": "\"언니들, 이제 우리 사이좋게 지내요.\"",
+     "src": "new",
+     "segs": [
+      [
+       "cind",
+       "언니들, 이제 우리 사이좋게 지내요.",
+       null,
+       "[sincere, warm, forgiving, gentle, kind]"
+      ]
+     ]
+    },
+    {
+     "text": "모두 함께 웃었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "모두 함께 웃었어요.",
+       null,
+       "[warm, happy, smiling]"
+      ]
+     ],
+     "before": [
+      "cast:sis1:look:stand:left",
+      "cast:sis2:look:stand:left",
+      "pop:500,230,하하!"
+     ]
+    },
+    {
+     "text": "착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.",
+       null,
+       "[warm, gentle, wise, slow, concluding]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
