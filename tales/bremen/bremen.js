@@ -612,6 +612,292 @@
       bs.forEach(x => x.b.remove());
     }
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
+       장면 자리·크기·카메라는 놀이판 그 장면 그대로(FIX). 대본 좌표는 놀이판 그림과 맞지 않아 쓰지 않는다. */
+    const READ_ACTS = (() => {
+      const rI = () => T.readInstant();
+      const hide = a => { a.pos.style.opacity = '0'; }; // put() 이 다시 보이게 한다
+      const nums = s => String(s).split(',').map(Number);
+      const rMiller = mk('miller'), rOwl = mk('owl');
+      const rRb = [C.pine, C.bean, C.bark].map(c => mk('robber', c));
+      const ACT = { donkey: cast.donkey, dog: cast.dog, cat: cast.cat, rooster: cast.rooster, miller: rMiller, owl: rOwl };
+      const BGK = { mill: 'mill', road: 'road', wall: 'wall', roof: 'roof', meadow: 'meadow', walk: 'walk', house_low: 'house_low', house_pov: 'house_pov', house_wide: 'house_wide', dark: 'dark', morning: 'morning' };
+      let key = '', bsh = null, fb = null, glow = null, tx = 0, scroll = [], stacked = [], top = { x: 0, y: 0 }, hw = null, tg = null, lowArt = false;
+      const DX = L(470, 430);
+      const WALLC = [575, Math.round(135 - .273 * (575 - 500)) + 3], ROOFC = [805, Math.round(121 + .18 * (805 - 784)) + 3];
+      const WALK = bgArt('walk'), roofArt = bgArt('roof');
+      const FX0 = L({ donkey: 120, dog: 300, cat: 420, rooster: 530 }, { donkey: 330, dog: 450, cat: 535, rooster: 612 });
+      const FS = L(1, .85), OWX = WALK ? 470 : L(860, 650), OWY = WALK ? 84 : 150, ROAD_Y = WALK ? 484 : 470;
+      const TXX = bgArt('house_low') ? (LOW_WIN.x0 + LOW_WIN.x1) / 2 - 40 : L(700, 590), TG0 = L(500, 470), TS = L(1, .85), WY = L(500, 548), WS = L(1, .7);
+      const TCX = bgArt('house_low') ? L(500, 650) : 500;
+      const WAIT_W = { donkey: 200, dog: 125, cat: 100, rooster: 95 };
+      const WTS = bgArt('house_wide') ? .36 : .72;
+      const WT = bgArt('house_wide') ? { x: 532, y: 414, s: WTS } : { x: 615, y: 488, s: WTS };
+      const SPOTS = L([['cat', 180, 478, 1.3], ['dog', 470, 478, 1.25], ['donkey', 690, 486, .95], ['rooster', 860, 120, 1.2]], [['cat', 320, 478, 1.1], ['dog', 440, 478, 1.05], ['donkey', 590, 486, .8], ['rooster', 665, 120, 1.1]]);
+      const STOPS = L([300, 380, 590, 800, 1150], [385, 520, 680, 700, 1150]);
+      const SPOT5 = L({ donkey: [200, 1.05], dog: [420, 1.2], cat: [590, 1.3], rooster: [770, 1.3] }, { donkey: [390, .75], dog: [492, .85], cat: [584, .98], rooster: [648, .9] });
+      const HOME = bgArt('morning')
+        ? L({ donkey: [150, 476, .95], dog: [470, 476, 1.1], cat: [860, 462, 1.05], rooster: [520, 172, 1] }, { donkey: [370, 476, .8], dog: [490, 476, 1], cat: [640, 462, .95], rooster: [500, 172, 1] })
+        : L({ donkey: [190, 486, 1], dog: [520, 486, 1.15], cat: [860, 410, 1.1], rooster: [470, 176, 1.1] }, { donkey: [385, 486, .85], dog: [505, 486, 1], cat: [648, 410, 1], rooster: [470, 176, 1.1] });
+      const CAMW = { road: [L(500, 640), 280, 1], roof: [L(500, 720), 280, 1], house_low: [TCX, 280, 1], house_wide: bgArt('house_wide') ? [505, 340, 1.9] : [500, 280, 1] };
+      const camW = () => { const c = CAMW[key] || [500, 280, 1]; camSnap(c[0], c[1], c[2]); };
+      const hx = k => HOME[k][0];
+      const darkSpot = k => SPOTS.find(q => q[0] === k);
+      const scrollStep = (st, dur = 700) => {
+        tx -= st;
+        fb.trees.animate([{ transform: `translateX(${tx + st}px)` }, { transform: `translateX(${tx}px)` }], { duration: dur, fill: 'forwards', easing: 'ease-in-out' });
+        scroll.forEach(o => o.animate([{ translate: `${tx + st}px 0` }, { translate: `${tx}px 0` }], { duration: dur, fill: 'forwards', easing: 'ease-in-out' }));
+        band.forEach(a => a.lean.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 350, iterations: 2 }));
+        S.step();
+      };
+      const build = k => {
+        key = k; tx = 0; scroll = []; stacked = []; fb = null; glow = null; hw = null; tg = null;
+        [...band, rOwl, rMiller, ...rRb].forEach(a => a.pos.getAnimations().forEach(x => x.cancel())); // 앞 장면의 날개짓·이동·사라짐 효과가 남지 않게
+        T.clear();
+        if (k === 'mill') {
+          millBG(T);
+          put(cast.donkey, DX, 505, 1.1, 'right'); put(rMiller, L(720, 650), 500, 1.05);
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'road') {
+          roadBG(T);
+          put(cast.dog, L(840, 800), 392, 1.2); bsh = bush(T);
+          put(cast.donkey, L(240, 480), 505, 1, 'right');
+          camSnap(L(500, 640), 280, 1); return;
+        }
+        if (k === 'wall') {
+          wallBG(T);
+          put(cast.cat, WALLC[0], WALLC[1], 1.2); cast.cat.parts.look('perch'); cast.cat.pose(POSE.perch);
+          put(cast.donkey, L(150, 330), 550, L(1.05, .9), 'right'); put(cast.dog, L(300, 450), 550, 1.15, 'right');
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'roof') {
+          roofBG(T);
+          put(cast.rooster, ROOFC[0], ROOFC[1], .72);
+          put(cast.donkey, L(140, 590), 550, L(1.05, .9), 'right'); put(cast.dog, L(290, 665), 550, L(1.15, 1), 'right'); put(cast.cat, L(390, 740), 550, L(1.3, 1.05), 'right');
+          camSnap(L(500, 720), 280, 1); return;
+        }
+        if (k === 'meadow') {
+          meadowBG(T);
+          band.forEach(a => put(a, SPOT5[a.key][0], 500, SPOT5[a.key][1]));
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'walk') {
+          fb = forestBG(T);
+          band.forEach(a => { put(a, FX0[a.key], ROAD_Y, (WALK ? { donkey: 1, dog: 1.1, cat: 1.2, rooster: 1.2 }[a.key] : (a.key === 'donkey' ? .85 : 1)) * FS, 'right'); a.lean.style.filter = WALK ? '' : 'brightness(.8)'; });
+          put(rOwl, OWX, OWY, WALK ? .9 : 1.1);
+          scroll = [rOwl.pos];
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'house_low') {
+          houseLowBG(T, TXX - 700, TG0 - 500 + L(0, 50));
+          const order = ['rooster', 'cat', 'dog', 'donkey'];
+          let x = L(40, TCX - visW() / 2 + 8);
+          order.forEach(q => { const w = WAIT_W[q] * WS; put(cast[q], x + w * .55, WY, WS); x += w; });
+          top = { x: TXX, y: TG0 };
+          camSnap(TCX, 280, 1); return;
+        }
+        if (k === 'house_pov') {
+          housePOV(T);
+          L([[200, 1], [372, 1.04], [540, 1]], [[410, .8], [500, .85], [590, .8]]).forEach(([x, s], i) => put(rRb[i], x, 312, s, i === 0 ? 'right' : 'left'));
+          bgClip(T, 'house_pov', T.world, POV_TABLE);
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'house_wide') {
+          hw = houseWideBG(T);
+          camW(); return;
+        }
+        if (k === 'dark') {
+          darkRoomBG(T, Object.fromEntries(SPOTS.map(([q, x]) => [q, x])));
+          SPOTS.forEach(([q, x, y, s]) => { put(cast[q], x, y, s, q === 'rooster' ? 'left' : 'right'); cast[q].lean.style.filter = 'brightness(.14)'; doze(cast[q]); });
+          const th = rRb[0]; put(th, 1100, 486, 1, 'left'); th.lean.style.filter = 'brightness(.6)'; th.parts.mouth.setAttribute('ry', 2);
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'morning') {
+          morningBG(T, hx('donkey') - 10, hx('cat'));
+          band.forEach(a => put(a, ...HOME[a.key]));
+          const dX = hx('donkey') + 60, gX = hx('dog') + 50, cX = hx('cat') + 60;
+          pic(T, T.world, 'drum', dX - 8, 428, 60.6, 52); pic(T, T.world, 'horn', gX - 7, 458.5, 53, 28.5);
+          pic(T, T.world, 'fiddle', cX - 13, 374.5, 26, 37.5); pic(T, T.world, 'bell', hx('rooster') + 37, 136, 20, 35);
+          camSnap(500, 280, 1);
+        }
+      };
+      const place = (n, spec) => { // 놀이판 자리(FIX): 장면마다 놀이판이 놓는 곳에 둔다. 걸어 나오는 동작이 필요한 곳은 따로
+        const a = ACT[n]; if (!a) return;
+        const [x, y, s = 1] = nums(spec);
+        if (key === 'road' && n === 'dog') { if (rI()) { hide(a); return; } // 덤불 뒤에서 엉금엉금 나온다
+          put(cast.dog, L(840, 800), 392, 1.2); T.world.appendChild(a.pos);
+          return a.move(L(560, 640), 505, 900, 'ease-out');
+        }
+        if (key === 'wall' && n === 'cat' && !rI()) { // 담장에서 폴짝 뛰어내린다
+          return (async () => {
+            a.parts.look('perch'); a.pose(POSE.perch); await a.hop(16, 320);
+            a.parts.look('home'); a.pose(POSE.stand);
+            await a.move(545, 250, 350, 'ease-out'); await a.move(L(450, 565), 550, 400, 'ease-in');
+            a.setScale(L(1.3, 1.1)); a.cry(); T.pop(L(450, 565), 380, '폴짝!', C.persimmon);
+          })();
+        }
+        if (key === 'roof' && n === 'rooster' && !rI()) { // 푸드덕 날아 내려온다
+          return (async () => {
+            flap(a); await a.move(roofArt ? L(760, 720) : L(600, 620), 120, 300, 'ease-out');
+            flap(a); await a.move(roofArt ? L(530, 815) : L(530, 640), 550, 700, 'ease-in');
+            a.setScale(L(1.3, 1.05));
+          })();
+        }
+        if (key === 'walk' && n === 'rooster' && !rI()) { // 나무 꼭대기로
+          return (async () => { flap(a); await a.move(WALK ? 520 : L(620, 560), 150, 700, 'ease-out'); scroll.push(a.pos); })();
+        }
+        if (n === 'owl' || n === 'miller') return;
+        if (key === 'meadow') { put(a, SPOT5[n][0], 500, SPOT5[n][1]); return; }
+        if (key === 'morning') { put(a, ...HOME[n]); return; }
+        if (key === 'wall' || key === 'roof' || key === 'road' || key === 'mill' || key === 'dark' || key === 'house_low' || key === 'walk' || key === 'house_wide') {
+          if (!a.pos.isConnected || a.pos.style.display === 'none') {
+            if (key === 'wall' && n === 'cat') put(a, WALLC[0], WALLC[1], 1.2);
+            else if (key === 'roof' && n === 'rooster') put(a, ROOFC[0], ROOFC[1], .72);
+            else if (key === 'road' && n === 'donkey') put(a, L(240, 480), 505, 1, 'right');
+            else put(a, x, y, s);
+          }
+        }
+      };
+      const actorVerb = n => (op, a1, a2) => {
+        const a = ACT[n]; if (!a) return;
+        if (op === 'at') return place(n, [a1, a2].filter(v => v != null).join(','));
+        if (op === 'hide') { hide(a); return; }
+        if (op === 'face') { a.face(a1); return; }
+        if (op === 'hop') { if (n === 'miller') return; a.cry && a.cry(.8); a.hop(24, 320); return; }
+        if (op === 'sing') { sing(a); return; }
+        if (op === 'doze') { if (key === 'dark') { a.lean.style.filter = 'brightness(.14)'; doze(a); } return; }
+        if (op === 'wake') { a.lean.style.filter = 'brightness(1)'; wake(a); a.cry(1); a.hop(24); return; }
+        if (op === 'look') { if (a.parts && a.parts.art && LOOKS[n] && LOOKS[n][a1 === 'perch' ? 'perch' : 'home']) a.parts.look(a1 === 'perch' ? 'perch' : 'home'); return; }
+        if (op === 'pose') {
+          if (a1 === 'sad') { a.pose(POSE.sad); if (n === 'donkey') a.parts.head.style.transform = 'rotate(-14deg)'; return; }
+          if (a1 === 'stand') { a.pose(POSE.stand); if (n === 'donkey' && a.parts.head) a.parts.head.style.transform = ''; if (n === 'cat') { a.parts.whUp.setAttribute('opacity', 1); a.parts.whDown.setAttribute('opacity', 0); } return; }
+          if (a1 === 'perch') { a.pose(POSE.perch); return; }
+          if (a1 === 'flat') { a.pose(POSE.flat); return; }
+          if (a1 === 'sleep') { a.pose(POSE.sleep); return; }
+          return;
+        }
+        if (op === 'walk') {
+          const [x, y = a.y] = nums(a1 + (a2 ? ',' + a2 : ''));
+          if (rI()) { a.place(x, y); return; }
+          return walk(a, x, y, 1800, false);
+        }
+        if (op === 'flap') { flap(a); T.pop(a.x, 40, '푸드덕!', C.persimmon); return; }
+      };
+      const acts = {
+        set(k) { if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
+        cam(a) { camW(); },
+        bush(op) { if (bsh) bsh.animate([{ translate: '0 0' }, { translate: '-6px 0' }, { translate: '6px 0' }, { translate: '0 0' }], { duration: 400, iterations: 2 }); },
+        window(op) { // 불빛이 켜진다 (오두막 창)
+          if (!fb) return;
+          glow = el('g', { transform: `translate(${fb.light[0] + tx},${fb.light[1]})` }, T.bg);
+          el('rect', { x: -14, y: -14, width: 28, height: 29, fill: '#FFD27A', opacity: .75 }, glow);
+          glow.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 800, fill: 'forwards' });
+          scroll.push(glow);
+          cast.rooster.face('right'); cast.rooster.cry();
+        },
+        band(op, a1) {
+          if (op === 'sing') {
+            const big = a1 === 'big';
+            return (async () => {
+              for (const [i, a] of band.entries()) {
+                if (key === 'house_wide') { a.cry(1); a.hop(WT.s < .5 ? 8 : 16, 300); T.pop(a.x + 6, a.y - 118 * a.scale - (a.key === 'donkey' ? 40 * a.scale : 0), { donkey: '히힝!', dog: '멍멍!', cat: '야옹!', rooster: '꼬끼오!' }[a.key], C.bean); await sleep(420); }
+                else { setTimeout(() => sing(a, big), i * (big ? 200 : 250)); }
+              }
+              if (key !== 'house_wide') await sleep(big ? 1000 : 1400);
+              if (key === 'morning') { T.confetti(); S.chord(523); }
+            })();
+          }
+          if (op === 'walk') {
+            return (async () => {
+              const st = fb && fb.art ? 72 : 170;
+              for (let i = 0; i < +a1; i++) { scrollStep(st); await sleep(800); }
+            })();
+          }
+        },
+        tower(op, who) {
+          if (op === 'wobble') { stacked.forEach((a, i) => setTimeout(() => a.lean.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-5deg)' }, { transform: 'rotate(5deg)' }, { transform: 'rotate(0deg)' }], { duration: 500, iterations: 2 }), i * 60)); AudioFX.sfx('creak', .6); return; }
+          if (op !== 'stack') return;
+          const g = cast[who];
+          if (key === 'house_wide') { // 놀이판 와이드: 탑 전체가 한 덩이로 서 있다
+            const k = stacked.length; if (k === 0) top = { x: WT.x, y: WT.y };
+            put(g, top.x, top.y, WT.s); stacked.push(g);
+            top = { x: top.x + BACK[who][0] * WT.s, y: top.y + BACK[who][1] * WT.s };
+            if (k === 3) { tg = el('g', {}, T.world); band.forEach(a => tg.appendChild(a.pos)); }
+            return;
+          }
+          if (rI()) return;
+          return (async () => {
+            T.world.appendChild(g.pos);
+            g.face(top.x > g.x ? 'right' : 'left'); g.setScale(TS);
+            await g.move((g.x + top.x) / 2, Math.min(g.y, top.y) - 70, 320, 'ease-out');
+            await g.move(top.x, top.y, 260, 'ease-in');
+            g.face('left'); S.thud();
+            stacked.push(g); g.cry(.7);
+            const [bx, by] = BACK[who];
+            top = { x: top.x + bx * TS, y: top.y + by * TS };
+            T.tone(392 + stacked.length * 98, .25, { type: 'triangle', vol: .16 });
+            if (who === 'rooster') await camTo(bgArt('house_low') ? TXX + 40 : TXX, L(190, 205), 1.6, 900);
+          })();
+        },
+        robbers(op) {
+          if (op === 'show') {
+            if (key === 'house_wide') { const RS = hw && hw.art ? .38 : .72; rRb.forEach(r => { put(r, hw.art ? 459 : 380, hw.art ? 352 : 488, RS, 'left'); r.pos.style.opacity = '0'; }); return; }
+            if (key === 'house_pov') { (async () => { for (let i = 0; i < 3; i++) { S.jingle(); rRb.forEach((r, j) => setTimeout(() => r.hop(10, 260), j * 90)); await sleep(900); } })(); }
+            return;
+          }
+          if (op === 'flee') {
+            AudioFX.sfx('door'); if (hw) hw.door.style.transform = 'scaleX(.1)';
+            return (async () => {
+              for (let i = 0; i < 3; i++) {
+                const r = rRb[i]; r.pos.style.opacity = '';
+                r.parts.mouth.setAttribute('ry', 8);
+                walk(r, hw && hw.art ? 120 : -120, hw && hw.art ? 402 : 488, 1100, false);
+                r.hop(hw && hw.art ? 16 : 40, 400);
+                await sleep(350);
+              }
+              await sleep(700);
+            })();
+          }
+        },
+        robber(op, a1) {
+          const th = rRb[0];
+          if (op === 'enter') return walk(th, STOPS[0], 486, 1800, false);
+          if (op === 'exit') return walk(th, STOPS[4], 486, 900, false);
+          if (op === 'hit') {
+            const idx = SPOTS.findIndex(q => q[0] === a1);
+            const prev = SPOTS[idx - 1];
+            if (prev) { const p = cast[prev[0]]; p.lean.style.filter = 'brightness(.14)'; doze(p); }
+            return (async () => {
+              if (Math.abs(th.x - STOPS[idx]) > 4) await walk(th, STOPS[idx], 486, a1 === 'rooster' ? 900 : 700, false);
+              th.parts.mouth.setAttribute('ry', 8); th.hop(50, 420); T.shake();
+              T.tone(1400, .1, { type: 'sine', vol: .08 });
+            })();
+          }
+        },
+        lights(op) {
+          if (key === 'house_wide' && op === 'off' && hw && hw.win) { try { hw.win.firstChild.nextSibling.setAttribute('fill', '#5A4A33'); } catch (e) { /* 창 불빛 끄기 실패는 무시 */ } }
+        },
+        cut(k) {
+          if (k === 'monster') return T.cutImage([{ src: artUrl('cut_monster'), hold: 2200 }], { hold: 2200 });
+          if (k === 'ghost') return T.cutImage([{ src: artUrl('cut_ghost'), hold: 3000 }], { hold: 3000 });
+        },
+        fx(n) {
+          if (n === 'crash') { S.boom(); if (hw) { band.slice().reverse().forEach((a, i) => setTimeout(() => a.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }), i * 80)); try { hw.win.firstChild.nextSibling.setAttribute('fill', '#FFE39A'); } catch (e) { /* 무시 */ } } }
+          else if (n === 'owl') { S.CRY.owl(); T.pop(OWX + (WALK ? 70 : 0), WALK ? 30 : 60, '부엉~', C.cream); }
+          else if (n === 'jingle') S.jingle();
+          else if (n === 'giggle') S.giggle();
+          else if (n === 'thud') S.thud();
+          else AudioFX.sfx('pop');
+        },
+        shake() { T.shake(); },
+        pop(spec) { const a = String(spec).split(','); T.pop(+a[0], +a[1], a.slice(2).join(','), C.bean); },
+      };
+      ['donkey', 'dog', 'cat', 'rooster', 'miller', 'owl'].forEach(n => { acts[n] = actorVerb(n); });
+      return acts;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ---------- 1. 방앗간 당나귀 (와이드) ---------- */
     const millArt = millBG(T);
     const miller = mk('miller');
@@ -1180,5 +1466,5 @@
     return T;
   }
 
-  Tale.mount({ title: '브레멘 음악대', subtitle: '네 친구의 신나는 합창', run: () => run(withFat(Tale.api)) });
+  Tale.mount({ title: '브레멘 음악대', subtitle: '네 친구의 신나는 합창', read: true, run: () => run(withFat(Tale.api)) });
 })();
