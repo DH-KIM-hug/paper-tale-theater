@@ -214,6 +214,205 @@
     const qn = +new URLSearchParams(location.search).get('n');
     const N = qn >= 1 && qn <= 5 ? qn : 1 + Math.floor(Math.random() * 5);
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
+       대본 좌표는 가로 화면 기준이라 세로 화면은 놀이판의 세로 자리(PXM)로 바꾼다. 둥지는 움직이지 않고 새끼는 둥지 안에서만 보인다. */
+    const READ_ACTS = (() => {
+      const rI = () => T.readInstant();
+      const A = { sch, lady, snake, mom, dad };
+      const NR = qn >= 1 && qn <= 5 ? qn : 3; // 읽기에서는 아기 까치 3마리로 고정(숫자 알기 없음)
+      /* 세로 화면 x (놀이판 X(l,p) 값). [장면][배우] */
+      const PXM = {
+        mg_bg_bigtree: { snake: 640, mom: 615, dad: 560, sch: 470 }, mg_bg_nest: { mom: 440 }, mg_bg_night: { sch: 420 },
+        mg_bg_paperdoor: { sch: 440, lady: 590, snake: 590 }, mg_bg_porch: { sch: 430, lady: 590 }, mg_bg_moonnest: { dad: 400, mom: 540 },
+        mg2_bg_belltower_night: { dad: 330, mom: 670 }, mg_bg_belltower: { dad: 440, mom: 560, sch: 1000 },
+      };
+      const CAMP = { mg_bg_bigtree: [520, 280], mg_bg_nest: [540, 235], mg_bg_night: [420, 280], mg_bg_paperdoor: [510, 280], mg_bg_moonnest: [420, 280] };
+      let key = '', walkP = Promise.resolve(), tintEl = null, dawnEl = null, flockR = [], nestN = NR, stopSteps = null;
+      const nums = s => String(s).split(',').map(v => (isNaN(+v) ? v : +v));
+      const px = (n, x) => (P && PXM[key] && PXM[key][n] != null ? PXM[key][n] : x);
+      const camGo = (x = 500, y = 280, z = 1) => { const c = P && CAMP[key]; camSnap(c ? c[0] : x, c ? c[1] : y, z); };
+      const NX = 564, RIM_Y = 284, STEP = 54, RWn = 150 + 36 * NR, RHn = RWn / ASP.mg2_prop_nest_rim;
+      const spotX = i => NX + (i - (NR - 1) / 2) * STEP;
+      const spotY = i => RIM_Y - .45 * RHn - Math.abs(i - (NR - 1) / 2) * 6 + (i % 2 ? 4 : 0);
+      const CY = RIM_Y - .45 * RHn;
+      const rCut = (k, name) => cutOk[name] ? T.cutImage([{ src: src(name), hold: CUT_HOLD }], { hold: CUT_HOLD }) : Promise.resolve();
+      const build = k => {
+        key = k; flockR = []; tintEl = null; dawnEl = null;
+        [sch, lady, snake, mom, dad, ...friends, ...chicks, arrow, rim, bell].forEach(hide);
+        scene(k);
+        if (P && CAMP[k]) camSnap(CAMP[k][0], CAMP[k][1], 1);
+      };
+      const place = (n, spec, look, a3, a4) => {
+        const a = A[n]; if (!a) return;
+        let [x, y] = nums(spec);
+        x = px(n, x);
+        let o = {};
+        if (n === 'snake') { o = { look, s: a3 != null && a3 !== '' ? +a3 : 1 }; }
+        else if (n === 'mom' || n === 'dad') { o = { look, to: a3 || undefined, s: a4 != null && a4 !== '' ? +a4 : 1 }; }
+        else o = { look, to: a3 || undefined };
+        if (n === 'sch' && key === 'mg_bg_belltower' && x >= 1000) x = P ? 1000 : 1100;
+        put(T, a, x, y, o);
+      };
+      const actorVerb = n => (op, a1, a2, a3, a4) => {
+        const a = A[n]; if (!a) return;
+        if (op === 'at') return place(n, a1, a2, a3, a4);
+        if (op === 'look') {
+          if (n === 'snake' && a1 === 'flee' && key === 'mg_bg_bigtree') { a.look('flee', a2 || 'left'); return; }
+          a.look(a1, a2 || undefined); return;
+        }
+        if (op === 'hop') { a.hop(n === 'sch' ? 8 : 10, 320); return; }
+        if (op === 'wiggle') { a.wiggle(n === 'sch' ? 3 : 5, 500); return; }
+        if (op === 'hide') { hide(a); return; }
+        if (op === 'fade') { if (a1 === 'in') { a.pos.style.display = ''; fadeIn(a, n === 'lady' && key === 'mg_bg_paperdoor' ? 1200 : 900); return; } return fadeOut(T, a, 700); }
+        if (op === 'walk') {
+          let [x, y, ms] = nums(a1);
+          if (n === 'sch') {
+            x = key === 'mg_bg_path' ? (P ? 500 : x) : key === 'mg_bg_belltower' && x === 720 ? (P ? 660 : 720) : key === 'mg_bg_night' && x === 700 ? (P ? 640 : 700) : x;
+            if (rI()) { a.place(x, y); return; }
+            const prev = walkP;
+            walkP = (async () => {
+              await prev;
+              let on = true; const stepV = key === 'mg_bg_night' ? .35 : .5;
+              (async () => { while (on) { AudioFX.sfx('step_grass', stepV); await sleep(520); } })();
+              (async () => { while (on) { a.hop(5, 480); await sleep(520); } })();
+              if (P) follow(Math.min(x, 700), ms);
+              await a.move(x, y, ms, 'linear'); on = false;
+            })();
+            return;
+          }
+          return a.move(x, y, ms || 900);
+        }
+      };
+      const acts = {
+        set(k) {
+          if (rI()) { build(k); return; }
+          return walkP.then(() => T.sceneCard('', () => build(k)));
+        },
+        cam(spec) { const [x, y, z] = nums(spec); camGo(x, y, z); },
+        tint(op) {
+          const o = +op;
+          if (tintEl) { tintEl.remove(); tintEl = null; }
+          if (rI()) { tintEl = tint(T, '#1F2A56', o); return; }
+          const d = tint(T, '#1F2A56', 0); tintEl = d;
+          T.anim(d, [{ opacity: 0 }, { opacity: o }], 1500).then(() => d.setAttribute('opacity', o));
+        },
+        dawn(op) {
+          if (op === 'on') { dawnEl = tint(T, '#1F2A56', .28); return; }
+          if (dawnEl) { const d = dawnEl; T.anim(d, [{ opacity: .28 }, { opacity: 0 }], 2000).then(() => d.setAttribute('opacity', 0)); }
+        },
+        parents(op) {
+          if (op === 'land') { // 나무에서 선비 옆 땅으로
+            sch.look('wonder');
+            mom.setScale(1); mom.look('sit', 'right'); mom.turn('left'); mom.move(X(600, 580), FL - 4, 1200);
+            dad.setScale(1); dad.look('fly', 'right');
+            return dad.move(X(690, 640), FL - 150, 1200).then(() => { dad.look('sit', 'left'); dad.place(dad.x, FL - 4); });
+          }
+          if (op === 'collapse') { // 힘이 빠져 종 아래로 스르르
+            put(T, dad, X(430, 440), 300, { look: 'tired' }); put(T, mom, X(560, 560), 300, { look: 'tired' });
+            [dad, mom].forEach(b => { fadeIn(b, 900); b.move(b.x, 480, 1600, 'ease-in'); });
+            sfx('paper_down', .4); return sleep(900);
+          }
+        },
+        snake(op, a1, a2, a3) {
+          if (op === 'climb') { // 똬리를 풀고 나무 기둥 위로
+            snake.look('flee', 'left');
+            return (async () => { await snake.move(X(800, 640), snake.y, 500); await snake.move(X(800, 185), 185, 2800, 'ease-in-out'); snake.look('coil'); })();
+          }
+          if (op === 'flee') {
+            if (key === 'mg_bg_paperdoor') { // 새벽: 여인이 변한 구렁이가 숲으로
+              snake.look('flee', 'right'); snake.place(snake.x, FL + 8);
+              sfx('swish', .5); T.pop(snake.x + 40, FL - 130, tr('스르르'));
+              return snake.move(1150, FL + 8, 2200, 'ease-in').then(() => hide(snake));
+            }
+            snake.look('flee', 'right'); snake.place(X(700, 640), FL + 8); snake.setScale(1);
+            sfx('swish', .6); T.pop(760, FL - 130, tr('스르르'));
+            return snake.move(1150, FL + 8, 1800, 'ease-in').then(() => hide(snake));
+          }
+          return actorVerb('snake')(op, a1, a2, a3);
+        },
+        chicks(op) {
+          if (op === 'nest') { // 배경 둥지의 오목한 자리에 앉는다 (둥지는 움직이지 않고 새끼는 둥지 안에서만)
+            nestN = NR;
+            (async () => { for (let i = 0; i < NR; i++) { const x = spotX(i); put(T, chicks[i], x, spotY(i), { to: 'left' }); fadeIn(chicks[i], 260); chicks[i].hop(14, 260); vo('chirp'); T.pop(x, spotY(i) - CH - 24, tr('짹!')); await sleep(700); } })();
+            return;
+          }
+          if (op === 'hop') { chicks.slice(0, NR).forEach(c => c.hop(12, 300)); vo('chirp2'); return; }
+          if (op === 'hide') chicks.forEach(hide);
+        },
+        flock(op) {
+          if (op === 'fly') {
+            hide(mom); hide(dad);
+            flockR = [dad, mom, friends[0], friends[1], friends[2]]; const FS = [1, 1, .9, .9, .85];
+            flockR.forEach((b, i) => {
+              const y = 150 + (i % 2) * 70 + (i > 1 ? 50 : 0);
+              put(T, b, -150 - i * 130, y, { look: 'fly', to: 'right', s: FS[i] });
+              b.move(1150, y - 40, 3200 + i * 200, 'linear');
+              (async () => { for (let j = 0; j < 10; j++) { b.hop(8, 380); await sleep(380); } })();
+            });
+            return;
+          }
+          if (op === 'hide') flockR.forEach(hide);
+        },
+        arrow(op) {
+          return (async () => {
+            sch.look('draw', 'right'); sfx('creak', .5);
+            for (let i = 0; i < 3; i++) await sch.wiggle(1.5, 400);
+            await sleep(300);
+            sch.look('release', 'right'); sfx('whoosh', .8); T.pop(sch.x + 70, FL - 250, tr('쉬익!'));
+            put(T, arrow, sch.x + 70, FL - 150, { to: 'right' });
+            await arrow.move(snake.x - 60, snake.y - 70, 420, 'linear');
+            sfx('thud', .6); T.pop(arrow.x, arrow.y - 40, tr('탁!'));
+            await sleep(500);
+          })();
+        },
+        bell(op, a1) {
+          if (op === 'show') { put(T, bell, 500, 385); bell.body.style.transformOrigin = '0 -170px'; return; }
+          if (op === 'strike') {
+            const k = +a1, hitL = 442, hitR = 558, backL = X(330, 400), backR = X(670, 600);
+            const mv = k === 1 ? [[dad, hitL, backL]] : k === 2 ? [[mom, hitR, backR]] : [[dad, hitL, backL], [mom, hitR, backR]];
+            return (async () => {
+              sfx('whoosh', .4);
+              await Promise.all(mv.map(([b, h]) => b.move(h, 300, 340, 'ease-in')));
+              sfx('bonk', .7); mv.forEach(([b, h]) => T.pop(h, 232, tr('꽁!')));
+              swingBell(bell); bellSfx(T, .9); T.shake(); setTimeout(() => T.pop(500, 165, tr('댕—'), '#1F2A56'), 250);
+              mv.forEach(([b]) => b.move(b === dad ? backL : backR, 300, 520, 'ease-out'));
+              mv.forEach(([b]) => b.wiggle(6, 520));
+              await sleep(600);
+            })();
+          }
+          if (op === 'far') { // 멀리서 들리는 종소리 세 번 — 여인이 흠칫
+            [600, 2400, 4200].forEach((t, i) => setTimeout(() => {
+              bellSfx(T, .32); T.pop(X(880, 640), 150, tr('댕—'), '#1F2A56');
+              lady.wiggle(4, 450).then(() => lady.move(lady.x + 14, FL, 260)); lady.hop(5, 300);
+            }, t));
+          }
+        },
+        water(op) {
+          if (op !== 'drops') return;
+          for (let i = 0; i < 4; i++) {
+            const d = T.el('circle', { r: 5, fill: '#BFD8EE', cx: sch.x - 95, cy: FL - 95 }, T.world);
+            const tx = mom.x + 40 - (sch.x - 95), ty = 480 - 30 - (FL - 95);
+            d.animate([{ translate: '0 0' }, { translate: `${tx / 2}px ${ty / 2 - 30}px`, offset: .5 }, { translate: `${tx}px ${ty}px` }], { duration: 480, delay: i * 110, easing: 'ease-in', fill: 'both' }).finished.then(() => d.remove()).catch(() => {});
+          }
+          T.pop(mom.x, 480 - 150, tr('똑똑!'));
+        },
+        cut(k) { return rCut(k, 'mg_cut_' + k); },
+        fx(n) {
+          if (n === 'caw') vo('caw'); else if (n === 'chirp') vo('chirp'); else if (n === 'chirp2') vo('chirp2');
+          else if (n === 'door') sfx('door', .6); else if (n === 'tada') sfx('tada', 1, () => sparkleSfx(T));
+          else if (n === 'splash') sfx('splash', .35); else if (n === 'paper_up') sfx('paper_up'); else if (n === 'paper_down') sfx('paper_down', .4);
+          else sfx(n, .6, () => sfx('pop', .5));
+        },
+        sparkle() { sparkleSfx(T); },
+        confetti() { T.confetti(); },
+        shake() { T.shake(); },
+        pop(spec) { const a = String(spec).split(','); T.pop(+a[0], +a[1], tr(a.slice(2).join(',')), a.slice(2).join(',') === '!' ? '#A93B32' : undefined); },
+      };
+      ['sch', 'lady', 'mom', 'dad'].forEach(n => { acts[n] = actorVerb(n); });
+      return acts;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ===== 1. 산길 (자동) ===== */
     scene('mg_bg_path');
     put(T, sch, X(-120, -120), FL, { look: 'walk', to: 'right' });
@@ -501,5 +700,5 @@
     return '은혜를 잊지 않고 갚아요.';
   }
 
-  Tale.mount({ title: '은혜 갚은 까치', subtitle: '은혜를 잊지 않고 갚아요', run: T => run(Tale.api) });
+  Tale.mount({ title: '은혜 갚은 까치', subtitle: '은혜를 잊지 않고 갚아요', read: true, run: T => run(Tale.api) });
 })();
