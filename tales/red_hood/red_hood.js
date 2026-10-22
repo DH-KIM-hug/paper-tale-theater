@@ -161,6 +161,198 @@
     const frame = prop(T, 'frame', 200);
     widen(T, bread, 96, 96); widen(T, milk, 96, 110); widen(T, apple, 96, 96);
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
+       장면 자리·자세·크기는 놀이판 그 장면 그대로(FIX). 대본 좌표는 놀이판 그림과 맞지 않는 곳이 있어 FIX 가 우선한다. */
+    const READ_ACTS = (() => {
+      const RP = T.viewWidth() < 990, TY = 336, tr = T.tr;
+      const A = { hood, wolf, mama, granny, hunter };
+      const BGKEY = { home: 'kitchen', promise: 'door', path: 'trail', wolf: 'tree', flowers: 'flowers', cottage: 'cottage', bed: 'bed', wardrobe: 'room', hunter: 'room', table: 'table' };
+      const CX = { wolf: 560, bed: RP ? 470 : 590, wardrobe: RP ? 330 : 380, hunter: 620, table: 540 };
+      const CARDS = { cottage: '', bed: '' };
+      const LOOKMAP = { hood: { spin: 'joy', promise: 'joy', flowers: 'pick', hug: 'joy', stand: 'joy', walk: 'walk' }, wolf: { stand: 'jump' } };
+      /* 놀이판 자리: [x, y, {look, to, s}] */
+      const FIX = {
+        home: { mama: [RP ? 340 : 290, 510, { to: 'right', s: RP ? .8 : 1 }], hood: [RP ? 645 : 700, 510, { look: 'joy', to: 'left', s: RP ? .8 : 1 }] },
+        promise: { mama: [400, 510, { look: 'a', to: 'right' }], hood: [600, 510, { look: 'joy', to: 'left' }] },
+        path: { hood: [380, 515, { look: 'walk', to: 'right', s: .95 }] },
+        wolf: { wolf: [650, 500, { look: 'peek', to: 'left' }], hood: [400, 510, { look: 'wonder', to: 'right' }] },
+        flowers: { hood: [RP ? 340 : 270, 330, { look: 'pick', to: 'right', s: .75 }] },
+        split: { hood: [500, 268, { look: 'pick', to: 'right', s: .62 }], wolf: [-200, 535, { look: 'run', to: 'right' }] },
+        cottage: { hood: [470, 366, { look: 'knock', to: 'left', s: .34 }] },
+        wardrobe: { hood: [RP ? 500 : 560, 510, { look: 'surprise', to: 'left' }] },
+        table: { granny: [RP ? 625 : 650, 510, { look: 'tea', to: 'left', s: RP ? .8 : 1 }], hood: [RP ? 385 : 400, 510, { look: 'joy', to: 'right', s: RP ? .8 : 1 }], hunter: [RP ? 695 : 770, 510, { look: 'laugh', to: 'left', s: RP ? .72 : 1 }] },
+      };
+      const ROOM_WOLF = { jump: [800, 450], sleep: [815, 430], hiccup: [760, 510], flee: [760, 520], _: [815, 440] };
+      let key = '', vases = [], packing = null;
+      const rI = () => T.readInstant();
+      const nums = s => String(s).split(',').map(Number);
+      const isRoom = () => key === 'wardrobe' || key === 'hunter';
+      const here = a => a.pos.isConnected && a.pos.style.display !== 'none';
+      const build = k => {
+        key = k; vases = [];
+        if (k === 'split') {
+          T.clear();
+          panel(T, 'flowers', 0, 272, 40); panel(T, 'shortcut', 288, 560, -20);
+          T.el('rect', { x: -40, y: 270, width: 1080, height: 20, fill: '#F6ECD8' }, T.bg);
+          T.el('rect', { x: -40, y: 290, width: 1080, height: 5, fill: '#000', 'fill-opacity': .18 }, T.bg);
+          camSnap(500, 280, 1); quiet(); return;
+        }
+        if (k === 'cottage') { T.clear(); bgImage(T, 'cottage'); camSnap(480, 310, 2.2); quiet(); return; }
+        scene(BGKEY[k], CX[k]);
+        if (k === 'home') { // 바구니와 식탁 위 음식 (담기는 basket:fill)
+          put(T, basket, 500, 505); put(T, bread, 370, TY); put(T, milk, 440, TY); put(T, apple, 510, TY);
+        }
+        if (k === 'bed') put(T, frame, 805, 278); // 그림 속 빈 액자 안에 진짜 할머니 사진
+        if (k === 'flowers') {
+          ['yellow', 'red', 'blue'].forEach((c, i) => { const v = prop(T, 'vase_' + c, 104); v.color = c; v.bq = []; put(T, v, 380 + i * 120, 535); vases.push(v); });
+        }
+        if (k === 'table') { put(T, bread, 480, 296); put(T, milk, 555, 296); put(T, apple, 630, 296); }
+      };
+      const placeRoomWolf = (look, a) => { const [x, y] = ROOM_WOLF[look] || ROOM_WOLF._; a.place(x, y); };
+      const walkLooks = a => { let n = 0; const iv = setInterval(() => { n++; a.look(n % 2 ? 'walk2' : 'walk'); }, 350); return () => clearInterval(iv); };
+      const actorVerb = (n, a) => (op, spec) => {
+        if (op === 'at') {
+          let [x, y = 505] = nums(spec); let o = {};
+          const f = FIX[key] && FIX[key][n];
+          if (f) { [x, y, o] = f; }
+          else if (isRoom() && n === 'wolf') { const [rx, ry] = ROOM_WOLF._; x = rx; y = ry; }
+          else if (isRoom() && n === 'hunter' && x >= 900) x = 1150;
+          else if (isRoom() && n === 'hood') { x = RP ? 500 : 560; y = 510; }
+          if (n === 'hood' && key === 'hunter' && here(a) && !rI()) { return a.move(x, y, 600); }
+          put(T, a, x, y, o);
+          if (isRoom() && n === 'wolf' && !f) placeRoomWolf(a.cur, a);
+          return;
+        }
+        if (op === 'look') {
+          const k = (LOOKMAP[n] && LOOKMAP[n][spec]) || spec;
+          if (n === 'hood' && spec === 'spin') { a.look('joy'); return a.hop(40, 500); }
+          if (n === 'wolf' && isRoom()) { a.look(k); placeRoomWolf(k, a); return; }
+          if (n === 'wolf' && key === 'hunter' && k === 'flee') { a.look('flee', 'right'); return; }
+          if (n === 'wolf' && k === 'flee') { a.look('flee', 'right'); return; }
+          a.look(k); return;
+        }
+        if (op === 'to') { a.turn(spec); return; }
+        if (op === 'hide') { hide(a); return; }
+        if (op === 'hop') { a.hop(30, 420); popSfx(T); return; }
+        if (op === 'walk') {
+          let [x, y = a.y] = nums(spec);
+          if (rI()) { a.place(x, y); return; }
+          if (n === 'hood' && isRoom()) { x = 145; y = 495; } // 옷장은 놀이판 그림에서 왼쪽 벽에 있다
+          if (n === 'hunter' && isRoom()) x = 600;
+          if (n === 'wolf') { AudioFX.sfx('whoosh', .6); return a.move(x, y === 480 || y === 470 ? 535 - (key === 'split' ? 0 : 15) : y, key === 'split' ? 2400 : 1300, 'ease-in'); }
+          const dx = x - a.x;
+          if (n === 'hood' && key !== 'wardrobe') {
+            a.look('walk', dx >= 0 ? 'right' : 'left');
+            const stop = walkLooks(a);
+            return a.move(x, y, Math.max(600, Math.abs(dx) * 6)).finally(stop);
+          }
+          if (n === 'hunter') { a.look('walk', 'left'); return a.move(x, y, 1200).then(() => a.look('tickle')); }
+          return a.move(x, y, 900);
+        }
+      };
+      const CUTH = { tail: [2600], whisper: [3200], dash: [2400, 'whoosh'], gulp: [2600], granwolf: [3000], jumpup: [2600, 'pow'], hiccup: [3200, 'pop'] };
+      const acts = {
+        set(k) {
+          if (rI()) { build(k); return; }
+          return T.sceneCard(CARDS[k] != null ? CARDS[k] : '', () => build(k));
+        },
+        cam(a, y, z) {
+          if (a === 'snap') { camSnap(+y, +arguments[3] || 280, +arguments[3] ? 1 : 1); return; }
+          return;
+        },
+        basket(op) {
+          if (op !== 'fill' || rI()) return;
+          return (async () => {
+            for (const it of [bread, milk, apple]) {
+              popSfx(T); await it.move(500, 480, 450, 'ease-in'); hide(it); basket.hop(14, 260);
+            }
+          })();
+        },
+        hood_on() { },
+        pinky() { popSfx(T); hood.hop(36, 450); if (mama.pos.isConnected && here(mama)) mama.hop(20, 450); if (key === 'table') granny.hop(20, 450); },
+        flowers(op) {
+          if (op !== 'pick') return;
+          hood.hop(16, 420); popSfx(T);
+          const seq = ['red', 'yellow', 'blue', 'blue', 'red', 'yellow'];
+          (async () => { // 말과 동시에 여섯 송이를 같은 색 꽃병에 (놀이판 짝 맞추기를 저절로)
+            for (const col of seq) {
+              if (key !== 'flowers') return;
+              const answer = vases.find(v => v.color === col); if (!answer) return;
+              const fl = prop(T, 'flower_' + col, 130); put(T, fl, 500, 340); fl.pos.animate([{ opacity: 0 }, { opacity: 1 }], 150);
+              await fl.move(answer.x, 440, 380, 'ease-in'); hide(fl);
+              const n = answer.bq.length;
+              const f2 = prop(T, 'flower_' + col, 70 + n * 16); put(T, f2, answer.x + (n % 2 ? 22 : -22) * (1 + n * .4), 440 - n * 6);
+              answer.bq.push(f2); T.world.appendChild(answer.pos); answer.hop(14, 260); popSfx(T);
+              await sleep(120);
+            }
+          })();
+        },
+        vases() { },
+        door(op) { if (op === 'knock') return (async () => { for (let k = 0; k < 3; k++) { hood.hop(8, 200); await sleep(260); } })(); },
+        window(op) { if (op === 'knock') knock(T); },
+        wardrobe(op) {
+          if (op === 'in') { // 옷장 속으로 쏙
+            hood.look('hide'); AudioFX.sfx('door') || AudioFX.sfx('creak');
+            hood.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: 'forwards' });
+            return sleep(400);
+          }
+          if (op === 'out') { // 옷장에서 살그머니
+            put(T, hood, 145, 495, { look: 'hide', to: 'left' });
+            AudioFX.sfx('door') || AudioFX.sfx('creak');
+            hood.pos.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 350 });
+            return sleep(450).then(() => hood.look('joy'));
+          }
+        },
+        wolf_tickle() { },
+        snacks(op) {
+          if (op !== 'share') return;
+          const plan = [[bread, granny], [milk, hood], [apple, hunter]];
+          return (async () => {
+            for (const [it, who] of plan) { popSfx(T); await it.move(who.x, who.y - 105 * (who.sc || 1), 520); who.hop(20, 300); }
+          })();
+        },
+        cut(k) {
+          const [hold, sfx] = CUTH[k] || [3000];
+          return T.cutImage([{ src: cutSrc(k), sfx, hold }], { hold });
+        },
+        fx(n) {
+          if (n === 'knock') knock(T);
+          else if (n === 'whoosh') AudioFX.sfx('whoosh', .6);
+          else if (n === 'pow') AudioFX.sfx('pow');
+          else if (n === 'ding') AudioFX.ding && AudioFX.ding();
+          else popSfx(T);
+        },
+        pop(spec) { const a = String(spec).split(','); T.pop(+a[0], +a[1], tr(a.slice(2).join(',')), a.slice(2).join(',') === '쿨쿨…' ? '#5C6BC0' : undefined); },
+      };
+      Object.keys(A).forEach(n => { acts[n] = actorVerb(n, A[n]); });
+      /* 이름이 겹치는 동사: wolf:tickle / granny:pop 은 배우 동사에 얹는다 */
+      const wv = acts.wolf; acts.wolf = (op, spec) => {
+        if (op === 'tickle') {
+          return (async () => { for (let i = 1; i <= 5; i++) { wolf.wiggle(6 + i * 2, 260); hunter.hop(12, 260); popSfx(T); await sleep(330); } })();
+        }
+        return wv(op, spec);
+      };
+      const gv = acts.granny; acts.granny = (op, spec) => {
+        if (op === 'pop') { // 딸꾹! → 할머니가 퐁
+          hunter.look('laugh'); wolf.look('hiccup'); wolf.place(...ROOM_WOLF.hiccup);
+          put(T, granny, 900, 510, { look: 'pop', to: 'left' }); T.pop(760, 160, '딸꾹!');
+          return granny.move(660, 510, 500).then(() => granny.hop(40, 450));
+        }
+        return gv(op, spec);
+      };
+      const hv = acts.hood; acts.hood = (op, spec) => (op === 'on' ? popSfx(T) : hv(op, spec));
+      /* cam:snap:x,y,z 는 콜론으로 잘려 cam('snap','480,310,2.2') 로 온다. cam:wide / cam:620 */
+      acts.cam = (a, spec) => {
+        if (a === 'snap') { const [x, y, z] = nums(spec); camSnap(x, y, z); return; }
+        if (a === 'wide') { if (key === 'cottage') return; camSnap(RP ? (CX[key] || 500) : 500, 280, 1); return; }
+        const x = +a; if (!isNaN(x)) camSnap(RP ? x : 500, 280, 1);
+      };
+      acts.vases = () => { };
+      acts.pinky = acts.pinky;
+      return acts;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* --- 1. 바구니 싸기 --- */
     scene('kitchen');
     const P = T.viewWidth() < 990; /* 세로 화면은 약 430 폭만 보인다 */
@@ -412,5 +604,5 @@
     return '빨간 모자가 약속을 꼭 지켜요!';
   }
 
-  Tale.mount({ title: '빨간 모자', subtitle: '약속을 꼭 지켜요', run: T => run(Tale.api) });
+  Tale.mount({ title: '빨간 모자', subtitle: '약속을 꼭 지켜요', read: true, run: T => run(Tale.api) });
 })();
