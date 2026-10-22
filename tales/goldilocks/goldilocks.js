@@ -566,12 +566,11 @@
     /* 짝 맞추기: 물건을 보여주고 → 주인 곰을 골라요 */
     async function whoseIs(item, owner, q, what) {
       const i = B.indexOf(owner);
-      await say(q);
-      return T.choose(B.map(b => ({ el: b.pos, ok: b === owner, onWrong: async () => {
+      return T.ask(q, () => T.choose(B.map(b => ({ el: b.pos, ok: b === owner, onWrong: async () => {
         b.setFace('o'); await b.wiggle(10, 500); b.setFace('smile');
         await say(`${b.name}: "내 ${what}${what === '그릇' ? '은' : '는'} 더 ${B.indexOf(b) < i ? '커요' : '작아요'}~"`);
       } })), { prompt: q, where: `${SNAME[i]} ${what}${what === '그릇' ? '은' : '는'} ${['가장 큰', '중간', '가장 작은'][i]} 곰 거예요.`,
-        who: `${josa(owner.name, '이에요/예요')}! 반짝이는 곰을 눌러요.` });
+        who: `${josa(owner.name, '이에요/예요')}! 반짝이는 곰을 눌러요.` }));
     }
 
     /* ---------- 1. 곰 집 아침 (부엌 와이드) ---------- */
@@ -583,13 +582,12 @@
     view();
     await T.curtain(true);
     await say('숲속 통나무집에 곰 세 식구가 살았어요.');
-    await say('곰 가족을 톡 눌러서 인사해요!');
     const hiBear = async b => {
       vo('hi_' + b.key); b.setFace('happy'); b.hop(24, 420);
       pop(b.x, headY(b) - 40, '안녕!', b.key === 'dad' ? C.bark : b.key === 'mom' ? C.persimmon : C.pine);
       await sleep(700);
     };
-    const first = (await T.choose(B.map(a => ({ el: a.pos, ok: true, a })), { prompt: '곰을 톡 눌러서 안녕!' })).a; // 한 마리만 누르면 나머지는 저절로 (2026-10-19)
+    const first = (await T.ask('곰 가족을 톡 눌러서 인사해요!', () => T.choose(B.map(a => ({ el: a.pos, ok: true, a })), { prompt: '곰을 톡 눌러서 안녕!' }))).a; // 한 마리만 누르면 나머지는 저절로 (2026-10-19)
     for (const b of [first, ...B.filter(b => b !== first)]) await hiBear(b);
     await say('아빠 곰은 굵은 목소리, 아기 곰은 가느다란 목소리예요.');
 
@@ -610,7 +608,6 @@
       view();
     }, bears.mom.pos);
     await say('엄마 곰이 맛있는 죽을 끓였어요. 그런데 너무 뜨거워요!');
-    await say('톡 눌러서 후후 불어 줘요!');
     const blowStep = i => {
       const b = B[(i - 1) % 3];
       b.setFace('o'); setTimeout(() => b.setFace('smile'), 500);
@@ -618,7 +615,7 @@
       const s = steams.splice(Math.floor(Math.random() * steams.length), 1)[0];
       s && s.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
     };
-    await T.tap(bowlsG, { prompt: '죽을 톡! 후후!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await T.ask('톡 눌러서 후후 불어 줘요!', () => T.tap(bowlsG, { prompt: '죽을 톡! 후후!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 6; i++) { await blowStep(i); await sleep(450); }
     await sleep(400);
     await say('김이 줄었지만, 아직 뜨거워요.');
@@ -700,8 +697,7 @@
       put(goldi, X(740), 490, .8); // 새 문은 작아져서 골디락스도 작게
       view();
     }, goldi.pos);
-    await say('우와, 커다란 문이에요. 문을 톡 두드려 봐요.');
-    await T.tap(door, { prompt: '문을 톡! 똑똑 두드려요.' });
+    await T.ask('우와, 커다란 문이에요. 문을 톡 두드려 봐요.', () => T.tap(door, { prompt: '문을 톡! 똑똑 두드려요.' }));
     for (let k = 0; k < 2; k++) { knock(T); pop(X(560), 200 + k * 60, '똑똑!', C.bark); await sleep(650); }
     await say('골디락스: "계세요?"');
     await sleep(600);
@@ -731,9 +727,8 @@
     }, goldi.pos);
     await say('식탁 위에 죽이 세 그릇 있어요.');
     const q5 = '딱 좋은 죽은 어느 걸까요?';
-    await say(q5);
     let cutHot = false, cutCold = false;
-    await T.choose([
+    await T.ask(q5, () => T.choose([
       { el: tops[0], ok: false, onWrong: async () => {
         goldi.setFace('tongue'); hot(T); goldi.hop(30, 400); pop(X(300), 150, '앗 뜨거!', C.bean);
         if (!cutHot) { cutHot = true; await sleep(500); cutVo('cut_hot'); await cutArt('cut_hot', svg => cutFace(T, svg, 'tongue', '앗 뜨거!'), { hold: 2000 }); }
@@ -745,7 +740,7 @@
         await say('얼음처럼 너무 차가워요!'); giggle(T); goldi.setFace('smile');
       } },
       { el: tops[2], ok: true },
-    ], { prompt: q5, where: '김이 펄펄 나면 뜨겁고, 얼음이 있으면 차가워요.', who: '김이 살짝 나는 작은 그릇이에요!' });
+    ], { prompt: q5, where: '김이 펄펄 나면 뜨겁고, 얼음이 있으면 차가워요.', who: '김이 살짝 나는 작은 그릇이에요!' }));
     goldi.setFace('happy');
     for (let k = 0; k < 3; k++) { AudioFX.chomp(); pop(X(760), 130, '냠냠!', C.persimmon); await sleep(500); }
     if (tops[2].setEmpty) tops[2].setEmpty();
@@ -764,9 +759,8 @@
     }, goldi.pos);
     await say('이번엔 의자가 세 개 있어요.');
     const q6 = '딱 맞는 의자는 어느 걸까요?';
-    await say(q6);
     const back = async () => { gmode('stand'); goldi.setFace('smile'); await goldi.move(X(640), 510, 500); };
-    await T.choose([
+    await T.ask(q6, () => T.choose([
       { el: chairs[0].g, ok: false, onWrong: async () => {
         AudioFX.boing(); sitOn(chairs[0]); goldi.hop(40, 400);
         goldi.setFace('o');
@@ -784,7 +778,7 @@
         cushFront.remove(); await back();
       } },
       { el: chairs[2].g, ok: true },
-    ], { prompt: q6, where: '너무 크지도, 너무 푹신하지도 않은 의자예요.', who: '작은 의자예요! 반짝이는 의자를 눌러요.' });
+    ], { prompt: q6, where: '너무 크지도, 너무 푹신하지도 않은 의자예요.', who: '작은 의자예요! 반짝이는 의자를 눌러요.' }));
     sitOn(chairs[2]); goldi.hop(16, 300); goldi.setFace('happy');
     await say('딱 맞아요! 그런데…');
     await sleep(300);
@@ -816,9 +810,8 @@
     await say('하암, 졸려요. 위층에 침대가 세 개 있어요.');
     goldi.setFace('smile');
     const q7 = '딱 좋은 침대는 어느 걸까요?';
-    await say(q7);
     const backBed = async () => { gmode('stand'); goldi.setScale(.8); goldi.setFace('smile'); goldi.place(X(630), 540); await sleep(200); };
-    await T.choose([
+    await T.ask(q7, () => T.choose([
       { el: beds[0].blanket, ok: false, onWrong: async () => {
         lieIn(beds[0]); goldi.setFace('o');
         await goldi.hop(40, 380); AudioFX.bonk(); await goldi.hop(20, 300); AudioFX.bonk();
@@ -833,7 +826,7 @@
         goldi.body.getAnimations().forEach(a => a.cancel()); await backBed();
       } },
       { el: beds[2].blanket, ok: true },
-    ], { prompt: q7, where: '딱딱하지도, 너무 푹신하지도 않은 침대예요.', who: '작은 침대예요! 반짝이는 침대를 눌러요.' });
+    ], { prompt: q7, where: '딱딱하지도, 너무 푹신하지도 않은 침대예요.', who: '작은 침대예요! 반짝이는 침대를 눌러요.' }));
     lieIn(beds[2]); goldi.setFace('happy');
     /* 브람스 〈자장가〉(1868, 공개 곡) — 오르골 소리. 한 소절을 들려주고, 침대를 톡 누르면 다음 소절이 이어진다 */
     const LULL1 = T.parseSong('E4:.5 E4:.5 G4:2 E4:.5 E4:.5 G4:2 E4:.5 G4:.5 C5:1 B4:1 A4:.5 A4:.5 G4:2');
@@ -940,9 +933,8 @@
     const zz = setInterval(() => pop(420, 330, 'Z', C.indigo), 1600);
     snore(T);
     await say('아기 곰이 살금살금 가 보니, 누가 자고 있어요!');
-    await say('이불을 톡 눌러 봐요.');
     paw.animate([{ translate: '0 0' }, { translate: '-20px -20px' }, { translate: '0 0' }], { duration: 900 });
-    await T.tap(blanket, { prompt: '아기 곰이랑 이불을 톡!' });
+    await T.ask('이불을 톡 눌러 봐요.', () => T.tap(blanket, { prompt: '아기 곰이랑 이불을 톡!' }));
     clearInterval(zz);
     paw.remove();
     goldi.pose(''); goldi.setFace('o');
@@ -989,15 +981,14 @@
     goldi.setFace('smile');
     await say('골디락스: "아기 곰 의자, 같이 고칠래?"');
     bears.baby.setFace('smile'); bears.baby.hop(20);
-    await say('톡톡 눌러서 뚝딱뚝딱 고쳐요!');
     hammer.style.opacity = '1';
-    await T.mash(fix.g, { count: 5, prompt: '의자를 톡톡! 뚝딱뚝딱.', onStep: i => {
+    await T.ask('톡톡 눌러서 뚝딱뚝딱 고쳐요!', () => T.mash(fix.g, { count: 5, prompt: '의자를 톡톡! 뚝딱뚝딱.', onStep: i => {
       knock(T);
       hammer.animate([{ transform: `translate(${fix.x - 70}px,380px) rotate(-30deg)` }, { transform: `translate(${fix.x - 50}px,400px) rotate(20deg)` }, { transform: `translate(${fix.x - 70}px,380px) rotate(-30deg)` }], { duration: 300 });
       fix.setBroken(1 - i / 5);
       pop(fix.x, 250, '뚝딱!', C.bark);
       (i % 2 ? goldi : bears.baby).hop(16, 300);
-    } });
+    } }));
     hammer.remove();
     await sleep(400);
     AudioFX.sfx('ding') || AudioFX.ding();
@@ -1019,17 +1010,17 @@
       view();
     }, goldi.pos);
     await say('엄마 곰이 새 죽을 끓였어요. 다 함께 먹어요!');
-    await say('가장 작은 그릇부터 차례대로 톡 눌러요.');
     const order = [tb[2], tb[1], tb[0]];
     const qs = ['가장 작은 그릇은 어느 걸까요?', '그다음은 중간 그릇!', '마지막은 가장 큰 그릇!'];
     const done = new Set();
     for (let k = 0; k < 3; k++) {
       const good = order[k];
-      if (k > 0) await say(qs[k]);
-      await T.choose(tb.filter(b => !done.has(b)).map(b => ({ el: b.g, ok: b === good, onWrong: async () => {
+      const pickBowl = () => T.choose(tb.filter(b => !done.has(b)).map(b => ({ el: b.g, ok: b === good, onWrong: async () => {
         await T.anim(b.g, [{ translate: '0 0' }, { translate: '0 -20px' }, { translate: '0 0' }], 360);
         await say(`"나는 다음이야~"`);
       } })), { prompt: qs[k], where: `${SNAME[good.i]} 그릇을 찾아요.`, who: `${SNAME[good.i]} 그릇이 반짝반짝! 눌러 봐요.` });
+      if (k === 0) await T.ask('가장 작은 그릇부터 차례대로 톡 눌러요.', pickBowl);
+      else { await say(qs[k]); await pickBowl(); }
       done.add(good);
       good.setFull(true);
       steam(T, T.world, good.x, good.y - BOWL_RIM() * good.s, good.s);
@@ -1134,5 +1125,30 @@
     cutText(T, svg, '앗, 치마가!', 64);
   }
 
-  Tale.mount({ title: '골디락스와 곰 세 마리', subtitle: '크다, 중간, 작다!', run: T => run(Tale.api) });
+  /* 누르는 자리 넓히기 (2026-10-22): 화면에서 짧은 변이 84px 보다 작은 대상(g)에 투명 사각을 덧대 84px 이상으로 만든다.
+     대상 가운데는 그대로(손가락 힌트 자리 불변). 조작을 열 때마다 지금 화면 배율로 다시 잰다. 클립된 그림 조각은 건드리지 않는다 */
+  function fatten(el, min = 84) {
+    try {
+      if (!el || !(el instanceof SVGGElement) || el.__noFat) return;
+      if (el.__fat) { el.__fat.remove(); el.__fat = null; }
+      const r = el.getBoundingClientRect(); if (!r.width || !r.height || el.getAttribute('clip-path')) return;
+      if (r.width >= min && r.height >= min) return;
+      const m = el.getScreenCTM(), bb = el.getBBox(); if (!m || !bb.width || !bb.height) return;
+      const sx = Math.hypot(m.a, m.b) || 1, sy = Math.hypot(m.c, m.d) || 1;
+      const w = Math.max(bb.width, min / sx), h = Math.max(bb.height, min / sy);
+      const rc = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rc.setAttribute('x', bb.x + bb.width / 2 - w / 2); rc.setAttribute('y', bb.y + bb.height / 2 - h / 2);
+      rc.setAttribute('width', w); rc.setAttribute('height', h); rc.setAttribute('fill', '#000'); rc.setAttribute('fill-opacity', 0);
+      el.insertBefore(rc, el.firstChild); el.__fat = rc;
+    } catch (e) { /* 넓히기 실패는 무시 */ }
+  }
+
+  function withFat(api) {
+    const T = Object.create(api);
+    const of = { tap: a => [a[0]], mash: a => [a[0]], swipe: a => [a[0]], hold: a => [a[0]], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
+    Object.keys(of).forEach(k => { T[k] = (...a) => { of[k](a).forEach(e => fatten(e)); return api[k](...a); }; });
+    return T;
+  }
+
+  Tale.mount({ title: '골디락스와 곰 세 마리', subtitle: '크다, 중간, 작다!', run: T => run(withFat(Tale.api)) });
 })();
