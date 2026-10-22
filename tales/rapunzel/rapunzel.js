@@ -186,6 +186,7 @@
       });
     });
     a.want = 'left';
+    a.pos.style.pointerEvents = 'none';   // 누르는 대상이 아닌 배우·소품이 대상 위를 덮어 누름을 가로채지 않게(2026-10-22). 대상은 hitBox 가 연다
     const place0 = a.place;      // 자리표시의 글자는 뒤집히지 않게 거꾸로 되돌린다
     a.place = (nx, ny) => { place0(nx, ny); a.pos.querySelectorAll('.phl').forEach(t => t.setAttribute('transform', `translate(${t.dataset.cx},${t.dataset.cy}) scale(${a.flip},1)`)); };
     a.turn = d => { a.want = d; const n = looks[a.cur].nat; a.face(n === 'front' || n === d ? 'left' : 'right'); };
@@ -216,10 +217,10 @@
     if (a.hitRect) a.hitRect.remove();
     const lw = w / a.scale, lh = h / a.scale;
     const r = T.el('rect', { x: -lw / 2, y: -a.h / 2 - lh / 2, width: lw, height: lh, fill: '#000', 'fill-opacity': 0 }, a.pos);
-    a.pos.insertBefore(r, a.body); a.hit = a.pos; a.hitRect = r;
+    a.pos.insertBefore(r, a.body); a.hit = a.pos; a.hitRect = r; a.pos.style.pointerEvents = 'auto';
     return a;
   }
-  const unhit = a => { if (a.hitRect) { a.hitRect.remove(); a.hitRect = null; } a.hit = null; a.pos.style.pointerEvents = ''; };
+  const unhit = a => { if (a.hitRect) { a.hitRect.remove(); a.hitRect = null; } a.hit = null; a.pos.style.pointerEvents = 'none'; };
 
   const hopLoop = async (a, ms, h = 4) => { const end = Date.now() + ms; while (Date.now() < end - 400) await a.hop(h, 520); };
   const walk = (a, x, y, ms, ease = 'linear') => Promise.all([a.move(x, y, ms, ease), hopLoop(a, ms)]);
@@ -233,6 +234,7 @@
   }
 
   async function run(T) {
+    if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ CLIMB = 6000, BRAID = 2600, RISE = 2200, WALK = 3600;   // 속도 상수 (SPEC §2-7)
     const say = async text => { await T.say(text); await sleep(GAP); };
@@ -334,11 +336,12 @@
     }
     async function compare(wrong, right, left) {
       const mine = [wrong, right], from = mine.map(a => [a.x, a.y]);
+      const pe = mine.map(a => a.pos.style.pointerEvents);
       mine.forEach(a => { a.pos.style.pointerEvents = 'none'; });
       await Promise.all([right.move(left + right.w / 2, 300, 500), wrong.move(left + wrong.w / 2, 336, 500)]);
       await sleep(1000);
       await Promise.all(mine.map((a, i) => a.move(from[i][0], from[i][1], 500)));
-      mine.forEach(a => { a.pos.style.pointerEvents = ''; });
+      mine.forEach((a, i) => { a.pos.style.pointerEvents = pe[i]; });
     }
     function petals(x0, x1) {
       for (let i = 0; i < 12; i++) setTimeout(async () => {
@@ -443,12 +446,10 @@
     await say('지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.');
     hitBox(T, bird, 90, 90); hitBox(T, rabbit, 90, 90);
     const Q1 = '탑 위에 있는 새를 톡, 눌러 봐요.', Q2 = '이번엔 탑 아래에 있는 토끼를 톡, 눌러 봐요.';
-    await say(Q1);
-    await T.choose([{ el: bird.hit, ok: true }, { el: rabbit.hit, ok: false, onWrong: async () => { await rabbit.wiggle(8, 360); await say('그건 탑 아래에 있는 토끼예요. 위를 봐요.'); await arrowHint(TX + 110, 'up'); } }], { prompt: Q1 });
+    await T.ask(Q1, () => T.choose([{ el: bird.hit, ok: true }, { el: rabbit.hit, ok: false, onWrong: async () => { await rabbit.wiggle(8, 360); await say('그건 탑 아래에 있는 토끼예요. 위를 봐요.'); await arrowHint(TX + 110, 'up'); } }], { prompt: Q1 }));
     glow(bird, 1200); bird.hop(14, 400); sparkleSfx(T); T.pop(TX + 120, 60, tr('반짝!'));
     await say('맞아요, 탑 위에 새!');
-    await say(Q2);
-    await T.choose([{ el: rabbit.hit, ok: true }, { el: bird.hit, ok: false, onWrong: async () => { await bird.wiggle(8, 360); await say('그건 탑 위에 있는 새예요. 아래를 봐요.'); await arrowHint(TX + 110, 'down'); } }], { prompt: Q2 });
+    await T.ask(Q2, () => T.choose([{ el: rabbit.hit, ok: true }, { el: bird.hit, ok: false, onWrong: async () => { await bird.wiggle(8, 360); await say('그건 탑 위에 있는 새예요. 아래를 봐요.'); await arrowHint(TX + 110, 'down'); } }], { prompt: Q2 }));
     glow(rabbit, 1200); rabbit.hop(14, 400); sparkleSfx(T); T.pop(TX - 160, FL - 110, tr('반짝!'));
     await say('맞아요, 탑 아래에 토끼!');
     unhit(bird); unhit(rabbit);
@@ -479,13 +480,13 @@
     await sleep(SCENE_END);
 
     /* ===== 5. 탑 안의 노래 (배움 놀이 2: 긴 것·짧은 것) ===== */
-    const LEFT = X(150, 250), ys = [436, 494, 552], LEN = { long: 180, mid: 120, short: 60 };
+    const LEFT = X(150, 250), ys = P ? [380, 460, 540] : [436, 494, 552], LEN = { long: 180, mid: 120, short: 60 };
     await T.sceneCard(tr('탑 안의 노래'), () => {
       scene('rp_bg_room');
       put(T, hook, HOOKX, 250);
       put(T, rap, X(760, 520), FL, { look: 'sing' });
       ['long', 'mid', 'short'].sort(() => Math.random() - .5).forEach((k, i) => {
-        const r = ribbons[k]; put(T, r, LEFT + LEN[k] / 2, ys[i]); hitBox(T, r, LEN[k] + 24, 56);
+        const r = ribbons[k]; put(T, r, LEFT + LEN[k] / 2, ys[i]); hitBox(T, r, LEN[k] + 24, P ? 88 : 56);
       });
       camSnap(P ? 400 : 500, 280, 1);
     }, rap.pos);
@@ -496,22 +497,20 @@
     ['long', 'mid', 'short'].forEach((_, i) => setTimeout(() => Object.values(ribbons).sort((a, b) => a.y - b.y)[i].hop(6, 300), i * 500));
     await say('바닥에 리본 세 개가 있어요. 길이가 다 달라요.');
     const Q3 = '라푼젤 머리를 묶을 제일 긴 리본을 찾아봐요.', Q4 = '그럼 제일 짧은 리본은 어디 있을까요?';
-    await say(Q3);
-    await T.choose(['long', 'mid', 'short'].map(k => ({ el: ribbons[k].hit, ok: k === 'long', onWrong: async () => {
+    await T.ask(Q3, () => T.choose(['long', 'mid', 'short'].map(k => ({ el: ribbons[k].hit, ok: k === 'long', onWrong: async () => {
       await ribbons[k].wiggle(8, 360);
       await say(k === 'mid' ? '그건 중간 리본이에요. 더 긴 리본이 있어요.' : '그건 제일 짧은 리본이에요. 더 긴 리본이 있어요.');
       await compare(ribbons[k], ribbons.long, LEFT);
-    } })), { prompt: Q3 });
+    } })), { prompt: Q3 }));
     glow(ribbons.long, 1200); sparkleSfx(T); T.pop(LEFT + 200, 395, tr('반짝!'));
     await say('맞아요, 제일 긴 리본!');
     const TIE = [38, -14];
     AudioFX.sfx('swish', .3);
     await ribbons.long.move(rap.x + TIE[0], FL + TIE[1], 700, 'ease-in-out');
     ribbons.long.pos.style.pointerEvents = 'none';
-    await say(Q4);
-    await T.choose([{ el: ribbons.short.hit, ok: true }, { el: ribbons.mid.hit, ok: false, onWrong: async () => {
+    await T.ask(Q4, () => T.choose([{ el: ribbons.short.hit, ok: true }, { el: ribbons.mid.hit, ok: false, onWrong: async () => {
       await ribbons.mid.wiggle(8, 360); await say('그건 중간 리본이에요. 더 짧은 리본이 있어요.'); await compare(ribbons.mid, ribbons.short, LEFT);
-    } }], { prompt: Q4 });
+    } }], { prompt: Q4 }));
     glow(ribbons.short, 1200); sparkleSfx(T); T.pop(LEFT + 100, 395, tr('반짝!'));
     await say('맞아요, 제일 짧은 리본!');
     AudioFX.sfx('swish', .3);

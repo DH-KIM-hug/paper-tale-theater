@@ -203,6 +203,7 @@
       });
     });
     a.want = 'left';
+    a.pos.style.pointerEvents = 'none';   // 누르는 대상이 아닌 배우·소품이 대상 위를 덮어 누름을 가로채지 않게(2026-10-22). 대상은 hitBox 가 연다
     const place0 = a.place;      // 자리표시의 글자는 뒤집히지 않게 거꾸로 되돌린다
     a.place = (nx, ny) => { place0(nx, ny); a.pos.querySelectorAll('.phl').forEach(t => t.setAttribute('transform', `translate(${t.dataset.cx},${t.dataset.cy}) scale(${a.flip},1)`)); };
     a.turn = d => { a.want = d; const n = looks[a.cur].nat; a.face(n === 'front' || n === d ? 'left' : 'right'); };
@@ -235,7 +236,7 @@
   function hitBox(T, a, w = 100, h = 100) {
     const lw = w / a.scale, lh = h / a.scale;
     const r = T.el('rect', { x: -lw / 2, y: -lh, width: lw, height: lh, fill: '#000', 'fill-opacity': 0 }, a.pos);
-    a.pos.insertBefore(r, a.body); a.hit = a.pos; a.hitRect = r;
+    a.pos.insertBefore(r, a.body); a.hit = a.pos; a.hitRect = r; a.pos.style.pointerEvents = 'auto';
     return a;
   }
   /* 줄 전체·화면 전체 누르기 자리 (T.world 맨 앞) */
@@ -288,7 +289,19 @@
     return p;
   }
 
+  /* 누르는 자리 넓히기(2026-10-22): 화면에서 짧은 변이 min px 보다 작으면 투명 사각을 대상 안에 깔아 min px 로 키운다. 눌리는 곳 크기만 바뀌고 그림은 그대로 */
+  function padHit(T, el, min = 88) {
+    try {
+      if (el.__pad) { el.__pad.remove(); el.__pad = null; }
+      const m = el.getScreenCTM(); if (!m) return;
+      const sc = Math.hypot(m.a, m.b) || 1, bb = el.getBBox();
+      const w = Math.max(bb.width, min / sc), h = Math.max(bb.height, min / sc);
+      if (w === bb.width && h === bb.height) return;
+      el.__pad = T.el('rect', { x: bb.x + bb.width / 2 - w / 2, y: bb.y + bb.height / 2 - h / 2, width: w, height: h, fill: '#000', 'fill-opacity': 0 }, el);
+    } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
+  }
   async function run(T) {
+    if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ WALK = 3000;
     const say = async text => { await T.say(text); await sleep(GAP); };
@@ -454,7 +467,7 @@
     await Promise.all([entering, say(S.L5)]);
     door.look('closed');
     const lx = SX(0) - 55 * RS, rw = SX(7) - SX(0) + 110 * RS;
-    const rowPlates = hitRect(T, lx, TABLE_Y - 40, rw, 70);
+    const rowPlates = P ? hitRect(T, lx, TABLE_Y - 54, rw, 98) : hitRect(T, lx, TABLE_Y - 40, rw, 70);   // 세로: 짧은 변 80px 이상
     const rowFairies = hitRect(T, lx, FL - 215 * RS, rw, 215 * RS + 10);
     let strips = [], striped = false;
     const matchUp = async () => {
@@ -472,13 +485,11 @@
       ss.forEach(s => s.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }));
       await sleep(300); ss.forEach(s => s.remove());
     };
-    await say(S.Q1);
-    await T.choose([{ el: rowFairies, ok: true }, { el: rowPlates, ok: false, onWrong: async () => { await matchUp(); await say(S.W1); await clearStrips(); } }], { prompt: S.Q1 });
+    await T.ask(S.Q1, () => T.choose([{ el: rowFairies, ok: true }, { el: rowPlates, ok: false, onWrong: async () => { await matchUp(); await say(S.W1); await clearStrips(); } }], { prompt: S.Q1 }));
     await matchUp();
     await sleep(700);
     await say(S.C1);
-    await say(S.Q2);
-    await T.choose([{ el: rowPlates, ok: true }, { el: rowFairies, ok: false, onWrong: async () => { await matchUp(); await say(S.W2); } }], { prompt: S.Q2 });
+    await T.ask(S.Q2, () => T.choose([{ el: rowPlates, ok: true }, { el: rowFairies, ok: false, onWrong: async () => { await matchUp(); await say(S.W2); } }], { prompt: S.Q2 }));
     for (let i = 0; i < 7; i++) { glow(plates[i], 500); await sleep(120); }
     sparkleSfx(T);
     await say(S.C2);
@@ -597,7 +608,7 @@
       put(T, pr, X(380, 400), FL, { look: 'stand' });
     };
     await veil(T, towerSet);
-    order.forEach(k => { hitBox(T, threads[k], 60, HT['sb_prop_thread_' + k] + 24); });
+    order.forEach(k => { hitBox(T, threads[k], 60, HT['sb_prop_thread_' + k] + 24); padHit(T, threads[k].pos, 80); });
     await say(S.L24);
     granny.wiggle(2, 600);
     await say(S.L25);
@@ -609,15 +620,13 @@
       await Promise.all([T.anim(a, [{ translate: `${wheel.x - 20 - ax}px 0` }, { translate: '0 0' }], 600), T.anim(b, [{ translate: `${wheel.x + 20 - bx}px 0` }, { translate: '0 0' }], 600)]);
       a.style.translate = ''; b.style.translate = '';
     };
-    await say(S.Q3);
-    await T.choose(order.map(k => ({ el: threads[k].hit, ok: k === 'long', onWrong: async () => { await wiggleEl(T, threads[k].pos); await showPair(k, 'long'); await say(k === 'short' ? S.W3a : S.W3b); } })), { prompt: S.Q3 });
+    await T.ask(S.Q3, () => T.choose(order.map(k => ({ el: threads[k].hit, ok: k === 'long', onWrong: async () => { await wiggleEl(T, threads[k].pos); await showPair(k, 'long'); await say(k === 'short' ? S.W3a : S.W3b); } })), { prompt: S.Q3 }));
     glow(threads.long, 1200);
     threads.long.body.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(1.08)' }, { transform: 'scaleY(1)' }], 700);
     sparkleSfx(T); T.pop(wheel.x, TY - 125, tr('반짝!'));
     await sleep(700);
     await say(S.C3);
-    await say(S.Q4);
-    await T.choose(order.map(k => ({ el: threads[k].hit, ok: k === 'short', onWrong: async () => { await wiggleEl(T, threads[k].pos); await showPair(k, 'short'); await say(k === 'long' ? S.W4a : S.W4b); } })), { prompt: S.Q4 });
+    await T.ask(S.Q4, () => T.choose(order.map(k => ({ el: threads[k].hit, ok: k === 'short', onWrong: async () => { await wiggleEl(T, threads[k].pos); await showPair(k, 'short'); await say(k === 'long' ? S.W4a : S.W4b); } })), { prompt: S.Q4 }));
     glow(threads.short, 1200); sparkleSfx(T); T.pop(wheel.x, TY - 125, tr('반짝!'));
     await say(S.C4);
     await sleep(SCENE_END);
@@ -625,7 +634,7 @@
     /* ===== 7. 콕, 스르르 ===== */
     await T.sceneCard(tr('콕, 스르르'), () => {
       towerSet();
-      order.forEach(k => { const t = threads[k]; if (t.hitRect) { t.hitRect.remove(); t.hitRect = null; t.hit = null; } });
+      order.forEach(k => { const t = threads[k]; if (t.hitRect) { t.hitRect.remove(); t.hitRect = null; t.hit = null; t.pos.style.pointerEvents = 'none'; } });
       camSnap(X(500, 520), 280, 1);
     }, pr.pos);
     const l26 = say(S.L26); pr.hop(8, 300); await l26;
@@ -710,8 +719,8 @@
     grandpa.hop(4, 400);
     await say(S.L33);
     prince.hop(8, 300);
-    await say(S.L34);
     bob(bush.pos);
+    await say(S.L34);
     await T.tap(bushHit);
     bushHit.remove();
     await bush.wiggle(2, 500);
@@ -743,8 +752,7 @@
     await say(S.L37);
     const OPT = { dog, bird, kid, guard: guardB };
     const ask = async (Q, W, right, onRight, C) => {
-      await say(Q);
-      await T.choose(Object.keys(OPT).map(k => ({ el: OPT[k].hit, ok: k === right, onWrong: async () => { await wiggleEl(T, OPT[k].pos); await say(W); } })), { prompt: Q });
+      await T.ask(Q, () => T.choose(Object.keys(OPT).map(k => ({ el: OPT[k].hit, ok: k === right, onWrong: async () => { await wiggleEl(T, OPT[k].pos); await say(W); } })), { prompt: Q }));
       onRight(); sparkleSfx(T);
       await sleep(700);
       await say(C);
