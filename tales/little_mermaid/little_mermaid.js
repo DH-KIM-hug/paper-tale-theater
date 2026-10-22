@@ -363,6 +363,246 @@
     const drift = (a, dx, dy, ms) => a.pos.animate([{ translate: '0 0' }, { translate: `${dx}px ${dy}px` }], { duration: ms, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
     const bob = (a, px, ms, n = Infinity) => a.pos.animate([{ translate: '0 0' }, { translate: `0 ${px}px` }, { translate: '0 0' }], { duration: ms, iterations: n, easing: 'ease-in-out' });
 
+    /* ===== 읽어 주기 (docs/READ_MODE.md): 조작·배움 놀이 없이 같은 그림으로 읽어 준다. 놀이판 흐름은 아래 그대로 ===== */
+    if (T.reading()) {
+      let sn = 0;                       /* 몇 번째 장면(set 을 부른 횟수). 같은 배경이 두 번 나와도 구분 */
+      let frontList = [], bobAnim = null;
+      const inst = () => T.readInstant();
+      const PX = x => (P && x >= 0 && x <= 1000 ? 500 + (x - 500) * .6 : x);
+      const CAMP = { 1: 440, 2: 460, 3: 520, 4: 500, 5: 500, 6: 600, 7: 500, 8: 500, 9: 500, 10: 300, 11: 470 };
+      const refront = () => { front(...frontList); };
+      const NAMES = { mer, sisters, king, granny, prince, witch, lady };
+      const SCN = { 6: { witch: .66 }, 7: { _: .8 }, 8: { _: 1.2 }, 9: { _: 1.5 } };
+      /* 대본 좌표는 놀이판과 바닥선·수면선이 달라서, 장면마다 놀이판 자리로 맞춘다 */
+      const place = (nm, x, y) => {
+        const sc = SCN[sn]; let s = sc ? (sc[nm] != null ? sc[nm] : (sc._ != null ? sc._ : 1)) : 1;
+        let xx = PX(x), yy = y;
+        if (sn === 6 && nm === 'witch') yy = WY; if (sn === 7) yy = SY; if (sn === 8) yy = GF;
+        if (sn === 2) { if (nm === 'ship') { xx = X(640, 560); yy = WATER + 28; } if (nm === 'prince') { xx = ship.x + BOW_DX; yy = ship.y + DECK_DY; } if (nm === 'mer') { xx = X(330, 420); yy = WATER + 12; } }
+        if (sn === 3) { if (nm === 'ship') { xx = X(620, 560); yy = WATER + 40; } if (nm === 'mer') yy = WATER + 12; }
+        if (sn === 4) { if (nm === 'mer') xx = X(360, 420); if (nm === 'prince') xx = X(580, 560); }
+        if (sn === 10) {
+          if (nm === 'ship') { xx = 720; yy = WATER + 46; }
+          if (nm === 'prince') { xx = ship.x + 40; yy = ship.y + DECK_DY; }
+          if (nm === 'lady') { xx = ship.x + 150; yy = ship.y + DECK_DY; }
+          if (nm === 'mer') { xx = ship.x + BOW_DX; yy = ship.y + DECK_DY; }
+          if (nm === 'sisters') { xx = 250; yy = WATER + 90; }
+        }
+        if (sn === 11) {
+          if (nm === 'ship') { xx = X(640, 600); yy = WATER11 + 28; }
+          if (nm === 'prince') { xx = ship.x - SHIP_W * .10; yy = ship.y + DECK_DY; }
+          if (nm === 'lady') { xx = ship.x + 60; yy = ship.y + DECK_DY; }
+          if (nm === 'mer') { xx = X(340, 410); yy = 300; }
+        }
+        return [xx, yy, s];
+      };
+      const hideLayers = () => { [...ALL, ...Object.values(L).flat(), ...fwD, fwE, fwA2].forEach(hide); };
+      const rWaveCover = (key) => waterCover(T, key, key === 'dawn_sea' ? WATER + 38 : WATER + 20);
+      const Y = y => (sn === 7 ? SY : sn === 8 ? GF : +y);
+      const R = {
+        set: key => {
+          sn++; frontList = []; hideLayers(); scene(key); T._cover = null;
+          if (P) camSnap(CAMP[sn] || 500, 280, 1);
+          if (key === 'palace') {
+            palaceBack(); put(T, L.coralA, 40, 548); put(T, L.coralB, 1035, 548, { to: 'right' }); put(T, L.kelp, 975, 560);
+            frontList = [L.coralA, L.coralB, L.kelp];
+          } else if (key === 'witch') {
+            put(T, L.jellyA, X(150, 400), 130); put(T, L.jellyB, X(880, 800), 200);
+            [L.jellyA, L.jellyB].forEach((j, i) => j.pos.animate([{ translate: '0 -14px' }, { translate: '0 14px' }], { duration: 3200, delay: i * 900, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' }));
+            put(T, L.coralB, 30, 552); frontList = [L.coralB];
+          } else if (key === 'garden') {
+            put(T, L.arch, 960, GF); put(T, L.topiary, 70, GF);
+            put(T, L.rose[0], 40, 560); put(T, L.rose[1], 975, 560, { to: 'right' }); frontList = [...L.rose];
+          } else if (key === 'deck') {
+            put(T, L.arch, X(565, 540), 520);
+          } else if (key === 'beach') {
+            put(T, rock, X(400, 420), 522); frontList = [rock];
+          }
+        },
+        tint: arg => { const [c, op] = arg.split(','); tint(T, c, +op); },
+        cam: arg => {
+          const [x, y, z] = arg.split(',');
+          const zz = +z, xx = P ? (zz > 1.1 ? 500 : (CAMP[sn] || 500)) : +x;
+          if (inst()) camSnap(xx, +y, zz); else T.camTo(xx, +y, zz, 700);
+        },
+        follow: x => { if (P && !inst()) T.camTo(+x, 280, 1, 700); },
+        confetti: () => { T.confetti(); },
+        fx: name => { sfx(T, name, name === 'tada' ? () => sparkleSfx(T) : name === 'sparkle' ? () => sparkleSfx(T) : null); },
+        pop: (...a) => { const [x, y, ...t] = a.join(':').split(','); T.pop(PX(+x), +y, tr(t.join(','))); },
+        glow: nm => { glow(NAMES[nm]); },
+        bubbles: arg => { const [x, y, n] = arg.split(','); bubblesUp(T, PX(+x), +y, +n, 140); },
+        sparkle: arg => { const [x, y] = arg.split(','); sparkle(T, PX(+x), +y, 110, 14); },
+        water: (op, a) => { const [key] = String(a).split(','); rWaveCover(key); refront(); },
+        fish: () => {
+          const fxs = X([120, 640, 760], [380, 560, 600]), fys = [380, 200, 430];
+          fish.forEach((f, i) => { put(T, f, fxs[i], fys[i], { to: i % 2 ? 'left' : 'right' }); drift(f, 24 * (i % 2 ? -1 : 1), 12, 3000 + i * 500); });
+          refront();
+        },
+        gulls: () => {
+          put(T, gulls[0], X(150, 250), 120); put(T, gulls[1], X(820, 560), 90);
+          gulls.forEach((g, i) => g.pos.animate([{ translate: '-30px 0' }, { translate: '30px -10px' }], { duration: 4000, iterations: Infinity, direction: 'alternate', delay: i * 700 }));
+        },
+        sun: () => { put(T, sun, 820, WATER + 70); T.bg.appendChild(sun.pos); },
+        shell: (op, xy) => { const [x, y] = xy.split(','); put(T, shell, PX(+x), +y); },
+        cauldron: (op, xy) => {
+          if (op === 'at') { const [x, y] = xy.split(','); put(T, cauldron, PX(+x), +y, { look: 'dim', s: .85 }); refront(); return; }
+          cauldron.look('glow'); sfx(T, 'bubbles');
+          put(T, potion, cauldron.x + 44, cauldron.y - 150, { look: 'empty' }); fadeIn(potion, 400);
+          sleep(600).then(() => { potion.look('full'); glow(potion, 1000); sfx(T, 'sparkle'); });
+        },
+        pearl: async () => {
+          const pearl = T.el('circle', { cx: 0, cy: 0, r: 8, fill: '#F6ECD8', stroke: '#F2B366', 'stroke-width': 2 }, T.world);
+          const mx = mer.x + mer.w * .28, my = mer.y - mer.h * .70;
+          potion.move(mer.x + 36, mer.y - 120, 1200).then(() => hide(potion), () => hide(potion));
+          await T.anim(pearl, [{ transform: `translate(${mx}px,${my}px)` }, { transform: `translate(${mx + 90}px,${my - 120}px)` }], { duration: 500, easing: 'ease-out' });
+          await T.anim(pearl, [{ transform: `translate(${mx + 90}px,${my - 120}px)` }, { transform: `translate(${shell.x}px,${shell.y - 30}px)` }], { duration: 700, easing: 'ease-in' });
+          sfx(T, 'sparkle'); pearl.remove(); glow(shell, 1200); mer.look('worry', 'right'); mer.wiggle(2, 600);
+        },
+        potion: async () => {
+          put(T, potion, mer.x + 34 * SC.steps, mer.y - 118 * SC.steps, { look: 'full', s: SC.steps });
+          await potion.move(mer.x + 22 * SC.steps, mer.y - 150 * SC.steps, 500); sfx(T, 'gulp', () => popSfx(T)); hide(potion);
+        },
+        ship: (op, xy, look) => {
+          if (op === 'at') {
+            const [x, y] = xy.split(',');
+            const o = place('ship', +x, +y); put(T, ship, o[0], o[1], { look });
+            if (sn === 2) ship.pos.animate([{ translate: '0 0' }, { translate: '0 3px' }, { translate: '0 0' }], { duration: 2600, iterations: Infinity });
+            return;
+          }
+          if (sn === 2) { ship.wiggle(2, 700); return; }
+          T.shake(); sfx(T, 'thud'); return ship.wiggle(4, 900);
+        },
+        storm: () => {
+          put(T, clouds[0], X(300, 380), 150); put(T, clouds[1], X(760, 620), 120);
+          T.bg.appendChild(clouds[0].pos); T.bg.appendChild(clouds[1].pos);
+          put(T, waves[0], X(420, 500), WATER + 95); put(T, waves[1], X(850, 760), WATER + 105);
+          { const c = waterCover(T, 'night_sea', WATER + 88); if (c) T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#1F2A56', opacity: .35 }, c); }
+          waves.forEach((w, i) => w.pos.animate([{ translate: '-25px 0' }, { translate: '25px -8px' }], { duration: 2000, iterations: Infinity, direction: 'alternate', delay: i * 400 }));
+        },
+        fireworks: () => {
+          const burst = async (f, x, y, h, snd, word) => {
+            put(T, f, x, y + h / 2); f.setScale(h / 120);
+            if (snd) sfx(T, snd); if (word) T.pop(x + 60, y - h / 2, tr('펑!'));
+            f.body.animate([{ transform: 'scale(.2)' }, { transform: 'scale(1.15)' }, { transform: 'scale(1)' }], 500);
+            await sleep(1800); await T.anim(f.pos, [{ opacity: 1 }, { opacity: 0 }], 400).catch(() => {}); hide(f);
+          };
+          const FWC = { prop_fw_a: '#F2C94E', prop_fw_b: '#E8A0B8', prop_fw_c: '#8FC1E3', layer_fw_d: '#EBD08A', layer_fw_e: '#F2A7B5' };
+          const reflect = (x, c) => [-30, 25].forEach((dx, i) => {
+            const e = T.el('ellipse', { cx: x + dx, cy: WATER + 30 + i * 22, rx: 26, ry: 5, fill: c, opacity: 0 }, T._cover || T.world); e.style.pointerEvents = 'none';
+            e.animate([{ opacity: 0 }, { opacity: .5 }, { opacity: 0 }], { duration: 900, delay: 200 }).finished.then(() => e.remove(), () => e.remove());
+          });
+          const fwx = x => X(x, 460 + (x - 560) * .55);
+          const SHOW = [[fw[0], 640, 100, 'pow', true], [fw[1], 780, 70], [fw[2], 300, 130], [fwD[0], 700, 160, 'boom'], [fwE, 230, 70], [fwD[1], 870, 130], [fwA2, 610, 60, 'pow', true]];
+          const GAPS = [700, 700, 600, 600, 500, 500];
+          (async () => {
+            for (let i = 0; i < SHOW.length; i++) {
+              const [f, x, y, snd, word] = SHOW[i], key = f === fwA2 ? 'prop_fw_a' : f === fwE ? 'layer_fw_e' : fwD.includes(f) ? 'layer_fw_d' : ['prop_fw_a', 'prop_fw_b', 'prop_fw_c'][fw.indexOf(f)];
+              burst(f, fwx(x), y, 120, snd || null, word); reflect(fwx(x), FWC[key]);
+              if (i < GAPS.length) await sleep(GAPS[i]);
+            }
+          })();
+          bob(mer, -3, 600, 3);
+        },
+        dance: async () => {
+          for (let i = 0; i < 2; i++) {
+            await Promise.all([mer.move(mer.x - 30, GF, 600), prince.move(prince.x - 30, GF, 600)]);
+            await Promise.all([mer.move(mer.x + 30, GF, 600), prince.move(prince.x + 30, GF, 600)]);
+            if (!i) T.pop(mer.x, GF - 250 * SC.garden, tr('흔들흔들'));
+          }
+        },
+        dagger: async op => {
+          if (op === 'give') {
+            if (dagger.pos.style.display === 'none') { put(T, dagger, sisters.x - sisters.w * .40, WATER - 12); fadeIn(dagger, 300); }
+            await dagger.move(mer.x, mer.y - mer.h * .38, 900); return;
+          }
+          const SP = [430, WATER + 40];
+          await dagger.move(mer.x - 120, mer.y - 260, 450, 'ease-out');
+          await dagger.move(SP[0], SP[1], 650, 'ease-in'); hide(dagger);
+          sfx(T, 'splash'); rippleAt(T, SP[0], WATER + 20); glints(T, SP[0], WATER + 10);
+          sun.move(820, WATER - 40, 2500, 'ease-out');
+          [-60, -30, 0, 30, 60].forEach((deg, i) => {
+            const a = (deg - 90) * Math.PI / 180, a1 = a - .06, a2 = a + .06, cx = 820, cy = WATER - 40, Rr = 420;
+            const w = T.el('polygon', { points: `${cx},${cy} ${cx + Math.cos(a1) * Rr},${cy + Math.sin(a1) * Rr} ${cx + Math.cos(a2) * Rr},${cy + Math.sin(a2) * Rr}`, fill: '#F2B366', opacity: 0 }, T.bg);
+            T.bg.insertBefore(w, sun.pos);
+            w.animate([{ opacity: 0 }, { opacity: .18 }], { duration: 2500, delay: i * 120, fill: 'forwards' });
+          });
+          const warm = tint(T, '#F2B366', 0); T.anim(warm, [{ opacity: 0 }, { opacity: .18 }], 2500).catch(() => {}); warm.setAttribute('opacity', .18);
+          if (T._cover) { const w2 = T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#F2B366', opacity: .18 }, T._cover); T.anim(w2, [{ opacity: 0 }, { opacity: .18 }], 2500).catch(() => {}); }
+          sfx(T, 'sparkle');
+        },
+        wind: () => {
+          sfx(T, 'blow_long', () => sfx(T, 'whoosh'));
+          [[wind[0], mer.x + 70, 220, ship.x + 150, 200, 1400], [wind[1], mer.x + 50, 300, ship.x + 120, 280, 1600]].forEach(async ([w, x0, y0, x1, y1, ms]) => {
+            put(T, w, x0, y0); fadeIn(w, 300);
+            await w.move(x1, y1, ms, 'ease-in-out'); await fadeOut(T, w, 300);
+          });
+          ship.body.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.05)' }, { transform: 'scale(1)' }], 900);
+          ship.hop(10, 600); ship.move(ship.x - 60, ship.y, 1800); gulls.forEach(g => g.hop(16, 500));
+        },
+      };
+      /* 배우 동사: at / look / move / hop / wiggle / fade / hide (+ 인어공주·왕자 전용) */
+      const AV = (nm, a) => (op, ...r) => {
+        switch (op) {
+          case 'at': {
+            const [xy, look, to] = r, [x, y] = xy.split(','), o = place(nm, +x, +y);
+            put(T, a, o[0], o[1], { look: look || undefined, to: to || undefined, s: o[2] });
+            if (nm === 'mer' && sn === 7 && look === 'sit_tail') put(T, potion, a.x + 34 * SC.steps, a.y - 118 * SC.steps, { look: 'full', s: SC.steps });
+            if (nm === 'mer' && sn === 8 && look === 'dance') petals(T, 6, X([120, 220, 800, 900], [330, 370, 640, 680]));
+            if (nm === 'sisters' && sn === 10) a.pos.style.opacity = '0';
+            if (nm === 'granny' && sn === 1 && look === 'hand') { [king, sisters, ...fish].forEach(hide); hide(L.school); }
+            refront(); return;
+          }
+          case 'look': a.look(r[0], r[1]); return;
+          case 'move': {
+            const [x, y, ms] = r[0].split(','), tx = (P && sn === 6 && nm === 'mer') ? 490 : PX(+x), p = a.move(tx, Y(y), +ms);
+            return (nm === 'prince' && (sn === 4 || sn === 7) && +x > 1000) ? null : p;
+          }
+          case 'hop': a.hop(10, 400); if (nm === 'sisters' && sn === 1) king.hop(6, 600); if (nm === 'sisters' && sn === 10 && dagger.pos.style.display === 'none') { put(T, dagger, a.x - a.w * .40, WATER - 12); fadeIn(dagger, 300); } return;
+          case 'wiggle': a.wiggle(nm === 'granny' ? 3 : 4, 600); return;
+          case 'fade':
+            if (r[0] === 'out') return fadeOut(T, a, 500);
+            a.pos.style.display = ''; a.pos.style.opacity = '';
+            fadeIn(a, 900); if (nm === 'sisters' && sn === 10) { sfx(T, 'bubbles'); a.move(250, WATER + 30, 1200, 'ease-out'); } return;
+          case 'hide': hide(a); return;
+          case 'wobble': { const [x, ms] = r[0].split(','); return wobbleWalk(T, a, PX(+x), +ms, SY); }
+          case 'surface': {
+            a.turn('left'); sfx(T, 'bubbles'); bubblesUp(T, a.x, a.y - 60, 6, 220);
+            return a.move(a.x + 40, -220, 2000, 'ease-in').then(() => hide(a));
+          }
+          case 'rescue': {
+            const HOLD_DX = a.w * .45 + prince.w * .5 - 20;
+            if (P) T.camTo(prince.x - 60, 280, 1, 700);
+            return a.move(prince.x - HOLD_DX, WATER + 12, 1400).then(() => {
+              mer.move(mer.x + 60, mer.y, 3600, 'linear'); prince.move(prince.x + 60, prince.y, 3600, 'linear');
+            });
+          }
+          case 'bubble': {
+            const bx = a.x, by = a.y, my = sn;
+            (async () => {
+              await fadeOut(T, a, 500);
+              if (sn !== my) return;   /* 장면이 이미 넘어갔으면 다음 장면 인물을 건드리지 않는다 */
+              put(T, a, bx, by, { look: 'bubble', s: .6 }); fadeIn(a, 600);
+              bubblesUp(T, bx, by - 80, 8, 260); sparkle(T, bx, by - 110, 120, 12); sleep(250).then(() => sparkle(T, bx, by - 150, 160, 12, true));
+              sleep(1200).then(() => T.pop(bx + 40, 230, tr('둥실')));
+              await a.move(bx + 40, 90, 3200, 'ease-in-out').catch(() => {}); if (sn === my) await fadeOut(T, a, 600);
+            })();
+            return;
+          }
+          case 'fall': {
+            put(T, a, ship.x - 120, ship.y + DECK_DY, { look: 'stand', to: 'left' });
+            return (async () => {
+              await a.move(a.x, WATER - 40, 620, 'ease-in');
+              sfx(T, 'splash_big');
+              a.look('float', 'left'); await a.move(ship.x - 150, WATER + 10, 500, 'ease-out');
+            })();
+          }
+        }
+      };
+      const READ_ACTS = { ...R, set: R.set };
+      Object.entries(NAMES).forEach(([nm, a]) => { READ_ACTS[nm] = AV(nm, a); });
+      return T.readPlay(READ_ACTS);
+    }
+
     /* ===== 1. 바다 밑 궁전 (배움 놀이: 뜨고 가라앉기) ===== */
     scene('palace');
     palaceBack();
@@ -754,5 +994,5 @@
     return '사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.';
   }
 
-  Tale.mount({ title: '인어공주', subtitle: '사랑하는 마음은 사라지지 않아요', run: T => run(Tale.api) });
+  Tale.mount({ title: '인어공주', subtitle: '사랑하는 마음은 사라지지 않아요', read: true, run: T => run(Tale.api) });
 })();
