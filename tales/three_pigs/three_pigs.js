@@ -21,6 +21,7 @@
 
   async function run(T) {
     const say = T.say, sleep = T.sleep;
+    if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const portrait = () => T.viewWidth() < 990;
     const look = (x, dur = 700) => T.camTo(x, 280, 1, dur);
     const sfx = n => { try { AudioFX.sfx(n); } catch (e) { /* 소리 없이도 진행 */ } };
@@ -41,6 +42,9 @@
       };
       a.show = on => { a.pos.style.opacity = on ? 1 : 0; };
       a.set(name, h);
+      /* 누르는 자리: 작은 그림도 화면 짧은 변 80px 이상(세로 휴대폰 포함)이 되게 투명 사각을 깐다 (2026-10-22) */
+      const hh = Math.max(h, 96), hr = T.el('rect', { x: -48, y: -hh, width: 96, height: hh, fill: '#000', 'fill-opacity': 0 }, a.pos);
+      a.pos.insertBefore(hr, a.pos.firstChild);
       return a;
     }
     const hit = (x, y, w, h) => T.el('rect', { x, y, width: w, height: h, fill: '#000', 'fill-opacity': 0 }, T.world);
@@ -80,9 +84,8 @@
       await look(500, 200);
       await say('아기 돼지들의 옷을 잘 보세요.');
       for (const q of qs) {
-        await say(q.q);
         const opts = row.map((a, j) => ({ el: a.pos, ok: order[j] === q.ans }));
-        const pick = await T.choose(opts, { prompt: q.q, where: '다시 한번 잘 보세요.', who: '반짝이는 돼지를 눌러 보세요.' });
+        const pick = await T.ask(q.q, () => T.choose(opts, { prompt: q.q, where: '다시 한번 잘 보세요.', who: '반짝이는 돼지를 눌러 보세요.' }));
         const w = row[opts.indexOf(pick)]; w.hop(36, 450); sfx('pop');
         await say('맞아요! 이 돼지예요.');
       }
@@ -243,9 +246,8 @@
     const choiceA = sprite('house_straw', 500 - gap, ch, 470), choiceB = sprite('house_wood', 500, ch, 470), choiceC = sprite('house_brick', 500 + gap, ch, 470);
     const runners = [sprite('pig1_flee', 60, small ? 55 : 150, 540), sprite('pig2_flee', 150, small ? 55 : 150, 540)];
     await look(500, 200);
-    await say('두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?');
-    const pick = await T.choose([{ el: choiceA.pos }, { el: choiceB.pos }, { el: choiceC.pos, ok: true }],
-      { prompt: '가장 튼튼한 집을 골라 봐요!', where: '짚은 너무 가벼워요. 다시 골라 봐요.', who: '벽돌 집이 가장 튼튼해요!' });
+    const pick = await T.ask('두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?', () => T.choose([{ el: choiceA.pos }, { el: choiceB.pos }, { el: choiceC.pos, ok: true }],
+      { prompt: '가장 튼튼한 집을 골라 봐요!', where: '짚은 너무 가벼워요. 다시 골라 봐요.', who: '벽돌 집이 가장 튼튼해요!' }));
     runners.forEach((r, i) => r.move(choiceC.x - 30 + i * 40, 540, 1000 + i * 200));
     choiceC.hop(20, 400); sfx('ding');
     await sleep(1300);
@@ -255,10 +257,11 @@
     await T.sceneCard('벽돌 집 안', () => { bg('brick_in'); T.camSnap(450, 280, 1); });
     const inside = [sprite('pig1_base', 300, 210), sprite('pig2_base', 440, 210), sprite('pig3_base', 580, 210)];
     await look(440, 200);
-    await say('삼 형제는 모두 모였어요. 하나, 둘, 셋을 세어 볼까요?');
+    let askG1 = '삼 형제는 모두 모였어요. 하나, 둘, 셋을 세어 볼까요?'; // 안내는 첫 번째 누름에만 (T.ask)
+    const askOnce1 = f => { const g = askG1; askG1 = null; return g ? T.ask(g, f) : f(); };
     for (let i = 0; i < 3; i++) {
       await look(inside[i].x);
-      await T.tap(inside[i].pos, { prompt: '아기 돼지를 톡 눌러요.' });
+      await askOnce1(() => T.tap(inside[i].pos, { prompt: '아기 돼지를 톡 눌러요.' }));
       inside[i].hop(36); T.pop(inside[i].x, 260, NUM[i]); sfx('pop');
     }
     await say('"셋이서 함께라서 무섭지 않아!"');
