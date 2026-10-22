@@ -1,0 +1,1400 @@
+{
+ "mode": "read",
+ "tale": "beauty_beast",
+ "lang": "en",
+ "title": "Beauty and the Beast",
+ "voices_from": "voice_script_el.json",
+ "moral": "Look at the heart, not the looks.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md). text 는 한국어 줄(키), en 이 읽는 문장. src=reuse 는 narration_el_en.js 의 영어 녹음 그대로, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<cottage|cottage_front|snow_forest|dining|garden|room>": "장면 배경(scene(key)). scenes[].set 으로 자동 호출, 장면 안에서 배경을 바꿀 때는 before 에 둔다",
+  "tint:<hex>,<op> | snowfall | cam:<x,y,z> | follow:<x>": "색 겹·눈 내림·카메라",
+  "belle:look:<stand|broom|point|resolve|sit|worry|sleep|run|kneel|joy>[:<dir>] | belle:at:<x,y>[:<look>[:<dir>]] | belle:move:<x,y,ms> | belle:hop | belle:wiggle | belle:fade:<in|out>": "벨",
+  "beast:look:<stand|sit|ring|lie|eyes>[:<dir>] | beast:at:<x,y>[:<look>[:<dir>[:<s>]]] | beast:hop | beast:wiggle | beast:appear | beast:transform": "야수. appear = 덤불 뒤에서 쿵 쿵 나타남(5장), transform = 빛과 반짝 속에 왕자로 바뀜(11장)",
+  "prince:at:<x,y> | prince:hop | father:look:<stand|ride|eat|sleep|shock|rose|bed|well>[:<dir>] | father:at:<x,y>[:<look>[:<dir>]] | father:move:<x,y,ms> | father:hop | father:wiggle | father:fade:<in|out> | father:hide": "왕자·아버지",
+  "sisa:look:<pout|plead|gasp|joy> | sisb:look:<…> | sisters:at:<x1,x2> | sisters:hop | sisters:wiggle": "큰언니·작은언니",
+  "horse:at:<x,y> | horse:hide | father:ride_off": "말 / 아버지가 말을 타고 따각따각 오른쪽으로 떠남(2장)",
+  "bushes:set | bush5:hop | bush2:hop | rose:pick | hat:drop": "장미 덤불 둘 놓기 / 아버지가 장미 한 송이를 꺾음(톡!) / 모자가 툭 떨어짐",
+  "table:long | table:small | vases:set | plate:show": "식탁 / 작은 탁자 / 장미 화병 셋(위·아래·옆) / '벨의 방' 문패",
+  "mirror:set | mirror:face:<show|hide> | ring:show | ring:give | ring:table": "거울·거울 얼굴 / 반지 보이기·벨에게·탁자에 놓기",
+  "sun:cycle | dream:show | dream:hide": "해가 뜨고 지기 3번(10장) / 꿈 구름 속 쓰러진 야수",
+  "spring:set | drops | shine | family:run": "샘 / 벨이 샘물을 똑똑 떨어뜨림 / 따뜻한 빛 / 아버지·언니들이 달려옴",
+  "glow:<belle|beast|prince|bush5|ring> | sparkle | shake | confetti | fx:<womp|paper_up|step_grass|blow_long|chomp|thud|paper_down|swish|pop|sparkle|splash|tada|xylo_down> | pop:<x,y,글자>": "효과"
+ },
+ "scenes": [
+  {
+   "key": "R01_cottage",
+   "card": "The Poor Family",
+   "set": "cottage",
+   "enter": [
+    "father:at:330,505:stand",
+    "belle:at:560,505:broom",
+    "sisters:at:760,870",
+    "sisa:look:pout",
+    "sisb:look:pout",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날에 상인에게 딸이 셋 있었어요. 막내 벨은 마음이 고와서 모두 '미녀'라고 불렀어요.",
+     "src": "reuse",
+     "en": "Once upon a time, a merchant had three daughters. The youngest, Belle, was so kind-hearted that everyone called her Beauty.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, a merchant had three daughters. The youngest, Belle, was so kind-hearted that everyone called her Beauty.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "언니들은 예쁜 옷과 반짝반짝 보석을 좋아했어요.",
+     "src": "new",
+     "en": "The older sisters loved pretty dresses and sparkly, twinkly jewels.",
+     "segs": [
+      [
+       "nar",
+       "The older sisters loved pretty dresses and sparkly, twinkly jewels.",
+       null
+      ]
+     ],
+     "before": [
+      "sisters:hop"
+     ]
+    },
+    {
+     "text": "어느 날 배들이 가라앉아, 가족은 시골 작은 집으로 갔어요.",
+     "src": "reuse",
+     "en": "One day his ships sank, and the family moved to a small cottage in the countryside.",
+     "segs": [
+      [
+       "nar",
+       "One day his ships sank, and the family moved to a small cottage in the countryside.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "father:wiggle"
+     ]
+    },
+    {
+     "text": "집은 작고, 바람이 휘휘 새어 들어왔어요.",
+     "src": "new",
+     "en": "The cottage was small, and the wind whistled, whoo, whoo, through the cracks.",
+     "segs": [
+      [
+       "nar",
+       "The cottage was small, and the wind whistled, whoo, whoo, through the cracks.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "괜찮아요, 제가 집안일을 할게요.",
+     "src": "reuse",
+     "en": "It's all right. I will do the housework.",
+     "segs": [
+      [
+       "belle",
+       "It's all right. I will do the housework.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "belle:hop"
+     ]
+    },
+    {
+     "text": "벨은 싹싹 빗자루질을 하며 콧노래를 흥얼거렸어요.",
+     "src": "new",
+     "en": "Belle swept the floor, swish, swish, humming a happy little tune.",
+     "segs": [
+      [
+       "nar",
+       "Belle swept the floor, swish, swish, humming a happy little tune.",
+       null
+      ]
+     ],
+     "after": [
+      "sisters:hop",
+      "pop:815,275,힝…",
+      "fx:womp"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_rose",
+   "card": "A Single Rose",
+   "set": "cottage_front",
+   "enter": [
+    "sisters:at:200,300",
+    "sisa:look:plead",
+    "sisb:look:plead",
+    "belle:at:430,505:point:right",
+    "horse:at:640,505",
+    "father:at:560,505:stand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "배 한 척이 돌아왔대요! 아버지가 도시로 떠나요.",
+     "src": "reuse",
+     "en": "One of the ships came back! Father is leaving for the city.",
+     "segs": [
+      [
+       "nar",
+       "One of the ships came back! Father is leaving for the city.",
+       "toneup"
+      ]
+     ]
+    },
+    {
+     "text": "비단옷이요! 반지랑 리본도요!",
+     "src": "reuse",
+     "en": "A silk dress for me! And rings and ribbons too!",
+     "segs": [
+      [
+       "sisa",
+       "A silk dress for me!",
+       "toneup"
+      ],
+      [
+       "sisb",
+       "And rings and ribbons too!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "sisters:hop"
+     ]
+    },
+    {
+     "text": "저는 장미 한 송이면 돼요.",
+     "src": "reuse",
+     "en": "A single rose is all I need.",
+     "segs": [
+      [
+       "belle",
+       "A single rose is all I need.",
+       null
+      ]
+     ],
+     "before": [
+      "belle:hop"
+     ]
+    },
+    {
+     "text": "그래, 다녀오마.",
+     "src": "reuse",
+     "en": "All right. I will be back soon.",
+     "segs": [
+      [
+       "father",
+       "All right. I will be back soon.",
+       null
+      ]
+     ],
+     "before": [
+      "father:hop"
+     ]
+    },
+    {
+     "text": "아버지는 말 등에 훌쩍 올라탔어요.",
+     "src": "new",
+     "en": "Father hopped up, hup, onto the horse's back.",
+     "segs": [
+      [
+       "nar",
+       "Father hopped up, hup, onto the horse's back.",
+       null
+      ]
+     ],
+     "before": [
+      "horse:hide",
+      "father:at:640,505:ride:right",
+      "fx:paper_up"
+     ]
+    },
+    {
+     "text": "따각따각, 아버지가 도시로 떠났어요.",
+     "src": "reuse",
+     "en": "Clip-clop, clip-clop. Father rode off to the city.",
+     "segs": [
+      [
+       "nar",
+       "Clip-clop, clip-clop. Father rode off to the city.",
+       null
+      ]
+     ],
+     "before": [
+      "father:ride_off",
+      "pop:640,155,따각따각"
+     ]
+    },
+    {
+     "text": "벨은 아버지가 보이지 않을 때까지 손을 흔들흔들 했어요.",
+     "src": "new",
+     "en": "Belle waved and waved, until Father was out of sight.",
+     "segs": [
+      [
+       "nar",
+       "Belle waved and waved, until Father was out of sight.",
+       null
+      ]
+     ],
+     "before": [
+      "belle:hop",
+      "sisters:wiggle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_snow",
+   "card": "The Palace in the Snowstorm",
+   "set": "snow_forest",
+   "enter": [
+    "snowfall",
+    "father:at:-150,505:ride:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그런데 배의 짐은 남의 것이 되어, 아버지는 빈손으로 돌아오다 눈보라에 길을 잃었어요.",
+     "src": "reuse",
+     "en": "But the ship's goods now belonged to someone else. Father came home empty-handed and lost his way in a snowstorm.",
+     "segs": [
+      [
+       "nar",
+       "But the ship's goods now belonged to someone else. Father came home empty-handed and lost his way in a snowstorm.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "fx:blow_long"
+     ],
+     "after": [
+      "father:move:480,505,3200"
+     ]
+    },
+    {
+     "text": "눈이 펑펑 쏟아지고, 바람이 쌩쌩 불었어요.",
+     "src": "new",
+     "en": "The snow came down thick and fast, and the wind blew, whoosh, whoosh.",
+     "segs": [
+      [
+       "nar",
+       "The snow came down thick and fast, and the wind blew, whoosh, whoosh.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "멀리 불빛! 커다란 궁전에 아무도 없고, 따뜻한 저녁상만 차려져 있었어요.",
+     "src": "reuse",
+     "en": "A light far away! In a huge palace there was no one at all, only a warm supper laid out on the table.",
+     "segs": [
+      [
+       "nar",
+       "A light far away! In a huge palace there was no one at all, only a warm supper laid out on the table.",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "father:hop"
+     ]
+    },
+    {
+     "text": "커다란 문이 저절로 스르르 열렸어요.",
+     "src": "new",
+     "en": "The great big door swung open all by itself, creeeak.",
+     "segs": [
+      [
+       "nar",
+       "The great big door swung open all by itself, creeeak.",
+       null
+      ]
+     ],
+     "after": [
+      "set:dining",
+      "father:at:560,505:eat",
+      "table:long"
+     ]
+    },
+    {
+     "text": "누구 계세요? …고맙게 먹겠습니다.",
+     "src": "reuse",
+     "en": "Is anyone here? ... Thank you, I will gladly eat.",
+     "segs": [
+      [
+       "father",
+       "Is anyone here? ... Thank you, I will gladly eat.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "냠냠, 쩝쩝! 따뜻한 수프와 빵이 정말 맛있었어요.",
+     "src": "new",
+     "en": "Yum, yum, munch, munch! The warm soup and bread were so delicious.",
+     "segs": [
+      [
+       "nar",
+       "Yum, yum, munch, munch! The warm soup and bread were so delicious.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:chomp",
+      "father:hop",
+      "pop:560,175,냠냠!"
+     ]
+    },
+    {
+     "text": "아버지는 배불리 먹고, 푹신한 의자에서 잠이 들었어요.",
+     "src": "reuse",
+     "en": "Father ate his fill and fell asleep in a soft armchair.",
+     "segs": [
+      [
+       "nar",
+       "Father ate his fill and fell asleep in a soft armchair.",
+       "tonedown"
+      ]
+     ],
+     "before": [
+      "father:fade:out",
+      "father:at:300,505:sleep",
+      "father:fade:in",
+      "tint:#1F2A56,.25",
+      "pop:300,275,쿨쿨"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_garden",
+   "card": "The Rose Garden and the Beast",
+   "set": "garden",
+   "enter": [
+    "bushes:set",
+    "father:at:880,505:stand:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "아침이 되자 눈 속에 장미가 활짝 피어 있었어요!",
+     "src": "reuse",
+     "en": "In the morning, roses were blooming in the snow!",
+     "segs": [
+      [
+       "nar",
+       "In the morning, roses were blooming in the snow!",
+       "toneup"
+      ]
+     ],
+     "after": [
+      "bush5:hop",
+      "bush2:hop"
+     ]
+    },
+    {
+     "text": "덤불 하나엔 장미 다섯 송이, 다른 덤불엔 두 송이가 반짝반짝 빛났어요.",
+     "src": "new",
+     "en": "One bush had five roses and the other had two, all sparkling, twinkle, twinkle, in the snow.",
+     "segs": [
+      [
+       "nar",
+       "One bush had five roses and the other had two, all sparkling, twinkle, twinkle, in the snow.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "벨에게 줄 장미 한 송이만.",
+     "src": "reuse",
+     "en": "Just one rose, for Belle.",
+     "segs": [
+      [
+       "father",
+       "Just one rose, for Belle.",
+       null
+      ]
+     ],
+     "before": [
+      "follow:330",
+      "father:move:440,505,1200"
+     ]
+    },
+    {
+     "text": "아버지는 장미 한 송이를 똑 꺾었어요.",
+     "src": "new",
+     "en": "Father snapped off a single rose, snip.",
+     "segs": [
+      [
+       "nar",
+       "Father snapped off a single rose, snip.",
+       null
+      ]
+     ],
+     "before": [
+      "rose:pick",
+      "father:look:rose",
+      "fx:pop",
+      "pop:440,265,톡!"
+     ]
+    },
+    {
+     "text": "그때 덤불 뒤에서 커다란 야수가 천천히 나왔어요.",
+     "src": "reuse",
+     "en": "Then, from behind the bush, a huge Beast slowly came out.",
+     "segs": [
+      [
+       "nar",
+       "Then, from behind the bush, a huge Beast slowly came out.",
+       "tonedown"
+      ]
+     ],
+     "before": [
+      "father:at:700,505:rose:left",
+      "beast:at:430,505:stand",
+      "beast:appear",
+      "pop:430,175,쿵"
+     ]
+    },
+    {
+     "text": "쿵, 쿵! 발소리에 땅이 흔들흔들했어요.",
+     "src": "new",
+     "en": "Thump, thump! The ground shook with every footstep.",
+     "segs": [
+      [
+       "nar",
+       "Thump, thump! The ground shook with every footstep.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:thud",
+      "shake"
+     ]
+    },
+    {
+     "text": "내 장미를 꺾었구나. 재워 주고 먹여 줬는데.",
+     "src": "reuse",
+     "en": "You picked my rose. After I gave you a bed and a meal.",
+     "segs": [
+      [
+       "beast",
+       "You picked my rose. After I gave you a bed and a meal.",
+       "sad"
+      ]
+     ]
+    },
+    {
+     "text": "죄송해요, 나리. 막내딸이 부탁한 거예요.",
+     "src": "reuse",
+     "en": "I am sorry, my lord. My youngest daughter asked for it.",
+     "segs": [
+      [
+       "father",
+       "I am sorry, my lord. My youngest daughter asked for it.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "father:look:shock",
+      "hat:drop",
+      "pop:740,465,툭!"
+     ],
+     "after": [
+      "father:wiggle"
+     ]
+    },
+    {
+     "text": "나리가 아니라 야수라고 불러라. 장미를 꺾었으니 벌을 받아야 해. 네가 돌아오든지, 딸 하나가 스스로 오든지.",
+     "src": "reuse",
+     "en": "Do not call me lord. Call me Beast. You picked my rose, so you must be punished. Either you come back, or one of your daughters comes here of her own free will.",
+     "segs": [
+      [
+       "beast",
+       "Do not call me lord. Call me Beast. You picked my rose, so you must be punished. Either you come back, or one of your daughters comes here of her own free will.",
+       null
+      ]
+     ],
+     "before": [
+      "beast:hop"
+     ]
+    },
+    {
+     "text": "아버지는 덜덜 떨며 고개를 끄덕끄덕했어요.",
+     "src": "new",
+     "en": "Father trembled, shiver, shiver, and nodded his head, nod, nod.",
+     "segs": [
+      [
+       "nar",
+       "Father trembled, shiver, shiver, and nodded his head, nod, nod.",
+       null
+      ]
+     ],
+     "before": [
+      "father:wiggle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_resolve",
+   "card": "Belle's Decision",
+   "set": "cottage",
+   "enter": [
+    "father:at:380,505:rose",
+    "belle:at:560,505:resolve",
+    "sisters:at:740,850",
+    "sisa:look:gasp",
+    "sisb:look:gasp",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "아버지는 장미를 들고 집으로 돌아왔어요.",
+     "src": "reuse",
+     "en": "Father came home holding the rose.",
+     "segs": [
+      [
+       "nar",
+       "Father came home holding the rose.",
+       "sad"
+      ]
+     ]
+    },
+    {
+     "text": "야수가… 딸 하나를 보내라고 했단다.",
+     "src": "reuse",
+     "en": "The Beast... said one of my daughters must go to him.",
+     "segs": [
+      [
+       "father",
+       "The Beast... said one of my daughters must go to him.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "father:wiggle"
+     ]
+    },
+    {
+     "text": "언니들은 깜짝 놀라 입을 떡 벌렸어요.",
+     "src": "new",
+     "en": "The sisters gasped, and their mouths fell wide open.",
+     "segs": [
+      [
+       "nar",
+       "The sisters gasped, and their mouths fell wide open.",
+       null
+      ]
+     ],
+     "before": [
+      "sisters:hop"
+     ]
+    },
+    {
+     "text": "제 장미 때문이에요. 제가 갈게요.",
+     "src": "reuse",
+     "en": "It is because of my rose. I will go.",
+     "segs": [
+      [
+       "belle",
+       "It is because of my rose. I will go.",
+       null
+      ]
+     ],
+     "before": [
+      "belle:hop"
+     ]
+    },
+    {
+     "text": "안 된다, 벨.",
+     "src": "reuse",
+     "en": "No, Belle.",
+     "segs": [
+      [
+       "father",
+       "No, Belle.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "father:hop"
+     ]
+    },
+    {
+     "text": "괜찮아요. 제가 가고 싶어요.",
+     "src": "reuse",
+     "en": "It's all right. I want to go.",
+     "segs": [
+      [
+       "belle",
+       "It's all right. I want to go.",
+       null
+      ]
+     ],
+     "before": [
+      "belle:hop"
+     ]
+    },
+    {
+     "text": "벨은 아버지의 손을 꼭 잡고 방긋 웃었어요.",
+     "src": "new",
+     "en": "Belle held Father's hand tight and gave him a sweet little smile.",
+     "segs": [
+      [
+       "nar",
+       "Belle held Father's hand tight and gave him a sweet little smile.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_guest",
+   "card": "A Guest at the Palace",
+   "set": "garden",
+   "enter": [
+    "beast:at:300,505:stand",
+    "father:at:1100,505:stand",
+    "belle:at:1100,505:stand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "아버지는 벨을 궁전까지 데려다주었어요.",
+     "src": "reuse",
+     "en": "Father brought Belle all the way to the palace.",
+     "segs": [
+      [
+       "nar",
+       "Father brought Belle all the way to the palace.",
+       null
+      ]
+     ],
+     "before": [
+      "father:move:650,505,1800",
+      "belle:move:520,505,1800",
+      "follow:500"
+     ]
+    },
+    {
+     "text": "벨의 가슴이 두근두근 뛰었어요.",
+     "src": "new",
+     "en": "Belle's heart went thump, thump, thump.",
+     "segs": [
+      [
+       "nar",
+       "Belle's heart went thump, thump, thump.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "스스로 온 거니?",
+     "src": "reuse",
+     "en": "Did you come here of your own free will?",
+     "segs": [
+      [
+       "beast",
+       "Did you come here of your own free will?",
+       null
+      ]
+     ],
+     "before": [
+      "beast:hop"
+     ]
+    },
+    {
+     "text": "네.",
+     "src": "reuse",
+     "en": "Yes.",
+     "segs": [
+      [
+       "belle",
+       "Yes.",
+       null
+      ]
+     ],
+     "before": [
+      "belle:hop"
+     ]
+    },
+    {
+     "text": "착하구나. 아버지는 내일 아침 집으로 가거라.",
+     "src": "reuse",
+     "en": "You are a good girl. Your father shall go home tomorrow morning.",
+     "segs": [
+      [
+       "beast",
+       "You are a good girl. Your father shall go home tomorrow morning.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "방 문에 '벨의 방'이라고 쓰여 있어요. 책도 많고, 장미도 있어요.",
+     "src": "reuse",
+     "en": "On the door it says 'Belle's Room'. There are lots of books, and roses too.",
+     "segs": [
+      [
+       "nar",
+       "On the door it says 'Belle's Room'. There are lots of books, and roses too.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "set:room",
+      "belle:at:230,505:stand",
+      "table:small",
+      "vases:set",
+      "plate:show"
+     ]
+    },
+    {
+     "text": "탁자 위에도, 아래에도, 옆에도 장미가 활짝활짝 피어 있었어요.",
+     "src": "new",
+     "en": "There were roses on the table, under the table and beside it, all blooming wide, wide open.",
+     "segs": [
+      [
+       "nar",
+       "There were roses on the table, under the table and beside it, all blooming wide, wide open.",
+       null
+      ]
+     ],
+     "before": [
+      "vases:set"
+     ]
+    },
+    {
+     "text": "벨은 폭신한 침대에 풀썩 누워 책을 펼쳤어요.",
+     "src": "new",
+     "en": "Belle flopped down, plop, onto the soft bed and opened a book.",
+     "segs": [
+      [
+       "nar",
+       "Belle flopped down, plop, onto the soft bed and opened a book.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_evenings",
+   "card": "Every Evening",
+   "set": "dining",
+   "enter": [
+    "belle:at:440,505:sit",
+    "beast:at:700,505:sit",
+    "table:long",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "저녁마다 야수가 찾아왔어요.",
+     "src": "reuse",
+     "en": "Every evening, the Beast came to see her.",
+     "segs": [
+      [
+       "nar",
+       "Every evening, the Beast came to see her.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "야수는 조심조심, 벨의 맞은편에 살며시 앉았어요.",
+     "src": "new",
+     "en": "The Beast sat down gently across from Belle, ever so carefully.",
+     "segs": [
+      [
+       "nar",
+       "The Beast sat down gently across from Belle, ever so carefully.",
+       null
+      ]
+     ],
+     "before": [
+      "beast:hop"
+     ]
+    },
+    {
+     "text": "벨, 잘 지냈니? 나와 결혼해 줄래?",
+     "src": "reuse",
+     "en": "Belle, how are you? Will you marry me?",
+     "segs": [
+      [
+       "beast",
+       "Belle, how are you? Will you marry me?",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "아니요, 야수님. 하지만 친구로 좋아해요.",
+     "src": "reuse",
+     "en": "No, Beast. But I like you very much as a friend.",
+     "segs": [
+      [
+       "belle",
+       "No, Beast. But I like you very much as a friend.",
+       null
+      ]
+     ],
+     "before": [
+      "belle:hop"
+     ]
+    },
+    {
+     "text": "그럼 내일 저녁에 또 올게.",
+     "src": "reuse",
+     "en": "Then I will come again tomorrow evening.",
+     "segs": [
+      [
+       "beast",
+       "Then I will come again tomorrow evening.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "beast:wiggle"
+     ]
+    },
+    {
+     "text": "벨은 날마다 친절하게 대답했고, 둘은 친구가 되었어요.",
+     "src": "reuse",
+     "en": "Belle answered kindly every day, and the two became friends.",
+     "segs": [
+      [
+       "nar",
+       "Belle answered kindly every day, and the two became friends.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "창밖은 아침, 낮, 밤으로 바뀌고, 날들이 술술 흘러갔어요.",
+     "src": "new",
+     "en": "Outside the window it turned morning, day and night, and the days slipped by, one after another.",
+     "segs": [
+      [
+       "nar",
+       "Outside the window it turned morning, day and night, and the days slipped by, one after another.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_mirror",
+   "card": "The Mirror and the Ring",
+   "set": "room",
+   "enter": [
+    "tint:#1F2A56,.35",
+    "mirror:set",
+    "belle:at:470,505:worry:left",
+    "beast:at:700,505:ring:left",
+    "table:small",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "어느 날, 벨은 거울로 집을 보았어요.",
+     "src": "reuse",
+     "en": "One day, Belle looked at her home through the magic mirror.",
+     "segs": [
+      [
+       "nar",
+       "One day, Belle looked at her home through the magic mirror.",
+       "tonedown"
+      ]
+     ],
+     "before": [
+      "fx:sparkle",
+      "mirror:face:show"
+     ]
+    },
+    {
+     "text": "거울 속에서 아버지가 콜록콜록 기침을 했어요.",
+     "src": "new",
+     "en": "In the mirror, Father was coughing, cough, cough.",
+     "segs": [
+      [
+       "nar",
+       "In the mirror, Father was coughing, cough, cough.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "아버지가 아파요…",
+     "src": "reuse",
+     "en": "Father is ill...",
+     "segs": [
+      [
+       "belle",
+       "Father is ill...",
+       "sad"
+      ]
+     ],
+     "before": [
+      "belle:wiggle"
+     ]
+    },
+    {
+     "text": "다녀와요. 하지만 일주일 뒤엔 꼭 돌아와요. 안 오면 나는 너무 슬플 거예요.",
+     "src": "reuse",
+     "en": "Go to him. But come back in one week, without fail. If you do not, I will be so very sad.",
+     "segs": [
+      [
+       "beast",
+       "Go to him. But come back in one week, without fail. If you do not, I will be so very sad.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "beast:hop"
+     ]
+    },
+    {
+     "text": "자기 전에 이 반지를 탁자에 놓으면, 아침에 여기로 돌아와요.",
+     "src": "reuse",
+     "en": "Put this ring on the table before you sleep, and in the morning you will be back here.",
+     "segs": [
+      [
+       "beast",
+       "Put this ring on the table before you sleep, and in the morning you will be back here.",
+       null
+      ]
+     ],
+     "before": [
+      "ring:show"
+     ],
+     "after": [
+      "ring:give",
+      "glow:ring",
+      "sparkle"
+     ]
+    },
+    {
+     "text": "작은 금반지가 반짝반짝 빛났어요.",
+     "src": "new",
+     "en": "The little gold ring sparkled, twinkle, twinkle.",
+     "segs": [
+      [
+       "nar",
+       "The little gold ring sparkled, twinkle, twinkle.",
+       null
+      ]
+     ],
+     "after": [
+      "mirror:face:hide"
+     ]
+    },
+    {
+     "text": "꼭 돌아올게요, 약속해요.",
+     "src": "reuse",
+     "en": "I will come back. I promise.",
+     "segs": [
+      [
+       "belle",
+       "I will come back. I promise.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_home",
+   "card": "Back Home",
+   "set": "cottage",
+   "enter": [
+    "father:at:330,505:well",
+    "belle:at:520,505:stand",
+    "sisters:at:700,800",
+    "sisa:look:plead",
+    "sisb:look:plead",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "다음 날 아침, 벨은 집에 와 있었어요.",
+     "src": "reuse",
+     "en": "The next morning, Belle was home.",
+     "segs": [
+      [
+       "nar",
+       "The next morning, Belle was home.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "네 덕분에 다 나았다.",
+     "src": "reuse",
+     "en": "Thanks to you, I am all better.",
+     "segs": [
+      [
+       "father",
+       "Thanks to you, I am all better.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "father:hop"
+     ]
+    },
+    {
+     "text": "조금만 더 있다 가. 응? 조금만 더.",
+     "src": "reuse",
+     "en": "Stay just a little longer. Please? Just a little.",
+     "segs": [
+      [
+       "sisa",
+       "Stay just a little longer.",
+       null
+      ],
+      [
+       "sisb",
+       "Please? Just a little.",
+       null
+      ]
+     ],
+     "before": [
+      "sisters:hop"
+     ]
+    },
+    {
+     "text": "그럴까…",
+     "src": "reuse",
+     "en": "Maybe I could...",
+     "segs": [
+      [
+       "belle",
+       "Maybe I could...",
+       null
+      ]
+     ],
+     "before": [
+      "belle:wiggle"
+     ]
+    },
+    {
+     "text": "해가 뜨고 지고, 일주일이 훌쩍 지났어요. 어느 밤, 벨은 꿈을 꾸었어요.",
+     "src": "reuse",
+     "en": "The sun rose and set, and a whole week slipped by. One night, Belle had a dream.",
+     "segs": [
+      [
+       "nar",
+       "The sun rose and set, and a whole week slipped by. One night, Belle had a dream.",
+       "tonedown"
+      ]
+     ],
+     "before": [
+      "sun:cycle"
+     ],
+     "after": [
+      "belle:at:520,511:sleep",
+      "pop:460,355,새근새근",
+      "dream:show",
+      "fx:xylo_down"
+     ]
+    },
+    {
+     "text": "꿈속에서 야수가 샘가에 축 늘어져 있었어요.",
+     "src": "new",
+     "en": "In her dream, the Beast lay slumped by the spring, all limp and still.",
+     "segs": [
+      [
+       "nar",
+       "In her dream, the Beast lay slumped by the spring, all limp and still.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "야수님! 약속을 어겼어요. 돌아가야 해요.",
+     "src": "reuse",
+     "en": "Beast! I broke my promise. I must go back.",
+     "segs": [
+      [
+       "belle",
+       "Beast! I broke my promise. I must go back.",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "dream:hide",
+      "belle:at:560,505:worry:right"
+     ]
+    },
+    {
+     "text": "벨은 반지를 탁자에 놓고 다시 잠이 들었어요.",
+     "src": "reuse",
+     "en": "Belle put the ring on the table and fell asleep again.",
+     "segs": [
+      [
+       "nar",
+       "Belle put the ring on the table and fell asleep again.",
+       "tonedown"
+      ]
+     ],
+     "before": [
+      "ring:table",
+      "belle:at:520,511:sleep"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_spring",
+   "card": "The Beast by the Spring",
+   "set": "garden",
+   "enter": [
+    "bush5:hop",
+    "beast:at:720,505:lie",
+    "spring:set",
+    "belle:at:-120,505:run:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "아침이 되자 벨은 궁전 정원에 있었어요. 야수는 샘가에 힘없이 누워 있었어요.",
+     "src": "reuse",
+     "en": "In the morning, Belle was in the palace garden. The Beast lay by the spring, weak and still.",
+     "segs": [
+      [
+       "nar",
+       "In the morning, Belle was in the palace garden. The Beast lay by the spring, weak and still.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "fx:step_grass"
+     ],
+     "after": [
+      "belle:move:430,505,2000"
+     ]
+    },
+    {
+     "text": "벨은 후다닥 달려가 야수 곁에 털썩 무릎을 꿇었어요.",
+     "src": "new",
+     "en": "Belle ran over, pitter-patter, and dropped to her knees beside the Beast.",
+     "segs": [
+      [
+       "nar",
+       "Belle ran over, pitter-patter, and dropped to her knees beside the Beast.",
+       null
+      ]
+     ],
+     "before": [
+      "belle:look:kneel:right"
+     ]
+    },
+    {
+     "text": "야수님, 일어나요!",
+     "src": "reuse",
+     "en": "Beast, wake up!",
+     "segs": [
+      [
+       "belle",
+       "Beast, wake up!",
+       "toneup"
+      ]
+     ]
+    },
+    {
+     "text": "벨은 샘물을 두 손으로 떠서 야수에게 똑똑 떨어뜨려 주었어요.",
+     "src": "new",
+     "en": "Belle scooped up spring water in her hands and let it drip, drip, drip onto the Beast.",
+     "segs": [
+      [
+       "nar",
+       "Belle scooped up spring water in her hands and let it drip, drip, drip onto the Beast.",
+       null
+      ]
+     ],
+     "before": [
+      "drops",
+      "fx:splash",
+      "pop:660,335,똑똑!"
+     ]
+    },
+    {
+     "text": "벨… 돌아왔구나.",
+     "src": "reuse",
+     "en": "Belle... you came back.",
+     "segs": [
+      [
+       "beast",
+       "Belle... you came back.",
+       null
+      ]
+     ],
+     "before": [
+      "beast:look:eyes",
+      "glow:beast",
+      "fx:sparkle"
+     ]
+    },
+    {
+     "text": "사랑해요, 야수님. 제 남편이 되어 주세요.",
+     "src": "reuse",
+     "en": "I love you, Beast. Please be my husband.",
+     "segs": [
+      [
+       "belle",
+       "I love you, Beast. Please be my husband.",
+       null
+      ]
+     ],
+     "before": [
+      "belle:hop"
+     ]
+    },
+    {
+     "text": "그러자 반짝! 야수가 멋진 왕자님으로 변했어요.",
+     "src": "reuse",
+     "en": "And then, a flash of light! The Beast turned into a handsome prince.",
+     "segs": [
+      [
+       "nar",
+       "And then, a flash of light! The Beast turned into a handsome prince.",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "shine",
+      "sparkle"
+     ],
+     "after": [
+      "beast:transform",
+      "prince:at:680,505",
+      "glow:prince"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_prince",
+   "card": "The Prince",
+   "set": "garden",
+   "enter": [
+    "bush5:hop",
+    "spring:set",
+    "shine",
+    "prince:at:680,505",
+    "belle:at:480,505:joy",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "벨은 눈을 비비고 또 비볐어요. 야수가 정말 왕자님이 된 거예요!",
+     "src": "new",
+     "en": "Belle rubbed her eyes and rubbed them again. The Beast really had become a prince!",
+     "segs": [
+      [
+       "nar",
+       "Belle rubbed her eyes and rubbed them again. The Beast really had become a prince!",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "고마워요, 벨. 겉모습만 보지 않고 내 마음을 봐 줬어요.",
+     "src": "reuse",
+     "en": "Thank you, Belle. You did not judge me by my looks. You saw my heart.",
+     "segs": [
+      [
+       "prince",
+       "Thank you, Belle. You did not judge me by my looks. You saw my heart.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "요정이 건 마법이 이제 풀렸어요.",
+     "src": "reuse",
+     "en": "The fairy's spell is broken at last.",
+     "segs": [
+      [
+       "prince",
+       "The fairy's spell is broken at last.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "두 사람은 손을 꼭 잡고 빙글빙글 돌았어요.",
+     "src": "new",
+     "en": "The two held hands tight and twirled round and round.",
+     "segs": [
+      [
+       "nar",
+       "The two held hands tight and twirled round and round.",
+       null
+      ]
+     ],
+     "before": [
+      "belle:hop",
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "아버지와 언니들도 달려왔어요.",
+     "src": "reuse",
+     "en": "Father and her sisters came running too.",
+     "segs": [
+      [
+       "nar",
+       "Father and her sisters came running too.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "family:run"
+     ]
+    },
+    {
+     "text": "모두 함께 궁전에서 행복하게 살았어요.",
+     "src": "reuse",
+     "en": "And they all lived happily together in the palace.",
+     "segs": [
+      [
+       "nar",
+       "And they all lived happily together in the palace.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "confetti",
+      "fx:tada"
+     ]
+    },
+    {
+     "text": "겉모습이 아니라 마음을 봐요.",
+     "src": "reuse",
+     "en": "Look at the heart, not the looks.",
+     "segs": [
+      [
+       "nar",
+       "Look at the heart, not the looks.",
+       null
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
