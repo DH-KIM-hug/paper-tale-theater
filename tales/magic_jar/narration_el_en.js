@@ -35,33 +35,117 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/magic_jar/en/nar_e2888814d5.mp3"
   ]
  },
- "항아리를 톡톡톡 눌러서 괭이가 몇 개 나오는지 세어 봐요!": {
-  "t": "Tap, tap, tap the jar and count how many hoes come out!",
-  "c": "audio/el/magic_jar/en/nar_c4eb94e6b1.mp3"
+ "항아리를 세 번 톡톡 눌러서 괭이를 세 개 세어 봐요!": {
+  "t": "Tap the jar three times and count three hoes!",
+  "c": "audio/el/magic_jar/en/nar_4256f915ec.mp3"
  },
- "항아리를 톡톡톡! 괭이를 세어 봐요.": {
-  "t": "Tap, tap, tap the jar! Count the hoes.",
-  "c": "audio/el/magic_jar/en/nar_53541b2c91.mp3"
+ "항아리를 세 번 톡톡! 괭이를 세어 봐요.": {
+  "t": "Tap the jar three times! Count the hoes.",
+  "c": "audio/el/magic_jar/en/nar_84590d646a.mp3"
  },
  "괭이가 하나, 둘, 셋! 농부와 아내는 손뼉을 쳤어요.": {
   "t": "One, two, three hoes! The farmer and his wife clapped their hands.",
   "c": "audio/el/magic_jar/en/nar_baab59dded.mp3"
  },
+ "항아리를 네 번 톡톡 눌러서 괭이를 네 개 세어 봐요!": {
+  "t": "Tap the jar four times and count four hoes!",
+  "c": "audio/el/magic_jar/en/nar_34ac4cbc69.mp3"
+ },
+ "항아리를 네 번 톡톡! 괭이를 세어 봐요.": {
+  "t": "Tap the jar four times! Count the hoes.",
+  "c": "audio/el/magic_jar/en/nar_96b38df42c.mp3"
+ },
+ "괭이가 하나, 둘, 셋, 넷! 농부와 아내는 손뼉을 쳤어요.": {
+  "t": "One, two, three, four hoes! The farmer and his wife clapped their hands.",
+  "c": "audio/el/magic_jar/en/nar_f258beba7b.mp3"
+ },
+ "항아리를 다섯 번 톡톡 눌러서 괭이를 다섯 개 세어 봐요!": {
+  "t": "Tap the jar five times and count five hoes!",
+  "c": "audio/el/magic_jar/en/nar_3d5059b0d3.mp3"
+ },
+ "항아리를 다섯 번 톡톡! 괭이를 세어 봐요.": {
+  "t": "Tap the jar five times! Count the hoes.",
+  "c": "audio/el/magic_jar/en/nar_94591bd74b.mp3"
+ },
+ "괭이가 하나, 둘, 셋, 넷, 다섯! 농부와 아내는 손뼉을 쳤어요.": {
+  "t": "One, two, three, four, five hoes! The farmer and his wife clapped their hands.",
+  "c": "audio/el/magic_jar/en/nar_4a3a3efd10.mp3"
+ },
+ "항아리를 여섯 번 톡톡 눌러서 괭이를 여섯 개 세어 봐요!": {
+  "t": "Tap the jar six times and count six hoes!",
+  "c": "audio/el/magic_jar/en/nar_826d01ec1a.mp3"
+ },
+ "항아리를 여섯 번 톡톡! 괭이를 세어 봐요.": {
+  "t": "Tap the jar six times! Count the hoes.",
+  "c": "audio/el/magic_jar/en/nar_b8fe5094a5.mp3"
+ },
+ "괭이가 하나, 둘, 셋, 넷, 다섯, 여섯! 농부와 아내는 손뼉을 쳤어요.": {
+  "t": "One, two, three, four, five, six hoes! The farmer and his wife clapped their hands.",
+  "c": "audio/el/magic_jar/en/nar_1bcb6232fe.mp3"
+ },
  "이번에는 엽전 하나를 넣어 봤어요. 와르르! 엽전이 쏟아져 나왔어요.": {
   "t": "This time they dropped in one coin. Whoosh! Coins poured out.",
   "c": "audio/el/magic_jar/en/nar_e700040fef.mp3"
  },
- "항아리를 톡톡톡톡톡 눌러서 엽전을 다섯 개 세어 봐요!": {
+ "항아리를 네 번 톡톡 눌러서 엽전을 네 개 세어 봐요!": {
+  "t": "Tap the jar four times and count four coins!",
+  "c": "audio/el/magic_jar/en/nar_b79f6c8829.mp3"
+ },
+ "항아리를 네 번 톡톡! 엽전을 세어 봐요.": {
+  "t": "Tap the jar four times! Count the coins.",
+  "c": "audio/el/magic_jar/en/nar_25d72e34d3.mp3"
+ },
+ "엽전이 하나, 둘, 셋, 넷! 이제 쌀도 사고 옷도 살 수 있어요.": {
+  "t": "One, two, three, four coins! Now they could buy rice and clothes.",
+  "c": "audio/el/magic_jar/en/nar_c1c0891358.mp3"
+ },
+ "항아리를 다섯 번 톡톡 눌러서 엽전을 다섯 개 세어 봐요!": {
   "t": "Tap the jar five times and count five coins!",
   "c": "audio/el/magic_jar/en/nar_171ee2d7b1.mp3"
  },
- "항아리를 톡톡톡톡톡! 엽전을 세어 봐요.": {
-  "t": "Tap, tap, tap, tap, tap the jar! Count the coins.",
-  "c": "audio/el/magic_jar/en/nar_9cc5712036.mp3"
+ "항아리를 다섯 번 톡톡! 엽전을 세어 봐요.": {
+  "t": "Tap the jar five times! Count the coins.",
+  "c": "audio/el/magic_jar/en/nar_236ae7731d.mp3"
  },
  "엽전이 하나, 둘, 셋, 넷, 다섯! 이제 쌀도 사고 옷도 살 수 있어요.": {
   "t": "One, two, three, four, five coins! Now they could buy rice and clothes.",
   "c": "audio/el/magic_jar/en/nar_4cc1af40a9.mp3"
+ },
+ "항아리를 여섯 번 톡톡 눌러서 엽전을 여섯 개 세어 봐요!": {
+  "t": "Tap the jar six times and count six coins!",
+  "c": "audio/el/magic_jar/en/nar_c4c14f0708.mp3"
+ },
+ "항아리를 여섯 번 톡톡! 엽전을 세어 봐요.": {
+  "t": "Tap the jar six times! Count the coins.",
+  "c": "audio/el/magic_jar/en/nar_bf8f24d773.mp3"
+ },
+ "엽전이 하나, 둘, 셋, 넷, 다섯, 여섯! 이제 쌀도 사고 옷도 살 수 있어요.": {
+  "t": "One, two, three, four, five, six coins! Now they could buy rice and clothes.",
+  "c": "audio/el/magic_jar/en/nar_027a87bff9.mp3"
+ },
+ "항아리를 일곱 번 톡톡 눌러서 엽전을 일곱 개 세어 봐요!": {
+  "t": "Tap the jar seven times and count seven coins!",
+  "c": "audio/el/magic_jar/en/nar_9c8d17cb12.mp3"
+ },
+ "항아리를 일곱 번 톡톡! 엽전을 세어 봐요.": {
+  "t": "Tap the jar seven times! Count the coins.",
+  "c": "audio/el/magic_jar/en/nar_dc555c07e0.mp3"
+ },
+ "엽전이 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱! 이제 쌀도 사고 옷도 살 수 있어요.": {
+  "t": "One, two, three, four, five, six, seven coins! Now they could buy rice and clothes.",
+  "c": "audio/el/magic_jar/en/nar_099911aa54.mp3"
+ },
+ "항아리를 여덟 번 톡톡 눌러서 엽전을 여덟 개 세어 봐요!": {
+  "t": "Tap the jar eight times and count eight coins!",
+  "c": "audio/el/magic_jar/en/nar_3bded71e8f.mp3"
+ },
+ "항아리를 여덟 번 톡톡! 엽전을 세어 봐요.": {
+  "t": "Tap the jar eight times! Count the coins.",
+  "c": "audio/el/magic_jar/en/nar_05d8ba95bf.mp3"
+ },
+ "엽전이 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 이제 쌀도 사고 옷도 살 수 있어요.": {
+  "t": "One, two, three, four, five, six, seven, eight coins! Now they could buy rice and clothes.",
+  "c": "audio/el/magic_jar/en/nar_29cfb526e3.mp3"
  },
  "착한 농부는 혼자만 쓰지 않았어요. 이웃 다섯 집에 쌀을 나눠 주러 갔어요.": {
   "t": "The kind farmer did not keep it all for himself. He went to share rice with five neighbors.",
@@ -83,7 +167,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   ]
  },
  "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\"": {
-  "t": "x",
+  "t": "The kind farmer said with a smile. \"Please use it, and bring it back!\"",
   "c": [
    "audio/el/magic_jar/en/nar_bc2508de20.mp3",
    "audio/el/magic_jar/en/farmer_b8e10a607e.mp3",
@@ -134,16 +218,16 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Splash! The father fell headfirst into the jar. He was not hurt.",
   "c": "audio/el/magic_jar/en/nar_f2d28abf6b.mp3"
  },
- "\"아버지가 어디 계시지?\" 항아리를 톡톡톡 눌러서 아버지를 세어 봐요!": {
-  "t": "Where is Father? Tap, tap, tap the jar and count the fathers!",
+ "\"아버지가 어디 계시지?\" 항아리를 여덟 번 톡톡 눌러서 아버지를 세어 봐요!": {
+  "t": "Where is Father? Tap the jar eight times and count the fathers!",
   "c": [
    "audio/el/magic_jar/en/rich_92281f0098.mp3",
-   "audio/el/magic_jar/en/nar_2d0e3d585a.mp3"
+   "audio/el/magic_jar/en/nar_b5ca6354b4.mp3"
   ]
  },
- "항아리를 톡톡톡! 아버지를 세어 봐요.": {
-  "t": "Tap, tap, tap the jar! Count the fathers.",
-  "c": "audio/el/magic_jar/en/nar_4cbdea91b4.mp3"
+ "항아리를 여덟 번 톡톡! 아버지를 세어 봐요.": {
+  "t": "Tap the jar eight times! Count the fathers.",
+  "c": "audio/el/magic_jar/en/nar_3f1b8e3f2f.mp3"
  },
  "아버지가 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 여덟 명이나 되었어요.": {
   "t": "One, two, three, four, five, six, seven, eight fathers! There were eight of them.",

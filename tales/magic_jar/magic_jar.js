@@ -55,7 +55,11 @@
   const popSfx = T => AudioFX.sfx('pop') || T.tone([500, 800], .12, { vol: .12 });
   const clinkSfx = T => AudioFX.sfx('ding') || T.tone([900, 1300], .15, { vol: .12 });
   const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   /* 세기는 말로만 (말풍선 없음) */
-  const NUM = ['하나!', '둘!', '셋!', '넷!', '다섯!', '여섯!', '일곱!', '여덟!'];
+  /* 세기 미션의 수는 할 때마다 바뀐다(괭이 3~6, 엽전 4~8, 엽전은 괭이와 다른 수). 안내·재안내·끝 대사는 수별로 미리 녹음해 두었다 → 문장이 voice_script 와 글자까지 같아야 한다 */
+  const KN = ['', '한', '두', '세', '네', '다섯', '여섯', '일곱', '여덟'], KC = ['', '하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟'];
+  const words = n => KC.slice(1, n + 1).join(', ');
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const hoeRows = n => n <= 3 ? [n] : n === 4 ? [2, 2] : n === 5 ? [3, 2] : [3, 3];   // 아래 줄부터 채워 항아리 위로 솟아오른다
 
   async function run(T) {
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
@@ -119,13 +123,15 @@
     await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260);
     await T.cutImage([{ src: cutSrc('twohoes'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     await say('"어머나! 괭이가 두 개가 되었어요!" 아내가 깜짝 놀랐어요.');
-    const hoes = [];
-    await T.ask('항아리를 톡톡톡 눌러서 괭이가 몇 개 나오는지 세어 봐요!', () => T.mash(jar.pos, { count: 3, prompt: '항아리를 톡톡톡! 괭이를 세어 봐요.', onStep: i => {
-      const h2 = prop(T, 'hoe', 110); h2.pos.style.pointerEvents = 'none'; put(T, h2, 740 + (i % 2) * 40, 300 + i * 64);
+    const hoes = [], nHoe = rnd(3, 6);
+    let nCoin; do nCoin = rnd(4, 8); while (nCoin === nHoe);
+    const hoeSpots = []; hoeRows(nHoe).forEach((cnt, r) => { for (let c = 0; c < cnt; c++) hoeSpots.push([fx(T, 520) + (c - (cnt - 1) / 2) * 105, 335 - r * 115]); });
+    await T.ask(`항아리를 ${KN[nHoe]} 번 톡톡 눌러서 괭이를 ${KN[nHoe]} 개 세어 봐요!`, () => T.mash(jar.pos, { count: nHoe, prompt: `항아리를 ${KN[nHoe]} 번 톡톡! 괭이를 세어 봐요.`, onStep: i => {
+      const h2 = prop(T, 'hoe', 110); h2.pos.style.pointerEvents = 'none'; put(T, h2, hoeSpots[i - 1][0], hoeSpots[i - 1][1], { raw: true });
       h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); hoes.push(h2);
       jar.hop(12, 240); popSfx(T); vo('n' + i);
     } }));
-    await say('괭이가 하나, 둘, 셋! 농부와 아내는 손뼉을 쳤어요.');
+    await say(`괭이가 ${words(nHoe)}! 농부와 아내는 손뼉을 쳤어요.`);
     await wife.hop(30, 400);
 
     /* --- 4. 엽전 --- */
@@ -134,12 +140,13 @@
     hoes.forEach(h => hide(h));
     put(T, jar, 520, 500); put(T, farmer, 270, 500, { look: 'count', to: 'right' }); put(T, wife, 780, 500, { look: 'clap', to: 'left' });
     await say('이번에는 엽전 하나를 넣어 봤어요. 와르르! 엽전이 쏟아져 나왔어요.');
-    await T.ask('항아리를 톡톡톡톡톡 눌러서 엽전을 다섯 개 세어 봐요!', () => T.mash(jar.pos, { count: 5, prompt: '항아리를 톡톡톡톡톡! 엽전을 세어 봐요.', onStep: i => {
-      const c = prop(T, 'coin', 52); c.pos.style.pointerEvents = 'none'; put(T, c, tight(T) ? 500 + (i - 3) * 56 : 280 + i * 90, 548, { raw: tight(T) });
+    const csp = tight(T) ? (nCoin <= 5 ? 60 : 50) : (nCoin <= 5 ? 90 : 72);   // 엽전 사이 간격: 8개까지 가로·세로 화면 안에 들어오게
+    await T.ask(`항아리를 ${KN[nCoin]} 번 톡톡 눌러서 엽전을 ${KN[nCoin]} 개 세어 봐요!`, () => T.mash(jar.pos, { count: nCoin, prompt: `항아리를 ${KN[nCoin]} 번 톡톡! 엽전을 세어 봐요.`, onStep: i => {
+      const c = prop(T, 'coin', 52); c.pos.style.pointerEvents = 'none'; put(T, c, fx(T, 520) + (i - (nCoin + 1) / 2) * csp, 548, { raw: true });
       c.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 280);
       jar.hop(10, 220); clinkSfx(T); vo('n' + i);
     } }));
-    await say('엽전이 하나, 둘, 셋, 넷, 다섯! 이제 쌀도 사고 옷도 살 수 있어요.');
+    await say(`엽전이 ${words(nCoin)}! 이제 쌀도 사고 옷도 살 수 있어요.`);
 
     /* --- 5. 이웃에게 나눠 주기 --- */
     await T.sceneCard(tr('이웃 마을'), () => {
@@ -231,7 +238,7 @@
     scene('hallwide');
     put(T, jar, 700, 505); put(T, rich, 240, 505, { look: 'shout', to: 'right' });
     await say('풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.');
-    await T.ask('"아버지가 어디 계시지?" 항아리를 톡톡톡 눌러서 아버지를 세어 봐요!', () => T.mash(jar.pos, { count: 8, prompt: '항아리를 톡톡톡! 아버지를 세어 봐요.', onStep: i => {
+    await T.ask('"아버지가 어디 계시지?" 항아리를 여덟 번 톡톡 눌러서 아버지를 세어 봐요!', () => T.mash(jar.pos, { count: 8, prompt: '항아리를 여덟 번 톡톡! 아버지를 세어 봐요.', onStep: i => {
       const o = olds[i - 1]; o.pos.style.pointerEvents = 'none';   // 항아리 위·옆에 쌓이는 아버지 그림이 눌림을 가로채지 않게
       put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .62 : 1, raw: tight(T) });
       o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); popSfx(T); vo('n' + i);
