@@ -321,6 +321,352 @@
       loads.lion_head_yawn, loads.lion_head_laugh].filter(Boolean)), sleep(3000)]);
     const cutArt = (key, o = {}) => artUrl(key) && T.cutImage([{ src: artUrl(key), ...o }], o);
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 놀이판 그림·연출을 누르기 없이 감싼 얇은 함수 =================
+       set 은 놀이판 장면 배경과 사자·생쥐 자리를 깐다. 대본의 savanna 는 처음(낮잠)만 초원 그림이고, 두 번째·세 번째(잡혔다·하하하)는 놀이판처럼 풀숲(생쥐 눈높이)에 사자 앞발이
+       생쥐 꼬리를 누른 자리, night_net 은 처음이 밤 숲 하이앵글(그물에 걸림), 두 번째가 그물 클로즈업(갉기)이다. 세기 놀이(숫자 소리·세기 판)는 뺐다. */
+    const inst = () => T.readInstant();
+    const rPt = () => T.portrait();
+    const rvo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };
+    const L1 = '사자', M1 = '생쥐';
+    let rScene = '', rSav = 0, rNight = 0, rLion = null, rMouse = null, rHead = null, rBreathe = null, rSnore = null, rStruggle = null, rLaugh = null, rScroll = null, rRider = null, rBoard = 0, rRopes = [], rHR = null, rHeadTimer = null, rRopeDone = 0, rSx = 0;
+    const rOn = a => a && a.pos && a.pos.isConnected;
+    const stopAll = () => {
+      [rBreathe, rStruggle, rLaugh].forEach(a => { try { a && a.cancel(); } catch (e) { /* 이미 끝남 */ } });
+      rBreathe = rStruggle = rLaugh = null;
+      if (rSnore) { clearInterval(rSnore); rSnore = null; }
+      if (rHeadTimer) { clearTimeout(rHeadTimer); rHeadTimer = null; }
+    };
+    const startBreathe = () => { if (rLion && rLion.parts.bubble) rBreathe = rLion.parts.bubble.animate([{ transform: 'scale(3)' }, { transform: 'scale(9)' }], { duration: 1300, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' }); };
+    const rFollow = (x, dur) => { if (rPt() && !inst()) camTo(x, 280, 1, dur); };
+    const POPAT = { R02: { '쭈르륵~': [760, 150] }, R03: { '탁!': [830, 380], '제발요~': [880, 380] }, R04: { '하하하!': [690, 170], '쏙!': [860, 420], '다다다!': [930, 390] }, R08: { '다다다!': [260, 300] } };
+    const POPC = { '퐁!': C.indigo, '쭈르륵~': C.bean, '제발요~': C.pine, '쏙!': C.pine, '다다다!': C.bark, '사각!': C.bean, '어흥~': C.persimmon, '어흥!': undefined, '탁!': C.bean };
+    const popKey = () => (rScene === 'grass' ? 'R02' : rScene === 'caught' ? 'R03' : rScene === 'savanna' ? 'R01' : rScene === 'morning' ? 'R08' : rScene);
+    const newMouse = (x, y, s, face) => { if (rOn(rMouse)) rMouse.pos.remove(); rMouse = mk(T, T.world, x, y, drawMouse, s); rMouse.face(face || 'right'); return rMouse; };
+    const R = {
+      set(key) {
+        stopAll(); T.clear(); camSnap(500, 280, 1);
+        rLion = rMouse = rHead = rScroll = rRider = null; rRopes = []; rHR = null; rBoard = 0; rRopeDone = 0; rSx = 0;
+        if (key === 'savanna') rSav++;
+        if (key === 'night_net') rNight++;
+        rScene = key === 'savanna' ? (rSav === 1 ? 'savanna' : 'caught') : key === 'night_net' ? (rNight === 1 ? 'night1' : 'night2') : key;
+        if (rScene === 'savanna') {
+          const art = savannaBG(T);
+          rLion = art ? mk(T, T.world, 620, 410, drawLionLie, 1.3) : null;
+          if (!rLion) { acacia(T, T.bg, 640, 1); rLion = mk(T, T.world, 640, 492, drawLionLie, 1.3); }
+          rLion.face('right'); rLion.parts.eyes('shut'); startBreathe();
+          if (rPt()) camSnap(610, 280, 1);
+          rSnore = setInterval(() => snore(T), 2600);
+        } else if (rScene === 'grass') {
+          grassForestBG(T);
+          rLion = mk(T, T.world, 640, 500, drawLionLie, 1.8); rLion.face('right'); rLion.parts.eyes('shut');
+          if (rLion.parts.art) rLion.place(520, 500);
+          if (rPt()) camSnap(60, 280, 1);
+        } else if (rScene === 'caught') {
+          grassForestBG(T);
+          rMouse = mk(T, T.world, 812, 498, drawMouse, 1.6); rMouse.face('left');
+          rLion = mk(T, T.world, 640, 500, drawLionLie, 1.8); rLion.face('right'); rLion.parts.eyes('open');
+          if (rLion.parts.art) rLion.place(520, 500);
+          rHead = lionFace(T, rLion.parts.hg, rLion.parts.art);
+          if (rPt()) camSnap(845, 330, 1);
+        } else if (rScene === 'board') {
+          boardBG(T);
+        } else if (rScene === 'night1') {
+          nightHighBG(T);
+          rLion = mk(T, T.world, 560, 460, drawLionLie, 1.3); rLion.parts.eyes('open');
+          pic(T, T.world, 'net', 262, 88, 453, 384);
+        } else if (rScene === 'night2') {
+          nightNetBG(T);
+          rLion = mk(T, T.world, 560, 520, drawLionLie, 2); rLion.parts.eyes('open');
+          const defs = el('defs', {}, T.world), pat = el('pattern', { id: 'lmRopePat', width: 12, height: 12, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)' }, defs);
+          el('rect', { width: 12, height: 12, fill: C.rope }, pat); el('rect', { width: 12, height: 5, fill: '#B98F4E' }, pat);
+          rHR = el('g', { stroke: 'url(#lmRopePat)', 'stroke-width': 9, 'stroke-linecap': 'round' }, T.world);
+          [150, 250, 350, 450].forEach(y => el('line', { x1: 100, y1: y, x2: 900, y2: y }, rHR));
+          const RP = [...Array(10)].map((_, i) => 120 + i * 84);
+          rRopes = RP.map(x => {
+            const g = el('g', { stroke: 'url(#lmRopePat)', 'stroke-width': 12, 'stroke-linecap': 'round' }, T.world);
+            const top = el('line', { x1: x, y1: 70, x2: x, y2: 496 }, g), bot = el('line', { x1: x, y1: 514, x2: x, y2: 540 }, g);
+            el('line', { x1: x, y1: 496, x2: x, y2: 514 }, g).classList.add('mid');
+            top.style.transformBox = 'view-box'; top.style.transformOrigin = `${x}px 70px`;
+            return { x, g, top, bot, mid: g.querySelector('.mid') };
+          });
+          newMouse(RP[0] - 52, 545, 1.5, 'right');
+          if (rPt()) camSnap(RP[0], 280, 1);
+        } else if (rScene === 'morning') {
+          if (bgUrl('morning_nosun')) {
+            rScroll = el('g', {}, T.bg); rScroll.style.transformBox = 'view-box';
+            bgImage(T, 'morning_nosun', rScroll); T.bg.appendChild(rScroll);
+            for (let k = 1; k < 5; k++) {
+              const t = el('g', { transform: k % 2 ? `translate(${BGBOX.x * 2 + BGBOX.w * (k + 1)},0) scale(-1,1)` : `translate(${BGBOX.w * k},0)` }, rScroll);
+              el('image', { href: bgUrl('morning_nosun'), x: BGBOX.x - 1, y: BGBOX.y, width: BGBOX.w + 2, height: BGBOX.h, preserveAspectRatio: 'none' }, t);
+            }
+            el('image', { href: AS + 'v3w/lm_sun.webp', x: 300, y: 70, width: 120, height: 120, style: 'pointer-events:none' }, T.bg);
+          } else {
+            savannaBG(T, { morning: true });
+            rScroll = el('g', {}, T.bg); rScroll.style.transformBox = 'view-box';
+            for (let k = 0; k < 5; k++) acacia(T, rScroll, 950 + k * 700, .8 + (k % 2) * .15);
+            tufts(T, rScroll, [...Array(24)].map((_, k) => 60 + k * 140), 495, C.leaf);
+          }
+          if (rPt()) camSnap(440, 280, 1);
+          rLion = mk(T, T.world, 380, 495, drawLionStand, 1.1); rLion.face('right'); rLion.parts.eyes('happy');
+          const bk = rLion.parts.back || [40, -152];
+          rRider = mk(T, rLion.body, bk[0], bk[1], drawMouse, 1.1);
+        }
+      },
+      lion(verb, a) {
+        if (!rOn(rLion)) return;
+        const P = rLion.parts;
+        if (verb === 'sleep') { P.eyes('shut'); return; }
+        if (verb === 'wake') {
+          P.eyes('open');
+          if (!inst() && rScene === 'grass') { P.eyes('sleepy'); P.mouth('open'); roar(T, .25); setTimeout(() => P.mouth('smile'), 600); }
+          return;
+        }
+        if (verb === 'paw') {
+          if (a === 'down') {
+            if (inst()) { P.eyes('lion_pawdown'); return; }
+            P.eyes('lion_pawup');
+            return (async () => { await sleep(700); P.eyes('lion_pawdown'); AudioFX.thud(); T.shake(); })();
+          }
+          if (a === 'up') {
+            if (inst()) { P.eyes('lion_pawup'); return; }
+            AudioFX.sfx('creak', .5);
+            return (async () => { await T.anim(P.hg, [{ rotate: '0deg' }, { rotate: '3deg' }], { duration: 1000, easing: 'ease-out' }); P.eyes('lion_pawup'); T.anim(P.hg, [{ rotate: '3deg' }, { rotate: '8deg' }], 500); })();
+          }
+        }
+        if (verb === 'yawn') {
+          if (rHead) rHead.set('yawn'); roar(T, .2);
+          rHeadTimer = setTimeout(() => { if (rHead) rHead.set(null); }, 3200); return;
+        }
+        if (verb === 'laugh') {
+          if (rHeadTimer) { clearTimeout(rHeadTimer); rHeadTimer = null; }
+          if (rHead) rHead.set('laugh');
+          if (inst()) return;
+          roar(T, .15);
+          rLaugh = P.hg.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 300, iterations: Infinity });
+          return;
+        }
+        if (verb === 'net') {
+          if (rScene === 'night1' && !inst()) rStruggle = rLion.body.animate([{ rotate: '0deg' }, { rotate: '-2deg' }, { rotate: '2deg' }, { rotate: '0deg' }], { duration: 500, iterations: Infinity });
+          return;
+        }
+        if (verb === 'free') {
+          return (async () => {
+            if (rStruggle) { rStruggle.cancel(); rStruggle = null; }
+            const fade = [rHR, ...rRopes.map(r => r.g)].filter(Boolean);
+            if (inst()) fade.forEach(n => n.remove());
+            else await Promise.all(fade.map(n => T.anim(n, [{ opacity: n.getAttribute('opacity') || 1 }, { opacity: 0 }], 600)));
+            rLion.pos.remove();
+            rLion = mk(T, T.world, 600, 520, drawLionStand, 1.9); rLion.parts.eyes('happy');
+            if (rOn(rMouse)) T.world.appendChild(rMouse.pos);
+            if (!inst()) { roar(T, .35); T.pop(660, 120, '어흥~', C.persimmon); T.confetti(); rLion.hop(30, 500); }
+          })();
+        }
+        if (verb === 'run') return;
+        console.warn('[read] lion 동사 모름', verb, a);
+      },
+      mouse(verb, a) {
+        if (verb === 'hide') { if (rOn(rMouse)) rMouse.pos.remove(); return; }
+        if (verb === 'at') {
+          const [x, y] = String(a).split(',').map(Number);
+          if (rScene === 'caught') return;   /* 놀이판처럼 사자 앞발 밑(오른쪽)에 꼬리가 깔린 자리 */
+          if (rScene === 'grass') { newMouse(x, 500, 1.5, 'right'); if (rPt()) camSnap(x, 280, 1); return; }
+          if (rScene === 'night1') {
+            newMouse(x, 505, 1.2, 'right');
+            if (inst()) return;
+            squeak(T);
+            camTo(140, 470, 2.4, 1000);
+            const perk = rMouse.parts.art ? 'scale(1,1.14)' : 'scale(1.45)';
+            return T.anim(rMouse.parts.ears, [{ transform: 'scale(1)' }, { transform: perk }, { transform: 'scale(1)' }, { transform: perk }, { transform: 'scale(1)' }], 900);
+          }
+          newMouse(x, y, 1.3, 'right'); return;
+        }
+        if (!rOn(rMouse)) return;
+        const m = rMouse;
+        if (verb === 'hop') {
+          const n = +a;
+          if (rScene === 'grass') {
+            if (n >= 3) {   /* 풀 사이를 폴짝폴짝 */
+              if (inst()) return;
+              return (async () => { for (let i = 1; i <= 4; i++) { squeak(T, 1400 + Math.random() * 300); m.hop(40, 380); rFollow(60 + i * 42 + 60, 380); await m.move(60 + i * 42, 500, 380); await sleep(120); } })();
+            }
+            /* 한 번 더 폴짝: 꼬리 → 등 → 갈기 꼭대기까지 올라간다 */
+            const climb = rLion.parts.art ? [[393, 459, 380], [427, 380, 420], [496, 344, 450], [555, 333, 350], [574, 261, 400], [628, 211, 400], [700, 187, 350]]
+              : [[232, 488, 380], [372, 376, 500], [568, 302, 500], [690, 250, 400], [815, 170, 450]];
+            if (inst()) { const [x, y] = climb[climb.length - 1]; m.place(x, y); return; }
+            return (async () => { for (const [x, y, d] of climb) { squeak(T, 1500); m.hop(24, d); rFollow(x, d); await m.move(x, y, d); } })();
+          }
+          if (inst()) return;
+          squeak(T, 1700); m.hop(rScene === 'night1' ? 20 : 24, 300);
+          if (rScene === 'night1') return (async () => { await camWide(700); await m.move(300, 520, 900); })();
+          return;
+        }
+        if (verb === 'slide') {
+          const slide = rLion.parts.art ? [[831, 265], [850, 341], [915, 500]] : [[925, 250], [975, 360], [880, 500]];
+          if (inst()) { m.place(slide[2][0], slide[2][1]); return; }
+          return (async () => {
+            m.body.style.transform = 'rotate(-35deg)';
+            T.tone([1400, 500], .9, { type: 'sine', vol: .12 });
+            await m.move(slide[0][0], slide[0][1], 260, 'ease-in');
+            await m.move(slide[1][0], slide[1][1], 240, 'linear');
+            rFollow(760, 500);
+            await m.move(slide[2][0], slide[2][1], 320, 'ease-out');
+            m.body.style.transform = ''; squeak(T, 1700); m.hop(30);
+          })();
+        }
+        if (verb === 'plead') {
+          m.face('right'); m.parts.arms.setAttribute('opacity', 0); m.parts.pray.setAttribute('opacity', 1);
+          if (!inst()) { squeak(T, 1600); m.hop(16); }
+          return;
+        }
+        if (verb === 'out') {
+          if (rLaugh) { rLaugh.cancel(); rLaugh = null; }
+          m.parts.arms.setAttribute('opacity', 1); m.parts.pray.setAttribute('opacity', 0); m.face('right');
+          if (inst()) { m.place(960, 498); return; }
+          T.tone([600, 1600], .25, { type: 'sine', vol: .14 });
+          return m.move(960, 498, 500, 'ease-in');
+        }
+        if (verb === 'run') {
+          if (m.parts.look) m.parts.look('run');
+          if (inst()) return;
+          squeak(T); return m.move(1250, 498, 700, 'ease-in');
+        }
+        if (verb === 'gnaw') { if (m.parts.look) m.parts.look('gnaw'); return; }
+        if (verb === 'ride') return;
+        console.warn('[read] mouse 동사 모름', verb, a);
+      },
+      bubble(verb) {
+        if (verb !== 'pop' || !rOn(rLion)) return;
+        if (inst()) return;
+        return (async () => {
+          if (rBreathe) { rBreathe.cancel(); rBreathe = null; }
+          T.tone([200, 600], .9, { type: 'sine', vol: .12 });
+          await T.anim(rLion.parts.bubble, [{ transform: 'scale(9)' }, { transform: 'scale(30)' }], { duration: 900, easing: 'ease-out' });
+          rLion.parts.bubble.style.transform = 'scale(0)';
+          AudioFX.sfx('pop') || T.tone(900, .08);
+          await rLion.parts.hg.animate([{ translate: '0 0' }, { translate: '0 -6px' }, { translate: '0 0' }], 400).finished;
+          startBreathe();
+        })();
+      },
+      board(verb) {
+        const PT = rPt();
+        const owner = (RG, who, x, OX) => who === L1
+          ? (() => { const g = el('g', { transform: `translate(${x + OX},390) scale(.75)` }, RG); drawHead(T, g).eyes('happy'); return g; })()
+          : mk(T, RG, x + OX, 450, drawMouse, 1.3).pos;
+        const cardsRound = (draw) => {
+          const CW = PT ? 240 : 300, CK = CW / 300, OX = PT ? 95 : 100;
+          const RG = el('g', { transform: `translate(522,249) scale(${PT ? .82 : .76}) translate(-500,-260)` }, T.world);
+          const CL = PT ? 375 : 345, CR = PT ? 625 : 655;
+          const card = (x, drawIn) => {
+            const g = el('g', {}, RG);
+            const inner = CK < 1 ? el('g', { transform: `translate(${x},260) scale(${CK}) translate(${-x},-260)` }, g) : g;
+            drawIn(inner, x, 260); return g;
+          };
+          const cl = card(CL, draw[L1]), cm = card(CR, draw[M1]);
+          owner(RG, L1, CL, OX); owner(RG, M1, CR, OX);
+          if (!inst()) { cl.animate([{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], 500); setTimeout(() => cm.animate([{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], 500), 500); }
+        };
+        if (verb === 'hole') {
+          T.world.innerHTML = '';
+          const HP = PT, HX = 500, LX = HP ? 300 : 230, SMX = HP ? 690 : 790, KS = HP ? .75 : 1;
+          if (!pic(T, T.world, 'hole_stump', HX - 158 * KS, 470 - 257 * KS, 320 * KS, 260 * KS)) T.paper(T.world, [['rect', { x: HX - 70, y: 150, width: 140, height: 320, rx: 10, fill: '#8A6344' }]]);
+          if (HP) camSnap(500, 280, .5);
+          const bl = mk(T, T.world, LX, 470, drawLionStand, .8); bl.face('right'); bl.parts.eyes('open');
+          mk(T, T.world, SMX, 470, drawMouse, 1.4);
+          return;
+        }
+        rBoard++;
+        if (verb === 'paw' && rBoard === 1) {   /* 사자 발가락 하나 = 생쥐 한 마리 */
+          T.world.innerHTML = '';
+          const bigPaw = el('g', {}, T.world);
+          let toe;
+          const PW = PT ? 215 : 250, PX = 318, PY = PT ? 112 : 100, MX = PT ? 640 : 650, MY = PT ? 352 : 372;
+          if (artUrl('paw_pad')) {
+            const PH = PW * 459 / 400, k = PW / 400;
+            pic(T, bigPaw, 'paw_pad', PX, PY, PW, PH);
+            toe = el('g', {}, bigPaw); const id = 'lmToeClip';
+            el('polygon', { points: [[305, 70], [400, 70], [400, 258], [338, 258], [296, 190], [302, 125]].map(([x, y]) => `${PX + x * k},${PY + y * k}`).join(' ') }, el('clipPath', { id }, toe));
+            const im = pic(T, toe, 'paw_pad', PX, PY, PW, PH, { shadow: false }); im.setAttribute('clip-path', `url(#${id})`);
+          } else {
+            T.paper(bigPaw, [['ellipse', { cx: 370, cy: 400, rx: 130, ry: 80, fill: C.lion }]]);
+            toe = T.paper(bigPaw, [['circle', { cx: 490, cy: 280, r: 40, fill: C.lionDk }]]);
+          }
+          const m = mk(T, T.world, MX, MY, drawMouse, PT ? 1.1 : 1.3);
+          el('rect', { x: MX - 80, y: MY, width: 160, height: 10, rx: 5, fill: C.bark }, T.world);
+          if (PT) camSnap(500, 280, .75);
+          if (!inst()) { toe.style.filter = 'url(#hintGlow)'; toe.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 700, iterations: 2 }); m.hop(20); squeak(T); }
+          return;
+        }
+        if (PT) camSnap(500, 280, 1);
+        T.world.innerHTML = '';
+        if (verb === 'paw') return cardsRound({ [L1]: (g, x, y) => pic(T, g, 'print_lion', x - 130, y - 126, 260, 252), [M1]: (g, x, y) => pic(T, g, 'print_mouse', x - 40, y - 33, 80, 66) });
+        if (verb === 'tooth') return cardsRound({ [L1]: (g, x, y) => pic(T, g, 'tooth_lion', x - 62, y - 125, 124, 248), [M1]: (g, x, y) => pic(T, g, 'tooth_mouse', x - 50, y - 34, 100, 68) });
+        console.warn('[read] board 동사 모름', verb);
+      },
+      net(verb, n) {
+        if (verb !== 'cut') return;
+        const to = Math.min(10, +n);
+        return (async () => {
+          for (let i = rRopeDone; i < to; i++) {
+            const r = rRopes[i]; if (!r) continue;
+            const x = r.x;
+            if (rPt() && !inst()) camTo(x, 280, 1, 220);
+            if (i > 0 && !inst()) { squeak(T, 1500); rMouse.hop(20, 220); await rMouse.move(x - 52, 545, 220); }
+            else if (inst()) rMouse.place(x - 52, 545);
+            if (!inst()) { rMouse.parts.teeth.setAttribute('opacity', 1); gnaw(T); T.tone([2600, 2000], .05, { type: 'square', vol: .05, when: .1 }); }
+            r.mid.remove();
+            r.bot.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
+            r.top.animate([{ transform: 'rotate(0)' }, { transform: `rotate(${i % 2 ? 6 : -6}deg)` }], { duration: 400, fill: 'forwards', easing: 'ease-out' });
+            r.top.style.opacity = '.45';
+            if (!inst()) T.pop(x, 400, i % 2 ? '톡!' : '사각!', C.bean);
+            if (rHR) rHR.setAttribute('opacity', 1 - (i + 1) / 12);
+            if (i === 2 && !inst()) rLion.parts.paws.animate([{ translate: '0 0' }, { translate: '-10px -40px' }, { translate: '0 0' }], 700);
+            if (i === 5 && !inst()) rLion.parts.hg.animate([{ rotate: '0deg' }, { rotate: '-8deg' }, { rotate: '8deg' }, { rotate: '0deg' }], 700);
+            if (!inst()) { await sleep(520); rMouse.parts.teeth.setAttribute('opacity', 0); }
+          }
+          rRopeDone = Math.max(rRopeDone, to);
+        })();
+      },
+      scroll(verb) {
+        if (verb !== 'run' || !rScroll) return;
+        if (inst()) return;
+        return (async () => {
+          for (let k = 0; k < 3; k++) {
+            const from = rSx; rSx -= 520;
+            rScroll.animate([{ transform: `translateX(${from}px)` }, { transform: `translateX(${rSx}px)` }], { duration: 900, easing: 'ease-in-out', fill: 'forwards' });
+            rLion.body.animate([{ translate: '0 0' }, { translate: '0 -22px' }, { translate: '0 0' }, { translate: '0 -22px' }, { translate: '0 0' }], 900);
+            AudioFX.sfx('step_grass', .5) || T.tone([160, 120], .12);
+            await sleep(950);
+          }
+        })();
+      },
+      cut(k) {
+        const C4 = { paw: ['cut_paw', { sfx: 'thud', hold: 1800 }], laugh: ['cut_laugh', { hold: 2200 }], net: ['cut_net', { hold: 2000 }], gnaw: ['cut_gnaw', { sfx: () => gnaw(T), hold: 1600 }] };
+        const c = C4[k]; if (!c) return console.warn('[read] cut 모름', k);
+        return cutArt(c[0], c[1]) || Promise.resolve();
+      },
+      vo(k) { return rvo(k); },
+      fx(n) {
+        if (n === 'thud') return AudioFX.thud();
+        if (n === 'roar') return roar(T, .4);
+        if (n === 'squeak') return squeak(T);
+        if (n === 'gnaw') return gnaw(T);
+        if (n === 'whoosh') return AudioFX.whoosh();
+      },
+      pop(spec) {
+        let [x, y, ...w] = String(spec).split(','); x = +x; y = +y; const t = w.join(',');
+        const o = (POPAT[popKey()] || {})[t]; if (o) [x, y] = o;
+        if (rPt()) { const c = T.camera, h = T.viewWidth() / 2 / Math.max(c.z, .1) - 60; x = Math.max(c.x - h, Math.min(c.x + h, x)); }
+        T.pop(x, y, t, POPC[t]);
+      },
+      cam(a) { if (a === 'wide') return; const [x, y, z] = String(a).split(',').map(Number); return inst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 700); },
+    };
+    const READ_ACTS = { set: R.set, lion: R.lion, mouse: R.mouse, bubble: R.bubble, board: R.board, net: R.net, scroll: R.scroll, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam };
+    if (T.reading()) {
+      T.director({ cast: { lion: () => rLion, mouse: () => rMouse }, listener: r => (r === 'lion' ? 'mouse' : 'lion'), noFace: ['lion'] });
+      return T.readPlay(READ_ACTS);
+    }
+
+
     /* --- 1. 낮잠 사자 (와이드) --- */
     let lion;
     if (savannaBG(T)) lion = mk(T, T.world, 620, 410, drawLionLie, 1.3); // 그림: 아카시아 그늘(줄기 앞)에 엎드림
@@ -813,5 +1159,5 @@
     } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
-  Tale.mount({ title: '사자와 생쥐', subtitle: '작은 친구의 큰 힘', run: T => run(portraitGuard(Tale.api)) });
+  Tale.mount({ title: '사자와 생쥐', subtitle: '작은 친구의 큰 힘', read: true, run: T => run(portraitGuard(Tale.api)) });
 })();
