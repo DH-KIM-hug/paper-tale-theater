@@ -534,7 +534,6 @@
     const hatHead = () => [N.x, N.y - 228 * N.scale];
     let flying = null;
     await say('바람이 볼을 빵빵하게 부풀렸어요.');
-    await say('바람을 톡 눌러서 후~ 불어 줘요!');
     const blow = async k => {
       W.p.setMouth('blow'); W.p.puffCheeks(1.2 + k * .18); W.setScale(.8 + k * .05);
       // 다섯째(단추 채우기)는 바로 얼굴로 카메라가 붙는다 → 바람 줄기는 얼굴 아래로만
@@ -579,7 +578,8 @@
       },
     ];
     for (let k = 1; k <= 5; k++) {
-      await T.mash(W.pos, { count: 1, prompt: k === 1 ? '바람을 톡 눌러서 불어 봐요!' : '더 세게, 톡!' });
+      const puff = () => T.mash(W.pos, { count: 1, prompt: k === 1 ? '바람을 톡 눌러서 불어 봐요!' : '더 세게, 톡!' });
+      await (k === 1 ? T.ask('바람을 톡 눌러서 후~ 불어 줘요!', puff) : puff());
       await blow(k);
       await steps[k - 1]();
       if (k < 5) { W.p.setMouth('smile'); if (k < 4) await say('바람은 더 세게 불었어요. 쓱!'); }
@@ -625,18 +625,18 @@
     }, N.pos);
     const ring = el('circle', { cx: 820, cy: 190, r: 104, fill: 'none', stroke: C.gold, 'stroke-width': 10, 'stroke-dasharray': 654, 'stroke-dashoffset': 654, transform: 'rotate(-90 820 190)', class: 'hold-ring', opacity: 0 }, T.fx);
     await say('이번엔 해님 차례예요.');
-    await say('해님을 톡톡 눌러서 따뜻하게 비춰 줘요!');
     const warmLv = [[SKY.day, .08], [SKY.warm, .16], [SKY.hot, .26]];
-    const holdOnce = async lv => {
+    const holdOnce = async (lv, guide) => {
       let lastTone = 0;
       ring.setAttribute('opacity', 1); ring.setAttribute('stroke-dashoffset', 654);
-      await T.mash(SN.pos, { count: 3, prompt: '해님을 톡톡 눌러 봐요!', onStep: i => {
+      const warm = () => T.mash(SN.pos, { count: 3, prompt: '해님을 톡톡 눌러 봐요!', onStep: i => {
         const p = i / 3;
         ring.setAttribute('stroke-dashoffset', 654 * (1 - p));
         SN.p.glow.setAttribute('opacity', (.2 + p * .5).toFixed(2));
         SN.body.style.transform = `scale(${1 + p * .12})`;
         T.tone(330 + p * 200, .4, { type: 'sine', vol: .06 });
       } });
+      await T.ask(guide, warm);
       ring.setAttribute('opacity', 0);
       SN.body.style.transform = ''; spinRays(SN); SND.warm(T, lv + 1); sparkles(T, 820, 190, 120, 8);
       F.sky.setAttribute('fill', warmLv[lv][0]); F.warm.setAttribute('opacity', warmLv[lv][1]);
@@ -646,19 +646,17 @@
         b.animate([{ opacity: 0 }, { opacity: .45 }, { opacity: 0 }], { duration: 1400, delay: i * 80 }).finished.then(() => b.remove());
       }
     };
-    await holdOnce(0);
+    await holdOnce(0, '해님을 톡톡 눌러서 따뜻하게 비춰 줘요!');
     N.__shiver.cancel(); N.P.face('smile');
     setOutfit(N.P, 'coatShut', 'down', { buttons: 4 });
     for (let i = 3; i >= 0; i--) { N.P.buttons[i].setAttribute('opacity', 0); T.tone(700 + i * 90, .1, { type: 'triangle', vol: .12 }); await sleep(220); }
     setOutfit(N.P, 'coat', 'down');
     await say('"아, 따뜻하다~" 나그네가 단추를 풀었어요.');
-    await say('조금 더 톡톡!');
-    await holdOnce(1);
+    await holdOnce(1, '조금 더 톡톡!');
     setOutfit(N.P, 'coat', 'fan'); N.P.sweat.setAttribute('opacity', 1); N.P.face('o');
     T.pop(N.x + 20, N.y - 350, '팔랑팔랑', C.bark); // 부채질하는 모자 위 (세로 화면은 카메라가 오른쪽에 있어 왼쪽은 잘린다)
     await say('"아이, 더워!" 모자로 부채질을 해요.');
-    await say('한 번 더 톡톡!');
-    await holdOnce(2);
+    await holdOnce(2, '한 번 더 톡톡!');
     vo('cut_off'); // 컷 속 나그네 한숨 (말풍선 없음)
     await (cutArt(T, 'cut_off', 'swish', 2400) || T.cut(svg => {
       const coat = T.el('g', { transform: 'translate(250,110) rotate(-28)' }, svg);
@@ -701,11 +699,10 @@
     T.world.__LR[1].hop(20);
     await say('해님이 비출 때는 외투를 벗었지요.');
     const q1 = '누가 외투를 벗게 했을까요? 해님일까요, 바람일까요?';
-    await say(q1);
-    await T.choose([
+    await T.ask(q1, () => T.choose([
       { el: Sr.pos, ok: true },
       { el: Wl.pos, ok: false, onWrong: async () => { SND.whoosh(T, 1); await Wl.wiggle(8, 500); T.world.__LR[0].wiggle(4, 400); } },
-    ], { prompt: '누가 외투를 벗게 했을까요?', where: '외투를 벗은 나그네 쪽 하늘을 봐요!', who: '해님이에요! 반짝이는 해님을 눌러 봐요!' });
+    ], { prompt: '누가 외투를 벗게 했을까요?', where: '외투를 벗은 나그네 쪽 하늘을 봐요!', who: '해님이에요! 반짝이는 해님을 눌러 봐요!' }));
     clearInterval(gustL);
     spinRays(Sr); SND.sparkle(T); T.confetti();
     await say('맞아요, 해님이에요! 따뜻한 해님이 이겼어요.');
@@ -728,9 +725,8 @@
         bs = { [okKey]: badge(T, left ? 500 - bx : 500 + bx, 330, g => ICON[okKey](T, g)), [noKey]: badge(T, left ? 500 + bx : 500 - bx, 330, g => ICON[noKey](T, g)) };
         if (T.portrait()) camSnap(500, 280, Math.min(1, T.viewWidth() / 2 / (bx + 100)));
       }, null);
-      await say(q);
-      await T.choose([{ el: bs[okKey], ok: true }, { el: bs[noKey], ok: false, onWrong: () => wrong(M) }],
-        { prompt: q, where, who: `${josa(okName, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });
+      await T.ask(q, () => T.choose([{ el: bs[okKey], ok: true }, { el: bs[noKey], ok: false, onWrong: () => wrong(M) }],
+        { prompt: q, where, who: `${josa(okName, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` }));
       bs[okKey].remove(); bs[noKey].remove();
       wear(M); M.hop(24); AudioFX.sfx('ding') || AudioFX.ding();
       await say(after);
@@ -762,8 +758,7 @@
     await say('나그네는 개울가에서 쉬어요.');
     AudioFX.splash(); T.pop(N.x + 150, N.y + 30, '퐁당!', C.indigo); // 발 옆 물 위 (다리를 가리지 않게)
     await say('시원한 물에 발을 퐁당 담갔어요.');
-    await say('바람아, 이번엔 살살 불어 줄래? 톡, 살살~');
-    await T.mash(WW.pos, { count: 3, prompt: '바람을 살살 톡톡 눌러 봐요!', onStep: i => {
+    await T.ask('바람아, 이번엔 살살 불어 줄래? 톡, 살살~', () => T.mash(WW.pos, { count: 3, prompt: '바람을 살살 톡톡 눌러 봐요!', onStep: i => {
       WW.p.setMouth('blow'); WW.p.puffCheeks(1.1); SND.breeze(T);
       // 그림: 바람(가운데 위)이 왼쪽 나그네 쪽으로 분다 → 바람 줄기도 왼쪽으로. 도형: 바람이 왼쪽에 있어 오른쪽으로
       if (ST.art) gust(T, 2, { x0: 380, y0: 220, y1: 400, w: 4, alpha: .55, dur: 1800, dist: -520 });
@@ -774,7 +769,7 @@
       else T.pop(N.x + 30 + i * 130, N.y - 360 + (i % 2) * 40, '살랑~', C.pine);
       N.P.face('big');
       setTimeout(() => WW.p.setMouth('smile'), 600);
-    } });
+    } }));
     await say('"아, 시원해. 고마워, 바람아!"');
     WW.hop(20);
     if (ST.art) WW.face('left'); // 이제 오른쪽 해님을 마주 본다 (악수 컷과 같은 자리: 바람 왼쪽, 해 오른쪽)
@@ -822,10 +817,9 @@
         fx: () => { wfx = precip(T, T.fx, 'snow', 40); [1568, 1319, 1175].forEach((f, i) => T.tone(f, .3, { type: 'sine', vol: .08, when: i * .12 })); } },
     };
     T.finale();
-    await say('하늘을 톡 눌러서 날씨를 바꿔 볼까요?');
-    await say('옷도 저절로 바뀐대요!');
-    for (const [k, w] of Object.entries(WEATHER)) {
-      await T.tap(btns[k].pos);
+    for (const [wi, [k, w]] of Object.entries(WEATHER).entries()) {
+      const tapW = () => T.tap(btns[k].pos);
+      await (wi === 0 ? T.ask('하늘을 톡 눌러서 날씨를 바꿔 볼까요?', tapW) : tapW());
       btns[k].hop(20);
       if (wfx) { wfx.remove(); wfx = null; }
       w.fx();
@@ -833,6 +827,7 @@
       PL.sky.setAttribute('fill', w.sky); PL.ground.setAttribute('fill', w.ground);
       w.wear(); M8.P.face('big'); M8.hop(16);
       T.pop(M8.x + 185, 380, w.cloth, C.bean); // 몸 옆 (세로 화면 보이는 폭 안)
+      if (wi === 0) await say('옷도 저절로 바뀐대요!');   // 첫 번째 눌렀을 때 옷이 바뀌는 걸 보며 안내
       await sleep(1800); // 바뀐 날씨를 잠깐 보여 준다
     }
     if (wfx) { wfx.remove(); wfx = null; }
@@ -902,12 +897,30 @@
       guardCam = api.camera;
     };
     const targetsOf = { tap: a => a[0], mash: a => a[0], swipe: a => a[0], hold: a => a[0], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
-    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); return api[k](...a); }; });
+    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); [].concat(targetsOf[k](a)).forEach(e => fatten(e)); return api[k](...a); }; });
     T.sceneCard = (label, change, focus) => api.sceneCard(label, () => {
       if (guardCam) { const c = api.camera; if (c.x === guardCam.x && c.y === guardCam.y && c.z === guardCam.z) api.camSnap(500, 280, 1); guardCam = null; }
       change && change();
     }, focus);
     return T;
+  }
+
+  /* 누르는 자리 넓히기 (2026-10-22): 화면에서 짧은 변이 84px 보다 작은 대상(g)에 투명 사각을 덧대 84px 이상으로 만든다.
+     대상 가운데는 그대로(손가락 힌트 자리 불변). 조작을 열 때마다 지금 화면 배율로 다시 잰다. 클립된 그림 조각은 건드리지 않는다 */
+  function fatten(el, min = 84) {
+    try {
+      if (!el || !(el instanceof SVGGElement) || el.__noFat) return;
+      if (el.__fat) { el.__fat.remove(); el.__fat = null; }
+      const r = el.getBoundingClientRect(); if (!r.width || !r.height || el.getAttribute('clip-path')) return;
+      if (r.width >= min && r.height >= min) return;
+      const m = el.getScreenCTM(), bb = el.getBBox(); if (!m || !bb.width || !bb.height) return;
+      const sx = Math.hypot(m.a, m.b) || 1, sy = Math.hypot(m.c, m.d) || 1;
+      const w = Math.max(bb.width, min / sx), h = Math.max(bb.height, min / sy);
+      const rc = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rc.setAttribute('x', bb.x + bb.width / 2 - w / 2); rc.setAttribute('y', bb.y + bb.height / 2 - h / 2);
+      rc.setAttribute('width', w); rc.setAttribute('height', h); rc.setAttribute('fill', '#000'); rc.setAttribute('fill-opacity', 0);
+      el.insertBefore(rc, el.firstChild); el.__fat = rc;
+    } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
   Tale.mount({ title: '해와 바람', subtitle: '누가 외투를 벗길까?', run: () => run(portraitGuard(Tale.api)) });
