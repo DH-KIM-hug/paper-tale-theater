@@ -456,6 +456,258 @@
     const PEEK_DX = -(curtain.w / 2 + 25);
     const hasFace = a => a;   // (자리 맞추기용 훅 — 지금은 쓰지 않음)
 
+    /* ===== 읽어 주기 (docs/READ_MODE.md §10) — 놀이판 장면·배우 함수를 동사 이름으로 감싼 것. 놀이판 흐름은 아래에서 그대로 ===== */
+    const READ_ACTS = (() => {
+      const inst = () => T.readInstant();
+      const BGMAP = { sb_bg_room: 'sb_bg_room_v2', sb_bg_hall: 'sb_bg_hall_v2', sb_bg_stairs: 'sb_bg_stairs', sb_bg_tower: 'sb_bg_tower', sb_bg_bedroom: 'sb_bg_bedroom_v2', sb_bg_outside: 'sb_bg_outside_v2', sb_bg_kitchen: 'sb_bg_kitchen_v2', sb_bg_chapel: 'sb_bg_chapel_v2' };
+      const PCAM = [500, 500, 620, 470, 540, 300, 520, 470, 600, 540, 540];   // 세로 화면: 장면마다 놀이판의 카메라 x
+      /* 세로 화면: 대본의 가로 x → 놀이판이 세로에서 쓰는 x */
+      const PM = { 'king:360': 395, 'queen:640': 605, 'queen:300': 430, 'king:420': 510, 'young:580': 590, 'old:870': 760, 'king:720': 660, 'queen:820': 740, 'king:640': 650, 'queen:730': 720,
+        'old:380': 420, 'pr:140': 140, 'pr:380': 400, 'young:300': 470, 'prince:-200': 200, 'prince:-80': 300, 'prince:660': 610, 'queen:700': 640, 'king:800': 720 };
+      const PW = { 'prince:340': 480, 'prince:150': 395 };
+      const who = { pr, baby, king, queen, young, old, granny, prince, grandpa };
+      const px = (n, x) => (P && PM[n + ':' + x] != null ? PM[n + ':' + x] : x);
+      const BGM = { cur: '', hall: 0, sleepers: 0, cam: 0 };
+      const rDoorX = X(970, SX(7) + 160 * RS - 60);
+      const POPC = { 딸랑: '#D9A94E', 덜컹: '#6B4A32', 쉿: '#1F2A56', 스르륵: '#3F6B4F', 하암: '#8A7A60' };
+      let strips = [], gp = null, curF = null, night = null;
+      const placeSet = (a, x, y, pose, to, s) => put(T, a, x, FL, { look: pose || undefined, to: to || undefined, s: s || 1 });
+      const lieOnBed = () => { if (bed.pos.isConnected) put(T, pr, bed.x - 8, bed.y + BED_TOP, { look: 'lie', to: 'left' }); };
+      const sleepRow = [[dog, X(590, 560), 'wag'], [maid, X(720, 640), 'stand'], [guardA, X(790, 720), 'stand'], [cook, X(860, 800), 'stand'], [kid, X(920, 870), 'stand'], [guardB, X(980, 940), 'stand']];
+      const leaveF = (f, i) => { f.look('stand'); f.move(X(50 + 70 * i, -200), FL, 900, 'ease-out'); };
+      const setCam = () => { const k = BGM.cam++; return inst() ? camSnap(P ? PCAM[Math.min(k, PCAM.length - 1)] : 500, 280, 1) : null; };
+      /* 사람·동물 공통 동사: at / look / hop / wiggle */
+      const actor = (name, hopArgs = [8, 300], extra = {}) => (verb, ...args) => {
+        const a = who[name];
+        if (verb === 'at') {
+          const [xs, ys] = String(args[0]).split(','); const [pose, dir] = [args[1], args[2]];
+          if (name === 'young' && pose === 'peek') {
+            put(T, curtain, X(900, 790), FL); put(T, a, curtain.x + PEEK_DX, FL, { look: 'peek', to: dir || 'left' }); return;
+          }
+          return put(T, a, px(name, +xs), FL, { look: pose, to: dir, s: 1 });
+        }
+        if (verb === 'look') {
+          const [pose, dir] = args;
+          if (name === 'pr' && pose === 'lie') return lieOnBed();
+          if (name === 'young' && pose === 'peek') { a.look('peek', dir || 'left'); if (curtain.pos.isConnected) a.place(curtain.x + PEEK_DX, FL); return; }
+          return a.look(pose, dir);
+        }
+        if (verb === 'hop') { if (name === 'baby') { a.hop(3, 500); return T.sleep(550).then(() => a.hop(3, 500)); } return a.hop(...hopArgs); }
+        if (verb === 'wiggle') return a.wiggle(2, 700);
+        const f = extra[verb]; return f ? f(...args) : console.warn('[read] 모르는 ' + name + ' 동사', verb);
+      };
+      const R = {
+        set(key) {
+          const bg = BGMAP[key] || key; BGM.cur = bg; strips = []; night = null;
+          setBg(bg); camSnap(500, 280, 1);
+          if (bg === 'sb_bg_hall_v2' && ++BGM.hall === 2) { put(T, curtain, X(760, 700), FL); put(T, door, X(985, 870), FL, { look: 'closed' }); }
+        },
+        cam(a) {
+          if (!inst()) { const [x, y, z] = String(a).split(',').map(Number); return T.camTo(x, y, z || 1, 700); }
+          return setCam();
+        },
+        async veil(key) {
+          const bg = BGMAP[key] || key;
+          const change = () => { BGM.cur = bg; setBg(bg); camSnap(P && bg === 'sb_bg_outside_v2' ? 600 : P && bg === 'sb_bg_tower' ? 520 : 500, 280, 1); };
+          if (inst()) return change();
+          await veil(T, change);
+        },
+        baby: actor('baby'), king: actor('king'), queen: actor('queen', [6, 300]), young: actor('young', [6, 300], {
+          hide: async () => {
+            if (!curtain.pos.isConnected) put(T, curtain, X(760, 700), FL);
+            await young.move(curtain.x + 10, FL, 900, 'ease-in');
+          },
+          step_out: async () => {
+            young.look('stand'); young.place(curtain.x + PEEK_DX, FL);
+            await walk(T, young, X(620, 600), FL, 1200, { snd: null, ease: 'ease-out' });
+            young.look('wand');
+          },
+          sleep_all: async () => {
+            for (const [a] of sleepRow) {
+              follow(a.x - 30, 600);
+              await walk(T, young, a.x - 70, FL, 600, { h: 4, hd: 420, snd: null });
+              twinkle(T, young.x + WAND_TIP[0], FL + WAND_TIP[1], '#9CC7DD', 4, 30); sfx(T, 'doop', .35, () => T.tone([520, 380], .12, { vol: .12 }));
+              a.look('sleep'); T.pop(a.x, FL - a.h - 80, tr('쿨쿨'), '#1F2A56'); T.tone([320, 220], .3, { type: 'sine', vol: .08 });
+              await sleep(700);
+            }
+          },
+        }),
+        old: actor('old', [6, 400], {
+          enter: async () => {
+            door.look('open'); L.chandelier2.wiggle(2, 600);
+            put(T, old, X(1080, rDoorX + 20), FL, { look: 'stand', to: 'left', s: RS });
+            await walk(T, old, SX(7), FL, WALK, { h: 3 * RS, hd: 560 });
+            door.look('closed');
+          },
+        }),
+        granny: actor('granny', [6, 300]), pr: actor('pr', [8, 300], {
+          climb_stairs: async () => {
+            for (const [sx, sy] of [[320, 452], [500, 376], [680, 300], [860, 224]]) { follow(sx, 900); await walk(T, pr, sx, sy, 900, { h: 6, hd: 300 }); }
+          },
+          prick: async () => {
+            pr.look('reach', 'right');
+            await pr.move(wheel.x + SPINDLE[0] - REACH_TIP[0], FL, 700, 'ease-out');
+            await sleep(250);
+            twinkle(T, pr.x + REACH_TIP[0], FL + REACH_TIP[1], CREAM, 4, 26); sfx(T, 'sparkle', .3);
+            await sleep(300);
+          },
+          wake: () => { pr.look('wake'); pr.place(bed.x - 20, bed.y + BED_TOP + 8); pr.hop(5, 400); },
+        }),
+        prince: actor('prince', [8, 300], {
+          walk: spec => {
+            const [xs, ms] = String(spec).split(',');
+            const grass = BGM.cur.startsWith('sb_bg_outside');
+            const p = walk(T, prince, PW['prince:' + xs] != null && P ? PW['prince:' + xs] : +xs, FL, +ms, { h: 4, hd: 420, snd: grass ? 'step_grass' : 'step_wood', vol: grass ? .3 : .2 });
+            return Promise.all([p, gp]).then(() => { gp = null; });
+          },
+          through: async () => {
+            prince.look('tiptoe', 'right'); T.world.insertBefore(prince.pos, bush.pos);
+            await walk(T, prince, 700, FL, 2200, { h: 4, hd: 420, snd: 'step_grass' });
+            await fadeOut(T, prince, 500);
+          },
+        }),
+        grandpa(verb) {
+          if (verb !== 'enter') return;
+          put(T, grandpa, X(-100, 280), FL, { look: 'point', to: 'right' });
+          gp = walk(T, grandpa, X(220, 390), FL, WALK, { h: 3, hd: 560, snd: 'step_grass' });
+          return T.sleep(300);
+        },
+        cradle(verb) {
+          if (verb === 'set') { put(T, cradle, 500, FL + 4); put(T, baby, cradle.x + CRADLE_BABY[0], cradle.y + CRADLE_BABY[1], { look: 'sleep' }); }
+          else if (verb === 'rock') { cradle.wiggle(5, 700); return cradle.wiggle(5, 700); }
+        },
+        plates(n) {
+          n = +n;
+          for (let i = 0; i < n; i++) put(T, plates[i], SLOT(i), TABLE_Y + 2);
+        },
+        fairies() {   /* 요정 여섯 + 막내 한 줄, 접시 일곱을 줄에 맞추고 문 */
+          for (let i = 0; i < 7; i++) put(T, plates[i], SX(i), TABLE_Y + 2, { s: RS });
+          for (let i = 0; i < 6; i++) put(T, fairies[i], SX(i), FL, { look: 'stand', s: RS });
+          put(T, young, SX(6), FL, { look: 'stand', s: RS });
+          put(T, door, rDoorX, FL, { look: 'closed', s: RS });
+        },
+        async fairy(verb, i) {
+          if (verb !== 'gift') return;
+          i = +i;
+          if (curF) { leaveF(curF.f, curF.i); curF = null; }
+          const f = fairies[i]; curF = { f, i };
+          put(T, f, X(-80, 250), FL, { look: 'stand' });
+          await walk(T, f, X(400, 410), FL, 1500, { snd: 'step_wood', vol: .25 });
+          f.look('wand');
+          twinkle(T, f.x + WAND_TIP[0], FL + WAND_TIP[1], COLOR[i]); sparkleSfx(T);
+          put(T, gifts[i], 500, FL - 205); fadeIn(gifts[i], 300);
+          gifts[i].move(500, FL - 295, 1600, 'ease-out');
+          setTimeout(() => fadeOut(T, gifts[i], 400), 1500);
+          await sleep(500);
+        },
+        match(verb) {
+          if (verb === 'strips') return (async () => {
+            for (let i = 0; i < 7; i++) { strips.push(strip(T, SX(i), TABLE_Y + 2 + 10 * RS, FL - 205 * RS - 6)); sfx(T, 'paper_tap', .3); await sleep(450); }
+          })();
+          if (verb === 'clear') { const ss = strips; strips = []; ss.forEach(s => s.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' })); return sleep(300).then(() => ss.forEach(s => s.remove())); }
+        },
+        wheel(verb) {
+          if (verb === 'set') put(T, wheel, X(150, 330), FL);
+          else if (verb === 'exit') {
+            wheel.wiggle(3, 500); setTimeout(() => sfx(T, 'rattle', .4), 900);
+            return wheel.move(X(-250, 100), FL, 1800, 'ease-in').then(() => hide(wheel));
+          }
+        },
+        tower() {
+          setBg('sb_bg_tower'); camSnap(P ? 520 : 500, 280, 1);
+          put(T, granny, X(640, 640), FL, { look: 'spin', to: 'left' });
+          put(T, wheel, X(540, 540), FL);
+          put(T, pr, X(380, 400), FL, { look: 'stand' });
+        },
+        threads() {
+          const order = ['short', 'mid', 'long'].sort(() => Math.random() - .5), TX = [wheel.x - 52, wheel.x, wheel.x + 52];
+          order.forEach((k, i) => put(T, threads[k], TX[i], FL - 150 + HT['sb_prop_thread_' + k]));
+        },
+        parents() {
+          put(T, king, X(-80, 300), FL, { look: 'worry' }); put(T, queen, X(-160, 240), FL, { look: 'worry' });
+          return Promise.all([walk(T, king, X(240, 420), FL, 1400, { h: 6, hd: 320, vol: .35 }), walk(T, queen, X(140, 330), FL, 1400, { h: 6, hd: 320, snd: null })]);
+        },
+        candle(k) {
+          if (k === 'lit') put(T, candle, X(240, 380), FL, { look: 'lit' });
+          else { candle.look('out'); night = tint(T, '#1F2A56', 0); T.anim(night, [{ opacity: 0 }, { opacity: .22 }], 1200); }
+        },
+        bed() { put(T, bed, 500, FL + 6); },
+        sleepers(verb) {
+          if (verb === 'set') {
+            if (++BGM.sleepers === 1) sleepRow.forEach(([a, x, lk]) => put(T, a, x, FL, { look: lk }));
+            else { put(T, maid, X(120, 330), FL, { look: 'sleep' }); put(T, cook, X(860, 720), FL, { look: 'sleep' }); put(T, kid, X(940, 800), FL, { look: 'sleep' }); front(L.cobweb, 30, 110); front(L.cobweb2, 970, 110, { to: 'right' }); }
+          } else if (verb === 'wake') [maid, cook, kid].forEach((a, i) => setTimeout(() => { a.look('stand'); a.hop(10, 360); }, i * 200));
+        },
+        tree(k) {
+          if (k === 'small') put(T, tree, X(880, 860), FL, { look: 'small' });
+          else if (tree.cur !== 'big') { tree.look('big'); tree.hop(6, 400); sfx(T, 'pop', .3); }
+        },
+        bush(verb) {
+          if (verb === 'set') { put(T, bush, X(700, 700), FL, { look: 'closed' }); if (!inst()) bush.body.style.transform = 'scale(.12)'; }
+          else if (verb === 'grow') {
+            const g = bush.body.animate([{ transform: 'scale(.12)' }, { transform: 'scale(1)' }], { duration: 2400, easing: 'ease-out', fill: 'forwards' });
+            L.thorn_vine.body.style.transformBox = 'fill-box'; L.thorn_vine.body.style.transformOrigin = '50% 100%';
+            L.thorn_vine.body.animate([{ transform: 'scale(.3)' }, { transform: 'scale(1)' }], { duration: 2400, easing: 'ease-out' });
+            return g.finished.catch(() => {}).then(() => { g.cancel(); bush.body.style.transform = ''; });
+          } else if (verb === 'open') {
+            bush.look('open'); if (!P) [L.thorn_top, L.thorn_top2].forEach(a => a.wiggle(3, 700)); return bush.wiggle(2, 500);
+          }
+        },
+        sunmoon() {
+          return sunMoon(T, () => {
+            tree.look('big'); tree.hop(6, 400); sfx(T, 'pop', .3);
+            const v3 = bgImage(T, 'sb_bg_outside_v3'); v3.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400, fill: 'backwards' });
+            const come = [mid(L.rose_bush2, X(1000, 790), FL - 10), front(L.mushrooms, X(60, 330), 585)];
+            if (!P) come.push(front(L.thorn_top, 120, 90), front(L.thorn_top2, 880, 90, { to: 'right' }));
+            come.forEach(a => a.pos.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400 }));
+          });
+        },
+        kitchen() {
+          put(T, shelf, X(760, 470), 150); put(T, bird, shelf.x + 45, shelf.y - 52, { to: 'left' });
+          put(T, table, X(300, 430), FL); put(T, dog, table.x, FL, { look: 'sleep', to: 'left' });
+          put(T, cook, X(560, 525), FL, { look: 'sleep' }); put(T, kid, X(640, 585), FL, { look: 'sleep' }); put(T, guardB, X(880, 665), FL, { look: 'sleep' });
+          L.pot_rack.wiggle(2, 800);
+        },
+        glow(k) {
+          if (k === 'plates') return (async () => { for (let i = 0; i < 8; i++) { glow(plates[i], 400); await sleep(100); } })();
+          const a = { old, dog, bird, kid }[k]; if (!a) return;
+          glow(a, 1200);
+          if (k !== 'old') { sparkleSfx(T); T.pop(a.x, k === 'bird' ? a.y - 80 : FL - (k === 'kid' ? 240 : 150), tr('반짝!')); }
+        },
+        chapel() {
+          for (let i = 0; i < 8; i++) put(T, plates[i], SX(i), TABLE_Y + 2, { s: RS });
+          for (let i = 0; i < 6; i++) put(T, fairies[i], SX(i), FL - 70, { look: 'stand', s: RS });
+          put(T, young, SX(6), FL - 70, { look: 'stand', s: RS });
+          put(T, old, SX(7), FL - 70, { look: 'smile', to: 'left', s: RS });
+          put(T, bell, 500, 118);
+          put(T, king, X(150, 300), FL, { look: 'joy' }); put(T, queen, X(940, 700), FL, { look: 'joy' });
+          put(T, pr, X(460, 462), FL, { look: 'wave' }); put(T, prince, X(540, 538), FL, { look: 'wave' });
+        },
+        bell() {
+          sfx(T, 'bell', .5, () => T.tone([1320, 1760], .25, { type: 'sine', vol: .12 }));
+          bell.wiggle(12, 900); setTimeout(() => bell.wiggle(12, 900), 950);
+        },
+        twinkle(spec) { const [x, y, c] = String(spec).split(','); twinkle(T, +x, +y, c, 6, 60); },
+        sparkle() { sparkleSfx(T); },
+        confetti() { T.confetti(); },
+        fx(n) {
+          if (n === 'sparkle') return sparkleSfx(T);
+          if (n === 'bell') return sfx(T, 'bell', .5, () => T.tone([1320, 1760], .25, { type: 'sine', vol: .12 }));
+          if (n === 'tada') return sfx(T, 'tada', .5, () => sparkleSfx(T));
+          if (n === 'giggle') return sfx(T, 'baby_giggle', .6, () => AudioFX.sfx('giggle', .6));
+          if (n === 'boing' || n === 'hop') return sfx(T, 'hop', .5);
+          return sfx(T, n, .4);
+        },
+        pop(spec) {
+          const [x, y, ...w] = String(spec).split(','); const t = w.join(',');
+          let xx = +x; if (P && xx === 150) xx = +y === 310 ? 330 : 395;
+          T.pop(xx, +y, tr(t), POPC[t]);
+        },
+      };
+      return R;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ===== 1. 기다리던 아기 (톡 1: 요람) ===== */
     scene('sb_bg_room_v2');
     put(T, king, X(360, 395), FL, { look: 'joy' });
@@ -867,5 +1119,5 @@
     T.finale(); await sleep(2500);
     return '아무도 빼놓지 않아요. 잊힌 사람의 마음은 아프답니다.';
   }
-  Tale.mount({ title: '잠자는 숲속의 공주', subtitle: '아무도 빼놓지 않아요', run: async T => { try { return await run(Tale.api); } catch (e) { console.error('RUNERR ' + (e && e.stack || e)); throw e; } } });
+  Tale.mount({ title: '잠자는 숲속의 공주', subtitle: '아무도 빼놓지 않아요', read: true, run: async T => { try { return await run(Tale.api); } catch (e) { console.error('RUNERR ' + (e && e.stack || e)); throw e; } } });
 })();
