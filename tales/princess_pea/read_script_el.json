@@ -1,0 +1,814 @@
+{
+ "mode": "read",
+ "tale": "princess_pea",
+ "lang": "ko",
+ "title": "완두콩 공주",
+ "voices_from": "voice_script_el.json",
+ "moral": "느낀 것을 솔직하게 말하는 마음이 진짜 공주의 마음이에요.",
+ "notes": "읽어 주기 모드 대본(docs/READ_MODE.md). 조작 안내(배·성문·매트리스·유리 상자 누르기)와 배움 놀이(제일 작은 것·큰 것 고르기, 매트리스 1~20 수 세기, 위·아래 고르기)와 그 오답·정답 대사를 모두 뺐다. 위·아래 장면은 사다리를 오르는 묘사로 남겼다. 놀이판 9장 → 읽기 9장. 기존 글자가 적은 편(약 640자)이라 배율을 2배 가까이 두었다. src: reuse = 기존 줄·녹음 그대로, trim = 기존 줄(from)의 조작 꼬리를 자름, new = 새 문장(녹음 필요, 모두 내레이터, 장면마다 의성어·의태어 2개 이상). 놀이판은 교훈을 대사로 말하지 않지만, 읽기 대본 규칙대로 마지막 줄에 이야기 말투로 한 번 넣었다. Typecast(tc) 배역 없음.",
+ "acts": {
+  "set:<pp_bg_room_day|pp_bg_gate_night|pp_bg_guest_day|pp_bg_guest_night|pp_bg_yard_day>": "장면 배경(scene(key): 배경 + 새 rig). scenes[].set 으로 자동 호출",
+  "cam:<x,y,z> | follow:<x> | rig:<up|down>": "카메라 / 탑 rig 를 위(꼭대기 보기)·아래로",
+  "pea:look:<stand|wet|climb|lie_a|lie_b|sleepy|honest|hold|wave>[:<dir>] | pea:at:<x,y>[:<look>[:<dir>]] | pea:hop | pea:wiggle | pea:climb | pea:toss | pea:lie": "공주. climb = 사다리를 타고 꼭대기까지(rig 도 함께 올라감), toss = 이리 뒤척 저리 뒤척(lie_a/lie_b 번갈아), lie = 이불 위에 누움",
+  "prince:look:<sigh|stand|surprise|joy|hold>[:<dir>] | prince:at:<x,y>[:<look>[:<dir>]] | prince:hop | prince:wiggle": "왕자",
+  "queen:look:<smile|wink|place|lift|hug>[:<dir>] | queen:at:<x,y>[:<look>[:<dir>]] | queen:hop | queen:wiggle | queen:hug": "왕비. hug = 공주 옆으로 가서 꼬옥",
+  "king:at:<x,y> | king:fade:in": "왕(등불)",
+  "boat:set | boat:sail | lands:set": "배·먼 나라들 / 배가 오른쪽 끝까지 갔다 돌아옴(출렁출렁)",
+  "storm:set | lightning | rain:<on|off> | door:knock | door:open": "구름·비 / 번쩍 우르릉 / 비 / 똑똑 / 끼익 열림(닫힌 문→열린 문, 왕·왕비 나타남)",
+  "compare:set | compare:hide | pea:place": "완두콩·베개·매트리스 한 장 놓기 / 완두콩을 침대 판자에(쏙)",
+  "pile:set | tower:stack:<from,to> | duvets | tower:build | ladder": "매트리스 더미 / 더미에서 침대로 한 장씩 쌓기(수 세기 소리 n1~n20 은 넣지 않음) / 이불 넉 장 / 스무 장 탑 한 번에 세우기 / 사다리",
+  "petals | case:set | glow:<pea|peaB|peaM|king> | sparkle | shake | confetti | fx:<swish|boom|knock|creak|paper_down|paper_up|poke|step_wood|tada> | pop:<x,y,글자>": "효과"
+ },
+ "scenes": [
+  {
+   "key": "R01_search",
+   "card": "진짜 공주를 찾아서",
+   "set": "pp_bg_room_day",
+   "enter": [
+    "lands:set",
+    "boat:set",
+    "queen:at:410,505:smile",
+    "prince:at:300,505:sigh",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날에 진짜 공주와 결혼하고 싶은 왕자가 있었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옛날에 진짜 공주와 결혼하고 싶은 왕자가 있었어요.",
+       null,
+       "[calm, warm storytelling, slow, once upon a time]"
+      ]
+     ]
+    },
+    {
+     "text": "왕자는 커다란 배에 훌쩍 올라탔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "왕자는 커다란 배에 훌쩍 올라탔어요.",
+       null,
+       "[light, storytelling, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "왕자는 배를 타고 온 세상을 돌아다녔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "왕자는 배를 타고 온 세상을 돌아다녔어요.",
+       null,
+       "[gentle, steady, a little wistful, slow]"
+      ]
+     ],
+     "before": [
+      "fx:swish",
+      "pop:754,200,출렁출렁"
+     ],
+     "after": [
+      "boat:sail"
+     ]
+    },
+    {
+     "text": "파도가 출렁출렁, 배는 이 나라 저 나라로 둥실둥실 떠갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "파도가 출렁출렁, 배는 이 나라 저 나라로 둥실둥실 떠갔어요.",
+       null,
+       "[gentle, rhythmic, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "온 세상을 다 가 봤지만, 진짜 공주인지 알 수 없었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prince",
+       "온 세상을 다 가 봤지만, 진짜 공주인지 알 수 없었어요.",
+       "sad",
+       "[young man, sighing, disappointed but gentle, slow]"
+      ]
+     ],
+     "before": [
+      "follow:300",
+      "prince:wiggle",
+      "pop:205,255,휴우"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_storm",
+   "card": "폭풍우 밤",
+   "set": "pp_bg_gate_night",
+   "enter": [
+    "storm:set",
+    "rain:on",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그날 밤, 비가 쏟아지고 천둥이 우르릉!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그날 밤, 비가 쏟아지고 천둥이 우르릉!",
+       null,
+       "[storytelling, a little dramatic but not scary, rumble on 우르릉]"
+      ]
+     ],
+     "after": [
+      "lightning",
+      "pop:480,60,번쩍",
+      "shake",
+      "pop:250,40,우르릉"
+     ]
+    },
+    {
+     "text": "주룩주룩, 쏴아쏴아, 빗줄기가 성문을 두드렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "주룩주룩, 쏴아쏴아, 빗줄기가 성문을 두드렸어요.",
+       null,
+       "[storytelling, a little dramatic but not scary]"
+      ]
+     ]
+    },
+    {
+     "text": "누가 성문을 똑똑, 두드려요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "누가 성문을 똑똑, 두드려요.",
+       null,
+       "[curious, soft, a tiny pause before 똑똑]"
+      ]
+     ],
+     "before": [
+      "door:knock",
+      "pop:700,150,똑똑",
+      "door:knock",
+      "pop:740,150,똑똑"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_gate",
+   "card": "문 앞의 아가씨",
+   "set": "pp_bg_gate_night",
+   "enter": [
+    "storm:set",
+    "rain:on",
+    "pea:at:500,505:wet:right",
+    "pop:415,465,뚝뚝",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "성문이 끼익 열리고, 왕과 왕비가 등불을 들고 나왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "성문이 끼익 열리고, 왕과 왕비가 등불을 들고 나왔어요.",
+       null,
+       "[curious, soft]"
+      ]
+     ],
+     "before": [
+      "door:open",
+      "fx:creak",
+      "pop:700,150,끼익",
+      "king:fade:in",
+      "glow:king"
+     ]
+    },
+    {
+     "text": "이 밤에 누구지?",
+     "src": "reuse",
+     "segs": [
+      [
+       "king",
+       "이 밤에 누구지?",
+       null,
+       "[old king, kind, a little surprised, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "문 앞에는 비에 흠뻑 젖은 아가씨가 서 있었어요. 머리에서 물이 뚝뚝 떨어졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "문 앞에는 비에 흠뻑 젖은 아가씨가 서 있었어요. 머리에서 물이 뚝뚝 떨어졌어요.",
+       null,
+       "[gentle, a little surprised]"
+      ]
+     ]
+    },
+    {
+     "text": "비를 맞았지만 괜찮아요. 저는 진짜 공주예요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "pea",
+       "비를 맞았지만 괜찮아요. 저는 진짜 공주예요!",
+       "happy",
+       "[young woman, brave and bright, cheerful despite being soaked, clear]"
+      ]
+     ],
+     "before": [
+      "pea:hop"
+     ]
+    },
+    {
+     "text": "어서 들어와 몸을 말리렴.",
+     "src": "reuse",
+     "segs": [
+      [
+       "queen",
+       "어서 들어와 몸을 말리렴.",
+       null,
+       "[old queen, warm, motherly, smiling]"
+      ]
+     ],
+     "before": [
+      "queen:wiggle"
+     ]
+    },
+    {
+     "text": "진짜 공주인지는… 살짝 알아볼까?",
+     "src": "reuse",
+     "segs": [
+      [
+       "queen",
+       "진짜 공주인지는… 살짝 알아볼까?",
+       "whisper",
+       "[old queen, playful, mischievous wink, half whispering, warm]"
+      ]
+     ],
+     "before": [
+      "queen:look:wink",
+      "pop:815,255,찡긋"
+     ],
+     "after": [
+      "rain:off"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_pea",
+   "card": "왕비의 완두콩",
+   "set": "pp_bg_guest_day",
+   "enter": [
+    "queen:at:690,505:place:right",
+    "compare:set",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "왕비님은 손님방에 완두콩 한 알, 베개, 매트리스 한 장을 가져왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "왕비님은 손님방에 완두콩 한 알, 베개, 매트리스 한 장을 가져왔어요.",
+       null,
+       "[calm, clear, slow, listing the three things]"
+      ]
+     ]
+    },
+    {
+     "text": "완두콩은 콩알만큼 조그맣고, 매트리스는 커다랗고 푹신푹신했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "완두콩은 콩알만큼 조그맣고, 매트리스는 커다랗고 푹신푹신했어요.",
+       null,
+       "[calm, clear, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "왕비님은 두리번두리번, 아무도 없는지 살폈어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "왕비님은 두리번두리번, 아무도 없는지 살폈어요.",
+       null,
+       "[playful, half whispering]"
+      ]
+     ]
+    },
+    {
+     "text": "요 조그만 완두콩 한 알을 침대 판자에 톡. 아무도 못 본 척!",
+     "src": "reuse",
+     "segs": [
+      [
+       "queen",
+       "요 조그만 완두콩 한 알을 침대 판자에 톡. 아무도 못 본 척!",
+       "whisper",
+       "[old queen, playful, conspiratorial, giggling softly, 톡 short and light]"
+      ]
+     ],
+     "before": [
+      "follow:700"
+     ],
+     "after": [
+      "pea:place",
+      "fx:poke",
+      "pop:760,335,톡"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_mattress",
+   "card": "매트리스 스무 장",
+   "set": "pp_bg_guest_day",
+   "enter": [
+    "tower:build",
+    "pile:set",
+    "queen:at:350,505:lift",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "완두콩 위에 매트리스를 쌓아 볼까?",
+     "src": "trim",
+     "from": "완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.",
+     "segs": [
+      [
+       "queen",
+       "완두콩 위에 매트리스를 쌓아 볼까?",
+       null,
+       "[old queen, cheerful, inviting, clear, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "왕비님은 매트리스를 한 장, 또 한 장, 차곡차곡 쌓았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "왕비님은 매트리스를 한 장, 또 한 장, 차곡차곡 쌓았어요.",
+       null,
+       "[cheerful, rhythmic]"
+      ]
+     ],
+     "after": [
+      "tower:stack:0,10"
+     ]
+    },
+    {
+     "text": "영차, 영차! 매트리스가 점점 높이높이 올라갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "영차, 영차! 매트리스가 점점 높이높이 올라갔어요.",
+       null,
+       "[effortful, playful]"
+      ]
+     ],
+     "after": [
+      "tower:stack:10,20"
+     ]
+    },
+    {
+     "text": "스물! 매트리스가 스무 장이에요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "queen",
+       "스물! 매트리스가 스무 장이에요.",
+       "happy",
+       "[old queen, delighted, clear, slow on 스무 장]"
+      ]
+     ]
+    },
+    {
+     "text": "이불도 스무 장, 푹신푹신!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이불도 스무 장, 푹신푹신!",
+       "happy",
+       "[warm, cozy, playful rhythm on 푹신푹신]"
+      ]
+     ],
+     "before": [
+      "duvets",
+      "pop:560,150,푹신푹신"
+     ]
+    },
+    {
+     "text": "침대는 성의 지붕만큼 높아져서, 사다리가 필요했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "침대는 성의 지붕만큼 높아져서, 사다리가 필요했어요.",
+       null,
+       "[amazed, slow]"
+      ]
+     ],
+     "after": [
+      "ladder"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_tall",
+   "card": "높은 침대",
+   "set": "pp_bg_guest_day",
+   "enter": [
+    "tower:build",
+    "ladder",
+    "pea:at:740,505:stand",
+    "queen:at:330,505:smile",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "완두콩은 맨 아래, 공주님은 맨 위에서 자요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "queen",
+       "완두콩은 맨 아래, 공주님은 맨 위에서 자요.",
+       null,
+       "[old queen, warm, clear, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "공주는 사다리를 영차영차, 한 칸 한 칸 올라갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "공주는 사다리를 영차영차, 한 칸 한 칸 올라갔어요.",
+       null,
+       "[light, effortful, playful]"
+      ]
+     ],
+     "before": [
+      "pea:look:climb:left",
+      "follow:600"
+     ],
+     "after": [
+      "pea:climb"
+     ]
+    },
+    {
+     "text": "와, 높다! 잘 자요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "pea",
+       "와, 높다! 잘 자요.",
+       "happy",
+       "[young woman, amazed then sleepy and content, soft at the end]"
+      ]
+     ],
+     "before": [
+      "pea:lie",
+      "fx:paper_down"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_night",
+   "card": "잠 못 든 밤",
+   "set": "pp_bg_guest_night",
+   "enter": [
+    "tower:build",
+    "ladder",
+    "pea:lie",
+    "rig:up",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "밤이 깊었는데… 공주는 이리 뒤척, 저리 뒤척.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "밤이 깊었는데… 공주는 이리 뒤척, 저리 뒤척.",
+       null,
+       "[quiet, slow, night-time storytelling, rhythmic on 이리 뒤척 저리 뒤척]"
+      ]
+     ],
+     "before": [
+      "pea:toss",
+      "pop:380,36,뒤척뒤척"
+     ]
+    },
+    {
+     "text": "뭔가 딱딱한 게 있는 것 같아…",
+     "src": "reuse",
+     "segs": [
+      [
+       "pea",
+       "뭔가 딱딱한 게 있는 것 같아…",
+       null,
+       "[young woman, sleepy, puzzled, murmuring, soft]"
+      ]
+     ],
+     "after": [
+      "rig:down",
+      "glow:peaB",
+      "fx:poke"
+     ]
+    },
+    {
+     "text": "매트리스 스무 장 아래, 완두콩 한 알이 콕콕 배겼어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "매트리스 스무 장 아래, 완두콩 한 알이 콕콕 배겼어요.",
+       null,
+       "[quiet, slow, a little playful]"
+      ]
+     ]
+    },
+    {
+     "text": "공주는 밤새 뒤척뒤척, 한숨도 자지 못했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "공주는 밤새 뒤척뒤척, 한숨도 자지 못했어요.",
+       null,
+       "[quiet, slow, night-time]"
+      ]
+     ],
+     "before": [
+      "rig:up",
+      "pea:toss"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_morning",
+   "card": "아침 인사",
+   "set": "pp_bg_guest_day",
+   "enter": [
+    "tower:build",
+    "ladder",
+    "queen:at:290,505:smile",
+    "prince:at:400,505:stand",
+    "pea:at:720,505:sleepy",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "아침이 되었어요. 공주가 사다리를 내려왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아침이 되었어요. 공주가 사다리를 내려왔어요.",
+       null,
+       "[calm, bright morning, slow]"
+      ]
+     ],
+     "before": [
+      "pea:wiggle",
+      "pop:720,215,하암"
+     ]
+    },
+    {
+     "text": "공주의 눈은 게슴츠레, 하품이 하암 나왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "공주의 눈은 게슴츠레, 하품이 하암 나왔어요.",
+       null,
+       "[sleepy, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "잘 잤니?",
+     "src": "reuse",
+     "segs": [
+      [
+       "queen",
+       "잘 잤니?",
+       null,
+       "[old queen, warm, gently curious]"
+      ]
+     ]
+    },
+    {
+     "text": "아니요, 솔직히 한숨도 못 잤어요. 뭔가 딱딱한 게 있어서 몸이 뻐근하고 졸려요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "pea",
+       "아니요, 솔직히 한숨도 못 잤어요. 뭔가 딱딱한 게 있어서 몸이 뻐근하고 졸려요.",
+       null,
+       "[young woman, honest and clear, a little tired, not whining, steady]"
+      ]
+     ],
+     "before": [
+      "pea:look:honest",
+      "pea:hop"
+     ]
+    },
+    {
+     "text": "매트리스 스무 장 아래 완두콩을 느끼다니! 진짜 공주로구나!",
+     "src": "reuse",
+     "segs": [
+      [
+       "queen",
+       "매트리스 스무 장 아래 완두콩을 느끼다니! 진짜 공주로구나!",
+       "happy",
+       "[old queen, overjoyed, warm, bright on 진짜 공주]"
+      ]
+     ],
+     "before": [
+      "prince:look:surprise",
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "왕비님은 공주를 꼬옥 안아 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "왕비님은 공주를 꼬옥 안아 주었어요.",
+       null,
+       "[warm, happy]"
+      ]
+     ],
+     "before": [
+      "queen:hug",
+      "pop:540,265,꼬옥"
+     ]
+    },
+    {
+     "text": "왕자는 기뻐서 폴짝폴짝 뛰었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "왕자는 기뻐서 폴짝폴짝 뛰었어요.",
+       null,
+       "[bright, joyful]"
+      ]
+     ],
+     "before": [
+      "prince:look:joy",
+      "prince:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_true",
+   "card": "진짜 공주",
+   "set": "pp_bg_yard_day",
+   "enter": [
+    "case:set",
+    "prince:at:430,505:hold:right",
+    "pea:at:520,505:hold:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "왕자와 공주는 손을 꼭 잡았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "왕자와 공주는 손을 꼭 잡았어요.",
+       null,
+       "[warm, happy, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "진짜 공주님을 드디어 찾았어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "prince",
+       "진짜 공주님을 드디어 찾았어요!",
+       "happy",
+       "[young man, joyful, bright, relieved]"
+      ]
+     ],
+     "before": [
+      "prince:hop",
+      "pea:hop"
+     ],
+     "after": [
+      "petals"
+     ]
+    },
+    {
+     "text": "꽃잎이 팔랑팔랑 날리고, 모두 활짝 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "꽃잎이 팔랑팔랑 날리고, 모두 활짝 웃었어요.",
+       null,
+       "[warm, happy]"
+      ]
+     ]
+    },
+    {
+     "text": "완두콩은 박물관에 갔대요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "완두콩은 박물관에 갔대요.",
+       null,
+       "[warm, a little playful, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "유리 상자 속 완두콩이 반짝반짝 빛났어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "유리 상자 속 완두콩이 반짝반짝 빛났어요.",
+       null,
+       "[warm, a little playful]"
+      ]
+     ],
+     "before": [
+      "glow:peaM",
+      "sparkle",
+      "pop:800,315,반짝!"
+     ]
+    },
+    {
+     "text": "안녕!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "안녕!",
+       "happy",
+       "[bright, waving goodbye, warm]"
+      ]
+     ],
+     "before": [
+      "pea:look:wave",
+      "prince:look:joy",
+      "confetti",
+      "fx:tada",
+      "pop:475,215,안녕!"
+     ]
+    },
+    {
+     "text": "느낀 것을 솔직하게 말하는 마음이, 바로 진짜 공주의 마음이랍니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "느낀 것을 솔직하게 말하는 마음이, 바로 진짜 공주의 마음이랍니다.",
+       null,
+       "[warm, gentle, closing the book, slow]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

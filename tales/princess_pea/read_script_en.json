@@ -1,0 +1,814 @@
+{
+ "mode": "read",
+ "tale": "princess_pea",
+ "lang": "en",
+ "title": "The Princess and the Pea",
+ "voices_from": "voice_script_el.json",
+ "moral": "A heart that says honestly what it feels is the heart of a true princess.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md). text 는 한국어 줄(키), en 이 읽는 문장. src=reuse 는 narration_el_en.js 의 영어 녹음 그대로, trim 은 from 줄의 영어 녹음을 같은 자리에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<pp_bg_room_day|pp_bg_gate_night|pp_bg_guest_day|pp_bg_guest_night|pp_bg_yard_day>": "장면 배경(scene(key): 배경 + 새 rig). scenes[].set 으로 자동 호출",
+  "cam:<x,y,z> | follow:<x> | rig:<up|down>": "카메라 / 탑 rig 를 위(꼭대기 보기)·아래로",
+  "pea:look:<stand|wet|climb|lie_a|lie_b|sleepy|honest|hold|wave>[:<dir>] | pea:at:<x,y>[:<look>[:<dir>]] | pea:hop | pea:wiggle | pea:climb | pea:toss | pea:lie": "공주. climb = 사다리를 타고 꼭대기까지(rig 도 함께 올라감), toss = 이리 뒤척 저리 뒤척(lie_a/lie_b 번갈아), lie = 이불 위에 누움",
+  "prince:look:<sigh|stand|surprise|joy|hold>[:<dir>] | prince:at:<x,y>[:<look>[:<dir>]] | prince:hop | prince:wiggle": "왕자",
+  "queen:look:<smile|wink|place|lift|hug>[:<dir>] | queen:at:<x,y>[:<look>[:<dir>]] | queen:hop | queen:wiggle | queen:hug": "왕비. hug = 공주 옆으로 가서 꼬옥",
+  "king:at:<x,y> | king:fade:in": "왕(등불)",
+  "boat:set | boat:sail | lands:set": "배·먼 나라들 / 배가 오른쪽 끝까지 갔다 돌아옴(출렁출렁)",
+  "storm:set | lightning | rain:<on|off> | door:knock | door:open": "구름·비 / 번쩍 우르릉 / 비 / 똑똑 / 끼익 열림(닫힌 문→열린 문, 왕·왕비 나타남)",
+  "compare:set | compare:hide | pea:place": "완두콩·베개·매트리스 한 장 놓기 / 완두콩을 침대 판자에(쏙)",
+  "pile:set | tower:stack:<from,to> | duvets | tower:build | ladder": "매트리스 더미 / 더미에서 침대로 한 장씩 쌓기(수 세기 소리 n1~n20 은 넣지 않음) / 이불 넉 장 / 스무 장 탑 한 번에 세우기 / 사다리",
+  "petals | case:set | glow:<pea|peaB|peaM|king> | sparkle | shake | confetti | fx:<swish|boom|knock|creak|paper_down|paper_up|poke|step_wood|tada> | pop:<x,y,글자>": "효과"
+ },
+ "scenes": [
+  {
+   "key": "R01_search",
+   "card": "Looking for a True Princess",
+   "set": "pp_bg_room_day",
+   "enter": [
+    "lands:set",
+    "boat:set",
+    "queen:at:410,505:smile",
+    "prince:at:300,505:sigh",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날에 진짜 공주와 결혼하고 싶은 왕자가 있었어요.",
+     "src": "reuse",
+     "en": "Once upon a time, there was a prince who wanted to marry a true princess.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, there was a prince who wanted to marry a true princess.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "왕자는 커다란 배에 훌쩍 올라탔어요.",
+     "src": "new",
+     "en": "The prince hopped, hup, onto a great big boat.",
+     "segs": [
+      [
+       "nar",
+       "The prince hopped, hup, onto a great big boat.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "왕자는 배를 타고 온 세상을 돌아다녔어요.",
+     "src": "reuse",
+     "en": "The prince sailed all around the world on his boat.",
+     "segs": [
+      [
+       "nar",
+       "The prince sailed all around the world on his boat.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:swish",
+      "pop:754,200,출렁출렁"
+     ],
+     "after": [
+      "boat:sail"
+     ]
+    },
+    {
+     "text": "파도가 출렁출렁, 배는 이 나라 저 나라로 둥실둥실 떠갔어요.",
+     "src": "new",
+     "en": "The waves went splish, splosh, and the boat bobbed along from land to land.",
+     "segs": [
+      [
+       "nar",
+       "The waves went splish, splosh, and the boat bobbed along from land to land.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "온 세상을 다 가 봤지만, 진짜 공주인지 알 수 없었어요.",
+     "src": "reuse",
+     "en": "I went all around the world, but I could never tell if a princess was a true princess.",
+     "segs": [
+      [
+       "prince",
+       "I went all around the world, but I could never tell if a princess was a true princess.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "follow:300",
+      "prince:wiggle",
+      "pop:205,255,휴우"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_storm",
+   "card": "The Stormy Night",
+   "set": "pp_bg_gate_night",
+   "enter": [
+    "storm:set",
+    "rain:on",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그날 밤, 비가 쏟아지고 천둥이 우르릉!",
+     "src": "reuse",
+     "en": "That night, the rain poured down and the thunder went rumble, rumble!",
+     "segs": [
+      [
+       "nar",
+       "That night, the rain poured down and the thunder went rumble, rumble!",
+       null
+      ]
+     ],
+     "after": [
+      "lightning",
+      "pop:480,60,번쩍",
+      "shake",
+      "pop:250,40,우르릉"
+     ]
+    },
+    {
+     "text": "주룩주룩, 쏴아쏴아, 빗줄기가 성문을 두드렸어요.",
+     "src": "new",
+     "en": "Pitter-patter, whoosh, whoosh! The rain beat against the castle gate.",
+     "segs": [
+      [
+       "nar",
+       "Pitter-patter, whoosh, whoosh! The rain beat against the castle gate.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "누가 성문을 똑똑, 두드려요.",
+     "src": "reuse",
+     "en": "Someone was knocking at the castle gate. Knock, knock.",
+     "segs": [
+      [
+       "nar",
+       "Someone was knocking at the castle gate. Knock, knock.",
+       null
+      ]
+     ],
+     "before": [
+      "door:knock",
+      "pop:700,150,똑똑",
+      "door:knock",
+      "pop:740,150,똑똑"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_gate",
+   "card": "The Girl at the Gate",
+   "set": "pp_bg_gate_night",
+   "enter": [
+    "storm:set",
+    "rain:on",
+    "pea:at:500,505:wet:right",
+    "pop:415,465,뚝뚝",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "성문이 끼익 열리고, 왕과 왕비가 등불을 들고 나왔어요.",
+     "src": "new",
+     "en": "The gate creaked open, creeeak, and the king and queen came out holding a lantern.",
+     "segs": [
+      [
+       "nar",
+       "The gate creaked open, creeeak, and the king and queen came out holding a lantern.",
+       null
+      ]
+     ],
+     "before": [
+      "door:open",
+      "fx:creak",
+      "pop:700,150,끼익",
+      "king:fade:in",
+      "glow:king"
+     ]
+    },
+    {
+     "text": "이 밤에 누구지?",
+     "src": "reuse",
+     "en": "Who could it be at this hour?",
+     "segs": [
+      [
+       "king",
+       "Who could it be at this hour?",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "문 앞에는 비에 흠뻑 젖은 아가씨가 서 있었어요. 머리에서 물이 뚝뚝 떨어졌어요.",
+     "src": "new",
+     "en": "At the gate stood a girl, soaked right through. Water dripped, drip, drip, from her hair.",
+     "segs": [
+      [
+       "nar",
+       "At the gate stood a girl, soaked right through. Water dripped, drip, drip, from her hair.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "비를 맞았지만 괜찮아요. 저는 진짜 공주예요!",
+     "src": "reuse",
+     "en": "I got caught in the rain, but I'm all right. I am a true princess!",
+     "segs": [
+      [
+       "pea",
+       "I got caught in the rain, but I'm all right. I am a true princess!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "pea:hop"
+     ]
+    },
+    {
+     "text": "어서 들어와 몸을 말리렴.",
+     "src": "reuse",
+     "en": "Come in, dear, and dry yourself off.",
+     "segs": [
+      [
+       "queen",
+       "Come in, dear, and dry yourself off.",
+       null
+      ]
+     ],
+     "before": [
+      "queen:wiggle"
+     ]
+    },
+    {
+     "text": "진짜 공주인지는… 살짝 알아볼까?",
+     "src": "reuse",
+     "en": "A true princess, hmm? Let's find out... just a little.",
+     "segs": [
+      [
+       "queen",
+       "A true princess, hmm? Let's find out... just a little.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "queen:look:wink",
+      "pop:815,255,찡긋"
+     ],
+     "after": [
+      "rain:off"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_pea",
+   "card": "The Queen's Pea",
+   "set": "pp_bg_guest_day",
+   "enter": [
+    "queen:at:690,505:place:right",
+    "compare:set",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "왕비님은 손님방에 완두콩 한 알, 베개, 매트리스 한 장을 가져왔어요.",
+     "src": "reuse",
+     "en": "The queen brought one pea, a pillow and a mattress into the guest room.",
+     "segs": [
+      [
+       "nar",
+       "The queen brought one pea, a pillow and a mattress into the guest room.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "완두콩은 콩알만큼 조그맣고, 매트리스는 커다랗고 푹신푹신했어요.",
+     "src": "new",
+     "en": "The pea was tiny, tiny, and the mattress was big and soft and squishy.",
+     "segs": [
+      [
+       "nar",
+       "The pea was tiny, tiny, and the mattress was big and soft and squishy.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "왕비님은 두리번두리번, 아무도 없는지 살폈어요.",
+     "src": "new",
+     "en": "The queen looked this way and that, peek, peek, to make sure no one was watching.",
+     "segs": [
+      [
+       "nar",
+       "The queen looked this way and that, peek, peek, to make sure no one was watching.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "요 조그만 완두콩 한 알을 침대 판자에 톡. 아무도 못 본 척!",
+     "src": "reuse",
+     "en": "This tiny little pea goes on the bed board, tap. Nobody saw a thing!",
+     "segs": [
+      [
+       "queen",
+       "This tiny little pea goes on the bed board, tap. Nobody saw a thing!",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "follow:700"
+     ],
+     "after": [
+      "pea:place",
+      "fx:poke",
+      "pop:760,335,톡"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_mattress",
+   "card": "Twenty Mattresses",
+   "set": "pp_bg_guest_day",
+   "enter": [
+    "tower:build",
+    "pile:set",
+    "queen:at:350,505:lift",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "완두콩 위에 매트리스를 쌓아 볼까?",
+     "src": "trim",
+     "from": "완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.",
+     "en": "Shall we pile mattresses on top of the pea?",
+     "segs": [
+      [
+       "queen",
+       "Shall we pile mattresses on top of the pea?",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "왕비님은 매트리스를 한 장, 또 한 장, 차곡차곡 쌓았어요.",
+     "src": "new",
+     "en": "The queen piled up the mattresses, one, then another, neat and tidy, stack, stack.",
+     "segs": [
+      [
+       "nar",
+       "The queen piled up the mattresses, one, then another, neat and tidy, stack, stack.",
+       null
+      ]
+     ],
+     "after": [
+      "tower:stack:0,10"
+     ]
+    },
+    {
+     "text": "영차, 영차! 매트리스가 점점 높이높이 올라갔어요.",
+     "src": "new",
+     "en": "Heave-ho, heave-ho! The mattresses rose higher and higher.",
+     "segs": [
+      [
+       "nar",
+       "Heave-ho, heave-ho! The mattresses rose higher and higher.",
+       null
+      ]
+     ],
+     "after": [
+      "tower:stack:10,20"
+     ]
+    },
+    {
+     "text": "스물! 매트리스가 스무 장이에요.",
+     "src": "reuse",
+     "en": "Twenty! That makes twenty mattresses.",
+     "segs": [
+      [
+       "queen",
+       "Twenty! That makes twenty mattresses.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "이불도 스무 장, 푹신푹신!",
+     "src": "reuse",
+     "en": "And twenty feather quilts on top, soft and fluffy!",
+     "segs": [
+      [
+       "nar",
+       "And twenty feather quilts on top, soft and fluffy!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "duvets",
+      "pop:560,150,푹신푹신"
+     ]
+    },
+    {
+     "text": "침대는 성의 지붕만큼 높아져서, 사다리가 필요했어요.",
+     "src": "new",
+     "en": "The bed was now as tall as the castle roof, so they needed a ladder.",
+     "segs": [
+      [
+       "nar",
+       "The bed was now as tall as the castle roof, so they needed a ladder.",
+       null
+      ]
+     ],
+     "after": [
+      "ladder"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_tall",
+   "card": "The Tall Bed",
+   "set": "pp_bg_guest_day",
+   "enter": [
+    "tower:build",
+    "ladder",
+    "pea:at:740,505:stand",
+    "queen:at:330,505:smile",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "완두콩은 맨 아래, 공주님은 맨 위에서 자요.",
+     "src": "reuse",
+     "en": "The pea at the very bottom, and the princess at the very top.",
+     "segs": [
+      [
+       "queen",
+       "The pea at the very bottom, and the princess at the very top.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "공주는 사다리를 영차영차, 한 칸 한 칸 올라갔어요.",
+     "src": "new",
+     "en": "The princess climbed the ladder, heave-ho, one rung at a time.",
+     "segs": [
+      [
+       "nar",
+       "The princess climbed the ladder, heave-ho, one rung at a time.",
+       null
+      ]
+     ],
+     "before": [
+      "pea:look:climb:left",
+      "follow:600"
+     ],
+     "after": [
+      "pea:climb"
+     ]
+    },
+    {
+     "text": "와, 높다! 잘 자요.",
+     "src": "reuse",
+     "en": "Wow, it's so high! Good night.",
+     "segs": [
+      [
+       "pea",
+       "Wow, it's so high! Good night.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "pea:lie",
+      "fx:paper_down"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_night",
+   "card": "The Sleepless Night",
+   "set": "pp_bg_guest_night",
+   "enter": [
+    "tower:build",
+    "ladder",
+    "pea:lie",
+    "rig:up",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "밤이 깊었는데… 공주는 이리 뒤척, 저리 뒤척.",
+     "src": "reuse",
+     "en": "Late into the night... the princess tossed this way, and turned that way.",
+     "segs": [
+      [
+       "nar",
+       "Late into the night... the princess tossed this way, and turned that way.",
+       null
+      ]
+     ],
+     "before": [
+      "pea:toss",
+      "pop:380,36,뒤척뒤척"
+     ]
+    },
+    {
+     "text": "뭔가 딱딱한 게 있는 것 같아…",
+     "src": "reuse",
+     "en": "I think there's something hard in here...",
+     "segs": [
+      [
+       "pea",
+       "I think there's something hard in here...",
+       null
+      ]
+     ],
+     "after": [
+      "rig:down",
+      "glow:peaB",
+      "fx:poke"
+     ]
+    },
+    {
+     "text": "매트리스 스무 장 아래, 완두콩 한 알이 콕콕 배겼어요.",
+     "src": "new",
+     "en": "Under twenty mattresses, one little pea was poking her, poke, poke.",
+     "segs": [
+      [
+       "nar",
+       "Under twenty mattresses, one little pea was poking her, poke, poke.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "공주는 밤새 뒤척뒤척, 한숨도 자지 못했어요.",
+     "src": "new",
+     "en": "The princess tossed and turned all night long, and did not sleep a wink.",
+     "segs": [
+      [
+       "nar",
+       "The princess tossed and turned all night long, and did not sleep a wink.",
+       null
+      ]
+     ],
+     "before": [
+      "rig:up",
+      "pea:toss"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_morning",
+   "card": "Good Morning",
+   "set": "pp_bg_guest_day",
+   "enter": [
+    "tower:build",
+    "ladder",
+    "queen:at:290,505:smile",
+    "prince:at:400,505:stand",
+    "pea:at:720,505:sleepy",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "아침이 되었어요. 공주가 사다리를 내려왔어요.",
+     "src": "reuse",
+     "en": "Morning came. The princess climbed down the ladder.",
+     "segs": [
+      [
+       "nar",
+       "Morning came. The princess climbed down the ladder.",
+       null
+      ]
+     ],
+     "before": [
+      "pea:wiggle",
+      "pop:720,215,하암"
+     ]
+    },
+    {
+     "text": "공주의 눈은 게슴츠레, 하품이 하암 나왔어요.",
+     "src": "new",
+     "en": "The princess's eyes were droopy, and out came a big yawn, yaaawn.",
+     "segs": [
+      [
+       "nar",
+       "The princess's eyes were droopy, and out came a big yawn, yaaawn.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "잘 잤니?",
+     "src": "reuse",
+     "en": "Did you sleep well?",
+     "segs": [
+      [
+       "queen",
+       "Did you sleep well?",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "아니요, 솔직히 한숨도 못 잤어요. 뭔가 딱딱한 게 있어서 몸이 뻐근하고 졸려요.",
+     "src": "reuse",
+     "en": "No. To be honest, I didn't sleep a wink. Something hard was in the bed, and now I'm stiff and sleepy.",
+     "segs": [
+      [
+       "pea",
+       "No. To be honest, I didn't sleep a wink. Something hard was in the bed, and now I'm stiff and sleepy.",
+       null
+      ]
+     ],
+     "before": [
+      "pea:look:honest",
+      "pea:hop"
+     ]
+    },
+    {
+     "text": "매트리스 스무 장 아래 완두콩을 느끼다니! 진짜 공주로구나!",
+     "src": "reuse",
+     "en": "She felt the pea through twenty mattresses! She is a true princess!",
+     "segs": [
+      [
+       "queen",
+       "She felt the pea through twenty mattresses! She is a true princess!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "prince:look:surprise",
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "왕비님은 공주를 꼬옥 안아 주었어요.",
+     "src": "new",
+     "en": "The queen gave the princess a great big hug, squeeze.",
+     "segs": [
+      [
+       "nar",
+       "The queen gave the princess a great big hug, squeeze.",
+       null
+      ]
+     ],
+     "before": [
+      "queen:hug",
+      "pop:540,265,꼬옥"
+     ]
+    },
+    {
+     "text": "왕자는 기뻐서 폴짝폴짝 뛰었어요.",
+     "src": "new",
+     "en": "The prince was so happy that he jumped for joy, hop, hop!",
+     "segs": [
+      [
+       "nar",
+       "The prince was so happy that he jumped for joy, hop, hop!",
+       null
+      ]
+     ],
+     "before": [
+      "prince:look:joy",
+      "prince:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_true",
+   "card": "A True Princess",
+   "set": "pp_bg_yard_day",
+   "enter": [
+    "case:set",
+    "prince:at:430,505:hold:right",
+    "pea:at:520,505:hold:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "왕자와 공주는 손을 꼭 잡았어요.",
+     "src": "reuse",
+     "en": "The prince and the princess held hands tight.",
+     "segs": [
+      [
+       "nar",
+       "The prince and the princess held hands tight.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "진짜 공주님을 드디어 찾았어요!",
+     "src": "reuse",
+     "en": "At last, I have found a true princess!",
+     "segs": [
+      [
+       "prince",
+       "At last, I have found a true princess!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "prince:hop",
+      "pea:hop"
+     ],
+     "after": [
+      "petals"
+     ]
+    },
+    {
+     "text": "꽃잎이 팔랑팔랑 날리고, 모두 활짝 웃었어요.",
+     "src": "new",
+     "en": "Petals fluttered down, flit, flit, and everyone smiled wide.",
+     "segs": [
+      [
+       "nar",
+       "Petals fluttered down, flit, flit, and everyone smiled wide.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "완두콩은 박물관에 갔대요.",
+     "src": "reuse",
+     "en": "And the pea was sent to a museum.",
+     "segs": [
+      [
+       "nar",
+       "And the pea was sent to a museum.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "유리 상자 속 완두콩이 반짝반짝 빛났어요.",
+     "src": "new",
+     "en": "Inside the glass case, the pea sparkled, twinkle, twinkle.",
+     "segs": [
+      [
+       "nar",
+       "Inside the glass case, the pea sparkled, twinkle, twinkle.",
+       null
+      ]
+     ],
+     "before": [
+      "glow:peaM",
+      "sparkle",
+      "pop:800,315,반짝!"
+     ]
+    },
+    {
+     "text": "안녕!",
+     "src": "reuse",
+     "en": "Bye-bye!",
+     "segs": [
+      [
+       "nar",
+       "Bye-bye!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "pea:look:wave",
+      "prince:look:joy",
+      "confetti",
+      "fx:tada",
+      "pop:475,215,안녕!"
+     ]
+    },
+    {
+     "text": "느낀 것을 솔직하게 말하는 마음이, 바로 진짜 공주의 마음이랍니다.",
+     "src": "new",
+     "en": "A heart that says honestly what it feels, that is the heart of a true princess.",
+     "segs": [
+      [
+       "nar",
+       "A heart that says honestly what it feels, that is the heart of a true princess.",
+       null
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
