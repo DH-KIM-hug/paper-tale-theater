@@ -5,7 +5,7 @@
  "title": "나의 빨간 자동차",
  "voices_from": "voice_script_el.json",
  "moral": "서로 도우면 혼자서는 못 가는 길도 함께 갈 수 있답니다.",
- "notes": "읽어 주기 대본(docs/READ_MODE.md). 창작 동화(PLAN.md·SPEC.md). 주인공 이현이(남자아이). 놀이판 10장면 그대로 10장면. 빨간 것 찾기(오답·정답 줄), 불꽃 누르기, 고리 누르기, 맨 앞·가운데·맨 뒤 고르기(안내·오답·정답 줄 전부), 이현이 누르기를 뺐다. 기존 줄 \"노느라 그만 빨간 자동차를 톡, 놓고 말았어요.\"는 의성어 \"톡\"이 조작 낱말 검사에 걸려 \"툭\"으로 바꾼 새 문장으로 썼다(판단 필요: 녹음 재사용을 원하면 검사 예외로 두고 reuse 로 되돌릴 수 있음). SPEC 은 놀이판에서 교훈을 대사로 읽지 않지만, 읽어 주기 규칙(READ_MODE §3-5)에 따라 마지막 줄에 이야기 말투로 한 번 읽는다(판단 필요). 사이렌·부릉 소리는 기존 VOICE_LINES(siren_*, vroom, cheer)를 vo 동사로 그대로 쓴다. 새 문장은 의성어·의태어를 장면마다 2~3개 넣었다(2026-10-22 사용자 지시).",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 창작 동화(PLAN.md·SPEC.md). 주인공 이현이(남자아이). 놀이판 10장면 그대로 10장면. 빨간 것 찾기(오답·정답 줄), 불꽃 누르기, 고리 누르기, 맨 앞·가운데·맨 뒤 고르기(안내·오답·정답 줄 전부), 이현이 누르기를 뺐다. 이야기 속 의성어 \"톡\"(\"빨간 자동차를 톡, 놓고\")은 조작 안내가 아니므로 reuse 로 둔다(2026-10-22 결정). SPEC 은 놀이판에서 교훈을 대사로 읽지 않지만, 읽어 주기 규칙(READ_MODE §3-5)에 따라 마지막 줄에 이야기 말투로 한 번 읽는다(판단 필요). 사이렌·부릉 소리는 기존 VOICE_LINES(siren_*, vroom, cheer)를 vo 동사로 그대로 쓴다. 새 문장은 의성어·의태어를 장면마다 2~3개 넣었다(2026-10-22 사용자 지시).",
  "acts": {
   "set:<room|yard|gate|road_a|road_b|road_c|road_long|road_hill|playground>": "장면 배경(rc_bg_<키>_v2). scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
   "kid:look:<stand|eat|sleep|point|run|cry|turn|hug>[:<dir>] | kid:at:<x,y> | kid:walk:<x,y,ms> | kid:hop | kid:wiggle": "이현이 자세·이동",
@@ -151,19 +151,34 @@
      ]
     },
     {
-     "text": "노느라 그만 빨간 자동차를 풀밭에 툭, 놓고 말았어요.",
-     "src": "new",
+     "text": "노느라 그만 빨간 자동차를 톡, 놓고 말았어요.",
+     "src": "reuse",
      "segs": [
       [
        "nar",
-       "노느라 그만 빨간 자동차를 풀밭에 툭, 놓고 말았어요.",
+       "노느라 그만 빨간 자동차를 톡, 놓고 말았어요.",
        null,
-       "[gentle, a tiny pause before 툭]"
+       "[gentle, a tiny pause before 톡]"
       ]
      ],
      "before": [
       "car:red:look:tired:right",
-      "pop:420,400,툭"
+      "pop:420,400,톡!"
+     ]
+    },
+    {
+     "text": "나비는 훨훨, 저 멀리 꽃밭 너머로 날아가 버렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "나비는 훨훨, 저 멀리 꽃밭 너머로 날아가 버렸어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "bfly:fly:1200,200"
      ]
     },
     {

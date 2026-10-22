@@ -5,7 +5,7 @@
  "title": "구름 공장",
  "voices_from": "voice_script_el.json",
  "moral": "비 오는 날도, 해 뜨는 날도 모두 소중하답니다. 또 놀러 와, 아기 구름아!",
- "notes": "읽어 주기 대본(docs/READ_MODE.md). 창작 동화(가족 주인공, family-tale 메모): 이름은 기존 대본의 다현·이현·은우·꿀떡이만 쓰고 새 정보는 넣지 않았다. 놀이판 16장면을 11장면으로 묶었다(한 장면 안에서 배경이 바뀌면 before 의 set 동사). 꿀떡이·굴뚝·구름·문틈·물방울·나팔·모양 틀·단추·먹구름·종·쓰다듬기·번개·빗방울·웅덩이·땅·무지개·굴뚝 누르기와 마음 고르기(슬퍼요/기뻐요)를 모두 뺐다. 기존 줄 중 조작 낱말이 든 \"이현이가 모양 틀을 꾹! 눌러요\", \"은우가 꾹! 눌렀어요\", 다현이의 \"눌러 봐도 돼?\", 빗방울 \"톡./토독./토도독.\"은 새 문장으로 바꿨고, 무지개 일곱 색 세기(빨강!~보라!)는 한 줄 묘사로 묶었다. 그림 컷 2장(껴안기·무지개)은 그대로. 원래 대사가 짧은 시 같은 문장이라 장면당 줄 수가 많지만(최대 10줄) 글자 수는 적다. 교훈은 끝 화면 문구 \"또 놀러 와, 아기 구름아!\"에 한 줄을 붙여 읽는다. 새 문장은 의성어·의태어를 장면마다 2~3개 넣었다(2026-10-22 사용자 지시).",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 창작 동화(가족 주인공, family-tale 메모): 이름은 기존 대본의 다현·이현·은우·꿀떡이만 쓰고 새 정보는 넣지 않았다. 놀이판 16장면을 11장면으로 묶었다(한 장면 안에서 배경이 바뀌면 before 의 set 동사). 꿀떡이·굴뚝·구름·문틈·물방울·나팔·모양 틀·단추·먹구름·종·쓰다듬기·번개·빗방울·웅덩이·땅·무지개·굴뚝 누르기와 마음 고르기(슬퍼요/기뻐요)를 모두 뺐다. 조작 안내 꼴인 \"이현이가 모양 틀을 꾹! 눌러요\"와 다현이의 \"눌러 봐도 돼?\"는 새 문장으로 바꿨고, 이야기 속 의성어 줄(\"은우가 꾹! 눌렀어요\", 빗방울 \"톡./토독./토도독.\")은 reuse 로 두었다(2026-10-22 결정). 무지개 일곱 색 세기(빨강!~보라!)는 한 줄 묘사로 묶었다. 그림 컷 2장(껴안기·무지개)은 그대로. 원래 대사가 짧은 시 같은 문장이라 장면당 줄 수가 많지만(최대 10줄) 글자 수는 적다. 교훈은 끝 화면 문구 \"또 놀러 와, 아기 구름아!\"에 한 줄을 붙여 읽는다. 새 문장은 의성어·의태어를 장면마다 2~3개 넣었다(2026-10-22 사용자 지시).",
  "acts": {
   "set:<01_road|02_hill|03_chimney|04_door|05_belt_v2|06_press_v2|07_button_v2|08_tank_room|09_bell_room|10_corner_close|12_storm|13_rain|14_soil_v2|15_rainbow_v2>": "장면 배경(scene 키). scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
   "kid:<nuna|oppa|agi>:look:<자세>[:<left|right>] | kid:<id>:at:<x,y> | kid:<id>:walk:<x,y,ms> | kid:<id>:hop | kids:look:<자세> | kids:walk:<x,ms>": "삼남매 자세(lookup·walk·run·wave·blow·hug·jump·back·whisper·point·tiptoe·crouch·clap·eek·splash·press·pet·reach·lookback)·이동",
@@ -719,18 +719,32 @@
      ]
     },
     {
-     "text": "은우가 아장아장 다가가 단추를 꾸욱 눌렀어요.",
+     "text": "은우가 아장아장 단추 앞으로 다가가요.",
      "src": "new",
      "segs": [
       [
        "nar",
-       "은우가 아장아장 다가가 단추를 꾸욱 눌렀어요.",
+       "은우가 아장아장 단추 앞으로 다가가요.",
        null,
        "[gentle, warm storyteller]"
       ]
      ],
      "before": [
-      "kid:agi:look:press:left",
+      "kid:agi:look:press:left"
+     ]
+    },
+    {
+     "text": "은우가 꾹! 눌렀어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "은우가 꾹! 눌렀어요.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
       "button:push",
       "pop:300,300,쿵!"
      ]
@@ -1303,12 +1317,43 @@
    ],
    "lines": [
     {
-     "text": "토독, 토도독. 빗방울이 하나, 둘 떨어져요.",
-     "src": "new",
+     "text": "톡.",
+     "src": "reuse",
      "segs": [
       [
        "nar",
-       "토독, 토도독. 빗방울이 하나, 둘 떨어져요.",
+       "톡.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "rain:drops",
+      "pop:300,200,톡!"
+     ]
+    },
+    {
+     "text": "토독.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토독.",
+       null,
+       "[gentle, warm storyteller]"
+      ]
+     ],
+     "before": [
+      "rain:drops"
+     ]
+    },
+    {
+     "text": "토도독.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토도독.",
        null,
        "[gentle, warm storyteller]"
       ]

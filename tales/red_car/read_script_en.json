@@ -148,18 +148,33 @@
      ]
     },
     {
-     "text": "노느라 그만 빨간 자동차를 풀밭에 툭, 놓고 말았어요.",
-     "src": "new",
-     "en": "He was so busy playing that the red car slipped out, plop, onto the grass.",
+     "text": "노느라 그만 빨간 자동차를 톡, 놓고 말았어요.",
+     "src": "reuse",
+     "en": "Ihyun was so busy playing that the red car slipped out, plop, onto the grass.",
      "segs": [
       [
        "nar",
-       "He was so busy playing that the red car slipped out, plop, onto the grass."
+       "Ee-hyun was so busy playing that the red car slipped out, plop, onto the grass.",
+       null
       ]
      ],
      "before": [
       "car:red:look:tired:right",
-      "pop:420,400,툭"
+      "pop:420,400,톡!"
+     ]
+    },
+    {
+     "text": "나비는 훨훨, 저 멀리 꽃밭 너머로 날아가 버렸어요.",
+     "src": "new",
+     "en": "The butterfly flapped and fluttered far, far away, over the flower field and out of sight.",
+     "segs": [
+      [
+       "nar",
+       "The butterfly flapped and fluttered far, far away, over the flower field and out of sight."
+      ]
+     ],
+     "before": [
+      "bfly:fly:1200,200"
      ]
     },
     {

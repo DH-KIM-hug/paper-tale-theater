@@ -674,17 +674,30 @@
      ]
     },
     {
-     "text": "은우가 아장아장 다가가 단추를 꾸욱 눌렀어요.",
+     "text": "은우가 아장아장 단추 앞으로 다가가요.",
      "src": "new",
-     "en": "Eunwoo toddles over and pushes the button down, pu-u-ush!",
+     "en": "Eunwoo toddles right up to the button.",
      "segs": [
       [
        "nar",
-       "Eunwoo toddles over and pushes the button down, pu-u-ush!"
+       "Eunwoo toddles right up to the button."
       ]
      ],
      "before": [
-      "kid:agi:look:press:left",
+      "kid:agi:look:press:left"
+     ]
+    },
+    {
+     "text": "은우가 꾹! 눌렀어요.",
+     "src": "reuse",
+     "en": "Eunwoo presses it. Push!",
+     "segs": [
+      [
+       "nar",
+       "Eunwoo presses it. Push!"
+      ]
+     ],
+     "before": [
       "button:push",
       "pop:300,300,쿵!"
      ]
@@ -1219,13 +1232,42 @@
    ],
    "lines": [
     {
-     "text": "토독, 토도독. 빗방울이 하나, 둘 떨어져요.",
-     "src": "new",
-     "en": "Plip, plop, plip-plop. The raindrops fall, one, then two.",
+     "text": "톡.",
+     "src": "reuse",
+     "en": "Plip.",
      "segs": [
       [
        "nar",
-       "Plip, plop, plip-plop. The raindrops fall, one, then two."
+       "Plip."
+      ]
+     ],
+     "before": [
+      "rain:drops",
+      "pop:300,200,톡!"
+     ]
+    },
+    {
+     "text": "토독.",
+     "src": "reuse",
+     "en": "Plip, plop.",
+     "segs": [
+      [
+       "nar",
+       "Plip, plop."
+      ]
+     ],
+     "before": [
+      "rain:drops"
+     ]
+    },
+    {
+     "text": "토도독.",
+     "src": "reuse",
+     "en": "Plip, plop, plop.",
+     "segs": [
+      [
+       "nar",
+       "Plip, plop, plop."
       ]
      ],
      "before": [

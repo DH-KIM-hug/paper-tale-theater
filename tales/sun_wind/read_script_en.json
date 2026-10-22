@@ -363,13 +363,13 @@
    ],
    "lines": [
     {
-     "text": "바람은 더 세게, 더 세게 후우후우 불었어요.",
-     "src": "new",
-     "en": "The Wind blew harder, and harder still. Whoosh, whoosh!",
+     "text": "바람은 더 세게 불었어요. 쓱!",
+     "src": "reuse",
+     "en": "The Wind blew even harder. Swish!",
      "segs": [
       [
        "nar",
-       "The Wind blew harder, and harder still. Whoosh, whoosh!"
+       "The Wind blew even harder. Swish!"
       ]
      ],
      "before": [
