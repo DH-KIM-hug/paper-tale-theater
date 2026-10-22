@@ -85,6 +85,219 @@
     let kids;
     const lineUp = (y = 520, h = 90) => { kids = [1, 2, 3, 4, 5, 6, 7].map((n, i) => kid(T, n, KX(i), y, h)); return kids; };
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
+       장면 자리·크기·카메라는 놀이판 그 장면 그대로(대본 좌표는 놀이판 그림과 맞지 않아 쓰지 않는다). */
+    const READ_ACTS = (() => {
+      const rI = () => T.readInstant();
+      const nums = s => String(s).split(',').map(Number);
+      const P = portrait();
+      const QX = 300, LX = 525, CX = 720, BX = 700, BY = 500, BELLY = [684, 425];
+      let key = '', seen = {}, M = null, W = null, K7 = null, kidsR = [], quilt = null, laundry = null, clk = null, doorway = null, paw = null, stoneP = null, snoreOn = false, popped = false, wolfs = {};
+      const CAMW = { house: P ? [180, 280] : [500, 280], tree: P ? [600, 280] : [500, 280] };
+      const clearAll = () => { snoreOn = false; };
+      const build = k => {
+        clearAll(); seen[k] = (seen[k] || 0) + 1;
+        const n = seen[k];
+        T.clear(); T.camSnap(500, 280, 1);
+        key = k; M = null; W = null; K7 = null; kidsR = []; popped = false; quilt = laundry = clk = doorway = paw = stoneP = null; wolfs = {};
+        if (k === 'house' && n === 1) k = 'paw'; if (k === 'house' && n > 1) k = 'hide'; key = k;
+        if (k === 'tree' && n > 1) key = 'belly';
+        if (k === 'well' && n > 1) key = 'together';
+        const bgKey = { paw: 'house', hide: 'house', belly: 'tree', together: 'well' }[key] || key;
+        bg(T, bgKey);
+        if (key === 'paw') {
+          T.el('rect', { x: 6, y: 369, width: 178, height: 8, rx: 2, fill: '#4A3424' }, T.world);
+          const cp = T.el('clipPath', { id: 'wgPawClip' }, T.world); T.el('rect', { x: -20, y: 374, width: 240, height: 200 }, cp);
+          const holder = T.el('g', { 'clip-path': 'url(#wgPawClip)' }, T.world);
+          paw = T.actor(holder, 95, 290, g => {
+            const w = T.el('g', { filter: 'url(#pp)', transform: 'scale(1.35)' }, g);
+            T.el('rect', { x: -21, y: -70, width: 42, height: 100, rx: 18, fill: '#F4F6FA' }, w);
+            T.el('ellipse', { cx: 0, cy: 34, rx: 31, ry: 22, fill: '#ECE9E3' }, w);
+            [[-19, 52], [0, 59], [19, 52]].forEach(([x, y]) => T.el('circle', { cx: x, cy: y, r: 10.5, fill: '#F4F6FA' }, w));
+          });
+        }
+        if (key === 'hide') {
+          quilt = prop(T, 'wg_quilt', QX, 548, 150); laundry = prop(T, 'wg_laundry', LX, 550, 110); clk = figure(T, CX, 445, 330, { a: 'wg_clock', open: 'wg_clock_open' }, 'a');
+          doorway = T.el('g', { opacity: 0 }, T.world);
+          T.el('rect', { x: 8, y: 8, width: 176, height: 364, fill: '#BFD9EA' }, doorway);
+          T.el('rect', { x: 8, y: 250, width: 176, height: 122, fill: '#7FA25A' }, doorway);
+          T.el('rect', { x: 0, y: 4, width: 22, height: 372, fill: '#A87444', filter: 'url(#pp)' }, doorway);
+          const wk = wolf(T, 100, 420, ['knock'], 'knock'); wk.face('right'); hide(wk); wolfs.wk = wk; W = wk;
+        }
+        if (key === 'messy') { clk = figure(T, 86, 492, 450, { a: 'wg_clock', open: 'wg_clock_open' }, 'a'); }
+        if (CAMW[bgKey] && (key === 'paw' || key === 'hide' || key === 'tree' || key === 'belly')) T.camSnap(CAMW[bgKey][0], CAMW[bgKey][1], 1);
+        if (key === 'tree' || key === 'belly') {
+          W = wolf(T, BX, BY, ['belly'], 'belly');
+          snoreOn = true;
+          (async () => { while (snoreOn) { floaty(T, 560, 340, 'z', '#3F6B4F', 34); floaty(T, 585, 305, 'Z', '#3F6B4F', 44, 500); await sleep(2400); } })();
+        }
+      };
+      const mkKids = () => {
+        if (key === 'paw' || key === 'hide') { kidsR = PAW_SPOTS.map(([x, y], i) => { const k = kid(T, i + 1, x, y, 85); k.look('left'); return k; }); return; }
+        if (key === 'together') { kidsR = [1, 2, 3, 4, 5, 6, 7].map((n, i) => { const k = kid(T, n, KX(i), 525, 90); k.pose('joy'); return k; }); return; }
+        lineUp(); kidsR = kids;
+      };
+      const acts = {
+        set(k) { if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
+        cam() { const bk = { paw: 'house', hide: 'house', tree: 'tree', belly: 'tree' }[key]; const c = (bk && CAMW[bk]) || [500, 280]; T.camSnap(c[0], c[1], 1); },
+        mama(op, a1) {
+          if (op === 'at') {
+            const [x, y] = nums(a1);
+            if (key === 'kitchen') M = mama(T, 330, 478);
+            else if (key === 'messy') M = mama(T, -100, 520, 280, 'surprise');
+            else if (key === 'tree') M = mama(T, -100, 530, 270, 'scissors');
+            else if (key === 'belly') M = mama(T, BELLY[0] + 6, 548, 270, 'scissors');
+            else if (key === 'together') M = mama(T, 500, 470, 260, 'dance');
+            else M = mama(T, x, y);
+            return;
+          }
+          if (!M) return;
+          if (op === 'pose') { M.pose(a1 === 'joy' ? 'dance' : a1); return; } // 엄마 염소에는 기뻐하는 그림이 따로 없어 춤 자세로
+          if (op === 'walk') {
+            const [x, y] = nums(a1);
+            if (key === 'kitchen') return M.move(1120, 478, 2600);
+            if (key === 'messy') return M.move(340, 520, 1400);
+            if (key === 'tree') return Promise.all([M.move(400, 532, 1600), K7 ? K7.move(500, 540, 1600) : null]);
+            if (key === 'belly') return Promise.all([M.move(250, 535, 800), K7 ? K7.move(345, 545, 800) : null]);
+            return M.move(x, y, 1200);
+          }
+        },
+        kids(op) {
+          if (op === 'lineup') { mkKids(); return; }
+          if (op === 'hop') { if (rI()) return; hopAll(kidsR, key === 'inside_door' ? 18 : 24); if (key === 'kitchen') AudioFX.jingle(); return; }
+          if (op === 'hide') { // 이불 속·빨래 바구니 속으로
+            return Promise.all(kidsR.slice(0, 6).map((k, i) => sleep(i * 120).then(async () => { const x = i < 3 ? QX : LX; k.look(k.x < x ? 'right' : 'left'); await k.move(x, 520, 600); hide(k); })));
+          }
+          if (op === 'dance') { hopAll(kidsR, 34); if (M) M.hop(30, 400); T.confetti(); AudioFX.sting('win'); return; }
+        },
+        kid7(op, a1) {
+          if (op === 'at') {
+            if (key === 'messy') { K7 = kid(T, 7, 90, 490, 90); hide(K7); return; }
+            if (key === 'tree') { K7 = kid(T, 7, -60, 535, 90); K7.pose('base'); K7.look('right'); return; }
+            if (key === 'belly') { K7 = kid(T, 7, 500, 540, 90); K7.pose('base'); K7.look('right'); return; }
+            return;
+          }
+          const k = key === 'hide' ? kidsR[6] : K7;
+          if (!k) return;
+          if (op === 'pose') { k.pose(a1); return; }
+          if (op === 'walk') {
+            if (key === 'hide') return k.move(CX, 480, 700); // 시계 앞으로
+            const [x, y] = nums(a1);
+            if (key === 'messy') return k.move(480, 530, 700);
+            if (key === 'tree') return null; // 엄마와 함께 걷는다 (mama:walk)
+            return k.move(x, y, 700);
+          }
+        },
+        wolf(op, a1, a2) {
+          if (op === 'show') {
+            if (a1 === 'chalk') { W = wolf(T, 500, 520, ['chalk', 'knock'], 'chalk'); return; }
+            if (a1 === 'knock') { if (W) appear(W); return; }
+            if (a1 === 'belly') return;
+            if (a1 === 'heavy') { W = wolf(T, 260, 520, ['heavy', 'splash'], 'heavy'); W.face('right'); return; }
+            if (a1 === 'splash') { if (W) { W.pose('splash'); W.face('left'); } return; }
+            if (a1 === 'flee') { if (W) W.pos.remove(); W = wolf(T, 790, 520, ['flee'], 'flee'); return; }
+            return;
+          }
+          if (op === 'hide') { if (W && key !== 'tree' && key !== 'belly') hide(W); return; }
+          if (op === 'at') { return; } // 자리는 놀이판 그대로(show/set 이 놓는다)
+          if (!W) return;
+          if (op === 'walk') {
+            const [x, y] = nums(a1);
+            if (key === 'door') { W.pose('knock'); return W.move(575, 515, 700).then(() => { knock(); [['♪', '#7B4F8C', 470, 250], ['✦', '#D9A94E', 520, 205], ['♫', '#E8703A', 430, 215], ['✦', '#3E7CB1', 560, 265]].forEach(([c, col, fx, fy], i) => floaty(T, fx, fy, c, col, 40, i * 260)); }); }
+            if (key === 'hide') {
+              if (x <= 250) { // 문으로 들어와 놀라게 한다 → 아기 염소들이 방 곳곳으로
+                const SCATTER = [[285, 505], [390, 552], [455, 470], [600, 548], [640, 470], [880, 388], [930, 545]], LOOK = ['left', 'right', 'left', 'right', 'left', 'left', 'right'];
+                sting('surprise'); T.pop(520, 200, '꺄악!');
+                kidsR.forEach((k, i) => sleep(i * 70).then(() => { k.look(LOOK[i]); k.hop(26, 360); k.move(SCATTER[i][0], SCATTER[i][1], 650); }));
+                if (P) T.camTo(520, 280, 1, 700);
+                return W.move(175, 455, 900);
+              }
+              return W.move(420, 540, 1600);
+            }
+            if (key === 'well' || key === 'together') {
+              if (y < 500) return W.move(760, 470, 420);
+              if (x < 800 && x > 500) { T.camTo(700, 280, 1, 2600); return W.move(700, 520, 2600); }
+              return W.move(x, y, 1500);
+            }
+            return W.move(x, y, 900);
+          }
+        },
+        paw(op) { // 문 밑 틈으로 하얀 발이 쑥
+          if (op !== 'show' || !paw) return;
+          paw.move(95, 372, 800, 'ease-out').then(() => { T.pop(200, 250, '쑥!'); AudioFX.tap(); [[50, 455], [140, 470], [95, 490], [180, 445]].forEach(([x, y], i) => floaty(T, x, y, '•', '#FFFFFF', 34, i * 120)); });
+        },
+        door(op) { if (op === 'open' && doorway) { doorway.setAttribute('opacity', 1); AudioFX.sfx('door', .8); } },
+        quilt(op) { if (quilt) quilt.hop(10, 260); },
+        laundry(op) { if (laundry) laundry.hop(10, 260); },
+        clock(op) {
+          if (!clk) return;
+          if (op === 'open') {
+            if (key === 'messy') { // 시계 속에서 막내가 폴짝
+              return (async () => {
+                if (P) await T.camTo(220, 280, 1, 800);
+                clk.pose('open'); if (K7) appear(K7); AudioFX.ding();
+                if (P) T.camTo(500, 280, 1, 700);
+              })();
+            }
+            clk.pose('open'); const k = kidsR[6];
+            if (k) return k.move(CX, 430, 700).then(() => hide(k));
+            return;
+          }
+          if (op === 'close') { clk.pose('a'); if (key === 'messy' && K7) { K7.pose('joy'); } }
+        },
+        belly(op, n) {
+          if (op !== 'pop') return;
+          const LAND = [[440, 552], [520, 515], [470, 488], [600, 556], [800, 556], [880, 545]];
+          kidsR = [1, 2, 3, 4, 5, 6].map(q => { const k = kid(T, q, BELLY[0], BELLY[1] + 40, 90); hide(k); k.pos.style.pointerEvents = 'none'; return k; });
+          return (async () => {
+            for (let i = 1; i <= +n; i++) {
+              const k = kidsR[i - 1], [x, y] = LAND[i - 1]; appear(k); k.pose('joy'); k.look(x < BELLY[0] ? 'left' : 'right');
+              k.hop(110, 640); k.move(x, y, 640); sting('surprise'); T.pop(BELLY[0] + (i % 2 ? -50 : 50), 270, '뿅!');
+              if (W) W.wiggle(3, 300);
+              await sleep(450);
+            }
+            if (K7) { K7.pose('joy'); kidsR.push(K7); }
+            popped = true;
+          })();
+        },
+        stone(op) { // 돌멩이를 늑대 배에 쏙쏙 (엄마가 배를 가린다)
+          if (op !== 'drop') return;
+          if (M) M.move(BELLY[0] + 6, 548, 800);
+          stoneP = prop(T, 'wg_stone', 520, 548, 90);
+          (async () => {
+            for (let i = 1; i <= 3; i++) {
+              await stoneP.move(BELLY[0] - 40, 480, 380); hide(stoneP); T.pop(BELLY[0], 250, '쏙!'); AudioFX.tap(); await sleep(300);
+              if (i < 3) { stoneP.place(520, 548); appear(stoneP); }
+              await sleep(300);
+            }
+          })();
+        },
+        needle(op) { snoreOn = false; return cutArt(T, 'wg_cut_stitch', 'magic'); },
+        cut(k) {
+          const C = { keyhole: ['wg_cut_keyhole', 'surprise'], chalk: ['wg_cut_chalk', 'laugh'], flour: ['wg_cut_flour', 'laugh'], enter: ['wg_cut_enter', 'bigHit'], gulp: ['wg_cut_belly', null], splash: ['wg_cut_splash', 'splash'] }[k];
+          if (!C) return;
+          if (k === 'gulp') { if (W) W.hop(30, 420); if (quilt) quilt.hop(14, 300); if (laundry) laundry.hop(14, 300); AudioFX.sfx('gulp'); }
+          return cutArt(T, C[0], C[1]);
+        },
+        fx(n) {
+          if (n === 'knock') { knock(); if (key === 'inside_door') T.shake(); }
+          else if (n === 'ding') { AudioFX.ding && AudioFX.ding(); if (key === 'paw' && kidsR.length) hopAll(kidsR, 22); }
+          else if (n === 'splash') AudioFX.sfx('splash');
+          else if (n === 'snore') { floaty(T, 560, 340, 'z', '#3F6B4F', 34); floaty(T, 585, 305, 'Z', '#3F6B4F', 44, 500); }
+          else if (n === 'snip') { AudioFX.tap(); if (M) { M.hop(10, 240); sleep(320).then(() => { M.hop(10, 240); AudioFX.tap(); }); } }
+          else if (n === 'pop') { if (key === 'belly' && popped) { hopAll(kidsR, 30); AudioFX.sting('win'); } else AudioFX.tap(); }
+          else AudioFX.tap();
+        },
+        pop(spec) {
+          const a = String(spec).split(','), txt = a.slice(2).join(',');
+          if (key === 'door' && txt === '와작!' && W) { W.hop(14, 240); AudioFX.sfx('crunch'); }
+          T.pop(+a[0], +a[1], txt, /쿨쿨/.test(txt) ? '#3F6B4F' : undefined);
+        },
+      };
+      return acts;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* --- 1. 부엌 --- */
     bg(T, 'kitchen');
     const mm = mama(T, 330, 478); lineUp();
@@ -296,5 +509,5 @@
     return '엄마 목소리를 잘 기억해요!';
   }
 
-  Tale.mount({ title: '늑대와 일곱 마리 아기 염소', subtitle: '엄마 목소리는 어떤 걸까?', run: T => run(Tale.api) });
+  Tale.mount({ title: '늑대와 일곱 마리 아기 염소', subtitle: '엄마 목소리는 어떤 걸까?', read: true, run: T => run(Tale.api) });
 })();
