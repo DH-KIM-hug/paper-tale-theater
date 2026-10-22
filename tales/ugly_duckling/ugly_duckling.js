@@ -718,6 +718,414 @@
       cards.forEach(c => c.g.remove());
     }
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
+       장면 자리·크기·카메라는 놀이판 그 장면 그대로(대본 좌표는 놀이판 그림과 맞지 않아 쓰지 않는다). */
+    const READ_ACTS = (() => {
+      const rI = () => T.readInstant();
+      const hide = a => { a.pos.style.opacity = '0'; };
+      const nums = s => String(s).split(',').map(Number);
+      let key = '', A = {}, swampN = 0, reflN = 0, eggsR = [], sibsR = [], icePatchR = null, iceCollarR = null, kyR = 372, bushR = null, bgReedsR = null, fgReedsR = null;
+      let unfloatR = () => {}, leafT = null, snowR = null, shivR = null, tremR = null, flapR = [], reflR = null, bobR = null, hatR = null, farR = null, swansR = [], flockR = null, headDX = 0;
+      const clearT = () => {
+        if (leafT) { clearInterval(leafT); leafT = null; }
+        if (snowR) { clearInterval(snowR); snowR = null; }
+        if (shivR) { shivR.cancel(); shivR = null; }
+        if (tremR) { tremR.cancel(); tremR = null; }
+        flapR.forEach(a => a.cancel()); flapR = [];
+        if (bobR) { bobR.cancel(); bobR = null; }
+        try { unfloatR(); } catch (e) { /* 무시 */ } unfloatR = () => {};
+      };
+      const heroMood = m => {
+        hero.setMood(m);
+        if (m === 'sad') hero.pose('translateY(4px) scale(1,.96)');
+        else if (m === 'scared') hero.pose('scale(1.08,.84)');
+        else hero.pose('');
+        if (m === 'scared') { if (!tremR) tremR = hero.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 140, iterations: Infinity }); }
+        else if (tremR) { tremR.cancel(); tremR = null; }
+      };
+      const hugeHero = (svg, word, mood) => {
+        el('rect', { width: 400, height: 300, fill: '#F2DFA8' }, svg);
+        const g = el('g', { transform: `translate(${mood === 'wings' ? 170 : 140},286) scale(1.7)` }, svg);
+        HERO.young(T, g, mood);
+        el('text', { x: 292, y: 70, 'text-anchor': 'middle', 'font-size': 50, fill: C.bean, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(word) }, svg);
+      };
+      const build = k => {
+        clearT();
+        const nw = narrow();
+        A = {}; swansR = []; farR = null;
+        if (k === 'swamp_high' || k === 'swamp') { swampN++; k = swampN === 1 ? 'swamp' : 'swamp_high'; }
+        if (k === 'reflect') { reflN++; k = reflN === 1 ? 'reflect' : 'family'; }
+        key = k;
+        T.clear(); [...T.fx.children].forEach(n => n.remove());
+        hero.pos.style.opacity = ''; hero.body.removeAttribute('clip-path'); if (hero.ripple) { hero.ripple.remove(); hero.ripple = null; }
+        hero.parts && hero.parts.wing && (hero.parts.wing.style.transform = '');
+        hero.pose(''); heroMood('neutral');
+        if (k === 'nest') {
+          const artNest = nestBG(T);
+          A.mom = artNest ? cast(T, 'mom', 616, 270, 1.7) : cast(T, 'mom', 760, 250, 1.6);
+          const SMALL = artNest ? [[404, 232], [444, 198], [492, 190], [538, 210]] : [[400, 300], [480, 250], [572, 262], [420, 400]];
+          eggsR = SMALL.map(([x, y]) => {
+            const g = el('g', { transform: `translate(${x},${y})` }, T.world);
+            if (!sprite(T, g, 'egg', 62 / 92 * .97)) { T.paper(g, [['ellipse', { rx: 24, ry: 31, fill: '#EFE6D2' }]]); el('circle', { cx: -6, cy: -10, r: 3, fill: '#C8BFA8' }, g); } else g.lastChild.setAttribute('transform', 'translate(0,31)');
+            return { g, x, y };
+          });
+          if (artNest) put(hero, 470, 340, 1.2); else put(hero, 570, 470, 1.25);
+          hero.setForm('egg'); sibsR = []; camSnap(500, 280, 1); return;
+        }
+        if (k === 'pond') {
+          const art = pondSideBG(T), WL = art ? 392 : 430, LINE = [0, 1, 2, 3].map(q => 300 - q * 80);
+          A.mom = cast(T, 'mom', 390, WL + 3, 1.8); put(A.mom, 390, WL + 3, 1.8, 'right');
+          sibsR = [0, 1, 2, 3].map(q => { const d = cast(T, 'duckling', LINE[q], WL, 1.3); put(d, LINE[q], WL, 1.3, 'right'); return d; });
+          put(hero, -40, WL + 1, 1.15, 'right'); hero.setForm('baby');
+          unfloatR = swimmersFloat([A.mom, ...sibsR, hero]);
+          frontBand(T, 'pond', WL - 30, 398) || waterFront(T, WL - 28, C.water, .92);
+          if (nw) camSnap(250, 280, 1); else camSnap(500, 280, 1);
+          return;
+        }
+        if (k === 'yard') {
+          yardBG(T);
+          A.hen = cast(T, 'hen', 290, 500, 1.4); A.hen.face('right');
+          A.rooster = cast(T, 'rooster', 395, 512, 1.5); A.rooster.face('right');
+          A.ducks = [cast(T, 'mom', 650, 505, 1.5), cast(T, 'mom', 750, 515, 1.6)];
+          put(hero, 525, 525, 1.35); hero.setForm('baby');
+          A.mom = cast(T, 'mom', 960, 505, 1.85); A.mom.face('left');
+          camSnap(nw ? 420 : 500, 280, 1); return;
+        }
+        if (k === 'reeds') {
+          bgReedsR = reedEyeBG(T); camSnap(500, 280, 1);
+          put(hero, 380, 540, 1.7, 'right'); hero.setForm('baby');
+          const list = []; for (let i = 0; i < 14; i++) list.push([60 + i * 130 + (i % 2) * 30, 562]);
+          if (artUrl('reed')) { fgReedsR = el('g', {}, T.world); list.forEach(([x, y], i) => { const g = el('g', { transform: `translate(${x},${y}) scale(${i % 2 ? -1 : 1},1)` }, fgReedsR); sprite(T, g, 'reed', .85 + (i % 3) * .1); }); }
+          else fgReedsR = reeds(T, T.world, list, 460, C.reedDk);
+          return;
+        }
+        if (k === 'swamp') {
+          swampBG(T);
+          put(hero, nw ? 372 : 380, 476, 1.45); hero.face('right'); hero.setForm('baby');
+          A.geese = (nw ? [[552, 470], [632, 484], [708, 474]] : [[580, 470], [690, 484], [800, 474]]).map(([x, y], q) => cast(T, 'goose', x, y, [1.3, 1.35, 1.25][q]));
+          camSnap(nw ? 530 : 500, 280, 1);
+          water('swamp', 446, 446, '#6A8FA4'); return;
+        }
+        if (k === 'swamp_high') {
+          const art = swampHighBG(T); camSnap(500, 280, 1);
+          if (art) put(hero, 525, 300, 1.6); else put(hero, 500, 410, 1.6);
+          hero.face('left'); hero.setForm('baby'); hero.setMood('neutral');
+          A.geese = [0, 1, 2].map(q => { const g = cast(T, 'goose', 0, 0, 1.2); put(g, [300, 700, 640][q], art ? [330, 350, 500][q] : [300, 320, 500][q], 1.2, q === 0 ? 'right' : 'left'); if (art) wade(T, g, 'goose'); return g; });
+          bushR = el('g', {}, T.world);
+          const clump = artUrl('reed_clump');
+          (art ? [[-1, 398, 318], [1, 652, 318]] : [[-1, 400, 380], [1, 600, 380]]).forEach(([dir, x, y]) => {
+            const leaf = el('g', {}, bushR);
+            if (clump) { const g = el('g', { transform: `translate(${x},${y}) scale(${dir < 0 ? 1 : -1},1)` }, leaf); sprite(T, g, 'reed_clump', .8); }
+            else T.paper(leaf, [['path', { d: `M${x} ${y} Q${x + dir * 30} ${y - 150} ${x + dir * 10} ${y - 230} Q${x + dir * 60} ${y - 140} ${x + dir * 40} ${y} Z`, fill: C.reed }], ['path', { d: `M${x + dir * 20} ${y} Q${x + dir * 70} ${y - 120} ${x + dir * 60} ${y - 200} Q${x + dir * 100} ${y - 110} ${x + dir * 70} ${y} Z`, fill: C.reedDk }]]);
+            leaf.style.transformBox = 'view-box'; leaf.style.transformOrigin = `${x}px ${y}px`; leaf.style.transition = 'transform .9s cubic-bezier(.3,1.3,.5,1)'; leaf._dir = dir;
+          });
+          bushR.style.pointerEvents = 'none'; return;
+        }
+        if (k === 'autumn') {
+          autumnLowBG(T);
+          hero.setForm('young'); put(hero, nw ? 440 : 400, 548, 1.45, 'right'); hero.pose('rotate(-8deg)');
+          flockR = el('g', {}, T.world);
+          [[0, 0], [70, 44], [-70, 44], [140, 88], [-140, 88]].forEach(([x, y]) => flyingSwan(T, flockR, 560 + x, 110 + y, 1.15));
+          flockR.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 2400, iterations: Infinity });
+          leafT = setInterval(() => {
+            if (!document.getElementById('bgL').firstChild) return;
+            const lf = T.paper(T.fx, [['ellipse', { rx: 9, ry: 5, fill: Math.random() < .5 ? C.persimmon : C.gold }]]);
+            const x0 = Math.random() * 1000;
+            lf.animate([{ transform: `translate(${x0}px,-20px) rotate(0deg)` }, { transform: `translate(${x0 - 80}px,560px) rotate(400deg)` }], { duration: 4200 }).finished.then(() => lf.remove());
+          }, 700);
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'winter') {
+          kyR = winterHighBG(T) ? 345 : 372;
+          const dy = kyR - 345, SHEET = [[330, 338], [372, 322], [450, 316], [540, 320], [600, 334], [618, 352], [580, 372], [500, 380], [410, 378], [348, 366]];
+          const poly = (g, pts, fill) => el('path', { d: 'M' + pts.map(q => q.join(' ')).join(' L') + ' Z', fill }, g);
+          icePatchR = el('g', { transform: `translate(0,${dy})` }, T.world);
+          poly(icePatchR, SHEET.map(([x, y]) => [x, y + 7]), '#9DBBD0'); poly(icePatchR, SHEET, '#EAF4F9');
+          icePatchR._cracks = el('g', {}, icePatchR);
+          put(hero, 470, kyR, 1.35, 'left'); hero.setForm('young');
+          iceCollarR = el('g', { transform: `translate(0,${dy})` }, T.world);
+          [[[424, 348], [440, 338], [458, 343], [452, 355], [430, 357]], [[455, 346], [472, 340], [492, 345], [488, 357], [462, 358]], [[488, 348], [504, 341], [522, 348], [512, 358], [492, 358]]].forEach(pts => { poly(iceCollarR, pts.map(([x, y]) => [x, y + 3]), '#9DBBD0'); poly(iceCollarR, pts, '#DDEBF3'); });
+          hero.setMood('sad');
+          A.farmer = cast(T, 'farmer', 1200, kyR - 20, 1.2);
+          snowR = setInterval(() => {
+            const f = el('circle', { r: 4 + Math.random() * 3, fill: '#fff', opacity: .9 }, T.fx); const x0 = Math.random() * 1000;
+            f.animate([{ transform: `translate(${x0}px,-10px)` }, { transform: `translate(${x0 + 40}px,570px)` }], { duration: 5000 }).finished.then(() => f.remove());
+          }, 260);
+          shivR = hero.body.animate([{ translate: '0 0' }, { translate: '2px 0' }, { translate: '-2px 0' }], { duration: 120, iterations: Infinity });
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'cabin') {
+          cabinBG(T);
+          A.grandma = cast(T, 'grandma', nw ? 680 : 715, 505, 1.55);
+          A.cat = cast(T, 'cat', 480, 520, 1.7); A.cat.face('left');
+          A.henin = cast(T, 'hen', 610, 490, 1.45); A.henin.face('left');
+          if (!prop(T, T.world, 'basket', 604, 501, 58)) T.paper(T.world, [['path', { d: 'M545 516 L560 478 L670 478 L655 516 Z', fill: '#C39445' }], ['rect', { x: 556, y: 486, width: 104, height: 6, fill: C.bark }]]);
+          put(hero, nw ? 385 : 355, 525, 1.25, 'right'); hero.setForm('young');
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'spring') {
+          put(hero, 470, springBG(T) ? 548 : 470, 1.5, 'right'); hero.setForm('young'); hero.setMood('happy');
+          camSnap(500, 280, 1); return;
+        }
+        if (k === 'reflect') {
+          reflectBG(T);
+          hero.setForm('swan'); hero.setMood('happy');
+          reflR = T.actor(T.world, 500, 174, g => HERO.swan(T, g, 'happy'), { scale: 1.1 });
+          reflR.pos.setAttribute('transform', 'translate(500,174) scale(1.1,-1.1)');
+          const rid = 'udRefl' + (++clipN);
+          T.el('rect', { x: -300, y: -600, width: 600, height: 565.5 }, T.el('clipPath', { id: rid }, reflR.pos));
+          reflR.body.setAttribute('clip-path', `url(#${rid})`); reflR.pos.style.opacity = 0;
+          for (let i = 0; i < 4; i++) el('ellipse', { cx: 485 + (i % 2) * 30, cy: 302 + i * 40, rx: 70 - i * 6, ry: 2.2, fill: '#E4F1F7', opacity: .45 }, T.world);
+          put(hero, 500, 250, 1.1, 'left'); wade(T, hero, 'swan', .2);
+          bobR = hero.body.animate([{ translate: '0 -1px' }, { translate: '0 3px' }], { duration: 1100, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+          hero.pos.style.opacity = 0;
+          camSnap(500, 215, 1.35); return;
+        }
+        if (k === 'family') {
+          const art = springBG(T), sy = art ? -32 : 0;
+          farR = el('g', {}, T.world);
+          const fm = cast(T, 'mom', 300, 300, .7, farR); fm.face('right');
+          const fs = [0, 1, 2, 3].map(q => { const d = cast(T, 'duckling', 336 + q * 24, 302, .45, farR); d.face('right'); return d; });
+          farR._ducks = [fm, ...fs]; A.mom = fm; A.sibs = fs;
+          hero.setForm('swan'); hero.setMood('happy'); put(hero, 440, 472 + sy, 1, 'right');
+          swansR = [[585, 462 + sy], [685, 490 + sy], [785, 468 + sy]].map(([x, y]) => { let parts; const a = T.actor(T.world, x, y, g => { parts = HERO.swan(T, g, 'happy'); }, { scale: .9 }); a.parts = parts; return a; });
+          A.swans = swansR;
+          water('spring', 452 + sy, 452, '#80AECB', .8, 1);
+          if (nw) camSnap(605, 280, Math.min(1, visW() / 610)); else camSnap(500, 280, 1);
+        }
+      };
+      const heroVerb = (op, a1) => {
+        if (op === 'at') return; // 놀이판 자리는 set 이 놓는다
+        if (op === 'face') { hero.face(a1); return; }
+        if (op === 'mood') { heroMood(a1); return; }
+        if (op === 'look') {
+          if (a1 === 'wings') { hero.setMood('wings'); return; }
+          if (a1 === 'hat' ) return;
+          if (['baby', 'young', 'swan'].includes(a1)) { if (key !== 'reflect' && key !== 'family') hero.setForm(a1); return; }
+          return;
+        }
+        if (op === 'hop') {
+          if (key === 'spring') { // 날갯짓하며 발이 살짝 떠올라요
+            const y0 = hero.y;
+            return (async () => { for (let i = 1; i <= 3; i++) { if (i / 3 > .3 && hero.art) hero.setMood('fly'); hero.place(hero.x, y0 - i / 3 * 120); await sleep(450); } })();
+          }
+          hero.hop(24, 360); quack(T); return;
+        }
+        if (op === 'dive') {
+          return (async () => { await T.anim(hero.inner, [{ transform: 'translateY(0)' }, { transform: 'translateY(60px)' }, { transform: 'translateY(60px)' }, { transform: 'translateY(0)' }], 900); AudioFX.sfx('pop', .7); })();
+        }
+        if (op === 'walk') { hero.face('right'); return hero.move(+a1, hero.y, 1800); }
+        if (op === 'fly') {
+          flapR = [hero.parts.wing, hero.parts.wingBack].map((w, k2) => { w.style.transition = ''; return w.animate([{ transform: `rotate(${-55 - k2 * 25}deg) scale(1.6)` }, { transform: `rotate(${15 + k2 * 10}deg) scale(1.6)` }, { transform: `rotate(${-55 - k2 * 25}deg) scale(1.6)` }], { duration: 420, iterations: Infinity }); });
+          if (hero.art) flapR.push(hero.body.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '0 -10px', rotate: '-4deg' }, { translate: '0 0', rotate: '0deg' }], { duration: 420, iterations: Infinity }));
+          AudioFX.whoosh();
+          hero.move(560, 330, 1400, 'ease-out').then(() => hero.move(1250, 250, 1400, 'ease-in'));
+          return;
+        }
+        if (op === 'wrap') { // 날개로 몸을 꼭 감싸 따뜻하게 (말과 동시에)
+          (async () => {
+            let warmed = false;
+            for (let i = 1; i <= 4; i++) {
+              const p = i / 4;
+              hero.parts.wing.style.transform = `scale(${1 + p * .5},${1 + p * .9})`;
+              if (shivR) shivR.playbackRate = Math.max(.15, 1 - p);
+              if (p > .5 && !warmed) { warmed = true; T.tone([392, 523], .4, { type: 'sine', vol: .12 }); if (hero.art) hero.setMood('neutral'); }
+              await sleep(550);
+            }
+            if (shivR) { shivR.cancel(); shivR = null; }
+            hero.setMood('neutral'); hero.parts.wing.style.transform = 'scale(1.5,1.9)';
+          })();
+          return;
+        }
+        if (op === 'hide') { heroMood('scared'); return; }
+      };
+      const acts = {
+        set(k) { if (rI()) { build(k); return; } return T.sceneCard(k === 'swamp_high' && swampN >= 1 ? '늪 한가운데' : '', () => build(k)); },
+        cam() { if (key === 'family') { return; } camSnap(key === 'yard' && narrow() ? 420 : key === 'pond' && narrow() ? 250 : key === 'swamp' && narrow() ? 530 : 500, key === 'reflect' ? 280 : 280, 1); },
+        hero(op, a1) { return heroVerb(op, a1); },
+        mom(op, a1) {
+          const a = A.mom; if (!a) return;
+          if (op === 'at') { if (key === 'yard' && !rI()) { a.pos.parentNode || T.world.appendChild(a.pos); return (async () => { quack(T); if (narrow()) camTo(560, 280, 1, 600); await a.move(655, 508, 800); })(); } return; }
+          if (op === 'hop') { quack(T); a.hop(16); return; }
+          if (op === 'wave') { if (a.parts.wing) a.parts.wing.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-40deg)' }, { transform: 'rotate(0deg)' }], { duration: 500, iterations: 4 }); a.hop(10, 300); quack(T, .4); return; }
+          if (op === 'hide') hide(a);
+        },
+        sibs(op) {
+          if (op === 'wave') (A.sibs || []).forEach((d, q) => setTimeout(() => { d.parts.wing && d.parts.wing.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-40deg)' }, { transform: 'rotate(0deg)' }], { duration: 500, iterations: 4 }); d.hop(10, 300); }, q * 100));
+        },
+        hen(op) { const a = A.hen; if (a && op === 'hop') { cluck(T); a.hop(14); } },
+        henin(op) { const a = A.henin; if (!a) return; if (op === 'hop') { cluck(T); a.hop(14); } else if (op === 'nod') a.wiggle(6, 400); },
+        cat(op) { const a = A.cat; if (!a) return; if (op === 'hop') { meow(T); a.hop(14); } else if (op === 'nod') { meow(T); a.wiggle(6, 400); } },
+        rooster(op) { const a = A.rooster; if (a && op === 'hop') { crow(T); a.hop(20); } },
+        ducks(op) { if (op === 'hop' && A.ducks) { quack(T); A.ducks.forEach(d => d.hop(14)); } },
+        geese(op) {
+          const gs = A.geese || [];
+          if (op === 'hop') { honk(T); gs.forEach((g, q) => setTimeout(() => g.hop(16), q * 120)); return; }
+          if (op === 'fly') {
+            honk(T);
+            gs.forEach((g, q) => { if (g.ripple) g.ripple.remove(); if (takeOff(T, g, 'goose_fly3')) g.face(q > 1 ? 'right' : 'left'); });
+            return Promise.all(gs.map((g, q) => g.move(g.x + (q - 1) * 200, -260, 1200 + q * 150, 'ease-in')));
+          }
+        },
+        farmer(op) {
+          const a = A.farmer; if (!a) return;
+          if (op === 'hide') { hide(a); return; }
+          if (op === 'at') { a.pos.style.opacity = ''; AudioFX.sfx('step_grass', .5); a.move(640, a.y, 1600).then(() => hero.face('right')); }
+        },
+        flock(op) {
+          if (op === 'fly' && flockR) T.anim(flockR, [{ transform: 'translate(0px,0px)' }, { transform: 'translate(-900px,-60px)' }], { duration: 3200, easing: 'ease-in' });
+        },
+        swans(op) { },
+        grandma(op) { const a = A.grandma; if (a && op === 'hop') a.hop(14, 320); },
+        eggs(op, a1) {
+          if (op !== 'hatch') return;
+          if (a1 === '4') {
+            return (async () => {
+              for (const e of eggsR) {
+                await sleep(450); crack(T); e.g.remove();
+                if (artUrl('eggshell')) [-1, 1].forEach(sg => prop(T, el('g', { transform: `translate(${e.x + sg * 22},${e.y + 28}) scale(${sg},1)` }, T.world), 'eggshell', 0, 0, 24));
+                else T.paper(T.world, [['path', { d: `M${e.x - 26} ${e.y + 20} Q${e.x - 24} ${e.y + 34} ${e.x - 6} ${e.y + 34} L${e.x - 10} ${e.y + 20} Z`, fill: '#EFE6D2' }], ['path', { d: `M${e.x + 26} ${e.y + 20} Q${e.x + 24} ${e.y + 34} ${e.x + 6} ${e.y + 34} L${e.x + 10} ${e.y + 20} Z`, fill: '#EFE6D2' }]]);
+                const d = cast(T, 'duckling', e.x, e.y + 30, 1.2); T.world.appendChild(hero.pos); sibsR.push(d);
+                peep(T, 1400 + sibsR.length * 80); d.hop(34);
+              }
+            })();
+          }
+          if (a1 === 'big') {
+            return (async () => {
+              const CR = ['M-10 -60 L-2 -52 L-8 -44', 'M-8 -44 L4 -38 L0 -30', 'M-2 -52 L12 -56 L20 -48', 'M20 -48 L30 -52'];
+              for (let i = 0; i < 4; i++) { crack(T); el('path', { d: CR[i], stroke: C.bark, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, hero.parts.crack); hero.wiggle(8, 300); await sleep(350); }
+              hero.setForm('baby'); hero.setScale(hero.art ? 1.4 : 1.1);
+              const [hx0, hy0] = hero.headPt();
+              hatR = el('g', {}, T.fx);
+              if (artUrl('eggshell')) prop(T, el('g', { transform: 'scale(1,-1)' }, hatR), 'eggshell', 0, 22, 44);
+              else T.paper(hatR, [['path', { d: 'M-30 0 Q-28 -34 0 -36 Q28 -34 30 0 L20 -6 L10 2 L0 -8 L-10 2 L-20 -6 Z', fill: '#E9E2D0' }]]);
+              const hatY = hy0 - (hero.art ? 34 : 20);
+              hatR.setAttribute('transform', `translate(${hx0},${hatY})`); hatR._p = [hx0, hatY];
+              quack(T); await hero.hop(26);
+            })();
+          }
+        },
+        hat(op) {
+          if (op !== 'drop' || !hatR) return;
+          const [hx0, hatY] = hatR._p;
+          return T.anim(hatR, [{ transform: `translate(${hx0}px,${hatY}px) rotate(0deg)` }, { transform: `translate(${hx0 + 50}px,${hatY - 30}px) rotate(40deg)` }, { transform: `translate(${hx0 + 90}px,${hero.y}px) rotate(160deg)` }], { duration: 700, easing: 'ease-in' }).then(() => { AudioFX.sfx('bonk', .4) || AudioFX.bonk(); giggle(T); sibsR.forEach((d, q) => setTimeout(() => { peep(T, 1500 + q * 60); d.hop(20, 300); }, q * 90)); });
+        },
+        tear(op) {
+          const [hx, hy] = hero.headPt();
+          const d = el('ellipse', { cx: hx + 14, cy: hy + 6, rx: 5, ry: 8, fill: '#9FD0EA' }, T.fx);
+          d.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: 'translateY(60px)', opacity: 0 }], { duration: 700, easing: 'ease-in' }).finished.then(() => d.remove());
+        },
+        swim(op) {
+          if (op !== 'line') return;
+          const swimmers = [A.mom, ...sibsR, hero];
+          const go = async () => {
+            if (key !== 'pond') return;
+            for (let i = 1; i <= 3; i++) {
+              if (key !== 'pond') return;
+              AudioFX.sfx('splash', .35) || AudioFX.splash();
+              swimmers.forEach((a, q) => setTimeout(() => { if (a === hero && narrow()) camTo(a.x + 280, 280, 1, 650); a.move(a.x + 150, a.y, 650); }, q * 70));
+              await sleep(700);
+            }
+          };
+          setTimeout(go, 1500);
+        },
+        reeds(op) {
+          if (op === 'part') {
+            (async () => {
+              for (let n = 1; n <= 3; n++) {
+                AudioFX.sfx('step_grass', .5) || AudioFX.swish();
+                T.anim(fgReedsR, [{ transform: `translateX(${-(n - 1) * 260}px)` }, { transform: `translateX(${-n * 260}px)` }], { duration: 700, easing: 'ease-out' });
+                const bd = bgReedsR.tagName === 'image' ? 40 : 90;
+                T.anim(bgReedsR, [{ transform: `translateX(${-(n - 1) * bd}px)` }, { transform: `translateX(${-n * bd}px)` }], { duration: 700, easing: 'ease-out' });
+                hero.hop(18, 350); await sleep(750);
+              }
+            })();
+            return;
+          }
+          if (op === 'cover') { if (bushR) [...bushR.children].forEach(l => { if (l._dir) l.style.transform = `rotate(${l._dir * -28}deg)`; }); AudioFX.swish(); if (tremR) { tremR.cancel(); tremR = null; } hero.setMood('neutral'); }
+        },
+        ice(op) {
+          if (op !== 'crack') return;
+          const ICR = ['M430 335 L450 352 L440 366', 'M520 330 L540 346 L560 340', 'M395 350 L375 362', 'M545 358 L568 368', 'M462 322 L474 338', 'M492 372 L512 376'];
+          const farmer = A.farmer, ky = kyR;
+          return (async () => {
+            for (let i = 1; i <= 6; i++) {
+              AudioFX.sfx('chop', .6) || T.tone([900, 300], .1, { type: 'square', vol: .12 });
+              if (farmer && farmer.parts.arm) { farmer.parts.arm.style.transform = 'rotate(24deg)'; setTimeout(() => farmer.parts.arm.style.transform = '', 160); }
+              el('path', { d: ICR[i - 1], stroke: '#7FA6BC', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, icePatchR._cracks);
+              for (let k2 = 0; k2 < 3; k2++) {
+                const bit = T.paper(T.fx, [['path', { d: 'M0 -8 L9 0 L2 9 L-8 4 Z', fill: '#E6F1F6' }]]);
+                const x0 = 420 + Math.random() * 100, dx = (Math.random() - .5) * 180;
+                bit.animate([{ transform: `translate(${x0}px,${ky - 2}px)` }, { transform: `translate(${x0 + dx / 2}px,${ky - 70}px) rotate(90deg)` }, { transform: `translate(${x0 + dx}px,${ky + 20}px) rotate(200deg)`, opacity: 0 }], { duration: 700 }).finished.then(() => bit.remove());
+              }
+              await sleep(330);
+            }
+            const dy = ky - 345, SHEET = [[330, 338], [372, 322], [450, 316], [540, 320], [600, 334], [618, 352], [580, 372], [500, 380], [410, 378], [348, 366]];
+            const poly = (g, pts, fill) => el('path', { d: 'M' + pts.map(q => q.join(' ')).join(' L') + ' Z', fill }, g);
+            const shards = el('g', { transform: `translate(0,${dy})` }, T.world); T.world.insertBefore(shards, hero.pos);
+            poly(shards, SHEET.map(([x, y]) => [x + (x < 470 ? -4 : 4), y + 5]), '#8FB2C9');
+            [[[330, 338], [372, 322], [430, 330], [410, 352], [348, 366]], [[372, 322], [450, 316], [470, 336], [430, 330]], [[450, 316], [540, 320], [520, 346], [470, 336]], [[540, 320], [600, 334], [618, 352], [560, 350]], [[348, 366], [410, 352], [440, 372], [410, 378]], [[470, 336], [520, 346], [500, 380], [440, 372]], [[520, 346], [560, 350], [580, 372], [500, 380]]].forEach((pts, k2) => {
+              const g = el('g', {}, shards), cx = pts.reduce((u, q) => u + q[0], 0) / pts.length, cy = pts.reduce((u, q) => u + q[1], 0) / pts.length;
+              poly(g, pts.map(([x, y]) => [x, y + 4]), '#9DBBD0'); poly(g, pts, '#EAF4F9');
+              const ang = Math.atan2(cy - 350, cx - 470);
+              g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
+              g.animate([{ transform: 'translate(0,0) rotate(0deg)' }, { transform: `translate(${Math.cos(ang) * 14}px,${Math.sin(ang) * 8}px) rotate(${(k2 % 2 ? 1 : -1) * (4 + k2)}deg)` }], { duration: 450, easing: 'ease-out', fill: 'forwards' });
+            });
+            icePatchR.remove(); iceCollarR.remove();
+            AudioFX.sfx('crash', .5); quack(T); hero.hop(30);
+            hero.parts.wing.style.transform = ''; T.world.appendChild(hero.pos);
+            hero.face('right'); hero.setScale(1); hero.move(562, ky - 77, 600).then(() => hero.face('left'));
+          })();
+        },
+        wings(op) {
+          if (op !== 'open') return;
+          return (async () => {
+            let spread = false;
+            for (let i = 1; i <= 3; i++) {
+              const p = i / 3;
+              if (p > .4 && !spread && hero.art) { spread = true; hero.setMood('wings'); AudioFX.swish(); }
+              hero.parts.wing.style.transform = `rotate(${-p * 55}deg) scale(${1 + p * .6})`;
+              hero.parts.wingBack.style.transform = `rotate(${-p * 80}deg) scale(${1 + p * .6})`;
+              await sleep(450);
+            }
+          })();
+        },
+        reflection(op) {
+          if (op !== 'show') return;
+          (async () => { // 날개를 편 채 미끄러져 내려와 물에 앉는다
+            const fl = el('g', {}, T.world), fw = 250, fh = fw * 353 / 398;
+            pic(T, fl, 'swan_fly', -fw / 2, -fh * .9, fw, fh);
+            await fl.animate([{ transform: 'translate(900px,20px) rotate(8deg)' }, { transform: 'translate(500px,232px) rotate(0deg)' }], { duration: 1700, easing: 'cubic-bezier(.3,.6,.4,1)', fill: 'forwards' }).finished;
+            AudioFX.sfx('splash_big', .6) || AudioFX.sfx('splash', .6);
+            [0, 160].forEach(d => { const r = el('ellipse', { cx: 500, cy: 214, rx: 30, ry: 8, fill: 'none', stroke: '#fff', 'stroke-width': 3 }, T.world); r.style.transformBox = 'fill-box'; r.style.transformOrigin = 'center'; r.animate([{ transform: 'scale(1)', opacity: .9 }, { transform: 'scale(4.5)', opacity: 0 }], { duration: 900, delay: d, easing: 'ease-out', fill: 'both' }).finished.then(() => r.remove()); });
+            fl.remove(); hero.pos.style.opacity = 1; reflR.pos.animate([{ opacity: 0 }, { opacity: .55 }], { duration: 600, fill: 'forwards' });
+            await sleep(900); camWide(1400);
+          })();
+        },
+        dance() {
+          const NOTES = [392, 440, 523, 587], dancers = [hero, ...swansR];
+          dancers.forEach((a, i) => setTimeout(() => { T.tone(NOTES[i % 4], .35, { type: 'triangle', vol: .18 }); a.hop(34, 420); a.body.animate([{ rotate: '0deg' }, { rotate: '-10deg' }, { rotate: '10deg' }, { rotate: '0deg' }], 500); }, i * 350));
+        },
+        cut(k) {
+          if (k === 'hatch') return artUrl('cut_hatch') ? T.cut(cutPic('cut_hatch'), { hold: 1600, sfx: 'pop' }) : undefined;
+          if (k === 'bang') return T.cut(svg => {
+            el('rect', { width: 400, height: 300, fill: C.indigo }, svg);
+            if (artUrl('goose_fly3')) [[30, 30, 120, -14], [150, 8, 130, -8], [270, 52, 100, -18]].forEach(([x, y, w, r]) => el('image', { href: AS + ART.goose_fly3, x, y, width: w, height: w * 349 / 445, transform: `rotate(${r} ${x + w / 2} ${y + 33})` }, svg));
+            el('text', { x: 200, y: 235, 'text-anchor': 'middle', 'font-size': 100, fill: C.amber, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('쾅!') }, svg);
+          }, { hold: 1500, sfx: () => { AudioFX.sfx('boom', 1); AudioFX.sfx('crash', .8); } });
+          if (k === 'purr') { vo('cut_purr') || purr(T); return T.cut(svg => hugeHero(svg, '가르릉…', 'neutral'), { hold: 1500 }); }
+          if (k === 'quack') { vo('cut_quack') || quack(T); return T.cut(svg => hugeHero(svg, '꽥!', 'happy'), { hold: 1500, sfx: 'pop' }).then(() => { giggle(T); heroMood('happy'); hero.hop(16); [A.cat, A.henin, A.grandma].forEach((a, q) => a && setTimeout(() => a.hop(14, 320), q * 120)); }); }
+        },
+        fx(n) {
+          if (n === 'crack') crack(T); else if (n === 'whoosh') AudioFX.whoosh(); else if (n === 'chime') swanCall(T); else if (n === 'jingle') { T.confetti(); AudioFX.sfx('bell', .5) || AudioFX.bell(); } else AudioFX.sfx('pop');
+        },
+        shake() { T.shake(); },
+        pop(spec) { const a = String(spec).split(','); T.pop(+a[0], +a[1], a.slice(2).join(','), C.bean); },
+      };
+      return acts;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ============ 1막 ============ */
     /* --- 1. 알 깨기 (둥지 하이앵글, 여름) --- */
     const artNest = nestBG(T); // 그림: 큰 둥지가 가운데 (그릇 안쪽 395~640 × 150~275). 엄마는 둥지 오른쪽에 앉아 알을 품고, 작은 알 넷은 안쪽, 큰 알은 앞쪽 테에
@@ -1236,5 +1644,5 @@
     return '달라도 괜찮아요. 모두 저마다 멋지게 자라요!';
   }
 
-  Tale.mount({ title: '미운 아기 오리', subtitle: '나는 누구일까?', run: T => run(Tale.api) });
+  Tale.mount({ title: '미운 아기 오리', subtitle: '나는 누구일까?', read: true, run: T => run(Tale.api) });
 })();
