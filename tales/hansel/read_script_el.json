@@ -5,7 +5,7 @@
  "title": "헨젤과 그레텔",
  "voices_from": "voice_script_el.json",
  "moral": "우리 집이 제일 포근해요.",
- "notes": "읽어 주기 대본(docs/READ_MODE.md §3). 놀이판 14장면(SPEC_listen 반영본)을 11장면으로: 집 앞+숲길, 과자 집+지붕, 마녀+새장을 각각 한 장면으로 묶었다. 뺀 것: 조약돌·헨젤·그레텔 누르기, 빵 부스러기·사탕 세기, 별 열쇠 고르기와 그 설명, 화덕 문 누르기, 마지막 만세. 지붕 사탕 붙이기·열쇠 찾기는 내레이션 새 문장으로 바꿨다. 순화는 놀이판 그대로: 계모는 \"숲에 두고 와요\" 한 줄뿐이며 벌을 받지 않고, 마녀는 과자를 아끼는 심술쟁이 할머니로 화덕에 들어가지 않고 빗자루로 달아난다. 배역 신규는 그레텔 1·헨젤 1·마녀 1줄. 컷 8장은 그대로.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md §3). 놀이판 14장면(SPEC_listen 반영본)을 11장면으로: 집 앞+숲길, 과자 집+지붕, 마녀+새장을 각각 한 장면으로 묶었다. 뺀 것: 조약돌·헨젤·그레텔 누르기, 빵 부스러기·사탕 세기, 별 열쇠 고르기와 그 설명, 화덕 문 누르기, 마지막 만세. 지붕 사탕 붙이기·열쇠 찾기는 내레이션 새 문장으로 바꿨다. 순화는 놀이판 그대로: 계모는 \"숲에 두고 와요\" 한 줄뿐이며 벌을 받지 않고, 마녀는 과자를 아끼는 심술쟁이 할머니로 화덕에 들어가지 않고 빗자루로 달아난다. 배역 신규는 그레텔 1·헨젤 1·마녀 1줄. 컷 8장은 그대로. 2026-10-22 놀이판 분량 늘리기로 신규 14줄이 놀이판 문장이 되어 reuse 로 바꿈(segs 는 voice_script 그대로 복사).",
  "acts": {
   "set:<house_night|cottage_night|trail|cottage|glade|ground|house|roof|cage|oven|river>": "장면 세트(scene(key): T.clear + bgImage + camSnap)",
   "cam:wide | cam:<x>": "카메라(camSnap cx)",
@@ -45,7 +45,7 @@
     },
     {
      "text": "그런데 집에는 먹을 것이 점점 떨어져, 찬장이 텅텅 비었지요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
@@ -108,13 +108,13 @@
     },
     {
      "text": "헨젤은 가슴이 콩닥콩닥 뛰었어요. 그래도 꼭 참고 생각했지요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "헨젤은 가슴이 콩닥콩닥 뛰었어요. 그래도 꼭 참고 생각했지요.",
        null,
-       "[hushed, tense but gentle]"
+       "=[hushed, tense] 헨젤은 가슴이 콩닥콩닥 뛰었어요. [calm, resolute] 그래도 꼭 참고 생각했지요."
       ]
      ]
     }
@@ -149,13 +149,13 @@
     },
     {
      "text": "헨젤은 하얀 조약돌을 하나, 또 하나, 주머니에 쏙쏙 넣었어요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "헨젤은 하얀 조약돌을 하나, 또 하나, 주머니에 쏙쏙 넣었어요.",
        null,
-       "[hushed, careful, playful]"
+       "[hushed, playful, counting softly]"
       ]
      ],
      "before": [
@@ -235,13 +235,13 @@
     },
     {
      "text": "뚜벅뚜벅, 셋은 숲속 깊이 들어갔어요. 나뭇잎이 바스락바스락 소리를 냈지요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "뚜벅뚜벅, 셋은 숲속 깊이 들어갔어요. 나뭇잎이 바스락바스락 소리를 냈지요.",
        null,
-       "[calm, storytelling]"
+       "[rhythmic, calm, storytelling]"
       ]
      ]
     },
@@ -367,13 +367,13 @@
     },
     {
      "text": "부스러기가 콩콩, 길게 줄을 이었지요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "부스러기가 콩콩, 길게 줄을 이었지요.",
        null,
-       "[bright, delighted]"
+       "[playful, light]"
       ]
      ]
     }
@@ -409,13 +409,13 @@
     },
     {
      "text": "아삭아삭, 새콤달콤! 손가락이 빨갛게 물들었어요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "아삭아삭, 새콤달콤! 손가락이 빨갛게 물들었어요.",
        null,
-       "[delighted, yummy, playful]"
+       "[delighted, crunchy, playful]"
       ]
      ]
     },
@@ -523,13 +523,13 @@
     },
     {
      "text": "둘은 두리번두리번, 땅바닥을 샅샅이 살폈어요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "둘은 두리번두리번, 땅바닥을 샅샅이 살폈어요.",
        null,
-       "[puzzled, curious]"
+       "[searching, curious]"
       ]
      ]
     },
@@ -626,13 +626,13 @@
     },
     {
      "text": "헨젤은 쿠키 벽을 와삭, 그레텔은 사탕 지붕을 오도독 깨물었어요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "헨젤은 쿠키 벽을 와삭, 그레텔은 사탕 지붕을 오도독 깨물었어요.",
        null,
-       "[delighted, playful]"
+       "[playful, crunchy, yummy]"
       ]
      ],
      "before": [
@@ -727,7 +727,7 @@
     },
     {
      "text": "\"내 사탕! 내 쿠키! 으으, 아까워라!\" 마녀는 발을 쿵쿵 굴렀어요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "witch",
@@ -739,7 +739,7 @@
        "nar",
        "마녀는 발을 쿵쿵 굴렀어요.",
        null,
-       "[playful, amused]"
+       "[amused, playful]"
       ]
      ]
     },
@@ -783,13 +783,13 @@
     },
     {
      "text": "동그라미, 세모, 별 모양. 그레텔은 자물쇠 구멍을 요리조리 살펴보았어요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "동그라미, 세모, 별 모양. 그레텔은 자물쇠 구멍을 요리조리 살펴보았어요.",
        null,
-       "[quiet, whispers, thoughtful]"
+       "[curious, thoughtful]"
       ]
      ]
     },
@@ -955,19 +955,19 @@
     },
     {
      "text": "\"휴, 이제 집으로 가자!\" 헨젤이 그레텔의 손을 잡았어요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "hans",
        "휴, 이제 집으로 가자!",
        null,
-       "[relieved, brave, hopeful]"
+       "[relieved, warm, cheerful]"
       ],
       [
        "nar",
        "헨젤이 그레텔의 손을 잡았어요.",
        null,
-       "[warm, relieved]"
+       "[warm, gentle]"
       ]
      ]
     }
@@ -998,13 +998,13 @@
     },
     {
      "text": "강물이 콸콸, 세차게 흘렀어요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "강물이 콸콸, 세차게 흘렀어요.",
        null,
-       "[soft, worried]"
+       "[rushing, dramatic but gentle]"
       ]
      ]
     },
@@ -1049,13 +1049,13 @@
     },
     {
      "text": "둘은 오리 등에 폴짝 올라탔어요. 오리는 둥실둥실 강을 건넜지요.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "둘은 오리 등에 폴짝 올라탔어요. 오리는 둥실둥실 강을 건넜지요.",
        null,
-       "[warm, relaxed, gentle]"
+       "[light, bobbing, cheerful]"
       ]
      ],
      "before": [
@@ -1188,13 +1188,13 @@
     },
     {
      "text": "그날 밤, 둘은 포근한 이불 속에서 새근새근 잠이 들었답니다.",
-     "src": "new",
+     "src": "reuse",
      "segs": [
       [
        "nar",
        "그날 밤, 둘은 포근한 이불 속에서 새근새근 잠이 들었답니다.",
        null,
-       "[gentle, warm, sleepy]"
+       "[gentle, sleepy, warm, closing]"
       ]
      ]
     },

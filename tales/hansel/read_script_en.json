@@ -5,7 +5,7 @@
  "title": "Hansel and Gretel",
  "voices_from": "voice_script_el.json",
  "moral": "Home is the coziest place of all.",
- "notes": "영어 읽어 주기 대본(docs/READ_MODE.md §3-4). text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 voice_script_en.json 의 en 그대로, trim 은 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md §3-4). text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 voice_script_en.json 의 en 그대로, trim 은 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다. 2026-10-22 놀이판 분량 늘리기로 신규 14줄이 놀이판 문장이 되어 reuse 로 바꿈(segs 는 voice_script 그대로 복사).",
  "acts": {
   "set:<house_night|cottage_night|trail|cottage|glade|ground|house|roof|cage|oven|river>": "장면 세트(scene(key): T.clear + bgImage + camSnap)",
   "cam:wide | cam:<x>": "카메라(camSnap cx)",
@@ -44,7 +44,7 @@
     },
     {
      "text": "그런데 집에는 먹을 것이 점점 떨어져, 찬장이 텅텅 비었지요.",
-     "src": "new",
+     "src": "reuse",
      "en": "But the food at home was running out, and the cupboard was bare, empty as could be.",
      "segs": [
       [
@@ -99,7 +99,7 @@
     },
     {
      "text": "헨젤은 가슴이 콩닥콩닥 뛰었어요. 그래도 꼭 참고 생각했지요.",
-     "src": "new",
+     "src": "reuse",
      "en": "Hansel's heart went thump, thump, thump. But he stayed quiet and thought hard.",
      "segs": [
       [
@@ -138,7 +138,7 @@
     },
     {
      "text": "헨젤은 하얀 조약돌을 하나, 또 하나, 주머니에 쏙쏙 넣었어요.",
-     "src": "new",
+     "src": "reuse",
      "en": "Hansel picked up the white pebbles, one, and another, and tucked them into his pockets, plop, plop.",
      "segs": [
       [
@@ -218,7 +218,7 @@
     },
     {
      "text": "뚜벅뚜벅, 셋은 숲속 깊이 들어갔어요. 나뭇잎이 바스락바스락 소리를 냈지요.",
-     "src": "new",
+     "src": "reuse",
      "en": "Tramp, tramp, the three went deep into the forest. The leaves rustled, rustle, rustle.",
      "segs": [
       [
@@ -340,7 +340,7 @@
     },
     {
      "text": "부스러기가 콩콩, 길게 줄을 이었지요.",
-     "src": "new",
+     "src": "reuse",
      "en": "The crumbs made a long, long trail behind him, dot, dot, dot.",
      "segs": [
       [
@@ -380,7 +380,7 @@
     },
     {
      "text": "아삭아삭, 새콤달콤! 손가락이 빨갛게 물들었어요.",
-     "src": "new",
+     "src": "reuse",
      "en": "Crunch, crunch, sweet and sour! Their fingers turned bright red with berry juice.",
      "segs": [
       [
@@ -485,7 +485,7 @@
     },
     {
      "text": "둘은 두리번두리번, 땅바닥을 샅샅이 살폈어요.",
-     "src": "new",
+     "src": "reuse",
      "en": "They looked all around, this way and that, searching every inch of the ground.",
      "segs": [
       [
@@ -580,7 +580,7 @@
     },
     {
      "text": "헨젤은 쿠키 벽을 와삭, 그레텔은 사탕 지붕을 오도독 깨물었어요.",
-     "src": "new",
+     "src": "reuse",
      "en": "Hansel bit into the cookie wall, crunch, and Gretel nibbled the candy roof, crackle, crackle.",
      "segs": [
       [
@@ -673,7 +673,7 @@
     },
     {
      "text": "\"내 사탕! 내 쿠키! 으으, 아까워라!\" 마녀는 발을 쿵쿵 굴렀어요.",
-     "src": "new",
+     "src": "reuse",
      "en": "\"My candy! My cookies! Oh, what a waste!\" The witch stamped her feet, stomp, stomp.",
      "segs": [
       [
@@ -722,7 +722,7 @@
     },
     {
      "text": "동그라미, 세모, 별 모양. 그레텔은 자물쇠 구멍을 요리조리 살펴보았어요.",
-     "src": "new",
+     "src": "reuse",
      "en": "A circle, a triangle, and a star. Gretel peered at the keyhole this way and that.",
      "segs": [
       [
@@ -877,7 +877,7 @@
     },
     {
      "text": "\"휴, 이제 집으로 가자!\" 헨젤이 그레텔의 손을 잡았어요.",
-     "src": "new",
+     "src": "reuse",
      "en": "\"Phew! Now let us go home!\" Hansel took Gretel's hand.",
      "segs": [
       [
@@ -916,7 +916,7 @@
     },
     {
      "text": "강물이 콸콸, 세차게 흘렀어요.",
-     "src": "new",
+     "src": "reuse",
      "en": "The river rushed and roared, splash, splash, swift and strong.",
      "segs": [
       [
@@ -962,7 +962,7 @@
     },
     {
      "text": "둘은 오리 등에 폴짝 올라탔어요. 오리는 둥실둥실 강을 건넜지요.",
-     "src": "new",
+     "src": "reuse",
      "en": "The two hopped onto the duck's back. The duck bobbed and paddled, bob, bob, across the river.",
      "segs": [
       [
@@ -1087,7 +1087,7 @@
     },
     {
      "text": "그날 밤, 둘은 포근한 이불 속에서 새근새근 잠이 들었답니다.",
-     "src": "new",
+     "src": "reuse",
      "en": "That night, the two of them snuggled under their cozy blankets and fell fast asleep, zzz.",
      "segs": [
       [

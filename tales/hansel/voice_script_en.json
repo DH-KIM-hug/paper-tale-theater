@@ -14,6 +14,26 @@
    "en": "Once upon a time, Hansel and Gretel lived in a little house beside the forest."
   },
   {
+   "text": "그런데 집에는 먹을 것이 점점 떨어져, 찬장이 텅텅 비었지요.",
+   "en": "But the food at home was running out, and the cupboard was bare, empty as could be.",
+   "segs": [
+    [
+     "nar",
+     "But the food at home was running out, and the cupboard was bare, empty as could be."
+    ]
+   ]
+  },
+  {
+   "text": "헨젤과 그레텔은 밤마다 배가 꼬르륵꼬르륵 울었어요.",
+   "en": "Every night, Hansel's and Gretel's tummies went grumble, grumble.",
+   "segs": [
+    [
+     "nar",
+     "Every night, Hansel's and Gretel's tummies went grumble, grumble."
+    ]
+   ]
+  },
+  {
    "text": "어느 날 밤, 헨젤은 문틈으로 엿들었어요.",
    "en": "One night, Hansel listened at the crack of the door.",
    "segs": [
@@ -52,6 +72,30 @@
    ]
   },
   {
+   "text": "헨젤은 가슴이 콩닥콩닥 뛰었어요. 그래도 꼭 참고 생각했지요.",
+   "en": "Hansel's heart went thump, thump, thump. But he stayed quiet and thought hard.",
+   "segs": [
+    [
+     "nar",
+     "Hansel's heart went thump, thump, thump. But he stayed quiet and thought hard."
+    ]
+   ]
+  },
+  {
+   "text": "\"그래, 좋은 생각이 났어!\" 헨젤이 작게 속삭였어요.",
+   "en": "\"Yes, I have an idea!\" Hansel whispered softly.",
+   "segs": [
+    [
+     "hans",
+     "Yes, I have an idea!"
+    ],
+    [
+     "nar",
+     "Hansel whispered softly."
+    ]
+   ]
+  },
+  {
    "text": "헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!",
    "en": "Hansel tiptoed outside. Pebbles twinkled in the moonlight!",
    "segs": [
@@ -68,6 +112,16 @@
     [
      "nar",
      "Tap Hansel! Pick up the pebbles."
+    ]
+   ]
+  },
+  {
+   "text": "헨젤은 하얀 조약돌을 하나, 또 하나, 주머니에 쏙쏙 넣었어요.",
+   "en": "Hansel picked up the white pebbles, one, and another, and tucked them into his pockets, plop, plop.",
+   "segs": [
+    [
+     "nar",
+     "Hansel picked up the white pebbles, one, and another, and tucked them into his pockets, plop, plop."
     ]
    ]
   },
@@ -96,6 +150,16 @@
    ]
   },
   {
+   "text": "뚜벅뚜벅, 셋은 숲속 깊이 들어갔어요. 나뭇잎이 바스락바스락 소리를 냈지요.",
+   "en": "Tramp, tramp, the three went deep into the forest. The leaves rustled, rustle, rustle.",
+   "segs": [
+    [
+     "nar",
+     "Tramp, tramp, the three went deep into the forest. The leaves rustled, rustle, rustle."
+    ]
+   ]
+  },
+  {
    "text": "헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.",
    "en": "Hansel quietly dropped the pebbles one by one.",
    "segs": [
@@ -116,12 +180,40 @@
    ]
   },
   {
+   "text": "\"아빠? 아빠!\" 그레텔이 불러 봤지만, 숲은 조용했어요.",
+   "en": "\"Papa? Papa!\" Gretel called, but the forest was silent.",
+   "segs": [
+    [
+     "gret",
+     "Papa? Papa!"
+    ],
+    [
+     "nar",
+     "Gretel called, but the forest was silent."
+    ]
+   ]
+  },
+  {
    "text": "밤이 되자 조약돌이 달빛에 반짝반짝 빛났어요. 둘은 조약돌을 따라 집으로 돌아왔어요.",
    "en": "When night came, the pebbles twinkled in the moonlight. The two followed them all the way home.",
    "segs": [
     [
      "nar",
      "When night came, the pebbles twinkled in the moonlight. The two followed them all the way home."
+    ]
+   ]
+  },
+  {
+   "text": "\"저기 우리 집이야!\" 헨젤이 소리쳤어요. 그레텔은 폴짝폴짝 뛰었지요.",
+   "en": "\"There is our house!\" Hansel shouted. Gretel hopped up and down with joy.",
+   "segs": [
+    [
+     "hans",
+     "There is our house!"
+    ],
+    [
+     "nar",
+     "Hansel shouted. Gretel hopped up and down with joy."
     ]
    ]
   },
@@ -176,8 +268,42 @@
    "en": "One, two, three, four, five crumbs! Now there is a trail."
   },
   {
+   "text": "부스러기가 콩콩, 길게 줄을 이었지요.",
+   "en": "The crumbs made a long, long trail behind him, dot, dot, dot.",
+   "segs": [
+    [
+     "nar",
+     "The crumbs made a long, long trail behind him, dot, dot, dot."
+    ]
+   ]
+  },
+  {
    "text": "빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.",
    "en": "The clearing was full of red berries. The two of them munched away."
+  },
+  {
+   "text": "아삭아삭, 새콤달콤! 손가락이 빨갛게 물들었어요.",
+   "en": "Crunch, crunch, sweet and sour! Their fingers turned bright red with berry juice.",
+   "segs": [
+    [
+     "nar",
+     "Crunch, crunch, sweet and sour! Their fingers turned bright red with berry juice."
+    ]
+   ]
+  },
+  {
+   "text": "\"오빠, 이것도 먹어 봐!\" 그레텔이 제일 큰 산딸기를 건넸어요.",
+   "en": "\"Hansel, try this one too!\" Gretel handed him the biggest berry of all.",
+   "segs": [
+    [
+     "gret",
+     "Hansel, try this one too!"
+    ],
+    [
+     "nar",
+     "Gretel handed him the biggest berry of all."
+    ]
+   ]
   },
   {
    "text": "배가 부르니 졸려서 둘은 나무 밑에서 깜빡 잠이 들었어요.",
@@ -190,6 +316,20 @@
   {
    "text": "그레텔은 마음이 조금 무서웠어요.",
    "en": "Gretel felt a little scared."
+  },
+  {
+   "text": "\"오빠, 무서워…\" 그레텔이 헨젤의 손을 꼭 잡았어요.",
+   "en": "\"Hansel, I am scared...\" Gretel held his hand tight.",
+   "segs": [
+    [
+     "gret",
+     "Hansel, I am scared..."
+    ],
+    [
+     "nar",
+     "Gretel held his hand tight."
+    ]
+   ]
   },
   {
    "text": "\"괜찮아, 빵 부스러기 길을 따라가자!\" 헨젤이 말했어요.",
@@ -210,6 +350,16 @@
    "en": "But how strange! There were no crumbs left at all!"
   },
   {
+   "text": "둘은 두리번두리번, 땅바닥을 샅샅이 살폈어요.",
+   "en": "They looked all around, this way and that, searching every inch of the ground.",
+   "segs": [
+    [
+     "nar",
+     "They looked all around, this way and that, searching every inch of the ground."
+    ]
+   ]
+  },
+  {
    "text": "작은 새가 빵 부스러기를 물고 있어요.",
    "en": "A little bird has a crumb in its beak."
   },
@@ -228,6 +378,30 @@
    ]
   },
   {
+   "text": "\"아이고, 우리 길이 없어졌네!\" 그레텔이 울상을 지었어요.",
+   "en": "\"Oh no, our trail is gone!\" Gretel's face crumpled.",
+   "segs": [
+    [
+     "gret",
+     "Oh no, our trail is gone!"
+    ],
+    [
+     "nar",
+     "Gretel's face crumpled."
+    ]
+   ]
+  },
+  {
+   "text": "새는 포르르, 하늘로 날아가 버렸어요.",
+   "en": "The bird fluttered off into the sky, flap, flap.",
+   "segs": [
+    [
+     "nar",
+     "The bird fluttered off into the sky, flap, flap."
+    ]
+   ]
+  },
+  {
    "text": "헨젤은 눈물이 글썽했지만 그레텔의 손을 꼭 잡고 걸었어요.",
    "en": "Hansel's eyes got teary, but he held Gretel's hand tight and kept walking."
   },
@@ -238,6 +412,16 @@
   {
    "text": "벽은 쿠키, 지붕은 사탕이에요.",
    "en": "The walls are cookies and the roof is candy."
+  },
+  {
+   "text": "헨젤은 쿠키 벽을 와삭, 그레텔은 사탕 지붕을 오도독 깨물었어요.",
+   "en": "Hansel bit into the cookie wall, crunch, and Gretel nibbled the candy roof, crackle, crackle.",
+   "segs": [
+    [
+     "nar",
+     "Hansel bit into the cookie wall, crunch, and Gretel nibbled the candy roof, crackle, crackle."
+    ]
+   ]
   },
   {
    "text": "너무 맛있어서 둘은 배가 빵빵해졌어요.",
@@ -278,6 +462,34 @@
    "en": "The witch was a grumpy granny who kept all her sweets to herself."
   },
   {
+   "text": "\"내 사탕! 내 쿠키! 으으, 아까워라!\" 마녀는 발을 쿵쿵 굴렀어요.",
+   "en": "\"My candy! My cookies! Oh, what a waste!\" The witch stamped her feet, stomp, stomp.",
+   "segs": [
+    [
+     "witch",
+     "My candy! My cookies! Oh, what a waste!"
+    ],
+    [
+     "nar",
+     "The witch stamped her feet, stomp, stomp."
+    ]
+   ]
+  },
+  {
+   "text": "\"죄송해요. 배가 너무 고팠어요.\" 헨젤이 작은 목소리로 말했어요.",
+   "en": "\"We are sorry. We were so very hungry.\" Hansel said in a small voice.",
+   "segs": [
+    [
+     "hans",
+     "We are sorry. We were so very hungry."
+    ],
+    [
+     "nar",
+     "Hansel said in a small voice."
+    ]
+   ]
+  },
+  {
    "text": "마녀는 헨젤을 새장에 쏙 넣어 버렸어요. \"과자 값을 낼 때까지 여기 있어!\"",
    "en": "The witch popped Hansel into a cage. Stay there until you pay for the candy!",
    "segs": [
@@ -292,8 +504,32 @@
    ]
   },
   {
+   "text": "그레텔은 눈물이 그렁그렁했어요. \"오빠, 내가 꼭 꺼내 줄게!\"",
+   "en": "Gretel's eyes filled with tears. \"Hansel, I will get you out, I promise!\"",
+   "segs": [
+    [
+     "nar",
+     "Gretel's eyes filled with tears."
+    ],
+    [
+     "gret",
+     "Hansel, I will get you out, I promise!"
+    ]
+   ]
+  },
+  {
    "text": "그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.",
    "en": "While the witch napped, Gretel fetched three keys."
+  },
+  {
+   "text": "동그라미, 세모, 별 모양. 그레텔은 자물쇠 구멍을 요리조리 살펴보았어요.",
+   "en": "A circle, a triangle, and a star. Gretel peered at the keyhole this way and that.",
+   "segs": [
+    [
+     "nar",
+     "A circle, a triangle, and a star. Gretel peered at the keyhole this way and that."
+    ]
+   ]
   },
   {
    "text": "새장 자물쇠에는 별 모양 구멍이 있어요. 별 모양 열쇠를 톡!",
@@ -348,6 +584,20 @@
    ]
   },
   {
+   "text": "\"반짝이는 거? 어디, 어디?\" 마녀는 화덕 쪽으로 성큼성큼 갔어요.",
+   "en": "\"Something shiny? Where, where?\" The witch strode over to the oven, stomp, stomp.",
+   "segs": [
+    [
+     "witch",
+     "Something shiny? Where, where?"
+    ],
+    [
+     "nar",
+     "The witch strode over to the oven, stomp, stomp."
+    ]
+   ]
+  },
+  {
    "text": "마녀가 화덕 안을 들여다봐요. 그레텔을 톡! 화덕 문을 쾅 밀어요.",
    "en": "The witch peeks into the oven. Tap Gretel and give the oven door a big push!"
   },
@@ -374,8 +624,46 @@
    ]
   },
   {
+   "text": "\"휴, 이제 집으로 가자!\" 헨젤이 그레텔의 손을 잡았어요.",
+   "en": "\"Phew! Now let us go home!\" Hansel took Gretel's hand.",
+   "segs": [
+    [
+     "hans",
+     "Phew! Now let us go home!"
+    ],
+    [
+     "nar",
+     "Hansel took Gretel's hand."
+    ]
+   ]
+  },
+  {
    "text": "집으로 가는 길에 넓은 강이 나왔어요. 다리가 없어요!",
    "en": "On the way home, they came to a wide river. There was no bridge!"
+  },
+  {
+   "text": "강물이 콸콸, 세차게 흘렀어요.",
+   "en": "The river rushed and roared, splash, splash, swift and strong.",
+   "segs": [
+    [
+     "nar",
+     "The river rushed and roared, splash, splash, swift and strong."
+    ]
+   ]
+  },
+  {
+   "text": "\"어떡하지? 우리는 헤엄을 못 치는데.\" 그레텔이 발을 동동 굴렀어요.",
+   "en": "\"What do we do? We cannot swim.\" Gretel stamped her feet, worried.",
+   "segs": [
+    [
+     "gret",
+     "What do we do? We cannot swim."
+    ],
+    [
+     "nar",
+     "Gretel stamped her feet, worried."
+    ]
+   ]
   },
   {
    "text": "그때 흰 오리가 헤엄쳐 왔어요.",
@@ -396,6 +684,16 @@
    ]
   },
   {
+   "text": "둘은 오리 등에 폴짝 올라탔어요. 오리는 둥실둥실 강을 건넜지요.",
+   "en": "The two hopped onto the duck's back. The duck bobbed and paddled, bob, bob, across the river.",
+   "segs": [
+    [
+     "nar",
+     "The two hopped onto the duck's back. The duck bobbed and paddled, bob, bob, across the river."
+    ]
+   ]
+  },
+  {
    "text": "오리가 둘을 태우고 강을 건너 주었어요. \"고마워, 오리야!\"",
    "en": "The duck carried them across the river. Thank you, Duck!",
    "segs": [
@@ -412,6 +710,20 @@
   {
    "text": "저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.",
    "en": "They could see their house far away. Papa had been searching the forest for them, so worried."
+  },
+  {
+   "text": "\"아빠다! 아빠!\" 그레텔이 먼저 달려갔어요.",
+   "en": "\"Papa! It is Papa!\" Gretel ran ahead first.",
+   "segs": [
+    [
+     "gret",
+     "Papa! It is Papa!"
+    ],
+    [
+     "nar",
+     "Gretel ran ahead first."
+    ]
+   ]
   },
   {
    "text": "\"헨젤! 그레텔!\" 아빠가 달려왔어요.",
@@ -442,12 +754,50 @@
    ]
   },
   {
+   "text": "\"아빠, 다시는 우리를 두고 가지 마세요.\" 헨젤이 말했어요.",
+   "en": "\"Papa, please never leave us again,\" said Hansel.",
+   "segs": [
+    [
+     "hans",
+     "Papa, please never leave us again,"
+    ],
+    [
+     "nar",
+     "said Hansel."
+    ]
+   ]
+  },
+  {
+   "text": "\"그래, 다시는 안 그럴게. 약속할게.\" 아빠가 두 아이를 꼭 안았어요.",
+   "en": "\"I never will. I promise.\" Papa hugged them both tight.",
+   "segs": [
+    [
+     "father",
+     "I never will. I promise."
+    ],
+    [
+     "nar",
+     "Papa hugged them both tight."
+    ]
+   ]
+  },
+  {
    "text": "헨젤과 그레텔은 마음이 따뜻하고 행복했어요. 여러분은 기분이 어때요? 헨젤을 톡! 만세!",
    "en": "Hansel and Gretel felt warm and happy. How do you feel? Tap Hansel and cheer!"
   },
   {
    "text": "헨젤을 톡! 만세!",
    "en": "Tap Hansel! Hooray!"
+  },
+  {
+   "text": "그날 밤, 둘은 포근한 이불 속에서 새근새근 잠이 들었답니다.",
+   "en": "That night, the two of them snuggled under their cozy blankets and fell fast asleep, zzz.",
+   "segs": [
+    [
+     "nar",
+     "That night, the two of them snuggled under their cozy blankets and fell fast asleep, zzz."
+    ]
+   ]
   },
   {
    "text": "우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.",

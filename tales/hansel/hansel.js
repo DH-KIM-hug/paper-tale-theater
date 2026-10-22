@@ -161,12 +161,17 @@
     put(T, door, DOOR.edge + (DOOR.sill - DOOR.top) * aspOf('prop_door') / 2, DOOR.sill, { to: 'left', s: 1 / SC }); /* 배경 문틀에 맞춘 크기라 세로 화면에서도 줄이지 않는다. 손잡이는 틈 쪽 */
     await T.curtain(true);
     await say('옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.');
+    await say('그런데 집에는 먹을 것이 점점 떨어져, 찬장이 텅텅 비었지요.');
+    await say('헨젤과 그레텔은 밤마다 배가 꼬르륵꼬르륵 울었어요.');
     await say('어느 날 밤, 헨젤은 문틈으로 엿들었어요.');
     step.look('point'); step.hop(8, 300);
     await say('"먹을 게 없어요. 내일 아이들을 숲에 두고 와요." 새엄마가 말했어요.');
     step.look('arms'); father.hop(6, 300);
     await say('"음… 아이들이 가엾은데…" 아빠는 망설였어요.');
-    await sleep(300); hans.hop(6, 260); /* 헨젤이 깜짝 — 들었어요 (첫 조작 30초 안이라 쉼은 예전 0.6초 그대로) */
+    await sleep(300); hans.hop(6, 260); /* 헨젤이 깜짝 — 들었어요 */
+    await say('헨젤은 가슴이 콩닥콩닥 뛰었어요. 그래도 꼭 참고 생각했지요.');
+    hans.hop(6, 260);
+    await say('"그래, 좋은 생각이 났어!" 헨젤이 작게 속삭였어요.');
     await sleep(300);
 
     /* --- 2. 달빛 조약돌: 톡 한 번으로 조약돌 다섯 개가 저절로 --- */
@@ -182,12 +187,14 @@
     await say('헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!');
     await T.ask('헨젤을 톡! 조약돌을 주워요.', () => T.tap(hans.pos, { prompt: '헨젤을 톡! 조약돌을 주워요.' })); /* 안내 도중에도 눌린다 (첫 조작 30초 안) */
     hans.hop(10, 240); glints.forEach(g => g.remove());
+    const picking = say('헨젤은 하얀 조약돌을 하나, 또 하나, 주머니에 쏙쏙 넣었어요.'); /* 조약돌이 날아드는 동안 읽는다 */
     await Promise.all(pebbles.map(async (p, i) => {
       await sleep(i * 180);
       await p.move(hans.x - 6 * SC, hans.y - 62 * SC, 320, 'ease-in'); /* 반바지 주머니 자리 */
       hide(p); popSfx(T);
     }));
     T.pop(hans.x + 40, hans.y - 265, tr('쏙!')); /* 머리 위로 비켜서(얼굴을 가리지 않게) */
+    await picking;
     hans.turn('left'); /* 집 쪽으로 돌아선다 */
     await sleep(500);
     await say('헨젤은 조약돌을 주머니에 가득 채웠어요. "이제 괜찮아."');
@@ -202,6 +209,9 @@
       put(T, hans, L(450, 520), GROUND, { look: 'crumb', to: 'right' });
     }, hans.pos);
     await say('다음 날, 아빠는 둘을 데리고 숲 깊은 곳으로 갔어요.');
+    const walkIn = Promise.all([father, gret, hans].map(a => a.move(a.x + L(40, 10), GROUND, 1600))); /* 뚜벅뚜벅 — 조금만 더 걸어도 다섯 걸음 뒤 셋 다 화면 안 */
+    await say('뚜벅뚜벅, 셋은 숲속 깊이 들어갔어요. 나뭇잎이 바스락바스락 소리를 냈지요.');
+    await walkIn;
     const dropAuto = (async () => {
       const dx = L(60, 25); /* 다섯 걸음 뒤에도 셋 다 화면 안 */
       for (let i = 0; i < 5; i++) {
@@ -221,19 +231,22 @@
     await leave;
     /* 둘러보기: 아빠가 안 보여요 — 뒤(왼쪽)를 봤다가 다시 앞으로 */
     await sleep(300); hans.turn('left'); gret.turn('left'); await sleep(800); hans.turn('right'); gret.turn('right'); await sleep(400);
+    gret.hop(10, 260);
+    await say('"아빠? 아빠!" 그레텔이 불러 봤지만, 숲은 조용했어요.');
     /* 밤: 컷 위에서 읽는다 (그림이 없으면 밤 집 앞 장면에서 읽는다) */
     const N11 = '밤이 되자 조약돌이 달빛에 반짝반짝 빛났어요. 둘은 조약돌을 따라 집으로 돌아왔어요.';
+    const N11b = '"저기 우리 집이야!" 헨젤이 소리쳤어요. 그레텔은 폴짝폴짝 뛰었지요.';
     if (await T.preload(cutSrc('pebbles'))) {
       const cp = document.getElementById('cutPanel'); let sp;
       await T.cutImage([{ src: cutSrc('pebbles'), sfx: 'pop', hold: 60000 }], { hold: 60000, onShow: () => {
-        sp = say(N11).then(() => sleep(500)).then(() => { if (cp.onpointerdown) cp.onpointerdown({ stopPropagation() {} }); });
+        sp = say(N11).then(() => say(N11b)).then(() => sleep(500)).then(() => { if (cp.onpointerdown) cp.onpointerdown({ stopPropagation() {} }); });
       } });
       await sp;
     } else {
       scene('cottage_night');
       put(T, gret, L(300, 400), GROUND, { look: 'walk', to: 'right' }); put(T, hans, L(380, 440), GROUND, { look: 'walk', to: 'right' });
       const home = Promise.all([gret.move(L(520, 520), GROUND, 4000), hans.move(L(600, 570), GROUND, 4000)]);
-      await say(N11); await home;
+      await say(N11); await home; gret.hop(14, 300); await say(N11b);
     }
 
     /* --- 4. 집 앞: 또 숲에 가요 --- */
@@ -266,6 +279,7 @@
       hans.hop(10, 220); hans.move(hx, GROUND, 360); gret.move(gx, GROUND, 360);
     } }));
     await say('빵 부스러기가 하나, 둘, 셋, 넷, 다섯! 길이 생겼어요.');
+    await say('부스러기가 콩콩, 길게 줄을 이었지요.');
 
     /* --- 3. 빈터: 졸려서 잠들고 길을 잃어요 --- */
     await sleep(REST); /* 장면 끝 쉼 */
@@ -284,12 +298,17 @@
     const eating = (async () => { await sleep(900); hans.hop(14, 300); gret.hop(14, 300); await sleep(900); hans.hop(14, 300); gret.hop(14, 300); })();
     await say('빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.');
     await eating;
+    await say('아삭아삭, 새콤달콤! 손가락이 빨갛게 물들었어요.');
+    gret.hop(12, 300);
+    await say('"오빠, 이것도 먹어 봐!" 그레텔이 제일 큰 산딸기를 건넸어요.');
+    hans.hop(12, 300);
     await say('배가 부르니 졸려서 둘은 나무 밑에서 깜빡 잠이 들었어요.');
     put(T, hans, L(430, 445), GROUND + 6, { look: 'doze' }); put(T, gret, L(540, 555), GROUND + 6, { look: 'doze' });
     await sleep(900);
     await say('눈을 떠 보니 아빠가 보이지 않았어요. 둘은 길을 잃었어요.');
     put(T, hans, L(430, 445), GROUND, { look: 'walk', to: 'right' }); put(T, gret, L(540, 555), GROUND, { look: 'walk', to: 'left' });
     await say('그레텔은 마음이 조금 무서웠어요.');
+    await say('"오빠, 무서워…" 그레텔이 헨젤의 손을 꼭 잡았어요.');
     await sleep(700); /* 저절로 */
     popSfx(T); gret.hop(14, 300); hans.move(gret.x - L(46, 40), GROUND, 420); T.pop(gret.x, gret.y - 215, tr('꼭!'));
     [-26, 0, 26].forEach((dx, k) => { const h = T.el('path', { d: 'M0 8 C-14 -4 -12 -16 0 -9 C12 -16 14 -4 0 8 Z', fill: '#E8607A', 'pointer-events': 'none', transform: `translate(${gret.x + dx - 22},${gret.y - 150})` }, T.world);
@@ -304,6 +323,9 @@
       put(T, gret, L(490, 500), GROUND, { look: 'walk', to: 'right' });
     }, hans.pos);
     await say('그런데 이상해요. 빵 부스러기가 하나도 없어요!');
+    hans.turn('left'); /* 두리번두리번 — 헨젤은 뒤쪽, 그레텔은 앞쪽 */
+    await say('둘은 두리번두리번, 땅바닥을 샅샅이 살폈어요.');
+    hans.turn('right');
     put(T, bird, L(640, 590), GROUND + 10, { look: 'crumb', to: 'left' }); fadeIn(bird);
     await say('작은 새가 빵 부스러기를 물고 있어요.');
     await sleep(700); /* 저절로 */
@@ -313,6 +335,11 @@
     put(T, hans, L(400, 425), GROUND, { look: 'walk', to: 'right' }); put(T, gret, L(490, 500), GROUND, { look: 'walk', to: 'right' });
     put(T, bird, L(640, 590), GROUND + 10, { look: 'peck', to: 'left' });
     await say('"짹짹! 맛있어서 내가 다 먹었어!" 새가 말했어요.');
+    gret.hop(12, 300);
+    await say('"아이고, 우리 길이 없어졌네!" 그레텔이 울상을 지었어요.');
+    const flyOff = bird.move(bird.x + L(140, 60), 150, 1000).then(() => hide(bird)); /* 포르르 — 오른쪽 위 하늘로 */
+    await say('새는 포르르, 하늘로 날아가 버렸어요.');
+    await flyOff;
     await say('헨젤은 눈물이 글썽했지만 그레텔의 손을 꼭 잡고 걸었어요.');
 
     /* --- 5. 과자 집 --- */
@@ -327,6 +354,8 @@
     await sleep(700); /* 저절로 냠냠 */
     gret.look('eat'); hans.look('eat'); AudioFX.sfx('chomp') || popSfx(T); gret.hop(16, 300); T.pop(gret.x, gret.y - 215, tr('냠냠!'));
     await T.cutImage([{ src: cutSrc('eat'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
+    hans.hop(12, 300); setTimeout(() => gret.hop(12, 300), 500);
+    await say('헨젤은 쿠키 벽을 와삭, 그레텔은 사탕 지붕을 오도독 깨물었어요.');
     await say('너무 맛있어서 둘은 배가 빵빵해졌어요.');
 
     /* --- 6. 지붕: 사탕 세기 --- */
@@ -361,8 +390,13 @@
     await T.cutImage([{ src: cutSrc('witch'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     await say('"내 과자 집을 누가 먹었니!" 마녀가 투덜거렸어요.');
     await say('마녀는 과자를 아끼는 심술쟁이 할머니였어요.');
+    witch.hop(10, 260); setTimeout(() => witch.hop(10, 260), 400); /* 발을 쿵쿵 */
+    await say('"내 사탕! 내 쿠키! 으으, 아까워라!" 마녀는 발을 쿵쿵 굴렀어요.');
+    await say('"죄송해요. 배가 너무 고팠어요." 헨젤이 작은 목소리로 말했어요.');
     hans.look('cage'); hans.place(hans.x, GROUND); hans.setScale(.55 * SC); hans.hop(14, 320); popSfx(T);
     await say('마녀는 헨젤을 새장에 쏙 넣어 버렸어요. "과자 값을 낼 때까지 여기 있어!"');
+    gret.hop(10, 260);
+    await say('그레텔은 눈물이 그렁그렁했어요. "오빠, 내가 꼭 꺼내 줄게!"');
 
     /* --- 8. 새장: 별 열쇠 고르기 --- */
     const CX = L(500, 215);
@@ -378,6 +412,7 @@
     const kc = keyAt(L(470, 160), 440, 'circle'), ks = keyAt(L(570, 225), 440, 'square'), kt = keyAt(L(670, 290), 440, 'star');
     const keys = [kc, ks, kt];
     keys.forEach(k => k.animate([{ opacity: 0, transform: 'translateY(-20px)' }, { opacity: 1, transform: 'translateY(0)' }], 350));
+    await say('동그라미, 세모, 별 모양. 그레텔은 자물쇠 구멍을 요리조리 살펴보았어요.');
     await T.ask('새장 자물쇠에는 별 모양 구멍이 있어요. 별 모양 열쇠를 톡!', () => T.choose([{ key: 'c', el: kc, ok: false }, { key: 's', el: ks, ok: false }, { key: 't', el: kt, ok: true }],
       { prompt: '별 모양 열쇠를 톡!', where: '열쇠 머리 모양을 잘 봐요.', who: '반짝이는 별 열쇠를 톡!' }));
     clinkSfx(T); kc.remove(); ks.remove(); kt.remove();
@@ -401,6 +436,9 @@
     await witch.move(L(640, 585), GROUND, 1000);
     await say('그때 마녀가 일어나 쿵쿵 걸어왔어요. 눈이 나빠서 더듬더듬 찾았어요.');
     await say('그레텔은 꾀가 났어요. "마녀님, 화덕 안에 반짝이는 게 있어요!"');
+    const stride = witch.move(witch.x - L(40, 20), GROUND, 900); /* 성큼성큼 화덕 쪽으로 */
+    await say('"반짝이는 거? 어디, 어디?" 마녀는 화덕 쪽으로 성큼성큼 갔어요.');
+    await stride;
     witch.look('oven', 'left'); witch.hop(10, 300);
     await T.ask('마녀가 화덕 안을 들여다봐요. 그레텔을 톡! 화덕 문을 쾅 밀어요.', () => T.tap(gret.pos, { prompt: '그레텔을 톡! 쾅 밀어요.' }));
     gret.look('push', 'right'); AudioFX.sfx('boom', 1); AudioFX.sfx('crash'); T.shake(); T.pop(L(500, 500), 330, tr('쾅!')); /* 2026-10-20 쾅 소리 */
@@ -412,6 +450,7 @@
     await say('마녀는 빗자루를 타고 굴뚝으로 휘리릭 날아갔어요. "다시는 안 올게~!"');
     AudioFX.sfx('whoosh'); T.pop(L(500, 500), 300, tr('휘리릭!'));
     gret.hop(24, 400); hans.hop(24, 400);
+    await say('"휴, 이제 집으로 가자!" 헨젤이 그레텔의 손을 잡았어요.');
 
     /* --- 10. 강: 오리의 등 --- */
     await sleep(REST); /* 장면 끝 쉼 */
@@ -421,6 +460,9 @@
       put(T, gret, L(470, 490), GROUND + 12, { look: 'walk', to: 'right' });
     }, hans.pos);
     await say('집으로 가는 길에 넓은 강이 나왔어요. 다리가 없어요!');
+    await say('강물이 콸콸, 세차게 흘렀어요.');
+    gret.hop(10, 260); setTimeout(() => gret.hop(10, 260), 400); /* 발을 동동 */
+    await say('"어떡하지? 우리는 헤엄을 못 치는데." 그레텔이 발을 동동 굴렀어요.');
     put(T, duck, L(820, 640), 470, { look: 'a', to: 'left' }); fadeIn(duck);
     await duck.move(L(640, 570), 470, 1100);
     await say('그때 흰 오리가 헤엄쳐 왔어요.');
@@ -440,6 +482,7 @@
       await Promise.all([duck.move(tx, 330, 2600), hans.move(tx - 22, 290, 2600), gret.move(tx + 22, 290, 2600)]);
       await Promise.all([hans.move(tx - 22 + 50, 250, 700), gret.move(tx + 22 + 50, 250, 700)]);
     })();
+    await say('둘은 오리 등에 폴짝 올라탔어요. 오리는 둥실둥실 강을 건넜지요.');
     await say('오리가 둘을 태우고 강을 건너 주었어요. "고마워, 오리야!"');
     await cross;
 
@@ -452,6 +495,9 @@
       put(T, father, L(300, 400), GROUND, { look: 'hug', to: 'right' });
     }, hans.pos);
     await say('저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.');
+    const runAhead = gret.move(gret.x - L(120, 50), GROUND, 900); /* 그레텔이 먼저 아빠 쪽으로 */
+    await say('"아빠다! 아빠!" 그레텔이 먼저 달려갔어요.');
+    await runAhead;
     await father.move(L(450, 480), GROUND, 800);
     await say('"헨젤! 그레텔!" 아빠가 달려왔어요.');
     await sleep(700); /* 저절로 */
@@ -461,10 +507,17 @@
     put(T, father, 500, GROUND, { look: 'hug', to: 'left' });
     put(T, hans, L(400, 440), GROUND, { look: 'joy', to: 'left' }); put(T, gret, L(600, 565), GROUND, { look: 'clever', to: 'left' });
     await say('"찾았다! 보고 싶었어!" 아빠가 말했어요.');
+    hans.hop(10, 300);
+    await say('"아빠, 다시는 우리를 두고 가지 마세요." 헨젤이 말했어요.');
+    father.hop(10, 300);
+    await say('"그래, 다시는 안 그럴게. 약속할게." 아빠가 두 아이를 꼭 안았어요.');
     await T.ask('헨젤과 그레텔은 마음이 따뜻하고 행복했어요. 여러분은 기분이 어때요? 헨젤을 톡! 만세!', () => T.tap(hans.pos, { prompt: '헨젤을 톡! 만세!' }));
     T.pop(hans.x - 90, hans.y - 230, tr('만세!'));
     T.confetti();
     await Promise.all([hans.hop(40, 500), gret.hop(34, 500), father.hop(26, 500)]);
+    await sleep(REST);
+    scene('cottage_night'); /* 그날 밤 — 창문만 환한 집(모두 안에서 잔다) */
+    await say('그날 밤, 둘은 포근한 이불 속에서 새근새근 잠이 들었답니다.');
     await say('우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.');
     T.finale();
     return '우리 집이 제일 포근해요!';
