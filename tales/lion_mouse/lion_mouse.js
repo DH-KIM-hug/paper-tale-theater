@@ -530,10 +530,9 @@
       newRound();
       const xs = { [LION]: lionLeft ? CL : CR, [MOUSE]: lionLeft ? CR : CL };
       const cards = { [LION]: card(xs[LION], r.draw[LION]), [MOUSE]: card(xs[MOUSE], r.draw[MOUSE]) };
-      await say(r.q);
       const other = r.ans === LION ? MOUSE : LION;
-      await T.choose([{ el: cards[r.ans], ok: true }, { el: cards[other], ok: false }], { prompt: r.prompt, where: r.where,
-        who: `${josa(r.ans, '이/가')} 가진 ${josa(r.thing, '이에요/예요')}. 반짝이는 쪽을 눌러 봐요!` });
+      await T.ask(r.q, () => T.choose([{ el: cards[r.ans], ok: true }, { el: cards[other], ok: false }], { prompt: r.prompt, where: r.where,
+        who: `${josa(r.ans, '이/가')} 가진 ${josa(r.thing, '이에요/예요')}. 반짝이는 쪽을 눌러 봐요!` }));
       const o1 = owner(LION, xs[LION]), o2 = owner(MOUSE, xs[MOUSE]);
       r.ans === LION ? roar(T, .2) : squeak(T);
       cards[r.ans].animate([{ translate: '0 0' }, { translate: '0 -16px' }, { translate: '0 0' }], 500);
@@ -551,8 +550,7 @@
     if (HP) camSnap(500, 280, .5);
     const bl = mk(T, T.world, LX, 470, drawLionStand, .8); bl.face('right'); bl.parts.eyes('open');
     const sm = mk(T, T.world, SMX, 470, drawMouse, 1.4);
-    await say('좁은 구멍이 있어요. 쏙 들어갈 수 있는 건 누구일까요?');
-    await T.choose([
+    await T.ask('좁은 구멍이 있어요. 쏙 들어갈 수 있는 건 누구일까요?', () => T.choose([
       { el: sm.pos, ok: true },
       { el: bl.pos, ok: false, onWrong: async () => {
         await bl.move(LX + 70, 470, 500);
@@ -563,7 +561,7 @@
         await bl.move(LX, 470, 500);
       } },
     ], { prompt: '구멍에 쏙 들어갈 친구를 톡 눌러 봐요!', where: '사자는 너무 커서 코가 쿵! 부딪혀요. 작은 친구는 누구지?',
-      who: `${josa(MOUSE, '이/가')} 들어갈 수 있어요. 반짝이는 친구를 눌러 봐요!` });
+      who: `${josa(MOUSE, '이/가')} 들어갈 수 있어요. 반짝이는 친구를 눌러 봐요!` }));
     squeak(T);
     await sm.move(HX + 20, 470, 500);
     T.tone([900, 400], .2, { type: 'sine', vol: .12 });
@@ -720,8 +718,7 @@
     await sleep(900);
     await say('바람을 가르며 초원을 달려요! 신난다!');
     T.finale();
-    await say('사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!');
-    await T.tap(rider.pos);
+    await T.ask('사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!', () => T.tap(rider.pos));
     rider.hop(26, 320); T.pop(250, 250, '찍!', C.pine); vo('hi_mouse');
     await sleep(500);
     await T.tap(lion.pos);
@@ -790,12 +787,30 @@
       guardCam = api.camera;
     };
     const targetsOf = { tap: a => a[0], mash: a => a[0], swipe: a => a[0], hold: a => a[0], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
-    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); return api[k](...a); }; });
+    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); [].concat(targetsOf[k](a)).forEach(e => fatten(e)); return api[k](...a); }; });
     T.sceneCard = (label, change, focus) => api.sceneCard(label, () => {
       if (guardCam) { const c = api.camera; if (c.x === guardCam.x && c.y === guardCam.y && c.z === guardCam.z) api.camSnap(500, 280, 1); guardCam = null; }
       change && change();
     }, focus);
     return T;
+  }
+
+  /* 누르는 자리 넓히기 (2026-10-22): 화면에서 짧은 변이 84px 보다 작은 대상(g)에 투명 사각을 덧대 84px 이상으로 만든다.
+     대상 가운데는 그대로(손가락 힌트 자리 불변). 조작을 열 때마다 지금 화면 배율로 다시 잰다. 클립된 그림 조각은 건드리지 않는다 */
+  function fatten(el, min = 84) {
+    try {
+      if (!el || !(el instanceof SVGGElement) || el.__noFat) return;
+      if (el.__fat) { el.__fat.remove(); el.__fat = null; }
+      const r = el.getBoundingClientRect(); if (!r.width || !r.height || el.getAttribute('clip-path')) return;
+      if (r.width >= min && r.height >= min) return;
+      const m = el.getScreenCTM(), bb = el.getBBox(); if (!m || !bb.width || !bb.height) return;
+      const sx = Math.hypot(m.a, m.b) || 1, sy = Math.hypot(m.c, m.d) || 1;
+      const w = Math.max(bb.width, min / sx), h = Math.max(bb.height, min / sy);
+      const rc = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rc.setAttribute('x', bb.x + bb.width / 2 - w / 2); rc.setAttribute('y', bb.y + bb.height / 2 - h / 2);
+      rc.setAttribute('width', w); rc.setAttribute('height', h); rc.setAttribute('fill', '#000'); rc.setAttribute('fill-opacity', 0);
+      el.insertBefore(rc, el.firstChild); el.__fat = rc;
+    } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
   Tale.mount({ title: '사자와 생쥐', subtitle: '작은 친구의 큰 힘', run: T => run(portraitGuard(Tale.api)) });
