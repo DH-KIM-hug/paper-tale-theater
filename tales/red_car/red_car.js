@@ -15,6 +15,10 @@
     rc_red_tired: 1.7078, rc_red_hooked: 1.5679, rc_police_run: 1.6854, rc_fire_run: 1.9027, rc_amb_run: 1.6822, rc_tow_run: 1.6605, rc_thief_b_run: 0.7233,
     rc_thief_a_hands: 0.7367, rc_bear_off: 0.695, rc_rabbit_off: 0.5667, rc_prop_butterfly_fold: 0.6967, rc_police_joy: 1.6187, rc_fire_spray: 1.8595,
     rc_fire_joy: 1.7893, rc_amb_open: 1.6791, rc_amb_joy: 1.5411, rc_tow_pull: 1.7647, rc_tow_joy: 1.5901, rc_thief_b_hands: 0.725, rc_prop_hook: 0.3783,
+    /* 시각 재기획(2026-10-22, PLAN.md '시각 재기획') 레이어 소품 */
+    rc_layer_arch: 0.7283, rc_layer_tower: 0.2367, rc_layer_crayons: 0.5883, rc_layer_crayon_front: 0.305, rc_layer_buttons: 0.76, rc_layer_train: 2.0737, rc_layer_top: 0.8183,
+    rc_layer_ball: 0.9933, rc_layer_spring: 1.7308, rc_layer_flags: 4.7872, rc_layer_signal: 0.3133, rc_layer_house_blue: 0.8383, rc_layer_rings: 0.6417, rc_layer_dice: 0.8983,
+    rc_layer_toybox: 1.0633, rc_layer_flowerbed: 1.7241, rc_layer_grass_front: 1.6129, rc_layer_meadow: 1.0467, rc_layer_ladybug: 1.105, rc_layer_snail: 1.345, rc_layer_sand_tools: 1.0617,
   };
   /* 장난감 세상 길이(px, scale 1). 기획 길이비 150:165:240:210:195 를 그대로 두면 큰 차(소방·구급·견인)의 바퀴가 빨간 차보다 27~31% 커진다(그림에서 잰 값).
      바퀴를 빨간 차의 +20% 안(≈40px)에 두려고 큰 차만 길이를 줄였다: 소방 240→218, 구급 210→191, 견인 195→183 (비율 1 : 1.1 : 1.22 : 1.27 : 1.45) */
@@ -23,6 +27,10 @@
   const HT = {
     rc_child_stand: 230, rc_child_point: 236, rc_child_run: 228, rc_child_cry: 230, rc_child_turn: 222, rc_child_hug: 217, rc_child_eat: 235, rc_child_sleep: 130,
     rc_thief_a_run: 76, rc_thief_b_run: 76, rc_thief_a_hands: 78, rc_thief_b_hands: 78, rc_bear_sit: 56, rc_rabbit_sit: 56, rc_bear_off: 56, rc_rabbit_off: 55.2,   /* 머리 폭을 sit 과 맞춤(곰 .672/.675, 토끼 .495/.502) */
+    /* 레이어 소품 높이(무대 px, PLAN 시각 재기획 §3). 장면이 달라도 같은 소품은 같은 높이 */
+    rc_layer_arch: 320, rc_layer_tower: 300, rc_layer_crayons: 220, rc_layer_crayon_front: 260, rc_layer_buttons: 110, rc_layer_train: 90, rc_layer_top: 120, rc_layer_ball: 110,
+    rc_layer_spring: 90, rc_layer_flags: 80, rc_layer_signal: 170, rc_layer_house_blue: 190, rc_layer_rings: 160, rc_layer_dice: 80, rc_layer_toybox: 150, rc_layer_flowerbed: 90,
+    rc_layer_grass_front: 70, rc_layer_meadow: 90, rc_layer_ladybug: 18, rc_layer_snail: 22, rc_layer_sand_tools: 90,
     rc_prop_butterfly_open: 60, rc_prop_butterfly_fold: 42,   /* 나비: 몸통 길이를 open 과 같게(몸통이 open 은 그림 높이의 .457, fold 는 .652 → 60×.457/.652) */ rc_prop_block: 42, rc_prop_duck: 46, rc_prop_house: 170, rc_prop_flame: 90, rc_prop_smoke: 40, rc_prop_water: 76, rc_prop_hook: 60,
   };
   function calcHT() {
@@ -36,10 +44,10 @@
     rc_red_run: 'right', rc_red_joy: 'right', rc_red_tired: 'right', rc_red_hooked: 'right',
     rc_police_run: 'right', rc_police_joy: 'right', rc_fire_run: 'right', rc_fire_spray: 'right', rc_fire_joy: 'right',
     rc_amb_run: 'right', rc_amb_open: 'right', rc_amb_joy: 'right', rc_tow_run: 'right', rc_tow_pull: 'right', rc_tow_joy: 'right',
-    rc_thief_a_run: 'right', rc_thief_b_run: 'right', rc_prop_duck: 'right', rc_prop_water: 'right', rc_prop_hook: 'right' };
+    rc_thief_a_run: 'right', rc_thief_b_run: 'right', rc_prop_duck: 'right', rc_prop_water: 'right', rc_prop_hook: 'right', rc_layer_train: 'left' };
   const FL = 505;                       // 바닥(바퀴·발끝 y)
   const S_TOY = .42;                    // 사람 세계에서 자동차 다섯 대에 공통으로 쓰는 축소 비율. 그 밖에 s 를 쓰지 않는다
-  const BGS = ['rc_bg_room', 'rc_bg_yard', 'rc_bg_gate', 'rc_bg_road_a', 'rc_bg_road_b', 'rc_bg_road_c', 'rc_bg_road_long', 'rc_bg_road_hill', 'rc_bg_playground'];
+  const BGS = ['rc_bg_room_v2', 'rc_bg_yard_v2', 'rc_bg_gate_v2', 'rc_bg_road_a_v2', 'rc_bg_road_b_v2', 'rc_bg_road_c_v2', 'rc_bg_road_long_v2', 'rc_bg_road_hill_v2', 'rc_bg_playground_v2'];   // 2026-10-22 시각 재기획: 옛 rc_bg_* 는 쓰지 않음
   const src = k => AS + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
@@ -147,6 +155,7 @@
     rc_bg_playground: { sky: '#EEF3F7', gnd: '#E9DCC0', name: '놀이터', shapes: () => [['rect', { x: 120, y: 160, width: 120, height: 260, fill: '#F2C94E' }], ['path', { d: 'M240 180 L460 420 L400 420 L240 240Z', fill: '#E8703A' }], ['circle', { cx: 860, cy: 100, r: 44, fill: '#F2B366' }]] },
   };
   function bgImage(T, key) {
+    if (!bgOK[key] && BGPH[key.replace('_v2', '')] && !BGPH[key]) BGPH[key] = BGPH[key.replace('_v2', '')];
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
     const d = BGPH[key], g = T.el('g', {}, T.bg);
     T.el('rect', { x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, fill: d.sky }, g);
@@ -179,8 +188,9 @@
     return a;
   }
   const prop = (T, f, h) => mk(T, { a: [f, h] });
+  let fronts = [];   // 앞 가림 층 소품: 나중에 put 한 배우보다도 늘 앞에 둔다(scene() 이 비운다)
   function put(T, a, x, y, { look, to, s = 1 } = {}) {
-    T.world.appendChild(a.pos); a.pos.getAnimations().forEach(n => n.cancel()); a.pos.style.display = ''; a.pos.style.opacity = '';
+    T.world.appendChild(a.pos); fronts.forEach(f => { if (f !== a && f.pos.isConnected) T.world.appendChild(f.pos); }); a.pos.getAnimations().forEach(n => n.cancel()); a.pos.style.display = ''; a.pos.style.opacity = '';
     a.setScale(s); if (look) a.look(look, to || 'right'); else a.turn(to || 'right');
     a.place(x, y); a.body.style.transform = ''; a.body.style.filter = '';
     return a;
@@ -196,17 +206,6 @@
   const sparkleSfx = T => AudioFX.sfx('sparkle') || T.tone([700, 1400], .3, { vol: .15 });
 
   /* 누르는 자리 넓히기: 화면 w×h 투명 사각을 그림 뒤에 깐다(a.scale 로 나눠 화면 크기를 지킨다) */
-  /* 수풀: 앞쪽에 그려 자동차 아래쪽을 가린다. 얼굴 없음, 평평한 초록 조각 여럿 */
-  function bush(T, cx, base, w, h) {
-    const g = T.el('g', {}, T.world);
-    const blob = (dx, dy, rx, ry, fill) => T.el('ellipse', { cx: cx + dx, cy: base - dy, rx, ry, fill }, g);
-    blob(0, h * .3, w * .5, h * .42, '#3F6B4F');
-    blob(-w * .28, h * .26, w * .32, h * .3, '#3F6B4F');
-    blob(w * .3, h * .26, w * .32, h * .28, '#3F6B4F');
-    blob(-w * .1, h * .6, w * .3, h * .3, '#8FAE72');
-    blob(w * .18, h * .58, w * .24, h * .26, '#8FAE72');
-    return g;
-  }
   function hitBox(T, a, w = 100, h = 100) {
     const lw = w / a.scale, lh = h / a.scale;
     const r = T.el('rect', { x: -lw / 2, y: -lh, width: lw, height: lh, fill: '#000', 'fill-opacity': 0 }, a.pos);
@@ -324,7 +323,17 @@
     const GAP = 700, SCENE_END = 1500, DRIVE = 6300, LINE_DRIVE = 8400, SIREN_GAP = 4000;
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(삐뽀삐뽀!·톡!…)
-    const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
+    const scene = key => { fronts = []; T.clear(); bgImage(T, key + '_v2'); camSnap(500, 280, 1); };
+    /* 레이어 소품(누름을 받지 않는다). mid: 배우보다 먼저 put → 뒤 / front: 앞 가림 층, fronts 에 넣어 늘 맨 앞 */
+    const LAYERS = {};
+    const layer = (k, x, y, { front = false, s = 1 } = {}) => {
+      const f = 'rc_layer_' + k;
+      const a = mk(T, { a: [f, HT[f]] }); a.pos.style.pointerEvents = 'none';
+      put(T, a, x, y, { s }); if (front) fronts.push(a);
+      (LAYERS[k] = LAYERS[k] || []).push(a);
+      return a;
+    };
+    const swayLoop = (a, px = 3, ms = 900) => { (async () => { while (a.pos.isConnected && a.pos.style.display !== 'none') await a.wiggle(px, ms); })(); };
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -363,6 +372,7 @@
     /* ===== 1. 언제나 함께 (배움 놀이 1: 빨간 것 찾기 — 첫 조작) ===== */
     scene('rc_bg_room');
     put(T, kid, X(300, 420), FL, { look: 'stand' });
+    layer('toybox', X(60, 330), 585, { front: true }); layer('ball', X(960, 790), 585, { front: true });   // 앞 가림 층(빨강 없음)
     const kinds = ['red', 'block', 'duck'].sort(() => Math.random() - .5), spots = X([480, 600, 720], [495, 570, 645]), toy = { red, block, duck };
     kinds.forEach((k, i) => { if (k !== 'red') { put(T, toy[k], spots[i], FL + 6); hitBox(T, toy[k], 100, 100); } });
     kinds.forEach((k, i) => { if (k === 'red') { put(T, red, spots[i], FL + 6, { look: 'run', s: S_TOY }); hitBox(T, red, 100, 100); } });
@@ -396,9 +406,11 @@
     /* ===== 2. 나비다! (자동 — 나비는 저절로 날아간다) ===== */
     await T.sceneCard(tr('나비다!'), () => {
       scene('rc_bg_yard');
+      layer('flowerbed', X(150, 300), FL - 25); layer('ladybug', X(230, 340), FL + 2); layer('snail', X(880, 790), FL + 2);   // 중간 층
       put(T, kid, X(380, 400), FL, { look: 'stand' });
       put(T, red, kid.x + HAND.stand[0], FL + HAND.stand[1], { look: 'run', s: S_TOY });
       put(T, bfly, X(700, 640), 300, { look: 'open' }); flutter(bfly);
+      layer('meadow', X(980, 800), 585, { front: true });
       if (P) camSnap(560, 280, 1);
     }, bfly.pos);
     await say(S.L3);
@@ -415,7 +427,7 @@
     const bushX = kid.x + 130;
     red.look('tired', 'right');
     await red.move(bushX, FL + 6, 600, 'ease-in');
-    bush(T, bushX, FL + 6, red.w * S_TOY * 1.5, red.h * S_TOY * .62);
+    layer('grass_front', bushX, FL + 38, { front: true }).wiggle(4, 500);   // 앞 풀 조각이 자동차 아래 절반을 가린다(시각 재기획: 타원 수풀 → 종이 풀 조각)
     await Promise.all([bflyGo, kidGo]);
     hide(bfly);
     const l5 = say(S.L5);
@@ -429,19 +441,32 @@
     /* ===== 3. 장난감 세상으로 붕붕! (자동 — 카메라 줌) ===== */
     await T.sceneCard(tr('장난감 세상으로 붕붕!'), () => {
       scene('rc_bg_yard');
+      layer('flowerbed', X(150, 300), FL - 25); layer('ladybug', X(230, 340), FL + 2);
       put(T, red, X(300, 300), FL + 6, { look: 'run', s: S_TOY });
+      layer('grass_front', X(300, 300), FL + 38, { front: true });
     }, red.pos);
     const l8 = say(S.L8);
     const zoom = T.camTo(300, 470, 1 / S_TOY, 4000);
     await Promise.all([l8, zoom]);
+    { const g = LAYERS.grass_front[LAYERS.grass_front.length - 1]; g.move(g.x, g.y + 40, 400); }   // 줌이 끝나면 앞 풀이 내려가 자동차가 다 보인다
     await sleep(1500);
-    await veil(T, () => { T.clear(); bgImage(T, 'rc_bg_gate'); camSnap(500, 280, 1); put(T, red, X(200, 380), FL, { look: 'run', s: 1 }); });
+    let pop3;
+    await veil(T, () => {
+      scene('rc_bg_gate');
+      const mids = [layer('rings', 900, FL - 5), layer('crayons', 1000, FL - 5)];   // 중간 층: 아치 너머 장난감 도시
+      put(T, red, X(200, 380), FL, { look: 'run', s: 1 });
+      layer('arch', 700, FL + 4, { front: true });                                  // 앞 가림 층: 자동차가 아치 뒤로 지나간다
+      const late = [layer('flags', 850, 120, { front: true }), layer('buttons', 980, 585, { front: true }), ...mids];
+      late.forEach(hide);
+      pop3 = () => late.forEach((a, i) => setTimeout(() => { a.pos.style.display = ''; fadeIn(a, 300); a.hop(6, 300); sfx('pop', .3); }, i * 300));
+    });
     const l9 = say(S.L9);
     red.hop(6, 300);
     await sleep(900);
     const stopR3 = rattle(.25, 1200);
     if (P) T.camTo(700, 280, 1, 2500);
-    setTimeout(() => T.pop(700, 250, tr('부릉부릉!')), 2700);
+    setTimeout(() => { T.pop(700, 250, tr('부릉부릉!')); sparkleSfx(T); pop3();   // 아치를 지나는 순간: 깃발·단추 꽃·링 탑이 차례로 톡톡
+      if (!P) T.camTo(700, 300, 1.12, 900).then(() => T.camTo(500, 280, 1, 1400)); }, 2700);
     await Promise.all([drive(red, 1150, FL, DRIVE), l9]);
     stopR3();
     await sleep(SCENE_END);
@@ -449,7 +474,9 @@
     /* ===== 4. 경찰차 형아 (자동) ===== */
     await T.sceneCard(tr('경찰차 형아'), () => {
       scene('rc_bg_road_a');
+      layer('tower', X(80, 360), FL - 10); layer('signal', X(965, 690), FL - 10);   // 중간 층
       put(T, thiefA, X(520, 560), FL, { look: 'run' }); put(T, thiefB, X(580, 620), FL, { look: 'run' }); put(T, police, X(300, 400), FL, { look: 'run' });
+      layer('crayon_front', X(20, 200), 590, { front: true }); layer('dice', X(1005, 720), 585, { front: true });   // 앞 가림 층
       if (P) camSnap(520, 280, 1);
     }, police.pos);
     const l10 = say(S.L10);
@@ -485,9 +512,11 @@
     const WCH = { x: 0.785, y: -0.145 };                // 물줄기 그림의 시작(왼쪽 아래)에서 끝(오른쪽 위 물방울)까지, 그림 폭·높이 비율
     await T.sceneCard(tr('소방차 이모'), () => {
       scene('rc_bg_road_b');
+      swayLoop(layer('top', X(120, 360), FL - 10), 3, 900);   // 중간 층: 팽이가 살랑
       put(T, house, X(800, 640), FL - 30);
       FL3.forEach((f, i) => { put(T, f, house.x + FPOS[i][0], house.y + FPOS[i][1]); hitBox(T, f, 84, 100); });
       put(T, fire, house.x - X(220, 150), FL, { look: 'spray' });
+      layer('buttons', X(40, 340), 585, { front: true }); layer('spring', X(1010, 790), 590, { front: true });   // 앞 가림 층(불꽃 ±120 밖)
       if (P) camSnap(560, 280, 1);
     }, fire.pos);
     const wob = [0, 1, 2].map(() => ({ on: true }));
@@ -548,8 +577,10 @@
     /* ===== 6. 구급차 삼촌 (자동 — 인형 내려 주기) ===== */
     await T.sceneCard(tr('구급차 삼촌'), () => {
       scene('rc_bg_road_c');
+      layer('signal', X(120, 360), FL - 10); layer('house_blue', X(300, 420), FL - 20);   // 중간 층
       put(T, amb, 40, FL, { look: 'run' });
       put(T, bear, 40 + WIN[0][0], FL + WIN[0][1], { look: 'sit' }); put(T, rabbit, 40 + WIN[1][0], FL + WIN[1][1], { look: 'sit' });
+      layer('ball', X(990, 800), 585, { front: true });
       if (P) camSnap(600, 280, 1);
     }, amb.pos);
     const ambX = X(620, 600);
@@ -580,11 +611,22 @@
     stopR6c();
     await sleep(SCENE_END);
 
+    /* 7·9장 긴 길: 뒤 기찻길 위로 장난감 기차가 천천히 지나가고(40초에 화면 한 번), 위에는 깃발 줄 두 장이 살랑 */
+    const longRoad = (dir, front) => {
+      const tr0 = layer('train', dir < 0 ? 1100 : -200, 340); tr0.turn(dir < 0 ? 'left' : 'right');
+      tr0.move(dir < 0 ? -200 : 1100, 340, 40000, 'linear');
+      layer('tower', X(60, 300), FL - 10);
+      const flags = [layer('flags', X(250, 400), 110, { front: true }), layer('flags', X(750, 760), 110, { front: true })];
+      flags.forEach(f => swayLoop(f, 4, 1800));
+      front(); return flags;
+    };
     /* ===== 7. 나란히 달려요 (자동 — 소리로 인사) ===== */
     const C7 = chain(845, ['red', 'police', 'fire', 'amb'], 30);
     await T.sceneCard(tr('나란히 달려요'), () => {
       scene('rc_bg_road_long');
+      longRoad(-1, () => {});
       put(T, amb, C7.amb - 450, FL, { look: 'run' }); put(T, fire, C7.fire - 450, FL, { look: 'run' }); put(T, police, C7.police - 450, FL, { look: 'run' }); put(T, red, C7.red - 450, FL, { look: 'run' });
+      layer('crayon_front', X(1000, 1000), 590, { front: true });   // 앞 가림 층(오른쪽 끝)
       if (P) camSnap(400, 280, 1);
     }, red.pos);
     const l28 = say(S.L28), stopR7 = rattle(.3, 1200);
@@ -609,7 +651,9 @@
     const C8 = chain(600, ['red', 'police', 'fire', 'amb'], 20), TOW8 = 600 + LEN.red / 2 + 20 + LEN.tow / 2;   // 견인차는 빨간 차 앞(오른쪽)
     await T.sceneCard(tr('에구구, 지쳤어요'), () => {
       scene('rc_bg_road_hill');
+      swayLoop(layer('top', X(110, 330), FL - 10), 3, 900);   // 중간 층
       put(T, amb, C8.amb - 260, FL, { look: 'run' }); put(T, fire, C8.fire - 260, FL, { look: 'run' }); put(T, police, C8.police - 260, FL, { look: 'run' }); put(T, red, C8.red - 260, FL, { look: 'run' });
+      layer('dice', X(995, 860), 585, { front: true });   // 앞 가림 층(고리 ±120 밖). 왼쪽 모서리는 구급차가 서는 자리라 비운다
       if (P) camSnap(600, 280, 1);
     }, red.pos);
     const l30 = say(S.L30), stopR8 = rattle(.25, 1200);
@@ -651,10 +695,13 @@
     const END9 = chain(880, ORD9, 10);
     const sh9 = END9.tow - END9.red - TOWGAP;   // 고리로 이어진 두 차는 LEN 간격보다 가깝다 → 뒤 차들도 같이 당긴다
     ORD9.slice(1).forEach(k => { END9[k] += sh9; });
+    let flags9 = [];
     await T.sceneCard(tr('기차처럼 한 줄로'), () => {
       scene('rc_bg_road_long');
+      flags9 = longRoad(1, () => {});
       put(T, amb, END9.amb - 430, FL, { look: 'run' }); put(T, fire, END9.fire - 430, FL, { look: 'run' }); put(T, police, END9.police - 430, FL, { look: 'run' });
       put(T, red, END9.red - 430, LANE_R, { look: 'hooked' }); put(T, tow, END9.tow - 430, LANE_T, { look: 'pull' }); put(T, hook, tow.x + HOOK_DX, tow.y + HOOK_DY, { to: 'right', s: HOOK_S });
+      layer('buttons', X(30, 300), 585, { front: true });
       if (P) camSnap(400, 280, 1);
     }, tow.pos);
     const l38 = say(S.L38), stopR9 = rattle(.3, 1000);
@@ -670,6 +717,7 @@
     const CX = P ? null : [200, 350, 500, 650, 800], cs = X(1, .54);
     const posP = [[413, 110], [500, 110], [587, 110], [456, 180], [544, 180]];
     if (P) camSnap(500, 280, 1);
+    flags9.forEach(f => T.anim(f.pos, [{ opacity: 1 }, { opacity: 0 }], 300).then(() => hide(f)));   // 카드 띠와 겹치지 않게 깃발 줄은 잠깐 걷는다
     const cards = order.map((k, i) => carCard(T, k, P ? posP[i][0] : CX[i], P ? posP[i][1] : 150, cs));
     cards.forEach((c, i) => c.g.animate([{ opacity: 0, translate: '0 20px' }, { opacity: 1, translate: '0 0' }], { duration: 450, delay: i * 120, fill: 'backwards' }));
     const W = QK === 'front' ? { red: S.W_red, police: S.W_police, fire: S.W_fire, amb: S.W_amb } : { red: S.W2_red, police: S.W2_police, fire: S.W2_fire, amb: S.W2_amb, tow: S.W2_tow };
@@ -680,6 +728,7 @@
     await say(CLINE);
     await Promise.all(cards.map(c => T.anim(c.g, [{ opacity: 1 }, { opacity: 0 }], 400)));
     cards.forEach(c => c.g.remove());
+    flags9.forEach(f => { f.pos.style.display = ''; fadeIn(f, 300); });
     winner.look({ tow: 'pull', red: 'hooked' }[ANS] || 'run');
     const l40 = say(S.L40), stopR9b = rattle(.3, 1000);
     T.pop(tow.x + 40, FL - 170, tr('칙칙폭폭!')); setTimeout(() => T.pop(red.x, FL - 140, tr('붕붕붕!')), 1800);
@@ -693,6 +742,7 @@
     await T.sceneCard(tr('이현이야, 안녕!'), () => {
       scene('rc_bg_playground');
       put(T, kid, X(640, 600), FL, { look: 'stand' });
+      layer('sand_tools', X(60, 330), 585, { front: true }); layer('grass_front', X(990, 790), 585, { front: true, s: 90 / 70 });   // 앞 가림 층
       [amb, fire, police, red, tow].forEach(c => put(T, c, END10[CK10.get(c)] - 330, FL + 6, { look: 'run', s: S_TOY }));
       if (P) camSnap(560, 280, 1);
     }, kid.pos);
