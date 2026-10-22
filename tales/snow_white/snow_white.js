@@ -170,6 +170,17 @@
   }
   const sleep0 = ms => new Promise(r => setTimeout(r, ms));
 
+  /* 누르는 자리 넓히기(2026-10-22): 화면에서 짧은 변이 min px 보다 작으면 투명 사각을 대상 안에 깔아 min px 로 키운다. 눌리는 곳 크기만 바뀌고 그림은 그대로 */
+  function padHit(T, el, min = 88) {
+    try {
+      if (el.__pad) { el.__pad.remove(); el.__pad = null; }
+      const m = el.getScreenCTM(); if (!m) return;
+      const sc = Math.hypot(m.a, m.b) || 1, bb = el.getBBox();
+      const w = Math.max(bb.width, min / sc), h = Math.max(bb.height, min / sc);
+      if (w === bb.width && h === bb.height) return;
+      el.__pad = T.el('rect', { x: bb.x + bb.width / 2 - w / 2, y: bb.y + bb.height / 2 - h / 2, width: w, height: h, fill: '#000', 'fill-opacity': 0 }, el);
+    } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
+  }
   async function run(T) {
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
@@ -466,6 +477,7 @@
       const q = BCOL[k] + ' 침대를 찾아 볼까요?';
       const opts = beds.map((b, i) => ({ el: b.pos, ok: i === k,
         onWrong: async () => { await b.wiggle(8, 360); await say('그건 ' + BCOL[i] + ' 침대예요.'); } }));
+      beds.forEach(b => padHit(T, b.pos));
       await T.ask(q, () => T.choose(opts, { prompt: q }));
       const b = beds[k];
       glow(b, 1200); b.hop(14, 400); sfx(T, 'sparkle', () => popSfx(T));
