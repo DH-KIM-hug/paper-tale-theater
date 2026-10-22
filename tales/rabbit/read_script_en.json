@@ -1,0 +1,1403 @@
+{
+ "mode": "read",
+ "tale": "rabbit",
+ "lang": "en",
+ "title": "The Rabbit and the Turtle",
+ "voices_from": "voice_script_el.json",
+ "moral": "Even if you go slowly, you can make it if you keep going!",
+ "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, trim 은 from 줄의 영어 녹음을 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<village|alley|stands|start|map|grass_low|shade|dream|stream|hill|dusk|finish|party>": "장면 배경(ART bg_*)·관객 자리. scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
+  "rabbit:pose:<stand|run|sleep|wake|congrats> | rabbit:eyes:<open|drowsy|sleep> | rabbit:ears:<n>": "토끼 자세·눈·귀",
+  "rabbit:at:<x,y[,s]> | rabbit:walk:<x,y,ms> | rabbit:hop | rabbit:face:<left|right> | rabbit:hide": "토끼 자리·이동",
+  "turtle:at:<x,y[,s]> | turtle:walk:<x,y,ms> | turtle:hop | turtle:face:<left|right> | turtle:neck:<n> | turtle:tilt:<deg> | turtle:swim:<on|off> | turtle:medal | turtle:hide": "거북이 자리·이동·목 늘리기·헤엄·메달",
+  "turtle:steps:<n> | turtle:rock | turtle:swimacross | turtle:climb | turtle:tiptoe": "놀이판 걷기·돌멩이 넘기·개울 건너기·언덕 오르기·살금살금 연출(누르기 없이 저절로)",
+  "aud:<duck|cow|pig|rooster|sheep|dog|cat|owl>:<stand|sit|hush|cheer[:글자]|cry> | aud:all:<sit|stand|cheer|hush|wave>": "관객 동물 한 마리·전원",
+  "owl:post | owl:lullaby": "부엉이 우체부 등장(봉투 네 집에 전하기) / 자장가 음표",
+  "doors:open": "골목 네 집 문이 차례로 열리며 동물이 얼굴을 내민다(초대장 묘사용)",
+  "blanket:cover | cloud:cover | zzz:<on|off>": "나뭇잎 이불 덮기·구름이 해를 가림·Z 글자",
+  "dream:carrot | dream:bite": "꿈속 당근 상 등장·아삭 한 입",
+  "drum:hit | race:<r,t> | bar:<show|hide> | tape:break | photo": "출발 북·경주 막대·결승 테이프·사진 판정",
+  "medal:give | podium": "메달 걸기·시상대",
+  "party:band": "잔치 행진곡(친구들이 저절로 연주)",
+  "cut:<wake|dash|photo>": "그림 컷 — 컷 속 외침(VOICE_LINES wake_rabbit)은 그대로 재사용",
+  "vo:<laugh_pig|cheer_dog|cheer_duck|cheer_sheep|wake_rabbit>": "말풍선 없는 소리 대사(기존 녹음)",
+  "fx:<boing|whoosh|splash|chomp|footstep|rooster|duck|cow|pig|sheep|dog|cat|owl|win> | pop:<x,y,글자> | speedlines | confetti | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_morning",
+   "card": "Forest Morning",
+   "set": "village",
+   "enter": [
+    "turtle:at:200,500,1.25",
+    "rabbit:at:1150,500,1",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "숲속 마을에 아침이 왔어요.",
+     "src": "reuse",
+     "en": "Morning has come to the forest village.",
+     "segs": [
+      [
+       "nar",
+       "Morning has come to the forest village.",
+       "happy:1.0"
+      ]
+     ],
+     "before": [
+      "turtle:walk:330,500,2600"
+     ]
+    },
+    {
+     "text": "해님이 방긋 떠오르고, 새들이 짹짹 노래했어요.",
+     "src": "new",
+     "en": "The sun peeked up with a smile, and the birds sang tweet, tweet.",
+     "segs": [
+      [
+       "nar",
+       "The sun peeked up with a smile, and the birds sang tweet, tweet."
+      ]
+     ]
+    },
+    {
+     "text": "거북이가 엉금엉금 산책해요.",
+     "src": "reuse",
+     "en": "The turtle takes a slow, slow walk.",
+     "segs": [
+      [
+       "nar",
+       "The turtle takes a slow, slow walk.",
+       "happy:1.0"
+      ]
+     ],
+     "after": [
+      "turtle:hop",
+      "turtle:neck:1.6"
+     ]
+    },
+    {
+     "text": "\"안녕! 나는 거북이야.\"",
+     "src": "reuse",
+     "en": "\"Hi! I'm Turtle.\"",
+     "segs": [
+      [
+       "turtle",
+       "Hi! I'm Turtle.",
+       "happy:1.0"
+      ]
+     ],
+     "after": [
+      "turtle:neck:1",
+      "rabbit:face:left"
+     ]
+    },
+    {
+     "text": "깡충깡충 토끼도 왔어요.",
+     "src": "reuse",
+     "en": "Hop, hop! Here comes the rabbit too.",
+     "segs": [
+      [
+       "nar",
+       "Hop, hop! Here comes the rabbit too.",
+       "happy:1.0"
+      ]
+     ],
+     "before": [
+      "rabbit:walk:700,500,1100",
+      "fx:boing"
+     ],
+     "after": [
+      "rabbit:hop"
+     ]
+    },
+    {
+     "text": "\"안녕! 나는 깡충 토끼야!\"",
+     "src": "reuse",
+     "en": "\"Hi! I'm Rabbit, the hoppy one!\"",
+     "segs": [
+      [
+       "rabbit",
+       "Hi! I'm Rabbit, the hoppy one!",
+       "happy:1.5"
+      ]
+     ],
+     "after": [
+      "rabbit:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_challenge",
+   "card": "The Race Is On",
+   "set": "village",
+   "enter": [
+    "turtle:at:330,500,1.25",
+    "rabbit:at:700,500,1",
+    "rabbit:face:left",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "토끼는 거북이의 짧은 다리를 보고 킥킥 웃었어요.",
+     "src": "new",
+     "en": "The rabbit looked at the turtle's short little legs and giggled.",
+     "segs": [
+      [
+       "nar",
+       "The rabbit looked at the turtle's short little legs and giggled."
+      ]
+     ]
+    },
+    {
+     "text": "토끼가 말했어요. \"느림보야, 나랑 달리기 할래?\"",
+     "src": "reuse",
+     "en": "The rabbit said, \"Hey, slowpoke! Want to race me?\"",
+     "segs": [
+      [
+       "nar",
+       "The rabbit said,"
+      ],
+      [
+       "rabbit",
+       "Hey, slowpoke! Want to race me?",
+       "happy:1.3"
+      ]
+     ],
+     "after": [
+      "turtle:hop"
+     ]
+    },
+    {
+     "text": "거북이가 방긋 웃었어요. \"좋아!\"",
+     "src": "reuse",
+     "en": "The turtle gave a big smile. \"Okay!\"",
+     "segs": [
+      [
+       "nar",
+       "The turtle gave a big smile."
+      ],
+      [
+       "turtle",
+       "Okay!",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "\"느려도 괜찮아. 나는 끝까지 갈 거야.\"",
+     "src": "new",
+     "en": "Slow is fine. I will go all the way to the end.",
+     "segs": [
+      [
+       "turtle",
+       "Slow is fine. I will go all the way to the end.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "거북이는 느려도 한 번 마음먹으면 끝까지 하는 친구였거든요.",
+     "src": "new",
+     "en": "The turtle was slow, but once he made up his mind, he never gave up.",
+     "segs": [
+      [
+       "nar",
+       "The turtle was slow, but once he made up his mind, he never gave up."
+      ]
+     ]
+    },
+    {
+     "text": "\"숲속 친구들한테 응원해 달라고 하자!\"",
+     "src": "reuse",
+     "en": "\"Let's ask our forest friends to cheer for us!\"",
+     "segs": [
+      [
+       "rabbit",
+       "Let's ask our forest friends to cheer for us!",
+       "happy:1.3"
+      ]
+     ],
+     "after": [
+      "rabbit:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_stands",
+   "card": "The Cheering Seats",
+   "set": "alley",
+   "enter": [
+    "rabbit:hide",
+    "turtle:hide",
+    "owl:post",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "부엉이 우체부가 초대장을 가져왔어요.",
+     "src": "reuse",
+     "en": "The owl mail carrier brought the invitations.",
+     "segs": [
+      [
+       "nar",
+       "The owl mail carrier brought the invitations."
+      ]
+     ]
+    },
+    {
+     "text": "똑똑! 문을 두드리자 오리, 소, 돼지, 강아지가 얼굴을 쏙 내밀었어요.",
+     "src": "new",
+     "en": "Knock, knock! When the owl tapped on the doors, the duck, the cow, the pig and the puppy all peeked out.",
+     "segs": [
+      [
+       "nar",
+       "Knock, knock! When the owl tapped on the doors, the duck, the cow, the pig and the puppy all peeked out."
+      ]
+     ],
+     "before": [
+      "doors:open"
+     ]
+    },
+    {
+     "text": "닭이랑 양이랑 고양이도 초대장을 받았어요!",
+     "src": "reuse",
+     "en": "The rooster, the sheep, and the cat got invitations too!",
+     "segs": [
+      [
+       "nar",
+       "The rooster, the sheep, and the cat got invitations too!"
+      ]
+     ]
+    },
+    {
+     "text": "동물 친구들이 응원하러 모였어요!",
+     "src": "reuse",
+     "en": "The animal friends gathered to cheer!",
+     "segs": [
+      [
+       "nar",
+       "The animal friends gathered to cheer!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "set:stands",
+      "aud:all:sit"
+     ]
+    },
+    {
+     "text": "친구들이 벌떡 일어나 응원해요!",
+     "src": "reuse",
+     "en": "All the friends jump up and cheer!",
+     "segs": [
+      [
+       "nar",
+       "All the friends jump up and cheer!",
+       "happy:1.0"
+      ]
+     ],
+     "before": [
+      "aud:all:stand",
+      "aud:all:cheer"
+     ]
+    },
+    {
+     "text": "와, 신나는 응원 소리!",
+     "src": "reuse",
+     "en": "Wow, what a happy cheer!",
+     "segs": [
+      [
+       "nar",
+       "Wow, what a happy cheer!",
+       "happy:1.4"
+      ]
+     ]
+    },
+    {
+     "text": "모두 응원석에 앉아 경주가 시작되기를 기다렸지요.",
+     "src": "new",
+     "en": "Everyone sat down in the cheering seats and waited for the race to begin.",
+     "segs": [
+      [
+       "nar",
+       "Everyone sat down in the cheering seats and waited for the race to begin."
+      ]
+     ],
+     "before": [
+      "aud:all:sit"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_start",
+   "card": "Ready, Set, Go!",
+   "set": "start",
+   "enter": [
+    "turtle:at:300,470,1.25",
+    "rabbit:at:480,470,1",
+    "aud:all:sit",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "달리기 전에 준비 운동을 해요.",
+     "src": "reuse",
+     "en": "Before the race, let's do warm-up exercises.",
+     "segs": [
+      [
+       "nar",
+       "Before the race, let's do warm-up exercises."
+      ]
+     ]
+    },
+    {
+     "text": "토끼가 귀를 쭉~",
+     "src": "reuse",
+     "en": "The rabbit stretches its ears, up, up!",
+     "segs": [
+      [
+       "nar",
+       "The rabbit stretches its ears, up, up!",
+       "happy:1.0"
+      ]
+     ],
+     "before": [
+      "rabbit:ears:1.35",
+      "pop:480,250,쭉!"
+     ],
+     "after": [
+      "rabbit:ears:1"
+     ]
+    },
+    {
+     "text": "거북이는 목을 쭉~",
+     "src": "reuse",
+     "en": "The turtle stretches its neck, long, long!",
+     "segs": [
+      [
+       "nar",
+       "The turtle stretches its neck, long, long!",
+       "happy:1.0"
+      ]
+     ],
+     "before": [
+      "turtle:neck:3.4",
+      "pop:500,340,쭈욱~"
+     ],
+     "after": [
+      "turtle:neck:1"
+     ]
+    },
+    {
+     "text": "와, 거북이 목이 쭈욱~ 길어졌어요!",
+     "src": "reuse",
+     "en": "Wow, the turtle's neck stretched waaay long!",
+     "segs": [
+      [
+       "nar",
+       "Wow, the turtle's neck stretched waaay long!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "aud:pig:cheer:하하!",
+      "vo:laugh_pig"
+     ]
+    },
+    {
+     "text": "너구리 심판이 커다란 북을 가져왔어요.",
+     "src": "reuse",
+     "en": "The raccoon referee brought a big drum.",
+     "segs": [
+      [
+       "nar",
+       "The raccoon referee brought a big drum."
+      ]
+     ]
+    },
+    {
+     "text": "친구들은 모두 숨을 죽이고 북을 바라보았어요.",
+     "src": "new",
+     "en": "All the friends held their breath and stared at the drum.",
+     "segs": [
+      [
+       "nar",
+       "All the friends held their breath and stared at the drum."
+      ]
+     ]
+    },
+    {
+     "text": "둥! 북소리가 울리자 둘은 나란히 출발했어요.",
+     "src": "new",
+     "en": "Boom! The drum rang out, and off they went, side by side.",
+     "segs": [
+      [
+       "nar",
+       "Boom! The drum rang out, and off they went, side by side.",
+       "toneup:1.2"
+      ]
+     ],
+     "before": [
+      "drum:hit",
+      "pop:745,330,땅!",
+      "aud:all:cheer"
+     ]
+    },
+    {
+     "text": "토끼는 쌩~ 거북이는 엉금 한 발!",
+     "src": "reuse",
+     "en": "The rabbit zooms off~ The turtle takes one slow step!",
+     "segs": [
+      [
+       "nar",
+       "The rabbit zooms off~ The turtle takes one slow step!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "rabbit:pose:run",
+      "fx:whoosh",
+      "speedlines",
+      "rabbit:walk:1250,470,450",
+      "turtle:walk:470,470,700",
+      "bar:show",
+      "race:0.3,0.04"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_dash",
+   "card": "Speedy Rabbit",
+   "set": "hill",
+   "enter": [
+    "turtle:hide",
+    "rabbit:pose:run",
+    "rabbit:at:470,505,1",
+    "bar:show",
+    "race:0.3,0.04",
+    "cam:470,300,1.12"
+   ],
+   "lines": [
+    {
+     "text": "토끼는 쌩쌩 달려요!",
+     "src": "trim",
+     "from": "토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!",
+     "en": "The rabbit zooms along!",
+     "segs": [
+      [
+       "nar",
+       "The rabbit zooms along!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "fx:whoosh",
+      "speedlines",
+      "rabbit:hop",
+      "pop:530,300,쌩!"
+     ],
+     "after": [
+      "race:0.6,0.04"
+     ]
+    },
+    {
+     "text": "돌멩이도 개울도 폴짝폴짝, 눈 깜짝할 사이에 지나갔지요.",
+     "src": "new",
+     "en": "Hop, hop! Over the rocks and across the stream, quick as a wink.",
+     "segs": [
+      [
+       "nar",
+       "Hop, hop! Over the rocks and across the stream, quick as a wink."
+      ]
+     ],
+     "before": [
+      "fx:whoosh",
+      "speedlines",
+      "rabbit:hop"
+     ]
+    },
+    {
+     "text": "금세 언덕 위 나무 그늘까지 왔어요.",
+     "src": "reuse",
+     "en": "Soon the rabbit reached the shady tree on the hill.",
+     "segs": [
+      [
+       "nar",
+       "Soon the rabbit reached the shady tree on the hill."
+      ]
+     ],
+     "before": [
+      "rabbit:pose:stand",
+      "rabbit:walk:470,505,500"
+     ]
+    },
+    {
+     "text": "뒤를 돌아보니… 거북이는 안 보여요!",
+     "src": "reuse",
+     "en": "Looking back... no turtle in sight!",
+     "segs": [
+      [
+       "nar",
+       "Looking back... no turtle in sight!",
+       "toneup:1.2"
+      ]
+     ],
+     "before": [
+      "rabbit:face:left"
+     ],
+     "after": [
+      "rabbit:face:right"
+     ]
+    },
+    {
+     "text": "\"거북이는 아직 한참 멀었겠지? 히히.\"",
+     "src": "new",
+     "en": "That turtle must still be way, way back. Hee hee.",
+     "segs": [
+      [
+       "rabbit",
+       "That turtle must still be way, way back. Hee hee.",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "\"하암~ 한숨 자고 가도 되겠다~\"",
+     "src": "reuse",
+     "en": "\"Yaaawn~ I can take a little nap~\"",
+     "segs": [
+      [
+       "rabbit",
+       "Yaaawn~ I can take a little nap~",
+       "tonedown:1.2"
+      ]
+     ],
+     "before": [
+      "rabbit:eyes:drowsy"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_shade",
+   "card": "Under the Tree",
+   "set": "shade",
+   "enter": [
+    "turtle:hide",
+    "rabbit:pose:sleep",
+    "rabbit:eyes:drowsy",
+    "rabbit:at:390,500,1",
+    "aud:owl:sit",
+    "aud:pig:sit",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "토끼는 나무 아래에 벌렁 드러누웠어요.",
+     "src": "new",
+     "en": "The rabbit flopped down under the tree and stretched out.",
+     "segs": [
+      [
+       "nar",
+       "The rabbit flopped down under the tree and stretched out."
+      ]
+     ]
+    },
+    {
+     "text": "포근포근~ 이불을 덮어 줬어요.",
+     "src": "reuse",
+     "en": "Snuggle, snuggle~ The blanket is tucked in.",
+     "segs": [
+      [
+       "nar",
+       "Snuggle, snuggle~ The blanket is tucked in.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "blanket:cover"
+     ]
+    },
+    {
+     "text": "부엉이가 자장가를 불러 줘요.",
+     "src": "trim",
+     "from": "부엉이가 자장가를 불러 줘요. 잘 들어 봐요.",
+     "en": "The owl sings a lullaby.",
+     "segs": [
+      [
+       "nar",
+       "The owl sings a lullaby."
+      ]
+     ],
+     "before": [
+      "owl:lullaby"
+     ]
+    },
+    {
+     "text": "부엉 부엉~ 토끼 눈이 스르르 감겨요.",
+     "src": "reuse",
+     "en": "Hoo hoo~ The rabbit's eyes slowly close.",
+     "segs": [
+      [
+       "nar",
+       "Hoo hoo~ The rabbit's eyes slowly close.",
+       "whisper"
+      ]
+     ]
+    },
+    {
+     "text": "구름도 살며시 다가와 해님을 가려 주었어요.",
+     "src": "new",
+     "en": "A cloud drifted over, soft and slow, and covered up the sun.",
+     "segs": [
+      [
+       "nar",
+       "A cloud drifted over, soft and slow, and covered up the sun.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "cloud:cover"
+     ]
+    },
+    {
+     "text": "토끼가 쿨쿨 잠이 들었어요.",
+     "src": "reuse",
+     "en": "The rabbit fell fast asleep. Zzz.",
+     "segs": [
+      [
+       "nar",
+       "The rabbit fell fast asleep. Zzz.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "rabbit:eyes:sleep",
+      "zzz:on"
+     ]
+    },
+    {
+     "text": "응원하던 친구들도 \"쉿!\" 조용히~",
+     "src": "reuse",
+     "en": "The cheering friends whisper, \"Shh!\" Quiet now~",
+     "segs": [
+      [
+       "nar",
+       "The cheering friends whisper,",
+       "whisper"
+      ],
+      [
+       "sheep",
+       "Shh!",
+       "whisper"
+      ],
+      [
+       "nar",
+       "Quiet now~",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "aud:owl:hush",
+      "aud:pig:hush"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_dream",
+   "card": "Rabbit's Dream",
+   "set": "dream",
+   "enter": [
+    "rabbit:pose:congrats",
+    "rabbit:at:500,480,1",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "토끼가 꿈을 꿔요. 꿈속에서 1등을 했어요!",
+     "src": "reuse",
+     "en": "The rabbit is dreaming. In the dream, the rabbit came in first!",
+     "segs": [
+      [
+       "nar",
+       "The rabbit is dreaming. In the dream, the rabbit came in first!"
+      ]
+     ],
+     "before": [
+      "confetti"
+     ]
+    },
+    {
+     "text": "상으로 커다란 당근을 받았어요.",
+     "src": "trim",
+     "from": "상으로 커다란 당근을 받았어요. 당근을 톡!",
+     "en": "As a prize, the rabbit got a giant carrot.",
+     "segs": [
+      [
+       "nar",
+       "As a prize, the rabbit got a giant carrot."
+      ]
+     ],
+     "before": [
+      "dream:carrot"
+     ]
+    },
+    {
+     "text": "\"아삭! 음~ 맛있다!\"",
+     "src": "reuse",
+     "en": "\"Crunch! Mmm, yummy!\"",
+     "segs": [
+      [
+       "rabbit",
+       "Crunch! Mmm, yummy!",
+       "happy:1.5"
+      ]
+     ],
+     "before": [
+      "dream:bite",
+      "fx:chomp",
+      "pop:560,420,아삭!"
+     ],
+     "after": [
+      "rabbit:hop"
+     ]
+    },
+    {
+     "text": "꿈속 친구들이 모두 토끼에게 짝짝짝 박수를 쳤어요.",
+     "src": "new",
+     "en": "In the dream, all the friends clapped and clapped for the rabbit.",
+     "segs": [
+      [
+       "nar",
+       "In the dream, all the friends clapped and clapped for the rabbit."
+      ]
+     ],
+     "before": [
+      "aud:all:cheer"
+     ]
+    },
+    {
+     "text": "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~",
+     "src": "reuse",
+     "en": "But the real rabbit is under the tree, snoring, zzz~",
+     "segs": [
+      [
+       "nar",
+       "But the real rabbit is under the tree, snoring, zzz~",
+       "tonedown:1.1"
+      ]
+     ],
+     "before": [
+      "set:shade",
+      "rabbit:pose:sleep",
+      "rabbit:eyes:sleep",
+      "rabbit:at:390,500,1",
+      "zzz:on"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_turtle",
+   "card": "Plodding Turtle",
+   "set": "grass_low",
+   "enter": [
+    "rabbit:hide",
+    "turtle:at:120,470,1.25",
+    "aud:dog:sit",
+    "aud:cat:sit",
+    "bar:show",
+    "race:0.6,0.04",
+    "cam:300,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그동안 거북이는? 엉금엉금 걷고 있어요.",
+     "src": "reuse",
+     "en": "Meanwhile, what about the turtle? Plod, plod, walking along.",
+     "segs": [
+      [
+       "nar",
+       "Meanwhile, what about the turtle? Plod, plod, walking along."
+      ]
+     ],
+     "before": [
+      "turtle:steps:6"
+     ]
+    },
+    {
+     "text": "한 발, 또 한 발. 거북이는 한 번도 쉬지 않았어요.",
+     "src": "new",
+     "en": "One step, then another. The turtle never stopped, not even once.",
+     "segs": [
+      [
+       "nar",
+       "One step, then another. The turtle never stopped, not even once."
+      ]
+     ],
+     "before": [
+      "turtle:steps:4",
+      "aud:dog:cheer:힘내!",
+      "vo:cheer_dog"
+     ]
+    },
+    {
+     "text": "어? 커다란 돌멩이예요!",
+     "src": "trim",
+     "from": "어? 커다란 돌멩이예요! 돌멩이를 톡 해서 넘어가요!",
+     "en": "Oh! A big rock!",
+     "segs": [
+      [
+       "nar",
+       "Oh! A big rock!"
+      ]
+     ],
+     "after": [
+      "turtle:rock"
+     ]
+    },
+    {
+     "text": "영차! 돌멩이를 넘었어요!",
+     "src": "reuse",
+     "en": "Heave-ho! The turtle made it over the rock!",
+     "segs": [
+      [
+       "turtle",
+       "Heave-ho!",
+       "toneup:1.3"
+      ],
+      [
+       "nar",
+       "The turtle made it over the rock!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "pop:620,330,영차!"
+     ],
+     "after": [
+      "race:0.6,0.2",
+      "aud:dog:cheer:와아!",
+      "aud:cat:cheer:야옹~"
+     ]
+    },
+    {
+     "text": "앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.",
+     "src": "reuse",
+     "en": "Oh, a stream! The turtle is a good swimmer.",
+     "segs": [
+      [
+       "nar",
+       "Oh, a stream! The turtle is a good swimmer."
+      ]
+     ],
+     "before": [
+      "set:stream",
+      "turtle:swim:on",
+      "turtle:at:120,430,1.35",
+      "aud:duck:sit",
+      "cam:270,280,1"
+     ]
+    },
+    {
+     "text": "첨벙첨벙, 거북이는 물살을 가르며 헤엄쳤어요.",
+     "src": "new",
+     "en": "Splish, splash! The turtle paddled right through the rippling water.",
+     "segs": [
+      [
+       "nar",
+       "Splish, splash! The turtle paddled right through the rippling water."
+      ]
+     ],
+     "before": [
+      "turtle:swimacross",
+      "aud:duck:cheer:꽥꽥! 힘내!",
+      "vo:cheer_duck"
+     ]
+    },
+    {
+     "text": "물고기랑 같이 개울을 건넜어요!",
+     "src": "reuse",
+     "en": "The turtle crossed the stream with the fish!",
+     "segs": [
+      [
+       "nar",
+       "The turtle crossed the stream with the fish!"
+      ]
+     ],
+     "after": [
+      "race:0.6,0.38"
+     ]
+    },
+    {
+     "text": "이번엔 높은 언덕이에요.",
+     "src": "reuse",
+     "en": "Now there's a tall hill.",
+     "segs": [
+      [
+       "nar",
+       "Now there's a tall hill."
+      ]
+     ],
+     "before": [
+      "set:hill",
+      "turtle:swim:off",
+      "turtle:at:120,470,1.3",
+      "aud:sheep:sit",
+      "cam:290,280,1"
+     ]
+    },
+    {
+     "text": "영차, 영차. 거북이는 느릿느릿, 그래도 멈추지 않고 올라갔어요.",
+     "src": "new",
+     "en": "Heave-ho, heave-ho. Slowly, slowly, but without stopping, the turtle climbed on up.",
+     "segs": [
+      [
+       "nar",
+       "Heave-ho, heave-ho. Slowly, slowly, but without stopping, the turtle climbed on up."
+      ]
+     ],
+     "before": [
+      "turtle:climb",
+      "aud:sheep:cheer:힘내!",
+      "vo:cheer_sheep"
+     ]
+    },
+    {
+     "text": "영차! 언덕 꼭대기에 올라왔어요.",
+     "src": "reuse",
+     "en": "Heave-ho! The turtle reached the top of the hill.",
+     "segs": [
+      [
+       "turtle",
+       "Heave-ho!",
+       "toneup:1.3"
+      ],
+      [
+       "nar",
+       "The turtle reached the top of the hill.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "pop:600,300,영차!"
+     ],
+     "after": [
+      "race:0.6,0.55"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_tiptoe",
+   "card": "Shh, Tiptoe",
+   "set": "shade",
+   "enter": [
+    "rabbit:pose:sleep",
+    "rabbit:eyes:sleep",
+    "rabbit:at:390,500,1",
+    "zzz:on",
+    "turtle:at:110,472,1.25",
+    "bar:show",
+    "race:0.6,0.55",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "위에는 쿨쿨 자는 토끼, 아래에는 거북이!",
+     "src": "reuse",
+     "en": "Up above, the rabbit sleeps. Down below, the turtle!",
+     "segs": [
+      [
+       "nar",
+       "Up above, the rabbit sleeps. Down below, the turtle!"
+      ]
+     ]
+    },
+    {
+     "text": "쉿, 조용히 지나가요~ 살금살금.",
+     "src": "reuse",
+     "en": "Shh, tiptoe past quietly~ sneak, sneak.",
+     "segs": [
+      [
+       "nar",
+       "Shh, tiptoe past quietly~ sneak, sneak.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "turtle:tiptoe"
+     ],
+     "after": [
+      "race:0.6,0.75"
+     ]
+    },
+    {
+     "text": "와, 거북이가 토끼를 앞질렀어요!",
+     "src": "reuse",
+     "en": "Wow, the turtle passed the rabbit!",
+     "segs": [
+      [
+       "nar",
+       "Wow, the turtle passed the rabbit!",
+       "happy:1.4"
+      ]
+     ],
+     "before": [
+      "turtle:walk:760,472,700"
+     ]
+    },
+    {
+     "text": "해가 뉘엿뉘엿 지고 있어요.",
+     "src": "reuse",
+     "en": "The sun is slowly setting.",
+     "segs": [
+      [
+       "nar",
+       "The sun is slowly setting."
+      ]
+     ],
+     "before": [
+      "set:dusk",
+      "rabbit:pose:sleep",
+      "rabbit:at:500,500,1",
+      "aud:rooster:sit",
+      "zzz:on",
+      "race:0.6,0.9"
+     ]
+    },
+    {
+     "text": "그때 닭이 큰 소리로 울었어요. 꼬끼오!",
+     "src": "new",
+     "en": "Just then the rooster crowed as loud as he could. Cock-a-doodle-doo!",
+     "segs": [
+      [
+       "nar",
+       "Just then the rooster crowed as loud as he could. Cock-a-doodle-doo!",
+       "toneup:1.2"
+      ]
+     ],
+     "before": [
+      "aud:rooster:stand",
+      "aud:rooster:cry",
+      "fx:rooster",
+      "pop:300,280,꼬끼오!"
+     ],
+     "after": [
+      "aud:rooster:sit"
+     ]
+    },
+    {
+     "text": "토끼가 벌떡 일어났어요! \"앗, 내가 잠들었네!\"",
+     "src": "reuse",
+     "en": "The rabbit jumped right up! \"Oh no, I fell asleep!\"",
+     "segs": [
+      [
+       "nar",
+       "The rabbit jumped right up!",
+       "toneup:1.2"
+      ],
+      [
+       "rabbit",
+       "Oh no, I fell asleep!",
+       "toneup:1.5"
+      ]
+     ],
+     "before": [
+      "zzz:off",
+      "rabbit:pose:wake",
+      "rabbit:eyes:open",
+      "vo:wake_rabbit",
+      "cut:wake"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_finish",
+   "card": "The Last Step",
+   "set": "finish",
+   "enter": [
+    "rabbit:pose:run",
+    "rabbit:at:-200,472,1",
+    "turtle:at:560,476,1.25",
+    "aud:all:sit",
+    "bar:show",
+    "race:0.6,0.92",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "응원하던 친구들이 모두 일어났어요!",
+     "src": "reuse",
+     "en": "All the cheering friends stood up!",
+     "segs": [
+      [
+       "nar",
+       "All the cheering friends stood up!"
+      ]
+     ],
+     "before": [
+      "aud:all:stand",
+      "aud:all:cheer"
+     ]
+    },
+    {
+     "text": "토끼가 쌩쌩 달려와요! 거북이는 딱 한 발 남았어요.",
+     "src": "reuse",
+     "en": "The rabbit is zooming back! The turtle has just one step left.",
+     "segs": [
+      [
+       "nar",
+       "The rabbit is zooming back! The turtle has just one step left.",
+       "toneup:1.3"
+      ]
+     ],
+     "before": [
+      "cut:dash",
+      "race:0.8,0.92"
+     ]
+    },
+    {
+     "text": "\"조금만 더. 조금만 더 가면 돼.\"",
+     "src": "new",
+     "en": "Just a little more. Just a little more and I am there.",
+     "segs": [
+      [
+       "turtle",
+       "Just a little more. Just a little more and I am there.",
+       "toneup:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "거북이는 숨을 크게 쉬고 마지막 한 발을 내디뎠어요.",
+     "src": "new",
+     "en": "The turtle took a big, deep breath and stepped out one last time.",
+     "segs": [
+      [
+       "nar",
+       "The turtle took a big, deep breath and stepped out one last time.",
+       "toneup:1.3"
+      ]
+     ],
+     "before": [
+      "turtle:walk:650,476,2000",
+      "rabbit:walk:430,472,2100"
+     ],
+     "after": [
+      "tape:break",
+      "race:0.95,1",
+      "pop:790,330,골인!"
+     ]
+    },
+    {
+     "text": "사진을 보니… 거북이 코끝이 먼저 닿았어요!",
+     "src": "reuse",
+     "en": "Look at the photo... the turtle's nose touched first!",
+     "segs": [
+      [
+       "nar",
+       "Look at the photo... the turtle's nose touched first!"
+      ]
+     ],
+     "before": [
+      "photo",
+      "cut:photo"
+     ]
+    },
+    {
+     "text": "거북이가 1등이에요!",
+     "src": "reuse",
+     "en": "The turtle is number one!",
+     "segs": [
+      [
+       "nar",
+       "The turtle is number one!",
+       "happy:1.5"
+      ]
+     ],
+     "before": [
+      "fx:win",
+      "confetti",
+      "aud:all:cheer"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_party",
+   "card": "Medal and Party",
+   "set": "finish",
+   "enter": [
+    "podium",
+    "turtle:at:600,460,1.25",
+    "rabbit:pose:stand",
+    "rabbit:at:850,500,1",
+    "aud:all:sit",
+    "bar:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "시상식이에요! 응원하던 친구들이 파도타기를 해요.",
+     "src": "reuse",
+     "en": "It's the award ceremony! The cheering friends do the wave.",
+     "segs": [
+      [
+       "nar",
+       "It's the award ceremony! The cheering friends do the wave."
+      ]
+     ],
+     "before": [
+      "aud:all:wave"
+     ]
+    },
+    {
+     "text": "반짝반짝, 금메달이에요!",
+     "src": "reuse",
+     "en": "Sparkle, sparkle, a gold medal!",
+     "segs": [
+      [
+       "nar",
+       "Sparkle, sparkle, a gold medal!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "medal:give",
+      "turtle:medal",
+      "turtle:hop"
+     ]
+    },
+    {
+     "text": "거북이는 메달을 목에 걸고 활짝 웃었어요.",
+     "src": "new",
+     "en": "The turtle wore the medal around his neck and smiled a great big smile.",
+     "segs": [
+      [
+       "nar",
+       "The turtle wore the medal around his neck and smiled a great big smile.",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "토끼가 다가와 말했어요.",
+     "src": "reuse",
+     "en": "The rabbit came over and said,",
+     "segs": [
+      [
+       "nar",
+       "The rabbit came over and said,"
+      ]
+     ],
+     "before": [
+      "rabbit:walk:330,500,1200",
+      "rabbit:face:right"
+     ]
+    },
+    {
+     "text": "\"축하해! 다음엔 나도 쉬지 않고 열심히 할게.\"",
+     "src": "reuse",
+     "en": "\"Congratulations! Next time I'll work hard and never stop to rest.\"",
+     "segs": [
+      [
+       "rabbit",
+       "Congratulations! Next time I'll work hard and never stop to rest.",
+       "happy:0.9"
+      ]
+     ]
+    },
+    {
+     "text": "거북이도 말했어요. \"고마워! 우리 또 같이 달리자!\"",
+     "src": "reuse",
+     "en": "The turtle said, \"Thank you! Let's race together again!\"",
+     "segs": [
+      [
+       "nar",
+       "The turtle said,"
+      ],
+      [
+       "turtle",
+       "Thank you! Let's race together again!",
+       "happy:1.3"
+      ]
+     ],
+     "after": [
+      "rabbit:hop",
+      "turtle:hop"
+     ]
+    },
+    {
+     "text": "밤이 되었어요. 숲속 잔치가 열렸어요!",
+     "src": "reuse",
+     "en": "Night came. The forest party began!",
+     "segs": [
+      [
+       "nar",
+       "Night came. The forest party began!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "set:party",
+      "turtle:medal",
+      "turtle:at:580,486,1.15",
+      "rabbit:at:420,490,1",
+      "aud:all:sit"
+     ]
+    },
+    {
+     "text": "친구들은 둥둥 북을 치고 딸랑딸랑 방울을 흔들었어요.",
+     "src": "new",
+     "en": "The friends beat the drums, boom, boom, and shook the bells, jingle, jingle.",
+     "segs": [
+      [
+       "nar",
+       "The friends beat the drums, boom, boom, and shook the bells, jingle, jingle.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "party:band"
+     ]
+    },
+    {
+     "text": "모두 함께 신나는 잔치를 했답니다.",
+     "src": "reuse",
+     "en": "Everyone had a happy party together.",
+     "segs": [
+      [
+       "nar",
+       "Everyone had a happy party together.",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "confetti"
+     ]
+    },
+    {
+     "text": "천천히 가도 끝까지 하면 해낼 수 있어요!",
+     "src": "reuse",
+     "en": "Even if you go slowly, you can make it if you keep going!",
+     "segs": [
+      [
+       "nar",
+       "Even if you go slowly, you can make it if you keep going!",
+       "happy:1.2"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

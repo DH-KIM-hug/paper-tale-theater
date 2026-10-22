@@ -1,0 +1,1445 @@
+{
+ "mode": "read",
+ "tale": "rabbit",
+ "lang": "ko",
+ "title": "토끼와 거북이",
+ "voices_from": "voice_script_el.json",
+ "moral": "천천히 가도 끝까지 하면 해낼 수 있어요!",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 놀이판 17장면을 11장면으로 묶었다: 초대장 돌리기(문 두드리기·목소리 고르기 퀴즈)와 응원석·준비 운동의 누르기, 경주 지도 설명, 토끼·거북이 몰기, 이불·부엉이·해님·당근·닭·메달 누르기, 잔치 악기 연주를 모두 뺐다. 초대장 장면의 그림은 응원석 장면 앞에 묘사 두 줄로만 남겼다. 교훈은 놀이판 마지막 줄 \"천천히 가도 끝까지 하면 해낼 수 있어요!\"를 그대로 쓴다. 순화할 거친 장면 없음. 원작(이솝)대로 토끼가 낮잠을 자고 거북이가 꾸준히 걸어 이긴다. 한 장면 안에서 배경이 바뀌는 곳(개울→언덕, 언덕→나무 그늘, 노을→결승, 시상식→잔치)은 before 의 set 동사로 바꾼다.",
+ "acts": {
+  "set:<village|alley|stands|start|map|grass_low|shade|dream|stream|hill|dusk|finish|party>": "장면 배경(ART bg_*)·관객 자리. scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
+  "rabbit:pose:<stand|run|sleep|wake|congrats> | rabbit:eyes:<open|drowsy|sleep> | rabbit:ears:<n>": "토끼 자세·눈·귀",
+  "rabbit:at:<x,y[,s]> | rabbit:walk:<x,y,ms> | rabbit:hop | rabbit:face:<left|right> | rabbit:hide": "토끼 자리·이동",
+  "turtle:at:<x,y[,s]> | turtle:walk:<x,y,ms> | turtle:hop | turtle:face:<left|right> | turtle:neck:<n> | turtle:tilt:<deg> | turtle:swim:<on|off> | turtle:medal | turtle:hide": "거북이 자리·이동·목 늘리기·헤엄·메달",
+  "turtle:steps:<n> | turtle:rock | turtle:swimacross | turtle:climb | turtle:tiptoe": "놀이판 걷기·돌멩이 넘기·개울 건너기·언덕 오르기·살금살금 연출(누르기 없이 저절로)",
+  "aud:<duck|cow|pig|rooster|sheep|dog|cat|owl>:<stand|sit|hush|cheer[:글자]|cry> | aud:all:<sit|stand|cheer|hush|wave>": "관객 동물 한 마리·전원",
+  "owl:post | owl:lullaby": "부엉이 우체부 등장(봉투 네 집에 전하기) / 자장가 음표",
+  "doors:open": "골목 네 집 문이 차례로 열리며 동물이 얼굴을 내민다(초대장 묘사용)",
+  "blanket:cover | cloud:cover | zzz:<on|off>": "나뭇잎 이불 덮기·구름이 해를 가림·Z 글자",
+  "dream:carrot | dream:bite": "꿈속 당근 상 등장·아삭 한 입",
+  "drum:hit | race:<r,t> | bar:<show|hide> | tape:break | photo": "출발 북·경주 막대·결승 테이프·사진 판정",
+  "medal:give | podium": "메달 걸기·시상대",
+  "party:band": "잔치 행진곡(친구들이 저절로 연주)",
+  "cut:<wake|dash|photo>": "그림 컷 — 컷 속 외침(VOICE_LINES wake_rabbit)은 그대로 재사용",
+  "vo:<laugh_pig|cheer_dog|cheer_duck|cheer_sheep|wake_rabbit>": "말풍선 없는 소리 대사(기존 녹음)",
+  "fx:<boing|whoosh|splash|chomp|footstep|rooster|duck|cow|pig|sheep|dog|cat|owl|win> | pop:<x,y,글자> | speedlines | confetti | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_morning",
+   "card": "숲속 아침",
+   "set": "village",
+   "enter": [
+    "turtle:at:200,500,1.25",
+    "rabbit:at:1150,500,1",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "숲속 마을에 아침이 왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "숲속 마을에 아침이 왔어요.",
+       "happy:1.0",
+       "[calm, fresh, warm storytelling, morning]"
+      ]
+     ],
+     "before": [
+      "turtle:walk:330,500,2600"
+     ]
+    },
+    {
+     "text": "해님이 방긋 떠오르고, 새들이 짹짹 노래했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "해님이 방긋 떠오르고, 새들이 짹짹 노래했어요.",
+       null,
+       "[calm, fresh, warm storytelling, morning]"
+      ]
+     ]
+    },
+    {
+     "text": "거북이가 엉금엉금 산책해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "거북이가 엉금엉금 산책해요.",
+       "happy:1.0",
+       "[calm, fresh, warm storytelling, morning]"
+      ]
+     ],
+     "after": [
+      "turtle:hop",
+      "turtle:neck:1.6"
+     ]
+    },
+    {
+     "text": "\"안녕! 나는 거북이야.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "turtle",
+       "안녕! 나는 거북이야.",
+       "happy:1.0",
+       "[slow, friendly, calm, gentle, old and wise]"
+      ]
+     ],
+     "after": [
+      "turtle:neck:1",
+      "rabbit:face:left"
+     ]
+    },
+    {
+     "text": "깡충깡충 토끼도 왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "깡충깡충 토끼도 왔어요.",
+       "happy:1.0",
+       "[calm, fresh, warm storytelling, morning]"
+      ]
+     ],
+     "before": [
+      "rabbit:walk:700,500,1100",
+      "fx:boing"
+     ],
+     "after": [
+      "rabbit:hop"
+     ]
+    },
+    {
+     "text": "\"안녕! 나는 깡충 토끼야!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "안녕! 나는 깡충 토끼야!",
+       "happy:1.5",
+       "[bouncy, energetic, cocky, cheerful, young]"
+      ]
+     ],
+     "after": [
+      "rabbit:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_challenge",
+   "card": "달리기 약속",
+   "set": "village",
+   "enter": [
+    "turtle:at:330,500,1.25",
+    "rabbit:at:700,500,1",
+    "rabbit:face:left",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "토끼는 거북이의 짧은 다리를 보고 킥킥 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "토끼는 거북이의 짧은 다리를 보고 킥킥 웃었어요.",
+       null,
+       "[light, amused, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "토끼가 말했어요. \"느림보야, 나랑 달리기 할래?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토끼가 말했어요.",
+       null,
+       "[light, storytelling]"
+      ],
+      [
+       "rabbit",
+       "느림보야, 나랑 달리기 할래?",
+       "happy:1.3",
+       "[teasing, cocky, playful, challenging]"
+      ]
+     ],
+     "after": [
+      "turtle:hop"
+     ]
+    },
+    {
+     "text": "거북이가 방긋 웃었어요. \"좋아!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "거북이가 방긋 웃었어요.",
+       null,
+       "[warm, smiling, storytelling]"
+      ],
+      [
+       "turtle",
+       "좋아!",
+       "happy",
+       "[calm, unbothered, smiling, slow, friendly]"
+      ]
+     ]
+    },
+    {
+     "text": "\"느려도 괜찮아. 나는 끝까지 갈 거야.\"",
+     "src": "new",
+     "segs": [
+      [
+       "turtle",
+       "느려도 괜찮아. 나는 끝까지 갈 거야.",
+       "happy",
+       "[calm, unbothered, smiling, slow, friendly]"
+      ]
+     ]
+    },
+    {
+     "text": "거북이는 느려도 한 번 마음먹으면 끝까지 하는 친구였거든요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "거북이는 느려도 한 번 마음먹으면 끝까지 하는 친구였거든요.",
+       null,
+       "[warm, smiling, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "\"숲속 친구들한테 응원해 달라고 하자!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "숲속 친구들한테 응원해 달라고 하자!",
+       "happy:1.3",
+       "[excited, cheerful, bouncy, bright]"
+      ]
+     ],
+     "after": [
+      "rabbit:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_stands",
+   "card": "응원석",
+   "set": "alley",
+   "enter": [
+    "rabbit:hide",
+    "turtle:hide",
+    "owl:post",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "부엉이 우체부가 초대장을 가져왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "부엉이 우체부가 초대장을 가져왔어요.",
+       null,
+       "[bright, light, storytelling, whimsical]"
+      ]
+     ]
+    },
+    {
+     "text": "똑똑! 문을 두드리자 오리, 소, 돼지, 강아지가 얼굴을 쏙 내밀었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "똑똑! 문을 두드리자 오리, 소, 돼지, 강아지가 얼굴을 쏙 내밀었어요.",
+       null,
+       "[bright, playful, storytelling]"
+      ]
+     ],
+     "before": [
+      "doors:open"
+     ]
+    },
+    {
+     "text": "닭이랑 양이랑 고양이도 초대장을 받았어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "닭이랑 양이랑 고양이도 초대장을 받았어요!",
+       null,
+       "[surprised, bright, storytelling, light]"
+      ]
+     ]
+    },
+    {
+     "text": "동물 친구들이 응원하러 모였어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "동물 친구들이 응원하러 모였어요!",
+       "happy:1.2",
+       "[happy, lively, excited, storytelling]"
+      ]
+     ],
+     "before": [
+      "set:stands",
+      "aud:all:sit"
+     ]
+    },
+    {
+     "text": "친구들이 벌떡 일어나 응원해요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "친구들이 벌떡 일어나 응원해요!",
+       "happy:1.0",
+       "[calm, fresh, warm storytelling, morning]"
+      ]
+     ],
+     "before": [
+      "aud:all:stand",
+      "aud:all:cheer"
+     ]
+    },
+    {
+     "text": "와, 신나는 응원 소리!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "와, 신나는 응원 소리!",
+       "happy:1.4",
+       "[delighted, excited, proud, lively]"
+      ]
+     ]
+    },
+    {
+     "text": "모두 응원석에 앉아 경주가 시작되기를 기다렸지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "모두 응원석에 앉아 경주가 시작되기를 기다렸지요.",
+       null,
+       "[warm, lively, storytelling]"
+      ]
+     ],
+     "before": [
+      "aud:all:sit"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_start",
+   "card": "요이~ 땅!",
+   "set": "start",
+   "enter": [
+    "turtle:at:300,470,1.25",
+    "rabbit:at:480,470,1",
+    "aud:all:sit",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "달리기 전에 준비 운동을 해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "달리기 전에 준비 운동을 해요.",
+       null,
+       "[bright, sporty, energetic, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "토끼가 귀를 쭉~",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토끼가 귀를 쭉~",
+       "happy:1.0",
+       "[calm, fresh, warm storytelling, morning]"
+      ]
+     ],
+     "before": [
+      "rabbit:ears:1.35",
+      "pop:480,250,쭉!"
+     ],
+     "after": [
+      "rabbit:ears:1"
+     ]
+    },
+    {
+     "text": "거북이는 목을 쭉~",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "거북이는 목을 쭉~",
+       "happy:1.0",
+       "[calm, fresh, warm storytelling, morning]"
+      ]
+     ],
+     "before": [
+      "turtle:neck:3.4",
+      "pop:500,340,쭈욱~"
+     ],
+     "after": [
+      "turtle:neck:1"
+     ]
+    },
+    {
+     "text": "와, 거북이 목이 쭈욱~ 길어졌어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "와, 거북이 목이 쭈욱~ 길어졌어요!",
+       "happy:1.3",
+       "[amused, delighted, giggles softly, amazed]"
+      ]
+     ],
+     "before": [
+      "aud:pig:cheer:하하!",
+      "vo:laugh_pig"
+     ]
+    },
+    {
+     "text": "너구리 심판이 커다란 북을 가져왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "너구리 심판이 커다란 북을 가져왔어요.",
+       null,
+       "[bright, announcing, storytelling, drum roll build-up]"
+      ]
+     ]
+    },
+    {
+     "text": "친구들은 모두 숨을 죽이고 북을 바라보았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "친구들은 모두 숨을 죽이고 북을 바라보았어요.",
+       null,
+       "[hushed, building suspense, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "둥! 북소리가 울리자 둘은 나란히 출발했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "둥! 북소리가 울리자 둘은 나란히 출발했어요.",
+       "toneup:1.2",
+       "[excited, bright, announcing]"
+      ]
+     ],
+     "before": [
+      "drum:hit",
+      "pop:745,330,땅!",
+      "aud:all:cheer"
+     ]
+    },
+    {
+     "text": "토끼는 쌩~ 거북이는 엉금 한 발!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토끼는 쌩~ 거북이는 엉금 한 발!",
+       "happy:1.2",
+       "[lively, amused, comical contrast, storytelling]"
+      ]
+     ],
+     "before": [
+      "rabbit:pose:run",
+      "fx:whoosh",
+      "speedlines",
+      "rabbit:walk:1250,470,450",
+      "turtle:walk:470,470,700",
+      "bar:show",
+      "race:0.3,0.04"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_dash",
+   "card": "쌩쌩 토끼",
+   "set": "hill",
+   "enter": [
+    "turtle:hide",
+    "rabbit:pose:run",
+    "rabbit:at:470,505,1",
+    "bar:show",
+    "race:0.3,0.04",
+    "cam:470,300,1.12"
+   ],
+   "lines": [
+    {
+     "text": "토끼는 쌩쌩 달려요!",
+     "src": "trim",
+     "from": "토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!",
+     "segs": [
+      [
+       "nar",
+       "토끼는 쌩쌩 달려요!",
+       "happy:1.2",
+       "[excited, lively, racing, encouraging]"
+      ]
+     ],
+     "before": [
+      "fx:whoosh",
+      "speedlines",
+      "rabbit:hop",
+      "pop:530,300,쌩!"
+     ],
+     "after": [
+      "race:0.6,0.04"
+     ]
+    },
+    {
+     "text": "돌멩이도 개울도 폴짝폴짝, 눈 깜짝할 사이에 지나갔지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "돌멩이도 개울도 폴짝폴짝, 눈 깜짝할 사이에 지나갔지요.",
+       null,
+       "[lively, amused, storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:whoosh",
+      "speedlines",
+      "rabbit:hop"
+     ]
+    },
+    {
+     "text": "금세 언덕 위 나무 그늘까지 왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "금세 언덕 위 나무 그늘까지 왔어요.",
+       null,
+       "[calm, relaxed, storytelling, slowing down]"
+      ]
+     ],
+     "before": [
+      "rabbit:pose:stand",
+      "rabbit:walk:470,505,500"
+     ]
+    },
+    {
+     "text": "뒤를 돌아보니… 거북이는 안 보여요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "뒤를 돌아보니… 거북이는 안 보여요!",
+       "toneup:1.2",
+       "[curious, playful, mock surprise, storytelling]"
+      ]
+     ],
+     "before": [
+      "rabbit:face:left"
+     ],
+     "after": [
+      "rabbit:face:right"
+     ]
+    },
+    {
+     "text": "\"거북이는 아직 한참 멀었겠지? 히히.\"",
+     "src": "new",
+     "segs": [
+      [
+       "rabbit",
+       "거북이는 아직 한참 멀었겠지? 히히.",
+       "happy:1.3",
+       "[smug, teasing, giggling, cocky]"
+      ]
+     ]
+    },
+    {
+     "text": "\"하암~ 한숨 자고 가도 되겠다~\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "하암~ 한숨 자고 가도 되겠다~",
+       "tonedown:1.2",
+       "[yawning, sleepy, smug, drowsy, slow, sighs happily]"
+      ]
+     ],
+     "before": [
+      "rabbit:eyes:drowsy"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_shade",
+   "card": "나무 그늘",
+   "set": "shade",
+   "enter": [
+    "turtle:hide",
+    "rabbit:pose:sleep",
+    "rabbit:eyes:drowsy",
+    "rabbit:at:390,500,1",
+    "aud:owl:sit",
+    "aud:pig:sit",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "토끼는 나무 아래에 벌렁 드러누웠어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "토끼는 나무 아래에 벌렁 드러누웠어요.",
+       null,
+       "[soft, cozy, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "포근포근~ 이불을 덮어 줬어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "포근포근~ 이불을 덮어 줬어요.",
+       "whisper",
+       "[soft, cozy, sleepy, storytelling]"
+      ]
+     ],
+     "before": [
+      "blanket:cover"
+     ]
+    },
+    {
+     "text": "부엉이가 자장가를 불러 줘요.",
+     "src": "trim",
+     "from": "부엉이가 자장가를 불러 줘요. 잘 들어 봐요.",
+     "segs": [
+      [
+       "nar",
+       "부엉이가 자장가를 불러 줘요.",
+       null,
+       "[soft, hushed, lullaby, calm, slow]"
+      ]
+     ],
+     "before": [
+      "owl:lullaby"
+     ]
+    },
+    {
+     "text": "부엉 부엉~ 토끼 눈이 스르르 감겨요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "부엉 부엉~ 토끼 눈이 스르르 감겨요.",
+       "whisper",
+       "[sleepy, slow, lullaby, whispers, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "구름도 살며시 다가와 해님을 가려 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "구름도 살며시 다가와 해님을 가려 주었어요.",
+       "whisper",
+       "[whispers, soft, slow, gentle]"
+      ]
+     ],
+     "before": [
+      "cloud:cover"
+     ]
+    },
+    {
+     "text": "토끼가 쿨쿨 잠이 들었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토끼가 쿨쿨 잠이 들었어요.",
+       "whisper",
+       "[whispers, soft, very sleepy, tender, slow]"
+      ]
+     ],
+     "before": [
+      "rabbit:eyes:sleep",
+      "zzz:on"
+     ]
+    },
+    {
+     "text": "응원하던 친구들도 \"쉿!\" 조용히~",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "응원하던 친구들도",
+       "whisper",
+       "[whispers, amused, soft, tender]"
+      ],
+      [
+       "sheep",
+       "쉿!",
+       "whisper",
+       "[whispers, hushed, shushing, gentle]"
+      ],
+      [
+       "nar",
+       "조용히~",
+       "whisper",
+       "[whispers, soft, tender, slow]"
+      ]
+     ],
+     "before": [
+      "aud:owl:hush",
+      "aud:pig:hush"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_dream",
+   "card": "토끼의 꿈",
+   "set": "dream",
+   "enter": [
+    "rabbit:pose:congrats",
+    "rabbit:at:500,480,1",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "토끼가 꿈을 꿔요. 꿈속에서 1등을 했어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토끼가 꿈을 꿔요. 꿈속에서 1등을 했어요!",
+       null,
+       "[soft, dreamy, wondrous, gentle storytelling]"
+      ]
+     ],
+     "before": [
+      "confetti"
+     ]
+    },
+    {
+     "text": "상으로 커다란 당근을 받았어요.",
+     "src": "trim",
+     "from": "상으로 커다란 당근을 받았어요. 당근을 톡!",
+     "segs": [
+      [
+       "nar",
+       "상으로 커다란 당근을 받았어요.",
+       null,
+       "[bright, delighted, storytelling, playful]"
+      ]
+     ],
+     "before": [
+      "dream:carrot"
+     ]
+    },
+    {
+     "text": "\"아삭! 음~ 맛있다!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "아삭! 음~ 맛있다!",
+       "happy:1.5",
+       "[dreamy, delighted, munching, happy sigh, sleepy talking]"
+      ]
+     ],
+     "before": [
+      "dream:bite",
+      "fx:chomp",
+      "pop:560,420,아삭!"
+     ],
+     "after": [
+      "rabbit:hop"
+     ]
+    },
+    {
+     "text": "꿈속 친구들이 모두 토끼에게 짝짝짝 박수를 쳤어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "꿈속 친구들이 모두 토끼에게 짝짝짝 박수를 쳤어요.",
+       null,
+       "[soft, dreamy, cheerful storytelling]"
+      ]
+     ],
+     "before": [
+      "aud:all:cheer"
+     ]
+    },
+    {
+     "text": "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~",
+       "tonedown:1.1",
+       "[amused, soft, comical, storytelling]"
+      ]
+     ],
+     "before": [
+      "set:shade",
+      "rabbit:pose:sleep",
+      "rabbit:eyes:sleep",
+      "rabbit:at:390,500,1",
+      "zzz:on"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_turtle",
+   "card": "엉금엉금 거북이",
+   "set": "grass_low",
+   "enter": [
+    "rabbit:hide",
+    "turtle:at:120,470,1.25",
+    "aud:dog:sit",
+    "aud:cat:sit",
+    "bar:show",
+    "race:0.6,0.04",
+    "cam:300,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그동안 거북이는? 엉금엉금 걷고 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그동안 거북이는? 엉금엉금 걷고 있어요.",
+       null,
+       "[calm, steady, warm, storytelling, slow and plodding]"
+      ]
+     ],
+     "before": [
+      "turtle:steps:6"
+     ]
+    },
+    {
+     "text": "한 발, 또 한 발. 거북이는 한 번도 쉬지 않았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "한 발, 또 한 발. 거북이는 한 번도 쉬지 않았어요.",
+       null,
+       "[calm, steady, warm, storytelling, slow and plodding]"
+      ]
+     ],
+     "before": [
+      "turtle:steps:4",
+      "aud:dog:cheer:힘내!",
+      "vo:cheer_dog"
+     ]
+    },
+    {
+     "text": "어? 커다란 돌멩이예요!",
+     "src": "trim",
+     "from": "어? 커다란 돌멩이예요! 돌멩이를 톡 해서 넘어가요!",
+     "segs": [
+      [
+       "nar",
+       "어? 커다란 돌멩이예요!",
+       null,
+       "[surprised, bright, playful, storytelling]"
+      ]
+     ],
+     "after": [
+      "turtle:rock"
+     ]
+    },
+    {
+     "text": "영차! 돌멩이를 넘었어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "turtle",
+       "영차!",
+       "toneup:1.3",
+       "[grunts with effort, determined, slow, steady, old voice]"
+      ],
+      [
+       "nar",
+       "돌멩이를 넘었어요!",
+       "happy:1.2",
+       "[relieved, proud, cheerful, storytelling]"
+      ]
+     ],
+     "before": [
+      "pop:620,330,영차!"
+     ],
+     "after": [
+      "race:0.6,0.2",
+      "aud:dog:cheer:와아!",
+      "aud:cat:cheer:야옹~"
+     ]
+    },
+    {
+     "text": "앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "앗, 개울이에요! 거북이는 헤엄을 잘 쳐요.",
+       null,
+       "[surprised, bright, cheerful, storytelling]"
+      ]
+     ],
+     "before": [
+      "set:stream",
+      "turtle:swim:on",
+      "turtle:at:120,430,1.35",
+      "aud:duck:sit",
+      "cam:270,280,1"
+     ]
+    },
+    {
+     "text": "첨벙첨벙, 거북이는 물살을 가르며 헤엄쳤어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "첨벙첨벙, 거북이는 물살을 가르며 헤엄쳤어요.",
+       null,
+       "[cheerful, splashy, storytelling]"
+      ]
+     ],
+     "before": [
+      "turtle:swimacross",
+      "aud:duck:cheer:꽥꽥! 힘내!",
+      "vo:cheer_duck"
+     ]
+    },
+    {
+     "text": "물고기랑 같이 개울을 건넜어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "물고기랑 같이 개울을 건넜어요!",
+       null,
+       "[delighted, refreshed, bright, storytelling]"
+      ]
+     ],
+     "after": [
+      "race:0.6,0.38"
+     ]
+    },
+    {
+     "text": "이번엔 높은 언덕이에요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이번엔 높은 언덕이에요.",
+       null,
+       "[thoughtful, steady, storytelling, light challenge]"
+      ]
+     ],
+     "before": [
+      "set:hill",
+      "turtle:swim:off",
+      "turtle:at:120,470,1.3",
+      "aud:sheep:sit",
+      "cam:290,280,1"
+     ]
+    },
+    {
+     "text": "영차, 영차. 거북이는 느릿느릿, 그래도 멈추지 않고 올라갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "영차, 영차. 거북이는 느릿느릿, 그래도 멈추지 않고 올라갔어요.",
+       null,
+       "[thoughtful, steady, rhythmic, storytelling]"
+      ]
+     ],
+     "before": [
+      "turtle:climb",
+      "aud:sheep:cheer:힘내!",
+      "vo:cheer_sheep"
+     ]
+    },
+    {
+     "text": "영차! 언덕 꼭대기에 올라왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "turtle",
+       "영차!",
+       "toneup:1.3",
+       "[grunts with effort, determined, steady, slow, old voice]"
+      ],
+      [
+       "nar",
+       "언덕 꼭대기에 올라왔어요.",
+       "happy:1.2",
+       "[proud, relieved, cheerful, storytelling]"
+      ]
+     ],
+     "before": [
+      "pop:600,300,영차!"
+     ],
+     "after": [
+      "race:0.6,0.55"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_tiptoe",
+   "card": "쉿, 살금살금",
+   "set": "shade",
+   "enter": [
+    "rabbit:pose:sleep",
+    "rabbit:eyes:sleep",
+    "rabbit:at:390,500,1",
+    "zzz:on",
+    "turtle:at:110,472,1.25",
+    "bar:show",
+    "race:0.6,0.55",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "위에는 쿨쿨 자는 토끼, 아래에는 거북이!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "위에는 쿨쿨 자는 토끼, 아래에는 거북이!",
+       null,
+       "[amused, whispering, playful, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "쉿, 조용히 지나가요~ 살금살금.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "쉿, 조용히 지나가요~ 살금살금.",
+       "whisper",
+       "[whispers, tiptoeing, playful, hushed]"
+      ]
+     ],
+     "before": [
+      "turtle:tiptoe"
+     ],
+     "after": [
+      "race:0.6,0.75"
+     ]
+    },
+    {
+     "text": "와, 거북이가 토끼를 앞질렀어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "와, 거북이가 토끼를 앞질렀어요!",
+       "happy:1.4",
+       "[excited, amazed, delighted, bright]"
+      ]
+     ],
+     "before": [
+      "turtle:walk:760,472,700"
+     ]
+    },
+    {
+     "text": "해가 뉘엿뉘엿 지고 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "해가 뉘엿뉘엿 지고 있어요.",
+       null,
+       "[soft, calm, storytelling, evening, slow]"
+      ]
+     ],
+     "before": [
+      "set:dusk",
+      "rabbit:pose:sleep",
+      "rabbit:at:500,500,1",
+      "aud:rooster:sit",
+      "zzz:on",
+      "race:0.6,0.9"
+     ]
+    },
+    {
+     "text": "그때 닭이 큰 소리로 울었어요. 꼬끼오!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그때 닭이 큰 소리로 울었어요. 꼬끼오!",
+       "toneup:1.2",
+       "[lively, surprised, loud, storytelling]"
+      ]
+     ],
+     "before": [
+      "aud:rooster:stand",
+      "aud:rooster:cry",
+      "fx:rooster",
+      "pop:300,280,꼬끼오!"
+     ],
+     "after": [
+      "aud:rooster:sit"
+     ]
+    },
+    {
+     "text": "토끼가 벌떡 일어났어요! \"앗, 내가 잠들었네!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토끼가 벌떡 일어났어요!",
+       "toneup:1.2",
+       "[lively, surprised, storytelling]"
+      ],
+      [
+       "rabbit",
+       "앗, 내가 잠들었네!",
+       "toneup:1.5",
+       "[startled, flustered, gasps, panicked, loud]"
+      ]
+     ],
+     "before": [
+      "zzz:off",
+      "rabbit:pose:wake",
+      "rabbit:eyes:open",
+      "vo:wake_rabbit",
+      "cut:wake"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_finish",
+   "card": "마지막 한 발",
+   "set": "finish",
+   "enter": [
+    "rabbit:pose:run",
+    "rabbit:at:-200,472,1",
+    "turtle:at:560,476,1.25",
+    "aud:all:sit",
+    "bar:show",
+    "race:0.6,0.92",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "응원하던 친구들이 모두 일어났어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "응원하던 친구들이 모두 일어났어요!",
+       null,
+       "[excited, bright, building, storytelling]"
+      ]
+     ],
+     "before": [
+      "aud:all:stand",
+      "aud:all:cheer"
+     ]
+    },
+    {
+     "text": "토끼가 쌩쌩 달려와요! 거북이는 딱 한 발 남았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토끼가 쌩쌩 달려와요! 거북이는 딱 한 발 남았어요.",
+       "toneup:1.3",
+       "[urgent, thrilling, fast, bright, light]"
+      ]
+     ],
+     "before": [
+      "cut:dash",
+      "race:0.8,0.92"
+     ]
+    },
+    {
+     "text": "\"조금만 더. 조금만 더 가면 돼.\"",
+     "src": "new",
+     "segs": [
+      [
+       "turtle",
+       "조금만 더. 조금만 더 가면 돼.",
+       "toneup:1.2",
+       "[grunts with effort, determined, slow, steady, old voice]"
+      ]
+     ]
+    },
+    {
+     "text": "거북이는 숨을 크게 쉬고 마지막 한 발을 내디뎠어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "거북이는 숨을 크게 쉬고 마지막 한 발을 내디뎠어요.",
+       "toneup:1.3",
+       "[urgent, thrilling, building tension, bright]"
+      ]
+     ],
+     "before": [
+      "turtle:walk:650,476,2000",
+      "rabbit:walk:430,472,2100"
+     ],
+     "after": [
+      "tape:break",
+      "race:0.95,1",
+      "pop:790,330,골인!"
+     ]
+    },
+    {
+     "text": "사진을 보니… 거북이 코끝이 먼저 닿았어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "사진을 보니… 거북이 코끝이 먼저 닿았어요!",
+       null,
+       "[amazed, bright, delighted, breathless]"
+      ]
+     ],
+     "before": [
+      "photo",
+      "cut:photo"
+     ]
+    },
+    {
+     "text": "거북이가 1등이에요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "거북이가 1등이에요!",
+       "happy:1.5",
+       "[delighted, triumphant, joyful, celebrating]"
+      ]
+     ],
+     "before": [
+      "fx:win",
+      "confetti",
+      "aud:all:cheer"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_party",
+   "card": "시상식과 잔치",
+   "set": "finish",
+   "enter": [
+    "podium",
+    "turtle:at:600,460,1.25",
+    "rabbit:pose:stand",
+    "rabbit:at:850,500,1",
+    "aud:all:sit",
+    "bar:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "시상식이에요! 응원하던 친구들이 파도타기를 해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "시상식이에요! 응원하던 친구들이 파도타기를 해요.",
+       null,
+       "[cheerful, festive, joyful, storytelling]"
+      ]
+     ],
+     "before": [
+      "aud:all:wave"
+     ]
+    },
+    {
+     "text": "반짝반짝, 금메달이에요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "반짝반짝, 금메달이에요!",
+       "happy:1.3",
+       "[delighted, proud, ceremonial, warm]"
+      ]
+     ],
+     "before": [
+      "medal:give",
+      "turtle:medal",
+      "turtle:hop"
+     ]
+    },
+    {
+     "text": "거북이는 메달을 목에 걸고 활짝 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "거북이는 메달을 목에 걸고 활짝 웃었어요.",
+       "happy:1.2",
+       "[proud, warm, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "토끼가 다가와 말했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토끼가 다가와 말했어요.",
+       null,
+       "[warm, gentle, storytelling]"
+      ]
+     ],
+     "before": [
+      "rabbit:walk:330,500,1200",
+      "rabbit:face:right"
+     ]
+    },
+    {
+     "text": "\"축하해! 다음엔 나도 쉬지 않고 열심히 할게.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "축하해! 다음엔 나도 쉬지 않고 열심히 할게.",
+       "happy:0.9",
+       "[sincere, humble, warm, friendly, sheepish, sporty]"
+      ]
+     ]
+    },
+    {
+     "text": "거북이도 말했어요. \"고마워! 우리 또 같이 달리자!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "거북이도 말했어요.",
+       null,
+       "[warm, smiling, storytelling]"
+      ],
+      [
+       "turtle",
+       "고마워! 우리 또 같이 달리자!",
+       "happy:1.3",
+       "[happy, warm, friendly, slow, grateful, chuckles]"
+      ]
+     ],
+     "after": [
+      "rabbit:hop",
+      "turtle:hop"
+     ]
+    },
+    {
+     "text": "밤이 되었어요. 숲속 잔치가 열렸어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "밤이 되었어요. 숲속 잔치가 열렸어요!",
+       "happy:1.2",
+       "[warm, glowing, festive, storytelling, evening]"
+      ]
+     ],
+     "before": [
+      "set:party",
+      "turtle:medal",
+      "turtle:at:580,486,1.15",
+      "rabbit:at:420,490,1",
+      "aud:all:sit"
+     ]
+    },
+    {
+     "text": "친구들은 둥둥 북을 치고 딸랑딸랑 방울을 흔들었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "친구들은 둥둥 북을 치고 딸랑딸랑 방울을 흔들었어요.",
+       "happy:1.2",
+       "[cheerful, festive, storytelling]"
+      ]
+     ],
+     "before": [
+      "party:band"
+     ]
+    },
+    {
+     "text": "모두 함께 신나는 잔치를 했답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "모두 함께 신나는 잔치를 했답니다.",
+       "happy:1.3",
+       "[warm, content, joyful, storytelling, slow]"
+      ]
+     ],
+     "before": [
+      "confetti"
+     ]
+    },
+    {
+     "text": "천천히 가도 끝까지 하면 해낼 수 있어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "천천히 가도 끝까지 하면 해낼 수 있어요!",
+       "happy:1.2",
+       "[warm, gentle, wise, reassuring, slow, closing]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
