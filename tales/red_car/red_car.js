@@ -360,6 +360,7 @@
     T.director({ cast: { child: kid, red, police, fire, amb, tow }, noFace: ['child', 'red', 'police', 'fire', 'amb', 'tow'] });
     /* 그림에서 잰 좌표(차 가운데 x·바닥 y 기준 오프셋, 2026-10-21): 서 있는 이현이 쥔 주먹(그림 왼쪽 손) · 식탁 윗면 · 누운 손 옆 · 구급차 큰 옆창 · 호스 끝 · 견인차 사슬 끝(고리 꼭대기가 사슬과 겹치게) · 빨간 차 앞 범퍼(지침 / 걸림 자세) */
     const HAND = { stand: [-14, -80], eat: [38, -96], sleep: [-63, -22] };
+    const DROP = X(380, 400) + 130;   // 2장에서 자동차가 떨어지는 자리(이현이 출발 x + 130). 3장 첫 화면도 이 자리
     const WIN = [[-68, -52], [-42, -52]], NOZ = [49, -56], TIP_PULL = [-90, -1], BUMPER = [60, -16], BUMPER9 = [66, -48];
     /* 견인(8~9장, 2026-10-21 그림에서 잰 값): 견인차 사슬 끝은 견인차 그림 기준 (-90, -42) 에 매달리고, 걸림 자세 범퍼 윗면은 빨간 차 기준 (+67, -57) 이다.
        고리가 하나의 사슬로 이어지려면 견인차 사슬 끝과 범퍼가 같은 자리에 와야 하므로 두 차의 가운데 간격을 TOWGAP(=90+67)로 두고,
@@ -424,7 +425,7 @@
     await sleep(500);
     sfx('paper_down', .5); vo('tok'); T.pop(red.x, FL - 40, tr('톡!'));
     /* 자동차는 수풀 속에 떨어져 반쯤만 보인다 (잃어버린 느낌) */
-    const bushX = kid.x + 130;
+    const bushX = DROP;   // 3장도 같은 자리(같은 세계 좌표)에서 시작한다
     red.look('tired', 'right');
     await red.move(bushX, FL + 6, 600, 'ease-in');
     layer('grass_front', bushX, FL + 38, { front: true }).wiggle(4, 500);   // 앞 풀 조각이 자동차 아래 절반을 가린다(시각 재기획: 타원 수풀 → 종이 풀 조각)
@@ -442,13 +443,16 @@
     await T.sceneCard(tr('장난감 세상으로 붕붕!'), () => {
       scene('rc_bg_yard');
       layer('flowerbed', X(150, 300), FL - 25); layer('ladybug', X(230, 340), FL + 2);
-      put(T, red, X(300, 300), FL + 6, { look: 'run', s: S_TOY });
-      layer('grass_front', X(300, 300), FL + 38, { front: true });
+      layer('snail', X(880, 790), FL + 2);
+      put(T, red, DROP, FL + 6, { look: 'tired', to: 'right', s: S_TOY });   // 2장에서 떨어진 그 자리·크기·방향 그대로
+      layer('grass_front', DROP, FL + 38, { front: true });
+      if (P) camSnap(560, 280, 1);
     }, red.pos);
     const l8 = say(S.L8);
-    const zoom = T.camTo(300, 470, 1 / S_TOY, 4000);
+    const zoom = T.camTo(DROP, 470, 1 / S_TOY, 4000);
     await Promise.all([l8, zoom]);
     { const g = LAYERS.grass_front[LAYERS.grass_front.length - 1]; g.move(g.x, g.y + 40, 400); }   // 줌이 끝나면 앞 풀이 내려가 자동차가 다 보인다
+    red.look('run', 'right');   // 용기 있게 출발: 지친 얼굴 → 달리는 얼굴
     await sleep(1500);
     let pop3;
     await veil(T, () => {

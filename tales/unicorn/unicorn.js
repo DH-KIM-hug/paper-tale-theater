@@ -296,8 +296,9 @@
 
     /* ===== 1. 설렘 (배움 놀이: 색 찾기 — 첫 조작) — 멀리서 넓게 ===== */
     scene('uc_bg2_hill', 400);
-    put(T, uni, X(800, 600), 365, { look: 'hide_cloud', to: 'left', s: .6 });    // 언덕 너머 먼 곳(원근으로만 작게): 꼬리 끝 7줄만 구름 위로
-    put(T, FG.cloud_hill, X(790, 590), 372);
+    /* 하늘의 구름 덩이(배경 구름 띠 아래, 지평선 위 y≈200): 다현이가 올려다보는 쪽. 유니콘은 그 구름 속에 숨어 꼬리 끝만 보인다 */
+    put(T, uni, X(800, 535), 188, { look: 'hide_cloud', to: 'left', s: .6 });    // 먼 하늘(원근으로만 작게): 꼬리 끝 7줄만 구름 위로
+    put(T, FG.cloud_hill, X(790, 525), 195);
     put(T, kid, 300, FL, { look: 'stand' });
     const kinds = ['red', 'yellow', 'blue'].sort(() => Math.random() - .5), spots = X([430, 560, 690], [380, 450, 520]);
     kinds.forEach((k, i) => { put(T, blocks[k], spots[i], FL + 4); hitBox(T, blocks[k], H(P ? 62 : 100), H(P ? 70 : 100)); });

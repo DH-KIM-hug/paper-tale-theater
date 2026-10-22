@@ -152,7 +152,7 @@
     sizeFrame(); setTale();
   }
 
-  fetch('manifest.json').then(r => r.json()).then(d => { M = d; init(); })
+  fetch('manifest.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.json()).then(d => { M = d; init(); })
     .catch(() => { $('#line').textContent = 'manifest.json 을 읽지 못했습니다(node tools/dev/make_manifest.js 로 생성)'; });
 })();
 </script>
