@@ -339,6 +339,204 @@
     const POPY = a => FL - a.h - 30;      // 말풍선 글자: 머리 위쪽 (인물 얼굴을 가리지 않는다)
     const stepTo = async (a, x, ms, h = 4) => { const st = stepSfx(.2, 600); await drive(a, x, FL, ms, 'linear', h); st(); };
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 아래 놀이판 연출을 감싼 얇은 함수 =================
+       set 은 놀이판의 그 장면 자리·자세·가림 조각을 그대로 놓는다(같은 배경이 두 번 나오면 나온 순서로 구분: hill1·hill2 …).
+       그래서 set 직후(T.readInstant()) enter 의 at·look·fg 동사는 놓여 있는 것을 건드리지 않는다. 세로 화면 x 는 놀이판 값(PMAP)으로 바꾼다. */
+    const inst = () => T.readInstant();
+    const rGift = flowers.red, RCLOUD_TOP = FL - 170, RMANE = () => [-uni.w * .14, -uni.h * .64];
+    const SHORT = { uc_bg2_hill: 'hill', uc_bg2_cloudland: 'cloudland', uc_bg2_night_forest: 'forest', uc_bg2_waterfall: 'waterfall', uc_bg2_dusk_road: 'dusk', uc_bg2_moon_night: 'moon' };
+    const PMAP = {
+      hill1: { 520: 400 }, cloudland1: { 470: 400 }, cloudland2: { 560: 420, 660: 520, 700: 560, 790: 640, 880: 700 }, forest1: { 400: 455 },
+      waterfall2: { 310: 290 }, dusk1: { 430: 380 }, moon1: { 500: 490, 430: 440, 830: 690 }, moon2: { 585: 705 },
+    };
+    let rTag = '', rTok = 0, rPicked = false; const rSeen = {};
+    const px = x => (P && PMAP[rTag] && PMAP[rTag][x] != null ? PMAP[rTag][x] : x);
+    const num = s => { s = String(s).trim(); const m = /^FL([+-]\d+)?$/.exec(s); return m ? FL + (m[1] ? +m[1] : 0) : +s; };
+    const aft = (a, fn) => { const p = a._mv; return p ? p.then(fn) : fn(); };
+    const rwalk = (a, x, y, ms, ease = 'linear') => {   /* 걷기는 기다리지 않는다(말하는 동안 걷는다). 같은 배우의 다음 동사가 끝나기를 기다린다 */
+      if (inst()) { a.place(x, y); return null; }
+      const st = stepSfx(.2, 600);
+      const p = (async () => { await (ease === 'linear' ? drive(a, x, y, ms, 'linear', 4) : a.move(x, y, ms, ease)); st(); })().finally(() => { if (a._mv === p) a._mv = null; });
+      a._mv = p; return null;
+    };
+    const rPick = async () => {   /* 떨어진 꽃을 주워 바구니에 쏙 */
+      kid.hop(8, 300); sfx('pop', .4);
+      await rGift.move(basket.x, FL - 150, 600, 'ease-out');
+      rGift.setScale(.7); T.world.appendChild(basket.pos);
+      await rGift.move(basket.x + 4, FL - 22, 450, 'ease-in');
+      T.pop(basket.x, FL - 120, tr('쏙!')); sfx('paper_down', .4);
+    };
+    const forestL = (kidLook, kidX) => {
+      scene('uc_bg2_night_forest', 590, .65);
+      put(T, uni, X(30, 260), FL - 10, { look: 'peek_tree', to: 'right' });
+      put(T, FG.tree_trunk, X(70, 300), FL + 40);
+      put(T, bush, X(840, 745), FL - 6, { look: 'a' });
+      put(T, deer, X(690, 650), FL, { look: kidLook === 'walk' ? 'hurt' : 'relief', to: 'left' });
+      put(T, kid, kidX, FL, { look: kidLook, to: 'right' });
+      put(T, FG.pine_branch, X(900, 790), 210); put(T, FG.fern_night, X(70, 290), 600);
+    };
+    const fallsL = (kidX, withBasket) => {
+      scene('uc_bg2_waterfall', 420, .55);
+      fallsAnim(T);
+      put(T, rainbow, 690, 400, { look: 'a' });
+      put(T, uni, FALL.x + 40, FALL.lake + 2, { look: 'peek_spray', to: 'left', s: .75 });
+      put(T, FG.spray, FALL.x, FALL.lake + 10, { s: .85 });
+      put(T, horse, X(470, 450), FL, { look: 'hungry', to: 'left' });
+      put(T, kid, kidX, FL, { look: 'walk', to: 'right' });
+      put(T, basket, kid.x + 85, FL, { look: 'a' }); if (!withBasket) hide(basket);
+      put(T, FG.grass_flowers, X(30, 60), 600);
+    };
+    const LAYOUT = {
+      hill1() {
+        scene('uc_bg2_hill', X(400, 430));
+        put(T, uni, X(800, 535), 188, { look: 'hide_cloud', to: 'left', s: .6 });
+        put(T, FG.cloud_hill, X(790, 525), 195);
+        put(T, kid, X(300, 260), FL, { look: 'stand' });
+        put(T, basket, kid.x + X(85, 80), FL, { look: 'a' });
+        put(T, rGift, X(470, 420), FL + 6, { look: 'a' });   /* 바람에 떨어진 꽃 (대본에 동사가 없어 첫 kid:hop 뒤 저절로 주워 넣는다) */
+        put(T, FG.grass_flowers, X(110, 90), 600);
+      },
+      cloudland1() {
+        scene('uc_bg2_cloudland', 470, .7);
+        put(T, uni, X(1060, 860), FL + 30, { look: 'peek_cloud_horn', to: 'left' });
+        put(T, FG.cloud_bank, X(985, 785), FL + 60);
+        put(T, cloud, X(620, 550), FL - 50, { look: 'a' });
+        put(T, sheep, cloud.x, RCLOUD_TOP + 18, { look: 'cry', to: 'left' });
+        put(T, kid, X(280, 345), FL, { look: 'walk', to: 'right' });
+        put(T, FG.cloud_wisp, X(110, 250), 600);
+      },
+      cloudland2() {
+        scene('uc_bg2_cloudland', 480, .7);
+        put(T, uni, X(935, 755), FL + 2, { look: 'peek_cloud_horn', to: 'left' });
+        put(T, home, X(880, 700), FL + 6);
+        put(T, kid, X(150, 330), FL, { look: 'walk', to: 'right' });
+        put(T, sheep, kid.x + 150, FL, { look: 'happy', to: 'right' });
+        put(T, FG.cloud_wisp, X(110, 250), 600);
+      },
+      forest1() { forestL('walk', X(200, 360)); },
+      forest2() { forestL('sad', X(400, 455)); },
+      waterfall1() { fallsL(X(60, 150), false); },
+      waterfall2() { fallsL(X(250, 250), true); },
+      dusk1() {
+        scene('uc_bg2_dusk_road', 500);
+        put(T, FG.bare_branch, X(150, 330), 236);
+        put(T, kid, X(760, 640), FL, { look: 'tired', to: 'left' });
+      },
+      moon1() {
+        scene('uc_bg2_moon_night', 540);
+        put(T, uni, X(745, 655), FL - 5, { look: 'hide_bush', to: 'right' });
+        put(T, cbush, X(930, 760), FL + 20);
+        put(T, kid, X(640, 600), FL, { look: 'tired', to: 'left' });
+        put(T, FG.fern_night, X(70, 400), 600);
+      },
+      moon2() {
+        scene('uc_bg2_moon_night', 500, 1);
+        if (P) camSnap(790, 280, .6);
+        put(T, halo, 878, 86 + HT.uc_mid_moon_halo / 2); T.bg.appendChild(halo.pos); halo.pos.style.opacity = 0;
+        put(T, kid, X(420, 650), FL, { look: 'stand' });
+        put(T, uni, X(720, 840), FL, { look: 'stand', to: 'left' }); uni.pos.style.opacity = 0;
+      },
+      hill2() {
+        scene('uc_bg2_hill', X(400, 450));
+        put(T, kid, X(360, 300), FL, { look: 'walk', to: 'right' });
+        put(T, uni, X(640, 580), FL, { look: 'stand', to: 'left' });
+        put(T, FG.grass_flowers, X(110, 230), 600);
+        const tok = rTok;   /* 대본에 동사가 없어: 첫 줄을 읽는 동안 기다렸다가 바구니 속 빨간 꽃을 갈기에 꽂아 준다 */
+        setTimeout(async () => {
+          if (tok !== rTok || rTag !== 'hill2') return;
+          kid.look('stand'); sfx('paper_up', .4);
+          put(T, rGift, kid.x + 40, FL - 100, { look: 'a', s: .55 }); fadeIn(rGift, 300);
+          const m = RMANE();
+          await rGift.move(uni.x + m[0], FL + m[1], 1200, 'ease-in-out');
+          if (tok !== rTok) return;
+          glow(uni, 1200); sparkleSfx(T); T.pop(uni.x + m[0], FL + m[1] - 70, tr('반짝!'), '#D9A94E');
+        }, 4200);
+      },
+    };
+    const ACTS = { kid, uni, sheep, deer, horse };
+    const actorVerb = name => (verb, a1, a2) => {
+      const a = ACTS[name];
+      if (verb === 'look') { if (inst()) return; return aft(a, () => a.look(a1, a2)); }
+      if (verb === 'at') { if (inst()) return; const [x, y] = String(a1).split(',').map(num); return aft(a, () => put(T, a, px(x), isNaN(y) ? FL : y)); }
+      if (verb === 'turn') return aft(a, () => a.turn(a1));
+      if (verb === 'walk') { const [x, y, ms] = String(a1).split(',').map(num); return name === 'uni' ? rwalk(a, px(x), y, ms, 'ease-in-out') : rwalk(a, px(x), FL, y); }
+      if (verb === 'hop') {
+        if (inst()) return;
+        if (name === 'kid' && rTag === 'hill1' && !rPicked) { rPicked = true; setTimeout(() => { if (rTag === 'hill1') rPick(); }, 2300); }
+        if (name === 'horse' && a1) return aft(a, async () => { for (let i = 0; i < +a1; i++) await a.hop(8, 520); });
+        return aft(a, () => a.hop(name === 'kid' ? 10 : 8, 380));
+      }
+      if (verb === 'hide') return aft(a, () => hide(a));
+      if (verb === 'front') { if (name === 'kid') sfx('paper_up', .5); T.world.appendChild(a.pos); if (name === 'uni') T.world.appendChild(FG.fern_night.pos); return; }
+      if (verb === 'glow') return aft(a, () => glow(a, 1500));
+      if (verb === 'fade') { a.pos.style.opacity = ''; fadeIn(a, 1400); return; }
+      if (verb === 'wiggle') return aft(a, () => a.wiggle(3, 300));
+      if (verb === 'jump') {   /* 구름에서 포물선으로 뛰어내림 (놀이판 그대로) */
+        const land = kid.x + 150, sx = a.x, sy = a.y;
+        sfx('whoosh', .4);
+        const p = (async () => { await a.move((sx + land) / 2 + 30, sy - 40, 250, 'ease-out'); await a.move(land, FL, 650, 'ease-in'); })().finally(() => { if (a._mv === p) a._mv = null; });
+        a._mv = p; return;
+      }
+      if (verb === 'behind') return aft(a, () => T.world.insertBefore(a.pos, home.pos));
+      console.warn('[read] 모르는 동사', name, verb);
+    };
+    const R = {
+      set(key) {
+        const k = SHORT[key]; rSeen[k] = (rSeen[k] || 0) + 1; rTag = k + rSeen[k]; rTok++;
+        ALL.forEach(a => { hide(a); a._mv = null; });
+        (LAYOUT[rTag] || (() => console.warn('[read] 장면 모름', rTag)))();
+      },
+      kid: actorVerb('kid'), uni: actorVerb('uni'), sheep: actorVerb('sheep'), deer: actorVerb('deer'), horse: actorVerb('horse'),
+      cam() { /* 카메라는 set 이 정한다 (cam:wide = 장면 기본, cam:moon = moon2 레이아웃) */ },
+      follow(a) { if (inst()) return; const [x, ms] = String(a).split(',').map(Number); follow(px(x), ms || 800); },
+      cloud() {}, bush() {}, rainbow() {}, home() {}, cbush() {},
+      halo(verb) { if (verb === 'fade') { halo.pos.style.opacity = ''; fadeIn(halo, 2400); } },
+      basket(verb, a1) {
+        if (verb === 'show') { put(T, basket, kid.x + 85, FL, { look: 'a' }); fadeIn(basket, 400); T.world.appendChild(FG.grass_flowers.pos); return; }
+        if (verb === 'move') { const [x, ms] = String(a1).split(',').map(Number); sfx('paper_up', .5); return basket.move(px(x), FL, ms || 1000, 'ease-in-out'); }
+        if (verb === 'hide') return fadeOut(T, basket, 600);
+      },
+      async thorns(verb) {
+        if (verb === 'show') {
+          thorns.forEach((t, i) => { put(T, t, deer.x + THORN[i][0], FL + THORN[i][1], { look: 'a' }); fadeIn(t, 500); });
+          return;
+        }
+        for (let i = 0; i < 3; i++) {   /* 쏙, 쏙, 쏙 (놀이판 가시 빼기, 숫자 목소리 없이) */
+          deer.wiggle(3, 300);
+          const t = thorns[i], tx = t.x, ty = t.y;
+          sfx('pop', .5);
+          await T.anim(t.pos, [{ transform: `translate(${tx}px,${ty}px)`, opacity: 1 }, { transform: `translate(${tx - 30}px,${ty - 80}px)`, opacity: 0 }], 650);
+          hide(t); await sleep(400);
+        }
+      },
+      fg(name, a1) { if (a1 === 'wiggle' && FG[name]) return wiggleEl(T, FG[name].pos); },
+      cut(n) { return T.cutImage([{ src: src(n), hold: n.endsWith('hug') ? 4200 : 3600 }]); },
+      pop(spec) {
+        const parts = String(spec).split(','), first = parts[0].trim();
+        if (ACTS[first]) {
+          const a = ACTS[first], txt = parts.slice(1).join(',').trim();
+          if (first === 'sheep') return T.pop(a.x, POPY(a) - 90, tr(txt), txt === '훌쩍…' ? '#3E7CB1' : undefined);
+          if (first === 'horse') return T.pop(a.x - (txt === '냠냠' ? 10 : 20), POPY(a) - (txt === '냠냠' ? 50 : 40), tr(txt));
+          if (first === 'uni') return T.pop(a.x + 40, FL - HT.uc_unicorn_stand - 100, tr(txt), '#D9A94E');
+          return T.pop(a.x, POPY(a), tr(txt));
+        }
+        const x = rTag === 'moon1' ? X(830, 560) : +first;
+        T.pop(x, num(parts[1]), tr(parts.slice(2).join(',').trim()));
+      },
+      vo(k) { vo(k); },
+      fx(n) {
+        if (n === 'boing') return AudioFX.sfx('boing', .5);
+        if (n === 'sparkle') return sparkleSfx(T);
+        if (n === 'tada') return sfx('tada', .4) || sparkleSfx(T);
+        if (n === 'paper_up') return sfx('paper_up', .5);
+        if (n === 'pop') return sfx('pop', .5);
+        if (n === 'whoosh') return sfx('whoosh', .4);
+        return sfx(n);
+      },
+      confetti() { T.confetti(); sfx('tada') || sparkleSfx(T); },
+    };
+    if (T.reading()) return T.readPlay(R);
+
     /* ===== 1. 설렘 (배움 놀이: 꽃 선물 색 고르기 — 첫 조작) — 멀리서 넓게 ===== */
     const ANS = Object.keys(FLOWER)[Math.floor(Math.random() * 7)];   // 오늘 유니콘에게 줄 꽃 색(7색 중 하나)
     scene('uc_bg2_hill', X(400, 430));
@@ -621,5 +819,5 @@
     return '너도 누군가에게 친절하면, 너만의 유니콘을 만날 수 있어.';
   }
 
-  Tale.mount({ title: '유니콘을 찾아서', subtitle: '', run: T => run(Tale.api) });
+  Tale.mount({ title: '유니콘을 찾아서', subtitle: '', read: true, run: T => run(Tale.api) });
 })();
