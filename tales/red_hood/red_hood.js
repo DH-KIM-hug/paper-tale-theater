@@ -23,6 +23,9 @@
   const C = { bean: '#A93B32', ink: '#2E241C' };
 
   /* 여러 자세를 겹쳐 두고 look()으로 하나만 보인다. 자세: [파일, 키, 그림이 원래 보는 쪽] — 발끝 가운데가 (0,0) */
+  const ACTORS = [];   // 누르는 대상이 아닌 배우·소품은 누름을 받지 않는다(마지막 장 빨간 모자가 할머니·사냥꾼 그림에 가려 안 눌리던 것, 2026-10-22). 대상만 live() 로 연다
+  const quiet = () => ACTORS.forEach(a => { a.pos.style.pointerEvents = 'none'; });
+  const live = a => { a.pos.style.pointerEvents = 'auto'; return a.pos; };
   function mk(T, poses) {
     const looks = {};
     const a = T.actor(T.world, -400, GROUND, g => {
@@ -33,6 +36,7 @@
       });
     });
     a.want = 'left';
+    a.pos.style.pointerEvents = 'none'; ACTORS.push(a);
     a.turn = d => { a.want = d; a.face(looks[a.cur].nat === d ? 'left' : 'right'); };
     a.look = (k, d) => {
       Object.entries(looks).forEach(([n, l]) => { l.wrap.style.display = n === k ? '' : 'none'; });
@@ -49,6 +53,11 @@
     return a;
   }
   const hide = a => { a.pos.style.display = 'none'; };
+  /* 작은 소품도 손가락이 닿게: 투명한 누르는 자리를 깐다(발끝 가운데가 0,0). 화면 짧은 변 80px 이상 (2026-10-22) */
+  function widen(T, a, w = 100, h = 100) {
+    const r = T.el('rect', { x: -w / 2, y: -h, width: w, height: h, fill: '#000', 'fill-opacity': 0 }, a.pos);
+    a.pos.insertBefore(r, a.pos.firstChild); return a;
+  }
 
   function bgImage(T, key, { x = BGBOX.x, y = BGBOX.y, w = BGBOX.w, h = BGBOX.h, parent } = {}) {
     return T.el('image', { href: bgSrc(key), x, y, width: w, height: h, preserveAspectRatio: 'none' }, parent || T.bg);
@@ -132,8 +141,9 @@
 
   async function run(T) {
     const { sleep, say, camSnap } = T;
+    if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const pan = (cx = 500) => camSnap(T.viewWidth() < 990 ? cx : 500, 280, 1);
-    const scene = (key, cx) => { T.clear(); bgImage(T, key); pan(cx); };
+    const scene = (key, cx) => { T.clear(); bgImage(T, key); pan(cx); quiet(); };
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
     await Promise.race([Promise.all(loads), sleep(4000)]);
@@ -149,6 +159,7 @@
     const hunter = mk(T, { walk: ['hunter_walk', 290, 'right'], tickle: ['hunter_tickle', 290, 'left'], laugh: ['hunter_laugh', 290, 'left'] });
     const basket = prop(T, 'basket', 100), bread = prop(T, 'bread', 62), milk = prop(T, 'milk', 105), apple = prop(T, 'apple', 62);
     const frame = prop(T, 'frame', 200);
+    widen(T, bread, 96, 96); widen(T, milk, 96, 110); widen(T, apple, 96, 96);
 
     /* --- 1. 바구니 싸기 --- */
     scene('kitchen');
@@ -160,10 +171,12 @@
     put(T, bread, 370, TABLE_Y); put(T, milk, 440, TABLE_Y); put(T, apple, 510, TABLE_Y);
     await T.curtain(true);
     await say('엄마가 빨간 모자에게 말했어요. "할머니가 아프시단다. 맛있는 걸 가져다 드리렴."');
-    await say('빵, 우유, 사과를 바구니에 담아요!');
+    let askG1 = '빵, 우유, 사과를 바구니에 담아요!'; // 안내는 첫 번째 누름에만 (T.ask)
+    const askOnce1 = f => { const g = askG1; askG1 = null; return g ? T.ask(g, f) : f(); };
     const pack = [[bread, '하나!'], [milk, '둘!'], [apple, '셋!']];
     for (const [it, word] of pack) {
-      await T.tap(it.pos, { prompt: '톡! 바구니에 담아요.' });
+      await askOnce1(() => T.tap(live(it), { prompt: '톡! 바구니에 담아요.' }));
+      it.pos.style.pointerEvents = 'none';
       popSfx(T); T.pop(it.x, it.y - 130, word);
       await it.move(500, 480, 450, 'ease-in');
       hide(it); basket.hop(14, 260);
@@ -180,7 +193,7 @@
     }, hood.pos);
     await say('"길에서 벗어나면 안 돼. 모르는 사람과 이야기하지도 마."');
     await say('"네, 엄마! 약속해요."');
-    await T.tap(hood.pos, { prompt: '빨간 모자를 톡! 새끼손가락을 걸어요.' });
+    await T.tap(live(hood), { prompt: '빨간 모자를 톡! 새끼손가락을 걸어요.' });
     popSfx(T); T.pop(500, 200, '약속!');
     await Promise.all([hood.hop(36, 450), mama.hop(20, 450)]);
     await say('엄마와 빨간 모자는 새끼손가락을 걸었어요.');
@@ -226,10 +239,11 @@
     const NAME = { red: '빨간', yellow: '노란', blue: '파란' };
     const vases = colors.map((c, i) => {
       const v = prop(T, 'vase_' + c, 104); v.color = c; v.bq = [];
-      put(T, v, 380 + i * 120, 535); return v;
+      widen(T, v, 100, 110); put(T, v, 380 + i * 120, 535); return v;
     });
     put(T, hood, P ? 340 : 270, 330, { look: 'pick', to: 'right', s: .75 }); // 2026-10-20 세로 화면에서 왼쪽 밖으로 잘리던 것
-    await say('꽃밭에 알록달록 꽃이 가득해요. 꽃을 같은 색 꽃병에 쏙쏙 담아요!');
+    let askG2 = '꽃밭에 알록달록 꽃이 가득해요. 꽃을 같은 색 꽃병에 쏙쏙 담아요!'; // 안내는 첫 번째 누름에만 (T.ask)
+    const askOnce2 = f => { const g = askG2; askG2 = null; return g ? T.ask(g, f) : f(); };
     const seq = ['red', 'yellow', 'blue', 'blue', 'red', 'yellow'];
     for (const [i, col] of seq.entries()) {
       const fl = prop(T, 'flower_' + col, 130);
@@ -237,9 +251,9 @@
       fl.pos.animate([{ opacity: 0 }, { opacity: 1 }], 300);
       await fl.hop(30, 400);
       const answer = vases.find(v => v.color === col);
-      await T.choose(vases.map(v => ({ el: v.pos, ok: v === answer,
+      await askOnce2(() => T.choose(vases.map(v => ({ el: live(v), ok: v === answer,
         onWrong: async () => { v.wiggle(8, 380); AudioFX.miss && AudioFX.miss(); } })), {
-        prompt: `${NAME[col]} 꽃이에요! 같은 색 꽃병을 톡!`, where: '꽃이랑 색깔이 같은 꽃병이 어디 있을까?', who: `${NAME[col]} 꽃병이에요! 반짝이는 꽃병을 눌러 봐요!` });
+        prompt: `${NAME[col]} 꽃이에요! 같은 색 꽃병을 톡!`, where: '꽃이랑 색깔이 같은 꽃병이 어디 있을까?', who: `${NAME[col]} 꽃병이에요! 반짝이는 꽃병을 눌러 봐요!` }));
       popSfx(T);
       await fl.move(answer.x, 440, 420, 'ease-in');
       hide(fl);
@@ -279,21 +293,19 @@
       T.clear(); bgImage(T, 'cottage'); camSnap(480, 310, 2.2);
       put(T, hood, 470, 366, { look: 'knock', to: 'left', s: .34 });
     }, wolf.pos);
-    await say('빨간 모자는 숲속 할머니 집에 도착했어요. 문을 톡 두드려요!');
-    await T.tap(hood.pos, { prompt: '빨간 모자를 톡! 똑똑똑 노크해요.' });
+    await T.ask('빨간 모자는 숲속 할머니 집에 도착했어요. 문을 톡 두드려요!', () => T.tap(live(hood), { prompt: '빨간 모자를 톡! 똑똑똑 노크해요.' }));
     for (let k = 0; k < 3; k++) { knock(T); T.pop(560, 250, '똑!'); await hood.hop(8, 200); }
     await say('"들어오렴~" 안에서 쉰 목소리가 들렸어요.');
 
     /* --- 8. 이상한 할머니 --- */
     await T.cutImage([{ src: cutSrc('granwolf'), hold: 3000 }], { hold: 3000 });
     await T.sceneCard('이상해요', () => {
-      scene('bed', P ? 510 : 590);
+      scene('bed', P ? 470 : 590);
       put(T, wolf, 335, 472, { look: 'granny', to: 'left' });
       put(T, frame, 805, 278); // 그림 속 빈 액자 안에 진짜 할머니 사진
       put(T, hood, 640, 510, { look: 'wonder', to: 'left' });
     }, wolf.pos);
     await say('"할머니, 오셨어요?" 그런데 침대 속 할머니가 어딘가 이상해요.');
-    await say('벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!');
     const WX = 335, WHt = 405 * RS.wolf_granny, WW = WHt * ASP.wolf_granny, WG = 472; // 2026-10-20 새 늑대 그림(오른쪽을 봄)에 맞춰 귀·눈·입 자리를 다시 잡음
     const px = f => WX - WW / 2 + f * WW, py = f => WG - WHt + f * WHt;
     const parts = {
@@ -303,15 +315,17 @@
     };
     const left = Object.keys(parts);
     const PROMPT = '사진 속 할머니와 달라 보이는 곳을 톡!';
+    let askG4 = '벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!'; // 안내는 첫 번째 찾기에만 (T.ask)
+    const askOnce4 = f => { const g = askG4; askG4 = null; return g ? T.ask(g, f) : f(); };
     while (left.length) {
-      const p = parts[await findSpot(T, left.map(k => ({ key: k, ...parts[k] })), PROMPT, () => wolf.wiggle(4, 400))];
+      const p = parts[await askOnce4(() => findSpot(T, left.map(k => ({ key: k, ...parts[k] })), PROMPT, () => wolf.wiggle(4, 400)))];
       const got = { key: left.find(k => parts[k] === p) };
       left.splice(left.indexOf(got.key), 1);
       ring(T, p.at[0], p.at[1], p.r + 8);
       await T.camTo(p.at[0], p.at[1], 2, 600);
       popSfx(T); T.pop(p.at[0], p.at[1] - 70, p.w);
       await say(p.q); await say(p.a);
-      await T.camTo(P ? 510 : 590, 280, 1, 500);
+      await T.camTo(P ? 470 : 590, 280, 1, 500);
       if (!left.length) break;
       await say('빨간 모자는 고개를 갸웃했어요. 또 이상한 곳이 있나 봐요.');
     }
@@ -321,13 +335,12 @@
     /* --- 9. 옷장으로! --- */
     await T.cutImage([{ src: cutSrc('jumpup'), sfx: 'pow', hold: 2600 }], { hold: 2600 });
     await T.sceneCard('옷장으로!', () => {
-      scene('room', 380);
-      put(T, hood, 560, 510, { look: 'surprise', to: 'left' });
+      scene('room', P ? 330 : 380);   // 세로: 옷장(40~255)이 화면 안에 온전히 들어오게 (2026-10-22)
+      put(T, hood, P ? 500 : 560, 510, { look: 'surprise', to: 'left' });
       put(T, wolf, 800, 450, { look: 'jump', to: 'left' });
     }, hood.pos);
     const wardrobeHot = hotRect(T, 40, 125, 215, 345);
-    await say('늑대가 벌떡 일어났어요! 빨간 모자야, 어서 숨어요! 옷장을 톡!');
-    await T.tap(wardrobeHot, { prompt: '옷장을 톡! 쏙 숨어요.' });
+    await T.ask('늑대가 벌떡 일어났어요! 빨간 모자야, 어서 숨어요! 옷장을 톡!', () => T.tap(wardrobeHot, { prompt: '옷장을 톡! 쏙 숨어요.' }));
     wardrobeHot.remove();
     await hood.move(145, 495, 650); hood.look('hide'); await sleep(250);
     AudioFX.sfx('door') || AudioFX.sfx('creak');
@@ -343,8 +356,7 @@
     /* --- 10. 사냥꾼 --- */
     await T.sceneCard('사냥꾼', () => { pan(620); }, wolf.pos);
     const windowHot = hotRect(T, 420, 140, 160, 170);
-    await say('창밖으로 지나가던 사냥꾼이 코 고는 소리를 들었어요. 창문을 톡톡 두드려 봐요!');
-    await T.tap(windowHot, { prompt: '창문을 톡!' });
+    await T.ask('창밖으로 지나가던 사냥꾼이 코 고는 소리를 들었어요. 창문을 톡톡 두드려 봐요!', () => T.tap(windowHot, { prompt: '창문을 톡!' }));
     windowHot.remove();
     knock(T); T.pop(500, 120, '똑똑!');
     put(T, hunter, 1150, 510, { look: 'walk', to: 'left' });
@@ -352,7 +364,7 @@
     await hunter.move(600, 510, 1200);
     hunter.look('tickle');
     await say('"늑대잖아! 이럴 땐 간질간질 간지럼이 최고지!"');
-    await T.mash(wolf.pos, { count: 5, prompt: '늑대를 톡톡톡! 간지럼을 태워요.', onStep: i => {
+    await T.mash(live(wolf), { count: 5, prompt: '늑대를 톡톡톡! 간지럼을 태워요.', onStep: i => {
       wolf.wiggle(6 + i * 2, 260); hunter.hop(12, 260); popSfx(T);
       T.pop(780, 300 - i * 6, ['킥', '킥킥', '키득', '하하', '꺄르르!'][i - 1] || '킥');
     } });
@@ -378,18 +390,20 @@
       put(T, bread, 480, 296); put(T, milk, 555, 296); put(T, apple, 630, 296); // 그림 속 식탁 윗면
       [bread, milk, apple].forEach(a => T.world.appendChild(a.pos));
     }, granny.pos);
-    await say('할머니 집 식탁에서 모두 함께 차를 마셔요. 바구니 속 간식을 한 가지씩 나눠 줘요!');
+    let askG3 = '할머니 집 식탁에서 모두 함께 차를 마셔요. 바구니 속 간식을 한 가지씩 나눠 줘요!'; // 안내는 첫 번째 누름에만 (T.ask)
+    const askOnce3 = f => { const g = askG3; askG3 = null; return g ? T.ask(g, f) : f(); };
     const share = [[bread, granny, '할머니!', '빵은 할머니께 톡!'], [milk, hood, '빨간 모자!', '우유는 빨간 모자 톡!'], [apple, hunter, '아저씨!', '사과는 사냥꾼 아저씨 톡!']];
     put(T, hunter, P ? 695 : 770, 510, { look: 'laugh', to: 'left', s: P ? .72 : 1 });
     for (const [it, who, word, pr] of share) {
-      await T.tap(it.pos, { prompt: pr });
+      await askOnce3(() => T.tap(live(it), { prompt: pr }));
+      it.pos.style.pointerEvents = 'none'; // 옮겨 놓은 간식이 뒤에 눌러야 할 빨간 모자를 덮지 않게
       popSfx(T); T.pop(who.x, 250, word);
       await it.move(who.x - (who === hood ? 0 : 0), who.y - 105, 520);
       who.hop(20, 300);
     }
     await say('"모두 고마워요!" 할머니는 활짝 웃었어요.');
     await say('"이제 약속을 꼭 지킬게요. 길에서 벗어나지 않고, 모르는 사람과는 이야기하지 않을래요."');
-    await T.tap(hood.pos, { prompt: '빨간 모자를 톡! 다시 약속해요.' });
+    await T.tap(live(hood), { prompt: '빨간 모자를 톡! 다시 약속해요.' });
     popSfx(T); T.pop(hood.x, 200, '약속!');
     await Promise.all([hood.hop(40, 500), granny.hop(20, 500)]);
     T.confetti();
