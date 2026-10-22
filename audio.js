@@ -137,9 +137,9 @@ const AudioFX = (() => {
   })();
   const samples = {};
   /* 같은 소리의 여러 버전: 기본 이름(rooster.mp3) 말고 rooster_2.mp3, rooster_3.mp3 … 가 있으면 재생할 때마다 바꿔 고른다 (버전 수는 기본 포함) */
-  const VARIANTS = { 'animals/duck': 3, 'animals/cow': 3, 'animals/pig': 3, 'animals/dog': 3, 'animals/owl': 3, 'animals/frog': 3,
-    'animals/rooster': 3, 'animals/cat': 3, 'animals/sheep': 3, 'animals/donkey': 3, 'animals/tiger': 2, 'sfx/knock': 3,
-    'sfx/crunch': 3, 'sfx/chomp': 3, 'sfx/gulp': 3, 'sfx/gom_se_mari': 2 };
+  const VARIANTS = { 'animals/duck': 2, 'animals/cow': 3, 'animals/pig': 2, 'animals/dog': 3, 'animals/owl': 3, 'animals/frog': 3,
+    'animals/rooster': 2, 'animals/cat': 3, 'animals/sheep': 2, 'animals/donkey': 2, 'animals/tiger': 2, 'sfx/knock': 3,
+    'sfx/crunch': 2, 'sfx/chomp': 3, 'sfx/gulp': 3, 'sfx/gom_se_mari': 2 };
   const variantPath = (base, i) => i === 1 ? base + '.mp3' : base + '_' + i + '.mp3';
   const lastVariant = {};
   function pickVariant(path) {
@@ -186,24 +186,24 @@ const AudioFX = (() => {
     boing: 'sfx/boing', chomp: 'sfx/chomp', gulp: 'sfx/gulp', slide: 'sfx/slide_down' };
   /* 만화 컷용 신나는 효과음 (sounds/CREDITS.md) — sting()이 여러 개를 겹쳐 쓴다 */
   const COMIC = ['spring', 'slide_up', 'slide_down', 'zip', 'cork', 'doop', 'sparkle', 'xylo_up', 'xylo_down', 'giggle_xylo',
-    'crash', 'cymbal', 'drumroll', 'tada', 'womp', 'pan', 'squeak', 'splash_big', 'bubbles', 'laugh_deep', 'giggle', 'cheer',
+    'crash', 'cymbal', 'drumroll', 'tada', 'womp', 'squeak', 'splash_big', 'bubbles', 'giggle', 'cheer',
     'rattle', 'uah'];
   const EXTRA = ['sfx/knock', 'sfx/crunch', 'sfx/chomp', 'sfx/gulp', 'sfx/chop', 'sfx/creak', 'sfx/drum', 'sfx/step_grass', 'sfx/step_wood', 'sfx/door', 'sfx/blow', 'sfx/blow_long',
     ...COMIC.map(n => 'sfx/' + n),
-    ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a), 'sfx/paper_turn', 'sfx/baby_cry', 'sfx/baby_giggle', 'sfx/note_xylo', 'sfx/gom_se_mari'];
+    ...['tiger', 'cow', 'pig', 'duck', 'rooster', 'sheep', 'dog', 'cat', 'owl', 'frog', 'frogs', 'donkey'].map(a => 'animals/' + a), 'sfx/paper_turn', 'sfx/baby_cry', 'sfx/baby_giggle', 'sfx/gom_se_mari'];
 
   /* 스팅: [효과음, 시작(초), 음량, 앞부분만 쓸 길이(초)?] 를 겹쳐서 한 번에 "휙-딱-반짝!" 처럼 울린다.
      음량은 내레이션이 묻히지 않게 0.35~0.95 사이, 전체에 STING_VOL을 곱한다 */
   const STING_VOL = 0.8;
   const STINGS = {
-    hit:      [['zip', 0, .6], ['pan', .1, .95], ['sparkle', .22, .45]],                        // 휙-땡!-반짝
+    hit:      [['zip', 0, .6], ['bonk', .1, .95], ['sparkle', .22, .45]],                        // 휙-땡!-반짝
     poke:     [['zip', 0, .55], ['poke', .1, .85], ['squeak', .16, .75], ['slide_up', .38, .5]], // 휙-콕!-삑-뿅~
     bigHit:   [['drumroll', 0, .55, .42], ['boom', .4, 1], ['crash', .42, .75], ['cymbal', .46, .6]], // 두구두-쾅!와장창-챙
     slip:     [['slide_down', 0, .6], ['thud', .62, .9], ['boing', .72, .6]],                  // 삐유~-쿵-보잉
     bite:     [['zip', 0, .55], ['chomp', .1, .95], ['squeak', .2, .6], ['uah', .42, .8]],      // 휙-앙!-삑-으악
     splash:   [['whoosh', 0, .6], ['splash_big', .14, .9], ['splash', .2, .5], ['bubbles', .6, .5]], // 휙-풍덩!-보글보글
     roll:     [['rattle', 0, .7], ['drumroll', .08, .35, .6], ['spring', .7, .55], ['boing', .78, .45]], // 달그락 돌돌-띠용
-    laugh:    [['giggle_xylo', 0, .45], ['laugh_deep', .2, .8]],                               // 또로롱-으하하
+    laugh:    [['giggle_xylo', 0, .45], ['giggle', .2, .8]],                                     // 또로롱-까르르
     fail:     [['womp', 0, .7]],                                                               // 빠밤빠밤~
     magic:    [['zip', 0, .35], ['sparkle', .05, .6], ['xylo_up', .3, .55]],                    // 반짝반짝-또로롱
     win:      [['drumroll', 0, .55, .7], ['tada', .62, .85], ['cymbal', .64, .4], ['cheer', .8, .45]], // 두구두구-짜잔!-와아
@@ -222,7 +222,11 @@ const AudioFX = (() => {
     /* 실로폰 음 하나: semi = 가운데 도(C5 샘플 그대로)에서 올린 반음 수(내리면 음수). 샘플이 아직 없으면 false */
     /* 아기 우는 소리(녹음). 샘플이 아직 없으면 합성 훌쩍임 */
     babyCry(vol = .8) { if (playSample('sfx/baby_cry.mp3', vol)) return true; api.whimper(); return false; },
-    note(semi, dur, vol = .6, when = 0) { return playSample('sfx/note_xylo.mp3', vol, when, dur, Math.pow(2, semi / 12)); },
+    note(semi, dur, vol = .6, when = 0) { // 실로폰 음 하나 — 샘플 대신 합성음(가운데 도 C5 = 523Hz 기준)
+      const hz = 523.25 * Math.pow(2, semi / 12), d = dur || .5;
+      tone(hz, d, { type: 'triangle', vol: vol * .35, when }); tone(hz * 2, d * .5, { type: 'sine', vol: vol * .08, when });
+      return true;
+    },
     /* 동물 소리로 음 하나 부르기: 녹음을 rate배 빠르게(=높게) 재생. 합창·멜로디용 */
     animalNote(name, rate, vol = .7, when = 0, dur) { return playSample('animals/' + name + '.mp3', vol, when, dur, rate, 0, true); },
     /* 클래식 녹음(sounds/music/<name>.mp3): 미리 불러 두고, music()으로 틀면 {stop(), done(Promise)}을 돌려준다.
@@ -383,11 +387,11 @@ const AudioFX = (() => {
     cymbal: () => noise(1.2, { freq: 6500, q: .3, vol: .22 }),
     drumroll: () => { for (let i = 0; i < 9; i++) noise(.05, { freq: 900, vol: .14 + i * .01, when: i * .05 }); },
     tada: () => { tone(784, .12, { type: 'triangle', vol: .22 }); [784, 988, 1175].forEach(f => tone(f, .6, { type: 'triangle', vol: .16, when: .16 })); },
-    womp: SYN.sad, pan: SYN.bonk, bonk: SYN.bonk, thud: SYN.thud, boom: SYN.boom, poke: SYN.poke,
+    womp: SYN.sad, bonk: SYN.bonk, thud: SYN.thud, boom: SYN.boom, poke: SYN.poke,
     squeak: () => { tone([1600, 2500], .12, { vol: .18 }); tone([2500, 1700], .14, { vol: .16, when: .13 }); },
     splash_big: SYN.splash, splash: SYN.splash,
     bubbles: () => run([600, 900, 700, 1100, 800], .12, 'sine', .14, .07),
-    laugh_deep: SYN.laugh, giggle: SYN.laugh,
+    giggle: SYN.laugh,
     cheer: () => noise(1.6, { freq: 1500, q: .5, vol: .15 }),
     rattle: SYN.roll, chomp: SYN.chomp, crunch: SYN.chomp, gulp: SYN.gulp, uah: SYN.yelp,
   };
