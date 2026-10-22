@@ -3,19 +3,19 @@ Object.assign(NARRATION_CLIPS, {
  "아주 먼 옛날, 엄마 염소와 일곱 마리 아기 염소가 살았어요.": "audio/el/wolf_goats/nar_9eae430ea3.mp3",
  "어느 날, 엄마 염소가 바구니를 들고 말했어요.": "audio/el/wolf_goats/nar_e3db06fbe6.mp3",
  "\"엄마는 풀을 뜯으러 다녀올게. 늑대가 오면 문을 열어 주면 안 돼!\"": "audio/el/wolf_goats/mom_3a63b371a4.mp3",
- "\"늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!\"": "audio/el/wolf_goats/mom_b487197809.mp3",
+ "\"늑대는 목소리가 굵고 거칠고, 발이 시커멓단다. 꼭 기억해!\"": "audio/el/wolf_goats/mom_462740472a.mp3",
  "\"네, 엄마!\" 아기 염소들이 큰 소리로 대답했어요.": [
   "audio/el/wolf_goats/kid_a312ae8b42.mp3",
   "audio/el/wolf_goats/nar_ddb9d8ad67.mp3"
  ],
  "엄마가 가고 얼마 뒤, 문밖에서 소리가 났어요.": "audio/el/wolf_goats/nar_99e9bad4bb.mp3",
- "\"얘들아, 엄마야. 문 열어 줘!\" 걸걸한 목소리였어요.": [
+ "\"얘들아, 엄마야. 문 열어 줘!\" 굵고 거친 목소리였어요.": [
   "audio/el/wolf_goats/wolf_bc2f7ba31b.mp3",
-  "audio/el/wolf_goats/nar_d052d06e6e.mp3"
+  "audio/el/wolf_goats/nar_c3352fc353.mp3"
  ],
  "아기 염소들이 서로 쳐다보았어요.": "audio/el/wolf_goats/nar_731fa4cd0a.mp3",
- "\"목소리가 걸걸해. 우리 엄마가 아니야!\" 첫째가 말했어요.": [
-  "audio/el/wolf_goats/kid_3268712e71.mp3",
+ "\"목소리가 굵고 거칠어. 우리 엄마가 아니야!\" 첫째가 말했어요.": [
+  "audio/el/wolf_goats/kid_5797552913.mp3",
   "audio/el/wolf_goats/nar_bf8067caa0.mp3"
  ],
  "\"저리 가요, 늑대!\" 아기 염소들이 소리쳤어요.": [
@@ -25,7 +25,7 @@ Object.assign(NARRATION_CLIPS, {
  "늑대는 곰곰이 생각했어요.": "audio/el/wolf_goats/nar_1e09e3d532.mp3",
  "\"목소리를 곱게 만들어야지. 분필을 먹어 볼까?\"": "audio/el/wolf_goats/wolf_ce05f5844b.mp3",
  "늑대의 목소리가 가늘고 고와졌어요.": "audio/el/wolf_goats/nar_429bd7ffdf.mp3",
- "\"얘들아, 엄마야. 문 열어 줘~\"": "audio/el/wolf_goats/wolf_c7c8534b3c.mp3",
+ "\"얘들아, 엄마야. 문 열어 줘~\"": "audio/el/wolf_goats/wolf_aec1bbaaab.mp3",
  "\"그럼 문틈으로 발을 보여 주세요!\" 아기 염소들이 말했어요.": [
   "audio/el/wolf_goats/kid_3c4c821f40.mp3",
   "audio/el/wolf_goats/nar_b3d65a9f7f.mp3"
@@ -65,9 +65,8 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "늑대는 배가 불러서, 나무 아래에서 쿨쿨 자고 있었어요.": "audio/el/wolf_goats/nar_62442a0dce.mp3",
  "엄마와 막내는 살금살금 다가갔어요.": "audio/el/wolf_goats/nar_78e2811576.mp3",
- "\"쉿! 늑대가 깨지 않게, 그림자 극장에서 아기들을 꺼내 줄게.\"": "audio/el/wolf_goats/mom_8c231448d7.mp3",
- "하얀 종이 극장에 엄마의 그림자가 나타났어요.": "audio/el/wolf_goats/nar_60234a6097.mp3",
- "슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!": "audio/el/wolf_goats/nar_253603c89e.mp3",
+ "\"쉿! 늑대가 깨지 않게, 살살 배에서 아기들을 꺼내 줄게.\"": "audio/el/wolf_goats/mom_c5898e4da1.mp3",
+ "엄마가 가위로 슥삭슥삭, 늑대 배를 열었어요. 늑대는 쿨쿨 자고 있었어요.": "audio/el/wolf_goats/nar_1a21b0d2e3.mp3",
  "\"엄마!\" 아기 염소 여섯 마리가 모두 무사히 나왔어요.": [
   "audio/el/wolf_goats/kid_57878e3efa.mp3",
   "audio/el/wolf_goats/nar_cb64e51092.mp3"
@@ -85,7 +84,7 @@ Object.assign(NARRATION_CLIPS, {
  "엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.": "audio/el/wolf_goats/nar_f257c8ab1e.mp3",
  "엄마 염소를 톡 눌러 봐요!": "audio/el/wolf_goats/nar_d611133639.mp3",
  "막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!": "audio/el/wolf_goats/nar_409557608c.mp3",
- "화면을 톡톡 눌러 봐요!": "audio/el/wolf_goats/nar_6eaf2926c5.mp3",
+ "늑대 배를 톡톡 눌러 봐요!": "audio/el/wolf_goats/nar_ec27b4fbee.mp3",
  "늑대를 톡! 눌러 봐요!": "audio/el/wolf_goats/nar_9bcb4e99c4.mp3",
  "돌멩이를 톡! 눌러 봐요!": "audio/el/wolf_goats/nar_4f8d247b2e.mp3"
 });

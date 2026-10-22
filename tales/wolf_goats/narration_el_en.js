@@ -12,7 +12,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "I'm going out to eat some grass. Don't open the door if the wolf comes!",
   "c": "audio/el/wolf_goats/en/mom_9e47f01931.mp3"
  },
- "\"늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!\"": {
+ "\"늑대는 목소리가 굵고 거칠고, 발이 시커멓단다. 꼭 기억해!\"": {
   "t": "The wolf has a rough voice and black paws. Remember!",
   "c": "audio/el/wolf_goats/en/mom_dd54cf6da6.mp3"
  },
@@ -27,7 +27,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Soon after Mother left, there was a sound outside the door.",
   "c": "audio/el/wolf_goats/en/nar_fd397b1c96.mp3"
  },
- "\"얘들아, 엄마야. 문 열어 줘!\" 걸걸한 목소리였어요.": {
+ "\"얘들아, 엄마야. 문 열어 줘!\" 굵고 거친 목소리였어요.": {
   "t": "Children, it's Mother. Open the door! It was a rough voice.",
   "c": [
    "audio/el/wolf_goats/en/wolf_4cf298b811.mp3",
@@ -38,7 +38,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The little goats looked at each other.",
   "c": "audio/el/wolf_goats/en/nar_5b498b3232.mp3"
  },
- "\"목소리가 걸걸해. 우리 엄마가 아니야!\" 첫째가 말했어요.": {
+ "\"목소리가 굵고 거칠어. 우리 엄마가 아니야!\" 첫째가 말했어요.": {
   "t": "That voice is rough. You're not our mother! said the oldest kid.",
   "c": [
    "audio/el/wolf_goats/en/kid_527beca655.mp3",
@@ -66,7 +66,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"얘들아, 엄마야. 문 열어 줘~\"": {
   "t": "Children, it's Mother. Open the door, please~",
-  "c": "audio/el/wolf_goats/en/wolf_25325e7786.mp3"
+  "c": "audio/el/wolf_goats/en/wolf_173feb4a56.mp3"
  },
  "\"그럼 문틈으로 발을 보여 주세요!\" 아기 염소들이 말했어요.": {
   "t": "Then show us your paw through the crack! said the little goats.",
@@ -161,17 +161,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Mother and the youngest tiptoed closer.",
   "c": "audio/el/wolf_goats/en/nar_fb5dac5a07.mp3"
  },
- "\"쉿! 늑대가 깨지 않게, 그림자 극장에서 아기들을 꺼내 줄게.\"": {
-  "t": "Shh! So the wolf won't wake up, I'll bring the little ones out at the shadow theater.",
-  "c": "audio/el/wolf_goats/en/mom_1013b7ef17.mp3"
+ "\"쉿! 늑대가 깨지 않게, 살살 배에서 아기들을 꺼내 줄게.\"": {
+  "t": "Shh! So the wolf won't wake up, I'll gently take the little ones out of his tummy.",
+  "c": "audio/el/wolf_goats/en/mom_96e1fd4ee6.mp3"
  },
- "하얀 종이 극장에 엄마의 그림자가 나타났어요.": {
-  "t": "Mother's shadow appeared in the white paper theater.",
-  "c": "audio/el/wolf_goats/en/nar_52c8499b29.mp3"
- },
- "슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!": {
-  "t": "Snip, snip! With each cut, the little goats came out one by one!",
-  "c": "audio/el/wolf_goats/en/nar_6a0b6eb2aa.mp3"
+ "엄마가 가위로 슥삭슥삭, 늑대 배를 열었어요. 늑대는 쿨쿨 자고 있었어요.": {
+  "t": "Snip, snip! Mother opened the wolf's tummy with her scissors. The wolf kept on snoring.",
+  "c": "audio/el/wolf_goats/en/nar_28905e9af3.mp3"
  },
  "\"엄마!\" 아기 염소 여섯 마리가 모두 무사히 나왔어요.": {
   "t": "Mother! All six little goats came out safe and sound.",
@@ -232,9 +228,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the youngest goat to hide him in the clock!",
   "c": "audio/el/wolf_goats/en/nar_d480125a3b.mp3"
  },
- "화면을 톡톡 눌러 봐요!": {
-  "t": "Tap, tap the screen!",
-  "c": "audio/el/wolf_goats/en/nar_b6f9fda20f.mp3"
+ "늑대 배를 톡톡 눌러 봐요!": {
+  "t": "Tap, tap the wolf's tummy!",
+  "c": "audio/el/wolf_goats/en/nar_67617c32b5.mp3"
  },
  "늑대를 톡! 눌러 봐요!": {
   "t": "Tap the wolf!",

@@ -11,9 +11,10 @@
   "cam:wide": "카메라",
   "mama:at:<x,y> | mama:walk:<x,y> | mama:pose:<basket|scissors|joy> | kids:lineup | kids:hop | kids:hide | kid7:at:<x,y> | kid7:walk:<x,y> | kid7:pose:<base|joy> | kids:dance": "엄마 염소·아기 염소 자리·걷기·자세(figure.pose)",
   "wolf:show:<chalk|flour|knock|belly|heavy|splash|flee> | wolf:at:<x,y> | wolf:walk:<x,y> | wolf:hide | wolf:sneeze": "늑대 그림·자리·걷기",
-  "clock:open | clock:close | quilt:hide | laundry:hide | shadow:cut:<n> | stone:drop | needle:stitch": "시계·이불·빨래 바구니·그림자 극장 가위질·돌멩이·바느질",
-  "cut:<chalk|flour|gulp|shadow|splash>": "그림 컷(cutImage)",
-  "fx:<knock|ding|splash|snore|snip|pop> | pop:<x,y,글자>": "효과음·의성어"
+  "fx:<knock|ding|splash|snore|snip|pop> | pop:<x,y,글자>": "효과음·의성어",
+  "clock:open | clock:close | quilt:hide | laundry:hide | belly:pop:<n> | stone:drop | needle:stitch": "시계·이불·빨래 바구니·늑대 배에서 아기 염소 뿅·돌멩이·바느질",
+  "paw:show | door:open": "문 밑으로 하얀 발 쑥·문 열림(집 안 배경 왼쪽 문)",
+  "cut:<keyhole|chalk|flour|enter|gulp|splash>": "그림 컷(cutImage)"
  },
  "scenes": [
   {
@@ -76,7 +77,7 @@
      ]
     },
     {
-     "text": "\"늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!\"",
+     "text": "\"늑대는 목소리가 굵고 거칠고, 발이 시커멓단다. 꼭 기억해!\"",
      "src": "reuse",
      "en": "The wolf has a rough voice and black paws. Remember!",
      "segs": [
@@ -144,7 +145,7 @@
      ]
     },
     {
-     "text": "\"얘들아, 엄마야. 문 열어 줘!\" 걸걸한 목소리였어요.",
+     "text": "\"얘들아, 엄마야. 문 열어 줘!\" 굵고 거친 목소리였어요.",
      "src": "reuse",
      "en": "Children, it's Mother. Open the door! It was a rough voice.",
      "segs": [
@@ -157,6 +158,9 @@
        "nar",
        "It was a rough voice."
       ]
+     ],
+     "after": [
+      "cut:keyhole"
      ]
     },
     {
@@ -182,7 +186,7 @@
      ]
     },
     {
-     "text": "\"목소리가 걸걸해. 우리 엄마가 아니야!\" 첫째가 말했어요.",
+     "text": "\"목소리가 굵고 거칠어. 우리 엄마가 아니야!\" 첫째가 말했어요.",
      "src": "reuse",
      "en": "That voice is rough. You're not our mother! said the oldest kid.",
      "segs": [
@@ -338,10 +342,10 @@
   {
    "key": "R04_paw",
    "card": "The White Paw",
-   "set": "window",
+   "set": "house",
    "enter": [
-    "wolf:show:flour",
-    "wolf:at:500,545",
+    "kids:lineup",
+    "wolf:hide",
     "cam:wide"
    ],
    "lines": [
@@ -367,6 +371,7 @@
       ]
      ],
      "before": [
+      "paw:show",
       "cut:flour"
      ]
     },
@@ -386,8 +391,7 @@
       ]
      ],
      "before": [
-      "wolf:sneeze",
-      "pop:500,300,에취!"
+      "pop:150,300,에취!"
      ]
     },
     {
@@ -443,8 +447,13 @@
       ]
      ],
      "before": [
+      "door:open",
       "wolf:show:knock",
-      "wolf:at:300,540"
+      "wolf:at:100,430",
+      "wolf:walk:200,470"
+     ],
+     "after": [
+      "cut:enter"
      ]
     },
     {
@@ -725,13 +734,13 @@
      ]
     },
     {
-     "text": "\"쉿! 늑대가 깨지 않게, 그림자 극장에서 아기들을 꺼내 줄게.\"",
+     "text": "\"쉿! 늑대가 깨지 않게, 살살 배에서 아기들을 꺼내 줄게.\"",
      "src": "reuse",
-     "en": "Shh! So the wolf won't wake up, I'll bring the little ones out at the shadow theater.",
+     "en": "Shh! So the wolf won't wake up, I'll gently take the little ones out of his tummy.",
      "segs": [
       [
        "mom",
-       "Shh! So the wolf won't wake up, I'll bring the little ones out at the shadow theater.",
+       "Shh! So the wolf won't wake up, I'll gently take the little ones out of his tummy.",
        "happy"
       ]
      ]
@@ -755,50 +764,34 @@
    ]
   },
   {
-   "key": "R08_shadow",
-   "card": "Shadow Theater",
-   "set": "shadow",
+   "key": "R08_belly",
+   "card": "The Wolf's Tummy",
+   "set": "tree",
    "enter": [
+    "wolf:show:belly",
+    "wolf:at:690,500",
+    "mama:at:640,530",
+    "mama:pose:scissors",
+    "kid7:at:330,530",
     "cam:wide"
    ],
    "lines": [
     {
-     "text": "하얀 종이 극장에 엄마의 그림자가 나타났어요.",
-     "src": "reuse",
-     "en": "Mother's shadow appeared in the white paper theater.",
-     "segs": [
-      [
-       "nar",
-       "Mother's shadow appeared in the white paper theater."
-      ]
-     ]
-    },
-    {
-     "text": "가위가 반짝반짝, 엄마는 조심조심 늑대 배를 열었어요.",
+     "text": "엄마가 가위로 슥삭슥삭, 늑대 배를 열었어요. 늑대는 쿨쿨 자고 있었어요.",
      "src": "new",
-     "en": "The scissors glinted, snip, snip, as Mother carefully, carefully opened the wolf's tummy.",
+     "en": "Snip, snip! Mother opened the wolf's tummy with her scissors. The wolf kept on snoring.",
      "segs": [
       [
        "nar",
-       "The scissors glinted, snip, snip, as Mother carefully, carefully opened the wolf's tummy."
-      ]
-     ]
-    },
-    {
-     "text": "슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!",
-     "src": "reuse",
-     "en": "Snip, snip! With each cut, the little goats came out one by one!",
-     "segs": [
-      [
-       "nar",
-       "Snip, snip! With each cut, the little goats came out one by one!"
+       "Snip, snip! Mother opened the wolf's tummy with her scissors. The wolf kept on snoring."
       ]
      ],
      "before": [
-      "fx:snip"
+      "fx:snip",
+      "pop:640,300,슥삭!"
      ],
      "after": [
-      "shadow:cut:6"
+      "mama:walk:220,530"
      ]
     },
     {
@@ -810,6 +803,9 @@
        "nar",
        "One, two, three... out hopped the little goats, boing, boing, boing."
       ]
+     ],
+     "before": [
+      "belly:pop:6"
      ]
     },
     {

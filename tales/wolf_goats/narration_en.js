@@ -12,7 +12,7 @@ const NARRATION_CLIPS_EN = {
   "t": "I'm going out to eat some grass. Don't open the door if the wolf comes!",
   "c": "audio/tc/wolf_goats/en/mom_4042cd3ce8.mp3"
  },
- "\"늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!\"": {
+ "\"늑대는 목소리가 굵고 거칠고, 발이 시커멓단다. 꼭 기억해!\"": {
   "t": "The wolf has a rough voice and black paws. Remember!",
   "c": "audio/tc/wolf_goats/en/mom_cf7c0f1b74.mp3"
  },
@@ -27,7 +27,7 @@ const NARRATION_CLIPS_EN = {
   "t": "Soon after Mother left, there was a sound outside the door.",
   "c": "audio/tc/wolf_goats/en/nar_eec751fbae.mp3"
  },
- "\"얘들아, 엄마야. 문 열어 줘!\" 걸걸한 목소리였어요.": {
+ "\"얘들아, 엄마야. 문 열어 줘!\" 굵고 거친 목소리였어요.": {
   "t": "Children, it's Mother. Open the door! It was a rough voice.",
   "c": [
    "audio/tc/wolf_goats/en/wolf_41f33f8db6.mp3",
@@ -38,7 +38,7 @@ const NARRATION_CLIPS_EN = {
   "t": "The little goats looked at each other.",
   "c": "audio/tc/wolf_goats/en/nar_3a0e822321.mp3"
  },
- "\"목소리가 걸걸해. 우리 엄마가 아니야!\" 첫째가 말했어요.": {
+ "\"목소리가 굵고 거칠어. 우리 엄마가 아니야!\" 첫째가 말했어요.": {
   "t": "That voice is rough. You're not our mother! said the oldest kid.",
   "c": [
    "audio/tc/wolf_goats/en/kid_a1be62ebda.mp3",

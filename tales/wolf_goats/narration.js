@@ -3,18 +3,18 @@ const NARRATION_CLIPS = {
  "아주 먼 옛날, 엄마 염소와 일곱 마리 아기 염소가 살았어요.": "audio/tc/wolf_goats/nar_f5d0d888e0.mp3",
  "어느 날, 엄마 염소가 바구니를 들고 말했어요.": "audio/tc/wolf_goats/nar_dc85d00c23.mp3",
  "\"엄마는 풀을 뜯으러 다녀올게. 늑대가 오면 문을 열어 주면 안 돼!\"": "audio/tc/wolf_goats/mom_142a49a869.mp3",
- "\"늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!\"": "audio/tc/wolf_goats/mom_b6934bf83b.mp3",
+ "\"늑대는 목소리가 굵고 거칠고, 발이 시커멓단다. 꼭 기억해!\"": "audio/tc/wolf_goats/mom_b6934bf83b.mp3",
  "\"네, 엄마!\" 아기 염소들이 큰 소리로 대답했어요.": [
   "audio/tc/wolf_goats/kid_f0d9bfdcee.mp3",
   "audio/tc/wolf_goats/nar_c5488f7a38.mp3"
  ],
  "엄마가 가고 얼마 뒤, 문밖에서 소리가 났어요.": "audio/tc/wolf_goats/nar_a207cb9d81.mp3",
- "\"얘들아, 엄마야. 문 열어 줘!\" 걸걸한 목소리였어요.": [
+ "\"얘들아, 엄마야. 문 열어 줘!\" 굵고 거친 목소리였어요.": [
   "audio/tc/wolf_goats/wolf_c67b5a76c6.mp3",
   "audio/tc/wolf_goats/nar_e74b8ddf91.mp3"
  ],
  "아기 염소들이 서로 쳐다보았어요.": "audio/tc/wolf_goats/nar_c342689f1e.mp3",
- "\"목소리가 걸걸해. 우리 엄마가 아니야!\" 첫째가 말했어요.": [
+ "\"목소리가 굵고 거칠어. 우리 엄마가 아니야!\" 첫째가 말했어요.": [
   "audio/tc/wolf_goats/kid_1f7cd4e14b.mp3",
   "audio/tc/wolf_goats/nar_cbd7c23f43.mp3"
  ],

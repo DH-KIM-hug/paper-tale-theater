@@ -38,7 +38,7 @@
    ]
   },
   {
-   "text": "\"늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!\"",
+   "text": "\"늑대는 목소리가 굵고 거칠고, 발이 시커멓단다. 꼭 기억해!\"",
    "en": "The wolf has a rough voice and black paws. Remember!",
    "segs": [
     [
@@ -74,7 +74,7 @@
    ]
   },
   {
-   "text": "\"얘들아, 엄마야. 문 열어 줘!\" 걸걸한 목소리였어요.",
+   "text": "\"얘들아, 엄마야. 문 열어 줘!\" 굵고 거친 목소리였어요.",
    "en": "Children, it's Mother. Open the door! It was a rough voice.",
    "segs": [
     [
@@ -99,7 +99,7 @@
    ]
   },
   {
-   "text": "\"목소리가 걸걸해. 우리 엄마가 아니야!\" 첫째가 말했어요.",
+   "text": "\"목소리가 굵고 거칠어. 우리 엄마가 아니야!\" 첫째가 말했어요.",
    "en": "That voice is rough. You're not our mother! said the oldest kid.",
    "segs": [
     [
@@ -388,33 +388,23 @@
    ]
   },
   {
-   "text": "\"쉿! 늑대가 깨지 않게, 그림자 극장에서 아기들을 꺼내 줄게.\"",
-   "en": "Shh! So the wolf won't wake up, I'll bring the little ones out at the shadow theater.",
+   "text": "\"쉿! 늑대가 깨지 않게, 살살 배에서 아기들을 꺼내 줄게.\"",
+   "en": "Shh! So the wolf won't wake up, I'll gently take the little ones out of his tummy.",
    "segs": [
     [
      "mom",
-     "Shh! So the wolf won't wake up, I'll bring the little ones out at the shadow theater.",
+     "Shh! So the wolf won't wake up, I'll gently take the little ones out of his tummy.",
      "happy"
     ]
    ]
   },
   {
-   "text": "하얀 종이 극장에 엄마의 그림자가 나타났어요.",
-   "en": "Mother's shadow appeared in the white paper theater.",
+   "text": "엄마가 가위로 슥삭슥삭, 늑대 배를 열었어요. 늑대는 쿨쿨 자고 있었어요.",
+   "en": "Snip, snip! Mother opened the wolf's tummy with her scissors. The wolf kept on snoring.",
    "segs": [
     [
      "nar",
-     "Mother's shadow appeared in the white paper theater."
-    ]
-   ]
-  },
-  {
-   "text": "슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!",
-   "en": "Snip, snip! With each cut, the little goats came out one by one!",
-   "segs": [
-    [
-     "nar",
-     "Snip, snip! With each cut, the little goats came out one by one!"
+     "Snip, snip! Mother opened the wolf's tummy with her scissors. The wolf kept on snoring."
     ]
    ]
   },
@@ -560,8 +550,8 @@
    "en": "Tap Mother Goat!"
   },
   {
-   "text": "화면을 톡톡 눌러 봐요!",
-   "en": "Tap, tap the screen!"
+   "text": "늑대 배를 톡톡 눌러 봐요!",
+   "en": "Tap, tap the wolf's tummy!"
   },
   {
    "text": "늑대를 톡! 눌러 봐요!",
@@ -585,7 +575,6 @@
   }
  ],
  "ui": {
-  "그림자 극장": "Shadow Theater",
   "꺄악!": "Eek!",
   "나무 아래 늑대": "The wolf under the tree",
   "늑대와 일곱 마리 아기 염소": "The Wolf and the Seven Kids",
@@ -601,6 +590,9 @@
   "와작!": "Crunch!",
   "우물가": "By the well",
   "쿨쿨~": "Zzz~",
-  "하얀 발": "White paws"
+  "하얀 발": "White paws",
+  "슥삭!": "Snip!",
+  "드르렁~": "Snore~",
+  "쑥!": "Whoosh!"
  }
 }

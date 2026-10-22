@@ -5,15 +5,16 @@
  "title": "늑대와 일곱 마리 아기 염소",
  "voices_from": "voice_script_el.json",
  "moral": "엄마 말을 잘 기억하고, 낯선 이에게 문을 열어 주지 않아요.",
- "notes": "읽어 주기 대본(docs/READ_MODE.md §3). 놀이판 10장면 그대로 10장면. 뺀 것: 엄마 염소·늑대·돌멩이·아기 염소 누르기, 막내 숨기기 조작, 그림자 극장 연타(한 번 누르면 저절로)와 마지막 춤 누르기. 순화는 놀이판 그대로: 삼켜진 아기 염소들은 다치지 않고 따뜻한 뱃속에 있다가 그림자 극장(종이 그림자)에서 가위로 꺼내지며, 늑대는 우물에 빠져 젖은 채 멀리 달아난다(죽지 않음). 배역 신규는 아기 염소 1·늑대 1줄.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md §3). 놀이판 10장면 그대로 10장면. 뺀 것: 엄마 염소·늑대·돌멩이·아기 염소 누르기, 막내 숨기기 조작, 늑대 배 연타(한 번 누르면 저절로)와 마지막 춤 누르기. 순화는 놀이판 그대로: 삼켜진 아기 염소들은 다치지 않고 따뜻한 뱃속에 있다가 잠든 늑대 배에서 꺼내지며(가르는 순간은 엄마 몸이 가린다), 늑대는 우물에 빠져 젖은 채 멀리 달아난다(죽지 않음). 배역 신규는 아기 염소 1·늑대 1줄.",
  "acts": {
   "set:<kitchen|inside_door|door|window|house|messy|tree|shadow|well>": "장면 세트(bg(T,key) + T.clear + camSnap)",
   "cam:wide": "카메라",
   "mama:at:<x,y> | mama:walk:<x,y> | mama:pose:<basket|scissors|joy> | kids:lineup | kids:hop | kids:hide | kid7:at:<x,y> | kid7:walk:<x,y> | kid7:pose:<base|joy> | kids:dance": "엄마 염소·아기 염소 자리·걷기·자세(figure.pose)",
   "wolf:show:<chalk|flour|knock|belly|heavy|splash|flee> | wolf:at:<x,y> | wolf:walk:<x,y> | wolf:hide | wolf:sneeze": "늑대 그림·자리·걷기",
-  "clock:open | clock:close | quilt:hide | laundry:hide | shadow:cut:<n> | stone:drop | needle:stitch": "시계·이불·빨래 바구니·그림자 극장 가위질·돌멩이·바느질",
-  "cut:<chalk|flour|gulp|shadow|splash>": "그림 컷(cutImage)",
-  "fx:<knock|ding|splash|snore|snip|pop> | pop:<x,y,글자>": "효과음·의성어"
+  "fx:<knock|ding|splash|snore|snip|pop> | pop:<x,y,글자>": "효과음·의성어",
+  "clock:open | clock:close | quilt:hide | laundry:hide | belly:pop:<n> | stone:drop | needle:stitch": "시계·이불·빨래 바구니·늑대 배에서 아기 염소 뿅·돌멩이·바느질",
+  "paw:show | door:open": "문 밑으로 하얀 발 쑥·문 열림(집 안 배경 왼쪽 문)",
+  "cut:<keyhole|chalk|flour|enter|gulp|splash>": "그림 컷(cutImage)"
  },
  "scenes": [
   {
@@ -79,12 +80,12 @@
      ]
     },
     {
-     "text": "\"늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!\"",
+     "text": "\"늑대는 목소리가 굵고 거칠고, 발이 시커멓단다. 꼭 기억해!\"",
      "src": "reuse",
      "segs": [
       [
        "mom",
-       "늑대는 목소리가 걸걸하고, 발이 시커멓단다. 꼭 기억해!",
+       "늑대는 목소리가 굵고 거칠고, 발이 시커멓단다. 꼭 기억해!",
        "happy",
        "[serious, caring, gentle]"
       ]
@@ -151,7 +152,7 @@
      ]
     },
     {
-     "text": "\"얘들아, 엄마야. 문 열어 줘!\" 걸걸한 목소리였어요.",
+     "text": "\"얘들아, 엄마야. 문 열어 줘!\" 굵고 거친 목소리였어요.",
      "src": "reuse",
      "segs": [
       [
@@ -162,10 +163,13 @@
       ],
       [
        "nar",
-       "걸걸한 목소리였어요.",
+       "굵고 거친 목소리였어요.",
        null,
        "[playful, hushed]"
       ]
+     ],
+     "after": [
+      "cut:keyhole"
      ]
     },
     {
@@ -193,12 +197,12 @@
      ]
     },
     {
-     "text": "\"목소리가 걸걸해. 우리 엄마가 아니야!\" 첫째가 말했어요.",
+     "text": "\"목소리가 굵고 거칠어. 우리 엄마가 아니야!\" 첫째가 말했어요.",
      "src": "reuse",
      "segs": [
       [
        "kid",
-       "목소리가 걸걸해. 우리 엄마가 아니야!",
+       "목소리가 굵고 거칠어. 우리 엄마가 아니야!",
        "happy",
        "[suspicious, childlike, firm, baby voice, lisping, very young child, giggly]"
       ],
@@ -330,7 +334,7 @@
        "wolf",
        "얘들아, 엄마야. 문 열어 줘~",
        "tonedown:1.1",
-       "[sweet, fake-sweet voice, comic]"
+       "[sweet, high-pitched, gentle, sing-song, imitating a mother]"
       ]
      ],
      "before": [
@@ -360,10 +364,10 @@
   {
    "key": "R04_paw",
    "card": "하얀 발",
-   "set": "window",
+   "set": "house",
    "enter": [
-    "wolf:show:flour",
-    "wolf:at:500,545",
+    "kids:lineup",
+    "wolf:hide",
     "cam:wide"
    ],
    "lines": [
@@ -391,6 +395,7 @@
       ]
      ],
      "before": [
+      "paw:show",
       "cut:flour"
      ]
     },
@@ -412,8 +417,7 @@
       ]
      ],
      "before": [
-      "wolf:sneeze",
-      "pop:500,300,에취!"
+      "pop:150,300,에취!"
      ]
     },
     {
@@ -473,8 +477,13 @@
       ]
      ],
      "before": [
+      "door:open",
       "wolf:show:knock",
-      "wolf:at:300,540"
+      "wolf:at:100,430",
+      "wolf:walk:200,470"
+     ],
+     "after": [
+      "cut:enter"
      ]
     },
     {
@@ -773,12 +782,12 @@
      ]
     },
     {
-     "text": "\"쉿! 늑대가 깨지 않게, 그림자 극장에서 아기들을 꺼내 줄게.\"",
+     "text": "\"쉿! 늑대가 깨지 않게, 살살 배에서 아기들을 꺼내 줄게.\"",
      "src": "reuse",
      "segs": [
       [
        "mom",
-       "쉿! 늑대가 깨지 않게, 그림자 극장에서 아기들을 꺼내 줄게.",
+       "쉿! 늑대가 깨지 않게, 살살 배에서 아기들을 꺼내 줄게.",
        "happy",
        "[whispers, soft, gentle]"
       ]
@@ -805,53 +814,35 @@
    ]
   },
   {
-   "key": "R08_shadow",
-   "card": "그림자 극장",
-   "set": "shadow",
+   "key": "R08_belly",
+   "card": "늑대 배",
+   "set": "tree",
    "enter": [
+    "wolf:show:belly",
+    "wolf:at:690,500",
+    "mama:at:640,530",
+    "mama:pose:scissors",
+    "kid7:at:330,530",
     "cam:wide"
    ],
    "lines": [
     {
-     "text": "하얀 종이 극장에 엄마의 그림자가 나타났어요.",
-     "src": "reuse",
-     "segs": [
-      [
-       "nar",
-       "하얀 종이 극장에 엄마의 그림자가 나타났어요.",
-       null,
-       "[wondering, soft]"
-      ]
-     ]
-    },
-    {
-     "text": "가위가 반짝반짝, 엄마는 조심조심 늑대 배를 열었어요.",
+     "text": "엄마가 가위로 슥삭슥삭, 늑대 배를 열었어요. 늑대는 쿨쿨 자고 있었어요.",
      "src": "new",
      "segs": [
       [
        "nar",
-       "가위가 반짝반짝, 엄마는 조심조심 늑대 배를 열었어요.",
+       "엄마가 가위로 슥삭슥삭, 늑대 배를 열었어요. 늑대는 쿨쿨 자고 있었어요.",
        null,
-       "[whispers, careful]"
-      ]
-     ]
-    },
-    {
-     "text": "슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!",
-     "src": "reuse",
-     "segs": [
-      [
-       "nar",
-       "슥삭슥삭, 가위질을 하자 아기 염소들이 하나씩 나와요!",
-       null,
-       "[playful, snip snip]"
+       "[hushed, gentle, storytelling]"
       ]
      ],
      "before": [
-      "fx:snip"
+      "fx:snip",
+      "pop:640,300,슥삭!"
      ],
      "after": [
-      "shadow:cut:6"
+      "mama:walk:220,530"
      ]
     },
     {
@@ -864,6 +855,9 @@
        null,
        "[playful, counting-free, bright]"
       ]
+     ],
+     "before": [
+      "belly:pop:6"
      ]
     },
     {
