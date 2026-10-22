@@ -319,13 +319,13 @@
      ]
     },
     {
-     "text": "수탉과 오리들은 부끄러워서 머리를 긁적긁적했어요. \"놀려서 미안해.\"",
-     "src": "new",
-     "en": "The rooster and the ducks felt shy and scratched their heads, scritch, scratch. \"Sorry for teasing you.\"",
+     "text": "수탉과 오리들이 머쓱해서 말했어요. \"놀려서 미안해.\"",
+     "src": "reuse",
+     "en": "The rooster and the ducks felt shy and said. \"Sorry for teasing you.\"",
      "segs": [
       [
        "nar",
-       "The rooster and the ducks felt shy and scratched their heads, scritch, scratch."
+       "The rooster and the ducks felt shy and said."
       ],
       [
        "rooster",
