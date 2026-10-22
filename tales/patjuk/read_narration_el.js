@@ -2,7 +2,7 @@
 Object.assign(NARRATION_CLIPS, {
  "옛날 옛날, 깊은 산골에 팥죽을 아주 잘 쑤는 할멈이 살았어요.": "audio/el/patjuk/nar_11129128e8.mp3",
  "팥밭에는 빨간 팥이 주렁주렁 열렸어요.": "audio/el/patjuk/nar_e9f1ddaec1.mp3",
- "할멈은 호미로 김을 매며 콧노래를 흥얼거렸지요.": "audio/el/patjuk/nar_b05750ee98.mp3",
+ "할멈은 호미로 콕콕 김을 매며 콧노래를 흥얼흥얼 불렀지요.": "audio/el/patjuk/nar_62b0837cbc.mp3",
  "어흥! 어느 날 커다란 호랑이가 나타났어요. \"할멈, 잡아먹어야겠다!\"": [
   "audio/el/patjuk/nar_1a943cfef6.mp3",
   "audio/el/patjuk/tiger_1201f31b26.mp3"
@@ -43,8 +43,8 @@ Object.assign(NARRATION_CLIPS, {
   "audio/tc/jeolgu_9da6e85c73.mp3",
   "audio/el/patjuk/nar_5f597bfdf2.mp3"
  ],
- "할멈은 친구들에게 팥죽을 한 그릇씩 떠 주며 조금씩 힘이 났어요.": "audio/el/patjuk/nar_7581fda159.mp3",
- "마당에도 친구들이 찾아왔어요.": "audio/el/patjuk/nar_698e3d0602.mp3",
+ "할멈은 친구들에게 팥죽을 듬뿍듬뿍 떠 주며 조금씩 힘이 났어요.": "audio/el/patjuk/nar_800d523632.mp3",
+ "똑똑똑! 마당에도 친구들이 찾아왔어요.": "audio/el/patjuk/nar_13baca04c9.mp3",
  "펄럭펄럭~ 멍석이 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 멍석은 팥죽을 얻어먹고 마당에 돌돌 말려 숨었어요.": [
   "audio/el/patjuk/nar_2be57cbde9.mp3",
   "audio/tc/myeongseok_f35e66aa6d.mp3",
@@ -55,7 +55,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/tc/jige_d90b72b7cd.mp3",
   "audio/el/patjuk/nar_9b39ac0e3f.mp3"
  ],
- "할멈은 눈물을 닦고 친구들에게 속삭였어요.": "audio/el/patjuk/nar_8633d0d4af.mp3",
+ "할멈은 눈물을 닦고 친구들에게 소곤소곤 속삭였어요.": "audio/el/patjuk/nar_ff3009e625.mp3",
  "\"얘들아, 도와줘!\"": "audio/el/patjuk/halmi_7ef9b4b8eb.mp3",
  "\"호랑이가 오면 모두 힘을 모아 주렴.\"": "audio/el/patjuk/halmi_dfb70b529f.mp3",
  "깜깜한 밤이 되었어요. 어흥! 호랑이가 어슬렁어슬렁 찾아왔어요!": "audio/el/patjuk/nar_eb528785a4.mp3",
@@ -90,9 +90,9 @@ Object.assign(NARRATION_CLIPS, {
  "지게가 호랑이를 번쩍 지고 가서 바다에 풍덩! 던져 버렸어요!": "audio/el/patjuk/nar_5a4b3efd5c.mp3",
  "호랑이는 허우적허우적 헤엄쳐 멀리멀리 달아났어요. 다시는 할멈 집에 오지 않았답니다.": "audio/el/patjuk/nar_9300401ed5.mp3",
  "만세! 호랑이를 물리쳤어요! 할멈은 친구들과 맛있는 팥죽을 나누어 먹었답니다.": "audio/el/patjuk/nar_39e47fe668.mp3",
- "할멈은 마당으로 나와 친구들을 꼭 안아 주었어요.": "audio/el/patjuk/nar_3335aef88c.mp3",
+ "할멈은 마당으로 총총 나와 친구들을 꼬옥 안아 주었어요.": "audio/el/patjuk/nar_d042f7f408.mp3",
  "\"고맙다, 얘들아. 너희 덕분에 살았구나.\"": "audio/el/patjuk/halmi_27e2267f6f.mp3",
- "알밤도, 자라도, 쇠똥도, 송곳도, 절구도, 멍석도, 지게도 모두 배불리 먹었지요.": "audio/el/patjuk/nar_e46f4f0204.mp3",
+ "알밤도, 자라도, 쇠똥도, 송곳도, 절구도, 멍석도, 지게도 모두 후루룩 배불리 먹었지요.": "audio/el/patjuk/nar_9b1a94fddf.mp3",
  "작은 친구들이 힘을 모으면 커다란 호랑이도 물리칠 수 있답니다.": "audio/el/patjuk/nar_e2e7a1d863.mp3"
 });
 Object.assign(VOICE_LINES, {});

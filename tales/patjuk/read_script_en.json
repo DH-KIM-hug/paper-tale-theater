@@ -59,13 +59,13 @@
      ]
     },
     {
-     "text": "할멈은 호미로 김을 매며 콧노래를 흥얼거렸지요.",
+     "text": "할멈은 호미로 콕콕 김을 매며 콧노래를 흥얼흥얼 불렀지요.",
      "src": "new",
-     "en": "Grandma pulled the weeds with her little hoe, humming a tune.",
+     "en": "Grandma pulled the weeds, poke, poke, with her little hoe, humming hum-hum-hum.",
      "segs": [
       [
        "nar",
-       "Grandma pulled the weeds with her little hoe, humming a tune.",
+       "Grandma pulled the weeds, poke, poke, with her little hoe, humming hum-hum-hum.",
        "smart"
       ]
      ]
@@ -409,13 +409,13 @@
      ]
     },
     {
-     "text": "할멈은 친구들에게 팥죽을 한 그릇씩 떠 주며 조금씩 힘이 났어요.",
+     "text": "할멈은 친구들에게 팥죽을 듬뿍듬뿍 떠 주며 조금씩 힘이 났어요.",
      "src": "new",
-     "en": "With every bowl of porridge she gave her friends, Grandma felt a little braver.",
+     "en": "Scoop, scoop! With every bowl she gave her friends, Grandma felt a little braver.",
      "segs": [
       [
        "nar",
-       "With every bowl of porridge she gave her friends, Grandma felt a little braver.",
+       "Scoop, scoop! With every bowl she gave her friends, Grandma felt a little braver.",
        "smart"
       ]
      ],
@@ -436,13 +436,13 @@
    ],
    "lines": [
     {
-     "text": "마당에도 친구들이 찾아왔어요.",
+     "text": "똑똑똑! 마당에도 친구들이 찾아왔어요.",
      "src": "new",
-     "en": "Out in the yard, more friends came to help.",
+     "en": "Knock, knock, knock! Out in the yard, more friends came to help.",
      "segs": [
       [
        "nar",
-       "Out in the yard, more friends came to help.",
+       "Knock, knock, knock! Out in the yard, more friends came to help.",
        "smart"
       ]
      ]
@@ -511,13 +511,13 @@
      ]
     },
     {
-     "text": "할멈은 눈물을 닦고 친구들에게 속삭였어요.",
+     "text": "할멈은 눈물을 닦고 친구들에게 소곤소곤 속삭였어요.",
      "src": "new",
-     "en": "Grandma wiped her tears and whispered to her friends,",
+     "en": "Grandma wiped her tears and whispered, psst, psst, to her friends,",
      "segs": [
       [
        "nar",
-       "Grandma wiped her tears and whispered to her friends,",
+       "Grandma wiped her tears and whispered, psst, psst, to her friends,",
        "smart"
       ]
      ],
@@ -983,13 +983,13 @@
      ]
     },
     {
-     "text": "할멈은 마당으로 나와 친구들을 꼭 안아 주었어요.",
+     "text": "할멈은 마당으로 총총 나와 친구들을 꼬옥 안아 주었어요.",
      "src": "new",
-     "en": "Grandma came out into the yard and hugged her friends tight.",
+     "en": "Grandma hurried out, pitter-patter, and hugged her friends tight, squeeze!",
      "segs": [
       [
        "nar",
-       "Grandma came out into the yard and hugged her friends tight.",
+       "Grandma hurried out, pitter-patter, and hugged her friends tight, squeeze!",
        "happy"
       ]
      ]
@@ -1010,13 +1010,13 @@
      ]
     },
     {
-     "text": "알밤도, 자라도, 쇠똥도, 송곳도, 절구도, 멍석도, 지게도 모두 배불리 먹었지요.",
+     "text": "알밤도, 자라도, 쇠똥도, 송곳도, 절구도, 멍석도, 지게도 모두 후루룩 배불리 먹었지요.",
      "src": "new",
-     "en": "The chestnut, the turtle, the dung, the awl, the mortar, the mat and the carrier all ate until their tummies were full.",
+     "en": "The chestnut, the turtle, the dung, the awl, the mortar, the mat and the carrier all went slurp, slurp, until their tummies were full.",
      "segs": [
       [
        "nar",
-       "The chestnut, the turtle, the dung, the awl, the mortar, the mat and the carrier all ate until their tummies were full.",
+       "The chestnut, the turtle, the dung, the awl, the mortar, the mat and the carrier all went slurp, slurp, until their tummies were full.",
        "happy"
       ]
      ],

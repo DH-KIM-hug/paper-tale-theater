@@ -8,9 +8,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Bright red beans hung thick all over the bean field.",
   "c": "audio/el/patjuk/en/nar_a20cf23e60.mp3"
  },
- "할멈은 호미로 김을 매며 콧노래를 흥얼거렸지요.": {
-  "t": "Grandma pulled the weeds with her little hoe, humming a tune.",
-  "c": "audio/el/patjuk/en/nar_9f41c1e6a4.mp3"
+ "할멈은 호미로 콕콕 김을 매며 콧노래를 흥얼흥얼 불렀지요.": {
+  "t": "Grandma pulled the weeds, poke, poke, with her little hoe, humming hum-hum-hum.",
+  "c": "audio/el/patjuk/en/nar_4056678a8e.mp3"
  },
  "어흥! 어느 날 커다란 호랑이가 나타났어요. \"할멈, 잡아먹어야겠다!\"": {
   "t": "Roar! One day, a big tiger appeared. Grandma, I'm going to eat you up!",
@@ -94,13 +94,13 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/patjuk/en/nar_9d5beb8866.mp3"
   ]
  },
- "할멈은 친구들에게 팥죽을 한 그릇씩 떠 주며 조금씩 힘이 났어요.": {
-  "t": "With every bowl of porridge she gave her friends, Grandma felt a little braver.",
-  "c": "audio/el/patjuk/en/nar_7626138bb6.mp3"
+ "할멈은 친구들에게 팥죽을 듬뿍듬뿍 떠 주며 조금씩 힘이 났어요.": {
+  "t": "Scoop, scoop! With every bowl she gave her friends, Grandma felt a little braver.",
+  "c": "audio/el/patjuk/en/nar_c1a9a67550.mp3"
  },
- "마당에도 친구들이 찾아왔어요.": {
-  "t": "Out in the yard, more friends came to help.",
-  "c": "audio/el/patjuk/en/nar_07c89614b3.mp3"
+ "똑똑똑! 마당에도 친구들이 찾아왔어요.": {
+  "t": "Knock, knock, knock! Out in the yard, more friends came to help.",
+  "c": "audio/el/patjuk/en/nar_f990b391ee.mp3"
  },
  "펄럭펄럭~ 멍석이 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 멍석은 팥죽을 얻어먹고 마당에 돌돌 말려 숨었어요.": {
   "t": "Flap, flap! Straw Mat arrived. Give me a bowl of red bean porridge and I'll help! Straw Mat ate the porridge, then rolled up tight in the yard to hide.",
@@ -118,9 +118,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/patjuk/en/nar_1e9c488da5.mp3"
   ]
  },
- "할멈은 눈물을 닦고 친구들에게 속삭였어요.": {
-  "t": "Grandma wiped her tears and whispered to her friends,",
-  "c": "audio/el/patjuk/en/nar_ce7e02bd6b.mp3"
+ "할멈은 눈물을 닦고 친구들에게 소곤소곤 속삭였어요.": {
+  "t": "Grandma wiped her tears and whispered, psst, psst, to her friends,",
+  "c": "audio/el/patjuk/en/nar_9d7c20fd4a.mp3"
  },
  "\"얘들아, 도와줘!\"": {
   "t": "Friends, help me!",
@@ -222,17 +222,17 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Hooray! The tiger was beaten! Grandma shared yummy red bean porridge with all her friends.",
   "c": "audio/el/patjuk/en/nar_7d6aec77a4.mp3"
  },
- "할멈은 마당으로 나와 친구들을 꼭 안아 주었어요.": {
-  "t": "Grandma came out into the yard and hugged her friends tight.",
-  "c": "audio/el/patjuk/en/nar_27c240e7c4.mp3"
+ "할멈은 마당으로 총총 나와 친구들을 꼬옥 안아 주었어요.": {
+  "t": "Grandma hurried out, pitter-patter, and hugged her friends tight, squeeze!",
+  "c": "audio/el/patjuk/en/nar_f8a9ac20c8.mp3"
  },
  "\"고맙다, 얘들아. 너희 덕분에 살았구나.\"": {
   "t": "Thank you, my dear friends. You saved me.",
   "c": "audio/el/patjuk/en/halmi_9a737b578b.mp3"
  },
- "알밤도, 자라도, 쇠똥도, 송곳도, 절구도, 멍석도, 지게도 모두 배불리 먹었지요.": {
-  "t": "The chestnut, the turtle, the dung, the awl, the mortar, the mat and the carrier all ate until their tummies were full.",
-  "c": "audio/el/patjuk/en/nar_725f694256.mp3"
+ "알밤도, 자라도, 쇠똥도, 송곳도, 절구도, 멍석도, 지게도 모두 후루룩 배불리 먹었지요.": {
+  "t": "The chestnut, the turtle, the dung, the awl, the mortar, the mat and the carrier all went slurp, slurp, until their tummies were full.",
+  "c": "audio/el/patjuk/en/nar_8a59d4c983.mp3"
  },
  "작은 친구들이 힘을 모으면 커다란 호랑이도 물리칠 수 있답니다.": {
   "t": "When little friends work together, they can even send a great big tiger away.",
