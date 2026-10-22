@@ -1,0 +1,733 @@
+{
+ "mode": "read",
+ "tale": "frog",
+ "lang": "en",
+ "title": "The Ox and the Frog",
+ "voices_from": "voice_script_el.json",
+ "moral": "A frog is wonderful as a frog, and an ox is wonderful as an ox.",
+ "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, trim 은 from 줄의 영어 녹음을 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<pond|meadow|chart|night>": "장면 배경(bg_pond·bg_meadow·bg_chart·bg_pond_night). scenes[].set 으로 자동 호출",
+  "babies:<sleep|wake|hop|run|hide|pads> | baby:<0|1|2>:hop": "아기 개구리 셋(연잎 위·풀밭)",
+  "mom:<base|puffed:<1-8>|flying|dizzy|hop|hide|show> | mom:at:<x,y>": "엄마개구리 그림·부풀기 단계·날기·어지러움",
+  "ox:<stand|kneel|jumpfail|show|hide> | ox:part:<tail|hoof|horn>": "황소 자세·부위 확대(풀밭 장면)",
+  "uncle:show | duck:show | sheep:show | chart:line": "삼촌 개구리·오리·양·키재기 줄",
+  "cut:<monster|pop|fly|splash|jump>": "그림 컷 5장 — 컷 속 외침(VOICE_LINES cut_pop·ox_thud)은 그대로 재사용",
+  "vo:<cut_pop|ox_thud>": "말풍선 없는 소리 대사(기존 녹음)",
+  "chorus:sing | chorus:fade": "밤 합창(저절로)·잦아듦",
+  "fx:<ribbit|splash|boing|thud|whoosh|pop> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_morning",
+   "card": "Morning Pond",
+   "set": "pond",
+   "enter": [
+    "babies:pads",
+    "babies:sleep",
+    "mom:base",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "연못에 아침이 왔어요. 아기 개구리들이 아직 쿨쿨 자고 있네요.",
+     "src": "reuse",
+     "en": "Morning came to the pond. The baby frogs are still fast asleep, zzz.",
+     "segs": [
+      [
+       "nar",
+       "Morning came to the pond. The baby frogs are still fast asleep, zzz.",
+       "happy:1.0"
+      ]
+     ]
+    },
+    {
+     "text": "햇살이 반짝, 연잎 위에 이슬이 또르르 굴러요.",
+     "src": "new",
+     "en": "The sunlight sparkles, and dewdrops roll across the lily pads, roly-poly.",
+     "segs": [
+      [
+       "nar",
+       "The sunlight sparkles, and dewdrops roll across the lily pads, roly-poly."
+      ]
+     ]
+    },
+    {
+     "text": "아기 개구리들이 기지개를 쭉, 눈을 깜빡깜빡 떴어요.",
+     "src": "new",
+     "en": "The baby frogs stretched, s-t-r-e-t-c-h, and blinked their eyes open, blink, blink.",
+     "segs": [
+      [
+       "nar",
+       "The baby frogs stretched, s-t-r-e-t-c-h, and blinked their eyes open, blink, blink.",
+       "happy:1.0"
+      ]
+     ],
+     "before": [
+      "babies:wake",
+      "fx:ribbit"
+     ]
+    },
+    {
+     "text": "엄마개구리가 말했어요. \"얘들아, 멀리 가면 안 된다~\"",
+     "src": "reuse",
+     "en": "Mama Frog said. \"Children, don't go far away~\"",
+     "segs": [
+      [
+       "nar",
+       "Mama Frog said."
+      ],
+      [
+       "mom",
+       "Children, don't go far away~",
+       "happy:0.9"
+      ]
+     ]
+    },
+    {
+     "text": "하지만 아기 개구리들은 폴짝폴짝, 몰래 연못을 빠져나갔어요.",
+     "src": "new",
+     "en": "But the baby frogs went hop, hop, hop, and sneaked right out of the pond.",
+     "segs": [
+      [
+       "nar",
+       "But the baby frogs went hop, hop, hop, and sneaked right out of the pond.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "babies:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_meadow",
+   "card": "The Meadow",
+   "set": "meadow",
+   "enter": [
+    "babies:hop",
+    "ox:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "아기 개구리들이 몰래 풀밭으로 나왔어요.",
+     "src": "trim",
+     "from": "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?",
+     "en": "The baby frogs sneaked out to the meadow.",
+     "segs": [
+      [
+       "nar",
+       "The baby frogs sneaked out to the meadow.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "babies:hop"
+     ]
+    },
+    {
+     "text": "풀잎이 살랑살랑, 아기 개구리들은 신이 나서 폴짝폴짝 뛰었어요.",
+     "src": "new",
+     "en": "The grass swayed gently, swish, swish, and the baby frogs hopped about happily, hop, hop.",
+     "segs": [
+      [
+       "nar",
+       "The grass swayed gently, swish, swish, and the baby frogs hopped about happily, hop, hop."
+      ]
+     ],
+     "before": [
+      "babies:hop"
+     ]
+    },
+    {
+     "text": "어? 눈앞에 커다란 무언가가 있어요!",
+     "src": "reuse",
+     "en": "Oh? Something huge is right in front of us!",
+     "segs": [
+      [
+       "nar",
+       "Oh? Something huge is right in front of us!",
+       "toneup:1.3"
+      ]
+     ],
+     "before": [
+      "ox:show"
+     ]
+    },
+    {
+     "text": "아기 개구리들은 눈을 동그랗게 뜨고 멈춰 섰어요.",
+     "src": "new",
+     "en": "The baby frogs stopped still, their eyes as round as marbles.",
+     "segs": [
+      [
+       "nar",
+       "The baby frogs stopped still, their eyes as round as marbles.",
+       "whisper"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_something",
+   "card": "Something Big",
+   "set": "meadow",
+   "enter": [
+    "babies:hop",
+    "ox:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이건 뭘까요? 꼬리일까요, 나무일까요?",
+     "src": "reuse",
+     "en": "What could this be? A tail or a tree?",
+     "segs": [
+      [
+       "nar",
+       "What could this be? A tail or a tree?",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "ox:part:tail"
+     ]
+    },
+    {
+     "text": "길쭉한 것이 살랑살랑 흔들려요. 꼬리였어요!",
+     "src": "new",
+     "en": "Something long was swishing back and forth, swish, swish. It was a tail!",
+     "segs": [
+      [
+       "nar",
+       "Something long was swishing back and forth, swish, swish. It was a tail!"
+      ]
+     ]
+    },
+    {
+     "text": "이번엔 뭘까요? 발굽일까요, 돌멩이일까요?",
+     "src": "reuse",
+     "en": "What is it this time? A hoof or a pebble?",
+     "segs": [
+      [
+       "nar",
+       "What is it this time? A hoof or a pebble?"
+      ]
+     ],
+     "before": [
+      "ox:part:hoof"
+     ]
+    },
+    {
+     "text": "쿵, 쿵! 땅을 울리는 커다란 발굽이었어요.",
+     "src": "new",
+     "en": "Thump, thump! It was a great big hoof that shook the ground.",
+     "segs": [
+      [
+       "nar",
+       "Thump, thump! It was a great big hoof that shook the ground."
+      ]
+     ],
+     "before": [
+      "fx:thud"
+     ]
+    },
+    {
+     "text": "이건 뭘까요? 뿔일까요, 나뭇가지일까요?",
+     "src": "reuse",
+     "en": "What could this be? A horn or a branch?",
+     "segs": [
+      [
+       "nar",
+       "What could this be? A horn or a branch?"
+      ]
+     ],
+     "before": [
+      "ox:part:horn"
+     ]
+    },
+    {
+     "text": "뾰족한 것이 삐죽! 머리 위에 솟은 뿔이었어요.",
+     "src": "new",
+     "en": "Something pointy stuck straight up, poke! It was a horn on top of a head.",
+     "segs": [
+      [
+       "nar",
+       "Something pointy stuck straight up, poke! It was a horn on top of a head."
+      ]
+     ]
+    },
+    {
+     "text": "커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.",
+     "src": "reuse",
+     "en": "It was a big, big ox! The baby frogs were so startled, they ran away.",
+     "segs": [
+      [
+       "nar",
+       "It was a big, big ox! The baby frogs were so startled, they ran away.",
+       "toneup:1.3"
+      ]
+     ],
+     "before": [
+      "ox:stand",
+      "cam:wide"
+     ],
+     "after": [
+      "babies:run",
+      "fx:boing"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_pond",
+   "card": "The Pond",
+   "set": "pond",
+   "enter": [
+    "babies:pads",
+    "babies:wake",
+    "mom:base",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "아기 개구리들은 헐레벌떡 연못으로 돌아왔어요.",
+     "src": "new",
+     "en": "The baby frogs came rushing back to the pond, huffing and puffing.",
+     "segs": [
+      [
+       "nar",
+       "The baby frogs came rushing back to the pond, huffing and puffing."
+      ]
+     ],
+     "before": [
+      "cut:monster"
+     ]
+    },
+    {
+     "text": "\"엄마! 산처럼 커다란 괴물을 봤어요!\"",
+     "src": "reuse",
+     "en": "\"Mama! I saw a monster as big as a mountain!\"",
+     "segs": [
+      [
+       "baby",
+       "Mama! I saw a monster as big as a mountain!",
+       "toneup:1.5"
+      ]
+     ],
+     "before": [
+      "baby:0:hop"
+     ]
+    },
+    {
+     "text": "아기 개구리들은 부들부들, 아직도 다리가 후들거렸어요.",
+     "src": "new",
+     "en": "The baby frogs trembled and shook, their little legs still wobbling.",
+     "segs": [
+      [
+       "nar",
+       "The baby frogs trembled and shook, their little legs still wobbling."
+      ]
+     ]
+    },
+    {
+     "text": "엄마개구리가 말했어요. \"흥, 얼마나 컸는데?\"",
+     "src": "reuse",
+     "en": "Mama Frog said. \"Hmph, how big was it?\"",
+     "segs": [
+      [
+       "nar",
+       "Mama Frog said."
+      ],
+      [
+       "mom",
+       "Hmph, how big was it?",
+       "tonedown:1.2"
+      ]
+     ],
+     "before": [
+      "mom:hop"
+     ]
+    },
+    {
+     "text": "개구리보다 오리가, 오리보다 양이, 양보다 황소가 훨씬 커요.",
+     "src": "new",
+     "en": "A duck is bigger than a frog, a sheep is bigger than a duck, and an ox is much, much bigger than a sheep.",
+     "segs": [
+      [
+       "nar",
+       "A duck is bigger than a frog, a sheep is bigger than a duck, and an ox is much, much bigger than a sheep."
+      ]
+     ],
+     "before": [
+      "set:chart",
+      "chart:line"
+     ],
+     "after": [
+      "set:pond"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_puff",
+   "card": "By the Pond",
+   "set": "pond",
+   "enter": [
+    "babies:pads",
+    "babies:wake",
+    "mom:base",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"흥, 나도 황소만큼 클 수 있어!\" 엄마개구리가 숨을 크게 들이마셨어요.",
+     "src": "reuse",
+     "en": "\"I can be as big as an ox!\" Mama Frog took a deep breath.",
+     "segs": [
+      [
+       "mom",
+       "I can be as big as an ox!",
+       "angry:1.3"
+      ],
+      [
+       "nar",
+       "Mama Frog took a deep breath."
+      ]
+     ]
+    },
+    {
+     "text": "후우, 후우! 엄마개구리 배가 볼록볼록, 점점 커졌어요.",
+     "src": "new",
+     "en": "Puff, puff! Mama Frog's tummy bulged and swelled, bigger and bigger.",
+     "segs": [
+      [
+       "nar",
+       "Puff, puff! Mama Frog's tummy bulged and swelled, bigger and bigger.",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "mom:puffed:3",
+      "fx:boing"
+     ]
+    },
+    {
+     "text": "\"아직 황소가 더 커요!\"",
+     "src": "reuse",
+     "en": "\"The ox is still bigger!\"",
+     "segs": [
+      [
+       "babyb",
+       "The ox is still bigger!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "baby:1:hop"
+     ]
+    },
+    {
+     "text": "엄마개구리는 또 후우! 숨을 들이마셨어요. 배가 빵빵!",
+     "src": "new",
+     "en": "Mama Frog took another big breath, pu-u-uff! Her tummy went tight as a drum!",
+     "segs": [
+      [
+       "nar",
+       "Mama Frog took another big breath, pu-u-uff! Her tummy went tight as a drum!",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "mom:puffed:6"
+     ]
+    },
+    {
+     "text": "\"와, 양만큼 커졌다! 그래도 황소가 더 커요!\"",
+     "src": "reuse",
+     "en": "\"Wow, as big as a sheep! But the ox is still bigger!\"",
+     "segs": [
+      [
+       "babyc",
+       "Wow, as big as a sheep! But the ox is still bigger!",
+       "happy:1.5"
+      ]
+     ],
+     "before": [
+      "baby:2:hop"
+     ]
+    },
+    {
+     "text": "엄마개구리가 부들부들 떨려요.",
+     "src": "trim",
+     "from": "엄마개구리가 부들부들 떨려요. 어어… 한 번 더 누르면 어떻게 될까?",
+     "en": "Mama Frog is trembling and wobbling.",
+     "segs": [
+      [
+       "nar",
+       "Mama Frog is trembling and wobbling.",
+       "tonedown:1.2"
+      ]
+     ],
+     "before": [
+      "mom:puffed:8"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_pop",
+   "card": "Pop!",
+   "set": "pond",
+   "enter": [
+    "babies:pads",
+    "babies:wake",
+    "mom:puffed:8",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "펑! 바람이 푸슈슈 빠지면서 엄마개구리가 하늘로 붕 떠올랐어요.",
+     "src": "new",
+     "en": "Pop! The air came rushing out, fsss, and Mama Frog shot up into the sky, whoosh!",
+     "segs": [
+      [
+       "nar",
+       "Pop! The air came rushing out, fsss, and Mama Frog shot up into the sky, whoosh!",
+       "toneup:1.4"
+      ]
+     ],
+     "before": [
+      "vo:cut_pop",
+      "cut:pop",
+      "cut:fly"
+     ]
+    },
+    {
+     "text": "푸슈슈슉~ 엄마개구리가 풍선처럼 날아다녀요!",
+     "src": "trim",
+     "from": "푸슈슈슉~ 엄마개구리가 풍선처럼 날아다녀요! 톡 눌러서 잡아 줘요!",
+     "en": "Fshhhhh~ Mama Frog is flying around like a balloon!",
+     "segs": [
+      [
+       "nar",
+       "Fshhhhh~ Mama Frog is flying around like a balloon!",
+       "toneup:1.4"
+      ]
+     ],
+     "before": [
+      "mom:flying",
+      "fx:whoosh"
+     ]
+    },
+    {
+     "text": "빙글빙글, 휘리릭! 그러다 퐁당! 연못에 떨어졌어요.",
+     "src": "new",
+     "en": "Round and round, whirl, whirl! And then, splash! Down she fell into the pond.",
+     "segs": [
+      [
+       "nar",
+       "Round and round, whirl, whirl! And then, splash! Down she fell into the pond.",
+       "toneup:1.2"
+      ]
+     ],
+     "before": [
+      "cut:splash",
+      "fx:splash",
+      "pop:500,300,퐁당!"
+     ]
+    },
+    {
+     "text": "엄마개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.",
+     "src": "reuse",
+     "en": "Mama Frog was back to her normal size. Dizzy as she was, she laughed ha ha ha.",
+     "segs": [
+      [
+       "nar",
+       "Mama Frog was back to her normal size. Dizzy as she was, she laughed ha ha ha.",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "mom:dizzy"
+     ],
+     "after": [
+      "mom:base"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_hop",
+   "card": "Hopping Contest",
+   "set": "meadow",
+   "enter": [
+    "mom:base",
+    "mom:at:300,470",
+    "babies:hop",
+    "ox:kneel",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "황소가 몸을 낮추고 다정하게 말했어요. \"크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!\"",
+     "src": "reuse",
+     "en": "The ox bent down low and said kindly. \"It's okay not to be big. You're a hopping champion!\"",
+     "segs": [
+      [
+       "nar",
+       "The ox bent down low and said kindly."
+      ],
+      [
+       "ox",
+       "It's okay not to be big. You're a hopping champion!",
+       "happy:1.0"
+      ]
+     ]
+    },
+    {
+     "text": "엄마개구리가 폴짝! 풀밭을 가로질러 멀리멀리 뛰었어요.",
+     "src": "new",
+     "en": "Mama Frog went hop! and sailed far, far across the meadow.",
+     "segs": [
+      [
+       "nar",
+       "Mama Frog went hop! and sailed far, far across the meadow.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "mom:hop",
+      "fx:boing",
+      "pop:400,300,폴짝!"
+     ]
+    },
+    {
+     "text": "황소도 따라 뛰어 볼까요? 하나, 둘…",
+     "src": "reuse",
+     "en": "Shall the ox try hopping too? One, two...",
+     "segs": [
+      [
+       "nar",
+       "Shall the ox try hopping too? One, two..."
+      ]
+     ],
+     "before": [
+      "ox:stand"
+     ]
+    },
+    {
+     "text": "쿵! 황소는 폴짝 뛰지 못했어요.",
+     "src": "trim",
+     "from": "쿵! 황소는 폴짝 뛰지 못했어요. 누가 더 멀리 뛸까요? 개구리!",
+     "en": "Thud! The ox couldn't hop.",
+     "segs": [
+      [
+       "nar",
+       "Thud! The ox couldn't hop.",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "ox:jumpfail",
+      "fx:thud",
+      "vo:ox_thud",
+      "pop:700,300,쿵!"
+     ],
+     "after": [
+      "cut:jump"
+     ]
+    },
+    {
+     "text": "아기 개구리들이 깔깔깔, 엄마개구리도 히히 웃었어요.",
+     "src": "new",
+     "en": "The baby frogs giggled, tee-hee-hee, and Mama Frog chuckled too.",
+     "segs": [
+      [
+       "nar",
+       "The baby frogs giggled, tee-hee-hee, and Mama Frog chuckled too.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "babies:hop",
+      "mom:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_night",
+   "card": "Night Pond",
+   "set": "night",
+   "enter": [
+    "babies:pads",
+    "mom:base",
+    "uncle:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요.",
+     "src": "trim",
+     "from": "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 먼저 들어 봐요!",
+     "en": "Night came. Uncle Frog, wearing a bow tie, came to visit. The frog family sings a song.",
+     "segs": [
+      [
+       "nar",
+       "Night came. Uncle Frog, wearing a bow tie, came to visit. The frog family sings a song.",
+       "happy:1.1"
+      ]
+     ],
+     "after": [
+      "chorus:sing"
+     ]
+    },
+    {
+     "text": "개굴개굴, 개굴개굴! 반짝이는 별 아래 노랫소리가 울려 퍼졌어요.",
+     "src": "new",
+     "en": "Ribbit, ribbit! Ribbit, ribbit! Under the twinkling stars, their song rang out across the pond.",
+     "segs": [
+      [
+       "nar",
+       "Ribbit, ribbit! Ribbit, ribbit! Under the twinkling stars, their song rang out across the pond.",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "pop:500,250,개굴!"
+     ]
+    },
+    {
+     "text": "개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.",
+     "src": "reuse",
+     "en": "Ribbit, ribbit~ The song faded away, and the frog family fell fast asleep.",
+     "segs": [
+      [
+       "nar",
+       "Ribbit, ribbit~ The song faded away, and the frog family fell fast asleep.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "chorus:fade"
+     ]
+    },
+    {
+     "text": "개구리는 개구리대로, 황소는 황소대로 멋지답니다.",
+     "src": "new",
+     "en": "A frog is wonderful as a frog, and an ox is wonderful as an ox.",
+     "segs": [
+      [
+       "nar",
+       "A frog is wonderful as a frog, and an ox is wonderful as an ox.",
+       "whisper"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

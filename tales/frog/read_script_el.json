@@ -1,0 +1,752 @@
+{
+ "mode": "read",
+ "tale": "frog",
+ "lang": "ko",
+ "title": "황소와 개구리",
+ "voices_from": "voice_script_el.json",
+ "moral": "개구리는 개구리대로, 황소는 황소대로 멋지답니다.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 놀이판 8장면을 8장면으로(키재기 장면을 빼고 연못가를 부풀기·펑! 둘로 나눔). 아기 개구리 깨우기, 폴짝 누르기, 꼬리·발굽·뿔 고르기(안내·정답 줄), 키재기 고르기 전체(동물 크기 비교는 묘사 한 줄로 남김), 엄마개구리 부풀리기 연타, 날아다니는 엄마 잡기, 폴짝 누르기, 밤 노래 따라 부르기를 뺐다. 꼬리 자름 5줄. 그림 컷 5장(괴물·펑·날기·퐁당·점프)은 그대로. 순화: 놀이판처럼 엄마개구리는 터지지 않고 바람이 빠져 풍선처럼 날아갔다가 연못에 퐁당 떨어진다(원작 이솝에서는 터진다). 기존 대사가 짧아(퀴즈·조작 줄을 빼면 약 540자) 전체 1,500자에는 못 미치지만 배율은 1.9배로 맞췄다. 새 문장은 의성어·의태어를 장면마다 2~3개 넣었다(2026-10-22 사용자 지시).",
+ "acts": {
+  "set:<pond|meadow|chart|night>": "장면 배경(bg_pond·bg_meadow·bg_chart·bg_pond_night). scenes[].set 으로 자동 호출",
+  "babies:<sleep|wake|hop|run|hide|pads> | baby:<0|1|2>:hop": "아기 개구리 셋(연잎 위·풀밭)",
+  "mom:<base|puffed:<1-8>|flying|dizzy|hop|hide|show> | mom:at:<x,y>": "엄마개구리 그림·부풀기 단계·날기·어지러움",
+  "ox:<stand|kneel|jumpfail|show|hide> | ox:part:<tail|hoof|horn>": "황소 자세·부위 확대(풀밭 장면)",
+  "uncle:show | duck:show | sheep:show | chart:line": "삼촌 개구리·오리·양·키재기 줄",
+  "cut:<monster|pop|fly|splash|jump>": "그림 컷 5장 — 컷 속 외침(VOICE_LINES cut_pop·ox_thud)은 그대로 재사용",
+  "vo:<cut_pop|ox_thud>": "말풍선 없는 소리 대사(기존 녹음)",
+  "chorus:sing | chorus:fade": "밤 합창(저절로)·잦아듦",
+  "fx:<ribbit|splash|boing|thud|whoosh|pop> | pop:<x,y,글자> | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_morning",
+   "card": "아침 연못",
+   "set": "pond",
+   "enter": [
+    "babies:pads",
+    "babies:sleep",
+    "mom:base",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "연못에 아침이 왔어요. 아기 개구리들이 아직 쿨쿨 자고 있네요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "연못에 아침이 왔어요. 아기 개구리들이 아직 쿨쿨 자고 있네요.",
+       "happy:1.0",
+       "[calm, soft, morning, sleepy]"
+      ]
+     ]
+    },
+    {
+     "text": "햇살이 반짝, 연잎 위에 이슬이 또르르 굴러요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "햇살이 반짝, 연잎 위에 이슬이 또르르 굴러요.",
+       null,
+       "[calm, soft, morning]"
+      ]
+     ]
+    },
+    {
+     "text": "아기 개구리들이 기지개를 쭉, 눈을 깜빡깜빡 떴어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아기 개구리들이 기지개를 쭉, 눈을 깜빡깜빡 떴어요.",
+       "happy:1.0",
+       "[gentle, bright, waking up]"
+      ]
+     ],
+     "before": [
+      "babies:wake",
+      "fx:ribbit"
+     ]
+    },
+    {
+     "text": "엄마개구리가 말했어요. \"얘들아, 멀리 가면 안 된다~\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마개구리가 말했어요.",
+       null,
+       "[warm, gentle]"
+      ],
+      [
+       "mom",
+       "얘들아, 멀리 가면 안 된다!",
+       "happy:0.9",
+       "[warm, smiling, lively sing-song call to her little ones, affectionate]"
+      ]
+     ]
+    },
+    {
+     "text": "하지만 아기 개구리들은 폴짝폴짝, 몰래 연못을 빠져나갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "하지만 아기 개구리들은 폴짝폴짝, 몰래 연못을 빠져나갔어요.",
+       "whisper",
+       "[whispers, sneaky, playful]"
+      ]
+     ],
+     "before": [
+      "babies:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_meadow",
+   "card": "풀밭",
+   "set": "meadow",
+   "enter": [
+    "babies:hop",
+    "ox:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "아기 개구리들이 몰래 풀밭으로 나왔어요.",
+     "src": "trim",
+     "from": "아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?",
+     "segs": [
+      [
+       "nar",
+       "아기 개구리들이 몰래 풀밭으로 나왔어요.",
+       "whisper",
+       "[whispers, sneaky, playful]"
+      ]
+     ],
+     "before": [
+      "babies:hop"
+     ]
+    },
+    {
+     "text": "풀잎이 살랑살랑, 아기 개구리들은 신이 나서 폴짝폴짝 뛰었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "풀잎이 살랑살랑, 아기 개구리들은 신이 나서 폴짝폴짝 뛰었어요.",
+       null,
+       "[playful, lively]"
+      ]
+     ],
+     "before": [
+      "babies:hop"
+     ]
+    },
+    {
+     "text": "어? 눈앞에 커다란 무언가가 있어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "어? 눈앞에 커다란 무언가가 있어요!",
+       "toneup:1.3",
+       "[surprised, wide-eyed, hushed]"
+      ]
+     ],
+     "before": [
+      "ox:show"
+     ]
+    },
+    {
+     "text": "아기 개구리들은 눈을 동그랗게 뜨고 멈춰 섰어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아기 개구리들은 눈을 동그랗게 뜨고 멈춰 섰어요.",
+       "whisper",
+       "[hushed, wide-eyed]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_something",
+   "card": "커다란 무언가",
+   "set": "meadow",
+   "enter": [
+    "babies:hop",
+    "ox:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이건 뭘까요? 꼬리일까요, 나무일까요?",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이건 뭘까요? 꼬리일까요, 나무일까요?",
+       "whisper",
+       "[whispers, curious, mysterious but gentle]"
+      ]
+     ],
+     "before": [
+      "ox:part:tail"
+     ]
+    },
+    {
+     "text": "길쭉한 것이 살랑살랑 흔들려요. 꼬리였어요!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "길쭉한 것이 살랑살랑 흔들려요. 꼬리였어요!",
+       null,
+       "[curious, then delighted]"
+      ]
+     ]
+    },
+    {
+     "text": "이번엔 뭘까요? 발굽일까요, 돌멩이일까요?",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이번엔 뭘까요? 발굽일까요, 돌멩이일까요?",
+       null,
+       "[curious, hushed]"
+      ]
+     ],
+     "before": [
+      "ox:part:hoof"
+     ]
+    },
+    {
+     "text": "쿵, 쿵! 땅을 울리는 커다란 발굽이었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "쿵, 쿵! 땅을 울리는 커다란 발굽이었어요.",
+       null,
+       "[curious, then surprised]"
+      ]
+     ],
+     "before": [
+      "fx:thud"
+     ]
+    },
+    {
+     "text": "이건 뭘까요? 뿔일까요, 나뭇가지일까요?",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이건 뭘까요? 뿔일까요, 나뭇가지일까요?",
+       null,
+       "[curious, hushed]"
+      ]
+     ],
+     "before": [
+      "ox:part:horn"
+     ]
+    },
+    {
+     "text": "뾰족한 것이 삐죽! 머리 위에 솟은 뿔이었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "뾰족한 것이 삐죽! 머리 위에 솟은 뿔이었어요.",
+       null,
+       "[curious, then surprised]"
+      ]
+     ]
+    },
+    {
+     "text": "커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.",
+       "toneup:1.3",
+       "[excited, comedic, startled]"
+      ]
+     ],
+     "before": [
+      "ox:stand",
+      "cam:wide"
+     ],
+     "after": [
+      "babies:run",
+      "fx:boing"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_pond",
+   "card": "연못",
+   "set": "pond",
+   "enter": [
+    "babies:pads",
+    "babies:wake",
+    "mom:base",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "아기 개구리들은 헐레벌떡 연못으로 돌아왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아기 개구리들은 헐레벌떡 연못으로 돌아왔어요.",
+       null,
+       "[breathless, quick]"
+      ]
+     ],
+     "before": [
+      "cut:monster"
+     ]
+    },
+    {
+     "text": "\"엄마! 산처럼 커다란 괴물을 봤어요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "baby",
+       "엄마! 산처럼 커다란 괴물을 봤어요!",
+       "toneup:1.5",
+       "[wide-eyed, breathless, exaggerating, scared, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "baby:0:hop"
+     ]
+    },
+    {
+     "text": "아기 개구리들은 부들부들, 아직도 다리가 후들거렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아기 개구리들은 부들부들, 아직도 다리가 후들거렸어요.",
+       null,
+       "[gentle, amused]"
+      ]
+     ]
+    },
+    {
+     "text": "엄마개구리가 말했어요. \"흥, 얼마나 컸는데?\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마개구리가 말했어요.",
+       null,
+       "[gentle]"
+      ],
+      [
+       "mom",
+       "흥, 얼마나 컸는데?",
+       "tonedown:1.2",
+       "[huffy playful scoff, nose in the air, comedic, very expressive]"
+      ]
+     ],
+     "before": [
+      "mom:hop"
+     ]
+    },
+    {
+     "text": "개구리보다 오리가, 오리보다 양이, 양보다 황소가 훨씬 커요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개구리보다 오리가, 오리보다 양이, 양보다 황소가 훨씬 커요.",
+       null,
+       "[warm storytelling, clear]"
+      ]
+     ],
+     "before": [
+      "set:chart",
+      "chart:line"
+     ],
+     "after": [
+      "set:pond"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_puff",
+   "card": "연못가",
+   "set": "pond",
+   "enter": [
+    "babies:pads",
+    "babies:wake",
+    "mom:base",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"흥, 나도 황소만큼 클 수 있어!\" 엄마개구리가 숨을 크게 들이마셨어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "mom",
+       "흥, 나도 황소만큼 클 수 있어!",
+       "angry:1.3",
+       "[very proud and boastful, puffing up, dramatic, loud, comedic determination]"
+      ],
+      [
+       "nar",
+       "엄마개구리가 숨을 크게 들이마셨어요.",
+       null,
+       "[gentle, inhaling deeply]"
+      ]
+     ]
+    },
+    {
+     "text": "후우, 후우! 엄마개구리 배가 볼록볼록, 점점 커졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "후우, 후우! 엄마개구리 배가 볼록볼록, 점점 커졌어요.",
+       "happy:1.1",
+       "[playful, building up]"
+      ]
+     ],
+     "before": [
+      "mom:puffed:3",
+      "fx:boing"
+     ]
+    },
+    {
+     "text": "\"아직 황소가 더 커요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "babyb",
+       "아직 황소가 더 커요!",
+       "happy:1.2",
+       "[teasing, cheerful, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "baby:1:hop"
+     ]
+    },
+    {
+     "text": "엄마개구리는 또 후우! 숨을 들이마셨어요. 배가 빵빵!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "엄마개구리는 또 후우! 숨을 들이마셨어요. 배가 빵빵!",
+       "happy:1.1",
+       "[playful, comedic]"
+      ]
+     ],
+     "before": [
+      "mom:puffed:6"
+     ]
+    },
+    {
+     "text": "\"와, 양만큼 커졌다! 그래도 황소가 더 커요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "babyc",
+       "와, 양만큼 커졌다! 그래도 황소가 더 커요!",
+       "happy:1.5",
+       "[amazed, excited, childlike, baby voice, lisping, very young child, giggly]"
+      ]
+     ],
+     "before": [
+      "baby:2:hop"
+     ]
+    },
+    {
+     "text": "엄마개구리가 부들부들 떨려요.",
+     "src": "trim",
+     "from": "엄마개구리가 부들부들 떨려요. 어어… 한 번 더 누르면 어떻게 될까?",
+     "segs": [
+      [
+       "nar",
+       "엄마개구리가 부들부들 떨려요.",
+       "tonedown:1.2",
+       "[wobbly, nervous, building suspense, gentle]"
+      ]
+     ],
+     "before": [
+      "mom:puffed:8"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_pop",
+   "card": "펑!",
+   "set": "pond",
+   "enter": [
+    "babies:pads",
+    "babies:wake",
+    "mom:puffed:8",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "펑! 바람이 푸슈슈 빠지면서 엄마개구리가 하늘로 붕 떠올랐어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "펑! 바람이 푸슈슈 빠지면서 엄마개구리가 하늘로 붕 떠올랐어요.",
+       "toneup:1.4",
+       "[excited, comedic]"
+      ]
+     ],
+     "before": [
+      "vo:cut_pop",
+      "cut:pop",
+      "cut:fly"
+     ]
+    },
+    {
+     "text": "푸슈슈슉~ 엄마개구리가 풍선처럼 날아다녀요!",
+     "src": "trim",
+     "from": "푸슈슈슉~ 엄마개구리가 풍선처럼 날아다녀요! 톡 눌러서 잡아 줘요!",
+     "segs": [
+      [
+       "nar",
+       "푸슈슈슉~ 엄마개구리가 풍선처럼 날아다녀요!",
+       "toneup:1.4",
+       "[excited, comedic, whooshing]"
+      ]
+     ],
+     "before": [
+      "mom:flying",
+      "fx:whoosh"
+     ]
+    },
+    {
+     "text": "빙글빙글, 휘리릭! 그러다 퐁당! 연못에 떨어졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "빙글빙글, 휘리릭! 그러다 퐁당! 연못에 떨어졌어요.",
+       "toneup:1.2",
+       "[comedic, whooshing, then a splash]"
+      ]
+     ],
+     "before": [
+      "cut:splash",
+      "fx:splash",
+      "pop:500,300,퐁당!"
+     ]
+    },
+    {
+     "text": "엄마개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "엄마개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.",
+       "happy:1.3",
+       "[warm, gently laughing, relieved]"
+      ]
+     ],
+     "before": [
+      "mom:dizzy"
+     ],
+     "after": [
+      "mom:base"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_hop",
+   "card": "폴짝 대회",
+   "set": "meadow",
+   "enter": [
+    "mom:base",
+    "mom:at:300,470",
+    "babies:hop",
+    "ox:kneel",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "황소가 몸을 낮추고 다정하게 말했어요. \"크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "황소가 몸을 낮추고 다정하게 말했어요.",
+       null,
+       "[gentle, kind]"
+      ],
+      [
+       "ox",
+       "크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!",
+       "happy:1.0",
+       "[warm, kind, gentle giant, reassuring]"
+      ]
+     ]
+    },
+    {
+     "text": "엄마개구리가 폴짝! 풀밭을 가로질러 멀리멀리 뛰었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "엄마개구리가 폴짝! 풀밭을 가로질러 멀리멀리 뛰었어요.",
+       "happy:1.2",
+       "[cheerful, bouncy]"
+      ]
+     ],
+     "before": [
+      "mom:hop",
+      "fx:boing",
+      "pop:400,300,폴짝!"
+     ]
+    },
+    {
+     "text": "황소도 따라 뛰어 볼까요? 하나, 둘…",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "황소도 따라 뛰어 볼까요? 하나, 둘…",
+       null,
+       "[playful, curious]"
+      ]
+     ],
+     "before": [
+      "ox:stand"
+     ]
+    },
+    {
+     "text": "쿵! 황소는 폴짝 뛰지 못했어요.",
+     "src": "trim",
+     "from": "쿵! 황소는 폴짝 뛰지 못했어요. 누가 더 멀리 뛸까요? 개구리!",
+     "segs": [
+      [
+       "nar",
+       "쿵! 황소는 폴짝 뛰지 못했어요.",
+       "happy:1.3",
+       "[triumphant, playful, laughs]"
+      ]
+     ],
+     "before": [
+      "ox:jumpfail",
+      "fx:thud",
+      "vo:ox_thud",
+      "pop:700,300,쿵!"
+     ],
+     "after": [
+      "cut:jump"
+     ]
+    },
+    {
+     "text": "아기 개구리들이 깔깔깔, 엄마개구리도 히히 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아기 개구리들이 깔깔깔, 엄마개구리도 히히 웃었어요.",
+       "happy:1.2",
+       "[warm, laughing]"
+      ]
+     ],
+     "before": [
+      "babies:hop",
+      "mom:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_night",
+   "card": "밤 연못",
+   "set": "night",
+   "enter": [
+    "babies:pads",
+    "mom:base",
+    "uncle:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요.",
+     "src": "trim",
+     "from": "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 먼저 들어 봐요!",
+     "segs": [
+      [
+       "nar",
+       "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요.",
+       "happy:1.1",
+       "[calm, evening, musical, inviting]"
+      ]
+     ],
+     "after": [
+      "chorus:sing"
+     ]
+    },
+    {
+     "text": "개굴개굴, 개굴개굴! 반짝이는 별 아래 노랫소리가 울려 퍼졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개굴개굴, 개굴개굴! 반짝이는 별 아래 노랫소리가 울려 퍼졌어요.",
+       "happy:1.1",
+       "[calm, evening, musical]"
+      ]
+     ],
+     "before": [
+      "pop:500,250,개굴!"
+     ]
+    },
+    {
+     "text": "개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.",
+       "whisper",
+       "[whispers, sleepy, fading, lullaby]"
+      ]
+     ],
+     "before": [
+      "chorus:fade"
+     ]
+    },
+    {
+     "text": "개구리는 개구리대로, 황소는 황소대로 멋지답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개구리는 개구리대로, 황소는 황소대로 멋지답니다.",
+       "whisper",
+       "[whispers, warm, gentle, closing]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

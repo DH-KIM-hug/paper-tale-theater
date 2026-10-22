@@ -1,0 +1,1074 @@
+{
+ "mode": "read",
+ "tale": "red_car",
+ "lang": "en",
+ "title": "My Red Car",
+ "voices_from": "voice_script_el.json",
+ "moral": "When we help each other, we can travel together down roads we could never travel alone.",
+ "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, new 만 새로 녹음한다(trim 없음). 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<room|yard|gate|road_a|road_b|road_c|road_long|road_hill|playground>": "장면 배경(rc_bg_<키>_v2). scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
+  "kid:look:<stand|eat|sleep|point|run|cry|turn|hug>[:<dir>] | kid:at:<x,y> | kid:walk:<x,y,ms> | kid:hop | kid:wiggle": "이현이 자세·이동",
+  "car:<red|police|fire|amb|tow>:look:<run|joy|tired|hooked|spray|open|pull>[:<dir>] | car:<id>:at:<x,y> | car:<id>:drive:<x,ms> | car:<id>:hop | car:<id>:wiggle | car:<id>:hide": "자동차 자세·달리기",
+  "toys:show | hand:<eat|sleep|stand> | bfly:flutter | bfly:fly:<x,y>": "방 안 장난감·손에 쥔 자동차 자리·나비",
+  "thieves:run | thieves:hands | house:fire | flames:out:<n> | dolls:out | amb:door": "도둑 장난감·불난 집·불꽃 끄기(저절로)·인형 내리기",
+  "hook:click | convoy:line | convoy:drive": "견인 고리 걸기·한 줄 서기·줄지어 달리기",
+  "vo:<siren_police|siren_fire|siren_amb|vroom|chalkak|cheer>": "말풍선 없는 소리 대사(기존 녹음)",
+  "fx:<whoosh|boing|door|creak|click|siren> | pop:<x,y,글자> | confetti | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_room",
+   "card": "My Red Car",
+   "set": "room",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:300,470",
+    "toys:show",
+    "car:red:look:run",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이현이는 빨간 자동차를 참 좋아했어요.",
+     "src": "reuse",
+     "en": "Ihyun loved the little red car very much.",
+     "segs": [
+      [
+       "nar",
+       "Ee-hyun loved the little red car very much.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "방 안에는 파란 블록, 노란 오리, 그리고 반짝반짝 빨간 자동차가 있었지요.",
+     "src": "new",
+     "en": "In his room were a blue block, a yellow duck, and a shiny, sparkly little red car.",
+     "segs": [
+      [
+       "nar",
+       "In his room were a blue block, a yellow duck, and a shiny, sparkly little red car."
+      ]
+     ]
+    },
+    {
+     "text": "부릉부릉! 이현이는 날마다 자동차를 씽씽 굴리며 놀았어요.",
+     "src": "new",
+     "en": "Vroom, vroom! Every day Ihyun played with the car, zooming it all around.",
+     "segs": [
+      [
+       "nar",
+       "Vroom, vroom! Every day Ihyun played with the car, zooming it all around."
+      ]
+     ],
+     "before": [
+      "vo:vroom",
+      "car:red:hop"
+     ]
+    },
+    {
+     "text": "밥 먹을 때도 냠냠, 잠잘 때도 쌔근, 언제나 손에 꼭 쥐고 있었지요.",
+     "src": "reuse",
+     "en": "Munch munch at mealtime, snore snore at bedtime, the red car was always in Ihyun's hand.",
+     "segs": [
+      [
+       "nar",
+       "Munch munch at mealtime, snore snore at bedtime, the red car was always in Ee-hyun's hand.",
+       null
+      ]
+     ],
+     "before": [
+      "kid:look:eat:right",
+      "hand:eat",
+      "pop:380,170,냠냠"
+     ],
+     "after": [
+      "kid:look:sleep",
+      "hand:sleep",
+      "pop:380,170,쌔근"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_butterfly",
+   "card": "A Butterfly!",
+   "set": "yard",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:380,470",
+    "hand:stand",
+    "bfly:flutter",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그러던 어느 날, 밖에서 놀고 있었어요.",
+     "src": "reuse",
+     "en": "Then one day, Ihyun was playing outside.",
+     "segs": [
+      [
+       "nar",
+       "Then one day, Ee-hyun was playing outside.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "어! 나비다!",
+     "src": "reuse",
+     "en": "Oh! A butterfly!",
+     "segs": [
+      [
+       "child",
+       "Oh! A butterfly!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "kid:look:point:right",
+      "kid:hop"
+     ]
+    },
+    {
+     "text": "나비가 팔랑팔랑 날아가자, 이현이는 폴짝폴짝 따라갔어요.",
+     "src": "new",
+     "en": "The butterfly fluttered away, flutter, flutter, and Ihyun went hopping after it, hop, hop.",
+     "segs": [
+      [
+       "nar",
+       "The butterfly fluttered away, flutter, flutter, and Ihyun went hopping after it, hop, hop."
+      ]
+     ],
+     "before": [
+      "kid:look:run:right",
+      "bfly:fly:900,250",
+      "kid:walk:800,470,1500"
+     ]
+    },
+    {
+     "text": "노느라 그만 빨간 자동차를 풀밭에 툭, 놓고 말았어요.",
+     "src": "new",
+     "en": "He was so busy playing that the red car slipped out, plop, onto the grass.",
+     "segs": [
+      [
+       "nar",
+       "He was so busy playing that the red car slipped out, plop, onto the grass."
+      ]
+     ],
+     "before": [
+      "car:red:look:tired:right",
+      "pop:420,400,툭"
+     ]
+    },
+    {
+     "text": "정신을 차려 보니… 어라? 빨간 자동차가 보이지 않아요!",
+     "src": "reuse",
+     "en": "And then... huh? The red car was nowhere to be seen!",
+     "segs": [
+      [
+       "nar",
+       "And then... huh? The red car was nowhere to be seen!",
+       null
+      ]
+     ],
+     "before": [
+      "kid:look:stand",
+      "kid:wiggle",
+      "pop:800,210,두리번"
+     ]
+    },
+    {
+     "text": "잉잉, 내 빨간 자동차 어디 갔지?",
+     "src": "reuse",
+     "en": "Boo-hoo, where did my red car go?",
+     "segs": [
+      [
+       "child",
+       "Boo-hoo, where did my red car go?",
+       "sad"
+      ]
+     ],
+     "before": [
+      "kid:look:cry",
+      "pop:760,150,잉잉"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_toyland",
+   "card": "Vroom, to Toy Land!",
+   "set": "yard",
+   "enter": [
+    "kid:hide",
+    "car:red:look:run",
+    "car:red:at:300,476",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+     "src": "reuse",
+     "en": "The little red car, all alone, decided to go and find Ihyun. Off it went, brave and bold!",
+     "segs": [
+      [
+       "nar",
+       "The little red car, all alone, decided to go and find Ee-hyun. Off it went, brave and bold!",
+       null
+      ]
+     ],
+     "before": [
+      "car:red:hop"
+     ]
+    },
+    {
+     "text": "작은 바퀴가 덜덜 떨렸지만, 씩씩하게 데굴데굴 굴러갔어요.",
+     "src": "new",
+     "en": "Its little wheels wobbled and shook, but bravely it rolled on, round and round.",
+     "segs": [
+      [
+       "nar",
+       "Its little wheels wobbled and shook, but bravely it rolled on, round and round."
+      ]
+     ],
+     "before": [
+      "car:red:wiggle"
+     ]
+    },
+    {
+     "text": "부릉부릉! 이현이를 찾아 장난감 세상으로 가자!",
+     "src": "reuse",
+     "en": "Vroom vroom! Let's go to Toy Land and find Ihyun!",
+     "segs": [
+      [
+       "red",
+       "Vroom vroom! Let's go to Toy Land and find Ee-hyun!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "vo:vroom"
+     ],
+     "after": [
+      "set:gate",
+      "car:red:at:200,470"
+     ]
+    },
+    {
+     "text": "끼이익, 장난감 세상의 커다란 문이 열렸어요.",
+     "src": "new",
+     "en": "Creeeak! The great big gate of Toy Land swung open.",
+     "segs": [
+      [
+       "nar",
+       "Creeeak! The great big gate of Toy Land swung open."
+      ]
+     ],
+     "before": [
+      "fx:creak"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_police",
+   "card": "Big Brother Police Car",
+   "set": "road_a",
+   "enter": [
+    "car:red:hide",
+    "car:police:look:run",
+    "car:police:at:300,470",
+    "thieves:run",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "조금 가다 보니, 삐뽀삐뽀 우렁찬 소리가 들렸어요.",
+     "src": "reuse",
+     "en": "A little way down the road, there came a loud wee-woo, wee-woo!",
+     "segs": [
+      [
+       "nar",
+       "A little way down the road, there came a loud wee-woo, wee-woo!",
+       null
+      ]
+     ],
+     "before": [
+      "vo:siren_police",
+      "pop:300,250,삐뽀삐뽀!"
+     ]
+    },
+    {
+     "text": "게 멈춰라!",
+     "src": "reuse",
+     "en": "Stop right there!",
+     "segs": [
+      [
+       "police",
+       "Stop right there!",
+       "toneup"
+      ]
+     ]
+    },
+    {
+     "text": "경찰차 장난감이 도둑 장난감들을 쫓아 씽씽 달리고 있었어요.",
+     "src": "reuse",
+     "en": "A toy police car was zooming after some toy robbers.",
+     "segs": [
+      [
+       "nar",
+       "A toy police car was zooming after some toy robbers.",
+       null
+      ]
+     ],
+     "before": [
+      "pop:400,250,씽씽!"
+     ]
+    },
+    {
+     "text": "도둑 장난감들이 깜짝 놀라 두 손을 번쩍 들었어요.",
+     "src": "new",
+     "en": "The toy robbers jumped in surprise and threw their hands straight up in the air.",
+     "segs": [
+      [
+       "nar",
+       "The toy robbers jumped in surprise and threw their hands straight up in the air."
+      ]
+     ],
+     "before": [
+      "thieves:hands",
+      "fx:boing"
+     ]
+    },
+    {
+     "text": "어? 너는 이현이가 잃어버렸던 경찰차 형아?!",
+     "src": "reuse",
+     "en": "Huh? You're the police car Ihyun lost! Big brother police car!",
+     "segs": [
+      [
+       "red",
+       "Huh? You're the police car Ee-hyun lost! Big brother police car!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "car:red:look:run",
+      "car:red:at:-120,470",
+      "car:red:drive:200,1500"
+     ]
+    },
+    {
+     "text": "우리 같이 이현이한테 가자!",
+     "src": "reuse",
+     "en": "Let's go find Ihyun together!",
+     "segs": [
+      [
+       "red",
+       "Let's go find Ee-hyun together!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "car:red:hop"
+     ]
+    },
+    {
+     "text": "좋아! 도둑을 다 잡았으니 같이 가자!",
+     "src": "reuse",
+     "en": "Sure! I've caught all the robbers, so let's go together!",
+     "segs": [
+      [
+       "police",
+       "Sure! I've caught all the robbers, so let's go together!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "car:police:look:joy",
+      "car:police:hop"
+     ],
+     "after": [
+      "car:police:look:run"
+     ]
+    },
+    {
+     "text": "경찰차 형아가 앞장섰어요.",
+     "src": "reuse",
+     "en": "Big brother police car led the way.",
+     "segs": [
+      [
+       "nar",
+       "Big brother police car led the way.",
+       null
+      ]
+     ],
+     "after": [
+      "car:police:drive:900,6000",
+      "car:red:drive:730,6000"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_fire",
+   "card": "Auntie Fire Truck",
+   "set": "road_b",
+   "enter": [
+    "car:red:hide",
+    "car:police:hide",
+    "house:fire",
+    "car:fire:look:spray",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "가다 보니 이번엔 위이잉, 소리가 났어요.",
+     "src": "reuse",
+     "en": "A little farther on, there came a wee-ooo sound.",
+     "segs": [
+      [
+       "nar",
+       "A little farther on, there came a wee-ooo sound.",
+       null
+      ]
+     ],
+     "before": [
+      "vo:siren_fire",
+      "pop:400,250,위이잉!"
+     ]
+    },
+    {
+     "text": "조심하세요! 불을 끕니다!",
+     "src": "reuse",
+     "en": "Stand back! I'm putting out the fire!",
+     "segs": [
+      [
+       "fire",
+       "Stand back! I'm putting out the fire!",
+       "toneup"
+      ]
+     ]
+    },
+    {
+     "text": "소방차가 블록으로 만든 장난감 집에 난 불을 쉭쉭 끄고 있었어요.",
+     "src": "reuse",
+     "en": "A fire truck was spraying water, whoosh whoosh, on a fire at a little block house.",
+     "segs": [
+      [
+       "nar",
+       "A fire truck was spraying water, whoosh whoosh, on a fire at a little block house.",
+       null
+      ]
+     ],
+     "before": [
+      "pop:520,250,쉭쉭!"
+     ]
+    },
+    {
+     "text": "쉭쉭, 치익! 불꽃이 하나, 둘, 셋, 모두 꺼졌어요.",
+     "src": "new",
+     "en": "Whoosh, whoosh, hiss! The flames went out, one, two, three, all gone.",
+     "segs": [
+      [
+       "nar",
+       "Whoosh, whoosh, hiss! The flames went out, one, two, three, all gone."
+      ]
+     ],
+     "before": [
+      "flames:out:3"
+     ]
+    },
+    {
+     "text": "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+     "src": "reuse",
+     "en": "Oh? Auntie fire truck! Come with us to find Ihyun!",
+     "segs": [
+      [
+       "red",
+       "Oh? Auntie fire truck! Come with us to find Ee-hyun!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "car:fire:look:run",
+      "car:police:look:run",
+      "car:police:at:-200,470",
+      "car:red:look:run",
+      "car:red:at:-120,470",
+      "car:police:drive:250,1500",
+      "car:red:drive:330,1500"
+     ]
+    },
+    {
+     "text": "그래그래! 불을 다 껐으니 같이 가자!",
+     "src": "reuse",
+     "en": "Of course! The fire is out, so let's go together!",
+     "segs": [
+      [
+       "fire",
+       "Of course! The fire is out, so let's go together!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "car:fire:look:joy",
+      "car:fire:hop"
+     ],
+     "after": [
+      "car:fire:look:run"
+     ]
+    },
+    {
+     "text": "소방차 이모도 신나게 함께했어요.",
+     "src": "reuse",
+     "en": "Auntie fire truck happily joined the group.",
+     "segs": [
+      [
+       "nar",
+       "Auntie fire truck happily joined the group.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_amb",
+   "card": "Uncle Ambulance",
+   "set": "road_c",
+   "enter": [
+    "car:red:hide",
+    "car:police:hide",
+    "car:fire:hide",
+    "car:amb:look:run",
+    "car:amb:at:40,470",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "셋이서 길을 가다 보니 삐용삐용, 바쁜 소리가 들렸어요.",
+     "src": "reuse",
+     "en": "As the three drove on, there came a busy nee-naw, nee-naw!",
+     "segs": [
+      [
+       "nar",
+       "As the three drove on, there came a busy nee-naw, nee-naw!",
+       null
+      ]
+     ],
+     "before": [
+      "vo:siren_amb",
+      "pop:300,250,삐용삐용!"
+     ]
+    },
+    {
+     "text": "구급차 삼촌이 아픈 인형들을 태우고 병원으로 가고 있었지요.",
+     "src": "reuse",
+     "en": "Uncle ambulance was taking some sick dolls to the hospital.",
+     "segs": [
+      [
+       "nar",
+       "Uncle ambulance was taking some sick dolls to the hospital.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "철컥! 문이 열리고, 인형들이 살금살금 병원으로 들어갔어요.",
+     "src": "new",
+     "en": "Click! The door opened, and the dolls tiptoed quietly into the hospital.",
+     "segs": [
+      [
+       "nar",
+       "Click! The door opened, and the dolls tiptoed quietly into the hospital."
+      ]
+     ],
+     "before": [
+      "car:amb:look:open",
+      "fx:door",
+      "amb:door",
+      "dolls:out"
+     ]
+    },
+    {
+     "text": "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+     "src": "reuse",
+     "en": "Uncle ambulance! Come with us to find Ihyun!",
+     "segs": [
+      [
+       "red",
+       "Uncle ambulance! Come with us to find Ee-hyun!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "car:police:look:run",
+      "car:red:look:run",
+      "car:fire:look:run",
+      "car:police:at:-250,470",
+      "car:red:at:-130,470",
+      "car:fire:at:-400,470",
+      "car:police:drive:300,1500",
+      "car:red:drive:420,1500",
+      "car:fire:drive:180,1500"
+     ]
+    },
+    {
+     "text": "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+     "src": "reuse",
+     "en": "All right, all right! I've brought the sick friends to the hospital, so now let's go to Ihyun!",
+     "segs": [
+      [
+       "amb",
+       "All right, all right! I've brought the sick friends to the hospital, so now let's go to Ee-hyun!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "car:amb:look:joy",
+      "car:amb:hop"
+     ],
+     "after": [
+      "car:amb:look:run"
+     ]
+    },
+    {
+     "text": "구급차 삼촌도 든든하게 따라나섰어요.",
+     "src": "reuse",
+     "en": "Uncle ambulance came along too, strong and steady.",
+     "segs": [
+      [
+       "nar",
+       "Uncle ambulance came along too, strong and steady.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_sidebyside",
+   "card": "Side by Side",
+   "set": "road_long",
+   "enter": [
+    "convoy:line",
+    "car:red:look:run",
+    "car:police:look:run",
+    "car:fire:look:run",
+    "car:amb:look:run",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "넷이서 나란히 달려요. 친구들이 소리로 인사했어요.",
+     "src": "reuse",
+     "en": "The four friends drove side by side. They said hello with their sounds.",
+     "segs": [
+      [
+       "nar",
+       "The four friends drove side by side. They said hello with their sounds.",
+       null
+      ]
+     ],
+     "before": [
+      "convoy:drive"
+     ]
+    },
+    {
+     "text": "경찰차는 삐뽀삐뽀, 소방차는 위이잉, 구급차는 삐용삐용!",
+     "src": "new",
+     "en": "The police car went wee-woo, the fire truck went wee-ooo, and the ambulance went nee-naw!",
+     "segs": [
+      [
+       "nar",
+       "The police car went wee-woo, the fire truck went wee-ooo, and the ambulance went nee-naw!"
+      ]
+     ],
+     "before": [
+      "vo:siren_police",
+      "vo:siren_fire",
+      "vo:siren_amb"
+     ]
+    },
+    {
+     "text": "자, 다 같이 이현이한테 가자!",
+     "src": "reuse",
+     "en": "Come on, everyone, let's go to Ihyun!",
+     "segs": [
+      [
+       "red",
+       "Come on, everyone, let's go to Ee-hyun!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "vo:vroom",
+      "car:red:hop"
+     ]
+    },
+    {
+     "text": "네 친구는 씽씽, 바람을 가르며 신나게 달렸어요.",
+     "src": "new",
+     "en": "The four friends zoomed along, zip, zip, slicing through the wind, happy as could be.",
+     "segs": [
+      [
+       "nar",
+       "The four friends zoomed along, zip, zip, slicing through the wind, happy as could be."
+      ]
+     ],
+     "before": [
+      "pop:500,250,씽씽!",
+      "convoy:drive"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_tired",
+   "card": "Oh No, So Tired",
+   "set": "road_hill",
+   "enter": [
+    "convoy:line",
+    "car:red:look:run",
+    "car:tow:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하지만 너무 오래 달린 빨간 자동차는 그만 툭, 멈춰 서고 말았어요.",
+     "src": "reuse",
+     "en": "But the little red car had driven for so long that it stopped with a clunk.",
+     "segs": [
+      [
+       "nar",
+       "But the little red car had driven for so long that it stopped with a clunk.",
+       null
+      ]
+     ],
+     "before": [
+      "car:red:look:tired",
+      "car:red:wiggle",
+      "pop:500,380,툭"
+     ]
+    },
+    {
+     "text": "아이고, 힘들어. 더는 못 가겠어…",
+     "src": "reuse",
+     "en": "Oh dear, I'm so tired. I can't go any farther...",
+     "segs": [
+      [
+       "red",
+       "Oh dear, I'm so tired. I can't go any farther...",
+       "sad"
+      ]
+     ]
+    },
+    {
+     "text": "바퀴가 무거워 꼼짝할 수가 없었지요.",
+     "src": "reuse",
+     "en": "Its wheels felt so heavy it couldn't move at all.",
+     "segs": [
+      [
+       "nar",
+       "Its wheels felt so heavy it couldn't move at all.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "빨간 자동차는 헉헉, 엔진이 식어 축 늘어졌어요.",
+     "src": "new",
+     "en": "Huff, puff. The little red car's engine went cold, and it slumped right down.",
+     "segs": [
+      [
+       "nar",
+       "Huff, puff. The little red car's engine went cold, and it slumped right down."
+      ]
+     ]
+    },
+    {
+     "text": "그때, 저 멀리서 덜컹덜컹 든든한 소리가 들렸어요.",
+     "src": "reuse",
+     "en": "Just then, from far away, came a sturdy clatter, clatter sound.",
+     "segs": [
+      [
+       "nar",
+       "Just then, from far away, came a sturdy clatter, clatter sound.",
+       null
+      ]
+     ],
+     "before": [
+      "car:tow:look:run",
+      "car:tow:at:-300,470",
+      "car:tow:drive:250,2500",
+      "pop:200,250,덜컹덜컹"
+     ]
+    },
+    {
+     "text": "걱정 마! 내가 도와줄게!",
+     "src": "reuse",
+     "en": "Don't worry! I'll help you!",
+     "segs": [
+      [
+       "tow",
+       "Don't worry! I'll help you!",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "바로 이현이가 전에 잃어버렸던 주황색 견인차였어요!",
+     "src": "reuse",
+     "en": "It was the orange tow truck Ihyun had lost long ago!",
+     "segs": [
+      [
+       "nar",
+       "It was the orange tow truck Ee-hyun had lost long ago!",
+       "toneup"
+      ]
+     ]
+    },
+    {
+     "text": "견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요.",
+     "src": "reuse",
+     "en": "The tow truck hooked its strong hook onto the red car. Click!",
+     "segs": [
+      [
+       "nar",
+       "The tow truck hooked its strong hook onto the red car. Click!",
+       null
+      ]
+     ],
+     "before": [
+      "car:tow:look:pull",
+      "fx:creak",
+      "hook:click",
+      "vo:chalkak",
+      "pop:420,350,찰칵!"
+     ],
+     "after": [
+      "car:red:look:hooked"
+     ]
+    },
+    {
+     "text": "영차, 영차!",
+     "src": "reuse",
+     "en": "Heave-ho, heave-ho!",
+     "segs": [
+      [
+       "tow",
+       "Heave-ho, heave-ho!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "pop:300,250,영차!"
+     ]
+    },
+    {
+     "text": "\"고마워, 견인차야! 이제 다시 갈 수 있어!\"",
+     "src": "new",
+     "en": "Thank you, tow truck! Now I can go again!",
+     "segs": [
+      [
+       "red",
+       "Thank you, tow truck! Now I can go again!",
+       "happy"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_train",
+   "card": "All in a Row Like a Train",
+   "set": "road_long",
+   "enter": [
+    "convoy:line",
+    "car:tow:look:pull",
+    "car:red:look:hooked",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 다른 차들이 든든하게 따랐어요.",
+     "src": "reuse",
+     "en": "The tow truck pulled the red car from the front, and the other cars followed close behind.",
+     "segs": [
+      [
+       "nar",
+       "The tow truck pulled the red car from the front, and the other cars followed close behind.",
+       null
+      ]
+     ],
+     "before": [
+      "convoy:drive"
+     ]
+    },
+    {
+     "text": "맨 앞에서 견인차가 영차영차, 그 뒤로 친구들이 줄줄이 따라가요.",
+     "src": "new",
+     "en": "At the very front, the tow truck pulled, heave-ho, heave-ho, and the friends followed along in a long, long line.",
+     "segs": [
+      [
+       "nar",
+       "At the very front, the tow truck pulled, heave-ho, heave-ho, and the friends followed along in a long, long line."
+      ]
+     ]
+    },
+    {
+     "text": "긴 기차처럼 한 줄로 칙칙폭폭, 붕붕붕!",
+     "src": "reuse",
+     "en": "Like a long train, all in a row: chugga-chugga, vroom vroom vroom!",
+     "segs": [
+      [
+       "nar",
+       "Like a long train, all in a row: chugga-chugga, vroom vroom vroom!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "pop:500,250,칙칙폭폭!",
+      "vo:vroom"
+     ]
+    },
+    {
+     "text": "덜컹덜컹, 부릉부릉, 삐뽀삐뽀! 신나는 소리가 길에 가득했어요.",
+     "src": "new",
+     "en": "Clatter, clatter, vroom, vroom, wee-woo, wee-woo! The road was filled with happy sounds.",
+     "segs": [
+      [
+       "nar",
+       "Clatter, clatter, vroom, vroom, wee-woo, wee-woo! The road was filled with happy sounds."
+      ]
+     ],
+     "before": [
+      "vo:siren_police"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_hello",
+   "card": "Hello, Ihyun!",
+   "set": "playground",
+   "enter": [
+    "kid:look:stand:left",
+    "kid:at:780,470",
+    "convoy:line",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "마침내 놀이터에 있는 이현이를 만났어요!",
+     "src": "reuse",
+     "en": "At last, they found Ihyun at the playground!",
+     "segs": [
+      [
+       "nar",
+       "At last, they found Ee-hyun at the playground!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "convoy:drive",
+      "kid:look:turn"
+     ]
+    },
+    {
+     "text": "와아! 내 빨간 자동차다!",
+     "src": "reuse",
+     "en": "Wow! My red car!",
+     "segs": [
+      [
+       "child",
+       "Wow! My red car!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "kid:look:point:left",
+      "kid:hop"
+     ]
+    },
+    {
+     "text": "경찰차랑 소방차, 구급차랑 견인차도 다 여기 있네!",
+     "src": "reuse",
+     "en": "And the police car, the fire truck, the ambulance and the tow truck are all here too!",
+     "segs": [
+      [
+       "child",
+       "And the police car, the fire truck, the ambulance and the tow truck are all here too!",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "이현이는 소중한 보물 자동차들을 모두 품에 안고 펄쩍펄쩍 기뻐했답니다.",
+     "src": "reuse",
+     "en": "Ihyun hugged all the precious toy cars and jumped for joy.",
+     "segs": [
+      [
+       "nar",
+       "Ee-hyun hugged all the precious toy cars and jumped for joy.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "kid:look:hug",
+      "kid:hop",
+      "confetti"
+     ]
+    },
+    {
+     "text": "자동차 친구들도 빵빵! 부릉부릉! 신이 나서 소리쳤어요.",
+     "src": "new",
+     "en": "The car friends honked and roared with joy. Beep, beep! Vroom, vroom!",
+     "segs": [
+      [
+       "nar",
+       "The car friends honked and roared with joy. Beep, beep! Vroom, vroom!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "vo:cheer",
+      "car:red:hop",
+      "car:police:hop",
+      "car:fire:hop",
+      "car:amb:hop",
+      "car:tow:hop"
+     ]
+    },
+    {
+     "text": "이제 모두 함께 집으로 출발!",
+     "src": "reuse",
+     "en": "Now let's all go home together!",
+     "segs": [
+      [
+       "nar",
+       "Now let's all go home together!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "vo:vroom"
+     ]
+    },
+    {
+     "text": "서로 도우면 혼자서는 못 가는 길도 함께 갈 수 있답니다.",
+     "src": "new",
+     "en": "When we help each other, we can travel together down roads we could never travel alone.",
+     "segs": [
+      [
+       "nar",
+       "When we help each other, we can travel together down roads we could never travel alone."
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

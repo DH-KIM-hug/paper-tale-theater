@@ -1,0 +1,1089 @@
+{
+ "mode": "read",
+ "tale": "red_car",
+ "lang": "ko",
+ "title": "나의 빨간 자동차",
+ "voices_from": "voice_script_el.json",
+ "moral": "서로 도우면 혼자서는 못 가는 길도 함께 갈 수 있답니다.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 창작 동화(PLAN.md·SPEC.md). 주인공 이현이(남자아이). 놀이판 10장면 그대로 10장면. 빨간 것 찾기(오답·정답 줄), 불꽃 누르기, 고리 누르기, 맨 앞·가운데·맨 뒤 고르기(안내·오답·정답 줄 전부), 이현이 누르기를 뺐다. 기존 줄 \"노느라 그만 빨간 자동차를 톡, 놓고 말았어요.\"는 의성어 \"톡\"이 조작 낱말 검사에 걸려 \"툭\"으로 바꾼 새 문장으로 썼다(판단 필요: 녹음 재사용을 원하면 검사 예외로 두고 reuse 로 되돌릴 수 있음). SPEC 은 놀이판에서 교훈을 대사로 읽지 않지만, 읽어 주기 규칙(READ_MODE §3-5)에 따라 마지막 줄에 이야기 말투로 한 번 읽는다(판단 필요). 사이렌·부릉 소리는 기존 VOICE_LINES(siren_*, vroom, cheer)를 vo 동사로 그대로 쓴다. 새 문장은 의성어·의태어를 장면마다 2~3개 넣었다(2026-10-22 사용자 지시).",
+ "acts": {
+  "set:<room|yard|gate|road_a|road_b|road_c|road_long|road_hill|playground>": "장면 배경(rc_bg_<키>_v2). scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
+  "kid:look:<stand|eat|sleep|point|run|cry|turn|hug>[:<dir>] | kid:at:<x,y> | kid:walk:<x,y,ms> | kid:hop | kid:wiggle": "이현이 자세·이동",
+  "car:<red|police|fire|amb|tow>:look:<run|joy|tired|hooked|spray|open|pull>[:<dir>] | car:<id>:at:<x,y> | car:<id>:drive:<x,ms> | car:<id>:hop | car:<id>:wiggle | car:<id>:hide": "자동차 자세·달리기",
+  "toys:show | hand:<eat|sleep|stand> | bfly:flutter | bfly:fly:<x,y>": "방 안 장난감·손에 쥔 자동차 자리·나비",
+  "thieves:run | thieves:hands | house:fire | flames:out:<n> | dolls:out | amb:door": "도둑 장난감·불난 집·불꽃 끄기(저절로)·인형 내리기",
+  "hook:click | convoy:line | convoy:drive": "견인 고리 걸기·한 줄 서기·줄지어 달리기",
+  "vo:<siren_police|siren_fire|siren_amb|vroom|chalkak|cheer>": "말풍선 없는 소리 대사(기존 녹음)",
+  "fx:<whoosh|boing|door|creak|click|siren> | pop:<x,y,글자> | confetti | cam:<x,y,z> | cam:wide": "효과음·의성어·카메라"
+ },
+ "scenes": [
+  {
+   "key": "R01_room",
+   "card": "나의 빨간 자동차",
+   "set": "room",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:300,470",
+    "toys:show",
+    "car:red:look:run",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이현이는 빨간 자동차를 참 좋아했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이현이는 빨간 자동차를 참 좋아했어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "방 안에는 파란 블록, 노란 오리, 그리고 반짝반짝 빨간 자동차가 있었지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "방 안에는 파란 블록, 노란 오리, 그리고 반짝반짝 빨간 자동차가 있었지요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "부릉부릉! 이현이는 날마다 자동차를 씽씽 굴리며 놀았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "부릉부릉! 이현이는 날마다 자동차를 씽씽 굴리며 놀았어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "vo:vroom",
+      "car:red:hop"
+     ]
+    },
+    {
+     "text": "밥 먹을 때도 냠냠, 잠잘 때도 쌔근, 언제나 손에 꼭 쥐고 있었지요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "밥 먹을 때도 냠냠, 잠잘 때도 쌔근, 언제나 손에 꼭 쥐고 있었지요.",
+       null,
+       "[warm, playful rhythm, slow, a small pause before 잠잘 때도]"
+      ]
+     ],
+     "before": [
+      "kid:look:eat:right",
+      "hand:eat",
+      "pop:380,170,냠냠"
+     ],
+     "after": [
+      "kid:look:sleep",
+      "hand:sleep",
+      "pop:380,170,쌔근"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_butterfly",
+   "card": "나비다!",
+   "set": "yard",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:380,470",
+    "hand:stand",
+    "bfly:flutter",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그러던 어느 날, 밖에서 놀고 있었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그러던 어느 날, 밖에서 놀고 있었어요.",
+       null,
+       "[calm, light, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "어! 나비다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "child",
+       "어! 나비다!",
+       "toneup",
+       "[child, surprised and delighted, quick]"
+      ]
+     ],
+     "before": [
+      "kid:look:point:right",
+      "kid:hop"
+     ]
+    },
+    {
+     "text": "나비가 팔랑팔랑 날아가자, 이현이는 폴짝폴짝 따라갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "나비가 팔랑팔랑 날아가자, 이현이는 폴짝폴짝 따라갔어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "kid:look:run:right",
+      "bfly:fly:900,250",
+      "kid:walk:800,470,1500"
+     ]
+    },
+    {
+     "text": "노느라 그만 빨간 자동차를 풀밭에 툭, 놓고 말았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "노느라 그만 빨간 자동차를 풀밭에 툭, 놓고 말았어요.",
+       null,
+       "[gentle, a tiny pause before 툭]"
+      ]
+     ],
+     "before": [
+      "car:red:look:tired:right",
+      "pop:420,400,툭"
+     ]
+    },
+    {
+     "text": "정신을 차려 보니… 어라? 빨간 자동차가 보이지 않아요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "정신을 차려 보니… 어라? 빨간 자동차가 보이지 않아요!",
+       null,
+       "[slow, then lightly surprised]"
+      ]
+     ],
+     "before": [
+      "kid:look:stand",
+      "kid:wiggle",
+      "pop:800,210,두리번"
+     ]
+    },
+    {
+     "text": "잉잉, 내 빨간 자동차 어디 갔지?",
+     "src": "reuse",
+     "segs": [
+      [
+       "child",
+       "잉잉, 내 빨간 자동차 어디 갔지?",
+       "sad",
+       "[child, tearful, sniffling, not loud]"
+      ]
+     ],
+     "before": [
+      "kid:look:cry",
+      "pop:760,150,잉잉"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_toyland",
+   "card": "장난감 세상으로 붕붕!",
+   "set": "yard",
+   "enter": [
+    "kid:hide",
+    "car:red:look:run",
+    "car:red:at:300,476",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+       null,
+       "[warm, building courage, slow then bright at 출발]"
+      ]
+     ],
+     "before": [
+      "car:red:hop"
+     ]
+    },
+    {
+     "text": "작은 바퀴가 덜덜 떨렸지만, 씩씩하게 데굴데굴 굴러갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "작은 바퀴가 덜덜 떨렸지만, 씩씩하게 데굴데굴 굴러갔어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "car:red:wiggle"
+     ]
+    },
+    {
+     "text": "부릉부릉! 이현이를 찾아 장난감 세상으로 가자!",
+     "src": "reuse",
+     "segs": [
+      [
+       "red",
+       "부릉부릉! 이현이를 찾아 장난감 세상으로 가자!",
+       "happy",
+       "[small brave voice, cheerful, determined, clear]"
+      ]
+     ],
+     "before": [
+      "vo:vroom"
+     ],
+     "after": [
+      "set:gate",
+      "car:red:at:200,470"
+     ]
+    },
+    {
+     "text": "끼이익, 장난감 세상의 커다란 문이 열렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "끼이익, 장난감 세상의 커다란 문이 열렸어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "fx:creak"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_police",
+   "card": "경찰차 형아",
+   "set": "road_a",
+   "enter": [
+    "car:red:hide",
+    "car:police:look:run",
+    "car:police:at:300,470",
+    "thieves:run",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "조금 가다 보니, 삐뽀삐뽀 우렁찬 소리가 들렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "조금 가다 보니, 삐뽀삐뽀 우렁찬 소리가 들렸어요.",
+       null,
+       "[calm, then a lively siren imitation]"
+      ]
+     ],
+     "before": [
+      "vo:siren_police",
+      "pop:300,250,삐뽀삐뽀!"
+     ]
+    },
+    {
+     "text": "게 멈춰라!",
+     "src": "reuse",
+     "segs": [
+      [
+       "police",
+       "게 멈춰라!",
+       "toneup",
+       "[big brother voice, bold, commanding but friendly]"
+      ]
+     ]
+    },
+    {
+     "text": "경찰차 장난감이 도둑 장난감들을 쫓아 씽씽 달리고 있었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "경찰차 장난감이 도둑 장난감들을 쫓아 씽씽 달리고 있었어요.",
+       null,
+       "[lively, quick rhythm]"
+      ]
+     ],
+     "before": [
+      "pop:400,250,씽씽!"
+     ]
+    },
+    {
+     "text": "도둑 장난감들이 깜짝 놀라 두 손을 번쩍 들었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "도둑 장난감들이 깜짝 놀라 두 손을 번쩍 들었어요.",
+       null,
+       "[lively, quick rhythm]"
+      ]
+     ],
+     "before": [
+      "thieves:hands",
+      "fx:boing"
+     ]
+    },
+    {
+     "text": "어? 너는 이현이가 잃어버렸던 경찰차 형아?!",
+     "src": "reuse",
+     "segs": [
+      [
+       "red",
+       "어? 너는 이현이가 잃어버렸던 경찰차 형아?!",
+       "toneup",
+       "[small voice, surprised, delighted]"
+      ]
+     ],
+     "before": [
+      "car:red:look:run",
+      "car:red:at:-120,470",
+      "car:red:drive:200,1500"
+     ]
+    },
+    {
+     "text": "우리 같이 이현이한테 가자!",
+     "src": "reuse",
+     "segs": [
+      [
+       "red",
+       "우리 같이 이현이한테 가자!",
+       "happy",
+       "[small voice, eager, inviting]"
+      ]
+     ],
+     "before": [
+      "car:red:hop"
+     ]
+    },
+    {
+     "text": "좋아! 도둑을 다 잡았으니 같이 가자!",
+     "src": "reuse",
+     "segs": [
+      [
+       "police",
+       "좋아! 도둑을 다 잡았으니 같이 가자!",
+       "happy",
+       "[big brother voice, hearty, proud]"
+      ]
+     ],
+     "before": [
+      "car:police:look:joy",
+      "car:police:hop"
+     ],
+     "after": [
+      "car:police:look:run"
+     ]
+    },
+    {
+     "text": "경찰차 형아가 앞장섰어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "경찰차 형아가 앞장섰어요.",
+       null,
+       "[warm, settled]"
+      ]
+     ],
+     "after": [
+      "car:police:drive:900,6000",
+      "car:red:drive:730,6000"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_fire",
+   "card": "소방차 이모",
+   "set": "road_b",
+   "enter": [
+    "car:red:hide",
+    "car:police:hide",
+    "house:fire",
+    "car:fire:look:spray",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "가다 보니 이번엔 위이잉, 소리가 났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "가다 보니 이번엔 위이잉, 소리가 났어요.",
+       null,
+       "[calm, then a rising siren imitation]"
+      ]
+     ],
+     "before": [
+      "vo:siren_fire",
+      "pop:400,250,위이잉!"
+     ]
+    },
+    {
+     "text": "조심하세요! 불을 끕니다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "fire",
+       "조심하세요! 불을 끕니다!",
+       "toneup",
+       "[warm auntie voice, firm and caring, calling out]"
+      ]
+     ]
+    },
+    {
+     "text": "소방차가 블록으로 만든 장난감 집에 난 불을 쉭쉭 끄고 있었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "소방차가 블록으로 만든 장난감 집에 난 불을 쉭쉭 끄고 있었어요.",
+       null,
+       "[lively, 쉭쉭 crisp]"
+      ]
+     ],
+     "before": [
+      "pop:520,250,쉭쉭!"
+     ]
+    },
+    {
+     "text": "쉭쉭, 치익! 불꽃이 하나, 둘, 셋, 모두 꺼졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "쉭쉭, 치익! 불꽃이 하나, 둘, 셋, 모두 꺼졌어요.",
+       null,
+       "[lively, crisp]"
+      ]
+     ],
+     "before": [
+      "flames:out:3"
+     ]
+    },
+    {
+     "text": "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "red",
+       "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+       "happy",
+       "[small voice, excited, polite]"
+      ]
+     ],
+     "before": [
+      "car:fire:look:run",
+      "car:police:look:run",
+      "car:police:at:-200,470",
+      "car:red:look:run",
+      "car:red:at:-120,470",
+      "car:police:drive:250,1500",
+      "car:red:drive:330,1500"
+     ]
+    },
+    {
+     "text": "그래그래! 불을 다 껐으니 같이 가자!",
+     "src": "reuse",
+     "segs": [
+      [
+       "fire",
+       "그래그래! 불을 다 껐으니 같이 가자!",
+       "happy",
+       "[warm auntie voice, cheerful, kind]"
+      ]
+     ],
+     "before": [
+      "car:fire:look:joy",
+      "car:fire:hop"
+     ],
+     "after": [
+      "car:fire:look:run"
+     ]
+    },
+    {
+     "text": "소방차 이모도 신나게 함께했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "소방차 이모도 신나게 함께했어요.",
+       null,
+       "[warm, bright]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_amb",
+   "card": "구급차 삼촌",
+   "set": "road_c",
+   "enter": [
+    "car:red:hide",
+    "car:police:hide",
+    "car:fire:hide",
+    "car:amb:look:run",
+    "car:amb:at:40,470",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "셋이서 길을 가다 보니 삐용삐용, 바쁜 소리가 들렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "셋이서 길을 가다 보니 삐용삐용, 바쁜 소리가 들렸어요.",
+       null,
+       "[calm, then a quick busy siren imitation]"
+      ]
+     ],
+     "before": [
+      "vo:siren_amb",
+      "pop:300,250,삐용삐용!"
+     ]
+    },
+    {
+     "text": "구급차 삼촌이 아픈 인형들을 태우고 병원으로 가고 있었지요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "구급차 삼촌이 아픈 인형들을 태우고 병원으로 가고 있었지요.",
+       null,
+       "[gentle, caring]"
+      ]
+     ]
+    },
+    {
+     "text": "철컥! 문이 열리고, 인형들이 살금살금 병원으로 들어갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "철컥! 문이 열리고, 인형들이 살금살금 병원으로 들어갔어요.",
+       null,
+       "[gentle, caring]"
+      ]
+     ],
+     "before": [
+      "car:amb:look:open",
+      "fx:door",
+      "amb:door",
+      "dolls:out"
+     ]
+    },
+    {
+     "text": "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "red",
+       "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+       "happy",
+       "[small voice, eager, polite]"
+      ]
+     ],
+     "before": [
+      "car:police:look:run",
+      "car:red:look:run",
+      "car:fire:look:run",
+      "car:police:at:-250,470",
+      "car:red:at:-130,470",
+      "car:fire:at:-400,470",
+      "car:police:drive:300,1500",
+      "car:red:drive:420,1500",
+      "car:fire:drive:180,1500"
+     ]
+    },
+    {
+     "text": "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+     "src": "reuse",
+     "segs": [
+      [
+       "amb",
+       "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+       "happy",
+       "[kind uncle voice, deep, reassuring, unhurried]"
+      ]
+     ],
+     "before": [
+      "car:amb:look:joy",
+      "car:amb:hop"
+     ],
+     "after": [
+      "car:amb:look:run"
+     ]
+    },
+    {
+     "text": "구급차 삼촌도 든든하게 따라나섰어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "구급차 삼촌도 든든하게 따라나섰어요.",
+       null,
+       "[warm, steady]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_sidebyside",
+   "card": "나란히 달려요",
+   "set": "road_long",
+   "enter": [
+    "convoy:line",
+    "car:red:look:run",
+    "car:police:look:run",
+    "car:fire:look:run",
+    "car:amb:look:run",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "넷이서 나란히 달려요. 친구들이 소리로 인사했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "넷이서 나란히 달려요. 친구들이 소리로 인사했어요.",
+       null,
+       "[cheerful, slow, inviting to listen]"
+      ]
+     ],
+     "before": [
+      "convoy:drive"
+     ]
+    },
+    {
+     "text": "경찰차는 삐뽀삐뽀, 소방차는 위이잉, 구급차는 삐용삐용!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "경찰차는 삐뽀삐뽀, 소방차는 위이잉, 구급차는 삐용삐용!",
+       null,
+       "[cheerful, playful siren imitations]"
+      ]
+     ],
+     "before": [
+      "vo:siren_police",
+      "vo:siren_fire",
+      "vo:siren_amb"
+     ]
+    },
+    {
+     "text": "자, 다 같이 이현이한테 가자!",
+     "src": "reuse",
+     "segs": [
+      [
+       "red",
+       "자, 다 같이 이현이한테 가자!",
+       "happy",
+       "[small voice, leading, cheerful]"
+      ]
+     ],
+     "before": [
+      "vo:vroom",
+      "car:red:hop"
+     ]
+    },
+    {
+     "text": "네 친구는 씽씽, 바람을 가르며 신나게 달렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "네 친구는 씽씽, 바람을 가르며 신나게 달렸어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "pop:500,250,씽씽!",
+      "convoy:drive"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_tired",
+   "card": "에구구, 지쳤어요",
+   "set": "road_hill",
+   "enter": [
+    "convoy:line",
+    "car:red:look:run",
+    "car:tow:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하지만 너무 오래 달린 빨간 자동차는 그만 툭, 멈춰 서고 말았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "하지만 너무 오래 달린 빨간 자동차는 그만 툭, 멈춰 서고 말았어요.",
+       null,
+       "[slowing down, gentle concern, pause before 툭]"
+      ]
+     ],
+     "before": [
+      "car:red:look:tired",
+      "car:red:wiggle",
+      "pop:500,380,툭"
+     ]
+    },
+    {
+     "text": "아이고, 힘들어. 더는 못 가겠어…",
+     "src": "reuse",
+     "segs": [
+      [
+       "red",
+       "아이고, 힘들어. 더는 못 가겠어…",
+       "sad",
+       "[small voice, tired, breathless, trailing off]"
+      ]
+     ]
+    },
+    {
+     "text": "바퀴가 무거워 꼼짝할 수가 없었지요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "바퀴가 무거워 꼼짝할 수가 없었지요.",
+       null,
+       "[soft, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "빨간 자동차는 헉헉, 엔진이 식어 축 늘어졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "빨간 자동차는 헉헉, 엔진이 식어 축 늘어졌어요.",
+       null,
+       "[soft, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "그때, 저 멀리서 덜컹덜컹 든든한 소리가 들렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그때, 저 멀리서 덜컹덜컹 든든한 소리가 들렸어요.",
+       null,
+       "[hopeful, rhythmic 덜컹덜컹]"
+      ]
+     ],
+     "before": [
+      "car:tow:look:run",
+      "car:tow:at:-300,470",
+      "car:tow:drive:250,2500",
+      "pop:200,250,덜컹덜컹"
+     ]
+    },
+    {
+     "text": "걱정 마! 내가 도와줄게!",
+     "src": "reuse",
+     "segs": [
+      [
+       "tow",
+       "걱정 마! 내가 도와줄게!",
+       "happy",
+       "[easygoing sturdy voice, warm, reassuring]"
+      ]
+     ]
+    },
+    {
+     "text": "바로 이현이가 전에 잃어버렸던 주황색 견인차였어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "바로 이현이가 전에 잃어버렸던 주황색 견인차였어요!",
+       "toneup",
+       "[bright, glad reveal]"
+      ]
+     ]
+    },
+    {
+     "text": "견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요.",
+       null,
+       "[crisp 찰칵, satisfied]"
+      ]
+     ],
+     "before": [
+      "car:tow:look:pull",
+      "fx:creak",
+      "hook:click",
+      "vo:chalkak",
+      "pop:420,350,찰칵!"
+     ],
+     "after": [
+      "car:red:look:hooked"
+     ]
+    },
+    {
+     "text": "영차, 영차!",
+     "src": "reuse",
+     "segs": [
+      [
+       "tow",
+       "영차, 영차!",
+       "toneup",
+       "[heave, heave]"
+      ]
+     ],
+     "before": [
+      "pop:300,250,영차!"
+     ]
+    },
+    {
+     "text": "\"고마워, 견인차야! 이제 다시 갈 수 있어!\"",
+     "src": "new",
+     "segs": [
+      [
+       "red",
+       "고마워, 견인차야! 이제 다시 갈 수 있어!",
+       "happy",
+       "[small voice, relieved, grateful, cheerful]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_train",
+   "card": "기차처럼 한 줄로",
+   "set": "road_long",
+   "enter": [
+    "convoy:line",
+    "car:tow:look:pull",
+    "car:red:look:hooked",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 다른 차들이 든든하게 따랐어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 다른 차들이 든든하게 따랐어요.",
+       null,
+       "[warm, slow]"
+      ]
+     ],
+     "before": [
+      "convoy:drive"
+     ]
+    },
+    {
+     "text": "맨 앞에서 견인차가 영차영차, 그 뒤로 친구들이 줄줄이 따라가요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "맨 앞에서 견인차가 영차영차, 그 뒤로 친구들이 줄줄이 따라가요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "긴 기차처럼 한 줄로 칙칙폭폭, 붕붕붕!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "긴 기차처럼 한 줄로 칙칙폭폭, 붕붕붕!",
+       "toneup",
+       "[playful, rhythmic, joyful]"
+      ]
+     ],
+     "before": [
+      "pop:500,250,칙칙폭폭!",
+      "vo:vroom"
+     ]
+    },
+    {
+     "text": "덜컹덜컹, 부릉부릉, 삐뽀삐뽀! 신나는 소리가 길에 가득했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "덜컹덜컹, 부릉부릉, 삐뽀삐뽀! 신나는 소리가 길에 가득했어요.",
+       null,
+       "[playful, rhythmic, joyful]"
+      ]
+     ],
+     "before": [
+      "vo:siren_police"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_hello",
+   "card": "이현이야, 안녕!",
+   "set": "playground",
+   "enter": [
+    "kid:look:stand:left",
+    "kid:at:780,470",
+    "convoy:line",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "마침내 놀이터에 있는 이현이를 만났어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "마침내 놀이터에 있는 이현이를 만났어요!",
+       "toneup",
+       "[bright, relieved, joyful]"
+      ]
+     ],
+     "before": [
+      "convoy:drive",
+      "kid:look:turn"
+     ]
+    },
+    {
+     "text": "와아! 내 빨간 자동차다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "child",
+       "와아! 내 빨간 자동차다!",
+       "happy",
+       "[child, overjoyed, big]"
+      ]
+     ],
+     "before": [
+      "kid:look:point:left",
+      "kid:hop"
+     ]
+    },
+    {
+     "text": "경찰차랑 소방차, 구급차랑 견인차도 다 여기 있네!",
+     "src": "reuse",
+     "segs": [
+      [
+       "child",
+       "경찰차랑 소방차, 구급차랑 견인차도 다 여기 있네!",
+       "happy",
+       "[child, amazed, counting them off happily]"
+      ]
+     ]
+    },
+    {
+     "text": "이현이는 소중한 보물 자동차들을 모두 품에 안고 펄쩍펄쩍 기뻐했답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이현이는 소중한 보물 자동차들을 모두 품에 안고 펄쩍펄쩍 기뻐했답니다.",
+       "happy",
+       "[warm, joyful, storybook ending tone]"
+      ]
+     ],
+     "before": [
+      "kid:look:hug",
+      "kid:hop",
+      "confetti"
+     ]
+    },
+    {
+     "text": "자동차 친구들도 빵빵! 부릉부릉! 신이 나서 소리쳤어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "자동차 친구들도 빵빵! 부릉부릉! 신이 나서 소리쳤어요.",
+       "happy",
+       "[warm, joyful, lively]"
+      ]
+     ],
+     "before": [
+      "vo:cheer",
+      "car:red:hop",
+      "car:police:hop",
+      "car:fire:hop",
+      "car:amb:hop",
+      "car:tow:hop"
+     ]
+    },
+    {
+     "text": "이제 모두 함께 집으로 출발!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이제 모두 함께 집으로 출발!",
+       "toneup",
+       "[bright send-off]"
+      ]
+     ],
+     "before": [
+      "vo:vroom"
+     ]
+    },
+    {
+     "text": "서로 도우면 혼자서는 못 가는 길도 함께 갈 수 있답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "서로 도우면 혼자서는 못 가는 길도 함께 갈 수 있답니다.",
+       null,
+       "[warm, gentle, slow, storybook ending tone]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
