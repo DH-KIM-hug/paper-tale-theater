@@ -64,7 +64,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `sfx/rattle.mp3` | qubodup-wobble1.wav | qubodup | CC0 | https://opengameart.org/content/wood-wobbling-rattling |
 | `sfx/xylo_up.mp3` · `sfx/xylo_down.mp3` · `sfx/giggle_xylo.mp3` | child's_xylophone-2.wav 의 한 음을 음높이만 바꿔 이어 붙임 | AntumDeluge | CC0 | https://opengameart.org/content/childrens-xylophone |
 | `sfx/note_xylo.mp3` | child's_xylophone-2.wav 의 첫 음(약 A6) 한 개를 잘라 C5 높이로 느리게 낮춤. 골디락스 〈곰 세 마리〉 연주용(AudioFX.note) | AntumDeluge | CC0 | https://opengameart.org/content/childrens-xylophone |
-| `sfx/gom_se_mari.mp3` | 〈곰 세 마리〉(동요, 작자 미상) 멜로디를 위 note_xylo 샘플로 연주해 미리 렌더한 한 곡(약 20초). 만드는 법: tools/dev/render_gom_se_mari.py. 골디락스 끝 노래, 음 시작 시각은 goldilocks.js 의 ONS 표 | AntumDeluge 샘플 가공 | CC0 | https://opengameart.org/content/childrens-xylophone |
+| `sfx/gom_se_mari.mp3` · `sfx/gom_se_mari_2.mp3` | 〈곰 세 마리〉(동요, 작자 미상) 멜로디 연주를 미리 렌더한 두 곡(약 25초, 재생마다 번갈아 랜덤). 앞은 피아노(Piano mf 단음 C4·G3·C5·D5·E5·G5·A5·C6), 뒤는 마림바(Marimba yarn mallet mf, 옥타브 녹음에서 잘라 쓴 G3·C4·C5·D5·E5·G5·A5·C6). 만드는 법: tools/dev/render_gom_se_mari.py (--clips). 음 시작 시각은 goldilocks.js 의 ONS 표(두 곡 같음) | The University of Iowa Musical Instrument Samples (Lawrence Fritts, Electronic Music Studios) | 사이트 원문: "freely available on this website and may be downloaded and used for any projects, without restrictions" (응용 프로그램 개발자도 사용자로 명시). 별도 라이선스 문서는 없고 출처 표기 의무 언급 없음 | https://theremin.music.uiowa.edu/MIS.html |
 | `sfx/paper_up.mp3` | RPG Audio: bookFlip3.ogg (홈 태그를 고를 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
 | `sfx/paper_down.mp3` | RPG Audio: bookPlace3.ogg (태그를 풀 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
 | `sfx/paper_turn.mp3` | RPG Audio: bookFlip2.ogg (동화로 넘어갈 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |

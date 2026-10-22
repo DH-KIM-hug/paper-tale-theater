@@ -139,7 +139,7 @@ const AudioFX = (() => {
   /* 같은 소리의 여러 버전: 기본 이름(rooster.mp3) 말고 rooster_2.mp3, rooster_3.mp3 … 가 있으면 재생할 때마다 바꿔 고른다 (버전 수는 기본 포함) */
   const VARIANTS = { 'animals/duck': 3, 'animals/cow': 3, 'animals/pig': 3, 'animals/dog': 3, 'animals/owl': 3, 'animals/frog': 3,
     'animals/rooster': 3, 'animals/cat': 3, 'animals/sheep': 3, 'animals/donkey': 3, 'animals/tiger': 2, 'sfx/knock': 3,
-    'sfx/crunch': 3, 'sfx/chomp': 3, 'sfx/gulp': 3 };
+    'sfx/crunch': 3, 'sfx/chomp': 3, 'sfx/gulp': 3, 'sfx/gom_se_mari': 2 };
   const variantPath = (base, i) => i === 1 ? base + '.mp3' : base + '_' + i + '.mp3';
   const lastVariant = {};
   function pickVariant(path) {
