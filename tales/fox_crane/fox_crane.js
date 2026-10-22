@@ -553,6 +553,276 @@
     await Promise.race([Promise.all([loads.bg_forest, loads.fox_stand, loads.crane_head, loads.crane_body].filter(Boolean)), sleep(2500)]);
     const ARTMODE = () => !!(artUrl('fox_stand') && artUrl('crane_head'));
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 아래 놀이판 연출을 누르기 없이 감싼 얇은 함수 =================
+       장면 차리기(set)는 놀이판 그 장면의 자리·그림·카메라를 그대로 놓는다. 대본의 'kitchen' 은 두 번 나온다(부엌 → 납작 접시 탁자). */
+    const RP = T.portrait();
+    const inst = () => T.readInstant();
+    const fadeIn = d => d.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400);
+    const rs = { tag: '', kn: 0, cam: [500, 280, 1], pot: null, tbl: null, bottle: null, plateD: null, party: {}, plates: {}, inv: null, kick: null, wag: null, mouth: null };
+    const rHI = () => !!(bgUrl('high') && ARTMODE());
+    const rcam = (x, y, z) => { rs.cam = [x, y, z]; camSnap(x, y, z); };
+    const stepsOn = () => setInterval(() => sfx(T, 'step_grass', () => T.tone([220, 160], .08, { type: 'triangle', vol: .1 }), .5), 380);
+    const rSets = {
+      forest() {
+        forestBG(T);
+        const FX = RP ? 380 : 300, CX = RP ? 640 : 740;
+        fox = guest(T, T.world, 'fox', FX, 480, 1.1); fox.face('right');
+        crane = guest(T, T.world, 'crane', CX, 480, 1.1);
+        rs.inv = actor(T.world, RP ? 505 : 520, 440, g => drawInvite(T, g), { scale: 1.3 });
+        rcam(500, 280, RP ? .78 : 1);
+      },
+      kitchen() {
+        kitchenBG(T);
+        let pp;
+        if (bgUrl('kitchen') && artUrl('pot')) {
+          fox = guest(T, T.world, 'fox', 540, 550, 1.2);
+          rs.pot = actor(T.world, 330, 545, g => { pp = drawPot(T, g); }, { scale: 1.05 }); rs.pot.parts = pp;
+          rcam(440, 400, 1.3);
+        } else {
+          fox = guest(T, T.world, 'fox', 360, 470, 1.2); fox.face('right');
+          rs.pot = actor(T.world, 580, 470, g => { pp = drawPot(T, g); }, { scale: 1.05 }); rs.pot.parts = pp;
+          rcam(480, 340, 1.3);
+        }
+      },
+      high() {
+        rcam(500, 280, 1); highBG(T);
+        if (rHI()) { fox = guest(T, T.world, 'fox', RP ? 440 : 190, 398, 1.4); fox.face('right'); crane = guest(T, T.world, 'crane', 1150, 440, 1.3); }
+        else { fox = guest(T, T.world, 'fox', 190, 440, 1.1); fox.face('right'); crane = guest(T, T.world, 'crane', 1150, 450, 1.2); }
+        rs.tbl = highTable(T, T.world);
+      },
+      pondhouse() {
+        pondHouseBG(T);
+        crane = guest(T, T.world, 'crane', 640, 500, 1.1);
+        fox = guest(T, T.world, 'fox', -200, 510, 1.1); fox.face('right');
+        rcam(500, 280, 1);
+      },
+      crane_room() {
+        lowBG(T);
+        fox = guest(T, T.world, 'fox', RP ? 400 : 300, 500, 1.0); fox.face('right');
+        if (bgUrl('crane_room') && ARTMODE()) { crane = guest(T, T.world, 'crane', RP ? 650 : 820, 505, 1.55); rs.bottle = dish(T, T.world, 'bottle', 506, 374, 1.3); }
+        else { crane = guest(T, T.world, 'crane', 730, 500, 1.5); lowTable(T, T.world); rs.bottle = dish(T, T.world, 'bottle', 560, 432, 1.3); }
+        rs.bottle.pos.style.display = 'none';
+        rs.mouth = [rs.bottle.x, rs.bottle.y + DISH.bottle.top * 1.3];
+        rcam(500, 280, 1);
+      },
+      split() {
+        splitBG(T);
+        crane = guest(T, T.world, 'crane', RP ? 310 : 150, 480, .95); crane.face('right');
+        rs.plateD = dish(T, T.world, 'plate', RP ? 405 : 300, 480, .9);
+        fox = guest(T, T.world, 'fox', RP ? 700 : 870, 480, 1.0);
+        rs.bottle = dish(T, T.world, 'bottle', RP ? 600 : 700, 480, .95);
+        rs.plateD.pos.style.display = 'none'; rs.bottle.pos.style.display = 'none';
+        rcam(500, 280, RP ? .85 : 1);
+        crane.parts.sadDeg = 15; mood(crane, 'sad'); mood(fox, 'sad');
+      },
+      feast(night) {
+        feastBG(T, night);
+        const gL = T.el('g', {}, T.world), tL = T.el('g', {}, T.world), dL = T.el('g', {}, T.world);
+        const PF = (bgUrl(night ? 'feast_night' : 'feast_day') && ARTMODE()) ? 440 : 400;
+        if (night && !bgUrl('feast_night')) [150, 390, 610, 850].forEach(x => lantern(T, T.bg, x, 110));
+        const P = rs.party = {}, D = rs.plates = {};
+        P.duck = guest(T, gL, 'duck', 85, PF, 1.2); P.duck.face('right');
+        P.fox = guest(T, gL, 'fox', 385, PF, 1.1); P.fox.face('right');
+        P.crane = guest(T, gL, 'crane', 725 + (PF - 400) * .5, PF, 1.1);
+        P.butterfly = guest(T, gL, 'butterfly', 915, 340, 1.3);
+        feastTable(T, tL);
+        D.duck = dish(T, dL, 'bowl', 180, 404, .9); D.fox = dish(T, dL, 'plate', 505, 404, .9);
+        D.crane = dish(T, dL, 'bottle', 612, 404, .95); D.butterfly = dish(T, dL, 'flower', 840, 404, 1);
+        if (RP) { [...Object.values(P), ...Object.values(D)].forEach(a => a.place(Math.round(500 + (a.x - 500) * .72), a.y)); rcam(500, 280, Math.min(1, T.viewWidth() / 2 / 350)); }
+        else rcam(500, 280, 1);
+        rs.gone = [];
+        if (!night) { /* 낮 장면은 손님이 하나씩 온다 → 오리·나비·그릇은 아직 없다 */
+          ['duck', 'butterfly'].forEach(k => { P[k].pos.style.display = 'none'; });
+          Object.values(D).forEach(d => { d.pos.style.display = 'none'; });
+        }
+      },
+    };
+    const rSet = key => {
+      T.clear(); rs.tag = key; rs.pot = rs.tbl = rs.bottle = rs.plateD = rs.inv = null; rs.party = {}; rs.plates = {};
+      if (key === 'kitchen') { rs.kn++; if (rs.kn === 2) { rs.tag = 'high'; return rSets.high(); } return rSets.kitchen(); }
+      if (key === 'feast_day') return rSets.feast(false);
+      if (key === 'feast_night') { rSets.feast(true); direct(() => rs.party.fox, () => rs.party.crane); return; }
+      (rSets[key] || (() => console.warn('[read] set 모름', key)))();
+      direct(() => fox, () => crane);
+    };
+    const rStir = i => {
+      const pot = rs.pot, st = pot.parts.stir || 22;
+      pot.parts.spoon.animate([{ transform: 'rotate(0deg)' }, { transform: `rotate(${-st}deg)` }, { transform: `rotate(${st}deg)` }, { transform: 'rotate(0deg)' }], { duration: 420 });
+      for (let k = 0; k < 2; k++) {
+        const b = el('circle', { cx: -60 + Math.random() * 120, cy: -126, r: 8 + Math.random() * 6, fill: C.cream, opacity: .9 }, pot.parts.bubbles);
+        b.animate([{ transform: 'translateY(0)', opacity: .9 }, { transform: 'translateY(-60px)', opacity: 0 }], { duration: 900, delay: k * 150, fill: 'forwards' });
+        setTimeout(() => b.remove(), 1200);
+      }
+      bubbleSnd(T);
+      if (i % 2) T.pop(pot.x + 20, pot.y - 200, '보글', C.bean);
+    };
+    const cutFB = () => () => {};
+    const actorOf = k => (k === 'fox' ? (rs.party.fox || fox) : k === 'crane' ? (rs.party.crane || crane) : rs.party[k]);
+    const rActor = k => (verb, a1, a2) => {
+      const a = actorOf(k), P = rs.party;
+      const inFeast = rs.tag === 'feast_day' || rs.tag === 'feast_night';
+      if (verb === 'stand') return;
+      if (verb === 'enter') return;
+      if (!a) return console.warn('[read] 배우 없음', k, verb);
+      if (verb === 'at') { const [x] = String(a1).split(',').map(Number); a.place(x, a.y); return; }
+      if (verb === 'hop') {
+        if (k === 'crane' && rs.tag === 'forest') return (async () => { craneCall(T); await a.hop(80, 600); T.pop(a.x, 180, '폴짝!', C.pine); await a.hop(60, 500); })();
+        if (inFeast && k === 'fox' && a.parts.blush) { a.parts.blush.setAttribute('opacity', 0); }
+        if (inFeast && k === 'crane') mood(a, null);
+        return a.hop(30);
+      }
+      if (verb === 'giggle') { AudioFX.laugh(); return a.wiggle(8, 500); }
+      if (verb === 'peck') return (async () => {
+        const peckAt = rHI() ? [604, 280] : [640, 418], words = ['콕!', '딱!', '딱딱!'];
+        for (let i = 0; i < 3; i++) {
+          const deg = aimP(a, peckAt);
+          await T.anim(a.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${deg}deg)` }], 260);
+          peckSnd(T);
+          await sleep(260);
+          await T.anim(a.parts.head, [{ transform: `rotate(${deg}deg)` }, { transform: 'rotate(0deg)' }], 320);
+        }
+      })();
+      if (verb === 'lick') return (async () => {
+        if (!RP) await fox.move(rHI() ? 222 : 235, fox.y, 500);
+        fox.parts.tongue.setAttribute('opacity', 1);
+        const lickAt = rHI() ? [392, 288] : [390, 440], lickP = rHI() ? [360, 150] : [330, 300];
+        const fdeg = aimP(fox, lickAt);
+        fox.parts.head.style.transform = `rotate(${fdeg}deg)`;
+        const licking = fox.parts.head.animate([{ transform: `rotate(${fdeg}deg)` }, { transform: `rotate(${fdeg * .7}deg)` }, { transform: `rotate(${fdeg}deg)` }], { duration: 420, iterations: Infinity });
+        const lickT = setInterval(() => { lickSnd(T); T.pop(...lickP, '핥핥', C.bean); }, 900);
+        lickSnd(T); T.pop(...lickP, '핥핥', C.bean);
+        await T.anim(rs.tbl.soup, [{ transform: 'scale(1)' }, { transform: 'scale(0)' }], 2400);
+        clearInterval(lickT); licking.cancel();
+        fox.parts.head.style.transform = ''; fox.parts.tongue.setAttribute('opacity', 0);
+      })();
+      if (verb === 'sad') { mood(a, 'sad'); return; }
+      if (verb === 'sorry') {
+        if (k === 'fox') { if (a.parts.blush) a.parts.blush.setAttribute('opacity', 1); mood(a, 'sorry'); return; }
+        mood(a, 'sorry'); return;
+      }
+      if (verb === 'walk') {
+        let [x, ms] = String(a1).split(',').map(Number);
+        if (rs.tag === 'high' && k === 'crane' && x < 1000) x = RP ? 640 : rHI() ? 770 : 730;
+        if (rs.tag === 'pondhouse' && k === 'fox') x = Math.min(x, crane.x - 150);
+        return (async () => {
+          a.face(x > a.x ? 'right' : 'left');
+          if (k === 'crane' && rs.tag === 'high' && x < 1000) a.face('left');
+          const st = stepsOn();
+          await a.move(x, a.y, ms || 1500);
+          clearInterval(st);
+          if (k === 'fox' && rs.tag === 'pondhouse') { a.face('right'); }
+        })();
+      }
+      if (verb === 'stuck') return (async () => {
+        const mouth = rs.mouth;
+        await sleep(300);
+        await fox.move(360, 500, 400);
+        await fox.wiggle(5, 400);
+        T.tone([1200, 900], .08, { type: 'sine', vol: .1 });
+        await T.anim(fox.body, [{ transform: 'scale(1,1)' }, { transform: 'scale(.95,1.15)' }, { transform: 'scale(.95,1.15)' }, { transform: 'scale(1,1)' }], 800);
+        T.pop(360, 250, '영차!', C.pine);
+        const SN = fox.parts.art ? FOX_STUCK_NOSE : [-130, -94];
+        const sx = mouth[0] + SN[0] * fox.scale + (fox.parts.art ? -6 : 0), sy = mouth[1] + (fox.parts.art ? 12 : 8) - SN[1] * fox.scale;
+        sfx(T, 'whoosh');
+        await Promise.all([fox.move(sx - 30, sy - 70, 380, 'ease-out'), T.anim(fox.parts.all, [{ transform: 'rotate(0deg)' }, { transform: 'rotate(-35deg)' }], 380)]);
+        await fox.move(sx, sy, 200, 'ease-in');
+        if (fox.parts.art) { fox.parts.all.style.transform = ''; fox.parts.setPose('stuck'); }
+        sfx(T, 'pop'); T.shake();
+        const kd = fox.parts.kick || 14;
+        rs.kick = fox.parts.legs.animate([{ transform: `rotate(${-kd}deg)` }, { transform: `rotate(${kd}deg)` }], { duration: 180, iterations: Infinity, direction: 'alternate' });
+        rs.wag = fox.parts.tail.animate([{ transform: 'rotate(-16deg)' }, { transform: 'rotate(16deg)' }], { duration: 260, iterations: Infinity, direction: 'alternate' });
+      })();
+      if (verb === 'pop') return (async () => {
+        if (rs.kick) { rs.kick.cancel(); rs.wag.cancel(); rs.kick = rs.wag = null; }
+        const mouth = rs.mouth;
+        fox.parts.all.style.transform = '';
+        if (fox.parts.art) fox.parts.setPose('stand');
+        fox.face('left');
+        await fox.move(330, 380, 360, 'ease-out');
+        await fox.move(300, 500, 320, 'ease-in');
+        fox.body.style.transform = 'scale(1.08,.86)';
+        [0, .15, .3].forEach(w => T.tone([700, 500], .12, { type: 'triangle', vol: .14, when: w }));
+      })();
+      if (verb === 'sip') return (async () => {
+        const mouth = rs.mouth;
+        const cdeg = aimP(crane, [mouth[0] + (crane.parts.art ? 4 : 0), mouth[1] + 20]);
+        for (let q = 0; q < 2; q++) {
+          await T.anim(crane.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${cdeg}deg)` }], 300);
+          sipSnd(T);
+          await sleep(350);
+          await T.anim(crane.parts.head, [{ transform: `rotate(${cdeg}deg)` }, { transform: 'rotate(0deg)' }], 300);
+        }
+        fox.body.style.transform = ''; fox.face('right');
+      })();
+      if (verb === 'eat') return eat(T, a, rs.plates[k]);
+      if (verb === 'enter') return;
+      console.warn('[read] 배우 동사 모름', k, verb);
+    };
+    const rGuest = k => (verb) => {
+      if (verb !== 'enter' && verb !== 'eat') return;
+      const P = rs.party;
+      if (verb === 'eat') return rActor(k)('eat');
+      const g = P[k]; if (!g) return;
+      if (rs.tag === 'feast_day' && !inst()) { /* 손님이 걸어(날아) 온다 */
+        const x = g.x, y = g.y;
+        g.pos.style.display = '';
+        g.place(k === 'duck' ? -140 : 1150, y);
+        return (async () => {
+          const st = k === 'duck' ? stepsOn() : null;
+          await g.move(x, y, 1500);
+          if (st) clearInterval(st);
+          g.hop(24);
+        })();
+      }
+      g.pos.style.display = '';
+    };
+    const READ_ACTS = {
+      set: rSet,
+      fox: rActor('fox'), crane: rActor('crane'), duck: rGuest('duck'), butterfly: rGuest('butterfly'),
+      cam: a => { if (a === 'wide') { const [x, y, z] = rs.cam; return inst() ? camSnap(x, y, z) : T.camTo(x, y, z, 700); } },
+      letter: () => (async () => {
+        sfx(T, 'whoosh');
+        const inv = rs.inv, cx = crane.x;
+        await inv.move(cx - 90, 400, 700);
+        sfx(T, 'ding'); craneCall(T);
+      })(),
+      pot: v => {
+        if (v === 'bubble') { for (let i = 0; i < 3; i++) setTimeout(() => rStirBubble(), i * 250); return; }
+        if (v === 'stir') return (async () => { for (let i = 1; i <= 5; i++) { rStir(i); await sleep(450); } await sleep(300); })();
+      },
+      plate: () => {
+        if (rs.tag === 'kitchen') { const d = dish(T, T.world, 'plate', 700, 555, .9); rs.plateD = d; if (!inst()) fadeIn(d); return; }
+        if (rs.tag === 'split' && rs.plateD) { rs.plateD.pos.style.display = ''; return; }
+      },
+      bottle: () => {
+        if (rs.tag === 'pondhouse') {
+          const b = dish(T, T.world, 'bottle', 820, 510, 1.0); rs.bottle = b;
+          if (!inst()) { b.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400); sfx(T, 'pop'); }
+          return;
+        }
+        if (rs.bottle) { rs.bottle.pos.style.display = ''; if (!inst()) rs.bottle.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400); }
+      },
+      guests: () => {
+        const D = rs.plates, order = ['crane', 'fox', 'duck', 'butterfly'];
+        if (inst()) { Object.values(D).forEach(d => { d.pos.style.display = ''; }); return; }
+        return (async () => { for (const k of order) { D[k].pos.style.display = ''; D[k].pos.animate([{ opacity: 0 }, { opacity: 1 }], 350); sfx(T, 'pop'); await sleep(350); } })();
+      },
+      lanterns: () => {},
+      vo: k => { vo(k); },
+      cut: k => cutArt('cut_' + k, cutFB(), { sfx: k === 'sorry' ? 'ding' : k === 'peck' ? 'poke' : undefined, hold: k === 'sorry' ? 2600 : k === 'peck' ? 2600 : 2200 }),
+      fx: n => {
+        if (n === 'boing') return sfx(T, 'boing');
+        if (n === 'bubble') return bubbleSnd(T);
+        if (n === 'grumble') return T.tone([500, 300], .5, { type: 'sine', vol: .14 });
+        if (n === 'pop') return sfx(T, 'pop');
+        if (n === 'thud') { sfx(T, 'thud'); T.shake(); return; }
+        return sfx(T, n);
+      },
+      pop: spec => { const [x, y, ...w] = String(spec).split(','); T.pop(+x, +y, w.join(','), C.bean); },
+    };
+    const rStirBubble = () => { if (rs.pot) bubbleSnd(T); };
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* --- 1. 초대장 (숲길 와이드) --- */
     forestBG(T);
     // 세로 화면(보이는 폭 ≈260): 여우·두루미를 가운데로 모아 둘 다 보이게
@@ -996,5 +1266,5 @@
     } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
-  Tale.mount({ title: '여우와 두루미', subtitle: '누구에게 어떤 그릇이 좋을까?', run: T => run(portraitGuard(Tale.api)) });
+  Tale.mount({ title: '여우와 두루미', subtitle: '누구에게 어떤 그릇이 좋을까?', read: true, run: T => run(portraitGuard(Tale.api)) });
 })();
