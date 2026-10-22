@@ -318,6 +318,219 @@
     };
     T.director({ cast: { belle, beast, father, sisa, sisb, prince }, noFace: ['belle', 'beast', 'father', 'sisa', 'sisb', 'prince'] });
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 아래 놀이판 연출을 감싼 얇은 함수 =================
+       set 은 놀이판 장면의 배경·층 소품(전나무·샹들리에·휘장·토피어리·앞 장미 덤불)을 그대로 깐다. 같은 배경이 여러 번 나오므로
+       set 호출 순서로 장면 이름표(tag)를 센다. 세로 화면은 대본의 가로 x 를 놀이판의 세로 자리(PXT)로 바꾼다. 대본 y(505)는 바닥선(FL)으로. */
+    const READ_ACTS = (() => {
+      const inst = () => T.readInstant();
+      const on = a => a.pos.isConnected && a.pos.style.display !== 'none';
+      const SEQ = ['R01', 'R02', 'R03', 'R03b', 'R04', 'R05', 'R06', 'R06b', 'R07', 'R08', 'R09', 'R10', 'R11'];
+      const PCAM = { R01: 520, R02: 520, R03: 300, R03b: 520, R04: 515, R05: 520, R06: 500, R06b: 500, R07: 520, R08: 520, R09: 520, R10: 500, R11: 500 };
+      const PXT = {
+        R01: { father: { 330: 400 }, belle: { 560: 520 }, sisa: { 760: 630 }, sisb: { 870: 700 } },
+        R02: { sisa: { 200: 330 }, sisb: { 300: 400 }, belle: { 430: 470 }, horse: { 640: 600 }, father: { 560: 540, 640: 600 } },
+        R03: { father: { 480: 500 } },
+        R03b: { father: { 560: 520, 300: 420 } },
+        R04: { father: { 880: 760, 440: 550, 700: 640 }, beast: { 430: 440 } },
+        R05: { father: { 380: 420 }, belle: { 560: 540 }, sisa: { 740: 640 }, sisb: { 850: 710 } },
+        R06: { beast: { 300: 380 }, father: { 1100: 1000, 650: 620 }, belle: { 1100: 1000, 520: 520 } },
+        R06b: { belle: { 230: 330 } },
+        R07: { belle: { 440: 450 }, beast: { 700: 600 } },
+        R08: { belle: { 470: 500 }, beast: { 700: 650 }, mirror: { 300: 380 }, tableS: { 880: 800 } },
+        R09: { father: { 330: 400 }, belle: { 520: 520, '520:sleep': 500, 560: 520 }, sisa: { 700: 640 }, sisb: { 800: 720 } },
+        R10: { beast: { 720: 640 }, belle: { 430: 400 }, spring: { 520: 460 } },
+        R11: { prince: { 680: 600 }, belle: { 480: 450 } },
+      };
+      let rIdx = -1, tag = '', camX = 500, busy = {}, cyc = null, famP = null, vPlaced = false, rPlate = null, rMf = null;
+      const LX = {};
+      const px = (who, lx, look) => {
+        if (!P) return lx;
+        const t = PXT[tag] && PXT[tag][who]; if (!t) return lx;
+        const k = look != null ? t[lx + ':' + look] : null;
+        return k != null ? k : (t[lx] != null ? t[lx] : lx);
+      };
+      const yOf = y => FL + (Number(y) - 505);
+      const xy = s => String(s).split(',').map(Number);
+      const A = { belle, beast, prince, father, sisa, sisb };
+      const RF = () => front(L.fir[0], L.fir[1], L.sbush, L.curtain[0], L.curtain[1], L.rose);
+      const BGK = { cottage: 'cottage', cottage_front: 'cottage_front', snow_forest: 'snow_forest_v2', dining: 'dining_v2', garden: 'garden_v2', room: 'room_v2' };
+      const setLayers = () => {
+        Object.values(L).flat().forEach(hide);
+        if (tag === 'R03') { put(T, L.fir[0], 60, 575); put(T, L.fir[1], 950, 575, { to: 'right' }); put(T, L.sbush, 985, 585); }
+        if (tag === 'R03b' || tag === 'R07') diningBack();
+        if (['R04', 'R06', 'R10', 'R11'].includes(tag)) put(T, L.topiary, 70, FL);
+        if (tag === 'R04') put(T, L.rose, 30, 585);
+        if (tag === 'R10' || tag === 'R11') put(T, L.rose, 985, 585, { to: 'right' });
+      };
+      const HOP = { belle: [10, 320], beast: [6, 500], prince: [8, 300], father: [8, 300], sisa: [8, 300], sisb: [8, 300] };
+      const bloomNow = () => {
+        if (!bgOK.garden_bloom_v2) return;
+        const img = T.el('image', { href: bgSrc('garden_bloom_v2'), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none', opacity: inst() ? 1 : 0 }, T.bg);
+        if (inst()) hide(L.topiary);
+        else { img.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400, fill: 'forwards' }); sfx(T, 'sparkle'); fadeOut(T, L.topiary, 2400); }
+      };
+      const actor = (name, a) => (op, ...r) => {
+        const w = busy[name];
+        const go = () => {
+          switch (op) {
+            case 'at': {
+              const [lx, ly] = xy(r[0]), look = r[1] || undefined, dir = r[2] || undefined, sc = r[3] ? Number(r[3]) : 1;
+              LX[name] = lx;
+              put(T, a, px(name, lx, look), yOf(ly), { look, to: dir, s: sc }); RF();
+              if (name === 'father' && look === 'ride' && tag === 'R02') bob(a.pos);
+              if (name === 'prince' && !inst()) { fadeIn(a, 500); glow(a, 1400); rosePetals(T, a.x, FL - 100, 10); bloomNow(); }
+              if (name === 'prince' && inst()) bloomNow();
+              if (name === 'belle' && look === 'sleep' && tag === 'R09' && !on(tableS)) { put(T, tableS, X(720, 610), FL); fadeIn(tableS); }
+              return null;
+            }
+            case 'look': a.look(r[0], r[1] || undefined); return null;
+            case 'hop': { const h = HOP[name]; a.hop(h[0], h[1]); return null; }
+            case 'wiggle': a.wiggle(name === 'belle' ? 3 : 4, 500); return null;
+            case 'fade': if (r[0] === 'out') return fadeOut(T, a, 400); fadeIn(a, 450); return null;
+            case 'hide': hide(a); return null;
+            case 'move': {
+              const [lx, ly] = xy(r[0]), ms = Number(r[1] || 1000), tx = px(name, lx);
+              LX[name] = lx;
+              const ride = a.cur === 'ride';
+              if (ride) (async () => { for (let i = 0; i < Math.floor(ms / 600); i++) { a.hop(5, 400); await sleep(600); } })();
+              if (P && tag === 'R03') T.camTo(450, 280, 1, ms);
+              if (P && tag === 'R10') T.camTo(460, 280, 1, ms);
+              busy[name] = a.move(tx, yOf(ly), ms, ride ? 'linear' : undefined); return null;
+            }
+            case 'appear': {
+              a.place(a.x, FL + 40);
+              if (on(bush5)) T.world.insertBefore(a.pos, bush5.pos);
+              a.pos.style.opacity = 0;
+              a.pos.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1400, fill: 'forwards' });
+              a.move(a.x, FL, 1400, 'ease-out');
+              setTimeout(() => sfx(T, 'thud', .45), 700);
+              return null;
+            }
+            case 'transform': return T.anim(a.pos, [{ opacity: 1 }, { opacity: 0 }], 500).then(() => hide(a));
+            case 'ride_off': {
+              (async () => { for (let i = 0; i < 6; i++) { AudioFX.sfx('step_grass'); a.hop(6, 420); await sleep(450); } })();
+              setTimeout(() => T.pop(P ? a.x + 40 : a.x + 300, FL - 340, tr('따각따각')), 1300);
+              a.move(1150, FL, 2800, 'linear').then(() => hide(a)); return null;
+            }
+            default: console.warn('[read] 모르는 동작', name, op); return null;
+          }
+        };
+        return (w && (op === 'at' || op === 'look')) ? w.then(go) : go();
+      };
+      const sparkleBeast = () => {
+        const bx = (on(beast) ? beast.x : px('prince', 680)) - 40;
+        if (!(AudioFX.sting && AudioFX.sting('magic'))) sparkleSfx(T);
+        sparkle(T, bx, FL - 120, 160, 18); setTimeout(() => sparkle(T, bx, FL - 120, 220, 18, true), 300);
+      };
+      const popX = x => {
+        let best = null;
+        Object.keys(LX).forEach(n => { const a = A[n] || null; if (a && on(a) && Math.abs(LX[n] - x) < 170 && (!best || Math.abs(LX[n] - x) < Math.abs(LX[best] - x))) best = n; });
+        if (best) return A[best].x + (x - LX[best]);
+        return Math.max(camX - 95, Math.min(camX + 95, x));
+      };
+      const R = {
+        set: key => {
+          tag = SEQ[++rIdx] || tag; busy = {}; cyc = null; famP = null; vPlaced = false; rMf = null;
+          scene(BGK[key] || key); if (P) { camX = PCAM[tag] || 520; camSnap(camX, 280, 1); }
+          setLayers();
+        },
+        belle: actor('belle', belle), beast: actor('beast', beast), father: actor('father', father), prince: actor('prince', prince),
+        sisa: actor('sisa', sisa), sisb: actor('sisb', sisb),
+        sisters: (op, s) => {
+          if (op === 'at') { const [x1, x2] = xy(s); LX.sisa = x1; LX.sisb = x2; put(T, sisa, px('sisa', x1), FL + 4); put(T, sisb, px('sisb', x2), FL + 6); RF(); }
+          else if (op === 'hop') { sisa.hop(8, 300); sisb.hop(8, 300); }
+          else if (op === 'wiggle') { sisa.wiggle(5, 500); sisb.wiggle(5, 500); }
+          return null;
+        },
+        horse: (op, s) => { if (op === 'hide') hide(horse); else { const [lx, ly] = xy(s); put(T, horse, px('horse', lx), yOf(ly), { to: 'right' }); RF(); } },
+        cam: a => { let [x, y, z] = String(a).split(',').map(Number); if (P) x = PCAM[tag] || x; camX = x; return inst() ? camSnap(x, y, z || 1) : T.camTo(x, y, z || 1, 800); },
+        follow: a => { if (!P) return null; let x = Number(a); if (tag === 'R04' && x === 330) x = 440; camX = x; T.camTo(x, 280, 1, tag === 'R06' ? 1800 : 900); return null; },
+        tint: a => { const [c, o] = String(a).split(','), op = Number(o); if (inst()) { tint(T, c, op); return null; } const n = tint(T, c, 0); return T.anim(n, [{ opacity: 0 }, { opacity: op }], 1000).then(() => n.setAttribute('opacity', op)); },
+        snowfall: () => snowfall(T, 22),
+        shake: () => T.shake(),
+        confetti: () => { const go = () => { T.confetti(); [belle, prince, father, sisa, sisb].forEach((a, i) => setTimeout(() => a.hop(16 + (i % 3) * 2, 460), i * 120)); return null; }; return famP ? famP.then(go) : go(); },
+        sparkle: () => { if (tag === 'R08') sparkle(T, ring.x, ring.y, 60, 8, true); else sparkleBeast(); },
+        glow: n => { const g = { belle, beast, prince, bush5, ring }[n]; if (g) glow(g, n === 'prince' ? 1400 : 1200); },
+        fx: n => {
+          const V = { thud: .45, blow_long: .4, womp: .4, xylo_down: .5, splash: .5 };
+          if (n === 'sparkle') return sparkleSfx(T); if (n === 'pop') return popSfx(T);
+          if (n === 'tada') return sfx(T, 'tada', () => sparkleSfx(T));
+          return sfx(T, n, V[n]);
+        },
+        pop: s => { const p = String(s).split(','); const x = Number(p[0]); T.pop(P ? popX(x) : x, Number(p[1]), tr(p.slice(2).join(','))); },
+        bushes: () => { put(T, bush5, X(330, 440), FL - 10, { s: P ? .65 : 1 }); put(T, bush2, X(690, 590), FL - 10, { s: P ? .65 : 1 }); RF(); },
+        bush5: () => { if (!on(bush5)) { put(T, bush5, X(780, 700), FL - 10, { s: P ? .8 : 1 }); RF(); } else bush5.hop(8, 360); },
+        bush2: () => { bush2.hop(8, 360); },
+        rose: () => {
+          const go = async () => { put(T, rose, bush5.x + 30, FL - 120); await rose.move(father.x - 28, FL - 108, 700); hide(rose); };
+          return busy.father ? busy.father.then(go) : go();
+        },
+        hat: () => {
+          put(T, hat, father.x, FL - 212 + 12); RF();
+          hat.pos.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '40px 200px', rotate: '70deg' }], { duration: 600, easing: 'ease-in', fill: 'forwards' });
+          sfx(T, 'paper_down'); return null;
+        },
+        table: op => {
+          if (op === 'long') { put(T, tableL, tag === 'R07' ? X(570, 525) : X(560, 520), FL + 4); diningFront(); }
+          else put(T, tableS, px('tableS', tag === 'R08' ? 880 : 500), FL);
+          return null;
+        },
+        vases: () => {
+          if (!vPlaced) {
+            vPlaced = true; const tx = X(500, 500);
+            put(T, vases[1], tx, FL - 4, { s: .85 }); T.world.insertBefore(vases[1].pos, tableS.pos);
+            put(T, vases[0], tx, FL - 110 + 2); put(T, vases[2], tx + X(140, 125), FL);
+          } else (async () => { for (const v of vases) await v.hop(8, 300); })();
+          return null;
+        },
+        plate: () => { rPlate = P ? namePlate(T, 560, 276, false) : namePlate(T, 932, 141, true); rPlate.glow(1500); return null; },
+        mirror: (op, a) => {
+          if (op === 'set') { put(T, mirror, px('mirror', 300), FL); rMf = mirrorFace(T, mirror.x, FL - 200 * .6, 58); }
+          else if (rMf) { if (a === 'show') rMf.show(); else rMf.hide(); }
+          return null;
+        },
+        ring: op => {
+          if (op === 'show') { put(T, ring, beast.x - beast.w * .28, FL - beast.h * .48); fadeIn(ring); return null; }
+          if (op === 'give') return ring.move(belle.x + 22, FL - 100, 900);
+          return (async () => { put(T, ring, belle.x + 22, FL - 100); fadeIn(ring); await ring.move(tableS.x, FL - 110 + 4, 900); sparkle(T, tableS.x, FL - 120, 60, 8); })();
+        },
+        sun: () => {
+          const sun = T.el('circle', { cx: 0, cy: 0, r: 28, fill: '#F2B366' }, T.bg);
+          sun.animate([{ translate: '120px 170px' }, { translate: '500px 50px' }, { translate: '880px 170px' }], { duration: 1700, iterations: 3 });
+          const nt = tint(T, '#1F2A56', 0);
+          nt.animate([{ opacity: 0 }, { opacity: .35, offset: .5 }, { opacity: 0 }], { duration: 1700, iterations: 3 }).finished.then(() => { nt.setAttribute('opacity', .35); sun.remove(); }, () => {});
+          cyc = (async () => { await sleep(5100); await Promise.all([fadeOut(T, father, 400), fadeOut(T, sisa, 400), fadeOut(T, sisb, 400), fadeOut(T, belle, 400)]); })();
+          return null;
+        },
+        dream: op => {
+          if (op === 'hide') { hide(dream); hide(beast); return null; }
+          put(T, dream, belle.x + X(170, 110), FL - 250); fadeIn(dream, 600);
+          put(T, beast, dream.x, dream.y - 45, { look: 'lie', s: .38 }); fadeIn(beast, 600); return null;
+        },
+        spring: () => { put(T, spring, px('spring', 520), FL + 10); return null; },
+        drops: () => { drops(T, belle.x + 40, FL - 85, beast.x - beast.w * .3, FL - 60); return null; },
+        shine: () => {
+          const bx = on(beast) ? beast.x - 40 : px('prince', 680);
+          put(T, shine, bx, FL - 10); if (on(beast)) T.world.insertBefore(shine.pos, beast.pos); fadeIn(shine, 500);
+          shine.body.animate([{ transform: 'scale(.9)' }, { transform: 'scale(1.08)' }, { transform: 'scale(.9)' }], { duration: 1400, iterations: Infinity });
+          if (inst()) setTimeout(() => fadeOut(T, shine, 600), 6500);
+          return null;
+        },
+        family: () => {
+          put(T, father, -100, FL, { look: 'well' }); put(T, sisa, -100, FL + 4, { look: 'joy' }); put(T, sisb, -100, FL + 8, { look: 'joy' }); RF();
+          if (P) T.camTo(430, 280, 1, 1200);
+          famP = Promise.all([father.move(X(160, 300), FL, 1600), sisa.move(X(260, 350), FL + 4, 1800), sisb.move(X(340, 395), FL + 8, 2000)])
+            .then(() => { if (P) T.camTo(520, 280, 1, 800); });
+          return null;
+        },
+      };
+      /* 아침 장면 전환: 대본의 '꿈' 장면에서 벨이 잠들기 전 해 뜨고 지기를 기다린다 */
+      const at0 = R.belle;
+      R.belle = (op, ...r) => { if (cyc && op === 'at') { const c = cyc; cyc = null; return c.then(() => at0(op, ...r)); } return at0(op, ...r); };
+      return R;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ===== 1. 가난해진 가족 ===== */
     scene('cottage');
     put(T, father, X(330, 400), FL, { look: 'stand' });
@@ -715,5 +928,5 @@
     return '겉모습이 아니라 마음을 봐요.';
   }
 
-  Tale.mount({ title: '미녀와 야수', subtitle: '겉모습이 아니라 마음을 봐요', run: T => run(Tale.api) });
+  Tale.mount({ title: '미녀와 야수', subtitle: '겉모습이 아니라 마음을 봐요', read: true, run: T => run(Tale.api) });
 })();
