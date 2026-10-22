@@ -1,0 +1,1279 @@
+{
+ "mode": "read",
+ "tale": "little_mermaid",
+ "lang": "en",
+ "title": "The Little Mermaid",
+ "voices_from": "voice_script_el.json",
+ "moral": "When you give way with a loving heart, that heart stays behind as something good.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md). text 는 한국어 줄(키), en 이 읽는 문장. src=reuse 는 narration_el_en.js 의 영어 녹음 그대로(합창 줄은 extra ch* 의 영어 합성), new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<palace|night_sea|beach|witch|steps|garden|deck|dawn_sea|morning_sea>": "장면 배경(scene(key)). scenes[].set 으로 자동 호출",
+  "tint:<hex>,<op> | cam:<x,y,z> | follow:<x>": "색 겹·카메라",
+  "mer:look:<swim|garden|peek|hide|hold|worry|resolve|sit_tail|stand|wobble_a|wobble_b|dance|sad|shake|throw|bubble>[:<dir>] | mer:at:<x,y>[:<look>[:<dir>[:<s>]]] | mer:move:<x,y,ms> | mer:hop | mer:wiggle | mer:fade:<in|out> | mer:hide": "인어공주",
+  "mer:surface | mer:wobble:<x,ms> | mer:rescue | mer:bubble": "물방울 올리며 위로 사라짐(2장) / 흔들흔들 걷기(wobbleWalk) / 왕자 머리를 받치고 헤엄(3장) / 거품이 되어 둥실 올라감(10장)",
+  "sisters:look:<long|short> | sisters:at:<x,y> | sisters:fade:in | sisters:hop | sisters:hide": "언니 다섯",
+  "king:at:<x,y> | granny:look:<talk|hand> | granny:at:<x,y>[:<look>] | granny:wiggle": "바다 왕(대사 없음)·할머니",
+  "prince:look:<stand|float|lie|wake|dance|sleep>[:<dir>] | prince:at:<x,y>[:<look>[:<dir>]] | prince:move:<x,y,ms> | prince:hop | prince:fall": "왕자. fall = 배에서 풍덩! 떨어져 float 자세(3장)",
+  "witch:look:<stand|hand> | witch:at:<x,y> | lady:look:<stand|wed|sleep>[:<dir>] | lady:at:<x,y>[:<look>[:<dir>]] | lady:move:<x,y,ms> | lady:hop": "마녀·하얀 집 아가씨(=이웃 나라 공주)",
+  "ship:at:<x,y>:<lantern|tilt|flower> | ship:rock | storm:on | fireworks": "배 / 폭풍(구름·큰 파도·흔들림·쿵) / 불꽃 세 개 펑! 펑!",
+  "fish:drift | gulls:fly | bubbles:<x,y,n> | sparkle:<x,y> | water:cover:<bg>,<y>": "물고기 떠다니기 / 갈매기 / 물방울 / 반짝 / 물 가림",
+  "cauldron:glow | pearl:take | potion:drink": "가마솥 보글보글+약 생김 / 목소리 진주가 조개로 / 약 꿀꺽! 반짝, 꼬리→다리",
+  "dance | dagger:give | dagger:throw | wind:blow": "둘이 춤(흔들흔들) / 단검이 인어공주 손으로 / 단검 풍덩! 물결 반짝, 해 뜸 / 휘잉~ 바람 두 줄기가 배를 밀어 줌",
+  "fx:<bubbles|whoosh|thud|splash_big|splash|step_grass|step_wood|sparkle|gulp|doop|giggle_xylo|bell|swish|slide_up|blow_long|tada> | pop:<x,y,글자> | confetti | glow:<mer|prince|lady>": "효과음·팝·꽃가루"
+ },
+ "scenes": [
+  {
+   "key": "R01_palace",
+   "card": "The Palace Under the Sea",
+   "set": "palace",
+   "enter": [
+    "king:at:690,512",
+    "granny:at:880,516:talk",
+    "sisters:at:500,300",
+    "mer:at:200,520:garden:right",
+    "fish:drift",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "깊고 깊은 바다 밑에 인어 나라가 있었어요. 바다 왕님과 할머니, 여섯 공주가 살았지요.",
+     "src": "reuse",
+     "en": "Deep, deep under the sea there was a kingdom of merfolk. The Sea King, the grandmother and six princesses lived there.",
+     "segs": [
+      [
+       "nar",
+       "Deep, deep under the sea there was a kingdom of merfolk. The Sea King, the grandmother and six princesses lived there.",
+       null
+      ]
+     ],
+     "before": [
+      "bubbles:520,420,4",
+      "sisters:hop"
+     ]
+    },
+    {
+     "text": "물고기들이 살랑살랑 헤엄치고, 보글보글 물방울이 올라갔어요.",
+     "src": "new",
+     "en": "Fish swished and swayed through the water, and bubbles went up, bloop, bloop.",
+     "segs": [
+      [
+       "nar",
+       "Fish swished and swayed through the water, and bubbles went up, bloop, bloop.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "막내 인어공주는 조용하고 생각이 많았어요. 정원에는 배에서 떨어진 물건을 모았어요.",
+     "src": "reuse",
+     "en": "The youngest, the little mermaid, was quiet and thoughtful. In her garden she collected things that had fallen from ships.",
+     "segs": [
+      [
+       "nar",
+       "The youngest, the little mermaid, was quiet and thoughtful. In her garden she collected things that had fallen from ships.",
+       null
+      ]
+     ],
+     "before": [
+      "glow:mer"
+     ]
+    },
+    {
+     "text": "유리병과 동그란 돌이 반짝반짝, 차곡차곡 놓여 있었지요.",
+     "src": "new",
+     "en": "Glass bottles and round stones sat there in neat little rows, all twinkly and bright.",
+     "segs": [
+      [
+       "nar",
+       "Glass bottles and round stones sat there in neat little rows, all twinkly and bright.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "언니들은 열다섯 살이 되면 바다 위로 올라갔어요. 드디어 막내 차례예요!",
+     "src": "reuse",
+     "en": "When each sister turned fifteen, she was allowed to swim up above the sea. At last it was the youngest one's turn!",
+     "segs": [
+      [
+       "nar",
+       "When each sister turned fifteen, she was allowed to swim up above the sea. At last it was the youngest one's turn!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "granny:at:560,516:hand",
+      "mer:at:400,512:swim:right",
+      "cam:480,330,1.3",
+      "mer:hop"
+     ]
+    },
+    {
+     "text": "조심해서 다녀오렴.",
+     "src": "reuse",
+     "en": "Be careful, and come back safely.",
+     "segs": [
+      [
+       "granny",
+       "Be careful, and come back safely.",
+       null
+      ]
+     ],
+     "before": [
+      "granny:wiggle"
+     ]
+    },
+    {
+     "text": "네, 할머니. 다녀올게요!",
+     "src": "reuse",
+     "en": "Yes, Grandmother. I will be back soon!",
+     "segs": [
+      [
+       "mer",
+       "Yes, Grandmother. I will be back soon!",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "인어공주는 꼬리를 살랑살랑 흔들며 위로, 위로 헤엄쳐 올라갔어요.",
+     "src": "new",
+     "en": "The little mermaid swished her tail, swish, swish, and swam up, up, up.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid swished her tail, swish, swish, and swam up, up, up.",
+       null
+      ]
+     ],
+     "after": [
+      "mer:surface"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_night_sea",
+   "card": "The Night Sea",
+   "set": "night_sea",
+   "enter": [
+    "ship:at:640,468:lantern",
+    "prince:at:541,341:stand:left",
+    "mer:at:330,452:peek:right",
+    "water:cover:night_sea,460",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "물 밖으로 고개를 쏙 내밀자, 별이 반짝반짝 빛났어요.",
+     "src": "new",
+     "en": "She poked her head up out of the water, and the stars went twinkle, twinkle.",
+     "segs": [
+      [
+       "nar",
+       "She poked her head up out of the water, and the stars went twinkle, twinkle.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "커다란 배가 있었어요. 오늘은 왕자님 생일이래요.",
+     "src": "reuse",
+     "en": "There was a great big ship. Today was the prince's birthday.",
+     "segs": [
+      [
+       "nar",
+       "There was a great big ship. Today was the prince's birthday.",
+       null
+      ]
+     ],
+     "before": [
+      "ship:rock"
+     ]
+    },
+    {
+     "text": "배에서는 둥둥 북소리와 하하 웃음소리가 흘러나왔어요.",
+     "src": "new",
+     "en": "From the ship came the boom, boom of drums and the sound of laughter, ha, ha.",
+     "segs": [
+      [
+       "nar",
+       "From the ship came the boom, boom of drums and the sound of laughter, ha, ha.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "펑! 펑! 불꽃이 하늘에 피었어요.",
+     "src": "reuse",
+     "en": "Pop! Pop! Fireworks bloomed in the sky.",
+     "segs": [
+      [
+       "nar",
+       "Pop! Pop! Fireworks bloomed in the sky.",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "fireworks"
+     ],
+     "after": [
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "\"우와, 불꽃이 꽃처럼 활짝 피었어!\"",
+     "src": "new",
+     "en": "Wow, the fireworks are blooming like flowers!",
+     "segs": [
+      [
+       "mer",
+       "Wow, the fireworks are blooming like flowers!",
+       "toneup"
+      ]
+     ]
+    },
+    {
+     "text": "저 사람이 왕자님이구나.",
+     "src": "reuse",
+     "en": "So that is the prince.",
+     "segs": [
+      [
+       "mer",
+       "So that is the prince.",
+       null
+      ]
+     ],
+     "before": [
+      "glow:prince",
+      "mer:wiggle"
+     ]
+    },
+    {
+     "text": "인어공주는 눈을 동그랗게 뜨고 한참을 가만가만 바라보았어요.",
+     "src": "new",
+     "en": "The little mermaid opened her eyes wide and gazed, ever so quietly, for a long, long time.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid opened her eyes wide and gazed, ever so quietly, for a long, long time.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_storm",
+   "card": "The Storm",
+   "set": "night_sea",
+   "enter": [
+    "tint:#1F2A56,.35",
+    "storm:on",
+    "ship:at:620,480:tilt",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "밤이 깊자 바람이 세졌어요. 배가 기우뚱!",
+     "src": "reuse",
+     "en": "Late at night the wind grew strong. The ship tipped over!",
+     "segs": [
+      [
+       "nar",
+       "Late at night the wind grew strong. The ship tipped over!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "fx:whoosh"
+     ],
+     "after": [
+      "ship:rock"
+     ]
+    },
+    {
+     "text": "쏴아쏴아, 파도가 높이 솟고 번쩍 번개가 쳤어요.",
+     "src": "new",
+     "en": "Whoosh, whoosh! The waves rose high, and lightning flashed, crack!",
+     "segs": [
+      [
+       "nar",
+       "Whoosh, whoosh! The waves rose high, and lightning flashed, crack!",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "왕자님이 바다에 빠졌어요.",
+     "src": "reuse",
+     "en": "The prince fell into the sea.",
+     "segs": [
+      [
+       "nar",
+       "The prince fell into the sea.",
+       null
+      ]
+     ],
+     "before": [
+      "prince:fall",
+      "pop:500,330,풍덩!"
+     ]
+    },
+    {
+     "text": "내가 도와줄게요!",
+     "src": "reuse",
+     "en": "I will help you!",
+     "segs": [
+      [
+       "mer",
+       "I will help you!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "mer:at:-150,452:hold:right",
+      "fx:bubbles"
+     ],
+     "after": [
+      "mer:rescue"
+     ]
+    },
+    {
+     "text": "인어공주는 왕자님의 머리를 물 위로 받쳐 주었어요.",
+     "src": "reuse",
+     "en": "The little mermaid held the prince's head above the water.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid held the prince's head above the water.",
+       null
+      ]
+     ],
+     "before": [
+      "glow:mer"
+     ]
+    },
+    {
+     "text": "인어공주는 첨벙첨벙 파도를 헤치고 밤새 헤엄쳤어요.",
+     "src": "new",
+     "en": "Splish, splash! The little mermaid swam through the waves all night long.",
+     "segs": [
+      [
+       "nar",
+       "Splish, splash! The little mermaid swam through the waves all night long.",
+       null
+      ]
+     ],
+     "after": [
+      "mer:fade:out",
+      "prince:fade:out"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_beach",
+   "card": "The Beach",
+   "set": "beach",
+   "enter": [
+    "mer:at:360,470:hide:right",
+    "prince:at:580,512:lie",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "인어공주는 왕자님을 모래밭에 눕히고, 바위 뒤에 숨었어요.",
+     "src": "reuse",
+     "en": "The little mermaid laid the prince on the sand and hid behind a rock.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid laid the prince on the sand and hid behind a rock.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "아침 해가 반짝 떠오르고, 갈매기가 끼룩끼룩 울었어요.",
+     "src": "new",
+     "en": "The morning sun rose, all sparkly, and the seagulls cried, squawk, squawk.",
+     "segs": [
+      [
+       "nar",
+       "The morning sun rose, all sparkly, and the seagulls cried, squawk, squawk.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "그때 하얀 옷을 입은 아가씨가 사뿐사뿐 걸어왔어요.",
+     "src": "new",
+     "en": "Just then a young lady in a white dress came walking along, light as a feather.",
+     "segs": [
+      [
+       "nar",
+       "Just then a young lady in a white dress came walking along, light as a feather.",
+       null
+      ]
+     ],
+     "before": [
+      "lady:at:1100,510:stand:left",
+      "fx:step_grass"
+     ],
+     "after": [
+      "lady:move:720,510,1800"
+     ]
+    },
+    {
+     "text": "어머, 괜찮으세요?",
+     "src": "reuse",
+     "en": "Oh my, are you all right?",
+     "segs": [
+      [
+       "lady",
+       "Oh my, are you all right?",
+       null
+      ]
+     ],
+     "before": [
+      "lady:hop"
+     ]
+    },
+    {
+     "text": "왕자님은 아가씨에게 웃어 주었어요. 인어공주는 보지 못했지요.",
+     "src": "reuse",
+     "en": "The prince smiled at the young lady. He never saw the little mermaid.",
+     "segs": [
+      [
+       "nar",
+       "The prince smiled at the young lady. He never saw the little mermaid.",
+       null
+      ]
+     ],
+     "before": [
+      "prince:look:wake:right",
+      "fx:sparkle",
+      "glow:prince"
+     ]
+    },
+    {
+     "text": "왕자님이 깨어났어요. 다행이에요.",
+     "src": "reuse",
+     "en": "The prince is awake. I am so glad.",
+     "segs": [
+      [
+       "mer",
+       "The prince is awake. I am so glad.",
+       "whisper"
+      ]
+     ],
+     "before": [
+      "mer:hop"
+     ]
+    },
+    {
+     "text": "인어공주는 바위 뒤에서 살금살금 바다로 돌아갔어요.",
+     "src": "new",
+     "en": "From behind the rock, the little mermaid slipped back into the sea, quiet as can be.",
+     "segs": [
+      [
+       "nar",
+       "From behind the rock, the little mermaid slipped back into the sea, quiet as can be.",
+       null
+      ]
+     ],
+     "after": [
+      "mer:fade:out",
+      "prince:look:stand:right",
+      "prince:move:1150,510,1800",
+      "lady:move:1180,510,1800"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_granny",
+   "card": "Grandmother's Story",
+   "set": "palace",
+   "enter": [
+    "granny:at:590,516:talk",
+    "mer:at:400,514:worry:right",
+    "cam:490,330,1.3"
+   ],
+   "lines": [
+    {
+     "text": "궁전으로 돌아온 인어공주는 한숨을 폭폭 쉬었어요.",
+     "src": "new",
+     "en": "Back at the palace, the little mermaid sighed and sighed, hoo, hoo.",
+     "segs": [
+      [
+       "nar",
+       "Back at the palace, the little mermaid sighed and sighed, hoo, hoo.",
+       null
+      ]
+     ],
+     "before": [
+      "mer:hop"
+     ]
+    },
+    {
+     "text": "할머니, 사람은 어떻게 살아요?",
+     "src": "reuse",
+     "en": "Grandmother, how do people live?",
+     "segs": [
+      [
+       "mer",
+       "Grandmother, how do people live?",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "사람은 땅 위에서 살고, 우리는 바다에서 살지. 사람에겐 별처럼 영원히 남는 마음이 있단다.",
+     "src": "reuse",
+     "en": "People live on the land, and we live in the sea. But people have a heart that lasts forever, like a star.",
+     "segs": [
+      [
+       "granny",
+       "People live on the land, and we live in the sea. But people have a heart that lasts forever, like a star.",
+       null
+      ]
+     ],
+     "before": [
+      "granny:look:hand",
+      "bubbles:550,316,3"
+     ]
+    },
+    {
+     "text": "인어공주의 눈이 별처럼 반짝반짝 빛났어요.",
+     "src": "new",
+     "en": "The little mermaid's eyes sparkled, twinkle, twinkle, like stars.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid's eyes sparkled, twinkle, twinkle, like stars.",
+       null
+      ]
+     ],
+     "before": [
+      "granny:look:talk"
+     ]
+    },
+    {
+     "text": "나도 왕자님 곁에서 그런 마음을 갖고 싶어요.",
+     "src": "reuse",
+     "en": "I want to have a heart like that too, beside the prince.",
+     "segs": [
+      [
+       "mer",
+       "I want to have a heart like that too, beside the prince.",
+       null
+      ]
+     ],
+     "before": [
+      "mer:look:resolve:right"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_witch",
+   "card": "The Sea Witch",
+   "set": "witch",
+   "enter": [
+    "witch:at:690,520:stand",
+    "cauldron:at:480,526",
+    "shell:at:780,506",
+    "mer:at:-150,520:swim:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "인어공주는 소용돌이 너머 바다 마녀를 찾아갔어요.",
+     "src": "reuse",
+     "en": "The little mermaid swam past the whirlpool to find the sea witch.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid swam past the whirlpool to find the sea witch.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:bubbles"
+     ],
+     "after": [
+      "mer:move:290,520,1800",
+      "mer:look:worry:right"
+     ]
+    },
+    {
+     "text": "소용돌이가 빙글빙글 돌고, 가마솥이 보글보글 끓고 있었어요.",
+     "src": "new",
+     "en": "The whirlpool spun round and round, and the cauldron went bubble, bubble.",
+     "segs": [
+      [
+       "nar",
+       "The whirlpool spun round and round, and the cauldron went bubble, bubble.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "다리를 갖고 싶다고? 좋아. 대신 네 고운 목소리를 다오.",
+     "src": "reuse",
+     "en": "You want legs? Very well. But in return, give me your lovely voice.",
+     "segs": [
+      [
+       "witch",
+       "You want legs? Very well. But in return, give me your lovely voice.",
+       null
+      ]
+     ],
+     "before": [
+      "witch:look:hand"
+     ]
+    },
+    {
+     "text": "다리는 조금 흔들흔들할 거야. 그리고 왕자가 다른 사람과 결혼하면, 너는 바다 거품이 된단다.",
+     "src": "reuse",
+     "en": "Your legs will wobble a little. And if the prince marries someone else, you will turn into sea foam.",
+     "segs": [
+      [
+       "witch",
+       "Your legs will wobble a little. And if the prince marries someone else, you will turn into sea foam.",
+       null
+      ]
+     ],
+     "before": [
+      "witch:look:stand"
+     ]
+    },
+    {
+     "text": "그래도 갈래요.",
+     "src": "reuse",
+     "en": "I will go anyway.",
+     "segs": [
+      [
+       "mer",
+       "I will go anyway.",
+       null
+      ]
+     ],
+     "before": [
+      "mer:look:resolve:right",
+      "mer:hop"
+     ]
+    },
+    {
+     "text": "마녀가 가마솥을 휘휘 젓자, 반짝반짝 약이 생겼어요.",
+     "src": "new",
+     "en": "The witch stirred the cauldron, swirl, swirl, and a sparkling potion appeared.",
+     "segs": [
+      [
+       "nar",
+       "The witch stirred the cauldron, swirl, swirl, and a sparkling potion appeared.",
+       null
+      ]
+     ],
+     "before": [
+      "cauldron:glow",
+      "pop:480,326,보글보글",
+      "sparkle:480,406"
+     ]
+    },
+    {
+     "text": "마녀가 목소리를 진주처럼 가져갔어요. 이제 인어공주는 말을 할 수 없어요.",
+     "src": "reuse",
+     "en": "The witch took her voice away like a little pearl. Now the little mermaid could not speak.",
+     "segs": [
+      [
+       "nar",
+       "The witch took her voice away like a little pearl. Now the little mermaid could not speak.",
+       null
+      ]
+     ],
+     "before": [
+      "pearl:take"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_legs",
+   "card": "Legs!",
+   "set": "steps",
+   "enter": [
+    "mer:at:520,520:sit_tail",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "새벽, 궁전 계단에서 인어공주는 약을 마셨어요.",
+     "src": "reuse",
+     "en": "At dawn, on the palace steps, the little mermaid drank the potion.",
+     "segs": [
+      [
+       "nar",
+       "At dawn, on the palace steps, the little mermaid drank the potion.",
+       null
+      ]
+     ],
+     "after": [
+      "potion:drink",
+      "pop:560,290,꿀꺽!"
+     ]
+    },
+    {
+     "text": "꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.",
+     "src": "reuse",
+     "en": "Her tail was gone and she had legs! Her steps went wobble, wobble.",
+     "segs": [
+      [
+       "nar",
+       "Her tail was gone and she had legs! Her steps went wobble, wobble.",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "sparkle:520,420",
+      "mer:look:stand:right",
+      "glow:mer"
+     ],
+     "after": [
+      "mer:wobble:540,1800",
+      "pop:520,270,흔들흔들"
+     ]
+    },
+    {
+     "text": "뚜벅뚜벅, 누군가 계단을 내려왔어요. 왕자님이었어요!",
+     "src": "new",
+     "en": "Clomp, clomp, someone came down the steps. It was the prince!",
+     "segs": [
+      [
+       "nar",
+       "Clomp, clomp, someone came down the steps. It was the prince!",
+       null
+      ]
+     ],
+     "before": [
+      "prince:at:1100,520:stand:left",
+      "fx:step_wood"
+     ],
+     "after": [
+      "prince:move:740,520,1500",
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "누구세요? 어디서 왔어요?",
+     "src": "reuse",
+     "en": "Who are you? Where did you come from?",
+     "segs": [
+      [
+       "prince",
+       "Who are you? Where did you come from?",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "인어공주는 말을 못 해요. 그저 웃었지요.",
+     "src": "reuse",
+     "en": "The little mermaid could not speak. She only smiled.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid could not speak. She only smiled.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:doop",
+      "pop:540,300,…",
+      "mer:wiggle"
+     ]
+    },
+    {
+     "text": "우리 궁전에서 지내요.",
+     "src": "reuse",
+     "en": "Come and stay at our palace.",
+     "segs": [
+      [
+       "prince",
+       "Come and stay at our palace.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "인어공주는 왕자님 뒤를 아장아장 따라갔어요.",
+     "src": "new",
+     "en": "The little mermaid toddled along behind the prince, wobble, wobble.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid toddled along behind the prince, wobble, wobble.",
+       null
+      ]
+     ],
+     "after": [
+      "prince:move:1150,520,1600",
+      "mer:wobble:1150,2000"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_garden",
+   "card": "The Palace Garden",
+   "set": "garden",
+   "enter": [
+    "prince:at:170,520:stand:right",
+    "mer:at:840,520:stand:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "궁전 정원에는 꽃이 활짝활짝 피고, 나비가 팔랑팔랑 날았어요.",
+     "src": "new",
+     "en": "In the palace garden the flowers bloomed wide open, and butterflies fluttered, flit, flit.",
+     "segs": [
+      [
+       "nar",
+       "In the palace garden the flowers bloomed wide open, and butterflies fluttered, flit, flit.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "인어공주는 날마다 왕자님과 정원을 사붓사붓 거닐었어요.",
+     "src": "new",
+     "en": "Every day the little mermaid strolled softly through the garden with the prince.",
+     "segs": [
+      [
+       "nar",
+       "Every day the little mermaid strolled softly through the garden with the prince.",
+       null
+      ]
+     ],
+     "before": [
+      "prince:hop",
+      "mer:hop"
+     ]
+    },
+    {
+     "text": "바다에서 온 아이 같아요. 내 귀여운 동생처럼 지내요.",
+     "src": "reuse",
+     "en": "You seem like a child from the sea. Stay with me like my sweet little sister.",
+     "segs": [
+      [
+       "prince",
+       "You seem like a child from the sea. Stay with me like my sweet little sister.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "인어공주는 흔들흔들해도 왕자님과 함께 춤추었어요.",
+     "src": "reuse",
+     "en": "Even with wobbly steps, the little mermaid danced with the prince.",
+     "segs": [
+      [
+       "nar",
+       "Even with wobbly steps, the little mermaid danced with the prince.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "mer:at:430,520:dance:right",
+      "prince:at:580,520:dance:left",
+      "fx:giggle_xylo"
+     ],
+     "after": [
+      "dance"
+     ]
+    },
+    {
+     "text": "빙글빙글 돌 때마다 발이 아팠지만, 인어공주는 방긋 웃었어요.",
+     "src": "new",
+     "en": "Every time she twirled round and round, her feet hurt, but the little mermaid smiled sweetly.",
+     "segs": [
+      [
+       "nar",
+       "Every time she twirled round and round, her feet hurt, but the little mermaid smiled sweetly.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_wedding",
+   "card": "The Prince's Wedding",
+   "set": "deck",
+   "enter": [
+    "prince:at:480,518:stand:right",
+    "lady:at:650,518:wed:left",
+    "mer:at:210,520:sad:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "어느 날, 커다란 배에 꽃이 주렁주렁 걸렸어요.",
+     "src": "new",
+     "en": "One day, the great ship was hung with flowers, bunches and bunches of them.",
+     "segs": [
+      [
+       "nar",
+       "One day, the great ship was hung with flowers, bunches and bunches of them.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "당신이 모래밭에서 저를 구해 준 분이군요!",
+     "src": "reuse",
+     "en": "You are the one who saved me on the beach!",
+     "segs": [
+      [
+       "prince",
+       "You are the one who saved me on the beach!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "fx:bell",
+      "prince:hop",
+      "lady:hop"
+     ]
+    },
+    {
+     "text": "왕자님은 하얀 집 아가씨를 보고 활짝 웃었어요.",
+     "src": "new",
+     "en": "The prince looked at the young lady from the white house and smiled a big, wide smile.",
+     "segs": [
+      [
+       "nar",
+       "The prince looked at the young lady from the white house and smiled a big, wide smile.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "왕자님은 이웃 나라 공주님과 결혼했어요. 인어공주는 말없이 웃었어요. 마음은 아팠지요.",
+     "src": "reuse",
+     "en": "The prince married the princess of the neighbouring kingdom. The little mermaid smiled without a word. But her heart ached.",
+     "segs": [
+      [
+       "nar",
+       "The prince married the princess of the neighbouring kingdom. The little mermaid smiled without a word. But her heart ached.",
+       null
+      ]
+     ],
+     "before": [
+      "follow:400",
+      "mer:wiggle"
+     ],
+     "after": [
+      "glow:mer"
+     ]
+    },
+    {
+     "text": "종소리가 댕댕 울리고, 인어공주는 혼자 뱃머리에 서 있었어요.",
+     "src": "new",
+     "en": "The bells rang, ding, dong, and the little mermaid stood all alone at the front of the ship.",
+     "segs": [
+      [
+       "nar",
+       "The bells rang, ding, dong, and the little mermaid stood all alone at the front of the ship.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_dawn",
+   "card": "The Sea at Dawn",
+   "set": "dawn_sea",
+   "enter": [
+    "sun:at:820,530",
+    "ship:at:720,506:flower",
+    "prince:at:760,407:sleep:left",
+    "lady:at:870,407:sleep:right",
+    "mer:at:500,407:sad:right",
+    "sisters:at:250,550:short",
+    "water:cover:dawn_sea,498",
+    "cam:300,280,1"
+   ],
+   "lines": [
+    {
+     "text": "새벽, 배 옆에 언니들이 올라왔어요. 긴 머리가 짧아졌어요.",
+     "src": "reuse",
+     "en": "At dawn, the sisters came up beside the ship. Their long hair had been cut short.",
+     "segs": [
+      [
+       "nar",
+       "At dawn, the sisters came up beside the ship. Their long hair had been cut short.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:bubbles",
+      "sisters:fade:in"
+     ],
+     "after": [
+      "sisters:hop"
+     ]
+    },
+    {
+     "text": "마녀에게 머리카락을 주고 이 단검을 받았어.",
+     "src": "reuse",
+     "en": "We gave the witch our hair and got this dagger.",
+     "segs": [
+      [
+       "sisa",
+       "We gave the witch our hair and got this dagger.",
+       null
+      ],
+      [
+       "sisb",
+       "We gave the witch our hair and got this dagger.",
+       null
+      ],
+      [
+       "sisc",
+       "We gave the witch our hair and got this dagger.",
+       null
+      ],
+      [
+       "sisd",
+       "We gave the witch our hair and got this dagger.",
+       null
+      ],
+      [
+       "sise",
+       "We gave the witch our hair and got this dagger.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야.",
+     "src": "reuse",
+     "en": "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+     "segs": [
+      [
+       "sisa",
+       "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+       null
+      ],
+      [
+       "sisb",
+       "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+       null
+      ],
+      [
+       "sisc",
+       "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+       null
+      ],
+      [
+       "sisd",
+       "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+       null
+      ],
+      [
+       "sise",
+       "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
+       null
+      ]
+     ],
+     "after": [
+      "follow:560",
+      "fx:swish",
+      "dagger:give"
+     ]
+    },
+    {
+     "text": "인어공주는 잠든 왕자님과 공주님을 보았어요. 그리고 고개를 저었지요.",
+     "src": "reuse",
+     "en": "The little mermaid looked at the sleeping prince and princess. Then she shook her head.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid looked at the sleeping prince and princess. Then she shook her head.",
+       null
+      ]
+     ],
+     "before": [
+      "glow:prince",
+      "glow:lady"
+     ],
+     "after": [
+      "mer:look:shake",
+      "mer:wiggle"
+     ]
+    },
+    {
+     "text": "인어공주는 왕자님이 행복하기를 마음속으로 조용조용 빌었어요.",
+     "src": "new",
+     "en": "In her heart, ever so quietly, the little mermaid wished for the prince to be happy.",
+     "segs": [
+      [
+       "nar",
+       "In her heart, ever so quietly, the little mermaid wished for the prince to be happy.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "인어공주는 단검을 칼집째 바다에 던졌어요. 물결이 붉은 금빛으로 반짝였어요. 해가 떠올랐어요.",
+     "src": "reuse",
+     "en": "The little mermaid threw the dagger, still in its sheath, into the sea. The waves sparkled red and gold. The sun rose.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid threw the dagger, still in its sheath, into the sea. The waves sparkled red and gold. The sun rose.",
+       null
+      ]
+     ],
+     "before": [
+      "mer:look:throw:left",
+      "fx:whoosh",
+      "dagger:throw",
+      "pop:430,410,풍덩!"
+     ],
+     "after": [
+      "mer:look:sad:left"
+     ]
+    },
+    {
+     "text": "인어공주는 반짝이는 거품이 되어 하늘로 둥실 올라갔어요.",
+     "src": "reuse",
+     "en": "The little mermaid turned into shining bubbles and floated up into the sky.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid turned into shining bubbles and floated up into the sky.",
+       null
+      ]
+     ],
+     "before": [
+      "mer:bubble",
+      "fx:slide_up"
+     ],
+     "after": [
+      "sisters:fade:out"
+     ]
+    },
+    {
+     "text": "거품은 햇살을 받아 알록달록 무지개빛으로 빛났어요.",
+     "src": "new",
+     "en": "The bubbles caught the sunlight and shimmered in all the colors of the rainbow.",
+     "segs": [
+      [
+       "nar",
+       "The bubbles caught the sunlight and shimmered in all the colors of the rainbow.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_breeze",
+   "card": "The Sea Breeze",
+   "set": "morning_sea",
+   "enter": [
+    "ship:at:640,468:flower",
+    "prince:at:600,341:stand:left",
+    "lady:at:700,341:wed:left",
+    "mer:at:340,300:bubble:right",
+    "gulls:fly",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "인어공주는 부드러운 바닷바람이 되었어요. 길 잃은 배의 돛을 밀어 주고, 더운 날엔 시원한 바람을 보내지요.",
+     "src": "reuse",
+     "en": "The little mermaid became a soft sea breeze. She pushes the sails of lost ships, and sends a cool wind on hot days.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid became a soft sea breeze. She pushes the sails of lost ships, and sends a cool wind on hot days.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "휘잉~ 바람이 불자 돛이 펄럭펄럭, 배가 쑥쑥 나아갔어요.",
+     "src": "new",
+     "en": "Whoosh! The wind blew, the sails flapped, flap, flap, and the ship sailed on and on.",
+     "segs": [
+      [
+       "nar",
+       "Whoosh! The wind blew, the sails flapped, flap, flap, and the ship sailed on and on.",
+       null
+      ]
+     ],
+     "before": [
+      "wind:blow",
+      "pop:470,170,휘잉~"
+     ],
+     "after": [
+      "prince:hop",
+      "lady:hop"
+     ]
+    },
+    {
+     "text": "갈매기들이 끼룩끼룩, 바람을 따라 춤을 추었어요.",
+     "src": "new",
+     "en": "The seagulls cried, squawk, squawk, and danced along with the wind.",
+     "segs": [
+      [
+       "nar",
+       "The seagulls cried, squawk, squawk, and danced along with the wind.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "사랑하는 마음은 사라지지 않아요. 안녕, 또 만나요!",
+     "src": "reuse",
+     "en": "A loving heart never disappears. Goodbye, see you again!",
+     "segs": [
+      [
+       "mer",
+       "A loving heart never disappears. Goodbye, see you again!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "glow:mer",
+      "mer:hop",
+      "confetti",
+      "fx:tada"
+     ]
+    },
+    {
+     "text": "사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.",
+     "src": "reuse",
+     "en": "When you give way with a loving heart, that heart stays behind as something good.",
+     "segs": [
+      [
+       "nar",
+       "When you give way with a loving heart, that heart stays behind as something good.",
+       null
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
