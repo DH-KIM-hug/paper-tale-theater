@@ -599,13 +599,13 @@
       const sp = Math.min(270, (visW() - 30) / 3), r = Math.min(86, sp * .44);
       const bs = keys.map((k, i) => ({ k, b: badge(T, 500 + (i - 1) * sp, 300, r, k) }));
       const name = cast[okKey].name;
-      await T.choose(bs.map(({ k, b }) => ({
+      await T.ask(q, () => T.choose(bs.map(({ k, b }) => ({
         el: b, ok: k === okKey,
         onWrong: async () => {
           cast[k].cry(); await T.anim(b, [{ translate: '0 0' }, { translate: '-10px 0' }, { translate: '10px 0' }, { translate: '0 0' }], 400);
           await sleep(700); hidden();
         },
-      })), { prompt: q, where: `${cast[okKey].word.replace(/[!~]/g, '')} 하고 우는 친구는 누굴까? 다시 들어 봐요.`, who: `${josa(name, '이에요/예요')}! 반짝이는 친구를 눌러 봐요!` });
+      })), { prompt: q, where: `${cast[okKey].word.replace(/[!~]/g, '')} 하고 우는 친구는 누굴까? 다시 들어 봐요.`, who: `${josa(name, '이에요/예요')}! 반짝이는 친구를 눌러 봐요!` }));
       cast[okKey].cry();
       const ok = bs.find(x => x.k === okKey).b;
       await T.anim(ok, [{ translate: '0 0' }, { translate: '0 -24px' }, { translate: '0 0' }], 420);
@@ -656,7 +656,6 @@
     await say('당나귀가 길을 가는데, 덤불이 흔들흔들.');
     rustle(); cast.dog.cry();
     const q2 = '덤불 뒤에서 멍멍! 누구일까요?';
-    await say(q2);
     await soundChoice('dog', q2, () => { rustle(); cast.dog.cry(); });
     T.world.appendChild(cast.dog.pos);
     const DOGX = bgArt('road') ? L(560, 640) : L(560, 545);
@@ -684,7 +683,6 @@
     }, cast.dog.pos);
     cast.cat.cry();
     const q3 = '담장 위에서 야옹~ 누구일까요?';
-    await say(q3);
     await soundChoice('cat', q3, () => cast.cat.cry());
     cast.cat.lean.style.filter = '';
     cast.cat.parts.whUp.setAttribute('opacity', 0); cast.cat.parts.whDown.setAttribute('opacity', 1);
@@ -721,7 +719,6 @@
     }, cast.cat.pos);
     cast.rooster.cry();
     const q4 = '지붕 위에서 꼬끼오! 누구일까요?';
-    await say(q4);
     await soundChoice('rooster', q4, () => cast.rooster.cry());
     cast.rooster.lean.style.filter = '';
     flap(cast.rooster);
@@ -764,16 +761,16 @@
         sing(a); await sleep(1100);
       }
       for (const b of icons) b.style.opacity = '.45';
-      await say('이제 똑같이 톡톡!');
       for (let i = 0; i < pat.length; i++) {
         const good = cast[pat[i]];
-        await T.choose(band.map(a => ({ el: a.pos, ok: a === good, onWrong: async () => {
+        const pickNote = () => T.choose(band.map(a => ({ el: a.pos, ok: a === good, onWrong: async () => {
           sing(a);
           await sleep(500);
           if (!laughed) { laughed = true; S.giggle(); await say('하하, 새 노래가 됐네! 한 번 더!'); }
           good.pos.style.filter = 'url(#hintGlow)';
           good.pos.animate([{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
         } })), { prompt: `${i === 0 ? '처음은' : '다음은'} 누구 소리였지?`, who: `${josa(good.name, '이에요/예요')}! 반짝이는 친구를 눌러 봐요!` });
+        await (i === 0 ? T.ask('이제 똑같이 톡톡!', pickNote) : pickNote());
         good.pos.style.filter = '';
         sing(good, true);
         icons[i].style.opacity = '1';
@@ -864,9 +861,8 @@
       const waiting = band.filter(a => !stacked.includes(a));
       const prev = stacked[k - 1];
       const q = k === 0 ? '누가 맨 아래에 설까요?' : k === 3 ? '맨 꼭대기는 누구?' : `${prev.name} 등에는 누가 올라갈까요?`;
-      if (k > 0) await say(q);
       let wrongOnce = false;
-      await T.choose(waiting.map(a => ({ el: a.pos, ok: a === good, onWrong: async () => {
+      const pickStack = () => T.choose(waiting.map(a => ({ el: a.pos, ok: a === good, onWrong: async () => {
         const home = { ...a.home };
         if (k === 0) {
           // 작은 친구가 맨 아래에 서면 당나귀가 올라와서… 납작! (웃음 컷)
@@ -893,6 +889,7 @@
         good.pos.style.filter = 'url(#hintGlow)';
         good.pos.animate([{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
       } })), { prompt: q, who: `${josa(good.name, '이에요/예요')}! 반짝이는 친구를 눌러 봐요!` });
+      await (k > 0 ? T.ask(q, pickStack) : pickStack());
       good.pos.style.filter = '';
       await climb(good, top.x, top.y);
       stacked.push(good);
@@ -981,8 +978,7 @@
     await sleep(400);
     /* 톡 한 번(2026-10-21): 탑을 한 번 누르면 네 친구가 차례로 자기 소리를 내고(당나귀 히힝 · 강아지 멍멍 · 고양이 야옹 · 닭 꼬끼오),
        이어서 진짜 동물 소리로 〈프레르 자크〉를 합창하고, 마지막엔 모두 같이 크게 — 나머지는 저절로 */
-    await say('다 같이 목청껏!');
-    await T.tap(hitT, { prompt: '다 같이 목청껏!' });
+    await T.ask('다 같이 목청껏!', () => T.tap(hitT, { prompt: '다 같이 목청껏!' }));
     const WORDS = { donkey: '히힝!', dog: '멍멍!', cat: '야옹!', rooster: '꼬끼오!' };
     hitT.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-6px)' }, { transform: 'translateY(0)' }], { duration: 260 });
     for (const a of band) { // 한 마리씩 큰 소리 + 점프 + 글자 + 음표
@@ -1072,8 +1068,7 @@
       eyes.animate([{ opacity: .2 }, { opacity: 1 }], { duration: 500, fill: 'forwards' });
       T.tone(1400, .1, { type: 'sine', vol: .08 });
       const R = REACT[k];
-      await say(R.q);
-      await T.tap(eyes, { prompt: R.q });
+      await T.ask(R.q, () => T.tap(eyes, { prompt: R.q }));
       eyes.remove();
       a.lean.style.filter = 'brightness(1)'; wake(a);
       a.cry(1); a.hop(24);
@@ -1160,5 +1155,30 @@
     return '나이 들어도, 작아도, 함께라면 해낼 수 있어요!';
   }
 
-  Tale.mount({ title: '브레멘 음악대', subtitle: '네 친구의 신나는 합창', run: () => run(Tale.api) });
+  /* 누르는 자리 넓히기 (2026-10-22): 화면에서 짧은 변이 84px 보다 작은 대상(g)에 투명 사각을 덧대 84px 이상으로 만든다.
+     대상 가운데는 그대로(손가락 힌트 자리 불변). 조작을 열 때마다 지금 화면 배율로 다시 잰다. 클립된 그림 조각은 건드리지 않는다 */
+  function fatten(el, min = 84) {
+    try {
+      if (!el || !(el instanceof SVGGElement) || el.__noFat) return;
+      if (el.__fat) { el.__fat.remove(); el.__fat = null; }
+      const r = el.getBoundingClientRect(); if (!r.width || !r.height || el.getAttribute('clip-path')) return;
+      if (r.width >= min && r.height >= min) return;
+      const m = el.getScreenCTM(), bb = el.getBBox(); if (!m || !bb.width || !bb.height) return;
+      const sx = Math.hypot(m.a, m.b) || 1, sy = Math.hypot(m.c, m.d) || 1;
+      const w = Math.max(bb.width, min / sx), h = Math.max(bb.height, min / sy);
+      const rc = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rc.setAttribute('x', bb.x + bb.width / 2 - w / 2); rc.setAttribute('y', bb.y + bb.height / 2 - h / 2);
+      rc.setAttribute('width', w); rc.setAttribute('height', h); rc.setAttribute('fill', '#000'); rc.setAttribute('fill-opacity', 0);
+      el.insertBefore(rc, el.firstChild); el.__fat = rc;
+    } catch (e) { /* 넓히기 실패는 무시 */ }
+  }
+
+  function withFat(api) {
+    const T = Object.defineProperties({}, Object.getOwnPropertyDescriptors(api));   // 복사본(스프레드 {...T} 로 다시 복사해도 모든 함수가 따라온다)
+    const of = { tap: a => [a[0]], mash: a => [a[0]], swipe: a => [a[0]], hold: a => [a[0]], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
+    Object.keys(of).forEach(k => { T[k] = (...a) => { of[k](a).forEach(e => fatten(e)); return api[k](...a); }; });
+    return T;
+  }
+
+  Tale.mount({ title: '브레멘 음악대', subtitle: '네 친구의 신나는 합창', run: () => run(withFat(Tale.api)) });
 })();

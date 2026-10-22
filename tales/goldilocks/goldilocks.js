@@ -1144,7 +1144,7 @@
   }
 
   function withFat(api) {
-    const T = Object.create(api);
+    const T = Object.defineProperties({}, Object.getOwnPropertyDescriptors(api));   // 복사본(스프레드 {...T} 로 다시 복사해도 모든 함수가 따라온다)
     const of = { tap: a => [a[0]], mash: a => [a[0]], swipe: a => [a[0]], hold: a => [a[0]], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
     Object.keys(of).forEach(k => { T[k] = (...a) => { of[k](a).forEach(e => fatten(e)); return api[k](...a); }; });
     return T;
