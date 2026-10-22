@@ -15,19 +15,22 @@
     pp_king_lantern: .60,
     pp_prop_pea: 1.0, pp_prop_pillow: 2.0, pp_prop_ladder: .20, pp_prop_boat: 1.1, pp_prop_far_lands: 9.0, pp_prop_cloud: 2.0, pp_prop_lightning: .35,
     pp_prop_door_closed: .55, pp_prop_door_open: 1.4, pp_prop_case: .5,
+    pp_layer_map_table: 1.7682, pp_layer_lantern_post: .2133, pp_layer_puddle: 2.6087, pp_layer_pea_vine: .3883, pp_layer_bunting: 4.4554, pp_layer_rose_arch: .63, pp_layer_flowerbed: 2.2059, pp_layer_fountain: .7183,
   };
   /* 상자를 폭·높이 둘 다 고정(preload 로 덮어쓰지 않음).
      매트리스(2026-10-22 다시 그림): 갈색 테두리 띠·누빔선·둥근 단추가 있는 옆모습. 받은 그림은 5.8:1 이라 240×20 에 넣으면 단추가 반으로 눌린다 →
-     민짜 몸통 줄만 빼서 12:1(900×75)로 만든 webp 를 쓴다(단추·테두리 띠는 그대로, 원본 png 는 assets/raw/_work/pp_mattress_try1) */
-  const FIXED_ASP = { pp_prop_mattress_gold: 12, pp_prop_mattress_cream: 12, pp_prop_mattress_persimmon: 12, pp_prop_duvet: 12.2, pp_prop_bed_board: 8.7 };
+     민짜 몸통 줄만 빼서 12:1(900×75)로 만든 webp 를 쓴다(단추·테두리 띠는 그대로, 원본 png 는 assets/raw/_work/pp_mattress_try1). 분홍·민트·라일락(v2)도 같은 방식: 윗면 줄을 빼고 테두리 띠를 반으로, 민짜 몸통 줄을 빼 900×75 */
+  const FIXED_ASP = { pp_prop_mattress_gold: 12, pp_prop_mattress_cream: 12, pp_prop_mattress_persimmon: 12, pp_prop_mattress_rose: 12, pp_prop_mattress_mint: 12, pp_prop_mattress_lilac: 12, pp_prop_duvet: 12.2, pp_prop_bed_board: 8.7 };
   /* 높이 — 같은 부위(얼굴 폭) 크기가 같아지도록 정한 값. 그림이 오면 얼굴 폭을 재서 고친다(SPEC §2-2) */
   const HT = {
     pp_princess_stand: 240, pp_princess_wet: 240, pp_princess_climb: 245, pp_princess_lie_a: 129, pp_princess_lie_b: 129, pp_princess_sleepy: 240, pp_princess_honest: 240, pp_princess_hold: 240, pp_princess_wave: 250,
     pp_prince_sigh: 240, pp_prince_stand: 240, pp_prince_surprise: 245, pp_prince_joy: 255, pp_prince_hold: 240,
     pp_queen_smile: 225, pp_queen_wink: 225, pp_queen_place: 200, pp_queen_lift: 250, pp_queen_hug: 225,
     pp_king_lantern: 225,
-    pp_prop_mattress_gold: 20, pp_prop_mattress_cream: 20, pp_prop_mattress_persimmon: 20, pp_prop_duvet: 20, pp_prop_pillow: 40, pp_prop_bed_board: 30, pp_prop_ladder: 470,
+    pp_prop_mattress_gold: 20, pp_prop_mattress_cream: 20, pp_prop_mattress_persimmon: 20, pp_prop_mattress_rose: 20, pp_prop_mattress_mint: 20, pp_prop_mattress_lilac: 20, pp_prop_duvet: 20, pp_prop_pillow: 40, pp_prop_bed_board: 30, pp_prop_ladder: 470,
     pp_prop_boat: 44, pp_prop_far_lands: 44, pp_prop_cloud: 70, pp_prop_lightning: 160, pp_prop_door_closed: 300, pp_prop_door_open: 300, pp_prop_case: 150, pp_prop_pea: 12,
+    /* 레이어 소품(VISUAL_PLAN §5): 배경을 꾸미는 종이 조각. 누름을 받지 않는다 */
+    pp_layer_map_table: 120, pp_layer_lantern_post: 300, pp_layer_puddle: 60, pp_layer_pea_vine: 260, pp_layer_bunting: 80, pp_layer_rose_arch: 300, pp_layer_flowerbed: 110, pp_layer_fountain: 220,
   };
   /* 그림이 보는 쪽 ('left' | 'right' | 'front') */
   const NAT = { pp_princess_climb: 'left', pp_princess_lie_a: 'left', pp_princess_lie_b: 'left', pp_princess_hold: 'right', pp_prince_hold: 'right', pp_queen_place: 'right', pp_prop_boat: 'right', pp_prop_cloud: 'left' };
@@ -35,7 +38,7 @@
   const MAT_W = 240, MAT_H = 20, BOARD_TOP = 475, TOP20 = BOARD_TOP - 20 * MAT_H;   // 탑: 판자 윗면 475, 20장 꼭대기 75
   const DUV_STEP = 12, DUV_TOP = TOP20 - 3 * DUV_STEP - HT.pp_prop_duvet;            // 이불 4장 꼭대기 y = 19
   const RIG_UP = 130;                   // 꼭대기를 볼 때 rig 를 내리는 양(§5-1)
-  const BGS = ['pp_bg_room_day', 'pp_bg_gate_night', 'pp_bg_guest_day', 'pp_bg_guest_night', 'pp_bg_yard_day'];
+  const BGS = ['pp_bg_room_day_v2', 'pp_bg_gate_night_v2', 'pp_bg_guest_day_v2', 'pp_bg_guest_night_v2', 'pp_bg_yard_day_v2'];
   const src = k => AS + k + '.webp';    // 배경·스프라이트 모두 파일 이름 전체(pp_…)로 부른다
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 902 / 1600 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
@@ -136,11 +139,11 @@
 
   /* 배경 자리표시: 종이 한 장 + 바닥 띠 + 요소 2~3개 + 이름표 */
   const BGPH = {
-    pp_bg_room_day:    { sky: '#F6ECD8', gnd: '#D9A94E', name: '왕자의 방(낮, 오른쪽 창)', shapes: () => [['rect', { x: 554, y: 49, width: 400, height: 201, rx: 4, fill: '#BFD8EE' }], ['rect', { x: 554, y: 250, width: 400, height: 103, fill: '#8B7BB8' }], ['rect', { x: 120, y: 160, width: 160, height: 250, rx: 4, fill: '#A93B32' }]] },
-    pp_bg_gate_night:  { sky: '#1F2A56', gnd: '#3a3f55', name: '성문 앞(밤)', shapes: () => [['rect', { x: -40, y: 205, width: 1080, height: 207, fill: '#55607F' }], ['rect', { x: 617, y: 205, width: 166, height: 300, rx: 4, fill: '#F2B366' }], ['rect', { x: 140, y: 250, width: 120, height: 160, fill: '#55607F' }]] },
-    pp_bg_guest_day:   { sky: '#F6ECD8', gnd: '#6B4A32', name: '손님방(낮, 왼쪽 창)', shapes: () => [['rect', { x: 100, y: 70, width: 170, height: 170, rx: 4, fill: '#BFD8EE' }], ['rect', { x: 140, y: 330, width: 140, height: 80, fill: '#A93B32' }], ['rect', { x: 880, y: 150, width: 90, height: 260, fill: '#D9A94E' }]] },
-    pp_bg_guest_night: { sky: '#2B3263', gnd: '#3a2a1c', name: '손님방(밤, 왼쪽 창·달)', shapes: () => [['rect', { x: 100, y: 70, width: 170, height: 170, rx: 4, fill: '#1F2A56' }], ['circle', { cx: 190, cy: 150, r: 38, fill: '#F6ECD8' }], ['rect', { x: 140, y: 330, width: 140, height: 80, fill: '#6B4A32' }]] },
-    pp_bg_yard_day:    { sky: '#BFD8EE', gnd: '#3F6B4F', name: '성 마당(낮)', shapes: () => [['rect', { x: -40, y: 250, width: 1080, height: 162, fill: '#F6ECD8' }], ['circle', { cx: 160, cy: 110, r: 44, fill: '#F2B366' }], ['rect', { x: 700, y: 90, width: 160, height: 160, rx: 4, fill: '#F6ECD8' }]] },
+    pp_bg_room_day_v2:    { sky: '#F6ECD8', gnd: '#D9A94E', name: '왕자의 방(낮, 오른쪽 창)', shapes: () => [['rect', { x: 554, y: 49, width: 400, height: 201, rx: 4, fill: '#BFD8EE' }], ['rect', { x: 554, y: 250, width: 400, height: 103, fill: '#8B7BB8' }], ['rect', { x: 120, y: 160, width: 160, height: 250, rx: 4, fill: '#A93B32' }]] },
+    pp_bg_gate_night_v2:  { sky: '#1F2A56', gnd: '#3a3f55', name: '성문 앞(밤)', shapes: () => [['rect', { x: -40, y: 205, width: 1080, height: 207, fill: '#55607F' }], ['rect', { x: 617, y: 205, width: 166, height: 300, rx: 4, fill: '#F2B366' }], ['rect', { x: 140, y: 250, width: 120, height: 160, fill: '#55607F' }]] },
+    pp_bg_guest_day_v2:   { sky: '#F6ECD8', gnd: '#6B4A32', name: '손님방(낮, 왼쪽 창)', shapes: () => [['rect', { x: 100, y: 70, width: 170, height: 170, rx: 4, fill: '#BFD8EE' }], ['rect', { x: 140, y: 330, width: 140, height: 80, fill: '#A93B32' }], ['rect', { x: 880, y: 150, width: 90, height: 260, fill: '#D9A94E' }]] },
+    pp_bg_guest_night_v2: { sky: '#2B3263', gnd: '#3a2a1c', name: '손님방(밤, 왼쪽 창·달)', shapes: () => [['rect', { x: 100, y: 70, width: 170, height: 170, rx: 4, fill: '#1F2A56' }], ['circle', { cx: 190, cy: 150, r: 38, fill: '#F6ECD8' }], ['rect', { x: 140, y: 330, width: 140, height: 80, fill: '#6B4A32' }]] },
+    pp_bg_yard_day_v2:    { sky: '#BFD8EE', gnd: '#3F6B4F', name: '성 마당(낮)', shapes: () => [['rect', { x: -40, y: 250, width: 1080, height: 162, fill: '#F6ECD8' }], ['circle', { cx: 160, cy: 110, r: 44, fill: '#F2B366' }], ['rect', { x: 700, y: 90, width: 160, height: 160, rx: 4, fill: '#F6ECD8' }]] },
   };
   function bgImage(T, key) {
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
@@ -234,7 +237,7 @@
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ SAIL = 8000, COUNT_A = 1400, COUNT_B = 1300, CLIMB = 6000;   // §2-7 속도 상수
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(수 세기 n1~n20)
-    const scene = key => { T.clear(); bgImage(T, key); newRig(T); camSnap(500, 280, 1); };
+    const scene = key => { T.clear(); bgImage(T, key); newRig(T); dress(key); camSnap(500, 280, 1); };
     if (T.fx) T.fx.style.pointerEvents = 'none';  // 빗줄기·꽃잎·'뚝뚝' 같은 효과 조각이 톡 대상을 덮지 않게
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
@@ -255,9 +258,9 @@
     const prince = mk(T, Object.fromEntries([['sigh', 'prince_sigh'], ['stand', 'prince_stand'], ['surprise', 'prince_surprise'], ['joy', 'prince_joy'], ['hold', 'prince_hold']].map(([k, f]) => [k, H('pp_' + f)])));
     const queen = mk(T, Object.fromEntries([['smile', 'queen_smile'], ['wink', 'queen_wink'], ['place', 'queen_place'], ['lift', 'queen_lift'], ['hug', 'queen_hug']].map(([k, f]) => [k, H('pp_' + f)])));
     const king = mk(T, { lantern: H('pp_king_lantern') });
-    const MATF = ['pp_prop_mattress_gold', 'pp_prop_mattress_cream', 'pp_prop_mattress_persimmon'];
-    const mats = Array.from({ length: 20 }, (_, i) => prop(T, MATF[i % 3], MAT_H));     // 20장(금·크림·감 번갈아)
-    const pile = Array.from({ length: 5 }, (_, i) => prop(T, MATF[i % 3], MAT_H));      // 5장 더미(5장 장면)
+    const MATF = ['pp_prop_mattress_gold', 'pp_prop_mattress_cream', 'pp_prop_mattress_persimmon', 'pp_prop_mattress_rose', 'pp_prop_mattress_mint', 'pp_prop_mattress_lilac'];   // 2026-10-22 VISUAL_PLAN 판단 1: 6색 순환
+    const mats = Array.from({ length: 20 }, (_, i) => prop(T, MATF[i % 6], MAT_H));     // 20장(6색 번갈아)
+    const pile = Array.from({ length: 5 }, (_, i) => prop(T, MATF[i % 6], MAT_H));      // 5장 더미(5장 장면)
     const duvs = Array.from({ length: 4 }, () => prop(T, 'pp_prop_duvet', HT.pp_prop_duvet));
     const peaB = prop(T, 'pp_prop_pea', 12), peaC = prop(T, 'pp_prop_pea', 22), peaM = prop(T, 'pp_prop_pea', 30);   // 판자 위·비교 놀이·유리 상자
     const matC = prop(T, 'pp_prop_mattress_gold', MAT_H), pillow = prop(T, 'pp_prop_pillow', HT.pp_prop_pillow);        // 4장 비교 보기
@@ -266,7 +269,44 @@
     const cloudA = prop(T, 'pp_prop_cloud', HT.pp_prop_cloud), cloudB = prop(T, 'pp_prop_cloud', HT.pp_prop_cloud), bolt = prop(T, 'pp_prop_lightning', HT.pp_prop_lightning);
     const doorC = prop(T, 'pp_prop_door_closed', HT.pp_prop_door_closed), doorO = prop(T, 'pp_prop_door_open', HT.pp_prop_door_open), kase = prop(T, 'pp_prop_case', HT.pp_prop_case);
     const ALL = [pea, prince, queen, king, ...mats, ...pile, ...duvs, peaB, peaC, peaM, matC, pillow, board, ladder, boat, lands, cloudA, cloudB, bolt, doorC, doorO, kase];
+    /* 레이어 소품(VISUAL_PLAN §4): rig 밖 T.world 맨 뒤(중간 층) 또는 fx(앞 가림 층). 모두 누름 없음 */
+    const deco = k => { const a = prop(T, 'pp_layer_' + k, HT['pp_layer_' + k]); a.pos.style.pointerEvents = 'none'; return a; };
+    const L = Object.fromEntries(['map_table', 'lantern_post', 'puddle', 'puddle2', 'pea_vine', 'bunting', 'bunting2', 'rose_arch', 'flowerbed', 'fountain'].map(k => [k, deco(k.replace(/2$/, ''))]));
+    ALL.push(...Object.values(L));
     ALL.forEach(hide);
+    const mid = (a, x, y) => { put(T, a, x, y); T.world.insertBefore(a.pos, T.world.firstChild); return a; };
+    const front = (a, x, y) => { put(T, a, x, y); T.fx.appendChild(a.pos); return a; };
+    const flicker = a => a.body.animate([{ opacity: 1 }, { opacity: .85 }, { opacity: 1 }], { duration: 1600, iterations: Infinity });
+    function rings(x, y) {          // 웅덩이 빗방울 고리(코드 원 2개)
+      [0, 700].forEach((d, i) => { const c = T.el('ellipse', { cx: x + (i ? 30 : -25), cy: y, rx: 6, ry: 2.5, fill: 'none', stroke: '#F6ECD8', 'stroke-width': 2 }, T.fx);
+        c.style.transformBox = 'fill-box'; c.style.transformOrigin = '50% 50%';
+        c.animate([{ transform: 'scale(.4)', opacity: .9 }, { transform: 'scale(3)', opacity: 0 }], { duration: 1400, delay: d, iterations: Infinity }); });
+    }
+    function dress(key) {
+      if (key === 'pp_bg_room_day_v2') mid(L.map_table, X(150, 250), FL);
+      if (key === 'pp_bg_gate_night_v2') {
+        flicker(mid(L.lantern_post, 940, FL));
+        front(L.puddle, X(80, 470), 585); front(L.puddle2, X(960, 830), 585); rings(X(80, 470), 560); rings(X(960, 830), 560);
+      }
+      if (key === 'pp_bg_guest_day_v2' || key === 'pp_bg_guest_night_v2') {
+        mid(L.pea_vine, 40, FL); L.pea_vine.body.style.filter = key === 'pp_bg_guest_night_v2' ? 'brightness(.6) saturate(.8)' : '';
+      }
+      if (key === 'pp_bg_yard_day_v2') {
+        mid(L.rose_arch, X(120, 330), FL); mid(L.fountain, 950, FL);
+        L.fountain.body.animate([{ translate: '0 0' }, { translate: '0 -3px' }, { translate: '0 0' }], { duration: 900, iterations: Infinity });
+        [[L.bunting, X(250, 470)], [L.bunting2, X(750, 690)]].forEach(([g, x]) => { front(g, x, 92); g.body.animate([{ rotate: '-1.5deg' }, { rotate: '1.5deg' }, { rotate: '-1.5deg' }], { duration: 4000, iterations: Infinity, easing: 'ease-in-out' }); });
+        front(L.flowerbed, X(40, 290), 585);
+      }
+    }
+    /* 탑 꼭대기 별(코드, 크림 별) */
+    function topStars(n, dy = 0) {
+      for (let i = 0; i < n; i++) {
+        const x = TX + [-150, 150, -110, 120][i], y = [70, 60, 20, 15][i] + dy, r = 10;
+        const st = T.el('path', { d: `M0 ${-r} L${r * .3} ${-r * .3} L${r} 0 L${r * .3} ${r * .3} L0 ${r} L${-r * .3} ${r * .3} L${-r} 0 L${-r * .3} ${-r * .3} Z`, fill: '#F6ECD8', transform: `translate(${x},${y})` }, T.fx);
+        st.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 1200, delay: i * 200 }).finished.then(() => st.remove(), () => st.remove());
+      }
+    }
+    const towerShake = () => { rig.style.transformBox = 'view-box'; rig.style.transformOrigin = `${TX}px ${FL}px`; rig.animate([{ rotate: '0deg' }, { rotate: '1deg' }, { rotate: '-1deg' }, { rotate: '0deg' }], 400); sparkleSfx(T); };
     hitBox(T, boat, 100, 100); hitBox(T, peaC, 100, 100); hitBox(T, pillow, 100, 100); hitBox(T, matC, 250, 100); hitBox(T, kase, 100, 150);
     T.director({ cast: { pea, prince, queen, king }, noFace: ['pea', 'prince', 'queen', 'king'] });
 
@@ -281,7 +321,7 @@
     const wrongSay = (a, text) => async () => { await a.wiggle(8, 360); await say(text); };
 
     /* ===== 1. 진짜 공주를 찾아서 (톡 1 — 배) ===== */
-    scene('pp_bg_room_day');
+    scene('pp_bg_room_day_v2');
     put(T, lands, 754, 262);
     put(T, boat, 600, 300, { to: 'right' });
     boat.body.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 900, iterations: Infinity });
@@ -308,7 +348,7 @@
 
     /* ===== 2. 폭풍우 밤 (자동) ===== */
     await T.sceneCard(tr('폭풍우 밤'), () => {
-      scene('pp_bg_gate_night');
+      scene('pp_bg_gate_night_v2');
       put(T, cloudA, 250, 110); put(T, cloudB, 820, 95, { to: 'right' });
       put(T, doorC, 700, FL);
       put(T, bolt, 480, 190); bolt.pos.style.opacity = 0;
@@ -338,7 +378,7 @@
     /* ===== 3. 문 앞의 아가씨 (톡 2 — 성문) ===== */
     let rain3;
     await T.sceneCard(tr('문 앞의 아가씨'), () => {
-      scene('pp_bg_gate_night');
+      scene('pp_bg_gate_night_v2');
       put(T, cloudA, 250, 110); put(T, cloudB, 820, 95, { to: 'right' });
       put(T, doorO, 700, FL); hide(doorO);
       put(T, queen, 745, FL, { look: 'smile' }); put(T, king, 700, FL, { look: 'lantern' }); hide(queen); hide(king);
@@ -366,7 +406,7 @@
 
     /* ===== 4. 왕비의 완두콩 (배움 놀이 1: 제일 작은 것 · 제일 큰 것) ===== */
     await T.sceneCard(tr('왕비의 완두콩'), () => {
-      scene('pp_bg_guest_day');
+      scene('pp_bg_guest_day_v2');
       put(T, board, X(820, 760), FL); inRig(board);
       put(T, queen, X(690, 620), FL, { look: 'place', to: 'right' });
       if (P) { put(T, peaC, 500, 300); put(T, pillow, 500, 400); put(T, matC, 500, FL); }   // 세로: 누르는 자리 100씩(화면 90px) 겹치지 않게
@@ -408,7 +448,7 @@
     const PILE_X = X(850, 700);
     let bedHit;
     await T.sceneCard(tr('매트리스 스무 장'), () => {
-      scene('pp_bg_guest_day');
+      scene('pp_bg_guest_day_v2');
       put(T, board, TX, FL); inRig(board);
       put(T, peaB, TX - 60, BOARD_TOP + 4); inRig(peaB);
       pile.forEach((p, k) => put(T, p, PILE_X, FL - k * MAT_H));
@@ -429,6 +469,7 @@
         sfx(T, 'paper_down', .35);
         if (i >= 15) hide(pile[19 - i]);
         vo('n' + (i + 1));
+        if (i === 9 || i === 19) setTimeout(towerShake, 450);
         await sleep(gap);
       }
     };
@@ -451,7 +492,7 @@
     /* ===== 6. 위? 아래? (배움 놀이 3: 위·아래) ===== */
     let zTop, zBot;
     await T.sceneCard(tr('위? 아래?'), () => {
-      scene('pp_bg_guest_day');
+      scene('pp_bg_guest_day_v2');
       buildTower();
       put(T, ladder, TX + 125, FL); inRig(ladder);
       put(T, pea, X(TX + 180, TX + 160), FL, { look: 'stand' }); inRig(pea);
@@ -484,13 +525,13 @@
       await Promise.all([pea.move(TX + 125, TOP20, CLIMB, 'linear'), rigTo(T, RIG_UP, CLIMB)]);
       climbing = false;
     }
-    pea.look('lie_a'); pea.place(TX, DUV_TOP); sfx(T, 'paper_down', .3);
+    pea.look('lie_a'); pea.place(TX, DUV_TOP); sfx(T, 'paper_down', .3); topStars(4, RIG_UP);
     await say('와, 높다! 잘 자요.');
     await sleep(SCENE_END);
 
     /* ===== 7. 잠 못 든 밤 (자동) ===== */
     await T.sceneCard(tr('잠 못 든 밤'), () => {
-      scene('pp_bg_guest_night');
+      scene('pp_bg_guest_night_v2');
       buildTower();
       put(T, ladder, TX + 125, FL); inRig(ladder);
       put(T, pea, TX, DUV_TOP, { look: 'lie_a' }); inRig(pea);
@@ -517,7 +558,7 @@
 
     /* ===== 8. 아침 인사 (자동) ===== */
     await T.sceneCard(tr('아침 인사'), () => {
-      scene('pp_bg_guest_day');
+      scene('pp_bg_guest_day_v2');
       buildTower();
       put(T, ladder, TX + 125, FL); inRig(ladder);
       put(T, queen, X(290, 400), FL, { look: 'smile' });
@@ -534,13 +575,13 @@
     await say('매트리스 스무 장 아래 완두콩을 느끼다니! 진짜 공주로구나!');
     queen.look('hug'); sfx(T, 'paper_up', .4);
     await queen.move(pea.x - 85, FL, 700, 'ease-out');
-    T.pop(queen.x - 95, FL - 240, tr('꼬옥')); queen.hop(10, 360); pea.hop(10, 360);
+    T.pop(queen.x - 95, FL - 240, tr('꼬옥')); queen.hop(10, 360); pea.hop(10, 360); topStars(3);
     prince.look('joy'); prince.hop(12, 360);
     await sleep(2500);
 
     /* ===== 9. 진짜 공주 (톡 3 — 유리 상자, 마지막 인사) ===== */
     await T.sceneCard(tr('진짜 공주'), () => {
-      scene('pp_bg_yard_day');
+      scene('pp_bg_yard_day_v2');
       put(T, kase, X(800, 660), FL);
       put(T, peaM, kase.x, kase.y - 95);
       put(T, prince, X(430, 450), FL, { look: 'hold', to: 'right' });
@@ -555,6 +596,7 @@
     bob(kase.pos);
     await T.ask('유리 상자를 톡 눌러 봐요.', () => T.tap(kase.hit, { prompt: '유리 상자를 톡 눌러 봐요.' }));
     glow(peaM, 1500); peaM.hop(10, 360); sparkleSfx(T); T.pop(kase.x, kase.y - 190, tr('반짝!'));
+    [L.bunting, L.bunting2].forEach(g => g.wiggle(6, 700));
     pea.look('wave'); prince.look('joy'); pea.hop(12, 360); prince.hop(12, 360);
     T.confetti(); sfx(T, 'tada', undefined, () => sparkleSfx(T));
     T.pop(X(475, 495), FL - 290, tr('안녕!'));
