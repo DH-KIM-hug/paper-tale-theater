@@ -874,6 +874,8 @@ const Tale = (() => {
   /* 저장소 뿌리(홈·썸네일 경로): 이 엔진 파일(engine/tale.js)의 한 단계 위 */
   const ROOT_URL = (() => { try { return new URL('../', document.currentScript.src).href; } catch (e) { return '../../'; } })();
   /* 동화 id = 폴더 이름 (tales/<id>/index.html) */
+  /* thumbs.js 캐시 버전: index.html 의 thumbs.js?v= 와 같이 올린다 */
+  const THUMBS_V = '20261022e';
   const taleId = () => { const m = location.pathname.match(/\/tales\/([^/]+)\//); return m ? decodeURIComponent(m[1]) : ''; };
   const PLAY_SVG = '<svg class="play" viewBox="0 0 10 11" aria-hidden="true"><path d="M1.2 1.1 Q1.2 .2 2 .6 L9.2 4.8 Q9.9 5.5 9.2 6.2 L2 10.4 Q1.2 10.8 1.2 9.9Z"/></svg>';
   /* 시작·끝 화면의 구멍 그림: 밝은 종이 = <id>_light.webp(THUMBS2L), 어두운 종이 = <id>.webp(THUMBS2). 없으면 빈 구멍 */
@@ -908,7 +910,7 @@ const Tale = (() => {
     return new Promise(res => {
       if (!id) return res();
       const sc = document.createElement('script');
-      sc.src = ROOT_URL + 'assets/thumbs/thumbs.js';
+      sc.src = ROOT_URL + 'assets/thumbs/thumbs.js?v=' + THUMBS_V; // 홈(index.html)과 같은 버전: 옛 표가 캐시에 남아 새 동화 색·그림이 빠지지 않게
       sc.onload = sc.onerror = () => {
         const src = set();
         const ki = document.querySelector('#startScreen .keyimg');
@@ -1055,7 +1057,7 @@ const Tale = (() => {
       if (frame && fq !== '0') { const d = $('#deco'); d.dataset.wide = ROOT_URL + 'assets/frames/' + frame + '_wide.webp'; d.dataset.tall = ROOT_URL + 'assets/frames/' + frame + '_tall.webp'; d.hidden = false; }
     } catch (e) { /* 액자 없이 */ }
     $('#finBtn').onclick = () => { Narrator.stop(); location.href = home; };
-    arrive(heroes());
+    const heroesP = heroes(); arrive(heroesP);
     // 세로 화면: 무대를 크게 키워 양옆을 자른다(slice), 가로: 전체를 맞춘다(meet)
     const portraitMQ = window.matchMedia('(orientation: portrait)');
     const fitStage = () => { stage.setAttribute('preserveAspectRatio', portraitMQ.matches ? 'xMidYMid slice' : 'xMidYMid meet'); fitFrame(portraitMQ.matches); };
@@ -1105,7 +1107,9 @@ const Tale = (() => {
     /* 끝 화면 = 책의 뒤표지: 이야기 끝 그림 창 + 책갈피 리본(한 번 더) + 도장. 그림은 <id>_back_* → 없으면 _key_* → _tile */
     const showEnd = () => {
       const es = $('#endScreen'), id = taleId(), base = ROOT_URL + 'assets/thumbs/' + id;
-      const ac = (window.BACKACCENT || {})[id]; if (ac) es.style.setProperty('--accent', ac); else es.style.removeProperty('--accent');
+      /* 리본 색 = BACKACCENT[id]. thumbs.js 가 아직 안 왔으면(?endpreview 등) 온 뒤에 다시 칠한다 */
+      const paint = () => { const ac = (window.BACKACCENT || {})[id]; if (ac) es.style.setProperty('--accent', ac); else es.style.removeProperty('--accent'); };
+      paint(); if (!window.BACKACCENT) heroesP.then(paint);
       const kind = () => (portraitMQ.matches ? 'tall' : 'wide');
       const bi = es.querySelector('.bimg'); let step = 0;
       const chain = () => [base + '_back_' + kind() + '.webp', base + '_key_' + kind() + '.webp', base + '_tile.webp'];
