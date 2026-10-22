@@ -16,6 +16,8 @@
     sb_grandpa_point: .70, sb_maid_stand: .44, sb_maid_sleep: .46, sb_guard_a_stand: .46, sb_guard_a_sleep: .46, sb_guard_b_stand: .46, sb_guard_b_sleep: .46, sb_cook_stand: .58, sb_cook_sleep: .58, sb_kid_stand: .46, sb_kid_sleep: .48,
     sb_dog_sleep: 1.6, sb_dog_wag: 1.35, sb_bird_sleep: 1.2,
     sb_prop_cradle: 1.25, sb_prop_plate: 2.6, sb_prop_door_closed: .52, sb_prop_door_open: .52, sb_prop_curtain: .75, sb_prop_wheel: 1.15, sb_prop_thread_short: .22, sb_prop_thread_mid: .13, sb_prop_thread_long: .09,
+    sb_layer_chandelier: .9733, sb_layer_flower_garland: 2.8302, sb_layer_bunting: 4.918, sb_layer_candle_stand: .4117, sb_layer_vase_roses: .8667, sb_layer_rose_bush: 1.8109, sb_layer_mushrooms: .89,
+    sb_layer_cobweb: 1.0317, sb_layer_pot_rack: 2.1077, sb_layer_bread_basket: 1.0633, sb_layer_wake_burst: .9967, sb_layer_thorn_vine: .3483, sb_layer_thorn_top: 2.267,
     sb_prop_bed: 1.45, sb_prop_candle_lit: .35, sb_prop_candle_out: .33, sb_prop_bush_closed: 1.75, sb_prop_bush_open: 1.75, sb_prop_tree_small: .9, sb_prop_tree_big: .8, sb_prop_table: 2.1, sb_prop_shelf: 3.0, sb_prop_bell: .8,
   };
   FC.forEach(c => { ASP[`sb_fairy_${c}_stand`] = .46; ASP[`sb_fairy_${c}_wand`] = .60; });
@@ -30,6 +32,9 @@
     sb_dog_sleep: 56, sb_dog_wag: 72, sb_bird_sleep: 28,
     sb_prop_cradle: 150, sb_prop_plate: 26, sb_prop_door_closed: 300, sb_prop_door_open: 300, sb_prop_curtain: 330, sb_prop_wheel: 150,
     sb_prop_thread_short: 70, sb_prop_thread_mid: 120, sb_prop_thread_long: 176, sb_prop_bed: 240, sb_prop_candle_lit: 90, sb_prop_candle_out: 90,
+    /* 레이어 소품(VISUAL_PLAN §5): 배경을 꾸미는 종이 조각. 누름을 받지 않는다 */
+    sb_layer_chandelier: 150, sb_layer_flower_garland: 70, sb_layer_bunting: 70, sb_layer_candle_stand: 260, sb_layer_vase_roses: 120, sb_layer_rose_bush: 130, sb_layer_mushrooms: 60,
+    sb_layer_cobweb: 120, sb_layer_pot_rack: 110, sb_layer_bread_basket: 90, sb_layer_wake_burst: 300, sb_layer_thorn_vine: 320, sb_layer_thorn_top: 90,
     sb_prop_bush_closed: 300, sb_prop_bush_open: 300, sb_prop_tree_small: 110, sb_prop_tree_big: 300, sb_prop_table: 110, sb_prop_shelf: 60, sb_prop_bell: 70,
   };
   FC.forEach(c => { HT[`sb_fairy_${c}_stand`] = 205; HT[`sb_fairy_${c}_wand`] = 215; });
@@ -37,10 +42,10 @@
   /* 그림이 보는 쪽(SPEC §2-3) — 앞모습은 'front'(뒤집지 않음) */
   const NAT = { sb_pr_climb: 'right', sb_pr_reach: 'right', sb_pr_lie: 'left', sb_young_peek: 'left', sb_old_stand: 'left', sb_old_sulk: 'left',
     sb_granny_spin: 'left', sb_granny_startle: 'left', sb_grandpa_point: 'right', sb_prince_tiptoe: 'right', sb_prince_kneel: 'left',
-    sb_dog_sleep: 'left', sb_dog_wag: 'left', sb_bird_sleep: 'left' };
+    sb_dog_sleep: 'left', sb_dog_wag: 'left', sb_bird_sleep: 'left', sb_layer_cobweb: 'left' };
   const FL = 528;                       // 바닥(발끝 y)
-  const TABLE_Y = 207;                  // 2·3·11장 식탁 윗선(배경 그림 38% 높이). 그림이 오면 ±10 맞춘다
-  const BGS = ['sb_bg_room', 'sb_bg_hall', 'sb_bg_stairs', 'sb_bg_tower', 'sb_bg_bedroom', 'sb_bg_outside', 'sb_bg_kitchen', 'sb_bg_chapel'];
+  let TABLE_Y = 207;                    // 2·3·11장 식탁 윗선. 배경마다 잰 값으로 dress() 가 바꾼다(hall_v2 260, chapel_v2 254 — 접시는 띠 윗선에 얹힌다)
+  const BGS = ['sb_bg_room_v2', 'sb_bg_hall_v2', 'sb_bg_stairs', 'sb_bg_tower', 'sb_bg_bedroom_v2', 'sb_bg_outside_v2', 'sb_bg_kitchen_v2', 'sb_bg_chapel_v2', 'sb_bg_outside_v3'];   // outside_v3: 9장 백 년 뒤 크로스페이드(같은 구도)
   const src = k => AS + k + '.webp';    // 배경·스프라이트 모두 파일 이름 전체(sb_…)로 부른다
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const hOf = f => HT[f] || 200;
@@ -171,14 +176,14 @@
 
   /* 배경 자리표시: 종이 한 장 + 요소 2~3개 + 장면 이름표 */
   const BGPH = {
-    sb_bg_room:    { sky: CREAM, gnd: GOLD, name: '아기 방', shapes: () => [['path', { d: 'M120 330 V190 A70 70 0 0 1 260 190 V330Z', fill: '#B9D3E4' }], ['rect', { x: 780, y: 20, width: 90, height: 190, fill: '#A93B32' }]] },
-    sb_bg_hall:    { sky: CREAM, gnd: BARK, name: '잔치 홀', shapes: () => [['rect', { x: -40, y: 207, width: 1080, height: 55, fill: BARK }], ['rect', { x: -40, y: 207, width: 1080, height: 10, fill: GOLD }]] },
+    sb_bg_room_v2: { sky: CREAM, gnd: GOLD, name: '아기 방', shapes: () => [['path', { d: 'M120 330 V190 A70 70 0 0 1 260 190 V330Z', fill: '#B9D3E4' }], ['rect', { x: 780, y: 20, width: 90, height: 190, fill: '#A93B32' }]] },
+    sb_bg_hall_v2: { sky: CREAM, gnd: BARK, name: '잔치 홀', shapes: () => [['rect', { x: -40, y: 207, width: 1080, height: 55, fill: BARK }], ['rect', { x: -40, y: 207, width: 1080, height: 10, fill: GOLD }]] },
     sb_bg_stairs:  { sky: '#B8AFA3', gnd: '#8f877c', name: '탑 계단', shapes: () => [0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ['rect', { x: 200 + i * 80, y: 470 - i * 48, width: 90, height: 24, fill: '#6f675d' }]) },
     sb_bg_tower:   { sky: '#B8AFA3', gnd: GOLD, name: '탑 꼭대기 방', shapes: () => [['path', { d: 'M440 300 V150 A60 60 0 0 1 560 150 V300Z', fill: '#B9D3E4' }]] },
-    sb_bg_bedroom: { sky: CREAM, gnd: GOLD, name: '공주 침실', shapes: () => [['path', { d: 'M780 330 V190 A70 70 0 0 1 920 190 V330Z', fill: '#B9D3E4' }]] },
-    sb_bg_outside: { sky: '#EEF3F7', gnd: '#9DBB7A', name: '성 밖 (덤불 자리 비움)', shapes: () => [['ellipse', { cx: 250, cy: 430, rx: 340, ry: 130, fill: '#3F6B4F' }], ['ellipse', { cx: 800, cy: 450, rx: 320, ry: 130, fill: '#3F6B4F' }], ['rect', { x: 440, y: 170, width: 120, height: 200, fill: CREAM }], ['rect', { x: 400, y: 120, width: 40, height: 250, fill: CREAM }], ['rect', { x: 560, y: 120, width: 40, height: 250, fill: CREAM }], ['rect', { x: 380, y: 480, width: 240, height: 120, fill: '#D9C79C' }]] },
-    sb_bg_kitchen: { sky: CREAM, gnd: '#B8AFA3', name: '부엌', shapes: () => [['path', { d: 'M60 420 V220 A110 110 0 0 1 280 220 V420Z', fill: BARK }], ['ellipse', { cx: 170, cy: 370, rx: 60, ry: 36, fill: '#E8703A' }]] },
-    sb_bg_chapel:  { sky: CREAM, gnd: '#B8AFA3', name: '예배당', shapes: () => [['path', { d: 'M420 120 V60 A80 80 0 0 1 580 60 V120Z', fill: '#B9D3E4' }], ['rect', { x: 440, y: 20, width: 28, height: 90, fill: '#A93B32' }], ['rect', { x: 468, y: 20, width: 28, height: 90, fill: GOLD }], ['rect', { x: 496, y: 20, width: 28, height: 90, fill: '#3F6B4F' }], ['rect', { x: 524, y: 20, width: 28, height: 90, fill: '#3E7CB1' }], ['rect', { x: -40, y: 207, width: 1080, height: 55, fill: BARK }], ['rect', { x: -40, y: 207, width: 1080, height: 10, fill: GOLD }]] },
+    sb_bg_bedroom_v2: { sky: CREAM, gnd: GOLD, name: '공주 침실', shapes: () => [['path', { d: 'M780 330 V190 A70 70 0 0 1 920 190 V330Z', fill: '#B9D3E4' }]] },
+    sb_bg_outside_v2: { sky: '#EEF3F7', gnd: '#9DBB7A', name: '성 밖 (덤불 자리 비움)', shapes: () => [['ellipse', { cx: 250, cy: 430, rx: 340, ry: 130, fill: '#3F6B4F' }], ['ellipse', { cx: 800, cy: 450, rx: 320, ry: 130, fill: '#3F6B4F' }], ['rect', { x: 440, y: 170, width: 120, height: 200, fill: CREAM }], ['rect', { x: 400, y: 120, width: 40, height: 250, fill: CREAM }], ['rect', { x: 560, y: 120, width: 40, height: 250, fill: CREAM }], ['rect', { x: 380, y: 480, width: 240, height: 120, fill: '#D9C79C' }]] },
+    sb_bg_kitchen_v2: { sky: CREAM, gnd: '#B8AFA3', name: '부엌', shapes: () => [['path', { d: 'M60 420 V220 A110 110 0 0 1 280 220 V420Z', fill: BARK }], ['ellipse', { cx: 170, cy: 370, rx: 60, ry: 36, fill: '#E8703A' }]] },
+    sb_bg_chapel_v2: { sky: CREAM, gnd: '#B8AFA3', name: '예배당', shapes: () => [['path', { d: 'M420 120 V60 A80 80 0 0 1 580 60 V120Z', fill: '#B9D3E4' }], ['rect', { x: 440, y: 20, width: 28, height: 90, fill: '#A93B32' }], ['rect', { x: 468, y: 20, width: 28, height: 90, fill: GOLD }], ['rect', { x: 496, y: 20, width: 28, height: 90, fill: '#3F6B4F' }], ['rect', { x: 524, y: 20, width: 28, height: 90, fill: '#3E7CB1' }], ['rect', { x: -40, y: 207, width: 1080, height: 55, fill: BARK }], ['rect', { x: -40, y: 207, width: 1080, height: 10, fill: GOLD }]] },
   };
   function bgImage(T, key) {
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
@@ -306,7 +311,7 @@
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ WALK = 3000;
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(count1~7)
-    const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
+    const scene = key => { setBg(key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990;                 // 세로 화면
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -421,14 +426,38 @@
     const tree   = mk(T, { small: h('sb_prop_tree_small'), big: h('sb_prop_tree_big') });
     const table  = prop(T, 'sb_prop_table', HT.sb_prop_table), shelf = prop(T, 'sb_prop_shelf', HT.sb_prop_shelf), bell = prop(T, 'sb_prop_bell', HT.sb_prop_bell);
     const ALL = [pr, baby, king, queen, ...fairies, young, old, granny, prince, grandpa, maid, guardA, guardB, cook, kid, dog, bird, cradle, ...plates, door, curtain, ...gifts, wheel, ...Object.values(threads), bed, candle, bush, tree, table, shelf, bell];
+    /* 레이어 소품(VISUAL_PLAN §4): 중간 층은 world 맨 뒤(배우보다 먼저), 앞 가림 층은 fx(배우 위). 모두 누름 없음 */
+    const L = Object.fromEntries(['chandelier', 'chandelier2', 'bunting', 'bunting2', 'candle_stand', 'candle_stand2', 'vase_roses', 'rose_bush', 'rose_bush2', 'mushrooms', 'cobweb', 'cobweb2', 'pot_rack', 'bread_basket', 'wake_burst', 'thorn_vine', 'thorn_top', 'thorn_top2']
+      .map(k => [k, prop(T, 'sb_layer_' + k.replace(/2$/, ''), HT['sb_layer_' + k.replace(/2$/, '')])]));
+    ALL.push(...Object.values(L));
     ALL.forEach(hide);
+    const mid = (a, x, y, o) => { put(T, a, x, y, o); T.world.insertBefore(a.pos, T.world.firstChild); return a; };
+    const front = (a, x, y, o) => { put(T, a, x, y, o); T.fx.appendChild(a.pos); return a; };
+    const flicker = a => { a.body.animate([{ opacity: 1 }, { opacity: .85 }, { opacity: 1 }], { duration: 1600, iterations: Infinity }); return a; };
+    const sway = a => { a.body.animate([{ rotate: '-1.5deg' }, { rotate: '1.5deg' }, { rotate: '-1.5deg' }], { duration: 4000, iterations: Infinity, easing: 'ease-in-out' }); return a; };
+    function dress(key) {
+      if (key === 'sb_bg_room_v2') mid(L.vase_roses, X(880, 880), FL);
+      if (key === 'sb_bg_hall_v2') TABLE_Y = 258;
+      if (key === 'sb_bg_chapel_v2') TABLE_Y = 252;
+      if (key === 'sb_bg_hall_v2') { flicker(mid(L.chandelier, X(300, 380), 150)); flicker(mid(L.chandelier2, X(700, 620), 150)); }
+      if (key === 'sb_bg_outside_v2') { mid(L.rose_bush, X(120, 330), FL - 10); front(L.thorn_vine, X(40, 300), 585); }
+      if (key === 'sb_bg_kitchen_v2') {
+        mid(L.pot_rack, X(500, 250), 120);
+        front(L.bread_basket, X(985, 985), 585); front(L.cobweb, 30, 110); front(L.cobweb2, 970, 110, { to: 'right' });
+      }
+      if (key === 'sb_bg_chapel_v2') {
+        flicker(mid(L.chandelier, X(250, 330), 150)); flicker(mid(L.chandelier2, X(750, 670), 150));
+        flicker(mid(L.candle_stand, X(60, 330), FL)); flicker(mid(L.candle_stand2, X(940, 670), FL));
+      }
+    }
+    const setBg = key => { T.clear(); bgImage(T, key); dress(key); };
     T.director({ cast: { king, queen, princess: pr, fred: fairies[0], forange: fairies[1], fyellow: fairies[2], fgreen: fairies[3], fblue: fairies[4], fpurple: fairies[5], young, old, granny, prince, grandpa },
                  noFace: ['king', 'queen', 'princess', 'fred', 'forange', 'fyellow', 'fgreen', 'fblue', 'fpurple', 'young', 'old', 'granny', 'prince', 'grandpa'] });
     const PEEK_DX = -(curtain.w / 2 + 25);
     const hasFace = a => a;   // (자리 맞추기용 훅 — 지금은 쓰지 않음)
 
     /* ===== 1. 기다리던 아기 (톡 1: 요람) ===== */
-    scene('sb_bg_room');
+    scene('sb_bg_room_v2');
     put(T, king, X(360, 395), FL, { look: 'joy' });
     put(T, queen, X(640, 605), FL, { look: 'joy' });
     put(T, cradle, 500, FL + 4);
@@ -438,7 +467,9 @@
     await T.curtain(true);
     await say(S.L1);
     await sleep(300);
-    const l2 = say(S.L2); king.hop(8, 300); await l2;
+    const l2 = say(S.L2); king.hop(8, 300);
+    [[L.bunting, X(250, 420)], [L.bunting2, X(750, 600)]].forEach(([g, x]) => { front(g, x, 70); sway(g); g.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 600); });
+    await l2;
     bob(cradle.pos);
     await T.tap(cradleHit);
     cradleHit.remove();
@@ -453,7 +484,7 @@
     /* ===== 2. 접시 일곱, 요정 여덟 (배움 놀이 1: 많고 적음) ===== */
     const doorX = X(970, SX(7) + 160 * RS - 60);
     await T.sceneCard(tr('접시 일곱, 요정 여덟'), () => {
-      scene('sb_bg_hall');
+      scene('sb_bg_hall_v2');
       for (let i = 0; i < 7; i++) put(T, plates[i], SX(i), TABLE_Y + 2, { s: RS });
       for (let i = 0; i < 6; i++) put(T, fairies[i], SX(i), FL, { look: 'stand', s: RS });
       put(T, young, SX(6), FL, { look: 'stand', s: RS });
@@ -461,7 +492,7 @@
       if (P) camSnap(500, 280, 1);
     }, young.pos);
     await say(S.L4);
-    door.look('open'); sfx(T, 'door', .5);
+    door.look('open'); sfx(T, 'door', .5); L.chandelier2.wiggle(2, 600);
     put(T, old, X(1080, doorX + 20), FL, { look: 'stand', to: 'left', s: RS });
     const entering = walk(T, old, SX(7), FL, WALK, { h: 3 * RS, hd: 560 });
     await Promise.all([entering, say(S.L5)]);
@@ -497,14 +528,14 @@
     rowPlates.remove(); rowFairies.remove();
     const l6 = say(S.L6);
     glow(old, 2000);
-    [...plates.slice(0, 7), ...fairies, young].forEach(a => { a.pos.style.transition = 'opacity .4s'; a.pos.style.opacity = .45; });
+    [...plates.slice(0, 7), ...fairies, young, L.chandelier, L.chandelier2].forEach(a => { a.pos.style.transition = 'opacity .4s'; a.pos.style.opacity = .45; });
     await l6;
-    [...plates.slice(0, 7), ...fairies, young].forEach(a => { a.pos.style.transition = ''; a.pos.style.opacity = ''; });
+    [...plates.slice(0, 7), ...fairies, young, L.chandelier, L.chandelier2].forEach(a => { a.pos.style.transition = ''; a.pos.style.opacity = ''; });
     await sleep(SCENE_END);
 
     /* ===== 3. 잊힌 요정 ===== */
     await T.sceneCard(tr('잊힌 요정'), () => {
-      scene('sb_bg_hall');
+      scene('sb_bg_hall_v2');
       for (let i = 0; i < 7; i++) put(T, plates[i], SLOT(i), TABLE_Y + 2);
       put(T, queen, X(300, 430), FL, { look: 'surprise', to: 'right' });
       put(T, king, X(420, 510), FL, { look: 'surprise', to: 'right' });
@@ -526,7 +557,7 @@
 
     /* ===== 4. 여섯 가지 선물 ===== */
     await T.sceneCard(tr('여섯 가지 선물'), () => {
-      scene('sb_bg_room');
+      scene('sb_bg_room_v2');
       put(T, cradle, 500, FL + 4);
       put(T, baby, cradle.x + CRADLE_BABY[0], cradle.y + CRADLE_BABY[1], { look: 'sleep' });
       put(T, king, X(720, 660), FL, { look: 'joy' });
@@ -548,12 +579,17 @@
       f.look('stand');
       await f.move(X(50 + 70 * i, -200), FL, 900, 'ease-out');
     }
+    for (let i = 0; i < 6; i++) {      // 여섯 색 별 아치(요람 위, 천천히 깜빡)
+      const t = i / 5, x = 380 + 240 * t, y = 230 - 40 * Math.sin(Math.PI * t), r = 11;
+      const st = T.el('path', { d: `M0 ${-r} L${r * .3} ${-r * .3} L${r} 0 L${r * .3} ${r * .3} L0 ${r} L${-r * .3} ${r * .3} L${-r} 0 L${-r * .3} ${-r * .3} Z`, fill: COLOR[i], transform: `translate(${x},${y})`, filter: 'url(#pp)' }, T.fx);
+      st.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: i * 120, fill: 'backwards' }).finished.then(() => st.animate([{ opacity: 1 }, { opacity: .45 }, { opacity: 1 }], { duration: 1800, iterations: Infinity }), () => {});
+    }
     const l17 = say(S.L17); baby.hop(3, 500); await sleep(550); baby.hop(3, 500); await l17;
     await sleep(SCENE_END);
 
     /* ===== 5. 백 년 잠 ===== */
     await T.sceneCard(tr('백 년 잠'), () => {
-      scene('sb_bg_room');
+      scene('sb_bg_room_v2');
       put(T, wheel, X(150, 330), FL);
       put(T, cradle, 500, FL + 4);
       put(T, baby, cradle.x + CRADLE_BABY[0], cradle.y + CRADLE_BABY[1], { look: 'sleep' });
@@ -600,7 +636,7 @@
     const TY = FL - 150;
     const order = ['short', 'mid', 'long'].sort(() => Math.random() - .5);
     const towerSet = () => {
-      T.clear(); bgImage(T, 'sb_bg_tower'); camSnap(X(500, 520), 280, 1);
+      setBg('sb_bg_tower'); camSnap(X(500, 520), 280, 1);
       put(T, granny, X(640, 640), FL, { look: 'spin', to: 'left' });
       put(T, wheel, X(540, 540), FL);
       const TX = [wheel.x - 52, wheel.x, wheel.x + 52];
@@ -653,7 +689,7 @@
     await Promise.all([walk(T, king, X(240, 420), FL, 1400, { h: 6, hd: 320, vol: .35 }), walk(T, queen, X(140, 330), FL, 1400, { h: 6, hd: 320, snd: null })]);
     await sleep(300);
     await veil(T, () => {
-      T.clear(); bgImage(T, 'sb_bg_bedroom'); camSnap(500, 280, 1);
+      setBg('sb_bg_bedroom_v2'); camSnap(500, 280, 1);
       put(T, candle, X(240, 380), FL, { look: 'lit' });
       put(T, bed, 500, FL + 6);
       put(T, pr, bed.x - 8, bed.y + BED_TOP, { look: 'lie', to: 'left' });
@@ -667,7 +703,7 @@
     /* ===== 8. 모두 잠들어요 ===== */
     const sleepers = [[dog, X(590, 560), 'wag'], [maid, X(720, 640), 'stand'], [guardA, X(790, 720), 'stand'], [cook, X(860, 800), 'stand'], [kid, X(920, 870), 'stand'], [guardB, X(980, 940), 'stand']];
     await T.sceneCard(tr('모두 잠들어요'), () => {
-      scene('sb_bg_bedroom');
+      scene('sb_bg_bedroom_v2');
       put(T, candle, X(240, 380), FL, { look: 'lit' });
       put(T, bed, 500, FL + 6);
       put(T, pr, bed.x - 8, bed.y + BED_TOP, { look: 'lie', to: 'left' });
@@ -689,11 +725,13 @@
     const night8 = tint(T, '#1F2A56', 0); T.anim(night8, [{ opacity: 0 }, { opacity: .22 }], 1200);
     await sleep(1800);
     await veil(T, () => {
-      T.clear(); bgImage(T, 'sb_bg_outside'); camSnap(X(500, 600), 280, 1);
+      setBg('sb_bg_outside_v2'); camSnap(X(500, 600), 280, 1);
       put(T, tree, X(880, 860), FL, { look: 'small' });
       put(T, bush, X(700, 700), FL, { look: 'closed' });
     });
     const grow = bush.body.animate([{ transform: 'scale(.12)' }, { transform: 'scale(1)' }], { duration: 2400, easing: 'ease-out', fill: 'forwards' });
+    L.thorn_vine.body.style.transformBox = 'fill-box'; L.thorn_vine.body.style.transformOrigin = '50% 100%';
+    L.thorn_vine.body.animate([{ transform: 'scale(.3)' }, { transform: 'scale(1)' }], { duration: 2400, easing: 'ease-out' });
     sfx(T, 'whoosh', .35); T.pop(700, FL - 345, tr('스르륵'), '#3F6B4F');
     await grow.finished.catch(() => {}); grow.cancel(); bush.body.style.transform = '';
     await l31;
@@ -701,14 +739,20 @@
 
     /* ===== 9. 백 년 뒤 (톡 2: 가시덤불) ===== */
     await T.sceneCard(tr('백 년 뒤'), () => {
-      scene('sb_bg_outside');
+      scene('sb_bg_outside_v2');
       put(T, tree, X(880, 860), FL, { look: 'small' });
       put(T, bush, 700, FL, { look: 'closed' });
       camSnap(X(500, 600), 280, 1);
     }, bush.pos);
     const bushHit = hitRect(T, 700 - 270, FL - 320, 540, 320);
     const l32 = say(S.L32);
-    const sm = sunMoon(T, () => { tree.look('big'); tree.hop(6, 400); sfx(T, 'pop', .3); });
+    const sm = sunMoon(T, () => {
+      tree.look('big'); tree.hop(6, 400); sfx(T, 'pop', .3);
+      const v3 = bgImage(T, 'sb_bg_outside_v3'); v3.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400, fill: 'backwards' });   // 백 년 뒤: 같은 구도의 무성한 숲으로
+      const come = [mid(L.rose_bush2, X(1000, 790), FL - 10), front(L.mushrooms, X(60, 330), 585)];
+      if (!P) come.push(front(L.thorn_top, 120, 90), front(L.thorn_top2, 880, 90, { to: 'right' }));
+      come.forEach(a => a.pos.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400 }));
+    });
     await Promise.all([l32, sm]);
     put(T, grandpa, X(-100, 280), FL, { look: 'point', to: 'right' });
     const gp = walk(T, grandpa, X(220, 390), FL, WALK, { h: 3, hd: 560, snd: 'step_grass' });
@@ -725,6 +769,7 @@
     bushHit.remove();
     await bush.wiggle(2, 500);
     bush.look('open'); sfx(T, 'swish', .45); T.pop(700, FL - 345, tr('스르륵'), '#3F6B4F');
+    if (!P) [L.thorn_top, L.thorn_top2].forEach(a => a.wiggle(3, 700));
     const l35 = say(S.L35);
     prince.look('tiptoe', 'right');
     T.world.insertBefore(prince.pos, bush.pos);
@@ -735,7 +780,7 @@
 
     /* ===== 10. 잠든 궁전 (배움 놀이 3: 위·아래·옆) ===== */
     await T.sceneCard(tr('잠든 궁전'), () => {
-      scene('sb_bg_kitchen');
+      scene('sb_bg_kitchen_v2');
       put(T, shelf, X(760, 470), 150);
       put(T, bird, shelf.x + 45, shelf.y - 52, { to: 'left' });
       put(T, table, X(300, 430), FL);
@@ -747,6 +792,7 @@
       camSnap(X(500, 540), 280, 1);
     }, cook.pos);
     hitBox(T, bird, 90, 90); hitBox(T, dog, 120, 100); hitBox(T, kid, 110, 210); hitBox(T, guardB, 120, 230);
+    L.pot_rack.wiggle(2, 800);
     await walk(T, prince, X(150, 395), FL, 2000, { h: 4, hd: 420, snd: 'step_wood', vol: .2 });
     const l36 = say(S.L36); T.pop(prince.x, FL - 295, tr('쉿'), '#1F2A56'); await l36;
     await say(S.L37);
@@ -764,7 +810,7 @@
 
     /* ===== 11. 깨어나요 (톡 3: 인사) ===== */
     await T.sceneCard(tr('깨어나요'), () => {
-      scene('sb_bg_bedroom');
+      scene('sb_bg_bedroom_v2');
       put(T, candle, X(240, 380), FL, { look: 'lit' });
       put(T, bed, 500, FL + 6);
       put(T, pr, bed.x - 8, bed.y + BED_TOP, { look: 'lie', to: 'left' });
@@ -772,11 +818,15 @@
       put(T, maid, X(120, 330), FL, { look: 'sleep' });
       put(T, cook, X(860, 720), FL, { look: 'sleep' });
       put(T, kid, X(940, 800), FL, { look: 'sleep' });
+      front(L.cobweb, 30, 110); front(L.cobweb2, 970, 110, { to: 'right' });   // 백 년의 잠(깨어날 때 걷힌다)
       camSnap(X(500, 540), 280, 1);
     }, pr.pos);
     const l38 = say(S.L38);
     await sleep(1200);
     twinkle(T, bed.x, bed.y + BED_TOP - 60, '#F2B366', 6, 60); sparkleSfx(T);
+    { const b = front(L.wake_burst, bed.x, bed.y + BED_TOP - 60 + HT.sb_layer_wake_burst / 2); b.body.style.transformBox = 'fill-box'; b.body.style.transformOrigin = '50% 50%';
+      b.body.animate([{ transform: 'scale(.2)', opacity: 1 }, { transform: 'scale(1.4)', opacity: 1, offset: .7 }, { transform: 'scale(1.4)', opacity: 0 }], { duration: 700, easing: 'ease-out' }).finished.then(() => hide(b), () => hide(b));
+      [L.cobweb, L.cobweb2].forEach(c => fadeOut(T, c, 900)); }
     pr.look('wake'); pr.place(bed.x - 20, bed.y + BED_TOP + 8); pr.hop(5, 400);
     await l38;
     await say(S.L39);
@@ -787,7 +837,7 @@
     await l41;
     await sleep(300);
     await veil(T, () => {
-      T.clear(); bgImage(T, 'sb_bg_chapel'); camSnap(500, 280, 1);
+      setBg('sb_bg_chapel_v2'); camSnap(500, 280, 1);
       for (let i = 0; i < 8; i++) put(T, plates[i], SX(i), TABLE_Y + 2, { s: RS });
       for (let i = 0; i < 6; i++) put(T, fairies[i], SX(i), FL - 70, { look: 'stand', s: RS });
       put(T, young, SX(6), FL - 70, { look: 'stand', s: RS });

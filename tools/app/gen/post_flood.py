@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """공주 v2 그림 후처리: 테두리와 이어진 마젠타만 지운다(보라·라벤더 조각 보호).
-  ~/.venvs/paper-tale/bin/python tools/app/gen/post_flood.py <tale> <id> [id ...]
+  ~/.venvs/paper-tale/bin/python tools/app/gen/post_flood.py <tale> <id> [id ...] [--sat=.55]
 - 원본: assets/raw/restyle/<tale>/<id>.png → assets/v3w/<id>.webp
 - 배경(id 에 _bg_): 16:9 가운데 자르기 → 1600×902 (post_tale.py 와 같음)
 - 그림: 마젠타 색상(283~338°)·채도 > .55 덩어리 중 테두리와 이어진 것 + 평균 채도 > .62 인 속 구멍만 배경.
@@ -11,7 +11,9 @@ import numpy as np
 from PIL import Image
 from scipy import ndimage
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
-tale = sys.argv[1]; ids = sys.argv[2:]
+args = [a for a in sys.argv[1:] if not a.startswith('--')]
+SAT = float(next((a.split('=')[1] for a in sys.argv if a.startswith('--sat=')), .55))   # 보라 옷처럼 채도 높은 보라 조각이 있으면 --sat=.7
+tale = args[0]; ids = args[1:]
 V3W = os.path.join(G, 'assets', 'v3w')
 
 def key(src):
@@ -21,7 +23,7 @@ def key(src):
     hsv = np.asarray(im0.convert('HSV')).astype(float)
     hue, sat, val = hsv[..., 0] * 360 / 255, hsv[..., 1] / 255, hsv[..., 2]
     mag = (hue > 283) & (hue < 338)                  # 마젠타 색상 띠(그늘진 바탕은 붉은 쪽으로 기운다)
-    core = mag & (sat > 0.55) & (val > 40)           # 보라·라벤더 색지는 채도 ≤ .5 라 여기 안 든다
+    core = mag & (sat > SAT) & (val > 40)           # 보라·라벤더 색지는 채도 ≤ .5 라 여기 안 든다
     lab, n = ndimage.label(core)
     edge = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
     keep = np.zeros(n + 1, bool)
@@ -29,12 +31,12 @@ def key(src):
     if n:   # 테두리와 안 이어진 속 구멍(풀잎 사이 등)은 아주 진한 마젠타 덩어리일 때만
         idx = np.arange(1, n + 1)
         mean = ndimage.mean(sat, lab, index=idx); size = ndimage.sum(np.ones_like(sat), lab, index=idx)
-        keep[1:] |= (mean > 0.62) & (size >= 8)
+        keep[1:] |= (mean > SAT + .07) & (size >= 8)
     bg = keep[lab]
     near = ndimage.binary_dilation(bg, iterations=2) & ~bg & (hue > 270) & (hue < 345) & (sat > 0.3)
     alpha = np.full(sat.shape, 255.0)
     alpha[bg] = 0
-    alpha[near] = np.clip((0.55 - sat[near]) * 255 / 0.25, 0, 255)
+    alpha[near] = np.clip((SAT - sat[near]) * 255 / 0.25, 0, 255)
     out = a.copy()
     sp = near | (ndimage.binary_dilation(bg, iterations=1) & ~bg)
     out[..., 0] = np.where(sp & (r > g + 30), np.minimum(r, g + 30), r)
