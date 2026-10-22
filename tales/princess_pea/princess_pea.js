@@ -320,6 +320,149 @@
     const reward = (a, ms = 1200, h = 14) => { glow(a, ms); a.hop(h, 400); sparkleSfx(T); };
     const wrongSay = (a, text) => async () => { await a.wiggle(8, 360); await say(text); };
 
+    /* ===== 읽어 주기: 동사 맵(READ_ACTS). 놀이판 장면·배우·소품 함수를 그대로 감싼다 ===== */
+    const READ_CAMP = [770, 700, 630, 500, TX, TX, TX, 520, 560];   // 세로 화면 카메라 가운데 — 장면 차례별(놀이판 camSnap 값)
+    const READ_PX = { pea: { 500: 560, 740: TX + 160, 720: 620, 520: 540 }, queen: { 410: 330, 690: 620, 350: 400, 330: 400, 290: 400 }, prince: { 300: 420, 400: 500, 430: 450 } };
+    const POPC = { '휴우': '#1F2A56', '뚝뚝': '#1F2A56', '뒤척뒤척': '#1F2A56', '하암': '#1F2A56', '우르릉': '#1F2A56', '번쩍': '#D9A94E' };
+    let rsc = -1, rcamP = 500, rrain = null, rtoss = null, rtowerRig = false, rclimb = false;
+    const rinst = () => T.readInstant();
+    const rcam = (ms = 600) => (P ? (rinst() ? (camSnap(rcamP, 280, 1), Promise.resolve()) : T.camTo(rcamP, 280, 1, ms)) : Promise.resolve());
+    const rstop = () => { if (rtoss) { clearInterval(rtoss); rtoss = null; } };
+    const rkey = k => (/_v2$/.test(k) ? k : k + '_v2');
+    const rat = (who, a, args) => {
+      const [xy, look, dir] = args; const [x0, y] = String(xy).split(',').map(Number);
+      const x = P && READ_PX[who] && READ_PX[who][x0] != null ? READ_PX[who][x0] : x0;
+      if (a === pea) rstop();
+      put(T, a, x, y, { look: look || undefined, to: dir || undefined });
+      if (a === pea && rtowerRig) inRig(a);
+      return a;
+    };
+    const rhop = (a, h = 10) => { a.hop(h, 340); };
+    const actorAct = (who, a) => (cmd, ...args) => {
+      if (cmd === 'look') { if (a === pea) rstop(); a.look(args[0], args[1]); return; }
+      if (cmd === 'at') return rat(who, a, args);
+      if (cmd === 'hop') return rhop(a, 10);
+      if (cmd === 'wiggle') return a.wiggle(3, 500);
+      if (cmd === 'fade') { if (rinst()) { a.pos.style.display = ''; } else fadeIn(a, 400); return; }
+    };
+    const peaAct = actorAct('pea', pea);
+    const READ_ACTS = {
+      set: key => { rsc++; rcamP = READ_CAMP[Math.min(rsc, READ_CAMP.length - 1)]; rstop(); rrain = null; rtowerRig = false; rclimb = false; scene(rkey(key)); if (P) camSnap(rcamP, 280, 1); },
+      cam: () => rcam(),
+      follow: x => { if (!P) return; const m = { 300: 420, 700: 700, 600: TX + 40 }; return follow(m[x] != null ? m[x] : +x); },
+      rig: d => { rtowerRig = true; return rigTo(T, d === 'up' ? RIG_UP : 0, rinst() ? 0 : 1600); },
+      pea: (cmd, ...args) => {
+        if (cmd === 'climb') {
+          rstop(); pea.look('climb', 'left'); pea.place(TX + 125, FL); inRig(pea); follow(TX + 40);
+          return (async () => {
+            let on = true; (async () => { while (on) { sfx(T, 'step_wood', .3); await sleep(500); } })();
+            await Promise.all([pea.move(TX + 125, TOP20, CLIMB, 'linear'), rigTo(T, RIG_UP, CLIMB)]); on = false;
+          })();
+        }
+        if (cmd === 'lie') { rstop(); pea.look('lie_a'); put(T, pea, TX, DUV_TOP, { look: 'lie_a' }); inRig(pea); if (!rinst()) topStars(4, RIG_UP); return; }
+        if (cmd === 'toss') { rstop(); rtoss = setInterval(() => pea.look(pea.cur === 'lie_a' ? 'lie_b' : 'lie_a'), 900); setTimeout(rstop, 12000); return; }
+        if (cmd === 'place') {   // 완두콩을 침대 판자에 쏙
+          return (async () => {
+            peaC.move(queen.x + 60, FL - 120, 600, 'ease-in'); await sleep(600); hide(peaC);
+            put(T, peaB, board.x - 60, BOARD_TOP + 4); inRig(peaB); fadeIn(peaB, 250);
+            fadeOut(T, matC, 400); fadeOut(T, pillow, 400);
+          })();
+        }
+        return peaAct(cmd, ...args);
+      },
+      prince: actorAct('prince', prince),
+      queen: (cmd, ...args) => {
+        if (cmd === 'hug') {
+          queen.look('hug'); sfx(T, 'paper_up', .4);
+          return (async () => { await queen.move(pea.x - 85, FL, 700, 'ease-out'); queen.hop(10, 360); pea.hop(10, 360); topStars(3); })();
+        }
+        return actorAct('queen', queen)(cmd, ...args);
+      },
+      king: (cmd, ...args) => {
+        if (cmd === 'at') { const [x, y] = args[0].split(',').map(Number); return put(T, king, x, y, { look: 'lantern' }); }
+        if (cmd === 'fade') { king.pos.style.display = ''; if (!rinst()) fadeIn(king, 400); }
+      },
+      boat: cmd => {
+        if (cmd === 'set') { put(T, boat, 600, 300, { to: 'right' }); boat.body.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 900, iterations: Infinity }); return; }
+        if (cmd === 'sail') return (async () => { await boat.move(900, 300, 3500, 'linear'); await sleep(300); boat.turn('left'); await boat.move(600, 300, 3500, 'linear'); boat.turn('right'); })();
+      },
+      lands: () => { put(T, lands, 754, 262); },
+      storm: () => {
+        put(T, cloudA, 250, 110); put(T, cloudB, 820, 95, { to: 'right' });
+        put(T, doorC, 700, FL); put(T, bolt, 480, 190); bolt.pos.style.opacity = 0;
+        put(T, doorO, 700, FL); hide(doorO); put(T, queen, 745, FL, { look: 'smile' }); put(T, king, 700, FL, { look: 'lantern' }); hide(queen); hide(king);
+        cloudA.body.animate([{ translate: '0 0' }, { translate: '6px 0' }, { translate: '0 0' }], { duration: 2400, iterations: Infinity });
+        cloudB.body.animate([{ translate: '0 0' }, { translate: '-6px 0' }, { translate: '0 0' }], { duration: 2400, iterations: Infinity });
+      },
+      rain: o => {
+        if (o === 'on') { rrain = rain(T); return; }
+        const r = rrain; rrain = null; if (!r) return;
+        if (rinst()) r.remove(); else return T.anim(r, [{ opacity: 1 }, { opacity: 0 }], 600);
+      },
+      lightning: async () => {
+        bolt.pos.animate([{ opacity: 0 }, { opacity: 1, offset: .15 }, { opacity: 1, offset: .5 }, { opacity: 0 }], { duration: 450 });
+        sfx(T, 'boom', .35, () => T.tone([120, 60], .4, { type: 'square', vol: .12 })); await sleep(500);
+      },
+      door: cmd => {
+        if (cmd === 'knock') { doorC.wiggle(4, 300); sfx(T, 'knock', .6, () => T.tone([900, 400], .1, { vol: .2 })); return sleep(700); }
+        if (cmd === 'open') {
+          if (rinst()) { hide(doorC); doorO.pos.style.display = ''; queen.pos.style.display = ''; return; }
+          fadeOut(T, doorC, 300); fadeIn(doorO, 300); fadeIn(queen, 400);
+        }
+      },
+      compare: cmd => {
+        if (cmd === 'hide') { hide(matC); hide(pillow); hide(peaC); return; }
+        put(T, board, X(820, 760), FL); inRig(board);
+        if (P) { put(T, peaC, 500, 300); put(T, pillow, 500, 400); put(T, matC, 500, FL); }
+        else { put(T, matC, 180, FL); put(T, pillow, 360, FL); put(T, peaC, 470, FL); }
+      },
+      pile: () => {
+        const PILE_X = X(850, 700);
+        mats.forEach(hide); duvs.forEach(hide);
+        pile.forEach((p, k) => put(T, p, PILE_X, FL - k * MAT_H));
+      },
+      tower: (cmd, a) => {
+        if (cmd === 'build') { buildTower(); rtowerRig = true; rig.appendChild(peaB.pos); return; }
+        if (cmd === 'stack') {
+          const [from, to] = a.split(',').map(Number), PILE_X = X(850, 700);
+          return (async () => {
+            for (let i = from; i < to; i++) {
+              const m = mats[i];
+              put(T, m, PILE_X, FL - 100); inRig(m); rig.appendChild(peaB.pos);
+              m.move(TX, BOARD_TOP - i * MAT_H, 450, 'ease-out'); sfx(T, 'paper_down', .35);
+              if (i >= 15) hide(pile[19 - i]);
+              if (i === 9 || i === 19) setTimeout(towerShake, 450);
+              await sleep(480);
+            }
+          })();
+        }
+      },
+      duvets: async () => {
+        for (let j = 0; j < 4; j++) {
+          const d = duvs[j]; put(T, d, TX, -80); inRig(d); d.move(TX, TOP20 - j * DUV_STEP, 500, 'ease-in'); sfx(T, 'swish', .3); await sleep(550);
+        }
+        rig.appendChild(peaB.pos); duvs.forEach(d => d.hop(6, 400));
+      },
+      ladder: () => { put(T, ladder, TX + 125, FL); inRig(ladder); },
+      case: () => { put(T, kase, X(800, 660), FL); put(T, peaM, kase.x, kase.y - 95); },
+      glow: w => {
+        if (w === 'king') glow(king, 1200);
+        else if (w === 'pea') glow(pea, 1200);
+        else if (w === 'peaB') { glow(peaB, 1600); peaB.hop(8, 400); }
+        else if (w === 'peaM') { glow(peaM, 1500); peaM.hop(10, 360); }
+      },
+      petals: () => petals(T),
+      sparkle: () => sparkleSfx(T),
+      shake: () => T.shake(),
+      confetti: () => T.confetti(),
+      fx: n => { sfx(T, n, n === 'tada' ? undefined : .4, n === 'tada' ? () => sparkleSfx(T) : undefined); },
+      pop: s => {
+        const [x0, y, ...t] = s.split(','), txt = t.join(','), x = P ? Math.max(rcamP - 110, Math.min(rcamP + 110, +x0)) : +x0;
+        T.pop(x, +y, tr(txt), POPC[txt]);
+      },
+    };
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ===== 1. 진짜 공주를 찾아서 (톡 1 — 배) ===== */
     scene('pp_bg_room_day_v2');
     put(T, lands, 754, 262);
@@ -605,5 +748,5 @@
     return '느낀 것을 솔직하게 말하는 마음이 진짜 공주의 마음이에요.';
   }
 
-  Tale.mount({ title: '완두콩 공주', subtitle: '느낀 것을 솔직하게 말하는 마음이 진짜 공주의 마음이에요', run: T => run(Tale.api) });
+  Tale.mount({ read: true, title: '완두콩 공주', subtitle: '느낀 것을 솔직하게 말하는 마음이 진짜 공주의 마음이에요', run: T => run(Tale.api) });
 })();
