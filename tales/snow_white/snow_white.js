@@ -154,12 +154,15 @@
      배경 아치(그림 픽셀 x 454~592, y 380~533)를 세계 좌표로 옮기면 x 266.5~359.6, 위 232.4, 문지방 335.7.
      문 그림(480×477)의 돌 테 바깥선(x 3~476, y 0~477)을 그 자리에 맞춘 값이 DOOR (가로 .2053, 세로 .2187 — 배경 아치가 5% 더 길쭉해서 세로만 조금 늘림).
      조각 (sw_prop_door_closed/open 에서 오려 냄, 좌표는 원래 그림 그대로):
-       inside 어두운 방(문 구멍 모양) · slot 들어가는 인물 자리 · wall 배경에서 오린 문 둘레 벽(문틀 바깥선 안쪽은 비움, 인물이 문 밖으로 삐져나오지 않게)
-       frame 돌 테 · leaf 닫힌 문짝(경첩은 왼쪽) · openFront 열린 그림에서 어두운 안쪽만 비운 것(열린 문짝+돌 테)
-     열림: 문짝을 왼쪽 경첩 가장자리를 축으로 가로로 접고(종이 문이 돌아가는 모습), 열린 그림 문짝 폭·자리에 닿으면 열린 그림으로 겹쳐 바꾼다.
-     돌 테는 닫힌·열린 그림이 같은 픽셀 자리라서 바꿔도 테가 움직이지 않는다 */
+       room 문 구멍 안 방(sw_door_room: 안쪽 벽·바닥·빛 자리·문지방·작은 창·식탁 실루엣, 구멍 위·옆 안쪽 그림자) ·
+       leaf 문짝(경첩은 왼쪽) · slot 들어가는 인물 자리 · wall 배경에서 오린 문 둘레 벽(문틀 바깥선 안쪽은 비움) · frame 돌 테
+     층 순서(뒤→앞): 방 → 문짝 → 인물 자리 → 벽 → 돌 테. 돌 테가 늘 맨 앞이라 문짝은 문틀 뒤, 구멍 안에서만 보인다.
+     열림(2026-10-22): 오두막 문은 안쪽으로 열린다. 문짝이 왼쪽 경첩을 축으로 방 안으로 돌아 들어가 앞에서 보면 가로로 좁아지고(cos),
+     빛을 등지며 조금 어두워진다. 다 열리면 왼쪽 돌 테 바로 뒤에 좁은 띠로 남고, 오른쪽 구멍으로 방 안이 보인다.
+     (안쪽으로 열린 문의 옆면은 경첩 쪽이라 돌 테에 가려 보이지 않는다) */
   const DOOR = { x: 263.9, y: 231.4, sx: .2053, sy: .2187 };
-  const DOOR_ART = ['door_inside', 'door_wall_v2', 'door_frame', 'door_leaf', 'door_openfront'];
+  const DOOR_ART = ['door_room', 'door_wall_v2', 'door_frame', 'door_leaf'];
+  const DOOR_OPEN = .3;   /* 다 열린 문짝의 앞에서 보이는 폭 비율 (약 72도) */
   function makeDoor(T) {
     const d = (ix, iy) => [DOOR.x + ix * DOOR.sx, DOOR.y + iy * DOOR.sy];
     const img = (k, ix, iy, iw, ih, parent, f = 'url(#pp)') => {
@@ -173,38 +176,40 @@
       T.el('feComposite', { in2: 'SourceGraphic', operator: 'in' }, f);
       const fm = T.el('feMerge', {}, f); T.el('feMergeNode', { in: 'SourceGraphic' }, fm); T.el('feMergeNode', {}, fm);
       p.tintId = id;
-      p.inside = img('door_inside', 73, 63, 320, 410, g, '').g;
+      p.inside = img('door_room', 73, 63, 320, 410, g, '').g;
+      p.front = T.el('g', {}, g);                 /* 두드릴 때 들썩이는 것은 문짝뿐 (돌 테·벽은 집에 붙어 움직이지 않는다) */
+      p.leaf = img('door_leaf', 75, 65, 316, 406, p.front);
       p.slot = T.el('g', {}, g);
       /* 배경 1600×902 의 (409,326)~(640,533) 조각 → 세계 좌표 (door_wall_v2: 같은 조각 모양을 v2 집 앞 배경에서 다시 오림. v2 집·아치 자리는 옛 배경과 같다) */
       p.wall = T.el('image', { href: artSrc('door_wall_v2'), x: -40 + 409 * .675, y: -24 + 326 * BGBOX.h / 902, width: 231 * .675, height: 207 * BGBOX.h / 902, preserveAspectRatio: 'none' }, g);
-      p.front = T.el('g', {}, g);                 /* 두드릴 때 들썩이는 것은 문틀·문짝뿐 (벽은 배경이라 움직이지 않는다) */
-      p.frame = img('door_frame', 0, 0, 480, 477, p.front).g;
-      p.leaf = img('door_leaf', 75, 65, 316, 406, p.front);
-      p.openFront = img('door_openfront', 0, 0, 480, 491, p.front).g;
+      p.frame = img('door_frame', 0, 0, 480, 477, g).g;
     });
     Object.assign(a, p);
     const L = a.leaf.im; L.style.transformBox = 'fill-box'; L.style.transformOrigin = '0% 50%';   /* 문짝 왼쪽 끝 = 경첩 */
     a.reset = (tint = false) => {
       T.world.appendChild(a.pos); a.pos.style.display = ''; a.pos.style.opacity = '';
-      [a.front, L, a.openFront, a.frame, a.leaf.g].forEach(n => { n.getAnimations().forEach(x => x.cancel()); n.style.transform = ''; n.style.opacity = ''; });
-      a.inside.style.display = 'none'; a.wall.style.display = 'none'; a.openFront.style.display = 'none';
+      [a.front, L, a.frame, a.leaf.g].forEach(n => { n.getAnimations().forEach(x => x.cancel()); n.style.transform = ''; n.style.opacity = ''; n.style.filter = ''; });
+      a.inside.style.display = 'none'; a.wall.style.display = 'none';
       a.frame.style.display = ''; a.leaf.g.style.display = '';
       a.wall.setAttribute('filter', tint ? `url(#${a.tintId})` : '');
       a.tint = tint;
     };
-    /* 열린 그림의 문짝: 왼쪽 끝 x≈55, 폭 ≈150 (닫힌 문짝 조각은 x 75, 폭 316) → 접힌 끝 모양 */
-    const END = `translateX(${-20 * DOOR.sx}px) scaleX(.48)`;
+    /* 안쪽으로 돌아 들어가는 문짝: 각도마다 앞에서 보이는 폭 = cos, 빛을 등지는 만큼 어두워진다.
+       삐걱(살짝 틈) → 잠깐 멈칫 → 끝까지 */
+    const at = deg => { const c = Math.cos(deg * Math.PI / 180); return { transform: `scaleX(${Math.max(c, DOOR_OPEN).toFixed(3)})`, filter: `brightness(${(1 - .28 * (1 - c)).toFixed(3)})` }; };
+    const swing = (d0, d1, ms, easing) => {
+      const n = 8, k = [...Array(n + 1)].map((_, i) => at(d0 + (d1 - d0) * i / n));
+      return T.anim(L, k, { duration: ms, easing });
+    };
+    const END = acos => Math.acos(acos) * 180 / Math.PI;
     a.open = async (onHalf) => {
       a.inside.style.display = '';
-      await T.anim(L, [{ transform: 'translateX(0) scaleX(1)' }, { transform: `translateX(${-8 * DOOR.sx}px) scaleX(.72)` }], { duration: 480, easing: 'ease-in' });
-      L.style.transform = `translateX(${-8 * DOOR.sx}px) scaleX(.72)`;
+      await swing(0, 24, 520, 'ease-in');                  /* 삐걱… 틈이 벌어진다 */
+      Object.assign(L.style, at(24));
       if (onHalf) onHalf();
-      await T.anim(L, [{ transform: L.style.transform }, { transform: END }], { duration: 420, easing: 'ease-out' });
-      L.style.transform = END;
-      /* 접힌 문짝 → 열린 그림 (같은 자리에서 겹쳐 바꿈) */
-      a.openFront.style.display = '';
-      await Promise.all([T.anim(a.openFront, [{ opacity: 0 }, { opacity: 1 }], 260), T.anim(a.leaf.g, [{ opacity: 1 }, { opacity: 0 }], 260)]);
-      a.leaf.g.style.display = 'none'; a.frame.style.display = 'none'; L.style.transform = '';
+      await T.anim(L, [at(24), at(27), at(24)], { duration: 260 });
+      await swing(24, END(DOOR_OPEN), 760, 'ease-out');    /* 끝까지 안쪽으로 */
+      Object.assign(L.style, at(END(DOOR_OPEN)));
     };
     a.reset();
     return a;
@@ -383,14 +388,16 @@
       camSnap(X(370, 380), 270, P ? 1.5 : 1.7);
     }, door.pos);
     await Promise.all([say('날이 저물 무렵, 백설공주는 숲속에서 아주 작은 집을 찾았어요.'), snow.move(410, 352, 1800)]);
-    await say('어머, 정말 작은 집이네. 계세요? 아무도 안 계세요?');
+    /* 문 바로 옆까지 다가가 두드린다 (문을 연 사람처럼 문 가까이 서서 열리는 문을 본다) */
+    await Promise.all([say('어머, 정말 작은 집이네. 계세요? 아무도 안 계세요?'), snow.move(388, 352, 1200)]);
+    snow.turn('left');
     door.front.animate([{ translate: '0 0' }, { translate: '0 -3px' }, { translate: '0 0' }], { duration: 900, iterations: 3, easing: 'ease-in-out' });
     await T.ask('문을 톡 두드려 볼까요?', () => T.tap(door.pos, { prompt: '문을 톡 두드려 볼까요?' }));
     sfx(T, 'knock', () => T.tone([180, 90], .12, { type: 'square', vol: .12 })); T.pop(314, 170, tr('똑똑!'));
     await sleep(700);
     sfx(T, 'creak', () => sfx(T, 'door'));
     door.front.getAnimations().forEach(n => n.cancel());
-    /* 문이 왼쪽 경첩을 축으로 열린다: 문짝이 경첩 쪽으로 접히며 뒤의 어두운 방이 문 구멍 안에만 보이고, 열린 그림으로 이어진다 */
+    /* 문이 왼쪽 경첩을 축으로 안쪽(방 안)으로 열린다: 문짝은 돌 테 뒤에서 좁아지고, 오른쪽 구멍으로 창빛·식탁이 있는 방이 보인다 */
     await door.open(() => T.pop(314, 150, tr('삐걱!')));
     await say('삐걱, 문이 열렸어요. 집 안에는 아무도 없었어요.');
     /* 문 안으로 들어간다: 문 앞까지 걸어가 문지방에 올라서며(안쪽으로 한 걸음, 원근만큼 작아짐) →
