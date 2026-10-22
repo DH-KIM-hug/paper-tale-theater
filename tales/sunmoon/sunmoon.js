@@ -513,6 +513,604 @@
       cast: { mom: () => onWorld(mom), boy: () => onWorld(boy), girl: () => onWorld(girl), tiger: tigerNow },
       listener: r => r === 'tiger' ? (onWorld(mom) ? 'mom' : 'boy') : r === 'mom' ? 'boy' : tigerNow() ? 'tiger' : r === 'boy' ? 'girl' : 'boy',
     });
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 놀이판 연출을 누르기 없이 감싼 얇은 함수 =================
+       장면 차리기(set)는 놀이판 그 장면의 배경·자리·카메라를 그대로 놓는다. 호랑이·엄마·오누이는 장면마다 놀이판 자리에 선다(대본의 at 좌표는 호랑이·엄마만 따른다).
+       대본의 set:tree 는 두 번 나온다(오르기 → 참기름·도끼 장면). */
+    const rs = { n: {}, tag: '', tiger: null, plateCakes: [], given: 0, hidden: false, tx: 760, hideY: 662, peekY: 415, yard: null, hideJar: null, prowl: null,
+      tree: null, tt: null, oil: null, bottle: null, refl: null, bucket: null, skyV: null, ropeGood: null, rope: null, step: 0, RX: 325, sunKid: null, moonKid: null, nightVeil: null, skyRect: null, starG: null,
+      night: false, rrope: null, sorg: null, peek: null };
+    const rInst = () => T.readInstant();
+    const rTiger = mkTiger(T, T.world, 700, 610); rTiger.pos.remove();
+    const rToBasket = i => {
+      const [bx, by] = mom.P.art ? [0, -12] : cakeSpot(i), [ax, ay] = mom.P.basketAt;
+      return [mom.x + mom.flip * (ax + bx) * mom.scale, mom.y + (ay + by) * mom.scale];
+    };
+    const rFly = async (x0, y0, x1, y1, s = 1.4, dur = 600, i = 0) => {
+      const g = el('g', {}, T.fx); drawCake(T, g, 0, 0, s, i);
+      const mx = (x0 + x1) / 2, my = Math.min(y0, y1) - 140;
+      await T.anim(g, [{ transform: `translate(${x0}px,${y0}px)` }, { transform: `translate(${mx}px,${my}px) rotate(180deg)` }, { transform: `translate(${x1}px,${y1}px) rotate(360deg)` }], { duration: dur, easing: 'ease-in-out' });
+      g.remove();
+    };
+    const rBasket = () => mom.P.setCakes(Math.max(0, Math.min(5, Math.ceil(5 * (6 - rs.given) / 6))));
+    const rHandArt = (g, k, w, h) => { const u = artUrl(k); if (!u) return false; T.el('image', { href: u, x: -w / 2, y: -h / 2, width: w, height: h, filter: 'url(#pp)' }, g); return true; };
+    /* 그림 나무 꼭대기 자리 · 마당 달리기 값 (놀이판과 같다) */
+    const rTREE_S = 1.07, rTOP = bgUrl('tree') ? { b: [935, 154], g: [825, 164] } : { b: [540, -140], g: [440, -140] };
+    const rCLIMB = bgUrl('tree') ? 85 : 140, rTREE_WIDE = bgUrl('tree') ? [700, 320] : [560, 90];
+    const rYARD = bgUrl('backyard') ? { x: -40, y: -250, w: 1600, h: 1600 * 992 / 1760 } : null;
+    const rYJ = rYARD ? { run1: PT ? 470 : 350, hide: [1365, 1322], hideY: 334, hideS: .7, out: [1425, 1360], run2: 30, prowl: [380, 1000] }
+      : { run1: 320, hide: [1110, 1050], hideY: 510, hideS: 1, out: [1330, 1250], run2: 330, prowl: [520, 900] };
+    const rJAR = [[1478, 500], [1580, 500], [1590, 515], [1603, 545], [1608, 585], [1598, 625], [1585, 645]];
+    const rJAR_L = [[1455, 645], [1450, 600], [1452, 560], [1465, 520], [1475, 508]];
+    const rJAR_FOOT = [[1585, 670], [1455, 670]];
+    const rYardCam = nb => { const x = T.portrait() ? nb + 40 : Math.max(500, nb + 180); return rYARD ? Math.min(x, rYARD.x + rYARD.w - T.viewWidth() / 2) : x; };
+    const rScramble = (a, dir, dur = 420) => T.anim(a.body, [{ transform: 'rotate(0deg) scale(1,1)' }, { transform: `rotate(${dir * 7}deg) scale(1.07,.9)` }, { transform: `rotate(${-dir * 5}deg) scale(.96,1.05)` }, { transform: 'rotate(0deg) scale(1,1)' }], { duration: dur, easing: 'ease-in-out' });
+    const rBuildTree = kidsUp => {
+      T.clear(); camSnap(500, 280, 1);
+      const tree = rs.tree = mkView(T, T.world);
+      const ta = treeArt(T, tree, rTREE_S, TREE_PX.trunk, [640, 570]);
+      if (ta) {
+        const [mx, my] = ta.at(TREE_PX.moon); el('circle', { cx: mx, cy: my, r: 40, fill: C.cream, opacity: .95 }, tree);
+        boy = mkBoy(T, tree, kidsUp ? rTOP.b[0] : 610, kidsUp ? rTOP.b[1] : 560, 1);
+        girl = mkGirl(T, tree, kidsUp ? rTOP.g[0] : 560, kidsUp ? rTOP.g[1] : 560, .92);
+        return;
+      }
+      sky(T, tree, C.indigo);
+      el('circle', { cx: 120, cy: -200, r: 46, fill: C.cream }, tree);
+      stars(T, tree, [[40, -500], [300, -250], [880, -520], [1000, -220], [-200, -100], [1250, -400], [-300, -560], [850, 40], [200, 80]]);
+      T.paper(tree, [['path', { d: 'M-900 420 Q-300 300 400 380 Q1100 300 1900 420 V1400 H-900 Z', fill: '#3A4A5E' }]]);
+      T.paper(tree, [['rect', { x: -900, y: 500, width: 2800, height: 900, fill: '#4E5A48' }]]);
+      T.paper(tree, [['circle', { cx: 640, cy: -350, r: 230, fill: '#35604A' }], ['circle', { cx: 430, cy: -260, r: 150, fill: C.pine }], ['circle', { cx: 850, cy: -240, r: 160, fill: C.pine }]]);
+      T.paper(tree, [['path', { d: 'M598 570 L612 -320 L668 -320 L684 570 Z', fill: C.bark }], ['path', { d: 'M620 -140 L360 -152 Q350 -140 362 -126 L620 -110 Z', fill: C.bark }]]);
+      const well = el('g', {}, tree);
+      T.paper(well, [['rect', { x: 170, y: 460, width: 200, height: 110, rx: 12, fill: C.stone }], ['ellipse', { cx: 270, cy: 462, rx: 100, ry: 22, fill: '#2E3A6E', stroke: '#B0A89C', 'stroke-width': 10 }],
+        ['rect', { x: 180, y: 330, width: 12, height: 140, fill: C.bark }], ['rect', { x: 348, y: 330, width: 12, height: 140, fill: C.bark }], ['rect', { x: 160, y: 322, width: 220, height: 16, fill: C.bark }]]);
+      boy = mkBoy(T, tree, kidsUp ? rTOP.b[0] : 610, kidsUp ? rTOP.b[1] : 560, 1);
+      girl = mkGirl(T, tree, kidsUp ? rTOP.g[0] : 560, kidsUp ? rTOP.g[1] : 560, .92);
+    };
+    const rSets = {
+      cottage() {
+        houseBG(T);
+        T.world.appendChild(mom.pos); mom.setScale(1); mom.place(610, 500); mom.face('left'); mom.P.holdBasket(false); mom.P.setCakes(0);
+        boy = mkBoy(T, T.world, PT ? 320 : 235, 510); girl = mkGirl(T, T.world, PT ? 450 : 385, 510);
+      },
+      kitchen() {
+        const [dx, dy, ry] = kitchenBG(T) ? [19, -140, 34] : [0, 0, 26];
+        T.world.appendChild(mom.pos); mom.setScale(1.4); mom.place(PT && mom.P.art ? 350 : 290, 545); mom.face('right'); mom.P.holdBasket(!mom.P.art); mom.P.setCakes(0);
+        const plate = el('g', {}, T.world);
+        el('rect', { x: 530 + dx, y: 290 + dy, width: 320, height: 160, fill: 'transparent' }, plate);
+        if (!sprite(T, el('g', { transform: `translate(${690 + dx} ${400 + dy + 44})` }, plate), 'plate', 300, 120, { stretch: true }))
+          T.paper(plate, [['ellipse', { cx: 690 + dx, cy: 400 + dy, rx: 110, ry, fill: C.snow, stroke: C.gold, 'stroke-width': 5 }]]);
+        rs.plateCakes = [...Array(5)].map((_, k) => { const x = 590 + k * 50, y = 404; return { x: x + dx, y: y + dy, k, g: drawCake(T, plate, x + dx, y + dy, 1.6, k) }; });
+      },
+      hill(n) {
+        let rock = null;
+        if (bgUrl('hill' + n)) { rs.tx = T.portrait() ? 730 : 760; rs.hideY = 662; rs.peekY = 415; T.world.appendChild(rTiger.pos); rTiger.place(rs.tx, rs.hideY); rock = hillArt(T, n); }
+        if (!rock) {
+          hillBG(T, n); rs.tx = T.portrait() ? 690 : 820; rs.hideY = 610; rs.peekY = 480;
+          T.world.appendChild(rTiger.pos); rTiger.place(rs.tx, rs.hideY);
+          rock = drawRock(T, T.world); if (rs.tx !== 820) rock.setAttribute('transform', `translate(${rs.tx - 820} 0)`);
+        }
+        rTiger.face('left'); rs.tiger = rTiger;
+        if (n === 0) { rTiger.P.setBelly(1); rs.given = 0; }
+        T.world.appendChild(mom.pos); mom.setScale(1); mom.place(-120, 500); mom.face('right');
+      },
+      door() {
+        const doorArt = doorBG(T);
+        const sil = el('g', { opacity: .3, transform: doorArt ? 'translate(-88 0)' : '' }, T.bg);
+        [['ellipse', { cx: 690, cy: 400, rx: 80, ry: 80 }], ['ellipse', { cx: 690, cy: 270, rx: 72, ry: 62 }], ['circle', { cx: 638, cy: 212, r: 20 }], ['circle', { cx: 742, cy: 212, r: 20 }], ['path', { d: 'M760 420 Q830 420 822 350 Q818 320 838 310', stroke: C.stripe, 'stroke-width': 18, fill: 'none', 'stroke-linecap': 'round' }]].forEach(([t, a]) => el(t, { fill: C.stripe, ...a }, sil));
+        el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.amber, opacity: .12 }, T.fx);
+        boy = mkBoy(T, T.world, PT ? 320 : 200, 540); girl = mkGirl(T, T.world, PT ? 450 : 340, 540);
+      },
+      backyard() {
+        const yard = rs.yard = mkView(T, T.world); rs.hidden = false;
+        if (rYARD) {
+          sky(T, yard, '#162847');
+          T.el('rect', { x: -1400, y: 330, width: 4400, height: 900, fill: '#bea08c' }, yard);
+          place(T, yard, bgUrl('backyard'), rYARD);
+          boy = mkBoy(T, yard, 260, 520, 1); girl = mkGirl(T, yard, 120, 520, .92);
+          const jars = el('g', {}, yard);
+          bgCutout(T, jars, bgUrl('backyard'), rYARD, [...rJAR, ...rJAR_FOOT, ...rJAR_L]);
+          rs.hideJar = el('g', {}, jars);
+          bgCutout(T, rs.hideJar, bgUrl('backyard'), rYARD, [...rJAR, ...rJAR_L]);
+          if (T.portrait()) yard.to(330, 280, 1, 0);
+          return;
+        }
+        sky(T, yard, C.indigo);
+        el('circle', { cx: 900, cy: 90, r: 40, fill: C.cream }, yard);
+        stars(T, yard, [[200, 60], [600, 120], [1300, 70], [1700, 140], [2100, 50], [2600, 110], [3000, 80]]);
+        T.paper(yard, [['rect', { x: -800, y: 330, width: 4400, height: 100, fill: '#6E6680' }]]);
+        T.paper(yard, [['rect', { x: -800, y: 420, width: 4400, height: 800, fill: '#5E6A58' }]]);
+        drawHouse(T, yard, 0, 470, 1);
+        boy = mkBoy(T, yard, 260, 520, 1); girl = mkGirl(T, yard, 120, 520, .92);
+        const jars = el('g', {}, yard);
+        T.paper(jars, [['rect', { x: 880, y: 500, width: 420, height: 34, rx: 8, fill: C.stone }]]);
+        const jar = (x, h, w) => T.paper(jars, [['path', { d: `M${x - w * .35} 510 Q${x - w * .62} ${510 - h * .5} ${x - w * .32} ${510 - h} L${x + w * .32} ${510 - h} Q${x + w * .62} ${510 - h * .5} ${x + w * .35} 510 Z`, fill: '#7A4028' }]]);
+        jar(950, 140, 150); jar(1210, 130, 140);
+        rs.hideJar = el('g', {}, jars); rs.hideJar.appendChild(jar(1080, 200, 190));
+        if (T.portrait()) yard.to(330, 280, 1, 0);
+      },
+      tree1() { rBuildTree(false); },
+      tree2() {
+        rBuildTree(true); rs.tree.to(...rTREE_WIDE, .58, 0);
+        const t = rs.tt = mkTiger(T, rs.tree, 760, 560, 1.1); t.P.wear('scarf'); t.P.setBelly(2.4); rs.tiger = t;
+        const oil = rs.oil = el('g', {}, rs.tree);
+        const oc = el('clipPath', { id: 'oilRun' }, oil); oil.__clip = el('rect', { x: 560, y: 40, width: 170, height: 0 }, oc);
+        const og = el('g', { 'clip-path': 'url(#oilRun)' }, oil);
+        el('path', { d: 'M606 40 Q600 200 610 330 Q598 420 612 520 Q640 548 670 522 Q684 420 672 330 Q682 200 676 40 Z', fill: '#E3A53A', opacity: .28 }, og);
+        [[-26, 40, 300, 12], [-14, 60, 470, 16], [-1, 40, 400, 11], [11, 90, 535, 18], [24, 40, 360, 13], [33, 140, 450, 10]].forEach(([dx, y0, y1, w]) => {
+          const x = 641 + dx;
+          el('path', { d: `M${x - w * .32} ${y0} L${x - w * .22} ${y1 - w * 1.3} C${x - w * .62} ${y1 - w * .5} ${x - w * .45} ${y1 + w * .55} ${x} ${y1 + w * .55} C${x + w * .45} ${y1 + w * .55} ${x + w * .62} ${y1 - w * .5} ${x + w * .22} ${y1 - w * 1.3} L${x + w * .32} ${y0} Z`, fill: '#E9A83C', opacity: .8 }, og);
+        });
+        rs.tree.insertBefore(oil, t.pos);
+        const bottle = rs.bottle = el('g', {}, rs.tree);
+        el('rect', { x: 860, y: 330, width: 170, height: 240, fill: 'transparent' }, bottle);
+        if (sprite(T, el('g', { transform: 'translate(945 564)' }, bottle), 'oil', 127, 210)) {
+          T.paper(bottle, [['rect', { x: 907, y: 486, width: 76, height: 36, rx: 6, fill: C.cream }], ['text', { x: 945, y: 512, 'text-anchor': 'middle', 'font-size': 21, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('참기름') }]]);
+        } else T.paper(bottle, [['path', { d: 'M905 560 Q890 470 930 440 V390 H960 V440 Q1000 470 985 560 Z', fill: '#E0B560' }], ['rect', { x: 924, y: 368, width: 42, height: 26, rx: 6, fill: C.bark }]]);
+        origin(bottle, 945, 470);
+      },
+      wellTop() {
+        const art = bgImage(T, T.bg, 'wellTop', { back: '#25367f' });
+        if (!art) { sky(T, T.bg, '#5E6A58'); T.paper(T.bg, [['circle', { cx: 500, cy: 290, r: 260, fill: C.stone }], ['circle', { cx: 500, cy: 290, r: 205, fill: '#5E574F' }]]); }
+        const cp = el('clipPath', { id: 'wellWater' }, T.world);
+        if (art) el('ellipse', { cx: 503, cy: 282, rx: 158, ry: 84 }, cp); else el('circle', { cx: 500, cy: 290, r: 190 }, cp);
+        const water = el('g', { 'clip-path': 'url(#wellWater)' }, T.world);
+        const wu = art && artUrl('well_water');
+        if (wu) {
+          const kx = 158 / 335, ky = 84 / 335;
+          el('image', { href: wu, x: 503 - 506 * kx, y: 282 - 516 * ky, width: 1013 * kx, height: 1024 * ky, preserveAspectRatio: 'none' }, water);
+          el('rect', { x: 150, y: 100, width: 700, height: 380, fill: '#1c2660', opacity: .42 }, water);
+        } else {
+          el('rect', { x: art ? 180 : 300, y: 90, width: art ? 640 : 400, height: 400, fill: '#2E3A6E' }, water);
+          el('circle', { cx: 500, cy: 290, r: 150, fill: C.lav, opacity: .45 }, water);
+        }
+        rs.refl = origin(el('g', {}, water), 500, 290);
+        drawKidFace(T, rs.refl, false, 450, 290, 1.5); drawKidFace(T, rs.refl, true, 560, 296, 1.4);
+        const bucket = rs.bucket = el('g', {}, T.world);
+        if (artUrl('bucket')) {
+          el('path', { d: 'M0 -600 V-100', stroke: '#B79A62', 'stroke-width': 5, fill: 'none' }, bucket);
+          T.el('image', { href: artUrl('bucket'), x: -34, y: -100, width: 68, height: 121, filter: 'url(#pp)' }, bucket);
+        } else T.paper(bucket, [['path', { d: 'M0 -600 V-30', stroke: '#C9B48A', 'stroke-width': 5, fill: 'none' }], ['path', { d: 'M-34 -30 H34 L26 20 H-26 Z', fill: C.bark }]]);
+        bucket.setAttribute('transform', 'translate(560,-120)');
+        const t = mkTiger(T, T.world, 780, bgUrl('wellTop') ? 730 : 800, 1.5); t.P.wear('scarf'); rs.tiger = t;
+      },
+      sky() {
+        const skyV = rs.skyV = mkView(T, T.world); rs.step = 0;
+        const BANDS = ['#1F2A56', '#2E3A6E', '#44478A', '#6A5E9E', '#9A82B0', '#D9A98A', '#F2C98A', '#F6DFA0'];
+        if (!bgImage(T, T.bg, 'sky', { back: C.indigo })) {
+          BANDS.forEach((c, i) => el('rect', { x: -1400, y: 700 - i * 450 - (i === BANDS.length - 1 ? 2000 : 0), width: 3800, height: i === 0 ? 1400 : 450 + (i === BANDS.length - 1 ? 2000 : 0), fill: c }, skyV));
+          stars(T, skyV, [[80, 60], [900, 120], [200, -300], [760, -500], [60, -800], [940, -900], [400, -1100], [700, 250]]);
+        }
+        [[-60, -2640, 260], [1060, -2640, 260]].forEach(([x, y, r]) => el('circle', { cx: x, cy: y, r, fill: C.amber, opacity: .5 }, skyV));
+        el('circle', { cx: 500, cy: -2720, r: 300, fill: '#FBE7B0', opacity: .8 }, skyV);
+        const [lf1, lf2, br] = bgUrl('sky') ? ['#8E93C4', '#7C82B6', '#4E4868'] : ['#35604A', C.pine, C.bark];
+        const tu = artUrl('treetop');
+        if (tu) el('image', { href: tu, x: -50, y: 246, width: 1100, height: 1100 * 805 / 1128, filter: 'url(#pp)' }, skyV);
+        else T.paper(skyV, [['circle', { cx: 500, cy: 720, r: 300, fill: lf1 }], ['circle', { cx: 200, cy: 640, r: 160, fill: lf2 }], ['circle', { cx: 820, cy: 650, r: 170, fill: lf2 }], ['path', { d: 'M150 500 H850 V530 H150 Z', fill: br }]]);
+        for (let k = 0; k < 6; k++) {
+          const y = 255 - k * 450;
+          [[-120, 0], [140, -20], [660, -10], [900, 10], [1120, -20]].forEach(([x, dy], j) => {
+            if (!bgUrl('sky')) { el('ellipse', { cx: x, cy: y + dy, rx: 140, ry: 46, fill: j % 2 ? C.snow : '#DCD6EA', opacity: .95 }, skyV); return; }
+            const cy = y + dy, cream = (j + k) % 2, f = cream ? '#F1E4C6' : '#CDBFD9';
+            const cu = artUrl(cream ? 'cloud_cream' : 'cloud_lilac');
+            if (cu) { const [iw, ih] = cream ? [557, 307] : [633, 349], w = 300, h = w * ih / iw; el('image', { href: cu, x: x - w / 2, y: cy + 26 - h, width: w, height: h, filter: 'url(#pp)' }, skyV); }
+            else T.paper(skyV, [['path', { d: `M${x - 150} ${cy + 26} Q${x - 150} ${cy - 6} ${x - 112} ${cy - 4} Q${x - 96} ${cy - 44} ${x - 46} ${cy - 30} Q${x - 10} ${cy - 66} ${x + 40} ${cy - 36} Q${x + 92} ${cy - 50} ${x + 112} ${cy - 10} Q${x + 150} ${cy - 8} ${x + 152} ${cy + 26} Z`, fill: f }]]);
+          });
+        }
+        const rg = rs.ropeGood = el('g', {}, skyV);
+        el('rect', { x: 250, y: -200, width: 150, height: 700, fill: 'transparent' }, rg);
+        if (!ropeArt(T, rg, 'rope_good', 325, 484, .59)) {
+          T.paper(rg, [['path', { d: 'M325 -3400 V470', stroke: C.gold, 'stroke-width': 26, fill: 'none' }], ['ellipse', { cx: 325, cy: 470, rx: 26, ry: 18, fill: C.gold }]]);
+          el('path', { d: 'M325 -3400 V460', stroke: '#B88A3A', 'stroke-width': 26, 'stroke-dasharray': '6 18', fill: 'none' }, rg);
+        }
+        [[292, 300], [360, 200], [300, 90], [355, 380]].forEach(([x, y]) => el('path', { d: `M${x} ${y - 14} L${x + 4} ${y - 4} L${x + 14} ${y} L${x + 4} ${y + 4} L${x} ${y + 14} L${x - 4} ${y + 4} L${x - 14} ${y} L${x - 4} ${y - 4} Z`, fill: '#FFF3C4' }, rg));
+        boy = mkBoy(T, skyV, 440, 510, 1); girl = mkGirl(T, skyV, 580, 510, .92);
+        rg.style.transform = 'translateY(-900px)';
+      },
+      sorghum() {
+        const sorgArt = bgImage(T, T.bg, 'sorghum', { back: '#301a25' });
+        if (!sorgArt) {
+          sky(T, T.bg, '#8B7BB8');
+          T.paper(T.bg, [['path', { d: 'M-300 360 Q200 200 600 300 Q850 180 1300 280 V700 H-300 Z', fill: '#4E5A70' }]]);
+          T.paper(T.bg, [['rect', { x: -300, y: 470, width: 1600, height: 500, fill: '#7A6A48' }]]);
+        }
+        const s = rs.sorg = mkTiger(T, T.world, 500, 540, 1.2); s.P.wear('scarf'); s.P.setBelly(2.4); rs.tiger = s;
+        const front = el('g', {}, T.world);
+        for (let i = -3; i < 16 && !sorgArt; i++) {
+          if (i >= 5 && i <= 9) continue;
+          const x = -60 + i * 72, h = 300 + (i % 3) * 40;
+          T.paper(front, [['path', { d: `M${x} 600 V${560 - h}`, stroke: C.pine, 'stroke-width': 7 }], ['ellipse', { cx: x, cy: 540 - h, rx: 16, ry: 32, fill: '#C98A3A' }]]);
+        }
+      },
+      heaven() {
+        const OX = T.portrait() ? [345, 655] : [260, 740];
+        const drawOrb = girlFace => (T2, g) => {
+          const P = {};
+          P.sun = T.el('g', {}, g);
+          const su = artUrl('sun_plain'), mu = artUrl('moon_plain');
+          if (su) T.el('image', { href: su, x: -124, y: -120, width: 248, height: 240, filter: 'url(#pp)' }, P.sun);
+          else { for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; T.el('path', { d: `M${Math.cos(a - .12) * 84} ${Math.sin(a - .12) * 84} L${Math.cos(a) * 120} ${Math.sin(a) * 120} L${Math.cos(a + .12) * 84} ${Math.sin(a + .12) * 84} Z`, fill: C.amber }, P.sun); } T.paper(P.sun, [['circle', { r: 86, fill: C.gold }]]); }
+          P.moon = T.el('g', {}, g);
+          if (mu) T.el('image', { href: mu, x: -88, y: -89, width: 176, height: 179, filter: 'url(#pp)' }, P.moon);
+          else T.paper(P.moon, [['circle', { r: 86, fill: C.snow }], ['circle', { cx: -50, cy: -40, r: 12, fill: '#DCD6EA' }], ['circle', { cx: 52, cy: 44, r: 9, fill: '#DCD6EA' }]]);
+          T.el('rect', { x: -120, y: -120, width: 240, height: 240, fill: 'transparent' }, g);
+          drawKidFace(T, g, girlFace, 0, 8, 1.6);
+          P.set = s => { P.sun.setAttribute('opacity', s ? 1 : 0); P.moon.setAttribute('opacity', !s ? 1 : 0); };
+          return P;
+        };
+        if (bgImage(T, T.bg, 'heaven', { back: C.indigo })) {
+          const nu = bgUrl('heavenNight');
+          rs.nightVeil = nu ? place(T, T.bg, nu, FULL) : el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.night, opacity: .62 }, T.bg);
+          rs.nightVeil.__full = !!nu; rs.nightVeil.style.transition = 'opacity 1s'; rs.skyRect = null;
+        } else { rs.nightVeil = null; rs.skyRect = sky(T, T.bg, C.indigo); rs.skyRect.style.transition = 'fill 1s'; }
+        rs.starG = el('g', {}, T.bg); stars(T, rs.starG, [[80, 60], [420, 90], [560, 40], [640, 250], [930, 300], [60, 300], [360, 260]]);
+        rs.starG.style.transition = 'opacity 1s';
+        if (!rs.nightVeil) {
+          T.paper(T.bg, [['path', { d: 'M-300 400 Q200 320 600 380 Q850 320 1300 380 V900 H-300 Z', fill: C.pine }]]);
+          T.paper(T.bg, [['rect', { x: -300, y: 480, width: 1600, height: 500, fill: C.leaf }]]);
+          drawHouse(T, T.bg, 800, 500, .6);
+        }
+        rs.sunKid = mk(T, T.world, OX[0], 170, drawOrb(false), .9); rs.moonKid = mk(T, T.world, OX[1], 170, drawOrb(true), .9);
+        rs.sunKid.P.set(true); rs.moonKid.P.set(false); rs.OX = OX; rs.night = false; rs.swapped = false;
+        boy = rs.sunKid; girl = rs.moonKid;
+      },
+    };
+    const rSetSky = day => {
+      const nv = rs.nightVeil;
+      if (nv) nv.style.opacity = day ? 0 : nv.__full ? 1 : .62; else if (rs.skyRect) rs.skyRect.style.fill = day ? '#F2DFA8' : C.indigo;
+      rs.starG.style.opacity = day ? 0 : 1;
+      const g = rs.swapped ? rs.moonKid : rs.sunKid, b = rs.swapped ? rs.sunKid : rs.moonKid;
+      /* 바꾼 뒤: 동생 = 해님(moonKid), 오빠 = 달님(sunKid) */
+      const girlSun = rs.moonKid, boyMoon = rs.sunKid;
+      if (rs.swapped) { girlSun.body.style.opacity = day ? 1 : .7; boyMoon.body.style.opacity = day ? .7 : 1; }
+    };
+    const rSet = key => {
+      T.clear(); camSnap(500, 280, 1);
+      rs.n[key] = (rs.n[key] || 0) + 1; rs.tag = key;
+      if (key === 'hill0' || key === 'hill1' || key === 'hill2') return rSets.hill(+key.slice(4));
+      if (key === 'tree') return rs.n.tree === 1 ? rSets.tree1() : rSets.tree2();
+      (rSets[key] || (() => console.warn('[read] set 모름', key)))();
+    };
+    /* 오누이 달리기 (뒷마당) */
+    const rRun = async (dx, dur = 560) => {
+      const nb = boy.x + dx, ng = girl.x + dx;
+      AudioFX.whoosh();
+      await Promise.all([boy.move(nb, 520, dur), girl.move(ng, 520, dur), boy.hop(24, dur), girl.hop(24, dur), rs.yard.to(rYardCam(nb), 280, 1, dur)]);
+    };
+    const rClimb = async i => {
+      const tree = rs.tree, gecko = !!(boy.P.art && artUrl('boy_gecko'));
+      yeongcha(T, i);
+      const climbArt = gecko && i < 5;
+      const by = i === 5 ? rTOP.b[1] : 560 - i * rCLIMB, gy = i === 5 ? rTOP.g[1] : by + (climbArt ? 96 : 80);
+      if (climbArt) {
+        boy.P.pose('climb'); girl.P.pose('climb');
+        boy.move(618, by - 30, 420); rScramble(boy, i % 2 ? 1 : -1);
+        setTimeout(() => { girl.move(664, gy - 30, 420); rScramble(girl, i % 2 ? -1 : 1); }, 230);
+      } else {
+        boy.P.pose('stand'); girl.P.pose('stand');
+        boy.move(i === 5 ? rTOP.b[0] : 610, by, 420); girl.move(i === 5 ? rTOP.g[0] : 560, gy, 420);
+        boy.hop(10, 420); girl.hop(10, 420);
+      }
+      tree.to(560, Math.max(bgUrl('tree') ? 112 : -1e9, Math.min(280, by - 60)), 1, 420);
+      T.pop(i % 2 ? 300 : 760, 200, '영차!', C.pine);
+      await sleep(450);
+    };
+    const rCut = {
+      roar: () => (cutArt(T, 'cut_roar', 'boom', 2400, () => cutVoice('cut_roar')) || T.cut(svg => {
+        el('rect', { width: 400, height: 300, fill: '#0b0a1a' }, svg);
+        const g = el('g', { transform: 'translate(200,300) scale(1.5)', opacity: .92 }, svg); drawTiger(T, g);
+        el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 52, fill: C.persimmon, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('어흥!') }, svg);
+        cutVoice('cut_roar');
+      }, { sfx: 'boom', hold: 2400 })),
+      gulp: () => { AudioFX.gulp && AudioFX.gulp(); return T.cut(svg => { el('rect', { width: 400, height: 300, fill: '#0b0a1a' }, svg); el('text', { x: 200, y: 165, 'text-anchor': 'middle', 'font-size': 56, fill: C.cream, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('꿀꺽…') }, svg); }, { hold: 2200 }); },
+      mimic: () => T.cut(svg => {
+        const g = el('g', { transform: 'translate(200,290) scale(1)' }, svg);
+        const P = drawTiger(T, g); P.wear('scarf'); P.setBelly(2.5);
+        el('text', { x: 200, y: 44, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('엄마 흉내 내야지~') }, svg);
+        cutVoice('cut_mimic', 450);
+      }, { sfx: 'whoosh', hold: 2600 }),
+      creak: () => T.cut(svg => {
+        if (!ropeArt(T, svg, 'rope_bad', 200, 150, .3, -20)) el('path', { d: 'M200 0 V120 Q210 150 196 180', stroke: '#9A8466', 'stroke-width': 7, fill: 'none', 'stroke-dasharray': '30 6' }, svg);
+        const g = el('g', { transform: 'translate(200,300) scale(.85)' }, svg); const P = drawTiger(T, g); P.setBelly(2.4);
+        el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': 34, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('삐걱… 삐걱…') }, svg);
+        cutVoice('cut_creak', 500);
+      }, { hold: 3500 }),
+      snap: () => (cutArt(T, 'cut_snap', 'pow', 3800, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
+        const g = el('g', { transform: 'translate(200,320) scale(.85) rotate(12)' }, svg); const P = drawTiger(T, g); P.oMouth(); P.setBelly(2.4);
+        el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('뚝!') }, svg);
+        cutVoice('cut_snap', 250);
+      }, { sfx: 'pow', hold: 3800 })),
+      bump: () => (cutArt(T, 'cut_bump', 'thud', 3400, () => cutVoice('cut_bump', 350)) || T.cut(svg => {
+        const g = el('g', { transform: 'translate(200,300) scale(.8)' }, svg); const P = drawTiger(T, g); P.wear('bump'); P.oMouth(); P.setBelly(2.4);
+        el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': 44, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('쿵! 엉덩방아') }, svg);
+        cutVoice('cut_bump', 350);
+      }, { sfx: 'thud', hold: 3400 })),
+    };
+    const rKid = who => (verb, a1) => {
+      const k = who === 'boy' ? boy : girl;
+      if (verb === 'at') return;
+      if (verb === 'wave') { AudioFX.pop(); k.hop(26); wave(T, k); T.pop(k.x, k.y - 200, '안녕!', C.pine); return; }
+      if (verb === 'hop') return k.hop(20);
+      if (verb === 'pose') {
+        if (a1 === 'rope' && who === 'boy') return (async () => {
+          const GAP = boy.P.art ? ROPE_GAP : 140; rs.RX = boy.P.art ? 325 : 360; rs.GAP = GAP;
+          if (!rInst()) await Promise.all([boy.move(rs.RX, 330, 600), girl.move(rs.RX, 330 + GAP, 600)]); else { boy.place(rs.RX, 330); girl.place(rs.RX, 330 + GAP); }
+          boy.P.pose('rope'); girl.P.pose('rope');
+        })();
+        if (a1 === 'rope') return;
+        k.P.pose(a1);
+        if (a1 === 'hug' && !rInst() && rs.tag === 'tree') { /* 덜덜 떤다 */ const tr = tremble(k); setTimeout(() => tr.cancel(), 2500); }
+        return;
+      }
+      console.warn('[read] 오누이 동사 모름', who, verb);
+    };
+    const rTigerAct = (verb, a1, a2) => {
+      const t = rs.tiger || rTiger;
+      if (verb === 'at') {
+        const [x, y] = String(a1).split(',').map(Number);
+        if (rs.tag === 'backyard') return (async () => {
+          const p = rs.prowl = mkTiger(T, rs.yard, rYJ.prowl[0], 530, 1); p.P.wear('scarf'); p.P.setBelly(2.4); p.face('right');
+          if (rs.yard.__noop) return;
+          await p.move(rYJ.prowl[1], 530, 1400);
+          p.face('left'); await sleep(350); p.face('right'); await sleep(350); p.face('left');
+          T.pop(rYARD ? rYJ.prowl[1] - 40 : 500, 170, '두리번두리번', C.bean);
+        })();
+        if (/^hill/.test(rs.tag)) { T.world.appendChild(rTiger.pos); rTiger.place(rs.tx, rs.hideY); return; }
+        t.place(x, y); return;
+      }
+      if (verb === 'enter') {
+        if (a1 === 'well') return (async () => {
+          const tree = rs.tree;
+          if (!rInst()) await tree.to(...rTREE_WIDE, .58, 1400); else tree.to(...rTREE_WIDE, .58, 0);
+          const tg = rs.tiger = mkTiger(T, tree, -300, 560, 1.1); tg.P.wear('scarf'); tg.P.setBelly(2.4); tg.face('right');
+          await tg.move(420, 560, 1500);
+        })();
+        return (async () => {   // 고개 바위 뒤에서 불쑥
+          await tiger_peek();
+        })();
+      }
+      if (verb === 'belly') { t.P.setBelly(+a1); t.wiggle(4, 220); return; }
+      if (verb === 'exit') {
+        if (rs.tag === 'backyard') return (async () => {
+          const p = rs.prowl; await p.move(rYJ.prowl[0] - 120, 530, 1300); p.pos.remove();
+          boy.setScale(1); girl.setScale(.92);
+          rs.yard.appendChild(boy.pos); rs.yard.appendChild(girl.pos);
+          await Promise.all([boy.move(rYJ.out[0], 520, 500), girl.move(rYJ.out[1], 520, 500), boy.hop(30, 500), girl.hop(30, 500)]);
+        })();
+        if (rs.tag === 'sorghum') return (async () => { t.face('right'); AudioFX.whoosh(); await Promise.all([t.move(1250, 380, 1800, 'ease-in'), T.anim(t.body, [{ transform: 'scale(1)' }, { transform: 'scale(.5)' }], 1800)]); })();
+        return (async () => { t.face('right'); await Promise.all([t.move(1250, 500, 900, 'ease-in'), t.hop(30, 450)]); t.face('left'); })();
+      }
+      if (verb === 'wear') { t.P.wear(a1); return; }
+      if (verb === 'face') { t.face(a1); return; }
+      if (verb === 'walk') { const [x, y] = String(a1).split(',').map(Number); return t.move(x, y, 1500, 'ease-in').then(() => t.face('left')); }
+      if (verb === 'well') return;
+      if (verb === 'bucket') return (async () => {
+        const b = rs.bucket;
+        await T.anim(b, [{ transform: 'translate(560px,-120px)' }, { transform: 'translate(600px,305px)' }], { duration: 700, easing: 'ease-in' });
+        b.setAttribute('transform', 'translate(600,305)'); b.style.transform = '';
+        AudioFX.splash(); T.pop(680, 260, '첨벙!', C.indigo);
+        rs.refl.animate([{ scale: 1 }, { scale: '1.08 .9' }, { scale: '.94 1.06' }, { scale: 1 }], { duration: 700 });
+        await sleep(600);
+        giggle(T); T.pop(500, 120, '킥킥!', C.bean);
+        await T.anim(rs.refl, [{ rotate: '0deg' }, { rotate: '-6deg' }, { rotate: '6deg' }, { rotate: '-4deg' }, { rotate: '0deg' }], 700);
+      })();
+      if (verb === 'lookup') { t.hop(30); return; }
+      if (verb === 'oil' && a1 === 'slip') return (async () => {
+        const tt = rs.tt;
+        for (let k = 0; k < 2; k++) {
+          await tt.move(640, 380, 700); AudioFX.slide(); T.pop(760, 180 + k * 30, k ? '쭈르륵!' : '미끌!', C.bean);
+          await tt.move(640, 560, 380, 'ease-in'); AudioFX.thud(); tt.wiggle(10, 300); await sleep(250);
+        }
+      })();
+      if (verb === 'axe') return rAxe();
+      if (verb === 'rope') return (async () => { t.face('left'); await t.move(500, 250, 1600, 'ease-in-out'); })();
+      if (verb === 'fall') return (async () => {
+        const ropeG = rs.rrope; if (ropeG) ropeG.remove();
+        t.P.wear('bump'); t.P.oMouth(); t.P.setBelly(1.5);
+        await t.move(500, 540, 450, 'ease-in');
+        const stars3 = el('g', {}, T.fx);
+        for (let k = 0; k < 3; k++) el('path', { d: 'M0 -12 L4 -4 12 -4 5 2 8 12 0 6 -8 12 -5 2 -12 -4 -4 -4 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(46 0)` }, stars3);
+        stars3.animate([{ transform: 'translate(500px,245px) rotate(0)' }, { transform: 'translate(500px,245px) rotate(360deg)' }], { duration: 1200, iterations: 3 });
+        setTimeout(() => stars3.remove(), 3700);
+      })();
+      console.warn('[read] 호랑이 동사 모름', verb, a1);
+    };
+    const tiger_peek = async () => {
+      const TX = rs.tx;
+      await sleep(rInst() ? 0 : 250);
+      if (rInst()) return;
+      await rTiger.move(TX, rs.peekY, 380, 'ease-out'); await sleep(250);
+      T.world.appendChild(rTiger.pos); AudioFX.hop();
+      await Promise.all([rTiger.move(T.portrait() ? 610 : 630, 500, 500), rTiger.hop(50, 500)]);
+    };
+    const rAxe = async () => {
+      const tree = rs.tree, tt = rs.tt;
+      if (!rInst()) await (bgUrl('tree') ? tree.to(800, 150, 1, 900) : tree.to(500, -200, 1, 900));
+      const split = el('g', {}, T.fx);
+      const cpT = el('clipPath', { id: 'splitTop' }, split); el('rect', { x: -1400, y: -1400, width: 3800, height: 1676 }, cpT);
+      const cpB = el('clipPath', { id: 'splitBot' }, split); el('rect', { x: -1400, y: 284, width: 3800, height: 1600 }, cpB);
+      const top = el('g', { 'clip-path': 'url(#splitTop)' }, split), bot = el('g', { 'clip-path': 'url(#splitBot)' }, split);
+      if (!treeArt(T, top, 1.6, TREE_PX.branch, [500, 262])) {
+        sky(T, top, C.indigo); stars(T, top, [[120, 60], [880, 80], [300, 30], [760, 200]]);
+        T.paper(top, [['circle', { cx: 500, cy: 40, r: 200, fill: '#35604A' }], ['path', { d: 'M180 250 H820 V282 H180 Z', fill: C.bark }]]);
+      }
+      const sb = mkBoy(T, top, 560, 256, .95), sg = mkGirl(T, top, 440, 256, .88);
+      sb.P.pose('hug'); sg.P.pose('hug');
+      const tr1 = tremble(sb), tr2 = tremble(sg);
+      if (!treeArt(T, bot, 1.8, TREE_PX.trunkMid, [500, 480])) { sky(T, bot, '#2A3558'); T.paper(bot, [['rect', { x: 430, y: 280, width: 140, height: 400, fill: C.bark }]]); }
+      const notches = el('g', {}, bot);
+      for (let k = 0; k < 14; k++) el('path', { d: `M440 ${160 + k * 40} L470 ${172 + k * 40}`, stroke: '#4A3222', 'stroke-width': 6, 'stroke-linecap': 'round' }, notches);
+      const st = mkTiger(T, bot, 470, 580, .9); st.P.wear('scarf'); st.P.setBelly(2.4); st.P.wear('axe');
+      el('rect', { x: -1400, y: 274, width: 3800, height: 12, fill: C.gold }, split);
+      let ny = 0;
+      for (let k = 0; k < 7; k++) {
+        kok(T); T.pop(640, 360, '콕!', C.bean); st.P.chop(); st.hop(12, 360);
+        ny += 40; T.anim(notches, [{ transform: `translateY(${ny - 40}px)` }, { transform: `translateY(${ny}px)` }], 360);
+        await sleep(640);
+      }
+      tr1.cancel(); tr2.cancel(); split.remove();
+      tt.P.wear('axe'); tt.place(640, 240);
+      await tree.to(...rTREE_WIDE, .58, 900);
+    };
+    const READ_ACTS = {
+      set: rSet,
+      cam: (a, b) => {
+        if (a === 'wide') return rInst() ? camSnap(500, 280, 1) : camWide(600);
+        if (a === 'snap') { const [x, y, z] = String(b).split(',').map(Number); return camSnap(x, y, z || 1); }
+        const [x, y, z] = String(a).split(',').map(Number); return rInst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 600);
+      },
+      mom: (verb, a1) => {
+        if (verb === 'at') { const [x, y] = String(a1).split(',').map(Number); mom.place(x, y); return; }
+        if (verb === 'face') { mom.face(a1); return; }
+        if (verb === 'wave') { wave(T, mom); return; }
+        if (verb === 'hide') { mom.pos.remove(); return; }
+        if (verb === 'basket') { if (a1 === 'on') { mom.P.holdBasket(true); mom.P.setCakes(5); mom.P.smile && mom.P.smile(); } else { mom.P.holdBasket(false); mom.P.setCakes(0); } return; }
+        if (verb === 'walk') {
+          let [x, y] = String(a1).split(',').map(Number);
+          if (/^hill/.test(rs.tag) && x < 1000) x = T.portrait() ? 370 : 300;
+          if (x > 1000) mom.face('right');
+          return mom.move(x, y, x > 1000 ? (rs.tag === 'cottage' ? 1800 : 1400) : 1500);
+        }
+        console.warn('[read] 엄마 동사 모름', verb);
+      },
+      boy: rKid('boy'), girl: rKid('girl'),
+      tiger: rTigerAct,
+      cake: (verb, n) => {
+        if (verb !== 'fly') return;
+        n = +n;
+        return (async () => {
+          if (rs.tag === 'kitchen') {
+            for (let i = 0; i < n && i < rs.plateCakes.length; i++) {
+              const c = rs.plateCakes[i], [x1, y1] = rToBasket(i);
+              T.tone(500 + i * 90, .15, { type: 'triangle', vol: .18 });
+              c.g.setAttribute('opacity', 0);
+              await rFly(c.x, c.y, x1, y1, 1.8, 450, c.k);
+              mom.P.setCakes(i + 1); mom.P.holdBasket(true); AudioFX.pop();
+            }
+            return;
+          }
+          const t = rs.tiger || rTiger;
+          for (let k = 0; k < n; k++) {
+            const [x0, y0] = rToBasket(Math.max(0, Math.min(4, Math.ceil((6 - rs.given) * 5 / 6) - 1)));
+            rs.given++; rBasket();
+            await rFly(x0, y0, t.x, t.y - 140, 1.4, 360, k);
+            AudioFX.chomp();
+          }
+          AudioFX.gulp && AudioFX.gulp();
+        })();
+      },
+      door: (verb, a1) => {
+        if (verb === 'hand') return (async () => {
+          const paw = rs.paw = el('g', { transform: 'translate(500,320)' }, T.world);
+          if (!rHandArt(paw, 'paw_flour', 150, 160)) {
+            T.paper(paw, [['ellipse', { cx: 0, cy: 10, rx: 70, ry: 62, fill: C.snow }], ['ellipse', { cx: 0, cy: 20, rx: 28, ry: 20, fill: C.pink }]]);
+            [-40, -14, 14, 40].forEach(x => { el('ellipse', { cx: x, cy: -44, rx: 16, ry: 18, fill: C.snow, stroke: '#CFC8BA', 'stroke-width': 3 }, paw); el('path', { d: `M${x - 6} -58 L${x} -86 L${x + 6} -58 Z`, fill: C.ink }, paw); });
+          }
+          AudioFX.slide();
+          await T.anim(paw, [{ transform: 'translate(500px,320px) scale(.1)' }, { transform: 'translate(500px,320px) scale(1.2)' }], { duration: 600, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+          paw.setAttribute('transform', 'translate(500,320) scale(1.2)'); paw.style.transform = '';
+        })();
+        if (verb === 'hole') return (async () => {
+          if (rs.paw) { rs.paw.remove(); rs.paw = null; }
+          const cp = el('clipPath', { id: 'peekHole' }, T.world), circ = el('circle', { cx: 500, cy: 300, r: 0 }, cp);
+          const inside = el('g', { 'clip-path': 'url(#peekHole)' }, T.world);
+          const fu = artUrl('peek_fur'), eu = artUrl('peek_eye');
+          if (fu) el('image', { href: fu, x: 50, y: -123, width: 900, height: 900 * 964 / 1024, preserveAspectRatio: 'none' }, inside);
+          else { el('rect', { x: 0, y: 0, width: 1000, height: 600, fill: C.persimmon }, inside); ['M180 60 L260 120 L170 150 Z', 'M820 60 L740 120 L830 150 Z', 'M470 30 L500 110 L530 30 Z'].forEach(d => el('path', { d, fill: C.stripe }, inside)); }
+          const eye = rs.eye = origin(el('g', {}, inside), 500, 300);
+          if (eu) el('image', { href: eu, x: 300, y: 111, width: 400, height: 377, filter: 'url(#pp)' }, eye);
+          else { el('ellipse', { cx: 500, cy: 300, rx: 190, ry: 180, fill: '#fff' }, eye); el('circle', { cx: 500, cy: 310, r: 110, fill: C.ink }, eye); el('circle', { cx: 548, cy: 256, r: 34, fill: '#fff' }, eye); }
+          const rim = el('circle', { cx: 500, cy: 300, r: 0, fill: 'none', stroke: '#E9DCC0', 'stroke-width': 18, 'stroke-dasharray': '10 6' }, T.world);
+          AudioFX.poke(); T.pop(620, 180, '콕!', C.bean);
+          for (let r = 10; r <= 200; r += 10) { circ.setAttribute('r', r); rim.setAttribute('r', r); if (!rInst()) await sleep(16); }
+        })();
+        if (verb === 'eye') return (async () => {
+          if (!rs.eye) return;
+          for (let k = 0; k < 2; k++) { await T.anim(rs.eye, [{ transform: 'scaleY(1)' }, { transform: 'scaleY(.08)' }, { transform: 'scaleY(1)' }], 320); await sleep(150); }
+          T.pop(820, 120, '깜빡깜빡', C.pine);
+        })();
+      },
+      kids: (verb, a1) => {
+        if (verb === 'run') return (async () => {
+          if (!rs.hidden) { for (let i = 1; i <= 2; i++) { await rRun(rYJ.run1); await sleep(150); } }
+          else { for (let i = 1; i <= 3; i++) { await rRun(rYJ.run2); await sleep(150); } }
+        })();
+        if (verb === 'hide') return (async () => {
+          AudioFX.slide();
+          const yard = rs.yard, jarsG = rs.hideJar.parentNode;
+          yard.insertBefore(boy.pos, jarsG); yard.insertBefore(girl.pos, jarsG);
+          await Promise.all([boy.move(rYJ.hide[0], rYJ.hideY, 500), girl.move(rYJ.hide[1], rYJ.hideY, 500), boy.hop(40, 500), girl.hop(40, 500)]);
+          boy.setScale(rYJ.hideS); girl.setScale(rYJ.hideS * .92); rs.hidden = true;
+        })();
+        if (verb === 'climb') return (async () => { for (let i = 1; i <= 5; i++) await rClimb(i); })();
+        if (verb === 'top') return (async () => {
+          const tree = rs.tree;
+          if (rs.n.tree === 1 || rs.tag !== 'tree') { boy.P.pose('stand'); girl.P.pose('stand'); }
+          boy.place(rTOP.b[0], rTOP.b[1]); girl.place(rTOP.g[0], rTOP.g[1]);
+          if (!rInst()) await tree.to(...rTREE_WIDE, .58, 1400); else tree.to(...rTREE_WIDE, .58, 0);
+        })();
+        if (verb === 'rope') return (async () => {
+          const RX = rs.RX, GAP = rs.GAP || ROPE_GAP;
+          for (let i = 1; i <= 3; i++) { rs.step++; const by = 330 - rs.step * 450; AudioFX.whoosh(); yeongcha(T, rs.step); boy.move(RX, by, 650); girl.move(RX, by + GAP, 650); rs.skyV.to(500, by + 30, 1, 650); await sleep(700); }
+        })();
+      },
+      clouds: () => (async () => {
+        const RX = rs.RX, GAP = rs.GAP || ROPE_GAP;
+        for (let i = 1; i <= 3; i++) { rs.step++; const by = 330 - rs.step * 450; AudioFX.whoosh(); yeongcha(T, rs.step); boy.move(RX, by, 650); girl.move(RX, by + GAP, 650); rs.skyV.to(500, by + 30, 1, 650); await sleep(700); }
+        await sleep(500); AudioFX.fanfare();
+      })(),
+      oil: () => (async () => {
+        const bottle = rs.bottle;
+        if (!rInst()) await rs.tree.to(700, 300, .85, 900);
+        await T.anim(bottle, [{ transform: 'rotate(0deg)' }, { transform: 'rotate(-60deg)' }], 400);
+        bottle.style.transform = 'rotate(-60deg)'; AudioFX.slide();
+        for (let hgt = 0; hgt <= 540; hgt += 27) { rs.oil.__clip.setAttribute('height', hgt); await sleep(16); }
+        T.pop(640, 110, '주르륵', C.gold);
+      })(),
+      rope: (verb) => {
+        if (verb === 'good') return (async () => { AudioFX.bell(); await T.anim(rs.ropeGood, [{ transform: 'translateY(-900px)' }, { transform: 'translateY(0)' }], { duration: 1500, easing: 'ease-out' }); rs.ropeGood.style.transform = 'translateY(0)'; AudioFX.jingle(); })();
+        if (verb === 'bad') return (async () => {   // 호랑이도 하늘에 빌자 낡은 줄이 스르르
+          const g = rs.rrope = el('g', {}, T.world);
+          if (!ropeArt(T, g, 'rope_bad', 500, 300, .35)) T.paper(g, [['path', { d: 'M500 -3400 V260 Q515 320 493 380', stroke: '#9A8466', 'stroke-width': 8, fill: 'none', 'stroke-dasharray': '40 7' }]]);
+          AudioFX.bell();
+          await T.anim(g, [{ transform: 'translateY(-700px)' }, { transform: 'translateY(0)' }], { duration: 1500, easing: 'ease-out' });
+        })();
+        if (verb === 'snap') return (async () => { creak(T); const g = rs.rrope; if (g) { T.anim(g, [{ transform: 'translateY(0)', opacity: 1 }, { transform: 'translateY(-500px)', opacity: 0 }], { duration: 900 }); } })();
+      },
+      sky: verb => {
+        if (verb === 'night') { rs.night = true; rSetSky(false); const nv = rs.nightVeil; if (!nv && rs.skyRect) rs.skyRect.style.fill = C.indigo; rs.starG.style.opacity = 1; if (nv) nv.style.opacity = nv.__full ? 1 : .62; AudioFX.bell(); return; }
+        if (verb === 'day') return (async () => {
+          if (rs.night && !rs.swapped) {   // "우리 바꾸자!" — 해와 달이 자리를 바꾼다
+            AudioFX.swish && AudioFX.swish();
+            await Promise.all([rs.sunKid.move(rs.OX[1], 170, 1000), rs.moonKid.move(rs.OX[0], 170, 1000)]);
+            rs.sunKid.P.set(false); rs.moonKid.P.set(true); rs.swapped = true;
+          }
+          rs.night = false;
+          const nv = rs.nightVeil;
+          if (nv) nv.style.opacity = 0; else if (rs.skyRect) rs.skyRect.style.fill = '#F2DFA8';
+          rs.starG.style.opacity = 0;
+          if (rs.swapped) { rs.moonKid.body.style.opacity = 1; rs.sunKid.body.style.opacity = .7; }
+        })();
+      },
+      cut: k => (rCut[k] ? rCut[k]() : console.warn('[read] cut 모름', k)),
+      fx: n => {
+        if (n === 'pop_out') return AudioFX.pop_out();
+        if (n === 'chomp') return AudioFX.chomp();
+        if (n === 'whoosh') return AudioFX.whoosh();
+        if (n === 'gulp') return AudioFX.gulp && AudioFX.gulp();
+        if (n === 'thud') return AudioFX.thud();
+        if (n === 'pop') return AudioFX.pop();
+        if (n === 'bell') return AudioFX.bell();
+        if (n === 'jingle') return AudioFX.jingle();
+        if (n === 'boom') return AudioFX.sfx('boom');
+        if (n === 'knock') { [0, 260, 520].forEach(t => setTimeout(() => AudioFX.sfx('knock'), t)); return; }
+        return AudioFX.sfx(n);
+      },
+      pop: spec => { const [x, y, ...w] = String(spec).split(','); T.pop(+x, +y, w.join(','), C.bean); },
+      shake: () => T.shake(),
+    };
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     await T.curtain(true);
     await say('옛날 옛날 산골 오막살이에 엄마와 오누이가 살았어요.');
     for (const [ki, k] of [boy, girl].entries()) {
@@ -1472,5 +2070,5 @@
     } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
-  Tale.mount({ title: '해와 달이 된 오누이', subtitle: '햇님 달님', run: T => run(portraitGuard(Tale.api)) });
+  Tale.mount({ title: '해와 달이 된 오누이', subtitle: '햇님 달님', read: true, run: T => run(portraitGuard(Tale.api)) });
 })();
