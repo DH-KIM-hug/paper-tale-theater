@@ -86,6 +86,66 @@
     };
   }
 
+  /* 난쟁이 집 문 (3장·9장). 배경 그림(sw_bg_house_front)의 돌 아치 문 자리에 딱 겹치게 세계 좌표로 바로 놓는다.
+     배경 아치(그림 픽셀 x 454~592, y 380~533)를 세계 좌표로 옮기면 x 266.5~359.6, 위 232.4, 문지방 335.7.
+     문 그림(480×477)의 돌 테 바깥선(x 3~476, y 0~477)을 그 자리에 맞춘 값이 DOOR (가로 .2053, 세로 .2187 — 배경 아치가 5% 더 길쭉해서 세로만 조금 늘림).
+     조각 (sw_prop_door_closed/open 에서 오려 냄, 좌표는 원래 그림 그대로):
+       inside 어두운 방(문 구멍 모양) · slot 들어가는 인물 자리 · wall 배경에서 오린 문 둘레 벽(문틀 바깥선 안쪽은 비움, 인물이 문 밖으로 삐져나오지 않게)
+       frame 돌 테 · leaf 닫힌 문짝(경첩은 왼쪽) · openFront 열린 그림에서 어두운 안쪽만 비운 것(열린 문짝+돌 테)
+     열림: 문짝을 왼쪽 경첩 가장자리를 축으로 가로로 접고(종이 문이 돌아가는 모습), 열린 그림 문짝 폭·자리에 닿으면 열린 그림으로 겹쳐 바꾼다.
+     돌 테는 닫힌·열린 그림이 같은 픽셀 자리라서 바꿔도 테가 움직이지 않는다 */
+  const DOOR = { x: 263.9, y: 231.4, sx: .2053, sy: .2187 };
+  const DOOR_ART = ['door_inside', 'door_wall', 'door_frame', 'door_leaf', 'door_openfront'];
+  function makeDoor(T) {
+    const d = (ix, iy) => [DOOR.x + ix * DOOR.sx, DOOR.y + iy * DOOR.sy];
+    const img = (k, ix, iy, iw, ih, parent, f = 'url(#pp)') => {
+      const [x, y] = d(ix, iy), g = T.el('g', f ? { filter: f } : {}, parent);
+      return { g, im: T.el('image', { href: artSrc(k), x, y, width: iw * DOOR.sx, height: ih * DOOR.sy, preserveAspectRatio: 'none' }, g) };
+    };
+    const p = {};
+    const a = T.actor(T.world, 0, 0, g => {
+      const id = 'swTint' + (++uid), f = T.el('filter', { id, 'color-interpolation-filters': 'sRGB' }, T.el('defs', {}, g));
+      T.el('feFlood', { 'flood-color': '#E8703A', 'flood-opacity': .16 }, f);
+      T.el('feComposite', { in2: 'SourceGraphic', operator: 'in' }, f);
+      const fm = T.el('feMerge', {}, f); T.el('feMergeNode', { in: 'SourceGraphic' }, fm); T.el('feMergeNode', {}, fm);
+      p.tintId = id;
+      p.inside = img('door_inside', 73, 63, 320, 410, g, '').g;
+      p.slot = T.el('g', {}, g);
+      /* 배경 1600×902 의 (409,326)~(640,533) 조각 → 세계 좌표 */
+      p.wall = T.el('image', { href: artSrc('door_wall'), x: -40 + 409 * .675, y: -24 + 326 * BGBOX.h / 902, width: 231 * .675, height: 207 * BGBOX.h / 902, preserveAspectRatio: 'none' }, g);
+      p.front = T.el('g', {}, g);                 /* 두드릴 때 들썩이는 것은 문틀·문짝뿐 (벽은 배경이라 움직이지 않는다) */
+      p.frame = img('door_frame', 0, 0, 480, 477, p.front).g;
+      p.leaf = img('door_leaf', 75, 65, 316, 406, p.front);
+      p.openFront = img('door_openfront', 0, 0, 480, 491, p.front).g;
+    });
+    Object.assign(a, p);
+    const L = a.leaf.im; L.style.transformBox = 'fill-box'; L.style.transformOrigin = '0% 50%';   /* 문짝 왼쪽 끝 = 경첩 */
+    a.reset = (tint = false) => {
+      T.world.appendChild(a.pos); a.pos.style.display = ''; a.pos.style.opacity = '';
+      [a.front, L, a.openFront, a.frame, a.leaf.g].forEach(n => { n.getAnimations().forEach(x => x.cancel()); n.style.transform = ''; n.style.opacity = ''; });
+      a.inside.style.display = 'none'; a.wall.style.display = 'none'; a.openFront.style.display = 'none';
+      a.frame.style.display = ''; a.leaf.g.style.display = '';
+      a.wall.setAttribute('filter', tint ? `url(#${a.tintId})` : '');
+      a.tint = tint;
+    };
+    /* 열린 그림의 문짝: 왼쪽 끝 x≈55, 폭 ≈150 (닫힌 문짝 조각은 x 75, 폭 316) → 접힌 끝 모양 */
+    const END = `translateX(${-20 * DOOR.sx}px) scaleX(.48)`;
+    a.open = async (onHalf) => {
+      a.inside.style.display = '';
+      await T.anim(L, [{ transform: 'translateX(0) scaleX(1)' }, { transform: `translateX(${-8 * DOOR.sx}px) scaleX(.72)` }], { duration: 480, easing: 'ease-in' });
+      L.style.transform = `translateX(${-8 * DOOR.sx}px) scaleX(.72)`;
+      if (onHalf) onHalf();
+      await T.anim(L, [{ transform: L.style.transform }, { transform: END }], { duration: 420, easing: 'ease-out' });
+      L.style.transform = END;
+      /* 접힌 문짝 → 열린 그림 (같은 자리에서 겹쳐 바꿈) */
+      a.openFront.style.display = '';
+      await Promise.all([T.anim(a.openFront, [{ opacity: 0 }, { opacity: 1 }], 260), T.anim(a.leaf.g, [{ opacity: 1 }, { opacity: 0 }], 260)]);
+      a.leaf.g.style.display = 'none'; a.frame.style.display = 'none'; L.style.transform = '';
+    };
+    a.reset();
+    return a;
+  }
+
   /* 일곱 난쟁이 한 줄 그림을 일곱 조각으로 오려(같은 그림, 자리만 나눠 자름) 말하는 난쟁이만 콩 뛰게 한다.
      등불(lantern)은 몇 명의 손 쪽에 붙여 함께 뛴다 */
   function crew(T, { lanterns = false } = {}) {
@@ -111,6 +171,7 @@
   const sleep0 = ms => new Promise(r => setTimeout(r, ms));
 
   async function run(T) {
+    if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     /* 대사 사이에 숨 한 번 (3~4세가 따라오게, 한 편 6~7분) */
     const say = async text => { await T.say(text); await sleep(700); };
@@ -120,7 +181,7 @@
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; /* 말풍선 없는 소리 대사 (수 세기) */
 
-    const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...Object.keys(ASP).map(k => T.preload(artSrc(k)))];
+    const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...Object.keys(ASP).map(k => T.preload(artSrc(k))), ...DOOR_ART.map(k => T.preload(artSrc(k)))];
     await Promise.race([Promise.all(loads), sleep(4000)]);
 
     /* ---- 배우 ---- (높이는 자세마다 머리 크기가 서 있을 때와 같아지게 잰 값) */
@@ -139,7 +200,7 @@
     const granny = prop(T, 'granny_basket', 215, 'left');
     const prince = prop(T, 'prince', 228);
     const mirror = prop(T, 'prop_mirror', 230);
-    const door = mk(T, { closed: ['prop_door_closed', 104, 'front'], open: ['prop_door_open', 107, 'front'] });
+    const door = makeDoor(T);
     const table = prop(T, 'prop_table', 165);
     const chairs = Array.from({ length: 7 }, (_, i) => prop(T, i === 6 ? 'prop_chair_7' : 'prop_chair', 84));
     const beds = Array.from({ length: 7 }, (_, i) => prop(T, 'prop_bed' + (i + 1), 100));
@@ -194,32 +255,38 @@
     const FAR = .62;                                       /* 집이 멀리 보이는 장면: 카메라를 당겨 화면 속 백설 크기는 다른 장면과 같다 */
     await T.sceneCard(tr('작은 집'), () => {
       scene('house_front'); tint(T, '#E8703A', .16);       /* 해 질 녘 */
-      put(T, door, 314, 339, { look: 'closed' });          /* 그림 속 집의 문 자리에 딱 맞춘 문 */
+      door.reset(true);                                    /* 그림 속 집의 문 자리에 딱 맞춘 문 (해 질 녘 빛을 벽 조각에도) */
       put(T, snow, 520, 352, { look: 'stand', s: FAR });
       camSnap(X(370, 380), 270, P ? 1.5 : 1.7);
     }, door.pos);
     await Promise.all([say('날이 저물 무렵, 백설공주는 숲속에서 아주 작은 집을 찾았어요.'), snow.move(410, 352, 1800)]);
     await say('어머, 정말 작은 집이네. 계세요? 아무도 안 계세요?');
-    door.pos.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 900, iterations: 3, easing: 'ease-in-out' });
-    await say('문을 톡 두드려 볼까요?');
-    await T.tap(door.pos, { prompt: '문을 톡 두드려 볼까요?' });
+    door.front.animate([{ translate: '0 0' }, { translate: '0 -3px' }, { translate: '0 0' }], { duration: 900, iterations: 3, easing: 'ease-in-out' });
+    await T.ask('문을 톡 두드려 볼까요?', () => T.tap(door.pos, { prompt: '문을 톡 두드려 볼까요?' }));
     sfx(T, 'knock', () => T.tone([180, 90], .12, { type: 'square', vol: .12 })); T.pop(314, 170, tr('똑똑!'));
     await sleep(700);
     sfx(T, 'creak', () => sfx(T, 'door'));
-    /* 문이 왼쪽 경첩을 따라 열린다: 닫힌 문 → 반쯤 열림(뒤에 어두운 안쪽) → 활짝 열린 그림 */
-    const dark = T.el('rect', { x: 314 - 51, y: 339 - 100, width: 102, height: 100, fill: '#2B1D14' }, T.world);
-    T.world.insertBefore(dark, door.pos);
-    door.body.style.transformBox = 'fill-box'; door.body.style.transformOrigin = '0% 50%';
-    await T.anim(door.body, [{ transform: 'scaleX(1)' }, { transform: 'scaleX(.55)' }], 420);
-    door.body.style.transform = 'scaleX(.55)'; T.pop(314, 150, tr('삐걱!'));
-    await T.anim(door.body, [{ transform: 'scaleX(.55)' }, { transform: 'scaleX(.9)' }], 260);
-    door.body.style.transform = ''; door.look('open'); dark.remove();
+    door.front.getAnimations().forEach(n => n.cancel());
+    /* 문이 왼쪽 경첩을 축으로 열린다: 문짝이 경첩 쪽으로 접히며 뒤의 어두운 방이 문 구멍 안에만 보이고, 열린 그림으로 이어진다 */
+    await door.open(() => T.pop(314, 150, tr('삐걱!')));
     await say('삐걱, 문이 열렸어요. 집 안에는 아무도 없었어요.');
-    /* 열린 문 안쪽(어두운 방)으로 걸어 들어간다 */
-    await snow.move(314, 345, 900);
-    snow.setScale(.8 * FAR);
-    snow.body.style.filter = 'brightness(.3)';
-    await T.anim(snow.pos, [{ opacity: 1 }, { opacity: 0 }], 500); hide(snow); snow.pos.style.opacity = ''; snow.body.style.filter = '';
+    /* 문 안으로 들어간다: 문 앞까지 걸어가 문지방에 올라서며(안쪽으로 한 걸음, 원근만큼 작아짐) →
+       문틀·벽 조각 뒤(slot)로 옮겨 문 구멍 안에서만 보이게 → 어두운 방 안쪽으로 멀어지며 어두워지다 사라진다.
+       문지방 위 크기 .44×FAR 는 문 구멍(열린 문짝 오른쪽 x 307~344, 아치 꼭대기 245)에 몸이 다 들어가는 크기라 옮길 때 잘림이 없다 */
+    const EX = 325, SILL3 = 336.5;
+    const tf = (x, y, s) => `translate(${x}px,${y}px) scale(${s},${s})`;
+    const stepTo = async (x, y, s, ms, extra) => {
+      const from = tf(snow.x, snow.y, snow.scale), to = tf(x, y, s);
+      snow.pos.removeAttribute('transform');
+      await Promise.all([T.anim(snow.pos, [{ transform: from }, { transform: to }], { duration: ms, easing: 'ease-in-out' }), extra && extra()]);
+      snow.pos.style.transform = ''; snow.scale = s; snow.place(x, y);
+    };
+    await snow.move(EX, 350, 900);
+    await stepTo(EX, SILL3, .44, 600);
+    door.wall.style.display = ''; door.slot.appendChild(snow.pos);
+    await stepTo(EX + 2, SILL3 - 6, .3, 1000, () => T.anim(snow.body, [{ filter: 'brightness(1)', opacity: 1 }, { filter: 'brightness(.35)', opacity: 1, offset: .6 }, { filter: 'brightness(.2)', opacity: 0 }], { duration: 1000, easing: 'ease-in' }));
+    hide(snow); snow.body.style.filter = ''; snow.body.style.opacity = ''; door.wall.style.display = 'none';
+    T.world.appendChild(snow.pos);
     await sleep(200);
 
     /* ===== 4. 작은 식탁 ===== */
@@ -367,8 +434,7 @@
       T.world.appendChild(snow.pos);
       if (P) camSnap(SX[2], 280, 1);
     }, bigBed.pos);
-    await say('침대가 몇 개일까요? 톡 눌러 봐요.');
-    await T.tap(bedsG, { prompt: '침대가 몇 개일까요? 톡 눌러 봐요.' });
+    await T.ask('침대가 몇 개일까요? 톡 눌러 봐요.', () => T.tap(bedsG, { prompt: '침대가 몇 개일까요? 톡 눌러 봐요.' }));
     const all = [...beds, bigBed];
     for (let i = 0; i < 8; i++) {
       const b = all[i];
@@ -398,10 +464,9 @@
     const order = [0, 1, 2, 3, 4, 5, 6].sort(() => Math.random() - .5).slice(0, 3);
     for (const k of order) {
       const q = BCOL[k] + ' 침대를 찾아 볼까요?';
-      await say(q);
       const opts = beds.map((b, i) => ({ el: b.pos, ok: i === k,
         onWrong: async () => { await b.wiggle(8, 360); await say('그건 ' + BCOL[i] + ' 침대예요.'); } }));
-      await T.choose(opts, { prompt: q });
+      await T.ask(q, () => T.choose(opts, { prompt: q }));
       const b = beds[k];
       glow(b, 1200); b.hop(14, 400); sfx(T, 'sparkle', () => popSfx(T));
       T.pop(b.x, b.y - 100 * (relaid ? .85 : (k % 2 ? .82 : .74)) - 30, tr('쿨쿨'));
@@ -429,7 +494,7 @@
     let winG;
     await T.sceneCard(tr('사과 할머니'), () => {
       scene('house_front');
-      put(T, door, 314, 339, { look: 'closed' });
+      door.reset();
       winG = T.el('g', {}, T.world);
       const id = 'swWin' + (++uid);
       T.el('rect', { x: WX - 17, y: SILL - 44, width: 34, height: 44, rx: 15 }, T.el('clipPath', { id }, winG));
@@ -529,8 +594,7 @@
     /* 유리 뚜껑·관 앞판이 백설 위를 덮고 있어 백설을 직접 누를 수 없다 → 맨 위에 투명한 누르는 자리를 따로 둔다 (2026-10-20) */
     const hand = T.el('circle', { cx: snow.x, cy: snow.y - 48, r: 90, fill: '#fff', opacity: 0 }, T.world);
     snow.pos.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 1600, iterations: 3, easing: 'ease-in-out' });
-    await say('백설공주의 손을 톡 눌러 볼까요?');
-    await T.tap(hand, { prompt: '백설공주의 손을 톡 눌러 볼까요?' });
+    await T.ask('백설공주의 손을 톡 눌러 볼까요?', () => T.tap(hand, { prompt: '백설공주의 손을 톡 눌러 볼까요?' }));
     hand.remove();
     glass.remove();                                        /* 유리 뚜껑을 열었다 */
     T.world.insertBefore(shine.pos, coffin.pos.nextSibling);
