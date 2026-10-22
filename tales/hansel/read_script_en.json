@@ -1,0 +1,1113 @@
+{
+ "mode": "read",
+ "tale": "hansel",
+ "lang": "en",
+ "title": "Hansel and Gretel",
+ "voices_from": "voice_script_el.json",
+ "moral": "Home is the coziest place of all.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md §3-4). text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 voice_script_en.json 의 en 그대로, trim 은 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<house_night|cottage_night|trail|cottage|glade|ground|house|roof|cage|oven|river>": "장면 세트(scene(key): T.clear + bgImage + camSnap)",
+  "cam:wide | cam:<x>": "카메라(camSnap cx)",
+  "<hans|gret|father|step|witch|bird|duck>:at:<x,y> | :look:<walk|crumb|wood|worry|stand|point|arms|hug|sleep|cage|broom> | :to:<left|right> | :walk:<x,y> | :hide | :hop | :fade": "배우 자리(put)·그림(look)·방향·걷기",
+  "pebbles:show | pebbles:pick | pebbles:drop:<n> | crumbs:drop:<n> | berries:eat | candy:fix:<n> | keys:show | cage:open | oven:slam | hat:fly | duck:cross | door:prop": "소품·연출(조약돌 줍기·떨어뜨리기, 부스러기, 산딸기, 사탕 붙이기, 열쇠, 새장 열림, 화덕 문, 모자 날아감, 오리 건너기, 문짝)",
+  "cut:<pebbles|bird|eat|witch|slam|pop|duck|hug>": "그림 컷(cutImage)",
+  "fx:<pop|click|boom|whoosh|sparkle> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
+ },
+ "scenes": [
+  {
+   "key": "R01_night",
+   "card": "Night at Home",
+   "set": "house_night",
+   "enter": [
+    "step:at:330,380",
+    "step:look:point",
+    "father:at:560,540",
+    "father:look:worry",
+    "hans:at:850,640",
+    "hans:look:walk",
+    "hans:to:left",
+    "door:prop",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.",
+     "src": "reuse",
+     "en": "Once upon a time, Hansel and Gretel lived in a little house beside the forest.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, Hansel and Gretel lived in a little house beside the forest."
+      ]
+     ]
+    },
+    {
+     "text": "그런데 집에는 먹을 것이 점점 떨어져, 찬장이 텅텅 비었지요.",
+     "src": "new",
+     "en": "But the food at home was running out, and the cupboard was bare, empty as could be.",
+     "segs": [
+      [
+       "nar",
+       "But the food at home was running out, and the cupboard was bare, empty as could be."
+      ]
+     ]
+    },
+    {
+     "text": "어느 날 밤, 헨젤은 문틈으로 엿들었어요.",
+     "src": "reuse",
+     "en": "One night, Hansel listened at the crack of the door.",
+     "segs": [
+      [
+       "nar",
+       "One night, Hansel listened at the crack of the door."
+      ]
+     ]
+    },
+    {
+     "text": "\"먹을 게 없어요. 내일 아이들을 숲에 두고 와요.\" 새엄마가 말했어요.",
+     "src": "reuse",
+     "en": "\"There's no food left. Tomorrow, let's leave the children in the forest,\" said the stepmother.",
+     "segs": [
+      [
+       "step",
+       "There's no food left. Tomorrow, let's leave the children in the forest."
+      ],
+      [
+       "nar",
+       "said the stepmother."
+      ]
+     ]
+    },
+    {
+     "text": "\"음… 아이들이 가엾은데…\" 아빠는 망설였어요.",
+     "src": "reuse",
+     "en": "\"Hmm... the poor children...\" Father hesitated.",
+     "segs": [
+      [
+       "father",
+       "Hmm... the poor children..."
+      ],
+      [
+       "nar",
+       "Father hesitated."
+      ]
+     ],
+     "before": [
+      "step:look:arms"
+     ]
+    },
+    {
+     "text": "헨젤은 가슴이 콩닥콩닥 뛰었어요. 그래도 꼭 참고 생각했지요.",
+     "src": "new",
+     "en": "Hansel's heart went thump, thump, thump. But he stayed quiet and thought hard.",
+     "segs": [
+      [
+       "nar",
+       "Hansel's heart went thump, thump, thump. But he stayed quiet and thought hard."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_pebbles",
+   "card": "Moonlit Pebbles",
+   "set": "cottage_night",
+   "enter": [
+    "hans:at:430,400",
+    "hans:look:crumb",
+    "hans:to:right",
+    "pebbles:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!",
+     "src": "reuse",
+     "en": "Hansel tiptoed outside. Pebbles twinkled in the moonlight!",
+     "segs": [
+      [
+       "nar",
+       "Hansel tiptoed outside. Pebbles twinkled in the moonlight!"
+      ]
+     ],
+     "before": [
+      "fx:sparkle"
+     ]
+    },
+    {
+     "text": "헨젤은 하얀 조약돌을 하나, 또 하나, 주머니에 쏙쏙 넣었어요.",
+     "src": "new",
+     "en": "Hansel picked up the white pebbles, one, and another, and tucked them into his pockets, plop, plop.",
+     "segs": [
+      [
+       "nar",
+       "Hansel picked up the white pebbles, one, and another, and tucked them into his pockets, plop, plop."
+      ]
+     ],
+     "before": [
+      "pebbles:pick",
+      "pop:600,330,쏙!"
+     ]
+    },
+    {
+     "text": "헨젤은 조약돌을 주머니에 가득 채웠어요. \"이제 괜찮아.\"",
+     "src": "reuse",
+     "en": "Hansel filled his pockets with pebbles. \"Now we'll be fine.\"",
+     "segs": [
+      [
+       "nar",
+       "Hansel filled his pockets with pebbles."
+      ],
+      [
+       "hans",
+       "Now we'll be fine."
+      ]
+     ],
+     "after": [
+      "hans:to:left"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_trail",
+   "card": "The Pebble Path",
+   "set": "trail",
+   "enter": [
+    "father:at:300,330",
+    "father:look:wood",
+    "gret:at:420,420",
+    "gret:look:walk",
+    "hans:at:520,500",
+    "hans:look:crumb",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "다음 날, 아빠는 둘을 데리고 숲 깊은 곳으로 갔어요.",
+     "src": "reuse",
+     "en": "The next day, Father took the two of them deep into the forest.",
+     "segs": [
+      [
+       "nar",
+       "The next day, Father took the two of them deep into the forest."
+      ]
+     ],
+     "after": [
+      "father:walk:600,330",
+      "gret:walk:720,420",
+      "hans:walk:820,500"
+     ]
+    },
+    {
+     "text": "헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.",
+     "src": "reuse",
+     "en": "Hansel quietly dropped the pebbles one by one.",
+     "segs": [
+      [
+       "nar",
+       "Hansel quietly dropped the pebbles one by one."
+      ]
+     ],
+     "before": [
+      "pebbles:drop:5",
+      "pop:520,250,반짝!"
+     ]
+    },
+    {
+     "text": "뚜벅뚜벅, 셋은 숲속 깊이 들어갔어요. 나뭇잎이 바스락바스락 소리를 냈지요.",
+     "src": "new",
+     "en": "Tramp, tramp, the three went deep into the forest. The leaves rustled, rustle, rustle.",
+     "segs": [
+      [
+       "nar",
+       "Tramp, tramp, the three went deep into the forest. The leaves rustled, rustle, rustle."
+      ]
+     ]
+    },
+    {
+     "text": "아빠는 둘을 숲에 남겨 두고 돌아갔어요.",
+     "src": "reuse",
+     "en": "Father left the two of them in the forest and went back.",
+     "segs": [
+      [
+       "nar",
+       "Father left the two of them in the forest and went back."
+      ]
+     ],
+     "after": [
+      "father:walk:1150,330"
+     ]
+    },
+    {
+     "text": "밤이 되자 조약돌이 달빛에 반짝반짝 빛났어요. 둘은 조약돌을 따라 집으로 돌아왔어요.",
+     "src": "reuse",
+     "en": "When night came, the pebbles twinkled in the moonlight. The two followed them all the way home.",
+     "segs": [
+      [
+       "nar",
+       "When night came, the pebbles twinkled in the moonlight. The two followed them all the way home."
+      ]
+     ],
+     "before": [
+      "cut:pebbles"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_crumbs",
+   "card": "Bread Crumbs",
+   "set": "cottage",
+   "enter": [
+    "step:at:200,300",
+    "step:look:stand",
+    "gret:at:340,395",
+    "hans:at:440,470",
+    "father:at:560,575",
+    "father:look:wood",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "하지만 얼마 뒤, 새엄마가 또 아이들을 숲에 두고 오자고 했어요.",
+     "src": "reuse",
+     "en": "But not long after, the stepmother said again to leave the children in the forest.",
+     "segs": [
+      [
+       "nar",
+       "But not long after, the stepmother said again to leave the children in the forest."
+      ]
+     ]
+    },
+    {
+     "text": "이번엔 밤에 문이 잠겨서, 조약돌을 주울 수 없었어요.",
+     "src": "reuse",
+     "en": "This time the door was locked at night, so Hansel could not gather pebbles.",
+     "segs": [
+      [
+       "nar",
+       "This time the door was locked at night, so Hansel could not gather pebbles."
+      ]
+     ]
+    },
+    {
+     "text": "\"얘들아, 숲에 산딸기 따러 가자!\" 아빠가 말했어요.",
+     "src": "reuse",
+     "en": "Children, let's go pick berries in the forest! said Papa.",
+     "segs": [
+      [
+       "father",
+       "Children, let's go pick berries in the forest!"
+      ],
+      [
+       "nar",
+       "said Papa."
+      ]
+     ],
+     "after": [
+      "hans:hop"
+     ]
+    },
+    {
+     "text": "헨젤은 빵 부스러기로 길을 표시하기로 했어요.",
+     "src": "reuse",
+     "en": "Hansel decided to mark the way with bread crumbs.",
+     "segs": [
+      [
+       "nar",
+       "Hansel decided to mark the way with bread crumbs."
+      ]
+     ]
+    },
+    {
+     "text": "숲길에서 헨젤은 빵 부스러기를 솔솔, 하나씩 떨어뜨렸어요.",
+     "src": "new",
+     "en": "Along the forest path, Hansel sprinkled bread crumbs, one by one, sprinkle, sprinkle.",
+     "segs": [
+      [
+       "nar",
+       "Along the forest path, Hansel sprinkled bread crumbs, one by one, sprinkle, sprinkle."
+      ]
+     ],
+     "before": [
+      "set:trail",
+      "hans:look:crumb",
+      "crumbs:drop:5"
+     ]
+    },
+    {
+     "text": "부스러기가 콩콩, 길게 줄을 이었지요.",
+     "src": "new",
+     "en": "The crumbs made a long, long trail behind him, dot, dot, dot.",
+     "segs": [
+      [
+       "nar",
+       "The crumbs made a long, long trail behind him, dot, dot, dot."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_glade",
+   "card": "The Clearing",
+   "set": "glade",
+   "enter": [
+    "hans:at:420,480",
+    "gret:at:520,480",
+    "father:at:700,520",
+    "father:look:wood",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.",
+     "src": "reuse",
+     "en": "The clearing was full of red berries. The two of them munched away.",
+     "segs": [
+      [
+       "nar",
+       "The clearing was full of red berries. The two of them munched away."
+      ]
+     ],
+     "before": [
+      "berries:eat",
+      "pop:500,300,냠냠!"
+     ]
+    },
+    {
+     "text": "아삭아삭, 새콤달콤! 손가락이 빨갛게 물들었어요.",
+     "src": "new",
+     "en": "Crunch, crunch, sweet and sour! Their fingers turned bright red with berry juice.",
+     "segs": [
+      [
+       "nar",
+       "Crunch, crunch, sweet and sour! Their fingers turned bright red with berry juice."
+      ]
+     ]
+    },
+    {
+     "text": "배가 부르니 졸려서 둘은 나무 밑에서 깜빡 잠이 들었어요.",
+     "src": "reuse",
+     "en": "With full tummies, they got sleepy and dozed off under a tree.",
+     "segs": [
+      [
+       "nar",
+       "With full tummies, they got sleepy and dozed off under a tree."
+      ]
+     ],
+     "before": [
+      "hans:look:sleep",
+      "gret:look:sleep"
+     ],
+     "after": [
+      "father:hide"
+     ]
+    },
+    {
+     "text": "눈을 떠 보니 아빠가 보이지 않았어요. 둘은 길을 잃었어요.",
+     "src": "reuse",
+     "en": "When they woke up, Papa was nowhere to be seen. They were lost.",
+     "segs": [
+      [
+       "nar",
+       "When they woke up, Papa was nowhere to be seen. They were lost."
+      ]
+     ],
+     "before": [
+      "hans:look:walk",
+      "gret:look:walk"
+     ]
+    },
+    {
+     "text": "그레텔은 마음이 조금 무서웠어요.",
+     "src": "reuse",
+     "en": "Gretel felt a little scared.",
+     "segs": [
+      [
+       "nar",
+       "Gretel felt a little scared."
+      ]
+     ]
+    },
+    {
+     "text": "깜깜한 숲에서 부엉이가 부엉부엉 울었거든요.",
+     "src": "new",
+     "en": "An owl hooted, hoo, hoo, somewhere in the dark forest.",
+     "segs": [
+      [
+       "nar",
+       "An owl hooted, hoo, hoo, somewhere in the dark forest."
+      ]
+     ]
+    },
+    {
+     "text": "\"괜찮아, 빵 부스러기 길을 따라가자!\" 헨젤이 말했어요.",
+     "src": "reuse",
+     "en": "It's okay, let's follow the crumb trail! said Hansel.",
+     "segs": [
+      [
+       "hans",
+       "It's okay, let's follow the crumb trail!"
+      ],
+      [
+       "nar",
+       "said Hansel."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_ground",
+   "card": "The Forest Floor",
+   "set": "ground",
+   "enter": [
+    "hans:at:400,500",
+    "gret:at:520,500",
+    "bird:at:620,460",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그런데 이상해요. 빵 부스러기가 하나도 없어요!",
+     "src": "reuse",
+     "en": "But how strange! There were no crumbs left at all!",
+     "segs": [
+      [
+       "nar",
+       "But how strange! There were no crumbs left at all!"
+      ]
+     ]
+    },
+    {
+     "text": "둘은 두리번두리번, 땅바닥을 샅샅이 살폈어요.",
+     "src": "new",
+     "en": "They looked all around, this way and that, searching every inch of the ground.",
+     "segs": [
+      [
+       "nar",
+       "They looked all around, this way and that, searching every inch of the ground."
+      ]
+     ]
+    },
+    {
+     "text": "작은 새가 빵 부스러기를 물고 있어요.",
+     "src": "reuse",
+     "en": "A little bird has a crumb in its beak.",
+     "segs": [
+      [
+       "nar",
+       "A little bird has a crumb in its beak."
+      ]
+     ],
+     "before": [
+      "bird:hop"
+     ],
+     "after": [
+      "cut:bird"
+     ]
+    },
+    {
+     "text": "\"짹짹! 맛있어서 내가 다 먹었어!\" 새가 말했어요.",
+     "src": "reuse",
+     "en": "Tweet tweet! They were so yummy, I ate them all! said the bird.",
+     "segs": [
+      [
+       "bird",
+       "Tweet tweet! They were so yummy, I ate them all!"
+      ],
+      [
+       "nar",
+       "said the bird."
+      ]
+     ],
+     "before": [
+      "pop:620,330,짹짹!"
+     ]
+    },
+    {
+     "text": "헨젤은 눈물이 글썽했지만 그레텔의 손을 꼭 잡고 걸었어요.",
+     "src": "reuse",
+     "en": "Hansel's eyes got teary, but he held Gretel's hand tight and kept walking.",
+     "segs": [
+      [
+       "nar",
+       "Hansel's eyes got teary, but he held Gretel's hand tight and kept walking."
+      ]
+     ],
+     "after": [
+      "hans:walk:1100,500",
+      "gret:walk:1200,500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_candy",
+   "card": "The Candy House",
+   "set": "house",
+   "enter": [
+    "hans:at:360,500",
+    "gret:at:460,500",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!",
+     "src": "reuse",
+     "en": "Then a sweet smell drifted by. Oh! A candy house!",
+     "segs": [
+      [
+       "nar",
+       "Then a sweet smell drifted by. Oh! A candy house!"
+      ]
+     ]
+    },
+    {
+     "text": "벽은 쿠키, 지붕은 사탕이에요.",
+     "src": "reuse",
+     "en": "The walls are cookies and the roof is candy.",
+     "segs": [
+      [
+       "nar",
+       "The walls are cookies and the roof is candy."
+      ]
+     ]
+    },
+    {
+     "text": "헨젤은 쿠키 벽을 와삭, 그레텔은 사탕 지붕을 오도독 깨물었어요.",
+     "src": "new",
+     "en": "Hansel bit into the cookie wall, crunch, and Gretel nibbled the candy roof, crackle, crackle.",
+     "segs": [
+      [
+       "nar",
+       "Hansel bit into the cookie wall, crunch, and Gretel nibbled the candy roof, crackle, crackle."
+      ]
+     ],
+     "before": [
+      "cut:eat"
+     ]
+    },
+    {
+     "text": "너무 맛있어서 둘은 배가 빵빵해졌어요.",
+     "src": "reuse",
+     "en": "It was so yummy that their tummies got round and full.",
+     "segs": [
+      [
+       "nar",
+       "It was so yummy that their tummies got round and full."
+      ]
+     ]
+    },
+    {
+     "text": "헨젤은 지붕에 빠진 사탕을 하나씩 다시 콕콕 붙여 주었지요.",
+     "src": "new",
+     "en": "Then Hansel stuck the missing candies back on the roof, one by one, pop, pop, pop.",
+     "segs": [
+      [
+       "nar",
+       "Then Hansel stuck the missing candies back on the roof, one by one, pop, pop, pop."
+      ]
+     ],
+     "before": [
+      "set:roof",
+      "candy:fix:5"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_witch",
+   "card": "The Witch",
+   "set": "house",
+   "enter": [
+    "hans:at:360,500",
+    "gret:at:460,500",
+    "witch:at:700,500",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그때 문이 열리고 마녀 할머니가 나왔어요.",
+     "src": "reuse",
+     "en": "Then the door opened, and a witch granny came out.",
+     "segs": [
+      [
+       "nar",
+       "Then the door opened, and a witch granny came out."
+      ]
+     ],
+     "before": [
+      "cut:witch"
+     ]
+    },
+    {
+     "text": "\"내 과자 집을 누가 먹었니!\" 마녀가 투덜거렸어요.",
+     "src": "reuse",
+     "en": "Who ate my candy house? grumbled the witch.",
+     "segs": [
+      [
+       "witch",
+       "Who ate my candy house?"
+      ],
+      [
+       "nar",
+       "grumbled the witch."
+      ]
+     ]
+    },
+    {
+     "text": "마녀는 과자를 아끼는 심술쟁이 할머니였어요.",
+     "src": "reuse",
+     "en": "The witch was a grumpy granny who kept all her sweets to herself.",
+     "segs": [
+      [
+       "nar",
+       "The witch was a grumpy granny who kept all her sweets to herself."
+      ]
+     ]
+    },
+    {
+     "text": "\"내 사탕! 내 쿠키! 으으, 아까워라!\" 마녀는 발을 쿵쿵 굴렀어요.",
+     "src": "new",
+     "en": "\"My candy! My cookies! Oh, what a waste!\" The witch stamped her feet, stomp, stomp.",
+     "segs": [
+      [
+       "witch",
+       "My candy! My cookies! Oh, what a waste!"
+      ],
+      [
+       "nar",
+       "The witch stamped her feet, stomp, stomp."
+      ]
+     ]
+    },
+    {
+     "text": "마녀는 헨젤을 새장에 쏙 넣어 버렸어요. \"과자 값을 낼 때까지 여기 있어!\"",
+     "src": "reuse",
+     "en": "The witch popped Hansel into a cage. Stay there until you pay for the candy!",
+     "segs": [
+      [
+       "nar",
+       "The witch popped Hansel into a cage."
+      ],
+      [
+       "witch",
+       "Stay there until you pay for the candy!"
+      ]
+     ],
+     "before": [
+      "set:cage",
+      "hans:look:cage"
+     ]
+    },
+    {
+     "text": "그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.",
+     "src": "reuse",
+     "en": "While the witch napped, Gretel fetched three keys.",
+     "segs": [
+      [
+       "nar",
+       "While the witch napped, Gretel fetched three keys."
+      ]
+     ],
+     "before": [
+      "witch:look:sleep",
+      "keys:show"
+     ]
+    },
+    {
+     "text": "동그라미, 세모, 별 모양. 그레텔은 자물쇠 구멍을 요리조리 살펴보았어요.",
+     "src": "new",
+     "en": "A circle, a triangle, and a star. Gretel peered at the keyhole this way and that.",
+     "segs": [
+      [
+       "nar",
+       "A circle, a triangle, and a star. Gretel peered at the keyhole this way and that."
+      ]
+     ]
+    },
+    {
+     "text": "\"별 모양이야!\" 그레텔은 별 열쇠를 살며시 꽂았어요.",
+     "src": "new",
+     "en": "\"It is the star!\" Gretel gently slid the star key into the lock.",
+     "segs": [
+      [
+       "gret",
+       "It is the star!"
+      ],
+      [
+       "nar",
+       "Gretel gently slid the star key into the lock."
+      ]
+     ]
+    },
+    {
+     "text": "찰칵! 새장이 열렸어요. 헨젤이 폴짝 뛰어나왔어요!",
+     "src": "reuse",
+     "en": "Click! The cage opened. Hansel hopped out!",
+     "segs": [
+      [
+       "nar",
+       "Click! The cage opened. Hansel hopped out!"
+      ]
+     ],
+     "before": [
+      "fx:click",
+      "cage:open",
+      "pop:500,300,찰칵!"
+     ]
+    },
+    {
+     "text": "\"고마워, 그레텔!\" 헨젤이 말했어요.",
+     "src": "reuse",
+     "en": "Thank you, Gretel! said Hansel.",
+     "segs": [
+      [
+       "hans",
+       "Thank you, Gretel!"
+      ],
+      [
+       "nar",
+       "said Hansel."
+      ]
+     ],
+     "before": [
+      "hans:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_oven",
+   "card": "The Oven",
+   "set": "oven",
+   "enter": [
+    "hans:at:300,500",
+    "gret:at:420,500",
+    "witch:at:700,500",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그때 마녀가 일어나 쿵쿵 걸어왔어요. 눈이 나빠서 더듬더듬 찾았어요.",
+     "src": "reuse",
+     "en": "Then the witch woke up and stomped over. She could not see well, so she felt around for them.",
+     "segs": [
+      [
+       "nar",
+       "Then the witch woke up and stomped over. She could not see well, so she felt around for them."
+      ]
+     ],
+     "before": [
+      "shake"
+     ]
+    },
+    {
+     "text": "그레텔은 꾀가 났어요. \"마녀님, 화덕 안에 반짝이는 게 있어요!\"",
+     "src": "reuse",
+     "en": "Gretel had a clever idea. Witch, there is something sparkly in the oven!",
+     "segs": [
+      [
+       "nar",
+       "Gretel had a clever idea."
+      ],
+      [
+       "gret",
+       "Witch, there is something sparkly in the oven!"
+      ]
+     ]
+    },
+    {
+     "text": "마녀가 화덕 안을 기웃기웃 들여다보자, 그레텔이 화덕 문을 힘껏 밀었어요.",
+     "src": "new",
+     "en": "When the witch leaned in to peek inside the oven, Gretel gave the oven door a mighty push.",
+     "segs": [
+      [
+       "nar",
+       "When the witch leaned in to peek inside the oven, Gretel gave the oven door a mighty push."
+      ]
+     ],
+     "after": [
+      "oven:slam",
+      "cut:slam",
+      "fx:boom"
+     ]
+    },
+    {
+     "text": "쾅! 마녀는 깜짝 놀라 모자가 휙 날아갔어요.",
+     "src": "reuse",
+     "en": "Bang! The witch jumped in fright, and her hat flew off.",
+     "segs": [
+      [
+       "nar",
+       "Bang! The witch jumped in fright, and her hat flew off."
+      ]
+     ],
+     "before": [
+      "hat:fly",
+      "pop:700,250,쾅!"
+     ]
+    },
+    {
+     "text": "마녀는 빗자루를 타고 굴뚝으로 휘리릭 날아갔어요. \"다시는 안 올게~!\"",
+     "src": "reuse",
+     "en": "The witch hopped on her broom and whooshed up the chimney. I won't come back again!",
+     "segs": [
+      [
+       "nar",
+       "The witch hopped on her broom and whooshed up the chimney."
+      ],
+      [
+       "witch",
+       "I won't come back again!"
+      ]
+     ],
+     "before": [
+      "witch:look:broom",
+      "fx:whoosh"
+     ],
+     "after": [
+      "witch:hide"
+     ]
+    },
+    {
+     "text": "\"휴, 이제 집으로 가자!\" 헨젤이 그레텔의 손을 잡았어요.",
+     "src": "new",
+     "en": "\"Phew! Now let us go home!\" Hansel took Gretel's hand.",
+     "segs": [
+      [
+       "hans",
+       "Phew! Now let us go home!"
+      ],
+      [
+       "nar",
+       "Hansel took Gretel's hand."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_river",
+   "card": "The River",
+   "set": "river",
+   "enter": [
+    "hans:at:300,500",
+    "gret:at:400,500",
+    "duck:at:700,540",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "집으로 가는 길에 넓은 강이 나왔어요. 다리가 없어요!",
+     "src": "reuse",
+     "en": "On the way home, they came to a wide river. There was no bridge!",
+     "segs": [
+      [
+       "nar",
+       "On the way home, they came to a wide river. There was no bridge!"
+      ]
+     ]
+    },
+    {
+     "text": "강물이 콸콸, 세차게 흘렀어요.",
+     "src": "new",
+     "en": "The river rushed and roared, splash, splash, swift and strong.",
+     "segs": [
+      [
+       "nar",
+       "The river rushed and roared, splash, splash, swift and strong."
+      ]
+     ]
+    },
+    {
+     "text": "그때 흰 오리가 헤엄쳐 왔어요.",
+     "src": "reuse",
+     "en": "Then a white duck came swimming.",
+     "segs": [
+      [
+       "nar",
+       "Then a white duck came swimming."
+      ]
+     ],
+     "before": [
+      "duck:walk:500,540"
+     ],
+     "after": [
+      "cut:duck"
+     ]
+    },
+    {
+     "text": "\"꽥꽥! 내 등에 타!\" 오리가 말했어요.",
+     "src": "reuse",
+     "en": "Quack quack! Hop on my back! said the duck.",
+     "segs": [
+      [
+       "duck",
+       "Quack quack! Hop on my back!"
+      ],
+      [
+       "nar",
+       "said the duck."
+      ]
+     ],
+     "before": [
+      "pop:500,330,꽥꽥!"
+     ]
+    },
+    {
+     "text": "둘은 오리 등에 폴짝 올라탔어요. 오리는 둥실둥실 강을 건넜지요.",
+     "src": "new",
+     "en": "The two hopped onto the duck's back. The duck bobbed and paddled, bob, bob, across the river.",
+     "segs": [
+      [
+       "nar",
+       "The two hopped onto the duck's back. The duck bobbed and paddled, bob, bob, across the river."
+      ]
+     ],
+     "before": [
+      "duck:cross"
+     ]
+    },
+    {
+     "text": "오리가 둘을 태우고 강을 건너 주었어요. \"고마워, 오리야!\"",
+     "src": "reuse",
+     "en": "The duck carried them across the river. Thank you, Duck!",
+     "segs": [
+      [
+       "nar",
+       "The duck carried them across the river."
+      ],
+      [
+       "gret",
+       "Thank you, Duck!"
+      ]
+     ]
+    },
+    {
+     "text": "그레텔은 오리의 보드라운 깃털을 살살 쓰다듬어 주었어요.",
+     "src": "new",
+     "en": "Gretel gently stroked the duck's soft, fluffy feathers.",
+     "segs": [
+      [
+       "nar",
+       "Gretel gently stroked the duck's soft, fluffy feathers."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_home",
+   "card": "Home",
+   "set": "cottage",
+   "enter": [
+    "hans:at:440,470",
+    "gret:at:340,395",
+    "father:at:-100,575",
+    "father:look:wood",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.",
+     "src": "reuse",
+     "en": "They could see their house far away. Papa had been searching the forest for them, so worried.",
+     "segs": [
+      [
+       "nar",
+       "They could see their house far away. Papa had been searching the forest for them, so worried."
+      ]
+     ]
+    },
+    {
+     "text": "\"헨젤! 그레텔!\" 아빠가 달려왔어요.",
+     "src": "reuse",
+     "en": "Hansel! Gretel! Papa came running.",
+     "segs": [
+      [
+       "father",
+       "Hansel! Gretel!"
+      ],
+      [
+       "nar",
+       "Papa came running."
+      ]
+     ],
+     "before": [
+      "father:walk:560,575"
+     ]
+    },
+    {
+     "text": "아빠는 두 아이를 번쩍 안아 올려 빙글빙글 돌았어요.",
+     "src": "new",
+     "en": "Papa scooped up both children and spun them round and round.",
+     "segs": [
+      [
+       "nar",
+       "Papa scooped up both children and spun them round and round."
+      ]
+     ],
+     "before": [
+      "father:look:hug",
+      "cut:hug"
+     ]
+    },
+    {
+     "text": "\"찾았다! 보고 싶었어!\" 아빠가 말했어요.",
+     "src": "reuse",
+     "en": "Found you! I missed you so much! said Papa.",
+     "segs": [
+      [
+       "father",
+       "Found you! I missed you so much!"
+      ],
+      [
+       "nar",
+       "said Papa."
+      ]
+     ]
+    },
+    {
+     "text": "헨젤과 그레텔은 마음이 따뜻하고 행복했어요.",
+     "src": "trim",
+     "from": "헨젤과 그레텔은 마음이 따뜻하고 행복했어요. 여러분은 기분이 어때요? 헨젤을 톡! 만세!",
+     "en": "Hansel and Gretel felt warm and happy.",
+     "segs": [
+      [
+       "nar",
+       "Hansel and Gretel felt warm and happy."
+      ]
+     ]
+    },
+    {
+     "text": "그날 밤, 둘은 포근한 이불 속에서 새근새근 잠이 들었답니다.",
+     "src": "new",
+     "en": "That night, the two of them snuggled under their cozy blankets and fell fast asleep, zzz.",
+     "segs": [
+      [
+       "nar",
+       "That night, the two of them snuggled under their cozy blankets and fell fast asleep, zzz."
+      ]
+     ]
+    },
+    {
+     "text": "우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.",
+     "src": "reuse",
+     "en": "Home is the coziest place. That is how the story of Hansel and Gretel ended.",
+     "segs": [
+      [
+       "nar",
+       "Home is the coziest place. That is how the story of Hansel and Gretel ended."
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
