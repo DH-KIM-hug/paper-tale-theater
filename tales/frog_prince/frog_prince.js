@@ -289,6 +289,7 @@
   };
 
   async function run(T) {
+    if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     const GAP = 700, SCENE_END = 1500, LOOK = 1500;   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */   // LOOK: 장면이 바뀐 뒤 그림을 둘러보는 쉼(목표 7분)
     const say = async text => { await T.say(text); await sleep(GAP); };
@@ -328,12 +329,11 @@
     await T.curtain(true);
     await say(S.L0);
     await sleep(300);
-    await say(S.L1);
     Object.values(sh).forEach(s => bob(s.pos));
-    await T.choose(kinds.map(k => ({
+    await T.ask(S.L1, () => T.choose(kinds.map(k => ({
       el: sh[k].hit, ok: k === 'circle',
       onWrong: async () => { await wiggleEl(T, sh[k].hit); await say(k === 'square' ? S.W_sq : S.W_tri); },
-    })), { prompt: S.L1 });
+    })), { prompt: S.L1 }));
     glow(sh.circle, 1200); sparkleSfx(T); T.pop(sh.circle.x, FL - 150, tr('반짝!'));
     await say(S.C1);
     kinds.forEach(k => T.anim(sh[k].pos, [{ opacity: 1 }, { opacity: 0 }], 400).then(() => { sh[k].pos.style.display = 'none'; }));
@@ -512,9 +512,8 @@
     }, plate.pos);
     await sleep(LOOK);
     await say(S.L25);
-    await say(S.L26);
     bob(plate.pos);
-    await T.tap(plate.hit, { prompt: S.L26 });
+    await T.ask(S.L26, () => T.tap(plate.hit, { prompt: S.L26 }));
     for (let i = 0; i < 3; i++) {
       if (AudioFX.countBeat) AudioFX.countBeat(i + 1);
       sfx('pop', .4); vo('n' + (i + 1)); glow(breads[i], 800); breads[i].hop(14, 360);
