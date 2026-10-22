@@ -1,0 +1,905 @@
+{
+ "mode": "read",
+ "tale": "heungbu",
+ "lang": "ko",
+ "title": "흥부와 놀부",
+ "voices_from": "voice_script_el.json",
+ "moral": "착한 마음은 복이 되어 돌아와요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md §3). 놀이판 10장면 그대로 10장면. 뺀 것: 흥부 인사 누르기, 제비·박·쌀자루 세기 5번, 제비 받기·박 타기·쌀자루 보내기·만세 누르기. \"하나, 둘, 셋!\" 세기 결과 줄은 내레이션 새 문장으로 바꿨다. 순화는 놀이판 그대로: 놀부는 제비 다리를 부러뜨리지 않고(흔들어 떨어뜨린 뒤 바로 감아 줌), 도깨비는 놀라게만 하고 사라지며, 집이 무너져도 아무도 다치지 않는다. 배역 신규는 흥부 1·놀부 1·형수 1줄. 컷은 그대로.",
+ "acts": {
+  "set:<sky_spring|nolkitchen|eaves|yard|sky_autumn|nol_eaves|nolyard|giwa>": "장면 세트(scene(key, cx))",
+  "cam:wide | cam:<x>": "카메라",
+  "spr:<name>:at:<x,y[,h]> | spr:<name>:hide | spr:<name>:hop | spr:<name>:walk:<x,y>": "그림 배우(spr): heung_hello/heung_catch/heung_plant/heung_saw/heung_glad/hwife/hwife_joy/nwife/nol_proud/nol_saw/nol_shy/chicks/chick_fall/swallow_fly/swallow_seed/seed/vine/gourd/rice/treasure",
+  "chick:fall | chick:catch | chick:bandage | swallow:fly:<x> | seed:drop | vine:grow | gourds:show:<n> | gourd:saw:<i> | rice:pour:<n> | treasure:show | house:new | mud:splash | house:collapse | rice:send:<n>": "연출(제비 떨어짐·받기·천 감기, 제비 날기, 박씨, 줄기, 박, 톱질, 쌀·보물·새집, 흙탕물, 집 무너짐, 쌀자루 보내기)",
+  "cut:<catch|saw|rice|treasure|house|mud|dok|collapse|hug>": "그림 컷(cutImage cut_*)",
+  "fx:<pop|ding|saw|splash|crash|boom> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
+ },
+ "scenes": [
+  {
+   "key": "R01_brothers",
+   "card": "두 형제",
+   "set": "sky_spring",
+   "enter": [
+    "spr:heung_hello:at:500,505,330",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날에 마음씨 착한 동생 흥부와 욕심쟁이 형 놀부가 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옛날 옛날에 마음씨 착한 동생 흥부와 욕심쟁이 형 놀부가 살았어요.",
+       null,
+       "[gentle, warm, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "흥부는 활짝 웃으며 인사했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "흥부는 활짝 웃으며 인사했어요.",
+       null,
+       "[warm, cheerful]"
+      ]
+     ],
+     "before": [
+      "spr:heung_hello:hop",
+      "pop:500,200,안녕!"
+     ]
+    },
+    {
+     "text": "흥부네 집은 작고 낡았지만, 아이들 웃음소리가 까르르 넘쳤지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "흥부네 집은 작고 낡았지만, 아이들 웃음소리가 까르르 넘쳤지요.",
+       null,
+       "[warm, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "놀부네 집은 크고 으리으리했지만, 놀부는 늘 흥, 하고 콧방귀만 뀌었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "놀부네 집은 크고 으리으리했지만, 놀부는 늘 흥, 하고 콧방귀만 뀌었어요.",
+       null,
+       "[playful, slightly sour]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_nolhouse",
+   "card": "형의 집",
+   "set": "nolkitchen",
+   "enter": [
+    "spr:heung_hello:at:400,505,320",
+    "spr:nwife:at:640,505,330",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "흥부는 배가 고파서 형 집으로 밥을 얻으러 갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "흥부는 배가 고파서 형 집으로 밥을 얻으러 갔어요.",
+       null,
+       "[soft, a little sad]"
+      ]
+     ]
+    },
+    {
+     "text": "배에서 꼬르륵꼬르륵 소리가 났어요. \"형수님, 밥 한 술만 주세요.\"",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "배에서 꼬르륵꼬르륵 소리가 났어요.",
+       null,
+       "[soft, a little sad]"
+      ],
+      [
+       "heung",
+       "형수님, 밥 한 술만 주세요.",
+       null,
+       "[humble, polite, hungry]"
+      ]
+     ]
+    },
+    {
+     "text": "형수는 화가 난 얼굴로 말했어요. \"밥이 어디 있어요! 저리 가요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "형수는 화가 난 얼굴로 말했어요.",
+       null,
+       "[calm, setting the scene]"
+      ],
+      [
+       "nwife",
+       "밥이 어디 있어요! 저리 가요!",
+       null,
+       "[irritated, comically snappy, shouting]"
+      ]
+     ]
+    },
+    {
+     "text": "형수가 주걱을 휘두르자 흥부 볼에 밥알이 붙었어요. 흥부는 그 밥알을 맛있게 먹었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "형수가 주걱을 휘두르자 흥부 볼에 밥알이 붙었어요. 흥부는 그 밥알을 맛있게 먹었어요.",
+       null,
+       "[playful, surprised, then warm]"
+      ]
+     ],
+     "before": [
+      "spr:nwife:hop",
+      "fx:pop"
+     ]
+    },
+    {
+     "text": "흥부는 웃으며 말했어요. \"괜찮아요. 밥알도 맛있어요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "흥부는 웃으며 말했어요.",
+       null,
+       "[gentle, warm]"
+      ],
+      [
+       "heung",
+       "괜찮아요. 밥알도 맛있어요!",
+       null,
+       "[cheerful, kind, sweet]"
+      ]
+     ]
+    },
+    {
+     "text": "흥부는 터벅터벅, 빈손으로 집에 돌아갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "흥부는 터벅터벅, 빈손으로 집에 돌아갔어요.",
+       null,
+       "[soft, gentle]"
+      ]
+     ],
+     "after": [
+      "spr:heung_hello:walk:-200,505"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_swallows",
+   "card": "흥부네 집",
+   "set": "eaves",
+   "enter": [
+    "spr:chicks:at:493,128,112",
+    "spr:hwife:at:300,505,300",
+    "spr:heung_hello:at:700,505,310",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "흥부네 초가집 처마에는 제비 가족이 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "흥부네 초가집 처마에는 제비 가족이 살았어요.",
+       null,
+       "[calm, gentle, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "아기 제비 세 마리가 짹짹짹, 입을 쩍쩍 벌리며 먹이를 기다렸지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아기 제비 세 마리가 짹짹짹, 입을 쩍쩍 벌리며 먹이를 기다렸지요.",
+       null,
+       "[bright, playful]"
+      ]
+     ],
+     "before": [
+      "spr:chicks:hop"
+     ]
+    },
+    {
+     "text": "앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!",
+       null,
+       "=[gasps] 앗! [worried, quick] 아기 제비 한 마리가 둥지에서 떨어졌어요!"
+      ]
+     ],
+     "before": [
+      "chick:fall"
+     ]
+    },
+    {
+     "text": "흥부는 깜짝 놀라 마당으로 후다닥 달려갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "흥부는 깜짝 놀라 마당으로 후다닥 달려갔어요.",
+       null,
+       "[worried, quick]"
+      ]
+     ],
+     "before": [
+      "set:yard",
+      "spr:heung_catch:at:380,505,340",
+      "spr:chick_fall:at:560,470,120"
+     ]
+    },
+    {
+     "text": "\"아이고, 아프겠다!\" 흥부는 아기 제비를 두 손으로 살포시 감쌌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "heung",
+       "아이고, 아프겠다!",
+       null,
+       "[worried, kind, gentle]"
+      ],
+      [
+       "nar",
+       "흥부는 아기 제비를 두 손으로 살포시 감쌌어요.",
+       null,
+       "[soft, caring]"
+      ]
+     ],
+     "before": [
+      "chick:catch",
+      "cut:catch"
+     ]
+    },
+    {
+     "text": "흥부는 아기 제비의 다친 다리에 천을 감아 주었어요. 아기 제비는 금방 나았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "흥부는 아기 제비의 다친 다리에 천을 감아 주었어요. 아기 제비는 금방 나았어요.",
+       null,
+       "[soft, caring, relieved]"
+      ]
+     ],
+     "before": [
+      "chick:bandage"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_autumn",
+   "card": "가을",
+   "set": "sky_autumn",
+   "enter": [
+    "spr:swallow_fly:at:380,300,150",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "가을이 되자 제비 가족은 따뜻한 남쪽 나라로 떠났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "가을이 되자 제비 가족은 따뜻한 남쪽 나라로 떠났어요.",
+       null,
+       "[soft, wistful, calm]"
+      ]
+     ],
+     "after": [
+      "swallow:fly:1200"
+     ]
+    },
+    {
+     "text": "제비들은 흥부네 지붕 위를 빙글 한 바퀴 돌고, 훨훨 날아갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "제비들은 흥부네 지붕 위를 빙글 한 바퀴 돌고, 훨훨 날아갔어요.",
+       null,
+       "[soft, wistful]"
+      ]
+     ]
+    },
+    {
+     "text": "\"잘 가, 내년에 또 보자!\" 흥부는 손을 흔들흔들 흔들었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "heung",
+       "잘 가, 내년에 또 보자!",
+       null,
+       "[warm, cheerful, waving]"
+      ],
+      [
+       "nar",
+       "흥부는 손을 흔들흔들 흔들었어요.",
+       null,
+       "[warm, gentle]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_spring",
+   "card": "이듬해 봄",
+   "set": "sky_spring",
+   "enter": [
+    "spr:swallow_seed:at:-150,280,140",
+    "spr:heung_plant:at:640,505,260",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.",
+       null,
+       "[bright, happy, gentle]"
+      ]
+     ],
+     "before": [
+      "swallow:fly:380"
+     ],
+     "after": [
+      "seed:drop",
+      "pop:380,250,또르르!"
+     ]
+    },
+    {
+     "text": "박씨가 흥부 손바닥에 또르르 굴러떨어졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "박씨가 흥부 손바닥에 또르르 굴러떨어졌어요.",
+       null,
+       "[bright, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "흥부는 박씨를 마당에 심었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "흥부는 박씨를 마당에 심었어요.",
+       null,
+       "[warm, inviting, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "흥부는 날마다 물을 졸졸 주고, 흙을 토닥토닥 다독였지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "흥부는 날마다 물을 졸졸 주고, 흙을 토닥토닥 다독였지요.",
+       null,
+       "[warm, caring]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_gourds",
+   "card": "박이 열렸어요",
+   "set": "yard",
+   "enter": [
+    "spr:vine:at:560,505,360",
+    "spr:heung_saw:at:380,505,300",
+    "spr:hwife_joy:at:195,505,300",
+    "cam:560"
+   ],
+   "lines": [
+    {
+     "text": "줄기가 쑥쑥쑥 자라더니, 커다란 박이 세 통이나 열렸어요!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "줄기가 쑥쑥쑥 자라더니, 커다란 박이 세 통이나 열렸어요!",
+       null,
+       "[amazed, bright, growing]"
+      ]
+     ],
+     "before": [
+      "vine:grow",
+      "gourds:show:3",
+      "pop:560,200,쑥쑥쑥!"
+     ]
+    },
+    {
+     "text": "흥부 부부는 톱으로 박을 탔어요.",
+     "src": "trim",
+     "from": "흥부 부부는 톱으로 박을 탔어요. 박을 톡! 눌러서 슬근슬근 타 봐요.",
+     "segs": [
+      [
+       "nar",
+       "흥부 부부는 톱으로 박을 탔어요.",
+       null,
+       "[playful, inviting]"
+      ]
+     ],
+     "before": [
+      "gourd:saw:0",
+      "fx:saw",
+      "pop:640,300,슬근슬근!"
+     ]
+    },
+    {
+     "text": "첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.",
+       null,
+       "[amazed, bursting with joy]"
+      ]
+     ],
+     "before": [
+      "cut:rice",
+      "rice:pour:3"
+     ]
+    },
+    {
+     "text": "쌀자루가 수북수북, 이제 배불리 먹을 수 있어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "쌀자루가 수북수북, 이제 배불리 먹을 수 있어요.",
+       null,
+       "[happy, relieved]"
+      ]
+     ]
+    },
+    {
+     "text": "두 번째 박에서는 반짝반짝 금은보화가 나왔어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "두 번째 박에서는 반짝반짝 금은보화가 나왔어요!",
+       null,
+       "[awe, sparkling wonder]"
+      ]
+     ],
+     "before": [
+      "gourd:saw:1",
+      "treasure:show",
+      "fx:ding",
+      "cut:treasure"
+     ]
+    },
+    {
+     "text": "세 번째 박에서는 작은 박 요정들이 나와 멋진 새집을 지어 주었어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "세 번째 박에서는 작은 박 요정들이 나와 멋진 새집을 지어 주었어요!",
+       null,
+       "[delighted, magical, wonder]"
+      ]
+     ],
+     "before": [
+      "gourd:saw:2",
+      "house:new",
+      "cut:house"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_nolbu",
+   "card": "놀부네 집",
+   "set": "nol_eaves",
+   "enter": [
+    "spr:nol_proud:at:400,505,330",
+    "spr:nwife:at:620,505,320",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "소문을 들은 놀부는 배가 아팠어요. \"나도 부자가 될 거야!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "소문을 들은 놀부는 배가 아팠어요.",
+       null,
+       "[calm, slightly sour]"
+      ],
+      [
+       "nol",
+       "나도 부자가 될 거야!",
+       null,
+       "[greedy, grumbling, comically envious]"
+      ]
+     ]
+    },
+    {
+     "text": "\"여보, 제비부터 찾아요!\" 형수도 눈을 반짝반짝 빛냈어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nwife",
+       "여보, 제비부터 찾아요!",
+       null,
+       "[eager, greedy, snappy]"
+      ],
+      [
+       "nar",
+       "형수도 눈을 반짝반짝 빛냈어요.",
+       null,
+       "[playful, sour]"
+      ]
+     ]
+    },
+    {
+     "text": "놀부는 제비집을 마구 흔들었어요. 아기 제비가 떨어졌어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "놀부는 제비집을 마구 흔들었어요. 아기 제비가 떨어졌어요!",
+       null,
+       "[mischievous, then surprised gasp]"
+      ]
+     ],
+     "before": [
+      "shake",
+      "chick:fall"
+     ]
+    },
+    {
+     "text": "놀부는 서둘러 천을 칭칭 감아 주었어요. \"자, 이제 박씨를 가져와라!\" 제비는 다치지 않고 날아갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "놀부는 서둘러 천을 칭칭 감아 주었어요.",
+       null,
+       "[calm, hurried]"
+      ],
+      [
+       "nol",
+       "자, 이제 박씨를 가져와라!",
+       null,
+       "[bossy, fake sweetness, comic]"
+      ],
+      [
+       "nar",
+       "제비는 다치지 않고 날아갔어요.",
+       null,
+       "[calm, relieved]"
+      ]
+     ],
+     "after": [
+      "swallow:fly:1200"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_nolyard",
+   "card": "놀부네 마당",
+   "set": "nolyard",
+   "enter": [
+    "spr:nol_saw:at:340,505,290",
+    "gourds:show:3",
+    "cam:560"
+   ],
+   "lines": [
+    {
+     "text": "놀부네 마당에도 박이 세 통 열렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "놀부네 마당에도 박이 세 통 열렸어요.",
+       null,
+       "[curious, inviting]"
+      ]
+     ]
+    },
+    {
+     "text": "\"헤헤, 금은보화야, 어서 나와라!\" 놀부는 슬근슬근 신나게 톱질했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nol",
+       "헤헤, 금은보화야, 어서 나와라!",
+       null,
+       "[greedy, giddy, comic]"
+      ],
+      [
+       "nar",
+       "놀부는 슬근슬근 신나게 톱질했어요.",
+       null,
+       "[playful, building suspense]"
+      ]
+     ],
+     "before": [
+      "gourd:saw:0",
+      "fx:saw"
+     ]
+    },
+    {
+     "text": "콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.",
+       null,
+       "=[big splash] 콸콸콸! [amused, playful] 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요."
+      ]
+     ],
+     "before": [
+      "mud:splash",
+      "fx:splash",
+      "cut:mud"
+     ]
+    },
+    {
+     "text": "이번에는 방망이를 든 도깨비가 쑥 나왔어요. \"이 욕심쟁이야!\" 도깨비는 놀부를 놀라게 하고 사라졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "이번에는 방망이를 든 도깨비가 쑥 나왔어요.",
+       null,
+       "[playful, calm]"
+      ],
+      [
+       "dok",
+       "이 욕심쟁이야!",
+       null,
+       "[booming, comically gruff, goblin]"
+      ],
+      [
+       "nar",
+       "도깨비는 놀부를 놀라게 하고 사라졌어요.",
+       null,
+       "[gentle, reassuring, playful]"
+      ]
+     ],
+     "before": [
+      "gourd:saw:1",
+      "cut:dok"
+     ]
+    },
+    {
+     "text": "놀부는 덜덜 떨면서도 세 번째 박을 탔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "놀부는 덜덜 떨면서도 세 번째 박을 탔어요.",
+       null,
+       "[comic, nervous]"
+      ]
+     ],
+     "before": [
+      "gourd:saw:2"
+     ]
+    },
+    {
+     "text": "와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.",
+       null,
+       "=[big rumble] 와르르! [gentle, reassuring] 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요."
+      ]
+     ],
+     "before": [
+      "house:collapse",
+      "fx:crash",
+      "shake",
+      "cut:collapse"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_sorry",
+   "card": "흥부네 기와집",
+   "set": "giwa",
+   "enter": [
+    "spr:heung_glad:at:415,505,330",
+    "spr:hwife_joy:at:225,505,310",
+    "spr:nol_shy:at:650,505,320",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "놀부는 흙투성이가 되어 흥부네 집을 찾아왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "놀부는 흙투성이가 되어 흥부네 집을 찾아왔어요.",
+       null,
+       "[calm, soft, amused]"
+      ]
+     ]
+    },
+    {
+     "text": "놀부는 머리를 긁적긁적, 발끝만 내려다보았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "놀부는 머리를 긁적긁적, 발끝만 내려다보았어요.",
+       null,
+       "[gentle, amused]"
+      ]
+     ]
+    },
+    {
+     "text": "놀부가 고개를 숙였어요. \"동생아, 내가 잘못했다. 욕심을 부려서 미안하구나.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "놀부가 고개를 숙였어요.",
+       null,
+       "[gentle, calm]"
+      ],
+      [
+       "nol",
+       "동생아, 내가 잘못했다. 욕심을 부려서 미안하구나.",
+       null,
+       "[sad, ashamed, sincere, softly]"
+      ]
+     ]
+    },
+    {
+     "text": "흥부가 활짝 웃으며 말했어요. \"형님, 괜찮아요. 우리 함께 살아요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "흥부가 활짝 웃으며 말했어요.",
+       null,
+       "[warm, smiling]"
+      ],
+      [
+       "heung",
+       "형님, 괜찮아요. 우리 함께 살아요!",
+       null,
+       "[cheerful, warm, forgiving]"
+      ]
+     ],
+     "before": [
+      "spr:heung_glad:hop"
+     ]
+    },
+    {
+     "text": "흥부는 쌀자루를 영차영차, 형님네로 보내 주었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "흥부는 쌀자루를 영차영차, 형님네로 보내 주었어요.",
+       null,
+       "[cheerful, warm]"
+      ]
+     ],
+     "before": [
+      "rice:send:3"
+     ]
+    },
+    {
+     "text": "놀부는 눈물이 핑 돌아 소매로 슥슥 닦았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "놀부는 눈물이 핑 돌아 소매로 슥슥 닦았어요.",
+       null,
+       "[touched, warm]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_end",
+   "card": "함께",
+   "set": "giwa",
+   "enter": [
+    "spr:heung_glad:at:415,505,330",
+    "spr:hwife_joy:at:225,505,310",
+    "spr:nol_shy:at:650,505,320",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "두 형제는 손을 꼭 잡고 하하 호호 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "두 형제는 손을 꼭 잡고 하하 호호 웃었어요.",
+       null,
+       "[joyful, warm]"
+      ]
+     ],
+     "before": [
+      "cut:hug",
+      "fx:ding"
+     ]
+    },
+    {
+     "text": "그날 저녁, 모두 둘러앉아 따끈따끈한 밥을 냠냠 나눠 먹었지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그날 저녁, 모두 둘러앉아 따끈따끈한 밥을 냠냠 나눠 먹었지요.",
+       null,
+       "[cozy, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "흥부와 놀부는 그 뒤로 사이좋게 오래오래 살았대요. 착한 마음은 복이 되어 돌아와요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "흥부와 놀부는 그 뒤로 사이좋게 오래오래 살았대요. 착한 마음은 복이 되어 돌아와요.",
+       null,
+       "[gentle, warm, slow, closing storytelling]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
