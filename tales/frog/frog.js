@@ -266,7 +266,10 @@
     const babies = [0, 1, 3].map(i => {
       let parts;
       const a = actor(T.world, pads[i === 3 ? 4 : i][0], pads[i === 3 ? 4 : i][1], g => { parts = drawBaby(T, g); }, { scale: babyS });
-      a.parts = parts; return a;
+      a.parts = parts;
+      // 자고 있는 아기를 톡 누르는 자리: 그림(약 75px)보다 넓게 — 짧은 변 80px 이상 (2026-10-22)
+      a.pos.insertBefore(T.el('rect', { x: -48, y: -105, width: 96, height: 105, fill: '#000', 'fill-opacity': 0 }, a.pos), a.body);
+      return a;
     });
     /* 대사 연출: 목소리 주인에게 카메라가 가고 서로 마주 본다. 개구리는 정면 그림이라 돌려세우지 않는다 */
     let oxActor = null, oxArt = null;
@@ -278,9 +281,9 @@
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
     await T.curtain(true);
     await say('연못에 아침이 왔어요. 아기 개구리들이 아직 쿨쿨 자고 있네요.');
-    await say('아기 개구리들을 톡 눌러서 깨워 줄까요?');
     for (const [bi, b] of babies.entries()) {
-      await T.tap(b.pos, { prompt: '자고 있는 아기 개구리를 톡 눌러 봐요!' });
+      const wake = () => T.tap(b.pos, { prompt: '자고 있는 아기 개구리를 톡 눌러 봐요!' });
+      await (bi === 0 ? T.ask('아기 개구리들을 톡 눌러서 깨워 줄까요?', wake) : wake());
       b.parts.lids.setAttribute('opacity', 0); b.hop(40); T.pop(inV(b.x), b.y - 80, '개굴!', C.pine); AudioFX.animalNote('frog', [1.19, 1.0, 1.33][bi], .85) || croak(T, 420); // 깨울 때는 개구리 울음 효과음
       await sleep(300);
     }
@@ -292,10 +295,9 @@
       babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(.9); b.place(200 + i * 70, 490); });
     }, babies[1].pos);
     if (T.portrait()) camSnap(babies[1].x, 280, 1);
-    await say('아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?');
     const hopStep = () => { babies.forEach((b, k) => { setTimeout(() => { croak(T, 380 + k * 40); b.move(b.x + 95, 490, 420); b.hop(50, 420); }, k * 90); });
       if (T.portrait()) camTo(babies[1].x + 95, 280, 1, 500); }; // 세로 화면: 카메라가 아기들을 따라간다 (가로는 그대로)
-    await T.tap(T.root.querySelector('#stageWrap'), { prompt: '화면을 톡! 폴짝폴짝!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await T.ask('아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?', () => T.tap(T.root.querySelector('#stageWrap'), { prompt: '화면을 톡! 폴짝폴짝!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 5; i++) { hopStep(i); await sleep(700); }
     await sleep(500);
 
@@ -324,9 +326,8 @@
       const L = pt ? 500 - Math.min(vw / 2 - 75, 115) : 500 - vw / 2 + 85, R = 1000 - L, by = pt ? 462 : 300;
       const bOk = badge(T, left ? L : R, by, g => iconArt(T, g, r.ok) || ICONS[r.ok](T, g));
       const bNo = badge(T, left ? R : L, by, g => iconArt(T, g, r.no) || ICONS[r.no](T, g));
-      await say(r.q);
-      await T.choose([{ el: bOk, ok: true }, { el: bNo, ok: false }], { prompt: r.q,
-        where: '가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!', who: `${T.josa(r.okName, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` });
+      await T.ask(r.q, () => T.choose([{ el: bOk, ok: true }, { el: bNo, ok: false }], { prompt: r.q,
+        where: '가운데 그림이랑 똑같이 생긴 쪽을 골라 봐요!', who: `${T.josa(r.okName, '이에요/예요')}! 반짝이는 걸 눌러 봐요!` }));
       bOk.remove(); bNo.remove();
       await say(`맞아요, ${T.josa(r.okName, '이에요/예요')}!`);
     }
@@ -368,8 +369,7 @@
       };
       const A = mk(bigLeft ? big : small, 500 - d), B = mk(bigLeft ? small : big, 500 + d);
       const bigA = bigLeft ? A : B, smallA = bigLeft ? B : A;
-      await say(`${T.josa(ANIMALS[A.key].name, '이랑/랑')} ${ANIMALS[B.key].name}, 누가 더 커요?`);
-      await T.choose([
+      await T.ask(`${T.josa(ANIMALS[A.key].name, '이랑/랑')} ${ANIMALS[B.key].name}, 누가 더 커요?`, () => T.choose([
         { el: bigA.pos, ok: true },
         { el: smallA.pos, ok: false, onWrong: async () => {
           // 틀리면 등을 맞대고 나란히 서서 차이를 보여준다
@@ -379,7 +379,7 @@
           await Promise.all([A.move(ax, floor, 500), B.move(bx, floor, 500)]);
         } },
       ], { prompt: '누가 더 커요? 큰 친구를 눌러 봐요!',
-        where: '둘이 나란히 섰어요. 머리가 더 높은 친구는 누구지?', who: `${T.josa(ANIMALS[big].name, '이/가')} 더 커요! 반짝이는 친구를 눌러 봐요!` });
+        where: '둘이 나란히 섰어요. 머리가 더 높은 친구는 누구지?', who: `${T.josa(ANIMALS[big].name, '이/가')} 더 커요! 반짝이는 친구를 눌러 봐요!` }));
       // 이긴 친구의 소리 (오리는 꽥, 양은 매애 — 개구리 울음이 아니라)
       ({ ox: () => moo(T), frog: () => croak(T, 500), duck: () => AudioFX.animal('duck', .7), sheep: () => AudioFX.animal('sheep', .7) }[big] || (() => {}))();
       await bigA.hop(24);
@@ -399,23 +399,21 @@
       babies.forEach((b, i) => { T.world.appendChild(b.pos); b.place(...spots[i]); });
     });
     await say('"흥, 나도 황소만큼 클 수 있어!" 엄마개구리가 숨을 크게 들이마셨어요.');
-    await say('엄마개구리를 톡톡 눌러서 부풀려 볼까요?');
     const SIZES = [1, 1.35, 1.7, 2.05, 2.4, 2.75, 3.1, 3.4, 3.65];
     const cheer = { 2: '"아직 황소가 더 커요!"', 5: '"와, 양만큼 커졌다! 그래도 황소가 더 커요!"' };
-    await T.mash(mom.pos, { count: 8, prompt: '엄마개구리를 톡톡 눌러 봐요!', onStep: i => {
+    await T.ask('엄마개구리를 톡톡 눌러서 부풀려 볼까요?', () => T.mash(mom.pos, { count: 8, prompt: '엄마개구리를 톡톡 눌러 봐요!', onStep: i => {
       T.tone([200 + i * 40, 420 + i * 40], .25, { type: 'sine', vol: .18 });
       mom.body.style.transition = 'transform .35s cubic-bezier(.3,1.6,.5,1)';
       mom.body.style.transform = `scale(${SIZES[i] * 1.08}, ${SIZES[i]})`;
       if (cheer[i]) Narrator.speak(cheer[i]);
       if (i >= 5) momArt.set('puffed'); // 부푼 그림이 있으면 (없으면 기본 그림을 키운 채로)
-    } });
+    } }));
     await sleep(500);
 
     /* --- 7. 부들부들 --- */
     const shiver = mom.body.animate([{ translate: '0 0' }, { translate: '4px 0' }, { translate: '-4px 0' }], { duration: 120, iterations: Infinity });
     babies.forEach(b => b.parts.hands.setAttribute('opacity', 1));
-    await say('엄마개구리가 부들부들 떨려요. 어어… 한 번 더 누르면 어떻게 될까?');
-    await Promise.race([T.tap(mom.pos), sleep(8000)]);
+    await Promise.race([T.ask('엄마개구리가 부들부들 떨려요. 어어… 한 번 더 누르면 어떻게 될까?', () => T.tap(mom.pos)), sleep(8000)]);
     shiver.cancel();
 
     /* --- 8. 뻥! → 풍선처럼 날아다니다 퐁당 --- */
@@ -438,9 +436,8 @@
     ], { duration: 9000, iterations: Infinity, easing: 'ease-in-out' }); // 아이가 따라가 누를 수 있게 천천히 (3.6초 → 9초 한 바퀴, 2026-10-19)
     mom.pos.removeAttribute('transform');
     const whoosh = setInterval(() => T.tone([900, 300], .35, { type: 'sawtooth', vol: .06 }), 1000);
-    await say('푸슈슈슉~ 엄마개구리가 풍선처럼 날아다녀요! 톡 눌러서 잡아 줘요!');
     // 움직이는 SVG 는 아이패드 Safari 에서 누른 자리 판정이 처음 자리에 남는다 → 화면 어디를 눌러도 지금 엄마개구리 자리(넉넉히)와 비교해 잡는다 (2026-10-20)
-    const caught = T.tap(mom.pos, { prompt: '날아다니는 엄마개구리를 톡!' });
+    const caught = T.ask('푸슈슈슉~ 엄마개구리가 풍선처럼 날아다녀요! 톡 눌러서 잡아 줘요!', () => T.tap(mom.pos, { prompt: '날아다니는 엄마개구리를 톡!' }));
     const near = e => {
       const r = mom.body.getBoundingClientRect(), pad = Math.max(40, r.width * .35);
       if (e.clientX < r.left - pad || e.clientX > r.right + pad || e.clientY < r.top - pad || e.clientY > r.bottom + pad) return;
@@ -585,12 +582,30 @@
       guardCam = api.camera;
     };
     const targetsOf = { tap: a => a[0], mash: a => a[0], swipe: a => a[0], hold: a => a[0], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
-    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); return api[k](...a); }; });
+    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); [].concat(targetsOf[k](a)).forEach(e => fatten(e)); return api[k](...a); }; });
     T.sceneCard = (label, change, focus) => api.sceneCard(label, () => {
       if (guardCam) { const c = api.camera; if (c.x === guardCam.x && c.y === guardCam.y && c.z === guardCam.z) api.camSnap(500, 280, 1); guardCam = null; }
       change && change();
     }, focus);
     return T;
+  }
+
+  /* 누르는 자리 넓히기 (2026-10-22): 화면에서 짧은 변이 84px 보다 작은 대상(g)에 투명 사각을 덧대 84px 이상으로 만든다.
+     대상 가운데는 그대로(손가락 힌트 자리 불변). 조작을 열 때마다 지금 화면 배율로 다시 잰다. 클립된 그림 조각은 건드리지 않는다 */
+  function fatten(el, min = 84) {
+    try {
+      if (!el || !(el instanceof SVGGElement) || el.__noFat) return;
+      if (el.__fat) { el.__fat.remove(); el.__fat = null; }
+      const r = el.getBoundingClientRect(); if (!r.width || !r.height || el.getAttribute('clip-path')) return;
+      if (r.width >= min && r.height >= min) return;
+      const m = el.getScreenCTM(), bb = el.getBBox(); if (!m || !bb.width || !bb.height) return;
+      const sx = Math.hypot(m.a, m.b) || 1, sy = Math.hypot(m.c, m.d) || 1;
+      const w = Math.max(bb.width, min / sx), h = Math.max(bb.height, min / sy);
+      const rc = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rc.setAttribute('x', bb.x + bb.width / 2 - w / 2); rc.setAttribute('y', bb.y + bb.height / 2 - h / 2);
+      rc.setAttribute('width', w); rc.setAttribute('height', h); rc.setAttribute('fill', '#000'); rc.setAttribute('fill-opacity', 0);
+      el.insertBefore(rc, el.firstChild); el.__fat = rc;
+    } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
   Tale.mount({ title: '황소와 개구리', subtitle: '누가 더 클까?', run: T => run(portraitGuard(Tale.api)) });
