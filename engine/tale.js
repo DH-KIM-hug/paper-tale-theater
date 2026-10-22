@@ -9,7 +9,12 @@ const Tale = (() => {
   const NS = 'http://www.w3.org/2000/svg';
   const $ = s => document.querySelector(s);
   let vFast = () => false;   /* 검증 모드에서 건너뛰는 중이면 기다림을 아주 짧게 */
-  const sleep = ms => new Promise(r => setTimeout(r, vFast() ? Math.min(ms, 15) : ms));
+  let vRush = false; const vSleeps = new Set();   /* 검증 모드: 움직이는 중에 '다음'을 누르면 남은 기다림을 바로 끝낸다 */
+  const sleep = ms => new Promise(r => {
+    if (vFast() || vRush) { setTimeout(r, Math.min(ms, 15)); return; }
+    const done = () => { vSleeps.delete(done); clearTimeout(t); r(); }, t = setTimeout(done, ms);
+    vSleeps.add(done);
+  });
   let root, stage, cam, bgL, world, fxL, handEl, busy = true;
   const camState = { x: 500, y: 280, z: 1 };
 
@@ -168,14 +173,16 @@ const Tale = (() => {
       try { document.getAnimations().forEach(a => { const t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState === 'running') a.finish(); }); } catch (e) { /* 무시 */ }
     }, 60);
   }
-  const vPost = m => { try { window.parent.postMessage(Object.assign({ type: 'step' }, m), '*'); } catch (e) { /* 부모 없음 */ } };
+  const vPost = m => { if (!m.skipped) vRush = false; try { window.parent.postMessage(Object.assign({ type: 'step' }, m), '*'); } catch (e) { /* 부모 없음 */ } };
   const vGo = () => new Promise(r => { vWait = r; });
   if (VERIFY) window.addEventListener('message', e => {
     const m = e.data || {};
     if (m.type === 'go') {
       if (vWait) { const r = vWait; vWait = null; r(); }
-      else {   /* 움직이는 중에 다음을 누르면: 끝이 있는 애니메이션을 바로 끝내서 다음 단계로 빨리 간다(무한 반복은 그대로) */
-        try { document.getAnimations().forEach(a => { const t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState === 'running') a.finish(); }); } catch (er) { /* 무시 */ }
+      else {   /* 움직이는 중에 다음을 누르면: 다음 단계가 올 때까지 기다림(sleep)은 바로 끝내고, 끝이 있는 애니메이션도 바로 끝낸다(무한 반복은 그대로) */
+        vRush = true; [...vSleeps].forEach(d => d());
+        const fin = () => { try { document.getAnimations().forEach(a => { const t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState === 'running') a.finish(); }); } catch (er) { /* 무시 */ } };
+        fin(); const iv = setInterval(() => { if (!vRush) { clearInterval(iv); return; } fin(); }, 60);
       }
     }
     if (m.type === 'replay' && vLine) { try { Narrator.speak(vLine); } catch (er) { /* 무시 */ } }
