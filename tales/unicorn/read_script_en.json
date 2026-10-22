@@ -75,6 +75,18 @@
      ]
     },
     {
+     "text": "다현이는 바람에 떨어진 꽃 한 송이를 살며시 주워 바구니에 쏙 넣었어요.",
+     "src": "reuse",
+     "en": "Dahyun gently picked up a flower the wind had dropped and popped it into her basket.",
+     "segs": [
+      [
+       "nar",
+       "Dahyun gently picked up a flower the wind had dropped and popped it into her basket.",
+       null
+      ]
+     ]
+    },
+    {
      "text": "다현이는 구름 나라로 올라가 보기로 했어요.",
      "src": "reuse",
      "en": "Dahyun decided to climb up to the cloud country.",
@@ -1016,6 +1028,57 @@
       "confetti",
       "kid:hop",
       "uni:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_home",
+   "card": "Home",
+   "set": "uc_bg2_hill",
+   "enter": [
+    "kid:look:walk:right",
+    "kid:at:360",
+    "uni:look:stand:left",
+    "uni:at:640",
+    "fg:grass_flowers:110,600",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "다음 날 아침, 다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.",
+     "src": "reuse",
+     "en": "The next morning, Dahyun came back to the hill by her home with the unicorn.",
+     "segs": [
+      [
+       "nar",
+       "The next morning, Dahyun came back to the hill by her home with the unicorn.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "다현이는 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
+     "src": "reuse",
+     "en": "Dahyun gently tucked the red flower from her basket into the unicorn's mane.",
+     "segs": [
+      [
+       "nar",
+       "Dahyun gently tucked the red flower from her basket into the unicorn's mane.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "고마워, 정말 예뻐!",
+     "src": "reuse",
+     "en": "Thank you. It's so pretty!",
+     "segs": [
+      [
+       "uni",
+       "Thank you. It's so pretty!",
+       "happy"
+      ]
      ]
     },
     {
