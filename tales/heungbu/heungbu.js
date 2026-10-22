@@ -54,6 +54,130 @@
       .map(k => T.preload(U('bg_' + k))).concat(['rice', 'fall', 'bandage2', 'south', 'seedback', 'rice_pour2', 'house2', 'mud2', 'dokkaebi', 'collapse']
       .map(k => T.preload(U('cut_' + k))))), sleep(4000)]);
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 ================= */
+    const READ_ACTS = (() => {
+      let S = {}, gourds = [], sacks = [];
+      const rI = () => T.readInstant();
+      const nums = s => String(s).split(',').map(Number);
+      const reset = () => { S = {}; gourds = []; sacks = []; };
+      const CARD = { yard: '마당' };
+      const CUT = { catch: ['fall', 'pop', 3200], rice: ['rice_pour2', 'pop', 3600], house: ['house2', 'pop', 3600], mud: ['mud2', 'pow', 3400], dok: ['dokkaebi', 'pow', 3400], collapse: ['collapse', 'crash', 3600] };
+      const FX = { pop: 'pop', ding: 'ding', saw: 'pop', splash: 'pow', crash: 'crash', boom: 'pow' };
+      const sawer = () => S.heung_saw || S.nol_saw;
+      const gx = i => (S.nol_saw ? cl(620, i, 100) : cl(640, i, 100));
+      return {
+        set(key) {
+          const go = () => { reset(); scene(key, 500); };
+          if (rI()) { go(); return; }
+          return T.sceneCard(CARD[key] || '', go);
+        },
+        cam() { pan(); }, // 놀이판처럼 카메라는 가운데(세로 화면은 spr 좌표를 좁혀 놓는다)
+        spr(name, op, spec) {
+          const a = S[name];
+          if (op === 'at') {
+            const [x, y = GROUND, h] = nums(spec);
+            if (a) a.pos.remove();
+            const n = spr(name, x, h, y === 505 ? GROUND : y);
+            if (name === 'swallow_seed') n.face('right'); // 왼쪽이 기본인 그림 → 오른쪽으로 날아가므로 뒤집는다
+            S[name] = n; return;
+          }
+          if (!a) return;
+          if (op === 'hop') { a.hop(24, 360); sfx('pop'); return; }
+          if (op === 'hide') { a.show(false); return; }
+          if (op === 'walk') {
+            const [x, y = GROUND] = nums(spec);
+            const ty = y === 505 ? GROUND : y;
+            if (rI()) { a.place(fx(x), ty); return; }
+            return a.move(fx(x), ty, 900);
+          }
+        },
+        chick(op) {
+          if (op === 'fall') { // 말과 동시에 굴러떨어진다 (기다리지 않는다)
+            const eaves = !!S.chicks;
+            const t = spr('chick_fall', eaves ? 493 : 720, eaves ? 90 : 120, eaves ? 120 : -30); S.chick_fall = t;
+            sfx('pow');
+            (async () => { await t.move(fx(eaves ? 560 : 720), 480, eaves ? 800 : 650, 'ease-in'); t.hop(10, 300); T.pop(t.x, t.y - 140, '아야!'); })();
+            return;
+          }
+          if (op === 'catch') {
+            const f = S.chick_fall, h = S.heung_catch;
+            if (rI()) { f && f.place(fx(425), 410); return; }
+            if (h) h.hop(20, 300);
+            sfx('ding');
+            return f && f.move(fx(425), 410, 500, 'ease-out');
+          }
+          if (op === 'bandage') return cut('bandage2', 'pop', 3600);
+        },
+        async swallow(op, x) {
+          const sx = +x;
+          if (S.swallow_seed) return S.swallow_seed.move(fx(sx), 280, 1300, 'ease-out'); // 봄: 날아와서 머문다
+          if (S.swallow_fly) return S.swallow_fly.move(sx, 240, 1400, 'ease-in'); // 가을: 남쪽으로
+          const c = S.chick_fall; // 놀부네: 천을 감아 주면 다친 데 없이 날아간다
+          if (c) {
+            const n = S.nol_proud; if (n) n.set('nol_wrap');
+            await c.move(fx(480), 430, 500, 'ease-out'); sfx('ding'); c.hop(12, 260);
+            await sleep(900);
+            c.set('swallow_fly', 100);
+            return c.move(sx, 150, 1400, 'ease-in');
+          }
+        },
+        async seed(op) {
+          const sw = S.swallow_seed; if (!sw) return;
+          const sd = spr('seed', 380, 70, 280); S.seed = sd; sd.place(sw.x, 280);
+          await sd.move(fx(560), 470, 600, 'ease-in'); sfx('ding'); sw.hop(16, 300);
+          sw.move(1150, 160, 1600, 'ease-in'); // 박씨를 주고 날아간다
+        },
+        vine(op) { const v = S.vine; if (v && op === 'grow') { v.hop(18, 360); sfx('pop'); } },
+        gourds(op, n) {
+          for (let i = 0; i < +n; i++) { const g = spr('gourd', gx(i), 140); gourds.push(g); if (!rI()) g.hop(14, 260); }
+          if (!rI()) sfx('pop');
+        },
+        gourd(op, i) {
+          const g = gourds[+i]; if (!g) return;
+          g.hop(18, 300); const s = sawer(); if (s) s.hop(14, 300); sfx('pop');
+          if (+i === 1) sacks.forEach(k => k.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' }));
+        },
+        rice(op, n) {
+          if (op === 'pour') {
+            for (let i = 0; i < +n; i++) { const s = spr('rice', cl(620, i, 90), 90, 545); s.hop(14, 260); sacks.push(s); }
+            sfx('pop'); return;
+          }
+          if (op === 'send') { // 쌀자루를 형님네 집으로 (누르기 없이 저절로)
+            const ns2 = S.nol_shy; if (!ns2) return;
+            const bags = [...Array(+n)].map((_, i) => spr('rice', cl(460, i, 80), 100, 500));
+            return (async () => {
+              for (let i = 0; i < bags.length; i++) { await sleep(300); sfx('pop'); await bags[i].move(ns2.x, 470, 450, 'ease-in'); bags[i].hop(12, 240); }
+            })();
+          }
+        },
+        treasure(op) {
+          const g = gourds[1]; if (g) g.set('gourd_open', 120);
+          const t = spr('treasure', 640, 130, 490); S.treasure = t;
+          if (g) t.place(g.x, 490);
+          t.hop(18, 300); sfx('ding');
+        },
+        house(op) { if (op === 'new') T.confetti(); else if (op === 'collapse') { sfx('crash'); const s = S.nol_saw; if (s) s.hop(14, 300); } },
+        mud(op) { const s = S.nol_saw; if (s) s.set('nol_mud'); sfx('pow'); },
+        shake() {
+          const n = S.nol_proud;
+          if (n) { n.set('nol_shake'); n.hop(18, 300); return; }
+          T.shake();
+        },
+        cut(k) {
+          if (k === 'hug') { T.confetti(); ['heung_glad', 'hwife_joy', 'nol_shy'].forEach(m => S[m] && S[m].hop(30, 500)); return; } // 컷 그림이 없어 함께 뛰는 장면으로 대신
+          if (k === 'treasure') return; // 컷 그림이 없어 금은보화 그림(treasure:show)만 보인다
+          const c = CUT[k]; if (!c) return;
+          return cut(c[0], c[1], c[2]);
+        },
+        fx(n) { sfx(FX[n] || 'pop'); },
+        pop(spec) {
+          const a = String(spec).split(',');
+          T.pop(fx(+a[0]), +a[1], a.slice(2).join(','));
+        },
+      };
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* 1. 봄 하늘 */
     scene('sky_spring');
     const heung = spr('heung_hello', 500, 330);
@@ -219,5 +343,5 @@
     return '착한 마음은 복이 되어 돌아와요!';
   }
 
-  Tale.mount({ title: '흥부와 놀부', subtitle: '착한 마음은 복이 되어 돌아와요', run: T => run(Tale.api) });
+  Tale.mount({ title: '흥부와 놀부', subtitle: '착한 마음은 복이 되어 돌아와요', read: true, run: T => run(Tale.api) });
 })();
