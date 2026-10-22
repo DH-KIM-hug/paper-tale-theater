@@ -310,3 +310,9 @@
 - 인물·누르는 소품·대사·녹음·조작은 바꾸지 않는다.
 - 모든 장면의 배경을 다층으로 바꾸되 집은 거실(화려)·부엌(수수하지만 겹이 있음)으로 나눈다. 1조각 1색·무광·웜 그림자·소품 얼굴 없음·원근법 금지·인물 주변 비우기는 그대로.
 - 작업표 18장은 코드가 쓰는 `jobs_cinderella2.json` 끝에 붙였고 기존 항목은 바꾸지 않았다.
+
+## 결정 (2026-10-22)
+
+- **판단 1 (거실 샹들리에)**: 같은 그림을 줄여 쓰지 않고 **거실용 작은 샹들리에를 따로 그린다.** 새 항목 `cd2_layer_chandelier_small`(pass 1, 큰 샹들리에와 같은 디자인 계열: Straw Gold 곡선 팔·Pale Gold 판·Ice Blue 수정·Bark Brown 사슬, 고리 1개·촛불 6). 거실 2·9·10장은 이 그림을 쓰고 높이는 후처리 뒤 재서 정한다(큰 것 150 대비 약 110 목표). §4-1 의 '같은 소품 같은 크기'는 두 그림이 서로 다른 소품이라 지켜진다.
+- **판단 2 (컷 5장)**: 새 배경 기준으로 다시 그린다. 새 id `cd2_cut_coach_v2`·`cd2_cut_gown_v2`·`cd2_cut_midnight_v2`·`cd2_cut_stairs_slipper_v2`·`cd2_cut_fit_v2`(기존 5장과 파일은 지우지 않음). 프롬프트를 새 배경 묘사에 맞췄고 refs 에 새 배경 항목 출력 경로를 마지막 ref 로 더했다(coach·gown ← `cd2_bg_garden_v2`, midnight ← `cd2_bg_ballroom_v2`, stairs_slipper ← `cd2_bg_stairs_v2`, fit ← `cd2_bg_parlor_v2`). pass 4(모든 새 배경 뒤).
+- 작업표 총 86항목(새로 그릴 것 24장). 생성 순서는 `tools/app/gen/restyle/princess_v2_ids.txt` 의 cinderella 줄.

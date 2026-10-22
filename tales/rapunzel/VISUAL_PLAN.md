@@ -138,3 +138,8 @@
 - 인물·탑·머리 그림, 대사·녹음, 조작은 바꾸지 않는다. 오두막 안 배경은 그대로.
 - 새 배경 `*_v2` 5장, 기존 파일은 참고 구도로 쓰고 남긴다. 탑 자리·창 위치·담 높이·길 띠는 기존 수치 그대로.
 - 1조각 1색·광택 금지·소품 얼굴 없음·원근법 금지·광원 한 방향은 그대로.
+
+## 결정 (2026-10-22)
+
+- **판단 1 (들판 성 실루엣)**: **넣지 않는다.** `rp_bg_field_v2` 프롬프트에서 먼 산 위 성 문장과 Stone Cream 색 항목을 지웠다(생성 전). §3·§6 표의 '아주 작은 성' 문구는 무효. 먼 층은 하늘·구름·먼 산 2겹·먼 숲 띠.
+- **판단 2 (탑 방 색)**: 갇힌 탑이므로 **차분하게** 바꾼다. Paper Cream·Sky Blue·Straw Gold 계열: 커튼 Paper Cream, 태피스트리 Sky Blue 바탕 + Straw Gold 별·마름모, 양탄자 테두리 Sky Blue, 책 Sky Blue·Paper Cream·Straw Gold, 별 모빌 Straw Gold·Cream. `rp_bg_room_v2` 프롬프트와 색지 목록(Candy Pink·Plum·Bean Red·Sunny Yellow·Lilac 삭제, 분홍·보라·붉은색 금지 문구 추가)을 고쳤다(생성 전). 표 속 Candy Pink 커튼·Plum 태피스트리 문구는 무효.
