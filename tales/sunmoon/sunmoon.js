@@ -515,9 +515,9 @@
     });
     await T.curtain(true);
     await say('옛날 옛날 산골 오막살이에 엄마와 오누이가 살았어요.');
-    await say('엄마가 일하러 가요. 오누이를 톡 눌러서 인사해요!');
-    for (const k of [boy, girl]) {
-      await T.tap(k.pos, { prompt: '오빠랑 동생을 톡 눌러서 "다녀오세요!" 해 봐요!' });
+    for (const [ki, k] of [boy, girl].entries()) {
+      const greet = () => T.tap(k.pos, { prompt: '오빠랑 동생을 톡 눌러서 "다녀오세요!" 해 봐요!' });
+      await (ki === 0 ? T.ask('엄마가 일하러 가요. 오누이를 톡 눌러서 인사해요!', greet) : greet());
       AudioFX.pop(); k.hop(26); wave(T, k); T.pop(k.x, k.y - 200, '안녕!', C.pine);
       await sleep(500);
     }
@@ -545,10 +545,12 @@
       if (!sprite(T, el('g', { transform: `translate(${690 + dx} ${400 + dy + 44})` }, plate), 'plate', 300, 120, { stretch: true })) // 떡 열 개(다섯 개씩 두 줄)가 올라가게 넓게
         T.paper(plate, [['ellipse', { cx: 690 + dx, cy: 400 + dy, rx: 110, ry, fill: C.snow, stroke: C.gold, 'stroke-width': 5 }]]);
       plateCakes = [...Array(10)].map((_, k) => { const x = 590 + (k % 5) * 50 + (k >= 5 ? 0 : 0), y = k < 5 ? 404 : 372; // 열 개: 앞줄 다섯·뒷줄 다섯
-        return { x: x + dx, y: y + dy, g: drawCake(T, plate, x + dx, y + dy, 1.6, k) }; });
+        const g = drawCake(T, plate, x + dx, y + dy, 1.6, k);
+        T.el('rect', { x: x + dx - 33, y: y + dy - 33, width: 66, height: 66, fill: '#000', 'fill-opacity': 0 }, g);   // 누르는 자리: 짧은 변 80px 이상 (2026-10-22)
+        g.__noFat = true;   // 떡끼리 간격이 좁아 80px 로 넓히면 이웃과 크게 겹친다 — 위 66 사각까지만
+        return { x: x + dx, y: y + dy, g }; });
     });
     await say('엄마는 부잣집에서 하루 종일 부지런히 일했어요.');
-    await say('"수고했어요. 떡 가져가요!" 떡을 하나씩 톡! 세면서 담아요.');
     const toBasket = i => {
       const [bx, by] = mom.P.art ? [0, -12] : cakeSpot(i), [ax, ay] = mom.P.basketAt;
       return [mom.x + mom.flip * (ax + bx) * mom.scale, mom.y + (ay + by) * mom.scale];
@@ -564,8 +566,9 @@
     /* 세기 (2026-10-19): 접시 위 떡을 아이가 한 개씩 골라 누른다. 누를 때마다 "하나! 둘! …" — 하나에 하나씩 짝지어 세기 */
     const left = plateCakes.map((c, k) => ({ ...c, k }));
     for (let i = 1; i <= 10; i++) {
-      const pick = await T.choose(left.map(c => ({ el: c.g, ok: true, c })), { prompt: '떡을 하나씩 톡 눌러 봐요!' });
-      const c = pick.c; left.splice(left.indexOf(c), 1); c.g.setAttribute('opacity', 0);
+      const pickCake = () => T.choose(left.map(c => ({ el: c.g, ok: true, c })), { prompt: '떡을 하나씩 톡 눌러 봐요!' });
+      const pick = await (i === 1 ? T.ask('"수고했어요. 떡 가져가요!" 떡을 하나씩 톡! 세면서 담아요.', pickCake) : pickCake());
+      const c = pick.c; left.splice(left.indexOf(c), 1); c.g.setAttribute('opacity', 0); c.g.style.pointerEvents = 'none';   // 사라진 떡이 이웃 떡 누름을 가로채지 않게
       const [x1, y1] = toBasket(i - 1);
       T.tone(500 + i * 90, .15, { type: 'triangle', vol: .18 });
       Narrator.speak(NUMS[i - 1] + '!');
@@ -601,12 +604,13 @@
     }
     /* 오답 개수: 정답과 1~3 차이, 범위 안 */
     const decoy = (n, max) => { const opts = [n - 1, n + 1, n - 2, n + 2, n + 3].filter(v => v >= 1 && v <= max && v !== n); return opts[Math.floor(Math.random() * Math.min(opts.length, 2))]; };
-    async function pickPlate(n, max, where) {
+    async function pickPlate(n, max, where, guide) {
       const okLeft = Math.random() < .5;
       const good = cakePlate(n, okLeft ? 250 : 750, 400), bad = cakePlate(decoy(n, max), okLeft ? 750 : 250, 400);
       T.fitRow([good, bad]); // 세로 화면: 보이는 폭 안으로
-      await T.choose([{ el: good, ok: true }, { el: bad, ok: false }], { prompt: '떡 접시를 골라 톡 눌러요!',
+      const choosePlate = () => T.choose([{ el: good, ok: true }, { el: bad, ok: false }], { prompt: '떡 접시를 골라 톡 눌러요!',
         where, who: '반짝이는 접시예요! 톡 눌러 봐요!' });
+      await (guide ? T.ask(guide, choosePlate) : choosePlate());
       AudioFX.ding();
       await T.anim(good, [{ scale: '1' }, { scale: '1.12' }, { scale: '1' }], 360);
       good.remove(); bad.remove();
@@ -651,8 +655,7 @@
         await say(`"어흥! 떡 ${CNT[ask - 1]} 개 주면 안 잡아먹지!"`);
         await camWide(600);
         const bub = askBubble(ask);
-        await say(`호랑이가 떡 ${CNT[ask - 1]} 개를 달래요. 어느 접시를 줄까요?`);
-        await pickPlate(ask, n === 0 ? 5 : 10, '호랑이 말풍선의 떡이랑 똑같이 생긴 접시를 골라요!');
+        await pickPlate(ask, n === 0 ? 5 : 10, '호랑이 말풍선의 떡이랑 똑같이 생긴 접시를 골라요!', `호랑이가 떡 ${CNT[ask - 1]} 개를 달래요. 어느 접시를 줄까요?`);
         bub.remove();
       } else {
         await say('"어흥! 남은 떡 몽땅 주면 안 잡아먹지!"');
@@ -665,8 +668,7 @@
         if (bu) el('image', { href: bu, x: 500 - (w + 50) / 2, y: 28, width: w + 50, height: (w + 50) * 425 / 554, filter: 'url(#pp)' }, left);
         else T.paper(left, [['path', { d: `M${500 - w / 2} 40 H${500 + w / 2} L${500 + w / 2 - 24} 150 H${500 - w / 2 + 24} Z`, fill: '#C9975E', stroke: C.bark, 'stroke-width': 5 }]]);
         for (let k = 0; k < ask; k++) drawCake(T, left, 500 - (Math.min(5, ask) - 1) * 25 + (k % 5) * 50, 78 + Math.floor(k / 5) * 40, 1.5, k);
-        await say('바구니에 남은 떡은 몇 개일까요? 세어 보고 접시를 골라요!');
-        await pickPlate(ask, 5, '바구니에 남은 떡이랑 똑같은 개수의 접시를 골라요!');
+        await pickPlate(ask, 5, '바구니에 남은 떡이랑 똑같은 개수의 접시를 골라요!', '바구니에 남은 떡은 몇 개일까요? 세어 보고 접시를 골라요!');
         left.remove();
       }
       // 고른 만큼 호랑이에게 날아간다
@@ -756,10 +758,9 @@
     soft.addEventListener('pointerdown', () => play(soft)); rough.addEventListener('pointerdown', () => play(rough));
     await say('1번 목소리.'); await hear(b1);
     await say('2번 목소리.'); await hear(b2);
-    await say('진짜 엄마 목소리는 몇 번일까요?');
-    await T.choose([{ el: soft, ok: true },
+    await T.ask('진짜 엄마 목소리는 몇 번일까요?', () => T.choose([{ el: soft, ok: true },
       { el: rough, ok: false, onWrong: async () => { await say('"어흥~" 이건 호랑이가 흉내 낸 목소리예요!'); } }],
-    { prompt: '진짜 엄마 목소리를 톡 골라 봐요! 다시 들으려면 한 번 더 눌러요.', where: '엄마 목소리는 다정하고 부드러웠어요. 다시 들어 봐요.', who: '반짝이는 쪽이 엄마 목소리예요!' });
+    { prompt: '진짜 엄마 목소리를 톡 골라 봐요! 다시 들으려면 한 번 더 눌러요.', where: '엄마 목소리는 다정하고 부드러웠어요. 다시 들어 봐요.', who: '반짝이는 쪽이 엄마 목소리예요!' }));
     soft.remove(); rough.remove();
     await say('맞아요! 진짜 엄마 목소리예요. 그런데 문밖 목소리는 걸걸했지요?');
     await say('오빠가 말했어요. "우리 엄마 목소리가 아니에요! 손을 보여 주세요!"');
@@ -776,7 +777,6 @@
       el('rect', { x: 490, y: -300, width: 20, height: 1200, fill: C.ink }, T.bg);
       el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.amber, opacity: .12 }, T.fx);
     });
-    await say('진짜 엄마 손은 뭘까요? 잘 보고 골라 봐요!');
     // 그림 손 (엄마 손·호랑이 발·밀가루 묻힌 발): 배지 가운데에. 없으면 아래 도형
     const handArt = (g, k, w, h) => { const u = artUrl(k); if (!u) return false; T.el('image', { href: u, x: -w / 2, y: -h / 2, width: w, height: h, filter: 'url(#pp)' }, g); return true; };
     const handMom = badge(T, 190, 320, 112, g => {
@@ -803,10 +803,10 @@
       [[40, 44], [-44, 40]].forEach(([x, y]) => el('circle', { cx: x, cy: y, r: 7, fill: C.persimmon }, g));
     });
     T.fitRow([handMom, handStripe, handFlour]); // 세로 화면: 보이는 폭 안으로
-    await T.choose([{ el: handMom, ok: true },
+    await T.ask('진짜 엄마 손은 뭘까요? 잘 보고 골라 봐요!', () => T.choose([{ el: handMom, ok: true },
       { el: handStripe, ok: false, onWrong: async () => { await T.anim(handStripe, [{ scale: 1 }, { scale: 1.12 }, { scale: 1 }], 500); await say('"어? 털이 복슬복슬… 줄무늬도 있네!"'); } },
       { el: handFlour, ok: false, onWrong: async () => { await T.anim(handFlour, [{ scale: 1 }, { scale: 1.12 }, { scale: 1 }], 500); await say('"어? 하얗긴 한데… 뾰족한 발톱이 있네!"'); } }],
-    { prompt: '진짜 엄마 손을 톡 골라 봐요!', where: '엄마 손은 손가락이 길쭉하고 떡가루가 묻어 있어요.', who: '반짝이는 손이 엄마 손이에요!' });
+    { prompt: '진짜 엄마 손을 톡 골라 봐요!', where: '엄마 손은 손가락이 길쭉하고 떡가루가 묻어 있어요.', who: '반짝이는 손이 엄마 손이에요!' }));
     handMom.remove(); handStripe.remove(); handFlour.remove();
     await say('맞아요! 엄마 손은 부드럽고 떡가루가 묻어 있지요.');
     const paw = el('g', { transform: 'translate(500,320)' }, T.world);
@@ -857,8 +857,7 @@
       el('rect', { x: 330, y: 170, width: 340, height: 260, fill: 'transparent' }, spot);
       el('circle', { cx: 500, cy: 300, r: 16, fill: C.bark, opacity: .35 }, spot);
     });
-    await say('문밖에 누가 있는지 보고 싶어요. 창호지를 손가락으로 콕 뚫어 볼까요?');
-    await T.tap(spot, { prompt: '창호지를 톡 눌러서 콕 뚫어 봐요!' });
+    await T.ask('문밖에 누가 있는지 보고 싶어요. 창호지를 손가락으로 콕 뚫어 볼까요?', () => T.tap(spot, { prompt: '창호지를 톡 눌러서 콕 뚫어 봐요!' }));
     AudioFX.poke(); T.pop(620, 180, '콕!', C.bean); spot.remove();
     for (let r = 10; r <= 200; r += 10) { peekCircle.setAttribute('r', r); rim.setAttribute('r', r); await sleep(16); }
     await sleep(400);
@@ -990,7 +989,6 @@
       girl = mkGirl(T, tree, kidsUp ? TOP.g[0] : 560, kidsUp ? TOP.g[1] : 560, .92);
     };
     await T.sceneCard('우물가 큰 나무', () => buildTree(false));
-    await say('우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.');
     /* 도마뱀처럼 꼼지락: 한 칸 오르며 좌우로 살랑(번갈아 몇 도) + 살짝 납작했다 펴짐. 발끝(0,0)이 기준 */
     const scramble = (a, dir, dur = 420) => T.anim(a.body, [{ transform: 'rotate(0deg) scale(1,1)' }, { transform: `rotate(${dir * 7}deg) scale(1.07,.9)` },
       { transform: `rotate(${-dir * 5}deg) scale(.96,1.05)` }, { transform: 'rotate(0deg) scale(1,1)' }], { duration: dur, easing: 'ease-in-out' });
@@ -1012,7 +1010,7 @@
       tree.to(560, Math.max(bgUrl('tree') ? 112 : -1e9, Math.min(280, by - 60)), 1, 420); // 그림 나무: 그림 위끝(y≈-168) 밖이 안 보이게
       T.pop(i % 2 ? 300 : 760, 200, '영차!', C.pine);
     };
-    await T.tap(stageWrap, { prompt: '화면을 톡 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await T.ask('우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.', () => T.tap(stageWrap, { prompt: '화면을 톡 눌러 봐요!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 5; i++) { await climbTree(i); await sleep(450); }
     await sleep(600);
     await say('오누이는 나무 꼭대기까지 올라갔어요!');
@@ -1066,8 +1064,7 @@
     bucket.setAttribute('transform', 'translate(600,305)'); bucket.style.transform = '';
     AudioFX.splash(); T.pop(680, 260, '첨벙!', C.indigo);
     refl.animate([{ scale: 1 }, { scale: '1.08 .9' }, { scale: '.94 1.06' }, { scale: 1 }], { duration: 700 });
-    await say('첨벙! 두레박에는 물만 가득. 우물 속 오누이 얼굴을 톡 눌러 봐요!');
-    await T.tap(refl, { prompt: '우물에 비친 오누이 얼굴을 톡!' });
+    await T.ask('첨벙! 두레박에는 물만 가득. 우물 속 오누이 얼굴을 톡 눌러 봐요!', () => T.tap(refl, { prompt: '우물에 비친 오누이 얼굴을 톡!' }));
     giggle(T); T.pop(500, 120, '킥킥!', C.bean);
     await T.anim(refl, [{ rotate: '0deg' }, { rotate: '-6deg' }, { rotate: '6deg' }, { rotate: '-4deg' }, { rotate: '0deg' }], 700);
     // 그림 컷: 우물을 들여다보는 호랑이 + 나무 위에서 킥킥 웃는 오누이 (그림이 없으면 건너뛴다)
@@ -1114,8 +1111,7 @@
     await say('호랑이가 올려다보며 물었어요. "얘들아, 거기 어떻게 올라갔니?"');
     await say('오빠가 꾀를 냈어요. "참기름 바르고 올라왔지!"');
     await tree.to(700, 300, .85, 900);
-    await say('참기름 병을 톡 눌러서 나무에 발라 줘요!');
-    await T.tap(bottle, { prompt: '참기름 병을 톡!' });
+    await T.ask('참기름 병을 톡 눌러서 나무에 발라 줘요!', () => T.tap(bottle, { prompt: '참기름 병을 톡!' }));
     await T.anim(bottle, [{ transform: 'rotate(0deg)' }, { transform: 'rotate(-60deg)' }], 400);
     bottle.style.transform = 'rotate(-60deg)';
     AudioFX.slide();
@@ -1229,14 +1225,13 @@
     AudioFX.bell();
     await Promise.all([T.anim(ropeGood, [{ transform: 'translateY(-900px)' }, { transform: 'translateY(0)' }], { duration: 1500, easing: 'ease-out' }),
       T.anim(ropeBad, [{ transform: 'translateY(-900px)' }, { transform: 'translateY(0)' }], { duration: 1700, easing: 'ease-out' })]);
-    await say('하늘에서 줄이 두 개 내려왔어요! 어떤 줄을 잡을까요?');
-    await T.choose([{ el: ropeGood, ok: true },
+    await T.ask('하늘에서 줄이 두 개 내려왔어요! 어떤 줄을 잡을까요?', () => T.choose([{ el: ropeGood, ok: true },
       { el: ropeBad, ok: false, onWrong: async () => {
         creak(T); await T.anim(ropeBad, [{ rotate: '0deg' }, { rotate: '2deg' }, { rotate: '-2deg' }, { rotate: '0deg' }], 600);
         ropeGood.style.filter = 'url(#hintGlow)';
         await say('삐걱… 이 줄은 낡았어!');
       } }],
-    { prompt: '굵고 반짝이는 튼튼한 줄을 톡 골라요!', where: '굵고 반짝반짝 튼튼한 줄을 찾아봐요!', who: '반짝이는 굵은 줄이 튼튼한 동아줄이에요!' });
+    { prompt: '굵고 반짝이는 튼튼한 줄을 톡 골라요!', where: '굵고 반짝반짝 튼튼한 줄을 찾아봐요!', who: '반짝이는 굵은 줄이 튼튼한 동아줄이에요!' }));
     AudioFX.jingle();
     T.anim(ropeBad, [{ transform: 'translateY(0)' }, { transform: 'translateY(-1400px)' }], { duration: 1200, easing: 'ease-in' }).then(() => ropeBad.remove());
     await say('맞아요! 굵고 반짝이는 새 동아줄이에요.');
@@ -1385,8 +1380,7 @@
     setSky(true);
     await say('그래서 동생은 해님, 오빠는 달님이 되었답니다.');
     T.finale();
-    await say('해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.');
-    await T.tap(boyMoon.pos); setSky(false); AudioFX.bell(); boyMoon.hop(24); await sleep(1800); // 달님을 톡 → 밤
+    await T.ask('해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.', () => T.tap(boyMoon.pos)); setSky(false); AudioFX.bell(); boyMoon.hop(24); await sleep(1800); // 달님을 톡 → 밤
     await T.tap(girlSun.pos); setSky(true); AudioFX.jingle(); girlSun.hop(24); await sleep(1500); // 해님을 톡 → 낮
     setSky(true);
     await say('해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.');
@@ -1452,12 +1446,30 @@
       guardCam = api.camera;
     };
     const targetsOf = { tap: a => a[0], mash: a => a[0], swipe: a => a[0], hold: a => a[0], choose: a => a[0].map(o => o.el), free: a => a[0].map(t => t.el) };
-    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); return api[k](...a); }; });
+    Object.keys(targetsOf).forEach(k => { T[k] = async (...a) => { await T.fitTo(targetsOf[k](a)); [].concat(targetsOf[k](a)).forEach(e => fatten(e)); return api[k](...a); }; });
     T.sceneCard = (label, change, focus) => api.sceneCard(label, () => {
       if (guardCam) { const c = api.camera; if (c.x === guardCam.x && c.y === guardCam.y && c.z === guardCam.z) api.camSnap(500, 280, 1); guardCam = null; }
       change && change();
     }, focus);
     return T;
+  }
+
+  /* 누르는 자리 넓히기 (2026-10-22): 화면에서 짧은 변이 84px 보다 작은 대상(g)에 투명 사각을 덧대 84px 이상으로 만든다.
+     대상 가운데는 그대로(손가락 힌트 자리 불변). 조작을 열 때마다 지금 화면 배율로 다시 잰다. 클립된 그림 조각은 건드리지 않는다 */
+  function fatten(el, min = 84) {
+    try {
+      if (!el || !(el instanceof SVGGElement) || el.__noFat) return;
+      if (el.__fat) { el.__fat.remove(); el.__fat = null; }
+      const r = el.getBoundingClientRect(); if (!r.width || !r.height || el.getAttribute('clip-path')) return;
+      if (r.width >= min && r.height >= min) return;
+      const m = el.getScreenCTM(), bb = el.getBBox(); if (!m || !bb.width || !bb.height) return;
+      const sx = Math.hypot(m.a, m.b) || 1, sy = Math.hypot(m.c, m.d) || 1;
+      const w = Math.max(bb.width, min / sx), h = Math.max(bb.height, min / sy);
+      const rc = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rc.setAttribute('x', bb.x + bb.width / 2 - w / 2); rc.setAttribute('y', bb.y + bb.height / 2 - h / 2);
+      rc.setAttribute('width', w); rc.setAttribute('height', h); rc.setAttribute('fill', '#000'); rc.setAttribute('fill-opacity', 0);
+      el.insertBefore(rc, el.firstChild); el.__fat = rc;
+    } catch (e) { /* 넓히기 실패는 무시 */ }
   }
 
   Tale.mount({ title: '해와 달이 된 오누이', subtitle: '햇님 달님', run: T => run(portraitGuard(Tale.api)) });
