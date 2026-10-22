@@ -16,7 +16,10 @@ for (const t of fs.readdirSync(root).sort()) {
     return { text, file: '../../' + file };
   });
   let vs = {}; try { vs = JSON.parse(fs.readFileSync(path.join(dir, 'voice_script_el.json'), 'utf8')); } catch (e) { }
-  out[t] = { ko: toList(kr), en: toList(enr), extra: Object.keys(ko.VOICE_LINES || {}).length };
+  // 읽어 주기 대본(read_script_el.json·_en.json)의 줄 순서: text = 화면 글, key = 클립 키(한국어 문장, skipto 에 쓴다)
+  const rs = f => { try { return JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).scenes.flatMap(s => s.lines.map(l => ({ text: l.en || l.text, key: l.text }))); } catch (e) { return null; } };
+  const rko = rs('read_script_el.json'), ren = rs('read_script_en.json');
+  out[t] = { ko: toList(kr), en: toList(enr), extra: Object.keys(ko.VOICE_LINES || {}).length, ...(rko ? { read_ko: rko } : {}), ...(ren ? { read_en: ren } : {}) };
 }
 fs.writeFileSync(path.join(__dirname, 'manifest.json'), JSON.stringify(out, null, 0));
 console.log(Object.keys(out).length, 'tales');

@@ -502,3 +502,8 @@ svg text { font-weight: 800; }
 #startScreen .pills .pill.auto { min-height: 36px; min-width: 0; padding: 0 14px; font-size: clamp(12px, 1.7vmin, 14px); font-weight: 500; opacity: .75; }
 #startScreen.keyed .pills { flex-wrap: wrap; }
 @media (orientation: landscape) { #startScreen.keyed .pills { justify-content: flex-end; max-width: 360px; } }
+
+/* 시작 화면 '읽어 주기' (2026-10-22): 보조 알약(음각) + 펼친 책. 책 두 장은 같은 구리색 종이, 가운데 접힌 틈만 비운다 */
+.pill .book { width: 1.15em; height: .95em; flex: none; margin-left: -.15em; }
+.pill .book .l { fill: var(--copper); }
+.pill .book .r { fill: #DDA57A; }

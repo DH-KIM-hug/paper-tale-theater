@@ -43,6 +43,7 @@
     <button id="portrait" aria-pressed="true">세로</button>
     <button id="land" aria-pressed="false">가로</button>
   </div>
+  <div class="seg"><button id="read" aria-pressed="false" title="읽어 주기 모드(?read=1): 조작 없이 그림책처럼 읽는다. 대본이 있는 동화만">읽어 주기</button></div>
   <button id="restart">처음부터</button>
   <span id="count"></span>
 </header>
@@ -68,7 +69,7 @@
 (() => {
   const $ = s => document.querySelector(s);
   const KIND = { say: '대사', tap: '톡', mash: '톡톡톡', choose: '고르기', swipe: '쓱', hold: '꾹', free: '자유 톡' };
-  let M = {}, lang = 'ko', taleId = '', steps = [], cur = -1, want = -1, pendingScene = null, port = true;
+  let M = {}, lang = 'ko', taleId = '', steps = [], cur = -1, want = -1, pendingScene = null, port = true, readMode = false;
 
   function load(skip, skipto) {
     const f = $('#frame');
@@ -79,7 +80,7 @@
       // 시작 화면의 시작 단추를 눌러 준다(같은 출처). 막혀 있으면 직접 한 번 눌러야 한다.
       setTimeout(() => { try { const b = f.contentDocument.querySelector('#startBtn'); if (b) b.click(); } catch (e) {} }, 400);
     };
-    f.src = `../../tales/${taleId}/index.html?verify=1&skip=${skip}` + (skipto ? `&skipto=${encodeURIComponent(skipto)}` : '') + `&t=${Date.now()}`;
+    f.src = `../../tales/${taleId}/index.html?verify=1&skip=${skip}` + (readMode ? '&read=1' : '') + (skipto ? `&skipto=${encodeURIComponent(skipto)}` : '') + `&t=${Date.now()}`;
   }
 
   function sizeFrame() {
@@ -98,17 +99,18 @@
     }
     $('#prev').disabled = cur <= 0;
     const list = $('#list'); list.innerHTML = '';
-    const all = ((M[taleId] || {})[lang === 'en' ? 'en' : 'ko'] || []).map(x => x.text);
+    const src = readMode ? ((M[taleId] || {})[lang === 'en' ? 'read_en' : 'read_ko'] || []) : ((M[taleId] || {})[lang === 'en' ? 'en' : 'ko'] || []);
+    const all = src.map(x => x.text), keys = src.map(x => x.key || x.text);
     const curText = st && st.kind === 'say' ? st.text : null;
     const seen = new Set(steps.filter(Boolean).filter(x => x.kind === 'say').map(x => x.text));
     all.forEach((t, i) => {
       const d = document.createElement('div');
-      if (t === curText) d.className = 'on';
-      else if (seen.has(t)) d.style.color = 'var(--mute)';
+      if (t === curText || keys[i] === curText) d.className = 'on';
+      else if (seen.has(t) || seen.has(keys[i])) d.style.color = 'var(--mute)';
       d.textContent = (i + 1) + '. ' + t;
       d.style.cursor = 'pointer';
       d.title = '눌러서 이 대사 장면으로 바로 가기';
-      d.onclick = () => { steps = []; load(0, t); };
+      d.onclick = () => { steps = []; load(0, keys[i]); };
       list.appendChild(d);
     });
     const on = list.querySelector('.on'); if (on) list.scrollTop = on.offsetTop - list.offsetTop - list.clientHeight / 2;   /* 목록 안에서만 스크롤(페이지는 그대로) */
@@ -146,6 +148,9 @@
     $('#ko').onclick = () => setLang('ko'); $('#en').onclick = () => setLang('en');
     $('#portrait').onclick = () => setPort(true); $('#land').onclick = () => setPort(false);
     $('#restart').onclick = setTale;
+    const setRead = v => { readMode = v; $('#read').setAttribute('aria-pressed', v); setTale(); };
+    if (new URLSearchParams(location.search).get('read') === '1') { readMode = true; $('#read').setAttribute('aria-pressed', true); }
+    $('#read').onclick = () => setRead(!readMode);
     $('#next').onclick = next; $('#prev').onclick = prev; $('#replay').onclick = replay;
     document.addEventListener('keydown', e => { if (e.target.tagName === 'SELECT') return; if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev(); });
     addEventListener('resize', sizeFrame);

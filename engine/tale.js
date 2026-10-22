@@ -877,6 +877,8 @@ const Tale = (() => {
   /* thumbs.js 캐시 버전: index.html 의 thumbs.js?v= 와 같이 올린다 */
   const THUMBS_V = '20261022e';
   const taleId = () => { const m = location.pathname.match(/\/tales\/([^/]+)\//); return m ? decodeURIComponent(m[1]) : ''; };
+  /* 읽어 주기 단추의 펼친 책 (종이 두 장) */
+  const BOOK_SVG = '<svg class="book" viewBox="0 0 24 20" aria-hidden="true"><path class="l" d="M11.2 4.2 Q7 1.6 1.6 2.4 V16.6 Q7 15.8 11.2 18.2Z"/><path class="r" d="M12.8 4.2 Q17 1.6 22.4 2.4 V16.6 Q17 15.8 12.8 18.2Z"/></svg>';
   const PLAY_SVG = '<svg class="play" viewBox="0 0 10 11" aria-hidden="true"><path d="M1.2 1.1 Q1.2 .2 2 .6 L9.2 4.8 Q9.9 5.5 9.2 6.2 L2 10.4 Q1.2 10.8 1.2 9.9Z"/></svg>';
   /* 시작·끝 화면의 구멍 그림: 밝은 종이 = <id>_light.webp(THUMBS2L), 어두운 종이 = <id>.webp(THUMBS2). 없으면 빈 구멍 */
   function heroes() {
@@ -958,7 +960,7 @@ const Tale = (() => {
 
   /* 화면 글자 번역: 영어 모드이고 이 동화에 영어 자료(TEXT_EN·NARRATION_CLIPS_EN)가 있을 때만 영어, 아니면 한국어 그대로 */
   const ENGINE_EN = { '끝내기': 'Exit', '돌려서 크게 보기': 'Rotate for a bigger view', '이야기 시작': 'Start story', '처음으로': 'Home', '다시 보기': 'Watch again', '끝!': 'The End!',
-    '자동 재생': 'Auto play', '오늘 동화 끝! 내일 또 만나요': 'The end! See you tomorrow', '한 번 더': 'Once more', '홈으로': 'Home',
+    '자동 재생': 'Auto play', '읽어 주기': 'Read to me', '오늘 동화 끝! 내일 또 만나요': 'The end! See you tomorrow', '한 번 더': 'Once more', '홈으로': 'Home',
     '오늘은 여기까지! 눈을 쉬어요': 'That is enough for today. Let our eyes rest.', '어른이 +10분': 'Grown-up: +10 min', '어른이 확인해 주세요': 'Grown-ups, please check', '닫기': 'Close' };
   const tr = ko => {
     if (!englishOn()) return ko;
@@ -988,8 +990,9 @@ const Tale = (() => {
   let restShow = null; // mount 가 채운다: 쉬는 화면을 보여 주고, 어른이 시간을 늘리면 풀려난다
   const restIfDue = async () => { if (PT.due() && restShow) await restShow(); };
 
-  function mount({ title, subtitle, run, note = false, endTitle = '끝!', frame = null, transition = 'page' }) /* 2026-10-19: 모든 동화 기본 = 책장 넘기기 (?trans=iris 로 예전 동그라미) */ {
+  function mount({ title, subtitle, run, note = false, endTitle = '끝!', frame = null, transition = 'page', read = false }) /* 2026-10-19: 모든 동화 기본 = 책장 넘기기 (?trans=iris 로 예전 동그라미) */ {
     document.title = tr(title);
+    readOpt = !!read; // 읽어 주기(READ_ACTS)를 갖춘 동화만
     const home = ROOT_URL + 'index.html';
     document.body.insertAdjacentHTML('beforeend', `
 <div id="tale">
@@ -1019,7 +1022,7 @@ const Tale = (() => {
     <div class="words">
       <h1 class="paperword ttl">${letters(tr(title))}</h1>
       ${subtitle ? `<p class="sub">${tr(subtitle)}</p>` : ''}
-      <div class="pills"><button class="pill go" id="startBtn">${PLAY_SVG}${tr('이야기 시작')}</button><a class="pill" href="${home}">${tr('처음으로')}</a>${AUTO() ? '' : `<button class="pill auto" id="autoBtn" type="button">${tr('자동 재생')}</button>`}</div>
+      <div class="pills"><button class="pill go" id="startBtn">${PLAY_SVG}${tr('이야기 시작')}</button><button class="pill read" id="readBtn" type="button" hidden>${BOOK_SVG}${tr('읽어 주기')}</button><a class="pill" href="${home}">${tr('처음으로')}</a>${AUTO() ? '' : `<button class="pill auto" id="autoBtn" type="button">${tr('자동 재생')}</button>`}</div>
       ${note ? `<p class="note">${note}</p>` : ''}
     </div>
   </div>
@@ -1092,6 +1095,7 @@ const Tale = (() => {
     });
     const start = async () => {
       if (PT.due()) { PT.run(false); await restShow(); }
+      reading = readWanted(); root.classList.toggle('reading', reading); // 끝 화면 '한 번 더'도 같은 모드로 (read_once 는 홈으로 갈 때 지운다)
       AudioFX.unlock(); PT.run(true);
       AudioFX.prefetchClips && AudioFX.prefetchClips(); // 이 동화의 녹음을 미리 받아 둔다 (대사가 늦게 나오지 않게)
       $('#startScreen').hidden = true; $('#endScreen').hidden = true;
@@ -1186,6 +1190,25 @@ const Tale = (() => {
       })();
     }); }
     $('#againBtn').onclick = start;
+    /* 시작 화면 '읽어 주기': 대본·녹음이 있을 때만 보인다. 누르면 이번 회차를 읽어 주기로 ('읽어 주기'를 홈 목소리로 한 번 말한 뒤) */
+    { const rb = $('#readBtn'); if (rb && readOpt) {
+      readAvailable().then(ok => { rb.hidden = !ok; }).catch(() => { /* 숨긴 채로 */ });
+      rb.addEventListener('click', () => {
+        readOnce = true; try { sessionStorage.setItem('read_once', '1'); } catch (e) { /* 이 페이지 안에서는 readOnce 로 */ }
+        try { AudioFX.stopNarration(); Narrator.stop(); } catch (e) { /* 무시 */ }
+        (async () => {
+          try {
+            AudioFX.unlock && AudioFX.unlock();
+            const txt = await (await fetch(ROOT_URL + 'home_narration_el.js')).text();
+            const c = new Function(txt + '; return { ko: NARRATION_CLIPS, en: (typeof NARRATION_CLIPS_EN !== "undefined" ? NARRATION_CLIPS_EN : {}) };')();
+            const en = typeof englishOn === 'function' && englishOn() ? c.en['읽어 주기'] : null;
+            const url = en ? en.c : c.ko['읽어 주기'];
+            if (url && typeof url === 'string') await AudioFX.playUrl(ROOT_URL + url);
+          } catch (e) { /* 소리 없이 시작 */ }
+          start();
+        })();
+      });
+    } }
   }
 
   /* 조작 대기 동안만 입력을 받는다 */
@@ -1270,6 +1293,102 @@ const Tale = (() => {
     return { set(k) { spans.forEach((sp, i) => sp.setAttribute('fill', i <= k ? on : off)); }, clear() { t.remove(); }, count: spans.length };
   }
 
+  /* ---------- 읽어 주기 (docs/READ_MODE.md, 2026-10-22 1단계) ----------
+     조작·배움 놀이 없이 같은 무대에서 그림책처럼 읽어 준다. 동화 js 는 run(T) 첫머리(배우를 만든 뒤)에서
+       if (T.reading()) return T.readPlay(READ_ACTS);
+     로 갈라지고, READ_ACTS = { 동사이름: (...인자) => … } 를 넘긴다. 대본은 tales/<id>/read_script_el.json(영어 _en),
+     녹음 맵은 read_narration_el.js(영어 read_narration_el_en.js). 들어오는 길: 시작 화면 '읽어 주기' 단추(sessionStorage 'read_once'),
+     주소 ?read=1. 동화가 mount({ read: true }) 로 알려야 단추가 보이고 읽기로 갈라진다(아직 READ_ACTS 가 없는 동화는 그대로 놀이판). */
+  let readOpt = false, reading = false, readInstant = false, readOnce = false;
+  const READ_GAP = 700, READ_SCENE_END = 1500;
+  const READ_Q = (() => { try { return new URLSearchParams(location.search).get('read') === '1'; } catch (e) { return false; } })();
+  const readWanted = () => { if (!readOpt) return false; if (READ_Q || readOnce) return true; try { return sessionStorage.getItem('read_once') === '1'; } catch (e) { return false; } };
+  /* 홈으로 가면 모드는 남지 않는다 (동화마다 그때그때 고른다) */
+  try { addEventListener('pagehide', () => { try { sessionStorage.removeItem('read_once'); } catch (e) { /* 무시 */ } }); } catch (e) { /* 무시 */ }
+  const fileOK = async f => {
+    try {
+      let r = await fetch(f, { method: 'HEAD', cache: 'no-cache' });
+      if (r.status === 405 || r.status === 501) r = await fetch(f, { cache: 'no-cache' });
+      return r.ok;
+    } catch (e) { return false; }
+  };
+  /* 단추를 보일지: 한국어 = 대본 + 녹음 맵, 영어 = 영어 대본 + 영어 녹음 맵(영어 읽기 녹음이 생기면 저절로 보인다) */
+  async function readAvailable() {
+    if (!readOpt) return false;
+    if (typeof englishOn === 'function' && englishOn()) return (await fileOK('read_script_en.json')) && fileOK('read_narration_el_en.js');
+    return (await fileOK('read_script_el.json')) && fileOK('read_narration_el.js');
+  }
+  /* 읽기 녹음 맵을 받아 NARRATION_CLIPS(_EN) 에 합친다 (시작 화면 home_narration_el.js 로더와 같은 방식) */
+  async function loadReadClips(en) {
+    const f = en ? 'read_narration_el_en.js' : 'read_narration_el.js';
+    try {
+      const r = await fetch(f, { cache: 'no-cache' });
+      if (!r.ok) return false;
+      const txt = await r.text();
+      if (typeof NARRATION_CLIPS === 'undefined') window.NARRATION_CLIPS = {};
+      new Function(txt)();
+      return true;
+    } catch (e) { console.warn('[read] 녹음 맵을 읽지 못함', f, e); return false; }
+  }
+  async function readPlay(acts = {}) {
+    const en = typeof englishOn === 'function' && englishOn();
+    const getJSON = async f => { try { const r = await fetch(f, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch (e) { return null; } };
+    const sc = (en && await getJSON('read_script_en.json')) || await getJSON('read_script_el.json');
+    if (!sc || !Array.isArray(sc.scenes)) { console.warn('[read] 대본이 없어 끝냅니다'); await curtain(true); return ''; }
+    await loadReadClips(en);
+    try { AudioFX.prefetchClips && AudioFX.prefetchClips(); } catch (e) { /* 미리 받기 없이 */ }
+    /* 클립 키 확인: 녹음이 없는 줄은 브라우저 TTS 로 떨어진다 → 콘솔과 window.__READ 에 남긴다 */
+    const has = t => {
+      try {
+        if (en) return !!(NARRATION_CLIPS_EN[t] && NARRATION_CLIPS_EN[t].c);
+        return typeof NARRATION_CLIPS !== 'undefined' && !!NARRATION_CLIPS[t];
+      } catch (e) { return false; }
+    };
+    const log = window.__READ = { tale: sc.tale, lang: en ? 'en' : 'ko', scenes: sc.scenes.length, lines: 0, missing: [], unknown: [], said: 0, done: false };
+    sc.scenes.forEach(s => (s.lines || []).forEach(l => { log.lines++; if (!has(l.text)) log.missing.push(l.text); }));
+    console.log(`[read] ${sc.tale} ${log.lang}: ${log.scenes}장면 ${log.lines}줄, 클립 없음 ${log.missing.length}`);
+    log.missing.forEach(t => console.warn('[read] 클립 없음(TTS):', t));
+    /* 동사 'name:a:b' → acts.name('a', 'b'). 모르는 동사는 경고만, 실패도 경고만 (대본이 코드보다 먼저 나와도 깨지지 않게) */
+    const verb = v => {
+      const [name, ...args] = String(v).split(':');
+      const f = acts[name];
+      if (typeof f !== 'function') {
+        if (!log.unknown.includes(v)) { log.unknown.push(v); console.warn('[read] 모르는 동사:', v); }
+        return null;
+      }
+      try {
+        const r = f(...args);
+        return r && typeof r.then === 'function' ? r.catch(e => console.warn('[read] 동사 실패:', v, e)) : null;
+      } catch (e) { console.warn('[read] 동사 실패:', v, e); return null; }
+    };
+    const runAll = async list => { for (const v of list || []) await verb(v); };
+    for (let i = 0; i < sc.scenes.length; i++) {
+      const s = sc.scenes[i], pend = [];
+      /* 장면 차리기: 책장이 넘어가는(덮인) 동안 놓기만 한다. 동사는 T.readInstant() 가 참이면 움직임 없이 바로 놓는다 */
+      const setUp = () => {
+        readInstant = true;
+        try {
+          if (s.set != null && typeof acts.set === 'function') { const r = verb('set:' + s.set); if (r) pend.push(r); }
+          for (const v of s.enter || []) { const r = verb(v); if (r) pend.push(r); }
+        } finally { readInstant = false; }
+      };
+      if (i === 0) { setUp(); await sleep(300); await curtain(true); }
+      else await sceneCard(s.card || '', setUp);
+      if (pend.length) await Promise.all(pend);
+      const lines = s.lines || [];
+      for (let j = 0; j < lines.length; j++) {
+        const l = lines[j];
+        await runAll(l.before);
+        await say(l.text);
+        log.said++;
+        await runAll(l.after);
+        await sleep(j === lines.length - 1 ? READ_SCENE_END : READ_GAP);
+      }
+    }
+    log.done = true;
+    return sc.moral || '';
+  }
+
   const finale = () => { const b = $('#finBtn'); if (b) b.hidden = false; };
 
   const api = {
@@ -1279,6 +1398,7 @@ const Tale = (() => {
     viewWidth,
     tap: autoInput('tap', tap), mash: autoInput('mash', mash), choose: autoInput('choose', choose), swipe: autoInput('swipe', swipe), hold: autoInput('hold', hold), free: autoInput('free', free),
     autoplay: AUTO, autoDo,
+    reading: () => reading, readPlay, readInstant: () => readInstant,
     get bg() { return bgL; }, get world() { return world; }, get fx() { return fxL; }, get root() { return root; },
   };
   return { mount, api };

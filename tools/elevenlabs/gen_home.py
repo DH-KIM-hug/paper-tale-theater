@@ -27,7 +27,7 @@ TAGS = {  # 한국어 say → 영어
   '수 세기': 'Counting', '크기 비교': 'Comparing sizes', '순서': 'Order', '분류하기': 'Sorting',
   '관찰하고 차이 찾기': 'Spot the difference', '소리 듣기': 'Listening to sounds', '모양 맞추기': 'Matching shapes',
   '날씨와 계절': 'Weather and seasons', '마음과 배려': 'Heart and kindness', '위치말': 'Position words',
-  '이야기 전체': 'All tales', '배우는 것 전체': 'All skills', '모든 동화가 열렸어요!': 'All tales are unlocked!', '자동 재생': 'Auto play',
+  '이야기 전체': 'All tales', '배우는 것 전체': 'All skills', '모든 동화가 열렸어요!': 'All tales are unlocked!', '자동 재생': 'Auto play', '읽어 주기': 'Read to me',
 }
 
 ALIAS = {'콩쥐팥쥐': 'Kongjwi and Patjwi'}
