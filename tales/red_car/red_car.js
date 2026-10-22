@@ -376,10 +376,10 @@
     const CARS = [red, police, fire, amb, tow];
     [kid, ...CARS, thiefA, thiefB, bear, rabbit, bfly, block, duck, house, flame, flame2, flame3, smoke, smoke2, smoke3, water, hook].forEach(hide);
     T.director({ cast: { child: kid, red, police, fire, amb, tow }, noFace: ['child', 'red', 'police', 'fire', 'amb', 'tow'] });
-    /* 그림에서 잰 좌표(차 가운데 x·바닥 y 기준 오프셋, 2026-10-21): 서 있는 이현이 쥔 주먹(그림 왼쪽 손) · 식탁 윗면 · 누운 손 옆 · 구급차 큰 옆창 · 호스 끝 · 견인차 사슬 끝(고리 꼭대기가 사슬과 겹치게) · 빨간 차 앞 범퍼(지침 / 걸림 자세) */
+    /* 그림에서 잰 좌표(차 가운데 x·바닥 y 기준 오프셋, 2026-10-21): 서 있는 이현이 쥔 주먹(그림 왼쪽 손) · 식탁 윗면 · 누운 손 옆 · 호스 끝 · 견인차 사슬 끝(고리 꼭대기가 사슬과 겹치게) · 빨간 차 앞 범퍼(지침 / 걸림 자세) */
     const HAND = { stand: [-14, -80], eat: [38, -96], sleep: [-63, -22] };
     const DROP = X(380, 400) + 130;   // 2장에서 자동차가 떨어지는 자리(이현이 출발 x + 130). 3장 첫 화면도 이 자리
-    const WIN = [[-68, -52], [-42, -52]], NOZ = [49, -56], TIP_PULL = [-90, -1], BUMPER = [60, -16], BUMPER9 = [66, -48];
+    const NOZ = [49, -56], TIP_PULL = [-90, -1], BUMPER = [60, -16], BUMPER9 = [66, -48];
     /* 견인(8~9장, 2026-10-21 그림에서 잰 값): 견인차 사슬 끝은 견인차 그림 기준 (-90, -42) 에 매달리고, 걸림 자세 범퍼 윗면은 빨간 차 기준 (+67, -57) 이다.
        고리가 하나의 사슬로 이어지려면 견인차 사슬 끝과 범퍼가 같은 자리에 와야 하므로 두 차의 가운데 간격을 TOWGAP(=90+67)로 두고,
        견인차를 한 줄(LANE_T) 위로, 빨간 차를 한 줄(LANE_R) 아래로 둔다(높이차 15 = 57-42). 고리는 붐 끝에서 범퍼 윗면까지 걸리도록 .78 배(그림 높이 47)로 줄여, 위쪽이 붐 끝, 아래 갈고리가 범퍼에 걸린다 */
@@ -601,26 +601,47 @@
     await sleep(SCENE_END);
 
     /* ===== 6. 구급차 삼촌 (자동 — 인형 내려 주기) ===== */
+    /* 인형은 '차 안에 탄' 모습(2026-10-22): 구급차 뒤 큰 옆창(달리기 그림에서 잰 창 x 83~312, y 90~266 / 900×535) 모양으로 자른 묶음을
+       구급차 몸(body)에 붙여 차와 함께 달리고 들썩인다. 창 안은 하늘색 종이(크림 토끼가 크림 창에 묻히지 않게), 인형은 머리·어깨만 보이고 크기는 다른 장면과 같다(scale 1).
+       내릴 때는 옆구리 문을 쓰지 않는다: 창 아래로 내려가(건너편으로 내림) 병원 쪽 차 뒤에서 나와 병원 문으로 들어간다 */
+    let cabin = null;
+    const ride = () => {
+      const k = amb.w / 900, x0 = -amb.w / 2 + 83 * k, y0 = -amb.h + 90 * k, cw = 229 * k, ch = 176 * k, yb = y0 + ch;
+      const g = T.el('g', {}, amb.body), cp = T.el('clipPath', { id: 'rcAmbWin' }, g);
+      T.el('rect', { x: x0, y: y0, width: cw, height: ch, rx: 3 }, cp);
+      const inner = T.el('g', { 'clip-path': 'url(#rcAmbWin)' }, g);
+      T.el('rect', { x: x0, y: y0, width: cw, height: ch, fill: '#A9C7DE' }, inner);
+      [[rabbit, x0 + cw * .82, yb + 22], [bear, x0 + cw * .28, yb + 23]].forEach(([d, x, y]) => {
+        inner.appendChild(d.pos); d.pos.getAnimations().forEach(n => n.cancel()); d.pos.style.display = ''; d.pos.style.opacity = '';
+        d.setScale(1); d.look('sit', 'right'); d.place(x, y);
+      });
+      T.el('rect', { x: x0, y: y0, width: cw, height: 3, fill: '#2E241C', opacity: .3 }, inner);   // 창 윗변 종이가 드리운 얕은 그림자
+      cabin = g;
+    };
     await T.sceneCard(tr('구급차 삼촌'), () => {
       scene('rc_bg_road_c');
       layer('signal', X(120, 360), FL - 10); layer('house_blue', X(300, 420), FL - 20);   // 중간 층
-      put(T, amb, 40, FL, { look: 'run' });
-      put(T, bear, 40 + WIN[0][0], FL + WIN[0][1], { look: 'sit' }); put(T, rabbit, 40 + WIN[1][0], FL + WIN[1][1], { look: 'sit' });
+      put(T, amb, 40, FL, { look: 'run' }); ride();
       layer('ball', X(990, 800), 585, { front: true });
       if (P) camSnap(600, 280, 1);
     }, amb.pos);
-    const ambX = X(620, 600);
+    const ambX = X(620, 600), DOOR = 738, STEP = 406;   // 병원 문(배경 그림 1108~1195px → 화면 x 708~767), 문턱 y
     const l23 = say(S.L23), stopR6 = rattle(.25, 1200);
     follow(600, DRIVE);
     setTimeout(() => { vo('siren_amb'); blink(T, amb); T.pop(amb.x, FL - 170, tr('삐용삐용!')); }, 800);
-    await Promise.all([drive(amb, ambX, FL, DRIVE), bear.move(ambX + WIN[0][0], FL + WIN[0][1], DRIVE, 'linear'), rabbit.move(ambX + WIN[1][0], FL + WIN[1][1], DRIVE, 'linear'), l23]);
+    await Promise.all([drive(amb, ambX - 90, FL, DRIVE), l23]);
+    const l24 = say(S.L24);   // 아직 병원으로 가는 중: 창 안의 인형을 태운 채 병원 문 앞까지
+    follow(650, 2600);
+    await Promise.all([drive(amb, ambX, FL, 2600, 'ease-out'), l24]);
     stopR6();
-    const l24 = say(S.L24);
-    amb.look('open'); sfx('door', .5);
-    bear.look('off'); rabbit.look('off');
+    /* 내리기: 창 아래로 쏙(건너편으로 내림) → 병원 쪽 차 뒤에서 나와 문으로 콩콩 → 문 안으로 */
     sfx('paper_down', .4);
-    await Promise.all([bear.move(X(700, 680), FL, 900, 'ease-in'), rabbit.move(X(745, 725), FL, 900, 'ease-in'), bear.hop(10, 320), rabbit.hop(10, 320)]);
-    await l24; 
+    await Promise.all([bear, rabbit].map(d => d.move(d.x, d.y + 40, 450, 'ease-in')));
+    cabin.remove(); cabin = null;
+    [[bear, amb.x + 45], [rabbit, amb.x + 75]].forEach(([d, x]) => { put(T, d, x, STEP, { look: 'off' }); T.world.insertBefore(d.pos, amb.pos); fadeIn(d, 250); });
+    await Promise.all([drive(bear, DOOR - 12, STEP, 1300, 'ease-in-out', 8), sleep(150).then(() => drive(rabbit, DOOR + 14, STEP, 1200, 'ease-in-out', 8))]);
+    sfx('door', .4);
+    await Promise.all([fadeOut(T, bear, 500), fadeOut(T, rabbit, 500)]);
     put(T, police, -250, FL, { look: 'run' }); put(T, red, -130, FL, { look: 'run' }); put(T, fire, -400, FL, { look: 'run' });
     const stopR6b = rattle(.25, 1200);
     follow(500, 3800);
@@ -631,7 +652,6 @@
     amb.look('run');
     const l27 = say(S.L27), stopR6c = rattle(.25, 1200);
     follow(560, 6000);
-    bear.hop(8, 320); rabbit.hop(8, 320);
     const E6 = chain(640, ['amb', 'red', 'police', 'fire'], 12);
     await Promise.all([drive(police, E6.police, FL, 6000, 'ease-out'), drive(red, E6.red, FL, 6000, 'ease-out'), drive(fire, E6.fire, FL, 6000, 'ease-out'), drive(amb, E6.amb, FL, 6000, 'ease-out'), l27]);
     stopR6c();
