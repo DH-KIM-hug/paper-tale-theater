@@ -2,7 +2,8 @@
    톡 2번(2장 말 출발 · 11장 샘물), 배움 놀이 3개(4장 많고 적음 · 7장 위·아래·옆 · 8장 아침·낮·밤), 연타 없음, 줄거리 선택 없음, 입맞춤 없음.
    사람은 모두 머리 크기가 같다(HT). 야수만 머리 1.3배, 키 1.5배. 그림: assets/v3w/bb_*.webp (목록 tools/app/gen/jobs_beauty_beast.json)
    시안(목업) 모드: 그림 파일이 아직 없으면 같은 크기·자리에 종이 자리표시(색 도형 + 한글 이름표)를 그린다.
-   파일이 생기면 코드를 고치지 않아도 그림으로 바뀐다 (ASP 표만 실제 비율로 갱신). */
+   파일이 생기면 코드를 고치지 않아도 그림으로 바뀐다 (ASP 표만 실제 비율로 갱신).
+   화려하게 다시 그리기(VISUAL_PLAN.md, 2026-10-22): 궁전 장면만 배경 v2 + 층 소품 bb_layer_*(누름 없음, 후처리 post_v2.py), 11장 끝 봄 정원 크로스페이드. 시골집은 그대로. */
 (() => {
   const AS = '../../assets/v3w/';
   /* 그림 폭/높이 비율 (tales/beauty_beast/ASP.txt 에서 옮김) */
@@ -15,6 +16,9 @@
     sisb_gasp: 0.4783, sisb_joy: 0.5717, prop_rose: 0.6033, prop_rose_vase: 0.5733, prop_bush5: 1.1083, prop_bush2: 1.2167,
     prop_table_small: 1.055, prop_table_long: 1.415, card_morning: 0.9067, card_noon: 0.905, card_night: 0.905, prop_mirror: 0.8267,
     prop_ring: 0.8133, prop_dream: 1.1283, prop_spring: 1.4833, prop_glow: 0.9883, prop_hat: 1.4783,
+    /* 화려하게 다시 그리기(VISUAL_PLAN.md, 2026-10-22): 궁전 장면 층 소품 (tools/app/gen/post_v2.py 로 오림) */
+    layer_snow_fir_front: 0.575, layer_snow_bush: 1.8987, layer_chandelier: 0.845, layer_curtain: 0.42, layer_feast: 2.1951,
+    layer_topiary_snow: 0.3983, layer_rosebush_front: 1.3633, layer_petal_rose: 1.0533,
   };
   /* 사람 그림 높이 (머리 크기를 벨 서기 200 과 맞춘 값. 야수는 머리 약 1.4배·키 1.15배 — 갈기가 커서 머리 1.3배를 지키면 벨보다 작아진다) */
   const HT = { beast_stand: 235, beast_ring: 235, beast_sit: 193, beast_lie: 141, beast_lie_eyes: 141,
@@ -25,7 +29,8 @@
   const NAT = { belle_point: 'right', belle_run: 'right', belle_kneel: 'right', belle_sleep: 'left', father_bed: 'left',
     beast_lie: 'left', beast_lie_eyes: 'left', beast_ring: 'left', father_ride: 'right', horse_stand: 'right' };
   const FL = 528;                    // 바닥(발끝 y)
-  const BGS = ['cottage', 'cottage_front', 'snow_forest', 'dining', 'garden', 'room'];
+  /* 사람 세계(시골집)는 그대로, 야수의 궁전 장면만 다층 v2 (VISUAL_PLAN) */
+  const BGS = ['cottage', 'cottage_front', 'snow_forest_v2', 'dining_v2', 'garden_v2', 'garden_bloom_v2', 'room_v2'];
   const bgSrc = k => AS + 'bb_bg_' + k + '.webp', artSrc = k => AS + 'bb_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const hOf = f => HT[f] || 200;
@@ -130,6 +135,7 @@
     garden:        { sky: '#F6ECD8', gnd: '#8fae85', name: '궁전 정원(낮, 왼쪽 문)', shapes: g => [['rect', { x: 20, y: 90, width: 150, height: 320, fill: '#D9A94E' }], ['rect', { x: 60, y: 260, width: 70, height: 150, rx: 35, fill: '#6B4A32' }], ['circle', { cx: 860, cy: 100, r: 44, fill: '#F2B366' }]] },
     room:          { sky: '#F6ECD8', gnd: '#C9A878', name: '벨의 방(오른쪽 문)', shapes: g => [['rect', { x: 780, y: 140, width: 120, height: 270, rx: 6, fill: '#A93B32' }], ['rect', { x: 130, y: 110, width: 200, height: 250, rx: 4, fill: '#6B4A32' }], ['rect', { x: 150, y: 140, width: 160, height: 40, fill: '#D9A94E' }]] },
   };
+  ['snow_forest', 'dining', 'garden', 'room'].forEach(k => { BGPH[k + '_v2'] = BGPH[k]; }); BGPH.garden_bloom_v2 = BGPH.garden;
   function bgImage(T, key) {
     if (bgOK[key]) return T.el('image', { href: bgSrc(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
     const d = BGPH[key], g = T.el('g', {}, T.bg);
@@ -184,8 +190,8 @@
   const tint = (T, fill, op) => T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill, opacity: op }, T.bg);
 
   /* 반짝: 작은 크림색 마름모가 퍼졌다 사라진다 */
-  function sparkle(T, x, y, r = 90, n = 10) {
-    sparkleSfx(T);
+  function sparkle(T, x, y, r = 90, n = 10, quiet = false) {
+    if (!quiet) sparkleSfx(T);
     for (let i = 0; i < n; i++) {
       const a = (i / n) * Math.PI * 2, d = r * (.6 + (i % 3) * .2);
       const p = T.el('path', { d: 'M0 -9 L5 0 L0 9 L-5 0 Z', fill: i % 2 ? '#F6ECD8' : '#F2B366', transform: `translate(${x},${y})` }, T.world);
@@ -218,8 +224,21 @@
   /* 눈: 한 줄로 내려온다 */
   function snowfall(T, n = 14) {
     for (let i = 0; i < n; i++) {
-      const c = T.el('circle', { cx: 40 + i * 70, cy: -30, r: 4 + (i % 4), fill: '#F4F6FA', opacity: .9 }, T.world);
+      const c = T.el('circle', { cx: 40 + (i * 977 / n) % 980, cy: -30, r: 4 + (i % 4), fill: '#F4F6FA', opacity: .9 }, T.world);
       c.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-40px,640px)' }], { duration: 5200 + (i % 4) * 900, delay: i * 180, iterations: Infinity, easing: 'linear' });
+    }
+  }
+
+  /* 장미 꽃잎이 (x,y) 둘레에서 바깥으로 흩날린다 (얼굴 위는 지나지 않게 아래·옆으로) */
+  function rosePetals(T, x, y, n = 10) {
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2, d = 150 + (i % 3) * 40, s = .8 + (i % 3) * .2;
+      const p = T.el('image', { href: artSrc('layer_petal_rose'), x: -8, y: -8, width: 16 * ASP.layer_petal_rose, height: 16, opacity: 0 }, T.world);
+      p.style.pointerEvents = 'none';
+      const ex = x + Math.cos(a) * d, ey = y + Math.abs(Math.sin(a)) * d * .5 + 20;
+      p.animate([{ transform: `translate(${x}px,${y}px) rotate(0deg) scale(${s})`, opacity: 0 }, { opacity: 1, offset: .2 },
+        { transform: `translate(${ex}px,${ey}px) rotate(${200 + i * 30}deg) scale(${s})`, opacity: 0 }], { duration: 1600, delay: i * 40, easing: 'ease-out' })
+        .finished.then(() => p.remove(), () => p.remove());
     }
   }
 
@@ -284,6 +303,19 @@
     const spring = prop(T, 'prop_spring', 90), shine = prop(T, 'prop_glow', 220), hat = prop(T, 'prop_hat', 34);
     const ALL = [belle, beast, prince, father, sisa, sisb, horse, bush5, bush2, rose, ...vases, tableS, tableL, mirror, ring, dream, spring, shine, hat];
     ALL.forEach(hide);
+    /* ---- 층 소품 (VISUAL_PLAN §4): 누름을 받지 않는다. 같은 소품은 어느 장면이든 같은 높이 ---- */
+    const D = (f, h) => { const a = prop(T, 'layer_' + f, h); a.pos.style.pointerEvents = 'none'; return a; };
+    const L = { fir: [D('snow_fir_front', 420), D('snow_fir_front', 420)], sbush: D('snow_bush', 110), chand: D('chandelier', 160),
+      curtain: [D('curtain', 520), D('curtain', 520)], feast: D('feast', 70), topiary: D('topiary_snow', 200), rose: D('rosebush_front', 150) };
+    Object.values(L).flat().forEach(hide);
+    const front = (...as) => as.forEach(a => { if (a.pos.style.display !== 'none') T.world.appendChild(a.pos); });
+    /* 연회장(3B·8장): 샹들리에(중간·위) → 배우·식탁 → 잔칫상(식탁 위) → 휘장 둘(앞) */
+    const diningBack = () => { put(T, L.chand, X(500, 520), 180); };
+    const diningFront = () => {
+      put(T, L.feast, tableL.x, FL + 4 - 170 * .72);
+      put(T, L.curtain[0], 25, 580); put(T, L.curtain[1], 975, 580, { to: 'right' });
+      front(L.curtain[0], L.curtain[1]);
+    };
     T.director({ cast: { belle, beast, father, sisa, sisb, prince }, noFace: ['belle', 'beast', 'father', 'sisa', 'sisb', 'prince'] });
 
     /* ===== 1. 가난해진 가족 ===== */
@@ -334,8 +366,9 @@
 
     /* ===== 3. 눈보라 속 궁전 ===== */
     await T.sceneCard(tr('눈보라 속 궁전'), () => {
-      scene('snow_forest'); snowfall(T);
+      scene('snow_forest_v2'); snowfall(T, 22);
       put(T, father, -150, FL, { look: 'ride', to: 'right' });
+      put(T, L.fir[0], 60, 575); put(T, L.fir[1], 950, 575, { to: 'right' }); put(T, L.sbush, 985, 585);   /* 앞 가림: 아버지는 왼쪽 전나무 뒤로 지나간다 */
       if (P) camSnap(300, 280, 1);
     }, father.pos);
     sfx(T, 'blow_long', .4);
@@ -346,9 +379,11 @@
     const h10 = father.hop(8, 400);
     await say('멀리 불빛! 커다란 궁전에 아무도 없고, 따뜻한 저녁상만 차려져 있었어요.');
     await h10;
-    T.clear(); bgImage(T, 'dining'); camSnap(500, 280, 1);
+    T.clear(); bgImage(T, 'dining_v2'); camSnap(500, 280, 1);
+    diningBack();
     put(T, father, X(560, 520), FL, { look: 'eat' });
     put(T, tableL, X(560, 520), FL + 4);
+    diningFront();
     if (P) camSnap(520, 280, 1);
     await say('누구 계세요? …고맙게 먹겠습니다.');
     sfx(T, 'chomp'); father.hop(8, 300); T.pop(father.x, FL - 330, tr('냠냠!'));
@@ -356,7 +391,7 @@
     sfx(T, 'chomp'); father.hop(8, 300); T.pop(father.x, FL - 330, tr('냠냠!'));
     await sleep(700);
     await fadeOut(T, father, 400);
-    put(T, father, X(300, 420), FL, { look: 'sleep' }); fadeIn(father);
+    put(T, father, X(300, 420), FL, { look: 'sleep' }); fadeIn(father); front(L.curtain[0], L.curtain[1]);
     const night3 = tint(T, '#1F2A56', 0);
     T.anim(night3, [{ opacity: 0 }, { opacity: .25 }], 1000);
     T.pop(father.x, FL - 230, tr('쿨쿨'));
@@ -365,7 +400,7 @@
 
     /* ===== 4. 장미 정원 (배움 놀이 1: 많고 적음) ===== */
     await T.sceneCard(tr('장미 정원'), () => {
-      scene('garden');
+      scene('garden_v2');                                  /* 4장은 세기 놀이라 층 소품을 두지 않는다 */
       put(T, bush5, X(330, 440), FL - 10, { s: P ? .65 : 1 });
       put(T, bush2, X(690, 590), FL - 10, { s: P ? .65 : 1 });
       put(T, father, X(880, 760), FL, { look: 'stand', to: 'left' });
@@ -396,11 +431,13 @@
 
     /* ===== 5. 야수 ===== */
     await T.sceneCard(tr('야수'), () => {
-      scene('garden');
+      scene('garden_v2');
+      put(T, L.topiary, 70, FL);
       put(T, bush5, X(330, 380), FL - 10, { s: P ? .8 : 1 });
       put(T, father, X(700, 640), FL, { look: 'rose', to: 'left' });
       put(T, beast, X(430, 440), FL + 40, { look: 'stand' });
       T.world.insertBefore(beast.pos, bush5.pos); beast.pos.style.opacity = 0;
+      put(T, L.rose, 30, 585);
       if (P) camSnap(520, 280, 1);
     }, bush5.pos);
     const appear = beast.pos.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1400, fill: 'forwards' });
@@ -410,7 +447,7 @@
     await say('그때 덤불 뒤에서 커다란 야수가 천천히 나왔어요.');
     await appear.finished.catch(() => {});
     await say('내 장미를 꺾었구나. 재워 주고 먹여 줬는데.');
-    put(T, hat, father.x, FL - 212 + 12); father.look('shock');
+    put(T, hat, father.x, FL - 212 + 12); father.look('shock'); front(L.rose);
     hat.pos.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '40px 200px', rotate: '70deg' }], { duration: 600, easing: 'ease-in', fill: 'forwards' });
     sfx(T, 'paper_down'); T.pop(father.x + 40, FL - 40, tr('툭!'));
     const w5 = father.wiggle(4, 500);
@@ -442,7 +479,8 @@
 
     /* ===== 7. 궁전의 손님 (배움 놀이 2: 위·아래·옆) ===== */
     await T.sceneCard(tr('궁전의 손님'), () => {
-      scene('garden');
+      scene('garden_v2');
+      put(T, L.topiary, 70, FL);
       put(T, beast, X(300, 380), FL, { look: 'stand' });
       put(T, father, X(1100, 1000), FL, { look: 'stand' });
       put(T, belle, X(1100, 1000), FL, { look: 'stand' });
@@ -459,7 +497,7 @@
     await sleep(400);
     let plate;
     await T.sceneCard(tr('벨의 방'), () => {
-      scene('room');
+      scene('room_v2');
       put(T, belle, X(230, 330), FL, { look: 'stand' });
       const tx = X(500, 500);
       put(T, vases[1], tx, FL - 4, { s: .85 });
@@ -493,10 +531,12 @@
 
     /* ===== 8. 저녁마다 (배움 놀이 3: 아침·낮·밤) ===== */
     await T.sceneCard(tr('저녁마다'), () => {
-      scene('dining');
+      scene('dining_v2');
+      diningBack();
       put(T, belle, X(440, 450), FL, { look: 'sit' });
       put(T, beast, X(700, 600), FL, { look: 'sit' });
       put(T, tableL, X(570, 525), FL + 4);
+      diningFront();
       if (P) camSnap(520, 280, 1);
     }, belle.pos);
     await say('저녁마다 야수가 찾아왔어요.');
@@ -546,7 +586,7 @@
     /* ===== 9. 거울과 반지 ===== */
     let mf;
     await T.sceneCard(tr('거울과 반지'), () => {
-      scene('room'); tint(T, '#1F2A56', .35);
+      scene('room_v2'); tint(T, '#1F2A56', .35);
       put(T, mirror, X(300, 380), FL);
       put(T, belle, X(470, 500), FL, { look: 'worry', to: 'left' });
       put(T, beast, X(700, 650), FL, { look: 'ring', to: 'left' });
@@ -614,11 +654,13 @@
 
     /* ===== 11. 샘가의 야수 (톡 2) ===== */
     await T.sceneCard(tr('샘가의 야수'), () => {
-      scene('garden');
+      scene('garden_v2');
+      put(T, L.topiary, 70, FL);
       put(T, bush5, X(780, 700), FL - 10, { s: P ? .8 : 1 });
       put(T, beast, X(720, 640), FL, { look: 'lie' });
       put(T, spring, X(520, 460), FL + 10);
       put(T, belle, X(-120, -120), FL, { look: 'run', to: 'right' });
+      put(T, L.rose, 985, 585, { to: 'right' });
       if (P) camSnap(500, 280, 1);
     }, spring.pos);
     follow(460, 1800);
@@ -640,12 +682,20 @@
     put(T, shine, beast.x - 40, FL - 10); T.world.insertBefore(shine.pos, beast.pos); fadeIn(shine, 500);
     shine.body.animate([{ transform: 'scale(.9)' }, { transform: 'scale(1.08)' }, { transform: 'scale(.9)' }], { duration: 1400, iterations: Infinity });
     if (!(AudioFX.sting && AudioFX.sting('magic'))) sparkleSfx(T);
-    sparkle(T, beast.x - 40, FL - 120, 160, 18);
+    /* 변신 반짝 2배(두 겹 36) + 장미 꽃잎 10장 */
+    sparkle(T, beast.x - 40, FL - 120, 160, 18); setTimeout(() => sparkle(T, beast.x - 40, FL - 120, 220, 18, true), 300);
     const s73 = say('그러자 반짝! 야수가 멋진 왕자님으로 변했어요.');
     await sleep(900);
     await T.anim(beast.pos, [{ opacity: 1 }, { opacity: 0 }], 500); hide(beast);
-    put(T, prince, X(680, 600), FL, { look: 'stand' }); fadeIn(prince, 500); glow(prince, 1400);
+    put(T, prince, X(680, 600), FL, { look: 'stand' }); fadeIn(prince, 500); glow(prince, 1400); front(L.rose);
+    rosePetals(T, prince.x, FL - 100, 10);
     await s73;
+    /* 마법이 풀렸다: 같은 구도의 봄 정원으로 천천히 바뀐다 (눈 녹고 장미 만발). 눈 얹힌 토피어리는 함께 사라진다 */
+    if (bgOK.garden_bloom_v2) {
+      const bloom = T.el('image', { href: bgSrc('garden_bloom_v2'), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none', opacity: 0 }, T.bg);
+      bloom.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400, fill: 'forwards' }); sfx(T, 'sparkle');
+      fadeOut(T, L.topiary, 2400);
+    }
     put(T, belle, X(480, 450), FL, { look: 'joy' });
     prince.hop(8, 300);
     await say('고마워요, 벨. 겉모습만 보지 않고 내 마음을 봐 줬어요.');

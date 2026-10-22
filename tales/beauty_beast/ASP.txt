@@ -46,3 +46,11 @@ prop_dream: 1.1283
 prop_spring: 1.4833
 prop_glow: 0.9883
 prop_hat: 1.4783
+layer_chandelier: 0.845
+layer_curtain: 0.42
+layer_feast: 2.1951
+layer_petal_rose: 1.0533
+layer_rosebush_front: 1.3633
+layer_snow_bush: 1.8987
+layer_snow_fir_front: 0.575
+layer_topiary_snow: 0.3983
