@@ -390,6 +390,315 @@
     const chain = (x0, keys, gap, sc = 1) => { const o = {}; let edge = x0 - LEN[keys[0]] * sc / 2; o[keys[0]] = x0; keys.slice(1).forEach(k => { o[k] = edge - gap - LEN[k] * sc / 2; edge = o[k] - LEN[k] * sc / 2; }); return o; };
     const waitFor = async cond => { for (let i = 0; i < 40 && !cond(); i++) await sleep(50); };
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 놀이판 장면·배우·연출을 누르기 없이 감싼 얇은 함수 =================
+       장면 차리기(set)는 배경·층 소품만 깔고, 배우는 enter 동사가 놓는다(놀이판의 같은 자리·크기). 대본의 y(470)는 바닥선이 아니라서 바닥(FL, 견인차는 LANE_T)에 둔다.
+       달리기(drive)는 저절로 가며(말하는 동안 이어진다), 다음 장면 책장이 넘어가기 전에 모두 끝난 뒤에 넘어간다. */
+    const RCARS = { red, police, fire, amb, tow };
+    const inst = () => T.readInstant();
+    const on = a => a.pos.isConnected && a.pos.style.display !== 'none';
+    const num = s => String(s).split(',').map(Number);
+    const rSeen = {};
+    let rTag = '', rCamX = 500, rFlights = [], rBed = null, rCabin = null, rChase = false, rConv = 0, rBush = null, rZoom = null, rStopFire = null, rWob = [], rFlameN = 0;
+    const PCAM = { room: 560, yard: 560, gate: 500, road_a: 520, road_b: 560, road_c: 600, road_long: 400, road_hill: 600, playground: 560 };
+    const flight = p => { const q = Promise.resolve(p).catch(() => {}); rFlights.push(q); return q; };
+    const flightsDone = async () => { while (rFlights.length) { const l = rFlights.splice(0); await Promise.all(l); } };
+    const stagger = ms => sleep(Math.min(ms, 250));
+    const rToy = () => ['room1', 'yard1', 'yard2', 'playground1'].includes(rTag);
+    const RCY = id => (id === 'tow' && rTag === 'road_hill1' ? LANE_T : (rTag === 'playground1' ? FL + 6 : FL));
+    const RKX = { 300: X(300, 420), 380: X(380, 400), 780: X(640, 600), 800: X(640, 600) };
+    const RSPOTS = X([480, 600, 720], [495, 570, 645]);
+    const RTOW8 = 600 + LEN.red / 2 + 20 + LEN.tow / 2;
+    const RORD = ['tow', 'red', 'police', 'fire', 'amb'];
+    const RC7 = chain(845, ['red', 'police', 'fire', 'amb'], 30), RC8 = chain(600, ['red', 'police', 'fire', 'amb'], 20);
+    const REND9 = chain(880, RORD, 10); { const sh = REND9.tow - REND9.red - TOWGAP; RORD.slice(1).forEach(k => { REND9[k] += sh; }); }
+    const REND10 = chain(X(520, 500), RORD, 6, S_TOY);
+    const RE5 = chain(900, ['fire', 'red', 'police'], 12), RE6 = chain(640, ['amb', 'red', 'police', 'fire'], 12);
+    const RDX = { 'road_a1:red:200': X(430, 380), 'road_b1:police:250': X(150, 300), 'road_b1:red:330': X(330, 440), 'road_c1:police:300': X(120, 300), 'road_c1:red:420': X(300, 440), 'road_c1:fire:180': X(-60, 100), 'road_hill1:tow:250': RTOW8 };
+    const RFL3 = [flame, flame2, flame3], RSMK = [smoke, smoke2, smoke3];
+    const RFPOS = [[-42, -108], [2, -150], [44, -70]], RWCH = { x: 0.785, y: -0.145 };
+    const RALL = [kid, ...CARS, thiefA, thiefB, bear, rabbit, bfly, block, duck, house, ...RFL3, ...RSMK, water, hook];
+    const RAMB_X = X(620, 600), RDOOR = 738, RSTEP = 406;
+    const rLong = dir => {
+      const t0 = layer('train', dir < 0 ? 1100 : -200, 340); t0.turn(dir < 0 ? 'left' : 'right');
+      t0.move(dir < 0 ? -200 : 1100, 340, 40000, 'linear').catch(() => {});
+      layer('tower', X(60, 300), FL - 10);
+      [layer('flags', X(250, 400), 110, { front: true }), layer('flags', X(750, 760), 110, { front: true })].forEach(f => swayLoop(f, 4, 1800));
+    };
+    const RLAY = {
+      room1() { layer('toybox', X(60, 330), 585, { front: true }); layer('ball', X(960, 790), 585, { front: true }); },
+      yard1() { layer('flowerbed', X(150, 300), FL - 25); layer('ladybug', X(230, 340), FL + 2); layer('snail', X(880, 790), FL + 2); layer('meadow', X(980, 800), 585, { front: true }); },
+      yard2() { layer('flowerbed', X(150, 300), FL - 25); layer('ladybug', X(230, 340), FL + 2); layer('snail', X(880, 790), FL + 2); rBush = layer('grass_front', DROP, FL + 38, { front: true }); },
+      gate1() { layer('rings', 900, FL - 5); layer('crayons', 1000, FL - 5); layer('arch', 700, FL + 4, { front: true }); layer('flags', 850, 120, { front: true }); layer('buttons', 980, 585, { front: true }); },
+      road_a1() { layer('tower', X(80, 360), FL - 10); layer('signal', X(965, 690), FL - 10); layer('crayon_front', X(20, 200), 590, { front: true }); layer('dice', X(1005, 720), 585, { front: true }); },
+      road_b1() { swayLoop(layer('top', X(120, 360), FL - 10), 3, 900); layer('buttons', X(40, 340), 585, { front: true }); layer('spring', X(1010, 790), 590, { front: true }); },
+      road_c1() { layer('signal', X(120, 360), FL - 10); layer('house_blue', X(300, 420), FL - 20); layer('ball', X(990, 800), 585, { front: true }); },
+      road_long1() { rLong(-1); layer('crayon_front', 1000, 590, { front: true }); },
+      road_hill1() { swayLoop(layer('top', X(110, 330), FL - 10), 3, 900); layer('dice', X(995, 860), 585, { front: true }); },
+      road_long2() { rLong(1); layer('buttons', X(30, 300), 585, { front: true }); },
+      playground1() { layer('sand_tools', X(60, 330), 585, { front: true }); layer('grass_front', X(990, 790), 585, { front: true, s: 90 / 70 }); },
+    };
+    const rFollow = (x, ms) => follow(x, ms);
+    const carDrive = (a, x, ms, ease = 'ease-out', y) => {
+      y = y ?? a.y;
+      if (inst()) { a.place(x, y); return; }
+      const fl = flight(drive(a, x, y, ms, ease, 3));
+      return stagger(ms).then(() => fl && null);
+    };
+    const exitChain = (E, order, camX) => {
+      rFollow(camX, 6000);
+      order.forEach((k, i) => { const a = RCARS[k]; if (on(a)) { a.look('run'); flight(sleep(i * 200).then(() => drive(a, E[k], a.y, 6000, 'ease-out', 3))); } });
+    };
+    const rSpray = async f => {
+      const tx = f.x, ty = f.y - 45, w = water.w, h = water.h;
+      const nz = { x: fire.x + NOZ[0], y: FL + NOZ[1] };
+      const ox = -.40 * w, oy = -.04 * h;
+      put(T, water, nz.x - ox, nz.y - oy, { to: 'right' });
+      const cx = RWCH.x * w, cy = RWCH.y * h, chord = Math.hypot(cx, cy);
+      const ang = Math.atan2(ty - nz.y, tx - nz.x) - Math.atan2(cy, cx), sc = Math.min(1.7, Math.max(.45, Math.hypot(tx - nz.x, ty - nz.y) / chord));
+      water.body.style.transformOrigin = `${ox}px ${oy}px`;
+      const tr0 = `rotate(${ang}rad) scale(`;
+      const an = water.body.animate([{ transform: tr0 + '.05)', opacity: .6 }, { transform: tr0 + sc + ')', opacity: 1 }], { duration: 380, easing: 'ease-out', fill: 'forwards' });
+      sfx('splash', .35); T.pop(f.x, f.y - 110, tr('쉭쉭!'));
+      await an.finished;
+    };
+    const rRide = () => {
+      const k = amb.w / 900, x0 = -amb.w / 2 + 83 * k, y0 = -amb.h + 90 * k, cw = 229 * k, ch = 176 * k, yb = y0 + ch;
+      const g = T.el('g', {}, amb.body), cp = T.el('clipPath', { id: 'rcAmbWin' }, g);
+      T.el('rect', { x: x0, y: y0, width: cw, height: ch, rx: 3 }, cp);
+      const inner = T.el('g', { 'clip-path': 'url(#rcAmbWin)' }, g);
+      T.el('rect', { x: x0, y: y0, width: cw, height: ch, fill: '#A9C7DE' }, inner);
+      [[rabbit, x0 + cw * .82, yb + 22], [bear, x0 + cw * .28, yb + 23]].forEach(([d, x, y]) => {
+        inner.appendChild(d.pos); d.pos.getAnimations().forEach(n => n.cancel()); d.pos.style.display = ''; d.pos.style.opacity = '';
+        d.setScale(1); d.look('sit', 'right'); d.place(x, y);
+      });
+      T.el('rect', { x: x0, y: y0, width: cw, height: 3, fill: '#2E241C', opacity: .3 }, inner);
+      rCabin = g;
+    };
+    const R = {
+      set(key) {
+        const go = () => {
+          rSeen[key] = (rSeen[key] || 0) + 1; rTag = key + rSeen[key];
+          if (rStopFire) { rStopFire(); rStopFire = null; }
+          rWob.forEach(w => { w.on = false; }); rWob = []; rCabin = null; rBed = null; rChase = false; rConv = 0; rBush = null; rZoom = null;
+          RALL.forEach(hide);
+          scene('rc_bg_' + key);
+          rCamX = P ? PCAM[key] : 500; if (P) camSnap(rCamX, 280, 1);
+          (RLAY[rTag] || (() => {}))();
+        };
+        if (inst() || !rTag) { go(); return; }
+        return flightsDone().then(() => veil(T, go));
+      },
+      cam(a) {
+        if (a === 'wide') { if (P) return inst() ? camSnap(rCamX, 280, 1) : T.camTo(rCamX, 280, 1, 700); return inst() ? camSnap(500, 280, 1) : T.camTo(500, 280, 1, 700); }
+        const [x, y, z] = num(a); return inst() ? camSnap(x, y, z || 1) : T.camTo(x, y, z || 1, 800);
+      },
+      kid(verb, a1, a2) {
+        if (verb === 'hide') { hide(kid); return; }
+        if (verb === 'at') { const [x] = num(a1); put(T, kid, RKX[x] ?? x, FL, { look: kid.cur, to: kid.want }); return; }
+        if (verb === 'hop') return kid.hop(10, 320);
+        if (verb === 'wiggle') return kid.wiggle(5, 500);
+        if (verb === 'walk') { const [x, , ms] = num(a1); return kid.move(RKX[x] ?? x, FL, ms || 1500, 'linear'); }
+        if (verb === 'look') {
+          if (a1 === 'sleep') return;   /* 잠은 침대 그림(hand:sleep)이 맡는다 */
+          if (a1 === 'hug' && rTag === 'playground1' && on(kid)) {   /* 자동차 다섯 대가 품으로 */
+            kid.look('hug', a2 || 'right');
+            const HUG = { amb: [24, -64], fire: [-18, -62], police: [26, -50], red: [-24, -50], tow: [2, -46] };
+            ['amb', 'fire', 'police', 'red', 'tow'].forEach(k => put(T, RCARS[k], RCARS[k].x, RCARS[k].y, { look: 'run', s: S_TOY }));
+            sfx('paper_up', .5);
+            return Promise.all(Object.entries(RCARS).map(([k, c]) => c.move(kid.x + HUG[k][0], FL + HUG[k][1], 600, 'ease-out'))).then(() => CARS.forEach(c => c.look('joy')));
+          }
+          kid.look(a1, a2); return;
+        }
+        console.warn('[read] kid 동사 모름', verb);
+      },
+      car(id, verb, a1, a2) {
+        const a = RCARS[id]; if (!a) return console.warn('[read] car 모름', id);
+        if (verb === 'hide') { hide(a); return; }
+        if (verb === 'hop') {
+          if (rTag === 'yard2' && id === 'red' && !rZoom) {   /* 자동차 눈높이로 카메라가 내려간다 (놀이판 3장 머리) */
+            rZoom = T.camTo(DROP, 470, 1 / S_TOY, 4000).then(() => { if (rBush) rBush.move(rBush.x, rBush.y + 40, 400); a.look('run', 'right'); }).catch(() => {});
+          }
+          return a.hop(8, 300);
+        }
+        if (verb === 'wiggle') return a.wiggle(3, 500);
+        if (verb === 'at') {
+          let [x] = num(a1);
+          if (rTag === 'gate1') x = X(200, 380); else if (rTag === 'yard2') x = DROP; else if (rTag === 'road_a1' && id === 'police') x = X(300, 400);
+          put(T, a, x, rTag === 'yard2' ? FL + 6 : RCY(id), { look: a.cur, to: a.want, s: rToy() ? S_TOY : 1 }); return;
+        }
+        if (verb === 'drive') {
+          let [x, ms] = num(a1); x = RDX[`${rTag}:${id}:${x}`] ?? x;
+          if (id === 'tow') ms = 7000; else if (ms <= 1500) ms = 3000;
+          if (rTag === 'road_a1' && id === 'police' && x === 900) { fadeOut(T, thiefA, 700); fadeOut(T, thiefB, 700); rFollow(800, 6000); }
+          else if (ms > 3000 || x > 400) rFollow(Math.min(x, 900), ms);
+          return carDrive(a, x, ms, id === 'tow' ? 'linear' : 'ease-out');
+        }
+        if (verb === 'look') {
+          const pose = a1 === 'open' ? 'run' : a1;
+          if (!on(a) && rTag === 'road_b1' && id === 'fire') { put(T, a, house.x - X(220, 150), FL, { look: pose, to: 'right' }); return; }
+          if (rTag === 'yard1' && id === 'red' && pose === 'tired') {   /* 나비를 따라가다 톡, 떨어뜨림 */
+            sfx('paper_down', .5); vo('tok');
+            a.look('tired', 'right');
+            const bushX = DROP;
+            return a.move(bushX, FL + 6, 600, 'ease-in').then(() => { const g = layer('grass_front', bushX, FL + 38, { front: true }); g.wiggle(4, 500); });
+          }
+          const wasJoy = a.cur === 'joy';
+          if (a.looks && !a.looks[pose]) { console.warn('[read] 자세 없음', id, pose); return; }
+          a.look(pose, a2 || undefined);
+          if (pose === 'hooked' && on(tow) && on(a)) a.place(a.x, LANE_R);
+          if (pose === 'run' && wasJoy && on(a)) {
+            if (rTag === 'road_b1' && id === 'fire') exitChain(RE5, ['police', 'red', 'fire'], 750);
+            if (rTag === 'road_c1' && id === 'amb') exitChain(RE6, ['police', 'red', 'fire', 'amb'], 560);
+          }
+          return;
+        }
+        console.warn('[read] car 동사 모름', id, verb);
+      },
+      toys(n) {
+        if (n !== 'show') return;
+        put(T, block, RSPOTS[0], FL + 6); put(T, duck, RSPOTS[2], FL + 6); put(T, red, RSPOTS[1], FL + 6, { look: 'run', s: S_TOY });
+        if (!inst()) [red, block, duck].forEach(a => bob(a.pos));
+      },
+      hand(n) {
+        if (n === 'stand') { put(T, red, kid.x + HAND.stand[0], FL + HAND.stand[1], { look: 'run', s: S_TOY }); return; }
+        if (n === 'eat') {
+          fadeOut(T, block, 400); fadeOut(T, duck, 400); sfx('paper_up', .5);
+          return red.move(kid.x + HAND.eat[0], FL + HAND.eat[1], 600, 'ease-out');
+        }
+        if (n === 'sleep') {   /* 침대 그림으로: 밤빛 → 카메라가 침대로 */
+          fadeOut(T, kid, 350); fadeOut(T, red, 350);
+          const t = tint(T, '#1F2A56', 0); T.anim(t, [{ opacity: 0 }, { opacity: .22 }], 900).then(() => t.setAttribute('opacity', .22));
+          rBed = bedSleep(T);
+          return (P ? T.camTo(870, 300, 1.3, 900) : T.camTo(760, 310, 1.9, 900)).then(() => rBed.show());
+        }
+      },
+      bfly(verb, a1) {
+        if (verb === 'flutter') { put(T, bfly, X(700, 640), 300, { look: 'open' }); flutter(bfly); return; }
+        if (verb === 'fly') {
+          const [x, y] = num(a1), ms = x > 1000 ? 3000 : 2000;
+          sfx('swish', .4);
+          flight(bfly.move(x, y, ms, 'ease-in').then(() => { if (x > 1000) hide(bfly); }));
+          return;
+        }
+      },
+      thieves(verb) {
+        if (verb === 'run') { put(T, thiefA, X(520, 560), FL, { look: 'run' }); put(T, thiefB, X(580, 620), FL, { look: 'run' }); return; }
+        if (verb === 'hands') { thiefA.look('hands'); thiefB.look('hands'); thiefA.hop(12, 320); thiefB.hop(12, 320); return; }
+      },
+      house(verb) {
+        if (verb !== 'fire') return;
+        put(T, house, X(800, 640), FL - 30);
+        RFL3.forEach((f, i) => put(T, f, house.x + RFPOS[i][0], house.y + RFPOS[i][1]));
+        rWob = RFL3.map(() => ({ on: true }));
+        RFL3.forEach((f, i) => { (async () => { while (rWob[i] && rWob[i].on) await f.wiggle(4, 600 + i * 90); })(); });
+        if (!inst()) rStopFire = fireLoop(.2);
+      },
+      async flames(verb) {
+        if (verb !== 'out') return;
+        const left = [...RFL3];
+        while (left.length) {
+          const f = left.shift();
+          await rSpray(f);
+          if (rWob[RFL3.indexOf(f)]) rWob[RFL3.indexOf(f)].on = false;
+          f.body.animate([{ scale: 1 }, { scale: .5 }], { duration: 800, fill: 'forwards' });
+          await sleep(850);
+          hide(water);
+          await fadeOut(T, f, 300);
+          const sm = RSMK[RFL3.indexOf(f)];
+          put(T, sm, f.x, f.y - 10); fadeIn(sm, 300);
+          flight(Promise.all([sm.move(sm.x + 10, sm.y - 60, 2400, 'ease-out'), T.anim(sm.pos, [{ opacity: 1 }, { opacity: 0 }], 2400)]).then(() => hide(sm)));
+        }
+        if (rStopFire) { rStopFire(); rStopFire = null; }
+        fire.look('run');
+      },
+      async dolls(verb) {
+        if (verb !== 'out' || !rCabin) return;
+        await flightsDone();
+        sfx('paper_down', .4);
+        await Promise.all([bear, rabbit].map(d => d.move(d.x, d.y + 40, 450, 'ease-in')));
+        rCabin.remove(); rCabin = null;
+        [[bear, amb.x + 45], [rabbit, amb.x + 75]].forEach(([d, x]) => { put(T, d, x, RSTEP, { look: 'off' }); T.world.insertBefore(d.pos, amb.pos); fadeIn(d, 250); });
+        await Promise.all([drive(bear, RDOOR - 12, RSTEP, 1300, 'ease-in-out', 8), sleep(150).then(() => drive(rabbit, RDOOR + 14, RSTEP, 1200, 'ease-in-out', 8))]);
+        sfx('door', .4);
+        await Promise.all([fadeOut(T, bear, 500), fadeOut(T, rabbit, 500)]);
+      },
+      amb(verb) { if (verb === 'door') return; },
+      async hook(verb) {
+        if (verb !== 'click') return;
+        put(T, hook, tow.x + HOOK_DX, tow.y + HOOK_DY, { to: 'right', s: HOOK_S });
+        await Promise.all([tow.move(red.x + TOWGAP, LANE_T, 700, 'ease-in-out'), hook.move(red.x + TOWGAP + HOOK_DX, hook.y, 700, 'ease-in-out')]);
+        sfx('knock', .6);
+        red.look('hooked'); red.place(red.x, LANE_R); glow(red, 600); red.hop(4, 260);
+      },
+      convoy(verb) {
+        if (verb === 'line') {
+          if (rTag === 'road_long1') { [['amb', 0], ['fire', 0], ['police', 0], ['red', 0]].forEach(([k]) => put(T, RCARS[k], RC7[k] - 450, FL, { look: 'run' })); }
+          else if (rTag === 'road_hill1') { ['amb', 'fire', 'police', 'red'].forEach(k => put(T, RCARS[k], RC8[k], FL, { look: 'run' })); }
+          else if (rTag === 'road_long2') {
+            ['amb', 'fire', 'police'].forEach(k => put(T, RCARS[k], REND9[k] - 430, FL, { look: 'run' }));
+            put(T, red, REND9.red - 430, LANE_R, { look: 'hooked' }); put(T, tow, REND9.tow - 430, LANE_T, { look: 'pull' }); put(T, hook, tow.x + HOOK_DX, tow.y + HOOK_DY, { to: 'right', s: HOOK_S });
+          } else if (rTag === 'playground1') { RORD.forEach(k => put(T, RCARS[k], REND10[k] - 330, FL + 6, { look: 'run', s: S_TOY })); }
+          return;
+        }
+        if (verb === 'drive') {
+          const n = rConv++;
+          if (rTag === 'road_long1') {
+            const ms = n ? 5000 : LINE_DRIVE, d = n ? 110 : 0;
+            rFollow(845, ms);
+            ['red', 'police', 'fire', 'amb'].forEach(k => flight(drive(RCARS[k], RC7[k] + d, FL, ms, n ? 'ease-out' : 'linear', 3)));
+            return stagger(ms);
+          }
+          if (rTag === 'road_long2') {
+            rFollow(REND9.tow, LINE_DRIVE);
+            RORD.forEach(k => flight(drive(RCARS[k], REND9[k], RCARS[k].y, LINE_DRIVE, 'linear', 3)));
+            flight(drive(hook, REND9.tow + HOOK_DX, LANE_T + HOOK_DY, LINE_DRIVE, 'linear', 3));
+            return stagger(LINE_DRIVE);
+          }
+          if (rTag === 'playground1') {
+            RORD.forEach(k => flight(drive(RCARS[k], REND10[k], FL + 6, 8000, 'linear', 2)));
+            return stagger(8000);
+          }
+        }
+      },
+      vo(k) {
+        const SIR = { siren_police: ['police_siren', police, '삐뽀삐뽀!'], siren_fire: ['fire_siren', fire, '위이잉!'], siren_amb: ['ambulance_siren', amb, '삐용삐용!'] }[k];
+        const long = rTag.startsWith('road_long');
+        if (SIR) {
+          const [s, c] = SIR;
+          sfx(s, long ? .45 : .3);
+          if (k === 'siren_police' && rTag === 'road_a1' && !rChase) {   /* 사이렌과 함께 도둑을 쫓기 시작 */
+            rChase = true; rFollow(620, 4400);
+            flight(drive(thiefA, thiefA.x + 300, FL, 4400, 'linear', 8)); flight(drive(thiefB, thiefB.x + 300, FL, 4400, 'linear', 8)); flight(drive(police, police.x + 300, FL, 4400, 'linear', 3));
+          }
+          if (k === 'siren_amb' && rTag === 'road_c1') {   /* 병원 문 앞까지 */
+            rFollow(600, DRIVE);
+            flight(drive(amb, RAMB_X - 90, FL, DRIVE, 'linear', 3).then(() => { rFollow(650, 2600); return drive(amb, RAMB_X, FL, 2600, 'ease-out', 3); }));
+          }
+          blink(T, c);
+          const u = vo(k);
+          if (long) { c.hop(10, 320); T.pop(c.x, FL - c.h - 40, tr(SIR[2])); return u ? Promise.race([u, sleep(3500)]) : sleep(800); }
+          return;
+        }
+        return vo(k);
+      },
+      fx(n) { return sfx(n === 'click' ? 'knock' : n, .4); },
+      confetti() { T.confetti(); sfx('tada') || sparkleSfx(T); },
+      pop(spec) {
+        let [x, y, ...w] = String(spec).split(','); x = +x; y = +y; const text = w.join(',');
+        if (rBed && text === '쌔근') { T.pop(rBed.head[0] - 40, rBed.head[1] - 75, tr(text), '#1F2A56'); return; }
+        if (P) { const cx = T.camera.x, lim = 190; x = Math.max(cx - lim, Math.min(cx + lim, x)); }
+        if (rTag === 'road_hill1' && text === '영차!') {   /* 영차, 영차! 견인차가 앞에서 끈다 */
+          [tow, hook, red].forEach(a => flight(a.move(a.x + 60, a.y, 3200, 'ease-in-out')));
+        }
+        T.pop(x, y, tr(text), text === '잉잉' || text === '툭' ? '#1F2A56' : undefined);
+      },
+    };
+    const READ_ACTS = { set: R.set, cam: R.cam, kid: R.kid, car: R.car, toys: R.toys, hand: R.hand, bfly: R.bfly, thieves: R.thieves, house: R.house, flames: R.flames, dolls: R.dolls, amb: R.amb, hook: R.hook, convoy: R.convoy, vo: R.vo, fx: R.fx, pop: R.pop, confetti: R.confetti };
+    if (T.reading()) {
+      const RT = { ...T, sceneCard: async (c, f) => { await flightsDone(); return T.sceneCard(c, f); } };
+      return T.readPlay.call(RT, READ_ACTS);
+    }
+
     /* ===== 1. 언제나 함께 (배움 놀이 1: 빨간 것 찾기 — 첫 조작) ===== */
     scene('rc_bg_room');
     put(T, kid, X(300, 420), FL, { look: 'stand' });
@@ -822,5 +1131,5 @@
     return '서로 도우면 함께 갈 수 있어요.';
   }
 
-  Tale.mount({ title: '나의 빨간 자동차', subtitle: '서로 도우면 함께 갈 수 있어요', run: T => run(Tale.api) });
+  Tale.mount({ title: '나의 빨간 자동차', subtitle: '서로 도우면 함께 갈 수 있어요', read: true, run: T => run(Tale.api) });
 })();
