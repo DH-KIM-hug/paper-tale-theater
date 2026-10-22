@@ -287,6 +287,7 @@
   }
 
   async function run(T) {
+    if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, say, camSnap, tr } = T;
     const scene = key => { T.clear(); T._cover = null; bgImage(T, key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990;   /* 세로 화면: 가운데 일부만 보인다 → 카메라가 따라간다 */
@@ -350,12 +351,11 @@
     const sinkRound = async (a, b, ax, bx, prompt, wrongLine, rightLine, land, ground) => {
       [[a, ax], [b, bx]].forEach(([o, x]) => { put(T, o, x, 300); hit(T, o, 62); fadeIn(o, 900); });
       await Promise.all([a.move(ax, 400, 900, 'ease-out'), b.move(bx, 400, 900, 'ease-out')]);
-      await say(prompt);
-      await T.choose([{ el: a.pos, ok: true }, { el: b.pos, ok: false, onWrong: async () => {
+      await T.ask(prompt, () => T.choose([{ el: a.pos, ok: true }, { el: b.pos, ok: false, onWrong: async () => {
         b.pos.animate([{ translate: '0 0' }, { translate: '0 -120px' }, { translate: '0 0' }], 900);
         T.pop(b.x, 300, tr('떠요'));
         await say(wrongLine);
-      } }], { prompt });
+      } }], { prompt }));
       sfx(T, 'bubbles'); bubblesUp(T, a.x, 400, 5, 120);
       const lift = b.move(b.x, 150, 1200).then(() => hide(b));
       T.pop(a.x, 330, tr('가라앉아요'));
@@ -395,8 +395,7 @@
     }, ship.pos);
     ship.pos.animate([{ translate: '0 0' }, { translate: '0 3px' }, { translate: '0 0' }], { duration: 2600, iterations: Infinity });
     await say('커다란 배가 있었어요. 오늘은 왕자님 생일이래요.');
-    await say('하늘을 톡 눌러 봐요.');
-    await T.tap(sky, { prompt: '하늘을 톡 눌러 봐요.' });
+    await T.ask('하늘을 톡 눌러 봐요.', () => T.tap(sky, { prompt: '하늘을 톡 눌러 봐요.' }));
     sky.remove();
     const burst = async (f, x, y, h, snd, word) => {
       put(T, f, x, y + h / 2); f.setScale(h / 120);
@@ -498,8 +497,7 @@
     mer.look('resolve', 'right'); mer.hop(8, 400);
     await say('그래도 갈래요.');
     cauldron.pos.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
-    await say('가마솥을 톡 눌러 봐요.');
-    await T.tap(cauldron.pos, { prompt: '가마솥을 톡 눌러 봐요.' });
+    await T.ask('가마솥을 톡 눌러 봐요.', () => T.tap(cauldron.pos, { prompt: '가마솥을 톡 눌러 봐요.' }));
     cauldron.look('glow'); sfx(T, 'bubbles'); T.pop(cauldron.x, cauldron.y - 200, tr('보글보글'));
     sparkle(T, cauldron.x, cauldron.y - 120, 110, 12);
     put(T, potion, cauldron.x + 44, cauldron.y - 150, { look: 'empty' }); fadeIn(potion, 400);
@@ -567,8 +565,7 @@
         return { name, a };
       });
       await sleep(400 + 2 * 120);
-      await say('바다에 사는 친구는 누구일까요?');
-      await T.choose(cards.map(c => ({ el: c.a.pos, ok: c.name === R.ok, onWrong: async () => { await c.a.wiggle(8, 360); await say(WRONG[c.name]); } })), { prompt: '바다에 사는 친구는 누구일까요?' });
+      await T.ask('바다에 사는 친구는 누구일까요?', () => T.choose(cards.map(c => ({ el: c.a.pos, ok: c.name === R.ok, onWrong: async () => { await c.a.wiggle(8, 360); await say(WRONG[c.name]); } })), { prompt: '바다에 사는 친구는 누구일까요?' }));
       const g = cards.find(c => c.name === R.ok).a;
       sparkle(T, g.x, g.y - IH / 2, 70, 8);
       await g.move(500, 488, 700, 'ease-in');
@@ -671,8 +668,7 @@
     mer.pos.animate([{ translate: '0 0' }, { translate: '0 6px' }], { duration: 1600, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
     hit(T, mer, 70);
     await say('인어공주는 부드러운 바닷바람이 되었어요. 길 잃은 배의 돛을 밀어 주고, 더운 날엔 시원한 바람을 보내지요.');
-    await say('거품 빛을 톡 눌러 인사해요.');
-    await T.tap(mer.pos, { prompt: '거품 빛을 톡 눌러 인사해요.' });
+    await T.ask('거품 빛을 톡 눌러 인사해요.', () => T.tap(mer.pos, { prompt: '거품 빛을 톡 눌러 인사해요.' }));
     sfx(T, 'blow_long', () => sfx(T, 'whoosh'));
     [[wind[0], mer.x + 70, 220, ship.x + 150, 200, 1400], [wind[1], mer.x + 50, 300, ship.x + 120, 280, 1600]].forEach(async ([w, x0, y0, x1, y1, ms]) => {
       put(T, w, x0, y0); fadeIn(w, 300);
