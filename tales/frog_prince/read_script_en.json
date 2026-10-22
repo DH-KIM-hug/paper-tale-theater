@@ -1,0 +1,976 @@
+{
+ "mode": "read",
+ "tale": "frog_prince",
+ "lang": "en",
+ "title": "The Frog Prince",
+ "voices_from": "voice_script_el.json",
+ "moral": "A promise made is a promise kept.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md). text 는 한국어 줄(키), en 이 읽는 문장. src=reuse 는 narration_el_en.js 의 영어 녹음 그대로, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<fp_bg_yard|fp_bg_pond|fp_bg_dining|fp_bg_room>": "장면 배경(scene(key)). scenes[].set 으로 자동 호출",
+  "cam:<x,y,z> | follow:<x>": "카메라",
+  "prin:look:<stand|ball|cry|run|refuse|sorry|sit|throw|hand>[:<dir>] | prin:at:<x,y>[:<look>[:<dir>]] | prin:move:<x,y,ms> | prin:hop | prin:wiggle | prin:run_out": "공주. run_out = 공을 안고 왼쪽으로 쌩 달려 나감(5장)",
+  "frog:look:<sit|ball|hop|fly|surprise>[:<dir>] | frog:at:<x,y>[:<look>[:<dir>]] | frog:hop | frog:wiggle | frog:rise | frog:dive | frog:hops:<x,n> | frog:to_table | frog:throw | frog:hide": "개구리. rise = 샘물 위로 고개 내밀기(뽀글뽀글), dive = 풍덩 들어갔다 공을 물고 올라옴, hops = x 까지 n 번 폴짝, to_table = 식탁 위로 폴짝, throw = 휙 날아가 베개 위에 포옥",
+  "king:at:<x,y> | king:enter | king:hop | prince:at:<x,y>[:<look>] | prince:appear | prince:look:<stand|hand>[:<dir>] | prince:move:<x,y,ms> | prince:hop": "임금님·왕자. appear = 팡! 빛과 함께 개구리 자리에 나타남(9장)",
+  "ball:at:<x,y> | ball:bounce | ball:hop:<n> | ball:fly | ball:sink | ball:to_prin | ball:pass | ball:hide": "금공. bounce = 손 위에서 통통, hop:n = n 번 튀기, fly = 높이 날아 샘 위로, sink = 풍덩 가라앉음, to_prin = 개구리 입에서 공주 품으로, pass = 왕자↔공주 주고받기",
+  "table:set | plate:set | breads:set | bread:eat:<frog|prin> | pillow:set | ripple | flash | petals": "소품·효과",
+  "fx:<boing|splash|splash_big|bubbles|knock|door|step_grass|step_wood|paper_up|paper_down|swish|sparkle|tada|chomp|pop> | pop:<x,y,글자> | glow:<prince|ball> | confetti": "효과음·팝"
+ },
+ "scenes": [
+  {
+   "key": "R01_yard",
+   "card": "The Castle Garden",
+   "set": "fp_bg_yard",
+   "enter": [
+    "prin:at:300,505:ball:right",
+    "ball:bounce",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날 어느 성에 금빛 공을 가장 좋아하는 공주가 살았어요.",
+     "src": "reuse",
+     "en": "Once upon a time, in a castle, there lived a princess who loved her golden ball more than anything.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, in a castle, there lived a princess who loved her golden ball more than anything.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "금공은 동글동글, 햇빛에 반짝반짝 빛났어요.",
+     "src": "new",
+     "en": "The golden ball was round, round, round, and it sparkled, twinkle, twinkle, in the sun.",
+     "segs": [
+      [
+       "nar",
+       "The golden ball was round, round, round, and it sparkled, twinkle, twinkle, in the sun.",
+       null
+      ]
+     ],
+     "before": [
+      "glow:ball"
+     ]
+    },
+    {
+     "text": "통통통! 내 금공은 세상에서 제일 예뻐.",
+     "src": "reuse",
+     "en": "Bounce, bounce! My golden ball is the prettiest in the whole world.",
+     "segs": [
+      [
+       "prin",
+       "Bounce, bounce! My golden ball is the prettiest in the whole world.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "ball:hop:3",
+      "pop:420,205,통통!"
+     ],
+     "after": [
+      "prin:hop"
+     ]
+    },
+    {
+     "text": "공주는 날마다 공을 높이높이 던지며 놀았어요.",
+     "src": "new",
+     "en": "Every day the princess played, tossing her ball up high, high, high.",
+     "segs": [
+      [
+       "nar",
+       "Every day the princess played, tossing her ball up high, high, high.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_spring",
+   "card": "By the Spring",
+   "set": "fp_bg_pond",
+   "enter": [
+    "prin:at:380,505:ball:right",
+    "ball:bounce",
+    "cam:520,280,1"
+   ],
+   "lines": [
+    {
+     "text": "어느 날, 공주는 숲속 샘가에서 공놀이를 했어요.",
+     "src": "reuse",
+     "en": "One day, the princess played with her ball beside a spring in the forest.",
+     "segs": [
+      [
+       "nar",
+       "One day, the princess played with her ball beside a spring in the forest.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "샘물은 맑고, 물속에서 물고기가 살랑살랑 헤엄쳤어요.",
+     "src": "new",
+     "en": "The spring was clear, and little fish swished, swish, swish, through the water.",
+     "segs": [
+      [
+       "nar",
+       "The spring was clear, and little fish swished, swish, swish, through the water.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "공이 높이, 더 높이… 어머나!",
+     "src": "reuse",
+     "en": "The ball went up high, and higher... oh my!",
+     "segs": [
+      [
+       "nar",
+       "The ball went up high, and higher... oh my!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "ball:hop:2",
+      "pop:500,205,통통!"
+     ],
+     "after": [
+      "fx:swish",
+      "ball:fly",
+      "prin:look:stand",
+      "prin:wiggle"
+     ]
+    },
+    {
+     "text": "공이 휙 날아가 샘 위로 뚝 떨어졌어요.",
+     "src": "new",
+     "en": "The ball flew off, whoosh, and dropped, plop, right over the spring.",
+     "segs": [
+      [
+       "nar",
+       "The ball flew off, whoosh, and dropped, plop, right over the spring.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_splash",
+   "card": "Splash!",
+   "set": "fp_bg_pond",
+   "enter": [
+    "prin:at:380,505:stand",
+    "ball:at:600,420",
+    "cam:520,280,1"
+   ],
+   "lines": [
+    {
+     "text": "공이 샘 속으로 풍덩! 금공이 깊은 물속으로 가라앉았어요.",
+     "src": "reuse",
+     "en": "Splash! The ball fell into the spring and sank deep down into the water.",
+     "segs": [
+      [
+       "nar",
+       "Splash! The ball fell into the spring and sank deep down into the water.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:splash_big",
+      "pop:600,315,풍덩!",
+      "ripple"
+     ],
+     "after": [
+      "ball:sink"
+     ]
+    },
+    {
+     "text": "물결이 동글동글 퍼지고, 금공은 보이지 않았어요.",
+     "src": "new",
+     "en": "Ripples spread out in rings, round and round, and the golden ball was gone.",
+     "segs": [
+      [
+       "nar",
+       "Ripples spread out in rings, round and round, and the golden ball was gone.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "엉엉, 내 금공… 내 금공이 사라졌어.",
+     "src": "reuse",
+     "en": "Boo-hoo, my golden ball... my golden ball is gone.",
+     "segs": [
+      [
+       "prin",
+       "Boo-hoo, my golden ball... my golden ball is gone.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "prin:look:cry",
+      "pop:290,235,엉엉"
+     ]
+    },
+    {
+     "text": "공주는 샘가에 주저앉아 훌쩍훌쩍 울었어요.",
+     "src": "new",
+     "en": "The princess sat down by the spring and cried, sniff, sniff.",
+     "segs": [
+      [
+       "nar",
+       "The princess sat down by the spring and cried, sniff, sniff.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_promise",
+   "card": "The Frog's Promise",
+   "set": "fp_bg_pond",
+   "enter": [
+    "prin:at:380,505:cry",
+    "frog:at:540,540:sit",
+    "cam:520,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그때 샘물 위로 초록 개구리가 고개를 내밀었어요.",
+     "src": "reuse",
+     "en": "Just then, a green frog poked his head up out of the water.",
+     "segs": [
+      [
+       "nar",
+       "Just then, a green frog poked his head up out of the water.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:bubbles",
+      "pop:670,335,뽀글뽀글"
+     ],
+     "after": [
+      "frog:rise"
+     ]
+    },
+    {
+     "text": "공주님, 왜 울어요?",
+     "src": "reuse",
+     "en": "Princess, why are you crying?",
+     "segs": [
+      [
+       "frog",
+       "Princess, why are you crying?",
+       null
+      ]
+     ],
+     "before": [
+      "frog:hop"
+     ]
+    },
+    {
+     "text": "내 금공이 샘에 빠졌어. 흑흑.",
+     "src": "reuse",
+     "en": "My golden ball fell into the spring. Sniff, sniff.",
+     "segs": [
+      [
+       "prin",
+       "My golden ball fell into the spring. Sniff, sniff.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "prin:look:stand"
+     ]
+    },
+    {
+     "text": "내가 공을 찾아 줄게. 대신 나랑 친구가 되고, 같이 먹고, 한 침대에서 자 줄래?",
+     "src": "reuse",
+     "en": "I'll get your ball for you. But in return, will you be my friend, eat with me, and let me sleep in your bed?",
+     "segs": [
+      [
+       "frog",
+       "I'll get your ball for you. But in return, will you be my friend, eat with me, and let me sleep in your bed?",
+       null
+      ]
+     ],
+     "before": [
+      "frog:hop"
+     ]
+    },
+    {
+     "text": "공주는 눈물을 쓱쓱 닦고 고개를 끄덕끄덕했어요.",
+     "src": "new",
+     "en": "The princess wiped away her tears, swipe, swipe, and nodded, nod, nod.",
+     "segs": [
+      [
+       "nar",
+       "The princess wiped away her tears, swipe, swipe, and nodded, nod, nod.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "좋아, 약속할게!",
+     "src": "reuse",
+     "en": "Okay, I promise!",
+     "segs": [
+      [
+       "prin",
+       "Okay, I promise!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "prin:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_found",
+   "card": "The Ball Is Found",
+   "set": "fp_bg_pond",
+   "enter": [
+    "prin:at:380,505:stand",
+    "frog:at:540,460:sit",
+    "cam:520,280,1"
+   ],
+   "lines": [
+    {
+     "text": "개구리는 풍덩 물속으로 들어가 금공을 물고 올라왔어요.",
+     "src": "reuse",
+     "en": "The frog dived into the water, splash, and came back up with the golden ball in his mouth.",
+     "segs": [
+      [
+       "nar",
+       "The frog dived into the water, splash, and came back up with the golden ball in his mouth.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:splash",
+      "pop:660,315,풍덩!"
+     ],
+     "after": [
+      "frog:dive"
+     ]
+    },
+    {
+     "text": "개구리는 물속을 요리조리 헤엄쳐 반짝이는 금공을 찾아냈어요.",
+     "src": "new",
+     "en": "The frog swam this way and that through the water, and found the shiny golden ball.",
+     "segs": [
+      [
+       "nar",
+       "The frog swam this way and that through the water, and found the shiny golden ball.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "내 공이다!",
+     "src": "reuse",
+     "en": "My ball!",
+     "segs": [
+      [
+       "prin",
+       "My ball!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "prin:hop"
+     ]
+    },
+    {
+     "text": "공주는 공을 받아 안고 성으로 쌩 달려갔어요.",
+     "src": "reuse",
+     "en": "The princess grabbed the ball and ran straight home to the castle.",
+     "segs": [
+      [
+       "nar",
+       "The princess grabbed the ball and ran straight home to the castle.",
+       null
+      ]
+     ],
+     "before": [
+      "ball:to_prin",
+      "fx:paper_up",
+      "prin:look:run:left",
+      "pop:490,255,쌩!"
+     ],
+     "after": [
+      "prin:run_out"
+     ]
+    },
+    {
+     "text": "기다려, 약속했잖아!",
+     "src": "reuse",
+     "en": "Wait! You promised!",
+     "segs": [
+      [
+       "frog",
+       "Wait! You promised!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "frog:wiggle"
+     ]
+    },
+    {
+     "text": "개구리는 샘가에 혼자 남아 눈만 끔뻑끔뻑했어요.",
+     "src": "new",
+     "en": "The frog was left all alone by the spring, blinking, blink, blink.",
+     "segs": [
+      [
+       "nar",
+       "The frog was left all alone by the spring, blinking, blink, blink.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_door",
+   "card": "The Frog at the Door",
+   "set": "fp_bg_dining",
+   "enter": [
+    "table:set",
+    "prin:at:420,505:stand:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "저녁 식사 때, 문 밖에서 폴짝폴짝 소리가 났어요. 똑똑!",
+     "src": "reuse",
+     "en": "At supper time, there came a hop, hop sound outside the door. Knock, knock!",
+     "segs": [
+      [
+       "nar",
+       "At supper time, there came a hop, hop sound outside the door. Knock, knock!",
+       null
+      ]
+     ],
+     "after": [
+      "fx:knock",
+      "pop:140,150,똑똑!"
+     ]
+    },
+    {
+     "text": "개구리가 폴짝폴짝, 문턱을 넘어 들어왔어요.",
+     "src": "new",
+     "en": "Hop, hop! The frog came hopping in over the doorstep.",
+     "segs": [
+      [
+       "nar",
+       "Hop, hop! The frog came hopping in over the doorstep.",
+       null
+      ]
+     ],
+     "before": [
+      "frog:at:-60,505:hop:right",
+      "pop:80,375,폴짝"
+     ],
+     "after": [
+      "frog:hops:160,3",
+      "frog:look:sit"
+     ]
+    },
+    {
+     "text": "공주님, 약속했잖아요. 문 좀 열어 줘요.",
+     "src": "reuse",
+     "en": "Princess, you promised. Please open the door.",
+     "segs": [
+      [
+       "frog",
+       "Princess, you promised. Please open the door.",
+       null
+      ]
+     ],
+     "before": [
+      "frog:hop"
+     ]
+    },
+    {
+     "text": "싫어! 저리 가!",
+     "src": "reuse",
+     "en": "No! Go away!",
+     "segs": [
+      [
+       "prin",
+       "No! Go away!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "prin:look:refuse:left",
+      "prin:move:460,505,500"
+     ]
+    },
+    {
+     "text": "공주는 팔짱을 끼고 홱 돌아섰어요.",
+     "src": "new",
+     "en": "The princess folded her arms and turned away with a huff.",
+     "segs": [
+      [
+       "nar",
+       "The princess folded her arms and turned away with a huff.",
+       null
+      ]
+     ],
+     "after": [
+      "frog:wiggle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_king",
+   "card": "Father's Words",
+   "set": "fp_bg_dining",
+   "enter": [
+    "table:set",
+    "frog:at:160,505:sit",
+    "prin:at:460,505:refuse:left",
+    "king:at:1100,505:stand:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그 모습을 본 임금님이 공주에게 물었어요.",
+     "src": "reuse",
+     "en": "The king saw this and asked the princess.",
+     "segs": [
+      [
+       "nar",
+       "The king saw this and asked the princess.",
+       null
+      ]
+     ],
+     "before": [
+      "king:enter",
+      "follow:560"
+     ]
+    },
+    {
+     "text": "공주야, 무슨 약속을 했느냐?",
+     "src": "reuse",
+     "en": "My princess, what did you promise?",
+     "segs": [
+      [
+       "king",
+       "My princess, what did you promise?",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "개구리가 금공을 찾아 주면… 친구가 되겠다고 했어요.",
+     "src": "reuse",
+     "en": "I said that if the frog found my golden ball... I would be his friend.",
+     "segs": [
+      [
+       "prin",
+       "I said that if the frog found my golden ball... I would be his friend.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "prin:look:sorry"
+     ]
+    },
+    {
+     "text": "약속은 지켜야 한단다. 도와준 친구에게는 더욱 그렇지.",
+     "src": "reuse",
+     "en": "A promise must be kept. Even more so to a friend who helped you.",
+     "segs": [
+      [
+       "king",
+       "A promise must be kept. Even more so to a friend who helped you.",
+       null
+      ]
+     ],
+     "before": [
+      "king:hop"
+     ]
+    },
+    {
+     "text": "…알겠어요, 아버지.",
+     "src": "reuse",
+     "en": "...Yes, Father.",
+     "segs": [
+      [
+       "prin",
+       "...Yes, Father.",
+       "sad"
+      ]
+     ]
+    },
+    {
+     "text": "공주는 입을 삐죽 내밀었지만, 개구리 쪽으로 돌아섰어요.",
+     "src": "new",
+     "en": "The princess pouted, but she turned around to face the frog.",
+     "segs": [
+      [
+       "nar",
+       "The princess pouted, but she turned around to face the frog.",
+       null
+      ]
+     ],
+     "before": [
+      "prin:look:stand"
+     ]
+    },
+    {
+     "text": "공주는 개구리를 식탁으로 데려갔어요.",
+     "src": "reuse",
+     "en": "The princess brought the frog to the table.",
+     "segs": [
+      [
+       "nar",
+       "The princess brought the frog to the table.",
+       null
+      ]
+     ],
+     "after": [
+      "frog:look:hop:right",
+      "frog:hops:330,2",
+      "fx:boing",
+      "frog:to_table",
+      "frog:look:sit"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_dinner",
+   "card": "Eating Together",
+   "set": "fp_bg_dining",
+   "enter": [
+    "table:set",
+    "plate:set",
+    "breads:set",
+    "frog:at:330,430:sit",
+    "prin:at:800,505:sit:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "약속했으니까 같이 먹자.",
+     "src": "reuse",
+     "en": "I promised, so let's eat together.",
+     "segs": [
+      [
+       "prin",
+       "I promised, so let's eat together.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "접시에는 노릇노릇 구운 빵이 놓여 있었어요.",
+     "src": "new",
+     "en": "On the plate sat buns, baked golden brown, crisp and toasty.",
+     "segs": [
+      [
+       "nar",
+       "On the plate sat buns, baked golden brown, crisp and toasty.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "빵이 세 개! 너 하나, 나 하나, 남은 하나는 나눠 먹자.",
+     "src": "reuse",
+     "en": "Three buns! One for you, one for me, and we'll share the last one.",
+     "segs": [
+      [
+       "prin",
+       "Three buns! One for you, one for me, and we'll share the last one.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "prin:hop"
+     ]
+    },
+    {
+     "text": "냠냠, 맛있다!",
+     "src": "reuse",
+     "en": "Yum yum, delicious!",
+     "segs": [
+      [
+       "frog",
+       "Yum yum, delicious!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "bread:eat:frog",
+      "fx:chomp",
+      "pop:330,280,냠냠"
+     ],
+     "after": [
+      "bread:eat:prin",
+      "frog:wiggle"
+     ]
+    },
+    {
+     "text": "공주도 빵을 한 입 베어 물고, 피식 웃음이 나왔어요.",
+     "src": "new",
+     "en": "The princess took a bite of her bun too, and a little giggle slipped out, tee-hee.",
+     "segs": [
+      [
+       "nar",
+       "The princess took a bite of her bun too, and a little giggle slipped out, tee-hee.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_pillow",
+   "card": "Onto the Pillow",
+   "set": "fp_bg_room",
+   "enter": [
+    "pillow:set",
+    "prin:at:360,505:stand:right",
+    "cam:520,280,1"
+   ],
+   "lines": [
+    {
+     "text": "밤이 되자 개구리가 공주의 방까지 따라왔어요.",
+     "src": "reuse",
+     "en": "When night came, the frog followed the princess all the way to her room.",
+     "segs": [
+      [
+       "nar",
+       "When night came, the frog followed the princess all the way to her room.",
+       null
+      ]
+     ],
+     "before": [
+      "frog:at:-60,505:hop:right"
+     ],
+     "after": [
+      "frog:hops:480,4",
+      "frog:look:sit"
+     ]
+    },
+    {
+     "text": "공주님, 같은 침대에서 자기로 했잖아요.",
+     "src": "reuse",
+     "en": "Princess, you said I could sleep in your bed.",
+     "segs": [
+      [
+       "frog",
+       "Princess, you said I could sleep in your bed.",
+       null
+      ]
+     ],
+     "before": [
+      "frog:hop"
+     ]
+    },
+    {
+     "text": "으, 이제 그만!",
+     "src": "reuse",
+     "en": "Ugh, that's enough!",
+     "segs": [
+      [
+       "prin",
+       "Ugh, that's enough!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "prin:look:throw:right"
+     ]
+    },
+    {
+     "text": "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!",
+     "src": "reuse",
+     "en": "The princess tossed the frog toward the bed. Plop! He landed softly on the fluffy pillow!",
+     "segs": [
+      [
+       "nar",
+       "The princess tossed the frog toward the bed. Plop! He landed softly on the fluffy pillow!",
+       null
+      ]
+     ],
+     "before": [
+      "fx:swish",
+      "pop:390,195,휙!"
+     ],
+     "after": [
+      "frog:throw",
+      "pop:720,210,포옥"
+     ]
+    },
+    {
+     "text": "그 순간 팡! 눈부신 빛이 방 안을 가득 채웠어요.",
+     "src": "new",
+     "en": "At that very moment, pop! A dazzling light filled the whole room.",
+     "segs": [
+      [
+       "nar",
+       "At that very moment, pop! A dazzling light filled the whole room.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:sparkle",
+      "pop:720,170,팡!",
+      "flash"
+     ],
+     "after": [
+      "frog:hide",
+      "prince:appear",
+      "glow:prince"
+     ]
+    },
+    {
+     "text": "고마워요. 나는 마법에 걸린 왕자였어요. 약속을 지켜 줘서 마법이 풀렸어요.",
+     "src": "reuse",
+     "en": "Thank you. I was a prince under a spell. Because you kept your promise, the spell is broken.",
+     "segs": [
+      [
+       "prince",
+       "Thank you. I was a prince under a spell. Because you kept your promise, the spell is broken.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "어머, 개구리가… 왕자님이었구나!",
+     "src": "reuse",
+     "en": "Oh my, the frog... was a prince!",
+     "segs": [
+      [
+       "prin",
+       "Oh my, the frog... was a prince!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "prin:look:stand",
+      "prin:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_friends",
+   "card": "Keeping the Promise",
+   "set": "fp_bg_yard",
+   "enter": [
+    "ball:at:510,507",
+    "prin:at:400,505:stand:right",
+    "prince:at:620,505:stand:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "다음 날, 공주와 왕자는 성 뜰에서 함께 놀았어요.",
+     "src": "reuse",
+     "en": "The next day, the princess and the prince played together in the castle garden.",
+     "segs": [
+      [
+       "nar",
+       "The next day, the princess and the prince played together in the castle garden.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "이제 우리는 진짜 친구예요.",
+     "src": "reuse",
+     "en": "Now we are true friends.",
+     "segs": [
+      [
+       "prince",
+       "Now we are true friends.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "prin:look:hand:right",
+      "prince:look:hand:left",
+      "prince:move:520,505,500"
+     ]
+    },
+    {
+     "text": "응! 우리 같이 공놀이하자!",
+     "src": "reuse",
+     "en": "Yes! Let's play ball together!",
+     "segs": [
+      [
+       "prin",
+       "Yes! Let's play ball together!",
+       "happy"
+      ]
+     ],
+     "before": [
+      "fx:sparkle",
+      "pop:470,205,반짝!",
+      "prin:hop",
+      "prince:hop",
+      "petals"
+     ]
+    },
+    {
+     "text": "금공이 통통, 두 사람 사이를 오락가락했어요.",
+     "src": "new",
+     "en": "The golden ball bounced, boing, boing, back and forth between the two of them.",
+     "segs": [
+      [
+       "nar",
+       "The golden ball bounced, boing, boing, back and forth between the two of them.",
+       null
+      ]
+     ],
+     "before": [
+      "ball:pass"
+     ]
+    },
+    {
+     "text": "둘은 금공을 주고받으며 오래오래 사이좋게 지냈답니다.",
+     "src": "reuse",
+     "en": "And the two of them tossed the golden ball back and forth and were the best of friends for a long, long time.",
+     "segs": [
+      [
+       "nar",
+       "And the two of them tossed the golden ball back and forth and were the best of friends for a long, long time.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "confetti",
+      "fx:tada"
+     ]
+    },
+    {
+     "text": "한 약속은 꼭 지켜야 한답니다. 그러면 마음도 반짝반짝 빛나요.",
+     "src": "new",
+     "en": "A promise made must always be kept. Then your heart will sparkle, twinkle, twinkle.",
+     "segs": [
+      [
+       "nar",
+       "A promise made must always be kept. Then your heart will sparkle, twinkle, twinkle.",
+       null
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

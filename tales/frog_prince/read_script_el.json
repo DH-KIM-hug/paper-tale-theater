@@ -1,0 +1,976 @@
+{
+ "mode": "read",
+ "tale": "frog_prince",
+ "lang": "ko",
+ "title": "개구리 왕자",
+ "voices_from": "voice_script_el.json",
+ "moral": "한 약속은 지켜요.",
+ "notes": "읽어 주기 모드 대본(docs/READ_MODE.md). 조작 안내(접시·손잡기 누르기)와 배움 놀이(금공 모양 고르기와 그 오답·정답 대사, 빵 세기)를 모두 뺐다. \"빵이 세 개! 너 하나, 나 하나…\"는 이야기 줄이라 남겼다. 놀이판 10장 → 읽기 10장. src: reuse = 기존 줄·녹음 그대로, new = 새 문장(녹음 필요, 모두 내레이터, 장면마다 의성어·의태어 2개 이상). 순화는 놀이판·PLAN.md 그대로: 개구리는 벽에 부딪히지 않고 푹신한 베개 위에 포옥 떨어지며 다치지 않는다, 키스·노래·마녀 없음, 빛이 팡! 하고 왕자로 변한다. 놀이판은 교훈을 대사로 말하지 않지만 읽기 규칙대로 마지막 줄에 이야기 말투로 한 번 넣었다. Typecast(tc) 배역 없음.",
+ "acts": {
+  "set:<fp_bg_yard|fp_bg_pond|fp_bg_dining|fp_bg_room>": "장면 배경(scene(key)). scenes[].set 으로 자동 호출",
+  "cam:<x,y,z> | follow:<x>": "카메라",
+  "prin:look:<stand|ball|cry|run|refuse|sorry|sit|throw|hand>[:<dir>] | prin:at:<x,y>[:<look>[:<dir>]] | prin:move:<x,y,ms> | prin:hop | prin:wiggle | prin:run_out": "공주. run_out = 공을 안고 왼쪽으로 쌩 달려 나감(5장)",
+  "frog:look:<sit|ball|hop|fly|surprise>[:<dir>] | frog:at:<x,y>[:<look>[:<dir>]] | frog:hop | frog:wiggle | frog:rise | frog:dive | frog:hops:<x,n> | frog:to_table | frog:throw | frog:hide": "개구리. rise = 샘물 위로 고개 내밀기(뽀글뽀글), dive = 풍덩 들어갔다 공을 물고 올라옴, hops = x 까지 n 번 폴짝, to_table = 식탁 위로 폴짝, throw = 휙 날아가 베개 위에 포옥",
+  "king:at:<x,y> | king:enter | king:hop | prince:at:<x,y>[:<look>] | prince:appear | prince:look:<stand|hand>[:<dir>] | prince:move:<x,y,ms> | prince:hop": "임금님·왕자. appear = 팡! 빛과 함께 개구리 자리에 나타남(9장)",
+  "ball:at:<x,y> | ball:bounce | ball:hop:<n> | ball:fly | ball:sink | ball:to_prin | ball:pass | ball:hide": "금공. bounce = 손 위에서 통통, hop:n = n 번 튀기, fly = 높이 날아 샘 위로, sink = 풍덩 가라앉음, to_prin = 개구리 입에서 공주 품으로, pass = 왕자↔공주 주고받기",
+  "table:set | plate:set | breads:set | bread:eat:<frog|prin> | pillow:set | ripple | flash | petals": "소품·효과",
+  "fx:<boing|splash|splash_big|bubbles|knock|door|step_grass|step_wood|paper_up|paper_down|swish|sparkle|tada|chomp|pop> | pop:<x,y,글자> | glow:<prince|ball> | confetti": "효과음·팝"
+ },
+ "scenes": [
+  {
+   "key": "R01_yard",
+   "card": "성 뜰",
+   "set": "fp_bg_yard",
+   "enter": [
+    "prin:at:300,505:ball:right",
+    "ball:bounce",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날 어느 성에 금빛 공을 가장 좋아하는 공주가 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옛날 어느 성에 금빛 공을 가장 좋아하는 공주가 살았어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "금공은 동글동글, 햇빛에 반짝반짝 빛났어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "금공은 동글동글, 햇빛에 반짝반짝 빛났어요.",
+       null,
+       "[calm, light, slow]"
+      ]
+     ],
+     "before": [
+      "glow:ball"
+     ]
+    },
+    {
+     "text": "통통통! 내 금공은 세상에서 제일 예뻐.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "통통통! 내 금공은 세상에서 제일 예뻐.",
+       "happy",
+       "[young girl, playful, proud, bouncy]"
+      ]
+     ],
+     "before": [
+      "ball:hop:3",
+      "pop:420,205,통통!"
+     ],
+     "after": [
+      "prin:hop"
+     ]
+    },
+    {
+     "text": "공주는 날마다 공을 높이높이 던지며 놀았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "공주는 날마다 공을 높이높이 던지며 놀았어요.",
+       null,
+       "[warm, light]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_spring",
+   "card": "샘가",
+   "set": "fp_bg_pond",
+   "enter": [
+    "prin:at:380,505:ball:right",
+    "ball:bounce",
+    "cam:520,280,1"
+   ],
+   "lines": [
+    {
+     "text": "어느 날, 공주는 숲속 샘가에서 공놀이를 했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "어느 날, 공주는 숲속 샘가에서 공놀이를 했어요.",
+       null,
+       "[calm, light, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "샘물은 맑고, 물속에서 물고기가 살랑살랑 헤엄쳤어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "샘물은 맑고, 물속에서 물고기가 살랑살랑 헤엄쳤어요.",
+       null,
+       "[calm, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "공이 높이, 더 높이… 어머나!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "공이 높이, 더 높이… 어머나!",
+       "toneup",
+       "[rising, then a small gasp at 어머나]"
+      ]
+     ],
+     "before": [
+      "ball:hop:2",
+      "pop:500,205,통통!"
+     ],
+     "after": [
+      "fx:swish",
+      "ball:fly",
+      "prin:look:stand",
+      "prin:wiggle"
+     ]
+    },
+    {
+     "text": "공이 휙 날아가 샘 위로 뚝 떨어졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "공이 휙 날아가 샘 위로 뚝 떨어졌어요.",
+       null,
+       "[rising, a small gasp]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_splash",
+   "card": "풍덩",
+   "set": "fp_bg_pond",
+   "enter": [
+    "prin:at:380,505:stand",
+    "ball:at:600,420",
+    "cam:520,280,1"
+   ],
+   "lines": [
+    {
+     "text": "공이 샘 속으로 풍덩! 금공이 깊은 물속으로 가라앉았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "공이 샘 속으로 풍덩! 금공이 깊은 물속으로 가라앉았어요.",
+       null,
+       "[a small splash at 풍덩, then slow and sinking]"
+      ]
+     ],
+     "before": [
+      "fx:splash_big",
+      "pop:600,315,풍덩!",
+      "ripple"
+     ],
+     "after": [
+      "ball:sink"
+     ]
+    },
+    {
+     "text": "물결이 동글동글 퍼지고, 금공은 보이지 않았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "물결이 동글동글 퍼지고, 금공은 보이지 않았어요.",
+       null,
+       "[slow, sinking feeling]"
+      ]
+     ]
+    },
+    {
+     "text": "엉엉, 내 금공… 내 금공이 사라졌어.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "엉엉, 내 금공… 내 금공이 사라졌어.",
+       "sad",
+       "[young girl, tearful, sniffling, not loud]"
+      ]
+     ],
+     "before": [
+      "prin:look:cry",
+      "pop:290,235,엉엉"
+     ]
+    },
+    {
+     "text": "공주는 샘가에 주저앉아 훌쩍훌쩍 울었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "공주는 샘가에 주저앉아 훌쩍훌쩍 울었어요.",
+       null,
+       "[soft, a little sad]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_promise",
+   "card": "개구리의 약속",
+   "set": "fp_bg_pond",
+   "enter": [
+    "prin:at:380,505:cry",
+    "frog:at:540,540:sit",
+    "cam:520,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그때 샘물 위로 초록 개구리가 고개를 내밀었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그때 샘물 위로 초록 개구리가 고개를 내밀었어요.",
+       null,
+       "[gentle, a little curious]"
+      ]
+     ],
+     "before": [
+      "fx:bubbles",
+      "pop:670,335,뽀글뽀글"
+     ],
+     "after": [
+      "frog:rise"
+     ]
+    },
+    {
+     "text": "공주님, 왜 울어요?",
+     "src": "reuse",
+     "segs": [
+      [
+       "frog",
+       "공주님, 왜 울어요?",
+       null,
+       "[slow, gentle, slightly croaky frog voice, kind]"
+      ]
+     ],
+     "before": [
+      "frog:hop"
+     ]
+    },
+    {
+     "text": "내 금공이 샘에 빠졌어. 흑흑.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "내 금공이 샘에 빠졌어. 흑흑.",
+       "sad",
+       "[young girl, sad, sniffling]"
+      ]
+     ],
+     "before": [
+      "prin:look:stand"
+     ]
+    },
+    {
+     "text": "내가 공을 찾아 줄게. 대신 나랑 친구가 되고, 같이 먹고, 한 침대에서 자 줄래?",
+     "src": "reuse",
+     "segs": [
+      [
+       "frog",
+       "내가 공을 찾아 줄게. 대신 나랑 친구가 되고, 같이 먹고, 한 침대에서 자 줄래?",
+       null,
+       "[slow, gentle, slightly croaky, earnest, a small pause before 대신]"
+      ]
+     ],
+     "before": [
+      "frog:hop"
+     ]
+    },
+    {
+     "text": "공주는 눈물을 쓱쓱 닦고 고개를 끄덕끄덕했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "공주는 눈물을 쓱쓱 닦고 고개를 끄덕끄덕했어요.",
+       null,
+       "[light, quick]"
+      ]
+     ]
+    },
+    {
+     "text": "좋아, 약속할게!",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "좋아, 약속할게!",
+       "happy",
+       "[young girl, quick and light, not really thinking about it]"
+      ]
+     ],
+     "before": [
+      "prin:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_found",
+   "card": "공을 찾았어요",
+   "set": "fp_bg_pond",
+   "enter": [
+    "prin:at:380,505:stand",
+    "frog:at:540,460:sit",
+    "cam:520,280,1"
+   ],
+   "lines": [
+    {
+     "text": "개구리는 풍덩 물속으로 들어가 금공을 물고 올라왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "개구리는 풍덩 물속으로 들어가 금공을 물고 올라왔어요.",
+       null,
+       "[lively, a small splash at 풍덩, bright at the end]"
+      ]
+     ],
+     "before": [
+      "fx:splash",
+      "pop:660,315,풍덩!"
+     ],
+     "after": [
+      "frog:dive"
+     ]
+    },
+    {
+     "text": "개구리는 물속을 요리조리 헤엄쳐 반짝이는 금공을 찾아냈어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개구리는 물속을 요리조리 헤엄쳐 반짝이는 금공을 찾아냈어요.",
+       null,
+       "[lively, bright]"
+      ]
+     ]
+    },
+    {
+     "text": "내 공이다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "내 공이다!",
+       "toneup",
+       "[young girl, delighted, quick]"
+      ]
+     ],
+     "before": [
+      "prin:hop"
+     ]
+    },
+    {
+     "text": "공주는 공을 받아 안고 성으로 쌩 달려갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "공주는 공을 받아 안고 성으로 쌩 달려갔어요.",
+       null,
+       "[quick, light, a whoosh feeling at 쌩]"
+      ]
+     ],
+     "before": [
+      "ball:to_prin",
+      "fx:paper_up",
+      "prin:look:run:left",
+      "pop:490,255,쌩!"
+     ],
+     "after": [
+      "prin:run_out"
+     ]
+    },
+    {
+     "text": "기다려, 약속했잖아!",
+     "src": "reuse",
+     "segs": [
+      [
+       "frog",
+       "기다려, 약속했잖아!",
+       "toneup",
+       "[slightly croaky, calling after someone, a little hurt but not angry]"
+      ]
+     ],
+     "before": [
+      "frog:wiggle"
+     ]
+    },
+    {
+     "text": "개구리는 샘가에 혼자 남아 눈만 끔뻑끔뻑했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개구리는 샘가에 혼자 남아 눈만 끔뻑끔뻑했어요.",
+       null,
+       "[gentle, a little lonely]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_door",
+   "card": "문 앞의 개구리",
+   "set": "fp_bg_dining",
+   "enter": [
+    "table:set",
+    "prin:at:420,505:stand:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "저녁 식사 때, 문 밖에서 폴짝폴짝 소리가 났어요. 똑똑!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "저녁 식사 때, 문 밖에서 폴짝폴짝 소리가 났어요. 똑똑!",
+       null,
+       "[calm, then two light knocks at 똑똑]"
+      ]
+     ],
+     "after": [
+      "fx:knock",
+      "pop:140,150,똑똑!"
+     ]
+    },
+    {
+     "text": "개구리가 폴짝폴짝, 문턱을 넘어 들어왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개구리가 폴짝폴짝, 문턱을 넘어 들어왔어요.",
+       null,
+       "[light, playful]"
+      ]
+     ],
+     "before": [
+      "frog:at:-60,505:hop:right",
+      "pop:80,375,폴짝"
+     ],
+     "after": [
+      "frog:hops:160,3",
+      "frog:look:sit"
+     ]
+    },
+    {
+     "text": "공주님, 약속했잖아요. 문 좀 열어 줘요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "frog",
+       "공주님, 약속했잖아요. 문 좀 열어 줘요.",
+       null,
+       "[slow, gentle, slightly croaky, polite, pleading softly]"
+      ]
+     ],
+     "before": [
+      "frog:hop"
+     ]
+    },
+    {
+     "text": "싫어! 저리 가!",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "싫어! 저리 가!",
+       "toneup",
+       "[young girl, grumpy, pouting, not screaming]"
+      ]
+     ],
+     "before": [
+      "prin:look:refuse:left",
+      "prin:move:460,505,500"
+     ]
+    },
+    {
+     "text": "공주는 팔짱을 끼고 홱 돌아섰어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "공주는 팔짱을 끼고 홱 돌아섰어요.",
+       null,
+       "[playful, a little grumpy]"
+      ]
+     ],
+     "after": [
+      "frog:wiggle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_king",
+   "card": "아버지의 말씀",
+   "set": "fp_bg_dining",
+   "enter": [
+    "table:set",
+    "frog:at:160,505:sit",
+    "prin:at:460,505:refuse:left",
+    "king:at:1100,505:stand:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그 모습을 본 임금님이 공주에게 물었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그 모습을 본 임금님이 공주에게 물었어요.",
+       null,
+       "[calm, slow]"
+      ]
+     ],
+     "before": [
+      "king:enter",
+      "follow:560"
+     ]
+    },
+    {
+     "text": "공주야, 무슨 약속을 했느냐?",
+     "src": "reuse",
+     "segs": [
+      [
+       "king",
+       "공주야, 무슨 약속을 했느냐?",
+       null,
+       "[kind old father, calm, gently asking]"
+      ]
+     ]
+    },
+    {
+     "text": "개구리가 금공을 찾아 주면… 친구가 되겠다고 했어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "개구리가 금공을 찾아 주면… 친구가 되겠다고 했어요.",
+       "sad",
+       "[young girl, small voice, hesitant, a pause before 친구가]"
+      ]
+     ],
+     "before": [
+      "prin:look:sorry"
+     ]
+    },
+    {
+     "text": "약속은 지켜야 한단다. 도와준 친구에게는 더욱 그렇지.",
+     "src": "reuse",
+     "segs": [
+      [
+       "king",
+       "약속은 지켜야 한단다. 도와준 친구에게는 더욱 그렇지.",
+       null,
+       "[kind old father, soft but firm, slow, warm]"
+      ]
+     ],
+     "before": [
+      "king:hop"
+     ]
+    },
+    {
+     "text": "…알겠어요, 아버지.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "…알겠어요, 아버지.",
+       "sad",
+       "[young girl, quiet, a little ashamed, accepting]"
+      ]
+     ]
+    },
+    {
+     "text": "공주는 입을 삐죽 내밀었지만, 개구리 쪽으로 돌아섰어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "공주는 입을 삐죽 내밀었지만, 개구리 쪽으로 돌아섰어요.",
+       null,
+       "[calm, a little shy]"
+      ]
+     ],
+     "before": [
+      "prin:look:stand"
+     ]
+    },
+    {
+     "text": "공주는 개구리를 식탁으로 데려갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "공주는 개구리를 식탁으로 데려갔어요.",
+       null,
+       "[calm, warm]"
+      ]
+     ],
+     "after": [
+      "frog:look:hop:right",
+      "frog:hops:330,2",
+      "fx:boing",
+      "frog:to_table",
+      "frog:look:sit"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_dinner",
+   "card": "같이 먹어요",
+   "set": "fp_bg_dining",
+   "enter": [
+    "table:set",
+    "plate:set",
+    "breads:set",
+    "frog:at:330,430:sit",
+    "prin:at:800,505:sit:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "약속했으니까 같이 먹자.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "약속했으니까 같이 먹자.",
+       null,
+       "[young girl, a little shy but kind]"
+      ]
+     ]
+    },
+    {
+     "text": "접시에는 노릇노릇 구운 빵이 놓여 있었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "접시에는 노릇노릇 구운 빵이 놓여 있었어요.",
+       null,
+       "[warm, cozy]"
+      ]
+     ]
+    },
+    {
+     "text": "빵이 세 개! 너 하나, 나 하나, 남은 하나는 나눠 먹자.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "빵이 세 개! 너 하나, 나 하나, 남은 하나는 나눠 먹자.",
+       "happy",
+       "[young girl, bright, counting happily, warm at the end]"
+      ]
+     ],
+     "before": [
+      "prin:hop"
+     ]
+    },
+    {
+     "text": "냠냠, 맛있다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "frog",
+       "냠냠, 맛있다!",
+       "happy",
+       "[slightly croaky, happy, munching]"
+      ]
+     ],
+     "before": [
+      "bread:eat:frog",
+      "fx:chomp",
+      "pop:330,280,냠냠"
+     ],
+     "after": [
+      "bread:eat:prin",
+      "frog:wiggle"
+     ]
+    },
+    {
+     "text": "공주도 빵을 한 입 베어 물고, 피식 웃음이 나왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "공주도 빵을 한 입 베어 물고, 피식 웃음이 나왔어요.",
+       null,
+       "[warm, light]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_pillow",
+   "card": "베개 위로 폴짝",
+   "set": "fp_bg_room",
+   "enter": [
+    "pillow:set",
+    "prin:at:360,505:stand:right",
+    "cam:520,280,1"
+   ],
+   "lines": [
+    {
+     "text": "밤이 되자 개구리가 공주의 방까지 따라왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "밤이 되자 개구리가 공주의 방까지 따라왔어요.",
+       null,
+       "[quiet, night-time, slow]"
+      ]
+     ],
+     "before": [
+      "frog:at:-60,505:hop:right"
+     ],
+     "after": [
+      "frog:hops:480,4",
+      "frog:look:sit"
+     ]
+    },
+    {
+     "text": "공주님, 같은 침대에서 자기로 했잖아요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "frog",
+       "공주님, 같은 침대에서 자기로 했잖아요.",
+       null,
+       "[slow, gentle, slightly croaky, sleepy, polite]"
+      ]
+     ],
+     "before": [
+      "frog:hop"
+     ]
+    },
+    {
+     "text": "으, 이제 그만!",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "으, 이제 그만!",
+       "toneup",
+       "[young girl, exasperated, a short huff, not a scream]"
+      ]
+     ],
+     "before": [
+      "prin:look:throw:right"
+     ]
+    },
+    {
+     "text": "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!",
+       null,
+       "[quick at 휙, then soft and bouncy at 포옥, playful not alarming]"
+      ]
+     ],
+     "before": [
+      "fx:swish",
+      "pop:390,195,휙!"
+     ],
+     "after": [
+      "frog:throw",
+      "pop:720,210,포옥"
+     ]
+    },
+    {
+     "text": "그 순간 팡! 눈부신 빛이 방 안을 가득 채웠어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그 순간 팡! 눈부신 빛이 방 안을 가득 채웠어요.",
+       null,
+       "[bright, magical]"
+      ]
+     ],
+     "before": [
+      "fx:sparkle",
+      "pop:720,170,팡!",
+      "flash"
+     ],
+     "after": [
+      "frog:hide",
+      "prince:appear",
+      "glow:prince"
+     ]
+    },
+    {
+     "text": "고마워요. 나는 마법에 걸린 왕자였어요. 약속을 지켜 줘서 마법이 풀렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prince",
+       "고마워요. 나는 마법에 걸린 왕자였어요. 약속을 지켜 줘서 마법이 풀렸어요.",
+       "happy",
+       "[young prince, warm, clear, grateful, gentle smile in the voice]"
+      ]
+     ]
+    },
+    {
+     "text": "어머, 개구리가… 왕자님이었구나!",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "어머, 개구리가… 왕자님이었구나!",
+       "toneup",
+       "[young girl, amazed, wide-eyed, a pause before 왕자님]"
+      ]
+     ],
+     "before": [
+      "prin:look:stand",
+      "prin:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_friends",
+   "card": "약속을 지켜요",
+   "set": "fp_bg_yard",
+   "enter": [
+    "ball:at:510,507",
+    "prin:at:400,505:stand:right",
+    "prince:at:620,505:stand:left",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "다음 날, 공주와 왕자는 성 뜰에서 함께 놀았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "다음 날, 공주와 왕자는 성 뜰에서 함께 놀았어요.",
+       "happy",
+       "[bright, warm, morning feeling]"
+      ]
+     ]
+    },
+    {
+     "text": "이제 우리는 진짜 친구예요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prince",
+       "이제 우리는 진짜 친구예요.",
+       "happy",
+       "[young prince, warm, sincere, smiling]"
+      ]
+     ],
+     "before": [
+      "prin:look:hand:right",
+      "prince:look:hand:left",
+      "prince:move:520,505,500"
+     ]
+    },
+    {
+     "text": "응! 우리 같이 공놀이하자!",
+     "src": "reuse",
+     "segs": [
+      [
+       "prin",
+       "응! 우리 같이 공놀이하자!",
+       "happy",
+       "[young girl, joyful, bouncy]"
+      ]
+     ],
+     "before": [
+      "fx:sparkle",
+      "pop:470,205,반짝!",
+      "prin:hop",
+      "prince:hop",
+      "petals"
+     ]
+    },
+    {
+     "text": "금공이 통통, 두 사람 사이를 오락가락했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "금공이 통통, 두 사람 사이를 오락가락했어요.",
+       null,
+       "[bright, playful]"
+      ]
+     ],
+     "before": [
+      "ball:pass"
+     ]
+    },
+    {
+     "text": "둘은 금공을 주고받으며 오래오래 사이좋게 지냈답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "둘은 금공을 주고받으며 오래오래 사이좋게 지냈답니다.",
+       "happy",
+       "[warm, joyful, storybook ending tone, slow at the end]"
+      ]
+     ],
+     "before": [
+      "confetti",
+      "fx:tada"
+     ]
+    },
+    {
+     "text": "한 약속은 꼭 지켜야 한답니다. 그러면 마음도 반짝반짝 빛나요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "한 약속은 꼭 지켜야 한답니다. 그러면 마음도 반짝반짝 빛나요.",
+       null,
+       "[warm, gentle, closing the book, slow]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
