@@ -81,14 +81,120 @@
     const olds = Array.from({ length: 8 }, (_, i) => mk(T, { a: ['father_fightA', 180, 'left'], b: ['father_fightB', 180, 'left'] }));
     const father = mk(T, { peek: ['father_peek', 210, 'left'], fall: ['father_fall', 150, 'left'] });
 
+    const plow = i => {
+      farmer.hop(16, 300); AudioFX.sfx('pop'); T.pop(farmer.x + 90, farmer.y - 300, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
+    };
+    const pull = i => {
+      farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
+    };
+    /* ===== 읽어 주기 동사 맵: 놀이판 장면·배우·컷 함수를 감싼 얇은 함수 (대본 read_script_el.json) ===== */
+    const RD = { hoes: [], coins: [], golds: [] };
+    const nums = s => String(s).split(',').map(Number);
+    const hideAll = list => { list.forEach(h => hide(h)); list.length = 0; };
+    const actorVerbs = (a, extra = {}) => (op, ...r) => {
+      if (op === 'look') return a.look(r[0], r[1]);
+      if (op === 'at') { const [x, y] = nums(r[0]); return put(T, a, x, y, { look: r[1], to: r[2] }); }
+      if (op === 'walk') { const [x, y, ms] = nums(r[0]); return a.move(fx(T, x), y, ms); }
+      if (op === 'hop') return a.hop(26, 400);
+      if (op === 'hide') return hide(a);
+      return extra[op] ? extra[op](...r) : console.warn('[read] 요술 항아리: 모르는 동작', op);
+    };
+    const cutVerb = k => T.cutImage([{ src: cutSrc(k), sfx: k === 'smash' ? 'pow' : 'pop', hold: 3000 }], { hold: 3000 });
+    const READ_ACTS = {
+      set: k => scene(k),
+      cam: s => { const [x, y, z] = nums(s); camSnap(x, y, z); },
+      cut: cutVerb,
+      confetti: () => T.confetti(),
+      fx: k => k === 'clink' ? clinkSfx(T) : k === 'pow' ? AudioFX.sfx('pow') : k === 'tada' ? (AudioFX.sfx('tada') || AudioFX.sfx('pop')) : popSfx(T),
+      pop: s => { const [x, y, ...t] = String(s).split(','); T.pop(+x, +y, tr(t.join(','))); },
+      farmer: actorVerbs(farmer, {
+        plow: async () => { for (let i = 1; i <= 3; i++) { plow(i); await sleep(450); } },
+        pull3: async () => { for (let i = 1; i <= 3; i++) { pull(i); await sleep(450); } },
+      }),
+      wife: actorVerbs(wife),
+      rich: actorVerbs(rich, {
+        dash: async () => { rich.look('hurry', 'right'); for (const x of [150, 330, 180, 300]) { rich.turn(x > rich.x ? 'right' : 'left'); await rich.move(fx(T, x), 505, 600); } rich.look('shout', 'right'); },
+      }),
+      father: actorVerbs(father),
+      jar: (op, ...r) => {
+        if (op === 'at') { const [x, y] = nums(r[0]); return put(T, jar, x, y); }
+        if (op === 'show') { jar.pos.style.display = ''; jar.pos.style.opacity = 1; return; }
+        if (op === 'hide') return hide(jar);
+        if (op === 'hop') return jar.hop(14, 260);
+        if (op === 'dig') { jar.pos.style.display = ''; jar.pos.style.opacity = 1; return jar.hop(40, 500); }
+        if (op === 'lend') return (async () => { await sleep(300); await jar.move(fx(T, 700), 520, 600); hide(jar); })();
+        console.warn('[read] 요술 항아리: 모르는 항아리 동작', op);
+      },
+      hoe: async op => {
+        if (op !== 'drop') return;
+        put(T, hoe, 400, 470); await sleep(300);
+        await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260);
+      },
+      cracked: op => { if (op === 'show') put(T, cracked, 700, 505); },
+      hoes: async (op, n) => {
+        if (op === 'hide') return hideAll(RD.hoes);
+        n = +n; hideAll(RD.hoes);
+        const spots = []; hoeRows(n).forEach((cnt, r) => { for (let c = 0; c < cnt; c++) spots.push([fx(T, 520) + (c - (cnt - 1) / 2) * 105, 335 - r * 115]); });
+        for (let i = 0; i < n; i++) {
+          const h2 = prop(T, 'hoe', 110); h2.pos.style.pointerEvents = 'none'; put(T, h2, spots[i][0], spots[i][1], { raw: true });
+          if (!T.readInstant()) { h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(12, 240); popSfx(T); await sleep(450); }
+          RD.hoes.push(h2);
+        }
+      },
+      coins: async (op, n) => {
+        if (op === 'hide') return hideAll(RD.coins);
+        n = +n; hideAll(RD.coins);
+        const csp = tight(T) ? (n <= 5 ? 60 : 50) : (n <= 5 ? 90 : 72);
+        for (let i = 1; i <= n; i++) {
+          const c = prop(T, 'coin', 52); c.pos.style.pointerEvents = 'none'; put(T, c, fx(T, 520) + (i - (n + 1) / 2) * csp, 548, { raw: true });
+          if (!T.readInstant()) { c.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 280); jar.hop(10, 220); clinkSfx(T); await sleep(450); }
+          RD.coins.push(c);
+        }
+      },
+      golds: async (op, n) => {
+        if (op === 'hide') return hideAll(RD.golds);
+        for (let i = 1; i <= +n; i++) {
+          const d = prop(T, 'gold', 46); put(T, d, jar.x, 250); d.move(jar.x, 400, 300, 'ease-in').then(() => hide(d));
+          const g = prop(T, 'gold', 70 + i * 24); put(T, g, 560 + i * 90, 505 - i * 6); RD.golds.push(g);
+          jar.hop(12, 240); clinkSfx(T); await sleep(500);
+        }
+      },
+      fathers: async (op, n) => {
+        if (op === 'hide') return olds.forEach(o => hide(o));
+        if (op === 'hop') return olds.forEach((o, i) => o.hop(14 + (i % 3) * 4, 300));
+        n = +n;
+        for (let i = 1; i <= n; i++) {
+          const o = olds[i - 1]; o.pos.style.pointerEvents = 'none';
+          put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .62 : 1, raw: tight(T) });
+          if (!T.readInstant()) { o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); popSfx(T); await sleep(450); }
+        }
+      },
+      rice: async op => {
+        if (op !== 'share') return;
+        const spots = [78, 297, 500, 719, 922];
+        for (let n = 0; n < 5; n++) {
+          const x = spots[n];
+          if (tight(T)) await Promise.all([T.camTo(x, 280, 1, 600), farmer.move(x, 540, 600)]);
+          const sack = prop(T, 'rice', 62); put(T, sack, farmer.x, 440, { raw: true });
+          popSfx(T);
+          await sack.move(x, 450, 520, 'ease-in');
+          sack.hop(16, 260); farmer.hop(12, 240); await sleep(400);
+        }
+        if (tight(T)) await T.camTo(500, 280, 1, 600);
+      },
+      tables: async op => {
+        if (op !== 'show') return;
+        const ts = [170, 820].map(x => { const t = prop(T, 'table', 80); put(T, t, x, 540); return t; });
+        for (const [i, t] of ts.entries()) { await sleep(600); popSfx(T); t.hop(20, 300); T.pop(t.x, t.y - 120, tr(['냠냠!', '맛있다!'][i])); }
+      },
+    };
+    if (T.reading()) return T.readPlay(READ_ACTS);   // 읽어 주기: 아래 놀이 흐름은 돌지 않는다
+
     /* --- 1. 밭 --- */
     scene('field');
     put(T, farmer, 460, 480, { look: 'hoe', to: 'right' });
     await T.curtain(true);
     await say('옛날 옛날에 마음씨 착한 농부가 살았어요.');
-    const plow = i => {
-      farmer.hop(16, 300); AudioFX.sfx('pop'); T.pop(farmer.x + 90, farmer.y - 300, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
-    };
     await T.ask('농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!', () => T.tap(farmer.pos, { prompt: '농부를 톡! 괭이질을 해요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { await plow(i); await sleep(450); }
     await T.cutImage([{ src: cutSrc('clink'), sfx: 'pop', hold: 2800 }], { hold: 2800 });
@@ -101,9 +207,6 @@
       put(T, jar, 500, 430); jar.pos.style.opacity = 0;
     }, farmer.pos);
     await say('땅속에서 둥근 뚜껑이 보여요.');
-    const pull = i => {
-      farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
-    };
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await pull(i); await sleep(450); }
     jar.pos.style.opacity = 1; jar.hop(40, 500);
@@ -287,5 +390,5 @@
     return '나누면 기쁨이 커져요!';
   }
 
-  Tale.mount({ title: '요술 항아리', subtitle: '나누면 기쁨이 커져요', run: T => run(Tale.api) });
+  Tale.mount({ title: '요술 항아리', subtitle: '나누면 기쁨이 커져요', read: true, run: T => run(Tale.api) });
 })();
