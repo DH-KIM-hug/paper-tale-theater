@@ -42,7 +42,9 @@ const AudioFX = (() => {
   ['touchend', 'pointerup', 'click', 'keydown'].forEach(ev =>
     addEventListener(ev, () => { if (needsWake()) wake(); }, { capture: true, passive: true }));
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { if (keepAlive) keepAlive.pause(); }  // 화면을 떠나면 붙잡고 있던 세션을 놓아 준다
+    // 화면을 떠나면 붙잡고 있던 세션을 놓아 준다. 읽어 주기(<audio> 내레이션) 중이면 화면이 꺼져도 이어 읽도록 붙잡아 둔다
+    if (document.hidden) { if (keepAlive && !mediaNar) keepAlive.pause(); }
+    else if (ctx && ctx.state !== 'running' && ctx.state !== 'closed') ctx.resume().catch(() => {}); // 돌아오면 효과음 다시 깨우기
   });
 
   /* 기본 톤: freq(Hz) 또는 [시작, 끝] 스윕 */
@@ -92,6 +94,48 @@ const AudioFX = (() => {
   /* ===== 사전 녹음 내레이션 재생 ===== */
   const narBuffers = {};
   let narSrc = null, voiceSrc = null, voiceGen = 0, voiceDone = Promise.resolve();
+  /* 지금 나오는 내레이션 조각: 시작 시각(ms)·길이(초, 모르면 0)·몇 번째 조각. 읽어 주기가 '오디오 길이 + 3초' 시간 제한에 쓴다 */
+  const narInfo = { t: 0, dur: 0, n: 0 };
+
+  /* ===== 읽어 주기: 내레이션을 <audio> 한 개로 재생 (2026-10-23) =====
+     화면이 꺼지거나 다른 앱·탭으로 가면 Web Audio 는 멈추거나(iOS 잠금) onended 가 오지 않을 수 있다.
+     <audio> 는 배경에서도 이어 재생되고 ended 이벤트로 다음 줄을 부를 수 있다(잠금 화면 '지금 재생'·Media Session 도 이 요소로).
+     시작 단추를 누르는 순간(사용자 누름 안에서) 한 번 재생해 두어야 iOS 가 나중에 누름 없이 재생을 허락한다 */
+  let narEl = null, mediaNar = false, narEnd = null, narHeld = false;
+  const narBlob = {};
+  function mediaNarration(on) {
+    mediaNar = !!on;
+    if (!mediaNar) return;
+    if (!narEl) { narEl = document.createElement('audio'); narEl.preload = 'auto'; narEl.setAttribute('playsinline', ''); }
+    try { narEl.src = SILENT; const p = narEl.play(); if (p && p.then) p.then(() => { if (!narEnd) narEl.pause(); }, () => {}); } catch (e) { /* 무시 */ }
+  }
+  async function playMedia(url) {
+    let u = narBlob[url];
+    if (!u) {
+      try { const bytes = await fetchBytes(url); u = narBlob[url] = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' })); }
+      catch (e) { u = clipUrl(url); }
+    }
+    return new Promise((resolve, reject) => {
+      const el = narEl;
+      if (narEnd) narEnd(true);
+      let done = false;
+      const fin = ok => {
+        if (done) return; done = true;
+        el.onended = el.onerror = el.onloadedmetadata = null;
+        if (narEnd === fin) narEnd = null;
+        ok ? resolve() : reject(new Error('media-fail'));
+      };
+      narEnd = fin;
+      el.onended = () => fin(true);
+      el.onerror = () => fin(false);
+      el.onloadedmetadata = () => { if (isFinite(el.duration)) narInfo.dur = el.duration; };
+      narInfo.t = Date.now(); narInfo.dur = 0; narInfo.n++;
+      el.src = u;
+      if (narHeld) return; // 잠금 화면에서 일시정지 중: 다시 재생을 누르면 이어서
+      const p = el.play();
+      if (p && p.catch) p.catch(() => fin(false));
+    });
+  }
 
   /* 녹음 경로(audio/…)는 저장소 루트 기준이다. 동화는 tales/<이름>/ 안에서 열리므로 audio.js 위치를 기준으로 바꾼다 */
   const ROOT_BASE = (() => {
@@ -260,12 +304,14 @@ const AudioFX = (() => {
     /* 첫 소리가 합성음으로 새지 않게 미리 불러 둔다: AudioFX.preloadSfx(['paper_up', …]) */
     preloadSfx(names) { names.forEach(n => loadSample('sfx/' + n + '.mp3')); },
     async playUrl(url) {
+      if (mediaNar && narEl) { try { return await playMedia(url); } catch (e) { /* <audio> 실패 → Web Audio 로 */ } }
       const buf = await loadClip(url);
       const c = ensure();
       return new Promise(resolve => {
         const src = c.createBufferSource();
         src.buffer = buf;
         src.connect(c.destination);
+        narInfo.t = Date.now(); narInfo.dur = buf.duration; narInfo.n++;
         narSrc = src;
         src.onended = () => { if (narSrc === src) narSrc = null; resolve(); };
         src.start();
@@ -296,6 +342,16 @@ const AudioFX = (() => {
     voiceIdle(ms = 4000) { return Promise.race([voiceDone, new Promise(r => setTimeout(r, ms))]); },
     stopNarration() {
       if (narSrc) { try { narSrc.stop(); } catch (e) { /* 무시 */ } narSrc = null; }
+      if (narEnd) { try { narEl.pause(); } catch (e) { /* 무시 */ } narEnd(true); }
+    },
+    /* 읽어 주기: 내레이션을 <audio> 로 (on) / Web Audio 로 (off). on 은 시작 단추 누름 안에서 부른다 */
+    mediaNarration,
+    narInfo: () => ({ ...narInfo }),
+    /* 잠금 화면 일시정지·재생 (Media Session) */
+    narHold(on) {
+      narHeld = !!on;
+      if (mediaNar && narEl) { try { if (on) narEl.pause(); else if (narEnd) narEl.play().catch(() => {}); } catch (e) { /* 무시 */ } }
+      else if (ctx) { try { on ? ctx.suspend() : ctx.resume(); } catch (e) { /* 무시 */ } }
     },
     prefetchClips,
     preloadAll(urls) {

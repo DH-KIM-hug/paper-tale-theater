@@ -537,14 +537,23 @@ const Tale = (() => {
     const lid = box.querySelector('.lid');
     return new Promise(res => {
       const t0 = performance.now();
-      const f = now => {
-        const k = Math.min(1, (now - t0) / ms), r = Math.max(0, r0 + (r1 - r0) * ease(k));
+      let over = false;
+      const draw = r => {
         lid.style.left = cx + 'px'; lid.style.top = cy + 'px';
         lid.style.width = lid.style.height = (r < .5 ? 0 : 2 * r).toFixed(1) + 'px';
         box.classList.toggle('shut', r < 1); // 완전히 닫히면 종이 한 장
-        k < 1 ? requestAnimationFrame(f) : res();
+      };
+      /* 화면이 안 보이면(탭 가림·화면 꺼짐) requestAnimationFrame 이 멈춘다 → 끝 모습으로 바로 맞추고 넘어간다 (읽어 주기가 멈추지 않게) */
+      const end = () => { if (over) return; over = true; draw(Math.max(0, r1)); res(); };
+      if (document.hidden) return end();
+      const f = now => {
+        if (over) return;
+        const k = Math.min(1, (now - t0) / ms);
+        draw(Math.max(0, r0 + (r1 - r0) * ease(k)));
+        if (k < 1) requestAnimationFrame(f); else end();
       };
       requestAnimationFrame(f);
+      setTimeout(end, ms + 600); // rAF 가 멈춘 경우 대비
     });
   }
   const easeIn = k => k * k * k;
@@ -566,7 +575,7 @@ const Tale = (() => {
     const t0 = performance.now();
     if (open) { await lidTo(v, W / 2, H / 2, 0, far, 1100, easeInOut); v.hidden = true; }
     else await lidTo(v, W / 2, H / 2, far, 0, 1000, easeInOut);
-    await sleep(Math.max(0, 1250 - (performance.now() - t0)));
+    if (!document.hidden) await sleep(Math.max(0, 1250 - (performance.now() - t0)));
   }
   /* 동그라미 장면 전환 (옛날 만화식 아이리스). focus: 동그라미가 모일 요소(주인공). 없으면 가운데
      닫힘 → 주인공 둘레에서 잠깐 멈춤 → 완전히 닫힘 → 장면 이름(오린 종이 글자) → change() → 톡 튀며 열림 */
@@ -575,6 +584,7 @@ const Tale = (() => {
     if (VERIFY) vPost({ type: 'scene', label: label || '' });
     await restIfDue();
     if (transitionMode === 'page') return pageTurn(change);
+    if (document.hidden) { $('#iris').hidden = true; if (change) change(); return; } // 안 보일 때: 넘김 연출 없이 장면만 바꾼다
     const wrap = $('#stageWrap'), ir = $('#iris'), card = $('#irisCard');
     const W = wrap.clientWidth, H = wrap.clientHeight;
     let cx = W / 2, cy = H / 2;
@@ -603,6 +613,7 @@ const Tale = (() => {
     /* 책장 넘기기: 접히는 선(f)이 오른쪽 끝에서 왼쪽 끝으로 지나간다.
        f 왼쪽 [0, 2f-W] = 아직 안 넘어간 지금 장면, [2f-W, f] = 넘어가며 접힌 종이 뒷면(가운데로 휜 그늘),
        f 오른쪽 = 새 장면. 접힌 선 옆에 새 장면 쪽으로 그림자. 종이 끝이 살짝 기울어(위가 먼저) 넘어간다 */
+    if (document.hidden) { if (change) change(); return; } // 안 보일 때: 넘김 연출 없이 장면만 바꾼다
     const wrap = $('#stageWrap'), stg = $('#stage'), W = wrap.clientWidth, H = wrap.clientHeight;
     const book = document.createElement('div'); book.className = 'book';
     const front = document.createElement('div'); front.className = 'front';
@@ -1096,6 +1107,7 @@ const Tale = (() => {
     const start = async () => {
       if (PT.due()) { PT.run(false); await restShow(); }
       reading = readWanted(); root.classList.toggle('reading', reading); // 끝 화면 '한 번 더'도 같은 모드로 (read_once 는 홈으로 갈 때 지운다)
+      try { AudioFX.mediaNarration && AudioFX.mediaNarration(reading); } catch (e) { /* 옛 audio.js */ } // 읽어 주기: 화면이 꺼져도 이어지게 <audio> 로 (누름 안에서 열어 둔다)
       AudioFX.unlock(); PT.run(true);
       AudioFX.prefetchClips && AudioFX.prefetchClips(); // 이 동화의 녹음을 미리 받아 둔다 (대사가 늦게 나오지 않게)
       $('#startScreen').hidden = true; $('#endScreen').hidden = true;
@@ -1363,29 +1375,106 @@ const Tale = (() => {
         return r && typeof r.then === 'function' ? r.catch(e => console.warn('[read] 동사 실패:', v, e)) : null;
       } catch (e) { console.warn('[read] 동사 실패:', v, e); return null; }
     };
-    const runAll = async list => { for (const v of list || []) await verb(v); };
-    for (let i = 0; i < sc.scenes.length; i++) {
-      const s = sc.scenes[i], pend = [];
-      /* 장면 차리기: 책장이 넘어가는(덮인) 동안 놓기만 한다. 동사는 T.readInstant() 가 참이면 움직임 없이 바로 놓는다 */
-      const setUp = () => {
-        readInstant = true;
-        try {
-          if (s.set != null && typeof acts.set === 'function') { const r = verb('set:' + s.set); if (r) pend.push(r); }
-          for (const v of s.enter || []) { const r = verb(v); if (r) pend.push(r); }
-        } finally { readInstant = false; }
+    /* ---- 멈추지 않게 (2026-10-23, 화면 끄고 잘 때 듣는 용도) ----
+       ① 기다림마다 시간 제한: 동사 8초, 장면 넘김 4초, 대사는 '녹음 길이 + 3초'(길이를 모르면 글자 수로). 넘기면 경고하고 다음으로.
+       ② 화면이 안 보이면(document.hidden: 화면 꺼짐·탭 가림) rAF 가 멈추고 타이머는 1초 이상으로 늘어진다 →
+          끝이 있는 애니메이션은 바로 끝내고, 동사는 기다리지 않고, 줄 사이 쉼도 건너뛰어 오디오 ended 만으로 이어 간다.
+       ③ 잠금 화면 '일시정지'(Media Session)·쉬는 화면 동안은 시간 제한을 멈춘다 */
+    log.timeouts = [];
+    let held = false, unhold = null;
+    const resting = () => { const r = $('#restScreen'); return !!(r && !r.hidden); };
+    const waitHeld = () => held ? new Promise(r => { unhold = r; }) : null;
+    const hidden = () => document.hidden;
+    const finishAnims = () => {
+      try { document.getAnimations().forEach(a => { const t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState === 'running') a.finish(); }); } catch (e) { /* 무시 */ }
+    };
+    /* p 를 기다리되 limit() ms(늘어날 수 있음) 를 넘기면 경고 후 놓아 준다 */
+    const guard = (p, what, limit) => new Promise(res => {
+      if (!p || typeof p.then !== 'function') return res(false);
+      let over = false;
+      const t0 = Date.now();
+      let extra = 0, last = t0;
+      const done = late => { if (over) return; over = true; clearInterval(iv); document.removeEventListener('visibilitychange', tick); res(late); };
+      const tick = () => {
+        if (over) return;
+        const now = Date.now();
+        if (held || resting()) extra += now - last;   // 일시정지·쉬는 화면 동안은 시계를 멈춘다
+        last = now;
+        if (hidden()) finishAnims();
+        if (now - t0 - extra > limit(t0)) {
+          console.warn('[read] 시간 제한으로 넘어감:', what);
+          log.timeouts.push(what);
+          done(true);
+        }
       };
-      if (i === 0) { setUp(); await sleep(300); await W.curtain(true); }
-      else await W.sceneCard(s.card || '', setUp);
-      if (pend.length) await Promise.all(pend);
-      const lines = s.lines || [];
-      for (let j = 0; j < lines.length; j++) {
-        const l = lines[j];
-        await runAll(l.before);
-        await W.say(l.text);
-        log.said++;
-        await runAll(l.after);
-        await sleep(j === lines.length - 1 ? READ_SCENE_END : READ_GAP);
+      const iv = setInterval(tick, 500);
+      document.addEventListener('visibilitychange', tick);
+      p.then(() => done(false), () => done(false));
+    });
+    const VERB_MS = 8000, CARD_MS = 4000;
+    const runAll = async list => {
+      for (const v of list || []) {
+        const r = verb(v);
+        if (!r) continue;
+        if (hidden()) { finishAnims(); continue; }   // 안 보일 때: 기다리지 않는다 (화면은 다시 보일 때 다음 장면 차리기로 맞춰진다)
+        await guard(r, '동사 ' + v, () => VERB_MS);
       }
+    };
+    /* 대사: 녹음 조각이 시작되면 그 길이 + 3초, 길이를 모르면(브라우저 TTS·받는 중) 글자 수 기반 */
+    const sayGuarded = text => {
+      const est = 8000 + String(text).length * 250;
+      const n0 = AudioFX.narInfo ? AudioFX.narInfo().n : 0;
+      const p = W.say(text);
+      return guard(p, '대사 ' + String(text).slice(0, 20), t0 => {
+        const ni = AudioFX.narInfo ? AudioFX.narInfo() : null;
+        if (ni && ni.n !== n0) return Math.max(0, ni.t - t0) + (ni.dur ? ni.dur * 1000 + 3000 : est);
+        return est;
+      }).then(late => { if (late) { try { Narrator.stop(); } catch (e) { /* 무시 */ } } });
+    };
+    const gap = ms => hidden() ? null : sleep(ms);
+    /* 잠금 화면·알림 센터에 동화 제목·표지, 일시정지/재생 (Media Session: 크롬·사파리 지원) */
+    const ms = 'mediaSession' in navigator ? navigator.mediaSession : null;
+    if (ms) {
+      try {
+        const ttl = ($('#startScreen .ttl') && $('#startScreen .ttl').textContent.trim()) || document.title;
+        const art = ROOT_URL + 'assets/thumbs/' + taleId() + '_tile.webp';
+        if (typeof MediaMetadata === 'function') ms.metadata = new MediaMetadata({ title: ttl, artist: tr('종이 동화극장 · 읽어 주기'), artwork: [{ src: new URL(art, location.href).href, sizes: '512x512', type: 'image/webp' }] });
+        ms.playbackState = 'playing';
+        ms.setActionHandler('pause', () => { held = true; AudioFX.narHold && AudioFX.narHold(true); ms.playbackState = 'paused'; });
+        ms.setActionHandler('play', () => { held = false; AudioFX.narHold && AudioFX.narHold(false); ms.playbackState = 'playing'; if (unhold) { const r = unhold; unhold = null; r(); } });
+      } catch (e) { /* Media Session 없이 */ }
+    }
+    try {
+      for (let i = 0; i < sc.scenes.length; i++) {
+        const s = sc.scenes[i], pend = [];
+        /* 장면 차리기: 책장이 넘어가는(덮인) 동안 놓기만 한다. 동사는 T.readInstant() 가 참이면 움직임 없이 바로 놓는다 */
+        let setDone = false;
+        const setUp = () => {
+          if (setDone) return; setDone = true;
+          readInstant = true;
+          try {
+            if (s.set != null && typeof acts.set === 'function') { const r = verb('set:' + s.set); if (r) pend.push(r); }
+            for (const v of s.enter || []) { const r = verb(v); if (r) pend.push(r); }
+          } finally { readInstant = false; }
+        };
+        await waitHeld();
+        if (i === 0) { setUp(); await gap(300); await guard(W.curtain(true), '막 열기', () => CARD_MS); }
+        else await guard(W.sceneCard(s.card || '', setUp), '장면 넘김 ' + (s.card || i), () => CARD_MS);
+        setUp(); // 시간 제한으로 넘김이 끝나지 않았어도 장면은 차린다
+        if (pend.length && !hidden()) await guard(Promise.all(pend), '장면 차리기 ' + (s.card || i), () => VERB_MS);
+        const lines = s.lines || [];
+        for (let j = 0; j < lines.length; j++) {
+          const l = lines[j];
+          await waitHeld();
+          await runAll(l.before);
+          await sayGuarded(l.text);
+          log.said++;
+          await runAll(l.after);
+          await gap(j === lines.length - 1 ? READ_SCENE_END : READ_GAP);
+        }
+      }
+    } finally {
+      if (ms) { try { ms.playbackState = 'none'; ms.setActionHandler('pause', null); ms.setActionHandler('play', null); } catch (e) { /* 무시 */ } }
     }
     log.done = true;
     return sc.moral || '';
