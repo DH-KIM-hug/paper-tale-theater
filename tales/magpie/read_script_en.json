@@ -54,13 +54,13 @@
      ]
     },
     {
-     "text": "봄 햇살이 따뜻하고, 길가에는 들꽃이 피어 있었어요.",
+     "text": "봄 햇살이 따뜻하고, 길가에는 들꽃이 활짝활짝 피어 있었어요.",
      "src": "new",
-     "en": "The spring sun was warm, and wildflowers bloomed along the path.",
+     "en": "The spring sun was warm, and wildflowers bloomed wide, wide open along the path.",
      "segs": [
       [
        "nar",
-       "The spring sun was warm, and wildflowers bloomed along the path.",
+       "The spring sun was warm, and wildflowers bloomed wide, wide open along the path.",
        null
       ]
      ]
@@ -82,25 +82,25 @@
      ]
     },
     {
-     "text": "나무가 빽빽해지고, 새소리가 점점 가까워졌어요.",
+     "text": "나무가 빽빽해지고, 짹짹 새소리가 점점 가까워졌어요.",
      "src": "new",
-     "en": "The trees grew thick, and the birdsong came closer and closer.",
+     "en": "The trees grew thick, and the tweet-tweet of birds came closer and closer.",
      "segs": [
       [
        "nar",
-       "The trees grew thick, and the birdsong came closer and closer.",
+       "The trees grew thick, and the tweet-tweet of birds came closer and closer.",
        null
       ]
      ]
     },
     {
-     "text": "그때 어디선가 다급한 까치 소리가 들렸어요.",
+     "text": "그때 어디선가 까악까악, 다급한 까치 소리가 들렸어요.",
      "src": "new",
-     "en": "Then, from somewhere, came the frantic cry of a magpie.",
+     "en": "Then, from somewhere, came a frantic caw-caw, the cry of a magpie.",
      "segs": [
       [
        "nar",
-       "Then, from somewhere, came the frantic cry of a magpie.",
+       "Then, from somewhere, came a frantic caw-caw, the cry of a magpie.",
        null
       ]
      ],
@@ -206,13 +206,13 @@
      ]
     },
     {
-     "text": "선비는 숨을 고르고, 활시위를 힘껏 당겼어요.",
+     "text": "선비는 후우 숨을 고르고, 활시위를 팽팽 당겼어요.",
      "src": "new",
-     "en": "The scholar took a deep breath and pulled the bowstring back with all his might.",
+     "en": "The scholar took a deep breath, whoo, and pulled the bowstring back, tight, tight.",
      "segs": [
       [
        "nar",
-       "The scholar took a deep breath and pulled the bowstring back with all his might.",
+       "The scholar took a deep breath, whoo, and pulled the bowstring back, tight, tight.",
        null
       ]
      ],
@@ -307,13 +307,13 @@
      ]
     },
     {
-     "text": "까치 부부는 선비 앞에 내려와 고개를 깊이 숙였어요.",
+     "text": "까치 부부는 포르르 날아 내려와 고개를 꾸벅 숙였어요.",
      "src": "new",
-     "en": "The magpie couple came down before the scholar and bowed their heads low.",
+     "en": "The magpie couple fluttered down, flap-flap, and bowed their heads low.",
      "segs": [
       [
        "nar",
-       "The magpie couple came down before the scholar and bowed their heads low.",
+       "The magpie couple fluttered down, flap-flap, and bowed their heads low.",
        null
       ]
      ]
@@ -415,13 +415,13 @@
      ]
     },
     {
-     "text": "까치 가족은 선비가 산길 너머로 사라질 때까지 바라보았어요.",
+     "text": "선비는 저벅저벅 걸어가고, 까치 가족은 오래오래 바라보았어요.",
      "src": "new",
-     "en": "The magpie family watched until the scholar disappeared over the mountain path.",
+     "en": "Step, step, the scholar walked away, and the magpie family watched him for a long, long time.",
      "segs": [
       [
        "nar",
-       "The magpie family watched until the scholar disappeared over the mountain path.",
+       "Step, step, the scholar walked away, and the magpie family watched him for a long, long time.",
        null
       ]
      ]
@@ -453,13 +453,13 @@
      ]
     },
     {
-     "text": "바람이 쏴아 불고, 선비는 조금 무서웠어요.",
+     "text": "바람이 쏴아 불고, 나뭇잎이 바스락바스락, 선비는 조금 무서웠어요.",
      "src": "new",
-     "en": "The wind went whoosh, and the scholar felt a little bit scared.",
+     "en": "The wind went whoosh, the leaves went rustle-rustle, and the scholar felt a little bit scared.",
      "segs": [
       [
        "nar",
-       "The wind went whoosh, and the scholar felt a little bit scared.",
+       "The wind went whoosh, the leaves went rustle-rustle, and the scholar felt a little bit scared.",
        null
       ]
      ]
@@ -587,13 +587,13 @@
      ]
     },
     {
-     "text": "방 안은 조용하고, 창호문 너머로 달빛만 희미했어요.",
+     "text": "방 안은 조용하고, 창호문 너머로 달빛만 어른어른 비쳤어요.",
      "src": "new",
-     "en": "The room was silent, and only a faint moonlight glowed through the paper door.",
+     "en": "The room was silent, and only the moonlight flickered, soft and faint, through the paper door.",
      "segs": [
       [
        "nar",
-       "The room was silent, and only a faint moonlight glowed through the paper door.",
+       "The room was silent, and only the moonlight flickered, soft and faint, through the paper door.",
        null
       ]
      ],
@@ -703,13 +703,13 @@
      ]
     },
     {
-     "text": "선비는 무릎을 끌어안고, 캄캄한 창밖만 바라보았어요.",
+     "text": "선비는 무릎을 끌어안고 덜덜 떨며, 캄캄한 창밖만 바라보았어요.",
      "src": "new",
-     "en": "The scholar hugged his knees and stared out at the pitch-dark night.",
+     "en": "The scholar hugged his knees, shivering, brr, and stared out at the pitch-dark night.",
      "segs": [
       [
        "nar",
-       "The scholar hugged his knees and stared out at the pitch-dark night.",
+       "The scholar hugged his knees, shivering, brr, and stared out at the pitch-dark night.",
        null
       ]
      ]
@@ -788,13 +788,13 @@
      ]
     },
     {
-     "text": "아기 까치들은 둥지 안에서 몸을 꼭 붙이고 고개를 끄덕였어요.",
+     "text": "아기 까치들은 둥지 안에서 몸을 꼭 붙이고 고개를 끄덕끄덕했어요.",
      "src": "new",
-     "en": "The baby magpies snuggled close together in the nest and nodded their little heads.",
+     "en": "The baby magpies snuggled close together in the nest and nodded, nod-nod, their little heads.",
      "segs": [
       [
        "nar",
-       "The baby magpies snuggled close together in the nest and nodded their little heads.",
+       "The baby magpies snuggled close together in the nest and nodded, nod-nod, their little heads.",
        null
       ]
      ]
@@ -818,13 +818,13 @@
      ]
     },
     {
-     "text": "달님이 까치들의 길을 환하게 비춰 주었어요.",
+     "text": "달님이 까치들의 길을 환하게 비추고, 별들이 반짝반짝 빛났어요.",
      "src": "new",
-     "en": "The moon lit the way for the magpies, bright and clear.",
+     "en": "The moon lit the way for the magpies, and the stars went twinkle, twinkle.",
      "segs": [
       [
        "nar",
-       "The moon lit the way for the magpies, bright and clear.",
+       "The moon lit the way for the magpies, and the stars went twinkle, twinkle.",
        null
       ]
      ]
@@ -888,13 +888,13 @@
      ]
     },
     {
-     "text": "엄마 까치와 아빠 까치는 서로를 바라보고, 날개를 활짝 폈어요.",
+     "text": "엄마 까치와 아빠 까치는 서로를 바라보고, 날개를 활짝 펴고 푸드덕 날았어요.",
      "src": "new",
-     "en": "Mama and Papa Magpie looked at each other and spread their wings wide.",
+     "en": "Mama and Papa Magpie looked at each other, spread their wings wide, and flew, flap-flap!",
      "segs": [
       [
        "nar",
-       "Mama and Papa Magpie looked at each other and spread their wings wide.",
+       "Mama and Papa Magpie looked at each other, spread their wings wide, and flew, flap-flap!",
        null
       ]
      ]
@@ -975,13 +975,13 @@
      ]
     },
     {
-     "text": "달빛이 잠든 까치들을 포근히 감싸 주었어요.",
+     "text": "달빛이 새근새근 잠든 까치들을 포근히 감싸 주었어요.",
      "src": "new",
-     "en": "The moonlight wrapped the sleeping magpies in its soft, gentle glow.",
+     "en": "The moonlight wrapped the magpies, sleeping softly, in its gentle glow.",
      "segs": [
       [
        "nar",
-       "The moonlight wrapped the sleeping magpies in its soft, gentle glow.",
+       "The moonlight wrapped the magpies, sleeping softly, in its gentle glow.",
        null
       ]
      ]
@@ -1030,13 +1030,13 @@
      ]
     },
     {
-     "text": "여인의 목소리가 조금 부드러워졌어요.",
+     "text": "여인은 후우 한숨을 쉬었고, 목소리가 조금 부드러워졌어요.",
      "src": "new",
-     "en": "The woman's voice grew just a little softer.",
+     "en": "The woman let out a long sigh, whoo, and her voice grew just a little softer.",
      "segs": [
       [
        "nar",
-       "The woman's voice grew just a little softer.",
+       "The woman let out a long sigh, whoo, and her voice grew just a little softer.",
        null
       ]
      ]
@@ -1076,13 +1076,13 @@
      ]
     },
     {
-     "text": "창밖이 조금씩 환해지고, 새들이 지저귀기 시작했어요.",
+     "text": "창밖이 조금씩 환해지고, 새들이 짹짹 지저귀기 시작했어요.",
      "src": "new",
-     "en": "Outside, the sky slowly grew light, and the birds began to sing.",
+     "en": "Outside, the sky slowly grew light, and the birds began to sing, tweet-tweet.",
      "segs": [
       [
        "nar",
-       "Outside, the sky slowly grew light, and the birds began to sing.",
+       "Outside, the sky slowly grew light, and the birds began to sing, tweet-tweet.",
        null
       ]
      ]
@@ -1294,13 +1294,13 @@
      ]
     },
     {
-     "text": "선비는 까치 가족을 보며 환하게 웃었어요.",
+     "text": "선비는 까치 가족을 보며 하하 환하게 웃었어요.",
      "src": "new",
-     "en": "The scholar looked at the magpie family and smiled a big, bright smile.",
+     "en": "The scholar looked at the magpie family and laughed, ha-ha, with a big, bright smile.",
      "segs": [
       [
        "nar",
-       "The scholar looked at the magpie family and smiled a big, bright smile.",
+       "The scholar looked at the magpie family and laughed, ha-ha, with a big, bright smile.",
        null
       ]
      ],
