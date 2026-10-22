@@ -60,10 +60,13 @@
   /* 해: 가운데 (0,0), 햇살 끝까지 지름 224. 바람: 구름 몸통 가운데가 (0,0), 꼬리는 왼쪽 */
   const SUN_D = 224;
   /* 2026-10-20 크기 일관성: wind_tired는 같은 구름을 1.13배로 그려 커 보였다(가로·세로 비율은 같음) → 기본 바람과 같은 상자로 맞춤 */
-  const WIND_BOX = { wind: [-135, -63, 223, 137], wind_blow: [-137, -63, 227, 140], wind_tired: [-135, -63, 223, 137] };
+  /* 2026-10-22 사용자 지시: 해님에 비해 바람이 작다 → 세 자세 모두 같은 비율(WIND_K)로 키운다(자세끼리 크기는 그대로 같다) */
+  const WIND_K = 1.4;
+  const WIND_BOX = Object.fromEntries(Object.entries({ wind: [-135, -63, 223, 137], wind_blow: [-137, -63, 227, 140], wind_tired: [-135, -63, 223, 137] })
+    .map(([k, v]) => [k, v.map(n => n * WIND_K)]));
   const cutArt = (T, key, sfx, hold, onShow) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx, hold }], { hold, onShow }) : null);
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). zoom: (cx, cy) 기준으로 키운다 */
-  const BG_EDGE = { sky: ['#a4c9da', '#7a807e'], high: ['#bcc29a', '#bcc29a'], field: ['#bedfe9', '#77693f'], stream: ['#b6d5df', '#4f827f'], snow: ['#dbeefb', '#f6f9fd'] };
+  const BG_EDGE = { sky: ['#a4c9da', '#e9edf2'], high: ['#bcc29a', '#bcc29a'], field: ['#bedfe9', '#77693f'], stream: ['#b6d5df', '#4f827f'], snow: ['#dbeefb', '#f6f9fd'] };
   function bgImage(T, key, { zoom = 1, cx = 500, cy = 560 } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const w = 1080 * zoom, h = w * 992 / 1760, x = cx + (-40 - cx) * zoom, y = cy + (-24 - cy) * zoom;
@@ -126,8 +129,9 @@
   function drawWind(T, g) {
     const { el, paper } = T;
     if (artUrl('wind')) { // 그림: 자세 셋(우쭐·볼 빵빵·헉헉)을 겹쳐 두고 입 모양 대신 자세를 바꾼다
-      // 그림의 바람은 왼쪽으로 분다 → 좌우로 뒤집어 기본이 오른쪽(나그네 쪽)으로 불게. 오른쪽에 선 바람은 face('right')로 다시 왼쪽을 향한다
-      const mir = el('g', { transform: 'scale(-1 1)' }, g);
+      // 그림의 바람 줄(소용돌이)은 구름 뒤(왼쪽)에 붙어 있다 → 그림 그대로가 '오른쪽으로 분다'. (2026-10-22 사용자: 뒤집어 둔 것이 반대 방향)
+      // 방향은 aimWind(바람, 상대)로만 정한다: 상대가 오른쪽이면 그대로, 왼쪽이면 face('right')로 뒤집는다
+      const mir = el('g', {}, g);
       const tail = el('g', {}, mir), puff = el('g', {}, mir); origin(puff, 0, 0);
       const cheekG = el('g', {}, puff); origin(cheekG, 0, 0);
       const poses = {};
@@ -303,6 +307,37 @@
   }
   const sun = (T, x, y, s = 1, parent = T.world) => { let p; const a = T.actor(parent, x, y, g => { p = drawSun(T, g); }, { scale: s }); a.p = p; return a; };
   const wind = (T, x, y, s = 1, parent = T.world) => { let p; const a = T.actor(parent, x, y, g => { p = drawWind(T, g); }, { scale: s }); a.p = p; return a; };
+  /* 내려다본 길: 위(먼 곳)일수록 작게 — 발끝 y 160 → 0.24, 476 → 0.34 (일정 비율) */
+  const pathScale = y => +(0.24 + Math.max(0, Math.min(1, (y - 160) / 316)) * 0.10).toFixed(3);
+  /* 길 따라 걷기: 점들을 잇는 한 번의 움직임(길이에 비례한 시간), 걷는 쪽으로 뒤집고, 멀고 가까움에 따라 크기를 바꾼다 */
+  async function walkPath(T, a, pts, dur) {
+    const seg = pts.slice(1).map((p, i) => Math.hypot(p[0] - pts[i][0], p[1] - pts[i][1]));
+    const total = seg.reduce((x, y) => x + y, 0) || 1;
+    const fl = (p, q) => (q[0] < p[0] - 1 ? 1 : q[0] > p[0] + 1 ? -1 : 0); // 정면 그림: 엔진 기본(1)이 왼쪽
+    let acc = 0, flip = fl(pts[0], pts[1]) || 1;
+    const tf = (p, f) => `translate(${p[0]}px,${p[1]}px) scale(${f * pathScale(p[1])},${pathScale(p[1])})`;
+    const kf = [{ transform: tf(pts[0], flip), offset: 0 }];
+    for (let i = 1; i < pts.length; i++) {
+      const off = (acc += seg[i - 1]) / total;
+      kf.push({ transform: tf(pts[i], flip), offset: off });
+      const nf = i < pts.length - 1 ? fl(pts[i], pts[i + 1]) : 0;
+      if (nf && nf !== flip) { flip = nf; kf.push({ transform: tf(pts[i], flip), offset: off }); } // 꺾이는 점에서 바로 돌아선다
+    }
+    a.pos.removeAttribute('transform');
+    await T.anim(a.pos, kf, { duration: dur, easing: 'linear' });
+    a.pos.style.transform = '';
+    const last = pts[pts.length - 1];
+    a.flip = flip; a.scale = pathScale(last[1]); a.place(last[0], last[1]);
+  }
+  /* 바람은 늘 나그네(없으면 해님) 쪽을 보고 분다. 장면마다 바람을 놓은 뒤, 상대가 움직인 뒤에 부른다.
+     엔진 face('right')는 그림을 뒤집는다 → 바람 그림(기본 오른쪽으로 붊)은 상대가 왼쪽일 때만 face('right') */
+  const aimWind = (w, target) => { const tx = typeof target === 'number' ? target : target.x; w.face(tx >= w.x ? 'left' : 'right'); return w; };
+  const windDir = w => (w.flip === 1 ? 1 : -1); // 1: 오른쪽으로 분다
+  /* 바람 입(앞쪽)에서 부는 쪽으로 나가는 바람 줄 */
+  const windGust = (T, w, n, o = {}) => {
+    const d = windDir(w), len = o.len || 240, front = w.x + d * 130 * w.scale;
+    gust(T, n, { ...o, x0: d > 0 ? front - 40 : front - len - 80, dist: d * Math.abs(o.dist || 760) });
+  };
   const shiver = a => a.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 110, iterations: Infinity });
   // 해 그림은 얼굴까지 한 장이라 한 바퀴 돌리지 않고 갸웃·통통 (도형은 햇살만 한 바퀴)
   const spinRays = (s, dur = 1400) => (s.p.art
@@ -318,12 +353,12 @@
         { duration: dur + rnd(0, 400), delay: i * 70, easing: 'ease-in', fill: 'both' }).finished.then(() => p.remove());
     }
   }
-  function leaves(T, n, x, y) {
+  function leaves(T, n, x, y, d = 1) { // d: 1 오른쪽, -1 왼쪽으로 날아간다
     for (let i = 0; i < n; i++) {
       const l = T.el('ellipse', { rx: 11, ry: 6, fill: [C.leaf, C.pine, C.gold][i % 3] }, T.fx);
       const sx = x + rnd(-60, 60), sy = y + rnd(-50, 40);
-      l.animate([{ transform: `translate(${sx}px,${sy}px) rotate(0deg)` }, { transform: `translate(${sx + 300}px,${sy - rnd(40, 120)}px) rotate(260deg)`, offset: .5 },
-        { transform: `translate(${sx + 760}px,${sy + rnd(-40, 80)}px) rotate(620deg)` }], { duration: 1800 + rnd(0, 700), delay: i * 60, fill: 'both' }).finished.then(() => l.remove());
+      l.animate([{ transform: `translate(${sx}px,${sy}px) rotate(0deg)` }, { transform: `translate(${sx + d * 300}px,${sy - rnd(40, 120)}px) rotate(${d * 260}deg)`, offset: .5 },
+        { transform: `translate(${sx + d * 760}px,${sy + rnd(-40, 80)}px) rotate(${d * 620}deg)` }], { duration: 1800 + rnd(0, 700), delay: i * 60, fill: 'both' }).finished.then(() => l.remove());
     }
   }
   function sparkles(T, x, y, r = 120, n = 6) {
@@ -353,7 +388,8 @@
   }
   function skyBG(T) { // 1. 하늘 와이드 (구름 층)
     const b = T.bg;
-    if (bgImage(T, 'sky')) return { sky: null, drift: T.el('g', {}, b), art: true }; // 구름은 그림 속 종이 → 흐르는 구름 없음
+    // 2026-10-22 사용자: 앞쪽 흙바닥·바위가 보이면 해·바람이 땅 위에 선 것 같다 → 그림 위쪽(하늘·구름 바다)만 크게 잡아 땅은 화면 밖으로
+    if (bgImage(T, 'sky', { zoom: 1.75, cx: 500, cy: 0 })) return { sky: null, drift: T.el('g', {}, b), art: true }; // 구름은 그림 속 종이 → 흐르는 구름 없음
     const sky = T.el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: SKY.day }, b);
     const drift = T.el('g', {}, b);
     [[140, 120, .8], [520, 90, .6], [860, 150, .7]].forEach(([x, y, s]) => T.paper(drift, [['ellipse', { cx: x, cy: y, rx: 70 * s, ry: 26 * s, fill: C.snow }], ['ellipse', { cx: x + 30 * s, cy: y - 16 * s, rx: 40 * s, ry: 24 * s, fill: C.snow }]]));
@@ -364,7 +400,8 @@
   }
   function highBG(T) { // 2. 하늘에서 내려다본 길
     const { el, paper } = T, b = T.bg;
-    if (bgImage(T, 'high')) return { art: true, path: [[490, 540], [500, 440], [497, 330], [500, 240]] }; // 그림 속 길을 따라 걷는다
+    // 그림 속 굽은 흙길의 가운데(그림에서 잰 값, 무대 좌표). 다리 아래(먼 곳)에서 앞(가까운 곳)으로 내려오는 순서
+    if (bgImage(T, 'high')) return { art: true, path: [[547, 160], [553, 182], [547, 206], [530, 233], [505, 260], [480, 287], [469, 314], [466, 341], [481, 368], [506, 395], [528, 422], [542, 449], [555, 476]] };
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: C.grass }, b);
     const cols = [C.leaf, '#8fae66', C.gold, C.pine, '#b9a25a'];
     for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++)
@@ -375,7 +412,7 @@
     paper(b, [['rect', { x: 820, y: 170, width: 70, height: 56, fill: C.cream }], ['path', { d: 'M810 176 L855 140 L900 176 Z', fill: C.gold }]]); // 초가 지붕 (위에서)
     // 구름 층 사이로 내려다본다 (위쪽 모서리)
     T.paper(b, [['circle', { cx: -20, cy: -10, r: 110, fill: C.snow }], ['circle', { cx: 100, cy: -40, r: 90, fill: C.snow }], ['circle', { cx: 1020, cy: -20, r: 120, fill: C.snow }], ['circle', { cx: 900, cy: -50, r: 90, fill: C.snow }]]);
-    return { path: [[470, 520], [570, 420], [500, 330], [560, 240]] };
+    return { path: [[560, 240], [500, 330], [570, 420], [470, 520]] };
   }
   function fieldBG(T, opts) { // 3·5. 들길 와이드 (바람/해 공용 — 조명은 하늘색과 덮개로)
     const { el, paper } = T, b = T.bg;
@@ -480,19 +517,19 @@
     /* --- 1. 하늘 자랑 --- */
     const sky1 = skyBG(T);
     // 세로 화면(양옆이 잘림): 해님·바람을 가운데 쪽으로 모으고 살짝 물러선다. 가로는 그대로
-    const S1 = sun(T, T.portrait() ? 370 : 290, 280, 1), W1 = wind(T, T.portrait() ? 635 : 710, 290, 1);
-    if (T.portrait()) camSnap(500, 280, Math.min(1, T.viewWidth() / 2 / 250));
+    const S1 = sun(T, T.portrait() ? 335 : 290, 250, 1), W1 = aimWind(wind(T, T.portrait() ? 610 : 720, 255, 1), T.portrait() ? 335 : 290); // 구름 바다 위 하늘에 떠 있다. 바람은 해님 쪽을 본다
+    if (T.portrait()) camSnap(510, 280, Math.min(1, T.viewWidth() / 2 / 300)); // 커진 바람까지 보이게 조금 더 물러선다
     sky1.drift.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(30px)' }, { transform: 'translateX(0)' }], { duration: 6000, iterations: Infinity });
     await T.curtain(true);
     await say('하늘 높이 해님과 바람이 살았어요.');
     await sleep(500); // 해님은 저절로 반짝 (2026-10-20)
-    spinRays(S1); S1.hop(26); sparkles(T, S1.x, 280, 130, 8); T.pop(S1.x, 140, '반짝!', C.persimmon);
+    spinRays(S1); S1.hop(26); sparkles(T, S1.x, S1.y, 130, 8); T.pop(S1.x, 110, '반짝!', C.persimmon);
     S1.p.glow.animate([{ opacity: 0, transform: 'scale(.8)' }, { opacity: .6, transform: 'scale(1.1)' }, { opacity: 0, transform: 'scale(1)' }], 1200);
     await say('"내가 제일 따뜻해!"');
     await sleep(500); // 바람은 저절로 휘잉 (2026-10-20)
-    W1.p.setMouth('blow'); W1.p.puffCheeks(1.6); SND.whoosh(T, 2); gust(T, 6, { x0: W1.x + 50, y0: 200, y1: 380, dist: 400 });
+    aimWind(W1, S1); W1.p.setMouth('blow'); W1.p.puffCheeks(1.6); SND.whoosh(T, 2); windGust(T, W1, 6, { y0: 180, y1: 340, dist: 400 });
     sky1.drift.animate([{ translate: '0 0' }, { translate: '60px 0' }, { translate: '0 0' }], { duration: 1400, easing: 'ease-out' });
-    T.pop(W1.x - 30, 140, '휘잉!', C.indigo); // 세로 화면(보이는 폭 ≈500)에서 오른쪽이 잘리지 않게 조금 안쪽
+    T.pop(W1.x - 30, 110, '휘잉!', C.indigo); // 세로 화면(보이는 폭 ≈500)에서 오른쪽이 잘리지 않게 조금 안쪽
     await W1.wiggle(6, 700);
     W1.p.setMouth('smile'); W1.p.puffCheeks(1);
     await say('"아니야, 내가 제일 세!"');
@@ -503,18 +540,17 @@
     await T.sceneCard('내기', () => {
       T.clear(); HB = highBG(T);
       if (T.portrait()) camSnap(500, 280, 1);
-      const pa = HB.path.slice().reverse(); // 정면 얼굴 그림이라 멀어지면 뒤로 걷는 모양 → 위(먼 곳)에서 아래(가까운 쪽)로 걸어 내려온다
-      N = traveler(T, pa[0][0], pa[0][1], HB.art ? .3 : .34, 'coat');
+      // 정면 얼굴 그림이라 멀어지면 뒤로 걷는 모양 → 위(먼 곳)에서 아래(가까운 쪽)로 길을 따라 걸어 내려온다
+      N = traveler(T, HB.path[0][0], HB.path[0][1], pathScale(HB.path[0][1]), 'coat');
       N.P.face('smile');
       const pt = T.portrait(); // 세로 화면: 양 귀퉁이에서 빼꼼 보이게 안쪽으로
-      const s = sun(T, pt ? 270 : 70, 520, 1.05), w = wind(T, pt ? 730 : 930, 520, 1.05); w.face('right');
+      const s = sun(T, pt ? 270 : 70, 520, 1.05), w = aimWind(wind(T, pt ? 715 : 940, 520, 1.05), 520); // 바람은 길 위 나그네 쪽(왼쪽)을 본다
       T.world.__sw = [s, w];
     });
     const walk = N.body.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 360, iterations: Infinity });
-    const [, p1, p2, p3] = HB.path.slice().reverse();
-    const walking = (async () => { await N.move(...p1, 2600, 'linear'); await N.move(...p2, 2400, 'linear'); await N.move(...p3, 2400, 'linear'); })();
+    const walking = walkPath(T, N, HB.path, 7400);
     await say('저 아래 길로 나그네가 걸어가요.');
-    await camTo(HB.art ? 480 : 530, HB.art ? 340 : 300, 1.5, 1400);
+    await camTo(HB.art ? 510 : 530, HB.art ? 340 : 300, 1.5, 1400);
     await say('나그네는 두툼한 외투를 입었어요.');
     await walking; walk.cancel();
     await camWide(900);
@@ -528,7 +564,7 @@
     await T.sceneCard('바람 차례', () => {
       T.clear(); F = fieldBG(T);
       N = traveler(T, 600, 500, 1.25, 'coat');
-      W = wind(T, 150, 180, .8);
+      W = aimWind(wind(T, 150, 180, .8), N); // 나그네(오른쪽) 쪽으로 분다
       if (T.portrait()) camSnap(395, 280, Math.min(1, T.viewWidth() / 2 / 320)); // 세로 화면: 바람과 나그네가 함께 보이게
     }, N.pos);
     const hatHead = () => [N.x, N.y - 228 * N.scale];
@@ -537,12 +573,12 @@
     const blow = async k => {
       W.p.setMouth('blow'); W.p.puffCheeks(1.2 + k * .18); W.setScale(.8 + k * .05);
       // 다섯째(단추 채우기)는 바로 얼굴로 카메라가 붙는다 → 바람 줄기는 얼굴 아래로만
-      SND.whoosh(T, k); gust(T, 3 + k * 2, { y0: k === 5 ? 310 : 150, y1: 470, w: 5 + k, alpha: .6 + k * .07 });
+      SND.whoosh(T, k); windGust(T, W, 3 + k * 2, { y0: k === 5 ? 310 : 150, y1: 470, w: 5 + k, alpha: .6 + k * .07 });
       F.tufts.childNodes.forEach(t => t.animate([{ transform: 'rotate(0)' }, { transform: `rotate(${10 + k * 5}deg)` }, { transform: 'rotate(0)' }], 900));
       N.body.animate([{ transform: 'rotate(0)' }, { transform: `rotate(${-1 - k}deg)` }, { transform: 'rotate(0)' }], { duration: 900, easing: 'ease-in-out' });
     };
     const steps = [
-      async () => { leaves(T, 10, ...F.tree); await say('휘잉~ 나뭇잎이 날아가요!'); },
+      async () => { leaves(T, 10, ...F.tree, windDir(W)); await say('휘잉~ 나뭇잎이 날아가요!'); },
       async () => {
         N.P.hat.style.opacity = 0; N.P.hat.dataset.gone = '1'; N.P.face('o'); refreshPose(N.P);
         const [hx, hy] = hatHead();
@@ -619,7 +655,7 @@
       if (N.__shiver) N.__shiver.cancel();
       N = traveler(T, 520, 500, 1.25, 'coatShut', 'cross', { buttons: 4 }); N.P.face('cold');
       N.__shiver = shiver(N);
-      W = wind(T, 120, 200, .6); W.p.wrinkles.setAttribute('opacity', 1); W.p.setMouth('smile'); W.p.puffCheeks(.8);
+      W = aimWind(wind(T, 150, 200, .6), N); W.p.wrinkles.setAttribute('opacity', 1); W.p.setMouth('smile'); W.p.puffCheeks(.8);
       SN = sun(T, 820, 190, .85);
       if (T.portrait()) camSnap(672, 280, Math.min(1, T.viewWidth() / 2 / 270)); // 세로 화면: 나그네와 해님이 함께 보이게
     }, N.pos);
@@ -687,8 +723,8 @@
       const pt = T.portrait(), X = pt ? { L: 375, R: 625, W: 370, S: 630 } : { L: 290, R: 720, W: 130, S: 880 };
       const L = traveler(T, X.L, 510, 1.2, 'coatShut', 'cross'); L.P.face('cold'); shiver(L);
       const R = traveler(T, X.R, 510, 1.2, 'shoulder', 'down'); R.P.face('big');
-      const skyY = pt && artUrl('trav_hold') ? 128 : 170; // 세로 화면 + 그림 나그네(모자까지 더 크다): 해·바람이 머리에 겹치지 않게 조금 위로
-      Wl = wind(T, X.W, skyY, .75); Wl.p.setMouth('blow'); Wl.p.puffCheeks(1.5);
+      const skyY = pt && artUrl('trav_hold') ? 92 : 150; // 세로 화면 + 그림 나그네(모자까지 더 크다): 해·바람이 머리에 겹치지 않게 조금 위로
+      Wl = aimWind(wind(T, X.W, skyY, .75), L); Wl.p.setMouth('blow'); Wl.p.puffCheeks(1.5);
       Sr = sun(T, X.S, skyY, .75);
       if (pt) camSnap(500, 280, Math.min(1, T.viewWidth() / 2 / 250));
       T.world.__LR = [L, R];
@@ -752,7 +788,7 @@
       N = traveler(T, ST.seat[0], ST.seat[1], 1.2, 'shirt', 'down', { sit: true }); N.P.face('smile');
       // 그림: 나그네가 왼쪽 바위에 앉으니 바람은 가운데 위에서 시작
       WW = ST.art ? wind(T, 520, 165, .7) : wind(T, 170, 190, .7); SS = sun(T, ST.art ? 850 : 830, ST.art ? 160 : 170, .7);
-      if (ST.art) WW.face('right'); // 나그네가 왼쪽 바위에 있다 → 바람은 왼쪽(나그네 쪽)으로 분다 (그림 기본은 오른쪽)
+      aimWind(WW, N); // 나그네 쪽으로 분다 (그림: 나그네가 왼쪽 바위)
     }, null);
     babble = SND.babble(T);
     await say('나그네는 개울가에서 쉬어요.');
@@ -761,8 +797,7 @@
     await T.ask('바람아, 이번엔 살살 불어 줄래? 톡, 살살~', () => T.mash(WW.pos, { count: 3, prompt: '바람을 살살 톡톡 눌러 봐요!', onStep: i => {
       WW.p.setMouth('blow'); WW.p.puffCheeks(1.1); SND.breeze(T);
       // 그림: 바람(가운데 위)이 왼쪽 나그네 쪽으로 분다 → 바람 줄기도 왼쪽으로. 도형: 바람이 왼쪽에 있어 오른쪽으로
-      if (ST.art) gust(T, 2, { x0: 380, y0: 220, y1: 400, w: 4, alpha: .55, dur: 1800, dist: -520 });
-      else gust(T, 2, { y0: 200, y1: 420, w: 4, alpha: .55, dur: 1800, dist: 600 });
+      windGust(T, WW, 2, { y0: 220, y1: 400, w: 4, alpha: .55, dur: 1800, dist: ST.art ? 520 : 600 });
       ST.tufts.childNodes.forEach(t => t.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(8deg)' }, { transform: 'rotate(0)' }], 1400));
       // 바람과 나그네 사이, 개울 위 (바람 구름·나그네 얼굴을 가리지 않게)
       if (ST.art) T.pop(N.x + 240 + i * 100, N.y - 100 + (i % 2) * 50, '살랑~', C.pine);
@@ -772,7 +807,7 @@
     } }));
     await say('"아, 시원해. 고마워, 바람아!"');
     WW.hop(20);
-    if (ST.art) WW.face('left'); // 이제 오른쪽 해님을 마주 본다 (악수 컷과 같은 자리: 바람 왼쪽, 해 오른쪽)
+    aimWind(WW, ST.art ? 660 : 600); // 이제 오른쪽 해님을 마주 본다 (악수 컷과 같은 자리: 바람 왼쪽, 해 오른쪽)
     await Promise.all(ST.art ? [WW.move(450, 170, 1200), SS.move(660, 165, 1200)] : [WW.move(400, 180, 1200), SS.move(600, 170, 1200)]);
     await say('해님과 바람이 마주 보고 웃었어요.');
     await (cutArt(T, 'cut_shake', 'ding', 2400) || T.cut(svg => {
@@ -805,6 +840,7 @@
         Object.values(btns).forEach(b => b.place(Math.round(500 + (b.x - 500) * k), b.y));
         camSnap(500, 280, Math.min(1, T.viewWidth() / 2 / (370 * k + 95)));
       }
+      aimWind(btns.wind, M8); // 나그네 쪽으로 분다
     }, null);
     const WEATHER = {
       sun: { sky: SKY.hot, ground: C.grass, word: '쨍쨍!', cloth: '반팔', col: C.persimmon, wear: () => setOutfit(M8.P, 'shirt'),
@@ -812,7 +848,7 @@
       rain: { sky: SKY.rain, ground: '#6f8a52', word: '주룩주룩', cloth: '우비', col: C.indigo, wear: () => setOutfit(M8.P, 'rain'),
         fx: () => { wfx = precip(T, T.fx, 'rain', 40); AudioFX.splash(); } },
       wind: { sky: SKY.day, ground: C.grass, word: '휘잉!', cloth: '외투', col: C.indigo, wear: () => setOutfit(M8.P, 'coatShut'),
-        fx: () => { SND.whoosh(T, 3); gust(T, 10, { y0: 250, y1: 480 }); leaves(T, 8, 100, 400); } },
+        fx: () => { SND.whoosh(T, 3); windGust(T, btns.wind, 10, { y0: 250, y1: 480 }); leaves(T, 8, btns.wind.x, 330, windDir(btns.wind)); } },
       snowc: { sky: SKY.snow, ground: C.snow, word: '펑펑', cloth: '목도리', col: C.indigo, wear: () => setOutfit(M8.P, 'scarf'),
         fx: () => { wfx = precip(T, T.fx, 'snow', 40); [1568, 1319, 1175].forEach((f, i) => T.tone(f, .3, { type: 'sine', vol: .08, when: i * .12 })); } },
     };
