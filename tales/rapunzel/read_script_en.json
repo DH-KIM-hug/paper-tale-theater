@@ -1,0 +1,1273 @@
+{
+ "mode": "read",
+ "tale": "rapunzel",
+ "lang": "en",
+ "title": "Rapunzel",
+ "voices_from": "voice_script_el.json",
+ "moral": "If you never give up, you can meet again.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md). text 는 한국어 줄(키), en 이 읽는 문장. src=reuse 는 narration_el_en.js 의 영어 녹음 그대로, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<rp_bg_cottage|rp_bg_garden_night|rp_bg_forest_day|rp_bg_room|rp_bg_forest_dusk|rp_bg_field> | veil:<bg>": "장면 배경(scene(key)) / 가림막으로 배경 바꾸기(veil)",
+  "cam:<x,y,z> | follow:<x>": "카메라",
+  "rap:look:<stand|window|wrap|sing|surprise|joy|short_shock|short_sing|short_hold>[:<dir>] | rap:at:<x,y>[:<look>] | rap:hop | rap:wiggle | rap:fade:in": "라푼젤",
+  "gothel:look:<stand|point|wand|scissors|cradle|climb>[:<dir>] | gothel:at:<x,y>[:<look>[:<dir>]] | gothel:walk:<x,ms> | gothel:move:<x,y,ms> | gothel:hop | gothel:wiggle | gothel:fade:in | gothel:hide": "마녀 고텔",
+  "father:look:<stand|climb|pull|shock>[:<dir>] | father:at:<x,y>[:<look>[:<dir>]] | father:move:<x,y,ms> | father:hop | mother:at:<x,y> | mother:hop": "아버지·엄마",
+  "prince:look:<stand|ride|hide|climb|sad|float|hold>[:<dir>] | prince:at:<x,y>[:<look>[:<dir>]] | prince:walk:<x,ms> | prince:move:<x,y,ms> | prince:hop | prince:wiggle | prince:loop | prince:land | prince:fade:in": "왕자. loop = 탑을 한 바퀴 돌기(6장), land = 마법 바람에 사뿐 내려앉기(9장)",
+  "horse:at:<x,y> | bird:at | bird:hop | rabbit:at | rabbit:hop": "말·새·토끼",
+  "tower:set[:norap] | tower:rise | braid:down | braid:up | braidcut:down | braidcut:hook | climb:<gothel|prince>[:pops]": "탑 세트(탑+창가 라푼젤+고리) / 탑이 쑥 솟음 / 머리 내리기·올리기 / 잘린 머리 / 머리를 잡고 올라가기(영차 영차 팝)",
+  "rampion:pull | magic:<x,y> | cradle:set | gothel:walk_out": "풀을 쏙 뽑음 / 별 셋 반짝 / 요람 / 고텔이 요람의 아기를 안고 걸어 나감(2장)",
+  "hum:<x,y> | notes:<x,y>": "라푼젤 허밍(extra hum 클립 + 음표 세 개 + 라라라~ 팝) / 음표만",
+  "silks:<n> | ribbon:tie | scissors:cut | wind:blow": "비단실 n개 / 긴 리본으로 머리 묶기 / 싹둑! 잘린 머리가 고리에 / 휘익~ 바람이 왕자를 탑 밖으로",
+  "petals | confetti | glow:<bird|rabbit> | fx:<paper_down|paper_up|paper_tap|swish|whoosh|sparkle|tada|step_grass|pop|slide_up|slide_down|chop|knock|cork|creak> | pop:<x,y,글자>": "효과"
+ },
+ "scenes": [
+  {
+   "key": "R01_garden",
+   "card": "The Garden Over the Wall",
+   "set": "rp_bg_cottage",
+   "enter": [
+    "father:at:420,505:stand",
+    "mother:at:600,505",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날에 아기를 기다리는 부부가 살았어요. 아기가 곧 올 거예요.",
+     "src": "reuse",
+     "en": "Once upon a time, there lived a husband and wife who were waiting for a baby. The baby was coming soon.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, there lived a husband and wife who were waiting for a baby. The baby was coming soon.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "담 너머 텃밭은 마녀 고텔의 마법 텃밭이라 아무도 들어가지 못했어요.",
+     "src": "reuse",
+     "en": "Beyond the wall was the magic garden of the witch Gothel, and no one was allowed in.",
+     "segs": [
+      [
+       "nar",
+       "Beyond the wall was the magic garden of the witch Gothel, and no one was allowed in.",
+       null
+      ]
+     ],
+     "after": [
+      "pop:760,120,반짝!"
+     ]
+    },
+    {
+     "text": "텃밭에는 초록 라푼젤 풀이 싱싱하게 쑥쑥 자라고 있었어요.",
+     "src": "new",
+     "en": "In the garden, green rampion grew fresh and tall, sprouting up, up, up.",
+     "segs": [
+      [
+       "nar",
+       "In the garden, green rampion grew fresh and tall, sprouting up, up, up.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "저 라푼젤 풀이 너무너무 먹고 싶어요.",
+     "src": "reuse",
+     "en": "Oh, I want to eat that rampion so, so much.",
+     "segs": [
+      [
+       "mother",
+       "Oh, I want to eat that rampion so, so much.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "mother:hop"
+     ]
+    },
+    {
+     "text": "엄마는 창가에서 텃밭을 보며 꿀꺽 침을 삼켰어요.",
+     "src": "new",
+     "en": "Mother gazed at the garden from the window and swallowed, gulp.",
+     "segs": [
+      [
+       "nar",
+       "Mother gazed at the garden from the window and swallowed, gulp.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "내가 가져올게요.",
+     "src": "reuse",
+     "en": "I'll go and get some for you.",
+     "segs": [
+      [
+       "father",
+       "I'll go and get some for you.",
+       null
+      ]
+     ],
+     "before": [
+      "father:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_rampion",
+   "card": "The Rampion",
+   "set": "rp_bg_garden_night",
+   "enter": [
+    "rampion:at:470,505",
+    "father:at:230,235:climb:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "밤이 되자, 아버지는 살금살금 담을 넘었어요.",
+     "src": "reuse",
+     "en": "When night came, the father quietly climbed over the wall.",
+     "segs": [
+      [
+       "nar",
+       "When night came, the father quietly climbed over the wall.",
+       null
+      ]
+     ],
+     "after": [
+      "fx:paper_down",
+      "father:move:380,505,900",
+      "father:look:pull:right"
+     ]
+    },
+    {
+     "text": "아버지가 풀을 쑥 뽑은 순간, 반짝! 마녀가 나타났어요.",
+     "src": "new",
+     "en": "The moment Father pulled up the rampion, pop, there was a flash, and the witch appeared!",
+     "segs": [
+      [
+       "nar",
+       "The moment Father pulled up the rampion, pop, there was a flash, and the witch appeared!",
+       null
+      ]
+     ],
+     "before": [
+      "rampion:pull",
+      "fx:cork",
+      "pop:530,355,쏙!"
+     ],
+     "after": [
+      "magic:640,385",
+      "gothel:at:640,505:point",
+      "gothel:fade:in"
+     ]
+    },
+    {
+     "text": "누구냐! 내 풀을 뽑다니!",
+     "src": "reuse",
+     "en": "Who's there! Pulling up my rampion!",
+     "segs": [
+      [
+       "gothel",
+       "Who's there! Pulling up my rampion!",
+       "toneup"
+      ]
+     ]
+    },
+    {
+     "text": "아, 아내가 너무너무 먹고 싶어 해서요.",
+     "src": "reuse",
+     "en": "Oh! My wife wanted it so, so much.",
+     "segs": [
+      [
+       "father",
+       "Oh! My wife wanted it so, so much.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "father:look:shock",
+      "father:hop"
+     ]
+    },
+    {
+     "text": "내 풀을 가져가도 좋다. 대신 아기가 태어나면 내가 키우마.",
+     "src": "reuse",
+     "en": "You may take my rampion. But when the baby is born, I shall raise it.",
+     "segs": [
+      [
+       "gothel",
+       "You may take my rampion. But when the baby is born, I shall raise it.",
+       null
+      ]
+     ],
+     "before": [
+      "gothel:look:stand",
+      "gothel:wiggle"
+     ]
+    },
+    {
+     "text": "네… 알겠어요.",
+     "src": "reuse",
+     "en": "Yes... all right.",
+     "segs": [
+      [
+       "father",
+       "Yes... all right.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "father:look:stand"
+     ]
+    },
+    {
+     "text": "아기가 태어났어요. 마녀 고텔은 아기를 데려가 라푼젤이라고 이름 짓고 정성껏 키웠어요.",
+     "src": "reuse",
+     "en": "The baby was born. The witch Gothel took her away, named her Rapunzel, and raised her with care.",
+     "segs": [
+      [
+       "nar",
+       "The baby was born. The witch Gothel took her away, named her Rapunzel, and raised her with care.",
+       null
+      ]
+     ],
+     "before": [
+      "veil:rp_bg_cottage",
+      "cradle:set",
+      "gothel:at:1150,505:stand"
+     ],
+     "after": [
+      "gothel:walk_out"
+     ]
+    },
+    {
+     "text": "고텔은 아기를 토닥토닥 재우고, 맛있는 죽도 보글보글 끓여 주었어요.",
+     "src": "new",
+     "en": "Gothel patted the baby to sleep, pat, pat, and cooked her yummy porridge, bubble, bubble.",
+     "segs": [
+      [
+       "nar",
+       "Gothel patted the baby to sleep, pat, pat, and cooked her yummy porridge, bubble, bubble.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_tower",
+   "card": "The Tower With No Door",
+   "set": "rp_bg_forest_day",
+   "enter": [
+    "gothel:at:470,505:wand:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "라푼젤이 열두 살이 되자, 마녀는 지팡이를 톡 두드렸어요.",
+     "src": "reuse",
+     "en": "When Rapunzel turned twelve, the witch tapped her stick on the ground.",
+     "segs": [
+      [
+       "nar",
+       "When Rapunzel turned twelve, the witch tapped her stick on the ground.",
+       null
+      ]
+     ],
+     "after": [
+      "gothel:hop",
+      "fx:knock",
+      "pop:540,245,톡",
+      "magic:640,465"
+     ]
+    },
+    {
+     "text": "숲속에 문도 계단도 없는 높은 탑이 쑥 솟았어요. 창문은 꼭대기에 하나뿐이에요.",
+     "src": "reuse",
+     "en": "Up rose a tall tower in the forest, with no door and no stairs. There was only one window, right at the top.",
+     "segs": [
+      [
+       "nar",
+       "Up rose a tall tower in the forest, with no door and no stairs. There was only one window, right at the top.",
+       null
+      ]
+     ],
+     "before": [
+      "tower:rise"
+     ],
+     "after": [
+      "rap:at:640,505:window",
+      "rap:fade:in",
+      "rabbit:at:555,505",
+      "bird:at:646,145"
+     ]
+    },
+    {
+     "text": "자, 잠겨라. 밖은 위험하단다. 여기가 제일 안전해.",
+     "src": "reuse",
+     "en": "Now, lock tight. The outside is dangerous. This is the safest place.",
+     "segs": [
+      [
+       "gothel",
+       "Now, lock tight. The outside is dangerous. This is the safest place.",
+       null
+      ]
+     ],
+     "before": [
+      "magic:640,465",
+      "fx:knock"
+     ],
+     "after": [
+      "gothel:look:stand"
+     ]
+    },
+    {
+     "text": "지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.",
+     "src": "reuse",
+     "en": "On top of the roof sits a bird, and down below the tower sits a rabbit.",
+     "segs": [
+      [
+       "nar",
+       "On top of the roof sits a bird, and down below the tower sits a rabbit.",
+       null
+      ]
+     ],
+     "before": [
+      "bird:hop"
+     ],
+     "after": [
+      "rabbit:hop"
+     ]
+    },
+    {
+     "text": "새는 짹짹, 토끼는 깡충깡충, 라푼젤은 창가에서 빙긋 웃었어요.",
+     "src": "new",
+     "en": "The bird went tweet, tweet, the rabbit went hop, hop, and Rapunzel smiled from her window.",
+     "segs": [
+      [
+       "nar",
+       "The bird went tweet, tweet, the rabbit went hop, hop, and Rapunzel smiled from her window.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_hair",
+   "card": "Let Down Your Hair",
+   "set": "rp_bg_forest_day",
+   "enter": [
+    "tower:set",
+    "rabbit:at:555,505",
+    "bird:at:646,145",
+    "gothel:at:470,505:stand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "라푼젤, 라푼젤, 머리를 내려 줘!",
+     "src": "reuse",
+     "en": "Rapunzel, Rapunzel, let down your hair!",
+     "segs": [
+      [
+       "gothel",
+       "Rapunzel, Rapunzel, let down your hair!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "gothel:hop"
+     ]
+    },
+    {
+     "text": "스르르~ 금빛 머리가 탑 아래까지 닿았어요.",
+     "src": "reuse",
+     "en": "Swish... the golden hair slid all the way down to the foot of the tower.",
+     "segs": [
+      [
+       "nar",
+       "Swish... the golden hair slid all the way down to the foot of the tower.",
+       null
+      ]
+     ],
+     "before": [
+      "rap:look:wrap",
+      "fx:paper_tap",
+      "braid:down"
+     ],
+     "after": [
+      "rap:look:window"
+     ]
+    },
+    {
+     "text": "고텔은 머리를 잡고 천천히 올라가요.",
+     "src": "reuse",
+     "en": "Gothel took hold of the hair and slowly climbed up.",
+     "segs": [
+      [
+       "nar",
+       "Gothel took hold of the hair and slowly climbed up.",
+       null
+      ]
+     ],
+     "before": [
+      "gothel:move:742,505,900",
+      "gothel:look:climb"
+     ],
+     "after": [
+      "climb:gothel:pops"
+     ]
+    },
+    {
+     "text": "영차, 영차! 머리카락이 흔들흔들, 고텔은 끙끙 올라갔어요.",
+     "src": "new",
+     "en": "Heave-ho, heave-ho! The braid swung to and fro, and Gothel huffed and puffed her way up.",
+     "segs": [
+      [
+       "nar",
+       "Heave-ho, heave-ho! The braid swung to and fro, and Gothel huffed and puffed her way up.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "창문에 닿자, 라푼젤은 머리를 스르륵 끌어올렸어요.",
+     "src": "new",
+     "en": "When Gothel reached the window, Rapunzel pulled her hair back up, swish.",
+     "segs": [
+      [
+       "nar",
+       "When Gothel reached the window, Rapunzel pulled her hair back up, swish.",
+       null
+      ]
+     ],
+     "before": [
+      "braid:up"
+     ],
+     "after": [
+      "rap:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_song",
+   "card": "A Song in the Tower",
+   "set": "rp_bg_room",
+   "enter": [
+    "rap:at:760,505:sing",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "라푼젤은 혼자 있을 때면 창가에서 노래를 불렀어요.",
+     "src": "reuse",
+     "en": "Whenever Rapunzel was alone, she sang at the window.",
+     "segs": [
+      [
+       "nar",
+       "Whenever Rapunzel was alone, she sang at the window.",
+       null
+      ]
+     ],
+     "after": [
+      "hum:610,205"
+     ]
+    },
+    {
+     "text": "라라라, 고운 노랫소리가 창밖으로 두둥실 퍼져 나갔어요.",
+     "src": "new",
+     "en": "La, la, la. Her lovely song floated out of the window and away, drifting on the air.",
+     "segs": [
+      [
+       "nar",
+       "La, la, la. Her lovely song floated out of the window and away, drifting on the air.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "내 노래가 숲 끝까지 닿았으면.",
+     "src": "reuse",
+     "en": "I wish my song could reach the end of the forest.",
+     "segs": [
+      [
+       "rap",
+       "I wish my song could reach the end of the forest.",
+       null
+      ]
+     ],
+     "before": [
+      "rap:hop"
+     ]
+    },
+    {
+     "text": "라푼젤은 제일 긴 리본으로 머리를 곱게 묶었어요.",
+     "src": "new",
+     "en": "Rapunzel tied her hair up neatly with the longest ribbon.",
+     "segs": [
+      [
+       "nar",
+       "Rapunzel tied her hair up neatly with the longest ribbon.",
+       null
+      ]
+     ],
+     "after": [
+      "ribbon:tie",
+      "fx:swish"
+     ]
+    },
+    {
+     "text": "라푼젤은 리본을 묶은 머리를 창가에 늘어뜨리고 또 노래했어요.",
+     "src": "reuse",
+     "en": "Rapunzel let her ribboned hair hang at the window and sang again.",
+     "segs": [
+      [
+       "nar",
+       "Rapunzel let her ribboned hair hang at the window and sang again.",
+       null
+      ]
+     ],
+     "before": [
+      "notes:720,275"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_voice",
+   "card": "The Singing",
+   "set": "rp_bg_forest_dusk",
+   "enter": [
+    "tower:set",
+    "prince:at:-200,505:ride:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "어느 해질녘, 숲을 지나던 왕자가 노랫소리를 들었어요.",
+     "src": "reuse",
+     "en": "One evening at sunset, a prince riding through the forest heard the singing.",
+     "segs": [
+      [
+       "nar",
+       "One evening at sunset, a prince riding through the forest heard the singing.",
+       null
+      ]
+     ],
+     "before": [
+      "fx:step_grass"
+     ],
+     "after": [
+      "prince:walk:260,3500",
+      "hum:480,140"
+     ]
+    },
+    {
+     "text": "해가 뉘엿뉘엿 지고, 숲이 발그레 물들었어요.",
+     "src": "new",
+     "en": "The sun was sinking low, and the forest glowed rosy pink.",
+     "segs": [
+      [
+       "nar",
+       "The sun was sinking low, and the forest glowed rosy pink.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "어디서 이렇게 고운 노래가 들리지?",
+     "src": "reuse",
+     "en": "Where is that lovely song coming from?",
+     "segs": [
+      [
+       "prince",
+       "Where is that lovely song coming from?",
+       null
+      ]
+     ],
+     "before": [
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "왕자는 탑을 한 바퀴 돌았지만 문이 없었어요.",
+     "src": "reuse",
+     "en": "The prince walked all the way around the tower, but there was no door.",
+     "segs": [
+      [
+       "nar",
+       "The prince walked all the way around the tower, but there was no door.",
+       null
+      ]
+     ],
+     "before": [
+      "horse:at:260,505",
+      "prince:at:330,505:stand"
+     ],
+     "after": [
+      "prince:loop"
+     ]
+    },
+    {
+     "text": "왕자는 고개를 갸웃갸웃, 탑을 올려다보았어요.",
+     "src": "new",
+     "en": "The prince tilted his head this way and that, and looked up at the tower.",
+     "segs": [
+      [
+       "nar",
+       "The prince tilted his head this way and that, and looked up at the tower.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "그때 마녀 고텔이 왔어요. 왕자는 나무 뒤에 숨었어요.",
+     "src": "reuse",
+     "en": "Just then the witch Gothel came. The prince hid behind a tree.",
+     "segs": [
+      [
+       "nar",
+       "Just then the witch Gothel came. The prince hid behind a tree.",
+       null
+      ]
+     ],
+     "before": [
+      "prince:look:hide:right",
+      "prince:move:120,505,1200"
+     ],
+     "after": [
+      "gothel:at:-100,505:stand",
+      "gothel:walk:470,3600"
+     ]
+    },
+    {
+     "text": "라푼젤, 라푼젤, 머리를 내려 줘!",
+     "src": "reuse",
+     "en": "Rapunzel, Rapunzel, let down your hair!",
+     "segs": [
+      [
+       "gothel",
+       "Rapunzel, Rapunzel, let down your hair!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "gothel:hop"
+     ],
+     "after": [
+      "rap:look:wrap",
+      "braid:down",
+      "rap:look:window",
+      "gothel:move:742,505,900",
+      "climb:gothel:pops",
+      "braid:up"
+     ]
+    },
+    {
+     "text": "아, 저렇게 올라가는구나!",
+     "src": "reuse",
+     "en": "Ah, so that's how you get up there!",
+     "segs": [
+      [
+       "prince",
+       "Ah, so that's how you get up there!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "prince:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_prince",
+   "card": "The Prince Climbs Up",
+   "set": "rp_bg_forest_dusk",
+   "enter": [
+    "tower:set",
+    "prince:at:470,505:stand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "다음 날 저녁, 왕자는 탑 아래에서 외쳤어요.",
+     "src": "reuse",
+     "en": "The next evening, the prince called out from the foot of the tower.",
+     "segs": [
+      [
+       "nar",
+       "The next evening, the prince called out from the foot of the tower.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "라푼젤, 라푼젤, 머리를 내려 줘요!",
+     "src": "reuse",
+     "en": "Rapunzel, Rapunzel, let down your hair!",
+     "segs": [
+      [
+       "prince",
+       "Rapunzel, Rapunzel, let down your hair!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "prince:hop"
+     ],
+     "after": [
+      "rap:look:wrap",
+      "braid:down",
+      "rap:look:window",
+      "prince:move:742,505,900",
+      "climb:prince:pops",
+      "braid:up"
+     ]
+    },
+    {
+     "text": "왕자가 창문으로 쑥 들어오자, 라푼젤은 깜짝 놀랐어요.",
+     "src": "new",
+     "en": "When the prince popped in through the window, Rapunzel jumped in surprise.",
+     "segs": [
+      [
+       "nar",
+       "When the prince popped in through the window, Rapunzel jumped in surprise.",
+       null
+      ]
+     ],
+     "before": [
+      "veil:rp_bg_room",
+      "rap:at:760,505:surprise",
+      "prince:at:770,505:stand",
+      "prince:fade:in",
+      "fx:paper_down"
+     ],
+     "after": [
+      "prince:move:600,505,1200",
+      "silks:1"
+     ]
+    },
+    {
+     "text": "어머, 할머니가 아니네?",
+     "src": "reuse",
+     "en": "Oh my, you're not Grandmother?",
+     "segs": [
+      [
+       "rap",
+       "Oh my, you're not Grandmother?",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "rap:hop"
+     ]
+    },
+    {
+     "text": "놀라게 해서 미안해요. 노래가 너무 고와서 왔어요. 저와 함께 성으로 가요.",
+     "src": "reuse",
+     "en": "I'm sorry I startled you. Your song was so lovely that I came. Come with me to my castle.",
+     "segs": [
+      [
+       "prince",
+       "I'm sorry I startled you. Your song was so lovely that I came. Come with me to my castle.",
+       null
+      ]
+     ],
+     "before": [
+      "prince:wiggle"
+     ]
+    },
+    {
+     "text": "좋아요. 비단실을 가져오면 사다리를 엮을게요.",
+     "src": "reuse",
+     "en": "All right. If you bring me silk thread, I'll weave a ladder.",
+     "segs": [
+      [
+       "rap",
+       "All right. If you bring me silk thread, I'll weave a ladder.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "rap:look:joy",
+      "rap:hop"
+     ],
+     "after": [
+      "rap:look:stand"
+     ]
+    },
+    {
+     "text": "왕자는 바깥세상 이야기를 조잘조잘 들려주었어요.",
+     "src": "new",
+     "en": "The prince chattered on and on about the big wide world outside.",
+     "segs": [
+      [
+       "nar",
+       "The prince chattered on and on about the big wide world outside.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "그날부터 왕자는 저녁마다 비단실을 가져왔어요.",
+     "src": "reuse",
+     "en": "From that day on, the prince brought silk thread every evening.",
+     "segs": [
+      [
+       "nar",
+       "From that day on, the prince brought silk thread every evening.",
+       null
+      ]
+     ],
+     "after": [
+      "silks:3"
+     ]
+    },
+    {
+     "text": "비단실이 차곡차곡 쌓이고, 두 사람은 날마다 도란도란 이야기를 나눴어요.",
+     "src": "new",
+     "en": "The silk piled up, neat and tidy, and every day the two chatted softly together.",
+     "segs": [
+      [
+       "nar",
+       "The silk piled up, neat and tidy, and every day the two chatted softly together.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_snip",
+   "card": "Snip!",
+   "set": "rp_bg_room",
+   "enter": [
+    "gothel:at:560,505:stand",
+    "rap:at:760,505:stand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "어느 날, 라푼젤이 무심코 말했어요.",
+     "src": "reuse",
+     "en": "One day, Rapunzel said without thinking,",
+     "segs": [
+      [
+       "nar",
+       "One day, Rapunzel said without thinking,",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "할머니, 할머니는 왜 왕자님보다 훨씬 무거워요?",
+     "src": "reuse",
+     "en": "Grandmother, why are you so much heavier than the prince?",
+     "segs": [
+      [
+       "rap",
+       "Grandmother, why are you so much heavier than the prince?",
+       null
+      ]
+     ],
+     "before": [
+      "rap:hop"
+     ]
+    },
+    {
+     "text": "뭐라고? 왕자라니!",
+     "src": "reuse",
+     "en": "What? A prince!",
+     "segs": [
+      [
+       "gothel",
+       "What? A prince!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "gothel:hop",
+      "gothel:wiggle"
+     ]
+    },
+    {
+     "text": "고텔은 부들부들 떨며 커다란 가위를 꺼냈어요.",
+     "src": "new",
+     "en": "Gothel shook with anger, tremble, tremble, and pulled out a great big pair of scissors.",
+     "segs": [
+      [
+       "nar",
+       "Gothel shook with anger, tremble, tremble, and pulled out a great big pair of scissors.",
+       null
+      ]
+     ],
+     "before": [
+      "gothel:move:680,505,700",
+      "gothel:look:scissors:right"
+     ]
+    },
+    {
+     "text": "마녀는 가위 한 번으로 라푼젤의 머리를 자르고, 지팡이를 톡 두드려 먼 들판의 작은 오두막으로 데려갔어요.",
+     "src": "reuse",
+     "en": "With one snip of her scissors the witch cut off Rapunzel's hair, then tapped her stick and took her away to a little cottage in a faraway meadow.",
+     "segs": [
+      [
+       "nar",
+       "With one snip of her scissors the witch cut off Rapunzel's hair, then tapped her stick and took her away to a little cottage in a faraway meadow.",
+       null
+      ]
+     ],
+     "before": [
+      "scissors:cut",
+      "fx:chop",
+      "pop:620,250,싹둑!"
+     ],
+     "after": [
+      "rap:look:short_shock",
+      "braidcut:hook",
+      "gothel:look:wand:right",
+      "fx:knock",
+      "magic:720,245",
+      "pop:610,230,톡",
+      "veil:rp_bg_field",
+      "gothel:at:400,505:stand",
+      "rap:at:560,505:short_shock",
+      "magic:480,305"
+     ]
+    },
+    {
+     "text": "라푼젤은 짧아진 머리를 만지며 훌쩍훌쩍 울었어요.",
+     "src": "new",
+     "en": "Rapunzel touched her short hair and cried, sniff, sniff.",
+     "segs": [
+      [
+       "nar",
+       "Rapunzel touched her short hair and cried, sniff, sniff.",
+       null
+      ]
+     ],
+     "before": [
+      "rap:wiggle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_empty",
+   "card": "The Empty Tower",
+   "set": "rp_bg_forest_dusk",
+   "enter": [
+    "tower:set:norap",
+    "braidcut:hook",
+    "prince:at:470,505:stand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그날 저녁, 왕자는 아무것도 모르고 탑에 왔어요.",
+     "src": "reuse",
+     "en": "That evening, the prince came to the tower, knowing nothing.",
+     "segs": [
+      [
+       "nar",
+       "That evening, the prince came to the tower, knowing nothing.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "탑은 텅 비고, 바람만 휘잉 지나갔어요.",
+     "src": "new",
+     "en": "The tower stood empty, and only the wind blew past, whoo.",
+     "segs": [
+      [
+       "nar",
+       "The tower stood empty, and only the wind blew past, whoo.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "라푼젤, 라푼젤, 머리를 내려 줘요!",
+     "src": "reuse",
+     "en": "Rapunzel, Rapunzel, let down your hair!",
+     "segs": [
+      [
+       "prince",
+       "Rapunzel, Rapunzel, let down your hair!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "마녀는 잘린 머리를 고리에 걸어 내려 주었어요.",
+     "src": "reuse",
+     "en": "The witch hung the cut-off braid on the hook and let it down.",
+     "segs": [
+      [
+       "nar",
+       "The witch hung the cut-off braid on the hook and let it down.",
+       null
+      ]
+     ],
+     "before": [
+      "braidcut:down"
+     ],
+     "after": [
+      "prince:move:742,505,900",
+      "climb:prince",
+      "braid:up",
+      "veil:rp_bg_room",
+      "braidcut:hook",
+      "gothel:at:560,505:point:right",
+      "prince:at:760,505:stand"
+     ]
+    },
+    {
+     "text": "라푼젤은 여기 없다. 다시는 못 볼 거다. 자, 내려가라.",
+     "src": "reuse",
+     "en": "Rapunzel is not here. You will never see her again. Now, down you go.",
+     "segs": [
+      [
+       "gothel",
+       "Rapunzel is not here. You will never see her again. Now, down you go.",
+       null
+      ]
+     ],
+     "before": [
+      "prince:hop"
+     ],
+     "after": [
+      "gothel:look:wand:right",
+      "fx:knock",
+      "magic:600,245",
+      "wind:blow"
+     ]
+    },
+    {
+     "text": "휘익~ 마법 바람이 왕자를 탑 아래 풀숲에 사뿐 내려놓았어요.",
+     "src": "reuse",
+     "en": "Whoosh... a magic wind set the prince gently down in the grass below the tower.",
+     "segs": [
+      [
+       "nar",
+       "Whoosh... a magic wind set the prince gently down in the grass below the tower.",
+       null
+      ]
+     ],
+     "before": [
+      "veil:rp_bg_forest_dusk",
+      "tower:set:norap",
+      "prince:at:742,380:float",
+      "pop:470,300,휘익~"
+     ],
+     "after": [
+      "prince:land",
+      "pop:380,445,사뿐"
+     ]
+    },
+    {
+     "text": "라푼젤… 어디로 갔을까.",
+     "src": "reuse",
+     "en": "Rapunzel... where could she be?",
+     "segs": [
+      [
+       "prince",
+       "Rapunzel... where could she be?",
+       "sad"
+      ]
+     ],
+     "before": [
+      "prince:look:sad"
+     ]
+    },
+    {
+     "text": "왕자는 슬픈 얼굴로 숲을 걷고 또 걸었어요.",
+     "src": "reuse",
+     "en": "The prince walked and walked through the forest with a sad face.",
+     "segs": [
+      [
+       "nar",
+       "The prince walked and walked through the forest with a sad face.",
+       "sad"
+      ]
+     ],
+     "before": [
+      "fx:step_grass",
+      "follow:300"
+     ],
+     "after": [
+      "prince:walk:-150,6000"
+     ]
+    },
+    {
+     "text": "터벅터벅, 왕자의 발걸음은 무겁기만 했어요.",
+     "src": "new",
+     "en": "Plod, plod. The prince's steps were heavy and slow.",
+     "segs": [
+      [
+       "nar",
+       "Plod, plod. The prince's steps were heavy and slow.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_reunion",
+   "card": "Following the Song",
+   "set": "rp_bg_field",
+   "enter": [
+    "rap:at:640,505:short_sing",
+    "prince:at:-120,505:sad:right",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "그때, 바람을 타고 노랫소리가 들려왔어요.",
+     "src": "reuse",
+     "en": "Then, carried on the wind, came the sound of singing.",
+     "segs": [
+      [
+       "nar",
+       "Then, carried on the wind, came the sound of singing.",
+       null
+      ]
+     ],
+     "before": [
+      "prince:walk:330,3600"
+     ],
+     "after": [
+      "hum:490,205"
+     ]
+    },
+    {
+     "text": "왕자의 귀가 쫑긋, 발걸음이 점점 빨라졌어요.",
+     "src": "new",
+     "en": "The prince's ears perked up, and his steps grew faster and faster.",
+     "segs": [
+      [
+       "nar",
+       "The prince's ears perked up, and his steps grew faster and faster.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "이 노래는… 라푼젤!",
+     "src": "reuse",
+     "en": "That song... Rapunzel!",
+     "segs": [
+      [
+       "prince",
+       "That song... Rapunzel!",
+       "toneup"
+      ]
+     ],
+     "before": [
+      "prince:look:stand",
+      "prince:hop"
+     ],
+     "after": [
+      "prince:walk:572,2200",
+      "rap:look:short_shock"
+     ]
+    },
+    {
+     "text": "왕자님! 찾아와 줬군요.",
+     "src": "reuse",
+     "en": "Prince! You came and found me.",
+     "segs": [
+      [
+       "rap",
+       "Prince! You came and found me.",
+       "happy"
+      ]
+     ],
+     "before": [
+      "rap:hop"
+     ]
+    },
+    {
+     "text": "포기하지 않길 잘했어요. 이제 함께 가요.",
+     "src": "reuse",
+     "en": "I'm glad I never gave up. Let's go together now.",
+     "segs": [
+      [
+       "prince",
+       "I'm glad I never gave up. Let's go together now.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "꽃잎이 팔랑팔랑 날리고, 두 사람은 손을 꼭 잡았어요.",
+     "src": "new",
+     "en": "Petals fluttered down, flit, flit, and the two held hands tight.",
+     "segs": [
+      [
+       "nar",
+       "Petals fluttered down, flit, flit, and the two held hands tight.",
+       null
+      ]
+     ],
+     "before": [
+      "rap:look:short_hold:left",
+      "prince:look:hold:right",
+      "fx:pop",
+      "petals",
+      "confetti",
+      "fx:tada",
+      "rap:hop",
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "두 사람은 손을 꼭 잡고 성으로 떠났어요.",
+     "src": "reuse",
+     "en": "The two held hands tightly and set off for the castle.",
+     "segs": [
+      [
+       "nar",
+       "The two held hands tightly and set off for the castle.",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "마녀 고텔은 텃밭으로 돌아갔어요.",
+     "src": "reuse",
+     "en": "And the witch Gothel went back to her garden.",
+     "segs": [
+      [
+       "nar",
+       "And the witch Gothel went back to her garden.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "멀리 떨어져 있어도 포기하지 않으면, 사랑하는 사람을 다시 만날 수 있답니다.",
+     "src": "new",
+     "en": "Even when you are far apart, if you never give up, you can meet the one you love again.",
+     "segs": [
+      [
+       "nar",
+       "Even when you are far apart, if you never give up, you can meet the one you love again.",
+       null
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
