@@ -20,7 +20,7 @@
   const GROUND = 480;
 
   async function run(T) {
-    const say = T.say, sleep = T.sleep;
+    const say = T.say, sleep = T.sleep, tr = T.tr;
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const portrait = () => T.viewWidth() < 990;
     const look = (x, dur = 700) => T.camTo(x, 280, 1, dur);
@@ -51,6 +51,240 @@
     const tune = (notes, type = 'triangle') => notes.forEach((f, i) => T.tone(f, .22, { type, vol: .12, when: i * .2 }));
 
     await Promise.all(['cut_strawhat', 'cut_planks', 'cut_tired', 'cut_crawl', 'cut_chimney', 'cut_splash', 'cut_launch', 'cut_village'].map(n => T.preload(U(n))));
+
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
+       장면 자리·크기는 놀이판 그 장면 그대로(대본 좌표는 놀이판 그림과 맞지 않아 쓰지 않는다). 세로 화면은 meadow·shop·sunset 만 카메라를 물려 넓게 본다. */
+    const READ_ACTS = (() => {
+      const P = portrait();
+      const KIND = {
+        straw: { n: 1, build: 'pig1_build', play: 'pig1_play', pigH: 245, playH: 245, pile: 'straw', pileH: 95, house: 'house_straw', ruin: 'house_straw_ruin', taps: 3, tick: 'pop', cut: 'cut_strawhat' },
+        wood: { n: 2, build: 'pig2_build', play: 'pig2_play', pigH: 230, playH: 214, pile: 'wood', pileH: 100, house: 'house_wood', ruin: 'house_wood_ruin', taps: 5, tick: 'chop', cut: 'cut_planks' },
+        brick: { n: 3, build: 'pig3_build', play: 'pig3_play', pigH: 215, playH: 215, pile: 'bricks', pileH: 140, house: 'house_brick', taps: 10, tick: 'thud' },
+      };
+      const LOT = { strawlot: 'straw', woodlot: 'wood', bricklot: 'brick' };
+      const rPIECE = { straw: ['#D9A94E', 34, 9], wood: ['#8A5E3C', 46, 9], brick: ['#A93B32', 28, 13] };
+      const hx = P ? 640 : 700, hy = P ? 420 : GROUND, houseH = P ? 310 : 390;
+      const BL = P ? { pigX: 560, pigY: 548, pigS: .85, pileX: 735, pileY: 556 } : { pigX: 160, pigY: GROUND, pigS: 1, pileX: 385, pileY: 490 };
+      let key = '', mode = '', kind = '', seen = {}, A = {}, house = null, stages = [], pile = null, glow = null, vh = [], vstages = [], vchain = Promise.resolve();
+      const rI = () => T.readInstant();
+      const nums = s => String(s).split(',').map(Number);
+      const CAMP = { meadow: [490, 280, .62], shop: [500, 280, .62], sunset: [500, 280, .55], strawlot: [hx, 280, 1], woodlot: [hx, 280, 1], bricklot: [hx, 280, 1], brick_in: [450, 280, 1], brick_out: [450, 280, 1] };
+      const camGo = (a, y, z) => { const c = P && CAMP[key] ? CAMP[key] : [a, y, z]; T.camSnap(c[0], c[1], c[2]); };
+      const popAt = (x, y, w) => { if (P) { const c = T.camera, h = T.viewWidth() / 2 / (c.z || 1) - 40; x = Math.min(Math.max(x, c.x - h), c.x + h); } T.pop(x, y, w); };
+      const reveal = async (a, ms = 380) => {
+        a.show(true);
+        const im = a.pos.querySelector('image');
+        const an = im.animate([{ clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)' }], { duration: ms, easing: 'cubic-bezier(.3,.7,.3,1)', fill: 'forwards' });
+        try { await an.finished; } catch (e) { /* 취소 */ }
+        try { an.cancel(); } catch (e) { /* 이미 끝남 */ }
+      };
+      const dropPieces = (k, x0, y0, x1, y1, n = 3) => {
+        const [col, w, h] = rPIECE[k];
+        for (let i = 0; i < n; i++) {
+          const g = T.el('g', {}, T.world); g.style.pointerEvents = 'none';
+          T.el('rect', { x: -w / 2 + 2, y: -h / 2 + 2, width: w, height: h, rx: 1.5, fill: '#2E241C', 'fill-opacity': .22 }, g);
+          T.el('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 1.5, fill: col }, g);
+          if (k === 'straw') T.el('rect', { x: -2, y: -h / 2, width: 4, height: h, fill: '#8A6A2E' }, g);
+          if (k === 'brick') T.el('rect', { x: -w / 2 + 3, y: -1, width: w - 6, height: 2, fill: '#E8D9BE', 'fill-opacity': .7 }, g);
+          const tx = x1 + (i - (n - 1) / 2) * 38, ty = y1 + (i % 2) * 8, mx = (x0 + tx) / 2, my = Math.min(y0, ty) - 90, rot = (i % 2 ? 1 : -1) * (14 + i * 6);
+          g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
+          const an = g.animate([
+            { transform: `translate(${x0}px,${y0}px) rotate(0deg)`, offset: 0 },
+            { transform: `translate(${mx}px,${my}px) rotate(${rot}deg)`, offset: .5 },
+            { transform: `translate(${tx}px,${ty}px) rotate(${rot / 3}deg)`, offset: .86 },
+            { transform: `translate(${tx}px,${ty}px) rotate(${rot / 3}deg) scale(1.3,.8)`, offset: .93 },
+            { transform: `translate(${tx}px,${ty}px) rotate(${rot / 3}deg)`, opacity: 1, offset: 1 }], { duration: 520 + i * 70, delay: i * 90, easing: 'ease-in', fill: 'forwards' });
+          an.finished.then(() => g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: 'forwards' }).finished).then(() => g.remove()).catch(() => g.remove());
+        }
+      };
+      const stageSprites = async (k, x, h, y) => {
+        const ok = await Promise.all([1, 2, 3].map(i => T.preload(U(`tp2_${k}_s${i}`))));
+        return ok.every(Boolean) ? [1, 2, 3].map(i => { const s = sprite(`tp2_${k}_s${i}`, x, h, y); s.show(false); s.pos.style.pointerEvents = 'none'; return s; }) : [];
+      };
+      const mkHouse = (k, x, h, y) => { const c = KIND[k]; const hs = sprite(c.house, x, h, y); hs.pos.style.pointerEvents = 'none'; return hs; };
+      const build = k => {
+        key = k; A = {}; house = null; stages = []; pile = null; glow = null;
+        seen[k] = (seen[k] || 0) + 1;
+        bg(k === 'strawlot' || k === 'woodlot' || k === 'bricklot' ? k : k);
+        camGo(500, 280, 1);
+        kind = LOT[k] || '';
+        mode = kind ? (seen[k] === 1 ? 'build' : 'blow') : '';
+        if (k === 'shop') {
+          A.fan = sprite('fan', 90, 190); A.mats = [sprite('straw', 310, 95), sprite('wood', 520, 105), sprite('bricks', 720, 150)];
+          A.mats.forEach(m => { m.pos.style.pointerEvents = 'none'; });
+          if (P) A.fan.show(false);
+        }
+        if (mode === 'build') {
+          (async () => {
+            stages = await stageSprites(kind, hx, houseH, hy);
+          })();
+          house = sprite(KIND[kind].house, hx, houseH, hy); house.show(false); house.pos.style.pointerEvents = 'none';
+        }
+        if (mode === 'blow') { house = sprite(KIND[kind].house, hx, houseH, hy); house.pos.style.pointerEvents = 'none'; }
+        if (k === 'chimney') {
+          glow = T.el('ellipse', { cx: 500, cy: 348, rx: 10, ry: 8, fill: '#FFB347', opacity: 0, 'pointer-events': 'none' }, T.world);
+        }
+        if (k === 'sunset') {
+          const hxs = P ? [500, 230, 770] : [500, 200, 800], vhh = P ? 230 : 270;
+          vh = hxs.map(x => { const hs = sprite('house_brick', x, vhh); hs.show(false); hs.pos.style.pointerEvents = 'none'; return hs; });
+          vstages = [];
+          hxs.forEach((x, i) => { stageSprites('brick', x, vhh, GROUND).then(st => { vstages[i] = st; }); });
+        }
+      };
+      const pigIdx = n => +n.replace('pig', '') - 1;
+      const pigAt = (n, x) => {
+        const i = pigIdx(n), nm = n;
+        let a;
+        if (key === 'meadow') a = sprite(nm + '_base', [500, 650, 800][i], 215);
+        else if (mode === 'build') { const c = KIND[kind]; a = sprite(c.build, BL.pigX, c.pigH * BL.pigS, BL.pigY); }
+        else if (mode === 'blow') a = sprite(nm + '_base', hx - (P ? 50 : 70) + (n === 'pig1' ? 0 : 1) * (P ? 100 : 140), P ? 150 : 215, hy + (P ? 20 : 0));
+        else if (key === 'brick_in') a = sprite(nm + '_base', [300, 440, 580][i], 210);
+        else if (key === 'chimney' || key === 'sunset') a = sprite(nm + '_base', [380, 500, 620][i], 140, 548);
+        else if (key === 'shop') { if (P) return null; a = sprite(nm + '_base', [95, 195, 295][i], 215, 548); }
+        else a = sprite(nm + '_base', x, 215);
+        if (key === 'bricklot' && x >= 600) { a.place(n === 'pig1' ? 540 : 880, 548); } // 셋째를 놀리러 온 형들
+        a.pos.style.pointerEvents = 'none';
+        return a;
+      };
+      const wolfAt = () => {
+        let w;
+        if (key === 'brick_out') { w = sprite('wolf_puff', 230, 210); w.face('right'); }
+        else { const wh = P ? 170 : 230; w = sprite('wolf_sniff', -160, wh, P ? 548 : GROUND); w.face('right'); w.wh = wh; }
+        w.pos.style.pointerEvents = 'none';
+        return w;
+      };
+      const SETN = (n, x) => {
+        if (/^pig/.test(n)) return null;
+      };
+      const actorVerb = n => (op, spec) => {
+        if (op === 'at') {
+          if (A[n] && A[n].pos.isConnected) A[n].pos.remove();
+          let a = null;
+          if (n === 'mom') { a = sprite('mama', P ? 230 : 230, 300); }
+          else if (n === 'wolf') a = wolfAt();
+          else { const x = nums(spec)[0]; a = pigAt(n, x); }
+          if (a) { a._n = n; A[n] = a; }
+          return;
+        }
+        const a = A[n]; if (!a) return;
+        if (op === 'hide') { a.show(false); return; }
+        if (op === 'hop') { a.hop(36); sfx('pop'); return; }
+        if (op === 'walk') {
+          const [x, y = a.y] = nums(spec);
+          if (n === 'wolf') { sfx('step_grass'); const wx = P ? 560 : 330; const p = a.move(x > 1000 ? 1200 : wx, a.y, x > 1000 ? 1100 : 1300); return p.then(async () => { await sleep(500); a.wiggle(5, 500); }); }
+          if (/^pig/.test(n) && key === 'meadow') { a.set(n + '_base'); const pr = a.move(x, a.y, 1500); return n === 'pig3' ? pr : null; }
+          if (/^pig/.test(n)) return a.move(x, a.y, 1100);
+          return a.move(x, y, 900);
+        }
+        if (op === 'set') {
+          if (n === 'wolf') { if (spec === 'blow') a.set('wolf_puff', a.wh || 230); else if (spec === 'tired') { a.set('wolf_tired', 230); } return; }
+          const c = KIND[kind];
+          if (spec === 'build') return;
+          if (spec === 'play') { const kk = Object.values(KIND).find(v => v.n === pigIdx(n) + 1); if (kk) a.set(kk.play, kk.playH * (P ? .85 : 1)); return; }
+          if (spec === 'flee') { a.set(n + '_flee'); return; }
+          if (spec === 'base') a.set(n + '_base');
+        }
+      };
+      const acts = {
+        set(k) {
+          if (rI()) { build(k); return; }
+          return T.sceneCard('', () => build(k));
+        },
+        cam(a, spec) { if (a === 'snap') { const [x, y, z] = nums(spec); camGo(x, y, z); } else camGo(500, 280, 1); },
+        fan(op, what) {
+          if (op !== 'blow') return;
+          const i = { straw: 0, wood: 1, brick: 2 }[what], m = A.mats && A.mats[i], f = A.fan;
+          if (!m) return;
+          if (P) T.camTo(m.x - 20, 280, .8, 400);
+          if (f && !P) f.move(m.x - 210, GROUND, 500);
+          return (async () => {
+            await sleep(P ? 300 : 500); sfx('blow'); T.pop(m.x - 60, 330, tr('후우~'));
+            if (i === 0) { m.pos.style.transition = 'opacity 1s'; m.pos.style.opacity = 0; m.move(m.x + 650, 250, 1100); }
+            else if (i === 1) await m.wiggle(14, 800);
+            else await sleep(500);
+          })();
+        },
+        pile(op, what) {
+          const c = KIND[what]; if (!c) return;
+          if (!pile || !pile.pos.isConnected) pile = sprite(c.pile, BL.pileX, c.pileH * (P ? .85 : 1), BL.pileY);
+          pile.pos.style.pointerEvents = 'none';
+          const pig = A['pig' + c.n], target = [hx, hy - houseH * .25];
+          (async () => { // 말과 동시에 조각들이 집 자리로 (누르기 없이 저절로)
+            for (let i = 0; i < c.taps; i++) {
+              sfx(c.tick); if (pig) pig.hop(26, 300); pile.wiggle(6, 300);
+              dropPieces(what, BL.pileX, BL.pileY - c.pileH * .5, target[0], target[1]);
+              await sleep(c.taps > 5 ? 360 : 520);
+            }
+          })();
+        },
+        async house(op, what, n2) {
+          if (op === 'reveal') {
+            if (key === 'brick_out') return;
+            const c = KIND[what]; if (!c) return;
+            if (!house || !house.pos.isConnected) house = sprite(c.house, hx, houseH, hy);
+            house.pos.style.pointerEvents = 'none';
+            if (rI()) { house.show(true); return; }
+            if (pile) pile.show(false);
+            for (const s of stages) { await reveal(s, 300); stages.forEach(o => { if (o !== s) o.show(false); }); s.hop(7, 200); }
+            await reveal(house, 380); stages.forEach(o => o.show(false)); house.hop(8, 240); sfx('ding'); T.confetti();
+            return;
+          }
+          if (op === 'ruin') {
+            const c = KIND[what]; sfx('boom'); T.shake();
+            if (house) house.set(c.ruin, houseH * .7);
+            Object.values(A).forEach(a => { if (/^pig/.test(a._n || '')) a.hop(30, 350); });
+            return;
+          }
+          if (op === 'build') {
+            const i = +what - 1;
+            vchain = vchain.then(async () => {
+              const hs = vh[i]; if (!hs) return;
+              const band = A['pig' + (i + 1)];
+              if (band) band.hop(24, 300);
+              sfx('thud');
+              dropPieces('brick', band ? band.x : 500, 480, hs.x, GROUND - (P ? 230 : 270) * .25, 4);
+              await sleep(300);
+              let prev = null;
+              for (const s of (vstages[i] || [])) { await reveal(s, 260); if (prev) prev.show(false); prev = s; }
+              await reveal(hs, 300); if (prev) prev.show(false); hs.hop(8, 240); sfx('ding');
+            });
+          }
+        },
+        wolf(op, spec) { return actorVerb('wolf')(op, spec); },
+        pigs(op, x) {
+          if (op !== 'run') return;
+          const ps = ['pig1', 'pig2'].map(n => A[n]).filter(Boolean);
+          return Promise.all(ps.map((p, i) => p.move(+x, p.y, 1100 + i * 150)));
+        },
+        fire(op) {
+          if (!glow) return;
+          (async () => { for (let i = 1; i <= 5; i++) { const p = i / 5; glow.setAttribute('rx', 14 + 40 * p); glow.setAttribute('ry', 10 + 26 * p); glow.setAttribute('opacity', .1 + .28 * p); await sleep(220); } })();
+        },
+        pot(op) { (async () => { for (let i = 0; i < 4; i++) { T.pop(500 + (Math.random() - .5) * 100, 250, tr('보글')); await sleep(300); } sfx('ding'); })(); },
+        cut(k) {
+          const HOLD = { strawhat: 3200, planks: 3200, tired: 3200, crawl: 3200, chimney: 2600, splash: 3200, launch: 3400, village: 3600 };
+          const SF = { splash: 'splash', launch: 'whoosh' };
+          return T.cutImage([{ src: U('cut_' + k), hold: HOLD[k] || 3200, sfx: SF[k] }]);
+        },
+        fx(n) {
+          if (n === 'thud') sfx('thud'); else if (n === 'ding') sfx('ding'); else if (n === 'crash') sfx('crash'); else if (n === 'splash') sfx('splash'); else sfx(n === 'whoosh' ? 'whoosh' : 'pop');
+        },
+        shake() { T.shake(); },
+        pop(spec) { const a = String(spec).split(','); popAt(+a[0], +a[1], tr(a.slice(2).join(','))); },
+      };
+      ['mom', 'pig1', 'pig2', 'pig3'].forEach(n => { acts[n] = actorVerb(n); });
+      const wv = actorVerb('wolf');
+      acts.wolf = (op, a1, a2) => {
+        if (op === 'blow') { // 후~ n 번 (세지 않고 저절로)
+          const w = A.wolf; const cnt = +a1;
+          return (async () => { for (let i = 0; i < cnt; i++) { sfx('blow'); if (w) w.hop(10, 300); if (house) house.wiggle(5 + Math.min(i, 3) * 4, 450); await sleep(450); } })();
+        }
+        if (op === 'hide') return;
+        return wv(op, a1);
+      };
+      return acts;
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
 
     /* 1. 엄마 배웅 */
     bg('meadow'); T.camSnap(500, 280, 1);
@@ -330,5 +564,5 @@
     return '튼튼한 집은 하나씩 정성껏 쌓아서 만들어요!';
   }
 
-  Tale.mount({ title: '아기 돼지 삼형제', subtitle: '튼튼한 집은 어떤 집일까요?', run: T => run(Tale.api) });
+  Tale.mount({ title: '아기 돼지 삼형제', subtitle: '튼튼한 집은 어떤 집일까요?', read: true, run: T => run(Tale.api) });
 })();
