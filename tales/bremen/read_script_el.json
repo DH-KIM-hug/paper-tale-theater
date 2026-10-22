@@ -1,0 +1,1129 @@
+{
+ "mode": "read",
+ "tale": "bremen",
+ "lang": "ko",
+ "title": "브레멘 음악대",
+ "voices_from": "voice_script_el.json",
+ "moral": "나이 들어도, 작아도, 함께라면 해낼 수 있어요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md §3). 놀이판 11장면을 그대로 11장면으로 둔다. 뺀 것: 당나귀 누르기, 울음소리 고르기 3번, 노래 따라 하기(연습 장면은 묘사 두 줄로 남김), 숲길 걷기 조작, 탑 쌓기 순서 고르기와 오답 대사, 창문 안 노래 누르기, 밤 장면의 반짝 누르기 4번, 끝의 연주 누르기. 순화는 놀이판 그대로: 도둑들은 다치지 않고 놀라서 숲으로 달아나며 다시 오지 않는다. 배역 신규는 당나귀 1·고양이 1·닭 1·도둑 두목 1줄. 도둑의 밤 장면 외침 4줄과 변명은 기존 녹음 그대로.",
+ "acts": {
+  "set:<mill|road|wall|roof|meadow|walk|house_low|house_pov|house_wide|dark|morning>": "장면 세트(millBG/roadBG/wallBG/roofBG/meadowBG/forestBG/houseLowBG/housePOV/houseWideBG/darkRoomBG/morningBG)",
+  "cam:wide | cam:<x,y,z>": "카메라",
+  "<donkey|dog|cat|rooster|miller|owl>:at:<x,y[,scale]> | :walk:<x,y> | :face:<left|right> | :hide": "배우 자리·걷기(walk)·방향(put/walk)",
+  "<key>:pose:<stand|sad|perch|flat|sleep> | <key>:look:<home|perch|sleep> | <key>:sing | <key>:hop | <key>:doze | <key>:wake": "자세(POSE)·그림 보기(look)·노래(sing: 울음+폴짝+글자)·잠",
+  "bush:rustle | rooster:flap | window:glow | tower:stack:<donkey|dog|cat|rooster> | tower:wobble | band:sing | band:sing:big": "덤불 흔들림·닭 날갯짓·창문 불빛·탑 쌓기(climb)·흔들림·합창",
+  "robbers:show | robbers:flee | robber:enter | robber:hit:<cat|dog|donkey|rooster> | robber:exit | lights:off | lights:on": "도둑 등장·도망·한밤 도둑 한 명·당하는 자리·불 끄기",
+  "cut:<monster|ghost>": "만화 컷 — 컷 속 외침(VOICE_LINES cut_*)을 그대로 재사용",
+  "fx:<thud|giggle|crash|owl|jingle> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
+ },
+ "scenes": [
+  {
+   "key": "R01_mill",
+   "card": "방앗간",
+   "set": "mill",
+   "enter": [
+    "donkey:at:430,520",
+    "miller:at:700,520",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날, 방앗간에 늙은 당나귀가 살았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옛날 옛날, 방앗간에 늙은 당나귀가 살았어요.",
+       null,
+       "[calm, warm storytelling, once upon a time]"
+      ]
+     ]
+    },
+    {
+     "text": "당나귀는 오랫동안 무거운 곡식 자루를 날랐어요. 이제는 힘이 없어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "당나귀는 오랫동안 무거운 곡식 자루를 날랐어요. 이제는 힘이 없어요.",
+       "sad:1.2",
+       "[sad, tired, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "다리는 후들후들, 귀는 축 늘어졌지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "다리는 후들후들, 귀는 축 늘어졌지요.",
+       "sad:1.1",
+       "[sad, tired, soft]"
+      ]
+     ],
+     "before": [
+      "donkey:pose:sad"
+     ]
+    },
+    {
+     "text": "주인: \"이제 일을 못 하겠구나. 너를 내보내야겠다.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "miller",
+       "이제 일을 못 하겠구나. 너를 내보내야겠다.",
+       "sad",
+       "[sad, reluctant, apologetic]"
+      ]
+     ]
+    },
+    {
+     "text": "당나귀는 잠깐 슬펐지만, 곧 귀를 쫑긋 세웠어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "당나귀는 잠깐 슬펐지만, 곧 귀를 쫑긋 세웠어요.",
+       null,
+       "[gentle, then brightening]"
+      ]
+     ],
+     "after": [
+      "donkey:pose:stand"
+     ]
+    },
+    {
+     "text": "당나귀: \"괜찮아! 브레멘에 가서 음악가가 될 거야!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "donkey",
+       "괜찮아! 브레멘에 가서 음악가가 될 거야!",
+       "happy:1.4",
+       "[cheerful, brave, hopeful]"
+      ]
+     ],
+     "after": [
+      "donkey:hop",
+      "donkey:face:right",
+      "donkey:walk:1200,520"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_dog",
+   "card": "덤불 뒤에",
+   "set": "road",
+   "enter": [
+    "donkey:at:300,520",
+    "dog:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "당나귀가 길을 가는데, 덤불이 흔들흔들.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "당나귀가 길을 가는데, 덤불이 흔들흔들.",
+       "tonedown:1.1",
+       "[curious, hushed]"
+      ]
+     ],
+     "after": [
+      "bush:rustle"
+     ]
+    },
+    {
+     "text": "덤불 뒤에서 멍멍!",
+     "src": "trim",
+     "from": "덤불 뒤에서 멍멍! 누구일까요?",
+     "segs": [
+      [
+       "nar",
+       "덤불 뒤에서 멍멍!",
+       "happy:1.1",
+       "[playful, curious]"
+      ]
+     ]
+    },
+    {
+     "text": "덤불 뒤에서 늙은 강아지가 엉금엉금 나왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "덤불 뒤에서 늙은 강아지가 엉금엉금 나왔어요.",
+       null,
+       "[gentle, curious]"
+      ]
+     ],
+     "before": [
+      "dog:at:560,540"
+     ]
+    },
+    {
+     "text": "강아지가 헉헉, 혀를 쭉 내밀었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "강아지가 헉헉, 혀를 쭉 내밀었어요.",
+       null,
+       "[gentle, panting-like, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "강아지: \"늙어서 사냥을 못 한다고 내보내졌어요.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "dog",
+       "늙어서 사냥을 못 한다고 내보내졌어요.",
+       "sad:1.4",
+       "[sad, resigned, soft]"
+      ]
+     ],
+     "before": [
+      "dog:pose:sad"
+     ]
+    },
+    {
+     "text": "당나귀: \"그럼 우리 같이 브레멘에 가서 음악가가 되자!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "donkey",
+       "그럼 우리 같이 브레멘에 가서 음악가가 되자!",
+       "happy:1.3",
+       "[cheerful, encouraging]"
+      ]
+     ],
+     "after": [
+      "dog:pose:stand",
+      "dog:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_cat",
+   "card": "담장 위에",
+   "set": "wall",
+   "enter": [
+    "donkey:at:260,520",
+    "dog:at:400,540",
+    "cat:at:575,135,1.2",
+    "cat:look:perch",
+    "cat:pose:perch",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "두 친구가 마을 길을 터벅터벅 걷는데, 담장 위에서 소리가 났어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "두 친구가 마을 길을 터벅터벅 걷는데, 담장 위에서 소리가 났어요.",
+       null,
+       "[curious, hushed]"
+      ]
+     ]
+    },
+    {
+     "text": "담장 위에서 야옹~",
+     "src": "trim",
+     "from": "담장 위에서 야옹~ 누구일까요?",
+     "segs": [
+      [
+       "nar",
+       "담장 위에서 야옹~",
+       "happy:1.1",
+       "[playful, curious]"
+      ]
+     ]
+    },
+    {
+     "text": "수염이 축 처진 고양이예요. \"쥐를 못 잡는다고 내보내졌어.\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "수염이 축 처진 고양이예요.",
+       null,
+       "[gentle, sympathetic]"
+      ],
+      [
+       "cat",
+       "쥐를 못 잡는다고 내보내졌어.",
+       "sad:1.4",
+       "[sad, droopy, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "강아지: \"우리랑 같이 가자! 브레멘에서 노래하자!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "dog",
+       "우리랑 같이 가자! 브레멘에서 노래하자!",
+       "happy",
+       "[cheerful, excited]"
+      ]
+     ]
+    },
+    {
+     "text": "고양이: \"야옹, 나도 노래라면 자신 있어!\"",
+     "src": "new",
+     "segs": [
+      [
+       "cat",
+       "야옹, 나도 노래라면 자신 있어!",
+       "happy:1.3",
+       "[perking up, playful, purring]"
+      ]
+     ],
+     "before": [
+      "cat:pose:stand"
+     ]
+    },
+    {
+     "text": "고양이는 담장에서 사뿐사뿐 뛰어내려 친구들 곁에 섰어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "고양이는 담장에서 사뿐사뿐 뛰어내려 친구들 곁에 섰어요.",
+       null,
+       "[light, warm]"
+      ]
+     ],
+     "after": [
+      "cat:at:540,540",
+      "cat:look:home"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_rooster",
+   "card": "지붕 위에",
+   "set": "roof",
+   "enter": [
+    "donkey:at:220,520",
+    "dog:at:360,540",
+    "cat:at:480,540",
+    "rooster:at:805,125,1.2",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "지붕 위에서 꼬끼오!",
+     "src": "trim",
+     "from": "지붕 위에서 꼬끼오! 누구일까요?",
+     "segs": [
+      [
+       "nar",
+       "지붕 위에서 꼬끼오!",
+       "happy:1.1",
+       "[bright, crowing, curious]"
+      ]
+     ],
+     "before": [
+      "rooster:flap"
+     ]
+    },
+    {
+     "text": "지붕 위의 닭은 고개를 푹 숙이고 있었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "지붕 위의 닭은 고개를 푹 숙이고 있었어요.",
+       null,
+       "[gentle, sympathetic]"
+      ]
+     ]
+    },
+    {
+     "text": "닭: \"이제 나는 필요 없대. 꼬끼오…\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "rooster",
+       "이제 나는 필요 없대. 꼬끼오…",
+       "sad:1.5",
+       "[sad, deflated, sighs]"
+      ]
+     ]
+    },
+    {
+     "text": "당나귀: \"우리랑 음악대 하자! 네 목소리 최고야!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "donkey",
+       "우리랑 음악대 하자! 네 목소리 최고야!",
+       "happy",
+       "[cheerful, warm, encouraging]"
+      ]
+     ]
+    },
+    {
+     "text": "닭은 푸드덕 날아 내려와 친구들 앞에 폴짝 섰어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "닭은 푸드덕 날아 내려와 친구들 앞에 폴짝 섰어요.",
+       null,
+       "[bright, fluttering]"
+      ]
+     ],
+     "before": [
+      "rooster:flap"
+     ],
+     "after": [
+      "rooster:at:640,540"
+     ]
+    },
+    {
+     "text": "당나귀, 강아지, 고양이, 닭. 네 친구가 모였어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "당나귀, 강아지, 고양이, 닭. 네 친구가 모였어요!",
+       "happy:1.4",
+       "[joyful, proud]"
+      ]
+     ],
+     "after": [
+      "band:sing"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_practice",
+   "card": "음악대 연습",
+   "set": "meadow",
+   "enter": [
+    "donkey:at:200,520,1.05",
+    "dog:at:420,540,1.2",
+    "cat:at:590,540,1.3",
+    "rooster:at:770,540,1.3",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "네 친구는 길가 풀밭에서 신나게 노래 연습을 했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "네 친구는 길가 풀밭에서 신나게 노래 연습을 했어요.",
+       "happy:1.1",
+       "[cheerful, musical]"
+      ]
+     ]
+    },
+    {
+     "text": "히힝! 멍멍! 야옹! 꼬끼오! 한 명씩 차례로, 그다음엔 다 같이!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "히힝! 멍멍! 야옹! 꼬끼오! 한 명씩 차례로, 그다음엔 다 같이!",
+       "happy:1.2",
+       "[rhythmic, playful, lively]"
+      ]
+     ],
+     "before": [
+      "donkey:sing",
+      "dog:sing",
+      "cat:sing",
+      "rooster:sing"
+     ]
+    },
+    {
+     "text": "야옹, 꼬끼오, 히힝! 최고의 음악대예요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "야옹, 꼬끼오, 히힝! 최고의 음악대예요!",
+       "happy:1.3",
+       "[joyful, triumphant]"
+      ]
+     ],
+     "before": [
+      "band:sing:big"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_forest",
+   "card": "캄캄한 숲",
+   "set": "walk",
+   "enter": [
+    "donkey:at:120,484",
+    "dog:at:300,484",
+    "cat:at:420,484",
+    "rooster:at:530,484",
+    "owl:at:470,84",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "해가 지고 캄캄한 숲이 되었어요. 부엉이가 부엉부엉.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "해가 지고 캄캄한 숲이 되었어요. 부엉이가 부엉부엉.",
+       "whisper:1.2",
+       "[whispers, nighttime, mysterious but gentle]"
+      ]
+     ],
+     "before": [
+      "fx:owl"
+     ]
+    },
+    {
+     "text": "숲을 지나가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "숲을 지나가요.",
+       "tonedown:1.0",
+       "[hushed, tiptoeing, rhythmic]"
+      ]
+     ],
+     "after": [
+      "band:walk:3"
+     ]
+    },
+    {
+     "text": "브레멘은 아직 멀었어요. 친구들은 다리가 아프고 배가 꼬르륵 고팠지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "브레멘은 아직 멀었어요. 친구들은 다리가 아프고 배가 꼬르륵 고팠지요.",
+       "tonedown:1.0",
+       "[soft, tired, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "닭이 나무 꼭대기로 푸드덕 올라갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "닭이 나무 꼭대기로 푸드덕 올라갔어요.",
+       null,
+       "[gentle, fluttering]"
+      ]
+     ],
+     "before": [
+      "rooster:flap",
+      "rooster:at:470,120"
+     ]
+    },
+    {
+     "text": "닭: \"저기 불빛이 보여요! 집이 있어요!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "rooster",
+       "저기 불빛이 보여요! 집이 있어요!",
+       "toneup:1.5",
+       "[excited, whispering, thrilled]"
+      ]
+     ],
+     "before": [
+      "window:glow",
+      "pop:590,230,불빛이다!"
+     ]
+    },
+    {
+     "text": "친구들은 불빛을 따라 살금살금 걸어갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "친구들은 불빛을 따라 살금살금 걸어갔어요.",
+       "whisper:1.1",
+       "[hushed, tiptoeing]"
+      ]
+     ],
+     "after": [
+      "band:walk:2"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_tower",
+   "card": "탑 쌓기",
+   "set": "house_low",
+   "enter": [
+    "donkey:at:200,560",
+    "dog:at:330,560",
+    "cat:at:440,560",
+    "rooster:at:540,560",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "불빛이 새어 나오는 창문이에요. 그런데 너무 높아서 아무도 안 닿아요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "불빛이 새어 나오는 창문이에요. 그런데 너무 높아서 아무도 안 닿아요.",
+       null,
+       "[hushed, curious]"
+      ]
+     ]
+    },
+    {
+     "text": "서로 등에 올라서 탑을 쌓아요!",
+     "src": "trim",
+     "from": "서로 등에 올라서 탑을 쌓아요! 크고 무거운 친구가 맨 아래예요.",
+     "segs": [
+      [
+       "nar",
+       "서로 등에 올라서 탑을 쌓아요!",
+       null,
+       "[playful, building suspense]"
+      ]
+     ]
+    },
+    {
+     "text": "당나귀가 맨 아래! 튼튼해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "당나귀가 맨 아래! 튼튼해요.",
+       "happy:1.2",
+       "[proud, encouraging]"
+      ]
+     ],
+     "before": [
+      "tower:stack:donkey"
+     ]
+    },
+    {
+     "text": "그 위에 강아지가 폴짝, 또 그 위에 고양이가 사뿐 올라갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그 위에 강아지가 폴짝, 또 그 위에 고양이가 사뿐 올라갔어요.",
+       null,
+       "[playful, building suspense]"
+      ]
+     ],
+     "before": [
+      "tower:stack:dog",
+      "tower:stack:cat",
+      "pop:700,330,영차!"
+     ]
+    },
+    {
+     "text": "흔들흔들! 더 크고 무거운 친구가 먼저예요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "흔들흔들! 더 크고 무거운 친구가 먼저예요.",
+       null,
+       "[playful, wobbly]"
+      ]
+     ],
+     "before": [
+      "tower:wobble"
+     ]
+    },
+    {
+     "text": "당나귀, 강아지, 고양이, 닭! 닭이 창문에 닿았어요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "당나귀, 강아지, 고양이, 닭! 닭이 창문에 닿았어요!",
+       "happy:1.4",
+       "[triumphant, excited]"
+      ]
+     ],
+     "before": [
+      "tower:stack:rooster"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_window",
+   "card": "창문 안",
+   "set": "house_pov",
+   "enter": [
+    "robbers:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.",
+       "whisper:1.2",
+       "[whispers, hushed, curious]"
+      ]
+     ]
+    },
+    {
+     "text": "도둑: \"금화가 잔뜩이다! 하하하!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "boss",
+       "금화가 잔뜩이다! 하하하!",
+       "happy:1.4",
+       "[booming laugh, greedy, gloating]"
+      ]
+     ],
+     "before": [
+      "pop:500,200,하하하!"
+     ]
+    },
+    {
+     "text": "도둑: \"이 빵도 고기도 냠냠, 다 내 거야!\"",
+     "src": "new",
+     "segs": [
+      [
+       "boss",
+       "이 빵도 고기도 냠냠, 다 내 거야!",
+       "happy:1.3",
+       "[greedy, gloating, chewing]"
+      ]
+     ]
+    },
+    {
+     "text": "닭이 친구들에게 소곤소곤 속삭였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "닭이 친구들에게 소곤소곤 속삭였어요.",
+       "whisper:1.1",
+       "[whispers, hushed]"
+      ]
+     ]
+    },
+    {
+     "text": "닭: \"우리 음악을 크게 들려주자!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "rooster",
+       "우리 음악을 크게 들려주자!",
+       "happy:1.4",
+       "[whispers, mischievous, excited]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_blast",
+   "card": "음악 대폭발",
+   "set": "house_wide",
+   "enter": [
+    "tower:stack:donkey",
+    "tower:stack:dog",
+    "tower:stack:cat",
+    "tower:stack:rooster",
+    "robbers:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "다 같이 목청껏!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "다 같이 목청껏!",
+       "happy:1.2",
+       "[joyful, loud, energetic]"
+      ]
+     ],
+     "before": [
+      "band:sing:big",
+      "shake"
+     ]
+    },
+    {
+     "text": "히힝! 멍멍! 야옹! 꼬끼오! 그리고 와장창, 창문으로 뛰어들었어요!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "히힝! 멍멍! 야옹! 꼬끼오! 그리고 와장창, 창문으로 뛰어들었어요!",
+       "happy:1.3",
+       "[loud, lively, dramatic]"
+      ]
+     ],
+     "before": [
+      "fx:crash",
+      "pop:600,300,와장창!"
+     ],
+     "after": [
+      "cut:monster"
+     ]
+    },
+    {
+     "text": "도둑들은 \"괴물이다!\" 하고 숲으로 후다닥 달아났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "도둑들은",
+       null,
+       "[gentle, amused]"
+      ],
+      [
+       "robber",
+       "괴물이다!",
+       "toneup:1.6",
+       "[screams in panic, high-pitched]"
+      ],
+      [
+       "nar",
+       "하고 숲으로 후다닥 달아났어요.",
+       "happy:1.2",
+       "[playful, amused]"
+      ]
+     ],
+     "after": [
+      "robbers:flee"
+     ]
+    },
+    {
+     "text": "네 친구는 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "네 친구는 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.",
+       "tonedown:1.1",
+       "[sleepy, content, soft]"
+      ]
+     ],
+     "after": [
+      "lights:off"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_night",
+   "card": "캄캄한 밤",
+   "set": "dark",
+   "enter": [
+    "lights:off",
+    "cat:doze",
+    "dog:doze",
+    "donkey:doze",
+    "rooster:doze",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "한밤중, 도둑 하나가 살금살금 돌아왔어요. 쉿!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "한밤중, 도둑 하나가 살금살금 돌아왔어요. 쉿!",
+       "whisper:1.4",
+       "[whispers, tiptoeing, suspense]"
+      ]
+     ],
+     "after": [
+      "robber:enter"
+     ]
+    },
+    {
+     "text": "아궁이에서 뭔가 반짝반짝! 도둑은 불씨인 줄 알고 손을 살며시 내밀었지요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아궁이에서 뭔가 반짝반짝! 도둑은 불씨인 줄 알고 손을 살며시 내밀었지요.",
+       "whisper:1.1",
+       "[whispers, playful]"
+      ]
+     ],
+     "after": [
+      "robber:hit:cat",
+      "cat:wake"
+     ]
+    },
+    {
+     "text": "도둑: \"앗, 따가워! 불씨인 줄 알았는데!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "robber",
+       "앗, 따가워! 불씨인 줄 알았는데!",
+       "toneup:1.5",
+       "[yelps in pain, startled, whiny]"
+      ]
+     ],
+     "before": [
+      "pop:400,300,야옹! 할퀴!"
+     ]
+    },
+    {
+     "text": "문 앞에서는 강아지가 다리를 덥석 물었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "문 앞에서는 강아지가 다리를 덥석 물었어요.",
+       "whisper:1.1",
+       "[whispers, hushed]"
+      ]
+     ],
+     "before": [
+      "robber:hit:dog",
+      "dog:wake"
+     ]
+    },
+    {
+     "text": "도둑: \"아얏! 다리를 콕 찔렸어!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "robber",
+       "아얏! 다리를 콕 찔렸어!",
+       "toneup:1.5",
+       "[yelps, startled, pained]"
+      ]
+     ]
+    },
+    {
+     "text": "짚더미에서는 당나귀가 뒷발로 뻥 찼어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "짚더미에서는 당나귀가 뒷발로 뻥 찼어요.",
+       "whisper:1.1",
+       "[whispers, hushed]"
+      ]
+     ],
+     "before": [
+      "robber:hit:donkey",
+      "donkey:wake"
+     ],
+     "after": [
+      "pop:600,300,히힝! 뻥!"
+     ]
+    },
+    {
+     "text": "도둑: \"으악! 누가 쿵 찼어!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "robber",
+       "으악! 누가 쿵 찼어!",
+       "toneup:1.6",
+       "[panicked, shouting, scared]"
+      ]
+     ]
+    },
+    {
+     "text": "그리고 들보 위에서 닭이 꼬끼오! 하고 크게 울었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그리고 들보 위에서 닭이 꼬끼오! 하고 크게 울었어요.",
+       "whisper:1.2",
+       "[whispers, then loud crow]"
+      ]
+     ],
+     "before": [
+      "robber:hit:rooster",
+      "rooster:wake"
+     ]
+    },
+    {
+     "text": "도둑: \"살려 줘~!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "robber",
+       "살려 줘~!",
+       "toneup:1.7",
+       "[terrified, wailing]"
+      ]
+     ],
+     "after": [
+      "robber:exit",
+      "cut:ghost"
+     ]
+    },
+    {
+     "text": "도둑: \"그 집엔 귀신이 할퀴고, 누가 다리를 콕 찌르고, 거인이 쿵 차고, 지붕에선 재판관이 도둑 잡아라! 소리쳤어!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "robber",
+       "그 집엔 귀신이 할퀴고, 누가 다리를 콕 찌르고, 거인이 쿵 차고, 지붕에선 재판관이 도둑 잡아라! 소리쳤어!",
+       "toneup:1.4",
+       "=[breathless, terrified, exaggerating] 그 집엔 귀신이 할퀴고, 누가 다리를 콕 찌르고, 거인이 쿵 차고, [voice rising, frantic] 지붕에선 재판관이 도둑 잡아라! 소리쳤어!"
+      ]
+     ]
+    },
+    {
+     "text": "사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.",
+       "happy:1.3",
+       "[amused, reassuring, gentle laugh]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_home",
+   "card": "우리 집",
+   "set": "morning",
+   "enter": [
+    "lights:on",
+    "donkey:at:260,520",
+    "dog:at:420,540",
+    "cat:at:560,540",
+    "rooster:at:690,540",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.",
+       "happy:1.2",
+       "[bright, gentle, morning]"
+      ]
+     ]
+    },
+    {
+     "text": "네 친구는 신이 나서 폴짝폴짝 뛰었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "네 친구는 신이 나서 폴짝폴짝 뛰었어요.",
+       "happy:1.2",
+       "[bright, cheerful]"
+      ]
+     ],
+     "before": [
+      "donkey:hop",
+      "dog:hop",
+      "cat:hop",
+      "rooster:hop"
+     ]
+    },
+    {
+     "text": "\"브레멘은 못 갔지만, 여기가 우리 집이야!\"",
+     "src": "reuse",
+     "segs": [
+      [
+       "donkey",
+       "브레멘은 못 갔지만, 여기가 우리 집이야!",
+       "happy:1.4",
+       "[warm, joyful, content]"
+      ]
+     ]
+    },
+    {
+     "text": "당나귀: \"다 같이 있으니까 하나도 안 무서워!\"",
+     "src": "new",
+     "segs": [
+      [
+       "donkey",
+       "다 같이 있으니까 하나도 안 무서워!",
+       "happy:1.3",
+       "[warm, joyful, content]"
+      ]
+     ]
+    },
+    {
+     "text": "닭: \"자, 이제 기쁨의 노래를 부르자! 꼬끼오!\"",
+     "src": "new",
+     "segs": [
+      [
+       "rooster",
+       "자, 이제 기쁨의 노래를 부르자! 꼬끼오!",
+       "happy:1.4",
+       "[bright, crowing, cheerful]"
+      ]
+     ],
+     "after": [
+      "band:sing:big",
+      "fx:jingle"
+     ]
+    },
+    {
+     "text": "함께라서 행복한 브레멘 음악대였답니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "함께라서 행복한 브레멘 음악대였답니다.",
+       "happy:1.3",
+       "[tender, warm, happy ending]"
+      ]
+     ]
+    },
+    {
+     "text": "나이 들어도, 작아도, 함께라면 무엇이든 해낼 수 있답니다.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "나이 들어도, 작아도, 함께라면 무엇이든 해낼 수 있답니다.",
+       "happy:1.2",
+       "[tender, warm, closing]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

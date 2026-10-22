@@ -1,0 +1,1111 @@
+{
+ "mode": "read",
+ "tale": "bremen",
+ "lang": "en",
+ "title": "The Bremen Town Musicians",
+ "voices_from": "voice_script_el.json",
+ "moral": "Old or small, together we can do anything.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md §3-4). text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 voice_script_en.json 의 en 그대로, trim 은 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<mill|road|wall|roof|meadow|walk|house_low|house_pov|house_wide|dark|morning>": "장면 세트(millBG/roadBG/wallBG/roofBG/meadowBG/forestBG/houseLowBG/housePOV/houseWideBG/darkRoomBG/morningBG)",
+  "cam:wide | cam:<x,y,z>": "카메라",
+  "<donkey|dog|cat|rooster|miller|owl>:at:<x,y[,scale]> | :walk:<x,y> | :face:<left|right> | :hide": "배우 자리·걷기(walk)·방향(put/walk)",
+  "<key>:pose:<stand|sad|perch|flat|sleep> | <key>:look:<home|perch|sleep> | <key>:sing | <key>:hop | <key>:doze | <key>:wake": "자세(POSE)·그림 보기(look)·노래(sing: 울음+폴짝+글자)·잠",
+  "bush:rustle | rooster:flap | window:glow | tower:stack:<donkey|dog|cat|rooster> | tower:wobble | band:sing | band:sing:big": "덤불 흔들림·닭 날갯짓·창문 불빛·탑 쌓기(climb)·흔들림·합창",
+  "robbers:show | robbers:flee | robber:enter | robber:hit:<cat|dog|donkey|rooster> | robber:exit | lights:off | lights:on": "도둑 등장·도망·한밤 도둑 한 명·당하는 자리·불 끄기",
+  "cut:<monster|ghost>": "만화 컷 — 컷 속 외침(VOICE_LINES cut_*)을 그대로 재사용",
+  "fx:<thud|giggle|crash|owl|jingle> | pop:<x,y,글자> | shake": "효과음·의성어·흔들기"
+ },
+ "scenes": [
+  {
+   "key": "R01_mill",
+   "card": "The Mill",
+   "set": "mill",
+   "enter": [
+    "donkey:at:430,520",
+    "miller:at:700,520",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날, 방앗간에 늙은 당나귀가 살았어요.",
+     "src": "reuse",
+     "en": "Once upon a time, an old donkey lived at a mill.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, an old donkey lived at a mill."
+      ]
+     ]
+    },
+    {
+     "text": "당나귀는 오랫동안 무거운 곡식 자루를 날랐어요. 이제는 힘이 없어요.",
+     "src": "reuse",
+     "en": "The donkey had carried heavy sacks of grain for a very long time. Now the donkey was too tired.",
+     "segs": [
+      [
+       "nar",
+       "The donkey had carried heavy sacks of grain for a very long time. Now the donkey was too tired.",
+       "sad:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "다리는 후들후들, 귀는 축 늘어졌지요.",
+     "src": "new",
+     "en": "Its legs wobbled, and its long ears drooped down low.",
+     "segs": [
+      [
+       "nar",
+       "Its legs wobbled, and its long ears drooped down low.",
+       "sad:1.1"
+      ]
+     ],
+     "before": [
+      "donkey:pose:sad"
+     ]
+    },
+    {
+     "text": "주인: \"이제 일을 못 하겠구나. 너를 내보내야겠다.\"",
+     "src": "reuse",
+     "en": "Miller: \"You can't work anymore. I have to send you away.\"",
+     "segs": [
+      [
+       "miller",
+       "You can't work anymore. I have to send you away.",
+       "sad"
+      ]
+     ]
+    },
+    {
+     "text": "당나귀는 잠깐 슬펐지만, 곧 귀를 쫑긋 세웠어요.",
+     "src": "new",
+     "en": "The donkey felt sad for a moment, but soon its ears perked right up.",
+     "segs": [
+      [
+       "nar",
+       "The donkey felt sad for a moment, but soon its ears perked right up."
+      ]
+     ],
+     "after": [
+      "donkey:pose:stand"
+     ]
+    },
+    {
+     "text": "당나귀: \"괜찮아! 브레멘에 가서 음악가가 될 거야!\"",
+     "src": "reuse",
+     "en": "Donkey: \"That's okay! I'll go to Bremen and become a musician!\"",
+     "segs": [
+      [
+       "donkey",
+       "That's okay! I'll go to Bremen and become a musician!",
+       "happy:1.4"
+      ]
+     ],
+     "after": [
+      "donkey:hop",
+      "donkey:face:right",
+      "donkey:walk:1200,520"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_dog",
+   "card": "Behind the Bush",
+   "set": "road",
+   "enter": [
+    "donkey:at:300,520",
+    "dog:hide",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "당나귀가 길을 가는데, 덤불이 흔들흔들.",
+     "src": "reuse",
+     "en": "The donkey walked along the road, and a bush began to wiggle and wobble.",
+     "segs": [
+      [
+       "nar",
+       "The donkey walked along the road, and a bush began to wiggle and wobble.",
+       "tonedown:1.1"
+      ]
+     ],
+     "after": [
+      "bush:rustle"
+     ]
+    },
+    {
+     "text": "덤불 뒤에서 멍멍!",
+     "src": "trim",
+     "from": "덤불 뒤에서 멍멍! 누구일까요?",
+     "en": "Woof, woof, from behind the bush!",
+     "segs": [
+      [
+       "nar",
+       "Woof, woof, from behind the bush!",
+       "happy:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "덤불 뒤에서 늙은 강아지가 엉금엉금 나왔어요.",
+     "src": "new",
+     "en": "Out from behind the bush crawled an old dog, slow and creaky.",
+     "segs": [
+      [
+       "nar",
+       "Out from behind the bush crawled an old dog, slow and creaky."
+      ]
+     ],
+     "before": [
+      "dog:at:560,540"
+     ]
+    },
+    {
+     "text": "강아지가 헉헉, 혀를 쭉 내밀었어요.",
+     "src": "reuse",
+     "en": "The dog went huff, huff, with a long tongue sticking out.",
+     "segs": [
+      [
+       "nar",
+       "The dog went huff, huff, with a long tongue sticking out."
+      ]
+     ]
+    },
+    {
+     "text": "강아지: \"늙어서 사냥을 못 한다고 내보내졌어요.\"",
+     "src": "reuse",
+     "en": "Dog: \"I got too old to hunt, so I was sent away.\"",
+     "segs": [
+      [
+       "dog",
+       "I got too old to hunt, so I was sent away.",
+       "sad:1.4"
+      ]
+     ],
+     "before": [
+      "dog:pose:sad"
+     ]
+    },
+    {
+     "text": "당나귀: \"그럼 우리 같이 브레멘에 가서 음악가가 되자!\"",
+     "src": "reuse",
+     "en": "Donkey: \"Then come with us! Let's go to Bremen and be musicians together!\"",
+     "segs": [
+      [
+       "donkey",
+       "Then come with us! Let's go to Bremen and be musicians together!",
+       "happy:1.3"
+      ]
+     ],
+     "after": [
+      "dog:pose:stand",
+      "dog:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_cat",
+   "card": "On the Wall",
+   "set": "wall",
+   "enter": [
+    "donkey:at:260,520",
+    "dog:at:400,540",
+    "cat:at:575,135,1.2",
+    "cat:look:perch",
+    "cat:pose:perch",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "두 친구가 마을 길을 터벅터벅 걷는데, 담장 위에서 소리가 났어요.",
+     "src": "new",
+     "en": "As the two friends plodded along the village road, a sound came from up on the wall.",
+     "segs": [
+      [
+       "nar",
+       "As the two friends plodded along the village road, a sound came from up on the wall."
+      ]
+     ]
+    },
+    {
+     "text": "담장 위에서 야옹~",
+     "src": "trim",
+     "from": "담장 위에서 야옹~ 누구일까요?",
+     "en": "A meow from up on the wall!",
+     "segs": [
+      [
+       "nar",
+       "A meow from up on the wall!",
+       "happy:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "수염이 축 처진 고양이예요. \"쥐를 못 잡는다고 내보내졌어.\"",
+     "src": "reuse",
+     "en": "This cat's whiskers are drooping. \"I can't catch mice anymore, so I was sent away.\"",
+     "segs": [
+      [
+       "nar",
+       "This cat's whiskers are drooping."
+      ],
+      [
+       "cat",
+       "I can't catch mice anymore, so I was sent away.",
+       "sad:1.4"
+      ]
+     ]
+    },
+    {
+     "text": "강아지: \"우리랑 같이 가자! 브레멘에서 노래하자!\"",
+     "src": "reuse",
+     "en": "Dog: \"Come with us! Let's sing in Bremen!\"",
+     "segs": [
+      [
+       "dog",
+       "Come with us! Let's sing in Bremen!",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "고양이: \"야옹, 나도 노래라면 자신 있어!\"",
+     "src": "new",
+     "en": "Cat: \"Meow, I can sing too!\"",
+     "segs": [
+      [
+       "cat",
+       "Meow, I can sing too!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "cat:pose:stand"
+     ]
+    },
+    {
+     "text": "고양이는 담장에서 사뿐사뿐 뛰어내려 친구들 곁에 섰어요.",
+     "src": "new",
+     "en": "The cat hopped lightly, pit-pat, down from the wall and stood beside its new friends.",
+     "segs": [
+      [
+       "nar",
+       "The cat hopped lightly, pit-pat, down from the wall and stood beside its new friends."
+      ]
+     ],
+     "after": [
+      "cat:at:540,540",
+      "cat:look:home"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_rooster",
+   "card": "On the Roof",
+   "set": "roof",
+   "enter": [
+    "donkey:at:220,520",
+    "dog:at:360,540",
+    "cat:at:480,540",
+    "rooster:at:805,125,1.2",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "지붕 위에서 꼬끼오!",
+     "src": "trim",
+     "from": "지붕 위에서 꼬끼오! 누구일까요?",
+     "en": "A cock-a-doodle-doo from up on the roof!",
+     "segs": [
+      [
+       "nar",
+       "A cock-a-doodle-doo from up on the roof!",
+       "happy:1.1"
+      ]
+     ],
+     "before": [
+      "rooster:flap"
+     ]
+    },
+    {
+     "text": "지붕 위의 닭은 고개를 푹 숙이고 있었어요.",
+     "src": "new",
+     "en": "Up on the roof sat a rooster, its head hanging low.",
+     "segs": [
+      [
+       "nar",
+       "Up on the roof sat a rooster, its head hanging low."
+      ]
+     ]
+    },
+    {
+     "text": "닭: \"이제 나는 필요 없대. 꼬끼오…\"",
+     "src": "reuse",
+     "en": "Rooster: \"They say I'm not needed anymore. Cock-a-doodle-doo...\"",
+     "segs": [
+      [
+       "rooster",
+       "They say I'm not needed anymore. Cock-a-doodle-doo...",
+       "sad:1.5"
+      ]
+     ]
+    },
+    {
+     "text": "당나귀: \"우리랑 음악대 하자! 네 목소리 최고야!\"",
+     "src": "reuse",
+     "en": "Donkey: \"Join our band! Your voice is the best!\"",
+     "segs": [
+      [
+       "donkey",
+       "Join our band! Your voice is the best!",
+       "happy"
+      ]
+     ]
+    },
+    {
+     "text": "닭은 푸드덕 날아 내려와 친구들 앞에 폴짝 섰어요.",
+     "src": "new",
+     "en": "The rooster flapped down, flutter, flutter, and hopped right in front of the friends.",
+     "segs": [
+      [
+       "nar",
+       "The rooster flapped down, flutter, flutter, and hopped right in front of the friends."
+      ]
+     ],
+     "before": [
+      "rooster:flap"
+     ],
+     "after": [
+      "rooster:at:640,540"
+     ]
+    },
+    {
+     "text": "당나귀, 강아지, 고양이, 닭. 네 친구가 모였어요!",
+     "src": "reuse",
+     "en": "Donkey, dog, cat, and rooster. Four friends together at last!",
+     "segs": [
+      [
+       "nar",
+       "Donkey, dog, cat, and rooster. Four friends together at last!",
+       "happy:1.4"
+      ]
+     ],
+     "after": [
+      "band:sing"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_practice",
+   "card": "Band Practice",
+   "set": "meadow",
+   "enter": [
+    "donkey:at:200,520,1.05",
+    "dog:at:420,540,1.2",
+    "cat:at:590,540,1.3",
+    "rooster:at:770,540,1.3",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "네 친구는 길가 풀밭에서 신나게 노래 연습을 했어요.",
+     "src": "new",
+     "en": "The four friends practiced their songs on the grassy roadside, full of cheer.",
+     "segs": [
+      [
+       "nar",
+       "The four friends practiced their songs on the grassy roadside, full of cheer.",
+       "happy:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "히힝! 멍멍! 야옹! 꼬끼오! 한 명씩 차례로, 그다음엔 다 같이!",
+     "src": "new",
+     "en": "Hee-haw! Woof! Meow! Cock-a-doodle-doo! One at a time, and then all together!",
+     "segs": [
+      [
+       "nar",
+       "Hee-haw! Woof! Meow! Cock-a-doodle-doo! One at a time, and then all together!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "donkey:sing",
+      "dog:sing",
+      "cat:sing",
+      "rooster:sing"
+     ]
+    },
+    {
+     "text": "야옹, 꼬끼오, 히힝! 최고의 음악대예요!",
+     "src": "reuse",
+     "en": "Meow, cock-a-doodle-doo, hee-haw! The best band ever!",
+     "segs": [
+      [
+       "nar",
+       "Meow, cock-a-doodle-doo, hee-haw! The best band ever!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "band:sing:big"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_forest",
+   "card": "The Dark Forest",
+   "set": "walk",
+   "enter": [
+    "donkey:at:120,484",
+    "dog:at:300,484",
+    "cat:at:420,484",
+    "rooster:at:530,484",
+    "owl:at:470,84",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "해가 지고 캄캄한 숲이 되었어요. 부엉이가 부엉부엉.",
+     "src": "reuse",
+     "en": "The sun went down, and the forest grew dark. The owl went hoo, hoo.",
+     "segs": [
+      [
+       "nar",
+       "The sun went down, and the forest grew dark. The owl went hoo, hoo.",
+       "whisper:1.2"
+      ]
+     ],
+     "before": [
+      "fx:owl"
+     ]
+    },
+    {
+     "text": "숲을 지나가요.",
+     "src": "reuse",
+     "en": "Let's walk through the forest.",
+     "segs": [
+      [
+       "nar",
+       "Let's walk through the forest.",
+       "tonedown:1.0"
+      ]
+     ],
+     "after": [
+      "band:walk:3"
+     ]
+    },
+    {
+     "text": "브레멘은 아직 멀었어요. 친구들은 다리가 아프고 배가 꼬르륵 고팠지요.",
+     "src": "new",
+     "en": "Bremen was still far away. The friends' legs were tired, and their tummies went grumble, grumble.",
+     "segs": [
+      [
+       "nar",
+       "Bremen was still far away. The friends' legs were tired, and their tummies went grumble, grumble.",
+       "tonedown:1.0"
+      ]
+     ]
+    },
+    {
+     "text": "닭이 나무 꼭대기로 푸드덕 올라갔어요.",
+     "src": "reuse",
+     "en": "The rooster flapped up to the top of a tree.",
+     "segs": [
+      [
+       "nar",
+       "The rooster flapped up to the top of a tree."
+      ]
+     ],
+     "before": [
+      "rooster:flap",
+      "rooster:at:470,120"
+     ]
+    },
+    {
+     "text": "닭: \"저기 불빛이 보여요! 집이 있어요!\"",
+     "src": "reuse",
+     "en": "Rooster: \"I see a light over there! There's a house!\"",
+     "segs": [
+      [
+       "rooster",
+       "I see a light over there! There's a house!",
+       "toneup:1.5"
+      ]
+     ],
+     "before": [
+      "window:glow",
+      "pop:590,230,불빛이다!"
+     ]
+    },
+    {
+     "text": "친구들은 불빛을 따라 살금살금 걸어갔어요.",
+     "src": "new",
+     "en": "The friends tiptoed quietly, step by step, toward the light.",
+     "segs": [
+      [
+       "nar",
+       "The friends tiptoed quietly, step by step, toward the light.",
+       "whisper:1.1"
+      ]
+     ],
+     "after": [
+      "band:walk:2"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_tower",
+   "card": "The Tower",
+   "set": "house_low",
+   "enter": [
+    "donkey:at:200,560",
+    "dog:at:330,560",
+    "cat:at:440,560",
+    "rooster:at:540,560",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "불빛이 새어 나오는 창문이에요. 그런데 너무 높아서 아무도 안 닿아요.",
+     "src": "reuse",
+     "en": "Light is shining out of a window. But it's so high that no one can reach it.",
+     "segs": [
+      [
+       "nar",
+       "Light is shining out of a window. But it's so high that no one can reach it."
+      ]
+     ]
+    },
+    {
+     "text": "서로 등에 올라서 탑을 쌓아요!",
+     "src": "trim",
+     "from": "서로 등에 올라서 탑을 쌓아요! 크고 무거운 친구가 맨 아래예요.",
+     "en": "Let's climb onto each other's backs and build a tower!",
+     "segs": [
+      [
+       "nar",
+       "Let's climb onto each other's backs and build a tower!"
+      ]
+     ]
+    },
+    {
+     "text": "당나귀가 맨 아래! 튼튼해요.",
+     "src": "reuse",
+     "en": "The donkey goes at the bottom! So strong.",
+     "segs": [
+      [
+       "nar",
+       "The donkey goes at the bottom! So strong.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "tower:stack:donkey"
+     ]
+    },
+    {
+     "text": "그 위에 강아지가 폴짝, 또 그 위에 고양이가 사뿐 올라갔어요.",
+     "src": "new",
+     "en": "Hop! The dog climbed on top, and then, pit-pat, the cat climbed up on the dog.",
+     "segs": [
+      [
+       "nar",
+       "Hop! The dog climbed on top, and then, pit-pat, the cat climbed up on the dog."
+      ]
+     ],
+     "before": [
+      "tower:stack:dog",
+      "tower:stack:cat",
+      "pop:700,330,영차!"
+     ]
+    },
+    {
+     "text": "흔들흔들! 더 크고 무거운 친구가 먼저예요.",
+     "src": "reuse",
+     "en": "Wobble, wobble! The bigger, heavier friend goes first.",
+     "segs": [
+      [
+       "nar",
+       "Wobble, wobble! The bigger, heavier friend goes first."
+      ]
+     ],
+     "before": [
+      "tower:wobble"
+     ]
+    },
+    {
+     "text": "당나귀, 강아지, 고양이, 닭! 닭이 창문에 닿았어요!",
+     "src": "reuse",
+     "en": "Donkey, dog, cat, rooster! The rooster reached the window!",
+     "segs": [
+      [
+       "nar",
+       "Donkey, dog, cat, rooster! The rooster reached the window!",
+       "happy:1.4"
+      ]
+     ],
+     "before": [
+      "tower:stack:rooster"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_window",
+   "card": "Inside the Window",
+   "set": "house_pov",
+   "enter": [
+    "robbers:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.",
+     "src": "reuse",
+     "en": "Peeking through the window, three robbers are counting gold coins and eating tasty food.",
+     "segs": [
+      [
+       "nar",
+       "Peeking through the window, three robbers are counting gold coins and eating tasty food.",
+       "whisper:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "도둑: \"금화가 잔뜩이다! 하하하!\"",
+     "src": "reuse",
+     "en": "Robber: \"Look at all this gold! Ha ha ha!\"",
+     "segs": [
+      [
+       "boss",
+       "Look at all this gold! Ha ha ha!",
+       "happy:1.4"
+      ]
+     ],
+     "before": [
+      "pop:500,200,하하하!"
+     ]
+    },
+    {
+     "text": "도둑: \"이 빵도 고기도 냠냠, 다 내 거야!\"",
+     "src": "new",
+     "en": "Robber: \"Yum, yum, all this bread and meat is mine, mine, mine!\"",
+     "segs": [
+      [
+       "boss",
+       "Yum, yum, all this bread and meat is mine, mine, mine!",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "닭이 친구들에게 소곤소곤 속삭였어요.",
+     "src": "new",
+     "en": "The rooster whispered, psst, psst, to its friends.",
+     "segs": [
+      [
+       "nar",
+       "The rooster whispered, psst, psst, to its friends.",
+       "whisper:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "닭: \"우리 음악을 크게 들려주자!\"",
+     "src": "reuse",
+     "en": "Rooster: \"Let's play our music nice and loud!\"",
+     "segs": [
+      [
+       "rooster",
+       "Let's play our music nice and loud!",
+       "happy:1.4"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_blast",
+   "card": "The Big Music Blast",
+   "set": "house_wide",
+   "enter": [
+    "tower:stack:donkey",
+    "tower:stack:dog",
+    "tower:stack:cat",
+    "tower:stack:rooster",
+    "robbers:show",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "다 같이 목청껏!",
+     "src": "reuse",
+     "en": "All together, as loud as you can!",
+     "segs": [
+      [
+       "nar",
+       "All together, as loud as you can!",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "band:sing:big",
+      "shake"
+     ]
+    },
+    {
+     "text": "히힝! 멍멍! 야옹! 꼬끼오! 그리고 와장창, 창문으로 뛰어들었어요!",
+     "src": "new",
+     "en": "Hee-haw! Woof! Meow! Cock-a-doodle-doo! And then, crash, they tumbled in through the window!",
+     "segs": [
+      [
+       "nar",
+       "Hee-haw! Woof! Meow! Cock-a-doodle-doo! And then, crash, they tumbled in through the window!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "fx:crash",
+      "pop:600,300,와장창!"
+     ],
+     "after": [
+      "cut:monster"
+     ]
+    },
+    {
+     "text": "도둑들은 \"괴물이다!\" 하고 숲으로 후다닥 달아났어요.",
+     "src": "reuse",
+     "en": "The robbers yelled, \"A monster!\" and scampered off into the forest.",
+     "segs": [
+      [
+       "nar",
+       "The robbers yelled,"
+      ],
+      [
+       "robber",
+       "A monster!",
+       "toneup:1.6"
+      ],
+      [
+       "nar",
+       "and scampered off into the forest.",
+       "happy:1.2"
+      ]
+     ],
+     "after": [
+      "robbers:flee"
+     ]
+    },
+    {
+     "text": "네 친구는 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.",
+     "src": "reuse",
+     "en": "The four friends munched the leftover food, put out the light, and fell fast asleep.",
+     "segs": [
+      [
+       "nar",
+       "The four friends munched the leftover food, put out the light, and fell fast asleep.",
+       "tonedown:1.1"
+      ]
+     ],
+     "after": [
+      "lights:off"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_night",
+   "card": "The Dark Night",
+   "set": "dark",
+   "enter": [
+    "lights:off",
+    "cat:doze",
+    "dog:doze",
+    "donkey:doze",
+    "rooster:doze",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "한밤중, 도둑 하나가 살금살금 돌아왔어요. 쉿!",
+     "src": "reuse",
+     "en": "In the middle of the night, one robber tiptoed back. Shh!",
+     "segs": [
+      [
+       "nar",
+       "In the middle of the night, one robber tiptoed back. Shh!",
+       "whisper:1.4"
+      ]
+     ],
+     "after": [
+      "robber:enter"
+     ]
+    },
+    {
+     "text": "아궁이에서 뭔가 반짝반짝! 도둑은 불씨인 줄 알고 손을 살며시 내밀었지요.",
+     "src": "new",
+     "en": "Something twinkled in the fireplace! The robber thought it was an ember and slowly reached out his hand.",
+     "segs": [
+      [
+       "nar",
+       "Something twinkled in the fireplace! The robber thought it was an ember and slowly reached out his hand.",
+       "whisper:1.1"
+      ]
+     ],
+     "after": [
+      "robber:hit:cat",
+      "cat:wake"
+     ]
+    },
+    {
+     "text": "도둑: \"앗, 따가워! 불씨인 줄 알았는데!\"",
+     "src": "reuse",
+     "en": "Robber: \"Ouch, that stings! I thought it was a glowing ember!\"",
+     "segs": [
+      [
+       "robber",
+       "Ouch, that stings! I thought it was a glowing ember!",
+       "toneup:1.5"
+      ]
+     ],
+     "before": [
+      "pop:400,300,야옹! 할퀴!"
+     ]
+    },
+    {
+     "text": "문 앞에서는 강아지가 다리를 덥석 물었어요.",
+     "src": "new",
+     "en": "By the door, the dog nipped at his leg.",
+     "segs": [
+      [
+       "nar",
+       "By the door, the dog nipped at his leg.",
+       "whisper:1.1"
+      ]
+     ],
+     "before": [
+      "robber:hit:dog",
+      "dog:wake"
+     ]
+    },
+    {
+     "text": "도둑: \"아얏! 다리를 콕 찔렸어!\"",
+     "src": "reuse",
+     "en": "Robber: \"Ow! Something poked my leg!\"",
+     "segs": [
+      [
+       "robber",
+       "Ow! Something poked my leg!",
+       "toneup:1.5"
+      ]
+     ]
+    },
+    {
+     "text": "짚더미에서는 당나귀가 뒷발로 뻥 찼어요.",
+     "src": "new",
+     "en": "In the pile of straw, the donkey gave him a big kick with its back legs.",
+     "segs": [
+      [
+       "nar",
+       "In the pile of straw, the donkey gave him a big kick with its back legs.",
+       "whisper:1.1"
+      ]
+     ],
+     "before": [
+      "robber:hit:donkey",
+      "donkey:wake"
+     ],
+     "after": [
+      "pop:600,300,히힝! 뻥!"
+     ]
+    },
+    {
+     "text": "도둑: \"으악! 누가 쿵 찼어!\"",
+     "src": "reuse",
+     "en": "Robber: \"Yikes! Something kicked me, boom!\"",
+     "segs": [
+      [
+       "robber",
+       "Yikes! Something kicked me, boom!",
+       "toneup:1.6"
+      ]
+     ]
+    },
+    {
+     "text": "그리고 들보 위에서 닭이 꼬끼오! 하고 크게 울었어요.",
+     "src": "new",
+     "en": "And up on the beam, the rooster crowed, cock-a-doodle-doo!",
+     "segs": [
+      [
+       "nar",
+       "And up on the beam, the rooster crowed, cock-a-doodle-doo!",
+       "whisper:1.2"
+      ]
+     ],
+     "before": [
+      "robber:hit:rooster",
+      "rooster:wake"
+     ]
+    },
+    {
+     "text": "도둑: \"살려 줘~!\"",
+     "src": "reuse",
+     "en": "Robber: \"Help me~!\"",
+     "segs": [
+      [
+       "robber",
+       "Help me~!",
+       "toneup:1.7"
+      ]
+     ],
+     "after": [
+      "robber:exit",
+      "cut:ghost"
+     ]
+    },
+    {
+     "text": "도둑: \"그 집엔 귀신이 할퀴고, 누가 다리를 콕 찌르고, 거인이 쿵 차고, 지붕에선 재판관이 도둑 잡아라! 소리쳤어!\"",
+     "src": "reuse",
+     "en": "Robber: \"In that house, a ghost scratched me, someone poked my leg, a giant kicked me, and up on the roof a judge shouted, 'Catch the thief!'\"",
+     "segs": [
+      [
+       "robber",
+       "In that house, a ghost scratched me, someone poked my leg, a giant kicked me, and up on the roof a judge shouted, 'Catch the thief!'",
+       "toneup:1.4"
+      ]
+     ]
+    },
+    {
+     "text": "사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.",
+     "src": "reuse",
+     "en": "It was really a cat, a dog, a donkey, and a rooster! The robbers never came back.",
+     "segs": [
+      [
+       "nar",
+       "It was really a cat, a dog, a donkey, and a rooster! The robbers never came back.",
+       "happy:1.3"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_home",
+   "card": "Our Home",
+   "set": "morning",
+   "enter": [
+    "lights:on",
+    "donkey:at:260,520",
+    "dog:at:420,540",
+    "cat:at:560,540",
+    "rooster:at:690,540",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.",
+     "src": "reuse",
+     "en": "Morning came. The four friends loved this house.",
+     "segs": [
+      [
+       "nar",
+       "Morning came. The four friends loved this house.",
+       "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "네 친구는 신이 나서 폴짝폴짝 뛰었어요.",
+     "src": "new",
+     "en": "The four friends were so happy they hopped and hopped for joy.",
+     "segs": [
+      [
+       "nar",
+       "The four friends were so happy they hopped and hopped for joy.",
+       "happy:1.2"
+      ]
+     ],
+     "before": [
+      "donkey:hop",
+      "dog:hop",
+      "cat:hop",
+      "rooster:hop"
+     ]
+    },
+    {
+     "text": "\"브레멘은 못 갔지만, 여기가 우리 집이야!\"",
+     "src": "reuse",
+     "en": "\"We never got to Bremen, but this is our home!\"",
+     "segs": [
+      [
+       "donkey",
+       "We never got to Bremen, but this is our home!",
+       "happy:1.4"
+      ]
+     ]
+    },
+    {
+     "text": "당나귀: \"다 같이 있으니까 하나도 안 무서워!\"",
+     "src": "new",
+     "en": "Donkey: \"With all of us together, nothing is scary at all!\"",
+     "segs": [
+      [
+       "donkey",
+       "With all of us together, nothing is scary at all!",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "닭: \"자, 이제 기쁨의 노래를 부르자! 꼬끼오!\"",
+     "src": "new",
+     "en": "Rooster: \"Now let's sing our song of joy! Cock-a-doodle-doo!\"",
+     "segs": [
+      [
+       "rooster",
+       "Now let's sing our song of joy! Cock-a-doodle-doo!",
+       "happy:1.4"
+      ]
+     ],
+     "after": [
+      "band:sing:big",
+      "fx:jingle"
+     ]
+    },
+    {
+     "text": "함께라서 행복한 브레멘 음악대였답니다.",
+     "src": "reuse",
+     "en": "Together, the Bremen Town Musicians were so happy.",
+     "segs": [
+      [
+       "nar",
+       "Together, the Bremen Town Musicians were so happy.",
+       "happy:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "나이 들어도, 작아도, 함께라면 무엇이든 해낼 수 있답니다.",
+     "src": "new",
+     "en": "Old or small, when friends stick together, they can do anything at all.",
+     "segs": [
+      [
+       "nar",
+       "Old or small, when friends stick together, they can do anything at all.",
+       "happy:1.2"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
