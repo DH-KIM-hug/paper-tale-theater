@@ -64,6 +64,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `sfx/rattle.mp3` | qubodup-wobble1.wav | qubodup | CC0 | https://opengameart.org/content/wood-wobbling-rattling |
 | `sfx/xylo_up.mp3` · `sfx/xylo_down.mp3` · `sfx/giggle_xylo.mp3` | child's_xylophone-2.wav 의 한 음을 음높이만 바꿔 이어 붙임 | AntumDeluge | CC0 | https://opengameart.org/content/childrens-xylophone |
 | `sfx/note_xylo.mp3` | child's_xylophone-2.wav 의 첫 음(약 A6) 한 개를 잘라 C5 높이로 느리게 낮춤. 골디락스 〈곰 세 마리〉 연주용(AudioFX.note) | AntumDeluge | CC0 | https://opengameart.org/content/childrens-xylophone |
+| `sfx/gom_se_mari.mp3` | 〈곰 세 마리〉(동요, 작자 미상) 멜로디를 위 note_xylo 샘플로 연주해 미리 렌더한 한 곡(약 20초). 만드는 법: tools/dev/render_gom_se_mari.py. 골디락스 끝 노래, 음 시작 시각은 goldilocks.js 의 ONS 표 | AntumDeluge 샘플 가공 | CC0 | https://opengameart.org/content/childrens-xylophone |
 | `sfx/paper_up.mp3` | RPG Audio: bookFlip3.ogg (홈 태그를 고를 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
 | `sfx/paper_down.mp3` | RPG Audio: bookPlace3.ogg (태그를 풀 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |
 | `sfx/paper_turn.mp3` | RPG Audio: bookFlip2.ogg (동화로 넘어갈 때) | Kenney | CC0 | https://kenney.nl/assets/rpg-audio |

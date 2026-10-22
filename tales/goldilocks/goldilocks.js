@@ -1058,7 +1058,13 @@
     ];
     const SHOW = ['곰 세 마리가 한 집에 있어', '아빠 곰 엄마 곰 애기 곰', '아빠 곰은 뚱뚱해', '엄마 곰은 날씬해', '애기 곰은 너무 귀여워', '히쭉히쭉 잘한다'];
     const BEAT = .52;
+    /* 미리 연주해 둔 녹음(sounds/sfx/gom_se_mari.mp3, tools/dev/render_gom_se_mari.py)의 음 시작 시각(초). 글자 색칠·곰 뛰기가 이 시각을 따른다 */
+    const ONS = [[0.0,0.52,1.04,1.3,1.56,2.08,2.34,2.6,2.86,3.12],[4.285,4.545,4.805,5.325,5.585,5.845,6.365,6.885,7.405],[8.57,8.83,9.09,9.35,9.61,9.87,10.13],[11.003,11.263,11.523,11.783,12.043,12.303,12.563],[13.437,13.697,13.957,14.217,14.477,14.737,14.997,15.257,15.517],[16.682,16.942,17.202,17.462,17.722,17.982,18.242]];
+    const SONG_END = 19.406;
     const svg = T.fx;
+    const rec = AudioFX.sfx('gom_se_mari', .9); // 녹음이 아직 안 왔으면 false → 아래 음마다 합성
+    const t0 = performance.now();
+    const waitTo = sec => T.sleep(Math.max(0, t0 + sec * 1000 - performance.now()));
     for (let li = 0; li < LINES.length; li++) {
       const [syl, notes, who] = LINES[li];
       svg.replaceChildren();
@@ -1075,17 +1081,20 @@
         const hz = HZ[seq[k][0]];
         const last = k === seq.length - 1;
         const dur = BEAT * +seq[k][1];
-        if (!AudioFX.note(SEMI[seq[k][0]], 0, .7)) { // 샘플이 아직 안 왔으면 합성음으로
-          T.tone(hz, dur * .9, { type: 'triangle', vol: .24 });
-          T.tone(hz * 2, dur * .5, { type: 'sine', vol: .05 });
+        await waitTo(ONS[li][k]);
+        if (!rec) {
+          if (!AudioFX.note(SEMI[seq[k][0]], 0, .7)) { // 샘플도 안 왔으면 합성음으로
+            T.tone(hz, dur * .9, { type: 'triangle', vol: .24 });
+            T.tone(hz * 2, dur * .5, { type: 'sine', vol: .05 });
+          }
+          if (k === 0) AudioFX.note(SEMI[seq[k][0]] - 12, 0, .35);
         }
-        if (k === 0) AudioFX.note(SEMI[seq[k][0]] - 12, 0, .35); // 구절 첫 박에만 한 옥타브 아래 받침
         const sp = spans[en ? Math.floor(k * spans.length / seq.length) : k];
         if (sp) sp.setAttribute('fill', C.bean);
         const a = Array.isArray(who) ? who[k] : who;
         if (a) a.hop(last ? 26 : 16, 280); else if (dur >= BEAT) goldi.hop(12, 240);
-        await T.sleep(dur * 1000);
       }
+      if (li < LINES.length - 1) await waitTo(ONS[li + 1][0]); else await waitTo(SONG_END);
     }
     svg.replaceChildren();
     T.confetti();
