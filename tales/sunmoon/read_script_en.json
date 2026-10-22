@@ -44,24 +44,24 @@
      ]
     },
     {
-     "text": "오빠는 씩씩하고, 동생은 웃음이 많았지요.",
+     "text": "오빠는 씩씩하고, 동생은 까르르 웃음이 많았지요.",
      "src": "new",
-     "en": "The brother was brave, and the little sister loved to giggle.",
+     "en": "The brother was brave, and the little sister giggled all day long.",
      "segs": [
       [
        "nar",
-       "The brother was brave, and the little sister loved to giggle."
+       "The brother was brave, and the little sister giggled all day long."
       ]
      ]
     },
     {
-     "text": "아침이 되자 엄마가 일하러 나갈 채비를 했어요.",
+     "text": "아침 해가 반짝 뜨자, 엄마는 부지런히 일하러 나갈 채비를 했어요.",
      "src": "new",
-     "en": "When morning came, Mom got ready to go to work.",
+     "en": "When the morning sun came up bright and shiny, Mom got ready to go to work.",
      "segs": [
       [
        "nar",
-       "When morning came, Mom got ready to go to work."
+       "When the morning sun came up bright and shiny, Mom got ready to go to work."
       ]
      ],
      "after": [
@@ -69,9 +69,9 @@
      ]
     },
     {
-     "text": "\"다녀오세요!\" 오누이는 손을 흔들며 인사했어요.",
+     "text": "\"다녀오세요!\" 오누이는 손을 흔들흔들 인사했어요.",
      "src": "new",
-     "en": "\"Take care, Mom!\" The brother and sister waved goodbye.",
+     "en": "\"Take care, Mom!\" The brother and sister waved and waved goodbye.",
      "segs": [
       [
        "boy",
@@ -80,7 +80,7 @@
       ],
       [
        "nar",
-       "The brother and sister waved goodbye."
+       "The brother and sister waved and waved goodbye."
       ]
      ],
      "before": [
@@ -133,24 +133,24 @@
      ]
     },
     {
-     "text": "쌀을 씻고, 불을 때고, 떡을 찌고. 해가 기울 때까지 쉬지 않았지요.",
+     "text": "싹싹 쌀을 씻고, 활활 불을 때고, 모락모락 떡을 쪘지요.",
      "src": "new",
-     "en": "She washed the rice, fed the fire, and steamed the rice cakes. She did not rest until the sun went down.",
+     "en": "Swish, swish, she washed the rice. Crackle, crackle, she fed the fire. And puff, puff, she steamed the rice cakes.",
      "segs": [
       [
        "nar",
-       "She washed the rice, fed the fire, and steamed the rice cakes. She did not rest until the sun went down."
+       "Swish, swish, she washed the rice. Crackle, crackle, she fed the fire. And puff, puff, she steamed the rice cakes."
       ]
      ]
     },
     {
-     "text": "저녁이 되자 부잣집 주인이 떡을 한 아름 내주었어요.",
+     "text": "저녁이 되자 부잣집 주인이 말랑말랑한 떡을 한 아름 내주었어요.",
      "src": "new",
-     "en": "When evening came, the lady of the house gave her a big armful of rice cakes.",
+     "en": "When evening came, the lady of the house gave her a big armful of soft, squishy rice cakes.",
      "segs": [
       [
        "nar",
-       "When evening came, the lady of the house gave her a big armful of rice cakes."
+       "When evening came, the lady of the house gave her a big armful of soft, squishy rice cakes."
       ]
      ]
     },
@@ -255,13 +255,13 @@
      ]
     },
     {
-     "text": "엄마는 떨리는 손으로 떡 한 개를 꺼내 주었어요.",
+     "text": "엄마는 덜덜 떨리는 손으로 떡 한 개를 꺼내 주었어요.",
      "src": "new",
-     "en": "With a trembling hand, Mom took out one rice cake and gave it to the tiger.",
+     "en": "With a hand shaking and trembling, Mom took out one rice cake and gave it to the tiger.",
      "segs": [
       [
        "nar",
-       "With a trembling hand, Mom took out one rice cake and gave it to the tiger."
+       "With a hand shaking and trembling, Mom took out one rice cake and gave it to the tiger."
       ]
      ],
      "after": [
@@ -349,13 +349,13 @@
      ]
     },
     {
-     "text": "엄마는 바구니에서 떡 두 개를 꺼내 주었어요.",
+     "text": "엄마는 바구니에서 떡 두 개를 주섬주섬 꺼내 주었어요.",
      "src": "new",
-     "en": "Mom took two rice cakes out of the basket and gave them to the tiger.",
+     "en": "Mom fumbled in the basket and took out two rice cakes for the tiger.",
      "segs": [
       [
        "nar",
-       "Mom took two rice cakes out of the basket and gave them to the tiger."
+       "Mom fumbled in the basket and took out two rice cakes for the tiger."
       ]
      ],
      "after": [
@@ -411,13 +411,13 @@
      ]
     },
     {
-     "text": "바위 뒤에서 또다시 불쑥! 호랑이 눈이 어둠 속에서 번쩍였어요.",
+     "text": "바위 뒤에서 또다시 불쑥! 호랑이 눈이 어둠 속에서 번쩍번쩍 빛났어요.",
      "src": "new",
-     "en": "From behind the rock, pop, there it was again! The tiger's eyes glowed in the dark.",
+     "en": "From behind the rock, pop, there it was again! The tiger's eyes flashed and glowed in the dark.",
      "segs": [
       [
        "nar",
-       "From behind the rock, pop, there it was again! The tiger's eyes glowed in the dark."
+       "From behind the rock, pop, there it was again! The tiger's eyes flashed and glowed in the dark."
       ]
      ],
      "before": [
@@ -458,13 +458,13 @@
      ]
     },
     {
-     "text": "엄마는 텅 빈 바구니를 꼭 끌어안았어요.",
+     "text": "엄마는 텅 빈 바구니를 꼭 끌어안고 부들부들 떨었어요.",
      "src": "new",
-     "en": "Mom hugged the empty basket tight.",
+     "en": "Mom hugged the empty basket tight, shivering and shaking.",
      "segs": [
       [
        "nar",
-       "Mom hugged the empty basket tight."
+       "Mom hugged the empty basket tight, shivering and shaking."
       ]
      ]
     },
@@ -538,13 +538,13 @@
    ],
    "lines": [
     {
-     "text": "집에서는 오누이가 엄마를 기다리고 있었어요. 밤은 점점 깊어졌지요.",
+     "text": "집에서는 오누이가 엄마를 기다리고 있었어요. 등잔불이 가물가물 흔들렸지요.",
      "src": "new",
-     "en": "Back at home, the brother and sister were waiting for Mom. The night grew darker and darker.",
+     "en": "Back at home, the brother and sister were waiting for Mom. The little lamp flickered and flickered.",
      "segs": [
       [
        "nar",
-       "Back at home, the brother and sister were waiting for Mom. The night grew darker and darker."
+       "Back at home, the brother and sister were waiting for Mom. The little lamp flickered and flickered."
       ]
      ]
     },
@@ -574,13 +574,13 @@
      ]
     },
     {
-     "text": "오누이는 고개를 갸웃했어요. 엄마 목소리는 다정하고 부드러운데 말이에요.",
+     "text": "오누이는 고개를 갸웃갸웃했어요. 엄마 목소리는 다정하고 부드러운데 말이에요.",
      "src": "new",
-     "en": "The children tilted their heads. Mom's voice was always warm and soft.",
+     "en": "The children tilted their heads this way and that. Mom's voice was always warm and soft.",
      "segs": [
       [
        "nar",
-       "The children tilted their heads. Mom's voice was always warm and soft."
+       "The children tilted their heads this way and that. Mom's voice was always warm and soft."
       ]
      ]
     },
@@ -640,13 +640,13 @@
      ]
     },
     {
-     "text": "오빠가 창호지에 손가락으로 살며시 구멍을 냈어요.",
+     "text": "오빠가 창호지에 손가락으로 살며시 콕, 구멍을 냈어요.",
      "src": "new",
-     "en": "The brother quietly poked a little hole in the paper door with his finger.",
+     "en": "The brother quietly poked, poke, a little hole in the paper door with his finger.",
      "segs": [
       [
        "nar",
-       "The brother quietly poked a little hole in the paper door with his finger."
+       "The brother quietly poked, poke, a little hole in the paper door with his finger."
       ]
      ],
      "after": [
@@ -728,20 +728,20 @@
      ]
     },
     {
-     "text": "오누이는 숨을 꼭 참고 장독 뒤에 꼭 붙어 있었어요.",
+     "text": "오누이는 숨을 꼭 참고 장독 뒤에 납작 붙어 있었어요. 가슴이 콩닥콩닥 뛰었지요.",
      "src": "new",
-     "en": "The children held their breath and pressed themselves tight against the big jar.",
+     "en": "The children held their breath and pressed flat against the big jar. Their hearts went thump, thump, thump.",
      "segs": [
       [
        "nar",
-       "The children held their breath and pressed themselves tight against the big jar."
+       "The children held their breath and pressed flat against the big jar. Their hearts went thump, thump, thump."
       ]
      ]
     },
     {
-     "text": "\"오빠, 무서워…\" 동생이 오빠 손을 꼭 잡았어요.",
+     "text": "\"오빠, 무서워…\" 동생이 덜덜 떨며 오빠 손을 꼭 잡았어요.",
      "src": "new",
-     "en": "\"Big brother, I am scared...\" The sister held her brother's hand tight.",
+     "en": "\"Big brother, I am scared...\" The sister trembled and held her brother's hand tight.",
      "segs": [
       [
        "girl",
@@ -750,7 +750,7 @@
       ],
       [
        "nar",
-       "The sister held her brother's hand tight."
+       "The sister trembled and held her brother's hand tight."
       ]
      ]
     },
@@ -817,13 +817,13 @@
      ]
     },
     {
-     "text": "오누이는 영차영차, 나무를 타고 올라갔어요.",
+     "text": "오누이는 영차영차, 나무를 타고 쑥쑥 올라갔어요.",
      "src": "new",
-     "en": "Heave-ho, heave-ho, the brother and sister climbed up the tree.",
+     "en": "Heave-ho, heave-ho, up and up the tree the brother and sister climbed.",
      "segs": [
       [
        "nar",
-       "Heave-ho, heave-ho, the brother and sister climbed up the tree."
+       "Heave-ho, heave-ho, up and up the tree the brother and sister climbed."
       ]
      ],
      "before": [
@@ -974,13 +974,13 @@
      ]
     },
     {
-     "text": "호랑이는 참기름을 나무에 잔뜩 바르고 올라가려 했어요.",
+     "text": "호랑이는 참기름을 나무에 척척 바르고 영차, 올라가려 했어요.",
      "src": "new",
-     "en": "The tiger rubbed sesame oil all over the tree and tried to climb.",
+     "en": "The tiger slapped sesame oil all over the tree and, heave-ho, tried to climb.",
      "segs": [
       [
        "nar",
-       "The tiger rubbed sesame oil all over the tree and tried to climb."
+       "The tiger slapped sesame oil all over the tree and, heave-ho, tried to climb."
       ]
      ],
      "before": [
@@ -1116,6 +1116,17 @@
       [
        "nar",
        "The thick, shiny rope is the strong rope!"
+      ]
+     ]
+    },
+    {
+     "text": "오누이는 줄을 꼭 붙잡고 대롱대롱 매달렸어요.",
+     "src": "new",
+     "en": "The brother and sister grabbed the rope tight and dangled, swinging to and fro.",
+     "segs": [
+      [
+       "nar",
+       "The brother and sister grabbed the rope tight and dangled, swinging to and fro."
       ]
      ]
     },
@@ -1308,13 +1319,13 @@
      ]
     },
     {
-     "text": "오빠는 낮에 환하게, 동생은 밤에 은은하게 세상을 비추었지요.",
+     "text": "오빠는 낮에 쨍쨍 환하게, 동생은 밤에 은은하게 세상을 비추었지요.",
      "src": "new",
-     "en": "The brother shone bright in the day, and the sister glowed softly at night.",
+     "en": "The brother shone bright and blazing in the day, and the sister glowed softly at night.",
      "segs": [
       [
        "nar",
-       "The brother shone bright in the day, and the sister glowed softly at night."
+       "The brother shone bright and blazing in the day, and the sister glowed softly at night."
       ]
      ]
     },
@@ -1350,13 +1361,13 @@
      ]
     },
     {
-     "text": "오빠는 동생을 위해 기꺼이 자리를 바꿔 주었어요.",
+     "text": "오빠는 싱긋 웃으며 기꺼이 자리를 바꿔 주었어요.",
      "src": "new",
-     "en": "The brother gladly switched places for his little sister.",
+     "en": "The brother smiled a big smile and gladly switched places.",
      "segs": [
       [
        "nar",
-       "The brother gladly switched places for his little sister."
+       "The brother smiled a big smile and gladly switched places."
       ]
      ],
      "after": [
