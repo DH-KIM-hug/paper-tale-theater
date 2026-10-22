@@ -243,6 +243,9 @@
     const { sleep, camSnap, tr } = T;
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ CLIMB = 6000, BRAID = 2600, RISE = 2200, WALK = 3600;   // 속도 상수 (SPEC §2-7)
     const say = async text => { await T.say(text); await sleep(GAP); };
+    /* 그림 컷(CLAUDE.md §5-2, SPEC 컷신 표): 사건 직후 컷을 띄우고 그 위에서 기존 대사 한 줄을 읽는다. 톡하면 바로 닫힌다 */
+    const CUT_HOLD = 4200;
+    const cutSay = async (k, sfxName, line) => { const c = T.cutImage([{ src: src(k), sfx: sfxName, hold: CUT_HOLD }], { hold: CUT_HOLD }); await say(line); await c; };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };         // 말풍선 없는 소리(허밍)
     const scene = key => { setBg(key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
@@ -255,6 +258,7 @@
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
+    ['rp_cut_caught', 'rp_cut_climb', 'rp_cut_peek', 'rp_cut_snip', 'rp_cut_reunion'].forEach(k => loads.push(T.preload(src(k))));
     await Promise.race([Promise.all(loads), sleep(4000)]);
     // 리본 높이는 길이에서 계산: 그림이 와서 ASP 가 바뀌어도 길이 180/120/60 이 유지된다
     HT.rp_prop_ribbon_long = 180 / ASP.rp_prop_ribbon_long; HT.rp_prop_ribbon_mid = 120 / ASP.rp_prop_ribbon_mid; HT.rp_prop_ribbon_short = 60 / ASP.rp_prop_ribbon_short;
@@ -447,7 +451,7 @@
     await sleep(300);
     magic(X(640, 540), FL - 120);
     put(T, gothel, X(640, 540), FL, { look: 'point' }); fadeIn(gothel, 300);
-    await say('누구냐! 내 풀을 뽑다니!');
+    await cutSay('rp_cut_caught', () => AudioFX.sfx('sparkle', .5), '누구냐! 내 풀을 뽑다니!');
     father.look('shock'); father.hop(12, 300); rampion.move(father.x + 40, FL, 300);
     await say('아, 아내가 너무너무 먹고 싶어 해서요.');
     gothel.look('stand'); gothel.wiggle(3, 600);
@@ -523,7 +527,7 @@
     rap.look('window');
     await gothel.move(TX + HOOK_DX + 2, FL, 900, 'ease-in-out');
     gothel.look('climb');
-    await Promise.all([climb(gothel, true), say('고텔은 머리를 잡고 천천히 올라가요.')]);
+    await Promise.all([climb(gothel, true), cutSay('rp_cut_climb', () => AudioFX.sfx('paper_up', .4), '고텔은 머리를 잡고 천천히 올라가요.')]);
     await braidUp();
     await rap.hop(6, 300);
     await sleep(SCENE_END);
@@ -603,7 +607,7 @@
     await climb(gothel, true);
     await braidUp();
     prince.hop(8, 300);
-    await say('아, 저렇게 올라가는구나!');
+    await cutSay('rp_cut_peek', null, '아, 저렇게 올라가는구나!');
     await sleep(SCENE_END);
 
     /* ===== 7. 왕자가 올라와요 (자동) ===== */
@@ -674,7 +678,7 @@
       await veil(T, () => { setBg('rp_bg_field_v2'); camSnap(X(500, 480), 280, 1); put(T, gothel, X(400, 400), FL, { look: 'stand' }); put(T, rap, X(560, 520), FL, { look: 'short_shock' }); });
       magic(X(480, 460), FL - 200);
     })();
-    await say('마녀는 가위 한 번으로 라푼젤의 머리를 자르고, 지팡이를 톡 두드려 먼 들판의 작은 오두막으로 데려갔어요.');
+    await cutSay('rp_cut_snip', () => AudioFX.sfx('chop', .5), '마녀는 가위 한 번으로 라푼젤의 머리를 자르고, 지팡이를 톡 두드려 먼 들판의 작은 오두막으로 데려갔어요.');
     await l35;
     rap.wiggle(3, 600);
     await sleep(SCENE_END);
@@ -764,7 +768,7 @@
     petals(X(480, 400), X(800, 680));
     T.confetti(); (AudioFX.sfx('tada') || sparkleSfx(T));
     rap.hop(14, 400); prince.hop(14, 400);
-    const l46 = say('두 사람은 손을 꼭 잡고 성으로 떠났어요.');
+    const l46 = cutSay('rp_cut_reunion', () => AudioFX.sfx('pop', .4), '두 사람은 손을 꼭 잡고 성으로 떠났어요.');
     await sleep(900); rap.hop(14, 400); prince.hop(14, 400);
     await l46;
     await say('마녀 고텔은 텃밭으로 돌아갔어요.');
