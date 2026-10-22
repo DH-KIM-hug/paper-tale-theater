@@ -530,6 +530,358 @@
       bOk.remove(); bNo.remove();
     }
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
+       장면 '모양(view)' 은 놀이판의 장면 그림을 그대로 쓴다: spring(씨 뿌리기·무럭무럭 텃밭) · garden(옆모습 텃밭 sideView) · lowangle(할아버지 혼자 영차)
+       · fence(덤불 강아지) · barn(헛간 지붕 고양이) · mouse(쥐구멍) · feast(잔치). 대본 set 은 spring/summer/feast 뿐이라
+       cast:grandpa:at:…,pull(로우앵글)·cast:dog:hide·cast:cat:at:…,sit·cast:mouse:hide 가 놀이판의 그 장면 그림을 차린다.
+       텃밭(옆모습)에서는 인물 크기 1·발끝 GROUND 로 맞춘다(대본 좌표의 .7 은 로우앵글 크기). */
+    const R = { view: '', bgp: null, hole: null, seed: null, step: 0, can: null, bush: null, steam: null, ui: null, flopped: false, pot: null };
+    const rInstant = () => T.readInstant();
+    const rNum = s => String(s).split(',').map(v => (v === '' || isNaN(+v) ? v : +v));
+    const VIEW_CAM = { spring: [500, 280, 1], lowangle: [T.portrait() ? 540 : 500, 280, 1], fence: [500, 280, T.portrait() ? .85 : 1], barn: [T.portrait() ? 700 : 500, 280, 1], mouse: [500, 280, 1], feast: [500, 280, 1] };
+    const lineCam = n => {
+      if (!T.portrait()) return [500, 280, 1];
+      const x0 = TX - 150, x1 = (n ? LINE_X[n - 1] : TX) + 60, half = (x1 - x0) / 2 + 12;
+      return [(x0 + x1) / 2, 280, Math.min(1, T.viewWidth() / 2 / half)];
+    };
+    const onLine = () => line.filter(a => a.pos.isConnected && a.x > -40 && a.x < 1040);
+    const viewCam = () => (R.view === 'garden' ? lineCam(onLine().length) : VIEW_CAM[R.view] || [500, 280, 1]);
+    const camGo = (c, dur = 700) => (rInstant() ? camSnap(...c) : camTo(...c, dur));
+    /* 세로 화면: 걸어갈 곳이 보이는 폭 밖이면 안쪽으로 */
+    const inView = x => { if (!T.portrait()) return x; const c = T.camera, h = T.viewWidth() / 2 / c.z; return Math.min(Math.max(x, c.x - h + 50), c.x + h - 50); };
+    const resetMisc = () => { if (R.steam) { clearInterval(R.steam); R.steam = null; } if (R.ui) { R.ui.remove(); R.ui = null; } R.bush = null; R.flopped = false; };
+    const toGarden = n => { resetMisc(); sideView(n); R.view = 'garden'; };
+    /* 다른 장면 모양에서 텃밭으로: 책장을 한 번 넘긴다 (놀이판의 sceneCard(null, sideView(n)) 와 같다) */
+    const gardenTurn = (n, extra) => T.sceneCard(null, () => { toGarden(n); extra && extra(); });
+    const lineUp = async n => {
+      if (R.view !== 'garden') { if (rInstant()) toGarden(n); else await gardenTurn(n); return; }
+      const moves = [];
+      for (let i = 0; i < n; i++) {
+        const a = line[i];
+        if (!a.pos.isConnected || a.x > 1040) put(a, 1080, GROUND, 1, 'pull');
+        a.look('pull'); a.pose(POSE.pull(4)); a.face('left');
+        if (Math.abs(a.x - LINE_X[i]) > 2) moves.push(rInstant() ? (a.place(LINE_X[i], GROUND), null) : a.move(LINE_X[i], GROUND, 700));
+      }
+      moves.push(camGo(lineCam(n), 700));
+      await Promise.all(moves.filter(Boolean));
+    };
+    const pullRead = async n => {
+      if (R.view === 'lowangle') { // 놀이판 pullGrandpa: 할아버지 혼자 다섯 번
+        for (let i = 1; i <= 5; i++) { chorus(T, 1); wobble(); cast.grandpa.pose(POSE.pull(18)); setTimeout(() => cast.grandpa.pose(POSE.stand()), 260); T.pop(i % 2 ? 700 : 560, 300, '영차!', C.bean); await sleep(420); }
+        return;
+      }
+      for (let i = 1; i <= 5; i++) { // 놀이판 pullRound 의 누르기 없는 판
+        chorus(T, n);
+        for (let k = 0; k < n; k++) { const a = line[k]; setTimeout(() => { a.pose(POSE.pull(PULL_DEG[k])); setTimeout(() => a.pose(POSE.pull(4)), 260); }, k * 70); }
+        wobble();
+        T.pop(i % 2 ? 640 : 360, 180, '영차!', C.bean);
+        await sleep(420);
+      }
+      await sleep(400);
+    };
+    /* 무럭무럭: 놀이판 waterStep 과 같은 6단계(물 · 해 번갈아). 1~2 물·해, 3 싹 → 잎, 6 다 자람 */
+    const growStep = (kind) => {
+      const i = Math.min(6, ++R.step), s = .3 + i * (.7 / 6);
+      turnip.body.style.transition = 'transform .45s cubic-bezier(.3,1.6,.5,1)';
+      turnip.body.style.transform = `scale(${s / .3})`;
+      if (R.bgp && R.bgp.art) R.bgp.skyR.setAttribute('opacity', (.6 * (1 - i / 6)).toFixed(2));
+      if (i === 3 && sprout) { showSprout(false); AudioFX.sfx('pop'); }
+      if (kind === 'water') {
+        if (!R.can || !R.can.isConnected) {
+          R.can = el('g', { opacity: 0 }, T.fx);
+          const canArt = pic(T, R.can, 'watering_can', -60, -50, 120, 120 / 1.226);
+          if (canArt) {
+            const cid = 'tnclip' + (++clipN), cp = el('clipPath', { id: cid, clipPathUnits: 'userSpaceOnUse' }, R.can), ch = 120 / 1.226;
+            el('rect', { x: -60, y: -50, width: .855 * 120, height: ch }, cp); el('rect', { x: -60, y: -50, width: 120, height: .55 * ch }, cp);
+            canArt.setAttribute('clip-path', `url(#${cid})`);
+          } else T.paper(R.can, [['rect', { x: -34, y: -24, width: 60, height: 44, rx: 8, fill: C.pine }], ['path', { d: 'M24 -10 L64 -34 L68 -26 L28 0 Z', fill: C.pine }]]);
+          R.can.dataset.art = canArt ? '1' : '';
+        }
+        const art = R.can.dataset.art === '1';
+        R.can.setAttribute('transform', art ? 'translate(352,208) rotate(28)' : 'translate(330,230) rotate(28)');
+        R.can.animate([{ opacity: 0 }, { opacity: 1, offset: .2 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 900 });
+        for (let d = 0; d < 5; d++) {
+          const dr = el('ellipse', { cx: (art ? 394 : 395) + d * 9, cy: art ? 240 : 290, rx: 4, ry: 7, fill: '#6FA8C8' }, T.fx);
+          dr.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(150px)', opacity: 0 }], { duration: 600, delay: d * 70 }).finished.then(() => dr.remove());
+        }
+        AudioFX.sfx('splash', .4) || AudioFX.splash();
+      } else if (kind === 'sun') {
+        if (R.bgp && R.bgp.art) { R.bgp.sun.setAttribute('r', 40 + i * 5); R.bgp.sun.animate([{ opacity: 0 }, { opacity: .8 }, { opacity: .35 }], { duration: 700, fill: 'forwards' }); }
+        else if (R.bgp) R.bgp.sun.setAttribute('r', 44 + i * 6);
+        T.tone([520, 780], .3, { type: 'sine', vol: .12 });
+        T.pop(150, 200, '반짝!', C.persimmon);
+      }
+      return sleep(700);
+    };
+    const growDone = () => { turnip.body.style.transition = ''; turnip.body.style.transform = ''; turnip.setScale(1); showSprout(false); };
+    const R_SPREAD = [0, 6, 16, 32, 46, 54];
+    const CAST_OP = {
+      at(a, spec) {
+        let [x, y = GROUND, s = 1, look] = rNum(spec);
+        if (typeof s === 'string') { look = s; s = 1; }
+        if (a.key === 'grandpa' && look === 'pull' && R.view !== 'lowangle') { // 놀이판 3장: 순무 로우앵글
+          resetMisc(); T.clear(); lowAngleBG(T);
+          putTurnip(420, 480, 1.6);
+          if (!bgFront(T, 'lowangle', 484)) T.paper(T.world, [['rect', { x: -300, y: 498, width: 1600, height: 300, fill: C.soil }]]);
+          R.view = 'lowangle';
+        }
+        if (a.key === 'cat' && look === 'sit') { // 놀이판 7장: 헛간 지붕 위 고양이 (그림자처럼 어둡게 → 내려오며 밝아진다)
+          resetMisc(); T.clear(); barnBG(T); R.view = 'barn';
+          if (bgOK.barn !== false && BG.barn) { put(a, 655, 129, 1.2, 'sit'); a.pose('translate(0px,0px) rotate(14deg) scale(1,1)'); } else put(a, 700, 242, 1.9);
+          a.lean.style.filter = 'brightness(.15)';
+          return;
+        }
+        if (R.view === 'garden' || R.view === 'spring') { // 텃밭: 같은 크기, 같은 땅
+          y = GROUND; s = 1;
+          if (R.view === 'spring' && turnip.pos.isConnected && Math.abs(x - turnip.x) < 120) x = 560; // 싹 위에 서지 않게 (놀이판 자리)
+        }
+        put(a, x, y, s, look);
+      },
+      walk(a, spec) {
+        const [x, y = a.y, ms = 900] = rNum(spec);
+        const gy = R.view === 'garden' ? GROUND : y;
+        if (rInstant()) { a.place(x, gy); return; }
+        return a.move(inView(x), gy, ms);
+      },
+      look(a, l, dir) { a.look(l); a.pose(POSE.stand()); if (dir) a.face(dir); },
+      sitdown: a => a.sitDown(),
+      standup: a => a.standUp(),
+      hop: a => a.hop(24, 360),
+      hide(a) {
+        if (a.key === 'dog') { // 놀이판 6장: 울타리 앞 덤불 뒤에 숨은 강아지
+          resetMisc(); T.clear(); fenceBG(T); R.view = 'fence';
+          put(a, 520, 510, 1.8, 'jump');
+          if (artUrl('bush')) pic(T, T.world, 'bush', 270, 315, 500, 500 * 414 / 520);
+          else T.paper(T.world, [['circle', { cx: 440, cy: 470, r: 90, fill: C.pine }], ['circle', { cx: 560, cy: 450, r: 110, fill: C.leaf }], ['circle', { cx: 670, cy: 480, r: 80, fill: C.pine }], ['rect', { x: 300, y: 500, width: 480, height: 80, fill: C.leaf }]]);
+          R.bush = T.world.lastChild;
+          return;
+        }
+        if (a.key === 'mouse') { // 놀이판 8장: 쥐구멍에서 머리만 빼꼼
+          resetMisc(); T.clear(); mouseBG(T); R.view = 'mouse';
+          if (bgOK.mouse !== false && BG.mouse) { put(a, 487, 452, 2.1); bgFront(T, 'mouse', 397); mouseClip(true); }
+          else { put(a, 520, 540, 3); T.paper(T.world, [['path', { d: 'M380 482 Q520 468 660 482 L700 600 L340 600 Z', fill: C.soil }]]); }
+          return;
+        }
+        a.pos.remove();
+      },
+    };
+    const READ_ACTS = {
+      set(k) {
+        if (k === 'spring') { // 놀이판 1장: 봄 텃밭, 구멍과 씨앗
+          resetMisc(); T.clear(); R.view = 'spring'; R.step = 0; rise = 0;
+          R.bgp = gardenBG(T, { season: 'spring' });
+          R.hole = el('ellipse', { cx: 430, cy: 470, rx: 40, ry: 12, fill: '#3E2A1A' }, T.world);
+          R.seed = el('g', {}, T.world);
+          if (!pic(T, R.seed, 'seed', -22, -28, 44, 56)) T.paper(R.seed, [['ellipse', { cx: 0, cy: 0, rx: 19, ry: 25, fill: C.bark }], ['ellipse', { cx: -6, cy: -8, rx: 6, ry: 9, fill: '#9C7550' }]]);
+          R.seed.setAttribute('transform', 'translate(496,378)');
+          return;
+        }
+        if (k === 'summer') {
+          if (R.view === 'spring' && !rInstant()) { if (R.bgp && R.bgp.art) R.bgp.skyR.setAttribute('opacity', 0); return; } // 같은 텃밭에서 계절만 바뀐다
+          if (R.view !== 'garden') { line.forEach(a => a.pos.remove()); toGarden(0); }
+          return;
+        }
+        if (k === 'feast') { resetMisc(); T.clear(); feastBG(T); R.view = 'feast'; }
+      },
+      seed: async a => {
+        if (a !== 'plant' || !R.seed) return;
+        await T.anim(R.seed, [{ transform: 'translate(496px,378px)' }, { transform: 'translate(462px,330px)' }, { transform: 'translate(430px,468px) scale(.6)' }], { duration: 600, easing: 'ease-in' });
+        R.seed.remove(); R.seed = null;
+        AudioFX.sfx('pop');
+        if (R.hole) R.hole.setAttribute('fill', C.soilDark);
+      },
+      sprout(a) {
+        if (a !== 'show') return;
+        if (R.hole) { R.hole.remove(); R.hole = null; } if (R.seed) { R.seed.remove(); R.seed = null; }
+        R.step = 0; rise = 0;
+        putTurnip(430, GROUND, .3); showSprout(true);
+        soilFront(T);
+      },
+      water: () => growStep('water'),
+      sun: () => growStep('sun'),
+      async grow(a) {
+        if (a === 'sprout') { putTurnip(430, GROUND, .3); showSprout(true); return; }
+        if (a === 'leaves') { while (R.step < 3) await growStep(R.step % 2 ? 'sun' : 'water'); return; }
+        if (a === 'big') { while (R.step < 6) await growStep(R.step % 2 ? 'sun' : 'water'); await sleep(400); growDone(); }
+      },
+      async turnip(a, b) {
+        if (a === 'at') return; // 순무 자리는 장면 모양(옆모습 TX · 로우앵글)이 정한다 — 심어 둔 순무는 옮기지 않는다
+        if (a === 'wobble') { wobble(); await sleep(450); return; }
+        if (a === 'rise') {
+          rise += +b || 0;
+          if (rInstant()) { turnip.place(TX, GROUND - rise); return; }
+          await turnip.move(TX, GROUND - rise, 500, 'cubic-bezier(.3,1.6,.5,1)');
+          return;
+        }
+        if (a === 'out') { // 쑥! 순무가 줄 왼쪽으로 날아가 떨어진다 (놀이판 그대로)
+          const landX = T.portrait() ? 290 : 110;
+          T.world.appendChild(turnip.pos);
+          turnip.pos.removeAttribute('transform');
+          turnip.pos.animate([
+            { transform: `translate(${TX}px,${GROUND - rise - 22}px) rotate(0deg)` },
+            { transform: `translate(${landX + 50}px,150px) rotate(-40deg)` },
+            { transform: `translate(${landX}px,372px) rotate(-80deg)` },
+          ], { duration: 900, easing: 'ease-in-out', fill: 'forwards' });
+          await sleep(300);
+        }
+      },
+      cast(id, op, ...args) {
+        const a = cast[id];
+        if (!a || !CAST_OP[op]) { console.warn('[read] cast 동사 모름:', id, op); return; }
+        return CAST_OP[op](a, ...args);
+      },
+      line: n => lineUp(+n),
+      pull: n => pullRead(+n),
+      async grandpa(a) {
+        if (a !== 'fall') return;
+        const g = cast.grandpa;
+        g.sitDown();
+        await g.move(g.x + 80, g.y, 350, 'ease-out');
+        await T.fitTo([g.pos], { dur: 300 });
+        thud(T); T.shake(); T.pop(g.x - 90, R.view === 'lowangle' ? 340 : g.y - 160, '쿵!');
+        const st = stars(T, g.x, g.y - (R.view === 'lowangle' ? 105 : 150));
+        setTimeout(() => st.remove(), 2600);
+      },
+      async flop(a) { // 생쥐부터 할아버지까지 벌렁 도미노
+        for (let k = 5; k >= 0; k--) {
+          const m = line[k]; if (!m.pos.isConnected) continue;
+          m.look('fall'); m.pose(`translate(${R_SPREAD[k]}px,0px)`);
+          AudioFX.sfx('bonk', .5) || T.tone([300 - k * 20, 120], .2, { type: 'triangle', vol: .15 });
+          await sleep(200);
+        }
+        await sleep(300);
+        thud(T); T.shake(); R.flopped = true;
+      },
+      async cheer() {
+        onLine().forEach((m, k) => setTimeout(() => { m.look('cheer'); m.pose(R.flopped ? `translate(${R_SPREAD[line.indexOf(m)]}px,0px)` : POSE.stand()); m.hop(26, 380); }, k * 110));
+        await sleep(700);
+      },
+      sit: () => { line.slice(0, 5).forEach(m => { if (m.pos.isConnected) m.sitDown(); }); },
+      async dog(a) { // 덤불에서 뛰어나와 오른쪽 풀밭에 내려앉는다
+        if (a !== 'bushout') return;
+        const d = cast.dog;
+        T.world.appendChild(d.pos);
+        if (d.art) d.face('right');
+        await d.move(T.portrait() ? 600 : 680, 300, 400, 'ease-out');
+        await d.move(T.portrait() ? 620 : 840, 540, 400, 'ease-in');
+        d.hop(30);
+      },
+      async cat(a) { // 지붕 끝에서 풀밭으로 폴짝
+        if (a !== 'roofdown') return;
+        const c = cast.cat;
+        c.lean.style.transition = 'transform .28s ease-out, filter .6s';
+        c.lean.style.filter = '';
+        await c.hop(40);
+        c.pose(POSE.stand());
+        await c.move(700, 300, 320, 'ease-out');
+        await c.move(640, T.portrait() ? 470 : 480, 380, 'ease-in');
+        await c.hop(16, 260);
+        c.lean.style.transition = 'transform .28s ease-out';
+      },
+      async mouse(a) { // 쥐구멍에서 쪼르르
+        if (a !== 'holeout') return;
+        const m = cast.mouse;
+        mouseClip(false); squeak(T);
+        m.face('right');
+        T.world.appendChild(m.pos);
+        await m.move(560, 360, 300, 'ease-out');
+        await m.move(640, 520, 300, 'ease-in');
+        T.pop(640, 300, '찍찍!', C.bark);
+      },
+      bush(a) {
+        if (a !== 'rustle' || !R.bush) return;
+        R.bush.animate([{ translate: '0 0' }, { translate: '-6px 0' }, { translate: '6px 0' }, { translate: '0 0' }], { duration: 400, iterations: 2 });
+      },
+      async cut(k) {
+        if (k === 'glare') {
+          const g = artUrl('cut_glare') && T.cutImage([{ src: artUrl('cut_glare'), hold: 2200 }], { hold: 2200, onShow: () => voiceLine('cut_glare', 300) });
+          await (g || T.cut(svg => {
+            const dogG = T.el('g', { transform: 'translate(70,262) scale(-2.3,2.3)' }, svg); DRAW.dog(T, dogG);
+            const catG = T.el('g', { transform: 'translate(350,262) scale(2.5)' }, svg); DRAW.cat(T, catG);
+            voiceLine('cut_glare', 300);
+          }, { hold: 2200 }));
+          return;
+        }
+        const cutTurnip = (svg, y, s, word) => {
+          T.el('rect', { x: 0, y: 220, width: 400, height: 80, fill: C.soil }, svg);
+          const tg = T.el('g', { transform: `translate(200,${y}) scale(${s})` }, svg); drawTurnip(T, tg);
+          T.el('rect', { x: 0, y: 236, width: 400, height: 64, fill: C.soil, opacity: y > 180 ? 1 : 0 }, svg);
+          T.el('text', { x: 200, y: 64, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(word) }, svg);
+        };
+        if (k === 'heave') { // 영~ 차~ 두 장 (코드 컷)
+          await T.cut(svg => cutTurnip(svg, 230, .6, '영~'), { hold: 1100 });
+          await T.cut(svg => cutTurnip(svg, 190, .6, '차~'), { hold: 1100 });
+          return;
+        }
+        if (k === 'pop') await ((artUrl('cut_pop') && T.cutImage([{ src: artUrl('cut_pop'), sfx: 'pow', hold: 2000 }], { hold: 2000 })) || T.cut(svg => cutTurnip(svg, 140, .6, '쑥!'), { hold: 1500, sfx: 'pow' }));
+      },
+      vo(k) {
+        if (k === 'squeak_mouse') squeak(T);
+        voiceLine(k);
+      },
+      async feast(a, n) {
+        if (a === 'table') { // 놀이판 10장 자리 그대로 (가로: 양쪽 세 명씩, 세로: 3명씩 두 줄)
+          const FX = [110, 220, 330, 670, 780, 890], SEAT_S = { grandpa: 1, grandma: 1, girl: 1.1, dog: 1.1, cat: 1.2, mouse: 1.5 };
+          const seats = line.slice().sort(() => Math.random() - .5);
+          const tbl = pic(T, T.world, 'table', 360, 376, 280, 280 / 2.346) || T.paper(T.world, [['rect', { x: 390, y: 400, width: 220, height: 20, rx: 6, fill: C.bark }], ['rect', { x: 410, y: 420, width: 16, height: 90, fill: C.bark }], ['rect', { x: 574, y: 420, width: 16, height: 90, fill: C.bark }]]);
+          R.pot = artUrl('pot') ? el('g', {}, T.world) : T.paper(T.world, [['path', { d: 'M446 350 H554 Q556 400 500 402 Q444 400 446 350 Z', fill: C.ink }], ['rect', { x: 438, y: 342, width: 124, height: 12, rx: 6, fill: '#4a3a30' }], ['ellipse', { cx: 500, cy: 344, rx: 50, ry: 8, fill: C.snow }]]);
+          pic(T, R.pot, 'pot', 430, 402 - 140 / 1.01, 140, 140 / 1.01);
+          if (!T.portrait()) seats.forEach((m, i) => { put(m, FX[i], 510, SEAT_S[m.key], m.key === 'cat' ? 'sit' : null); if (i < 3) m.face('right'); });
+          else {
+            const TALL = ['grandpa', 'grandma', 'girl'];
+            if (!TALL.includes(seats[1].key)) { const j = seats.findIndex((m, i) => i !== 1 && TALL.includes(m.key)); [seats[1], seats[j]] = [seats[j], seats[1]]; }
+            const PX = [345, 500, 655, 340, 500, 660], PY = [370, 325, 370, 560, 560, 560];
+            seats.forEach((m, i) => {
+              put(m, PX[i], PY[i], SEAT_S[m.key] * (i < 3 ? .9 : 1), m.key === 'cat' ? 'sit' : null);
+              if (i === 0 || i === 3) m.face('right');
+              if (i < 3) T.world.insertBefore(m.pos, tbl);
+            });
+          }
+          R.steam = setInterval(() => { const s = el('circle', { cx: 480 + Math.random() * 40, cy: 330, r: 8, fill: C.snow, opacity: .7 }, T.fx); s.animate([{ transform: 'translateY(0)', opacity: .7 }, { transform: 'translateY(-60px)', opacity: 0 }], { duration: 1400 }).finished.then(() => s.remove()); }, 400);
+          return;
+        }
+        if (a === 'soup') { // 한 그릇씩 저절로 (놀이판 냄비 톡톡의 누르기 없는 판)
+          const cnt = +n || 6, NUM = ['하나', '둘', '셋', '넷', '다섯', '여섯'];
+          R.ui = el('g', {}, document.getElementById('stage'));
+          const dots = line.map((_, i) => el('circle', { cx: 380 + i * 48, cy: 118, r: 17, fill: C.cream, stroke: C.gold, 'stroke-width': 5 }, R.ui));
+          for (let i = 1; i <= cnt; i++) {
+            const m = line[i - 1];
+            const bowl = T.el('g', {}, T.world);
+            if (!pic(T, bowl, 'soup_bowl', -25, -17, 50, 50 * 119 / 153)) T.paper(bowl, [['path', { d: 'M-22 -8 H22 Q20 14 0 15 Q-20 14 -22 -8 Z', fill: C.snow }], ['ellipse', { cx: 0, cy: -8, rx: 22, ry: 5, fill: C.amber }]]);
+            const ty = m.y - m.h * m.scale * .55;
+            bowl.animate([{ transform: 'translate(500px,330px)' }, { transform: `translate(${(500 + m.x) / 2}px,200px)` }, { transform: `translate(${m.x}px,${ty}px)` }], { duration: 600, easing: 'ease-in-out', fill: 'forwards' });
+            if (dots[i - 1]) dots[i - 1].setAttribute('fill', C.persimmon);
+            T.tone(523 + i * 40, .2, { type: 'triangle', vol: .16 });
+            setTimeout(() => { m.hop(20, 300); T.pop(m.x, !T.portrait() ? m.y - m.h * m.scale - 90 : m.y > 450 ? m.y - 20 : m.y - m.h * m.scale - 50, NUM[i - 1], C.pine); }, 600);
+            await sleep(750);
+          }
+          await sleep(500);
+          return;
+        }
+        if (a === 'eat') {
+          line.forEach((m, i) => setTimeout(() => { m.hop(18, 320); T.tone(440 + i * 30, .12, { type: 'triangle', vol: .1 }); }, i * 150));
+          T.confetti(); AudioFX.sfx('bell', .5);
+          setTimeout(() => { if (R.steam) { clearInterval(R.steam); R.steam = null; } if (R.ui) { R.ui.remove(); R.ui = null; } }, 4000);
+        }
+      },
+      fx(n) {
+        if (n === 'bark') return bark(T);
+        if (n === 'meow') return meow(T);
+        if (n === 'chorus') return chorus(T, 6);
+        if (n === 'step') return AudioFX.sfx('step_grass', .4);
+        if (AudioFX.hasSting && AudioFX.hasSting(n)) return AudioFX.sting(n);
+        if (AudioFX[n]) AudioFX[n]();
+      },
+      pop(spec) { const [x, y, ...w] = String(spec).split(','); T.pop(+x, +y, w.join(','), C.bean); },
+      confetti: () => T.confetti(),
+      cam(a) {
+        if (a === 'wide') return camGo(viewCam());
+        const [x, y, z = 1] = rNum(a);
+        return camGo([x, y, z]);
+      },
+    };
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* --- 1. 씨 뿌리기 (텃밭 봄) --- */
     let bgp = gardenBG(T, { season: 'spring' });
     put(cast.grandpa, 560);
@@ -973,5 +1325,5 @@
     return T;
   }
 
-  Tale.mount({ title: '커다란 순무', subtitle: '다 함께 영차!', run: T => run(portraitGuard(Tale.api)) });
+  Tale.mount({ title: '커다란 순무', subtitle: '다 함께 영차!', read: true, run: T => run(portraitGuard(Tale.api)) });
 })();
