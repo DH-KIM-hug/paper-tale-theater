@@ -1,0 +1,1574 @@
+{
+ "mode": "read",
+ "tale": "snow_white",
+ "lang": "ko",
+ "title": "백설공주",
+ "voices_from": "voice_script_el.json",
+ "moral": "낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.",
+ "notes": "읽어 주기 모드 대본(docs/READ_MODE.md). 조작 안내(문·침대·손 누르기)와 배움 놀이(침대 여덟 개 수 세기, 침대 색 찾기와 그 오답·정답 대사, \"이제 잘 시간!\" 안내, 합창 ch4 \"모두 여덟 개!\")를 모두 뺐다. 침대 여덟 개 장면은 큰 침대 장면 끝에 묘사 한 줄로 남겼다. 놀이판 11장 → 읽기 11장(일곱 난쟁이→일곱 난쟁이+아침, 침대 여덟 개 뺌; 다시 거울과 사과 할머니는 한 장). 난쟁이 합창 줄(voice_script extra ch1·ch2·ch3·ch5·ch6)은 일곱 목소리 녹음·mix_chorus_el.py 합성을 그대로 재사용한다. src: reuse = 기존 줄·녹음 그대로, new = 새 문장(녹음 필요, 모두 내레이터, 장면마다 의성어·의태어 2개 이상). 순화는 놀이판·PLAN.md 그대로: 왕비의 마지막은 그리지 않고 \"왕비는 멀리 떠났어요\" 한 줄, 깨어남은 관을 옮기다 사과 조각이 빠져서(키스 없음), 노래·요정 없음. Typecast(tc) 배역 없음.",
+ "acts": {
+  "set:<queen_room|forest|house_front|house_table2|house_bed2|hill>": "장면 배경(scene(key)). scenes[].set 으로 자동 호출, 장면 안에서 배경을 바꿀 때는 before 에 둔다",
+  "tint:<hex>,<op> | night:<on|off>": "색 겹(해 질 녘 #E8703A .16 등) / 밤 겹(#1F2A56 .45) 켜고 걷기",
+  "mirror:room | mirror:face:<show|hide>": "거울 방 세트(거울+왕비 mirror 자세+거울 얼굴) / 거울 얼굴 보이기·숨기기",
+  "queen:look:<mirror|fist> | queen:hop": "왕비",
+  "snow:look:<stand|flee|eat|receive|awake|chair|bedknees|bedtoes|bedcurl|coffin>[:<dir>] | snow:at:<x,y>[:<look>[:<s>]] | snow:move:<x,y,ms> | snow:hop | snow:wiggle | snow:hide": "백설공주",
+  "snow:enter_door | snow:eat3 | snow:sit7 | snow:onbed:<0-6>:<bedknees|bedtoes|bedcurl> | snow:window | snow:fall": "문 안으로 들어감(놀이판 3장) / 접시·컵 맛보기(냠! 꿀꺽! 냠냠!) / 일곱째 의자에 앉기(영차!) / i 번 침대에 눕기 / 창문 속 받기 자세 / 창틀 아래로 스르르",
+  "hunter:at:<x,y> | hunter:shake": "사냥꾼 놓기 / 고개 젓기",
+  "door:reset | door:knock | door:open": "그림 속 문 조각(똑똑! / 삐걱 열림)",
+  "table:set | beds:lay | beds:eight": "식탁+의자 일곱 / 작은 침대 일곱 두 줄 / 작은 침대 일곱+큰 침대(놀이판 8장 배치)",
+  "crew:enter | crew:at:<x,y> | crew:hopOne:<0-6> | crew:hopAll | crew:hide": "일곱 난쟁이 줄(등불) 걸어 들어오기·자리·한 명 폴짝·모두 폴짝",
+  "dwarfs:build": "판자·망치 난쟁이 뚝딱 3번 → 큰 침대 등장(짠!, 웃는 난쟁이)",
+  "worry:enter | worry:at:<x,y>": "걱정하는 난쟁이 떼",
+  "granny:at:<x,y> | granny:move:<x,y,ms> | granny:leave": "사과 할머니(왕비 변장)",
+  "apple:show | apple:give": "할머니 손의 사과 / 사과가 창문으로 가고 아삭!",
+  "coffin:set | coffin:jolt | glass:open | shine | petals": "유리관 속 백설(관+유리+받침) / 덜컹! 사과 조각 툭 / 유리 뚜껑 열기 / 따뜻한 빛 / 꽃잎 팔랑팔랑",
+  "prince:enter | prince:at:<x,y> | prince:hop": "왕자",
+  "glow:<snow|prince|bigbed> | sparkle | shake | confetti | fx:<thud|whoosh|knock|creak|chomp|gulp|squeak|paper_down|step_wood|tada|sparkle|slide_down|pop> | pop:<x,y,글자> | cam:<x,y,z>": "효과"
+ },
+ "scenes": [
+  {
+   "key": "R01_mirror",
+   "card": "거울 앞의 왕비",
+   "set": "queen_room",
+   "enter": [
+    "mirror:room",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "옛날 어느 나라에 눈처럼 하얀 얼굴의 공주가 살았어요. 이름은 백설공주였어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "옛날 어느 나라에 눈처럼 하얀 얼굴의 공주가 살았어요. 이름은 백설공주였어요.",
+       null,
+       "[calm, warm storytelling, once upon a time]"
+      ]
+     ]
+    },
+    {
+     "text": "백설공주는 마음씨가 곱고, 웃음소리가 방울처럼 또랑또랑했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 마음씨가 곱고, 웃음소리가 방울처럼 또랑또랑했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.",
+       null,
+       "[calm, mysterious, gentle wonder]"
+      ]
+     ]
+    },
+    {
+     "text": "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?",
+     "src": "reuse",
+     "segs": [
+      [
+       "queen",
+       "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?",
+       null,
+       "[icy, elegant, vain, haughty, proud]"
+      ]
+     ]
+    },
+    {
+     "text": "왕비님도 예쁘지만, 백설공주가 더 예뻐요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "mirror",
+       "왕비님도 예쁘지만, 백설공주가 더 예뻐요.",
+       null,
+       "[calm, soft, shimmering, gentle, kind]"
+      ]
+     ],
+     "before": [
+      "sparkle",
+      "mirror:face:show"
+     ]
+    },
+    {
+     "text": "왕비는 샘이 나서 얼굴이 빨개졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "왕비는 샘이 나서 얼굴이 빨개졌어요.",
+       null,
+       "[gentle, slightly tense, storytelling]"
+      ]
+     ],
+     "before": [
+      "queen:look:fist",
+      "shake",
+      "fx:thud",
+      "queen:hop"
+     ]
+    },
+    {
+     "text": "왕비는 발을 쿵쿵 구르며 거울을 노려보았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "왕비는 발을 쿵쿵 구르며 거울을 노려보았어요.",
+       null,
+       "[tense but gentle, storytelling]"
+      ]
+     ],
+     "after": [
+      "mirror:face:hide"
+     ]
+    },
+    {
+     "text": "내가 제일이어야 해! 사냥꾼을 불러라!",
+     "src": "reuse",
+     "segs": [
+      [
+       "queen",
+       "내가 제일이어야 해! 사냥꾼을 불러라!",
+       "angry",
+       "[angry, jealous, sharp, commanding, stamping foot]"
+      ]
+     ],
+     "before": [
+      "queen:hop"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_forest",
+   "card": "깊은 숲",
+   "set": "forest",
+   "enter": [
+    "snow:at:400,530:stand",
+    "hunter:at:610,534",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "사냥꾼은 백설공주를 깊은 숲으로 데려갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "사냥꾼은 백설공주를 깊은 숲으로 데려갔어요.",
+       null,
+       "[soft, slightly sad, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "숲은 깜깜하고, 나뭇가지가 삐죽삐죽 뻗어 있었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "숲은 깜깜하고, 나뭇가지가 삐죽삐죽 뻗어 있었어요.",
+       null,
+       "[soft, gentle suspense]"
+      ]
+     ]
+    },
+    {
+     "text": "사냥꾼의 손이 부들부들 떨렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "사냥꾼의 손이 부들부들 떨렸어요.",
+       null,
+       "[soft, slightly sad]"
+      ]
+     ],
+     "before": [
+      "hunter:shake"
+     ]
+    },
+    {
+     "text": "공주님, 저는 도저히 못 하겠어요. 멀리멀리 달아나세요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "hunter",
+       "공주님, 저는 도저히 못 하겠어요. 멀리멀리 달아나세요.",
+       "sad",
+       "[sad, pitying, gentle, kind, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "고맙습니다, 아저씨.",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "고맙습니다, 아저씨.",
+       "happy",
+       "[kind, grateful, sweet, childlike, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "백설공주는 어두운 숲을 혼자 달리고 또 달렸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 어두운 숲을 혼자 달리고 또 달렸어요.",
+       null,
+       "[soft, gentle suspense, storytelling]"
+      ]
+     ],
+     "before": [
+      "snow:look:flee:left",
+      "fx:whoosh"
+     ],
+     "after": [
+      "snow:move:-120,530,1600",
+      "snow:hide"
+     ]
+    },
+    {
+     "text": "가시덤불에 치마가 북북 걸리고, 부엉이가 부엉부엉 울었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "가시덤불에 치마가 북북 걸리고, 부엉이가 부엉부엉 울었어요.",
+       null,
+       "[soft, gentle suspense, storytelling]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_house",
+   "card": "작은 집",
+   "set": "house_front",
+   "enter": [
+    "tint:#E8703A,.16",
+    "door:reset",
+    "snow:at:520,352:stand:.62",
+    "cam:370,270,1.7"
+   ],
+   "lines": [
+    {
+     "text": "날이 저물 무렵, 백설공주는 숲속에서 아주 작은 집을 찾았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "날이 저물 무렵, 백설공주는 숲속에서 아주 작은 집을 찾았어요.",
+       null,
+       "[calm, hopeful, warm storytelling]"
+      ]
+     ],
+     "before": [
+      "snow:move:410,352,1800"
+     ]
+    },
+    {
+     "text": "굴뚝도 작고, 창문도 작고, 문도 아주 작았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "굴뚝도 작고, 창문도 작고, 문도 아주 작았어요.",
+       null,
+       "[calm, gentle wonder]"
+      ]
+     ]
+    },
+    {
+     "text": "백설공주는 발끝을 들고 창문 안을 빼꼼 들여다보았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 발끝을 들고 창문 안을 빼꼼 들여다보았어요.",
+       null,
+       "[curious, playful, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "어머, 정말 작은 집이네. 계세요? 아무도 안 계세요?",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "어머, 정말 작은 집이네. 계세요? 아무도 안 계세요?",
+       "toneup",
+       "[surprised, curious, sweet, childlike, calling out]"
+      ]
+     ]
+    },
+    {
+     "text": "백설공주는 문을 똑똑 두드렸어요. 아무 대답이 없었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 문을 똑똑 두드렸어요. 아무 대답이 없었어요.",
+       null,
+       "[calm, quiet, curious]"
+      ]
+     ],
+     "before": [
+      "door:knock",
+      "pop:314,170,똑똑!"
+     ]
+    },
+    {
+     "text": "삐걱, 문이 열렸어요. 집 안에는 아무도 없었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "삐걱, 문이 열렸어요. 집 안에는 아무도 없었어요.",
+       null,
+       "[calm, quiet, curious, storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:creak",
+      "door:open",
+      "pop:314,150,삐걱!"
+     ]
+    },
+    {
+     "text": "백설공주는 살금살금 집 안으로 들어갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 살금살금 집 안으로 들어갔어요.",
+       null,
+       "[hushed, playful]"
+      ]
+     ],
+     "after": [
+      "snow:enter_door"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_table",
+   "card": "작은 식탁",
+   "set": "house_table2",
+   "enter": [
+    "table:set",
+    "snow:at:150,548:stand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "작은 식탁 위에 작은 접시와 작은 컵이 나란히 놓여 있었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "작은 식탁 위에 작은 접시와 작은 컵이 나란히 놓여 있었어요.",
+       null,
+       "[calm, warm, gentle wonder, storytelling]"
+      ]
+     ],
+     "after": [
+      "snow:move:230,548,700"
+     ]
+    },
+    {
+     "text": "접시도 일곱 개, 컵도 일곱 개, 작은 의자도 일곱 개였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "접시도 일곱 개, 컵도 일곱 개, 작은 의자도 일곱 개였어요.",
+       null,
+       "[calm, warm, gentle wonder]"
+      ]
+     ]
+    },
+    {
+     "text": "배가 너무 고파요. 한 접시에서 다 먹으면 미안하니까, 조금씩만 먹을게요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "배가 너무 고파요. 한 접시에서 다 먹으면 미안하니까, 조금씩만 먹을게요.",
+       null,
+       "[sweet, shy, hungry, childlike, polite]"
+      ]
+     ]
+    },
+    {
+     "text": "백설공주는 접시마다 한 입씩, 컵마다 한 모금씩 먹었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 접시마다 한 입씩, 컵마다 한 모금씩 먹었어요.",
+       null,
+       "[calm, cheerful, storytelling]"
+      ]
+     ],
+     "before": [
+      "snow:look:eat"
+     ],
+     "after": [
+      "snow:eat3"
+     ]
+    },
+    {
+     "text": "의자가 정말 작네. 조금 작지만… 영차, 앉았다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "의자가 정말 작네. 조금 작지만… 영차, 앉았다!",
+       "happy",
+       "[cheerful, effortful, playful, childlike]"
+      ]
+     ],
+     "before": [
+      "snow:look:stand",
+      "snow:move:380,552,1300"
+     ],
+     "after": [
+      "snow:sit7"
+     ]
+    },
+    {
+     "text": "하아암, 너무 졸려요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "하아암, 너무 졸려요.",
+       null,
+       "[sleepy, yawning, soft, childlike]"
+      ]
+     ]
+    },
+    {
+     "text": "백설공주는 눈을 비비며 꾸벅꾸벅 졸았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 눈을 비비며 꾸벅꾸벅 졸았어요.",
+       null,
+       "[soft, sleepy]"
+      ]
+     ],
+     "before": [
+      "snow:wiggle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_beds",
+   "card": "작은 침대",
+   "set": "house_bed2",
+   "enter": [
+    "beds:lay",
+    "snow:at:60,558:stand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "방에는 작은 침대가 나란히 놓여 있었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "방에는 작은 침대가 나란히 놓여 있었어요.",
+       null,
+       "[calm, gentle, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "이 침대는 너무 짧아요. 다리가 안 펴져요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "이 침대는 너무 짧아요. 다리가 안 펴져요.",
+       "toneup",
+       "[amused, childlike, trying out the bed, giggling]"
+      ]
+     ],
+     "before": [
+      "snow:onbed:0:bedknees",
+      "pop:300,356,끙!"
+     ]
+    },
+    {
+     "text": "이 침대는 불편해요. 발끝이 쿵 닿아요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "이 침대는 불편해요. 발끝이 쿵 닿아요.",
+       "toneup",
+       "[amused, childlike, trying out the bed, giggling]"
+      ]
+     ],
+     "before": [
+      "snow:onbed:1:bedtoes",
+      "pop:390,316,쿵!"
+     ]
+    },
+    {
+     "text": "백설공주는 이 침대 저 침대 데굴데굴 굴러 보았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 이 침대 저 침대 데굴데굴 굴러 보았어요.",
+       null,
+       "[amused, playful]"
+      ]
+     ]
+    },
+    {
+     "text": "몸을 동그랗게 웅크리면… 조금 작지만 포근해요. 잘 자요…",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "몸을 동그랗게 웅크리면… 조금 작지만 포근해요. 잘 자요…",
+       null,
+       "[sleepy, cozy, soft, drowsy, whispering goodnight]"
+      ]
+     ],
+     "before": [
+      "snow:onbed:6:bedcurl",
+      "fx:paper_down",
+      "pop:840,326,쏙!"
+     ]
+    },
+    {
+     "text": "이불은 포근포근, 베개는 말랑말랑했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "이불은 포근포근, 베개는 말랑말랑했어요.",
+       null,
+       "[soft, cozy, whispering]"
+      ]
+     ]
+    },
+    {
+     "text": "백설공주는 스르르 잠이 들었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 스르르 잠이 들었어요.",
+       null,
+       "[soft, calm, lullaby-like, storytelling]"
+      ]
+     ],
+     "before": [
+      "pop:790,326,새근새근"
+     ]
+    },
+    {
+     "text": "창밖에는 별이 반짝반짝, 집 안은 쌔근쌔근 조용했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "창밖에는 별이 반짝반짝, 집 안은 쌔근쌔근 조용했어요.",
+       null,
+       "[soft, calm, lullaby-like]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_dwarfs",
+   "card": "일곱 난쟁이",
+   "set": "house_bed2",
+   "enter": [
+    "night:on",
+    "beds:lay",
+    "snow:onbed:6:bedcurl",
+    "crew:at:-260,560",
+    "cam:560,280,1"
+   ],
+   "lines": [
+    {
+     "text": "밤이 되자, 산에서 일하던 일곱 난쟁이가 집으로 돌아왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "밤이 되자, 산에서 일하던 일곱 난쟁이가 집으로 돌아왔어요.",
+       null,
+       "[calm, warm, storytelling, nighttime]"
+      ]
+     ],
+     "before": [
+      "fx:step_wood",
+      "crew:enter"
+     ]
+    },
+    {
+     "text": "난쟁이들은 등불을 흔들흔들 들고, 뚜벅뚜벅 들어왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "난쟁이들은 등불을 흔들흔들 들고, 뚜벅뚜벅 들어왔어요.",
+       null,
+       "[calm, warm, nighttime]"
+      ]
+     ]
+    },
+    {
+     "text": "누가 내 의자에 앉았지?",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfa",
+       "누가 내 의자에 앉았지?",
+       "toneup",
+       "[gruff, surprised, deep, puzzled]"
+      ]
+     ],
+     "before": [
+      "crew:hopOne:0"
+     ]
+    },
+    {
+     "text": "누가 내 접시에서 먹었지?",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfb",
+       "누가 내 접시에서 먹었지?",
+       "toneup",
+       "[gruff, surprised, puzzled]"
+      ]
+     ],
+     "before": [
+      "crew:hopOne:1"
+     ]
+    },
+    {
+     "text": "누가 내 빵을 먹었지?",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfc",
+       "누가 내 빵을 먹었지?",
+       "toneup",
+       "[surprised, puzzled, funny]"
+      ]
+     ],
+     "before": [
+      "crew:hopOne:2"
+     ]
+    },
+    {
+     "text": "누가 내 숟가락을 썼지?",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfd",
+       "누가 내 숟가락을 썼지?",
+       "toneup",
+       "[surprised, puzzled, grumbling]"
+      ]
+     ],
+     "before": [
+      "crew:hopOne:3"
+     ]
+    },
+    {
+     "text": "누가 내 포크를 썼지?",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfe",
+       "누가 내 포크를 썼지?",
+       "toneup",
+       "[surprised, puzzled, funny, cheerful]"
+      ]
+     ],
+     "before": [
+      "crew:hopOne:4"
+     ]
+    },
+    {
+     "text": "누가 내 컵으로 마셨지?",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarff",
+       "누가 내 컵으로 마셨지?",
+       "toneup",
+       "[surprised, puzzled, childlike, funny]"
+      ]
+     ],
+     "before": [
+      "crew:hopOne:5"
+     ]
+    },
+    {
+     "text": "어? 내 침대에 누가 자고 있어!",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfg",
+       "어? 내 침대에 누가 자고 있어!",
+       "toneup",
+       "[loud whisper, amazed, high-pitched, childlike]"
+      ]
+     ],
+     "before": [
+      "crew:hopOne:6"
+     ]
+    },
+    {
+     "text": "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfa",
+       "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+       "whisper",
+       "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+      ],
+      [
+       "dwarfb",
+       "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+       "whisper",
+       "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+      ],
+      [
+       "dwarfc",
+       "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+       "whisper",
+       "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+      ],
+      [
+       "dwarfd",
+       "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+       "whisper",
+       "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+      ],
+      [
+       "dwarfe",
+       "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+       "whisper",
+       "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+      ],
+      [
+       "dwarff",
+       "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+       "whisper",
+       "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+      ],
+      [
+       "dwarfg",
+       "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+       "whisper",
+       "[whispering excitedly, amazed, warm, gruff-but-gentle]"
+      ]
+     ],
+     "before": [
+      "glow:snow",
+      "crew:hopAll"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_morning",
+   "card": "아침",
+   "set": "house_bed2",
+   "enter": [
+    "night:on",
+    "beds:lay",
+    "snow:onbed:6:bedcurl",
+    "crew:at:330,560",
+    "cam:560,280,1"
+   ],
+   "lines": [
+    {
+     "text": "아침 햇살이 창문으로 반짝 들어왔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "아침 햇살이 창문으로 반짝 들어왔어요.",
+       null,
+       "[calm, bright, morning]"
+      ]
+     ],
+     "before": [
+      "night:off"
+     ]
+    },
+    {
+     "text": "아침이 되자 백설공주가 눈을 떴어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "아침이 되자 백설공주가 눈을 떴어요.",
+       null,
+       "[calm, bright, warm storytelling, morning]"
+      ]
+     ],
+     "before": [
+      "sparkle",
+      "snow:look:awake",
+      "snow:hop"
+     ]
+    },
+    {
+     "text": "깜짝이야! 저는 백설공주예요. 갈 곳이 없어요. 여기서 지내도 될까요?",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "깜짝이야! 저는 백설공주예요. 갈 곳이 없어요. 여기서 지내도 될까요?",
+       "toneup",
+       "[startled, polite, sweet, childlike, shy, hopeful]"
+      ]
+     ],
+     "after": [
+      "crew:hopAll"
+     ]
+    },
+    {
+     "text": "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfa",
+       "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+       null,
+       "[firm, kind, warning, gruff-but-warm, together]"
+      ],
+      [
+       "dwarfb",
+       "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+       null,
+       "[firm, kind, warning, gruff-but-warm, together]"
+      ],
+      [
+       "dwarfc",
+       "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+       null,
+       "[firm, kind, warning, gruff-but-warm, together]"
+      ],
+      [
+       "dwarfd",
+       "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+       null,
+       "[firm, kind, warning, gruff-but-warm, together]"
+      ],
+      [
+       "dwarfe",
+       "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+       null,
+       "[firm, kind, warning, gruff-but-warm, together]"
+      ],
+      [
+       "dwarff",
+       "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+       null,
+       "[firm, kind, warning, gruff-but-warm, together]"
+      ],
+      [
+       "dwarfg",
+       "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+       null,
+       "[firm, kind, warning, gruff-but-warm, together]"
+      ]
+     ]
+    },
+    {
+     "text": "네, 약속할게요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "네, 약속할게요.",
+       "happy",
+       "[earnest, sweet, childlike, promising]"
+      ]
+     ],
+     "before": [
+      "snow:hop"
+     ]
+    },
+    {
+     "text": "난쟁이들은 곡괭이를 메고 뚜벅뚜벅 산으로 일하러 갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "난쟁이들은 곡괭이를 메고 뚜벅뚜벅 산으로 일하러 갔어요.",
+       null,
+       "[cheerful, warm]"
+      ]
+     ],
+     "after": [
+      "crew:hide"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_bigbed",
+   "card": "큰 침대",
+   "set": "house_bed2",
+   "enter": [
+    "snow:at:860,540:stand",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "백설공주는 집안일을 하고, 난쟁이들은 산에서 일했어요. 모두 사이좋게 지냈어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 집안일을 하고, 난쟁이들은 산에서 일했어요. 모두 사이좋게 지냈어요.",
+       "happy",
+       "[cheerful, warm, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "백설공주는 싹싹 쓸고 닦고, 보글보글 국도 끓였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 싹싹 쓸고 닦고, 보글보글 국도 끓였어요.",
+       null,
+       "[cheerful, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfa",
+       "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+       "happy",
+       "[cheerful, excited, warm, gruff-but-warm]"
+      ],
+      [
+       "dwarfb",
+       "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+       "happy",
+       "[cheerful, excited, warm, gruff-but-warm]"
+      ],
+      [
+       "dwarfc",
+       "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+       "happy",
+       "[cheerful, excited, warm, gruff-but-warm]"
+      ],
+      [
+       "dwarfd",
+       "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+       "happy",
+       "[cheerful, excited, warm, gruff-but-warm]"
+      ],
+      [
+       "dwarfe",
+       "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+       "happy",
+       "[cheerful, excited, warm, gruff-but-warm]"
+      ],
+      [
+       "dwarff",
+       "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+       "happy",
+       "[cheerful, excited, warm, gruff-but-warm]"
+      ],
+      [
+       "dwarfg",
+       "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+       "happy",
+       "[cheerful, excited, warm, gruff-but-warm]"
+      ]
+     ]
+    },
+    {
+     "text": "뚝딱뚝딱, 쿵쿵!",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "뚝딱뚝딱, 쿵쿵!",
+       "toneup",
+       "[cheerful, rhythmic, playful, bouncy]"
+      ]
+     ],
+     "before": [
+      "dwarfs:build"
+     ]
+    },
+    {
+     "text": "작은 침대 일곱 개 옆에, 커다란 침대가 짠! 하고 놓였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "작은 침대 일곱 개 옆에, 커다란 침대가 짠! 하고 놓였어요.",
+       null,
+       "[bright, delighted]"
+      ]
+     ],
+     "before": [
+      "beds:eight",
+      "fx:tada",
+      "glow:bigbed"
+     ]
+    },
+    {
+     "text": "와아, 고맙습니다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "와아, 고맙습니다!",
+       "happy",
+       "[delighted, grateful, bright, childlike]"
+      ]
+     ],
+     "before": [
+      "snow:hop"
+     ]
+    },
+    {
+     "text": "모두 잘 자요. 함께 지내서 행복해요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "모두 잘 자요. 함께 지내서 행복해요.",
+       "happy",
+       "[warm, content, sleepy, sweet, childlike, happy]"
+      ]
+     ],
+     "before": [
+      "pop:790,420,쿨쿨"
+     ]
+    },
+    {
+     "text": "그날 밤은 모두 드르렁 쿨쿨, 꿈나라로 갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "그날 밤은 모두 드르렁 쿨쿨, 꿈나라로 갔어요.",
+       null,
+       "[soft, calm, lullaby-like]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_apple",
+   "card": "사과 할머니",
+   "set": "queen_room",
+   "enter": [
+    "mirror:room",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?",
+     "src": "reuse",
+     "segs": [
+      [
+       "queen",
+       "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?",
+       null,
+       "[icy, elegant, vain, haughty, proud]"
+      ]
+     ]
+    },
+    {
+     "text": "숲속 일곱 난쟁이 집의 백설공주가 제일 예뻐요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "mirror",
+       "숲속 일곱 난쟁이 집의 백설공주가 제일 예뻐요.",
+       null,
+       "[calm, soft, shimmering, gentle]"
+      ]
+     ],
+     "before": [
+      "sparkle",
+      "mirror:face:show"
+     ]
+    },
+    {
+     "text": "왕비는 부들부들 떨며 나쁜 꾀를 생각해 냈어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "왕비는 부들부들 떨며 나쁜 꾀를 생각해 냈어요.",
+       null,
+       "[soft, tense but gentle]"
+      ]
+     ],
+     "before": [
+      "queen:look:fist",
+      "shake",
+      "fx:thud",
+      "queen:hop"
+     ]
+    },
+    {
+     "text": "왕비는 할머니로 변장하고 빨간 사과를 들고 숲으로 갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "왕비는 할머니로 변장하고 빨간 사과를 들고 숲으로 갔어요.",
+       null,
+       "[soft, slightly tense, storytelling]"
+      ]
+     ],
+     "before": [
+      "set:house_front",
+      "door:reset",
+      "snow:window",
+      "granny:at:560,356",
+      "cam:280,280,1.7"
+     ],
+     "after": [
+      "granny:move:262,356,2400"
+     ]
+    },
+    {
+     "text": "사과 사세요~ 아주 맛있는 사과란다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "granny",
+       "사과 사세요~ 아주 맛있는 사과란다.",
+       null,
+       "[sweetly coaxing, old woman, warm, singsong]"
+      ]
+     ],
+     "before": [
+      "apple:show"
+     ]
+    },
+    {
+     "text": "문은 열면 안 돼요. 난쟁이들과 약속했거든요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "문은 열면 안 돼요. 난쟁이들과 약속했거든요.",
+       null,
+       "[kind, polite, firm, childlike, gentle]"
+      ]
+     ],
+     "before": [
+      "snow:wiggle"
+     ]
+    },
+    {
+     "text": "그럼 창문으로 하나만 맛보렴.",
+     "src": "reuse",
+     "segs": [
+      [
+       "granny",
+       "그럼 창문으로 하나만 맛보렴.",
+       null,
+       "[sweetly coaxing, old woman, warm, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "사과는 새빨갛고 반질반질, 아주 맛있어 보였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "사과는 새빨갛고 반질반질, 아주 맛있어 보였어요.",
+       null,
+       "[soft, gentle, a touch of warning]"
+      ]
+     ],
+     "after": [
+      "apple:give"
+     ]
+    },
+    {
+     "text": "백설공주는 사과를 한 입 베어 물고, 그만 스르르 잠이 들었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "백설공주는 사과를 한 입 베어 물고, 그만 스르르 잠이 들었어요.",
+       null,
+       "[soft, gentle, calm, storytelling]"
+      ]
+     ],
+     "before": [
+      "fx:chomp",
+      "pop:162,246,아삭!"
+     ],
+     "after": [
+      "snow:fall",
+      "granny:leave"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_coffin",
+   "card": "유리관",
+   "set": "house_front",
+   "enter": [
+    "tint:#E8703A,.16",
+    "door:reset",
+    "worry:at:520,360",
+    "cam:280,280,1.7"
+   ],
+   "lines": [
+    {
+     "text": "저녁에 돌아온 난쟁이들은 깜짝 놀랐어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "저녁에 돌아온 난쟁이들은 깜짝 놀랐어요.",
+       null,
+       "[soft, worried, gentle, storytelling]"
+      ]
+     ],
+     "before": [
+      "worry:enter"
+     ]
+    },
+    {
+     "text": "백설공주님, 일어나요! 일어나세요…",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfa",
+       "백설공주님, 일어나요! 일어나세요…",
+       "tonedown",
+       "[gentle, coaxing, soft, worried-warm]"
+      ],
+      [
+       "dwarfb",
+       "백설공주님, 일어나요! 일어나세요…",
+       "tonedown",
+       "[gentle, coaxing, soft, worried-warm]"
+      ],
+      [
+       "dwarfc",
+       "백설공주님, 일어나요! 일어나세요…",
+       "tonedown",
+       "[gentle, coaxing, soft, worried-warm]"
+      ],
+      [
+       "dwarfd",
+       "백설공주님, 일어나요! 일어나세요…",
+       "tonedown",
+       "[gentle, coaxing, soft, worried-warm]"
+      ],
+      [
+       "dwarfe",
+       "백설공주님, 일어나요! 일어나세요…",
+       "tonedown",
+       "[gentle, coaxing, soft, worried-warm]"
+      ],
+      [
+       "dwarff",
+       "백설공주님, 일어나요! 일어나세요…",
+       "tonedown",
+       "[gentle, coaxing, soft, worried-warm]"
+      ],
+      [
+       "dwarfg",
+       "백설공주님, 일어나요! 일어나세요…",
+       "tonedown",
+       "[gentle, coaxing, soft, worried-warm]"
+      ]
+     ]
+    },
+    {
+     "text": "난쟁이들은 훌쩍훌쩍 울며 백설공주를 안아 들었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "난쟁이들은 훌쩍훌쩍 울며 백설공주를 안아 들었어요.",
+       null,
+       "[soft, tender, sorrowful but gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "난쟁이들은 백설공주를 맑은 유리관에 눕히고, 날마다 곁을 지켰어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "난쟁이들은 백설공주를 맑은 유리관에 눕히고, 날마다 곁을 지켰어요.",
+       null,
+       "[soft, gentle, tender, storytelling]"
+      ]
+     ],
+     "before": [
+      "set:hill",
+      "coffin:set",
+      "worry:at:205,548",
+      "cam:500,280,1"
+     ]
+    },
+    {
+     "text": "유리관은 햇빛을 받아 반짝반짝 빛나고, 새들도 포르르 날아와 곁에 앉았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "유리관은 햇빛을 받아 반짝반짝 빛나고, 새들도 포르르 날아와 곁에 앉았어요.",
+       null,
+       "[soft, tender, calm]"
+      ]
+     ]
+    },
+    {
+     "text": "어느 날, 이웃 나라 왕자님이 숲을 지나가다 백설공주를 보았어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "어느 날, 이웃 나라 왕자님이 숲을 지나가다 백설공주를 보았어요.",
+       null,
+       "[calm, hopeful, warm storytelling]"
+      ]
+     ],
+     "before": [
+      "prince:enter"
+     ]
+    },
+    {
+     "text": "이 공주님을 제 성으로 모셔 가 정성껏 돌보고 싶어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prince",
+       "이 공주님을 제 성으로 모셔 가 정성껏 돌보고 싶어요.",
+       null,
+       "[kind, gentle, polite, warm, young man]"
+      ]
+     ]
+    },
+    {
+     "text": "그런데 관을 옮기다가 덜컹! 목에 걸렸던 사과 조각이 툭 빠졌어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그런데 관을 옮기다가 덜컹! 목에 걸렸던 사과 조각이 툭 빠졌어요.",
+       null,
+       "[bright, sudden, surprised, storytelling]"
+      ]
+     ],
+     "after": [
+      "coffin:jolt"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_awake",
+   "card": "깨어나요",
+   "set": "hill",
+   "enter": [
+    "coffin:set",
+    "crew:at:195,550",
+    "prince:at:770,540",
+    "cam:500,280,1"
+   ],
+   "lines": [
+    {
+     "text": "백설공주의 손가락이 꼼지락꼼지락 움직였어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "백설공주의 손가락이 꼼지락꼼지락 움직였어요.",
+       null,
+       "[hushed, hopeful]"
+      ]
+     ],
+     "before": [
+      "glass:open",
+      "shine",
+      "sparkle"
+     ]
+    },
+    {
+     "text": "어머, 제가 오래 잤나 봐요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "snow",
+       "어머, 제가 오래 잤나 봐요.",
+       "happy",
+       "[gentle, sweet, waking up, childlike, surprised]"
+      ]
+     ],
+     "before": [
+      "snow:look:awake",
+      "glow:snow",
+      "petals"
+     ]
+    },
+    {
+     "text": "이제 괜찮아요. 함께 성으로 가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "prince",
+       "이제 괜찮아요. 함께 성으로 가요.",
+       null,
+       "[kind, gentle, warm, relieved, young man]"
+      ]
+     ],
+     "before": [
+      "prince:hop"
+     ]
+    },
+    {
+     "text": "만세! 백설공주가 깨어났다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "dwarfa",
+       "만세! 백설공주가 깨어났다!",
+       "toneup",
+       "[joyful, loud, cheering, delighted]"
+      ],
+      [
+       "dwarfb",
+       "만세! 백설공주가 깨어났다!",
+       "toneup",
+       "[joyful, loud, cheering, delighted]"
+      ],
+      [
+       "dwarfc",
+       "만세! 백설공주가 깨어났다!",
+       "toneup",
+       "[joyful, loud, cheering, delighted]"
+      ],
+      [
+       "dwarfd",
+       "만세! 백설공주가 깨어났다!",
+       "toneup",
+       "[joyful, loud, cheering, delighted]"
+      ],
+      [
+       "dwarfe",
+       "만세! 백설공주가 깨어났다!",
+       "toneup",
+       "[joyful, loud, cheering, delighted]"
+      ],
+      [
+       "dwarff",
+       "만세! 백설공주가 깨어났다!",
+       "toneup",
+       "[joyful, loud, cheering, delighted]"
+      ],
+      [
+       "dwarfg",
+       "만세! 백설공주가 깨어났다!",
+       "toneup",
+       "[joyful, loud, cheering, delighted]"
+      ]
+     ],
+     "before": [
+      "crew:hopAll"
+     ]
+    },
+    {
+     "text": "난쟁이들은 깡충깡충 뛰며 손뼉을 짝짝 쳤어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "난쟁이들은 깡충깡충 뛰며 손뼉을 짝짝 쳤어요.",
+       null,
+       "[bright, joyful]"
+      ]
+     ]
+    },
+    {
+     "text": "왕비는 멀리 떠났어요",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "왕비는 멀리 떠났어요",
+       null,
+       "[calm, quiet, gentle, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.",
+       "happy",
+       "[calm, warm, gentle, wise, storytelling]"
+      ]
+     ],
+     "before": [
+      "confetti"
+     ]
+    }
+   ]
+  }
+ ]
+}
