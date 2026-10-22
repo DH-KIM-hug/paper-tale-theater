@@ -5,7 +5,8 @@
    크기 원칙: 백설은 모든 장면에서 같은 크기다 (자세마다 머리 크기가 같게 높이를 맞췄다). 난쟁이 가구가 백설에게 작은 것이지, 백설을 줄이지 않는다.
    난쟁이 목소리: 일곱 명이 따로(dwarfa~g). [난쟁이들] 대사는 일곱 목소리를 겹친 합창 파일(chorus.js, mix_chorus.py).
    교훈: 질투는 마음을 해친다. 낯선 사람이 주는 것은 어른에게 물어보고 받는다.
-   그림: assets/v3w/sw_*.webp (목록은 tools/app/gen/jobs_snow_white.json — sw_ 머리글자는 해와 바람과 같이 쓰므로 그 목록에 있는 것만 쓴다) */
+   그림: assets/v3w/sw_*.webp (목록은 tools/app/gen/jobs_snow_white.json — sw_ 머리글자는 해와 바람과 같이 쓰므로 그 목록에 있는 것만 쓴다)
+   화려하게 다시 그리기(VISUAL_PLAN.md, 2026-10-22): 성·숲·집 앞·빈터 배경 v2 + 층 소품 sw_layer_*(중간 층은 배우 뒤, 앞 가림 층은 맨 앞, 모두 누름 없음) */
 (() => {
   const AS = '../../assets/v3w/';
   /* 그림 폭/높이 비율 (사방 여백 없이 오린 그림) */
@@ -16,8 +17,12 @@
     prop_door_closed: 1.0063, prop_door_open: .9756, prop_table: 2.2556, prop_chair: .7929, prop_chair_7: .7857,
     prop_bed1: 1.5857, prop_bed2: 1.5857, prop_bed3: 1.5786, prop_bed4: 1.5857, prop_bed5: 1.5857, prop_bed6: 1.5857, prop_bed7: 1.5857,
     prop_bed_big: 1.5, prop_planks: 1.1938, prop_glow: .98, prop_petals: 1.0526,
-    snow_bedknees: 1.5738, snow_bedtoes: 1.5786, snow_bedcurl: 1.519, prop_mirror_face: .9875, prop_lantern: .6833 };
-  const BGS = ['queen_room', 'forest', 'house_front', 'house_table2', 'house_bed2', 'hill'];
+    snow_bedknees: 1.5738, snow_bedtoes: 1.5786, snow_bedcurl: 1.519, prop_mirror_face: .9875, prop_lantern: .6833,
+    /* 화려하게 다시 그리기(VISUAL_PLAN.md, 2026-10-22): 중간 층·앞 가림 층 소품 (tools/app/gen/post_v2.py 로 오림) */
+    layer_chandelier: .94, layer_candelabra: .4883, layer_curtain_side: .3817, layer_vine: .4133, layer_mushrooms: 1.0583,
+    layer_bluebells: .8117, layer_fern_front: 1.1017, layer_flowers_front: 1.07, layer_flowers_mid: 2.3316, layer_branch: 1.07,
+    layer_bird_blue: 1.0083, layer_bird_robin: 1.0017, layer_rabbit: .6517, layer_fawn: 1.2617, layer_butterfly: 1.205 };
+  const BGS = ['queen_room_v2', 'forest_v2', 'house_front_v2', 'house_table2', 'house_bed2', 'hill_v2'];   /* 성·숲·집 앞·빈터는 v2(다층) */
   const bgSrc = k => AS + 'sw_bg_' + k + '.webp', artSrc = k => AS + 'sw_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 그림이 무대 1000×560을 덮게 */
   const H_SNOW = 205;  /* 백설 키 (서기 기준). 어른(왕비·사냥꾼·할머니·왕자)은 조금 더 크고, 난쟁이는 백설 허리 조금 위 */
@@ -57,6 +62,65 @@
   /* 반짝 (세는 침대·깨어나는 백설) */
   const glow = (a, ms = 900) => { a.body.style.filter = 'url(#hintGlow)'; setTimeout(() => { a.body.style.filter = ''; }, ms); };
 
+  /* ---- 층 소품 도우미 (VISUAL_PLAN §3~5) ---- */
+  /* 매달린 소품(샹들리에·덩굴·가지)은 위 끝을 축으로, 바닥 소품은 발끝을 축으로 살랑 */
+  function sway(a, deg, ms, top = true) {
+    a.body.getAnimations().forEach(n => n.cancel());
+    const h = a.h, R = d => (top ? `translate(0px,${-h}px) rotate(${d}deg) translate(0px,${h}px)` : `rotate(${d}deg)`);
+    return a.body.animate([{ transform: R(-deg) }, { transform: R(deg) }, { transform: R(-deg) }], { duration: ms, iterations: Infinity, easing: 'ease-in-out' });
+  }
+  /* 은·금 마름모 반짝이 (신데렐라 sparkle 과 같은 모양) */
+  function sparkleRing(T, x, y, r, n, colors) {
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2, d = r * (.7 + (i % 3) * .15);
+      const p = T.el('path', { d: 'M0 -9 L5 0 L0 9 L-5 0 Z', fill: colors[i % colors.length], transform: `translate(${x},${y})` }, T.world);
+      p.style.pointerEvents = 'none';
+      p.animate([{ transform: `translate(${x}px,${y}px) scale(.3)`, opacity: 0 },
+        { transform: `translate(${x + Math.cos(a) * d * .7}px,${y + Math.sin(a) * d * .7}px) scale(1.2)`, opacity: 1, offset: .4 },
+        { transform: `translate(${x + Math.cos(a) * d}px,${y + Math.sin(a) * d}px) scale(.4)`, opacity: 0 }], { duration: 1300, delay: i * 35, easing: 'ease-out' })
+        .finished.then(() => p.remove(), () => p.remove());
+    }
+  }
+  /* 촛불 반짝 점: 노란 원이 천천히 깜빡인다 (불꽃 그림 위에 얹는다) */
+  function twinkle(T, pts) {
+    const g = T.el('g', {}, T.world); g.style.pointerEvents = 'none';
+    pts.forEach(([x, y], i) => {
+      const c = T.el('circle', { cx: x, cy: y, r: 3.5, fill: '#FFF3C4' }, g);
+      c.animate([{ opacity: .1 }, { opacity: .95 }, { opacity: .1 }], { duration: 1200, delay: i * 400, iterations: Infinity });
+    });
+    return g;
+  }
+  /* 반딧불: 노란 원(둘레에 크림 원 한 겹)이 느리게 떠다니며 깜빡인다. 인물 얼굴 자리(x 250~760, y 330~450)는 피한다 */
+  function fireflies(T, n, P) {
+    const g = T.el('g', {}, T.world); g.style.pointerEvents = 'none';
+    const flies = [];
+    for (let i = 0; i < n; i++) {
+      const side = i % 3;   // 0: 위쪽, 1: 왼쪽, 2: 오른쪽
+      const x = side === 0 ? (P ? 300 : 120) + ((i * 137) % (P ? 400 : 760)) : side === 1 ? (P ? 300 : 40) + (i * 53) % 170 : (P ? 560 : 790) + (i * 61) % 170;
+      const y = side === 0 ? 60 + (i * 47) % 150 : 120 + (i * 71) % 200;
+      const f = T.el('g', { transform: `translate(${x},${y})` }, g);
+      const r = 3 + (i % 3);
+      T.el('circle', { r: r + 3, fill: '#F3E9C8', opacity: .55 }, f);
+      T.el('circle', { r, fill: '#F2C94E' }, f);
+      const dx = 25 + (i % 4) * 5, dy = 15 + (i % 3) * 5, ms = 5000 + (i % 5) * 1000;
+      f.animate([{ transform: `translate(${x}px,${y}px)` }, { transform: `translate(${x + dx}px,${y - dy}px)` }, { transform: `translate(${x - dx}px,${y + dy}px)` }, { transform: `translate(${x}px,${y}px)` }],
+        { duration: ms, iterations: Infinity, easing: 'ease-in-out' });
+      f.children[1].animate([{ opacity: .25 }, { opacity: 1 }, { opacity: .25 }], { duration: 1500 + (i % 4) * 400, delay: i * 170, iterations: Infinity });
+      flies.push({ f, x, y });
+    }
+    return { g, flies };
+  }
+  /* 나비: 날갯짓(scaleX) + 떠다님. fast 면 빠르게 */
+  function flutter(a, fast = false) {
+    a.body.getAnimations().forEach(n => n.cancel());
+    const h = a.h / 2;
+    a.body.animate([{ transform: `translateY(${-h}px) scaleX(1) translateY(${h}px)` }, { transform: `translateY(${-h}px) scaleX(.3) translateY(${h}px)` }, { transform: `translateY(${-h}px) scaleX(1) translateY(${h}px)` }],
+      { duration: fast ? 260 : 520, iterations: Infinity });
+    const x = a.x, y = a.y, dx = fast ? 60 : 30, ms = fast ? 2600 : 6000;
+    a.pos.animate([{ transform: `translate(${x}px,${y}px)` }, { transform: `translate(${x + dx}px,${y - 30}px)` }, { transform: `translate(${x}px,${y - 10}px)` }, { transform: `translate(${x - dx}px,${y - 30}px)` }, { transform: `translate(${x}px,${y}px)` }],
+      { duration: ms, iterations: Infinity, easing: 'ease-in-out' });
+  }
+
   function bgImage(T, key) {
     return T.el('image', { href: bgSrc(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
   }
@@ -95,7 +159,7 @@
      열림: 문짝을 왼쪽 경첩 가장자리를 축으로 가로로 접고(종이 문이 돌아가는 모습), 열린 그림 문짝 폭·자리에 닿으면 열린 그림으로 겹쳐 바꾼다.
      돌 테는 닫힌·열린 그림이 같은 픽셀 자리라서 바꿔도 테가 움직이지 않는다 */
   const DOOR = { x: 263.9, y: 231.4, sx: .2053, sy: .2187 };
-  const DOOR_ART = ['door_inside', 'door_wall', 'door_frame', 'door_leaf', 'door_openfront'];
+  const DOOR_ART = ['door_inside', 'door_wall_v2', 'door_frame', 'door_leaf', 'door_openfront'];
   function makeDoor(T) {
     const d = (ix, iy) => [DOOR.x + ix * DOOR.sx, DOOR.y + iy * DOOR.sy];
     const img = (k, ix, iy, iw, ih, parent, f = 'url(#pp)') => {
@@ -111,8 +175,8 @@
       p.tintId = id;
       p.inside = img('door_inside', 73, 63, 320, 410, g, '').g;
       p.slot = T.el('g', {}, g);
-      /* 배경 1600×902 의 (409,326)~(640,533) 조각 → 세계 좌표 */
-      p.wall = T.el('image', { href: artSrc('door_wall'), x: -40 + 409 * .675, y: -24 + 326 * BGBOX.h / 902, width: 231 * .675, height: 207 * BGBOX.h / 902, preserveAspectRatio: 'none' }, g);
+      /* 배경 1600×902 의 (409,326)~(640,533) 조각 → 세계 좌표 (door_wall_v2: 같은 조각 모양을 v2 집 앞 배경에서 다시 오림. v2 집·아치 자리는 옛 배경과 같다) */
+      p.wall = T.el('image', { href: artSrc('door_wall_v2'), x: -40 + 409 * .675, y: -24 + 326 * BGBOX.h / 902, width: 231 * .675, height: 207 * BGBOX.h / 902, preserveAspectRatio: 'none' }, g);
       p.front = T.el('g', {}, g);                 /* 두드릴 때 들썩이는 것은 문틀·문짝뿐 (벽은 배경이라 움직이지 않는다) */
       p.frame = img('door_frame', 0, 0, 480, 477, p.front).g;
       p.leaf = img('door_leaf', 75, 65, 316, 406, p.front);
@@ -223,24 +287,61 @@
     const shine = prop(T, 'prop_glow', 190);
     [snow, queen, hunter, dwarfs, worry, hammerD, plankD, smileD, granny, prince, mirror, door, table, ...chairs, ...beds, bigBed, planks, apple, piece, coffin, shine].forEach(hide);
 
+    /* ---- 층 소품 (VISUAL_PLAN §3~6): 누름을 받지 않는다. 같은 소품은 어느 장면이든 같은 높이(§4-1) ---- */
+    const D = (f, h, nat) => { const a = prop(T, 'layer_' + f, h, nat); a.pos.style.pointerEvents = 'none'; return a; };
+    const L = {
+      chand: D('chandelier', 150), cand: [D('candelabra', 170), D('candelabra', 170)], curtain: D('curtain_side', 400),
+      vine: [D('vine', 220), D('vine', 220)], mush: D('mushrooms', 95), bells: D('bluebells', 90),
+      fern: [D('fern_front', 120), D('fern_front', 120)],
+      fmid: [D('flowers_mid', 80), D('flowers_mid', 80), D('flowers_mid', 80)], branch: [D('branch', 180), D('branch', 180)],
+      blue: D('bird_blue', 34, 'right'), robin: D('bird_robin', 34, 'right'), rabbit: D('rabbit', 56), fawn: D('fawn', 95, 'left'),
+      bf: [D('butterfly', 26), D('butterfly', 26), D('butterfly', 26)], ffront: [D('flowers_front', 100), D('flowers_front', 100)],
+    };
+    /* 샹들리에 사슬: 그림 위 끝에서 화면 밖까지 Bark Brown 띠 한 장 */
+    { const ch = T.el('rect', { x: -2, y: -150 - 400, width: 4, height: 404, fill: '#6B4A32' }, L.chand.body); L.chand.body.insertBefore(ch, L.chand.body.firstChild); }
+    Object.values(L).flat().forEach(hide);
+    /* 앞 가림 층을 맨 앞으로 (뒤에 put 한 배우보다 앞) */
+    const front = (...as) => as.forEach(a => { if (a.pos.style.display !== 'none') T.world.appendChild(a.pos); });
+    /* 성: 샹들리에(중간)·촛대 둘(중간)·오른쪽 커튼(앞). 거울·왕비보다 먼저 깐다 */
+    const castleBack = () => {
+      put(T, L.chand, X(640, 620), 150); sway(L.chand, 1.5, 6000);
+      put(T, L.cand[0], X(70, 150), 560); put(T, L.cand[1], X(930, 840), 560);
+    };
+    const castleFront = () => {
+      put(T, L.curtain, 1012, 376); front(L.curtain);
+      const w = 150 * ASP.layer_chandelier, cx = X(640, 620);
+      twinkle(T, [[cx - w * .27, 150 - 150 * .58], [cx + w * .05, 150 - 150 * .62], [cx + w * .4, 150 - 150 * .58]]);
+    };
     /* 거울 장면 (1장, 9장 처음) */
     const MY = 455, MCY = MY - 230 * .47;
     const mirrorRoom = () => {
-      scene('queen_room');
+      scene('queen_room_v2');
+      castleBack();
       put(T, mirror, X(250, 385), MY);
       put(T, queen, X(470, 560), 528, { look: 'mirror', to: 'left' });
-      return mirrorFace(T, X(250, 385), MCY);
+      const f = mirrorFace(T, X(250, 385), MCY);
+      castleFront();
+      return f;
+    };
+    const mirrorShine = () => sparkleRing(T, X(250, 385), MCY, 120, 12, ['#DCE3EE', '#EBD08A']);
+    /* 왕비가 주먹 쥘 때 샹들리에가 한 번 크게 흔들린다 */
+    const chandJolt = async () => {
+      const h = L.chand.h, R = d => `translate(0px,${-h}px) rotate(${d}deg) translate(0px,${h}px)`;
+      L.chand.body.getAnimations().forEach(n => n.cancel());
+      await T.anim(L.chand.body, [{ transform: R(0) }, { transform: R(-4) }, { transform: R(3) }, { transform: R(-1.5) }, { transform: R(0) }], 700);
+      sway(L.chand, 1.5, 6000);
     };
 
     /* ===== 1. 거울 앞의 왕비 ===== */
     let mf = mirrorRoom();
     await T.curtain(true);
+    if (!P) T.camTo(500, 240, 1.06, 2500).then(() => T.camTo(500, 280, 1, 1500));   /* 홀 위쪽(샹들리에·창)을 천천히 보여 주고 돌아온다 */
     await say('옛날 어느 나라에 눈처럼 하얀 얼굴의 공주가 살았어요. 이름은 백설공주였어요.');
     await say('왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.');
     await say('거울아, 거울아, 이 나라에서 누가 제일 예쁘니?');
-    sfx(T, 'sparkle'); mf.show();
+    sfx(T, 'sparkle'); mf.show(); mirrorShine();
     await say('왕비님도 예쁘지만, 백설공주가 더 예뻐요.');
-    queen.look('fist'); T.shake(); sfx(T, 'thud'); queen.hop(16, 320);
+    queen.look('fist'); T.shake(); sfx(T, 'thud'); queen.hop(16, 320); chandJolt();
     await say('왕비는 샘이 나서 얼굴이 빨개졌어요.');
     mf.hide();
     queen.hop(12, 300);
@@ -248,10 +349,18 @@
     await sleep(300);
 
     /* ===== 2. 숲속의 사냥꾼 ===== */
+    let ffly;
     await T.sceneCard(tr('깊은 숲'), () => {
-      scene('forest');
+      scene('forest_v2');
+      /* 중간 층: 덩굴·버섯·초롱꽃 → 배우 → 앞 층: 고사리.
+         (안개 띠 sw_layer_mist 는 오솔길 위에 놓으면 납작한 눈 둑처럼 보여 쓰지 않는다. 배경 그림의 안개 층으로 충분) */
+      put(T, L.vine[0], X(120, 300), 196); sway(L.vine[0], 1.5, 7000);
+      put(T, L.vine[1], X(900, 720), 196, { to: 'right' }); sway(L.vine[1], 1.5, 7600);
+      put(T, L.mush, X(130, 290), 556); put(T, L.bells, X(900, 720), 556);
       put(T, snow, X(400, 440), 530, { look: 'stand' });
       put(T, hunter, X(610, 575), 534);
+      put(T, L.fern[0], 40, 590); put(T, L.fern[1], 980, 590, { to: 'right' });
+      ffly = fireflies(T, 14, P);
     }, hunter.pos);
     await say('사냥꾼은 백설공주를 깊은 숲으로 데려갔어요.');
     const shakeHead = (async () => { await sleep(300); for (let i = 0; i < 3; i++) await hunter.wiggle(5, 520); })();
@@ -259,15 +368,18 @@
     await shakeHead;
     await say('고맙습니다, 아저씨.');
     snow.look('flee', 'left'); sfx(T, 'whoosh');
+    L.fern[0].wiggle(4, 500);
+    ffly.flies.slice(0, 2).forEach(({ f }) => f.parentNode && f.animate([{ translate: '0 0' }, { translate: '-300px 40px' }], { duration: 1600, fill: 'forwards', easing: 'ease-in', composite: 'add' }));
     await Promise.all([say('백설공주는 어두운 숲을 혼자 달리고 또 달렸어요.'),
       (async () => { await snow.move(X(-120, 240), 530, 1600, 'ease-in'); hide(snow); })()]);
 
     /* ===== 3. 작은 집 (톡 1: 첫 조작) ===== */
     const FAR = .62;                                       /* 집이 멀리 보이는 장면: 카메라를 당겨 화면 속 백설 크기는 다른 장면과 같다 */
     await T.sceneCard(tr('작은 집'), () => {
-      scene('house_front'); tint(T, '#E8703A', .16);       /* 해 질 녘 */
+      scene('house_front_v2'); tint(T, '#E8703A', .16);       /* 해 질 녘 */
       door.reset(true);                                    /* 그림 속 집의 문 자리에 딱 맞춘 문 (해 질 녘 빛을 벽 조각에도) */
       put(T, snow, 520, 352, { look: 'stand', s: FAR });
+      if (!P) put(T, L.fern[0], 110, 448, { s: FAR });       /* 앞 가림(가로만): 화면 왼쪽 아래 모서리 */
       camSnap(X(370, 380), 270, P ? 1.5 : 1.7);
     }, door.pos);
     await Promise.all([say('날이 저물 무렵, 백설공주는 숲속에서 아주 작은 집을 찾았어요.'), snow.move(410, 352, 1800)]);
@@ -496,16 +608,16 @@
     /* 다시 거울: 짧게 */
     await T.sceneCard(tr('다시 거울'), () => { mf = mirrorRoom(); queen.look('mirror'); }, mirror.pos);
     await say('거울아, 거울아, 이 나라에서 누가 제일 예쁘니?');
-    sfx(T, 'sparkle'); mf.show();
+    sfx(T, 'sparkle'); mf.show(); mirrorShine();
     await say('숲속 일곱 난쟁이 집의 백설공주가 제일 예뻐요.');
-    queen.look('fist'); T.shake(); sfx(T, 'thud'); queen.hop(14, 300);
+    queen.look('fist'); T.shake(); sfx(T, 'thud'); queen.hop(14, 300); chandJolt();
     await sleep(500);
     /* 난쟁이 집 앞. 백설은 문을 열지 않고 집 안에서 창문으로 내다보며 사과를 받는다 (원작: 문은 열지 않음).
        그림 속 창문 구멍(WX·SILL, 폭 약 37·높이 44)만 보이게 자르고, 몸은 집 안(어두운 방)에 있어 벽 앞으로 나오지 않는다 */
     const WX = 162, SILL = 306, WS = .36;
     let winG;
     await T.sceneCard(tr('사과 할머니'), () => {
-      scene('house_front');
+      scene('house_front_v2');
       door.reset();
       winG = T.el('g', {}, T.world);
       const id = 'swWin' + (++uid);
@@ -514,6 +626,7 @@
       T.el('rect', { x: WX - 20, y: SILL - 48, width: 40, height: 52, fill: '#4A3626' }, winG);   /* 창 너머 어두운 방 */
       put(T, snow, WX, SILL + 35, { look: 'receive', s: WS }); winG.appendChild(snow.pos);
       put(T, granny, 560, 356, { to: 'left', s: FAR });
+      if (!P) put(T, L.fern[0], 110, 448, { s: FAR });
       camSnap(X(280, 250), 280, P ? 1.5 : 1.7);
     }, snow.pos);
     await Promise.all([say('왕비는 할머니로 변장하고 빨간 사과를 들고 숲으로 갔어요.'), granny.move(262, 356, 2400)]);
@@ -565,15 +678,42 @@
       T.el('image', { href, ...box, 'clip-path': `url(#${cid})` }, glass);
       glass.style.transformBox = 'view-box';
     };
+    /* 빈터 층 소품 (VISUAL_PLAN §5): 들꽃 띠 → 아기 사슴 → 토끼 → (유리관·백설·난쟁이·왕자) → 새 → 벚꽃 가지·나비·꽃 묶음 */
+    const BIRD = { blue: [X(70, 640), X(122, 118)], robin: [X(930, 742), X(118, 112)] };   /* 10장: 가지 위 */
+    const meadowBack = () => {
+      [170, 500, 830].forEach((x, i) => put(T, L.fmid[i], x, 556, { to: i === 1 ? 'right' : 'left' }));
+      put(T, L.fawn, X(960, 770), 548, { to: 'left' });
+      put(T, L.rabbit, X(880, 700), 556);
+    };
+    const meadowFront = (fast = false) => {
+      put(T, L.branch[0], X(940, 700), 156); sway(L.branch[0], 1, 8000);
+      if (!P) { put(T, L.branch[1], 60, 156, { to: 'right' }); sway(L.branch[1], 1, 8600); }
+      put(T, L.blue, BIRD.blue[0], BIRD.blue[1], { to: 'right' }); put(T, L.robin, BIRD.robin[0], BIRD.robin[1], { to: 'left' });
+      if (P) hide(L.blue);
+      const bx = X([140, 880, 960], [330, 660, 600]), by = [250, 300, 220];
+      L.bf.forEach((b, i) => { if (i < (fast ? 3 : 2)) { put(T, b, bx[i], by[i]); flutter(b, fast); } else hide(b); });
+      put(T, L.ffront[0], 985, 600); put(T, L.ffront[1], 25, 618, { to: 'right' });
+      front(L.branch[0], L.branch[1], L.blue, L.robin, ...L.bf, ...L.ffront);
+    };
     await T.sceneCard(tr('유리관'), () => {
-      scene('hill');
+      scene('hill_v2');
+      meadowBack();
       put(T, coffin, CX, CY);
       inCoffin();
       put(T, worry, X(205, 360), 548);
+      meadowFront();
       if (P) camSnap(430, 280, 1);
     }, coffin.pos);
+    /* "날마다 곁을 지켰어요": 꽃잎 두 장만 천천히 */
+    for (let i = 0; i < 2; i++) {
+      const p = prop(T, 'prop_petals', 44); p.pos.style.pointerEvents = 'none';
+      put(T, p, X(860, 640) - i * 120, 40);
+      p.body.animate([{ transform: 'translate(0,0) rotate(0deg)', opacity: 0 }, { transform: 'translate(-30px,200px) rotate(140deg)', opacity: 1, offset: .5 }, { transform: 'translate(10px,420px) rotate(280deg)', opacity: 0 }],
+        { duration: 6500, delay: 600 + i * 1500, fill: 'forwards', easing: 'ease-in-out' });
+    }
     await say('난쟁이들은 백설공주를 맑은 유리관에 눕히고, 날마다 곁을 지켰어요.');
     put(T, prince, X(1100, 900), 540); prince.face('left');
+    front(L.branch[0], L.branch[1], L.blue, L.robin, ...L.bf, ...L.ffront);
     await Promise.all([say('어느 날, 이웃 나라 왕자님이 숲을 지나가다 백설공주를 보았어요.'), prince.move(X(770, 640), 540, 2200), follow(560, 2200)]);
     await say('이 공주님을 제 성으로 모셔 가 정성껏 돌보고 싶어요.');
     /* 관을 옮기다 덜컹 → 목에 걸린 사과 조각이 툭 빠진다 */
@@ -595,12 +735,14 @@
     /* ===== 11. 깨어나요 (톡: 백설의 손을 톡) ===== */
     const crewE = crew(T); hide(crewE);
     await T.sceneCard(tr('깨어나요'), () => {
-      scene('hill');
+      scene('hill_v2');
+      meadowBack();
       put(T, coffin, CX, CY);
       put(T, shine, CX, CY - 40); hide(shine);
       inCoffin();
       put(T, crewE, X(195, 330), 550, { s: .85 });
       put(T, prince, X(770, 650), 540);
+      meadowFront();
       if (P) camSnap(500, 280, 1);
     }, snow.pos);
     /* 유리 뚜껑·관 앞판이 백설 위를 덮고 있어 백설을 직접 누를 수 없다 → 맨 위에 투명한 누르는 자리를 따로 둔다 (2026-10-20) */
@@ -615,10 +757,24 @@
     sfx(T, 'sparkle', () => T.tone([700, 1400], .4, { vol: .12 }));
     put(T, snow, CX + 10, CY - 30, { look: 'awake' }); fadeIn(snow, 500); glow(snow, 1200);
     T.world.appendChild(prince.pos); T.world.appendChild(crewE.pos);
-    /* 꽃잎이 팔랑팔랑 내린다 */
+    /* 깨어남 연출(VISUAL_PLAN §5): 반짝 → 새 두 마리가 유리관 테두리로 → 토끼·사슴 깡충 → 나비 빠르게 → 꽃잎은 벚꽃 가지에서 */
+    sparkleRing(T, CX, CY - 80, 190, 18, ['#EBD08A', '#F6ECD8']);
+    if (!P) T.camTo(500, 300, 1.08, 900).then(() => T.camTo(500, 280, 1, 1400));
+    const land = async (b, x, ms, d) => {
+      await sleep(d); b.pos.style.display = ''; T.world.appendChild(b.pos);
+      const x0 = b.x, y0 = b.y, y1 = CY - 150 + 12, mx = (x0 + x) / 2, my = Math.min(y0, y1) - 60;
+      b.pos.removeAttribute('transform');
+      const t = (xx, yy) => `translate(${xx}px,${yy}px) scale(${b.flip * b.scale},${b.scale})`;
+      await T.anim(b.pos, [{ transform: t(x0, y0) }, { transform: t(mx, my) }, { transform: t(x, y1) }], { duration: ms, easing: 'ease-in-out' });
+      b.pos.style.transform = ''; b.place(x, y1); await b.hop(6, 300);
+    };
+    land(L.blue, CX - 150, 900, 300); land(L.robin, CX + 150, 900, 600);
+    (async () => { await sleep(800); popSfx(T); L.rabbit.hop(14, 400).then(() => L.rabbit.hop(14, 400)); L.fawn.hop(8, 420); })();
+    (async () => { await sleep(1000); L.bf.forEach((b, i) => { const bx = X([140, 880, 960], [330, 660, 600]), by = [250, 300, 220]; put(T, b, bx[i], by[i]); flutter(b, true); }); front(...L.bf, ...L.ffront); })();
+    /* 꽃잎이 팔랑팔랑 내린다 (벚꽃 가지 자리에서) */
     for (let i = 0; i < 9; i++) {
-      const p = prop(T, 'prop_petals', 44 + (i % 3) * 14);
-      put(T, p, 80 + i * 105, -40);
+      const p = prop(T, 'prop_petals', 44 + (i % 3) * 14); p.pos.style.pointerEvents = 'none';
+      put(T, p, P ? 600 + (i % 5) * 30 : (i < 5 ? 880 + i * 30 : 20 + (i - 5) * 45), 60);
       p.body.animate([{ transform: 'translate(0,0) rotate(0deg)', opacity: 0 }, { transform: 'translate(-30px,240px) rotate(160deg)', opacity: 1, offset: .5 }, { transform: 'translate(20px,560px) rotate(320deg)', opacity: 0 }],
         { duration: 5200 + (i % 4) * 700, delay: i * 260, iterations: 2, easing: 'ease-in-out' });
     }
