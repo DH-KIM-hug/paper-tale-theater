@@ -199,13 +199,13 @@
      ]
     },
     {
-     "text": "거북이는 느려도 한 번 마음먹으면 끝까지 하는 친구였거든요.",
+     "text": "거북이는 느릿느릿 걸어도 한 번 마음먹으면 끝까지 하는 친구였거든요.",
      "src": "new",
-     "en": "The turtle was slow, but once he made up his mind, he never gave up.",
+     "en": "The turtle plodded along ever so slowly, but once he made up his mind, he never gave up.",
      "segs": [
       [
        "nar",
-       "The turtle was slow, but once he made up his mind, he never gave up."
+       "The turtle plodded along ever so slowly, but once he made up his mind, he never gave up."
       ]
      ]
     },
@@ -318,13 +318,13 @@
      ]
     },
     {
-     "text": "모두 응원석에 앉아 경주가 시작되기를 기다렸지요.",
+     "text": "모두 응원석에 옹기종기 앉아 두근두근 경주를 기다렸지요.",
      "src": "new",
-     "en": "Everyone sat down in the cheering seats and waited for the race to begin.",
+     "en": "Everyone snuggled up together in the cheering seats, hearts going pitter-patter, waiting for the race.",
      "segs": [
       [
        "nar",
-       "Everyone sat down in the cheering seats and waited for the race to begin."
+       "Everyone snuggled up together in the cheering seats, hearts going pitter-patter, waiting for the race."
       ]
      ],
      "before": [
@@ -421,24 +421,24 @@
      ]
     },
     {
-     "text": "친구들은 모두 숨을 죽이고 북을 바라보았어요.",
+     "text": "친구들은 모두 숨을 죽이고 두근두근 북을 바라보았어요.",
      "src": "new",
-     "en": "All the friends held their breath and stared at the drum.",
+     "en": "All the friends held their breath, hearts thumping, and stared at the drum.",
      "segs": [
       [
        "nar",
-       "All the friends held their breath and stared at the drum."
+       "All the friends held their breath, hearts thumping, and stared at the drum."
       ]
      ]
     },
     {
-     "text": "둥! 북소리가 울리자 둘은 나란히 출발했어요.",
+     "text": "둥둥! 북소리가 쿵쿵 울리자 둘은 나란히 출발했어요.",
      "src": "new",
-     "en": "Boom! The drum rang out, and off they went, side by side.",
+     "en": "Boom, boom! The drum thumped and thundered, and off they went, side by side.",
      "segs": [
       [
        "nar",
-       "Boom! The drum rang out, and off they went, side by side.",
+       "Boom, boom! The drum thumped and thundered, and off they went, side by side.",
        "toneup:1.2"
       ]
      ],
@@ -599,13 +599,13 @@
    ],
    "lines": [
     {
-     "text": "토끼는 나무 아래에 벌렁 드러누웠어요.",
+     "text": "토끼는 나무 아래에 벌렁 드러누워 하암~ 하품을 했어요.",
      "src": "new",
-     "en": "The rabbit flopped down under the tree and stretched out.",
+     "en": "The rabbit flopped down under the tree and let out a big yaaawn.",
      "segs": [
       [
        "nar",
-       "The rabbit flopped down under the tree and stretched out."
+       "The rabbit flopped down under the tree and let out a big yaaawn."
       ]
      ]
     },
@@ -652,13 +652,13 @@
      ]
     },
     {
-     "text": "구름도 살며시 다가와 해님을 가려 주었어요.",
+     "text": "구름도 뭉게뭉게 다가와 해님을 살며시 가려 주었어요.",
      "src": "new",
-     "en": "A cloud drifted over, soft and slow, and covered up the sun.",
+     "en": "A fluffy, puffy cloud drifted over, soft and slow, and covered up the sun.",
      "segs": [
       [
        "nar",
-       "A cloud drifted over, soft and slow, and covered up the sun.",
+       "A fluffy, puffy cloud drifted over, soft and slow, and covered up the sun.",
        "whisper"
       ]
      ],
@@ -833,13 +833,13 @@
      ]
     },
     {
-     "text": "한 발, 또 한 발. 거북이는 한 번도 쉬지 않았어요.",
+     "text": "엉금엉금, 한 발 또 한 발. 거북이는 한 번도 쉬지 않았어요.",
      "src": "new",
-     "en": "One step, then another. The turtle never stopped, not even once.",
+     "en": "Plod, plod, one step, then another. The turtle never stopped, not even once.",
      "segs": [
       [
        "nar",
-       "One step, then another. The turtle never stopped, not even once."
+       "Plod, plod, one step, then another. The turtle never stopped, not even once."
       ]
      ],
      "before": [
@@ -1166,25 +1166,25 @@
      ]
     },
     {
-     "text": "\"조금만 더. 조금만 더 가면 돼.\"",
+     "text": "\"영차, 조금만 더. 조금만 더 가면 돼.\"",
      "src": "new",
-     "en": "Just a little more. Just a little more and I am there.",
+     "en": "Heave-ho, just a little more. Just a little more and I am there.",
      "segs": [
       [
        "turtle",
-       "Just a little more. Just a little more and I am there.",
+       "Heave-ho, just a little more. Just a little more and I am there.",
        "toneup:1.2"
       ]
      ]
     },
     {
-     "text": "거북이는 숨을 크게 쉬고 마지막 한 발을 내디뎠어요.",
+     "text": "거북이는 후우 숨을 크게 쉬고 마지막 한 발을 쿵 내디뎠어요.",
      "src": "new",
-     "en": "The turtle took a big, deep breath and stepped out one last time.",
+     "en": "The turtle took a big, deep breath, whoosh, and stomped out one last step. Thump!",
      "segs": [
       [
        "nar",
-       "The turtle took a big, deep breath and stepped out one last time.",
+       "The turtle took a big, deep breath, whoosh, and stomped out one last step. Thump!",
        "toneup:1.3"
       ]
      ],
@@ -1278,13 +1278,13 @@
      ]
     },
     {
-     "text": "거북이는 메달을 목에 걸고 활짝 웃었어요.",
+     "text": "거북이는 반짝반짝 메달을 목에 걸고 활짝 웃었어요.",
      "src": "new",
-     "en": "The turtle wore the medal around his neck and smiled a great big smile.",
+     "en": "The turtle wore the sparkly, twinkly medal around his neck and smiled a great big smile.",
      "segs": [
       [
        "nar",
-       "The turtle wore the medal around his neck and smiled a great big smile.",
+       "The turtle wore the sparkly, twinkly medal around his neck and smiled a great big smile.",
        "happy:1.2"
       ]
      ]

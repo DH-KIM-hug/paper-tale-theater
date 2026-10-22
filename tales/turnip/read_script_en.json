@@ -43,13 +43,13 @@
      ]
     },
     {
-     "text": "할아버지 손에는 아주 작은 순무 씨앗 하나가 있었어요.",
+     "text": "할아버지 손바닥 위에 작은 씨앗 하나가 또르르 굴렀어요.",
      "src": "new",
-     "en": "In Grandpa's hand was one teeny tiny turnip seed.",
+     "en": "On Grandpa's palm, one teeny tiny seed rolled round and round.",
      "segs": [
       [
        "nar",
-       "In Grandpa's hand was one teeny tiny turnip seed."
+       "On Grandpa's palm, one teeny tiny seed rolled round and round."
       ]
      ]
     },
@@ -85,13 +85,13 @@
      ]
     },
     {
-     "text": "할아버지는 흙을 살살 두드려 주고 집으로 돌아갔어요.",
+     "text": "할아버지는 흙을 토닥토닥 덮어 주고 집으로 돌아갔어요.",
      "src": "new",
-     "en": "Grandpa patted the soil down gently and went back home.",
+     "en": "Grandpa patted the soil down, pat, pat, pat, and went back home.",
      "segs": [
       [
        "nar",
-       "Grandpa patted the soil down gently and went back home."
+       "Grandpa patted the soil down, pat, pat, pat, and went back home."
       ]
      ]
     }
@@ -124,13 +124,13 @@
      ]
     },
     {
-     "text": "할아버지는 날마다 텃밭에 나와 싹을 들여다보았어요.",
+     "text": "할아버지는 날마다 텃밭에 나와 싹을 요리조리 들여다보았어요.",
      "src": "new",
-     "en": "Every day Grandpa came out to the garden to look at the little sprout.",
+     "en": "Every day Grandpa came out to the garden and peered at the little sprout, this way and that.",
      "segs": [
       [
        "nar",
-       "Every day Grandpa came out to the garden to look at the little sprout."
+       "Every day Grandpa came out to the garden and peered at the little sprout, this way and that."
       ]
      ]
     },
@@ -167,13 +167,13 @@
      ]
     },
     {
-     "text": "땅속 뿌리도 커다랗게, 커다랗게 자랐지요.",
+     "text": "땅속 뿌리도 무럭무럭, 커다랗게 자랐지요.",
      "src": "new",
-     "en": "And under the ground, the root grew bigger and bigger, too.",
+     "en": "And under the ground, the root grew and grew, bigger and bigger, too.",
      "segs": [
       [
        "nar",
-       "And under the ground, the root grew bigger and bigger, too.",
+       "And under the ground, the root grew and grew, bigger and bigger, too.",
        "toneup:1.1"
       ]
      ]
@@ -191,13 +191,13 @@
    ],
    "lines": [
     {
-     "text": "\"이제 뽑을 때가 되었구나.\" 할아버지가 소매를 걷었어요.",
+     "text": "\"이제 뽑을 때가 되었구나.\" 할아버지가 손바닥을 탁탁 쳤어요.",
      "src": "new",
-     "en": "\"It is time to pull it up,\" said Grandpa, and he rolled up his sleeves.",
+     "en": "\"It is time to pull it up,\" said Grandpa, and he clapped his hands, clap, clap.",
      "segs": [
       [
        "nar",
-       "\"It is time to pull it up,\" said Grandpa, and he rolled up his sleeves."
+       "\"It is time to pull it up,\" said Grandpa, and he clapped his hands, clap, clap."
       ]
      ]
     },
@@ -270,13 +270,13 @@
      ]
     },
     {
-     "text": "할머니는 앞치마를 두른 채 부엌에서 뛰어나왔어요.",
+     "text": "할머니는 앞치마를 두른 채 부엌에서 후다닥 뛰어나왔어요.",
      "src": "new",
-     "en": "Grandma ran out of the kitchen, still wearing her apron.",
+     "en": "Grandma came dashing out of the kitchen, pitter-patter, still wearing her apron.",
      "segs": [
       [
        "nar",
-       "Grandma ran out of the kitchen, still wearing her apron."
+       "Grandma came dashing out of the kitchen, pitter-patter, still wearing her apron."
       ]
      ]
     }
@@ -420,13 +420,13 @@
      ]
     },
     {
-     "text": "세 사람이 힘을 모아도 순무는 아직 땅속에 꼭 박혀 있었어요.",
+     "text": "세 사람이 영차영차 당겨도 순무는 땅속에 꼭 박혀 있었어요.",
      "src": "new",
-     "en": "Even with three of them pulling, the turnip was still stuck fast in the ground.",
+     "en": "Even with three of them pulling, heave-ho, heave-ho, the turnip was still stuck fast in the ground.",
      "segs": [
       [
        "nar",
-       "Even with three of them pulling, the turnip was still stuck fast in the ground.",
+       "Even with three of them pulling, heave-ho, heave-ho, the turnip was still stuck fast in the ground.",
        "tonedown:1.1"
       ]
      ]
@@ -513,13 +513,13 @@
      ]
     },
     {
-     "text": "순무가 조금 더 올라왔지만, 아직도 뽑히지 않았어요.",
+     "text": "순무가 꿈틀, 조금 더 올라왔지만 아직도 뽑히지 않았어요.",
      "src": "new",
-     "en": "The turnip came up a bit more, but it still would not come out.",
+     "en": "The turnip wiggled up a bit more, but it still would not come out.",
      "segs": [
       [
        "nar",
-       "The turnip came up a bit more, but it still would not come out."
+       "The turnip wiggled up a bit more, but it still would not come out."
       ]
      ]
     }
@@ -607,13 +607,13 @@
      ]
     },
     {
-     "text": "다섯이 함께 당겨도 순무는 꼼짝하지 않았어요.",
+     "text": "다섯이 영차영차 당겨도 순무는 꼼짝하지 않았어요.",
      "src": "new",
-     "en": "Even with five of them pulling, the turnip did not budge.",
+     "en": "Even with five of them pulling, heave-ho, heave-ho, the turnip did not budge.",
      "segs": [
       [
        "nar",
-       "Even with five of them pulling, the turnip did not budge."
+       "Even with five of them pulling, heave-ho, heave-ho, the turnip did not budge."
       ]
      ]
     },
@@ -713,13 +713,13 @@
      ]
     },
     {
-     "text": "모두 다시 일어나 앞사람을 꼭 붙잡았어요.",
+     "text": "모두 벌떡 일어나 앞사람을 꼭 붙잡았어요.",
      "src": "new",
-     "en": "Everyone stood up again and held on tight to the one in front.",
+     "en": "Everyone jumped right up and held on tight to the one in front.",
      "segs": [
       [
        "nar",
-       "Everyone stood up again and held on tight to the one in front."
+       "Everyone jumped right up and held on tight to the one in front."
       ]
      ],
      "before": [
@@ -831,13 +831,13 @@
    ],
    "lines": [
     {
-     "text": "할아버지는 순무를 썰고, 할머니는 커다란 냄비를 꺼냈어요.",
+     "text": "할아버지는 순무를 숭덩숭덩 썰고, 할머니는 커다란 냄비를 꺼냈어요.",
      "src": "new",
-     "en": "Grandpa chopped the turnip, and Grandma brought out her biggest pot.",
+     "en": "Grandpa chopped the turnip, chop, chop, chop, and Grandma brought out her biggest pot.",
      "segs": [
       [
        "nar",
-       "Grandpa chopped the turnip, and Grandma brought out her biggest pot."
+       "Grandpa chopped the turnip, chop, chop, chop, and Grandma brought out her biggest pot."
       ]
      ]
     },
