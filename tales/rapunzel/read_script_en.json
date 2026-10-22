@@ -18,7 +18,8 @@
   "rampion:pull | magic:<x,y> | cradle:set | gothel:walk_out": "풀을 쏙 뽑음 / 별 셋 반짝 / 요람 / 고텔이 요람의 아기를 안고 걸어 나감(2장)",
   "hum:<x,y> | notes:<x,y>": "라푼젤 허밍(extra hum 클립 + 음표 세 개 + 라라라~ 팝) / 음표만",
   "silks:<n> | ribbon:tie | scissors:cut | wind:blow": "비단실 n개 / 긴 리본으로 머리 묶기 / 싹둑! 잘린 머리가 고리에 / 휘익~ 바람이 왕자를 탑 밖으로",
-  "petals | confetti | glow:<bird|rabbit> | fx:<paper_down|paper_up|paper_tap|swish|whoosh|sparkle|tada|step_grass|pop|slide_up|slide_down|chop|knock|cork|creak> | pop:<x,y,글자>": "효과"
+  "petals | confetti | glow:<bird|rabbit> | fx:<paper_down|paper_up|paper_tap|swish|whoosh|sparkle|tada|step_grass|pop|slide_up|slide_down|chop|knock|cork|creak> | pop:<x,y,글자>": "효과",
+  "cut:<caught|climb|peek|snip|reunion>": "그림 컷(cutImage) 띄우기. 컷 위에서 그 줄을 읽고, 뒤따르는 동사는 컷이 끝나면 실행 (놀이판 컷 5장과 같음)"
  },
  "scenes": [
   {
@@ -173,6 +174,9 @@
        "Who's there! Pulling up my rampion!",
        "toneup"
       ]
+     ],
+     "before": [
+      "cut:caught"
      ]
     },
     {
@@ -415,7 +419,8 @@
      ],
      "before": [
       "gothel:move:742,505,900",
-      "gothel:look:climb"
+      "gothel:look:climb",
+      "cut:climb"
      ],
      "after": [
       "climb:gothel:pops"
@@ -679,7 +684,8 @@
       ]
      ],
      "before": [
-      "prince:hop"
+      "prince:hop",
+      "cut:peek"
      ]
     }
    ]
@@ -925,7 +931,8 @@
      "before": [
       "scissors:cut",
       "fx:chop",
-      "pop:620,250,싹둑!"
+      "pop:620,250,싹둑!",
+      "cut:snip"
      ],
      "after": [
       "rap:look:short_shock",
@@ -1241,6 +1248,9 @@
        "The two held hands tightly and set off for the castle.",
        "happy"
       ]
+     ],
+     "before": [
+      "cut:reunion"
      ]
     },
     {

@@ -414,6 +414,129 @@
     }
     const popAt = (a, dx, y, txt) => T.pop(a.x + dx, y, tr(txt));
 
+    /* ===== 읽어 주기(READ_MODE.md §10): 대본 동사 → 놀이판 함수. 그림·크기·자리·컷은 놀이판 그대로 ===== */
+    const READ_ACTS = (() => {
+      const NUM = s => String(s).split(',').map(Number);
+      let n = 0, curBg = '', winDrawn = false, curCut = null, camX = 500;
+      const bgKey = k => (k === 'rp_bg_cottage' || /_v2$/.test(k) ? k : k + '_v2');
+      /* 대본 좌표(가로 기준) → 세로 화면 자리. 놀이판이 세로에서 X(가로, 세로) 로 쓰던 값을 장면별로 모은 것 */
+      const PMAP = { 1: { 600: 470 }, 2: { 640: 540 }, 3: { 640: TX, 555: TX - 85, 646: TX + 6 }, 4: { 640: TX, 555: TX - 85, 646: TX + 6 }, 5: { 760: 520, 610: 370, 720: 480 },
+        6: { 640: TX, 260: 440, 330: 420, 120: 350, 470: 440, 480: 400 }, 7: { 760: 520, 770: 530, 600: 440, 640: TX }, 8: { 760: 520, 680: 440, 720: 480 }, 9: { 640: TX, 560: 440, 760: 540, 600: 480 }, 10: { 330: 420, 572: 492, 606: 526 } };
+      const mx = x => {
+        if (x === 742) return TX + HOOK_DX + 2;
+        if (!P) return x;
+        if (n === 8 && /field/.test(curBg)) return ({ 560: 520, 480: 460 })[x] ?? x;
+        const m = PMAP[n]; return m && m[x] != null ? m[x] : x;
+      };
+      const PCAM = [0, 420, 470, 520, 520, 400, 480, 520, 520, 520, 560];
+      const popX = x => { const v = mx(x); return P ? Math.max(camX - 110, Math.min(camX + 110, v)) : v; };
+      const camTo0 = x => { camX = x; camSnap(x, 280, 1); };
+      const bgSet = key => { setBg(key); curBg = key; winDrawn = false; if (key === 'rp_bg_room_v2') put(T, hook, HOOKX, 250); };
+      const winKit = () => { if (winDrawn) return; winDrawn = true; put(T, hook, TX + HOOK_DX, FL + WIN_DY - 4); sillPaper(); };
+      const inst = () => T.readInstant();
+      const place = (a, s, k, d) => { const [x, y] = NUM(s); return put(T, a, mx(x), y, { look: k, to: d }); };
+      const actor = (a, extra = {}) => ({
+        look: (k, d) => { a.look(k, d); if (k === 'hide') T.world.appendChild(a.pos); if (extra.look) extra.look(k, d); },
+        at: (s, k, d) => extra.at ? extra.at(s, k, d) : place(a, s, k, d),
+        hop: () => { a.hop(8, 350); }, wiggle: () => { a.wiggle(3, 600); },
+        walk: s => { const [x, ms] = NUM(s); return walk(a, mx(x), FL, ms); },
+        move: s => { const [x, y, ms] = NUM(s); return a.move(mx(x), y, ms, 'ease-in-out'); },
+        fade: () => { fadeIn(a, 400); }, hide: () => hide(a), ...extra.more,
+      });
+      const A = {
+        rap: actor(rap, { at: (s, k, d) => { const [x] = NUM(s); if (k === 'window' || k === 'wrap') { place0(rap, TX, FL + WIN_DY + 4, k, d); winKit(); return; } place(rap, s, k, d); } }),
+        gothel: actor(gothel, { more: { walk_out: undefined } }),
+        father: actor(father, { look: k => { if (k === 'pull') father.place(rampion.x - 70, FL); if (k === 'shock') rampion.move(father.x + 40, FL, 300); } }),
+        mother: actor(mother, { at: s => place(mother, s, 'window', 'right') }),
+        prince: actor(prince, {
+          at: (s, k, d) => { const [x] = NUM(s); if (k === 'float') { place0(prince, mx(x), FL + WIN_DY - 40, k, d); return; } place(prince, s, k, d); if (n === 6 && k === 'stand') T.world.insertBefore(prince.pos, tower.pos); },
+          more: {
+            loop: async () => { T.world.insertBefore(prince.pos, tower.pos); await walk(prince, TX + 130, FL, 1800, 'ease-in-out'); await sleep(300); await walk(prince, X(330, 420), FL, 1800, 'linear'); },
+            land: async () => {
+              const mv = prince.move(X(TX - 150, TX - 110), FL, 2600, 'ease-out');
+              prince.wiggle(3, 900); setTimeout(() => prince.wiggle(3, 900), 1000);
+              await mv; AudioFX.sfx('paper_down', .3);
+            },
+          },
+        }),
+      };
+      function place0(a, x, y, k, d) { return put(T, a, x, y, { look: k, to: d }); }
+      A.gothel.walk_out = async () => {
+        await walk(gothel, X(600, 540), FL, 2200, 'ease-out'); await sleep(400);
+        hide(cradle); gothel.look('cradle', 'right'); AudioFX.sfx('paper_up', .4); await sleep(200);
+        await walk(gothel, 1150, FL, WALK, 'linear');
+      };
+      const prop1 = (a, extra = {}) => ({ at: s => { const [x, y] = NUM(s); put(T, a, mx(x), extra.y != null ? extra.y : y); }, hop: () => { a.hop(6, 300); } });
+      const SFX = { chop: [.6, () => T.tone([900, 300], .12, { type: 'square', vol: .18 })], cork: [.5], knock: [.5], step_grass: [.3], paper_down: [.4], paper_tap: [.4], swish: [.3], pop: [.4], tada: [] };
+      const CUTS = { caught: ['rp_cut_caught', () => AudioFX.sfx('sparkle', .5)], climb: ['rp_cut_climb', () => AudioFX.sfx('paper_up', .4)], peek: ['rp_cut_peek', null], snip: ['rp_cut_snip', () => AudioFX.sfx('chop', .5)], reunion: ['rp_cut_reunion', () => AudioFX.sfx('pop', .4)] };
+      const acts = {
+        set(k) { n++; setBg(bgKey(k)); curBg = bgKey(k); winDrawn = false; if (curBg === 'rp_bg_room_v2') put(T, hook, HOOKX, 250); camTo0(500); },
+        cam(s) { const [x, y, z] = NUM(s); if (x === 500 && P) camTo0(PCAM[n] || 500); else { camX = x; camSnap(x, y, z); } },
+        follow(x) { follow(+x, 6000); },
+        veil(k) {
+          const key = bgKey(k);
+          const r = T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#F5EFE9', opacity: 0 }, T.fx);
+          return (async () => {
+            await T.anim(r, [{ opacity: 0 }, { opacity: 1 }], 350); r.setAttribute('opacity', 1);
+            bgSet(key);
+            camTo0(P ? ({ rp_bg_cottage: 470, rp_bg_room_v2: n === 7 ? 480 : 520, rp_bg_field_v2: 480, rp_bg_forest_dusk_v2: 520 })[key] || 500 : 500);
+            T.fx.appendChild(r);
+            setTimeout(async () => { T.fx.appendChild(r); await T.anim(r, [{ opacity: 1 }, { opacity: 0 }], 350); r.remove(); }, 160);
+          })();
+        },
+        rap: (v, ...a) => A.rap[v](...a), gothel: (v, ...a) => A.gothel[v](...a), father: (v, ...a) => A.father[v](...a), mother: (v, ...a) => A.mother[v](...a), prince: (v, ...a) => A.prince[v](...a),
+        horse: (v, s) => { if (v === 'at') { const [x] = NUM(s); put(T, horse, mx(x), FL); } },
+        bird: (v, s) => { if (v === 'at') { const [x] = NUM(s); put(T, bird, mx(x), FL - TOWER_H + 16); } else if (v === 'hop') bird.hop(6, 300); },
+        rabbit: (v, s) => { if (v === 'at') { const [x] = NUM(s); put(T, rabbit, mx(x), FL); } else if (v === 'hop') rabbit.hop(6, 300); },
+        tower(v, arg) {
+          if (v === 'set') { towerSet({ withRap: arg !== 'norap' }); winDrawn = true; }
+          else if (v === 'rise') { put(T, tower, TX, FL); towerRise(); }
+        },
+        braid: v => (v === 'down' ? braidDown() : braidUp()),
+        braidcut(v) {
+          if (v === 'down') return (async () => { await fadeOut(T, braidCut, 300); await braidDown(); })();
+          const room = curBg === 'rp_bg_room_v2', hx = room ? HOOKX : TX + HOOK_DX, hy = room ? 250 + 110 : FL + WIN_DY - 4 + 110;
+          if (inst() || !braidCut.pos.isConnected || braidCut.pos.style.display === 'none') { put(T, braidCut, hx, hy); return; }
+          return (async () => { await braidCut.move(hx, hy, 800, 'ease-in-out'); AudioFX.sfx('paper_up', .4); })();
+        },
+        scissors() { put(T, braidCut, gothel.x + 40, FL - 60); fadeIn(braidCut, 200); rap.hop(8, 300); },
+        climb: (who, pops) => climb(who === 'prince' ? prince : gothel, !!pops),
+        cradle() { put(T, cradle, X(470, 430), FL); },
+        magic: s => { const [x, y] = NUM(s); magic(mx(x), y); },
+        hum: s => { const [x, y] = NUM(s); return hum(mx(x), y); },
+        notes: s => { const [x, y] = NUM(s); notesUp(mx(x), y); },
+        silks(c) {
+          const k = +c; if (!prince.pos.isConnected) return;
+          const show = (a, dx, ms) => { put(T, a, prince.x + dx, FL); fadeIn(a, ms); };
+          if (k === 1) show(silks[0], 70, 400); else { show(silks[0], 70, 200); setTimeout(() => show(silks[1], 100, 400), 300); setTimeout(() => show(silks[2], 130, 400), 900); }
+        },
+        ribbon() {
+          const x = rap.x + 38; put(T, ribbons.long, x - 120, FL + 20); AudioFX.sfx('swish', .3);
+          return ribbons.long.move(x, FL - 14, 700, 'ease-in-out');
+        },
+        wind() {
+          return (async () => {
+            AudioFX.sfx('knock', 0); await sleep(500);
+            put(T, wind, gothel.x + 90, FL - 200); fadeIn(wind, 200);
+            wind.move(prince.x, FL - 230, 900, 'ease-in'); AudioFX.sfx('whoosh', .5); await sleep(900);
+            prince.look('float'); await prince.move(prince.x, FL - 90, 600, 'ease-out'); hide(wind);
+            await prince.move(1100, FL - 140, 900, 'ease-in');
+          })();
+        },
+        petals() { petals(X(480, 400), X(800, 680)); },
+        confetti() { T.confetti(); },
+        glow(w) { glow(w === 'bird' ? bird : rabbit, 1200); },
+        fx(name) { const [v, f] = SFX[name] || [.4]; if (name === 'tada') return AudioFX.sfx('tada') || sparkleSfx(T); if (name === 'chop' || name === 'pop' || name === 'paper_down') return AudioFX.sfx(name, v, f); AudioFX.sfx(name, v, f); },
+        pop(s) { const p = s.split(','); T.pop(popX(+p[0]), +p[1], tr(p.slice(2).join(','))); },
+        cut(k) { const [f, sf] = CUTS[k]; curCut = T.cutImage([{ src: src(f), sfx: sf, hold: CUT_HOLD }], { hold: CUT_HOLD }); curCut.then(() => { curCut = null; }, () => { curCut = null; }); },
+      };
+      acts.rampion = (v, s) => { if (v === 'at') { const [x, y] = NUM(s); put(T, rampion, mx(x), y, { look: 'in' }); } else if (v === 'pull') { rampion.look('out'); rampion.move(rampion.x, FL - 60, 350, 'ease-out').then(() => rampion.move(father.x + 60, FL - 70, 400)); } };
+      /* 컷이 떠 있는 동안에는 뒤따르는 동사(climb 제외: 컷 아래에서 오르기)가 컷이 끝나기를 기다린다 */
+      const gate = f => (...a) => (curCut && !inst() ? curCut.then(() => f(...a)) : f(...a));
+      return Object.fromEntries(Object.entries(acts).map(([k, f]) => [k, ['cut', 'climb', 'set'].includes(k) ? f : gate(f)]));
+    })();
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ===== 1. 담 너머 텃밭 (자동) ===== */
     scene('rp_bg_cottage');
     put(T, father, 420, FL, { look: 'stand' });
@@ -776,5 +899,5 @@
     return '포기하지 않으면 다시 만날 수 있어요.';
   }
 
-  Tale.mount({ title: '라푼젤', subtitle: '포기하지 않으면 다시 만날 수 있어요', run: T => run(Tale.api) });
+  Tale.mount({ title: '라푼젤', subtitle: '포기하지 않으면 다시 만날 수 있어요', read: true, run: T => run(Tale.api) });
 })();
