@@ -638,6 +638,7 @@
   /* ================= 이야기 ================= */
   async function run(T) {
     const { el, sleep, say, camTo, camWide, camSnap, josa } = T;
+    if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     /* 그림 미리 불러오기: 배우와 첫 배경을 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
     const loads = {};
     Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
@@ -681,10 +682,9 @@
       await T.anim(mirror, [{ opacity: 0, translate: '0 -30px' }, { opacity: 1, translate: '0 0' }], 400);
       const sl = slots(moods.length), order = shuffle(moods);
       const cards = order.map((m, i) => ({ m, g: card(T, sl.xs[i], 425, Math.min(sl.r, 66), g => faceIcon(m, swan)(T, g), MOOD_LABEL[m]) }));
-      await say(q);
-      const pick = await T.choose(cards.map(c => ({ el: c.g, ok: c.m === answer, onWrong: async () => {
+      const pick = await T.ask(q, () => T.choose(cards.map(c => ({ el: c.g, ok: c.m === answer, onWrong: async () => {
         await T.anim(c.g, [{ translate: '0 0' }, { translate: '-10px 0' }, { translate: '10px 0' }, { translate: '0 0' }], 400);
-      } })), { prompt: q, where: swan ? '백조 얼굴을 잘 봐요. 눈썹이랑 입이 어떻게 생겼지?' : '아기 오리 얼굴을 잘 봐요. 눈썹이랑 입이 어떻게 생겼지?', who: `${josa(MOOD_FACE[answer], '이에요/예요')}! 반짝이는 얼굴을 눌러 봐요.` });
+      } })), { prompt: q, where: swan ? '백조 얼굴을 잘 봐요. 눈썹이랑 입이 어떻게 생겼지?' : '아기 오리 얼굴을 잘 봐요. 눈썹이랑 입이 어떻게 생겼지?', who: `${josa(MOOD_FACE[answer], '이에요/예요')}! 반짝이는 얼굴을 눌러 봐요.` }));
       await T.anim(pick.el, [{ translate: '0 0' }, { translate: '0 -24px' }, { translate: '0 0' }], 420);
       cards.forEach(c => c.g.remove()); mirror.remove();
     }
@@ -697,14 +697,13 @@
       for (let k = 0; k < cards.length; k++) {
         const good = cards[k];
         const q = k === 0 ? qFirst : qNext(cards[k - 1]);
-        await say(q);
         const left = cards.filter(c => !done.includes(c));
-        await T.choose(left.map(c => ({ el: c.g, ok: c === good, onWrong: async () => {
+        await T.ask(q, () => T.choose(left.map(c => ({ el: c.g, ok: c === good, onWrong: async () => {
           await T.anim(c.g, [{ translate: '0 0' }, { translate: '0 -22px' }, { translate: '0 0' }], 380);
           await say(`"나는 다음이야~"`);
           good.g.style.filter = 'url(#hintGlow)';
           good.g.animate([{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
-        } })), { prompt: q, who: `${josa(good.label, '이에요/예요')}! 반짝이는 카드를 눌러 봐요.` });
+        } })), { prompt: q, who: `${josa(good.label, '이에요/예요')}! 반짝이는 카드를 눌러 봐요.` }));
         done.push(good);
         good.g.style.filter = '';
         const tx = sl.xs[k], ty = 478;
@@ -753,9 +752,8 @@
     }
     await sleep(500);
     await say('노란 아기 오리 넷이 나왔어요. 삐약삐약!');
-    await say('어? 제일 큰 알은 아직이에요. 톡! 두드려 볼까요?');
     const CR = ['M-10 -60 L-2 -52 L-8 -44', 'M-8 -44 L4 -38 L0 -30', 'M-2 -52 L12 -56 L20 -48', 'M20 -48 L30 -52', 'M-10 -60 L-24 -56 L-32 -62', 'M0 -30 L14 -26 L26 -30'];
-    await T.tap(hero.pos, { prompt: '큰 알을 톡!' }); // 한 번 톡 하면 금이 저절로 간다
+    await T.ask('어? 제일 큰 알은 아직이에요. 톡! 두드려 볼까요?', () => T.tap(hero.pos, { prompt: '큰 알을 톡!' })); // 한 번 톡 하면 금이 저절로 간다
     for (let i = 1; i <= 6; i++) {
       crack(T);
       el('path', { d: CR[i - 1], stroke: C.bark, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, hero.parts.crack);
@@ -798,9 +796,8 @@
       if (narrow()) camSnap(250, 280, 1); // 세로: 줄 선 오리들 쪽을 비춘다
     }, hero.pos);
     await say('엄마 오리가 아기들을 데리고 연못에 갔어요. 줄을 서서 헤엄쳐요.');
-    await say('톡! 눌러서 헤엄쳐 볼까요?');
     const swimmers = [mom, ...sibs, hero];
-    await T.tap(T.root.querySelector('#stageWrap'), { prompt: '톡! 헤엄쳐요' }); // 한 번 톡 하면 줄이 저절로 헤엄쳐 간다
+    await T.ask('톡! 눌러서 헤엄쳐 볼까요?', () => T.tap(T.root.querySelector('#stageWrap'), { prompt: '톡! 헤엄쳐요' })); // 한 번 톡 하면 줄이 저절로 헤엄쳐 간다
     for (let i = 1; i <= 3; i++) {
       AudioFX.sfx('splash', .35) || AudioFX.splash();
       swimmers.forEach((a, k) => setTimeout(() => {
@@ -838,8 +835,7 @@
     hero.setMood('sad'); hero.pose('translateY(4px) scale(1,.96)');
     await askMood('sad', ['happy', 'sad', 'angry'], '아기 오리 마음은 어떨까요?');
     await say('맞아요. 아기 오리는 슬퍼요. 눈물이 똑 떨어졌어요.');
-    await say('아기 오리를 톡 눌러서 쓰다듬어 줄까요? "괜찮아."');
-    await T.tap(hero.pos, { prompt: '아기 오리를 톡! 쓰다듬어 줘요.' });
+    await T.ask('아기 오리를 톡 눌러서 쓰다듬어 줄까요? "괜찮아."', () => T.tap(hero.pos, { prompt: '아기 오리를 톡! 쓰다듬어 줘요.' }));
     {
       const [hx, hy] = hero.headPt();
       const hand = el('g', {}, T.fx);
@@ -872,9 +868,8 @@
       } else fgReeds = reeds(T, T.world, list, 460, C.reedDk);
     }, hero.pos);
     await say('갈대가 아기 오리 머리보다 훨씬 높아요.');
-    await say('톡! 눌러서 갈대를 헤쳐 봐요.');
     let off = 0;
-    await T.tap(T.root.querySelector('#stageWrap'), { prompt: '톡! 갈대를 헤쳐요.' }); // 한 번 톡 하면 나머지는 저절로
+    await T.ask('톡! 눌러서 갈대를 헤쳐 봐요.', () => T.tap(T.root.querySelector('#stageWrap'), { prompt: '톡! 갈대를 헤쳐요.' })); // 한 번 톡 하면 나머지는 저절로
     for (let n = 0; n < 3; n++) {
       off += 1;
       AudioFX.sfx('step_grass', .5) || AudioFX.swish();
@@ -944,8 +939,7 @@
     const tremble = hero.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 140, iterations: Infinity });
     await askMood('scared', ['happy', 'scared', 'angry'], '혼자 남은 아기 오리 마음은 어떨까요?');
     await say('맞아요. 아기 오리는 무서워요. 갈대 속에 웅크렸어요.');
-    await say('갈대를 톡 눌러서 아기 오리를 살포시 덮어 줄까요?');
-    await T.tap(bush, { prompt: '갈대를 톡! 살포시 덮어 줘요.' });
+    await T.ask('갈대를 톡 눌러서 아기 오리를 살포시 덮어 줄까요?', () => T.tap(bush, { prompt: '갈대를 톡! 살포시 덮어 줘요.' }));
     [...bush.children].forEach(l => { if (l._dir) l.style.transform = `rotate(${l._dir * -28}deg)`; });
     AudioFX.swish();
     tremble.cancel();
@@ -1102,7 +1096,6 @@
     await say('암탉이 말했어요. "꼬꼬. 그럼 알은 낳을 줄 아니?" 아기 오리는 고개를 저었어요.');
     await hero.wiggle(10);
     const q9 = '아기 오리가 잘하는 건 뭘까요?';
-    await say(q9);
     {
       const sl = slots(3), r = Math.min(sl.r, 72);
       const opts = shuffle([
@@ -1111,11 +1104,11 @@
         { k: 'swim', label: '헤엄', ok: true, icon: (T, g) => { if (prop(T, g, 'icon_swim', 0, 2, 104)) return; HERO.baby(T, T.el('g', { transform: 'translate(4,24) scale(.8)' }, g), 'happy'); T.paper(g, [['path', { d: 'M-66 20 Q-50 8 -34 20 Q-18 8 -2 20 Q14 8 30 20 Q46 8 62 20 V60 H-66 Z', fill: C.water }]]); } }, // 그림: 물에 뜬 아기 오리(발은 물속 — 물색으로 메움)
       ]);
       const cards = opts.map((o, i) => ({ ...o, g: card(T, sl.xs[i], narrow() ? 190 : 158, r, g => o.icon(T, g), o.label) }));
-      const pick = await T.choose(cards.map(c => ({ el: c.g, ok: c.ok, onWrong: async () => {
+      const pick = await T.ask(q9, () => T.choose(cards.map(c => ({ el: c.g, ok: c.ok, onWrong: async () => {
         await T.anim(c.g, [{ translate: '0 0' }, { translate: '-10px 0' }, { translate: '10px 0' }, { translate: '0 0' }], 360);
         if (c.k === 'purr') { cat.hop(14); await say('고양이: "가르릉은 내가 잘하지~"'); } // 목소리와 겹치던 합성음은 뺐다
         else { henIn.hop(14); await say('암탉: "알 낳기는 내가 잘하지~"'); }
-      } })), { prompt: q9, where: '연못에서 쏙 들어갔다가 퐁! 기억나요?', who: '헤엄이에요! 반짝이는 카드를 눌러 봐요.' });
+      } })), { prompt: q9, where: '연못에서 쏙 들어갔다가 퐁! 기억나요?', who: '헤엄이에요! 반짝이는 카드를 눌러 봐요.' }));
       await T.anim(pick.el, [{ translate: '0 0' }, { translate: '0 -24px' }, { translate: '0 0' }], 420);
       cards.forEach(c => c.g.remove());
     }
@@ -1131,9 +1124,8 @@
       hero.setMood('happy');
     }, hero.pos);
     await say('따뜻한 봄이 왔어요. 아기 오리는 몸이 부쩍 자랐어요.');
-    await say('아기 오리를 톡! 눌러서 날개를 활짝 펴 볼까요?');
     let spread = false;
-    await T.tap(hero.pos, { prompt: '톡! 날개를 활짝!' }); // 한 번 톡 하면 날개가 저절로 활짝
+    await T.ask('아기 오리를 톡! 눌러서 날개를 활짝 펴 볼까요?', () => T.tap(hero.pos, { prompt: '톡! 날개를 활짝!' })); // 한 번 톡 하면 날개가 저절로 활짝
     for (let i = 1; i <= 3; i++) {
       const p = i / 3;
       if (p > .4 && !spread && hero.art) { spread = true; hero.setMood('wings'); AudioFX.swish(); } // 그림: 날개 활짝 그림으로
@@ -1226,12 +1218,13 @@
     await say('저 멀리 엄마 오리와 형제들도 반갑게 날개를 흔들어요. "잘 자랐구나!"');
     // 세로: 백조 넷이 한 화면에 다 들어오게 카메라를 살짝 물린다
     if (narrow()) await camTo(605, 280, Math.min(1, visW() / 610), 700);
-    await say('백조들을 톡톡 눌러서 함께 춤을 춰요!');
+    let askG1 = '백조들을 톡톡 눌러서 함께 춤을 춰요!'; // 안내는 첫 번째 누름에만 (T.ask)
+    const askOnce1 = f => { const g = askG1; askG1 = null; return g ? T.ask(g, f) : f(); };
     const NOTES = [392, 440, 523, 587];
     const dancers = [hero, ...swans];
     for (let i = 0; i < dancers.length; i++) { // 한 마리씩 차례로 톡 (자유 놀이 없음)
       const a = dancers[i];
-      await T.tap(a.pos);
+      await askOnce1(() => T.tap(a.pos));
       T.tone(NOTES[i], .35, { type: 'triangle', vol: .18 });
       a.hop(34, 420);
       a.body.animate([{ rotate: '0deg' }, { rotate: '-10deg' }, { rotate: '10deg' }, { rotate: '0deg' }], 500);
