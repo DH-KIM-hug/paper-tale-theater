@@ -573,6 +573,347 @@
         who: `${josa(owner.name, '이에요/예요')}! 반짝이는 곰을 눌러요.` }));
     }
 
+    /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 놀이판 연출을 누르기 없이 감싼 얇은 함수 =================
+       대본의 set 은 같은 이름이 여러 번 나온다 → 나온 순서로 놀이판 장면에 맞춘다
+       kitchen: 1 곰 집 와이드 · 2 식탁 클로즈업 / table: 1 죽 세 그릇(위에서) · 2 곰 가족 귀가 · 3 새 죽 나눠 먹기 /
+       living: 1 의자 세 개 · 2 의자 주인 · 3 부엌 오후(의자 고치기) / bed_side: 1 침대 세 개(위에서) · 2 누가 내 침대에(옆) */
+    const rs = { n: {}, tag: '', bearsFn: null, goldiFn: null, steams: [], bowlsG: null, tops: [], chairs: [], beds: [], door: null, blanket: null, hammer: null, fix: null, tb: [], house: null, groundFlowers: [], butterfly: null,
+      sitting: false, cush: null, lying: false, rWinX: 0, cam: null };
+    const rInst = () => T.readInstant();
+    const rHide = a => { try { a.pos.remove(); } catch (e) { /* 무시 */ } };
+    const rWin = () => (bgUrl('bed_side') ? (P() ? 205 : 10) : (P() ? 170 : 80));
+    const rView = () => { rs.cam = [500, 280, P() ? Z : 1]; view(); };
+    const rShowAll = (list) => list.forEach(a => { a.pos.style.opacity = ''; });
+    const rSets = {
+      kitchen1() {
+        kitchenBG(T);
+        const KY = bgUrl('kitchen') ? 10 : 0;
+        sideTable(T, 680, 360 + KY, 260);
+        SIZE.forEach((s, i) => bowlSide(T, T.world, 730 + i * 85, 372 + KY, s * .6));
+        rs.bearsFn = () => { put(bears.dad, X(280), 500 + KY); put(bears.mom, X(470), 500 + KY, SIZE[1]); put(bears.baby, X(620), 500 + KY, SIZE[2]); };
+        rView();
+      },
+      kitchen2() {
+        kitchenBG(T);
+        const TT = TABLE_TOP(), BY = TT + 30;
+        rs.bearsFn = () => { put(bears.dad, X(230), 520, 1.2); put(bears.mom, 500, TT + 50, .86); put(bears.baby, X(770), TT + 12, .6); };
+        rs.bearsFn();
+        tableFront(T, TT);
+        rs.bowlsG = el('g', {}, T.world); rs.steams = [];
+        [230, 500, 770].map(X).forEach((x, i) => {
+          bowlSide(T, rs.bowlsG, x, BY, SIZE[i]);
+          for (let k = 0; k < 2; k++) rs.steams.push(steam(T, rs.bowlsG, x + (k ? 1 : -1) * 92 * SIZE[i], BY - BOWL_RIM() * SIZE[i], SIZE[i] * .95));
+        });
+        rs.bearsFn = null;   // 이미 놓았다
+        rView();
+      },
+      forest1() {
+        rs.house = forestBG(T, X(900));
+        rs.goldiFn = () => { put(goldi, X(200), 505, 1.3); if (goldi.setHold) goldi.setHold(false); };
+        rs.goldiFn();
+        const butterfly = rs.butterfly = el('g', {}, T.world);
+        const wings = artUrl('butterfly') ? pic(T, butterfly, 'butterfly', { box: [-22, -16, 44, 32] })
+          : T.paper(butterfly, [['ellipse', { cx: -9, cy: 0, rx: 10, ry: 14, fill: C.persimmon }], ['ellipse', { cx: 9, cy: 0, rx: 10, ry: 14, fill: C.persimmon }], ['rect', { x: -2, y: -10, width: 4, height: 20, rx: 2, fill: C.ink }]]);
+        wings.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(.3)' }, { transform: 'scaleX(1)' }], { duration: 300, iterations: Infinity });
+        butterfly.style.transform = `translate(${X(120)}px,260px)`;
+        forestFront(T);
+        rs.groundFlowers = [1, 2, 3].map(i => {
+          const fg = el('g', { transform: `translate(${X(200 + i * 170) + 48},508)` }, T.world);
+          if (!pic(T, fg, 'flower_g')) bouquetFlower(T, fg, i - 1);
+          return fg;
+        });
+        rView();
+      },
+      door1() {
+        rs.door = doorBG(T).door;
+        rs.goldiFn = () => put(goldi, X(740), 490, .8);
+        rs.goldiFn(); rView();
+      },
+      table1() {
+        tableTopBG(T);
+        const bx = [290, 520, 740].map(X), R = 110, BCY = 300;
+        rs.tops = bx.map((x, i) => bowlTop(T, T.world, x, BCY, R * SIZE[i]));
+        for (let k = 0; k < 4; k++) steam(T, rs.tops[0], bx[0] - 50 + k * 34, BCY + 20, 1.3);
+        [[-26, -14], [18, -26], [4, 22], [-10, 6]].forEach(([dx, dy], k) => T.paper(rs.tops[1], [['rect', { x: bx[1] + dx - 11, y: BCY + dy - 11, width: 22, height: 22, rx: 4, fill: C.snow, stroke: '#CFE0E6', 'stroke-width': 3, transform: `rotate(${k * 20} ${bx[1] + dx} ${BCY + dy})` }]]));
+        steam(T, rs.tops[2], bx[2], BCY + 10, .7);
+        rs.goldiFn = () => put(goldi, 500, P() ? 715 : 600, 1.25);
+        rs.goldiFn(); rView();
+      },
+      table2() {
+        kitchenBG(T);
+        sideTable(T, 330, 330, 340);
+        SIZE.forEach((s, i) => bowlSide(T, T.world, 255 + i * 85, 342, s * .6, { full: false }));
+        const xs = shuffle([200, 500, 800].map(X));
+        rs.bearsFn = () => B.forEach((b, i) => put(b, 1350, 530, SIZE[i]));   // 산책에서 돌아온다 (bears:walk 로 자리에 선다)
+        rs.bearPos = B.map((b, i) => [xs[i], 530]);
+        rView();
+      },
+      table3() {
+        kitchenBG(T, true);
+        const TT = TABLE_TOP();
+        rs.bearsFn = () => { put(bears.dad, X(170), 525, 1.15); put(bears.mom, X(390), TT + 52, .82); put(bears.baby, X(820), TT + 12, .6); [bears.dad, bears.mom, bears.baby].forEach(a => a.setFace('happy')); };
+        rs.goldiFn = () => { put(goldi, X(610), TT + 42, 1.1); goldi.setFace('happy'); };
+        rs.goldiFn();
+        tableFront(T, TT);
+        const xs = [240, 500, 760].map(X);
+        rs.tb = SIZE.map((s, i) => Object.assign(bowlSide(T, T.world, xs[i], TT + 70, s, { full: false }), { x: xs[i], y: TT + 70, s, i }));
+        rView();
+      },
+      living1() {
+        livingBG(T);
+        rs.chairs = [chair(T, T.world, X(190), 500, SIZE[0]), chair(T, T.world, X(480), 500, SIZE[1], { cushion: true }), chair(T, T.world, X(790), 500, SIZE[2])];
+        rs.goldiFn = () => put(goldi, X(640), 510, 1);
+        rs.goldiFn(); rView();
+      },
+      living2() {
+        livingBG(T);
+        const pt = P(), cx9 = pt ? [280, 470, 640] : [120, 300, 450], cy9 = pt ? 440 : 500, cs9 = pt ? .8 : 1;
+        rs.chairs = SIZE.map((s, i) => chair(T, T.world, cx9[i], cy9, s * cs9, { cushion: i === 1, tier: i }));
+        rs.chairs[2].setBroken(1);
+        const xs = shuffle(pt ? [300, 500, 700] : [610, 770, 910]);
+        rs.bearsFn = () => B.forEach((b, i) => put(b, xs[i], pt ? 548 : 530, SIZE[i]));
+        rView();
+      },
+      living3() {
+        kitchenBG(T, true);
+        const lx = P() ? [300, 430, 540, 640, 770] : [330, 500, 650, 770, 910];
+        rs.bearsFn = () => { put(bears.dad, lx[4], 510, SIZE[0]); put(bears.mom, lx[3], 510, SIZE[1]); put(bears.baby, lx[2], 515, SIZE[2]); bears.baby.setFace('cry'); };
+        rs.goldiFn = () => { put(goldi, lx[0], 510, 1); goldi.setFace('sorry'); };
+        rs.goldiFn();
+        rs.fix = chair(T, T.world, lx[1], 510, SIZE[2]); rs.fix.setBroken(1);
+        const hammer = rs.hammer = T.el('g', {}, T.fx);
+        if (artUrl('hammer')) pic(T, T.el('g', { transform: 'rotate(-27)' }, hammer), 'hammer', { box: [-47.2, -25, 78, 102.5] });
+        else T.paper(hammer, [['rect', { x: -5, y: -10, width: 10, height: 60, rx: 4, fill: C.bark }], ['rect', { x: -22, y: -24, width: 44, height: 18, rx: 4, fill: '#9A938C' }]]);
+        hammer.setAttribute('transform', `translate(${rs.fix.x - 70},380) rotate(-30)`); hammer.style.opacity = '0'; hammer.style.pointerEvents = 'none';
+        rView();
+      },
+      bed_side1() {
+        bedroomTopBG(T);
+        const baseL = el('g', {}, T.world), midL = el('g', {}, T.world), topL = el('g', {}, T.world);
+        const bxs = P() ? (artUrl('bed_big') ? [285, 535, 740] : [290, 500, 700]) : [190, 470, 790];
+        const bY = bgUrl('bed_top') && artUrl('bed_big') ? 545 : 470;
+        rs.beds = [bedTop(T, baseL, topL, bxs[0], bY, SIZE[0], 'hard'), bedTop(T, baseL, topL, bxs[1], bY, SIZE[1], 'soft'), bedTop(T, baseL, topL, bxs[2], bY, SIZE[2], 'quilt')];
+        rs.goldiFn = () => put(goldi, X(630), 540, .8, midL);
+        rs.goldiFn(); rView();
+      },
+      bed_side2() {
+        const winX = rs.rWinX = rWin();
+        bedroomSideBG(T, winX); bedSide(T);
+        rs.goldiFn = () => { put(goldi, BED_SIDE_ART() ? 505 : 548, BED_SIDE_ART() ? 385 : 386, .85); goldi.pose('rotate(-90deg)'); goldi.setFace('sleep'); };
+        rs.goldiFn();
+        rs.blanket = blanketSide(T);
+        rView();
+      },
+    };
+    const rSet = key => {
+      T.clear(); rs.n[key] = (rs.n[key] || 0) + 1; rs.tag = key + rs.n[key];
+      rs.bearsFn = rs.goldiFn = null; rs.sitting = rs.lying = false; rs.steams = []; rs.cush = null;
+      [goldi, ...B].forEach(rHide);
+      (rSets[rs.tag] || (() => console.warn('[read] set 모름', rs.tag)))();
+    };
+    const rLast = new Set();
+    const rFace = f => ({ hot: 'tongue', brr: 'brr', smile: 'smile', sleepy: 'yawn', sorry: 'sorry', happy: 'happy' }[f] || f);
+    const rBack = async () => {   // 앉거나 누워 있던 자리에서 일어선다
+      if (rs.cush) { rs.cush.remove(); rs.cush = null; }
+      if (rs.sitting) { rs.sitting = false; gmode('stand'); goldi.setFace('smile'); if (!rInst()) await goldi.move(X(640), 510, 400); else goldi.place(X(640), 510); }
+      if (rs.lying) { rs.lying = false; gmode('stand'); goldi.setScale(.8); goldi.setFace('smile'); goldi.place(X(630), 540); if (!rInst()) await sleep(200); }
+    };
+    const rSizeIdx = s => ({ big: 0, mid: 1, small: 2 }[s]);
+    const rBear = (k, verb, a1, a2) => {
+      const b = bears[k]; if (!b) return console.warn('[read] 곰 모름', k);
+      if (verb === 'wave') { b.setFace('happy'); b.hop(24, 420); pop(b.x, headY(b) - 40, '안녕!', k === 'dad' ? C.bark : k === 'mom' ? C.persimmon : C.pine); return sleep(500); }
+      if (verb === 'blow') { b.setFace('o'); setTimeout(() => b.setFace('smile'), 500); blow(T); pop(b.x, 300, '후~', C.pine); return sleep(350); }
+      if (verb === 'grumble') { b.setFace('o'); setTimeout(() => b.setFace('smile'), 1500); b.wiggle(8, 400); return; }
+      if (verb === 'cry') { b.setFace('cry'); AudioFX.babyCry(); return; }
+      if (verb === 'hug') { b.setFace('happy'); b.hop(20, 400); return; }
+      if (verb === 'peek') { b.setFace('o'); b.hop(10, 300); return; }
+      if (verb === 'stand') return;
+      if (verb === 'at') { const [x, y] = String(a1).split(',').map(Number); put(b, X(x), (b.y > 0 && b.y < 700 && b.x > -100) ? b.y : 520, SIZE[2]); return; }
+      if (verb === 'walk') {
+        const [x, ms] = String(a1).split(',').map(Number);
+        AudioFX.sfx('step_wood', .5);
+        return b.move(X(x), b.y, ms || 1500);
+      }
+      console.warn('[read] 곰 동사 모름', k, verb);
+    };
+    const READ_ACTS = {
+      set: key => {
+        if (key === 'living' && rs.n.living === 1 && rs.tag === 'table2' && !rInst()) return T.sceneCard('의자 주인', () => rSet('living'));
+        return rSet(key);
+      },
+      cam: a => {
+        if (a === 'wide') { const c = rs.cam || [500, 280, P() ? Z : 1]; return rInst() ? camSnap(...c) : camTo(c[0], c[1], c[2], 700); }
+        const [x, y, z] = String(a).split(',').map(Number); return rInst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 800);
+      },
+      bears: (verb, a1) => {
+        if (verb === 'show') {
+          if (rs.tag === 'bed_side2') { const wake = rs.wake; return; }
+          if (rs.bearsFn) rs.bearsFn(); return;
+        }
+        if (verb === 'hide') { B.forEach(rHide); return; }
+        if (verb === 'walk') {
+          const [x, ms] = String(a1).split(',').map(Number);
+          AudioFX.sfx('step_wood', .5);
+          if (x > 1000) { B.forEach((b, i) => setTimeout(() => b.move(b.x + 900, b.y, 1400, 'ease-in'), i * 150)); return sleep(1400); }
+          const ps = rs.bearPos || B.map(b => [b.x, b.y]);
+          B.forEach((b, i) => { b.face && 0; b.move(ps[i][0], ps[i][1], ms || 1800, 'ease-out'); });
+          return sleep(ms || 1800);
+        }
+        console.warn('[read] bears 동사 모름', verb);
+      },
+      bear: rBear_ => 0,
+    };
+    READ_ACTS.bear = (k, verb, ...rest) => rBear(k, verb, rest.join(':'));
+    Object.assign(READ_ACTS, {
+      bowls: (verb, n) => {
+        if (verb === 'steam') {
+          if (rs.tag === 'kitchen2' && +n === 1) { const k = Math.floor(rs.steams.length * 2 / 3); rs.steams.splice(0, k).forEach(s => s.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 600, fill: 'forwards' })); AudioFX.sfx('whoosh', .3); }
+          return;
+        }
+        if (verb === 'fill') return (async () => {
+          const order = [rs.tb[2], rs.tb[1], rs.tb[0]];
+          for (let k = 0; k < 3; k++) {
+            const good = order[k]; good.setFull(true);
+            steam(T, T.world, good.x, good.y - BOWL_RIM() * good.s, good.s);
+            T.tone(440 + k * 110, .25, { type: 'triangle', vol: .16 });
+            await sleep(rInst() ? 0 : 600);
+          }
+          const gb = bowlSide(T, T.world, X(610), TABLE_TOP() + 102, .55, { full: true });
+          gb.g.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400 });
+          [bears.dad, bears.mom, goldi, bears.baby].forEach((a, i) => setTimeout(() => { a.hop(20, 320); AudioFX.chomp(); }, i * 180));
+          AudioFX.sfx('bell', .5);
+        })();
+      },
+      flowers: (verb, n) => {
+        if (verb !== 'pick') return;
+        return (async () => {
+          const NUM = ['하나', '둘', '셋'], tf = (x, y, k) => `translate(${x}px,${y}px) scale(${k})`;
+          for (let i = 1; i <= 3; i++) {
+            const nx = X(200 + i * 170);
+            goldi.move(nx, 505, 600); goldi.hop(18, 300);
+            AudioFX.sfx('step_grass', .6) || T.tone(300, .1);
+            const fx = nx + 85, fl = el('g', {}, T.world); fl.style.transform = tf(fx, 508, .01);
+            bouquetFlower(T, fl, 1);
+            const gf = rs.groundFlowers[i - 1];
+            setTimeout(() => { if (!goldi.art) goldi.lean.style.transform = 'rotate(26deg) scale(1,.9)'; setTimeout(() => { gf.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: 'forwards' }); AudioFX.sfx('pop', .6) || T.tone(700, .1); pop(nx, 200 + (i % 2) * 70, `꽃 ${NUM[i - 1]}!`, C.persimmon); }, 260); setTimeout(() => { goldi.lean.style.transform = ''; }, 620); }, 620);
+            rs.butterfly.animate([{ transform: rs.butterfly.style.transform }, { transform: `translate(${nx - 60}px,${230 - (i % 2) * 40}px)` }], { duration: 900, easing: 'ease-in-out', fill: 'forwards' });
+            rs.butterfly.style.transform = `translate(${nx - 60}px,${230 - (i % 2) * 40}px)`;
+            await sleep(650);
+            fl.animate([{ transform: tf(fx, 508, .01) }, { transform: tf(fx, 508, 1.8) }], { duration: 350, easing: 'ease-out', fill: 'forwards' });
+            await sleep(250);
+            if (goldi.art) { goldi.setBend(true); setTimeout(() => goldi.setBend(false), 800); }
+            await sleep(450);
+            T.tone([600, 900], .12, { type: 'sine', vol: .1 });
+            fl.animate([{ transform: tf(fx, 508, 1.8) }, { transform: tf(nx + 28, 430, .9) }], { duration: 450, easing: 'ease-in', fill: 'forwards' });
+            await sleep(450); fl.remove();
+            await sleep(500);
+          }
+          if (goldi.setHold) goldi.setHold(true);
+          goldi.setFace('o');
+          const h = rs.house, hx = h.ax != null ? h.ax : X(900), hy = h.ay != null ? h.ay : 392, hs = h.as || .55;
+          h.animate([{ transform: `translate(${hx}px,${hy}px) scale(${hs})` }, { transform: `translate(${hx}px,${hy}px) scale(${hs * 1.27})` }, { transform: `translate(${hx}px,${hy}px) scale(${hs})` }], { duration: 900 });
+        })();
+      },
+      door: verb => { if (verb === 'open') { rs.door.style.transform = 'scaleX(.12)'; return sleep(rInst() ? 0 : 900); } },
+      chair: verb => {
+        if (verb === 'crack') return (async () => {
+          const c = rs.chairs[2]; AudioFX.sfx('chop') || AudioFX.bonk(); c.setBroken(1);
+          goldi.setFace('o'); await goldi.move(c.x, 505, 250, 'ease-in');
+          thud(T); T.shake();
+          const st = stars(c.x, 340); setTimeout(() => st.remove(), 1800);
+        })();
+        if (verb === 'fix') return (async () => {
+          rs.hammer.style.opacity = '1';
+          const fix = rs.fix;
+          for (let i = 1; i <= 5; i++) {
+            knock(T);
+            rs.hammer.animate([{ transform: `translate(${fix.x - 70}px,380px) rotate(-30deg)` }, { transform: `translate(${fix.x - 50}px,400px) rotate(20deg)` }, { transform: `translate(${fix.x - 70}px,380px) rotate(-30deg)` }], { duration: 300 });
+            fix.setBroken(1 - i / 5);
+            (i % 2 ? goldi : bears.baby).hop(16, 300);
+            await sleep(450);
+          }
+          rs.hammer.remove();
+        })();
+      },
+      blanket: verb => {
+        if (verb !== 'lift') return;
+        return (async () => {
+          if (!rInst()) await camTo(510, 400, 1.8, 600);
+          rs.blanket.style.transition = 'transform .5s, opacity .5s'; rs.blanket.style.transform = 'translateY(-30px)'; rs.blanket.style.opacity = '.0';
+          await sleep(400);
+        })();
+      },
+      goldi: (verb, a1, a2) => {
+        if (verb === 'hide') return rHide(goldi);
+        if (verb === 'at') { if (rs.goldiFn) rs.goldiFn(); return; }
+        if (verb === 'walk') return (async () => { AudioFX.sfx('step_grass', .6); await goldi.move(X(250), goldi.y, 2000); })();
+        if (verb === 'face') { goldi.setFace(rFace(a1)); if (a1 === 'hot') { hot(T); goldi.hop(30, 400); } if (a1 === 'brr') { brr(T); goldi.wiggle(6, 400); } return; }
+        if (verb === 'knock') return (async () => { for (let k = 0; k < 2; k++) { goldi.hop(10, 250); await sleep(650); } })();
+        if (verb === 'tiptoe') return (async () => {
+          AudioFX.sfx('step_wood', .5);
+          goldi.setFace('o');
+          goldi.pos.style.transition = 'opacity .8s'; goldi.pos.style.opacity = '0';
+          await goldi.move(495, 412, 900); goldi.pos.style.transition = '';
+        })();
+        if (verb === 'eat') return (async () => {
+          const i = rSizeIdx(a1);
+          if (i === 2) { goldi.setFace('happy'); for (let k = 0; k < 3; k++) { AudioFX.chomp(); await sleep(450); } const t = rs.tops[2]; if (t.setEmpty) t.setEmpty(); else { const inner = t.querySelectorAll('circle')[1]; if (inner) inner.setAttribute('fill', '#C9B48E'); } [...t.querySelectorAll('path')].forEach(p => p.remove()); return; }
+          goldi.hop(14, 300); AudioFX.chomp(); await sleep(500);
+        })();
+        if (verb === 'sit') return (async () => {
+          await rBack(); const i = rSizeIdx(a1), c = rs.chairs[i];
+          AudioFX.hop(); gmode('sit'); goldi.place(c.x, c.seatTop + 38 * goldi.scale); rs.sitting = true;
+          if (i === 0) { goldi.hop(40, 400); goldi.setFace('o'); goldi.legs.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(14deg)' }, { transform: 'rotate(-14deg)' }, { transform: 'rotate(0deg)' }], { duration: 600, iterations: 3 }); }
+          if (i === 1) {
+            goldi.setFace('o'); AudioFX.cushion();
+            rs.cush = T.paper(T.world, [['ellipse', { cx: c.x, cy: c.seatTop + 30, rx: 70, ry: 30, fill: c.art ? '#F28C1C' : C.persimmon }]]);
+            if (!rInst()) await goldi.move(c.x, goldi.y + 46, 600, 'ease-in'); else goldi.place(c.x, goldi.y + 46);
+          }
+          if (i === 2) { goldi.hop(16, 300); goldi.setFace('happy'); }
+        })();
+        if (verb === 'lie') return (async () => {
+          await rBack(); const i = rSizeIdx(a1), bd = rs.beds[i];
+          const s = goldi.art ? GOLDI_LIE : .8; gmode('lie'); goldi.setScale(s); goldi.place(bd.headX != null ? bd.headX : bd.cx, bd.headY + 150 * s); rs.lying = true;
+          goldi.setFace(i === 2 ? 'happy' : 'o');
+          if (i === 0) { await goldi.hop(40, 380); AudioFX.bonk(); await goldi.hop(20, 300); AudioFX.bonk(); }
+          if (i === 1) { goldi.body.animate([{ transform: 'scale(1)' }, { transform: 'scale(.8)' }, { transform: 'scale(.85)' }], { duration: 700, fill: 'forwards' }); AudioFX.cushion(); await sleep(700); goldi.body.getAnimations().forEach(a => a.cancel()); }
+        })();
+        if (verb === 'sleep') { if (rs.tag === 'bed_side2') { if (rs.goldiFn) rs.goldiFn(); } else goldi.setFace('sleep'); return; }
+        if (verb === 'wake') return (async () => {
+          goldi.pose(''); goldi.setFace('o'); goldi.place(500, 400); goldi.hop(50, 450); AudioFX.pop_out();
+          if (P()) { put(bears.dad, 738, 520, SIZE[0]); put(bears.mom, 676, 530, SIZE[1]); put(bears.baby, 626, 540, SIZE[2]); }
+          else { put(bears.dad, 910, 520, SIZE[0]); put(bears.mom, 790, 520, SIZE[1]); put(bears.baby, 690, 520, SIZE[2]); }
+          B.forEach(b => b.setFace('o'));
+          rs.blanket.style.opacity = '';
+          if (!rInst()) await camTo(500, 280, P() ? Z : 1, 700);
+        })();
+        if (verb === 'run') return (async () => {
+          const winX = rs.rWinX; AudioFX.whoosh();
+          await goldi.move(winX + 75, 470, 700, 'ease-in'); await goldi.move(winX + 75, 320, 300, 'ease-out');
+        })();
+        if (verb === 'turn') return goldi.move(rs.rWinX + 120, 505, 400, 'ease-in');
+        console.warn('[read] goldi 동사 모름', verb);
+      },
+      cut: k => {
+        const F = { hot: svg => cutFace(T, svg, 'tongue', '앗 뜨거!'), cold: svg => cutFace(T, svg, 'brr', '부르르!'), crack: svg => cutCrack(T, svg), eyes: svg => cutEyes(T, svg), skirt: svg => cutSkirt(T, svg) };
+        return cutArt('cut_' + k, F[k], { hold: { hot: 2000, cold: 2000, crack: 1800, eyes: 2400, skirt: 2200 }[k], sfx: k === 'crack' ? 'pow' : undefined });
+      },
+      vo: k => { const p = vo(k); return /^hi_/.test(k) ? p : undefined; },
+      fx: n => {
+        if (n === 'knock') return knock(T);
+        if (n === 'creak') return AudioFX.sfx('creak') || T.tone([300, 180], .8, { type: 'sawtooth', vol: .08 });
+        if (n === 'pow') return AudioFX.sfx('chop') || AudioFX.bonk();
+        if (n === 'thud') { thud(T); T.shake(); return; }
+        if (n === 'giggle') return giggle(T);
+        if (n === 'snore') return snore(T);
+        if (n === 'hammer') return knock(T);
+        if (n === 'ding') return AudioFX.sfx('ding') || AudioFX.ding();
+        return AudioFX.sfx(n);
+      },
+      pop: spec => { const [x, y, ...w] = String(spec).split(','); pop(+x, +y, w.join(','), C.persimmon); },
+    });
+    if (T.reading()) return T.readPlay(READ_ACTS);
+
     /* ---------- 1. 곰 집 아침 (부엌 와이드) ---------- */
     kitchenBG(T);
     const KY = bgUrl('kitchen') ? 10 : 0; // 그림 속 바닥(무대 y≈430~560) 위에 발이 닿게
@@ -1163,5 +1504,5 @@
     return T;
   }
 
-  Tale.mount({ title: '골디락스와 곰 세 마리', subtitle: '크다, 중간, 작다!', run: T => run(withFat(Tale.api)) });
+  Tale.mount({ title: '골디락스와 곰 세 마리', subtitle: '크다, 중간, 작다!', read: true, run: T => run(withFat(Tale.api)) });
 })();
