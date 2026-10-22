@@ -47,7 +47,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 ## 만화 컷 효과음 (AudioFX.sting 재료)
 
 원본에서 잘라내거나 여러 개를 섞은 뒤 음량을 맞췄다(loudnorm I=-16 TP=-1.5, 모노 44.1kHz, 96kbps mp3).
-CC BY 파일은 **출처 표시 의무가 있다** — 크레딧 화면에 "Kevin MacLeod (incompetech.com), CC BY 3.0"을 꼭 넣는다.
+효과음·동물 소리에는 출처 표시가 필요한 파일이 더 이상 없다(CC BY·CC BY-SA 였던 cymbal·오리·소·돼지·개·부엉이·개구리는 Pixabay 로 교체). 출처 표시가 필요한 것은 클래식 녹음(CC BY-SA 4.0)뿐이다.
 
 | 파일 | 원본 | 만든 이 | 라이선스 | 출처 |
 |---|---|---|---|---|
@@ -80,7 +80,7 @@ CC BY 파일은 **출처 표시 의무가 있다** — 크레딧 화면에 "Kevi
 | `sfx/cheer.mp3` | Slow starting applause.ogg | stephan | Public domain | https://commons.wikimedia.org/wiki/File:Slow_starting_applause.ogg |
 | `sfx/chomp.mp3` | Dragon bite.ogg | gregoryweir | Public domain | https://commons.wikimedia.org/wiki/File:Dragon_bite.ogg |
 | `sfx/gulp.mp3` | Swallowing gulp.ogg | gregoryweir | Public domain | https://commons.wikimedia.org/wiki/File:Swallowing_gulp.ogg |
-| `sfx/cymbal.mp3` | Kevin MacLeod assorted rimshots - Crasher.wav | Kevin MacLeod (incompetech.com) | **CC BY 3.0** | https://commons.wikimedia.org/wiki/File:Kevin_MacLeod_assorted_rimshots_-_Crasher.wav |
+| `sfx/cymbal.mp3` | Pixabay "Crash Cymbal Hit" (처음 1.58초, 끝 페이드아웃) | Universfield | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/crash-cymbal-hit-140577/ |
 | `sfx/slide_up.mp3` · `sfx/slide_down.mp3` | 슬라이드 휘슬 — 이 프로젝트에서 직접 합성(사인파+숨소리+비브라토) | 팥죽 게임 | CC0 | — |
 
 ## 직접 만든 소리
