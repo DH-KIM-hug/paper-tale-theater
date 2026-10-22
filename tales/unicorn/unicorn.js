@@ -6,7 +6,9 @@
    시안(목업) 모드: 그림 파일이 없으면 같은 크기·자리에 종이 자리표시(색 도형 + 한글 이름표)를 그린다. 파일(assets/v3w/uc_*.webp)이 생기면 코드를 고치지 않아도 그림으로 바뀐다
    (ASP 는 preload 가 실제 비율로 덮어쓴다; HT 는 같은 부위 폭으로 다시 잰다 — 아래 '그림 도착 뒤 맞출 것').
    세로(390x844): 보이는 폭이 약 260 이라 장면 전체를 PS 배로 줄여(원근) 한 화면에 담는다. 월드와 효과 층에 같은 변환을 건다(setView).
-   그림 도착 뒤 맞출 것: ① HT(자세별 같은 머리·몸 폭) ② 사슴 가시 자리 THORN(다리 위 좌표) ③ 사슴·말 입·간식 자리 ④ 아이 손과 양 손 높이(3장 손잡기) ⑤ 바닥 FL(배경 바닥선) ⑥ 힌트 위치 ⑦ NAT(실제 보는 쪽) */
+   2026-10-22 연출 재기획 그림 반영: 배경 uc_bg2_* · 다현이 공주 옷 uc_kid2_* · 컷 uc_cut2_* · 숨은 유니콘은 장소별 전신 자세 + 가리는 물체(z 순서, 반투명 없음)
+   · 중간 소품 uc_mid_* · 앞 가림 조각 uc_fg_*. 옛 uc_hint_*·uc_prop_waterfall·uc_bg_*·uc_kid_*·uc_cut_* 는 쓰지 않는다(파일만 둠, 자리표시 함수에 이름이 남아 있음).
+   z 순서: 배경 → 중간 소품 → 숨은 유니콘 → 가림 → 인물 → 앞 가림. 남은 확인: 사슴 가시 자리 THORN, 말 입·간식 자리 */
 (() => {
   const AS = '../../assets/v3w/';
   const ASP = {
@@ -18,6 +20,12 @@
     uc_hint_silhouette: 1.0083, uc_hint_tree_gap: 0.1883, uc_hint_spray_eye: 1.1167, uc_hint_horn_tip: 0.365,
     uc_sheep_jump: 1.2683, uc_sheep_happy: 1.09, uc_deer_relief: 0.7933, uc_horse_happy: 1.2433,
     uc_prop_block_yellow: 1.0233, uc_prop_block_blue: 1.015,
+    /* 2026-10-22 연출 재기획 그림(PLAN §9): 다현이 공주 옷 · 숨는 자세 · 중간 소품 · 앞 가림 조각 */
+    uc_kid2_stand: 0.565, uc_kid2_walk: 0.5983, uc_kid2_sad: 0.5517, uc_kid2_tired: 0.5517, uc_kid2_turn: 0.5417, uc_kid2_hug: 0.6633, uc_kid2_wave: 0.6567,
+    uc_unicorn_hide_cloud: 1.18, uc_unicorn_peek_cloud_horn: 0.9083, uc_unicorn_peek_tree: 0.9633, uc_unicorn_peek_spray: 1.015, uc_unicorn_hide_bush: 1.7274,
+    uc_mid_sheep_home: 1.3433, uc_mid_bush_corner: 1.3867, uc_mid_moon_halo: 1.085,
+    uc_fg_grass_flowers: 1.3833, uc_fg_cloud_hill: 2.4862, uc_fg_cloud_bank: 0.7333, uc_fg_cloud_wisp: 2.8846, uc_fg_tree_trunk: 0.6183, uc_fg_pine_branch: 1.5,
+    uc_fg_spray: 0.835, uc_fg_bare_branch: 1.5598, uc_fg_fern_night: 1.315,
   };
   /* 높이(px, scale 1). 인물·동물은 같은 부위 폭으로 맞춘다: 아이 머리 폭 기준 / 양·사슴·말·유니콘 몸통 폭 기준.
      기획 비율: 유니콘 = 말 = 조랑말(아이 어깨 높이 이상, 서면 뿔까지 아이의 1.2배), 양은 유니콘 키의 절반(등이 아이 허리), 사슴은 유니콘과 비슷한 크기.
@@ -30,16 +38,26 @@
     uc_prop_block_red: 56, uc_prop_block_yellow: 56, uc_prop_block_blue: 56, uc_prop_cloud: 120, uc_prop_thorn: 54, uc_prop_thorn_bush: 100,
     uc_prop_waterfall: 300, uc_prop_rainbow: 200, uc_prop_basket: 66, uc_prop_horn_bands: 40,
     uc_hint_tail: 90, uc_hint_silhouette: 150, uc_hint_tree_gap: 260, uc_hint_spray_eye: 70, uc_hint_horn_tip: 110,
+    /* 다현이(공주 옷, 2026-10-22): 머리카락 덩어리 폭(위 절반의 갈색 조각 폭)을 서기와 같게 잰 값. 돌아봄은 옆얼굴이라 머리카락 높이로 */
+    uc_kid2_stand: 230, uc_kid2_walk: 237, uc_kid2_sad: 236, uc_kid2_tired: 240, uc_kid2_turn: 244, uc_kid2_hug: 230, uc_kid2_wave: 238,
+    /* 숨는 자세(§8-3): 눈·얼굴 크기와 다리 길이를 서기(270)와 나란히 놓고 맞춘 값. 덤불 자세는 낮고 길게 엎드려 그림 높이가 작다 */
+    uc_unicorn_peek_tree: 270, uc_unicorn_peek_spray: 268, uc_unicorn_peek_cloud_horn: 282, uc_unicorn_hide_cloud: 245, uc_unicorn_hide_bush: 160,
+    uc_mid_sheep_home: 280, uc_mid_bush_corner: 260, uc_mid_moon_halo: 330,
+    uc_fg_grass_flowers: 240, uc_fg_cloud_hill: 125, uc_fg_cloud_bank: 300, uc_fg_cloud_wisp: 92, uc_fg_tree_trunk: 560, uc_fg_pine_branch: 240,
+    uc_fg_spray: 330, uc_fg_bare_branch: 260, uc_fg_fern_night: 180,
   };
   /* 그림이 보는 쪽 (PLAN §5-1 표; 실제 그림을 눈으로 본 뒤 고친다) */
   const NAT = {
     uc_kid_walk: 'right', uc_kid_sad: 'right', uc_kid_tired: 'right', uc_kid_turn: 'right', uc_kid_stand: 'front', uc_kid_hug: 'front',
     uc_unicorn_stand: 'left', uc_unicorn_back: 'right', uc_sheep_cry: 'left', uc_sheep_jump: 'left', uc_sheep_happy: 'left',
     uc_deer_hurt: 'left', uc_deer_relief: 'left', uc_horse_hungry: 'left', uc_horse_happy: 'left', uc_hint_silhouette: 'left',
+    /* 2026-10-22 새 그림(눈으로 본 쪽): 다현이 걷기·돌아봄은 오른쪽, 지침은 고개를 숙인 왼쪽, 서기·슬픔·안기·손 흔들기는 앞모습. 숨는 자세 다섯은 모두 왼쪽 */
+    uc_kid2_walk: 'right', uc_kid2_turn: 'right', uc_kid2_tired: 'left', uc_kid2_stand: 'front', uc_kid2_sad: 'front', uc_kid2_hug: 'front', uc_kid2_wave: 'front',
+    uc_unicorn_hide_cloud: 'left', uc_unicorn_peek_cloud_horn: 'left', uc_unicorn_peek_tree: 'left', uc_unicorn_peek_spray: 'left', uc_unicorn_hide_bush: 'left',
   };
   const FL = 490;                       // 바닥(발끝 y)
-  const BGS = ['uc_bg_hill', 'uc_bg_cloudland', 'uc_bg_night_forest', 'uc_bg_waterfall', 'uc_bg_dusk_road', 'uc_bg_moon_night'];
-  const CUTS = ['uc_cut_sheep_jump', 'uc_cut_thorns', 'uc_cut_turn', 'uc_cut_hug'];
+  const BGS = ['uc_bg2_hill', 'uc_bg2_cloudland', 'uc_bg2_night_forest', 'uc_bg2_waterfall', 'uc_bg2_dusk_road', 'uc_bg2_moon_night'];   // 2026-10-22 화려한 다층 배경(옛 uc_bg_* 는 쓰지 않음)
+  const CUTS = ['uc_cut2_sheep_jump', 'uc_cut2_thorns', 'uc_cut2_turn', 'uc_cut2_hug'];   // 공주 옷 컷
   const src = k => AS + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 902 / 1600 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
@@ -127,7 +145,7 @@
   };
   function bgImage(T, key) {
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
-    const d = BGPH[key], g = T.el('g', {}, T.bg);
+    const d = BGPH[key] || BGPH[key.replace('bg2_', 'bg_')], g = T.el('g', {}, T.bg);
     T.el('rect', { x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, fill: d.sky }, g);
     T.el('rect', { x: BGBOX.x, y: 412, width: BGBOX.w, height: 200, fill: d.gnd }, g);
     d.shapes().forEach(([t, a]) => T.el(t, a, g));
@@ -253,32 +271,37 @@
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
     CUTS.forEach(k => T.preload(src(k)));
     await Promise.race([Promise.all(loads), sleep(4000)]);
-    const pz = (who, ps) => Object.fromEntries(ps.map(p => [p, ['uc_' + who + '_' + p, HT['uc_' + who + '_' + p]]]));
-    const kid = mk(T, pz('kid', ['stand', 'walk', 'sad', 'tired', 'turn', 'hug']));
-    const uni = mk(T, pz('unicorn', ['stand', 'back']));
+    const pz = (who, ps, pre = who) => Object.fromEntries(ps.map(p => [p, ['uc_' + pre + '_' + p, HT['uc_' + pre + '_' + p]]]));
+    const kid = mk(T, pz('kid', ['stand', 'walk', 'sad', 'tired', 'turn', 'hug', 'wave'], 'kid2'));   // 다현이(공주 옷, PLAN §13)
+    /* 유니콘: 서기·뒷모습 + 장소별 숨는 자세 다섯(PLAN §8-2). 가리는 물체는 z 순서로 덮는다(반투명 없음) */
+    const uni = mk(T, { ...pz('unicorn', ['stand', 'back']), ...pz('unicorn', ['hide_cloud', 'peek_cloud_horn', 'peek_tree', 'peek_spray', 'hide_bush']) });
     const sheep = mk(T, pz('sheep', ['cry', 'jump', 'happy']));
     const deer = mk(T, pz('deer', ['hurt', 'relief']));
     const horse = mk(T, pz('horse', ['hungry', 'happy']));
     const blocks = { red: prop(T, 'uc_prop_block_red'), yellow: prop(T, 'uc_prop_block_yellow'), blue: prop(T, 'uc_prop_block_blue') };
-    const cloud = prop(T, 'uc_prop_cloud'), bush = prop(T, 'uc_prop_thorn_bush'), fall = prop(T, 'uc_prop_waterfall'), rainbow = prop(T, 'uc_prop_rainbow');
+    const cloud = prop(T, 'uc_prop_cloud'), bush = prop(T, 'uc_prop_thorn_bush'), rainbow = prop(T, 'uc_prop_rainbow');
     const basket = prop(T, 'uc_prop_basket'), bands = prop(T, 'uc_prop_horn_bands');
     const thorns = [0, 1, 2].map(() => prop(T, 'uc_prop_thorn'));
-    const hTail = prop(T, 'uc_hint_tail'), hSil = prop(T, 'uc_hint_silhouette'), hTree = prop(T, 'uc_hint_tree_gap'), hEye = prop(T, 'uc_hint_spray_eye'), hTip = prop(T, 'uc_hint_horn_tip');
-    const ALL = [kid, uni, sheep, deer, horse, ...Object.values(blocks), cloud, bush, fall, rainbow, basket, bands, ...thorns, hTail, hSil, hTree, hEye, hTip];
+    /* 중간 소품(P1)·앞 가림 조각(P2b·P4): 누름을 받지 않는다 */
+    const deco = k => { const a = prop(T, 'uc_' + k); a.pos.style.pointerEvents = 'none'; return a; };
+    const home = deco('mid_sheep_home'), cbush = deco('mid_bush_corner'), halo = deco('mid_moon_halo');
+    const FG = Object.fromEntries(['grass_flowers', 'cloud_hill', 'cloud_bank', 'cloud_wisp', 'tree_trunk', 'pine_branch', 'spray', 'bare_branch', 'fern_night'].map(k => [k, deco('fg_' + k)]));
+    const ALL = [kid, uni, sheep, deer, horse, ...Object.values(blocks), cloud, bush, rainbow, basket, bands, ...thorns, home, cbush, halo, ...Object.values(FG)];
     ALL.forEach(hide);
     T.director(null);
-    /* 숨은 유니콘 힌트: 점진 노출 (PLAN 표) — 아주 옅게 시작해서 10장에 완전히 나온다 */
-    const hint = (a, x, y, op) => { put(T, a, x, y); a.body.style.opacity = op; return a; };
     /* 사슴 다리의 가시 자리(사슴 가운데 x·바닥 y 기준 오프셋, 누운 사슴 그림 도착 뒤 다시 잰다) */
     const THORN = [[-52, -42], [-72, -35], [-92, -28]];
     const POPY = a => FL - a.h - 30;      // 말풍선 글자: 머리 위쪽 (인물 얼굴을 가리지 않는다)
+    const stepTo = async (a, x, ms, h = 4) => { const st = stepSfx(.2, 600); await drive(a, x, FL, ms, 'linear', h); st(); };
 
-    /* ===== 1. 설렘 (배움 놀이: 색 찾기 — 첫 조작) ===== */
-    scene('uc_bg_hill', 400);
+    /* ===== 1. 설렘 (배움 놀이: 색 찾기 — 첫 조작) — 멀리서 넓게 ===== */
+    scene('uc_bg2_hill', 400);
+    put(T, uni, X(800, 600), 365, { look: 'hide_cloud', to: 'left', s: .6 });    // 언덕 너머 먼 곳(원근으로만 작게): 꼬리 끝 7줄만 구름 위로
+    put(T, FG.cloud_hill, X(790, 590), 372);
     put(T, kid, 300, FL, { look: 'stand' });
-    hint(hTail, X(870, 520), 185, .1);
     const kinds = ['red', 'yellow', 'blue'].sort(() => Math.random() - .5), spots = X([430, 560, 690], [380, 450, 520]);
     kinds.forEach((k, i) => { put(T, blocks[k], spots[i], FL + 4); hitBox(T, blocks[k], H(P ? 62 : 100), H(P ? 70 : 100)); });
+    put(T, FG.grass_flowers, X(110, 230), 600);
     await T.curtain(true);
     await say(S.L0);
     await sleep(300);
@@ -298,13 +321,16 @@
     await say(S.L3);
     await sleep(SCENE_END);
 
-    /* ===== 2. 구름 나라 (재미 톡 1: 구름) ===== */
+    /* ===== 2. 구름 나라 (재미 톡 1: 구름) — 아이 눈높이, 가까이 ===== */
+    const CLOUD_TOP = FL - 170;               // 양 구름 윗면(바닥보다 170 위, 떠 있음). 밑면은 FL-50
     await T.sceneCard(tr('구름 나라'), () => {
-      scene('uc_bg_cloudland', 470, .7);
-      hint(hSil, X(830, 520), 230, .2);
-      put(T, cloud, X(640, 550), FL + 30, { look: 'a' });
-      put(T, sheep, cloud.x, FL + 30 - HT.uc_prop_cloud + 18, { look: 'cry', to: 'left' });
-      put(T, kid, X(260, 345), FL, { look: 'walk', to: 'right' });
+      scene('uc_bg2_cloudland', 470, .7);
+      put(T, uni, X(1060, 860), FL + 30, { look: 'peek_cloud_horn', to: 'left' });   // 구름 둑(오른쪽이 높다) 위로 뿔·귀만, 발굽은 둑 밑에
+      put(T, FG.cloud_bank, X(985, 785), FL + 60);
+      put(T, cloud, X(620, 550), FL - 50, { look: 'a' });
+      put(T, sheep, cloud.x, CLOUD_TOP + 18, { look: 'cry', to: 'left' });
+      put(T, kid, X(280, 345), FL, { look: 'walk', to: 'right' });
+      put(T, FG.cloud_wisp, X(110, 250), 600);
     }, kid.pos);
     await say(S.L4);
     T.pop(sheep.x, POPY(sheep) - 90, tr('훌쩍…'), '#3E7CB1');
@@ -313,49 +339,60 @@
     bob(cloud.pos);
     await T.ask(S.L6, () => T.tap(cloud.hit, { prompt: S.L6 }));
     unhit(cloud); AudioFX.sfx('boing', .5);
-    await T.cutImage([{ src: src('uc_cut_sheep_jump'), hold: 3600 }]);
+    await T.cutImage([{ src: src('uc_cut2_sheep_jump'), hold: 3600 }]);
     sheep.look('jump', 'left'); sfx('whoosh', .4);
-    const land = kid.x + 150;
+    const land = kid.x + 150, sx = sheep.x, sy = sheep.y;     // 포물선: 위로 40(0.25초) → 아래로 210(0.65초)
     const sayJump = say(S.L7);
-    await Promise.all([sheep.move(land, FL, 900, 'ease-in'), sleep(0)]);
-    sheep.look('happy', 'left'); sheep.hop(14, 380); T.pop(land, FL - 200, tr('폴짝!'));
+    await sheep.move((sx + land) / 2 + 30, sy - 40, 250, 'ease-out');
+    await sheep.move(land, FL, 650, 'ease-in');
+    sheep.look('happy', 'left'); sheep.hop(14, 380); setTimeout(() => sheep.hop(14, 380), 420); T.pop(land, FL - 200, tr('폴짝!'));
     kid.look('walk', 'right'); kid.hop(10, 320);
     await sayJump;
     await sleep(SCENE_END);
 
-    /* ===== 3. 길 찾기 ===== */
+    /* ===== 3. 길 찾기 — 옆에서 트래킹, 양의 집에 닿아 헤어진다 ===== */
     await T.sceneCard(tr('길 찾기'), () => {
-      scene('uc_bg_cloudland', 480, .7);
-      hint(hSil, X(880, 520), 215, .2);
+      scene('uc_bg2_cloudland', 480, .7);
+      put(T, uni, X(935, 755), FL + 2, { look: 'peek_cloud_horn', to: 'left' });  // 양의 집 지붕 왼쪽 위로 뿔·귀만
+      put(T, home, X(880, 700), FL + 6);
       put(T, kid, X(150, 330), FL, { look: 'walk', to: 'right' });
       put(T, sheep, kid.x + 150, FL, { look: 'happy', to: 'left' });
+      put(T, FG.cloud_wisp, X(110, 250), 600);
     }, kid.pos);
     await say(S.L8);
     kid.hop(10, 300);
     sheep.turn('right');                                  // 둘 다 가는 쪽(오른쪽)을 본다 — 양이 앞서고 손을 잡는다
-    const endX = X(700, 560), stop3 = stepSfx(.2, 750);
+    const endX = X(700, 560), stop3 = stepSfx(.2, 600);
     const l9 = say(S.L9);
-    follow(endX - 40, 16000);
-    await Promise.all([drive(kid, endX - 150, FL, 16000, 'linear', 5), drive(sheep, endX, FL, 16000, 'linear', 5), l9]);
-    stop3();
+    follow(endX - 40, 2500);
+    await Promise.all([drive(kid, endX - 140, FL, 2500, 'linear', 5), drive(sheep, endX, FL, 2500, 'linear', 5)]);
+    stop3(); await l9;
     sheep.turn('left'); sheep.hop(18, 400); sparkleSfx(T);
     await say(S.L10);
-    sheep.turn('right'); sheep.look('happy', 'right');
-    const l11 = say(S.L11), stop3b = stepSfx(.2, 600);
-    await Promise.all([drive(sheep, X(1100, endX + 220), FL, 6000, 'ease-in', 6), l11]);
-    stop3b(); hide(sheep);
+    sheep.look('happy', 'right'); await sheep.move(X(790, 640), FL, 600, 'ease-out');
+    sheep.turn('left'); sheep.hop(10, 320);                // 집 앞에서 아이 쪽을 보고 인사
+    kid.look('wave'); kid.hop(10, 320);
+    const l11 = say(S.L11);
+    await sleep(900);
+    sheep.turn('right'); T.world.insertBefore(sheep.pos, home.pos);   // 집 뒤로 들어간다(사라지는 대신 z 로 숨김)
+    await sheep.move(X(880, 700), FL, 800, 'ease-in'); hide(sheep);
+    await l11;
     await sleep(SCENE_END);
 
-    /* ===== 4. 별빛 숲 (배움 놀이 2: 세기 — 톡 1회, 목소리만) ===== */
-    await T.sceneCard(tr('별빛 숲'), () => {
-      scene('uc_bg_night_forest', 590, .65);
+    /* ===== 4. 별빛 숲 (배움 놀이 2: 세기 — 톡 1회, 목소리만) — 낮게, 둥치 사이로 ===== */
+    const forest = (kidLook, kidX) => {
+      scene('uc_bg2_night_forest', 590, .65);
+      put(T, uni, X(30, 260), FL - 10, { look: 'peek_tree', to: 'right' });   // 둥치 뒤에서 얼굴 반쪽·눈 하나
+      put(T, FG.tree_trunk, X(70, 300), FL + 40);
       put(T, bush, X(840, 745), FL - 6, { look: 'a' });
-      put(T, deer, X(690, 650), FL, { look: 'hurt', to: 'left' });
-      put(T, kid, X(110, 330), FL, { look: 'walk', to: 'right' });
-    }, kid.pos);
-    const l12 = say(S.L12), stop4 = stepSfx(.18, 800);
-    await Promise.all([drive(kid, X(400, 455), FL, 8000, 'ease-out', 4), l12]);
-    stop4();
+      put(T, deer, X(690, 650), FL, { look: kidLook === 'walk' ? 'hurt' : 'relief', to: 'left' });
+      put(T, kid, kidX, FL, { look: kidLook, to: 'right' });
+      put(T, FG.pine_branch, X(900, 790), 210); put(T, FG.fern_night, X(70, 290), 600);
+    };
+    await T.sceneCard(tr('별빛 숲'), () => forest('walk', X(200, 360)), kid.pos);
+    const l12 = say(S.L12);
+    await stepTo(kid, X(400, 455), 1200);
+    await l12;
     await say(S.L13);
     deer.hop(4, 500);
     thorns.forEach((t, i) => { put(T, t, deer.x + THORN[i][0], FL + THORN[i][1], { look: 'a' }); fadeIn(t, 500); });
@@ -363,7 +400,7 @@
     bob(thorns[0].pos);
     await T.ask(S.L14, () => T.tap(thorns[0].hit, { prompt: S.L14 }));
     unhit(thorns[0]);
-    await T.cutImage([{ src: src('uc_cut_thorns'), hold: 3600 }]);
+    await T.cutImage([{ src: src('uc_cut2_thorns'), hold: 3600 }]);
     for (let i = 0; i < 3; i++) {                          // 하나 · 둘 · 셋 (목소리만, 화면 숫자 글자 없음)
       deer.wiggle(3, 300);
       const t = thorns[i], tx = t.x, ty = t.y;
@@ -378,32 +415,27 @@
     await say(S.L16);
     await sleep(SCENE_END);
 
-    /* ===== 5. 사슴의 뿔 · 아쉬움 ===== */
-    await T.sceneCard(tr('사슴의 뿔'), () => {
-      scene('uc_bg_night_forest', 590, .65);
-      put(T, bush, X(840, 745), FL - 6, { look: 'a' });
-      put(T, deer, X(690, 650), FL, { look: 'relief', to: 'left' });
-      put(T, kid, X(400, 455), FL, { look: 'sad', to: 'right' });
-    }, kid.pos);
+    /* ===== 5. 사슴의 뿔 · 아쉬움 — 같은 세트, 가까이 ===== */
+    await T.sceneCard(tr('사슴의 뿔'), () => forest('sad', X(400, 455)), kid.pos);
     await say(S.L17);
     await sleep(2500);
     await say(S.L18);
     await sleep(SCENE_END);
 
-    /* ===== 6. 무지개 폭포 ===== */
-    await T.sceneCard(tr('무지개 폭포'), () => {
-      scene('uc_bg_waterfall', 420, .55);
-      hint(hTree, X(50, 150), FL - 8, .4);
-      put(T, rainbow, X(800, 800), FL - 60, { look: 'a' });
-      put(T, fall, X(880, 880), FL - 48, { look: 'a' });
+    /* ===== 6. 무지개 폭포 — 옆에서 넓게. 폭포는 배경 안(PLAN §5) ===== */
+    const falls = (kidX, withBasket) => {
+      scene('uc_bg2_waterfall', 420, .55);
+      put(T, rainbow, X(690, 690), 400, { look: 'a' });
+      put(T, uni, X(900, 900), 472, { look: 'peek_spray', to: 'left' });     // 물보라 틈으로 갈기·뿔·목·눈
+      put(T, FG.spray, X(890, 890), 545);
       put(T, horse, X(470, 450), FL, { look: 'hungry', to: 'left' });
-      put(T, kid, X(60, 150), FL, { look: 'walk', to: 'right' });
-      put(T, basket, kid.x + 85, FL, { look: 'a' }); basket.pos.style.display = 'none';
-    }, kid.pos);
-    const stop6 = stepSfx(.18, 800);
-    await Promise.all([drive(kid, X(230, 250), FL, 3500, 'ease-out', 4)]);
-    stop6();
-    put(T, basket, kid.x + 85, FL, { look: 'a' }); fadeIn(basket, 400);
+      put(T, kid, kidX, FL, { look: 'walk', to: 'right' });
+      put(T, basket, kid.x + 85, FL, { look: 'a' }); if (!withBasket) basket.pos.style.display = 'none';
+      put(T, FG.grass_flowers, X(30, 60), 600);   // 아이(250)와 겹치지 않게 왼쪽 모서리
+    };
+    await T.sceneCard(tr('무지개 폭포'), () => falls(X(60, 150), false), kid.pos);
+    await stepTo(kid, X(250, 250), 800);
+    put(T, basket, kid.x + 85, FL, { look: 'a' }); fadeIn(basket, 400); T.world.appendChild(FG.grass_flowers.pos);
     const l19 = say(S.L19);
     follow(840, 1600); setTimeout(() => follow(420, 1600), 3200);
     await l19;
@@ -412,20 +444,12 @@
     await say(S.L21);
     await sleep(SCENE_END);
 
-    /* ===== 7. 간식 나누기 ===== */
-    await T.sceneCard(tr('간식 나누기'), () => {
-      scene('uc_bg_waterfall', 420, .55);
-      hint(hEye, X(800, 800), FL - 22, .6);
-      put(T, rainbow, X(800, 800), FL - 60, { look: 'a' });
-      put(T, fall, X(880, 880), FL - 48, { look: 'a' });
-      put(T, horse, X(470, 450), FL, { look: 'hungry', to: 'left' });
-      put(T, kid, X(230, 250), FL, { look: 'walk', to: 'right' });
-      put(T, basket, kid.x + 85, FL, { look: 'a' });
-    }, kid.pos);
+    /* ===== 7. 간식 나누기 — 같은 세트 ===== */
+    await T.sceneCard(tr('간식 나누기'), () => falls(X(250, 250), true), kid.pos);
     kid.hop(10, 320);
     await say(S.L22);
     sfx('paper_up', .5);
-    await basket.move(horse.x - 160, FL, 1400, 'ease-in-out');
+    await basket.move(horse.x - 160, FL, 1000, 'ease-in-out');
     horse.look('happy', 'left');
     const l23 = say(S.L23);
     T.pop(horse.x - 10, POPY(horse) - 50, tr('냠냠')); sfx('pop', .4);
@@ -440,9 +464,10 @@
     follow(420, 1200);
     await sleep(SCENE_END);
 
-    /* ===== 8. 빈 길 (조용히) ===== */
+    /* ===== 8. 빈 길 (조용히) — 멀리서 넓게, 여백. 유니콘 없음 ===== */
     await T.sceneCard(tr('빈 길'), () => {
-      scene('uc_bg_dusk_road', 500);
+      scene('uc_bg2_dusk_road', 500);
+      put(T, FG.bare_branch, X(150, 330), 236);
       put(T, kid, X(760, 640), FL, { look: 'tired', to: 'left' });     // 아이는 땅을 보며 왼쪽으로 걷는다 (뒤돌아보지 않음)
     }, kid.pos);
     await sleep(5000);
@@ -451,40 +476,45 @@
     await say(S.L27);
     await sleep(2000);
     const l28 = say(S.L28), stop8 = stepSfx(.15, 1000);
-    follow(X(430, 380), 22000);
-    await Promise.all([drive(kid, X(430, 380), FL, 22000, 'linear', 2), l28]);
-    stop8();
+    follow(X(430, 380), 3000);
+    await drive(kid, X(430, 380), FL, 3000, 'linear', 2);       // 지친 걸음 110px/초(최대 3초)
+    stop8(); await l28;
     await sleep(SCENE_END + 1500);
 
-    /* ===== 9. 사박사박 ===== */
+    /* ===== 9. 사박사박 — 아이 눈높이, 길모퉁이 ===== */
     await T.sceneCard(tr('사박사박'), () => {
-      scene('uc_bg_moon_night', 540);
+      scene('uc_bg2_moon_night', 540);
+      put(T, uni, X(745, 655), FL - 5, { look: 'hide_bush', to: 'right' });   // 머리는 덤불 속, 엉덩이·꼬리 7색만
+      put(T, cbush, X(930, 760), FL + 20);
       put(T, kid, X(640, 600), FL, { look: 'tired', to: 'left' });
+      put(T, FG.fern_night, X(70, 400), 600);
     }, kid.pos);
     const l29 = say(S.L29), stop9 = stepSfx(.15, 1000);
-    follow(X(430, 440), 4500);
-    await Promise.all([drive(kid, X(500, 490), FL, 4500, 'linear', 2), l29]);
-    stop9();
-    hint(hTip, X(800, 650), 330, .85);
-    fadeIn(hTip, 1200);
+    follow(X(430, 440), 1000);
+    await drive(kid, X(500, 490), FL, 1000, 'linear', 2);
+    stop9(); await l29;
     await sleep(600);
     for (let i = 0; i < 3; i++) { vo('steps'); T.pop(X(830, 560), FL - 345, tr('사박, 사박')); await sleep(3600); }
-    await T.cutImage([{ src: src('uc_cut_turn'), hold: 3600 }]);
+    await T.cutImage([{ src: src('uc_cut2_turn'), hold: 3600 }]);
     kid.look('turn', 'right'); kid.hop(6, 400);                       // 뒤를 돌아본다 (고개를 오른쪽 어깨 너머로)
     const l30 = say(S.L30);
-    fadeOut(T, hTip, 900);
-    put(T, uni, X(830, 640), FL - 30, { look: 'back', to: 'right', s: .85 }); fadeIn(uni, 1600); glow(uni, 1800);
+    uni.look('back', 'right'); T.world.appendChild(uni.pos); T.world.appendChild(FG.fern_night.pos);   // 덤불에서 걸어 나온다
+    await uni.move(X(830, 690), FL - 30, 1200, 'ease-in-out'); glow(uni, 1800);
     await l30;
     await sleep(4500);
     await sleep(SCENE_END);
 
-    /* ===== 10. 진짜 유니콘 (인사 톡) ===== */
+    /* ===== 10. 진짜 유니콘 (인사 톡) — 가까이, 둘만 ===== */
     await T.sceneCard(tr('진짜 유니콘'), () => {
-      scene('uc_bg_moon_night', 560, .6);
+      scene('uc_bg2_moon_night', 560, .6);
+      if (P) put(T, halo, 690, 200);                                   // 세로: 배경 달이 화면 밖이라 유니콘 위 하늘에 무리만
+      else { put(T, halo, 878, 86 + HT.uc_mid_moon_halo / 2); T.bg.appendChild(halo.pos); }   // 가로: 배경 층에 붙여 배경 달 둘레에
+      halo.pos.style.opacity = 0;   // 달 둘레 7색 무리
       put(T, kid, X(420, 430), FL, { look: 'stand' });
       put(T, uni, X(720, 650), FL, { look: 'stand', to: 'left' }); uni.pos.style.opacity = 0;
     }, uni.pos);
     uni.pos.style.opacity = ''; fadeIn(uni, 1400); glow(uni, 1500);
+    halo.pos.style.opacity = ''; fadeIn(halo, 2400);
     await sleep(2500);
     await say(S.L31);
     await say(S.L32);
@@ -500,10 +530,10 @@
     T.pop(uni.x + 40, FL - HT.uc_unicorn_stand - 100, tr('반짝!'), '#D9A94E');
     await sleep(3000);
     await T.anim(bands.pos, [{ opacity: 1 }, { opacity: 0 }], 600); hide(bands);
-    await T.cutImage([{ src: src('uc_cut_hug'), hold: 4200 }]);
+    await T.cutImage([{ src: src('uc_cut2_hug'), hold: 4200 }]);
     kid.look('hug'); T.world.appendChild(kid.pos);
     sfx('paper_up', .5);
-    await kid.move(uni.x - 135, FL, 900, 'ease-out');
+    await kid.move(uni.x - 135, FL, 700, 'ease-out');
     T.confetti(); sfx('tada') || sparkleSfx(T);
     for (let i = 0; i < 2; i++) await Promise.all([kid.hop(22, 480), uni.hop(14, 480)]);
     await say(S.L36);
