@@ -1,0 +1,903 @@
+{
+ "mode": "read",
+ "tale": "kongjwi",
+ "lang": "en",
+ "title": "Kongjwi and Patjwi",
+ "voices_from": "voice_script_el.json",
+ "moral": "A kind heart brings help.",
+ "notes": "영어 읽어 주기 대본(docs/READ_MODE.md §3-4). text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 voice_script_en.json 의 en 그대로, trim 은 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "acts": {
+  "set:<yard|field|well|jar|mat|loom|stream|feast|office|wedding>": "장면 세트(scene(key): T.clear + bgImage + camSnap)",
+  "cam:wide": "카메라",
+  "<kong|step|pat|ox|toad|fairy|won|flock|sparrow>:at:<x,y> | :look:<sweep|hoe|pour|wet|loom|shoes|bride|order|eat|dressed|shy|idle|float|give|shoe|stand> | :to:<left|right> | :walk:<x,y> | :hide | :hop | :fade": "배우 자리(put)·그림(look)·방향·걷기·보이기",
+  "prop:<jar|pail|basketY|basketR|drum|buk|gong|shoeP|shoeB|shoeM|cakes>:at:<x,y> | prop:<id>:hide | sweep:dust | pail:pour:<n> | jar:leak | jar:full | sparrows:peck:<n> | kong:cross:<n> | shoe:drift | shoe:fit": "소품·연출(쓸기 먼지·물 붓기·독 새기·채우기·참새 쪼기·징검다리 건너기·꽃신 떠내려가기·신기기)",
+  "cut:<ox|wet|toad|sparrows|fairy|splash|shy>": "그림 컷(cutImage)",
+  "fx:<pop|drum|gong|splash|sparkle> | pop:<x,y,글자>": "효과음·의성어"
+ },
+ "scenes": [
+  {
+   "key": "R01_yard",
+   "card": "The Yard",
+   "set": "yard",
+   "enter": [
+    "kong:at:440,505",
+    "kong:look:sweep",
+    "kong:to:right",
+    "step:at:620,505",
+    "step:look:order",
+    "step:to:left",
+    "pat:at:800,505",
+    "pat:look:eat",
+    "pat:to:left",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "옛날 옛날에 마음씨 고운 콩쥐가 살았어요.",
+     "src": "reuse",
+     "en": "Once upon a time, there lived a kind girl named Kongjwi.",
+     "segs": [
+      [
+       "nar",
+       "Once upon a time, there lived a kind girl named Kongjwi."
+      ]
+     ]
+    },
+    {
+     "text": "콩쥐는 새엄마, 팥쥐와 함께 살았어요.",
+     "src": "reuse",
+     "en": "She lived with her stepmother and Patjwi.",
+     "segs": [
+      [
+       "nar",
+       "She lived with her stepmother and Patjwi."
+      ]
+     ]
+    },
+    {
+     "text": "팥쥐는 날마다 뒹굴뒹굴 놀고, 떡을 냠냠 먹기만 했지요.",
+     "src": "new",
+     "en": "Patjwi just lolled about all day, lounging and munching on rice cakes, yum, yum.",
+     "segs": [
+      [
+       "nar",
+       "Patjwi just lolled about all day, lounging and munching on rice cakes, yum, yum."
+      ]
+     ]
+    },
+    {
+     "text": "\"콩쥐야, 마당을 쓸어라!\" 새엄마가 말했어요.",
+     "src": "reuse",
+     "en": "Kongjwi, sweep the yard! said her stepmother.",
+     "segs": [
+      [
+       "step",
+       "Kongjwi, sweep the yard!"
+      ],
+      [
+       "nar",
+       "said her stepmother."
+      ]
+     ]
+    },
+    {
+     "text": "콩쥐는 빗자루를 들고 싹싹, 마당을 쓸었어요.",
+     "src": "new",
+     "en": "Kongjwi picked up the broom and swept the yard, swish, swish, swish.",
+     "segs": [
+      [
+       "nar",
+       "Kongjwi picked up the broom and swept the yard, swish, swish, swish."
+      ]
+     ],
+     "before": [
+      "sweep:dust",
+      "pop:440,250,싹싹!"
+     ]
+    },
+    {
+     "text": "마당이 깨끗해졌어요. 콩쥐는 방긋 웃었어요.",
+     "src": "reuse",
+     "en": "The yard was clean. Kongjwi smiled.",
+     "segs": [
+      [
+       "nar",
+       "The yard was clean. Kongjwi smiled."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_field",
+   "card": "The Field",
+   "set": "field",
+   "enter": [
+    "kong:at:400,505",
+    "kong:look:hoe",
+    "kong:to:right",
+    "step:at:720,505",
+    "step:look:order",
+    "step:to:left",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"이 밭을 다 갈아 놓아라!\" 새엄마가 말했어요.",
+     "src": "reuse",
+     "en": "Plow this whole field! said her stepmother.",
+     "segs": [
+      [
+       "step",
+       "Plow this whole field!"
+      ],
+      [
+       "nar",
+       "said her stepmother."
+      ]
+     ]
+    },
+    {
+     "text": "밭은 너무 넓어서 콩쥐는 한숨이 나왔어요.",
+     "src": "reuse",
+     "en": "The field was so big that Kongjwi sighed.",
+     "segs": [
+      [
+       "nar",
+       "The field was so big that Kongjwi sighed."
+      ]
+     ]
+    },
+    {
+     "text": "콩쥐는 호미로 땅을 콕콕 파기 시작했어요. 땀이 뚝뚝 떨어졌지요.",
+     "src": "new",
+     "en": "Kongjwi began to dig at the earth with her little hoe, poke, poke. Sweat dripped down, drip, drop.",
+     "segs": [
+      [
+       "nar",
+       "Kongjwi began to dig at the earth with her little hoe, poke, poke. Sweat dripped down, drip, drop."
+      ]
+     ]
+    },
+    {
+     "text": "그때 검은 소가 나타났어요. \"음메~ 내가 도와줄게!\"",
+     "src": "reuse",
+     "en": "Then a black ox appeared. Moo! I will help you!",
+     "segs": [
+      [
+       "nar",
+       "Then a black ox appeared."
+      ],
+      [
+       "ox",
+       "Moo! I will help you!"
+      ]
+     ],
+     "before": [
+      "ox:at:560,520",
+      "ox:fade"
+     ],
+     "after": [
+      "cut:ox"
+     ]
+    },
+    {
+     "text": "소가 쑥쑥 밭을 갈아 주었어요. \"고마워, 소야!\"",
+     "src": "reuse",
+     "en": "The ox plowed the field fast. Thank you, ox!",
+     "segs": [
+      [
+       "nar",
+       "The ox plowed the field fast."
+      ],
+      [
+       "kong",
+       "Thank you, ox!"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_well",
+   "card": "The Well",
+   "set": "well",
+   "enter": [
+    "kong:at:400,505",
+    "kong:look:pour",
+    "kong:to:right",
+    "prop:jar:at:560,505",
+    "prop:pail:at:480,520",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"이 독에 물을 가득 채워라!\" 새엄마가 말했어요.",
+     "src": "reuse",
+     "en": "Fill this big jar with water! said her stepmother.",
+     "segs": [
+      [
+       "step",
+       "Fill this big jar with water!"
+      ],
+      [
+       "nar",
+       "said her stepmother."
+      ]
+     ]
+    },
+    {
+     "text": "콩쥐는 물동이를 들고 우물을 오르락내리락, 물을 콸콸 부었어요.",
+     "src": "new",
+     "en": "Kongjwi carried the bucket back and forth to the well and poured the water in, glug, glug, glug.",
+     "segs": [
+      [
+       "nar",
+       "Kongjwi carried the bucket back and forth to the well and poured the water in, glug, glug, glug."
+      ]
+     ],
+     "before": [
+      "pail:pour:3"
+     ]
+    },
+    {
+     "text": "앗! 독 밑에 구멍이 나서 물이 줄줄 새어 나왔어요.",
+     "src": "reuse",
+     "en": "Oh no! There was a hole in the jar, and the water leaked out.",
+     "segs": [
+      [
+       "nar",
+       "Oh no! There was a hole in the jar, and the water leaked out."
+      ]
+     ],
+     "before": [
+      "cut:wet",
+      "kong:look:wet",
+      "jar:leak"
+     ]
+    },
+    {
+     "text": "부어도 부어도 독은 텅텅 비었어요. 콩쥐는 울상이 되었지요.",
+     "src": "new",
+     "en": "No matter how much she poured, the jar stayed empty. Kongjwi was about to cry.",
+     "segs": [
+      [
+       "nar",
+       "No matter how much she poured, the jar stayed empty. Kongjwi was about to cry.",
+       "sad:1.1"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_jar",
+   "card": "Inside the Jar",
+   "set": "jar",
+   "enter": [
+    "toad:at:500,520",
+    "toad:look:idle",
+    "toad:to:left",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "그때 두꺼비가 폴짝 나타났어요. \"내가 구멍을 막아 줄게!\"",
+     "src": "reuse",
+     "en": "Then a toad hopped over. I will plug the hole!",
+     "segs": [
+      [
+       "nar",
+       "Then a toad hopped over."
+      ],
+      [
+       "toad",
+       "I will plug the hole!"
+      ]
+     ],
+     "before": [
+      "toad:hop"
+     ]
+    },
+    {
+     "text": "두꺼비가 구멍에 쏙! 이제 물이 새지 않아요.",
+     "src": "reuse",
+     "en": "The toad slipped into the hole! Now the water does not leak.",
+     "segs": [
+      [
+       "nar",
+       "The toad slipped into the hole! Now the water does not leak."
+      ]
+     ],
+     "before": [
+      "cut:toad"
+     ]
+    },
+    {
+     "text": "콩쥐는 다시 물을 콸콸 부었어요. 독이 찰랑찰랑 차올랐지요.",
+     "src": "new",
+     "en": "Kongjwi poured the water again, glug, glug. The jar filled up, slosh, slosh, to the brim.",
+     "segs": [
+      [
+       "nar",
+       "Kongjwi poured the water again, glug, glug. The jar filled up, slosh, slosh, to the brim."
+      ]
+     ],
+     "before": [
+      "set:well",
+      "kong:look:pour",
+      "pail:pour:3"
+     ],
+     "after": [
+      "jar:full"
+     ]
+    },
+    {
+     "text": "독이 물로 가득 찼어요. \"고마워, 두꺼비야!\"",
+     "src": "reuse",
+     "en": "The jar was full of water. Thank you, toad!",
+     "segs": [
+      [
+       "nar",
+       "The jar was full of water."
+      ],
+      [
+       "kong",
+       "Thank you, toad!"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_mat",
+   "card": "The Straw Mat",
+   "set": "mat",
+   "enter": [
+    "kong:at:390,505",
+    "kong:look:sweep",
+    "kong:to:right",
+    "step:at:740,505",
+    "step:look:order",
+    "step:to:left",
+    "prop:basketY:at:500,535",
+    "prop:basketR:at:590,535",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "\"겉겨를 벗겨서 쌀을 가져오너라!\" 새엄마가 말했어요.",
+     "src": "reuse",
+     "en": "Peel the husks and bring me the rice! said her stepmother.",
+     "segs": [
+      [
+       "step",
+       "Peel the husks and bring me the rice!"
+      ],
+      [
+       "nar",
+       "said her stepmother."
+      ]
+     ]
+    },
+    {
+     "text": "곡식이 너무 많아서 콩쥐는 걱정이 되었어요.",
+     "src": "reuse",
+     "en": "There was so much grain that Kongjwi felt worried.",
+     "segs": [
+      [
+       "nar",
+       "There was so much grain that Kongjwi felt worried."
+      ]
+     ]
+    },
+    {
+     "text": "그때 참새들이 날아왔어요. \"짹짹! 우리가 도와줄게!\"",
+     "src": "reuse",
+     "en": "Then sparrows flew in. Tweet tweet! We will help!",
+     "segs": [
+      [
+       "nar",
+       "Then sparrows flew in."
+      ],
+      [
+       "sparrow",
+       "Tweet tweet! We will help!"
+      ]
+     ],
+     "before": [
+      "flock:at:500,330",
+      "flock:fade"
+     ],
+     "after": [
+      "cut:sparrows"
+     ]
+    },
+    {
+     "text": "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요.",
+     "src": "trim",
+     "from": "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!",
+     "en": "The sparrows pecked and peeled the husks.",
+     "segs": [
+      [
+       "nar",
+       "The sparrows pecked and peeled the husks."
+      ]
+     ],
+     "before": [
+      "sparrows:peck:5"
+     ]
+    },
+    {
+     "text": "짹짹, 콕콕! 쌀이 금방 하얗게 되었어요.",
+     "src": "new",
+     "en": "Tweet, tweet, peck, peck! The rice soon turned snowy white.",
+     "segs": [
+      [
+       "nar",
+       "Tweet, tweet, peck, peck! The rice soon turned snowy white."
+      ]
+     ]
+    },
+    {
+     "text": "\"고마워, 참새들아!\" 콩쥐는 참새들에게 손을 흔들었어요.",
+     "src": "new",
+     "en": "\"Thank you, little sparrows!\" Kongjwi waved to the sparrows as they flew away.",
+     "segs": [
+      [
+       "kong",
+       "Thank you, little sparrows!"
+      ],
+      [
+       "nar",
+       "Kongjwi waved to the sparrows as they flew away."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_loom",
+   "card": "The Loom",
+   "set": "loom",
+   "enter": [
+    "kong:at:520,505",
+    "kong:look:loom",
+    "kong:to:right",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.",
+     "src": "reuse",
+     "en": "Now Kongjwi had to weave cloth. She wove very hard.",
+     "segs": [
+      [
+       "nar",
+       "Now Kongjwi had to weave cloth. She wove very hard."
+      ]
+     ]
+    },
+    {
+     "text": "찰칵찰칵, 베틀 소리가 밤늦도록 이어졌지요.",
+     "src": "new",
+     "en": "Clack, clack, clack, the loom sang on late into the night.",
+     "segs": [
+      [
+       "nar",
+       "Clack, clack, clack, the loom sang on late into the night."
+      ]
+     ]
+    },
+    {
+     "text": "그때 하늘에서 선녀가 내려왔어요. \"착한 콩쥐야, 선물을 줄게!\"",
+     "src": "reuse",
+     "en": "Then a fairy came down from the sky. Kind Kongjwi, I have a gift for you!",
+     "segs": [
+      [
+       "nar",
+       "Then a fairy came down from the sky."
+      ],
+      [
+       "fairy",
+       "Kind Kongjwi, I have a gift for you!"
+      ]
+     ],
+     "before": [
+      "fairy:at:640,400",
+      "fairy:look:float",
+      "fairy:fade",
+      "fx:sparkle"
+     ],
+     "after": [
+      "cut:fairy"
+     ]
+    },
+    {
+     "text": "콩쥐는 곱디고운 옷과 나비 꽃신을 받았어요. \"고맙습니다, 선녀님!\"",
+     "src": "reuse",
+     "en": "Kongjwi got a beautiful dress and butterfly shoes. Thank you, fairy!",
+     "segs": [
+      [
+       "nar",
+       "Kongjwi got a beautiful dress and butterfly shoes."
+      ],
+      [
+       "kong",
+       "Thank you, fairy!"
+      ]
+     ],
+     "before": [
+      "kong:look:shoes",
+      "fairy:look:give"
+     ]
+    },
+    {
+     "text": "꽃신은 반짝반짝, 나비가 팔랑팔랑 날아갈 것만 같았어요.",
+     "src": "new",
+     "en": "The shoes sparkled and shone, and the butterflies on them looked ready to flutter away.",
+     "segs": [
+      [
+       "nar",
+       "The shoes sparkled and shone, and the butterflies on them looked ready to flutter away."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_stream",
+   "card": "The Stream",
+   "set": "stream",
+   "enter": [
+    "kong:at:370,505",
+    "kong:look:shoes",
+    "kong:to:right",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "콩쥐는 잔치에 가려고 개울을 건너기로 했어요.",
+     "src": "trim",
+     "from": "콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!",
+     "en": "Kongjwi crossed the stream to go to the feast.",
+     "segs": [
+      [
+       "nar",
+       "Kongjwi crossed the stream to go to the feast."
+      ]
+     ]
+    },
+    {
+     "text": "징검다리를 폴짝, 폴짝, 폴짝! 개울물은 졸졸 흘렀어요.",
+     "src": "new",
+     "en": "Hop, hop, hop across the stepping stones! The stream trickled and babbled along.",
+     "segs": [
+      [
+       "nar",
+       "Hop, hop, hop across the stepping stones! The stream trickled and babbled along."
+      ]
+     ],
+     "before": [
+      "kong:cross:4"
+     ],
+     "after": [
+      "cut:splash"
+     ]
+    },
+    {
+     "text": "풍덩! 꽃신 한 짝이 개울에 빠졌어요. 꽃신은 둥둥 떠내려갔어요.",
+     "src": "reuse",
+     "en": "Splash! One shoe fell into the stream and floated away.",
+     "segs": [
+      [
+       "nar",
+       "Splash! One shoe fell into the stream and floated away."
+      ]
+     ],
+     "before": [
+      "fx:splash"
+     ],
+     "after": [
+      "shoe:drift"
+     ]
+    },
+    {
+     "text": "콩쥐는 아쉬웠지만 한 짝만 신고 잔치로 갔어요.",
+     "src": "reuse",
+     "en": "Kongjwi felt sad, but she went to the feast with one shoe.",
+     "segs": [
+      [
+       "nar",
+       "Kongjwi felt sad, but she went to the feast with one shoe."
+      ]
+     ],
+     "after": [
+      "kong:walk:1200,505"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_feast",
+   "card": "The Feast",
+   "set": "feast",
+   "enter": [
+    "step:at:410,490",
+    "step:look:dressed",
+    "pat:at:500,490",
+    "pat:look:dressed",
+    "kong:at:590,490",
+    "kong:look:shoes",
+    "kong:to:left",
+    "prop:drum:at:400,560",
+    "prop:buk:at:500,560",
+    "prop:gong:at:600,560",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "잔치에서는 북과 장구와 꽹과리 소리가 울렸어요.",
+     "src": "trim",
+     "from": "잔치에서는 북과 장구와 꽹과리 소리가 울렸어요. 북을 톡 눌러 봐요!",
+     "en": "At the feast, drums and gongs rang out.",
+     "segs": [
+      [
+       "nar",
+       "At the feast, drums and gongs rang out."
+      ]
+     ],
+     "before": [
+      "fx:drum",
+      "pop:400,330,둥!",
+      "fx:gong",
+      "pop:600,330,꽹!"
+     ]
+    },
+    {
+     "text": "둥둥! 덩덩! 꽹꽹! 어깨가 절로 들썩들썩했지요.",
+     "src": "new",
+     "en": "Boom, boom! Dung, dung! Clang, clang! Everyone's shoulders bounced along to the beat.",
+     "segs": [
+      [
+       "nar",
+       "Boom, boom! Dung, dung! Clang, clang! Everyone's shoulders bounced along to the beat."
+      ]
+     ]
+    },
+    {
+     "text": "모두 신나게 춤을 추었어요. 새엄마와 팥쥐도 곱게 차려입고 왔어요.",
+     "src": "reuse",
+     "en": "Everyone danced happily. Her stepmother and Patjwi came in fancy clothes too.",
+     "segs": [
+      [
+       "nar",
+       "Everyone danced happily. Her stepmother and Patjwi came in fancy clothes too."
+      ]
+     ],
+     "after": [
+      "cut:shy"
+     ]
+    },
+    {
+     "text": "콩쥐를 본 새엄마와 팥쥐는 부끄러워서 부채로 얼굴을 가렸어요.",
+     "src": "reuse",
+     "en": "When they saw Kongjwi, her stepmother and Patjwi felt shy and hid their faces behind fans.",
+     "segs": [
+      [
+       "nar",
+       "When they saw Kongjwi, her stepmother and Patjwi felt shy and hid their faces behind fans."
+      ]
+     ],
+     "before": [
+      "step:look:shy",
+      "pat:look:shy"
+     ]
+    },
+    {
+     "text": "\"어머, 저게 콩쥐라고?\" 팥쥐는 부채 뒤에서 눈만 빼꼼 내밀었어요.",
+     "src": "new",
+     "en": "\"What? That is Kongjwi?\" Patjwi peeked out from behind her fan with just her eyes.",
+     "segs": [
+      [
+       "pat",
+       "What? That is Kongjwi?"
+      ],
+      [
+       "nar",
+       "Patjwi peeked out from behind her fan with just her eyes."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_office",
+   "card": "The Magistrate's House",
+   "set": "office",
+   "enter": [
+    "won:at:480,505",
+    "won:look:shoe",
+    "won:to:right",
+    "prop:shoeP:at:380,545",
+    "prop:shoeB:at:500,545",
+    "prop:shoeM:at:620,545",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "개울에 빠진 꽃신은 원님에게 닿았어요. \"이 꽃신의 주인을 찾아요!\"",
+     "src": "reuse",
+     "en": "The lost shoe reached the magistrate. Let's find who owns this shoe!",
+     "segs": [
+      [
+       "nar",
+       "The lost shoe reached the magistrate."
+      ],
+      [
+       "won",
+       "Let's find who owns this shoe!"
+      ]
+     ]
+    },
+    {
+     "text": "마을 처녀들이 줄줄이 와서 꽃신을 신어 보았지만, 아무에게도 맞지 않았어요.",
+     "src": "new",
+     "en": "The village girls lined up one by one to try the shoe, but it fit no one at all.",
+     "segs": [
+      [
+       "nar",
+       "The village girls lined up one by one to try the shoe, but it fit no one at all."
+      ]
+     ]
+    },
+    {
+     "text": "\"꼭 맞는 사람이 있을 거요.\" 원님은 콩쥐에게 꽃신을 내밀었어요.",
+     "src": "new",
+     "en": "\"Someone must fit this shoe.\" The magistrate held the shoe out to Kongjwi.",
+     "segs": [
+      [
+       "won",
+       "Someone must fit this shoe."
+      ],
+      [
+       "nar",
+       "The magistrate held the shoe out to Kongjwi."
+      ]
+     ],
+     "before": [
+      "kong:at:640,505",
+      "kong:look:shoes",
+      "kong:to:left"
+     ]
+    },
+    {
+     "text": "원님이 콩쥐에게 꽃신을 신겨 주었어요. 꼭 맞았어요!",
+     "src": "reuse",
+     "en": "The magistrate put the shoe on Kongjwi. It fit perfectly!",
+     "segs": [
+      [
+       "nar",
+       "The magistrate put the shoe on Kongjwi. It fit perfectly!"
+      ]
+     ],
+     "before": [
+      "shoe:fit",
+      "fx:sparkle",
+      "pop:640,250,꼭 맞아!"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_wedding",
+   "card": "The Wedding",
+   "set": "wedding",
+   "enter": [
+    "kong:at:482,505",
+    "kong:look:bride",
+    "kong:to:left",
+    "won:at:407,505",
+    "won:look:stand",
+    "won:to:right",
+    "step:at:557,505",
+    "step:look:shy",
+    "pat:at:622,505",
+    "pat:look:shy",
+    "prop:cakes:at:500,548",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "콩쥐와 원님은 혼례를 올렸어요. 콩쥐는 곱게 차린 신부가 되었어요.",
+     "src": "reuse",
+     "en": "Kongjwi and the magistrate got married. Kongjwi became a lovely bride.",
+     "segs": [
+      [
+       "nar",
+       "Kongjwi and the magistrate got married. Kongjwi became a lovely bride."
+      ]
+     ]
+    },
+    {
+     "text": "\"콩쥐야, 그동안 미안했어.\" 새엄마와 팥쥐가 고개를 숙였어요.",
+     "src": "reuse",
+     "en": "Kongjwi, I am sorry for everything. Her stepmother and Patjwi bowed their heads.",
+     "segs": [
+      [
+       "step",
+       "Kongjwi, I am sorry for everything."
+      ],
+      [
+       "nar",
+       "Her stepmother and Patjwi bowed their heads."
+      ]
+     ]
+    },
+    {
+     "text": "콩쥐는 웃으며 말했어요. \"괜찮아요. 우리 같이 지내요.\"",
+     "src": "reuse",
+     "en": "Kongjwi smiled and said, It's okay. Let's live together.",
+     "segs": [
+      [
+       "nar",
+       "Kongjwi smiled and said,"
+      ],
+      [
+       "kong",
+       "It's okay. Let's live together."
+      ]
+     ]
+    },
+    {
+     "text": "모두 함께 떡을 나눠 먹어요.",
+     "src": "reuse",
+     "en": "Everyone shares rice cakes.",
+     "segs": [
+      [
+       "nar",
+       "Everyone shares rice cakes."
+      ]
+     ],
+     "before": [
+      "pop:500,330,냠냠!"
+     ]
+    },
+    {
+     "text": "쫀득쫀득 떡을 냠냠, 웃음소리가 하하 호호 울려 퍼졌어요.",
+     "src": "new",
+     "en": "Chewy rice cakes, yum, yum, and laughter rang out, ha ha, ho ho.",
+     "segs": [
+      [
+       "nar",
+       "Chewy rice cakes, yum, yum, and laughter rang out, ha ha, ho ho."
+      ]
+     ]
+    },
+    {
+     "text": "모두 둘러앉아 맛있게 먹었어요.",
+     "src": "trim",
+     "from": "모두 둘러앉아 맛있게 먹었어요. 콩쥐를 톡! 모두 함께 만세!",
+     "en": "Everyone sat around and ate happily.",
+     "segs": [
+      [
+       "nar",
+       "Everyone sat around and ate happily."
+      ]
+     ]
+    },
+    {
+     "text": "착한 마음은 도움을 불러와요. 콩쥐팥쥐 이야기는 이렇게 끝났어요.",
+     "src": "reuse",
+     "en": "A kind heart brings help. And that is how the story of Kongjwi and Patjwi ended.",
+     "segs": [
+      [
+       "nar",
+       "A kind heart brings help. And that is how the story of Kongjwi and Patjwi ended."
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
