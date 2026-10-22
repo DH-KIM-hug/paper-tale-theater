@@ -73,7 +73,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `sfx/doop.mp3` | Cute doop.ogg | stephan | Public domain | https://commons.wikimedia.org/wiki/File:Cute_doop.ogg |
 | `sfx/cheer.mp3` | "Applause, small audience"(박수만 2.3초, 목소리 없음) | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/applause-small-audience-97257/ |
 | `sfx/chomp.mp3 · `sfx/chomp_2.mp3` | "Munching Food"(냠냠 1.2초) · "Biting an Apple 3" | freesound_community · XpMonster | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/munching-food-73994/ · https://pixabay.com/ko/sound-effects/biting-an-apple-3-595362/ |
-| `sfx/chomp_3.mp3` | 직접 만든 소리 — ElevenLabs 효과음 생성(만화풍 냠냠·앙 1.15초, 목소리 없음) | 팥죽 게임 | 직접 만든 소리(ElevenLabs 효과음 생성) | — |
+| `sfx/chomp_3.mp3` | 직접 만든 소리 — ElevenLabs 효과음 생성(아이가 부드러운 빵을 두세 번 냠냠 씹는 소리 1.2초, 목소리 없음) | 팥죽 게임 | 직접 만든 소리(ElevenLabs 효과음 생성) | — |
 | `sfx/crunch.mp3 · `sfx/crunch_2.mp3` | "Chip Crunch Bite 2" · "Chip Crunch Bite 1" (와작와작, 각 1초) | AppleHillStudios | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/chip-crunch-bite-2-543566/ · https://pixabay.com/ko/sound-effects/chip-crunch-bite-1-543565/ |
 | `sfx/gulp.mp3 · `sfx/gulp_2.mp3 · `sfx/gulp_3.mp3` | Pixabay "Gulp"(103200 앞부분) · "gulps"(91631 두 곳) — 꿀꺽 한 번씩 0.6~0.7초 | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/gulp-103200/ · https://pixabay.com/ko/sound-effects/gulps-91631/ |
 | `sfx/cymbal.mp3` | Pixabay "Crash Cymbal Hit" (처음 1.58초, 끝 페이드아웃) | Universfield | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/crash-cymbal-hit-140577/ |
