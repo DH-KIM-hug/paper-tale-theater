@@ -247,7 +247,7 @@
     crane: { name: '두루미', draw: drawCrane, scale: 1.05 },
     fox: { name: '여우', draw: drawFox, scale: 1.05 },
     duck: { name: '오리', draw: drawDuck, scale: 1.25 },
-    butterfly: { name: '나비', draw: drawButterfly, scale: 1.3 },
+    butterfly: { name: '나비', draw: drawButterfly, scale: .85 }, // 2026-10-24 사용자 결정: 1.3 은 두루미만큼 커 보여 작은 나비로(모든 장면 같은 크기)
   };
   function guest(T, parent, key, x, y, scale) {
     let parts;
@@ -636,7 +636,7 @@
         P.duck = guest(T, gL, 'duck', 85, PF, 1.2); P.duck.face('right');
         P.fox = guest(T, gL, 'fox', 385, PF, 1.1); P.fox.face('right');
         P.crane = guest(T, gL, 'crane', 725 + (PF - 400) * .5, PF, 1.1);
-        P.butterfly = guest(T, gL, 'butterfly', 915, 340, 1.3);
+        P.butterfly = guest(T, gL, 'butterfly', 870, 345);
         feastTable(T, tL);
         D.duck = dish(T, dL, 'bowl', 180, 404, .9); D.fox = dish(T, dL, 'plate', 505, 404, .9);
         D.crane = dish(T, dL, 'bottle', 612, 404, .95); D.butterfly = dish(T, dL, 'flower', 840, 404, 1);
@@ -1152,7 +1152,7 @@
       party.duck = guest(T, gL, 'duck', 85, PF, 1.2); party.duck.face('right');
       party.fox = guest(T, gL, 'fox', 385, PF, 1.1); party.fox.face('right');
       party.crane = guest(T, gL, 'crane', 725 + (PF - 400) * .5, PF, 1.1);
-      party.butterfly = guest(T, gL, 'butterfly', 915, 340, 1.3);
+      party.butterfly = guest(T, gL, 'butterfly', 870, 345); // 꽃 바로 위에서 날갯짓(작은 나비, GUESTS 크기)
       feastTable(T, tL);
       plates.duck = dish(T, dL, 'bowl', 180, 404, .9);
       plates.fox = dish(T, dL, 'plate', 505, 404, .9);
