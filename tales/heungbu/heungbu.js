@@ -9,7 +9,12 @@
     hwife: .4429, hwife_joy: .4573, nol_proud: .5551, nol_shake: .8046, nol_wrap: .9382, nol_saw: 1.0143, nol_ouch: .6929, nol_mud: .961,
     nol_shy: .6321, nwife: .7027, nwife_smile: .7335, swallow_fly: 1.1971, swallow_hurt: 1.136, swallow_band: 1.2842, swallow_seed: 1.2057,
     chicks: 1.2811, chick_fall: 1.2373, gourd: .5963, gourd_open: 1.0704, rice: .9294, treasure: 1.2652, seed: .9284, vine: .5342,
+    /* 층 소품(VISUAL_PLAN §3~§6, 2026-10-23) */
+    layer_blossom_branch: 1.0133, layer_petal: .7417, layer_grass_front: 1.1683, layer_rapeseed: .8683, layer_pine_branch: 1.0967, layer_jars: 1.5929,
+    layer_persimmon_branch: 1.0367, layer_leaf_sil: .9583, layer_tree_sil: .98, layer_reeds_sil: 1.2517, layer_grass_sil: 1.085, layer_vine_sil: 2.2785,
   };
+  /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 set:<키> 포함)는 그대로, 그림만 v2·라이트박스. 둥지·부엌문·초가·대문·기와집 자리는 원본과 같다(겹쳐 확인) */
+  const BGS = { sky_spring: 'sky_spring_v2', nolkitchen: 'nolkitchen_v2', eaves: 'eaves_v2', yard: 'yard_v2', sky_autumn: 'sky_autumn_lb', nol_eaves: 'nol_eaves_v2', nolyard: 'nolyard_v2', giwa: 'giwa_v2' };
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const GROUND = 500;
   const NUM = ['하나!', '둘!', '셋!'];
@@ -26,10 +31,96 @@
     const sfx = n => { try { AudioFX.sfx(n); } catch (e) { /* 소리 없이도 진행 */ } };
     const cut = (k, s = 'pop', hold = 3200) => T.cutImage([{ src: U('cut_' + k), sfx: s, hold }], { hold });
 
+    /* 층 소품: 누름 없음. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위). (cx, y) = 가운데·발끝, top 이면 윗변 */
+    const L = {};
+    const still = () => T.reading() && T.readInstant();
+    function layer(k, cx, y, h, { front = true, flip = false, top = false, name } = {}) {
+      const w = h * AR['layer_' + k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+      if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+      const inner = T.el('g', { filter: 'url(#pp)' }, g);
+      T.el('image', { href: U('layer_' + k), x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+      inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+      if (name) L[name] = inner;
+      return inner;
+    }
+    const sway = (g, deg, ms, delay = 0) => { if (!still()) g.animate([{ rotate: `${-deg}deg` }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }], { duration: ms, delay, iterations: Infinity, easing: 'ease-in-out' }); return g; };
+    const wig = (name, deg = 3, ms = 500) => { const g = L[name]; if (g && g.isConnected) g.animate([{ rotate: '0deg' }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }, { rotate: '0deg' }], { duration: ms, composite: 'add' }); };
+    /* 꽃잎·단풍잎 낙하(사인 곡선, 회전). 작아서 얼굴을 지나도 괜찮다 */
+    function falling(k, n, h, { loop = true, x0 = 0, x1 = 1000 } = {}) {
+      if (still()) return;
+      for (let i = 0; i < n; i++) {
+        const x = x0 + Math.random() * (x1 - x0), w = h * AR['layer_' + k], d = 6000 + Math.random() * 4000;
+        const g = T.el('g', { style: 'pointer-events:none' }, T.fx);
+        T.el('image', { href: U('layer_' + k), x: -w / 2, y: -h / 2, width: w, height: h }, g);
+        const sx = (i % 2 ? 1 : -1) * (30 + Math.random() * 10);
+        const a = g.animate([0, .25, .5, .75, 1].map((t, j) => ({ transform: `translate(${x + (j % 2 ? sx : 0) + t * 80}px, ${-40 + t * 640}px) rotate(${t * 360}deg)` })),
+          { duration: d, delay: loop ? Math.random() * d : i * 150, iterations: loop ? Infinity : 1, easing: 'linear' });
+        if (!loop) a.onfinish = () => g.remove();
+      }
+    }
+    /* 빛 점(라이트박스 하늘): 작은 크림 원이 깜빡 */
+    function lightDots(n, [x0, x1, y0, y1]) {
+      for (let i = 0; i < n; i++) {
+        const x = x0 + Math.random() * (x1 - x0), y = y0 + Math.random() * (y1 - y0), r = 3 + Math.random() * 2;
+        const g = T.el('g', { style: 'pointer-events:none' }, T.fx);
+        T.el('circle', { cx: x, cy: y, r: r + 3, fill: '#FBE8A6', opacity: .5 }, g); T.el('circle', { cx: x, cy: y, r, fill: '#FFF4CC' }, g);
+        if (!still()) g.animate([{ opacity: .2 }, { opacity: 1 }, { opacity: .2 }], { duration: 1400 + Math.random() * 1200, delay: Math.random() * 1000, iterations: Infinity });
+      }
+    }
+    /* 어두운 막을 깔았다가 걷는다(종이 뒤 불이 켜지는 느낌) */
+    function tint(o, ms) {
+      if (still()) return;
+      const r = T.el('rect', { x: -1400, y: -1400, width: 3800, height: 3800, fill: '#2E241C', opacity: o, style: 'pointer-events:none' }, T.fx);
+      r.animate([{ opacity: o }, { opacity: 0 }], { duration: ms, fill: 'forwards' }).onfinish = () => r.remove();
+    }
+    let spring2 = false;   // 6장(이듬해 봄): 제비가 지나가므로 벚꽃 가지를 더 위로
+    function dress(key) {
+      if (key === 'sky_spring') {
+        const y = spring2 ? -60 : -24;
+        sway(layer('blossom_branch', P ? 290 : 80, y, 180, { top: true, name: 'blossomL' }), 1, 8000);
+        sway(layer('blossom_branch', P ? 710 : 920, y, 180, { top: true, flip: true }), 1, 8000, 2000);
+        if (!P) { layer('grass_front', 60, 600, 90); layer('grass_front', 940, 600, 90, { flip: true }); }
+        falling('petal', 8, 22);
+      }
+      if (key === 'nolkitchen') { if (!P) layer('jars', 880, 520, 150, { front: false }); layer('pine_branch', P ? 715 : 930, P ? -40 : -24, 200, { top: true, name: 'pine' }); layer('grass_front', 40, 600, 90); }
+      if (key === 'eaves') { layer('rapeseed', 50, 600, 110, { name: 'rapeL' }); layer('rapeseed', 950, 600, 110, { flip: true, name: 'rape' }); }
+      if (key === 'yard') { layer('persimmon_branch', 940, -24, 170, { top: true, name: 'persimmon' }); layer('grass_front', 40, 600, 90, { name: 'grassF' }); }
+      if (key === 'sky_autumn') {
+        if (!P) layer('tree_sil', 40, 585, 420);
+        [180, 500, 820].forEach((x, i) => { const r = layer('reeds_sil', x, 600, 120, { flip: i === 1 }); if (!still()) r.animate([{ translate: '-6px 0' }, { translate: '6px 0' }, { translate: '-6px 0' }], { duration: 5000, delay: i * 700, iterations: Infinity, easing: 'ease-in-out' }); });
+        falling('leaf_sil', 6, 26, { x0: 0, x1: 700 });
+        tint(.35, 600); lightDots(12, [520, 1000, 30, 130]);
+      }
+      if (key === 'nol_eaves') { layer('pine_branch', P ? 290 : 60, P ? -40 : -24, 200, { top: true, flip: true, name: 'pine' }); if (!P) layer('jars', 120, 520, 150, { front: false }); }
+      if (key === 'nolyard') { layer('pine_branch', P ? 710 : 930, P ? -40 : -24, 200, { top: true, name: 'pine' }); layer('grass_front', 40, 600, 90); }
+      if (key === 'giwa') {
+        layer('blossom_branch', P ? 290 : 80, -24, 180, { top: true });
+        if (!P) layer('blossom_branch', 920, -24, 180, { top: true, flip: true });
+        layer('grass_front', 40, 600, 90); layer('grass_front', 960, 600, 90, { flip: true });
+        falling('petal', 6, 22);
+      }
+    }
     function scene(key, cx = 500) {
-      T.clear();
-      T.el('image', { href: U('bg_' + key), x: BG.x, y: BG.y, width: BG.w, height: BG.h, preserveAspectRatio: 'none' }, T.bg);
+      T.clear(); L.lb = null;
+      L.bg = T.el('image', { href: U('bg_' + (BGS[key] || key)), x: BG.x, y: BG.y, width: BG.w, height: BG.h, preserveAspectRatio: 'none' }, T.bg);
+      dress(key);
       pan(cx);
+    }
+    /* 7장 첫 박을 타는 순간: 낮 마당 → 금빛 라이트박스(같은 구도). 감 가지·풀 포기는 걷고 넝쿨·풀 실루엣을 건다 */
+    function toLightbox() {
+      if (!L.bg || !L.bg.isConnected || L.lb) return;
+      const old = L.bg, lb = T.el('image', { href: U('bg_yard_lb'), x: BG.x, y: BG.y, width: BG.w, height: BG.h, preserveAspectRatio: 'none', opacity: 0 }, T.bg);
+      old.after(lb); L.lb = lb;
+      const quick = still();
+      tint(.3, 900);
+      if (quick) { lb.setAttribute('opacity', 1); old.remove(); }
+      else lb.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, fill: 'forwards' }).onfinish = () => { lb.setAttribute('opacity', 1); old.remove(); };
+      [L.persimmon, L.grassF].forEach(g => { if (g) { if (quick) g.remove(); else g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' }); } });
+      const add = [sway(layer('vine_sil', 500, -24, 150, { top: true }), .5, 9000)];
+      if (!P) add.push(layer('grass_sil', 25, 600, 80), layer('grass_sil', 975, 600, 80, { flip: true }));
+      if (!quick) add.forEach(g => g.animate([{ opacity: 0 }, { opacity: 1 }], 600));
+      lightDots(8, [460, 1000, 30, 200]);
+      if (!P && !quick) T.camTo(560, 300, 1.06, 900).then(() => T.camTo(500, 280, 1, 1400));
     }
     /* 누르는 대상이 아닌 그림은 누름을 받지 않고(옆 그림이 가리지 않게), 대상은 live() 로 열며 짧은 변 90단위(휴대폰 세로에서도 80px 이상)로 넓힌다 (2026-10-22) */
     const live = (a, w = 90) => {
@@ -50,13 +141,13 @@
       return a;
     }
 
-    await Promise.race([Promise.all(['sky_spring', 'nolkitchen', 'eaves', 'yard', 'sky_autumn', 'nol_eaves', 'nolyard', 'giwa']
-      .map(k => T.preload(U('bg_' + k))).concat(['rice', 'fall', 'bandage2', 'south', 'seedback', 'rice_pour2', 'house2', 'mud2', 'dokkaebi', 'collapse']
+    await Promise.race([Promise.all(['sky_spring', 'nolkitchen', 'eaves', 'yard', 'sky_autumn', 'nol_eaves', 'nolyard', 'giwa', 'yard_lb']
+      .map(k => T.preload(U('bg_' + (BGS[k] || k)))).concat(['rice', 'fall', 'bandage2', 'south', 'seedback', 'rice_pour2', 'house2', 'mud2', 'dokkaebi', 'collapse']
       .map(k => T.preload(U('cut_' + k))))), sleep(4000)]);
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 ================= */
     const READ_ACTS = (() => {
-      let S = {}, gourds = [], sacks = [];
+      let S = {}, gourds = [], sacks = [], seenSpring = false;
       const rI = () => T.readInstant();
       const nums = s => String(s).split(',').map(Number);
       const reset = () => { S = {}; gourds = []; sacks = []; };
@@ -67,7 +158,7 @@
       const gx = i => (S.nol_saw ? cl(620, i, 100) : cl(640, i, 100));
       return {
         set(key) {
-          const go = () => { reset(); scene(key, 500); };
+          const go = () => { reset(); spring2 = key === 'sky_spring' && seenSpring; if (key === 'sky_spring') seenSpring = true; scene(key, 500); };
           if (rI()) { go(); return; }
           return T.sceneCard(CARD[key] || '', go);
         },
@@ -134,6 +225,7 @@
         },
         gourd(op, i) {
           const g = gourds[+i]; if (!g) return;
+          if (+i === 0) toLightbox();
           g.hop(18, 300); const s = sawer(); if (s) s.hop(14, 300); sfx('pop');
           if (+i === 1) sacks.forEach(k => k.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' }));
         },
@@ -184,7 +276,7 @@
     await T.curtain(true);
     await say('옛날 옛날에 마음씨 착한 동생 흥부와 욕심쟁이 형 놀부가 살았어요.');
     await T.ask('흥부를 톡! 눌러서 인사해요.', () => T.tap(live(heung), { prompt: '흥부를 톡! 인사해요.' }));
-    heung.hop(34, 400); sfx('pop'); T.pop(heung.x + 80, heung.y - 390, '안녕!');
+    heung.hop(34, 400); sfx('pop'); T.pop(heung.x + 80, heung.y - 390, '안녕!'); falling('petal', 4, 22, { loop: false });
     await say('흥부는 활짝 웃으며 인사했어요.');
 
     /* 2. 형 집 */
@@ -195,7 +287,7 @@
     const h2 = spr('heung_hello', 400, 320), wife2 = spr('nwife', 640, 330);
     await say('흥부는 배가 고파서 형 집으로 밥을 얻으러 갔어요.');
     await say('형수는 화가 난 얼굴로 말했어요. "밥이 어디 있어요! 저리 가요!"');
-    wife2.hop(16, 300);
+    wife2.hop(16, 300); wig('pine', 2, 300);
     await cut('rice', 'pop', 3600);
     await say('형수가 주걱을 휘두르자 흥부 볼에 밥알이 붙었어요. 흥부는 그 밥알을 맛있게 먹었어요.');
     await say('흥부는 웃으며 말했어요. "괜찮아요. 밥알도 맛있어요!"');
@@ -213,7 +305,7 @@
     /* 강제로 떨어진다: 아이가 아무것도 안 눌러도 둥지에서 굴러떨어져 땅에 아프게 눕는다 */
     const tumble = spr('chick_fall', 493, 90, 120);
     const fell = say('앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!'); /* 말과 동시에 굴러떨어진다 */
-    sfx('pow'); await tumble.move(fx(560), 470, 800, 'ease-in'); tumble.hop(10, 300);
+    sfx('pow'); wig('rape', 3, 400); await tumble.move(fx(560), 470, 800, 'ease-in'); tumble.hop(10, 300);
     T.pop(tumble.x, tumble.y - 140, '아야!');
     const tshiv = setInterval(() => tumble.hop(5, 220), 800); await sleep(1400); clearInterval(tshiv);
     await fell;
@@ -236,14 +328,14 @@
     await cut('south', 'pop', 3200);
 
     /* 5. 이듬해 봄, 박씨 */
-    await T.sceneCard('이듬해 봄', () => { scene('sky_spring', 500); });
+    await T.sceneCard('이듬해 봄', () => { spring2 = true; scene('sky_spring', 500); });
     const sw = spr('swallow_seed', -150, 140, 280), hp = spr('heung_plant', 640, 260);
     sw.face('right'); // seed 그림은 왼쪽이 기본 → 오른쪽으로 날아가므로 뒤집는다
     await sw.move(fx(380), 280, 1300, 'ease-out'); /* 날아와서 머문다 */
     await say('봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.');
     await cut('seedback', 'pop', 3200);
     const seed = spr('seed', 380, 70, 280); seed.place(sw.x, 280);
-    await seed.move(fx(560), 470, 600, 'ease-in'); sfx('ding'); sw.hop(16, 300);
+    await seed.move(fx(560), 470, 600, 'ease-in'); sfx('ding'); sw.hop(16, 300); falling('petal', 2, 22, { loop: false });
     sw.move(1150, 160, 1600, 'ease-in'); /* 박씨를 주고 날아간다 */
     await say('흥부는 박씨를 마당에 심었어요.');
     for (let i = 1; i <= 3; i++) { /* 저절로 물을 줘요 (2026-10-20 톡 조작 정리) */
@@ -265,6 +357,7 @@
       g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, word);
     };
     await open(gourds[0], '슬근슬근!', '흥부 부부는 톱으로 박을 탔어요. 박을 톡! 눌러서 슬근슬근 타 봐요.');
+    toLightbox();
     const autoOpen1 = async g => { await sleep(500); g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
     await cut('rice_pour2', 'pop', 3600);
     await say('첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.');
@@ -289,7 +382,7 @@
     const nol = spr('nol_proud', 400, 330), nw = spr('nwife', 620, 320);
     await say('소문을 들은 놀부는 배가 아팠어요. "나도 부자가 될 거야!"');
     await say('놀부는 제비집을 마구 흔들었어요. 아기 제비가 떨어졌어요!');
-    nol.set('nol_shake'); nol.hop(18, 300);
+    nol.set('nol_shake'); nol.hop(18, 300); wig('pine', 4, 500);
     const chick2 = spr('chick_fall', 720, 120, -30);
     await chick2.move(fx(720), 480, 650, 'ease-in'); chick2.hop(10, 300);
     await sleep(500); /* 저절로 받아 줘요 */
@@ -318,7 +411,7 @@
     await cut('dokkaebi', 'pow', 3400);
     await say('이번에는 방망이를 든 도깨비가 쑥 나왔어요. "이 욕심쟁이야!" 도깨비는 놀부를 놀라게 하고 사라졌어요.');
     await autoOpen(ng[2]);
-    await cut('collapse', 'crash', 3600);
+    await cut('collapse', 'crash', 3600); wig('pine', 6, 600);
     await say('와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.');
 
     /* 8. 화해와 나눔 */
@@ -336,7 +429,7 @@
     }
     await say('쌀자루가 하나, 둘, 셋! 놀부는 눈물이 핑 돌았어요.');
     await T.ask('흥부를 톡! 눌러서 모두 함께 만세!', () => T.tap(live(hg), { prompt: '흥부를 톡! 모두 만세!' }));
-    T.confetti();
+    T.confetti(); falling('petal', 6, 22, { loop: false });
     await Promise.all([hg.hop(40, 500), hj.hop(30, 500), ns2.hop(30, 500)]);
     await say('흥부와 놀부는 그 뒤로 사이좋게 오래오래 살았대요. 착한 마음은 복이 되어 돌아와요.');
     T.finale();
