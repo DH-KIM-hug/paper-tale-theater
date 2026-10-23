@@ -12,8 +12,23 @@
      배경은 장면마다 한 장을 무대에 꽉 채워 깐다. 순무 앞 흙(soilFront)은 같은 배경 그림을 아래쪽만 오려 앞에 한 번 더 깐다 → 이음매가 없다. */
   const AS = '../../assets/';
   const BG = {
-    garden: 'v3w/tn_bg_garden.webp', lowangle: 'v3w/tn_bg_lowangle.webp', door: 'v3w/tn_bg_door.webp', fence: 'v3w/tn_bg_fence.webp',
-    barn: 'v3w/tn_bg_barn.webp', mouse: 'v3w/tn_bg_mouse.webp', feast: 'v3w/tn_bg_feast.webp',
+    /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): v2 7장. 흙선·문·헛간 지붕선·쥐구멍은 옛 그림과 겹쳐 같은 자리라 좌표 그대로.
+       울타리 v2 는 가운데 빈 벽판을 울타리로 이었다(덤불이 그 앞을 가린다) */
+    garden: 'v3w/tn_bg_garden_v2.webp', lowangle: 'v3w/tn_bg_lowangle_v2.webp', door: 'v3w/tn_bg_door_v2.webp', fence: 'v3w/tn_bg_fence_v2.webp',
+    barn: 'v3w/tn_bg_barn_v2.webp', mouse: 'v3w/tn_bg_mouse_v2.webp', feast: 'v3w/tn_bg_feast_v2.webp',
+  };
+  /* 라이트박스(해 질 녘 텃밭 = 여섯이 다 함께 마지막 당기기, 잔치 밤 = 다 함께 먹는 끝): 같은 자리의 그림을 위에 겹쳐 1.2초 크로스페이드 */
+  const LB = { garden: 'v3w/tn_lb_garden_dusk.webp', feast: 'v3w/tn_lb_feast_night.webp' };
+  /* 층 소품 tn_layer_*: [이름, 가운데 x, 발끝 y(top 이면 위 끝), 높이, 폭/높이, top, 뒤집기, mid]. mid = 배경 바로 위(배우 뒤), 아니면 근경(배우 앞, 누름 없음).
+     세로 화면 가운데(285~715) 밖. 깃발줄은 그림에 이미 가운데 줄이 있어 양 위 모서리에 */
+  const LAYERS = {
+    garden: [['sunflowers', 950, 470, 260, 1.005, false, false, true], ['grass_front', 30, 590, 90, 1.4033]],
+    lowangle: [['bean_vine_top', 60, -24, 240, .5683, true]],
+    door: [['grass_front', 980, 590, 90, 1.4033, false, true]],
+    fence: [['fence_flowers', 120, 430, 150, 1.1683, false, false, true]],
+    barn: [['pumpkins', 40, 590, 110, 1.2417], ['bunting', 160, -24, 80, 3.629, true], ['bunting', 840, -24, 80, 3.629, true, true]],
+    mouse: [['grass_front', 30, 590, 90, 1.4033]],
+    feast: [['bunting', 160, -24, 80, 3.629, true], ['bunting', 840, -24, 80, 3.629, true, true], ['pumpkins', 980, 590, 110, 1.2417, false, true]],
   };
   /* 배우·소품·컷 (인물·동물은 모두 왼쪽을 본다)
      - 인물 6명 × (stand·pull·fall·cheer) 24장(2026-10, tn2_*): pull은 두 팔(앞발)을 앞으로 뻗은 빈손 — 앞사람 허리에 닿게 LINE_X를 맞췄다. fall=엉덩방아·벌렁, cheer=뽑고 기뻐함. 배지는 stand 그림. 강아지는 크림색에 파란 멜빵
@@ -78,15 +93,37 @@
   const FLIP = {};
   const LOOKS = { grandpa: ['stand', 'pull', 'fall', 'cheer'], grandma: ['stand', 'pull', 'fall', 'cheer'], girl: ['stand', 'pull', 'fall', 'cheer'], dog: ['stand', 'pull', 'fall', 'cheer', 'jump'], cat: ['stand', 'pull', 'fall', 'cheer', 'sit'], mouse: ['stand', 'pull', 'fall', 'cheer'] };
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992) */
-  const BG_EDGE = { garden: ['#9cc5dd', '#664232'], lowangle: ['#74a090', '#5e3a2b'], door: ['#75acd8', '#59673c'], fence: ['#87badc', '#8a9d49'],
-    barn: ['#6cb2d6', '#567038'], mouse: ['#dabe6e', '#cd9666'], feast: ['#f78d5a', '#9a6124'] };
+  const BG_EDGE = { garden: ['#93c4e1', '#754937'], lowangle: ['#76be5a', '#5d3e2d'], door: ['#6cb0e4', '#7d8a42'], fence: ['#7ebce3', '#90a444'],
+    barn: ['#69b5e0', '#53793c'], mouse: ['#fad070', '#d19462'], feast: ['#fb8450', '#d1832c'] };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   function bgImage(T, key) {
     const u = bgUrl(key); if (!u) return null;
     const { x, y, w, h } = BGBOX, [top, bot] = BG_EDGE[key];
     T.el('rect', { x: -1400, y: -1400, width: 3800, height: 1400 + y + h / 2, fill: top }, T.bg);
     T.el('rect', { x: -1400, y: y + h / 2, width: 3800, height: 2000, fill: bot }, T.bg);
-    return T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, T.bg);
+    const im = T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, T.bg);
+    const fg = fgLayer(T); fg.innerHTML = '';
+    (LAYERS[key] || []).forEach(([n, lx, ly, lh, asp, top, flip, mid]) => {
+      const lw = lh * asp, g = T.el('g', { class: mid ? 'tn-mid' : 'tn-front', 'pointer-events': 'none', transform: `translate(${lx} ${ly})${flip ? ' scale(-1 1)' : ''}` }, mid ? T.bg : fg);
+      T.el('image', { href: AS + `v3w/tn_layer_${n}.webp`, x: -lw / 2, y: top ? 0 : -lh, width: lw, height: lh, filter: 'url(#pp)' }, g);
+    });
+    return im;
+  }
+  /* 근경 층: 배우(world) 앞·효과(fx) 뒤, 누름 없음. 장면 그림을 깔 때마다 비운다 */
+  function fgLayer(T) {
+    let g = document.getElementById('tnFg');
+    if (!g || !g.isConnected) { g = T.el('g', { id: 'tnFg', 'pointer-events': 'none' }); T.fx.parentNode.insertBefore(g, T.fx); }
+    return g;
+  }
+  /* 장면 그림(배경·오려 붙인 앞 흙)을 라이트박스로 크로스페이드. 배우 뒤 층 소품(mid)은 함께 걷는다 */
+  function lbFade(T, key, ms = 1200) {
+    const u = bgUrl(key); if (!u || !LB[key]) return;
+    document.querySelectorAll('#cam image').forEach(im => {
+      if (im.getAttribute('href') !== u) return;
+      const n = im.cloneNode(); n.setAttribute('href', AS + LB[key]); im.after(n);
+      if (ms) n.animate([{ opacity: 0 }, { opacity: 1 }], { duration: ms, easing: 'ease-in-out' });
+    });
+    T.bg.querySelectorAll('.tn-mid').forEach(g => { if (ms) g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ms, fill: 'forwards' }); else g.setAttribute('opacity', 0); });
   }
   /* 같은 배경 그림을 y0 아래만 오려 world 맨 위에 깐다 (순무·생쥐가 흙 속에 묻혀 보이게). 아래로 넘친 곳은 바닥 색으로 */
   let clipN = 0;
@@ -731,7 +768,7 @@
         return CAST_OP[op](a, ...args);
       },
       line: n => lineUp(+n),
-      pull: n => pullRead(+n),
+      pull: n => { if (+n === 6 && R.view !== 'lowangle') lbFade(T, 'garden', rInstant() ? 0 : 1200); return pullRead(+n); },
       async grandpa(a) {
         if (a !== 'fall') return;
         const g = cast.grandpa;
@@ -859,6 +896,7 @@
           return;
         }
         if (a === 'eat') {
+          lbFade(T, 'feast', rInstant() ? 0 : 1200);
           line.forEach((m, i) => setTimeout(() => { m.hop(18, 320); T.tone(440 + i * 30, .12, { type: 'triangle', vol: .1 }); }, i * 150));
           T.confetti(); AudioFX.sfx('bell', .5);
           setTimeout(() => { if (R.steam) { clearInterval(R.steam); R.steam = null; } if (R.ui) { R.ui.remove(); R.ui = null; } }, 4000);
@@ -1127,6 +1165,7 @@
     await sleep(400);
 
     /* --- 9. 쑥! (다 함께 톡톡) --- */
+    lbFade(T, 'garden'); // 해 질 녘 라이트박스: 마지막 당기기
     await T.ask('이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!', () => T.mash(turnip.pos, { count: 4, prompt: '순무를 톡톡 눌러요. 영~차!', onStep: i => {
       const p = i / 4;
       line.forEach(a => a.pose(POSE.pull(6 + p * 20)));
@@ -1253,6 +1292,7 @@
     line.forEach((a, i) => setTimeout(() => { a.hop(18, 320); T.tone(440 + i * 30, .12, { type: 'triangle', vol: .1 }); }, i * 150));
     T.pop(500, 230, '냠냠!', C.persimmon);
     T.confetti(); AudioFX.sfx('bell', .5);
+    lbFade(T, 'feast'); // 잔치 밤 라이트박스
     await say('모두 함께 맛있게 먹었답니다.');
     clearInterval(steam); ui.remove();
     return '작은 힘도 모이면 커다란 힘이 돼요!';
