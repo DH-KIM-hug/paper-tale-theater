@@ -39,8 +39,10 @@
      - 쓰지 않는 그림: crane_peck (고개를 바닥까지 숙인 자세 — 이 동화의 접시·병은 높이 있어서 목 돌리기로 대신) */
   const AS = '../../assets/';
   const BG = {
-    forest: 'v3w/fc_bg_forest.webp', kitchen: 'v3w/fc_bg_kitchen.webp', high: 'v3w/fc_bg_high.webp', pondhouse: 'v3w/fc_bg_pondhouse.webp',
-    crane_room: 'v3w/fc_bg_crane_room.webp', feast_day: 'v3w/fc_bg_feast_day.webp', feast_night: 'v3w/fc_bg_feast_night.webp',
+    /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 낮 장면은 다층 v2, 밤 잔치·두루미 집 해 질 녘은 라이트박스(lb). 탁자·창·집·연못 자리는 원본과 같다(겹쳐 확인) */
+    forest: 'v3w/fc_bg_forest_v2.webp', kitchen: 'v3w/fc_bg_kitchen_v2.webp', high: 'v3w/fc_bg_high_v2.webp', pondhouse: 'v3w/fc_bg_pondhouse_v2.webp',
+    crane_room: 'v3w/fc_bg_crane_room_v2.webp', feast_day: 'v3w/fc_bg_feast_day_v2.webp', feast_night: 'v3w/fc_lb_feast_night.webp',
+    pond_dusk: 'v3w/fc_lb_pondhouse_dusk.webp', // 두루미가 "놀러 와~" 부를 때 크로스페이드
   };
   const ART = {
     fox_stand: 'v3w/fc_fox_stand.webp', fox_lick: 'v3w/fc_fox_lick.webp', fox_sorry: 'v3w/fc_fox_sorry.webp', fox_stuck: 'v3w/fc_fox_stuck.webp',
@@ -82,8 +84,15 @@
     return wrap;
   }
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). 그림 밖(세로 화면에서 물러설 때)은 끝 색으로 */
-  const BG_EDGE = { forest: ['#f2e6bf', '#a98e62'], kitchen: ['#d0b078', '#a67a48'], high: ['#efbb70', '#efbb70'], pondhouse: ['#c9e2e6', '#6f8f4a'],
-    crane_room: ['#fdf0c8', '#d6a355'], feast_day: ['#cfe3ea', '#5f7a3a'], feast_night: ['#13204a', '#2d3a22'] };
+  const BG_EDGE = { forest: ['#85b5a6', '#617c4e'], kitchen: ['#763e23', '#7b4833'], high: ['#c6874b', '#d3923a'], pondhouse: ['#8db7cd', '#748446'],
+    crane_room: ['#975d36', '#dea156'], feast_day: ['#98b2ae', '#617347'], feast_night: ['#3e325d', '#936e33'], pond_dusk: ['#9f7690', '#725945'] };
+  /* 층 소품(VISUAL_PLAN §1): 누름 없음. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위). (cx, y) = 가운데·발끝(top 이면 윗변) */
+  const LAYER = { flowers_front: 1.39, herb_bunch: .55, lantern_string: 2.5714, reeds_pond: .6633, bunting: 3.8793, fern_front: 1.2983 };
+  function layer(T, k, cx, y, h, { front = false, flip = false, top = false } = {}) {
+    const w = h * LAYER[k], g = T.el('g', { filter: 'url(#pp)', style: 'pointer-events:none' }, front ? T.fx : T.bg);
+    if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+    return T.el('image', { href: AS + 'v3w/fc_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, g);
+  }
   function bgImage(T, key, { dx = 0, parent, clip } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const w = 1080, h = w * 992 / 1760, x = -40 + dx, y = -24;
@@ -333,7 +342,7 @@
   /* ================= 배경 (장면마다 통판 1장) ================= */
   const sky = (T, fill) => T.el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill }, T.bg);
   function forestBG(T) {
-    if (bgImage(T, 'forest')) return;
+    if (bgImage(T, 'forest')) { layer(T, 'fern_front', 10, 600, 110, { front: true }); layer(T, 'flowers_front', 990, 600, 100, { front: true }); return; }
     const { el, paper } = T, b = T.bg;
     sky(T, C.sky);
     el('circle', { cx: 840, cy: 90, r: 44, fill: '#F6D98A' }, b);
@@ -350,7 +359,7 @@
     [[80, 450], [930, 455], [160, 540], [860, 545]].forEach(([x, y]) => paper(b, [['circle', { cx: x, cy: y, r: 9, fill: C.persimmon }], ['circle', { cx: x, cy: y, r: 4, fill: C.gold }]]));
   }
   function kitchenBG(T) {
-    if (bgImage(T, 'kitchen')) return;
+    if (bgImage(T, 'kitchen')) { layer(T, 'herb_bunch', 560, -24, 140, { top: true }); return; }
     const { el, paper } = T, b = T.bg;
     sky(T, '#3a2519');
     paper(b, [['path', { d: 'M40 600 V210 Q40 30 500 30 Q960 30 960 210 V600 Z', fill: '#8a6344' }]]);
@@ -389,7 +398,7 @@
     return { soup };
   }
   function pondHouseBG(T) {
-    if (bgImage(T, 'pondhouse')) return;
+    if (bgImage(T, 'pondhouse')) { layer(T, 'reeds_pond', 90, 560, 170); return; }
     const { el, paper } = T, b = T.bg;
     sky(T, C.sky);
     el('circle', { cx: 150, cy: 90, r: 40, fill: '#F6D98A' }, b);
@@ -448,7 +457,10 @@
     el('path', { d: 'M420 -200 V800 M580 -200 V800', stroke: C.gold, 'stroke-width': 8 }, b);
   }
   function feastBG(T, night) {
-    if (bgImage(T, night ? 'feast_night' : 'feast_day')) return true; // 밤 그림에는 등불이 그려져 있다
+    if (bgImage(T, night ? 'feast_night' : 'feast_day')) { // 밤 그림(라이트박스)에는 초롱이 구멍으로 있다. 낮: 꽃 덤불 앞 가림(왼쪽 끝, 식탁 다리 쪽)
+      if (!night) layer(T, 'flowers_front', 0, 600, 100, { front: true });
+      return true;
+    }
     const { el, paper } = T, b = T.bg;
     sky(T, night ? C.indigo : C.sky);
     if (night) {
@@ -950,6 +962,8 @@
     }, crane.pos);
     craneCall(T);
     await say('며칠 뒤, 이번엔 두루미가 여우를 불렀어요.');
+    const dusk = bgImage(T, 'pond_dusk', { parent: T.bg }); // 해 질 녘 라이트박스로 천천히 바뀐다(여우가 걸어가는 동안)
+    if (dusk) { dusk.style.opacity = 0; T.bg.insertBefore(dusk, T.bg.querySelector('g') || null); dusk.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1600, fill: 'forwards' }); }
     await say('"여우야, 우리 집에도 놀러 와~"');
     const steps = setInterval(() => sfx(T, 'step_grass', () => T.tone([220, 160], .08, { type: 'triangle', vol: .1 }), .5), 380);
     await fox.move(380, 510, 1800);
