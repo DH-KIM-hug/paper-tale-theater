@@ -740,7 +740,7 @@ const Tale = (() => {
         p.onpointerdown = e => { e.stopPropagation(); p.onpointerdown = null; AudioFX.tap(); clearTimeout(t); setTimeout(res, 200); };
       });
       p.onpointerdown = null;
-      p.firstChild.classList.add('out');
+      if (p.firstChild) p.firstChild.classList.add('out'); // 컷이 겹쳐 열리면(읽어 주기 시간 제한 등) 앞 컷이 이미 비워졌을 수 있다
       await sleep(280);
     }
     p.hidden = true; p.innerHTML = '';
