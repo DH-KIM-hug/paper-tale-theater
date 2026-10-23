@@ -594,15 +594,13 @@
       if (a.setFace) a.setFace('smile');
     };
     const headY = a => a.y - (a === goldi ? 150 : 215) * a.scale;
-    /* 해 질 녘 집 앞 라이트박스(곰 가족이 돌아오는 첫 줄): 곰이 어두운 땅·실루엣에 묻히지 않게 곰 뒤에 반투명 빛 타원(곰과 함께 움직임) */
+    /* 해 질 녘 집 앞 라이트박스(곰 가족이 돌아오는 첫 줄): 곰 뒤 반투명 빛 타원은 떠 있는 노란 원판처럼 보여 뺐다(2026-10-24 사용자 결정, 곰은 밝은 마당 흙 위라 묻히지 않음) */
     let glows8 = [];
     const unglow8 = () => { glows8.forEach(n => n.remove()); glows8 = []; };
     const duskYard = () => {
       T.clear(); unglow8(); doorBG(T, 'door_dusk');
       B.forEach((b, i) => {
         put(b, 1180 + i * 130, 518, SIZE[i] * .8);
-        const e = el('ellipse', { cx: 0, cy: -108, rx: 112, ry: 128, fill: '#F7D77A', opacity: .24, style: 'pointer-events:none' });
-        b.pos.insertBefore(e, b.body); glows8.push(e);
       });
       view();
     };
