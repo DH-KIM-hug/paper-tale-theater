@@ -474,6 +474,10 @@
   }
   /* 그림 숲속 집(2026-10-21 새 그림에서 다시 쟀다 — 집이 작다): 문짝 (439..479, 281..348), 불빛 창 유리 (532..567, 286..322), 집 바닥선 y≈348. 동물·도둑은 이 크기에 맞춰 작게 (문 높이 67 ≈ 당나귀 키) */
   const WIDE = { door: [439, 281, 40, 67], win: [532, 286, 35, 36] };
+  /* 2026-10-24 사용자 결정(빛 상자 검수): 탑이 마당 가운데(발 y 414)에 떠 보여 창 바로 앞 땅선(마당 끝 y≈348, 덤불 앞)으로 옮김.
+     크기는 그대로(.36 = 당나귀 ≈ 문 높이, 도둑 .38 과 같은 잣대 §4-1) — 대신 카메라를 창·문 쪽으로 더 당겨(1.9→2.6, 빈 마당을 덜 보이게) 크게 보이게.
+     닭이 창 유리(y 286~322) 높이에 닿는다. 색종이 동물 그대로: 앞에서 본 넓은 장면이라 노래하는 얼굴이 보여야 하고, 어두운 집 벽 앞 실루엣은 묻힌다 */
+  const HW_T = { x: 540, y: 366, s: .36 }, HW_CAM = [524, 302, 2.6];
   function houseWideBG(T) {
     const { paper, el } = T, b = T.bg;
     if (bgImage(T, 'house_wide')) {
@@ -708,14 +712,14 @@
       const TCX = bgArt('house_low') ? L(500, 650) : 500;
       const WAIT_W = { donkey: 200, dog: 125, cat: 100, rooster: 95 };
       const WTS = bgArt('house_wide') ? .36 : .72;
-      const WT = bgArt('house_wide') ? { x: 532, y: 414, s: WTS } : { x: 615, y: 488, s: WTS };
+      const WT = bgArt('house_wide') ? HW_T : { x: 615, y: 488, s: WTS };
       const SPOTS = L([['cat', 180, 478, 1.3], ['dog', 470, 478, 1.25], ['donkey', 690, 486, .95], ['rooster', 860, 120, 1.2]], [['cat', 320, 478, 1.1], ['dog', 440, 478, 1.05], ['donkey', 590, 486, .8], ['rooster', 665, 120, 1.1]]);
       const STOPS = L([300, 380, 590, 800, 1150], [385, 520, 680, 700, 1150]);
       const SPOT5 = L({ donkey: [200, 1.05], dog: [420, 1.2], cat: [590, 1.3], rooster: [770, 1.3] }, { donkey: [390, .75], dog: [492, .85], cat: [584, .98], rooster: [648, .9] });
       const HOME = bgArt('morning')
         ? L({ donkey: [150, 476, .95], dog: [470, 476, 1.1], cat: [860, 462, 1.05], rooster: [520, 172, 1] }, { donkey: [370, 476, .8], dog: [490, 476, 1], cat: [640, 462, .95], rooster: [500, 172, 1] })
         : L({ donkey: [190, 486, 1], dog: [520, 486, 1.15], cat: [860, 410, 1.1], rooster: [470, 176, 1.1] }, { donkey: [385, 486, .85], dog: [505, 486, 1], cat: [648, 410, 1], rooster: [470, 176, 1.1] });
-      const CAMW = { road: [L(500, 640), 280, 1], roof: [L(500, 720), 280, 1], house_low: [TCX, 280, 1], house_wide: bgArt('house_wide') ? [505, 340, 1.9] : [500, 280, 1] };
+      const CAMW = { road: [L(500, 640), 280, 1], roof: [L(500, 720), 280, 1], house_low: [TCX, 280, 1], house_wide: bgArt('house_wide') ? HW_CAM : [500, 280, 1] };
       const camW = () => { const c = CAMW[key] || [500, 280, 1]; camSnap(c[0], c[1], c[2]); };
       const hx = k => HOME[k][0];
       const darkSpot = k => SPOTS.find(q => q[0] === k);
@@ -1305,14 +1309,14 @@
     /* ---------- 9. 음악 대폭발 (창문 와이드 → 컷) ---------- */
     let hw, tg;
     const WTS = bgArt('house_wide') ? .36 : .72; // 그림: 집이 작다(문 높이 67) → 당나귀(키 200)도 .36배(문보다 살짝 크다 = 집 앞쪽에 서 있다), 창(y 286~322)에 닭이 닿는 탑
-    const WT = bgArt('house_wide') ? { x: 532, y: 414, s: WTS } : { x: 615, y: 488, s: WTS };
+    const WT = bgArt('house_wide') ? HW_T : { x: 615, y: 488, s: WTS };
     await T.sceneCard('음악 대폭발', () => {
       T.clear(); hw = houseWideBG(T);
       let p = { x: WT.x, y: WT.y };
       band.forEach(a => { put(a, p.x, p.y, WT.s); p = { x: p.x + BACK[a.key][0] * WT.s, y: p.y + BACK[a.key][1] * WT.s }; });
       tg = el('g', {}, T.world); band.forEach(a => tg.appendChild(a.pos)); // 탑 전체가 한 덩이 (톡 한 번 + 반짝)
       el('rect', { x: WT.x - 50, y: WT.y - 330 * WT.s, width: 120, height: 330 * WT.s + 10, fill: '#fff', opacity: 0 }, tg);
-      if (hw.art) camSnap(505, 340, 1.9); else camSnap(500, 280, 1); // 그림: 집이 작아서 카메라를 집 앞으로 당긴다 (가로·세로 모두 문·창·탑이 보인다)
+      if (hw.art) camSnap(...HW_CAM); else camSnap(500, 280, 1); // 그림: 집이 작아서 카메라를 집 앞으로 당긴다 (가로·세로 모두 문·창·탑이 보인다)
     });
     const hitT = tg;
     /* 〈프레르 자크〉(프랑스 전래 동요): 네 친구가 한 줄씩 돌아가며 노래한다 */
