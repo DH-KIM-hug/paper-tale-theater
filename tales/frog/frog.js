@@ -13,8 +13,10 @@
      lilypad: 다시 뽑은 연잎에 붙어 나온 눈·볼을 지우고(assets/v3/frog_lilypad.png) 연꽃만 남겼다
      baby_sleep: 그림은 눈을 뜨고 있어서, 그 위에 감은 눈꺼풀(임시 도형)을 덧댄다 (BABY_LIDS) */
   const ART = {
-    bg_pond: 'v3w/frog_bg_pond.webp', bg_meadow: 'v3w/frog_bg_meadow.webp', bg_chart: 'v3w/frog_bg_chart.webp',
-    bg_night: 'v3w/frog_bg_pond_night.webp',
+    /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 연잎 5장(낮·밤)·기린 자·풀밭 바닥은 옛 그림과 겹쳐 같은 자리라 PADS 그대로.
+       밤 연못은 라이트박스(달·반딧불 구멍), 풀밭은 황소 정체가 드러나는 순간만 해 질 녘 라이트박스로 1.5초 크로스페이드했다 돌아온다 */
+    bg_pond: 'v3w/frog_bg_pond_v2.webp', bg_meadow: 'v3w/frog_bg_meadow_v2.webp', bg_chart: 'v3w/frog_bg_chart_v2.webp',
+    bg_night: 'v3w/frog_lb_pond_night.webp', lb_meadow: 'v3w/frog_lb_meadow_sun.webp',
     mom: 'v3w/frog_mom.webp', mom_flying: 'v3w/frog_mom_flying.webp', mom_puffed: 'v3w/frog_mom_puffed.webp', mom_dizzy: 'v3w/frog_mom_dizzy.webp',
     baby_sleep: 'v3w/frog_baby_sleep_shut2.webp', baby_awake: 'v3w/frog_baby_awake2.webp', baby_cover: 'v3w/frog_baby_cover.webp', // 2026-10-04: 눈 감은 아기 그림(코 방울) — 눈꺼풀 덧그림(BABY_LIDS)은 예전 그림(frog_baby_sleep)일 때만
     /* 2026-10-04 코드 도형을 대신하는 새 그림 (jobs_svg.json): 삼촌 개구리(밤 합창), 퀴즈 배지 6종.
@@ -31,14 +33,41 @@
   };
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
-  const EDGE = { bg_pond: ['#94c6dd', '#4a6a68'], bg_meadow: ['#84bade', '#8d9a4e'], bg_chart: ['#e7d6c0', '#a8a96b'], bg_night: ['#1a2850', '#7a5844'] };
+  const EDGE = { bg_pond: ['#8cc9e6', '#634b38'], bg_meadow: ['#7fc1eb', '#749447'], bg_chart: ['#eadac4', '#a9b068'], bg_night: ['#373267', '#ca9f51'] };
   /* 장면 그림 한 장을 무대 전체에 (없으면 false → 임시 도형 배경) */
   function artBG(T, key, parent = T.bg) {
     if (!ART[key]) return false;
     const [top, bot] = EDGE[key] || ['#F2DFA8', '#7c9a58'];
     T.el('rect', { x: -1200, y: -1200, width: 3400, height: 1480, fill: top }, parent);
     T.el('rect', { x: -1200, y: 280, width: 3400, height: 1600, fill: bot }, parent);
-    return T.el('image', { href: A(ART[key]), x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, parent);
+    const im = T.el('image', { href: A(ART[key]), x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, parent);
+    if (parent === T.bg) (LAYERS[key] || []).forEach(([n, x, y, h, asp, mid, o = {}]) => {
+      const w = h * asp, g = T.el('g', { class: 'frog-layer', 'pointer-events': 'none', transform: `translate(${x} ${y})${o.flip ? ' scale(-1 1)' : ''}` }, mid ? T.bg : T.fx);
+      const i = T.el('image', { href: A(`v3w/frog_layer_${n}.webp`), x: -w / 2, y: -h, width: w, height: h, filter: 'url(#pp)' }, g);
+      if (o.dim) i.style.filter = 'brightness(.42) saturate(.7)'; // 밤: 앞 갈대는 실루엣처럼 어둡게
+      if (o.fly) i.animate([{ transform: 'translate(0px,0px) rotate(-4deg)' }, { transform: 'translate(-14px,-10px) rotate(5deg)' }], { duration: 1600, direction: 'alternate', iterations: Infinity, easing: 'ease-in-out' });
+    });
+    return im;
+  }
+  /* 층 소품 frog_layer_*: [이름, 가운데 x, 발끝 y, 높이, 폭/높이, mid(배우 뒤), {flip, dim, fly}]. 앞 소품은 배우 앞(T.fx), 누름 없음, 세로 화면 가운데(285~715) 밖 */
+  const LAYERS = {
+    bg_meadow: [['wildflowers_mid', 500, 400, 90, 2.7439, true], ['grass_front', 30, 590, 100, 1.2883]],
+    bg_pond: [['reeds_front', 30, 590, 230, .695], ['lily_front', 985, 590, 140, 1.3317], ['dragonfly', 880, 185, 50, 1.4967, false, { fly: true }]],
+    bg_chart: [['fern_front', 30, 590, 110, 1.275]],
+    bg_night: [['reeds_front', 30, 590, 230, .695, false, { dim: true }]],
+  };
+  /* 폴짝 대회처럼 카메라가 따라가거나 황소가 앞에 서는 장면: 앞 소품을 걷는다 */
+  const noFront = T => T.fx.querySelectorAll('.frog-layer').forEach(g => g.remove());
+  /* 풀밭 라이트박스(황소가 드러나는 순간): on 이면 해 질 녘 그림을 1.5초에 걸쳐 겹치고, off 면 걷는다 */
+  function meadowSun(T, on, ms = 1500) {
+    const base = T.bg.querySelector(`image[href="${A(ART.bg_meadow)}"]`); if (!base) return;
+    let lb = T.bg.querySelector('.frog-lb');
+    if (on && !lb) { lb = base.cloneNode(); lb.setAttribute('href', A(ART.lb_meadow)); lb.setAttribute('class', 'frog-lb'); base.after(lb); }
+    if (!lb) return;
+    const mids = [...T.bg.querySelectorAll('.frog-layer')];
+    const a = on ? 0 : 1, b = on ? 1 : 0;
+    lb.setAttribute('opacity', b); mids.forEach(g => g.setAttribute('opacity', a)); // 배우 뒤 들꽃 띠는 실루엣 하늘에서 걷는다
+    if (ms) { lb.animate([{ opacity: a }, { opacity: b }], { duration: ms, easing: 'ease-in-out' }); mids.forEach(g => g.animate([{ opacity: b }, { opacity: a }], { duration: ms })); }
   }
   /* 배우 그림: 발끝(0,0) 기준 w×h 상자 안에 아래·가운데 맞춤. flip: 그림이 코드가 가정한 쪽과 반대를 볼 때 */
   function sprite(T, g, key, w, h, { flip = false, dx = 0 } = {}) {
@@ -340,7 +369,7 @@
           if (inst()) return;
           const ps = babies.map((b, i) => { b.hop(36, 360); return b.move(-90 - i * 20, 490, 900, 'ease-in'); });
           croak(T, 520);
-          return Promise.all(ps);
+          return Promise.all(ps).then(() => meadowSun(T, false));
         }
         if (verb === 'hop') {
           if (rScene === 'meadow' && rSteps < 3) {
@@ -430,7 +459,7 @@
         if (verb === 'stand' || verb === 'kneel' || verb === 'jumpfail') {
           const hadPeek = !!rpeek;
           const o = oxShow(verb);
-          if (hadPeek) { const p = rpeek; rpeek = null; rPeekPart = ''; o.body.style.filter = ''; rSilh = false; return (async () => { await p.hide(); T.world.appendChild(o.pos); await camTo(500, 280, 1, 900); })(); }
+          if (hadPeek) { const p = rpeek; rpeek = null; rPeekPart = ''; o.body.style.filter = ''; rSilh = false; return (async () => { await p.hide(); T.world.appendChild(o.pos); await camTo(500, 280, 1, 900); if (!inst()) meadowSun(T, true); })(); }
           if (rSilh) { o.body.style.filter = ''; rSilh = false; }
           if (verb === 'jumpfail' && !inst()) { T.anim(o.pos, [{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], 400); }
           return;
@@ -543,7 +572,9 @@
     await peek.hide();
     await camTo(500, 280, 1, 1600);
     T.shake(); moo(T); // 음매~는 황소 효과음으로
+    meadowSun(T, true);
     await say('커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.');
+    meadowSun(T, false);
 
     /* --- 4. 엄마! 괴물이에요! --- */
     await T.sceneCard('연못', () => {
@@ -676,6 +707,7 @@
       T.world.appendChild(mom.pos); mom.place(...(ART.bg_pond ? START : [120, 480]));
       if (T.portrait()) camSnap(mom.x, 280, 1);
       // 그림 연못: 황소는 오른쪽 앞 얕은 물에 서 있다 (몸을 낮추고 말한다)
+      noFront(T);
       oxActor = actor(T.world, ART.bg_pond ? 850 : 900, ART.bg_pond ? 546 : 520, g => { oxArt = drawOx(T, g, { pose: 'kneel' }); }, { scale: .55 });
     }, mom.pos);
     const ox = oxActor.pos;
