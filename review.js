@@ -10,7 +10,7 @@ window.REVIEW = {
   ugly_duckling: '빛 상자 손봄: 농부 둑', wolf_goats: '빛 상자 손봄: 우물 풍덩', ant_grasshopper: '빛 상자 손봄: 개미집 불빛',
   goldilocks: '빛 상자 손봄: 곰 빛 원판 뺌', sunmoon: '다시 그림: 초가집·수수밭', bremen: '빛 상자 손봄: 창 앞 탑',
   three_pigs: '다시 그림: 벽돌 집터',
-  snow_white: '공주 화려하게(v2)', cinderella: '공주 화려하게(v2)', little_mermaid: '공주 화려하게(v2)', beauty_beast: '공주 화려하게(v2)',
-  rapunzel: '공주 화려하게(v2)', frog_prince: '공주 화려하게(v2)', princess_pea: '공주 화려하게(v2)', sleeping_beauty: '공주 화려하게(v2)',
+  snow_white: '공주 화려하게(v2)', cinderella: '빛 상자: 궁전 계단', little_mermaid: '빛 상자: 밤바다·폭풍', beauty_beast: '빛 상자: 눈보라 숲',
+  rapunzel: '빛 상자: 밤 텃밭·밤 숲', frog_prince: '빛 상자: 밤 방', princess_pea: '빛 상자: 성문·잠 못 든 밤', sleeping_beauty: '빛 상자: 밤 침실',
   kkultteok: '꽃밭·공장 다층', red_car: '장난감나라 컨셉 재기획', unicorn: '재기획 그림 전체'
 };
