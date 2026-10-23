@@ -19,12 +19,13 @@
   /* 장면 한 장 그림 (생성 중). 없으면 폴백 조합 */
   /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): v2 세 장은 옛 그림과 겹쳐 집·창·선반·돌담·달 자리가 같다.
      라이트박스 둘: 깜깜한 밤 부엌(저녁 빛이 걷힐 때 1.2초 크로스페이드), 달빛 마당(밤이 된 뒤의 마당 = 호랑이가 도망쳐 나온 뒤·잔치) */
-  const SCENE_IMG = { A: A('v3w/pj_bg_field_v2.webp'), B1: A('v3w/pj_bg_kitchen_v2.webp'), B2: A('v3w/pj_bg_yard_v2.webp') };
-  const SCENE_LB = { B1: A('v3w/pj_lb_kitchen_night.webp'), B2: A('v3w/pj_lb_yard_moon.webp') };
+  /* 2026-10-23 사용자 판단: 팥밭(A)·부엌(B1)은 옛 그림이 낫다(새 부엌은 마늘·고추·옥수수가 거대하고 사실적, 밤 부엌 라이트박스도 같은 그림이라
+     오른쪽 거적이 부엌문 조각과 겹친다) → 옛 그림으로 되돌리고 밤은 예전처럼 저녁 빛 덮개만 걷는다. 마당(B2)만 v2·달빛 라이트박스를 쓴다 */
+  const SCENE_IMG = { A: A('v3w/scene_a_field.webp'), B1: A('v3w/scene_b_kitchen.webp'), B2: A('v3w/pj_bg_yard_v2.webp') };
+  const SCENE_LB = { B2: A('v3w/pj_lb_yard_moon.webp') };
   /* 앞 가림 층 소품(pj_layer_*): 근경(fgL, 누름 없음). [이름, 가운데 x, 발끝 y(top 이면 위 끝), 높이, 그림 폭/높이, top, 뒤집기] — 세로 화면 가운데(285~715) 밖 */
   const LAYERS = {
-    A: [['pampas_front', 40, 590, 260, .8717], ['maple_branch', 960, -22, 200, 1.5358, true]],
-    B1: [['garlic_bunch', 405, -22, 150, .4467, true]],
+    // A·B1 은 옛 그림으로 되돌려 층 소품을 뺀다(옛 팥밭엔 단풍 가지·억새가 이미 그려져 있다)
     B2: [['snow_pine_front', 1000, -22, 220, 1.1933, true, true], ['snow_bush_front', 0, 590, 120, 1.27]],
   };
   const sceneOK = {};
@@ -108,14 +109,16 @@
       const lo = tx + tw - hw, hi = tx - tw + hw;
       return lo > hi ? tx : Math.min(Math.max(x, lo), hi);
     }
+    let holdCam = false; // 둘을 함께 잡은 화면: 말하는 사람 쪽으로 당기는 연출(director)을 다음 카메라 이동까지 멈춘다
     const camTo = async (x, y, z = 1, dur = 800) => {
+      holdCam = false;
       camBusy++;
       try { await T.camTo(keepTiger(x, z), groundY(y, z), z, dur); } finally { camBusy--; }
     };
-    const camSnap = (x, y, z = 1) => { T.camSnap(keepTiger(x, z), groundY(y, z), z); };
+    const camSnap = (x, y, z = 1) => { holdCam = false; T.camSnap(keepTiger(x, z), groundY(y, z), z); };
     const camWide = (dur = 800) => camTo(500, 280, 1, dur);
     /* 세로 화면: 주어진 요소들이 모두 보이도록 카메라를 맞춘다 (화면 좌표 → 무대 좌표로 바꿔 합친 상자) */
-    async function fitCam(els, maxZ, pad, dur) {
+    async function fitCam(els, maxZ, pad, dur, minZ = 0, raw = false) { // raw: 호랑이 붙잡기(keepTiger) 없이 — 상자에 호랑이가 이미 들어 있을 때
       const r = stage.getBoundingClientRect(), c = T.camera, k = Math.max(r.width / 1000, r.height / 560) * c.z;
       const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
       let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
@@ -123,9 +126,15 @@
         x0 = Math.min(x0, c.x + (b.left - cx) / k); x1 = Math.max(x1, c.x + (b.right - cx) / k);
         y0 = Math.min(y0, c.y + (b.top - cy) / k); y1 = Math.max(y1, c.y + (b.bottom - cy) / k); });
       if (!isFinite(x0)) return;
-      const z = Math.min(maxZ, T.viewWidth() / (x1 - x0 + 2 * pad), 560 / (y1 - y0 + 2 * pad));
+      const z = Math.max(minZ, Math.min(maxZ, T.viewWidth() / (x1 - x0 + 2 * pad), 560 / (y1 - y0 + 2 * pad)));
+      if (raw) { holdCam = false; camBusy++; try { await T.camTo((x0 + x1) / 2, groundY((y0 + y1) / 2, z), z, dur); } finally { camBusy--; } return; }
       await camTo((x0 + x1) / 2, (y0 + y1) / 2, z, dur);
     }
+
+    /* 할멈과 호랑이를 함께: 가로는 와이드 그대로, 세로는 둘이 다 들어오게 맞춘다 */
+    const camPair = async (dur = 600) => { await (portrait() ? fitCam([granny.pos, tiger.pos], 1.3, 18, dur, .95, true) : camWide(dur)); holdCam = true; };
+    /* 팥밭에 버티는 호랑이 자리: 세로 화면은 할멈과 한 화면에 들도록 조금 가까이 */
+    const fieldTigerX = () => (portrait() ? 500 : 700);
 
     /* ---------- 배우 ---------- */
     function makeGranny() {
@@ -439,7 +448,7 @@
     T.director({
       cast: { halmi: granny, tiger, ...friends },
       listener: r => (r === 'halmi' ? 'tiger' : 'halmi'),
-      camTo: (x, y, z, dur) => camTo(x, y, z, dur),
+      camTo: (x, y, z, dur) => (holdCam ? Promise.resolve() : camTo(x, y, z, dur)),
     });
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 ================= */
@@ -546,6 +555,7 @@
         if (a === 'wide') return T.readInstant() ? camSnap(500, 280, 1) : camWide(700);
         if (a === 'friend') { if (T.readInstant()) { const f = friends[b]; return camSnap(f.gx, f.gy + f.by + f.h / 2 - 20, Math.min(2.6, Math.max(1.6, (560 * .3) / f.h))); } return camFriend(b, 650); }
         if (a === 'station') return go(...stationCam(+b, tiger.x));
+        if (a === 'pair') return camPair(T.readInstant() ? 0 : 700);
         const [x, y, z] = String(a).split(',').map(num);
         return go(x, y, z || 1);
       },
@@ -564,7 +574,7 @@
         if (a === 'hide') { parkTiger(); return; }
         if (a === 'enter') { // 팥밭: 오른쪽에서 걸어 들어와 할멈 앞에 버틴다
           tiger.place(POS.tigerEnter, 520); tigerShow();
-          await walk(tiger, 700, 340);
+          await walk(tiger, fieldTigerX(), 340);
           tiger.face('left'); granny.face('right');
           AudioFX.thud(); T.shake(); granny.hop(26, 420);
           return;
@@ -652,7 +662,7 @@
       fx: n => (n === 'win' ? AudioFX.sting('win') : AudioFX[n] && AudioFX[n]()),
       pop(spec) {
         const [x, y, ...w] = String(spec).split(','), word = w.join(',');
-        impact(num(x), num(y), word, word === '어흥!' ? '#c0392b' : undefined);
+        impact(x === 'tiger' ? tiger.x + 30 : num(x), num(y), word, word === '어흥!' ? '#c0392b' : undefined);
       },
       shake: () => T.shake(),
       confetti: () => T.confetti(),
@@ -684,18 +694,19 @@
         await camWide(700);
         AudioFX.growl();
         tiger.pos.style.opacity = 1;
-        await walk(tiger, 700, 340);
+        await walk(tiger, fieldTigerX(), 340);
         tiger.face('left');
         granny.face('right');
         grannyMood('scared');
-        impact(730, 170, '어흥!', '#c0392b');
+        impact(tiger.x + 30, 170, '어흥!', '#c0392b');
         AudioFX.thud(); T.shake();
         granny.hop(26, 420);
         granny.face('left'); // 물러나는 방향(왼쪽)을 보며 밀린다
         await granny.move(granny.x - 24, 520, 420, 'ease-out');
         granny.art.style.transition = 'rotate .22s ease-in';
         granny.art.style.rotate = '-24deg';
-        await camTo(690, 430, 1.45, 600);
+        await sleep(240); // 기우는 할멈(rotate .22s)까지 상자에 담도록
+        await camPair(600); // 할멈이 떠는 모습과 호랑이를 함께 (가로는 확대 없이 와이드)
         await say(INTRO.opening[1]);
       });
       // 3. 약속 — 와이드, 호랑이 퇴장
