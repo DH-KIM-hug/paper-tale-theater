@@ -274,11 +274,11 @@
   }
 
   /* ================= 관객 동물 8마리 ================= */
-  /* 자장가: 미리 렌더한 실제 악기 연주(sounds/sfx/lullaby_a·b = 오르골, _2 = 피아노, tools/dev/render_melody.py)를 한 소절씩 틀고,
+  /* 자장가: 미리 렌더한 실제 악기 연주(sounds/sfx/lullaby_a·b = 마림바, _2 = 피아노, tools/dev/render_melody.py)를 한 소절씩 틀고,
      음표 표시·눈 감김은 음 시작 시각(박 격자 그대로)에 맞춘다. 곡을 아직 못 받았으면 첫 음에서 합성 오르골로 대신한다 */
   const LULL_SRC = { a: 'E4:.5 E4:.5 G4:2 E4:.5 E4:.5 G4:2 E4:.5 G4:.5 C5:1 B4:1 A4:.5 A4:.5 G4:2', b: 'A4:.5 A4:.5 C5:2 A4:.5 A4:.5 C5:2 A4:.5 C5:.5 F5:1 E5:1 D5:.5 D5:.5 C5:3' };
   const LULL_BEAT = .65;
-  const lullPick = () => (Math.random() < .5 ? '' : '_2'); // 오르골 / 피아노 — 두 소절은 같은 악기
+  const lullPick = () => (Math.random() < .5 ? '' : '_2'); // 마림바 / 피아노 — 두 소절은 같은 악기
   function lullVoice(T, which, ver) {
     let rec = false, box = null;
     return (n, d, i) => {
@@ -848,7 +848,7 @@
       owl(a) {
         const o = aud.owl;
         if (a === 'post') { o.reset(); o.stand(); show(o.parts.bag, 1); put(o, instant() ? 70 : -80, 283, .85); if (!instant()) return o.move(70, 283, 900); return; }
-        if (a === 'lullaby') { // 브람스 자장가 한 소절 (오르골), 음표가 부엉이 둘레로
+        if (a === 'lullaby') { // 브람스 자장가 한 소절 (마림바·피아노), 음표가 부엉이 둘레로
           seatOne('owl');
           return T.playMelody(T.parseSong(LULL_SRC.a), { beat: LULL_BEAT,
             voice: lullVoice(T, 'a', lullPick()), onNote: i => { noteShape(T, o.x - 60 - (i % 6) * 30, o.y - 50, C.indigo); if (i % 3 === 0) o.wiggle(8, 500); } });
@@ -1218,9 +1218,9 @@
     rp.mouth('yawn'); T.tone([400, 200], .8, { type: 'sine', vol: .12 });
     await say('포근포근~ 이불을 덮어 줬어요.');
     rp.mouth('smile');
-    /* 브람스 〈자장가〉(1868, 공개 곡) — 오르골 소리. 먼저 한 소절을 들려주고, 부엉이를 톡 누르면 다음 소절이 흘러간다 */
+    /* 브람스 〈자장가〉(1868, 공개 곡) — 마림바·피아노 소리. 먼저 한 소절을 들려주고, 부엉이를 톡 누르면 다음 소절이 흘러간다 */
     const LULL1 = T.parseSong(LULL_SRC.a), LULL2 = T.parseSong(LULL_SRC.b);
-    const lullVer = lullPick(); // 이번 판은 오르골이나 피아노 (두 소절 같은 악기)
+    const lullVer = lullPick(); // 이번 판은 마림바나 피아노 (두 소절 같은 악기)
     const lullNote = i => { noteShape(T, aud.owl.x - 60 - (i % 6) * 30, aud.owl.y - 50, C.indigo); if (i % 3 === 0) aud.owl.wiggle(8, 500); };
     await say('부엉이가 자장가를 불러 줘요. 잘 들어 봐요.');
     await T.playMelody(LULL1, { beat: LULL_BEAT, voice: lullVoice(T, 'a', lullVer), onNote: lullNote });
