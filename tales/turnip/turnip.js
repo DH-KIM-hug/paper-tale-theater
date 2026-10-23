@@ -1086,7 +1086,7 @@
       T.el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('째릿!') }, svg);
       voiceLine('cut_glare', 300);
     }, { hold: 2200 }));
-    await say('"흥!" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.');
+    await say('"흥, 알았어!" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.');
     await pullRound(5, 10, '순무를 톡 눌러서 영차!');
 
     /* --- 8. 아주 작은 생쥐 (생쥐 눈높이) --- */

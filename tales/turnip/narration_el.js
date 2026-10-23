@@ -46,8 +46,8 @@ Object.assign(NARRATION_CLIPS, {
  "고양이예요! 반짝이는 친구를 눌러 봐요!": "audio/el/turnip/nar_3f0380c2bd.mp3",
  "고양이가 지붕에서 폴짝 내려왔어요.": "audio/el/turnip/nar_780bdf6fcc.mp3",
  "어? 강아지랑 고양이가 서로 째려봐요.": "audio/el/turnip/nar_719af83d16.mp3",
- "\"흥!\" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.": [
-  "audio/el/turnip/cat_b2606ae164.mp3",
+ "\"흥, 알았어!\" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.": [
+  "audio/el/turnip/cat_71163fcc2f.mp3",
   "audio/el/turnip/nar_3fd9b6c780.mp3"
  ],
  "휴우, 모두 지쳐서 털썩 주저앉았어요.": "audio/el/turnip/nar_fa06987608.mp3",
