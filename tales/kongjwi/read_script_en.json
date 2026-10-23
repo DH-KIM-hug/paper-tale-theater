@@ -550,7 +550,7 @@
    "card": "The Stream",
    "set": "stream",
    "enter": [
-    "kong:at:370,505",
+    "kong:at:170,520",
     "kong:look:shoes",
     "kong:to:right",
     "cam:wide"

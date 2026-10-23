@@ -18,7 +18,7 @@
   const BGS = ['yard', 'field', 'jar', 'jarbottom', 'mat', 'loom', 'stream', 'feast', 'gate', 'wedding'];
   const CUTS = ['ox', 'wet', 'toad', 'sparrows', 'fairy', 'splash', 'shy'];
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키는 그대로 두고 그림만 v2·라이트박스(lb)로. 우물·독 입구와 구멍·멍석·문/창/병풍·징검돌·대문은 원본 자리(겹쳐 확인) */
-  const BGFILE = { yard: 'yard_v2', field: 'field_v2', jar: 'jar_v2', jarbottom: 'jarbottom_lb', mat: 'mat_v2', loom: 'loom_v2', stream: 'stream_v2', gate: 'gate_v2' };
+  const BGFILE = { yard: 'yard_v2', field: 'field_v2', jar: 'jar_v2', jarbottom: 'jarbottom_lb', mat: 'mat_v2', loom: 'loom_v2', stream: 'stream_v3', gate: 'gate_v2' };
   /* 2026-10-23 사용자 결정: 잔치(feast)·혼례(wedding 라이트박스)는 옛 그림으로 되돌림(홍등 줄·깃발·모란·소나무/풀 실루엣·반딧불도 뺌) */
   /* 층 소품 폭/높이 */
   const LASP = { persimmon_branch: .77, cosmos_front: .9983, mist: 4.9724, willow: .7617, lantern_string: 1.6275, flags: 4.4335, peony_front: 1.0217, thread_skeins: 1.03, pine_sil: 1.0117, grass_sil: 3.2727, jarwall_sil: .9867 };
@@ -66,7 +66,7 @@
   const NUM = ['하나!', '둘!', '셋!', '넷!', '다섯!'];
 
   async function run(T) {
-    const { sleep, say, camSnap } = T;
+    const { sleep, say, camSnap, camTo } = T;
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const tr = T.tr;
     /* 층 소품(VISUAL_PLAN §3~§8): 누름 없음. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위, 이미 pointer-events none).
@@ -109,6 +109,21 @@
     };
     const pourDrops = (pail, jar) => { for (let k = 0; k < 3; k++) setTimeout(() => drop(pail.x - 10, pail.y - 90, jar.x - 20 + k * 14, jar.y - 150, 380), k * 90); };
     const leakDrops = jar => { for (let k = 0; k < 3; k++) setTimeout(() => drop(jar.x - 4, jar.y - 30, jar.x - 4 + (k - 1) * 12, jar.y + 20, 360), 380 + k * 110); };
+    /* 개울 v3: 징검돌·모래톱 자리와 떠내려가는 꽃신. 꽃신 아래쪽을 물빛 물결 조각으로 덮어 물에 잠겨 보이게 하고(앞층), 물결 따라 오르내리며 오른쪽으로 */
+    /* 그림(kj_bg_stream_v3)에서 잰 자리: 징검돌 가운데 x 298·432·570·700, 돌 윗면 y 414~456 → 발 440. 왼쪽 모래톱 (170, 520).
+       세로 화면(보이는 폭 약 430)은 카메라가 콩쥐를 따라 옆으로 간다(가로는 clampCam 이 500 에 묶어 그대로) */
+    const STONES = [298, 432, 570, 700], STONE_Y = 440, BANK = [170, 520], WATER_FRONT = '#3F87C6';
+    const followCam = (x, ms = 380) => { if (P) return ms ? camTo(x, 280, 1, ms) : camSnap(x, 280, 1); };
+    const driftShoe = () => {
+      const lost = prop(T, 'shoe_butterfly', 34); put(T, lost, STONES[3] + 60, 470, { to: 'right' });
+      followCam(STONES[3] + 60, 0);
+      const wv = T.el('g', { style: 'pointer-events:none', filter: 'url(#pp)' }, lost.pos);   // 물결 종이 조각 두 장(물빛 + 흰 물마루)
+      T.el('path', { d: 'M-52,-6 q8,-7 16,0 t16,0 t16,0 t16,0 t16,0 t16,0 q4,6 -6,9 q-46,7 -88,0 q-10,-3 -6,-9 Z', fill: WATER_FRONT }, wv);
+      T.el('path', { d: 'M-44,-10 q8,-7 16,0 t16,0 t16,0 t16,0 t16,0 q-4,6 -10,4 q-6,-5 -12,0 q-6,4 -12,0 q-6,-5 -12,0 q-6,4 -12,0 q-6,-5 -12,0 q-6,4 -12,0 q-6,-3 -12,2 Z', fill: '#E8F2FA' }, wv);
+      lost.pos.animate([{ opacity: 0 }, { opacity: 1 }], 300);
+      if (!still()) lost.body.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '0 -4px', rotate: '-4deg' }, { translate: '0 0', rotate: '0deg' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
+      return lost.move(1080, 466, 4200, 'ease-in').then(() => hide(lost));
+    };
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
     await Promise.race([Promise.all(loads), sleep(4000)]);
@@ -160,8 +175,8 @@
           return a.move(x, y, 900);
         }
         if (op === 'cross') { // 징검다리를 n 번 폴짝 (누르기 없이 저절로)
-          const n2 = +spec, x0 = a.x;
-          return (async () => { for (let i = 1; i <= n2; i++) { a.move(x0 + i * 225 / n2, 505, 380); popSfx(T); await sleep(430); } })();
+          const next = STONES.filter(x => x > a.x + 10).slice(0, +spec);   // 개울 v3: 돌마다 폴짝
+          return (async () => { for (const x of next) { a.move(x, STONE_Y, 380); a.hop(26, 380); followCam(x); popSfx(T); await sleep(430); } })();
         }
         if (op === 'peck') return null;
       };
@@ -176,7 +191,7 @@
           if (rI()) { scene(BG_OF[k]); water = null; return; }
           return T.sceneCard(null, () => { scene(BG_OF[k]); water = null; });
         },
-        cam() { camSnap(500, 280, 1); },
+        cam() { camSnap(500, 280, 1); if (key === 'stream') followCam(kong.x, 0); },
         prop(id, op, spec) {
           const a = PR[id]; if (!a) return;
           if (op === 'at') { const [x, y] = nums(spec); put(T, a, x, y); return; }
@@ -207,8 +222,7 @@
         },
         shoe(op) {
           if (op === 'drift') { // 떠내려간다 (이어서 다음 줄을 읽는다)
-            const lost = prop(T, 'shoe_butterfly', 34); put(T, lost, 640, 540);
-            lost.move(930, 560, 3800, 'ease-in-out').then(() => hide(lost));
+            driftShoe();
             return;
           }
           if (op === 'fit') { clinkSfx(T); shoeB.hop(24, 320); return sleep(450).then(() => kong.hop(34, 400)); }
@@ -342,20 +356,21 @@
     await kong.hop(30, 400);
 
     /* --- 6. 개울에서 꽃신이 풍덩 --- */
+    /* 2026-10-23 개울 v3: 물이 화면 아래 절반, 징검돌 넷(STONES). 콩쥐는 왼쪽 모래톱에서 돌 넷을 하나씩 폴짝(세로는 카메라가 따라감) */
     await T.sceneCard(tr('개울'), () => {
       scene('stream');
-      put(T, kong, 370, 505, { look: 'shoes', to: 'right' });
+      put(T, kong, BANK[0], BANK[1], { look: 'shoes', to: 'right' }); followCam(BANK[0], 0);
     }, kong.pos);
-    const cross = i => {
-      kong.move(370 + i * 75, 505, 380); popSfx(T); wig('willowL', 2, 400); wig('willowR', 2, 400); T.pop(kong.x + 40, kong.y - 295, tr(NUM[i - 1]));
+    const cross = (i, x) => {
+      kong.move(x, STONE_Y, 380); kong.hop(26, 380); followCam(x); popSfx(T); wig('willowL', 2, 400); wig('willowR', 2, 400); T.pop(x + 40, STONE_Y - 295, tr(NUM[i - 1]));
+      return sleep(380);
     };
     await T.ask('콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!', () => T.tap(kong.pos, { prompt: '콩쥐를 톡! 징검다리를 건너요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
-    for (let i = 1; i <= 3; i++) { await cross(i); await sleep(400); }
+    { const next = STONES.filter(x => x > kong.x + 10); for (let i = 1; i <= next.length; i++) { await cross(i, next[i - 1]); await sleep(400); } }
     await T.cutImage([{ src: cutSrc('splash'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     scene('stream');
-    put(T, kong, 595, 505, { look: 'shoes', to: 'right' });
-    const lost = prop(T, 'shoe_butterfly', 34); put(T, lost, 640, 540);
-    const drift = lost.move(930, 560, 3800, 'ease-in-out').then(() => hide(lost));
+    put(T, kong, STONES[3], STONE_Y, { look: 'shoes', to: 'right' });
+    const drift = driftShoe();
     await say('풍덩! 꽃신 한 짝이 개울에 빠졌어요. 꽃신은 둥둥 떠내려갔어요.');
     await drift;
     await say('콩쥐는 아쉬웠지만 한 짝만 신고 잔치로 갔어요.');
