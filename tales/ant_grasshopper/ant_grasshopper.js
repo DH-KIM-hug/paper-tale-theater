@@ -22,8 +22,8 @@
      소나기는 여름 들판 위에 곱하기(multiply) 회색 한 겹 + 해를 가리는 먹구름(코드). 겨울 들판은 하이앵글 눈밭 그림. */
   const AS = '../../assets/';
   const BG = {
-    summer: 'v3w/ag_bg_summer.webp', autumn: 'v3w/ag_bg_autumn3.webp', spring: 'v3w/ag_bg_spring.webp',
-    ant_eye: 'v3w/ag_bg_ant_eye.webp', leafstage: 'v3w/ag_bg_leafstage.webp', winter_high: 'v3w/ag_bg_winter_high.webp',
+    summer: 'v3w/ag_bg_summer_v2.webp', autumn: 'v3w/ag_bg_autumn_v2.webp', spring: 'v3w/ag_bg_spring_v2.webp',
+    ant_eye: 'v3w/ag_bg_ant_eye.webp', leafstage: 'v3w/ag_bg_leafstage_v2.webp', winter_high: 'v3w/ag_lb_snow_dusk.webp', lamp: 'v3w/ag_lb_cellar_lamp.webp',
     door: 'v3w/ag_bg_door.webp', cellar: 'v3w/ag_bg_cellar.webp', // cellar: 어두운 흙을 조금 밝혀 구움, 곡식·도토리 방은 그림 속에 이미 가득
   };
   /* 배우·소품·컷 (인물·곤충은 모두 왼쪽을 본다)
@@ -70,8 +70,21 @@
   }
   const sprite = (T, g, key) => { const s = SPR[key]; return s ? pic(T, g, key, -s[2] * s[0], -s[3] * s[1], s[0], s[1]) : null; };
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). dx·dy: 그림을 통째로 옮긴다 */
+  /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 여름·가을·봄 들판과 풀잎 무대는 v2(개미집·언덕·나무·무대 잎 자리 그대로, 겹쳐 확인 — 가을·봄 개미집 문은 FIELD_DOOR 만 고침),
+     첫눈은 보랏빛 저녁 라이트박스(멀리 구멍에 문 불빛), 겨울 음악회는 창고 그림 위에 등불 라이트박스를 크로스페이드. 똑똑(문)·창고 가득(세기)은 그대로 */
   const BG_EDGE = { summer: ['#a8d3eb', '#4a6345'], autumn: ['#fbb589', '#431700'], spring: ['#b5e6fb', '#62753d'], ant_eye: ['#95becc', '#20230e'],
-    leafstage: ['#a5cbd9', '#232011'], winter_high: ['#d0dfee', '#e4ecf7'], door: ['#d4e7fc', '#e3ecfa'], cellar: ['#cad9dd', '#341f0d'] };
+    leafstage: ['#a5cbd9', '#232011'], winter_high: ['#b7a8d8', '#dfe3f0'], door: ['#d4e7fc', '#e3ecfa'], cellar: ['#cad9dd', '#341f0d'] };
+  const LAYER_AR = { grass_front: 1.035, sunflowers_mid: .935, leafpile_front: 1.5517, tulips_mid: 3.6885, snow_branch: .9933, sil_roots: 1.0183 };
+  /* 층 소품: 누름 없음. front 면 배우 앞(T.fx), 아니면 배우 뒤(T.bg). (cx, y) = 가운데·발끝, top 이면 윗변 */
+  function layer(T, k, cx, y, h, { front = true, flip = false, top = false, sway = 0, ms = 8000 } = {}) {
+    const w = h * LAYER_AR[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+    if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+    const inner = T.el('g', { filter: 'url(#pp)' }, g);
+    T.el('image', { href: AS + 'v3w/ag_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+    inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+    if (sway && !(T.reading() && T.readInstant())) inner.animate([{ rotate: `${-sway}deg` }, { rotate: `${sway}deg` }, { rotate: `${-sway}deg` }], { duration: ms, iterations: Infinity, easing: 'ease-in-out' });
+    return inner;
+  }
   function bgImage(T, key, { dx = 0, dy = 0 } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const w = 1080, h = w * 992 / 1760, x = -40 + dx, y = -24 + dy;
@@ -79,6 +92,16 @@
     T.el('rect', { x: -1400, y: -1400, width: 3800, height: 1400 + y + h / 2, fill: top }, T.bg);
     T.el('rect', { x: -1400, y: y + h / 2, width: 3800, height: 2000, fill: bot }, T.bg);
     return T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, T.bg);
+  }
+  /* 겨울 음악회: 창고 그림 위에 등불 라이트박스(같은 구도, 곡식·도토리 방 자리 같음)를 겹쳐 켜고 뿌리 실루엣을 위 모서리에 */
+  function lampOn(T, K) {
+    if (!K || !K.img || !K.img.isConnected || K.lamp || !bgUrl('lamp')) return;
+    const quick = T.reading() && T.readInstant();
+    const lb = T.el('image', { href: bgUrl('lamp'), x: K.img.getAttribute('x'), y: K.img.getAttribute('y'), width: K.img.getAttribute('width'), height: K.img.getAttribute('height'), preserveAspectRatio: 'none', opacity: quick ? 1 : 0 }, T.bg);
+    K.img.after(lb); K.lamp = lb;
+    if (!quick) lb.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, fill: 'forwards' }).onfinish = () => lb.setAttribute('opacity', 1);
+    [layer(T, 'sil_roots', 160, 96, 150, { top: true }), layer(T, 'sil_roots', 840, 96, 150, { top: true, flip: true })]
+      .forEach(g => { if (!quick) g.animate([{ opacity: 0 }, { opacity: 1 }], 900); });
   }
 
   /* ================= 소리 ================= */
@@ -325,10 +348,14 @@
     if (season === 'winter') T.paper(parent, [['path', { d: `M${x - 88} ${y - 58} Q${x} ${y - 124} ${x + 88} ${y - 58} Q${x} ${y - 84} ${x - 88} ${y - 58} Z`, fill: C.snow }]]);
   }
   /* 들판 4계절: 같은 구도 (나무 둘 · 언덕 · 개미집) */
-  const FIELD_DOOR = { summer: [915, 342], autumn: [873, 346], spring: [886, 358] }; // 그림 속 개미집 문 (무대 좌표)
+  const FIELD_DOOR = { summer: [915, 342], autumn: [857, 346], spring: [907, 367] }; // 그림 속 개미집 문 (무대 좌표). 2026-10-23 v2: 가을 16 왼쪽, 봄 21 오른쪽·9 아래
   function fieldBG(T, season, { sky } = {}) {
     const { el, paper } = T, b = T.bg;
     if (bgImage(T, season)) {
+      const P = narrow();
+      if (season === 'summer' && !P) { layer(T, 'sunflowers_mid', 60, 556, 110, { front: false }); }
+      if (season === 'autumn') { layer(T, 'leafpile_front', 50, 592, 70); layer(T, 'leafpile_front', 960, 592, 70, { flip: true }); }
+      if (season === 'spring') { layer(T, 'tulips_mid', P ? 200 : 120, 560, 70, { front: false }); }
       if (sky) { // 소나기: 그림 속 해를 먹구름으로 가리고 회색 한 겹을 곱한다
         storm(T, b, -60, -10, 260);
         const t = el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: '#8A9AAD', opacity: .55 }, b);
@@ -392,7 +419,7 @@
   /* 풀잎 무대 로우앵글: 커다란 잎 위에 베짱이, 양옆에 꽃 */
   function leafStageBG(T) {
     const { el, paper } = T, b = T.bg;
-    if (bgImage(T, 'leafstage')) return true;
+    if (bgImage(T, 'leafstage')) { layer(T, 'grass_front', 30, 592, 130, { sway: 1.5, ms: 6000 }); layer(T, 'grass_front', 970, 592, 130, { flip: true, sway: 1.5, ms: 6000 }); return true; }
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.summer }, b);
     el('circle', { cx: 860, cy: 80, r: 60, fill: '#F6D98A' }, b);
     [[-40, 30], [60, 80], [940, 60], [1030, 20]].forEach(([x, top]) =>
@@ -411,7 +438,12 @@
   /* 겨울 들판 하이앵글: 땅이 화면을 채우고, 지평선은 위쪽에 */
   function winterHighBG(T) {
     const { el, paper } = T, b = T.bg;
-    if (bgImage(T, 'winter_high')) return { hole: [655, 150], far: true }; // 그림: 구멍이 멀리(위쪽) → 걸어가며 작아진다
+    if (bgImage(T, 'winter_high')) { // 2026-10-23 보랏빛 첫눈 저녁 라이트박스: 구멍 자리 같음, 문 불빛이 작게 숨 쉰다
+      layer(T, 'snow_branch', 50, -24, 170, { top: true, sway: 1, ms: 9000 }); layer(T, 'snow_branch', 950, -24, 170, { top: true, flip: true, sway: 1, ms: 9000 });
+      const g = T.el('circle', { cx: 652, cy: 150, r: 26, fill: '#F5A64B', opacity: .3, style: 'pointer-events:none' }, T.bg);
+      if (!(T.reading() && T.readInstant())) g.animate([{ opacity: .15 }, { opacity: .45 }, { opacity: .15 }], { duration: 2200, iterations: Infinity });
+      return { hole: [655, 150], far: true };
+    } // 그림: 구멍이 멀리(위쪽) → 걸어가며 작아진다
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.winter }, b);
     paper(b, [['rect', { x: -300, y: 90, width: 1600, height: 700, fill: C.snow }]]);
     [80, 200, 330, 620, 780, 930].forEach((x, i) => { const g = T.el('g', { transform: `translate(${x},${96}) scale(.32)` }, b); T.paper(g, [['rect', { x: -10, y: -150, width: 20, height: 150, fill: C.bark }]]); T.el('path', { d: 'M0 -110 L-40 -170 M0 -90 L40 -160', stroke: C.bark, 'stroke-width': 8, fill: 'none' }, g); });
@@ -428,6 +460,7 @@
     const { el, paper } = T, b = T.bg;
     const DX = narrow() ? 200 : 0;
     if (bgImage(T, 'door', { dx: DX })) {
+      layer(T, 'snow_branch', 950, -24, 170, { top: true, flip: true, sway: 1, ms: 9000 });
       // 2026-10-20 새 배경(문틀·나무 문이 그림 속에 있다): 속 문간 x 203~325, 아치 꼭대기 y≈211, 문턱 y≈350
       const arch = `M${203 + DX} 350 V272 A61 61 0 0 1 ${325 + DX} 272 V350 Z`;
       const glow = el('path', { d: arch, fill: '#FFD58A', opacity: .15 }, b); glow.style.mixBlendMode = 'screen';
@@ -461,11 +494,12 @@
   /* 그림: 120 아래로 옮겨 깐다 → 위는 하늘·눈(눈 위 y 140), 굴은 x 475로 내려가 큰 방 바닥 y 520. 곡식·도토리 더미는 그림 속에 있다 */
   function cellarBG(T, { full = true } = {}) {
     const { el, paper } = T, b = T.bg;
-    if (bgImage(T, 'cellar', { dy: 120 })) {
+    const img = bgImage(T, 'cellar', { dy: 120 });
+    if (img) {
       const light = el('ellipse', { cx: 495, cy: 410, rx: 200, ry: 115, fill: '#6B4E1E', opacity: 0 }, b);
       light.style.mixBlendMode = 'screen';
       // 그림: 큰 방이 좁아 두 줄 — 뒤(개미 가족·베짱이 y 512), 앞(손님 넷 y 548, 큰 방 앞 흙바닥)
-      return { art: true, light, door: [475, 140], snowY: 140, shaftX: 475, shaftY: 400, antY: 512, hopY: 514, seatY: [548, 550, 550, 548], cam: [495, 440] };
+      return { art: true, img, light, door: [475, 140], snowY: 140, shaftX: 475, shaftY: 400, antY: 512, hopY: 514, seatY: [548, 550, 550, 548], cam: [495, 440] };
     }
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.winter }, b);
     paper(b, [['rect', { x: -300, y: 196, width: 1600, height: 700, fill: C.soil }], ['rect', { x: -300, y: 186, width: 1600, height: 22, rx: 8, fill: C.snow }]]);
@@ -904,7 +938,7 @@
         },
         firefly(op) {
           if (op !== 'glow') return;
-          K.light.setAttribute('opacity', .55);
+          K.light.setAttribute('opacity', .55); lampOn(T, K);
           for (let i = 0; i < 7; i++) {
             const x = 330 + i * 56, y = 368 + (i % 2) * 14;
             const l = el('circle', { cx: x, cy: y, r: 5, fill: '#FFE08A' }, T.fx);
@@ -1258,7 +1292,7 @@
     await T.sceneCard('겨울 음악회', () => {
       camSnap(K.cam[0], K.cam[1], narrow() ? 1.1 : 2.1);
       hopperMode(hop.p, 'play');
-      K.light.setAttribute('opacity', .55);
+      K.light.setAttribute('opacity', .55); lampOn(T, K);
       for (let i = 0; i < 7; i++) {
         const x = 330 + i * 56, y = 368 + (i % 2) * 14;
         const l = el('circle', { cx: x, cy: y, r: 5, fill: '#FFE08A' }, T.fx);
