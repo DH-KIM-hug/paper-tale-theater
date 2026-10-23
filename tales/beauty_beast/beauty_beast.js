@@ -30,7 +30,7 @@
     beast_lie: 'left', beast_lie_eyes: 'left', beast_ring: 'left', father_ride: 'right', horse_stand: 'right' };
   const FL = 528;                    // 바닥(발끝 y)
   /* 사람 세계(시골집)는 그대로, 야수의 궁전 장면만 다층 v2 (VISUAL_PLAN) */
-  const BGS = ['cottage', 'cottage_front', 'snow_forest_v2', 'dining_v2', 'garden_v2', 'garden_bloom_v2', 'room_v2'];
+  const BGS = ['cottage', 'cottage_front', 'snow_forest_lb', 'dining_v2', 'garden_v2', 'garden_bloom_v2', 'room_v2'];
   const bgSrc = k => AS + 'bb_bg_' + k + '.webp', artSrc = k => AS + 'bb_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const hOf = f => HT[f] || 200;
@@ -135,7 +135,7 @@
     garden:        { sky: '#F6ECD8', gnd: '#8fae85', name: '궁전 정원(낮, 왼쪽 문)', shapes: g => [['rect', { x: 20, y: 90, width: 150, height: 320, fill: '#D9A94E' }], ['rect', { x: 60, y: 260, width: 70, height: 150, rx: 35, fill: '#6B4A32' }], ['circle', { cx: 860, cy: 100, r: 44, fill: '#F2B366' }]] },
     room:          { sky: '#F6ECD8', gnd: '#C9A878', name: '벨의 방(오른쪽 문)', shapes: g => [['rect', { x: 780, y: 140, width: 120, height: 270, rx: 6, fill: '#A93B32' }], ['rect', { x: 130, y: 110, width: 200, height: 250, rx: 4, fill: '#6B4A32' }], ['rect', { x: 150, y: 140, width: 160, height: 40, fill: '#D9A94E' }]] },
   };
-  ['snow_forest', 'dining', 'garden', 'room'].forEach(k => { BGPH[k + '_v2'] = BGPH[k]; }); BGPH.garden_bloom_v2 = BGPH.garden;
+  ['snow_forest', 'dining', 'garden', 'room'].forEach(k => { BGPH[k + '_v2'] = BGPH[k]; }); BGPH.snow_forest_lb = BGPH.snow_forest; BGPH.garden_bloom_v2 = BGPH.garden;
   function bgImage(T, key) {
     if (bgOK[key]) return T.el('image', { href: bgSrc(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
     const d = BGPH[key], g = T.el('g', {}, T.bg);
@@ -308,6 +308,8 @@
     const L = { fir: [D('snow_fir_front', 420), D('snow_fir_front', 420)], sbush: D('snow_bush', 110), chand: D('chandelier', 160),
       curtain: [D('curtain', 520), D('curtain', 520)], feast: D('feast', 70), topiary: D('topiary_snow', 200), rose: D('rosebush_front', 150) };
     Object.values(L).flat().forEach(hide);
+    /* 3장 눈보라 숲은 빛 상자(snow_forest_lb, VISUAL_PLAN 재기획 2 A): 앞 전나무·덤불은 낮 색이라 밤빛 실루엣처럼 낮춘다(이 소품은 3장에만 쓴다) */
+    [L.fir[0], L.fir[1], L.sbush].forEach(a => { a.pos.style.filter = 'brightness(.42) saturate(.55)'; });   // put() 이 body 필터를 비우므로 pos 에
     const front = (...as) => as.forEach(a => { if (a.pos.style.display !== 'none') T.world.appendChild(a.pos); });
     /* 연회장(3B·8장): 샹들리에(중간·위) → 배우·식탁 → 잔칫상(식탁 위) → 휘장 둘(앞) */
     const diningBack = () => { put(T, L.chand, X(500, 520), 180); };
@@ -332,6 +334,7 @@
         R03: { father: { 480: 500 } },
         R03b: { father: { 560: 520, 300: 420 } },
         R04: { father: { 880: 760, 440: 550, 700: 640 }, beast: { 430: 440 } },
+        R03: { father: { '-150': 200, 480: 500 } },
         R05: { father: { 380: 420 }, belle: { 560: 540 }, sisa: { 740: 640 }, sisb: { 850: 710 } },
         R06: { beast: { 300: 380 }, father: { 1100: 1000, 650: 620 }, belle: { 1100: 1000, 520: 520 } },
         R06b: { belle: { 230: 330 } },
@@ -353,7 +356,7 @@
       const xy = s => String(s).split(',').map(Number);
       const A = { belle, beast, prince, father, sisa, sisb };
       const RF = () => front(L.fir[0], L.fir[1], L.sbush, L.curtain[0], L.curtain[1], L.rose);
-      const BGK = { cottage: 'cottage', cottage_front: 'cottage_front', snow_forest: 'snow_forest_v2', dining: 'dining_v2', garden: 'garden_v2', room: 'room_v2' };
+      const BGK = { cottage: 'cottage', cottage_front: 'cottage_front', snow_forest: 'snow_forest_lb', dining: 'dining_v2', garden: 'garden_v2', room: 'room_v2' };
       const setLayers = () => {
         Object.values(L).flat().forEach(hide);
         if (tag === 'R03') { put(T, L.fir[0], 60, 575); put(T, L.fir[1], 950, 575, { to: 'right' }); put(T, L.sbush, 985, 585); }
@@ -393,7 +396,7 @@
               LX[name] = lx;
               const ride = a.cur === 'ride';
               if (ride) (async () => { for (let i = 0; i < Math.floor(ms / 600); i++) { a.hop(5, 400); await sleep(600); } })();
-              if (P && tag === 'R03') T.camTo(450, 280, 1, ms);
+              if (P && tag === 'R03') T.camTo(500, 280, 1, ms);
               if (P && tag === 'R10') T.camTo(460, 280, 1, ms);
               busy[name] = a.move(tx, yOf(ly), ms, ride ? 'linear' : undefined); return null;
             }
@@ -579,14 +582,14 @@
 
     /* ===== 3. 눈보라 속 궁전 ===== */
     await T.sceneCard(tr('눈보라 속 궁전'), () => {
-      scene('snow_forest_v2'); snowfall(T, 22);
-      put(T, father, -150, FL, { look: 'ride', to: 'right' });
+      scene('snow_forest_lb'); snowfall(T, 22);
+      put(T, father, X(-150, 200), FL, { look: 'ride', to: 'right' });   /* 세로: 아버지·말이 처음부터 화면 안(왼쪽 끝 잘림 방지) */
       put(T, L.fir[0], 60, 575); put(T, L.fir[1], 950, 575, { to: 'right' }); put(T, L.sbush, 985, 585);   /* 앞 가림: 아버지는 왼쪽 전나무 뒤로 지나간다 */
       if (P) camSnap(300, 280, 1);
     }, father.pos);
     sfx(T, 'blow_long', .4);
     (async () => { for (let i = 0; i < 6; i++) { father.hop(5, 400); await sleep(600); } })();
-    if (P) T.camTo(450, 280, 1, 3000);
+    if (P) T.camTo(500, 280, 1, 3200);   /* 아버지를 따라가며 궁전(빛나는 창·문)이 화면에 들어온다 */
     await Promise.all([father.move(X(480, 500), FL, 3200, 'linear'), say('그런데 배의 짐은 남의 것이 되어, 아버지는 빈손으로 돌아오다 눈보라에 길을 잃었어요.')]);
     await sleep(300);
     const h10 = father.hop(8, 400);
