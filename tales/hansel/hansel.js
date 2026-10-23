@@ -19,7 +19,8 @@
   const aspOf = f => ASP[f] || imgAsp[f] || (NEWART[f] && NEWART[f][0]) || 1;
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 BGK 포함)는 그대로, 그림만 v2·라이트박스(lb). 지붕은 그대로.
      집 안 밤 문틀(DOOR·기둥 클립)·집 앞 집·과자 집 자리는 원본과 겹쳐 확인(문틀은 같은 자리, 과자 집은 약 2% 오른쪽 — 좌표에 묶이지 않음) */
-  const BGFILE = { cottage: 'cottage_v2', trail: 'trail_v2', glade: 'glade_v2', ground: 'ground_v2', house: 'house_lb', cage: 'cage_v2', oven: 'oven_v2', river: 'river_v2', house_night: 'house_night_v2', cottage_night: 'cottage_night_lb' };
+  /* 2026-10-23 사용자 결정: 숲길(trail)·빈터(glade)·숲 바닥(ground)은 옛 그림으로 되돌림(짝 소품·반딧불도 뺌) */
+  const BGFILE = { cottage: 'cottage_v2', house: 'house_lb', cage: 'cage_v2', oven: 'oven_v2', river: 'river_v2', house_night: 'house_night_v2', cottage_night: 'cottage_night_lb' };
   const LASP = { leaves_front: 1.1533, berry_bush_front: 1.07, wildflowers: 1.11, reeds: .86, mist: 4.1667, beam_herbs: 1.3433, candy_cane: 1.0583, branch_sil: 1.01, grass_sil: 3.4483, pine_sil: .4967, lollipop_sil: 1.0917 };
   const bgSrc = k => AS + 'hg_bg_' + (BGFILE[k] || k) + '.webp', cutSrc = k => AS + 'hg_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
@@ -96,10 +97,6 @@
       const c = T.el('circle', { cx: x, cy: y, r, fill, style: 'pointer-events:none' }, T.fx);
       if (!still()) c.animate([{ opacity: .25 }, { opacity: 1 }, { opacity: .25 }], { duration: 1500 + i * 230, delay: i * 170, iterations: Infinity });
     });
-    const fireflies = n => [[90, 120], [180, 260], [60, 330], [230, 80], [820, 100], [900, 240], [960, 160], [780, 300], [420, 70], [600, 90]].slice(0, n).forEach(([x, y], i) => {
-      const c = T.el('circle', { cx: x, cy: y, r: 3.5, fill: '#F2C94E', style: 'pointer-events:none' }, T.fx);
-      if (!still()) c.animate([{ translate: '0 0', opacity: .2 }, { translate: `${i % 2 ? 22 : -22}px -16px`, opacity: 1 }, { translate: '0 0', opacity: .2 }], { duration: 3200 + i * 300, iterations: Infinity, easing: 'ease-in-out' });
-    });
     function dress(key) {
       if (key === 'cottage_night') {   // 라이트박스: 달빛 조약돌·그날 밤
         sway(layer('branch_sil', L(90, 300), -24, 200, { top: true }), 1, 9000);
@@ -107,15 +104,7 @@
         [170, 500, 830].forEach((x, i) => layer('grass_sil', x, 600, 70, { flip: i === 1 }));
         lightOn(); twinkles([[560, 60], [640, 110], [860, 70], [930, 140], [470, 40], [700, 30], [800, 160], [520, 150]], '#FFF4CC');
       }
-      if (key === 'trail' && !P) { layer('leaves_front', 0, 600, 120, { name: 'leafL' }); layer('leaves_front', 1000, 600, 120, { flip: true, name: 'leafR' }); }
       if (key === 'cottage' && !P) { layer('wildflowers', 55, 505, 90, { front: false }); layer('wildflowers', 905, 505, 90, { front: false, flip: true }); layer('wildflowers', 985, 600, 90, { name: 'flowers' }); }
-      if (key === 'glade' && !P) {
-        layer('berry_bush_front', 120, 505, 130, { front: false }); layer('berry_bush_front', 880, 505, 130, { front: false, flip: true });
-        layer('berry_bush_front', 30, 600, 130, { name: 'berryL' }); layer('berry_bush_front', 970, 600, 130, { flip: true, name: 'berryR' });
-      }
-      if (key === 'ground') {
-        fireflies(10);   // 안개 띠(mist)는 땅 위 파란 덩어리처럼 보여 뺐다(사진 확인 2026-10-23)
-      }
       if (key === 'house') {   // 라이트박스: 과자 집·마녀
         layer('candy_cane', L(150, 300), 505, 110, { front: false });
         if (!P) { layer('candy_cane', 820, 505, 110, { front: false, flip: true }); layer('lollipop_sil', 90, 585, 150); layer('pine_sil', 25, 585, 420); layer('pine_sil', 975, 585, 420, { flip: true }); }
@@ -519,7 +508,7 @@
     await say('헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.');
     await dropAuto;
     hans.look('walk', 'right');
-    const leave = father.move(1150, GROUND, 2600); setTimeout(() => wig('leafR', 4, 500), 1800);
+    const leave = father.move(1150, GROUND, 2600);
     await say('아빠는 둘을 숲에 남겨 두고 돌아갔어요.');
     await leave;
     /* 둘러보기: 아빠가 안 보여요 — 뒤(왼쪽)를 봤다가 다시 앞으로 */
@@ -567,7 +556,7 @@
     let hx = hans.x, gx = gret.x;
     await T.ask('헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!', () => T.mash(hans.pos, { count: 5, prompt: '헨젤을 톡톡톡톡톡! 부스러기를 세어요.', onStep: i => {
       const cx = hx - 14;
-      crumbAt(cx, 520); popSfx(T); T.pop(cx, i % 2 ? 260 : 200, tr(NUM[i - 1])); wig('leafL', 2, 300);
+      crumbAt(cx, 520); popSfx(T); T.pop(cx, i % 2 ? 260 : 200, tr(NUM[i - 1]));
       hx += stepX; gx += stepX;
       hans.hop(10, 220); hans.move(hx, GROUND, 360); gret.move(gx, GROUND, 360);
     } }));
@@ -588,7 +577,7 @@
       g.animate([{ opacity: 0 }, { opacity: 1 }], 500);
     });
     put(T, hans, L(430, 445), GROUND, { look: 'eat', to: 'right' }); put(T, gret, L(540, 555), GROUND, { look: 'eat', to: 'left' });
-    const eating = (async () => { await sleep(900); hans.hop(14, 300); gret.hop(14, 300); wig('berryL', 3, 400); wig('berryR', 3, 400); await sleep(900); hans.hop(14, 300); gret.hop(14, 300); })();
+    const eating = (async () => { await sleep(900); hans.hop(14, 300); gret.hop(14, 300); await sleep(900); hans.hop(14, 300); gret.hop(14, 300); })();
     await say('빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.');
     await eating;
     await say('아삭아삭, 새콤달콤! 손가락이 빨갛게 물들었어요.');
