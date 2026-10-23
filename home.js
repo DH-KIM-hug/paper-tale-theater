@@ -220,7 +220,10 @@
       : st === 'locked' ? `<span class="lock-tag" aria-hidden="true"><b>${L('잠겨 있어요', 'Locked')}</b></span>` : '';
     const o = ORIGIN[t.origin];
     const skills = t.skills.map(k => `<span class="sk" title="${SKILL[k].label}">${icon(k)}</span>`).join('');
-    const inner = `
+    const rv = window.REVIEW && window.REVIEW[t.id];
+    let rvOk = false; try { rvOk = !!JSON.parse(localStorage.getItem('review_ok') || '{}')[t.id]; } catch (e) { /* 무시 */ }
+    const rvTag = rv ? `<span class="rv-badge${rvOk ? ' ok' : ''}" data-rv="${t.id}" title="${rv}">${rvOk ? '확인함' : '새 그림'}</span>` : ''; // 임시: review.js
+    const inner = `${rvTag}
       ${holeHTML(t, open, tag)}
       <span class="label">
         <strong class="title">${t.title}</strong>
@@ -828,3 +831,12 @@
     if (lk && TALES.some(t => t.id === lk && t.ready)) { history.replaceState(null, '', location.pathname + location.hash); setTimeout(() => openStore(lk), 600); }
   } catch (e) { /* 무시 */ }
 })();
+/* 임시(review.js): '새 그림' 딱지를 톡 누르면 확인함으로 바꾼다. 카드가 열리지 않게 막는다 */
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('.rv-badge'); if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  let m = {}; try { m = JSON.parse(localStorage.getItem('review_ok') || '{}'); } catch (er) { /* 무시 */ }
+  m[b.dataset.rv] = !m[b.dataset.rv]; try { localStorage.setItem('review_ok', JSON.stringify(m)); } catch (er) { /* 무시 */ }
+  document.querySelectorAll('.rv-badge[data-rv="' + b.dataset.rv + '"]').forEach(x => { x.classList.toggle('ok', !!m[b.dataset.rv]); x.textContent = m[b.dataset.rv] ? '확인함' : '새 그림'; });
+}, true);
+

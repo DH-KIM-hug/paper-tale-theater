@@ -779,3 +779,8 @@ body.app .card.sel { outline: 3px solid var(--copper); outline-offset: -2px; }
 
 body.app #hero { touch-action: pan-y; } /* 가로로 쓸면 큰 그림이 넘어가게(세로 스크롤은 그대로) */
 body.app .shelf::-webkit-scrollbar { display: none; }   /* 큰 그림과 목록이 한 덩어리로 같이 스크롤 */
+
+/* 임시(review.js): 새 그림 확인 딱지 */
+.card { position: relative; }
+.rv-badge { position: absolute; left: 6px; top: 6px; z-index: 5; font: 700 12px/1 'Pretendard Variable', Pretendard, sans-serif; color: #fff; background: #A93B32; padding: 6px 9px; border-radius: 999px; box-shadow: 0 2px 4px rgba(46,36,28,.3); cursor: pointer; }
+.rv-badge.ok { background: #3F6B4F; }
