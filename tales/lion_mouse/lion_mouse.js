@@ -14,10 +14,11 @@
      비교 판 배경(lm_bg_board)·큰 발(paw_pad + 따로 오린 발가락 paw_toe)·이빨 카드·그루터기 구멍·밤 숲 그물은 그림. 발자국 카드·끊는 밧줄은 코드 그대로. */
   const AS = '../../assets/';
   const BG = {
-    savanna: 'v3w/lm_bg_savanna.webp', grass: 'v3w/lm_bg_grass.webp',
-    night_forest: 'v3w/lm_bg_night_forest.webp', night_net: 'v3w/lm_bg_night_net.webp', morning: 'v3w/lm_bg_morning.webp',
+    /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 낮 초원·풀숲은 다층 v2, 밤 숲·사각사각·아침 띠는 라이트박스(lb). 아카시아·공터·달 자리는 원본과 같다 */
+    savanna: 'v3w/lm_bg_savanna_v2.webp', grass: 'v3w/lm_bg_grass_v2.webp',
+    night_forest: 'v3w/lm_lb_night_forest.webp', night_net: 'v3w/lm_lb_night_net.webp', morning: 'v3w/lm_bg_morning.webp',
     board: 'v3w/lm_bg_board.webp',
-    morning_nosun: 'v3w/lm_bg_morning_nosun.webp', // 아침 초원에서 그림 속 해만 지운 판 (달리는 띠 이어 붙이기용; 해는 코드가 하늘에 하나만 고정)
+    morning_nosun: 'v3w/lm_lb_morning_nosun.webp', // 아침 초원 라이트박스(해 없음, 지평선 띠 Amber Glow) (달리는 띠 이어 붙이기용; 해는 코드가 하늘에 하나만 고정)
   };
   /* 배우·소품·컷 (사자·생쥐는 모두 왼쪽을 본다)
      - lion_sleep: 뜬 눈으로 나와서 감은 눈(‿)으로 고쳐 칠함
@@ -55,7 +56,7 @@
     }
     return wrap;
   }
-  const BG_EDGE = { savanna: ['#8fb1ac', '#9c7f42'], grass: ['#abc7bf', '#d0a374'], night_forest: ['#17333f', '#284342'], night_net: ['#18325a', '#46554c'], morning: ['#93b8d3', '#a98147'], morning_nosun: ['#93b8d3', '#a98147'], board: ['#a5c5de', '#d09555'] };
+  const BG_EDGE = { savanna: ['#8fbabc', '#a78540'], grass: ['#9cc8d0', '#d8a471'], night_forest: ['#292f58', '#2d393a'], night_net: ['#463778', '#272422'], morning: ['#93b8d3', '#a98147'], morning_nosun: ['#fab082', '#81673f'], board: ['#a5c5de', '#d09555'] };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   function bgImage(T, key, parent) {
     const u = bgUrl(key); if (!u) return null;
@@ -63,6 +64,14 @@
     T.el('rect', { x: -1400, y: -1400, width: 3800, height: 1400 + y + h / 2, fill: top }, T.bg);
     T.el('rect', { x: -1400, y: y + h / 2, width: 3800, height: 2000, fill: bot }, T.bg);
     return T.el('image', { href: u, x, y, width: w, height: h, preserveAspectRatio: 'none' }, parent || T.bg);
+  }
+  /* 층 소품(VISUAL_PLAN §1): 배경을 꾸미는 종이 조각, 누름 없음. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위).
+     (cx, y) = 가운데·발끝(top 이면 윗변). 자리는 인물 발끝·생쥐 자리를 피해 화면 가장자리에 둔다 */
+  const LAYER = { grass_front: 1.205, acacia_branch_top: 1.3283, daisy_giant: .5783, termite_mound: .78, fern_night_front: 1.1667, rocks_front: 1.37 };
+  function layer(T, k, cx, y, h, { front = false, flip = false, top = false } = {}) {
+    const w = h * LAYER[k], g = T.el('g', { filter: 'url(#pp)', style: 'pointer-events:none' }, front ? T.fx : T.bg);
+    if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+    return T.el('image', { href: AS + 'v3w/lm_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, g);
   }
   /* 누운 사자 그림 (왼쪽을 봄, 발끝 0): 갈기 지름이 두 그림에서 같도록 같은 배율. 갈기 가운데 ≈ 임시 도형 머리 자리(-100, -96) */
   const LIE = {
@@ -228,7 +237,10 @@
   /* ================= 배경 ================= */
   function savannaBG(T, { morning = false } = {}) {
     const { el, paper } = T, b = T.bg;
-    if (bgImage(T, morning ? 'morning' : 'savanna')) return true; // 그림: 큰 아카시아(나무 그늘 x≈640)까지 그림 속에
+    if (bgImage(T, morning ? 'morning' : 'savanna')) { // 그림: 큰 아카시아(나무 그늘 x≈640)까지 그림 속에
+      if (!morning) { layer(T, 'termite_mound', 110, 470, 160); layer(T, 'acacia_branch_top', 960, -24, 180, { front: true, top: true }); layer(T, 'rocks_front', 20, 600, 90, { front: true }); }
+      return true;
+    }
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: morning ? '#F6E2B0' : C.sky }, b);
     el('circle', { cx: morning ? 160 : 860, cy: morning ? 140 : 90, r: 44, fill: morning ? C.amber : '#F6D98A' }, b);
     paper(b, [['path', { d: 'M-200 380 Q120 300 380 360 Q650 290 1200 370 V600 H-200 Z', fill: '#E3C88A' }]]);
@@ -246,7 +258,10 @@
   /* 생쥐 눈높이: 풀이 숲처럼 커 보인다 */
   function grassForestBG(T) {
     const { el, paper } = T, b = T.bg;
-    if (bgImage(T, 'grass')) return true;
+    if (bgImage(T, 'grass')) { // 거인 데이지는 사자 뒤 오른쪽, 앞 풀 포기는 왼쪽 끝 아래(생쥐 발끝 y 500 보다 낮게)
+      layer(T, 'daisy_giant', 975, 560, 260); layer(T, 'grass_front', 0, 610, 100, { front: true });
+      return true;
+    }
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: '#EFE3B8' }, b);
     for (let i = 0; i < 16; i++) {
       const x = -40 + i * 72, h = 330 + (i * 53 % 4) * 45;
@@ -265,7 +280,7 @@
   /* 밤 숲 하이앵글: 위에서 내려다본 땅 */
   function nightHighBG(T) {
     const { el, paper } = T, b = T.bg;
-    if (bgImage(T, 'night_forest')) return true; // 숲 공터(풀밭)는 무대 y 345~540, 가운데 x≈500
+    if (bgImage(T, 'night_forest')) { layer(T, 'fern_night_front', 0, 610, 100, { front: true }); return true; } // 숲 공터(풀밭)는 무대 y 345~540, 가운데 x≈500. 고사리는 생쥐(120,505) 아래 왼쪽 끝
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: '#223227' }, b);
     paper(b, [['ellipse', { cx: 520, cy: 330, rx: 360, ry: 200, fill: '#34493A' }]]);
     [[40, 40, 120], [960, 60, 140], [-10, 380, 110], [990, 470, 130], [300, -40, 90], [720, 560, 100]].forEach(([x, y, r]) =>
@@ -274,7 +289,7 @@
   }
   function nightNetBG(T) {
     const { el, paper } = T, b = T.bg;
-    if (bgImage(T, 'night_net')) return true;
+    if (bgImage(T, 'night_net')) { layer(T, 'fern_night_front', 1000, 610, 100, { front: true, flip: true }); return true; }
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: C.indigo }, b);
     el('circle', { cx: 900, cy: 70, r: 36, fill: C.cream }, b);
     paper(b, [['rect', { x: -200, y: 470, width: 1400, height: 300, fill: '#2B3B2E' }]]);
