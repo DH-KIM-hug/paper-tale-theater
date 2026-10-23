@@ -17,7 +17,11 @@
     bg_house_night: [0, '#5B4332', '집 안 밤'], bg_cottage_night: [0, '#1F2A56', '집 앞 밤'] };
   const has = {}, imgAsp = {}; /* 새 그림이 실제로 있는지, 있으면 폭/높이 */
   const aspOf = f => ASP[f] || imgAsp[f] || (NEWART[f] && NEWART[f][0]) || 1;
-  const bgSrc = k => AS + 'hg_bg_' + k + '.webp', cutSrc = k => AS + 'hg_cut_' + k + '.webp';
+  /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 BGK 포함)는 그대로, 그림만 v2·라이트박스(lb). 지붕은 그대로.
+     집 안 밤 문틀(DOOR·기둥 클립)·집 앞 집·과자 집 자리는 원본과 겹쳐 확인(문틀은 같은 자리, 과자 집은 약 2% 오른쪽 — 좌표에 묶이지 않음) */
+  const BGFILE = { cottage: 'cottage_v2', trail: 'trail_v2', glade: 'glade_v2', ground: 'ground_v2', house: 'house_lb', cage: 'cage_v2', oven: 'oven_v2', river: 'river_v2', house_night: 'house_night_v2', cottage_night: 'cottage_night_lb' };
+  const LASP = { leaves_front: 1.1533, berry_bush_front: 1.07, wildflowers: 1.11, reeds: .86, mist: 4.1667, beam_herbs: 1.3433, candy_cane: 1.0583, branch_sil: 1.01, grass_sil: 3.4483, pine_sil: .4967, lollipop_sil: 1.0917 };
+  const bgSrc = k => AS + 'hg_bg_' + (BGFILE[k] || k) + '.webp', cutSrc = k => AS + 'hg_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const INK = '#2E241C';
 
@@ -73,7 +77,56 @@
     const tr = T.tr;
     const P = T.viewWidth() < 990; /* 세로 화면은 가운데 좁은 폭만 보인다 */
     SC = P ? .8 : 1;
-    const scene = (key, cx = 500) => { T.clear(); bgImage(T, key); camSnap(cx, 280, 1); };
+    /* 층 소품(VISUAL_PLAN §3~§12): 누름 없음. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위, 누름 없음). 세로 화면은 가운데 밖 소품을 대부분 뺀다 */
+    const LY = {};
+    const still = () => T.reading() && T.readInstant();
+    const layer = (k, cx, y, h, { front = true, flip = false, top = false, name } = {}) => {
+      const w = h * LASP[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+      if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+      const inner = T.el('g', { filter: 'url(#pp)' }, g);
+      T.el('image', { href: AS + 'hg_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+      inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+      if (name) LY[name] = inner;
+      return inner;
+    };
+    const sway = (g, deg, ms, delay = 0) => { if (!still()) g.animate([{ rotate: `${-deg}deg` }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }], { duration: ms, delay, iterations: Infinity, easing: 'ease-in-out' }); return g; };
+    const wig = (name, deg = 3, ms = 500) => { const g = LY[name]; if (g && g.isConnected) g.animate([{ rotate: '0deg' }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }, { rotate: '0deg' }], { duration: ms, composite: 'add' }); };
+    const lightOn = () => { if (still()) return; const r = T.el('rect', { x: -1400, y: -1400, width: 3800, height: 3800, fill: INK, opacity: .35, style: 'pointer-events:none' }, T.fx); r.animate([{ opacity: .35 }, { opacity: 0 }], { duration: 900, fill: 'forwards' }).onfinish = () => r.remove(); };
+    const twinkles = (pts, fill, r = 3) => pts.forEach(([x, y], i) => {
+      const c = T.el('circle', { cx: x, cy: y, r, fill, style: 'pointer-events:none' }, T.fx);
+      if (!still()) c.animate([{ opacity: .25 }, { opacity: 1 }, { opacity: .25 }], { duration: 1500 + i * 230, delay: i * 170, iterations: Infinity });
+    });
+    const fireflies = n => [[90, 120], [180, 260], [60, 330], [230, 80], [820, 100], [900, 240], [960, 160], [780, 300], [420, 70], [600, 90]].slice(0, n).forEach(([x, y], i) => {
+      const c = T.el('circle', { cx: x, cy: y, r: 3.5, fill: '#F2C94E', style: 'pointer-events:none' }, T.fx);
+      if (!still()) c.animate([{ translate: '0 0', opacity: .2 }, { translate: `${i % 2 ? 22 : -22}px -16px`, opacity: 1 }, { translate: '0 0', opacity: .2 }], { duration: 3200 + i * 300, iterations: Infinity, easing: 'ease-in-out' });
+    });
+    function dress(key) {
+      if (key === 'cottage_night') {   // 라이트박스: 달빛 조약돌·그날 밤
+        sway(layer('branch_sil', L(90, 300), -24, 200, { top: true }), 1, 9000);
+        if (!P) layer('pine_sil', 975, 585, 420);
+        [170, 500, 830].forEach((x, i) => layer('grass_sil', x, 600, 70, { flip: i === 1 }));
+        lightOn(); twinkles([[560, 60], [640, 110], [860, 70], [930, 140], [470, 40], [700, 30], [800, 160], [520, 150]], '#FFF4CC');
+      }
+      if (key === 'trail' && !P) { layer('leaves_front', 0, 600, 120, { name: 'leafL' }); layer('leaves_front', 1000, 600, 120, { flip: true, name: 'leafR' }); }
+      if (key === 'cottage' && !P) { layer('wildflowers', 55, 505, 90, { front: false }); layer('wildflowers', 905, 505, 90, { front: false, flip: true }); layer('wildflowers', 985, 600, 90, { name: 'flowers' }); }
+      if (key === 'glade' && !P) {
+        layer('berry_bush_front', 120, 505, 130, { front: false }); layer('berry_bush_front', 880, 505, 130, { front: false, flip: true });
+        layer('berry_bush_front', 30, 600, 130, { name: 'berryL' }); layer('berry_bush_front', 970, 600, 130, { flip: true, name: 'berryR' });
+      }
+      if (key === 'ground') {
+        fireflies(10);   // 안개 띠(mist)는 땅 위 파란 덩어리처럼 보여 뺐다(사진 확인 2026-10-23)
+      }
+      if (key === 'house') {   // 라이트박스: 과자 집·마녀
+        layer('candy_cane', L(150, 300), 505, 110, { front: false });
+        if (!P) { layer('candy_cane', 820, 505, 110, { front: false, flip: true }); layer('lollipop_sil', 90, 585, 150); layer('pine_sil', 25, 585, 420); layer('pine_sil', 975, 585, 420, { flip: true }); }
+        lightOn(); twinkles([[120, 60], [220, 140], [280, 50], [720, 70], [800, 150], [880, 50]], '#FFF4CC', 2.5);
+      }
+      if (key === 'cage' || key === 'oven') [L(180, 120), L(820, 330)].forEach((x, i) => layer('beam_herbs', x, -24, 120, { top: true, flip: i === 1, name: 'beam' + i }));
+      if (key === 'river') {
+        if (!P) { sway(layer('reeds', 120, 517, 170, { front: false }), 1.5, 6000); layer('reeds', 30, 600, 170, { name: 'reedL' }); layer('reeds', 970, 600, 170, { flip: true, name: 'reedR' }); }
+      }
+    }
+    const scene = (key, cx = 500) => { T.clear(); bgImage(T, key); dress(key); camSnap(cx, 280, 1); };
     const L = (l, p) => (P ? p : l); /* 가로 값, 세로 값 */
 
     /* 종이로 오린 작은 그림들 (눈 없는 것만) */
@@ -466,7 +519,7 @@
     await say('헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.');
     await dropAuto;
     hans.look('walk', 'right');
-    const leave = father.move(1150, GROUND, 2600);
+    const leave = father.move(1150, GROUND, 2600); setTimeout(() => wig('leafR', 4, 500), 1800);
     await say('아빠는 둘을 숲에 남겨 두고 돌아갔어요.');
     await leave;
     /* 둘러보기: 아빠가 안 보여요 — 뒤(왼쪽)를 봤다가 다시 앞으로 */
@@ -514,7 +567,7 @@
     let hx = hans.x, gx = gret.x;
     await T.ask('헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!', () => T.mash(hans.pos, { count: 5, prompt: '헨젤을 톡톡톡톡톡! 부스러기를 세어요.', onStep: i => {
       const cx = hx - 14;
-      crumbAt(cx, 520); popSfx(T); T.pop(cx, i % 2 ? 260 : 200, tr(NUM[i - 1]));
+      crumbAt(cx, 520); popSfx(T); T.pop(cx, i % 2 ? 260 : 200, tr(NUM[i - 1])); wig('leafL', 2, 300);
       hx += stepX; gx += stepX;
       hans.hop(10, 220); hans.move(hx, GROUND, 360); gret.move(gx, GROUND, 360);
     } }));
@@ -535,7 +588,7 @@
       g.animate([{ opacity: 0 }, { opacity: 1 }], 500);
     });
     put(T, hans, L(430, 445), GROUND, { look: 'eat', to: 'right' }); put(T, gret, L(540, 555), GROUND, { look: 'eat', to: 'left' });
-    const eating = (async () => { await sleep(900); hans.hop(14, 300); gret.hop(14, 300); await sleep(900); hans.hop(14, 300); gret.hop(14, 300); })();
+    const eating = (async () => { await sleep(900); hans.hop(14, 300); gret.hop(14, 300); wig('berryL', 3, 400); wig('berryR', 3, 400); await sleep(900); hans.hop(14, 300); gret.hop(14, 300); })();
     await say('빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.');
     await eating;
     await say('아삭아삭, 새콤달콤! 손가락이 빨갛게 물들었어요.');
@@ -681,7 +734,7 @@
     await stride;
     witch.look('oven', 'left'); witch.hop(10, 300);
     await T.ask('마녀가 화덕 안을 들여다봐요. 그레텔을 톡! 화덕 문을 쾅 밀어요.', () => T.tap(gret.pos, { prompt: '그레텔을 톡! 쾅 밀어요.' }));
-    gret.look('push', 'right'); AudioFX.sfx('boom', 1); AudioFX.sfx('crash'); T.shake(); T.pop(L(500, 500), 330, tr('쾅!')); /* 2026-10-20 쾅 소리 */
+    gret.look('push', 'right'); AudioFX.sfx('boom', 1); AudioFX.sfx('crash'); T.shake(); wig('beam0', 3, 700); wig('beam1', 3, 700); T.pop(L(500, 500), 330, tr('쾅!')); /* 2026-10-20 쾅 소리 */
     await T.cutImage([{ src: cutSrc('slam'), sfx: 'boom', hold: 3200 }], { hold: 3200 });
     await say('쾅! 마녀는 깜짝 놀라 모자가 휙 날아갔어요.');
     scene('oven');
@@ -707,7 +760,7 @@
     await duck.move(L(640, 570), 470, 1100);
     await say('그때 흰 오리가 헤엄쳐 왔어요.');
     await sleep(700); /* 저절로 */
-    duck.look('b'); duck.hop(14, 300); AudioFX.sfx('squeak') || popSfx(T); T.pop(duck.x, duck.y - 150, tr('꽥꽥!'));
+    duck.look('b'); duck.hop(14, 300); AudioFX.sfx('squeak') || popSfx(T); wig('reedL', 3, 400); wig('reedR', 3, 400); T.pop(duck.x, duck.y - 150, tr('꽥꽥!'));
     await T.cutImage([{ src: cutSrc('duck'), sfx: 'pop', hold: 3400 }], { hold: 3400 });
     scene('river');
     put(T, duck, L(640, 570), 470, { look: 'b', to: 'left' });
@@ -753,7 +806,7 @@
     await say('"그래, 다시는 안 그럴게. 약속할게." 아빠가 두 아이를 꼭 안았어요.');
     await T.ask('헨젤과 그레텔은 마음이 따뜻하고 행복했어요. 여러분은 기분이 어때요? 헨젤을 톡! 만세!', () => T.tap(hans.pos, { prompt: '헨젤을 톡! 만세!' }));
     T.pop(hans.x - 90, hans.y - 230, tr('만세!'));
-    T.confetti();
+    T.confetti(); wig('flowers', 3, 500);
     await Promise.all([hans.hop(40, 500), gret.hop(34, 500), father.hop(26, 500)]);
     await sleep(REST);
     scene('cottage_night'); /* 그날 밤 — 창문만 환한 집(모두 안에서 잔다) */
