@@ -17,19 +17,22 @@
      - 마지막 판(방·큰 나무·문)은 다시 뽑은 낮 그림(sm_bg_room2 · tree2 · door2)을 밤빛으로 구웠다 (스크래치 bake4.py · tree2fix.py) */
   const AS = '../../assets/';
   const BG = {
-    cottage: 'v3w/sm_bg_cottage.webp',
+    /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 초가집·세 고개·하늘 나라는 v2, 큰 나무·하늘 동아줄·수수밭은 라이트박스(lb).
+       초가·문·감나무 자리와 큰 나무 기둥·가지·우물·초가(TREE_PX)는 옛 그림과 겹쳐 같다. 세 고개의 바위는 새 그림마다 HILL_ROCKS 를 다시 땄다.
+       하늘 나라 밤은 구운 밤 그림 대신 코드 남색 장막(판단 1). 수수는 실루엣, 붉은 수숫대는 쓰지 않는다(판단 3) */
+    cottage: 'v3w/sm_bg_cottage_v2.webp',
     kitchen: 'v3w/sm_bg_kitchen.webp',
-    hill0: 'v3w/sm_bg_hill_dusk_gold.webp',
-    hill1: 'v3w/sm_bg_hill_dusk.webp',
-    hill2: 'v3w/sm_bg_hill_dusk_night.webp',
+    hill0: 'v3w/sm_bg_hill_gold_v2.webp',
+    hill1: 'v3w/sm_bg_hill_dusk_v2.webp',
+    hill2: 'v3w/sm_bg_hill_night_v2.webp',
     room: 'v3w/sm_bg_room2_lamp.webp',  // 방 안 (노란 장판·닫힌 창호지 문·반닫이·이불·등잔) — 낮 그림을 등잔불 밤으로 구움, 그림 속 등잔 불꽃은 지웠다 (코드가 켠다)
     backyard: 'v3w/sm_bg_backyard2_night.webp', // 뒷마당: 초가 모퉁이·돌담·장독대·감나무 (그림 속 달리는 아이 셋을 지우고 달밤으로 구움)
-    sky: 'v3w/sm_bg_sky.webp',               // 구름 사이로 빛이 드는 밤하늘 (무대 뒤에 고정, 줄·구름·오누이만 위로 흐른다)
-    sorghum: 'v3w/sm_bg_sorghum_dusk.webp',  // 수수밭 — 원본은 한낮이라 해 질 녘 보랏빛으로 구움 (줄이 끊어진 건 밤)
-    heaven: 'v3w/sm_bg_heaven.webp', heavenNight: 'v3w/sm_bg_heaven_night.webp', // 밤 = 같은 그림을 푸른 밤으로 구운 것 (톡 하면 서서히 바뀜)         // 하늘 나라 — 그림 속 해·달은 지웠다 (해님·달님은 오누이 배우). 밤은 코드의 남색 장막
+    sky: 'v3w/sm_lb_sky_rope.webp',              // 구름 사이로 빛이 드는 밤하늘 (무대 뒤에 고정, 줄·구름·오누이만 위로 흐른다)
+    sorghum: 'v3w/sm_lb_sorghum.webp', // 수수밭 — 원본은 한낮이라 해 질 녘 보랏빛으로 구움 (줄이 끊어진 건 밤)
+    heaven: 'v3w/sm_bg_heaven_v2.webp', heavenNight: null, // 밤 = 같은 그림을 푸른 밤으로 구운 것 (톡 하면 서서히 바뀜)         // 하늘 나라 — 그림 속 해·달은 지웠다 (해님·달님은 오누이 배우). 밤은 코드의 남색 장막
     /* 까맣게 나와 다시 뽑은 낮 그림(assets/raw/v3/*_day.png)을 밤으로 구운 것 (conv: 스크래치 bake_night.py).
        하늘은 푸른 밤, 종이 물건은 달빛 받은 연보라·크림 — 가장 어두운 곳도 남색(#24285a 쯤)까지만 */
-    tree: 'v3w/sm_bg_tree2_night.webp',       // 큰 나무(가운데)·돌 우물(왼쪽)·초가(오른쪽) — 그림 속 아이 넷을 지우고 달밤으로 구움
+    tree: 'v3w/sm_lb_tree_moon.webp',      // 큰 나무(가운데)·돌 우물(왼쪽)·초가(오른쪽) — 그림 속 아이 넷을 지우고 달밤으로 구움
     wellTop: 'v3w/sm_bg_well_top_night.webp', // 우물 속 (위에서 본 돌 우물)
     door: 'v3w/sm_bg_door2_lamp.webp',        // 닫힌 미닫이 창호지 문 (가운데 이음매에 고리) — 등잔불 색
   };
@@ -134,7 +137,41 @@
     T.el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: back }, p);
     const g = T.el('g', flip ? { transform: 'matrix(-1,0,0,1,1000,0)' } : {}, p);
     place(T, g, u, FULL);
+    if (p === T.bg) dress(T, k);
     return g;
+  }
+  /* 층 소품(sm_layer_*, 누름 없음): 폭/높이. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위). (cx, y) = 가운데·발끝, top 이면 윗변.
+     앞 소품은 세로 화면 가운데(285~715) 밖 */
+  const LASP = { pampas_front: 1.0217, maple_branch: .9667, chrysanthemum_mid: 3.8793, sorghum_front: .885, sil_pine: 1.0517 };
+  const still = T => T.reading && T.reading() && T.readInstant && T.readInstant();
+  function layer(T, k, cx, y, h, { front = false, flip = false, top = false } = {}) {
+    const w = h * LASP[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+    const inner = T.el('g', { filter: 'url(#pp)' }, g);
+    if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+    T.el('image', { href: AS + 'v3w/sm_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+    inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+    return inner;
+  }
+  const sway = (T, g, deg, ms, delay = 0) => { if (!still(T)) g.animate([{ rotate: `${-deg}deg` }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }], { duration: ms, delay, iterations: Infinity, easing: 'ease-in-out' }); return g; };
+  function dress(T, k) {
+    if (k === 'cottage') {
+      [250, 750].forEach((x, i) => layer(T, 'chrysanthemum_mid', x, 590, 62, { flip: !!i }));
+      sway(T, layer(T, 'maple_branch', 60, -24, 180, { front: true, top: true, flip: true }), 1, 8000);
+    }
+    if (k === 'hill0' || k === 'hill1' || k === 'hill2') {   // 바위(오른쪽)는 그림을 뒤집어 쓴다 → 억새는 양 끝 아래, 단풍 가지는 왼쪽 위만
+      sway(T, layer(T, 'pampas_front', 30, 600, 130, { front: true }), 1.2, 6000);
+      sway(T, layer(T, 'pampas_front', 985, 600, 130, { front: true, flip: true }), 1.2, 6000, 1500);
+      if (k !== 'hill2') sway(T, layer(T, 'maple_branch', 50, -24, 180, { front: true, top: true, flip: true }), 1, 8000);
+    }
+    if (k === 'sorghum') {
+      sway(T, layer(T, 'sorghum_front', 40, 600, 170, { front: true }), 1.5, 5000);
+      sway(T, layer(T, 'sorghum_front', 965, 600, 170, { front: true, flip: true }), 1.5, 5000, 1200);
+    }
+    if (k === 'heaven') [250, 750].forEach((x, i) => layer(T, 'chrysanthemum_mid', x, 590, 56, { flip: !!i }));
+    if (k === 'tree') {   // 달밤 큰 나무 라이트박스: 위 모서리 실루엣 소나무 가지
+      sway(T, layer(T, 'sil_pine', 40, -30, 200, { front: true, top: true }), 1, 9000);
+      sway(T, layer(T, 'sil_pine', 960, -30, 200, { front: true, top: true, flip: true }), 1, 9000, 2000);
+    }
   }
   /* 같은 그림을 한 번 더, 모양(poly: 원본 1760×992 픽셀 좌표)대로 오려서 배우 앞에 둔다 = 그림 속 바위·장독 뒤에 숨기 */
   let clipN = 0;
@@ -157,14 +194,13 @@
     T.el('rect', { x: -1400, y: -1400, width: 5600, height: 3400, fill: '#34427f' }, p);   // 그림 밖: 위 하늘색
     T.el('rect', { x: -1400, y: y + 940 * s, width: 5600, height: 3400, fill: '#464c75' }, p); // 아래 땅색
     place(T, p, u, { x, y, w: 1760 * s, h: 992 * s });
-    T.el('rect', { x: -1400, y: -1400, width: 5600, height: 5600, fill: '#1c2660', opacity: .14 }, p); // 가까이 볼 때 흰 잎이 눈처럼 보이지 않게 밤빛을 한 겹 더
     return { at: ([qx, qy]) => [x + qx * s, y + qy * s] };
   }
   /* 세 고개 그림마다 바위 모양이 달라 하나씩 (원본 픽셀, 좌우 뒤집기 전). 바위 아래 땅 끝까지 오려 호랑이 발이 안 보이게 */
-  const HILL_ROCKS = [
-    [[30, 640], [60, 540], [120, 495], [240, 445], [330, 415], [370, 402], [450, 430], [510, 480], [550, 540], [585, 600], [592, 650], [650, 640], [682, 665], [682, 1060], [30, 1060]],
-    [[85, 650], [100, 590], [150, 520], [220, 460], [290, 432], [345, 420], [390, 418], [440, 440], [480, 490], [520, 545], [550, 615], [620, 660], [618, 700], [618, 1060], [85, 1060]],
-    [[85, 490], [130, 455], [220, 415], [280, 396], [350, 410], [440, 435], [500, 450], [560, 443], [600, 500], [640, 565], [672, 600], [668, 650], [630, 705], [680, 730], [680, 1060], [85, 1060]],
+  const HILL_ROCKS = [   // v2 그림(2026-10-23)에서 다시 땀
+    [[35, 600], [60, 530], [150, 455], [250, 425], [300, 410], [380, 404], [440, 430], [500, 470], [525, 520], [550, 590], [600, 630], [640, 660], [650, 700], [650, 1060], [35, 1060]],
+    [[80, 620], [100, 560], [160, 500], [250, 440], [300, 420], [380, 410], [440, 430], [495, 470], [530, 540], [555, 600], [620, 640], [665, 665], [670, 710], [670, 1060], [80, 1060]],
+    [[45, 590], [70, 540], [130, 500], [290, 425], [390, 420], [450, 480], [500, 560], [530, 600], [600, 640], [650, 660], [660, 700], [660, 1060], [45, 1060]],
   ];
 
   /* ================= 작은 도우미 ================= */
@@ -547,7 +583,7 @@
     const rBuildTree = kidsUp => {
       T.clear(); camSnap(500, 280, 1);
       const tree = rs.tree = mkView(T, T.world);
-      const ta = treeArt(T, tree, rTREE_S, TREE_PX.trunk, [640, 570]);
+      const ta = treeArt(T, tree, rTREE_S, TREE_PX.trunk, [640, 570]); if (ta) dress(T, 'tree');
       if (ta) {
         const [mx, my] = ta.at(TREE_PX.moon); el('circle', { cx: mx, cy: my, r: 40, fill: C.cream, opacity: .95 }, tree);
         boy = mkBoy(T, tree, kidsUp ? rTOP.b[0] : 610, kidsUp ? rTOP.b[1] : 560, 1);
@@ -1565,7 +1601,7 @@
       T.clear(); camSnap(500, 280, 1);
       tree = mkView(T, T.world);
       /* 그림 나무: 기둥 가운데가 x 640·땅 y 570 → 우물은 왼쪽(x 100~330), 오른쪽 굵은 가지 위가 오누이 자리(TOP) */
-      const ta = treeArt(T, tree, TREE_S, TREE_PX.trunk, [640, 570]);
+      const ta = treeArt(T, tree, TREE_S, TREE_PX.trunk, [640, 570]); if (ta) dress(T, 'tree');
       if (ta) {
         const [mx, my] = ta.at(TREE_PX.moon); el('circle', { cx: mx, cy: my, r: 40, fill: C.cream, opacity: .95 }, tree);
         well = el('g', {}, tree); // 우물은 그림 속에

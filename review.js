@@ -7,7 +7,7 @@ window.REVIEW = {
   sun_wind: '배경 다층·빛 상자', lion_mouse: '배경 다층·빛 상자', fox_crane: '배경 다층·빛 상자', kongjwi: '배경 다층·빛 상자',
   heungbu: '배경 다층·빛 상자', hansel: '배경 다층·빛 상자',
   ugly_duckling: '배경 다층·빛 상자', wolf_goats: '배경 다층·빛 상자',
-  goldilocks: '배경 다층·빛 상자',
+  goldilocks: '배경 다층·빛 상자', sunmoon: '배경 다층·빛 상자',
   snow_white: '공주 화려하게(v2)', cinderella: '공주 화려하게(v2)', little_mermaid: '공주 화려하게(v2)', beauty_beast: '공주 화려하게(v2)',
   rapunzel: '공주 화려하게(v2)', frog_prince: '공주 화려하게(v2)', princess_pea: '공주 화려하게(v2)', sleeping_beauty: '공주 화려하게(v2)',
   kkultteok: '꽃밭·공장 다층', red_car: '장난감 나라 다층', unicorn: '재기획 그림 전체'
