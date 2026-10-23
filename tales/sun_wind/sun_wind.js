@@ -15,15 +15,14 @@
      하늘빛은 그림 위에 곱하기(multiply)로 얹는 색 한 겹(tint)이 바꾼다. */
   const AS = '../../assets/';
   const BG = {
-    /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 하늘은 라이트박스(지평선 빛·구름 바다), 부감 길·나무·바위·전나무는 옛 그림과 겹쳐 같은 자리.
+    /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 하늘은 옛 그림(라이트박스는 사용자 결정으로 되돌림), 부감 길·나무·바위·전나무는 옛 그림과 겹쳐 같은 자리.
        들길 라이트박스 둘(fieldBG lb): 바람 차례 = 은빛 바람 들판, 해님 차례 = 바람 들판에서 햇살 들판으로 톡톡마다 크로스페이드(틴트·덮개 대신) */
-    sky: 'v3w/sw_lb_sky.webp', high: 'v3w/sw_bg_high_v2.webp', field: 'v3w/sw_bg_field_v2.webp',
+    sky: 'v3w/sw_bg_sky.webp', high: 'v3w/sw_bg_high_v2.webp', field: 'v3w/sw_bg_field_v2.webp',
     stream: 'v3w/sw_bg_stream_v2.webp', snow: 'v3w/sw_bg_snow_v2.webp',
     lb_wind: 'v3w/sw_lb_field_wind.webp', lb_sun: 'v3w/sw_lb_field_sun.webp',
   };
   /* 층 소품 sw_layer_*: [이름, 가운데 x, 발끝 y, 높이, 폭/높이, {mid(배우 뒤), flip, sway(바람 흔들림), lb('wind'|'sun')}]. 앞 소품은 배우 앞(T.fx), 누름 없음 */
   const LAYERS = {
-    sky: [['cloud_front', 120, 600, 150, 2.6946], ['cloud_front', 500, 600, 150, 2.6946, { flip: true }], ['cloud_front', 880, 600, 150, 2.6946]],
     field: [['grass_front', 30, 590, 90, 1.0933]],
     stream: [['reeds_stream', 880, 560, 180, .7433, { mid: true }]],
     snowbush: [['snow_bush', 30, 590, 120, 1.2567]],
@@ -87,7 +86,7 @@
     .map(([k, v]) => [k, v.map(n => n * WIND_K)]));
   const cutArt = (T, key, sfx, hold, onShow) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx, hold }], { hold, onShow }) : null);
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). zoom: (cx, cy) 기준으로 키운다 */
-  const BG_EDGE = { sky: ['#fbb440', '#3a284c'], high: ['#8fa056', '#7a8a47'], field: ['#7dc4ec', '#d1a16e'], stream: ['#93ceed', '#ae7b5a'], snow: ['#b1cee3', '#e7e6eb'] };
+  const BG_EDGE = { sky: ['#a4c9da', '#e9edf2'], high: ['#8fa056', '#7a8a47'], field: ['#7dc4ec', '#d1a16e'], stream: ['#93ceed', '#ae7b5a'], snow: ['#b1cee3', '#e7e6eb'] };
   function bgImage(T, key, { zoom = 1, cx = 500, cy = 560 } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const w = 1080 * zoom, h = w * 992 / 1760, x = cx + (-40 - cx) * zoom, y = cy + (-24 - cy) * zoom;
@@ -410,9 +409,8 @@
   function skyBG(T, sunX = 290) { // 1. 하늘 와이드 (구름 층)
     const b = T.bg;
     // 2026-10-22 사용자: 앞쪽 흙바닥·바위가 보이면 해·바람이 땅 위에 선 것 같다 → 그림 위쪽(하늘·구름 바다)만 크게 잡아 땅은 화면 밖으로
-    if (bgImage(T, 'sky', { zoom: 1.75, cx: 500, cy: 0 })) {
-      T.el('circle', { cx: sunX, cy: 262, r: 170, fill: '#FFF3D2', opacity: .5, 'pointer-events': 'none' }, b); // 라이트박스 금빛 하늘에서 해님이 묻히지 않게 뒤에 옅은 빛 원
-      layers(T, 'sky'); return { sky: null, drift: T.el('g', {}, b), art: true }; } // 구름은 그림 속 종이 → 흐르는 구름 없음
+    // 2026-10-23 사용자: 하늘 라이트박스(sw_lb_sky)는 이전 그림으로 되돌림 — 빛 원·구름 앞 소품도 뺌
+    if (bgImage(T, 'sky', { zoom: 1.75, cx: 500, cy: 0 })) return { sky: null, drift: T.el('g', {}, b), art: true }; // 구름은 그림 속 종이 → 흐르는 구름 없음
     const sky = T.el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: SKY.day }, b);
     const drift = T.el('g', {}, b);
     [[140, 120, .8], [520, 90, .6], [860, 150, .7]].forEach(([x, y, s]) => T.paper(drift, [['ellipse', { cx: x, cy: y, rx: 70 * s, ry: 26 * s, fill: C.snow }], ['ellipse', { cx: x + 30 * s, cy: y - 16 * s, rx: 40 * s, ry: 24 * s, fill: C.snow }]]));
