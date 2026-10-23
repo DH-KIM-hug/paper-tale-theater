@@ -221,7 +221,7 @@
     const o = ORIGIN[t.origin];
     const skills = t.skills.map(k => `<span class="sk" title="${SKILL[k].label}">${icon(k)}</span>`).join('');
     const rv = window.REVIEW && window.REVIEW[t.id];
-    let rvOk = false; try { rvOk = !!JSON.parse(localStorage.getItem('review_ok') || '{}')[t.id]; } catch (e) { /* 무시 */ }
+    let rvOk = false; try { rvOk = rvSeen(JSON.parse(localStorage.getItem('review_ok') || '{}')[t.id], rv); } catch (e) { /* 무시 */ }
     const rvTag = rv ? `<span class="rv-badge${rvOk ? ' ok' : ''}" data-rv="${t.id}" title="${rv}">${rvOk ? '확인함' : '새 그림'}</span>` : ''; // 임시: review.js
     const inner = `${rvTag}
       ${holeHTML(t, open, tag)}
@@ -832,11 +832,14 @@
   } catch (e) { /* 무시 */ }
 })();
 /* 임시(review.js): '새 그림' 딱지를 톡 누르면 확인함으로 바꾼다. 카드가 열리지 않게 막는다 */
+/* 확인함은 그때의 REVIEW 값을 저장한다. 값이 바뀌면(다시 그림 등) 딱지가 다시 '새 그림'으로 보인다. 옛 기록(true)은 처음 값일 때만 확인함 */
+function rvSeen(v, rv) { return v === rv || (v === true && /^(배경 다층·빛 상자(·개울)?|공주 화려하게\(v2\)|꽃밭·공장 다층|장난감 나라 다층|재기획 그림 전체)$/.test(rv || '')); }
 document.addEventListener('click', e => {
   const b = e.target.closest && e.target.closest('.rv-badge'); if (!b) return;
   e.preventDefault(); e.stopPropagation();
   let m = {}; try { m = JSON.parse(localStorage.getItem('review_ok') || '{}'); } catch (er) { /* 무시 */ }
-  m[b.dataset.rv] = !m[b.dataset.rv]; try { localStorage.setItem('review_ok', JSON.stringify(m)); } catch (er) { /* 무시 */ }
-  document.querySelectorAll('.rv-badge[data-rv="' + b.dataset.rv + '"]').forEach(x => { x.classList.toggle('ok', !!m[b.dataset.rv]); x.textContent = m[b.dataset.rv] ? '확인함' : '새 그림'; });
+  const rv = window.REVIEW && window.REVIEW[b.dataset.rv], on = !rvSeen(m[b.dataset.rv], rv);
+  m[b.dataset.rv] = on ? rv : false; try { localStorage.setItem('review_ok', JSON.stringify(m)); } catch (er) { /* 무시 */ }
+  document.querySelectorAll('.rv-badge[data-rv="' + b.dataset.rv + '"]').forEach(x => { x.classList.toggle('ok', on); x.textContent = on ? '확인함' : '새 그림'; });
 }, true);
 

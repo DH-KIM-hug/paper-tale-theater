@@ -40,7 +40,7 @@
   const AS = '../../assets/';
   const BG = {
     /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 낮 장면은 다층 v2, 밤 잔치·두루미 집 해 질 녘은 라이트박스(lb). 탁자·창·집·연못 자리는 원본과 같다(겹쳐 확인) */
-    forest: 'v3w/fc_bg_forest_v2.webp', kitchen: 'v3w/fc_bg_kitchen_v2.webp', high: 'v3w/fc_bg_high_v2.webp', pondhouse: 'v3w/fc_bg_pondhouse_v2.webp',
+    forest: 'v3w/fc_bg_forest_v2.webp', kitchen: 'v3w/fc_bg_kitchen_v3.webp', high: 'v3w/fc_bg_high_v3.webp', pondhouse: 'v3w/fc_bg_pondhouse_v2.webp',
     crane_room: 'v3w/fc_bg_crane_room_v2.webp', feast_day: 'v3w/fc_bg_feast_day_v2.webp', feast_night: 'v3w/fc_lb_feast_night.webp',
     pond_dusk: 'v3w/fc_lb_pondhouse_dusk.webp', // 두루미가 "놀러 와~" 부를 때 크로스페이드
   };

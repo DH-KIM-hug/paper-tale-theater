@@ -15,7 +15,7 @@
     /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): v2 7장. 흙선·문·헛간 지붕선·쥐구멍은 옛 그림과 겹쳐 같은 자리라 좌표 그대로.
        울타리 v2 는 가운데 빈 벽판을 울타리로 이었다(덤불이 그 앞을 가린다) */
     garden: 'v3w/tn_bg_garden_v2.webp', lowangle: 'v3w/tn_bg_lowangle_v2.webp', door: 'v3w/tn_bg_door_v2.webp', fence: 'v3w/tn_bg_fence_v2.webp',
-    barn: 'v3w/tn_bg_barn_v2.webp', mouse: 'v3w/tn_bg_mouse_v2.webp', feast: 'v3w/tn_bg_feast_v2.webp',
+    barn: 'v3w/tn_bg_barn_v3.webp', mouse: 'v3w/tn_bg_mouse_v2.webp', feast: 'v3w/tn_bg_feast_v2.webp',
   };
   /* 라이트박스(해 질 녘 텃밭 = 여섯이 다 함께 마지막 당기기, 잔치 밤 = 다 함께 먹는 끝): 같은 자리의 그림을 위에 겹쳐 1.2초 크로스페이드 */
   const LB = { garden: 'v3w/tn_lb_garden_dusk.webp', feast: 'v3w/tn_lb_feast_night.webp' };

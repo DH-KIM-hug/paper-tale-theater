@@ -15,7 +15,7 @@
   };
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 set:<키> 포함)는 그대로, 그림만 v2·라이트박스. 둥지·부엌문·초가·대문·기와집 자리는 원본과 같다(겹쳐 확인) */
   /* 2026-10-23 사용자 결정: 처마(eaves)·가을 하늘(sky_autumn 라이트박스)은 옛 그림으로 되돌림(유채·실루엣·빛 점·어둠 막·단풍잎 낙하도 뺌) */
-  const BGS = { sky_spring: 'sky_spring_v2', nolkitchen: 'nolkitchen_v2', yard: 'yard_v2', nol_eaves: 'nol_eaves_v2', nolyard: 'nolyard_v2', giwa: 'giwa_v2' };
+  const BGS = { sky_spring: 'sky_spring_v2', nolkitchen: 'nolkitchen_v3', yard: 'yard_v3b', yard_lb: 'yard_lb2b', nol_eaves: 'nol_eaves_v2', nolyard: 'nolyard_v2', giwa: 'giwa_v2' };
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const GROUND = 500;
   const NUM = ['하나!', '둘!', '셋!'];
@@ -103,7 +103,7 @@
     /* 7장 첫 박을 타는 순간: 낮 마당 → 금빛 라이트박스(같은 구도). 감 가지·풀 포기는 걷고 넝쿨·풀 실루엣을 건다 */
     function toLightbox() {
       if (!L.bg || !L.bg.isConnected || L.lb) return;
-      const old = L.bg, lb = T.el('image', { href: U('bg_yard_lb'), x: BG.x, y: BG.y, width: BG.w, height: BG.h, preserveAspectRatio: 'none', opacity: 0 }, T.bg);
+      const old = L.bg, lb = T.el('image', { href: U('bg_' + BGS.yard_lb), x: BG.x, y: BG.y, width: BG.w, height: BG.h, preserveAspectRatio: 'none', opacity: 0 }, T.bg);
       old.after(lb); L.lb = lb;
       const quick = still();
       tint(.3, 900);

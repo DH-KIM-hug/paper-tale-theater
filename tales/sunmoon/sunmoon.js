@@ -20,7 +20,7 @@
     /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 초가집·세 고개·하늘 나라는 v2, 큰 나무·하늘 동아줄·수수밭은 라이트박스(lb).
        초가·문·감나무 자리와 큰 나무 기둥·가지·우물·초가(TREE_PX)는 옛 그림과 겹쳐 같다. 세 고개의 바위는 새 그림마다 HILL_ROCKS 를 다시 땄다.
        하늘 나라 밤은 구운 밤 그림 대신 코드 남색 장막(판단 1). 수수는 실루엣, 붉은 수숫대는 쓰지 않는다(판단 3) */
-    cottage: 'v3w/sm_bg_cottage_v2.webp',
+    cottage: 'v3w/sm_bg_cottage_v3b.webp',
     kitchen: 'v3w/sm_bg_kitchen.webp',
     hill0: 'v3w/sm_bg_hill_gold_v2.webp',
     hill1: 'v3w/sm_bg_hill_dusk_v2.webp',
@@ -28,7 +28,7 @@
     room: 'v3w/sm_bg_room2_lamp.webp',  // 방 안 (노란 장판·닫힌 창호지 문·반닫이·이불·등잔) — 낮 그림을 등잔불 밤으로 구움, 그림 속 등잔 불꽃은 지웠다 (코드가 켠다)
     backyard: 'v3w/sm_bg_backyard2_night.webp', // 뒷마당: 초가 모퉁이·돌담·장독대·감나무 (그림 속 달리는 아이 셋을 지우고 달밤으로 구움)
     sky: 'v3w/sm_lb_sky_rope.webp',              // 구름 사이로 빛이 드는 밤하늘 (무대 뒤에 고정, 줄·구름·오누이만 위로 흐른다)
-    sorghum: 'v3w/sm_lb_sorghum.webp', // 수수밭 — 원본은 한낮이라 해 질 녘 보랏빛으로 구움 (줄이 끊어진 건 밤)
+    sorghum: 'v3w/sm_lb_sorghum2.webp', // 수수밭 — 원본은 한낮이라 해 질 녘 보랏빛으로 구움 (줄이 끊어진 건 밤)
     heaven: 'v3w/sm_bg_heaven_v2.webp', heavenNight: null, // 밤 = 같은 그림을 푸른 밤으로 구운 것 (톡 하면 서서히 바뀜)         // 하늘 나라 — 그림 속 해·달은 지웠다 (해님·달님은 오누이 배우). 밤은 코드의 남색 장막
     /* 까맣게 나와 다시 뽑은 낮 그림(assets/raw/v3/*_day.png)을 밤으로 구운 것 (conv: 스크래치 bake_night.py).
        하늘은 푸른 밤, 종이 물건은 달빛 받은 연보라·크림 — 가장 어두운 곳도 남색(#24285a 쯤)까지만 */

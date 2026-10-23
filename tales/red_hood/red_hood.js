@@ -19,7 +19,7 @@
   /* 2026-10-23 화려한 다층 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 BGKEY 포함)는 그대로, 그림만 v2·라이트박스.
      부엌 식탁·집 문·오두막·침대·액자·옷장·창·식탁은 옛 그림과 겹쳐 같은 자리(±1%). 늑대(4장)·지름길(6장 아래 칸)은 라이트박스 */
   /* 2026-10-23 사용자 결정: 숲길(trail)·꽃밭(flowers)·늑대 숲(tree 라이트박스)은 옛 그림으로 되돌림(짝 소품·빛 점·어둠 막도 뺌) */
-  const BGV = { bed: 'bed_v2', cottage: 'cottage_v2', door: 'door_v2', kitchen: 'kitchen_v2', room: 'room_v2', shortcut: 'shortcut_lb', table: 'table_v2' };
+  const BGV = { bed: 'bed_v2', cottage: 'cottage_v2', door: 'door_v2', kitchen: 'kitchen_v2', room: 'room_v3', shortcut: 'shortcut_lb', table: 'table_v3' };
   /* 층 소품(rh_layer_*, 누름 없음) 그림 폭/높이 */
   const LAR = { fern_front: 1.0267, branch_leaves: 1.01, flowers_front: 1.0967, bird: .9833, butterfly: 1.2033, herbs: .67, plant_pot: .7967, trees_sil: .8533, grass_sil: 5.6962 };
   const NF = new Set(['apple', 'basket', 'bread', 'flower_blue', 'flower_red', 'flower_yellow', 'milk', 'vase_blue', 'vase_red', 'vase_yellow', 'wardrobe']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)

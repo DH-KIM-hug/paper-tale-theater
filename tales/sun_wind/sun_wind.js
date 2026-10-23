@@ -19,7 +19,7 @@
        들길 라이트박스 둘(fieldBG lb): 바람 차례 = 은빛 바람 들판, 해님 차례 = 바람 들판에서 햇살 들판으로 톡톡마다 크로스페이드(틴트·덮개 대신) */
     sky: 'v3w/sw_bg_sky.webp', high: 'v3w/sw_bg_high_v2.webp', field: 'v3w/sw_bg_field_v2.webp',
     stream: 'v3w/sw_bg_stream_v2.webp', snow: 'v3w/sw_bg_snow_v2.webp',
-    lb_wind: 'v3w/sw_lb_field_wind.webp', lb_sun: 'v3w/sw_lb_field_sun.webp',
+    lb_wind: 'v3w/sw_lb_field_wind2.webp', lb_sun: 'v3w/sw_lb_field_sun2.webp',
   };
   /* 층 소품 sw_layer_*: [이름, 가운데 x, 발끝 y, 높이, 폭/높이, {mid(배우 뒤), flip, sway(바람 흔들림), lb('wind'|'sun')}]. 앞 소품은 배우 앞(T.fx), 누름 없음 */
   const LAYERS = {

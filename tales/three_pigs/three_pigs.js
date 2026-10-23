@@ -18,7 +18,7 @@
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 들판·집터 셋·세 집터 들판은 v2(땅선·집 자리 그대로), 쿵쿵쿵은 해 질 녘 라이트박스(집·문·창·굴뚝 자리 그대로),
      보글보글은 벽난로 불빛 라이트박스, 벽돌 마을은 노을 라이트박스. 가게·벽돌 집 안은 그대로 */
-  const BGF = { meadow: 'bg_meadow_v2', strawlot: 'bg_strawlot_v2', woodlot: 'bg_woodlot_v2', bricklot: 'bg_bricklot_v2', field: 'bg_field_v2', brick_out: 'lb_brick_dusk', chimney: 'lb_hearth', sunset: 'lb_village_sunset' };
+  const BGF = { meadow: 'bg_meadow_v2', strawlot: 'bg_strawlot_v2', woodlot: 'bg_woodlot_v2', bricklot: 'bg_bricklot_v3', field: 'bg_field_v2', brick_out: 'lb_brick_dusk', chimney: 'lb_hearth', sunset: 'lb_village_sunset' };
   /* 층 소품(tp_layer_*, 누름 없음): 폭/높이. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위, pointer-events none). (cx, y) = 가운데·발끝, top 이면 윗변 */
   const LASP = { wheat_front: 1.0017, fern_front: 1.0533, poppies_mid: 4.2857, cherry_branch: .8883, sil_cypress: .3933 };
   const NUM = ['하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열'];
