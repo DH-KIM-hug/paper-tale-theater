@@ -59,6 +59,24 @@
       lightDots(T, 10, [40, 960, 60, 300]);
     }
   }
+  /* 2026-10-24 사용자 결정(빛 상자 검수): 늑대가 우물 오른쪽 빈 땅에서 물을 튀겨 → 달밤 우물(wg_lb_well_moon) 돌 우물 안으로 빠진다.
+     그림 속 우물: 돌 벽 x 446~690, 테두리 윗면 y≈258, 앞 벽 y 268~392(겹쳐 잼). 늑대는 우물 가운데(568, 352)에 발끝을 두고,
+     배경에서 앞 벽만 오려 배우 위(T.fx)에 다시 얹어 아랫몸이 우물 속에 잠기게 한다 */
+  const WELL_IN = { x: 568, y: 352 };
+  let wellN = 0;
+  function wellFront(T) {
+    const id = 'wgWellFront' + (++wellN), g = T.el('g', { style: 'pointer-events:none' }, T.fx);
+    const cp = T.el('clipPath', { id }, g); T.el('path', { d: 'M446 270 Q568 284 690 270 V392 H446 Z' }, cp);
+    T.el('image', { href: `../../assets/v3w/${BGS.well}.webp`, x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice', 'clip-path': `url(#${id})` }, g);
+    return g;
+  }
+  async function wellSplash(T, W) {
+    W.pose('splash'); W.face('left');
+    const front = wellFront(T);
+    W.hop && W.hop(40, 420);
+    await W.move(WELL_IN.x, WELL_IN.y, 420);
+    return front;
+  }
   /* 배우: poses = { 이름: 그림 }. first 자세의 높이가 h. 발끝 = (x,y) */
   function figure(T, x, y, h, poses, first, mul = {}) {
     const imgs = {}, s = h / DIM[poses[first]][1];
@@ -130,14 +148,14 @@
       const nums = s => String(s).split(',').map(Number);
       const P = portrait();
       const QX = 300, LX = 525, CX = 720, BX = 700, BY = 500, BELLY = [684, 425];
-      let key = '', seen = {}, M = null, W = null, K7 = null, kidsR = [], quilt = null, laundry = null, clk = null, doorway = null, paw = null, stoneP = null, snoreOn = false, popped = false, wolfs = {};
+      let key = '', seen = {}, M = null, W = null, wellF = null, K7 = null, kidsR = [], quilt = null, laundry = null, clk = null, doorway = null, paw = null, stoneP = null, snoreOn = false, popped = false, wolfs = {};
       const CAMW = { house: P ? [180, 280] : [500, 280], tree: P ? [600, 280] : [500, 280] };
       const clearAll = () => { snoreOn = false; };
       const build = k => {
         clearAll(); seen[k] = (seen[k] || 0) + 1;
         const n = seen[k];
         T.clear(); T.camSnap(500, 280, 1);
-        key = k; M = null; W = null; K7 = null; kidsR = []; popped = false; quilt = laundry = clk = doorway = paw = stoneP = null; wolfs = {};
+        key = k; M = null; W = null; wellF = null; K7 = null; kidsR = []; popped = false; quilt = laundry = clk = doorway = paw = stoneP = null; wolfs = {};
         if (k === 'house' && n === 1) k = 'paw'; if (k === 'house' && n > 1) k = 'hide'; key = k;
         if (k === 'tree' && n > 1) key = 'belly';
         if (k === 'well' && n > 1) key = 'together';
@@ -232,8 +250,8 @@
             if (a1 === 'knock') { if (W) appear(W); return; }
             if (a1 === 'belly') return;
             if (a1 === 'heavy') { W = wolf(T, 260, 520, ['heavy', 'splash'], 'heavy'); W.face('right'); return; }
-            if (a1 === 'splash') { if (W) { W.pose('splash'); W.face('left'); } return; }
-            if (a1 === 'flee') { if (W) W.pos.remove(); W = wolf(T, 790, 520, ['flee'], 'flee'); return; }
+            if (a1 === 'splash') { if (W) { W.pose('splash'); W.face('left'); } return; } // 우물 속으로는 walk(y<500) 에서
+            if (a1 === 'flee') { if (W) W.pos.remove(); if (wellF) { wellF.remove(); wellF = null; } W = wolf(T, 790, 520, ['flee'], 'flee'); return; }
             return;
           }
           if (op === 'hide') { if (W && key !== 'tree' && key !== 'belly') hide(W); return; }
@@ -253,7 +271,7 @@
               return W.move(420, 540, 1600);
             }
             if (key === 'well' || key === 'together') {
-              if (y < 500) return W.move(760, 470, 420);
+              if (y < 500) return wellSplash(T, W).then(f => { wellF = f; });
               if (x < 800 && x > 500) { T.camTo(700, 280, 1, 2600); return W.move(700, 520, 2600); }
               return W.move(x, y, 1500);
             }
@@ -521,10 +539,10 @@
     await wh.move(700, 520, 2600);
     await say('"우물에서 물을 마셔야지."');
     await sleep(500);
-    wh.pose('splash'); wh.face('left'); await wh.move(760, 470, 420);
+    const wellFr = await wellSplash(T, wh);
     await cutArt(T, 'wg_cut_splash', 'splash');
     await say('풍덩! 늑대가 우물에 빠졌어요.');
-    wh.pos.remove();
+    wh.pos.remove(); wellFr.remove();
     const wf2 = wolf(T, 790, 520, ['flee'], 'flee');
     await say('"으악, 차가워! 다시는 안 올 거야!"');
     await wf2.move(1250, 520, 1500);
