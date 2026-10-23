@@ -14,10 +14,13 @@
      - bg_wall · bg_roof: 담장 위 흰 고양이 · 지붕 위 수탉이 그려져 나와서 지웠다 (코드가 그 자리에 고양이 · 닭을 둔다)
      - bg_forest_night · house_low · house_wide: 그림책 밤처럼 조금 밝게 */
   const AS = '../../assets/';
+  /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 방앗간·들길·풀밭·우리 집은 v2, 탑 쌓기 창문·음악 대폭발 집은 라이트박스(창·문 자리 그대로),
+     도둑이 숲에서 과장 보고하는 장면만 밤 숲길 라이트박스(walk_lb). 캄캄한 숲(걷기)은 부엉이 가지·닭 소나무·오두막 창 좌표가 새 그림과 달라 옛 그림,
+     창문 안(식탁)은 새 그림의 잔치 음식이 식탁 앞 오림(POV_TABLE)과 맞지 않아 옛 그림. 담장·지붕은 그대로 */
   const BG = {
-    mill: 'v3w/br_bg_mill.webp', road: 'v3w/br_bg_road.webp', wall: 'v3w/br_bg_wall.webp', roof: 'v3w/br_bg_roof.webp', meadow: 'v3w/br_bg_meadow.webp',
-    forest: 'v3w/br_bg_forest_night.webp', house_low: 'v3w/br_bg_house_low.webp', house_pov: 'v3w/br_bg_house_pov.webp',
-    house_wide: 'v3w/br_bg_house_wide.webp', morning: 'v3w/br_bg_morning.webp',
+    mill: 'v3w/br_bg_mill_v2.webp', road: 'v3w/br_bg_road_v2.webp', wall: 'v3w/br_bg_wall.webp', roof: 'v3w/br_bg_roof.webp', meadow: 'v3w/br_bg_meadow_v2.webp',
+    forest: 'v3w/br_bg_forest_night.webp', house_low: 'v3w/br_lb_window_glow.webp', house_pov: 'v3w/br_bg_house_pov.webp',
+    house_wide: 'v3w/br_lb_house_burst.webp', morning: 'v3w/br_bg_morning_v2.webp', walk_lb: 'v3w/br_lb_walk_moon.webp',
     walk: 'v3w/br2_bg_walk.webp', // 2026-10-21 밤 숲길 (옆에서 본 평평한 길: 걷는 동물이 길 위에 선다)
   };
   /* 배우·소품·컷 (모두 왼쪽을 본다)
@@ -57,14 +60,38 @@
   };
   const ROBBER = { '#3F6B4F': 'robber_green', '#A93B32': 'robber_red', '#6B4A32': 'robber_brown' };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
-  const BG_EDGE = { mill: ['#a7d3e7', '#dbcca7'], road: ['#c2e4f5', '#918b68'], wall: ['#9bd1f4', '#384830'], roof: ['#fef9bf', '#795e3a'], meadow: ['#bedbe1', '#39422c'],
-    forest: ['#002552', '#4b6261'], walk: ['#15224a', '#1d3631'], house_low: ['#1b2b44', '#76814f'], house_pov: ['#fdecc0', '#c79a5d'], house_wide: ['#003573', '#283a40'], morning: ['#aed3e7', '#a9a277'] };
+  const BG_EDGE = { mill: ['#7fc3ec', '#eed0ad'], road: ['#7fab9c', '#b9b268'], wall: ['#9bd1f4', '#384830'], roof: ['#fef9bf', '#795e3a'], meadow: ['#8ec3e4', '#395432'],
+    forest: ['#002552', '#4b6261'], walk: ['#15224a', '#1d3631'], walk_lb: ['#7264a3', '#5f473f'], house_low: ['#4e444d', '#714936'], house_pov: ['#fdecc0', '#c79a5d'], house_wide: ['#7b5ca4', '#544649'], morning: ['#90cae6', '#b9a57b'] };
+  /* 층 소품(br_layer_*, 누름 없음): 폭/높이. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위). (cx, y) = 가운데·발끝, top 이면 윗변. 앞 소품은 세로 화면 가운데(285~715) 밖 */
+  const LASP = { flowerbush_front: 1.075, wildflowers_mid: 3.8298, swirl_branch: .785, ivy_top: .505, sil_fir: 1.005 };
+  const still = T => T.reading && T.reading() && T.readInstant && T.readInstant();
+  function layer(T, k, cx, y, h, { front = false, flip = false, top = false } = {}) {
+    const w = h * LASP[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+    const inner = T.el('g', { filter: 'url(#pp)' }, g);
+    if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+    T.el('image', { href: AS + 'v3w/br_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+    inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+    return inner;
+  }
+  const sway = (T, g, deg, ms, delay = 0) => { if (!still(T)) g.animate([{ rotate: `${-deg}deg` }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }], { duration: ms, delay, iterations: Infinity, easing: 'ease-in-out' }); return g; };
+  function dress(T, k) {
+    const bush = (xl = 40, xr = 980) => { sway(T, layer(T, 'flowerbush_front', xl, 592, 120, { front: true }), 1, 6000); sway(T, layer(T, 'flowerbush_front', xr, 592, 120, { front: true, flip: true }), 1, 6000, 1400); };
+    const swirl = () => sway(T, layer(T, 'swirl_branch', 950, -24, 180, { front: true, top: true }), 1, 8000);
+    if (k === 'mill') { bush(); swirl(); }
+    if (k === 'road') { bush(); [250, 750].forEach((x, i) => layer(T, 'wildflowers_mid', x, 590, 56, { flip: !!i })); }
+    if (k === 'wall') { sway(T, layer(T, 'ivy_top', 70, -24, 200, { front: true, top: true }), 1, 9000); [250, 750].forEach((x, i) => layer(T, 'wildflowers_mid', x, 590, 56, { flip: !!i })); }
+    if (k === 'meadow') { bush(); swirl(); }
+    if (k === 'morning') bush(5, 1005);
+    if (k === 'walk_lb') { sway(T, layer(T, 'sil_fir', 50, -24, 220, { front: true, top: true }), 1, 9000); sway(T, layer(T, 'sil_fir', 950, -24, 220, { front: true, top: true, flip: true }), 1, 9000, 2000); }
+  }
   function bgImage(T, key, { parent, zoom = 1 } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const { x, y, w, h } = BGBOX, [top, bot] = BG_EDGE[key];
     T.el('rect', { x: -1400, y: -1400, width: 3800, height: 1400 + y + h / 2, fill: top }, T.bg);
     T.el('rect', { x: -1400, y: y + h / 2, width: 3800, height: 2000, fill: bot }, T.bg);
-    return T.el('image', { href: u, x, y, width: w * zoom, height: h * zoom, preserveAspectRatio: 'none' }, parent || T.bg);
+    const im = T.el('image', { href: u, x, y, width: w * zoom, height: h * zoom, preserveAspectRatio: 'none' }, parent || T.bg);
+    if (!parent) dress(T, key);
+    return im;
   }
   /* 같은 배경 그림의 일부(clip 모양들)만 오려 parent에 한 번 더 깐다: 덤불 뒤 강아지 · 식탁 뒤 도둑 · 열리는 문 */
   let clipN = 0;
@@ -361,8 +388,13 @@
     paper(b, [['rect', { x: -300, y: 440, width: 1600, height: 400, fill: C.leaf }]]);
     for (let i = 0; i < 12; i++) paper(b, [['circle', { cx: 40 + i * 85, cy: 520 + (i % 3) * 12, r: 8, fill: i % 2 ? C.persimmon : C.cream }]]);
   }
-  function forestBG(T) {
+  function forestBG(T, lb = false) {
     const { paper, el } = T, b = T.bg;
+    if (lb && bgUrl('walk_lb')) {   // 도둑 과장 보고: 밤 숲길 라이트박스(길 띠는 옛 그림과 같은 높이), 밀지 않는다
+      const trees = T.el('g', {}, T.bg);
+      bgImage(T, 'walk_lb', { parent: trees }); T.bg.appendChild(trees); dress(T, 'walk_lb');   // 그림 밖 색 판 위로
+      return { trees, path: null, art: true, light: [812, 238] };
+    }
     if (bgUrl('walk')) {
       /* 그림(br2_bg_walk): 옆에서 본 평평한 숲길. 동물은 길(y 404~520) 위에 서고, 걸을 때 배경이 왼쪽으로 밀린다.
          무대 오른쪽 너머는 같은 그림을 좌우로 뒤집어 이어 붙인다 → 밀려도 빈 곳이 없다(밀기는 220 이하 — 더 밀면 뒤집힌 오두막이 오른쪽에 보인다). 그림 속 오두막 창 (806,276), 큰 나무 가지 위 (470,80)에 부엉이 */
@@ -432,8 +464,9 @@
     const { paper, el } = T, b = T.bg;
     if (bgImage(T, 'house_wide')) {
       const [dx, dy, dw, dh] = WIDE.door, [wx, wy, ww, wh] = WIDE.win;
-      el('rect', { x: dx, y: dy, width: dw, height: dh, fill: '#1A120C' }, b);
+      el('rect', { x: dx, y: dy, width: dw, height: dh, fill: '#F2B366' }, b);   // 라이트박스 그림은 문이 빛나므로, 열리면 문 안 불빛이 보이게
       const door = bgClip(T, 'house_wide', b, [['rect', { x: dx, y: dy, width: dw, height: dh }]]);
+      el('rect', { x: dx, y: dy, width: dw, height: dh, fill: '#3A2A3E' }, door.lastChild);   // 닫힌 문짝(실루엣 집보다 조금 밝게)
       door.style.transformBox = 'view-box'; door.style.transformOrigin = `${dx}px 0px`; door.style.transition = 'transform .4s';
       // 창: 코드가 win.firstChild.nextSibling 의 fill을 바꿔 불을 환하게 → 그 자리에 유리 위 빛 한 겹
       const win = el('g', {}, b); el('g', {}, win);
@@ -1370,7 +1403,7 @@
 
     /* 도둑의 과장 보고 (숲 속 와이드) */
     await T.sceneCard(null, () => {
-      T.clear(); const f = forestBG(T);
+      T.clear(); const f = forestBG(T, true);
       put(rb[1], L(400, 370), 470, 1.1, 'right'); put(rb[2], L(520, 460), 470, 1.1, 'right');
       put(thief, 1100, 470, 1.1, 'left'); thief.lean.style.filter = '';
       camSnap(500, 280, 1);
