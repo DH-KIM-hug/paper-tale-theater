@@ -36,6 +36,9 @@
   /* 2026-10-23 스케일 점검: 부엌 배우가 커져서 ① 물독 옆(1) 335→370 (자라가 호랑이에 가리지 않게) ② 문(4) 885→855 (꼬리가 무대 밖으로 잘리지 않게)
      ③ 할멈 구석 620→660 (넘어진 호랑이 꼬리와 겹치지 않게) */
   const POS = { tigerEnter: 1080, tigerStage: [270, 370, 430, 470, 855, 560, 640], grannyCook: 250, grannyCorner: 660, rolledSpot: 560 };
+  /* 2026-10-24 사용자 지시(§5-1): 할멈이 장면 안에서 왔다 갔다 돌지 않게 한 방향으로 둔다. 할멈 그림은 모두 왼쪽을 보고 그려져 있다.
+     밭(A): 오른쪽(호랑이가 오고 사라지는 산길 쪽) · 동짓날 저녁 부엌(B1, 친구들이 오른쪽 부엌문으로 하나씩 온다): 오른쪽, 알밤이 올 때만 왼쪽(아궁이) */
+  const GRANNY_FACE = { A: 'right', B1: 'right', B2: 'right' };
   const STATION_CAM = [[240, 430, 1.5], [320, 430, 1.5], [420, 440, 1.4], [470, 450, 1.5], [860, 380, 1.32], [560, 440, 1.35], [640, 450, 1.3]];
   const DOOR_X = { B1: 885, B2: 112 };
   const FRIEND_SET = { bam: 'B1', jara: 'B1', ddong: 'B1', songgot: 'B1', jeolgu: 'B1', myeongseok: 'B2', jige: 'B2' };
@@ -119,12 +122,17 @@
       return lo > hi ? tx : Math.min(Math.max(x, lo), hi);
     }
     let holdCam = false; // 둘을 함께 잡은 화면: 말하는 사람 쪽으로 당기는 연출(director)을 다음 카메라 이동까지 멈춘다
+    /* 2026-10-24 사용자 의견: 가로(아이패드 1180x820 등)는 확대가 심해 보기 힘들다 → 가로 화면 확대는 1.15배까지.
+       달밤 마당(pj_lb_yard_moon)은 확대하면 달·별 하늘이 잘려 낮처럼 보이므로 가로는 확대 없이 와이드. 세로 따라가기는 그대로 */
+    const LAND_Z = 1.15;
+    const zCap = z => (scene === 'B2' && night ? Math.min(z, 1) : portrait() ? z : Math.min(z, LAND_Z)); // 달밤 마당은 세로도 1배까지
     const camTo = async (x, y, z = 1, dur = 800) => {
+      z = zCap(z);
       holdCam = false;
       camBusy++;
       try { await T.camTo(keepTiger(x, z), groundY(y, z), z, dur); } finally { camBusy--; }
     };
-    const camSnap = (x, y, z = 1) => { holdCam = false; T.camSnap(keepTiger(x, z), groundY(y, z), z); };
+    const camSnap = (x, y, z = 1) => { z = zCap(z); holdCam = false; T.camSnap(keepTiger(x, z), groundY(y, z), z); };
     const camWide = (dur = 800) => camTo(500, 280, 1, dur);
     /* 세로 화면: 주어진 요소들이 모두 보이도록 카메라를 맞춘다 (화면 좌표 → 무대 좌표로 바꿔 합친 상자) */
     async function fitCam(els, maxZ, pad, dur, minZ = 0, raw = false) { // raw: 호랑이 붙잡기(keepTiger) 없이 — 상자에 호랑이가 이미 들어 있을 때
@@ -220,7 +228,7 @@
     }
 
     /* ---------- 장면 ---------- */
-    let scene = 'A', daylight = null, lbImg = null, night = false; // night: 부엌 저녁 빛이 걷혀 깜깜한 밤이 된 뒤(마당도 달빛 라이트박스)
+    let scene = 'A', daylight = null, lbImg = null, night = false, moonBox = null; // night: 부엌 저녁 빛이 걷혀 깜깜한 밤이 된 뒤(마당도 달빛 라이트박스)
     /* 부엌 저녁 빛(0.25)·밤(0): 밤이면 라이트박스 그림으로 크로스페이드 (ms 0 이면 바로) */
     function setDusk(op, ms = 0, from = null) {
       night = op === 0;
@@ -232,7 +240,7 @@
       scene = k;
       const bg = T.bg;
       bg.innerHTML = ''; fgL.innerHTML = '';
-      daylight = null; lbImg = null;
+      daylight = null; lbImg = null; moonBox = null;
       el('rect', { x: -3000, y: -3000, width: 7000, height: 7000, fill: k === 'A' ? '#e9c77a' : k === 'B1' ? '#241811' : night ? '#bcc6db' : '#1a2350' }, bg);
       const full = sceneOK[k];
       // 장면 한 장 그림: 무대(1000x560)를 꽉 채우고 가로 레터박스용으로 양옆을 조금 더 덮는다
@@ -304,6 +312,7 @@
         // 장독대는 집 오른쪽 모서리 앞으로
         img(bg, 'v3w/pj3_prop_house.webp', -280, 109, 784, 385, 'xMidYMax meet', { class: 'prop' });
         el('ellipse', { cx: DOOR_X.B2, cy: 420, rx: 100, ry: 100, fill: '#f7d98a', opacity: .16 }, bg);
+        moonBox = night ? el('rect', { x: 130, y: 6, width: 100, height: 64, fill: 'transparent', 'pointer-events': 'none' }, bg) : null; // 달밤 그림의 초승달 자리(세로 화면 카메라 맞춤용)
         img(bg, 'v3w/pj3_prop_jangdok.webp', 365, 438, 140, 82, 'xMidYMax meet', { class: 'prop' });
         if (!full) img(bg, 'v2/p2_doldam.png', 470, 440, 190, 80, 'none', { class: 'prop' }); // 장면 그림엔 돌담·사립문이 이미 있다
       }
@@ -353,7 +362,7 @@
       granny.art.classList.remove('scaredShake');
       granny.tears.setAttribute('opacity', 0); // 우는 자세 그림에 눈물이 들어 있다
       if (m === 'scared') granny.art.classList.add('scaredShake');
-      grannyPose({ cook: 'stir', scared: 'scared', cry: 'cry', happy: 'cheer' }[m] || null);
+      grannyPose({ cook: scene === 'A' ? null : 'stir', scared: 'scared', cry: 'cry', happy: 'cheer' }[m] || null); // 밭(A)의 cook = 호미로 김매기(기본 hoe), 2026-10-24 사용자 지시
     }
     const impact = (x, y, word, color = '#8e3b2f') => T.pop(x, y, word, color);
     const bounceFriend = id => friends[id].hop(26, 500);
@@ -480,6 +489,9 @@
     const fact = id => friends[id].act; // (아래 놀이판의 act 는 이 분기 뒤에 만들어진다)
     const atGranny = { cook: () => POS.grannyCook, corner: () => POS.grannyCorner, door: () => DOOR_X[scene] ?? POS.grannyCook };
     const tigerShow = () => { tiger.pos.style.opacity = 1; };
+    /* 읽어 주기도 놀이판과 같은 방향(2026-10-24): 밭은 늘 오른쪽, 호랑이가 없는 부엌·마당은 장면 방향, 호랑이와 있으면 예전처럼 왼쪽(뒤에서 호랑이 쪽으로 돌린다) */
+    const tigerHidden = () => tiger.pos.style.opacity === '0';
+    const gFace = () => (scene === 'A' ? GRANNY_FACE.A : tigerHidden() ? (GRANNY_FACE[scene] || 'left') : 'left');
     const grannyFacesTiger = () => { if (scene === 'B1' && granny.x === POS.grannyCorner && tiger.pos.style.opacity !== '0') faceTo(granny, tiger); };
     const friendHome = fr => { fr.act.style.transform = ''; fr.pos.classList.remove('party'); fr.shown = true; fr.pos.style.display = FRIEND_SET[fr.id] === scene ? '' : 'none'; };
     const enterFriend = async id => {
@@ -533,7 +545,7 @@
       jige: () => FRIEND_ACT.carry('jige'),
     };
     const FRIEND_ACT = {
-      enter: id => enterFriend(id),
+      enter: id => { if (tigerHidden() && granny.pos.style.display !== 'none') granny.face(friends[id].gx < granny.x ? 'left' : 'right'); return enterFriend(id); }, // 알밤만 왼쪽(아궁이)
       hop: id => bounceFriend(id),
       hide: id => { const fr = friends[id]; fr.shown = false; fr.pos.style.display = 'none'; },
       strike: id => STRIKE[id] && STRIKE[id](),
@@ -580,17 +592,20 @@
         if (a === 'station') return go(...stationCam(+b, tiger.x));
         if (a === 'pair') return camPair(T.readInstant() ? 0 : 700);
         const [x, y, z] = String(a).split(',').map(num);
+        if (portrait() && moonBox && scene === 'B2' && friends.bam.pos.classList.contains('party')) // 잔치(달밤): 놀이판처럼 모두 + 초승달
+          return fitCam([...FRIENDS.map(f => friends[f.id].hit), granny.pos, moonBox], 1, 20, T.readInstant() ? 0 : 800);
         return go(x, y, z || 1);
       },
       granny(a, b) {
-        if (a === 'at') { granny.place(atGranny[b] ? atGranny[b]() : num(b), 520); granny.pos.style.display = ''; granny.pos.style.opacity = 1; granny.face('left'); grannyFacesTiger(); return; }
-        if (a === 'walk') return walk(granny, num(b), 260).then(() => granny.face('left'));
+        if (a === 'at') { granny.place(atGranny[b] ? atGranny[b]() : num(b), 520); granny.pos.style.display = ''; granny.pos.style.opacity = 1; granny.face(gFace()); grannyFacesTiger(); return; }
+        if (a === 'walk') return walk(granny, num(b), 260).then(() => granny.face(scene === 'A' ? GRANNY_FACE.A : 'left'));
         if (a === 'hop') return granny.hop(22, 420);
         if (a === 'hide') { granny.pos.style.display = 'none'; return; }
         if (a === 'show') { granny.pos.style.display = ''; granny.pos.style.opacity = 1; return; }
         if (a === 'hoe' || a === 'ladle') { granny.base = a; grannyPose(null); return; }
         if (a === 'offer') { grannyPose('offer'); return; }
         if (a === 'scared' && scene === 'B1' && tiger.pos.style.opacity !== '0') faceTo(granny, tiger);
+        if (a === 'cry' && scene !== 'A' && tigerHidden() && granny.pos.style.display !== 'none') granny.face(GRANNY_FACE[scene] || 'left'); // 알밤 쪽을 본 뒤 다시 장면 방향
         grannyMood(a); // cook · cry · scared · happy
       },
       async tiger(a, b) {
@@ -602,7 +617,7 @@
           AudioFX.thud(); T.shake(); granny.hop(26, 420);
           return;
         }
-        if (a === 'exit') { await walk(tiger, POS.tigerEnter, 340); parkTiger(); granny.face('left'); return; }
+        if (a === 'exit') { await walk(tiger, POS.tigerEnter, 340); parkTiger(); granny.face(gFace()); return; }
         if (a === 'at') {
           if (b === 'door') {
             tiger.pos.style.opacity = 0;
@@ -698,6 +713,7 @@
       setScene('A');
       grannyMood('cook');
       granny.place(POS.grannyCook, 520); parkTiger();
+      granny.face(GRANNY_FACE.A); // 장면 안에서 한 방향(§5-1)
       camSnap(500, 280, 1);
       await sleep(300);
       await T.curtain(true);
@@ -725,7 +741,7 @@
         impact(tiger.x + 30, 170, '어흥!', '#c0392b');
         AudioFX.thud(); T.shake();
         granny.hop(26, 420);
-        granny.face('left'); // 물러나는 방향(왼쪽)을 보며 밀린다
+        // 호랑이를 본 채 뒤로 밀린다(보는 쪽은 그대로, 2026-10-24 방향 고정)
         await granny.move(granny.x - 24, 520, 420, 'ease-out');
         granny.art.style.transition = 'rotate .22s ease-in';
         granny.art.style.rotate = '-24deg';
@@ -744,13 +760,13 @@
         await say(INTRO.opening[2]);
         await walk(tiger, POS.tigerEnter, 340);
         parkTiger();
-        granny.face('left');
+        granny.face(GRANNY_FACE.A); // 호랑이가 사라진 산길(오른쪽)을 계속 바라본다
       });
       // 4. 동짓날 저녁 — 낮 팥밭에서 저녁 부엌으로
       beats.push(async () => {
         await T.sceneCard('동짓날 저녁', () => {
           setScene('B1');
-          granny.place(POS.grannyCook, 520); granny.face('left');
+          granny.place(POS.grannyCook, 520); granny.face(GRANNY_FACE.B1);
           grannyMood('cry');
           setDusk(.25);
           camSnap(240, 430, 1.6);
@@ -780,9 +796,11 @@
         camFriend(f.id, 650);
         bounceFriend(f.id);
         const was = [...Object.entries(granny.poses)].find(([, im]) => im.style.display !== 'none');
+        granny.face(fr.gx < granny.x ? 'left' : 'right'); // 알밤(아궁이, 할멈 왼쪽)이 올 때만 왼쪽, 나머지는 오른쪽
         grannyPose('offer'); // 팥죽 한 그릇을 건넨다
         await say(f.intro);
         grannyPose(was ? was[0] : null);
+        granny.face(GRANNY_FACE[scene] || 'right');
       }));
 
       for (const beat of beats) {
@@ -797,7 +815,7 @@
       Object.values(friends).forEach(fr => { fr.shown = true; fr.act.style.transform = ''; });
       if (scene === 'A') setScene('B1'); else setScene(scene);
       parkTiger();
-      granny.place(POS.grannyCook, 520); granny.face('left');
+      granny.place(POS.grannyCook, 520); granny.face(GRANNY_FACE.B1);
       grannyMood('cry');
       setDusk(0, 900, skipRequested ? 1 : .25);
       await camWide(600);
@@ -1100,7 +1118,7 @@
       // 세로 화면: 1.4배 클로즈업이면 양 끝 친구가 잘린다 → 잔치에 모인 모두가 들어오게 카메라를 맞춘다.
       // 친구 그림(act)만 누름 대상으로 쓴다 (원래 자리에 남은 그림자까지 넣으면 누름 영역이 화면 밖으로 넓어진다)
       const partyEl = f => friends[f.id].hit;
-      if (portrait()) await fitCam([...FRIENDS.map(partyEl), granny.pos], 1.4, 28, 800);
+      if (portrait()) await fitCam([...FRIENDS.map(partyEl), granny.pos, ...(moonBox ? [moonBox] : [])], 1, 20, 800); // 세로 화면: 잔치 모두 + 초승달(달밤이 낮처럼 보이지 않게)
       tiger.pos.style.pointerEvents = 'none'; // 호랑이 그림이 친구 누름을 가로막지 않게
       T.finale();
       await say(LINES.happyEnd);
@@ -1136,7 +1154,7 @@
       await camTo(560, 440, 1.3, 900);
       // 차례로 꾸벅. 세로 화면은 한 줄(x 235~880)이 다 안 들어오므로 꾸벅하는 쪽으로 카메라를 옮겨 간다 (엔진 camTo: 호랑이 붙잡기 없이)
       const bow = t => anim(t, [{ rotate: '0deg' }, { rotate: '-16deg' }, { rotate: '0deg' }], { duration: 520, easing: 'ease-in-out' });
-      const look = x => (portrait() ? T.camTo(x, groundY(440, 1.3), 1.3, 380) : Promise.resolve());
+      const look = x => { const z = zCap(1.3); return portrait() ? T.camTo(x, groundY(440, z), z, 380) : Promise.resolve(); };
       for (const f of FRIENDS) {
         await look(LINE_X[f.id]);
         const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s]();
