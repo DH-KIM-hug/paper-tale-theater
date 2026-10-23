@@ -141,3 +141,39 @@
 
 - 판단 1(백 년 뒤 배경 `sb_bg_outside_v3` 크로스페이드 넣음) 권장안으로 확정.
 - 판단 2(거미 없는 거미줄 소품 넣음, 깨어날 때 걷힘) 권장안으로 확정.
+
+## 재기획 2 (2026-10-23) — 라이트박스 장면 추가
+
+사용자 지시: "공주도 더 화려하게 할 곳 있으면 재기획 후 해당 장면만 재생성." CLAUDE.md §7-5-1 '빛 상자(라이트박스) 장면 허용(2026-10-23)' 적용. 참고 그림(assets/raw/refs_visual, 스타일 참고만·생성 참고 금지)의 어휘: 뒤 종이가 빛나고 앞으로 올수록 한 단계씩 어두운 종이, 맨 앞은 실루엣.
+
+### 건드리지 않는 장면
+- 왕궁 방·연회장·부엌·예배당(`room_v2`·`hall_v2`·`kitchen_v2`·`chapel_v2`)과 층 소품 13장 — 받은 그림이 이미 화려하다(스테인드글라스·배너·꽃 줄). 6장 탑 계단·꼭대기 방(`sb_bg_stairs`·`sb_bg_tower`)은 '잊힌 곳'의 소박함을 위해 그대로.
+- 9장 덤불 톡 자리(x 430~970, y 208~505)·나무(880)·위쪽 가운데 하늘(x 20~80%, y 0~30%, 코드 `sunMoon` 이 해·달을 그림)은 어떤 라이트박스에서도 비운다. 침실 창(오른쪽 위)·배너(왼쪽 위)·선반·러그·바닥선은 그대로.
+
+### 고른 장면과 이유
+| 장면 | 지금 | 왜 라이트박스인가 |
+|---|---|---|
+| 8 모두 잠들어요 "촛불도 잠들고, 성 둘레에는 가시덤불이 높이높이 자랐어요" | `bedroom_v2`(분홍 벽지·밝은 낮 창) + 남색 틴트 .22 | 틴트만으로는 '모두 잠든 밤'이 약하다. 창 밖 달만 빛나는 빛 상자 침실로 바뀌면 백 년의 잠이 시작되는 순간이 크게 보이고, 11장 깨어남(같은 방, 밝은 `bedroom_v2`)과 **같은 자리의 밤↔아침 대비**가 생긴다 |
+| 9 백 년 뒤 "저 안에 공주님이 백 년째 자고 있대요" | `outside_v2` → (해·달 세 번) → `outside_v3` 무성한 숲 크로스페이드 | 왕자가 가시덤불 성에 도착하는 큰 순간. 숲 뒤로 해가 지는 낮은 빛 띠, 덩굴 덮인 성의 **창 하나만 빛남**(공주가 자는 방) — 아이가 '저기에 공주가 있구나'를 그림으로 안다 |
+
+### 새 구성
+**A. `sb_bg_bedroom_night_lb` (배경, 라이트박스, pass 1, refs `sb_bg_bedroom_v2` — 같은 구도)**
+- 층: 창이 빛 — 램프 골드 `#F7E3A1` 뒤판이 아치 안에서 큰 Pale Gold `#EBD08A` 보름달과 별 구멍, 창틀 밝은 Paper Cream `#F6ECD8`, 커튼 Royal Purple `#5B3A7E` 실루엣 + Pale Gold 술. 벽: 분홍 벽지 → Plum `#7B4F8C` 판 + Royal Purple 백합 조각 반복(무늬 자리 같음), 위 띠 Deep Indigo `#1F2A56` + Plum 구멍, 배너 Wine `#7A2E3A` + Pale Gold 왕관 구멍(빛남), 선반·꽃병 Midnight `#121A3A` 실루엣 + Rose Red `#C94C5E` 장미(유일한 색), 아래 벽 Deep Indigo + Midnight 돌. 러그 Plum 타원, 마루 Dark Walnut `#3E2A1C`. 창 가까이 위에만 작은 Pale Gold 먼지 구멍 몇 개.
+- **비움**: 바닥 전체와 가운데 아래(침대·촛대·잠든 사람들 자리), 앞 가림 없음. 거미줄은 그리지 않는다(소품).
+- 색지 13: 램프 골드·Pale Gold·Ember Amber·Dusk Orange `#D98B5A`·Plum·Royal Purple·Deep Indigo·Midnight·Ink `#0E1230`·Paper Cream·Wine·Rose Red·Dark Walnut.
+- 흐름(코드): 8장은 `bedroom_v2` 로 시작(L30 "모두 함께 자요"), L31 "촛불도 잠들고" 에서 기존 틴트 `night8` 대신 `bedroom_night_lb` 를 얹어 **2.4초 크로스페이드**. 침대·촛대·공주·왕·왕비·요정은 원래 색(어두운 방에서 침대가 가장 또렷). 11장 '깨어나요' 는 기존 `bedroom_v2`(밝음) 그대로라 밤→아침 대비.
+
+**B. `sb_bg_outside_lb` (배경, 라이트박스, pass 1, refs `sb_bg_outside_v2`·`sb_bg_outside_v3` — 같은 구도)**
+- 빛은 하늘 꼭대기가 아니라 **언덕 뒤 낮은 띠**: 램프 골드가 숲 뒤 세로 30~48% 넓은 띠로 보이고 위로 Pale Gold → Ember Amber → Dusk Orange → Plum 평평한 띠, 그 위 하늘은 Deep Indigo 민판(별 구멍은 위 모서리에만). **위쪽 가운데 하늘(x 20~80%, 위 30%) 완전 비움**(`sunMoon`).
+- 성: 같은 자리(위 가운데), Royal Purple 실루엣 탑 다섯 + Dark Pine `#2F4F3A` 덩굴 조각, **가장 높은 탑 꼭대기 창 구멍 하나만 Pale Gold**. 숲: 둥근 나무 머리 4줄 Plum → Deep Indigo → Midnight → Ink. 가시 장미 덩굴 Ink 실루엣은 양 끝 가장자리와 앞 나무 줄 윗선에만, Rose Red 장미가 유일한 밝은 색. 왼쪽 아래 버섯 실루엣 셋, 양옆 풀 위 Pale Gold 반딧불 구멍 10개. 풀밭 Dark Pine 민판(인물·덤불 자리), 길 Midnight 띠.
+- **비움**: 가운데 x 40~95%·y 35~95%(큰 덤불·나무 소품), 왼쪽 x 10~35% 길 위.
+- 색지 11: 램프 골드·Pale Gold·Ember Amber·Dusk Orange·Plum·Royal Purple·Deep Indigo·Midnight·Ink·Dark Pine·Rose Red.
+- 흐름(코드): 9장 L32 "백 년이 흘렀어요" 동안 기존대로 `outside_v2` 위로 해·달 세 번 → `outside_v3` 크로스페이드(백 년 무성함). 그 뒤 L33 할아버지 대사 시작에 `outside_lb` 를 얹어 **2초 크로스페이드**(해 질 녘 왕자 도착). 덤불 톡 대상(`bushHit`, 색 덤불 소품)·왕자·할아버지는 원래 색. 장미 덤불·가시 덩굴 소품(`rose_bush`·`thorn_vine`)은 `brightness(.45) saturate(.7)` 로 낮춰 배경 실루엣과 맞춘다(톡 대상 덤불은 낮추지 않음). L35 "가시덤불이 왕자님에게만 길을 열어 주었어요" 는 기존 효과 그대로.
+
+### 작업표·ID
+- `jobs_sleeping_beauty.json` 끝에 2항목: `sb_bg_outside_lb`(bg, pass 1, refs `outside_v2`·`outside_v3`), `sb_bg_bedroom_night_lb`(bg, pass 1, refs `bedroom_v2`). SCENE 앞머리·LIGHT 를 '종이 뒤 광원' 문구로 바꿨다. **생성은 아직 하지 않는다.** ID 목록: `tools/app/gen/restyle/lavish_princess_ids.txt`.
+- 받은 뒤 점검: ① 침실 창·배너·선반·러그가 v2 와 겹쳐 같은 자리인지(크로스페이드) ② 성 밖 위쪽 가운데 하늘이 민판인지, 성 자리가 v2·v3 와 같은지 ③ 덤불 톡 자리 비움 ④ 빛이 구멍으로만, 그라데이션·후광 없음.
+
+### 판단이 필요한 부분
+1. **9장 크로스페이드를 두 번(v2→v3→lb) 할지**: 추천: 두 번(백 년이 흐름 → 왕자가 저녁에 도착). 짧게 하려면 해·달 세 번 뒤 바로 `outside_lb` 로 가고 `outside_v3` 는 쓰지 않는다(이미 생성된 v3 는 보관).
+2. **8장 틴트 대신 빛 상자**: 기존 틴트 .22 는 지운다. 거절하면 8장은 그대로 두고 A 는 생성하지 않는다(11장 대비만 잃음).

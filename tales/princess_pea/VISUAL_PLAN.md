@@ -134,3 +134,38 @@
 
 - 판단 1(매트리스 6색 순환, 매트리스 3장 추가, 컷 `pp_cut_top` 은 다시 그리지 않음) 권장안으로 확정.
 - 판단 2(완두콩 덩굴 x 40, 세로 화면에서는 보이지 않으므로 그대로) 권장안으로 확정.
+
+## 재기획 2 (2026-10-23) — 라이트박스 장면 추가
+
+사용자 지시: "공주도 더 화려하게 할 곳 있으면 재기획 후 해당 장면만 재생성." CLAUDE.md §7-5-1 '빛 상자(라이트박스) 장면 허용(2026-10-23)' 적용. 참고 그림(assets/raw/refs_visual, 스타일 참고만·생성 참고 금지)의 어휘: 뒤 종이가 빛나고 앞으로 올수록 한 단계씩 어두운 종이, 맨 앞은 실루엣.
+
+### 건드리지 않는 장면
+- 1장 왕자의 방(`room_day_v2`), 4~6·8장 낮 손님방(`guest_day_v2`), 9장 축하 뜰(`yard_day_v2`), 매트리스 6색과 층 소품 — 받은 그림이 이미 다층이다. 다시 그리지 않는다.
+- **성문 구멍(그림 x 61~76%, y 38~87%)**, 2·3장 번개·구름이 뜨는 왼쪽 위 하늘(x 25~50%, y 0~35%), **손님방 가운데 기둥 x 36~70%(매트리스 탑 자리) 민무늬**는 어떤 라이트박스에서도 그대로.
+
+### 고른 장면과 이유
+| 장면 | 지금 | 왜 라이트박스인가 |
+|---|---|---|
+| 2 폭풍우 밤 · 3 문 앞의 아가씨 | `gate_night_v2`: 회색 성벽 한 판이 화면 절반, 탑 셋이 작다 | 이야기의 큰 사건("비가 쏟아지고 천둥이 우르릉", "누가 성문을 똑똑"). 성 전체가 뒤에서 빛나는 빛 상자가 되면 **열린 성문이 달 다음으로 밝은 곳**이라, 비 맞은 아가씨가 들어갈 따뜻한 곳으로 보인다(무섭지 않은 폭풍) |
+| 7 잠 못 든 밤 | `guest_night_v2`: 남색 벽 한 판, 달빛 조각 하나 | "이리 뒤척, 저리 뒤척" — 완두콩 하나가 밤새 공주를 깨우는 장면. 창의 달이 유일한 빛이고 방이 한 겹씩 어두워지면, **가운데 색 매트리스 탑만 색으로 남아** 이 동화의 상징이 된다 |
+
+### 새 구성
+**A. `pp_bg_gate_night_lb` (배경, 라이트박스, pass 1, refs `pp_bg_gate_night_v2` — 같은 구도)**
+- 층(뒤→앞): ① 램프 골드 `#F7E3A1` 뒤판 → ② 초승달 구멍(오른쪽 위, 지금 자리) + Pale Gold `#EBD08A` 고리 → ③ Ember Amber `#F2B366` → ④ Plum `#7B4F8C` → ⑤ Deep Indigo `#1F2A56` → ⑥ 맨 위 Midnight `#121A3A`; 찢은 가장자리 구름 실루엣은 **오른쪽 위에만** Plum. **왼쪽 위 하늘(x 25~50%, 위 35%)은 Deep Indigo 민판**(코드 번개·구름 자리). ⑦ 탑 셋 Royal Purple `#5B3A7E` 실루엣(뾰족 지붕·깃발), 탑마다 Pale Gold 창 구멍 셋 → ⑧ 성벽 Deep Indigo 판 + Midnight 돌 조각·톱니 → ⑨ **성문 구멍 Ember Amber**(Pale Gold 아치 테, 위 Plum 방패 문장), 오른쪽 등불 걸이에 Ember 불꽃 구멍 하나 → ⑩ 바닥 Ink `#0E1230` 판 + Midnight 돌바닥 조각.
+- **비움**: 성문 앞 바닥 x 28~88%. 문짝·비·번개·웅덩이는 그리지 않는다(코드·소품).
+- 색지 9: 램프 골드·Pale Gold·Ember Amber·Dusk Orange `#D98B5A`·Plum·Royal Purple·Deep Indigo·Midnight·Ink.
+- 코드: `scene('pp_bg_gate_night_lb')`(2·3장). 비·번개(`x 480, y 190`)·구름은 그대로. 웅덩이 `pp_layer_puddle` 은 색이 밝으면 `brightness(.5)` 로 낮추고, 등불 기둥 `pp_layer_lantern_post` 는 불꽃만 밝게 두고 기둥은 `brightness(.45)`. 공주·왕자·왕비·성문 문짝 소품은 원래 색(Ember 성문 구멍 앞에 서면 또렷).
+
+**B. `pp_bg_guest_night_lb` (배경, 라이트박스, pass 1, refs `pp_bg_guest_night_v2`)**
+- 층: 창이 빛 — 램프 골드 뒤판이 아치 안에서 큰 Pale Gold 보름달과 별 구멍, 창틀 밝은 Paper Cream `#F6ECD8`, 커튼 Royal Purple 실루엣 + Pale Gold 끈. 바닥 달빛은 계단 평행사변형 **두 조각**(안 Pale Gold, 밖 Lavender Dusk `#8B7BB8`). 벽 Deep Indigo, 위 띠 Plum + Royal Purple 백합 구멍. 태피스트리 Wine `#7A2E3A` + Pale Gold 왕관 구멍(빛남) + Dark Pine `#2F4F3A` 덩굴. 오른쪽 끝 덩굴 Dark Pine 실루엣. 탁자 Midnight 실루엣 + Ember 불꽃 한 조각. 러그 Plum + Dark Gold `#B8862E` 테. 마루 Dark Walnut `#3E2A1C`.
+- **비움**: 가운데 기둥 x 36~70% 바닥부터 천장까지 Deep Indigo 민벽·민바닥(매트리스 탑).
+- 색지 15: 위 9색 + Paper Cream·Lavender Dusk·Wine·Dark Pine·Dark Gold·Dark Walnut.
+- 코드: 7장 `scene('pp_bg_guest_night_lb')`. 매트리스 스무 장·공주는 **원래 색**(필터 없음) — 어두운 민벽 앞에서 6색 탑이 가장 밝은 색 덩어리가 된다. 완두콩 덩굴 소품의 기존 `brightness(.6) saturate(.8)` 는 그대로.
+
+### 작업표·ID
+- `jobs_princess_pea.json` 끝에 2항목: `pp_bg_gate_night_lb`, `pp_bg_guest_night_lb`(둘 다 bg, pass 1, refs 각 `_v2`). SCENE 앞머리·LIGHT 를 '종이 뒤 광원' 문구로 바꿨다. **생성은 아직 하지 않는다.** ID 목록: `tools/app/gen/restyle/lavish_princess_ids.txt`.
+- 받은 뒤 점검: ① 성문 구멍 x 61~76%·y 38~87% ±1.5%(문짝 소품이 맞물림 — 가장 중요) ② 왼쪽 위 하늘 민판 ③ 손님방 가운데 기둥 민무늬 ④ 빛이 구멍으로만, 그라데이션·후광 없음.
+
+### 판단이 필요한 부분
+1. **폭풍 밤에 달이 보이는 것**: 비가 쏟아지는데 초승달이 빛나는 것은 조금 어색하다. 추천: 지금 v2 도 초승달이 있으므로 유지하고, 달 위에 찢은 구름 실루엣을 반쯤 걸친다(프롬프트 그대로 — 구름은 오른쪽 위). 대안: 달을 빼고 성 창·성문만 빛나게(프롬프트 한 문장 수정).
+2. **7장 이후 8장 아침으로 돌아올 때**: 빛 상자(밤) → 낮 손님방 전환이 갑작스러울 수 있다. 추천: 8장 카드 넘김 자체가 전환이므로 그대로. 원하면 8장 시작에 `guest_night_lb` → `guest_day_v2` 1.5초 크로스페이드.

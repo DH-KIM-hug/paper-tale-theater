@@ -131,3 +131,46 @@
 
 - 판단 1(샘의 장소: 정원과 숲의 경계) 권장안으로 확정.
 - 판단 2(9장 변신 연출: 카메라 밀기 500ms 작게, 플래시는 기존 크림 원 한 번, 폭발 0.7초) 권장안으로 확정.
+
+## 재기획 2 (2026-10-23) — 덜 화려한 장면 재기획 + 라이트박스
+
+사용자 지시: "공주도 더 화려하게 할 곳 있으면 재기획 후 해당 장면만 재생성." CLAUDE.md §7-5-1 '빛 상자(라이트박스) 장면 허용(2026-10-23)' 적용. 참고 그림(assets/raw/refs_visual, 스타일 참고만·생성 참고 금지)의 어휘: 뒤 종이가 빛나고 앞으로 올수록 한 단계씩 어두운 종이, 맨 앞은 실루엣.
+
+### 건드리지 않는 장면
+- 1·10 성 뜰(`yard_v2`), 2~5 샘가(`pond_v2`)와 층 소품 11장 — 받은 그림이 이미 다층(장미 아치·토피어리·수련·붓꽃)이다. 다시 그리지 않는다.
+- 인물·금공·식탁·접시·빵·베개 그림, 대사·녹음·조작은 바꾸지 않는다.
+
+### 고른 장면과 이유
+| 장면 | 지금 | 바꿈 | 이유 |
+|---|---|---|---|
+| 6~8 식당(문 앞의 개구리·아버지의 말씀·같이 먹어요) | `dining_v2`: 크림 벽 한 판에 창 둘·촛대 둘·위 띠 하나. 세 장면이 같은 판이라 가장 덜 화려하다 | **`fp_bg_dining_v3`**(다층 연회장, 라이트박스 아님) | 세 장면(전체의 30%)이 머무는 곳. 스테인드글라스 창·기둥·깃발 휘장·벽 촛대·접시 선반으로 왕궁답게 |
+| 9 베개 위로 폴짝 | `room_v2`: 밝은 크림 방, 창 밖만 밤 | **`fp_bg_room_night_lb`** 라이트박스 | "밤이 되자" 개구리가 방까지 따라온 장면이자 변신 직전. 창의 달이 유일한 빛이 되면, 변신 섬광(기존 `magic_burst`·`flash`)이 어둠 속에서 가장 크게 터진다 |
+| 5→6 사이 "문 밖에서 폴짝폴짝" | 무대에서 개구리가 문으로 세 번 폴짝 | **컷 `fp_cut_night_hop_lb`** | 개구리가 샘에서 성까지 혼자 폴짝폴짝 따라온 먼 길(원작의 '계단을 올라오는 소리'). 달 뒤 빛과 성 실루엣, 개구리 실루엣의 긴 점프 한 장 |
+
+### 새 구성
+**A. `fp_bg_dining_v3` (배경, 다층 낮→저녁 세트 B, pass 1, refs `fp_bg_dining_v2` — 같은 구도)**
+- **유지**: 왼쪽 열린 문(문 가운데 무대 x 130 = `DOOR.x`, 문짝·아치 같은 자리·크기 — 개구리가 이 문으로 들어오고 '똑똑!' 팝이 문 위에 뜬다), 위 장식 띠 높이, 아치 창 둘 자리, 오른쪽 사이드보드, 바닥선(FL 505), 파란 카펫 띠.
+- 먼 층: 창 위 1/3 스테인드글라스(Royal Blue·Bean Red·Lemon·Plum, Bark Brown 납선) + Deep Indigo 밤하늘·Paper Cream 달·별. 중간 층: Ivory 기둥·Straw Gold 띠, 창 양옆 휘장 둘(Royal Blue+Straw Gold 백합 / Bean Red+Lemon 왕관, Dark Gold 술), 위 띠 Bean Red + Dark Gold 백합 + Lemon 마름모 + Straw Gold 코니스, 벽 촛대 셋(Ember Amber 불꽃), 사이드보드 위 접시 선반, 문 옆 Plum 태피스트리. 앞 층: Cocoa·Bark Brown 마루, 카펫 Royal Blue + Dark Gold 테 + Lemon 마름모.
+- **비움**: 가운데 벽 x 35~65%(식탁·접시 톡 대상 자리)는 크림 민벽, 문 둘레와 바닥 전체.
+- 색지 16: Paper Cream `#F6ECD8`, Ivory `#FBF4E6`, Straw Gold `#D9A94E`, Dark Gold `#B8862E`, Lemon `#F2C94E`, Ember Amber `#F2B366`, Bean Red `#A93B32`, Wine `#7A2E3A`, Rose Red `#C94C5E`, Royal Blue `#2E4A8C`, Plum `#7B4F8C`, Deep Indigo `#1F2A56`, Bark Brown `#6B4A32`, Cocoa `#4E3524`, Silver Grey `#C8CCD4`, Snow White `#F4F6FA`.
+- 광원 세트 B(오른쪽 위 앰버, 그림자 왼쪽 아래). 카메라 기존.
+- 코드: `BGS`·`scene()` 의 `fp_bg_dining_v2` → `fp_bg_dining_v3`. 샹들리에·촛대 소품(`dress`)은 그대로. 받은 뒤 `DOOR.x`·`TABLE_TOP` 을 다시 재 본다(문이 ±1.5% 넘게 움직이면 재생성).
+
+**B. `fp_bg_room_night_lb` (배경, 라이트박스, pass 1, refs `fp_bg_room_v2`)**
+- **유지**: 왼쪽 위 아치 창 자리, 오른쪽 캐노피 침대(**매트리스 윗선 그림 세로 68% = `BED.top` 272 근처**, 베개 자리 x 850), 가운데 아래 둥근 러그, 왼쪽 촛대 탁자.
+- 층: 창이 빛 — 램프 골드 `#F7E3A1` 뒤판이 아치 안에서 큰 Pale Gold `#EBD08A` 보름달과 별 구멍으로 보이고, 창틀은 밝은 Paper Cream. 벽은 창에서 멀어질수록 한 단계씩 어둡게: 창 둘레 Plum `#7B4F8C` → Royal Purple `#5B3A7E` → 나머지 Deep Indigo `#1F2A56`, 위 코니스 Royal Purple 에 왕관·마름모 구멍 줄. 침대: 캐노피·물결 발랑스 Plum + Pale Gold 테, 옆 커튼 Royal Purple + Pale Gold 리본, 기둥 Deep Indigo, **매트리스 윗면은 Paper Cream 민띠(윗선 유지)**, 이불 Plum·Royal Purple 조각보. 탁자·초 Midnight `#121A3A` 실루엣 + Ember Amber 불꽃 한 조각. 러그 Plum 타원, 마루 Dark Walnut `#3E2A1C`. 오른쪽 끝에만 Ink `#0E1230` 커튼 주름 실루엣.
+- **비움**: 바닥 x 10~55%, 바닥과 침대 윗면 사이 공중(개구리가 날아오르는 호), 매트리스 윗띠. 베개 없음(소품).
+- 색지 11: 램프 골드·Pale Gold·Ember Amber·Dusk Orange `#D98B5A`·Plum·Royal Purple·Deep Indigo·Midnight·Ink·Paper Cream·Dark Walnut.
+- 흐름(코드): 9장 `scene('fp_bg_room_night_lb')` 로 시작. 공주·개구리·베개는 원래 색(크림 매트리스 띠 위에서 초록 개구리가 가장 또렷). 변신 순간 기존 `magic_burst` + `flash(BED.x, BED.top − 100)` 와 함께 `fp_bg_room_v2` 를 얹어 **1.6초 크로스페이드**로 방이 환해진다(판단 1). 그 뒤 기존 컷 `fp_cut_prince`.
+
+**C. `fp_cut_night_hop_lb` (컷 4:3, 라이트박스, pass 1, refs 없음)**
+- 구성: 램프 골드 뒤판 + 왼쪽 위 보름달 구멍 → Pale Gold 고리 → Ember Amber → Plum → Deep Indigo → 모서리 Midnight 하늘(별 구멍). 오른쪽 성 Plum 실루엣(탑 셋·깃발, Pale Gold 창 구멍 여럿, 발치 아치 문 구멍 Ember Amber). 왼쪽 아래 연못(Moonlight `#DDE6F2` 물 한 조각 + Ink 연잎·갈대)에서 성 문까지 올라가는 Plum 길 띠. 가운데 길 위 공중에 **개구리 실루엣**(Deep Indigo 한 장, 뒷다리를 길게 편 점프), 뒤로 지나온 폴짝 자국 점선 호 셋(Pale Gold 조각). 둥근 나무 실루엣 Royal Purple → Deep Indigo → 양옆 Ink, 반딧불 구멍 12개. 재미있고 씩씩하게.
+- 붙이는 곳: 6장 시작, 카드가 열린 직후 L16("저녁 식사 때, 문 밖에서 폴짝폴짝 소리가 났어요. 똑똑!")과 함께 `T.cutImage([{ src, sfx: 'hop', hold: L16 길이 }])`. 기존 '똑똑' 타이머(2초 뒤 노크)는 컷이 닫힌 뒤로 미룬다. 컷 수 4 + 1 = 5(§5-2 한 편 3~5장).
+
+### 작업표·ID
+- `jobs_frog_prince.json` 끝에 3항목: `fp_bg_dining_v3`(bg, pass 1, refs `fp_bg_dining_v2.png`), `fp_bg_room_night_lb`(bg, pass 1, refs `fp_bg_room_v2.png`), `fp_cut_night_hop_lb`(cut, pass 1, refs 없음). 라이트박스 두 항목만 SCENE 앞머리·LIGHT 를 '종이 뒤 광원' 문구로 바꿨다. **생성은 아직 하지 않는다.** ID 목록: `tools/app/gen/restyle/lavish_princess_ids.txt`.
+- 받은 뒤 점검: ① 식당 문 자리·크기가 v2 와 겹쳐 같은지(가장 중요) ② 가운데 벽(식탁 자리)이 민벽인지 ③ 방 매트리스 윗선 68% ±1.5% ④ 빛이 구멍으로만 보이는지 ⑤ 컷 개구리 실루엣이 귀여운지.
+
+### 판단이 필요한 부분
+1. **9장 변신 때 밤 → 밝은 방 크로스페이드**: 원작은 밤에 변신한다. 방이 환해지는 것은 '마법의 빛' 연출이다. 추천: 넣는다(어두운 방에서 끝나지 않아 아이가 편하다). 거절하면 변신 섬광만 쓰고 9장 끝까지 밤 빛 상자.
+2. **6장 컷 위치**: 컷이 L16 을 덮으면 무대의 '똑똑' 팝·문 효과음이 컷 뒤로 밀린다. 추천: 컷 위에서 L16 → 컷 닫힘 → 노크 두 번 → 개구리 등장(대사 순서는 같음). 대안: 5장 끝("개구리는 폴짝폴짝 성으로 따라갔어요" 계열 대사가 있으면 그 위)에 붙인다.

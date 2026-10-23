@@ -143,3 +143,39 @@
 
 - **판단 1 (들판 성 실루엣)**: **넣지 않는다.** `rp_bg_field_v2` 프롬프트에서 먼 산 위 성 문장과 Stone Cream 색 항목을 지웠다(생성 전). §3·§6 표의 '아주 작은 성' 문구는 무효. 먼 층은 하늘·구름·먼 산 2겹·먼 숲 띠.
 - **판단 2 (탑 방 색)**: 갇힌 탑이므로 **차분하게** 바꾼다. Paper Cream·Sky Blue·Straw Gold 계열: 커튼 Paper Cream, 태피스트리 Sky Blue 바탕 + Straw Gold 별·마름모, 양탄자 테두리 Sky Blue, 책 Sky Blue·Paper Cream·Straw Gold, 별 모빌 Straw Gold·Cream. `rp_bg_room_v2` 프롬프트와 색지 목록(Candy Pink·Plum·Bean Red·Sunny Yellow·Lilac 삭제, 분홍·보라·붉은색 금지 문구 추가)을 고쳤다(생성 전). 표 속 Candy Pink 커튼·Plum 태피스트리 문구는 무효.
+
+## 재기획 2 (2026-10-23) — 라이트박스 장면 추가
+
+사용자 지시: "공주도 더 화려하게 할 곳 있으면 재기획 후 해당 장면만 재생성." CLAUDE.md §7-5-1 '빛 상자(라이트박스) 장면 허용(2026-10-23)' 적용. 참고 그림(assets/raw/refs_visual, 스타일 참고만·생성 참고 금지)의 어휘: 뒤 종이가 빛나고 앞으로 올수록 한 단계씩 어두운 종이, 맨 앞은 실루엣.
+
+### 건드리지 않는 장면
+- 3·4장 낮 숲(`forest_day_v2`), 5·6장 해질녘 숲(`forest_dusk_v2`), 탑 방(`room_v2`), 9장 꽃 들판(`field_v2`)과 층 소품 — 받은 그림이 이미 다층이다. 다시 그리지 않는다. 1장 오두막은 사람 집이라 수수하게 그대로.
+- **탑 자리(x 48~72% 전체, 그 위 하늘 x 40~80%·y < 30%)와 탑 발치 땅(x 35~80%, y > 70%)은 어떤 라이트박스에서도 비운다**(§1 '탑 자리 비우기'). 밤 텃밭의 담(왼쪽 1/3, 윗선 40%)·채소 줄(62%)도 그대로.
+
+### 고른 장면과 이유
+| 장면 | 지금 | 왜 라이트박스인가 |
+|---|---|---|
+| 2 라푼젤 풀 "밤이 되자 아버지는 살금살금 담을 넘었어요" | `garden_night_v2`: 남색 하늘 한 장 + 회색 담 + 흙, 층이 둘뿐 | 이야기가 시작되는 '마녀의 텃밭 밤'. 달이 뒤에서 비추고 담·숲·채소 줄이 한 겹씩 어두워지면 몰래 들어간 긴장이 무섭지 않게 산다. 달맞이꽃·반딧불은 구멍으로만 빛난다 |
+| 8 빈 탑 "왕자는 슬픈 얼굴로 숲을 걷고 또 걸었어요" | 5·6장과 같은 해질녘 숲 | 결말 직전의 가장 어두운 순간. 같은 숲이 **밤 빛 상자**로 바뀌어 5·6장(노을)과 9장(꽃 들판 낮)의 대비가 커지고, 다음 장면의 재회가 더 밝게 느껴진다 |
+
+### 새 구성
+**A. `rp_bg_garden_night_lb` (배경, 라이트박스, pass 1, refs `rp_bg_garden_night_v2`)**
+- 층(뒤→앞): ① 램프 골드 `#F7E3A1` 뒤판 → ② 보름달 구멍(오른쪽 위, 지금 달 자리) + Pale Gold `#EBD08A` 고리 → ③ Ember Amber `#F2B366` → ④ Plum `#7B4F8C` → ⑤ Deep Indigo `#1F2A56` → ⑥ 왼쪽 위 Midnight `#121A3A`(별 구멍 20개) → ⑦ 먼 숲 둥근 나무 머리 Royal Purple `#5B3A7E` → Deep Indigo → ⑧ 담: Deep Indigo 판 + Midnight 돌 조각(같은 높이·길이), 왼쪽 끝 달맞이꽃 덩굴 Olive `#7A8F3C` 실루엣에 Pale Gold 꽃 구멍 7개 → ⑨ 채소 줄 3줄 Dark Pine `#2F4F3A` 잎 실루엣 + Midnight 흙두둑(지금 자리), 줄 바로 위 Pale Gold 반딧불 구멍 8개 → ⑩ 앞 흙 Dark Earth `#2A1F16` 민판(아래 1/3 비움).
+- 색지 12: 위 + Dusk Orange `#D98B5A`, Ink `#0E1230`.
+- 코드: `scene('rp_bg_garden_night_lb')`. 기존 반딧불 점 `fireflies([...])`(x 560~960, y 305~345)는 배경 구멍과 겹치므로 6개 → 3개(x 640·800·960)로 줄인다. 아버지·마녀는 원래 색, 흙 앞은 비어 있어 묻히지 않는다.
+
+**B. `rp_bg_forest_night_lb` (배경, 라이트박스, pass 1, refs `rp_bg_forest_dusk_v2` — 같은 구도)**
+- 층(뒤→앞): ① 램프 골드 뒤판 → ② 보름달 구멍(지금 해질녘 해 자리, 오른쪽 위) + Pale Gold 고리 → ③ Ember Amber → ④ Plum → ⑤ Royal Purple → ⑥ 맨 위 Deep Indigo(별 구멍 20개) → ⑦ 산 4겹 Plum → Royal Purple → Deep Indigo → Midnight → ⑧ Midnight 작은 전나무 띠 → ⑨ 양옆 큰 전나무(왼쪽 3·오른쪽 2, 지금 자리) Ink 실루엣, 발치에만 Pale Gold 반딧불 구멍 6개 → ⑩ 땅 Dark Pine 민판(아래 1/3), 아래 모서리에만 Ink 풀포기.
+- **비움**: 가운데 x 48~72% 와 그 위 하늘(x 40~80%, 위 30%)은 하늘·산 판만(탑 소품 자리), 땅 x 35~80% 에 아무것도 없음.
+- 색지 10: 램프 골드·Pale Gold·Ember Amber·Dusk Orange·Plum·Royal Purple·Deep Indigo·Midnight·Ink·Dark Pine.
+- 앞 실루엣 층(소품): `rp_layer_branch_silhouette_lb`(전나무 가지가 위에서 늘어진 Ink 실루엣 + 뒤 Midnight 한 장, 높이 200) — 8장에서만 왼쪽 위 x 60·y −20 에 건다. 탑·창·고리(905, 250) 쪽으로는 가지 끝이 x 300 을 넘지 않는다.
+- 코드: 8장 `scene('rp_bg_forest_night_lb')`. 탑 소품(`prop_tower`)·땋은 머리·마녀·왕자는 원래 색(탑의 크림 돌·빨간 지붕이 어두운 판 위에서 가장 또렷). `dress('rp_bg_forest_dusk_v2')` 의 소품 중 `wildflowers_mid`·`bush_flower_front` 는 8장 밤에서 숨기고, 앞 나무 `tree_front` 는 `filter: brightness(.35) saturate(.5)` 로 실루엣처럼 낮추며, 탑 덩굴 `tower_ivy` 는 탑에 붙어 있으므로 원래 색 그대로. 해질녘 반딧불 8점은 배경 구멍과 겹치므로 4점으로 줄인다. "휘익~ 마법 바람" 은 기존 효과 그대로.
+- 세로 화면: 같은 흐름. 가지 실루엣은 세로 크롭 밖이면 그냥 안 보인다.
+
+### 작업표·ID
+- `jobs_rapunzel.json` 끝에 3항목: `rp_bg_garden_night_lb`(bg, pass 1), `rp_bg_forest_night_lb`(bg, pass 1, refs `rp_bg_forest_dusk_v2`), `rp_layer_branch_silhouette_lb`(sprite, pass 1, 마젠타 크로마키). 라이트박스 배경만 SCENE 앞머리·LIGHT 를 '종이 뒤 광원' 문구로 바꿨다. **생성은 아직 하지 않는다.** ID 목록: `tools/app/gen/restyle/lavish_princess_ids.txt`.
+- 받은 뒤 점검: ① 담 윗선·채소 줄·양옆 전나무가 원본과 겹쳐 같은 자리인지 ② 탑 자리(가운데)에 나무·반딧불이 없는지 ③ 빛이 구멍으로만 보이는지(그라데이션·후광 없음).
+
+### 판단이 필요한 부분
+1. **8장을 밤으로**: 원작은 왕자가 탑에서 떨어져 눈이 멀고 숲을 헤맨다(이 앱은 '마법 바람이 사뿐 내려놓음'으로 순화). "그날 저녁" 대사와 밤 그림이 조금 어긋난다. 추천: 장면 시작은 `forest_dusk_v2`, "마법 바람" 뒤 "숲을 걷고 또 걸었어요" 대사에서 `forest_night_lb` 로 **3초 크로스페이드**(시간이 흘러 밤이 됨). 거절하면 8장은 그대로 두고 B 는 생성하지 않는다.
+2. **2장 텃밭이 너무 어두울지**: 3~4세에게 '몰래 담 넘기'가 무서울 수 있다. 추천: 달을 크게(지름 세로 18%) 하고 달맞이꽃 구멍을 밝게 두어 '따뜻한 밤'으로. 마녀 등장 효과음은 기존 그대로.
