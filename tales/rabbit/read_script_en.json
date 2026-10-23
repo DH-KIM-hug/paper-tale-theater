@@ -5,7 +5,7 @@
  "title": "The Rabbit and the Turtle",
  "voices_from": "voice_script_el.json",
  "moral": "Even if you go slowly, you can make it if you keep going!",
- "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, trim 은 from 줄의 영어 녹음을 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
+ "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, trim 은 from 줄의 영어 녹음을 같은 문장 경계에서 자른 것, new 만 새로 녹음한다. 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다. 2026-10-23 사용자 지시: 중간중간 응원하는 동물을 모두 뺐다. 나무 그늘의 돼지 자리, 돌멩이 길의 강아지·고양이, 개울의 오리, 언덕의 양 응원(자리·글자·소리 vo:cheer_*)과 줄 \"응원하던 친구들도 쉿!\"·\"꿈속 친구들이 모두 토끼에게 짝짝짝 박수를 쳤어요.\"(대본에서만 제외, 녹음 클립은 그대로)를 뺐다. 출발 전 초대장·응원석 소개, 출발선 구경, 결승과 시상식·잔치의 동물은 남겼다.",
  "acts": {
   "set:<village|alley|stands|start|map|grass_low|shade|dream|stream|hill|dusk|finish|party>": "장면 배경(ART bg_*)·관객 자리. scenes[].set 으로 자동 호출, 한 장면 안에서 바꿀 때는 before 에 둔다",
   "rabbit:pose:<stand|run|sleep|wake|congrats> | rabbit:eyes:<open|drowsy|sleep> | rabbit:ears:<n>": "토끼 자세·눈·귀",
@@ -594,7 +594,6 @@
     "rabbit:eyes:drowsy",
     "rabbit:at:390,500,1",
     "aud:owl:sit",
-    "aud:pig:sit",
     "cam:wide"
    ],
    "lines": [
@@ -681,32 +680,6 @@
       "rabbit:eyes:sleep",
       "zzz:on"
      ]
-    },
-    {
-     "text": "응원하던 친구들도 \"쉿!\" 조용히~",
-     "src": "reuse",
-     "en": "The cheering friends whisper, \"Shh!\" Quiet now~",
-     "segs": [
-      [
-       "nar",
-       "The cheering friends whisper,",
-       "whisper"
-      ],
-      [
-       "sheep",
-       "Shh!",
-       "whisper"
-      ],
-      [
-       "nar",
-       "Quiet now~",
-       "whisper"
-      ]
-     ],
-     "before": [
-      "aud:owl:hush",
-      "aud:pig:hush"
-     ]
     }
    ]
   },
@@ -770,20 +743,6 @@
      ]
     },
     {
-     "text": "꿈속 친구들이 모두 토끼에게 짝짝짝 박수를 쳤어요.",
-     "src": "new",
-     "en": "In the dream, all the friends clapped and clapped for the rabbit.",
-     "segs": [
-      [
-       "nar",
-       "In the dream, all the friends clapped and clapped for the rabbit."
-      ]
-     ],
-     "before": [
-      "aud:all:cheer"
-     ]
-    },
-    {
      "text": "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~",
      "src": "reuse",
      "en": "But the real rabbit is under the tree, snoring, zzz~",
@@ -811,8 +770,6 @@
    "enter": [
     "rabbit:hide",
     "turtle:at:120,470,1.25",
-    "aud:dog:sit",
-    "aud:cat:sit",
     "bar:show",
     "race:0.6,0.04",
     "cam:300,280,1"
@@ -843,9 +800,7 @@
       ]
      ],
      "before": [
-      "turtle:steps:4",
-      "aud:dog:cheer:힘내!",
-      "vo:cheer_dog"
+      "turtle:steps:4"
      ]
     },
     {
@@ -883,9 +838,7 @@
       "pop:620,330,영차!"
      ],
      "after": [
-      "race:0.6,0.2",
-      "aud:dog:cheer:와아!",
-      "aud:cat:cheer:야옹~"
+      "race:0.6,0.2"
      ]
     },
     {
@@ -902,7 +855,6 @@
       "set:stream",
       "turtle:swim:on",
       "turtle:at:120,430,1.35",
-      "aud:duck:sit",
       "cam:270,280,1"
      ]
     },
@@ -917,9 +869,7 @@
       ]
      ],
      "before": [
-      "turtle:swimacross",
-      "aud:duck:cheer:꽥꽥! 힘내!",
-      "vo:cheer_duck"
+      "turtle:swimacross"
      ]
     },
     {
@@ -950,7 +900,6 @@
       "set:hill",
       "turtle:swim:off",
       "turtle:at:120,470,1.3",
-      "aud:sheep:sit",
       "cam:290,280,1"
      ]
     },
@@ -965,9 +914,7 @@
       ]
      ],
      "before": [
-      "turtle:climb",
-      "aud:sheep:cheer:힘내!",
-      "vo:cheer_sheep"
+      "turtle:climb"
      ]
     },
     {

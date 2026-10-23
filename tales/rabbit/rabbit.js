@@ -245,6 +245,19 @@
   }
 
   /* ================= 관객 동물 8마리 ================= */
+  /* 자장가: 미리 렌더한 실제 악기 연주(sounds/sfx/lullaby_a·b = 오르골, _2 = 피아노, tools/dev/render_melody.py)를 한 소절씩 틀고,
+     음표 표시·눈 감김은 음 시작 시각(박 격자 그대로)에 맞춘다. 곡을 아직 못 받았으면 첫 음에서 합성 오르골로 대신한다 */
+  const LULL_SRC = { a: 'E4:.5 E4:.5 G4:2 E4:.5 E4:.5 G4:2 E4:.5 G4:.5 C5:1 B4:1 A4:.5 A4:.5 G4:2', b: 'A4:.5 A4:.5 C5:2 A4:.5 A4:.5 C5:2 A4:.5 C5:.5 F5:1 E5:1 D5:.5 D5:.5 C5:3' };
+  const LULL_BEAT = .65;
+  const lullPick = () => (Math.random() < .5 ? '' : '_2'); // 오르골 / 피아노 — 두 소절은 같은 악기
+  function lullVoice(T, which, ver) {
+    let rec = false, box = null;
+    return (n, d, i) => {
+      if (i === 0) rec = AudioFX.sfx('lullaby_' + which + ver, .9);
+      if (rec) return;
+      box = box || T.timbre('box'); box(T.hz(n), d, 0, .22);
+    };
+  }
   const KINDS = ['duck', 'cow', 'pig', 'rooster', 'sheep', 'dog', 'cat', 'owl'];
   const SPEC = {
     duck: { name: '오리', word: '꽥꽥!', body: C.snow, arm: C.snow, leg: C.persimmon },
@@ -596,10 +609,7 @@
       stands: Object.fromEntries([['rooster', 185, 330, .95], ['sheep', 315, 330, .95], ['cat', 700, 330, .95], ['owl', 830, 330, .95],
         ['duck', 170, 505, 1.2], ['cow', 390, 505, 1.2], ['pig', 610, 505, 1.2], ['dog', 830, 505, 1.2]].map(([k, x, y, s]) => [k, [PX(x, .72), y, s]])),
       start: { duck: [45, 408, .55], cow: [120, 392, .55], pig: [195, 400, .55], cat: [868, 400, .55], dog: [925, 395, .55], rooster: [985, 415, .55] },
-      shade: { owl: [640, 244, .8], pig: [760, 505, .8] },
-      grass_low: { dog: [285, 445, .5], cat: [745, 440, .5] },
-      stream: { duck: [720, 436, .7] },
-      hill: { sheep: [830, 490, .95] },
+      shade: { owl: [640, 244, .8] }, // 자장가 부엉이만 (중간 응원 동물은 뺐다, 2026-10-23)
       dusk: { rooster: [300, 474, 1.5] },
       finish: Object.fromEntries(KINDS.map((k, i) => [k, [[50, 125, 200, 275, 655, 725, 875, 945][i], 408, .5]])),
       party: Object.fromEntries(PART.map(([k, x, y, s]) => [k, [PX(x, .72), y, s]])),
@@ -811,9 +821,8 @@
         if (a === 'post') { o.reset(); o.stand(); show(o.parts.bag, 1); put(o, instant() ? 70 : -80, 283, .85); if (!instant()) return o.move(70, 283, 900); return; }
         if (a === 'lullaby') { // 브람스 자장가 한 소절 (오르골), 음표가 부엉이 둘레로
           seatOne('owl');
-          const box = T.timbre('box');
-          return T.playMelody(T.parseSong('E4:.5 E4:.5 G4:2 E4:.5 E4:.5 G4:2 E4:.5 G4:.5 C5:1 B4:1 A4:.5 A4:.5 G4:2'), { beat: .65,
-            voice: (n, d) => box(T.hz(n), d, 0, .22), onNote: i => { noteShape(T, o.x - 60 - (i % 6) * 30, o.y - 50, C.indigo); if (i % 3 === 0) o.wiggle(8, 500); } });
+          return T.playMelody(T.parseSong(LULL_SRC.a), { beat: LULL_BEAT,
+            voice: lullVoice(T, 'a', lullPick()), onNote: i => { noteShape(T, o.x - 60 - (i % 6) * 30, o.y - 50, C.indigo); if (i % 3 === 0) o.wiggle(8, 500); } });
         }
       },
       doors(a) { // 골목 네 집: 부엉이가 날아가 똑똑, 문이 열리며 동물이 얼굴을 내민다
@@ -1163,7 +1172,7 @@
       else cloud = paper(skyG, [['circle', { cx: 100, cy: 130, r: 44, fill: '#E7E3F0' }], ['circle', { cx: 150, cy: 105, r: 56, fill: '#E7E3F0' }], ['circle', { cx: 205, cy: 132, r: 42, fill: '#E7E3F0' }], ['rect', { x: 90, y: 128, width: 130, height: 46, rx: 22, fill: '#E7E3F0' }]]);
       cloud.setAttribute('transform', 'translate(-420 0)');
       const o = aud.owl; o.reset(); put(o, ...(shade ? [640, 244, .8] : [870, 252, .95])); // 그림: 큰 나무 가지 끝
-      seat(shade ? [['pig', 760, 505, .8]] : [['pig', 900, 556, .8]]); // 양은 뺐다 (잠재우는 장면에 양이 있으면 '양 세기'처럼 보여 어색함, 2026-10-19)
+      // 응원 동물(돼지·양)은 뺐다: 잠재우는 장면에는 자장가 부엉이만 (2026-10-23 사용자 지시, 중간중간 응원 동물 없앰)
       rabbitReset(); rp.setEyes('half'); faceL(rabbit);
       put(rabbit, 520, 488, 1.5);
       blanket = el('g', { transform: 'translate(220 470)' }, T.world);
@@ -1181,16 +1190,14 @@
     await say('포근포근~ 이불을 덮어 줬어요.');
     rp.mouth('smile');
     /* 브람스 〈자장가〉(1868, 공개 곡) — 오르골 소리. 먼저 한 소절을 들려주고, 부엉이를 톡 누르면 다음 소절이 흘러간다 */
-    const LULL1 = T.parseSong('E4:.5 E4:.5 G4:2 E4:.5 E4:.5 G4:2 E4:.5 G4:.5 C5:1 B4:1 A4:.5 A4:.5 G4:2');
-    const LULL2 = T.parseSong('A4:.5 A4:.5 C5:2 A4:.5 A4:.5 C5:2 A4:.5 C5:.5 F5:1 E5:1 D5:.5 D5:.5 C5:3');
-    const box = T.timbre('box');
-    const lullVoice = (n, d) => box(T.hz(n), d, 0, .22);
+    const LULL1 = T.parseSong(LULL_SRC.a), LULL2 = T.parseSong(LULL_SRC.b);
+    const lullVer = lullPick(); // 이번 판은 오르골이나 피아노 (두 소절 같은 악기)
     const lullNote = i => { noteShape(T, aud.owl.x - 60 - (i % 6) * 30, aud.owl.y - 50, C.indigo); if (i % 3 === 0) aud.owl.wiggle(8, 500); };
     await say('부엉이가 자장가를 불러 줘요. 잘 들어 봐요.');
-    await T.playMelody(LULL1, { beat: .65, voice: lullVoice, onNote: lullNote });
+    await T.playMelody(LULL1, { beat: LULL_BEAT, voice: lullVoice(T, 'a', lullVer), onNote: lullNote });
     await sleep(400);
     await say('이번에는 부엉이를 톡 눌러 봐요. 자장가가 이어져요!');
-    await T.holdMelody(LULL2, { beat: .65, tapStart: true, target: aud.owl.pos, voice: lullVoice, onNote: lullNote });
+    await T.holdMelody(LULL2, { beat: LULL_BEAT, tapStart: true, target: aud.owl.pos, voice: lullVoice(T, 'b', lullVer), onNote: lullNote });
     T.pop(aud.owl.x, aud.owl.y - 130, '부엉 부엉~', C.indigo);
     rp.sleepy(true);
     rp.setEyes('drowsy'); // 자장가를 들으면 선 채로 눈이 스르르 감긴다 (그림: 감은 눈꺼풀을 서서히)
@@ -1203,8 +1210,6 @@
     const zzz = () => every(1000, () => floatText(T, rabbit.x - 60, rabbit.y - 230, 'Z', C.indigo, 34 + Math.random() * 14));
     zzz(); let sk = 0; every(1800, () => snore(T, sk++ % 2));
     await say('토끼가 쿨쿨 잠이 들었어요.');
-    aud.owl.hush(true); await sleep(300); aud.pig.hush(true);
-    await say('응원하던 친구들도 "쉿!" 조용히~');
 
     /* --- 8. 토끼의 꿈 --- */
     let carrot, bite, biteAt = [830, 230];
@@ -1266,7 +1271,6 @@
     await scene('엉금엉금 거북이', () => {
       if (low) {
         artBG(T, 'bg_grass_low');
-        seat([['dog', 285, 445, .5], ['cat', 745, 440, .5]]);
         rock = artPiece(T, 'bg_grass_low', ['ellipse', { cx: 515, cy: 322, rx: 158, ry: 82 }]);
         turtleReset(); put(turtle, R9.x0, R9.y, R9.s);
         if (T.portrait()) camSnap(300, 280, 1);
@@ -1277,7 +1281,6 @@
       paper(T.bg, [['path', { d: 'M-300 340 Q100 300 400 335 Q700 300 1300 330 V800 H-300 Z', fill: '#a9b56a' }]]);
       paper(T.bg, [['rect', { x: -300, y: 350, width: 1600, height: 400, fill: C.grass }]]);
       paper(T.bg, [['ellipse', { cx: 540, cy: 352, rx: 130, ry: 20, fill: '#8fae66' }]]);
-      seat([['dog', 480, 352, .5], ['cat', 600, 352, .5]]);
       // 중간 돌멩이
       paper(T.world, [['ellipse', { cx: 300, cy: 420, rx: 26, ry: 14, fill: '#b3aca0' }], ['ellipse', { cx: 520, cy: 400, rx: 18, ry: 10, fill: '#b3aca0' }]]);
       rock = paper(T.world, [['path', { d: 'M580 482 Q570 380 660 350 Q760 330 810 400 Q840 450 820 482 Z', fill: '#9a948a' }], ['path', { d: 'M620 380 Q660 360 700 366', stroke: '#c9c2b6', 'stroke-width': 8, fill: 'none', 'stroke-linecap': 'round' }]]);
@@ -1295,7 +1298,6 @@
     const stepWalk = i => {
       tp.step(st++ % 2); footstep(T); turtle.move(R9.x0 + i * R9.dx, R9.y, 380); follow(R9.x0 + 100 + i * R9.dx, 380);
       setRace(null, .04 + i * .02, 400);
-      if (i === 3) { aud.dog.cheer('힘내!'); vo('cheer_dog'); setTimeout(() => aud.cat.cheer('힘내!'), 300); }
     };
     await T.ask('화면을 톡! 한 발 한 발 걸어요.', () => T.tap(wrap, { prompt: '화면을 톡 눌러 봐요!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 6; i++) { stepWalk(i); await sleep(420); }
@@ -1308,7 +1310,6 @@
     tp.tilt(18);
     await turtle.move(...R9.down, 800);
     tp.tilt(0); setRace(null, .2, 600);
-    aud.dog.cheer('와아!'); aud.cat.cheer('야옹~');
     await say('영차! 돌멩이를 넘었어요!');
 
     /* --- 10. 거북이 시점: 개울 --- */
@@ -1316,7 +1317,7 @@
     const brook = !!ART.bg_stream; // 그림 개울: 물은 y 430 아래
     const R10 = brook ? { x0: 200, y: 492, fish: [[130, 470], [90, 500], [330, 520]] } : { x0: 160, y: 420, fish: [[90, 360], [40, 470], [200, 490]] };
     await scene('개울', () => {
-      if (brook) { artBG(T, 'bg_stream'); seat([['duck', 720, 436, .7]]); } else {
+      if (brook) { artBG(T, 'bg_stream'); } else {
       sky(T);
       paper(T.bg, [['path', { d: 'M-300 250 H130 L90 600 H-300 Z', fill: C.grass }], ['path', { d: 'M1300 250 H880 L930 600 H1300 Z', fill: C.grass }]]);
       paper(T.bg, [['rect', { x: -300, y: 244, width: 1600, height: 400, fill: '#9fb3d9', opacity: .95 }]]);
@@ -1325,7 +1326,6 @@
       el('path', { d: 'M-300 244 ' + Array.from({ length: 20 }, (_, i) => `Q${-270 + i * 80} 234 ${-220 + i * 80} 244 T${-140 + i * 80} 244`).join(' '), stroke: C.snow, 'stroke-width': 4, fill: 'none' }, T.bg);
       paper(T.bg, [['rect', { x: -300, y: 520, width: 1600, height: 100, fill: '#8a7a60' }], ...[80, 260, 470, 690, 900].map((x, i) => ['ellipse', { cx: x, cy: 522, rx: 30 + i % 2 * 12, ry: 14, fill: '#9a948a' }])]);
       [40, 110, 900, 960].forEach(x => paper(T.bg, [['path', { d: `M${x} 540 Q${x - 10} 380 ${x + 6} 250`, stroke: C.pine, 'stroke-width': 8, fill: 'none' }], ['ellipse', { cx: x + 6, cy: 250, rx: 7, ry: 22, fill: C.bark }]]));
-      seat([['duck', 560, 256, .85]]);
       }
       [[C.persimmon, 'orange'], [C.gold, 'gold'], [C.lav, 'lavender']].map(([c, n], i) => [c, n, ...R10.fish[i]]).forEach(([c, n, x, y]) => {
         // 그림 물고기(오른쪽을 본다 — 도형과 같은 쪽), 없으면 임시 도형
@@ -1345,7 +1345,6 @@
         ...fish.map((f, k) => f.move(f.x + 185, f.y + (k - 1) * 8, 850))]));
       for (let b = 0; b < 5; b++) { const c = el('circle', { cx: turtle.x + 60, cy: turtle.y - 40, r: 5 + b * 2, fill: 'none', stroke: C.snow, 'stroke-width': 3 }, T.fx); c.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${b * 10}px,-140px)`, opacity: 0 }], { duration: 1200, delay: b * 120, fill: 'both' }).finished.then(() => c.remove()); }
       setRace(null, .2 + i * .06, 800);
-      if (i === 2) { aud.duck.cheer('꽥꽥! 힘내!'); setTimeout(() => vo('cheer_duck'), 900); } // 진짜 오리 소리(꽥꽥) 다음에 오리 목소리로 '힘내'
     };
     await T.ask('화면을 톡! 헤엄쳐요.', () => T.tap(wrap, { prompt: '화면을 톡 눌러 봐요!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { stepSwim(i); await sleep(700); }
@@ -1362,12 +1361,11 @@
     const hillAt = p => hill ? [HILL.a[0] + (HILL.b[0] - HILL.a[0]) * p, HILL.a[1] + (HILL.b[1] - HILL.a[1]) * p, HILL.s0 + (HILL.s1 - HILL.s0) * p]
       : [190 + 580 * p, slopeY(190 + 580 * p), 1.3];
     await scene('언덕', () => {
-      if (hill) { artBG(T, 'bg_hill'); seat([['sheep', 830, 490, .95]]); } else {
+      if (hill) { artBG(T, 'bg_hill'); } else {
       sky(T, '#F6D9A0');
       paper(T.bg, [['path', { d: 'M-300 600 L-50 540 L1050 170 L1300 170 V800 H-300 Z', fill: C.leaf }]]);
       for (let i = 0; i < 6; i++) el('path', { d: `M${-50 + i * 190} ${slopeY(-50 + i * 190) + 30} l40 ${-13} l30 40`, stroke: C.pine, 'stroke-width': 5, fill: 'none', opacity: .6 }, T.bg);
       tree(T, T.bg, 960, 205, .7);
-      seat([['sheep', 880, 556, .95]]);
       }
       turtleReset(); tp.tilt(hill ? HILL.tilt : -18.6); put(turtle, ...hillAt(0));
       if (T.portrait()) camSnap(290, 280, 1);
@@ -1375,7 +1373,7 @@
       bar.show(true);
     });
     await say('이번엔 높은 언덕이에요.');
-    let lastStep = -1, cheered = false;
+    let lastStep = -1;
     const yo = new Set();
     /* 톡 누를 때마다 한 칸씩 들어오므로, 칸마다 move()를 새로 걸면 움직임이 겹쳐 뒤로 튄다 →
        목표 위치만 바꾸고 매 프레임 부드럽게 따라가게 한다 */
@@ -1386,7 +1384,6 @@
       climb.tgt = p; const [x, y] = hillAt(p); follow(x + 40, 300);
       const s = Math.floor(p * 16); if (s !== lastStep) { lastStep = s; tp.step(s % 2); footstep(T); }
       [.3, .7].forEach(m => { if (p >= m && !yo.has(m)) { yo.add(m); T.pop(x + 60, y - 160 * hillAt(p)[2] / 1.3, '영차!', C.pine); } });
-      if (p > .5 && !cheered) { cheered = true; aud.sheep.cheer('힘내!'); vo('cheer_sheep'); }
       setRace(null, .38 + .17 * p, 100);
     };
     await T.ask('화면을 톡! 영차영차 올라가요.', () => T.tap(wrap, { prompt: '화면을 톡 눌러 봐요!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
