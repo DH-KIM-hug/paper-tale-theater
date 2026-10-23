@@ -37,8 +37,9 @@
   const FL = 505;                       // 바닥(발끝 y)
   const MAT_W = 240, MAT_H = 20, BOARD_TOP = 475, TOP20 = BOARD_TOP - 20 * MAT_H;   // 탑: 판자 윗면 475, 20장 꼭대기 75
   const DUV_STEP = 12, DUV_TOP = TOP20 - 3 * DUV_STEP - HT.pp_prop_duvet;            // 이불 4장 꼭대기 y = 19
+  const LIE_DY = 10;                    // 누운 공주를 이불 속으로 내리는 양(그림 아래 여백·들린 머리 보정)
   const RIG_UP = 130;                   // 꼭대기를 볼 때 rig 를 내리는 양(§5-1)
-  const BGS = ['pp_bg_room_day_v2', 'pp_bg_gate_night_v2', 'pp_bg_guest_day_v2', 'pp_bg_guest_night_v2', 'pp_bg_yard_day_v2'];
+  const BGS = ['pp_bg_room_day_v2', 'pp_bg_gate_night_lb', 'pp_bg_guest_day_v2', 'pp_bg_guest_night_lb', 'pp_bg_yard_day_v2'];
   const src = k => AS + k + '.webp';    // 배경·스프라이트 모두 파일 이름 전체(pp_…)로 부른다
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 902 / 1600 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
@@ -140,9 +141,9 @@
   /* 배경 자리표시: 종이 한 장 + 바닥 띠 + 요소 2~3개 + 이름표 */
   const BGPH = {
     pp_bg_room_day_v2:    { sky: '#F6ECD8', gnd: '#D9A94E', name: '왕자의 방(낮, 오른쪽 창)', shapes: () => [['rect', { x: 554, y: 49, width: 400, height: 201, rx: 4, fill: '#BFD8EE' }], ['rect', { x: 554, y: 250, width: 400, height: 103, fill: '#8B7BB8' }], ['rect', { x: 120, y: 160, width: 160, height: 250, rx: 4, fill: '#A93B32' }]] },
-    pp_bg_gate_night_v2:  { sky: '#1F2A56', gnd: '#3a3f55', name: '성문 앞(밤)', shapes: () => [['rect', { x: -40, y: 205, width: 1080, height: 207, fill: '#55607F' }], ['rect', { x: 617, y: 205, width: 166, height: 300, rx: 4, fill: '#F2B366' }], ['rect', { x: 140, y: 250, width: 120, height: 160, fill: '#55607F' }]] },
+    pp_bg_gate_night_lb:  { sky: '#1F2A56', gnd: '#3a3f55', name: '성문 앞(밤)', shapes: () => [['rect', { x: -40, y: 205, width: 1080, height: 207, fill: '#55607F' }], ['rect', { x: 617, y: 205, width: 166, height: 300, rx: 4, fill: '#F2B366' }], ['rect', { x: 140, y: 250, width: 120, height: 160, fill: '#55607F' }]] },
     pp_bg_guest_day_v2:   { sky: '#F6ECD8', gnd: '#6B4A32', name: '손님방(낮, 왼쪽 창)', shapes: () => [['rect', { x: 100, y: 70, width: 170, height: 170, rx: 4, fill: '#BFD8EE' }], ['rect', { x: 140, y: 330, width: 140, height: 80, fill: '#A93B32' }], ['rect', { x: 880, y: 150, width: 90, height: 260, fill: '#D9A94E' }]] },
-    pp_bg_guest_night_v2: { sky: '#2B3263', gnd: '#3a2a1c', name: '손님방(밤, 왼쪽 창·달)', shapes: () => [['rect', { x: 100, y: 70, width: 170, height: 170, rx: 4, fill: '#1F2A56' }], ['circle', { cx: 190, cy: 150, r: 38, fill: '#F6ECD8' }], ['rect', { x: 140, y: 330, width: 140, height: 80, fill: '#6B4A32' }]] },
+    pp_bg_guest_night_lb: { sky: '#2B3263', gnd: '#3a2a1c', name: '손님방(밤, 왼쪽 창·달)', shapes: () => [['rect', { x: 100, y: 70, width: 170, height: 170, rx: 4, fill: '#1F2A56' }], ['circle', { cx: 190, cy: 150, r: 38, fill: '#F6ECD8' }], ['rect', { x: 140, y: 330, width: 140, height: 80, fill: '#6B4A32' }]] },
     pp_bg_yard_day_v2:    { sky: '#BFD8EE', gnd: '#3F6B4F', name: '성 마당(낮)', shapes: () => [['rect', { x: -40, y: 250, width: 1080, height: 162, fill: '#F6ECD8' }], ['circle', { cx: 160, cy: 110, r: 44, fill: '#F2B366' }], ['rect', { x: 700, y: 90, width: 160, height: 160, rx: 4, fill: '#F6ECD8' }]] },
   };
   function bgImage(T, key) {
@@ -164,6 +165,8 @@
         const [f, h0] = Array.isArray(v) ? v : [v, null], h = h0 || hOf(f), w = h * (ASP[f] || 1);
         const wrap = T.el('g', { filter: 'url(#pp)' }, g);
         sprite(T, wrap, f, -w / 2, -h, w, h);
+        /* 누운 자세: 그림은 머리가 살짝 들려 있어 이불 위에 떠 보인다 → 조금 내려 이불에 눕히고(LIE_DY), 발끝을 축으로 머리 쪽을 3도 낮춘다 */
+        if (/_lie_[ab]$/.test(f)) wrap.setAttribute('transform', `translate(0 ${LIE_DY}) rotate(-3 ${w * .3} 0)`);
         wrap.style.display = 'none'; looks[k] = { wrap, h, w, nat: NAT[f] || 'front' };
       });
     });
@@ -284,12 +287,12 @@
     }
     function dress(key) {
       if (key === 'pp_bg_room_day_v2') mid(L.map_table, X(150, 250), FL);
-      if (key === 'pp_bg_gate_night_v2') {
-        flicker(mid(L.lantern_post, 940, FL));
-        front(L.puddle, X(80, 470), 585); front(L.puddle2, X(960, 830), 585); rings(X(80, 470), 560); rings(X(960, 830), 560);
+      if (key === 'pp_bg_gate_night_lb') {
+        flicker(mid(L.lantern_post, 940, FL)); L.lantern_post.pos.style.filter = 'brightness(.7) saturate(.85)';   // 빛 상자 밤: 기둥을 조금 낮춰 성문 빛이 가장 밝게
+        front(L.puddle, X(80, 470), 585); front(L.puddle2, X(960, 830), 585); [L.puddle, L.puddle2].forEach(a => { a.pos.style.filter = 'brightness(.55) saturate(.8)'; }); rings(X(80, 470), 560); rings(X(960, 830), 560);
       }
-      if (key === 'pp_bg_guest_day_v2' || key === 'pp_bg_guest_night_v2') {
-        mid(L.pea_vine, 40, FL); L.pea_vine.body.style.filter = key === 'pp_bg_guest_night_v2' ? 'brightness(.6) saturate(.8)' : '';
+      if (key === 'pp_bg_guest_day_v2' || key === 'pp_bg_guest_night_lb') {
+        mid(L.pea_vine, 40, FL); L.pea_vine.body.style.filter = key === 'pp_bg_guest_night_lb' ? 'brightness(.6) saturate(.8)' : '';
       }
       if (key === 'pp_bg_yard_day_v2') {
         mid(L.rose_arch, X(120, 330), FL); mid(L.fountain, 950, FL);
@@ -328,7 +331,7 @@
     const rinst = () => T.readInstant();
     const rcam = (ms = 600) => (P ? (rinst() ? (camSnap(rcamP, 280, 1), Promise.resolve()) : T.camTo(rcamP, 280, 1, ms)) : Promise.resolve());
     const rstop = () => { if (rtoss) { clearInterval(rtoss); rtoss = null; } };
-    const rkey = k => (/_v2$/.test(k) ? k : k + '_v2');
+    const rkey = k => { const b = k.replace(/_(v2|lb)$/, ''); return b + (b === 'pp_bg_gate_night' || b === 'pp_bg_guest_night' ? '_lb' : '_v2'); };   // 밤 두 장면은 빛 상자판
     const rat = (who, a, args) => {
       const [xy, look, dir] = args; const [x0, y] = String(xy).split(',').map(Number);
       const x = P && READ_PX[who] && READ_PX[who][x0] != null ? READ_PX[who][x0] : x0;
@@ -491,7 +494,7 @@
 
     /* ===== 2. 폭풍우 밤 (자동) ===== */
     await T.sceneCard(tr('폭풍우 밤'), () => {
-      scene('pp_bg_gate_night_v2');
+      scene('pp_bg_gate_night_lb');
       put(T, cloudA, 250, 110); put(T, cloudB, 820, 95, { to: 'right' });
       put(T, doorC, 700, FL);
       put(T, bolt, 480, 190); bolt.pos.style.opacity = 0;
@@ -521,7 +524,7 @@
     /* ===== 3. 문 앞의 아가씨 (톡 2 — 성문) ===== */
     let rain3;
     await T.sceneCard(tr('문 앞의 아가씨'), () => {
-      scene('pp_bg_gate_night_v2');
+      scene('pp_bg_gate_night_lb');
       put(T, cloudA, 250, 110); put(T, cloudB, 820, 95, { to: 'right' });
       put(T, doorO, 700, FL); hide(doorO);
       put(T, queen, 745, FL, { look: 'smile' }); put(T, king, 700, FL, { look: 'lantern' }); hide(queen); hide(king);
@@ -674,7 +677,7 @@
 
     /* ===== 7. 잠 못 든 밤 (자동) ===== */
     await T.sceneCard(tr('잠 못 든 밤'), () => {
-      scene('pp_bg_guest_night_v2');
+      scene('pp_bg_guest_night_lb');
       buildTower();
       put(T, ladder, TX + 125, FL); inRig(ladder);
       put(T, pea, TX, DUV_TOP, { look: 'lie_a' }); inRig(pea);
