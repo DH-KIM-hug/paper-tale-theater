@@ -4,13 +4,13 @@ window.REVIEW = {
   magpie: '배경 다층·빛 상자',
   magic_jar: '배경 다층·빛 상자',
   red_hood: '다시 그림: 할머니 방·식탁',
-  rabbit: '배경 다층·빛 상자·개울', patjuk: '다시 그림: 부엌', turnip: '다시 그림: 헛간', frog: '배경 다층·빛 상자',
-  sun_wind: '다시 그림: 바람·해 빛 상자(낮)', lion_mouse: '배경 다층·빛 상자', fox_crane: '다시 그림: 부엌·식탁', kongjwi: '배경 다층·빛 상자',
-  heungbu: '다시 그림: 놀부 부엌·마당·박 빛 상자', hansel: '배경 다층·빛 상자',
-  ugly_duckling: '배경 다층·빛 상자', wolf_goats: '배경 다층·빛 상자', ant_grasshopper: '배경 다층·빛 상자',
-  goldilocks: '배경 다층·빛 상자', sunmoon: '다시 그림: 초가집·수수밭', bremen: '빛 상자 탑 장면',
+  rabbit: '배경 다층·빛 상자·개울', patjuk: '빛 상자 손봄: 달밤 마당·할멈 방향·호미', turnip: '다시 그림: 헛간', frog: '배경 다층·빛 상자',
+  sun_wind: '다시 그림: 바람·해 빛 상자(낮)', lion_mouse: '배경 다층·빛 상자', fox_crane: '빛 상자 손봄: 잔치 나비', kongjwi: '빛 상자 손봄: 독 안 옛 그림',
+  heungbu: '다시 그림: 놀부 부엌·마당·박 빛 상자', hansel: '빛 상자 손봄: 달밤 집 앞',
+  ugly_duckling: '빛 상자 손봄: 농부 둑', wolf_goats: '빛 상자 손봄: 우물 풍덩', ant_grasshopper: '빛 상자 손봄: 개미집 불빛',
+  goldilocks: '빛 상자 손봄: 곰 빛 원판 뺌', sunmoon: '다시 그림: 초가집·수수밭', bremen: '빛 상자 손봄: 창 앞 탑',
   three_pigs: '다시 그림: 벽돌 집터',
   snow_white: '공주 화려하게(v2)', cinderella: '공주 화려하게(v2)', little_mermaid: '공주 화려하게(v2)', beauty_beast: '공주 화려하게(v2)',
   rapunzel: '공주 화려하게(v2)', frog_prince: '공주 화려하게(v2)', princess_pea: '공주 화려하게(v2)', sleeping_beauty: '공주 화려하게(v2)',
-  kkultteok: '꽃밭·공장 다층', red_car: '장난감 나라 다층', unicorn: '재기획 그림 전체'
+  kkultteok: '꽃밭·공장 다층', red_car: '장난감나라 컨셉 재기획', unicorn: '재기획 그림 전체'
 };
