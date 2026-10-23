@@ -16,6 +16,11 @@
   // 집 짓는 단계 그림(tp2_<집>_s1~3): 완성 그림과 같은 상자·같은 바닥선으로 만든다
   ['straw', 'wood', 'brick'].forEach(k => [1, 2, 3].forEach(i => { SZ[`tp2_${k}_s${i}`] = SZ[`house_${k}`]; NW[`tp2_${k}_s${i}`] = NW[`house_${k}`]; }));
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
+  /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 들판·집터 셋·세 집터 들판은 v2(땅선·집 자리 그대로), 쿵쿵쿵은 해 질 녘 라이트박스(집·문·창·굴뚝 자리 그대로),
+     보글보글은 벽난로 불빛 라이트박스, 벽돌 마을은 노을 라이트박스. 가게·벽돌 집 안은 그대로 */
+  const BGF = { meadow: 'bg_meadow_v2', strawlot: 'bg_strawlot_v2', woodlot: 'bg_woodlot_v2', bricklot: 'bg_bricklot_v2', field: 'bg_field_v2', brick_out: 'lb_brick_dusk', chimney: 'lb_hearth', sunset: 'lb_village_sunset' };
+  /* 층 소품(tp_layer_*, 누름 없음): 폭/높이. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위, pointer-events none). (cx, y) = 가운데·발끝, top 이면 윗변 */
+  const LASP = { wheat_front: 1.0017, fern_front: 1.0533, poppies_mid: 4.2857, cherry_branch: .8883, sil_cypress: .3933 };
   const NUM = ['하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열'];
   const GROUND = 480;
 
@@ -27,9 +32,27 @@
     const sfx = n => { try { AudioFX.sfx(n); } catch (e) { /* 소리 없이도 진행 */ } };
     const raf = () => new Promise(r => requestAnimationFrame(r));
 
+    const still = () => T.reading && T.reading() && T.readInstant && T.readInstant();
+    function layer(k, cx, y, h, { front = false, flip = false, top = false } = {}) {
+      const w = h * LASP[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+      const inner = T.el('g', { filter: 'url(#pp)' }, g);
+      if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+      T.el('image', { href: `../../assets/v3w/tp_layer_${k}.webp`, x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+      inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+      return inner;
+    }
+    const sway = (g, deg, ms, delay = 0) => { if (!still()) g.animate([{ rotate: `${-deg}deg` }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }], { duration: ms, delay, iterations: Infinity, easing: 'ease-in-out' }); return g; };
+    function dress(key) {
+      if (key === 'meadow') [250, 750].forEach((x, i) => layer('poppies_mid', x, 590, 60, { flip: !!i }));
+      if (key === 'shop') sway(layer('cherry_branch', 40, -24, 180, { front: true, top: true, flip: true }), 1, 8000);
+      if (key === 'strawlot') sway(layer('wheat_front', 40, 592, 120, { front: true }), 1.2, 5000);   // 집터는 오른쪽에 집이 오므로 왼쪽만
+      if (key === 'woodlot') layer('fern_front', 40, 592, 120, { front: true });
+      if (key === 'brick_out') { layer('sil_cypress', 20, 600, 300, { front: true }); layer('sil_cypress', 985, 600, 300, { front: true, flip: true }); }
+    }
     function bg(key) {
       T.bg.innerHTML = ''; T.world.innerHTML = ''; T.fx.innerHTML = '';
-      T.el('image', { href: U('bg_' + key), x: BG.x, y: BG.y, width: BG.w, height: BG.h, preserveAspectRatio: 'none' }, T.bg);
+      T.el('image', { href: BGF[key] ? `../../assets/v3w/tp_${BGF[key]}.webp` : U('bg_' + key), x: BG.x, y: BG.y, width: BG.w, height: BG.h, preserveAspectRatio: 'none' }, T.bg);
+      dress(key);
     }
     function sprite(name, x, h, y = GROUND) {
       let im;
