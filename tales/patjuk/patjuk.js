@@ -17,7 +17,16 @@
   }
 
   /* 장면 한 장 그림 (생성 중). 없으면 폴백 조합 */
-  const SCENE_IMG = { A: A('v3w/scene_a_field.webp'), B1: A('v3w/scene_b_kitchen.webp'), B2: A('v3w/scene_c_yard_sea.webp') };
+  /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): v2 세 장은 옛 그림과 겹쳐 집·창·선반·돌담·달 자리가 같다.
+     라이트박스 둘: 깜깜한 밤 부엌(저녁 빛이 걷힐 때 1.2초 크로스페이드), 달빛 마당(밤이 된 뒤의 마당 = 호랑이가 도망쳐 나온 뒤·잔치) */
+  const SCENE_IMG = { A: A('v3w/pj_bg_field_v2.webp'), B1: A('v3w/pj_bg_kitchen_v2.webp'), B2: A('v3w/pj_bg_yard_v2.webp') };
+  const SCENE_LB = { B1: A('v3w/pj_lb_kitchen_night.webp'), B2: A('v3w/pj_lb_yard_moon.webp') };
+  /* 앞 가림 층 소품(pj_layer_*): 근경(fgL, 누름 없음). [이름, 가운데 x, 발끝 y(top 이면 위 끝), 높이, 그림 폭/높이, top, 뒤집기] — 세로 화면 가운데(285~715) 밖 */
+  const LAYERS = {
+    A: [['pampas_front', 40, 590, 260, .8717], ['maple_branch', 960, -22, 200, 1.5358, true]],
+    B1: [['garlic_bunch', 405, -22, 150, .4467, true]],
+    B2: [['snow_pine_front', 1000, -22, 220, 1.1933, true, true], ['snow_bush_front', 0, 590, 120, 1.27]],
+  };
   const sceneOK = {};
 
   /* 무대 좌표 (발 기준 y=520) */
@@ -191,17 +200,27 @@
     }
 
     /* ---------- 장면 ---------- */
-    let scene = 'A', daylight = null;
+    let scene = 'A', daylight = null, lbImg = null, night = false; // night: 부엌 저녁 빛이 걷혀 깜깜한 밤이 된 뒤(마당도 달빛 라이트박스)
+    /* 부엌 저녁 빛(0.25)·밤(0): 밤이면 라이트박스 그림으로 크로스페이드 (ms 0 이면 바로) */
+    function setDusk(op, ms = 0, from = null) {
+      night = op === 0;
+      if (daylight) { if (ms) anim(daylight, [{ opacity: from ?? +daylight.getAttribute('opacity') }, { opacity: op }], ms).then(() => daylight && daylight.setAttribute('opacity', op)); else daylight.setAttribute('opacity', op); }
+      if (lbImg && scene === 'B1') { const to = night ? 1 : 0; if (ms) anim(lbImg, [{ opacity: +lbImg.getAttribute('opacity') }, { opacity: to }], Math.max(ms, 1200)).then(() => lbImg && lbImg.setAttribute('opacity', to)); else lbImg.setAttribute('opacity', to); }
+    }
     const friends = {}; // id → actor
     function setScene(k) {
       scene = k;
       const bg = T.bg;
       bg.innerHTML = ''; fgL.innerHTML = '';
-      daylight = null;
-      el('rect', { x: -3000, y: -3000, width: 7000, height: 7000, fill: k === 'A' ? '#e9c77a' : k === 'B1' ? '#241811' : '#1a2350' }, bg);
+      daylight = null; lbImg = null;
+      el('rect', { x: -3000, y: -3000, width: 7000, height: 7000, fill: k === 'A' ? '#e9c77a' : k === 'B1' ? '#241811' : night ? '#bcc6db' : '#1a2350' }, bg);
       const full = sceneOK[k];
       // 장면 한 장 그림: 무대(1000x560)를 꽉 채우고 가로 레터박스용으로 양옆을 조금 더 덮는다
       if (full) el('image', { href: SCENE_IMG[k], x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, bg);
+      if (full && SCENE_LB[k]) lbImg = el('image', { href: SCENE_LB[k], x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice', opacity: night ? 1 : 0 }, bg);
+      if (full) (LAYERS[k] || []).forEach(([n, x, y, h, asp, top, flip]) => {
+        const w = h * asp; img(fgL, `v3w/pj_layer_${n}.webp`, x - w / 2, top ? y : y - h, w, h, 'xMidYMid meet', { filter: 'url(#pp)', ...(flip ? { transform: `translate(${2 * x},0) scale(-1,1)` } : {}) });
+      });
       if (k === 'A') {
         // 팥 포기: 밭 띠 위 두 줄 (배경 그림이라 배우는 그 앞에 선다)
         if (false) { // 밭 그림(GPT)에 팥 포기가 이미 그려져 있어 따로 오려 붙이지 않는다 (예전 조각 그림용 코드)
@@ -520,8 +539,8 @@
       6: () => walk(tiger, POS.tigerStage[6], 260),
     };
     const READ_ACTS = {
-      set: k => { setScene(k); if (daylight && readDusk != null) daylight.setAttribute('opacity', readDusk); }, // 부엌 저녁 빛은 다음 부엌 장면에도 이어진다
-      daylight: m => { readDusk = m === 'dusk' ? .25 : 0; if (daylight) daylight.setAttribute('opacity', readDusk); },
+      set: k => { setScene(k); if (daylight && readDusk != null) setDusk(readDusk); }, // 부엌 저녁 빛은 다음 부엌 장면에도 이어진다
+      daylight: m => { readDusk = m === 'dusk' ? .25 : 0; setDusk(readDusk, T.readInstant() ? 0 : 1200); },
       cam(a, b) {
         const go = (x, y, z) => (T.readInstant() ? camSnap(x, y, z) : camTo(x, y, z, 800));
         if (a === 'wide') return T.readInstant() ? camSnap(500, 280, 1) : camWide(700);
@@ -698,7 +717,7 @@
           setScene('B1');
           granny.place(POS.grannyCook, 520); granny.face('left');
           grannyMood('cry');
-          daylight && daylight.setAttribute('opacity', .25);
+          setDusk(.25);
           camSnap(240, 430, 1.6);
         }, granny.pos);
         await say(INTRO.opening[3]);
@@ -745,7 +764,7 @@
       parkTiger();
       granny.place(POS.grannyCook, 520); granny.face('left');
       grannyMood('cry');
-      if (daylight) anim(daylight, [{ opacity: skipRequested ? 1 : .25 }, { opacity: 0 }], 900);
+      setDusk(0, 900, skipRequested ? 1 : .25);
       await camWide(600);
       // 호랑이가 오기 전, 숨은 친구들에게 작전 속삭이기 (놀이 설명)
       await say(INTRO.help);
@@ -761,7 +780,7 @@
         // 다시 보기: 덮인 종이 뒤에서 무대를 차려 두고 종이 조리개를 연다
         Object.values(friends).forEach(fr => { fr.shown = true; });
         setScene('B1');
-        if (daylight) daylight.setAttribute('opacity', 0);
+        setDusk(0);
         granny.place(POS.grannyCook, 520); grannyMood('cry');
         parkTiger();
         camSnap(500, 280, 1);
@@ -770,7 +789,7 @@
       } else {
         await T.sceneCard('깜깜한 밤', () => {
           setScene('B1');
-          if (daylight) daylight.setAttribute('opacity', 0);
+          setDusk(0);
           camSnap(500, 280, 1);
         });
       }
