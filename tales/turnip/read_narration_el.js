@@ -44,8 +44,8 @@ Object.assign(NARRATION_CLIPS, {
  "헛간 지붕에서 야옹!": "audio/el/turnip/nar_5261dae3bc.mp3",
  "고양이가 지붕에서 폴짝 내려왔어요.": "audio/el/turnip/nar_780bdf6fcc.mp3",
  "어? 강아지랑 고양이가 서로 째려봐요.": "audio/el/turnip/nar_719af83d16.mp3",
- "\"흥!\" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.": [
-  "audio/el/turnip/cat_b2606ae164.mp3",
+ "\"흥, 알았어!\" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.": [
+  "audio/el/turnip/cat_71163fcc2f.mp3",
   "audio/el/turnip/nar_3fd9b6c780.mp3"
  ],
  "다섯이 영차영차 당겨도 순무는 꼼짝하지 않았어요.": "audio/el/turnip/nar_d0ae96d97a.mp3",
