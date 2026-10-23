@@ -20,10 +20,10 @@
   const BG = {
     nest: 'v3w/ud_bg_nest2.webp', pond: 'v3w/ud_bg_pond_v2.webp', yard: 'v3w/ud_bg_yard_v2.webp', reeds: 'v3w/ud_bg_reeds.webp',
     swamp: 'v3w/ud_bg_swamp.webp', swamp_high: 'v3w/ud_lb_swamp_dusk.webp', autumn: 'v3w/ud_bg_autumn_v2.webp', winter: 'v3w/ud_lb_winter_moon.webp',
-    cabin: 'v3w/ud_bg_cabin.webp', spring: 'v3w/ud_bg_spring_v2.webp', reflect: 'v3w/ud_bg_reflect_v2.webp', lake: 'v3w/ud_lb_lake_sunset.webp',
+    cabin: 'v3w/ud_bg_cabin.webp', spring: 'v3w/ud_bg_spring_v2.webp', reflect: 'v3w/ud_bg_reflect.webp',
   };
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 연못·마당·가을·봄은 v2(물 띠·헛간·땅선·호수 띠 자리 그대로, 겹쳐 확인),
-     늪 한가운데(해 질 녘)·겨울(달밤)·물에 비친 모습과 백조 가족(노을 호수)은 라이트박스. 층 소품은 누름 없음 */
+     늪 한가운데(해 질 녘)·겨울(달밤)은 라이트박스. 물에 비친 모습·백조 가족의 노을 호수 라이트박스는 사용자 결정으로 되돌림(옛 반사 그림·봄 호수). 층 소품은 누름 없음 */
   const LAYER_AR = { reeds_front: .9817, iris_mid: .945, willow_top: .92, sil_willow: .935 };
   /* 배우·소품·컷 (모두 왼쪽을 본다)
      - 주인공: 알 → 아기(보통·슬픔·무서움·기쁨) → 어린 새(보통·덜덜·날개 활짝) → 백조. 같은 자라기 단계 안에서는 픽셀 배율이 같다(머리 크기가 튀지 않게)
@@ -74,7 +74,7 @@
      BG_FIT[key] = [배율, 그림 속 점 u, v(비율), 그 점이 올 무대 x, y] — 배율 1이면 그림 전체를 무대에 맞춘다 */
   const BG_EDGE = { nest: ['#a5c4b6', '#37502d'], pond: ['#70bbe5', '#926244'], yard: ['#86bfdf', '#dca264'], reeds: ['#bad2d9', '#533f27'],
     swamp: ['#b9bca8', '#8fa6ad'], swamp_high: ['#da7486', '#271a14'], autumn: ['#ec682b', '#99532d'], winter: ['#afa1cf', '#dedde3'],
-    cabin: ['#c99a58', '#c9944f'], spring: ['#9bc8e9', '#758e3f'], reflect: ['#c5e4ed', '#77cae2'], lake: ['#fa5e45', '#261c15'] };
+    cabin: ['#c99a58', '#c9944f'], spring: ['#9bc8e9', '#758e3f'], reflect: ['#c5e4ed', '#77cae2'] };
   /* 층 소품: (cx, y) 가운데·발끝(top 이면 윗변). front 면 배우 앞(T.fx), 아니면 배우 뒤(T.bg). 누름 없음 */
   function layer(T, k, cx, y, h, { front = true, flip = false, top = false, sway = 0, ms = 8000 } = {}) {
     const w = h * LAYER_AR[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
@@ -84,15 +84,6 @@
     inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
     if (sway && !(T.reading() && T.readInstant())) inner.animate([{ rotate: `${-sway}deg` }, { rotate: `${sway}deg` }, { rotate: `${-sway}deg` }], { duration: ms, iterations: Infinity, easing: 'ease-in-out' });
     return inner;
-  }
-  /* 라이트박스 빛 점: 작은 크림 원이 깜빡 */
-  function lightDots(T, n, [x0, x1, y0, y1]) {
-    for (let i = 0; i < n; i++) {
-      const x = x0 + Math.random() * (x1 - x0), y = y0 + Math.random() * (y1 - y0), r = 3 + Math.random() * 2;
-      const g = T.el('g', { style: 'pointer-events:none' }, T.fx);
-      T.el('circle', { cx: x, cy: y, r: r + 3, fill: '#FBE8A6', opacity: .5 }, g); T.el('circle', { cx: x, cy: y, r, fill: '#FFF4CC' }, g);
-      if (!(T.reading() && T.readInstant())) g.animate([{ opacity: .2 }, { opacity: 1 }, { opacity: .2 }], { duration: 1400 + Math.random() * 1200, delay: Math.random() * 1000, iterations: Infinity });
-    }
   }
   const BG_FIT = { reeds: [1.3, .5, .5, 500, 280] };
   function bgRect(key) {
@@ -602,8 +593,6 @@
       T.paper(T.bg, [['rect', { x: x - 2, y, width: 4, height: 20, fill: C.pine }], ...[0, 1, 2, 3, 4].map(k => ['circle', { cx: x + Math.cos(k * 1.256) * 8, cy: y + Math.sin(k * 1.256) * 8, r: 6, fill: c }]), ['circle', { cx: x, cy: y, r: 4, fill: C.gold }]]);
     });
   }
-  /* 노을 호수 라이트박스(11·12장): 물(Lagoon) 윗선이 약 256, 아래 실루엣 띠가 약 490부터 */
-  function lakeBG(T) { return !!bgImage(T, 'lake'); }
   function reflectBG(T) { // 호수 반사 하이앵글
     if (bgImage(T, 'reflect')) return true;
     const { paper, el } = T;
@@ -682,7 +671,6 @@
     /* 물 앞 띠: 그림 배경이면 같은 그림의 아래쪽을 배우 앞에(frontCut), 아니면 코드 물 띠 */
     const water = (key, artY, y, color, op, artOp = .92) => frontCut(T, key, artY, artOp) || waterFront(T, y, color, op);
     const hero = makeHero(T);
-    let RD = 0; // 2026-10-23 물에 비친 모습이 노을 호수 라이트박스면 물 윗선(256) 아래로 모두 RD 만큼 내린다
     const put = (a, x, y, s = a.scale, dir = 'left') => { T.world.appendChild(a.pos); a.setScale(s); a.face(dir); a.place(x, y); };
     let snowT = null;
 
@@ -902,30 +890,29 @@
           camSnap(500, 280, 1); return;
         }
         if (k === 'reflect') {
-          RD = lakeBG(T) ? 100 : (reflectBG(T), 0);
+          reflectBG(T);
           hero.setForm('swan'); hero.setMood('happy');
-          reflR = T.actor(T.world, 500, 174 + RD, g => HERO.swan(T, g, 'happy'), { scale: 1.1 });
-          reflR.pos.setAttribute('transform', `translate(500,${174 + RD}) scale(1.1,-1.1)`);
+          reflR = T.actor(T.world, 500, 174, g => HERO.swan(T, g, 'happy'), { scale: 1.1 });
+          reflR.pos.setAttribute('transform', 'translate(500,174) scale(1.1,-1.1)');
           const rid = 'udRefl' + (++clipN);
           T.el('rect', { x: -300, y: -600, width: 600, height: 565.5 }, T.el('clipPath', { id: rid }, reflR.pos));
           reflR.body.setAttribute('clip-path', `url(#${rid})`); reflR.pos.style.opacity = 0;
-          for (let i = 0; i < 4; i++) el('ellipse', { cx: 485 + (i % 2) * 30, cy: 302 + RD + i * 40, rx: 70 - i * 6, ry: 2.2, fill: '#E4F1F7', opacity: .45 }, T.world);
-          put(hero, 500, 250 + RD, 1.1, 'left'); wade(T, hero, 'swan', .2);
+          for (let i = 0; i < 4; i++) el('ellipse', { cx: 485 + (i % 2) * 30, cy: 302 + i * 40, rx: 70 - i * 6, ry: 2.2, fill: '#E4F1F7', opacity: .45 }, T.world);
+          put(hero, 500, 250, 1.1, 'left'); wade(T, hero, 'swan', .2);
           bobR = hero.body.animate([{ translate: '0 -1px' }, { translate: '0 3px' }], { duration: 1100, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
           hero.pos.style.opacity = 0;
-          camSnap(500, 215 + RD, 1.35); return;
+          camSnap(500, 215, 1.35); return;
         }
         if (k === 'family') {
-          const lake = lakeBG(T), art = lake || springBG(T), sy = art ? -32 : 0, fy = lake ? -48 : 0;
+          const art = springBG(T), sy = art ? -32 : 0;
           farR = el('g', {}, T.world);
-          const fm = cast(T, 'mom', 300, 300 + fy, .7, farR); fm.face('right');
-          const fs = [0, 1, 2, 3].map(q => { const d = cast(T, 'duckling', 336 + q * 24, 302 + fy, .45, farR); d.face('right'); return d; });
-          if (lake) lightDots(T, 12, [80, 920, 30, 200]);
+          const fm = cast(T, 'mom', 300, 300, .7, farR); fm.face('right');
+          const fs = [0, 1, 2, 3].map(q => { const d = cast(T, 'duckling', 336 + q * 24, 302, .45, farR); d.face('right'); return d; });
           farR._ducks = [fm, ...fs]; A.mom = fm; A.sibs = fs;
           hero.setForm('swan'); hero.setMood('happy'); put(hero, 440, 472 + sy, 1, 'right');
           swansR = [[585, 462 + sy], [685, 490 + sy], [785, 468 + sy]].map(([x, y]) => { let parts; const a = T.actor(T.world, x, y, g => { parts = HERO.swan(T, g, 'happy'); }, { scale: .9 }); a.parts = parts; return a; });
           A.swans = swansR;
-          water(lake ? 'lake' : 'spring', 452 + sy, 452, '#80AECB', .8, 1);
+          water('spring', 452 + sy, 452, '#80AECB', .8, 1);
           if (nw) camSnap(605, 280, Math.min(1, visW() / 610)); else camSnap(500, 280, 1);
         }
       };
@@ -1130,9 +1117,9 @@
           (async () => { // 날개를 편 채 미끄러져 내려와 물에 앉는다
             const fl = el('g', {}, T.world), fw = 250, fh = fw * 353 / 398;
             pic(T, fl, 'swan_fly', -fw / 2, -fh * .9, fw, fh);
-            await fl.animate([{ transform: 'translate(900px,20px) rotate(8deg)' }, { transform: `translate(500px,${232 + RD}px) rotate(0deg)` }], { duration: 1700, easing: 'cubic-bezier(.3,.6,.4,1)', fill: 'forwards' }).finished;
+            await fl.animate([{ transform: 'translate(900px,20px) rotate(8deg)' }, { transform: 'translate(500px,232px) rotate(0deg)' }], { duration: 1700, easing: 'cubic-bezier(.3,.6,.4,1)', fill: 'forwards' }).finished;
             AudioFX.sfx('splash_big', .6) || AudioFX.sfx('splash', .6);
-            [0, 160].forEach(d => { const r = el('ellipse', { cx: 500, cy: 214 + RD, rx: 30, ry: 8, fill: 'none', stroke: '#fff', 'stroke-width': 3 }, T.world); r.style.transformBox = 'fill-box'; r.style.transformOrigin = 'center'; r.animate([{ transform: 'scale(1)', opacity: .9 }, { transform: 'scale(4.5)', opacity: 0 }], { duration: 900, delay: d, easing: 'ease-out', fill: 'both' }).finished.then(() => r.remove()); });
+            [0, 160].forEach(d => { const r = el('ellipse', { cx: 500, cy: 214, rx: 30, ry: 8, fill: 'none', stroke: '#fff', 'stroke-width': 3 }, T.world); r.style.transformBox = 'fill-box'; r.style.transformOrigin = 'center'; r.animate([{ transform: 'scale(1)', opacity: .9 }, { transform: 'scale(4.5)', opacity: 0 }], { duration: 900, delay: d, easing: 'ease-out', fill: 'both' }).finished.then(() => r.remove()); });
             fl.remove(); hero.pos.style.opacity = 1; reflR.pos.animate([{ opacity: 0 }, { opacity: .55 }], { duration: 600, fill: 'forwards' });
             await sleep(900); camWide(1400);
           })();
@@ -1599,29 +1586,29 @@
     /* --- 11. 물에 비친 모습 (호수 반사 하이앵글, 메인) --- */
     let refl, bob;
     await T.sceneCard('물에 비친 모습', () => {
-      T.clear(); RD = lakeBG(T) ? 100 : (reflectBG(T), 0);
+      T.clear(); reflectBG(T);
       hero.setForm('swan'); hero.setMood('happy');
       // 2026-10-20 백조는 물에 '앉는다': 몸 아래(다리)는 물에 잠겨 안 보이고, 비친 모습은 물선(212)에서 시작한다
-      refl = T.actor(T.world, 500, 174 + RD, g => HERO.swan(T, g, 'happy'), { scale: 1.1 });
-      refl.pos.setAttribute('transform', `translate(500,${174 + RD}) scale(1.1,-1.1)`);
+      refl = T.actor(T.world, 500, 174, g => HERO.swan(T, g, 'happy'), { scale: 1.1 });
+      refl.pos.setAttribute('transform', 'translate(500,174) scale(1.1,-1.1)');
       const rid = 'udRefl' + (++clipN);
       T.el('rect', { x: -300, y: -600, width: 600, height: 565.5 }, T.el('clipPath', { id: rid }, refl.pos));
       refl.body.setAttribute('clip-path', `url(#${rid})`);
       refl.pos.style.opacity = 0;
-      for (let i = 0; i < 4; i++) el('ellipse', { cx: 485 + (i % 2) * 30, cy: 302 + RD + i * 40, rx: 70 - i * 6, ry: 2.2, fill: '#E4F1F7', opacity: .45 }, T.world); // 비친 모습 위 잔물결: 가늘고 옅게 (딱딱한 줄무늬 X)
-      put(hero, 500, 250 + RD, 1.1, 'left');
+      for (let i = 0; i < 4; i++) el('ellipse', { cx: 485 + (i % 2) * 30, cy: 302 + i * 40, rx: 70 - i * 6, ry: 2.2, fill: '#E4F1F7', opacity: .45 }, T.world); // 비친 모습 위 잔물결: 가늘고 옅게 (딱딱한 줄무늬 X)
+      put(hero, 500, 250, 1.1, 'left');
       wade(T, hero, 'swan', .2);
       bob = hero.body.animate([{ translate: '0 -1px' }, { translate: '0 3px' }], { duration: 1100, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
       hero.pos.style.opacity = 0;
-      camSnap(500, 215 + RD, 1.35); // 내려앉는 모습이 보이게 위쪽을 비춘다
+      camSnap(500, 215, 1.35); // 내려앉는 모습이 보이게 위쪽을 비춘다
     });
     // 날개를 활짝 편 채 미끄러져 내려와 배부터 물에 닿고, 퐁! 물결이 퍼지며 날개를 접고 물에 앉는다
     const landing = (async () => {
       const fl = el('g', {}, T.world), fw = 250, fh = fw * 353 / 398;
       pic(T, fl, 'swan_fly', -fw / 2, -fh * .9, fw, fh);
-      await fl.animate([{ transform: 'translate(900px,20px) rotate(8deg)' }, { transform: `translate(500px,${232 + RD}px) rotate(0deg)` }], { duration: 1700, easing: 'cubic-bezier(.3,.6,.4,1)', fill: 'forwards' }).finished;
+      await fl.animate([{ transform: 'translate(900px,20px) rotate(8deg)' }, { transform: 'translate(500px,232px) rotate(0deg)' }], { duration: 1700, easing: 'cubic-bezier(.3,.6,.4,1)', fill: 'forwards' }).finished;
       AudioFX.sfx('splash_big', .6) || AudioFX.sfx('splash', .6);
-      [0, 160].forEach(d => { const r = el('ellipse', { cx: 500, cy: 214 + RD, rx: 30, ry: 8, fill: 'none', stroke: '#fff', 'stroke-width': 3 }, T.world); r.style.transformBox = 'fill-box'; r.style.transformOrigin = 'center'; r.animate([{ transform: 'scale(1)', opacity: .9 }, { transform: 'scale(4.5)', opacity: 0 }], { duration: 900, delay: d, easing: 'ease-out', fill: 'both' }).finished.then(() => r.remove()); });
+      [0, 160].forEach(d => { const r = el('ellipse', { cx: 500, cy: 214, rx: 30, ry: 8, fill: 'none', stroke: '#fff', 'stroke-width': 3 }, T.world); r.style.transformBox = 'fill-box'; r.style.transformOrigin = 'center'; r.animate([{ transform: 'scale(1)', opacity: .9 }, { transform: 'scale(4.5)', opacity: 0 }], { duration: 900, delay: d, easing: 'ease-out', fill: 'both' }).finished.then(() => r.remove()); });
       fl.remove(); hero.pos.style.opacity = 1; refl.pos.animate([{ opacity: 0 }, { opacity: .55 }], { duration: 600, fill: 'forwards' });
     })();
     await say('아기 오리가 호숫가에 내려앉았어요. 물에 누가 비쳤을까요?');
@@ -1639,11 +1626,10 @@
     /* --- 12. 백조 가족 (호수 와이드, 봄꽃) --- */
     let swans, far;
     await T.sceneCard('백조 가족', () => {
-      T.clear(); const lake = lakeBG(T), art = lake || springBG(T), sy = art ? -32 : 0, fy = lake ? -48 : 0; // 그림: 호수에 뜨게 조금 위로. 2026-10-23 노을 호수 라이트박스, 엄마와 형제는 먼 물가(약 252)
+      T.clear(); const art = springBG(T), sy = art ? -32 : 0; // 그림: 호수(가운데 330~515)에 뜨게 조금 위로. 2026-10-23 노을 호수 라이트박스는 사용자 결정으로 되돌림
       far = el('g', {}, T.world);
-      const fm = cast(T, 'mom', 300, 300 + fy, .7, far); fm.face('right'); // 멀리서 백조들 쪽을 본다
-      const fs = [0, 1, 2, 3].map(k => { const d = cast(T, 'duckling', 336 + k * 24, 302 + fy, .45, far); d.face('right'); return d; });
-      if (lake) lightDots(T, 12, [80, 920, 30, 200]);
+      const fm = cast(T, 'mom', 300, 300, .7, far); fm.face('right'); // 멀리서 백조들 쪽을 본다
+      const fs = [0, 1, 2, 3].map(k => { const d = cast(T, 'duckling', 336 + k * 24, 302, .45, far); d.face('right'); return d; });
       far._ducks = [fm, ...fs];
       put(hero, 440, 472 + sy, 1, 'right');
       swans = [[585, 462 + sy], [685, 490 + sy], [785, 468 + sy]].map(([x, y]) => {
@@ -1651,7 +1637,7 @@
         const a = T.actor(T.world, x, y, g => { parts = HERO.swan(T, g, 'happy'); }, { scale: .9 });
         a.parts = parts; return a;
       });
-      water(lake ? 'lake' : 'spring', 452 + sy, 452, '#80AECB', .8, 1); // 반투명이면 물 아래 몸이 비쳐 이음 줄이 보인다
+      water('spring', 452 + sy, 452, '#80AECB', .8, 1); // 반투명이면 물 아래 몸이 비쳐 이음 줄이 보인다
     }, hero.pos);
     swanCall(T);
     await say('백조들이 헤엄쳐 왔어요. "안녕! 너도 우리 친구야. 같이 살자!"');
