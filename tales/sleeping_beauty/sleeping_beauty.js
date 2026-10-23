@@ -45,7 +45,7 @@
     sb_dog_sleep: 'left', sb_dog_wag: 'left', sb_bird_sleep: 'left', sb_layer_cobweb: 'left' };
   const FL = 528;                       // 바닥(발끝 y)
   let TABLE_Y = 207;                    // 2·3·11장 식탁 윗선. 배경마다 잰 값으로 dress() 가 바꾼다(hall_v2 260, chapel_v2 254 — 접시는 띠 윗선에 얹힌다)
-  const BGS = ['sb_bg_room_v2', 'sb_bg_hall_v2', 'sb_bg_stairs', 'sb_bg_tower', 'sb_bg_bedroom_v2', 'sb_bg_outside_v2', 'sb_bg_kitchen_v2', 'sb_bg_chapel_v2', 'sb_bg_outside_v3'];   // outside_v3: 9장 백 년 뒤 크로스페이드(같은 구도)
+  const BGS = ['sb_bg_room_v2', 'sb_bg_hall_v2', 'sb_bg_stairs', 'sb_bg_tower', 'sb_bg_bedroom_v2', 'sb_bg_outside_v2', 'sb_bg_kitchen_v2', 'sb_bg_chapel_v2', 'sb_bg_outside_v3', 'sb_bg_bedroom_night_lb'];   // outside_v3: 9장 백 년 뒤 크로스페이드(같은 구도)
   const src = k => AS + k + '.webp';    // 배경·스프라이트 모두 파일 이름 전체(sb_…)로 부른다
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const hOf = f => HT[f] || 200;
@@ -185,6 +185,21 @@
     sb_bg_kitchen_v2: { sky: CREAM, gnd: '#B8AFA3', name: '부엌', shapes: () => [['path', { d: 'M60 420 V220 A110 110 0 0 1 280 220 V420Z', fill: BARK }], ['ellipse', { cx: 170, cy: 370, rx: 60, ry: 36, fill: '#E8703A' }]] },
     sb_bg_chapel_v2: { sky: CREAM, gnd: '#B8AFA3', name: '예배당', shapes: () => [['path', { d: 'M420 120 V60 A80 80 0 0 1 580 60 V120Z', fill: '#B9D3E4' }], ['rect', { x: 440, y: 20, width: 28, height: 90, fill: '#A93B32' }], ['rect', { x: 468, y: 20, width: 28, height: 90, fill: GOLD }], ['rect', { x: 496, y: 20, width: 28, height: 90, fill: '#3F6B4F' }], ['rect', { x: 524, y: 20, width: 28, height: 90, fill: '#3E7CB1' }], ['rect', { x: -40, y: 207, width: 1080, height: 55, fill: BARK }], ['rect', { x: -40, y: 207, width: 1080, height: 10, fill: GOLD }]] },
   };
+  /* 8장 "촛불도 잠들고": 밝은 침실 위에 밤 빛 상자 침실(bedroom_night_lb, 같은 구도)을 2.4초 크로스페이드로 얹는다(VISUAL_PLAN 재기획 2 A). 그림이 없으면 옛 남색 틴트 */
+  function bedroomNight(T, instant) {
+    if (!bgOK.sb_bg_bedroom_night_lb) { const t = T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#1F2A56', opacity: instant ? .22 : 0 }, T.bg); if (!instant) T.anim(t, [{ opacity: 0 }, { opacity: .22 }], 1200).then(() => t.setAttribute('opacity', .22), () => {}); return t; }
+    const im = T.el('image', { href: src('sb_bg_bedroom_night_lb'), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none', opacity: instant ? 1 : 0 }, T.bg);
+    if (!instant) T.anim(im, [{ opacity: 0 }, { opacity: 1 }], 2400).then(() => im.setAttribute('opacity', 1), () => {});
+    return im;
+  }
+  /* 막내 요정의 잠 마법: 요정은 침대 왼쪽 제자리에서 지팡이를 흔들고, 빛 알갱이가 잠들 사람에게 날아간다
+     (요정이 줄을 따라 걸으면 침대 앞을 지나며 잠든 공주를 가린다 — 2026-10-24 사용자 검수) */
+  function spellMote(T, x0, y0, x1, y1, ms = 600) {
+    const g = T.el('g', {}, T.fx); g.style.pointerEvents = 'none';
+    T.el('circle', { cx: 0, cy: 0, r: 9, fill: '#9CC7DD', opacity: .45 }, g); T.el('circle', { cx: 0, cy: 0, r: 4.5, fill: '#F4F6FA' }, g);
+    const an = g.animate([{ transform: `translate(${x0}px,${y0}px)` }, { transform: `translate(${(x0 + x1) / 2}px,${Math.min(y0, y1) - 60}px)`, offset: .5 }, { transform: `translate(${x1}px,${y1}px)` }], { duration: ms, easing: 'ease-in-out', fill: 'forwards' });
+    return an.finished.then(() => g.remove(), () => g.remove());
+  }
   function bgImage(T, key) {
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
     const d = BGPH[key], g = T.el('g', {}, T.bg);
@@ -484,7 +499,8 @@
           if (name === 'young' && pose === 'peek') {
             put(T, curtain, X(900, 790), FL); put(T, a, curtain.x + PEEK_DX, FL, { look: 'peek', to: dir || 'left' }); return;
           }
-          return put(T, a, px(name, +xs), FL, { look: pose, to: dir, s: 1 });
+          const x8 = P && name === 'young' && +xs === 300 && BGM.cur === 'sb_bg_bedroom_v2' ? 330 : px(name, +xs);   // 8장 세로: 요정은 침대 왼쪽(공주를 가리지 않게)
+          return put(T, a, x8, FL, { look: pose, to: dir, s: 1 });
         }
         if (verb === 'look') {
           const [pose, dir] = args;
@@ -525,10 +541,11 @@
           sleep_all: async () => {
             for (const [a] of sleepRow) {
               follow(a.x - 30, 600);
-              await walk(T, young, a.x - 70, FL, 600, { h: 4, hd: 420, snd: null });
-              twinkle(T, young.x + WAND_TIP[0], FL + WAND_TIP[1], '#9CC7DD', 4, 30); sfx(T, 'doop', .35, () => T.tone([520, 380], .12, { vol: .12 }));
+              young.wiggle(3, 400); twinkle(T, young.x + WAND_TIP[0], FL + WAND_TIP[1], '#9CC7DD', 4, 30); sfx(T, 'doop', .35, () => T.tone([520, 380], .12, { vol: .12 }));
+              await spellMote(T, young.x + WAND_TIP[0], FL + WAND_TIP[1], a.x, FL - a.h * .7, 450);
+              twinkle(T, a.x, FL - a.h * .7, '#9CC7DD', 4, 30);
               a.look('sleep'); T.pop(a.x, FL - a.h - 80, tr('쿨쿨'), '#1F2A56'); T.tone([320, 220], .3, { type: 'sine', vol: .08 });
-              await sleep(700);
+              await sleep(550);
             }
           },
         }),
@@ -629,7 +646,7 @@
         },
         candle(k) {
           if (k === 'lit') put(T, candle, X(240, 380), FL, { look: 'lit' });
-          else { candle.look('out'); night = tint(T, '#1F2A56', 0); T.anim(night, [{ opacity: 0 }, { opacity: .22 }], 1200); }
+          else { candle.look('out'); night = bedroomNight(T, inst()); if (P && BGM.cur === 'sb_bg_bedroom_v2') (inst() ? camSnap(470, 280, 1) : T.camTo(470, 280, 1, 800)); }
         },
         bed() { put(T, bed, 500, FL + 6); },
         sleepers(verb) {
@@ -960,22 +977,24 @@
       put(T, bed, 500, FL + 6);
       put(T, pr, bed.x - 8, bed.y + BED_TOP, { look: 'lie', to: 'left' });
       sleepers.forEach(([a, x, lk]) => put(T, a, x, FL, { look: lk }));
-      put(T, young, X(300, 470), FL, { look: 'wand' });
+      put(T, young, X(300, 330), FL, { look: 'wand' });   // 세로도 침대 왼쪽: 요정이 잠든 공주를 가리지 않게(2026-10-24 검수)
       camSnap(X(500, 470), 280, 1);
     }, young.pos);
     const l30 = say(S.L30); young.hop(6, 300); await l30;
     for (const [a] of sleepers) {
       follow(a.x - 30, 700);
-      await walk(T, young, a.x - 70, FL, 700, { h: 4, hd: 420, snd: null });
-      twinkle(T, young.x + WAND_TIP[0], FL + WAND_TIP[1], '#9CC7DD', 4, 30); sfx(T, 'doop', .35, () => T.tone([520, 380], .12, { vol: .12 }));
+      young.wiggle(3, 400); twinkle(T, young.x + WAND_TIP[0], FL + WAND_TIP[1], '#9CC7DD', 4, 30); sfx(T, 'doop', .35, () => T.tone([520, 380], .12, { vol: .12 }));
+      await spellMote(T, young.x + WAND_TIP[0], FL + WAND_TIP[1], a.x, FL - a.h * .7, 700);
+      twinkle(T, a.x, FL - a.h * .7, '#9CC7DD', 4, 30);
       a.look('sleep');
       T.pop(a.x, FL - a.h - 80, tr('쿨쿨'), '#1F2A56'); T.tone([320, 220], .3, { type: 'sine', vol: .08 });
       await sleep(1000);
     }
     const l31 = say(S.L31);
+    if (P) T.camTo(470, 280, 1, 800);   // 세로: 잠든 공주·침대로 돌아와 밤이 내리는 것을 본다
     candle.look('out'); sfx(T, 'blow', .4);
-    const night8 = tint(T, '#1F2A56', 0); T.anim(night8, [{ opacity: 0 }, { opacity: .22 }], 1200);
-    await sleep(1800);
+    bedroomNight(T, false);   // 밤 빛 상자 침실로 2.4초 크로스페이드
+    await sleep(2800);
     await veil(T, () => {
       setBg('sb_bg_outside_v2'); camSnap(X(500, 600), 280, 1);
       put(T, tree, X(880, 860), FL, { look: 'small' });
