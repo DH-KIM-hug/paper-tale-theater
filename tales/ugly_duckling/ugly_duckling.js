@@ -546,6 +546,9 @@
     paper(T.bg, [['path', { d: 'M-300 500 Q500 470 1300 500 V800 H-300 Z', fill: '#A8743E' }]]);
     paper(T.bg, [['path', { d: 'M200 520 Q500 505 800 520 L820 560 L180 560 Z', fill: C.water }]]);
   }
+  /* 2026-10-24 사용자 결정(빛 상자 검수): 농부가 언 호수 한가운데 얼음 위에 서 있어 어색 → 앞쪽 눈 둑(호수 앞 물가 y≈390, 둑 위 발 y 428)에 서서
+     얼음판 오른쪽 끝(x 618) 쪽으로 손을 뻗는다. 안기는 자리는 농부 발끝 기준 (-78, -57) 그대로 */
+  const FARM_ART = { x: 670, y: 428 };
   function winterHighBG(T) { // 겨울 호수 하이앵글
     if (bgImage(T, 'winter')) { // 달밤: 농부가 오는 오른쪽 둑에 등불 하나(구조 예고)
       const g = T.el('g', { style: 'pointer-events:none' }, T.fx);
@@ -868,7 +871,7 @@
           iceCollarR = el('g', { transform: `translate(0,${dy})` }, T.world);
           [[[424, 348], [440, 338], [458, 343], [452, 355], [430, 357]], [[455, 346], [472, 340], [492, 345], [488, 357], [462, 358]], [[488, 348], [504, 341], [522, 348], [512, 358], [492, 358]]].forEach(pts => { poly(iceCollarR, pts.map(([x, y]) => [x, y + 3]), '#9DBBD0'); poly(iceCollarR, pts, '#DDEBF3'); });
           hero.setMood('sad');
-          A.farmer = cast(T, 'farmer', 1200, kyR - 20, 1.2);
+          A.farmer = cast(T, 'farmer', 1200, bgUrl('winter') ? FARM_ART.y : kyR - 20, 1.2);
           snowR = setInterval(() => {
             const f = el('circle', { r: 4 + Math.random() * 3, fill: '#fff', opacity: .9 }, T.fx); const x0 = Math.random() * 1000;
             f.animate([{ transform: `translate(${x0}px,-10px)` }, { transform: `translate(${x0 + 40}px,570px)` }], { duration: 5000 }).finished.then(() => f.remove());
@@ -992,7 +995,7 @@
         farmer(op) {
           const a = A.farmer; if (!a) return;
           if (op === 'hide') { hide(a); return; }
-          if (op === 'at') { a.pos.style.opacity = ''; AudioFX.sfx('step_grass', .5); a.move(640, a.y, 1600).then(() => hero.face('right')); }
+          if (op === 'at') { a.pos.style.opacity = ''; AudioFX.sfx('step_grass', .5); a.move(bgUrl('winter') ? FARM_ART.x : 640, a.y, 1600).then(() => hero.face('right')); }
         },
         flock(op) {
           if (op === 'fly' && flockR) T.anim(flockR, [{ transform: 'translate(0px,0px)' }, { transform: 'translate(-900px,-60px)' }], { duration: 3200, easing: 'ease-in' });
@@ -1096,7 +1099,7 @@
             icePatchR.remove(); iceCollarR.remove();
             AudioFX.sfx('crash', .5); quack(T); hero.hop(30);
             hero.parts.wing.style.transform = ''; T.world.appendChild(hero.pos);
-            hero.face('right'); hero.setScale(1); hero.move(562, ky - 77, 600).then(() => hero.face('left'));
+            hero.face('right'); hero.setScale(1); hero.move(farmer ? farmer.x - 78 : 562, farmer ? farmer.y - 57 : ky - 77, 600).then(() => hero.face('left'));
           })();
         },
         wings(op) {
@@ -1427,7 +1430,7 @@
         poly(iceCollar, pts.map(([x, y]) => [x, y + 3]), '#9DBBD0'); poly(iceCollar, pts, '#DDEBF3');
       });
       hero.setMood('sad');
-      farmer = cast(T, 'farmer', 1200, ky - 20, 1.2);
+      farmer = cast(T, 'farmer', 1200, bgUrl('winter') ? FARM_ART.y : ky - 20, 1.2);
     }, hero.pos);
     snowT = setInterval(() => {
       const f = el('circle', { r: 4 + Math.random() * 3, fill: '#fff', opacity: .9 }, T.fx);
@@ -1449,7 +1452,7 @@
     hero.setMood('neutral'); hero.parts.wing.style.transform = 'scale(1.5,1.9)';
     await say('날개로 몸을 꼭 감쌌더니 조금 따뜻해졌어요.');
     AudioFX.sfx('step_grass', .5);
-    await farmer.move(640, farmer.y, 1600);
+    await farmer.move(bgUrl('winter') ? FARM_ART.x : 640, farmer.y, 1600);
     hero.face('right'); // 다가온 농부 할아버지를 본다
     await say('그때 농부 할아버지가 지나가다 아기 오리를 보았어요. "저런, 얼음에 발이 붙었구나!"');
     const ICR = ['M430 335 L450 352 L440 366', 'M520 330 L540 346 L560 340', 'M395 350 L375 362', 'M545 358 L568 368', 'M462 322 L474 338', 'M492 372 L512 376'];
@@ -1486,11 +1489,11 @@
     await say('쩍! 얼음이 깨졌어요. 발이 쏙 빠졌어요!');
     hero.parts.wing.style.transform = '';
     T.world.appendChild(hero.pos);
-    const hugY = ky - 77; // 그림 농부: 앞으로 뻗은 두 손(발끝에서 -80,-121) 높이에 안긴다
-    hero.face('right'); hero.setScale(1); hero.move(562, hugY, 600).then(() => hero.face('left')); // 가는 동안은 오른쪽(이동 방향), 안긴 뒤 할아버지와 같은 쪽(가는 쪽)을 본다
+    const hugY = farmer.y - 57, hugX = farmer.x - 78; // 그림 농부: 앞으로 뻗은 두 손(발끝에서 -80,-121) 높이에 안긴다
+    hero.face('right'); hero.setScale(1); hero.move(hugX, hugY, 600).then(() => hero.face('left')); // 가는 동안은 오른쪽(이동 방향), 안긴 뒤 할아버지와 같은 쪽(가는 쪽)을 본다
     await say('농부 할아버지가 아기 오리를 품에 폭 안았어요. 따뜻한 집으로 가요!');
     // 농부는 왼쪽을 보고 서 있으니 보는 쪽(왼쪽)으로 걸어 나간다 (뒷걸음 X)
-    await Promise.all([farmer.move(-260, farmer.y, 1900), hero.move(562 - 900, hugY, 1900)]);
+    await Promise.all([farmer.move(-260, farmer.y, 1900), hero.move(hugX - 900, hugY, 1900)]);
     clearInterval(snowT); snowT = null;
 
     /* --- 9. 할머니 집 (오두막 안 와이드) --- */
