@@ -26,14 +26,17 @@
   /* 앞 가림 층 소품(pj_layer_*): 근경(fgL, 누름 없음). [이름, 가운데 x, 발끝 y(top 이면 위 끝), 높이, 그림 폭/높이, top, 뒤집기] — 세로 화면 가운데(285~715) 밖 */
   const LAYERS = {
     // A·B1 은 옛 그림으로 되돌려 층 소품을 뺀다(옛 팥밭엔 단풍 가지·억새가 이미 그려져 있다)
-    B2: [['snow_pine_front', 1000, -22, 220, 1.1933, true, true], ['snow_bush_front', 0, 590, 120, 1.27]],
+    // 2026-10-23 배경·스케일 점검: 오른쪽 위 앞 소나무(snow_pine_front)는 배경 속 소나무와 두 그루로 겹쳐 보여 뺐다
+    B2: [['snow_bush_front', 0, 590, 120, 1.27]],
   };
   const sceneOK = {};
 
   /* 무대 좌표 (발 기준 y=520) */
-  const POS = { tigerEnter: 1080, tigerStage: [270, 335, 430, 470, 885, 560, 640], grannyCook: 250, grannyCorner: 620, rolledSpot: 560 };
+  /* 2026-10-23 스케일 점검: 부엌 배우가 커져서 ① 물독 옆(1) 335→370 (자라가 호랑이에 가리지 않게) ② 문(4) 885→855 (꼬리가 무대 밖으로 잘리지 않게)
+     ③ 할멈 구석 620→660 (넘어진 호랑이 꼬리와 겹치지 않게) */
+  const POS = { tigerEnter: 1080, tigerStage: [270, 370, 430, 470, 855, 560, 640], grannyCook: 250, grannyCorner: 660, rolledSpot: 560 };
   const STATION_CAM = [[240, 430, 1.5], [320, 430, 1.5], [420, 440, 1.4], [470, 450, 1.5], [860, 380, 1.32], [560, 440, 1.35], [640, 450, 1.3]];
-  const DOOR_X = { B1: 885, B2: 135 };
+  const DOOR_X = { B1: 885, B2: 112 };
   const FRIEND_SET = { bam: 'B1', jara: 'B1', ddong: 'B1', songgot: 'B1', jeolgu: 'B1', myeongseok: 'B2', jige: 'B2' };
   /* 친구 자리 (발끝) · 그림 상자 [x, y, w, h] · 그림자 반지름 */
   const FR = {
@@ -41,11 +44,16 @@
     jara: { x: 300, y: 428, box: [-24, -42, 48, 48], shd: 18 },
     ddong: { x: 432, y: 520, box: [-23, -42, 46, 46], shd: 21 },
     songgot: { x: 495, y: 520, box: [-20, -42, 40, 42], shd: 12 },
-    jeolgu: { x: 890, y: 212, box: [-27, -52, 54, 54], shd: 23 }, // 커진 부엌문 위
-    myeongseok: { x: 560, y: 520, box: [-47, -76, 94, 80], shd: 42 },
-    jige: { x: 690, y: 520, box: [-54, -118, 108, 120], shd: 40 },
+    jeolgu: { x: 890, y: 247, box: [-34, -65, 68, 68], shd: 29 }, // 부엌문 위 (절구는 실물 비율로 1.25배: 할멈 키의 약 0.4)
+    myeongseok: { x: 560, y: 520, box: [-56, -91, 113, 96], shd: 50 }, // 멍석말이 그림과 이어지게 1.2배
+    jige: { x: 690, y: 520, box: [-67, -148, 135, 150], shd: 50 }, // 지게는 실물 비율로 1.25배: 할멈 키의 약 0.85
   };
-  const ACTOR_SCALE = { A: 2.1, B1: 1.25, B2: 1.45 };
+  /* 2026-10-23 배경·스케일 점검: 부엌(B1) 1.25 → 1.45 — 할멈 키가 부엌문 높이의 약 0.75, 마당(B2)과 같은 크기(§4-1).
+     호랑이는 할멈보다 조금 크게(TIGER_K): 선 그림 키 105 → 116 (할멈 116)·몸길이는 할멈 폭의 2배, 부엌문보다는 작다 */
+  const ACTOR_SCALE = { A: 2.1, B1: 1.45, B2: 1.45 };
+  const TIGER_K = 1.1;
+  /* 멍석말이 그림(마당에서만): 머리 크기를 마당의 선 호랑이와 같게 (볼 지름으로 잼: 멍석말이 그림 머리가 선 그림의 1.19배) */
+  const ROLLED_S = ACTOR_SCALE.B2 * TIGER_K * 0.84;
   /* 만화 컷 스팅 (audio.js AudioFX.sting): 친구 컷은 맞는 순간, _b 컷은 호랑이 반응, wrong_ 컷은 비웃음 */
   const CUT_SFX = {
     bam: 'hit', bam_b: 'dizzy',               // 알밤이 눈에 톡! → 눈 감싸고 빙글빙글
@@ -57,7 +65,7 @@
     jige: 'splash', jige_b: 'surprise',       // 지게째 풍덩 → 바다에서 허우적
   };
   const FINALE_SFX = { bam: 'pop', jara: 'chomp', ddong: 'cushion', songgot: 'poke', jeolgu: 'bonk', myeongseok: 'roll', jige: 'step_wood' };
-  const STAR_SCALE = { bam: 1.9, jara: 1.9, ddong: 1.9, songgot: 1.9, jeolgu: 1.45, myeongseok: 1.15, jige: 1.15 };
+  const STAR_SCALE = { bam: 1.9, jara: 1.9, ddong: 1.9, songgot: 1.9, jeolgu: 1.16, myeongseok: 1, jige: 1 }; // 절구·멍석·지게는 바탕 크기를 키운 만큼 줄여 잔치 크기는 그대로
   /* 다시 뽑은 컷 (2026-10-04): 절구 반응은 작은 혹+별, 지게는 A자 나무 지게가 멍석째 바다로, 헛수고 지게는 빈 A자 지게, 자라 반응은 입을 문 자라.
      새 파일을 못 불러오면 예전 그림(cut_<key>.png)으로 */
   const CUT_NEW = { jeolgu_b: 'jeolgu_b2', jige: 'jige2', wrong_jige: 'wrong_jige2', jara_b: 'jara_b2' };
@@ -161,11 +169,13 @@
         el('ellipse', { class: 'shd', cx: -4, cy: -3, rx: 76, ry: 10 }, g);
         art = el('g', { class: 'pj-art pj-tiger' }, g);
         img(art, 'v3w/pj3_tiger_stand.webp', -86, -108, 172, 108, 'xMidYMax meet', { class: 'tbase' });
-        img(art, 'v3w/pj3_tiger_fallen.webp', -100, -92, 200, 92, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'fallen' });
-        img(art, 'v3w/pj3_tiger_flat.webp', -112, -74, 224, 74, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'flat' });
-        img(art, 'v3w/pj3_tiger_bow.webp', -80, -117, 160, 117, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'bow' });
-        // 알밤에 맞은 뒤: 한쪽 눈을 앞발로 감싸고 찡그린 그림 (예전엔 선 그림 위에 X 표시만 그렸다). 머리 크기를 선 그림에 맞춤
-        img(art, 'v3w/pj3_tiger_eyehurt.webp', -42, -112, 84, 112, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'eyehurt' });
+        /* 자세마다 머리 크기를 선 그림(stand)에 맞춘다 (§4-1, 2026-10-23 볼 지름·볼 사이 거리로 잼):
+           넘어짐 ×1.12 · 납작 ×1.17 · 꾸벅 ×0.89 · 눈 아픔 ×1.16 — 상자 아래(발끝)·가운데는 그대로 */
+        img(art, 'v3w/pj3_tiger_fallen.webp', -112, -103, 224, 103, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'fallen' });
+        img(art, 'v3w/pj3_tiger_flat.webp', -131, -87, 262, 87, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'flat' });
+        img(art, 'v3w/pj3_tiger_bow.webp', -71, -104, 142, 104, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'bow' });
+        // 알밤에 맞은 뒤: 한쪽 눈을 앞발로 감싸고 찡그린 그림 (예전엔 선 그림 위에 X 표시만 그렸다)
+        img(art, 'v3w/pj3_tiger_eyehurt.webp', -49, -130, 98, 130, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'eyehurt' });
         const ov = el('g', { class: 'toverlay' }, art);
         el('path', { id: 'pjEyeHurt', opacity: 0, d: 'M-73 -81 l14 14 M-59 -81 l-14 14', stroke: '#2c1a10', 'stroke-width': 4.5, 'stroke-linecap': 'round' }, ov);
         const band = (p, x, y, r, s = 8) => { const b = el('g', { fill: '#efe0bd', transform: `translate(${x},${y}) rotate(${r})` }, p); el('rect', { x: -s, y: -s / 3, width: s * 2, height: s * .66, rx: s / 3 }, b); el('rect', { x: -s / 3, y: -s, width: s * .66, height: s * 2, rx: s / 3 }, b); };
@@ -201,8 +211,8 @@
     }
     function makeRolled() {
       const a = T.actor(T.world, POS.rolledSpot, 520, g => {
-        el('ellipse', { class: 'shd', cx: 0, cy: 0, rx: 84, ry: 10 }, g);
-        img(g, 'v3w/pj3_tiger_rolled.webp', -105, -96, 210, 96, 'xMidYMax meet');
+        el('ellipse', { class: 'shd', cx: 0, cy: 0, rx: 84 * ROLLED_S, ry: 10 * ROLLED_S }, g);
+        img(g, 'v3w/pj3_tiger_rolled.webp', -105 * ROLLED_S, -96 * ROLLED_S, 210 * ROLLED_S, 96 * ROLLED_S, 'xMidYMax meet');
       });
       a.pos.style.display = 'none';
       return a;
@@ -267,7 +277,7 @@
         }
         daylight = el('rect', { x: -3000, y: -3000, width: 7000, height: 7000, fill: '#f2e3c0', opacity: 0, 'pointer-events': 'none' }, bg);
         // 이야기에 쓰이는 소품: 부뚜막(알밤) · 물독(자라) · 장작 · 부엌문(절구)
-        img(bg, 'v3w/pj3_prop_door.webp', 785, 200, 210, 320, 'xMidYMax meet', { class: 'prop' }); // 사람 키보다 큰 부엌문
+        img(bg, 'v3w/pj3_prop_door.webp', 793, 226, 193, 294, 'xMidYMax meet', { class: 'prop' }); // 부엌문: 문짝 높이(약 224)의 0.75 = 할멈 키
         img(bg, 'v3w/pj3_prop_hearth.webp', 30, 390, 222, 120, 'xMidYMax meet', { class: 'prop' });
         img(bg, 'v3w/pj3_prop_muldok.webp', 258, 408, 88, 115, 'xMidYMax meet', { class: 'prop' });
         img(bg, 'v3w/pj3_prop_firewood.webp', 352, 462, 78, 62, 'xMidYMax meet', { class: 'prop' });
@@ -289,13 +299,15 @@
           });
         }
         // 이야기에 쓰이는 소품: 집(할멈·호랑이가 드나드는 문) · 장독대 · 돌담(지게가 기댄 담벼락)
-        img(bg, 'v3w/pj3_prop_house.webp', -130, 250, 560, 275, 'xMidYMax meet', { class: 'prop' });
-        el('ellipse', { cx: DOOR_X.B2, cy: 440, rx: 90, ry: 90, fill: '#f7d98a', opacity: .16 }, bg);
-        img(bg, 'v3w/pj3_prop_jangdok.webp', 330, 438, 140, 82, 'xMidYMax meet', { class: 'prop' });
+        // 2026-10-23 배경·스케일 점검: 집을 1.4배로(문 70 → 98) 키우고 발끝을 조금 뒤(y 494)로 물려 할멈이 집 앞마당에 선 거리감을 준다.
+        // 장독대는 집 오른쪽 모서리 앞으로
+        img(bg, 'v3w/pj3_prop_house.webp', -280, 109, 784, 385, 'xMidYMax meet', { class: 'prop' });
+        el('ellipse', { cx: DOOR_X.B2, cy: 420, rx: 100, ry: 100, fill: '#f7d98a', opacity: .16 }, bg);
+        img(bg, 'v3w/pj3_prop_jangdok.webp', 365, 438, 140, 82, 'xMidYMax meet', { class: 'prop' });
         if (!full) img(bg, 'v2/p2_doldam.png', 470, 440, 190, 80, 'none', { class: 'prop' }); // 장면 그림엔 돌담·사립문이 이미 있다
       }
       // 배우 크기·옷차림·보이는 친구
-      granny.setScale(ACTOR_SCALE[k]); tiger.setScale(ACTOR_SCALE[k]);
+      granny.setScale(ACTOR_SCALE[k]); tiger.setScale(ACTOR_SCALE[k] * TIGER_K);
       granny.base = k === 'A' ? 'hoe' : 'ladle'; grannyPose(null);
       Object.values(friends).forEach(f => { f.pos.style.display = (FRIEND_SET[f.id] === k && f.shown) ? '' : 'none'; });
     }
@@ -322,6 +334,9 @@
     /* 무대 밖 대기: 가로 화면 클로즈업 때 레터박스 가장자리로 비치지 않게 숨긴다 */
     const parkTiger = () => { tiger.place(POS.tigerEnter, 520); tiger.pos.style.opacity = 0; };
     const faceTo = (a, b) => a.face(b.x > a.x ? 'right' : 'left');
+    /* 왼쪽을 보는 선 호랑이의 머리 가운데 x · 절구가 떨어져 머리 위에 닿는 거리 (호랑이 크기에 맞춰) */
+    const tigerHeadX = () => tiger.x - 46 * tiger.scale;
+    const jeolguDrop = () => Math.max(60, Math.round(520 - 105 * tiger.scale - 26 - FR.jeolgu.y));
     const pose = p => { tiger.art.classList.remove('fallen', 'flat', 'bow'); if (p) tiger.art.classList.add(p); };
     const tigerEyesHurt = on => { $('#pjEyeHurt').setAttribute('opacity', on ? 1 : 0); tiger.art.classList.toggle('eyehurt', !!on); };
     const showWound = i => { const w = $('#pjWnd' + i); w && w.setAttribute('opacity', 1); };
@@ -349,8 +364,14 @@
     function stationCam(i, tigerX = POS.tigerStage[i]) {
       const [cx, cy, z] = STATION_CAM[i];
       if (scene !== 'B1') return [cx, cy, z];
-      const lo = Math.min(tigerX - 120, POS.grannyCorner - 70), hi = Math.max(tigerX + 120, POS.grannyCorner + 70);
-      return [(lo + hi) / 2, cy, Math.min(z, Math.max(1.1, 1000 / (hi - lo)))];
+      const tw = 90 * tiger.scale, gw = 50 * granny.scale; // 호랑이·할멈 반 폭 (크기에 맞춰, 잘리지 않게)
+      const lo = Math.min(tigerX - tw, POS.grannyCorner - gw), hi = Math.max(tigerX + tw, POS.grannyCorner + gw);
+      if (!portrait()) return [(lo + hi) / 2, cy, Math.min(z, Math.max(1.1, 1000 / (hi - lo)))];
+      // 세로 화면: 둘이 다 들어오면 둘을, 아니면 호랑이만 잡고 할멈은 화면 밖으로 완전히 뺀다 (가장자리에 반쯤 잘려 보이지 않게)
+      const vw = T.viewWidth(), zf = vw / (hi - lo);
+      if (zf >= .95) return [(lo + hi) / 2, cy, Math.min(z, zf)];
+      const gl = POS.grannyCorner - gw - 6;
+      return [Math.min(tigerX, gl - vw / 2 / z), cy, z];
     }
     function friendTo(id, x, dur, big = false) {
       const f = friends[id];
@@ -442,6 +463,7 @@
     T.world.appendChild(granny.pos); // 할멈은 친구들 앞
     T.world.appendChild(tiger.pos);
     T.world.appendChild(rolled.pos);
+    T.world.appendChild(friends.jara.pos); // 물독 위 자라는 옆에 선 호랑이보다 앞 (커진 호랑이에 가리지 않게)
     let stageI = 0, misses = 0;
 
     /* 대사 연출: 목소리 주인에게 카메라가 가고, 말하는 쪽과 듣는 쪽이 서로 마주 본다 */
@@ -476,11 +498,11 @@
     /* 친구가 치는 순간 (놀이판 SUCCESS 에서 컷·호랑이 반응을 뺀 앞부분 — 컷과 반응은 대본의 cut:·tiger: 동사가 맡는다) */
     const STRIKE = {
       async bam() {
-        const dx = (tiger.x - 58) - FR.bam.x;
+        const dx = tigerHeadX() - FR.bam.x;
         AudioFX.pop();
         await anim(fact('bam'), [{ transform: 'translate(0px,0px)' }, { transform: `translate(${dx * .5}px,-120px) rotate(180deg)` }, { transform: `translate(${dx}px,-80px) rotate(360deg)` }], { duration: 550, easing: 'ease-out' });
         AudioFX.bonk();
-        impact(tiger.x - 58, 390, '톡!');
+        impact(tigerHeadX(), 390, '톡!');
         // 알밤은 컷이 떠 있는 동안 제자리로 돌아간다
         sleep(600).then(() => anim(fact('bam'), [{ transform: `translate(${dx}px,-80px)` }, { transform: `translate(${dx * .4}px,-140px) rotate(-180deg)` }, { transform: 'translate(0px,0px) rotate(-360deg)' }], { duration: 500, easing: 'ease-in' })).then(() => { fact('bam').style.transform = ''; });
       },
@@ -499,7 +521,7 @@
         await anim(fact('songgot'), [{ transform: 'translate(0px,0px)' }, { transform: 'translate(0px,-18px)' }, { transform: 'translate(0px,0px)' }], 260);
       },
       async jeolgu() {
-        const dx = (tiger.x - 58) - FR.jeolgu.x, dy = 150;
+        const dx = tigerHeadX() - FR.jeolgu.x, dy = jeolguDrop();
         AudioFX.slide();
         await anim(fact('jeolgu'), [{ transform: 'translate(0px,0px)' }, { transform: `translate(${dx}px,${dy}px) rotate(14deg)` }], { duration: 420, easing: 'ease-in' });
         impact(tiger.x - 40, 370, '쿵!');
@@ -585,6 +607,7 @@
             tiger.pos.style.opacity = 0;
             tiger.place(scene === 'B2' ? DOOR_X.B2 + 30 : DOOR_X.B1 - 25, 520); tiger.face('left');
             if (!T.readInstant()) { await sleep(150); tigerShow(); T.shake(); } else tigerShow();
+            if (portrait() && scene === 'B1') { if (T.readInstant()) camSnap(DOOR_X.B1 - 25, 280, 1); else camTo(DOOR_X.B1 - 25, 280, 1, 600); } // 세로 화면: 문가의 호랑이가 보이게
             if (scene === 'B1' && granny.pos.style.display !== 'none') granny.face('right');
             return;
           }
@@ -813,6 +836,7 @@
       tiger.pos.style.opacity = 1;
       T.shake();
       impact(DOOR_X.B1 - 25, 340, '어흥!', '#c0392b');
+      if (portrait()) camTo(DOOR_X.B1 - 25, 280, 1, 600); // 세로 화면: 문가의 호랑이가 화면 밖에 있으면 '어흥!'만 보인다 → 호랑이 쪽으로
       grannyMood('scared'); granny.face('right');
       await arrive;
       // 할멈의 말에 이끌려 호랑이가 아궁이로 가고, 그 틈에 할멈은 반대편 구석으로 피한다
@@ -876,11 +900,11 @@
     const act = id => friends[id].act;
     const SUCCESS = {
       async bam() {
-        const dx = (tiger.x - 58) - FR.bam.x;
+        const dx = tigerHeadX() - FR.bam.x;
         AudioFX.pop();
         await anim(act('bam'), [{ transform: 'translate(0px,0px)' }, { transform: `translate(${dx * .5}px,-120px) rotate(180deg)` }, { transform: `translate(${dx}px,-80px) rotate(360deg)` }], { duration: 550, easing: 'ease-out' });
         AudioFX.bonk();
-        impact(tiger.x - 58, 390, '톡!');
+        impact(tigerHeadX(), 390, '톡!');
         await showCut('bam');
         tigerEyesHurt(true);
         AudioFX.whimper();
@@ -921,7 +945,7 @@
         await tiger.hop(100, 550);
       },
       async jeolgu() {
-        const dx = (tiger.x - 58) - FR.jeolgu.x, dy = 150;
+        const dx = tigerHeadX() - FR.jeolgu.x, dy = jeolguDrop();
         AudioFX.slide();
         await anim(act('jeolgu'), [{ transform: 'translate(0px,0px)' }, { transform: `translate(${dx}px,${dy}px) rotate(14deg)` }], { duration: 420, easing: 'ease-in' });
         AudioFX.bonk();
