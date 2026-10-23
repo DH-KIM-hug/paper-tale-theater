@@ -18,7 +18,8 @@
   const BGS = ['yard', 'field', 'jar', 'jarbottom', 'mat', 'loom', 'stream', 'feast', 'gate', 'wedding'];
   const CUTS = ['ox', 'wet', 'toad', 'sparrows', 'fairy', 'splash', 'shy'];
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키는 그대로 두고 그림만 v2·라이트박스(lb)로. 우물·독 입구와 구멍·멍석·문/창/병풍·징검돌·대문은 원본 자리(겹쳐 확인) */
-  const BGFILE = { yard: 'yard_v2', field: 'field_v2', jar: 'jar_v2', jarbottom: 'jarbottom_lb', mat: 'mat_v2', loom: 'loom_v2', stream: 'stream_v2', feast: 'feast_v2', gate: 'gate_v2', wedding: 'wedding_lb' };
+  const BGFILE = { yard: 'yard_v2', field: 'field_v2', jar: 'jar_v2', jarbottom: 'jarbottom_lb', mat: 'mat_v2', loom: 'loom_v2', stream: 'stream_v2', gate: 'gate_v2' };
+  /* 2026-10-23 사용자 결정: 잔치(feast)·혼례(wedding 라이트박스)는 옛 그림으로 되돌림(홍등 줄·깃발·모란·소나무/풀 실루엣·반딧불도 뺌) */
   /* 층 소품 폭/높이 */
   const LASP = { persimmon_branch: .77, cosmos_front: .9983, mist: 4.9724, willow: .7617, lantern_string: 1.6275, flags: 4.4335, peony_front: 1.0217, thread_skeins: 1.03, pine_sil: 1.0117, grass_sil: 3.2727, jarwall_sil: .9867 };
   const bgSrc = k => AS + 'kj_bg_' + (BGFILE[k] || k) + '.webp', cutSrc = k => AS + 'kj_cut_' + k + '.webp';
@@ -85,13 +86,6 @@
     const wig = (name, deg = 3, ms = 500) => { const g = L[name]; if (g && g.isConnected) g.animate([{ rotate: '0deg' }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }, { rotate: '0deg' }], { duration: ms, composite: 'add' }); };
     const cosmos = (both = true) => { sway(layer('cosmos_front', 30, 600, 120, { front: true }), 1, 5000); if (both) sway(layer('cosmos_front', 970, 600, 120, { front: true, flip: true }), 1, 5000, 1300); };
     const peony = () => { layer('peony_front', 30, 600, 110, { front: true }); layer('peony_front', 970, 600, 110, { front: true, flip: true }); };
-    function fireflies(n) {   // 혼례 반딧불: 위·양옆에서만 떠다님(얼굴 자리 x 300~720·y 240~420 밖)
-      const spots = [[120, 120], [230, 200], [90, 300], [800, 90], [880, 210], [950, 320], [400, 70], [620, 60]].slice(0, n);
-      spots.forEach(([x, y], i) => {
-        const c = T.el('circle', { cx: x, cy: y, r: 3.5, fill: '#F2C94E', style: 'pointer-events:none' }, T.fx);
-        if (!still()) c.animate([{ translate: '0 0', opacity: .3 }, { translate: `${i % 2 ? 18 : -18}px -14px`, opacity: 1 }, { translate: '0 0', opacity: .3 }], { duration: 2400 + i * 260, iterations: Infinity, easing: 'ease-in-out' });
-      });
-    }
     function dress(key) {
       if (key === 'yard') { sway(layer('persimmon_branch', P ? 700 : 920, -24, 220, { front: true, top: true, name: 'persimmon' }), 1.2, 7000); cosmos(); }
       if (key === 'field') cosmos();   // 안개 띠(mist)는 들판 가운데 떠 있는 구름처럼 보여 뺐다(사진 확인 2026-10-23)
@@ -103,18 +97,7 @@
         cosmos(false);
         sway(layer('willow', 70, -24, 280, { front: true, top: true, name: 'willowL' }), 1.5, 6000); sway(layer('willow', 930, -24, 280, { front: true, top: true, flip: true, name: 'willowR' }), 1.5, 6000, 1500);
       }
-      if (key === 'feast') {
-        sway(layer('lantern_string', 500, 20, 150, { top: true, name: 'lanterns' }), 1.5, 6000);
-        [260, 740].forEach(x => { const f = layer('flags', x, -24, 110, { front: true, top: true }); if (!still()) f.animate([{ translate: '0 0' }, { translate: '0 3px' }, { translate: '0 0' }], { duration: 4000, iterations: Infinity }); });
-        peony();
-      }
       if (key === 'gate') peony();
-      if (key === 'wedding') {
-        layer('lantern_string', 500, -24, 150, { top: true });
-        layer('pine_sil', 80, -24, 240, { front: true, top: true }); layer('pine_sil', 920, -24, 240, { front: true, top: true, flip: true });
-        if (!P) [170, 500, 830].forEach((x, i) => layer('grass_sil', x, 600, 100, { front: true, flip: i === 1 }));
-        fireflies(8);
-      }
     }
     const scene = key => { T.clear(); bgImage(T, key); dress(key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990; /* 세로 화면은 가운데 약 430만 보인다 */
@@ -386,7 +369,7 @@
       put(T, drum, 400, 560); put(T, buk, 500, 560); put(T, gong, 600, 560);
     }, kong.pos);
     await T.ask('잔치에서는 북과 장구와 꽹과리 소리가 울렸어요. 북을 톡 눌러 봐요!', () => T.tap(drum.pos, { prompt: '북을 톡! 둥둥 소리가 나요.' }));
-    AudioFX.sfx('drum') || T.tone([140, 90], .3, { vol: .25 }); drum.hop(14, 240); wig('lanterns', 3, 400); T.pop(drum.x, drum.y - 360, tr('둥!'));
+    AudioFX.sfx('drum') || T.tone([140, 90], .3, { vol: .25 }); drum.hop(14, 240); T.pop(drum.x, drum.y - 360, tr('둥!'));
     await sleep(500);
     AudioFX.sfx('drum') || T.tone([200, 150], .25, { vol: .22 }); buk.hop(14, 240); T.pop(buk.x, buk.y - 360, tr('덩!'));
     await sleep(500);
