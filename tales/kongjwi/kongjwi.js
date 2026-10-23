@@ -4,7 +4,7 @@
   const AS = '../../assets/v3w/';
   const GROUND = 505;
   const ASP = { basket_r: 1.1861, basket_y: 1.1563, buk: 0.9671, drum: 1.2567, fairy_float: 0.9211, fairy_give: 0.8134, gong: 1.0256,
-    hangari: 0.9504, kong_bride: 0.8421, kong_hoe: 0.8966, kong_loom: 1.0174, kong_pour: 0.9145, kong_shoes: 0.8349, kong_sweep: 0.9176,
+    hangari: 0.9504, kong_bride: 0.8421, kong_hoe: 0.8966, kong_loom: 1.0174, kong_pour: 0.9145, kong_shoes: 0.8349, kong_step_l: 0.8617, kong_step_r: 0.8367, kong_sweep: 0.9176,
     kong_wet: 0.8294, loom: 1.0240, ox_stand: 0.8526, ox_walk: 1.5771, pail: 1.0608, pat_dressed: 0.6433, pat_eat: 0.8316,
     pat_shy: 0.5786, ricecake: 1.2600, shoe_butterfly: 2.0949, shoe_peony: 2.0693, shoe_plum: 2.0959, sparrow_flock: 1.0225,
     sparrow_one: 1.0704, step_dressed: 0.7247, step_order: 0.7370, step_shy: 0.7208, toad_idle: 1.2000, toad_plug: 1.2019,
@@ -17,12 +17,15 @@
   /* 서 있는 콩쥐(신부·젖은·꽃신)는 새 그림이 작게 그려져서 비율 대신 높이를 직접 정함 */
   const BGS = ['yard', 'field', 'jar', 'jarbottom', 'mat', 'loom', 'stream', 'feast', 'gate', 'wedding'];
   const CUTS = ['ox', 'wet', 'toad', 'sparrows', 'fairy', 'splash', 'shy'];
+  /* 2026-10-24 사용자 지시: 두꺼비 컷을 원작대로 다시 그림(toad2: 깨진 독 안 바닥 구멍을 두꺼비가 등으로 막고 물이 차오르며, 땋은 머리 콩쥐가 물동이로 붓는다) */
+  const CUTFILE = { toad: 'toad2' };
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키는 그대로 두고 그림만 v2·라이트박스(lb)로. 우물·독 입구와 구멍·멍석·문/창/병풍·징검돌·대문은 원본 자리(겹쳐 확인) */
-  const BGFILE = { yard: 'yard_v2', field: 'field_v2', jar: 'jar_v2', jarbottom: 'jarbottom_lb', mat: 'mat_v2', loom: 'loom_v2', stream: 'stream_v3', gate: 'gate_v2' };
+  const BGFILE = { yard: 'yard_v2', field: 'field_v2', jar: 'jar_v2', mat: 'mat_v2', loom: 'loom_v2', stream: 'stream_v3', gate: 'gate_v2' };
   /* 2026-10-23 사용자 결정: 잔치(feast)·혼례(wedding 라이트박스)는 옛 그림으로 되돌림(홍등 줄·깃발·모란·소나무/풀 실루엣·반딧불도 뺌) */
+  /* 2026-10-24 사용자 결정: 독 안(jarbottom 라이트박스)도 옛 그림(kj_bg_jarbottom)으로 되돌림(독 벽 쐐기 실루엣도 뺌) */
   /* 층 소품 폭/높이 */
   const LASP = { persimmon_branch: .77, cosmos_front: .9983, mist: 4.9724, willow: .7617, lantern_string: 1.6275, flags: 4.4335, peony_front: 1.0217, thread_skeins: 1.03, pine_sil: 1.0117, grass_sil: 3.2727, jarwall_sil: .9867 };
-  const bgSrc = k => AS + 'kj_bg_' + (BGFILE[k] || k) + '.webp', cutSrc = k => AS + 'kj_cut_' + k + '.webp';
+  const bgSrc = k => AS + 'kj_bg_' + (BGFILE[k] || k) + '.webp', cutSrc = k => AS + 'kj_cut_' + (CUTFILE[k] || k) + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
 
   /* 2026-10-20 새 그림은 콩쥐(쓸기·괭이·베틀)가 왼쪽을, 새엄마(시키기)가 오른쪽을 보게 그려져 그림 방향 표시를 바꿈 */
@@ -64,6 +67,21 @@
   const popSfx = T => AudioFX.sfx('pop') || T.tone([500, 800], .12, { vol: .12 });
   const clinkSfx = T => AudioFX.sfx('ding') || T.tone([900, 1300], .15, { vol: .12 });
   const NUM = ['하나!', '둘!', '셋!', '넷!', '다섯!'];
+  /* 2026-10-24 사용자 지시: 참새를 셀 때 내레이터가 "하나! 둘! …" 하고 소리 내어 센다. 같은 내레이터 목소리(ElevenLabs nar=Huelyn)로
+     녹음된 해와 달 세기 클립을 빌려 쓴다(콩쥐 대본에 없는 줄만 채움) */
+  (() => {
+    const KO = ['nar_e5ca069e52', 'nar_d8cbfaca09', 'nar_b63e21d47c', 'nar_8af172779e', 'nar_85ab7b4b39'];
+    const EN = [['One!', 'nar_732ee05cfe'], ['Two!', 'nar_ef5690c0b2'], ['Three!', 'nar_a1c2b6b48c'], ['Four!', 'nar_eeeefc8670'], ['Five!', 'nar_cddcb7ac4a']];
+    try {
+      NUM.forEach((k, i) => {
+        if (typeof NARRATION_CLIPS !== 'undefined' && !NARRATION_CLIPS[k]) NARRATION_CLIPS[k] = 'audio/el/sunmoon/' + KO[i] + '.mp3';
+        if (typeof NARRATION_CLIPS_EN !== 'undefined' && !NARRATION_CLIPS_EN[k]) NARRATION_CLIPS_EN[k] = { t: EN[i][0], c: 'audio/el/sunmoon/en/' + EN[i][1] + '.mp3' };
+      });
+    } catch (e) { /* 클립 표가 없으면 소리 없이 */ }
+  })();
+  const sayNum = (T, i) => { if (!(T.reading() && T.readInstant())) try { Narrator.speak(NUM[i - 1]); } catch (e) { /* 무시 */ } };
+  /* 2026-10-24 독 안(옛 그림 kj_bg_jarbottom): 바닥 구멍은 (467~536, 540~557). 두꺼비는 구멍 옆에 폴짝 나타났다가, 톡 하면 구멍 위로 폴짝 올라가 막는다 */
+  const TOAD_SIDE = [350, 534], TOAD_HOLE = [500, 562];
 
   async function run(T) {
     const { sleep, say, camSnap, camTo } = T;
@@ -90,7 +108,6 @@
       if (key === 'yard') { sway(layer('persimmon_branch', P ? 700 : 920, -24, 220, { front: true, top: true, name: 'persimmon' }), 1.2, 7000); cosmos(); }
       if (key === 'field') cosmos();   // 안개 띠(mist)는 들판 가운데 떠 있는 구름처럼 보여 뺐다(사진 확인 2026-10-23)
       if (key === 'jar') { sway(layer('persimmon_branch', P ? 700 : 920, -24, 220, { front: true, top: true, name: 'persimmon' }), 1.2, 7000); cosmos(false); }
-      if (key === 'jarbottom') { layer('jarwall_sil', 20, 600, 300, { front: true }); layer('jarwall_sil', 980, 600, 300, { front: true, flip: true }); }
       if (key === 'mat') cosmos();
       if (key === 'loom') layer('thread_skeins', 250, 540, 80);
       if (key === 'stream') {
@@ -103,10 +120,12 @@
     const P = T.viewWidth() < 990; /* 세로 화면은 가운데 약 430만 보인다 */
     /* 물방울: 물동이에서 독으로 붓기 / 독 구멍으로 새기 */
     const drop = (x0, y0, x1, y1, ms = 420) => {
-      const c = T.el('ellipse', { cx: x0, cy: y0, rx: 7, ry: 10, fill: '#5FB4E8', stroke: '#fff', 'stroke-width': 2 }, T.world);
+      const c = T.el('image', { href: AS + 'kj_water_drop.webp', x: x0 - 7, y: y0 - 10, width: 14, height: 20, preserveAspectRatio: 'none', style: 'pointer-events:none' }, T.world);   // 2026-10-24 코드 타원 → 종이 물방울 그림
       const a = c.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${x1 - x0}px,${y1 - y0}px)`, opacity: .2 }], { duration: ms, easing: 'ease-in' });
       a.onfinish = () => c.remove();
     };
+    /* 독 아가리의 물 면: 종이 물 면 그림(kj_water_surface, 흰 테두리 없음). opacity 로 차오름 */
+    const waterTop = jar => T.el('image', { href: AS + 'kj_water_surface.webp', x: jar.x - 52, y: jar.y - 162, width: 104, height: 24, preserveAspectRatio: 'none', opacity: 0, style: 'pointer-events:none' }, T.world);
     const pourDrops = (pail, jar) => { for (let k = 0; k < 3; k++) setTimeout(() => drop(pail.x - 10, pail.y - 90, jar.x - 20 + k * 14, jar.y - 150, 380), k * 90); };
     const leakDrops = jar => { for (let k = 0; k < 3; k++) setTimeout(() => drop(jar.x - 4, jar.y - 30, jar.x - 4 + (k - 1) * 12, jar.y + 20, 360), 380 + k * 110); };
     /* 개울 v3: 징검돌·모래톱 자리와 떠내려가는 꽃신. 꽃신 아래쪽을 물빛 물결 조각으로 덮어 물에 잠겨 보이게 하고(앞층), 물결 따라 오르내리며 오른쪽으로 */
@@ -118,18 +137,19 @@
       const lost = prop(T, 'shoe_butterfly', 34); put(T, lost, STONES[3] + 60, 470, { to: 'right' });
       followCam(STONES[3] + 60, 0);
       const wv = T.el('g', { style: 'pointer-events:none', filter: 'url(#pp)' }, lost.pos);   // 물결 종이 조각 두 장(물빛 + 흰 물마루)
-      T.el('path', { d: 'M-52,-6 q8,-7 16,0 t16,0 t16,0 t16,0 t16,0 t16,0 q4,6 -6,9 q-46,7 -88,0 q-10,-3 -6,-9 Z', fill: WATER_FRONT }, wv);
-      T.el('path', { d: 'M-44,-10 q8,-7 16,0 t16,0 t16,0 t16,0 t16,0 q-4,6 -10,4 q-6,-5 -12,0 q-6,4 -12,0 q-6,-5 -12,0 q-6,4 -12,0 q-6,-5 -12,0 q-6,4 -12,0 q-6,-3 -12,2 Z', fill: '#E8F2FA' }, wv);
+      T.el('image', { href: AS + 'kj_wave_front.webp', x: -56, y: -17, width: 112, height: 25, preserveAspectRatio: 'none' }, wv);   // 2026-10-24 코드 물결 → 종이 물결 그림(kj_wave_front)
       lost.pos.animate([{ opacity: 0 }, { opacity: 1 }], 300);
       if (!still()) lost.body.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '0 -4px', rotate: '-4deg' }, { translate: '0 0', rotate: '0deg' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
       return lost.move(1080, 466, 4200, 'ease-in').then(() => hide(lost));
     };
 
-    const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
+    const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k))), ...['kong_step_r', 'kong_step_l', 'water_drop', 'water_surface', 'wave_front'].map(k => T.preload(AS + 'kj_' + k + '.webp'))];   // 걸음 자세는 장면 중간에 바뀌므로 미리 불러 둔다
     await Promise.race([Promise.all(loads), sleep(4000)]);
 
     const kong = mk(T, { sweep: ['kong_sweep', 230, 'left'], hoe: ['kong_hoe', 230, 'left'], pour: ['kong_pour', 230, 'left'],
-      loom: ['kong_loom', 230, 'left'], shoes: ['kong_shoes', 215, 'left'], bride: ['kong_bride', 235, 'left'], wet: ['kong_wet', 225, 'left'] });
+      loom: ['kong_loom', 230, 'left'], shoes: ['kong_shoes', 215, 'left'],
+      /* 2026-10-24 징검다리 걸음: 오른발·왼발 번갈아 디디는 옆모습(오른쪽을 봄). 높이 200 = 꽃신 자세(215)와 머리 폭이 같게 잰 값(§4-1) */
+      stepR: ['kong_step_r', 200, 'right'], stepL: ['kong_step_l', 200, 'right'], bride: ['kong_bride', 235, 'left'], wet: ['kong_wet', 225, 'left'] });
     const step = mk(T, { order: ['step_order', 240, 'right'], dressed: ['step_dressed', 240, 'left'], shy: ['step_shy', 240, 'left'] });
     const pat = mk(T, { eat: ['pat_eat', 190, 'left'], dressed: ['pat_dressed', 210, 'left'], shy: ['pat_shy', 210, 'left'] });
     const toad = mk(T, { idle: ['toad_idle', 150, 'left'], plug: ['toad_plug', 150, 'left'] });
@@ -160,7 +180,7 @@
       const fadeIn = a => a.pos.animate([{ opacity: 0 }, { opacity: 1 }], 450);
       const CUT_HOLD = { ox: 3000, wet: 3000, toad: 3000, sparrows: 3200, fairy: 3200, splash: 3000, shy: 3200 };
       const actorVerb = (n, a) => (op, spec) => {
-        if (op === 'at') { const [x, y = GROUND] = nums(spec); put(T, a, px(n, x), y); return; }
+        if (op === 'at') { const [x, y = GROUND] = nums(spec); if (n === 'toad' && key === 'jar') { put(T, a, ...TOAD_SIDE); return; } put(T, a, px(n, x), y); return; }
         if (op === 'look') {
           if (n === 'kong' && spec === 'shoes' && key === 'loom') put(T, a, 450, 505); // 선녀가 옷을 주는 자리 (놀이판)
           a.look(spec); return;
@@ -176,7 +196,7 @@
         }
         if (op === 'cross') { // 징검다리를 n 번 폴짝 (누르기 없이 저절로)
           const next = STONES.filter(x => x > a.x + 10).slice(0, +spec);   // 개울 v3: 돌마다 폴짝
-          return (async () => { for (const x of next) { a.move(x, STONE_Y, 380); a.hop(26, 380); followCam(x); popSfx(T); await sleep(430); } })();
+          return (async () => { let k = 0; for (const x of next) { if (n === 'kong') a.look(++k % 2 ? 'stepL' : 'stepR', 'right'); a.move(x, STONE_Y, 380); a.hop(26, 380); followCam(x); popSfx(T); await sleep(430); } })();
         }
         if (op === 'peck') return null;
       };
@@ -205,7 +225,7 @@
         jar(op) {
           if (op === 'leak') { leakDrops(jar); return sleep(900); }
           if (op === 'full') {
-            if (!water || !water.isConnected) water = T.el('ellipse', { cx: jar.x, cy: jar.y - 150, rx: 52, ry: 11, fill: '#5FB4E8', stroke: '#fff', 'stroke-width': 3, opacity: 0 }, T.world);
+            if (!water || !water.isConnected) water = waterTop(jar);
             water.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, fill: 'forwards' });
             popSfx(T); return sleep(700);
           }
@@ -216,7 +236,8 @@
             for (let i = 1; i <= sp.length; i++) {
               const s = sp[i - 1]; put(T, s, 410 + i * 52, 440 - (i % 2) * 26, { to: 'left' });
               s.pos.animate([{ opacity: 0, translate: '0 -30px' }, { opacity: 1, translate: '0 0' }], 260); s.hop(10, 240); popSfx(T);
-              await sleep(300);
+              sayNum(T, i); T.pop(s.x, s.y - 190, tr(NUM[i - 1]));
+              await sleep(rI() ? 0 : 750);
             }
           })();
         },
@@ -229,7 +250,7 @@
         },
         cut(k) {
           if (k === 'sparrows') hide(flock);
-          if (k === 'toad') toad.look('plug');
+          if (k === 'toad') { toad.look('plug'); toad.place(...TOAD_HOLE); }
           return T.cutImage([{ src: cutSrc(k), sfx: 'pop', hold: CUT_HOLD[k] || 3000 }], { hold: CUT_HOLD[k] || 3000 });
         },
         fx(n) {
@@ -296,16 +317,16 @@
     await say('앗! 독 밑에 구멍이 나서 물이 줄줄 새어 나왔어요.');
     await T.sceneCard(tr('독 안'), () => {
       scene('jarbottom');
-      put(T, toad, 500, 520, { look: 'idle', to: 'left' });
+      put(T, toad, ...TOAD_SIDE, { look: 'idle', to: 'left' });
     }, toad.pos);
     await say('그때 두꺼비가 폴짝 나타났어요. "내가 구멍을 막아 줄게!"');
     await T.tap(toad.pos, { prompt: '두꺼비를 톡! 구멍을 막아요.' });
-    toad.look('plug'); toad.hop(24, 320); popSfx(T);
+    toad.look('plug'); toad.hop(40, 420); await toad.move(...TOAD_HOLE, 420); popSfx(T);
     await T.cutImage([{ src: cutSrc('toad'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     await say('두꺼비가 구멍에 쏙! 이제 물이 새지 않아요.');
     scene('jar');
     put(T, kong, 400, 505, { look: 'pour', to: 'right' }); put(T, jar, 560, 505); put(T, pail, 480, 520);
-    const water = T.el('ellipse', { cx: jar.x, cy: jar.y - 150, rx: 52, ry: 11, fill: '#5FB4E8', stroke: '#fff', 'stroke-width': 3, opacity: 0 }, T.world);
+    const water = waterTop(jar);
     const refill = i => {
       pail.hop(14, 260); popSfx(T); pourDrops(pail, jar); T.pop(pail.x, pail.y - 290, tr(NUM[i - 1]));
       setTimeout(() => { water.setAttribute('opacity', (i / 3).toFixed(2)); }, 380);
@@ -334,7 +355,7 @@
     await T.ask('참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!', () => T.mash(flock.pos, { count: 5, prompt: '참새를 톡톡톡톡톡! 하나씩 세어요.', onStep: i => {
       const s = sparrows[i - 1]; put(T, s, 410 + i * 52, 440 - (i % 2) * 26, { to: 'left' });
       s.pos.animate([{ opacity: 0, translate: '0 -30px' }, { opacity: 1, translate: '0 0' }], 260); s.hop(10, 240);
-      popSfx(T); T.pop(s.x, s.y - 190, tr(NUM[i - 1]));
+      popSfx(T); sayNum(T, i); T.pop(s.x, s.y - 190, tr(NUM[i - 1]));
     } }));
     hide(flock);
     await say('참새가 하나, 둘, 셋, 넷, 다섯! 쌀이 금방 하얗게 되었어요.');
@@ -360,9 +381,10 @@
     await T.sceneCard(tr('개울'), () => {
       scene('stream');
       put(T, kong, BANK[0], BANK[1], { look: 'shoes', to: 'right' }); followCam(BANK[0], 0);
+      kong.look('stepR', 'right');
     }, kong.pos);
     const cross = (i, x) => {
-      kong.move(x, STONE_Y, 380); kong.hop(26, 380); followCam(x); popSfx(T); wig('willowL', 2, 400); wig('willowR', 2, 400); T.pop(x + 40, STONE_Y - 295, tr(NUM[i - 1]));
+      kong.look(i % 2 ? 'stepL' : 'stepR', 'right'); kong.move(x, STONE_Y, 380); kong.hop(26, 380); followCam(x); popSfx(T); wig('willowL', 2, 400); wig('willowR', 2, 400); T.pop(x + 40, STONE_Y - 295, tr(NUM[i - 1]));
       return sleep(380);
     };
     await T.ask('콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!', () => T.tap(kong.pos, { prompt: '콩쥐를 톡! 징검다리를 건너요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
