@@ -18,7 +18,7 @@
     /* 시각 재기획(2026-10-22, PLAN.md '시각 재기획') 레이어 소품 */
     rc_layer_arch: 0.7283, rc_layer_tower: 0.2367, rc_layer_crayons: 0.5883, rc_layer_crayon_front: 0.305, rc_layer_buttons: 0.76, rc_layer_train: 2.0737, rc_layer_top: 0.8183,
     rc_layer_ball: 0.9933, rc_layer_spring: 1.7308, rc_layer_flags: 4.7872, rc_layer_signal: 0.3133, rc_layer_house_blue: 0.8383, rc_layer_rings: 0.6417, rc_layer_dice: 0.8983,
-    rc_layer_toybox: 1.0633, rc_layer_flowerbed: 1.7241, rc_layer_lights_sil: 4.3062, rc_layer_blocks_sil: 0.98, rc_layer_grass_front: 1.6129, rc_layer_meadow: 1.0467, rc_layer_ladybug: 1.105, rc_layer_snail: 1.345, rc_layer_sand_tools: 1.0617,
+    rc_layer_toybox: 1.0633, rc_layer_flowerbed: 1.7241, rc_layer_grass_front: 1.6129, rc_layer_meadow: 1.0467, rc_layer_ladybug: 1.105, rc_layer_snail: 1.345, rc_layer_sand_tools: 1.0617,
   };
   /* 장난감 세상 길이(px, scale 1). 기획 길이비 150:165:240:210:195 를 그대로 두면 큰 차(소방·구급·견인)의 바퀴가 빨간 차보다 27~31% 커진다(그림에서 잰 값).
      바퀴를 빨간 차의 +20% 안(≈40px)에 두려고 큰 차만 길이를 줄였다: 소방 240→218, 구급 210→191, 견인 195→183 (비율 1 : 1.1 : 1.22 : 1.27 : 1.45) */
@@ -31,7 +31,6 @@
     rc_layer_arch: 320, rc_layer_tower: 300, rc_layer_crayons: 220, rc_layer_crayon_front: 260, rc_layer_buttons: 110, rc_layer_train: 90, rc_layer_top: 120, rc_layer_ball: 110,
     rc_layer_spring: 90, rc_layer_flags: 80, rc_layer_signal: 170, rc_layer_house_blue: 190, rc_layer_rings: 160, rc_layer_dice: 80, rc_layer_toybox: 150, rc_layer_flowerbed: 90,
     rc_layer_grass_front: 70, rc_layer_meadow: 90, rc_layer_ladybug: 18, rc_layer_snail: 22, rc_layer_sand_tools: 90,
-    rc_layer_lights_sil: 100, rc_layer_blocks_sil: 90,   /* 8장 빛 상자 앞 실루엣(PLAN '라이트박스 장면' §4) */
     rc_prop_butterfly_open: 60, rc_prop_butterfly_fold: 42,   /* 나비: 몸통 길이를 open 과 같게(몸통이 open 은 그림 높이의 .457, fold 는 .652 → 60×.457/.652) */ rc_prop_block: 42, rc_prop_duck: 46, rc_prop_house: 170, rc_prop_flame: 90, rc_prop_smoke: 40, rc_prop_water: 76, rc_prop_hook: 60,
   };
   function calcHT() {
@@ -48,7 +47,7 @@
     rc_thief_a_run: 'right', rc_thief_b_run: 'right', rc_prop_duck: 'right', rc_prop_water: 'right', rc_prop_hook: 'right', rc_layer_train: 'left' };
   const FL = 505;                       // 바닥(바퀴·발끝 y)
   const S_TOY = .42;                    // 사람 세계에서 자동차 다섯 대에 공통으로 쓰는 축소 비율. 그 밖에 s 를 쓰지 않는다
-  const BGS = ['rc_bg_room_v2', 'rc_bg_yard_v2', 'rc_bg_gate_v2', 'rc_bg_road_a_v2', 'rc_bg_road_b_v2', 'rc_bg_road_c_v2', 'rc_bg_road_long_v2', 'rc_bg_road_hill_v2', 'rc_bg_playground_v2', 'rc_bg_road_hill_lb'];   // _lb: 8장 해 질 녘 빛 상자(PLAN '라이트박스 장면', 2026-10-24)   // 2026-10-22 시각 재기획: 옛 rc_bg_* 는 쓰지 않음
+  const BGS = ['rc_bg_room_v2', 'rc_bg_yard_v2', 'rc_bg_gate_v2', 'rc_bg_road_a_v2', 'rc_bg_road_b_v2', 'rc_bg_road_c_v2', 'rc_bg_road_long_v2', 'rc_bg_road_hill_v2', 'rc_bg_playground_v2'];   // 2026-10-22 시각 재기획: 옛 rc_bg_* 는 쓰지 않음
   const src = k => AS + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
@@ -156,7 +155,7 @@
     rc_bg_playground: { sky: '#EEF3F7', gnd: '#E9DCC0', name: '놀이터', shapes: () => [['rect', { x: 120, y: 160, width: 120, height: 260, fill: '#F2C94E' }], ['path', { d: 'M240 180 L460 420 L400 420 L240 240Z', fill: '#E8703A' }], ['circle', { cx: 860, cy: 100, r: 44, fill: '#F2B366' }]] },
   };
   function bgImage(T, key) {
-    if (!bgOK[key] && BGPH[key.replace(/_(v2|lb)$/, '')] && !BGPH[key]) BGPH[key] = BGPH[key.replace(/_(v2|lb)$/, '')];
+    if (!bgOK[key] && BGPH[key.replace('_v2', '')] && !BGPH[key]) BGPH[key] = BGPH[key.replace('_v2', '')];
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
     const d = BGPH[key], g = T.el('g', {}, T.bg);
     T.el('rect', { x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, fill: d.sky }, g);
@@ -343,7 +342,7 @@
     const GAP = 700, SCENE_END = 1500, DRIVE = 6300, LINE_DRIVE = 8400, SIREN_GAP = 4000;
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(삐뽀삐뽀!·톡!…)
-    const scene = (key, suf = '_v2') => { fronts = []; T.clear(); bgImage(T, key + suf); camSnap(500, 280, 1); };
+    const scene = key => { fronts = []; T.clear(); bgImage(T, key + '_v2'); camSnap(500, 280, 1); };
     /* 레이어 소품(누름을 받지 않는다). mid: 배우보다 먼저 put → 뒤 / front: 앞 가림 층, fronts 에 넣어 늘 맨 앞 */
     const LAYERS = {};
     const layer = (k, x, y, { front = false, s = 1 } = {}) => {
@@ -353,14 +352,6 @@
       (LAYERS[k] = LAYERS[k] || []).push(a);
       return a;
     };
-    /* 8장 빛 상자(해 질 녘): 앞 실루엣 — 블록 더미(주사위 자리)·전구 줄 2(위 하늘, 세로에선 가운데 밖). 색 팽이는 뺀다(PLAN 판단 2) */
-    const duskLayers = () => {
-      [layer('lights_sil', X(250, 120), 90, { front: true }), layer('lights_sil', X(750, 880), 90, { front: true })].forEach(f => swayLoop(f, 4, 1800));
-      layer('blocks_sil', X(995, 860), 585, { front: true });
-    };
-    /* 지쳐서 멈춘 동안 살짝 어둡게(.18) → "저 멀리서 덜컹덜컹" 에 1.5초 동안 걷혀 해 질 녘 빛이 켜진다 */
-    const duskDim = () => tint(T, '#1F2A56', .18);
-    const duskLift = t => { if (!t || !t.isConnected) return; T.anim(t, [{ opacity: .18 }, { opacity: 0 }], 1500).then(() => t.setAttribute('opacity', 0)); };
     const swayLoop = (a, px = 3, ms = 900) => { (async () => { while (a.pos.isConnected && a.pos.style.display !== 'none') await a.wiggle(px, ms); })(); };
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
@@ -407,7 +398,7 @@
     const on = a => a.pos.isConnected && a.pos.style.display !== 'none';
     const num = s => String(s).split(',').map(Number);
     const rSeen = {};
-    let rDusk = null, rTag = '', rCamX = 500, rFlights = [], rBed = null, rCabin = null, rChase = false, rConv = 0, rBush = null, rZoom = null, rStopFire = null, rWob = [], rFlameN = 0;
+    let rTag = '', rCamX = 500, rFlights = [], rBed = null, rCabin = null, rChase = false, rConv = 0, rBush = null, rZoom = null, rStopFire = null, rWob = [], rFlameN = 0;
     const PCAM = { room: 560, yard: 560, gate: 500, road_a: 520, road_b: 560, road_c: 600, road_long: 400, road_hill: 600, playground: 560 };
     const flight = p => { const q = Promise.resolve(p).catch(() => {}); rFlights.push(q); return q; };
     const flightsDone = async () => { while (rFlights.length) { const l = rFlights.splice(0); await Promise.all(l); } };
@@ -442,7 +433,7 @@
       road_b1() { swayLoop(layer('top', X(120, 360), FL - 10), 3, 900); layer('buttons', X(40, 340), 585, { front: true }); layer('spring', X(1010, 790), 590, { front: true }); },
       road_c1() { layer('signal', X(120, 360), FL - 10); layer('house_blue', X(300, 420), FL - 20); layer('ball', X(990, 800), 585, { front: true }); },
       road_long1() { rLong(-1); layer('crayon_front', 1000, 590, { front: true }); },
-      road_hill1() { duskLayers(); rDusk = duskDim(); },
+      road_hill1() { swayLoop(layer('top', X(110, 330), FL - 10), 3, 900); layer('dice', X(995, 860), 585, { front: true }); },
       road_long2() { rLong(1); layer('buttons', X(30, 300), 585, { front: true }); },
       playground1() { layer('sand_tools', X(60, 330), 585, { front: true }); layer('grass_front', X(990, 790), 585, { front: true, s: 90 / 70 }); },
     };
@@ -490,7 +481,7 @@
           if (rStopFire) { rStopFire(); rStopFire = null; }
           rWob.forEach(w => { w.on = false; }); rWob = []; rCabin = null; rBed = null; rChase = false; rConv = 0; rBush = null; rZoom = null;
           RALL.forEach(hide);
-          rDusk = null; scene('rc_bg_' + key, key === 'road_hill' ? '_lb' : '_v2');
+          scene('rc_bg_' + key);
           rCamX = P ? PCAM[key] : 500; if (P) camSnap(rCamX, 280, 1);
           (RLAY[rTag] || (() => {}))();
         };
@@ -694,7 +685,6 @@
       confetti() { T.confetti(); sfx('tada') || sparkleSfx(T); },
       pop(spec) {
         let [x, y, ...w] = String(spec).split(','); x = +x; y = +y; const text = w.join(',');
-        if (rTag === 'road_hill1' && text === '덜컹덜컹' && rDusk) { duskLift(rDusk); rDusk = null; }
         if (rBed && text === '쌔근') { T.pop(rBed.head[0] - 40, rBed.head[1] - 75, tr(text), '#1F2A56'); return; }
         if (P) { const cx = T.camera.x, lim = 190; x = Math.max(cx - lim, Math.min(cx + lim, x)); }
         if (rTag === 'road_hill1' && text === '영차!') {   /* 영차, 영차! 견인차가 앞에서 끈다 */
@@ -1019,12 +1009,11 @@
 
     /* ===== 8. 에구구, 지쳤어요 (톡 2 — 고리) ===== */
     const C8 = chain(600, ['red', 'police', 'fire', 'amb'], 20), TOW8 = 600 + LEN.red / 2 + 20 + LEN.tow / 2;   // 견인차는 빨간 차 앞(오른쪽)
-    let dusk8 = null;
     await T.sceneCard(tr('에구구, 지쳤어요'), () => {
-      scene('rc_bg_road_hill', '_lb');   // 해 질 녘 빛 상자
-      dusk8 = duskDim();
+      scene('rc_bg_road_hill');
+      swayLoop(layer('top', X(110, 330), FL - 10), 3, 900);   // 중간 층
       put(T, amb, C8.amb - 260, FL, { look: 'run' }); put(T, fire, C8.fire - 260, FL, { look: 'run' }); put(T, police, C8.police - 260, FL, { look: 'run' }); put(T, red, C8.red - 260, FL, { look: 'run' });
-      duskLayers();   // 앞 실루엣 층(고리 ±120 밖). 왼쪽 모서리는 구급차가 서는 자리라 비운다
+      layer('dice', X(995, 860), 585, { front: true });   // 앞 가림 층(고리 ±120 밖). 왼쪽 모서리는 구급차가 서는 자리라 비운다
       if (P) camSnap(600, 280, 1);
     }, red.pos);
     const l30 = say(S.L30), stopR8 = rattle(.25, 1200);
@@ -1037,7 +1026,7 @@
     red.hop(4, 300); await say(S.L31);
     await say(S.L32);
     [police, fire, amb].forEach((c, i) => setTimeout(() => c.wiggle(2, 700), i * 300));
-    const l33 = say(S.L33); duskLift(dusk8);
+    const l33 = say(S.L33);
     put(T, tow, -300, LANE_T, { look: 'run' });
     const stopR8b = rattle(.45, 900);
     setTimeout(() => T.pop(tow.x, FL - 150, tr('덜컹덜컹')), 0); setTimeout(() => T.pop(tow.x, FL - 150, tr('덜컹덜컹')), 3500);
