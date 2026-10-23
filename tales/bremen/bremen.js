@@ -33,6 +33,8 @@
     rooster: 'v3w/br_rooster.webp', rooster_sing: 'v3w/br_rooster_sing.webp', miller: 'v3w/br_miller.webp', owl: 'v3w/br_owl.webp',
     robber_red: 'v3w/br_robber_red.webp', robber_green: 'v3w/br_robber_green.webp', robber_brown: 'v3w/br_robber_brown.webp',
     cut_crash: 'v3w/br_cut_crash5.webp', cut_monster: 'v3w/br_cut_monster.webp', cut_ghost: 'v3w/br_cut_ghost3.webp',
+    // 빛 상자 탑 장면(7장)에서만 쓰는 실루엣 동물(VISUAL_PLAN §4-4): 색종이 그림과 같은 자세·방향, 눈 구멍 하나
+    donkey_sil: 'v3w/br_lb_sil_donkey.webp', dog_sil: 'v3w/br_lb_sil_dog.webp', cat_sil: 'v3w/br_lb_sil_cat.webp', rooster_sil: 'v3w/br_lb_sil_rooster.webp',
     drum: 'v3w/br_drum.webp', horn: 'v3w/br_horn.webp', fiddle: 'v3w/br_fiddle.webp', bell: 'v3w/br_bell.webp', // 우리 집 악기 (바이올린 옆에 따로 그려진 리본 조각은 지움)
   };
   const artOK = {}, bgOK = {};
@@ -49,13 +51,15 @@
     donkey: [200, 0.571, 0.9308], donkey_sing: [202, 0.569, 0.9315], donkey_sleep: [168, 0.572, 1.2125], dog_sing: [95, 0.466, 0.9568], dog_tired: [97, 0.534, 1.0742], cat_sing: [89, 0.558, 1.0696], cat_sad: [85, 0.619, 1.0364], cat_perch: [102, 0.5, 0.7283, 0.76], // [키, 발끝 x 비율, 폭/높이, (앉은 그림) 엉덩이·발 밑선이 그림 높이의 몇 %인지]
     
     rooster: [104, 0.427, 0.937], rooster_sing: [96, 0.462, 0.9875], 
+    // 실루엣(빛 상자 탑, 2026-10-23): 색종이 그림과 같은 자세라 그림 높이 55% 줄의 몸통 폭이 같아지게 키를 맞췄다(§4-1), 발끝은 발 띠 가운데
+    donkey_sil: [204, 0.571, 0.9367], dog_sil: [95, 0.472, 0.955], cat_sil: [89, 0.534, 1.0117], rooster_sil: [98, 0.48, 0.9917],
     miller: [183, 0.432, 0.4764], owl: [80, 0.495, 0.835], 
     robber_red: [170, 0.535, 0.7725], robber_green: [157, 0.31, 0.9511], robber_brown: [162, 0.52, 0.7318],
   };
   /* 동물마다 자세 이름 → 그림. home = 평소 그림 (강아지·고양이는 서 있는 그림이 없어 노래 그림이 평소) */
   const LOOKS = {
-    donkey: { home: 'donkey', sing: 'donkey_sing', sleep: 'donkey_sleep' }, dog: { home: 'dog_sing', sing: 'dog_sing', tired: 'dog_tired' },
-    cat: { home: 'cat_sing', sing: 'cat_sing', sad: 'cat_sad', perch: 'cat_perch' }, rooster: { home: 'rooster', sing: 'rooster_sing' },
+    donkey: { home: 'donkey', sing: 'donkey_sing', sleep: 'donkey_sleep', sil: 'donkey_sil' }, dog: { home: 'dog_sing', sing: 'dog_sing', tired: 'dog_tired', sil: 'dog_sil' },
+    cat: { home: 'cat_sing', sing: 'cat_sing', sad: 'cat_sad', perch: 'cat_perch', sil: 'cat_sil' }, rooster: { home: 'rooster', sing: 'rooster_sing', sil: 'rooster_sil' },
     miller: { home: 'miller' }, owl: { home: 'owl' },
   };
   const ROBBER = { '#3F6B4F': 'robber_green', '#A93B32': 'robber_red', '#6B4A32': 'robber_brown' };
@@ -114,7 +118,9 @@
     Object.entries(L).forEach(([n, k]) => { if (imgs[k] || !artUrl(k)) return; const [h, fx, as, base = 1] = SPR[k], w = h * as; imgs[k] = pic(T, g, k, -w * fx, -h * base, w, h); });
     let cur = 'home';
     const p = { art: true, imgs };
-    p.look = n => { cur = L[n] && imgs[L[n]] ? n : 'home'; Object.entries(imgs).forEach(([k, f]) => { f.style.display = k === L[cur] ? '' : 'none'; }); };
+    if (L.sil && imgs[L.sil]) imgs[L.sil].style.filter = SIL_GLOW; // 빛 상자: 뒤 빛이 종이 가장자리로 샌다
+    p.sil = false; // true 면 어떤 자세를 불러도 실루엣 (빛 상자 탑 장면)
+    p.look = n => { if (p.sil && L.sil && imgs[L.sil]) n = 'sil'; cur = L[n] && imgs[L[n]] ? n : 'home'; Object.entries(imgs).forEach(([k, f]) => { f.style.display = k === L[cur] ? '' : 'none'; }); };
     p.cur = () => cur;
     p.flash = (n, ms = 900) => { const back = cur; p.look(n); clearTimeout(p._t); p._t = setTimeout(() => p.look(back === n ? 'home' : back), ms); };
     p.look('home');
@@ -126,6 +132,7 @@
     const [h, , as] = SPR[L.home]; T.el('rect', { x: -h * as / 2, y: -h, width: h * as, height: h, fill: '#fff', opacity: 0 }, g); // 누를 자리
     return p;
   }
+  const SIL_GLOW = 'url(#pp) drop-shadow(0 0 2px #F5A64B) drop-shadow(0 0 5px rgba(245,166,75,.6))';
   /* 컷 안에 배우 한 장 (그림이 있으면 그림, 없으면 임시 도형) */
   function drawLook(T, g, key, look = 'home', extra) {
     const k = key === 'robber' ? ROBBER[extra] : (LOOKS[key] || {})[look] || (LOOKS[key] || {}).home;
@@ -266,6 +273,7 @@
   /* 탑 쌓기: 등 위(다음 친구가 설 자리)의 발 기준 위치 */
   const BACK0 = { donkey: [8, -112], dog: [4, -58], cat: [6, -46], rooster: [0, -60] };
   const BACK_ART = { donkey: [20, -100], dog: [12, -52], cat: [10, -49], rooster: [0, -60] }; // 그림 등 윗선(그림에서 잰 높이)
+  const BACK_SIL = { ...BACK_ART, dog: [26, -52] }; // 실루엣 탑: 고양이를 강아지 엉덩이 쪽으로 조금 더 → 노래하는 강아지 머리가 고양이에 가리지 않는다(실루엣은 겹치면 한 덩이가 되므로)
   const BACK = new Proxy({}, { get: (o, k) => (artUrl(LOOKS[k] ? LOOKS[k].home : '') ? BACK_ART : BACK0)[k] });
   /* 머리(눈) 위치 — 어둠 속 눈 반짝이 */
   const EYE0 = { donkey: [-82, -152], dog: [-52, -64], cat: [-25, -54], rooster: [-22, -71] };
@@ -417,6 +425,12 @@
     }
     el('rect', { x: -400, y: -400, width: 1800, height: 1400, fill: C.indigo, opacity: .45 }, b);
     return { trees, path };
+  }
+  /* 빛 상자 탑 장면 앞층: 같은 배경 그림 아래 모서리의 짙은 풀 실루엣만 오려 둔 그림(그림 y 722~902)을 배우 앞(T.fx)에 한 번 더. 누름 없음 */
+  function lowFront(T) {
+    if (!bgUrl('house_low')) return;
+    const k = BGBOX.h / 902, g = T.el('g', { style: 'pointer-events:none' }, T.fx);
+    T.el('image', { href: AS + 'v3w/br_lb_window_grass.webp', x: BGBOX.x, y: BGBOX.y + 722 * k, width: BGBOX.w, height: 180 * k, preserveAspectRatio: 'none' }, g);
   }
   /* 그림 벽의 높은 창(2026-10-21 새 그림에서 다시 쟀다): 유리 x 657..818, 위는 화면 밖에서 시작해 아래 y 180, 창턱 아래 y 222, 가운데 x≈737 */
   const LOW_WIN = { x0: 657, x1: 818, y0: -24, y1: 180 };
@@ -592,8 +606,36 @@
     const put = (a, x, y, s = 1, dir = 'left') => {
       T.world.appendChild(a.pos); a.face(dir); a.setScale(s); a.place(x, y); a.pose(POSE.stand);
       a.body.style.transform = ''; a.lean.style.filter = ''; a.pos.style.opacity = ''; a.home = { x, y };
-      if (a.parts && a.parts.art) a.parts.look('home');
+      if (a.parts && a.parts.art) { a.parts.sil = false; a.parts.look('home'); }
     };
+    /* 빛 상자 탑 장면: 실루엣 동물로 바꾼다(그림이 없으면 그대로). 등 위 자리도 실루엣 그림에서 잰 BACK_SIL */
+    const silOn = a => { if (a.parts && a.parts.art && artUrl(LOOKS[a.key].sil)) { a.parts.sil = true; a.parts.look('sil'); } };
+    const silBack = k => (cast[k].parts.sil ? BACK_SIL : BACK)[k];
+    /* 창빛 숨 쉬기(올라탈 때) · 다 쌓이면 한 번 더 밝아지며 짧은 노래 + 창 안 도둑 그림자 폴짝 놀람 (놀라게만) */
+    function winBreath(win, peak = .28, ms = 700) {
+      if (!win || !win.lastChild) return;
+      const inner = win.lastChild;
+      let r = win._glow;
+      if (!r) { r = win._glow = el('rect', { x: LOW_WIN.x0, y: LOW_WIN.y0, width: LOW_WIN.x1 - LOW_WIN.x0, height: LOW_WIN.y1 - LOW_WIN.y0, fill: '#FBF1C8', opacity: 0 }, null); inner.insertBefore(r, inner.children[1] || null); }
+      r.animate([{ opacity: 0 }, { opacity: peak }, { opacity: 0 }], { duration: ms, easing: 'ease-in-out' });
+      for (let i = 0; i < 3; i++) { // 빛 점이 창에서 떠오른다
+        const d = el('circle', { cx: LOW_WIN.x0 + 20 + Math.random() * (LOW_WIN.x1 - LOW_WIN.x0 - 40), cy: LOW_WIN.y1 - 10, r: 4 + Math.random() * 3, fill: '#F7D77A', opacity: 0 }, T.fx);
+        d.animate([{ opacity: 0, translate: '0 0' }, { opacity: .9, translate: `${(Math.random() - .5) * 30}px -40px` }, { opacity: 0, translate: `${(Math.random() - .5) * 60}px -110px` }], { duration: 1600, delay: i * 160 }).finished.then(() => d.remove(), () => d.remove());
+      }
+    }
+    async function towerSong(win) {
+      if (win && win.lastChild) {
+        winBreath(win, .5, 1600);
+        win._glow.animate([{ opacity: .5 }, { opacity: .2 }], { duration: 900, delay: 1600, fill: 'forwards' });
+      }
+      for (const a of band) { a.cry(.35); a.hop(8, 260); note(T, a.x + 16, a.y - 90 * a.scale, [C.bean, C.gold, C.cream][band.indexOf(a) % 3]); await sleep(330); }
+      const sh = win && win.lastChild && win.lastChild.lastChild;
+      if (sh) [...sh.children].forEach((g, i) => { // 창 안 도둑 그림자: 폴짝! 양옆으로 살짝 흩어졌다가 제자리
+        const dx = (i - 1) * 22;
+        g.animate([{ translate: '0 0' }, { translate: `${dx * .3}px -16px`, offset: .2 }, { translate: `${dx}px 4px`, offset: .5 }, { translate: `${dx}px 4px`, offset: .75 }, { translate: '0 0' }], { duration: 1800, delay: i * 70, easing: 'ease-out' });
+      });
+      await sleep(900);
+    }
     /* 캄캄한 방: 잠든 자세. 그림이면 잠자는 그림(당나귀) 또는 평소 그림을 코드로 눌러 앉힘 */
     const doze = a => { if (a.parts.art && a.parts.imgs[LOOKS[a.key].sleep]) { a.parts.look('sleep'); a.pose(POSE.stand); } else a.pose(POSE.sleep); };
     const wake = a => { if (a.parts.art) a.parts.look('home'); a.pose(POSE.stand); };
@@ -655,6 +697,7 @@
       const rRb = [C.pine, C.bean, C.bark].map(c => mk('robber', c));
       const ACT = { donkey: cast.donkey, dog: cast.dog, cat: cast.cat, rooster: cast.rooster, miller: rMiller, owl: rOwl };
       const BGK = { mill: 'mill', road: 'road', wall: 'wall', roof: 'roof', meadow: 'meadow', walk: 'walk', house_low: 'house_low', house_pov: 'house_pov', house_wide: 'house_wide', dark: 'dark', morning: 'morning' };
+      let lowWinR = null;
       let key = '', bsh = null, fb = null, glow = null, tx = 0, scroll = [], stacked = [], top = { x: 0, y: 0 }, hw = null, tg = null, lowArt = false;
       const DX = L(470, 430);
       const WALLC = [575, Math.round(135 - .273 * (575 - 500)) + 3], ROOFC = [805, Math.round(121 + .18 * (805 - 784)) + 3];
@@ -723,10 +766,11 @@
           camSnap(500, 280, 1); return;
         }
         if (k === 'house_low') {
-          houseLowBG(T, TXX - 700, TG0 - 500 + L(0, 50));
+          lowWinR = houseLowBG(T, TXX - 700, TG0 - 500 + L(0, 50));
           const order = ['rooster', 'cat', 'dog', 'donkey'];
           let x = L(40, TCX - visW() / 2 + 8);
           order.forEach(q => { const w = WAIT_W[q] * WS; put(cast[q], x + w * .55, WY, WS); x += w; });
+          band.forEach(silOn); lowFront(T); // 빛 상자 탑 장면: 실루엣 (놀이판과 같게)
           top = { x: TXX, y: TG0 };
           camSnap(TCX, 280, 1); return;
         }
@@ -867,9 +911,11 @@
             await g.move(top.x, top.y, 260, 'ease-in');
             g.face('left'); S.thud();
             stacked.push(g); g.cry(.7);
-            const [bx, by] = BACK[who];
+            const [bx, by] = silBack(who);
             top = { x: top.x + bx * TS, y: top.y + by * TS };
             T.tone(392 + stacked.length * 98, .25, { type: 'triangle', vol: .16 });
+            if (bgArt('house_low') && who !== 'rooster') winBreath(lowWinR);
+            if (who === 'rooster' && bgArt('house_low')) await towerSong(lowWinR);
             if (who === 'rooster') await camTo(bgArt('house_low') ? TXX + 40 : TXX, L(190, 205), 1.6, 900);
           })();
         },
@@ -1153,11 +1199,14 @@
     const TCX = lowArt ? L(500, 650) : 500; // 그림: 창이 오른쪽에 그려져 있어 세로 화면은 카메라를 오른쪽으로
     const ORDER = ['donkey', 'dog', 'cat', 'rooster'];
     const WAIT_W = { donkey: 200, dog: 125, cat: 100, rooster: 95 };
+    let lowWin = null;
     await T.sceneCard('탑 쌓기', () => {
-      T.clear(); houseLowBG(T, TX - 700, TG - 500 + L(0, 50));
+      T.clear(); lowWin = houseLowBG(T, TX - 700, TG - 500 + L(0, 50));
       const keys = ORDER.slice().sort(() => Math.random() - .5);
       let x = L(40, TCX - visW() / 2 + 8);
       keys.forEach(k => { const w = WAIT_W[k] * WS; put(cast[k], x + w * .55, WY, WS); x += w; });
+      band.forEach(silOn); // 빛 상자 탑 장면: 네 친구 모두 실루엣
+      lowFront(T);
       camSnap(TCX, 280, 1);
     }, cast.dog.pos);
     await say('불빛이 새어 나오는 창문이에요. 그런데 너무 높아서 아무도 안 닿아요.');
@@ -1213,12 +1262,14 @@
       await climb(good, top.x, top.y);
       stacked.push(good);
       good.cry(.7);
-      const [bx, by] = BACK[good.key];
+      const [bx, by] = silBack(good.key);
       top = { x: top.x + bx * TS, y: top.y + by * TS };
       T.tone(392 + k * 98, .25, { type: 'triangle', vol: .16 });
+      if (lowArt && k < 3) winBreath(lowWin);
       if (k === 0) await say('당나귀가 맨 아래! 튼튼해요.');
     }
     tower();
+    if (lowArt) await towerSong(lowWin);
     await say('당나귀, 강아지, 고양이, 닭! 닭이 창문에 닿았어요!');
     await camTo(lowArt ? TX + 40 : TX, L(190, 205), 1.6, 900);
 
