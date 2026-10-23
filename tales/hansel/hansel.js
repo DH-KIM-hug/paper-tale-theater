@@ -20,7 +20,7 @@
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 BGK 포함)는 그대로, 그림만 v2·라이트박스(lb). 지붕은 그대로.
      집 안 밤 문틀(DOOR·기둥 클립)·집 앞 집·과자 집 자리는 원본과 겹쳐 확인(문틀은 같은 자리, 과자 집은 약 2% 오른쪽 — 좌표에 묶이지 않음) */
   /* 2026-10-23 사용자 결정: 숲길(trail)·빈터(glade)·숲 바닥(ground)은 옛 그림으로 되돌림(짝 소품·반딧불도 뺌) */
-  const BGFILE = { cottage: 'cottage_v2', house: 'house_lb', cage: 'cage_v2', oven: 'oven_v2', river: 'river_v2', house_night: 'house_night_v2', cottage_night: 'cottage_night_lb' };
+  const BGFILE = { cottage: 'cottage_v2', house: 'house_lb', cage: 'cage_v2', oven: 'oven_v2', river: 'river_v2', house_night: 'house_night_v2', cottage_night: 'cottage_night_lb2' };   /* 2026-10-24 사용자 결정: 그날 밤 집 앞은 주황 해 질 녘처럼 보여 달밤(남색 하늘·은빛 달, 창 등불만 주황) lb2 로 다시 그림 — 집·문·창·달 자리 같음(겹쳐 확인) */
   const LASP = { leaves_front: 1.1533, berry_bush_front: 1.07, wildflowers: 1.11, reeds: .86, mist: 4.1667, beam_herbs: 1.3433, candy_cane: 1.0583, branch_sil: 1.01, grass_sil: 3.4483, pine_sil: .4967, lollipop_sil: 1.0917 };
   const bgSrc = k => AS + 'hg_bg_' + (BGFILE[k] || k) + '.webp', cutSrc = k => AS + 'hg_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
@@ -99,9 +99,10 @@
     });
     function dress(key) {
       if (key === 'cottage_night') {   // 라이트박스: 달빛 조약돌·그날 밤
-        sway(layer('branch_sil', L(90, 300), -24, 200, { top: true }), 1, 9000);
-        if (!P) layer('pine_sil', 975, 585, 420);
-        [170, 500, 830].forEach((x, i) => layer('grass_sil', x, 600, 70, { flip: i === 1 }));
+        const night = g => { if (g) g.parentNode.style.filter = 'brightness(.42) saturate(.5)'; return g; };   // 달밤 lb2: 갈색 실루엣을 거의 검은 남빛 쪽으로(따뜻한 색은 창 등불만)
+        sway(night(layer('branch_sil', L(90, 300), -24, 200, { top: true })), 1, 9000);
+        if (!P) night(layer('pine_sil', 975, 585, 420));
+        [170, 500, 830].forEach((x, i) => night(layer('grass_sil', x, 600, 70, { flip: i === 1 })));
         lightOn(); twinkles([[560, 60], [640, 110], [860, 70], [930, 140], [470, 40], [700, 30], [800, 160], [520, 150]], '#FFF4CC');
       }
       if (key === 'cottage' && !P) { layer('wildflowers', 55, 505, 90, { front: false }); layer('wildflowers', 905, 505, 90, { front: false, flip: true }); layer('wildflowers', 985, 600, 90, { name: 'flowers' }); }
