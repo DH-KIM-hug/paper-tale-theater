@@ -22,8 +22,10 @@
      - bed_small: 다시 뽑은 그림(큰·중간 침대처럼 위에서 본 모습). gl_bg_bed_top 새 그림은 여전히 지평선·언덕이 보여(위에서 본 바닥 아님) 안 바꿈
      - cut_crack: 의자 등판에 붙은 눈·볼을 지운 것. 치마 걸림 컷은 코드 그림 그대로 */
   const AS = '../../assets/';
-  const BG = { kitchen: 'v3w/gl_bg_kitchen.webp', forest: 'v3w/gl_bg_forest.webp', door: 'v3w/gl_bg_door.webp', table: 'v3w/gl_bg_table.webp',
-    living: 'v3w/gl_bg_living.webp', bed_top: 'v3w/gl_bg_bed_top.webp', bed_side: 'v3w/gl_bg_bed_side.webp' };
+  /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 부엌·집 앞·침대 옆은 v2, 숲길은 새벽 라이트박스(통나무집 자리 그대로라 집 클립도 그대로),
+     곰 가족이 돌아오는 첫 줄은 해 질 녘 집 앞 라이트박스(door_dusk). 집·문·창·난로·창문 자리는 옛 그림과 겹쳐 같음. 세기·고르기 장면(식탁·거실·침대 위)은 그대로 */
+  const BG = { kitchen: 'v3w/gl_bg_kitchen_v2.webp', forest: 'v3w/gl_lb_forest_dawn.webp', door: 'v3w/gl_bg_door_v2.webp', door_dusk: 'v3w/gl_lb_door_dusk.webp', table: 'v3w/gl_bg_table.webp',
+    living: 'v3w/gl_bg_living.webp', bed_top: 'v3w/gl_bg_bed_top.webp', bed_side: 'v3w/gl_bg_bed_side_v2.webp' };
   const ART = {};
   ['goldi_walk', 'goldi_walk_empty', 'goldi_pick', 'goldi_tongue', 'goldi_sorry', 'goldi_surprised', 'goldi_sit', 'goldi_side', 'goldi_side_sleep', 'goldi_lie', 'goldi_lie_sleep',
     'bear_dad', 'bear_mom', 'bear_baby', 'bear_baby_cry', 'bowl', 'bowl_empty', 'chair_big', 'chair_mid', 'chair_small',
@@ -69,8 +71,52 @@
     return wrap;
   }
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). 그림 밖은 끝 색으로 */
-  const BG_EDGE = { kitchen: ['#d59045', '#e0b389'], forest: ['#8cb6c8', '#c7a773'], door: ['#a0cadd', '#8c8458'], table: ['#6d5131', '#6a3d27'],
-    living: ['#95633f', '#b58060'], bed_top: ['#573721', '#bd7d3d'], bed_side: ['#e1ad4b', '#b06c46'] };
+  const BG_EDGE = { kitchen: ['#bb783c', '#e0b085'], forest: ['#d2a458', '#c9a46d'], door: ['#8cc9eb', '#99925d'], door_dusk: ['#efbb60', '#724836'], table: ['#6d5131', '#6a3d27'],
+    living: ['#95633f', '#b58060'], bed_top: ['#573721', '#bd7d3d'], bed_side: ['#e6ab44', '#b36740'] };
+  /* 층 소품(gl_layer_*, 누름 없음): 폭/높이. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위). (cx, y) = 가운데·발끝, top 이면 윗변.
+     세로 화면(카메라 .62배라 x 약 150~850 이 보임)은 앞 소품을 가운데(285~715) 밖에 둔다 */
+  const LASP = { fern_front: 1.0933, wildflowers_mid: 4.5226, branch_swirl: .7183, butterfly: 1.235, herb_garland: 1.325, quilt_curtain: .775, sil_branches: 1.0517 };
+  const isP = () => window.matchMedia('(orientation: portrait)').matches;
+  const still = T => T.reading && T.reading() && T.readInstant && T.readInstant();
+  function layer(T, k, cx, y, h, { front = false, flip = false, top = false } = {}) {
+    const w = h * LASP[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+    const inner = T.el('g', { filter: 'url(#pp)' }, g);
+    if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+    T.el('image', { href: AS + 'v3w/gl_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+    inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+    return inner;
+  }
+  const sway = (T, g, deg, ms, delay = 0) => { if (!still(T)) g.animate([{ rotate: `${-deg}deg` }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }], { duration: ms, delay, iterations: Infinity, easing: 'ease-in-out' }); return g; };
+  /* 빛 판: 숨 쉬는 반투명 원·네모 (라이트박스의 해 둘레·창문) */
+  function glow(T, shape, attrs, parent) {
+    const n = T.el(shape, { fill: '#FBF1C8', style: 'pointer-events:none', ...attrs }, parent || T.bg);
+    if (!still(T)) n.animate([{ opacity: +attrs.opacity * .55 }, { opacity: +attrs.opacity }, { opacity: +attrs.opacity * .55 }], { duration: 4000, iterations: Infinity, easing: 'ease-in-out' });
+    return n;
+  }
+  function dress(T, key) {
+    const P = isP();
+    if (key === 'forest') {   // 새벽 라이트박스: 해 둘레 빛, 위 모서리 실루엣 가지 그물
+      glow(T, 'circle', { cx: 662, cy: 43, r: 82, opacity: .35 });
+      sway(T, layer(T, 'sil_branches', P ? 170 : 60, -24, 220, { front: true, top: true }), 1, 9000);
+      sway(T, layer(T, 'sil_branches', P ? 830 : 940, -24, 220, { front: true, top: true, flip: true }), 1, 9000, 2000);
+    }
+    if (key === 'door') {     // 집 앞 낮: 들꽃 띠(배우 뒤), 고사리·버섯과 소용돌이 잎 가지(앞), 나비
+      [250, 750].forEach((x, i) => layer(T, 'wildflowers_mid', x, 556, 56, { flip: i === 1 }));
+      layer(T, 'fern_front', P ? 170 : 40, 592, 120, { front: true }); layer(T, 'fern_front', P ? 830 : 970, 592, 120, { front: true, flip: true });
+      sway(T, layer(T, 'branch_swirl', P ? 800 : 935, -24, 180, { front: true, top: true }), 1, 8000);
+      if (!P) sway(T, layer(T, 'branch_swirl', 65, -24, 180, { front: true, top: true, flip: true }), 1, 8000, 1600);
+      [[P ? 230 : 130, 300, 0], [P ? 780 : 880, 236, 1]].forEach(([x, y, i]) => {
+        const b = layer(T, 'butterfly', x, y, 26, { front: true, flip: !!i });
+        if (!still(T)) { b.animate([{ scale: '1 1' }, { scale: '.35 1' }, { scale: '1 1' }], { duration: 320 + i * 60, iterations: Infinity }); b.parentNode.animate([{ translate: '0 0' }, { translate: `${i ? -16 : 18}px -12px` }, { translate: '0 0' }], { duration: 3200 + i * 700, iterations: Infinity, easing: 'ease-in-out' }); }
+      });
+    }
+    if (key === 'door_dusk') {   // 해 질 녘 집 앞 라이트박스: 창문 두 개에 빛, 위 모서리 실루엣 가지
+      [[326, 208], [601, 208]].forEach(([x, y]) => glow(T, 'rect', { x, y, width: 64, height: 68, rx: 4, opacity: .4 }));
+      sway(T, layer(T, 'sil_branches', P ? 170 : 60, -24, 220, { front: true, top: true }), 1, 9000);
+      sway(T, layer(T, 'sil_branches', P ? 830 : 940, -24, 220, { front: true, top: true, flip: true }), 1, 9000, 2000);
+    }
+    if (key === 'table') layer(T, 'herb_garland', P ? 210 : 110, -24, 110, { front: true, top: true });   // 죽 세 그릇: 위 모서리 허브 엮음만
+  }
   function bgImage(T, key, { dx = 0, parent } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const w = 1080, h = w * 992 / 1760, x = -40 + dx, y = -24, p = parent || T.bg;
@@ -359,6 +405,7 @@
       const cp = el('clipPath', { id: 'glCabin' }, b); const [cx, cy, cw, ch] = CABIN.box; el('rect', { x: cx, y: cy, width: cw, height: ch, rx: 8 }, cp);
       bgImage(T, 'forest', { parent: inner }).setAttribute('clip-path', 'url(#glCabin)');
       Object.assign(house, { ax: CABIN.x, ay: CABIN.y, as: 1 });
+      dress(T, 'forest');
       return house;
     }
     fill(T, '#DCE8C8');
@@ -382,16 +429,17 @@
   }
   /* 그림 속 문: 아치 모양 그대로 오린 같은 그림 한 겹이 문짝 (왼쪽 경첩을 축으로 열린다) */
   const DOOR_D = 'M445 357 V228 Q445 181 495 181 Q546 181 546 228 V357 Z';
-  function doorBG(T) {
+  function doorBG(T, key = 'door') {
     const { paper, el } = T, b = T.bg;
-    if (bgImage(T, 'door')) {
+    if (bgImage(T, key)) {
       const inside = paper(b, [['path', { d: DOOR_D, fill: C.amber }]]);
       paper(b, [['path', { d: 'M455 357 V250 Q455 215 495 215 Q536 215 536 250 V357 Z', fill: '#E9A35A', opacity: .7 }]]);
       const door = el('g', {}, b);
       const cp = el('clipPath', { id: 'glDoor' }, b); el('path', { d: DOOR_D }, cp);
-      bgImage(T, 'door', { parent: door }).setAttribute('clip-path', 'url(#glDoor)');
+      bgImage(T, key, { parent: door }).setAttribute('clip-path', 'url(#glDoor)');
       el('path', { d: DOOR_D, fill: '#fff', opacity: 0 }, door);
       door.style.transformBox = 'view-box'; door.style.transformOrigin = '445px 0px'; door.style.transition = 'transform .9s ease-in-out';
+      dress(T, key);
       return { door, inside };
     }
     fill(T, '#CFE0E6');
@@ -410,7 +458,7 @@
   }
   function tableTopBG(T) {
     const { paper, el } = T;
-    if (bgImage(T, 'table')) return;
+    if (bgImage(T, 'table')) { dress(T, 'table'); return; }
     fill(T, '#5A3D29');
     paper(T.bg, [['rect', { x: 20, y: 30, width: 960, height: 520, rx: 26, fill: C.log }]]);
     for (let i = 1; i < 8; i++) el('rect', { x: 20, y: 30 + i * 65, width: 960, height: 4, fill: C.logLine, opacity: .6 }, T.bg);
@@ -546,6 +594,19 @@
       if (a.setFace) a.setFace('smile');
     };
     const headY = a => a.y - (a === goldi ? 150 : 215) * a.scale;
+    /* 해 질 녘 집 앞 라이트박스(곰 가족이 돌아오는 첫 줄): 곰이 어두운 땅·실루엣에 묻히지 않게 곰 뒤에 반투명 빛 타원(곰과 함께 움직임) */
+    let glows8 = [];
+    const unglow8 = () => { glows8.forEach(n => n.remove()); glows8 = []; };
+    const duskYard = () => {
+      T.clear(); unglow8(); doorBG(T, 'door_dusk');
+      B.forEach((b, i) => {
+        put(b, 1180 + i * 130, 518, SIZE[i] * .8);
+        const e = el('ellipse', { cx: 0, cy: -108, rx: 112, ry: 128, fill: '#F7D77A', opacity: .24, style: 'pointer-events:none' });
+        b.pos.insertBefore(e, b.body); glows8.push(e);
+      });
+      view();
+    };
+    const duskWalk = (ms = 2000) => { AudioFX.sfx('step_wood', .5); const xs = [840, 710, 600].map(X); return Promise.all(B.map((b, i) => sleep(i * 150).then(() => b.move(xs[i], 518, ms, 'ease-out')))); };
     const stars = (x, y) => {
       const g = el('g', {}, T.fx);
       for (let k = 0; k < 3; k++) el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(26 0)` }, g);
@@ -640,13 +701,22 @@
         rs.goldiFn(); rView();
       },
       table2() {
-        kitchenBG(T);
-        sideTable(T, 330, 330, 340);
-        SIZE.forEach((s, i) => bowlSide(T, T.world, 255 + i * 85, 342, s * .6, { full: false }));
         const xs = shuffle([200, 500, 800].map(X));
-        rs.bearsFn = () => B.forEach((b, i) => put(b, 1350, 530, SIZE[i]));   // 산책에서 돌아온다 (bears:walk 로 자리에 선다)
         rs.bearPos = B.map((b, i) => [xs[i], 530]);
-        rView();
+        rs.kitchen8 = () => {
+          T.clear(); unglow8(); kitchenBG(T);
+          sideTable(T, 330, 330, 340);
+          SIZE.forEach((s, i) => bowlSide(T, T.world, 255 + i * 85, 342, s * .6, { full: false }));
+          rView();
+        };
+        if (bgUrl('door_dusk')) {   // 해 질 녘 집 앞 라이트박스: 첫 줄에 걸어 돌아오고, 다음 줄(아빠 곰 투덜)에서 부엌으로 넘긴다
+          rs.dusk8 = 'yard';
+          rs.bearsFn = () => { duskYard(); rs.cam = [500, 280, P() ? Z : 1]; };
+          duskYard(); rs.cam = [500, 280, P() ? Z : 1];
+          return;
+        }
+        rs.kitchen8();
+        rs.bearsFn = () => B.forEach((b, i) => put(b, 1350, 530, SIZE[i]));   // 산책에서 돌아온다 (bears:walk 로 자리에 선다)
       },
       table3() {
         kitchenBG(T, true);
@@ -706,7 +776,7 @@
       },
     };
     const rSet = key => {
-      T.clear(); rs.n[key] = (rs.n[key] || 0) + 1; rs.tag = key + rs.n[key];
+      T.clear(); unglow8(); rs.dusk8 = null; rs.n[key] = (rs.n[key] || 0) + 1; rs.tag = key + rs.n[key];
       rs.bearsFn = rs.goldiFn = null; rs.sitting = rs.lying = false; rs.steams = []; rs.cush = null;
       [goldi, ...B].forEach(rHide);
       (rSets[rs.tag] || (() => console.warn('[read] set 모름', rs.tag)))();
@@ -719,7 +789,13 @@
       if (rs.lying) { rs.lying = false; gmode('stand'); goldi.setScale(.8); goldi.setFace('smile'); goldi.place(X(630), 540); if (!rInst()) await sleep(200); }
     };
     const rSizeIdx = s => ({ big: 0, mid: 1, small: 2 }[s]);
-    const rBear = (k, verb, a1, a2) => {
+    const rDuskSwap = async () => {   // 해 질 녘 집 앞 → 부엌(곰은 바로 자리에)
+      rs.dusk8 = null;
+      const go = () => { rs.kitchen8(); B.forEach((b, i) => put(b, rs.bearPos[i][0], rs.bearPos[i][1], SIZE[i])); };
+      if (rInst()) go(); else await T.sceneCard(null, go, bears.dad.pos);
+    };
+    const rBear = async (k, verb, a1, a2) => {
+      if (rs.dusk8 === 'swap') await rDuskSwap();
       const b = bears[k]; if (!b) return console.warn('[read] 곰 모름', k);
       if (verb === 'wave') { b.setFace('happy'); b.hop(24, 420); pop(b.x, headY(b) - 40, '안녕!', k === 'dad' ? C.bark : k === 'mom' ? C.persimmon : C.pine); return sleep(500); }
       if (verb === 'blow') { b.setFace('o'); setTimeout(() => b.setFace('smile'), 500); blow(T); pop(b.x, 300, '후~', C.pine); return sleep(350); }
@@ -753,6 +829,11 @@
         if (verb === 'hide') { B.forEach(rHide); return; }
         if (verb === 'walk') {
           const [x, ms] = String(a1).split(',').map(Number);
+          if (rs.dusk8 === 'yard') {   // 집 앞으로 걸어오는 동안 첫 줄을 읽는다(기다리지 않음)
+            rs.dusk8 = 'swap';
+            if (rInst()) { const xs = [840, 710, 600].map(X); B.forEach((b, i) => b.place(xs[i], 518)); } else duskWalk(ms || 2000);
+            return;
+          }
           AudioFX.sfx('step_wood', .5);
           if (x > 1000) { B.forEach((b, i) => setTimeout(() => b.move(b.x + 900, b.y, 1400, 'ease-in'), i * 150)); return sleep(1400); }
           const ps = rs.bearPos || B.map(b => [b.x, b.y]);
@@ -1191,13 +1272,21 @@
 
     /* ---------- 8. 곰 가족 귀가: 그릇 주인 찾기 (곰 눈높이) ---------- */
     const floor8 = 530;
-    await T.sceneCard('곰 가족이 왔어요', () => {
-      T.clear(); kitchenBG(T);
+    const kitchen8 = () => {
+      T.clear(); unglow8(); kitchenBG(T);
       sideTable(T, 330, 330, 340);
       shuffle([200, 500, 800].map(X)).forEach((x, i) => put(B[i], x, floor8, SIZE[i]));
       view();
-    }, bears.dad.pos);
-    await say('그때 곰 가족이 산책에서 돌아왔어요.');
+    };
+    if (bgUrl('door_dusk')) {   // 해 질 녘 집 앞(라이트박스)으로 걸어 돌아온 뒤 부엌으로 넘긴다
+      await T.sceneCard('곰 가족이 왔어요', duskYard, bears.dad.pos);
+      await Promise.all([say('그때 곰 가족이 산책에서 돌아왔어요.'), duskWalk()]);
+      await sleep(300);
+      await T.sceneCard(null, kitchen8, bears.dad.pos);
+    } else {
+      await T.sceneCard('곰 가족이 왔어요', kitchen8, bears.dad.pos);
+      await say('그때 곰 가족이 산책에서 돌아왔어요.');
+    }
     bears.dad.setFace('o');
     await say('아빠 곰: "누가 내 죽을 먹었지?"');
     bears.dad.setFace('smile');
