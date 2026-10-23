@@ -17,8 +17,18 @@
   const BGS = ['mg_bg_path', 'mg_bg_bigtree', 'mg_bg_nest', 'mg_bg_night', 'mg_bg_porch', 'mg_bg_paperdoor', 'mg_bg_moonnest', 'mg2_bg_belltower_night', 'mg_bg_belltower', 'mg_bg_dawn'];
   const CUTS = ['mg_cut_arrow', 'mg_cut_flee', 'mg_cut_flock', 'mg_cut_ring', 'mg_cut_wake'];
   const src = k => AS + k + '.webp';
+  /* 2026-10-23 화려한 다층 재기획(VISUAL_PLAN.md): 배경 키(대본·PXM·CAMP·BG_PLACE)는 그대로, 파일만 v2·라이트박스로.
+     산길·큰 나무(둥지 자리)·밤 산길·외딴집·창호문·종탑(밤·아침)·새벽 마당은 옛 그림과 겹쳐 같은 자리(±1%).
+     둥지(mg_bg_nest)는 v2 둥지가 아래로 약 5% 내려가 그려져(±1.5% 넘음) 기존 그림을 그대로 쓴다(둥지는 움직이지 않는다).
+     라이트박스: 창호문(5·8장), 달밤(6장), 밤 종탑(7장) */
+  const BGFILE = { mg_bg_path: 'mg2_bg_path_v2', mg_bg_bigtree: 'mg2_bg_bigtree_v2', mg_bg_night: 'mg2_bg_night_v2', mg_bg_porch: 'mg2_bg_porch_v2',
+    mg_bg_paperdoor: 'mg2_bg_paperdoor_lb', mg_bg_moonnest: 'mg2_bg_moonnest_lb', mg2_bg_belltower_night: 'mg2_bg_belltower_night_lb', mg_bg_dawn: 'mg2_bg_dawn_v2', mg_bg_belltower: 'mg2_bg_belltower_v2' };
+  const bgSrc = k => src(BGFILE[k] || k);
+  /* 층 소품(mg2_layer_*, 누름 없음) 그림 폭/높이 */
+  const LAR = { maple_branch: .8, leaf_pile: 2.1327, leaf: .99, pine_sprig: .9983, blossom_branch: .6817, petal: .8583, pine_branch_sil: .8967, grass_sil: 4.0909, soban_sil: 1.1233 };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
-  const BG_PLACE = { mg_bg_belltower: { dx: 130, dy: -100, s: 1.2 }, mg_bg_nest: { dx: 40, dy: 47, s: 1.25 } };
+  /* 아침 종탑: 1.2배로 아래가 약 15px 비던 것(AUDIT 9장)을 v2 그림에서 15 내려 채움(-100 → -85) */
+  const BG_PLACE = { mg_bg_belltower: { dx: 130, dy: -85, s: 1.2 }, mg_bg_nest: { dx: 40, dy: 47, s: 1.25 } };
   const artOK = {}, bgOK = {}, cutOk = {};
   const INK = '#2E241C', CR = '#F6ECD8';
   const PHC = { scholar: '#8FB4E0', lady: '#3F6B4F', snake: '#7A9A4E', mag: '#3B3B44', chick: '#D9A94E', prop: '#A47A4A' };
@@ -72,10 +82,121 @@
     const { dx = 0, dy = 0, s = 1 } = BG_PLACE[key] || {};
     const w = BGBOX.w * s, h = BGBOX.h * s;
     const x = s === 1 ? BGBOX.x + dx : 500 + dx - w / 2, y = s === 1 ? BGBOX.y + dy : 280 + dy - h / 2;
-    const img = (extra = {}) => T.el('image', { href: src(key), x, y, width: w, height: h, preserveAspectRatio: 'none', ...extra }, T.bg);
+    const img = (extra = {}) => T.el('image', { href: bgSrc(key), x, y, width: w, height: h, preserveAspectRatio: 'none', ...extra }, T.bg);
     if (dx > 0 && s === 1) img({ transform: `matrix(-1,0,0,1,${2 * x},0)` });
     if (dy < 0 && s === 1) { img({ transform: `matrix(1,0,0,-1,0,${2 * (y + h)})` }); if (dx > 0) img({ transform: `matrix(-1,0,0,-1,${2 * x},${2 * (y + h)})` }); }
     return img();
+  }
+  /* ---- 층 소품: 누름 없음. 앞 가림 층은 T.fx(배우 위), 중간 층은 T.bg(배우 뒤). (cx, y) = 가운데·발끝, top 이면 윗변 ---- */
+  const LY = {};
+  const LDOTS = [];
+  function layer(T, k, cx, y, h, { front = true, flip = false, top = false, name } = {}) {
+    const w = h * LAR[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+    if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+    const inner = T.el('g', { filter: 'url(#pp)' }, g);
+    T.el('image', { href: AS + 'mg2_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+    inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+    if (name) LY[name] = inner;
+    return inner;
+  }
+  const sway = (g, deg, ms, delay = 0) => { g.animate([{ rotate: `${-deg}deg` }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }], { duration: ms, delay, iterations: Infinity, easing: 'ease-in-out' }); return g; };
+  const lyWig = (name, deg = 3, ms = 400) => { const g = LY[name]; if (g && g.isConnected) g.animate([{ rotate: '0deg' }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }, { rotate: '0deg' }], { duration: ms, composite: 'add' }); };
+  /* 낙엽·꽃잎: 위에서 아래로 사인 곡선 + 회전. xs = [[x0, x1], ...] 가운데(누르는 대상 위)를 피한 범위. loop 면 끝나면 다시 위에서 */
+  function falling(T, k, n, h, xs, { loop = true, y0 = -30, y1 = 540, ms = [7000, 11000], front = false } = {}) {
+    for (let i = 0; i < n; i++) {
+      const [a, b] = xs[i % xs.length], x = a + Math.random() * (b - a), w = h * LAR[k], d = ms[0] + Math.random() * (ms[1] - ms[0]);
+      const g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+      T.el('image', { href: AS + 'mg2_layer_' + k + '.webp', x: -w / 2, y: -h / 2, width: w, height: h }, g);
+      const sx = (i % 2 ? 1 : -1) * 35;
+      const an = g.animate([0, .25, .5, .75, 1].map((t, j) => ({ transform: `translate(${x + (j % 2 ? sx : 0)}px, ${y0 + t * (y1 - y0)}px) rotate(${t * 360}deg)`, opacity: t > .9 ? 0 : 1 })),
+        { duration: d, delay: loop ? Math.random() * d * .8 : i * 160, iterations: loop ? Infinity : 1, easing: 'linear', fill: loop ? 'none' : 'forwards' });
+      if (!loop) an.onfinish = () => g.remove();
+    }
+  }
+  /* 반딧불: 사인 곡선으로 떠다니며 깜빡 (얼굴 자리 밖) */
+  function fireflies(T, n, xs, [ya, yb] = [150, 380]) {
+    return Array.from({ length: n }, (_, i) => {
+      const [a, b] = xs[i % xs.length], x = a + Math.random() * (b - a), y = ya + Math.random() * (yb - ya);
+      const g = T.el('g', { style: 'pointer-events:none' }, T.world);
+      T.el('circle', { cx: x, cy: y, r: 6, fill: '#F6ECD8', opacity: .35 }, g); T.el('circle', { cx: x, cy: y, r: 3.5, fill: '#F2B366' }, g);
+      const d = 5000 + Math.random() * 4000;
+      g.animate([{ translate: '0 0', opacity: .2 }, { translate: '40px -25px', opacity: 1 }, { translate: '-20px 25px', opacity: .5 }, { translate: '0 0', opacity: .2 }], { duration: d, delay: -Math.random() * d, iterations: Infinity, easing: 'ease-in-out' });
+      return g;
+    });
+  }
+  /* 라이트박스 빛 점: 정해진 상자 안(가운데 비움)에서 깜빡. LDOTS 에 모아 타종 때 밝히고 쓰러질 때 가라앉힌다 */
+  function lightDots(T, n, xs, [ya, yb]) {
+    LDOTS.length = 0;
+    for (let i = 0; i < n; i++) {
+      const [a, b] = xs[i % xs.length], x = a + Math.random() * (b - a), y = ya + Math.random() * (yb - ya), r = 2 + Math.random();
+      const g = T.el('g', { style: 'pointer-events:none' }, T.fx);
+      T.el('circle', { cx: x, cy: y, r: r + 3, fill: '#F2B366', opacity: .4 }, g); T.el('circle', { cx: x, cy: y, r, fill: '#FFF1C9' }, g);
+      g.animate([{ opacity: .3 }, { opacity: .9 }, { opacity: .3 }], { duration: 2400, delay: Math.random() * 2000, iterations: Infinity });
+      LDOTS.push(g);
+    }
+  }
+  const dotsFlash = () => LDOTS.forEach(g => { if (g.isConnected) g.animate([{ opacity: 1 }, { opacity: 1 }], { duration: 400 }); });
+  const dotsSettle = () => LDOTS.forEach(g => { if (g.isConnected) { g.getAnimations().forEach(a => a.cancel()); g.style.opacity = .3; } });
+  /* 빛 고리: 종이 울릴 때 빛이 퍼진다(배경 위·배우 뒤) */
+  function lightRing(T, x, y) {
+    const c = T.el('circle', { cx: x, cy: y, r: 60, fill: 'none', stroke: '#FFF1C9', 'stroke-width': 6, opacity: .8, style: 'pointer-events:none' }, T.bg);
+    c.animate([{ r: 60, opacity: .8 }, { r: 320, opacity: 0 }], { duration: 900, easing: 'ease-out', fill: 'forwards' }).onfinish = () => c.remove();
+  }
+  /* 마름모 반짝: (x, y) 둘레로 n 조각이 퍼졌다 사라진다 */
+  function sparkleRing(T, x, y, r = 70, n = 8, colors = ['#FFF1C9', '#F2D98A']) {
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2, s = 7 + Math.random() * 4;
+      const g = T.el('path', { d: `M0 ${-s} L${s * .6} 0 L0 ${s} L${-s * .6} 0 Z`, fill: colors[i % colors.length], style: 'pointer-events:none' }, T.fx);
+      g.animate([{ transform: `translate(${x}px,${y}px) scale(.3)`, opacity: 1 }, { transform: `translate(${x + Math.cos(a) * r}px,${y + Math.sin(a) * r}px) scale(1)`, opacity: 1, offset: .6 }, { transform: `translate(${x + Math.cos(a) * r * 1.2}px,${y + Math.sin(a) * r * 1.2}px) scale(.5)`, opacity: 0 }],
+        { duration: 1100, easing: 'ease-out', fill: 'forwards' }).onfinish = () => g.remove();
+    }
+  }
+  /* 라이트박스 진입: 웜 다크 막이 걷히며 불이 켜진다 */
+  function lightUp(T, o = .5, ms = 1500) {
+    const r = T.el('rect', { x: -1400, y: -1400, width: 3800, height: 3800, fill: '#1A1410', opacity: o, style: 'pointer-events:none' }, T.fx);
+    if (T.readInstant && T.readInstant()) { r.remove(); return; }
+    r.animate([{ opacity: o }, { opacity: 0 }], { duration: ms, fill: 'forwards' }).onfinish = () => r.remove();
+  }
+  /* 장면별 층 소품 (VISUAL_PLAN §3~§7). 세로 화면 가운데(x 285~715)에는 앞 가림 층을 두지 않는다. 안개 띠 소품(밤·새벽)은 땅 위에 떠 보여 쓰지 않는다(배경 그림에 안개 띠가 이미 있다) */
+  function dress(T, key) {
+    Object.keys(LY).forEach(k => delete LY[k]); LDOTS.length = 0;
+    const band = (y, h) => [125, 375, 625, 875].forEach((x, i) => layer(T, 'grass_sil', x, y, h, { flip: i % 2 === 1 }));
+    if (key === 'mg_bg_path') {
+      sway(layer(T, 'maple_branch', 90, -24, 170, { top: true }), 1.2, 7000); sway(layer(T, 'maple_branch', 930, -24, 170, { top: true, flip: true }), 1.2, 7000, 1500);
+      layer(T, 'leaf_pile', 40, 590, 90, { name: 'pileL' }); layer(T, 'leaf_pile', 985, 590, 90, { flip: true });
+      falling(T, 'leaf', 6, 22, [[0, 1000]]);
+    }
+    if (key === 'mg_bg_bigtree') {
+      sway(layer(T, 'maple_branch', 80, -24, 170, { top: true }), 1.2, 7000);
+      layer(T, 'leaf_pile', 40, 590, 90); layer(T, 'leaf_pile', 985, 590, 90, { flip: true });
+      falling(T, 'leaf', 6, 22, [[0, 300], [820, 1000]]);
+    }
+    if (key === 'mg_bg_nest') { layer(T, 'pine_sprig', 50, 590, 150); layer(T, 'pine_sprig', 950, 590, 150, { flip: true }); }
+    if (key === 'mg_bg_night') fireflies(T, 6, [[0, 250], [800, 1000]]);
+    if (key === 'mg_bg_porch') LY.flies = fireflies(T, 8, [[0, 250], [800, 1000]]);
+    if (key === 'mg_bg_paperdoor') {
+      const h = 110, w = h * LAR.soban_sil, x0 = 120 - w / 2, y0 = 560 - h;
+      layer(T, 'soban_sil', 120, 560, h);
+      /* 촛불 조각 위 옅은 빛(깜빡). 그림 속 불꽃 자리: 폭 72.5%, 높이 10.7% */
+      const fl = T.el('ellipse', { cx: x0 + .725 * w, cy: y0 + .107 * h, rx: 9, ry: 13, fill: '#FFF1C9', opacity: .6, style: 'pointer-events:none' }, T.fx);
+      fl.style.transformBox = 'fill-box'; fl.style.transformOrigin = '50% 100%';
+      fl.animate([{ opacity: .6 }, { opacity: 1 }, { opacity: .6 }], { duration: 1100, iterations: Infinity }); LY.candle = fl;
+    }
+    if (key === 'mg_bg_moonnest') {
+      band(590, 60);
+      lightDots(T, 10, [[0, 200], [580, 1000]], [400, 480]);
+      lightUp(T, .5, 1500);
+    }
+    if (key === 'mg2_bg_belltower_night') {
+      layer(T, 'pine_branch_sil', 40, -24, 160, { top: true }); layer(T, 'pine_branch_sil', 980, -24, 160, { top: true, flip: true });
+      band(590, 60);
+      lightDots(T, 8, [[0, 280], [720, 1000]], [330, 400]);
+      lightUp(T, .5, 1500);
+    }
+    if (key === 'mg_bg_belltower') {
+      sway(layer(T, 'blossom_branch', 70, -24, 180, { top: true }), 1, 8000); sway(layer(T, 'blossom_branch', 940, -24, 180, { top: true, flip: true }), 1, 8000, 1800);
+      falling(T, 'petal', 4, 16, [[0, 600], [800, 1000]], { ms: [6000, 10000] });
+    }
   }
   const sfx = (name, vol, fb) => AudioFX.sfx(name, vol) || (fb && fb());
   const bellSfx = (T, vol = .9) => { (AudioFX.sfx('beomjong', vol) || AudioFX.sfx('beomjong_synth', vol)); T.tone(64, 2.2, { type: 'sine', vol: .12 * vol }); };
@@ -183,12 +304,12 @@
     let early = true;   // 첫 조작(활 톡)까지는 숨을 짧게 (시작 30초 안에 첫 조작)
     const say = async text => { await T.say(text); await sleep(early ? 300 : GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };
-    const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
+    const scene = key => { T.clear(); bgImage(T, key); dress(T, key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990;
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     AudioFX.preloadSfx(['beomjong', 'beomjong_synth', 'bonk', 'whoosh', 'creak', 'step_grass', 'step_wood', 'swish', 'paper_up', 'paper_down', 'sparkle', 'tada', 'door', 'thud', 'pop', 'splash']);
-    const loads = [...BGS.map(k => T.preload(src(k)).then(ok => { bgOK[k] = ok; })), ...CUTS.map(k => T.preload(src(k)).then(ok => { cutOk[k] = ok; }))];
+    const loads = [...BGS.map(k => T.preload(bgSrc(k)).then(ok => { bgOK[k] = ok; })), ...CUTS.map(k => T.preload(src(k)).then(ok => { cutOk[k] = ok; }))];
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
     await Promise.race([Promise.all(loads), sleep(4000)]);
     const cut = (k, sfxName) => cutOk[k] ? T.cutImage([{ src: src(k), sfx: sfxName, hold: CUT_HOLD }], { hold: CUT_HOLD }) : Promise.resolve();
@@ -214,6 +335,10 @@
     const qn = +new URLSearchParams(location.search).get('n');
     const N = qn >= 1 && qn <= 5 ? qn : 1 + Math.floor(Math.random() * 5);
 
+    /* 화살이 나무에 꽂힐 때 나무갓에서 낙엽 3장 */
+    const thudLeaves = () => falling(T, 'leaf', 3, 22, [[700, 900]], { loop: false, y0: 120, ms: [3000, 4000] });
+    /* 반딧불 둘이 문 쪽으로 모였다 흩어진다 */
+    const fliesToDoor = () => (LY.flies || []).slice(0, 2).forEach(g => g.animate([{ transform: 'translate(0,0)' }, { transform: `translate(${(g.getBBox().x < 500 ? 1 : -1) * 260}px, 40px)`, offset: .5 }, { transform: 'translate(0,0)' }], { duration: 2400, easing: 'ease-in-out' }));
     /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
        대본 좌표는 가로 화면 기준이라 세로 화면은 놀이판의 세로 자리(PXM)로 바꾼다. 둥지는 움직이지 않고 새끼는 둥지 안에서만 보인다. */
     const READ_ACTS = (() => {
@@ -292,12 +417,13 @@
         tint(op) {
           const o = +op;
           if (tintEl) { tintEl.remove(); tintEl = null; }
-          if (rI()) { tintEl = tint(T, '#1F2A56', o); return; }
-          const d = tint(T, '#1F2A56', 0); tintEl = d;
+          const tc = key === 'mg_bg_paperdoor' ? '#1A1410' : '#1F2A56';   // 창호문 라이트박스는 웜 다크(유채색 그림자 금지), 4장 잠드는 마당은 남색 밤 그대로
+          if (rI()) { tintEl = tint(T, tc, o); return; }
+          const d = tint(T, tc, 0); tintEl = d;
           T.anim(d, [{ opacity: 0 }, { opacity: o }], 1500).then(() => d.setAttribute('opacity', o));
         },
         dawn(op) {
-          if (op === 'on') { dawnEl = tint(T, '#1F2A56', .28); return; }
+          if (op === 'on') { dawnEl = tint(T, '#1A1410', .28); return; }
           if (dawnEl) { const d = dawnEl; T.anim(d, [{ opacity: .28 }, { opacity: 0 }], 2000).then(() => d.setAttribute('opacity', 0)); }
         },
         parents(op) {
@@ -310,7 +436,7 @@
           if (op === 'collapse') { // 힘이 빠져 종 아래로 스르르
             put(T, dad, X(430, 440), 300, { look: 'tired' }); put(T, mom, X(560, 560), 300, { look: 'tired' });
             [dad, mom].forEach(b => { fadeIn(b, 900); b.move(b.x, 480, 1600, 'ease-in'); });
-            sfx('paper_down', .4); return sleep(900);
+            sfx('paper_down', .4); dotsSettle(); return sleep(900);
           }
         },
         snake(op, a1, a2, a3) {
@@ -320,7 +446,7 @@
           }
           if (op === 'flee') {
             if (key === 'mg_bg_paperdoor') { // 새벽: 여인이 변한 구렁이가 숲으로
-              snake.look('flee', 'right'); snake.place(snake.x, FL + 8);
+              snake.look('flee', 'right'); snake.place(snake.x, FL + 8); sparkleRing(T, 500, 230, 120, 8);
               sfx('swish', .5); T.pop(snake.x + 40, FL - 130, tr('스르르'));
               return snake.move(1150, FL + 8, 2200, 'ease-in').then(() => hide(snake));
             }
@@ -342,7 +468,7 @@
         flock(op) {
           if (op === 'fly') {
             hide(mom); hide(dad);
-            flockR = [dad, mom, friends[0], friends[1], friends[2]]; const FS = [1, 1, .9, .9, .85];
+            flockR = [dad, mom, friends[0], friends[1], friends[2]]; const FS = [1, 1, .9, .9, .85]; sparkleRing(T, 770, 73, 80, 10);
             flockR.forEach((b, i) => {
               const y = 150 + (i % 2) * 70 + (i > 1 ? 50 : 0);
               put(T, b, -150 - i * 130, y, { look: 'fly', to: 'right', s: FS[i] });
@@ -361,7 +487,7 @@
             sch.look('release', 'right'); sfx('whoosh', .8); T.pop(sch.x + 70, FL - 250, tr('쉬익!'));
             put(T, arrow, sch.x + 70, FL - 150, { to: 'right' });
             await arrow.move(snake.x - 60, snake.y - 70, 420, 'linear');
-            sfx('thud', .6); T.pop(arrow.x, arrow.y - 40, tr('탁!'));
+            sfx('thud', .6); T.pop(arrow.x, arrow.y - 40, tr('탁!')); thudLeaves();
             await sleep(500);
           })();
         },
@@ -374,7 +500,7 @@
               sfx('whoosh', .4);
               await Promise.all(mv.map(([b, h]) => b.move(h, 300, 340, 'ease-in')));
               sfx('bonk', .7); mv.forEach(([b, h]) => T.pop(h, 232, tr('꽁!')));
-              swingBell(bell); bellSfx(T, .9); T.shake(); setTimeout(() => T.pop(500, 165, tr('댕—'), '#1F2A56'), 250);
+              swingBell(bell); bellSfx(T, .9); T.shake(); setTimeout(() => T.pop(500, 165, tr('댕—'), '#1F2A56'), 250); lightRing(T, 500, 300); dotsFlash();
               mv.forEach(([b]) => b.move(b === dad ? backL : backR, 300, 520, 'ease-out'));
               mv.forEach(([b]) => b.wiggle(6, 520));
               await sleep(600);
@@ -403,7 +529,7 @@
           else if (n === 'splash') sfx('splash', .35); else if (n === 'paper_up') sfx('paper_up'); else if (n === 'paper_down') sfx('paper_down', .4);
           else sfx(n, .6, () => sfx('pop', .5));
         },
-        sparkle() { sparkleSfx(T); },
+        sparkle() { sparkleSfx(T); if (key === 'mg_bg_belltower') falling(T, 'petal', 4, 16, [[0, 600], [800, 1000]], { ms: [6000, 10000] }); },
         confetti() { T.confetti(); },
         shake() { T.shake(); },
         pop(spec) { const a = String(spec).split(','); T.pop(+a[0], +a[1], tr(a.slice(2).join(',')), a.slice(2).join(',') === '!' ? '#A93B32' : undefined); },
@@ -418,7 +544,7 @@
     put(T, sch, X(-120, -120), FL, { look: 'walk', to: 'right' });
     await T.curtain(true);
     const steps1 = stepLoop(520, .5);
-    const walk1 = sch.move(X(520, 500), FL, 7000, 'linear');
+    const walk1 = sch.move(X(520, 500), FL, 7000, 'linear'); setTimeout(() => lyWig('pileL', 3, 400), 1200);
     (async () => { for (let i = 0; i < 13; i++) { sch.hop(5, 480); await sleep(520); } })();
     T.pop(sch.x, FL - 270, tr('저벅저벅')); setTimeout(() => T.pop(sch.x, FL - 270, tr('저벅저벅')), 3000);
     await say(S.L0);
@@ -454,7 +580,7 @@
     sch.look('release', 'right'); sfx('whoosh', .8); T.pop(sch.x + 70, FL - 250, tr('쉬익!'));
     put(T, arrow, sch.x + 70, FL - 150, { to: 'right' });
     await arrow.move(snake.x - 60, snake.y - 70, 420, 'linear');
-    sfx('thud', .6); T.pop(arrow.x, arrow.y - 40, tr('탁!'));
+    sfx('thud', .6); T.pop(arrow.x, arrow.y - 40, tr('탁!')); thudLeaves();
     await sleep(500);
     await cutSay('mg_cut_arrow', S.L6);
     hide(arrow);
@@ -531,10 +657,10 @@
     const l14 = say(S.L14); await sleep(3200); T.pop(790, 290, tr('반짝!')); sparkleSfx(T); await l14;
     sch.hop(8, 300);
     await sch.move(X(700, 640), FL, 2000, 'linear'); await sleep(400);
-    T.clear(); bgImage(T, 'mg_bg_porch'); camSnap(500, 280, 1);
+    T.clear(); bgImage(T, 'mg_bg_porch'); dress(T, 'mg_bg_porch'); camSnap(500, 280, 1);
     put(T, sch, X(380, 430), FL, { look: 'wonder' });
     sfx('door', .6);
-    put(T, lady, X(640, 590), FL, { look: 'greet' }); fadeIn(lady, 900);
+    put(T, lady, X(640, 590), FL, { look: 'greet' }); fadeIn(lady, 900); fliesToDoor();
     await say(S.L15);
     const l16 = say(S.L16); await sleep(500); lady.hop(4, 700); await l16;
     const l17 = say(S.L17); await sleep(500); sch.hop(8, 300); await l17;
@@ -546,7 +672,7 @@
 
     /* ===== 5. 외딴집 (자동) ===== */
     await T.sceneCard(tr('외딴집'), () => {
-      scene('mg_bg_paperdoor'); tint(T, '#1F2A56', .35);
+      scene('mg_bg_paperdoor'); tint(T, '#1A1410', .35);
       put(T, sch, X(380, 440), FL, { look: 'sit' });
       if (P) camSnap(510, 280, 1);
     }, sch.pos);
@@ -554,7 +680,7 @@
     put(T, lady, X(640, 590), FL, { look: 'stern' }); fadeIn(lady, 1200);
     await sleep(1200);
     const l20 = say(S.L20); await sleep(3400);
-    lady.look('tail'); sfx('pop', .5); T.pop(lady.x + 120, FL - 40, tr('!'), '#A93B32'); sch.look('surprise'); await l20;
+    lady.look('tail'); sfx('pop', .5); if (LY.candle) LY.candle.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(1.4)' }, { transform: 'scaleY(1)' }], 300); T.pop(lady.x + 120, FL - 40, tr('!'), '#A93B32'); sch.look('surprise'); await l20;
     await say(S.L21);
     const l22 = say(S.L22); await sleep(700); lady.hop(3, 800); await l22;
     sch.look('sit');
@@ -586,7 +712,7 @@
       b.move(1150, y - 40, 3200 + i * 200, 'linear');
       (async () => { for (let j = 0; j < 10; j++) { b.hop(8, 380); await sleep(380); } })();
     });
-    sfx('whoosh', .3);
+    sfx('whoosh', .3); sparkleRing(T, 770, 73, 80, 10);
     await say(S.L31);
     await cutSay('mg_cut_flock', S.L32);
     flock.forEach(hide); chicks.forEach(hide);
@@ -612,7 +738,7 @@
       sfx('whoosh', .4);
       await Promise.all(mv.map(([b, h]) => b.move(h, 300, 340, 'ease-in')));
       sfx('bonk', .7); mv.forEach(([b, h]) => T.pop(h, 232, tr('꽁!')));
-      swingBell(bell); bellSfx(T, .9); T.shake(); setTimeout(() => T.pop(500, 165, tr('댕—'), '#1F2A56'), 250);
+      swingBell(bell); bellSfx(T, .9); T.shake(); setTimeout(() => T.pop(500, 165, tr('댕—'), '#1F2A56'), 250); lightRing(T, 500, 300); dotsFlash();
       const back = Promise.all(mv.map(([b, , bk]) => b.move(bk, 300, 520, 'ease-out')));
       mv.forEach(([b]) => b.wiggle(6, 520));
       await sleep(600); await say(S['L' + (35 + k)]); await back;
@@ -623,14 +749,14 @@
     dad.look('tired'); mom.look('tired');
     put(T, dad, X(430, 440), 300, { look: 'tired' }); put(T, mom, X(560, 560), 300, { look: 'tired' });
     [dad, mom].forEach(b => { fadeIn(b, 900); b.move(b.x, 480, 1600, 'ease-in'); });
-    sfx('paper_down', .4);
+    sfx('paper_down', .4); dotsSettle();
     await say(S.L40);
     await sleep(2500); await sleep(SCENE_END);
 
     /* ===== 8. 새벽 (자동) ===== */
     let dawn;
     await T.sceneCard(tr('새벽'), () => {
-      scene('mg_bg_paperdoor'); dawn = tint(T, '#1F2A56', .28);
+      scene('mg_bg_paperdoor'); dawn = tint(T, '#1A1410', .28);
       put(T, sch, X(380, 440), FL, { look: 'sit' });
       put(T, lady, X(640, 590), FL, { look: 'stern' });
       if (P) camSnap(510, 280, 1);
@@ -649,7 +775,7 @@
     await fadeOut(T, lady, 700);
     put(T, snake, lady.x, FL, { look: 'coil' }); fadeIn(snake, 700); sparkleSfx(T, .4);
     await sleep(700);
-    snake.look('flee', 'right'); snake.place(snake.x, FL + 8);
+    snake.look('flee', 'right'); snake.place(snake.x, FL + 8); sparkleRing(T, 500, 230, 120, 8);
     sfx('swish', .5); T.pop(snake.x + 40, FL - 130, tr('스르르'));
     const sl = snake.move(1150, FL + 8, 2200, 'ease-in');
     await say(S.L44); await sl; hide(snake);
@@ -667,7 +793,7 @@
     (async () => { for (let i = 0; i < 10; i++) { sch.hop(7, 380); await sleep(420); } })();
     await say(S.L46); await w9; steps9();
     await sleep(300);
-    T.clear(); bgImage(T, 'mg_bg_belltower'); camSnap(500, 280, 1);
+    T.clear(); bgImage(T, 'mg_bg_belltower'); dress(T, 'mg_bg_belltower'); camSnap(500, 280, 1);
     put(T, dad, X(430, 440), 480, { look: 'tired' }); put(T, mom, X(560, 560), 480, { look: 'tired' });
     put(T, sch, X(1100, 1000), FL, { look: 'walk', to: 'left' });
     const w9b = sch.move(X(720, 660), FL, 2600, 'ease-out'); follow(560, 2600);
@@ -682,7 +808,7 @@
     }
     T.pop(mom.x, 480 - 150, tr('똑똑!'));
     await say(S.L49);
-    glow(mom, 1000); glow(dad, 1000); sparkleSfx(T);
+    glow(mom, 1000); glow(dad, 1000); sparkleSfx(T); falling(T, 'petal', 4, 16, [[0, 600], [800, 1000]], { ms: [6000, 10000] });
     mom.hop(10, 420); dad.hop(10, 420);
     await say(S.L50); await say(S.L51);
     const l52 = say(S.L52);
