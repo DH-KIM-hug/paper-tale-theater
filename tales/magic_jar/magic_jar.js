@@ -16,7 +16,8 @@
   /* 2026-10-23 화려한 다층 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 set 포함)는 그대로, 그림만 v2·라이트박스.
      마당 초가·돌담·감나무, 마을 집 다섯, 대문·계단·돌사자, 병풍·마루, 땅속 뚜껑, 잔치 초가 자리는 옛 그림과 겹쳐 같다(±1%).
      라이트박스는 2장 땅속·10장 잔치 둘(7장 금 더미는 코드 반짝) */
-  const BGV = { field: 'field_v2', pit: 'pit_lb', jarfront: 'jarfront_v2', village: 'village_v2', richgate: 'richgate_v2', hall: 'hall_v2', hallwide: 'hallwide_v2', feast: 'feast_lb' };
+  /* 2026-10-23 사용자 결정: 밭(field)·땅속(pit 라이트박스)·부잣집 대문(richgate)·큰 방(hall·hallwide)은 옛 그림으로 되돌림(짝 소품·땅속 빛 연출도 뺌) */
+  const BGV = { jarfront: 'jarfront_v2', village: 'village_v2', feast: 'feast_lb' };
   /* 층 소품(mj_layer_*, 누름 없음) 그림 폭/높이 */
   const LAR = { persimmon_branch: .965, cosmos_front: 1.075, sparrow: 1.0333, chili_string: .5983, blossom_branch: .8783, pine_branch: 1.055, peony_front: 1.105,
     lantern: .3667, roots_sil: 1.2783, soil_sil: 4.4776, lantern_sil: 2.381, bush_sil: 1.15 };
@@ -108,15 +109,6 @@
   const LANTERN_HOLES = [[.094, .446], [.258, .526], [.42, .563], [.583, .562], [.745, .526], [.909, .446]];
   function dress(T, key) {
     Object.keys(LY).forEach(k => delete LY[k]);
-    if (key === 'field') {
-      sway(layer(T, 'persimmon_branch', 960, -24, 200, { top: true }), 1, 8000);
-      layer(T, 'cosmos_front', 40, 590, 110); layer(T, 'cosmos_front', 980, 590, 110, { flip: true });
-      layer(T, 'sparrow', 150, 478, 30, { front: false, name: 'sp1' }); layer(T, 'sparrow', 850, 478, 30, { front: false, flip: true, name: 'sp2' });
-    }
-    if (key === 'pit') {
-      layer(T, 'roots_sil', 60, -24, 200, { top: true }); layer(T, 'roots_sil', 940, -24, 200, { top: true, flip: true });
-      [125, 375, 625, 875].forEach((x, i) => layer(T, 'soil_sil', x, 592, 60, { flip: i % 2 === 1, name: 'soil' + i }));
-    }
     if (key === 'jarfront') {
       sway(layer(T, 'persimmon_branch', 960, -24, 200, { top: true }), 1, 8000);
       layer(T, 'chili_string', CHILI[0], CHILI[1], 140, { front: false, top: true, name: 'chili' });
@@ -126,13 +118,6 @@
     if (key === 'village') {
       sway(layer(T, 'blossom_branch', 60, -24, 180, { top: true }), 1, 8000); sway(layer(T, 'blossom_branch', 940, -24, 180, { top: true, flip: true }), 1, 8000, 1500);
       layer(T, 'sparrow', 297, 205, 30, { front: false, name: 'sp297' }); layer(T, 'sparrow', 719, 205, 30, { front: false, flip: true, name: 'sp719' });
-    }
-    if (key === 'richgate') {
-      sway(layer(T, 'pine_branch', 60, -24, 200, { top: true }), 1, 9000);
-      layer(T, 'peony_front', 15, 590, 120); layer(T, 'peony_front', 985, 590, 120, { flip: true, name: 'peonyR' });
-    }
-    if (key === 'hall' || key === 'hallwide') {
-      sway(layer(T, 'lantern', 150, -24, 150, { front: false, top: true, name: 'lanL' }), 1.5, 6000); sway(layer(T, 'lantern', 850, -24, 150, { front: false, top: true, name: 'lanR' }), 1.5, 6000, 1200);
     }
     if (key === 'feast') {
       const lh = 120, lw = lh * LAR.lantern_sil, xs = [200, 800];
@@ -160,18 +145,6 @@
     const tr = T.tr;
     const pan = (cx = 500) => camSnap(T.viewWidth() < 990 ? cx : 500, 280, 1);
     const scene = (key, cx) => { T.clear(); bgImage(T, key); dress(T, key); pan(cx); };
-    const lanternSwing = deg => ['lanL', 'lanR'].forEach(n => lyWig(n, deg, 800));
-    /* 2장 땅속 라이트박스: 어둠이 걷히며 빛나는 구멍이 드러나고, 뚜껑 둘레 빛 점 8 이 깜빡인다(당길 때마다 한 단계 커짐) */
-    let lidDots = [];
-    const pitLight = () => {
-      tint(T, '#1A1410', .35, 1200);
-      lidDots = glowDots(T, Array.from({ length: 8 }, (_, i) => [500 + Math.cos(i / 8 * Math.PI * 2) * 95, 365 + Math.sin(i / 8 * Math.PI * 2) * 38]), 3, '#D9A94E', 6400);
-    };
-    const lidGrow = i => lidDots.forEach(g => g.querySelectorAll('circle').forEach((c, j) => c.setAttribute('r', (j ? 3 : 7) + i)));
-    const jarRise = () => {
-      sparkle(T, jar.x, 300, 16, 110); ['soil0', 'soil1', 'soil2', 'soil3'].forEach(n => lyWig(n, 2, 300));
-      if (!tight(T) && !T.readInstant()) T.camTo(500, 300, 1.06, 700).then(() => T.camTo(500, 280, 1, 1200));
-    };
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
     await Promise.race([Promise.all(loads), sleep(4000)]);
@@ -192,12 +165,9 @@
     const pull = i => {
       farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
     };
-    /* 참새: 괭이질하면 두 마리가 날아올라 양옆 돌담 위에 앉는다 */
-    /* sp2 는 뒤집힌 그림이라 가로 이동 부호가 반대(-50 → 화면에서 오른쪽 +50) */
-    const flySparrows = () => [['sp1', -50, -216], ['sp2', -50, -210]].forEach(([n, dx, dy]) => { const g = LY[n]; if (g && g.isConnected) g.animate([{ translate: '0 0' }, { translate: `${dx * .5}px ${dy - 40}px`, offset: .6 }, { translate: `${dx}px ${dy}px` }], { duration: 900, easing: 'ease-out', fill: 'forwards' }); });
     const sparrowHop = x => { const n = 'sp' + x; lyHop(n, 8, 220); setTimeout(() => lyHop(n, 8, 220), 260); };
     const jarGlint = () => { sparkle(T, jar.x, 345, 6, 60); lyHop('sp1', 6, 200); };
-    const goldGlint = i => { sparkle(T, 560 + i * 90, 380, 10, 80, ['#EBD08A', '#F6ECD8']); lanternSwing(4); };
+    const goldGlint = i => { sparkle(T, 560 + i * 90, 380, 10, 80, ['#EBD08A', '#F6ECD8']); };
     /* ===== 읽어 주기 동사 맵: 놀이판 장면·배우·컷 함수를 감싼 얇은 함수 (대본 read_script_el.json) ===== */
     const RD = { hoes: [], coins: [], golds: [] };
     const nums = s => String(s).split(',').map(Number);
@@ -212,15 +182,15 @@
     };
     const cutVerb = k => T.cutImage([{ src: cutSrc(k), sfx: k === 'smash' ? 'pow' : 'pop', hold: 3000 }], { hold: 3000 });
     const READ_ACTS = {
-      set: k => { scene(k); if (k === 'pit') pitLight(); },
+      set: k => scene(k),
       cam: s => { const [x, y, z] = nums(s); camSnap(x, y, z); },
       cut: cutVerb,
       confetti: () => T.confetti(),
       fx: k => k === 'clink' ? clinkSfx(T) : k === 'pow' ? AudioFX.sfx('pow') : k === 'tada' ? (AudioFX.sfx('tada') || AudioFX.sfx('pop')) : popSfx(T),
       pop: s => { const [x, y, ...t] = String(s).split(','); T.pop(+x, +y, tr(t.join(','))); },
       farmer: actorVerbs(farmer, {
-        pull3: async () => { for (let i = 1; i <= 3; i++) { pull(i); lidGrow(i); await sleep(450); } },
-        plow: async () => { for (let i = 1; i <= 3; i++) { plow(i); if (i === 1) flySparrows(); await sleep(450); } },
+        pull3: async () => { for (let i = 1; i <= 3; i++) { pull(i); await sleep(450); } },
+        plow: async () => { for (let i = 1; i <= 3; i++) { plow(i); await sleep(450); } },
       }),
       wife: actorVerbs(wife),
       rich: actorVerbs(rich, {
@@ -232,7 +202,7 @@
         if (op === 'show') { jar.pos.style.display = ''; jar.pos.style.opacity = 1; return; }
         if (op === 'hide') return hide(jar);
         if (op === 'hop') return jar.hop(14, 260);
-        if (op === 'dig') { jar.pos.style.display = ''; jar.pos.style.opacity = 1; jarRise(); return jar.hop(40, 500); }
+        if (op === 'dig') { jar.pos.style.display = ''; jar.pos.style.opacity = 1; return jar.hop(40, 500); }
         if (op === 'lend') return (async () => { await sleep(300); await jar.move(fx(T, 700), 520, 600); hide(jar); })();
         console.warn('[read] 요술 항아리: 모르는 항아리 동작', op);
       },
@@ -308,20 +278,20 @@
     await T.curtain(true);
     await say('옛날 옛날에 마음씨 착한 농부가 살았어요.');
     await T.ask('농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!', () => T.tap(farmer.pos, { prompt: '농부를 톡! 괭이질을 해요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
-    for (let i = 1; i <= 3; i++) { await plow(i); if (i === 1) flySparrows(); await sleep(450); }
+    for (let i = 1; i <= 3; i++) { await plow(i); await sleep(450); }
     await T.cutImage([{ src: cutSrc('clink'), sfx: 'pop', hold: 2800 }], { hold: 2800 });
     await say('쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.');
 
     /* --- 2. 항아리 캐내기 --- */
     await T.sceneCard(tr('땅속'), () => {
-      scene('pit'); pitLight();
+      scene('pit');
       put(T, farmer, 700, 520, { look: 'pull', to: 'left' });
       put(T, jar, 500, 430); jar.pos.style.opacity = 0;
     }, farmer.pos);
     await say('땅속에서 둥근 뚜껑이 보여요.');
     // 저절로 (2026-10-19 톡 조작 정리)
-    for (let i = 1; i <= 3; i++) { await pull(i); lidGrow(i); await sleep(450); }
-    jar.pos.style.opacity = 1; jar.hop(40, 500); jarRise();
+    for (let i = 1; i <= 3; i++) { await pull(i); await sleep(450); }
+    jar.pos.style.opacity = 1; jar.hop(40, 500);
     farmer.look('amaze');
     await say('쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.');
 
@@ -412,7 +382,6 @@
     await jar.move(fx(T, 700), 520, 600); hide(jar);
     rich.look('grab', 'right');
     await say('"고맙네! 얼른 가져가야지, 헤헤." 부자는 항아리를 꼭 안고 달려갔어요.');
-    lyWig('peonyR', 4, 500); setTimeout(() => lyWig('peonyR', 4, 500), 900);
     await rich.move(fx(T, 1200), 520, 1300, 'ease-in');
 
     /* --- 7. 금덩이 --- */
@@ -474,7 +443,7 @@
     await say('부자는 지쳐서 외쳤어요. "이게 다 항아리 때문이야! 이제 그만!"');
     await sleep(500);
     await T.cutImage([{ src: cutSrc('smash'), sfx: 'pow', hold: 3000 }], { hold: 3000 });
-    scene('hallwide'); lanternSwing(5);
+    scene('hallwide');
     olds.forEach(o => hide(o)); hide(jar);
     put(T, cracked, 700, 505); put(T, rich, 300, 505, { look: 'shout', to: 'right' }); put(T, father, 500, 505, { look: 'peek', to: 'right' });
     await say('쨍그랑! 항아리가 깨지자 일곱 명은 사라지고, 진짜 아버지만 남았어요.');
