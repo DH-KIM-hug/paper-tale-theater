@@ -43,9 +43,10 @@
   const WATER = 300;          /* 2·3·10번 수면선 */
   const WATER11 = 372;        /* 11번 수면선 */
   const BGS = ['palace', 'night_sea', 'beach', 'witch', 'steps', 'garden', 'deck', 'dawn_sea', 'morning_sea'];
-  const bgSrc = k => AS + (BG5[k] ? 'mer_bg5_' : BG3[k] ? 'mer_bg3_' : 'mer_bg2_') + k + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
+  const bgSrc = k => AS + (BG5[k] ? 'mer_bg5_' : BG3[k] ? 'mer_bg3_' : 'mer_bg2_') + k + (LB[k] ? '_lb' : '') + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
   const BG3 = { steps: 1 };   /* 비례를 다시 그린 배경(mer_bg3_*) */
-  const BG5 = { palace: 1, night_sea: 1, witch: 1, garden: 1, deck: 1 };   /* 화려하게 다시 그린 다층 배경(mer_bg5_*, 같은 구도: VISUAL_PLAN) */
+  const BG5 = { palace: 1, night_sea: 1, witch: 1, garden: 1, deck: 1 };
+  const LB = { night_sea: 1 };   /* 빛 상자판(mer_bg5_night_sea_lb, VISUAL_PLAN 재기획 2 B, 2026-10-24): 같은 수면선·달 자리 */   /* 화려하게 다시 그린 다층 배경(mer_bg5_*, 같은 구도: VISUAL_PLAN) */
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 배경이 무대 1000×560 을 덮게 */
   /* 장면별 배경 상자: 마녀 동굴은 조개 문이 작게 그려져 2.2배 확대(문 중심 x=680, 문 밑 y≈470) */
   const BGBOXES = { witch: { x: -1221, y: -594, w: 1080 * 2.2, h: 1080 * 992 / 1760 * 2.2 } };
@@ -196,6 +197,21 @@
     T.el('image', { href: bgSrc(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, g);
     T._cover = g;
     return g;
+  }
+  /* 폭풍 파도(prop_wave_big)의 남색 몸판을 빛 상자 밤바다(틴트 .35 아래) 물빛에 맞춘다 — 물 덮개 윗선에서 몸판 네모 띠가 따로 보이지 않게.
+     채널마다 직선 변환: 몸판 (16,51,103) → 바다 (30,41,87), 거품 크림 (233,228,204) 은 그대로 */
+  function stormWaves(T, ws) {
+    const old = T.world.ownerDocument.getElementById('merWaveNight'); if (old) old.remove();
+    const f = T.el('filter', { id: 'merWaveNight', 'color-interpolation-filters': 'sRGB' }, T.world);
+    T.el('feColorMatrix', { type: 'matrix', values: '0.9355 0 0 0 0.0589  0 1.0565 0 0 -0.0505  0 0 1.1584 0 -0.1267  0 0 0 1 0' }, f);
+    /* 몸판 아래쪽은 물 덮개 윗선까지 서서히 사라지게(마스크) — 이음 띠가 남지 않게 */
+    const om = T.world.ownerDocument.getElementById('merWaveFade'); if (om) om.remove();
+    const og = T.world.ownerDocument.getElementById('merWaveFadeG'); if (og) og.remove();
+    const gr = T.el('linearGradient', { id: 'merWaveFadeG', x1: 0, y1: 0, x2: 0, y2: 1 }, T.world);
+    [[0, 1], [.7, 1], [.95, 0]].forEach(([o, a]) => T.el('stop', { offset: o, 'stop-color': '#fff', 'stop-opacity': a }, gr));
+    const mk = T.el('mask', { id: 'merWaveFade', maskContentUnits: 'objectBoundingBox' }, T.world);
+    T.el('rect', { x: 0, y: 0, width: 1, height: 1, fill: 'url(#merWaveFadeG)' }, mk);
+    ws.forEach(w => { w.body.style.filter = 'url(#merWaveNight)'; w.body.setAttribute('mask', 'url(#merWaveFade)'); });
   }
   const WY = 482;   /* 마녀 동굴: 마녀 발 (조개 문 앞 모래, 뒤쪽이라 원근 0.66배) */
   const SY = 404;   /* 계단 장면: 맨 윗단 위 (기둥 밑) */
@@ -475,7 +491,7 @@
         storm: () => {
           put(T, clouds[0], X(300, 380), 150); put(T, clouds[1], X(760, 620), 120);
           T.bg.appendChild(clouds[0].pos); T.bg.appendChild(clouds[1].pos);
-          put(T, waves[0], X(420, 500), WATER + 95); put(T, waves[1], X(850, 760), WATER + 105);
+          put(T, waves[0], X(420, 500), WATER + 95); put(T, waves[1], X(850, 760), WATER + 105); stormWaves(T, waves);
           { const c = waterCover(T, 'night_sea', WATER + 88); if (c) T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#1F2A56', opacity: .35 }, c); }
           waves.forEach((w, i) => w.pos.animate([{ translate: '-25px 0' }, { translate: '25px -8px' }], { duration: 2000, iterations: Infinity, direction: 'alternate', delay: i * 400 }));
         },
@@ -489,7 +505,7 @@
           const FWC = { prop_fw_a: '#F2C94E', prop_fw_b: '#E8A0B8', prop_fw_c: '#8FC1E3', layer_fw_d: '#EBD08A', layer_fw_e: '#F2A7B5' };
           const reflect = (x, c) => [-30, 25].forEach((dx, i) => {
             const e = T.el('ellipse', { cx: x + dx, cy: WATER + 30 + i * 22, rx: 26, ry: 5, fill: c, opacity: 0 }, T._cover || T.world); e.style.pointerEvents = 'none';
-            e.animate([{ opacity: 0 }, { opacity: .5 }, { opacity: 0 }], { duration: 900, delay: 200 }).finished.then(() => e.remove(), () => e.remove());
+            e.animate([{ opacity: 0 }, { opacity: .6 }, { opacity: 0 }], { duration: 900, delay: 200 }).finished.then(() => e.remove(), () => e.remove());
           });
           const fwx = x => X(x, 460 + (x - 560) * .55);
           const SHOW = [[fw[0], 640, 100, 'pow', true], [fw[1], 780, 70], [fw[2], 300, 130], [fwD[0], 700, 160, 'boom'], [fwE, 230, 70], [fwD[1], 870, 130], [fwA2, 610, 60, 'pow', true]];
@@ -683,7 +699,7 @@
     const FWC = { prop_fw_a: '#F2C94E', prop_fw_b: '#E8A0B8', prop_fw_c: '#8FC1E3', layer_fw_d: '#EBD08A', layer_fw_e: '#F2A7B5' };
     const reflect = (x, c) => [-30, 25].forEach((dx, i) => {
       const e = T.el('ellipse', { cx: x + dx, cy: WATER + 30 + i * 22, rx: 26, ry: 5, fill: c, opacity: 0 }, T._cover || T.world); e.style.pointerEvents = 'none';   /* 물 덮개 안(수면 위)에 */
-      e.animate([{ opacity: 0 }, { opacity: .5 }, { opacity: 0 }], { duration: 900, delay: 200 }).finished.then(() => e.remove(), () => e.remove());
+      e.animate([{ opacity: 0 }, { opacity: .6 }, { opacity: 0 }], { duration: 900, delay: 200 }).finished.then(() => e.remove(), () => e.remove());
     });
     const fx = x => X(x, 460 + (x - 560) * .55);
     /* 뱃머리 왕자 얼굴(x 430~530, y 0~130)은 피한다 */
@@ -708,7 +724,7 @@
       put(T, clouds[0], X(300, 380), 150); put(T, clouds[1], X(760, 620), 120);
       T.bg.appendChild(clouds[0].pos); T.bg.appendChild(clouds[1].pos);
       put(T, ship, X(620, 560), WATER + 40, { look: 'tilt' });
-      put(T, waves[0], X(420, 500), WATER + 95); put(T, waves[1], X(850, 760), WATER + 105);
+      put(T, waves[0], X(420, 500), WATER + 95); put(T, waves[1], X(850, 760), WATER + 105); stormWaves(T, waves);
       { const c = waterCover(T, 'night_sea', WATER + 88); if (c) T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#1F2A56', opacity: .35 }, c); }
       waves.forEach((w, i) => w.pos.animate([{ translate: '-25px 0' }, { translate: '25px -8px' }], { duration: 2000, iterations: Infinity, direction: 'alternate', delay: i * 400 }));
       if (P) camSnap(520, 280, 1);
