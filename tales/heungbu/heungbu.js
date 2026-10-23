@@ -14,7 +14,8 @@
     layer_persimmon_branch: 1.0367, layer_leaf_sil: .9583, layer_tree_sil: .98, layer_reeds_sil: 1.2517, layer_grass_sil: 1.085, layer_vine_sil: 2.2785,
   };
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 set:<키> 포함)는 그대로, 그림만 v2·라이트박스. 둥지·부엌문·초가·대문·기와집 자리는 원본과 같다(겹쳐 확인) */
-  const BGS = { sky_spring: 'sky_spring_v2', nolkitchen: 'nolkitchen_v2', eaves: 'eaves_v2', yard: 'yard_v2', sky_autumn: 'sky_autumn_lb', nol_eaves: 'nol_eaves_v2', nolyard: 'nolyard_v2', giwa: 'giwa_v2' };
+  /* 2026-10-23 사용자 결정: 처마(eaves)·가을 하늘(sky_autumn 라이트박스)은 옛 그림으로 되돌림(유채·실루엣·빛 점·어둠 막·단풍잎 낙하도 뺌) */
+  const BGS = { sky_spring: 'sky_spring_v2', nolkitchen: 'nolkitchen_v2', yard: 'yard_v2', nol_eaves: 'nol_eaves_v2', nolyard: 'nolyard_v2', giwa: 'giwa_v2' };
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const GROUND = 500;
   const NUM = ['하나!', '둘!', '셋!'];
@@ -83,14 +84,7 @@
         falling('petal', 8, 22);
       }
       if (key === 'nolkitchen') { if (!P) layer('jars', 880, 520, 150, { front: false }); layer('pine_branch', P ? 715 : 930, P ? -40 : -24, 200, { top: true, name: 'pine' }); layer('grass_front', 40, 600, 90); }
-      if (key === 'eaves') { layer('rapeseed', 50, 600, 110, { name: 'rapeL' }); layer('rapeseed', 950, 600, 110, { flip: true, name: 'rape' }); }
       if (key === 'yard') { layer('persimmon_branch', 940, -24, 170, { top: true, name: 'persimmon' }); layer('grass_front', 40, 600, 90, { name: 'grassF' }); }
-      if (key === 'sky_autumn') {
-        if (!P) layer('tree_sil', 40, 585, 420);
-        [180, 500, 820].forEach((x, i) => { const r = layer('reeds_sil', x, 600, 120, { flip: i === 1 }); if (!still()) r.animate([{ translate: '-6px 0' }, { translate: '6px 0' }, { translate: '-6px 0' }], { duration: 5000, delay: i * 700, iterations: Infinity, easing: 'ease-in-out' }); });
-        falling('leaf_sil', 6, 26, { x0: 0, x1: 700 });
-        tint(.35, 600); lightDots(12, [520, 1000, 30, 130]);
-      }
       if (key === 'nol_eaves') { layer('pine_branch', P ? 290 : 60, P ? -40 : -24, 200, { top: true, flip: true, name: 'pine' }); if (!P) layer('jars', 120, 520, 150, { front: false }); }
       if (key === 'nolyard') { layer('pine_branch', P ? 710 : 930, P ? -40 : -24, 200, { top: true, name: 'pine' }); layer('grass_front', 40, 600, 90); }
       if (key === 'giwa') {
@@ -305,7 +299,7 @@
     /* 강제로 떨어진다: 아이가 아무것도 안 눌러도 둥지에서 굴러떨어져 땅에 아프게 눕는다 */
     const tumble = spr('chick_fall', 493, 90, 120);
     const fell = say('앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!'); /* 말과 동시에 굴러떨어진다 */
-    sfx('pow'); wig('rape', 3, 400); await tumble.move(fx(560), 470, 800, 'ease-in'); tumble.hop(10, 300);
+    sfx('pow'); await tumble.move(fx(560), 470, 800, 'ease-in'); tumble.hop(10, 300);
     T.pop(tumble.x, tumble.y - 140, '아야!');
     const tshiv = setInterval(() => tumble.hop(5, 220), 800); await sleep(1400); clearInterval(tshiv);
     await fell;
