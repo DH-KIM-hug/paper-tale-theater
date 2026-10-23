@@ -25,10 +25,13 @@
      부엉이: aud_owl 그림에 다른 동물 둘이 같이 그려져 있어 owl_post(가방 멘 부엉이)를 관객석에도 쓴다
      메달: rab_medal 위쪽의 엉뚱한 노란 덩어리는 잘라내고 리본+메달만 webp로 만들었다 */
   const ART = {
-    bg_village: 'v3w/rab_bg_village.webp', bg_alley: 'v3w/rab_bg_alley.webp', bg_stands: 'v3w/rab_bg_stands.webp', bg_start: 'v3w/rab_bg_start.webp',
-    bg_map: 'v3w/rab_bg_map.webp', bg_shade: 'v3w/rab_bg_shade.webp', bg_dream: 'v3w/rab_bg_dream.webp',
-    bg_grass_low: 'v3w/rab_bg_grass_low.webp', bg_stream: 'v3w/rab_bg_stream.webp', bg_hill: 'v3w/rab_bg_hill.webp', bg_finish: 'v3w/rab_bg_finish.webp',
-    bg_party: 'v3w/rab_bg_party.webp',
+    /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 배경 v2 9장 + 라이트박스 3장(꿈·시상식 dream, 쉿·꼬끼오 dusk, 잔치 party).
+       문·돌멩이·시상대·언덕 능선·벤치는 옛 그림과 겹쳐 ±2% 안이라 코드 좌표 그대로. 지도(map)는 길 점선 좌표 때문에 옛 그림 유지.
+       개울 v2: 수면이 그림 세로 52%(무대 y≈293)까지 올라와 거북이(y 341~492)·물고기가 모두 물 안, 좌우 둑 사이를 건넌다 */
+    bg_village: 'v3w/rab_bg_village_v2.webp', bg_alley: 'v3w/rab_bg_alley_v2.webp', bg_stands: 'v3w/rab_bg_stands_v2.webp', bg_start: 'v3w/rab_bg_start_v2.webp',
+    bg_map: 'v3w/rab_bg_map.webp', bg_shade: 'v3w/rab_bg_shade_v2.webp', bg_dream: 'v3w/rab_lb_dream.webp',
+    bg_grass_low: 'v3w/rab_bg_grass_low_v2.webp', bg_stream: 'v3w/rab_bg_stream_v2.webp', bg_hill: 'v3w/rab_bg_hill_v2.webp', bg_finish: 'v3w/rab_bg_finish_v2.webp',
+    bg_party: 'v3w/rab_lb_party.webp',
     rabbit_stand: 'v3w/rab_rabbit_tease_c.webp', rabbit_run: 'v3w/rab_rabbit_run_c.webp', rabbit_wake: 'v3w/rab_rabbit_wake_c.webp', rabbit_congrats: 'v3w/rab_rabbit_congrats_c.webp',
     rabbit_sleep: 'v3w/rab_rabbit_sleep_c.webp',
     turtle_walk: 'v3w/rab_turtle_walk.webp', turtle_swim: 'v3w/rab_turtle_swim.webp', turtle_medal: 'v3w/rab_turtle_medal.webp',
@@ -42,7 +45,7 @@
     cut_wake: 'v3w/rab_cut_wake.webp', cut_dash: 'v3w/rab_cut_dash.webp', cut_photo: 'v3w/rab_cut_photo.webp',
     /* 2026-10-04 코드 도형을 대신하는 새 그림 (jobs_svg.json): 노을 배경(그림 속 닭은 울타리로 메움 — 무대 닭은 배우), 결승 기둥+깃발(판은 비어 있어 글자는 코드),
        시상대(숫자는 코드), 나뭇잎 이불, 해님·구름, 개울 물고기 셋, 잔치 악기 8종, 초대장 봉투 */
-    bg_dusk: 'v3w/rab_bg_dusk.webp', finish_post: 'v3w/rab_finish_post.webp', podium: 'v3w/rab_podium.webp',
+    bg_dusk: 'v3w/rab_lb_dawn.webp', finish_post: 'v3w/rab_finish_post.webp', podium: 'v3w/rab_podium.webp',
     leaf_blanket: 'v3w/rab_leaf_blanket.webp', sun_small: 'v3w/rab_sun_small.webp', cloud_small: 'v3w/rab_cloud_small.webp',
     fish_orange: 'v3w/rab_fish_orange.webp', fish_gold: 'v3w/rab_fish_gold.webp', fish_lavender: 'v3w/rab_fish_lavender.webp',
     ins_tambourine: 'v3w/rab_ins_tambourine.webp', ins_drum: 'v3w/rab_ins_drum.webp', ins_xylophone: 'v3w/rab_ins_xylophone.webp', ins_horn: 'v3w/rab_ins_horn.webp',
@@ -51,10 +54,10 @@
   };
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
-  const EDGE = { bg_village: ['#77aa8b', '#e3ba89'], bg_alley: ['#73998b', '#6e7b3a'], bg_stands: ['#6a9a69', '#899741'], bg_start: ['#588388', '#d6b186'],
-    bg_map: ['#58a3d4', '#adab3c'], bg_shade: ['#4da6eb', '#606034'], bg_dream: ['#636467', '#9a7d4f'],
-    bg_grass_low: ['#648e79', '#a87251'], bg_stream: ['#83a754', '#5f6470'], bg_hill: ['#4ea4dc', '#5e843a'], bg_finish: ['#6597a1', '#e0ab76'], bg_party: ['#5d5843', '#9d733c'],
-    bg_dusk: ['#f79358', '#796b38'] };
+  const EDGE = { bg_village: ['#64bb67', '#e8bd8c'], bg_alley: ['#7cb270', '#8e9843'], bg_stands: ['#81a559', '#8da44b'], bg_start: ['#6f905f', '#d8ae7f'],
+    bg_map: ['#58a3d4', '#adab3c'], bg_shade: ['#56b3f6', '#7e953a'], bg_dream: ['#202343', '#d79f60'],
+    bg_grass_low: ['#61a155', '#b5754f'], bg_stream: ['#f6e492', '#197682'], bg_hill: ['#51afea', '#779f3b'], bg_finish: ['#55a6df', '#e5ad74'], bg_party: ['#2e3532', '#c58c40'],
+    bg_dusk: ['#fcb334', '#d8aa43'] };
   const BGX = { x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }; // 장면 그림 자리 (무대 1000×560 전체)
   /* 장면 그림 한 장을 무대 전체에 (없으면 false → 임시 도형 배경) */
   function artBG(T, key, parent = T.bg) {
@@ -62,8 +65,34 @@
     const [top, bot] = EDGE[key] || [C.sky, C.grass];
     T.el('rect', { x: -1200, y: -1200, width: 3400, height: 1480, fill: top }, parent);
     T.el('rect', { x: -1200, y: 280, width: 3400, height: 1600, fill: bot }, parent);
-    return T.el('image', { href: A(ART[key]), ...BGX }, parent);
+    const img = T.el('image', { href: A(ART[key]), ...BGX }, parent);
+    if (parent === T.bg && FRONT[key]) FRONT[key](T);
+    return img;
   }
+  /* 앞 가림 층 소품(rab_layer_*): 배우 앞(T.fx)에 깔고 누름은 받지 않는다. 세로 화면 가운데(x 285~715)는 비운다.
+     카메라가 따라가는 언덕·마지막 한 발에는 두지 않는다(개울만 물결 띠). x·y: 가운데·발끝(top 이면 위 끝) */
+  const LAYER_ASP = { water_front: 4.0229, reeds_front: .7878, flower_bush_front: 1.4572, branch_top: 1.3178, grass_front: 1.3246, lantern_string: 2.7694 };
+  function layer(T, k, x, y, h, { top = false, flip = false, parent = T.fx } = {}) {
+    const w = h * LAYER_ASP[k], g = T.el('g', { 'pointer-events': 'none', transform: `translate(${x} ${y})${flip ? ' scale(-1 1)' : ''}` }, parent);
+    T.el('image', { href: A(`v3w/rab_layer_${k}.webp`), x: -w / 2, y: top ? 0 : -h, width: w, height: h, filter: 'url(#pp)' }, g);
+    return g;
+  }
+  const lanterns = (T, h) => { layer(T, 'lantern_string', 170, -22, h, { top: true }); layer(T, 'lantern_string', 830, -22, h, { top: true, flip: true }); };
+  const FRONT = {
+    bg_village: T => layer(T, 'flower_bush_front', 40, 590, 110),
+    bg_stands: T => { lanterns(T, 120); layer(T, 'grass_front', 980, 590, 90); },
+    bg_start: T => layer(T, 'grass_front', 30, 590, 90),
+    bg_shade: T => layer(T, 'branch_top', 900, -22, 200, { top: true, flip: true }), // 왼쪽 위 하늘은 해님·구름 자리라 오른쪽 위에
+    bg_grass_low: T => layer(T, 'grass_front', 990, 590, 90),
+    bg_party: T => lanterns(T, 110),
+    /* 개울: 왼쪽 둑 갈대 + 진한 물결 띠 세 장을 이어 무대 아래를 덮고 좌우로 천천히 흔든다 → 거북이 발·물고기가 물에 잠긴다 */
+    bg_stream: T => {
+      layer(T, 'reeds_front', -25, 590, 210);
+      const wave = T.el('g', { 'pointer-events': 'none' }, T.fx), h = 120, w = h * LAYER_ASP.water_front;
+      [-1, 0, 1].forEach(i => layer(T, 'water_front', 500 + i * (w - 70), 600, h, { flip: i === 0, parent: wave }));
+      try { wave.animate([{ transform: 'translateX(-15px)' }, { transform: 'translateX(15px)' }], { duration: 5200, direction: 'alternate', iterations: Infinity, easing: 'ease-in-out' }); } catch (e) { /* 정지 */ }
+    },
+  };
   /* 배경 그림 속 물건(문·돌멩이)을 톡 대상으로: 같은 그림을 그 모양으로 오려 겹친다 → 반짝임(armGlow)이 그 물건에 생긴다 */
   let clipN = 0;
   function artPiece(T, key, shape, parent = T.world) {
