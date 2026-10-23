@@ -15,9 +15,30 @@
      하늘빛은 그림 위에 곱하기(multiply)로 얹는 색 한 겹(tint)이 바꾼다. */
   const AS = '../../assets/';
   const BG = {
-    sky: 'v3w/sw_bg_sky.webp', high: 'v3w/sw_bg_high.webp', field: 'v3w/sw_bg_field.webp',
-    stream: 'v3w/sw_bg_stream.webp', snow: 'v3w/sw_bg_snow.webp',
+    /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 하늘은 라이트박스(지평선 빛·구름 바다), 부감 길·나무·바위·전나무는 옛 그림과 겹쳐 같은 자리.
+       들길 라이트박스 둘(fieldBG lb): 바람 차례 = 은빛 바람 들판, 해님 차례 = 바람 들판에서 햇살 들판으로 톡톡마다 크로스페이드(틴트·덮개 대신) */
+    sky: 'v3w/sw_lb_sky.webp', high: 'v3w/sw_bg_high_v2.webp', field: 'v3w/sw_bg_field_v2.webp',
+    stream: 'v3w/sw_bg_stream_v2.webp', snow: 'v3w/sw_bg_snow_v2.webp',
+    lb_wind: 'v3w/sw_lb_field_wind.webp', lb_sun: 'v3w/sw_lb_field_sun.webp',
   };
+  /* 층 소품 sw_layer_*: [이름, 가운데 x, 발끝 y, 높이, 폭/높이, {mid(배우 뒤), flip, sway(바람 흔들림), lb('wind'|'sun')}]. 앞 소품은 배우 앞(T.fx), 누름 없음 */
+  const LAYERS = {
+    sky: [['cloud_front', 120, 600, 150, 2.6946], ['cloud_front', 500, 600, 150, 2.6946, { flip: true }], ['cloud_front', 880, 600, 150, 2.6946]],
+    field: [['grass_front', 30, 590, 90, 1.0933]],
+    stream: [['reeds_stream', 880, 560, 180, .7433, { mid: true }]],
+    snowbush: [['snow_bush', 30, 590, 120, 1.2567]],
+    wind: [['tree_bent', 40, 590, 280, 1.2944, { mid: true, sway: true, lb: 'wind' }], ['grass_front', 980, 590, 90, 1.0933, { flip: true, sway: true, lb: 'wind' }],
+      ['wheat_front', 980, 590, 200, .8517, { lb: 'sun' }]],
+  };
+  function layers(T, key) {
+    return (LAYERS[key] || []).map(([n, x, y, h, asp, o = {}]) => {
+      const w = h * asp, g = T.el('g', { class: 'sw-layer', 'pointer-events': 'none', transform: `translate(${x} ${y})${o.flip ? ' scale(-1 1)' : ''}` }, o.mid ? T.bg : T.fx);
+      const im = T.el('image', { href: AS + `v3w/sw_layer_${n}.webp`, x: -w / 2, y: -h, width: w, height: h, filter: 'url(#pp)' }, g);
+      if (o.sway) { im.style.transformBox = 'fill-box'; im.style.transformOrigin = '50% 100%'; im.animate([{ transform: 'rotate(-1.5deg)' }, { transform: 'rotate(3deg)' }], { duration: 900, direction: 'alternate', iterations: Infinity, easing: 'ease-in-out' }); }
+      if (o.lb) g.dataset.lb = o.lb;
+      return g;
+    });
+  }
   /* 배우·소품·컷
      - trav_walk_nohat: 걷기 그림의 머리(모자)를 '덜덜' 그림 머리로 바꿔 붙인 것 (바람에 모자가 날아간 뒤, 외투는 아직 열림)
      - trav_sit: 신발을 살색으로 칠해 맨발로 (개울에 발을 담근다)
@@ -66,7 +87,7 @@
     .map(([k, v]) => [k, v.map(n => n * WIND_K)]));
   const cutArt = (T, key, sfx, hold, onShow) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx, hold }], { hold, onShow }) : null);
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). zoom: (cx, cy) 기준으로 키운다 */
-  const BG_EDGE = { sky: ['#a4c9da', '#e9edf2'], high: ['#bcc29a', '#bcc29a'], field: ['#bedfe9', '#77693f'], stream: ['#b6d5df', '#4f827f'], snow: ['#dbeefb', '#f6f9fd'] };
+  const BG_EDGE = { sky: ['#fbb440', '#3a284c'], high: ['#8fa056', '#7a8a47'], field: ['#7dc4ec', '#d1a16e'], stream: ['#93ceed', '#ae7b5a'], snow: ['#b1cee3', '#e7e6eb'] };
   function bgImage(T, key, { zoom = 1, cx = 500, cy = 560 } = {}) {
     const u = bgUrl(key); if (!u) return null;
     const w = 1080 * zoom, h = w * 992 / 1760, x = cx + (-40 - cx) * zoom, y = cy + (-24 - cy) * zoom;
@@ -386,10 +407,12 @@
   function cloudBank(T, parent, y, col, n = 7, r = 90) {
     T.paper(parent, Array.from({ length: n }, (_, i) => ['circle', { cx: -60 + i * (1120 / (n - 1)), cy: y + (i % 2) * 22, r: r + (i % 3) * 18, fill: col }]));
   }
-  function skyBG(T) { // 1. 하늘 와이드 (구름 층)
+  function skyBG(T, sunX = 290) { // 1. 하늘 와이드 (구름 층)
     const b = T.bg;
     // 2026-10-22 사용자: 앞쪽 흙바닥·바위가 보이면 해·바람이 땅 위에 선 것 같다 → 그림 위쪽(하늘·구름 바다)만 크게 잡아 땅은 화면 밖으로
-    if (bgImage(T, 'sky', { zoom: 1.75, cx: 500, cy: 0 })) return { sky: null, drift: T.el('g', {}, b), art: true }; // 구름은 그림 속 종이 → 흐르는 구름 없음
+    if (bgImage(T, 'sky', { zoom: 1.75, cx: 500, cy: 0 })) {
+      T.el('circle', { cx: sunX, cy: 262, r: 170, fill: '#FFF3D2', opacity: .5, 'pointer-events': 'none' }, b); // 라이트박스 금빛 하늘에서 해님이 묻히지 않게 뒤에 옅은 빛 원
+      layers(T, 'sky'); return { sky: null, drift: T.el('g', {}, b), art: true }; } // 구름은 그림 속 종이 → 흐르는 구름 없음
     const sky = T.el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: SKY.day }, b);
     const drift = T.el('g', {}, b);
     [[140, 120, .8], [520, 90, .6], [860, 150, .7]].forEach(([x, y, s]) => T.paper(drift, [['ellipse', { cx: x, cy: y, rx: 70 * s, ry: 26 * s, fill: C.snow }], ['ellipse', { cx: x + 30 * s, cy: y - 16 * s, rx: 40 * s, ry: 24 * s, fill: C.snow }]]));
@@ -414,9 +437,29 @@
     T.paper(b, [['circle', { cx: -20, cy: -10, r: 110, fill: C.snow }], ['circle', { cx: 100, cy: -40, r: 90, fill: C.snow }], ['circle', { cx: 1020, cy: -20, r: 120, fill: C.snow }], ['circle', { cx: 900, cy: -50, r: 90, fill: C.snow }]]);
     return { path: [[560, 240], [500, 330], [570, 420], [470, 520]] };
   }
-  function fieldBG(T, opts) { // 3·5. 들길 와이드 (바람/해 공용 — 조명은 하늘색과 덮개로)
+  function fieldBG(T, opts = {}) { // 3·5. 들길 와이드 (바람/해 공용 — 조명은 하늘색과 덮개로)
     const { el, paper } = T, b = T.bg;
-    if (bgImage(T, 'field', opts)) {
+    const { lb, ...bo } = opts;
+    const base = bgImage(T, 'field', bo);
+    if (base && lb && bgUrl('lb_wind')) {
+      /* 라이트박스 들길: lb 'wind' = 바람 들판, 'turn' = 바람 들판에서 시작해 light(p) 로 햇살 들판(0~1)으로 바뀐다. 하늘 틴트·덮개는 쓰지 않는다 */
+      const wImg = el('image', { href: bgUrl('lb_wind'), x: base.getAttribute('x'), y: base.getAttribute('y'), width: base.getAttribute('width'), height: base.getAttribute('height'), preserveAspectRatio: 'none' }, b);
+      const sImg = lb === 'turn' ? el('image', { href: bgUrl('lb_sun'), x: base.getAttribute('x'), y: base.getAttribute('y'), width: base.getAttribute('width'), height: base.getAttribute('height'), preserveAspectRatio: 'none', opacity: 0 }, b) : null;
+      /* 그림 밖 위·아래(세로 화면에서 물러설 때)도 라이트박스 끝 색으로 */
+      const edge = ([top, bot], o = 1) => { const y = +base.getAttribute('y'), h = +base.getAttribute('height'), g = el('g', { opacity: o }, b);
+        el('rect', { x: -1400, y: -1400, width: 3800, height: 1400 + y + h / 2, fill: top }, g); el('rect', { x: -1400, y: y + h / 2, width: 3800, height: 2000, fill: bot }, g); base.before(g); return g; };
+      edge(['#6d788d', '#253044']);
+      const sEdge = lb === 'turn' ? edge(['#fda731', '#d7a855'], 0) : null;
+      const ls = layers(T, 'wind');
+      const light = p => {
+        [[sImg, p], [sEdge, p], ...ls.map(g => [g, g.dataset.lb === 'sun' ? p : 1 - p])].forEach(([n, o]) => { if (!n) return; n.style.transition = 'opacity 1.2s'; n.setAttribute('opacity', o); });
+      };
+      ls.forEach(g => { if (g.dataset.lb === 'sun' || (g.dataset.lb === 'wind' && lb === 'sun')) g.setAttribute('opacity', 0); });
+      const nop = { setAttribute() {}, style: {} };
+      return { sky: nop, warm: nop, tufts: el('g', {}, b), tree: [95, 230], art: true, light };
+    }
+    if (base) {
+      layers(T, 'field');
       const sky = tintLayer(T, b);
       const warm = el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.amber, opacity: 0 }, T.fx);
       warm.style.transition = 'opacity 1s';
@@ -441,6 +484,7 @@
   function streamBG(T) { // 7. 개울가
     const { el, paper } = T, b = T.bg;
     if (bgImage(T, 'stream')) { // 바위는 그림 왼쪽(윗면 y≈300). 개어 둔 외투는 바위 오른쪽 풀밭에
+      layers(T, 'stream');
       const cw = 70, ch = cw * 360 / 360;
       if (!pic(T, b, 'coat', 372 - cw / 2, 352 - ch, cw, ch)) paper(b, [['path', { d: 'M330 330 L410 322 L416 348 L326 352 Z', fill: C.bean }]]);
       return { tufts: el('g', {}, b), art: true, seat: [215, 410] };
@@ -466,7 +510,10 @@
       const snowImg = snowU && el('image', { href: snowU, x: -40, y: -24, width: 1080, height: 1080 * 992 / 1760, preserveAspectRatio: 'none', opacity: 0 }, b);
       if (snowImg) snowImg.style.transition = 'opacity .8s';
       const tint = tintLayer(T, b, { dur: .8 });
-      const sky = { setAttribute(k, v) { if (k !== 'fill') return; const sn = v === SKY.snow && snowImg; if (snowImg) snowImg.setAttribute('opacity', sn ? 1 : 0); tint.setAttribute('fill', sn ? SKY.day : v); } };
+      const [grass] = layers(T, 'field'), bush = layers(T, 'snowbush')[0];
+      if (bush) bush.setAttribute('opacity', 0);
+      const sky = { setAttribute(k, v) { if (k !== 'fill') return; const sn = v === SKY.snow && snowImg; if (snowImg) snowImg.setAttribute('opacity', sn ? 1 : 0); tint.setAttribute('fill', sn ? SKY.day : v);
+        if (grass) grass.setAttribute('opacity', sn ? 0 : 1); if (bush) bush.setAttribute('opacity', sn ? 1 : 0); } };
       return { sky, ground: { setAttribute() {} }, art: true };
     }
     const sky = el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: SKY.day }, b);
@@ -552,14 +599,14 @@
         rScene = key; rS = rW = rN = rF = rHB = rST = rFlying = null; rFlapShut = false; rSync();
         T.clear();
         if (key === 'sky') {
-          const sky1 = skyBG(T), pt = rPt();
+          const pt = rPt(), sky1 = skyBG(T, pt ? 335 : 290);
           rS = sun(T, pt ? 335 : 290, 250, 1); rW = aimWind(wind(T, pt ? 610 : 720, 255, 1), pt ? 335 : 290); rSync();
           if (pt) camSnap(510, 280, Math.min(1, T.viewWidth() / 2 / 300)); else camSnap(500, 280, 1);
           sky1.drift.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(30px)' }, { transform: 'translateX(0)' }], { duration: 6000, iterations: Infinity });
         } else if (key === 'high') {
           rHB = highBG(T); camSnap(500, 280, 1);
         } else if (key === 'field') {
-          rFieldN++; rF = fieldBG(T); rButtoned = rButtoned && rFieldN > 1;
+          rFieldN++; rF = fieldBG(T, rFieldN <= 2 ? { lb: 'wind' } : rFieldN === 3 ? { lb: 'turn' } : {}); rButtoned = rButtoned && rFieldN > 1;
           if (rFieldN === 3) rF.sky.setAttribute('fill', SKY.grey);
           fieldCam();
         } else if (key === 'stream') {
@@ -583,7 +630,7 @@
           rS.pos.style.opacity = '';
           spinRays(rS); SND.warm(T, lv); sparkles(T, rS.x, rS.y, 120, 8); rS.hop(16, 500);
           rS.p.glow.animate([{ opacity: 0, transform: 'scale(.8)' }, { opacity: .6, transform: 'scale(1.1)' }, { opacity: 0, transform: 'scale(1)' }], 1200);
-          if (rF && rF.sky && rFieldN >= 3 && lv >= 1) { const [c, o] = rWarmLv[Math.min(lv, 3) - 1]; rF.sky.setAttribute('fill', c); rF.warm.setAttribute('opacity', o); }
+          if (rF && rF.sky && rFieldN >= 3 && lv >= 1) { const [c, o] = rWarmLv[Math.min(lv, 3) - 1]; rF.sky.setAttribute('fill', c); rF.warm.setAttribute('opacity', o); if (rF.light) rF.light([.4, .75, 1][Math.min(lv, 3) - 1]); }
           for (let i = 0; i < 5; i++) {
             const bm = el('path', { d: 'M0 0 L-16 0 L-60 260 L40 260 Z', fill: '#FFE9A8', opacity: 0, transform: `translate(${rS.x},${rS.y}) rotate(${40 + i * 12})` }, T.fx);
             bm.animate([{ opacity: 0 }, { opacity: .45 }, { opacity: 0 }], { duration: 1400, delay: i * 80 }).finished.then(() => bm.remove());
@@ -752,7 +799,7 @@
 
 
     /* --- 1. 하늘 자랑 --- */
-    const sky1 = skyBG(T);
+    const sky1 = skyBG(T, T.portrait() ? 335 : 290);
     // 세로 화면(양옆이 잘림): 해님·바람을 가운데 쪽으로 모으고 살짝 물러선다. 가로는 그대로
     const S1 = sun(T, T.portrait() ? 335 : 290, 250, 1), W1 = aimWind(wind(T, T.portrait() ? 610 : 720, 255, 1), T.portrait() ? 335 : 290); // 구름 바다 위 하늘에 떠 있다. 바람은 해님 쪽을 본다
     if (T.portrait()) camSnap(510, 280, Math.min(1, T.viewWidth() / 2 / 300)); // 커진 바람까지 보이게 조금 더 물러선다
@@ -799,7 +846,7 @@
     /* --- 3. 바람 차례 (메인 1): 쓱 ×5, 점점 세게 --- */
     let F, W;
     await T.sceneCard('바람 차례', () => {
-      T.clear(); F = fieldBG(T);
+      T.clear(); F = fieldBG(T, { lb: 'wind' });
       N = traveler(T, 600, 500, 1.25, 'coat');
       W = aimWind(wind(T, 150, 180, .8), N); // 나그네(오른쪽) 쪽으로 분다
       if (T.portrait()) camSnap(395, 280, Math.min(1, T.viewWidth() / 2 / 320)); // 세로 화면: 바람과 나그네가 함께 보이게
@@ -888,7 +935,7 @@
     /* --- 5. 해님 차례 (메인 2): 꾹 ×3 --- */
     let SN;
     await T.sceneCard('해님 차례', () => {
-      T.clear(); F = fieldBG(T); F.sky.setAttribute('fill', SKY.grey);
+      T.clear(); F = fieldBG(T, { lb: 'turn' }); F.sky.setAttribute('fill', SKY.grey);
       if (N.__shiver) N.__shiver.cancel();
       N = traveler(T, 520, 500, 1.25, 'coatShut', 'cross', { buttons: 4 }); N.P.face('cold');
       N.__shiver = shiver(N);
@@ -913,6 +960,7 @@
       ring.setAttribute('opacity', 0);
       SN.body.style.transform = ''; spinRays(SN); SND.warm(T, lv + 1); sparkles(T, 820, 190, 120, 8);
       F.sky.setAttribute('fill', warmLv[lv][0]); F.warm.setAttribute('opacity', warmLv[lv][1]);
+      if (F.light) F.light([.4, .75, 1][lv]); // 라이트박스: 톡톡마다 햇살 들판으로
       // 햇살 줄기
       for (let i = 0; i < 5; i++) {
         const b = el('path', { d: 'M0 0 L-16 0 L-60 260 L40 260 Z', fill: '#FFE9A8', opacity: 0, transform: `translate(820,190) rotate(${40 + i * 12})` }, T.fx);
