@@ -4,7 +4,7 @@ window.REVIEW = {
   magpie: '배경 다층·빛 상자',
   magic_jar: '배경 다층·빛 상자',
   red_hood: '다시 그림: 할머니 방·식탁',
-  rabbit: '배경 다층·빛 상자·개울', patjuk: '배경 다층·빛 상자', turnip: '다시 그림: 헛간', frog: '배경 다층·빛 상자',
+  rabbit: '배경 다층·빛 상자·개울', patjuk: '다시 그림: 부엌', turnip: '다시 그림: 헛간', frog: '배경 다층·빛 상자',
   sun_wind: '다시 그림: 바람·해 빛 상자(낮)', lion_mouse: '배경 다층·빛 상자', fox_crane: '다시 그림: 부엌·식탁', kongjwi: '배경 다층·빛 상자',
   heungbu: '다시 그림: 놀부 부엌·마당·박 빛 상자', hansel: '배경 다층·빛 상자',
   ugly_duckling: '배경 다층·빛 상자', wolf_goats: '배경 다층·빛 상자', ant_grasshopper: '배경 다층·빛 상자',
