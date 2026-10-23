@@ -38,7 +38,7 @@
   const BALL_RUN = [22, -118];          // prin_run: 품에 안은 공 중심(오른쪽 볼 때). 왼쪽을 볼 때는 x 부호를 뒤집는다
   const HAND_PRIN = [58, -118];         // prin_hand: 내민 손끝(오른쪽 볼 때)
   const HAND_PRINCE = [60, -122];       // prince_hand: 내민 손끝(오른쪽 볼 때; 왼쪽 보면 x = -60)
-  const BGS = ['fp_bg_yard_v2', 'fp_bg_pond_v2', 'fp_bg_dining_v2', 'fp_bg_room_v2'];
+  const BGS = ['fp_bg_yard_v2', 'fp_bg_pond_v2', 'fp_bg_dining_v2', 'fp_bg_room_v2', 'fp_bg_room_night_lb'];   // room_night_lb: 9장 밤 빛 상자(VISUAL_PLAN 재기획 2 B, 2026-10-24), 변신 때 room_v2 로 밝아짐
   const src = k => AS + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
@@ -124,7 +124,7 @@
   };
   function bgImage(T, key) {
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
-    const d = BGPH[key], g = T.el('g', {}, T.bg);
+    const d = BGPH[key] || BGPH[key.replace('_night_lb', '_v2')], g = T.el('g', {}, T.bg);
     T.el('rect', { x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, fill: d.sky }, g);
     T.el('rect', { x: BGBOX.x, y: 412, width: BGBOX.w, height: 200, fill: d.gnd }, g);
     d.shapes().forEach(([t, a]) => T.el(t, a, g));
@@ -301,6 +301,12 @@
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(하나·둘·셋)
     const scene = key => { T.clear(); bgImage(T, key); dress(key); camSnap(500, 280, 1); };
+    /* 9장 변신: 밤 빛 상자 방 위에 밝은 방(room_v2)을 1.6초 크로스페이드로 얹는다(VISUAL_PLAN 재기획 2 판단 1) */
+    const roomBright = () => {
+      if (!bgOK.fp_bg_room_v2) return;
+      const im = T.el('image', { href: src('fp_bg_room_v2'), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none', opacity: T.readInstant && T.readInstant() ? 1 : 0 }, T.bg);
+      if (im.getAttribute('opacity') === '0') T.anim(im, [{ opacity: 0 }, { opacity: 1 }], 1600).then(() => im.setAttribute('opacity', 1), () => im.setAttribute('opacity', 1));
+    };
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -376,7 +382,7 @@
         return inst() ? camSnap(x, y, z) : T.camTo(x, y, z, 700);
       };
       return {
-        set(k) { key = k.replace(/_v2$/, ''); cancelBn(); pend = null; scene(key + '_v2'); [prin, frog, king, prince, ball, table, plate, pillow, ...breads].forEach(hide); },
+        set(k) { key = k.replace(/_v2$/, ''); cancelBn(); pend = null; scene(key === 'fp_bg_room' ? 'fp_bg_room_night_lb' : key + '_v2'); [prin, frog, king, prince, ball, table, plate, pillow, ...breads].forEach(hide); },
         cam: a => camGo(...num(a)),
         follow: x => (P ? T.camTo(+x, 280, 1, 700) : Promise.resolve()),
         prin: (op, ...a) => {
@@ -429,7 +435,7 @@
           if (!P) T.camTo(BED.x - 80, 300, 1.12, 500);
           const b = front(L.magic_burst, BED.x, BED.top - 100 + HT.fp_layer_magic_burst / 2); b.body.style.transformBox = 'fill-box'; b.body.style.transformOrigin = '50% 50%';
           b.body.animate([{ transform: 'scale(.2) rotate(0deg)', opacity: 1 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 1, offset: .7 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 0 }], { duration: 700, easing: 'ease-out' }).finished.then(() => hide(b), () => hide(b));
-          flash(T, BED.x, BED.top - 100);
+          flash(T, BED.x, BED.top - 100); roomBright();
         },
         petals: () => petals(T),
         fx(n) {
@@ -663,7 +669,7 @@
 
     /* ===== 9. 베개 위로 폴짝 ===== */
     await T.sceneCard(tr('베개 위로 폴짝'), () => {
-      scene('fp_bg_room_v2');
+      scene('fp_bg_room_night_lb');   // 밤 빛 상자: 창의 달이 유일한 빛
       put(T, pillow, BED.x, BED.top + 4);
       put(T, prin, X(360, 400), FL, { look: 'stand', to: 'right' });
       hide(frog);
@@ -692,7 +698,7 @@
     if (!P) T.camTo(BED.x - 80, 300, 1.12, 500);
     { const b = front(L.magic_burst, BED.x, BED.top - 100 + HT.fp_layer_magic_burst / 2); b.body.style.transformBox = 'fill-box'; b.body.style.transformOrigin = '50% 50%';
       b.body.animate([{ transform: 'scale(.2) rotate(0deg)', opacity: 1 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 1, offset: .7 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 0 }], { duration: 700, easing: 'ease-out' }).finished.then(() => hide(b), () => hide(b)); }
-    flash(T, BED.x, BED.top - 100);
+    flash(T, BED.x, BED.top - 100); roomBright();
     await sleep(350);
     hide(frog);
     put(T, prince, BED.x - 40, FL, { look: 'stand' }); fadeIn(prince, 400); glow(prince, 1200);
