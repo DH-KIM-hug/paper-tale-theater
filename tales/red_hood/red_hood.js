@@ -16,11 +16,18 @@
     hunter_tickle: 0.892, hunter_walk: 0.931, mama: 0.933, milk: 0.863, vase_blue: 0.904, vase_red: 0.944, vase_yellow: 0.964,
     wardrobe: 0.734, wolf_granny: 0.652, wolf_hiccup: 0.550, wolf_jump: 0.494, wolf_peek: 0.596, };
   const BGS = ['bed', 'cottage', 'door', 'flowers', 'kitchen', 'room', 'shortcut', 'table', 'trail', 'tree'];
+  /* 2026-10-23 화려한 다층 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 BGKEY 포함)는 그대로, 그림만 v2·라이트박스.
+     부엌 식탁·집 문·오두막·침대·액자·옷장·창·식탁은 옛 그림과 겹쳐 같은 자리(±1%). 늑대(4장)·지름길(6장 아래 칸)은 라이트박스 */
+  const BGV = { bed: 'bed_v2', cottage: 'cottage_v2', door: 'door_v2', flowers: 'flowers_v2', kitchen: 'kitchen_v2', room: 'room_v2', shortcut: 'shortcut_lb', table: 'table_v2', trail: 'trail_v2', tree: 'tree_lb' };
+  /* 층 소품(rh_layer_*, 누름 없음) 그림 폭/높이 */
+  const LAR = { fern_front: 1.0267, branch_leaves: 1.01, flowers_front: 1.0967, bird: .9833, butterfly: 1.2033, herbs: .67, plant_pot: .7967, trees_sil: .8533, grass_sil: 5.6962 };
   const NF = new Set(['apple', 'basket', 'bread', 'flower_blue', 'flower_red', 'flower_yellow', 'milk', 'vase_blue', 'vase_red', 'vase_yellow', 'wardrobe']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
   const CUTS = ['tail', 'whisper', 'dash', 'gulp', 'granwolf', 'jumpup', 'hiccup'];
-  const bgSrc = k => AS + 'rh_bg_' + k + '.webp', cutSrc = k => AS + 'rh_cut_' + k + '.webp';
+  const bgSrc = k => AS + 'rh_bg_' + (BGV[k] || k) + '.webp', cutSrc = k => AS + 'rh_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const C = { bean: '#A93B32', ink: '#2E241C' };
+  /* 할머니 사진 소품: 침실 그림 속 빈 액자(무대 x 752~899, y 2~154)를 덮는다 [가운데 x, 아래 y, 크기] (2026-10-23, 옛 805,278 은 액자 아래 벽에 떠 있었다) */
+  const FRAME = [825, 162, .88];
 
   /* 여러 자세를 겹쳐 두고 look()으로 하나만 보인다. 자세: [파일, 키, 그림이 원래 보는 쪽] — 발끝 가운데가 (0,0) */
   const ACTORS = [];   // 누르는 대상이 아닌 배우·소품은 누름을 받지 않는다(마지막 장 빨간 모자가 할머니·사냥꾼 그림에 가려 안 눌리던 것, 2026-10-22). 대상만 live() 로 연다
@@ -53,6 +60,87 @@
     return a;
   }
   const hide = a => { a.pos.style.display = 'none'; };
+
+  /* ---- 층 소품: 누름 없음. 앞 가림 층은 T.fx(배우 위), 중간 층은 T.bg(배우 뒤). (cx, y) = 가운데·발끝, top 이면 윗변 ---- */
+  const LY = {};
+  function layer(T, k, cx, y, h, { front = true, flip = false, top = false, name } = {}) {
+    const w = h * LAR[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+    if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+    const inner = T.el('g', { filter: 'url(#pp)' }, g);
+    T.el('image', { href: AS + 'rh_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+    inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+    if (name) LY[name] = inner;
+    return inner;
+  }
+  const sway = (g, deg, ms, delay = 0) => { g.animate([{ rotate: `${-deg}deg` }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }], { duration: ms, delay, iterations: Infinity, easing: 'ease-in-out' }); return g; };
+  const lyHop = (name, dy = 6, ms = 250) => { const g = LY[name]; if (g && g.isConnected) g.animate([{ translate: '0 0' }, { translate: `0 ${-dy}px` }, { translate: '0 0' }], { duration: ms, easing: 'ease-out', composite: 'add' }); };
+  const lyWig = (name, deg = 4, ms = 500) => { const g = LY[name]; if (g && g.isConnected) g.animate([{ rotate: '0deg' }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }, { rotate: '0deg' }], { duration: ms, composite: 'add' }); };
+  /* 나비: 날갯짓(scaleX 1↔.3) + 가로 ±dx 사인 곡선 (가운데로 들어오지 않게 dx 작게) */
+  function butterfly(T, cx, cy, h, dx = 50, ms = 6000, name) {
+    const outer = T.el('g', { style: 'pointer-events:none' }, T.fx);
+    const g = layer(T, 'butterfly', 0, 0, h, { top: true }); outer.appendChild(g.parentNode);
+    g.style.transformOrigin = '50% 50%';
+    g.animate([{ scale: '1 1' }, { scale: '.3 1' }, { scale: '1 1' }], { duration: 260, iterations: Infinity });
+    const k = [0, .25, .5, .75, 1].map((t, i) => ({ transform: `translate(${cx + Math.sin(t * Math.PI * 2) * dx}px, ${cy + (i % 2 ? -14 : 0)}px)` }));
+    outer.animate(k, { duration: ms, iterations: Infinity, easing: 'ease-in-out' });
+    if (name) LY[name] = outer;
+    return outer;
+  }
+  /* 라이트박스 빛 점: 호박색 작은 원이 깜빡 (장면이 바뀌면 T.clear 로 지워진다) */
+  function glowDots(T, n, pick) {
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const [x, y] = pick(i), r = 3 + Math.random();
+      const g = T.el('g', { style: 'pointer-events:none' }, T.fx);
+      T.el('circle', { cx: x, cy: y, r: r + 3, fill: '#F2B366', opacity: .45 }, g); T.el('circle', { cx: x, cy: y, r, fill: '#FFE3A8' }, g);
+      g.animate([{ opacity: .3 }, { opacity: 1 }, { opacity: .3 }], { duration: 2000 + Math.random() * 2000, delay: Math.random() * 1500, iterations: Infinity });
+      out.push(g);
+    }
+    return out;
+  }
+  /* 어두운 막(종이 뒤 불이 켜지기 전). 돌려준 함수를 부르면 ms 동안 걷힌다 */
+  function tint(T, o) {
+    const r = T.el('rect', { x: -1400, y: -1400, width: 3800, height: 3800, fill: '#2E241C', opacity: o, style: 'pointer-events:none' }, T.fx);
+    return (ms = 600) => { if (!r.isConnected) return; r.animate([{ opacity: o }, { opacity: 0 }], { duration: ms, fill: 'forwards' }).onfinish = () => r.remove(); };
+  }
+  /* 장면별 층 소품 (VISUAL_PLAN §3~§7). 세로 화면 가운데(x 285~715)에는 앞 가림 층을 두지 않는다 */
+  function dress(T, key, P, { bird = false } = {}) {
+    Object.keys(LY).forEach(k => delete LY[k]);
+    if (key === 'kitchen') { sway(layer(T, 'herbs', 150, -24, 150, { top: true }), 1.5, 7000); sway(layer(T, 'herbs', 880, -24, 150, { top: true, flip: true }), 1.5, 7000, 1500); }
+    if (key === 'door') {
+      layer(T, 'bird', 300, 100, 34, { front: false, name: 'bird' });
+      layer(T, 'fern_front', 980, 590, 120);
+      butterfly(T, 860, 245, 26, 50);
+    }
+    if (key === 'trail') {
+      sway(layer(T, 'branch_leaves', 110, -24, 200, { top: true }), 1.5, 7000); sway(layer(T, 'branch_leaves', 890, -24, 200, { top: true, flip: true }), 1.5, 7000, 1800);
+      layer(T, 'bird', 150, 150, 34, { front: false, name: 'bird' });
+      layer(T, 'fern_front', 40, 590, 120, { name: 'fernL' }); layer(T, 'fern_front', 980, 590, 120, { flip: true });
+      butterfly(T, 880, 215, 26, 45);
+    }
+    if (key === 'tree') {
+      [140, 500, 860].forEach((x, i) => layer(T, 'grass_sil', x, 600, 70, { flip: i === 1 }));
+      glowDots(T, 10, i => (i < 6 || P) ? [40 + Math.random() * 920, 10 + Math.random() * 90] : [i % 2 ? 20 + Math.random() * 90 : 890 + Math.random() * 90, 140 + Math.random() * 260]);
+    }
+    if (key === 'flowers') {
+      sway(layer(T, 'branch_leaves', 90, -24, 200, { top: true }), 1.5, 7000); sway(layer(T, 'branch_leaves', 910, -24, 200, { top: true, flip: true }), 1.5, 7000, 1800);
+      layer(T, 'flowers_front', 60, 590, 100, { name: 'flL' }); layer(T, 'flowers_front', 940, 590, 100, { flip: true, name: 'flR' });
+      butterfly(T, 130, 200, 26, 40, 6000, 'bf1'); butterfly(T, 900, 250, 26, 40, 7000, 'bf2');
+    }
+    if (key === 'cottage') {
+      layer(T, 'fern_front', 262, 445, 54); layer(T, 'flowers_front', 700, 445, 45);
+      if (bird) layer(T, 'bird', 560, 232, 15, { front: false, name: 'bird' });
+    }
+    if (key === 'bed') layer(T, 'plant_pot', 60, 545, 150);
+    if (key === 'room') layer(T, 'plant_pot', 20, 545, 150);
+    if (key === 'table') { sway(layer(T, 'herbs', 120, -24, 150, { top: true }), 1.5, 7000); layer(T, 'plant_pot', 960, 545, 150); }
+  }
+  /* 6장 분할 화면: 위 꽃밭(낮)·아래 지름길(해질녘 라이트박스). 아래 칸 풀 띠·빛 점은 배우 위 */
+  function splitDress(T) {
+    [140, 500, 860].forEach((x, i) => layer(T, 'grass_sil', x, 605, 70, { flip: i === 1 }));
+    glowDots(T, 6, i => [i % 2 ? 20 + Math.random() * 190 : 790 + Math.random() * 190, 300 + Math.random() * 70]);
+    return glowDots(T, 2, i => [-60 - i * 80, 330 + i * 30]);
+  }
   /* 작은 소품도 손가락이 닿게: 투명한 누르는 자리를 깐다(발끝 가운데가 0,0). 화면 짧은 변 80px 이상 (2026-10-22) */
   function widen(T, a, w = 100, h = 100) {
     const r = T.el('rect', { x: -w / 2, y: -h, width: w, height: h, fill: '#000', 'fill-opacity': 0 }, a.pos);
@@ -143,8 +231,11 @@
     const { sleep, say, camSnap } = T;
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const pan = (cx = 500) => camSnap(T.viewWidth() < 990 ? cx : 500, 280, 1);
-    const scene = (key, cx) => { T.clear(); bgImage(T, key); pan(cx); quiet(); };
+    const scene = (key, cx) => { T.clear(); bgImage(T, key); dress(T, key, T.viewWidth() < 990); pan(cx); quiet(); };
 
+    let runDots = [];
+    /* 지름길 빛 점 둘이 늑대 뒤를 따라 오른쪽으로 흘러간다(늑대와 같은 2400ms) */
+    const followDots = ds => ds.forEach((g, i) => g.animate([{ translate: '0 0' }, { translate: `${700 + i * 120}px 0` }], { duration: 2400, easing: 'ease-in', fill: 'forwards', composite: 'add' }));
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
     await Promise.race([Promise.all(loads), sleep(4000)]);
 
@@ -183,7 +274,7 @@
         table: { granny: [RP ? 625 : 650, 510, { look: 'tea', to: 'left', s: RP ? .8 : 1 }], hood: [RP ? 385 : 400, 510, { look: 'joy', to: 'right', s: RP ? .8 : 1 }], hunter: [RP ? 695 : 770, 510, { look: 'laugh', to: 'left', s: RP ? .72 : 1 }] },
       };
       const ROOM_WOLF = { jump: [800, 450], sleep: [815, 430], hiccup: [760, 510], flee: [760, 520], _: [815, 440] };
-      let key = '', vases = [], packing = null;
+      let key = '', vases = [], packing = null, splitDots = [];
       const rI = () => T.readInstant();
       const nums = s => String(s).split(',').map(Number);
       const isRoom = () => key === 'wardrobe' || key === 'hunter';
@@ -195,14 +286,15 @@
           panel(T, 'flowers', 0, 272, 40); panel(T, 'shortcut', 288, 560, -20);
           T.el('rect', { x: -40, y: 270, width: 1080, height: 20, fill: '#F6ECD8' }, T.bg);
           T.el('rect', { x: -40, y: 290, width: 1080, height: 5, fill: '#000', 'fill-opacity': .18 }, T.bg);
+          splitDots = splitDress(T);
           camSnap(500, 280, 1); quiet(); return;
         }
-        if (k === 'cottage') { T.clear(); bgImage(T, 'cottage'); camSnap(480, 310, 2.2); quiet(); return; }
+        if (k === 'cottage') { T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', RP, { bird: true }); camSnap(480, 310, 2.2); quiet(); return; }
         scene(BGKEY[k], CX[k]);
         if (k === 'home') { // 바구니와 식탁 위 음식 (담기는 basket:fill)
           put(T, basket, 500, 505); put(T, bread, 370, TY); put(T, milk, 440, TY); put(T, apple, 510, TY);
         }
-        if (k === 'bed') put(T, frame, 805, 278); // 그림 속 빈 액자 안에 진짜 할머니 사진
+        if (k === 'bed') put(T, frame, FRAME[0], FRAME[1], { s: FRAME[2] }); // 그림 속 빈 액자 안에 진짜 할머니 사진
         if (k === 'flowers') {
           ['yellow', 'red', 'blue'].forEach((c, i) => { const v = prop(T, 'vase_' + c, 104); v.color = c; v.bq = []; put(T, v, 380 + i * 120, 535); vases.push(v); });
         }
@@ -239,7 +331,7 @@
           if (rI()) { a.place(x, y); return; }
           if (n === 'hood' && isRoom()) { x = 145; y = 495; } // 옷장은 놀이판 그림에서 왼쪽 벽에 있다
           if (n === 'hunter' && isRoom()) x = 600;
-          if (n === 'wolf') { AudioFX.sfx('whoosh', .6); return a.move(x, y === 480 || y === 470 ? 535 - (key === 'split' ? 0 : 15) : y, key === 'split' ? 2400 : 1300, 'ease-in'); }
+          if (n === 'wolf') { AudioFX.sfx('whoosh', .6); if (key === 'split') followDots(splitDots); return a.move(x, y === 480 || y === 470 ? 535 - (key === 'split' ? 0 : 15) : y, key === 'split' ? 2400 : 1300, 'ease-in'); }
           const dx = x - a.x;
           if (n === 'hood' && key !== 'wardrobe') {
             a.look('walk', dx >= 0 ? 'right' : 'left');
@@ -269,7 +361,7 @@
           })();
         },
         hood_on() { },
-        pinky() { popSfx(T); hood.hop(36, 450); if (mama.pos.isConnected && here(mama)) mama.hop(20, 450); if (key === 'table') granny.hop(20, 450); },
+        pinky() { popSfx(T); hood.hop(36, 450); lyHop('bird', 10, 300); if (mama.pos.isConnected && here(mama)) mama.hop(20, 450); if (key === 'table') granny.hop(20, 450); },
         flowers(op) {
           if (op !== 'pick') return;
           hood.hop(16, 420); popSfx(T);
@@ -282,13 +374,13 @@
               await fl.move(answer.x, 440, 380, 'ease-in'); hide(fl);
               const n = answer.bq.length;
               const f2 = prop(T, 'flower_' + col, 70 + n * 16); put(T, f2, answer.x + (n % 2 ? 22 : -22) * (1 + n * .4), 440 - n * 6);
-              answer.bq.push(f2); T.world.appendChild(answer.pos); answer.hop(14, 260); popSfx(T);
+              answer.bq.push(f2); T.world.appendChild(answer.pos); answer.hop(14, 260); popSfx(T); lyHop(answer.x < 500 ? 'flL' : 'flR', 6, 250);
               await sleep(120);
             }
           })();
         },
         vases() { },
-        door(op) { if (op === 'knock') return (async () => { for (let k = 0; k < 3; k++) { hood.hop(8, 200); await sleep(260); } })(); },
+        door(op) { if (op === 'knock') return (async () => { for (let k = 0; k < 3; k++) { hood.hop(8, 200); lyHop('bird', 6, 250); await sleep(260); } })(); },
         window(op) { if (op === 'knock') knock(T); },
         wardrobe(op) {
           if (op === 'in') { // 옷장 속으로 쏙
@@ -387,6 +479,7 @@
     await say('"네, 엄마! 약속해요."');
     await T.tap(live(hood), { prompt: '빨간 모자를 톡! 새끼손가락을 걸어요.' });
     popSfx(T); T.pop(500, 200, '약속!');
+    lyHop('bird', 10, 300); setTimeout(() => lyHop('bird', 10, 300), 320);
     await Promise.all([hood.hop(36, 450), mama.hop(20, 450)]);
     await say('엄마와 빨간 모자는 새끼손가락을 걸었어요.');
 
@@ -400,7 +493,7 @@
     const trailStep = _ => {
       step++; hood.look(step % 2 ? 'walk2' : 'walk');
       hood.move(hood.x + 55, 515 + step * 2, 420); hood.hop(14, 380);
-      AudioFX.sfx('step_grass', .4);
+      AudioFX.sfx('step_grass', .4); lyHop('bird', 6, 300); if (step === 3) lyWig('fernL', 4, 500);
     };
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await trailStep(i); await sleep(600); }
@@ -409,11 +502,13 @@
     await say('어, 나무 뒤에서 뭔가 보슬보슬한 게 살짝 보였어요. 꼬리였나 봐요!');
 
     /* --- 4. 늑대의 꾀 --- */
+    let unTint = null;
     await T.sceneCard('늑대', () => {
-      scene('tree', 560);
+      scene('tree', 560); unTint = tint(T, .10);
       put(T, wolf, 650, 500, { look: 'peek', to: 'left' });
       put(T, hood, 400, 510, { look: 'wonder', to: 'right' });
     }, wolf.pos);
+    unTint && unTint(600);
     await say('나무 옆에서 늑대가 슬그머니 나왔어요. "빨간 모자 아가씨, 어디 가니?"');
     await say('"할머니 댁에 가요." 빨간 모자가 대답했어요.');
     await T.cutImage([{ src: cutSrc('whisper'), hold: 3200 }], { hold: 3200 });
@@ -452,7 +547,7 @@
       const n = answer.bq.length;
       const f2 = prop(T, 'flower_' + col, 70 + n * 16); put(T, f2, answer.x + (n % 2 ? 22 : -22) * (1 + n * .4), 440 - n * 6);
       bouquet.appendChild(f2.pos); answer.bq.push(f2); T.world.appendChild(answer.pos);
-      answer.hop(14, 260);
+      answer.hop(14, 260); lyHop(answer.x < 500 ? 'flL' : 'flR', 6, 250);
       T.pop(answer.x + (n % 2 ? 50 : -50), 360 - (n > 1 ? 40 : 0), ['하나!', '둘!', '셋!', '넷!', '다섯!', '여섯!'][i]);
       await sleep(300);
     }
@@ -467,14 +562,15 @@
       pan();
       put(T, hood, 500, 268, { look: 'pick', to: 'right', s: .62 });
       put(T, wolf, -200, 535, { look: 'run', to: 'right' });
+      runDots = splitDress(T);
     }, wolf.pos);
     await say('위에서는 빨간 모자가 꽃을 따요. 아래에서는 늑대가 지름길로 달려가요!');
     hood.hop(16, 420);
-    AudioFX.sfx('whoosh', .6);
+    AudioFX.sfx('whoosh', .6); followDots(runDots);
     await wolf.move(1200, 535, 2400, 'ease-in');
     await T.cutImage([{ src: cutSrc('dash'), sfx: 'whoosh', hold: 2400 }], { hold: 2400 });
     await T.cutImage([{ src: cutSrc('gulp'), hold: 2600 }], { hold: 2600 });
-    await T.sceneCard('', () => { T.clear(); bgImage(T, 'cottage'); camSnap(480, 310, 2.2); hide(hood); hide(wolf); }, wolf.pos);
+    await T.sceneCard('', () => { T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', P); camSnap(480, 310, 2.2); hide(hood); hide(wolf); }, wolf.pos); // 꿀꺽: 새는 놀라 날아간 뒤라 없다
     AudioFX.sfx('gulp') || T.tone([300, 120], .4, { vol: .2 });
     await say('똑똑똑… 문이 닫히고… 꿀꺽!');
     await T.sceneCard('', () => { scene('bed', 590); put(T, wolf, 430, 470, { look: 'granny', to: 'left' }); }, wolf.pos);
@@ -482,11 +578,11 @@
 
     /* --- 7. 할머니 집 --- */
     await T.sceneCard('', () => {
-      T.clear(); bgImage(T, 'cottage'); camSnap(480, 310, 2.2);
+      T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', P, { bird: true }); camSnap(480, 310, 2.2);
       put(T, hood, 470, 366, { look: 'knock', to: 'left', s: .34 });
     }, wolf.pos);
     await T.ask('빨간 모자는 숲속 할머니 집에 도착했어요. 문을 톡 두드려요!', () => T.tap(live(hood), { prompt: '빨간 모자를 톡! 똑똑똑 노크해요.' }));
-    for (let k = 0; k < 3; k++) { knock(T); T.pop(560, 250, '똑!'); await hood.hop(8, 200); }
+    for (let k = 0; k < 3; k++) { knock(T); T.pop(560, 250, '똑!'); lyHop('bird', 6, 250); await hood.hop(8, 200); }
     await say('"들어오렴~" 안에서 쉰 목소리가 들렸어요.');
 
     /* --- 8. 이상한 할머니 --- */
@@ -494,7 +590,7 @@
     await T.sceneCard('이상해요', () => {
       scene('bed', P ? 470 : 590);
       put(T, wolf, 335, 472, { look: 'granny', to: 'left' });
-      put(T, frame, 805, 278); // 그림 속 빈 액자 안에 진짜 할머니 사진
+      put(T, frame, FRAME[0], FRAME[1], { s: FRAME[2] }); // 그림 속 빈 액자 안에 진짜 할머니 사진
       put(T, hood, 640, 510, { look: 'wonder', to: 'left' });
     }, wolf.pos);
     await say('"할머니, 오셨어요?" 그런데 침대 속 할머니가 어딘가 이상해요.');
