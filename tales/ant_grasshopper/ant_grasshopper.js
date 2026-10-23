@@ -22,7 +22,7 @@
      소나기는 여름 들판 위에 곱하기(multiply) 회색 한 겹 + 해를 가리는 먹구름(코드). 겨울 들판은 하이앵글 눈밭 그림. */
   const AS = '../../assets/';
   const BG = {
-    summer: 'v3w/ag_bg_summer_v2.webp', autumn: 'v3w/ag_bg_autumn_v2.webp', spring: 'v3w/ag_bg_spring_v2.webp',
+    summer: 'v3w/ag_bg_summer_v2.webp', autumn: 'v3w/ag_bg_autumn_v2.webp', spring: 'v3w/ag_bg_spring.webp',
     ant_eye: 'v3w/ag_bg_ant_eye.webp', leafstage: 'v3w/ag_bg_leafstage_v2.webp', winter_high: 'v3w/ag_lb_snow_dusk.webp', lamp: 'v3w/ag_lb_cellar_lamp.webp',
     door: 'v3w/ag_bg_door.webp', cellar: 'v3w/ag_bg_cellar.webp', // cellar: 어두운 흙을 조금 밝혀 구움, 곡식·도토리 방은 그림 속에 이미 가득
   };
@@ -70,7 +70,7 @@
   }
   const sprite = (T, g, key) => { const s = SPR[key]; return s ? pic(T, g, key, -s[2] * s[0], -s[3] * s[1], s[0], s[1]) : null; };
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992). dx·dy: 그림을 통째로 옮긴다 */
-  /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 여름·가을·봄 들판과 풀잎 무대는 v2(개미집·언덕·나무·무대 잎 자리 그대로, 겹쳐 확인 — 가을·봄 개미집 문은 FIELD_DOOR 만 고침),
+  /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md, 봄 들판은 사용자 결정으로 옛 그림): 여름·가을 들판과 풀잎 무대는 v2(개미집·언덕·나무·무대 잎 자리 그대로, 겹쳐 확인 — 가을·봄 개미집 문은 FIELD_DOOR 만 고침),
      첫눈은 보랏빛 저녁 라이트박스(멀리 구멍에 문 불빛), 겨울 음악회는 창고 그림 위에 등불 라이트박스를 크로스페이드. 똑똑(문)·창고 가득(세기)은 그대로 */
   const BG_EDGE = { summer: ['#a8d3eb', '#4a6345'], autumn: ['#fbb589', '#431700'], spring: ['#b5e6fb', '#62753d'], ant_eye: ['#95becc', '#20230e'],
     leafstage: ['#a5cbd9', '#232011'], winter_high: ['#b7a8d8', '#dfe3f0'], door: ['#d4e7fc', '#e3ecfa'], cellar: ['#cad9dd', '#341f0d'] };
@@ -348,14 +348,13 @@
     if (season === 'winter') T.paper(parent, [['path', { d: `M${x - 88} ${y - 58} Q${x} ${y - 124} ${x + 88} ${y - 58} Q${x} ${y - 84} ${x - 88} ${y - 58} Z`, fill: C.snow }]]);
   }
   /* 들판 4계절: 같은 구도 (나무 둘 · 언덕 · 개미집) */
-  const FIELD_DOOR = { summer: [915, 342], autumn: [857, 346], spring: [907, 367] }; // 그림 속 개미집 문 (무대 좌표). 2026-10-23 v2: 가을 16 왼쪽, 봄 21 오른쪽·9 아래
+  const FIELD_DOOR = { summer: [915, 342], autumn: [857, 346], spring: [886, 358] }; // 그림 속 개미집 문 (무대 좌표). 2026-10-23 v2: 가을 16 왼쪽. 봄은 사용자 결정으로 옛 그림(옛 좌표)
   function fieldBG(T, season, { sky } = {}) {
     const { el, paper } = T, b = T.bg;
     if (bgImage(T, season)) {
       const P = narrow();
       if (season === 'summer' && !P) { layer(T, 'sunflowers_mid', 60, 556, 110, { front: false }); }
       if (season === 'autumn') { layer(T, 'leafpile_front', 50, 592, 70); layer(T, 'leafpile_front', 960, 592, 70, { flip: true }); }
-      if (season === 'spring') { layer(T, 'tulips_mid', P ? 200 : 120, 560, 70, { front: false }); }
       if (sky) { // 소나기: 그림 속 해를 먹구름으로 가리고 회색 한 겹을 곱한다
         storm(T, b, -60, -10, 260);
         const t = el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: '#8A9AAD', opacity: .55 }, b);
