@@ -13,8 +13,15 @@
     rich_gold: 0.906, rich_grab: 0.873, rich_shout: 0.953, };
   const NF = new Set(['coin', 'gold', 'jar', 'jar_cracked', 'rice']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
   const BGS = ['field', 'pit', 'jarfront', 'village', 'richgate', 'hall', 'hallwide', 'feast'];
+  /* 2026-10-23 화려한 다층 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 set 포함)는 그대로, 그림만 v2·라이트박스.
+     마당 초가·돌담·감나무, 마을 집 다섯, 대문·계단·돌사자, 병풍·마루, 땅속 뚜껑, 잔치 초가 자리는 옛 그림과 겹쳐 같다(±1%).
+     라이트박스는 2장 땅속·10장 잔치 둘(7장 금 더미는 코드 반짝) */
+  const BGV = { field: 'field_v2', pit: 'pit_lb', jarfront: 'jarfront_v2', village: 'village_v2', richgate: 'richgate_v2', hall: 'hall_v2', hallwide: 'hallwide_v2', feast: 'feast_lb' };
+  /* 층 소품(mj_layer_*, 누름 없음) 그림 폭/높이 */
+  const LAR = { persimmon_branch: .965, cosmos_front: 1.075, sparrow: 1.0333, chili_string: .5983, blossom_branch: .8783, pine_branch: 1.055, peony_front: 1.105,
+    lantern: .3667, roots_sil: 1.2783, soil_sil: 4.4776, lantern_sil: 2.381, bush_sil: 1.15 };
   const CUTS = ['clink', 'twohoes', 'coins', 'buried', 'plop', 'eight', 'smash', 'hungry'];
-  const bgSrc = k => AS + 'mj_bg_' + k + '.webp', cutSrc = k => AS + 'mj_cut_' + k + '.webp';
+  const bgSrc = k => AS + 'mj_bg_' + (BGV[k] || k) + '.webp', cutSrc = k => AS + 'mj_cut_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
 
   /* 2026-10-20 새 '금 넣는 부자' 그림(gold)은 그림 속에 항아리가 이미 있어 항아리가 둘로 보여서, 항아리 없는 shout 자세로 대신함 */
@@ -51,6 +58,92 @@
   function bgImage(T, key, { x = BGBOX.x, y = BGBOX.y, w = BGBOX.w, h = BGBOX.h, parent } = {}) {
     return T.el('image', { href: bgSrc(key), x, y, width: w, height: h, preserveAspectRatio: 'none' }, parent || T.bg);
   }
+  /* ---- 층 소품: 누름 없음. 앞 가림 층은 T.fx(배우 위), 중간 층은 T.bg(배우 뒤). (cx, y) = 가운데·발끝, top 이면 윗변. 세로 화면 압축(fx) 없이 무대 좌표 그대로 ---- */
+  const LY = {};
+  function layer(T, k, cx, y, h, { front = true, flip = false, top = false, name } = {}) {
+    const w = h * LAR[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+    if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+    const inner = T.el('g', { filter: 'url(#pp)' }, g);
+    T.el('image', { href: AS + 'mj_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+    inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+    if (name) LY[name] = inner;
+    return inner;
+  }
+  const sway = (g, deg, ms, delay = 0) => { g.animate([{ rotate: `${-deg}deg` }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }], { duration: ms, delay, iterations: Infinity, easing: 'ease-in-out' }); return g; };
+  const lyHop = (name, dy = 6, ms = 220) => { const g = LY[name]; if (g && g.isConnected) g.animate([{ translate: '0 0' }, { translate: `0 ${-dy}px` }, { translate: '0 0' }], { duration: ms, easing: 'ease-out', composite: 'add' }); };
+  const lyWig = (name, deg = 4, ms = 500) => { const g = LY[name]; if (g && g.isConnected) g.animate([{ rotate: '0deg' }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }, { rotate: '0deg' }], { duration: ms, composite: 'add' }); };
+  /* 금빛 마름모 반짝: (x, y) 에서 n 조각이 퍼졌다 사라진다 */
+  function sparkle(T, x, y, n = 6, spread = 70, colors = ['#EBD08A', '#F3E9C8']) {
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2 + Math.random() * .5, d = spread * (.6 + Math.random() * .5), s = 7 + Math.random() * 5;
+      const g = T.el('path', { d: `M0 ${-s} L${s * .6} 0 L0 ${s} L${-s * .6} 0 Z`, fill: colors[i % colors.length], style: 'pointer-events:none' }, T.fx);
+      g.animate([{ transform: `translate(${x}px,${y}px) scale(.3)`, opacity: 1 }, { transform: `translate(${x + Math.cos(a) * d}px,${y + Math.sin(a) * d}px) scale(1)`, opacity: 1, offset: .6 }, { transform: `translate(${x + Math.cos(a) * d * 1.15}px,${y + Math.sin(a) * d * 1.15}px) scale(.6)`, opacity: 0 }],
+        { duration: 900 + Math.random() * 300, easing: 'ease-out', fill: 'forwards' }).onfinish = () => g.remove();
+    }
+  }
+  /* 빛 점: 정해진 자리에서 깜빡 (장면이 바뀌면 T.clear 로 지워진다) */
+  function glowDots(T, spots, r = 4, color = '#F2B366', ms = 1600) {
+    return spots.map(([x, y], i) => {
+      const g = T.el('g', { style: 'pointer-events:none' }, T.fx);
+      T.el('circle', { cx: x, cy: y, r: r + 4, fill: color, opacity: .4 }, g); T.el('circle', { cx: x, cy: y, r, fill: '#FFF1C9' }, g);
+      g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
+      g.animate([{ opacity: .3 }, { opacity: 1 }, { opacity: .3 }], { duration: ms, delay: i * (ms / spots.length), iterations: Infinity });
+      return g;
+    });
+  }
+  /* 어두운(또는 따뜻한) 막을 깔았다가 걷는다 — 종이 뒤 불이 켜지는 느낌 */
+  function tint(T, color, o, ms) {
+    const r = T.el('rect', { x: -1400, y: -1400, width: 3800, height: 3800, fill: color, opacity: o, style: 'pointer-events:none' }, T.fx);
+    r.animate([{ opacity: o }, { opacity: 0 }], { duration: ms, fill: 'forwards' }).onfinish = () => r.remove();
+  }
+  /* 꽃잎이 위에서 천천히 떨어진다(한 번) */
+  function petals(T, n = 8) {
+    for (let i = 0; i < n; i++) {
+      const x = 60 + Math.random() * 880, g = T.el('ellipse', { cx: 0, cy: 0, rx: 7, ry: 4.5, fill: i % 3 ? '#F2A7B8' : '#F7C9D2', style: 'pointer-events:none' }, T.fx);
+      g.animate([0, .5, 1].map((t, j) => ({ transform: `translate(${x + (j === 1 ? 30 : 0) + t * 40}px, ${-30 + t * 560}px) rotate(${t * 300}deg)`, opacity: t > .85 ? 0 : 1 })),
+        { duration: 3000 + Math.random() * 600, delay: i * 120, easing: 'linear', fill: 'forwards' }).onfinish = () => g.remove();
+    }
+  }
+  /* 장면별 층 소품 (VISUAL_PLAN §3~§7). 세로 화면 가운데(x 285~715)에는 앞 가림 층을 두지 않는다 */
+  const LANTERN_HOLES = [[.094, .446], [.258, .526], [.42, .563], [.583, .562], [.745, .526], [.909, .446]];
+  function dress(T, key) {
+    Object.keys(LY).forEach(k => delete LY[k]);
+    if (key === 'field') {
+      sway(layer(T, 'persimmon_branch', 960, -24, 200, { top: true }), 1, 8000);
+      layer(T, 'cosmos_front', 40, 590, 110); layer(T, 'cosmos_front', 980, 590, 110, { flip: true });
+      layer(T, 'sparrow', 150, 478, 30, { front: false, name: 'sp1' }); layer(T, 'sparrow', 850, 478, 30, { front: false, flip: true, name: 'sp2' });
+    }
+    if (key === 'pit') {
+      layer(T, 'roots_sil', 60, -24, 200, { top: true }); layer(T, 'roots_sil', 940, -24, 200, { top: true, flip: true });
+      [125, 375, 625, 875].forEach((x, i) => layer(T, 'soil_sil', x, 592, 60, { flip: i % 2 === 1, name: 'soil' + i }));
+    }
+    if (key === 'jarfront') {
+      sway(layer(T, 'persimmon_branch', 960, -24, 200, { top: true }), 1, 8000);
+      layer(T, 'chili_string', CHILI[0], CHILI[1], 140, { front: false, top: true, name: 'chili' });
+      layer(T, 'cosmos_front', 40, 590, 110);
+      layer(T, 'sparrow', 930, 285, 30, { front: false, flip: true, name: 'sp1' });
+    }
+    if (key === 'village') {
+      sway(layer(T, 'blossom_branch', 60, -24, 180, { top: true }), 1, 8000); sway(layer(T, 'blossom_branch', 940, -24, 180, { top: true, flip: true }), 1, 8000, 1500);
+      layer(T, 'sparrow', 297, 205, 30, { front: false, name: 'sp297' }); layer(T, 'sparrow', 719, 205, 30, { front: false, flip: true, name: 'sp719' });
+    }
+    if (key === 'richgate') {
+      sway(layer(T, 'pine_branch', 60, -24, 200, { top: true }), 1, 9000);
+      layer(T, 'peony_front', 15, 590, 120); layer(T, 'peony_front', 985, 590, 120, { flip: true, name: 'peonyR' });
+    }
+    if (key === 'hall' || key === 'hallwide') {
+      sway(layer(T, 'lantern', 150, -24, 150, { front: false, top: true, name: 'lanL' }), 1.5, 6000); sway(layer(T, 'lantern', 850, -24, 150, { front: false, top: true, name: 'lanR' }), 1.5, 6000, 1200);
+    }
+    if (key === 'feast') {
+      const lh = 120, lw = lh * LAR.lantern_sil, xs = [200, 800];
+      xs.forEach((x, i) => sway(layer(T, 'lantern_sil', x, -12, lh, { top: true, flip: i === 1 }), 1, 7000, i * 1500));
+      glowDots(T, xs.flatMap(x => LANTERN_HOLES.map(([fx2, fy]) => [x - lw / 2 + fx2 * lw, -12 + fy * lh])), 6, '#F2B366', 1200);
+      layer(T, 'bush_sil', 30, 590, 120); layer(T, 'bush_sil', 970, 590, 120, { flip: true });
+      tint(T, '#E8703A', .12, 1400);
+    }
+  }
+  /* 고추 꾸러미: 처마 밑 벽(문과 마늘 타래 사이를 피해 왼쪽 기둥 옆) [가운데 x, 윗 y] */
+  const CHILI = [300, 150];
   const hot = (T, cx, cy, r) => T.el('circle', { cx, cy, r, fill: '#fff', 'fill-opacity': .01 }, T.world);
   const popSfx = T => AudioFX.sfx('pop') || T.tone([500, 800], .12, { vol: .12 });
   const clinkSfx = T => AudioFX.sfx('ding') || T.tone([900, 1300], .15, { vol: .12 });
@@ -66,7 +159,19 @@
     const { sleep, say, camSnap } = T;
     const tr = T.tr;
     const pan = (cx = 500) => camSnap(T.viewWidth() < 990 ? cx : 500, 280, 1);
-    const scene = (key, cx) => { T.clear(); bgImage(T, key); pan(cx); };
+    const scene = (key, cx) => { T.clear(); bgImage(T, key); dress(T, key); pan(cx); };
+    const lanternSwing = deg => ['lanL', 'lanR'].forEach(n => lyWig(n, deg, 800));
+    /* 2장 땅속 라이트박스: 어둠이 걷히며 빛나는 구멍이 드러나고, 뚜껑 둘레 빛 점 8 이 깜빡인다(당길 때마다 한 단계 커짐) */
+    let lidDots = [];
+    const pitLight = () => {
+      tint(T, '#1A1410', .35, 1200);
+      lidDots = glowDots(T, Array.from({ length: 8 }, (_, i) => [500 + Math.cos(i / 8 * Math.PI * 2) * 95, 365 + Math.sin(i / 8 * Math.PI * 2) * 38]), 3, '#D9A94E', 6400);
+    };
+    const lidGrow = i => lidDots.forEach(g => g.querySelectorAll('circle').forEach((c, j) => c.setAttribute('r', (j ? 3 : 7) + i)));
+    const jarRise = () => {
+      sparkle(T, jar.x, 300, 16, 110); ['soil0', 'soil1', 'soil2', 'soil3'].forEach(n => lyWig(n, 2, 300));
+      if (!tight(T) && !T.readInstant()) T.camTo(500, 300, 1.06, 700).then(() => T.camTo(500, 280, 1, 1200));
+    };
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
     await Promise.race([Promise.all(loads), sleep(4000)]);
@@ -87,6 +192,12 @@
     const pull = i => {
       farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
     };
+    /* 참새: 괭이질하면 두 마리가 날아올라 양옆 돌담 위에 앉는다 */
+    /* sp2 는 뒤집힌 그림이라 가로 이동 부호가 반대(-50 → 화면에서 오른쪽 +50) */
+    const flySparrows = () => [['sp1', -50, -216], ['sp2', -50, -210]].forEach(([n, dx, dy]) => { const g = LY[n]; if (g && g.isConnected) g.animate([{ translate: '0 0' }, { translate: `${dx * .5}px ${dy - 40}px`, offset: .6 }, { translate: `${dx}px ${dy}px` }], { duration: 900, easing: 'ease-out', fill: 'forwards' }); });
+    const sparrowHop = x => { const n = 'sp' + x; lyHop(n, 8, 220); setTimeout(() => lyHop(n, 8, 220), 260); };
+    const jarGlint = () => { sparkle(T, jar.x, 345, 6, 60); lyHop('sp1', 6, 200); };
+    const goldGlint = i => { sparkle(T, 560 + i * 90, 380, 10, 80, ['#EBD08A', '#F6ECD8']); lanternSwing(4); };
     /* ===== 읽어 주기 동사 맵: 놀이판 장면·배우·컷 함수를 감싼 얇은 함수 (대본 read_script_el.json) ===== */
     const RD = { hoes: [], coins: [], golds: [] };
     const nums = s => String(s).split(',').map(Number);
@@ -101,15 +212,15 @@
     };
     const cutVerb = k => T.cutImage([{ src: cutSrc(k), sfx: k === 'smash' ? 'pow' : 'pop', hold: 3000 }], { hold: 3000 });
     const READ_ACTS = {
-      set: k => scene(k),
+      set: k => { scene(k); if (k === 'pit') pitLight(); },
       cam: s => { const [x, y, z] = nums(s); camSnap(x, y, z); },
       cut: cutVerb,
       confetti: () => T.confetti(),
       fx: k => k === 'clink' ? clinkSfx(T) : k === 'pow' ? AudioFX.sfx('pow') : k === 'tada' ? (AudioFX.sfx('tada') || AudioFX.sfx('pop')) : popSfx(T),
       pop: s => { const [x, y, ...t] = String(s).split(','); T.pop(+x, +y, tr(t.join(','))); },
       farmer: actorVerbs(farmer, {
-        plow: async () => { for (let i = 1; i <= 3; i++) { plow(i); await sleep(450); } },
-        pull3: async () => { for (let i = 1; i <= 3; i++) { pull(i); await sleep(450); } },
+        pull3: async () => { for (let i = 1; i <= 3; i++) { pull(i); lidGrow(i); await sleep(450); } },
+        plow: async () => { for (let i = 1; i <= 3; i++) { plow(i); if (i === 1) flySparrows(); await sleep(450); } },
       }),
       wife: actorVerbs(wife),
       rich: actorVerbs(rich, {
@@ -121,14 +232,14 @@
         if (op === 'show') { jar.pos.style.display = ''; jar.pos.style.opacity = 1; return; }
         if (op === 'hide') return hide(jar);
         if (op === 'hop') return jar.hop(14, 260);
-        if (op === 'dig') { jar.pos.style.display = ''; jar.pos.style.opacity = 1; return jar.hop(40, 500); }
+        if (op === 'dig') { jar.pos.style.display = ''; jar.pos.style.opacity = 1; jarRise(); return jar.hop(40, 500); }
         if (op === 'lend') return (async () => { await sleep(300); await jar.move(fx(T, 700), 520, 600); hide(jar); })();
         console.warn('[read] 요술 항아리: 모르는 항아리 동작', op);
       },
       hoe: async op => {
         if (op !== 'drop') return;
         put(T, hoe, 400, 470); await sleep(300);
-        await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260);
+        await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260); lyWig('chili', 3, 400);
       },
       cracked: op => { if (op === 'show') put(T, cracked, 700, 505); },
       hoes: async (op, n) => {
@@ -137,7 +248,7 @@
         const spots = []; hoeRows(n).forEach((cnt, r) => { for (let c = 0; c < cnt; c++) spots.push([fx(T, 520) + (c - (cnt - 1) / 2) * 105, 335 - r * 115]); });
         for (let i = 0; i < n; i++) {
           const h2 = prop(T, 'hoe', 110); h2.pos.style.pointerEvents = 'none'; put(T, h2, spots[i][0], spots[i][1], { raw: true });
-          if (!T.readInstant()) { h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(12, 240); popSfx(T); await sleep(450); }
+          if (!T.readInstant()) { h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(12, 240); popSfx(T); jarGlint(); await sleep(450); }
           RD.hoes.push(h2);
         }
       },
@@ -147,7 +258,7 @@
         const csp = tight(T) ? (n <= 5 ? 60 : 50) : (n <= 5 ? 90 : 72);
         for (let i = 1; i <= n; i++) {
           const c = prop(T, 'coin', 52); c.pos.style.pointerEvents = 'none'; put(T, c, fx(T, 520) + (i - (n + 1) / 2) * csp, 548, { raw: true });
-          if (!T.readInstant()) { c.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 280); jar.hop(10, 220); clinkSfx(T); await sleep(450); }
+          if (!T.readInstant()) { c.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 280); jar.hop(10, 220); clinkSfx(T); jarGlint(); await sleep(450); }
           RD.coins.push(c);
         }
       },
@@ -156,7 +267,7 @@
         for (let i = 1; i <= +n; i++) {
           const d = prop(T, 'gold', 46); put(T, d, jar.x, 250); d.move(jar.x, 400, 300, 'ease-in').then(() => hide(d));
           const g = prop(T, 'gold', 70 + i * 24); put(T, g, 560 + i * 90, 505 - i * 6); RD.golds.push(g);
-          jar.hop(12, 240); clinkSfx(T); await sleep(500);
+          jar.hop(12, 240); clinkSfx(T); goldGlint(i); await sleep(500);
         }
       },
       fathers: async (op, n) => {
@@ -178,9 +289,10 @@
           const sack = prop(T, 'rice', 62); put(T, sack, farmer.x, 440, { raw: true });
           popSfx(T);
           await sack.move(x, 450, 520, 'ease-in');
-          sack.hop(16, 260); farmer.hop(12, 240); await sleep(400);
+          sack.hop(16, 260); farmer.hop(12, 240); sparrowHop(x); await sleep(400);
         }
         if (tight(T)) await T.camTo(500, 280, 1, 600);
+        petals(T, 8);
       },
       tables: async op => {
         if (op !== 'show') return;
@@ -196,20 +308,20 @@
     await T.curtain(true);
     await say('옛날 옛날에 마음씨 착한 농부가 살았어요.');
     await T.ask('농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!', () => T.tap(farmer.pos, { prompt: '농부를 톡! 괭이질을 해요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
-    for (let i = 1; i <= 3; i++) { await plow(i); await sleep(450); }
+    for (let i = 1; i <= 3; i++) { await plow(i); if (i === 1) flySparrows(); await sleep(450); }
     await T.cutImage([{ src: cutSrc('clink'), sfx: 'pop', hold: 2800 }], { hold: 2800 });
     await say('쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.');
 
     /* --- 2. 항아리 캐내기 --- */
     await T.sceneCard(tr('땅속'), () => {
-      scene('pit');
+      scene('pit'); pitLight();
       put(T, farmer, 700, 520, { look: 'pull', to: 'left' });
       put(T, jar, 500, 430); jar.pos.style.opacity = 0;
     }, farmer.pos);
     await say('땅속에서 둥근 뚜껑이 보여요.');
     // 저절로 (2026-10-19 톡 조작 정리)
-    for (let i = 1; i <= 3; i++) { await pull(i); await sleep(450); }
-    jar.pos.style.opacity = 1; jar.hop(40, 500);
+    for (let i = 1; i <= 3; i++) { await pull(i); lidGrow(i); await sleep(450); }
+    jar.pos.style.opacity = 1; jar.hop(40, 500); jarRise();
     farmer.look('amaze');
     await say('쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.');
 
@@ -223,7 +335,7 @@
     await say('농부는 항아리를 집 마당에 놓았어요. 아내도 구경하러 나왔어요.');
     await say('농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.');
     await sleep(500);
-    await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260);
+    await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260); lyWig('chili', 3, 400);
     await T.cutImage([{ src: cutSrc('twohoes'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     await say('"어머나! 괭이가 두 개가 되었어요!" 아내가 깜짝 놀랐어요.');
     const hoes = [], nHoe = rnd(3, 6);
@@ -232,7 +344,7 @@
     await T.ask(`항아리를 ${KN[nHoe]} 번 톡톡 눌러서 괭이를 ${KN[nHoe]} 개 세어 봐요!`, () => T.mash(jar.pos, { count: nHoe, prompt: `항아리를 ${KN[nHoe]} 번 톡톡! 괭이를 세어 봐요.`, onStep: i => {
       const h2 = prop(T, 'hoe', 110); h2.pos.style.pointerEvents = 'none'; put(T, h2, hoeSpots[i - 1][0], hoeSpots[i - 1][1], { raw: true });
       h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); hoes.push(h2);
-      jar.hop(12, 240); popSfx(T); vo('n' + i);
+      jar.hop(12, 240); popSfx(T); vo('n' + i); jarGlint();
     } }));
     await say(`괭이가 ${words(nHoe)}! 농부와 아내는 손뼉을 쳤어요.`);
     await wife.hop(30, 400);
@@ -247,7 +359,7 @@
     await T.ask(`항아리를 ${KN[nCoin]} 번 톡톡 눌러서 엽전을 ${KN[nCoin]} 개 세어 봐요!`, () => T.mash(jar.pos, { count: nCoin, prompt: `항아리를 ${KN[nCoin]} 번 톡톡! 엽전을 세어 봐요.`, onStep: i => {
       const c = prop(T, 'coin', 52); c.pos.style.pointerEvents = 'none'; put(T, c, fx(T, 520) + (i - (nCoin + 1) / 2) * csp, 548, { raw: true });
       c.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 280);
-      jar.hop(10, 220); clinkSfx(T); vo('n' + i);
+      jar.hop(10, 220); clinkSfx(T); vo('n' + i); jarGlint();
     } }));
     await say(`엽전이 ${words(nCoin)}! 이제 쌀도 사고 옷도 살 수 있어요.`);
 
@@ -279,10 +391,11 @@
       const sack = prop(T, 'rice', 62); put(T, sack, farmer.x, 440, { raw: true });
       popSfx(T);
       await sack.move(got.key.x, 450, 520, 'ease-in');
-      sack.hop(16, 260); vo('n' + (n + 1));
+      sack.hop(16, 260); vo('n' + (n + 1)); sparrowHop(got.key.x);
       farmer.hop(12, 240);
     }
     if (tight(T)) await T.camTo(500, 280, 1, 600);
+    petals(T, 8);
     await say('다섯 집 모두 쌀을 받고 활짝 웃었어요. 마을이 함께 행복해졌어요.');
 
     /* --- 6. 욕심쟁이 부자 --- */
@@ -299,6 +412,7 @@
     await jar.move(fx(T, 700), 520, 600); hide(jar);
     rich.look('grab', 'right');
     await say('"고맙네! 얼른 가져가야지, 헤헤." 부자는 항아리를 꼭 안고 달려갔어요.');
+    lyWig('peonyR', 4, 500); setTimeout(() => lyWig('peonyR', 4, 500), 900);
     await rich.move(fx(T, 1200), 520, 1300, 'ease-in');
 
     /* --- 7. 금덩이 --- */
@@ -314,7 +428,7 @@
       const d = prop(T, 'gold', 46); put(T, d, jar.x, 250); d.move(jar.x, 400, 300, 'ease-in').then(() => hide(d));
       const g = prop(T, 'gold', 70 + i * 24); put(T, g, 560 + i * 90, 505 - i * 6); g.pos.style.opacity = 0; golds.push(g);
       setTimeout(() => { g.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250).onfinish = () => { g.pos.style.opacity = 1; }; g.pos.style.opacity = 1; }, 300);
-      jar.hop(12, 240); clinkSfx(T); vo('n' + i);
+      jar.hop(12, 240); clinkSfx(T); vo('n' + i); setTimeout(() => goldGlint(i), 300);
     };
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await goldIn(i); await sleep(500); }
@@ -360,7 +474,7 @@
     await say('부자는 지쳐서 외쳤어요. "이게 다 항아리 때문이야! 이제 그만!"');
     await sleep(500);
     await T.cutImage([{ src: cutSrc('smash'), sfx: 'pow', hold: 3000 }], { hold: 3000 });
-    scene('hallwide');
+    scene('hallwide'); lanternSwing(5);
     olds.forEach(o => hide(o)); hide(jar);
     put(T, cracked, 700, 505); put(T, rich, 300, 505, { look: 'shout', to: 'right' }); put(T, father, 500, 505, { look: 'peek', to: 'right' });
     await say('쨍그랑! 항아리가 깨지자 일곱 명은 사라지고, 진짜 아버지만 남았어요.');
