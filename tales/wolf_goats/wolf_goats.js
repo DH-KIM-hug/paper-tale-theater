@@ -18,8 +18,46 @@
   const show = (n, on) => n.setAttribute('opacity', on ? 1 : 0);
   const KX = i => 320 + 60 * i; // 아기 염소 일곱이 한 줄로 설 자리 (세로 화면에서도 보이는 가운데 폭 안)
 
+  /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 포함)는 그대로 그림만 v2·라이트박스.
+     부엌 창·시계·난로, 집 안 문(문 밑 틈 369)·창·벤치, 어질러진 방 시계·의자·이불, 집 앞 문, 나무 기둥, 우물·울타리는 원본과 겹쳐 같은 자리.
+     나무 아래는 노을 라이트박스, 우물가는 달밤 라이트박스(판단 1 추천안). 똑똑똑(inside_door)은 그대로 */
+  const BGS = { kitchen: 'wg_bg_kitchen_v2', house: 'wg_bg_house_v2', messy: 'wg_bg_messy_v2', door: 'wg_bg_door_v2', tree: 'wg_lb_tree_sunset', well: 'wg_lb_well_moon' };
+  const LAYER_AR = { herb_garland: 1.215, rosebush_front: 1.1183, wildflowers_mid: 3.4091, sil_branch: 1.16 };
   function bg(T, key) {
-    T.el('image', { href: A('wg_bg_' + key), x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, T.bg);
+    T.el('image', { href: BGS[key] ? `../../assets/v3w/${BGS[key]}.webp` : A('wg_bg_' + key), x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, T.bg);
+    dress(T, key);
+  }
+  /* 층 소품: 누름 없음. front 면 배우 앞(T.fx), 아니면 배우 뒤(T.bg). (cx, y) = 가운데·발끝, top 이면 윗변 */
+  const still = T => T.reading() && T.readInstant();
+  function layer(T, k, cx, y, h, { front = true, flip = false, top = false, sway = 0, ms = 9000 } = {}) {
+    const w = h * LAYER_AR[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
+    if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
+    const inner = T.el('g', { filter: 'url(#pp)' }, g);
+    T.el('image', { href: `../../assets/v3w/wg_layer_${k}.webp`, x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+    inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
+    if (sway && !still(T)) inner.animate([{ rotate: `${-sway}deg` }, { rotate: `${sway}deg` }, { rotate: `${-sway}deg` }], { duration: ms, iterations: Infinity, easing: 'ease-in-out' });
+    return inner;
+  }
+  /* 반딧불(라이트박스 하늘): 작은 크림 원이 깜빡 */
+  function lightDots(T, n, [x0, x1, y0, y1]) {
+    for (let i = 0; i < n; i++) {
+      const x = x0 + Math.random() * (x1 - x0), y = y0 + Math.random() * (y1 - y0), r = 3 + Math.random() * 2;
+      const g = T.el('g', { style: 'pointer-events:none' }, T.fx);
+      T.el('circle', { cx: x, cy: y, r: r + 3, fill: '#FBE8A6', opacity: .5 }, g); T.el('circle', { cx: x, cy: y, r, fill: '#FFF4CC' }, g);
+      if (!still(T)) g.animate([{ opacity: .2 }, { opacity: 1 }, { opacity: .2 }], { duration: 1400 + Math.random() * 1200, delay: Math.random() * 1000, iterations: Infinity });
+    }
+  }
+  function dress(T, key) {
+    if (key === 'kitchen' || key === 'inside_door') layer(T, 'herb_garland', key === 'kitchen' ? 860 : 800, -22, 70, { top: true });
+    if (key === 'door') {
+      layer(T, 'wildflowers_mid', 140, 560, 70, { front: false }); layer(T, 'wildflowers_mid', 860, 560, 70, { front: false, flip: true });
+      layer(T, 'rosebush_front', 40, 592, 120); layer(T, 'rosebush_front', 960, 592, 120, { flip: true });
+    }
+    if (key === 'tree') layer(T, 'sil_branch', 60, -22, 220, { top: true, sway: 1 });
+    if (key === 'well') {
+      layer(T, 'sil_branch', 60, -22, 200, { top: true, sway: 1 }); layer(T, 'sil_branch', 940, -22, 200, { top: true, flip: true, sway: 1 });
+      lightDots(T, 10, [40, 960, 60, 300]);
+    }
   }
   /* 배우: poses = { 이름: 그림 }. first 자세의 높이가 h. 발끝 = (x,y) */
   function figure(T, x, y, h, poses, first, mul = {}) {
