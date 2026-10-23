@@ -30,7 +30,7 @@
     cind_stand: 'right', cind_surprise: 'right', cind_joy: 'right', step_stand: 'right', sis1_proud: 'right', sis1_sorry: 'right',
     sis2_stand: 'right', sis2_proud: 'right', sis2_sorry: 'right', prince_stand: 'right', fairy_appear: 'right', mouse: 'right' };
   const FL = 532;            /* 바닥 */
-  const BGS = ['kitchen_v2', 'kitchen_night_v2', 'parlor_v2', 'garden_v2', 'ballroom_v2', 'stairs_v2'];   /* 다층 배경 v2 (VISUAL_PLAN) */
+  const BGS = ['kitchen_v2', 'kitchen_night_v2', 'parlor_v2', 'garden_v2', 'ballroom_v2', 'stairs_lb'];   /* 다층 배경 v2 (VISUAL_PLAN). 궁전 계단은 열두 시 빛 상자 stairs_lb(VISUAL_PLAN 재기획 2, 2026-10-24) */
   const bgSrc = k => AS + 'cd2_bg_' + k + '.webp', artSrc = k => AS + 'cd2_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 그림이 무대 1000×560을 덮게 */
   const K = 1.35;            /* 집 배경이 사람에 비해 커 보여서 모든 사람·소품을 같은 비율로 키움 (2026-10-20) */
@@ -237,6 +237,8 @@
       vase: D('vase', 120), garland: D('garland', 70), lantern: D('lantern_post', 220), urn: D('rose_urn', 150),
       moon: D('moonflowers', 100), vine: D('pumpkin_vine', 90), burst: D('star_burst', 200), veg: D('basket_veg', 80),
     };
+    /* 궁전 계단(열두 시 빛 상자)에만 쓰는 앞 가림: 낮 색 그대로면 밤 그림에서 튀므로 밤빛으로 낮춘다 */
+    L.urn.pos.style.filter = 'brightness(.55) saturate(.75)'; L.lantern.pos.style.filter = 'brightness(.75) saturate(.85)';   // put() 이 body 필터를 비우므로 pos 에
     [...L.chand, L.chandS].forEach(chainOf);
     Object.values(L).flat().forEach(hide);
     const front = (...as) => as.forEach(a => { if (a.pos.style.display !== 'none') T.world.appendChild(a.pos); });
@@ -363,7 +365,7 @@
         if (P) camSnap(500, 280, 1);
       },
       stairs1() {
-        twinkle(T, Array.from({ length: 10 }, (_, i) => [60 + (i * 67) % 640, 20 + (i * 53) % 240, 2.5 + (i % 3)]), { color: '#F4F6FA', ms: 2000 });
+        twinkle(T, Array.from({ length: 10 }, (_, i) => [60 + (i * 67) % 640, 20 + (i * 53) % 240, 2.5 + (i % 3)]), { color: '#EBD08A', ms: 2000 });   /* 별 깜빡: 빛 상자 Pale Gold */
         put(T, cind, RST[0][0], RST[0][1], { look: 'run', to: 'left', s: RSS });
         put(T, L.urn, 40, 585); put(T, L.lantern, 985, 585);
         twinkle(T, [[985, 585 - 220 * .82, 10, '#F2B366']], { ms: 1400 });
@@ -487,7 +489,7 @@
         rSeen[key] = (rSeen[key] || 0) + 1; rTag = key + rSeen[key];
         SPOT = {}; FACE_FIX = {}; rClock = null; rBurst = false; chandDots = null; ballDots = null;
         ALL.forEach(hide); Object.values(L).flat().forEach(hide);
-        scene(key + '_v2');
+        scene(key === 'stairs' ? 'stairs_lb' : key + '_v2');
         (LAYOUT[rTag] || (() => {}))();
       },
       cast(id, verb, a1, a2) {
@@ -948,9 +950,9 @@
     /* 계단: 위 오른쪽에서 아래 왼쪽으로 달려 내려가며 구두 한 짝이 떨어진다 */
     const ST = [[860, 185], [640, 262], [430, 335], [220, 410], [-150, 440]], SS = .75; /* 그림 속 계단 위끝 → 아래끝 */
     await T.sceneCard(tr('궁전 계단'), () => {
-      scene('stairs_v2');
+      scene('stairs_lb');   /* 열두 시 빛 상자: 창·문·달만 빛나고 계단은 어두운 단 */
       /* 하늘 별 깜빡 10 (그림 속 별 위) */
-      twinkle(T, Array.from({ length: 10 }, (_, i) => [60 + (i * 67) % 640, 20 + (i * 53) % 240, 2.5 + (i % 3)]), { color: '#F4F6FA', ms: 2000 });
+      twinkle(T, Array.from({ length: 10 }, (_, i) => [60 + (i * 67) % 640, 20 + (i * 53) % 240, 2.5 + (i % 3)]), { color: '#EBD08A', ms: 2000 });   /* 별 깜빡: 빛 상자 Pale Gold */
       put(T, cind, ST[0][0], ST[0][1], { look: 'run', to: 'left', s: SS });
       put(T, L.urn, 40, 585); put(T, L.lantern, 985, 585);   /* 앞 가림: 장미 항아리(왼쪽 아래)·등불 기둥(오른쪽 아래) */
       { const lw = L.lantern.w; twinkle(T, [[985, 585 - 220 * .82, 10, '#F2B366']], { ms: 1400 }); void lw; }
