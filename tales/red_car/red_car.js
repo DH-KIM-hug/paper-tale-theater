@@ -45,9 +45,11 @@
     rc_police_run: 'right', rc_police_joy: 'right', rc_fire_run: 'right', rc_fire_spray: 'right', rc_fire_joy: 'right',
     rc_amb_run: 'right', rc_amb_open: 'right', rc_amb_joy: 'right', rc_tow_run: 'right', rc_tow_pull: 'right', rc_tow_joy: 'right',
     rc_thief_a_run: 'right', rc_thief_b_run: 'right', rc_prop_duck: 'right', rc_prop_water: 'right', rc_prop_hook: 'right', rc_layer_train: 'left' };
+  const TRAIN_Y = 330;                 // 7·9장 장난감 기차 바퀴 y: v3 기찻길 놀이판의 뒤 직선 레일(화면 y 312~332) 위
   const FL = 505;                       // 바닥(바퀴·발끝 y)
   const S_TOY = .42;                    // 사람 세계에서 자동차 다섯 대에 공통으로 쓰는 축소 비율. 그 밖에 s 를 쓰지 않는다
-  const BGS = ['rc_bg_room_v2', 'rc_bg_yard_v2', 'rc_bg_gate_v2', 'rc_bg_road_a_v2', 'rc_bg_road_b_v2', 'rc_bg_road_c_v2', 'rc_bg_road_long_v2', 'rc_bg_road_hill_v2', 'rc_bg_playground_v2'];   // 2026-10-22 시각 재기획: 옛 rc_bg_* 는 쓰지 않음
+  const BGS = ['rc_bg_room_v2', 'rc_bg_yard_v2', 'rc_bg_gate_v2', 'rc_bg_road_a_v2', 'rc_bg_road_b_v2', 'rc_bg_road_c_v2', 'rc_bg_road_long_v2', 'rc_bg_road_hill_v2', 'rc_bg_playground_v2',
+    'rc_bg_road_a_v3', 'rc_bg_road_b_v3', 'rc_bg_road_c_v3', 'rc_bg_road_long_v3', 'rc_bg_road_hill_v3'];   // 2026-10-22 시각 재기획: 옛 rc_bg_* 는 쓰지 않음. _v3: 장난감나라 세상별 컨셉(2026-10-24, PLAN '장난감나라 컨셉 재기획')
   const src = k => AS + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
@@ -155,7 +157,7 @@
     rc_bg_playground: { sky: '#EEF3F7', gnd: '#E9DCC0', name: '놀이터', shapes: () => [['rect', { x: 120, y: 160, width: 120, height: 260, fill: '#F2C94E' }], ['path', { d: 'M240 180 L460 420 L400 420 L240 240Z', fill: '#E8703A' }], ['circle', { cx: 860, cy: 100, r: 44, fill: '#F2B366' }]] },
   };
   function bgImage(T, key) {
-    if (!bgOK[key] && BGPH[key.replace('_v2', '')] && !BGPH[key]) BGPH[key] = BGPH[key.replace('_v2', '')];
+    if (!bgOK[key] && BGPH[key.replace(/_v[23]$/, '')] && !BGPH[key]) BGPH[key] = BGPH[key.replace(/_v[23]$/, '')];
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
     const d = BGPH[key], g = T.el('g', {}, T.bg);
     T.el('rect', { x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, fill: d.sky }, g);
@@ -342,7 +344,9 @@
     const GAP = 700, SCENE_END = 1500, DRIVE = 6300, LINE_DRIVE = 8400, SIREN_GAP = 4000;
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(삐뽀삐뽀!·톡!…)
-    const scene = key => { fronts = []; T.clear(); bgImage(T, key + '_v2'); camSnap(500, 280, 1); };
+    /* 장난감나라 세상(2026-10-24): 4장 블록 · 5장 색칠 · 6장 봉제 인형 · 7·9장 기찻길 놀이판 · 8장 소꿉놀이 → _v3. 나머지는 _v2 */
+    const V3 = { rc_bg_road_a: 1, rc_bg_road_b: 1, rc_bg_road_c: 1, rc_bg_road_long: 1, rc_bg_road_hill: 1 };
+    const scene = key => { fronts = []; T.clear(); bgImage(T, key + (V3[key] ? '_v3' : '_v2')); camSnap(500, 280, 1); };
     /* 레이어 소품(누름을 받지 않는다). mid: 배우보다 먼저 put → 뒤 / front: 앞 가림 층, fronts 에 넣어 늘 맨 앞 */
     const LAYERS = {};
     const layer = (k, x, y, { front = false, s = 1 } = {}) => {
@@ -417,11 +421,10 @@
     const RFL3 = [flame, flame2, flame3], RSMK = [smoke, smoke2, smoke3];
     const RFPOS = [[-42, -108], [2, -150], [44, -70]], RWCH = { x: 0.785, y: -0.145 };
     const RALL = [kid, ...CARS, thiefA, thiefB, bear, rabbit, bfly, block, duck, house, ...RFL3, ...RSMK, water, hook];
-    const RAMB_X = X(620, 600), RDOOR = 738, RSTEP = 406;
+    const RAMB_X = X(620, 600), RDOOR = 764, RSTEP = 407;
     const rLong = dir => {
-      const t0 = layer('train', dir < 0 ? 1100 : -200, 340); t0.turn(dir < 0 ? 'left' : 'right');
-      t0.move(dir < 0 ? -200 : 1100, 340, 40000, 'linear').catch(() => {});
-      layer('tower', X(60, 300), FL - 10);
+      const t0 = layer('train', dir < 0 ? 1100 : -200, TRAIN_Y); t0.turn(dir < 0 ? 'left' : 'right');
+      t0.move(dir < 0 ? -200 : 1100, TRAIN_Y, 40000, 'linear').catch(() => {});
       [layer('flags', X(250, 400), 110, { front: true }), layer('flags', X(750, 760), 110, { front: true })].forEach(f => swayLoop(f, 4, 1800));
     };
     const RLAY = {
@@ -429,12 +432,12 @@
       yard1() { layer('flowerbed', X(150, 300), FL - 25); layer('ladybug', X(230, 340), FL + 2); layer('snail', X(880, 790), FL + 2); layer('meadow', X(980, 800), 585, { front: true }); },
       yard2() { layer('flowerbed', X(150, 300), FL - 25); layer('ladybug', X(230, 340), FL + 2); layer('snail', X(880, 790), FL + 2); rBush = layer('grass_front', DROP, FL + 38, { front: true }); },
       gate1() { layer('rings', 900, FL - 5); layer('crayons', 1000, FL - 5); layer('arch', 700, FL + 4, { front: true }); layer('flags', 850, 120, { front: true }); layer('buttons', 980, 585, { front: true }); },
-      road_a1() { layer('tower', X(80, 360), FL - 10); layer('signal', X(965, 690), FL - 10); layer('crayon_front', X(20, 200), 590, { front: true }); layer('dice', X(1005, 720), 585, { front: true }); },
-      road_b1() { swayLoop(layer('top', X(120, 360), FL - 10), 3, 900); layer('buttons', X(40, 340), 585, { front: true }); layer('spring', X(1010, 790), 590, { front: true }); },
-      road_c1() { layer('signal', X(120, 360), FL - 10); layer('house_blue', X(300, 420), FL - 20); layer('ball', X(990, 800), 585, { front: true }); },
-      road_long1() { rLong(-1); layer('crayon_front', 1000, 590, { front: true }); },
-      road_hill1() { swayLoop(layer('top', X(110, 330), FL - 10), 3, 900); layer('dice', X(995, 860), 585, { front: true }); },
-      road_long2() { rLong(1); layer('buttons', X(30, 300), 585, { front: true }); },
+      road_a1() { layer('tower', X(80, 360), FL - 10); layer('dice', X(1005, 720), 585, { front: true }); },
+      road_b1() { layer('crayon_front', X(20, 200), 590, { front: true }); },
+      road_c1() { layer('ball', X(990, 800), 585, { front: true }); },
+      road_long1() { rLong(-1); },
+      road_hill1() { },
+      road_long2() { rLong(1); },
       playground1() { layer('sand_tools', X(60, 330), 585, { front: true }); layer('grass_front', X(990, 790), 585, { front: true, s: 90 / 70 }); },
     };
     const rFollow = (x, ms) => follow(x, ms);
@@ -811,9 +814,9 @@
     /* ===== 4. 경찰차 형아 (자동) ===== */
     await T.sceneCard(tr('경찰차 형아'), () => {
       scene('rc_bg_road_a');
-      layer('tower', X(80, 360), FL - 10); layer('signal', X(965, 690), FL - 10);   // 중간 층
+      layer('tower', X(80, 360), FL - 10);   // 중간 층: 블록 세상의 블록 탑
       put(T, thiefA, X(520, 560), FL, { look: 'run' }); put(T, thiefB, X(580, 620), FL, { look: 'run' }); put(T, police, X(300, 400), FL, { look: 'run' });
-      layer('crayon_front', X(20, 200), 590, { front: true }); layer('dice', X(1005, 720), 585, { front: true });   // 앞 가림 층
+      layer('dice', X(1005, 720), 585, { front: true });   // 앞 가림 층
       if (P) camSnap(520, 280, 1);
     }, police.pos);
     const l10 = say(S.L10);
@@ -849,11 +852,10 @@
     const WCH = { x: 0.785, y: -0.145 };                // 물줄기 그림의 시작(왼쪽 아래)에서 끝(오른쪽 위 물방울)까지, 그림 폭·높이 비율
     await T.sceneCard(tr('소방차 이모'), () => {
       scene('rc_bg_road_b');
-      swayLoop(layer('top', X(120, 360), FL - 10), 3, 900);   // 중간 층: 팽이가 살랑
       put(T, house, X(800, 640), FL - 30);
       FL3.forEach((f, i) => { put(T, f, house.x + FPOS[i][0], house.y + FPOS[i][1]); hitBox(T, f, 84, 100); });
       put(T, fire, house.x - X(220, 150), FL, { look: 'spray' });
-      layer('buttons', X(40, 340), 585, { front: true }); layer('spring', X(1010, 790), 590, { front: true });   // 앞 가림 층(불꽃 ±120 밖)
+      layer('crayon_front', X(20, 200), 590, { front: true });   // 앞 가림 층: 색칠 세상의 큰 크레용(불꽃 ±120 밖)
       if (P) camSnap(560, 280, 1);
     }, fire.pos);
     const wob = [0, 1, 2].map(() => ({ on: true }));
@@ -933,12 +935,11 @@
     };
     await T.sceneCard(tr('구급차 삼촌'), () => {
       scene('rc_bg_road_c');
-      layer('signal', X(120, 360), FL - 10); layer('house_blue', X(300, 420), FL - 20);   // 중간 층
       put(T, amb, 40, FL, { look: 'run' }); ride();
       layer('ball', X(990, 800), 585, { front: true });
       if (P) camSnap(600, 280, 1);
     }, amb.pos);
-    const ambX = X(620, 600), DOOR = 738, STEP = 406;   // 병원 문(배경 그림 1108~1195px → 화면 x 708~767), 문턱 y
+    const ambX = X(620, 600), DOOR = 764, STEP = 407;   // 병원 문(봉제 병원 v3 그림 1156~1227px → 화면 x 740~788, 문 아래 391), 문턱 y
     const l23 = say(S.L23), stopR6 = rattle(.25, 1200);
     follow(600, DRIVE);
     setTimeout(() => { sfx('ambulance_siren', .3); vo('siren_amb'); blink(T, amb); T.pop(amb.x, FL - 170, tr('삐용삐용!')); }, 800);
@@ -972,9 +973,8 @@
 
     /* 7·9장 긴 길: 뒤 기찻길 위로 장난감 기차가 천천히 지나가고(40초에 화면 한 번), 위에는 깃발 줄 두 장이 살랑 */
     const longRoad = (dir, front) => {
-      const tr0 = layer('train', dir < 0 ? 1100 : -200, 340); tr0.turn(dir < 0 ? 'left' : 'right');
-      tr0.move(dir < 0 ? -200 : 1100, 340, 40000, 'linear');
-      layer('tower', X(60, 300), FL - 10);
+      const tr0 = layer('train', dir < 0 ? 1100 : -200, TRAIN_Y); tr0.turn(dir < 0 ? 'left' : 'right');
+      tr0.move(dir < 0 ? -200 : 1100, TRAIN_Y, 40000, 'linear');
       const flags = [layer('flags', X(250, 400), 110, { front: true }), layer('flags', X(750, 760), 110, { front: true })];
       flags.forEach(f => swayLoop(f, 4, 1800));
       front(); return flags;
@@ -985,7 +985,6 @@
       scene('rc_bg_road_long');
       longRoad(-1, () => {});
       put(T, amb, C7.amb - 450, FL, { look: 'run' }); put(T, fire, C7.fire - 450, FL, { look: 'run' }); put(T, police, C7.police - 450, FL, { look: 'run' }); put(T, red, C7.red - 450, FL, { look: 'run' });
-      layer('crayon_front', X(1000, 1000), 590, { front: true });   // 앞 가림 층(오른쪽 끝)
       if (P) camSnap(400, 280, 1);
     }, red.pos);
     const l28 = say(S.L28), stopR7 = rattle(.3, 1200);
@@ -1011,9 +1010,7 @@
     const C8 = chain(600, ['red', 'police', 'fire', 'amb'], 20), TOW8 = 600 + LEN.red / 2 + 20 + LEN.tow / 2;   // 견인차는 빨간 차 앞(오른쪽)
     await T.sceneCard(tr('에구구, 지쳤어요'), () => {
       scene('rc_bg_road_hill');
-      swayLoop(layer('top', X(110, 330), FL - 10), 3, 900);   // 중간 층
       put(T, amb, C8.amb - 260, FL, { look: 'run' }); put(T, fire, C8.fire - 260, FL, { look: 'run' }); put(T, police, C8.police - 260, FL, { look: 'run' }); put(T, red, C8.red - 260, FL, { look: 'run' });
-      layer('dice', X(995, 860), 585, { front: true });   // 앞 가림 층(고리 ±120 밖). 왼쪽 모서리는 구급차가 서는 자리라 비운다
       if (P) camSnap(600, 280, 1);
     }, red.pos);
     const l30 = say(S.L30), stopR8 = rattle(.25, 1200);
@@ -1061,7 +1058,6 @@
       flags9 = longRoad(1, () => {});
       put(T, amb, END9.amb - 430, FL, { look: 'run' }); put(T, fire, END9.fire - 430, FL, { look: 'run' }); put(T, police, END9.police - 430, FL, { look: 'run' });
       put(T, red, END9.red - 430, LANE_R, { look: 'hooked' }); put(T, tow, END9.tow - 430, LANE_T, { look: 'pull' }); put(T, hook, tow.x + HOOK_DX, tow.y + HOOK_DY, { to: 'right', s: HOOK_S });
-      layer('buttons', X(30, 300), 585, { front: true });
       if (P) camSnap(400, 280, 1);
     }, tow.pos);
     const l38 = say(S.L38), stopR9 = rattle(.3, 1000);
