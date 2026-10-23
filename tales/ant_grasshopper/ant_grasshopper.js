@@ -439,8 +439,9 @@
     const { el, paper } = T, b = T.bg;
     if (bgImage(T, 'winter_high')) { // 2026-10-23 보랏빛 첫눈 저녁 라이트박스: 구멍 자리 같음, 문 불빛이 작게 숨 쉰다
       layer(T, 'snow_branch', 50, -24, 170, { top: true, sway: 1, ms: 9000 }); layer(T, 'snow_branch', 950, -24, 170, { top: true, flip: true, sway: 1, ms: 9000 });
-      const g = T.el('circle', { cx: 652, cy: 150, r: 26, fill: '#F5A64B', opacity: .3, style: 'pointer-events:none' }, T.bg);
-      if (!(T.reading() && T.readInstant())) g.animate([{ opacity: .15 }, { opacity: .45 }, { opacity: .15 }], { duration: 2200, iterations: Infinity });
+      // 2026-10-24 사용자 결정: 문 불빛 주황 원이 눈밭 얼룩처럼 떠 보여 뺐다 → 그림 속 구멍 안(타원 x 637~698, y 159~172)만 screen 으로 숨 쉰다
+      const g = T.el('ellipse', { cx: 667, cy: 166, rx: 27, ry: 5.5, fill: '#FFE2A0', opacity: .3, style: 'pointer-events:none;mix-blend-mode:screen' }, T.bg);
+      if (!(T.reading() && T.readInstant())) g.animate([{ opacity: .1 }, { opacity: .4 }, { opacity: .1 }], { duration: 2200, iterations: Infinity });
       return { hole: [655, 150], far: true };
     } // 그림: 구멍이 멀리(위쪽) → 걸어가며 작아진다
     el('rect', { x: -300, y: -300, width: 1600, height: 1200, fill: SKY.winter }, b);
