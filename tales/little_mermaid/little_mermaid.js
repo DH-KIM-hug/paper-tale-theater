@@ -43,9 +43,8 @@
   const WATER = 300;          /* 2·3·10번 수면선 */
   const WATER11 = 372;        /* 11번 수면선 */
   const BGS = ['palace', 'night_sea', 'beach', 'witch', 'steps', 'garden', 'deck', 'dawn_sea', 'morning_sea'];
-  const bgSrc = k => AS + (BG5[k] ? 'mer_bg5_' : BG3[k] ? 'mer_bg3_' : 'mer_bg2_') + k + (LB[k] ? '_lb' : '') + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
-  const BG3 = { steps: 1 };   /* 비례를 다시 그린 배경(mer_bg3_*) */
-  const BG5 = { palace: 1, night_sea: 1, witch: 1, garden: 1, deck: 1 };
+  const bgSrc = k => AS + (BG5[k] ? 'mer_bg5_' : 'mer_bg2_') + k + (LB[k] ? '_lb' : '') + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
+  const BG5 = { steps: 1, palace: 1, night_sea: 1, witch: 1, garden: 1, deck: 1 };
   const LB = { night_sea: 1 };   /* 빛 상자판(mer_bg5_night_sea_lb, VISUAL_PLAN 재기획 2 B, 2026-10-24): 같은 수면선·달 자리 */   /* 화려하게 다시 그린 다층 배경(mer_bg5_*, 같은 구도: VISUAL_PLAN) */
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 배경이 무대 1000×560 을 덮게 */
   /* 장면별 배경 상자: 마녀 동굴은 조개 문이 작게 그려져 2.2배 확대(문 중심 x=680, 문 밑 y≈470) */
@@ -942,9 +941,9 @@
     await Promise.all([say('새벽, 배 옆에 언니들이 올라왔어요. 긴 머리가 짧아졌어요.'), sisters.move(250, WATER + 30, 1200, 'ease-out')]);
     put(T, dagger, sisters.x - sisters.w * .40, WATER - 12); fadeIn(dagger, 300);
     sisters.hop(8, 400);
-    await say('마녀에게 머리카락을 주고 이 단검을 받았어.');
+    await say('마녀에게 머리카락을 주고 이 단검을 받았어.', { simultaneous: true });
     sisters.wiggle(2, 800);
-    await say('해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야.');
+    await say('해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야.', { simultaneous: true });
     follow(560);
     sfx(T, 'swish');
     await dagger.move(mer.x, mer.y - mer.h * .38, 900);

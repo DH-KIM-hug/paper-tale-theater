@@ -1033,6 +1033,7 @@
     },
     {
      "text": "마녀에게 머리카락을 주고 이 단검을 받았어.",
+     "simultaneous": true,
      "src": "reuse",
      "en": "We gave the witch our hair and got this dagger.",
      "segs": [
@@ -1065,6 +1066,7 @@
     },
     {
      "text": "해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야.",
+     "simultaneous": true,
      "src": "reuse",
      "en": "If you use this on the prince before the sun rises, you will be a mermaid again. If you do not, you will turn into foam.",
      "segs": [
