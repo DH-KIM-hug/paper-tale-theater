@@ -1160,15 +1160,17 @@ const Tale = (() => {
         return clips;
       };
       const sayTitle = async () => {
-        if (busyT) return; busyT = true;
+        if (busyT || launching || running || $('#startScreen').hidden) return; busyT = true;
         try {
           const c = await loadClips();
+          // 제목 녹음을 기다리는 사이 자동 재생이 시작됐으면 이야기 음성을 건드리지 않는다.
+          if (launching || running || $('#startScreen').hidden) return;
           const en = typeof englishOn === 'function' && englishOn() ? c.en[title] : null;
           const url = en ? en.c : c.ko[title];
           if (url && typeof url === 'string') { try { Narrator.stop(); } catch (e) { /* 무시 */ } await AudioFX.playUrl(ROOT_URL + url); }
           else await Narrator.speak(tr(title));
         } catch (e) { /* 소리 없이 */ }
-        busyT = false;
+        finally { busyT = false; }
       };
       const tt = $('#startScreen .ttl');
       if (tt) { tt.style.cursor = 'pointer'; tt.addEventListener('click', sayTitle); }
