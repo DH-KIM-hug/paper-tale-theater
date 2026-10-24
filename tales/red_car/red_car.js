@@ -19,6 +19,9 @@
     rc_layer_arch: 0.7283, rc_layer_tower: 0.2367, rc_layer_crayons: 0.5883, rc_layer_crayon_front: 0.305, rc_layer_buttons: 0.76, rc_layer_train: 2.0737, rc_layer_top: 0.8183,
     rc_layer_ball: 0.9933, rc_layer_spring: 1.7308, rc_layer_flags: 4.7872, rc_layer_signal: 0.3133, rc_layer_house_blue: 0.8383, rc_layer_rings: 0.6417, rc_layer_dice: 0.8983,
     rc_layer_toybox: 1.0633, rc_layer_flowerbed: 1.7241, rc_layer_grass_front: 1.6129, rc_layer_meadow: 1.0467, rc_layer_ladybug: 1.105, rc_layer_snail: 1.345, rc_layer_sand_tools: 1.0617,
+    /* 장난감나라 세상별 소품·인형(2026-10-24, PLAN '장난감나라 컨셉 재기획' §4). 값은 preload 가 실제 그림 비율로 덮어씀 */
+    rc_layer_bricks: 1.2367, rc_layer_yarn: 1.22, rc_layer_tyres: 0.9433, rc_prop_house_crayon: 0.84,
+    rc_layer_doll_teddy_giant: 0.7317, rc_layer_doll_rabbit: 0.5417, rc_layer_doll_duck: 0.69, rc_layer_doll_elephant: 0.975,
   };
   /* 장난감 세상 길이(px, scale 1). 기획 길이비 150:165:240:210:195 를 그대로 두면 큰 차(소방·구급·견인)의 바퀴가 빨간 차보다 27~31% 커진다(그림에서 잰 값).
      바퀴를 빨간 차의 +20% 안(≈40px)에 두려고 큰 차만 길이를 줄였다: 소방 240→218, 구급 210→191, 견인 195→183 (비율 1 : 1.1 : 1.22 : 1.27 : 1.45) */
@@ -28,9 +31,12 @@
     rc_child_stand: 230, rc_child_point: 236, rc_child_run: 228, rc_child_cry: 230, rc_child_turn: 222, rc_child_hug: 217, rc_child_eat: 235, rc_child_sleep: 130,
     rc_thief_a_run: 76, rc_thief_b_run: 76, rc_thief_a_hands: 78, rc_thief_b_hands: 78, rc_bear_sit: 56, rc_rabbit_sit: 56, rc_bear_off: 56, rc_rabbit_off: 55.2,   /* 머리 폭을 sit 과 맞춤(곰 .672/.675, 토끼 .495/.502) */
     /* 레이어 소품 높이(무대 px, PLAN 시각 재기획 §3). 장면이 달라도 같은 소품은 같은 높이 */
-    rc_layer_arch: 320, rc_layer_tower: 300, rc_layer_crayons: 220, rc_layer_crayon_front: 260, rc_layer_buttons: 110, rc_layer_train: 90, rc_layer_top: 120, rc_layer_ball: 110,
+    rc_layer_arch: 320, rc_layer_tower: 300, rc_layer_crayons: 220, rc_layer_crayon_front: 260, rc_layer_buttons: 110, rc_layer_train: 70, rc_layer_top: 120, rc_layer_ball: 110,
     rc_layer_spring: 90, rc_layer_flags: 80, rc_layer_signal: 170, rc_layer_house_blue: 190, rc_layer_rings: 160, rc_layer_dice: 80, rc_layer_toybox: 150, rc_layer_flowerbed: 90,
     rc_layer_grass_front: 70, rc_layer_meadow: 90, rc_layer_ladybug: 18, rc_layer_snail: 22, rc_layer_sand_tools: 90,
+    rc_layer_bricks: 80, rc_layer_yarn: 90, rc_layer_tyres: 90, rc_prop_house_crayon: 170,   /* 블록 더미=옛 주사위 자리·높이, 색칠 집=옛 블록 집과 같은 틀 */
+    /* 봉제 인형 세상 인형(머리 폭을 환자 곰 rc_bear_sit 머리와 같게 잼, 큰 곰인형은 환자 곰의 4.5배) */
+    rc_layer_doll_teddy_giant: 250, rc_layer_doll_rabbit: 120, rc_layer_doll_duck: 72, rc_layer_doll_elephant: 96,   /* 행인 머리 폭 ≈ 34(환자 곰 머리 26의 1.3배 — 화면에서 읽히게, 세 행인끼리 같음. 토끼는 귀 포함 높이). 큰 곰 머리 ≈ 142 = 환자 곰 머리의 5.5배 */
     rc_prop_butterfly_open: 60, rc_prop_butterfly_fold: 42,   /* 나비: 몸통 길이를 open 과 같게(몸통이 open 은 그림 높이의 .457, fold 는 .652 → 60×.457/.652) */ rc_prop_block: 42, rc_prop_duck: 46, rc_prop_house: 170, rc_prop_flame: 90, rc_prop_smoke: 40, rc_prop_water: 76, rc_prop_hook: 60,
   };
   function calcHT() {
@@ -44,12 +50,13 @@
     rc_red_run: 'right', rc_red_joy: 'right', rc_red_tired: 'right', rc_red_hooked: 'right',
     rc_police_run: 'right', rc_police_joy: 'right', rc_fire_run: 'right', rc_fire_spray: 'right', rc_fire_joy: 'right',
     rc_amb_run: 'right', rc_amb_open: 'right', rc_amb_joy: 'right', rc_tow_run: 'right', rc_tow_pull: 'right', rc_tow_joy: 'right',
-    rc_thief_a_run: 'right', rc_thief_b_run: 'right', rc_prop_duck: 'right', rc_prop_water: 'right', rc_prop_hook: 'right', rc_layer_train: 'left' };
+    rc_thief_a_run: 'right', rc_thief_b_run: 'right', rc_prop_duck: 'right', rc_prop_water: 'right', rc_prop_hook: 'right', rc_layer_train: 'left',
+    rc_layer_doll_rabbit: 'right', rc_layer_doll_duck: 'right', rc_layer_doll_elephant: 'left' };
   const TRAIN_Y = 330;                 // 7·9장 장난감 기차 바퀴 y: v3 기찻길 놀이판의 뒤 직선 레일(화면 y 312~332) 위
   const FL = 505;                       // 바닥(바퀴·발끝 y)
   const S_TOY = .42;                    // 사람 세계에서 자동차 다섯 대에 공통으로 쓰는 축소 비율. 그 밖에 s 를 쓰지 않는다
   const BGS = ['rc_bg_room_v2', 'rc_bg_yard_v2', 'rc_bg_gate_v2', 'rc_bg_road_a_v2', 'rc_bg_road_b_v2', 'rc_bg_road_c_v2', 'rc_bg_road_long_v2', 'rc_bg_road_hill_v2', 'rc_bg_playground_v2',
-    'rc_bg_road_a_v3', 'rc_bg_road_b_v3', 'rc_bg_road_c_v3', 'rc_bg_road_long_v3', 'rc_bg_road_hill_v3'];   // 2026-10-22 시각 재기획: 옛 rc_bg_* 는 쓰지 않음. _v3: 장난감나라 세상별 컨셉(2026-10-24, PLAN '장난감나라 컨셉 재기획')
+    'rc_bg_road_a_v3', 'rc_bg_road_b_v3', 'rc_bg_road_c_v3', 'rc_bg_road_long_v3', 'rc_bg_road_hill_v4'];   // 2026-10-22 시각 재기획: 옛 rc_bg_* 는 쓰지 않음. _v3: 장난감나라 세상별 컨셉(2026-10-24, PLAN '장난감나라 컨셉 재기획')
   const src = k => AS + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
@@ -157,7 +164,7 @@
     rc_bg_playground: { sky: '#EEF3F7', gnd: '#E9DCC0', name: '놀이터', shapes: () => [['rect', { x: 120, y: 160, width: 120, height: 260, fill: '#F2C94E' }], ['path', { d: 'M240 180 L460 420 L400 420 L240 240Z', fill: '#E8703A' }], ['circle', { cx: 860, cy: 100, r: 44, fill: '#F2B366' }]] },
   };
   function bgImage(T, key) {
-    if (!bgOK[key] && BGPH[key.replace(/_v[23]$/, '')] && !BGPH[key]) BGPH[key] = BGPH[key.replace(/_v[23]$/, '')];
+    if (!bgOK[key] && BGPH[key.replace(/_v[234]$/, '')] && !BGPH[key]) BGPH[key] = BGPH[key.replace(/_v[234]$/, '')];
     if (bgOK[key]) return T.el('image', { href: src(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
     const d = BGPH[key], g = T.el('g', {}, T.bg);
     T.el('rect', { x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, fill: d.sky }, g);
@@ -345,8 +352,8 @@
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(삐뽀삐뽀!·톡!…)
     /* 장난감나라 세상(2026-10-24): 4장 블록 · 5장 색칠 · 6장 봉제 인형 · 7·9장 기찻길 놀이판 · 8장 소꿉놀이 → _v3. 나머지는 _v2 */
-    const V3 = { rc_bg_road_a: 1, rc_bg_road_b: 1, rc_bg_road_c: 1, rc_bg_road_long: 1, rc_bg_road_hill: 1 };
-    const scene = key => { fronts = []; T.clear(); bgImage(T, key + (V3[key] ? '_v3' : '_v2')); camSnap(500, 280, 1); };
+    const V3 = { rc_bg_road_a: '_v3', rc_bg_road_b: '_v3', rc_bg_road_c: '_v3', rc_bg_road_long: '_v3', rc_bg_road_hill: '_v4' };   // 8장: 장난감 정비소(v4, 소꿉놀이 v3 은 쓰지 않음)
+    const scene = key => { fronts = []; T.clear(); bgImage(T, key + (V3[key] || '_v2')); camSnap(500, 280, 1); };
     /* 레이어 소품(누름을 받지 않는다). mid: 배우보다 먼저 put → 뒤 / front: 앞 가림 층, fronts 에 넣어 늘 맨 앞 */
     const LAYERS = {};
     const layer = (k, x, y, { front = false, s = 1 } = {}) => {
@@ -355,6 +362,27 @@
       put(T, a, x, y, { s }); if (front) fronts.push(a);
       (LAYERS[k] = LAYERS[k] || []).push(a);
       return a;
+    };
+    /* 7·9장 장난감 기차: 기찻길 놀이판 오른쪽 터널(입구 안쪽 x 918~991, 바닥 y ≈ 307)에서 빠져나와 왼쪽으로 달린다(두 장면 같은 방향).
+       터널 안에 있는 부분은 x 918 오른쪽을 잘라(clipPath, 무대 좌표) 보이지 않게 하고, 입구 바닥에서 굽은 레일을 따라 뒤 직선(TRAIN_Y)으로 내려온다 */
+    const TUN_X = 918, TUN_Y = 305;
+    const trainRun = () => {
+      const t0 = layer('train', TUN_X + HT.rc_layer_train * ASP.rc_layer_train / 2 + 6, TUN_Y); t0.turn('left');
+      const g = T.el('g', {}, t0.pos.parentNode), cp = T.el('clipPath', { id: 'rcTunnelClip' }, g);
+      T.el('rect', { x: -2000, y: -2000, width: 2000 + TUN_X, height: 4000 }, cp);
+      const cg = T.el('g', { 'clip-path': 'url(#rcTunnelClip)' }, g); t0.pos.parentNode.insertBefore(g, t0.pos); cg.appendChild(t0.pos);
+      t0.move(840, TRAIN_Y, 6000, 'linear').then(() => t0.move(-260, TRAIN_Y, 34000, 'linear')).catch(() => {});
+      return t0;
+    };
+    /* 6장 봉제 인형 세상의 인형들(누름 없음, 자동차 뒤 바닥선 y≈412~418에 서서 자동차보다 먼저 put → 뒤).
+       큰 곰인형은 왼쪽 베개 집 앞에 앉아 집 대신 서 있고, 행인 토끼·오리는 울타리 앞을 천천히 걷는다(병원 문 740~788·인형 내리는 길 밖), 코끼리는 병원 오른쪽 */
+    const plushDolls = () => {
+      layer('doll_teddy_giant', X(125, 150), 420);
+      const rb = layer('doll_rabbit', X(500, 520), 412); rb.turn('left');
+      const dk = layer('doll_duck', X(590, 590), 414); dk.turn('left');
+      const el = layer('doll_elephant', X(940, 900), 414); el.turn('left');
+      rb.move(rb.x - 90, 412, 9000, 'linear').catch(() => {}); dk.move(dk.x - 60, 414, 9000, 'linear').catch(() => {});
+      [rb, dk, el].forEach((a, i) => swayLoop(a, 2, 700 + i * 120));
     };
     const swayLoop = (a, px = 3, ms = 900) => { (async () => { while (a.pos.isConnected && a.pos.style.display !== 'none') await a.wiggle(px, ms); })(); };
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
@@ -376,7 +404,7 @@
     const bear = mk(T, pz('bear', ['sit', 'off'])), rabbit = mk(T, pz('rabbit', ['sit', 'off']));
     const bfly = mk(T, { open: ['rc_prop_butterfly_open', HT.rc_prop_butterfly_open], fold: ['rc_prop_butterfly_fold', HT.rc_prop_butterfly_fold] });
     const block = prop(T, 'rc_prop_block', HT.rc_prop_block), duck = prop(T, 'rc_prop_duck', HT.rc_prop_duck);
-    const house = prop(T, 'rc_prop_house', HT.rc_prop_house), flame = prop(T, 'rc_prop_flame', HT.rc_prop_flame), smoke = prop(T, 'rc_prop_smoke', HT.rc_prop_smoke);
+    const house = prop(T, 'rc_prop_house_crayon', HT.rc_prop_house_crayon), flame = prop(T, 'rc_prop_flame', HT.rc_prop_flame), smoke = prop(T, 'rc_prop_smoke', HT.rc_prop_smoke);
     const flame2 = prop(T, 'rc_prop_flame', HT.rc_prop_flame), flame3 = prop(T, 'rc_prop_flame', HT.rc_prop_flame), smoke2 = prop(T, 'rc_prop_smoke', HT.rc_prop_smoke), smoke3 = prop(T, 'rc_prop_smoke', HT.rc_prop_smoke);
     const water = prop(T, 'rc_prop_water', HT.rc_prop_water), hook = prop(T, 'rc_prop_hook', HT.rc_prop_hook);
     const CARS = [red, police, fire, amb, tow];
@@ -423,8 +451,7 @@
     const RALL = [kid, ...CARS, thiefA, thiefB, bear, rabbit, bfly, block, duck, house, ...RFL3, ...RSMK, water, hook];
     const RAMB_X = X(620, 600), RDOOR = 764, RSTEP = 407;
     const rLong = dir => {
-      const t0 = layer('train', dir < 0 ? 1100 : -200, TRAIN_Y); t0.turn(dir < 0 ? 'left' : 'right');
-      t0.move(dir < 0 ? -200 : 1100, TRAIN_Y, 40000, 'linear').catch(() => {});
+      trainRun();
       [layer('flags', X(250, 400), 110, { front: true }), layer('flags', X(750, 760), 110, { front: true })].forEach(f => swayLoop(f, 4, 1800));
     };
     const RLAY = {
@@ -432,11 +459,11 @@
       yard1() { layer('flowerbed', X(150, 300), FL - 25); layer('ladybug', X(230, 340), FL + 2); layer('snail', X(880, 790), FL + 2); layer('meadow', X(980, 800), 585, { front: true }); },
       yard2() { layer('flowerbed', X(150, 300), FL - 25); layer('ladybug', X(230, 340), FL + 2); layer('snail', X(880, 790), FL + 2); rBush = layer('grass_front', DROP, FL + 38, { front: true }); },
       gate1() { layer('rings', 900, FL - 5); layer('crayons', 1000, FL - 5); layer('arch', 700, FL + 4, { front: true }); layer('flags', 850, 120, { front: true }); layer('buttons', 980, 585, { front: true }); },
-      road_a1() { layer('tower', X(80, 360), FL - 10); layer('dice', X(1005, 720), 585, { front: true }); },
+      road_a1() { layer('tower', X(80, 360), FL - 10); layer('bricks', X(1005, 720), 585, { front: true }); },
       road_b1() { layer('crayon_front', X(20, 200), 590, { front: true }); },
-      road_c1() { layer('ball', X(990, 800), 585, { front: true }); },
+      road_c1() { plushDolls(); layer('yarn', X(990, 800), 585, { front: true }); },
       road_long1() { rLong(-1); },
-      road_hill1() { },
+      road_hill1() { layer('tyres', X(995, 860), 585, { front: true }); },
       road_long2() { rLong(1); },
       playground1() { layer('sand_tools', X(60, 330), 585, { front: true }); layer('grass_front', X(990, 790), 585, { front: true, s: 90 / 70 }); },
     };
@@ -816,7 +843,7 @@
       scene('rc_bg_road_a');
       layer('tower', X(80, 360), FL - 10);   // 중간 층: 블록 세상의 블록 탑
       put(T, thiefA, X(520, 560), FL, { look: 'run' }); put(T, thiefB, X(580, 620), FL, { look: 'run' }); put(T, police, X(300, 400), FL, { look: 'run' });
-      layer('dice', X(1005, 720), 585, { front: true });   // 앞 가림 층
+      layer('bricks', X(1005, 720), 585, { front: true });   // 앞 가림 층: 블록 더미
       if (P) camSnap(520, 280, 1);
     }, police.pos);
     const l10 = say(S.L10);
@@ -935,8 +962,9 @@
     };
     await T.sceneCard(tr('구급차 삼촌'), () => {
       scene('rc_bg_road_c');
+      plushDolls();   // 중간 층: 큰 곰인형·행인 인형
       put(T, amb, 40, FL, { look: 'run' }); ride();
-      layer('ball', X(990, 800), 585, { front: true });
+      layer('yarn', X(990, 800), 585, { front: true });   // 앞 가림 층: 털실·단추
       if (P) camSnap(600, 280, 1);
     }, amb.pos);
     const ambX = X(620, 600), DOOR = 764, STEP = 407;   // 병원 문(봉제 병원 v3 그림 1156~1227px → 화면 x 740~788, 문 아래 391), 문턱 y
@@ -973,8 +1001,7 @@
 
     /* 7·9장 긴 길: 뒤 기찻길 위로 장난감 기차가 천천히 지나가고(40초에 화면 한 번), 위에는 깃발 줄 두 장이 살랑 */
     const longRoad = (dir, front) => {
-      const tr0 = layer('train', dir < 0 ? 1100 : -200, TRAIN_Y); tr0.turn(dir < 0 ? 'left' : 'right');
-      tr0.move(dir < 0 ? -200 : 1100, TRAIN_Y, 40000, 'linear');
+      trainRun();
       const flags = [layer('flags', X(250, 400), 110, { front: true }), layer('flags', X(750, 760), 110, { front: true })];
       flags.forEach(f => swayLoop(f, 4, 1800));
       front(); return flags;
@@ -1011,6 +1038,7 @@
     await T.sceneCard(tr('에구구, 지쳤어요'), () => {
       scene('rc_bg_road_hill');
       put(T, amb, C8.amb - 260, FL, { look: 'run' }); put(T, fire, C8.fire - 260, FL, { look: 'run' }); put(T, police, C8.police - 260, FL, { look: 'run' }); put(T, red, C8.red - 260, FL, { look: 'run' });
+      layer('tyres', X(995, 860), 585, { front: true });   // 앞 가림 층: 정비소 타이어(고리 ±120 밖, 견인차 끝 938 밖)
       if (P) camSnap(600, 280, 1);
     }, red.pos);
     const l30 = say(S.L30), stopR8 = rattle(.25, 1200);
