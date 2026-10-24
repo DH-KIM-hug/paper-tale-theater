@@ -455,6 +455,7 @@
             else if (R.set === 'house_bed2' && x === 500 && R.laid) x = 160;
             else if (R.set === 'hill' && x === 500 && R.worryHill) x = 430;
           }
+          if (!P && z > 1.3) { x = 500; y = 280; z = 1.3; }
           camSnap(x, y, z);
         },
         tint: s => { const [c, o] = s.split(','); tint(T, c, +o); R.tinted = true; },
@@ -704,7 +705,7 @@
       door.reset(true);                                    /* 그림 속 집의 문 자리에 딱 맞춘 문 (해 질 녘 빛을 벽 조각에도) */
       put(T, snow, 520, 352, { look: 'stand', s: FAR });
       if (!P) put(T, L.fern[0], 110, 448, { s: FAR });       /* 앞 가림(가로만): 화면 왼쪽 아래 모서리 */
-      camSnap(X(370, 380), 270, P ? 1.5 : 1.7);
+      camSnap(X(500, 380), P ? 270 : 280, P ? 1.5 : 1.3);
     }, door.pos);
     await Promise.all([say('날이 저물 무렵, 백설공주는 숲속에서 아주 작은 집을 찾았어요.'), snow.move(410, 352, 1800)]);
     /* 문 바로 옆까지 다가가 두드린다 (문을 연 사람처럼 문 가까이 서서 열리는 문을 본다) */
@@ -953,7 +954,7 @@
       put(T, snow, WX, SILL + 35, { look: 'receive', s: WS }); winG.appendChild(snow.pos);
       put(T, granny, 560, 356, { to: 'left', s: FAR });
       if (!P) put(T, L.fern[0], 110, 448, { s: FAR });
-      camSnap(X(280, 250), 280, P ? 1.5 : 1.7);
+      camSnap(X(500, 250), 280, P ? 1.5 : 1.3);
     }, snow.pos);
     await Promise.all([say('왕비는 할머니로 변장하고 빨간 사과를 들고 숲으로 갔어요.'), granny.move(262, 356, 2400)]);
     const handX = () => granny.x - 215 * .765 * .42 * FAR, handY = 356 - 215 * .52 * FAR;

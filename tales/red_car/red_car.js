@@ -706,8 +706,9 @@
           }
           blink(T, c);
           const u = vo(k);
-          if (long) { c.hop(10, 320); T.pop(c.x, FL - c.h - 40, tr(SIR[2])); return u ? Promise.race([u, sleep(3500)]) : sleep(800); }
-          return;
+          if (long) { c.hop(10, 320); T.pop(c.x, FL - c.h - 40, tr(SIR[2])); }
+          /* 사이렌 목소리가 끝난 뒤 대사로 (말하기의 voiceIdle 은 4초까지만 기다려서, 4.6초짜리 위이잉 위로 내레이션이 겹쳤다) */
+          return u ? Promise.race([u, sleep(6000)]) : sleep(800);
         }
         return vo(k);
       },
@@ -723,10 +724,10 @@
         T.pop(x, y, tr(text), text === '잉잉' || text === '툭' ? '#1F2A56' : undefined);
       },
     };
-    const READ_ACTS = { set: R.set, cam: R.cam, kid: R.kid, car: R.car, toys: R.toys, hand: R.hand, bfly: R.bfly, thieves: R.thieves, house: R.house, flames: R.flames, dolls: R.dolls, amb: R.amb, hook: R.hook, convoy: R.convoy, vo: R.vo, fx: R.fx, pop: R.pop, confetti: R.confetti };
+    /* settle: 장면 넘김 전에 달리던 차가 다 멈추기를 기다린다(엔진이 넘김 시간 제한 밖에서 부른다) */
+    const READ_ACTS = { settle: flightsDone, set: R.set, cam: R.cam, kid: R.kid, car: R.car, toys: R.toys, hand: R.hand, bfly: R.bfly, thieves: R.thieves, house: R.house, flames: R.flames, dolls: R.dolls, amb: R.amb, hook: R.hook, convoy: R.convoy, vo: R.vo, fx: R.fx, pop: R.pop, confetti: R.confetti };
     if (T.reading()) {
-      const RT = { ...T, sceneCard: async (c, f) => { await flightsDone(); return T.sceneCard(c, f); } };
-      return T.readPlay.call(RT, READ_ACTS);
+      return T.readPlay(READ_ACTS);
     }
 
     /* ===== 1. 언제나 함께 (배움 놀이 1: 빨간 것 찾기 — 첫 조작) ===== */

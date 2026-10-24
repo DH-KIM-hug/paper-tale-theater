@@ -97,16 +97,23 @@ const AudioFX = (() => {
   /* 지금 나오는 내레이션 조각: 시작 시각(ms)·길이(초, 모르면 0)·몇 번째 조각. 읽어 주기가 '오디오 길이 + 3초' 시간 제한에 쓴다 */
   const narInfo = { t: 0, dur: 0, n: 0 };
 
-  /* ===== 읽어 주기: 내레이션을 <audio> 한 개로 재생 (2026-10-23) =====
+  /* ===== 읽어 주기: 내레이션을 <audio>로 재생 (2026-10-23) =====
      화면이 꺼지거나 다른 앱·탭으로 가면 Web Audio 는 멈추거나(iOS 잠금) onended 가 오지 않을 수 있다.
      <audio> 는 배경에서도 이어 재생되고 ended 이벤트로 다음 줄을 부를 수 있다(잠금 화면 '지금 재생'·Media Session 도 이 요소로).
      시작 단추를 누르는 순간(사용자 누름 안에서) 한 번 재생해 두어야 iOS 가 나중에 누름 없이 재생을 허락한다 */
   let narEl = null, mediaNar = false, narEnd = null, narHeld = false;
   const narBlob = {};
+  const narHelpers = [];
+  let pairEnds = [], pairGen = 0;
   function mediaNarration(on) {
     mediaNar = !!on;
     if (!mediaNar) return;
     if (!narEl) { narEl = document.createElement('audio'); narEl.preload = 'auto'; narEl.setAttribute('playsinline', ''); }
+    // 각 요소를 사용자 누름 안에서 열어 두어 iOS에서도 합창을 이어 재생한다.
+    while (narHelpers.length < 7) {
+      const el = document.createElement('audio'); el.preload = 'auto'; el.setAttribute('playsinline', ''); narHelpers.push(el);
+    }
+    narHelpers.forEach(el => { el.src = SILENT; const p = el.play(); if (p) p.then(() => { if (!pairEnds.length) el.pause(); }, () => {}); });
     try { narEl.src = SILENT; const p = narEl.play(); if (p && p.then) p.then(() => { if (!narEnd) narEl.pause(); }, () => {}); } catch (e) { /* 무시 */ }
   }
   async function playMedia(url) {
@@ -317,6 +324,28 @@ const AudioFX = (() => {
         src.start();
       });
     },
+    async playTogether(urls) {
+      const gen = pairGen;
+      if (urls.length > narHelpers.length) throw new Error('too many simultaneous voices');
+      // 모두 받은 뒤 한 작업 안에서 play: 늦게 받아진 목소리 때문에 합창이 벌어지지 않는다.
+      const sources = await Promise.all(urls.map(async url => {
+        if (!narBlob[url]) narBlob[url] = URL.createObjectURL(new Blob([await fetchBytes(url)], { type: 'audio/mpeg' }));
+        return narBlob[url];
+      }));
+      if (gen !== pairGen) return;
+      narInfo.t = Date.now(); narInfo.dur = 0; narInfo.n++;
+      const jobs = sources.map((src, i) => new Promise((resolve, reject) => {
+        const el = narHelpers[i];
+        const fin = ok => { el.onended = el.onerror = el.onloadedmetadata = el.onplaying = null; pairEnds = pairEnds.filter(f => f !== fin); ok ? resolve() : reject(new Error('simultaneous media failed')); };
+        pairEnds.push(fin); el.onended = () => fin(true); el.onerror = () => fin(false);
+        el.onloadedmetadata = () => { if (isFinite(el.duration)) narInfo.dur = Math.max(narInfo.dur, el.duration); };
+        el.onplaying = () => console.log('[read] simultaneous start', urls[i], performance.now());
+        el.src = src;
+      }));
+      sources.forEach((_, i) => { if (!narHeld) narHelpers[i].play().catch(() => { const el = narHelpers[i]; if (el.onerror) el.onerror(); }); });
+      try { await Promise.all(jobs); }
+      catch (e) { narHelpers.forEach(el => el.pause()); [...pairEnds].forEach(fin => fin(true)); throw e; } // 가장 긴 목소리가 끝나야 다음 줄로
+    },
     /* 말풍선 없는 짧은 대사 (컷신 비명, 인사): 내레이션과 따로 재생하고, 새 대사가 오면 앞 대사는 끊는다 */
     async voice(urls) {
       const gen = ++voiceGen;
@@ -341,6 +370,9 @@ const AudioFX = (() => {
     /* 짧은 대사가 끝날 때까지 기다린다 (내레이션과 겹치지 않게, 최대 ms) */
     voiceIdle(ms = 4000) { return Promise.race([voiceDone, new Promise(r => setTimeout(r, ms))]); },
     stopNarration() {
+      pairGen++;
+      narHelpers.forEach(el => el.pause());
+      [...pairEnds].forEach(fin => fin(true));
       if (narSrc) { try { narSrc.stop(); } catch (e) { /* 무시 */ } narSrc = null; }
       if (narEnd) { try { narEl.pause(); } catch (e) { /* 무시 */ } narEnd(true); }
     },
@@ -350,6 +382,7 @@ const AudioFX = (() => {
     /* 잠금 화면 일시정지·재생 (Media Session) */
     narHold(on) {
       narHeld = !!on;
+      if (pairEnds.length) narHelpers.forEach(el => { if (on) el.pause(); else if (el.onended && !el.ended) el.play().catch(() => {}); });
       if (mediaNar && narEl) { try { if (on) narEl.pause(); else if (narEnd) narEl.play().catch(() => {}); } catch (e) { /* 무시 */ } }
       else if (ctx) { try { on ? ctx.suspend() : ctx.resume(); } catch (e) { /* 무시 */ } }
     },
@@ -522,7 +555,7 @@ const Narrator = (() => {
   /* 클립 경로에서 배역을 읽는다: audio/tc/tiger_ab12cd34ef.mp3, audio/tc/frog/mom_…mp3 → 'tiger', 'mom' (없으면 내레이터) */
   const roleOf = url => (/\/([a-z]+)_[0-9a-f]{10}\.mp3$/.exec(url) || [, 'nar'])[1];
 
-  async function speak(text, { keep = false, onSeg } = {}) {
+  async function speak(text, { keep = false, onSeg, simultaneous = false } = {}) {
     const gen = ++speakGen;
     AudioFX.stopNarration(); // 겹침 방지: 진행 중인 클립 중단
     const en = englishOn() && NARRATION_CLIPS_EN[text]; // 영어 자료가 없는 문장은 한국어로
@@ -534,7 +567,9 @@ const Narrator = (() => {
       try {
         // 배열이면 배역별 세그먼트를 순서대로 이어서 재생
         const list = Array.isArray(clip) ? clip : [clip];
-        for (const url of list) {
+        if (simultaneous && list.length > 1) {
+          await AudioFX.playTogether(list);
+        } else for (const url of list) {
           if (gen !== speakGen) return; // 중간에 다른 내레이션이 시작됨
           if (onSeg) try { onSeg(roleOf(url)); } catch (e) { /* 연출 실패는 무시 */ }
           await AudioFX.playUrl(url);

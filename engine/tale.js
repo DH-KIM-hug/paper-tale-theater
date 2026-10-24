@@ -131,12 +131,12 @@ const Tale = (() => {
   const camWide = (dur = 700) => camTo(500, 280, 1, dur);
 
   /* ---------- 대사 ---------- */
-  async function say(text) {
+  async function say(text, options = {}) {
     const was = busy; busy = true;
     const d = dir && dir.begin();
     try {
       if (VERIFY) await vSay(text, d);
-      else await Narrator.speak(text, d ? { onSeg: d.seg } : {});
+      else await Narrator.speak(text, { ...options, ...(d ? { onSeg: d.seg } : {}) });
     }
     finally { if (d) d.end(); busy = was; }
   }
@@ -1104,11 +1104,19 @@ const Tale = (() => {
         };
       };
     });
+    /* 한 번에 한 판만 시작한다. 오디오는 비동기 대기 전에 사용자 누름 안에서 연다. */
+    let launching = false, running = false;
     const start = async () => {
-      if (PT.due()) { PT.run(false); await restShow(); }
+      if (running) return;
+      running = true; launching = false;
+      try { await startRun(); } finally { running = false; }
+    };
+    const startRun = async () => {
       reading = readWanted(); root.classList.toggle('reading', reading); // 끝 화면 '한 번 더'도 같은 모드로 (read_once 는 홈으로 갈 때 지운다)
       try { AudioFX.mediaNarration && AudioFX.mediaNarration(reading); } catch (e) { /* 옛 audio.js */ } // 읽어 주기: 화면이 꺼져도 이어지게 <audio> 로 (누름 안에서 열어 둔다)
-      AudioFX.unlock(); PT.run(true);
+      AudioFX.unlock();
+      if (PT.due()) { PT.run(false); await restShow(); }
+      PT.run(true);
       AudioFX.prefetchClips && AudioFX.prefetchClips(); // 이 동화의 녹음을 미리 받아 둔다 (대사가 늦게 나오지 않게)
       $('#startScreen').hidden = true; $('#endScreen').hidden = true;
       clear(); camSnap(500, 280, 1); shutVeil();
@@ -1187,38 +1195,20 @@ const Tale = (() => {
     };
     if (AUTO()) autoNet();
     { const ab = $('#autoBtn'); if (ab) ab.addEventListener('click', () => {
+      if (launching || running) return; launching = true;
       try { sessionStorage.setItem('auto_once', '1'); } catch (e) { /* 저장 못 하면 이 판은 그냥 시작 */ }
       try { AudioFX.stopNarration(); Narrator.stop(); } catch (e) { /* 무시 */ }
-      /* '자동 재생'을 홈 목소리로 한 번 말한 뒤 시작한다(녹음이 없으면 바로 시작) */
-      (async () => {
-        try {
-          const txt = await (await fetch(ROOT_URL + 'home_narration_el.js')).text();
-          const c = new Function(txt + '; return { ko: NARRATION_CLIPS, en: (typeof NARRATION_CLIPS_EN !== "undefined" ? NARRATION_CLIPS_EN : {}) };')();
-          const en = typeof englishOn === 'function' && englishOn() ? c.en['자동 재생'] : null;
-          const url = en ? en.c : c.ko['자동 재생'];
-          if (url && typeof url === 'string') await AudioFX.playUrl(ROOT_URL + url);
-        } catch (e) { /* 소리 없이 시작 */ }
-        autoNet(); start();
-      })();
+      autoNet(); start();
     }); }
     $('#againBtn').onclick = start;
-    /* 시작 화면 '읽어 주기': 대본·녹음이 있을 때만 보인다. 누르면 이번 회차를 읽어 주기로 ('읽어 주기'를 홈 목소리로 한 번 말한 뒤) */
+    /* 시작 화면 '읽어 주기': 대본·녹음이 있을 때만 보인다. 누르면 이번 회차를 읽어 주기로 사용자 누름 안에서 바로 시작 */
     { const rb = $('#readBtn'); if (rb && readOpt) {
       readAvailable().then(ok => { rb.hidden = !ok; }).catch(() => { /* 숨긴 채로 */ });
       rb.addEventListener('click', () => {
+        if (launching || running) return; launching = true;
         readOnce = true; try { sessionStorage.setItem('read_once', '1'); } catch (e) { /* 이 페이지 안에서는 readOnce 로 */ }
         try { AudioFX.stopNarration(); Narrator.stop(); } catch (e) { /* 무시 */ }
-        (async () => {
-          try {
-            AudioFX.unlock && AudioFX.unlock();
-            const txt = await (await fetch(ROOT_URL + 'home_narration_el.js')).text();
-            const c = new Function(txt + '; return { ko: NARRATION_CLIPS, en: (typeof NARRATION_CLIPS_EN !== "undefined" ? NARRATION_CLIPS_EN : {}) };')();
-            const en = typeof englishOn === 'function' && englishOn() ? c.en['읽어 주기'] : null;
-            const url = en ? en.c : c.ko['읽어 주기'];
-            if (url && typeof url === 'string') await AudioFX.playUrl(ROOT_URL + url);
-          } catch (e) { /* 소리 없이 시작 */ }
-          start();
-        })();
+        start();
       });
     } }
   }
@@ -1421,10 +1411,10 @@ const Tale = (() => {
       }
     };
     /* 대사: 녹음 조각이 시작되면 그 길이 + 3초, 길이를 모르면(브라우저 TTS·받는 중) 글자 수 기반 */
-    const sayGuarded = text => {
+    const sayGuarded = (text, simultaneous = false) => {
       const est = 8000 + String(text).length * 250;
       const n0 = AudioFX.narInfo ? AudioFX.narInfo().n : 0;
-      const p = W.say(text);
+      const p = W.say(text, { simultaneous });
       return guard(p, '대사 ' + String(text).slice(0, 20), t0 => {
         const ni = AudioFX.narInfo ? AudioFX.narInfo() : null;
         if (ni && ni.n !== n0) return Math.max(0, ni.t - t0) + (ni.dur ? ni.dur * 1000 + 3000 : est);
@@ -1458,6 +1448,12 @@ const Tale = (() => {
           } finally { readInstant = false; }
         };
         await waitHeld();
+        /* 앞 장면에서 아직 달리는 움직임(차 행렬 등)이 있으면 acts.settle() 로 먼저 끝낸다. 장면 넘김(4초 제한) 안에서 기다리면
+           제한에 걸려 장면이 넘김 없이 바뀌고 새 장면 대사가 시작된 뒤에야 넘김이 늦게 돌아간다(2026-10-24 빨간 자동차) */
+        if (i > 0 && typeof acts.settle === 'function' && !hidden()) {
+          let sp = null; try { sp = acts.settle(); } catch (e) { console.warn('[read] settle 실패', e); }
+          if (sp) await guard(Promise.resolve(sp), '장면 마무리 ' + (s.card || i), () => VERB_MS);
+        }
         if (i === 0) { setUp(); await gap(300); await guard(W.curtain(true), '막 열기', () => CARD_MS); }
         else await guard(W.sceneCard(s.card || '', setUp), '장면 넘김 ' + (s.card || i), () => CARD_MS);
         setUp(); // 시간 제한으로 넘김이 끝나지 않았어도 장면은 차린다
@@ -1467,7 +1463,7 @@ const Tale = (() => {
           const l = lines[j];
           await waitHeld();
           await runAll(l.before);
-          await sayGuarded(l.text);
+          await sayGuarded(l.text, l.simultaneous === true);
           log.said++;
           await runAll(l.after);
           await gap(j === lines.length - 1 ? READ_SCENE_END : READ_GAP);
