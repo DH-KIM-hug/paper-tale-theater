@@ -577,6 +577,9 @@
   /* ================= 이야기 ================= */
   async function run(T) {
     const { el, sleep, say, actor, camTo, camWide, camSnap, josa } = T;
+    // 가로는 1.3배 상한. 탑을 조금 키워 창 앞 전경에 두고, 세로 구도는 유지한다.
+    const wideTower = () => narrow() ? HW_T : { x: 540, y: 390, s: .48 };
+    const wideCamera = () => narrow() ? HW_CAM : [522, 300, 1.3];
     const S = makeSounds(T);
     const pop0 = T.pop; T = { ...T, pop: (x, y, w, c) => pop0(clampX(x, 60 + [...T.tr(w)].length * 12), y, w, c) };
 
@@ -712,14 +715,14 @@
       const TCX = bgArt('house_low') ? L(500, 650) : 500;
       const WAIT_W = { donkey: 200, dog: 125, cat: 100, rooster: 95 };
       const WTS = bgArt('house_wide') ? .36 : .72;
-      const WT = bgArt('house_wide') ? HW_T : { x: 615, y: 488, s: WTS };
+      const WT = bgArt('house_wide') ? wideTower() : { x: 615, y: 488, s: WTS };
       const SPOTS = L([['cat', 180, 478, 1.3], ['dog', 470, 478, 1.25], ['donkey', 690, 486, .95], ['rooster', 860, 120, 1.2]], [['cat', 320, 478, 1.1], ['dog', 440, 478, 1.05], ['donkey', 590, 486, .8], ['rooster', 665, 120, 1.1]]);
       const STOPS = L([300, 380, 590, 800, 1150], [385, 520, 680, 700, 1150]);
       const SPOT5 = L({ donkey: [200, 1.05], dog: [420, 1.2], cat: [590, 1.3], rooster: [770, 1.3] }, { donkey: [390, .75], dog: [492, .85], cat: [584, .98], rooster: [648, .9] });
       const HOME = bgArt('morning')
         ? L({ donkey: [150, 476, .95], dog: [470, 476, 1.1], cat: [860, 462, 1.05], rooster: [520, 172, 1] }, { donkey: [370, 476, .8], dog: [490, 476, 1], cat: [640, 462, .95], rooster: [500, 172, 1] })
         : L({ donkey: [190, 486, 1], dog: [520, 486, 1.15], cat: [860, 410, 1.1], rooster: [470, 176, 1.1] }, { donkey: [385, 486, .85], dog: [505, 486, 1], cat: [648, 410, 1], rooster: [470, 176, 1.1] });
-      const CAMW = { road: [L(500, 640), 280, 1], roof: [L(500, 720), 280, 1], house_low: [TCX, 280, 1], house_wide: bgArt('house_wide') ? HW_CAM : [500, 280, 1] };
+      const CAMW = { road: [L(500, 640), 280, 1], roof: [L(500, 720), 280, 1], house_low: [TCX, 280, 1], house_wide: bgArt('house_wide') ? wideCamera() : [500, 280, 1] };
       const camW = () => { const c = CAMW[key] || [500, 280, 1]; camSnap(c[0], c[1], c[2]); };
       const hx = k => HOME[k][0];
       const darkSpot = k => SPOTS.find(q => q[0] === k);
@@ -920,7 +923,7 @@
             T.tone(392 + stacked.length * 98, .25, { type: 'triangle', vol: .16 });
             if (bgArt('house_low') && who !== 'rooster') winBreath(lowWinR);
             if (who === 'rooster' && bgArt('house_low')) await towerSong(lowWinR);
-            if (who === 'rooster') await camTo(bgArt('house_low') ? TXX + 40 : TXX, L(190, 205), 1.6, 900);
+            if (who === 'rooster') await camTo(bgArt('house_low') ? TXX + 40 : TXX, narrow() ? L(190, 205) : 320, narrow() ? 1.6 : 1.3, 900);
           })();
         },
         robbers(op) {
@@ -1275,7 +1278,7 @@
     tower();
     if (lowArt) await towerSong(lowWin);
     await say('당나귀, 강아지, 고양이, 닭! 닭이 창문에 닿았어요!');
-    await camTo(lowArt ? TX + 40 : TX, L(190, 205), 1.6, 900);
+    await camTo(lowArt ? TX + 40 : TX, narrow() ? L(190, 205) : 320, narrow() ? 1.6 : 1.3, 900);
 
     /* ---------- 8. 창문 안 (닭의 시점) ---------- */
     const rb = [C.pine, C.bean, C.bark].map(c => mk('robber', c));
@@ -1309,14 +1312,14 @@
     /* ---------- 9. 음악 대폭발 (창문 와이드 → 컷) ---------- */
     let hw, tg;
     const WTS = bgArt('house_wide') ? .36 : .72; // 그림: 집이 작다(문 높이 67) → 당나귀(키 200)도 .36배(문보다 살짝 크다 = 집 앞쪽에 서 있다), 창(y 286~322)에 닭이 닿는 탑
-    const WT = bgArt('house_wide') ? HW_T : { x: 615, y: 488, s: WTS };
+    const WT = bgArt('house_wide') ? wideTower() : { x: 615, y: 488, s: WTS };
     await T.sceneCard('음악 대폭발', () => {
       T.clear(); hw = houseWideBG(T);
       let p = { x: WT.x, y: WT.y };
       band.forEach(a => { put(a, p.x, p.y, WT.s); p = { x: p.x + BACK[a.key][0] * WT.s, y: p.y + BACK[a.key][1] * WT.s }; });
       tg = el('g', {}, T.world); band.forEach(a => tg.appendChild(a.pos)); // 탑 전체가 한 덩이 (톡 한 번 + 반짝)
       el('rect', { x: WT.x - 50, y: WT.y - 330 * WT.s, width: 120, height: 330 * WT.s + 10, fill: '#fff', opacity: 0 }, tg);
-      if (hw.art) camSnap(...HW_CAM); else camSnap(500, 280, 1); // 그림: 집이 작아서 카메라를 집 앞으로 당긴다 (가로·세로 모두 문·창·탑이 보인다)
+      if (hw.art) camSnap(...wideCamera()); else camSnap(500, 280, 1); // 가로는 탑·문·창을 함께 담고, 세로는 기존 구도
     });
     const hitT = tg;
     /* 〈프레르 자크〉(프랑스 전래 동요): 네 친구가 한 줄씩 돌아가며 노래한다 */
