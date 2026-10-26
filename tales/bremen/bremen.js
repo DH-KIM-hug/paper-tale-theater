@@ -33,8 +33,9 @@
     rooster: 'v3w/br_rooster.webp', rooster_sing: 'v3w/br_rooster_sing.webp', miller: 'v3w/br_miller.webp', owl: 'v3w/br_owl.webp',
     robber_red: 'v3w/br_robber_red.webp', robber_green: 'v3w/br_robber_green.webp', robber_brown: 'v3w/br_robber_brown.webp',
     cut_crash: 'v3w/br_cut_crash5.webp', cut_monster: 'v3w/br_cut_monster.webp', cut_ghost: 'v3w/br_cut_ghost3.webp',
-    // 빛 상자 탑 장면(7장)에서만 쓰는 실루엣 동물(VISUAL_PLAN §4-4): 색종이 그림과 같은 자세·방향, 눈 구멍 하나
+    // 빛 상자 탑 장면(7장)에서만 쓰는 실루엣 동물(VISUAL_PLAN §4-4): 기존 그림과 같은 자세·방향, 눈 구멍 하나
     donkey_sil: 'v3w/br_lb_sil_donkey.webp', dog_sil: 'v3w/br_lb_sil_dog.webp', cat_sil: 'v3w/br_lb_sil_cat.webp', rooster_sil: 'v3w/br_lb_sil_rooster.webp',
+    robber_sil_1: 'v3w/br_lb_robber_1.webp', robber_sil_2: 'v3w/br_lb_robber_2.webp', robber_sil_3: 'v3w/br_lb_robber_3.webp',
     drum: 'v3w/br_drum.webp', horn: 'v3w/br_horn.webp', fiddle: 'v3w/br_fiddle.webp', bell: 'v3w/br_bell.webp', // 우리 집 악기 (바이올린 옆에 따로 그려진 리본 조각은 지움)
   };
   const artOK = {}, bgOK = {};
@@ -51,8 +52,8 @@
     donkey: [200, 0.571, 0.9308], donkey_sing: [202, 0.569, 0.9315], donkey_sleep: [168, 0.572, 1.2125], dog_sing: [95, 0.466, 0.9568], dog_tired: [97, 0.534, 1.0742], cat_sing: [89, 0.558, 1.0696], cat_sad: [85, 0.619, 1.0364], cat_perch: [102, 0.5, 0.7283, 0.76], // [키, 발끝 x 비율, 폭/높이, (앉은 그림) 엉덩이·발 밑선이 그림 높이의 몇 %인지]
     
     rooster: [104, 0.427, 0.937], rooster_sing: [96, 0.462, 0.9875], 
-    // 실루엣(빛 상자 탑, 2026-10-23): 색종이 그림과 같은 자세라 그림 높이 55% 줄의 몸통 폭이 같아지게 키를 맞췄다(§4-1), 발끝은 발 띠 가운데
-    donkey_sil: [204, 0.571, 0.9367], dog_sil: [95, 0.472, 0.955], cat_sil: [89, 0.534, 1.0117], rooster_sil: [98, 0.48, 0.9917],
+    // 실루엣(빛 상자 탑): 당나귀 200, 강아지·고양이·닭 100. 발끝은 발 띠 가운데
+    donkey_sil: [200, 0.571, 0.9667], dog_sil: [100, 0.472, 0.985], cat_sil: [100, 0.534, 1.01], rooster_sil: [100, 0.48, 0.99],
     miller: [183, 0.432, 0.4764], owl: [80, 0.495, 0.835], 
     robber_red: [170, 0.535, 0.7725], robber_green: [157, 0.31, 0.9511], robber_brown: [162, 0.52, 0.7318],
   };
@@ -73,7 +74,7 @@
     const w = h * LASP[k], g = T.el('g', { style: 'pointer-events:none' }, front ? T.fx : T.bg);
     const inner = T.el('g', { filter: 'url(#pp)' }, g);
     if (flip) g.setAttribute('transform', `translate(${2 * cx},0) scale(-1,1)`);
-    T.el('image', { href: AS + 'v3w/br_layer_' + k + '.webp', x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
+    T.el('image', { href: AS + 'v3w/br_layer_' + k + '.webp' + (k === 'swirl_branch' ? '?v=20261027' : ''), x: cx - w / 2, y: top ? y : y - h, width: w, height: h, preserveAspectRatio: 'none' }, inner);
     inner.style.transformBox = 'fill-box'; inner.style.transformOrigin = top ? '50% 0%' : '50% 100%';
     return inner;
   }
@@ -115,10 +116,9 @@
     const L = key === 'robber' ? { home: ROBBER[extra] || 'robber_red' } : LOOKS[key];
     if (!L || !artUrl(L.home)) return null;
     const imgs = {};
-    Object.entries(L).forEach(([n, k]) => { if (imgs[k] || !artUrl(k)) return; const [h, fx, as, base = 1] = SPR[k], w = h * as; imgs[k] = pic(T, g, k, -w * fx, -h * base, w, h); });
+    Object.entries(L).forEach(([n, k]) => { if (imgs[k] || !artUrl(k)) return; const [h, fx, as, base = 1] = SPR[k], w = h * as; imgs[k] = pic(T, g, k, -w * fx, -h * base, w, h, { shadow: n !== 'sil' }); });
     let cur = 'home';
     const p = { art: true, imgs };
-    if (L.sil && imgs[L.sil]) imgs[L.sil].style.filter = SIL_GLOW; // 빛 상자: 뒤 빛이 종이 가장자리로 샌다
     p.sil = false; // true 면 어떤 자세를 불러도 실루엣 (빛 상자 탑 장면)
     p.look = n => { if (p.sil && L.sil && imgs[L.sil]) n = 'sil'; cur = L[n] && imgs[L[n]] ? n : 'home'; Object.entries(imgs).forEach(([k, f]) => { f.style.display = k === L[cur] ? '' : 'none'; }); };
     p.cur = () => cur;
@@ -132,11 +132,10 @@
     const [h, , as] = SPR[L.home]; T.el('rect', { x: -h * as / 2, y: -h, width: h * as, height: h, fill: '#fff', opacity: 0 }, g); // 누를 자리
     return p;
   }
-  const SIL_GLOW = 'url(#pp) drop-shadow(0 0 2px #F5A64B) drop-shadow(0 0 5px rgba(245,166,75,.6))';
   /* 컷 안에 배우 한 장 (그림이 있으면 그림, 없으면 임시 도형) */
   function drawLook(T, g, key, look = 'home', extra) {
     const k = key === 'robber' ? ROBBER[extra] : (LOOKS[key] || {})[look] || (LOOKS[key] || {}).home;
-    if (k && artUrl(k)) { const [h, fx, as, base = 1] = SPR[k], w = h * as; pic(T, g, k, -w * fx, -h * base, w, h); return true; }
+    if (k && artUrl(k)) { const [h, fx, as, base = 1] = SPR[k], w = h * as; pic(T, g, k, -w * fx, -h * base, w, h, { shadow: look !== 'sil' }); return true; }
     return DRAW[key](T, g, extra);
   }
 
@@ -278,7 +277,7 @@
   /* 머리(눈) 위치 — 어둠 속 눈 반짝이 */
   const EYE0 = { donkey: [-82, -152], dog: [-52, -64], cat: [-25, -54], rooster: [-22, -71] };
   // 그림: 당나귀는 잠자는 그림의 감은 눈 자리, 나머지는 눌러 앉힌(POSE.sleep 세로 .8) 평소 그림의 눈 자리
-  const EYE_ART = { donkey: [-101, -67], dog: [-38, -69], cat: [-34, -52], rooster: [-22, -60] };
+  const EYE_ART = { donkey: [-76.0, -76.0], dog: [-22.1, -56.2], cat: [-29.1, -47.3], rooster: [-23.7, -61.8] };
   const EYE = new Proxy({}, { get: (o, k) => (artUrl(LOOKS[k] ? LOOKS[k].home : '') ? EYE_ART : EYE0)[k] });
   const POSE = {
     stand: 'translate(0px,0px) rotate(0deg) scale(1,1)',
@@ -436,10 +435,10 @@
   const LOW_WIN = { x0: 657, x1: 818, y0: -24, y1: 180 };
   function houseLowBG(T, dx = 0, dy = 0) {
     const { paper, el } = T, b = T.bg;
-    if (bgImage(T, 'house_low')) { // 창 속 도둑 그림자 셋은 코드 (유리 안에만)
+    if (bgImage(T, 'house_low')) { // 밝은 창 광원 한 장을 동물 실루엣 뒤에 깐다(필터 없음)
       const win = bgClip(T, 'house_low', b, [['rect', { x: LOW_WIN.x0, y: LOW_WIN.y0, width: LOW_WIN.x1 - LOW_WIN.x0, height: LOW_WIN.y1 - LOW_WIN.y0 }]]);
       const sh = win.lastChild;
-      [690, 737, 784].forEach((x, i) => paper(sh, [['circle', { cx: x, cy: 118 - (i % 2) * 8, r: 18, fill: '#8a5a32', opacity: .75 }], ['ellipse', { cx: x, cy: 176, rx: 24, ry: 30, fill: '#8a5a32', opacity: .75 }]]));
+      [690, 737, 784].forEach((x, i) => el('image', { href: artUrl(`robber_sil_${i + 1}`), x: x - 30, y: 116 - (i % 2) * 8, width: 60, height: 72, preserveAspectRatio: 'xMidYMax meet' }, sh));
       return win;
     }
     sky(T, C.indigo);
@@ -451,7 +450,10 @@
     const win = paper(b, [['rect', { x: 596, y: 96, width: 208, height: 164, fill: C.bark }], ['rect', { x: 610, y: 110, width: 180, height: 136, fill: C.amber }],
       ['rect', { x: 696, y: 110, width: 8, height: 136, fill: C.bark }], ['rect', { x: 610, y: 172, width: 180, height: 8, fill: C.bark }]], { transform: `translate(${dx},${dy})` });
     // 창 안 도둑 그림자 셋
-    [650, 700, 750].forEach((x, i) => paper(win, [['circle', { cx: x, cy: 214 - (i % 2) * 8, r: 16, fill: '#8a5a32' }], ['ellipse', { cx: x, cy: 250, rx: 20, ry: 26, fill: '#8a5a32' }]]));
+    const robberClip = el('clipPath', { id: 'br-low-fallback-' + (++clipN) }, win);
+    el('rect', { x: 610, y: 110, width: 180, height: 136 }, robberClip);
+    const robbers = el('g', { 'clip-path': `url(#${robberClip.id})` }, win);
+    [650, 700, 750].forEach((x, i) => el('image', { href: artUrl(`robber_sil_${i + 1}`), x: x - 30, y: 182 - (i % 2) * 8, width: 60, height: 72, preserveAspectRatio: 'xMidYMax meet' }, robbers));
     paper(b, [['rect', { x: -300, y: 500, width: 1600, height: 300, fill: '#3E5A3A' }]]);
     return win;
   }
@@ -579,7 +581,7 @@
     const { el, sleep, say, actor, camTo, camWide, camSnap, josa } = T;
     // 가로는 1.3배 상한. 탑을 조금 키워 창 앞 전경에 두고, 세로 구도는 유지한다.
     const wideTower = () => narrow() ? HW_T : { x: 540, y: 390, s: .48 };
-    const wideCamera = () => narrow() ? HW_CAM : [522, 300, 1.3];
+    const wideCamera = () => narrow() ? HW_CAM : [522, 300, 1.8];
     const S = makeSounds(T);
     const pop0 = T.pop; T = { ...T, pop: (x, y, w, c) => pop0(clampX(x, 60 + [...T.tr(w)].length * 12), y, w, c) };
 
@@ -1514,16 +1516,29 @@
     const ODE = T.parseSong('E4:1 E4:1 F4:1 G4:1 G4:1 F4:1 E4:1 D4:1 C4:1 C4:1 D4:1 E4:1 E4:1.5 D4:.5 D4:2 E4:1 E4:1 F4:1 G4:1 G4:1 F4:1 E4:1 D4:1 C4:1 C4:1 D4:1 E4:1 D4:1.5 C4:.5 C4:2');
     const BARS = [4, 4, 4, 3, 4, 4, 4, 3], ODE_ORDER = ['cat', 'dog', 'rooster', 'donkey'];
     const WHO = []; BARS.forEach((c, bi) => { for (let i = 0; i < c; i++) WHO.push(ODE_ORDER[bi % 4]); });
+    if (WHO.length !== 30 || WHO.length !== ODE.length) throw new Error('Ode to Joy: note/performer count mismatch');
+    const ODE_BEAT = .42, ODE_ROOTS = ['C2', 'G2', 'F2', 'G2', 'C2', 'G2', 'F2', 'C2'];
+    const ODE_BASS = new Map();
+    let odeStart = 0;
+    BARS.forEach((count, bi) => {
+      const beats = ODE.slice(odeStart, odeStart + count).reduce((sum, [, length]) => sum + length, 0);
+      ODE_BASS.set(odeStart, [ODE_ROOTS[bi], beats * ODE_BEAT]);
+      odeStart += count;
+    });
     const ODE_VOICE = {
-      donkey: (f, d) => T.tone([f * .9, f * .5], .3, { type: 'sine', vol: .32 }),
+      donkey: (f, d) => T.tone(f * .5, d * 1.1, { type: 'triangle', vol: .23 }),
       dog: (f, d) => T.timbre('horn')(f, d, 0, .16),
-      cat: (f, d) => { T.tone(f, d * 1.1, { type: 'sawtooth', vol: .05 }); T.tone(f, d * 1.1, { type: 'triangle', vol: .12 }); },
+      cat: (f, d) => T.timbre('xylo')(f, Math.min(d * .55, .18), 0, .2),
       rooster: (f, d) => T.timbre('bell')(f * 2, d, 0, .17),
     };
-    const odeVoice = (n, d, i) => ODE_VOICE[WHO[i]](T.hz(n), d);
+    const odeVoice = (n, d, i) => {
+      const bass = ODE_BASS.get(i);
+      if (bass) T.tone(T.hz(bass[0]), bass[1], { type: 'sine', vol: .045 });
+      ODE_VOICE[WHO[i]](T.hz(n), d);
+    };
     const odeHop = i => { const a = cast[WHO[i]]; a.hop(18, 280); note(T, a.x + 20, a.y - 100 * a.scale, [C.bean, C.pine, C.persimmon][i % 3]); };
     await say('기쁨의 노래를 연주해요!'); // 따라 누르기 없이 들려주기만 (2026-10-19)
-    await T.playMelody(ODE, { beat: .4, voice: odeVoice, onNote: odeHop });
+    await T.playMelody(ODE, { beat: ODE_BEAT, voice: odeVoice, onNote: odeHop });
     await sleep(500);
     await sleep(400);
     band.forEach((a, i) => setTimeout(() => { a.cry(.6); a.hop(24, 380); }, i * 200));
