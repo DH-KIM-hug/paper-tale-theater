@@ -1181,7 +1181,7 @@
       T.world.appendChild(hero.pos);
       sibs.push(d);
       peep(T, 1400 + sibs.length * 80); d.hop(34);
-      T.pop(e.x, e.y - 60, '삐약!', C.gold);
+      T.pop(e.x, e.y - 125, '삐약!', C.gold); // 깨어난 아기 오리가 톡 튀어 올라도 머리를 덮지 않게 위로(-60→-125)
     }
     await sleep(500);
     await say('노란 아기 오리 넷이 나왔어요. 삐약삐약!');
