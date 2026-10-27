@@ -326,6 +326,11 @@
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ WALK = 3000;
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(count1~7)
+    /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
+    const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const SCENE_AMB = { sb_bg_hall_v2: 'crowd_murmur_1', sb_bg_outside_v2: 'birds_chirp_1' };
+    const bgAmb = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } if (SCENE_AMB[key] && !(T.reading() && key === 'sb_bg_hall_v2')) amb(SCENE_AMB[key], key === 'sb_bg_hall_v2' ? .2 : .28); };   // 읽기는 잔치 웅성 대신 조용히   // 배경이 바뀔 때마다(setBg) 이전 배경 소리를 끄고 새 장면 소리 시작
     const scene = key => { setBg(key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990;                 // 세로 화면
     const X = (l, p) => (P ? p : l);
@@ -334,7 +339,7 @@
     const S_ROW = T.viewWidth() < 300 ? .36 : .55, SGAP = S_ROW === .36 ? 32 : 50;
     const SLOT = i => 112 + 108 * i, SLOTP = i => 500 - 3.5 * SGAP + SGAP * i;
     const SX = i => X(SLOT(i), SLOTP(i)), RS = X(1, S_ROW);
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'hop']);
+    AudioFX.preloadSfx(['paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'hop', 'crowd_murmur_1', 'birds_chirp_1', 'birds_chirp_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'question', 'ding_glock', 'sleepy_tuba', 'shimmer', 'boing', 'party_horn']);
     const S = {
       L1: "왕과 왕비는 오래오래 아기를 기다렸어요. 드디어 예쁜 공주님이 태어났어요!",
       L2: "온 나라 사람들을 불러 잔치를 열자!",
@@ -407,7 +412,7 @@
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
 
     /* ---- 배우 (자세 이름: [그림, 높이]) ---- */
     const h = f => [f, HT[f]];
@@ -465,7 +470,7 @@
         flicker(mid(L.candle_stand, X(60, 330), FL)); flicker(mid(L.candle_stand2, X(940, 670), FL));
       }
     }
-    const setBg = key => { T.clear(); bgImage(T, key); dress(key); };
+    const setBg = key => { bgAmb(key); T.clear(); bgImage(T, key); dress(key); };
     T.director({ cast: { king, queen, princess: pr, fred: fairies[0], forange: fairies[1], fyellow: fairies[2], fgreen: fairies[3], fblue: fairies[4], fpurple: fairies[5], young, old, granny, prince, grandpa },
                  noFace: ['king', 'queen', 'princess', 'fred', 'forange', 'fyellow', 'fgreen', 'fblue', 'fpurple', 'young', 'old', 'granny', 'prince', 'grandpa'] });
     const PEEK_DX = -(curtain.w / 2 + 25);
@@ -774,7 +779,7 @@
       if (striped) { await sleep(600); return; }
       for (let i = 0; i < 7; i++) {
         strips.push(strip(T, SX(i), TABLE_Y + 2 + 10 * RS, FL - 205 * RS - 6));
-        sfx(T, 'paper_tap', .3); vo('count' + (i + 1));
+        cue('marimba_' + (i + 1), .8) || sfx(T, 'paper_tap', .3); vo('count' + (i + 1));
         await sleep(700);
       }
       striped = true;
@@ -785,13 +790,14 @@
       ss.forEach(s => s.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }));
       await sleep(300); ss.forEach(s => s.remove());
     };
+    cue('question', .6);
     await T.ask(S.Q1, () => T.choose([{ el: rowFairies, ok: true }, { el: rowPlates, ok: false, onWrong: async () => { await matchUp(); await say(S.W1); await clearStrips(); } }], { prompt: S.Q1 }));
     await matchUp();
     await sleep(700);
     await say(S.C1);
     await T.ask(S.Q2, () => T.choose([{ el: rowPlates, ok: true }, { el: rowFairies, ok: false, onWrong: async () => { await matchUp(); await say(S.W2); } }], { prompt: S.Q2 }));
     for (let i = 0; i < 7; i++) { glow(plates[i], 500); await sleep(120); }
-    sparkleSfx(T);
+    cue('ding_glock', .8) || sparkleSfx(T);
     await say(S.C2);
     await clearStrips();
     rowPlates.remove(); rowFairies.remove();
@@ -925,14 +931,15 @@
       await Promise.all([T.anim(a, [{ translate: `${wheel.x - 20 - ax}px 0` }, { translate: '0 0' }], 600), T.anim(b, [{ translate: `${wheel.x + 20 - bx}px 0` }, { translate: '0 0' }], 600)]);
       a.style.translate = ''; b.style.translate = '';
     };
+    cue('question', .6);
     await T.ask(S.Q3, () => T.choose(order.map(k => ({ el: threads[k].hit, ok: k === 'long', onWrong: async () => { await wiggleEl(T, threads[k].pos); await showPair(k, 'long'); await say(k === 'short' ? S.W3a : S.W3b); } })), { prompt: S.Q3 }));
     glow(threads.long, 1200);
     threads.long.body.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(1.08)' }, { transform: 'scaleY(1)' }], 700);
-    sparkleSfx(T); T.pop(wheel.x, TY - 125, tr('반짝!'));
+    cue('ding_glock', .8) || sparkleSfx(T); T.pop(wheel.x, TY - 125, tr('반짝!'));
     await sleep(700);
     await say(S.C3);
     await T.ask(S.Q4, () => T.choose(order.map(k => ({ el: threads[k].hit, ok: k === 'short', onWrong: async () => { await wiggleEl(T, threads[k].pos); await showPair(k, 'short'); await say(k === 'long' ? S.W4a : S.W4b); } })), { prompt: S.Q4 }));
-    glow(threads.short, 1200); sparkleSfx(T); T.pop(wheel.x, TY - 125, tr('반짝!'));
+    glow(threads.short, 1200); cue('ding_glock', .8) || sparkleSfx(T); T.pop(wheel.x, TY - 125, tr('반짝!'));
     await say(S.C4);
     await sleep(SCENE_END);
 
@@ -981,6 +988,7 @@
       camSnap(X(500, 470), 280, 1);
     }, young.pos);
     const l30 = say(S.L30); young.hop(6, 300); await l30;
+    cue('sleepy_tuba', .5);
     for (const [a] of sleepers) {
       follow(a.x - 30, 700);
       young.wiggle(3, 400); twinkle(T, young.x + WAND_TIP[0], FL + WAND_TIP[1], '#9CC7DD', 4, 30); sfx(T, 'doop', .35, () => T.tone([520, 380], .12, { vol: .12 }));
@@ -1069,8 +1077,9 @@
     await say(S.L37);
     const OPT = { dog, bird, kid, guard: guardB };
     const ask = async (Q, W, right, onRight, C) => {
+      cue('question', .6);
       await T.ask(Q, () => T.choose(Object.keys(OPT).map(k => ({ el: OPT[k].hit, ok: k === right, onWrong: async () => { await wiggleEl(T, OPT[k].pos); await say(W); } })), { prompt: Q }));
-      onRight(); sparkleSfx(T);
+      onRight(); cue('ding_glock', .8) || sparkleSfx(T);
       await sleep(700);
       await say(C);
     };
@@ -1081,7 +1090,7 @@
 
     /* ===== 11. 깨어나요 (톡 3: 인사) ===== */
     await T.sceneCard(tr('깨어나요'), () => {
-      scene('sb_bg_bedroom_v2');
+      scene('sb_bg_bedroom_v2'); amb('birds_chirp_2');
       put(T, candle, X(240, 380), FL, { look: 'lit' });
       put(T, bed, 500, FL + 6);
       put(T, pr, bed.x - 8, bed.y + BED_TOP, { look: 'lie', to: 'left' });
@@ -1094,7 +1103,7 @@
     }, pr.pos);
     const l38 = say(S.L38);
     await sleep(1200);
-    twinkle(T, bed.x, bed.y + BED_TOP - 60, '#F2B366', 6, 60); sparkleSfx(T);
+    twinkle(T, bed.x, bed.y + BED_TOP - 60, '#F2B366', 6, 60); sfx(T, 'shimmer', .7, () => sparkleSfx(T));
     { const b = front(L.wake_burst, bed.x, bed.y + BED_TOP - 60 + HT.sb_layer_wake_burst / 2); b.body.style.transformBox = 'fill-box'; b.body.style.transformOrigin = '50% 50%';
       b.body.animate([{ transform: 'scale(.2)', opacity: 1 }, { transform: 'scale(1.4)', opacity: 1, offset: .7 }, { transform: 'scale(1.4)', opacity: 0 }], { duration: 700, easing: 'ease-out' }).finished.then(() => hide(b), () => hide(b));
       [L.cobweb, L.cobweb2].forEach(c => fadeOut(T, c, 900)); }
@@ -1104,7 +1113,7 @@
     prince.look('stand'); prince.hop(6, 300);
     await say(S.L40);
     const l41 = say(S.L41);
-    [maid, cook, kid].forEach((a, i) => setTimeout(() => { a.look('stand'); a.hop(10, 360); sfx(T, 'hop', .5); }, i * 200));
+    [maid, cook, kid].forEach((a, i) => setTimeout(() => { a.look('stand'); a.hop(10, 360); cue('boing', .4) || sfx(T, 'hop', .5); }, i * 200));
     await l41;
     await sleep(300);
     await veil(T, () => {
@@ -1133,8 +1142,9 @@
     allHit.remove();
     pr.look('wave'); prince.look('wave');
     [...fairies, young, old, king, queen, pr, prince].forEach((a, i) => setTimeout(() => a.hop(10, 400), i * 120));
-    T.confetti(); sfx(T, 'tada', .5, () => sparkleSfx(T));
+    T.confetti(); sfx(T, 'party_horn', .9, () => sfx(T, 'tada', .5, () => sparkleSfx(T)));
     await say(S.L44);
+    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale(); await sleep(2500);
     return '아무도 빼놓지 않아요. 잊힌 사람의 마음은 아프답니다.';
   }
