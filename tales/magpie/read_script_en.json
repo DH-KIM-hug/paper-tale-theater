@@ -105,6 +105,7 @@
       ]
      ],
      "after": [
+      "snd:surprise_sting:.6",
       "fx:caw",
       "pop:900,230,까악!",
       "sch:look:surprise",
@@ -183,7 +184,8 @@
       ]
      ],
      "before": [
-      "snake:look:flee:left"
+      "snake:look:flee:left",
+      "snd:rustle_1:.5:900"
      ],
      "after": [
       "snake:climb"
@@ -231,6 +233,9 @@
        "The scholar took out his bow.",
        null
       ]
+     ],
+     "before": [
+      "snd:pull_pop:.7"
      ]
     },
     {
@@ -274,7 +279,8 @@
       ]
      ],
      "before": [
-      "cut:arrow"
+      "cut:arrow",
+      "snd:bow_arrow_1:.8"
      ]
     },
     {
@@ -397,7 +403,10 @@
       ]
      ],
      "before": [
-      "chicks:nest"
+      "chicks:nest",
+      "snd:marimba_1:.8:300",
+      "snd:marimba_2:.8:900",
+      "snd:marimba_3:.8:1500"
      ]
     },
     {
@@ -687,7 +696,8 @@
       "lady:look:tail",
       "fx:pop",
       "pop:760,465,!",
-      "sch:look:surprise"
+      "sch:look:surprise",
+      "snd:surprise_sting:.6"
      ]
     },
     {
@@ -898,7 +908,8 @@
       "mom:hide",
       "dad:hide",
       "flock:fly",
-      "fx:whoosh"
+      "fx:whoosh",
+      "snd:wing_flap_1:.4"
      ]
     },
     {
@@ -1491,6 +1502,9 @@
        "A heart that remembers kindness and gives it back is as warm as this.",
        null
       ]
+     ],
+     "after": [
+      "snd:party_horn:.7"
      ]
     }
    ]

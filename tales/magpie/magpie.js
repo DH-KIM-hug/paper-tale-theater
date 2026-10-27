@@ -245,7 +245,7 @@
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };
     /* 소리 큐: 재생(놀이)에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { mg_bg_path: 'birds_chirp_1', mg_bg_night: 'crickets_night_1', mg_bg_dawn: 'birds_chirp_2' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); dress(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     const P = T.viewWidth() < 990;
@@ -378,7 +378,7 @@
           if (op === 'collapse') { // 힘이 빠져 종 아래로 스르르
             put(T, dad, X(430, 440), 300, { look: 'tired' }); put(T, mom, X(560, 560), 300, { look: 'tired' });
             [dad, mom].forEach(b => { fadeIn(b, 900); b.move(b.x, 480, 1600, 'ease-in'); });
-            sfx('paper_down', .4); return sleep(900);
+            cue('whistle_down', .4) || sfx('paper_down', .4); return sleep(900);
           }
         },
         snake(op, a1, a2, a3) {
@@ -389,11 +389,11 @@
           if (op === 'flee') {
             if (key === 'mg_bg_paperdoor') { // 새벽: 여인이 변한 구렁이가 숲으로
               snake.look('flee', 'right'); snake.place(snake.x, FL + 8);
-              sfx('swish', .5); T.pop(snake.x + 40, FL - 130, tr('스르르'));
+              cue('zip_away', .5) || sfx('swish', .5); T.pop(snake.x + 40, FL - 130, tr('스르르'));
               return snake.move(1150, FL + 8, 2200, 'ease-in').then(() => hide(snake));
             }
             snake.look('flee', 'right'); snake.place(X(700, 640), FL + 8); snake.setScale(1);
-            sfx('swish', .6); T.pop(760, FL - 130, tr('스르르'));
+            cue('zip_away', .6) || sfx('swish', .6); T.pop(760, FL - 130, tr('스르르'));
             return snake.move(1150, FL + 8, 1800, 'ease-in').then(() => hide(snake));
           }
           return actorVerb('snake')(op, a1, a2, a3);
@@ -479,7 +479,15 @@
       ['sch', 'lady', 'mom', 'dad'].forEach(n => { acts[n] = actorVerb(n); });
       return acts;
     })();
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초>. 소리는 대사를 막지 않는다 */
+    Object.assign(READ_ACTS, {
+      snd(n, v = .7, d = 0) { try { const f = () => { try { AudioFX.sfx(n, +v * .8); } catch (e) { /* */ } }; +d > 0 ? setTimeout(f, +d) : f(); } catch (e) { /* */ } },
+      amb(n, v = .2, d = 4) { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
+    });
+    if (T.reading()) {
+      try { AudioFX.preloadSfx(['surprise_sting', 'rustle_1', 'pull_pop', 'bow_arrow_1', 'marimba_1', 'marimba_2', 'marimba_3', 'wing_flap_1', 'party_horn', 'zip_away', 'whistle_down']); } catch (e) { /* */ }
+      return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    }
 
     /* ===== 1. 산길 (자동) ===== */
     scene('mg_bg_path');
