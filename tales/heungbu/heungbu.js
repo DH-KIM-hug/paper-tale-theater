@@ -29,7 +29,12 @@
     const fx = x => P ? 500 + (x - 500) * .55 : x;
     const cl = (b, i, s, n = 3, sp = 70) => P ? 500 + ((b + (n - 1) / 2 * s) - 500) * .45 + (i - (n - 1) / 2) * sp : b + i * s;
     const pan = () => T.camSnap(500, 280, 1);
-    const sfx = n => { try { AudioFX.sfx(n); } catch (e) { /* 소리 없이도 진행 */ } };
+    const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } }; // 소리 없이도 진행
+    /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
+    const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
+    const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'stomach_growl', 'comic_brass', 'bonk', 'marimba_1', 'marimba_2', 'marimba_3', 'whistle_down', 'thud', 'harp_gliss', 'coins_1', 'party_horn', 'sad_trombone', 'surprise_sting', 'fall_crash', 'splash', 'pow', 'ding', 'pop', 'crash']); } catch (e) { /* 무시 */ }
+    { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     const cut = (k, s = 'pop', hold = 3200) => T.cutImage([{ src: U('cut_' + k), sfx: s, hold }], { hold });
 
     /* 층 소품: 누름 없음. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위). (cx, y) = 가운데·발끝, top 이면 윗변 */
@@ -137,7 +142,7 @@
 
     await Promise.race([Promise.all(['sky_spring', 'nolkitchen', 'eaves', 'yard', 'sky_autumn', 'nol_eaves', 'nolyard', 'giwa', 'yard_lb']
       .map(k => T.preload(U('bg_' + (BGS[k] || k)))).concat(['rice', 'fall', 'bandage2', 'south', 'seedback', 'rice_pour2', 'house2', 'mud2', 'dokkaebi', 'collapse']
-      .map(k => T.preload(U('cut_' + k))))), sleep(4000)]);
+      .map(k => T.preload(U('cut_' + k))))), new Promise(r => setTimeout(r, 4000))]);
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 ================= */
     const READ_ACTS = (() => {
@@ -146,13 +151,13 @@
       const nums = s => String(s).split(',').map(Number);
       const reset = () => { S = {}; gourds = []; sacks = []; };
       const CARD = { yard: '마당' };
-      const CUT = { catch: ['fall', 'pop', 3200], rice: ['rice_pour2', 'pop', 3600], house: ['house2', 'pop', 3600], mud: ['mud2', 'pow', 3400], dok: ['dokkaebi', 'pow', 3400], collapse: ['collapse', 'crash', 3600] };
-      const FX = { pop: 'pop', ding: 'ding', saw: 'pop', splash: 'pow', crash: 'crash', boom: 'pow' };
+      const CUT = { catch: ['fall', 'pop', 3200], rice: ['rice_pour2', 'pop', 3600], house: ['house2', 'pop', 3600], mud: ['mud2', 'splash', 3400], dok: ['dokkaebi', 'thud', 3400], collapse: ['collapse', 'thud', 3600] }; // 잠자리용: pow·crash 대신 부드러운 소리
+      const FX = { pop: 'pop', ding: 'ding', saw: 'pop', splash: 'splash', crash: 'thud', boom: 'thud' }; // 잠자리용: 센 소리(pow·crash)는 부드러운 것으로
       const sawer = () => S.heung_saw || S.nol_saw;
       const gx = i => (S.nol_saw ? cl(620, i, 100) : cl(640, i, 100));
       return {
         set(key) {
-          const go = () => { reset(); spring2 = key === 'sky_spring' && seenSpring; if (key === 'sky_spring') seenSpring = true; scene(key, 500); };
+          const go = () => { reset(); stopAmb(.6); spring2 = key === 'sky_spring' && seenSpring; if (key === 'sky_spring') seenSpring = true; scene(key, 500); const ra = { eaves: ['birds_chirp_2', .15], sky_spring: ['birds_chirp_1', .15] }[key]; if (ra) { if (!amb(ra[0], { vol: ra[1], dur: 4, fadeIn: 1 })) setTimeout(() => { amb(ra[0], { vol: ra[1], dur: 3, fadeIn: 1 }); }, 1500); } };
           if (rI()) { go(); return; }
           return T.sceneCard(CARD[key] || '', go);
         },
@@ -180,7 +185,7 @@
           if (op === 'fall') { // 말과 동시에 굴러떨어진다 (기다리지 않는다)
             const eaves = !!S.chicks;
             const t = spr('chick_fall', eaves ? 493 : 720, eaves ? 90 : 120, eaves ? 120 : -30); S.chick_fall = t;
-            sfx('pow');
+            sfx('thud', .4);
             (async () => { await t.move(fx(eaves ? 560 : 720), 480, eaves ? 800 : 650, 'ease-in'); t.hop(10, 300); T.pop(t.x, t.y - 140, '아야!'); })();
             return;
           }
@@ -243,7 +248,7 @@
           t.hop(18, 300); sfx('ding');
         },
         house(op) { if (op === 'new') T.confetti(); else if (op === 'collapse') { sfx('crash'); const s = S.nol_saw; if (s) s.hop(14, 300); } },
-        mud(op) { const s = S.nol_saw; if (s) s.set('nol_mud'); sfx('pow'); },
+        mud(op) { const s = S.nol_saw; if (s) s.set('nol_mud'); sfx('splash', .35); },
         shake() {
           const n = S.nol_proud;
           if (n) { n.set('nol_shake'); n.hop(18, 300); return; }
@@ -268,6 +273,7 @@
     scene('sky_spring');
     const heung = spr('heung_hello', 500, 330);
     await T.curtain(true);
+    amb('birds_chirp_1', { vol: .25, dur: 4 }); // 아침 새소리
     await say('옛날 옛날에 마음씨 착한 동생 흥부와 욕심쟁이 형 놀부가 살았어요.');
     await T.ask('흥부를 톡! 눌러서 인사해요.', () => T.tap(live(heung), { prompt: '흥부를 톡! 인사해요.' }));
     heung.hop(34, 400); sfx('pop'); T.pop(heung.x + 80, heung.y - 390, '안녕!'); falling('petal', 4, 22, { loop: false });
@@ -279,10 +285,13 @@
       heung.pos.remove();
     }, heung.pos);
     const h2 = spr('heung_hello', 400, 320), wife2 = spr('nwife', 640, 330);
+    sfx('stomach_growl', .6);
     await say('흥부는 배가 고파서 형 집으로 밥을 얻으러 갔어요.');
+    sfx('comic_brass', .6); // 심술쟁이 형수
     await say('형수는 화가 난 얼굴로 말했어요. "밥이 어디 있어요! 저리 가요!"');
     wife2.hop(16, 300); wig('pine', 2, 300);
     await cut('rice', 'pop', 3600);
+    sfx('bonk', .5);
     await say('형수가 주걱을 휘두르자 흥부 볼에 밥알이 붙었어요. 흥부는 그 밥알을 맛있게 먹었어요.');
     await say('흥부는 웃으며 말했어요. "괜찮아요. 밥알도 맛있어요!"');
     await h2.move(fx(120), GROUND, 900);
@@ -291,15 +300,17 @@
     await T.sceneCard('흥부네 집', () => { scene('eaves', 500); });
     const chicks = spr('chicks', 493, 112, 128); /* 배경에 그려진 작은 둥지 위에 딱 겹쳐서 둥지가 하나로 보이게 */
     const hw = spr('hwife', 300, 300), h3 = spr('heung_hello', 700, 310);
+    amb('birds_chirp_2', { vol: .25, dur: 4 }); // 아기 제비 짹짹
     await say('흥부네 초가집 처마에는 제비 가족이 살았어요.');
     await T.ask('아기 제비는 몇 마리일까요? 둥지를 톡톡톡 눌러서 세어 봐요!', () => T.mash(live(chicks), { count: 3, prompt: '둥지를 톡톡톡! 아기 제비를 세어 봐요.', onStep: i => {
-      chicks.hop(14, 260); sfx('pop'); T.pop(chicks.x + (i - 2) * 70, chicks.y + 70, NUM[i - 1]);
+      chicks.hop(14, 260); sfx('marimba_' + i, .6); T.pop(chicks.x + (i - 2) * 70, chicks.y + 70, NUM[i - 1]);
     } }));
     await say('아기 제비가 하나, 둘, 셋! 세 마리예요.');
     /* 강제로 떨어진다: 아이가 아무것도 안 눌러도 둥지에서 굴러떨어져 땅에 아프게 눕는다 */
     const tumble = spr('chick_fall', 493, 90, 120);
     const fell = say('앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!'); /* 말과 동시에 굴러떨어진다 */
-    sfx('pow'); await tumble.move(fx(560), 470, 800, 'ease-in'); tumble.hop(10, 300);
+    sfx('whistle_down', .5); setTimeout(() => sfx('thud', .4), 750); // 떨어진다: 휘익, 톡
+    await tumble.move(fx(560), 470, 800, 'ease-in'); tumble.hop(10, 300);
     T.pop(tumble.x, tumble.y - 140, '아야!');
     const tshiv = setInterval(() => tumble.hop(5, 220), 800); await sleep(1400); clearInterval(tshiv);
     await fell;
@@ -317,6 +328,7 @@
     /* 4. 가을, 남쪽으로 */
     await T.sceneCard('가을', () => { scene('sky_autumn', 500); });
     const fly = spr('swallow_fly', 380, 150, 300);
+    sfx('harp_gliss', .5); // 시간이 흘러 가을
     await say('가을이 되자 제비 가족은 따뜻한 남쪽 나라로 떠났어요.');
     await fly.move(1150, 240, 1400, 'ease-in');
     await cut('south', 'pop', 3200);
@@ -326,6 +338,7 @@
     const sw = spr('swallow_seed', -150, 140, 280), hp = spr('heung_plant', 640, 260);
     sw.face('right'); // seed 그림은 왼쪽이 기본 → 오른쪽으로 날아가므로 뒤집는다
     await sw.move(fx(380), 280, 1300, 'ease-out'); /* 날아와서 머문다 */
+    sfx('harp_gliss', .5); // 시간이 흘러 봄
     await say('봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.');
     await cut('seedback', 'pop', 3200);
     const seed = spr('seed', 380, 70, 280); seed.place(sw.x, 280);
@@ -340,7 +353,7 @@
     const gourds = [];
     await T.ask('쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!', () => T.mash(live(vine), { count: 3, prompt: '줄기를 톡톡톡! 박을 세어 봐요.', onStep: i => {
       const g = spr('gourd', cl(640, i - 1, 100), 140); g.hop(14, 260); gourds.push(g);
-      sfx('pop'); T.pop(g.x, g.y - 170, NUM[i - 1]);
+      sfx('marimba_' + i, .6); T.pop(g.x, g.y - 170, NUM[i - 1]);
     } }));
     await say('박이 하나, 둘, 셋! 세 통이에요.');
 
@@ -358,22 +371,24 @@
     const sacks = [];
     await T.ask('쌀자루를 톡톡톡 눌러서 세어 봐요!', () => T.mash(live(gourds[0]), { count: 3, prompt: '쌀자루를 톡톡톡! 세어 봐요.', onStep: i => {
       const s = spr('rice', cl(620, i - 1, 90), 90, 545); s.hop(14, 260); sacks.push(s);
-      sfx('pop'); T.pop(s.x, s.y - 140, NUM[i - 1]);
+      sfx('marimba_' + i, .6); T.pop(s.x, s.y - 140, NUM[i - 1]);
     } }));
     await say('쌀자루가 하나, 둘, 셋! 이제 배불리 먹을 수 있어요.');
     sacks.forEach(s => s.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' }));
     await autoOpen1(gourds[1]);
     gourds[1].set('gourd_open', 120);
-    const tre = spr('treasure', 640, 130, 490); tre.place(gourds[1].x, 490); tre.hop(18, 300); sfx('ding');
+    const tre = spr('treasure', 640, 130, 490); tre.place(gourds[1].x, 490); tre.hop(18, 300); sfx('coins_1', .5); // 금은보화 짤랑
     await say('두 번째 박에서는 반짝반짝 금은보화가 나왔어요!');
     await autoOpen1(gourds[2]);
     await cut('house2', 'pop', 3600);
+    sfx('party_horn', .6);
     await say('세 번째 박에서는 작은 박 요정들이 나와 멋진 새집을 지어 주었어요!');
     T.confetti();
 
     /* 7. 놀부 소문 */
     await T.sceneCard('놀부네 집', () => { scene('nol_eaves', 500); });
     const nol = spr('nol_proud', 400, 330), nw = spr('nwife', 620, 320);
+    sfx('comic_brass', .6); // 욕심쟁이 놀부
     await say('소문을 들은 놀부는 배가 아팠어요. "나도 부자가 될 거야!"');
     await say('놀부는 제비집을 마구 흔들었어요. 아기 제비가 떨어졌어요!');
     nol.set('nol_shake'); nol.hop(18, 300); wig('pine', 4, 500);
@@ -388,7 +403,7 @@
     const ns = spr('nol_saw', 340, 290), ng = [0, 1, 2].map(i => spr('gourd', cl(620, i, 100), 140));
     await say('놀부네 마당에도 박이 세 통 열렸어요.');
     for (let i = 1; i <= 3; i++) { /* 저절로 세기 */
-      ng[i - 1].hop(14, 260); sfx('pop'); T.pop(ng[i - 1].x, ng[i - 1].y - 170, NUM[i - 1]); await sleep(600);
+      ng[i - 1].hop(14, 260); sfx('marimba_' + i, .6); T.pop(ng[i - 1].x, ng[i - 1].y - 170, NUM[i - 1]); await sleep(600);
     }
     await say('박이 하나, 둘, 셋! 놀부는 기대에 부풀었어요.');
     const nopen = async (g, word, guide) => {
@@ -398,14 +413,14 @@
     };
     await nopen(ng[0], '슬근슬근!', '첫 번째 박을 톡!');
     const autoOpen = async g => { await sleep(500); g.hop(18, 300); ns.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
-    await cut('mud2', 'pow', 3400);
+    await cut('mud2', 'sad_trombone', 3400); // 욕심쟁이 놀부가 흠뻑
     await say('콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.');
     ns.set('nol_mud');
     await autoOpen(ng[1]);
-    await cut('dokkaebi', 'pow', 3400);
+    await cut('dokkaebi', 'surprise_sting', 3400);
     await say('이번에는 방망이를 든 도깨비가 쑥 나왔어요. "이 욕심쟁이야!" 도깨비는 놀부를 놀라게 하고 사라졌어요.');
     await autoOpen(ng[2]);
-    await cut('collapse', 'crash', 3600); wig('pine', 6, 600);
+    await cut('collapse', 'fall_crash', 3600); wig('pine', 6, 600); // 와르르: 만화 소리
     await say('와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.');
 
     /* 8. 화해와 나눔 */
@@ -419,14 +434,14 @@
     for (let i = 0; i < 3; i++) {
       if (i === 0) await T.ask('쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.', () => T.tap(live(bags[i]), { prompt: '쌀자루를 톡! 형님께 보내요.' })); else await sleep(500); /* 한 번 누르면 나머지는 저절로 */
       bags[i].pos.style.pointerEvents = 'none';
-      sfx('pop'); await bags[i].move(ns2.x, 470, 450, 'ease-in'); bags[i].hop(12, 240); T.pop(ns2.x, 120, NUM[i]);
+      sfx('marimba_' + (i + 1), .6); await bags[i].move(ns2.x, 470, 450, 'ease-in'); bags[i].hop(12, 240); T.pop(ns2.x, 120, NUM[i]);
     }
     await say('쌀자루가 하나, 둘, 셋! 놀부는 눈물이 핑 돌았어요.');
     await T.ask('흥부를 톡! 눌러서 모두 함께 만세!', () => T.tap(live(hg), { prompt: '흥부를 톡! 모두 만세!' }));
-    T.confetti(); falling('petal', 6, 22, { loop: false });
+    T.confetti(); sfx('party_horn', .6); falling('petal', 6, 22, { loop: false });
     await Promise.all([hg.hop(40, 500), hj.hop(30, 500), ns2.hop(30, 500)]);
     await say('흥부와 놀부는 그 뒤로 사이좋게 오래오래 살았대요. 착한 마음은 복이 되어 돌아와요.');
-    T.finale();
+    T.finale(); stopAmb(.8);
     return '착한 마음은 복이 되어 돌아와요!';
   }
 
