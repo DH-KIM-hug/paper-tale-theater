@@ -39,7 +39,7 @@
   const HAND_PRIN = [58, -118];         // prin_hand: 내민 손끝(오른쪽 볼 때)
   const HAND_PRINCE = [60, -122];       // prince_hand: 내민 손끝(오른쪽 볼 때; 왼쪽 보면 x = -60)
   const BGS = ['fp_bg_yard_v2', 'fp_bg_pond_v2', 'fp_bg_dining_v2', 'fp_bg_room_v2', 'fp_bg_room_night_lb'];   // room_night_lb: 9장 밤 빛 상자(VISUAL_PLAN 재기획 2 B, 2026-10-24), 변신 때 room_v2 로 밝아짐
-  const src = k => AS + k + '.webp';
+  const src = k => AS + (k === 'fp_bg_dining_v2' ? 'fp_bg_dining_v3' : k) + '.webp';   // 식당 그림은 v3(2026-10-27 사용자 결정), 키·소품 조건은 v2 그대로
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
   const hOf = f => HT[f] || 200;
