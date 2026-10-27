@@ -47,12 +47,14 @@
     return wrap;
   }
   /* 자세 그림: [키(배율 1), 발끝 가운데(폭 비율), 폭/높이]. 한 동물의 자세끼리는 같은 원본 배율(잠자는 당나귀만 머리 크기에 맞춰 줄임) */
+  /* 2026-10-27 사용자 결정: 실제처럼 강아지 > 고양이 ≈ 닭. 당나귀 200 기준 키 강아지 120 · 고양이 95 · 닭 95 (그림 알파로 잰 보이는 키 = 그림 높이 × .99).
+     한 동물의 자세끼리는 예전 자세 비율(같은 부위 폭으로 맞춘 값) 그대로 같은 배율: 강아지 ×120/95, 고양이 ×95/89, 닭 ×95/104, 실루엣 강아지 ×1.2 · 고양이·닭 ×.95 */
+  const KD = 120 / 95, KC = 95 / 89, KR = 95 / 104;
   const SPR = { // 2026-10-20 새 그림: 옛 그림과 같은 눈금(키÷옛 높이)으로 키·비율을 다시 잡고 발끝 자리는 새 그림에서 쟀다
-    donkey: [200, 0.571, 0.9308], donkey_sing: [202, 0.569, 0.9315], donkey_sleep: [168, 0.572, 1.2125], dog_sing: [95, 0.466, 0.9568], dog_tired: [97, 0.534, 1.0742], cat_sing: [89, 0.558, 1.0696], cat_sad: [85, 0.619, 1.0364], cat_perch: [102, 0.5, 0.7283, 0.76], // [키, 발끝 x 비율, 폭/높이, (앉은 그림) 엉덩이·발 밑선이 그림 높이의 몇 %인지]
-    
-    rooster: [104, 0.427, 0.937], rooster_sing: [96, 0.462, 0.9875], 
-    // 실루엣(빛 상자 탑): 당나귀 200, 강아지·고양이·닭 100. 발끝은 발 띠 가운데
-    donkey_sil: [200, 0.571, 0.9667], dog_sil: [100 * 600 / 599, 0.472, 0.985], cat_sil: [100, 0.534, 1.01], rooster_sil: [100, 0.48, 0.99],
+    donkey: [200, 0.571, 0.9308], donkey_sing: [202, 0.569, 0.9315], donkey_sleep: [168, 0.572, 1.2125], dog_sing: [95 * KD, 0.466, 0.9568], dog_tired: [97 * KD, 0.534, 1.0742], cat_sing: [89 * KC, 0.558, 1.0696], cat_sad: [85 * KC, 0.619, 1.0364], cat_perch: [102 * KC, 0.5, 0.7283, 0.76], // [키, 발끝 x 비율, 폭/높이, (앉은 그림) 엉덩이·발 밑선이 그림 높이의 몇 %인지]
+    rooster: [104 * KR, 0.427, 0.937], rooster_sing: [96 * KR, 0.462, 0.9875],
+    // 실루엣(빛 상자 탑): 당나귀 200, 강아지 120, 고양이·닭 95. 발끝은 발 띠 가운데
+    donkey_sil: [200, 0.571, 0.9667], dog_sil: [120 * 600 / 599, 0.472, 0.985], cat_sil: [95, 0.534, 1.01], rooster_sil: [95, 0.48, 0.99],
     miller: [183, 0.432, 0.4764], owl: [80, 0.495, 0.835], 
     robber_red: [170, 0.535, 0.7725], robber_green: [157, 0.31, 0.9511], robber_brown: [162, 0.52, 0.7318],
   };
@@ -270,13 +272,14 @@
   ];
   /* 탑 쌓기: 등 위(다음 친구가 설 자리)의 발 기준 위치 */
   const BACK0 = { donkey: [8, -112], dog: [4, -58], cat: [6, -46], rooster: [0, -60] };
-  const BACK_ART = { donkey: [20, -100], dog: [12, -52], cat: [10, -49], rooster: [0, -60] }; // 그림 등 윗선(그림에서 잰 높이)
-  const BACK_SIL = { ...BACK_ART, dog: [26, -55], cat: [10, -54] }; // 실루엣 탑: 고양이를 강아지 엉덩이 쪽으로 조금 더 → 노래하는 강아지 머리가 고양이에 가리지 않는다(실루엣은 겹치면 한 덩이가 되므로)
+  // 그림 등 윗선(그림에서 잰 높이, 2026-10-27 새 키로 다시 잼): 강아지는 머리 뒤 낮은 등(x 16~40, y -66) 중 엉덩이 쪽 → 고양이가 강아지 머리·몸을 덮지 않는다
+  const BACK_ART = { donkey: [20, -100], dog: [36, -67], cat: [10.7, -52.3], rooster: [0, -60 * KR] };
+  const BACK_SIL = { ...BACK_ART, dog: [40, -68], cat: [9.5, -51.3] }; // 실루엣 탑: 실루엣은 겹치면 한 덩이가 되므로 고양이를 강아지 엉덩이 위에
   const BACK = new Proxy({}, { get: (o, k) => (artUrl(LOOKS[k] ? LOOKS[k].home : '') ? BACK_ART : BACK0)[k] });
   /* 머리(눈) 위치 — 어둠 속 눈 반짝이 */
   const EYE0 = { donkey: [-82, -152], dog: [-52, -64], cat: [-25, -54], rooster: [-22, -71] };
   // 그림: 당나귀는 잠자는 그림의 감은 눈 자리, 나머지는 눌러 앉힌(POSE.sleep 세로 .8) 평소 그림의 눈 자리
-  const EYE_ART = { donkey: [-76.0, -76.0], dog: [-22.1, -56.2], cat: [-29.1, -47.3], rooster: [-23.7, -61.8] };
+  const EYE_ART = { donkey: [-76.0, -76.0], dog: [-22.1 * KD, -56.2 * KD], cat: [-29.1 * KC, -47.3 * KC], rooster: [-23.7 * KR, -61.8 * KR] };
   const EYE = new Proxy({}, { get: (o, k) => (artUrl(LOOKS[k] ? LOOKS[k].home : '') ? EYE_ART : EYE0)[k] });
   const POSE = {
     stand: 'translate(0px,0px) rotate(0deg) scale(1,1)',
@@ -432,14 +435,14 @@
   }
   /* 그림 벽의 높은 창(2026-10-21 새 그림에서 다시 쟀다): 유리 x 657..818, 위는 화면 밖에서 시작해 아래 y 180, 창턱 아래 y 222, 가운데 x≈737 */
   const LOW_WIN = { x0: 657, x1: 818, y0: -24, y1: 180 };
-  // 기존 도둑 그림의 머리·어깨만 창턱 위에 보인다. 검게 만드는 필터 하나만 사용한다.
+  // 기존 도둑 그림의 머리·어깨만 창턱 위에 보인다. 2026-10-27: 새까맣게(brightness 0) 하면 머리가 뭉개져 → 창빛 뒤 사람처럼 어둡게만(.4), 셋 사이를 띄움
   function windowRobbers(T, parent, xs, y) {
     ['robber_green', 'robber_red', 'robber_brown'].forEach((key, i) => {
       const id = 'br-shoulders-' + (++clipN), top = y - (i % 2) * 8;
       const cp = T.el('clipPath', { id }, parent);
       T.el('rect', { x: xs[i] - 28, y: top, width: 56, height: 64 }, cp);
       const g = T.el('g', { 'clip-path': `url(#${id})` }, parent);
-      T.el('image', { href: artUrl(key), x: xs[i] - 28, y: top, width: 56, height: 112, preserveAspectRatio: 'xMidYMin slice', style: 'filter:brightness(0)' }, g);
+      T.el('image', { href: artUrl(key), x: xs[i] - 28, y: top, width: 56, height: 112, preserveAspectRatio: 'xMidYMin slice', style: 'filter:brightness(.4)' }, g);
     });
   }
   function houseLowBG(T, dx = 0, dy = 0) {
@@ -448,7 +451,7 @@
       const win = bgClip(T, 'house_low', b, [['rect', { x: LOW_WIN.x0, y: LOW_WIN.y0, width: LOW_WIN.x1 - LOW_WIN.x0, height: LOW_WIN.y1 - LOW_WIN.y0 }]]);
       const sh = win.lastChild;
       const silhouettes = el('g', {}, sh);
-      windowRobbers(T, silhouettes, [690, 737, 784], 116);
+      windowRobbers(T, silhouettes, [674, 737, 800], 116);
       return win;
     }
     sky(T, C.indigo);
@@ -489,7 +492,9 @@
   /* 2026-10-24 사용자 결정(빛 상자 검수): 탑이 마당 가운데(발 y 414)에 떠 보여 창 바로 앞 땅선(마당 끝 y≈348, 덤불 앞)으로 옮김.
      크기는 그대로(.36 = 당나귀 ≈ 문 높이, 도둑 .38 과 같은 잣대 §4-1) — 대신 카메라는 창·문 쪽으로 조금만 더 당김(1.9→2.2: 가로 과한 확대를 줄이라는 사용자 의견과 빈 마당 사이에서) 크게 보이게.
      닭이 창 유리(y 286~322) 높이에 닿는다. 색종이 동물 그대로: 앞에서 본 넓은 장면이라 노래하는 얼굴이 보여야 하고, 어두운 집 벽 앞 실루엣은 묻힌다 */
-  const HW_T = { x: 540, y: 366, s: .36 }, HW_CAM = [522, 312, 2.2];
+  /* 2026-10-27 사용자 결정: 탑이 창을 가려서 창 오른쪽 옆(집 벽 끝·덤불 앞)으로 옮긴다. 당나귀 머리(발끝 왼쪽 -84~-38)가 창 유리(x 532~567) 오른쪽 밖, 닭은 창 높이.
+     세로는 문(426)~탑 끝(≈645)이 다 들어오게 카메라를 2.2→1.7 */
+  const HW_T = { x: 600, y: 372, s: .36 }, HW_CAM = [532, 300, 1.7];
   function houseWideBG(T) {
     const { paper, el } = T, b = T.bg;
     if (bgImage(T, 'house_wide')) {
@@ -501,7 +506,12 @@
       // 창: 코드가 win.firstChild.nextSibling 의 fill을 바꿔 불을 환하게 → 그 자리에 유리 위 빛 한 겹
       const win = el('g', {}, b); el('g', {}, win);
       const glow = el('rect', { x: wx, y: wy, width: ww, height: wh, fill: '#FFD27A', opacity: .0 }, win);
-      glow.setAttribute = (k, v) => { Element.prototype.setAttribute.call(glow, k, v); if (k === 'fill') Element.prototype.setAttribute.call(glow, 'opacity', .55); };
+      // 창 불빛 번짐(§7-1 빛 예외): 창 가운데가 가장 밝고 바깥으로 투명해지는 방사형 빛. 불을 끄면 사라지고, 와장창 땐 더 밝게
+      const hid = 'br-wide-halo-' + (++clipN), cx = wx + ww / 2, cy = wy + wh / 2;
+      const hg = el('radialGradient', { id: hid, gradientUnits: 'userSpaceOnUse', cx, cy, r: 70 }, win);
+      [[0, '#FFE7A8', .75], [.4, '#FBD27A', .35], [1, '#F2B366', 0]].forEach(([o, c, a]) => el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, hg));
+      const halo = el('circle', { cx, cy, r: 70, fill: `url(#${hid})`, opacity: .6, style: 'pointer-events:none;transition:opacity .4s' }, win);
+      glow.setAttribute = (k, v) => { Element.prototype.setAttribute.call(glow, k, v); if (k === 'fill') { Element.prototype.setAttribute.call(glow, 'opacity', .55); halo.setAttribute('opacity', v === '#5A4A33' ? 0 : 1); } };
       return { door, win, art: true };
     }
     sky(T, C.indigo);
@@ -590,8 +600,8 @@
   async function run(T) {
     const { el, sleep, say, actor, camTo, camWide, camSnap, josa } = T;
     // 가로는 1.3배 상한. 탑을 조금 키워 창 앞 전경에 두고, 세로 구도는 유지한다.
-    const wideTower = () => narrow() ? HW_T : { x: 540, y: 390, s: .48 };
-    const wideCamera = () => narrow() ? HW_CAM : [522, 300, 1.8];
+    const wideTower = () => narrow() ? HW_T : { x: 612, y: 410, s: .48 };
+    const wideCamera = () => narrow() ? HW_CAM : [545, 300, 1.8];
     const S = makeSounds(T);
     const pop0 = T.pop; T = { ...T, pop: (x, y, w, c) => pop0(clampX(x, 60 + [...T.tr(w)].length * 12), y, w, c) };
 
@@ -631,20 +641,25 @@
     /* 빛 상자 탑 장면: 실루엣 동물로 바꾼다(그림이 없으면 그대로). 등 위 자리도 실루엣 그림에서 잰 BACK_SIL */
     const silOn = a => { if (a.parts && a.parts.art && artUrl(LOOKS[a.key].sil)) { a.parts.sil = true; a.parts.look('sil'); } };
     const silBack = k => (cast[k].parts.sil ? BACK_SIL : BACK)[k];
-    // 한 장의 창빛 종이: 알파 마스크만 사용해 실루엣 바깥으로 약 3px씩 보인다.
+    // 창빛 한 장: 실루엣 모양(조금 넓힌 알파 마스크를 흐림)으로만 보여, 실루엣 바깥으로 빛이 살짝 번진다.
+    // 2026-10-27 사용자 결정(§7-1 빛 예외): 창에서 나오는 빛 — 창 쪽이 가장 밝고 아래·바깥으로 갈수록 투명(방사형). 빛 층만 흐림, 실루엣엔 필터 없음
     function towerPaper(animals) {
       let sheet = T.bg.querySelector('[data-tower-light]');
       if (!sheet) sheet = el('g', { 'data-tower-light': '', style: 'pointer-events:none' }, T.bg);
       sheet.replaceChildren();
-      const id = 'br-tower-paper-' + (++clipN);
+      const id = 'br-tower-paper-' + (++clipN), gid = id + '-g', bl = id + '-b', wx = (LOW_WIN.x0 + LOW_WIN.x1) / 2;
+      const fl = el('filter', { id: bl, x: -400, y: -400, width: 1800, height: 1400, filterUnits: 'userSpaceOnUse' }, sheet); el('feGaussianBlur', { stdDeviation: 5 }, fl);
+      const gr = el('radialGradient', { id: gid, gradientUnits: 'userSpaceOnUse', cx: wx, cy: LOW_WIN.y1, r: 400, fx: wx, fy: LOW_WIN.y1 - 30 }, sheet);
+      [[0, '#FFF4CC', 1], [.35, '#FDE3A0', .9], [.7, '#F6C676', .45], [1, '#F2B366', 0]].forEach(([o, c, a]) => el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, gr));
       const mask = el('mask', { id, maskUnits: 'userSpaceOnUse', x: -400, y: -400, width: 1800, height: 1400, style: 'mask-type:alpha' }, sheet);
+      const soft = el('g', { filter: `url(#${bl})` }, mask);
       animals.forEach(a => {
         if (!a.parts.sil) return;
         const key = LOOKS[a.key].sil, [h, fx, aspect] = SPR[key], w = h * aspect;
-        const g = el('g', { transform: `translate(${a.x},${a.y}) scale(${a.scale})` }, mask);
-        el('image', { href: artUrl(key), x: -w * fx - 3, y: -h - 3, width: w + 6, height: h + 6, preserveAspectRatio: 'none' }, g);
+        const g = el('g', { transform: `translate(${a.x},${a.y}) scale(${a.scale})` }, soft);
+        el('image', { href: artUrl(key), x: -w * fx - 7, y: -h - 7, width: w + 14, height: h + 10, preserveAspectRatio: 'none' }, g);
       });
-      el('rect', { x: -400, y: -400, width: 1800, height: 1400, fill: '#FDECB7', mask: `url(#${id})` }, sheet);
+      el('rect', { x: -400, y: -400, width: 1800, height: 1400, fill: `url(#${gid})`, mask: `url(#${id})` }, sheet);
     }
     // 닭의 발은 지면에서 출발해 고양이 등 바로 옆을 거쳐 등 위 슬롯에 닿는다.
     async function climbToCat(a, x, y, scale) {
@@ -658,7 +673,7 @@
       const d = cast.donkey, g = cast.dog, [dbx, dby] = silBack('donkey'), [gbx, gby] = silBack('dog');
       const steps = [
         { x: d.x + (dbx + 62) * d.scale, y: d.y + (dby + 10) * d.scale },
-        { x: g.x + (gbx + 44) * g.scale, y: g.y + (gby + 8) * g.scale },
+        { x: g.x + (gbx + 14) * g.scale, y: g.y + (gby - 4) * g.scale }, // 강아지 꼬리 쪽 엉덩이
         back,
       ];
       a.face(steps[0].x > a.x ? 'right' : 'left');
@@ -890,14 +905,14 @@
       const FS = L(1, .85), OWX = WALK ? 470 : L(860, 650), OWY = WALK ? 84 : 150, ROAD_Y = WALK ? 484 : 470;
       const TXX = bgArt('house_low') ? (LOW_WIN.x0 + LOW_WIN.x1) / 2 - 40 : L(700, 590), TG0 = L(500, 470), TS = L(1, .85), WY = L(500, 548), WS = L(1, .7);
       const TCX = bgArt('house_low') ? L(500, 650) : 500;
-      const WAIT_W = { donkey: 200, dog: 125, cat: 100, rooster: 95 };
+      const WAIT_W = { donkey: 200, dog: 135, cat: 105, rooster: 100 };
       const WTS = bgArt('house_wide') ? .36 : .72;
       const WT = bgArt('house_wide') ? wideTower() : { x: 615, y: 488, s: WTS };
-      const SPOTS = L([['cat', 180, 478, 1.3], ['dog', 470, 478, 1.25], ['donkey', 690, 486, .95], ['rooster', 860, 120, 1.2]], [['cat', 320, 478, 1.1], ['dog', 440, 478, 1.05], ['donkey', 590, 486, .8], ['rooster', 665, 120, 1.1]]);
+      const SPOTS = L([['cat', 180, 478, .95], ['dog', 470, 478, .95], ['donkey', 690, 486, .95], ['rooster', 860, 120, .95]], [['cat', 320, 478, .8], ['dog', 440, 478, .8], ['donkey', 590, 486, .8], ['rooster', 665, 120, .8]]);
       const STOPS = L([300, 380, 590, 800, 1150], [485, 540, 720, 700, 1150]); // 세로: 도둑이 눈빛(머리) 오른쪽에 서서 눈을 가리지 않게(2026-10-27 화면에서 잼)
-      const SPOT5 = L({ donkey: [200, 1.05], dog: [420, 1.2], cat: [590, 1.3], rooster: [770, 1.3] }, { donkey: [390, .75], dog: [492, .85], cat: [584, .98], rooster: [648, .9] });
+      const SPOT5 = L({ donkey: [200, 1.05], dog: [420, 1.05], cat: [590, 1.05], rooster: [770, 1.05] }, { donkey: [390, .75], dog: [492, .75], cat: [584, .75], rooster: [648, .75] });
       const HOME = bgArt('morning')
-        ? L({ donkey: [150, 476, .95], dog: [470, 476, 1.1], cat: [860, 462, 1.05], rooster: [520, 172, 1] }, { donkey: [370, 476, .8], dog: [490, 476, 1], cat: [640, 462, .95], rooster: [500, 172, 1] })
+        ? L({ donkey: [150, 476, .95], dog: [470, 476, .95], cat: [860, 462, .95], rooster: [520, 172, .95] }, { donkey: [370, 476, .8], dog: [490, 476, .8], cat: [640, 462, .8], rooster: [500, 172, .8] })
         : L({ donkey: [190, 486, 1], dog: [520, 486, 1.15], cat: [860, 410, 1.1], rooster: [470, 176, 1.1] }, { donkey: [385, 486, .85], dog: [505, 486, 1], cat: [648, 410, 1], rooster: [470, 176, 1.1] });
       const CAMW = { road: [L(500, 640), 280, 1], roof: [L(500, 720), 280, 1], house_low: [TCX, 280, 1], house_wide: bgArt('house_wide') ? wideCamera() : [500, 280, 1] };
       const camW = () => { const c = CAMW[key] || [500, 280, 1]; camSnap(c[0], c[1], c[2]); };
@@ -921,20 +936,20 @@
         }
         if (k === 'road') {
           roadBG(T);
-          put(cast.dog, L(840, 800), 392, 1.2); bsh = bush(T);
+          put(cast.dog, L(840, 800), 392, 1); bsh = bush(T);
           put(cast.donkey, L(240, 480), 505, 1, 'right');
           camSnap(L(500, 640), 280, 1); return;
         }
         if (k === 'wall') {
           wallBG(T);
-          put(cast.cat, WALLC[0], WALLC[1], 1.2); cast.cat.parts.look('perch'); cast.cat.pose(POSE.perch);
-          put(cast.donkey, L(150, 330), 550, L(1.05, .9), 'right'); put(cast.dog, L(300, 450), 550, 1.15, 'right');
+          put(cast.cat, WALLC[0], WALLC[1], 1.05); cast.cat.parts.look('perch'); cast.cat.pose(POSE.perch);
+          put(cast.donkey, L(150, 330), 550, L(1.05, .9), 'right'); put(cast.dog, L(300, 450), 550, L(1.05, .9), 'right');
           camSnap(500, 280, 1); return;
         }
         if (k === 'roof') {
           roofBG(T);
           put(cast.rooster, ROOFC[0], ROOFC[1], .72);
-          put(cast.donkey, L(140, 590), 550, L(1.05, .9), 'right'); put(cast.dog, L(290, 665), 550, L(1.15, 1), 'right'); put(cast.cat, L(390, 740), 550, L(1.3, 1.05), 'right');
+          put(cast.donkey, L(140, 590), 550, L(1.05, .9), 'right'); put(cast.dog, L(290, 665), 550, L(1.05, .9), 'right'); put(cast.cat, L(390, 740), 550, L(1.05, .9), 'right');
           camSnap(L(500, 720), 280, 1); return;
         }
         if (k === 'meadow') {
@@ -944,7 +959,7 @@
         }
         if (k === 'walk') {
           fb = forestBG(T);
-          band.forEach(a => { put(a, FX0[a.key], ROAD_Y, (WALK ? { donkey: 1, dog: 1.1, cat: 1.2, rooster: 1.2 }[a.key] : (a.key === 'donkey' ? .85 : 1)) * FS, 'right'); a.lean.style.filter = WALK ? '' : 'brightness(.8)'; });
+          band.forEach(a => { put(a, FX0[a.key], ROAD_Y, (WALK ? 1 : (a.key === 'donkey' ? .85 : 1)) * FS, 'right'); a.lean.style.filter = WALK ? '' : 'brightness(.8)'; });
           put(rOwl, OWX, OWY, WALK ? .9 : 1.1);
           scroll = [rOwl.pos];
           camSnap(500, 280, 1); return;
@@ -987,7 +1002,7 @@
         const a = ACT[n]; if (!a) return;
         const [x, y, s = 1] = nums(spec);
         if (key === 'road' && n === 'dog') { if (rI()) { hide(a); return; } // 덤불 뒤에서 엉금엉금 나온다
-          put(cast.dog, L(840, 800), 392, 1.2); T.world.appendChild(a.pos);
+          put(cast.dog, L(840, 800), 392, 1); T.world.appendChild(a.pos);
           return a.move(L(560, 640), 505, 900, 'ease-out');
         }
         if (key === 'wall' && n === 'cat' && !rI()) { // 담장에서 폴짝 뛰어내린다
@@ -995,14 +1010,14 @@
             a.parts.look('perch'); a.pose(POSE.perch); await a.hop(16, 320);
             a.parts.look('home'); a.pose(POSE.stand);
             await a.move(545, 250, 350, 'ease-out'); await a.move(L(450, 565), 550, 400, 'ease-in');
-            a.setScale(L(1.3, 1.1)); a.cry(); T.pop(L(450, 565), 380, '폴짝!', C.persimmon);
+            a.setScale(L(1.05, .9)); a.cry(); T.pop(L(450, 565), 380, '폴짝!', C.persimmon);
           })();
         }
         if (key === 'roof' && n === 'rooster' && !rI()) { // 푸드덕 날아 내려온다
           return (async () => {
             flap(a); await a.move(roofArt ? L(760, 720) : L(600, 620), 120, 300, 'ease-out');
             flap(a); await a.move(roofArt ? L(530, 815) : L(530, 640), 550, 700, 'ease-in');
-            a.setScale(L(1.3, 1.05));
+            a.setScale(L(1.05, .9));
           })();
         }
         if (key === 'walk' && n === 'rooster' && !rI()) { // 나무 꼭대기로
@@ -1013,7 +1028,7 @@
         if (key === 'morning') { put(a, ...HOME[n]); return; }
         if (key === 'wall' || key === 'roof' || key === 'road' || key === 'mill' || key === 'dark' || key === 'house_low' || key === 'walk' || key === 'house_wide') {
           if (!a.pos.isConnected || a.pos.style.display === 'none') {
-            if (key === 'wall' && n === 'cat') put(a, WALLC[0], WALLC[1], 1.2);
+            if (key === 'wall' && n === 'cat') put(a, WALLC[0], WALLC[1], 1.05);
             else if (key === 'roof' && n === 'rooster') put(a, ROOFC[0], ROOFC[1], .72);
             else if (key === 'road' && n === 'donkey') put(a, L(240, 480), 505, 1, 'right');
             else put(a, x, y, s);
@@ -1197,7 +1212,7 @@
     await T.sceneCard('덤불 뒤에 누구?', () => {
       T.clear();
       if (roadBG(T)) { // 그림: 덤불이 오른쪽에 그려져 있다 → 강아지는 그 뒤, 세로 화면은 카메라를 오른쪽으로
-        put(cast.dog, L(840, 800), 392, 1.2); // 덤불 뒤(덤불 밑 y 398 바로 위)
+        put(cast.dog, L(840, 800), 392, 1); // 덤불 뒤(덤불 밑 y 398 바로 위)
         bsh = bush(T);
         put(cast.donkey, L(240, 480), 505, 1, 'right');
         camSnap(L(500, 640), 280, 1);
@@ -1231,10 +1246,10 @@
     await T.sceneCard('담장 위에 누구?', () => {
       T.clear();
       if (wallBG(T)) { // 그림(2026-10-21 다시 쟀다): 담장 윗선(갈색 덮개 윗모서리)이 y = 135 - 0.273 (x - 500). 고양이는 '앉은' 그림을 그 선 위에 엉덩이가 닿게 (꼬리는 담 앞으로 늘어진다)
-        put(cast.cat, WALLC[0], WALLC[1], 1.2); cast.cat.parts.look('perch'); cast.cat.pose(POSE.perch);
+        put(cast.cat, WALLC[0], WALLC[1], 1.05); cast.cat.parts.look('perch'); cast.cat.pose(POSE.perch);
       } else put(cast.cat, L(720, 610), L(270, 279), 1.6);
       cast.cat.lean.style.filter = 'brightness(.12)';
-      put(cast.donkey, L(150, 330), 550, L(1.05, .9), 'right'); put(cast.dog, L(300, 450), 550, 1.15, 'right');
+      put(cast.donkey, L(150, 330), 550, L(1.05, .9), 'right'); put(cast.dog, L(300, 450), 550, L(1.05, .9), 'right');
       camSnap(500, 280, 1);
     }, cast.dog.pos);
     cast.cat.cry();
@@ -1254,7 +1269,7 @@
     }
     await cast.cat.move(bgArt('wall') ? 545 : L(600, 590), bgArt('wall') ? 250 : 180, 350, 'ease-out');
     await cast.cat.move(L(450, 565), 550, 400, 'ease-in');
-    cast.cat.setScale(L(1.3, 1.1)); cast.cat.cry(); T.pop(L(450, 565), 380, '폴짝!', C.persimmon);
+    cast.cat.setScale(L(1.05, .9)); cast.cat.cry(); T.pop(L(450, 565), 380, '폴짝!', C.persimmon);
     await sleep(600);
 
     /* ---------- 4. 지붕 위 누구? ③ 닭 (농가 지붕 로우앵글) ---------- */
@@ -1264,7 +1279,7 @@
       if (roofBG(T)) { // 그림: 오른쪽 지붕 윗선 위(지운 수탉 자리). 세로 화면은 지붕선이 너무 높아 볏이 잘려서 왼쪽 박공 비탈 위. 카메라·친구들도 오른쪽으로
         put(cast.rooster, ROOFC[0], ROOFC[1], .72); // 그림(2026-10-21 다시 쟀다): 지붕 맨 위 꼭짓점 (784,121), 윗선은 오른쪽으로 y = 121 + .18 (x - 784) → 그 선 위에 발
         cast.rooster.lean.style.filter = 'brightness(.12)';
-        put(cast.donkey, L(140, 590), 550, L(1.05, .9), 'right'); put(cast.dog, L(290, 665), 550, L(1.15, 1), 'right'); put(cast.cat, L(390, 740), 550, L(1.3, 1.05), 'right');
+        put(cast.donkey, L(140, 590), 550, L(1.05, .9), 'right'); put(cast.dog, L(290, 665), 550, L(1.05, .9), 'right'); put(cast.cat, L(390, 740), 550, L(1.05, .9), 'right');
         camSnap(L(500, 720), 280, 1);
       } else {
         put(cast.rooster, L(650, 560), L(172, 184), 1.5);
@@ -1283,7 +1298,7 @@
     await cast.rooster.move(roofArt ? L(760, 720) : L(600, 620), 120, 300, 'ease-out');
     flap(cast.rooster);
     await cast.rooster.move(roofArt ? L(530, 815) : L(530, 640), 550, 700, 'ease-in');
-    cast.rooster.setScale(L(1.3, 1.05));
+    cast.rooster.setScale(L(1.05, .9));
     await say('닭: "이제 나는 필요 없대. 꼬끼오…"');
     await say('당나귀: "우리랑 음악대 하자! 네 목소리 최고야!"');
     band.forEach((a, i) => setTimeout(() => sing(a), i * 250));
@@ -1291,8 +1306,8 @@
     await say('당나귀, 강아지, 고양이, 닭. 네 친구가 모였어요!');
 
     /* ---------- 5. 음악대 연습 (길가 풀밭 와이드) ---------- */
-    const SPOT = L({ donkey: [200, 1.05], dog: [420, 1.2], cat: [590, 1.3], rooster: [770, 1.3] },
-      { donkey: [390, .75], dog: [492, .85], cat: [584, .98], rooster: [648, .9] }); // 세로: 닭이 오른쪽 끝에 잘리지 않게
+    const SPOT = L({ donkey: [200, 1.05], dog: [420, 1.05], cat: [590, 1.05], rooster: [770, 1.05] },
+      { donkey: [390, .75], dog: [492, .75], cat: [584, .75], rooster: [648, .75] }); // 세로: 닭이 오른쪽 끝에 잘리지 않게
     await T.sceneCard('음악대 연습', () => {
       T.clear(); meadowBG(T);
       band.forEach(a => put(a, SPOT[a.key][0], 500, SPOT[a.key][1]));
@@ -1347,7 +1362,7 @@
     const owl = mk('owl');
     await T.sceneCard('캄캄한 숲', () => {
       T.clear(); fb = forestBG(T);
-      band.forEach(a => { put(a, FX0[a.key], ROAD_Y, (WALK ? { donkey: 1, dog: 1.1, cat: 1.2, rooster: 1.2 }[a.key] : (a.key === 'donkey' ? .85 : 1)) * FS, 'right'); a.lean.style.filter = WALK ? '' : 'brightness(.8)'; });
+      band.forEach(a => { put(a, FX0[a.key], ROAD_Y, (WALK ? 1 : (a.key === 'donkey' ? .85 : 1)) * FS, 'right'); a.lean.style.filter = WALK ? '' : 'brightness(.8)'; });
       put(owl, OWX, OWY, WALK ? .9 : 1.1);
       camSnap(500, 280, 1);
     }, cast.dog.pos);
@@ -1389,7 +1404,7 @@
       TG = L(500, 470), TS = L(1, .85), WY = L(500, 548), WS = L(1, .7);
     const TCX = lowArt ? L(500, 650) : 500; // 그림: 창이 오른쪽에 그려져 있어 세로 화면은 카메라를 오른쪽으로
     const ORDER = ['donkey', 'dog', 'cat', 'rooster'];
-    const WAIT_W = { donkey: 200, dog: 125, cat: 100, rooster: 95 };
+    const WAIT_W = { donkey: 200, dog: 135, cat: 105, rooster: 100 };
     let lowWin = null;
     await T.sceneCard('탑 쌓기', () => {
       T.clear(); lowWin = houseLowBG(T, TX - 700, TG - 500 + L(0, 50));
@@ -1601,8 +1616,8 @@
     await say('네 친구는 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.');
 
     /* ---------- 10. 도둑의 정찰 (캄캄한 집 안, 눈만 보임) ---------- */
-    const SPOTS = L([['cat', 180, 478, 1.3], ['dog', 470, 478, 1.25], ['donkey', 690, 486, .95], ['rooster', 860, 120, 1.2]],
-      [['cat', 320, 478, 1.1], ['dog', 440, 478, 1.05], ['donkey', 590, 486, .8], ['rooster', 665, 120, 1.1]]);
+    const SPOTS = L([['cat', 180, 478, .95], ['dog', 470, 478, .95], ['donkey', 690, 486, .95], ['rooster', 860, 120, .95]],
+      [['cat', 320, 478, .8], ['dog', 440, 478, .8], ['donkey', 590, 486, .8], ['rooster', 665, 120, .8]]);
     const STOPS = L([300, 380, 590, 800, 1150], [485, 540, 720, 700, 1150]); // 세로: 도둑이 눈빛(머리) 오른쪽에 서서 눈을 가리지 않게(2026-10-27 화면에서 잼)
     const thief = rb[0];
     await T.sceneCard('캄캄한 밤', () => {
@@ -1672,8 +1687,8 @@
 
     /* ---------- 11. 우리 집 (아침 와이드 · 합주) ---------- */
     const HOME = bgArt('morning') // 그림: 짚더미 앞 · 문 앞 · 아궁이 앞 · 지붕 윗선 위
-      ? L({ donkey: [150, 476, .95], dog: [470, 476, 1.1], cat: [860, 462, 1.05], rooster: [520, 172, 1] },
-        { donkey: [370, 476, .8], dog: [490, 476, 1], cat: [640, 462, .95], rooster: [500, 172, 1] })
+      ? L({ donkey: [150, 476, .95], dog: [470, 476, .95], cat: [860, 462, .95], rooster: [520, 172, .95] },
+        { donkey: [370, 476, .8], dog: [490, 476, .8], cat: [640, 462, .8], rooster: [500, 172, .8] })
       : L({ donkey: [190, 486, 1], dog: [520, 486, 1.15], cat: [860, 410, 1.1], rooster: [470, 176, 1.1] },
         { donkey: [385, 486, .85], dog: [505, 486, 1], cat: [648, 410, 1], rooster: [470, 176, 1.1] });
     const hx = k => HOME[k][0];
