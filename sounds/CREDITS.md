@@ -38,6 +38,20 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `music/vivaldi_summer3.mp3` | Vivaldi - Four Seasons 2 Summer mvt 3 Presto - John Harrison violin.oga (처음 20초, 끝 페이드아웃, 음량 맞춤) | John Harrison(바이올린), Robert Turizziani(지휘), Wichita State University Chamber Players, 2000년 라이브 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_2_Summer_mvt_3_Presto_-_John_Harrison_violin.oga |
 | `music/vivaldi_autumn1.mp3` | Vivaldi - Four Seasons 3 Autumn mvt 1 Allegro - John Harrison violin.oga (처음 22초, 끝 페이드아웃, 음량 맞춤) | John Harrison(바이올린), Robert Turizziani(지휘), Wichita State University Chamber Players, 2000년 라이브 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_3_Autumn_mvt_1_Allegro_-_John_Harrison_violin.oga |
 
+## 브레멘 음악대 음악 (Pixabay, 파일은 `audio/bremen/` 에 있음)
+
+| 파일 | 원본 | 만든 이 | 라이선스 | 사용 구간 |
+|---|---|---|---|---|
+| `audio/bremen/finale_march_vienna.mp3` | Pixabay "Vienna March (Wiener Marsch)" — juliush-vienna-march-wiener-marsch-210221.mp3 | juliush | Pixabay Content License (출처 표기 불필요) | 1.74~23.74초(22초), 마지막 연주 |
+| `audio/bremen/bigband_burst.mp3` | Pixabay "Big Band" — aurec-big-band-597001.mp3 | aurec | Pixabay Content License (출처 표기 불필요) | 120.7~145.7초(25초)에 동물 소리(위 `animals/` 파일)를 섞음, 음악 대폭발 |
+
+## 마법 소리 (Pixabay)
+
+| 파일 | 원본 | 만든 이 | 라이선스 | 사용 구간 |
+|---|---|---|---|---|
+| `music/magic_awaken.mp3` | Pixabay "Outro Gentle & Magical Christmas Music" — grand_project-a-christmas-dream_outro-gentle-amp-magical-christmas-music-625440.mp3 | grand_project | Pixabay Content License (출처 표기 불필요) | 전체 16.2초, 음량 -4dB·끝 페이드. 백설공주 깨어남·미녀와 야수 저주 풀림 |
+| `sfx/magic_wand.mp3` | Pixabay "Magic Wand" — freesound_community-magic-wand-6214.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 0.1~2.7초(2.6초), 앞뒤 페이드. 요술 항아리 불려 내기 |
+
 ## 효과음 (Kenney, CC0 — 출처 표시 의무 없음)
 
 `sounds/sfx/` 의 thud·boom·pow·bonk·pop·poke·tap·ding·swish·chop·step_grass·step_wood·door
