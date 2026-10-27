@@ -445,11 +445,38 @@
       T.el('image', { href: artUrl(key), x: xs[i] - 28, y: top, width: 56, height: 112, preserveAspectRatio: 'xMidYMin slice', style: 'filter:brightness(.4)' }, g);
     });
   }
+  /* 창 아래 빛 줄기(그림 속 노란 단색 사다리꼴, 2026-10-27 그림 px 에서 재서 무대 좌표로: x=-40+px*.675, y=-24+py*.6748).
+     창턱 밑 y 227 에서 시작해 땅(y≈407)에서 꺾여 넓어지고 y 475 에서 끝난다 */
+  const LOW_BEAM = [[621.5, 227], [840.2, 227], [892.2, 407.2], [965.8, 475.4], [427.1, 475.4], [528.4, 407.2]];
+  const LOW_BEAM_Y = [227, 475.4];
+  const pts = P => P.map(p => p.join(',')).join(' ');
+  function lowBeam(T, b) {
+    const { el } = T, id = 'br-beam-' + (++clipN), [y0, y1] = LOW_BEAM_Y;
+    const g = el('g', { style: 'pointer-events:none' }, b);
+    const lg = (k, stops) => { const gr = el('linearGradient', { id: id + k, gradientUnits: 'userSpaceOnUse', x1: 0, y1: y0, x2: 0, y2: y1 }, g); stops.forEach(([o, c, a]) => el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, gr)); };
+    const blur = (k, s) => { const f = el('filter', { id: id + k, x: -400, y: -400, width: 1800, height: 1400, filterUnits: 'userSpaceOnUse' }, g); el('feGaussianBlur', { stdDeviation: s }, f); };
+    // §7-1 빛 예외: 창(광원) 쪽이 가장 밝은 크림, 아래로 갈수록 마당 흙색(#BE7540)에 섞여 끝은 거의 흙색
+    lg('-g', [[0, '#FFF6D2', .95], [.25, '#FDE7A6', .7], [.55, '#F2C072', .45], [.78, '#D99050', .7], [1, '#BE7540', .95]]);
+    lg('-s', [[0, '#FFE9A8', .5], [.6, '#F6C676', .22], [1, '#E0A060', 0]]);
+    blur('-b', 3); blur('-w', 16);
+    // 옆으로 퍼지는 빛: 조금 넓힌 줄기를 크게 흐려 벽·땅에 옅게
+    const cx = 696, wide = LOW_BEAM.map(([x, y]) => [cx + (x - cx) * 1.08, y + (y <= y0 ? 6 : 0)]);
+    el('polygon', { points: pts(wide), fill: `url(#${id}-s)`, filter: `url(#${id}-w)` }, g);
+    // 흐림이 그림 속 노란 단색 가장자리(아래 비스듬한 변의 밝은 절단면 포함)를 덮도록 넓혀 깐다. 아래쪽일수록 변이 눕혀 있어 옆으로 더 넓힌다(아래 끝은 흙색이라 땅에 묻힌다)
+    const cover = LOW_BEAM.map(([x, y]) => [x + Math.sign(x - cx) * (y <= y0 ? 5 : y >= y1 ? 16 : 8), y >= y1 ? y + 5 : y]);
+    el('polygon', { points: pts(cover), fill: `url(#${id}-g)`, filter: `url(#${id}-b)` }, g);
+    return g;
+  }
   function houseLowBG(T, dx = 0, dy = 0) {
     const { paper, el } = T, b = T.bg;
     if (bgImage(T, 'house_low')) { // 밝은 창 광원 한 장을 동물 실루엣 뒤에 깐다(필터 없음)
+      lowBeam(T, b);
       const win = bgClip(T, 'house_low', b, [['rect', { x: LOW_WIN.x0, y: LOW_WIN.y0, width: LOW_WIN.x1 - LOW_WIN.x0, height: LOW_WIN.y1 - LOW_WIN.y0 }]]);
       const sh = win.lastChild;
+      // 창 유리 = 광원: 유리 위쪽 가운데가 가장 밝은 옅은 방사형(도둑 머리 y 108~ 는 거의 그대로)
+      const rid = 'br-pane-' + (++clipN), rg = el('radialGradient', { id: rid, gradientUnits: 'userSpaceOnUse', cx: (LOW_WIN.x0 + LOW_WIN.x1) / 2, cy: 40, r: 120 }, sh);
+      [[0, '#FFFCEB', .6], [.55, '#FFF3C8', .25], [1, '#FFF3C8', 0]].forEach(([o, c, a]) => el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, rg));
+      el('rect', { x: LOW_WIN.x0, y: LOW_WIN.y0, width: LOW_WIN.x1 - LOW_WIN.x0, height: LOW_WIN.y1 - LOW_WIN.y0, fill: `url(#${rid})` }, sh);
       const silhouettes = el('g', {}, sh);
       windowRobbers(T, silhouettes, [674, 737, 800], 116);
       return win;
@@ -648,16 +675,17 @@
       if (!sheet) sheet = el('g', { 'data-tower-light': '', style: 'pointer-events:none' }, T.bg);
       sheet.replaceChildren();
       const id = 'br-tower-paper-' + (++clipN), gid = id + '-g', bl = id + '-b', wx = (LOW_WIN.x0 + LOW_WIN.x1) / 2;
-      const fl = el('filter', { id: bl, x: -400, y: -400, width: 1800, height: 1400, filterUnits: 'userSpaceOnUse' }, sheet); el('feGaussianBlur', { stdDeviation: 5 }, fl);
-      const gr = el('radialGradient', { id: gid, gradientUnits: 'userSpaceOnUse', cx: wx, cy: LOW_WIN.y1, r: 400, fx: wx, fy: LOW_WIN.y1 - 30 }, sheet);
-      [[0, '#FFF4CC', 1], [.35, '#FDE3A0', .9], [.7, '#F6C676', .45], [1, '#F2B366', 0]].forEach(([o, c, a]) => el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, gr));
+      const fl = el('filter', { id: bl, x: -400, y: -400, width: 1800, height: 1400, filterUnits: 'userSpaceOnUse' }, sheet); el('feGaussianBlur', { stdDeviation: 6 }, fl);
+      // 빛 줄기(lowBeam)와 같은 세로 그라데이션: 창 쪽 실루엣 둘레는 줄기보다 한층 밝은 크림, 땅 쪽은 흙색에 묻혀 사라진다
+      const gr = el('linearGradient', { id: gid, gradientUnits: 'userSpaceOnUse', x1: wx, y1: LOW_BEAM_Y[0] - 40, x2: wx, y2: LOW_BEAM_Y[1] }, sheet);
+      [[0, '#FFFDF0', 1], [.4, '#FFF2C4', .95], [.75, '#FBD58E', .55], [1, '#E9A866', 0]].forEach(([o, c, a]) => el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, gr));
       const mask = el('mask', { id, maskUnits: 'userSpaceOnUse', x: -400, y: -400, width: 1800, height: 1400, style: 'mask-type:alpha' }, sheet);
       const soft = el('g', { filter: `url(#${bl})` }, mask);
       animals.forEach(a => {
         if (!a.parts.sil) return;
         const key = LOOKS[a.key].sil, [h, fx, aspect] = SPR[key], w = h * aspect;
         const g = el('g', { transform: `translate(${a.x},${a.y}) scale(${a.scale})` }, soft);
-        el('image', { href: artUrl(key), x: -w * fx - 7, y: -h - 7, width: w + 14, height: h + 10, preserveAspectRatio: 'none' }, g);
+        el('image', { href: artUrl(key), x: -w * fx - 10, y: -h - 10, width: w + 20, height: h + 14, preserveAspectRatio: 'none' }, g);
       });
       el('rect', { x: -400, y: -400, width: 1800, height: 1400, fill: `url(#${gid})`, mask: `url(#${id})` }, sheet);
     }
