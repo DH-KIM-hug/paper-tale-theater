@@ -454,12 +454,19 @@
   async function run(T) {
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { el, sleep, say, actor, camTo, camWide, camSnap, josa } = T;
+    /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'pot_boil', 'whistle_down', 'comic_brass', 'drumroll_crash']); } catch (e) { /* 소리 없이도 진행 */ }
+    const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     /* 그림 미리 불러오기: 배우·순무·첫 배경을 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
     const loads = {};
     Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
     Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
-    await Promise.race([Promise.all([loads.bg_garden, loads.turnip, loads.sprout, ...Object.keys(SPR).map(k => loads[k])].filter(Boolean)), sleep(4000)]);
+    await Promise.race([Promise.all([loads.bg_garden, loads.turnip, loads.sprout, ...Object.keys(SPR).map(k => loads[k])].filter(Boolean)), new Promise(r => setTimeout(r, 4000))]);
 
     /* 배우: 안쪽 '자세' 층을 따로 두어 기울기·벌렁을 hop과 겹치지 않게 한다.
        그림이 있으면 자세 그림(서기·당기기·앉기·뛰기)을 겹쳐 두고 look()으로 하나만 보인다. 기울기·찌그러짐은 그대로 코드가 한다 */
@@ -704,6 +711,7 @@
     };
     const READ_ACTS = {
       set(k) {
+        if (k === 'spring' && !R.sawSpring) { R.sawSpring = 1; amb('birds_chirp_1'); } else if (k === 'feast') amb('pot_boil', .2, 4); else stopAmb();
         if (k === 'spring') { // 놀이판 1장: 봄 텃밭, 구멍과 씨앗
           resetMisc(); T.clear(); R.view = 'spring'; R.step = 0; rise = 0;
           R.bgp = gardenBG(T, { season: 'spring' });
@@ -918,7 +926,7 @@
         return camGo([x, y, z]);
       },
     };
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     /* --- 1. 씨 뿌리기 (텃밭 봄) --- */
     let bgp = gardenBG(T, { season: 'spring' });
@@ -930,6 +938,7 @@
     seed.setAttribute('transform', 'translate(496,378)');
     camSnap(500, T.portrait() ? 360 : 340, T.portrait() ? 1.5 : 1.3);
     await T.curtain(true);
+    amb('birds_chirp_1');
     await say('봄이 왔어요. 할아버지가 텃밭에 구멍을 팠어요.');
     await T.ask('"순무야, 크게 자라라." 씨앗을 톡 눌러 봐요!', () => T.tap(seed, { prompt: '씨앗을 톡 눌러 봐요!' }));
     await T.anim(seed, [{ transform: 'translate(496px,378px)' }, { transform: 'translate(462px,330px)' }, { transform: 'translate(430px,468px) scale(.6)' }], { duration: 600, easing: 'ease-in' });
@@ -1004,9 +1013,11 @@
     for (let i = 1; i <= 5; i++) { await pullGrandpa(i); await sleep(420); }
     await sleep(300);
     await say('순무는 꿈쩍도 안 해요.');
+    sfx('whistle_down', .7); // 넘어지는 동안 휘리릭, 쿵은 그 뒤
     cast.grandpa.sitDown();
-    await cast.grandpa.move(680, 500, 350, 'ease-out');
+    await cast.grandpa.move(680, 500, 350, 'ease-out'); await sleep(500);
     await T.fitTo([cast.grandpa.pos], { dur: 300 }); // 세로 화면: 엉덩방아 찧은 할아버지가 화면 밖으로 나가지 않게
+    stopAmb();
     thud(T); T.shake(); T.pop(cast.grandpa.x - 90, 340, '쿵!'); // 머리 왼쪽 위 (오른쪽은 세로 화면에서 잘린다)
     const st1 = stars(T, 680, 395); // (킥킥 기계음은 뺐다: 할아버지 "아이코!"와 겹침)
     await say('아이코! 할아버지가 엉덩방아를 찧었어요.');
@@ -1116,6 +1127,7 @@
     cast.cat.lean.style.transition = 'transform .28s ease-out';
     await T.sceneCard(null, () => sideView(5), cast.cat.pos);
     await say('어? 강아지랑 고양이가 서로 째려봐요.');
+    sfx('comic_brass', .6);
     const glare = artUrl('cut_glare') && T.cutImage([{ src: artUrl('cut_glare'), hold: 2200 }], { hold: 2200, onShow: () => voiceLine('cut_glare', 300) });
     await (glare || T.cut(svg => {
       const dogG = T.el('g', { transform: 'translate(70,262) scale(-2.3,2.3)' }, svg); DRAW.dog(T, dogG);
@@ -1179,6 +1191,7 @@
       T.el('text', { x: 200, y: 64, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(word) }, svg);
     };
     voiceLine('cut_heave', 150);
+    sfx('drumroll_crash', .8);
     await T.cut(svg => cutTurnip(svg, 230, .6, '영~'), { hold: 1100 });
     await T.cut(svg => cutTurnip(svg, 190, .6, '차~'), { hold: 1100 });
     // 쑥! 은 그림 컷(얼굴 없는 순무가 흙을 튀기며 쑥, 여섯이 벌렁) — 없으면 코드 컷
@@ -1215,6 +1228,7 @@
     const seats = line.slice().sort(() => Math.random() - .5);
     let pot;
     await T.sceneCard('순무 잔치', () => {
+      amb('pot_boil', .25, 4);
       T.clear(); feastBG(T);
       // 잔치 상: 그림(낮은 상, 520×162)이면 윗판이 솥 밑(y≈402)에 오게, 없으면 판+다리 도형
       const tbl = pic(T, T.world, 'table', 360, 376, 280, 280 / 2.346) || T.paper(T.world, [['rect', { x: 390, y: 400, width: 220, height: 20, rx: 6, fill: C.bark }], ['rect', { x: 410, y: 420, width: 16, height: 90, fill: C.bark }], ['rect', { x: 574, y: 420, width: 16, height: 90, fill: C.bark }]]);
