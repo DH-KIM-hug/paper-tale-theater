@@ -310,8 +310,8 @@ const AudioFX = (() => {
     },
     /* 첫 소리가 합성음으로 새지 않게 미리 불러 둔다: AudioFX.preloadSfx(['paper_up', …]) */
     preloadSfx(names) { names.forEach(n => loadSample('sfx/' + n + '.mp3')); },
-    async playUrl(url) {
-      if (mediaNar && narEl) { try { return await playMedia(url); } catch (e) { /* <audio> 실패 → Web Audio 로 */ } }
+    async playUrl(url, { recordedOnly = false } = {}) {
+      if (mediaNar && narEl) { try { return await playMedia(url); } catch (e) { if (recordedOnly) throw e; /* <audio> 실패 → Web Audio 로 */ } }
       const buf = await loadClip(url);
       const c = ensure();
       return new Promise(resolve => {
@@ -368,7 +368,7 @@ const AudioFX = (() => {
       return run;
     },
     /* 짧은 대사가 끝날 때까지 기다린다 (내레이션과 겹치지 않게, 최대 ms) */
-    voiceIdle(ms = 4000) { return Promise.race([voiceDone, new Promise(r => setTimeout(r, ms))]); },
+    voiceIdle(ms = 4000) { if (ms === null) return voiceDone; return Promise.race([voiceDone, new Promise(r => setTimeout(r, ms))]); },
     stopNarration() {
       pairGen++;
       narHelpers.forEach(el => el.pause());
@@ -555,14 +555,14 @@ const Narrator = (() => {
   /* 클립 경로에서 배역을 읽는다: audio/tc/tiger_ab12cd34ef.mp3, audio/tc/frog/mom_…mp3 → 'tiger', 'mom' (없으면 내레이터) */
   const roleOf = url => (/\/([a-z]+)_[0-9a-f]{10}\.mp3$/.exec(url) || [, 'nar'])[1];
 
-  async function speak(text, { keep = false, onSeg, simultaneous = false } = {}) {
+  async function speak(text, { keep = false, onSeg, simultaneous = false, recordedOnly = false } = {}) {
     const gen = ++speakGen;
     AudioFX.stopNarration(); // 겹침 방지: 진행 중인 클립 중단
     const en = englishOn() && NARRATION_CLIPS_EN[text]; // 영어 자료가 없는 문장은 한국어로
     showBubble(en ? en.t : text);
     const clip = en ? en.c : (typeof NARRATION_CLIPS !== 'undefined') && NARRATION_CLIPS[text];
     if (clip) {
-      await AudioFX.voiceIdle(); // 컷신 대사가 끝난 뒤 이어서
+      await AudioFX.voiceIdle(recordedOnly ? null : 4000); // 컷신 대사가 끝난 뒤 이어서
       if (gen !== speakGen) return;
       try {
         // 배열이면 배역별 세그먼트를 순서대로 이어서 재생
@@ -572,12 +572,16 @@ const Narrator = (() => {
         } else for (const url of list) {
           if (gen !== speakGen) return; // 중간에 다른 내레이션이 시작됨
           if (onSeg) try { onSeg(roleOf(url)); } catch (e) { /* 연출 실패는 무시 */ }
-          await AudioFX.playUrl(url);
+          await AudioFX.playUrl(url, { recordedOnly });
         }
         if (!keep && gen === speakGen) hideBubble();
         return;
-      } catch (e) { /* 클립 실패 → 브라우저 TTS 폴백 */ }
+      } catch (e) {
+        if (recordedOnly) { if (!keep && gen === speakGen) hideBubble(); throw e; }
+        /* 클립 실패 → 브라우저 TTS 폴백 */
+      }
     }
+    if (recordedOnly) { if (!keep && gen === speakGen) hideBubble(); return; }
     return speakTTS(en ? en.t : text, keep, gen, !!en);
   }
 

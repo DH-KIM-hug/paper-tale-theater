@@ -1343,7 +1343,7 @@ const Tale = (() => {
     if (!sc || !Array.isArray(sc.scenes)) { console.warn('[read] 대본이 없어 끝냅니다'); await W.curtain(true); return ''; }
     await loadReadClips(en);
     try { AudioFX.prefetchClips && AudioFX.prefetchClips(); } catch (e) { /* 미리 받기 없이 */ }
-    /* 클립 키 확인: 녹음이 없는 줄은 브라우저 TTS 로 떨어진다 → 콘솔과 window.__READ 에 남긴다 */
+    /* 클립 키 확인: 녹음이 없는 줄은 건너뛴다(브라우저 TTS 로 읽지 않는다, 2026-10-27 사용자 결정) → 콘솔과 window.__READ 에 남긴다 */
     const has = t => {
       try {
         if (en) return !!(NARRATION_CLIPS_EN[t] && NARRATION_CLIPS_EN[t].c);
@@ -1353,7 +1353,7 @@ const Tale = (() => {
     const log = window.__READ = { tale: sc.tale, lang: en ? 'en' : 'ko', scenes: sc.scenes.length, lines: 0, missing: [], unknown: [], said: 0, done: false };
     sc.scenes.forEach(s => (s.lines || []).forEach(l => { log.lines++; if (!has(l.text)) log.missing.push(l.text); }));
     console.log(`[read] ${sc.tale} ${log.lang}: ${log.scenes}장면 ${log.lines}줄, 클립 없음 ${log.missing.length}`);
-    log.missing.forEach(t => console.warn('[read] 클립 없음(TTS):', t));
+    log.missing.forEach(t => console.warn('[read] 클립 없음(건너뜀):', t));
     /* 동사 'name:a:b' → acts.name('a', 'b'). 모르는 동사는 경고만, 실패도 경고만 (대본이 코드보다 먼저 나와도 깨지지 않게) */
     const verb = v => {
       const [name, ...args] = String(v).split(':');
@@ -1416,7 +1416,7 @@ const Tale = (() => {
     const sayGuarded = (text, simultaneous = false) => {
       const est = 8000 + String(text).length * 250;
       const n0 = AudioFX.narInfo ? AudioFX.narInfo().n : 0;
-      const p = W.say(text, { simultaneous });
+      const p = W.say(text, { simultaneous, recordedOnly: true }); // 녹음 없는 줄은 바로 건너뛴다(시간 제한은 그대로)
       return guard(p, '대사 ' + String(text).slice(0, 20), t0 => {
         const ni = AudioFX.narInfo ? AudioFX.narInfo() : null;
         if (ni && ni.n !== n0) return Math.max(0, ni.t - t0) + (ni.dur ? ni.dur * 1000 + 3000 : est);
