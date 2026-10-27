@@ -183,7 +183,20 @@
     t.textContent = '[그림 준비 중] ' + d.name;
   }
   function bgImage(T, key) {
-    if (bgOK[key]) { const b = bgBox(key); return T.el('image', { href: bgSrc(key), x: b.x, y: b.y, width: b.w, height: b.h, preserveAspectRatio: 'none' }, T.bg); }
+    if (bgOK[key]) {
+      const b = bgBox(key), attrs = { href: bgSrc(key), x: b.x, y: b.y, width: b.w, height: b.h, preserveAspectRatio: 'none' };
+      const image = T.el('image', attrs, T.bg);
+      if (key === 'garden') {
+        // 사용자 결정: 꽃은 y 240 위와 아래 모서리만. 가운데는 잔디 종이로 덮고 연못은 보존한다.
+        T.el('rect', { x: b.x, y: 240, width: b.w, height: b.y + b.h - 240, fill: '#8CBF5A' }, T.bg);
+        const clip = T.el('clipPath', { id: 'merGardenCornersPond' }, T.bg);
+        T.el('rect', { x: b.x, y: 440, width: 220, height: 180 }, clip);
+        T.el('rect', { x: 820, y: 440, width: 220, height: 180 }, clip);
+        T.el('ellipse', { cx: 500, cy: 473, rx: 220, ry: 63 }, clip);
+        T.el('image', { ...attrs, 'clip-path': 'url(#merGardenCornersPond)' }, T.bg);
+      }
+      return image;
+    }
     bgPlaceholder(T, key);
   }
   /* 물 덮개: 새 바다 배경은 물결이 그림 안에 있다. 배·인어가 물에 잠겨 보이게, 같은 배경 그림을 y0 아래만 오려 인물 위에 한 번 더 얹는다
@@ -868,12 +881,14 @@
     const WRONG = { butterfly: '나비는 하늘을 날아요. 땅 친구예요.', rabbit: '토끼는 땅에서 뛰어요. 땅 친구예요.', flower: '꽃은 땅에서 피어요. 땅 친구예요.',
       bird: '새는 하늘을 날아요. 땅 친구예요.', tree: '나무는 땅에서 자라요. 땅 친구예요.', dog: '강아지는 땅에서 뛰어요. 땅 친구예요.' };
     const RIGHT = { fish: '물고기는 바다에 살아요!', shell: '조개는 바다에 살아요!', starfish: '불가사리는 바다에 살아요!' };
-    const IX = X([330, 500, 670], [416, 500, 584]), IY = 330, IH = X(96, 76);
+    const IX = X([330, 500, 670], [380, 500, 620]), IY = 330, IH = X(96, 76);
     for (const R of ROUNDS) {
       const order = [...R.opts].sort(() => Math.random() - .5);
       const cards = order.map((name, i) => {
         const a = prop(T, name === 'fish' ? 'fish_a' : 'item_' + name, IH);
-        put(T, a, IX[i], 300); hit(T, a, X(66, 52));
+        put(T, a, IX[i], 300);
+        const backing = hit(T, a, X(66, 44)); // 세로: 흰 받침끼리 겹치지 않게 간격 120, 반지름 44(소품 배율이 곱해져 화면에서 약 57px)
+        backing.setAttribute('opacity', '1'); a.pos.insertBefore(backing, a.pos.firstChild);
         a.pos.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: i * 120, fill: 'backwards' });
         a.move(IX[i], IY, 400 + i * 120);
         return { name, a };
