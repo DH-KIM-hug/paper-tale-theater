@@ -19,6 +19,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/heungbu/heung_cd0b39f029.mp3"
  ],
  "흥부는 터벅터벅, 빈손으로 집에 돌아갔어요.": "audio/el/heungbu/nar_272a82ad89.mp3",
+ "집으로 돌아온 흥부는 처마 밑의 제비들을 바라보았어요.": "audio/el/heungbu/nar_5cfd4ffadb.mp3",
  "흥부네 초가집 처마에는 제비 가족이 살았어요.": "audio/el/heungbu/nar_dccc093b91.mp3",
  "아기 제비 세 마리가 짹짹짹, 입을 쩍쩍 벌리며 먹이를 기다렸지요.": "audio/el/heungbu/nar_889aa97d76.mp3",
  "앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!": "audio/el/heungbu/nar_1a513d0bde.mp3",
@@ -34,16 +35,19 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/heungbu/heung_9988f4bc5b.mp3",
   "audio/el/heungbu/nar_76d12999ba.mp3"
  ],
+ "추운 겨울이 지나고 흥부네 마당에도 봄볕이 들었어요.": "audio/el/heungbu/nar_729607b5aa.mp3",
  "봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.": "audio/el/heungbu/nar_eda7c8a3c4.mp3",
  "박씨가 흥부 손바닥에 또르르 굴러떨어졌어요.": "audio/el/heungbu/nar_b04f9580a4.mp3",
  "흥부는 박씨를 마당에 심었어요.": "audio/el/heungbu/nar_00038e7050.mp3",
  "흥부는 날마다 물을 졸졸 주고, 흙을 토닥토닥 다독였지요.": "audio/el/heungbu/nar_c2f46ddc2f.mp3",
+ "시간이 흘러 흥부네 마당의 박 덩굴이 자랐어요.": "audio/el/heungbu/nar_3f57760c17.mp3",
  "줄기가 쑥쑥쑥 자라더니, 커다란 박이 세 통이나 열렸어요!": "audio/el/heungbu/nar_fa129dcad3.mp3",
  "흥부 부부는 톱으로 박을 탔어요.": "audio/el/heungbu/nar_e24421b8af.mp3",
  "첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.": "audio/el/heungbu/nar_bf9d0fd213.mp3",
  "쌀자루가 수북수북, 이제 배불리 먹을 수 있어요.": "audio/el/heungbu/nar_446b9f3d55.mp3",
  "두 번째 박에서는 반짝반짝 금은보화가 나왔어요!": "audio/el/heungbu/nar_34a8e9d7d2.mp3",
  "세 번째 박에서는 작은 박 요정들이 나와 멋진 새집을 지어 주었어요!": "audio/el/heungbu/nar_5253d5ecec.mp3",
+ "한편, 놀부와 형수는 자기 집 처마 밑에 있었어요.": "audio/el/heungbu/nar_0d2e50e973.mp3",
  "소문을 들은 놀부는 배가 아팠어요. \"나도 부자가 될 거야!\"": [
   "audio/el/heungbu/nar_d92dcd5932.mp3",
   "audio/el/heungbu/nol_83f12effea.mp3"
@@ -58,6 +62,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/heungbu/nol_70b4a1f7e4.mp3",
   "audio/el/heungbu/nar_d61fd5864d.mp3"
  ],
+ "그 뒤 놀부도 박씨를 얻어 자기 집 마당에 심었어요.": "audio/el/heungbu/nar_b6b43197d6.mp3",
  "놀부네 마당에도 박이 세 통 열렸어요.": "audio/el/heungbu/nar_e817f78717.mp3",
  "\"헤헤, 금은보화야, 어서 나와라!\" 놀부는 슬근슬근 신나게 톱질했어요.": [
   "audio/el/heungbu/nol_dc632e85c3.mp3",
@@ -83,6 +88,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "흥부는 쌀자루를 영차영차, 형님네로 보내 주었어요.": "audio/el/heungbu/nar_51916f9db2.mp3",
  "놀부는 눈물이 핑 돌아 소매로 슥슥 닦았어요.": "audio/el/heungbu/nar_9832ec57e2.mp3",
+ "흥부네 집에 모인 두 집안은 다시 한 가족이 되었어요.": "audio/el/heungbu/nar_0c1c535d0a.mp3",
  "두 형제는 손을 꼭 잡고 하하 호호 웃었어요.": "audio/el/heungbu/nar_5385fd0ec6.mp3",
  "그날 저녁, 모두 둘러앉아 따끈따끈한 밥을 냠냠 나눠 먹었지요.": "audio/el/heungbu/nar_e75656c4c6.mp3",
  "흥부와 놀부는 그 뒤로 사이좋게 오래오래 살았대요. 착한 마음은 복이 되어 돌아와요.": "audio/el/heungbu/nar_9d03113c8b.mp3"
