@@ -21,7 +21,7 @@
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 포함)는 그대로 그림만 v2·라이트박스.
      부엌 창·시계·난로, 집 안 문(문 밑 틈 369)·창·벤치, 어질러진 방 시계·의자·이불, 집 앞 문, 나무 기둥, 우물·울타리는 원본과 겹쳐 같은 자리.
      나무 아래는 노을 라이트박스, 우물가는 달밤 라이트박스(판단 1 추천안). 똑똑똑(inside_door)은 그대로 */
-  const BGS = { kitchen: 'wg_bg_kitchen_v2', house: 'wg_bg_house_v2', messy: 'wg_bg_messy_v2', door: 'wg_bg_door_v2', tree: 'wg_lb_tree_sunset', well: 'wg_lb_well_moon' };
+  const BGS = { kitchen: 'wg_bg_kitchen_v2', house: 'wg_bg_house_v2', messy: 'wg_bg_messy_v2', door: 'wg_bg_door_v2', tree: 'wg_lb_tree_sunset', well: 'wg_lb_well_moon_glow' };   // 2026-10-28 사용자 결정(§7-1 빛 예외): 달의 단단한 크림 고리 → 반투명 달무리(_glow, 우물·땅선 자리 그대로)
   const LAYER_AR = { herb_garland: 1.215, rosebush_front: 1.1183, wildflowers_mid: 3.4091, sil_branch: 1.16 };
   function bg(T, key) {
     T.el('image', { href: BGS[key] ? `../../assets/v3w/${BGS[key]}.webp` : A('wg_bg_' + key), x: -40, y: -22, width: 1080, height: 605, preserveAspectRatio: 'xMidYMid slice' }, T.bg);
