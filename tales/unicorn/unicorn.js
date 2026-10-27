@@ -307,10 +307,14 @@
       [T.world, T.fx].forEach(g => (t ? g.setAttribute('transform', t) : g.removeAttribute('transform')));
       camSnap(500, 280, 1);
     };
-    const scene = (key, lx, ps) => { T.clear(); bgImage(T, key); setView(lx, ps); };
+    /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
+    const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const SCENE_AMB = { uc_bg2_hill: 'birds_chirp_1', uc_bg2_night_forest: 'crickets_night_1', uc_bg2_waterfall: 'waterfall', uc_bg2_moon_night: 'crickets_night_2' };
+    const scene = (key, lx, ps) => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); setView(lx, ps); if (SCENE_AMB[key]) amb(SCENE_AMB[key], key === 'uc_bg2_waterfall' ? .22 : .28); };
     const follow = (x, ms = 800) => (P ? T.camTo(500 + (x - VX.lx) * VX.ps, 280, 1, ms) : Promise.resolve());
     const H = n => (P ? n / VX.ps : n);               // 화면 크기를 지키는 누르는 자리
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding']);
+    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding', 'birds_chirp_1', 'crickets_night_1', 'crickets_night_2', 'waterfall', 'question', 'ding_glock', 'boing', 'stomach_growl', 'horse_neigh_1', 'drumroll_crash', 'shimmer', 'party_horn']);
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
@@ -556,13 +560,14 @@
     await sleep(300);
     await say(S.L1);
     picks.forEach(c => bob(flowers[c].pos));
+    cue('question', .6);
     await T.ask(S['F_ASK_' + ANS], () => T.choose(picks.map(c => ({
       el: flowers[c].hit, ok: c === ANS,
       onWrong: async () => { await wiggleEl(T, flowers[c].hit); await voWait('retry_' + ANS); },
     })), { prompt: S['F_ASK_' + ANS] }));
     picks.forEach(c => unhit(flowers[c]));
     const gift = flowers[ANS];
-    glow(gift, 1200); sparkleSfx(T); T.pop(gift.x, gift.y - 140, tr('반짝!'));
+    glow(gift, 1200); cue('ding_glock', .8) || sparkleSfx(T); T.pop(gift.x, gift.y - 140, tr('반짝!'));
     await say(S['F_OK_' + ANS]);
     /* 떨어진 꽃을 주워 바구니에 쏙: 꽃이 아이 앞을 지나 바구니로 날아가 반쯤 잠긴다(바구니가 꽃 줄기를 가린다) */
     kid.hop(8, 300); sfx('pop', .4);
@@ -595,7 +600,7 @@
     await T.ask(S.L6, () => T.tap(cloud.hit, { prompt: S.L6 }));
     unhit(cloud); AudioFX.sfx('cushion', .7);
     await T.cutImage([{ src: src('uc_cut2_sheep_jump'), hold: 3600 }]);
-    sheep.look('jump', 'left'); sfx('whoosh', .4);
+    sheep.look('jump', 'left'); cue('boing', .6) || sfx('whoosh', .4);
     const land = kid.x + 150, sx = sheep.x, sy = sheep.y;     // 포물선: 위로 40(0.25초) → 아래로 210(0.65초)
     const sayJump = say(S.L7);
     await sheep.move((sx + land) / 2 + 30, sy - 40, 250, 'ease-out');
@@ -622,7 +627,7 @@
     follow(endX - 40, 2500);
     await Promise.all([drive(kid, endX - 140, FL, 2500, 'linear', 5), drive(sheep, endX, FL, 2500, 'linear', 5)]);
     stop3(); await l9;
-    sheep.turn('left'); sheep.hop(18, 400); sparkleSfx(T);
+    sheep.turn('left'); sheep.hop(18, 400); cue('ding_glock', .8) || sparkleSfx(T);
     await say(S.L10);
     sheep.look('happy', 'right'); await sheep.move(X(790, 640), FL, 600, 'ease-out');
     sheep.turn('left'); sheep.hop(10, 320);                // 집 앞에서 아이 쪽을 보고 인사
@@ -695,7 +700,7 @@
     const l19 = say(S.L19);
     follow(840, 1600); setTimeout(() => follow(420, 1600), 3200);
     await l19;
-    horse.hop(6, 500); T.pop(horse.x - 20, POPY(horse) - 40, tr('꼬르륵…'));
+    horse.hop(6, 500); cue('stomach_growl', .6); T.pop(horse.x - 20, POPY(horse) - 40, tr('꼬르륵…'));
     await say(S.L20);
     await say(S.L21);
     await sleep(SCENE_END);
@@ -706,7 +711,7 @@
     await say(S.L22);
     sfx('paper_up', .5);
     await basket.move(horse.x - 160, FL, 1000, 'ease-in-out');
-    horse.look('happy', 'left');
+    horse.look('happy', 'left'); cue('horse_neigh_1', .5);
     const l23 = say(S.L23);
     T.pop(horse.x - 10, POPY(horse) - 50, tr('냠냠')); sfx('pop', .4);
     for (let i = 0; i < 3; i++) await horse.hop(8, 520);
@@ -769,6 +774,7 @@
       put(T, kid, X(420, 650), FL, { look: 'stand' });
       put(T, uni, X(720, 840), FL, { look: 'stand', to: 'left' }); uni.pos.style.opacity = 0;
     }, uni.pos);
+    cue('drumroll_crash', .6);
     uni.pos.style.opacity = ''; fadeIn(uni, 1400); glow(uni, 1500);
     halo.pos.style.opacity = ''; fadeIn(halo, 2400);
     await sleep(2500);
@@ -781,7 +787,7 @@
     bob(uni.pos);
     await T.ask(S.L35, () => T.tap(uni.hit, { prompt: S.L35 }));
     unhit(uni);
-    glow(uni, 1400); sparkleSfx(T);
+    glow(uni, 1400); AudioFX.sfx('shimmer', .7) || sparkleSfx(T);
     put(T, bands, uni.x - 95, FL - HT.uc_unicorn_stand - 34, { look: 'a' }); fadeIn(bands, 500);
     T.pop(uni.x + 40, FL - HT.uc_unicorn_stand - 100, tr('반짝!'), '#D9A94E');
     await sleep(3000);
@@ -790,7 +796,7 @@
     kid.look('hug'); T.world.appendChild(kid.pos);
     sfx('paper_up', .5);
     await kid.move(uni.x - 135, FL, 700, 'ease-out');
-    T.confetti(); sfx('tada') || sparkleSfx(T);
+    T.confetti(); sfx('party_horn', .9) || sfx('tada') || sparkleSfx(T);
     for (let i = 0; i < 2; i++) await Promise.all([kid.hop(22, 480), uni.hop(14, 480)]);
     await say(S.L36);
     await sleep(SCENE_END);
@@ -815,6 +821,7 @@
     await say(S.H2);
     kid.look('wave'); kid.hop(12, 360);
     await sleep(3000);
+    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '너도 누군가에게 친절하면, 너만의 유니콘을 만날 수 있어.';
   }
