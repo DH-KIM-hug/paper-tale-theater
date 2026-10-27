@@ -153,6 +153,9 @@
      "before": [
       "ants:carry:10",
       "store:fill:10"
+     ],
+     "after": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5,marimba_6,marimba_7,marimba_8,marimba_note,marimba_note:240:.5"
      ]
     },
     {
@@ -168,6 +171,9 @@
      ],
      "before": [
       "fx:sparkle"
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     }
    ]
@@ -394,6 +400,9 @@
      ],
      "after": [
       "weather:stop"
+     ],
+     "before": [
+      "sfx:boing:.5"
      ]
     }
    ]
@@ -447,7 +456,8 @@
      ],
      "before": [
       "acorns:roll",
-      "pop:520,420,데굴데굴~"
+      "pop:520,420,데굴데굴~",
+      "sfx:xylo_down:.45"
      ]
     },
     {
@@ -617,6 +627,9 @@
        null,
        "[calm, warm storytelling]"
       ]
+     ],
+     "after": [
+      "sfx:stomach_growl:.5"
      ]
     },
     {
@@ -902,7 +915,8 @@
       "guests:enter:ladybug",
       "guests:enter:snail",
       "guests:enter:pillbug",
-      "guests:enter:firefly"
+      "guests:enter:firefly",
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4:700:.5"
      ]
     },
     {
@@ -1011,6 +1025,9 @@
      ],
      "before": [
       "pop:500,250,짝짝짝!"
+     ],
+     "after": [
+      "sfx:applause_1:.3"
      ]
     }
    ]
@@ -1121,6 +1138,9 @@
        "Spring, summer, autumn, winter! The seasons go round and round.",
        "happy:1.2"
       ]
+     ],
+     "after": [
+      "sfxs:marimba_2,marimba_4,marimba_6,marimba_8:450:.5"
      ]
     },
     {
@@ -1133,6 +1153,9 @@
        "By getting ready ahead and sharing together, even winter was warm.",
        "happy:1.3"
       ]
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     }
    ]
