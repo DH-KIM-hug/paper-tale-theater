@@ -1,0 +1,48 @@
+{
+  "finale_march": {
+    "file": "finale_march_vienna.mp3",
+    "duration_seconds": 22.0,
+    "music_duration_seconds": 22.0,
+    "sample_rate": 44100,
+    "bpm": 100.017,
+    "time_signature": "2/4",
+    "phrases": [
+      {
+        "start_seconds": 0.017,
+        "friend": "donkey"
+      },
+      {
+        "start_seconds": 2.417,
+        "friend": "dog"
+      },
+      {
+        "start_seconds": 4.817,
+        "friend": "cat"
+      },
+      {
+        "start_seconds": 7.216,
+        "friend": "rooster"
+      },
+      {
+        "start_seconds": 9.616,
+        "friend": "donkey"
+      },
+      {
+        "start_seconds": 12.015,
+        "friend": "dog"
+      },
+      {
+        "start_seconds": 14.415,
+        "friend": "cat"
+      },
+      {
+        "start_seconds": 16.815,
+        "friend": "rooster"
+      },
+      {
+        "start_seconds": 19.214,
+        "friend": "donkey"
+      }
+    ]
+  }
+}

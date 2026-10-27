@@ -1,0 +1,95 @@
+{
+  "bigband_burst": {
+    "file": "bigband_burst.mp3",
+    "duration_seconds": 25.0,
+    "music_duration_seconds": 25.0,
+    "sample_rate": 48000,
+    "source_file": "aurec-big-band-597001.mp3",
+    "source_start_seconds": 120.7,
+    "source_end_seconds": 145.7,
+    "fadeout_seconds": 0.8,
+    "license": "Pixabay; user-confirmed",
+    "selection_method": "Highest weighted RMS / 250–10000 Hz energy / positive spectral flux after 12s; seven maximum-total-flux attacks >=3s apart",
+    "phrases": [
+      {
+        "start_seconds": 0.2,
+        "friend": "dog"
+      },
+      {
+        "start_seconds": 3.7,
+        "friend": "donkey"
+      },
+      {
+        "start_seconds": 7.0,
+        "friend": "cat"
+      },
+      {
+        "start_seconds": 10.51,
+        "friend": "rooster"
+      },
+      {
+        "start_seconds": 14.0,
+        "friend": "dog"
+      },
+      {
+        "start_seconds": 19.47,
+        "friend": "donkey"
+      },
+      {
+        "start_seconds": 23.43,
+        "friend": "cat"
+      }
+    ],
+    "animals": [
+      {
+        "start_seconds": 0.2,
+        "friend": "dog",
+        "file": "../../sounds/animals/dog.mp3",
+        "duration_seconds": 0.912,
+        "level_below_music_db": -9
+      },
+      {
+        "start_seconds": 3.7,
+        "friend": "donkey",
+        "file": "../../sounds/animals/donkey.mp3",
+        "duration_seconds": 1.14,
+        "level_below_music_db": -9
+      },
+      {
+        "start_seconds": 7.0,
+        "friend": "cat",
+        "file": "../../sounds/animals/cat.mp3",
+        "duration_seconds": 1.25,
+        "level_below_music_db": -9
+      },
+      {
+        "start_seconds": 10.51,
+        "friend": "rooster",
+        "file": "../../sounds/animals/rooster.mp3",
+        "duration_seconds": 1.5,
+        "level_below_music_db": -9
+      },
+      {
+        "start_seconds": 14.0,
+        "friend": "dog",
+        "file": "../../sounds/animals/dog.mp3",
+        "duration_seconds": 0.912,
+        "level_below_music_db": -9
+      },
+      {
+        "start_seconds": 19.47,
+        "friend": "donkey",
+        "file": "../../sounds/animals/donkey.mp3",
+        "duration_seconds": 1.14,
+        "level_below_music_db": -9
+      },
+      {
+        "start_seconds": 23.43,
+        "friend": "cat",
+        "file": "../../sounds/animals/cat.mp3",
+        "duration_seconds": 1.25,
+        "level_below_music_db": -9
+      }
+    ]
+  }
+}

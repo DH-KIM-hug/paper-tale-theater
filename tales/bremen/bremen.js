@@ -35,7 +35,6 @@
     cut_crash: 'v3w/br_cut_crash5.webp', cut_monster: 'v3w/br_cut_monster.webp', cut_ghost: 'v3w/br_cut_ghost3.webp',
     // 빛 상자 탑 장면(7장)에서만 쓰는 실루엣 동물(VISUAL_PLAN §4-4): 기존 그림과 같은 자세·방향, 눈 구멍 하나
     donkey_sil: 'v3w/br_lb_sil_donkey.webp', dog_sil: 'v3w/br_lb_sil_dog.webp', cat_sil: 'v3w/br_lb_sil_cat.webp', rooster_sil: 'v3w/br_lb_sil_rooster.webp',
-    robber_sil_1: 'v3w/br_lb_robber_1.webp', robber_sil_2: 'v3w/br_lb_robber_2.webp', robber_sil_3: 'v3w/br_lb_robber_3.webp',
     drum: 'v3w/br_drum.webp', horn: 'v3w/br_horn.webp', fiddle: 'v3w/br_fiddle.webp', bell: 'v3w/br_bell.webp', // 우리 집 악기 (바이올린 옆에 따로 그려진 리본 조각은 지움)
   };
   const artOK = {}, bgOK = {};
@@ -53,7 +52,7 @@
     
     rooster: [104, 0.427, 0.937], rooster_sing: [96, 0.462, 0.9875], 
     // 실루엣(빛 상자 탑): 당나귀 200, 강아지·고양이·닭 100. 발끝은 발 띠 가운데
-    donkey_sil: [200, 0.571, 0.9667], dog_sil: [100, 0.472, 0.985], cat_sil: [100, 0.534, 1.01], rooster_sil: [100, 0.48, 0.99],
+    donkey_sil: [200, 0.571, 0.9667], dog_sil: [100 * 600 / 599, 0.472, 0.985], cat_sil: [100, 0.534, 1.01], rooster_sil: [100, 0.48, 0.99],
     miller: [183, 0.432, 0.4764], owl: [80, 0.495, 0.835], 
     robber_red: [170, 0.535, 0.7725], robber_green: [157, 0.31, 0.9511], robber_brown: [162, 0.52, 0.7318],
   };
@@ -272,7 +271,7 @@
   /* 탑 쌓기: 등 위(다음 친구가 설 자리)의 발 기준 위치 */
   const BACK0 = { donkey: [8, -112], dog: [4, -58], cat: [6, -46], rooster: [0, -60] };
   const BACK_ART = { donkey: [20, -100], dog: [12, -52], cat: [10, -49], rooster: [0, -60] }; // 그림 등 윗선(그림에서 잰 높이)
-  const BACK_SIL = { ...BACK_ART, dog: [26, -52] }; // 실루엣 탑: 고양이를 강아지 엉덩이 쪽으로 조금 더 → 노래하는 강아지 머리가 고양이에 가리지 않는다(실루엣은 겹치면 한 덩이가 되므로)
+  const BACK_SIL = { ...BACK_ART, dog: [26, -55], cat: [10, -54] }; // 실루엣 탑: 고양이를 강아지 엉덩이 쪽으로 조금 더 → 노래하는 강아지 머리가 고양이에 가리지 않는다(실루엣은 겹치면 한 덩이가 되므로)
   const BACK = new Proxy({}, { get: (o, k) => (artUrl(LOOKS[k] ? LOOKS[k].home : '') ? BACK_ART : BACK0)[k] });
   /* 머리(눈) 위치 — 어둠 속 눈 반짝이 */
   const EYE0 = { donkey: [-82, -152], dog: [-52, -64], cat: [-25, -54], rooster: [-22, -71] };
@@ -433,12 +432,23 @@
   }
   /* 그림 벽의 높은 창(2026-10-21 새 그림에서 다시 쟀다): 유리 x 657..818, 위는 화면 밖에서 시작해 아래 y 180, 창턱 아래 y 222, 가운데 x≈737 */
   const LOW_WIN = { x0: 657, x1: 818, y0: -24, y1: 180 };
+  // 기존 도둑 그림의 머리·어깨만 창턱 위에 보인다. 검게 만드는 필터 하나만 사용한다.
+  function windowRobbers(T, parent, xs, y) {
+    ['robber_green', 'robber_red', 'robber_brown'].forEach((key, i) => {
+      const id = 'br-shoulders-' + (++clipN), top = y - (i % 2) * 8;
+      const cp = T.el('clipPath', { id }, parent);
+      T.el('rect', { x: xs[i] - 28, y: top, width: 56, height: 64 }, cp);
+      const g = T.el('g', { 'clip-path': `url(#${id})` }, parent);
+      T.el('image', { href: artUrl(key), x: xs[i] - 28, y: top, width: 56, height: 112, preserveAspectRatio: 'xMidYMin slice', style: 'filter:brightness(0)' }, g);
+    });
+  }
   function houseLowBG(T, dx = 0, dy = 0) {
     const { paper, el } = T, b = T.bg;
     if (bgImage(T, 'house_low')) { // 밝은 창 광원 한 장을 동물 실루엣 뒤에 깐다(필터 없음)
       const win = bgClip(T, 'house_low', b, [['rect', { x: LOW_WIN.x0, y: LOW_WIN.y0, width: LOW_WIN.x1 - LOW_WIN.x0, height: LOW_WIN.y1 - LOW_WIN.y0 }]]);
       const sh = win.lastChild;
-      [690, 737, 784].forEach((x, i) => el('image', { href: artUrl(`robber_sil_${i + 1}`), x: x - 30, y: 116 - (i % 2) * 8, width: 60, height: 72, preserveAspectRatio: 'xMidYMax meet' }, sh));
+      const silhouettes = el('g', {}, sh);
+      windowRobbers(T, silhouettes, [690, 737, 784], 116);
       return win;
     }
     sky(T, C.indigo);
@@ -453,7 +463,7 @@
     const robberClip = el('clipPath', { id: 'br-low-fallback-' + (++clipN) }, win);
     el('rect', { x: 610, y: 110, width: 180, height: 136 }, robberClip);
     const robbers = el('g', { 'clip-path': `url(#${robberClip.id})` }, win);
-    [650, 700, 750].forEach((x, i) => el('image', { href: artUrl(`robber_sil_${i + 1}`), x: x - 30, y: 182 - (i % 2) * 8, width: 60, height: 72, preserveAspectRatio: 'xMidYMax meet' }, robbers));
+    windowRobbers(T, robbers, [650, 700, 750], 182);
     paper(b, [['rect', { x: -300, y: 500, width: 1600, height: 300, fill: '#3E5A3A' }]]);
     return win;
   }
@@ -615,11 +625,52 @@
     const put = (a, x, y, s = 1, dir = 'left') => {
       T.world.appendChild(a.pos); a.face(dir); a.setScale(s); a.place(x, y); a.pose(POSE.stand);
       a.body.style.transform = ''; a.lean.style.filter = ''; a.pos.style.opacity = ''; a.home = { x, y };
+      a.pos.getAnimations().forEach(x => { if (x.playState === 'finished') x.cancel(); }); // 앞 장면의 끝난 투명 채움(fill forwards)이 새 자리에 남지 않게
       if (a.parts && a.parts.art) { a.parts.sil = false; a.parts.look('home'); }
     };
     /* 빛 상자 탑 장면: 실루엣 동물로 바꾼다(그림이 없으면 그대로). 등 위 자리도 실루엣 그림에서 잰 BACK_SIL */
     const silOn = a => { if (a.parts && a.parts.art && artUrl(LOOKS[a.key].sil)) { a.parts.sil = true; a.parts.look('sil'); } };
     const silBack = k => (cast[k].parts.sil ? BACK_SIL : BACK)[k];
+    // 한 장의 창빛 종이: 알파 마스크만 사용해 실루엣 바깥으로 약 3px씩 보인다.
+    function towerPaper(animals) {
+      let sheet = T.bg.querySelector('[data-tower-light]');
+      if (!sheet) sheet = el('g', { 'data-tower-light': '', style: 'pointer-events:none' }, T.bg);
+      sheet.replaceChildren();
+      const id = 'br-tower-paper-' + (++clipN);
+      const mask = el('mask', { id, maskUnits: 'userSpaceOnUse', x: -400, y: -400, width: 1800, height: 1400, style: 'mask-type:alpha' }, sheet);
+      animals.forEach(a => {
+        if (!a.parts.sil) return;
+        const key = LOOKS[a.key].sil, [h, fx, aspect] = SPR[key], w = h * aspect;
+        const g = el('g', { transform: `translate(${a.x},${a.y}) scale(${a.scale})` }, mask);
+        el('image', { href: artUrl(key), x: -w * fx - 3, y: -h - 3, width: w + 6, height: h + 6, preserveAspectRatio: 'none' }, g);
+      });
+      el('rect', { x: -400, y: -400, width: 1800, height: 1400, fill: '#FDECB7', mask: `url(#${id})` }, sheet);
+    }
+    // 닭의 발은 지면에서 출발해 고양이 등 바로 옆을 거쳐 등 위 슬롯에 닿는다.
+    async function climbToCat(a, x, y, scale) {
+      const [bx, by] = silBack('cat'), cat = cast.cat;
+      const back = { x: cat.x + bx * cat.scale, y: cat.y + by * cat.scale };
+      const onCat = Math.abs(x - back.x) < 1 && Math.abs(y - back.y) < 1;
+      if (a.key !== 'rooster' || !onCat) return false;
+      a.place(a.home.x, a.home.y); // 앞 장면의 나무 위 좌표 대신 대기 중인 지면 좌표에서 시작
+      a.setScale(scale);
+      // 탑 꼬리 쪽(오른쪽)으로 한 칸씩 깡충: 지면 → 당나귀 엉덩이 → 강아지 엉덩이 → 고양이 등. 친구 등을 밟고 올라가는 게 보이게.
+      const d = cast.donkey, g = cast.dog, [dbx, dby] = silBack('donkey'), [gbx, gby] = silBack('dog');
+      const steps = [
+        { x: d.x + (dbx + 62) * d.scale, y: d.y + (dby + 10) * d.scale },
+        { x: g.x + (gbx + 44) * g.scale, y: g.y + (gby + 8) * g.scale },
+        back,
+      ];
+      a.face(steps[0].x > a.x ? 'right' : 'left');
+      const gx = steps[0].x + 40 * scale; await a.move(gx, a.y, Math.min(1100, Math.max(380, Math.abs(gx - a.x) * 1.2)), 'ease-in-out'); // 탑 뒤쪽 땅으로 걸어가서(먼 자리면 천천히)
+      for (const st of steps) {
+        a.face(st.x > a.x ? 'right' : 'left');
+        await a.move((a.x + st.x) / 2, Math.min(a.y, st.y) - 26 * scale, 170, 'ease-out');
+        await a.move(st.x, st.y, 150, 'ease-in');
+        S.thud();
+      }
+      return true;
+    }
     /* 창빛 숨 쉬기(올라탈 때) · 다 쌓이면 한 번 더 밝아지며 짧은 노래 + 창 안 도둑 그림자 폴짝 놀람 (놀라게만) */
     function winBreath(win, peak = .28, ms = 700) {
       if (!win || !win.lastChild) return;
@@ -696,6 +747,130 @@
       bs.forEach(x => x.b.remove());
     }
 
+    const JACQUES = [
+      ['donkey', 'C4:1 D4:1 E4:1 C4:1', '히 힝 히 힝'],
+      ['dog', 'E4:1 F4:1 G4:2', '멍 멍 멍'],
+      ['cat', 'G4:.5 A4:.5 G4:.5 F4:.5 E4:1 C4:1', '야 옹 야 옹 야 옹'],
+      ['rooster', 'C4:1 G3:1 C4:2', '꼬 끼 오'],
+    ];
+    const SING = {
+      donkey: (f, d) => T.timbre('horn')(f * .5, d * .9, 0, .16), // 낮고 묵직하게
+      dog: (f, d) => T.timbre('xylo')(f, d * .85, 0, .23), // 밝은 타격음
+      cat: (f, d) => T.timbre('box')(f, Math.min(.12, d * .3), 0, .22), // 짧게 끊기
+      rooster: (f, d) => T.timbre('bell')(f * 2, d * .65, 0, .15), // 높고 맑게
+    };
+    const SONG = [], LINE = [];
+    JACQUES.forEach(([k, str, ly], li) => { for (let r = 0; r < 2; r++) T.parseSong(str).forEach((n, ni) => { SONG.push(n); LINE.push({ k, li, ni, ly }); }); });
+    const SONG1 = [], LINE1 = []; // 한 번씩만 (톡 뒤 합창용)
+    JACQUES.forEach(([k, str, ly], li) => T.parseSong(str).forEach((n, ni) => { SONG1.push(n); LINE1.push({ k, li, ni, ly }); }));
+    /* 새로 지은 C장조 4/4 행진곡: 2마디씩 여섯 구절, 48박 × .46초 = 22.08초.
+       audio.js에 piano/marimba 전용 음색은 없다. 기존 T.tone의 정수 배음과 짧은 감쇠로 타건음을 만든다. */
+    const ODE = T.parseSong([
+      'C4:1 E4:1 G4:1 E4:1 D4:1 G4:1 C5:2',
+      'E4:1 G4:1 A4:1 G4:1 F4:1 E4:1 D4:2',
+      'C4:1 C4:.5 D4:.5 E4:1 G4:1 A4:1 G4:1 E4:2',
+      'F4:1 A4:1 G4:1 E4:1 D4:1 D4:1 G4:2',
+      'C5:1 G4:1 E4:1 G4:1 A4:1 F4:1 D4:2',
+      'G4:1 E4:.5 F4:.5 G4:1 B4:1 C5:1 G4:1 C4:2',
+    ].join(' '));
+    const BARS = [4, 3, 4, 3, 5, 3, 4, 3, 4, 3, 5, 3];
+    const ODE_ORDER = ['cat', 'dog', 'rooster', 'donkey'];
+    const WHO = []; BARS.forEach((c, bi) => { for (let i = 0; i < c; i++) WHO.push(ODE_ORDER[Math.floor(bi / 2) % 4]); });
+    if (WHO.length !== 44 || WHO.length !== ODE.length) throw new Error('March: note/performer count mismatch');
+    const ODE_BEAT = .46, ODE_ROOTS = ['C3', 'G2', 'C3', 'G2', 'C3', 'C3', 'F2', 'G2', 'C3', 'F2', 'G2', 'C3'];
+    const piano = (f, d, when, vol) => {
+      T.tone(f, Math.min(d * .85, .48), { type: 'sine', vol, when });
+      T.tone(f * 2, .11, { type: 'sine', vol: vol * .38, when });
+      T.tone(f * 3, .055, { type: 'sine', vol: vol * .16, when });
+    };
+    const marimba = (f, d, when, vol) => {
+      T.tone(f, Math.min(d * .65, .28), { type: 'sine', vol, when });
+      T.tone(f * 4, .045, { type: 'sine', vol: vol * .24, when });
+    };
+    const ODE_VOICE = {
+      donkey: (f, d, w, v) => piano(f * .5, d, w, v),
+      dog: (f, d, w, v) => piano(f, d, w, v),
+      cat: (f, d, w, v) => marimba(f, d, w, v),
+      rooster: (f, d, w, v) => marimba(f * 2, d, w, v * .8),
+    };
+    // 첫 콜백에서 모든 음을 오디오 시계에 예약한다. 화면 콜백의 대기 오차가 박자에 쌓이지 않는다.
+    const odeVoice = (n, d, i) => {
+      if (i !== 0) return;
+      let start = 0, elapsed = 0;
+      BARS.forEach((count, bi) => {
+        let beat = 0;
+        ODE.slice(start, start + count).forEach(([pitch, length], ni) => {
+          ODE_VOICE[WHO[start + ni]](T.hz(pitch), length * ODE_BEAT, elapsed * ODE_BEAT, beat === 0 ? .23 : .17);
+          beat += length; elapsed += length;
+        });
+        // 1·3박 저음, 2·4박 짧은 화음으로 행진의 강박을 분명하게 한다.
+        const barTime = (elapsed - 4) * ODE_BEAT, root = T.hz(ODE_ROOTS[bi]);
+        for (let b = 0; b < 4; b++) {
+          const when = barTime + b * ODE_BEAT;
+          if (b % 2 === 0) piano(root, .3, when, b === 0 ? .13 : .09);
+          else { marimba(root * 2, .15, when, .06); marimba(root * 3, .15, when, .04); }
+        }
+        start += count;
+      });
+    };
+    const odeHop = i => { const a = cast[WHO[i]]; a.hop(18, 280); note(T, a.x + 20, a.y - 100 * a.scale, [C.bean, C.pine, C.persimmon][i % 3]); };
+    // Load metadata only; sound starts at the existing post-gesture story cues.
+    const musicRoot = new URL('../../audio/bremen/', document.baseURI);
+    // 마지막 연주: 픽사베이 'Vienna March'(juliush) 22초 · 약 100BPM · 4박마다 구절(timing_vienna.json). 못 불러오면 합성 행진곡(marchFallback).
+    const timingReady = fetch(new URL('timing_vienna.json', musicRoot))
+      .then(r => { if (!r.ok) throw new Error('music timing'); return r.json(); }).catch(() => null);
+    const burstTimingReady = fetch(new URL('bigband_burst_cues.json', musicRoot))
+      .then(r => { if (!r.ok) throw new Error('burst timing'); return r.json(); }).catch(() => null);
+    const musicHop = phrase => {
+      const a = cast[phrase.friend];
+      a.hop(18, 280);
+      if (a.parts.art) a.parts.flash('sing');
+      note(T, a.x + 20, a.y - 100 * a.scale, C.gold);
+    };
+    // maxMs: 읽어 주기는 동사 하나를 8초까지만 기다리므로, 그 안에서 소리를 줄여 끝낸다(다음 낭독과 음악이 겹치지 않게)
+    async function recordedMusic(name, fallback, onPhrase = musicHop, maxMs = 0) {
+      let media, frame, watchdog, startTimer, capTimer, fadeTimer, disposed = false;
+      try {
+        const timing = await Promise.race([name === 'bigband_burst' ? burstTimingReady : timingReady, new Promise(resolve => setTimeout(() => resolve(null), 4000))]);
+        const track = timing && timing[name];
+        if (!track || !Array.isArray(track.phrases)) throw new Error('missing music timing');
+        media = new Audio(new URL(track.file, musicRoot).href);
+        media.preload = 'auto';
+        await new Promise((resolve, reject) => {
+          let next = 0, lastTime = -1, lastProgress = performance.now();
+          const fail = () => reject(new Error('music playback failed'));
+          media.onerror = fail;
+          media.onended = resolve;
+          const tick = () => {
+            if (media.currentTime !== lastTime) { lastTime = media.currentTime; lastProgress = performance.now(); }
+            while (next < track.phrases.length && track.phrases[next].start_seconds <= media.currentTime) onPhrase(track.phrases[next++]);
+            frame = requestAnimationFrame(tick);
+          };
+          // A stalled or rejected load must also release the story to synthesis.
+          watchdog = setInterval(() => { if (performance.now() - lastProgress > 10000) fail(); }, 500);
+          startTimer = setTimeout(fail, 8000);
+          media.play().then(() => {
+            if (disposed) return; clearTimeout(startTimer); tick();
+            if (maxMs) capTimer = setTimeout(() => { // 끝 0.6초 동안 소리를 줄이고 마친다
+              const v0 = media.volume; let k = 0;
+              fadeTimer = setInterval(() => { k++; media.volume = Math.max(0, v0 * (1 - k / 12)); if (k >= 12) { clearInterval(fadeTimer); resolve(); } }, 50);
+            }, Math.max(0, maxMs - 600));
+          }, fail);
+        });
+        return;
+      } catch (e) {
+        // Stop partial playback before restarting the original synthesized score.
+        if (media) media.pause();
+      } finally {
+        disposed = true;
+        cancelAnimationFrame(frame); clearInterval(watchdog); clearTimeout(startTimer); clearTimeout(capTimer); clearInterval(fadeTimer);
+        if (media) { media.pause(); media.onended = media.onerror = null; media.removeAttribute('src'); media.load(); }
+      }
+      await fallback();
+    }
+    const marchFallback = () => T.playMelody(ODE, { beat: ODE_BEAT, voice: odeVoice, onNote: odeHop });
+    const roundFallback = () => T.playMelody(SONG, { beat: .42, voice: (n, d, i) => SING[LINE[i].k](T.hz(n), d), onNote: i => { if (LINE[i].ni === 0) musicHop({ friend: LINE[i].k }); } });
+
     /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
        장면 자리·크기·카메라는 놀이판 그 장면 그대로(FIX). 대본 좌표는 놀이판 그림과 맞지 않아 쓰지 않는다. */
     const READ_ACTS = (() => {
@@ -719,7 +894,7 @@
       const WTS = bgArt('house_wide') ? .36 : .72;
       const WT = bgArt('house_wide') ? wideTower() : { x: 615, y: 488, s: WTS };
       const SPOTS = L([['cat', 180, 478, 1.3], ['dog', 470, 478, 1.25], ['donkey', 690, 486, .95], ['rooster', 860, 120, 1.2]], [['cat', 320, 478, 1.1], ['dog', 440, 478, 1.05], ['donkey', 590, 486, .8], ['rooster', 665, 120, 1.1]]);
-      const STOPS = L([300, 380, 590, 800, 1150], [385, 520, 680, 700, 1150]);
+      const STOPS = L([300, 380, 590, 800, 1150], [485, 540, 720, 700, 1150]); // 세로: 도둑이 눈빛(머리) 오른쪽에 서서 눈을 가리지 않게(2026-10-27 화면에서 잼)
       const SPOT5 = L({ donkey: [200, 1.05], dog: [420, 1.2], cat: [590, 1.3], rooster: [770, 1.3] }, { donkey: [390, .75], dog: [492, .85], cat: [584, .98], rooster: [648, .9] });
       const HOME = bgArt('morning')
         ? L({ donkey: [150, 476, .95], dog: [470, 476, 1.1], cat: [860, 462, 1.05], rooster: [520, 172, 1] }, { donkey: [370, 476, .8], dog: [490, 476, 1], cat: [640, 462, .95], rooster: [500, 172, 1] })
@@ -884,6 +1059,11 @@
         },
         band(op, a1) {
           if (op === 'sing') {
+            if (!rI() && (key === 'house_wide' || key === 'morning')) {
+              return recordedMusic(key === 'morning' ? 'finale_march' : 'bigband_burst', key === 'morning' ? marchFallback : roundFallback, musicHop, 6500)
+                .then(() => { if (key === 'morning') T.confetti(); });
+            }
+            if (rI()) return;
             const big = a1 === 'big';
             return (async () => {
               for (const [i, a] of band.entries()) {
@@ -916,10 +1096,12 @@
           return (async () => {
             T.world.appendChild(g.pos);
             g.face(top.x > g.x ? 'right' : 'left'); g.setScale(TS);
-            await g.move((g.x + top.x) / 2, Math.min(g.y, top.y) - 70, 320, 'ease-out');
-            await g.move(top.x, top.y, 260, 'ease-in');
+            if (!await climbToCat(g, top.x, top.y, TS)) {
+              await g.move((g.x + top.x) / 2, Math.min(g.y, top.y) - 70, 320, 'ease-out');
+              await g.move(top.x, top.y, 260, 'ease-in');
+            }
             g.face('left'); S.thud();
-            stacked.push(g); g.cry(.7);
+            stacked.push(g); towerPaper(stacked); g.cry(.7);
             const [bx, by] = silBack(who);
             top = { x: top.x + bx * TS, y: top.y + by * TS };
             T.tone(392 + stacked.length * 98, .25, { type: 'triangle', vol: .16 });
@@ -971,7 +1153,7 @@
           if (k === 'ghost') return T.cutImage([{ src: artUrl('cut_ghost'), hold: 3000 }], { hold: 3000 });
         },
         fx(n) {
-          if (n === 'crash') { S.boom(); if (hw) { band.slice().reverse().forEach((a, i) => setTimeout(() => a.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }), i * 80)); try { hw.win.firstChild.nextSibling.setAttribute('fill', '#FFE39A'); } catch (e) { /* 무시 */ } } }
+          if (n === 'crash') { S.boom(); if (hw) { band.slice().reverse().forEach((a, i) => a.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, delay: i * 80, fill: 'forwards' })); try { hw.win.firstChild.nextSibling.setAttribute('fill', '#FFE39A'); } catch (e) { /* 무시 */ } } }
           else if (n === 'owl') { S.CRY.owl(); T.pop(OWX + (WALK ? 70 : 0), WALK ? 30 : 60, '부엉~', C.cream); }
           else if (n === 'jingle') S.jingle();
           else if (n === 'giggle') S.giggle();
@@ -1228,8 +1410,10 @@
     async function climb(a, x, y, s = TS) {
       T.world.appendChild(a.pos);
       a.face(x > a.x ? 'right' : 'left'); a.setScale(s); // 가는 쪽을 보며 올라간다
-      await a.move((a.x + x) / 2, Math.min(a.y, y) - 70, 320, 'ease-out');
-      await a.move(x, y, 260, 'ease-in');
+      if (!await climbToCat(a, x, y, s)) {
+        await a.move((a.x + x) / 2, Math.min(a.y, y) - 70, 320, 'ease-out');
+        await a.move(x, y, 260, 'ease-in');
+      }
       a.face('left');
       S.thud();
     }
@@ -1270,6 +1454,7 @@
       good.pos.style.filter = '';
       await climb(good, top.x, top.y);
       stacked.push(good);
+      towerPaper(stacked);
       good.cry(.7);
       const [bx, by] = silBack(good.key);
       top = { x: top.x + bx * TS, y: top.y + by * TS };
@@ -1325,24 +1510,13 @@
     });
     const hitT = tg;
     /* 〈프레르 자크〉(프랑스 전래 동요): 네 친구가 한 줄씩 돌아가며 노래한다 */
-    const JACQUES = [
-      ['donkey', 'C4:1 D4:1 E4:1 C4:1', '히 힝 히 힝'],
-      ['dog', 'E4:1 F4:1 G4:2', '멍 멍 멍'],
-      ['cat', 'G4:.5 A4:.5 G4:.5 F4:.5 E4:1 C4:1', '야 옹 야 옹 야 옹'],
-      ['rooster', 'C4:1 G3:1 C4:2', '꼬 끼 오'],
-    ];
-    const SING = { donkey: 'horn', dog: 'xylo', cat: 'box', rooster: 'bell' };
-    const SONG = [], LINE = [];
-    JACQUES.forEach(([k, str, ly], li) => { for (let r = 0; r < 2; r++) T.parseSong(str).forEach((n, ni) => { SONG.push(n); LINE.push({ k, li, ni, ly }); }); });
-    const SONG1 = [], LINE1 = []; // 한 번씩만 (톡 뒤 합창용)
-    JACQUES.forEach(([k, str, ly], li) => T.parseSong(str).forEach((n, ni) => { SONG1.push(n); LINE1.push({ k, li, ni, ly }); }));
     let lyr = null;
     const LYR = hw.art ? { y: 232, size: Math.round(Math.min(28, visW() / 1.9 / 7.5)) } : { y: 80 }; // 카메라를 당긴 장면은 가사도 보이는 칸 안(위쪽)에 작게
-    const singVoice = (n, d, i) => T.timbre(SING[LINE[i].k])(T.hz(n), d, 0, LINE[i].k === 'donkey' ? .12 : .2);
+    const singVoice = (n, d, i) => SING[LINE[i].k](T.hz(n), d);
     /* 진짜 동물 소리(sounds/animals/*.mp3)를 음높이만 바꿔 한 음씩: 아직 못 불러왔으면 악기 소리로 */
     const animalVoice = (n, d, i) => {
       const k = LINE1[i].k, rate = Math.min(1.7, Math.max(.6, T.hz(n) / T.hz('E4')));
-      if (!AudioFX.animalNote(k, rate, k === 'donkey' ? .55 : .7, 0, Math.min(.9, d * 1.5))) T.timbre(SING[k])(T.hz(n), d, 0, .2);
+      if (!AudioFX.animalNote(k, rate, k === 'donkey' ? .55 : .7, 0, Math.min(.9, d * 1.5))) SING[k](T.hz(n), d);
     };
     const singNote = (i, L_ = LINE) => {
       const { k, ni, ly } = L_[i], a = cast[k];
@@ -1352,7 +1526,15 @@
       note(T, a.x + 20, a.y - 110 * a.scale, [C.bean, C.gold, C.cream][i % 3]);
     };
     await say('도둑을 놀라게 할 노래예요. 먼저 들어 봐요!');
-    await T.playMelody(SONG, { beat: .42, voice: singVoice, onNote: (i, n, d) => singNote(i) });
+    const roundPhrase = phrase => {
+      musicHop(phrase);
+      lyr && lyr.clear();
+      if (!phrase.lyrics) return;
+      const translated = T.tr(phrase.lyrics);
+      lyr = T.lyric(translated.includes('|') ? translated.split('|') : phrase.lyrics, LYR);
+      lyr.set(0);
+    };
+    await recordedMusic('bigband_burst', () => T.playMelody(SONG, { beat: .42, voice: singVoice, onNote: i => singNote(i) }), roundPhrase);
     lyr && lyr.clear(); lyr = null;
     await sleep(400);
     /* 톡 한 번(2026-10-21): 탑을 한 번 누르면 네 친구가 차례로 자기 소리를 내고(당나귀 히힝 · 강아지 멍멍 · 고양이 야옹 · 닭 꼬끼오),
@@ -1366,7 +1548,7 @@
       note(T, a.x + 14, a.y - 100 * a.scale, [C.bean, C.gold, C.cream][band.indexOf(a) % 3]);
       await sleep(620);
     }
-    await T.playMelody(SONG1, { beat: .4, voice: animalVoice, onNote: (i, n, d) => singNote(i, LINE1) }); // 진짜 동물 소리로 한 소절씩
+    await recordedMusic('bigband_burst', () => T.playMelody(SONG1, { beat: .4, voice: animalVoice, onNote: i => singNote(i, LINE1) }), roundPhrase);
     lyr && lyr.clear(); lyr = null;
     for (let i = 1; i <= 4; i++) { // 마지막 모두 같이, 점점 크게
       const v = Math.min(1, .4 + i * .18);
@@ -1386,9 +1568,8 @@
       T.el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 60, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('와장창!') }, svg);
     }, { hold: 2000 }));
     // 탑째로 창문 안으로 쏙
-    band.slice().reverse().forEach((a, i) => setTimeout(() => {
-      a.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
-    }, i * 80));
+    // setTimeout 대신 delay: 아래 cancel() 이 늦게 시작한 애니메이션까지 확실히 지운다(빨리 넘기면 투명 채움이 다음 장면에 남던 문제)
+    band.slice().reverse().forEach((a, i) => a.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, delay: i * 80, fill: 'forwards' }));
     hw.win.firstChild.nextSibling.setAttribute('fill', '#FFE39A');
     await sleep(700);
     band.forEach(a => { a.pos.getAnimations().forEach(x => x.cancel()); a.pos.style.opacity = '0'; });
@@ -1422,7 +1603,7 @@
     /* ---------- 10. 도둑의 정찰 (캄캄한 집 안, 눈만 보임) ---------- */
     const SPOTS = L([['cat', 180, 478, 1.3], ['dog', 470, 478, 1.25], ['donkey', 690, 486, .95], ['rooster', 860, 120, 1.2]],
       [['cat', 320, 478, 1.1], ['dog', 440, 478, 1.05], ['donkey', 590, 486, .8], ['rooster', 665, 120, 1.1]]);
-    const STOPS = L([300, 380, 590, 800, 1150], [385, 520, 680, 700, 1150]);
+    const STOPS = L([300, 380, 590, 800, 1150], [485, 540, 720, 700, 1150]); // 세로: 도둑이 눈빛(머리) 오른쪽에 서서 눈을 가리지 않게(2026-10-27 화면에서 잼)
     const thief = rb[0];
     await T.sceneCard('캄캄한 밤', () => {
       T.clear(); darkRoomBG(T, Object.fromEntries(SPOTS.map(([k, x]) => [k, x])));
@@ -1512,33 +1693,8 @@
     await say('아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.');
     await say('"브레멘은 못 갔지만, 여기가 우리 집이야!"');
     T.finale();
-    /* 베토벤 〈환희의 송가〉 주제(1824, 공개 곡): 소절마다 한 친구가 자기 악기로 연주한다 */
-    const ODE = T.parseSong('E4:1 E4:1 F4:1 G4:1 G4:1 F4:1 E4:1 D4:1 C4:1 C4:1 D4:1 E4:1 E4:1.5 D4:.5 D4:2 E4:1 E4:1 F4:1 G4:1 G4:1 F4:1 E4:1 D4:1 C4:1 C4:1 D4:1 E4:1 D4:1.5 C4:.5 C4:2');
-    const BARS = [4, 4, 4, 3, 4, 4, 4, 3], ODE_ORDER = ['cat', 'dog', 'rooster', 'donkey'];
-    const WHO = []; BARS.forEach((c, bi) => { for (let i = 0; i < c; i++) WHO.push(ODE_ORDER[bi % 4]); });
-    if (WHO.length !== 30 || WHO.length !== ODE.length) throw new Error('Ode to Joy: note/performer count mismatch');
-    const ODE_BEAT = .42, ODE_ROOTS = ['C2', 'G2', 'F2', 'G2', 'C2', 'G2', 'F2', 'C2'];
-    const ODE_BASS = new Map();
-    let odeStart = 0;
-    BARS.forEach((count, bi) => {
-      const beats = ODE.slice(odeStart, odeStart + count).reduce((sum, [, length]) => sum + length, 0);
-      ODE_BASS.set(odeStart, [ODE_ROOTS[bi], beats * ODE_BEAT]);
-      odeStart += count;
-    });
-    const ODE_VOICE = {
-      donkey: (f, d) => T.tone(f * .5, d * 1.1, { type: 'triangle', vol: .23 }),
-      dog: (f, d) => T.timbre('horn')(f, d, 0, .16),
-      cat: (f, d) => T.timbre('xylo')(f, Math.min(d * .55, .18), 0, .2),
-      rooster: (f, d) => T.timbre('bell')(f * 2, d, 0, .17),
-    };
-    const odeVoice = (n, d, i) => {
-      const bass = ODE_BASS.get(i);
-      if (bass) T.tone(T.hz(bass[0]), bass[1], { type: 'sine', vol: .045 });
-      ODE_VOICE[WHO[i]](T.hz(n), d);
-    };
-    const odeHop = i => { const a = cast[WHO[i]]; a.hop(18, 280); note(T, a.x + 20, a.y - 100 * a.scale, [C.bean, C.pine, C.persimmon][i % 3]); };
     await say('기쁨의 노래를 연주해요!'); // 따라 누르기 없이 들려주기만 (2026-10-19)
-    await T.playMelody(ODE, { beat: ODE_BEAT, voice: odeVoice, onNote: odeHop });
+    await recordedMusic('finale_march', marchFallback);
     await sleep(500);
     await sleep(400);
     band.forEach((a, i) => setTimeout(() => { a.cry(.6); a.hop(24, 380); }, i * 200));
