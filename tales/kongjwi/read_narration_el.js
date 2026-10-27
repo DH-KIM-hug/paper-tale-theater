@@ -9,6 +9,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "콩쥐는 빗자루를 들고 싹싹, 마당을 쓸었어요.": "audio/el/kongjwi/nar_204e967618.mp3",
  "마당이 깨끗해졌어요. 콩쥐는 방긋 웃었어요.": "audio/el/kongjwi/nar_702f7f0689.mp3",
+ "마당 일을 마치자 새엄마가 콩쥐를 밭으로 데려갔어요.": "audio/el/kongjwi/nar_f91f232b0b.mp3",
  "\"이 밭을 다 갈아 놓아라!\" 새엄마가 말했어요.": [
   "audio/el/kongjwi/step_5bd5b29210.mp3",
   "audio/el/kongjwi/nar_af42e95b79.mp3"
@@ -23,6 +24,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kongjwi/nar_bc9c0ac527.mp3",
   "audio/el/kongjwi/kong_aac5abe9ae.mp3"
  ],
+ "밭일을 마친 콩쥐는 집 우물가로 돌아왔어요.": "audio/el/kongjwi/nar_e5d0a96387.mp3",
  "\"이 독에 물을 가득 채워라!\" 새엄마가 말했어요.": [
   "audio/el/kongjwi/step_b8f9d7f86d.mp3",
   "audio/el/kongjwi/nar_af42e95b79.mp3"
@@ -30,6 +32,7 @@ Object.assign(NARRATION_CLIPS, {
  "콩쥐는 물동이를 들고 우물을 오르락내리락, 물을 콸콸 부었어요.": "audio/el/kongjwi/nar_a686cd4d85.mp3",
  "앗! 독 밑에 구멍이 나서 물이 줄줄 새어 나왔어요.": "audio/el/kongjwi/nar_1c66b0485d.mp3",
  "부어도 부어도 독은 텅텅 비었어요. 콩쥐는 울상이 되었지요.": "audio/el/kongjwi/nar_bc1a774a7f.mp3",
+ "콩쥐가 우물가에서 새는 독을 들여다보고 있었어요.": "audio/el/kongjwi/nar_6f09b8de94.mp3",
  "그때 두꺼비가 폴짝 나타났어요. \"내가 구멍을 막아 줄게!\"": [
   "audio/el/kongjwi/nar_4d023724a9.mp3",
   "audio/el/kongjwi/toad_8939a88e7e.mp3"
@@ -40,6 +43,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kongjwi/nar_a5fe540ac8.mp3",
   "audio/el/kongjwi/kong_a59ca23833.mp3"
  ],
+ "물을 다 채운 콩쥐에게 새엄마가 곡식을 가져왔어요.": "audio/el/kongjwi/nar_e75ff62c8f.mp3",
  "\"겉겨를 벗겨서 쌀을 가져오너라!\" 새엄마가 말했어요.": [
   "audio/el/kongjwi/step_075041453b.mp3",
   "audio/el/kongjwi/nar_af42e95b79.mp3"
@@ -55,6 +59,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kongjwi/kong_4c802d9efc.mp3",
   "audio/el/kongjwi/nar_dd0ac8c912.mp3"
  ],
+ "곡식 일을 마친 콩쥐는 방 안 베틀 앞에 앉았어요.": "audio/el/kongjwi/nar_de2190cd1d.mp3",
  "이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.": "audio/el/kongjwi/nar_f7f67ba0f0.mp3",
  "찰칵찰칵, 베틀 소리가 밤늦도록 이어졌지요.": "audio/el/kongjwi/nar_a91c0c7d76.mp3",
  "그때 하늘에서 선녀가 내려왔어요. \"착한 콩쥐야, 선물을 줄게!\"": [
@@ -66,10 +71,12 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kongjwi/kong_8715ce6a49.mp3"
  ],
  "꽃신은 반짝반짝, 나비가 팔랑팔랑 날아갈 것만 같았어요.": "audio/el/kongjwi/nar_1cb0f91771.mp3",
+ "다음 날, 콩쥐는 선물 받은 옷과 꽃신을 신었어요.": "audio/el/kongjwi/nar_bacfd54a76.mp3",
  "콩쥐는 잔치에 가려고 개울을 건너기로 했어요.": "audio/el/kongjwi/nar_f0aa8d052c.mp3",
  "징검다리를 폴짝, 폴짝, 폴짝! 개울물은 졸졸 흘렀어요.": "audio/el/kongjwi/nar_00525f0d29.mp3",
  "풍덩! 꽃신 한 짝이 개울에 빠졌어요. 꽃신은 둥둥 떠내려갔어요.": "audio/el/kongjwi/nar_f4e2a4ee18.mp3",
  "콩쥐는 아쉬웠지만 한 짝만 신고 잔치로 갔어요.": "audio/el/kongjwi/nar_e316bf5431.mp3",
+ "꽃신 한 짝을 신은 콩쥐가 잔칫집에 도착했어요.": "audio/el/kongjwi/nar_d6056c4b96.mp3",
  "잔치에서는 북과 장구와 꽹과리 소리가 울렸어요.": "audio/el/kongjwi/nar_5f737dd399.mp3",
  "둥둥! 덩덩! 꽹꽹! 어깨가 절로 들썩들썩했지요.": "audio/el/kongjwi/nar_16dbc3ba0c.mp3",
  "모두 신나게 춤을 추었어요. 새엄마와 팥쥐도 곱게 차려입고 왔어요.": "audio/el/kongjwi/nar_bab0eaabc7.mp3",
@@ -82,12 +89,14 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kongjwi/nar_7afeb07d62.mp3",
   "audio/el/kongjwi/won_0413796fac.mp3"
  ],
+ "원님은 관아에서 꽃신 주인을 기다렸어요.": "audio/el/kongjwi/nar_ee40ee4060.mp3",
  "마을 처녀들이 줄줄이 와서 꽃신을 신어 보았지만, 아무에게도 맞지 않았어요.": "audio/el/kongjwi/nar_fb0d6543e6.mp3",
  "\"꼭 맞는 사람이 있을 거요.\" 원님은 콩쥐에게 꽃신을 내밀었어요.": [
   "audio/el/kongjwi/won_7bace75108.mp3",
   "audio/el/kongjwi/nar_ab2fd7b5d1.mp3"
  ],
  "원님이 콩쥐에게 꽃신을 신겨 주었어요. 꼭 맞았어요!": "audio/el/kongjwi/nar_263aa42aa8.mp3",
+ "얼마 뒤, 혼례 마당에 콩쥐와 원님이 나란히 섰어요.": "audio/el/kongjwi/nar_fcf8a9b051.mp3",
  "콩쥐와 원님은 혼례를 올렸어요. 콩쥐는 곱게 차린 신부가 되었어요.": "audio/el/kongjwi/nar_0c604082b4.mp3",
  "\"콩쥐야, 그동안 미안했어.\" 새엄마와 팥쥐가 고개를 숙였어요.": [
   "audio/el/kongjwi/step_31e24cafda.mp3",
