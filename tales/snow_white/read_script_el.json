@@ -60,6 +60,19 @@
      ]
     },
     {
+     "text": "궁 안의 방에서 왕비가 신기한 거울 앞에 섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "궁 안의 방에서 왕비가 신기한 거울 앞에 섰어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.",
      "src": "reuse",
      "segs": [
@@ -145,6 +158,32 @@
      ],
      "before": [
       "queen:hop"
+     ]
+    },
+    {
+     "text": "왕비는 사냥꾼에게 소리쳤어요. 백설공주를 깊은 숲에 데려가서 버리고 오너라!",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "왕비는 사냥꾼에게 소리쳤어요. 백설공주를 깊은 숲에 데려가서 버리고 오너라!",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "사냥꾼은 백설공주의 손을 잡고 숲으로 떠났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "사냥꾼은 백설공주의 손을 잡고 숲으로 떠났어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     }
    ]
@@ -379,6 +418,19 @@
    ],
    "lines": [
     {
+     "text": "집 안으로 들어온 백설공주는 작은 식탁 앞으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "집 안으로 들어온 백설공주는 작은 식탁 앞으로 갔어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "작은 식탁 위에 작은 접시와 작은 컵이 나란히 놓여 있었어요.",
      "src": "reuse",
      "segs": [
@@ -493,6 +545,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "졸린 백설공주는 식탁을 떠나 침대가 있는 방으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "졸린 백설공주는 식탁을 떠나 침대가 있는 방으로 갔어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
     {
      "text": "방에는 작은 침대가 나란히 놓여 있었어요.",
      "src": "reuse",
@@ -648,6 +713,19 @@
      ]
     },
     {
+     "text": "난쟁이들은 집 안을 둘러보며 한 명씩 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "난쟁이들은 집 안을 둘러보며 한 명씩 말했어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "누가 내 의자에 앉았지?",
      "src": "reuse",
      "segs": [
@@ -754,6 +832,7 @@
     },
     {
      "text": "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!",
+     "simultaneous": true,
      "src": "reuse",
      "segs": [
       [
@@ -851,6 +930,19 @@
      ]
     },
     {
+     "text": "침대 곁에는 일곱 난쟁이가 모여 있었어요. 백설공주가 난쟁이들에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "침대 곁에는 일곱 난쟁이가 모여 있었어요. 백설공주가 난쟁이들에게 말했어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "깜짝이야! 저는 백설공주예요. 갈 곳이 없어요. 여기서 지내도 될까요?",
      "src": "reuse",
      "segs": [
@@ -867,6 +959,7 @@
     },
     {
      "text": "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!",
+     "simultaneous": true,
      "src": "reuse",
      "segs": [
       [
@@ -979,7 +1072,21 @@
      ]
     },
     {
+     "text": "어느 날, 집에 돌아온 난쟁이들이 침대가 있는 방에 모였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "어느 날, 집에 돌아온 난쟁이들이 침대가 있는 방에 모였어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!",
+     "simultaneous": true,
      "src": "reuse",
      "segs": [
       [
@@ -1112,6 +1219,19 @@
    ],
    "lines": [
     {
+     "text": "한편, 궁 안의 왕비는 다시 거울 앞에 섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "한편, 궁 안의 왕비는 다시 거울 앞에 섰어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?",
      "src": "reuse",
      "segs": [
@@ -1180,6 +1300,19 @@
      ]
     },
     {
+     "text": "숲속 작은 집 창가에서 할머니가 백설공주를 불렀어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "숲속 작은 집 창가에서 할머니가 백설공주를 불렀어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "사과 사세요~ 아주 맛있는 사과란다.",
      "src": "reuse",
      "segs": [
@@ -1222,6 +1355,19 @@
      ]
     },
     {
+     "text": "할머니가 가져온 사과에는 먹으면 깊이 잠드는 약이 들어 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "할머니가 가져온 사과에는 먹으면 깊이 잠드는 약이 들어 있었어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "사과는 새빨갛고 반질반질, 아주 맛있어 보였어요.",
      "src": "new",
      "segs": [
@@ -1234,6 +1380,19 @@
      ],
      "after": [
       "apple:give"
+     ]
+    },
+    {
+     "text": "백설공주는 창문으로 사과를 받았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "백설공주는 창문으로 사과를 받았어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
      ]
     },
     {
@@ -1254,6 +1413,19 @@
      "after": [
       "snow:fall",
       "granny:leave"
+     ]
+    },
+    {
+     "text": "백설공주가 창문 아래로 쓰러졌어요. 할머니로 변장한 왕비는 떠나 버렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "백설공주가 창문 아래로 쓰러졌어요. 할머니로 변장한 왕비는 떠나 버렸어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
      ]
     }
    ]
@@ -1285,7 +1457,21 @@
      ]
     },
     {
+     "text": "집 안에는 백설공주가 쓰러져 있었어요. 불러도 눈을 뜨지 않았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "집 안에는 백설공주가 쓰러져 있었어요. 불러도 눈을 뜨지 않았어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "백설공주님, 일어나요! 일어나세요…",
+     "simultaneous": true,
      "src": "reuse",
      "segs": [
       [
@@ -1363,6 +1549,19 @@
      ]
     },
     {
+     "text": "숲속 언덕에 유리관이 놓였어요. 난쟁이들은 잠든 백설공주 곁에 머물렀어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "숲속 언덕에 유리관이 놓였어요. 난쟁이들은 잠든 백설공주 곁에 머물렀어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "유리관은 햇빛을 받아 반짝반짝 빛나고, 새들도 포르르 날아와 곁에 앉았어요.",
      "src": "new",
      "segs": [
@@ -1430,6 +1629,19 @@
    ],
    "lines": [
     {
+     "text": "숲속 언덕에서 유리관 뚜껑이 열렸어요. 난쟁이들과 왕자가 곁에서 지켜보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "숲속 언덕에서 유리관 뚜껑이 열렸어요. 난쟁이들과 왕자가 곁에서 지켜보았어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "백설공주의 손가락이 꼼지락꼼지락 움직였어요.",
      "src": "new",
      "segs": [
@@ -1464,6 +1676,19 @@
      ]
     },
     {
+     "text": "백설공주가 눈을 뜨자, 왕자가 다정하게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "백설공주가 눈을 뜨자, 왕자가 다정하게 말했어요.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "이제 괜찮아요. 함께 성으로 가요.",
      "src": "reuse",
      "segs": [
@@ -1480,6 +1705,7 @@
     },
     {
      "text": "만세! 백설공주가 깨어났다!",
+     "simultaneous": true,
      "src": "reuse",
      "segs": [
       [
