@@ -146,3 +146,80 @@ Pixabay 검색 페이지가 자동 접속을 막아 소리 파일을 받지 못�
 | `sfx/ball_bounce.mp3 · sfx/ball_bounce_2.mp3` | 공 통통(0.6초) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
 | `sfx/cushion.mp3` | 푹신한 데 앉기 '푹'(0.3초) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
 | `sfx/pop_out.mp3` | 불쑥 나타나기 쑥-뿅(0.55초) | 직접 만든 소리(ElevenLabs 효과음 생성) | 직접 만든 소리 |
+
+## 효과음 · 자연·생활·사람 소리 (Pixabay, 2026-10-28)
+
+소리 종류별 파일 목록은 `sfx_types.json`. 음량은 효과음 -20 LUFS, 배경 소리 -24 LUFS 근처로 맞췄다(모노·44.1kHz·96kbps).
+
+| 파일 | 원본 | 만든 이 | 라이선스 | 사용 구간 |
+|---|---|---|---|---|
+| `sfx/birds_chirp_1.mp3` | Pixabay "Morning-Birds" — freesound_community-morning-birds-30911.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 3초부터 12초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/birds_chirp_2.mp3` | Pixabay "Morning Birdsong" — creative_spark-morning-birdsong-246402.mp3 | Creative_Spark | Pixabay Content License (출처 표기 불필요) | 원본 4초부터 14초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/crickets_night_1.mp3` | Pixabay "Night atmosphere with crickets" — schorsch1964-night-atmosphere-with-crickets-374652.mp3 | Schorsch1964 | Pixabay Content License (출처 표기 불필요) | 원본 10초부터 14초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/crickets_night_2.mp3` | Pixabay "crickets" — blender_abstract-crickets-395138.mp3 | blender_abstract | Pixabay Content License (출처 표기 불필요) | 원본 0.2초부터 8.8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/waves.mp3` | Pixabay "Gentle Ocean Shore Waves" — dragon-studio-gentle-ocean-shore-waves-499665.mp3 | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | 원본 6초부터 14초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/water_pour_1.mp3` | Pixabay "Pouring Water" — universfield-pouring-water-191999.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 3.5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/water_pour_2.mp3` | Pixabay "Water Pouring" — freesound_community-water-pouring-80316.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 1초부터 8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/rustle_1.mp3` | Pixabay "Bush Rustle" — freesound_community-bush-rustle-36789.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 3.8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/rustle_2.mp3` | Pixabay "Leaves Rustle 03" — tanweraman-leaves-rustle-03-329001.mp3 | TanwerAman | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 1.5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/wing_flap_1.mp3` | Pixabay "bird-wings" — u_editorpropro-bird-wings-598020.mp3 | u_editorpropro | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 2.9초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/wing_flap_2.mp3` | Pixabay "Bird flapping wings" — freesound_community-bird-flapping-wings-6046.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 45초부터 4.7초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/pot_boil.mp3` | Pixabay "Boiling Food" — freesound_community-boiling-food-81761.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0.8초부터 8.5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/stream_1.mp3` | Pixabay "Flowng Stream water" — debwong1951-flowng-stream-water-624850.mp3 | DebWong1951 | Pixabay Content License (출처 표기 불필요) | 원본 1.2초부터 8.2초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/stream_2.mp3` | Pixabay "water stream" — u_g4b6tnje0y-water-stream-512531.mp3 | u_g4b6tnje0y | Pixabay Content License (출처 표기 불필요) | 원본 10초부터 12초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/horse_hooves_1.mp3` | Pixabay "Horse Walking" — universfield-horse-walking-123782.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0.5초부터 6.5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/horse_hooves_2.mp3` | Pixabay "Horse Galloping Nearby (8D)" — dragon-studio-horse-galloping-nearby-8d-515255.mp3 | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | 원본 5초부터 8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/winter_wind_1.mp3` | Pixabay "Blizzard Wind" — dragon-studio-blizzard-wind-463217.mp3 | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | 원본 0.5초부터 12초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/winter_wind_2.mp3` | Pixabay "Blizzard" — tanweraman-blizzard-445020.mp3 | TanwerAman | Pixabay Content License (출처 표기 불필요) | 원본 1초부터 12초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/slurp_1.mp3` | Pixabay "Cartoon Slurp" — freesound_community-cartoon-slurp-37066.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 0.4초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/slurp_2.mp3` | Pixabay "slurp" — freesound_community-slurp-76969.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 0.9초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/slurp_3.mp3` | Pixabay "coffee slurp 7" — freesound_community-coffee-slurp-7-94517.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 1.5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/stomach_growl.mp3` | Pixabay "Stomach growl" — u_jwx1u7kjvu-stomach-growl-456233.mp3 | u_jwx1u7kjvu | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 2.4초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/heartbeat.mp3` | Pixabay "Heartbeat Sound" — dragon-studio-heartbeat-sound-372448.mp3 | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | 원본 2초부터 8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/applause_1.mp3` | Pixabay "Small group applause" — freesound_community-small-group-applause-43613.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0.6초부터 7초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/applause_2.mp3` | Pixabay "Small applause" — freesound_community-small-applause-6695.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 4초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/applause_3.mp3` | Pixabay "Small Crowd Applause 1" — freesound_community-small-crowd-applause-1-106994.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0.6초부터 5.8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/leaves_footsteps.mp3` | Pixabay "Footsteps Walking Boots Leaves Autumn 1" — soundreality-footsteps-walking-boots-leaves-autumn-1-422735.mp3 | SoundReality | Pixabay Content License (출처 표기 불필요) | 원본 3초부터 8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/hammer.mp3` | Pixabay "Hitting nails with Hammer" — freesound_community-hitting-nails-with-hammer-38478.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 3.8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/dig_soil.mp3` | Pixabay "Digging with shovel" — freesound_community-digging-with-shovel-63069.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0.2초부터 6.8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/coins_1.mp3` | Pixabay "Coins Jingle" — yuliana-yurukova-coins-jingle-275765.mp3 | yuliana-yurukova | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 2.9초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/coins_2.mp3` | Pixabay "clink jingle coins" — prmodrai-clink-jingle-coins-399024.mp3 | Prmodrai | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 0.4초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/latch_click.mp3` | Pixabay "Door Lock" — freesound_community-door-lock-82542.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 0.9초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/door_heavy_1.mp3` | Pixabay "Heavy Wooden Creaking SFX" — dragon-studio-heavy-wooden-creaking-sfx-515253.mp3 | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 1.5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/door_heavy_2.mp3` | Pixabay "Heavy Creaking" — dragon-studio-heavy-creaking-515252.mp3 | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 1.6초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/door_heavy_3.mp3` | Pixabay "Heavy Door Unlocking" — dragon-studio-heavy-door-unlocking-515258.mp3 | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 1.7초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/rain_1.mp3` | Pixabay "LIGHT RAIN" — liecio-light-rain-109591.mp3 | Liecio | Pixabay Content License (출처 표기 불필요) | 원본 20초부터 14초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/rain_2.mp3` | Pixabay "CALMING RAIN" — liecio-calming-rain-257596.mp3 | Liecio | Pixabay Content License (출처 표기 불필요) | 원본 10초부터 14초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/rain_3.mp3` | Pixabay "Light Spring Rain – Nature Sounds" — 49656682-light-spring-rain-nature-sounds-331710.mp3 | 49656682 | Pixabay Content License (출처 표기 불필요) | 원본 0.8초부터 13초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/thunder.mp3` | Pixabay "Distant Thunder Clap_Gentle" — freesound_community-distant-thunder-clap_gentle-72248.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0.5초부터 10초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/water_drip.mp3` | Pixabay "Water Drops" — freesound_community-water-drops-26638.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 2초부터 8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/yawn.mp3` | Pixabay "Male Yawn Effect" — dragon-studio-male-yawn-effect-376879.mp3 | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 1.2초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/crowd_murmur_1.mp3` | Pixabay "Crowd Murmuring" — freesound_community-crowd-murmuring-60721.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 1초부터 12초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/crowd_murmur_2.mp3` | Pixabay "Crowd Noise" — soundreality-crowd-noise-375725.mp3 | SoundReality | Pixabay Content License (출처 표기 불필요) | 원본 3초부터 12초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/horse_neigh_1.mp3` | Pixabay "Horse Neigh" — universfield-horse-neigh-123780.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 1.3초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/horse_neigh_2.mp3` | Pixabay "Horse Neigh" — tanweraman-horse-neigh-261131.mp3 | TanwerAman | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 1.3초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/horse_neigh_3.mp3` | Pixabay "Horse Neigh" — dragon-studio-horse-neigh-390297.mp3 | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 1.5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/broom_1.mp3` | Pixabay "Sweeping" — freesound_community-sweeping-44962.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0.5초부터 4.5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/broom_2.mp3` | Pixabay "Sweeping" — freesound_community-sweeping-100067.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0.4초부터 7초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/pottery_break.mp3` | Pixabay "Breaking a Vase (remix)" — freesound_community-breaking-a-vase-remix-87091.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 0.9초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/mouse_squeak_1.mp3` | Pixabay "Mouse Squeak" — tanweraman-mouse-squeak-261126.mp3 | TanwerAman | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 0.1초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/mouse_squeak_2.mp3` | Pixabay "Mouse" — freesound_community-mouse-36220.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 2.7초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/seagull_1.mp3` | Pixabay "seagulls" — dammafra-seagulls-435999.mp3 | dammafra | Pixabay Content License (출처 표기 불필요) | 원본 1초부터 10초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/seagull_2.mp3` | Pixabay "Sound Effect Seagulls" — scottishperson-sound-effect-seagulls-157829.mp3 | ScottishPerson | Pixabay Content License (출처 표기 불필요) | 원본 3초부터 12초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/clock_tick.mp3` | Pixabay "Clock Ticking Sound Effect" — 11325622-clock-ticking-sound-effect-240503.mp3 | 11325622 | Pixabay Content License (출처 표기 불필요) | 원본 0.5초부터 8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/church_bell_1.mp3` | Pixabay "Church bell" — audiopapkin-church-bell-304946.mp3 | AudioPapkin | Pixabay Content License (출처 표기 불필요) | 원본 2초부터 12초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/church_bell_2.mp3` | Pixabay "Bruitage cloches" — vanzetpictures-bruitage-cloches-457850.mp3 | VanzetPictures | Pixabay Content License (출처 표기 불필요) | 원본 3초부터 12초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/geese_swan.mp3` | Pixabay "geese fly by" — freesound_community-geese-fly-by-25581.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0.5초부터 10초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/cat_purr.mp3` | Pixabay "Purring Cat" — universfield-purring-cat-156459.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0.3초부터 6.3초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/balloon.mp3` | Pixabay "Balloon Deflate Squeak 4" — floraphonic-balloon-deflate-squeak-4-185254.mp3 | floraphonic | Pixabay Content License (출처 표기 불필요) | 원본 0.2초부터 5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/loom_spin.mp3` | Pixabay "navette de métier à tisser" — freesound_community-navette-de-metier-a-tisser-65454.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 10초부터 10초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/bow_arrow_1.mp3` | Pixabay "Arrow Wood Impact" — dennish18-arrow-wood-impact-146418.mp3 | DennisH18 | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 0.5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/bow_arrow_2.mp3` | Pixabay "Arrow Swish_03" — djartmusic-arrow-swish_03-306040.mp3 | DJARTMUSIC | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 0.3초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/waterfall.mp3` | Pixabay "Birds and waterfall" — rmultimediaeu-birds-and-waterfall-250309.mp3 | RMultimediaEU | Pixabay Content License (출처 표기 불필요) | 원본 8초부터 14초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/steam_hiss.mp3` | Pixabay "Steam" — freesound_community-steam-101163.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 2초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/duckling_peep.mp3` | Pixabay "Baby Chicks Chirping" — alex_jauk-baby-chicks-chirping-192422.mp3 | Alex_Jauk | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 5초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/bee_buzz.mp3` | Pixabay "Bee landing on flower" — ejah_music-bee-landing-on-flower-374609.mp3 | ejah_music | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 3.9초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/cicada.mp3` | Pixabay "Cicada Buzzing" — dragon-studio-cicada-buzzing-331499.mp3 | DRAGON-STUDIO | Pixabay Content License (출처 표기 불필요) | 원본 0.5초부터 12초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/train.mp3` | Pixabay "Toy Train Whistle Soft" — freesound_community-toy-train-whistle-soft-106348.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 4.6초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/fireworks.mp3` | Pixabay "Distant Fireworks" — freesound_community-distant-fireworks-19067.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 350초부터 10초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/toy_flute.mp3` | Pixabay "Flute alto" — freesound_community-flute-alto-88973.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 7.2초, 앞뒤 무음 정리·페이드·음량 맞춤 |
