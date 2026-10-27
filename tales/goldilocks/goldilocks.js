@@ -115,7 +115,7 @@
       });
     }
     if (key === 'door_dusk') {   // 해 질 녘 집 앞 라이트박스: 창문 두 개에 빛, 위 모서리 실루엣 가지
-      [[326, 208], [601, 208]].forEach(([x, y]) => glow(T, 'rect', { x: x - 22, y: y - 22, width: 108, height: 112, opacity: .55 }));   // 창 둘레까지 번지는 창빛(가운데 밝고 가장자리 투명)
+      [[326, 208], [601, 208]].forEach(([x, y]) => glow(T, 'rect', { x: x - 40, y: y - 40, width: 144, height: 148, opacity: .9 }));   // 창 둘레까지 번지는 창빛(가운데 밝고 가장자리 투명). 2026-10-28 조금 더 잘 보이게(.55→.9, 번짐 22→40px)
       sway(T, layer(T, 'sil_branches', P ? 170 : 60, -24, 220, { front: true, top: true }), 1, 9000);
       sway(T, layer(T, 'sil_branches', P ? 830 : 940, -24, 220, { front: true, top: true, flip: true }), 1, 9000, 2000);
     }
