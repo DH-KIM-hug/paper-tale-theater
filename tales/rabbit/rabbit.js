@@ -1412,7 +1412,7 @@
     const stepClimb = i => { const p = i / 6;
       climb.tgt = p; const [x, y] = hillAt(p); follow(x + 40, 300);
       const s = Math.floor(p * 16); if (s !== lastStep) { lastStep = s; tp.step(s % 2); footstep(T); }
-      [.3, .7].forEach(m => { if (p >= m && !yo.has(m)) { yo.add(m); T.pop(x + 60, y - 160 * hillAt(p)[2] / 1.3, '영차!', C.pine); } });
+      [.3, .7].forEach(m => { if (p >= m && !yo.has(m)) { yo.add(m); T.pop(x + 60, y - 160 * hillAt(p)[2] / 1.3 - 80, '영차!', C.pine); /* 거북이가 뒤따라 올라오며 풍선에 들어가지 않게 머리 위로 */ } });
       setRace(null, .38 + .17 * p, 100);
     };
     await T.ask('화면을 톡! 영차영차 올라가요.', () => T.tap(wrap, { prompt: '화면을 톡 눌러 봐요!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
