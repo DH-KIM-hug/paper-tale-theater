@@ -1000,7 +1000,7 @@
     const cryAt = (h, a) => { a.cry(); T.anim(h.g, [{ translate: '0 0' }, { translate: '-4px 0' }, { translate: '4px 0' }, { translate: '0 0' }], 400); };
     for (let i = 0; i < 4; i++) {
       const h = houses[i], k = guests[i], a = aud[k];
-      camTo(h.x - 40, h.ay ? 293 : 310, 1.6, 900);
+      camTo(h.x - 40, T.portrait() ? (h.ay ? 293 : 310) : 300, T.portrait() ? 1.6 : 1.3, 900);
       await owl.move(h.x - 120, h.ay ? 283 : 340, 900);
       await T.ask(i === 0 ? '문을 톡 두드려 봐요. 누가 나올까?' : '이번 집도 문을 톡!', () => T.tap(h.hit || h.door, { prompt: '문을 톡 두드려 봐요!' }));
       if (!AudioFX.sfx('knock')) { T.tone([200, 130], .08, { type: 'square', vol: .25 }); T.tone([200, 130], .08, { type: 'square', vol: .25, when: .2 }); }
