@@ -993,7 +993,9 @@
       cam: (a, b) => {
         if (a === 'wide') return rInst() ? camSnap(500, 280, 1) : camWide(600);
         if (a === 'snap') { const [x, y, z] = String(b).split(',').map(Number); return camSnap(x, y, z || 1); }
-        const [x, y, z] = String(a).split(',').map(Number); return rInst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 600);
+        let [x, y, z] = String(a).split(',').map(Number);
+        if (!T.portrait() && z > 1.3) { x = 500; y = 320; z = 1.3; }
+        return rInst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 600);
       },
       mom: (verb, a1) => {
         if (verb === 'at') { const [x, y] = String(a1).split(',').map(Number); mom.place(x, y); return; }
@@ -1283,7 +1285,7 @@
       await sleep(250);
       T.world.appendChild(tiger.pos); AudioFX.hop();
       await Promise.all([tiger.move(T.portrait() ? 610 : 630, 500, 500), tiger.hop(50, 500)]);
-      await camTo(630, 330, 1.6, 600); // (기계음 으르렁은 뺐다: 호랑이 목소리 "어흥!"과 겹침)
+      await camTo(T.portrait() ? 630 : 500, T.portrait() ? 330 : 320, T.portrait() ? 1.6 : 1.3, 600); // (기계음 으르렁은 뺐다: 호랑이 목소리 "어흥!"과 겹침)
       const ask = ASKS[n];
       if (n < 2) {
         await say(`"어흥! 떡 ${CNT[ask - 1]} 개 주면 안 잡아먹지!"`);
