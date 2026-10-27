@@ -43,7 +43,8 @@
   const WATER = 300;          /* 2·3·10번 수면선 */
   const WATER11 = 372;        /* 11번 수면선 */
   const BGS = ['palace', 'night_sea', 'beach', 'witch', 'steps', 'garden', 'deck', 'dawn_sea', 'morning_sea'];
-  const bgSrc = k => AS + (BG5[k] ? 'mer_bg5_' : 'mer_bg2_') + k + (LB[k] ? '_lb' : '') + '.webp', artSrc = k => AS + 'mer_' + k + '.webp';
+  const bgSrc = k => AS + (BG5[k] ? 'mer_bg5_' : 'mer_bg2_') + k + (LB[k] ? '_lb_glow' : '') + '.webp',   /* 2026-10-28 사용자 결정(§7-1 빛 예외): 밤바다 달 둘레의 단단한 주황 동심원 종이 → 달에서 멀어질수록 흐려지는 반투명 달무리(_lb_glow, 같은 수면선·달 자리) */
+  artSrc = k => AS + 'mer_' + k + '.webp';
   const BG5 = { steps: 1, palace: 1, night_sea: 1, witch: 1, garden: 1, deck: 1 };
   const LB = { night_sea: 1 };   /* 빛 상자판(mer_bg5_night_sea_lb, VISUAL_PLAN 재기획 2 B, 2026-10-24): 같은 수면선·달 자리 */   /* 화려하게 다시 그린 다층 배경(mer_bg5_*, 같은 구도: VISUAL_PLAN) */
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 배경이 무대 1000×560 을 덮게 */
@@ -268,6 +269,16 @@
   const glow = (a, ms = 900) => { a.body.style.filter = 'url(#hintGlow)'; setTimeout(() => { a.body.style.filter = ''; }, ms); };
   const sleep0 = ms => new Promise(r => setTimeout(r, ms));
   const tint = (T, fill, op) => T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill, opacity: op }, T.bg);
+  /* 2026-10-28 사용자 결정(§7-1 빛 예외): 해돋이 햇살 쐐기는 해(광원) 쪽이 밝고 끝으로 갈수록 투명해지는 방사형 빛(옛 단색 앰버 쐐기) */
+  let rayN = 0;
+  function sunWedge(T, cx, cy, deg, before) {
+    const a = (deg - 90) * Math.PI / 180, a1 = a - .06, a2 = a + .06, Rr = 420, id = 'merRay' + (++rayN);
+    const g = T.el('g', { opacity: 0, style: 'pointer-events:none' }, T.bg), rg = T.el('radialGradient', { id, gradientUnits: 'userSpaceOnUse', cx, cy, r: Rr }, g);
+    [[0, '#FFE9B8', 1], [.45, '#F2B366', .5], [1, '#F2B366', 0]].forEach(([o, c, op]) => T.el('stop', { offset: o, 'stop-color': c, 'stop-opacity': op }, rg));
+    T.el('polygon', { points: `${cx},${cy} ${cx + Math.cos(a1) * Rr},${cy + Math.sin(a1) * Rr} ${cx + Math.cos(a2) * Rr},${cy + Math.sin(a2) * Rr}`, fill: `url(#${id})` }, g);
+    if (before) T.bg.insertBefore(g, before);
+    return g;
+  }
   const sfx = (T, name, fb) => AudioFX.sfx(name) || fb && fb();
   const popSfx = T => sfx(T, 'pop', () => T.tone([500, 800], .12, { vol: .12 }));
   const sparkleSfx = T => sfx(T, 'sparkle', () => T.tone([700, 1400], .4, { vol: .12 }));
@@ -549,10 +560,8 @@
           sfx(T, 'splash'); rippleAt(T, SP[0], WATER + 20); glints(T, SP[0], WATER + 10);
           sun.move(820, WATER - 40, 2500, 'ease-out');
           [-60, -30, 0, 30, 60].forEach((deg, i) => {
-            const a = (deg - 90) * Math.PI / 180, a1 = a - .06, a2 = a + .06, cx = 820, cy = WATER - 40, Rr = 420;
-            const w = T.el('polygon', { points: `${cx},${cy} ${cx + Math.cos(a1) * Rr},${cy + Math.sin(a1) * Rr} ${cx + Math.cos(a2) * Rr},${cy + Math.sin(a2) * Rr}`, fill: '#F2B366', opacity: 0 }, T.bg);
-            T.bg.insertBefore(w, sun.pos);
-            w.animate([{ opacity: 0 }, { opacity: .18 }], { duration: 2500, delay: i * 120, fill: 'forwards' });
+            const w = sunWedge(T, 820, WATER - 40, deg, sun.pos);
+            w.animate([{ opacity: 0 }, { opacity: .4 }], { duration: 2500, delay: i * 120, fill: 'forwards' });
           });
           const warm = tint(T, '#F2B366', 0); T.anim(warm, [{ opacity: 0 }, { opacity: .18 }], 2500).catch(() => {}); warm.setAttribute('opacity', .18);
           if (T._cover) { const w2 = T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#F2B366', opacity: .18 }, T._cover); T.anim(w2, [{ opacity: 0 }, { opacity: .18 }], 2500).catch(() => {}); }
@@ -974,10 +983,8 @@
     sun.move(820, WATER - 40, 2500, 'ease-out');
     /* 해돋이 햇살 쐐기 5개 (해 뒤, 앰버 한 장씩) */
     [-60, -30, 0, 30, 60].forEach((deg, i) => {
-      const a = (deg - 90) * Math.PI / 180, a1 = a - .06, a2 = a + .06, cx = 820, cy = WATER - 40, Rr = 420;
-      const w = T.el('polygon', { points: `${cx},${cy} ${cx + Math.cos(a1) * Rr},${cy + Math.sin(a1) * Rr} ${cx + Math.cos(a2) * Rr},${cy + Math.sin(a2) * Rr}`, fill: '#F2B366', opacity: 0 }, T.bg);
-      T.bg.insertBefore(w, sun.pos);
-      w.animate([{ opacity: 0 }, { opacity: .18 }], { duration: 2500, delay: i * 120, fill: 'forwards' });
+      const w = sunWedge(T, 820, WATER - 40, deg, sun.pos);
+      w.animate([{ opacity: 0 }, { opacity: .4 }], { duration: 2500, delay: i * 120, fill: 'forwards' });
     });
     const warm = tint(T, '#F2B366', 0); T.anim(warm, [{ opacity: 0 }, { opacity: .18 }], 2500).catch(() => {}); warm.setAttribute('opacity', .18);
     if (T._cover) { const w2 = T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: '#F2B366', opacity: .18 }, T._cover); T.anim(w2, [{ opacity: 0 }, { opacity: .18 }], 2500).catch(() => {}); }
