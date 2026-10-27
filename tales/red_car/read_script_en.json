@@ -30,6 +30,20 @@
    ],
    "lines": [
     {
+     "text": "이현이의 방에 작은 빨간 장난감 자동차가 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "In Ihyun's room, there was a little red toy car.",
+     "segs": [
+      [
+       "nar",
+       "In Ihyun's room, there was a little red toy car.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "이현이는 빨간 자동차를 참 좋아했어요.",
      "src": "reuse",
      "en": "Ihyun loved the little red car very much.",
@@ -116,6 +130,20 @@
      ]
     },
     {
+     "text": "이현이는 빨간 자동차를 손에 들고 나비를 보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Ihyun held the red car in his hand and saw a butterfly. Look!",
+     "segs": [
+      [
+       "nar",
+       "Ihyun held the red car in his hand and saw a butterfly. Look!",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "어! 나비다!",
      "src": "reuse",
      "en": "Oh! A butterfly!",
@@ -195,6 +223,20 @@
      ]
     },
     {
+     "text": "이현이는 자동차를 찾으며 눈물을 뚝뚝 흘렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Ihyun looked and looked for his car, and his tears fell, drip, drop.",
+     "segs": [
+      [
+       "nar",
+       "Ihyun looked and looked for his car, and his tears fell, drip, drop.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "잉잉, 내 빨간 자동차 어디 갔지?",
      "src": "reuse",
      "en": "Boo-hoo, where did my red car go?",
@@ -223,6 +265,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "이현이가 떠난 자리에 빨간 자동차만 혼자 남았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Ihyun went away, and the red car was left all alone on the grass.",
+     "segs": [
+      [
+       "nar",
+       "Ihyun went away, and the red car was left all alone on the grass.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
     {
      "text": "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
      "src": "reuse",
@@ -284,6 +340,20 @@
      "before": [
       "fx:creak"
      ]
+    },
+    {
+     "text": "열린 문을 지나자 장난감 친구들이 사는 세상이 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Through the open gate, there it was: the world where toy friends live! Wow!",
+     "segs": [
+      [
+       "nar",
+       "Through the open gate, there it was: the world where toy friends live! Wow!",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
     }
    ]
   },
@@ -300,6 +370,20 @@
    ],
    "lines": [
     {
+     "text": "장난감 세상 길 위에서 빨간 자동차는 경찰차를 만났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "On a road in Toy Land, the red car met a police car.",
+     "segs": [
+      [
+       "nar",
+       "On a road in Toy Land, the red car met a police car.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "조금 가다 보니, 삐뽀삐뽀 우렁찬 소리가 들렸어요.",
      "src": "reuse",
      "en": "A little way down the road, there came a loud wee-woo, wee-woo!",
@@ -313,6 +397,20 @@
      "before": [
       "vo:siren_police",
       "pop:300,250,삐뽀삐뽀!"
+     ]
+    },
+    {
+     "text": "경찰차 형아가 도둑 장난감들에게 외쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Big brother police car shouted at the toy robbers,",
+     "segs": [
+      [
+       "nar",
+       "Big brother police car shouted at the toy robbers,",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
      ]
     },
     {
@@ -439,6 +537,20 @@
    ],
    "lines": [
     {
+     "text": "빨간 자동차와 경찰차는 장난감 집들이 있는 길에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The red car and the police car came to a street full of toy houses.",
+     "segs": [
+      [
+       "nar",
+       "The red car and the police car came to a street full of toy houses.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "가다 보니 이번엔 위이잉, 소리가 났어요.",
      "src": "reuse",
      "en": "A little farther on, there came a wee-ooo sound.",
@@ -452,6 +564,20 @@
      "before": [
       "vo:siren_fire",
       "pop:400,250,위이잉!"
+     ]
+    },
+    {
+     "text": "소방차 이모가 불이 난 집 앞에서 외쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "In front of the burning house, auntie fire truck called out,",
+     "segs": [
+      [
+       "nar",
+       "In front of the burning house, auntie fire truck called out,",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
      ]
     },
     {
@@ -562,6 +688,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "세 친구는 장난감 병원 앞길로 달려갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The three friends zoomed off to the road by the toy hospital. Vroom!",
+     "segs": [
+      [
+       "nar",
+       "The three friends zoomed off to the road by the toy hospital. Vroom!",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
     {
      "text": "셋이서 길을 가다 보니 삐용삐용, 바쁜 소리가 들렸어요.",
      "src": "reuse",
@@ -677,6 +817,20 @@
    ],
    "lines": [
     {
+     "text": "병원을 떠난 네 친구는 긴 길로 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The four friends left the hospital and came out onto a long, long road.",
+     "segs": [
+      [
+       "nar",
+       "The four friends left the hospital and came out onto a long, long road.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "넷이서 나란히 달려요. 친구들이 소리로 인사했어요.",
      "src": "reuse",
      "en": "The four friends drove side by side. They said hello with their sounds.",
@@ -751,6 +905,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "네 친구가 언덕길에 다다랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The four friends reached a hilly road. Up, up, up!",
+     "segs": [
+      [
+       "nar",
+       "The four friends reached a hilly road. Up, up, up!",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
     {
      "text": "하지만 너무 오래 달린 빨간 자동차는 그만 툭, 멈춰 서고 말았어요.",
      "src": "reuse",
@@ -907,6 +1075,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "다섯 자동차 친구는 언덕을 지나 긴 길로 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The five car friends went over the hill and out onto a long road.",
+     "segs": [
+      [
+       "nar",
+       "The five car friends went over the hill and out onto a long road.",
+       null,
+       "[calm, warm, gentle storytelling]"
+      ]
+     ]
+    },
     {
      "text": "견인차가 빨간 자동차를 앞에서 끌고, 그 뒤로 다른 차들이 든든하게 따랐어요.",
      "src": "reuse",
