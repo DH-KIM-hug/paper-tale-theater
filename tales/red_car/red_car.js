@@ -353,7 +353,11 @@
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(삐뽀삐뽀!·톡!…)
     /* 장난감나라 세상(2026-10-24): 4장 블록 · 5장 색칠 · 6장 봉제 인형 · 7·9장 기찻길 놀이판 · 8장 소꿉놀이 → _v3. 나머지는 _v2 */
     const V3 = { rc_bg_road_a: '_v3', rc_bg_road_b: '_v3', rc_bg_road_c: '_v3', rc_bg_road_long: '_v3', rc_bg_road_hill: '_v4' };   // 8장: 장난감 정비소(v4, 소꿉놀이 v3 은 쓰지 않음)
-    const scene = key => { fronts = []; T.clear(); bgImage(T, key + (V3[key] || '_v2')); camSnap(500, 280, 1); };
+    /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
+    const amb4 = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const SCENE_AMB = { rc_bg_yard: 'birds_chirp_1', rc_bg_playground: 'birds_chirp_2' };
+    const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } fronts = []; T.clear(); bgImage(T, key + (V3[key] || '_v2')); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb4(SCENE_AMB[key]); };
     /* 레이어 소품(누름을 받지 않는다). mid: 배우보다 먼저 put → 뒤 / front: 앞 가림 층, fronts 에 넣어 늘 맨 앞 */
     const LAYERS = {};
     const layer = (k, x, y, { front = false, s = 1 } = {}) => {
@@ -388,13 +392,13 @@
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'squeak', 'door', 'creak', 'police_siren', 'fire_siren', 'ambulance_siren', 'fire_crackle']);
+    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'squeak', 'door', 'creak', 'police_siren', 'fire_siren', 'ambulance_siren', 'fire_crackle', 'birds_chirp_1', 'birds_chirp_2', 'ding_glock', 'question', 'whistle_down', 'harp_gliss', 'pop_appear', 'water_pour_1', 'latch_click', 'train', 'party_horn']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
     loads.push(T.preload(src(BED.f)));
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
     calcHT();
     const pz = (who, ps) => Object.fromEntries(ps.map(p => [p, ['rc_' + who + '_' + p, HT['rc_' + who + '_' + p]]]));
     const kid = mk(T, pz('child', ['stand', 'eat', 'sleep', 'point', 'run', 'cry', 'turn', 'hug']));
@@ -742,11 +746,12 @@
     await say(S.L0);
     await sleep(300);
     [red, block, duck].forEach(a => bob(a.pos));
+    cue('question', .6);
     await T.ask(S.L1, () => T.choose(kinds.map(k => ({
       el: toy[k].hit, ok: k === 'red',
       onWrong: async () => { await wiggleEl(T, toy[k].hit); await say(k === 'block' ? S.W_block : S.W_duck); },
     })), { prompt: S.L1 }));
-    glow(red, 1200); sparkleSfx(T); T.pop(red.x, FL - 60, tr('반짝!'));
+    glow(red, 1200); cue('ding_glock', .8) || sparkleSfx(T); T.pop(red.x, FL - 60, tr('반짝!'));
     await say(S.C1);
     unhit(red);
     fadeOut(T, block, 400); fadeOut(T, duck, 400);
@@ -787,7 +792,7 @@
     kid.look('run', 'right');
     const kidGo = kid.move(X(640, 600), FL, 1800, 'linear');
     await sleep(500);
-    sfx('paper_down', .5); vo('tok'); T.pop(red.x, FL - 40, tr('톡!'));
+    cue('whistle_down', .5) || sfx('paper_down', .5); vo('tok'); T.pop(red.x, FL - 40, tr('톡!'));
     /* 자동차는 수풀 속에 떨어져 반쯤만 보인다 (잃어버린 느낌) */
     const bushX = DROP;   // 3장도 같은 자리(같은 세계 좌표)에서 시작한다
     red.look('tired', 'right');
@@ -826,14 +831,14 @@
       layer('arch', 700, FL + 4, { front: true });                                  // 앞 가림 층: 자동차가 아치 뒤로 지나간다
       const late = [layer('flags', 850, 120, { front: true }), layer('buttons', 980, 585, { front: true }), ...mids];
       late.forEach(hide);
-      pop3 = () => late.forEach((a, i) => setTimeout(() => { a.pos.style.display = ''; fadeIn(a, 300); a.hop(6, 300); sfx('pop', .3); }, i * 300));
+      pop3 = () => late.forEach((a, i) => setTimeout(() => { a.pos.style.display = ''; fadeIn(a, 300); a.hop(6, 300); cue('pop_appear', .4) || sfx('pop', .3); }, i * 300));
     });
     const l9 = say(S.L9);
     red.hop(6, 300);
     await sleep(900);
     const stopR3 = rattle(.25, 1200);
     if (P) T.camTo(700, 280, 1, 2500);
-    setTimeout(() => { T.pop(700, 250, tr('부릉부릉!')); sparkleSfx(T); pop3();   // 아치를 지나는 순간: 깃발·단추 꽃·링 탑이 차례로 톡톡
+    setTimeout(() => { T.pop(700, 250, tr('부릉부릉!')); cue('harp_gliss', .6) || sparkleSfx(T); pop3();   // 아치를 지나는 순간: 깃발·단추 꽃·링 탑이 차례로 톡톡
       if (!P) T.camTo(700, 300, 1.12, 900).then(() => T.camTo(500, 280, 1, 1400)); }, 2700);
     await Promise.all([drive(red, 1150, FL, DRIVE), l9]);
     stopR3();
@@ -906,7 +911,7 @@
       water.body.style.transformOrigin = `${ox}px ${oy}px`;
       const tr0 = `rotate(${ang}rad) scale(`;
       const an = water.body.animate([{ transform: tr0 + '.05)', opacity: .6 }, { transform: tr0 + sc + ')', opacity: 1 }], { duration: 380, easing: 'ease-out', fill: 'forwards' });
-      sfx('splash', .35); T.pop(f.x, f.y - 110, tr('쉭쉭!'));
+      cue('water_pour_1', .4) || sfx('splash', .35); T.pop(f.x, f.y - 110, tr('쉭쉭!'));
       await an.finished;
     };
     const left = [...FL3]; let smokes = [];
@@ -1046,7 +1051,8 @@
     follow(600, 4000);
     await Promise.all([drive(amb, C8.amb, FL, 4000, 'ease-out'), drive(fire, C8.fire, FL, 4000, 'ease-out'), drive(police, C8.police, FL, 4000, 'ease-out'), drive(red, C8.red, FL, 4000, 'ease-out')]);
     stopR8();
-    sfx('thud', .4); T.pop(red.x, FL - 140, tr('툭'), '#1F2A56');
+    if (cue('whistle_down', .5)) setTimeout(() => cue('thud', .3), 500); else sfx('thud', .4);
+    T.pop(red.x, FL - 140, tr('툭'), '#1F2A56');
     red.look('tired'); red.wiggle(3, 500);
     await l30;
     red.hop(4, 300); await say(S.L31);
@@ -1068,7 +1074,7 @@
     /* 견인차가 뒤로 살짝 물러나 고리를 빨간 차 앞 범퍼 위로 가져간다(사슬은 견인차에 붙은 채) */
     sfx('creak', .4);
     await Promise.all([tow.move(red.x + TOWGAP, LANE_T, 700, 'ease-in-out'), hook.move(red.x + TOWGAP + HOOK_DX, hook.y, 700, 'ease-in-out')]);
-    sfx('knock', .6); vo('chalkak'); T.pop(hook.x, hook.y - 90, tr('찰칵!'));
+    sfx('latch_click', .6, () => sfx('knock', .6)); vo('chalkak'); T.pop(hook.x, hook.y - 90, tr('찰칵!'));
     red.look('hooked'); red.place(red.x, LANE_R); glow(red, 600); red.hop(4, 260);   // 코가 들려 고리에 걸린다
     await say(S.L36);
     const l37 = say(S.L37);
@@ -1083,7 +1089,7 @@
     ORD9.slice(1).forEach(k => { END9[k] += sh9; });
     let flags9 = [];
     await T.sceneCard(tr('기차처럼 한 줄로'), () => {
-      scene('rc_bg_road_long');
+      scene('rc_bg_road_long'); if (!T.reading()) amb4('train', .25, 4);
       flags9 = longRoad(1, () => {});
       put(T, amb, END9.amb - 430, FL, { look: 'run' }); put(T, fire, END9.fire - 430, FL, { look: 'run' }); put(T, police, END9.police - 430, FL, { look: 'run' });
       put(T, red, END9.red - 430, LANE_R, { look: 'hooked' }); put(T, tow, END9.tow - 430, LANE_T, { look: 'pull' }); put(T, hook, tow.x + HOOK_DX, tow.y + HOOK_DY, { to: 'right', s: HOOK_S });
@@ -1106,10 +1112,11 @@
     const cards = order.map((k, i) => carCard(T, k, P ? posP[i][0] : CX[i], P ? posP[i][1] : 150, cs));
     cards.forEach((c, i) => c.g.animate([{ opacity: 0, translate: '0 20px' }, { opacity: 1, translate: '0 0' }], { duration: 450, delay: i * 120, fill: 'backwards' }));
     const W = QK === 'front' ? { red: S.W_red, police: S.W_police, fire: S.W_fire, amb: S.W_amb } : { red: S.W2_red, police: S.W2_police, fire: S.W2_fire, amb: S.W2_amb, tow: S.W2_tow };
+    cue('question', .6);
     await T.ask(QLINE, () => T.choose(cards.map(c => ({ el: c.g, ok: c.key === ANS, onWrong: async () => { await wiggleEl(T, c.g); CAR[c.key].hop(10, 320); await say(W[c.key]); } })), { prompt: QLINE }));
     cards.find(c => c.key === ANS).g.style.filter = 'url(#hintGlow)';
     const winner = CAR[ANS];
-    winner.look('joy'); glow(winner, 1200); sparkleSfx(T); T.pop(winner.x, FL - 170, tr('반짝!'));
+    winner.look('joy'); glow(winner, 1200); cue('ding_glock', .8) || sparkleSfx(T); T.pop(winner.x, FL - 170, tr('반짝!'));
     await say(CLINE);
     await Promise.all(cards.map(c => T.anim(c.g, [{ opacity: 1 }, { opacity: 0 }], 400)));
     cards.forEach(c => c.g.remove());
@@ -1146,12 +1153,13 @@
     sfx('paper_up', .5);
     await Promise.all(Object.entries(CK).map(([k, c]) => c.move(kid.x + HUG[k][0], FL + HUG[k][1], 600, 'ease-out')));
     CARS.forEach(c => c.look('joy'));
-    T.confetti(); sfx('tada') || sparkleSfx(T);
+    T.confetti(); sfx('party_horn', .9) || sfx('tada') || sparkleSfx(T);
     for (let i = 0; i < 3; i++) await Promise.all([kid.hop(30, 480), ...CARS.map(c => c.hop(30, 480))]);
     await say(S.L44);
     await say(S.L45);
     T.pop(kid.x + X(-90, -45), FL - 250, tr('빵빵!')); T.pop(kid.x + X(90, 35), FL - X(250, 305), tr('부릉부릉!'));
     await say('부릉부릉, 빵빵!');
+    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '서로 도우면 함께 갈 수 있어요.';
   }
