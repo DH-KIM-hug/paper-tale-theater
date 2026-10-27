@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "build:www": "bash tools/app/build_www.sh",
-    "sync": "bash tools/app/build_www.sh && npx cap sync ios"
+    "sync": "bash tools/app/build_www.sh && bash tools/app/cap_sync.sh"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.5.3",
     "@capacitor/core": "^8.5.3",
     "@capacitor/ios": "^8.5.3"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3"
   }
 }

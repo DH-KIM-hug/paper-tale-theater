@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">톡톡 동화극장</string>
+    <string name="title_activity_main">톡톡 동화극장</string>
+    <string name="package_name">com.papertale.theater</string>
+    <string name="custom_url_scheme">com.papertale.theater</string>
+</resources>
