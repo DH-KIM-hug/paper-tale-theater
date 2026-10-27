@@ -88,12 +88,29 @@
     /* ---------- 미리 불러오기: 장면 그림 존재 확인, 컷, 녹음 ---------- */
     await Promise.race([
       Promise.all(Object.entries(SCENE_IMG).map(([k, u]) => T.preload(u).then(ok => { sceneOK[k] = ok; }))),
-      sleep(2500),
+      new Promise(r => setTimeout(r, 2500)),
     ]);
     const preCut = key => T.preload(cutUrl(key)).then(ok => { cutOK[key] = ok; if (!ok && CUT_NEW[key]) T.preload(cutUrl(key)); });
     FRIENDS.forEach(f => ['', '_b'].forEach(s => preCut(f.id + s)));
     FRIENDS.forEach(f => preCut('wrong_' + f.id));
     if (typeof NARRATION_CLIPS !== 'undefined') AudioFX.preloadAll(Object.values(NARRATION_CLIPS).flat());
+    /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
+    const SFX_NAMES = ['birds_chirp_1', 'winter_wind_1', 'crickets_night_1', 'crickets_night_2', 'waves', 'whistle_down', 'whistle_up'];
+    try { AudioFX.preloadSfx(SFX_NAMES); } catch (e) { /* 소리 없이도 진행 */ }
+    const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
+    const amb = (n, vol = .28, dur = 4) => { try { if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    let b1Seen = 0;
+    let ambScene = null;
+    const sceneAmb = k => {
+      const prev = ambScene; ambScene = k;
+      if (prev === k) return;
+      try { AudioFX.stopAmbient(.4); } catch (e) { /* 무시 */ }
+      if (k === 'A') amb('birds_chirp_1');
+      else if (k === 'B1') amb(b1Seen++ ? 'crickets_night_1' : 'winter_wind_1');
+      else if (k === 'B2') amb('crickets_night_2');
+    };
 
     /* ---------- 층: 배경(bg) · 배우(world) · 근경(fgL) · 효과(fx) ----------
        무대 둘레는 엔진의 종이 구멍(#frame)이 맡는다: 무대 바깥은 종이, 아래 가장자리는 오린 종이의 깨끗한 그늘 */
@@ -238,6 +255,7 @@
     const friends = {}; // id → actor
     function setScene(k) {
       scene = k;
+      sceneAmb(k);
       const bg = T.bg;
       bg.innerHTML = ''; fgL.innerHTML = '';
       daylight = null; lbImg = null; moonBox = null;
@@ -556,6 +574,7 @@
       async carry(id) { // 지게가 다가가 멍석말이 호랑이를 지고 물가로 (풍덩은 tiger:splash)
         await anim(fact(id), [{ transform: 'translate(0px,0px)' }, { transform: 'translate(-45px,0px)' }], { duration: 500, easing: 'ease-in-out' });
         AudioFX.sfx('step_wood', .8);
+        amb('waves', .2, 4);
         if (rolled.pos.style.display === 'none') { rolled.place(POS.rolledSpot, 520); rolled.pos.style.display = ''; }
         await Promise.all([
           rolled.move(930, 475, 1700),
@@ -706,7 +725,7 @@
       shake: () => T.shake(),
       confetti: () => T.confetti(),
     };
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } return rr; }
 
     /* ================= 시작: 종이 조리개가 열리며 낮 팥밭이 보인다 ================= */
     async function openScene() {
@@ -944,7 +963,7 @@
         tiger.art.classList.remove('shiver');
       },
       async ddong() {
-        AudioFX.slide();
+        AudioFX.slide(); sfx('whistle_down', .7);
         impact(440, 440, '미끌~', '#4f7d46');
         await tiger.move(POS.tigerStage[3], 520, 500, 'ease-in');
         pose('fallen');
@@ -993,6 +1012,7 @@
         // 지게가 다가가 멍석말이 호랑이를 지고 물가로
         await anim(act('jige'), [{ transform: 'translate(0px,0px)' }, { transform: 'translate(-45px,0px)' }], { duration: 500, easing: 'ease-in-out' });
         AudioFX.sfx('step_wood', .8);
+        amb('waves', .28, 4);
         await Promise.all([
           rolled.move(930, 475, 1700),
           anim(act('jige'), [{ transform: 'translate(-45px,0px)' }, { transform: 'translate(215px,0px)' }], { duration: 1700, easing: 'ease-in-out' }),
@@ -1030,7 +1050,7 @@
       4: async () => {
         // 문 쪽으로 도망치다 구석의 할멈을 폴짝 뛰어넘는다
         const over = sleep(Math.max(0, (POS.grannyCorner - 60 - tiger.x) / 360 * 1000)).then(() => {
-          grannyMood('scared');
+          grannyMood('scared'); sfx('whistle_up', .7);
           return anim(tiger.body, [{ transform: 'translateY(0px)' }, { transform: 'translateY(-120px)', offset: .5 }, { transform: 'translateY(0px)' }], { duration: 520, easing: 'ease-in-out' });
         });
         await Promise.all([walk(tiger, POS.tigerStage[4], 360), camTo(...stationCam(4), 900), over]);
@@ -1100,6 +1120,7 @@
     /* ================= 엔딩 ================= */
     async function happyEnd() {
       trayEl.hidden = true;
+      try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ }
       await lastCut; // 풍덩 컷이 잔치 장면을 가리지 않게 끝까지 보고 넘어간다
       AudioFX.sting('win'); // 두구두구-짜잔!-와아
       await camWide(900);
@@ -1195,6 +1216,7 @@
     }
     await happyEnd();
     trayEl.hidden = true;
+    try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ }
     return '친구들이 힘을 모아 호랑이를 물리쳤어요!';
   }
 
