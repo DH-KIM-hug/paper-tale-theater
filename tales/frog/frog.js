@@ -283,6 +283,14 @@
   /* ================= 이야기 ================= */
   async function run(T) {
     const { el, sleep, say, actor, camTo, camWide, camSnap } = T;
+    /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
+    const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     // 세로 화면: 글자가 보이는 폭 밖으로 잘려 나가지 않게 안쪽으로 모은다
     const inV = x => { if (T.viewWidth() >= 990) return x; const c = T.camera, h = T.viewWidth() / 2 / Math.max(c.z, .1) - 70; return Math.max(c.x - h, Math.min(c.x + h, x)); };
@@ -339,6 +347,7 @@
         if (key === 'meadow') { rMeadow++; rSteps = rMeadow >= 2 ? 3 : 0; }
         if (key === 'pond' || key === 'night') rPond++;
         T.clear(); camSnap(500, 280, 1);
+        if (key === 'night') amb('crickets_night_1'); else if (key === 'pond' && rPond === 1) amb('birds_chirp_1'); else if (key === 'meadow' && rMeadow === 1) amb('birds_chirp_2'); else stopAmb();
         momArt.set('base'); runcle = null;
         babies.forEach(b => { b.parts.lids.setAttribute('opacity', 0); b.parts.hands.setAttribute('opacity', 0); });
         if (key === 'pond' || key === 'night') {
@@ -515,9 +524,10 @@
     let rShiver = null, rChartFloor = 470, rChart = [];
     const fadeInR = (n, ms = 500) => n.animate([{ opacity: 0 }, { opacity: 1 }], ms);
     const READ_ACTS = { set: R.set, babies: R.babies, baby: R.baby, mom: R.mom, ox: R.ox, chart: R.chart, uncle: R.uncle, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam, chorus: R.chorus };
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     await T.curtain(true);
+    amb('birds_chirp_1');
     await say('연못에 아침이 왔어요. 아기 개구리들이 아직 쿨쿨 자고 있네요.');
     for (const [bi, b] of babies.entries()) {
       const wake = () => T.tap(b.pos, { prompt: '자고 있는 아기 개구리를 톡 눌러 봐요!' });
@@ -529,6 +539,7 @@
 
     /* --- 2. 풀밭 모험 --- */
     await T.sceneCard('풀밭', () => {
+      amb('birds_chirp_2', .25, 3);
       T.clear(); grassBG(T);
       babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(.9); b.place(200 + i * 70, 490); });
     }, babies[1].pos);
@@ -536,6 +547,7 @@
     const hopStep = () => { babies.forEach((b, k) => { setTimeout(() => { croak(T, 380 + k * 40); b.move(b.x + 95, 490, 420); b.hop(50, 420); }, k * 90); });
       if (T.portrait()) camTo(babies[1].x + 95, 280, 1, 500); }; // 세로 화면: 카메라가 아기들을 따라간다 (가로는 그대로)
     await T.ask('아기 개구리들이 몰래 풀밭으로 나왔어요. 톡 눌러서 폴짝폴짝 가 볼까요?', () => T.tap(T.root.querySelector('#stageWrap'), { prompt: '화면을 톡! 폴짝폴짝!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    sfx('boing_steps', .7);
     for (let i = 1; i <= 5; i++) { hopStep(i); await sleep(700); }
     await sleep(500);
 
@@ -570,6 +582,7 @@
       await say(`맞아요, ${T.josa(r.okName, '이에요/예요')}!`);
     }
     await peek.hide();
+    sfx('drumroll_crash', .8);
     await camTo(500, 280, 1, 1600);
     T.shake(); moo(T); // 음매~는 황소 효과음으로
     meadowSun(T, true);
@@ -578,6 +591,7 @@
 
     /* --- 4. 엄마! 괴물이에요! --- */
     await T.sceneCard('연못', () => {
+      stopAmb();
       T.clear(); pads = pondBG(T);
       T.world.appendChild(mom.pos); mom.place(pads[2][0], pads[2][1]);
       babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(babyS); b.place(pads[[0, 1, 4][i]][0], pads[[0, 1, 4][i]][1]); });
@@ -664,7 +678,7 @@
       T.el('text', { x: 200, y: 175, 'text-anchor': 'middle', 'font-size': 90, fill: '#A93B32', stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('뻥!') }, svg);
     }, { sfx: 'boom' }));
     babies.forEach(b => b.parts.hands.setAttribute('opacity', 0));
-    momArt.set('flying');
+    momArt.set('flying'); short('balloon', .5, 2.5);
     mom.body.style.transition = 'transform 3s linear';
     mom.body.style.transform = 'scale(1.6)';
     // 세로 화면: 살짝 물러서고, 보이는 폭 안에서만 날아다닌다 (가로는 fz = fk = 1)
@@ -689,7 +703,7 @@
     clearInterval(whoosh); fly.cancel();
     if (fz < 1) camSnap(500, 280, 1);
     mom.body.style.transition = ''; mom.body.style.transform = '';
-    mom.place(500, 468); momArt.set('dizzy');
+    mom.place(500, 468); momArt.set('dizzy'); sfx('whistle_down', .7); await sleep(900);
     await (cutArt(T, [['cut_splash', 'splash', 2200]]) || AudioFX.splash());
     T.pop(500, 400, '퐁당!', C.indigo);
     const stars = el('g', { transform: 'translate(500,370)' }, T.fx);
@@ -725,7 +739,7 @@
     oxArt.set('stand');
     await say('황소도 따라 뛰어 볼까요? 하나, 둘…');
     if (T.portrait()) await camTo(oxActor.x, 280, 1, 700); // 세로 화면: 황소 쪽으로
-    oxArt.set('jumpfail');
+    oxArt.set('jumpfail'); sfx('whistle_up', .7);
     await T.anim(ox, [{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], 400);
     AudioFX.thud(); T.shake(); T.pop(oxActor.x, oxActor.y - 190, '쿵!'); vo('ox_thud');
     oxArt.set('stand');
@@ -734,6 +748,7 @@
 
     /* --- 10. 밤 연못 합창 --- */
     await T.sceneCard('밤 연못', () => {
+      amb('crickets_night_1', .25, 4);
       T.clear(); pads = pondBG(T, true); if (T.portrait()) camSnap(500, 280, 1);
       T.world.appendChild(mom.pos); mom.place(pads[2][0], pads[2][1]);
       [0, 1, 3].forEach((p, i) => { const b = babies[i]; T.world.appendChild(b.pos); b.place(pads[p][0], pads[p][1]); });
@@ -761,6 +776,8 @@
     T.playMelody(TWINKLE, { beat: .5, voice, onNote: () => choir.forEach(f => f.hop(18, 300)) });
     await sleep(7200);
     await say('개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.');
+    sfx('sleepy_tuba', .6);
+    stopAmb();
     return '개구리는 개구리대로 멋져요!';
   }
 
