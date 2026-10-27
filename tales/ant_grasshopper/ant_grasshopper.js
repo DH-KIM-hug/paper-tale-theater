@@ -657,6 +657,11 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
+    /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
+    const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
+    const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
+    const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'rain_1', 'winter_wind_1', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'party_horn', 'boing', 'question', 'xylo_down', 'stomach_growl', 'applause_1', 'ding_glock', 'page_turn', 'page_turn_big', 'step_grass', 'knock', 'creak', 'door']); } catch (e) { /* 무시 */ }
     AudioFX.preloadMusic(['vivaldi_spring', 'vivaldi_spring3', 'vivaldi_summer1', 'vivaldi_summer3', 'vivaldi_autumn1', 'vivaldi_winter', 'vivaldi_winter1']);
     /* 계절 음악 (2026-10-20): 계절 장면마다 〈사계〉 해당 곡. 한 번에 한 곡만 — 새로 틀면 앞 곡은 서서히 끈다. 목소리 밑에 깔리게 작게(vol .3) */
     let bgm = null;
@@ -671,7 +676,7 @@
     const loads = {};
     Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
     Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
-    await Promise.race([Promise.all([loads.bg_summer, ...Object.keys(SPR).map(k => loads[k]), loads.hopper_hat].filter(Boolean)), sleep(4000)]);
+    await Promise.race([Promise.all([loads.bg_summer, ...Object.keys(SPR).map(k => loads[k]), loads.hopper_hat].filter(Boolean)), new Promise(r => setTimeout(r, 4000))]);
     /* 그림 컷: 컷 틀(400×300)에 그림을 깔고 글자는 코드가. 그림이 없으면 draw(임시 그림) */
     const cutPic = (key, draw) => svg => { const u = artUrl(key); if (u) el('image', { href: u, x: 0, y: 0, width: 400, height: 300, preserveAspectRatio: 'xMidYMid slice' }, svg); return draw(svg, !!u); };
 
@@ -711,9 +716,10 @@
         timers.forEach(t => clearInterval(t)); timers = [];
         [rain, leaves, snow].forEach(w => w && w.stop()); rain = leaves = snow = null;
         if (shiverA) { shiverA.cancel(); shiverA = null; }
-        stopBgm(.8);
+        stopBgm(.8); stopAmb(.6);
       };
-      const bgm = k => { const b = BGMS[k]; if (b) playBgm(b[0], .22, b[1], 2); };
+      const RAMB = { summer: ['birds_chirp_1', .15], storm: ['rain_1', .18], winter_high: ['winter_wind_1', .15], spring: ['birds_chirp_2', .15] };
+      const bgm = k => { const b = BGMS[k]; if (b) playBgm(b[0], .22, b[1], 2); const a = RAMB[k]; if (a) amb(a[0], { vol: a[1], dur: 4, fadeIn: 1 }); };
       const camW = () => camSnap(key === 'spring' && narrow() ? 380 : 500, 280, 1);
       const build = k => {
         const prev = key; key = k;
@@ -994,6 +1000,7 @@
     if (T.reading()) return T.readPlay(READ_ACTS);
 
     await T.curtain(true);
+    amb('birds_chirp_1', { vol: .25, dur: 4 }); // 여름 아침 새소리
     await say('여름이에요. 개미들이 줄지어 먹이를 날라요.'); // 개미 영차·베짱이 연주는 저절로 (2026-10-19)
     SND.yeongcha(T, 3); ants.forEach((a, i) => setTimeout(() => a.hop(18, 300), i * 90));
     T.pop(605, 330, '영차!', C.bean);
@@ -1025,6 +1032,7 @@
     const sayNum = k => { numQ = numQ.then(async () => { try { await Narrator.speak(NUM[k]); } catch (e) { /* 소리 없이도 진행 */ } await sleep(250); }); };
     await T.ask('곡식을 톡톡 눌러서 창고로 날라 줘요!', () => T.mash(pile, { count: 10, prompt: '노란 곡식을 톡톡 눌러 봐요!', onStep: i => {
       sayNum(i - 1);
+      sfx(i <= 8 ? 'marimba_' + i : 'marimba_note', .6); // 한 알에 한 음, 올라가는 마림바
       const a = ant(T, T.world, PX + 140, 496, .9); a.face('right'); carry(a.p, true);
       SND.yeongcha(T, 2);
       a.move(E.door[0], E.door[1], 1500, 'linear').then(() => a.pos.remove());
@@ -1039,6 +1047,7 @@
     } }));
     await sleep(1600);
     await numQ;
+    sfx('party_horn', .6);
     await say('창고 칸이 가득 찼어요! 하나부터 열까지, 열 칸!');
 
     /* --- 3. 베짱이 연주 (풀잎 무대 로우앵글) --- */
@@ -1084,7 +1093,7 @@
       leafU.setAttribute('transform', `translate(455,${LY}) scale(.75) rotate(-40)`);
       rain = precip(T, 'rain', 44);
     }, hop.pos);
-    AudioFX.sfx('splash', .25);
+    amb('rain_1', { vol: .25, dur: 4 }); // 후두둑 소나기
     playBgm('vivaldi_summer3', .3, 26, 2); // 〈사계〉 여름 3악장(폭풍)
     await say('앗, 소나기가 와요! 후두둑 후두둑!');
     shelterAnts.forEach(a => { a.p.mouth.setAttribute('d', 'M-26 -80 Q-21 -86 -15 -80'); a.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 160, iterations: 6 }); });
@@ -1116,9 +1125,9 @@
       cutText(T, svg, 200, 90, '에취!', 84);
     }), { hold: 2000 });
     if (!sneezed) SND.sneeze(T); // 목소리 재채기가 있으면 합성음은 생략
-    hop.hop(24);
+    hop.hop(24); sfx('boing', .6);
     await say('베짱이는 혼자 흠뻑 젖었어요. 에취! 그래도 "괜찮아~" 하고 웃었어요.');
-    rain.stop(); stopBgm(1.2);
+    rain.stop(); stopBgm(1.2); stopAmb(.8);
 
     /* --- 5. 가을 (낙엽 들판) --- */
     let leaves, acorns, AF;
@@ -1137,7 +1146,7 @@
     const rollStep = i => {
       const last = acorns.lastElementChild; if (last) last.remove();
       const a = acornShape(T, T.world, 0, 0, 1.4);
-      SND.roll(T);
+      sfx('xylo_down', .5) || SND.roll(T);
       a.animate([{ transform: 'translate(520px,474px) rotate(0deg) scale(2)' }, { transform: `translate(${AF.door[0]}px,${AF.door[1]}px) rotate(720deg) scale(${AF.art ? .7 : 1.1})` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' }).finished.then(() => a.remove());
       rolled++;
       T.pop(620, 360, rolled % 2 ? '데굴!' : '데굴데굴~', C.bark);
@@ -1154,6 +1163,7 @@
       await say(line);
       wear(lead.p, []); fx && fx(false);
     };
+    sfx('question', .6);
     await T.ask('바람이 선선해요. 가을엔 무엇을 입을까?', () => T.choose([
       { el: bVest, ok: true },
       { el: bTee, ok: false, onWrong: () => tryOn(['tee'], on => { if (on) { SND.shiver(T); lead.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 120, iterations: 8 }); } }, '반팔은 으슬으슬~ 조금 추워요.') },
@@ -1180,10 +1190,11 @@
       (artUrl('ant_stand') ? [470, 590] : [440, 510]).forEach(x => { const a = ant(T, T.world, x, 440, .8); a.face('right'); crew.push(a); }); // 그림 개미는 옆으로 길어 간격을 벌린다
       snow = precip(T, 'snow', 40);
     }, lead.pos);
-    SND.shiver(T);
+    SND.shiver(T); amb('winter_wind_1', { vol: .25, dur: 4 }); // 겨울 바람
     playBgm('vivaldi_winter1', .3, 26, 2); // 〈사계〉 겨울 1악장
     await say('하얀 눈이 펑펑! 겨울이 왔어요. 호호, 추워라.');
     const [bWarm, bTee2, bSwim] = choiceBadges(T, [CLOTH.warm, CLOTH.tee, CLOTH.swim], 190);
+    sfx('question', .6);
     await T.ask('겨울엔 무엇을 입을까?', () => T.choose([
       { el: bWarm, ok: true },
       { el: bTee2, ok: false, onWrong: () => tryOn(['tee'], on => { if (on) { SND.shiver(T); lead.body.animate([{ translate: '0 0' }, { translate: '4px 0' }, { translate: '-4px 0' }], { duration: 110, iterations: 10 }); } }, '반팔은 오들오들~ 너무 추워요!') },
@@ -1201,7 +1212,7 @@
         : [{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: W.far ? 1600 : 1100, fill: 'forwards' });
       await sleep(300);
     }
-    stopBgm(1);
+    stopBgm(1); stopAmb(.8);
     await sleep(1000);
     lead.body.getAnimations().forEach(x => x.cancel());
     crew.forEach(a => a.body.getAnimations().forEach(x => x.cancel()));
@@ -1233,6 +1244,7 @@
     const host = ant(T, T.world, D.hostX, D.y, .95); host.face('right'); wear(host.p, ['scarf']);
     baby = ant(T, T.world, D.babyX, D.y, .62, { baby: true }); baby.face('right');
     host.pos.parentNode.insertBefore(host.pos, hop.pos);
+    sfx('stomach_growl', .6);
     await say('"개미야, 먹을 것 좀 나눠 줄 수 있니?"');
     await say('개미가 물었어요. "여름엔 뭘 했니?"');
     await say('"노래했지. 띠리링~"');
@@ -1288,7 +1300,7 @@
       await g.move(K.shaftX, K.shaftY, 450, 'ease-in');
       await g.move(seats[i][0], seats[i][1], 500);
       g.face(seats[i][0] < 500 ? 'right' : 'left'); g.setScale(g.f.s * (K.art ? .58 : .62));
-      cnt.fill(i); T.tone(523 + i * 110, .2, { type: 'triangle', vol: .14 });
+      cnt.fill(i); sfx('marimba_' + (i + 1), .6) || T.tone(523 + i * 110, .2, { type: 'triangle', vol: .14 });
       T.pop(500, 300, NUM[i] + '!', C.persimmon);
       await say(`${NUM[i]}! ${josa(g.f.name, '이/가')} 왔어요.`);
     }
@@ -1327,7 +1339,7 @@
       else { a.hop(20, 360); a.wiggle(10, 360); }
       await sleep(450);
     }
-    SND.tune(T);
+    SND.tune(T); sfx('applause_1', .35);
     dancers.forEach((a, i) => setTimeout(() => a.hop(16, 360), i * 80));
     await say('띠리링~ 짝짝짝! 겨울이 하나도 춥지 않았어요.');
 
@@ -1339,7 +1351,7 @@
       hopWarm(hop.p, false);
       (artUrl('ant_carry') ? [420, 485, 550] : [400, 460, 520]).forEach(x => { const a = ant(T, T.world, x, 494, .6); a.face('right'); carry(a.p, true); workers.push(a); });
     }, hop.pos);
-    AudioFX.animal('rooster', .3);
+    AudioFX.animal('rooster', .3); amb('birds_chirp_2', { vol: .22, dur: 4 }); // 봄 새소리
     playBgm('vivaldi_spring', .3, 22, 2); // 〈사계〉 봄 1악장
     await say('따뜻한 봄이 왔어요. 새싹이 쏙쏙!');
     await say('이번엔 베짱이도 함께 날라요.');
@@ -1355,7 +1367,7 @@
     for (let i = 1; i <= 4; i++) { await carryStep(i); await sleep(650); }
     await sleep(600);
     await say('"영차! 여름엔 노래하고, 일도 함께 할래요!"');
-    stopBgm(1);
+    stopBgm(1); stopAmb(.8);
 
     // 끝 놀이: 계절 카드 순서대로
     await camTo(500, 280, 1, 400);
@@ -1385,16 +1397,17 @@
       left.splice(left.indexOf(want), 1);
       want.check.setAttribute('opacity', 1); want.num.textContent = k + 1;
       T.anim(want.g, [{ translate: '0 0' }, { translate: '0 -20px' }, { translate: '0 0' }], 380);
-      T.tone(523 + k * 131, .25, { type: 'triangle', vol: .16 });
+      sfx('marimba_' + (k * 2 + 2), .6) || T.tone(523 + k * 131, .25, { type: 'triangle', vol: .16 });
       await say(`${k + 1}번, ${name}!`);
       if (AudioFX.slice(SEASON_MUSIC[want.s], 0, 2.4, .6)) await sleep(2500); // 그 계절의 〈사계〉 한 소절
     }
     T.finale();
-    SND.sparkle(T); T.confetti(); AudioFX.fanfare && AudioFX.fanfare();
+    SND.sparkle(T); T.confetti(); sfx('party_horn', .7) || (AudioFX.fanfare && AudioFX.fanfare());
     await say('봄, 여름, 가을, 겨울! 계절은 빙글빙글 돌아요.');
     cards.forEach(c => c.g.remove()); veil.remove();
     workers.forEach((a, i) => setTimeout(() => a.hop(20), i * 90)); hop.hop(26);
     await say('미리 준비하고 함께 나누니, 겨울도 따뜻했답니다.');
+    stopAmb(.8);
     return '미리 준비하고, 함께 나누면 모두 따뜻해요!';
   }
 
