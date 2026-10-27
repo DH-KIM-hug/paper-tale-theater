@@ -31,7 +31,9 @@
     sis2_stand: 'right', sis2_proud: 'right', sis2_sorry: 'right', prince_stand: 'right', fairy_appear: 'right', mouse: 'right' };
   const FL = 532;            /* 바닥 */
   const BGS = ['kitchen_v2', 'kitchen_night_v2', 'parlor_v2', 'garden_v2', 'ballroom_v2', 'stairs_lb'];   /* 다층 배경 v2 (VISUAL_PLAN). 궁전 계단은 열두 시 빛 상자 stairs_lb(VISUAL_PLAN 재기획 2, 2026-10-24) */
-  const bgSrc = k => AS + 'cd2_bg_' + k + '.webp', artSrc = k => AS + 'cd2_' + k + '.webp';
+  /* 2026-10-28 사용자 결정(§7-1 빛 예외): 열두 시 계단은 분수·궁전 문·창 둘레에 반투명 빛이 광원에서 흐려지는 _glow 그림(같은 구도: 계단·기둥·분수·문 자리 그대로) */
+  const GLOW = { stairs_lb: 1 };
+  const bgSrc = k => AS + 'cd2_bg_' + k + (GLOW[k] ? '_glow' : '') + '.webp', artSrc = k => AS + 'cd2_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 }; /* 1600×902 그림이 무대 1000×560을 덮게 */
   const K = 1.35;            /* 집 배경이 사람에 비해 커 보여서 모든 사람·소품을 같은 비율로 키움 (2026-10-20) */
   const hOf = f => HT[f] || 200;
