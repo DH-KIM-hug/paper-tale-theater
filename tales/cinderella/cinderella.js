@@ -566,7 +566,7 @@
         const c = rWall();
         if (inst()) { rAt(h); return; }
         if (+h >= 12) { glow({ body: c.g }, 1500); await c.toTwelve(1500); return; }
-        await T.camTo(RCL.x, 170, 1.6, 800);
+        await T.camTo(P ? RCL.x : 540, P ? 170 : 240, P ? 1.6 : 1.3, 800); // 가로: 시계(위 y≈43~193)가 다 보이게 위쪽으로
         glow({ body: c.g }, 1500); rAt(h);
         await sleep(1200);
         T.camTo(P ? 600 : 500, 280, 1, 600);
@@ -877,7 +877,7 @@
     await say('어머, 고마워요!');
     await say('언니들은 신데렐라를 알아보지 못했어요.');
     hide(orange);
-    T.camTo(CL.x, 170, 1.6, 800);
+    T.camTo(P ? CL.x : 540, P ? 170 : 240, P ? 1.6 : 1.3, 800); // 가로: 시계(위 y≈43~193)가 다 보이게 위쪽으로
     glow({ body: clock.g }, 1500);
     await say('시계를 보니 열두 시가 가까워요. 신데렐라는 약속대로 집에 돌아왔어요.');
     T.camTo(P ? 600 : 500, 280, 1, 600);
