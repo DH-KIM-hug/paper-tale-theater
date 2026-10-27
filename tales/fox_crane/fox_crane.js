@@ -550,6 +550,13 @@
   async function run(T) {
     const { el, sleep, say, actor, camTo, camSnap, josa } = T;
     let fox, crane;
+    /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'pot_boil', 'water_pour_1', 'crickets_night_1', 'boing', 'whistle_down', 'surprise_sting', 'question']); } catch (e) { /* 소리 없이도 진행 */ }
+    const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const cue = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
     /* 대사 연출: 목소리 주인에게 카메라, 여우와 두루미가 서로 마주 봄 (장면마다 새 배우라 함수로) */
     const direct = (getFox, getCrane) => T.director({ cast: { fox: getFox, crane: getCrane }, listener: r => (r === 'fox' ? 'crane' : 'fox') });
     direct(() => fox, () => crane);
@@ -562,7 +569,7 @@
     const loads = {};
     Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
     Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
-    await Promise.race([Promise.all([loads.bg_forest, loads.fox_stand, loads.crane_head, loads.crane_body].filter(Boolean)), sleep(2500)]);
+    await Promise.race([Promise.all([loads.bg_forest, loads.fox_stand, loads.crane_head, loads.crane_body].filter(Boolean)), new Promise(r => setTimeout(r, 2500))]);
     const ARTMODE = () => !!(artUrl('fox_stand') && artUrl('crane_head'));
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 아래 놀이판 연출을 누르기 없이 감싼 얇은 함수 =================
@@ -650,6 +657,7 @@
       },
     };
     const rSet = key => {
+      if (key === 'forest' && !rs.sawForest) { rs.sawForest = 1; amb('birds_chirp_1'); } else if (key === 'kitchen' && !rs.kn) amb('pot_boil', .2, 4); else if (key === 'feast_night') amb('crickets_night_1', .2, 4); else stopAmb();
       T.clear(); rs.tag = key; rs.pot = rs.tbl = rs.bottle = rs.plateD = rs.inv = null; rs.party = {}; rs.plates = {};
       if (key === 'kitchen') { rs.kn++; if (rs.kn === 2) { rs.tag = 'high'; return rSets.high(); } return rSets.kitchen(); }
       if (key === 'feast_day') return rSets.feast(false);
@@ -833,7 +841,7 @@
       pop: spec => { const [x, y, ...w] = String(spec).split(','); T.pop(+x, +y, w.join(','), C.bean); },
     };
     const rStirBubble = () => { if (rs.pot) bubbleSnd(T); };
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     /* --- 1. 초대장 (숲길 와이드) --- */
     forestBG(T);
@@ -844,6 +852,7 @@
     const inv = actor(T.world, P1 ? 505 : 520, 440, g => drawInvite(T, g), { scale: 1.3 });
     if (P1) camSnap(500, 280, .78);
     await T.curtain(true);
+    amb('birds_chirp_1');
     await say('숲속에 여우랑 두루미가 살았어요.');
     await say('여우가 초대장을 가져왔어요.'); // 초대장은 저절로 두루미에게 (2026-10-19)
     await sleep(300);
@@ -854,11 +863,13 @@
     await crane.hop(80, 600);
     T.pop(CX1, 180, '폴짝!', C.pine);
     await crane.hop(60, 500);
+    setTimeout(() => cue('boing', .7), 700);
     await say('"와, 고마워!" 두루미가 긴 다리로 폴짝 뛰었어요.');
 
     /* --- 2. 여우의 부엌 (중간샷) --- */
     let pot;
     await T.sceneCard('여우의 부엌', () => {
+      amb('pot_boil', .25, 3);
       T.clear(); kitchenBG(T);
       let pp;
       if (bgUrl('kitchen') && artUrl('pot')) { // 그림: 배경 안쪽 아궁이 자리(그림 속 솥)에 수프 냄비를 얹고, 여우는 앞쪽에서 냄비를 본다
@@ -974,6 +985,7 @@
     /* --- 5. 긴 병 (로우앵글) --- */
     let bottle;
     await T.sceneCard('긴 병', () => {
+      amb('water_pour_1', .25, 3);
       T.clear(); lowBG(T);
       fox = guest(T, T.world, 'fox', 300, 500, 1.0); fox.face('right');
       if (bgUrl('crane_room') && ARTMODE()) { // 그림: 병은 배경 속 작은 탁자 위, 두루미는 탁자 오른쪽 앞
@@ -1015,6 +1027,7 @@
     const kick = fox.parts.legs.animate([{ transform: `rotate(${-kd}deg)` }, { transform: `rotate(${kd}deg)` }], { duration: 180, iterations: Infinity, direction: 'alternate' });
     const wag = fox.parts.tail.animate([{ transform: 'rotate(-16deg)' }, { transform: 'rotate(16deg)' }], { duration: 260, iterations: Infinity, direction: 'alternate' });
     cutVo('cut_stuck');
+    cue('surprise_sting', .7);
     await cutArt('cut_stuck', svg => {
       el('rect', { x: 170, y: 150, width: 60, height: 150, fill: C.pine }, svg);
       el('rect', { x: 158, y: 138, width: 84, height: 22, rx: 6, fill: C.gold }, svg);
@@ -1030,8 +1043,10 @@
     fox.parts.all.style.transform = '';
     if (fox.parts.art) fox.parts.setPose('stand');
     fox.face('left'); // 뒤로 물러나는 방향(왼쪽)을 본다
+    cue('whistle_down', .7); // 뒤로 넘어지는 동안 휘리릭, 쿵은 그 뒤
     await fox.move(330, 380, 360, 'ease-out');
     await fox.move(300, 500, 320, 'ease-in');
+    await sleep(250);
     sfx(T, 'thud'); T.shake();
     fox.body.style.transform = 'scale(1.08,.86)';
     T.pop(300, 380, '쿵!', C.bark);
@@ -1067,6 +1082,7 @@
       crane.parts.sadDeg = 15; mood(crane, 'sad');
       mood(fox, 'sad');
     }, fox.pos);
+    cue('question', .7);
     await say('둘 다 못 먹었어요. 왜 그랬을까요?');
     const qs = [
       { who: crane, q: '두루미는 부리가 길쭉해요. 어떤 그릇이 좋을까요?', ok: 'bottle', no: 'plate',
@@ -1145,6 +1161,7 @@
     const party = {};
     const plates = {};
     await T.sceneCard('함께 먹어요', () => {
+      amb('crickets_night_1', .25, 4);
       T.clear();
       if (!feastBG(T, true)) [150, 390, 610, 850].forEach(x => lantern(T, T.bg, x, 110));
       gL = el('g', {}, T.world); tL = el('g', {}, T.world); dL = el('g', {}, T.world);
