@@ -229,6 +229,20 @@
      ]
     },
     {
+     "text": "연못에서 나온 아기 오리가 마당으로 뒤뚱뒤뚱 왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Waddle, waddle! The duckling left the pond and came into the yard.",
+     "segs": [
+      [
+       "nar",
+       "Waddle, waddle! The duckling left the pond and came into the yard.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "수탉이 말했어요. \"꼬꼬댁! 너는 못생겼어!\"",
      "src": "reuse",
      "en": "The rooster said. \"Cock-a-doodle-doo! You're ugly!\"",
@@ -362,6 +376,20 @@
    ],
    "lines": [
     {
+     "text": "농장을 떠난 아기 오리는 혼자 갈대숲에 들어섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The duckling left the farm and went into the reeds alone.",
+     "segs": [
+      [
+       "nar",
+       "The duckling left the farm and went into the reeds alone.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "갈대가 아기 오리 머리보다 훨씬 높아요.",
      "src": "reuse",
      "en": "The reeds are much taller than the duckling's head.",
@@ -423,6 +451,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "갈대숲을 지난 아기 오리는 늪에서 걸음을 멈추었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After passing through the reeds, the duckling stopped at the marsh.",
+     "segs": [
+      [
+       "nar",
+       "After passing through the reeds, the duckling stopped at the marsh.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "늪에는 기러기들이 살고 있었어요.",
      "src": "reuse",
@@ -560,6 +602,20 @@
      ]
     },
     {
+     "text": "늪을 떠난 아기 오리는 가을 호숫가를 거닐었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The duckling left the marsh and wandered beside an autumn lake.",
+     "segs": [
+      [
+       "nar",
+       "The duckling left the marsh and wandered beside an autumn lake.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "알록달록 나뭇잎이 팔랑팔랑 떨어졌어요.",
      "src": "new",
      "en": "Colorful leaves came fluttering down, flit, flit, flit.",
@@ -630,6 +686,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "호숫가에 혼자 남은 아기 오리 곁으로 눈이 내렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Snow fell around the duckling, alone beside the lake.",
+     "segs": [
+      [
+       "nar",
+       "Snow fell around the duckling, alone beside the lake.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "추운 겨울이 왔어요. 호수가 꽁꽁 얼어서 발이 얼음에 붙어 버렸어요.",
      "src": "reuse",
@@ -754,6 +824,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "농부 할아버지는 아기 오리를 할머니가 있는 집에 데려다주었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The farmer brought the duckling to the house where Grandma was.",
+     "segs": [
+      [
+       "nar",
+       "The farmer brought the duckling to the house where Grandma was.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "할머니 집은 난로가 있어 따뜻했어요. 고양이와 암탉도 함께 살았어요.",
      "src": "reuse",
@@ -909,6 +993,20 @@
        "nar",
        "Warm spring came. The duckling grew bigger and bigger.",
        "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "집 밖으로 나온 아기 오리가 봄바람을 맞았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The duckling came outside into the spring breeze.",
+     "segs": [
+      [
+       "nar",
+       "The duckling came outside into the spring breeze.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -1072,6 +1170,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "물에 비친 모습을 보던 백조 곁으로 물결이 일렁였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Ripples spread beside the swan as he looked at his reflection.",
+     "segs": [
+      [
+       "nar",
+       "Ripples spread beside the swan as he looked at his reflection.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "백조들이 헤엄쳐 왔어요. \"안녕! 너도 우리 친구야. 같이 살자!\"",
      "src": "reuse",

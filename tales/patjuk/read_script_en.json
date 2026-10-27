@@ -82,6 +82,20 @@
    ],
    "lines": [
     {
+     "text": "그날도 할멈은 팥밭에서 일을 하고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "That day, Granny was working in her bean field again.",
+     "segs": [
+      [
+       "nar",
+       "That day, Granny was working in her bean field again.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "어흥! 어느 날 커다란 호랑이가 나타났어요. \"할멈, 잡아먹어야겠다!\"",
      "src": "reuse",
      "en": "Roar! One day, a big tiger appeared. Grandma, I'm going to eat you up!",
@@ -181,6 +195,20 @@
    ],
    "lines": [
     {
+     "text": "어느덧 찬바람 부는 겨울이 왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Soon, winter came with a chilly whoosh of wind.",
+     "segs": [
+      [
+       "nar",
+       "Soon, winter came with a chilly whoosh of wind.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "드디어 동짓날이 되었어요. 할멈은 팥죽을 쑤면서 훌쩍훌쩍 울었어요.",
      "src": "reuse",
      "en": "At last, the longest night came. Grandma cooked the porridge, and she sniffled and cried.",
@@ -189,6 +217,20 @@
        "nar",
        "At last, the longest night came. Grandma cooked the porridge, and she sniffled and cried.",
        "sad:1.1"
+      ]
+     ]
+    },
+    {
+     "text": "동짓날 저녁, 할멈은 집 안 부엌에 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "That winter evening, Granny was in her kitchen at home.",
+     "segs": [
+      [
+       "nar",
+       "That winter evening, Granny was in her kitchen at home.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -314,6 +356,20 @@
    ],
    "lines": [
     {
+     "text": "알밤과 자라가 숨은 부엌으로 또 친구들이 왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "More friends came to the kitchen where Chestnut and Turtle were hiding.",
+     "segs": [
+      [
+       "nar",
+       "More friends came to the kitchen where Chestnut and Turtle were hiding.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "철퍼덕! 쇠똥이 왔어요. \"팥죽 한 그릇 주면 나도 도울게!\" 쇠똥은 팥죽을 얻어먹고 부엌 바닥에 납작 엎드려 숨었어요.",
      "src": "reuse",
      "en": "Splat! Cow Plop arrived. Give me a bowl of red bean porridge and I'll help too! Cow Plop ate the porridge, then lay flat on the kitchen floor to hide.",
@@ -435,6 +491,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "할멈은 부엌에서 마당 쪽 문가로 나갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Granny stepped out of the kitchen to the doorway by the yard.",
+     "segs": [
+      [
+       "nar",
+       "Granny stepped out of the kitchen to the doorway by the yard.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "똑똑똑! 마당에도 친구들이 찾아왔어요.",
      "src": "new",
@@ -567,6 +637,20 @@
    ],
    "lines": [
     {
+     "text": "할멈은 다시 부엌으로 들어가 친구들과 호랑이를 기다렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Granny went back into the kitchen to wait for Tiger with her friends.",
+     "segs": [
+      [
+       "nar",
+       "Granny went back into the kitchen to wait for Tiger with her friends.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "깜깜한 밤이 되었어요. 어흥! 호랑이가 어슬렁어슬렁 찾아왔어요!",
      "src": "reuse",
      "en": "It was a dark, dark night. Roar! The tiger came prowling back!",
@@ -617,6 +701,20 @@
       "tiger:walk:0",
       "granny:at:corner",
       "cam:station:0"
+     ]
+    },
+    {
+     "text": "할멈은 부엌 구석으로 살금살금 물러났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Granny tiptoed back into a corner of the kitchen.",
+     "segs": [
+      [
+       "nar",
+       "Granny tiptoed back into a corner of the kitchen.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -696,6 +794,20 @@
     "cam:station:1"
    ],
    "lines": [
+    {
+     "text": "물독에 입을 넣었던 호랑이가 부엌에서 몸을 부르르 떨었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Tiger shivered in the kitchen after dipping his mouth into the water jar.",
+     "segs": [
+      [
+       "nar",
+       "Tiger shivered in the kitchen after dipping his mouth into the water jar.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "\"아야야!\" 호랑이가 깜짝 놀라 뒷걸음질을 쳤어요.",
      "src": "trim",
@@ -965,6 +1077,20 @@
     "cam:600,430,1.4"
    ],
    "lines": [
+    {
+     "text": "호랑이가 떠나자 친구들이 마당으로 모였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Once Tiger was gone, the friends gathered in the yard.",
+     "segs": [
+      [
+       "nar",
+       "Once Tiger was gone, the friends gathered in the yard.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "만세! 호랑이를 물리쳤어요! 할멈은 친구들과 맛있는 팥죽을 나누어 먹었답니다.",
      "src": "reuse",

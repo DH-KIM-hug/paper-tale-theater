@@ -125,6 +125,19 @@
    ],
    "lines": [
     {
+     "text": "다음 날, 여우는 자기 집 부엌에서 손님 맞을 준비를 했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "다음 날, 여우는 자기 집 부엌에서 손님 맞을 준비를 했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "여우가 맛있는 수프를 끓여요.",
      "src": "reuse",
      "segs": [
@@ -218,6 +231,19 @@
    ],
    "lines": [
     {
+     "text": "밥때가 되자 두루미가 여우네 부엌으로 들어왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "밥때가 되자 두루미가 여우네 부엌으로 들어왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "두루미가 놀러 왔어요. 그런데 접시가 아주 납작해요!",
      "src": "reuse",
      "segs": [
@@ -231,6 +257,19 @@
      "before": [
       "crane:walk:650,1500",
       "vo:hi_crane"
+     ]
+    },
+    {
+     "text": "여우는 두루미 앞에도 수프를 담은 납작 접시를 놓았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "여우는 두루미 앞에도 수프를 담은 납작 접시를 놓았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -410,6 +449,19 @@
    ],
    "lines": [
     {
+     "text": "여우는 두루미를 따라 집 안으로 들어왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "여우는 두루미를 따라 집 안으로 들어왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "와, 병이 탑처럼 높아요! 목이 아주 길어요.",
      "src": "reuse",
      "segs": [
@@ -527,6 +579,19 @@
    ],
    "lines": [
     {
+     "text": "식사를 마친 두루미와 배고픈 여우는 그릇을 바라보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "식사를 마친 두루미와 배고픈 여우는 그릇을 바라보았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "둘 다 못 먹었어요. 왜 그랬을까요?",
      "src": "reuse",
      "segs": [
@@ -586,6 +651,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "그 뒤, 둘은 친구마다 먹기 편한 그릇을 준비했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "그 뒤, 둘은 친구마다 먹기 편한 그릇을 준비했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "여우랑 두루미가 함께 잔치를 열었어요. 손님들도 와요!",
      "src": "reuse",
@@ -659,6 +737,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "어느새 밤이 되었지만, 손님들은 잔치 자리에 함께 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "어느새 밤이 되었지만, 손님들은 잔치 자리에 함께 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "등불이 반짝, 모두 모여 잔치를 해요.",
      "src": "reuse",

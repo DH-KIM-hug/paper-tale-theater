@@ -236,6 +236,19 @@
      ]
     },
     {
+     "text": "연못에서 나온 아기 오리가 마당으로 뒤뚱뒤뚱 왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "연못에서 나온 아기 오리가 마당으로 뒤뚱뒤뚱 왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "수탉이 말했어요. \"꼬꼬댁! 너는 못생겼어!\"",
      "src": "reuse",
      "segs": [
@@ -378,6 +391,19 @@
    ],
    "lines": [
     {
+     "text": "농장을 떠난 아기 오리는 혼자 갈대숲에 들어섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "농장을 떠난 아기 오리는 혼자 갈대숲에 들어섰어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "갈대가 아기 오리 머리보다 훨씬 높아요.",
      "src": "reuse",
      "segs": [
@@ -443,6 +469,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "갈대숲을 지난 아기 오리는 늪에서 걸음을 멈추었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "갈대숲을 지난 아기 오리는 늪에서 걸음을 멈추었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "늪에는 기러기들이 살고 있었어요.",
      "src": "reuse",
@@ -584,6 +623,19 @@
      ]
     },
     {
+     "text": "늪을 떠난 아기 오리는 가을 호숫가를 거닐었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "늪을 떠난 아기 오리는 가을 호숫가를 거닐었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "알록달록 나뭇잎이 팔랑팔랑 떨어졌어요.",
      "src": "new",
      "segs": [
@@ -656,6 +708,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "호숫가에 혼자 남은 아기 오리 곁으로 눈이 내렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "호숫가에 혼자 남은 아기 오리 곁으로 눈이 내렸어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "추운 겨울이 왔어요. 호수가 꽁꽁 얼어서 발이 얼음에 붙어 버렸어요.",
      "src": "reuse",
@@ -784,6 +849,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "농부 할아버지는 아기 오리를 할머니가 있는 집에 데려다주었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "농부 할아버지는 아기 오리를 할머니가 있는 집에 데려다주었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "할머니 집은 난로가 있어 따뜻했어요. 고양이와 암탉도 함께 살았어요.",
      "src": "reuse",
@@ -955,6 +1033,19 @@
      ]
     },
     {
+     "text": "집 밖으로 나온 아기 오리가 봄바람을 맞았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "집 밖으로 나온 아기 오리가 봄바람을 맞았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "아기 오리는 기지개를 쭉 켜고 날개를 활짝 펼쳤어요.",
      "src": "new",
      "segs": [
@@ -1115,6 +1206,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "물에 비친 모습을 보던 백조 곁으로 물결이 일렁였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "물에 비친 모습을 보던 백조 곁으로 물결이 일렁였어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "백조들이 헤엄쳐 왔어요. \"안녕! 너도 우리 친구야. 같이 살자!\"",
      "src": "reuse",

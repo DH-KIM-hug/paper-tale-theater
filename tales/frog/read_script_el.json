@@ -185,6 +185,19 @@
    ],
    "lines": [
     {
+     "text": "풀밭에 멈춰 선 아기 개구리들은 커다란 몸을 올려다보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "풀밭에 멈춰 선 아기 개구리들은 커다란 몸을 올려다보았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "이건 뭘까요? 꼬리일까요, 나무일까요?",
      "src": "reuse",
      "segs": [
@@ -397,6 +410,19 @@
    ],
    "lines": [
     {
+     "text": "연못가에서 엄마개구리는 아기들 앞에 나섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "연못가에서 엄마개구리는 아기들 앞에 나섰어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"흥, 나도 황소만큼 클 수 있어!\" 엄마개구리가 숨을 크게 들이마셨어요.",
      "src": "reuse",
      "segs": [
@@ -588,6 +614,19 @@
    ],
    "lines": [
     {
+     "text": "그 뒤, 엄마개구리는 아기들과 황소가 있는 풀밭으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "그 뒤, 엄마개구리는 아기들과 황소가 있는 풀밭으로 갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "황소가 몸을 낮추고 다정하게 말했어요. \"크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!\"",
      "src": "reuse",
      "segs": [
@@ -688,6 +727,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "해가 지자 개구리 가족은 연못으로 돌아왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "해가 지자 개구리 가족은 연못으로 돌아왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요.",
      "src": "trim",

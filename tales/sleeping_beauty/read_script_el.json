@@ -47,6 +47,19 @@
      ]
     },
     {
+     "text": "성 안에서 왕이 기쁜 목소리로 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "성 안에서 왕이 기쁜 목소리로 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "온 나라 사람들을 불러 잔치를 열자!",
      "src": "reuse",
      "segs": [
@@ -119,6 +132,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "잔칫날, 성 안 식탁에 손님 맞을 준비가 한창이었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "잔칫날, 성 안 식탁에 손님 맞을 준비가 한창이었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "요정 일곱 명을 아기의 대모로 모셨어요. 금 접시도 일곱 개 놓았지요.",
      "src": "reuse",
@@ -224,6 +250,19 @@
    ],
    "lines": [
     {
+     "text": "잔치 자리에 선 늙은 요정은 마음이 상했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "잔치 자리에 선 늙은 요정은 마음이 상했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "늙은 요정은 입을 삐죽 내밀고 접시를 두리번두리번 찾았어요.",
      "src": "new",
      "segs": [
@@ -263,6 +302,19 @@
      ],
      "before": [
       "king:hop"
+     ]
+    },
+    {
+     "text": "막내 요정은 늙은 요정이 무슨 말을 할지 걱정됐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "막내 요정은 늙은 요정이 무슨 말을 할지 걱정됐어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -309,6 +361,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "같은 잔치 자리에서 여섯 요정이 아기 요람을 둘러쌌어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "같은 잔치 자리에서 여섯 요정이 아기 요람을 둘러쌌어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "요정들이 한 명씩 다가와 지팡이를 반짝 흔들었어요.",
      "src": "new",
@@ -444,6 +509,19 @@
    ],
    "lines": [
     {
+     "text": "여섯 요정이 선물을 주자 늙은 요정이 아기에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "여섯 요정이 선물을 주자 늙은 요정이 아기에게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "열여섯 살이 되면 물레 바늘에 찔려 영영 깨어나지 않는 깊은 잠에 빠질 거야.",
      "src": "reuse",
      "segs": [
@@ -471,6 +549,19 @@
      ],
      "before": [
       "queen:wiggle"
+     ]
+    },
+    {
+     "text": "그때 커튼 뒤에서 막내 요정이 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "그때 커튼 뒤에서 막내 요정이 나왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -591,6 +682,19 @@
      ]
     },
     {
+     "text": "탑 꼭대기 방에서는 할머니가 물레 앞에 앉아 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "탑 꼭대기 방에서는 할머니가 물레 앞에 앉아 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "할머니, 뭐 하세요?",
      "src": "reuse",
      "segs": [
@@ -648,6 +752,19 @@
    ],
    "lines": [
     {
+     "text": "물레를 구경하던 공주님이 할머니에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "물레를 구경하던 공주님이 할머니에게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "저도 해 볼래요!",
      "src": "reuse",
      "segs": [
@@ -698,6 +815,19 @@
      ]
     },
     {
+     "text": "공주님은 눈을 감고 스르르 잠이 들었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "공주님은 눈을 감고 스르르 잠이 들었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "어머나, 큰일 났네! 누구 없어요?",
      "src": "reuse",
      "segs": [
@@ -726,6 +856,19 @@
      ],
      "before": [
       "parents:rush"
+     ]
+    },
+    {
+     "text": "왕과 왕비는 잠든 공주님을 침실 침대에 눕혔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "왕과 왕비는 잠든 공주님을 침실 침대에 눕혔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -766,6 +909,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "공주님의 침실에 온 막내 요정이 나직이 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "공주님의 침실에 온 막내 요정이 나직이 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "공주님이 혼자 깨면 외로울 거야. 모두 함께 자요.",
      "src": "reuse",
@@ -875,6 +1031,19 @@
      ]
     },
     {
+     "text": "어느 날 성 밖에서, 할아버지가 찾아온 왕자에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "어느 날 성 밖에서, 할아버지가 찾아온 왕자에게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "저 안에 공주님이 백 년째 자고 있대요.",
      "src": "reuse",
      "segs": [
@@ -951,6 +1120,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "가시덤불을 지나온 왕자님은 성 안 부엌으로 들어갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "가시덤불을 지나온 왕자님은 성 안 부엌으로 들어갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "쉿, 다들 자고 있어요.",
      "src": "reuse",
@@ -1042,6 +1224,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "마침내 왕자님은 공주님이 잠든 침실에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "마침내 왕자님은 공주님이 잠든 침실에 도착했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "왕자님은 공주님 곁에 조용히 무릎을 꿇고 기다렸어요.",
      "src": "new",
@@ -1136,6 +1331,19 @@
      ],
      "after": [
       "glow:plates"
+     ]
+    },
+    {
+     "text": "늙은 요정도 예배당에 와서 두 사람을 축하했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "늙은 요정도 예배당에 와서 두 사람을 축하했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {

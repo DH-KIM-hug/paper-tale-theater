@@ -108,6 +108,20 @@
    ],
    "lines": [
     {
+     "text": "며칠 뒤, 할아버지가 씨앗을 심은 텃밭에 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "A few days later, Grandpa came to the garden where he had planted the seed.",
+     "segs": [
+      [
+       "nar",
+       "A few days later, Grandpa came to the garden where he had planted the seed.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "파란 싹이 났어요! 물도 주고 햇볕도 줘요.",
      "src": "reuse",
      "en": "A green sprout popped up! It gets water and sunshine too.",
@@ -191,6 +205,20 @@
    ],
    "lines": [
     {
+     "text": "여름날, 할아버지가 커다란 순무 앞에 섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "One summer day, Grandpa stood before the big turnip.",
+     "segs": [
+      [
+       "nar",
+       "One summer day, Grandpa stood before the big turnip.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"이제 뽑을 때가 되었구나.\" 할아버지가 손바닥을 탁탁 쳤어요.",
      "src": "new",
      "en": "\"It is time to pull it up,\" said Grandpa, and he clapped his hands, clap, clap.",
@@ -216,6 +244,20 @@
      "after": [
       "pull:1",
       "pop:600,330,영차!"
+     ]
+    },
+    {
+     "text": "영차! 할아버지가 잎을 힘껏 당겼어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Heave-ho! Grandpa pulled hard on the leaves.",
+     "segs": [
+      [
+       "nar",
+       "Heave-ho! Grandpa pulled hard on the leaves.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -294,6 +336,20 @@
    ],
    "lines": [
     {
+     "text": "텃밭에서 할아버지가 순무 곁에 기다리고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Grandpa waited beside the turnip in the garden.",
+     "segs": [
+      [
+       "nar",
+       "Grandpa waited beside the turnip in the garden.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "할머니가 달려왔어요. \"같이 해 봐요!\"",
      "src": "reuse",
      "en": "Grandma came running. \"Let's do it together!\"",
@@ -368,6 +424,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "텃밭의 할아버지와 할머니는 손녀를 기다렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Grandpa and Grandma waited for their granddaughter in the garden.",
+     "segs": [
+      [
+       "nar",
+       "Grandpa and Grandma waited for their granddaughter in the garden.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "마당에서 놀던 손녀가 깡충깡충 달려왔어요.",
      "src": "new",
@@ -444,6 +514,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "세 사람이 당기는 텃밭 옆에서 소리가 났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "A sound came from beside the garden where the three were pulling.",
+     "segs": [
+      [
+       "nar",
+       "A sound came from beside the garden where the three were pulling.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "덤불 뒤에서 멍멍!",
      "src": "trim",
@@ -536,6 +620,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "텃밭에서는 강아지까지 넷이 힘을 쓰고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "In the garden, all four, including Dog, were pulling hard.",
+     "segs": [
+      [
+       "nar",
+       "In the garden, all four, including Dog, were pulling hard.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "헛간 지붕에서 야옹!",
      "src": "trim",
@@ -647,6 +745,20 @@
    ],
    "lines": [
     {
+     "text": "다섯이 텃밭에 앉아 쉬는데 작은 소리가 났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "As the five rested in the garden, a tiny sound came.",
+     "segs": [
+      [
+       "nar",
+       "As the five rested in the garden, a tiny sound came.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "흙구멍에서 찍찍 소리가 나요.",
      "src": "trim",
      "from": "흙구멍에서 찍찍 소리가 나요. 톡 눌러 봐요!",
@@ -740,6 +852,20 @@
    ],
    "lines": [
     {
+     "text": "텃밭에 선 여섯은 순무를 다시 당겼어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The six stood in the garden and pulled the turnip again.",
+     "segs": [
+      [
+       "nar",
+       "The six stood in the garden and pulled the turnip again.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "이번엔 여섯이 다 함께!",
      "src": "trim",
      "from": "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!",
@@ -830,6 +956,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "순무를 뽑은 여섯은 집에 모였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After pulling up the turnip, all six gathered in the house.",
+     "segs": [
+      [
+       "nar",
+       "After pulling up the turnip, all six gathered in the house.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "할아버지는 순무를 숭덩숭덩 썰고, 할머니는 커다란 냄비를 꺼냈어요.",
      "src": "new",

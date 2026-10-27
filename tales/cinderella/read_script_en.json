@@ -52,6 +52,20 @@
      ]
     },
     {
+     "text": "부엌에서 새엄마가 아가씨에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "In the kitchen, Stepmother spoke to the girl.",
+     "segs": [
+      [
+       "nar",
+       "In the kitchen, Stepmother spoke to the girl.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "넌 부엌 일을 해!",
      "src": "reuse",
      "en": "You work in the kitchen!",
@@ -137,6 +151,20 @@
      ]
     },
     {
+     "text": "집 안 응접실에서 두 언니가 편지를 보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The two sisters looked at the letter in the sitting room.",
+     "segs": [
+      [
+       "nar",
+       "The two sisters looked at the letter in the sitting room.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "언니들은 신이 나서 폴짝폴짝 뛰며 호들갑을 떨었어요.",
      "src": "new",
      "en": "The sisters were so excited that they hopped and bounced and made a great big fuss.",
@@ -151,6 +179,20 @@
       "cast:sis2:look:proud",
       "cast:sis1:hop",
       "cast:sis2:hop"
+     ]
+    },
+    {
+     "text": "언니가 신데렐라를 불렀어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "One sister called to Cinderella.",
+     "segs": [
+      [
+       "nar",
+       "One sister called to Cinderella.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -240,6 +282,20 @@
    ],
    "lines": [
     {
+     "text": "밤이 된 부엌에는 신데렐라만 남았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "That night, Cinderella was all alone in the kitchen.",
+     "segs": [
+      [
+       "nar",
+       "That night, Cinderella was all alone in the kitchen.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "혼자 남은 신데렐라는 훌쩍훌쩍 울었어요.",
      "src": "reuse",
      "en": "Cinderella, left all alone, sobbed and sobbed.",
@@ -327,6 +383,20 @@
    ],
    "lines": [
     {
+     "text": "신데렐라는 요정 대모와 집 밖 텃밭으로 나갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Cinderella went out to the garden with her fairy godmother.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella went out to the garden with her fairy godmother.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "텃밭에서 제일 큰 호박을 가져오렴.",
      "src": "reuse",
      "en": "Bring me the biggest pumpkin from the garden.",
@@ -403,6 +473,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "텃밭의 마차 곁에서 요정 대모가 쥐덫을 살펴보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Beside the coach in the garden, her fairy godmother looked at a mousetrap.",
+     "segs": [
+      [
+       "nar",
+       "Beside the coach in the garden, her fairy godmother looked at a mousetrap.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "쥐덫에 생쥐가 있구나.",
      "src": "trim",
@@ -486,6 +570,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "텃밭에 선 요정 대모가 신데렐라에게 지팡이를 향했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "In the garden, her fairy godmother pointed her wand at Cinderella.",
+     "segs": [
+      [
+       "nar",
+       "In the garden, her fairy godmother pointed her wand at Cinderella.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "이제 네 차례란다.",
      "src": "reuse",
@@ -575,6 +673,20 @@
      ]
     },
     {
+     "text": "신데렐라는 마차에 올라탔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Cinderella climbed into the coach.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella climbed into the coach.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "황금 마차가 달그락달그락, 궁전으로 달려갔어요.",
      "src": "new",
      "en": "The golden coach rattled off to the palace, clip-clop, clip-clop.",
@@ -603,6 +715,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "신데렐라는 궁전의 무도회장 안으로 들어갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Cinderella stepped into the palace ballroom.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella stepped into the palace ballroom.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "궁전에 가니 모두 신데렐라를 바라보았어요.",
      "src": "reuse",
@@ -748,6 +874,20 @@
      ]
     },
     {
+     "text": "신데렐라는 다시 궁전으로 가서 왕자님과 춤을 추었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Cinderella went back to the palace and danced with the prince.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella went back to the palace and danced with the prince.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "신데렐라는 춤추느라 시간 가는 줄 몰랐어요.",
      "src": "reuse",
      "en": "Cinderella was dancing so happily that she forgot the time.",
@@ -812,6 +952,20 @@
      ]
     },
     {
+     "text": "왕자님이 달려가는 신데렐라를 불렀어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The prince called after Cinderella as she ran away.",
+     "segs": [
+      [
+       "nar",
+       "The prince called after Cinderella as she ran away.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"잠깐만요! 가지 마세요!\"",
      "src": "new",
      "en": "Wait! Please do not go!",
@@ -835,6 +989,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "궁전 밖 계단까지 왕자님이 뒤따라왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The prince followed her out to the palace steps.",
+     "segs": [
+      [
+       "nar",
+       "The prince followed her out to the palace steps.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.",
      "src": "reuse",
@@ -863,6 +1031,20 @@
      ],
      "before": [
       "fx:pop"
+     ]
+    },
+    {
+     "text": "신데렐라는 재 묻은 옷차림으로 집에 돌아갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Cinderella went home in her old, ashy clothes.",
+     "segs": [
+      [
+       "nar",
+       "Cinderella went home in her old, ashy clothes.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -926,6 +1108,34 @@
        "nar",
        "The prince carried the glass slipper from house to house.",
        null
+      ]
+     ]
+    },
+    {
+     "text": "마침내 왕자님은 신데렐라의 집에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "At last, the prince reached Cinderella’s home.",
+     "segs": [
+      [
+       "nar",
+       "At last, the prince reached Cinderella’s home.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "응접실에서 두 언니가 구두를 신어 보겠다고 나섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "In the sitting room, both sisters stepped forward to try on the slipper.",
+     "segs": [
+      [
+       "nar",
+       "In the sitting room, both sisters stepped forward to try on the slipper.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -1065,6 +1275,20 @@
    ],
    "lines": [
     {
+     "text": "모두가 모인 응접실에 요정 대모가 나타났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Her fairy godmother appeared in the sitting room where everyone had gathered.",
+     "segs": [
+      [
+       "nar",
+       "Her fairy godmother appeared in the sitting room where everyone had gathered.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "요정 대모가 다시 고운 옷을 입혀 주었어요.",
      "src": "reuse",
      "en": "Her fairy godmother dressed her in a beautiful gown again.",
@@ -1079,6 +1303,20 @@
       "fx:sparkle",
       "cast:cind:look:gown",
       "glow:cind"
+     ]
+    },
+    {
+     "text": "두 언니는 신데렐라에게 미안하다고 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The two sisters told Cinderella they were sorry.",
+     "segs": [
+      [
+       "nar",
+       "The two sisters told Cinderella they were sorry.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {

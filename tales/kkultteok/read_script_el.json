@@ -99,6 +99,19 @@
      ]
     },
     {
+     "text": "삼남매와 꿀떡이는 작은 언덕 아래에 왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "삼남매와 꿀떡이는 작은 언덕 아래에 왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "킁킁킁! 꿀떡이가 무슨 냄새를 맡았어요.",
      "src": "reuse",
      "segs": [
@@ -202,6 +215,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "언덕 꼭대기에 오른 삼남매와 꿀떡이가 걸음을 멈췄어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "언덕 꼭대기에 오른 삼남매와 꿀떡이가 걸음을 멈췄어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "언덕 너머에 커다란 굴뚝 하나.",
      "src": "reuse",
@@ -340,6 +366,19 @@
    ],
    "lines": [
     {
+     "text": "삼남매와 꿀떡이는 굴뚝 아래로 내려갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "삼남매와 꿀떡이는 굴뚝 아래로 내려갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "굴뚝 아래 커다란 문.",
      "src": "reuse",
      "segs": [
@@ -445,6 +484,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "공장 안으로 들어온 삼남매와 꿀떡이는 벨트 앞에 섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "공장 안으로 들어온 삼남매와 꿀떡이는 벨트 앞에 섰어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "기다란 벨트 위로 물방울이 똑, 똑, 똑.",
      "src": "reuse",
@@ -577,6 +629,19 @@
    ],
    "lines": [
     {
+     "text": "삼남매와 꿀떡이는 구름 모양을 만드는 기계 앞으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "삼남매와 꿀떡이는 구름 모양을 만드는 기계 앞으로 갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "이현이가 모양 틀을 힘껏, 쿵! 내리찍어요.",
      "src": "new",
      "segs": [
@@ -694,6 +759,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "강아지 구름을 따라 삼남매와 꿀떡이가 공장 구석으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "강아지 구름을 따라 삼남매와 꿀떡이가 공장 구석으로 갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "구석에 커다란 빨간 단추가 있어요.",
      "src": "reuse",
@@ -895,6 +973,19 @@
      ]
     },
     {
+     "text": "삼남매와 꿀떡이는 종이 있는 방으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "삼남매와 꿀떡이는 종이 있는 방으로 갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "땡, 땡, 땡! 종이 울려요.",
      "src": "reuse",
      "segs": [
@@ -953,6 +1044,19 @@
    ],
    "lines": [
     {
+     "text": "먹구름들이 떠난 방에 삼남매와 꿀떡이는 잠깐 남아 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "먹구름들이 떠난 방에 삼남매와 꿀떡이는 잠깐 남아 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "구석에 아기 먹구름 하나가 혼자 웅크리고 있어요.",
      "src": "reuse",
      "segs": [
@@ -961,6 +1065,19 @@
        "구석에 아기 먹구름 하나가 혼자 웅크리고 있어요.",
        null,
        "[gentle, warm storyteller]"
+      ]
+     ]
+    },
+    {
+     "text": "아기 먹구름이 작은 목소리로 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "아기 먹구름이 작은 목소리로 말했어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -1133,6 +1250,19 @@
    ],
    "lines": [
     {
+     "text": "기운을 낸 아기 먹구름이 단추 방으로 둥실 왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "기운을 낸 아기 먹구름이 단추 방으로 둥실 왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"정말? 그럼 나, 갈게!\"",
      "src": "reuse",
      "segs": [
@@ -1175,6 +1305,19 @@
      "before": [
       "kids:look:run",
       "kids:walk:1100,1500"
+     ]
+    },
+    {
+     "text": "꿀떡이도 삼남매를 따라 공장 밖으로 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "꿀떡이도 삼남매를 따라 공장 밖으로 나왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -1262,6 +1405,19 @@
      ]
     },
     {
+     "text": "하늘의 먹구름이 삼남매에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "하늘의 먹구름이 삼남매에게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"미안, 미안! 인사한 거야!\"",
      "src": "reuse",
      "segs": [
@@ -1316,6 +1472,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "공장 밖에 선 삼남매와 꿀떡이에게 빗방울이 떨어졌어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "공장 밖에 선 삼남매와 꿀떡이에게 빗방울이 떨어졌어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "톡.",
      "src": "reuse",
@@ -1534,6 +1703,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "비가 그치자 삼남매와 꿀떡이는 하늘을 올려다봤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "비가 그치자 삼남매와 꿀떡이는 하늘을 올려다봤어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "하늘에 커다란 무지개! \"우와!\"",
      "src": "reuse",

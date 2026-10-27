@@ -27,6 +27,20 @@
    ],
    "lines": [
     {
+     "text": "어느 날, 집에서 엄마가 빨간 모자에게 바구니를 건넸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "One day at home, Mother handed Little Red Riding Hood a basket.",
+     "segs": [
+      [
+       "nar",
+       "One day at home, Mother handed Little Red Riding Hood a basket.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "엄마가 빨간 모자에게 말했어요. \"할머니가 아프시단다. 맛있는 걸 가져다 드리렴.\"",
      "src": "reuse",
      "en": "Mother said to Little Red Riding Hood. Grandmother is sick. Bring her something yummy.",
@@ -94,6 +108,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "집을 나서기 전, 엄마가 빨간 모자를 불렀어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Before Little Red Riding Hood left home, Mother called to her.",
+     "segs": [
+      [
+       "nar",
+       "Before Little Red Riding Hood left home, Mother called to her.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "\"길에서 벗어나면 안 돼. 모르는 사람과 이야기하지도 마.\"",
      "src": "reuse",
@@ -302,6 +330,20 @@
    ],
    "lines": [
     {
+     "text": "빨간 모자는 숲길을 벗어나 꽃밭으로 들어갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Little Red Riding Hood left the forest path and went into the flower patch.",
+     "segs": [
+      [
+       "nar",
+       "Little Red Riding Hood left the forest path and went into the flower patch.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "꽃밭에는 빨간 꽃, 노란 꽃, 파란 꽃이 알록달록 가득했어요.",
      "src": "new",
      "en": "The flower field was full of red flowers, yellow flowers, and blue flowers, all bright and colorful.",
@@ -363,6 +405,20 @@
    ],
    "lines": [
     {
+     "text": "늑대는 빨간 모자보다 먼저 할머니 집에 가려 했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Wolf wanted to reach Grandmother’s house before Little Red Riding Hood.",
+     "segs": [
+      [
+       "nar",
+       "Wolf wanted to reach Grandmother’s house before Little Red Riding Hood.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "위에서는 빨간 모자가 꽃을 따요. 아래에서는 늑대가 지름길로 달려가요!",
      "src": "reuse",
      "en": "Up above, Red Hood picks flowers. Down below, the wolf runs along the shortcut!",
@@ -381,6 +437,20 @@
      ]
     },
     {
+     "text": "늑대는 할머니 집 문 앞에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Wolf reached the door of Grandmother’s house.",
+     "segs": [
+      [
+       "nar",
+       "Wolf reached the door of Grandmother’s house.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "똑똑똑… 문이 닫히고… 꿀꺽!",
      "src": "reuse",
      "en": "Knock, knock, knock... the door closes... gulp!",
@@ -394,6 +464,20 @@
       "set:cottage",
       "cam:snap:480,310,2.2",
       "fx:knock"
+     ]
+    },
+    {
+     "text": "집 안으로 들어간 늑대가 할머니를 삼켜 버렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Wolf went inside and swallowed Grandmother.",
+     "segs": [
+      [
+       "nar",
+       "Wolf went inside and swallowed Grandmother.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -442,6 +526,20 @@
    ],
    "lines": [
     {
+     "text": "꽃을 다 딴 빨간 모자는 다시 숲길을 걸어갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After picking flowers, Little Red Riding Hood walked along the forest path again.",
+     "segs": [
+      [
+       "nar",
+       "After picking flowers, Little Red Riding Hood walked along the forest path again.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "빨간 모자는 숲속 할머니 집에 도착해 문을 똑똑똑 두드렸어요.",
      "src": "new",
      "en": "Red Hood reached Grandmother's house in the forest and knocked on the door, knock, knock, knock.",
@@ -474,6 +572,20 @@
      ],
      "after": [
       "cut:granwolf"
+     ]
+    },
+    {
+     "text": "빨간 모자는 문을 열고 침대 곁으로 다가갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Little Red Riding Hood opened the door and went over to the bed.",
+     "segs": [
+      [
+       "nar",
+       "Little Red Riding Hood opened the door and went over to the bed.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -846,6 +958,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "이제 안심한 세 사람은 침대 곁에서 식탁으로 자리를 옮겼어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Safe at last, the three of them moved from the bedside to the table.",
+     "segs": [
+      [
+       "nar",
+       "Safe at last, the three of them moved from the bedside to the table.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "할머니 집 식탁에서 모두 함께 차를 마셔요.",
      "src": "trim",

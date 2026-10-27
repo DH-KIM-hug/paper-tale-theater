@@ -130,6 +130,20 @@
    ],
    "lines": [
     {
+     "text": "농부는 밭에서 소리가 난 곳의 흙을 걷어 냈어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The farmer cleared the soil where he had heard the clink.",
+     "segs": [
+      [
+       "nar",
+       "The farmer cleared the soil where he had heard the clink.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "땅속에서 둥근 뚜껑이 보여요.",
      "src": "reuse",
      "en": "A round lid is showing in the ground.",
@@ -313,6 +327,20 @@
    ],
    "lines": [
     {
+     "text": "농부와 아내는 마당의 항아리 곁에 그대로 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The farmer and his wife stayed beside the jar in the yard.",
+     "segs": [
+      [
+       "nar",
+       "The farmer and his wife stayed beside the jar in the yard.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"이번에는 다른 것도 넣어 볼까?\" 농부가 싱글벙글 웃으며 말했어요.",
      "src": "new",
      "en": "Shall we try putting something else in? said the farmer with a big grin.",
@@ -399,6 +427,20 @@
    ],
    "lines": [
     {
+     "text": "농부는 늘어난 돈으로 이웃에게 줄 쌀을 샀어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "With the extra coins, the farmer bought rice for his neighbors.",
+     "segs": [
+      [
+       "nar",
+       "With the extra coins, the farmer bought rice for his neighbors.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "착한 농부는 혼자만 쓰지 않았어요. 이웃 다섯 집에 쌀을 나눠 주러 갔어요.",
      "src": "reuse",
      "en": "The kind farmer did not keep it all for himself. He went to share rice with five neighbors.",
@@ -484,6 +526,20 @@
        "nar",
        "But in that village there also lived a rich man whose greed was as big as a mountain.",
        null
+      ]
+     ]
+    },
+    {
+     "text": "농부가 부잣집 대문 앞으로 찾아갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The farmer went to the rich man’s gate.",
+     "segs": [
+      [
+       "nar",
+       "The farmer went to the rich man’s gate.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -665,6 +721,20 @@
    ],
    "lines": [
     {
+     "text": "소동을 듣고 부자의 아버지가 방으로 들어왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Hearing the noise, the rich man’s father came into the room.",
+     "segs": [
+      [
+       "nar",
+       "Hearing the noise, the rich man’s father came into the room.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "그때 부자의 아버지가 다가와 항아리 속을 들여다보았어요. \"이게 뭐냐?\"",
      "src": "reuse",
      "en": "Then the rich man's father came and peeked into the jar. What is this?",
@@ -810,6 +880,20 @@
    ],
    "lines": [
     {
+     "text": "부잣집 방 안에서 부자는 아직도 밥을 나르고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "In the rich man’s room, he was still carrying food to the fathers.",
+     "segs": [
+      [
+       "nar",
+       "In the rich man’s room, he was still carrying food to the fathers.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "아버지 여덟 명이 우르르 몰려다니며 왁자지껄 떠들었어요.",
      "src": "new",
      "en": "Eight fathers bustled about all together, chattering and clattering.",
@@ -852,6 +936,20 @@
      ],
      "after": [
       "cut:smash"
+     ]
+    },
+    {
+     "text": "부자는 항아리를 바닥에 내리쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The rich man brought the jar down on the floor.",
+     "segs": [
+      [
+       "nar",
+       "The rich man brought the jar down on the floor.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -925,6 +1023,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "소동이 끝난 뒤, 부자는 농부네 집으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After all the fuss, the rich man went to the farmer’s home.",
+     "segs": [
+      [
+       "nar",
+       "After all the fuss, the rich man went to the farmer’s home.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "부자는 농부를 찾아가 사과하고, 가진 것을 마을 사람들과 나누기로 했어요. 함께 잔치를 열어요!",
      "src": "reuse",

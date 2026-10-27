@@ -108,6 +108,20 @@
       "mom:face:right",
       "mom:walk:1180,500"
      ]
+    },
+    {
+     "text": "엄마가 떠나자 오누이는 문을 꼭 잠갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After Mom left, the children locked the door tight.",
+     "segs": [
+      [
+       "nar",
+       "After Mom left, the children locked the door tight.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
     }
    ]
   },
@@ -121,6 +135,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "엄마는 산길을 지나 부잣집 부엌에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Mom walked along the mountain path to the rich family’s kitchen.",
+     "segs": [
+      [
+       "nar",
+       "Mom walked along the mountain path to the rich family’s kitchen.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "엄마는 부잣집에서 하루 종일 부지런히 일했어요.",
      "src": "reuse",
@@ -549,6 +577,20 @@
      ]
     },
     {
+     "text": "문밖에는 엄마 옷을 입은 호랑이가 서 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Outside stood the tiger, wearing Mom’s clothes.",
+     "segs": [
+      [
+       "nar",
+       "Outside stood the tiger, wearing Mom’s clothes.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.",
      "src": "reuse",
      "en": "Knock, knock, knock. \"Kids~ Mom's home. Open the door~\" The voice is rough and raspy.",
@@ -698,6 +740,20 @@
    ],
    "lines": [
     {
+     "text": "깜깜한 뒷마당에 오누이가 발을 살금살금 내디뎠어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The children stepped softly into the dark backyard.",
+     "segs": [
+      [
+       "nar",
+       "The children stepped softly into the dark backyard.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "오누이는 뒷문으로 살금살금 나왔어요.",
      "src": "reuse",
      "en": "The children tiptoed out the back door.",
@@ -803,6 +859,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "오누이는 장독 뒤를 떠나 우물가에 다다랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The children left the jars and reached the well.",
+     "segs": [
+      [
+       "nar",
+       "The children left the jars and reached the well.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "우물가에 커다란 나무가 있어요.",
      "src": "trim",
@@ -1071,6 +1141,20 @@
    ],
    "lines": [
     {
+     "text": "나무 꼭대기에서 오누이는 서로 꼭 붙어 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "At the top of the tree, the children huddled close.",
+     "segs": [
+      [
+       "nar",
+       "At the top of the tree, the children huddled close.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.",
      "src": "reuse",
      "en": "The tiger is getting closer and closer. The brother and sister put their hands together.",
@@ -1187,6 +1271,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "오누이가 떠난 나무에 호랑이만 남았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The children were gone, and the tiger was left in the tree.",
+     "segs": [
+      [
+       "nar",
+       "The children were gone, and the tiger was left in the tree.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.",
      "src": "reuse",
@@ -1307,6 +1405,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "그동안 오누이는 하늘 나라에서 무사히 함께 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Meanwhile, the children were safe together in the sky.",
+     "segs": [
+      [
+       "nar",
+       "Meanwhile, the children were safe together in the sky.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.",
      "src": "reuse",

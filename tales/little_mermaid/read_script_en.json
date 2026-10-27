@@ -109,6 +109,20 @@
      ]
     },
     {
+     "text": "할머니가 막내 인어공주에게 당부했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Grandmother had a gentle word for the youngest mermaid.",
+     "segs": [
+      [
+       "nar",
+       "Grandmother had a gentle word for the youngest mermaid.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "조심해서 다녀오렴.",
      "src": "reuse",
      "en": "Be careful, and come back safely.",
@@ -234,6 +248,20 @@
      ]
     },
     {
+     "text": "인어공주가 배 위의 왕자님을 보며 속삭였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The little mermaid looked at the prince on the ship and whispered.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid looked at the prince on the ship and whispered.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "저 사람이 왕자님이구나.",
      "src": "reuse",
      "en": "So that is the prince.",
@@ -321,6 +349,20 @@
      ]
     },
     {
+     "text": "인어공주가 물에 빠진 왕자님에게 헤엄쳐 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The little mermaid swam toward the prince in the water.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid swam toward the prince in the water.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "내가 도와줄게요!",
      "src": "reuse",
      "en": "I will help you!",
@@ -382,6 +424,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "밤새 헤엄친 인어공주는 마침내 바닷가에 닿았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After swimming all night, the little mermaid reached the shore.",
+     "segs": [
+      [
+       "nar",
+       "After swimming all night, the little mermaid reached the shore.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "인어공주는 왕자님을 모래밭에 눕히고, 바위 뒤에 숨었어요.",
      "src": "reuse",
@@ -518,6 +574,20 @@
      ]
     },
     {
+     "text": "인어공주가 할머니 곁에 앉아 물었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The little mermaid sat beside Grandmother and asked a question.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid sat beside Grandmother and asked a question.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "할머니, 사람은 어떻게 살아요?",
      "src": "reuse",
      "en": "Grandmother, how do people live?",
@@ -621,6 +691,20 @@
      ]
     },
     {
+     "text": "마녀가 찾아온 인어공주에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The witch spoke to the little mermaid who had come to see her.",
+     "segs": [
+      [
+       "nar",
+       "The witch spoke to the little mermaid who had come to see her.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "다리를 갖고 싶다고? 좋아. 대신 네 고운 목소리를 다오.",
      "src": "reuse",
      "en": "You want legs? Very well. But in return, give me your lovely voice.",
@@ -710,6 +794,20 @@
    ],
    "lines": [
     {
+     "text": "인어공주는 약을 가지고 사람들의 궁전으로 헤엄쳐 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "With the potion, the little mermaid swam to the human palace.",
+     "segs": [
+      [
+       "nar",
+       "With the potion, the little mermaid swam to the human palace.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "새벽, 궁전 계단에서 인어공주는 약을 마셨어요.",
      "src": "reuse",
      "en": "At dawn, on the palace steps, the little mermaid drank the potion.",
@@ -764,6 +862,20 @@
      "after": [
       "prince:move:740,520,1500",
       "prince:hop"
+     ]
+    },
+    {
+     "text": "계단에서 인어공주를 발견한 왕자님이 물었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The prince saw the little mermaid on the steps and asked a question.",
+     "segs": [
+      [
+       "nar",
+       "The prince saw the little mermaid on the steps and asked a question.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -867,6 +979,20 @@
      ]
     },
     {
+     "text": "왕자님이 인어공주에게 다정하게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The prince spoke gently to the little mermaid.",
+     "segs": [
+      [
+       "nar",
+       "The prince spoke gently to the little mermaid.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "바다에서 온 아이 같아요. 내 귀여운 동생처럼 지내요.",
      "src": "reuse",
      "en": "You seem like a child from the sea. Stay with me like my sweet little sister.",
@@ -932,6 +1058,34 @@
        "nar",
        "One day, the great ship was hung with flowers, bunches and bunches of them.",
        null
+      ]
+     ]
+    },
+    {
+     "text": "그 배에 왕자님과 인어공주, 이웃 나라 공주님이 모였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The prince, the little mermaid, and a princess from a nearby kingdom were on the ship.",
+     "segs": [
+      [
+       "nar",
+       "The prince, the little mermaid, and a princess from a nearby kingdom were on the ship.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "왕자님이 이웃 나라 공주님에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The prince spoke to the princess from the nearby kingdom.",
+     "segs": [
+      [
+       "nar",
+       "The prince spoke to the princess from the nearby kingdom.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -1032,6 +1186,20 @@
      ]
     },
     {
+     "text": "언니들이 배 위의 인어공주에게 속삭였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The sisters whispered to the little mermaid on the ship.",
+     "segs": [
+      [
+       "nar",
+       "The sisters whispered to the little mermaid on the ship.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "마녀에게 머리카락을 주고 이 단검을 받았어.",
      "simultaneous": true,
      "src": "reuse",
@@ -1100,6 +1268,20 @@
       "follow:560",
       "fx:swish",
       "dagger:give"
+     ]
+    },
+    {
+     "text": "언니가 내민 단검을 인어공주가 받아 들었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The little mermaid took the dagger her sister held out.",
+     "segs": [
+      [
+       "nar",
+       "The little mermaid took the dagger her sister held out.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -1201,6 +1383,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "아침 바다 위로 배가 조용히 흘러갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The ship sailed gently across the morning sea.",
+     "segs": [
+      [
+       "nar",
+       "The ship sailed gently across the morning sea.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "인어공주는 부드러운 바닷바람이 되었어요. 길 잃은 배의 돛을 밀어 주고, 더운 날엔 시원한 바람을 보내지요.",
      "src": "reuse",

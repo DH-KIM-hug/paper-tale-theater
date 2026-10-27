@@ -145,6 +145,20 @@
      ]
     },
     {
+     "text": "문밖에 서 있는 건 늑대였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "It was the wolf standing outside.",
+     "segs": [
+      [
+       "nar",
+       "It was the wolf standing outside.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"얘들아, 엄마야. 문 열어 줘!\" 굵고 거친 목소리였어요.",
      "src": "reuse",
      "en": "Children, it's Mother. Open the door! It was a rough voice.",
@@ -255,6 +269,20 @@
    ],
    "lines": [
     {
+     "text": "집 밖에서 늑대는 아기 염소들을 속일 궁리를 했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Outside the house, the wolf thought of a way to trick the little goats.",
+     "segs": [
+      [
+       "nar",
+       "Outside the house, the wolf thought of a way to trick the little goats.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "늑대는 곰곰이 생각했어요.",
      "src": "reuse",
      "en": "The wolf thought hard.",
@@ -307,6 +335,20 @@
      ]
     },
     {
+     "text": "늑대가 다시 염소네 문 앞으로 왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The wolf came back to the goats’ door.",
+     "segs": [
+      [
+       "nar",
+       "The wolf came back to the goats’ door.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"얘들아, 엄마야. 문 열어 줘~\"",
      "src": "reuse",
      "en": "Children, it's Mother. Open the door, please~",
@@ -336,6 +378,20 @@
        "said the little goats."
       ]
      ]
+    },
+    {
+     "text": "하지만 시커먼 발을 보고 아기 염소들은 문을 안 열었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "But the little goats saw his black paw and kept the door shut.",
+     "segs": [
+      [
+       "nar",
+       "But the little goats saw his black paw and kept the door shut.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
     }
    ]
   },
@@ -357,6 +413,20 @@
       [
        "nar",
        "The wolf scurried off to the mill and found a sack of flour."
+      ]
+     ]
+    },
+    {
+     "text": "늑대는 다시 염소네 집 문 앞으로 돌아왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The wolf came back to the goats’ door again.",
+     "segs": [
+      [
+       "nar",
+       "The wolf came back to the goats’ door again.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -578,6 +648,20 @@
    ],
    "lines": [
     {
+     "text": "늑대가 떠난 집 안에는 막내만 숨어 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After the wolf left, only the youngest goat was hiding in the house.",
+     "segs": [
+      [
+       "nar",
+       "After the wolf left, only the youngest goat was hiding in the house.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "집에 돌아온 엄마 염소는 깜짝 놀랐어요.",
      "src": "reuse",
      "en": "Mother Goat came home and was very surprised.",
@@ -693,6 +777,20 @@
    ],
    "lines": [
     {
+     "text": "엄마와 막내는 집을 나와 늑대가 있는 나무를 찾았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Mom and the youngest left the house and found the tree where the wolf was.",
+     "segs": [
+      [
+       "nar",
+       "Mom and the youngest left the house and found the tree where the wolf was.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "늑대는 배가 불러서, 나무 아래에서 쿨쿨 자고 있었어요.",
      "src": "reuse",
      "en": "The wolf was full, and he was fast asleep under a tree.",
@@ -777,6 +875,20 @@
    ],
    "lines": [
     {
+     "text": "나무 아래에서 엄마는 잠든 늑대 곁에 앉았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Under the tree, Mom sat beside the sleeping wolf.",
+     "segs": [
+      [
+       "nar",
+       "Under the tree, Mom sat beside the sleeping wolf.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "엄마가 가위로 슥삭슥삭, 늑대 배를 열었어요. 늑대는 쿨쿨 자고 있었어요.",
      "src": "new",
      "en": "Snip, snip! Mother opened the wolf's tummy with her scissors. The wolf kept on snoring.",
@@ -854,6 +966,20 @@
      ]
     },
     {
+     "text": "엄마는 늑대 배에 돌멩이를 넣었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Mom put the stones into the wolf’s belly.",
+     "segs": [
+      [
+       "nar",
+       "Mom put the stones into the wolf’s belly.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "엄마가 바늘로 콕콕콕 꿰맸어요. 늑대는 아무것도 몰랐어요.",
      "src": "reuse",
      "en": "Mother stitched with her needle, poke, poke, poke. The wolf did not notice a thing.",
@@ -879,6 +1005,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "염소 가족이 물러난 뒤에도 늑대는 나무 아래에서 잤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After the goat family moved away, the wolf kept sleeping under the tree.",
+     "segs": [
+      [
+       "nar",
+       "After the goat family moved away, the wolf kept sleeping under the tree.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "잠에서 깬 늑대가 비틀비틀 일어났어요.",
      "src": "reuse",
@@ -1006,6 +1146,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "늑대가 달아난 우물가에 염소 가족이 모였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The goat family gathered by the well after the wolf ran away.",
+     "segs": [
+      [
+       "nar",
+       "The goat family gathered by the well after the wolf ran away.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.",
      "src": "reuse",

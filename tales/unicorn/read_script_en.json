@@ -60,6 +60,20 @@
      ]
     },
     {
+     "text": "다현이가 혼잣말을 했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Dahyun said to herself.",
+     "segs": [
+      [
+       "nar",
+       "Dahyun said to herself.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "진짜 유니콘을 만나고 싶어요.",
      "src": "reuse",
      "en": "I want to meet a real unicorn.",
@@ -137,6 +151,20 @@
    ],
    "lines": [
     {
+     "text": "언덕을 오른 다현이가 구름 나라에 다다랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Dahyun climbed the hill and reached cloudland.",
+     "segs": [
+      [
+       "nar",
+       "Dahyun climbed the hill and reached cloudland.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "구름 섬에 양 한 마리가 혼자 앉아 있어요.",
      "src": "reuse",
      "en": "On a cloud island, a little sheep sat all alone.",
@@ -145,6 +173,20 @@
        "nar",
        "On a cloud island, a little sheep sat all alone.",
        null
+      ]
+     ]
+    },
+    {
+     "text": "양은 길을 잃어 훌쩍훌쩍 울고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The sheep was lost and crying. Sniff, sniff.",
+     "segs": [
+      [
+       "nar",
+       "The sheep was lost and crying. Sniff, sniff.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -161,6 +203,20 @@
      ],
      "before": [
       "pop:sheep,훌쩍…"
+     ]
+    },
+    {
+     "text": "다현이가 양 아래에서 두 팔을 벌렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Dahyun opened her arms below the sheep.",
+     "segs": [
+      [
+       "nar",
+       "Dahyun opened her arms below the sheep.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -385,6 +441,20 @@
      ]
     },
     {
+     "text": "다현이는 숲속에서 아픈 사슴을 만났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "In the forest, Dahyun met a deer who was hurt.",
+     "segs": [
+      [
+       "nar",
+       "In the forest, Dahyun met a deer who was hurt.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "아야, 아야…",
      "src": "reuse",
      "en": "Ouch, ouch...",
@@ -485,6 +555,20 @@
    ],
    "lines": [
     {
+     "text": "가시를 뺀 뒤에도 다현이는 숲에서 사슴 곁에 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After pulling out the thorns, Dahyun stayed beside the deer in the forest.",
+     "segs": [
+      [
+       "nar",
+       "After pulling out the thorns, Dahyun stayed beside the deer in the forest.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "다현이는 사슴의 작은 뿔을 가만히 보았어요.",
      "src": "reuse",
      "en": "Dahyun looked quietly at the deer's little antlers.",
@@ -564,6 +648,20 @@
      ]
     },
     {
+     "text": "숲을 떠난 다현이는 폭포 앞에 다다랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Dahyun left the forest and reached the waterfall.",
+     "segs": [
+      [
+       "nar",
+       "Dahyun left the forest and reached the waterfall.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "폭포 위에 무지개가 떠 있어요. 말 한 마리가 서 있어요.",
      "src": "reuse",
      "en": "A rainbow hangs over the waterfall. A horse is standing there.",
@@ -590,6 +688,20 @@
        "nar",
        "Water drops sparkled, sparkle, sparkle, and the rainbow glowed in every colour.",
        null
+      ]
+     ]
+    },
+    {
+     "text": "말의 배에서 소리가 났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "A sound came from the horse’s tummy.",
+     "segs": [
+      [
+       "nar",
+       "A sound came from the horse’s tummy.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -641,6 +753,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "폭포 앞에서 다현이가 배고픈 말에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "By the waterfall, Dahyun spoke to the hungry horse.",
+     "segs": [
+      [
+       "nar",
+       "By the waterfall, Dahyun spoke to the hungry horse.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "자, 같이 먹자.",
      "src": "reuse",
@@ -755,6 +881,20 @@
    ],
    "lines": [
     {
+     "text": "말과 헤어진 다현이가 혼자 길로 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After saying goodbye to the horse, Dahyun came out onto the road alone.",
+     "segs": [
+      [
+       "nar",
+       "After saying goodbye to the horse, Dahyun came out onto the road alone.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "해가 지고, 길은 텅 비었어요.",
      "src": "reuse",
      "en": "The sun went down, and the road was empty.",
@@ -850,6 +990,20 @@
      ]
     },
     {
+     "text": "다현이는 그 길을 계속 걷고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Dahyun was still walking along the road.",
+     "segs": [
+      [
+       "nar",
+       "Dahyun was still walking along the road.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "그때, 뒤에서 작은 소리가 났어요.",
      "src": "reuse",
      "en": "Just then, a small sound came from behind.",
@@ -938,6 +1092,20 @@
       "uni:fade:in",
       "uni:glow",
       "halo:fade:in"
+     ]
+    },
+    {
+     "text": "유니콘이 다현이에게 다정하게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The unicorn spoke gently to Dahyun.",
+     "segs": [
+      [
+       "nar",
+       "The unicorn spoke gently to Dahyun.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -1066,6 +1234,20 @@
        "nar",
        "Dahyun gently tucked the red flower from her basket into the unicorn's mane.",
        "happy"
+      ]
+     ]
+    },
+    {
+     "text": "유니콘이 다현이에게 고맙다고 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The unicorn thanked Dahyun.",
+     "segs": [
+      [
+       "nar",
+       "The unicorn thanked Dahyun.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },

@@ -83,6 +83,19 @@
    ],
    "lines": [
     {
+     "text": "어느 날 아침, 곰 세 식구는 부엌에 모였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "어느 날 아침, 곰 세 식구는 부엌에 모였어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "엄마 곰이 맛있는 죽을 끓였어요. 그런데 너무 뜨거워요!",
      "src": "reuse",
      "segs": [
@@ -243,6 +256,19 @@
    ],
    "lines": [
     {
+     "text": "골디락스는 통나무집 문 앞으로 다가갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "골디락스는 통나무집 문 앞으로 다가갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "우와, 커다란 문이에요.",
      "src": "trim",
      "from": "우와, 커다란 문이에요. 문을 톡 두드려 봐요.",
@@ -328,6 +354,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "집 안으로 들어온 골디락스는 식탁으로 다가갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "집 안으로 들어온 골디락스는 식탁으로 다가갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "식탁 위에 죽이 세 그릇 있어요.",
      "src": "reuse",
@@ -464,6 +503,19 @@
    ],
    "lines": [
     {
+     "text": "죽을 먹은 골디락스는 거실로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "죽을 먹은 골디락스는 거실로 갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "이번엔 의자가 세 개 있어요.",
      "src": "reuse",
      "segs": [
@@ -545,6 +597,19 @@
      ]
     },
     {
+     "text": "골디락스는 작은 의자에도 사뿐 앉아 보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "골디락스는 작은 의자에도 사뿐 앉아 보았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "딱 맞아요! 그런데…",
      "src": "reuse",
      "segs": [
@@ -617,6 +682,19 @@
      ],
      "before": [
       "pop:300,250,하암~"
+     ]
+    },
+    {
+     "text": "골디락스는 계단을 올라가 침대 곁에 섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "골디락스는 계단을 올라가 침대 곁에 섰어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -738,6 +816,19 @@
      ]
     },
     {
+     "text": "곰 세 식구는 식탁에 놓인 그릇들을 살펴보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "곰 세 식구는 식탁에 놓인 그릇들을 살펴보았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "아빠 곰: \"누가 내 죽을 먹었지?\"",
      "src": "reuse",
      "segs": [
@@ -777,6 +868,19 @@
      ],
      "before": [
       "bear:baby:cry"
+     ]
+    },
+    {
+     "text": "곰 가족은 식탁을 떠나 거실로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "곰 가족은 식탁을 떠나 거실로 갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -853,6 +957,19 @@
      "before": [
       "fx:snore",
       "pop:600,250,쿨쿨"
+     ]
+    },
+    {
+     "text": "곰 세 식구는 소리를 따라 위층으로 올라갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "곰 세 식구는 소리를 따라 위층으로 올라갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -977,6 +1094,32 @@
    ],
    "lines": [
     {
+     "text": "골디락스는 걸린 치마를 살살 빼냈어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "골디락스는 걸린 치마를 살살 빼냈어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "골디락스와 곰 가족은 아래층 거실로 내려왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "골디락스와 곰 가족은 아래층 거실로 내려왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "골디락스: \"허락 없이 들어와서 미안해요.\"",
      "src": "reuse",
      "segs": [
@@ -1076,6 +1219,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "의자를 고친 뒤, 모두 다시 식탁에 모였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "의자를 고친 뒤, 모두 다시 식탁에 모였어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "엄마 곰이 새 죽을 끓였어요. 다 함께 먹어요!",
      "src": "reuse",

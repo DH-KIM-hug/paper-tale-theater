@@ -117,6 +117,20 @@
    ],
    "lines": [
     {
+     "text": "여행을 마친 왕자는 자기 성으로 돌아왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After his journey, the prince came home to his castle.",
+     "segs": [
+      [
+       "nar",
+       "After his journey, the prince came home to his castle.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "그날 밤, 비가 쏟아지고 천둥이 우르릉!",
      "src": "reuse",
      "en": "That night, the rain poured down and the thunder went rumble, rumble!",
@@ -252,6 +266,20 @@
      ]
     },
     {
+     "text": "공주가 성 안으로 들어오자 왕비는 곰곰 생각했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "As the princess came inside, the queen thought for a moment.",
+     "segs": [
+      [
+       "nar",
+       "As the princess came inside, the queen thought for a moment.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "진짜 공주인지는… 살짝 알아볼까?",
      "src": "reuse",
      "en": "A true princess, hmm? Let's find out... just a little.",
@@ -351,6 +379,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "왕비는 손님방 침대 앞에서 준비를 계속했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The queen kept getting the bed ready in the guest room.",
+     "segs": [
+      [
+       "nar",
+       "The queen kept getting the bed ready in the guest room.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "완두콩 위에 매트리스를 쌓아 볼까?",
      "src": "trim",
@@ -452,6 +494,20 @@
    ],
    "lines": [
     {
+     "text": "잠잘 시간이 되자 왕비가 공주를 손님방으로 데려왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "At bedtime, the queen brought the princess to the guest room.",
+     "segs": [
+      [
+       "nar",
+       "At bedtime, the queen brought the princess to the guest room.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "완두콩은 맨 아래, 공주님은 맨 위에서 자요.",
      "src": "reuse",
      "en": "The pea at the very bottom, and the princess at the very top.",
@@ -512,6 +568,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "공주는 높은 침대 위에 혼자 누웠어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The princess lay alone on top of the tall bed.",
+     "segs": [
+      [
+       "nar",
+       "The princess lay alone on top of the tall bed.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "밤이 깊었는데… 공주는 이리 뒤척, 저리 뒤척.",
      "src": "reuse",
@@ -617,6 +687,34 @@
      ]
     },
     {
+     "text": "침대 아래에서 왕비와 왕자가 공주를 기다렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The queen and the prince waited for her beside the bed.",
+     "segs": [
+      [
+       "nar",
+       "The queen and the prince waited for her beside the bed.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "왕비가 공주에게 다정하게 물었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The queen gently asked the princess a question.",
+     "segs": [
+      [
+       "nar",
+       "The queen gently asked the princess a question.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "잘 잤니?",
      "src": "reuse",
      "en": "Did you sleep well?",
@@ -642,6 +740,20 @@
      "before": [
       "pea:look:honest",
       "pea:hop"
+     ]
+    },
+    {
+     "text": "공주의 대답을 듣고 왕비가 깜짝 놀랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The queen gasped when she heard the princess’s answer.",
+     "segs": [
+      [
+       "nar",
+       "The queen gasped when she heard the princess’s answer.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -705,6 +817,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "그 뒤, 성 마당에 왕자와 공주가 나란히 섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Later, the prince and princess stood side by side in the castle yard.",
+     "segs": [
+      [
+       "nar",
+       "Later, the prince and princess stood side by side in the castle yard.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "왕자와 공주는 손을 꼭 잡았어요.",
      "src": "reuse",

@@ -64,6 +64,20 @@
      ]
     },
     {
+     "text": "해님이 바람에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The Sun spoke to the Wind.",
+     "segs": [
+      [
+       "nar",
+       "The Sun spoke to the Wind.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"내가 제일 따뜻해!\"",
      "src": "reuse",
      "en": "\"I'm the warmest!\"",
@@ -76,6 +90,20 @@
      ],
      "before": [
       "sun:shine:1"
+     ]
+    },
+    {
+     "text": "바람도 해님에게 큰 소리로 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The Wind spoke loudly to the Sun too.",
+     "segs": [
+      [
+       "nar",
+       "The Wind spoke loudly to the Sun too.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -118,6 +146,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "해님과 바람은 하늘에서 아래를 내려다보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The Sun and the Wind looked down from the sky.",
+     "segs": [
+      [
+       "nar",
+       "The Sun and the Wind looked down from the sky.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "저 아래 길로 나그네가 걸어가요.",
      "src": "reuse",
@@ -217,6 +259,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "나그네가 걷는 들판으로 바람이 불어왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The Wind blew across the field where the traveler walked.",
+     "segs": [
+      [
+       "nar",
+       "The Wind blew across the field where the traveler walked.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "바람이 볼을 빵빵하게 부풀렸어요.",
      "src": "reuse",
@@ -363,6 +419,20 @@
    ],
    "lines": [
     {
+     "text": "나그네는 아직 그 들판 길을 걷고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The traveler was still walking along the field path.",
+     "segs": [
+      [
+       "nar",
+       "The traveler was still walking along the field path.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "바람은 더 세게 불었어요. 쓱!",
      "src": "reuse",
      "en": "The Wind blew even harder. Swish!",
@@ -474,6 +544,20 @@
      ],
      "before": [
       "sun:smile"
+     ]
+    },
+    {
+     "text": "바람이 멈춘 들판에 나그네가 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The traveler was in the field, where the Wind had stopped blowing.",
+     "segs": [
+      [
+       "nar",
+       "The traveler was in the field, where the Wind had stopped blowing.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -612,6 +696,20 @@
    ],
    "lines": [
     {
+     "text": "외투를 벗은 나그네 위로 해님과 바람이 내려다보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The Sun and the Wind looked down at the traveler with his coat off.",
+     "segs": [
+      [
+       "nar",
+       "The Sun and the Wind looked down at the traveler with his coat off.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "바람이 불 때, 나그네는 외투를 꽉 여몄어요.",
      "src": "reuse",
      "en": "When the Wind blew, the traveler held the coat tight.",
@@ -695,6 +793,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "길을 걷던 나그네가 개울가에 다다랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The traveler followed the path to a stream.",
+     "segs": [
+      [
+       "nar",
+       "The traveler followed the path to a stream.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "나그네는 개울가에서 쉬어요.",
      "src": "reuse",
@@ -803,6 +915,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "나그네가 쉬는 동안, 하늘에서는 해님과 바람이 만났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "While the traveler rested, the Sun and the Wind met in the sky.",
+     "segs": [
+      [
+       "nar",
+       "While the traveler rested, the Sun and the Wind met in the sky.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "해님과 바람이 마주 보고 웃었어요.",
      "src": "reuse",

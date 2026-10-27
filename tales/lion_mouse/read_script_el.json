@@ -103,6 +103,19 @@
    ],
    "lines": [
     {
+     "text": "사자가 자는 나무 옆 풀밭으로 가 볼까요?",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "사자가 자는 나무 옆 풀밭으로 가 볼까요?",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "작은 생쥐가 산책을 나왔어요. 풀이 숲처럼 커다래요!",
      "src": "reuse",
      "segs": [
@@ -145,6 +158,19 @@
      ],
      "before": [
       "mouse:hop:1"
+     ]
+    },
+    {
+     "text": "생쥐가 잠든 사자의 갈기 위로 올라갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "생쥐가 잠든 사자의 갈기 위로 올라갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -322,6 +348,19 @@
    ],
    "lines": [
     {
+     "text": "생쥐를 내려다보던 사자가 물었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "생쥐를 내려다보던 사자가 물었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"네가? 나를 도와준다고?\"",
      "src": "reuse",
      "segs": [
@@ -418,6 +457,19 @@
    ],
    "lines": [
     {
+     "text": "생쥐가 떠난 뒤, 두 친구의 크기를 떠올려 볼까요?",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "생쥐가 떠난 뒤, 두 친구의 크기를 떠올려 볼까요?",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "사자 발가락 하나가 생쥐 한 마리만 해요!",
      "src": "reuse",
      "segs": [
@@ -501,6 +553,19 @@
      ]
     },
     {
+     "text": "풀밭에 놓인 덫의 그물이 사자를 꽁꽁 감쌌어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "풀밭에 놓인 덫의 그물이 사자를 꽁꽁 감쌌어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "사자가 버둥버둥, 그래도 그물이 풀리지 않아요.",
      "src": "reuse",
      "segs": [
@@ -559,6 +624,19 @@
      ]
     },
     {
+     "text": "생쥐가 다다다 달려와 그물 앞에 섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "생쥐가 다다다 달려와 그물 앞에 섰어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"사자님, 제가 도와 드릴게요!\"",
      "src": "reuse",
      "segs": [
@@ -585,6 +663,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "달빛 아래, 생쥐가 사자를 감싼 그물에 매달렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "달빛 아래, 생쥐가 사자를 감싼 그물에 매달렸어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!",
      "src": "reuse",
@@ -663,6 +754,19 @@
      ]
     },
     {
+     "text": "풀려난 사자가 생쥐에게 다정하게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "풀려난 사자가 생쥐에게 다정하게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!\"",
      "src": "reuse",
      "segs": [
@@ -701,6 +805,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "밤이 지나고, 두 친구가 있는 초원에 해가 떴어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "밤이 지나고, 두 친구가 있는 초원에 해가 떴어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "다음 날 아침, 사자가 생쥐를 등에 태웠어요. \"꽉 잡아!\"",
      "src": "reuse",

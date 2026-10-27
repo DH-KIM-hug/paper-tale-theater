@@ -90,6 +90,19 @@
      ]
     },
     {
+     "text": "벨이 아버지에게 다정하게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "벨이 아버지에게 다정하게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "괜찮아요, 제가 집안일을 할게요.",
      "src": "reuse",
      "segs": [
@@ -138,6 +151,19 @@
    ],
    "lines": [
     {
+     "text": "작은 집 앞에 아버지와 세 딸이 모였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "작은 집 앞에 아버지와 세 딸이 모였어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "배 한 척이 돌아왔대요! 아버지가 도시로 떠나요.",
      "src": "reuse",
      "segs": [
@@ -146,6 +172,19 @@
        "배 한 척이 돌아왔대요! 아버지가 도시로 떠나요.",
        "toneup",
        "[excited, bright news, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "언니들은 아버지에게 선물을 부탁했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "언니들은 아버지에게 선물을 부탁했어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -168,6 +207,19 @@
      ],
      "before": [
       "sisters:hop"
+     ]
+    },
+    {
+     "text": "벨도 아버지에게 조용히 부탁했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "벨도 아버지에게 조용히 부탁했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -280,6 +332,19 @@
      ]
     },
     {
+     "text": "아버지가 말을 타고 지나던 숲은 어두워졌어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "아버지가 말을 타고 지나던 숲은 어두워졌어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "눈이 펑펑 쏟아지고, 바람이 쌩쌩 불었어요.",
      "src": "new",
      "segs": [
@@ -321,6 +386,19 @@
       "set:dining",
       "father:at:560,505:eat",
       "table:long"
+     ]
+    },
+    {
+     "text": "아버지는 궁전 안 식탁 앞으로 들어갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "아버지는 궁전 안 식탁 앞으로 들어갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -383,6 +461,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "잠에서 깬 아버지는 궁전 정원으로 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "잠에서 깬 아버지는 궁전 정원으로 나왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "아침이 되자 눈 속에 장미가 활짝 피어 있었어요!",
      "src": "reuse",
@@ -512,6 +603,19 @@
      ]
     },
     {
+     "text": "놀란 아버지의 모자가 바닥에 툭 떨어졌어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "놀란 아버지의 모자가 바닥에 툭 떨어졌어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "나리가 아니라 야수라고 불러라. 장미를 꺾었으니 벌을 받아야 해. 네가 돌아오든지, 딸 하나가 스스로 오든지.",
      "src": "reuse",
      "segs": [
@@ -565,6 +669,19 @@
        "아버지는 장미를 들고 집으로 돌아왔어요.",
        "sad",
        "[quiet, gentle, storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "작은 집에서 세 딸이 아버지의 이야기를 들었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "작은 집에서 세 딸이 아버지의 이야기를 들었어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -686,6 +803,19 @@
      ]
     },
     {
+     "text": "정원에서는 야수가 두 사람을 기다리고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "정원에서는 야수가 두 사람을 기다리고 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "벨의 가슴이 두근두근 뛰었어요.",
      "src": "new",
      "segs": [
@@ -736,6 +866,19 @@
        "착하구나. 아버지는 내일 아침 집으로 가거라.",
        null,
        "[deep, kind, slow, warm]"
+      ]
+     ]
+    },
+    {
+     "text": "벨은 궁전 안에 마련된 자기 방으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "벨은 궁전 안에 마련된 자기 방으로 갔어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -798,6 +941,32 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "다음 날 아침, 아버지는 집으로 돌아갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "다음 날 아침, 아버지는 집으로 돌아갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "궁전에 남은 벨은 저녁이면 식탁에 앉았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "궁전에 남은 벨은 저녁이면 식탁에 앉았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "저녁마다 야수가 찾아왔어요.",
      "src": "reuse",
@@ -907,6 +1076,19 @@
    ],
    "lines": [
     {
+     "text": "어느 저녁, 야수는 벨의 방에 함께 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "어느 저녁, 야수는 벨의 방에 함께 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "어느 날, 벨은 거울로 집을 보았어요.",
      "src": "reuse",
      "segs": [
@@ -920,6 +1102,19 @@
      "before": [
       "fx:sparkle",
       "mirror:face:show"
+     ]
+    },
+    {
+     "text": "그 거울은 멀리 있는 집도 보여 주는 신기한 거울이었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "그 거울은 멀리 있는 집도 보여 주는 신기한 거울이었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -947,6 +1142,19 @@
      ],
      "before": [
       "belle:wiggle"
+     ]
+    },
+    {
+     "text": "야수가 걱정하는 벨에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "야수가 걱정하는 벨에게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -1039,6 +1247,19 @@
      ]
     },
     {
+     "text": "벨은 아픈 아버지를 정성껏 돌보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "벨은 아픈 아버지를 정성껏 돌보았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "네 덕분에 다 나았다.",
      "src": "reuse",
      "segs": [
@@ -1051,6 +1272,19 @@
      ],
      "before": [
       "father:hop"
+     ]
+    },
+    {
+     "text": "아버지가 나아지자 언니들이 벨을 붙잡았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "아버지가 나아지자 언니들이 벨을 붙잡았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -1298,6 +1532,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "같은 정원에서 벨은 왕자님을 바라보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "같은 정원에서 벨은 왕자님을 바라보았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "벨은 눈을 비비고 또 비볐어요. 야수가 정말 왕자님이 된 거예요!",
      "src": "new",

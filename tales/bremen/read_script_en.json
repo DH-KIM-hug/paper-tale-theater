@@ -316,6 +316,20 @@
    ],
    "lines": [
     {
+     "text": "세 친구가 마을 집 앞을 지나가고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The three friends were passing a house in the village.",
+     "segs": [
+      [
+       "nar",
+       "The three friends were passing a house in the village.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "지붕 위에서 꼬끼오!",
      "src": "trim",
      "from": "지붕 위에서 꼬끼오! 누구일까요?",
@@ -384,7 +398,7 @@
      ]
     },
     {
-     "text": "당나귀, 강아지, 고양이, 닭. 네 친구가 모였어요!",
+     "text": "당나귀, 강아지, 고양이, 닭. 친구 넷이 모였어요!",
      "src": "reuse",
      "en": "Donkey, dog, cat, and rooster. Four friends together at last!",
      "segs": [
@@ -413,7 +427,7 @@
    ],
    "lines": [
     {
-     "text": "네 친구는 길가 풀밭에서 신나게 노래 연습을 했어요.",
+     "text": "친구 넷은 길가 풀밭에서 신나게 노래 연습을 했어요.",
      "src": "new",
      "en": "The four friends practiced their songs on the grassy roadside, full of cheer.",
      "segs": [
@@ -472,6 +486,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "노래 연습을 마친 친구 넷은 숲길로 들어섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After singing practice, the four friends set off along a forest path.",
+     "segs": [
+      [
+       "nar",
+       "After singing practice, the four friends set off along a forest path.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "해가 지고 캄캄한 숲이 되었어요. 부엉이가 부엉부엉.",
      "src": "reuse",
@@ -575,6 +603,20 @@
    ],
    "lines": [
     {
+     "text": "친구 넷은 숲속 집 앞에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The four friends reached the house in the woods.",
+     "segs": [
+      [
+       "nar",
+       "The four friends reached the house in the woods.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "불빛이 새어 나오는 창문이에요. 그런데 너무 높아서 아무도 안 닿아요.",
      "src": "reuse",
      "en": "Light is shining out of a window. But it's so high that no one can reach it.",
@@ -669,6 +711,20 @@
    ],
    "lines": [
     {
+     "text": "맨 위에 올라간 닭이 집 안을 살펴보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Rooster, up on top, peeped into the house.",
+     "segs": [
+      [
+       "nar",
+       "Rooster, up on top, peeped into the house.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.",
      "src": "reuse",
      "en": "Peeking through the window, three robbers are counting gold coins and eating tasty food.",
@@ -747,6 +803,20 @@
    ],
    "lines": [
     {
+     "text": "창문 밖의 친구 넷이 함께 노래할 준비를 했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Outside the window, the four friends got ready to sing together.",
+     "segs": [
+      [
+       "nar",
+       "Outside the window, the four friends got ready to sing together.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "다 같이 목청껏!",
      "src": "reuse",
      "en": "All together, as loud as you can!",
@@ -806,7 +876,7 @@
      ]
     },
     {
-     "text": "네 친구는 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.",
+     "text": "친구 넷은 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.",
      "src": "reuse",
      "en": "The four friends munched the leftover food, put out the light, and fell fast asleep.",
      "segs": [
@@ -836,6 +906,48 @@
    ],
    "lines": [
     {
+     "text": "어두운 집 안에서 친구 넷은 저마다 자리를 잡았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Inside the dark house, each friend found a place to rest.",
+     "segs": [
+      [
+       "nar",
+       "Inside the dark house, each friend found a place to rest.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "고양이는 아궁이에, 강아지는 문 앞에 누웠어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Cat lay by the fireplace, and Dog lay by the door.",
+     "segs": [
+      [
+       "nar",
+       "Cat lay by the fireplace, and Dog lay by the door.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "당나귀는 짚더미에, 닭은 천장 아래 나무 위에 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Donkey rested in the straw, and Rooster perched on a beam overhead.",
+     "segs": [
+      [
+       "nar",
+       "Donkey rested in the straw, and Rooster perched on a beam overhead.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "한밤중, 도둑 하나가 살금살금 돌아왔어요. 쉿!",
      "src": "reuse",
      "en": "In the middle of the night, one robber tiptoed back. Shh!",
@@ -864,6 +976,34 @@
      "after": [
       "robber:hit:cat",
       "cat:wake"
+     ]
+    },
+    {
+     "text": "반짝이던 것은 고양이의 두 눈이었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Those two little lights were Cat’s eyes.",
+     "segs": [
+      [
+       "nar",
+       "Those two little lights were Cat’s eyes.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "잠에서 깬 고양이가 도둑의 손을 할퀴었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Cat woke up and scratched the robber’s hand.",
+     "segs": [
+      [
+       "nar",
+       "Cat woke up and scratched the robber’s hand.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -973,6 +1113,20 @@
      ]
     },
     {
+     "text": "도둑은 숲으로 달아나 다른 도둑들에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The robber ran into the woods and told the other robbers.",
+     "segs": [
+      [
+       "nar",
+       "The robber ran into the woods and told the other robbers.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "도둑: \"그 집엔 귀신이 할퀴고, 누가 다리를 콕 찌르고, 거인이 쿵 차고, 지붕에선 재판관이 도둑 잡아라! 소리쳤어!\"",
      "src": "reuse",
      "en": "Robber: \"In that house, a ghost scratched me, someone poked my leg, a giant kicked me, and up on the roof a judge shouted, 'Catch the thief!'\"",
@@ -1012,7 +1166,7 @@
    ],
    "lines": [
     {
-     "text": "아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.",
+     "text": "아침이 밝았어요. 친구 넷은 이 집이 참 좋았어요.",
      "src": "reuse",
      "en": "Morning came. The four friends loved this house.",
      "segs": [
@@ -1024,7 +1178,21 @@
      ]
     },
     {
-     "text": "네 친구는 신이 나서 폴짝폴짝 뛰었어요.",
+     "text": "집 안에 모인 친구 넷은 여기서 살기로 했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Together in the house, the four friends decided to stay.",
+     "segs": [
+      [
+       "nar",
+       "Together in the house, the four friends decided to stay.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "친구 넷은 신이 나서 폴짝폴짝 뛰었어요.",
      "src": "new",
      "en": "The four friends were so happy they hopped and hopped for joy.",
      "segs": [

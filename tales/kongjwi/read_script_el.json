@@ -131,6 +131,19 @@
    ],
    "lines": [
     {
+     "text": "마당 일을 마치자 새엄마가 콩쥐를 밭으로 데려갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "마당 일을 마치자 새엄마가 콩쥐를 밭으로 데려갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"이 밭을 다 갈아 놓아라!\" 새엄마가 말했어요.",
      "src": "reuse",
      "segs": [
@@ -231,6 +244,19 @@
    ],
    "lines": [
     {
+     "text": "밭일을 마친 콩쥐는 집 우물가로 돌아왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "밭일을 마친 콩쥐는 집 우물가로 돌아왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"이 독에 물을 가득 채워라!\" 새엄마가 말했어요.",
      "src": "reuse",
      "segs": [
@@ -305,6 +331,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "콩쥐가 우물가에서 새는 독을 들여다보고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "콩쥐가 우물가에서 새는 독을 들여다보고 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "그때 두꺼비가 폴짝 나타났어요. \"내가 구멍을 막아 줄게!\"",
      "src": "reuse",
@@ -397,6 +436,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "물을 다 채운 콩쥐에게 새엄마가 곡식을 가져왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "물을 다 채운 콩쥐에게 새엄마가 곡식을 가져왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "\"겉겨를 벗겨서 쌀을 가져오너라!\" 새엄마가 말했어요.",
      "src": "reuse",
@@ -512,6 +564,19 @@
    ],
    "lines": [
     {
+     "text": "곡식 일을 마친 콩쥐는 방 안 베틀 앞에 앉았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "곡식 일을 마친 콩쥐는 방 안 베틀 앞에 앉았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.",
      "src": "reuse",
      "segs": [
@@ -610,6 +675,19 @@
    ],
    "lines": [
     {
+     "text": "다음 날, 콩쥐는 선물 받은 옷과 꽃신을 신었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "다음 날, 콩쥐는 선물 받은 옷과 꽃신을 신었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "콩쥐는 잔치에 가려고 개울을 건너기로 했어요.",
      "src": "trim",
      "from": "콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!",
@@ -693,6 +771,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "꽃신 한 짝을 신은 콩쥐가 잔칫집에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "꽃신 한 짝을 신은 콩쥐가 잔칫집에 도착했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "잔치에서는 북과 장구와 꽹과리 소리가 울렸어요.",
      "src": "trim",
@@ -808,6 +899,19 @@
      ]
     },
     {
+     "text": "원님은 관아에서 꽃신 주인을 기다렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "원님은 관아에서 꽃신 주인을 기다렸어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "마을 처녀들이 줄줄이 와서 꽃신을 신어 보았지만, 아무에게도 맞지 않았어요.",
      "src": "new",
      "segs": [
@@ -880,6 +984,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "얼마 뒤, 혼례 마당에 콩쥐와 원님이 나란히 섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "얼마 뒤, 혼례 마당에 콩쥐와 원님이 나란히 섰어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "콩쥐와 원님은 혼례를 올렸어요. 콩쥐는 곱게 차린 신부가 되었어요.",
      "src": "reuse",

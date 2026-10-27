@@ -131,6 +131,19 @@
    ],
    "lines": [
     {
+     "text": "농부는 밭에서 소리가 난 곳의 흙을 걷어 냈어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "농부는 밭에서 소리가 난 곳의 흙을 걷어 냈어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "땅속에서 둥근 뚜껑이 보여요.",
      "src": "reuse",
      "segs": [
@@ -317,6 +330,19 @@
    ],
    "lines": [
     {
+     "text": "농부와 아내는 마당의 항아리 곁에 그대로 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "농부와 아내는 마당의 항아리 곁에 그대로 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"이번에는 다른 것도 넣어 볼까?\" 농부가 싱글벙글 웃으며 말했어요.",
      "src": "new",
      "segs": [
@@ -404,6 +430,19 @@
    ],
    "lines": [
     {
+     "text": "농부는 늘어난 돈으로 이웃에게 줄 쌀을 샀어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "농부는 늘어난 돈으로 이웃에게 줄 쌀을 샀어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "착한 농부는 혼자만 쓰지 않았어요. 이웃 다섯 집에 쌀을 나눠 주러 갔어요.",
      "src": "reuse",
      "segs": [
@@ -489,6 +528,19 @@
        "그런데 마을에는 욕심이 산더미 같은 부자가 살고 있었어요.",
        null,
        "[calm, a little playful]"
+      ]
+     ]
+    },
+    {
+     "text": "농부가 부잣집 대문 앞으로 찾아갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "농부가 부잣집 대문 앞으로 찾아갔어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -683,6 +735,19 @@
    ],
    "lines": [
     {
+     "text": "소동을 듣고 부자의 아버지가 방으로 들어왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "소동을 듣고 부자의 아버지가 방으로 들어왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "그때 부자의 아버지가 다가와 항아리 속을 들여다보았어요. \"이게 뭐냐?\"",
      "src": "reuse",
      "segs": [
@@ -840,6 +905,19 @@
    ],
    "lines": [
     {
+     "text": "부잣집 방 안에서 부자는 아직도 밥을 나르고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "부잣집 방 안에서 부자는 아직도 밥을 나르고 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "아버지 여덟 명이 우르르 몰려다니며 왁자지껄 떠들었어요.",
      "src": "new",
      "segs": [
@@ -885,6 +963,19 @@
      ],
      "after": [
       "cut:smash"
+     ]
+    },
+    {
+     "text": "부자는 항아리를 바닥에 내리쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "부자는 항아리를 바닥에 내리쳤어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -959,6 +1050,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "소동이 끝난 뒤, 부자는 농부네 집으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "소동이 끝난 뒤, 부자는 농부네 집으로 갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "부자는 농부를 찾아가 사과하고, 가진 것을 마을 사람들과 나누기로 했어요. 함께 잔치를 열어요!",
      "src": "reuse",

@@ -133,6 +133,19 @@
    ],
    "lines": [
     {
+     "text": "그날 밤, 헨젤은 집으로 돌아올 길을 표시할 생각이었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "그날 밤, 헨젤은 집으로 돌아올 길을 표시할 생각이었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!",
      "src": "reuse",
      "segs": [
@@ -349,6 +362,19 @@
      ]
     },
     {
+     "text": "다음 날, 아빠와 두 아이는 다시 숲으로 향했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "다음 날, 아빠와 두 아이는 다시 숲으로 향했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "숲길에서 헨젤은 빵 부스러기를 솔솔, 하나씩 떨어뜨렸어요.",
      "src": "new",
      "segs": [
@@ -391,6 +417,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "아빠와 두 아이는 숲속 빈터에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "아빠와 두 아이는 숲속 빈터에 도착했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.",
      "src": "reuse",
@@ -436,6 +475,19 @@
      ],
      "after": [
       "father:hide"
+     ]
+    },
+    {
+     "text": "아이들이 잠든 사이 아빠는 혼자 집으로 돌아갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "아이들이 잠든 사이 아빠는 혼자 집으로 돌아갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -509,6 +561,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "헨젤과 그레텔은 왔던 숲길로 발길을 돌렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "헨젤과 그레텔은 왔던 숲길로 발길을 돌렸어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "그런데 이상해요. 빵 부스러기가 하나도 없어요!",
      "src": "reuse",
@@ -600,6 +665,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "둘은 숲을 헤매다가 작은 집 앞에 다다랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "둘은 숲을 헤매다가 작은 집 앞에 다다랐어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!",
      "src": "reuse",
@@ -766,6 +844,19 @@
      ]
     },
     {
+     "text": "새장에 갇힌 헨젤 곁에서 그레텔은 빠져나갈 방법을 찾았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "새장에 갇힌 헨젤 곁에서 그레텔은 빠져나갈 방법을 찾았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.",
      "src": "reuse",
      "segs": [
@@ -862,6 +953,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "새장에서 나온 헨젤은 그레텔과 화덕 곁에 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "새장에서 나온 헨젤은 그레텔과 화덕 곁에 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "그때 마녀가 일어나 쿵쿵 걸어왔어요. 눈이 나빠서 더듬더듬 찾았어요.",
      "src": "reuse",
@@ -1106,6 +1210,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "강을 건넌 두 아이는 숲길을 따라 계속 걸었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "강을 건넌 두 아이는 숲길을 따라 계속 걸었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.",
      "src": "reuse",

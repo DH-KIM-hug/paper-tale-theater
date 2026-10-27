@@ -109,6 +109,19 @@
      ]
     },
     {
+     "text": "할머니가 막내 인어공주에게 당부했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "할머니가 막내 인어공주에게 당부했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "조심해서 다녀오렴.",
      "src": "reuse",
      "segs": [
@@ -234,6 +247,19 @@
      ]
     },
     {
+     "text": "인어공주가 배 위의 왕자님을 보며 속삭였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "인어공주가 배 위의 왕자님을 보며 속삭였어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "저 사람이 왕자님이구나.",
      "src": "reuse",
      "segs": [
@@ -321,6 +347,19 @@
      ]
     },
     {
+     "text": "인어공주가 물에 빠진 왕자님에게 헤엄쳐 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "인어공주가 물에 빠진 왕자님에게 헤엄쳐 갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "내가 도와줄게요!",
      "src": "reuse",
      "segs": [
@@ -382,6 +421,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "밤새 헤엄친 인어공주는 마침내 바닷가에 닿았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "밤새 헤엄친 인어공주는 마침내 바닷가에 닿았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "인어공주는 왕자님을 모래밭에 눕히고, 바위 뒤에 숨었어요.",
      "src": "reuse",
@@ -518,6 +570,19 @@
      ]
     },
     {
+     "text": "인어공주가 할머니 곁에 앉아 물었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "인어공주가 할머니 곁에 앉아 물었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "할머니, 사람은 어떻게 살아요?",
      "src": "reuse",
      "segs": [
@@ -621,6 +686,19 @@
      ]
     },
     {
+     "text": "마녀가 찾아온 인어공주에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "마녀가 찾아온 인어공주에게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "다리를 갖고 싶다고? 좋아. 대신 네 고운 목소리를 다오.",
      "src": "reuse",
      "segs": [
@@ -710,6 +788,19 @@
    ],
    "lines": [
     {
+     "text": "인어공주는 약을 가지고 사람들의 궁전으로 헤엄쳐 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "인어공주는 약을 가지고 사람들의 궁전으로 헤엄쳐 갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "새벽, 궁전 계단에서 인어공주는 약을 마셨어요.",
      "src": "reuse",
      "segs": [
@@ -764,6 +855,19 @@
      "after": [
       "prince:move:740,520,1500",
       "prince:hop"
+     ]
+    },
+    {
+     "text": "계단에서 인어공주를 발견한 왕자님이 물었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "계단에서 인어공주를 발견한 왕자님이 물었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -867,6 +971,19 @@
      ]
     },
     {
+     "text": "왕자님이 인어공주에게 다정하게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "왕자님이 인어공주에게 다정하게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "바다에서 온 아이 같아요. 내 귀여운 동생처럼 지내요.",
      "src": "reuse",
      "segs": [
@@ -932,6 +1049,32 @@
        "어느 날, 커다란 배에 꽃이 주렁주렁 걸렸어요.",
        null,
        "[calm, gentle]"
+      ]
+     ]
+    },
+    {
+     "text": "그 배에 왕자님과 인어공주, 이웃 나라 공주님이 모였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "그 배에 왕자님과 인어공주, 이웃 나라 공주님이 모였어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "왕자님이 이웃 나라 공주님에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "왕자님이 이웃 나라 공주님에게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -1032,6 +1175,19 @@
      ]
     },
     {
+     "text": "언니들이 배 위의 인어공주에게 속삭였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "언니들이 배 위의 인어공주에게 속삭였어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "마녀에게 머리카락을 주고 이 단검을 받았어.",
      "simultaneous": true,
      "src": "reuse",
@@ -1108,6 +1264,19 @@
       "follow:560",
       "fx:swish",
       "dagger:give"
+     ]
+    },
+    {
+     "text": "언니가 내민 단검을 인어공주가 받아 들었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "언니가 내민 단검을 인어공주가 받아 들었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -1209,6 +1378,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "아침 바다 위로 배가 조용히 흘러갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "아침 바다 위로 배가 조용히 흘러갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "인어공주는 부드러운 바닷바람이 되었어요. 길 잃은 배의 돛을 밀어 주고, 더운 날엔 시원한 바람을 보내지요.",
      "src": "reuse",

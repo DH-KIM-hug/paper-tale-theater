@@ -53,6 +53,19 @@
      ]
     },
     {
+     "text": "풀밭에 엄마 돼지와 삼 형제가 모였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "풀밭에 엄마 돼지와 삼 형제가 모였어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "엄마 돼지가 말했어요. \"이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴.\"",
      "src": "reuse",
      "segs": [
@@ -226,6 +239,19 @@
    ],
    "lines": [
     {
+     "text": "가게를 떠난 첫째가 집 지을 터에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "가게를 떠난 첫째가 집 지을 터에 도착했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "첫째는 짚으로 집을 짓기로 했어요.",
      "src": "trim",
      "from": "첫째는 짚으로 집을 짓기로 했어요. 짚을 톡톡톡 쌓아요!",
@@ -285,6 +311,19 @@
    ],
    "lines": [
     {
+     "text": "그동안 둘째도 자기 집 지을 터에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "그동안 둘째도 자기 집 지을 터에 도착했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "둘째는 나무로 집을 짓기로 했어요.",
      "src": "trim",
      "from": "둘째는 나무로 집을 짓기로 했어요. 망치로 톡톡톡톡톡!",
@@ -343,6 +382,19 @@
     "cam:snap:500,280,1"
    ],
    "lines": [
+    {
+     "text": "셋째도 자기 집 지을 터로 벽돌을 날랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "셋째도 자기 집 지을 터로 벽돌을 날랐어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 열 장을 천천히 쌓아요.",
      "src": "reuse",
@@ -446,6 +498,19 @@
     "cam:snap:500,280,1"
    ],
    "lines": [
+    {
+     "text": "첫째는 짚 집에서 놀고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "첫째는 짚 집에서 놀고 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요. \"아기 돼지야, 문 열어라!\"",
      "src": "reuse",
@@ -566,6 +631,19 @@
     "cam:snap:500,280,1"
    ],
    "lines": [
+    {
+     "text": "첫째가 나무 집 안으로 후다닥 들어갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "첫째가 나무 집 안으로 후다닥 들어갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "늑대가 나무 집에도 왔어요. \"아기 돼지야, 문 열어라!\"",
      "src": "reuse",
@@ -688,6 +766,19 @@
    ],
    "lines": [
     {
+     "text": "두 형은 셋째의 벽돌 집 문 앞에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "두 형은 셋째의 벽돌 집 문 앞에 도착했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "두 형은 숨이 차서 헉헉!",
      "src": "trim",
      "from": "두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?",
@@ -764,6 +855,19 @@
     "cam:snap:450,280,1"
    ],
    "lines": [
+    {
+     "text": "삼 형제가 숨은 벽돌 집 밖에서 발소리가 났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "삼 형제가 숨은 벽돌 집 밖에서 발소리가 났어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "늑대가 벽돌 집에 왔어요. \"아기 돼지야, 문 열어라!\"",
      "src": "reuse",
@@ -914,6 +1018,19 @@
      ]
     },
     {
+     "text": "집 안의 삼 형제는 굴뚝 아래에 솥을 놓았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "집 안의 삼 형제는 굴뚝 아래에 솥을 놓았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.",
      "src": "reuse",
      "segs": [
@@ -961,6 +1078,19 @@
      ]
     },
     {
+     "text": "늑대 엉덩이가 뜨거운 솥에 닿았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "늑대 엉덩이가 뜨거운 솥에 닿았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"앗, 뜨거워!\"",
      "src": "reuse",
      "segs": [
@@ -1001,6 +1131,19 @@
     "cam:snap:500,280,1"
    ],
    "lines": [
+    {
+     "text": "늑대가 떠난 뒤, 삼 형제는 집 밖으로 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "늑대가 떠난 뒤, 삼 형제는 집 밖으로 나왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.",
      "src": "reuse",

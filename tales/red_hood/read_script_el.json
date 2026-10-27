@@ -27,6 +27,19 @@
    ],
    "lines": [
     {
+     "text": "어느 날, 집에서 엄마가 빨간 모자에게 바구니를 건넸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "어느 날, 집에서 엄마가 빨간 모자에게 바구니를 건넸어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "엄마가 빨간 모자에게 말했어요. \"할머니가 아프시단다. 맛있는 걸 가져다 드리렴.\"",
      "src": "reuse",
      "segs": [
@@ -100,6 +113,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "집을 나서기 전, 엄마가 빨간 모자를 불렀어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "집을 나서기 전, 엄마가 빨간 모자를 불렀어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "\"길에서 벗어나면 안 돼. 모르는 사람과 이야기하지도 마.\"",
      "src": "reuse",
@@ -321,6 +347,19 @@
    ],
    "lines": [
     {
+     "text": "빨간 모자는 숲길을 벗어나 꽃밭으로 들어갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "빨간 모자는 숲길을 벗어나 꽃밭으로 들어갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "꽃밭에는 빨간 꽃, 노란 꽃, 파란 꽃이 알록달록 가득했어요.",
      "src": "new",
      "segs": [
@@ -386,6 +425,19 @@
    ],
    "lines": [
     {
+     "text": "늑대는 빨간 모자보다 먼저 할머니 집에 가려 했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "늑대는 빨간 모자보다 먼저 할머니 집에 가려 했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "위에서는 빨간 모자가 꽃을 따요. 아래에서는 늑대가 지름길로 달려가요!",
      "src": "reuse",
      "segs": [
@@ -405,6 +457,19 @@
      ]
     },
     {
+     "text": "늑대는 할머니 집 문 앞에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "늑대는 할머니 집 문 앞에 도착했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "똑똑똑… 문이 닫히고… 꿀꺽!",
      "src": "reuse",
      "segs": [
@@ -419,6 +484,19 @@
       "set:cottage",
       "cam:snap:480,310,2.2",
       "fx:knock"
+     ]
+    },
+    {
+     "text": "집 안으로 들어간 늑대가 할머니를 삼켜 버렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "집 안으로 들어간 늑대가 할머니를 삼켜 버렸어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -470,6 +548,19 @@
    ],
    "lines": [
     {
+     "text": "꽃을 다 딴 빨간 모자는 다시 숲길을 걸어갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "꽃을 다 딴 빨간 모자는 다시 숲길을 걸어갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "빨간 모자는 숲속 할머니 집에 도착해 문을 똑똑똑 두드렸어요.",
      "src": "new",
      "segs": [
@@ -505,6 +596,19 @@
      ],
      "after": [
       "cut:granwolf"
+     ]
+    },
+    {
+     "text": "빨간 모자는 문을 열고 침대 곁으로 다가갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "빨간 모자는 문을 열고 침대 곁으로 다가갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -901,6 +1005,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "이제 안심한 세 사람은 침대 곁에서 식탁으로 자리를 옮겼어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "이제 안심한 세 사람은 침대 곁에서 식탁으로 자리를 옮겼어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "할머니 집 식탁에서 모두 함께 차를 마셔요.",
      "src": "trim",

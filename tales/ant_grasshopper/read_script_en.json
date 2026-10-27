@@ -103,6 +103,20 @@
    ],
    "lines": [
     {
+     "text": "풀밭에서 일하던 개미들을 가까이 들여다볼까요?",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Shall we take a closer look at the ants working in the grass?",
+     "segs": [
+      [
+       "nar",
+       "Shall we take a closer look at the ants working in the grass?",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "개미 눈으로 보면 풀잎이 나무처럼 커다래요!",
      "src": "reuse",
      "en": "Through an ant's eyes, blades of grass look as big as trees!",
@@ -169,6 +183,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "그동안 베짱이는 풀잎 위에서 노래하고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Meanwhile, Grasshopper was singing on a leaf.",
+     "segs": [
+      [
+       "nar",
+       "Meanwhile, Grasshopper was singing on a leaf.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "\"같이 놀자~ 띠리링!\" 베짱이가 노래해요.",
      "src": "reuse",
@@ -258,6 +286,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "개미들이 먹이를 나르는 풀밭에 먹구름이 몰려왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Dark clouds gathered over the grass where the ants were carrying food.",
+     "segs": [
+      [
+       "nar",
+       "Dark clouds gathered over the grass where the ants were carrying food.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "앗, 소나기가 와요! 후두둑 후두둑!",
      "src": "reuse",
@@ -379,6 +421,20 @@
      ]
     },
     {
+     "text": "개미들은 풀밭에서 겨울 먹이를 더 모았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The ants gathered more winter food in the grass.",
+     "segs": [
+      [
+       "nar",
+       "The ants gathered more winter food in the grass.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "개미들은 도토리를 데굴데굴 굴려 창고로 날랐어요.",
      "src": "new",
      "en": "The ants rolled acorns, roll, roll, roll, all the way to the storeroom.",
@@ -469,6 +525,20 @@
      ]
     },
     {
+     "text": "창고 밖에 있던 개미들 위로 눈이 소복소복 쌓였어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Soft snow piled up over the ants outside the storehouse.",
+     "segs": [
+      [
+       "nar",
+       "Soft snow piled up over the ants outside the storehouse.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "개미들은 오들오들 떨며 서로 꼭 붙었어요.",
      "src": "new",
      "en": "The ants shivered, brrr, brrr, and huddled close together.",
@@ -536,6 +606,20 @@
    ],
    "lines": [
     {
+     "text": "먹이를 모아 두지 않은 베짱이는 배가 꼬르륵 고팠어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Grasshopper had saved no food, and his tummy went rumble, rumble.",
+     "segs": [
+      [
+       "nar",
+       "Grasshopper had saved no food, and his tummy went rumble, rumble.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "눈 오는 날, 베짱이가 오들오들 떨며 창고 문을 두드렸어요.",
      "src": "reuse",
      "en": "On a snowy day, the grasshopper came shivering and knocked on the storeroom door.",
@@ -568,6 +652,20 @@
      ]
     },
     {
+     "text": "끼익, 문을 연 개미가 베짱이를 바라보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Creak! An ant opened the door and looked at Grasshopper.",
+     "segs": [
+      [
+       "nar",
+       "Creak! An ant opened the door and looked at Grasshopper.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "개미가 물었어요. \"여름엔 뭘 했니?\"",
      "src": "reuse",
      "en": "The ant asked, \"What did you do in the summer?\"",
@@ -591,6 +689,20 @@
        "hop",
        "I sang. Tra-la-la~",
        "sad:1.3"
+      ]
+     ]
+    },
+    {
+     "text": "개미가 베짱이에게 대답했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The ant answered Grasshopper.",
+     "segs": [
+      [
+       "nar",
+       "The ant answered Grasshopper.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -653,6 +765,20 @@
      ]
     },
     {
+     "text": "개미가 베짱이에게 다정하게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The ant spoke kindly to Grasshopper.",
+     "segs": [
+      [
+       "nar",
+       "The ant spoke kindly to Grasshopper.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"어서 들어와요! 같이 겨울을 나요.\"",
      "src": "reuse",
      "en": "\"Come in, come in! Let's spend the winter together.\"",
@@ -696,6 +822,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "베짱이는 개미들을 따라 따뜻한 창고 안으로 들어갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Grasshopper followed the ants into the warm storehouse.",
+     "segs": [
+      [
+       "nar",
+       "Grasshopper followed the ants into the warm storehouse.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "창고 안이 곡식이랑 도토리로 가득해요! 여름부터 미리 모은 덕분이에요.",
      "src": "reuse",
@@ -790,6 +930,20 @@
    ],
    "lines": [
     {
+     "text": "친구들이 모인 창고에서 베짱이가 악기를 들었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "In the storehouse full of friends, Grasshopper picked up his instrument.",
+     "segs": [
+      [
+       "nar",
+       "In the storehouse full of friends, Grasshopper picked up his instrument.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "반딧불이가 불을 밝히고, 겨울 음악회가 시작됐어요!",
      "src": "reuse",
      "en": "The firefly lit up its light, and the winter concert began!",
@@ -882,6 +1036,20 @@
        "nar",
        "Warm spring has come. Little sprouts pop up!",
        "happy:1.2"
+      ]
+     ]
+    },
+    {
+     "text": "눈이 녹은 풀밭으로 개미들과 베짱이가 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The ants and Grasshopper came out into the grass as the snow melted.",
+     "segs": [
+      [
+       "nar",
+       "The ants and Grasshopper came out into the grass as the snow melted.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },

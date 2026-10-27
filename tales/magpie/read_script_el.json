@@ -126,6 +126,32 @@
    ],
    "lines": [
     {
+     "text": "선비가 소리를 따라 큰 소나무 아래로 달려갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "선비가 소리를 따라 큰 소나무 아래로 달려갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "둥지 위에서 엄마 까치가 다급하게 외쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "둥지 위에서 엄마 까치가 다급하게 외쳤어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "까악, 까악! 도와주세요!",
      "src": "reuse",
      "segs": [
@@ -283,6 +309,19 @@
      ]
     },
     {
+     "text": "안심한 까치 부부가 선비에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "안심한 까치 부부가 선비에게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "고맙습니다, 선비님! 이 은혜는 꼭 갚을게요.",
      "src": "reuse",
      "segs": [
@@ -330,6 +369,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "선비가 떠나기 전, 소나무 위 둥지를 올려다봤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "선비가 떠나기 전, 소나무 위 둥지를 올려다봤어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "둥지 안에서 아기 까치들이 고개를 쏙 내밀었어요.",
      "src": "reuse",
@@ -481,6 +533,19 @@
       "sparkle",
       "sch:hop",
       "sch:walk:700,505,2000"
+     ]
+    },
+    {
+     "text": "선비는 불빛을 따라 외딴집 앞에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "선비는 불빛을 따라 외딴집 앞에 도착했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -728,6 +793,19 @@
    ],
    "lines": [
     {
+     "text": "선비가 갇힌 그 밤, 소나무 둥지로 가 볼까요?",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "선비가 갇힌 그 밤, 소나무 둥지로 가 볼까요?",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "그때, 큰 소나무 둥지의 까치 가족은 잠들지 못하고 있었어요.",
      "src": "reuse",
      "segs": [
@@ -874,6 +952,19 @@
      ]
     },
     {
+     "text": "종 앞에 도착한 아빠 까치가 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "종 앞에 도착한 아빠 까치가 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "종을 쳐야 해. 우리 머리로, 온 힘을 다해!",
      "src": "reuse",
      "segs": [
@@ -897,6 +988,19 @@
        "엄마 까치와 아빠 까치는 서로를 바라보고, 날개를 활짝 펴고 푸드덕 날았어요.",
        null,
        "[determined, solemn, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "까치들이 머리로 종을 힘껏 쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "까치들이 머리로 종을 힘껏 쳤어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -1000,6 +1104,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "까치들이 종을 울리는 동안, 선비는 외딴집 방 안에 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "까치들이 종을 울리는 동안, 선비는 외딴집 방 안에 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "멀리서 종소리가 들려왔어요.",
      "src": "reuse",
@@ -1130,6 +1247,19 @@
      ]
     },
     {
+     "text": "절에 도착한 선비가 종 아래로 다가갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "절에 도착한 선비가 종 아래로 다가갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "종 아래에, 까치 엄마 아빠가 눈을 감은 채 누워 있었어요.",
      "src": "reuse",
      "segs": [
@@ -1222,6 +1352,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "절의 종 아래에서 엄마 까치가 선비를 올려다보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "절의 종 아래에서 엄마 까치가 선비를 올려다보았어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "선비님… 무사하셨군요.",
      "src": "reuse",

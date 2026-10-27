@@ -183,6 +183,20 @@
    ],
    "lines": [
     {
+     "text": "집으로 돌아온 흥부는 처마 밑의 제비들을 바라보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Back home, Heungbu looked at the swallows under his roof.",
+     "segs": [
+      [
+       "nar",
+       "Back home, Heungbu looked at the swallows under his roof.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "흥부네 초가집 처마에는 제비 가족이 살았어요.",
      "src": "reuse",
      "en": "A swallow family lived under the eaves of Heungbu's little house.",
@@ -334,6 +348,20 @@
    ],
    "lines": [
     {
+     "text": "추운 겨울이 지나고 흥부네 마당에도 봄볕이 들었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The cold winter passed, and spring sunshine warmed Heungbu’s yard.",
+     "segs": [
+      [
+       "nar",
+       "The cold winter passed, and spring sunshine warmed Heungbu’s yard.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.",
      "src": "reuse",
      "en": "When spring came, the swallow flew back and dropped one gourd seed.",
@@ -397,6 +425,20 @@
     "cam:560"
    ],
    "lines": [
+    {
+     "text": "시간이 흘러 흥부네 마당의 박 덩굴이 자랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "As time passed, the gourd vine grew in Heungbu’s yard.",
+     "segs": [
+      [
+       "nar",
+       "As time passed, the gourd vine grew in Heungbu’s yard.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "줄기가 쑥쑥쑥 자라더니, 커다란 박이 세 통이나 열렸어요!",
      "src": "new",
@@ -502,6 +544,20 @@
    ],
    "lines": [
     {
+     "text": "한편, 놀부와 형수는 자기 집 처마 밑에 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Meanwhile, Nolbu and his wife stood under their own roof.",
+     "segs": [
+      [
+       "nar",
+       "Meanwhile, Nolbu and his wife stood under their own roof.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "소문을 들은 놀부는 배가 아팠어요. \"나도 부자가 될 거야!\"",
      "src": "reuse",
      "en": "When Nolbu heard the news, he felt jealous. \"I will be rich too!\"",
@@ -580,6 +636,20 @@
     "cam:560"
    ],
    "lines": [
+    {
+     "text": "그 뒤 놀부도 박씨를 얻어 자기 집 마당에 심었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Later, Nolbu got a gourd seed too and planted it in his yard.",
+     "segs": [
+      [
+       "nar",
+       "Later, Nolbu got a gourd seed too and planted it in his yard.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "놀부네 마당에도 박이 세 통 열렸어요.",
      "src": "reuse",
@@ -786,6 +856,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "흥부네 집에 모인 두 집안은 다시 한 가족이 되었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Together at Heungbu’s home, the two families became one again.",
+     "segs": [
+      [
+       "nar",
+       "Together at Heungbu’s home, the two families became one again.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "두 형제는 손을 꼭 잡고 하하 호호 웃었어요.",
      "src": "new",

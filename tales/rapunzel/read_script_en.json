@@ -72,6 +72,20 @@
      ]
     },
     {
+     "text": "엄마가 아빠에게 나직이 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Mother spoke softly to Father.",
+     "segs": [
+      [
+       "nar",
+       "Mother spoke softly to Father.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "저 라푼젤 풀이 너무너무 먹고 싶어요.",
      "src": "reuse",
      "en": "Oh, I want to eat that rampion so, so much.",
@@ -309,6 +323,20 @@
      ]
     },
     {
+     "text": "고텔은 라푼젤을 탑 꼭대기 방에 살게 했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Gothel made Rapunzel live in the room at the top of the tower.",
+     "segs": [
+      [
+       "nar",
+       "Gothel made Rapunzel live in the room at the top of the tower.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "자, 잠겨라. 밖은 위험하단다. 여기가 제일 안전해.",
      "src": "reuse",
      "en": "Now, lock tight. The outside is dangerous. This is the safest place.",
@@ -372,6 +400,20 @@
    ],
    "lines": [
     {
+     "text": "그 뒤로 고텔은 찾아올 때마다 탑 아래에서 외쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "After that, Gothel called from below the tower whenever she visited.",
+     "segs": [
+      [
+       "nar",
+       "After that, Gothel called from below the tower whenever she visited.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "라푼젤, 라푼젤, 머리를 내려 줘!",
      "src": "reuse",
      "en": "Rapunzel, Rapunzel, let down your hair!",
@@ -384,6 +426,20 @@
      ],
      "before": [
       "gothel:hop"
+     ]
+    },
+    {
+     "text": "라푼젤은 창가에서 길게 땋은 머리를 풀어 내렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Rapunzel let her long braid tumble down from the window.",
+     "segs": [
+      [
+       "nar",
+       "Rapunzel let her long braid tumble down from the window.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -467,6 +523,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "고텔이 돌아가면 탑 꼭대기 방은 조용해졌어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "When Gothel left, the room at the top of the tower grew quiet.",
+     "segs": [
+      [
+       "nar",
+       "When Gothel left, the room at the top of the tower grew quiet.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "라푼젤은 혼자 있을 때면 창가에서 노래를 불렀어요.",
      "src": "reuse",
@@ -599,6 +669,20 @@
      ]
     },
     {
+     "text": "왕자는 말에서 내려 노랫소리가 나는 탑으로 다가갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The prince got off his horse and went toward the singing in the tower.",
+     "segs": [
+      [
+       "nar",
+       "The prince got off his horse and went toward the singing in the tower.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "왕자는 탑을 한 바퀴 돌았지만 문이 없었어요.",
      "src": "reuse",
      "en": "The prince walked all the way around the tower, but there was no door.",
@@ -673,6 +757,20 @@
      ]
     },
     {
+     "text": "고텔이 머리카락을 타고 창문 안으로 올라갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Gothel climbed up the braid and in through the window.",
+     "segs": [
+      [
+       "nar",
+       "Gothel climbed up the braid and in through the window.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "아, 저렇게 올라가는구나!",
      "src": "reuse",
      "en": "Ah, so that's how you get up there!",
@@ -733,6 +831,20 @@
       "prince:move:742,505,900",
       "climb:prince:pops",
       "braid:up"
+     ]
+    },
+    {
+     "text": "라푼젤이 내린 머리를 붙잡고 왕자가 영차영차 올라갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The prince held the braid Rapunzel lowered and climbed up, heave-ho!",
+     "segs": [
+      [
+       "nar",
+       "The prince held the braid Rapunzel lowered and climbed up, heave-ho!",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -858,6 +970,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "왕자가 없는 낮, 탑 안에는 고텔과 라푼젤이 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "In the daytime, while the prince was away, Gothel and Rapunzel were in the tower.",
+     "segs": [
+      [
+       "nar",
+       "In the daytime, while the prince was away, Gothel and Rapunzel were in the tower.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "어느 날, 라푼젤이 무심코 말했어요.",
      "src": "reuse",
@@ -1039,6 +1165,20 @@
      ]
     },
     {
+     "text": "왕자는 머리카락을 타고 올라가 방 안의 고텔과 마주쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The prince climbed the braid and found Gothel waiting in the room.",
+     "segs": [
+      [
+       "nar",
+       "The prince climbed the braid and found Gothel waiting in the room.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "라푼젤은 여기 없다. 다시는 못 볼 거다. 자, 내려가라.",
      "src": "reuse",
      "en": "Rapunzel is not here. You will never see her again. Now, down you go.",
@@ -1139,6 +1279,34 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "숲을 벗어난 왕자가 작은 오두막이 있는 들판에 이르렀어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The prince came out of the forest to a field with a little cottage.",
+     "segs": [
+      [
+       "nar",
+       "The prince came out of the forest to a field with a little cottage.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "라푼젤은 그 오두막 곁에서 노래하고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Rapunzel was singing beside that cottage.",
+     "segs": [
+      [
+       "nar",
+       "Rapunzel was singing beside that cottage.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "그때, 바람을 타고 노랫소리가 들려왔어요.",
      "src": "reuse",

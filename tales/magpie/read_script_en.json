@@ -126,6 +126,34 @@
    ],
    "lines": [
     {
+     "text": "선비가 소리를 따라 큰 소나무 아래로 달려갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The scholar followed the cries and ran to a big pine tree.",
+     "segs": [
+      [
+       "nar",
+       "The scholar followed the cries and ran to a big pine tree.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "둥지 위에서 엄마 까치가 다급하게 외쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Up at the nest, Mother Magpie called out in a hurry.",
+     "segs": [
+      [
+       "nar",
+       "Up at the nest, Mother Magpie called out in a hurry.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "까악, 까악! 도와주세요!",
      "src": "reuse",
      "en": "Caw, caw! Please help us!",
@@ -283,6 +311,20 @@
      ]
     },
     {
+     "text": "안심한 까치 부부가 선비에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Feeling safe, the two magpies spoke to the scholar.",
+     "segs": [
+      [
+       "nar",
+       "Feeling safe, the two magpies spoke to the scholar.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "고맙습니다, 선비님! 이 은혜는 꼭 갚을게요.",
      "src": "reuse",
      "en": "Thank you, kind scholar! We will repay your kindness, we promise.",
@@ -329,6 +371,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "선비가 떠나기 전, 소나무 위 둥지를 올려다봤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Before leaving, the scholar looked up at the nest in the pine tree.",
+     "segs": [
+      [
+       "nar",
+       "Before leaving, the scholar looked up at the nest in the pine tree.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "둥지 안에서 아기 까치들이 고개를 쏙 내밀었어요.",
      "src": "reuse",
@@ -480,6 +536,20 @@
       "sparkle",
       "sch:hop",
       "sch:walk:700,505,2000"
+     ]
+    },
+    {
+     "text": "선비는 불빛을 따라 외딴집 앞에 도착했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Following the light, the scholar reached a lonely house.",
+     "segs": [
+      [
+       "nar",
+       "Following the light, the scholar reached a lonely house.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -727,6 +797,20 @@
    ],
    "lines": [
     {
+     "text": "선비가 갇힌 그 밤, 소나무 둥지로 가 볼까요?",
+     "src": "new",
+     "needs_audio": true,
+     "en": "That same night, shall we visit the nest in the pine tree?",
+     "segs": [
+      [
+       "nar",
+       "That same night, shall we visit the nest in the pine tree?",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "그때, 큰 소나무 둥지의 까치 가족은 잠들지 못하고 있었어요.",
      "src": "reuse",
      "en": "Meanwhile, in the nest in the big pine tree, the magpie family could not sleep.",
@@ -873,6 +957,20 @@
      ]
     },
     {
+     "text": "종 앞에 도착한 아빠 까치가 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "At the bell, Father Magpie spoke.",
+     "segs": [
+      [
+       "nar",
+       "At the bell, Father Magpie spoke.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "종을 쳐야 해. 우리 머리로, 온 힘을 다해!",
      "src": "reuse",
      "en": "We must strike the bell. With our heads, with all our might!",
@@ -896,6 +994,20 @@
        "nar",
        "Mama and Papa Magpie looked at each other, spread their wings wide, and flew, flap-flap!",
        null
+      ]
+     ]
+    },
+    {
+     "text": "까치들이 머리로 종을 힘껏 쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The magpies struck the bell hard with their heads.",
+     "segs": [
+      [
+       "nar",
+       "The magpies struck the bell hard with their heads.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -999,6 +1111,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "까치들이 종을 울리는 동안, 선비는 외딴집 방 안에 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "While the magpies rang the bell, the scholar was in the lonely house.",
+     "segs": [
+      [
+       "nar",
+       "While the magpies rang the bell, the scholar was in the lonely house.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "멀리서 종소리가 들려왔어요.",
      "src": "reuse",
@@ -1129,6 +1255,20 @@
      ]
     },
     {
+     "text": "절에 도착한 선비가 종 아래로 다가갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "At the temple, the scholar went up to the bell.",
+     "segs": [
+      [
+       "nar",
+       "At the temple, the scholar went up to the bell.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "종 아래에, 까치 엄마 아빠가 눈을 감은 채 누워 있었어요.",
      "src": "reuse",
      "en": "Beneath the bell, Mama and Papa Magpie lay with their eyes closed.",
@@ -1221,6 +1361,20 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "절의 종 아래에서 엄마 까치가 선비를 올려다보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Below the temple bell, Mother Magpie looked up at the scholar.",
+     "segs": [
+      [
+       "nar",
+       "Below the temple bell, Mother Magpie looked up at the scholar.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "선비님… 무사하셨군요.",
      "src": "reuse",

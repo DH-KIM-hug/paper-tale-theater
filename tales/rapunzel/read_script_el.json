@@ -72,6 +72,19 @@
      ]
     },
     {
+     "text": "엄마가 아빠에게 나직이 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "엄마가 아빠에게 나직이 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "저 라푼젤 풀이 너무너무 먹고 싶어요.",
      "src": "reuse",
      "segs": [
@@ -309,6 +322,19 @@
      ]
     },
     {
+     "text": "고텔은 라푼젤을 탑 꼭대기 방에 살게 했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "고텔은 라푼젤을 탑 꼭대기 방에 살게 했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "자, 잠겨라. 밖은 위험하단다. 여기가 제일 안전해.",
      "src": "reuse",
      "segs": [
@@ -372,6 +398,19 @@
    ],
    "lines": [
     {
+     "text": "그 뒤로 고텔은 찾아올 때마다 탑 아래에서 외쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "그 뒤로 고텔은 찾아올 때마다 탑 아래에서 외쳤어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "라푼젤, 라푼젤, 머리를 내려 줘!",
      "src": "reuse",
      "segs": [
@@ -384,6 +423,19 @@
      ],
      "before": [
       "gothel:hop"
+     ]
+    },
+    {
+     "text": "라푼젤은 창가에서 길게 땋은 머리를 풀어 내렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "라푼젤은 창가에서 길게 땋은 머리를 풀어 내렸어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -467,6 +519,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "고텔이 돌아가면 탑 꼭대기 방은 조용해졌어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "고텔이 돌아가면 탑 꼭대기 방은 조용해졌어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "라푼젤은 혼자 있을 때면 창가에서 노래를 불렀어요.",
      "src": "reuse",
@@ -599,6 +664,19 @@
      ]
     },
     {
+     "text": "왕자는 말에서 내려 노랫소리가 나는 탑으로 다가갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "왕자는 말에서 내려 노랫소리가 나는 탑으로 다가갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "왕자는 탑을 한 바퀴 돌았지만 문이 없었어요.",
      "src": "reuse",
      "segs": [
@@ -673,6 +751,19 @@
      ]
     },
     {
+     "text": "고텔이 머리카락을 타고 창문 안으로 올라갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "고텔이 머리카락을 타고 창문 안으로 올라갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "아, 저렇게 올라가는구나!",
      "src": "reuse",
      "segs": [
@@ -733,6 +824,19 @@
       "prince:move:742,505,900",
       "climb:prince:pops",
       "braid:up"
+     ]
+    },
+    {
+     "text": "라푼젤이 내린 머리를 붙잡고 왕자가 영차영차 올라갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "라푼젤이 내린 머리를 붙잡고 왕자가 영차영차 올라갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -858,6 +962,19 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "왕자가 없는 낮, 탑 안에는 고텔과 라푼젤이 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "왕자가 없는 낮, 탑 안에는 고텔과 라푼젤이 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "어느 날, 라푼젤이 무심코 말했어요.",
      "src": "reuse",
@@ -1039,6 +1156,19 @@
      ]
     },
     {
+     "text": "왕자는 머리카락을 타고 올라가 방 안의 고텔과 마주쳤어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "왕자는 머리카락을 타고 올라가 방 안의 고텔과 마주쳤어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "라푼젤은 여기 없다. 다시는 못 볼 거다. 자, 내려가라.",
      "src": "reuse",
      "segs": [
@@ -1139,6 +1269,32 @@
     "cam:500,280,1"
    ],
    "lines": [
+    {
+     "text": "숲을 벗어난 왕자가 작은 오두막이 있는 들판에 이르렀어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "숲을 벗어난 왕자가 작은 오두막이 있는 들판에 이르렀어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "라푼젤은 그 오두막 곁에서 노래하고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "라푼젤은 그 오두막 곁에서 노래하고 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "그때, 바람을 타고 노랫소리가 들려왔어요.",
      "src": "reuse",

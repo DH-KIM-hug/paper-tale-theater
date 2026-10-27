@@ -60,6 +60,19 @@
      ]
     },
     {
+     "text": "다현이가 혼잣말을 했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "다현이가 혼잣말을 했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "진짜 유니콘을 만나고 싶어요.",
      "src": "reuse",
      "segs": [
@@ -137,6 +150,19 @@
    ],
    "lines": [
     {
+     "text": "언덕을 오른 다현이가 구름 나라에 다다랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "언덕을 오른 다현이가 구름 나라에 다다랐어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "구름 섬에 양 한 마리가 혼자 앉아 있어요.",
      "src": "reuse",
      "segs": [
@@ -145,6 +171,19 @@
        "구름 섬에 양 한 마리가 혼자 앉아 있어요.",
        null,
        "[gentle, a little curious, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "양은 길을 잃어 훌쩍훌쩍 울고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "양은 길을 잃어 훌쩍훌쩍 울고 있었어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -161,6 +200,19 @@
      ],
      "before": [
       "pop:sheep,훌쩍…"
+     ]
+    },
+    {
+     "text": "다현이가 양 아래에서 두 팔을 벌렸어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "다현이가 양 아래에서 두 팔을 벌렸어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -385,6 +437,19 @@
      ]
     },
     {
+     "text": "다현이는 숲속에서 아픈 사슴을 만났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "다현이는 숲속에서 아픈 사슴을 만났어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "아야, 아야…",
      "src": "reuse",
      "segs": [
@@ -485,6 +550,19 @@
    ],
    "lines": [
     {
+     "text": "가시를 뺀 뒤에도 다현이는 숲에서 사슴 곁에 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "가시를 뺀 뒤에도 다현이는 숲에서 사슴 곁에 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "다현이는 사슴의 작은 뿔을 가만히 보았어요.",
      "src": "reuse",
      "segs": [
@@ -564,6 +642,19 @@
      ]
     },
     {
+     "text": "숲을 떠난 다현이는 폭포 앞에 다다랐어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "숲을 떠난 다현이는 폭포 앞에 다다랐어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "폭포 위에 무지개가 떠 있어요. 말 한 마리가 서 있어요.",
      "src": "reuse",
      "segs": [
@@ -590,6 +681,19 @@
        "물방울이 반짝반짝 튀고, 무지개는 알록달록 빛났지요.",
        null,
        "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "말의 배에서 소리가 났어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "말의 배에서 소리가 났어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -641,6 +745,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "폭포 앞에서 다현이가 배고픈 말에게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "폭포 앞에서 다현이가 배고픈 말에게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "자, 같이 먹자.",
      "src": "reuse",
@@ -755,6 +872,19 @@
    ],
    "lines": [
     {
+     "text": "말과 헤어진 다현이가 혼자 길로 나왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "말과 헤어진 다현이가 혼자 길로 나왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "해가 지고, 길은 텅 비었어요.",
      "src": "reuse",
      "segs": [
@@ -850,6 +980,19 @@
      ]
     },
     {
+     "text": "다현이는 그 길을 계속 걷고 있었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "다현이는 그 길을 계속 걷고 있었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "그때, 뒤에서 작은 소리가 났어요.",
      "src": "reuse",
      "segs": [
@@ -938,6 +1081,19 @@
       "uni:fade:in",
       "uni:glow",
       "halo:fade:in"
+     ]
+    },
+    {
+     "text": "유니콘이 다현이에게 다정하게 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "유니콘이 다현이에게 다정하게 말했어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
      ]
     },
     {
@@ -1066,6 +1222,19 @@
        "다현이는 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
        "happy",
        "[warm, tender, joyful, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "유니콘이 다현이에게 고맙다고 말했어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "유니콘이 다현이에게 고맙다고 말했어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },

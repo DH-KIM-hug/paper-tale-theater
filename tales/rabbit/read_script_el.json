@@ -142,6 +142,19 @@
    ],
    "lines": [
     {
+     "text": "숲속 길에서 토끼와 거북이가 마주 섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "숲속 길에서 토끼와 거북이가 마주 섰어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "토끼는 거북이의 짧은 다리를 보고 킥킥 웃었어요.",
      "src": "new",
      "segs": [
@@ -245,6 +258,19 @@
    ],
    "lines": [
     {
+     "text": "경주 소식을 전하려고 부엉이가 마을 집집마다 날아갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "경주 소식을 전하려고 부엉이가 마을 집집마다 날아갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "부엉이 우체부가 초대장을 가져왔어요.",
      "src": "reuse",
      "segs": [
@@ -280,6 +306,19 @@
        "닭이랑 양이랑 고양이도 초대장을 받았어요!",
        null,
        "[surprised, bright, storytelling, light]"
+      ]
+     ]
+    },
+    {
+     "text": "초대장을 받은 친구들은 경주 길 옆 응원석으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "초대장을 받은 친구들은 경주 길 옆 응원석으로 갔어요.",
+       null,
+       "[calm, warm storytelling]"
       ]
      ]
     },
@@ -355,6 +394,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "토끼와 거북이는 친구들 앞 출발선에 나란히 섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "토끼와 거북이는 친구들 앞 출발선에 나란히 섰어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "달리기 전에 준비 운동을 해요.",
      "src": "reuse",
@@ -796,6 +848,19 @@
    ],
    "lines": [
     {
+     "text": "토끼가 자는 동안, 거북이는 숲속 경주 길을 따라갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "토끼가 자는 동안, 거북이는 숲속 경주 길을 따라갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "그동안 거북이는? 엉금엉금 걷고 있어요.",
      "src": "reuse",
      "segs": [
@@ -988,6 +1053,19 @@
    ],
    "lines": [
     {
+     "text": "언덕을 오른 거북이가 토끼가 자는 나무 곁에 왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "언덕을 오른 거북이가 토끼가 자는 나무 곁에 왔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "위에는 쿨쿨 자는 토끼, 아래에는 거북이!",
      "src": "reuse",
      "segs": [
@@ -1115,6 +1193,19 @@
    ],
    "lines": [
     {
+     "text": "거북이가 결승선 가까이 오자 친구들이 몸을 쭉 내밀었어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "거북이가 결승선 가까이 오자 친구들이 몸을 쭉 내밀었어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "응원하던 친구들이 모두 일어났어요!",
      "src": "reuse",
      "segs": [
@@ -1180,6 +1271,19 @@
      ]
     },
     {
+     "text": "찰칵! 둘이 결승선에 닿는 순간이 사진에 담겼어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "찰칵! 둘이 결승선에 닿는 순간이 사진에 담겼어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "사진을 보니… 거북이 코끝이 먼저 닿았어요!",
      "src": "reuse",
      "segs": [
@@ -1228,6 +1332,19 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "경주가 끝나고, 거북이는 시상대 위로 올라갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "segs": [
+      [
+       "nar",
+       "경주가 끝나고, 거북이는 시상대 위로 올라갔어요.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "시상식이에요! 응원하던 친구들이 파도타기를 해요.",
      "src": "reuse",

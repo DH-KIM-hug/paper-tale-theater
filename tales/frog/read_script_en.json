@@ -181,6 +181,20 @@
    ],
    "lines": [
     {
+     "text": "풀밭에 멈춰 선 아기 개구리들은 커다란 몸을 올려다보았어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "The baby frogs stood in the meadow and looked up at the huge animal.",
+     "segs": [
+      [
+       "nar",
+       "The baby frogs stood in the meadow and looked up at the huge animal.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "이건 뭘까요? 꼬리일까요, 나무일까요?",
      "src": "reuse",
      "en": "What could this be? A tail or a tree?",
@@ -383,6 +397,20 @@
    ],
    "lines": [
     {
+     "text": "연못가에서 엄마개구리는 아기들 앞에 나섰어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "By the pond, Mama Frog stepped in front of her babies.",
+     "segs": [
+      [
+       "nar",
+       "By the pond, Mama Frog stepped in front of her babies.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "\"흥, 나도 황소만큼 클 수 있어!\" 엄마개구리가 숨을 크게 들이마셨어요.",
      "src": "reuse",
      "en": "\"I can be as big as an ox!\" Mama Frog took a deep breath.",
@@ -572,6 +600,20 @@
    ],
    "lines": [
     {
+     "text": "그 뒤, 엄마개구리는 아기들과 황소가 있는 풀밭으로 갔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "Later, Mama Frog went with her babies to the meadow where the ox was.",
+     "segs": [
+      [
+       "nar",
+       "Later, Mama Frog went with her babies to the meadow where the ox was.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
+    {
      "text": "황소가 몸을 낮추고 다정하게 말했어요. \"크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!\"",
      "src": "reuse",
      "en": "The ox bent down low and said kindly. \"It's okay not to be big. You're a hopping champion!\"",
@@ -669,6 +711,20 @@
     "cam:wide"
    ],
    "lines": [
+    {
+     "text": "해가 지자 개구리 가족은 연못으로 돌아왔어요.",
+     "src": "new",
+     "needs_audio": true,
+     "en": "At sunset, the frog family came back to the pond.",
+     "segs": [
+      [
+       "nar",
+       "At sunset, the frog family came back to the pond.",
+       null,
+       "[calm, warm storytelling]"
+      ]
+     ]
+    },
     {
      "text": "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요.",
      "src": "trim",
