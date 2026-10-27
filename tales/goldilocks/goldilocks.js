@@ -87,16 +87,20 @@
     return inner;
   }
   const sway = (T, g, deg, ms, delay = 0) => { if (!still(T)) g.animate([{ rotate: `${-deg}deg` }, { rotate: `${deg}deg` }, { rotate: `${-deg}deg` }], { duration: ms, delay, iterations: Infinity, easing: 'ease-in-out' }); return g; };
-  /* 빛 판: 숨 쉬는 반투명 원·네모 (라이트박스의 해 둘레·창문) */
+  /* 빛: 숨 쉬는 반투명 빛 (라이트박스의 해 둘레·창문).
+     2026-10-28 사용자 결정(§7-1 빛 예외): 단색 원·네모가 아니라 광원 가운데가 가장 밝고 바깥으로 갈수록 투명해지는 방사형 */
+  let glowN = 0;
   function glow(T, shape, attrs, parent) {
-    const n = T.el(shape, { fill: '#FBF1C8', style: 'pointer-events:none', ...attrs }, parent || T.bg);
+    const p = parent || T.bg, id = 'glGlow' + (++glowN), rg = T.el('radialGradient', { id }, p);
+    [[0, '#FFF6D8', 1], [.45, '#FBF1C8', .6], [1, '#FBF1C8', 0]].forEach(([o, c, a]) => T.el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, rg));
+    const n = T.el(shape, { fill: `url(#${id})`, style: 'pointer-events:none', ...attrs }, p);
     if (!still(T)) n.animate([{ opacity: +attrs.opacity * .55 }, { opacity: +attrs.opacity }, { opacity: +attrs.opacity * .55 }], { duration: 4000, iterations: Infinity, easing: 'ease-in-out' });
     return n;
   }
   function dress(T, key) {
     const P = isP();
     if (key === 'forest') {   // 새벽 라이트박스: 해 둘레 빛, 위 모서리 실루엣 가지 그물
-      glow(T, 'circle', { cx: 662, cy: 43, r: 82, opacity: .35 });
+      glow(T, 'circle', { cx: 662, cy: 43, r: 120, opacity: .5 });   // 해 둘레: 해에서 흐려지는 햇무리
       sway(T, layer(T, 'sil_branches', P ? 170 : 60, -24, 220, { front: true, top: true }), 1, 9000);
       sway(T, layer(T, 'sil_branches', P ? 830 : 940, -24, 220, { front: true, top: true, flip: true }), 1, 9000, 2000);
     }
@@ -111,7 +115,7 @@
       });
     }
     if (key === 'door_dusk') {   // 해 질 녘 집 앞 라이트박스: 창문 두 개에 빛, 위 모서리 실루엣 가지
-      [[326, 208], [601, 208]].forEach(([x, y]) => glow(T, 'rect', { x, y, width: 64, height: 68, rx: 4, opacity: .4 }));
+      [[326, 208], [601, 208]].forEach(([x, y]) => glow(T, 'rect', { x: x - 22, y: y - 22, width: 108, height: 112, opacity: .55 }));   // 창 둘레까지 번지는 창빛(가운데 밝고 가장자리 투명)
       sway(T, layer(T, 'sil_branches', P ? 170 : 60, -24, 220, { front: true, top: true }), 1, 9000);
       sway(T, layer(T, 'sil_branches', P ? 830 : 940, -24, 220, { front: true, top: true, flip: true }), 1, 9000, 2000);
     }
