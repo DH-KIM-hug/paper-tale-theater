@@ -99,7 +99,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Donkey: \"Join our band! Your voice is the best!\"",
   "c": "audio/el/bremen/en/donkey_47538a3b88.mp3"
  },
- "당나귀, 강아지, 고양이, 닭. 네 친구가 모였어요!": {
+ "당나귀, 강아지, 고양이, 닭. 친구 넷이 모였어요!": {
   "t": "Donkey, dog, cat, and rooster. Four friends together at last!",
   "c": "audio/el/bremen/en/nar_2facfb056d.mp3"
  },
@@ -247,7 +247,7 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/bremen/en/nar_32b7def3dc.mp3"
   ]
  },
- "네 친구는 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.": {
+ "친구 넷은 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.": {
   "t": "The four friends munched the leftover food, put out the light, and fell fast asleep.",
   "c": "audio/el/bremen/en/nar_163dd31e7b.mp3"
  },
@@ -295,7 +295,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "It was really a cat, a dog, a donkey, and a rooster! The robbers never came back.",
   "c": "audio/el/bremen/en/nar_ad23e32935.mp3"
  },
- "아침이 밝았어요. 네 친구는 이 집이 참 좋았어요.": {
+ "아침이 밝았어요. 친구 넷은 이 집이 참 좋았어요.": {
   "t": "Morning came. The four friends loved this house.",
   "c": "audio/el/bremen/en/nar_c25c889d52.mp3"
  },
