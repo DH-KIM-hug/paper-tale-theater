@@ -904,7 +904,7 @@
           put(hero, 500, 250, 1.1, 'left'); wade(T, hero, 'swan', .2);
           bobR = hero.body.animate([{ translate: '0 -1px' }, { translate: '0 3px' }], { duration: 1100, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
           hero.pos.style.opacity = 0;
-          camSnap(500, 215, 1.35); return;
+          camSnap(500, narrow() ? 215 : 220, narrow() ? 1.35 : 1.3); return;
         }
         if (k === 'family') {
           const art = springBG(T), sy = art ? -32 : 0;
@@ -1603,7 +1603,7 @@
       wade(T, hero, 'swan', .2);
       bob = hero.body.animate([{ translate: '0 -1px' }, { translate: '0 3px' }], { duration: 1100, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
       hero.pos.style.opacity = 0;
-      camSnap(500, 215, 1.35); // 내려앉는 모습이 보이게 위쪽을 비춘다
+      camSnap(500, narrow() ? 215 : 220, narrow() ? 1.35 : 1.3); // 내려앉는 모습이 보이게 위쪽을 비춘다
     });
     // 날개를 활짝 편 채 미끄러져 내려와 배부터 물에 닿고, 퐁! 물결이 퍼지며 날개를 접고 물에 앉는다
     const landing = (async () => {
