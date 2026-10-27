@@ -243,13 +243,17 @@
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ SAIL = 8000, COUNT_A = 1400, COUNT_B = 1300, CLIMB = 6000;   // §2-7 속도 상수
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(수 세기 n1~n20)
-    const scene = key => { T.clear(); bgImage(T, key); newRig(T); dress(key); camSnap(500, 280, 1); };
+    /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
+    const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const SCENE_AMB = { pp_bg_room_day_v2: 'waves', pp_bg_gate_night_lb: 'rain_1', pp_bg_guest_night_lb: 'crickets_night_1', pp_bg_yard_day_v2: 'birds_chirp_1' };
+    const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); newRig(T); dress(key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     if (T.fx) T.fx.style.pointerEvents = 'none';  // 빗줄기·꽃잎·'뚝뚝' 같은 효과 조각이 톡 대상을 덮지 않게
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const TX = X(560, 520);                        // 탑(침대) 가운데 x — 4·5·6·7·8장 공통
-    AudioFX.preloadSfx && AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'creak', 'boom', 'sparkle', 'tada', 'step_wood', 'poke', 'splash', 'bubbles']);
+    AudioFX.preloadSfx && AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'creak', 'boom', 'sparkle', 'tada', 'step_wood', 'poke', 'splash', 'bubbles', 'waves', 'rain_1', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'thunder', 'door_heavy_1', 'question', 'ding_glock', 'cushion', 'sleepy_tuba', 'party_horn', 'applause_1']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 (FIXED_ASP 는 덮어쓰지 않는다) */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -323,7 +327,7 @@
       duvs.forEach((d, j) => { put(T, d, TX, TOP20 - j * DUV_STEP); inRig(d); });
       put(T, peaB, TX - 60, BOARD_TOP + 4); inRig(peaB);
     };
-    const reward = (a, ms = 1200, h = 14) => { glow(a, ms); a.hop(h, 400); sparkleSfx(T); };
+    const reward = (a, ms = 1200, h = 14) => { glow(a, ms); a.hop(h, 400); cue('ding_glock', .8) || sparkleSfx(T); };
     const wrongSay = (a, text) => async () => { await a.wiggle(8, 360); await say(text); };
 
     /* ===== 읽어 주기: 동사 맵(READ_ACTS). 놀이판 장면·배우·소품 함수를 그대로 감싼다 ===== */
@@ -510,7 +514,7 @@
       const t = (async () => {
         await sleep(1200);
         bolt.pos.animate([{ opacity: 0 }, { opacity: 1, offset: .15 }, { opacity: 1, offset: .5 }, { opacity: 0 }], { duration: 450 });
-        sfx(T, 'boom', .35, () => T.tone([120, 60], .4, { type: 'square', vol: .12 }));
+        cue('thunder', .45) || sfx(T, 'boom', .35, () => T.tone([120, 60], .4, { type: 'square', vol: .12 }));
         T.pop(480, 60, tr('번쩍'), '#D9A94E'); T.shake();
         await sleep(800);
         T.pop(250, 40, tr('우르릉'), '#1F2A56');
@@ -540,7 +544,7 @@
     bob(doorC.pos); doorC.pos.style.pointerEvents = 'auto';
     await T.ask('성문을 톡 눌러 봐요.', () => T.tap(doorC.pos, { prompt: '성문을 톡 눌러 봐요.' }));
     doorC.pos.style.pointerEvents = 'none';
-    sfx(T, 'creak', .5); T.pop(700, 150, tr('끼익'));
+    sfx(T, 'door_heavy_1', .6, () => sfx(T, 'creak', .5)); T.pop(700, 150, tr('끼익'));
     fadeOut(T, doorC, 300); fadeIn(doorO, 300);
     fadeIn(queen, 400); fadeIn(king, 400); glow(king, 1200);
     await say('이 밤에 누구지?');
@@ -563,6 +567,7 @@
       if (P) camSnap(500, 280, 1);
     }, peaC.pos);
     await say('왕비님은 손님방에 완두콩 한 알, 베개, 매트리스 한 장을 가져왔어요.');
+    cue('question', .6);
     await T.ask('셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.', () => T.choose([
       { el: peaC.hit, ok: true },
       { el: pillow.hit, ok: false, onWrong: wrongSay(pillow, '그건 베개예요. 더 작은 걸 찾아봐요.') },
@@ -571,6 +576,7 @@
     reward(peaC); T.pop(peaC.x, peaC.y - 70, tr('반짝!'));
     await say('맞아요, 완두콩이 제일 작아요!');
     await sleep(1400);
+    cue('question', .6);
     await T.ask('그럼 제일 큰 것은 뭘까요? 눌러 봐요.', () => T.choose([
       { el: matC.hit, ok: true },
       { el: peaC.hit, ok: false, onWrong: wrongSay(peaC, '그건 완두콩이에요. 더 큰 걸 찾아봐요.') },
@@ -615,7 +621,7 @@
         const m = mats[i];
         put(T, m, PILE_X, FL - 100); inRig(m); rig.appendChild(peaB.pos); rig.appendChild(bedHit);
         m.move(TX, BOARD_TOP - i * MAT_H, 450, 'ease-out');
-        sfx(T, 'paper_down', .35);
+        cue('cushion', .45) || sfx(T, 'paper_down', .35);
         if (i >= 15) hide(pile[19 - i]);
         vo('n' + (i + 1));
         if (i === 9 || i === 19) setTimeout(towerShake, 450);
@@ -652,17 +658,19 @@
     const showZones = () => [zTop, zBot].forEach(z => { z.animate([{ opacity: 0 }, { opacity: .22 }], { duration: 400, fill: 'forwards' }); });
     const hideZones = async () => { await Promise.all([zTop, zBot].map(z => T.anim(z, [{ opacity: .22 }, { opacity: 0 }], 300))); };
     showZones();
+    cue('question', .6);
     await T.ask('완두콩은 어디 있을까요? 탑의 위? 아래?', () => T.choose([
       { el: zBot, ok: true },
       { el: zTop, ok: false, onWrong: async () => { await wiggleEl(T, zTop); await say('거긴 탑의 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.'); } },
     ], { prompt: '완두콩은 어디 있을까요? 탑의 위? 아래?' }));
-    glow(peaB, 1500); peaB.hop(10, 360); sparkleSfx(T); T.pop(TX, 420, tr('반짝!'));
+    glow(peaB, 1500); peaB.hop(10, 360); cue('ding_glock', .8) || sparkleSfx(T); T.pop(TX, 420, tr('반짝!'));
     await say('맞아요! 완두콩은 맨 아래에 있어요.'); await sleep(1200);
+    cue('question', .6);
     await T.ask('공주님은 어디서 잘까요? 위? 아래?', () => T.choose([
       { el: zTop, ok: true },
       { el: zBot, ok: false, onWrong: async () => { await wiggleEl(T, zBot); await say('거긴 탑의 아래예요. 공주님은 맨 위에서 자요. 위를 눌러 봐요.'); } },
     ], { prompt: '공주님은 어디서 잘까요? 위? 아래?' }));
-    zTop.style.filter = 'url(#hintGlow)'; setTimeout(() => { zTop.style.filter = ''; }, 1200); sparkleSfx(T); T.pop(TX, 110, tr('반짝!'));
+    zTop.style.filter = 'url(#hintGlow)'; setTimeout(() => { zTop.style.filter = ''; }, 1200); cue('ding_glock', .8) || sparkleSfx(T); T.pop(TX, 110, tr('반짝!'));
     await say('맞아요! 공주님은 맨 위에서 자요.');
     await hideZones(); zTop.remove(); zBot.remove();
     await say('완두콩은 맨 아래, 공주님은 맨 위에서 자요.');
@@ -707,7 +715,7 @@
 
     /* ===== 8. 아침 인사 (자동) ===== */
     await T.sceneCard(tr('아침 인사'), () => {
-      scene('pp_bg_guest_day_v2');
+      scene('pp_bg_guest_day_v2'); amb('birds_chirp_2');
       buildTower();
       put(T, ladder, TX + 125, FL); inRig(ladder);
       put(T, queen, X(290, 400), FL, { look: 'smile' });
@@ -715,7 +723,7 @@
       put(T, pea, X(720, 620), FL, { look: 'sleepy' });
       if (P) camSnap(520, 280, 1);
     }, pea.pos);
-    pea.wiggle(3, 500); T.pop(pea.x, FL - 290, tr('하암'), '#1F2A56');
+    pea.wiggle(3, 500); cue('sleepy_tuba', .6); T.pop(pea.x, FL - 290, tr('하암'), '#1F2A56');
     await say('아침이 되었어요. 공주가 사다리를 내려왔어요.');
     await say('잘 잤니?');
     pea.look('honest'); pea.hop(8, 300);
@@ -744,13 +752,14 @@
     await say('완두콩은 박물관에 갔대요.');
     bob(kase.pos);
     await T.ask('유리 상자를 톡 눌러 봐요.', () => T.tap(kase.hit, { prompt: '유리 상자를 톡 눌러 봐요.' }));
-    glow(peaM, 1500); peaM.hop(10, 360); sparkleSfx(T); T.pop(kase.x, kase.y - 190, tr('반짝!'));
+    glow(peaM, 1500); peaM.hop(10, 360); cue('ding_glock', .8) || sparkleSfx(T); T.pop(kase.x, kase.y - 190, tr('반짝!'));
     [L.bunting, L.bunting2].forEach(g => g.wiggle(6, 700));
     pea.look('wave'); prince.look('joy'); pea.hop(12, 360); prince.hop(12, 360);
-    T.confetti(); sfx(T, 'tada', undefined, () => sparkleSfx(T));
+    T.confetti(); sfx(T, 'party_horn', .9, () => sfx(T, 'tada', undefined, () => sparkleSfx(T))); setTimeout(() => cue('applause_1', .4), 900);
     T.pop(X(475, 495), FL - 290, tr('안녕!'));
     await say('안녕!');
-    await sleep(2500); T.finale(); await sleep(1500);
+    await sleep(2500); try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    T.finale(); await sleep(1500);
     return '느낀 것을 솔직하게 말하는 마음이 진짜 공주의 마음이에요.';
   }
 
