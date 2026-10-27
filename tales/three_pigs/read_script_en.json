@@ -37,6 +37,9 @@
        "nar",
        "Once upon a time, three little pigs lived together."
       ]
+     ],
+     "before": [
+      "sfx:toy_flute:.4"
      ]
     },
     {
@@ -265,7 +268,8 @@
       "pile:drop:straw"
      ],
      "after": [
-      "house:reveal:straw"
+      "house:reveal:straw",
+      "sfxs:marimba_1,marimba_2,marimba_3:350:.5"
      ]
     },
     {
@@ -280,7 +284,8 @@
      ],
      "before": [
       "pig1:set:play",
-      "pop:500,300,삐리리~"
+      "pop:500,300,삐리리~",
+      "sfx:ding_glock:.5"
      ]
     }
    ]
@@ -350,7 +355,8 @@
      ],
      "before": [
       "pig2:set:play",
-      "pop:500,300,깽깽~"
+      "pop:500,300,깽깽~",
+      "sfx:ding_glock:.5"
      ]
     }
    ]
@@ -443,6 +449,9 @@
        "nar",
        "the third pig said bravely."
       ]
+     ],
+     "after": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5,marimba_6,marimba_7,marimba_8,marimba_note,marimba_note:200:.5"
      ]
     },
     {
@@ -504,7 +513,8 @@
      ],
      "before": [
       "wolf:at:-100,540",
-      "wolf:walk:300,540"
+      "wolf:walk:300,540",
+      "sfx:tiptoe_pizz:.5"
      ]
     },
     {
@@ -628,7 +638,8 @@
      ],
      "before": [
       "wolf:at:-100,540",
-      "wolf:walk:300,540"
+      "wolf:walk:300,540",
+      "sfx:tiptoe_pizz:.5"
      ]
     },
     {
@@ -768,6 +779,9 @@
        "nar",
        "The three brothers shut the door tight and slid the bolt, click, clack."
       ]
+     ],
+     "after": [
+      "sfx:latch_click:.5"
      ]
     },
     {
@@ -780,6 +794,9 @@
        "nar",
        "All three brothers were together."
       ]
+     ],
+     "after": [
+      "sfxs:marimba_1,marimba_2,marimba_3:350:.5"
      ]
     },
     {
@@ -839,7 +856,8 @@
       ]
      ],
      "before": [
-      "pop:450,250,쿵쿵쿵!"
+      "pop:450,250,쿵쿵쿵!",
+      "sfx:knock:.5"
      ]
     },
     {
@@ -873,6 +891,7 @@
       "wolf:set:blow"
      ],
      "after": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5,marimba_6,marimba_7,marimba_8:200:.5",
       "wolf:blow:8"
      ]
     },
@@ -905,7 +924,8 @@
      ],
      "before": [
       "wolf:set:tired",
-      "fx:thud"
+      "fx:thud",
+      "sfx:sad_trombone:.5"
      ]
     },
     {
@@ -936,6 +956,9 @@
        "nar",
        "The wolf crept up onto the roof. He wanted to sneak in through the chimney."
       ]
+     ],
+     "before": [
+      "sfx:tiptoe_pizz:.5"
      ]
     }
    ]
@@ -1000,6 +1023,9 @@
        "nar",
        "They tossed in more wood, and the fire blazed, crackle, crackle."
       ]
+     ],
+     "after": [
+      "sfx:drumroll_crash:.5"
      ]
     },
     {
@@ -1046,8 +1072,12 @@
       ]
      ],
      "after": [
+      "sfx:zip_away:.5",
       "cut:launch",
       "fx:whoosh"
+     ],
+     "before": [
+      "sfx:comic_brass:.5"
      ]
     },
     {
@@ -1110,6 +1140,7 @@
       ]
      ],
      "before": [
+      "sfxs:pop_appear,marimba_2,marimba_3:700:.5",
       "house:build:1",
       "house:build:2",
       "house:build:3"
@@ -1163,6 +1194,9 @@
        "nar",
        "A strong house is built carefully, one piece at a time."
       ]
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     }
    ]
