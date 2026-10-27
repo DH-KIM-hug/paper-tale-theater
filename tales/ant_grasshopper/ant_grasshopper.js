@@ -23,7 +23,7 @@
   const AS = '../../assets/';
   const BG = {
     summer: 'v3w/ag_bg_summer_v2.webp', autumn: 'v3w/ag_bg_autumn_v2.webp', spring: 'v3w/ag_bg_spring.webp',
-    ant_eye: 'v3w/ag_bg_ant_eye.webp', leafstage: 'v3w/ag_bg_leafstage_v2.webp', winter_high: 'v3w/ag_lb_snow_dusk.webp', lamp: 'v3w/ag_lb_cellar_lamp.webp',
+    ant_eye: 'v3w/ag_bg_ant_eye.webp', leafstage: 'v3w/ag_bg_leafstage_v2.webp', winter_high: 'v3w/ag_lb_snow_dusk.webp', lamp: 'v3w/ag_lb_cellar_lamp_glow.webp', // 2026-10-28 §7-1 빛 예외: 등불 둘레의 계단식 단색 원판 → 등에서 멀어질수록 흐려지는 반투명 빛(같은 구도)
     door: 'v3w/ag_bg_door.webp', cellar: 'v3w/ag_bg_cellar.webp', // cellar: 어두운 흙을 조금 밝혀 구움, 곡식·도토리 방은 그림 속에 이미 가득
   };
   /* 배우·소품·컷 (인물·곤충은 모두 왼쪽을 본다)
@@ -289,7 +289,7 @@
       T.el('circle', { cx: -46, cy: -22, r: 4, fill: '#fff' }, g); T.el('circle', { cx: -47, cy: -22, r: 2, fill: C.ink }, g);
     } },
     { key: 'firefly', name: '반딧불이', s: 1.3, draw(T, g) {
-      const glow = T.el('circle', { cx: 28, cy: -30, r: 26, fill: C.amber, opacity: .45 }, g);
+      const glow = softGlow(T, g, 'circle', { cx: 28, cy: -30, r: 34, opacity: .45 }, '#FFD98A');
       glow.animate([{ opacity: .25 }, { opacity: .7 }], { duration: 800, iterations: Infinity, direction: 'alternate' });
       T.paper(g, [['path', { d: 'M-10 -30 L-14 0 M6 -30 L8 0', stroke: C.ink, 'stroke-width': 3, fill: 'none' }],
         ['ellipse', { cx: 0, cy: -34, rx: 26, ry: 14, fill: '#4a3a30' }], ['circle', { cx: 28, cy: -30, r: 12, fill: '#FFE08A' }],
@@ -301,10 +301,17 @@
 
   /* 손님 그림: 발끝 가운데 (0,0). 반딧불이 불빛은 그림 속 꼬리 자리에서 깜빡인다 */
   const FIREFLY_TAIL = [8.5, -11.5];
+  /* 2026-10-28 §7-1 빛 예외: 빛은 광원에서 멀어질수록 흐려지는 반투명 방사형(가운데 peak → 가장자리 투명). 단색 원·타원 빛을 쓰지 않는다 */
+  let glowN = 0;
+  function softGlow(T, parent, tag, attrs, color, peak = 1) {
+    const id = 'agGlow' + (++glowN), rg = T.el('radialGradient', { id }, parent);
+    [[0, color, peak], [.5, color, peak * .45], [1, color, 0]].forEach(([o, c, a]) => T.el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, rg));
+    return T.el(tag, { ...attrs, fill: `url(#${id})`, style: 'pointer-events:none' }, parent);
+  }
   function friendArt(T, g, key) {
     if (!artUrl(key)) return false;
     if (key === 'firefly') {
-      const glow = T.el('circle', { cx: FIREFLY_TAIL[0], cy: FIREFLY_TAIL[1], r: 22, fill: C.amber, opacity: .45 }, g);
+      const glow = softGlow(T, g, 'circle', { cx: FIREFLY_TAIL[0], cy: FIREFLY_TAIL[1], r: 30, opacity: .45 }, '#FFD98A');
       glow.animate([{ opacity: .2 }, { opacity: .75 }], { duration: 800, iterations: Infinity, direction: 'alternate' });
     }
     sprite(T, g, key);
@@ -496,7 +503,7 @@
     const { el, paper } = T, b = T.bg;
     const img = bgImage(T, 'cellar', { dy: 120 });
     if (img) {
-      const light = el('ellipse', { cx: 495, cy: 410, rx: 200, ry: 115, fill: '#6B4E1E', opacity: 0 }, b);
+      const light = softGlow(T, b, 'ellipse', { cx: 495, cy: 400, rx: 250, ry: 150, opacity: 0 }, '#7A5A24');   // 등불 빛: 가운데가 밝고 가장자리로 흐려진다(옛 단색 타원)
       light.style.mixBlendMode = 'screen';
       // 그림: 큰 방이 좁아 두 줄 — 뒤(개미 가족·베짱이 y 512), 앞(손님 넷 y 548, 큰 방 앞 흙바닥)
       return { art: true, img, light, door: [475, 140], snowY: 140, shaftX: 475, shaftY: 400, antY: 512, hopY: 514, seatY: [548, 550, 550, 548], cam: [495, 440] };
