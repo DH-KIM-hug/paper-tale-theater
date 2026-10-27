@@ -18,7 +18,14 @@
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   /* 화려한 다층 재기획(VISUAL_PLAN.md, 2026-10-23): 들판·집터 셋·세 집터 들판은 v2(땅선·집 자리 그대로), 쿵쿵쿵은 해 질 녘 라이트박스(집·문·창·굴뚝 자리 그대로),
      보글보글은 벽난로 불빛 라이트박스, 벽돌 마을은 노을 라이트박스. 가게·벽돌 집 안은 그대로 */
-  const BGF = { meadow: 'bg_meadow_v2', strawlot: 'bg_strawlot_v2', woodlot: 'bg_woodlot_v2', bricklot: 'bg_bricklot_v3', field: 'bg_field_v2', brick_out: 'lb_brick_dusk', chimney: 'lb_hearth', sunset: 'lb_village_sunset' };
+  /* 2026-10-28 사용자 결정(§7-1 빛 예외): 벽난로 불빛은 불 가운데가 밝고 바깥으로 투명해지는 방사형(옛 단색 주황 타원) */
+  let glowN = 0;
+  function fireGlow(T) {
+    const id = 'tpFire' + (++glowN), rg = T.el('radialGradient', { id }, T.world);
+    [[0, '#FFE2A0', 1], [.5, '#FFB347', .55], [1, '#FFB347', 0]].forEach(([o, c, a]) => T.el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, rg));
+    return T.el('ellipse', { cx: 500, cy: 348, rx: 10, ry: 8, fill: `url(#${id})`, opacity: 0, 'pointer-events': 'none' }, T.world);
+  }
+  const BGF = { meadow: 'bg_meadow_v2', strawlot: 'bg_strawlot_v2', woodlot: 'bg_woodlot_v2', bricklot: 'bg_bricklot_v3', field: 'bg_field_v2', brick_out: 'lb_brick_dusk_glow', chimney: 'lb_hearth', sunset: 'lb_village_sunset_glow' };   // 2026-10-28 사용자 결정(§7-1 빛 예외): 노을 해 둘레의 단단한 동심원 종이 → 해에서 흐려지는 반투명 햇무리(_glow, 집·문·창·굴뚝·땅선 자리 그대로)
   /* 층 소품(tp_layer_*, 누름 없음): 폭/높이. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위, pointer-events none). (cx, y) = 가운데·발끝, top 이면 윗변 */
   const LASP = { wheat_front: 1.0017, fern_front: 1.0533, poppies_mid: 4.2857, cherry_branch: .8883, sil_cypress: .3933 };
   const NUM = ['하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열'];
@@ -145,7 +152,7 @@
         }
         if (mode === 'blow') { house = sprite(KIND[kind].house, hx, houseH, hy); house.pos.style.pointerEvents = 'none'; }
         if (k === 'chimney') {
-          glow = T.el('ellipse', { cx: 500, cy: 348, rx: 10, ry: 8, fill: '#FFB347', opacity: 0, 'pointer-events': 'none' }, T.world);
+          glow = fireGlow(T);
         }
         if (k === 'sunset') {
           const hxs = P ? [500, 230, 770] : [500, 200, 800], vhh = P ? 230 : 270;
@@ -281,7 +288,7 @@
         },
         fire(op) {
           if (!glow) return;
-          (async () => { for (let i = 1; i <= 5; i++) { const p = i / 5; glow.setAttribute('rx', 14 + 40 * p); glow.setAttribute('ry', 10 + 26 * p); glow.setAttribute('opacity', .1 + .28 * p); await sleep(220); } })();
+          (async () => { for (let i = 1; i <= 5; i++) { const p = i / 5; glow.setAttribute('rx', 18 + 62 * p); glow.setAttribute('ry', 14 + 40 * p); glow.setAttribute('opacity', .15 + .5 * p); await sleep(220); } })();
         },
         pot(op) { (async () => { for (let i = 0; i < 4; i++) { T.pop(500 + (Math.random() - .5) * 100, 250, tr('보글')); await sleep(300); } sfx('ding'); })(); },
         cut(k) {
@@ -542,11 +549,11 @@
     await say('늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.');
     await T.sceneCard('보글보글', () => { bg('chimney'); T.camSnap(500, 280, 1); });
     const fire = hit(425, 290, 150, 100); // 2026-10-20 새 배경: 벽난로 불이 무대 y≈345 (옛 그림은 바닥 근처였다)
-    const glow = T.el('ellipse', { cx: 500, cy: 348, rx: 10, ry: 8, fill: '#FFB347', opacity: 0, 'pointer-events': 'none' }, T.world);
+    const glow = fireGlow(T);
     await say('아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.');
     await T.mash(fire, { count: 5, prompt: '불을 톡톡 눌러서 크게 해 줘요.', onStep: i => {
       const p = i / 5;
-      glow.setAttribute('rx', 14 + 40 * p); glow.setAttribute('ry', 10 + 26 * p); glow.setAttribute('opacity', .1 + .28 * p);
+      glow.setAttribute('rx', 18 + 62 * p); glow.setAttribute('ry', 14 + 40 * p); glow.setAttribute('opacity', .15 + .5 * p);
       T.pop(500 + (Math.random() - .5) * 100, 250, '보글');
     } });
     sfx('ding');
