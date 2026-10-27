@@ -386,6 +386,14 @@ const AudioFX = (() => {
       if (mediaNar && narEl) { try { if (on) narEl.pause(); else if (narEnd) narEl.play().catch(() => {}); } catch (e) { /* 무시 */ } }
       else if (ctx) { try { on ? ctx.suspend() : ctx.resume(); } catch (e) { /* 무시 */ } }
     },
+    /* 잠자리 이어 듣기가 끝났을 때: 내레이션 <audio> 를 비우고 무음 유지 루프도 놓는다(배경에 무음만 남지 않게) */
+    sessionEnd() {
+      mediaNar = false; narHeld = false;
+      try { api.stopNarration(); } catch (e) { /* 무시 */ }
+      if (narEl) { try { narEl.pause(); narEl.removeAttribute('src'); narEl.load(); } catch (e) { /* 무시 */ } }
+      narHelpers.forEach(el => { try { el.pause(); el.removeAttribute('src'); } catch (e) { /* 무시 */ } });
+      if (keepAlive) { try { keepAlive.pause(); } catch (e) { /* 무시 */ } }
+    },
     prefetchClips,
     preloadAll(urls) {
       urls.forEach(u => loadClip(u).catch(() => { /* 폴백 경로가 처리 */ }));

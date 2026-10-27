@@ -12,7 +12,8 @@ public class StorePlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "getPrice", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "isOwned", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "purchase", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "restore", returnType: CAPPluginReturnPromise)
+        CAPPluginMethod(name: "restore", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getSignedTransaction", returnType: CAPPluginReturnPromise)
     ]
 
     private var updates: Task<Void, Never>?
@@ -35,6 +36,36 @@ public class StorePlugin: CAPPlugin, CAPBridgedPlugin {
         return false
     }
 
+    /// 현재 소유 중인 거래의 JWS (서버 영수증 검증용). 없으면 nil.
+    static func currentSignedTransaction() async -> String? {
+        for await result in Transaction.currentEntitlements {
+            if case .verified(let tx) = result, tx.productID == unlockAllProductID, tx.revocationDate == nil {
+                return result.jwsRepresentation
+            }
+        }
+        return nil
+    }
+
+    /// owned 결과에 signedTransaction 을 붙여 돌려준다 (소유 중일 때만).
+    static func ownedResult(extra: [String: Any] = [:]) async -> [String: Any] {
+        var out = extra
+        if let jws = await currentSignedTransaction() {
+            out["owned"] = true
+            out["signedTransaction"] = jws
+        } else {
+            out["owned"] = false
+        }
+        return out
+    }
+
+    @objc func getSignedTransaction(_ call: CAPPluginCall) {
+        Task {
+            if let jws = await Self.currentSignedTransaction() {
+                call.resolve(["owned": true, "signedTransaction": jws])
+            } else { call.resolve(["owned": false]) }
+        }
+    }
+
     @objc func getPrice(_ call: CAPPluginCall) {
         Task {
             do {
@@ -45,7 +76,7 @@ public class StorePlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     @objc func isOwned(_ call: CAPPluginCall) {
-        Task { call.resolve(["owned": await Self.ownsUnlockAll()]) }
+        Task { call.resolve(await Self.ownedResult()) }
     }
 
     @objc func purchase(_ call: CAPPluginCall) {
@@ -58,7 +89,7 @@ public class StorePlugin: CAPPlugin, CAPBridgedPlugin {
                 case .success(let verification):
                     if case .verified(let tx) = verification {
                         await tx.finish()
-                        call.resolve(["owned": true])
+                        call.resolve(["owned": true, "signedTransaction": verification.jwsRepresentation])
                     } else { call.resolve(["owned": false, "reason": "unverified"]) }
                 case .userCancelled: call.resolve(["owned": false, "reason": "cancelled"])
                 case .pending: call.resolve(["owned": false, "reason": "pending"])
@@ -71,7 +102,7 @@ public class StorePlugin: CAPPlugin, CAPBridgedPlugin {
     @objc func restore(_ call: CAPPluginCall) {
         Task {
             try? await AppStore.sync()
-            call.resolve(["owned": await Self.ownsUnlockAll()])
+            call.resolve(await Self.ownedResult())
         }
     }
 }
