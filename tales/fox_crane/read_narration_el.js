@@ -9,6 +9,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/fox_crane/nar_aca0817c71.mp3"
  ],
  "\"좋아, 여우야! 내일 꼭 갈게!\"": "audio/el/fox_crane/crane_724b6bfa6e.mp3",
+ "다음 날, 여우는 자기 집 부엌에서 손님 맞을 준비를 했어요.": "audio/el/fox_crane/nar_0c3d748d9f.mp3",
  "여우가 맛있는 수프를 끓여요.": "audio/el/fox_crane/nar_17bcb0c575.mp3",
  "여우는 꼬리를 살랑살랑 흔들며 콧노래를 흥얼흥얼 불렀어요.": "audio/el/fox_crane/nar_b6a4109ad1.mp3",
  "보글보글, 구수한 냄새가 솔솔 퍼졌어요.": "audio/el/fox_crane/nar_078e969516.mp3",
@@ -17,7 +18,9 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/fox_crane/nar_77e273e957.mp3",
   "audio/el/fox_crane/fox_079ca4b3b3.mp3"
  ],
+ "밥때가 되자 두루미가 여우네 부엌으로 들어왔어요.": "audio/el/fox_crane/nar_aafcbf91f9.mp3",
  "두루미가 놀러 왔어요. 그런데 접시가 아주 납작해요!": "audio/el/fox_crane/nar_74c2ad0a43.mp3",
+ "여우는 두루미 앞에도 수프를 담은 납작 접시를 놓았어요.": "audio/el/fox_crane/nar_60f50fe1f3.mp3",
  "두루미는 긴 부리를 접시에 콕, 콕, 딱딱 부딪쳐 보았어요.": "audio/el/fox_crane/nar_f1c7c3c61f.mp3",
  "어머나, 부리 끝만 딱딱 닿아요. 수프를 먹을 수가 없어요.": "audio/el/fox_crane/nar_f454e7a9e1.mp3",
  "여우는 혀로 핥핥, 다 먹었어요. 두루미는 배가 꼬르륵, 속상했어요.": "audio/el/fox_crane/nar_43bc10d6bd.mp3",
@@ -30,6 +33,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/fox_crane/fox_ca78953297.mp3"
  ],
  "여우는 꼬리를 살랑살랑 흔들며 총총 달려갔어요.": "audio/el/fox_crane/nar_316d12bbcf.mp3",
+ "여우는 두루미를 따라 집 안으로 들어왔어요.": "audio/el/fox_crane/nar_5367ec9738.mp3",
  "와, 병이 탑처럼 높아요! 목이 아주 길어요.": [
   "audio/el/fox_crane/fox_0e24a4c39a.mp3",
   "audio/el/fox_crane/nar_fee85f95d5.mp3"
@@ -39,14 +43,17 @@ Object.assign(NARRATION_CLIPS, {
  "어머나! 여우 코가 병에 쏙 끼었어요!": "audio/el/fox_crane/nar_099f711af4.mp3",
  "뿅! 코가 빠졌어요. 엉덩방아 쿵!": "audio/el/fox_crane/nar_bc39066950.mp3",
  "두루미는 긴 부리로 쪽쪽 먹었어요. 여우는 배가 꼬르륵, 속상했어요.": "audio/el/fox_crane/nar_46ad4b994b.mp3",
+ "식사를 마친 두루미와 배고픈 여우는 그릇을 바라보았어요.": "audio/el/fox_crane/nar_3cf61fce50.mp3",
  "둘 다 못 먹었어요. 왜 그랬을까요?": "audio/el/fox_crane/nar_e178e13681.mp3",
  "두루미 부리는 길쭉길쭉, 납작한 접시에는 콕콕 닿지 않아요.": "audio/el/fox_crane/nar_304104ecd8.mp3",
  "여우 입은 짧고 혀로 핥핥, 목이 긴 병에는 쏙 들어가지 않지요.": "audio/el/fox_crane/nar_37827fe730.mp3",
  "둘은 서로의 입 모양을 가만가만 들여다보았어요.": "audio/el/fox_crane/nar_6ee142bcd3.mp3",
+ "그 뒤, 둘은 친구마다 먹기 편한 그릇을 준비했어요.": "audio/el/fox_crane/nar_1f24f4d3f2.mp3",
  "여우랑 두루미가 함께 잔치를 열었어요. 손님들도 와요!": "audio/el/fox_crane/nar_dc222fc1c0.mp3",
  "꽥꽥! 오리가 뒤뚱뒤뚱, 팔랑팔랑! 나비가 사뿐사뿐 날아왔어요.": "audio/el/fox_crane/nar_97e5cc20d3.mp3",
  "두루미에게는 긴 병, 여우에게는 납작 접시, 오리에게는 넓은 그릇, 나비에게는 꽃!": "audio/el/fox_crane/nar_366d39b6d8.mp3",
  "모두 자기한테 딱 맞는 그릇을 받고 싱글벙글 웃었어요.": "audio/el/fox_crane/nar_54daf08d32.mp3",
+ "어느새 밤이 되었지만, 손님들은 잔치 자리에 함께 있었어요.": "audio/el/fox_crane/nar_bf9c26362d.mp3",
  "등불이 반짝, 모두 모여 잔치를 해요.": "audio/el/fox_crane/nar_b3ea229fcd.mp3",
  "여우가 말했어요. \"두루미야, 미안해.\"": [
   "audio/el/fox_crane/nar_376b8dea51.mp3",
