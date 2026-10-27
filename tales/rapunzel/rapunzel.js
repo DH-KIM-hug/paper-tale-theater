@@ -249,19 +249,24 @@
     const CUT_HOLD = 4200;
     const cutSay = async (k, sfxName, line) => { const c = T.cutImage([{ src: src(k), sfx: sfxName, hold: CUT_HOLD }], { hold: CUT_HOLD }); await say(line); await c; };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };         // 말풍선 없는 소리(허밍)
+    /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
+    const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const SCENE_AMB = { rp_bg_garden_night_lb: 'crickets_night_1', rp_bg_forest_day_v2: 'birds_chirp_1', rp_bg_forest_dusk_v2: 'birds_chirp_2', rp_bg_field_v2: 'birds_chirp_1' };
+    const bgAmb = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };   // 배경이 바뀔 때마다(setBg) 이전 배경 소리를 끄고 새 장면 소리 시작
     const scene = key => { setBg(key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const TX = X(640, 560);                        // 탑의 x (3·4·6·7·9장 공통)
     const HOOKX = X(905, 905);                     // 탑 안 창 오른쪽 벽의 고리 x
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'sparkle', 'tada', 'step_grass', 'pop', 'slide_up', 'slide_down', 'chop', 'knock', 'cork', 'creak']);
+    AudioFX.preloadSfx(['paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'sparkle', 'tada', 'step_grass', 'pop', 'slide_up', 'slide_down', 'chop', 'knock', 'cork', 'creak', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'whistle_up', 'whistle_wobble', 'pull_pop', 'question', 'ding_glock', 'surprise_sting', 'horse_neigh_1', 'party_horn']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율로 ASP 를 덮어쓴다 */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
     ['rp_cut_caught', 'rp_cut_climb', 'rp_cut_peek', 'rp_cut_snip', 'rp_cut_reunion'].forEach(k => loads.push(T.preload(src(k))));
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
     // 리본 높이는 길이에서 계산: 그림이 와서 ASP 가 바뀌어도 길이 180/120/60 이 유지된다
     HT.rp_prop_ribbon_long = 180 / ASP.rp_prop_ribbon_long; HT.rp_prop_ribbon_mid = 120 / ASP.rp_prop_ribbon_mid; HT.rp_prop_ribbon_short = 60 / ASP.rp_prop_ribbon_short;
 
@@ -325,7 +330,7 @@
         butterflies(P ? [400, 100, 500, 160] : [110, 90, 330, 190]);
       }
     }
-    const setBg = key => { T.clear(); hide(branchSil); L.tree_front.body.style.transition = ''; L.tree_front.body.style.filter = ''; bgImage(T, key); dress(key); };
+    const setBg = key => { bgAmb(key); T.clear(); hide(branchSil); L.tree_front.body.style.transition = ''; L.tree_front.body.style.filter = ''; bgImage(T, key); dress(key); };
     /* 9장 끝 "숲을 걷고 또 걸었어요": 해질녘 숲 위에 밤 빛 상자 숲을 3초 크로스페이드로 얹는다(VISUAL_PLAN 재기획 2 B·판단 1).
        앞 큰 나무는 밤빛 실루엣으로 낮추고, 들꽃·꽃 덤불은 걷고, 왼쪽 위에 전나무 가지 실루엣(가로만, 탑 쪽 x 300 안 넘음) */
     const branchSil = deco('branch_silhouette_lb'); hide(branchSil);
@@ -358,7 +363,7 @@
     }
     async function towerRise() {
       tower.body.style.transformBox = 'fill-box'; tower.body.style.transformOrigin = '50% 100%';
-      AudioFX.sfx('slide_up', .5);
+      cue('whistle_up', .5) || AudioFX.sfx('slide_up', .5);
       setTimeout(() => T.pop(TX - 150, 200, tr('쑥!')), 600);
       await T.anim(tower.body, [{ transform: 'scaleY(0)' }, { transform: 'scaleY(1.04)', offset: .85 }, { transform: 'scaleY(1)' }], { duration: RISE, easing: 'ease-out' });
       tower.body.style.transform = '';
@@ -366,7 +371,7 @@
     async function braidDown() {
       put(T, braid, TX + HOOK_DX, FL);
       braid.body.style.transformBox = 'fill-box'; braid.body.style.transformOrigin = '50% 0%';
-      AudioFX.sfx('slide_down', .5, () => T.tone([900, 300], .5, { vol: .1 }));
+      cue('whistle_wobble', .5) || AudioFX.sfx('slide_down', .5, () => T.tone([900, 300], .5, { vol: .1 }));
       T.pop(TX - 130, 330, tr('스르르~'));
       await T.anim(braid.body, [{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }], { duration: BRAID, easing: 'ease-out' });
       braid.body.style.transform = '';
@@ -587,13 +592,13 @@
     bob(rampion.pos);
     await T.tap(rampion.hit);
     rampion.look('out'); unhit(rampion);
-    sfx(T, 'cork', .5); T.pop(rampion.x + 60, FL - 150, tr('쏙!'));
+    cue('pull_pop', .8) || sfx(T, 'cork', .5); T.pop(rampion.x + 60, FL - 150, tr('쏙!'));
     await rampion.move(rampion.x, FL - 60, 350, 'ease-out');
     await rampion.move(father.x + 60, FL - 70, 400);
     await sleep(300);
     magic(X(640, 540), FL - 120);
     put(T, gothel, X(640, 540), FL, { look: 'point' }); fadeIn(gothel, 300);
-    await cutSay('rp_cut_caught', () => AudioFX.sfx('sparkle', .5), '누구냐! 내 풀을 뽑다니!');
+    await cutSay('rp_cut_caught', () => cue('surprise_sting', .6) || AudioFX.sfx('sparkle', .5), '누구냐! 내 풀을 뽑다니!');
     father.look('shock'); father.hop(12, 300); rampion.move(father.x + 40, FL, 300);
     await say('아, 아내가 너무너무 먹고 싶어 해서요.');
     gothel.look('stand'); gothel.wiggle(3, 600);
@@ -641,11 +646,13 @@
     await say('지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.');
     hitBox(T, bird, 90, 90); hitBox(T, rabbit, 90, 90);
     const Q1 = '탑 위에 있는 새를 톡, 눌러 봐요.', Q2 = '이번엔 탑 아래에 있는 토끼를 톡, 눌러 봐요.';
+    cue('question', .6);
     await T.ask(Q1, () => T.choose([{ el: bird.hit, ok: true }, { el: rabbit.hit, ok: false, onWrong: async () => { await rabbit.wiggle(8, 360); await say('그건 탑 아래에 있는 토끼예요. 위를 봐요.'); await arrowHint(TX + 110, 'up'); } }], { prompt: Q1 }));
-    glow(bird, 1200); bird.hop(14, 400); sparkleSfx(T); T.pop(TX + 120, 60, tr('반짝!'));
+    glow(bird, 1200); bird.hop(14, 400); cue('ding_glock', .8) || sparkleSfx(T); T.pop(TX + 120, 60, tr('반짝!'));
     await say('맞아요, 탑 위에 새!');
+    cue('question', .6);
     await T.ask(Q2, () => T.choose([{ el: rabbit.hit, ok: true }, { el: bird.hit, ok: false, onWrong: async () => { await bird.wiggle(8, 360); await say('그건 탑 위에 있는 새예요. 아래를 봐요.'); await arrowHint(TX + 110, 'down'); } }], { prompt: Q2 }));
-    glow(rabbit, 1200); rabbit.hop(14, 400); sparkleSfx(T); T.pop(TX - 160, FL - 110, tr('반짝!'));
+    glow(rabbit, 1200); rabbit.hop(14, 400); cue('ding_glock', .8) || sparkleSfx(T); T.pop(TX - 160, FL - 110, tr('반짝!'));
     await say('맞아요, 탑 아래에 토끼!');
     unhit(bird); unhit(rabbit);
     await sleep(SCENE_END);
@@ -692,21 +699,23 @@
     ['long', 'mid', 'short'].forEach((_, i) => setTimeout(() => Object.values(ribbons).sort((a, b) => a.y - b.y)[i].hop(6, 300), i * 500));
     await say('바닥에 리본 세 개가 있어요. 길이가 다 달라요.');
     const Q3 = '라푼젤 머리를 묶을 제일 긴 리본을 찾아봐요.', Q4 = '그럼 제일 짧은 리본은 어디 있을까요?';
+    cue('question', .6);
     await T.ask(Q3, () => T.choose(['long', 'mid', 'short'].map(k => ({ el: ribbons[k].hit, ok: k === 'long', onWrong: async () => {
       await ribbons[k].wiggle(8, 360);
       await say(k === 'mid' ? '그건 중간 리본이에요. 더 긴 리본이 있어요.' : '그건 제일 짧은 리본이에요. 더 긴 리본이 있어요.');
       await compare(ribbons[k], ribbons.long, LEFT);
     } })), { prompt: Q3 }));
-    glow(ribbons.long, 1200); sparkleSfx(T); T.pop(LEFT + 200, 395, tr('반짝!'));
+    glow(ribbons.long, 1200); cue('ding_glock', .8) || sparkleSfx(T); T.pop(LEFT + 200, 395, tr('반짝!'));
     await say('맞아요, 제일 긴 리본!');
     const TIE = [38, -14];
     AudioFX.sfx('swish', .3);
     await ribbons.long.move(rap.x + TIE[0], FL + TIE[1], 700, 'ease-in-out');
     ribbons.long.pos.style.pointerEvents = 'none';
+    cue('question', .6);
     await T.ask(Q4, () => T.choose([{ el: ribbons.short.hit, ok: true }, { el: ribbons.mid.hit, ok: false, onWrong: async () => {
       await ribbons.mid.wiggle(8, 360); await say('그건 중간 리본이에요. 더 짧은 리본이 있어요.'); await compare(ribbons.mid, ribbons.short, LEFT);
     } }], { prompt: Q4 }));
-    glow(ribbons.short, 1200); sparkleSfx(T); T.pop(LEFT + 100, 395, tr('반짝!'));
+    glow(ribbons.short, 1200); cue('ding_glock', .8) || sparkleSfx(T); T.pop(LEFT + 100, 395, tr('반짝!'));
     await say('맞아요, 제일 짧은 리본!');
     AudioFX.sfx('swish', .3);
     await ribbons.short.move(rap.x + TIE[0] + 26, FL + TIE[1] - 10, 700, 'ease-in-out');
@@ -722,6 +731,7 @@
       put(T, prince, -200, FL, { look: 'ride', to: 'right' });
       camSnap(P ? 480 : 500, 280, 1);
     }, rap.pos);
+    cue('horse_neigh_1', .5);
     const stepper = (async () => { for (let i = 0; i < 4; i++) { AudioFX.sfx('step_grass', .3); await sleep(1000); } })();
     const ridePromise = walk(prince, X(260, 440), FL, 3500, 'linear');
     await say('어느 해질녘, 숲을 지나던 왕자가 노랫소리를 들었어요.');
@@ -909,12 +919,13 @@
     rap.look('short_hold', 'left'); prince.look('hold', 'right');
     AudioFX.sfx('pop', .4);
     petals(X(480, 400), X(800, 680));
-    T.confetti(); (AudioFX.sfx('tada') || sparkleSfx(T));
+    T.confetti(); (cue('party_horn', .9) || AudioFX.sfx('tada') || sparkleSfx(T));
     rap.hop(14, 400); prince.hop(14, 400);
     const l46 = cutSay('rp_cut_reunion', () => AudioFX.sfx('pop', .4), '두 사람은 손을 꼭 잡고 성으로 떠났어요.');
     await sleep(900); rap.hop(14, 400); prince.hop(14, 400);
     await l46;
     await say('마녀 고텔은 텃밭으로 돌아갔어요.');
+    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '포기하지 않으면 다시 만날 수 있어요.';
   }
