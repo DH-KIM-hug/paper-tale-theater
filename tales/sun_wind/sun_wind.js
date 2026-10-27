@@ -684,7 +684,7 @@
             rWalkBob = rN.body.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 360, iterations: Infinity });
             const tok = rScene + rFieldN, a = rN;
             walkPath(T, rN, rHB.path, 7400).then(() => { if (rWalkBob) { rWalkBob.cancel(); rWalkBob = null; } if (rScene === 'high' && rN === a) camTo(500, 280, 1, 900); });
-            camTo(rHB.art ? 510 : 530, rHB.art ? 340 : 300, 1.5, 1400);
+            camTo(rHB.art ? 510 : 530, T.portrait() ? (rHB.art ? 340 : 300) : 300, T.portrait() ? 1.5 : 1.3, 1400);
             return;
           }
           if (!rOn(rN)) { mkMan(x); return; }
@@ -731,7 +731,7 @@
           rButtoned = true;
           if (inst()) return;
           return (async () => {
-            await camTo(N.x, N.y - 150, 1.7, 800);
+            await camTo(T.portrait() ? N.x : 500, T.portrait() ? N.y - 150 : 300, T.portrait() ? 1.7 : 1.3, 800);
             for (let i = 0; i < 4; i++) { if (N.P.buttons[i]) N.P.buttons[i].setAttribute('opacity', 1); AudioFX.sfx('pop', .5) || AudioFX.pop(); await sleep(260); }
           })();
         }
@@ -832,7 +832,7 @@
     const walk = N.body.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 360, iterations: Infinity });
     const walking = walkPath(T, N, HB.path, 7400);
     await say('저 아래 길로 나그네가 걸어가요.');
-    await camTo(HB.art ? 510 : 530, HB.art ? 340 : 300, 1.5, 1400);
+    await camTo(HB.art ? 510 : 530, T.portrait() ? (HB.art ? 340 : 300) : 300, T.portrait() ? 1.5 : 1.3, 1400);
     await say('나그네는 두툼한 외투를 입었어요.');
     await walking; walk.cancel();
     await camWide(900);
@@ -890,7 +890,7 @@
         await say('"으으, 추워!" 나그네는 외투를 꽉 여몄어요.');
       },
       async () => {
-        await camTo(N.x, N.y - 150, 1.7, 800);
+        await camTo(T.portrait() ? N.x : 500, T.portrait() ? N.y - 150 : 300, T.portrait() ? 1.7 : 1.3, 800);
         for (let i = 0; i < 4; i++) { N.P.buttons[i].setAttribute('opacity', 1); AudioFX.sfx('pop', .5) || AudioFX.pop(); await sleep(260); }
         await say('단추까지 꼭꼭 채웠어요. 외투는 꼼짝도 안 해요!');
       },
@@ -914,7 +914,7 @@
     W.p.wrinkles.setAttribute('opacity', 1); W.p.sweat.setAttribute('opacity', 1);
     W.p.puff.style.transition = 'transform .5s'; W.p.puff.style.transform = W.p.art ? 'scale(.94,.88)' : 'scale(.85,.75)';
     const pant = W.p.puff.animate([{ scale: '1 1' }, { scale: '1.06 1.1' }, { scale: '1 1' }], { duration: 700, iterations: Infinity });
-    await camTo(W.x, W.y + 40, 2.1, 900);
+    await camTo(T.portrait() ? W.x : 500, T.portrait() ? W.y + 40 : 280, T.portrait() ? 2.1 : 1.3, 900);
     SND.pant(T);
     await say('바람은 숨이 차서 헉헉, 볼이 쭈글쭈글해졌어요.');
     await say('"에이, 안 되네!"'); // 헉헉 합성음은 목소리와 겹쳐서 뺌
