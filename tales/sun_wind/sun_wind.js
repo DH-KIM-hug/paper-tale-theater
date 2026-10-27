@@ -126,10 +126,22 @@
   };
 
   /* ================= 캐릭터 (임시 도형) ================= */
+  /* 2026-10-28 사용자 결정(§7-1 빛 예외): 해의 빛은 광원에서 멀어질수록 흐려지는 반투명 그라데이션. 단색 원·단색 줄기를 쓰지 않는다 */
+  let glowN = 0;
+  function lightGrad(T, parent, kind, attrs, stops) {
+    const id = 'swLight' + (++glowN), gr = T.el(kind, { id, ...attrs }, parent);
+    stops.forEach(([o, c, a]) => T.el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, gr));
+    return `url(#${id})`;
+  }
+  /* 햇살 줄기 한 가닥(해 가운데 (0,0)에서 아래로 260): 해 쪽이 가장 밝고 끝으로 갈수록 투명 */
+  function sunRay(T, x, y, rot) {
+    const fill = lightGrad(T, T.fx, 'linearGradient', { gradientUnits: 'userSpaceOnUse', x1: 0, y1: 0, x2: 0, y2: 260 }, [[0, '#FFF3C8', .95], [.45, '#FFE9A8', .45], [1, '#FFE9A8', 0]]);
+    return T.el('path', { d: 'M0 0 L-16 0 L-60 260 L40 260 Z', fill, opacity: 0, transform: `translate(${x},${y}) rotate(${rot})`, style: 'pointer-events:none' }, T.fx);
+  }
   /* 해님: 가운데가 (0,0). 반지름 ~105 */
   function drawSun(T, g) {
     const { el, paper } = T;
-    const glow = el('circle', { r: 118, fill: C.amber, opacity: 0 }, g);
+    const glow = el('circle', { r: 150, fill: lightGrad(T, g, 'radialGradient', {}, [[0, '#FFE6A8', 1], [.5, C.amber, .6], [1, C.amber, 0]]), opacity: 0, style: 'pointer-events:none' }, g);   // 해 둘레 빛: 가운데가 밝고 바깥으로 투명(옛 단색 원 r118)
     const art = pic(T, g, 'sun', -SUN_D / 2, -SUN_D / 2, SUN_D, SUN_D);
     if (art) return { glow, rays: art.inner, mouth: el('g', {}, g), art: true };
     const rays = el('g', {}, g); origin(rays, 0, 0);
@@ -630,7 +642,7 @@
           rS.p.glow.animate([{ opacity: 0, transform: 'scale(.8)' }, { opacity: .6, transform: 'scale(1.1)' }, { opacity: 0, transform: 'scale(1)' }], 1200);
           if (rF && rF.sky && rFieldN >= 3 && lv >= 1) { const [c, o] = rWarmLv[Math.min(lv, 3) - 1]; rF.sky.setAttribute('fill', c); rF.warm.setAttribute('opacity', o); if (rF.light) rF.light([.4, .75, 1][Math.min(lv, 3) - 1]); }
           for (let i = 0; i < 5; i++) {
-            const bm = el('path', { d: 'M0 0 L-16 0 L-60 260 L40 260 Z', fill: '#FFE9A8', opacity: 0, transform: `translate(${rS.x},${rS.y}) rotate(${40 + i * 12})` }, T.fx);
+            const bm = sunRay(T, rS.x, rS.y, 40 + i * 12);
             bm.animate([{ opacity: 0 }, { opacity: .45 }, { opacity: 0 }], { duration: 1400, delay: i * 80 }).finished.then(() => bm.remove());
           }
           return;
@@ -961,7 +973,7 @@
       if (F.light) F.light([.4, .75, 1][lv]); // 라이트박스: 톡톡마다 햇살 들판으로
       // 햇살 줄기
       for (let i = 0; i < 5; i++) {
-        const b = el('path', { d: 'M0 0 L-16 0 L-60 260 L40 260 Z', fill: '#FFE9A8', opacity: 0, transform: `translate(820,190) rotate(${40 + i * 12})` }, T.fx);
+        const b = sunRay(T, 820, 190, 40 + i * 12);
         b.animate([{ opacity: 0 }, { opacity: .45 }, { opacity: 0 }], { duration: 1400, delay: i * 80 }).finished.then(() => b.remove());
       }
     };
