@@ -917,7 +917,7 @@
       blanket: verb => {
         if (verb !== 'lift') return;
         return (async () => {
-          if (!rInst()) await camTo(510, 400, 1.8, 600);
+          if (!rInst()) await camTo(510, P() ? 400 : 340, P() ? 1.8 : 1.3, 600);
           rs.blanket.style.transition = 'transform .5s, opacity .5s'; rs.blanket.style.transform = 'translateY(-30px)'; rs.blanket.style.opacity = '.0';
           await sleep(400);
         })();
@@ -1356,7 +1356,7 @@
       if (artUrl('bear_paw')) { paw = T.el('g', {}, T.fx); pic(T, paw, 'bear_paw', { box: [pwx - 60, 455, 120, 257] }); } // 그림 발: 아래에서 발가락이 쑥
       else paw = T.paper(T.fx, [['ellipse', { cx: pwx, cy: 560, rx: 70, ry: 60, fill: BEAR.baby.fur }], ['ellipse', { cx: pwx, cy: 540, rx: 30, ry: 22, fill: BEAR.baby.light }],
         ...[-34, 0, 34].map(d => ['circle', { cx: pwx + d, cy: 506, r: 12, fill: BEAR.baby.light }])]);
-      camSnap(510, 400, 1.8);
+      camSnap(510, P() ? 400 : 340, P() ? 1.8 : 1.3);
     }, goldi.pos);
     const zz = setInterval(() => pop(420, 330, 'Z', C.indigo), 1600);
     snore(T);
