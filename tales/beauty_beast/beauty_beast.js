@@ -283,12 +283,17 @@
     const { sleep, camSnap, tr } = T;
     let gap = 150;                                  // 대사 사이 숨 (첫 조작 전에는 짧게: 시작 후 30초 안에 첫 톡)
     const say = async text => { await T.say(text); await sleep(gap); };
-    const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
+    /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
+    const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const SCENE_AMB = { snow_forest_lb: 'winter_wind_1' };
+    const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
+    try { AudioFX.preloadSfx(['sparkle', 'thud', 'womp', 'paper_up', 'paper_down', 'step_grass', 'blow_long', 'chomp', 'swish', 'pop', 'xylo_down', 'splash', 'tada', 'winter_wind_1', 'birds_chirp_1', 'horse_hooves_1', 'door_heavy_1', 'ding_glock', 'question', 'pull_pop', 'surprise_sting', 'whistle_down', 'water_drip', 'party_horn']); } catch (e) { /* */ }
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const loads = [...BGS.map(k => T.preload(bgSrc(k)).then(ok => { bgOK[k] = ok; })), ...Object.keys(ASP).map(k => T.preload(artSrc(k)).then(ok => { artOK[k] = ok; }))];
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
 
     /* ---- 배우 ---- */
     const belle = mk(T, { stand: 'belle_stand', broom: 'belle_broom', point: 'belle_point', resolve: 'belle_resolve', sit: 'belle_sit',
@@ -375,7 +380,7 @@
         if (!bgOK.garden_bloom_v2) return;
         const img = T.el('image', { href: bgSrc('garden_bloom_v2'), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none', opacity: inst() ? 1 : 0 }, T.bg);
         if (inst()) hide(L.topiary);
-        else { img.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400, fill: 'forwards' }); sfx(T, 'sparkle'); fadeOut(T, L.topiary, 2400); }
+        else { img.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400, fill: 'forwards' }); sfx(T, 'sparkle'); amb('birds_chirp_1', .18, 4); fadeOut(T, L.topiary, 2400); }
       };
       const actor = (name, a) => (op, ...r) => {
         const w = busy[name];
@@ -578,7 +583,7 @@
     bob(father.pos);
     await T.ask('말을 톡 눌러 봐요.', () => T.tap(father.pos, { prompt: '말을 톡 눌러 봐요.' }));
     gap = 500;
-    (async () => { for (let i = 0; i < 6; i++) { AudioFX.sfx('step_grass'); father.hop(6, 420); await sleep(450); } })();
+    if (!cue('horse_hooves_1', .6)) (async () => { for (let i = 0; i < 6; i++) { AudioFX.sfx('step_grass'); father.hop(6, 420); await sleep(450); } })(); else (async () => { for (let i = 0; i < 6; i++) { father.hop(6, 420); await sleep(450); } })();
     T.pop(father.x, FL - 350, tr('따각따각'));
     setTimeout(() => T.pop(father.x + 300, FL - 340, tr('따각따각')), 1300);
     belle.hop(10); sisa.wiggle(5, 500); sisb.wiggle(5, 500);
@@ -592,12 +597,12 @@
       put(T, L.fir[0], 60, 575); put(T, L.fir[1], 950, 575, { to: 'right' }); put(T, L.sbush, 985, 585);   /* 앞 가림: 아버지는 왼쪽 전나무 뒤로 지나간다 */
       if (P) camSnap(300, 280, 1);
     }, father.pos);
-    sfx(T, 'blow_long', .4);
     (async () => { for (let i = 0; i < 6; i++) { father.hop(5, 400); await sleep(600); } })();
     if (P) T.camTo(500, 280, 1, 3200);   /* 아버지를 따라가며 궁전(빛나는 창·문)이 화면에 들어온다 */
     await Promise.all([father.move(X(480, 500), FL, 3200, 'linear'), say('그런데 배의 짐은 남의 것이 되어, 아버지는 빈손으로 돌아오다 눈보라에 길을 잃었어요.')]);
     await sleep(300);
     const h10 = father.hop(8, 400);
+    cue('door_heavy_1', .5);
     await say('멀리 불빛! 커다란 궁전에 아무도 없고, 따뜻한 저녁상만 차려져 있었어요.');
     await h10;
     T.clear(); bgImage(T, 'dining_v2'); camSnap(500, 280, 1);
@@ -629,9 +634,10 @@
     }, bush5.pos);
     await say('아침이 되자 눈 속에 장미가 활짝 피어 있었어요!');
     bush5.hop(8, 360); await sleep(150); bush2.hop(8, 360);
+    cue('question', .6);
     await T.ask('장미가 많은 덤불은 어느 쪽일까요?', () => T.choose([{ el: bush5.pos, ok: true }, { el: bush2.pos, ok: false, onWrong: async () => { await bush2.wiggle(8, 360); await say('그 덤불은 장미가 두 송이예요. 적어요.'); } }],
       { prompt: '장미가 많은 덤불은 어느 쪽일까요?' }));
-    glow(bush5, 1200); bush5.hop(14, 400); sparkleSfx(T); T.pop(bush5.x, FL - 260, tr('반짝!'));
+    glow(bush5, 1200); bush5.hop(14, 400); cue('ding_glock', .8) || sparkleSfx(T); T.pop(bush5.x, FL - 260, tr('반짝!'));
     await say('맞아요, 다섯 송이! 장미가 많아요.');
     {
       const a5 = bush5.x, a2 = bush2.x; sfx(T, 'swish');
@@ -639,7 +645,7 @@
     }
     await T.ask('자리를 바꿨어요. 장미가 적은 덤불은 어느 쪽일까요?', () => T.choose([{ el: bush2.pos, ok: true }, { el: bush5.pos, ok: false, onWrong: async () => { await bush5.wiggle(8, 360); await say('그 덤불은 장미가 다섯 송이예요. 많아요.'); } }],
       { prompt: '장미가 적은 덤불은 어느 쪽일까요?' }));
-    glow(bush2, 1200); bush2.hop(14, 400); sparkleSfx(T); T.pop(bush2.x, FL - 260, tr('반짝!'));
+    glow(bush2, 1200); bush2.hop(14, 400); cue('ding_glock', .8) || sparkleSfx(T); T.pop(bush2.x, FL - 260, tr('반짝!'));
     await say('맞아요, 두 송이! 장미가 적어요.');
     follow(bush5.x, 900);
     await father.move(bush5.x + 110, FL, 1200);
@@ -647,7 +653,7 @@
     const rm = rose.move(father.x - 28, FL - 108, 700);
     await say('벨에게 줄 장미 한 송이만.');
     await rm;
-    hide(rose); father.look('rose'); sfx(T, 'pop'); T.pop(father.x, FL - 240, tr('톡!'));
+    hide(rose); father.look('rose'); cue('pull_pop', .8) || sfx(T, 'pop'); T.pop(father.x, FL - 240, tr('톡!'));
     await sleep(500);
 
     /* ===== 5. 야수 ===== */
@@ -663,14 +669,14 @@
     }, bush5.pos);
     const appear = beast.pos.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1400, fill: 'forwards' });
     beast.move(beast.x, FL, 1400, 'ease-out');
-    sfx(T, 'thud', .45); T.pop(beast.x, FL - 330, tr('쿵'));
+    cue('surprise_sting', .6) || sfx(T, 'thud', .45); T.pop(beast.x, FL - 330, tr('쿵'));
     setTimeout(() => { sfx(T, 'thud', .45); T.pop(beast.x + 40, FL - 330, tr('쿵')); }, 700);
     await say('그때 덤불 뒤에서 커다란 야수가 천천히 나왔어요.');
     await appear.finished.catch(() => {});
     await say('내 장미를 꺾었구나. 재워 주고 먹여 줬는데.');
     put(T, hat, father.x, FL - 212 + 12); father.look('shock'); front(L.rose);
     hat.pos.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '40px 200px', rotate: '70deg' }], { duration: 600, easing: 'ease-in', fill: 'forwards' });
-    sfx(T, 'paper_down'); T.pop(father.x + 40, FL - 40, tr('툭!'));
+    cue('whistle_down', .6) || sfx(T, 'paper_down'); T.pop(father.x + 40, FL - 40, tr('툭!'));
     const w5 = father.wiggle(4, 500);
     await say('죄송해요, 나리. 막내딸이 부탁한 거예요.');
     await w5;
@@ -742,8 +748,9 @@
     for (const k of ['on', 'under', 'beside'].sort(() => Math.random() - .5)) {
       const q = QS[k];
       vases.forEach(v => padHit(T, v.pos));
+      cue('question', .6);
       await T.ask(q.ask, () => T.choose(vases.map((v, i) => ({ el: v.pos, ok: i === q.vi, onWrong: async () => { await v.wiggle(8, 360); await say(WR[i]); } })), { prompt: q.ask }));
-      const v = vases[q.vi]; glow(v, 1200); v.hop(14, 400); sparkleSfx(T); T.pop(v.x, FL - 160, tr('반짝!'));
+      const v = vases[q.vi]; glow(v, 1200); v.hop(14, 400); cue('ding_glock', .8) || sparkleSfx(T); T.pop(v.x, FL - 160, tr('반짝!'));
       await say(q.right);
       await sleep(300);
     }
@@ -787,6 +794,7 @@
     };
     const ASK = '창밖은 아침, 낮, 밤으로 바뀌어요. 아침부터 차례로 눌러 봐요.'.replace('창밖은', '창밖은');
     const wrongC = (k, line) => ({ el: cardOf(k).g, ok: false, onWrong: async () => { await wiggleEl(T, cardOf(k).g); await say(line); } });
+    cue('question', .6);
     await T.ask('창밖은 아침, 낮, 밤으로 바뀌어요. 아침부터 차례로 눌러 봐요.', () => T.choose([{ el: cardOf('morning').g, ok: true }, wrongC('noon', '그건 낮이에요. 아침은 어디일까요?'), wrongC('night', '그건 밤이에요. 아침은 어디일까요?')], { prompt: ASK }));
     cardOf('morning').g.style.filter = 'url(#hintGlow)';
     flash('#F2B366', .22, 0);
@@ -894,7 +902,7 @@
     bob(spring.pos);
     await T.ask('샘물을 톡 눌러 봐요.', () => T.tap(spring.pos, { prompt: '샘물을 톡 눌러 봐요.' }));
     drops(T, belle.x + 40, FL - 85, beast.x - beast.w * .3, FL - 60);
-    sfx(T, 'splash', .5); T.pop(beast.x - 60, FL - 170, tr('똑똑!'));
+    sfx(T, 'water_drip', .6, () => sfx(T, 'splash', .5)); T.pop(beast.x - 60, FL - 170, tr('똑똑!'));
     await sleep(700);
     beast.look('eyes'); glow(beast, 1000); sfx(T, 'sparkle');
     await say('벨… 돌아왔구나.');
@@ -914,7 +922,7 @@
     /* 마법이 풀렸다: 같은 구도의 봄 정원으로 천천히 바뀐다 (눈 녹고 장미 만발). 눈 얹힌 토피어리는 함께 사라진다 */
     if (bgOK.garden_bloom_v2) {
       const bloom = T.el('image', { href: bgSrc('garden_bloom_v2'), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none', opacity: 0 }, T.bg);
-      bloom.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400, fill: 'forwards' }); sfx(T, 'sparkle');
+      bloom.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 2400, fill: 'forwards' }); sfx(T, 'sparkle'); amb('birds_chirp_1');
       fadeOut(T, L.topiary, 2400);
     }
     put(T, belle, X(480, 450), FL, { look: 'joy' });
@@ -928,10 +936,11 @@
     await say('아버지와 언니들도 달려왔어요.');
     await fam;
     if (P) T.camTo(520, 280, 1, 800);
-    T.confetti(); sfx(T, 'tada', () => sparkleSfx(T));
+    T.confetti(); sfx(T, 'party_horn', () => sfx(T, 'tada', () => sparkleSfx(T)));
     [belle, prince, father, sisa, sisb].forEach((a, i) => setTimeout(() => a.hop(16 + (i % 3) * 2, 460), i * 120));
     await say('모두 함께 궁전에서 행복하게 살았어요.');
     await say('겉모습이 아니라 마음을 봐요.');
+    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '겉모습이 아니라 마음을 봐요.';
   }
