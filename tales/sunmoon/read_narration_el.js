@@ -11,6 +11,8 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/sunmoon/nar_28d55bc8dc.mp3",
   "audio/el/sunmoon/mom_4d55c0ef72.mp3"
  ],
+ "엄마가 떠나자 오누이는 문을 꼭 잠갔어요.": "audio/el/sunmoon/nar_0e5e916ab0.mp3",
+ "엄마는 산길을 지나 부잣집 부엌에 도착했어요.": "audio/el/sunmoon/nar_cd06b8d009.mp3",
  "엄마는 부잣집에서 하루 종일 부지런히 일했어요.": "audio/el/sunmoon/nar_fc75cb228f.mp3",
  "싹싹 쌀을 씻고, 활활 불을 때고, 모락모락 떡을 쪘지요.": "audio/el/sunmoon/nar_ac8d595409.mp3",
  "저녁이 되자 부잣집 주인이 말랑말랑한 떡을 한 아름 내주었어요.": "audio/el/sunmoon/nar_cf434f86c8.mp3",
@@ -42,6 +44,7 @@ Object.assign(NARRATION_CLIPS, {
  "호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.": "audio/el/sunmoon/nar_01ef9bf114.mp3",
  "호랑이는 엄마 옷을 입고, 오누이가 기다리는 집으로 갔어요.": "audio/el/sunmoon/nar_e3f151cd80.mp3",
  "집에서는 오누이가 엄마를 기다리고 있었어요. 등잔불이 가물가물 흔들렸지요.": "audio/el/sunmoon/nar_42249d0717.mp3",
+ "문밖에는 엄마 옷을 입은 호랑이가 서 있었어요.": "audio/el/sunmoon/nar_f6d50df7cc.mp3",
  "똑똑똑. \"얘들아~ 엄마 왔다. 문 열어라~\" 걸걸한 목소리예요.": [
   "audio/el/sunmoon/nar_ebfdec0091.mp3",
   "audio/el/sunmoon/tiger_4ff847a2b8.mp3",
@@ -61,6 +64,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/sunmoon/nar_e72fafb1a4.mp3",
   "audio/el/sunmoon/boy_f28d015eaf.mp3"
  ],
+ "깜깜한 뒷마당에 오누이가 발을 살금살금 내디뎠어요.": "audio/el/sunmoon/nar_1cc219a231.mp3",
  "오누이는 뒷문으로 살금살금 나왔어요.": "audio/el/sunmoon/nar_e4711224d8.mp3",
  "앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!": "audio/el/sunmoon/nar_aa51dc8e0d.mp3",
  "오누이는 숨을 꼭 참고 장독 뒤에 납작 붙어 있었어요. 가슴이 콩닥콩닥 뛰었지요.": "audio/el/sunmoon/nar_2f0ceb6af7.mp3",
@@ -73,6 +77,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/sunmoon/nar_3562027e8a.mp3"
  ],
  "휴~ 이제 우물가 큰 나무로 달려가요!": "audio/el/sunmoon/nar_a60238e246.mp3",
+ "오누이는 장독 뒤를 떠나 우물가에 다다랐어요.": "audio/el/sunmoon/nar_cedad36e04.mp3",
  "우물가에 커다란 나무가 있어요.": "audio/el/sunmoon/nar_f839fcb6a8.mp3",
  "오누이는 영차영차, 나무를 타고 쑥쑥 올라갔어요.": "audio/el/sunmoon/nar_a06d6b4a4c.mp3",
  "오누이는 나무 꼭대기까지 올라갔어요!": "audio/el/sunmoon/nar_9b797fcbf1.mp3",
@@ -108,6 +113,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/sunmoon/nar_50f03b4b93.mp3"
  ],
  "호랑이가 도끼로 콕콕 찍으며 올라와요! 오누이는 덜덜 떨었어요.": "audio/el/sunmoon/nar_62a36f0852.mp3",
+ "나무 꼭대기에서 오누이는 서로 꼭 붙어 있었어요.": "audio/el/sunmoon/nar_fcc7ccd90e.mp3",
  "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.": "audio/el/sunmoon/nar_3af3ac4f12.mp3",
  "\"하늘님, 튼튼한 동아줄을 내려 주세요!\"": "audio/el/sunmoon/boy_e461e44689.mp3",
  "그러자 하늘에서 굵은 동아줄이 스르르 내려왔어요!": "audio/el/sunmoon/nar_370b5e6363.mp3",
@@ -116,6 +122,7 @@ Object.assign(NARRATION_CLIPS, {
  "줄을 꼭 잡고, 영차영차 올라가요!": "audio/el/sunmoon/nar_1cec46a5f4.mp3",
  "구름을 뚫고 쑥쑥!": "audio/el/sunmoon/nar_827112eb47.mp3",
  "구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!": "audio/el/sunmoon/nar_4dc59b08ac.mp3",
+ "오누이가 떠난 나무에 호랑이만 남았어요.": "audio/el/sunmoon/nar_6434f8b3b5.mp3",
  "호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.": "audio/el/sunmoon/nar_ab5a454287.mp3",
  "\"어흥, 나도 올라가야지!\" 호랑이는 신이 나서 줄을 덥석 잡았어요.": [
   "audio/el/sunmoon/tiger_551889b451.mp3",
@@ -129,6 +136,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/sunmoon/nar_61cd59f41a.mp3"
  ],
  "호랑이는 혹을 달고 산속으로 줄행랑! 다시는 오지 않았대요.": "audio/el/sunmoon/nar_a8b53aba4d.mp3",
+ "그동안 오누이는 하늘 나라에서 무사히 함께 있었어요.": "audio/el/sunmoon/nar_c685bd307c.mp3",
  "하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.": "audio/el/sunmoon/nar_ea4c6a484e.mp3",
  "오빠는 낮에 쨍쨍 환하게, 동생은 밤에 은은하게 세상을 비추었지요.": "audio/el/sunmoon/nar_366e8e3360.mp3",
  "동생이 말했어요. \"오빠, 나는 밤이 무서워요.\"": [
