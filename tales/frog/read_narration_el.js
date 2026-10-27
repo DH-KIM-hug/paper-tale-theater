@@ -12,6 +12,7 @@ Object.assign(NARRATION_CLIPS, {
  "풀잎이 살랑살랑, 아기 개구리들은 신이 나서 폴짝폴짝 뛰었어요.": "audio/el/frog/nar_8a20935aff.mp3",
  "어? 눈앞에 커다란 무언가가 있어요!": "audio/el/frog/nar_649ab75c57.mp3",
  "아기 개구리들은 눈을 동그랗게 뜨고 멈춰 섰어요.": "audio/el/frog/nar_4376e86f6e.mp3",
+ "풀밭에 멈춰 선 아기 개구리들은 커다란 몸을 올려다보았어요.": "audio/el/frog/nar_50352320c6.mp3",
  "이건 뭘까요? 꼬리일까요, 나무일까요?": "audio/el/frog/nar_451b6259c1.mp3",
  "길쭉한 것이 살랑살랑 흔들려요. 꼬리였어요!": "audio/el/frog/nar_a077da67de.mp3",
  "이번엔 뭘까요? 발굽일까요, 돌멩이일까요?": "audio/el/frog/nar_6f448c08d0.mp3",
@@ -27,6 +28,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/frog/mom_854f9f3953.mp3"
  ],
  "개구리보다 오리가, 오리보다 양이, 양보다 황소가 훨씬 커요.": "audio/el/frog/nar_dd1ce3e54e.mp3",
+ "연못가에서 엄마개구리는 아기들 앞에 나섰어요.": "audio/el/frog/nar_f559855534.mp3",
  "\"흥, 나도 황소만큼 클 수 있어!\" 엄마개구리가 숨을 크게 들이마셨어요.": [
   "audio/el/frog/mom_ef0de5c49e.mp3",
   "audio/el/frog/nar_55da34644b.mp3"
@@ -40,6 +42,7 @@ Object.assign(NARRATION_CLIPS, {
  "푸슈슈슉~ 엄마개구리가 풍선처럼 날아다녀요!": "audio/el/frog/nar_6c2bce7074.mp3",
  "빙글빙글, 휘리릭! 그러다 퐁당! 연못에 떨어졌어요.": "audio/el/frog/nar_dc2ddafaf2.mp3",
  "엄마개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.": "audio/el/frog/nar_b034590808.mp3",
+ "그 뒤, 엄마개구리는 아기들과 황소가 있는 풀밭으로 갔어요.": "audio/el/frog/nar_6cf9cb6ce4.mp3",
  "황소가 몸을 낮추고 다정하게 말했어요. \"크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!\"": [
   "audio/el/frog/nar_106ff3845e.mp3",
   "audio/el/frog/ox_3db7f0ec30.mp3"
@@ -48,6 +51,7 @@ Object.assign(NARRATION_CLIPS, {
  "황소도 따라 뛰어 볼까요? 하나, 둘…": "audio/el/frog/nar_a2860e4d1d.mp3",
  "쿵! 황소는 폴짝 뛰지 못했어요.": "audio/el/frog/nar_3ff88b49bc.mp3",
  "아기 개구리들이 깔깔깔, 엄마개구리도 히히 웃었어요.": "audio/el/frog/nar_e3b4b03916.mp3",
+ "해가 지자 개구리 가족은 연못으로 돌아왔어요.": "audio/el/frog/nar_4661b447c8.mp3",
  "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요.": "audio/el/frog/nar_79a8661af9.mp3",
  "개굴개굴, 개굴개굴! 반짝이는 별 아래 노랫소리가 울려 퍼졌어요.": "audio/el/frog/nar_60871da287.mp3",
  "개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.": "audio/el/frog/nar_755934b71c.mp3",
