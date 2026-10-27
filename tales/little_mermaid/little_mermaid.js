@@ -354,7 +354,7 @@
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(bgSrc(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(artSrc(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);   // 진짜 4초: 검증 화면 건너뛰기(skipto)의 빠른 sleep(15ms)에 지면 그림이 덜 받아져 이름표 상자로 나온다(unicorn 과 같은 처리, 2026-10-28)
 
     /* ---- 배우 ---- */
     const mer = mk(T, { swim: 'mer_swim', garden: 'mer_garden', peek: 'mer_peek', hide: 'mer_hide', hold: 'mer_hold', worry: 'mer_worry', resolve: 'mer_resolve',

@@ -254,7 +254,7 @@
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     [...Object.keys(ASP), ...Object.keys(FIXED_ASP)].forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && !FIXED_ASP[k] && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);   // 진짜 4초: 검증 화면 건너뛰기(skipto)의 빠른 sleep(15ms)에 지면 그림이 덜 받아져 이름표 상자로 나온다(unicorn 과 같은 처리, 2026-10-28)
     Object.assign(ASP, FIXED_ASP);
     const H = f => [f, HT[f]];
 
