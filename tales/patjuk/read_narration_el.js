@@ -3,6 +3,7 @@ Object.assign(NARRATION_CLIPS, {
  "옛날 옛날, 깊은 산골에 팥죽을 아주 잘 쑤는 할멈이 살았어요.": "audio/el/patjuk/nar_11129128e8.mp3",
  "팥밭에는 빨간 팥이 주렁주렁 열렸어요.": "audio/el/patjuk/nar_e9f1ddaec1.mp3",
  "할멈은 호미로 콕콕 김을 매며 콧노래를 흥얼흥얼 불렀지요.": "audio/el/patjuk/nar_62b0837cbc.mp3",
+ "그날도 할멈은 팥밭에서 일을 하고 있었어요.": "audio/el/patjuk/nar_c4627a4a51.mp3",
  "어흥! 어느 날 커다란 호랑이가 나타났어요. \"할멈, 잡아먹어야겠다!\"": [
   "audio/el/patjuk/nar_1a943cfef6.mp3",
   "audio/el/patjuk/tiger_1201f31b26.mp3"
@@ -14,7 +15,9 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/patjuk/nar_a2bfddd4e4.mp3"
  ],
  "할멈은 호랑이가 사라진 산길을 한참 바라보았어요.": "audio/el/patjuk/nar_f1bd8441d5.mp3",
+ "어느덧 찬바람 부는 겨울이 왔어요.": "audio/el/patjuk/nar_e3d6b3b3ff.mp3",
  "드디어 동짓날이 되었어요. 할멈은 팥죽을 쑤면서 훌쩍훌쩍 울었어요.": "audio/el/patjuk/nar_3d01d2df4f.mp3",
+ "동짓날 저녁, 할멈은 집 안 부엌에 있었어요.": "audio/el/patjuk/nar_4fe6c73a5d.mp3",
  "보글보글, 구수한 팥죽 냄새가 부엌에 가득했지요.": "audio/el/patjuk/nar_bc352e11f1.mp3",
  "\"오늘 밤 호랑이가 오면 나는 어떡하지.\"": "audio/el/patjuk/halmi_f6d0aedc25.mp3",
  "그때 부엌문 밖에서 작은 소리가 들렸어요.": "audio/el/patjuk/nar_3b72e746dc.mp3",
@@ -28,6 +31,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/tc/jara_09a425076e.mp3",
   "audio/el/patjuk/nar_db35a90620.mp3"
  ],
+ "알밤과 자라가 숨은 부엌으로 또 친구들이 왔어요.": "audio/el/patjuk/nar_485dadd465.mp3",
  "철퍼덕! 쇠똥이 왔어요. \"팥죽 한 그릇 주면 나도 도울게!\" 쇠똥은 팥죽을 얻어먹고 부엌 바닥에 납작 엎드려 숨었어요.": [
   "audio/el/patjuk/nar_9d5d1ecfc1.mp3",
   "audio/tc/ddong_5e1ebbe7ac.mp3",
@@ -44,6 +48,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/patjuk/nar_5f597bfdf2.mp3"
  ],
  "할멈은 친구들에게 팥죽을 듬뿍듬뿍 떠 주며 조금씩 힘이 났어요.": "audio/el/patjuk/nar_800d523632.mp3",
+ "할멈은 부엌에서 마당 쪽 문가로 나갔어요.": "audio/el/patjuk/nar_8d53ea7182.mp3",
  "똑똑똑! 마당에도 친구들이 찾아왔어요.": "audio/el/patjuk/nar_13baca04c9.mp3",
  "펄럭펄럭~ 멍석이 왔어요. \"팥죽 한 그릇 주면 도와줄게!\" 멍석은 팥죽을 얻어먹고 마당에 돌돌 말려 숨었어요.": [
   "audio/el/patjuk/nar_2be57cbde9.mp3",
@@ -58,18 +63,21 @@ Object.assign(NARRATION_CLIPS, {
  "할멈은 눈물을 닦고 친구들에게 소곤소곤 속삭였어요.": "audio/el/patjuk/nar_ff3009e625.mp3",
  "\"얘들아, 도와줘!\"": "audio/el/patjuk/halmi_7ef9b4b8eb.mp3",
  "\"호랑이가 오면 모두 힘을 모아 주렴.\"": "audio/el/patjuk/halmi_dfb70b529f.mp3",
+ "할멈은 다시 부엌으로 들어가 친구들과 호랑이를 기다렸어요.": "audio/el/patjuk/nar_8f3bffb479.mp3",
  "깜깜한 밤이 되었어요. 어흥! 호랑이가 어슬렁어슬렁 찾아왔어요!": "audio/el/patjuk/nar_eb528785a4.mp3",
  "\"할멈, 약속대로 왔다. 팥죽을 먹고 나서 너를 잡아먹겠다!\"": "audio/el/patjuk/tiger_3c80faeb88.mp3",
  "\"호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.\" 할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요.": [
   "audio/el/patjuk/halmi_cba1d1cd68.mp3",
   "audio/el/patjuk/nar_8099f6a445.mp3"
  ],
+ "할멈은 부엌 구석으로 살금살금 물러났어요.": "audio/el/patjuk/nar_2dd9436806.mp3",
  "알밤이 아궁이에서 톡! 튀어나와 호랑이 눈을 딱 때렸어요!": "audio/el/patjuk/nar_bd46e77507.mp3",
  "\"앗, 뜨거워! 눈이야!\" 호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요.": [
   "audio/el/patjuk/tiger_a8a30eb10c.mp3",
   "audio/el/patjuk/nar_241f915035.mp3"
  ],
  "물독 속 자라가 호랑이 입을 앙! 물었어요!": "audio/el/patjuk/nar_47f141b75e.mp3",
+ "물독에 입을 넣었던 호랑이가 부엌에서 몸을 부르르 떨었어요.": "audio/el/patjuk/nar_d1fb3e83a5.mp3",
  "\"아야야!\" 호랑이가 깜짝 놀라 뒷걸음질을 쳤어요.": [
   "audio/el/patjuk/tiger_c012726df9.mp3",
   "audio/el/patjuk/nar_d724e22d3e.mp3"
@@ -89,6 +97,7 @@ Object.assign(NARRATION_CLIPS, {
  "\"으악, 답답해! 꺼내 줘!\"": "audio/el/patjuk/tiger_d32228dc01.mp3",
  "지게가 호랑이를 번쩍 지고 가서 바다에 풍덩! 던져 버렸어요!": "audio/el/patjuk/nar_5a4b3efd5c.mp3",
  "호랑이는 허우적허우적 헤엄쳐 멀리멀리 달아났어요. 다시는 할멈 집에 오지 않았답니다.": "audio/el/patjuk/nar_9300401ed5.mp3",
+ "호랑이가 떠나자 친구들이 마당으로 모였어요.": "audio/el/patjuk/nar_003f172ae3.mp3",
  "만세! 호랑이를 물리쳤어요! 할멈은 친구들과 맛있는 팥죽을 나누어 먹었답니다.": "audio/el/patjuk/nar_39e47fe668.mp3",
  "할멈은 마당으로 총총 나와 친구들을 꼬옥 안아 주었어요.": "audio/el/patjuk/nar_d042f7f408.mp3",
  "\"고맙다, 얘들아. 너희 덕분에 살았구나.\"": "audio/el/patjuk/halmi_27e2267f6f.mp3",
