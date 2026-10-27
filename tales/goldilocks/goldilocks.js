@@ -546,6 +546,14 @@
   /* ================= 이야기 ================= */
   async function run(T) {
     const { el, sleep, say, actor, camTo, camSnap, josa } = T;
+    /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'pot_boil', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'surprise_sting', 'whistle_down', 'zip_away', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
+    const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const cue = (n, v = .9) => { try { if (isRead()) return false; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
     /* 세로 화면(무대 양옆이 잘림): 카메라를 조금 물리고(Z) 가로 자리를 가운데로 모은다(K) */
     const P = () => window.matchMedia('(orientation: portrait)').matches;
     const K = .7, Z = .62;
@@ -561,7 +569,7 @@
     const loads = {};
     Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
     Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
-    await Promise.race([Promise.all(['bg_kitchen', 'goldi_walk', 'bear_dad', 'bear_mom', 'bear_baby', 'bowl', 'bowl_empty'].map(k => loads[k]).filter(Boolean)), sleep(2500)]);
+    await Promise.race([Promise.all(['bg_kitchen', 'goldi_walk', 'bear_dad', 'bear_mom', 'bear_baby', 'bowl', 'bowl_empty'].map(k => loads[k]).filter(Boolean)), new Promise(r => setTimeout(r, 2500))]);
     const cutArt = (key, draw, o = {}) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx: o.sfx, hold: o.hold || 2600 }], { hold: o.hold || 2600 }) : T.cut(draw, o));
 
     /* 배우: 안쪽 '자세' 층(lean)으로 눕기·기울기를 hop과 겹치지 않게 */
@@ -778,6 +786,7 @@
       },
     };
     const rSet = key => {
+      if (key === 'kitchen') { if (!rs.n.kitchen) amb('birds_chirp_1'); else if (rs.n.kitchen === 1) amb('pot_boil', .2, 4); else stopAmb(); } else if (key === 'forest') amb('birds_chirp_2', .2, 4); else stopAmb();
       T.clear(); unglow8(); rs.dusk8 = null; rs.n[key] = (rs.n[key] || 0) + 1; rs.tag = key + rs.n[key];
       rs.bearsFn = rs.goldiFn = null; rs.sitting = rs.lying = false; rs.steams = []; rs.cush = null;
       [goldi, ...B].forEach(rHide);
@@ -995,7 +1004,7 @@
       },
       pop: spec => { const [x, y, ...w] = String(spec).split(','); pop(+x, +y, w.join(','), C.persimmon); },
     });
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     /* ---------- 1. 곰 집 아침 (부엌 와이드) ---------- */
     kitchenBG(T);
@@ -1005,6 +1014,7 @@
     put(bears.dad, X(280), 500 + KY); put(bears.mom, X(470), 500 + KY, SIZE[1]); put(bears.baby, X(620), 500 + KY, SIZE[2]);
     view();
     await T.curtain(true);
+    amb('birds_chirp_1');
     await say('숲속 통나무집에 곰 세 식구가 살았어요.');
     const hiBear = async b => {
       vo('hi_' + b.key); b.setFace('happy'); b.hop(24, 420);
@@ -1018,6 +1028,7 @@
     /* ---------- 2. 앗 뜨거 (식탁 클로즈업) ---------- */
     let bowlsG, steams = [];
     await T.sceneCard('앗 뜨거!', () => {
+      amb('pot_boil', .25, 3);
       T.clear(); kitchenBG(T);
       const TT = TABLE_TOP(), BY = TT + 30; // 식탁 윗단 · 그릇 바닥 (곰 발은 식탁 뒤에 숨는다)
       put(bears.dad, X(230), 520, 1.2); put(bears.mom, 500, TT + 50, .86); put(bears.baby, X(770), TT + 12, .6);
@@ -1051,6 +1062,7 @@
     /* ---------- 3. 숲길 골디락스 (눈높이) ---------- */
     let area, butterfly, house, groundFlowers = [];
     await T.sceneCard('숲길', () => {
+      amb('birds_chirp_2', .25, 4);
       T.clear(); house = forestBG(T, X(900));
       put(goldi, X(200), 505, 1.3); if (goldi.setHold) goldi.setHold(false); // 꽃을 따기 전엔 빈손
       butterfly = el('g', {}, T.world);
@@ -1211,6 +1223,7 @@
     AudioFX.sfx('chop') || AudioFX.bonk();
     chairs[2].setBroken(1);
     goldi.setFace('o');
+    cue('whistle_down', .7);
     await goldi.move(chairs[2].x, 505, 250, 'ease-in');
     thud(T); T.shake(); pop(chairs[2].x - 110, 300, '쿵!', C.bean);
     const st6 = stars(chairs[2].x, 340);
@@ -1271,6 +1284,7 @@
     goldi.setFace('sleep');
     snore(T); pop(beds[2].cx, 200, '쿨쿨', C.indigo);
     await say('골디락스는 쿨쿨 잠이 들었어요.');
+    cue('sleepy_tuba', .6);
 
     /* ---------- 8. 곰 가족 귀가: 그릇 주인 찾기 (곰 눈높이) ---------- */
     const floor8 = 530;
@@ -1281,7 +1295,7 @@
       view();
     };
     if (bgUrl('door_dusk')) {   // 해 질 녘 집 앞(라이트박스)으로 걸어 돌아온 뒤 부엌으로 넘긴다
-      await T.sceneCard('곰 가족이 왔어요', duskYard, bears.dad.pos);
+      await T.sceneCard('곰 가족이 왔어요', () => { amb('crickets_night_1', .25, 4); duskYard(); }, bears.dad.pos);
       await Promise.all([say('그때 곰 가족이 산책에서 돌아왔어요.'), duskWalk()]);
       await sleep(300);
       await T.sceneCard(null, kitchen8, bears.dad.pos);
@@ -1364,6 +1378,7 @@
     }, goldi.pos);
     const zz = setInterval(() => pop(420, 330, 'Z', C.indigo), 1600);
     snore(T);
+    short('tiptoe_pizz', .6, 3.5);
     await say('아기 곰이 살금살금 가 보니, 누가 자고 있어요!');
     paw.animate([{ translate: '0 0' }, { translate: '-20px -20px' }, { translate: '0 0' }], { duration: 900 });
     await T.ask('이불을 톡 눌러 봐요.', () => T.tap(blanket, { prompt: '아기 곰이랑 이불을 톡!' }));
@@ -1371,7 +1386,7 @@
     paw.remove();
     goldi.pose(''); goldi.setFace('o');
     goldi.place(500, 400); goldi.hop(50, 450);
-    AudioFX.pop_out();
+    if (cue('surprise_sting', .7) === false) AudioFX.pop_out();
     pop(500, 300, '깜짝!', C.bean);
     if (P()) { put(bears.dad, 738, 520, SIZE[0]); put(bears.mom, 676, 530, SIZE[1]); put(bears.baby, 626, 540, SIZE[2]); } // 세로: 아빠 곰 오른쪽 끝이 잘리지 않게
     else { put(bears.dad, 910, 520, SIZE[0]); put(bears.mom, 790, 520, SIZE[1]); put(bears.baby, 690, 520, SIZE[2]); }
@@ -1380,7 +1395,7 @@
     cutVo('cut_eyes');
     await cutArt('cut_eyes', svg => cutEyes(T, svg), { hold: 2400 });
     await say('골디락스와 곰 세 마리 눈이 딱 마주쳤어요!');
-    AudioFX.whoosh();
+    if (cue('zip_away', .7) === false) AudioFX.whoosh();
     await goldi.move(winX + 75, 470, 700, 'ease-in');
     await goldi.move(winX + 75, 320, 300, 'ease-out');
     cutVo('cut_skirt');
@@ -1423,7 +1438,7 @@
     } }));
     hammer.remove();
     await sleep(400);
-    AudioFX.sfx('ding') || AudioFX.ding();
+    if (cue('ding_glock', .8) === false) AudioFX.sfx('ding') || AudioFX.ding();
     pop(fix.x, 130, '짠!', C.persimmon);
     goldi.setFace('happy'); bears.baby.setFace('happy');
     await say('짠! 의자가 다 고쳐졌어요.');
