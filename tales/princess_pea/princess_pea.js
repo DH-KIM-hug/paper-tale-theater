@@ -40,7 +40,10 @@
   const LIE_DY = 10;                    // 누운 공주를 이불 속으로 내리는 양(그림 아래 여백·들린 머리 보정)
   const RIG_UP = 130;                   // 꼭대기를 볼 때 rig 를 내리는 양(§5-1)
   const BGS = ['pp_bg_room_day_v2', 'pp_bg_gate_night_lb', 'pp_bg_guest_day_v2', 'pp_bg_guest_night_lb', 'pp_bg_yard_day_v2'];
-  const src = k => AS + k + '.webp';    // 배경·스프라이트 모두 파일 이름 전체(pp_…)로 부른다
+  /* 2026-10-28 사용자 결정(§7-1 빛 예외): 밤 두 장면은 반투명 빛이 광원에서 멀어질수록 흐려지는 _glow 그림(같은 구도, 창·성문·등 자리 그대로).
+     손님방: 바닥의 불투명 평행사변형 달빛 조각 → 창에서 바닥으로 흐려지는 달빛. 성문: 문간 빛이 돌바닥으로 퍼지고, 벽 등에 옅은 빛 */
+  const GLOW = { pp_bg_guest_night_lb: 1, pp_bg_gate_night_lb: 1 };
+  const src = k => AS + k + (GLOW[k] ? '_glow' : '') + '.webp';    // 배경·스프라이트 모두 파일 이름 전체(pp_…)로 부른다
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 902 / 1600 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
   const hOf = f => HT[f] || 200;
