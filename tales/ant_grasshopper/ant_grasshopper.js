@@ -808,7 +808,7 @@
       const acts = {
         set(k) { if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
         cam() {
-          if (key === 'cellar' && cellarN > 1) { camSnap(K.cam[0], K.cam[1], narrow() ? 1.1 : 2.1); return; }
+          if (key === 'cellar' && cellarN > 1) { camSnap(K.cam[0], narrow() ? K.cam[1] : 380, narrow() ? 1.1 : 1.5); return; }
           camW();
         },
         hop(op, a1, a2) {
@@ -1140,7 +1140,7 @@
     await sleep(900);
     await say('창고가 도토리로 더 가득해졌어요!');
     // 가을 옷 고르기
-    await camTo(narrow() ? lead.x : 440, 380, 1.6, 700);
+    await camTo(narrow() ? lead.x : 500, narrow() ? 380 : 340, narrow() ? 1.6 : 1.3, 700);
     const [bTee, bVest, bCoat] = choiceBadges(T, [CLOTH.tee, CLOTH.vest, CLOTH.coat], 250);
     const tryOn = async (list, fx, line) => {
       wear(lead.p, list); fx && fx(true);
@@ -1290,7 +1290,7 @@
 
     /* --- 9. 겨울 음악회 (큰 방 확대, 반딧불 조명) --- */
     await T.sceneCard('겨울 음악회', () => {
-      camSnap(K.cam[0], K.cam[1], narrow() ? 1.1 : 2.1);
+      camSnap(K.cam[0], narrow() ? K.cam[1] : 380, narrow() ? 1.1 : 1.5); // 가로: 장면 안 확대 전환이 없어 1.5(2026-10-24 사용자 판단), 아래로 내려 관객이 바닥에 잘리지 않게
       hopperMode(hop.p, 'play');
       K.light.setAttribute('opacity', .55); lampOn(T, K);
       for (let i = 0; i < 7; i++) {
