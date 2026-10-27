@@ -16,6 +16,7 @@ Object.assign(NARRATION_CLIPS, {
  "회색 아기 오리는 헤엄을 제일 잘해요! 쏙 들어갔다가 퐁!": "audio/el/ugly_duckling/nar_5d3e4f1595.mp3",
  "그런데 늘 줄 맨 끝에서 혼자 따라가요.": "audio/el/ugly_duckling/nar_709fc3224b.mp3",
  "농장 마당에 닭이랑 오리들이 모여 있어요.": "audio/el/ugly_duckling/nar_580e78702a.mp3",
+ "연못에서 나온 아기 오리가 마당으로 뒤뚱뒤뚱 왔어요.": "audio/el/ugly_duckling/nar_1f4d1ae85a.mp3",
  "수탉이 말했어요. \"꼬꼬댁! 너는 못생겼어!\"": [
   "audio/el/ugly_duckling/nar_5f8ca769a9.mp3",
   "audio/el/ugly_duckling/rooster_1370925d7a.mp3"
@@ -35,10 +36,12 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/ugly_duckling/rooster_8a2f051dc9.mp3"
  ],
  "그래도 아기 오리는 마음이 쓸쓸했어요. 넓은 세상을 보러 길을 떠났어요.": "audio/el/ugly_duckling/nar_27f6b496da.mp3",
+ "농장을 떠난 아기 오리는 혼자 갈대숲에 들어섰어요.": "audio/el/ugly_duckling/nar_90c3c9380f.mp3",
  "갈대가 아기 오리 머리보다 훨씬 높아요.": "audio/el/ugly_duckling/nar_ced0616415.mp3",
  "갈대 사이로 햇살이 반짝반짝 비쳤어요.": "audio/el/ugly_duckling/nar_8de1c78f9b.mp3",
  "바스락바스락, 아기 오리는 갈대를 헤치며 나아갔어요.": "audio/el/ugly_duckling/nar_7d49eca9b1.mp3",
  "뒤뚱뒤뚱, 갈대숲을 지나 넓은 늪에 닿았어요.": "audio/el/ugly_duckling/nar_22b91a5b5c.mp3",
+ "갈대숲을 지난 아기 오리는 늪에서 걸음을 멈추었어요.": "audio/el/ugly_duckling/nar_a8c3f3e8cd.mp3",
  "늪에는 기러기들이 살고 있었어요.": "audio/el/ugly_duckling/nar_fe1eec31d7.mp3",
  "기러기들이 말했어요. \"안녕! 우리랑 같이 놀자!\"": [
   "audio/el/ugly_duckling/nar_7cead67a96.mp3",
@@ -50,6 +53,7 @@ Object.assign(NARRATION_CLIPS, {
  "아기 오리는 무서워서 덜덜 떨며 갈대 속에 웅크렸어요.": "audio/el/ugly_duckling/nar_a3b7467f4f.mp3",
  "쉿, 이제 조용해요. 아기 오리는 갈대 속에서 포근하게 쉬었어요.": "audio/el/ugly_duckling/nar_c7535bc7e8.mp3",
  "어느덧 가을이 되었어요. 아기 오리는 조금 더 자라 어린 새가 되었어요.": "audio/el/ugly_duckling/nar_be54c4db7d.mp3",
+ "늪을 떠난 아기 오리는 가을 호숫가를 거닐었어요.": "audio/el/ugly_duckling/nar_14164780ba.mp3",
  "알록달록 나뭇잎이 팔랑팔랑 떨어졌어요.": "audio/el/ugly_duckling/nar_4e046fc03e.mp3",
  "하늘 높이 하얀 새들이 줄지어 날아가요.": "audio/el/ugly_duckling/nar_70bfe54d61.mp3",
  "뿌우~ 나팔 같은 소리! 백조들이에요.": "audio/el/ugly_duckling/nar_58f464b756.mp3",
@@ -57,6 +61,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/ugly_duckling/nar_f65becba38.mp3",
   "audio/el/ugly_duckling/hero_d681095b1d.mp3"
  ],
+ "호숫가에 혼자 남은 아기 오리 곁으로 눈이 내렸어요.": "audio/el/ugly_duckling/nar_77ef4b8250.mp3",
  "추운 겨울이 왔어요. 호수가 꽁꽁 얼어서 발이 얼음에 붙어 버렸어요.": "audio/el/ugly_duckling/nar_8f417bc2fb.mp3",
  "찬 바람이 쌩쌩 불고, 아기 오리는 오들오들 떨었어요.": "audio/el/ugly_duckling/nar_e137b08a08.mp3",
  "날개로 몸을 꼭 감쌌더니 조금 따뜻해졌어요.": "audio/el/ugly_duckling/nar_a359869b26.mp3",
@@ -68,6 +73,7 @@ Object.assign(NARRATION_CLIPS, {
  "쩍! 얼음이 깨졌어요. 발이 쏙 빠졌어요!": "audio/el/ugly_duckling/nar_cae6eb8da2.mp3",
  "농부 할아버지가 아기 오리를 품에 폭 안았어요. 따뜻한 집으로 가요!": "audio/el/ugly_duckling/nar_18822c9b73.mp3",
  "할아버지 품은 포근포근, 아기 오리는 스르르 눈을 감았어요.": "audio/el/ugly_duckling/nar_91ad0ddf72.mp3",
+ "농부 할아버지는 아기 오리를 할머니가 있는 집에 데려다주었어요.": "audio/el/ugly_duckling/nar_16346f98eb.mp3",
  "할머니 집은 난로가 있어 따뜻했어요. 고양이와 암탉도 함께 살았어요.": "audio/el/ugly_duckling/nar_ba761af831.mp3",
  "난로 불이 타닥타닥, 아기 오리 깃털이 보송보송 말랐어요.": "audio/el/ugly_duckling/nar_ef2e021cbc.mp3",
  "고양이가 말했어요. \"야옹. 너, 가르릉 할 줄 아니?\"": [
@@ -90,6 +96,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/ugly_duckling/hen_93ccd2fa30.mp3"
  ],
  "따뜻한 봄이 왔어요. 아기 오리는 몸이 부쩍 자랐어요.": "audio/el/ugly_duckling/nar_ae6df4a850.mp3",
+ "집 밖으로 나온 아기 오리가 봄바람을 맞았어요.": "audio/el/ugly_duckling/nar_ab3dc4246b.mp3",
  "아기 오리는 기지개를 쭉 켜고 날개를 활짝 펼쳤어요.": "audio/el/ugly_duckling/nar_6ef3df1170.mp3",
  "와, 날개가 이렇게 커졌어요!": "audio/el/ugly_duckling/nar_7836c0b430.mp3",
  "파닥파닥, 파닥파닥! 발이 땅에서 살짝 떠올랐어요.": "audio/el/ugly_duckling/nar_b4b9ad0d9c.mp3",
@@ -102,6 +109,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/ugly_duckling/nar_e34437850f.mp3"
  ],
  "알, 아기, 어린 새, 그리고 백조! 이렇게 자랐어요.": "audio/el/ugly_duckling/nar_870f544c39.mp3",
+ "물에 비친 모습을 보던 백조 곁으로 물결이 일렁였어요.": "audio/el/ugly_duckling/nar_a4baa53fc6.mp3",
  "백조들이 헤엄쳐 왔어요. \"안녕! 너도 우리 친구야. 같이 살자!\"": [
   "audio/el/ugly_duckling/nar_50d9e408e2.mp3",
   "audio/el/ugly_duckling/swan_b019146061.mp3"
