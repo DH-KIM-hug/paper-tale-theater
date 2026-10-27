@@ -681,7 +681,7 @@
     await T.ask('언니 머리를 톡 눌러 봐요.', () => T.tap(sis1.pos, { prompt: '언니 머리를 톡 눌러 봐요.' }));
     hair.remove();
     put(T, ribbon, sis1.x + 6, FL - sh + 14); ribbon.pos.animate([{ transform: `translate(${sis1.x + 6}px,${FL - sh + 14}px) scale(.2)` }, { transform: `translate(${sis1.x + 6}px,${FL - sh + 14}px) scale(1.25)` }, { transform: `translate(${sis1.x + 6}px,${FL - sh + 14}px) scale(1)` }], 420);
-    popSfx(T); T.pop(sis1.x, FL - sh - 30, tr('퐁!'));
+    popSfx(T); setTimeout(() => T.pop(sis1.x, FL - sh - 30, tr('퐁!')), 260); /* 리본이 커진 뒤에 띄워 엔진이 리본·머리를 피해 놓게 */
     cind.hop(8, 300); await sis1.hop(16, 380);
     await say('어머, 예쁘다!');
     await say('언니들은 신이 나서 무도회에 갔어요.');
