@@ -452,6 +452,17 @@
 
   /* ================= 배경 ================= */
   function sky(T, p, fill, extra = {}) { return T.el('rect', { x: -1400, y: -1400, width: 5600, height: 3400, fill, ...extra }, p); }
+  /* 2026-10-28 사용자 결정(§7-1 빛 예외): 하늘 꼭대기(하늘나라) 빛. 옛 단색 원(앰버 .5 둘, 크림 .8 하나)을 가운데가 밝고 바깥으로 투명해지는 방사형으로 */
+  let skyGlowN = 0;
+  function skyGlow(T, p) {
+    const g = T.el('g', { style: 'pointer-events:none' }, p);
+    [[-60, -2640, 360, C.amber, .5], [1060, -2640, 360, C.amber, .5], [500, -2720, 420, '#FBE7B0', .85]].forEach(([cx, cy, r, c, a]) => {
+      const id = 'smSky' + (++skyGlowN), rg = T.el('radialGradient', { id }, g);
+      [[0, c, a], [.5, c, a * .55], [1, c, 0]].forEach(([o, sc, op]) => T.el('stop', { offset: o, 'stop-color': sc, 'stop-opacity': op }, rg));
+      T.el('circle', { cx, cy, r, fill: `url(#${id})` }, g);
+    });
+    return g;
+  }
   function stars(T, p, list, r = 4) { list.forEach(([x, y]) => T.el('circle', { cx: x, cy: y, r, fill: C.cream, opacity: .9 }, p)); }
   function houseBG(T) {
     const { paper } = T, b = T.bg;
@@ -717,8 +728,7 @@
           BANDS.forEach((c, i) => el('rect', { x: -1400, y: 700 - i * 450 - (i === BANDS.length - 1 ? 2000 : 0), width: 3800, height: i === 0 ? 1400 : 450 + (i === BANDS.length - 1 ? 2000 : 0), fill: c }, skyV));
           stars(T, skyV, [[80, 60], [900, 120], [200, -300], [760, -500], [60, -800], [940, -900], [400, -1100], [700, 250]]);
         }
-        [[-60, -2640, 260], [1060, -2640, 260]].forEach(([x, y, r]) => el('circle', { cx: x, cy: y, r, fill: C.amber, opacity: .5 }, skyV));
-        el('circle', { cx: 500, cy: -2720, r: 300, fill: '#FBE7B0', opacity: .8 }, skyV);
+        skyGlow(T, skyV);   // 하늘 꼭대기 빛: 단색 원 셋 → 반투명 방사형(2026-10-28)
         const [lf1, lf2, br] = bgUrl('sky') ? ['#8E93C4', '#7C82B6', '#4E4868'] : ['#35604A', C.pine, C.bark];
         const tu = artUrl('treetop');
         if (tu) el('image', { href: tu, x: -50, y: 246, width: 1100, height: 1100 * 805 / 1128, filter: 'url(#pp)' }, skyV);
@@ -1823,8 +1833,7 @@
         BANDS.forEach((c, i) => el('rect', { x: -1400, y: 700 - i * 450 - (i === BANDS.length - 1 ? 2000 : 0), width: 3800, height: i === 0 ? 1400 : 450 + (i === BANDS.length - 1 ? 2000 : 0), fill: c }, skyV));
         stars(T, skyV, [[80, 60], [900, 120], [200, -300], [760, -500], [60, -800], [940, -900], [400, -1100], [700, 250]]);
       }
-      [[-60, -2640, 260], [1060, -2640, 260]].forEach(([x, y, r]) => el('circle', { cx: x, cy: y, r, fill: C.amber, opacity: .5 }, skyV));
-      el('circle', { cx: 500, cy: -2720, r: 300, fill: '#FBE7B0', opacity: .8 }, skyV);
+      skyGlow(T, skyV);   // 하늘 꼭대기 빛: 단색 원 셋 → 반투명 방사형(2026-10-28)
       // 나무 꼭대기 (출발 자리): 하늘 그림이면 앞 장면 그림 나무처럼 달빛 받은 연보라 잎
       const [lf1, lf2, br] = bgUrl('sky') ? ['#8E93C4', '#7C82B6', '#4E4868'] : ['#35604A', C.pine, C.bark];
       const tu = artUrl('treetop'); // 그림 나무 꼭대기(1128×805): 가지 윗면(그림 y≈250)이 오누이 발밑 y 505에 오게
