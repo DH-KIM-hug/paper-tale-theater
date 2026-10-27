@@ -133,6 +133,9 @@
     }
     if (key === 'mg_bg_nest') { layer(T, 'pine_sprig', 50, 590, 150); layer(T, 'pine_sprig', 950, 590, 150, { flip: true }); }
     if (key === 'mg_bg_porch') LY.flies = fireflies(T, 8, [[0, 250], [800, 1000]]);
+    /* 달밤: 왼쪽 나무에서 뻗은 가지. 가운데 윗면 y≈345(부모 까치 발끝), 달(x≈750) 밖.
+       놀이·읽기 모두 dress 를 쓰며 까치 높이·배율은 그대로 유지한다. */
+    if (key === 'mg_bg_moonnest') T.el('image', { href: src('mg2_layer_moon_perch'), x: -40, y: 278, width: 700, height: 184.333, preserveAspectRatio: 'none', style: 'pointer-events:none' }, T.bg);
   }
   const sfx = (name, vol, fb) => AudioFX.sfx(name, vol) || (fb && fb());
   const bellSfx = (T, vol = .9) => { (AudioFX.sfx('beomjong', vol) || AudioFX.sfx('beomjong_synth', vol)); T.tone(64, 2.2, { type: 'sine', vol: .12 * vol }); };
@@ -245,7 +248,7 @@
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     AudioFX.preloadSfx(['beomjong', 'beomjong_synth', 'bonk', 'whoosh', 'creak', 'step_grass', 'step_wood', 'swish', 'paper_up', 'paper_down', 'sparkle', 'tada', 'door', 'thud', 'pop', 'splash']);
-    const loads = [...BGS.map(k => T.preload(bgSrc(k)).then(ok => { bgOK[k] = ok; })), ...CUTS.map(k => T.preload(src(k)).then(ok => { cutOk[k] = ok; }))];
+    const loads = [T.preload(src('mg2_layer_moon_perch')), ...BGS.map(k => T.preload(bgSrc(k)).then(ok => { bgOK[k] = ok; })), ...CUTS.map(k => T.preload(src(k)).then(ok => { cutOk[k] = ok; }))];
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
     await Promise.race([Promise.all(loads), sleep(4000)]);
     const cut = (k, sfxName) => cutOk[k] ? T.cutImage([{ src: src(k), sfx: sfxName, hold: CUT_HOLD }], { hold: CUT_HOLD }) : Promise.resolve();
