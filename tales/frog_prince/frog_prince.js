@@ -300,7 +300,11 @@
     const GAP = 700, SCENE_END = 1500, LOOK = 1500;   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */   // LOOK: 장면이 바뀐 뒤 그림을 둘러보는 쉼(목표 7분)
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(하나·둘·셋)
-    const scene = key => { T.clear(); bgImage(T, key); dress(key); camSnap(500, 280, 1); };
+    /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
+    const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const SCENE_AMB = { fp_bg_yard_v2: 'birds_chirp_1', fp_bg_room_night_lb: 'crickets_night_1' };
+    const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); dress(key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     /* 9장 변신: 밤 빛 상자 방 위에 밝은 방(room_v2)을 1.6초 크로스페이드로 얹는다(VISUAL_PLAN 재기획 2 판단 1) */
     const roomBright = () => {
       if (!bgOK.fp_bg_room_v2) return;
@@ -310,12 +314,12 @@
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['hop', 'ball_bounce', 'splash', 'splash_big', 'bubbles', 'knock', 'door', 'step_grass', 'step_wood', 'paper_up', 'paper_down', 'swish', 'sparkle', 'tada', 'chomp', 'pop']);
+    AudioFX.preloadSfx(['hop', 'ball_bounce', 'splash', 'splash_big', 'bubbles', 'knock', 'door', 'step_grass', 'step_wood', 'paper_up', 'paper_down', 'swish', 'sparkle', 'tada', 'chomp', 'pop', 'birds_chirp_1', 'crickets_night_1', 'stream_1', 'question', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'cushion', 'boing', 'shimmer', 'party_horn']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
     const pz = (who, ps) => Object.fromEntries(ps.map(p => [p, ['fp_' + who + '_' + p, HT['fp_' + who + '_' + p]]]));
     const prin = mk(T, pz('prin', ['stand', 'ball', 'cry', 'run', 'refuse', 'sorry', 'sit', 'throw', 'hand']));
     const frog = mk(T, pz('frog', ['sit', 'ball', 'hop', 'fly', 'surprise']));
@@ -466,11 +470,12 @@
     await say(S.L0);
     await sleep(300);
     Object.values(sh).forEach(s => bob(s.pos));
+    cue('question', .6);
     await T.ask(S.L1, () => T.choose(kinds.map(k => ({
       el: sh[k].hit, ok: k === 'circle',
       onWrong: async () => { await wiggleEl(T, sh[k].hit); await say(k === 'square' ? S.W_sq : S.W_tri); },
     })), { prompt: S.L1 }));
-    glow(sh.circle, 1200); sparkleSfx(T); T.pop(sh.circle.x, FL - 150, tr('반짝!'));
+    glow(sh.circle, 1200); cue('ding_glock', .8) || sparkleSfx(T); T.pop(sh.circle.x, FL - 150, tr('반짝!'));
     await say(S.C1);
     kinds.forEach(k => T.anim(sh[k].pos, [{ opacity: 1 }, { opacity: 0 }], 400).then(() => { sh[k].pos.style.display = 'none'; }));
     bn.cancel();
@@ -485,7 +490,7 @@
 
     /* ===== 2. 샘가 (공이 높이 튀어 샘으로) ===== */
     await T.sceneCard(tr('샘가'), () => {
-      scene('fp_bg_pond_v2');
+      scene('fp_bg_pond_v2'); amb('stream_1', .25, 4);
       put(T, prin, X(380, 430), FL, { look: 'ball', to: 'right' });
       put(T, ball, prin.x + BALL_UP[0], FL + BALL_UP[1] + 24);
       bn = bounce(ball);
@@ -655,7 +660,7 @@
     await T.ask(S.L26, () => T.tap(plate.hit, { prompt: S.L26 }));
     for (let i = 0; i < 3; i++) {
       if (AudioFX.countBeat) AudioFX.countBeat(i + 1);
-      sfx('pop', .4); vo('n' + (i + 1)); glow(breads[i], 800); breads[i].hop(14, 360);
+      cue('marimba_' + Math.min(4, i + 1), .8) || sfx('pop', .4); vo('n' + (i + 1)); glow(breads[i], 800); breads[i].hop(14, 360);
       await sleep(1500);
     }
     prin.hop(8, 300); await say(S.L27);
@@ -685,16 +690,16 @@
     frog.hop(6, 300); await say(S.L30);
     prin.look('throw', 'right'); await say(S.L31);
     const t9b = (async () => {
-      sfx('swish', .5); T.pop(prin.x + 30, FL - 310, tr('휙!'));
+      cue('boing', .6) || sfx('swish', .5); T.pop(prin.x + 30, FL - 310, tr('휙!'));
       frog.look('fly', 'right');
       follow(BED.x - 80, 1100);
       await arc(frog, BED.x, BED.top - 62, 170, 1100);
-      sfx('paper_down', .4); frog.look('surprise'); T.pop(BED.x, BED.top - 200, tr('포옥'), '#1F2A56');
+      cue('cushion', .5) || sfx('paper_down', .4); frog.look('surprise'); T.pop(BED.x, BED.top - 200, tr('포옥'), '#1F2A56');
       pillow.body.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(.85)' }, { transform: 'scaleY(1)' }], { duration: 400 });
     })();
     await say(S.L32); await t9b;
     await sleep(500);
-    sparkleSfx(T); T.pop(BED.x, BED.top - 240, tr('팡!'), GOLD);
+    sfx('shimmer', .7, () => sparkleSfx(T)); T.pop(BED.x, BED.top - 240, tr('팡!'), GOLD);
     if (!P) T.camTo(BED.x - 80, 300, 1.12, 500);
     { const b = front(L.magic_burst, BED.x, BED.top - 100 + HT.fp_layer_magic_burst / 2); b.body.style.transformBox = 'fill-box'; b.body.style.transformOrigin = '50% 50%';
       b.body.animate([{ transform: 'scale(.2) rotate(0deg)', opacity: 1 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 1, offset: .7 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 0 }], { duration: 700, easing: 'ease-out' }).finished.then(() => hide(b), () => hide(b)); }
@@ -728,7 +733,7 @@
     await T.tap(spot);
     spot.remove();
     await prince.move(prince.x - 24, FL, 400, 'ease-out');
-    sparkleSfx(T); T.pop(prin.x + HAND_PRIN[0] + 11, FL - 300, tr('반짝!'));
+    cue('ding_glock', .8) || sparkleSfx(T); T.pop(prin.x + HAND_PRIN[0] + 11, FL - 300, tr('반짝!'));
     for (let i = 0; i < 2; i++) await Promise.all([prin.hop(16, 360), prince.hop(16, 360)]);
     petals(T);
     await say(S.L37);
@@ -738,7 +743,8 @@
       await ball.move(510, FL + 2, 600, 'ease-in');
     })();
     await say(S.L38); await tb;
-    T.finale(); sfx('tada') || sparkleSfx(T);
+    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    T.finale(); sfx('party_horn', .9) || sfx('tada') || sparkleSfx(T);
     await sleep(2500);
     return '한 약속은 지켜요.';
   }
