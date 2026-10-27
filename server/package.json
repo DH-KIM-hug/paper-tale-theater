@@ -1,0 +1,16 @@
+{
+  "name": "paper-tale-sync-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "종이 동화극장 연결 서버 (Cloudflare Workers + KV)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.0",
+    "wrangler": "^3.80.0"
+  }
+}

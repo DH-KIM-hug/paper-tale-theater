@@ -1,0 +1,20 @@
+# 종이 동화극장 연결 서버. 배포 절차는 README.md 참고.
+name = "paper-tale-sync"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+# account_id = "여기에_클라우드플레어_계정_ID"   # 자리표시자: wrangler whoami 로 확인해 채운다
+
+[[kv_namespaces]]
+binding = "ACCOUNTS"
+id = "여기에_KV_네임스페이스_ID"            # 자리표시자: wrangler kv namespace create ACCOUNTS 결과
+preview_id = "여기에_미리보기_KV_네임스페이스_ID"  # 자리표시자: --preview 로 만든 것
+
+[vars]
+APPLE_BUNDLE_ID = "com.papertale.theater"
+PLAY_PACKAGE_NAME = "com.papertale.theater"
+# 웹 공개 주소(CORS 허용). 실제 주소로 바꾼다. 여러 개면 쉼표로 구분.
+WEB_ORIGINS = "https://여기에_깃허브_아이디.github.io"
+
+# 비밀값은 wrangler.toml 에 쓰지 않는다:
+#   wrangler secret put GOOGLE_SERVICE_ACCOUNT_JSON
+#   wrangler secret put APPLE_ROOT_CA_G3_PEM   (코드 상수가 자리표시자일 때만)
