@@ -269,7 +269,7 @@
           splitDots = splitDress(T);
           camSnap(500, 280, 1); quiet(); return;
         }
-        if (k === 'cottage') { T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', RP, { bird: true }); camSnap(480, 310, 2.2); quiet(); return; }
+        if (k === 'cottage') { T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', RP, { bird: true }); camSnap(480, (T.viewWidth() < 990) ? 310 : 300, (T.viewWidth() < 990) ? 2.2 : 1.3); quiet(); return; }
         scene(BGKEY[k], CX[k]);
         if (k === 'home') { // 바구니와 식탁 위 음식 (담기는 basket:fill)
           put(T, basket, 500, 505); put(T, bread, 370, TY); put(T, milk, 440, TY); put(T, apple, 510, TY);
@@ -415,7 +415,7 @@
       const hv = acts.hood; acts.hood = (op, spec) => (op === 'on' ? popSfx(T) : hv(op, spec));
       /* cam:snap:x,y,z 는 콜론으로 잘려 cam('snap','480,310,2.2') 로 온다. cam:wide / cam:620 */
       acts.cam = (a, spec) => {
-        if (a === 'snap') { const [x, y, z] = nums(spec); camSnap(x, y, z); return; }
+        if (a === 'snap') { const [x, y, z] = nums(spec); camSnap(x, !(T.viewWidth() < 990) && z > 1.3 ? 300 : y, (T.viewWidth() < 990) ? z : Math.min(z, 1.3)); return; }
         if (a === 'wide') { if (key === 'cottage') return; camSnap(RP ? (CX[key] || 500) : 500, 280, 1); return; }
         const x = +a; if (!isNaN(x)) camSnap(RP ? x : 500, 280, 1);
       };
@@ -548,7 +548,7 @@
     await wolf.move(1200, 535, 2400, 'ease-in');
     await T.cutImage([{ src: cutSrc('dash'), sfx: 'whoosh', hold: 2400 }], { hold: 2400 });
     await T.cutImage([{ src: cutSrc('gulp'), hold: 2600 }], { hold: 2600 });
-    await T.sceneCard('', () => { T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', P); camSnap(480, 310, 2.2); hide(hood); hide(wolf); }, wolf.pos); // 꿀꺽: 새는 놀라 날아간 뒤라 없다
+    await T.sceneCard('', () => { T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', P); camSnap(480, (T.viewWidth() < 990) ? 310 : 300, (T.viewWidth() < 990) ? 2.2 : 1.3); hide(hood); hide(wolf); }, wolf.pos); // 꿀꺽: 새는 놀라 날아간 뒤라 없다
     AudioFX.sfx('gulp') || T.tone([300, 120], .4, { vol: .2 });
     await say('똑똑똑… 문이 닫히고… 꿀꺽!');
     await T.sceneCard('', () => { scene('bed', 590); put(T, wolf, 430, 470, { look: 'granny', to: 'left' }); }, wolf.pos);
@@ -556,10 +556,15 @@
 
     /* --- 7. 할머니 집 --- */
     await T.sceneCard('', () => {
-      T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', P, { bird: true }); camSnap(480, 310, 2.2);
+      /* 가로: 이 장면은 안에서 확대 전환이 없어 1.5까지 허용(2026-10-24 사용자 판단) — 작은 빨간 모자가 묻히지 않게 */
+      T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', P, { bird: true }); camSnap(480, (T.viewWidth() < 990) ? 310 : 320, (T.viewWidth() < 990) ? 2.2 : 1.5);
       put(T, hood, 470, 366, { look: 'knock', to: 'left', s: .34 });
     }, wolf.pos);
+    /* 누르는 영역: 작은 빨간 모자(.34배) 둘레에 투명 받침 — 화면에서 짧은 변 80px 이상 */
+    const hb = hood.body.getBBox(), hoodPad = T.el('rect', { x: Math.min(hb.x, -90), y: hb.y - 20, width: Math.max(hb.width, 180), height: hb.height + 40, fill: '#fff', opacity: 0 });
+    hood.pos.insertBefore(hoodPad, hood.pos.firstChild);
     await T.ask('빨간 모자는 숲속 할머니 집에 도착했어요. 문을 톡 두드려요!', () => T.tap(live(hood), { prompt: '빨간 모자를 톡! 똑똑똑 노크해요.' }));
+    hoodPad.remove();
     for (let k = 0; k < 3; k++) { knock(T); T.pop(560, 250, '똑!'); lyHop('bird', 6, 250); await hood.hop(8, 200); }
     await say('"들어오렴~" 안에서 쉰 목소리가 들렸어요.');
 
@@ -588,7 +593,7 @@
       const got = { key: left.find(k => parts[k] === p) };
       left.splice(left.indexOf(got.key), 1);
       ring(T, p.at[0], p.at[1], p.r + 8);
-      await T.camTo(p.at[0], p.at[1], 2, 600);
+      await T.camTo(P ? p.at[0] : 500, P ? p.at[1] : 300, P ? 2 : 1.3, 600);
       popSfx(T); T.pop(p.at[0], p.at[1] - 70, p.w);
       await say(p.q); await say(p.a);
       await T.camTo(P ? 470 : 590, 280, 1, 500);
