@@ -19,7 +19,7 @@
   const AS = '../../assets/';
   const BG = {
     nest: 'v3w/ud_bg_nest2.webp', pond: 'v3w/ud_bg_pond_v2.webp', yard: 'v3w/ud_bg_yard_v2.webp', reeds: 'v3w/ud_bg_reeds.webp',
-    swamp: 'v3w/ud_bg_swamp.webp', swamp_high: 'v3w/ud_lb_swamp_dusk.webp', autumn: 'v3w/ud_bg_autumn_v2.webp', winter: 'v3w/ud_lb_winter_moon.webp',
+    swamp: 'v3w/ud_bg_swamp.webp', swamp_high: 'v3w/ud_lb_swamp_dusk_glow.webp', /* 2026-10-28 §7-1 빛 예외: 해 둘레 동심원 종이 → 해에서 흐려지는 반투명 햇무리, 같은 구도 */ autumn: 'v3w/ud_bg_autumn_v2.webp', winter: 'v3w/ud_lb_winter_moon.webp',
     cabin: 'v3w/ud_bg_cabin.webp', spring: 'v3w/ud_bg_spring_v2.webp', reflect: 'v3w/ud_bg_reflect.webp',
   };
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 연못·마당·가을·봄은 v2(물 띠·헛간·땅선·호수 띠 자리 그대로, 겹쳐 확인),
