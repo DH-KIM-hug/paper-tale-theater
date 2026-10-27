@@ -109,6 +109,17 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/wolf_goats/nar_c8bf0fab80.mp3"
  ],
  "엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.": "audio/el/wolf_goats/nar_f257c8ab1e.mp3",
- "엄마 말을 잘 기억하고, 낯선 이에게는 문을 열어 주지 않는답니다.": "audio/el/wolf_goats/nar_855bddf020.mp3"
+ "엄마 말을 잘 기억하고, 낯선 이에게는 문을 열어 주지 않는답니다.": "audio/el/wolf_goats/nar_855bddf020.mp3",
+ "문밖에 서 있는 건 늑대였어요.": "audio/el/wolf_goats/nar_20ae782764.mp3",
+ "집 밖에서 늑대는 아기 염소들을 속일 궁리를 했어요.": "audio/el/wolf_goats/nar_aef3ad682d.mp3",
+ "늑대가 다시 염소네 문 앞으로 왔어요.": "audio/el/wolf_goats/nar_2896f43ee4.mp3",
+ "하지만 시커먼 발을 보고 아기 염소들은 문을 안 열었어요.": "audio/el/wolf_goats/nar_5a3090d9f3.mp3",
+ "늑대는 다시 염소네 집 문 앞으로 돌아왔어요.": "audio/el/wolf_goats/nar_e12d0006ef.mp3",
+ "늑대가 떠난 집 안에는 막내만 숨어 있었어요.": "audio/el/wolf_goats/nar_7a0d325828.mp3",
+ "엄마와 막내는 집을 나와 늑대가 있는 나무를 찾았어요.": "audio/el/wolf_goats/nar_56541df4b0.mp3",
+ "나무 아래에서 엄마는 잠든 늑대 곁에 앉았어요.": "audio/el/wolf_goats/nar_5e17558f44.mp3",
+ "엄마는 늑대 배에 돌멩이를 넣었어요.": "audio/el/wolf_goats/nar_64b40927de.mp3",
+ "염소 가족이 물러난 뒤에도 늑대는 나무 아래에서 잤어요.": "audio/el/wolf_goats/nar_efc220a26c.mp3",
+ "늑대가 달아난 우물가에 염소 가족이 모였어요.": "audio/el/wolf_goats/nar_a64d6fb013.mp3"
 });
 Object.assign(VOICE_LINES, {});
