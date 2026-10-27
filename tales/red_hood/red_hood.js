@@ -209,6 +209,12 @@
 
   async function run(T) {
     const { sleep, say, camSnap } = T;
+    /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
+    const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
+    const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
+    const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'bee_buzz', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'tiptoe_pizz', 'peek_pop', 'ding_glock', 'question', 'zip_away', 'whistle_down', 'surprise_sting', 'sleepy_tuba', 'pop_appear', 'party_horn', 'knock', 'pop', 'whoosh', 'door', 'creak', 'thud']); } catch (e) { /* 무시 */ }
+    { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const pan = (cx = 500) => camSnap(T.viewWidth() < 990 ? cx : 500, 280, 1);
     const scene = (key, cx) => { T.clear(); bgImage(T, key); dress(T, key, T.viewWidth() < 990); pan(cx); quiet(); };
@@ -217,7 +223,7 @@
     /* 지름길 빛 점 둘이 늑대 뒤를 따라 오른쪽으로 흘러간다(늑대와 같은 2400ms) */
     const followDots = ds => ds.forEach((g, i) => g.animate([{ translate: '0 0' }, { translate: `${700 + i * 120}px 0` }], { duration: 2400, easing: 'ease-in', fill: 'forwards', composite: 'add' }));
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
 
     const hood = mk(T, { joy: ['hood_joy', 230, 'left'], walk: ['hood_walk', 230, 'right'], walk2: ['hood_walk2', 230, 'right'],
       pick: ['hood_pick', 230, 'left'], knock: ['hood_knock', 230, 'left'], wonder: ['hood_wonder', 230, 'left'],
@@ -261,6 +267,8 @@
       const here = a => a.pos.isConnected && a.pos.style.display !== 'none';
       const build = k => {
         key = k; vases = [];
+        stopAmb(.6);
+        { const ra = { kitchen: ['birds_chirp_1', .12], path: ['birds_chirp_1', .15], flowers: ['bee_buzz', .12], split: ['bee_buzz', .1] }[k]; if (ra) { const kk = k; if (!amb(ra[0], { vol: ra[1], dur: 4, fadeIn: 1 })) setTimeout(() => { if (key === kk) amb(ra[0], { vol: ra[1], dur: 3, fadeIn: 1 }); }, 1500); } } // 장소 소리는 작게, 잠깐만
         if (k === 'split') {
           T.clear();
           panel(T, 'flowers', 0, 272, 40); panel(T, 'shortcut', 288, 560, -20);
@@ -322,7 +330,7 @@
           return a.move(x, y, 900);
         }
       };
-      const CUTH = { tail: [2600], whisper: [3200], dash: [2400, 'whoosh'], gulp: [2600], granwolf: [3000], jumpup: [2600, 'pow'], hiccup: [3200, 'pop'] };
+      const CUTH = { tail: [2600], whisper: [3200], dash: [2400, 'whoosh'], gulp: [2600], granwolf: [3000], jumpup: [2600, 'thud'], hiccup: [3200, 'pop'] }; // 잠자리용: pow 대신 부드러운 소리
       const acts = {
         set(k) {
           if (rI()) { build(k); return; }
@@ -390,7 +398,7 @@
         fx(n) {
           if (n === 'knock') knock(T);
           else if (n === 'whoosh') AudioFX.sfx('whoosh', .6);
-          else if (n === 'pow') AudioFX.sfx('pow');
+          else if (n === 'pow') sfx('thud', .4); // 잠자리용: 센 소리 대신
           else if (n === 'ding') AudioFX.ding && AudioFX.ding();
           else popSfx(T);
         },
@@ -441,7 +449,7 @@
     for (const [it, word] of pack) {
       await askOnce1(() => T.tap(live(it), { prompt: '톡! 바구니에 담아요.' }));
       it.pos.style.pointerEvents = 'none';
-      popSfx(T); T.pop(it.x, it.y - 130, word);
+      sfx('marimba_' + (pack.findIndex(q => q[0] === it) + 1), .6) || popSfx(T); T.pop(it.x, it.y - 130, word); // 하나, 둘, 셋: 한 음씩
       await it.move(500, 480, 450, 'ease-in');
       hide(it); basket.hop(14, 260);
     }
@@ -468,6 +476,7 @@
       scene('trail');
       put(T, hood, 380, 515, { look: 'walk', to: 'right', s: .95 });
     }, hood.pos);
+    amb('birds_chirp_1', { vol: .25, dur: 4 }); // 숲 새소리
     await say('빨간 모자는 콧노래를 부르며 숲길을 걸어요.'); // 숲길은 저절로 (2026-10-19)
     let step = 0;
     const trailStep = _ => {
@@ -478,6 +487,7 @@
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await trailStep(i); await sleep(600); }
     await sleep(500);
+    sfx('peek_pop', .6);
     await T.cutImage([{ src: cutSrc('tail'), hold: 2600 }], { hold: 2600 });
     await say('어, 나무 뒤에서 뭔가 보슬보슬한 게 살짝 보였어요. 꼬리였나 봐요!');
 
@@ -487,11 +497,13 @@
       put(T, wolf, 650, 500, { look: 'peek', to: 'left' });
       put(T, hood, 400, 510, { look: 'wonder', to: 'right' });
     }, wolf.pos);
+    sfx('tiptoe_pizz', .6); // 늑대가 슬그머니
     await say('나무 옆에서 늑대가 슬그머니 나왔어요. "빨간 모자 아가씨, 어디 가니?"');
     await say('"할머니 댁에 가요." 빨간 모자가 대답했어요.');
     await T.cutImage([{ src: cutSrc('whisper'), hold: 3200 }], { hold: 3200 });
     await say('"꽃을 따 가면 할머니가 참 좋아하실 텐데~"');
     hood.look('joy'); await hood.hop(34, 420);
+    sfx('ding_glock', .5); // 꽃을 따 가자는 생각
     await say('"좋은 생각이에요!" 빨간 모자는 엄마와 한 약속을 깜빡하고 말았어요.');
 
     /* --- 5. 꽃밭: 같은 색 꽃병에 --- */
@@ -507,6 +519,8 @@
       widen(T, v, 100, 110); put(T, v, 380 + i * 120, 535); return v;
     });
     put(T, hood, P ? 340 : 270, 330, { look: 'pick', to: 'right', s: .75 }); // 2026-10-20 세로 화면에서 왼쪽 밖으로 잘리던 것
+    amb('bee_buzz', { vol: .2, dur: 3 }); // 벌 윙윙
+    sfx('question', .6);
     let askG2 = '꽃밭에 알록달록 꽃이 가득해요. 꽃을 같은 색 꽃병에 쏙쏙 담아요!'; // 안내는 첫 번째 누름에만 (T.ask)
     const askOnce2 = f => { const g = askG2; askG2 = null; return g ? T.ask(g, f) : f(); };
     const seq = ['red', 'yellow', 'blue', 'blue', 'red', 'yellow'];
@@ -544,12 +558,12 @@
     }, wolf.pos);
     await say('위에서는 빨간 모자가 꽃을 따요. 아래에서는 늑대가 지름길로 달려가요!');
     hood.hop(16, 420);
-    AudioFX.sfx('whoosh', .6); followDots(runDots);
+    sfx('zip_away', .6); followDots(runDots); // 늑대가 지름길로 쌩
     await wolf.move(1200, 535, 2400, 'ease-in');
-    await T.cutImage([{ src: cutSrc('dash'), sfx: 'whoosh', hold: 2400 }], { hold: 2400 });
+    await T.cutImage([{ src: cutSrc('dash'), sfx: 'zip_away', hold: 2400 }], { hold: 2400 });
     await T.cutImage([{ src: cutSrc('gulp'), hold: 2600 }], { hold: 2600 });
     await T.sceneCard('', () => { T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', P); camSnap(480, (T.viewWidth() < 990) ? 310 : 300, (T.viewWidth() < 990) ? 2.2 : 1.3); hide(hood); hide(wolf); }, wolf.pos); // 꿀꺽: 새는 놀라 날아간 뒤라 없다
-    AudioFX.sfx('gulp') || T.tone([300, 120], .4, { vol: .2 });
+    knock(T); setTimeout(() => sfx('whistle_down', .5), 1300); // 똑똑똑, 꿀꺽은 만화 소리로
     await say('똑똑똑… 문이 닫히고… 꿀꺽!');
     await T.sceneCard('', () => { scene('bed', 590); put(T, wolf, 430, 470, { look: 'granny', to: 'left' }); }, wolf.pos);
     await say('늑대는 할머니의 잠옷을 입고 침대에 누웠어요.');
@@ -587,6 +601,7 @@
     };
     const left = Object.keys(parts);
     const PROMPT = '사진 속 할머니와 달라 보이는 곳을 톡!';
+    sfx('question', .6);
     let askG4 = '벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!'; // 안내는 첫 번째 찾기에만 (T.ask)
     const askOnce4 = f => { const g = askG4; askG4 = null; return g ? T.ask(g, f) : f(); };
     while (left.length) {
@@ -605,7 +620,7 @@
     await say('빨간 모자는 깜짝 놀랐어요. 이 사람은 할머니가 아니에요!');
 
     /* --- 9. 옷장으로! --- */
-    await T.cutImage([{ src: cutSrc('jumpup'), sfx: 'pow', hold: 2600 }], { hold: 2600 });
+    await T.cutImage([{ src: cutSrc('jumpup'), sfx: 'surprise_sting', hold: 2600 }], { hold: 2600 });
     await T.sceneCard('옷장으로!', () => {
       scene('room', P ? 330 : 380);   // 세로: 옷장(40~255)이 화면 안에 온전히 들어오게 (2026-10-22)
       put(T, hood, P ? 500 : 560, 510, { look: 'surprise', to: 'left' });
@@ -622,6 +637,7 @@
     wolf.look('peek', 'left'); wolf.wiggle(8, 500); await sleep(900);
     put(T, wolf, 815, 430, { look: 'sleep', to: 'left' }); // 침대 위
     await T.camTo(640, 280, 1, 700);
+    sfx('sleepy_tuba', .5);
     await say('할머니를 먹어서 배가 불렀던 늑대는 스르르 눈이 감겼어요. 쿨쿨…');
     T.pop(760, 300, '쿨쿨…', '#5C6BC0');
 
@@ -637,7 +653,7 @@
     hunter.look('tickle');
     await say('"늑대잖아! 이럴 땐 간질간질 간지럼이 최고지!"');
     await T.mash(live(wolf), { count: 5, prompt: '늑대를 톡톡톡! 간지럼을 태워요.', onStep: i => {
-      wolf.wiggle(6 + i * 2, 260); hunter.hop(12, 260); popSfx(T);
+      wolf.wiggle(6 + i * 2, 260); hunter.hop(12, 260); sfx('marimba_' + i, .6) || popSfx(T); // 간지럼 한 번에 한 음
       T.pop(780, 300 - i * 6, ['킥', '킥킥', '키득', '하하', '꺄르르!'][i - 1] || '킥');
     } });
     await T.cutImage([{ src: cutSrc('hiccup'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
@@ -645,11 +661,12 @@
     wolf.look('hiccup'); wolf.place(760, 510);
     put(T, granny, 900, 510, { look: 'pop', to: 'left' });
     AudioFX.sfx('pop'); T.pop(760, 160, '딸꾹!');
+    setTimeout(() => sfx('pop_appear', .6), 500); // 딸꾹 뒤에 퐁!
     await granny.move(660, 510, 500); granny.hop(40, 450);
     await say('늑대가 딸꾹! 하자 할머니가 퐁! 하고 튀어나왔어요. 할머니는 다치지 않고 멀쩡했어요!');
     await say('늑대는 깜짝 놀라서 "걸음아 날 살려라~" 하고 창밖으로 달아났어요.');
     wolf.look('flee', 'right'); wolf.place(760, 520);
-    AudioFX.sfx('whoosh', .6);
+    sfx('zip_away', .6);
     await wolf.move(1250, 520, 1300, 'ease-in');
     hide(wolf);
     await say('빨간 모자도 옷장에서 살그머니 나왔어요. "할머니!"');
@@ -678,9 +695,9 @@
     await T.tap(live(hood), { prompt: '빨간 모자를 톡! 다시 약속해요.' });
     popSfx(T); T.pop(hood.x, 200, '약속!');
     await Promise.all([hood.hop(40, 500), granny.hop(20, 500)]);
-    T.confetti();
+    T.confetti(); sfx('party_horn', .6);
     await say('빨간 모자는 새끼손가락을 걸고, 오늘 일을 오래오래 기억했어요.');
-    T.finale();
+    T.finale(); stopAmb(.8);
     return '빨간 모자가 약속을 꼭 지켜요!';
   }
 
