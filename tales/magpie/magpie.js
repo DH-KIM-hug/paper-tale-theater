@@ -243,14 +243,18 @@
     let early = true;   // 첫 조작(활 톡)까지는 숨을 짧게 (시작 30초 안에 첫 조작)
     const say = async text => { await T.say(text); await sleep(early ? 300 : GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };
-    const scene = key => { T.clear(); bgImage(T, key); dress(T, key); camSnap(500, 280, 1); };
+    /* 소리 큐: 재생(놀이)에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
+    const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const SCENE_AMB = { mg_bg_path: 'birds_chirp_1', mg_bg_night: 'crickets_night_1', mg_bg_dawn: 'birds_chirp_2' };
+    const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); dress(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     const P = T.viewWidth() < 990;
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['beomjong', 'beomjong_synth', 'bonk', 'whoosh', 'creak', 'step_grass', 'step_wood', 'swish', 'paper_up', 'paper_down', 'sparkle', 'tada', 'door', 'thud', 'pop', 'splash']);
+    AudioFX.preloadSfx(['beomjong', 'beomjong_synth', 'bonk', 'whoosh', 'creak', 'step_grass', 'step_wood', 'swish', 'paper_up', 'paper_down', 'sparkle', 'tada', 'door', 'thud', 'pop', 'splash', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'rustle_1', 'bow_arrow_1', 'zip_away', 'pull_pop', 'surprise_sting', 'wing_flap_1', 'ding_glock', 'whistle_down', 'party_horn', 'shimmer', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5']);
     const loads = [T.preload(src('mg2_layer_moon_perch')), ...BGS.map(k => T.preload(bgSrc(k)).then(ok => { bgOK[k] = ok; })), ...CUTS.map(k => T.preload(src(k)).then(ok => { cutOk[k] = ok; }))];
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
     const cut = (k, sfxName) => cutOk[k] ? T.cutImage([{ src: src(k), sfx: sfxName, hold: CUT_HOLD }], { hold: CUT_HOLD }) : Promise.resolve();
     const cutSay = async (k, line) => { const c = cut(k); await say(line); await c; };
     const stepLoop = (ms, vol, hopH, total) => { let on = true; (async () => { while (on) { AudioFX.sfx('step_grass', vol); await sleep(ms); } })(); return () => { on = false; }; };
@@ -353,6 +357,7 @@
         cam(spec) { const [x, y, z] = nums(spec); camGo(x, y, z); },
         tint(op) {
           const o = +op;
+          if (o >= .3) amb('crickets_night_2', .18, 4);
           if (tintEl) { tintEl.remove(); tintEl = null; }
           const tc = '#1F2A56';
           if (rI()) { tintEl = tint(T, tc, o); return; }
@@ -360,7 +365,7 @@
           T.anim(d, [{ opacity: 0 }, { opacity: o }], 1500).then(() => d.setAttribute('opacity', o));
         },
         dawn(op) {
-          if (op === 'on') { dawnEl = tint(T, '#1F2A56', .28); return; }
+          if (op === 'on') { amb('birds_chirp_2', .18, 4);  dawnEl = tint(T, '#1F2A56', .28); return; }
           if (dawnEl) { const d = dawnEl; T.anim(d, [{ opacity: .28 }, { opacity: 0 }], 2000).then(() => d.setAttribute('opacity', 0)); }
         },
         parents(op) {
@@ -489,7 +494,7 @@
     await walk1; steps1(); await l1;
     await sleep(150);
     vo('caw'); T.pop(X(900, 640), 230, tr('까악!'));
-    sch.look('surprise'); sch.hop(8, 300);
+    sch.look('surprise'); sch.hop(8, 300); cue('surprise_sting', .6);
     await sleep(500);
 
     /* ===== 2. 큰 소나무 (톡 1: 활쏘기) ===== */
@@ -504,9 +509,10 @@
     const l2 = say(S.L2); mom.hop(10, 300); await sleep(500); mom.hop(10, 300); dad.wiggle(5, 500); await l2;
     snake.look('flee', 'left');   /* 똬리를 풀고 몸을 길게 뻗어 기어 올라간다 */
     /* 나무 기둥(가운데 x≈800) 위로만 기어 올라간다: 먼저 기둥 밑으로 가고, 그다음 기둥을 따라 위로 (허공으로 빗겨 가지 않게) */
+    cue('rustle_1', .5);
     const climb = (async () => { await snake.move(X(800, 640), snake.y, 500);   /* 지금 높이 그대로 옆으로만 가서 기둥 밑에 선다(아래로 내려가지 않게) */ await snake.move(X(800, 185), 185, 2800, 'ease-in-out'); })();
     await say(S.L3); await climb; snake.look('coil');   /* 나무 위에 도착해 다시 똬리를 튼다 */
-    sch.look('ready', 'right'); sfx('paper_up');
+    sch.look('ready', 'right'); cue('pull_pop', .7);
     await say(S.L4); await sleep(150);
     bob(sch.pos);
     await T.ask(S.L5, () => T.tap(sch.pos, { prompt: '선비가 활을 꺼냈어요. 선비를 톡 눌러 봐요.' }));
@@ -514,7 +520,7 @@
     sch.look('draw', 'right'); sfx('creak', .5);
     for (let i = 0; i < 3; i++) await sch.wiggle(1.5, 400);
     await sleep(300);
-    sch.look('release', 'right'); sfx('whoosh', .8); T.pop(sch.x + 70, FL - 250, tr('쉬익!'));
+    sch.look('release', 'right'); sfx('bow_arrow_1', .8, () => sfx('whoosh', .8)); T.pop(sch.x + 70, FL - 250, tr('쉬익!'));
     put(T, arrow, sch.x + 70, FL - 150, { to: 'right' });
     await arrow.move(snake.x - 60, snake.y - 70, 420, 'linear');
     sfx('thud', .6); T.pop(arrow.x, arrow.y - 40, tr('탁!'));
@@ -522,7 +528,7 @@
     await cutSay('mg_cut_arrow', S.L6);
     hide(arrow);
     snake.look('flee', 'right'); snake.place(X(700, 640), FL + 8); snake.setScale(1);
-    sfx('swish', .6); T.pop(760, FL - 130, tr('스르르'));
+    cue('zip_away', .6) || sfx('swish', .6); T.pop(760, FL - 130, tr('스르르'));
     const run2 = snake.move(1150, FL + 8, 1800, 'ease-in');
     await run2; hide(snake);
     await cutSay('mg_cut_flee', S.L7);
@@ -565,14 +571,14 @@
     const countChicks = async () => {
       for (let i = 0; i < N; i++) {
         const c = chicks[i];
-        c.hop(16, 320); glow(c, 700); AudioFX.popStep(i + 1); T.pop(c.x, c.y - CH - 24, tr(CN[i]));
+        c.hop(16, 320); glow(c, 700); (cue('marimba_' + (i + 1), .8) || AudioFX.popStep(i + 1)); T.pop(c.x, c.y - CH - 24, tr(CN[i]));
         const u = vo('n' + (i + 1)); await (u || sleep(650)); await sleep(350);
       }
     };
     cards.forEach(c => padHit(T, c.g));
     await T.ask(S.L10, () => T.choose(cards.map(c => ({ el: c.g, ok: c.n === N, onWrong: async () => { await wiggleEl(T, c.g); await say(W[c.n]); await countChicks(); } })), { prompt: '아기 까치가 몇 마리일까요? 맞는 숫자를 골라요.' }));
     const good = cards.find(c => c.n === N);
-    good.g.style.filter = 'url(#hintGlow)'; sparkleSfx(T); T.pop(good.x, cardY - 90, tr('반짝!'));
+    good.g.style.filter = 'url(#hintGlow)'; cue('ding_glock', .8) || sparkleSfx(T); T.pop(good.x, cardY - 90, tr('반짝!'));
     await countChicks();
     await say(S['C' + N]);
     cards.forEach(c => c.g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }));
@@ -609,7 +615,7 @@
 
     /* ===== 5. 외딴집 (자동) ===== */
     await T.sceneCard(tr('외딴집'), () => {
-      scene('mg_bg_paperdoor'); tint(T, '#1F2A56', .35);
+      scene('mg_bg_paperdoor'); tint(T, '#1F2A56', .35); amb('crickets_night_2');
       put(T, sch, X(380, 440), FL, { look: 'sit' });
       if (P) camSnap(510, 280, 1);
     }, sch.pos);
@@ -617,7 +623,7 @@
     put(T, lady, X(640, 590), FL, { look: 'stern' }); fadeIn(lady, 1200);
     await sleep(1200);
     const l20 = say(S.L20); await sleep(3400);
-    lady.look('tail'); sfx('pop', .5); T.pop(lady.x + 120, FL - 40, tr('!'), '#A93B32'); sch.look('surprise'); await l20;
+    lady.look('tail'); cue('surprise_sting', .6) || sfx('pop', .5); T.pop(lady.x + 120, FL - 40, tr('!'), '#A93B32'); sch.look('surprise'); await l20;
     await say(S.L21);
     const l22 = say(S.L22); await sleep(700); lady.hop(3, 800); await l22;
     sch.look('sit');
@@ -649,7 +655,7 @@
       b.move(1150, y - 40, 3200 + i * 200, 'linear');
       (async () => { for (let j = 0; j < 10; j++) { b.hop(8, 380); await sleep(380); } })();
     });
-    sfx('whoosh', .3);
+    cue('wing_flap_1', .4) || sfx('whoosh', .3);
     await say(S.L31);
     await cutSay('mg_cut_flock', S.L32);
     flock.forEach(hide); chicks.forEach(hide);
@@ -686,14 +692,14 @@
     dad.look('tired'); mom.look('tired');
     put(T, dad, X(430, 440), 300, { look: 'tired' }); put(T, mom, X(560, 560), 300, { look: 'tired' });
     [dad, mom].forEach(b => { fadeIn(b, 900); b.move(b.x, 480, 1600, 'ease-in'); });
-    sfx('paper_down', .4);
+    cue('whistle_down', .4) || sfx('paper_down', .4);
     await say(S.L40);
     await sleep(2500); await sleep(SCENE_END);
 
     /* ===== 8. 새벽 (자동) ===== */
     let dawn;
     await T.sceneCard(tr('새벽'), () => {
-      scene('mg_bg_paperdoor'); dawn = tint(T, '#1F2A56', .28);
+      scene('mg_bg_paperdoor'); dawn = tint(T, '#1F2A56', .28); amb('birds_chirp_2');
       put(T, sch, X(380, 440), FL, { look: 'sit' });
       put(T, lady, X(640, 590), FL, { look: 'stern' });
       if (P) camSnap(510, 280, 1);
@@ -710,10 +716,10 @@
     const l42 = say(S.L42); await l42;
     await say(S.L43);
     await fadeOut(T, lady, 700);
-    put(T, snake, lady.x, FL, { look: 'coil' }); fadeIn(snake, 700); sparkleSfx(T, .4);
+    put(T, snake, lady.x, FL, { look: 'coil' }); fadeIn(snake, 700); AudioFX.sfx('shimmer', .5) || sparkleSfx(T, .4);
     await sleep(700);
     snake.look('flee', 'right'); snake.place(snake.x, FL + 8);
-    sfx('swish', .5); T.pop(snake.x + 40, FL - 130, tr('스르르'));
+    cue('zip_away', .5) || sfx('swish', .5); T.pop(snake.x + 40, FL - 130, tr('스르르'));
     const sl = snake.move(1150, FL + 8, 2200, 'ease-in');
     await say(S.L44); await sl; hide(snake);
     T.anim(dawn, [{ opacity: .28 }, { opacity: 0 }], 2000).then(() => dawn.setAttribute('opacity', 0));
@@ -755,10 +761,11 @@
     await cutSay('mg_cut_wake', S.L53);
     bob(sch.pos);
     await T.ask(S.L54, () => T.tap(sch.pos, { prompt: '선비를 톡 눌러 봐요.' }));
-    T.confetti(); sfx('tada', 1, () => sparkleSfx(T));
+    T.confetti(); sfx('party_horn', .9, () => sfx('tada', 1, () => sparkleSfx(T)));
     sch.hop(30, 480); chicks.slice(0, N).forEach(c => c.hop(18, 460)); mom.hop(8, 460); dad.hop(8, 460);
     await say(S.L55);
     await say(S.L56);
+    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '은혜를 잊지 않고 갚아요.';
   }
