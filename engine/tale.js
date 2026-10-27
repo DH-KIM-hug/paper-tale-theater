@@ -759,12 +759,116 @@ const Tale = (() => {
   /* 텍스트 효과 (의성어) — 탄력: 별이 스프링처럼 튀고, 글자가 한 자씩 떨어지며 출렁이다 자리 잡는다 */
   const SPRING = [0, 1.35, .86, 1.07, .97, 1]; // 넘쳤다 되돌아오는 스프링 곡선 (키프레임 값)
   function springFrames(fn) { return SPRING.map((v, i) => ({ transform: fn(v, i), offset: i / (SPRING.length - 1) })); }
+  /* ---------- 말풍선 자리 찾기: 무대 그림(인물·소품)을 피해 가장 가까운 빈 자리 ----------
+     그림마다 불투명한 곳을 24x24 칸으로 한 번 재 두고(같은 그림은 캐시), 풍선 사각형과 겹치는 넓이를 센다.
+     머리 쪽(그림 위 40%)은 두 배로 센다. 배경 층(layer·bg·scene·fg·frame 이름, 무대 대부분을 덮는 큰 그림)은 빼고 본다. */
+  const POP_GRID = new Map(); // href → { cells, bb } | 'wait' | null
+  function popGrid(href) {
+    const had = POP_GRID.get(href);
+    if (had !== undefined) return had;
+    POP_GRID.set(href, 'wait');
+    const im = new Image();
+    im.onload = () => {
+      try {
+        const N = 24, c = document.createElement('canvas'); c.width = c.height = N;
+        const cx = c.getContext('2d', { willReadFrequently: true }); cx.drawImage(im, 0, 0, N, N);
+        const d = cx.getImageData(0, 0, N, N).data, cells = [];
+        let x0 = N, y0 = N, x1 = -1, y1 = -1;
+        for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) if (d[(j * N + i) * 4 + 3] > 60) {
+          cells.push(i, j); if (i < x0) x0 = i; if (i > x1) x1 = i; if (j < y0) y0 = j; if (j > y1) y1 = j;
+        }
+        POP_GRID.set(href, cells.length ? { cells, bb: [x0, y0, x1 + 1, y1 + 1] } : null);
+      } catch (e) { POP_GRID.set(href, 'full'); } // 그림을 읽을 수 없으면 사각형으로
+    };
+    im.onerror = () => POP_GRID.set(href, null);
+    im.src = href;
+    return 'wait';
+  }
+  function popShown(n) {
+    for (; n && n !== world; n = n.parentNode) {
+      if (!(n instanceof Element)) return false;
+      const cs = getComputedStyle(n);
+      if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+      if (+cs.opacity < .15 && !(n.getAnimations && n.getAnimations().some(a => a.playState === 'running'))) return false; // 막 나타나는 중(fadeIn)이면 보이는 것으로
+    }
+    return n === world;
+  }
+  /* 무대 좌표(fxL)로 본 장애물 그림 목록: { bb, cells: [x0, y0, x1, y1, 무게], area } */
+  function popObstacles(view) {
+    const out = [];
+    let I; try { I = fxL.getScreenCTM().inverse(); } catch (e) { return out; }
+    for (const im of world.querySelectorAll('image')) {
+      const href = im.getAttribute('href') || im.getAttribute('xlink:href') || '';
+      const name = href.split('/').pop();
+      if (!href || /layer|(^|_)bg|scene|_fg|frame/i.test(name)) continue;
+      const w = +im.getAttribute('width') || 0, h = +im.getAttribute('height') || 0;
+      if (w <= 0 || h <= 0) continue;
+      const sm = im.getScreenCTM(); if (!sm) continue;
+      const M = I.multiply(sm), x = +im.getAttribute('x') || 0, y = +im.getAttribute('y') || 0;
+      const P = (u, v) => [M.a * u + M.c * v + M.e, M.b * u + M.d * v + M.f];
+      const gd = popGrid(href);
+      if (gd === null) continue;
+      const N = 24, bb = gd && gd.bb ? gd.bb : [N * .12, N * .04, N * .88, N]; // 아직 못 잰 그림: 옆 여백만 덜어 낸 사각형
+      const [ax, ay] = P(x + bb[0] / N * w, y + bb[1] / N * h), [bx, by] = P(x + bb[2] / N * w, y + bb[3] / N * h);
+      const L = Math.min(ax, bx), R = Math.max(ax, bx), T0 = Math.min(ay, by), B0 = Math.max(ay, by);
+      if (R - L > 620 || B0 - T0 > 460) continue; // 무대를 거의 덮는 배경 그림
+      if (R < view[0] || L > view[2] || B0 < view[1] || T0 > view[3]) continue;
+      if (!popShown(im)) continue;
+      const headY = T0 + (B0 - T0) * .4, cells = [];
+      if (gd && gd.cells) {
+        const cw = Math.abs(M.a * w / N) + Math.abs(M.c * h / N), ch = Math.abs(M.b * w / N) + Math.abs(M.d * h / N);
+        for (let k = 0; k < gd.cells.length; k += 2) {
+          const [px, py] = P(x + (gd.cells[k] + .5) * w / N, y + (gd.cells[k + 1] + .5) * h / N);
+          cells.push([px - cw / 2, py - ch / 2, px + cw / 2, py + ch / 2, py < headY ? 2 : 1]);
+        }
+      } else { cells.push([L, T0, R, headY, 2], [L, headY, R, B0, 1]); }
+      out.push({ bb: [L, T0, R, B0], cells, area: cells.reduce((s, c) => s + (c[2] - c[0]) * (c[3] - c[1]) * c[4], 0) || 1 });
+    }
+    return out;
+  }
+  /* 카메라가 움직이는 중이어도 지금 화면에 보이는 카메라 */
+  function camNow() {
+    try { const m = new DOMMatrix(getComputedStyle(cam).transform); if (m.a > 0) return { z: m.a, x: (500 - m.e) / m.a, y: (280 - m.f) / m.a }; } catch (e) { /* 아래 */ }
+    return { ...camState };
+  }
+  /* (x,y) 에 놓을 hw×hh(반폭·반높이, 무대 좌표) 풍선의 자리: 겹침이 적으면 그대로, 많으면 가까운 빈 곳 */
+  function popPlace(x, y, hw, hh, view) {
+    const clampX = v => Math.min(Math.max(v, view[0] + hw), view[2] - hw), clampY = v => Math.min(Math.max(v, view[1] + hh), view[3] - hh);
+    const x0 = view[2] - view[0] > hw * 2 ? clampX(x) : (view[0] + view[2]) / 2, y0 = view[3] - view[1] > hh * 2 ? clampY(y) : (view[1] + view[3]) / 2;
+    let obs; try { obs = popObstacles(view); } catch (e) { obs = []; }
+    if (!obs.length) return [x0, y0];
+    const sw = hw * .86, sh = hh * .8, area = 4 * sw * sh; // 구름 모양이라 모서리는 비어 있다
+    const cost = (cx, cy) => { // 풍선 넓이 중 그림이 차지한 몫 + 그림마다 가려진 몫(작은 인물도 덮지 않게)
+      const l = cx - sw, r = cx + sw, t = cy - sh, b = cy + sh;
+      let s = 0, f = 0;
+      for (const o of obs) {
+        if (o.bb[2] < l || o.bb[0] > r || o.bb[3] < t || o.bb[1] > b) continue;
+        let q = 0;
+        for (const c of o.cells) { const ix = Math.min(r, c[2]) - Math.max(l, c[0]); if (ix <= 0) continue; const iy = Math.min(b, c[3]) - Math.max(t, c[1]); if (iy > 0) q += ix * iy * c[4]; }
+        s += q; f += q / o.area;
+      }
+      return s / area + f * .8;
+    };
+    const c0 = cost(x0, y0);
+    if (c0 < .06) return [x0, y0];
+    const z = Math.max(1, camState.z);
+    let best = [x0, y0], bestC = c0;
+    for (let r = 30; r <= 360; r += 30) for (let k = 0; k < 16; k++) {
+      const a = k / 16 * Math.PI * 2, cx = clampX(x0 + Math.cos(a) * r / z), cy = clampY(y0 + Math.sin(a) * r / z);
+      const d = Math.hypot(cx - x0, cy - y0) * z;
+      const c = cost(cx, cy) + d / 700 + (cy > y0 + 8 / z ? .06 : 0); // 가까운 곳, 아래보다 위
+      if (c < bestC) { bestC = c; best = [cx, cy]; }
+    }
+    return best;
+  }
   function pop(x, y, word, color = '#A93B32') {
     // 카메라가 가까이 붙을수록 화면에서 커지므로 확대 배율만큼 줄여 늘 비슷한 크기로 보이게
     if (AudioFX.countPop) AudioFX.countPop(); // 세는 박자면 음이 올라가는 pop
-    const g = el('g', { transform: `translate(${x},${y}) scale(${(1 / Math.max(1, camState.z)).toFixed(3)})` }, fxL);
+    const ax = x, ay = y, cn = camNow();
+    const g = el('g', { transform: `translate(${x},${y}) scale(${(1 / Math.max(1, cn.z)).toFixed(3)})` }, fxL);
+    g.style.pointerEvents = 'none'; // 풍선과 글자는 누름을 받지 않는다 (밑의 인물·물건이 그대로 눌린다)
     const txt = tr(word), FONT = "'Pretendard Variable', Pretendard, sans-serif";
-    const latin = /[A-Za-z]/.test(txt), vw = viewWidth(), maxW = vw * .7;
+    const latin = /[A-Za-z]/.test(txt), vw = viewWidth(), maxW = vw * .6;
     // 말풍선: 뾰족한 별 대신 가장자리가 동글동글한 종이 구름 (120 단위 상자, 가운데 0,0)
     const BURST = pop.shape = pop.shape || (() => {
       const n = 11, R = 44, r = 15, P = i => { const a = i / n * Math.PI * 2 - Math.PI / 2; return [(R * Math.cos(a)).toFixed(1), (R * Math.sin(a)).toFixed(1)]; };
@@ -773,19 +877,19 @@ const Tale = (() => {
       return d + ' Z';
     })();
     const pieces = []; // { s: 글자(또는 낱말), x, y } — 가운데 기준 배치
-    let size, burstW, burstH;
-    if (!latin) { // 한글: 한 자씩 고정 폭 (기존 모양 그대로)
-      const chars = [...txt]; size = chars.length > 3 ? 48 : 56;
+    let size, bwW, bwH; // 풍선 그림 크기: 글자에 맞춰 작게 (2026-10-27 인물을 가려 답답하다는 지적으로 줄임)
+    if (!latin) { // 한글: 한 자씩 고정 폭
+      const chars = [...txt]; size = chars.length > 3 ? 38 : 44;
       const cw = ch => /[!?~.…,]/.test(ch) ? size * .42 : size * .86; // 문장부호는 좁게
       const total = chars.reduce((a, ch) => a + cw(ch), 0);
       let cursor = -total / 2;
       chars.forEach(ch => { pieces.push({ s: ch, x: cursor + cw(ch) / 2, y: 0 }); cursor += cw(ch); });
-      burstW = Math.min(120 * Math.max(1.4, total / 70), vw * .95); burstH = 168;
+      bwW = Math.min(Math.max(total + size * 1.5, size * 2.6), vw * .9); bwH = size * 2.15;
     } else { // 영어: 낱말 단위로 실제 글자 폭을 재서 놓고, 너무 길면 글자를 줄이고 두 줄 이상으로 나눈다
       const cx = (pop.cvs = pop.cvs || document.createElement('canvas')).getContext('2d');
       const words = txt.split(/\s+/).filter(Boolean);
       let lines, wid, lw, sp;
-      size = words.length > 1 || txt.length > 6 ? 48 : 56;
+      size = words.length > 1 || txt.length > 6 ? 38 : 44;
       for (;;) {
         cx.font = `600 ${size}px ${FONT}`;
         wid = words.map(w => cx.measureText(w).width); sp = cx.measureText(' ').width + size * .22; // 흰 테두리에 먹히지 않게 낱말 사이를 조금 더 띄운다
@@ -795,7 +899,7 @@ const Tale = (() => {
           if (lines[L].length && lw[L] + sp + wid[i] > maxW) { lines.push([]); lw.push(0); L++; }
           lw[L] += (lines[L].length ? sp : 0) + wid[i]; lines[L].push(i);
         });
-        if ((Math.max(...lw) <= maxW && lines.length <= 3) || size <= 26) break;
+        if ((Math.max(...lw) <= maxW && lines.length <= 3) || size <= 24) break;
         size -= 4;
       }
       const lh = size * 1.08, W = Math.max(...lw);
@@ -803,26 +907,38 @@ const Tale = (() => {
         let cur = -lw[li] / 2;
         ln.forEach(i => { pieces.push({ s: words[i], x: cur + wid[i] / 2, y: (li - (lines.length - 1) / 2) * lh }); cur += wid[i] + sp; });
       });
-      burstW = Math.min(Math.max(168, W * 1.25 + 70), vw * .95); burstH = 168 + (lines.length - 1) * lh * 1.1;
+      bwW = Math.min(Math.max(size * 2.8, W + size * 1.6), vw * .9); bwH = size * 2.15 + (lines.length - 1) * lh * 1.1;
     }
-    { // 화면 가장자리에서 터져도 별이 잘리지 않게 보이는 폭 안으로 민다
-      const z = Math.max(1, camState.z), half = burstW / 2 / z, hv = vw / 2 / z;
-      if (hv > half) { const nx = Math.min(Math.max(x, camState.x - hv + half), camState.x + hv - half); g.setAttribute('transform', `translate(${nx.toFixed(1)},${y}) scale(${(1 / z).toFixed(3)})`); }
+    const z = Math.max(1, cn.z);
+    { // 자리: 보이는 무대 안에서, 인물·물건 그림을 덮지 않는 가장 가까운 곳 (가장자리에서도 잘리지 않게)
+      const hv = vw / 2 / z, m = 8 / z, view = [cn.x - hv + m, cn.y - 280 / z + m, cn.x + hv - m, cn.y + 280 / z - m];
+      [x, y] = popPlace(x, y, bwW / 2 / z, bwH / 2 / z, view);
+      g.setAttribute('transform', `translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${(1 / z).toFixed(3)})`);
     }
     { // 같은 자리에서 연달아 터지면(톡톡톡 세기) 앞의 것은 비켜 사라지고, 아직 막 터진 것이면 새것을 옆으로 비킨다
-      const z = Math.max(1, camState.z), now = performance.now();
-      let cur = parseFloat((/translate\(([-\d.]+)/.exec(g.getAttribute('transform')) || [0, x])[1]);
-      const bw0 = burstW / z, bh0 = burstH / z, hit = p => now - p.t < 1000 && Math.abs(p.x - cur) < (p.w + bw0) / 2 && Math.abs(p.y - y) < (p.h + bh0) / 2;
+      const now = performance.now();
+      let cur = x;
+      const bw0 = bwW / z, bh0 = bwH / z, hit = p => now - p.t < 1000 && Math.abs(p.x - cur) < (p.w + bw0) / 2 && Math.abs(p.y - y) < (p.h + bh0) / 2;
       const young = POPS.find(p => hit(p) && now - p.t < 250 && p.txt !== txt);
-      if (young) { cur += (pop.flip = !pop.flip) ? 80 : -80; g.setAttribute('transform', `translate(${cur.toFixed(1)},${y}) scale(${(1 / z).toFixed(3)})`); }
-      POPS.forEach((p, i) => { if (p.g.isConnected && hit({ ...p, x: p.x })) fadePop(p, Math.max(0, 250 - (now - p.t))); });
+      if (young) { cur += (pop.flip = !pop.flip) ? 80 : -80; g.setAttribute('transform', `translate(${cur.toFixed(1)},${y.toFixed(1)}) scale(${(1 / z).toFixed(3)})`); }
+      POPS.forEach(p => { if (p.g.isConnected && hit(p)) fadePop(p, Math.max(0, 250 - (now - p.t))); });
       POPS.splice(0, POPS.length, ...POPS.filter(p => p.g.isConnected && now - p.t < 2500));
       POPS.push({ g, x: cur, y, w: bw0, h: bh0, t: now, txt });
+      x = cur;
     }
-    const sc = `scale(${(burstW / 120 * .95).toFixed(3)},${(burstH / 120 * .8).toFixed(3)})`;
+    const sc = `scale(${(bwW / 118).toFixed(3)},${(bwH / 118).toFixed(3)})`;
     const bw = el('g', {}, g);
+    { // 비켜 놓였으면 받침(꼬리)이 원래 자리(말하는 인물·소리 난 곳) 쪽을 가리킨다: 살구색 받침 위에 크림 종이 두 겹
+      const dx = (ax - x) * z, dy = (ay - y) * z, d = Math.hypot(dx, dy);
+      if (d > bwH * .45) {
+        const ux = dx / d, uy = dy / d, px = -uy, py = ux, a = bwW / 2 * .86, b = bwH / 2 * .82;
+        const e = 1 / Math.hypot(ux / a, uy / b), tip = Math.min(d, e + 30), bs = Math.min(15, b * .45);
+        const tri = (k, w) => `M${(ux * (e - 16) + px * w).toFixed(1)} ${(uy * (e - 16) + py * w).toFixed(1)} L${(ux * (tip + k)).toFixed(1)} ${(uy * (tip + k)).toFixed(1)} L${(ux * (e - 16) - px * w).toFixed(1)} ${(uy * (e - 16) - py * w).toFixed(1)} Z`;
+        el('path', { d: tri(5, bs + 5), fill: '#F2A671' }, bw);
+        el('path', { d: tri(-2, bs), fill: '#EEDFC6' }, bw);
+      }
+    }
     // 종이 공예 말풍선 그림(assets/ui/pop_bubble.webp: 크림 종이 + 살구색 받침 두 겹). 못 불러오면 그린 구름 모양
-    const bwW = burstW * .98, bwH = burstH * .82;
     const bimg = el('image', { href: ROOT_URL + 'assets/ui/pop_bubble.webp', x: -bwW / 2, y: -bwH / 2, width: bwW, height: bwH, preserveAspectRatio: 'none' }, bw);
     bimg.addEventListener('error', () => { bimg.remove(); el('path', { d: BURST, fill: '#FFF7EA', stroke: '#E9C79A', 'stroke-width': 2.2, 'vector-effect': 'non-scaling-stroke', transform: sc }, bw); });
     bw.style.transformBox = 'view-box'; bw.style.transformOrigin = '0 0';
@@ -836,7 +952,9 @@ const Tale = (() => {
       t.animate(springFrames((v, k) => `translate(${pc.x}px, ${pc.y + size * .36 - (k === 0 ? 56 : 0)}px) scale(${Math.max(v, .01)}) rotate(${k < 3 ? rot : 0}deg)`),
         { duration: 700, delay: step * i, easing: 'ease-out', fill: 'both' });
     });
-    const life = g.animate([{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400 + pieces.length * step });
+    // 오래 남아 인물을 가리지 않게: 글자 수에 맞춰 짧게 (한글 1.3~2.3초, 영어 1.4~2.6초)
+    const n = latin ? txt.split(/\s+/).length : [...txt].length;
+    const life = g.animate([{ opacity: 1 }, { opacity: 1, offset: .78 }, { opacity: 0 }], { duration: latin ? Math.min(2600, Math.max(1400, 1100 + n * 260)) : Math.min(2300, Math.max(1300, 1000 + n * 120)) });
     life.finished.then(() => g.remove(), () => {});
     POPS[POPS.length - 1].life = life;
   }
