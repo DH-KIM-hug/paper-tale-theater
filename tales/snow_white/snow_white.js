@@ -258,14 +258,19 @@
     const { sleep, camSnap, tr } = T;
     /* 대사 사이에 숨 한 번 (3~4세가 따라오게, 한 편 6~7분) */
     const say = async text => { await T.say(text); await sleep(700); };
-    const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
+    /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
+    const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const SCENE_AMB = { forest_v2: 'crickets_night_2', hill_v2: 'birds_chirp_1' };
+    const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
+    try { AudioFX.preloadSfx(['sparkle', 'thud', 'whoosh', 'knock', 'creak', 'door', 'gulp', 'chomp', 'squeak', 'paper_down', 'step_wood', 'tada', 'pop', 'slide_down', 'crickets_night_1', 'crickets_night_2', 'birds_chirp_1', 'surprise_sting', 'zip_away', 'sleepy_tuba', 'boing', 'tiptoe_pizz', 'ding_glock', 'hammer', 'pop_appear', 'whistle_down', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* */ }
     const P = T.viewWidth() < 990; /* 세로 화면: 가운데 일부만 보인다 → 카메라가 주인공을 따라간다 */
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; /* 말풍선 없는 소리 대사 (수 세기) */
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...Object.keys(ASP).map(k => T.preload(artSrc(k))), ...DOOR_ART.map(k => T.preload(artSrc(k)))];
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
 
     /* ---- 배우 ---- (높이는 자세마다 머리 크기가 서 있을 때와 같아지게 잰 값) */
     const snow = mk(T, { stand: ['snow_stand', H_SNOW, 'front'], flee: ['snow_flee', 167, 'right'], eat: ['snow_eat', H_SNOW, 'front'],
@@ -464,7 +469,7 @@
         },
         tint: s => { const [c, o] = s.split(','); tint(T, c, +o); R.tinted = true; },
         night: m => {
-          if (m === 'on') { R.night = tint(T, '#1F2A56', .45); return null; }
+          if (m === 'on') { R.night = tint(T, '#1F2A56', .45); amb('crickets_night_1', .18, 4); return null; }
           const n = R.night; if (!n) return null;
           if (inst()) { n.setAttribute('opacity', 0); return null; }
           return T.anim(n, [{ opacity: .45 }, { opacity: 0 }], 1200).then(() => n.setAttribute('opacity', 0));
@@ -670,7 +675,7 @@
     await say('거울아, 거울아, 이 나라에서 누가 제일 예쁘니?');
     sfx(T, 'sparkle'); mf.show(); mirrorShine();
     await say('왕비님도 예쁘지만, 백설공주가 더 예뻐요.');
-    queen.look('fist'); T.shake(); sfx(T, 'thud'); queen.hop(16, 320); chandJolt();
+    queen.look('fist'); T.shake(); cue('surprise_sting', .7) || sfx(T, 'thud'); queen.hop(16, 320); chandJolt();
     await say('왕비는 샘이 나서 얼굴이 빨개졌어요.');
     mf.hide();
     queen.hop(12, 300);
@@ -696,7 +701,7 @@
     await say('공주님, 저는 도저히 못 하겠어요. 멀리멀리 달아나세요.');
     await shakeHead;
     await say('고맙습니다, 아저씨.');
-    snow.look('flee', 'left'); sfx(T, 'whoosh');
+    snow.look('flee', 'left'); cue('zip_away', .6) || sfx(T, 'whoosh');
     L.fern[0].wiggle(4, 500);
     ffly.flies.slice(0, 2).forEach(({ f }) => f.parentNode && f.animate([{ translate: '0 0' }, { translate: '-300px 40px' }], { duration: 1600, fill: 'forwards', easing: 'ease-in', composite: 'add' }));
     await Promise.all([say('백설공주는 어두운 숲을 혼자 달리고 또 달렸어요.'),
@@ -777,6 +782,7 @@
     })();
     await say('의자가 정말 작네. 조금 작지만… 영차, 앉았다!');
     await sit;
+    cue('sleepy_tuba', .6);
     await say('하아암, 너무 졸려요.');
     await sleep(300);
 
@@ -799,9 +805,9 @@
       if (P) camSnap(160, 280, 1);
     }, beds[0].pos);
     await say('방에는 작은 침대가 나란히 놓여 있었어요.');
-    onBed(0, 'bedknees'); popSfx(T); snow.wiggle(3, 420); T.pop(300, BY_F - 200, tr('끙!'));
+    onBed(0, 'bedknees'); cue('boing', .6) || popSfx(T); snow.wiggle(3, 420); T.pop(300, BY_F - 200, tr('끙!'));
     await say('이 침대는 너무 짧아요. 다리가 안 펴져요.');
-    follow(500, 500); onBed(1, 'bedtoes'); popSfx(T); snow.wiggle(3, 420); T.pop(390, BY_F - 240, tr('쿵!'));
+    follow(500, 500); onBed(1, 'bedtoes'); cue('boing', .6) || popSfx(T); snow.wiggle(3, 420); T.pop(390, BY_F - 240, tr('쿵!'));
     await say('이 침대는 불편해요. 발끝이 쿵 닿아요.');
     follow(840, 700); onBed(6, 'bedcurl'); sfx(T, 'paper_down', () => popSfx(T)); T.pop(840, BY_F - 230, tr('쏙!'));
     await say('몸을 동그랗게 웅크리면… 조금 작지만 포근해요. 잘 자요…');
@@ -813,13 +819,13 @@
     const crewN = crew(T, { lanterns: true }); hide(crewN);
     let night;
     await T.sceneCard(tr('일곱 난쟁이'), () => {
-      scene('house_bed2'); night = tint(T, '#1F2A56', .45);
+      scene('house_bed2'); night = tint(T, '#1F2A56', .45); amb('crickets_night_1');
       layBeds(); lying = -1;
       onBed(6, 'bedcurl');
       put(T, crewN, -260, 560);
       if (P) camSnap(560, 280, 1);
     }, beds[6].pos);
-    sfx(T, 'step_wood');
+    cue('tiptoe_pizz', .7) || sfx(T, 'step_wood');
     await Promise.all([say('밤이 되자, 산에서 일하던 일곱 난쟁이가 집으로 돌아왔어요.'), crewN.move(X(330, 460), 560, 2200)]);
     const WHO = ['누가 내 의자에 앉았지?', '누가 내 접시에서 먹었지?', '누가 내 빵을 먹었지?', '누가 내 숟가락을 썼지?',
       '누가 내 포크를 썼지?', '누가 내 컵으로 마셨지?', '어? 내 침대에 누가 자고 있어!'];
@@ -832,7 +838,7 @@
     /* 아침: 밤빛이 걷히고 백설이 일어나 앉는다 */
     await T.anim(night, [{ opacity: .45 }, { opacity: 0 }], 1200); night.setAttribute('opacity', 0);
     await say('아침이 되자 백설공주가 눈을 떴어요.');
-    sfx(T, 'sparkle'); beds[6].pos.style.display = ''; lying = -1;
+    amb('birds_chirp_1'); cue('ding_glock', .7) || sfx(T, 'sparkle'); beds[6].pos.style.display = ''; lying = -1;
     put(T, snow, BPOS[6][0] + 6, BPOS[6][1] - 34, { look: 'awake' }); T.world.insertBefore(snow.pos, beds[6].pos.nextSibling);
     snow.hop(10, 300);
     await say('깜짝이야! 저는 백설공주예요. 갈 곳이 없어요. 여기서 지내도 될까요?');
@@ -858,7 +864,7 @@
     const hammering = (async () => {
       for (let i = 0; i < 3; i++) {
         hammerD.wiggle(10, 360); plankD.hop(10, 360);
-        sfx(T, 'knock', () => T.tone([180, 90], .12, { type: 'square', vol: .12 }));
+        cue('hammer', .7) || sfx(T, 'knock', () => T.tone([180, 90], .12, { type: 'square', vol: .12 }));
         T.pop(X(500, 500) + [-60, 50, -10][i], 330, tr(['뚝딱!', '쿵쿵!', '뚝딱!'][i]));
         await sleep(900);
       }
@@ -893,7 +899,7 @@
     for (let i = 0; i < 8; i++) {
       const b = all[i];
       if (P) T.camTo(Math.min(Math.max(b.x, SX[2]), BIGX), 280, 1, 450);
-      AudioFX.countBeat && AudioFX.countBeat(i + 1); popSfx(T); vo('n' + (i + 1));
+      AudioFX.countBeat && AudioFX.countBeat(i + 1); cue('marimba_' + (i + 1), .8) || popSfx(T); vo('n' + (i + 1));
       glow(b, 800); b.hop(i === 7 ? 18 : 12, 360);
       T.pop(b.x, i === 7 ? 220 : (i % 2 ? 250 : 190), tr(NUM[i]));
       await sleep(i === 6 ? 1300 : 950);                  /* 일곱 다음에 한 박 쉬고 큰 침대 */
@@ -923,7 +929,7 @@
       beds.forEach(b => padHit(T, b.pos));
       await T.ask(q, () => T.choose(opts, { prompt: q }));
       const b = beds[k];
-      glow(b, 1200); b.hop(14, 400); sfx(T, 'sparkle', () => popSfx(T));
+      glow(b, 1200); b.hop(14, 400); cue('ding_glock', .8) || sfx(T, 'sparkle', () => popSfx(T));
       T.pop(b.x, b.y - 100 * (relaid ? .85 : (k % 2 ? .82 : .74)) - 30, tr('쿨쿨'));
       await say('맞아요, ' + BCOL[k] + ' 침대!');
       await sleep(300);
@@ -941,7 +947,7 @@
     await say('거울아, 거울아, 이 나라에서 누가 제일 예쁘니?');
     sfx(T, 'sparkle'); mf.show(); mirrorShine();
     await say('숲속 일곱 난쟁이 집의 백설공주가 제일 예뻐요.');
-    queen.look('fist'); T.shake(); sfx(T, 'thud'); queen.hop(14, 300); chandJolt();
+    queen.look('fist'); T.shake(); cue('surprise_sting', .7) || sfx(T, 'thud'); queen.hop(14, 300); chandJolt();
     await sleep(500);
     /* 난쟁이 집 앞. 백설은 문을 열지 않고 집 안에서 창문으로 내다보며 사과를 받는다 (원작: 문은 열지 않음).
        그림 속 창문 구멍(WX·SILL, 폭 약 37·높이 44)만 보이게 자르고, 몸은 집 안(어두운 방)에 있어 벽 앞으로 나오지 않는다 */
@@ -974,7 +980,7 @@
     const fall = (async () => {
       await sleep(1600);
       hide(apple);
-      sfx(T, 'slide_down');
+      cue('whistle_down', .6) || sfx(T, 'slide_down');
       await snow.move(WX, SILL + 35 + 70, 1500, 'ease-in');  /* 창틀 아래로 스르르 (구멍 밖은 잘려 안 보인다) */
       hide(snow); winG.style.display = 'none';   /* 닫힌 창으로 돌아간다 */
       granny.turn('right');
@@ -1118,8 +1124,9 @@
     await say('낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.');
     await sleep(300);
     await say('왕비는 멀리 떠났어요');
-    T.confetti();
+    T.confetti(); cue('party_horn', .9);
     await Promise.all([snow.hop(20, 460), crewE.hopAll(20, 460), prince.hop(14, 460)]);
+    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale();
     await sleep(1500);
     return '낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.';
