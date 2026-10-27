@@ -828,7 +828,7 @@
         boy.hop(10, 420); girl.hop(10, 420);
       }
       tree.to(560, Math.max(bgUrl('tree') ? 112 : -1e9, Math.min(280, by - 60)), 1, 420);
-      T.pop(i % 2 ? 300 : 760, 200, '영차!', C.pine);
+      setTimeout(() => T.pop(i % 2 || i >= 4 ? 300 : 760, 200, '영차!', C.pine), 420); // 다 올라간 뒤에 띄운다. 4·5번째는 오누이가 오른쪽 가지 끝으로 가므로 왼쪽에
       await sleep(450);
     };
     const rCut = {
@@ -1280,8 +1280,9 @@
       else await say('깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.');
       await mom.move(T.portrait() ? 370 : 300, 500, 1500);
       await sleep(300);
-      AudioFX.pop_out(); T.pop(T.portrait() ? Math.min(TX, 590) : TX, 250, n ? '또 왔어!' : '불쑥!', C.bean); // 세로 화면: 글자가 오른쪽 가장자리에 잘리지 않게
+      AudioFX.pop_out();
       await tiger.move(TX, peekY, 380, 'ease-out');
+      T.pop(T.portrait() ? Math.min(TX, 590) : TX, 190, n ? '또 왔어!' : '불쑥!', C.bean); // 호랑이가 다 솟은 뒤, 머리 위(250→190)에 띄워 귀를 덮지 않게
       await sleep(250);
       T.world.appendChild(tiger.pos); AudioFX.hop();
       await Promise.all([tiger.move(T.portrait() ? 610 : 630, 500, 500), tiger.hop(50, 500)]);
@@ -1644,7 +1645,7 @@
         boy.hop(10, 420); girl.hop(10, 420);
       }
       tree.to(560, Math.max(bgUrl('tree') ? 112 : -1e9, Math.min(280, by - 60)), 1, 420); // 그림 나무: 그림 위끝(y≈-168) 밖이 안 보이게
-      T.pop(i % 2 ? 300 : 760, 200, '영차!', C.pine);
+      setTimeout(() => T.pop(i % 2 || i >= 4 ? 300 : 760, 200, '영차!', C.pine), 420); // 다 올라간 뒤에 띄운다. 4·5번째는 오누이가 오른쪽 가지 끝으로 가므로 왼쪽에
     };
     await T.ask('우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.', () => T.tap(stageWrap, { prompt: '화면을 톡 눌러 봐요!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 5; i++) { await climbTree(i); await sleep(450); }
