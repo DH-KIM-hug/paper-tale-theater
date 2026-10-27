@@ -85,6 +85,12 @@
 
   async function run(T) {
     const { sleep, say, camSnap, camTo } = T;
+    /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
+    const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
+    const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
+    const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'stream_1', 'stream_2', 'loom_spin', 'crowd_murmur_1', 'broom_1', 'dig_soil', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'boing', 'shimmer', 'chime_up', 'whistle_down', 'splash', 'question', 'party_horn', 'ding_glock', 'pop_appear']); } catch (e) { /* 무시 */ }
+    { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const tr = T.tr;
     /* 층 소품(VISUAL_PLAN §3~§8): 누름 없음. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위, 이미 pointer-events none).
@@ -144,7 +150,7 @@
     };
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k))), ...['kong_step_r', 'kong_step_l', 'water_drop', 'water_surface', 'wave_front'].map(k => T.preload(AS + 'kj_' + k + '.webp'))];   // 걸음 자세는 장면 중간에 바뀌므로 미리 불러 둔다
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
 
     const kong = mk(T, { sweep: ['kong_sweep', 230, 'left'], hoe: ['kong_hoe', 230, 'left'], pour: ['kong_pour', 230, 'left'],
       loom: ['kong_loom', 230, 'left'], shoes: ['kong_shoes', 215, 'left'],
@@ -206,7 +212,8 @@
       };
       const acts = {
         set(k) {
-          key = k;
+          key = k; stopAmb(.6);
+          { const ra = { yard: ['birds_chirp_1', .15], mat: ['birds_chirp_2', .15], loom: ['loom_spin', .15], stream: ['stream_1', .15], feast: ['crowd_murmur_1', .12] }[k]; if (ra) { const kk = k; if (!amb(ra[0], { vol: ra[1], dur: 4, fadeIn: 1 })) setTimeout(() => { if (key === kk) amb(ra[0], { vol: ra[1], dur: 3, fadeIn: 1 }); }, 1500); } } // 장소 소리는 작게, 잠깐만
           if (k === 'well') { if (rI()) { wellScene(); return; } return T.sceneCard(null, wellScene); }
           if (rI()) { scene(BG_OF[k]); water = null; return; }
           return T.sceneCard(null, () => { scene(BG_OF[k]); water = null; });
@@ -249,6 +256,7 @@
           if (op === 'fit') { clinkSfx(T); shoeB.hop(24, 320); return sleep(450).then(() => kong.hop(34, 400)); }
         },
         cut(k) {
+          if (k === 'fairy') sfx('shimmer', .35); // 원작의 선녀 선물: 반짝 한 번
           if (k === 'sparrows') hide(flock);
           if (k === 'toad') { toad.look('plug'); toad.place(...TOAD_HOLE); }
           return T.cutImage([{ src: cutSrc(k), sfx: 'pop', hold: CUT_HOLD[k] || 3000 }], { hold: CUT_HOLD[k] || 3000 });
@@ -276,11 +284,12 @@
     put(T, step, P ? 600 : 620, 505, { look: 'order', to: 'left' });
     put(T, pat, P ? 690 : 800, 505, { look: 'eat', to: 'left' });
     await T.curtain(true);
+    amb('birds_chirp_1', { vol: .25, dur: 4 }); // 아침 마당 새소리
     await say('옛날 옛날에 마음씨 고운 콩쥐가 살았어요.');
     await say('콩쥐는 새엄마, 팥쥐와 함께 살았어요.');
     await say('"콩쥐야, 마당을 쓸어라!" 새엄마가 말했어요.');
     const sweep = i => {
-      kong.hop(14, 300); popSfx(T); T.pop(kong.x + 70, kong.y - 295, tr(['쓱쓱!', '싹싹!', '깨끗!'][i - 1])); if (i === 1) wig('persimmon');
+      kong.hop(14, 300); sfx('broom_1', .5) || popSfx(T); T.pop(kong.x + 70, kong.y - 295, tr(['쓱쓱!', '싹싹!', '깨끗!'][i - 1])); if (i === 1) wig('persimmon');
     };
     await T.ask('콩쥐를 톡! 눌러서 마당을 쓸어 봐요!', () => T.tap(kong.pos, { prompt: '콩쥐를 톡! 마당을 쓸어요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { await sweep(i); await sleep(450); }
@@ -295,10 +304,12 @@
     await say('"이 밭을 다 갈아 놓아라!" 새엄마가 말했어요.');
     await say('밭은 너무 넓어서 콩쥐는 한숨이 나왔어요.');
     put(T, ox, P ? 520 : 560, 520, { to: 'left' }); ox.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400);
+    AudioFX.animal('cow', .5);
     await say('그때 검은 소가 나타났어요. "음메~ 내가 도와줄게!"');
     await sleep(500);
     popSfx(T); ox.hop(20, 300);
     await T.cutImage([{ src: cutSrc('ox'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
+    sfx('dig_soil', .4);
     await say('소가 쑥쑥 밭을 갈아 주었어요. "고마워, 소야!"');
 
     /* --- 3. 깨진 독 --- */
@@ -309,11 +320,12 @@
     }, jar.pos);
     await say('"이 독에 물을 가득 채워라!" 새엄마가 말했어요.');
     await T.ask('물동이를 톡톡톡 눌러서 물을 세 번 부어 봐요!', () => T.mash(pail.pos, { count: 3, prompt: '물동이를 톡톡톡! 물을 부어요.', onStep: i => {
-      pail.hop(14, 260); popSfx(T); pourDrops(pail, jar); leakDrops(jar); T.pop(pail.x, pail.y - 290, tr(NUM[i - 1]));
+      pail.hop(14, 260); sfx('marimba_' + i, .6) || popSfx(T); pourDrops(pail, jar); leakDrops(jar); T.pop(pail.x, pail.y - 290, tr(NUM[i - 1])); // 붓는 만큼 한 음씩
     } }));
     await T.cutImage([{ src: cutSrc('wet'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     scene('jar');
     put(T, kong, 400, 505, { look: 'wet', to: 'right' }); put(T, jar, 560, 505);
+    amb('stream_2', { vol: .25, dur: 3 }); // 물이 줄줄
     await say('앗! 독 밑에 구멍이 나서 물이 줄줄 새어 나왔어요.');
     await T.sceneCard(tr('독 안'), () => {
       scene('jarbottom');
@@ -321,14 +333,14 @@
     }, toad.pos);
     await say('그때 두꺼비가 폴짝 나타났어요. "내가 구멍을 막아 줄게!"');
     await T.tap(toad.pos, { prompt: '두꺼비를 톡! 구멍을 막아요.' });
-    toad.look('plug'); toad.hop(40, 420); await toad.move(...TOAD_HOLE, 420); popSfx(T);
+    toad.look('plug'); toad.hop(40, 420); sfx('boing', .6); await toad.move(...TOAD_HOLE, 420); popSfx(T);
     await T.cutImage([{ src: cutSrc('toad'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     await say('두꺼비가 구멍에 쏙! 이제 물이 새지 않아요.');
     scene('jar');
     put(T, kong, 400, 505, { look: 'pour', to: 'right' }); put(T, jar, 560, 505); put(T, pail, 480, 520);
     const water = waterTop(jar);
     const refill = i => {
-      pail.hop(14, 260); popSfx(T); pourDrops(pail, jar); T.pop(pail.x, pail.y - 290, tr(NUM[i - 1]));
+      pail.hop(14, 260); sfx('marimba_' + i, .6) || popSfx(T); pourDrops(pail, jar); T.pop(pail.x, pail.y - 290, tr(NUM[i - 1]));
       setTimeout(() => { water.setAttribute('opacity', (i / 3).toFixed(2)); }, 380);
     };
     // 저절로 (2026-10-19 톡 조작 정리)
@@ -345,6 +357,7 @@
     await say('"겉겨를 벗겨서 쌀을 가져오너라!" 새엄마가 말했어요.');
     await say('곡식이 너무 많아서 콩쥐는 걱정이 되었어요.');
     put(T, flock, 500, 330); flock.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400);
+    amb('birds_chirp_2', { vol: .25, dur: 3 }); // 참새 짹짹
     await say('그때 참새들이 날아왔어요. "짹짹! 우리가 도와줄게!"');
     await sleep(500);
     hide(flock); popSfx(T);
@@ -355,7 +368,7 @@
     await T.ask('참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!', () => T.mash(flock.pos, { count: 5, prompt: '참새를 톡톡톡톡톡! 하나씩 세어요.', onStep: i => {
       const s = sparrows[i - 1]; put(T, s, 410 + i * 52, 440 - (i % 2) * 26, { to: 'left' });
       s.pos.animate([{ opacity: 0, translate: '0 -30px' }, { opacity: 1, translate: '0 0' }], 260); s.hop(10, 240);
-      popSfx(T); sayNum(T, i); T.pop(s.x, s.y - 190, tr(NUM[i - 1]));
+      sfx('marimba_' + i, .6) || popSfx(T); sayNum(T, i); T.pop(s.x, s.y - 190, tr(NUM[i - 1])); // 한 마리에 한 음
     } }));
     hide(flock);
     await say('참새가 하나, 둘, 셋, 넷, 다섯! 쌀이 금방 하얗게 되었어요.');
@@ -365,14 +378,17 @@
       scene('loom');
       put(T, kong, 520, 505, { look: 'loom', to: 'right' }); // 2026-10-20 새 콩쥐 베틀 그림은 베틀이 그림 속에 있어 따로 놓던 베틀 소품은 뺌
     }, kong.pos);
+    amb('loom_spin', { vol: .22, dur: 4 }); // 베틀 찰칵
     await say('이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.');
     put(T, fairy, 640, 400, { look: 'float', to: 'left' }); fairy.pos.animate([{ opacity: 0 }, { opacity: 1 }], 500);
+    sfx('shimmer', .4); // 원작의 선녀: 반짝 한 번
     await say('그때 하늘에서 선녀가 내려왔어요. "착한 콩쥐야, 선물을 줄게!"');
     await sleep(500);
     fairy.look('give'); popSfx(T);
     await T.cutImage([{ src: cutSrc('fairy'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
     scene('loom');
     put(T, kong, 450, 505, { look: 'shoes', to: 'right' }); put(T, fairy, 580, 505, { look: 'give', to: 'left' });
+    sfx('chime_up', .5); // 선물을 받아 옷이 바뀐다
     await say('콩쥐는 곱디고운 옷과 나비 꽃신을 받았어요. "고맙습니다, 선녀님!"');
     await kong.hop(30, 400);
 
@@ -383,8 +399,9 @@
       put(T, kong, BANK[0], BANK[1], { look: 'shoes', to: 'right' }); followCam(BANK[0], 0);
       kong.look('stepR', 'right');
     }, kong.pos);
+    amb('stream_1', { vol: .25, dur: 4 }); // 개울 졸졸
     const cross = (i, x) => {
-      kong.look(i % 2 ? 'stepL' : 'stepR', 'right'); kong.move(x, STONE_Y, 380); kong.hop(26, 380); followCam(x); popSfx(T); wig('willowL', 2, 400); wig('willowR', 2, 400); T.pop(x + 40, STONE_Y - 295, tr(NUM[i - 1]));
+      kong.look(i % 2 ? 'stepL' : 'stepR', 'right'); kong.move(x, STONE_Y, 380); kong.hop(26, 380); followCam(x); sfx('marimba_' + i, .6) || popSfx(T); wig('willowL', 2, 400); wig('willowR', 2, 400); T.pop(x + 40, STONE_Y - 295, tr(NUM[i - 1]));
       return sleep(380);
     };
     await T.ask('콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!', () => T.tap(kong.pos, { prompt: '콩쥐를 톡! 징검다리를 건너요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
@@ -392,6 +409,7 @@
     await T.cutImage([{ src: cutSrc('splash'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     scene('stream');
     put(T, kong, STONES[3], STONE_Y, { look: 'shoes', to: 'right' });
+    sfx('whistle_down', .5); setTimeout(() => sfx('splash', .35), 450); // 꽃신이 퐁당
     const drift = driftShoe();
     await say('풍덩! 꽃신 한 짝이 개울에 빠졌어요. 꽃신은 둥둥 떠내려갔어요.');
     await drift;
@@ -405,6 +423,7 @@
       put(T, kong, 590, 490, { look: 'shoes', to: 'left' });
       put(T, drum, 400, 560); put(T, buk, 500, 560); put(T, gong, 600, 560);
     }, kong.pos);
+    amb('crowd_murmur_1', { vol: .2, dur: 4 }); // 잔치 웅성웅성
     await T.ask('잔치에서는 북과 장구와 꽹과리 소리가 울렸어요. 북을 톡 눌러 봐요!', () => T.tap(drum.pos, { prompt: '북을 톡! 둥둥 소리가 나요.' }));
     AudioFX.sfx('drum') || T.tone([140, 90], .3, { vol: .25 }); drum.hop(14, 240); T.pop(drum.x, drum.y - 360, tr('둥!'));
     await sleep(500);
@@ -422,6 +441,7 @@
       put(T, shoeP, 380, 545); put(T, shoeB, 500, 545); put(T, shoeM, 620, 545);
     }, won.pos);
     await say('개울에 빠진 꽃신은 원님에게 닿았어요. "이 꽃신의 주인을 찾아요!"');
+    sfx('question', .6);
     const got = await T.ask('꽃신 세 켤레 중에서 나비 꽃신이 콩쥐의 꽃신이에요. 나비 꽃신을 톡!', () => T.choose([
       { key: 'p', el: shoeP.pos, ok: false }, { key: 'b', el: shoeB.pos, ok: true }, { key: 'm', el: shoeM.pos, ok: false }],
       { prompt: '나비 꽃신을 톡!', where: '나비가 그려진 꽃신을 찾아봐요.', who: '반짝이는 꽃신을 톡!' }));
@@ -453,10 +473,10 @@
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await feed(i); await sleep(500); }
     await T.ask('모두 둘러앉아 맛있게 먹었어요. 콩쥐를 톡! 모두 함께 만세!', () => T.tap(kong.pos, { prompt: '콩쥐를 톡! 모두 함께 만세!' }));
-    T.confetti();
+    T.confetti(); sfx('party_horn', .6);
     await Promise.all([kong.hop(40, 500), won.hop(30, 500), step.hop(24, 500), pat.hop(24, 500)]);
     await say('착한 마음은 도움을 불러와요. 콩쥐팥쥐 이야기는 이렇게 끝났어요.');
-    T.finale();
+    T.finale(); stopAmb(.8);
     return '착한 마음은 도움을 불러와요!';
   }
 
