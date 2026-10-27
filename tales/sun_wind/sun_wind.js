@@ -564,19 +564,27 @@
       noFace: ['sun', 'man'],
     });
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
+    /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'leaves_footsteps', 'cicada', 'stream_1', 'balloon', 'whistle_down']); } catch (e) { /* 소리 없이도 진행 */ }
+    const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     /* 그림 미리 불러오기: 첫 장면(하늘·해·바람) 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
     const loads = {};
     Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
     Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
-    await Promise.race([Promise.all([loads.bg_sky, loads.sun, loads.wind, loads.wind_blow].filter(Boolean)), sleep(2500)]);
+    await Promise.race([Promise.all([loads.bg_sky, loads.sun, loads.wind, loads.wind_blow].filter(Boolean)), new Promise(r => setTimeout(r, 2500))]);
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 놀이판 그림·연출을 누르기 없이 감싼 얇은 함수 =================
        set 은 놀이판 장면 배경과 카메라를 깐다(하늘·하이앵글 길·들길·개울가). 해님·바람·나그네는 동사가 처음 부를 때 그 장면 자리에 놓는다.
        바람·해님으로 외투를 벗기는 흐름(단추·땀·부채질·훌러덩)은 눌러서 하던 단계를 대본 줄에 맞춰 하나씩 한다. */
     const inst = () => T.readInstant();
     const rPt = () => T.portrait();
-    let rScene = '', rFieldN = 0, rS = null, rW = null, rN = null, rF = null, rHB = null, rST = null, rFlying = null, rPant = null, rBabble = null, rHatGone = false, rButtoned = false, rWalkBob = null, rFlapShut = false;
+    let rSawSky = 0, rScene = '', rFieldN = 0, rS = null, rW = null, rN = null, rF = null, rHB = null, rST = null, rFlying = null, rPant = null, rBabble = null, rHatGone = false, rButtoned = false, rWalkBob = null, rFlapShut = false;
     const rOn = a => a && a.pos.isConnected;
     const rAim = () => { if (rOn(rW)) aimWind(rW, rOn(rN) ? rN : rOn(rS) ? rS : 500); };
     const rSync = () => { T.world.__sw = [rS, rW]; T.world.__man = rN; };
@@ -607,6 +615,7 @@
         if (rBabble) { clearInterval(rBabble); rBabble = null; }
         if (rPant) { rPant.cancel(); rPant = null; }
         rScene = key; rS = rW = rN = rF = rHB = rST = rFlying = null; rFlapShut = false; rSync();
+        if (key === 'sky' && !rSawSky) { rSawSky = 1; amb('birds_chirp_1'); } else if (key === 'stream') amb('stream_1', .2, 4); else stopAmb();
         T.clear();
         if (key === 'sky') {
           const pt = rPt(), sky1 = skyBG(T, pt ? 335 : 290);
@@ -805,7 +814,7 @@
       cam(a) { if (a === 'wide') return; const [x, y, z] = String(a).split(',').map(Number); return inst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 700); },
     };
     const READ_ACTS = { set: R.set, sun: R.sun, wind: R.wind, man: R.man, leaves: R.leaves, flap: R.flap, sweat: R.sweat, breeze: R.breeze, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam };
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
 
     /* --- 1. 하늘 자랑 --- */
@@ -815,6 +824,7 @@
     if (T.portrait()) camSnap(510, 280, Math.min(1, T.viewWidth() / 2 / 300)); // 커진 바람까지 보이게 조금 더 물러선다
     sky1.drift.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(30px)' }, { transform: 'translateX(0)' }], { duration: 6000, iterations: Infinity });
     await T.curtain(true);
+    amb('birds_chirp_1');
     await say('하늘 높이 해님과 바람이 살았어요.');
     await sleep(500); // 해님은 저절로 반짝 (2026-10-20)
     spinRays(S1); S1.hop(26); sparkles(T, S1.x, S1.y, 130, 8); T.pop(S1.x, 110, '반짝!', C.persimmon);
@@ -832,6 +842,7 @@
     /* --- 2. 내기 (하이앵글) --- */
     let N, HB;
     await T.sceneCard('내기', () => {
+      amb('leaves_footsteps', .25, 3);
       T.clear(); HB = highBG(T);
       if (T.portrait()) camSnap(500, 280, 1);
       // 정면 얼굴 그림이라 멀어지면 뒤로 걷는 모양 → 위(먼 곳)에서 아래(가까운 쪽)로 길을 따라 걸어 내려온다
@@ -856,6 +867,7 @@
     /* --- 3. 바람 차례 (메인 1): 쓱 ×5, 점점 세게 --- */
     let F, W;
     await T.sceneCard('바람 차례', () => {
+      stopAmb();
       T.clear(); F = fieldBG(T, { lb: 'wind' });
       N = traveler(T, 600, 500, 1.25, 'coat');
       W = aimWind(wind(T, 150, 180, .8), N); // 나그네(오른쪽) 쪽으로 분다
@@ -918,6 +930,7 @@
     /* --- 4. 바람 헉헉 --- */
     await camWide(700);
     vo('cut_pant'); // 컷 속 바람의 헉헉 (말풍선 없음)
+    short('balloon', .5, 2.5);
     await (cutArt(T, 'cut_pant', null, 2400) || T.cut(svg => {
       T.actor(svg, 200, 160, g => { const p = drawWind(T, g); p.wrinkles.setAttribute('opacity', 1); p.sweat.setAttribute('opacity', 1); p.setMouth('tired'); p.puff.style.transform = p.art ? 'scale(.94,.88)' : 'scale(.85,.72)'; }, { scale: 1.5 });
       T.el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 58, fill: C.indigo, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('헉헉…') }, svg);
@@ -928,6 +941,7 @@
     const pant = W.p.puff.animate([{ scale: '1 1' }, { scale: '1.06 1.1' }, { scale: '1 1' }], { duration: 700, iterations: Infinity });
     await camTo(T.portrait() ? W.x : 500, T.portrait() ? W.y + 40 : 280, T.portrait() ? 2.1 : 1.3, 900);
     SND.pant(T);
+    sfx('whistle_down', .7);
     await say('바람은 숨이 차서 헉헉, 볼이 쭈글쭈글해졌어요.');
     await say('"에이, 안 되네!"'); // 헉헉 합성음은 목소리와 겹쳐서 뺌
     await camWide(800);
@@ -945,6 +959,7 @@
     /* --- 5. 해님 차례 (메인 2): 꾹 ×3 --- */
     let SN;
     await T.sceneCard('해님 차례', () => {
+      amb('cicada', .25, 4);
       T.clear(); F = fieldBG(T, { lb: 'turn' }); F.sky.setAttribute('fill', SKY.grey);
       if (N.__shiver) N.__shiver.cancel();
       N = traveler(T, 520, 500, 1.25, 'coatShut', 'cross', { buttons: 4 }); N.P.face('cold');
@@ -1078,6 +1093,7 @@
     /* --- 7. 개울가 쉼 --- */
     let ST, WW, SS, babble;
     await T.sceneCard('개울가', () => {
+      amb('stream_1', .25, 4);
       T.clear(); ST = streamBG(T);
       if (T.portrait()) camSnap(ST.art ? 330 : 440, 280, 1); // 앞 장면에서 물러선 카메라를 제자리로 (세로 화면만). 그림은 바위가 왼쪽
       N = traveler(T, ST.seat[0], ST.seat[1], 1.2, 'shirt', 'down', { sit: true }); N.P.face('smile');
@@ -1120,6 +1136,7 @@
     let PL, M8, wfx = null;
     const btns = {};
     await T.sceneCard('날씨 놀이', () => {
+      stopAmb();
       T.clear(); PL = playBG(T);
       M8 = traveler(T, 500, 520, 1.15, 'shirt', 'down'); M8.P.face('smile');
       btns.sun = sun(T, 130, 200, .55);
