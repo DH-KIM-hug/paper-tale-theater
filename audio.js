@@ -191,7 +191,9 @@ const AudioFX = (() => {
   const VARIANTS = { 'animals/cow': 3, 'animals/pig': 2, 'animals/dog': 3, 'animals/owl': 3, 'animals/frog': 3,
     'animals/rooster': 2, 'animals/cat': 3, 'animals/sheep': 2, 'animals/donkey': 2, 'animals/tiger': 2, 'sfx/knock': 2,
     'sfx/crunch': 2, 'sfx/chomp': 3, 'sfx/gulp': 3, 'sfx/gom_se_mari': 2,
-    'sfx/hop': 2, 'sfx/ball_bounce': 2 };
+    'sfx/hop': 2, 'sfx/ball_bounce': 2,
+    'sfx/boing_steps': 2, 'sfx/harp_gliss': 2, 'sfx/ding_glock': 2, 'sfx/sad_trombone': 3, 'sfx/comic_brass': 2,
+    'sfx/fall_crash': 2, 'sfx/pull_pop': 2, 'sfx/party_horn': 2, 'sfx/marimba_note': 2 };
   const variantPath = (base, i) => i === 1 ? base + '.mp3' : base + '_' + i + '.mp3';
   const lastVariant = {};
   function pickVariant(path) {
@@ -264,6 +266,25 @@ const AudioFX = (() => {
     ouch:     [['squeak', 0, .8], ['xylo_down', .12, .5], ['sparkle', .35, .3]],                // 삑-또로롱↓-반짝
   };
 
+  /* 배경 소리(ambient) 공용: 한 통(bus)을 거치게 해서 내레이션이 읽히는 동안 한꺼번에 낮춘다 */
+  const DUCK = .45; // 내레이션 중 배경 소리 배율(약 -7dB). 평소 vol(.25~.35)과 곱해져 -15~-20dB 안팎
+  let ambs = [], ambGain = null, ambTimer = 0;
+  function ambBus() {
+    if (!ambGain || ambGain.context !== ctx) { ambGain = ctx.createGain(); ambGain.connect(ctx.destination); }
+    return ambGain;
+  }
+  const narrating = () => !!(narSrc || narEnd || pairEnds.length || (narEl && !narEl.paused && !narEl.ended && narEl.src));
+  function ambTick() { // 켜져 있는 동안만 0.25초마다 내레이션을 살펴 볼륨을 오르내린다
+    if (!ambs.length) { clearInterval(ambTimer); ambTimer = 0; return; }
+    if (!ambTimer) ambTimer = setInterval(ambTick, 250);
+    try { if (ambGain && ctx) ambGain.gain.setTargetAtTime(narrating() ? DUCK : 1, ctx.currentTime, .3); } catch (e) { /* 무시 */ }
+  }
+  /* 화면을 떠나면 끈다. 읽어 주기(<audio> 내레이션) 중 화면 꺼짐은 이어 간다 */
+  addEventListener('pagehide', () => { try { ambs.slice().forEach(h => h.stop(.1)); } catch (e) { /* 무시 */ } });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !mediaNar) { try { ambs.slice().forEach(h => h.stop(.3)); } catch (e) { /* 무시 */ } }
+  });
+
   const api = {
     unlock() {
       wake();
@@ -310,6 +331,40 @@ const AudioFX = (() => {
     },
     /* 첫 소리가 합성음으로 새지 않게 미리 불러 둔다: AudioFX.preloadSfx(['paper_up', …]) */
     preloadSfx(names) { names.forEach(n => loadSample('sfx/' + n + '.mp3')); },
+    /* 배경 소리(sounds/sfx/<name>.mp3, 종류 ambient): 이어서 반복 재생하는 바닥 소리. 효과음처럼 미리 불러 둔다(preloadSfx).
+       AudioFX.ambient('birds_chirp_1', { vol: .3, fadeIn: .8, dur })  → { stop(fadeSec = .8) } | 아직 못 불러왔으면 null(부르는 쪽은 그냥 넘어간다)
+       - vol 은 .25~.35 가 내레이션 밑에서 알맞다. 내레이션이 읽히는 동안은 자동으로 더 낮춘다(DUCK).
+       - dur(초)를 주면 그 뒤 저절로 사라진다. loop:false 면 한 번만 틀고 끝난다.
+       - 같은 이름을 다시 부르면 앞의 것은 서서히 끄고 새로 튼다. 내레이션을 막거나 깨지 않게 모두 try/catch 로 감싼다. */
+    ambient(name, { vol = .3, loop = true, fadeIn = .8, dur } = {}) {
+      try {
+        const path = 'sfx/' + name + '.mp3', buf = samples[path];
+        if (!buf) { loadSample(path); return null; }
+        const c = ensure(); if (!c) return null;
+        ambs.filter(h => h.name === name).forEach(h => h.stop(.4));
+        const s = c.createBufferSource(), g = c.createGain(), t0 = c.currentTime;
+        s.buffer = buf; s.loop = !!loop;
+        g.gain.setValueAtTime(0.0001, t0); g.gain.linearRampToValueAtTime(vol, t0 + Math.max(.05, fadeIn));
+        s.connect(g).connect(ambBus());
+        let stopped = false, timer = 0;
+        const h = { name, stop(f = .8) {
+          if (stopped) return; stopped = true; clearTimeout(timer);
+          try {
+            const t = c.currentTime, f2 = Math.max(.05, f);
+            g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(Math.max(g.gain.value, 0.0001), t); g.gain.linearRampToValueAtTime(0.0001, t + f2);
+            s.stop(t + f2 + .02);
+          } catch (e) { /* 무시 */ }
+          setTimeout(() => { try { g.disconnect(); } catch (e) { /* 무시 */ } ambs = ambs.filter(x => x !== h); ambTick(); }, (f + .1) * 1000);
+        } };
+        s.onended = () => { if (!stopped) h.stop(.05); };
+        s.start(t0);
+        if (dur > 0) timer = setTimeout(() => h.stop(Math.min(1.2, dur / 2)), Math.max(0, dur - 1.2) * 1000);
+        ambs.push(h); ambTick();
+        return h;
+      } catch (e) { return null; }
+    },
+    /* 켜 둔 배경 소리를 모두 끈다. 장면이 바뀔 때·동화가 끝날 때 부른다(화면을 떠나면 저절로 꺼진다) */
+    stopAmbient(fadeSec = .8) { ambs.slice().forEach(h => { try { h.stop(fadeSec); } catch (e) { /* 무시 */ } }); },
     async playUrl(url, { recordedOnly = false } = {}) {
       if (mediaNar && narEl) { try { return await playMedia(url); } catch (e) { if (recordedOnly) throw e; /* <audio> 실패 → Web Audio 로 */ } }
       const buf = await loadClip(url);
@@ -389,6 +444,7 @@ const AudioFX = (() => {
     /* 잠자리 이어 듣기가 끝났을 때: 내레이션 <audio> 를 비우고 무음 유지 루프도 놓는다(배경에 무음만 남지 않게) */
     sessionEnd() {
       mediaNar = false; narHeld = false;
+      try { api.stopAmbient(.4); } catch (e) { /* 무시 */ }
       try { api.stopNarration(); } catch (e) { /* 무시 */ }
       if (narEl) { try { narEl.pause(); narEl.removeAttribute('src'); narEl.load(); } catch (e) { /* 무시 */ } }
       narHelpers.forEach(el => { try { el.pause(); el.removeAttribute('src'); } catch (e) { /* 무시 */ } });

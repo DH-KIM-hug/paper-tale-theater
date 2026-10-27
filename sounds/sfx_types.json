@@ -451,6 +451,11 @@
    "file": "sfx/boing_steps.mp3",
    "kind": "oneshot",
    "sec": 1.6
+  },
+  {
+   "file": "sfx/boing_steps_2.mp3",
+   "kind": "oneshot",
+   "sec": 2.4
   }
  ],
  "whistle_up": [
@@ -500,6 +505,11 @@
    "file": "sfx/harp_gliss.mp3",
    "kind": "oneshot",
    "sec": 2.45
+  },
+  {
+   "file": "sfx/harp_gliss_2.mp3",
+   "kind": "oneshot",
+   "sec": 2.5
   }
  ],
  "ding_glock": [
@@ -507,6 +517,11 @@
    "file": "sfx/ding_glock.mp3",
    "kind": "oneshot",
    "sec": 1.1
+  },
+  {
+   "file": "sfx/ding_glock_2.mp3",
+   "kind": "oneshot",
+   "sec": 0.95
   }
  ],
  "shimmer": [
@@ -542,6 +557,16 @@
    "file": "sfx/sad_trombone.mp3",
    "kind": "oneshot",
    "sec": 2.6
+  },
+  {
+   "file": "sfx/sad_trombone_2.mp3",
+   "kind": "oneshot",
+   "sec": 1.65
+  },
+  {
+   "file": "sfx/sad_trombone_3.mp3",
+   "kind": "oneshot",
+   "sec": 1.4
   }
  ],
  "comic_brass": [
@@ -549,6 +574,11 @@
    "file": "sfx/comic_brass.mp3",
    "kind": "oneshot",
    "sec": 2.0
+  },
+  {
+   "file": "sfx/comic_brass_2.mp3",
+   "kind": "oneshot",
+   "sec": 2.9
   }
  ],
  "tiptoe_pizz": [
@@ -570,6 +600,11 @@
    "file": "sfx/fall_crash.mp3",
    "kind": "oneshot",
    "sec": 1.7
+  },
+  {
+   "file": "sfx/fall_crash_2.mp3",
+   "kind": "oneshot",
+   "sec": 1.0
   }
  ],
  "pull_pop": [
@@ -577,6 +612,11 @@
    "file": "sfx/pull_pop.mp3",
    "kind": "oneshot",
    "sec": 0.55
+  },
+  {
+   "file": "sfx/pull_pop_2.mp3",
+   "kind": "oneshot",
+   "sec": 0.5
   }
  ],
  "bumper": [
@@ -598,6 +638,11 @@
    "file": "sfx/party_horn.mp3",
    "kind": "oneshot",
    "sec": 1.3
+  },
+  {
+   "file": "sfx/party_horn_2.mp3",
+   "kind": "oneshot",
+   "sec": 0.85
   }
  ],
  "chime_up": [
@@ -605,6 +650,11 @@
    "file": "sfx/magic_wand.mp3",
    "kind": "oneshot",
    "sec": 2.6
+  },
+  {
+   "file": "sfx/chime_up.mp3",
+   "kind": "oneshot",
+   "sec": 2.5
   }
  ],
  "xylo_up": [
@@ -670,6 +720,11 @@
    "kind": "oneshot",
    "sec": 0.8,
    "note": "진짜 마림바 한 음(낮은 음). 수 세기에서 marimba_scale 과 섞어 쓸 수 있다."
+  },
+  {
+   "file": "sfx/marimba_note_2.mp3",
+   "kind": "oneshot",
+   "sec": 0.99
   }
  ]
 }

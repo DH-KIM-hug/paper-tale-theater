@@ -255,3 +255,14 @@ Pixabay 검색 페이지가 자동 접속을 막아 소리 파일을 받지 못�
 | `sfx/marimba_6.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
 | `sfx/marimba_7.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
 | `sfx/marimba_8.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/boing_steps_2.mp3` | Pixabay "Cartoon Running Footsteps" — universfield-cartoon-running-footsteps-250962.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0-2.4s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
+| `sfx/harp_gliss_2.mp3` | Pixabay "Harp Glissando Descending Short" — sergequadrado-harp-glissando-descending-short-103886.mp3 | SergeQuadrado | Pixabay Content License (출처 표기 불필요) | 원본 0-2.5s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
+| `sfx/ding_glock_2.mp3` | Pixabay "DING CARTOON" — alexis_gaming_cam-ding-cartoon-346093.mp3 | ALEXIS_GAMING_CAM | Pixabay Content License (출처 표기 불필요) | 원본 0.25-1.2s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
+| `sfx/chime_up.mp3` | Pixabay "Fairy Dust Shimmer 1" — floraphonic-fairy-dust-shimmer-1-175611.mp3 | floraphonic | Pixabay Content License (출처 표기 불필요) | 원본 0-2.5s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
+| `sfx/sad_trombone_2.mp3` | Pixabay "Fail Trombone" — universfield-fail-trombone-229173.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0.05-1.7s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
+| `sfx/sad_trombone_3.mp3` | Pixabay "Fail Trumpet 02" — universfield-fail-trumpet-02-383962.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0-1.4s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
+| `sfx/comic_brass_2.mp3` | Pixabay "Wah Wah Horn" — universfield-wah-wah-horn-117724.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0.1-3.0s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
+| `sfx/fall_crash_2.mp3` | Pixabay "FX Falling cartoon" — mori_sound-fx-falling-cartoon-531304.mp3 | Mori_sound | Pixabay Content License (출처 표기 불필요) | 원본 0-1.0s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
+| `sfx/pull_pop_2.mp3` | Pixabay "Cartoon Yoink 1" — floraphonic-cartoon-yoink-1-183915.mp3 | floraphonic | Pixabay Content License (출처 표기 불필요) | 원본 0-0.5s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
+| `sfx/party_horn_2.mp3` | Pixabay "Birthday Party Horn" — universfield-birthday-party-horn-250238.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0.05-0.9s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
+| `sfx/marimba_note_2.mp3` | Pixabay "Xylophone C3" — freesound_community-xylophone-c3-87468.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0-1.0s, 앞뒤 무음 정리·페이드·음량 맞춤. 변형(VARIANTS) |
