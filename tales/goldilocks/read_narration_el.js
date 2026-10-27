@@ -93,6 +93,6 @@ Object.assign(NARRATION_CLIPS, {
  "골디락스 그릇도 하나 더! 다 함께 냠냠.": "audio/el/goldilocks/nar_24a15e1d88.mp3",
  "골디락스와 곰 가족은 사이좋은 친구가 되었답니다.": "audio/el/goldilocks/nar_42720c5162.mp3",
  "\"미안해요\" 하면 다시 친구가 될 수 있답니다.": "audio/el/goldilocks/nar_b572709bed.mp3",
- "호록호록, 냠냠! 네 식구가 둘러앉아 맛있게 먹었어요.": "audio/el/goldilocks/nar_208bccfc68.mp3"
+ "호록호록, 냠냠! 식구 넷이 둘러앉아 맛있게 먹었어요.": "audio/el/goldilocks/nar_c9723ff397.mp3"
 });
 Object.assign(VOICE_LINES, {});
