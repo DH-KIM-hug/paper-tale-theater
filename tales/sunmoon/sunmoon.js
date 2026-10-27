@@ -536,6 +536,14 @@
     /* 짧은 소리 대사(귀 배지·컷 비명)가 끝난 뒤에 내레이션을 시작한다 — 엔진은 4초만 기다려서 긴 대사는 내레이터와 겹쳤다 */
     const say = async text => { await AudioFX.voiceIdle(10000); return T.say(text); };
     const stageWrap = T.root.querySelector('#stageWrap');
+    /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
+    try { AudioFX.preloadSfx(['fire_crackle', 'crickets_night_1', 'crickets_night_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'tada', 'whistle_down', 'whistle_wobble', 'shimmer']); } catch (e) { /* 소리 없이도 진행 */ }
+    const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) return false; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     /* 배경 그림 미리 불러오기: 첫 장면 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 없는 파일은 그레이박스로 */
     const loads = {};
@@ -543,7 +551,7 @@
     const artLoads = {};
     Object.keys(ART).filter(k => ART[k]).forEach(k => { artLoads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
     // 첫 장면 배우(엄마·오누이) 그림도 함께 기다린다 — 못 불러온 그림은 그레이박스로
-    await Promise.race([Promise.all([loads.cottage, artLoads.mom_wave, artLoads.boy, artLoads.girl].filter(Boolean)), sleep(2500)]);
+    await Promise.race([Promise.all([loads.cottage, artLoads.mom_wave, artLoads.boy, artLoads.girl].filter(Boolean)), new Promise(r => setTimeout(r, 2500))]);
 
     /* ====== 1막 — 떡 고개 ====== */
     /* --- 1. 오막살이 아침 --- */
@@ -999,7 +1007,7 @@
       await tree.to(...rTREE_WIDE, .58, 900);
     };
     const READ_ACTS = {
-      set: rSet,
+      set: key => { if (key === 'kitchen') amb('fire_crackle', .2, 3); else if (key === 'hill2') amb('crickets_night_1', .2, 4); else if (key === 'backyard') amb('crickets_night_2', .2, 4); else stopAmb(); return rSet(key); },
       cam: (a, b) => {
         if (a === 'wide') return rInst() ? camSnap(500, 280, 1) : camWide(600);
         if (a === 'snap') { const [x, y, z] = String(b).split(',').map(Number); return camSnap(x, y, z || 1); }
@@ -1129,7 +1137,7 @@
         if (verb === 'night') { rs.night = true; rSetSky(false); const nv = rs.nightVeil; if (!nv && rs.skyRect) rs.skyRect.style.fill = C.indigo; rs.starG.style.opacity = 1; if (nv) nv.style.opacity = nv.__full ? 1 : .62; AudioFX.bell(); return; }
         if (verb === 'day') return (async () => {
           if (rs.night && !rs.swapped) {   // "우리 바꾸자!" — 해와 달이 자리를 바꾼다
-            AudioFX.swish && AudioFX.swish();
+            AudioFX.swish && AudioFX.swish(); try { AudioFX.sfx('shimmer', .5); } catch (e) { /* 무시 */ }
             await Promise.all([rs.sunKid.move(rs.OX[1], 170, 1000), rs.moonKid.move(rs.OX[0], 170, 1000)]);
             rs.sunKid.P.set(false); rs.moonKid.P.set(true); rs.swapped = true;
           }
@@ -1157,7 +1165,7 @@
       pop: spec => { const [x, y, ...w] = String(spec).split(','); T.pop(+x, +y, w.join(','), C.bean); },
       shake: () => T.shake(),
     };
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     await T.curtain(true);
     await say('옛날 옛날 산골 오막살이에 엄마와 오누이가 살았어요.');
@@ -1181,6 +1189,7 @@
     const TOTAL = ASKS[0] + ASKS[1] + ASKS[2];
     let plateCakes = [];
     await T.sceneCard('부잣집 부엌', () => {
+      amb('fire_crackle', .25, 3);
       T.clear();
       // 그림 부엌: 상 위의 그림 떡 접시를 이 접시가 덮는다 (떡이 줄면 그림 떡도 안 보이게)
       const [dx, dy, ry] = kitchenBG(T) ? [19, -140, 34] : [0, 0, 26];
@@ -1216,11 +1225,12 @@
       const pick = await (i === 1 ? T.ask('"수고했어요. 떡 가져가요!" 떡을 하나씩 톡! 세면서 담아요.', pickCake) : pickCake());
       const c = pick.c; left.splice(left.indexOf(c), 1); c.g.setAttribute('opacity', 0); c.g.style.pointerEvents = 'none';   // 사라진 떡이 이웃 떡 누름을 가로채지 않게
       const [x1, y1] = toBasket(i - 1);
-      T.tone(500 + i * 90, .15, { type: 'triangle', vol: .18 });
+      if (sfx('marimba_' + Math.min(8, i), .8) === false) T.tone(500 + i * 90, .15, { type: 'triangle', vol: .18 });
       Narrator.speak(NUMS[i - 1] + '!');
       T.pop(c.x, c.y - 90, NUMS[i - 1] + '!', C.bean);
       await fly(c.x, c.y, x1, y1, 1.8, 450, c.k).then(() => { inBasket = Math.round(TOTAL * i / 10); showBasket(); mom.P.holdBasket(true); AudioFX.pop(); });
     }
+    sfx('tada', .7);
     await sleep(700);
     mom.P.smile();
     await say('떡을 바구니 가득 받았어요! "우리 아이들이 좋아하겠다!" 엄마는 서둘러 집으로 떠났어요.');
@@ -1268,6 +1278,7 @@
     let rock, given = 0, TX = 820, hideY = 610, peekY = 480;
     for (let n = 0; n < 3; n++) {
       await T.sceneCard(['첫째 고개', '둘째 고개', '셋째 고개'][n], () => {
+        if (n === 2) amb('crickets_night_1', .25, 4); else stopAmb();
         T.clear(); camSnap(500, 280, 1);
         rock = null;
         if (bgUrl('hill' + n)) {
@@ -1529,6 +1540,7 @@
       return YARD ? Math.min(x, YARD.x + YARD.w - T.viewWidth() / 2) : x;
     };
     await T.sceneCard('뒷마당', () => {
+      amb('crickets_night_2', .25, 4);
       T.clear(); camSnap(500, 280, 1);
       yard = mkView(T, T.world);
       if (YARD) {
@@ -1903,6 +1915,7 @@
 
     /* --- 14. 뚝! (컷 3장 + 수수밭) --- */
     await say('호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.');
+    short('whistle_wobble', .6, 1.8);
     const cutText = (svg, t, s = 40) => el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': s, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(t) }, svg);
     await T.cut(svg => {
       if (!ropeArt(T, svg, 'rope_bad', 200, 150, .3, -20)) el('path', { d: 'M200 0 V120 Q210 150 196 180', stroke: '#9A8466', 'stroke-width': 7, fill: 'none', 'stroke-dasharray': '30 6' }, svg);
@@ -1917,6 +1930,7 @@
       cutText(svg, '뚝!', 64);
       cutVoice('cut_snap', 250);
     }, { sfx: 'pow', hold: 3800 }));
+    sfx('whistle_down', .7); await sleep(900);
     await (cutArt(T, 'cut_bump', 'thud', 3400, () => cutVoice('cut_bump', 350)) || T.cut(svg => {
       for (let i = 0; i < 9; i++) el('path', { d: `M${20 + i * 45} 300 V${170 + (i % 3) * 16}`, stroke: C.pine, 'stroke-width': 6 }, svg);
       for (let i = 0; i < 9; i++) el('ellipse', { cx: 20 + i * 45, cy: 164 + (i % 3) * 16, rx: 12, ry: 22, fill: '#C98A3A' }, svg);
@@ -1926,6 +1940,7 @@
     }, { sfx: 'thud', hold: 3400 }));
     let sorg;
     await T.sceneCard('수수밭', () => {
+      stopAmb();
       T.clear(); camSnap(500, 280, 1);
       const sorgArt = bgImage(T, T.bg, 'sorghum', { back: '#301a25' });
       if (!sorgArt) {
@@ -1985,6 +2000,7 @@
       return P;
     };
     await T.sceneCard('해와 달', () => {
+      stopAmb();
       T.clear(); camSnap(500, 280, 1);
       if (bgImage(T, T.bg, 'heaven', { back: C.indigo })) {
         // 하늘 그림(낮) 위에 밤 장막: 밤이면 남색으로 덮고 별을 띄운다
@@ -2013,7 +2029,7 @@
     await say('하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.');
     await say('동생이 말했어요. "오빠, 나는 밤이 무서워요."');
     await say('"그럼 우리 바꾸자!"');
-    AudioFX.swish();
+    AudioFX.swish(); sfx('shimmer', .6);
     await Promise.all([sunKid.move(OX[1], 170, 1000), moonKid.move(OX[0], 170, 1000)]);
     sunKid.P.set(false); moonKid.P.set(true);
     const girlSun = moonKid, boyMoon = sunKid;
