@@ -364,5 +364,20 @@
   "out": "assets/raw/restyle/bremen/br_lb_window_glow_v2.png",
   "lightbox": true,
   "prompt": "Use case: illustration-story. Recreate this exact paper-art night background with exactly the same composition, window position and size, navy paper wall, small wall bricks, low stone wall, orange earth ground, moon, purple foliage and dimensions. Change only the light: the lit window is the light source. Warm golden lamplight pours out of the window and falls DOWN as a soft, TRANSLUCENT beam onto the wall and the ground below, brightest right under the window sill and fading gradually with distance, widening as it reaches the ground. The light is real light, not a paper piece: it is semi-transparent, so the navy wall paper grain, the bricks, the low stone wall and the ground texture are all clearly visible THROUGH the glow, just tinted warm. Soft gentle edges, a faint warm haze, gradient allowed ONLY for the light itself. All paper pieces stay flat cut paper, one colour each, subtle paper grain, no gloss. The window panes glow cream and gold. NO animals, NO people, NO robbers, NO silhouettes (they are added in code). Keep the empty area under the window clear for an animal tower. Landscape 16:9 full bleed."
+ },
+ {
+  "id": "br_lb_window_glow_v3",
+  "kind": "bg",
+  "pass": 2,
+  "refs": [
+   "assets/raw/restyle/bremen/br_lb_window_glow_v2.png"
+  ],
+  "size": [
+   1600,
+   902
+  ],
+  "out": "assets/raw/restyle/bremen/br_lb_window_glow_v3.png",
+  "lightbox": true,
+  "prompt": "Use case: illustration-story. Recreate this exact paper-art night background with exactly the same composition, window position and size, window panes, warm window lamplight beam, navy paper wall, small wall bricks, low stone wall, orange earth ground, purple foliage, tree and dimensions. Do NOT move or resize anything. Change only the moon and moonlight: keep the round cream cut-paper moon at the same place in the upper left sky (flat one-colour paper circle, subtle paper grain, no face, no gloss, no shading inside the paper). Add soft cool-cream MOONLIGHT around it: a gentle translucent halo glowing behind the moon, brightest right at the moon's edge and fading gradually with distance into the navy sky, plus a faint pale moonlight wash over the nearby tree leaves and the top-left of the wall. The moonlight is real light, not a paper piece: semi-transparent, so the navy wall paper grain and the leaves stay visible through it. Gradient allowed ONLY for the light itself. The moonlight must stay in the upper-left part of the picture, well away from the lit window and away from the empty area under the window. The window and its warm golden light stay exactly as they are. All paper pieces stay flat cut paper, one colour each, subtle paper grain, no gloss, no coloured shadows. NO animals, NO people, NO robbers, NO silhouettes. Keep the empty area under the window clear for an animal tower. Landscape 16:9 full bleed."
  }
 ]

@@ -19,7 +19,7 @@
      창문 안(식탁)은 새 그림의 잔치 음식이 식탁 앞 오림(POV_TABLE)과 맞지 않아 옛 그림. 담장·지붕은 그대로 */
   const BG = {
     mill: 'v3w/br_bg_mill_v2.webp', road: 'v3w/br_bg_road_v2.webp', wall: 'v3w/br_bg_wall.webp', roof: 'v3w/br_bg_roof.webp', meadow: 'v3w/br_bg_meadow_v2.webp',
-    forest: 'v3w/br_bg_forest_night.webp', house_low: 'v3w/br_lb_window_glow_v2.webp', house_pov: 'v3w/br_bg_house_pov.webp',
+    forest: 'v3w/br_bg_forest_night.webp', house_low: 'v3w/br_lb_window_glow_v3.webp', house_pov: 'v3w/br_bg_house_pov.webp',
     house_wide: 'v3w/br_lb_house_burst.webp', morning: 'v3w/br_bg_morning_v2.webp', walk_lb: 'v3w/br_lb_walk_moon.webp',
     walk: 'v3w/br2_bg_walk.webp', // 2026-10-21 밤 숲길 (옆에서 본 평평한 길: 걷는 동물이 길 위에 선다)
   };
@@ -435,23 +435,24 @@
   }
   /* 그림 벽의 높은 창(2026-10-21 새 그림에서 다시 쟀다): 유리 x 657..818, 위는 화면 밖에서 시작해 아래 y 180, 창턱 아래 y 222, 가운데 x≈737 */
   const LOW_WIN = { x0: 657, x1: 818, y0: -24, y1: 180 };
-  // 기존 도둑 그림의 머리·어깨만 창턱 위에 보인다. 2026-10-27: 새까맣게(brightness 0) 하면 머리가 뭉개져 → 창빛 뒤 사람처럼 어둡게만(.4), 셋 사이를 띄움
-  function windowRobbers(T, parent, xs, y) {
-    ['robber_green', 'robber_red', 'robber_brown'].forEach((key, i) => {
-      const id = 'br-shoulders-' + (++clipN), top = y - (i % 2) * 8;
-      const cp = T.el('clipPath', { id }, parent);
-      T.el('rect', { x: xs[i] - 28, y: top, width: 56, height: 64 }, cp);
-      const g = T.el('g', { 'clip-path': `url(#${id})` }, parent);
-      T.el('image', { href: artUrl(key), x: xs[i] - 28, y: top, width: 56, height: 112, preserveAspectRatio: 'xMidYMin slice', style: 'filter:brightness(.4)' }, g);
+  // 기존 도둑 그림의 머리·가슴만 창 유리 아래 끝(창틀 안쪽) 위로 보인다. 2026-10-27: 새까맣게(brightness 0) 하면 머리가 뭉개져 → 창빛 뒤 사람처럼 어둡게만(.4)
+  // 2026-10-28 사용자 "도둑이 잘려 보임": 56×112 상자에 slice 로 넣어 그림 양옆(팔·자루)이 칼로 자른 듯 잘리고, 도둑마다 따로 64 높이로 잘라 가운데 도둑 아래가 유리 위에 떠 있었다.
+  // → 그림 비율 그대로(§4-1 같은 잣대 SPR 높이 × s), 따로 자르지 않고 창 유리(bgClip)로만 가린다. 셋은 살짝 겹쳐 서고(가운데 빨강이 맨 앞·조금 높이), 아래는 모두 유리 아래 끝 뒤로 들어간다
+  // xs = 각 도둑 그림 가운데, bot = 그림 발끝 y(유리 아래 끝보다 아래 → 머리·가슴만 보임)
+  function windowRobbers(T, parent, xs, bot, s = .56) {
+    [['robber_green', 0, -22], ['robber_brown', 2, 22], ['robber_red', 1, 0]].forEach(([key, i, dx]) => {
+      const [h, , aspect] = SPR[key], H = h * s, W = H * aspect, lift = i === 1 ? 6 : 0;
+      const g = T.el('g', { 'data-dx': dx }, parent);
+      T.el('image', { href: artUrl(key), x: xs[i] - W / 2, y: bot - lift - H, width: W, height: H, preserveAspectRatio: 'xMidYMid meet', style: 'filter:brightness(.4)' }, g);
     });
   }
   function houseLowBG(T, dx = 0, dy = 0) {
     const { paper, el } = T, b = T.bg;
-    if (bgImage(T, 'house_low')) { // 창빛은 그림 속(v2, 2026-10-27: 창이 광원, 반투명 빛이 벽·돌담·땅을 비치며 아래로 흐려짐). 코드 빛 줄기·유리 방사형은 뺐다
+    if (bgImage(T, 'house_low')) { // 창빛·달빛은 그림 속(v3 2026-10-28: v2 그대로 왼쪽 위 종이 달 둘레에 달빛 번짐만 더함, 창 자리 같음. v2, 2026-10-27: 창이 광원, 반투명 빛이 벽·돌담·땅을 비치며 아래로 흐려짐). 코드 빛 줄기·유리 방사형은 뺐다
       const win = bgClip(T, 'house_low', b, [['rect', { x: LOW_WIN.x0, y: LOW_WIN.y0, width: LOW_WIN.x1 - LOW_WIN.x0, height: LOW_WIN.y1 - LOW_WIN.y0 }]]);
       const sh = win.lastChild;
       const silhouettes = el('g', {}, sh);
-      windowRobbers(T, silhouettes, [674, 737, 800], 116);
+      windowRobbers(T, silhouettes, [682, 739, 788], 220);
       return win;
     }
     sky(T, C.indigo);
@@ -466,7 +467,7 @@
     const robberClip = el('clipPath', { id: 'br-low-fallback-' + (++clipN) }, win);
     el('rect', { x: 610, y: 110, width: 180, height: 136 }, robberClip);
     const robbers = el('g', { 'clip-path': `url(#${robberClip.id})` }, win);
-    windowRobbers(T, robbers, [650, 700, 750], 182);
+    windowRobbers(T, robbers, [650, 700, 750], 250);
     paper(b, [['rect', { x: -300, y: 500, width: 1600, height: 300, fill: '#3E5A3A' }]]);
     return win;
   }
@@ -714,7 +715,7 @@
       for (const a of band) { a.cry(.35); a.hop(8, 260); note(T, a.x + 16, a.y - 90 * a.scale, [C.bean, C.gold, C.cream][band.indexOf(a) % 3]); await sleep(330); }
       const sh = win && win.lastChild && win.lastChild.lastChild;
       if (sh) [...sh.children].forEach((g, i) => { // 창 안 도둑 그림자: 폴짝! 양옆으로 살짝 흩어졌다가 제자리
-        const dx = (i - 1) * 22;
+        const dx = +(g.dataset.dx ?? (i - 1) * 22);
         g.animate([{ translate: '0 0' }, { translate: `${dx * .3}px -16px`, offset: .2 }, { translate: `${dx}px 4px`, offset: .5 }, { translate: `${dx}px 4px`, offset: .75 }, { translate: '0 0' }], { duration: 1800, delay: i * 70, easing: 'ease-out' });
       });
       await sleep(900);
