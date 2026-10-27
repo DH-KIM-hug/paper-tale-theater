@@ -134,6 +134,12 @@
 
   async function run(T) {
     const { sleep, say } = T;
+    /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
+    const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
+    const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
+    const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'stream_1', 'door_heavy_1', 'ding_glock', 'clock_tick', 'question', 'tiptoe_pizz', 'zip_away', 'sleepy_tuba', 'zipper', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'whistle_down', 'comic_brass', 'party_horn', 'knock', 'door', 'crunch']); } catch (e) { /* 무시 */ }
+    { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     const portrait = () => T.viewWidth() < 990;
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const scene = (label, fn) => T.sceneCard(label, () => { T.clear(); T.camSnap(500, 280, 1); fn(); });
@@ -158,6 +164,7 @@
         key = k; M = null; W = null; wellF = null; K7 = null; kidsR = []; popped = false; quilt = laundry = clk = doorway = paw = stoneP = null; wolfs = {};
         if (k === 'house' && n === 1) k = 'paw'; if (k === 'house' && n > 1) k = 'hide'; key = k;
         if (k === 'tree' && n > 1) key = 'belly';
+        { const kk = key; const ra = { kitchen: ['birds_chirp_1', .15], hide: ['clock_tick', .15], well: ['stream_1', .15] }[key]; if (ra && !amb(ra[0], { vol: ra[1], dur: 4, fadeIn: 1 })) setTimeout(() => { if (key === kk) amb(ra[0], { vol: ra[1], dur: 3, fadeIn: 1 }); }, 1500); } // 새소리·큰 시계 똑딱·우물 물소리
         if (k === 'well' && n > 1) key = 'together';
         const bgKey = { paw: 'house', hide: 'house', belly: 'tree', together: 'well' }[key] || key;
         bg(T, bgKey);
@@ -368,6 +375,7 @@
     await say('"네, 엄마!" 아기 염소들이 큰 소리로 대답했어요.');
     await hopAll(kids); mm.pose('basket');
     await mm.move(1120, 478, 2600);
+    sfx('door_heavy_1', .5); // 엄마가 나가며 문이 닫힌다
 
     /* --- 2. 문 안쪽: 똑똑똑 --- */
     await scene('똑똑똑!', () => { bg(T, 'inside_door'); lineUp(); });
@@ -392,6 +400,7 @@
     await T.tap(wc.pos, { prompt: '늑대를 톡! 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { await chalk(i); await sleep(500); }
     await cutArt(T, 'wg_cut_chalk', 'laugh');
+    sfx('ding_glock', .5);
     await say('늑대의 목소리가 가늘고 고와졌어요.');
     /* 2026-10-22: 분필을 다 먹었으니 문 앞에서 다정한 척 서서 말한다(분필 자세 그대로 말하지 않게). 고운 목소리는 음표·반짝이로 */
     wc.pose('knock'); await wc.move(575, 515, 700);
@@ -429,6 +438,7 @@
 
     /* --- 5. 숨바꼭질 (2026-10-22: 늑대가 왼쪽 문으로 들어오고, 아기 염소들은 방 곳곳으로 흩어진다. 숨을 곳은 서로 떨어지게) --- */
     await scene('숨바꼭질', () => { bg(T, 'house'); });
+    amb('clock_tick', { vol: .25, dur: 4 }); // 큰 시계 똑딱
     const QX = 300, LX = 525, CX = 720;
     const quilt = prop(T, 'wg_quilt', QX, 548, 150), laundry = prop(T, 'wg_laundry', LX, 550, 110), clock = figure(T, CX, 445, 330, { a: 'wg_clock', open: 'wg_clock_open' }, 'a'); // 시계는 벽 앞
     const doorway = T.el('g', { opacity: 0 }, T.world); // 열린 문: 바깥 하늘·풀밭 조각과 젖혀진 문짝
@@ -454,14 +464,16 @@
     quilt.hop(10, 260); laundry.hop(10, 260);
     if (portrait()) await T.camTo(820, 280, 1, 700); // 세로: 막내(오른쪽)와 시계가 보이게
     kids[6].look('left');
+    sfx('question', .6);
     await T.ask('막내는 어디에 숨을까요?', () => T.tap(kids[6].widen(), { prompt: '막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!' }));
     clock.pose('open');
     await kids[6].move(CX, 430, 700); hide(kids[6]); clock.pose('a'); AudioFX.ding();
     await say('막내는 키 큰 시계 속에 쏙 숨었어요. 아무도 몰랐어요.');
     if (portrait()) T.camTo(420, 280, 1, 900);
+    sfx('tiptoe_pizz', .6); // 늑대가 살금살금 뒤진다
     await wk.move(420, 540, 1600);
     await say('"어디 숨었나? 다 찾아낼 테다!" 늑대가 집 안을 뒤졌어요.');
-    wk.hop(30, 420); quilt.hop(14, 300); laundry.hop(14, 300); AudioFX.sfx('gulp'); // 꿀꺽
+    wk.hop(30, 420); quilt.hop(14, 300); laundry.hop(14, 300); sfx('zip_away', .6); // 꿀꺽 대신 만화 소리 (2026-10-28)
     await say('늑대는 시계 속만 빼고, 아기 염소들을 모두 찾아내서 꿀꺽 삼켜 버렸어요.');
     await say('하지만 아기 염소들은 다치지 않았어요. 아주 따뜻하고 포근한 뱃속이었거든요.');
     await cutArt(T, 'wg_cut_belly', null);
@@ -492,6 +504,7 @@
     let snoring = true;
     (async () => { while (snoring) { floaty(T, 560, 340, 'z', '#3F6B4F', 34); floaty(T, 585, 305, 'Z', '#3F6B4F', 44, 500); await sleep(2400); } })();
     if (portrait()) await T.camTo(600, 280, 1, 600);
+    sfx('sleepy_tuba', .5);
     await say('늑대는 배가 불러서, 나무 아래에서 쿨쿨 자고 있었어요.');
     T.pop(560, 250, '쿨쿨~', '#3F6B4F');
     await Promise.all([mm3.move(400, 532, 1600), k7b.move(500, 540, 1600)]);
@@ -504,7 +517,7 @@
        가위질·가르는 순간은 엄마 몸이 배를 가려 보이지 않게, 피·상처 없음. 아기 염소가 배에서 튀어나오는 모습은 보여 준다) --- */
     await mm3.move(BELLY[0] + 6, 548, 900); // 엄마가 배 앞에 서서 가린다
     k7b.look('right');
-    T.pop(BELLY[0], 230, '슥삭!'); AudioFX.tap(); mm3.hop(10, 240); sleep(320).then(() => { mm3.hop(10, 240); AudioFX.tap(); });
+    T.pop(BELLY[0], 230, '슥삭!'); sfx('zipper', .7); mm3.hop(10, 240); sleep(320).then(() => { mm3.hop(10, 240); }); // 가위질은 지퍼 소리로
     await say('엄마가 가위로 슥삭슥삭, 늑대 배를 열었어요. 늑대는 쿨쿨 자고 있었어요.');
     await Promise.all([mm3.move(250, 535, 800), k7b.move(345, 545, 800)]); // 비켜서서 배를 보여 준다
     const LAND = [[440, 552], [520, 515], [470, 488], [600, 556], [800, 556], [880, 545]];
@@ -512,7 +525,7 @@
     const hit = T.el('rect', { x: BELLY[0] - 95, y: BELLY[1] - 85, width: 190, height: 150, rx: 40, fill: '#000', 'fill-opacity': 0 }, T.world); // 눌러 볼 늑대 배
     await T.ask('늑대 배를 톡톡 눌러 봐요!', () => T.mash(hit, { count: 6, prompt: '늑대 배를 톡톡 눌러 봐요!', onStep: i => {
       const k = kids[i - 1], [x, y] = LAND[i - 1]; appear(k); k.pose('joy'); k.look(x < BELLY[0] ? 'left' : 'right');
-      k.hop(110, 640); k.move(x, y, 640); sting('surprise'); T.pop(BELLY[0] + (i % 2 ? -50 : 50), 270, '뿅!');
+      k.hop(110, 640); k.move(x, y, 640); sfx('marimba_' + i, .6); T.pop(BELLY[0] + (i % 2 ? -50 : 50), 270, '뿅!'); // 한 마리에 한 음
       wb.wiggle(3, 300);
     } }));
     hit.remove();
@@ -539,11 +552,13 @@
     await wh.move(700, 520, 2600);
     await say('"우물에서 물을 마셔야지."');
     await sleep(500);
+    sfx('whistle_down', .6); // 우물로 쑤욱
     const wellFr = await wellSplash(T, wh);
     await cutArt(T, 'wg_cut_splash', 'splash');
     await say('풍덩! 늑대가 우물에 빠졌어요.');
     wh.pos.remove(); wellFr.remove();
     const wf2 = wolf(T, 790, 520, ['flee'], 'flee');
+    sfx('comic_brass', .6);
     await say('"으악, 차가워! 다시는 안 올 거야!"');
     await wf2.move(1250, 520, 1500);
     await say('늑대는 흠뻑 젖은 채 멀리멀리 도망갔어요.');
@@ -555,13 +570,14 @@
     kids = [1, 2, 3, 4, 5, 6, 7].map((n, i) => { const k = kid(T, n, KX(i), 525, 90); k.pose('joy'); return k; });
     T.finale();
     await say('엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.');
-    await hopAll(kids, 34); md.hop(30, 400); T.confetti(); AudioFX.sting('win');
+    await hopAll(kids, 34); md.hop(30, 400); T.confetti(); sfx('party_horn', .6) || AudioFX.sting('win');
     // 가운데 아기 염소를 톡톡: 누를 때마다 엄마와 아기 염소들이 차례로 폴짝 (자유 놀이 없음)
     const dance = () => { AudioFX.tap(); md.hop(30, 340); kids.forEach((k, j) => setTimeout(() => k.hop(30, 340), j * 70)); };
     await T.ask('아기 염소를 톡! 눌러 같이 춤춰 봐요!', () => T.tap(kids[3].widen(), { prompt: '아기 염소를 톡! 눌러 같이 춤춰 봐요!' })); // 한 번 누르면 나머지는 저절로
     for (let i = 1; i <= 3; i++) { dance(); await sleep(700); }
     await sleep(700);
     await say('엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.');
+    stopAmb(.8);
     return '엄마 목소리를 잘 기억해요!';
   }
 
