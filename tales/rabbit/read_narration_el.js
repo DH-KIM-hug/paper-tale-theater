@@ -6,6 +6,7 @@ Object.assign(NARRATION_CLIPS, {
  "\"안녕! 나는 거북이야.\"": "audio/el/rabbit/turtle_c08eaa6bda.mp3",
  "깡충깡충 토끼도 왔어요.": "audio/el/rabbit/nar_34036f0fcc.mp3",
  "\"안녕! 나는 깡충 토끼야!\"": "audio/el/rabbit/rabbit_a004e555a2.mp3",
+ "숲속 길에서 토끼와 거북이가 마주 섰어요.": "audio/el/rabbit/nar_1483881418.mp3",
  "토끼는 거북이의 짧은 다리를 보고 킥킥 웃었어요.": "audio/el/rabbit/nar_24a7e4b5f9.mp3",
  "토끼가 말했어요. \"느림보야, 나랑 달리기 할래?\"": [
   "audio/el/rabbit/nar_1577161b63.mp3",
@@ -18,13 +19,16 @@ Object.assign(NARRATION_CLIPS, {
  "\"느려도 괜찮아. 나는 끝까지 갈 거야.\"": "audio/el/rabbit/turtle_f65aae8891.mp3",
  "거북이는 느릿느릿 걸어도 한 번 마음먹으면 끝까지 하는 친구였거든요.": "audio/el/rabbit/nar_b3a4c93746.mp3",
  "\"숲속 친구들한테 응원해 달라고 하자!\"": "audio/el/rabbit/rabbit_1b0de6498d.mp3",
+ "경주 소식을 전하려고 부엉이가 마을 집집마다 날아갔어요.": "audio/el/rabbit/nar_27c3c6d650.mp3",
  "부엉이 우체부가 초대장을 가져왔어요.": "audio/el/rabbit/nar_9d0c5a80d2.mp3",
  "똑똑! 문을 두드리자 오리, 소, 돼지, 강아지가 얼굴을 쏙 내밀었어요.": "audio/el/rabbit/nar_db8b3cf9c5.mp3",
  "닭이랑 양이랑 고양이도 초대장을 받았어요!": "audio/el/rabbit/nar_572e676bbc.mp3",
+ "초대장을 받은 친구들은 경주 길 옆 응원석으로 갔어요.": "audio/el/rabbit/nar_4e16dc2bc8.mp3",
  "동물 친구들이 응원하러 모였어요!": "audio/el/rabbit/nar_7ad7d230fb.mp3",
  "친구들이 벌떡 일어나 응원해요!": "audio/el/rabbit/nar_1a9db8d31a.mp3",
  "와, 신나는 응원 소리!": "audio/el/rabbit/nar_9ccfd07c97.mp3",
  "모두 응원석에 옹기종기 앉아 두근두근 경주를 기다렸지요.": "audio/el/rabbit/nar_e5f06b3508.mp3",
+ "토끼와 거북이는 친구들 앞 출발선에 나란히 섰어요.": "audio/el/rabbit/nar_75dbfd1ff5.mp3",
  "달리기 전에 준비 운동을 해요.": "audio/el/rabbit/nar_619369730c.mp3",
  "토끼가 귀를 쭉~": "audio/el/rabbit/nar_4d8eb453cd.mp3",
  "거북이는 목을 쭉~": "audio/el/rabbit/nar_d2bad1a9b2.mp3",
@@ -45,16 +49,11 @@ Object.assign(NARRATION_CLIPS, {
  "부엉 부엉~ 토끼 눈이 스르르 감겨요.": "audio/el/rabbit/nar_a3defbcb14.mp3",
  "구름도 뭉게뭉게 다가와 해님을 살며시 가려 주었어요.": "audio/el/rabbit/nar_4b7a403018.mp3",
  "토끼가 쿨쿨 잠이 들었어요.": "audio/el/rabbit/nar_0423173d3e.mp3",
- "응원하던 친구들도 \"쉿!\" 조용히~": [
-  "audio/el/rabbit/nar_e3d77c29ef.mp3",
-  "audio/el/rabbit/sheep_6ef70681a8.mp3",
-  "audio/el/rabbit/nar_35c7cf8dd1.mp3"
- ],
  "토끼가 꿈을 꿔요. 꿈속에서 1등을 했어요!": "audio/el/rabbit/nar_a0519faa0f.mp3",
  "상으로 커다란 당근을 받았어요.": "audio/el/rabbit/nar_dc651b2d70.mp3",
  "\"아삭! 음~ 맛있다!\"": "audio/el/rabbit/rabbit_1b65a2a21f.mp3",
- "꿈속 친구들이 모두 토끼에게 짝짝짝 박수를 쳤어요.": "audio/el/rabbit/nar_c10e3777e4.mp3",
  "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~": "audio/el/rabbit/nar_310e068c07.mp3",
+ "토끼가 자는 동안, 거북이는 숲속 경주 길을 따라갔어요.": "audio/el/rabbit/nar_e71f4cb56a.mp3",
  "그동안 거북이는? 엉금엉금 걷고 있어요.": "audio/el/rabbit/nar_c1e6c1022b.mp3",
  "엉금엉금, 한 발 또 한 발. 거북이는 한 번도 쉬지 않았어요.": "audio/el/rabbit/nar_c6239923f9.mp3",
  "어? 커다란 돌멩이예요!": "audio/el/rabbit/nar_eb76e5b8f2.mp3",
@@ -71,6 +70,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/rabbit/turtle_b51dbfea93.mp3",
   "audio/el/rabbit/nar_1c2583cbc1.mp3"
  ],
+ "언덕을 오른 거북이가 토끼가 자는 나무 곁에 왔어요.": "audio/el/rabbit/nar_168f299584.mp3",
  "위에는 쿨쿨 자는 토끼, 아래에는 거북이!": "audio/el/rabbit/nar_380f0ae76e.mp3",
  "쉿, 조용히 지나가요~ 살금살금.": "audio/el/rabbit/nar_a4afb86068.mp3",
  "와, 거북이가 토끼를 앞질렀어요!": "audio/el/rabbit/nar_a3fc8b6669.mp3",
@@ -80,12 +80,15 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/rabbit/nar_35dcdb7f27.mp3",
   "audio/el/rabbit/rabbit_a996f4278e.mp3"
  ],
+ "거북이가 결승선 가까이 오자 친구들이 몸을 쭉 내밀었어요.": "audio/el/rabbit/nar_626182556f.mp3",
  "응원하던 친구들이 모두 일어났어요!": "audio/el/rabbit/nar_128373154c.mp3",
  "토끼가 쌩쌩 달려와요! 거북이는 딱 한 발 남았어요.": "audio/el/rabbit/nar_738ed62eb3.mp3",
  "\"영차, 조금만 더. 조금만 더 가면 돼.\"": "audio/el/rabbit/turtle_080f758bf2.mp3",
  "거북이는 후우 숨을 크게 쉬고 마지막 한 발을 쿵 내디뎠어요.": "audio/el/rabbit/nar_db95a2d837.mp3",
+ "찰칵! 둘이 결승선에 닿는 순간이 사진에 담겼어요.": "audio/el/rabbit/nar_682a4a2583.mp3",
  "사진을 보니… 거북이 코끝이 먼저 닿았어요!": "audio/el/rabbit/nar_059f9a76a2.mp3",
  "거북이가 1등이에요!": "audio/el/rabbit/nar_b93e6d3416.mp3",
+ "경주가 끝나고, 거북이는 시상대 위로 올라갔어요.": "audio/el/rabbit/nar_1a6ef48287.mp3",
  "시상식이에요! 응원하던 친구들이 파도타기를 해요.": "audio/el/rabbit/nar_6416dd4f19.mp3",
  "반짝반짝, 금메달이에요!": "audio/el/rabbit/nar_6e65e7205c.mp3",
  "거북이는 반짝반짝 메달을 목에 걸고 활짝 웃었어요.": "audio/el/rabbit/nar_211fd03ce0.mp3",
@@ -98,6 +101,12 @@ Object.assign(NARRATION_CLIPS, {
  "밤이 되었어요. 숲속 잔치가 열렸어요!": "audio/el/rabbit/nar_a50713cf23.mp3",
  "친구들은 둥둥 북을 치고 딸랑딸랑 방울을 흔들었어요.": "audio/el/rabbit/nar_c5ff4c60d2.mp3",
  "모두 함께 신나는 잔치를 했답니다.": "audio/el/rabbit/nar_6604c26c01.mp3",
- "천천히 가도 끝까지 하면 해낼 수 있어요!": "audio/el/rabbit/nar_cfab06b73b.mp3"
+ "천천히 가도 끝까지 하면 해낼 수 있어요!": "audio/el/rabbit/nar_cfab06b73b.mp3",
+ "응원하던 친구들도 \"쉿!\" 조용히~": [
+  "audio/el/rabbit/nar_e3d77c29ef.mp3",
+  "audio/el/rabbit/sheep_6ef70681a8.mp3",
+  "audio/el/rabbit/nar_35c7cf8dd1.mp3"
+ ],
+ "꿈속 친구들이 모두 토끼에게 짝짝짝 박수를 쳤어요.": "audio/el/rabbit/nar_c10e3777e4.mp3"
 });
 Object.assign(VOICE_LINES, {});
