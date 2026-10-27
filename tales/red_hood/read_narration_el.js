@@ -1,5 +1,6 @@
 /* red_hood — ElevenLabs 배역 내레이션 (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS, {
+ "어느 날, 집에서 엄마가 빨간 모자에게 바구니를 건넸어요.": "audio/el/red_hood/nar_64b8cff3dd.mp3",
  "엄마가 빨간 모자에게 말했어요. \"할머니가 아프시단다. 맛있는 걸 가져다 드리렴.\"": [
   "audio/el/red_hood/nar_f2afb4b5e4.mp3",
   "audio/el/red_hood/mama_f69b0c1f66.mp3"
@@ -7,6 +8,7 @@ Object.assign(NARRATION_CLIPS, {
  "빨간 모자는 빵과 우유와 사과를 바구니에 차곡차곡 담았어요.": "audio/el/red_hood/nar_c6b4f89420.mp3",
  "엄마가 빨간 모자를 머리에 씌워 주었어요. 빨간 모자가 한 번 빙글 돌았어요.": "audio/el/red_hood/nar_70712c0389.mp3",
  "할머니 댁은 숲 건너 저쪽, 꼬불꼬불 숲길 끝에 있었지요.": "audio/el/red_hood/nar_0b7e4813ff.mp3",
+ "집을 나서기 전, 엄마가 빨간 모자를 불렀어요.": "audio/el/red_hood/nar_77581211f2.mp3",
  "\"길에서 벗어나면 안 돼. 모르는 사람과 이야기하지도 마.\"": "audio/el/red_hood/mama_333b128053.mp3",
  "\"네, 엄마! 약속해요.\"": "audio/el/red_hood/hood_4e43b81bf3.mp3",
  "엄마와 빨간 모자는 새끼손가락을 걸었어요.": "audio/el/red_hood/nar_b0b08201be.mp3",
@@ -28,22 +30,28 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/red_hood/hood_dc508372d6.mp3",
   "audio/el/red_hood/nar_81ea540a16.mp3"
  ],
+ "빨간 모자는 숲길을 벗어나 꽃밭으로 들어갔어요.": "audio/el/red_hood/nar_62da9518a9.mp3",
  "꽃밭에는 빨간 꽃, 노란 꽃, 파란 꽃이 알록달록 가득했어요.": "audio/el/red_hood/nar_733b5f2f35.mp3",
  "빨간 모자는 꽃을 한 송이씩 하나하나 꺾어 모았어요.": "audio/el/red_hood/nar_ce18751d3c.mp3",
  "나비가 팔랑팔랑, 벌이 윙윙 따라다녔지요.": "audio/el/red_hood/nar_fb3e3541aa.mp3",
  "꽃병마다 꽃다발이 활짝! 빨간 모자는 꽃을 따느라 시간 가는 줄 몰랐어요.": "audio/el/red_hood/nar_d1dee6e8ca.mp3",
+ "늑대는 빨간 모자보다 먼저 할머니 집에 가려 했어요.": "audio/el/red_hood/nar_64cdb57cf4.mp3",
  "위에서는 빨간 모자가 꽃을 따요. 아래에서는 늑대가 지름길로 달려가요!": "audio/el/red_hood/nar_d4d176d343.mp3",
+ "늑대는 할머니 집 문 앞에 도착했어요.": "audio/el/red_hood/nar_040e7f2dbe.mp3",
  "똑똑똑… 문이 닫히고… 꿀꺽!": "audio/el/red_hood/nar_90c2b92e6f.mp3",
+ "집 안으로 들어간 늑대가 할머니를 삼켜 버렸어요.": "audio/el/red_hood/nar_60fe0d230f.mp3",
  "늑대는 할머니의 잠옷을 입고 침대에 누웠어요.": "audio/el/red_hood/nar_f85105b243.mp3",
  "\"흐흐, 이제 빨간 모자만 기다리면 되겠군.\" 늑대는 이불을 코까지 끌어올렸어요.": [
   "audio/el/red_hood/wolf_621a7e459a.mp3",
   "audio/el/red_hood/nar_e5d7ed0235.mp3"
  ],
+ "꽃을 다 딴 빨간 모자는 다시 숲길을 걸어갔어요.": "audio/el/red_hood/nar_7e4f2501a3.mp3",
  "빨간 모자는 숲속 할머니 집에 도착해 문을 똑똑똑 두드렸어요.": "audio/el/red_hood/nar_ccbabb2ade.mp3",
  "\"들어오렴~\" 안에서 쉰 목소리가 들렸어요.": [
   "audio/el/red_hood/wolf_4ea75714e1.mp3",
   "audio/el/red_hood/nar_2e15813edb.mp3"
  ],
+ "빨간 모자는 문을 열고 침대 곁으로 다가갔어요.": "audio/el/red_hood/nar_7de1707e60.mp3",
  "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.": [
   "audio/el/red_hood/hood_19c8f8af0f.mp3",
   "audio/el/red_hood/nar_03bbde0b16.mp3"
@@ -81,6 +89,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/red_hood/granny_02f57e4b83.mp3",
   "audio/el/red_hood/nar_0f9736cd03.mp3"
  ],
+ "이제 안심한 세 사람은 침대 곁에서 식탁으로 자리를 옮겼어요.": "audio/el/red_hood/nar_6cec9e69d5.mp3",
  "할머니 집 식탁에서 모두 함께 차를 마셔요.": "audio/el/red_hood/nar_163c92152d.mp3",
  "빵은 할머니, 우유는 빨간 모자, 사과는 아저씨! 모두 냠냠 맛있게 먹었어요.": "audio/el/red_hood/nar_8573ad03d7.mp3",
  "\"모두 고마워요!\" 할머니는 활짝 웃었어요.": [
