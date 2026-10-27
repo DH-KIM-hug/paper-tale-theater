@@ -140,15 +140,21 @@
   const hoeRows = n => n <= 3 ? [n] : n === 4 ? [2, 2] : n === 5 ? [3, 2] : [3, 3];   // 아래 줄부터 채워 항아리 위로 솟아오른다
 
   async function run(T) {
-    try { AudioFX.sfx('magic_wand', 0); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
+    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, say, camSnap } = T;
     const tr = T.tr;
     const pan = (cx = 500) => camSnap(T.viewWidth() < 990 ? cx : 500, 280, 1);
-    const scene = (key, cx) => { T.clear(); bgImage(T, key); dress(T, key); pan(cx); };
+    /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)와 요술 반짝만 */
+    const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const later = (ms, name, v) => setTimeout(() => cue(name, v), ms);
+    const note = (i, v = .8) => cue('marimba_' + Math.min(8, Math.max(1, i)), v);   // 세기: 한 번에 한 음, 올라간다
+    const SCENE_AMB = { field: 'birds_chirp_2', village: 'birds_chirp_1' };
+    const scene = (key, cx) => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); dress(T, key); pan(cx); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
-    await Promise.race([Promise.all(loads), sleep(4000)]);
+    await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
 
     const farmer = mk(T, { hoe: ['farmer_hoe', 250, 'left'], pull: ['farmer_pull', 250, 'left'], amaze: ['farmer_amaze', 250, 'left'],
       count: ['farmer_count', 250, 'left'], share: ['farmer_share', 200, 'left'], feast: ['farmer_feast', 250, 'left'] }); /* 2026-10-20 크기 일관성: 나눠 주기(share) 자세는 모자 폭이 다른 농부보다 22% 커서 250 → 200 */
@@ -161,7 +167,7 @@
     const father = mk(T, { peek: ['father_peek', 210, 'left'], fall: ['father_fall', 150, 'left'] });
 
     const plow = i => {
-      farmer.hop(16, 300); AudioFX.sfx('pop'); T.pop(farmer.x + 90, farmer.y - 300, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
+      farmer.hop(16, 300); cue('dig_soil', .5) || AudioFX.sfx('pop'); T.pop(farmer.x + 90, farmer.y - 300, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
     };
     const pull = i => {
       farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
@@ -181,7 +187,7 @@
       if (op === 'hide') return hide(a);
       return extra[op] ? extra[op](...r) : console.warn('[read] 요술 항아리: 모르는 동작', op);
     };
-    const cutVerb = k => T.cutImage([{ src: cutSrc(k), sfx: k === 'smash' ? 'pow' : 'pop', hold: 3000 }], { hold: 3000 });
+    const cutVerb = k => T.cutImage([{ src: cutSrc(k), sfx: k === 'smash' ? 'pow' : k === 'twohoes' || k === 'coins' ? 'shimmer' : 'pop', hold: 3000 }], { hold: 3000 });
     const READ_ACTS = {
       set: k => scene(k),
       cam: s => { const [x, y, z] = nums(s); camSnap(x, y, z); },
@@ -280,7 +286,7 @@
     await say('옛날 옛날에 마음씨 착한 농부가 살았어요.');
     await T.ask('농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!', () => T.tap(farmer.pos, { prompt: '농부를 톡! 괭이질을 해요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { await plow(i); await sleep(450); }
-    await T.cutImage([{ src: cutSrc('clink'), sfx: 'pop', hold: 2800 }], { hold: 2800 });
+    await T.cutImage([{ src: cutSrc('clink'), sfx: () => cue('ding_glock', .8) || AudioFX.sfx('pop'), hold: 2800 }], { hold: 2800 });
     await say('쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.');
 
     /* --- 2. 항아리 캐내기 --- */
@@ -292,7 +298,7 @@
     await say('땅속에서 둥근 뚜껑이 보여요.');
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await pull(i); await sleep(450); }
-    jar.pos.style.opacity = 1; jar.hop(40, 500);
+    jar.pos.style.opacity = 1; jar.hop(40, 500); cue('pull_pop', .8);
     farmer.look('amaze');
     await say('쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.');
 
@@ -307,7 +313,7 @@
     await say('농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.');
     await sleep(500);
     await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260); lyWig('chili', 3, 400);
-    await T.cutImage([{ src: cutSrc('twohoes'), sfx: () => AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('twohoes'), sfx: () => AudioFX.sfx('shimmer') || AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 3000 }], { hold: 3000 });
     await say('"어머나! 괭이가 두 개가 되었어요!" 아내가 깜짝 놀랐어요.');
     const hoes = [], nHoe = rnd(3, 6);
     let nCoin; do nCoin = rnd(4, 8); while (nCoin === nHoe);
@@ -315,22 +321,23 @@
     await T.ask(`항아리를 ${KN[nHoe]} 번 톡톡 눌러서 괭이를 ${KN[nHoe]} 개 세어 봐요!`, () => T.mash(jar.pos, { count: nHoe, prompt: `항아리를 ${KN[nHoe]} 번 톡톡! 괭이를 세어 봐요.`, onStep: i => {
       const h2 = prop(T, 'hoe', 110); h2.pos.style.pointerEvents = 'none'; put(T, h2, hoeSpots[i - 1][0], hoeSpots[i - 1][1], { raw: true });
       h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); hoes.push(h2);
-      jar.hop(12, 240); popSfx(T); vo('n' + i); jarGlint();
+      jar.hop(12, 240); note(i) || popSfx(T); vo('n' + i); jarGlint(); if (i === nHoe) later(500, 'tada', .7);
     } }));
     await say(`괭이가 ${words(nHoe)}! 농부와 아내는 손뼉을 쳤어요.`);
     await wife.hop(30, 400);
 
     /* --- 4. 엽전 --- */
-    await T.cutImage([{ src: cutSrc('coins'), sfx: () => AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('coins'), sfx: () => AudioFX.sfx('shimmer') || AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 3000 }], { hold: 3000 });
     scene('jarfront');
     hoes.forEach(h => hide(h));
     put(T, jar, 520, 500); put(T, farmer, 270, 500, { look: 'count', to: 'right' }); put(T, wife, 780, 500, { look: 'clap', to: 'left' });
+    cue('coins_1', .6);
     await say('이번에는 엽전 하나를 넣어 봤어요. 와르르! 엽전이 쏟아져 나왔어요.');
     const csp = tight(T) ? (nCoin <= 5 ? 60 : 50) : (nCoin <= 5 ? 90 : 72);   // 엽전 사이 간격: 8개까지 가로·세로 화면 안에 들어오게
     await T.ask(`항아리를 ${KN[nCoin]} 번 톡톡 눌러서 엽전을 ${KN[nCoin]} 개 세어 봐요!`, () => T.mash(jar.pos, { count: nCoin, prompt: `항아리를 ${KN[nCoin]} 번 톡톡! 엽전을 세어 봐요.`, onStep: i => {
       const c = prop(T, 'coin', 52); c.pos.style.pointerEvents = 'none'; put(T, c, fx(T, 520) + (i - (nCoin + 1) / 2) * csp, 548, { raw: true });
       c.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 280);
-      jar.hop(10, 220); clinkSfx(T); vo('n' + i); jarGlint();
+      jar.hop(10, 220); note(i) || clinkSfx(T); vo('n' + i); jarGlint(); if (i === nCoin) later(500, 'tada', .7);
     } }));
     await say(`엽전이 ${words(nCoin)}! 이제 쌀도 사고 옷도 살 수 있어요.`);
 
@@ -362,7 +369,7 @@
       const sack = prop(T, 'rice', 62); put(T, sack, farmer.x, 440, { raw: true });
       popSfx(T);
       await sack.move(got.key.x, 450, 520, 'ease-in');
-      sack.hop(16, 260); vo('n' + (n + 1)); sparrowHop(got.key.x);
+      note(n + 1, .7); sack.hop(16, 260); vo('n' + (n + 1)); sparrowHop(got.key.x);
       farmer.hop(12, 240);
     }
     if (tight(T)) await T.camTo(500, 280, 1, 600);
@@ -383,11 +390,11 @@
     await jar.move(fx(T, 700), 520, 600); hide(jar);
     rich.look('grab', 'right');
     await say('"고맙네! 얼른 가져가야지, 헤헤." 부자는 항아리를 꼭 안고 달려갔어요.');
-    await rich.move(fx(T, 1200), 520, 1300, 'ease-in');
+    cue('zip_away', .6); await rich.move(fx(T, 1200), 520, 1300, 'ease-in');
 
     /* --- 7. 금덩이 --- */
     await T.sceneCard(tr('큰 방'), () => {
-      scene('hall');
+      scene('hall'); cue('door_heavy_2', .6);
       put(T, rich, 330, 505, { look: 'shout', to: 'right' });
       put(T, jar, 650, 505); jar.pos.style.display = '';
     }, jar.pos);
@@ -398,17 +405,17 @@
       const d = prop(T, 'gold', 46); put(T, d, jar.x, 250); d.move(jar.x, 400, 300, 'ease-in').then(() => hide(d));
       const g = prop(T, 'gold', 70 + i * 24); put(T, g, 560 + i * 90, 505 - i * 6); g.pos.style.opacity = 0; golds.push(g);
       setTimeout(() => { g.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250).onfinish = () => { g.pos.style.opacity = 1; }; g.pos.style.opacity = 1; }, 300);
-      jar.hop(12, 240); clinkSfx(T); vo('n' + i); setTimeout(() => goldGlint(i), 300);
+      jar.hop(12, 240); note(i) || clinkSfx(T); if (i === 1) later(250, 'coins_2', .5); vo('n' + i); setTimeout(() => goldGlint(i), 300);
     };
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await goldIn(i); await sleep(500); }
-    await T.cutImage([{ src: cutSrc('buried'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('buried'), sfx: () => cue('coins_1', .7) || AudioFX.sfx('pop'), hold: 3000 }], { hold: 3000 });
     scene('hall');
     put(T, jar, 650, 505); golds.forEach(g => { g.pos.style.display = ''; T.world.appendChild(g.pos); });
     put(T, rich, 330, 505, { look: 'pinned', to: 'left' });
     await say('금덩이가 와르르! 부자는 금 더미에 폭 파묻혔어요. "사람 살려~"');
     await T.ask('부자를 톡! 눌러서 꺼내 줘요.', () => T.tap(rich.pos, { prompt: '부자를 톡! 금 더미에서 꺼내 줘요.' }));
-    golds.forEach(g => hide(g)); popSfx(T);
+    golds.forEach(g => hide(g)); cue('pull_pop', .8) || popSfx(T);
     rich.look('shout', 'right'); rich.hop(30, 400);
     await say('쏙! 부자가 빠져나왔어요. 다치지는 않았어요.');
 
@@ -421,20 +428,20 @@
     await say('그때 부자의 아버지가 다가와 항아리 속을 들여다보았어요. "이게 뭐냐?"');
     await sleep(500);
     await father.move(fx(T, 660), 505, 700);
-    await T.cutImage([{ src: cutSrc('plop'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('plop'), sfx: () => { if (cue('whistle_down', .7)) later(650, 'splash', .4); else AudioFX.sfx('pop'); }, hold: 3000 }], { hold: 3000 });
     scene('hallwide');
     put(T, jar, 700, 505); put(T, rich, 240, 505, { look: 'shout', to: 'right' });
     await say('풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.');
     await T.ask('"아버지가 어디 계시지?" 항아리를 여덟 번 톡톡 눌러서 아버지를 세어 봐요!', () => T.mash(jar.pos, { count: 8, prompt: '항아리를 여덟 번 톡톡! 아버지를 세어 봐요.', onStep: i => {
       const o = olds[i - 1]; o.pos.style.pointerEvents = 'none';   // 항아리 위·옆에 쌓이는 아버지 그림이 눌림을 가로채지 않게
       put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .62 : 1, raw: tight(T) });
-      o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); popSfx(T); vo('n' + i);
+      o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); note(i) || popSfx(T); vo('n' + i);
     } }));
-    await T.cutImage([{ src: cutSrc('eight'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
+    await T.cutImage([{ src: cutSrc('eight'), sfx: () => cue('tada', .7) || AudioFX.sfx('pop'), hold: 3200 }], { hold: 3200 });
     await say('아버지가 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 여덟 명이나 되었어요.');
     await say('"내가 진짜 아버지다!" "아니야, 내가 진짜야!" 모두 서로 자기가 진짜라고 우겼어요.');
     olds.forEach((o, i) => o.hop(14 + (i % 3) * 4, 300));
-    await T.cutImage([{ src: cutSrc('hungry'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
+    await T.cutImage([{ src: cutSrc('hungry'), sfx: () => cue('comic_brass', .7) || AudioFX.sfx('pop'), hold: 3200 }], { hold: 3200 });
     rich.look('hurry', 'right');
     const dash = (async () => { for (const x of [150, 330, 180, 300]) { rich.turn(x > rich.x ? 'right' : 'left'); await rich.move(fx(T, x), 505, 600); } })();
     await say('"배고프다! 밥 줘라!" 부자는 쟁반을 들고 이리저리 뛰어다녔어요.');
@@ -443,7 +450,7 @@
     /* --- 9. 항아리가 깨졌어요 --- */
     await say('부자는 지쳐서 외쳤어요. "이게 다 항아리 때문이야! 이제 그만!"');
     await sleep(500);
-    await T.cutImage([{ src: cutSrc('smash'), sfx: 'pow', hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('smash'), sfx: () => AudioFX.sfx('pottery_break') || AudioFX.sfx('pow'), hold: 3000 }], { hold: 3000 });
     scene('hallwide');
     olds.forEach(o => hide(o)); hide(jar);
     put(T, cracked, 700, 505); put(T, rich, 300, 505, { look: 'shout', to: 'right' }); put(T, father, 500, 505, { look: 'peek', to: 'right' });
@@ -463,13 +470,14 @@
     const tables = [[170, 'table'], [820, 'table']].map(([x]) => { const t = prop(T, 'table', 80); put(T, t, x, 540); return t; });
     for (const [i, t] of tables.entries()) {
       await sleep(600);
-      popSfx(T); t.hop(20, 300); T.pop(t.x, t.y - 120, tr(['냠냠!', '맛있다!'][i]));
+      cue('pop_appear', .7) || popSfx(T); t.hop(20, 300); T.pop(t.x, t.y - 120, tr(['냠냠!', '맛있다!'][i]));
     }
     await say('"모두 고맙네!" 모두 둘러앉아 맛있게 먹었어요.');
     await sleep(600);   /* 마지막 톡 없음: 만세는 저절로 */
-    T.confetti();
+    T.confetti(); cue('party_horn', .9);
     await Promise.all([farmer.hop(40, 500), wife.hop(30, 500), rich.hop(30, 500), father.hop(24, 500)]);
     await say('나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.');
+    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale();
     return '나누면 기쁨이 커져요!';
   }
