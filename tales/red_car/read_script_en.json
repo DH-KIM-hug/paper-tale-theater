@@ -817,7 +817,7 @@
    ],
    "lines": [
     {
-     "text": "병원을 떠난 네 친구는 긴 길로 나왔어요.",
+     "text": "병원을 떠난 친구 넷은 긴 길로 나왔어요.",
      "src": "new",
      "needs_audio": true,
      "en": "The four friends left the hospital and came out onto a long, long road.",
@@ -878,7 +878,7 @@
      ]
     },
     {
-     "text": "네 친구는 씽씽, 바람을 가르며 신나게 달렸어요.",
+     "text": "친구 넷은 씽씽, 바람을 가르며 신나게 달렸어요.",
      "src": "new",
      "en": "The four friends zoomed along, zip, zip, slicing through the wind, happy as could be.",
      "segs": [
@@ -906,7 +906,7 @@
    ],
    "lines": [
     {
-     "text": "네 친구가 언덕길에 다다랐어요.",
+     "text": "친구 넷이 언덕길에 다다랐어요.",
      "src": "new",
      "needs_audio": true,
      "en": "The four friends reached a hilly road. Up, up, up!",

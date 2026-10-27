@@ -816,13 +816,13 @@
    ],
    "lines": [
     {
-     "text": "병원을 떠난 네 친구는 긴 길로 나왔어요.",
+     "text": "병원을 떠난 친구 넷은 긴 길로 나왔어요.",
      "src": "new",
      "needs_audio": true,
      "segs": [
       [
        "nar",
-       "병원을 떠난 네 친구는 긴 길로 나왔어요.",
+       "병원을 떠난 친구 넷은 긴 길로 나왔어요.",
        null,
        "[calm, warm, gentle storytelling]"
       ]
@@ -877,12 +877,12 @@
      ]
     },
     {
-     "text": "네 친구는 씽씽, 바람을 가르며 신나게 달렸어요.",
+     "text": "친구 넷은 씽씽, 바람을 가르며 신나게 달렸어요.",
      "src": "new",
      "segs": [
       [
        "nar",
-       "네 친구는 씽씽, 바람을 가르며 신나게 달렸어요.",
+       "친구 넷은 씽씽, 바람을 가르며 신나게 달렸어요.",
        null,
        "[calm, warm storytelling, slow, unhurried]"
       ]
@@ -906,13 +906,13 @@
    ],
    "lines": [
     {
-     "text": "네 친구가 언덕길에 다다랐어요.",
+     "text": "친구 넷이 언덕길에 다다랐어요.",
      "src": "new",
      "needs_audio": true,
      "segs": [
       [
        "nar",
-       "네 친구가 언덕길에 다다랐어요.",
+       "친구 넷이 언덕길에 다다랐어요.",
        null,
        "[calm, warm, gentle storytelling]"
       ]

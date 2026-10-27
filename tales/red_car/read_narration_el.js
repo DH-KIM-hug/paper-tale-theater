@@ -71,6 +71,8 @@ Object.assign(NARRATION_CLIPS, {
  "자동차 친구들도 빵빵! 부릉부릉! 신이 나서 소리쳤어요.": "audio/el/red_car/nar_ed8aa87c95.mp3",
  "이제 모두 함께 집으로 출발!": "audio/el/red_car/nar_3ff6830287.mp3",
  "서로 도우면 혼자서는 못 가는 길도 함께 갈 수 있답니다.": "audio/el/red_car/nar_5bc5e90721.mp3",
- "네 친구는 씽씽, 바람을 가르며 신나게 달렸어요.": "audio/el/red_car/nar_2ee4364cc5.mp3"
+ "병원을 떠난 친구 넷은 긴 길로 나왔어요.": "audio/el/red_car/nar_1034183bd4.mp3",
+ "친구 넷은 씽씽, 바람을 가르며 신나게 달렸어요.": "audio/el/red_car/nar_5ceeaa60de.mp3",
+ "친구 넷이 언덕길에 다다랐어요.": "audio/el/red_car/nar_fd6adcb95a.mp3"
 });
 Object.assign(VOICE_LINES, {});
