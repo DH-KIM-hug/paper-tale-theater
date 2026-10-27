@@ -489,7 +489,7 @@
             newMouse(x, 505, 1.2, 'right');
             if (inst()) return;
             squeak(T);
-            camTo(140, 470, 2.4, 1000);
+            camTo(T.portrait() ? 140 : 390, T.portrait() ? 470 : 340, T.portrait() ? 2.4 : 1.3, 1000);
             const perk = rMouse.parts.art ? 'scale(1,1.14)' : 'scale(1.45)';
             return T.anim(rMouse.parts.ears, [{ transform: 'scale(1)' }, { transform: perk }, { transform: 'scale(1)' }, { transform: perk }, { transform: 'scale(1)' }], 900);
           }
@@ -803,7 +803,7 @@
     await say('생쥐가 두 손을 모았어요. "제발요, 사자님~"');
 
     /* --- 4. 하하하 (사자 클로즈업 → 컷) --- */
-    await camTo(720, 300, 1.6, 900);
+    await camTo(T.portrait() ? 720 : 610, T.portrait() ? 300 : 320, T.portrait() ? 1.6 : 1.3, 900);
     await say('"네가? 나를 도와준다고?"');
     cutVo('cut_laugh');
     await (cutArt('cut_laugh', { hold: 2200 }) || T.cut(svg => {
@@ -814,7 +814,7 @@
     head.set('laugh');
     roar(T, .15);
     const laugh = lion.parts.hg.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 300, iterations: Infinity });
-    await camTo(800, 380, 1.4, 900);
+    await camTo(T.portrait() ? 800 : 610, T.portrait() ? 380 : 340, T.portrait() ? 1.4 : 1.3, 900);
     AudioFX.sfx('creak', .5);
     // 사자가 웃느라 몸이 뒤로 젖혀져 앞발이 들린다 (몸 전체를 뒷발 끝을 축으로 돌림)
     await T.anim(lion.parts.hg, [{ rotate: '0deg' }, { rotate: '3deg' }], { duration: 1200, easing: 'ease-out' });
@@ -963,7 +963,7 @@
     }, { hold: 2000 }));
     AudioFX.sfx('step_grass', .15);
     await say('사자가 버둥버둥, 그래도 그물이 풀리지 않아요.');
-    await camTo(140, 470, 2.4, 1000);
+    await camTo(T.portrait() ? 140 : 390, T.portrait() ? 470 : 340, T.portrait() ? 2.4 : 1.3, 1000);
     const perk = mouse.parts.art ? 'scale(1,1.14)' : 'scale(1.45)'; // 그림: 귀만 따로 없어서 몸을 쭉 펴며 쫑긋
     await T.anim(mouse.parts.ears, [{ transform: 'scale(1)' }, { transform: perk }, { transform: 'scale(1)' }, { transform: perk }, { transform: 'scale(1)' }], 900);
     squeak(T);
