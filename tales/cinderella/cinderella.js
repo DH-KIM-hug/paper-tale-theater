@@ -201,6 +201,12 @@
 
   async function run(T) {
     const { sleep, say, camSnap, tr } = T;
+    /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
+    const sx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
+    const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
+    const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['fire_crackle', 'crickets_night_1', 'crowd_murmur_1', 'shimmer', 'chime_up', 'horse_neigh_1', 'horse_hooves_1', 'question', 'surprise_sting', 'xylo_down', 'knock', 'ding_glock', 'party_horn', 'whoosh', 'sparkle', 'swish', 'bell', 'tada', 'creak', 'ding']); } catch (e) { /* 무시 */ }
+    { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990; /* 세로 화면: 가운데 일부만 보인다 → 카메라가 주인공을 따라간다 */
@@ -210,7 +216,7 @@
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...Object.keys(ASP).map(k => T.preload(artSrc(k)))];
     const cutLoads = CUTS.map(k => T.preload(artSrc('cut_' + k + '_v2')).then(ok => { cutOk[k] = ok; }));
-    await Promise.race([Promise.all([...loads, ...cutLoads]), sleep(4000)]);
+    await Promise.race([Promise.all([...loads, ...cutLoads]), new Promise(r => setTimeout(r, 4000))]);
 
     /* ---- 배우 (사람은 모두 같은 얼굴 크기) ---- */
     const cind = mk(T, { stand: 'cind_stand', braid: 'cind_braid', cry: 'cind_cry', surprise: 'cind_surprise', joy: 'cind_joy',
@@ -489,6 +495,8 @@
     const R = {
       set(key) {
         rSeen[key] = (rSeen[key] || 0) + 1; rTag = key + rSeen[key];
+        stopAmb(.6);
+        { const ra = { kitchen: ['fire_crackle', .12], kitchen_night: ['crickets_night_1', .15], ballroom: ['crowd_murmur_1', .12] }[key]; if (ra) { const kk = rTag; if (!amb(ra[0], { vol: ra[1], dur: 4, fadeIn: 1 })) setTimeout(() => { if (rTag === kk) amb(ra[0], { vol: ra[1], dur: 3, fadeIn: 1 }); }, 1500); } } // 장소 소리는 작게, 잠깐만
         SPOT = {}; FACE_FIX = {}; rClock = null; rBurst = false; chandDots = null; ballDots = null;
         ALL.forEach(hide); Object.values(L).flat().forEach(hide);
         scene(key === 'stairs' ? 'stairs_lb' : key + '_v2');
@@ -647,6 +655,7 @@
     put(T, L.veg, 985, 585);                               /* 앞 가림: 채소 바구니 (오른쪽 아래 모서리) */
     if (P) camSnap(520, 280, 1);
     await T.curtain(true);
+    amb('fire_crackle', { vol: .25, dur: 4 }); // 아궁이 타닥
     await say('옛날에 마음씨 고운 아가씨가 살았어요.');
     step.hop(10, 320);
     await say('넌 부엌 일을 해!');
@@ -697,6 +706,7 @@
       put(T, cind, X(480, 520), FL, { look: 'cry' });
       if (P) camSnap(520, 280, 1);
     }, cind.pos);
+    amb('crickets_night_1', { vol: .25, dur: 4 }); // 밤 부엌 귀뚜라미
     const sob = cind.pos.animate([{ translate: '0 0' }, { translate: '0 -3px' }, { translate: '0 0' }], { duration: 700, iterations: 6 });
     await say('혼자 남은 신데렐라는 훌쩍훌쩍 울었어요.');
     await say('나도 무도회에 가고 싶어요.');
@@ -791,6 +801,7 @@
     /* 뒷줄(짝수) 말을 앞줄 뒤로 */
     [0, 2, 4].forEach(i => T.world.insertBefore(horses[i].pos, horses[1].pos));
     T.world.appendChild(coach.pos);
+    sx('horse_neigh_1', .4); // 말 히힝
     await sleep(600);
     sparkle(T, rat.x, FL - 30, 80, 8); sparkle(T, lizard.x, FL - 20, 70, 8);
     await Promise.all([fadeOut(T, rat, 400), fadeOut(T, lizard, 400)]);
@@ -835,6 +846,7 @@
     await say('와, 정말 고맙습니다!');
     fairy.look('appear');
     await say('꼭 기억하렴. 밤 열두 시가 되면 마법이 풀린단다.');
+    sx('horse_hooves_1', .5); // 마차가 달려간다
     await say('네, 꼭 기억할게요!');
     cind.turn('right');
     await cind.move(cind.x + 140, FL, 900);
@@ -857,6 +869,7 @@
       if (P) camSnap(500, 280, 1); else camSnap(500, 220, 1.18);   /* 입장: 샹들리에·창 높이에서 시작 */
     }, cind.pos);
     if (!P) T.camTo(500, 280, 1, 2600);
+    amb('crowd_murmur_1', { vol: .2, dur: 4 }); // 무도회장 웅성웅성
     await say('궁전에 가니 모두 신데렐라를 바라보았어요.');
     await say('함께 춤춰요.');
     /* 빙글빙글 (서로 손을 잡은 채 좌우로 오간다) */
@@ -922,6 +935,7 @@
     if (P) camSnap(500, 250, 1);
     let hinted = false;
     const NAME = { 3: '그건 세 시예요.', 6: '그건 여섯 시예요.' };
+    sx('question', .6);
     await T.ask('긴 바늘과 짧은 바늘이 모두 12를 가리키면 열두 시예요. 열두 시 시계를 찾아봐요!', () => T.choose(cards.map(c => ({ el: c.g, ok: c.k === '12',
       onWrong: async () => {
         await say(NAME[c.k]);
@@ -946,7 +960,9 @@
     cards.forEach(c => c.g.remove());
     cind.pos.style.opacity = ''; prince.pos.style.opacity = '';
     cind.look('run', 'left');
+    sx('surprise_sting', .7);
     await say('앗, 열두 시예요!');
+    sx('xylo_down', .5); // 계단을 달려 내려간다
     await cind.move(-120, FL, 1100, 'ease-in');
     hide(cind);
     /* 계단: 위 오른쪽에서 아래 왼쪽으로 달려 내려가며 구두 한 짝이 떨어진다 */
@@ -989,6 +1005,7 @@
       parlorFront();
       if (P) camSnap(560, 280, 1);
     }, prince.pos);
+    sx('knock', .6); // 집집마다 똑똑
     await say('왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.');
     sis1.look('foot', 'right'); sis1.wiggle(5, 500);
     await say('내 발이 들어갈 거야!');
@@ -1028,6 +1045,7 @@
       return { k, g };
     });
     if (P) camSnap(500, 280, 1);
+    sx('question', .6);
     await T.ask('구두와 크기가 같은 발을 찾아봐요!', () => T.choose(feet.map(f => ({ el: f.g, ok: f.k === 'small', onWrong: async () => { await say('그 발은 구두보다 커요.'); } })), { prompt: '구두와 크기가 같은 발을 찾아봐요!' }));
     const right = feet.find(f => f.k === 'small');
     right.g.style.filter = 'url(#hintGlow)'; sparkleSfx(T);
@@ -1047,6 +1065,7 @@
     T.pop(toe()[0], toe()[1] - 60, tr('쏙!'));
     await sleep(500);
     await cutArt(T, 'fit', () => { popSfx(T); setTimeout(() => sparkleSfx(T), 250); });
+    sx('ding_glock', .5);
     await say('구두가 꼭 맞았어요!');
     /* 앞치마 주머니(무릎 위)에서 다른 한 짝이 쏙 나온다 */
     put(T, slipper2, cind.x + 4, FL - cind.h * .36, { to: 'right' }); fadeIn(slipper2, 300);
@@ -1083,13 +1102,13 @@
     await Promise.all([sis1.hop(12, 360), sis2.hop(12, 360)]);
     if (P) T.camTo(480, 280, 1, 500);
     await T.ask('신데렐라에게 톡 인사해요!', () => T.tap(cind.pos, { prompt: '신데렐라에게 톡 인사해요!' }));
-    T.confetti(); sfx(T, 'tada', () => sparkleSfx(T));
+    T.confetti(); sx('party_horn', .6) || sfx(T, 'tada', () => sparkleSfx(T));
     L.garland.hop(6, 420); if (chandDots) chandDots.style.display = '';
     glow(cind, 1200);
     await Promise.all([cind.hop(20, 460), sis1.hop(16, 460), sis2.hop(16, 460), prince.hop(12, 460)]);
     await say('모두 함께 웃었어요.');
     await say('착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.');
-    T.finale();
+    T.finale(); stopAmb(.8);
     await sleep(1500);
     return '착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.';
   }
