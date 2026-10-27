@@ -349,5 +349,20 @@
    900
   ],
   "prompt": "Use case: illustration-story. ONE anonymous robber HEAD AND SHOULDERS ONLY, front-facing bust cut from one flat deep brown #2A2118 paper sheet. Round human head, distinct round bowler hat, connected neck and shoulders, broad simple coat outline, bottom cropped straight at chest. Faceless: no eyes, nose, mouth, beard or interior marks. Organic human silhouette, not a collection of circles. Crisp hand-cut paper edges, subtle fine paper grain. One flat colour, no gradients, no shading, NO glow, NO shadows, no border, no rim. Centred isolated bust fills 85% square canvas. Genuinely transparent background, no floor, no props, no text."
+ },
+ {
+  "id": "br_lb_window_glow_v2",
+  "kind": "bg",
+  "pass": 2,
+  "refs": [
+   "assets/raw/restyle/bremen/br_lb_window_glow.png"
+  ],
+  "size": [
+   1600,
+   902
+  ],
+  "out": "assets/raw/restyle/bremen/br_lb_window_glow_v2.png",
+  "lightbox": true,
+  "prompt": "Use case: illustration-story. Recreate this exact paper-art night background with exactly the same composition, window position and size, navy paper wall, small wall bricks, low stone wall, orange earth ground, moon, purple foliage and dimensions. Change only the light: the lit window is the light source. Warm golden lamplight pours out of the window and falls DOWN as a soft, TRANSLUCENT beam onto the wall and the ground below, brightest right under the window sill and fading gradually with distance, widening as it reaches the ground. The light is real light, not a paper piece: it is semi-transparent, so the navy wall paper grain, the bricks, the low stone wall and the ground texture are all clearly visible THROUGH the glow, just tinted warm. Soft gentle edges, a faint warm haze, gradient allowed ONLY for the light itself. All paper pieces stay flat cut paper, one colour each, subtle paper grain, no gloss. The window panes glow cream and gold. NO animals, NO people, NO robbers, NO silhouettes (they are added in code). Keep the empty area under the window clear for an animal tower. Landscape 16:9 full bleed."
  }
 ]
