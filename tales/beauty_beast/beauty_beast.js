@@ -31,7 +31,9 @@
   const FL = 528;                    // 바닥(발끝 y)
   /* 사람 세계(시골집)는 그대로, 야수의 궁전 장면만 다층 v2 (VISUAL_PLAN) */
   const BGS = ['cottage', 'cottage_front', 'snow_forest_lb', 'dining_v2', 'garden_v2', 'garden_bloom_v2', 'room_v2'];
-  const bgSrc = k => AS + 'bb_bg_' + k + '.webp', artSrc = k => AS + 'bb_' + k + '.webp';
+  /* 2026-10-28 사용자 결정(§7-1 빛 예외): 눈보라 숲은 성문에서 내려오던 불투명 크림 빛 띠 두 줄을 뺀 _glow 그림(같은 구도). 성문·창 둘레의 반투명 빛이 언덕을 따라 흐려진다 */
+  const GLOW = { snow_forest_lb: 1 };
+  const bgSrc = k => AS + 'bb_bg_' + k + (GLOW[k] ? '_glow' : '') + '.webp', artSrc = k => AS + 'bb_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const hOf = f => HT[f] || 200;
   const artOK = {}, bgOK = {};       // 그림 파일이 실제로 있는지 (preload 결과)
