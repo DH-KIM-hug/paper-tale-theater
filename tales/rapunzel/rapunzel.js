@@ -42,7 +42,9 @@
   const FL = 505;                                                    // 바닥(발끝 y)
   const TOWER_H = 445, WIN_DY = -300, HOOK_DX = 40, BRAID_H = 300;   // 탑 좌표계 (SPEC §2-8)
   const BGS = ['rp_bg_cottage', 'rp_bg_garden_night_lb', 'rp_bg_forest_day_v2', 'rp_bg_room_v2', 'rp_bg_forest_dusk_v2', 'rp_bg_field_v2', 'rp_bg_forest_night_lb'];   // _lb: 빛 상자(VISUAL_PLAN 재기획 2, 2026-10-24) — 밤 텃밭, 9장 끝 밤 숲(크로스페이드)
-  const src = k => AS + k + '.webp';
+  /* 2026-10-28 사용자 결정(§7-1 빛 예외): 밤 텃밭 달의 단단한 주황 고리 → 달에서 흐려지는 반투명 달무리(_glow, 같은 구도·담·고랑 자리) */
+  const GLOW = { rp_bg_garden_night_lb: 1 };
+  const src = k => AS + k + (GLOW[k] ? '_glow' : '') + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};
 
