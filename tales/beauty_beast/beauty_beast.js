@@ -185,6 +185,8 @@
 
   const sfx = (T, name, vol, fb) => (typeof vol === 'function' ? (AudioFX.sfx(name) || vol()) : (AudioFX.sfx(name, vol) || (fb && fb())));
   const popSfx = T => sfx(T, 'pop', undefined, () => T.tone([500, 800], .12, { vol: .12 }));
+  /* 저주가 풀리는 음악(sounds/music/magic_awaken.mp3, 16초): 대사와 겹치니 작게, 끝은 페이드. 못 불렀으면 예전 '마법' 효과음 */
+  const curseMusic = () => { if (AudioFX.music) { AudioFX.preloadMusic && AudioFX.preloadMusic(['magic_awaken']); const m = AudioFX.music('magic_awaken', { vol: .28, fade: 3 }); if (m) return true; } return !!(AudioFX.sting && AudioFX.sting('magic')); };
   const sparkleSfx = T => sfx(T, 'sparkle', undefined, () => T.tone([700, 1400], .4, { vol: .12 }));
   /* 배경 위에 얇은 색 한 장 (밤·하늘빛). 인물은 그 위에 있어 그대로 보인다 */
   const tint = (T, fill, op) => T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill, opacity: op }, T.bg);
@@ -274,6 +276,7 @@
     } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
   }
   async function run(T) {
+    if (AudioFX.preloadMusic) AudioFX.preloadMusic(['magic_awaken']);
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     let gap = 150;                                  // 대사 사이 숨 (첫 조작 전에는 짧게: 시작 후 30초 안에 첫 톡)
@@ -422,7 +425,7 @@
       };
       const sparkleBeast = () => {
         const bx = (on(beast) ? beast.x : px('prince', 680)) - 40;
-        if (!(AudioFX.sting && AudioFX.sting('magic'))) sparkleSfx(T);
+        if (!curseMusic()) sparkleSfx(T);
         sparkle(T, bx, FL - 120, 160, 18); setTimeout(() => sparkle(T, bx, FL - 120, 220, 18, true), 300);
       };
       const popX = x => {
@@ -897,7 +900,7 @@
     await say('사랑해요, 야수님. 제 남편이 되어 주세요.');
     put(T, shine, beast.x - 40, FL - 10); T.world.insertBefore(shine.pos, beast.pos); fadeIn(shine, 500);
     shine.body.animate([{ transform: 'scale(.9)' }, { transform: 'scale(1.08)' }, { transform: 'scale(.9)' }], { duration: 1400, iterations: Infinity });
-    if (!(AudioFX.sting && AudioFX.sting('magic'))) sparkleSfx(T);
+    if (!curseMusic()) sparkleSfx(T);
     /* 변신 반짝 2배(두 겹 36) + 장미 꽃잎 10장 */
     sparkle(T, beast.x - 40, FL - 120, 160, 18); setTimeout(() => sparkle(T, beast.x - 40, FL - 120, 220, 18, true), 300);
     const s73 = say('그러자 반짝! 야수가 멋진 왕자님으로 변했어요.');
