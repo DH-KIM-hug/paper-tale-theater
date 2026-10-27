@@ -345,7 +345,12 @@
   async function run(T) {
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, say, camSnap, tr } = T;
-    const scene = key => { T.clear(); T._cover = null; bgImage(T, key); camSnap(500, 280, 1); };
+    /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
+    const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const SCENE_AMB = { night_sea: 'waves', beach: 'seagull_1', garden: 'birds_chirp_2', deck: 'waves', dawn_sea: 'waves', morning_sea: 'seagull_2' };
+    const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); T._cover = null; bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
+    try { AudioFX.preloadSfx(['step_wood', 'step_grass', 'bubbles', 'sparkle', 'gulp', 'thud', 'splash', 'splash_big', 'whoosh', 'swish', 'tada', 'bell', 'doop', 'giggle_xylo', 'slide_up', 'blow_long', 'paper_down', 'pow', 'boom', 'waves', 'seagull_1', 'seagull_2', 'birds_chirp_2', 'thunder', 'whistle_down', 'ding_glock', 'pot_boil', 'shimmer', 'question', 'chime_up', 'party_horn']); } catch (e) { /* */ }
     const P = T.viewWidth() < 990;   /* 세로 화면: 가운데 일부만 보인다 → 카메라가 따라간다 */
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -662,6 +667,7 @@
     const sinkRound = async (a, b, ax, bx, prompt, wrongLine, rightLine, land, ground) => {
       [[a, ax], [b, bx]].forEach(([o, x]) => { put(T, o, x, 300); hit(T, o, 62); fadeIn(o, 900); });
       await Promise.all([a.move(ax, 400, 900, 'ease-out'), b.move(bx, 400, 900, 'ease-out')]);
+      cue('question', .6);
       await T.ask(prompt, () => T.choose([{ el: a.pos, ok: true }, { el: b.pos, ok: false, onWrong: async () => {
         b.pos.animate([{ translate: '0 0' }, { translate: '0 -120px' }, { translate: '0 0' }], 900);
         T.pop(b.x, 300, tr('떠요'));
@@ -671,7 +677,7 @@
       const lift = b.move(b.x, 150, 1200).then(() => hide(b));
       T.pop(a.x, 330, tr('가라앉아요'));
       await a.move(land[0], ground, 2400, 'ease-in');
-      sfx(T, 'paper_down', () => popSfx(T)); glow(a, 1000); mer.hop(10, 360);
+      cue('ding_glock', .8) || sfx(T, 'paper_down', () => popSfx(T)); glow(a, 1000); mer.hop(10, 360);
       await Promise.all([lift, say(rightLine)]);
     };
     await sinkRound(stone, wood, X(300, 440), X(480, 560), '무거운 것은 가라앉고, 가벼운 것은 떠요. 어느 것이 바다 밑까지 내려올까요?',
@@ -752,12 +758,13 @@
     }, ship.pos);
     sfx(T, 'whoosh');
     const stormSay = say('밤이 깊자 바람이 세졌어요. 배가 기우뚱!');
-    await sleep(1200); T.shake(); sfx(T, 'thud'); ship.wiggle(4, 900);
+    await sleep(1200); T.shake(); cue('thunder', .5) || sfx(T, 'thud'); ship.wiggle(4, 900);
     await sleep(1100); T.shake(); sfx(T, 'thud'); ship.wiggle(4, 900);
     await stormSay;
     put(T, prince, ship.x - 120, ship.y + DECK_DY, { look: 'stand', to: 'left' });
     await prince.move(ship.x - 120, WATER - 40, 620, 'ease-in');
-    sfx(T, 'splash_big'); T.pop(prince.x, WATER - 110, tr('풍덩!'));
+    if (cue('whistle_down', .6)) setTimeout(() => AudioFX.sfx('splash_big'), 550); else sfx(T, 'splash_big');
+    T.pop(prince.x, WATER - 110, tr('풍덩!'));
     prince.look('float', 'left'); await prince.move(ship.x - 150, WATER + 10, 500, 'ease-out');
     await say('왕자님이 바다에 빠졌어요.');
     put(T, mer, -150, WATER + 12, { look: 'hold', to: 'right' }); sfx(T, 'bubbles');
@@ -783,7 +790,7 @@
     follow(600);
     lady.hop(8, 360);
     await say('어머, 괜찮으세요?');
-    prince.look('wake', 'right'); sfx(T, 'sparkle', () => popSfx(T)); glow(prince, 1000);
+    prince.look('wake', 'right'); cue('ding_glock', .8) || sfx(T, 'sparkle', () => popSfx(T)); glow(prince, 1000);
     await say('왕자님은 아가씨에게 웃어 주었어요. 인어공주는 보지 못했지요.');
     mer.hop(6, 400);
     await say('왕자님이 깨어났어요. 다행이에요.');
@@ -832,7 +839,7 @@
     await say('그래도 갈래요.');
     cauldron.pos.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
     await T.ask('가마솥을 톡 눌러 봐요.', () => T.tap(cauldron.pos, { prompt: '가마솥을 톡 눌러 봐요.' }));
-    cauldron.look('glow'); sfx(T, 'bubbles'); T.pop(cauldron.x, cauldron.y - 200, tr('보글보글'));
+    cauldron.look('glow'); cue('pot_boil', .7) || sfx(T, 'bubbles'); T.pop(cauldron.x, cauldron.y - 200, tr('보글보글'));
     sparkle(T, cauldron.x, cauldron.y - 120, 110, 20);
     put(T, potion, cauldron.x + 44, cauldron.y - 150, { look: 'empty' }); fadeIn(potion, 400);
     sleep(600).then(() => { potion.look('full'); glow(potion, 1000); sfx(T, 'sparkle'); });
@@ -856,7 +863,7 @@
     await sleep(1500);
     await potion.move(mer.x + 22 * SC.steps, mer.y - 150 * SC.steps, 500); sfx(T, 'gulp', () => popSfx(T)); T.pop(mer.x + 40, mer.y - 230 * SC.steps, tr('꿀꺽!')); hide(potion);
     await drink;
-    sfx(T, 'sparkle'); sparkle(T, mer.x, mer.y - 100 * SC.steps, 130, 16);
+    sfx(T, 'shimmer', () => sfx(T, 'sparkle')); sparkle(T, mer.x, mer.y - 100 * SC.steps, 130, 16);
     await T.anim(mer.pos, [{ opacity: 1 }, { opacity: .1 }], 400);
     mer.look('stand', 'right'); mer.pos.style.opacity = ''; fadeIn(mer, 500); glow(mer, 1400);
     await Promise.all([say('꼬리가 사라지고 다리가 생겼어요! 걸음은 흔들흔들.'), (async () => { await sleep(1800); T.pop(mer.x, mer.y - 250 * SC.steps, tr('흔들흔들')); await wobbleWalk(T, mer, X(540, 500), 1800, SY); })()]);
@@ -903,9 +910,10 @@
         return { name, a };
       });
       await sleep(400 + 2 * 120);
+      cue('question', .6);
       await T.ask('바다에 사는 친구는 누구일까요?', () => T.choose(cards.map(c => ({ el: c.a.pos, ok: c.name === R.ok, onWrong: async () => { await c.a.wiggle(8, 360); await say(WRONG[c.name]); } })), { prompt: '바다에 사는 친구는 누구일까요?' }));
       const g = cards.find(c => c.name === R.ok).a;
-      sparkle(T, g.x, g.y - IH / 2, 70, 8);
+      cue('ding_glock', .8); sparkle(T, g.x, g.y - IH / 2, 70, 8);
       await g.move(500, 488, 700, 'ease-in');
       sfx(T, 'splash'); T.pop(500, 430, tr('퐁당!'));
       await T.anim(g.pos, [{ opacity: 1 }, { opacity: 0 }], 300); hide(g);
@@ -994,7 +1002,7 @@
     const bx = mer.x, by = mer.y;
     await fadeOut(T, mer, 500);
     put(T, mer, bx, by, { look: 'bubble', s: .6 }); fadeIn(mer, 600);
-    sfx(T, 'slide_up'); bubblesUp(T, bx, by - 80, 8, 260); sparkle(T, bx, by - 110, 120, 12); sleep(250).then(() => sparkle(T, bx, by - 150, 160, 12, true));   /* 거품 반짝 2배 */
+    sfx(T, 'chime_up', () => sfx(T, 'slide_up')); bubblesUp(T, bx, by - 80, 8, 260); sparkle(T, bx, by - 110, 120, 12); sleep(250).then(() => sparkle(T, bx, by - 150, 160, 12, true));   /* 거품 반짝 2배 */
     sleep(1200).then(() => T.pop(bx + 40, 230, tr('둥실')));
     await Promise.all([say('인어공주는 반짝이는 거품이 되어 하늘로 둥실 올라갔어요.'), mer.move(bx + 40, 90, 3200, 'ease-in-out')]);
     fadeOut(T, sisters, 800); await fadeOut(T, mer, 600);
@@ -1024,9 +1032,10 @@
     ship.body.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.05)' }, { transform: 'scale(1)' }], 900);
     ship.hop(10, 600); ship.move(ship.x - 60, ship.y, 1800);
     prince.hop(10, 460); lady.hop(10, 460); gulls.forEach(g => g.hop(16, 500));
-    glow(mer, 1400); mer.hop(14, 500); T.confetti(); sfx(T, 'tada', () => sparkleSfx(T));
+    glow(mer, 1400); mer.hop(14, 500); T.confetti(); sfx(T, 'party_horn', () => sfx(T, 'tada', () => sparkleSfx(T)));
     await say('사랑하는 마음은 사라지지 않아요. 안녕, 또 만나요!');
     await say('사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.');
+    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.';
   }
