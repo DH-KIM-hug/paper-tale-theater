@@ -125,6 +125,8 @@
     return T.el('image', { href: bgSrc(key), x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: BGBOX.h, preserveAspectRatio: 'none' }, T.bg);
   }
   const sfx = (T, name, fb) => AudioFX.sfx(name) || fb && fb();
+  /* 마법이 풀리는 음악(sounds/music/magic_awaken.mp3, 16초): 대사와 겹치니 작게, 끝은 페이드 */
+  const awakenMusic = () => { if (!AudioFX.music) return null; AudioFX.preloadMusic && AudioFX.preloadMusic(['magic_awaken']); return AudioFX.music('magic_awaken', { vol: .28, fade: 3 }); };
   const popSfx = T => sfx(T, 'pop', () => T.tone([500, 800], .12, { vol: .12 }));
   const NUM = ['하나!', '둘!', '셋!', '넷!', '다섯!', '여섯!', '일곱!', '여덟!'];
 
@@ -251,6 +253,7 @@
     } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
   }
   async function run(T) {
+    if (AudioFX.preloadMusic) AudioFX.preloadMusic(['magic_awaken']);
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     /* 대사 사이에 숨 한 번 (3~4세가 따라오게, 한 편 6~7분) */
@@ -391,6 +394,7 @@
       };
       const wake = async () => {
         sfx(T, 'sparkle', () => T.tone([700, 1400], .4, { vol: .12 }));
+        awakenMusic();
         sparkleRing(T, CX, CY - 80, 190, 18, ['#EBD08A', '#F6ECD8']);
         if (!P) T.camTo(500, 300, 1.08, 900).then(() => T.camTo(500, 280, 1, 1400));
         const land = async (b, x, ms, d) => {
@@ -1082,6 +1086,7 @@
     shine.pos.style.display = ''; fadeIn(shine, 700);
     shine.body.animate([{ transform: 'scale(.9)' }, { transform: 'scale(1.08)' }, { transform: 'scale(.9)' }], { duration: 1600, iterations: Infinity, easing: 'ease-in-out' });
     sfx(T, 'sparkle', () => T.tone([700, 1400], .4, { vol: .12 }));
+    awakenMusic();
     put(T, snow, CX + 10, CY - 30, { look: 'awake' }); fadeIn(snow, 500); glow(snow, 1200);
     T.world.appendChild(prince.pos); T.world.appendChild(crewE.pos);
     /* 깨어남 연출(VISUAL_PLAN §5): 반짝 → 새 두 마리가 유리관 테두리로 → 토끼·사슴 깡충 → 나비 빠르게 → 꽃잎은 벚꽃 가지에서 */
