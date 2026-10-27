@@ -147,7 +147,7 @@
     const pan = (cx = 500) => camSnap(T.viewWidth() < 990 ? cx : 500, 280, 1);
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)와 요술 반짝만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { if (T.reading() && document.hidden && /^marimba_/.test(name)) return true; /* 화면 꺼짐: 한꺼번에 울리는 화음 방지 */ return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const later = (ms, name, v) => setTimeout(() => cue(name, v), ms);
     const note = (i, v = .8) => cue('marimba_' + Math.min(8, Math.max(1, i)), v);   // 세기: 한 번에 한 음, 올라간다
     const SCENE_AMB = { field: 'birds_chirp_2', village: 'birds_chirp_1' };
@@ -187,7 +187,10 @@
       if (op === 'hide') return hide(a);
       return extra[op] ? extra[op](...r) : console.warn('[read] 요술 항아리: 모르는 동작', op);
     };
-    const cutVerb = k => T.cutImage([{ src: cutSrc(k), sfx: k === 'smash' ? 'pow' : k === 'twohoes' || k === 'coins' ? 'shimmer' : 'pop', hold: 3000 }], { hold: 3000 });
+    const CUT_SFX = { clink: () => cue('ding_glock', .8) || AudioFX.sfx('pop'), buried: () => cue('coins_1', .7) || AudioFX.sfx('pop'),
+      plop: () => { if (cue('whistle_down', .7)) later(650, 'splash', .4); else AudioFX.sfx('pop'); }, eight: () => cue('tada', .7) || AudioFX.sfx('pop'),
+      hungry: () => cue('comic_brass', .7) || AudioFX.sfx('pop'), smash: () => AudioFX.sfx('pottery_break') || AudioFX.sfx('pow') };
+    const cutVerb = k => T.cutImage([{ src: cutSrc(k), sfx: CUT_SFX[k] || (k === 'twohoes' || k === 'coins' ? 'shimmer' : 'pop'), hold: 3000 }], { hold: 3000 });
     const READ_ACTS = {
       set: k => scene(k),
       cam: s => { const [x, y, z] = nums(s); camSnap(x, y, z); },
@@ -225,7 +228,7 @@
         const spots = []; hoeRows(n).forEach((cnt, r) => { for (let c = 0; c < cnt; c++) spots.push([fx(T, 520) + (c - (cnt - 1) / 2) * 105, 335 - r * 115]); });
         for (let i = 0; i < n; i++) {
           const h2 = prop(T, 'hoe', 110); h2.pos.style.pointerEvents = 'none'; put(T, h2, spots[i][0], spots[i][1], { raw: true });
-          if (!T.readInstant()) { h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(12, 240); popSfx(T); jarGlint(); await sleep(450); }
+          if (!T.readInstant()) { h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(12, 240); note(i + 1) || popSfx(T); jarGlint(); await sleep(450); }
           RD.hoes.push(h2);
         }
       },
@@ -235,7 +238,7 @@
         const csp = tight(T) ? (n <= 5 ? 60 : 50) : (n <= 5 ? 90 : 72);
         for (let i = 1; i <= n; i++) {
           const c = prop(T, 'coin', 52); c.pos.style.pointerEvents = 'none'; put(T, c, fx(T, 520) + (i - (n + 1) / 2) * csp, 548, { raw: true });
-          if (!T.readInstant()) { c.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 280); jar.hop(10, 220); clinkSfx(T); jarGlint(); await sleep(450); }
+          if (!T.readInstant()) { c.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 280); jar.hop(10, 220); note(i) || clinkSfx(T); jarGlint(); await sleep(450); }
           RD.coins.push(c);
         }
       },
@@ -244,7 +247,7 @@
         for (let i = 1; i <= +n; i++) {
           const d = prop(T, 'gold', 46); put(T, d, jar.x, 250); d.move(jar.x, 400, 300, 'ease-in').then(() => hide(d));
           const g = prop(T, 'gold', 70 + i * 24); put(T, g, 560 + i * 90, 505 - i * 6); RD.golds.push(g);
-          jar.hop(12, 240); clinkSfx(T); goldGlint(i); await sleep(500);
+          jar.hop(12, 240); if (!note(i)) clinkSfx(T); if (i === 1) later(200, 'coins_2', .6); goldGlint(i); await sleep(500);
         }
       },
       fathers: async (op, n) => {
@@ -254,7 +257,7 @@
         for (let i = 1; i <= n; i++) {
           const o = olds[i - 1]; o.pos.style.pointerEvents = 'none';
           put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .62 : 1, raw: tight(T) });
-          if (!T.readInstant()) { o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); popSfx(T); await sleep(450); }
+          if (!T.readInstant()) { o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); note(i) || popSfx(T); await sleep(450); }
         }
       },
       rice: async op => {
@@ -264,7 +267,7 @@
           const x = spots[n];
           if (tight(T)) await Promise.all([T.camTo(x, 280, 1, 600), farmer.move(x, 540, 600)]);
           const sack = prop(T, 'rice', 62); put(T, sack, farmer.x, 440, { raw: true });
-          popSfx(T);
+          note(n + 1) || popSfx(T);
           await sack.move(x, 450, 520, 'ease-in');
           sack.hop(16, 260); farmer.hop(12, 240); sparrowHop(x); await sleep(400);
         }
@@ -274,10 +277,17 @@
       tables: async op => {
         if (op !== 'show') return;
         const ts = [170, 820].map(x => { const t = prop(T, 'table', 80); put(T, t, x, 540); return t; });
-        for (const [i, t] of ts.entries()) { await sleep(600); popSfx(T); t.hop(20, 300); T.pop(t.x, t.y - 120, tr(['냠냠!', '맛있다!'][i])); }
+        for (const [i, t] of ts.entries()) { await sleep(600); cue('pop_appear', .7) || popSfx(T); t.hop(20, 300); T.pop(t.x, t.y - 120, tr(['냠냠!', '맛있다!'][i])); }
       },
     };
-    if (T.reading()) return T.readPlay(READ_ACTS);   // 읽어 주기: 아래 놀이 흐름은 돌지 않는다
+    /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초>. 소리는 대사를 막지 않는다 */
+    Object.assign(READ_ACTS, {
+      snd: (n, v = .7, d = 0) => { try { +d > 0 ? later(+d, n, +v) : cue(n, +v); } catch (e) { /* */ } },
+      amb: (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
+    });
+    if (T.reading()) {   // 읽어 주기: 아래 놀이 흐름은 돌지 않는다
+      return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    }
 
     /* --- 1. 밭 --- */
     scene('field');
