@@ -928,7 +928,7 @@
     el('circle', { cx: 0, cy: 0, r: 46, fill: '#fff', opacity: 0 }, seed);
     if (!pic(T, seed, 'seed', -22, -28, 44, 56)) T.paper(seed, [['ellipse', { cx: 0, cy: 0, rx: 19, ry: 25, fill: C.bark }], ['ellipse', { cx: -6, cy: -8, rx: 6, ry: 9, fill: '#9C7550' }]]); // 첫 탭 목표라 눈에 띄게 크게
     seed.setAttribute('transform', 'translate(496,378)');
-    camSnap(500, 360, 1.5);
+    camSnap(500, T.portrait() ? 360 : 340, T.portrait() ? 1.5 : 1.3);
     await T.curtain(true);
     await say('봄이 왔어요. 할아버지가 텃밭에 구멍을 팠어요.');
     await T.ask('"순무야, 크게 자라라." 씨앗을 톡 눌러 봐요!', () => T.tap(seed, { prompt: '씨앗을 톡 눌러 봐요!' }));
