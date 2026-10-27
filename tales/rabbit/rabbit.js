@@ -595,6 +595,14 @@
   /* ================= 이야기 ================= */
   async function run(T) {
     const { el, paper, sleep, say, actor, camTo, camSnap, camWide } = T;
+    /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'stream_1', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
+    const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
+    const SCENE_AMB = { '초대장 돌리기': ['birds_chirp_2', .25, 3], '개울': ['stream_1', .28, 4], '숲속 잔치': ['crickets_night_1', .25, 4] }; // 장면 카드 이름 → 장소 소리 (장면 처음 몇 초만)
     const wrap = T.root.querySelector('#stageWrap');
     stopLoops();
     const bar = makeBar(T);
@@ -620,7 +628,7 @@
     const rabbitReset = () => { rp.pose('stand'); rp.setEyes('open'); rp.mouth('smile'); rp.sleepy(false); rp.ears(1); faceR(rabbit); };
     const turtleReset = () => { tp.step(0); tp.neck(1); tp.tilt(0); tp.swim(false); faceR(turtle); };
     const walk = (ms, gap = 260) => { let k = 0; const h = setInterval(() => { tp.step(k++ % 2); footstep(T); }, gap); setTimeout(() => { clearInterval(h); tp.step(0); }, ms); };
-    const scene = (label, fn) => T.sceneCard(label, () => { stopLoops(); T.clear(); camSnap(500, 280, 1); fn(); });
+    const scene = (label, fn) => T.sceneCard(label, () => { stopLoops(); T.clear(); camSnap(500, 280, 1); const sa = SCENE_AMB[label]; if (sa) amb(...sa); else stopAmb(); fn(); });
     /* 세로 화면(양옆이 잘림)용: 카메라가 x를 따라가고, 넓게 벌려 선 자리는 가운데로 모은다. 가로 화면에서는 아무 일도 안 한다 */
     const follow = (x, dur = 500) => T.portrait() ? camTo(x, 280, 1, dur) : Promise.resolve();
     const PX = (x, k) => T.portrait() ? Math.round(500 + (x - 500) * k) : x;
@@ -729,6 +737,7 @@
         rabbit.pos.remove(); turtle.pos.remove();
         rabbitReset(); turtleReset(); R.lying = false; R.podium = false; R.tneck = 1;
         R.set = k;
+        if (k === 'village' && !R.sawVillage) { R.sawVillage = 1; amb('birds_chirp_1'); } else if (k === 'grass_low') amb('stream_1', .2, 4); else stopAmb();
         (DRAW[k] || (() => artBG(T, 'bg_' + k)))();
         if (k === 'shade') { // 이불은 배우보다 앞, 덮은 뒤라면 덮인 자리로
           RD.blanket = el('g', { transform: 'translate(220 470)' }, T.world);
@@ -944,7 +953,7 @@
     { const at0 = READ_ACTS.turtle; READ_ACTS.turtle = (a, b) => (a === 'at' && R.podium ? put(turtle, 490, 402, 1.25) : at0(a, b)); }
     /* 꿈속 토끼는 시상대 1등 자리 (놀이판 자리) */
     { const at0 = READ_ACTS.rabbit; READ_ACTS.rabbit = (a, b) => (a === 'at' && R.set === 'dream' ? put(rabbit, 502, 314, .9) : at0(a, b)); }
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     /* ===== 1막 — 경주를 열자 ===== */
     /* --- 1. 숲속 마을 아침 --- */
@@ -954,6 +963,7 @@
     put(turtle, PX(200, .7), gy1, 1.25);
     put(rabbit, T.portrait() ? 1060 : 1150, gy1, 1);
     await T.curtain(true);
+    amb('birds_chirp_1');
     walk(2600);
     turtle.move(T.portrait() ? 400 : 330, gy1, 2600, 'linear');
     await say('숲속 마을에 아침이 왔어요.');
@@ -1239,6 +1249,7 @@
     const zzz = () => every(1000, () => floatText(T, rabbit.x - 60, rabbit.y - 230, 'Z', C.indigo, 34 + Math.random() * 14));
     zzz(); let sk = 0; every(1800, () => snore(T, sk++ % 2));
     await say('토끼가 쿨쿨 잠이 들었어요.');
+    sfx('sleepy_tuba', .6);
 
     /* --- 8. 토끼의 꿈 --- */
     let carrot, bite, biteAt = [830, 230];
@@ -1464,6 +1475,7 @@
     zzz2(); let sk3 = 0; every(1800, () => snore(T, sk3++ % 2));
     await say('위에는 쿨쿨 자는 토끼, 아래에는 거북이!');
     await say('쉿, 조용히 지나가요~ 살금살금.');
+    sfx('tiptoe_pizz', .8);
     for (let i = 0; i < 5; i++) {
       tp.step(i % 2); T.tone(880 + (i % 2) * 110, .08, { type: 'triangle', vol: .12 });
       if (i === 2) setTimeout(() => { guide.animate([{ opacity: .75, strokeWidth: 6 }, { opacity: 1, strokeWidth: 16 }, { opacity: .75, strokeWidth: 6 }], { duration: 700 }); }, 380); // 거북이가 토끼 바로 아래를 지나는 순간
@@ -1471,7 +1483,7 @@
       setRace(null, .55 + (i + 1) * .04, 600);
       await sleep(150);
     }
-    tp.step(0); bar.pulse('t');
+    tp.step(0); bar.pulse('t'); sfx('ding_glock', .8);
     await say('와, 거북이가 토끼를 앞질렀어요!');
 
     /* ===== 3막 — 결승선 ===== */
@@ -1664,7 +1676,7 @@
     await sleep(5800);
     AudioFX.sfx('cheer', .6);
     T.confetti();
-    stopLoops();
+    stopLoops(); stopAmb();
     await say('모두 함께 신나는 잔치를 했답니다.');
     await say('천천히 가도 끝까지 하면 해낼 수 있어요!');
     KINDS.forEach(k => show(aud[k].parts.instr, 0));
