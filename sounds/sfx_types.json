@@ -438,5 +438,238 @@
    "kind": "oneshot",
    "sec": 7.2
   }
+ ],
+ "boing": [
+  {
+   "file": "sfx/boing.mp3",
+   "kind": "oneshot",
+   "sec": 1.45
+  }
+ ],
+ "boing_steps": [
+  {
+   "file": "sfx/boing_steps.mp3",
+   "kind": "oneshot",
+   "sec": 1.6
+  }
+ ],
+ "whistle_up": [
+  {
+   "file": "sfx/whistle_up.mp3",
+   "kind": "oneshot",
+   "sec": 1.2
+  }
+ ],
+ "whistle_down": [
+  {
+   "file": "sfx/whistle_down.mp3",
+   "kind": "oneshot",
+   "sec": 1.2
+  }
+ ],
+ "whistle_wobble": [
+  {
+   "file": "sfx/whistle_wobble.mp3",
+   "kind": "oneshot",
+   "sec": 2.4
+  }
+ ],
+ "pop_appear": [
+  {
+   "file": "sfx/pop_appear.mp3",
+   "kind": "oneshot",
+   "sec": 0.55
+  }
+ ],
+ "peek_pop": [
+  {
+   "file": "sfx/peek_pop.mp3",
+   "kind": "oneshot",
+   "sec": 0.5
+  }
+ ],
+ "zip_away": [
+  {
+   "file": "sfx/zip_away.mp3",
+   "kind": "oneshot",
+   "sec": 0.5
+  }
+ ],
+ "harp_gliss": [
+  {
+   "file": "sfx/harp_gliss.mp3",
+   "kind": "oneshot",
+   "sec": 2.45
+  }
+ ],
+ "ding_glock": [
+  {
+   "file": "sfx/ding_glock.mp3",
+   "kind": "oneshot",
+   "sec": 1.1
+  }
+ ],
+ "shimmer": [
+  {
+   "file": "sfx/shimmer.mp3",
+   "kind": "oneshot",
+   "sec": 1.5
+  }
+ ],
+ "drumroll_crash": [
+  {
+   "file": "sfx/drumroll_crash.mp3",
+   "kind": "oneshot",
+   "sec": 2.3
+  }
+ ],
+ "surprise_sting": [
+  {
+   "file": "sfx/surprise_sting.mp3",
+   "kind": "oneshot",
+   "sec": 1.1
+  }
+ ],
+ "question": [
+  {
+   "file": "sfx/question.mp3",
+   "kind": "oneshot",
+   "sec": 1.08
+  }
+ ],
+ "sad_trombone": [
+  {
+   "file": "sfx/sad_trombone.mp3",
+   "kind": "oneshot",
+   "sec": 2.6
+  }
+ ],
+ "comic_brass": [
+  {
+   "file": "sfx/comic_brass.mp3",
+   "kind": "oneshot",
+   "sec": 2.0
+  }
+ ],
+ "tiptoe_pizz": [
+  {
+   "file": "sfx/tiptoe_pizz.mp3",
+   "kind": "oneshot",
+   "sec": 5.0
+  }
+ ],
+ "sleepy_tuba": [
+  {
+   "file": "sfx/sleepy_tuba.mp3",
+   "kind": "oneshot",
+   "sec": 3.5
+  }
+ ],
+ "fall_crash": [
+  {
+   "file": "sfx/fall_crash.mp3",
+   "kind": "oneshot",
+   "sec": 1.7
+  }
+ ],
+ "pull_pop": [
+  {
+   "file": "sfx/pull_pop.mp3",
+   "kind": "oneshot",
+   "sec": 0.55
+  }
+ ],
+ "bumper": [
+  {
+   "file": "sfx/bumper.mp3",
+   "kind": "oneshot",
+   "sec": 1.9
+  }
+ ],
+ "zipper": [
+  {
+   "file": "sfx/zipper.mp3",
+   "kind": "oneshot",
+   "sec": 1.25
+  }
+ ],
+ "party_horn": [
+  {
+   "file": "sfx/party_horn.mp3",
+   "kind": "oneshot",
+   "sec": 1.3
+  }
+ ],
+ "chime_up": [
+  {
+   "file": "sfx/magic_wand.mp3",
+   "kind": "oneshot",
+   "sec": 2.6
+  }
+ ],
+ "xylo_up": [
+  {
+   "file": "sfx/xylo_up.mp3",
+   "kind": "oneshot",
+   "sec": 0.89
+  }
+ ],
+ "xylo_down": [
+  {
+   "file": "sfx/xylo_down.mp3",
+   "kind": "oneshot",
+   "sec": 1.2
+  }
+ ],
+ "marimba_scale": [
+  {
+   "file": "sfx/marimba_1.mp3",
+   "kind": "oneshot",
+   "sec": 1.0,
+   "note": "marimba_1~8 은 장난감 글로켄슈필 8음(낮은음→높은음, 약 1060~2130Hz). 수 세기에서 1~8 순서대로 쓴다."
+  },
+  {
+   "file": "sfx/marimba_2.mp3",
+   "kind": "oneshot",
+   "sec": 1.0
+  },
+  {
+   "file": "sfx/marimba_3.mp3",
+   "kind": "oneshot",
+   "sec": 1.0
+  },
+  {
+   "file": "sfx/marimba_4.mp3",
+   "kind": "oneshot",
+   "sec": 1.0
+  },
+  {
+   "file": "sfx/marimba_5.mp3",
+   "kind": "oneshot",
+   "sec": 1.0
+  },
+  {
+   "file": "sfx/marimba_6.mp3",
+   "kind": "oneshot",
+   "sec": 1.0
+  },
+  {
+   "file": "sfx/marimba_7.mp3",
+   "kind": "oneshot",
+   "sec": 1.0
+  },
+  {
+   "file": "sfx/marimba_8.mp3",
+   "kind": "oneshot",
+   "sec": 1.0
+  }
+ ],
+ "marimba_note": [
+  {
+   "file": "sfx/marimba_note.mp3",
+   "kind": "oneshot",
+   "sec": 0.8,
+   "note": "진짜 마림바 한 음(낮은 음). 수 세기에서 marimba_scale 과 섞어 쓸 수 있다."
+  }
  ]
 }

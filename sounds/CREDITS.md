@@ -223,3 +223,35 @@ Pixabay 검색 페이지가 자동 접속을 막아 소리 파일을 받지 못�
 | `sfx/train.mp3` | Pixabay "Toy Train Whistle Soft" — freesound_community-toy-train-whistle-soft-106348.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 4.6초, 앞뒤 무음 정리·페이드·음량 맞춤 |
 | `sfx/fireworks.mp3` | Pixabay "Distant Fireworks" — freesound_community-distant-fireworks-19067.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 350초부터 10초, 앞뒤 무음 정리·페이드·음량 맞춤 |
 | `sfx/toy_flute.mp3` | Pixabay "Flute alto" — freesound_community-flute-alto-88973.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 7.2초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/boing.mp3` | Pixabay "Cartoon Spring Boing" — universfield-cartoon-spring-boing-140378.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0.05-1.5s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/boing_steps.mp3` | Pixabay "Boing Boing Bounce" — humordome-boing-boing-bounce-454474.mp3 | humordome | Pixabay Content License (출처 표기 불필요) | 원본 0-1.6s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/whistle_up.mp3` | Pixabay "Cartoon Slide Whistle Up 1" — floraphonic-cartoon-slide-whistle-up-1-176649.mp3 | floraphonic | Pixabay Content License (출처 표기 불필요) | 원본 0-1.2s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/whistle_down.mp3` | Pixabay "Cartoon Slide Whistle Down 1" — floraphonic-cartoon-slide-whistle-down-1-176647.mp3 | floraphonic | Pixabay Content License (출처 표기 불필요) | 원본 0-1.2s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/whistle_wobble.mp3` | Pixabay "Cartoon Slide Whistle Dizzy 1" — floraphonic-cartoon-slide-whistle-dizzy-1-176653.mp3 | floraphonic | Pixabay Content License (출처 표기 불필요) | 원본 0-2.4s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/pop_appear.mp3` | Pixabay "Bubble Pop 06" — universfield-bubble-pop-06-351337.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0.05-0.6s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/peek_pop.mp3` | Pixabay "Sharp Pop" — creatorshome-sharp-pop-328170.mp3 | CreatorsHome | Pixabay Content License (출처 표기 불필요) | 원본 0-0.5s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/zip_away.mp3` | Pixabay "Movement Swipe Whoosh 3" — floraphonic-movement-swipe-whoosh-3-186577.mp3 | floraphonic | Pixabay Content License (출처 표기 불필요) | 원본 0-0.5s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/harp_gliss.mp3` | Pixabay "Harp Glissando Up C7 1" — floraphonic-harp-glissando-up-c7-1-186382.mp3 | floraphonic | Pixabay Content License (출처 표기 불필요) | 원본 0.05-2.5s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/ding_glock.mp3` | Pixabay "Ding~" — u_31vnwfmzt6-ding-126626.mp3 | u_31vnwfmzt6 | Pixabay Content License (출처 표기 불필요) | 원본 0-1.1s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/shimmer.mp3` | Pixabay "Sound Effect: Twinkle/Sparkle" — shidenbeatsmusic-sound-effect-twinklesparkle-115095.mp3 | ShidenBeatsMusic | Pixabay Content License (출처 표기 불필요) | 원본 0.1-1.6s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/drumroll_crash.mp3` | Pixabay "drum roll 3" — lazychillzone-drum-roll-3-228357.mp3 | LazyChillZone | Pixabay Content License (출처 표기 불필요) | 원본 0-2.3s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/surprise_sting.mp3` | Pixabay "Surprise Sound Effect" — phoenix_connection_brazil-surprise-sound-effect-99300.mp3 | Phoenix_Connection_Brazil | Pixabay Content License (출처 표기 불필요) | 원본 0.05-1.2s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/question.mp3` | Pixabay "question noise" — freesound_community-question-noise-44154.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0-1.1s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/sad_trombone.mp3` | Pixabay "Sad Trumpet" — universfield-sad-trumpet-278822.mp3 | Universfield | Pixabay Content License (출처 표기 불필요) | 원본 0-2.6s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/comic_brass.mp3` | Pixabay "Brass Fail 11 A" — floraphonic-brass-fail-11-a-207140.mp3 | floraphonic | Pixabay Content License (출처 표기 불필요) | 원본 0-2.0s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/tiptoe_pizz.mp3` | Pixabay "Mischievous Pizzicato" — lucadialessandro-mischievous-pizzicato-614730.mp3 | lucadialessandro | Pixabay Content License (출처 표기 불필요) | 원본 0-5.0s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/sleepy_tuba.mp3` | Pixabay "Tuba" — freesound_community-tuba-84425.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0-3.5s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/fall_crash.mp3` | Pixabay "FX Fail - Cartoon" — mori_sound-fx-fail-cartoon-506430.mp3 | Mori_sound | Pixabay Content License (출처 표기 불필요) | 원본 0-1.7s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/pull_pop.mp3` | Pixabay "Pop" — soundreality-pop-423717.mp3 | SoundReality | Pixabay Content License (출처 표기 불필요) | 원본 0.05-0.6s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/bumper.mp3` | Pixabay "Cartoon Kids Logo Sting — Little Loop Laugh" — openmindaudio-cartoon-kids-logo-sting-little-loop-laugh-500897.mp3 | OpenMindAudio | Pixabay Content License (출처 표기 불필요) | 원본 0-1.9s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/zipper.mp3` | Pixabay "zipper" — freesound_community-zipper-43841.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0.15-1.4s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/party_horn.mp3` | Pixabay "Party Blower 5" — floraphonic-party-blower-5-211734.mp3 | floraphonic | Pixabay Content License (출처 표기 불필요) | 원본 0-1.3s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/marimba_note.mp3` | Pixabay "Marimba note struck" — freesound_community-marimba-note-struck-88596.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0-0.8s, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/marimba_1.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/marimba_2.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/marimba_3.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/marimba_4.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/marimba_5.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/marimba_6.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/marimba_7.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/marimba_8.mp3` | Pixabay "Toy Glockenspiel" — freesound_community-toy-glockenspiel-69436.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 4초 간격 8음 중 하나(1→8 낮은음→높은음), 앞뒤 무음 정리·페이드·음량 맞춤 |
