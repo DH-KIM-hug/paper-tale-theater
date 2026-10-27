@@ -327,13 +327,21 @@
   async function run(T) {
     const { el, sleep, say, camTo, camWide, camSnap, josa } = T;
     const LION = '사자', MOUSE = '생쥐';
+    /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'whistle_wobble', 'surprise_sting', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'party_horn']); } catch (e) { /* 소리 없이도 진행 */ }
+    const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) return false; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     /* 그림 미리 불러오기: 첫 장면 그림·생쥐를 기다리고(최대 3초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
     const loads = {};
     Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
     Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
     await Promise.race([Promise.all([loads.bg_savanna, loads.lion_sleep, loads.lion_lie_awake, loads.mouse_walk, loads.mouse_pray, loads.mouse_run, loads.mouse_gnaw,
-      loads.lion_head_yawn, loads.lion_head_laugh].filter(Boolean)), sleep(3000)]);
+      loads.lion_head_yawn, loads.lion_head_laugh].filter(Boolean)), new Promise(r => setTimeout(r, 3000))]);
     const cutArt = (key, o = {}) => artUrl(key) && T.cutImage([{ src: artUrl(key), ...o }], o);
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 놀이판 그림·연출을 누르기 없이 감싼 얇은 함수 =================
@@ -675,10 +683,10 @@
       },
       cam(a) { if (a === 'wide') return; const [x, y, z] = String(a).split(',').map(Number); return inst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 700); },
     };
-    const READ_ACTS = { set: R.set, lion: R.lion, mouse: R.mouse, bubble: R.bubble, board: R.board, net: R.net, scroll: R.scroll, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam };
+    const READ_ACTS = { set: k => { if (k === 'savanna' && !R.sawSav) { R.sawSav = 1; amb('birds_chirp_1'); } else if (k === 'night_net') amb('crickets_night_1', .2, 4); else if (k === 'morning') amb('birds_chirp_2', .2, 4); else stopAmb(); return R.set(k); }, lion: R.lion, mouse: R.mouse, bubble: R.bubble, board: R.board, net: R.net, scroll: R.scroll, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam };
     if (T.reading()) {
       T.director({ cast: { lion: () => rLion, mouse: () => rMouse }, listener: r => (r === 'lion' ? 'mouse' : 'lion'), noFace: ['lion'] });
-      return T.readPlay(READ_ACTS);
+      const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr;
     }
 
 
@@ -696,6 +704,7 @@
     const breathe = lion.parts.bubble.animate([{ transform: 'scale(3)' }, { transform: 'scale(9)' }], { duration: 1300, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
     const snoring = setInterval(() => snore(T), 2600);
     await T.curtain(true);
+    amb('birds_chirp_1');
     snore(T);
     await say('나무 그늘에서 사자가 쿨쿨 낮잠을 자요.');
     await sleep(1600); // 콧방울은 저절로 퐁 (2026-10-19: 톡 조작 줄임)
@@ -747,7 +756,7 @@
     }
     await sleep(200);
     mouse.body.style.transform = 'rotate(-35deg)';
-    T.tone([1400, 500], .9, { type: 'sine', vol: .12 });
+    short('whistle_wobble', .6, 1.6);
     T.pop(760, 150, '쭈르륵~', C.bean);
     const slide = lion.parts.art ? [[831, 265], [850, 341], [915, 500]] : [[925, 250], [975, 360], [880, 500]]; // 갈기 앞면을 따라 쭈르륵
     await mouse.move(slide[0][0], slide[0][1], 260, 'ease-in');
@@ -761,6 +770,7 @@
     roar(T, .25);
     await sleep(400);
     lion.parts.mouth('smile');
+    sfx('surprise_sting', .7);
     await say('어? 사자가 눈을 떴어요!');
 
     /* 거대한 발 컷 */
@@ -935,6 +945,7 @@
 
     /* --- 6. 그물 (밤 숲 하이앵글) --- */
     await T.sceneCard('밤 숲', () => {
+      amb('crickets_night_1', .25, 4);
       T.clear(); camSnap(500, 280, 1); nightHighBG(T);
       lion = mk(T, T.world, 560, 460, drawLionLie, 1.3); lion.parts.eyes('open');
       if (!pic(T, T.world, 'net', 262, 88, 453, 384)) { // 그물 그림(둥근 지붕꼴)이 사자를 덮는다
@@ -1004,6 +1015,7 @@
         if (i > 0) { squeak(T, 1500); mouse.hop(20, 220); await mouse.move(x - 52, 545, 220); }
         mouse.parts.teeth.setAttribute('opacity', 1);
         gnaw(T); T.tone([2600, 2000], .05, { type: 'square', vol: .05, when: .1 });
+        setTimeout(() => sfx('marimba_' + Math.min(8, i + 1), .55), 380); // 줄마다 한 음씩 올라가며 센다
         const r = ropes[i];
         r.mid.remove();
         r.bot.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
@@ -1021,6 +1033,7 @@
     };
     for (let i = 0; i < 10; i++) { cutRope(i); await sleep(250); } // 하나부터 열까지 저절로 (줄마다 숫자를 세며 끊는다)
     await q;
+    sfx('party_horn', .6);
     await sleep(500);
     cnt.remove();
     await (cutArt('cut_gnaw', { sfx: () => gnaw(T), hold: 1600 }) || Promise.resolve()); // 싹둑! (그림 컷만)
@@ -1041,6 +1054,7 @@
     /* --- 8. 친구 (초원 아침 와이드) --- */
     let scroll, rider;
     await T.sceneCard('아침 초원', () => {
+      amb('birds_chirp_2', .25, 4);
       T.clear();
       if (bgUrl('morning_nosun')) {
         // 그림: 아침 초원을 좌우로 번갈아 뒤집어 이어 붙인 긴 띠(이음매가 거울처럼 맞는다)를 통째로 민다
