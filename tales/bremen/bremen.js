@@ -604,13 +604,21 @@
     const wideTower = () => narrow() ? HW_T : { x: 612, y: 410, s: .48 };
     const wideCamera = () => narrow() ? HW_CAM : [545, 300, 1.8];
     const S = makeSounds(T);
+    /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'whistle_up', 'ding_glock', 'coins_1', 'zip_away', 'tiptoe_pizz', 'comic_brass']); } catch (e) { /* 소리 없이도 진행 */ }
+    const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const cue = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
     const pop0 = T.pop; T = { ...T, pop: (x, y, w, c) => pop0(clampX(x, 60 + [...T.tr(w)].length * 12), y, w, c) };
 
     /* 그림 미리 불러오기: 첫 장면(방앗간·당나귀·주인)과 네 친구를 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
     const loads = {};
     Object.keys(BG).filter(k => BG[k]).forEach(k => { loads['bg_' + k] = T.preload(AS + BG[k]).then(ok => { bgOK[k] = ok; }); });
     Object.keys(ART).filter(k => ART[k]).forEach(k => { loads[k] = T.preload(AS + ART[k]).then(ok => { artOK[k] = ok; }); });
-    await Promise.race([Promise.all([loads.bg_mill, ...Object.keys(SPR).map(k => loads[k])].filter(Boolean)), sleep(4000)]);
+    await Promise.race([Promise.all([loads.bg_mill, ...Object.keys(SPR).map(k => loads[k])].filter(Boolean)), new Promise(r => setTimeout(r, 4000))]);
     const bgArt = k => !!bgUrl(k);
 
     /* 배우: 안쪽 '자세' 층(lean)을 따로 두어 납작·시무룩을 hop과 겹치지 않게 한다 */
@@ -1070,7 +1078,7 @@
         if (op === 'flap') { flap(a); T.pop(a.x, 40, '푸드덕!', C.persimmon); return; }
       };
       const acts = {
-        set(k) { if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
+        set(k) { if (k === 'walk') amb('crickets_night_1', .2, 4); else if (k === 'dark') amb('crickets_night_2', .2, 4); else if (k === 'morning') amb('birds_chirp_2', .2, 4); else stopAmb(); if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
         cam(a) { camW(); },
         bush(op) { if (bsh) bsh.animate([{ translate: '0 0' }, { translate: '-6px 0' }, { translate: '6px 0' }, { translate: '0 0' }], { duration: 400, iterations: 2 }); },
         window(op) { // 불빛이 켜진다 (오두막 창)
@@ -1190,7 +1198,7 @@
       ['donkey', 'dog', 'cat', 'rooster', 'miller', 'owl'].forEach(n => { acts[n] = actorVerb(n); });
       return acts;
     })();
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     /* ---------- 1. 방앗간 당나귀 (와이드) ---------- */
     const millArt = millBG(T);
@@ -1202,6 +1210,7 @@
     put(miller, L(720, 650), 500, 1.05);
     camSnap(DX, 330, 1.25);
     await T.curtain(true);
+    amb('birds_chirp_1');
     await say('옛날 옛날, 방앗간에 늙은 당나귀가 살았어요.');
     await sleep(300); // 당나귀 히힝은 저절로 (2026-10-19)
     cast.donkey.cry(); cast.donkey.hop(20); T.pop(DX + 40, 220, '히힝~', C.bean);
@@ -1370,6 +1379,7 @@
     const FS = L(1, .85), OWX = WALK ? 470 : L(860, 650), OWY = WALK ? 84 : 150, GX = L(0, -240), ROAD_Y = WALK ? 484 : 470; // 그림: 길 띠 y 404~520 가운데에 발, 부엉이는 큰 나무 가지(470,80) 위
     const owl = mk('owl');
     await T.sceneCard('캄캄한 숲', () => {
+      amb('crickets_night_1', .25, 4);
       T.clear(); fb = forestBG(T);
       band.forEach(a => { put(a, FX0[a.key], ROAD_Y, (WALK ? 1 : (a.key === 'donkey' ? .85 : 1)) * FS, 'right'); a.lean.style.filter = WALK ? '' : 'brightness(.8)'; });
       put(owl, OWX, OWY, WALK ? .9 : 1.1);
@@ -1393,6 +1403,7 @@
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await walkStep(i); await sleep(800); }
     area.remove();
+    cue('whistle_up', .7);
     await say('닭이 나무 꼭대기로 푸드덕 올라갔어요.');
     flap(cast.rooster);
     await cast.rooster.move(WALK ? 520 : L(620, 560), 150, 700, 'ease-out'); // 그림: 오두막 왼쪽 소나무 꼭대기(밀린 뒤 x≈525, 윗끝 y≈150)
@@ -1488,6 +1499,7 @@
     }
     tower();
     if (lowArt) await towerSong(lowWin);
+    cue('ding_glock', .8);
     await say('당나귀, 강아지, 고양이, 닭! 닭이 창문에 닿았어요!');
     await camTo(lowArt ? TX + 40 : TX, narrow() ? L(190, 205) : 320, narrow() ? 1.6 : 1.3, 900);
 
@@ -1514,6 +1526,7 @@
       camSnap(500, 280, 1);
     }, cast.rooster.pos);
     const countC = setInterval(() => { S.jingle(); rb.forEach((r, i) => setTimeout(() => r.hop(10, 260), i * 90)); }, 900);
+    short('coins_1', .5, 2.2);
     await say('창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.');
     clearInterval(countC); // 두목 목소리와 짤랑 합성음이 겹치지 않게
     T.pop(500, 170, '하하하!', C.bean);
@@ -1621,6 +1634,7 @@
       T.el('text', { x: 200, y: 58, 'text-anchor': 'middle', 'font-size': 50, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('으악, 괴물이다!') }, svg);
     }, { hold: 2200 });
     if (!yelled) S.giggle(); // 컷 목소리가 이어지는 동안 합성 웃음은 생략
+    cue('zip_away', .7);
     await say('도둑들은 "괴물이다!" 하고 숲으로 후다닥 달아났어요.');
     await say('친구 넷은 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.');
 
@@ -1630,12 +1644,14 @@
     const STOPS = L([300, 380, 590, 800, 1150], [485, 540, 720, 700, 1150]); // 세로: 도둑이 눈빛(머리) 오른쪽에 서서 눈을 가리지 않게(2026-10-27 화면에서 잼)
     const thief = rb[0];
     await T.sceneCard('캄캄한 밤', () => {
+      amb('crickets_night_2', .25, 4);
       T.clear(); darkRoomBG(T, Object.fromEntries(SPOTS.map(([k, x]) => [k, x])));
       SPOTS.forEach(([k, x, y, s]) => { put(cast[k], x, y, s, k === 'rooster' ? 'left' : 'right'); cast[k].lean.style.filter = 'brightness(.14)'; doze(cast[k]); });
       put(thief, 1100, 486, 1, 'left');
       thief.lean.style.filter = 'brightness(.6)'; thief.parts.mouth.setAttribute('ry', 2);
       camSnap(500, 280, 1);
     });
+    short('tiptoe_pizz', .6, 3.5);
     await say('한밤중, 도둑 하나가 살금살금 돌아왔어요. 쉿!');
     const REACT = {
       cat: { q: '아궁이 안에서 뭔가 반짝! 톡 눌러 봐요.', pop: '야옹! 할퀴!', say: '도둑: "앗, 따가워! 불씨인 줄 알았는데!"' },
@@ -1682,6 +1698,7 @@
     rb.forEach((r, i) => walk(r, -200 - i * 60, 470, 1400, false));
     await sleep(1200);
     const told = vo('cut_ghost');
+    cue('comic_brass', .6);
     await (artUrl('cut_ghost') ? T.cutImage([{ src: artUrl('cut_ghost'), hold: 3000 }], { hold: 3000 }) : T.cut(svg => {
       const cells = [['cat', 0, 0, '귀신?', 1.25], ['dog', 200, 0, '콕?', 1.2], ['donkey', 0, 150, '거인?', .6], ['rooster', 200, 150, '재판관?', 1.2]];
       T.el('rect', { x: 0, y: 0, width: 400, height: 300, fill: C.cream }, svg);
@@ -1703,6 +1720,7 @@
     const hx = k => HOME[k][0];
     const INST = { donkey: 'drum', dog: 'horn', cat: 'fiddle', rooster: 'bell' };
     await T.sceneCard('우리 집', () => {
+      amb('birds_chirp_2', .25, 4);
       T.clear(); morningBG(T, hx('donkey') - 10, hx('cat'));
       band.forEach(a => put(a, ...HOME[a.key]));
       // 악기 소품 (그림: 북·나팔·바이올린·종. 없으면 임시 도형)
