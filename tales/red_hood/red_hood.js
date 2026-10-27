@@ -227,7 +227,7 @@
     const wolf = mk(T, { peek: ['wolf_peek', 430, 'left'], whisper: ['wolf_whisper', 210, 'left'], granny: ['wolf_granny', 405, 'left'],
       run: ['wolf_run', 150, 'right'], sleep: ['wolf_sleep', 190, 'left'], hiccup: ['wolf_hiccup', 430, 'left'], flee: ['wolf_flee', 150, 'right'],
       jump: ['wolf_jump', 430, 'left'] });
-    const hunter = mk(T, { walk: ['hunter_walk', 290, 'right'], tickle: ['hunter_tickle', 290, 'left'], laugh: ['hunter_laugh', 290, 'left'] });
+    const hunter = mk(T, { walk: ['hunter_walk', 290, 'left'], tickle: ['hunter_tickle', 290, 'left'], laugh: ['hunter_laugh', 290, 'left'] });
     const basket = prop(T, 'basket', 100), bread = prop(T, 'bread', 62), milk = prop(T, 'milk', 105), apple = prop(T, 'apple', 62);
     const frame = prop(T, 'frame', 200);
     widen(T, bread, 96, 96); widen(T, milk, 96, 110); widen(T, apple, 96, 96);

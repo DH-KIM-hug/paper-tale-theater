@@ -1,0 +1,1 @@
+three 0.185.1 (npm). three.module.min.js 는 ./three.core.min.js 를 import 하므로 두 파일을 같은 폴더에 둔다.

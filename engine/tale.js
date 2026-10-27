@@ -972,7 +972,8 @@ const Tale = (() => {
   /* 화면 글자 번역: 영어 모드이고 이 동화에 영어 자료(TEXT_EN·NARRATION_CLIPS_EN)가 있을 때만 영어, 아니면 한국어 그대로 */
   const ENGINE_EN = { '끝내기': 'Exit', '돌려서 크게 보기': 'Rotate for a bigger view', '이야기 시작': 'Start story', '처음으로': 'Home', '다시 보기': 'Watch again', '끝!': 'The End!',
     '자동 재생': 'Auto play', '읽어 주기': 'Read to me', '오늘 동화 끝! 내일 또 만나요': 'The end! See you tomorrow', '한 번 더': 'Once more', '홈으로': 'Home',
-    '오늘은 여기까지! 눈을 쉬어요': 'That is enough for today. Let our eyes rest.', '어른이 +10분': 'Grown-up: +10 min', '어른이 확인해 주세요': 'Grown-ups, please check', '닫기': 'Close' };
+    '오늘은 여기까지! 눈을 쉬어요': 'That is enough for today. Let our eyes rest.', '어른이 +10분': 'Grown-up: +10 min', '어른이 확인해 주세요': 'Grown-ups, please check', '닫기': 'Close',
+    '놀이': 'Play', '스티커북': 'Sticker Book', '종이별': 'Paper Stars', '스티커를 받았어요!': 'You got a sticker!', '종이별 하나 받았어요!': 'You got a Paper Star!', '다섯 개! 동화를 하나 열 수 있어요': 'Five stars! You can open a tale.', '새 친구 스티커!': 'A new friend sticker!' };
   const tr = ko => {
     if (!englishOn()) return ko;
     const t = typeof TEXT_EN !== 'undefined' && TEXT_EN[ko], c = NARRATION_CLIPS_EN[ko];
@@ -1005,6 +1006,12 @@ const Tale = (() => {
     document.title = tr(title);
     readOpt = !!read; // 읽어 주기(READ_ACTS)를 갖춘 동화만
     const home = ROOT_URL + 'index.html';
+    /* 시작 화면 두 변형(APP_SCREENS_PLAN S5): 동화 탭에서 = 큰 '이야기 시작' + 작은 '읽어 주기', 잠자리 탭에서(?read=1) = 큰 '읽어 주기' + 작은 '놀이' */
+    const PLAYB = `<button class="pill go" id="startBtn">${PLAY_SVG}${tr('이야기 시작')}</button>`;
+    const PLAYS = `<button class="pill" id="startBtn">${PLAY_SVG}${tr('놀이')}</button>`;
+    const READB = hide => `<button class="pill read" id="readBtn" type="button"${hide ? ' hidden' : ''}>${BOOK_SVG}${tr('읽어 주기')}</button>`;
+    const readFirst = readOpt && READ_Q;
+    const startPills = readFirst ? READB(false).replace('pill read', 'pill go read') + PLAYS : PLAYB + READB(true);
     document.body.insertAdjacentHTML('beforeend', `
 <div id="tale">
   <div id="stageWrap">
@@ -1027,29 +1034,32 @@ const Tale = (() => {
   <div id="bubble" hidden><p id="bubbleText"></p></div>
   <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
+    <a class="homeIcon" id="homeIcon" href="${home}" aria-label="${tr('처음으로')}"><svg viewBox="0 0 48 48" aria-hidden="true"><path class="a" d="M24 7 L43 24 H5Z"/><rect class="b" x="11" y="23" width="26" height="18" rx="1.5"/><rect class="a" x="20" y="29" width="8" height="12" rx="1"/></svg></a>
     ${AUTO() ? '<i class="autobadge" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5"/><path d="M9.2 7.2 Q9.2 6.3 10 6.8 L17 11.2 Q17.6 12 17 12.8 L10 17.2 Q9.2 17.7 9.2 16.8Z"/></svg></i>' : ''}
     <img class="keyimg" alt="" decoding="async">
     <div class="hero plain"><img alt="" decoding="async"></div>
     <div class="words">
-      <h1 class="paperword ttl">${letters(tr(title))}</h1>
+      <h1 class="paperword ttl" aria-label="${tr(title)}">${letters(tr(title))}</h1>
       ${subtitle ? `<p class="sub">${tr(subtitle)}</p>` : ''}
-      <div class="pills"><button class="pill go" id="startBtn">${PLAY_SVG}${tr('이야기 시작')}</button><button class="pill read" id="readBtn" type="button" hidden>${BOOK_SVG}${tr('읽어 주기')}</button><a class="pill" href="${home}">${tr('처음으로')}</a>${AUTO() ? '' : `<button class="pill auto" id="autoBtn" type="button">${tr('자동 재생')}</button>`}</div>
+      <div class="pills" id="startPills">${startPills}</div>
       ${note ? `<p class="note">${note}</p>` : ''}
     </div>
+    <div class="startHint" id="startHint" hidden aria-hidden="true">${handSvg()}</div>
   </div>
   <div id="endScreen" class="screen back" hidden>
-    <i class="spine" aria-hidden="true"></i><i class="stitch" aria-hidden="true"></i>
-    <button type="button" class="ribbon" id="ribbonBtn" aria-label="${tr('한 번 더')}"></button>
     <div class="bwin"><img class="bimg" alt="" decoding="async"></div>
     <div class="words">
-      <h2 class="paperword ttl">${letters(tr(endTitle))}</h2>
+      <h2 class="paperword ttl" aria-label="${tr(endTitle)}">${letters(tr(endTitle))}</h2>
       <p class="sub" id="endMsg" hidden></p>
       <div class="rbtns">
         <a class="rbtn" id="homeBtn" href="${home}" aria-label="${tr('홈으로')}"><svg viewBox="0 0 48 48" aria-hidden="true"><path class="a" d="M24 7 L43 24 H5Z"/><rect class="b" x="11" y="23" width="26" height="18" rx="1.5"/><rect class="a" x="20" y="29" width="8" height="12" rx="1"/></svg></a>
         <button type="button" class="rbtn" id="againBtn" aria-label="${tr('한 번 더')}"><svg viewBox="0 0 48 48" aria-hidden="true"><path class="s" d="M38 24 A14 14 0 1 1 31 11.8"/><path class="a" d="M26 4 L38 11 L28 20Z"/></svg></button>
       </div>
     </div>
-    <div class="stamp" aria-hidden="true"><img alt="" decoding="async"></div>
+    <div class="aw-tray" id="awTray" hidden>
+      <a class="aw-book" id="awBook" href="${home}#stickers" aria-label="${tr('스티커북')}"><i class="aw-hole"></i></a>
+      <a class="aw-plate" id="awPlate" href="${home}#stickers" aria-label="${tr('종이별')}" hidden><i></i><i></i><i></i><i></i><i></i></a>
+    </div>
     <div id="endConfetti" class="endconf"></div>
   </div>
   <div id="restScreen" class="screen" hidden>
@@ -1113,6 +1123,9 @@ const Tale = (() => {
     };
     const startRun = async () => {
       reading = readWanted(); root.classList.toggle('reading', reading); // 끝 화면 '한 번 더'도 같은 모드로 (read_once 는 홈으로 갈 때 지운다)
+      if (reading && !VERIFY) {   // 잠자리 탭 '최근 들은'
+        try { const k = 'paperTheater.recentRead', id = taleId(), a = JSON.parse(localStorage.getItem(k) || '[]'); localStorage.setItem(k, JSON.stringify([id, ...(Array.isArray(a) ? a : []).filter(x => x !== id)].slice(0, 8))); } catch (err) { /* 기억 못 해도 읽어 준다 */ }
+      }
       try { AudioFX.mediaNarration && AudioFX.mediaNarration(reading); } catch (e) { /* 옛 audio.js */ } // 읽어 주기: 화면이 꺼져도 이어지게 <audio> 로 (누름 안에서 열어 둔다)
       AudioFX.unlock();
       if (PT.due()) { PT.run(false); await restShow(); }
@@ -1126,12 +1139,22 @@ const Tale = (() => {
       busy = true; $('#finBtn').hidden = true;
       await curtain(false);
       $('#endMsg').textContent = tr(msg || ''); // 교훈 문구는 화면에 보이지 않는다(숨김)
-      showEnd();
+      /* 놀이로 직접 끝까지 했을 때만 스티커 1장(처음 한 번)·종이별 1개(하루 1개·앱 모드만은 Entitlements 가 판정).
+         읽어 주기·자동 재생·verify 완주는 주지 않는다. '끝내기'로 나간 경우는 여기까지 오지 않는다 */
+      let award = null;   // 놀이로 직접 끝까지 한 회차만 {sticker, star}. 읽어 주기·자동 재생·검수는 null = 끝 화면에 아무 연출도 없다
+      try {
+        if (!reading && !AUTO() && !VERIFY && typeof Entitlements !== 'undefined') {
+          await loadStickers();                 // 캐릭터 스티커 세트(tales/stickers.js)를 알아야 다음 그림을 정한다
+          award = Entitlements.finishPlay(taleId());
+        }
+      } catch (e) { /* 이용권 없이도 동화는 끝까지 */ }
+      showEnd(award);
     };
-    /* 끝 화면 = 책의 뒤표지: 이야기 끝 그림 창 + 책갈피 리본(한 번 더) + 도장. 그림은 <id>_back_* → 없으면 _key_* → _tile */
-    const showEnd = () => {
+    /* 끝 화면 = 책의 뒤표지: 이야기 끝 그림 창 + 만세 + 집·한 번 더 동그라미 둘. 그림은 <id>_back_* → 없으면 _key_* → _tile
+       놀이로 끝까지 했으면(award) 오른쪽 아래 받은 것 쟁반에서 스티커·종이별이 날아와 앉는다 (APP_SCREENS_PLAN S7) */
+    const showEnd = (award = null) => {
       const es = $('#endScreen'), id = taleId(), base = ROOT_URL + 'assets/thumbs/' + id;
-      /* 리본 색 = BACKACCENT[id]. thumbs.js 가 아직 안 왔으면(?endpreview 등) 온 뒤에 다시 칠한다 */
+      /* 동그라미 버튼 색 = BACKACCENT[id]. thumbs.js 가 아직 안 왔으면(?endpreview 등) 온 뒤에 다시 칠한다 */
       const paint = () => { const ac = (window.BACKACCENT || {})[id]; if (ac) es.style.setProperty('--accent', ac); else es.style.removeProperty('--accent'); };
       paint(); if (!window.BACKACCENT) heroesP.then(paint);
       const kind = () => (portraitMQ.matches ? 'tall' : 'wide');
@@ -1139,15 +1162,20 @@ const Tale = (() => {
       const chain = () => [base + '_back_' + kind() + '.webp', base + '_key_' + kind() + '.webp', base + '_tile.webp'];
       bi.onerror = () => { step++; const c = chain(); if (step < c.length) { es.classList.add('fallback'); bi.src = c[step]; } else bi.removeAttribute('src'); };
       es.classList.toggle('fallback', false); bi.src = chain()[0];
-      const si = es.querySelector('.stamp img'); si.onerror = () => { es.querySelector('.stamp').hidden = true; };
-      es.querySelector('.stamp').hidden = false; si.src = base + '_tile.webp';
       es.hidden = false;
       try { AudioFX.sfx('page_turn_big', .8); } catch (e) { /* 소리 없이 */ }
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) confetti($('#endConfetti'), 26);
+      if (award) awardShow(es, award);
     };
-    $('#ribbonBtn').onclick = start;
-    try { if (new URLSearchParams(location.search).get('endpreview') === '1') { $('#startScreen').hidden = true; showEnd(); } } catch (e) { /* 미리보기 전용 */ }
-    $('#startBtn').onclick = start;
+    try {
+      const ep = new URLSearchParams(location.search).get('endpreview');
+      if (ep === '1') { $('#startScreen').hidden = true; showEnd(); }
+      else if (ep === '2') {   // 보상 연출 미리보기: 실제 finishPlay 로 이번 기기의 보상을 받은 것처럼 끝 화면을 연다(?store=1 이면 종이별도)
+        $('#startScreen').hidden = true;
+        loadStickers().then(() => { let aw = null; try { aw = Entitlements.finishPlay(taleId()); } catch (e) { /* 보상 없이 */ } showEnd(aw); });
+      }
+    } catch (e) { /* 미리보기 전용 */ }
+    $('#startBtn').onclick = () => { playForced = true; try { sessionStorage.removeItem('read_once'); } catch (e) { /* 무시 */ } start(); };   // 놀이를 직접 고르면 ?read=1 이어도 놀이판
     /* 시작 화면: 제목을 톡 하면 한 번 읽어 준다 (홈 제목 녹음이 있으면 그 목소리, 없으면 브라우저 말하기) */
     {
       let clips = null, busyT = false;
@@ -1196,25 +1224,161 @@ const Tale = (() => {
       }, 4000);
     };
     if (AUTO()) autoNet();
-    { const ab = $('#autoBtn'); if (ab) ab.addEventListener('click', () => {
-      if (launching || running) return; launching = true;
-      try { sessionStorage.setItem('auto_once', '1'); } catch (e) { /* 저장 못 하면 이 판은 그냥 시작 */ }
-      try { AudioFX.stopNarration(); Narrator.stop(); } catch (e) { /* 무시 */ }
-      autoNet(); start();
-    }); }
     $('#againBtn').onclick = start;
-    /* 시작 화면 '읽어 주기': 대본·녹음이 있을 때만 보인다. 누르면 이번 회차를 읽어 주기로 사용자 누름 안에서 바로 시작 */
+    /* 시작 화면 '읽어 주기': 대본·녹음이 있을 때만 보인다. 누르면 이번 회차를 읽어 주기로 사용자 누름 안에서 바로 시작.
+       ?read=1(잠자리 탭)로 들어왔는데 읽을 수 없으면(영어 녹음 없음 등) 보통 시작 화면으로 되돌린다 */
     { const rb = $('#readBtn'); if (rb && readOpt) {
-      readAvailable().then(ok => { rb.hidden = !ok; }).catch(() => { /* 숨긴 채로 */ });
+      readAvailable().then(ok => {
+        if (ok) { rb.hidden = false; return; }
+        rb.hidden = true;
+        if (readFirst) { const sb = $('#startBtn'); sb.classList.add('go'); sb.lastChild.textContent = tr('이야기 시작'); }
+      }).catch(() => { rb.hidden = true; });
       rb.addEventListener('click', () => {
         if (launching || running) return; launching = true;
-        readOnce = true; try { sessionStorage.setItem('read_once', '1'); } catch (e) { /* 이 페이지 안에서는 readOnce 로 */ }
+        playForced = false; readOnce = true; try { sessionStorage.setItem('read_once', '1'); } catch (e) { /* 이 페이지 안에서는 readOnce 로 */ }
         try { AudioFX.stopNarration(); Narrator.stop(); } catch (e) { /* 무시 */ }
         start();
       });
     } }
+    /* 시작 화면 열림: 제목을 한 번 읽어 주고(소리가 막혀 있으면 조용히 넘어간다), 5초 동안 아무 입력이 없으면 큰 버튼 위에 손가락 힌트 */
+    {
+      const ss = $('#startScreen'), sh = $('#startHint');
+      let idle = 0;
+      const place = () => {
+        const b = $('#startPills .go') || $('#startBtn'), r = b.getBoundingClientRect(), w = ss.getBoundingClientRect();
+        sh.style.left = (r.left - w.left + r.width / 2 - 18) + 'px'; sh.style.top = (r.top - w.top - 40) + 'px';
+      };
+      const hide = () => { sh.hidden = true; clearTimeout(idle); };
+      const arm = () => { clearTimeout(idle); if (ss.hidden || launching || running) return; idle = setTimeout(() => { if (ss.hidden || launching || running) return; place(); sh.hidden = false; }, 5000); };
+      ss.addEventListener('pointerdown', () => { sh.hidden = true; arm(); });
+      arm();
+      /* 제목 읽기: 시작 화면이 열리고 0.5초 뒤 한 번 (자동 재생·검수 회차는 제외) */
+      setTimeout(() => { if (!AUTO() && !VERIFY && !ss.hidden && !launching && !running) { const tt = $('#startScreen .ttl'); if (tt) tt.click(); } }, 500);
+    }
   }
 
+  /* 3D 보상 연출 모듈(engine/reward3d.js)을 끝 화면에서 처음 필요할 때만 불러온다(동화 페이지마다 태그를 넣지 않는다). 실패해도 DOM 연출로 */
+  function loadReward3d() {
+    if (typeof Reward3D !== 'undefined') return Promise.resolve();
+    return new Promise(res => {
+      const sc = document.createElement('script');
+      sc.src = ROOT_URL + 'engine/reward3d.js?v=20261027r3d1';
+      sc.onload = sc.onerror = () => res();
+      document.head.appendChild(sc);
+      setTimeout(res, 2500);
+    });
+  }
+  /* 캐릭터 스티커 세트 자료(tales/stickers.js)를 한 번만 불러온다. 못 불러와도(오프라인 등) 동화는 그대로 끝난다 */
+  function loadStickers() {
+    if (typeof STICKERS !== 'undefined') return Promise.resolve();
+    return new Promise(res => {
+      const sc = document.createElement('script');
+      sc.src = ROOT_URL + 'tales/stickers.js?v=20261027cast1';
+      sc.onload = sc.onerror = () => res();
+      document.head.appendChild(sc);
+      setTimeout(res, 2500);
+    });
+  }
+  /* 놀이로 끝까지 했을 때의 받은 것 쟁반 (퍼즐 스티커 → 캐릭터 스티커 → 종이별 순서로 0.8초 간격). award = Entitlements.finishPlay 결과 {sticker, star, cast} */
+  function awardShow(es, award) {
+    const tray = $('#awTray'), book = $('#awBook'), plate = $('#awPlate'), id = taleId();
+    const app = typeof Entitlements !== 'undefined' && Entitlements.appMode();
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const bal = () => { try { return Entitlements.starBalance(); } catch (e) { return 0; } };
+    const need = (typeof Entitlements !== 'undefined' && Entitlements.STAR_NEED) || 5;
+    tray.hidden = false; plate.hidden = !app;
+    const dots = [...plate.children];
+    const paintPlate = n => dots.forEach((d, i) => d.classList.toggle('on', i < n));
+    const hole = book.querySelector('.aw-hole');
+    /* 이미 받은 스티커는 쟁반 구멍에 붙어 있다 */
+    const stk = () => `<img alt="" draggable="false" src="${ROOT_URL}assets/thumbs/${id}_tile.webp">`;
+    const had = !award.sticker && (() => { try { return Entitlements.hasSticker(id); } catch (e) { return false; } })();
+    if (had) hole.innerHTML = stk();
+    const after = bal();
+    paintPlate(award.star ? Math.min(need, Math.max(0, after - 1)) : Math.min(need, after));
+    const fly = (html, cls, from, to, ms) => new Promise(res => {
+      if (calm) return res();
+      const el = document.createElement('div'); el.className = 'flyer ' + cls; el.innerHTML = html; document.body.appendChild(el);
+      const fx = from.left + from.width / 2, fy = from.top + from.height / 2, tx = to.left + to.width / 2, ty = to.top + to.height / 2;
+      const sz = el.offsetWidth, at = (x, y, sc, rot) => `translate(${x - sz / 2}px, ${y - sz / 2}px) scale(${sc}) rotate(${rot}deg)`;
+      const a = el.animate([
+        { transform: at(fx, fy, .2, -18), opacity: 0 },
+        { transform: at(fx, fy, 1.12, -8), opacity: 1, offset: .22 },
+        { transform: at(fx, fy - 18, 1, 4), opacity: 1, offset: .34 },
+        { transform: at(tx, ty, .5, 14), opacity: 1 }
+      ], { duration: ms, easing: 'cubic-bezier(.3, .1, .2, 1)', fill: 'forwards' });
+      a.onfinish = a.oncancel = () => { el.remove(); res(); };
+    });
+    const pulse = el => { if (!calm) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(.96)' }, { transform: 'scale(1)' }], { duration: 520, easing: 'ease-out' }); };
+    const say = t => { try { Narrator.speak(tr(t)); } catch (e) { /* 소리 없이 */ } };
+    const sfx = (n, v) => { try { AudioFX.sfx(n, v); } catch (e) { /* 소리 없이 */ } };
+    /* 3D 보상 연출: 퍼즐 스티커 → 캐릭터 스티커 → 종이별(받은 것만)이 가운데서 튀어나와 돌고 반짝이며 스티커북 구멍·별 접시로 날아든다.
+       효과음·음성은 나타날 때(onAppear), 쟁반 갱신·통통은 착지할 때(onLand). WebGL 이 없거나 모듈을 못 불러오면 false → 기존 DOM 연출 */
+    const play3d = async () => {
+      try {
+        await loadReward3d();
+        if (typeof Reward3D === 'undefined' || es.hidden) return false;
+        const items = [];
+        const wantStar = award.star && app;
+        if (award.sticker) items.push({ kind: 'sticker', img: `${ROOT_URL}assets/thumbs/${id}_tile.webp`, target: () => hole.getBoundingClientRect() });
+        if (award.cast) {
+          const c = (Entitlements.castOf(id).find(x => x.k === award.cast)) || null;
+          if (c) items.push({ kind: 'cast', img: /^(https?:|\/)/.test(c.img) ? c.img : ROOT_URL + c.img, target: () => hole.getBoundingClientRect() });
+        }
+        if (wantStar) items.push({ kind: 'star', target: () => (dots[Math.max(0, Math.min(need, after) - 1)] || plate).getBoundingClientRect() });
+        if (!items.length) return true;
+        let said = Promise.resolve(), castShown = false;
+        const queue = t => { said = said.then(() => { try { return Narrator.speak(tr(t)); } catch (e) { return null; } }).catch(() => {}); };
+        const ok = await Reward3D.play({
+          items,
+          onAppear: k => {
+            if (k === 'star') { sfx(after >= need ? 'tada' : 'sparkle', .7); queue(after >= need ? '다섯 개! 동화를 하나 열 수 있어요' : '종이별 하나 받았어요!'); }
+            else { sfx('pop', .8); queue(k === 'cast' ? '새 친구 스티커!' : '스티커를 받았어요!'); }
+          },
+          onLand: k => {
+            if (k === 'star') { paintPlate(Math.min(need, after)); pulse(plate); if (after >= need) plate.classList.add('full'); }
+            else { if (k === 'sticker') hole.innerHTML = stk(); pulse(book); }
+          }
+        });
+        if (!ok) return false;
+        if (!es.hidden) { if (award.sticker) hole.innerHTML = stk(); paintPlate(Math.min(need, after)); }
+        return true;
+      } catch (e) { return false; }
+    };
+    (async () => {
+      await sleep(1000);                                          // '만세!' 1초 뒤
+      if (es.hidden) return;
+      if (await play3d()) return;                                 // 3D 연출(engine/reward3d.js)로 끝냈으면 아래 DOM 연출은 건너뛴다. 못 하면(false) 그대로 아래로
+      if (award.sticker) {
+        await fly(stk(), 'stk', es.querySelector('.bwin').getBoundingClientRect(), hole.getBoundingClientRect(), 1300);
+        hole.innerHTML = stk(); pulse(book);
+        sfx('pop', .8);                                           // 스티커가 붙는 뽁 (sounds/CREDITS.md)
+        say('스티커를 받았어요!');
+        await sleep(900);
+      }
+      if (award.cast && !es.hidden) {                               // 이번에 받은 캐릭터 스티커: 그림이 날아가 스티커북 구멍으로
+        if (award.sticker) await sleep(800);
+        const c = (Entitlements.castOf(id).find(x => x.k === award.cast)) || null;
+        if (c) {
+          const src = /^(https?:|\/)/.test(c.img) ? c.img : ROOT_URL + c.img;
+          await fly(`<img alt="" draggable="false" src="${src}">`, 'cast', es.querySelector('.bwin').getBoundingClientRect(), hole.getBoundingClientRect(), 1300);
+          pulse(book);
+          sfx('pop', .8);
+          say('새 친구 스티커!');
+          await sleep(900);
+        }
+      }
+      if (award.star && app && !es.hidden) {
+        if (award.sticker || award.cast) await sleep(800);
+        const slot = dots[Math.max(0, Math.min(need, after) - 1)];
+        await fly('<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z"/></svg>', 'star', (award.sticker || award.cast) ? book.getBoundingClientRect() : es.querySelector('.bwin').getBoundingClientRect(), slot.getBoundingClientRect(), 1100);
+        paintPlate(Math.min(need, after)); pulse(plate);
+        sfx(after >= need ? 'tada' : 'sparkle', .7);               // 별 반짝(Pixabay Magic Twinkle), 다섯 개째는 짧은 팡파르(Kenney CC0)
+        say(after >= need ? '다섯 개! 동화를 하나 열 수 있어요' : '종이별 하나 받았어요!');
+        if (after >= need) plate.classList.add('full');
+      }
+    })();
+  }
   /* 조작 대기 동안만 입력을 받는다 */
   const input = fn => async (...a) => { busy = false; try { return await fn(...a); } finally { busy = true; } };
 
@@ -1306,7 +1470,8 @@ const Tale = (() => {
   let readOpt = false, reading = false, readInstant = false, readOnce = false;
   const READ_GAP = 700, READ_SCENE_END = 1500;
   const READ_Q = (() => { try { return new URLSearchParams(location.search).get('read') === '1'; } catch (e) { return false; } })();
-  const readWanted = () => { if (!readOpt) return false; if (READ_Q || readOnce) return true; try { return sessionStorage.getItem('read_once') === '1'; } catch (e) { return false; } };
+  let playForced = false;
+  const readWanted = () => { if (!readOpt || playForced) return false; if (READ_Q || readOnce) return true; try { return sessionStorage.getItem('read_once') === '1'; } catch (e) { return false; } };
   /* 홈으로 가면 모드는 남지 않는다 (동화마다 그때그때 고른다) */
   try { addEventListener('pagehide', () => { try { sessionStorage.removeItem('read_once'); } catch (e) { /* 무시 */ } }); } catch (e) { /* 무시 */ }
   const fileOK = async f => {

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reward3D 시험</title>
+<style>
+html,body{margin:0;height:100%;background:#F5EFE9;font-family:system-ui,sans-serif;color:#6B4A32}
+.bar{position:fixed;left:12px;top:12px;display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;font-size:16px;padding:12px 18px;border:0;border-radius:14px;background:#E8703A;color:#fff}
+#book{position:fixed;right:20px;bottom:20px;width:96px;height:96px;border-radius:22px;background:#D9A94E;display:grid;place-items:center;font-size:15px;color:#fff}
+#plate{position:fixed;right:136px;bottom:28px;width:110px;height:70px;border-radius:35px;background:#EBDFC8;display:grid;place-items:center;font-size:14px}
+.pop{animation:pop .5s}@keyframes pop{40%{transform:scale(1.2)}}
+#log{position:fixed;left:12px;bottom:12px;font-size:12px;white-space:pre}
+</style></head><body>
+<div class="bar"><button data-n="1">1개</button><button data-n="2">2개</button><button data-n="3">3개</button><button id="calm">줄인 모션</button></div>
+<div id="plate">별 접시</div><div id="book">스티커북</div><div id="log"></div>
+<script src="../../engine/reward3d.js"></script>
+<script>
+const R='../../', all=[{kind:'sticker',img:R+'assets/thumbs/patjuk_tile.webp',target:()=>book.getBoundingClientRect()},
+ {kind:'cast',img:R+'assets/v3w/bb_belle_stand.webp',target:()=>book.getBoundingClientRect()},
+ {kind:'star',target:()=>plate.getBoundingClientRect()}];
+const log=t=>document.getElementById('log').textContent+=t+'\n';
+function go(n,calm){document.getElementById('log').textContent='';
+ Reward3D.play({items:all.slice(0,n),calm,onAppear:k=>log('appear '+k),onLand:k=>{log('land '+k);const e=k==='star'?plate:book;e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')},onDone:()=>log('done '+JSON.stringify(Reward3D.lastStats))}).then(r=>log('ok='+r))}
+document.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>go(+b.dataset.n));
+calm.onclick=()=>go(3,true);
+const q=new URLSearchParams(location.search);if(q.get('n'))go(+q.get('n'),q.get('calm')==='1');
+</script></body></html>

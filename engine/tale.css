@@ -427,25 +427,13 @@ svg text { font-weight: 800; }
 #tale img, #tale image { -webkit-user-drag: none; }
 
 /* ═════════ 끝 화면 = 책의 뒤표지 (앞표지 = 시작 화면) ═════════
-   앞표지와 같은 종이, 안쪽 색(조금 짙은 따뜻한 크림 한 색). 왼쪽 책등 + 박음질, 위에서 늘어진 책갈피 리본(= 한 번 더),
-   작은 창 속 "이야기 끝" 그림, 동그란 도장, 둥근 종이 아이콘 버튼 두 개 */
+   앞표지와 같은 종이, 안쪽 색(조금 짙은 따뜻한 크림 한 색). 작은 창 속 "이야기 끝" 그림, 둥근 종이 아이콘 버튼 두 개,
+   놀이로 끝냈을 때만 오른쪽 아래 받은 것 쟁반(스티커북 구멍 + 종이별 접시). 리본·책등·박음질·도장은 없다(장식 소품 금지, 2026-10-27) */
 #endScreen.back {
-  --accent: #C0392B; --back: #EBDFC8; --back-dn: #DCCBA8; --stitch: #A9895C; --spine-w: clamp(22px, 3.6vw, 44px);
+  --accent: #C0392B; --back: #EBDFC8; --back-dn: #DCCBA8;
   background: var(--page-grain), var(--back);
-  padding-left: calc(var(--spine-w) + clamp(24px, 4vw, 56px));
   gap: clamp(20px, 4.4vw, 64px); flex-direction: row; overflow: hidden;
 }
-#endScreen.back .spine { position: absolute; left: 0; top: 0; bottom: 0; width: var(--spine-w); background: var(--back-dn); box-shadow: 2px 0 0 rgba(70, 48, 30, .10), 3px 0 7px rgba(70, 48, 30, .22); }
-#endScreen.back .stitch { position: absolute; top: 3.5%; bottom: 3.5%; left: calc(var(--spine-w) + clamp(10px, 1.6vw, 18px)); border-left: 3px dashed var(--stitch); opacity: .85; }
-/* 책갈피 리본: 색종이 한 줄, 아래 끝은 V자로 오림 */
-#endScreen.back .ribbon {
-  position: absolute; top: -4px; right: clamp(40px, 12vw, 160px); width: clamp(48px, 6.2vmin, 68px); height: clamp(120px, 24vmin, 220px); padding: 0; border: 0; cursor: pointer;
-  background: var(--accent); z-index: 4; transform-origin: 50% 0; animation: ribbonSway 4.6s ease-in-out infinite;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%);
-  filter: drop-shadow(2px 4px 2px rgba(60, 36, 24, .30));
-}
-#endScreen.back .ribbon:active { animation-play-state: paused; transform: translateY(3px); }
-@keyframes ribbonSway { 0%, 100% { transform: rotate(-2.4deg); } 50% { transform: rotate(2.4deg); } }
 /* 창: 뒤표지 안쪽에 뚫린 작은 창. 그림은 창 안쪽으로 한 단 내려앉아 있다 */
 #endScreen.back .bwin {
   position: relative; flex: none; overflow: hidden; border-radius: clamp(22px, 4vmin, 40px);
@@ -459,7 +447,7 @@ svg text { font-weight: 800; }
 #endScreen.back .ttl { font-size: clamp(54px, 11vmin, 110px); --let-top: #D0562F; --let-bot: var(--accent); --let-edge: rgba(255, 252, 244, .85); --let-sh: rgba(70, 48, 40, .32); --let-sh-2: rgba(70, 48, 40, .2); }
 #endScreen.back .rbtns { display: flex; gap: clamp(16px, 3vmin, 30px); }
 #endScreen.back .rbtn {
-  display: inline-flex; align-items: center; justify-content: center; width: clamp(64px, 11vmin, 96px); height: clamp(64px, 11vmin, 96px); padding: 0; border: 0; border-radius: 50%; cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center; width: clamp(80px, 11vmin, 96px); height: clamp(80px, 11vmin, 96px); padding: 0; border: 0; border-radius: 50%; cursor: pointer; text-decoration: none;
   background: #F6ECD8; box-shadow: inset 0 1.5px 0 #FFFDF4, 2px 4px 3px rgba(70, 48, 30, .30), 4px 9px 14px rgba(70, 48, 30, .16);
   transition: transform .18s cubic-bezier(.3, 1.6, .5, 1), box-shadow .18s;
 }
@@ -467,20 +455,13 @@ svg text { font-weight: 800; }
 #endScreen.back .rbtn .a { fill: var(--accent); } #endScreen.back .rbtn .b { fill: #A9895C; }
 #endScreen.back .rbtn .s { fill: none; stroke: var(--accent); stroke-width: 6.5; stroke-linecap: butt; }
 #endScreen.back .rbtn:active { transform: translateY(2px); box-shadow: inset 0 1.5px 0 #FFFDF4, 1px 2px 2px rgba(70, 48, 30, .3); }
-#endScreen.back .rbtn:focus-visible, #endScreen.back .ribbon:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
-/* 도장: 동화 그림(tile)을 동그랗게 오려 종이 테두리를 두른 것 */
-#endScreen.back .stamp {
-  position: absolute; right: clamp(16px, 3.4vmin, 40px); bottom: clamp(16px, 3.4vmin, 40px); width: clamp(64px, 11vmin, 108px); aspect-ratio: 1; border-radius: 50%; overflow: hidden;
-  background: #F6ECD8; padding: clamp(4px, .8vmin, 8px); box-sizing: border-box; box-shadow: 2px 4px 3px rgba(70, 48, 30, .28), 3px 8px 12px rgba(70, 48, 30, .14); transform: rotate(-8deg);
-}
-#endScreen.back .stamp img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+#endScreen.back .rbtn:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 #endScreen.back .endconf { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 6; }
 #endScreen.back .endconf span { position: absolute; top: -20px; width: 11px; height: 11px; border-radius: 2px; animation: fall linear forwards; box-shadow: 1px 2px 2px rgba(60, 36, 24, .22); }
 @media (orientation: portrait) {
   #endScreen.back.fallback .bimg { transform: scale(1.38); transform-origin: 50% 33%; object-position: 50% 33%; }
-  #endScreen.back { flex-direction: column; justify-content: center; gap: clamp(14px, 3vh, 34px); padding-top: clamp(80px, 12vh, 150px); }
+  #endScreen.back { flex-direction: column; justify-content: center; gap: clamp(14px, 3vh, 34px); padding-top: clamp(24px, 4vh, 60px); }
   #endScreen.back .bwin { width: min(76vw, 40vh, 620px); aspect-ratio: 1 / 1.15; }
-  #endScreen.back .ribbon { right: clamp(30px, 14vw, 120px); }
 }
 @media (max-width: 520px) and (orientation: portrait) {
   #endScreen.back { padding-right: 20px; }
@@ -490,7 +471,6 @@ svg text { font-weight: 800; }
   #endScreen.back .bwin { width: min(54vw, 100vh); }
   #endScreen.back .ttl { font-size: clamp(40px, 13vh, 70px); }
 }
-@media (prefers-reduced-motion: reduce) { #endScreen.back .ribbon { animation: none; } }
 
 /* 자동 재생이 켜져 있다는 작은 종이 표시 (글자 없음) */
 .autobadge { position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: 16px; width: 34px; height: 34px; z-index: 3; pointer-events: none; filter: drop-shadow(0 2px 2px rgba(46, 36, 28, .35)); }
@@ -507,3 +487,38 @@ svg text { font-weight: 800; }
 .pill .book { width: 1.15em; height: .95em; flex: none; margin-left: -.15em; }
 .pill .book .l { fill: var(--copper); }
 .pill .book .r { fill: #DDA57A; }
+
+/* ═════════ 시작 화면 집 아이콘 · 손가락 힌트 (S5) ═════════ */
+#startScreen .homeIcon {
+  position: absolute; z-index: 6; top: max(14px, env(safe-area-inset-top)); left: max(14px, env(safe-area-inset-left));
+  width: 64px; height: 64px; display: grid; place-items: center; border-radius: 50%; text-decoration: none;
+  background: var(--sheet-up); box-shadow: inset 0 1.5px 0 var(--hi-top), 2px 4px 5px var(--sh-drop), 4px 9px 14px var(--sh-drop-2);
+}
+#startScreen .homeIcon svg { width: 54%; height: 54%; display: block; }
+#startScreen .homeIcon .a { fill: var(--copper); } #startScreen .homeIcon .b { fill: var(--text-3); }
+#startScreen .homeIcon:active { transform: translateY(2px); }
+#startScreen .homeIcon:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; }
+.startHint { position: absolute; z-index: 7; width: 56px; height: 56px; pointer-events: none; }
+.startHint[hidden] { display: none; }
+.startHint svg { width: 100%; height: 100%; filter: drop-shadow(1px 4px 3px rgba(46, 36, 28, .4)); animation: handTap .9s ease-in-out infinite; }
+#startScreen .pills .pill.go.read { min-height: 72px; min-width: 230px; opacity: 1; font-size: clamp(22px, 3.4vmin, 29px); }
+#startScreen .pills .pill.go.read .book { width: 1.2em; }
+
+/* ═════════ 끝 화면: 받은 것 쟁반 (S7) — 스티커북 구멍 + 종이별 접시, 오른쪽 아래 ═════════ */
+#endScreen .aw-tray { position: absolute; z-index: 5; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 16px; }
+#endScreen .aw-tray[hidden] { display: none; }
+#endScreen .aw-book { position: relative; width: 96px; height: 96px; border-radius: 50%; display: block; flex: none; overflow: hidden; background: #DCCBA8; box-shadow: inset 2px 3px 5px rgba(46, 36, 28, .32), inset -1px -1.5px 0 rgba(255, 252, 244, .7); }
+#endScreen .aw-hole { position: absolute; inset: 0; display: grid; place-items: center; }
+#endScreen .aw-hole img { width: 82%; height: 82%; border-radius: 50%; object-fit: cover; border: 4px solid #FBF7F1; box-shadow: 1px 3px 4px rgba(46, 36, 28, .35); }
+#endScreen .aw-plate { display: flex; align-items: center; justify-content: center; gap: 7px; min-width: 128px; height: 80px; padding: 0 16px; border-radius: 40px; background: #F6ECD8; box-shadow: inset 0 1.5px 0 #FFFDF4, 2px 4px 3px rgba(70, 48, 30, .28), 4px 9px 14px rgba(70, 48, 30, .14); text-decoration: none; }
+#endScreen .aw-plate[hidden] { display: none; }
+#endScreen .aw-plate i { width: 17px; height: 17px; border-radius: 50%; background: #DCCBA8; box-shadow: inset 1px 1.5px 2px rgba(46, 36, 28, .3); }
+#endScreen .aw-plate i.on { background: var(--copper); box-shadow: 0 1px 2px rgba(46, 36, 28, .3); }
+#endScreen .aw-plate.full { background: #FBE9C8; box-shadow: 0 0 0 3px var(--copper), 2px 4px 3px rgba(70, 48, 30, .28), 4px 9px 14px rgba(70, 48, 30, .14); }
+.flyer { position: fixed; left: 0; top: 0; z-index: 70; width: 120px; height: 120px; pointer-events: none; will-change: transform; transform-origin: 50% 50%; }
+.flyer.stk img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 6px solid #FBF7F1; box-shadow: 2px 5px 7px rgba(46, 36, 28, .4); display: block; }
+.flyer.cast { width: 150px; height: 150px; }
+.flyer.cast img { width: 100%; height: 100%; object-fit: contain; display: block; filter: drop-shadow(2px 5px 5px rgba(46, 36, 28, .4)); }
+.flyer.star { width: 84px; height: 84px; }
+.flyer.star svg { width: 100%; height: 100%; display: block; fill: var(--copper); filter: drop-shadow(2px 4px 3px rgba(46, 36, 28, .35)); }
+@media (orientation: landscape) and (max-height: 520px) { #endScreen .aw-book { width: 80px; height: 80px; } #endScreen .aw-plate { height: 64px; min-width: 112px; } }
