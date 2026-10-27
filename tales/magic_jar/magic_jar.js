@@ -140,6 +140,7 @@
   const hoeRows = n => n <= 3 ? [n] : n === 4 ? [2, 2] : n === 5 ? [3, 2] : [3, 3];   // 아래 줄부터 채워 항아리 위로 솟아오른다
 
   async function run(T) {
+    try { AudioFX.sfx('magic_wand', 0); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, say, camSnap } = T;
     const tr = T.tr;
@@ -306,7 +307,7 @@
     await say('농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.');
     await sleep(500);
     await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260); lyWig('chili', 3, 400);
-    await T.cutImage([{ src: cutSrc('twohoes'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('twohoes'), sfx: () => AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 3000 }], { hold: 3000 });
     await say('"어머나! 괭이가 두 개가 되었어요!" 아내가 깜짝 놀랐어요.');
     const hoes = [], nHoe = rnd(3, 6);
     let nCoin; do nCoin = rnd(4, 8); while (nCoin === nHoe);
@@ -320,7 +321,7 @@
     await wife.hop(30, 400);
 
     /* --- 4. 엽전 --- */
-    await T.cutImage([{ src: cutSrc('coins'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('coins'), sfx: () => AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 3000 }], { hold: 3000 });
     scene('jarfront');
     hoes.forEach(h => hide(h));
     put(T, jar, 520, 500); put(T, farmer, 270, 500, { look: 'count', to: 'right' }); put(T, wife, 780, 500, { look: 'clap', to: 'left' });
