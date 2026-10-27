@@ -60,7 +60,8 @@
      ],
      "before": [
       "eggs:hatch:4",
-      "pop:500,200,삐약!"
+      "pop:500,200,삐약!",
+      "sfx:duckling_peep:.45"
      ]
     },
     {
@@ -492,7 +493,8 @@
       ]
      ],
      "before": [
-      "geese:hop"
+      "geese:hop",
+      "sfx:geese_swan:.35"
      ]
     },
     {
@@ -599,6 +601,9 @@
        "nar",
        "Before long, it was autumn. The duckling had grown a little and become a young bird."
       ]
+     ],
+     "before": [
+      "sfx:harp_gliss:.4"
      ]
     },
     {
@@ -877,7 +882,8 @@
       ]
      ],
      "before": [
-      "cat:hop"
+      "cat:hop",
+      "sfx:cat_purr:.35"
      ]
     },
     {
@@ -994,6 +1000,9 @@
        "Warm spring came. The duckling grew bigger and bigger.",
        "happy:1.2"
       ]
+     ],
+     "before": [
+      "sfx:harp_gliss:.4"
      ]
     },
     {
@@ -1068,7 +1077,8 @@
      "before": [
       "hero:fly",
       "fx:whoosh",
-      "pop:500,200,훨훨!"
+      "pop:500,200,훨훨!",
+      "sfx:whistle_up:.45"
      ]
     }
    ]
@@ -1096,6 +1106,9 @@
      ],
      "before": [
       "reflection:show"
+     ],
+     "after": [
+      "sfx:drumroll_crash:.5"
      ]
     },
     {
@@ -1140,7 +1153,8 @@
      ],
      "before": [
       "fx:chime",
-      "pop:500,250,백조!"
+      "pop:500,250,백조!",
+      "sfx:ding_glock:.45"
      ]
     },
     {
@@ -1275,6 +1289,9 @@
        "It's okay to be different. Everyone grows up wonderful in their own way.",
        "happy:1.2"
       ]
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     }
    ]
