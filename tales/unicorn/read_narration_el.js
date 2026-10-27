@@ -57,6 +57,19 @@ Object.assign(NARRATION_CLIPS, {
  "다음 날 아침, 다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.": "audio/el/unicorn/nar_3a05f82ba3.mp3",
  "다현이는 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": "audio/el/unicorn/nar_47ba578853.mp3",
  "고마워, 정말 예뻐!": "audio/el/unicorn/uni_2894b8feb3.mp3",
- "너도 누군가에게 친절하면, 너만의 유니콘을 만날 수 있답니다.": "audio/el/unicorn/nar_4be3431181.mp3"
+ "너도 누군가에게 친절하면, 너만의 유니콘을 만날 수 있답니다.": "audio/el/unicorn/nar_4be3431181.mp3",
+ "다현이가 혼잣말을 했어요.": "audio/el/unicorn/nar_3e734da6ac.mp3",
+ "언덕을 오른 다현이가 구름 나라에 다다랐어요.": "audio/el/unicorn/nar_cf92a9a2c7.mp3",
+ "양은 길을 잃어 훌쩍훌쩍 울고 있었어요.": "audio/el/unicorn/nar_4a81519afd.mp3",
+ "다현이가 양 아래에서 두 팔을 벌렸어요.": "audio/el/unicorn/nar_ff507ffc7d.mp3",
+ "다현이는 숲속에서 아픈 사슴을 만났어요.": "audio/el/unicorn/nar_aacf97df0c.mp3",
+ "가시를 뺀 뒤에도 다현이는 숲에서 사슴 곁에 있었어요.": "audio/el/unicorn/nar_69a7c0b401.mp3",
+ "숲을 떠난 다현이는 폭포 앞에 다다랐어요.": "audio/el/unicorn/nar_85bd3be68c.mp3",
+ "말의 배에서 소리가 났어요.": "audio/el/unicorn/nar_195df3a0b9.mp3",
+ "폭포 앞에서 다현이가 배고픈 말에게 말했어요.": "audio/el/unicorn/nar_d514762e98.mp3",
+ "말과 헤어진 다현이가 혼자 길로 나왔어요.": "audio/el/unicorn/nar_11e0895fa9.mp3",
+ "다현이는 그 길을 계속 걷고 있었어요.": "audio/el/unicorn/nar_fbcdd873f6.mp3",
+ "유니콘이 다현이에게 다정하게 말했어요.": "audio/el/unicorn/nar_4ca6dd141b.mp3",
+ "유니콘이 다현이에게 고맙다고 말했어요.": "audio/el/unicorn/nar_fb69fd349f.mp3"
 });
 Object.assign(VOICE_LINES, {});
