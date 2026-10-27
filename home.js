@@ -8,6 +8,7 @@
   const STORE = 'paperTheater.home.v2';
   const RM = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
   const motion = () => !RM.matches;
+  const REVIEW_ON = (() => { try { return new URLSearchParams(location.search).get('review') === '1'; } catch (e) { return false; } })();   // 검수용 '새 그림' 딱지는 ?review=1 일 때만
 
   /* ── 움직임 도구 ── */
   const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
@@ -22,8 +23,6 @@
   };
   /* 떨림 1 → 0 (눌렀을 때 종이가 출렁이다 멈춘다) */
   const wob = (t, z = .3, w = 24) => t < 0 ? 0 : Math.exp(-z * w * t) * Math.cos(w * Math.sqrt(1 - z * z) * t);
-  /* 고정 씨앗 난수: 매번 같은 모양으로 흩어진다 */
-  const rng = seed => () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
 
   function play(dur, seek, done) {
     let alive = true, raf = 0, t0 = 0;
@@ -54,27 +53,22 @@
     try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; }
   }
   function save() {
-    try { localStorage.setItem(STORE, JSON.stringify({ origin: [...sel.origin], skill: [...sel.skill], speak, tagsOff, layout: 2 })); } catch (e) { /* 무시 */ }
+    try { localStorage.setItem(STORE, JSON.stringify({ origin: [...sel.origin], skill: [...sel.skill], layout: 2 })); } catch (e) { /* 무시 */ }
   }
   /* 아직 쓰는 동화가 없는 태그(hideUnused)는 칩을 숨기고, 저장된 선택도 무시한다 */
   TAGS.skill = TAGS.skill.filter(t => !t.hideUnused || TALES.some(x => x.skills.includes(t.key)));
   const saved = load();
   const valid = (row, list) => (Array.isArray(list) ? list : []).filter(k => TAGS[row].some(t => t.key === k));
   const sel = { origin: new Set(valid('origin', saved.origin)), skill: new Set(valid('skill', saved.skill)) };
-  let speak = saved.speak !== false;
-  /* 앱 화면(앱 모드): 큰 동화 하나 + 작은 목록. 태그는 처음엔 숨겨 두고 보호자가 켠다 */
-  /* 웹도 앱과 같은 화면(큰 동화 하나 + 작은 목록, 첫 톡 = 제목 듣기, 두 번째 톡 = 열기). 옛 선반은 ?layout=shelf 로만 본다.
-     storeMode = 앱 스토어 모드(스플래시·잠금·결제). 화면 배치와는 별개다. */
+  /* 웹도 앱과 같은 화면(탭 3개, 동화 탭은 큰 동화 하나 + 작은 목록, 첫 톡 = 제목 듣기, 두 번째 톡 = 열기).
+     storeMode = 앱 스토어 모드(스플래시·잠금·결제). 화면 배치와는 별개다. 옛 선반(?layout=shelf)은 탭을 도입하며 없앴다. */
   const storeMode = typeof Entitlements !== 'undefined' && Entitlements.appMode();
-  const appUI = !/[?&]layout=shelf(&|$)/.test(location.search);
-  if (appUI) document.body.classList.add('app');
+  document.body.classList.add('app');
   if (storeMode) document.body.classList.add('store');
-  if (appUI && saved.layout !== 2) saved.tagsOff = undefined; // 새 화면으로 처음 열면 태그는 접힌 채
-  let tagsOff = saved.tagsOff === true || (appUI && saved.tagsOff === undefined); // 태그 숨기기 (홈 첫 화면을 그림만으로)
 
   /* ── 소리 ── */
   function say(text) {
-    if (!speak || typeof Narrator === 'undefined') return;
+    if (typeof Narrator === 'undefined') return;
     try { Narrator.speak(text); } catch (e) { /* 무시 */ }
   }
   function fx(name) {
@@ -89,7 +83,7 @@
   /* ── 준비 상태: 만드는 중인 동화는 파일이 있으면 연다 ── */
   const readyNow = new Set(TALES.filter(t => t.ready).map(t => t.id));
   /* 지난번에 열렸던 '만드는 중' 동화는 바로 열린 채로 그린다(확인 전에 '곧 열려요'가 잠깐 붙었다 사라지지 않게) */
-  let probed = false;
+  let probed = !!(typeof Entitlements !== 'undefined' && Entitlements.appMode());   // 앱 모드는 카탈로그의 ready 만 열리므로 파일 확인이 필요 없다
   try { JSON.parse(localStorage.getItem('making_open') || '[]').forEach(id => { if (TALES.some(t => t.id === id && t.making)) readyNow.add(id); }); } catch (e) { /* 저장소 없음 */ }
   async function exists(url) {
     try { const r = await fetch(url, { method: 'HEAD', cache: 'no-cache' }); return r.ok; } catch (e) { return false; }
@@ -115,24 +109,6 @@
     : `<svg class="${cls}" aria-hidden="true"><use href="#i-${key}"/></svg>`;
   /* 글자마다 따로 늘었다 줄었다 할 수 있게 한 글자씩 감싼다 (읽기 이름은 aria-label 로) */
   const letters = s => [...s].map(ch => ch === ' ' ? '<i class="sp"> </i>' : `<i>${ch}</i>`).join('');
-
-  function buildChips(row) {
-    const box = document.querySelector(`.tagrow[data-row="${row}"] .chips`);
-    const chip = (key, label, ic) =>
-      `<button type="button" class="chip${key ? '' : ' all'}" data-row="${row}" data-key="${key}" aria-label="${label}">${icon(ic)}<span class="lb" aria-hidden="true">${letters(label)}</span></button>`;
-    box.innerHTML = chip('', '전체', 'all') + TAGS[row].map(t => chip(t.key, (lang === 'en' && t.en) || t.label, t.key)).join('');
-    box.addEventListener('click', e => {
-      const b = e.target.closest('.chip');
-      if (!b) return;
-      const key = b.dataset.key;
-      paper(key && !sel[row].has(key) ? 'up' : 'down'); // 고르면 양각으로 솟고, 풀면 음각으로 눌린다
-      if (!key) { sel[row].clear(); say(row === 'origin' ? '이야기 전체' : '배우는 것 전체'); }
-      else if (sel[row].has(key)) sel[row].delete(key);
-      else { sel[row].add(key); say(TAGS[row].find(t => t.key === key).say); }
-      update();
-      wobble(b);
-    });
-  }
 
   function paintChips() {
     document.querySelectorAll('.chip[data-row]').forEach(b => {
@@ -193,8 +169,32 @@
   const TILE = new Set(window.TILES || []);
   const imgAttrs = 'class="art" alt="" loading="lazy" decoding="async"';
 
-  function holeHTML(t, open, extra = '') {
-    const plug = ((open || (t.making && !probed)) ? '' : '<span class="plug" aria-hidden="true"><b>곧 열려요</b></span>') + extra;   // 확인 전에는 '곧 열려요'를 붙이지 않는다
+  /* ── 그림 딱지: 글자 없이 그림으로 (잠김 = 자물쇠, 이번 주 무료 = 별, 만드는 중 = 가위). 생성 그림 assets/ui/badge_<kind>.webp 가
+     ui.js 의 UI_ART 에 올라오면 그것을 쓰고, 그 전에는 작은 기호(코드)로 대신한다 ── */
+  const UIA = new Set(window.UI_ART || []);
+  const uiImg = (key, cls = '') => `<img class="ui ${cls}" src="assets/ui/${key}.webp" alt="" aria-hidden="true" draggable="false" decoding="async">`;
+  const BADGE_SVG = {
+    lock: '<svg viewBox="0 0 48 56"><path d="M13 24v-7a11 11 0 0 1 22 0v7" fill="none" stroke="#5C6784" stroke-width="5" stroke-linecap="round"/><rect x="6" y="22" width="36" height="28" rx="5" fill="#5C6784"/><circle cx="24" cy="35" r="4" fill="#F5EFE9"/><rect x="22" y="35" width="4" height="9" rx="2" fill="#F5EFE9"/></svg>',
+    week: '<svg viewBox="0 0 48 48"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z" fill="#C98A5B"/></svg>',
+    making: '<svg viewBox="0 0 48 48"><path d="M17 30L37 6M31 30L11 6" stroke="#5C6784" stroke-width="4.5" stroke-linecap="round" fill="none"/><circle cx="13" cy="36" r="6.5" fill="none" stroke="#C98A5B" stroke-width="4"/><circle cx="35" cy="36" r="6.5" fill="none" stroke="#C98A5B" stroke-width="4"/></svg>'
+  };
+  const badge = kind => `<span class="bdg bdg-${kind}" aria-hidden="true">${UIA.has('badge_' + kind) ? uiImg('badge_' + kind) : BADGE_SVG[kind]}</span>`;
+  /* 서가 줄 머리 스티커(64px): assets/ui/row_<줄>.webp 가 있으면 그림, 없으면 태그 아이콘·작은 기호 */
+  const ROW_SVG = {
+    week: '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z" fill="#C98A5B"/></svg>',
+    recent: '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="#DDD2C4"/><circle cx="24" cy="24" r="14" fill="#F5EFE9"/><path d="M24 14v11l7 4" stroke="#5C6784" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>'
+  };
+  const rowIcon = k => UIA.has('row_' + k) ? uiImg('row_' + k, 'ic') : (ROW_SVG[k] || icon(k));
+
+  /* 임시 스티커·구멍 그림 경로: 동화 그림 중 사각 종이 썸네일(_tile)을 쓴다 */
+  const tileSrc = id => TILE.has(id) ? `assets/thumbs/${id}_tile.webp` : PIC2L.has(id) ? `assets/thumbs/${id}_light.webp` : (PIC2.has(id) || PIC.has(id)) ? `assets/thumbs/${id}.webp` : '';
+
+  /* 큰 동화도 작은 목록과 같은 4:3 타일을 쓴다. 키아트(_key_wide/_key_tall)는 동화 시작 화면 전용(2026-10-13 사용자 결정) —
+     홈에 넣으면 키아트의 종이 바탕이 홈 카드 안에서 따로 노는 네모로 보인다 */
+  function holeHTML(t, open, st) {
+    /* 구멍을 덮는 종이 마개: 잠김·만드는 중. 확인 전의 '만드는 중'(웹)은 덮지 않는다 */
+    const covered = st === 'locked' ? 'lock' : (!open && !(t.making && !probed)) ? 'making' : '';
+    const plug = (covered ? `<span class="plug" aria-hidden="true">${badge(covered)}</span>` : '') + (st === 'week' ? badge('week') : '');
     // 밝은 종이 한 가지만 쓴다 (다크 모드 없음). 밝은 판이 없으면 남색 판이라도
     if (TILE.has(t.id)) return `<span class="thumb full tile"><img ${imgAttrs} src="assets/thumbs/${t.id}_tile.webp">${plug}</span>`;
     const dk = PIC2.has(t.id), lt = PIC2L.has(t.id), base = `assets/thumbs/${t.id}`;
@@ -212,48 +212,56 @@
   const L = (ko, en) => lang === 'en' ? en : ko;
   /* 앱에서는 카탈로그가 ready 로 공개한 동화만 열린다 (만드는 중 파일 탐지는 웹 전용) */
   const isOpen = t => readyNow.has(t.id) && (!Entitlements.appMode() || t.ready);
-  function cardHTML(t0) {
+  /* 앱 모드에서 '만드는 중'은 맨 앞의 2~3장만 예고로 보이고 나머지는 숨긴다(웹은 모두 보인다) */
+  const TEASER_MAX = 3;
+  const TEASERS = new Set(TALES.filter(t => !t.ready).slice(0, TEASER_MAX).map(t => t.id));
+  const inScope = t => !storeMode || t.ready || TEASERS.has(t.id);
+  /* o.night = 잠자리 탭 타일(읽어 주기 주소 + 읽기 시간), o.big = 큰 동화 */
+  function cardHTML(t0, o = {}) {
     const t = shown(t0);
     const open = isOpen(t);
     const st = open ? Entitlements.status(t.id) : 'free';
-    const tag = st === 'week' ? `<span class="week-tag" aria-hidden="true"><b>${L('이번 주 무료', 'Free this week')}</b></span>`
-      : st === 'locked' ? `<span class="lock-tag" aria-hidden="true"><b>${L('잠겨 있어요', 'Locked')}</b></span>` : '';
-    const o = ORIGIN[t.origin];
-    const skills = t.skills.map(k => `<span class="sk" title="${SKILL[k].label}">${icon(k)}</span>`).join('');
     const rv = window.REVIEW && window.REVIEW[t.id];
-    let rvOk = false; try { rvOk = rvSeen(JSON.parse(localStorage.getItem('review_ok') || '{}')[t.id], rv); } catch (e) { /* 무시 */ }
-    const rvTag = rv ? `<span class="rv-badge${rvOk ? ' ok' : ''}" data-rv="${t.id}" title="${rv}">${rvOk ? '확인함' : '새 그림'}</span>` : ''; // 임시: review.js
+    let rvTag = '';
+    if (rv && REVIEW_ON) {   // 검수용 '새 그림' 딱지: 주소에 ?review=1 일 때만 (출시 화면에는 없다)
+      let rvOk = false; try { rvOk = rvSeen(JSON.parse(localStorage.getItem('review_ok') || '{}')[t.id], rv); } catch (e) { /* 무시 */ }
+      rvTag = `<span class="rv-badge${rvOk ? ' ok' : ''}" data-rv="${t.id}" title="${rv}">${rvOk ? '확인함' : '새 그림'}</span>`;
+    }
+    const extra = o.night ? `<span class="rmin">${t0.readMin ? L(`${t0.readMin}분`, `${t0.readMin} min`) : ''}${lang === 'en' && !t0.readEn ? `<em>${L('한국어만', 'Korean only')}</em>` : ''}</span>` : '';
     const inner = `${rvTag}
-      ${holeHTML(t, open, tag)}
-      <span class="label">
-        <strong class="title">${t.title}</strong>
-        <span class="line">${t.line}</span>
-        <span class="tags"><span class="org" title="${o.label}">${icon(t.origin)}${(t.also || []).map(k => icon(k)).join('')}</span>${skills}</span>
-      </span>`;
-    const attrs = `data-id="${t.id}" data-origin="${t.origin}"`;
+      ${holeHTML(t, open, st)}
+      <span class="label"><strong class="title">${t.title}</strong>${extra}</span>`;
+    const href = `tales/${t.folder || t.id}/index.html${o.night ? '?read=1' : ''}`;
+    const attrs = `data-id="${t.id}" data-origin="${t.origin}"${o.night ? ' data-night="1"' : ''}`;
     if (st === 'locked') {
       return `<div class="card locked" role="button" tabindex="0" aria-label="${t.title}, ${L('잠겨 있어요', 'locked')}" ${attrs}>${inner}</div>`;
     }
     return open
-      ? `<a class="card" href="tales/${t.folder || t.id}/index.html" ${attrs}>${inner}</a>`
-      : `<div class="card closed" role="button" tabindex="0" aria-disabled="true" aria-label="${t.title}, 곧 열려요" ${attrs}>${inner}</div>`;
+      ? `<a class="card" href="${href}" aria-label="${t.title}${st === 'week' ? ', ' + L('이번 주 무료', 'free this week') : ''}${o.night ? ', ' + L('읽어 주기', 'read aloud') : ''}" ${attrs}>${inner}</a>`
+      : `<div class="card closed" role="button" tabindex="0" aria-disabled="true" aria-label="${t.title}, ${L('곧 열려요', 'coming soon')}" ${attrs}>${inner}</div>`;
   }
 
-  /* ── 앱 화면의 큰 동화(히어로): 화살표를 톡 눌러 넘기고, 큰 카드를 톡 눌러 연다. 옆으로 밀어도 넘어간다(덤) ── */
+  /* ── 앱 화면의 큰 동화(히어로): 화살표를 톡 눌러 넘기고, 큰 카드를 톡 눌러 연다. 옆으로 밀어도 넘어간다(덤) ──
+     큰 동화 아래에는 제목만 둔다(보호자용 한 줄 소개·태그 아이콘은 보호자 영역 '동화 찾기'로 옮겼다). 잠긴·만드는 중 동화는 올라오지 않는다 */
   let heroId = null, heroList = [], heroDir = 0;
-  const lastKey = 'paperTheater.last';
+  const lastKey = 'paperTheater.last', recentKey = 'paperTheater.recent', recentReadKey = 'paperTheater.recentRead';
+  const APP_VERSION = '1.0.0';   // package.json 과 같게 (보호자 영역 '정보'에 보임)
+  const readList = k => { try { const a = JSON.parse(localStorage.getItem(k) || '[]'); return Array.isArray(a) ? a.filter(x => typeof x === 'string') : []; } catch (e) { return []; } };
+  function pushRecent(id) {
+    try { localStorage.setItem(recentKey, JSON.stringify([id, ...readList(recentKey).filter(x => x !== id)].slice(0, 8))); } catch (e) { /* 기억 못 해도 동화는 열린다 */ }
+  }
   function renderHero() {
     const hero = $('#hero');
-    if (!appUI) return;
     hero.hidden = heroList.length === 0;
-    if (!heroList.length) return;
+    if (!heroList.length) { $('#heroStrip').hidden = true; return; }
     if (!heroList.some(t => t.id === heroId)) heroId = heroList[0].id;
     const t = heroList.find(x => x.id === heroId);
     const slot = $('#heroSlot');
-    slot.innerHTML = cardHTML(t);
+    slot.innerHTML = cardHTML(t, { big: true });
     const n = heroList.length;
     $('#heroPrev').hidden = $('#heroNext').hidden = n < 2;
-    document.querySelectorAll('#grid .card').forEach(c => c.classList.toggle('sel', c.dataset.id === heroId));
+    document.querySelectorAll('#rows .card').forEach(c => c.classList.toggle('sel', c.dataset.id === heroId));
+    $('#heroStrip').textContent = shown(t).title;
     if (heroDir && motion()) {
       slot.firstElementChild.animate([{ transform: `translateX(${heroDir * 56}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 260, easing: 'cubic-bezier(.2,.8,.2,1)' });
     }
@@ -267,14 +275,16 @@
     paper('tap');
     renderHero();
     const t = heroList.find(x => x.id === heroId);
-    say(t.title);
+    say(shown(t).title);
   }
+  /* 작은 타일 톡 = 제목 읽기 + 큰 동화로 올라옴(스크롤했으면 맨 위로 부드럽게) */
   function heroSelect(id) {
     heroId = id; heroDir = 0; renderHero();
     const t = heroList.find(x => x.id === id);
-    if (t) say(t.title);
+    if (t) say(shown(t).title);
+    try { $('#view-tales').scrollTo({ top: 0, behavior: motion() ? 'smooth' : 'auto' }); $('#rows').scrollTo({ top: 0, behavior: motion() ? 'smooth' : 'auto' }); } catch (e) { /* 스크롤 못 해도 큰 동화는 바뀐다 */ }
   }
-  if (appUI) {
+  {
     $('#heroPrev').addEventListener('click', () => heroStep(-1));
     $('#heroNext').addEventListener('click', () => heroStep(1));
     let sx = null;
@@ -291,97 +301,75 @@
       wheelAt = now; heroStep(d > 0 ? 1 : -1);
     }, { passive: false });
     hz.addEventListener('click', e => { if (hz.dataset.swiped) { e.preventDefault(); e.stopPropagation(); } }, true);
+    /* 큰 동화가 스크롤로 가려지면 머리줄 아래에 얇은 제목 띠만 남긴다. 띠를 톡 = 맨 위로 */
+    const strip = $('#heroStrip');
+    if (window.IntersectionObserver) new IntersectionObserver(es => { const e = es[es.length - 1]; strip.hidden = e.intersectionRatio > .25 || $('#hero').hidden; }, { root: $('#view-tales'), threshold: [0, .1, .25, .5, 1] }).observe(hz);   // 큰 동화가 4분의 3 넘게 가려지면 띠
+    strip.addEventListener('click', () => { paper('tap'); try { $('#view-tales').scrollTo({ top: 0, behavior: motion() ? 'smooth' : 'auto' }); } catch (e) { /* 무시 */ } });
   }
 
-  /* 선반 다시 그리기 + FLIP:
-     · 남는 카드 = 예전 자리에서 새 자리로 스프링으로 미끄러지고, 살짝 앞으로 튀어나온다
-     · 새로 들어오는 카드 = 종이에 구멍이 가운데서부터 스프링으로 뚫리며 열린다(차례로)
-     · 빠지는 카드 = 제자리에 둔 채 구멍이 오므라들며 사라진다 */
-  let gridAnim = null, pending = false;
+  /* ── S1 서가 줄 7개: 이번 주 무료(앱 모드만) · 최근 본 · 창작 · 공주 · 동물(이솝) · 우리나라 · 세계. 비는 줄은 숨기고, 같은 동화가 여러 줄에 나와도 된다.
+     동화는 모두 origin 이 하나 있으므로 31편이 최소 한 줄에는 보인다 ── */
+  const ROWS = [
+    { k: 'week', ko: '이번 주 무료', en: 'Free this week', pick: () => storeMode ? Entitlements.freeThisWeek().map(id => TALES.find(t => t.id === id)).filter(Boolean) : [] },
+    { k: 'recent', ko: '최근 본', en: 'Recently played', pick: () => readList(recentKey).map(id => TALES.find(t => t.id === id)).filter(Boolean) },
+    { k: 'original', ko: '창작 동화', en: 'Original tales', pick: () => TALES.filter(t => t.origin === 'original') },
+    { k: 'princess', ko: '공주', en: 'Princesses', pick: () => TALES.filter(t => (t.also || []).includes('princess')) },
+    { k: 'aesop', ko: '동물 이야기', en: 'Animal tales', pick: () => TALES.filter(t => t.origin === 'aesop') },
+    { k: 'korean', ko: '우리나라 옛이야기', en: 'Korean tales', pick: () => TALES.filter(t => t.origin === 'korean') },
+    { k: 'world', ko: '세계 옛이야기', en: 'World tales', pick: () => TALES.filter(t => t.origin === 'world') }
+  ];
+  /* 열린 것 → 잠긴 것 → 만드는 중 순서로 (카탈로그 순서는 그대로) */
+  const playable = t => isOpen(t) && Entitlements.canPlay(t.id);
+  const rank = t => playable(t) ? 0 : isOpen(t) ? 1 : 2;
+  const byRank = list => list.map((t, i) => [t, i]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(x => x[0]);
+  let introPending = false;
   function render(opts = {}) {
-    if (gridAnim) gridAnim.finish();
-    const grid = $('#grid');
-    const g0 = grid.getBoundingClientRect();
-    const before = new Map();
-    grid.querySelectorAll('.slot:not([hidden])').forEach(s => {
-      const r = s.getBoundingClientRect();
-      before.set(s.dataset.id, { x: r.left - g0.left, y: r.top - g0.top, w: r.width, h: r.height, open: !!s.querySelector('a.card') });
-    });
-    const animate = opts.anim !== false && motion() && (before.size > 0 || opts.intro);
-    const playable = t => isOpen(t) && Entitlements.canPlay(t.id);
-    const sorted = [...TALES.filter(playable), ...TALES.filter(t => isOpen(t) && !playable(t)), ...TALES.filter(t => !isOpen(t))];
-    let shown = 0;
-    if (appUI) { heroList = sorted.filter(match); try { if (!heroId) heroId = localStorage.getItem(lastKey); } catch (e) { /* 무시 */ } }
-    grid.innerHTML = sorted.map(t => {
-      const m = match(t), b = before.get(t.id);
-      if (m) shown++;
-      if (!m && b && animate) {
-        return `<li class="slot leaving" data-id="${t.id}" style="left:${b.x}px;top:${b.y}px;width:${b.w}px;height:${b.h}px">${cardHTML(t)}</li>`;
-      }
-      return `<li class="slot" data-id="${t.id}"${m ? '' : ' hidden'}>${cardHTML(t)}</li>`;
+    const rowsEl = $('#rows');
+    const seen = TALES.filter(t => inScope(t) && match(t));
+    const vis = new Set(seen.map(t => t.id));
+    heroList = TALES.filter(t => vis.has(t.id) && playable(t));
+    try { if (!heroId) heroId = localStorage.getItem(lastKey); } catch (e) { /* 무시 */ }
+    rowsEl.innerHTML = ROWS.map(r => {
+      const list = r.k === 'week' || r.k === 'recent' ? r.pick().filter(t => vis.has(t.id)) : byRank(r.pick().filter(t => vis.has(t.id)));
+      if (!list.length) return '';
+      return `<section class="row" data-row="${r.k}" aria-label="${L(r.ko, r.en)}"><h3 class="row-h"><span class="row-ic">${rowIcon(r.k)}</span><span class="row-t">${L(r.ko, r.en)}</span></h3>
+        <div class="row-scroll">${list.map(t => `<div class="slot" data-id="${t.id}">${cardHTML(t)}</div>`).join('')}</div></section>`;
     }).join('');
-    $('#empty').hidden = shown > 0;
+    const none = seen.length === 0;
+    $('#empty').hidden = !none;
+    if (none && !emptySaid) { emptySaid = true; say(L('이 조합의 이야기는 아직 없어요', 'No tales match yet')); }
+    if (!none) emptySaid = false;
     renderHero();
-    if (!animate) return;
-
-    const g1 = grid.getBoundingClientRect(), vh = innerHeight, items = [];
-    const delay0 = opts.delay || .04, step = opts.step || .045;
-    let k = 0;
-    grid.querySelectorAll('.slot:not([hidden])').forEach(s => {
-      const card = s.firstElementChild, id = s.dataset.id, hole = card.querySelector('.thumb');
-      if (s.classList.contains('leaving')) { items.push({ kind: 'out', card, hole }); return; }
-      const r = s.getBoundingClientRect(), b = before.get(id);
-      if (b) {
-        items.push({ kind: 'stay', card, dx: b.x - (r.left - g1.left), dy: b.y - (r.top - g1.top) });
-      } else {
-        const seen = r.top < vh && r.bottom > 0;
-        items.push({ kind: 'in', card, hole, at: delay0 + (seen ? Math.min(k++ * step, .45) : 0) });
-      }
-    });
-    items.forEach(it => it.card.classList.add('anim'));
-    const iris = (el, f) => { el.style.clipPath = `circle(${(Math.max(0, f) * 72).toFixed(2)}% at 50% 50%)`; };
-    gridAnim = play(delay0 + .95, t => {
-      for (const it of items) {
-        const c = it.card;
-        if (it.kind === 'out') {
-          const q = eio(t / .3);
-          c.style.opacity = (1 - q).toFixed(3);
-          iris(it.hole, 1 - q);
-        } else if (it.kind === 'stay') {
-          const s = spring(t, .62, 16), pop = Math.sin(Math.PI * clamp(t / .42)) * .04;
-          tf(c, it.dx * (1 - s), it.dy * (1 - s), 1 + pop, 0);
-        } else {
-          const tt = t - it.at, s = spring(tt, .5, 14);
-          c.style.opacity = clamp(tt / .08).toFixed(3);
-          iris(it.hole, tt <= 0 ? 0 : .06 + .94 * s);
-          tf(c, 0, 10 * (1 - clamp(s)), 1, 0);
-        }
-      }
-    }, () => {
-      grid.querySelectorAll('.slot.leaving').forEach(s => { s.hidden = true; s.classList.remove('leaving'); s.removeAttribute('style'); });
-      items.forEach(it => {
-        untf(it.card);
-        it.card.classList.remove('anim');
-        if (it.hole) it.hole.style.clipPath = '';
+    renderNight(); drawStickers();
+    if ((opts.intro || introPending) && motion() && opts.anim !== false) {     // 처음 열릴 때: 타일이 차례로 살짝 떠오른다
+      introPending = false;
+      let k = 0;
+      rowsEl.querySelectorAll('.card').forEach(c => {
+        const r = c.getBoundingClientRect();
+        if (r.top > innerHeight || r.bottom < 0) return;
+        c.animate([{ opacity: 0, transform: 'translateY(12px) scale(.96)' }, { opacity: 1, transform: 'none' }], { duration: 380, delay: Math.min(k++, 14) * 30 + (opts.delay || 0) * 1000, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' });
       });
-      gridAnim = null;
-      if (pending) { pending = false; render(); }
-    });
+    }
   }
-  /* 준비 확인처럼 급하지 않은 다시 그리기는 지금 움직임이 끝난 뒤에 */
-  function requestRender() {
-    if (gridAnim && gridAnim.alive) pending = true;
-    else render();
-  }
+  let emptySaid = false;
+  const requestRender = () => render({ anim: false });
 
-  /* ── 언어 바꾸기: 영어 자료가 있는 동화만 영어로 (나머지는 한국어 그대로) ── */
-  const langBtn = $('#langToggle');
+  /* ── 언어: 영어 자료가 있는 동화만 영어로 (나머지는 한국어 그대로). 바꾸는 곳은 보호자 영역 ── */
   function paintLang() {
-    langBtn.querySelector('.lg-t').textContent = lang === 'en' ? '한' : 'EN';
-    langBtn.setAttribute('aria-label', lang === 'en' ? '한국어로 보기' : 'Switch language: English');
-    langBtn.classList.toggle('on', lang === 'en');
     document.documentElement.lang = lang;
     paintLogo();
+    /* 보조기기용 이름도 언어를 따른다 */
+    const set = (sel, v) => { const el = $(sel); if (el) el.setAttribute('aria-label', v); };
+    set('#tabs', L('메뉴', 'Menu'));
+    set('#parentBtn', L('보호자 메뉴: 1초 동안 누르세요. 화면 읽기 기능을 쓰면 두 번 탭해도 열려요', 'Grown-up menu: press and hold for 1 second. With a screen reader, double-tap'));
+    set('#hero', L('오늘의 동화', 'Featured tale'));
+    set('#heroPrev', L('이전 동화', 'Previous tale'));
+    set('#heroNext', L('다음 동화', 'Next tale'));
+    set('#view-tales', L('동화', 'Tales'));
+    set('#view-night', L('잠자리', 'Bedtime'));
+    set('#view-stickers', L('스티커북', 'Sticker Book'));
+    set('#pzRow', L('퍼즐판', 'Puzzle boards'));
+    set('#guardList', L('보호자 항목', 'Grown-up items'));
   }
   function paintLogo() {
     const logo = $('.logo'), words = lang === 'en' ? ['Tok', 'Tok', 'Tale', 'Theater'] : ['톡', '톡', '동', '화', '극', '장'], gapAt = 2;
@@ -389,37 +377,10 @@
       words.map((w, i) => `<span class="lt${i === gapAt ? ' gap' : ''}${lang === 'en' && i < 3 ? ' w' : ''}" aria-hidden="true">${w}</span>`).join('');
     document.title = L('톡톡 동화극장', 'Tok Tok Tale Theater');
   }
-  langBtn.addEventListener('click', () => {
-    lang = lang === 'en' ? 'ko' : 'en';
-    try { localStorage.setItem('lang', lang); } catch (e) { /* 저장 못 해도 이 화면은 바뀐다 */ }
-    paper('down');
-    paintLang();
-    render({ anim: false });
-  });
   paintLang();
 
-  /* ── 태그 숨기기/보이기: 숨기면 격자가 화면을 넓게 쓴다. 고른 태그는 그대로 적용되고, 버튼에 개수만 표시 ── */
-  const tagBtn = $('#tagToggle');
-  function paintTagToggle() {
-    const n = sel.origin.size + sel.skill.size;
-    $('#home').classList.toggle('tags-off', tagsOff);
-    tagBtn.setAttribute('aria-expanded', String(!tagsOff));
-    tagBtn.setAttribute('aria-label', tagsOff ? '태그 보이기' : '태그 숨기기');
-    tagBtn.classList.toggle('on', !tagsOff);
-    const badge = tagBtn.querySelector('.tt-n');
-    badge.hidden = !(tagsOff && n); badge.textContent = n;
-  }
-  tagBtn.addEventListener('click', () => {
-    tagsOff = !tagsOff;
-    paper(tagsOff ? 'down' : 'up');
-    paintTagToggle();
-    render({ anim: false });
-    save();
-  });
-  paintTagToggle();
-
   function update(opts) {
-    try { paintTagToggle(); paintChips(); } catch (e) { console.error(e); } // 칩 표시가 틀어져도 동화 목록은 반드시 그린다
+    try { paintChips(); paintFilterOn(); } catch (e) { console.error(e); } // 칩 표시가 틀어져도 동화 목록은 반드시 그린다
     render(opts);
     save();
   }
@@ -433,6 +394,7 @@
     const href = card.getAttribute('href');
     if (leavingPage) return;
     try { localStorage.setItem(lastKey, card.dataset.id); } catch (e) { /* 무시 */ }
+    if (!card.dataset.night) pushRecent(card.dataset.id);
     leavingPage = true;
     let gone = false;
     const go = () => { if (!gone) { gone = true; location.href = href; } };
@@ -489,123 +451,112 @@
     if (!c || c.closest('.leaving')) return;
     const t = TALES.find(x => x.id === c.dataset.id);
     const inHero = !!c.closest('#hero');
-    if (appUI && !inHero && c.dataset.id !== heroId) { e.preventDefault(); paper('tap'); heroSelect(c.dataset.id); return; }
+    /* 잠긴 동화는 큰 동화로 올라오지 않고, 어디를 눌러도 아이용 잠김 쪽지(S4)가 먼저 열린다 */
+    if (c.classList.contains('locked')) { e.preventDefault(); paper('down'); peek(c); openLock(t.id); return; }
+    /* 만드는 중: 마개가 들썩이고 '곧 열려요' (큰 동화로는 올라오지 않는다) */
     if (c.classList.contains('closed')) {
       e.preventDefault();
       paper('down');
       peek(c);
-      say(`${t.title}. 곧 열려요.`);
+      say(L(`${shown(t).title}. 곧 열려요.`, `${shown(t).title}. Coming soon.`));
       return;
     }
-    if (c.classList.contains('locked')) {
-      e.preventDefault();
-      paper('down');
-      peek(c);
-      openStore(t.id);
-      return;
-    }
+    if (!inHero && c.dataset.id !== heroId) { e.preventDefault(); paper('tap'); heroSelect(c.dataset.id); return; }
     paper('tap');
     try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (err) { /* 무시 */ }
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;   // 새 탭 열기는 그대로
     e.preventDefault();
     openTale(c);
   }
-  $('#grid').addEventListener('click', activate);
+  $('#rows').addEventListener('click', activate);
   $('#heroSlot').addEventListener('click', activate);
   const cardKey = e => {
     if ((e.key === 'Enter' || e.key === ' ') && (e.target.classList.contains('closed') || e.target.classList.contains('locked'))) { e.preventDefault(); e.target.click(); }
   };
-  $('#grid').addEventListener('keydown', cardKey);
+  $('#rows').addEventListener('keydown', cardKey);
+  $('#nightBody').addEventListener('keydown', cardKey);
   $('#heroSlot').addEventListener('keydown', cardKey);
 
-  function resetFilters() { sel.origin.clear(); sel.skill.clear(); update(); }
-  $('#emptyReset').addEventListener('click', () => { paper('down'); resetFilters(); });
-
-  /* ── 보호자 메뉴: 톱니를 1초 동안 눌러야 열린다 ── */
-  const gear = $('#parentBtn'), panel = $('#parentPanel'), hint = $('#hint'), sheet = panel.querySelector('.sheet');
-  let holdTimer = 0, hintTimer = 0, opened = false, panelAnim = null;
-  function holdStart(e) {
-    if (e.button !== undefined && e.button !== 0) return;
-    opened = false;
-    gear.classList.add('holding');
-    clearTimeout(holdTimer);
-    holdTimer = setTimeout(() => { opened = true; gear.classList.remove('holding'); openPanel(); }, 1000);
+  /* ── 꾹 누르기: 톱니(1초)·'어른이 열기'(1초)·부모 확인 정답(1.5초)이 같은 부품을 쓴다.
+     누르는 동안 .holding 이 붙고(CSS 가 --hold 시간 동안 채움), 끝까지 누르면 done, 중간에 떼면 early ── */
+  function holdable(el, ms, done, early) {
+    let timer = 0, fired = false;
+    el.style.setProperty('--hold', ms + 'ms');
+    const start = e => {
+      if (e.button) return;
+      fired = false;
+      el.classList.add('holding');
+      clearTimeout(timer);
+      timer = setTimeout(() => { fired = true; el.classList.remove('holding'); done(); }, ms);
+    };
+    const end = () => {
+      if (!el.classList.contains('holding')) return;
+      el.classList.remove('holding');
+      clearTimeout(timer);
+      if (!fired && early) early();
+    };
+    el.addEventListener('pointerdown', start);
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => el.addEventListener(ev, end));
+    el.addEventListener('contextmenu', e => e.preventDefault());
+    /* VoiceOver·스위치 컨트롤의 '활성화'는 손가락 누름 없이 click(detail 0)만 보낸다 → 꾹 누르기 대신 바로 통과시킨다.
+       아이의 손가락 톡은 pointerdown 이 먼저 오고 detail 이 1 이상이라 여기로 오지 않는다 */
+    el.addEventListener('click', e => { if (e.detail === 0 && e.isTrusted && !e.pointerType) { e.preventDefault(); clearTimeout(timer); el.classList.remove('holding'); done(); } });
+    el.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) { e.preventDefault(); start(e); } });
+    el.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') end(); });
   }
-  function holdEnd() {
-    if (!gear.classList.contains('holding')) return;
-    gear.classList.remove('holding');
-    clearTimeout(holdTimer);
-    if (!opened) {
-      hint.hidden = false;
-      clearTimeout(hintTimer);
-      hintTimer = setTimeout(() => { hint.hidden = true; }, 1800);
-    }
-  }
-  gear.addEventListener('pointerdown', holdStart);
-  ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => gear.addEventListener(ev, holdEnd));
-  gear.addEventListener('contextmenu', e => e.preventDefault());
 
-  /* 보호자 쪽지: 아래에서 튀어 올라와 기울어진 채 내려앉는다 */
-  function openPanel() {
-    if (panelAnim) panelAnim.finish();
+  /* ── 쪽지 열고 닫기: 아래에서 튀어 올라와 기울어진 채 내려앉는다(gentle = 큰 종이는 살짝 떠오르기만) ── */
+  function showModal(el, sheet, o = {}) {
+    if (el._a) el._a.finish();
     hint.hidden = true;
-    $('#optSpeak').checked = speak; $('#optCaption').checked = !captionsOff();
-    $('#captionLbl').textContent = L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'); 
-    $('#optAuto').checked = autoOn(); $('#autoLbl').textContent = L('자동 재생 (톡·퀴즈 없이 이야기만 틀어 주기)', 'Auto-play (no taps or quizzes — just watch and listen)');
-    drawTimer();
-    panel.hidden = false;
-    $('#parentClose').focus();
-    panelAnim = play(.7, t => {
-      panel.style.opacity = eo(t / .18).toFixed(3);
+    el.hidden = false;
+    const f = o.focus && el.querySelector(o.focus); if (f) f.focus({ preventScroll: true });
+    el._a = play(o.gentle ? .35 : .7, t => {
+      el.style.opacity = eo(t / .18).toFixed(3);
+      if (o.gentle) { tf(sheet, 0, 28 * (1 - eo(t / .35)), 1, 0); return; }
       const s = spring(t, .48, 15);
       tf(sheet, 0, 60 * (1 - s), .9 + .1 * s, -5 * (1 - s));
-    }, () => { panel.style.opacity = ''; untf(sheet); });
+    }, () => { el.style.opacity = ''; untf(sheet); });
   }
-  function closePanel() {
-    if (panel.hidden) return;
-    if (panelAnim) panelAnim.finish();
-    panelAnim = play(.2, t => {
+  function hideModal(el, sheet, after) {
+    if (el.hidden) return;
+    if (el._a) el._a.finish();
+    el._a = play(.2, t => {
       const q = eio(t / .2);
-      panel.style.opacity = (1 - q).toFixed(3);
+      el.style.opacity = (1 - q).toFixed(3);
       tf(sheet, 0, 24 * q, 1 - .06 * q, 2 * q);
-    }, () => { panel.hidden = true; panel.style.opacity = ''; untf(sheet); });
+    }, () => { el.hidden = true; el.style.opacity = ''; untf(sheet); if (after) after(); });
   }
-  $('#parentClose').addEventListener('click', closePanel);
-  panel.addEventListener('click', e => { if (e.target === panel) closePanel(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) closePanel(); });
-  $('#optSpeak').addEventListener('change', e => { speak = e.target.checked; save(); });
-  /* 대사 자막(말풍선 글 상자): 끄면 동화 속에서 목소리만 나온다. 동화 쪽(audio.js showBubble)이 같은 키를 읽는다 */
-  const captionsOff = () => { try { return localStorage.getItem('captions_off') === '1'; } catch (e) { return false; } };
-  $('#optCaption').addEventListener('change', e => {
-    try { if (e.target.checked) localStorage.removeItem('captions_off'); else localStorage.setItem('captions_off', '1'); } catch (err) { /* 저장 못 하면 이번만 */ }
-  });
-  /* 자동 재생: 켜면 동화가 톡·퀴즈 없이 혼자 끝까지 흘러간다. 동화 엔진(tale.js)이 같은 키 auto_play 를 읽는다 */
-  const autoOn = () => { try { return localStorage.getItem('auto_play') === '1'; } catch (e) { return false; } };
-  $('#optAuto').addEventListener('change', e => {
-    try { if (e.target.checked) localStorage.setItem('auto_play', '1'); else localStorage.removeItem('auto_play'); } catch (err) { /* 저장 못 하면 이번만 */ }
-  });
-  /* 놀이 시간 알림: 보호자 메뉴에서 정한다. 시간이 되면 동화가 장면이 바뀔 때 조용히 쉬는 화면을 보여 준다 */
-  const TIMES = [0, 10, 15, 20, 30];
-  const limitNow = () => { try { return +JSON.parse(localStorage.getItem('play_limit_min')) || 0; } catch (e) { return 0; } };
-  function drawTimer() {
-    $('#timerLbl').textContent = L('놀이 시간 알림', 'Play-time reminder');
-    $('#timerNote').textContent = L('시간이 되면 소리 없이 조용히 쉬는 화면이 나와요. 하루 기준이에요.', 'When time is up, a quiet rest screen appears — no alarm. Counted per day.');
-    $('#timerOpts').innerHTML = TIMES.map(m => `<button type="button" class="chip${m === limitNow() ? ' on' : ''}" data-m="${m}" aria-pressed="${m === limitNow()}">${m ? m + L('분', ' min') : L('끄기', 'Off')}</button>`).join('');
+  /* 짧은 안내 쪽지(톱니를 짧게 눌렀을 때·부모 확인 잠금 중) */
+  const hint = $('#hint');
+  let hintTimer = 0;
+  function toast(msg) {
+    hint.textContent = msg;
+    hint.hidden = false;
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => { hint.hidden = true; }, 1800);
   }
-  $('#timerOpts').addEventListener('click', e => {
-    const b = e.target.closest('button'); if (!b) return;
-    try { localStorage.setItem('play_limit_min', JSON.stringify(+b.dataset.m)); } catch (err) { /* 저장 없이도 동작 */ }
-    drawTimer();
-  });
-  drawTimer();
-  $('#optReset').addEventListener('click', () => { resetFilters(); closePanel(); });
 
-  /* ── 보호자 확인 → 전체 열기 (앱 모드 전용) ──
-     잠긴 카드를 누르면 먼저 어른용 곱셈 문제(보기 4개)를 푼다. 풀어야 결제 쪽지가 열린다. 틀리면 새 문제 */
-  const storePanel = $('#storePanel'), storeSheet = storePanel.querySelector('.sheet');
-  const storeBuyBtn = $('#storeBuyBtn'), storeRestore = $('#storeRestore'), buyMsg = $('#buyMsg');
-  let storeAnim = null, gateAnswer = 0, storeFor = null, busyBuy = false;
+  const guardEl = $('#guard'), guardSheet = guardEl.querySelector('.gpaper'), guardList = $('#guardList'), guardPane = $('#guardPane'), guardBody = $('#guardBody');
+  const gateEl = $('#gate'), gateSheet = gateEl.querySelector('.sheet');
+  const flowEl = $('#flow'), flowSheet = flowEl.querySelector('.sheet');
+  const isApp = Entitlements.appMode();
   const title = id => shown(TALES.find(x => x.id === id)).title;
+  const anyOpen = () => !guardEl.hidden || !flowEl.hidden || !gateEl.hidden;
+
+  /* ── S10 부모 확인: 곱셈 + 보기 4개. 정답을 1.5초 꾹 눌러야 통과, 틀린 답을 끝까지 누르면 30초 잠김.
+     통과는 지금 열린 보호자 영역·이용권 쪽지 안에서만 유효하다(모두 닫으면 다시 묻는다) ── */
+  const GATE_HOLD = 1500, GATE_LOCK = 30000;
+  let passOk = false, gateLockUntil = 0, gateAnswer = 0, gateCb = null;
+  const sheetClosed = () => { if (!anyOpen()) passOk = false; };
+  const GATE_WHY = {
+    buy: ['결제 화면으로 가려면 아래 문제를 풀어 주세요.', 'To go on to purchase, please answer this question.'],
+    pick: ['동화를 고르려면 아래 문제를 풀어 주세요.', 'To pick a tale, please answer this question.'],
+    link: ['기기를 연결하려면 아래 문제를 풀어 주세요.', 'To link devices, please answer this question.'],
+    open: ['이용권 화면으로 가려면 아래 문제를 풀어 주세요.', 'To open the access screen, please answer this question.'],
+    doc: ['문서를 보려면 아래 문제를 풀어 주세요.', 'To read the document, please answer this question.'],
+    reset: ['기록을 지우려면 아래 문제를 풀어 주세요.', 'To erase records, please answer this question.']
+  };
   function newGate() {
     const a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
     gateAnswer = a * b;
@@ -615,220 +566,870 @@
       if (gateAnswer + d > 0) opts.add(gateAnswer + d);
     }
     $('#gateQ').textContent = `${a} × ${b} = ?`;
-    $('#gateOpts').innerHTML = [...opts].sort(() => Math.random() - .5)
-      .map(n => `<button type="button" class="ticket alt" data-n="${n}">${n}</button>`).join('');
+    const box = $('#gateOpts');
+    box.innerHTML = [...opts].sort(() => Math.random() - .5).map(n => `<button type="button" class="gate-opt holdbtn" data-n="${n}"><b>${n}</b></button>`).join('');
+    box.querySelectorAll('.gate-opt').forEach(b => holdable(b, GATE_HOLD, () => gateAnswered(+b.dataset.n),
+      () => { $('#gateHint').textContent = L('답을 1.5초 동안 꾹 눌러 주세요.', 'Press and hold your answer for 1.5 seconds.'); paper('down'); }));
   }
-  function showStore(step) {
-    $('#storeGate').hidden = step !== 'gate';
-    $('#storeBuy').hidden = step !== 'buy';
-    storeBuyBtn.hidden = step !== 'buy';
-    storeRestore.hidden = step !== 'buy';
-    $('#storeTitle').textContent = step === 'gate' ? L('어른이 확인해 주세요', 'Grown-ups, please check')
-      : L('모든 동화 열기', 'Unlock all tales');
-    $('#storeClose').textContent = step === 'gate' ? L('닫기', 'Close') : L('다음에', 'Not now');
-    if (step === 'gate') {
-      $('#gateHow').textContent = L('결제 화면으로 가려면 아래 문제를 풀어 주세요.', 'To go on to purchase, please answer this question.');
-      newGate();
-    } else {
-      const names = Entitlements.freeThisWeek().map(title).join(', ');
-      $('#buyHow').textContent = (storeFor ? L(`'${title(storeFor)}'은(는) 잠겨 있어요. `, `"${title(storeFor)}" is locked. `) : '')
-        + L(`${Entitlements.PRICE}를 한 번만 내면 모든 동화가 열려요. 앞으로 새로 나오는 동화도 함께요.`,
-            `Pay ${Entitlements.PRICE} once to unlock every tale, including new ones to come.`);
-      $('#buyWeek').textContent = L(`이번 주 무료 동화: ${names}. 매주 월요일에 바뀌어요.`, `Free this week: ${names}. They change every Monday.`);
-      buyMsg.hidden = true;
-      storeBuyBtn.textContent = L(`모두 열기 ${Entitlements.PRICE}`, `Unlock all ${Entitlements.PRICE}`);
-      storeRestore.textContent = L('구매 복원', 'Restore purchase');
-    }
-  }
-  function openStore(id, step = 'gate') {
-    if (!Entitlements.appMode()) return;
-    storeFor = id || null;
-    if (storeAnim) storeAnim.finish();
-    showStore(step);
-    storePanel.hidden = false;
-    $('#storeClose').focus();
-    storeAnim = play(.7, t => {
-      storePanel.style.opacity = eo(t / .18).toFixed(3);
-      const s = spring(t, .48, 15);
-      tf(storeSheet, 0, 60 * (1 - s), .9 + .1 * s, -5 * (1 - s));
-    }, () => { storePanel.style.opacity = ''; untf(storeSheet); });
-  }
-  function closeStore() {
-    if (storePanel.hidden) return;
-    if (storeAnim) storeAnim.finish();
-    storeAnim = play(.2, t => {
-      const q = eio(t / .2);
-      storePanel.style.opacity = (1 - q).toFixed(3);
-      tf(storeSheet, 0, 24 * q, 1 - .06 * q, 2 * q);
-    }, () => { storePanel.hidden = true; storePanel.style.opacity = ''; untf(storeSheet); });
-  }
-  function bought(ok, failKo, failEn) {
-    busyBuy = false;
-    if (ok) { closeStore(); render({ anim: false }); say('모든 동화가 열렸어요!'); return; }
-    buyMsg.textContent = L(failKo, failEn);
-    buyMsg.hidden = false;
-  }
-  $('#gateOpts').addEventListener('click', e => {
-    const b = e.target.closest('button');
-    if (!b) return;
-    if (+b.dataset.n === gateAnswer) { paper('tap'); showStore('buy'); return; }
-    paper('down');
-    if (motion()) storeSheet.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(0)' }], { duration: 260 });
+  /* why: GATE_WHY 의 열쇠, onPass: 통과한 뒤 할 일 */
+  function parentCheck(why, onPass) {
+    if (passOk) { onPass(); return; }
+    const left = Math.ceil((gateLockUntil - Date.now()) / 1000);
+    if (left > 0) { toast(L(`잠시 뒤에 다시 해 주세요 (${left}초)`, `Please try again in ${left} s`)); return; }
+    gateCb = onPass;
+    $('#gateTitle').textContent = L('어른이 확인해 주세요', 'Grown-ups, please check');
+    $('#gateHow').textContent = L(...(GATE_WHY[why] || GATE_WHY.open));
+    $('#gateHint').textContent = L('정답을 1.5초 동안 꾹 눌러요.', 'Press and hold the right answer for 1.5 seconds.');
+    $('#gateClose').textContent = L('닫기', 'Close');
     newGate();
+    flowEl.classList.add('under');          // 잠김 쪽지 위에 뜰 때 뒤 쪽지는 숨긴다(쪽지 두 장이 겹쳐 보이지 않게)
+    showModal(gateEl, gateSheet, { focus: '#gateClose' });
+  }
+  const gateOff = after => { flowEl.classList.remove('under'); if (after) after(); };
+  function gateAnswered(n) {
+    const cb = gateCb; gateCb = null;
+    if (n === gateAnswer) {
+      paper('tap'); passOk = true;
+      hideModal(gateEl, gateSheet, () => gateOff(cb));
+      return;
+    }
+    paper('down');
+    gateLockUntil = Date.now() + GATE_LOCK;
+    hideModal(gateEl, gateSheet, () => { gateOff(); sheetClosed(); toast(L('틀렸어요. 30초 뒤에 다시 해 주세요.', 'Not quite. Please try again in 30 seconds.')); });
+  }
+  function closeGate() { gateCb = null; hideModal(gateEl, gateSheet, () => gateOff(sheetClosed)); }
+  $('#gateClose').addEventListener('click', closeGate);
+  gateEl.addEventListener('click', e => { if (e.target === gateEl) closeGate(); });
+
+  /* ── 톱니(1초 꾹) → S9 보호자 영역 ── */
+  const gear = $('#parentBtn');
+  holdable(gear, 1000, () => openGuard(), () => toast(L('보호자 메뉴는 1초 동안 꾹 누르세요', 'Press and hold for 1 second for the grown-up menu')));
+
+  /* 보호자 쪽 기능 도우미: 대사 자막·자동 재생·놀이 시간(동화 엔진이 같은 키를 읽는다) */
+  const captionsOff = () => { try { return localStorage.getItem('captions_off') === '1'; } catch (e) { return false; } };
+  const autoOn = () => { try { return localStorage.getItem('auto_play') === '1'; } catch (e) { return false; } };
+  const setFlag = (k, on) => { try { if (on) localStorage.setItem(k, '1'); else localStorage.removeItem(k); } catch (err) { /* 저장 못 하면 이번만 */ } };
+  const TIMES = [0, 10, 15, 20, 30];
+  const limitNow = () => { try { return +JSON.parse(localStorage.getItem('play_limit_min')) || 0; } catch (e) { return 0; } };
+  function resetFilters() { sel.origin.clear(); sel.skill.clear(); update(); }
+  $('#emptyReset').addEventListener('click', () => { paper('down'); resetFilters(); });
+  /* 필터가 걸려 있으면 머리줄에 작은 '필터 중' 표시 */
+  function paintFilterOn() {
+    const on = sel.origin.size + sel.skill.size > 0, el = $('#filterOn');
+    el.hidden = !on; el.textContent = L('필터 중', 'Filtered');
+  }
+
+  /* ── S9 보호자 영역: 아이패드·가로 = 2열(왼쪽 목록, 오른쪽 내용), 아이폰 세로 = 1열 push ── */
+  const GI = {
+    sound: '<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/>',
+    time: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/>',
+    lang: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c3 3 3 14 0 17M12 3.5c-3 3-3 14 0 17"/>',
+    find: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>',
+    pass: '<path d="M12 4l2.4 5 5.4.6-4 3.7 1.1 5.4L12 16l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/>',
+    link: '<circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/>',
+    about: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.5"/>',
+    records: '<path d="M6 7h12M9 7V4.5h6V7M7.5 7l.8 12.5h7.4L16.5 7"/>'
+  };
+  const guardItems = () => [
+    { k: 'sound', t: L('소리와 글', 'Sound & text') },
+    { k: 'time', t: L('놀이 시간', 'Play time') },
+    { k: 'lang', t: L('언어', 'Language') },
+    { k: 'find', t: L('동화 찾기', 'Find tales') },
+    ...(isApp ? [{ k: 'pass', t: L('이용권', 'Access') }, { k: 'link', t: L('기기 연결', 'Link devices') }] : []),
+    { k: 'about', t: L('정보', 'About') },
+    { k: 'records', t: L('기록', 'Records') }
+  ];
+  let curGuard = 'sound', recAsk = '', linkTick = 0, docShown = '';
+  function drawGuardList() {
+    $('#guardTitle').textContent = L('보호자', 'Grown-ups');
+    $('#guardClose').textContent = L('닫기', 'Close');
+    guardList.innerHTML = guardItems().map(i => `<button type="button" class="g-item${i.k === curGuard ? ' on' : ''}" data-k="${i.k}" aria-current="${i.k === curGuard}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${GI[i.k]}</svg><span>${i.t}</span></button>`).join('');
+  }
+  function openGuard() {
+    hint.hidden = true;
+    curGuard = guardItems().some(i => i.k === curGuard) ? curGuard : 'sound';
+    delete guardBody.dataset.open;           // 1열일 때는 목록부터
+    recAsk = ''; docShown = '';
+    drawGuardList(); drawGuardPane();
+    showModal(guardEl, guardSheet, { gentle: true, focus: '#guardClose' });
+  }
+  function closeGuard() {
+    clearInterval(linkTick);
+    hideModal(guardEl, guardSheet, sheetClosed);
+  }
+  const refreshGuard = () => { if (!guardEl.hidden && curGuard !== 'link') drawGuardPane(); };
+  $('#guardClose').addEventListener('click', closeGuard);
+  guardList.addEventListener('click', e => {
+    const b = e.target.closest('.g-item'); if (!b) return;
+    paper('tap');
+    curGuard = b.dataset.k; recAsk = ''; docShown = '';
+    guardBody.dataset.open = '1';
+    drawGuardList(); drawGuardPane();
+    guardPane.scrollTop = 0;
   });
-  storeBuyBtn.addEventListener('click', async () => {
+
+  const switchHTML = (key, on, label) => `<label class="toggle"><input type="checkbox" data-opt="${key}"${on ? ' checked' : ''}> <span>${label}</span></label>`;
+  const chipRowHTML = row => `<section class="tagrow"><h4 class="row-tab">${row === 'origin' ? L('이야기 종류', 'Kind of tale') : L('배우는 것', 'What it teaches')}</h4><div class="chips" role="group" data-row="${row}">`
+    + [{ key: '', label: L('전체', 'All'), ic: 'all' }, ...TAGS[row].map(t => ({ key: t.key, label: (lang === 'en' && t.en) || t.label, ic: t.key }))]
+      .map(c => `<button type="button" class="chip${c.key ? '' : ' all'}" data-row="${row}" data-key="${c.key}" aria-label="${c.label}">${icon(c.ic)}<span class="lb" aria-hidden="true">${letters(c.label)}</span></button>`).join('') + '</div></section>';
+
+  function passHTML() {
+    const s = Entitlements.state(), names = ids => ids.length ? ids.map(title).join(', ') : L('없어요', 'None');
+    const wait = Entitlements.waitAvailable(), left = Entitlements.waitDaysLeft(), stars = Entitlements.starBalance(), need = Entitlements.STAR_NEED;
+    const opened = [...new Set([...s.starUnlocked, ...s.waitUnlocked])];
+    const waitTxt = wait ? L(`지금 ${wait}편을 열 수 있어요.`, `You can open ${wait} now.`) : left ? L(`${left}일 뒤에 한 편을 열 수 있어요.`, `One more can be opened in ${left} days.`) : L('기다무를 모두 썼어요.', 'All waiting passes are used.');
+    return `<h3>${L('이용권', 'Access')}</h3>
+      <dl class="g-dl">
+        <dt>${L('이번 주 무료', 'Free this week')}</dt><dd>${names(Entitlements.freeThisWeek())}<small>${L('월요일마다 바뀌어요.', 'Changes every Monday.')}</small></dd>
+        <dt>${L('열어 둔 동화', 'Opened tales')}</dt><dd>${Entitlements.state().owned ? L('모든 동화가 열려 있어요.', 'Every tale is open.') : names(opened)}</dd>
+        <dt>${L('기다무', 'Waiting pass')}</dt><dd>${waitTxt}${wait ? `<button type="button" class="ticket alt" data-act="g-wait">${L('한 편 고르기', 'Pick a tale')}</button>` : ''}</dd>
+        <dt>${L('종이별', 'Paper Stars')}</dt><dd>${Math.min(stars, 99)} / ${need}${stars >= need && Entitlements.lockedChoices().length ? `<button type="button" class="ticket alt" data-act="g-star">${L('한 편 고르기', 'Pick a tale')}</button>` : ''}</dd>
+      </dl>
+      <p class="how buy-msg" id="gMsg" hidden></p>
+      <div class="g-btns">
+        ${s.owned ? '' : `<button type="button" class="ticket alt" data-act="g-buy">${L(`모든 동화 열기 ${Entitlements.PRICE}`, `Unlock all ${Entitlements.PRICE}`)}</button>`}
+        <button type="button" class="ticket alt" data-act="g-restore">${L('구매 복원', 'Restore purchase')}</button>
+      </div>
+      <p class="how">${L('고르기·결제·복원 앞에서는 어른 확인을 한 번 더 해요.', 'A grown-up check comes before picking, buying or restoring.')}</p>`;
+  }
+  function drawGuardPane() {
+    clearInterval(linkTick);
+    const k = curGuard, back = `<button type="button" class="g-pback" data-act="g-back">‹ ${L('목록', 'List')}</button>`;
+    const name = (guardItems().find(i => i.k === k) || {}).t || '';
+    let h = '';
+    if (k === 'sound') {
+      h = `<h3>${name}</h3>
+        <p class="how">${L('제목과 탭 이름은 늘 소리로 읽어 줘요. 아이가 아직 글을 못 읽기 때문이에요.', 'Titles and tab names are always read aloud, since young children cannot read yet.')}</p>
+        ${switchHTML('caption', !captionsOff(), L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'))}
+        ${switchHTML('auto', autoOn(), L('자동 재생', 'Auto-play'))}
+        <p class="how">${L('놀이 조작 없이 이야기만 흘러가요. 잠자리에 읽어 줄 때는 \'잠자리\' 탭의 읽어 주기를 써요.', 'The story plays on its own with no taps. For bedtime reading, use Read-aloud in the Bedtime tab.')}</p>`;
+    } else if (k === 'time') {
+      h = `<h3>${name}</h3>
+        <div class="timerOpts" id="timerOpts">${TIMES.map(m => `<button type="button" class="chip${m === limitNow() ? ' on' : ''}" data-m="${m}" aria-pressed="${m === limitNow()}">${m ? m + L('분', ' min') : L('끄기', 'Off')}</button>`).join('')}</div>
+        <p class="how">${L('하루 기준이에요. 시간이 되면 소리 없이 조용한 쉬는 화면이 나와요. 놀이 시간은 화면을 보는 시간이라서, 잠자리 읽어 주기는 끝난 뒤에 적용돼요.', 'Counted per day. When time is up, a quiet rest screen appears — no alarm. It counts screen time, so Bedtime read-aloud finishes first.')}</p>`;
+    } else if (k === 'lang') {
+      h = `<h3>${name}</h3>
+        <div class="seg" role="group" aria-label="${name}"><button type="button" class="ticket alt${lang === 'ko' ? ' on' : ''}" data-lang="ko" aria-pressed="${lang === 'ko'}">한국어</button><button type="button" class="ticket alt${lang === 'en' ? ' on' : ''}" data-lang="en" aria-pressed="${lang === 'en'}">English</button></div>
+        <p class="how">${L('바꾸면 글, 목소리, 동화 순서가 바뀌어요. 영어 자료가 없는 동화는 한국어로 나와요.', 'Text, voices and tale order change. Tales without English material appear in Korean.')}</p>`;
+    } else if (k === 'find') {
+      const list = TALES.filter(match);
+      h = `<h3>${name}</h3>
+        <p class="how">${L('위 줄에서 <b>이야기 종류</b>, 아래 줄에서 <b>배우는 것</b>을 고르면 동화 탭에 그 동화만 나와요. 같은 줄에서 여러 개를 고르면 <b>하나라도</b> 맞는 이야기, 두 줄을 함께 고르면 <b>둘 다</b> 맞는 이야기예요. 공주 동화는 다른 종류와 겹쳐서 나와요.', 'Pick a kind of tale and/or what it teaches, and only those tales show in the Tales tab. Several picks in one row match <b>any</b>; picks in both rows must match <b>both</b>.')}</p>
+        ${chipRowHTML('origin')}${chipRowHTML('skill')}
+        <div class="g-btns"><button type="button" class="ticket alt" data-act="g-clear">${L('필터 지우기', 'Clear filters')}</button></div>
+        <h4 class="row-tab">${L(`동화 ${list.length}편`, `${list.length} tales`)}</h4>
+        <ul class="g-tales">${list.map(t0 => { const t = shown(t0); return `<li><b>${t.title}</b><span>${t.line}</span></li>`; }).join('')}</ul>`;
+    } else if (k === 'pass') {
+      h = passHTML();
+    } else if (k === 'link') {
+      const off = navigator.onLine === false;
+      h = `<h3>${name}</h3>
+        <p class="how">${L('다른 기기에서도 같은 기록을 쓰려면, 한 기기에서 코드를 만들고 다른 기기에 넣어요. 코드는 10분 동안, 한 번만 쓸 수 있어요.', 'To share progress on another device, make a code on one device and enter it on the other. A code works once, for 10 minutes.')}</p>
+        <div class="link-two"><button type="button" class="ticket alt" data-act="lk-make"${off ? ' disabled' : ''}>${L('이 기기에서 코드 만들기', 'Make a code here')}</button><button type="button" class="ticket alt" data-act="lk-in"${off ? ' disabled' : ''}>${L('다른 기기의 코드 넣기', 'Enter a code')}</button></div>
+        ${off ? `<p class="how buy-msg">${L('인터넷이 있어야 해요.', 'An internet connection is needed.')}</p>` : ''}
+        <div id="lkView"></div>`;
+    } else if (k === 'about') {
+      h = `<h3>${name}</h3>
+        <dl class="g-dl"><dt>${L('버전', 'Version')}</dt><dd>${APP_VERSION}</dd>
+        <dt>${L('문의', 'Contact')}</dt><dd>github.com/DH-KIM-hug/paper-tale-theater/issues</dd></dl>
+        <div class="g-btns"><button type="button" class="ticket alt" data-act="doc-privacy">${L('개인정보 처리방침', 'Privacy policy')}</button><button type="button" class="ticket alt" data-act="doc-credits">${L('그림·소리 출처', 'Credits')}</button></div>
+        <div id="docView"></div>`;
+    } else if (k === 'records') {
+      const ask = { progress: L('동화 진행 기록(마지막 본 동화, 오늘 놀이 시간)을 지울까요?', 'Erase play progress (last tale, today\'s play time)?'), all1: L('이 기기의 종이별·스티커·열어 둔 동화·기기 연결을 모두 초기화할까요?', 'Reset Paper Stars, stickers, opened tales and device link on this device?'), all2: L('마지막 확인이에요. 되돌릴 수 없어요. (구매는 \'구매 복원\'으로 다시 받을 수 있어요.)', 'Last check. This cannot be undone. (A purchase can be restored with Restore purchase.)') };
+      h = `<h3>${name}</h3>
+        <div class="g-btns"><button type="button" class="ticket alt" data-act="rec-progress">${L('동화 진행 기록 지우기', 'Erase play progress')}</button><button type="button" class="ticket alt" data-act="rec-all">${L('이 기기의 종이별·기록 초기화', 'Reset stars & records on this device')}</button></div>
+        ${recAsk ? `<div class="g-ask"><p class="how">${ask[recAsk]}</p><div class="g-btns"><button type="button" class="ticket alt" data-act="rec-no">${L('그만두기', 'Cancel')}</button><button type="button" class="ticket" data-act="rec-yes">${recAsk === 'all1' ? L('다음', 'Next') : L('지우기', 'Erase')}</button></div></div>` : ''}`;
+    }
+    guardPane.innerHTML = back + h;
+    if (k === 'find') paintChips();
+  }
+  /* 기록 지우기 (동화 쪽 키·Entitlements 의 저장 키) */
+  function eraseRecords(all) {
+    const keys = ['paperTheater.last', 'play_used', 'play_bonus'];
+    if (all) keys.push('sync_state', 'sync_dirty', 'sync_receipt', 'sync_account', 'owned_all');
+    try { keys.forEach(k => localStorage.removeItem(k)); } catch (e) { /* 저장소가 없으면 지울 것도 없다 */ }
+    if (all) { closeGuard(); setTimeout(() => location.reload(), 250); }
+    else { recAsk = ''; drawGuardPane(); toast(L('지웠어요.', 'Erased.')); }
+  }
+  async function doPurchase(msgEl) {
     if (busyBuy) return;
     busyBuy = true; paper('tap');
     let ok = false;
     try { ok = await Entitlements.purchase(); } catch (err) { ok = false; }
-    bought(ok, '결제가 끝나지 않았어요. 다시 해 주세요.', 'The purchase did not go through. Please try again.');
-  });
-  async function doRestore() {
+    afterBuy(ok, msgEl, '결제가 끝나지 않았어요. 다시 해 주세요.', 'The purchase did not go through. Please try again.');
+  }
+  async function doRestore(msgEl) {
     if (busyBuy) return;
     busyBuy = true; paper('tap');
     let ok = false;
     try { ok = await Entitlements.restore(); } catch (err) { ok = false; }
-    bought(ok, '복원할 구매를 찾지 못했어요.', 'No purchase was found to restore.');
+    afterBuy(ok, msgEl, '복원할 구매를 찾지 못했어요.', 'No purchase was found to restore.');
   }
-  storeRestore.addEventListener('click', doRestore);
-  $('#storeClose').addEventListener('click', closeStore);
-  storePanel.addEventListener('click', e => { if (e.target === storePanel) closeStore(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !storePanel.hidden) closeStore(); });
-  // 보호자 메뉴(1초 꾹)에도 구매 복원 — 앱 모드에서만 보인다
-  const optRestore = $('#optRestore');
-  if (Entitlements.appMode()) {
-    optRestore.hidden = false;
-    optRestore.addEventListener('click', () => { closePanel(); openStore(null); });
+  let busyBuy = false;
+  function afterBuy(ok, msgEl, failKo, failEn) {
+    busyBuy = false;
+    if (ok) {
+      closeFlow(); closeGuard(); render({ anim: false }); paintTabBadge();
+      setTab('tales', { silent: true });
+      say(L('모든 동화가 열렸어요!', 'Every tale is open!'));
+      return;
+    }
+    const el = msgEl && document.body.contains(msgEl) ? msgEl : $('#gMsg') || $('#flowMsg');
+    if (el) { el.textContent = L(failKo, failEn); el.hidden = false; }
   }
 
-  /* ── 여는 장면 (1.5초 안, 아무 데나 누르면 건너뜀) ──
-     흩어진 색종이 조각이 포물선을 그리며 날아와 로고 글자 조각이 되고(파티클 로고),
-     태그 칩이 차례로 붙고, 카드가 선반 위로 떨어진다(스프링 스택).
-     같은 탭(세션)에서 두 번째부터는 카드만 짧게 떨어진다. */
-  /* 앱 첫 화면: 켤 때마다 한 번. 색 종이 석 장이 깔리고, 동화 친구들이 차례로 솟고, 제목이 톡 앉는다. 어디든 누르면 건너뜀 */
+  guardPane.addEventListener('change', e => {
+    const o = e.target.dataset && e.target.dataset.opt;
+    if (o === 'caption') setFlag('captions_off', !e.target.checked);
+    else if (o === 'auto') setFlag('auto_play', e.target.checked);
+  });
+  guardPane.addEventListener('click', e => {
+    const chip = e.target.closest('.chip[data-row]');
+    if (chip) {                                            // 동화 찾기 칩
+      const row = chip.dataset.row, key = chip.dataset.key;
+      paper(key && !sel[row].has(key) ? 'up' : 'down');
+      if (!key) sel[row].clear(); else if (sel[row].has(key)) sel[row].delete(key); else sel[row].add(key);
+      update(); wobble(chip);
+      const ul = guardPane.querySelector('.g-tales'), head = ul && ul.previousElementSibling;   // 아래 목록·개수만 새로 그린다
+      if (ul) { const list = TALES.filter(match); head.textContent = L(`동화 ${list.length}편`, `${list.length} tales`); ul.innerHTML = list.map(t0 => { const t = shown(t0); return `<li><b>${t.title}</b><span>${t.line}</span></li>`; }).join(''); }
+      return;
+    }
+    const tm = e.target.closest('#timerOpts button');
+    if (tm) {
+      try { localStorage.setItem('play_limit_min', JSON.stringify(+tm.dataset.m)); } catch (err) { /* 저장 없이도 동작 */ }
+      paper('tap'); drawGuardPane(); return;
+    }
+    const lg = e.target.closest('[data-lang]');
+    if (lg) {
+      lang = lg.dataset.lang;
+      try { localStorage.setItem('lang', lang); } catch (err) { /* 저장 못 해도 이 화면은 바뀐다 */ }
+      paper('down'); paintLang(); paintTabs(); paintFilterOn(); render({ anim: false }); drawGuardList(); drawGuardPane();
+      return;
+    }
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    const act = b.dataset.act;
+    if (act === 'g-back') { delete guardBody.dataset.open; paper('tap'); }
+    else if (act === 'g-clear') { paper('down'); resetFilters(); drawGuardPane(); }
+    else if (act === 'g-wait') parentCheck('pick', () => { pickKind = 'wait'; openFlow('pick', { id: null, sel: null }); });
+    else if (act === 'g-star') parentCheck('pick', () => { pickKind = 'star'; openFlow('pick', { id: null, sel: null }); });
+    else if (act === 'g-buy') parentCheck('buy', () => doPurchase($('#gMsg')));
+    else if (act === 'g-restore') parentCheck('buy', () => doRestore($('#gMsg')));
+    else if (act === 'lk-make') parentCheck('link', () => linkMake());
+    else if (act === 'lk-in') parentCheck('link', () => linkEnter());
+    else if (act === 'doc-privacy') parentCheck('doc', () => showDoc('privacy'));
+    else if (act === 'doc-credits') showDoc('credits');
+    else if (act === 'rec-progress') parentCheck('reset', () => { recAsk = 'progress'; drawGuardPane(); });
+    else if (act === 'rec-all') parentCheck('reset', () => { recAsk = 'all1'; drawGuardPane(); });
+    else if (act === 'rec-no') { recAsk = ''; drawGuardPane(); }
+    else if (act === 'rec-yes') {
+      if (recAsk === 'all1') { recAsk = 'all2'; drawGuardPane(); } else eraseRecords(recAsk === 'all2');
+    }
+  });
+  /* 정보: 개인정보 처리방침(앱 안 문서, 외부 링크가 있어 어른 확인 뒤에)·출처 */
+  async function showDoc(which) {
+    const box = $('#docView'); if (!box) return;
+    if (which === 'privacy') { box.innerHTML = '<iframe class="g-doc" src="privacy.html" title="privacy"></iframe>'; return; }
+    box.innerHTML = '<div class="g-doc credits" tabindex="0"></div>';
+    /* 앱에는 .md 가 들어가지 않는다(build_www.sh 가 sounds/CREDITS.md 를 CREDITS.txt 로 복사). 웹에서는 .md 도 읽는다 */
+    let txt = '';
+    for (const f of window.Capacitor ? ['sounds/CREDITS.txt', 'sounds/CREDITS.md'] : ['sounds/CREDITS.md', 'sounds/CREDITS.txt']) {   // 앱은 .txt, 웹은 .md 먼저 (없는 파일을 요청해 404 가 남지 않게)
+      try { const r = await fetch(f); if (r.ok) { txt = await r.text(); break; } } catch (e) { /* 다음 후보 */ }
+    }
+    const view = box.firstChild;
+    if (!txt) { view.textContent = L('출처 문서를 열 수 없어요.', 'Cannot open the credits document.'); return; }
+    /* 표·제목만 읽기 좋게 옮긴다: '# 제목' → 제목, '| a | b |' → 한 줄 항목, 나머지는 문단 */
+    const esc = x => x.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    view.innerHTML = txt.split('\n').map(line => {
+      const l = line.trim();
+      if (!l || /^\|[\s|:-]+\|$/.test(l)) return '';
+      if (/^#{1,3} /.test(l)) return `<h5>${esc(l.replace(/^#+ /, ''))}</h5>`;
+      if (l.startsWith('|')) {
+        const cells = l.split('|').slice(1, -1).map(c => esc(c.trim().replace(/`/g, '')));
+        if (cells[0] === '파일') return '';
+        return `<p class="cr-row"><b>${cells[0]}</b> ${cells.slice(1).join(' · ')}</p>`;
+      }
+      return `<p>${esc(l)}</p>`;
+    }).join('');
+  }
+
+  /* ── S11-2 기기 연결 (부품): 코드 만들기(8자리 크게 + 남은 시간) · 코드 넣기 ── */
+  const MSG_LINK = {
+    offline: ['서버에 닿지 않아요. 인터넷을 확인하고 다시 해 주세요.', 'Cannot reach the server. Check your connection and try again.'],
+    code_invalid: ['없거나 시간이 지난 코드예요. 새 코드를 받아 주세요.', 'That code does not exist or has expired. Please get a new one.'],
+    code_self: ['이 기기에서 만든 코드예요. 다른 기기에서 입력해 주세요.', 'This code was made on this device. Enter it on another device.'],
+    rate_limited: ['너무 자주 눌렀어요. 잠시 뒤에 다시 해 주세요.', 'Too many tries. Please wait a little.'],
+    bad_request: ['코드는 8자리예요. 다시 확인해 주세요.', 'The code has 8 characters. Please check it.']
+  };
+  const linkErr = e => L(...(MSG_LINK[e] || ['연결하지 못했어요. 다시 해 주세요.', 'Could not link. Please try again.']));
+  function paintLeft(exp) {
+    const sec = Math.max(0, Math.round((exp - Date.now()) / 1000)), el = $('#lkLeft'), code = $('#lkCode');
+    if (!el) { clearInterval(linkTick); return; }
+    if (!sec) { clearInterval(linkTick); code.hidden = true; el.textContent = L('코드 시간이 지났어요. 새로 만들어 주세요.', 'The code has expired. Please make a new one.'); return; }
+    el.textContent = L(`남은 시간 ${Math.floor(sec / 60)}분 ${String(sec % 60).padStart(2, '0')}초`, `Time left ${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`);
+  }
+  async function linkMake() {
+    clearInterval(linkTick);
+    const v = $('#lkView');
+    v.innerHTML = `<p class="link-code" id="lkCode" hidden></p><p class="how" id="lkLeft"></p><p class="how buy-msg" id="lkMsg" hidden></p>`;
+    const r = await Entitlements.createLinkCode();
+    if (!$('#lkView') || curGuard !== 'link') return;
+    if (!r.ok) { $('#lkLeft').hidden = true; $('#lkMsg').textContent = linkErr(r.error); $('#lkMsg').hidden = false; return; }
+    $('#lkCode').textContent = r.code.slice(0, 4) + ' ' + r.code.slice(4); $('#lkCode').hidden = false;
+    const exp = typeof r.expiresAt === 'number' ? (r.expiresAt < 1e12 ? r.expiresAt * 1000 : r.expiresAt) : Date.parse(r.expiresAt) || Date.now() + 600000;
+    paintLeft(exp); linkTick = setInterval(() => paintLeft(exp), 1000);
+  }
+  function linkEnter() {
+    clearInterval(linkTick);
+    const v = $('#lkView');
+    v.innerHTML = `<div class="link-in"><label class="how" for="lkInput">${L('다른 기기의 코드를 넣어요', 'Enter the code from the other device')}</label>
+      <input id="lkInput" class="link-input" type="text" maxlength="9" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text">
+      <button type="button" class="ticket" id="lkGo">${L('연결하기', 'Link')}</button></div><p class="how buy-msg" id="lkMsg" hidden></p>`;
+    $('#lkInput').addEventListener('input', e => { e.target.value = Entitlements.cleanCode(e.target.value).slice(0, 8); });
+    $('#lkInput').focus();
+    $('#lkGo').addEventListener('click', async () => {
+      paper('tap');
+      const msg = $('#lkMsg'), btn = $('#lkGo');
+      btn.disabled = true;
+      const r = await Entitlements.redeemLinkCode($('#lkInput').value);
+      btn.disabled = false;
+      msg.hidden = false;
+      if (r.ok) { msg.textContent = L('연결됐어요! 두 기기가 같은 기록을 써요.', 'Linked! Both devices now share the same progress.'); render({ anim: false }); paintTabBadge(); }
+      else msg.textContent = linkErr(r.error);
+    });
+  }
+
+  /* ── 잠금 흐름: S4 잠김 쪽지(아이) → S10 → S11 이용권 → S12 고르기. 하나의 쪽지(#flow)가 단계마다 내용을 바꾼다 ── */
+  const LOCK_SVG = '<svg viewBox="0 0 48 56" aria-hidden="true"><path d="M13 24v-7a11 11 0 0 1 22 0v7" fill="none" stroke="#5C6784" stroke-width="5" stroke-linecap="round"/><rect x="6" y="22" width="36" height="28" rx="5" fill="#5C6784"/><circle cx="24" cy="35" r="4" fill="#F5EFE9"/><rect x="22" y="35" width="4" height="9" rx="2" fill="#F5EFE9"/></svg>';
+  const STAR_SVG = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z" fill="#C98A5B"/></svg>';
+  const X_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>';
+  /* 동화 타일 그림 (구멍 속 사각 그림). 그림이 없으면 빈 구멍 */
+  function miniTile(id) {
+    const src = TILE.has(id) ? `${id}_tile` : PIC2L.has(id) ? `${id}_light` : (PIC2.has(id) || PIC.has(id)) ? id : '';
+    return `<span class="mini">${src ? `<img src="assets/thumbs/${src}.webp" alt="" draggable="false">` : ''}</span>`;
+  }
+  let flowCtx = { step: '', id: null, sel: null };
+  let pickKind = 'star';
+  function openFlow(step, o = {}) {
+    Object.assign(flowCtx, o, { step });
+    renderFlow();
+    if (flowEl.hidden) showModal(flowEl, flowSheet, { focus: '.f-first' });
+    else { const f = flowSheet.querySelector('.f-first'); if (f) f.focus({ preventScroll: true }); }
+  }
+  function closeFlow() { hideModal(flowEl, flowSheet, sheetClosed); }
+  /* S4: 아이용. 자물쇠 그림 + 읽어 주기. 가격·결제 글은 없다 */
+  function openLock(id) {
+    if (!isApp) return;
+    openFlow('lock', { id, sel: null });
+    say(L('이 동화는 잠겨 있어요. 어른과 함께 열어요.', 'This tale is locked. Open it together with a grown-up.'));
+  }
+  function renderFlow() {
+    const { step, id } = flowCtx;
+    flowSheet.className = 'sheet flow-' + step;
+    const t = id && TALES.some(x => x.id === id) ? title(id) : '';
+    const stars = Entitlements.starBalance(), need = Entitlements.STAR_NEED;
+    if (step === 'lock') {
+      const canStar = stars >= need && Entitlements.lockedChoices().length > 0;
+      flowSheet.innerHTML = `<div class="note">
+        <div class="note-pic">${miniTile(id)}<span class="note-lock">${LOCK_SVG}</span></div>
+        <h2 class="note-t">${t}</h2>
+        <div class="note-btns">
+          <button type="button" class="round f-first" data-act="f-close" aria-label="${L('닫기', 'Close')}">${X_SVG}</button>
+          ${canStar ? `<button type="button" class="round star" data-act="f-star" aria-label="${L('종이별로 열기', 'Open with Paper Stars')}">${STAR_SVG}</button>` : ''}
+        </div>
+        <button type="button" class="adult holdbtn" data-adult>${L('어른이 열기', 'Grown-ups open')}<small>${L('1초 꾹', 'hold 1 s')}</small></button>
+        <p class="how">${L('이번 주 무료 동화는 월요일마다 바뀌어요.', 'The free tales change every Monday.')}</p>
+      </div>`;
+      const ad = flowSheet.querySelector('[data-adult]');
+      holdable(ad, 1000, () => parentCheck('buy', () => openFlow('buy')), () => toast(L('1초 동안 꾹 누르세요', 'Press and hold for 1 second')));
+    } else if (step === 'buy') {
+      const wait = Entitlements.waitAvailable(), left = Entitlements.waitDaysLeft(), canStar = stars >= need && Entitlements.lockedChoices().length > 0;
+      const names = Entitlements.freeThisWeek().map(title).join(', ');
+      flowSheet.innerHTML = `<h2>${L('동화 열기', 'Open a tale')}</h2>
+        ${t ? `<div class="buy-head">${miniTile(id)}<p class="how">${L(`'${t}'은(는) 잠겨 있어요.`, `"${t}" is locked.`)}</p></div>` : ''}
+        <div class="buy-cols">
+          <section class="col"><h3>${L('이번 주 기다리기', 'Wait for this week')}</h3><p class="how">${L(`매주 월요일에 무료 동화가 바뀌어요. 이번 주: ${names}`, `The free tales change every Monday. This week: ${names}`)}</p><button type="button" class="ticket alt" data-act="f-close">${L('기다릴게요', 'I will wait')}</button></section>
+          <section class="col"><h3>${L('기다무·종이별', 'Waiting pass / Stars')}</h3><p class="how">${wait ? L('기다무로 한 편을 열 수 있어요.', 'You can open one with a waiting pass.') : left ? L(`기다무는 ${left}일 뒤에 열려요.`, `A waiting pass opens in ${left} days.`) : L('기다무를 모두 썼어요.', 'All waiting passes are used.')} ${L(`종이별 ${Math.min(stars, 99)}/${need}`, `Paper Stars ${Math.min(stars, 99)}/${need}`)}</p>
+            ${wait ? `<button type="button" class="ticket alt" data-act="f-wait">${L('기다무로 열기', 'Open with waiting pass')}</button>` : ''}
+            ${canStar ? `<button type="button" class="ticket alt" data-act="f-star">${L('종이별로 열기', 'Open with Paper Stars')}</button>` : ''}
+            ${!wait && !canStar ? `<button type="button" class="ticket alt" disabled>${L('아직 열 수 없어요', 'Not yet')}</button>` : ''}</section>
+          <section class="col"><h3>${L('모든 동화 열기', 'Unlock all tales')}</h3><p class="how">${L(`${Entitlements.PRICE}를 한 번만 내면 모든 동화가 열려요. 새로 나오는 동화도 함께요.`, `Pay ${Entitlements.PRICE} once to unlock every tale, including new ones.`)}</p><button type="button" class="ticket alt" data-act="f-buy">${L(`모두 열기 ${Entitlements.PRICE}`, `Unlock all ${Entitlements.PRICE}`)}</button></section>
+        </div>
+        <p class="how buy-msg" id="flowMsg" hidden></p>
+        <div class="sheet-btns"><button type="button" class="ticket alt" data-act="f-restore">${L('구매 복원', 'Restore purchase')}</button><button type="button" class="ticket f-first" data-act="f-close">${L('다음에', 'Not now')}</button></div>`;
+    } else if (step === 'pick') {
+      const star = pickKind === 'star', list = Entitlements.lockedChoices();
+      flowSheet.innerHTML = `<h2>${star ? L('종이별로 동화 열기', 'Open a tale with Paper Stars') : L('기다무로 동화 열기', 'Open a tale with a waiting pass')}</h2>
+        ${star ? `<div class="plate" aria-label="${L(`종이별 ${Math.min(stars, need)}개`, `${Math.min(stars, need)} Paper Stars`)}">${[...Array(need)].map((_, i) => `<i class="${i < stars ? 'on' : ''}"></i>`).join('')}</div>` : ''}
+        <p class="how">${list.length ? L('열고 싶은 동화를 하나 골라요. 같은 동화를 한 번 더 톡 하면 열려요.', 'Pick one tale. Tap it again to open.') : L('지금 열 수 있는 잠긴 동화가 없어요.', 'No locked tales to open right now.')}</p>
+        <div class="pick-list">${list.map(i => `<button type="button" class="pick${i === flowCtx.sel ? ' on' : ''}" data-id="${i}" aria-pressed="${i === flowCtx.sel}">${miniTile(i)}<span>${title(i)}</span></button>`).join('')}</div>
+        <p class="how buy-msg" id="flowMsg" hidden></p>
+        <div class="sheet-btns"><button type="button" class="ticket alt f-first" data-act="f-close">${L('닫기', 'Close')}</button>${list.length ? `<button type="button" class="ticket" data-act="f-open"${flowCtx.sel ? '' : ' disabled'}>${L('열기', 'Open')}</button>` : ''}</div>`;
+    }
+  }
+  function unlockSel() {
+    const id = flowCtx.sel; if (!id) return;
+    const ok = pickKind === 'star' ? Entitlements.starUnlock(id) : Entitlements.waitUnlock(id);
+    if (!ok) {
+      paper('down'); flowCtx.sel = null; renderFlow();
+      const m = $('#flowMsg'); m.textContent = L('열지 못했어요. 다시 골라 주세요.', 'Could not open it. Please pick again.'); m.hidden = false;
+      return;
+    }
+    paper('tap');
+    closeFlow(); closeGuard(); paintTabBadge();
+    heroId = id; try { localStorage.setItem(lastKey, id); } catch (e) { /* 무시 */ }
+    setTab('tales', { silent: true }); render({ anim: false });
+    say(L(`'${title(id)}'이(가) 열렸어요!`, `"${title(id)}" is open!`));
+  }
+  flowSheet.addEventListener('click', e => {
+    const pk = e.target.closest('.pick');
+    if (pk) {
+      paper('tap');
+      if (flowCtx.sel === pk.dataset.id) { unlockSel(); return; }       // 같은 타일 다시 톡 = 열기
+      flowCtx.sel = pk.dataset.id; renderFlow(); say(title(flowCtx.sel));
+      return;
+    }
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    const act = b.dataset.act;
+    if (act === 'f-close') closeFlow();
+    else if (act === 'f-star') { pickKind = 'star'; paper('tap'); openFlow('pick', { sel: null }); }          // 종이별 고르기는 어른 확인 없이 (판단 #4 가)
+    else if (act === 'f-wait') { pickKind = 'wait'; paper('tap'); openFlow('pick', { sel: null }); }
+    else if (act === 'f-buy') doPurchase($('#flowMsg'));
+    else if (act === 'f-restore') doRestore($('#flowMsg'));
+    else if (act === 'f-open') unlockSel();
+  });
+  flowEl.addEventListener('click', e => { if (e.target === flowEl) closeFlow(); });
+
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (!gateEl.hidden) closeGate(); else if (!flowEl.hidden) closeFlow(); else if (!guardEl.hidden) closeGuard();
+  });
+  Entitlements.onChange(() => { if (!flowEl.hidden && flowCtx.step === 'pick') return; refreshGuard(); });
+  addEventListener('online', refreshGuard); addEventListener('offline', refreshGuard);
+
+  /* ── S2 잠자리 탭: 읽어 주기가 준비된 동화만(카탈로그 read: true — 대본·녹음 맵·readPlay 가 있는지는 tools/app/check_read_flags.mjs 가 확인).
+     타일 톡 = 제목 읽기 + 살짝 들림, 같은 타일 다시 톡 = 그 동화의 읽어 주기 시작 화면(?read=1). 잠긴 동화는 S4. 영어 모드에서는 영어 읽기 녹음이 있는 동화가 먼저 ── */
+  ROW_SVG.all = '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M22.4 11Q14 6 4 7.6V37Q14 35.4 22.4 40Z" fill="#C98A5B"/><path d="M25.6 11Q34 6 44 7.6V37Q34 35.4 25.6 40Z" fill="#DDD2C4"/></svg>';
+  let nightSel = '';
+  const nightList = () => {
+    const l = TALES.filter(t => t.read && inScope(t) && isOpen(t));
+    return lang === 'en' ? [...l.filter(t => t.readEn), ...l.filter(t => !t.readEn)] : l;
+  };
+  /* ── 잠자리 이어 듣기 카드 두 장 (docs/BEDTIME_PLAN.md §4-1): 랜덤 이어 듣기 + 우리 재생목록. 둘 다 bedtime.html 플레이어로 간다.
+     설정은 로컬 localStorage paperTheater.bedtime = { count, playlist } (동기화 안 함). 타일 톡의 한 편 읽어 주기(?read=1)는 그대로 ── */
+  const BT_KEY = 'paperTheater.bedtime', BT_MAX = 5, BT_COUNTS = [1, 2, 3, 5];
+  const btGet = () => { try { const o = JSON.parse(localStorage.getItem(BT_KEY) || '{}'); return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } };
+  const btSet = o => { try { localStorage.setItem(BT_KEY, JSON.stringify({ ...btGet(), ...o })); } catch (e) { /* 기억 못 해도 이 화면은 바뀐다 */ } };
+  const btOk = t => !!(t && t.read && t.ready && Entitlements.canPlay(t.id) && (lang !== 'en' || t.readEn));
+  const btCount = () => BT_COUNTS.includes(btGet().count) ? btGet().count : 2;
+  const btList = () => (Array.isArray(btGet().playlist) ? btGet().playlist : []).map(id => TALES.find(t => t.id === id)).filter(t => t && t.read && t.ready).slice(0, BT_MAX);
+  const BT_NOTE = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M20 8v24.5a7 7 0 1 1-4-6.3V14l20-5v20.5a7 7 0 1 1-4-6.3V8Z" fill="currentColor"/></svg>';
+  const BT_LIST = '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="11" width="36" height="5" rx="1" fill="currentColor"/><rect x="6" y="21.5" width="36" height="5" rx="1" fill="currentColor"/><rect x="6" y="32" width="24" height="5" rx="1" fill="currentColor"/></svg>';
+  function btHTML() {
+    const cand = TALES.filter(t => nightList().includes(t) && btOk(t)), cnt = btCount(), pl = btList().filter(btOk);
+    const none = cand.length === 0;
+    const randLabel = none ? L('영어 읽어 주기는 준비 중이에요', 'English read-aloud is getting ready')
+      : lang === 'en' && cand.length === 1 ? L('아무 이야기나 이어 듣기', 'Listen to the English tale') : L('아무 이야기나 이어 듣기', 'Listen to random tales');
+    const chips = BT_COUNTS.map(n => `<button type="button" class="b-chip${n === cnt ? ' on' : ''}" data-bt-count="${n}" aria-pressed="${n === cnt}">${n}</button>`).join('');
+    const thumbs = pl.slice(0, 3).map(t => `<img class="b-th" src="assets/thumbs/${t.id}_tile.webp" alt="${shown(t).title}" draggable="false">`).join('') + (pl.length > 3 ? `<span class="b-more">+${pl.length - 3}</span>` : '');
+    return `<div class="b-cards">
+      <section class="b-card" aria-label="${L('아무 이야기나 이어 듣기', 'Random bedtime tales')}">
+        <button type="button" class="b-go" data-bt="random"${none ? ' disabled' : ''}><span class="b-ic">${UIA.has('tab_night') ? uiImg('tab_night') : BT_NOTE}</span><span class="b-t">${randLabel}</span></button>
+        <div class="b-set"><span class="b-lb">${L(`${cnt}편 듣고 끄기`, `Stop after ${cnt}`)}</span><span class="b-chips">${chips}</span></div>
+      </section>
+      <section class="b-card" aria-label="${L('우리 재생목록', 'Our playlist')}">
+        <div class="b-pl-h"><span class="b-ic">${BT_LIST}</span><span class="b-t">${L('우리 재생목록', 'Our playlist')}</span></div>
+        <div class="b-thumbs">${pl.length ? thumbs : `<span class="b-empty">${L('아직 비어 있어요 · 어른이 1초 꾹 눌러 만들어요', 'Empty for now · a grown-up can hold 1 second to make one')}</span>`}</div>
+        <div class="b-row"><button type="button" class="b-go small" data-bt="list"${pl.length ? '' : ' disabled'}>${L('듣기', 'Play')}</button>
+          <button type="button" class="b-hold" data-bt-hold><span class="b-hold-t">${pl.length ? L('편집 1초 꾹', 'Edit · hold 1 s') : L('만들기 1초 꾹', 'Make · hold 1 s')}</span></button></div>
+      </section></div>`;
+  }
+  function btGo(mode) {
+    paper('tap');
+    try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (e) { /* 무시 */ }
+    location.href = 'bedtime.html?mode=' + mode;
+  }
+  /* 재생목록 편집 시트(보호자): 순서·추가·빼기, 최대 5편 */
+  let btDraft = [];
+  function btEditor() {
+    let el = document.getElementById('plEdit');
+    if (!el) {
+      el = document.createElement('div'); el.id = 'plEdit'; el.className = 'pl-edit'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true');
+      document.body.appendChild(el);
+      el.addEventListener('click', e => {
+        const b = e.target.closest('[data-pl]'); if (!b) return;
+        const act = b.dataset.pl, i = Number(b.dataset.i), id = b.dataset.id;
+        if (act === 'close') { el.hidden = true; return; }
+        if (act === 'save') { btSet({ playlist: btDraft.slice() }); el.hidden = true; renderNight(); return; }
+        paper('tap');
+        if (act === 'up' && i > 0) [btDraft[i - 1], btDraft[i]] = [btDraft[i], btDraft[i - 1]];
+        else if (act === 'down' && i < btDraft.length - 1) [btDraft[i + 1], btDraft[i]] = [btDraft[i], btDraft[i + 1]];
+        else if (act === 'del') btDraft.splice(i, 1);
+        else if (act === 'add') { const k = btDraft.indexOf(id); if (k >= 0) btDraft.splice(k, 1); else if (btDraft.length < BT_MAX) btDraft.push(id); }
+        btPaintEditor();
+      });
+    }
+    return el;
+  }
+  function btPaintEditor() {
+    const el = btEditor(), byId = id => TALES.find(t => t.id === id);
+    const rows = btDraft.map((id, i) => { const t = byId(id); return `<li class="pl-row"><span class="pl-n">${i + 1}</span><img class="pl-th" src="assets/thumbs/${id}_tile.webp" alt="" draggable="false"><span class="pl-tt">${shown(t).title}</span>
+      <button type="button" class="pl-b" data-pl="up" data-i="${i}" aria-label="${L('위로', 'Up')}"${i === 0 ? ' disabled' : ''}>▲</button>
+      <button type="button" class="pl-b" data-pl="down" data-i="${i}" aria-label="${L('아래로', 'Down')}"${i === btDraft.length - 1 ? ' disabled' : ''}>▼</button>
+      <button type="button" class="pl-b" data-pl="del" data-i="${i}" aria-label="${L('빼기', 'Remove')}">×</button></li>`; }).join('');
+    const tiles = nightList().map(t => {
+      const locked = !btOk(t), on = btDraft.includes(t.id), full = !on && btDraft.length >= BT_MAX;
+      return `<button type="button" class="pl-tile${on ? ' on' : ''}" data-pl="add" data-id="${t.id}"${locked || full ? ' disabled' : ''} aria-pressed="${on}"><img src="assets/thumbs/${t.id}_tile.webp" alt="" draggable="false"><span>${shown(t).title}</span>${on ? '<i class="pl-ck">✓</i>' : ''}${locked ? `<i class="pl-lk">${L('잠김', 'Locked')}</i>` : ''}</button>`;
+    }).join('');
+    el.innerHTML = `<div class="pl-sheet"><header class="pl-h"><button type="button" class="pl-top" data-pl="close">${L('닫기', 'Close')}</button><h2>${L(`우리 재생목록 (최대 ${BT_MAX}편)`, `Our playlist (up to ${BT_MAX})`)}</h2><button type="button" class="pl-top pl-save" data-pl="save">${L('저장', 'Save')}</button></header>
+      <ol class="pl-list">${rows || `<li class="pl-none">${L('아래에서 동화를 골라요', 'Pick tales below')}</li>`}</ol>
+      <h3 class="pl-add">${L('더하기', 'Add')}</h3><div class="pl-grid">${tiles}</div></div>`;
+  }
+  function btOpenEditor() {
+    btDraft = btList().filter(t => TALES.some(x => x.id === t.id)).map(t => t.id);
+    btEditor().hidden = false; btPaintEditor();
+  }
+  /* 1초 꾹: 손을 떼면 취소. 링 대신 아래 막대가 차오른다(CSS .holding) */
+  let btHoldT = 0;
+  const btHoldEnd = () => { clearTimeout(btHoldT); document.querySelectorAll('.b-hold.holding').forEach(b => b.classList.remove('holding')); };
+  document.addEventListener('pointerdown', e => {
+    const h = e.target.closest && e.target.closest('[data-bt-hold]'); if (!h) return;
+    h.classList.add('holding'); clearTimeout(btHoldT);
+    btHoldT = setTimeout(() => { btHoldEnd(); paper('tap'); btOpenEditor(); }, 1000);
+  });
+  ['pointerup', 'pointercancel', 'pointerleave', 'dragstart'].forEach(ev => document.addEventListener(ev, btHoldEnd, true));
+  function renderNight() {
+    const body = $('#nightBody'); if (!body) return;
+    const list = nightList(), recent = readList(recentReadKey).map(id => list.find(t => t.id === id)).filter(Boolean);
+    $('#nightEmpty').hidden = list.length > 0;
+    body.hidden = list.length === 0;
+    const sec = (k, ko, en, items) => items.length ? `<section class="n-sec" data-row="${k}" aria-label="${L(ko, en)}"><h3 class="row-h"><span class="row-ic">${rowIcon(k)}</span><span class="row-t">${L(ko, en)}</span></h3>
+      <div class="n-grid">${items.map(t => `<div class="slot" data-id="${t.id}">${cardHTML(t, { night: true })}</div>`).join('')}</div></section>` : '';
+    body.innerHTML = btHTML() + sec('recent', '최근 들은', 'Recently heard', recent) + sec('all', '모든 이야기', 'All tales', list);
+    paintNightSel();
+  }
+  const paintNightSel = () => document.querySelectorAll('#nightBody .card').forEach(c => c.classList.toggle('sel', c.dataset.id === nightSel));
+  function activateNight(e, c) {
+    e.preventDefault();
+    const id = c.dataset.id, t = TALES.find(x => x.id === id);
+    if (c.classList.contains('locked')) { paper('down'); peek(c); openLock(id); return; }
+    if (nightSel !== id) {                                   // 첫 톡 = 제목 읽기 + 살짝 들림
+      nightSel = id; paper('tap'); paintNightSel(); say(shown(t).title);
+      if (motion()) c.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px) scale(1.03)' }, { transform: 'translateY(-4px) scale(1.015)' }], { duration: 300, easing: 'cubic-bezier(.3,1.5,.5,1)', fill: 'forwards' });
+      return;
+    }
+    paper('tap');
+    try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (err) { /* 무시 */ }
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+    openTale(c);
+  }
+
+  /* ── S3 스티커북 탭: 퍼즐판 5개(카탈로그의 origin·also 로 계산 — 새 동화가 공개되면 그 판에 조각이 저절로 는다).
+     스티커 그림(assets/ui/sticker_<id>.webp)·판 그림(puzzle_<판>.webp)이 UI_ART 에 올라오기 전에는 동화의 사각 썸네일을 둥글게 오려 쓴다.
+     조각 = 카탈로그의 모든 동화(아직 안 나온 동화 포함, 2026-10-27 사용자 결정). 빈 조각은 실루엣 새김만(자물쇠·가격·구매 문구 없음) ── */
+  const isPrincess = t => (t.also || []).includes('princess');
+  const BOARDS = [
+    { k: 'princess', ko: '공주 퍼즐', en: 'Princess Puzzle', say: '공주 퍼즐을 다 모았어요!', has: isPrincess },
+    { k: 'korean', ko: '우리 옛이야기', en: 'Korean Tales', say: '우리 옛이야기를 다 모았어요!', has: t => t.origin === 'korean' && !isPrincess(t) },
+    { k: 'aesop', ko: '이솝 동물 친구', en: 'Aesop Animals', say: '이솝 동물 친구를 다 모았어요!', has: t => t.origin === 'aesop' && !isPrincess(t) },
+    { k: 'world', ko: '세계 명작', en: 'World Classics', say: '세계 명작을 다 모았어요!', has: t => t.origin === 'world' && !isPrincess(t) },
+    { k: 'original', ko: '창작 동화', en: 'Original Tales', say: '창작 동화를 다 모았어요!', has: t => t.origin === 'original' && !isPrincess(t) }
+  ];
+  const DONE_KEY = 'paperTheater.puzzleDone', BOARD_KEY = 'paperTheater.board';
+  const doneRec = () => { try { const o = JSON.parse(localStorage.getItem(DONE_KEY) || '{}'); return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } };
+  const pieces = b => TALES.filter(b.has);
+  const stickerSrc = id => UIA.has('sticker_' + id) ? `assets/ui/sticker_${id}.webp` : tileSrc(id);
+  const has = id => { try { return Entitlements.hasSticker(id); } catch (e) { return false; } };
+  const starSvg = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z"/></svg>';
+  let curBoard = '', pendingCel = [], celebrating = false, castView = '';
+  try { curBoard = localStorage.getItem(BOARD_KEY) || ''; } catch (e) { /* 기억 없음 */ }
+  const stickImg = (id, off) => { const s = stickerSrc(id); return s ? `<img src="${s}" alt="" draggable="false" decoding="async"${off ? ' class="sil"' : ''}>` : ''; };
+  /* 캐릭터 스티커 세트(tales/stickers.js): 그림이 있는 칸만 받을 수 있다. 그림 없는 칸(새로 그릴 자리)은 맨 뒤에 흐린 빈 구멍(글자 없음) */
+  const castSet = id => { try { const a = typeof STICKERS !== 'undefined' && STICKERS[id]; return Array.isArray(a) ? a : []; } catch (e) { return []; } };
+  const hasCast = (id, k) => { try { return Entitlements.hasCast(id, k); } catch (e) { return false; } };
+  const CAST_DONE_KEY = 'paperTheater.castDone';
+  const castDone = () => { try { const o = JSON.parse(localStorage.getItem(CAST_DONE_KEY) || '{}'); return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } };
+  /* 퍼즐 칸 위의 작은 진행 점: 10칸 중 받은 만큼 채운다 */
+  const castDots = id => { const set = castSet(id); if (!set.length) return ''; return `<span class="cast-dots" aria-hidden="true">${set.map(c => `<i class="${hasCast(id, c.k) ? 'on' : c.img ? '' : 'plan'}"></i>`).join('')}</span>`; };
+  function drawCast() {
+    const t0 = TALES.find(x => x.id === castView), set = castSet(castView);
+    if (!t0 || !set.length) { castView = ''; return false; }
+    const t = shown(t0), ready = set.filter(c => c.img), plan = set.filter(c => !c.img);
+    const got = ready.filter(c => hasCast(castView, c.k)).length, whole = !plan.length && got === ready.length && ready.length > 0;
+    const cell = c => {
+      if (!c.img) return `<span class="cs plan" aria-hidden="true"></span>`;
+      const g = hasCast(castView, c.k), nm = lang === 'en' ? c.en : c.ko;
+      return g ? `<button type="button" class="cs" data-k="${c.k}" aria-label="${nm}"><img src="${c.img}" alt="" draggable="false" decoding="async"></button>`
+        : `<span class="cs off" data-k="${c.k}" role="img" aria-label="${L('아직 비어 있어요', 'Still empty')}"><img class="sil" src="${c.img}" alt="" draggable="false" decoding="async"></span>`;
+    };
+    $('#pzBoard').innerHTML = `<div class="pz-head"><button type="button" class="cast-back" data-act="cast-back" aria-label="${L('뒤로', 'Back')}"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M30 8L14 24l16 16" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>${t.title}</h2><span class="pz-n">${got} / ${set.length}</span></div>
+      <div class="cast-grid${whole ? ' complete' : ''}"><i class="pz-glow" aria-hidden="true"></i>${[...ready, ...plan].map(cell).join('')}</div>`;
+    if (whole) {                                    // 친구들을 다 모았으면 한 번 축하
+      const rec = castDone();
+      if (!rec[castView] && curTab === 'stickers' && !celebrating) {
+        rec[castView] = true; try { localStorage.setItem(CAST_DONE_KEY, JSON.stringify(rec)); } catch (e) { /* 기록 못 해도 이번 화면에서는 보인다 */ }
+        const id = castView;
+        requestAnimationFrame(() => celebrateCast(id));
+      }
+    }
+    return true;
+  }
+  function confetti() {
+    const host = document.createElement('div'); host.className = 'confetti'; document.body.appendChild(host);
+    const cols = ['#E8703A', '#D9A94E', '#A93B32', '#3F6B4F', '#8B7BB8', '#F6ECD8'];
+    for (let i = 0; i < 36; i++) {
+      const s = document.createElement('i'); s.className = 'bit b' + (i % 3); s.style.background = cols[i % cols.length]; host.appendChild(s);
+      const x = Math.random() * innerWidth, r = (Math.random() - .5) * 720;
+      s.animate([{ transform: `translate(${x}px, -20px) rotate(0)`, opacity: 1 }, { transform: `translate(${x + (Math.random() - .5) * 120}px, ${innerHeight + 30}px) rotate(${r}deg)`, opacity: 1 }], { duration: 1800 + Math.random() * 1400, delay: Math.random() * 600, easing: 'ease-in', fill: 'forwards' });
+    }
+    return host;
+  }
+  function celebrateCast(id) {
+    const t0 = TALES.find(x => x.id === id), g = $('#pzBoard .cast-grid');
+    if (!t0 || !g || castView !== id) return;
+    celebrating = true;
+    try { AudioFX.sfx('tada', .7); setTimeout(() => AudioFX.sfx('cheer', .5), 700); } catch (e) { /* 소리 없이 */ }
+    const t = shown(t0);
+    say(L(`${t.title} 친구들을 다 모았어요!`, `You collected all the friends of ${t.title}!`));
+    if (!motion()) { celebrating = false; return; }
+    g.querySelectorAll('.cs:not(.plan)').forEach((c, i) => c.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.16) rotate(-5deg)', offset: .4 }, { transform: 'scale(1)' }], { duration: 700, delay: 150 + i * 110, easing: 'ease-in-out' }));
+    const host = confetti();
+    setTimeout(() => { host.remove(); celebrating = false; }, 3600);
+  }
+  function drawStickers() {
+    const root = $('#pzRow'); if (!root) return;
+    const rec = doneRec(), bs = BOARDS.map(b => ({ b, list: pieces(b) })).filter(x => x.list.length);
+    /* 판을 다 채웠으면 기록(한 번 기록하면 새 조각이 생겨도 '완성' 표시는 남는다) */
+    let changed = false;
+    bs.forEach(({ b, list }) => { if (!rec[b.k] && list.every(t => has(t.id))) { rec[b.k] = true; changed = true; pendingCel.push(b.k); } });
+    if (changed) try { localStorage.setItem(DONE_KEY, JSON.stringify(rec)); } catch (e) { /* 기록 못 해도 이번 화면에서는 보인다 */ }
+    const total = Entitlements.stickerCount();
+    $('#pzEmpty').hidden = bs.length > 0;
+    $('#pzMain').hidden = bs.length === 0;
+    root.hidden = bs.length === 0;
+    if (!bs.length) return;
+    if (curTab === 'stickers' && pendingCel.length) { curBoard = pendingCel[0]; }
+    if (!bs.some(x => x.b.k === curBoard)) { const withSt = bs.find(x => x.list.some(t => has(t.id))); curBoard = (withSt || bs[0]).b.k; }
+    root.innerHTML = bs.map(({ b, list }) => {
+      const got = list.filter(t => has(t.id)), done = !!rec[b.k], on = b.k === curBoard;
+      const art = UIA.has('puzzle_' + b.k) ? uiImg('puzzle_' + b.k, 'pz-art') : (got.length ? stickImg(got[got.length - 1].id) : '');
+      return `<button type="button" class="pz-b${on ? ' on' : ''}${done ? ' done' : ''}" role="tab" data-b="${b.k}" aria-selected="${on}" aria-label="${L(b.ko, b.en)} ${got.length}/${list.length}${done ? ', ' + L('완성', 'complete') : ''}">
+        <span class="pz-hole${art ? '' : ' empty'}">${art}${done ? `<i class="pz-done">${starSvg}</i>` : ''}</span>
+        <span class="pz-cnt">${got.length} / ${list.length}</span><span class="pz-nm">${L(b.ko, b.en)}</span></button>`;
+    }).join('');
+    const cur = bs.find(x => x.b.k === curBoard), list = cur.list, got = list.filter(t => has(t.id)), complete = got.length === list.length;
+    const cols = list.length <= 3 ? list.length : list.length <= 6 ? 3 : 4;
+    if (pendingCel.length && curTab === 'stickers') castView = '';
+    if (castView && drawCast()) { drawPlate(); return; }
+    $('#pzBoard').innerHTML = `<div class="pz-head"><h2>${L(cur.b.ko, cur.b.en)}</h2><span class="pz-n">${got.length} / ${list.length}</span>${rec[cur.b.k] ? `<i class="pz-done">${starSvg}</i>` : ''}</div>
+      ${complete && UIA.has('puzzle_' + cur.b.k) ? uiImg('puzzle_' + cur.b.k, 'pz-full') : ''}
+      <div class="pz-grid${complete ? ' complete' : ''}" style="--cols:${cols}"><i class="pz-glow" aria-hidden="true"></i>${list.map(t0 => {
+        const t = shown(t0), g = has(t.id);
+        return g ? `<button type="button" class="pz-s" data-id="${t.id}" aria-label="${t.title}">${stickImg(t.id)}${castDots(t.id)}</button>`
+          : `<span class="pz-s off" role="img" aria-label="${L('아직 비어 있어요', 'Still empty')}">${stickImg(t.id, true)}</span>`;
+      }).join('')}</div>`;
+    drawPlate();
+    if (curTab === 'stickers' && pendingCel.length && !celebrating) { const k = pendingCel.shift(); requestAnimationFrame(() => celebrate(k)); }
+  }
+  /* 종이별 접시(앱 모드만): 별 0~5개, 5개면 [동화 하나 열기] → S12 종이별 모드 */
+  function drawPlate() {
+    const el = $('#pzPlate'); if (!el) return;
+    el.hidden = !storeMode;
+    if (!storeMode) return;
+    const bal = Entitlements.starBalance(), need = Entitlements.STAR_NEED, n = Math.min(bal, need);
+    const canOpen = bal >= need && Entitlements.lockedChoices().length > 0;
+    el.className = 'pz-plate' + (bal >= need ? ' full' : '');
+    el.setAttribute('aria-label', L(`종이별 ${n} / ${need}`, `Paper Stars ${n} / ${need}`));
+    el.innerHTML = `<div class="plate-art">${UIA.has('star_plate') ? uiImg('star_plate', 'plate-img') : ''}<div class="plate-dots">${[...Array(need)].map((_, i) => `<i class="${i < n ? 'on' : ''}">${i < n ? starSvg : ''}</i>`).join('')}</div></div>
+      <p class="plate-n">${n} / ${need}</p>
+      ${canOpen ? `<button type="button" class="bigbtn" data-act="pz-open">${L('동화 하나 열기', 'Open a tale')}</button>` : ''}`;
+  }
+  /* 판 완성 연출 한 번: 종이 뒤에서 빛이 번지고, 스티커들이 차례로 뒤집히고, 색종이가 흩날린다 + 음성 */
+  function celebrate(k) {
+    const b = BOARDS.find(x => x.k === k), g = $('#pzBoard .pz-grid');
+    if (!b || !g || curBoard !== k) return;
+    celebrating = true;
+    try { AudioFX.sfx('tada', .7); setTimeout(() => AudioFX.sfx('cheer', .5), 700); } catch (e) { /* 소리 없이 */ }   // 팡파르(Kenney CC0) 뒤 박수(Pixabay)
+    say(L(b.say, `You finished the ${b.en}!`));
+    if (!motion()) { celebrating = false; return; }
+    const glow = g.querySelector('.pz-glow');
+    glow.animate([{ opacity: 0, transform: 'scale(.4)' }, { opacity: .95, transform: 'scale(1)', offset: .35 }, { opacity: 0, transform: 'scale(1.25)' }], { duration: 1800, easing: 'ease-out' });
+    g.querySelectorAll('.pz-s').forEach((s, i) => s.animate([{ transform: 'rotateY(0)' }, { transform: 'rotateY(180deg) scale(1.08)', offset: .5 }, { transform: 'rotateY(360deg)' }], { duration: 900, delay: 200 + i * 110, easing: 'ease-in-out' }));
+    const host = confetti();
+    setTimeout(() => { host.remove(); celebrating = false; if (pendingCel.length && curTab === 'stickers') drawStickers(); }, 3600);
+  }
+  $('#pzRow').addEventListener('click', e => {
+    const b = e.target.closest('.pz-b'); if (!b) return;
+    curBoard = b.dataset.b; castView = ''; paper('tap');
+    try { localStorage.setItem(BOARD_KEY, curBoard); } catch (err) { /* 무시 */ }
+    drawStickers();
+    const bd = BOARDS.find(x => x.k === curBoard); if (bd) say(L(bd.ko, bd.en));
+  });
+  $('#pzBoard').addEventListener('click', e => {
+    if (e.target.closest('[data-act="cast-back"]')) { paper('tap'); castView = ''; drawStickers(); const bd = BOARDS.find(x => x.k === curBoard); if (bd) say(L(bd.ko, bd.en)); return; }
+    const cs = e.target.closest('.cs');
+    if (cs) {                                                  // 캐릭터 세트 칸: 받은 칸 = 이름 읽기 + 들썩, 빈 칸 = 안내
+      if (cs.classList.contains('off')) { paper('down'); say(L('아직 비어 있어요', 'Still empty')); return; }
+      const c = castSet(castView).find(x => x.k === cs.dataset.k); paper('tap'); if (c) say(L(c.ko, c.en));
+      if (motion()) cs.animate([{ transform: 'rotate(0) scale(1)' }, { transform: 'rotate(-9deg) scale(1.12)', offset: .25 }, { transform: 'rotate(7deg) scale(1.08)', offset: .55 }, { transform: 'rotate(-3deg) scale(1.03)', offset: .8 }, { transform: 'rotate(0) scale(1)' }], { duration: 650, easing: 'ease-out' });
+      return;
+    }
+    const s = e.target.closest('.pz-s'); if (!s) return;
+    if (s.classList.contains('off')) { paper('down'); say(L('아직 비어 있어요', 'Still empty')); return; }
+    paper('tap');
+    const t = TALES.find(x => x.id === s.dataset.id);
+    if (t && castSet(t.id).length) { castView = t.id; drawStickers(); say(shown(t).title); return; }     // 동화 스티커 톡 = 그 동화의 캐릭터 세트 보기
+    if (t) say(shown(t).title);     // 제목 읽기 + 들썩 (동화로 들어가지는 않는다)
+    if (motion()) s.animate([{ transform: 'rotate(0) scale(1)' }, { transform: 'rotate(-9deg) scale(1.12)', offset: .25 }, { transform: 'rotate(7deg) scale(1.08)', offset: .55 }, { transform: 'rotate(-3deg) scale(1.03)', offset: .8 }, { transform: 'rotate(0) scale(1)' }], { duration: 650, easing: 'ease-out' });
+  });
+  $('#pzPlate').addEventListener('click', e => {
+    if (!e.target.closest('[data-act="pz-open"]')) return;
+    paper('tap'); pickKind = 'star'; openFlow('pick', { id: null, sel: null });
+  });
+  $('#nightGo').addEventListener('click', () => { paper('tap'); setTab('tales'); });
+  $('#nightBody').addEventListener('click', e => {
+    const n = e.target.closest('[data-bt-count]');
+    if (n) { paper('tap'); btSet({ count: Number(n.dataset.btCount) }); renderNight(); return; }
+    const g = e.target.closest('[data-bt]');
+    if (g && !g.disabled) { btGo(g.dataset.bt); return; }
+    const c = e.target.closest('.card'); if (c) activateNight(e, c);
+  });
+
+  /* ── 탭 3개 (APP_SCREENS_PLAN §2): 동화 · 잠자리 · 스티커북. 해시 #tales #night #stickers, 마지막 탭은 기억한다 ── */
+  const TABS = {
+    tales:    { ko: '동화',   en: 'Tales',        say: '동화' },
+    night:    { ko: '잠자리', en: 'Bedtime',      say: '잠자리' },
+    stickers: { ko: '스티커북', en: 'Sticker Book', say: '스티커북' }
+  };
+  const TAB_KEY = 'paperTheater.tab';
+  let curTab = '';
+  const tabBtns = [...document.querySelectorAll('#tabs .tab')];
+  const tabFromHash = () => { const h = location.hash.replace('#', ''); return TABS[h] ? h : ''; };
+  function paintTabs() {
+    tabBtns.forEach(b => {
+      const k = b.dataset.tab, on = k === curTab;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+      b.setAttribute('aria-label', L(TABS[k].ko, TABS[k].en));
+      b.querySelector('.tab-lb').textContent = L(TABS[k].ko, TABS[k].en);
+    });
+    document.querySelectorAll('.view').forEach(v => { v.hidden = v.dataset.view !== curTab; });
+    $('#home').dataset.tab = curTab;
+    $('#nTitle').textContent = L('잠자리 이야기', 'Bedtime stories');
+    $('#nightEmptyT').textContent = L('읽어 주기는 준비 중이에요', 'Read-aloud is getting ready');
+    $('#nightGo').textContent = L('동화 탭으로', 'Go to Tales');
+    $('#pzEmptyT').textContent = L('동화를 끝까지 하면 스티커가 생겨요', 'Finish a tale to get a sticker');
+    $('#emptyT').textContent = L('이 조합의 이야기는 아직 없어요', 'No tales match yet');
+    $('#emptyReset').textContent = L('전체 보기', 'Show all');
+    if (curTab === 'stickers') drawStickers();
+  }
+  /* 새 탭의 구멍이 열리고(스프링) 이전 구멍은 오므라든다. 한 번 톡으로 바로 바뀌고 이름을 한 번 읽어 준다 */
+  function setTab(k, o = {}) {
+    if (!TABS[k]) k = 'tales';
+    const prev = curTab;
+    if (k === prev && !o.force) return;
+    curTab = k;
+    paintTabs();
+    if (!o.silent) { try { localStorage.setItem(TAB_KEY, k); } catch (e) { /* 기억 못 해도 이 화면은 바뀐다 */ } }
+    if (!o.silent && location.hash !== '#' + k) { try { history.replaceState(null, '', location.pathname + location.search + '#' + k); } catch (e) { /* 무시 */ } }
+    if (o.silent) return;
+    paper('tap');
+    say(k === 'stickers' && Entitlements.stickerCount() === 0 ? L('스티커북. 동화를 끝까지 하면 스티커가 생겨요', 'Sticker Book. Finish a tale to get a sticker') : L(TABS[k].say, TABS[k].en));
+    const hole = tabBtns.find(b => b.dataset.tab === k).querySelector('.hole');
+    play(.4, t => { const s = spring(t, .5, 15); hole.style.scale = (.78 + .22 * s).toFixed(4); }, () => { hole.style.scale = ''; });
+    const old = prev && tabBtns.find(b => b.dataset.tab === prev).querySelector('.hole');
+    if (old) play(.25, t => { old.style.scale = (1 - .1 * Math.sin(Math.PI * clamp(t / .25))).toFixed(4); }, () => { old.style.scale = ''; });
+  }
+  $('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) setTab(b.dataset.tab); });
+  $('#tabs').addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    e.preventDefault();
+    const i = tabBtns.findIndex(b => b.dataset.tab === curTab), d = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : -1;
+    const nb = tabBtns[(i + d + tabBtns.length) % tabBtns.length];
+    setTab(nb.dataset.tab); nb.focus();
+  });
+  addEventListener('hashchange', () => { const k = tabFromHash(); if (k) setTab(k); });
+  /* 스티커북 탭 구멍 가장자리의 구리색 점: 종이별이 5개 모였을 때만 (앱 모드) */
+  function paintTabBadge() {
+    const on = Entitlements.appMode() && Entitlements.starBalance() >= Entitlements.STAR_NEED;
+    tabBtns.find(b => b.dataset.tab === 'stickers').querySelector('.tab-badge').hidden = !on;
+  }
+  /* 탭 그림(assets/ui/tab_<탭>.webp, 목록은 assets/ui/ui.js)이 들어오면 임시 동그라미 대신 쓴다. 없는 파일은 요청하지 않는다 */
+  tabBtns.forEach(b => {
+    const key = 'tab_' + b.dataset.tab, hole = b.querySelector('.hole');
+    if (!(window.UI_ART || []).includes(key)) return;
+    hole.classList.add('art');
+    hole.insertAdjacentHTML('afterbegin', `<img class="tab-art" src="assets/ui/${key}.webp" alt="" aria-hidden="true" draggable="false">`);
+  });
+  /* 빈 상태·잠자리 머리 그림(assets/ui/empty_shelf · empty_night · night_head .webp)도 UI_ART 에 올라오면 그림으로 */
+  [['#empty .empty-pic', 'empty_shelf'], ['#nightEmpty .empty-pic', 'empty_night'], ['#pzEmpty .empty-pic', 'empty_stickers'], ['#nHole', 'night_head']].forEach(([sel, key]) => {
+    const el = $(sel); if (el && UIA.has(key)) el.insertAdjacentHTML('afterbegin', uiImg(key));
+  });
+  paintTabBadge();
+  Entitlements.onChange(() => { paintTabBadge(); requestRender(); });
+
+  /* 앱 시작: 실제 종이 풍경으로 만든 Three.js 스플래시. 웹은 ?splash=1 로 확인. */
   function splash(done) {
     const sp = $('#splash');
-    const cast = ['tiger_stand', 'rab_rabbit_run', 'tp_pig2_base', 'lm_lion_stand'];
-    sp.querySelector('.sp-cast').innerHTML = cast.map(n => `<img src="assets/v3w/${n}.webp" alt="">`).join('');
-    const ttl = sp.querySelector('.sp-title');
-    ttl.innerHTML = lang === 'en' ? '<span>Tok Tok</span> <span>Tale Theater</span>' : '<span>톡톡</span> <span>동화극장</span>';
-    sp.querySelector('.sp-tap').textContent = L('톡 눌러 시작', 'Tap to start');
+    let finished = false, pending;
+    const complete = () => {
+      if (finished) return;
+      finished = true;
+      clearTimeout(pending);
+      sp.removeEventListener('pointerdown', complete);
+      sp.hidden = true;
+      sp.setAttribute('aria-hidden', 'true');
+      done();
+    };
+    // Branded static first paint while the optional 3D module loads.
     sp.hidden = false;
-    const A = sp.querySelector('.sp-a'), B = sp.querySelector('.sp-b'), C = sp.querySelector('.sp-c');
-    const imgs = [...sp.querySelectorAll('.sp-cast img')], words = [...ttl.children], tap = sp.querySelector('.sp-tap');
-    let anim = null, closed = false;
-    const finish = () => { if (closed) return; closed = true; if (anim) anim.finish(); };
-    sp.addEventListener('pointerdown', finish, { once: true });
-    anim = play(2.2, t => {
-      const pa = eo(t / .5), pb = eo((t - .12) / .5), pc = eo((t - .24) / .5);
-      tf(A, 0, 100 * (1 - pa), 1, 0); A.style.opacity = clamp(pa * 2);
-      tf(B, 0, 100 * (1 - pb), 1, 0); B.style.opacity = clamp(pb * 2);
-      tf(C, 0, 100 * (1 - pc), 1, 0); C.style.opacity = clamp(pc * 2);
-      imgs.forEach((im, i) => {
-        const tt = t - .5 - i * .14, q = spring(tt, .42, 15);
-        im.style.opacity = tt > 0 ? '1' : '0';
-        im.style.translate = `0 ${((1 - q) * 160).toFixed(1)}px`;
-      });
-      words.forEach((w, i) => {
-        const tt = t - 1.05 - i * .16, q = spring(tt, .4, 16);
-        w.style.opacity = tt > 0 ? '1' : '0';
-        w.style.scale = Math.max(0, q).toFixed(3);
-      });
-      tap.style.opacity = (clamp((t - 1.6) / .3) * (.55 + .45 * Math.sin(t * 5))).toFixed(3);
-    }, () => {
-      sp.style.transition = 'opacity .35s';
-      sp.style.opacity = '0';
-      setTimeout(() => { sp.hidden = true; sp.style.opacity = sp.style.transition = ''; done(); }, 340);
-    });
+    sp.replaceChildren();
+    const fallback = document.createElement('div');
+    fallback.className = 'splash-fallback';
+    const title = document.createElement(lang === 'en' ? 'strong' : 'img');
+    if (lang === 'en') title.textContent = 'Tok Tok Tale Theater';
+    else {
+      title.className = 'splash-wordmark';
+      title.src = 'assets/v3w/sp_wordmark_v1.webp';
+      title.alt = '톡톡 동화극장';
+    }
+    fallback.append(title); sp.append(fallback);
+    sp.addEventListener('pointerdown', complete);
+    pending = setTimeout(complete, 2500);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
+    import('./engine/splash/start.js?v=20261027letter1')
+      .then(({ startSplash }) => {
+        if (finished) return;
+        clearTimeout(pending);
+        sp.removeEventListener('pointerdown', complete);
+        startSplash(sp, { lang, onDone: complete });
+      })
+      .catch(complete);
   }
 
   function intro() {
-    if (appUI) {
-      let first = storeMode;
-      if (storeMode) try { first = !sessionStorage.getItem('paperTheater.splash'); sessionStorage.setItem('paperTheater.splash', '1'); } catch (e) { /* 무시 */ }
-      else first = false; // 웹은 스플래시 없이 바로 홈
-      update({ anim: false });
-      if (first && motion() && location.hash !== '#parent') splash(() => update({ intro: true, delay: .04, step: .035 }));
-      else update({ intro: true, delay: .02, step: .03 });
-      return;
-    }
-    let full = true;
-    try { full = !sessionStorage.getItem('paperTheater.intro'); sessionStorage.setItem('paperTheater.intro', '1'); } catch (e) { /* 무시 */ }
-    if (location.hash === '#parent') full = false;
-    if (!motion()) { update({ anim: false }); return; }
-    if (!full) { update({ intro: true, delay: .02, step: .03 }); return; }
-
-    const tiles = [...document.querySelectorAll('.logo .lt')];
-    const stickers = [...document.querySelectorAll('.row-tab, .chip, .gear')];
-    const R = rng(11), vw = innerWidth, vh = innerHeight;
-    const layer = document.createElement('div');
-    layer.className = 'confetti';
-    const PAL = getComputedStyle(document.documentElement).getPropertyValue('--confetti').split(',').map(c => c.trim()).filter(Boolean);
-    const bits = [];
-    tiles.forEach((el, i) => {
-      const r = el.getBoundingClientRect(), col = getComputedStyle(el).color;
-      for (let j = 0; j < 9; j++) {
-        const d = document.createElement('i');
-        d.className = 'bit b' + (j % 3);
-        d.style.background = j < 5 || !PAL.length ? col : PAL[(i + j) % PAL.length];
-        layer.appendChild(d);
-        const sx = R() * vw, sy = R() * vh;
-        bits.push({
-          d, sx, sy,
-          ex: r.left + r.width / 2 + (R() - .5) * r.width * .6 - 4,
-          ey: r.top + r.height / 2 + (R() - .5) * r.height * .6 - 4,
-          at: .02 + i * .07 + R() * .1, bend: (R() - .5) * 180, r0: (R() - .5) * 540
-        });
-      }
-    });
-    document.body.appendChild(layer);
-    const FLY = .5;
-    const land = i => .02 + i * .07 + FLY + .02;
-
-    let introAnim = null;
-    const skip = () => { if (introAnim) introAnim.finish(); if (gridAnim) gridAnim.finish(); };
-    addEventListener('pointerdown', skip, { capture: true, once: true });
-    addEventListener('keydown', skip, { capture: true, once: true });
-
-    introAnim = play(1.45, t => {
-      for (const b of bits) {
-        const q = eo((t - b.at) / FLY);
-        const x = lerp(b.sx, b.ex, q), y = lerp(b.sy, b.ey, q) + Math.sin(Math.PI * q) * b.bend;
-        b.d.style.opacity = (q <= 0 ? 0 : q < .88 ? clamp(q / .12) : 1 - (q - .88) / .12).toFixed(3);
-        tf(b.d, x, y, lerp(1.5, .6, q), b.r0 * (1 - q));
-      }
-      tiles.forEach((el, i) => {
-        const tt = t - land(i), s = spring(tt, .38, 17);
-        el.style.opacity = tt > 0 ? '1' : '0';
-        el.style.scale = Math.max(0, s).toFixed(4);
-        el.style.rotate = `${((i % 2 ? 24 : -24) * (1 - s)).toFixed(2)}deg`;
-      });
-      stickers.forEach((el, j) => {
-        const tt = t - .28 - Math.min(j * .022, .4), s = spring(tt, .45, 16);
-        el.style.opacity = clamp(tt / .08).toFixed(3);
-        el.style.scale = (.55 + .45 * s).toFixed(4);
-      });
-    }, () => {
-      layer.remove();
-      [...tiles, ...stickers].forEach(untf);
-      removeEventListener('pointerdown', skip, { capture: true });
-      removeEventListener('keydown', skip, { capture: true });
-    });
-    update({ intro: true, delay: .5, step: .04 });
+    let first = storeMode;
+    if (storeMode) try { first = !sessionStorage.getItem('paperTheater.splash'); sessionStorage.setItem('paperTheater.splash', '1'); } catch (e) { /* 무시 */ }
+    if (new URLSearchParams(location.search).get('splash') === '1') first = true;
+    update({ anim: false });
+    if (first && location.hash !== '#parent') splash(() => update({ intro: true, delay: .04, step: .035 }));
+    else update({ intro: true, delay: .02, step: .03 });
   }
 
-  buildChips('origin');
-  buildChips('skill');
+  /* 처음 탭: 주소의 해시 → 마지막으로 본 탭 → 동화 */
+  let startTab = tabFromHash();
+  if (!startTab) try { const m = localStorage.getItem(TAB_KEY); if (TABS[m]) startTab = m; } catch (e) { /* 기억 없음 */ }
+  setTab(startTab || 'tales', { silent: true, force: true });
+
   intro();
   /* 목소리: 기본은 ElevenLabs, ?voice=tc 면 Typecast로, ?voice=el 이면 다시 기본으로 */
   try { const v = new URLSearchParams(location.search).get('voice'); if (v === 'tc') localStorage.setItem('voice', 'tc'); else if (v === 'el') localStorage.removeItem('voice'); } catch (e) { /* 무시 */ }
   /* 확인용: index.html#parent 로 열면 보호자 메뉴가 바로 열린다 */
-  if (location.hash === '#parent') openPanel();
-  probeMaking();
+  if (location.hash === '#parent') openGuard();
+  if (!storeMode) probeMaking();
   /* 잠긴 동화 주소로 바로 들어왔다가 돌아온 경우: 보호자 확인부터 */
   try {
     const lk = new URLSearchParams(location.search).get('locked');
-    if (lk && TALES.some(t => t.id === lk && t.ready)) { history.replaceState(null, '', location.pathname + location.hash); setTimeout(() => openStore(lk), 600); }
+    if (lk && TALES.some(t => t.id === lk && t.ready)) { history.replaceState(null, '', location.pathname + location.hash); setTimeout(() => openLock(lk), 600); }
   } catch (e) { /* 무시 */ }
 })();
 /* 임시(review.js): '새 그림' 딱지를 톡 누르면 확인함으로 바꾼다. 카드가 열리지 않게 막는다 */

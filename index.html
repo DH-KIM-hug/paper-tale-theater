@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23222B45'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23141A2C'/%3E%3Ccircle cx='17' cy='17' r='7' fill='%23EDE6D6'/%3E%3C/svg%3E">
 <meta name="copyright" content="Copyright © 2026 DH-KIM-hug. All rights reserved. Not open source.">
 <title>톡톡 동화극장</title>
-<link rel="stylesheet" href="home.css?v=20261023a">
+<link rel="stylesheet" href="home.css?v=20261027bd1">
 </head>
 <body>
 <!-- 공용 SVG: 종이 조각 그림자 필터 + 태그 아이콘 (글을 못 읽는 아이가 그림으로 알아본다) -->
@@ -87,104 +87,109 @@
   <rect class="wgrain" width="600" height="500" clip-path="url(#waveClip)" filter="url(#waveGrain)"/>
 </svg>
 
-<div id="home">
-  <aside class="board" aria-label="동화 고르기">
-    <header class="brand">
-      <h1 class="logo"><span class="sr">톡톡 동화극장</span><span class="lt" aria-hidden="true">톡</span><span class="lt" aria-hidden="true">톡</span><span class="lt gap" aria-hidden="true">동</span><span class="lt" aria-hidden="true">화</span><span class="lt" aria-hidden="true">극</span><span class="lt" aria-hidden="true">장</span></h1>
-      <button id="langToggle" class="langtoggle" type="button" aria-label="Switch language: English"><span class="lg-t">EN</span></button>
-      <button id="tagToggle" class="tagtoggle" type="button" aria-controls="tagRows" aria-expanded="true" aria-label="태그 숨기기">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>
-        <span class="tt-lb">태그</span><span class="tt-n" hidden></span>
-      </button>
-      <button id="parentBtn" class="gear" type="button" aria-label="보호자 메뉴: 1초 동안 누르세요">
-        <svg class="gear-ic" aria-hidden="true"><use href="#i-gear"/></svg>
-        <svg class="gear-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19"/></svg>
-      </button>
-    </header>
+<div id="home" data-tab="tales">
+  <header class="brand">
+    <h1 class="logo"><span class="sr">톡톡 동화극장</span><span class="lt" aria-hidden="true">톡</span><span class="lt" aria-hidden="true">톡</span><span class="lt gap" aria-hidden="true">동</span><span class="lt" aria-hidden="true">화</span><span class="lt" aria-hidden="true">극</span><span class="lt" aria-hidden="true">장</span></h1>
+    <span class="filter-on" id="filterOn" hidden></span>
+  </header>
 
-    <div id="tagRows" class="tagrows">
-    <section class="tagrow" data-row="origin">
-      <h2 class="row-tab">이야기</h2>
-      <div class="chips" role="group" aria-label="이야기 종류"></div>
-    </section>
-    <section class="tagrow" data-row="skill">
-      <h2 class="row-tab">배우는 것</h2>
-      <div class="chips" role="group" aria-label="배우는 것"></div>
-    </section>
-    </div>
-  </aside>
+  <!-- 아이용 탭 3개: 같은 크림 종이에 뚫린 구멍. 선택 = 열린 구멍(색), 아닌 것 = 새김. 가로 = 왼쪽 레일, 세로 = 아래 막대 -->
+  <nav id="tabs" class="tabs" role="tablist" aria-label="메뉴">
+    <button type="button" class="tab" role="tab" data-tab="tales" aria-controls="view-tales" aria-label="동화">
+      <span class="hole"><i class="dot" aria-hidden="true"></i></span><span class="tab-lb">동화</span>
+    </button>
+    <button type="button" class="tab" role="tab" data-tab="night" aria-controls="view-night" aria-label="잠자리">
+      <span class="hole"><i class="dot" aria-hidden="true"></i></span><span class="tab-lb">잠자리</span>
+    </button>
+    <button type="button" class="tab" role="tab" data-tab="stickers" aria-controls="view-stickers" aria-label="스티커북">
+      <span class="hole"><i class="dot" aria-hidden="true"></i></span><span class="tab-lb">스티커북</span>
+      <i class="tab-badge" aria-hidden="true" hidden></i>
+    </button>
+  </nav>
 
-  <main class="shelf" id="shelf">
-    <!-- 앱 화면: 큰 동화 하나(좌우 화살표로 넘김) + 아래 작은 목록 -->
-    <section class="hero" id="hero" aria-label="오늘의 동화" hidden>
-      <button type="button" class="hero-nav prev" id="heroPrev" aria-label="이전 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="hero-slot" id="heroSlot"></div>
-      <button type="button" class="hero-nav next" id="heroNext" aria-label="다음 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <main class="views" id="views">
+    <!-- 동화 탭: 큰 동화 하나(좌우 화살표로 넘김) + 아래 작은 목록 -->
+    <section class="view shelf" id="view-tales" data-view="tales" role="tabpanel" aria-label="동화">
+      <section class="hero" id="hero" aria-label="오늘의 동화" hidden>
+        <button type="button" class="hero-nav prev" id="heroPrev" aria-label="이전 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="hero-slot" id="heroSlot"></div>
+        <button type="button" class="hero-nav next" id="heroNext" aria-label="다음 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </section>
+      <div class="hero-strip" id="heroStrip" role="button" tabindex="-1" hidden aria-hidden="true"></div>
+      <div class="rows" id="rows"></div>
+      <div class="empty" id="empty" hidden>
+        <span class="empty-pic" aria-hidden="true"></span>
+        <p id="emptyT">이 조합의 이야기는 아직 없어요</p>
+        <button type="button" class="ticket big" id="emptyReset">전체 보기</button>
+      </div>
     </section>
-    <ul class="grid" id="grid"></ul>
-    <div class="empty" id="empty" hidden>
-      <p>이 조합의 이야기는 아직 없어요</p>
-      <button type="button" class="ticket" id="emptyReset">전체 보기</button>
-    </div>
+    <!-- 잠자리 탭 (S2): 읽어 주기가 준비된 동화 -->
+    <section class="view night" id="view-night" data-view="night" role="tabpanel" aria-label="잠자리" hidden>
+      <header class="n-head"><span class="n-hole" id="nHole" aria-hidden="true"></span><h2 id="nTitle">잠자리 이야기</h2></header>
+      <div class="n-body" id="nightBody"></div>
+      <div class="empty" id="nightEmpty" hidden>
+        <span class="empty-pic" aria-hidden="true"></span>
+        <p id="nightEmptyT">읽어 주기는 준비 중이에요</p>
+        <button type="button" class="ticket big" id="nightGo">동화 탭으로</button>
+      </div>
+    </section>
+    <!-- 스티커북 탭 (S3): 퍼즐판 5개 + 종이별 접시 -->
+    <section class="view stk" id="view-stickers" data-view="stickers" role="tabpanel" aria-label="스티커북" hidden>
+      <div class="pz-row" id="pzRow" role="tablist" aria-label="퍼즐판"></div>
+      <div class="pz-main" id="pzMain">
+        <div class="pz-board" id="pzBoard"></div>
+        <aside class="pz-plate" id="pzPlate" hidden></aside>
+      </div>
+      <div class="empty" id="pzEmpty" hidden>
+        <span class="empty-pic" aria-hidden="true"></span>
+        <p id="pzEmptyT">동화를 끝까지 하면 스티커가 생겨요</p>
+      </div>
+    </section>
   </main>
 </div>
+
+<!-- 보호자 톱니: 오른쪽 위 고정, 1초 꾹 -->
+<button id="parentBtn" class="gear" type="button" aria-label="보호자 메뉴: 1초 동안 누르세요">
+  <svg class="gear-ic" aria-hidden="true"><use href="#i-gear"/></svg>
+  <svg class="gear-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19"/></svg>
+</button>
 
 <!-- 짧은 안내 쪽지 (보호자 톱니를 짧게 눌렀을 때) -->
 <div id="hint" class="hint" hidden>보호자 메뉴는 1초 동안 꾹 누르세요</div>
 
-<!-- 보호자 메뉴 -->
-<div id="parentPanel" class="parent" hidden role="dialog" aria-modal="true" aria-labelledby="parentTitle">
-  <div class="sheet">
-    <h2 id="parentTitle">보호자 메뉴</h2>
-    <p class="how">위 줄에서 <b>이야기 종류</b>, 아래 줄에서 <b>배우는 것</b>을 고릅니다.
-      공주 동화는 다른 종류(예: 외국 전래)와 겹쳐서 나옵니다.
-      같은 줄에서 여러 개를 고르면 그중 <b>하나라도</b> 맞는 이야기, 두 줄을 함께 고르면 <b>둘 다</b> 맞는 이야기가 나옵니다.
-      구멍이 종이 마개로 덮인 이야기는 아직 만들고 있는 중이에요.</p>
-    <label class="toggle"><input type="checkbox" id="optSpeak"> 태그와 제목을 소리로 읽어 주기</label>
-    <label class="toggle"><input type="checkbox" id="optCaption"> <span id="captionLbl">동화 속 글 상자(대사 자막) 보여 주기</span></label>
-    <label class="toggle"><input type="checkbox" id="optAuto"> <span id="autoLbl">자동 재생 (톡·퀴즈 없이 이야기만 틀어 주기)</span></label>
-    <div class="timerRow" role="group" aria-labelledby="timerLbl">
-      <p id="timerLbl">놀이 시간 알림</p>
-      <div class="timerOpts" id="timerOpts"></div>
-      <p class="timerNote" id="timerNote"></p>
-    </div>
-    <div class="sheet-btns">
-      <button type="button" class="ticket alt" id="optRestore" hidden>구매 복원</button>
-      <button type="button" class="ticket alt" id="optReset">고른 태그 지우기</button>
-      <button type="button" class="ticket" id="parentClose">닫기</button>
+<!-- 보호자 영역 (S9): 톱니 1초 꾹. 아이패드·가로 = 2열, 아이폰 세로 = 1열 push -->
+<div id="guard" class="guard" hidden role="dialog" aria-modal="true" aria-labelledby="guardTitle">
+  <div class="gpaper">
+    <header class="g-head">
+      <button type="button" class="ticket alt g-close" id="guardClose">닫기</button>
+      <h2 id="guardTitle">보호자</h2>
+    </header>
+    <div class="g-body" id="guardBody">
+      <nav class="g-list" id="guardList" aria-label="보호자 항목"></nav>
+      <section class="g-pane" id="guardPane" tabindex="-1"></section>
     </div>
   </div>
 </div>
 
-<!-- 보호자 확인 · 전체 열기 (앱 모드에서만 뜬다) -->
-<div id="storePanel" class="parent" hidden role="dialog" aria-modal="true" aria-labelledby="storeTitle">
+<!-- 부모 확인 (S10): 곱셈, 정답 1.5초 꾹, 틀리면 30초 잠김 -->
+<div id="gate" class="parent gate" hidden role="dialog" aria-modal="true" aria-labelledby="gateTitle">
   <div class="sheet">
-    <h2 id="storeTitle"></h2>
-    <div id="storeGate">
-      <p class="how" id="gateHow"></p>
-      <p class="gate-q" id="gateQ"></p>
-      <div class="gate-opts" id="gateOpts"></div>
-    </div>
-    <div id="storeBuy" hidden>
-      <p class="how" id="buyHow"></p>
-      <p class="how" id="buyWeek"></p>
-      <p class="how buy-msg" id="buyMsg" hidden></p>
-    </div>
-    <div class="sheet-btns" id="storeBtns">
-      <button type="button" class="ticket alt" id="storeRestore" hidden></button>
-      <button type="button" class="ticket alt" id="storeClose"></button>
-      <button type="button" class="ticket" id="storeBuyBtn" hidden></button>
-    </div>
+    <h2 id="gateTitle"></h2>
+    <p class="how" id="gateHow"></p>
+    <p class="gate-q" id="gateQ"></p>
+    <div class="gate-opts" id="gateOpts"></div>
+    <p class="how gate-hint" id="gateHint" aria-live="polite"></p>
+    <div class="sheet-btns"><button type="button" class="ticket alt" id="gateClose"></button></div>
   </div>
 </div>
 
-<!-- 앱 첫 화면: 켤 때마다 한 번 (앱 모드에서만) -->
-<div id="splash" class="splash" hidden aria-hidden="true">
-  <div class="sp-paper sp-a"></div><div class="sp-paper sp-b"></div><div class="sp-paper sp-c"></div>
-  <div class="sp-cast"></div>
-  <h1 class="sp-title"><span>종이</span> <span>동화극장</span></h1>
-  <p class="sp-tap">톡 눌러 시작</p>
+<!-- 잠금 흐름 (S4 잠김 쪽지 · S11 이용권 · S12 동화 고르기): JS 가 단계마다 내용을 채운다 -->
+<div id="flow" class="parent flow" hidden role="dialog" aria-modal="true">
+  <div class="sheet"></div>
 </div>
+
+<!-- 앱 시작 화면: 실제 종이 풍경, 아무 곳이나 톡하면 홈으로 -->
+<div id="splash" class="splash" hidden aria-hidden="true"></div>
 
 <!-- 카드 → 무대 전환 (JS 가 채운다) -->
 <div id="stageOut" class="stage-out" hidden aria-hidden="true"><div class="so-veil"></div><div class="so-box"></div><div class="so-iris"></div></div>
@@ -192,14 +197,16 @@
 <!-- audio.js 의 Narrator 가 쓰는 말풍선 (홈에서는 작은 이름표로 보인다) -->
 <div id="bubble" hidden><p id="bubbleText"></p></div>
 
-<script src="audio.js?v=20261023rd"></script>
-<script src="tales/catalog.js?v=20261022c"></script>
-<script src="entitlements.js?v=20261022c"></script>
+<script src="audio.js?v=20261027bd1"></script>
+<script src="tales/catalog.js?v=20261027pub2"></script>
+<script src="tales/stickers.js?v=20261027cast1"></script>
+<script src="entitlements.js?v=20261027cast1"></script>
 <script src="assets/thumbs/thumbs.js?v=20261022e"></script>
 <script src="assets/thumbs/tiles.js?v=20261022c"></script>
 <script src="assets/icons/icons.js?v=20261022c"></script>
+<script src="assets/ui/ui.js?v=20261027ui2"></script>
 <script src="home_narration_el.js?v=20261022r"></script>
 <script src="review.js?v=20261024lb2"></script>
-<script src="home.js?v=20261024v3"></script>
+<script src="home.js?v=20261027bd1"></script>
 </body>
 </html>
