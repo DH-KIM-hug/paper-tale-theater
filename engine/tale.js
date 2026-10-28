@@ -697,11 +697,8 @@ const Tale = (() => {
     const p = $('#cutPanel');
     p.innerHTML = '<div class="cut"></div>';
     const svg = el('svg', { viewBox: '0 0 400 300' }, p.firstChild);
-    el('rect', { width: 400, height: 300, fill: '#1F2A56' }, svg);
-    for (let i = 0; i < 14; i++) {
-      const a = (i / 14) * Math.PI * 2;
-      el('path', { d: `M200 150 L${200 + Math.cos(a) * 400} ${150 + Math.sin(a) * 400} L${200 + Math.cos(a + .16) * 400} ${150 + Math.sin(a + .16) * 400} Z`, fill: i % 2 ? '#E8703A' : '#D9A94E', opacity: .85 }, svg);
-    }
+    el('rect', { width: 400, height: 300, fill: '#1F2A56' }, svg);   // 그림을 불러오기 전 바탕
+    el('image', { href: ROOT_URL + 'assets/v3w/cm_cut_bg.webp', width: 400, height: 300, preserveAspectRatio: 'xMidYMid slice' }, svg);   // 종이 햇살 바탕(생성 그림, 2026-10-29 SVG → 이미지)
     draw(svg);
     fitCutText(svg);
     p.hidden = false;
@@ -1002,6 +999,7 @@ const Tale = (() => {
   /* ---------- 틀 만들기 ---------- */
   /* 저장소 뿌리(홈·썸네일 경로): 이 엔진 파일(engine/tale.js)의 한 단계 위 */
   const ROOT_URL = (() => { try { return new URL('../', document.currentScript.src).href; } catch (e) { return '../../'; } })();
+  preload(ROOT_URL + 'assets/v3w/cm_cut_bg.webp');   // 만화 컷 바탕은 첫 컷에 바로 보이게 미리
   /* 동화 id = 폴더 이름 (tales/<id>/index.html) */
   /* thumbs.js 캐시 버전: index.html 의 thumbs.js?v= 와 같이 올린다 */
   const THUMBS_V = '20261022e';
