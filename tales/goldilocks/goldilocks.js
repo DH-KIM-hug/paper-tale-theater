@@ -550,9 +550,9 @@
     try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'pot_boil', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'surprise_sting', 'whistle_down', 'zip_away', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
-    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
-    const cue = (n, v = .9) => { try { if (isRead()) return false; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
-    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const cue = (n, v = .9) => { try { if (isRead()) v *= .8; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) vol *= .8; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
     /* 세로 화면(무대 양옆이 잘림): 카메라를 조금 물리고(Z) 가로 자리를 가운데로 모은다(K) */
     const P = () => window.matchMedia('(orientation: portrait)').matches;
@@ -786,7 +786,7 @@
       },
     };
     const rSet = key => {
-      if (key === 'kitchen') { if (!rs.n.kitchen) amb('birds_chirp_1'); else if (rs.n.kitchen === 1) amb('pot_boil', .2, 4); else stopAmb(); } else if (key === 'forest') amb('birds_chirp_2', .2, 4); else stopAmb();
+      if (key === 'kitchen') { if (!rs.n.kitchen) amb('birds_chirp_1'); else if (rs.n.kitchen === 1) amb('pot_boil', .25, 3); else stopAmb(); } else if (key === 'forest') amb('birds_chirp_2', .25, 4); else if (key === 'table' && rs.n.table === 1) amb('crickets_night_1', .25, 4); else stopAmb();
       T.clear(); unglow8(); rs.dusk8 = null; rs.n[key] = (rs.n[key] || 0) + 1; rs.tag = key + rs.n[key];
       rs.bearsFn = rs.goldiFn = null; rs.sitting = rs.lying = false; rs.steams = []; rs.cush = null;
       [goldi, ...B].forEach(rHide);
@@ -818,6 +818,7 @@
       if (verb === 'at') { const [x, y] = String(a1).split(',').map(Number); put(b, X(x), (b.y > 0 && b.y < 700 && b.x > -100) ? b.y : 520, SIZE[2]); return; }
       if (verb === 'walk') {
         const [x, ms] = String(a1).split(',').map(Number);
+        if (k === 'baby' && rs.tag === 'bed_side2' && !rInst()) cue('tiptoe_pizz', .8);
         AudioFX.sfx('step_wood', .5);
         return b.move(X(x), b.y, ms || 1500);
       }
@@ -909,7 +910,7 @@
       door: verb => { if (verb === 'open') { rs.door.style.transform = 'scaleX(.12)'; return sleep(rInst() ? 0 : 900); } },
       chair: verb => {
         if (verb === 'crack') return (async () => {
-          const c = rs.chairs[2]; AudioFX.sfx('chop') || AudioFX.bonk(); c.setBroken(1);
+          const c = rs.chairs[2]; if (!rInst()) cue('whistle_down', .7); AudioFX.sfx('chop') || AudioFX.bonk(); c.setBroken(1);
           goldi.setFace('o'); await goldi.move(c.x, 505, 250, 'ease-in');
           thud(T); T.shake();
           const st = stars(c.x, 340); setTimeout(() => st.remove(), 1800);
@@ -970,9 +971,9 @@
           if (i === 0) { await goldi.hop(40, 380); AudioFX.bonk(); await goldi.hop(20, 300); AudioFX.bonk(); }
           if (i === 1) { goldi.body.animate([{ transform: 'scale(1)' }, { transform: 'scale(.8)' }, { transform: 'scale(.85)' }], { duration: 700, fill: 'forwards' }); AudioFX.cushion(); await sleep(700); goldi.body.getAnimations().forEach(a => a.cancel()); }
         })();
-        if (verb === 'sleep') { if (rs.tag === 'bed_side2') { if (rs.goldiFn) rs.goldiFn(); } else goldi.setFace('sleep'); return; }
+        if (verb === 'sleep') { if (rs.tag === 'bed_side2') { if (rs.goldiFn) rs.goldiFn(); } else { goldi.setFace('sleep'); if (!rInst()) cue('sleepy_tuba', .6); } return; }
         if (verb === 'wake') return (async () => {
-          goldi.pose(''); goldi.setFace('o'); goldi.place(500, 400); goldi.hop(50, 450); AudioFX.pop_out();
+          goldi.pose(''); goldi.setFace('o'); goldi.place(500, 400); goldi.hop(50, 450); if (rInst()) AudioFX.pop_out(); else if (cue('surprise_sting', .7) === false) AudioFX.pop_out();
           if (P()) { put(bears.dad, 738, 520, SIZE[0]); put(bears.mom, 676, 530, SIZE[1]); put(bears.baby, 626, 540, SIZE[2]); }
           else { put(bears.dad, 910, 520, SIZE[0]); put(bears.mom, 790, 520, SIZE[1]); put(bears.baby, 690, 520, SIZE[2]); }
           B.forEach(b => b.setFace('o'));
@@ -980,7 +981,7 @@
           if (!rInst()) await camTo(500, 280, P() ? Z : 1, 700);
         })();
         if (verb === 'run') return (async () => {
-          const winX = rs.rWinX; AudioFX.whoosh();
+          const winX = rs.rWinX; if (rInst()) AudioFX.whoosh(); else if (cue('zip_away', .7) === false) AudioFX.whoosh();
           await goldi.move(winX + 75, 470, 700, 'ease-in'); await goldi.move(winX + 75, 320, 300, 'ease-out');
         })();
         if (verb === 'turn') return goldi.move(rs.rWinX + 120, 505, 400, 'ease-in');
@@ -999,7 +1000,7 @@
         if (n === 'giggle') return giggle(T);
         if (n === 'snore') return snore(T);
         if (n === 'hammer') return knock(T);
-        if (n === 'ding') return AudioFX.sfx('ding') || AudioFX.ding();
+        if (n === 'ding') return rInst() ? (AudioFX.sfx('ding') || AudioFX.ding()) : cue('ding_glock', .8) === false ? (AudioFX.sfx('ding') || AudioFX.ding()) : undefined;
         return AudioFX.sfx(n);
       },
       pop: spec => { const [x, y, ...w] = String(spec).split(','); pop(+x, +y, w.join(','), C.persimmon); },
