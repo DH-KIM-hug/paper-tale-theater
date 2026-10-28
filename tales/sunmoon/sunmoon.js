@@ -537,7 +537,7 @@
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_night', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_night', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
@@ -548,7 +548,7 @@
     const say = async text => { await AudioFX.voiceIdle(10000); return T.say(text); };
     const stageWrap = T.root.querySelector('#stageWrap');
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['intro_korean', 'fire_crackle', 'crickets_night_1', 'crickets_night_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'tada', 'whistle_down', 'whistle_wobble', 'shimmer']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_night', 'fire_crackle', 'crickets_night_1', 'crickets_night_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'tada', 'whistle_down', 'whistle_wobble', 'shimmer']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -879,17 +879,17 @@
         const g = el('g', { transform: 'translate(200,300) scale(.85)' }, svg); const P = drawTiger(T, g); P.setBelly(2.4);
         el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': 34, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('삐걱… 삐걱…') }, svg);
         cutVoice('cut_creak', 500);
-      }, { hold: 3500 }),
-      snap: () => (cutArt(T, 'cut_snap', 'pow', 3800, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
+      }, { hold: 3300 }),
+      snap: () => (cutArt(T, 'cut_snap', 'pow', 2800, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
         const g = el('g', { transform: 'translate(200,320) scale(.85) rotate(12)' }, svg); const P = drawTiger(T, g); P.oMouth(); P.setBelly(2.4);
         el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('뚝!') }, svg);
         cutVoice('cut_snap', 250);
-      }, { sfx: 'pow', hold: 3800 })),
-      bump: () => (cutArt(T, 'cut_bump', 'thud', 3400, () => cutVoice('cut_bump', 350)) || T.cut(svg => {
+      }, { sfx: 'pow', hold: 2800 })),
+      bump: () => (cutArt(T, 'cut_bump', 'thud', 3000, () => cutVoice('cut_bump', 350)) || T.cut(svg => {
         const g = el('g', { transform: 'translate(200,300) scale(.8)' }, svg); const P = drawTiger(T, g); P.wear('bump'); P.oMouth(); P.setBelly(2.4);
         el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': 44, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('쿵! 엉덩방아') }, svg);
         cutVoice('cut_bump', 350);
-      }, { sfx: 'thud', hold: 3400 })),
+      }, { sfx: 'thud', hold: 3000 })),
     };
     const rKid = who => (verb, a1) => {
       const k = who === 'boy' ? boy : girl;
@@ -1937,22 +1937,22 @@
       const g = el('g', { transform: 'translate(200,300) scale(.85)' }, svg); const P = drawTiger(T, g); P.setBelly(2.4); // 나무 위(도끼)·뚝·엉덩방아 그림과 같이 엄마 옷 없이
       cutText(svg, '삐걱… 삐걱…', 34);
       cutVoice('cut_creak', 500);
-    }, { hold: 3500 });
+    }, { hold: 3300 });
     creak(T);
-    await (cutArt(T, 'cut_snap', 'pow', 3800, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
+    await (cutArt(T, 'cut_snap', 'pow', 2800, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
       el('path', { d: 'M200 0 V90 L190 100 M205 100 L212 92', stroke: '#9A8466', 'stroke-width': 7, fill: 'none' }, svg);
       const g = el('g', { transform: 'translate(200,320) scale(.85) rotate(12)' }, svg); const P = drawTiger(T, g); P.oMouth(); P.setBelly(2.4);
       cutText(svg, '뚝!', 64);
       cutVoice('cut_snap', 250);
-    }, { sfx: 'pow', hold: 3800 }));
+    }, { sfx: 'pow', hold: 2800 }));
     sfx('whistle_down', .7); await sleep(900);
-    await (cutArt(T, 'cut_bump', 'thud', 3400, () => cutVoice('cut_bump', 350)) || T.cut(svg => {
+    await (cutArt(T, 'cut_bump', 'thud', 3000, () => cutVoice('cut_bump', 350)) || T.cut(svg => {
       for (let i = 0; i < 9; i++) el('path', { d: `M${20 + i * 45} 300 V${170 + (i % 3) * 16}`, stroke: C.pine, 'stroke-width': 6 }, svg);
       for (let i = 0; i < 9; i++) el('ellipse', { cx: 20 + i * 45, cy: 164 + (i % 3) * 16, rx: 12, ry: 22, fill: '#C98A3A' }, svg);
       const g = el('g', { transform: 'translate(200,300) scale(.8)' }, svg); const P = drawTiger(T, g); P.wear('bump'); P.oMouth(); P.setBelly(2.4);
       cutText(svg, '쿵! 엉덩방아', 44);
       cutVoice('cut_bump', 350);
-    }, { sfx: 'thud', hold: 3400 }));
+    }, { sfx: 'thud', hold: 3000 }));
     let sorg;
     await T.sceneCard('수수밭', () => {
       stopAmb();
@@ -2057,8 +2057,8 @@
     setSky(true);
     await say('그래서 동생은 해님, 오빠는 달님이 되었답니다.');
     T.finale();
-    await T.ask('해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.', () => T.tap(boyMoon.pos)); setSky(false); AudioFX.bell(); boyMoon.hop(24); await sleep(1800); // 달님을 톡 → 밤
-    await T.tap(girlSun.pos); setSky(true); AudioFX.jingle(); girlSun.hop(24); await sleep(1500); // 해님을 톡 → 낮
+    await T.ask('해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.', () => T.tap(boyMoon.pos)); setSky(false); AudioFX.bell(); boyMoon.hop(24); await sleep(1200); // 달님을 톡 → 밤
+    await T.tap(girlSun.pos); setSky(true); AudioFX.jingle(); girlSun.hop(24); await sleep(1200); // 해님을 톡 → 낮
     setSky(true);
     await say('해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.');
     return '해님 달님이 늘 우리를 비춰 줘요!';
