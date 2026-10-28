@@ -62,8 +62,9 @@
     $('#meta').textContent = L(`${Q.length}편 중 ${i + 1}편째`, `Tale ${i + 1} of ${Q.length}`);
     $('#next').textContent = nx ? L(`다음: ${title(nx)}`, `Next: ${title(nx)}`) : L('다음: 없음 · 끝나면 조용히 멈춰요', 'Next: none · it stops quietly');
   };
-  const SVG_PAUSE = '<svg viewBox="0 0 44 44" aria-hidden="true"><rect x="9" y="7" width="9" height="30" rx="1" fill="currentColor"/><rect x="26" y="7" width="9" height="30" rx="1" fill="currentColor"/></svg>';
-  const SVG_PLAY = '<svg viewBox="0 0 44 44" aria-hidden="true"><path d="M12 6 38 22 12 38Z" fill="currentColor"/></svg>';
+  /* 생성 그림 단추(UI_REDESIGN §6-2: ic_pause · ic_play 44) */
+  const SVG_PAUSE = '<img src="assets/ui/ic_pause.webp" alt="" aria-hidden="true" draggable="false">';
+  const SVG_PLAY = '<img class="play" src="assets/ui/ic_play.webp" alt="" aria-hidden="true" draggable="false">';
   function paintPause() {
     const b = $('#pauseBtn');
     b.innerHTML = held ? SVG_PLAY : SVG_PAUSE;

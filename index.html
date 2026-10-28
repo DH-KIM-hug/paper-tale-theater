@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23222B45'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23141A2C'/%3E%3Ccircle cx='17' cy='17' r='7' fill='%23EDE6D6'/%3E%3C/svg%3E">
 <meta name="copyright" content="Copyright © 2026 DH-KIM-hug. All rights reserved. Not open source.">
 <title>톡톡 동화극장</title>
-<link rel="stylesheet" href="home.css?v=20261027bd1">
+<link rel="stylesheet" href="home.css?v=20261028ui3">
 </head>
 <body>
 <!-- 공용 SVG: 종이 조각 그림자 필터 + 태그 아이콘 (글을 못 읽는 아이가 그림으로 알아본다) -->
@@ -73,7 +73,17 @@
   <!-- 위치말: 막대 위의 공, 위·아래 화살표 -->
   <symbol id="i-position" viewBox="0 0 32 32"><path d="M8 2.5 L14 10 H2Z" fill="#22B07D"/><rect x="2" y="13.5" width="26" height="3.2" fill="#7A4A30"/><circle cx="22" cy="9" r="4.2" fill="#E0413A"/><path d="M8 29.5 L14 22 H2Z" fill="#4E6AF0"/></symbol>
   <!-- 보호자 톱니 -->
-  <symbol id="i-gear" viewBox="0 0 32 32"><path d="M13.5 3 h5 l.8 3.6 3 1.3 3.1 -2 3.5 3.5 -2 3.1 1.3 3 3.6 .8 v5 l-3.6 .8 -1.3 3 2 3.1 -3.5 3.5 -3.1 -2 -3 1.3 -.8 3.6 h-5 l-.8 -3.6 -3 -1.3 -3.1 2 -3.5 -3.5 2 -3.1 -1.3 -3 -3.6 -.8 v-5 l3.6 -.8 1.3 -3 -2 -3.1 3.5 -3.5 3.1 2 3 -1.3z" fill="currentColor"/><circle cx="16" cy="16" r="4.5" style="fill: var(--sheet)"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 32 32"><path d="M13.5 3 h5 l.8 3.6 3 1.3 3.1 -2 3.5 3.5 -2 3.1 1.3 3 3.6 .8 v5 l-3.6 .8 -1.3 3 2 3.1 -3.5 3.5 -3.1 -2 -3 1.3 -.8 3.6 h-5 l-.8 -3.6 -3 -1.3 -3.1 2 -3.5 -3.5 2 -3.1 -1.3 -3 -3.6 -.8 v-5 l3.6 -.8 1.3 -3 -2 -3.1 3.5 -3.5 3.1 2 3 -1.3z" fill="currentColor"/><circle cx="16" cy="16" r="4.5" style="fill: var(--paper)"/></symbol>
+  <!-- 기호(벡터, §6-2): 보호자 영역·글자 옆 작은 표시. 단색 currentColor, 선 2.5(28px 기준), 끝 둥글게 -->
+  <symbol id="i-puzzle" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10h6a3.2 3.2 0 1 1 6.4 0H24v6a3.2 3.2 0 1 1 0 6.4V27h-5.6a3.2 3.2 0 1 0-6.4 0H6v-5a3.2 3.2 0 1 0 0-6.4z"/></symbol>
+  <symbol id="i-sticker" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h18v11l-7 7H7z"/><path d="M25 18h-5a2 2 0 0 0-2 2v5"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v3.2a2.8 2.8 0 0 0 0 5.6V22a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3.2a2.8 2.8 0 0 0 0-5.6z"/><path d="M20 9v2.5M20 14.8v2.4M20 20.5V23"/></symbol>
+  <symbol id="i-check" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 16.5l6 6L25 10.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M16 8v16M8 16h16"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M8 16h16"/></symbol>
+  <symbol id="i-up" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19.5l7-7 7 7"/></symbol>
+  <symbol id="i-down" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.5l7 7 7-7"/></symbol>
+  <symbol id="i-back" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 8l-8 8 8 8"/></symbol>
 </svg>
 
 <!-- 한 장의 종이 위 단 하나의 장식: 모서리에서 차오르는 남색 종이 물결(같은 색 계단) + 작은 구리색 달 하나 -->
@@ -110,10 +120,17 @@
   <main class="views" id="views">
     <!-- 동화 탭: 큰 동화 하나(좌우 화살표로 넘김) + 아래 작은 목록 -->
     <section class="view shelf" id="view-tales" data-view="tales" role="tabpanel" aria-label="동화">
+      <!-- 큰 동화 (§4-1·§7-1): 바탕에 뚫린 그림 창 + 제목·감빛 놀이 시작 원·화살표. 배치는 화면마다 CSS 가 바꾼다 -->
       <section class="hero" id="hero" aria-label="오늘의 동화" hidden>
-        <button type="button" class="hero-nav prev" id="heroPrev" aria-label="이전 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="hero-slot" id="heroSlot"></div>
-        <button type="button" class="hero-nav next" id="heroNext" aria-label="다음 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="hero-win"><div class="hero-slot" id="heroSlot"></div></div>
+        <div class="hero-info">
+          <h2 class="hero-t" id="heroTitle"></h2>
+          <button type="button" class="hero-play" id="heroPlay" aria-label="이야기 시작"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg></button>
+          <div class="hero-arrows">
+            <button type="button" class="hero-nav prev" id="heroPrev" aria-label="이전 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="hero-nav next" id="heroNext" aria-label="다음 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
       </section>
       <div class="hero-strip" id="heroStrip" role="button" tabindex="-1" hidden aria-hidden="true"></div>
       <div class="rows" id="rows"></div>
@@ -151,7 +168,7 @@
 <!-- 보호자 톱니: 오른쪽 위 고정, 1초 꾹 -->
 <button id="parentBtn" class="gear" type="button" aria-label="보호자 메뉴: 1초 동안 누르세요">
   <svg class="gear-ic" aria-hidden="true"><use href="#i-gear"/></svg>
-  <svg class="gear-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19"/></svg>
+  <svg class="gear-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.6"/></svg>
 </button>
 
 <!-- 짧은 안내 쪽지 (보호자 톱니를 짧게 눌렀을 때) -->
@@ -161,7 +178,7 @@
 <div id="guard" class="guard" hidden role="dialog" aria-modal="true" aria-labelledby="guardTitle">
   <div class="gpaper">
     <header class="g-head">
-      <button type="button" class="ticket alt g-close" id="guardClose">닫기</button>
+      <button type="button" class="g-close" id="guardClose"><svg aria-hidden="true"><use href="#i-back"/></svg><span id="guardCloseT">닫기</span></button>
       <h2 id="guardTitle">보호자</h2>
     </header>
     <div class="g-body" id="guardBody">
@@ -200,13 +217,13 @@
 <script src="audio.js?v=20261028amb"></script>
 <script src="tales/catalog.js?v=20261027pub2"></script>
 <script src="tales/stickers.js?v=20261027cast1"></script>
-<script src="entitlements.js?v=20261027cast1"></script>
+<script src="entitlements.js?v=20261028pz1"></script>
 <script src="assets/thumbs/thumbs.js?v=20261022e"></script>
 <script src="assets/thumbs/tiles.js?v=20261022c"></script>
 <script src="assets/icons/icons.js?v=20261022c"></script>
-<script src="assets/ui/ui.js?v=20261027ui2"></script>
+<script src="assets/ui/ui.js?v=20261028ui3"></script>
 <script src="home_narration_el.js?v=20261022r"></script>
 <script src="review.js?v=20261024lb2"></script>
-<script src="home.js?v=20261027bd1"></script>
+<script src="home.js?v=20261028ui3"></script>
 </body>
 </html>

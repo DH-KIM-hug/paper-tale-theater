@@ -21,8 +21,6 @@
     const wd = w * Math.sqrt(1 - z * z);
     return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + z * w / wd * Math.sin(wd * t));
   };
-  /* 떨림 1 → 0 (눌렀을 때 종이가 출렁이다 멈춘다) */
-  const wob = (t, z = .3, w = 24) => t < 0 ? 0 : Math.exp(-z * w * t) * Math.cos(w * Math.sqrt(1 - z * z) * t);
 
   function play(dur, seek, done) {
     let alive = true, raf = 0, t0 = 0;
@@ -119,38 +117,6 @@
     });
   }
 
-  /* 누른 칩: 종이가 눌려 출렁이고(탄성), 글자는 가운데부터 늘었다 돌아오고,
-     가까운 칩들은 자석처럼 살짝 끌려왔다가 제자리로 튕겨 간다 */
-  const chipAnim = new WeakMap();
-  function wobble(b) {
-    if (!motion()) return;
-    const box = b.parentNode;
-    if (chipAnim.get(box)) chipAnim.get(box).finish();
-    const br = b.getBoundingClientRect(), bx = br.left + br.width / 2, by = br.top + br.height / 2;
-    const near = [...box.children].filter(x => x !== b).map(x => {
-      const r = x.getBoundingClientRect(), dx = bx - (r.left + r.width / 2), dy = by - (r.top + r.height / 2), d = Math.hypot(dx, dy) || 1;
-      return { x, ux: dx / d, uy: dy / d, f: Math.exp(-((d / 120) ** 2)), lag: d / 2400 };
-    }).filter(o => o.f > .04);
-    const ls = [...b.querySelectorAll('.lb i')], mid = (ls.length - 1) / 2;
-    chipAnim.set(box, play(.75, t => {
-      const w = wob(t, .26, 26);
-      b.style.scale = `${(1 + .12 * w).toFixed(4)} ${(1 - .12 * w).toFixed(4)}`;
-      ls.forEach((l, i) => {
-        const lw = wob(t - .04 - Math.abs(i - mid) * .04, .3, 28);
-        l.style.scale = `${(1 - .1 * lw).toFixed(4)} ${(1 + .32 * lw).toFixed(4)}`;
-      });
-      near.forEach(o => {
-        const tt = t - o.lag, pull = tt < .1 ? eo(tt / .1) : wob(tt - .1, .34, 22);
-        const d = 7 * o.f * pull;
-        o.x.style.translate = `${(o.ux * d).toFixed(2)}px ${(o.uy * d * .5).toFixed(2)}px`;
-      });
-    }, () => {
-      b.style.scale = '';
-      ls.forEach(l => { l.style.scale = ''; });
-      near.forEach(o => { o.x.style.translate = ''; });
-    }));
-  }
-
   /* ── 선반: 한 장의 남색 종이에 뚫린 구멍들 ── */
   const ORIGIN = Object.fromEntries(TAGS.origin.map(t => [t.key, t]));
   const SKILL = Object.fromEntries(TAGS.skill.map(t => [t.key, t]));
@@ -193,8 +159,9 @@
      홈에 넣으면 키아트의 종이 바탕이 홈 카드 안에서 따로 노는 네모로 보인다 */
   function holeHTML(t, open, st) {
     /* 구멍을 덮는 종이 마개: 잠김·만드는 중. 확인 전의 '만드는 중'(웹)은 덮지 않는다 */
-    const covered = st === 'locked' ? 'lock' : (!open && !(t.making && !probed)) ? 'making' : '';
-    const plug = (covered ? `<span class="plug" aria-hidden="true">${badge(covered)}</span>` : '') + (st === 'week' ? badge('week') : '');
+    /* 마개는 '만드는 중'에만. 잠김은 크림 반투명 종이(CSS) + 오른쪽 아래 모서리 자물쇠, 이번 주 무료는 오른쪽 위 모서리 별(§7-2) — 얼굴을 가리지 않는다 */
+    const making = st !== 'locked' && !open && !(t.making && !probed);
+    const plug = (making ? `<span class="plug" aria-hidden="true">${badge('making')}</span>` : '') + (st === 'locked' ? badge('lock') : '') + (st === 'week' ? badge('week') : '');
     // 밝은 종이 한 가지만 쓴다 (다크 모드 없음). 밝은 판이 없으면 남색 판이라도
     if (TILE.has(t.id)) return `<span class="thumb full tile"><img ${imgAttrs} src="assets/thumbs/${t.id}_tile.webp">${plug}</span>`;
     const dk = PIC2.has(t.id), lt = PIC2L.has(t.id), base = `assets/thumbs/${t.id}`;
@@ -250,25 +217,42 @@
   function pushRecent(id) {
     try { localStorage.setItem(recentKey, JSON.stringify([id, ...readList(recentKey).filter(x => x !== id)].slice(0, 8))); } catch (e) { /* 기억 못 해도 동화는 열린다 */ }
   }
+  /* 넘기기 (§5-5): 창은 그대로, 지금 그림은 반대쪽으로 40px 밀리며 200ms 에 사라지고 새 그림은 같은 쪽 40px 에서 320ms 로 들어온다.
+     제목은 60ms 늦게 16px 이동하며 바뀐다. 움직임 줄이기 = 160ms 크로스페이드 */
+  let heroLock = 0;
   function renderHero() {
     const hero = $('#hero');
     hero.hidden = heroList.length === 0;
     if (!heroList.length) { $('#heroStrip').hidden = true; return; }
     if (!heroList.some(t => t.id === heroId)) heroId = heroList[0].id;
-    const t = heroList.find(x => x.id === heroId);
-    const slot = $('#heroSlot');
-    slot.innerHTML = cardHTML(t, { big: true });
+    const t = heroList.find(x => x.id === heroId), name = shown(t).title;
+    const slot = $('#heroSlot'), tt = $('#heroTitle'), dir = heroDir;
+    heroDir = 0;
+    slot.querySelectorAll('.hero-old').forEach(x => x.remove());
+    const old = slot.firstElementChild;
+    if (dir && old && old.animate) {
+      const rm = RM.matches, mv = rm ? 0 : 40, E = 'cubic-bezier(.2,.8,.2,1)';
+      old.classList.add('hero-old'); old.removeAttribute('href'); old.setAttribute('aria-hidden', 'true');
+      slot.insertAdjacentHTML('beforeend', cardHTML(t, { big: true }));
+      old.animate([{ transform: 'none', opacity: 1 }, { transform: `translateX(${-dir * mv}px)`, opacity: 0 }], { duration: rm ? 160 : 200, easing: E, fill: 'forwards' }).onfinish = () => old.remove();
+      slot.lastElementChild.animate([{ transform: `translateX(${dir * mv}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: rm ? 160 : 320, easing: E });
+      tt.textContent = name;
+      tt.animate([{ transform: `translateX(${dir * (rm ? 0 : 16)}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: rm ? 160 : 260, delay: rm ? 0 : 60, easing: E, fill: 'backwards' });
+    } else {
+      slot.innerHTML = cardHTML(t, { big: true });
+      tt.textContent = name;
+    }
     const n = heroList.length;
     $('#heroPrev').hidden = $('#heroNext').hidden = n < 2;
+    $('#heroPlay').setAttribute('aria-label', L(`${name} 이야기 시작`, `Start ${name}`));
     document.querySelectorAll('#rows .card').forEach(c => c.classList.toggle('sel', c.dataset.id === heroId));
-    $('#heroStrip').textContent = shown(t).title;
-    if (heroDir && motion()) {
-      slot.firstElementChild.animate([{ transform: `translateX(${heroDir * 56}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 260, easing: 'cubic-bezier(.2,.8,.2,1)' });
-    }
-    heroDir = 0;
+    $('#heroStrip').textContent = name;
   }
   function heroStep(d) {
     if (heroList.length < 2) return;
+    const now = performance.now();
+    if (now < heroLock) return;                              // 넘기는 동안 다시 누름은 무시(연타 방지)
+    heroLock = now + 320;
     const i = heroList.findIndex(t => t.id === heroId);
     heroId = heroList[(i + d + heroList.length) % heroList.length].id;
     heroDir = d;
@@ -287,6 +271,11 @@
   {
     $('#heroPrev').addEventListener('click', () => heroStep(-1));
     $('#heroNext').addEventListener('click', () => heroStep(1));
+    /* 감빛 놀이 시작 원 = 큰 동화 창 톡과 같은 동작(조리개 → 동화) */
+    $('#heroPlay').addEventListener('click', () => { const c = $('#heroSlot .card:not(.hero-old)'); if (c) c.click(); });
+    /* 생성 그림(ic_play·ic_arrow)이 있으면 임시 기호 대신 */
+    if (UIA.has('ic_play')) $('#heroPlay').innerHTML = uiImg('ic_play');
+    if (UIA.has('ic_arrow')) ['#heroPrev', '#heroNext'].forEach(s => { $(s).innerHTML = uiImg('ic_arrow'); });
     let sx = null;
     const hz = $('#hero');
     hz.addEventListener('pointerdown', e => { sx = e.clientX; });
@@ -378,6 +367,11 @@
     document.title = L('톡톡 동화극장', 'Tok Tok Tale Theater');
   }
   paintLang();
+  /* 로고 마크(§6-2 logo_mark): 가로 = 레일 맨 위 48(pL 40), 세로 = 머리줄 워드마크 옆 36. 어느 쪽을 보일지는 CSS 가 정한다 */
+  if (UIA.has('logo_mark')) {
+    $('#tabs').insertAdjacentHTML('afterbegin', uiImg('logo_mark', 'logo-mark rail'));
+    $('.brand .logo').insertAdjacentHTML('beforebegin', uiImg('logo_mark', 'logo-mark head'));
+  }
 
   function update(opts) {
     try { paintChips(); paintFilterOn(); } catch (e) { console.error(e); } // 칩 표시가 틀어져도 동화 목록은 반드시 그린다
@@ -435,7 +429,7 @@
   /* 닫힌 카드: 구멍을 막은 종이 마개가 들썩이다 제자리에 앉는다 */
   function peek(c) {
     if (!motion()) return;
-    const plug = c.querySelector('.plug');
+    const plug = c.querySelector('.plug') || c.querySelector('.bdg-lock');   // 잠김은 모서리 자물쇠가 들썩인다
     if (!plug) return;
     plug.animate([
       { transform: 'translate(0, 0) rotate(0deg) scale(1)' },
@@ -482,12 +476,17 @@
   function holdable(el, ms, done, early) {
     let timer = 0, fired = false;
     el.style.setProperty('--hold', ms + 'ms');
+    /* 꾹 단추(어른이 열기·정답)는 둘레에 감빛 링이 찬다 (§5-8). 모양은 CSS .hold-ring */
+    if (el.classList.contains('holdbtn') && !el.querySelector('.hold-ring')) el.insertAdjacentHTML('beforeend', '<i class="hold-ring" aria-hidden="true"></i>');
     const start = e => {
       if (e.button) return;
       fired = false;
       el.classList.add('holding');
       clearTimeout(timer);
-      timer = setTimeout(() => { fired = true; el.classList.remove('holding'); done(); }, ms);
+      timer = setTimeout(() => {   // 링이 다 차면 60ms 크림으로 밝아졌다 사라지고 동작 (§5-8)
+        fired = true; el.classList.remove('holding'); el.classList.add('held');
+        setTimeout(() => { el.classList.remove('held'); done(); }, 60);
+      }, ms);
     };
     const end = () => {
       if (!el.classList.contains('holding')) return;
@@ -505,27 +504,30 @@
     el.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') end(); });
   }
 
-  /* ── 쪽지 열고 닫기: 아래에서 튀어 올라와 기울어진 채 내려앉는다(gentle = 큰 종이는 살짝 떠오르기만) ── */
+  /* ── 쪽지 열고 닫기 (UI_REDESIGN §5-4): 움직임은 CSS 가 맡는다. data-state="open" 으로 놓이고,
+     "closing" 으로 걷히며 베일의 전환이 끝나면(transitionend) hidden. 튕김 없음 ── */
+  const modalStop = el => { clearTimeout(el._t); if (el._te) el.removeEventListener('transitionend', el._te); el._te = null; };
   function showModal(el, sheet, o = {}) {
-    if (el._a) el._a.finish();
+    modalStop(el);
     hint.hidden = true;
+    const opened = !el.hidden && el.dataset.state === 'open';
     el.hidden = false;
+    if (!opened) { void el.offsetWidth; el.dataset.state = 'open'; }   // 닫힌 모습을 한 번 그린 뒤 열어야 전환이 보인다
     const f = o.focus && el.querySelector(o.focus); if (f) f.focus({ preventScroll: true });
-    el._a = play(o.gentle ? .35 : .7, t => {
-      el.style.opacity = eo(t / .18).toFixed(3);
-      if (o.gentle) { tf(sheet, 0, 28 * (1 - eo(t / .35)), 1, 0); return; }
-      const s = spring(t, .48, 15);
-      tf(sheet, 0, 60 * (1 - s), .9 + .1 * s, -5 * (1 - s));
-    }, () => { el.style.opacity = ''; untf(sheet); });
   }
   function hideModal(el, sheet, after) {
-    if (el.hidden) return;
-    if (el._a) el._a.finish();
-    el._a = play(.2, t => {
-      const q = eio(t / .2);
-      el.style.opacity = (1 - q).toFixed(3);
-      tf(sheet, 0, 24 * q, 1 - .06 * q, 2 * q);
-    }, () => { el.hidden = true; el.style.opacity = ''; untf(sheet); if (after) after(); });
+    if (el.hidden || el.dataset.state === 'closing') return;
+    modalStop(el);
+    el.dataset.state = 'closing';
+    const fin = () => {
+      if (el.dataset.state !== 'closing') return;
+      modalStop(el);
+      el.hidden = true; delete el.dataset.state;
+      if (after) after();
+    };
+    el._te = e => { if (e.target === el && e.propertyName === 'opacity') fin(); };
+    el.addEventListener('transitionend', el._te);
+    el._t = setTimeout(fin, 400);   // 전환이 안 끝나도(탭이 가려짐 등) 닫는다
   }
   /* 짧은 안내 쪽지(톱니를 짧게 눌렀을 때·부모 확인 잠금 중) */
   const hint = $('#hint');
@@ -588,14 +590,17 @@
   const gateOff = after => { flowEl.classList.remove('under'); if (after) after(); };
   function gateAnswered(n) {
     const cb = gateCb; gateCb = null;
-    if (n === gateAnswer) {
+    const opt = gateEl.querySelector(`.gate-opt[data-n="${n}"]`);
+    if (n === gateAnswer) {                                  // 통과: 고른 조각이 감빛으로 바뀌고 120ms 뒤 다음 단계 (§4-5)
       paper('tap'); passOk = true;
-      hideModal(gateEl, gateSheet, () => gateOff(cb));
+      if (opt) opt.classList.add('pass');
+      setTimeout(() => hideModal(gateEl, gateSheet, () => gateOff(cb)), 120);
       return;
     }
     paper('down');
     gateLockUntil = Date.now() + GATE_LOCK;
-    hideModal(gateEl, gateSheet, () => { gateOff(); sheetClosed(); toast(L('틀렸어요. 30초 뒤에 다시 해 주세요.', 'Not quite. Please try again in 30 seconds.')); });
+    gateSheet.classList.add('fail');                         // 틀림: 쪽지가 40ms 에 6px 눌렸다 올라오고 닫힌다(흔들기 없음)
+    setTimeout(() => { gateSheet.classList.remove('fail'); hideModal(gateEl, gateSheet, () => { gateOff(); sheetClosed(); toast(L('틀렸어요. 30초 뒤에 다시 해 주세요.', 'Not quite. Please try again in 30 seconds.')); }); }, 100);
   }
   function closeGate() { gateCb = null; hideModal(gateEl, gateSheet, () => gateOff(sheetClosed)); }
   $('#gateClose').addEventListener('click', closeGate);
@@ -625,7 +630,6 @@
     time: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/>',
     lang: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c3 3 3 14 0 17M12 3.5c-3 3-3 14 0 17"/>',
     find: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>',
-    pass: '<path d="M12 4l2.4 5 5.4.6-4 3.7 1.1 5.4L12 16l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/>',
     link: '<circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/>',
     about: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.5"/>',
     records: '<path d="M6 7h12M9 7V4.5h6V7M7.5 7l.8 12.5h7.4L16.5 7"/>'
@@ -642,8 +646,8 @@
   let curGuard = 'sound', recAsk = '', linkTick = 0, docShown = '';
   function drawGuardList() {
     $('#guardTitle').textContent = L('보호자', 'Grown-ups');
-    $('#guardClose').textContent = L('닫기', 'Close');
-    guardList.innerHTML = guardItems().map(i => `<button type="button" class="g-item${i.k === curGuard ? ' on' : ''}" data-k="${i.k}" aria-current="${i.k === curGuard}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${GI[i.k]}</svg><span>${i.t}</span></button>`).join('');
+    $('#guardCloseT').textContent = L('닫기', 'Close');
+    guardList.innerHTML = guardItems().map(i => `<button type="button" class="g-item${i.k === curGuard ? ' on' : ''}" data-k="${i.k}" aria-current="${i.k === curGuard}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${i.k === 'pass' ? '<use href="#i-ticket"/>' : GI[i.k]}</svg><span>${i.t}</span></button>`).join('');
   }
   function openGuard() {
     hint.hidden = true;
@@ -668,7 +672,8 @@
     guardPane.scrollTop = 0;
   });
 
-  const switchHTML = (key, on, label) => `<label class="toggle"><input type="checkbox" data-opt="${key}"${on ? ' checked' : ''}> <span>${label}</span></label>`;
+  /* 설정 줄 72: 글자 왼쪽, 스위치 72×40 오른쪽(§7-8). 체크박스는 보이지 않게 두고 같은 change 처리 */
+  const switchHTML = (key, on, label) => `<label class="toggle"><span class="tg-t">${label}</span><input type="checkbox" role="switch" data-opt="${key}"${on ? ' checked' : ''}><i class="sw" aria-hidden="true"></i></label>`;
   const chipRowHTML = row => `<section class="tagrow"><h4 class="row-tab">${row === 'origin' ? L('이야기 종류', 'Kind of tale') : L('배우는 것', 'What it teaches')}</h4><div class="chips" role="group" data-row="${row}">`
     + [{ key: '', label: L('전체', 'All'), ic: 'all' }, ...TAGS[row].map(t => ({ key: t.key, label: (lang === 'en' && t.en) || t.label, ic: t.key }))]
       .map(c => `<button type="button" class="chip${c.key ? '' : ' all'}" data-row="${row}" data-key="${c.key}" aria-label="${c.label}">${icon(c.ic)}<span class="lb" aria-hidden="true">${letters(c.label)}</span></button>`).join('') + '</div></section>';
@@ -694,7 +699,7 @@
   }
   function drawGuardPane() {
     clearInterval(linkTick);
-    const k = curGuard, back = `<button type="button" class="g-pback" data-act="g-back">‹ ${L('목록', 'List')}</button>`;
+    const k = curGuard, back = `<button type="button" class="g-pback" data-act="g-back"><svg aria-hidden="true"><use href="#i-back"/></svg>${L('보호자', 'Grown-ups')}</button>`;
     const name = (guardItems().find(i => i.k === k) || {}).t || '';
     let h = '';
     if (k === 'sound') {
@@ -705,11 +710,11 @@
         <p class="how">${L('놀이 조작 없이 이야기만 흘러가요. 잠자리에 읽어 줄 때는 \'잠자리\' 탭의 읽어 주기를 써요.', 'The story plays on its own with no taps. For bedtime reading, use Read-aloud in the Bedtime tab.')}</p>`;
     } else if (k === 'time') {
       h = `<h3>${name}</h3>
-        <div class="timerOpts" id="timerOpts">${TIMES.map(m => `<button type="button" class="chip${m === limitNow() ? ' on' : ''}" data-m="${m}" aria-pressed="${m === limitNow()}">${m ? m + L('분', ' min') : L('끄기', 'Off')}</button>`).join('')}</div>
+        <div class="seg" id="timerOpts" role="group" aria-label="${name}">${TIMES.map(m => `<button type="button" class="${m === limitNow() ? 'on' : ''}" data-m="${m}" aria-pressed="${m === limitNow()}">${m ? m + L('분', ' min') : L('끄기', 'Off')}</button>`).join('')}</div>
         <p class="how">${L('하루 기준이에요. 시간이 되면 소리 없이 조용한 쉬는 화면이 나와요. 놀이 시간은 화면을 보는 시간이라서, 잠자리 읽어 주기는 끝난 뒤에 적용돼요.', 'Counted per day. When time is up, a quiet rest screen appears — no alarm. It counts screen time, so Bedtime read-aloud finishes first.')}</p>`;
     } else if (k === 'lang') {
       h = `<h3>${name}</h3>
-        <div class="seg" role="group" aria-label="${name}"><button type="button" class="ticket alt${lang === 'ko' ? ' on' : ''}" data-lang="ko" aria-pressed="${lang === 'ko'}">한국어</button><button type="button" class="ticket alt${lang === 'en' ? ' on' : ''}" data-lang="en" aria-pressed="${lang === 'en'}">English</button></div>
+        <div class="seg" role="group" aria-label="${name}"><button type="button" class="${lang === 'ko' ? 'on' : ''}" data-lang="ko" aria-pressed="${lang === 'ko'}">한국어</button><button type="button" class="${lang === 'en' ? 'on' : ''}" data-lang="en" aria-pressed="${lang === 'en'}">English</button></div>
         <p class="how">${L('바꾸면 글, 목소리, 동화 순서가 바뀌어요. 영어 자료가 없는 동화는 한국어로 나와요.', 'Text, voices and tale order change. Tales without English material appear in Korean.')}</p>`;
     } else if (k === 'find') {
       const list = TALES.filter(match);
@@ -737,7 +742,7 @@
     } else if (k === 'records') {
       const ask = { progress: L('동화 진행 기록(마지막 본 동화, 오늘 놀이 시간)을 지울까요?', 'Erase play progress (last tale, today\'s play time)?'), all1: L('이 기기의 종이별·스티커·열어 둔 동화·기기 연결을 모두 초기화할까요?', 'Reset Paper Stars, stickers, opened tales and device link on this device?'), all2: L('마지막 확인이에요. 되돌릴 수 없어요. (구매는 \'구매 복원\'으로 다시 받을 수 있어요.)', 'Last check. This cannot be undone. (A purchase can be restored with Restore purchase.)') };
       h = `<h3>${name}</h3>
-        <div class="g-btns"><button type="button" class="ticket alt" data-act="rec-progress">${L('동화 진행 기록 지우기', 'Erase play progress')}</button><button type="button" class="ticket alt" data-act="rec-all">${L('이 기기의 종이별·기록 초기화', 'Reset stars & records on this device')}</button></div>
+        <div class="g-btns"><button type="button" class="ticket alt danger" data-act="rec-progress">${L('동화 진행 기록 지우기', 'Erase play progress')}</button><button type="button" class="ticket alt danger" data-act="rec-all">${L('이 기기의 종이별·기록 초기화', 'Reset stars & records on this device')}</button></div>
         ${recAsk ? `<div class="g-ask"><p class="how">${ask[recAsk]}</p><div class="g-btns"><button type="button" class="ticket alt" data-act="rec-no">${L('그만두기', 'Cancel')}</button><button type="button" class="ticket" data-act="rec-yes">${recAsk === 'all1' ? L('다음', 'Next') : L('지우기', 'Erase')}</button></div></div>` : ''}`;
     }
     guardPane.innerHTML = back + h;
@@ -789,7 +794,7 @@
       const row = chip.dataset.row, key = chip.dataset.key;
       paper(key && !sel[row].has(key) ? 'up' : 'down');
       if (!key) sel[row].clear(); else if (sel[row].has(key)) sel[row].delete(key); else sel[row].add(key);
-      update(); wobble(chip);
+      update();
       const ul = guardPane.querySelector('.g-tales'), head = ul && ul.previousElementSibling;   // 아래 목록·개수만 새로 그린다
       if (ul) { const list = TALES.filter(match); head.textContent = L(`동화 ${list.length}편`, `${list.length} tales`); ul.innerHTML = list.map(t0 => { const t = shown(t0); return `<li><b>${t.title}</b><span>${t.line}</span></li>`; }).join(''); }
       return;
@@ -929,14 +934,16 @@
     const stars = Entitlements.starBalance(), need = Entitlements.STAR_NEED;
     if (step === 'lock') {
       const canStar = stars >= need && Entitlements.lockedChoices().length > 0;
+      /* 그림 창은 가리지 않고, 자물쇠는 창의 오른쪽 아래 모서리에 걸친다. 색이 있는 단추는 종이별 원(구리)뿐 (§4-4) */
       flowSheet.innerHTML = `<div class="note">
-        <div class="note-pic">${miniTile(id)}<span class="note-lock">${LOCK_SVG}</span></div>
+        <div class="note-pic">${miniTile(id)}<span class="note-lock" aria-hidden="true">${UIA.has('badge_lock') ? uiImg('badge_lock') : LOCK_SVG}</span></div>
         <h2 class="note-t">${t}</h2>
+        <p class="note-sub">${L('잠겨 있어요', 'Locked')}</p>
         <div class="note-btns">
-          <button type="button" class="round f-first" data-act="f-close" aria-label="${L('닫기', 'Close')}">${X_SVG}</button>
-          ${canStar ? `<button type="button" class="round star" data-act="f-star" aria-label="${L('종이별로 열기', 'Open with Paper Stars')}">${STAR_SVG}</button>` : ''}
+          <button type="button" class="round f-first" data-act="f-close" aria-label="${L('닫기', 'Close')}">${UIA.has('ic_close') ? uiImg('ic_close') : X_SVG}</button>
+          ${canStar ? `<button type="button" class="round star" data-act="f-star" aria-label="${L('종이별로 열기', 'Open with Paper Stars')}">${UIA.has('star_one') ? uiImg('star_one') : STAR_SVG}</button>` : ''}
         </div>
-        <button type="button" class="adult holdbtn" data-adult>${L('어른이 열기', 'Grown-ups open')}<small>${L('1초 꾹', 'hold 1 s')}</small></button>
+        <button type="button" class="adult holdbtn" data-adult><span>${L('어른이 열기', 'Grown-ups open')}</span><small>${L('1초 꾹', 'hold 1 s')}</small></button>
         <p class="how">${L('이번 주 무료 동화는 월요일마다 바뀌어요.', 'The free tales change every Monday.')}</p>
       </div>`;
       const ad = flowSheet.querySelector('[data-adult]');
@@ -955,7 +962,7 @@
           <section class="col"><h3>${L('모든 동화 열기', 'Unlock all tales')}</h3><p class="how">${L(`${Entitlements.PRICE}를 한 번만 내면 모든 동화가 열려요. 새로 나오는 동화도 함께요.`, `Pay ${Entitlements.PRICE} once to unlock every tale, including new ones.`)}</p><button type="button" class="ticket alt" data-act="f-buy">${L(`모두 열기 ${Entitlements.PRICE}`, `Unlock all ${Entitlements.PRICE}`)}</button></section>
         </div>
         <p class="how buy-msg" id="flowMsg" hidden></p>
-        <div class="sheet-btns"><button type="button" class="ticket alt" data-act="f-restore">${L('구매 복원', 'Restore purchase')}</button><button type="button" class="ticket f-first" data-act="f-close">${L('다음에', 'Not now')}</button></div>`;
+        <div class="sheet-btns"><button type="button" class="ticket txt" data-act="f-restore">${L('구매 복원', 'Restore purchase')}</button><button type="button" class="ticket alt f-first" data-act="f-close">${L('다음에', 'Not now')}</button></div>`;
     } else if (step === 'pick') {
       const star = pickKind === 'star', list = Entitlements.lockedChoices();
       flowSheet.innerHTML = `<h2>${star ? L('종이별로 동화 열기', 'Open a tale with Paper Stars') : L('기다무로 동화 열기', 'Open a tale with a waiting pass')}</h2>
@@ -1029,18 +1036,23 @@
     const none = cand.length === 0;
     const randLabel = none ? L('영어 읽어 주기는 준비 중이에요', 'English read-aloud is getting ready')
       : lang === 'en' && cand.length === 1 ? L('아무 이야기나 이어 듣기', 'Listen to the English tale') : L('아무 이야기나 이어 듣기', 'Listen to random tales');
-    const chips = BT_COUNTS.map(n => `<button type="button" class="b-chip${n === cnt ? ' on' : ''}" data-bt-count="${n}" aria-pressed="${n === cnt}">${n}</button>`).join('');
+    const chips = BT_COUNTS.map(n => `<button type="button" class="b-chip${n === cnt ? ' on' : ''}" data-bt-count="${n}" aria-pressed="${n === cnt}" aria-label="${L(`${n}편 듣고 끄기`, `Stop after ${n}`)}">${n}</button>`).join('');
     const thumbs = pl.slice(0, 3).map(t => `<img class="b-th" src="assets/thumbs/${t.id}_tile.webp" alt="${shown(t).title}" draggable="false">`).join('') + (pl.length > 3 ? `<span class="b-more">+${pl.length - 3}</span>` : '');
+    /* 남색 밤 종이 두 장 (§7-7). 카드 안 1차 행동은 감빛 원 하나(ic_play). 재생목록이 비면 속 빈 크림 테두리 원, 영어 후보 0 이면 꺼진 원 */
+    const playIc = UIA.has('ic_play') ? uiImg('ic_play') : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>';
     return `<div class="b-cards">
-      <section class="b-card" aria-label="${L('아무 이야기나 이어 듣기', 'Random bedtime tales')}">
-        <button type="button" class="b-go" data-bt="random"${none ? ' disabled' : ''}><span class="b-ic">${UIA.has('tab_night') ? uiImg('tab_night') : BT_NOTE}</span><span class="b-t">${randLabel}</span></button>
-        <div class="b-set"><span class="b-lb">${L(`${cnt}편 듣고 끄기`, `Stop after ${cnt}`)}</span><span class="b-chips">${chips}</span></div>
+      <section class="b-card b-rand" aria-label="${L('아무 이야기나 이어 듣기', 'Random bedtime tales')}">
+        <span class="b-art" aria-hidden="true">${UIA.has('ic_listen') ? uiImg('ic_listen') : BT_NOTE}</span>
+        <h3 class="b-t">${randLabel}</h3>
+        <button type="button" class="b-play" data-bt="random"${none ? ' disabled' : ''} aria-label="${randLabel}">${playIc}</button>
+        <div class="b-set" role="group" aria-label="${L(`${cnt}편 듣고 끄기`, `Stop after ${cnt}`)}"><span class="b-lb">${L(`${cnt}편 듣고 끄기`, `Stop after ${cnt}`)}</span><span class="b-chips">${chips}</span></div>
       </section>
-      <section class="b-card" aria-label="${L('우리 재생목록', 'Our playlist')}">
-        <div class="b-pl-h"><span class="b-ic">${BT_LIST}</span><span class="b-t">${L('우리 재생목록', 'Our playlist')}</span></div>
-        <div class="b-thumbs">${pl.length ? thumbs : `<span class="b-empty">${L('아직 비어 있어요 · 어른이 1초 꾹 눌러 만들어요', 'Empty for now · a grown-up can hold 1 second to make one')}</span>`}</div>
-        <div class="b-row"><button type="button" class="b-go small" data-bt="list"${pl.length ? '' : ' disabled'}>${L('듣기', 'Play')}</button>
-          <button type="button" class="b-hold" data-bt-hold><span class="b-hold-t">${pl.length ? L('편집 1초 꾹', 'Edit · hold 1 s') : L('만들기 1초 꾹', 'Make · hold 1 s')}</span></button></div>
+      <section class="b-card b-pl" aria-label="${L('우리 재생목록', 'Our playlist')}">
+        <span class="b-art" aria-hidden="true">${UIA.has('ic_playlist') ? uiImg('ic_playlist') : BT_LIST}</span>
+        <h3 class="b-t">${L('우리 재생목록', 'Our playlist')}</h3>
+        <div class="b-thumbs">${pl.length ? thumbs : `<span class="b-empty">${L('어른이 1초 꾹 눌러 만들어요', 'A grown-up can hold 1 second to make one')}</span>`}</div>
+        <button type="button" class="b-play${pl.length ? '' : ' empty'}" data-bt="list"${pl.length ? '' : ' disabled'} aria-label="${L('재생목록 듣기', 'Play the playlist')}">${pl.length ? playIc : ''}</button>
+        <button type="button" class="b-hold" data-bt-hold><span class="b-hold-t">${pl.length ? L('편집 1초 꾹', 'Edit · hold 1 s') : L('만들기 1초 꾹', 'Make · hold 1 s')}</span><i class="hold-ring" aria-hidden="true"></i></button>
       </section></div>`;
   }
   function btGo(mode) {
@@ -1050,6 +1062,7 @@
   }
   /* 재생목록 편집 시트(보호자): 순서·추가·빼기, 최대 5편 */
   let btDraft = [];
+  const SYM = k => `<svg aria-hidden="true"><use href="#i-${k}"/></svg>`;   // 벡터 기호 (index.html 스프라이트, §6-2)
   function btEditor() {
     let el = document.getElementById('plEdit');
     if (!el) {
@@ -1058,8 +1071,8 @@
       el.addEventListener('click', e => {
         const b = e.target.closest('[data-pl]'); if (!b) return;
         const act = b.dataset.pl, i = Number(b.dataset.i), id = b.dataset.id;
-        if (act === 'close') { el.hidden = true; return; }
-        if (act === 'save') { btSet({ playlist: btDraft.slice() }); el.hidden = true; renderNight(); return; }
+        if (act === 'close') { hideModal(el); return; }
+        if (act === 'save') { btSet({ playlist: btDraft.slice() }); hideModal(el); renderNight(); return; }
         paper('tap');
         if (act === 'up' && i > 0) [btDraft[i - 1], btDraft[i]] = [btDraft[i], btDraft[i - 1]];
         else if (act === 'down' && i < btDraft.length - 1) [btDraft[i + 1], btDraft[i]] = [btDraft[i], btDraft[i + 1]];
@@ -1073,20 +1086,20 @@
   function btPaintEditor() {
     const el = btEditor(), byId = id => TALES.find(t => t.id === id);
     const rows = btDraft.map((id, i) => { const t = byId(id); return `<li class="pl-row"><span class="pl-n">${i + 1}</span><img class="pl-th" src="assets/thumbs/${id}_tile.webp" alt="" draggable="false"><span class="pl-tt">${shown(t).title}</span>
-      <button type="button" class="pl-b" data-pl="up" data-i="${i}" aria-label="${L('위로', 'Up')}"${i === 0 ? ' disabled' : ''}>▲</button>
-      <button type="button" class="pl-b" data-pl="down" data-i="${i}" aria-label="${L('아래로', 'Down')}"${i === btDraft.length - 1 ? ' disabled' : ''}>▼</button>
-      <button type="button" class="pl-b" data-pl="del" data-i="${i}" aria-label="${L('빼기', 'Remove')}">×</button></li>`; }).join('');
+      <button type="button" class="pl-b" data-pl="up" data-i="${i}" aria-label="${L('위로', 'Up')}"${i === 0 ? ' disabled' : ''}>${SYM('up')}</button>
+      <button type="button" class="pl-b" data-pl="down" data-i="${i}" aria-label="${L('아래로', 'Down')}"${i === btDraft.length - 1 ? ' disabled' : ''}>${SYM('down')}</button>
+      <button type="button" class="pl-b" data-pl="del" data-i="${i}" aria-label="${L('빼기', 'Remove')}">${SYM('minus')}</button></li>`; }).join('');
     const tiles = nightList().map(t => {
       const locked = !btOk(t), on = btDraft.includes(t.id), full = !on && btDraft.length >= BT_MAX;
-      return `<button type="button" class="pl-tile${on ? ' on' : ''}" data-pl="add" data-id="${t.id}"${locked || full ? ' disabled' : ''} aria-pressed="${on}"><img src="assets/thumbs/${t.id}_tile.webp" alt="" draggable="false"><span>${shown(t).title}</span>${on ? '<i class="pl-ck">✓</i>' : ''}${locked ? `<i class="pl-lk">${L('잠김', 'Locked')}</i>` : ''}</button>`;
+      return `<button type="button" class="pl-tile${on ? ' on' : ''}" data-pl="add" data-id="${t.id}"${locked || full ? ' disabled' : ''} aria-pressed="${on}"><img src="assets/thumbs/${t.id}_tile.webp" alt="" draggable="false"><span>${shown(t).title}</span>${on ? `<i class="pl-ck" aria-hidden="true">${SYM('check')}</i>` : ''}${locked ? `<i class="pl-lk">${L('잠김', 'Locked')}</i>` : ''}</button>`;
     }).join('');
     el.innerHTML = `<div class="pl-sheet"><header class="pl-h"><button type="button" class="pl-top" data-pl="close">${L('닫기', 'Close')}</button><h2>${L(`우리 재생목록 (최대 ${BT_MAX}편)`, `Our playlist (up to ${BT_MAX})`)}</h2><button type="button" class="pl-top pl-save" data-pl="save">${L('저장', 'Save')}</button></header>
       <ol class="pl-list">${rows || `<li class="pl-none">${L('아래에서 동화를 골라요', 'Pick tales below')}</li>`}</ol>
-      <h3 class="pl-add">${L('더하기', 'Add')}</h3><div class="pl-grid">${tiles}</div></div>`;
+      <h3 class="pl-add">${SYM('plus')}${L('더하기', 'Add')}</h3><div class="pl-grid">${tiles}</div></div>`;
   }
   function btOpenEditor() {
     btDraft = btList().filter(t => TALES.some(x => x.id === t.id)).map(t => t.id);
-    btEditor().hidden = false; btPaintEditor();
+    btPaintEditor(); showModal(btEditor());
   }
   /* 1초 꾹: 손을 떼면 취소. 링 대신 아래 막대가 차오른다(CSS .holding) */
   let btHoldT = 0;
@@ -1134,11 +1147,31 @@
     { k: 'world', ko: '세계 명작', en: 'World Classics', say: '세계 명작을 다 모았어요!', has: t => t.origin === 'world' && !isPrincess(t) },
     { k: 'original', ko: '창작 동화', en: 'Original Tales', say: '창작 동화를 다 모았어요!', has: t => t.origin === 'original' && !isPrincess(t) }
   ];
-  const DONE_KEY = 'paperTheater.puzzleDone', BOARD_KEY = 'paperTheater.board';
-  const doneRec = () => { try { const o = JSON.parse(localStorage.getItem(DONE_KEY) || '{}'); return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } };
-  const pieces = b => TALES.filter(b.has);
+  const BOARD_KEY = 'paperTheater.board';
+  const doneRec = () => { try { const o = JSON.parse(localStorage.getItem(PZ_DONE_KEY) || '{}'); return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } };
+  /* 판 = 이어진 판 그림 한 장을 빈틈없이 나눈 조각 퍼즐. 동화 칸마다 조각 묶음 2개(아래 = 처음 완주, 위 = 두 번째 완주), 묶음 = 물건 모양 조각 + 둘레 조각. 순서·조각 그림은 assets/ui/puzzle_layout.json
+     (tools/app/gen/post_puzzle.py 가 만든다). 목록에 없는 새 동화는 카탈로그 순서로 맨 뒤에 붙고, 그림이 없는 조각은 동화 썸네일을 같은 모양으로 오려 쓴다 */
+  const PZ_DONE_KEY = 'paperTheater.puzzleDone2';
+  let PZ = null;
+  try { fetch('assets/ui/puzzle_layout.json?v=20261028pz3').then(r => r.ok ? r.json() : null).then(j => { if (j && j.boards) { PZ = j; if (curTab === 'stickers') drawStickers(); } }).catch(() => { /* 없으면 썸네일 조각 */ }); } catch (e) { /* 무시 */ }
+  const pieces = b => {
+    const all = TALES.filter(b.has), ord = (PZ && PZ.boards[b.k] && PZ.boards[b.k].tales) || [];
+    return [...ord.map(id => all.find(t => t.id === id)).filter(Boolean), ...all.filter(t => !ord.includes(t.id))];
+  };
+  /* 조각 모양: tools/app/gen/post_puzzle.py 가 판 그림을 물건 모양 조각(구름·강아지·자동차 …)과 모양 없는 조각으로 빈틈없이 나눈다. 조각마다 상자(x,y,w,h: 판 좌표 px, 칸 512)와 SVG 경로.
+     layout 에 없는 새 동화는 칸 반쪽 네모 조각(썸네일)으로 보이고, post_puzzle.py 를 다시 돌리면 조각 퍼즐이 된다 */
+  const PZ_S = 512;
+  const pzBox = (id, col, row) => {                                                 // 그 동화 칸의 위(row 0)·아래(row 1) 조각 묶음
+    const e = PZ && PZ.boards[curBoard] && PZ.boards[curBoard].pieces[id], q = e && e[row ? 'bot' : 'top'];
+    if (Array.isArray(q) && q.length) return q;
+    const h = PZ_S;                                                                 // layout 에 없는 새 동화: 칸을 위·아래 반씩 네모 조각 하나로
+    return [{ file: null, x: col * PZ_S, y: row ? h : 0, w: PZ_S, h, path: `M0 0H${PZ_S}V${h}H0Z` }];
+  };
+  const PZ_INSET = '<svg class="pz-defs" width="0" height="0" aria-hidden="true"><defs><filter id="pzInset" x="-5%" y="-5%" width="110%" height="110%"><feOffset in="SourceAlpha" dx="2" dy="6" result="o"/><feGaussianBlur in="o" stdDeviation="6" result="b"/><feComposite in="SourceAlpha" in2="b" operator="out" result="inv"/><feFlood flood-color="#2E241C" flood-opacity=".3"/><feComposite in2="inv" operator="in"/><feComposite in2="SourceGraphic" operator="over"/></filter></defs></svg>';
   const stickerSrc = id => UIA.has('sticker_' + id) ? `assets/ui/sticker_${id}.webp` : tileSrc(id);
   const has = id => { try { return Entitlements.hasSticker(id); } catch (e) { return false; } };
+  const has2 = id => { try { return Entitlements.hasSticker2(id); } catch (e) { return false; } };
+  const pzGot = t => (has(t.id) ? 1 : 0) + (has2(t.id) ? 1 : 0);
   const starSvg = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z"/></svg>';
   let curBoard = '', pendingCel = [], celebrating = false, castView = '';
   try { curBoard = localStorage.getItem(BOARD_KEY) || ''; } catch (e) { /* 기억 없음 */ }
@@ -1161,8 +1194,8 @@
       return g ? `<button type="button" class="cs" data-k="${c.k}" aria-label="${nm}"><img src="${c.img}" alt="" draggable="false" decoding="async"></button>`
         : `<span class="cs off" data-k="${c.k}" role="img" aria-label="${L('아직 비어 있어요', 'Still empty')}"><img class="sil" src="${c.img}" alt="" draggable="false" decoding="async"></span>`;
     };
-    $('#pzBoard').innerHTML = `<div class="pz-head"><button type="button" class="cast-back" data-act="cast-back" aria-label="${L('뒤로', 'Back')}"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M30 8L14 24l16 16" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>${t.title}</h2><span class="pz-n">${got} / ${set.length}</span></div>
-      <div class="cast-grid${whole ? ' complete' : ''}"><i class="pz-glow" aria-hidden="true"></i>${[...ready, ...plan].map(cell).join('')}</div>`;
+    $('#pzBoard').innerHTML = `<div class="pz-head"><button type="button" class="cast-back" data-act="cast-back" aria-label="${L('뒤로', 'Back')}">${arrowIc('M30 8L14 24l16 16')}</button><h2>${t.title}</h2><span class="pz-n">${got} / ${set.length}</span></div>
+      <div class="pz-win"><div class="cast-grid${whole ? ' complete' : ''}"><i class="pz-glow" aria-hidden="true"></i>${[...ready, ...plan].map(cell).join('')}</div></div>`;
     if (whole) {                                    // 친구들을 다 모았으면 한 번 축하
       const rec = castDone();
       if (!rec[castView] && curTab === 'stickers' && !celebrating) {
@@ -1195,40 +1228,105 @@
     const host = confetti();
     setTimeout(() => { host.remove(); celebrating = false; }, 3600);
   }
+  /* 조각 묶음(판 좌표의 상자에 하나씩 놓는다): 받음 = 조각 그림(없으면 동화 썸네일을 같은 모양으로 오림) · 못 받음 = 눌린 빈 자리. 눌림 영역은 조각 모양 그대로(투명 경로).
+     묶음의 첫 조각만 키보드·화면 읽기 대상이고 나머지는 같은 동작을 하는 눌림 영역이다 */
+  const pzScroll = {};
+  const arrowIc = d => UIA.has('ic_arrow') ? uiImg('ic_arrow') : `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  /* 조각 톡 반경 (§7-5): 받은 조각 묶음의 상자가 72px 보다 작으면 가운데에 72px 투명 톡 영역을 깐다(빈 조각 위·받은 조각 아래 층) */
+  let pzCur = null;
+  function pzHits() {
+    const tr = $('#pzBoard .pz-track'), box = tr && tr.querySelector('.pz-hits'); if (!box || !pzCur) return;
+    const cell = tr.offsetHeight / 2, list = pzCur.list; if (!cell) return;
+    box.innerHTML = list.flatMap((t, i) => [0, 1].map(row => {
+      if (!(row ? has(t.id) : has2(t.id))) return '';
+      const qs = pzBox(t.id, i, row), x0 = Math.min(...qs.map(q => q.x)), y0 = Math.min(...qs.map(q => q.y)), x1 = Math.max(...qs.map(q => q.x + q.w)), y1 = Math.max(...qs.map(q => q.y + q.h));
+      const f = cell / PZ_S, w = (x1 - x0) * f, h = (y1 - y0) * f;
+      if (Math.min(w, h) >= 72) return '';
+      const W = Math.max(72, w), H = Math.max(72, h), l = Math.max(0, Math.min(tr.offsetWidth - W, (x0 + x1) / 2 * f - W / 2)), tp = Math.max(0, Math.min(tr.offsetHeight - H, (y0 + y1) / 2 * f - H / 2));
+      return `<span class="pz-s pz-hit" data-id="${t.id}" data-part="${row ? 'bot' : 'top'}" style="left:${l.toFixed(1)}px;top:${tp.toFixed(1)}px;width:${W.toFixed(1)}px;height:${H.toFixed(1)}px"></span>`;
+    })).join('');
+  }
+  addEventListener('resize', () => { if (curTab === 'stickers') pzHits(); });
+  /* 화살표: 판 끝에 닿으면 그쪽 원은 꺼진 모양(§7-9 비활성) */
+  function pzArrows() {
+    const pan = $('#pzBoard .pz-pan'); if (!pan) return;
+    const l = $('#pzBoard [data-act="pan-l"]'), r = $('#pzBoard [data-act="pan-r"]');
+    if (l) l.disabled = pan.scrollLeft <= 2;
+    if (r) r.disabled = pan.scrollLeft >= pan.scrollWidth - pan.clientWidth - 2;
+  }
+  /* 처음 보는 조각(끝 화면에서 받아 온 것): 홈 스티커북 탭에 구리 점, 스티커북을 열면 한 번 들썩. 기록이 없으면 지금 있는 것을 본 것으로 */
+  const PZ_SEEN_KEY = 'paperTheater.pzSeen';
+  const gotKeys = () => TALES.flatMap(t => [has(t.id) ? t.id + '-bot' : '', has2(t.id) ? t.id + '-top' : '']).filter(Boolean);
+  const pzSeenSave = () => { try { localStorage.setItem(PZ_SEEN_KEY, JSON.stringify(gotKeys())); } catch (e) { /* 기억 못 하면 점이 남지 않는다 */ } };
+  function pzNew() {
+    let seen = null;
+    try { seen = JSON.parse(localStorage.getItem(PZ_SEEN_KEY)); } catch (e) { seen = null; }
+    if (!Array.isArray(seen)) { pzSeenSave(); return []; }
+    return gotKeys().filter(k => !seen.includes(k));
+  }
+  function pieceHTML(list, i, row) {
+    const t0 = list[i], t = shown(t0), got = row ? has(t0.id) : has2(t0.id);
+    return pzBox(t0.id, i, row).map((q, k) => {
+      const id = `${t0.id}-${row}-${k}`;
+      const sty = `left:calc(var(--cell)*${q.x / PZ_S});top:calc(var(--cell)*${q.y / PZ_S});width:calc(var(--cell)*${q.w / PZ_S});height:calc(var(--cell)*${q.h / PZ_S})`;
+      let art;
+      if (!got) art = `<svg class="pz-art" viewBox="0 0 ${q.w} ${q.h}" aria-hidden="true"><path d="${q.path}" fill="#E9DFD2" filter="url(#pzInset)"/></svg>`;
+      else if (q.file) art = `<img class="pz-art" src="assets/ui/${q.file}" alt="" draggable="false" decoding="async">`;
+      else {
+        const im = [i - 1, i, i + 1].filter(c => c >= 0 && c < list.length).map(c => { const src = tileSrc(list[c].id); return src ? `<image href="${src}" x="${c * PZ_S - q.x}" y="${-q.y}" width="${PZ_S}" height="${PZ_S * 2}" preserveAspectRatio="xMidYMid slice"/>` : ''; }).join('');
+        art = `<svg class="pz-art" viewBox="0 0 ${q.w} ${q.h}" aria-hidden="true"><defs><clipPath id="pzc-${id}"><path d="${q.path}"/></clipPath></defs><rect width="${q.w}" height="${q.h}" fill="#E9DFD3" clip-path="url(#pzc-${id})"/><g clip-path="url(#pzc-${id})">${im}</g></svg>`;
+      }
+      const hit = `<svg class="pz-s${got ? '' : ' off'}" viewBox="0 0 ${q.w} ${q.h}" data-id="${t0.id}" data-part="${row ? 'bot' : 'top'}"${k ? ' tabindex="-1" aria-hidden="true"' : ` tabindex="0" role="${got ? 'button' : 'img'}" aria-label="${got ? t.title : L('아직 비어 있어요', 'Still empty')}"`}><path d="${q.path}" fill="transparent" pointer-events="all"/></svg>`;
+      return `<div class="pzp${got ? ' got' : ''}${q.obj ? ' obj' : ''}" data-k="${t0.id}-${row ? 'bot' : 'top'}" style="${sty}">${art}${hit}</div>`;
+    }).join('');
+  }
   function drawStickers() {
     const root = $('#pzRow'); if (!root) return;
     const rec = doneRec(), bs = BOARDS.map(b => ({ b, list: pieces(b) })).filter(x => x.list.length);
+    const cnt = list => list.reduce((n, t) => n + pzGot(t), 0);
     /* 판을 다 채웠으면 기록(한 번 기록하면 새 조각이 생겨도 '완성' 표시는 남는다) */
     let changed = false;
-    bs.forEach(({ b, list }) => { if (!rec[b.k] && list.every(t => has(t.id))) { rec[b.k] = true; changed = true; pendingCel.push(b.k); } });
-    if (changed) try { localStorage.setItem(DONE_KEY, JSON.stringify(rec)); } catch (e) { /* 기록 못 해도 이번 화면에서는 보인다 */ }
-    const total = Entitlements.stickerCount();
+    bs.forEach(({ b, list }) => { if (!rec[b.k] && cnt(list) === list.length * 2) { rec[b.k] = true; changed = true; pendingCel.push(b.k); } });
+    if (changed) try { localStorage.setItem(PZ_DONE_KEY, JSON.stringify(rec)); } catch (e) { /* 기록 못 해도 이번 화면에서는 보인다 */ }
     $('#pzEmpty').hidden = bs.length > 0;
     $('#pzMain').hidden = bs.length === 0;
     root.hidden = bs.length === 0;
     if (!bs.length) return;
+    const seeing = curTab === 'stickers', fresh = seeing ? pzNew() : [];
     if (curTab === 'stickers' && pendingCel.length) { curBoard = pendingCel[0]; }
+    else if (fresh.length) { const fb = bs.find(x => x.list.some(t => fresh.some(f => f.startsWith(t.id + '-')))); if (fb) { curBoard = fb.b.k; castView = ''; } }
     if (!bs.some(x => x.b.k === curBoard)) { const withSt = bs.find(x => x.list.some(t => has(t.id))); curBoard = (withSt || bs[0]).b.k; }
     root.innerHTML = bs.map(({ b, list }) => {
-      const got = list.filter(t => has(t.id)), done = !!rec[b.k], on = b.k === curBoard;
-      const art = UIA.has('puzzle_' + b.k) ? uiImg('puzzle_' + b.k, 'pz-art') : (got.length ? stickImg(got[got.length - 1].id) : '');
-      return `<button type="button" class="pz-b${on ? ' on' : ''}${done ? ' done' : ''}" role="tab" data-b="${b.k}" aria-selected="${on}" aria-label="${L(b.ko, b.en)} ${got.length}/${list.length}${done ? ', ' + L('완성', 'complete') : ''}">
+      const gotN = cnt(list), all = list.length * 2, done = !!rec[b.k], on = b.k === curBoard, last = [...list].reverse().find(t => has(t.id));
+      const art = UIA.has('puzzle_' + b.k) ? uiImg('puzzle_' + b.k, 'pz-art') : stickImg((last || list[0]).id);
+      return `<button type="button" class="pz-b${on ? ' on' : ''}${done ? ' done' : ''}" role="tab" data-b="${b.k}" aria-selected="${on}" aria-label="${L(b.ko, b.en)} ${gotN}/${all}${done ? ', ' + L('완성', 'complete') : ''}">
         <span class="pz-hole${art ? '' : ' empty'}">${art}${done ? `<i class="pz-done">${starSvg}</i>` : ''}</span>
-        <span class="pz-cnt">${got.length} / ${list.length}</span><span class="pz-nm">${L(b.ko, b.en)}</span></button>`;
+        <span class="pz-cnt">${gotN} / ${all}</span><span class="pz-nm">${L(b.ko, b.en)}</span></button>`;
     }).join('');
-    const cur = bs.find(x => x.b.k === curBoard), list = cur.list, got = list.filter(t => has(t.id)), complete = got.length === list.length;
-    const cols = list.length <= 3 ? list.length : list.length <= 6 ? 3 : 4;
+    const cur = bs.find(x => x.b.k === curBoard), list = cur.list, gotN = cnt(list), all = list.length * 2, complete = gotN === all;
     if (pendingCel.length && curTab === 'stickers') castView = '';
-    if (castView && drawCast()) { drawPlate(); return; }
-    $('#pzBoard').innerHTML = `<div class="pz-head"><h2>${L(cur.b.ko, cur.b.en)}</h2><span class="pz-n">${got.length} / ${list.length}</span>${rec[cur.b.k] ? `<i class="pz-done">${starSvg}</i>` : ''}</div>
-      ${complete && UIA.has('puzzle_' + cur.b.k) ? uiImg('puzzle_' + cur.b.k, 'pz-full') : ''}
-      <div class="pz-grid${complete ? ' complete' : ''}" style="--cols:${cols}"><i class="pz-glow" aria-hidden="true"></i>${list.map(t0 => {
-        const t = shown(t0), g = has(t.id);
-        return g ? `<button type="button" class="pz-s" data-id="${t.id}" aria-label="${t.title}">${stickImg(t.id)}${castDots(t.id)}</button>`
-          : `<span class="pz-s off" role="img" aria-label="${L('아직 비어 있어요', 'Still empty')}">${stickImg(t.id, true)}</span>`;
-      }).join('')}</div>`;
+    if (castView && drawCast()) { drawPlate(); if (seeing) { pzSeenSave(); paintTabBadge(); } return; }
+    const arrow = (act, d) => `<button type="button" class="pz-arr" data-act="${act}" aria-label="${act === 'pan-l' ? L('왼쪽으로', 'Left') : L('오른쪽으로', 'Right')}">${arrowIc(d)}</button>`;
+    /* 빈 조각을 먼저, 받은 조각을 나중에 그린다. 그 사이 층(.pz-hits)에 작은 받은 조각의 넓힌 톡 영역(72)을 둔다 → 빈 조각보다 위, 받은 조각보다 아래 */
+    const parts = list.flatMap((t, i) => [[i, 0, has2(t.id)], [i, 1, has(t.id)]]);
+    const html = want => parts.filter(p => p[2] === want).map(p => pieceHTML(list, p[0], p[1])).join('');
+    $('#pzBoard').innerHTML = PZ_INSET + `<div class="pz-win"><div class="pz-pan${complete ? ' complete' : ''}" style="--n:${list.length}"><div class="pz-track"><i class="pz-glow" aria-hidden="true"></i>${html(false)}<div class="pz-hits" aria-hidden="true"></div>${html(true)}</div></div></div>
+      <div class="pz-head"><h2>${L(cur.b.ko, cur.b.en)}</h2><span class="pz-n">${gotN} / ${all}</span>${rec[cur.b.k] ? `<i class="pz-done">${starSvg}</i>` : ''}<span class="pz-arrs">${arrow('pan-l', 'M30 8L14 24l16 16')}${arrow('pan-r', 'M18 8l16 16-16 16')}</span></div>`;
+    const pan = $('#pzBoard .pz-pan'), k = cur.b.k;
+    pan.addEventListener('scroll', () => { pzScroll[k] = pan.scrollLeft; pzArrows(); }, { passive: true });
+    const firstOpen = Math.max(0, list.findIndex(t => pzGot(t) < 2));
+    const freshAt = fresh.length ? list.findIndex(t => fresh.some(f => f.startsWith(t.id + '-'))) : -1;
+    if (freshAt >= 0) pzScroll[k] = null;
+    const at = freshAt >= 0 ? freshAt : firstOpen;
+    pan.scrollLeft = pzScroll[k] != null ? pzScroll[k] : (complete || at < 1 ? 0 : pan.scrollWidth / list.length * (at - .15));
+    pzCur = { list }; pzHits(); pzArrows();
+    /* 보상 받기 연결 (§5-7 ④): 처음 보는 조각은 자리에서 한 번 들썩(108% → 100%, 240ms), 본 것으로 적고 탭의 구리 점을 끈다 */
+    if (seeing) {
+      if (motion()) fresh.forEach(f => $('#pzBoard').querySelectorAll(`.pzp[data-k="${f}"]`).forEach(p => p.animate([{ transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 240, delay: 260, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' })));
+      pzSeenSave(); paintTabBadge();
+    }
     drawPlate();
-    if (curTab === 'stickers' && pendingCel.length && !celebrating) { const k = pendingCel.shift(); requestAnimationFrame(() => celebrate(k)); }
+    if (curTab === 'stickers' && pendingCel.length && !celebrating) { const k2 = pendingCel.shift(); requestAnimationFrame(() => celebrate(k2)); }
   }
   /* 종이별 접시(앱 모드만): 별 0~5개, 5개면 [동화 하나 열기] → S12 종이별 모드 */
   function drawPlate() {
@@ -1239,13 +1337,14 @@
     const canOpen = bal >= need && Entitlements.lockedChoices().length > 0;
     el.className = 'pz-plate' + (bal >= need ? ' full' : '');
     el.setAttribute('aria-label', L(`종이별 ${n} / ${need}`, `Paper Stars ${n} / ${need}`));
-    el.innerHTML = `<div class="plate-art">${UIA.has('star_plate') ? uiImg('star_plate', 'plate-img') : ''}<div class="plate-dots">${[...Array(need)].map((_, i) => `<i class="${i < n ? 'on' : ''}">${i < n ? starSvg : ''}</i>`).join('')}</div></div>
+    const star = UIA.has('star_one') ? uiImg('star_one') : starSvg;
+    el.innerHTML = `<div class="plate-art">${UIA.has('star_plate') ? uiImg('star_plate', 'plate-img') : ''}<div class="plate-dots">${[...Array(need)].map((_, i) => `<i class="${i < n ? 'on' : ''}">${i < n ? star : ''}</i>`).join('')}</div></div>
       <p class="plate-n">${n} / ${need}</p>
-      ${canOpen ? `<button type="button" class="bigbtn" data-act="pz-open">${L('동화 하나 열기', 'Open a tale')}</button>` : ''}`;
+      ${canOpen ? `<button type="button" class="pz-open" data-act="pz-open" aria-label="${L('종이별로 동화 하나 열기', 'Open a tale with Paper Stars')}">${star}</button>` : ''}`;
   }
   /* 판 완성 연출 한 번: 종이 뒤에서 빛이 번지고, 스티커들이 차례로 뒤집히고, 색종이가 흩날린다 + 음성 */
   function celebrate(k) {
-    const b = BOARDS.find(x => x.k === k), g = $('#pzBoard .pz-grid');
+    const b = BOARDS.find(x => x.k === k), g = $('#pzBoard .pz-track');
     if (!b || !g || curBoard !== k) return;
     celebrating = true;
     try { AudioFX.sfx('tada', .7); setTimeout(() => AudioFX.sfx('cheer', .5), 700); } catch (e) { /* 소리 없이 */ }   // 팡파르(Kenney CC0) 뒤 박수(Pixabay)
@@ -1253,7 +1352,7 @@
     if (!motion()) { celebrating = false; return; }
     const glow = g.querySelector('.pz-glow');
     glow.animate([{ opacity: 0, transform: 'scale(.4)' }, { opacity: .95, transform: 'scale(1)', offset: .35 }, { opacity: 0, transform: 'scale(1.25)' }], { duration: 1800, easing: 'ease-out' });
-    g.querySelectorAll('.pz-s').forEach((s, i) => s.animate([{ transform: 'rotateY(0)' }, { transform: 'rotateY(180deg) scale(1.08)', offset: .5 }, { transform: 'rotateY(360deg)' }], { duration: 900, delay: 200 + i * 110, easing: 'ease-in-out' }));
+    g.querySelectorAll('.pzp').forEach((s, i) => s.animate([{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-10px) scale(1.04)', offset: .45 }, { transform: 'translateY(0) scale(1)' }], { duration: 900, delay: 200 + Math.floor(i / 2) * 140, easing: 'ease-in-out' }));
     const host = confetti();
     setTimeout(() => { host.remove(); celebrating = false; if (pendingCel.length && curTab === 'stickers') drawStickers(); }, 3600);
   }
@@ -1273,14 +1372,18 @@
       if (motion()) cs.animate([{ transform: 'rotate(0) scale(1)' }, { transform: 'rotate(-9deg) scale(1.12)', offset: .25 }, { transform: 'rotate(7deg) scale(1.08)', offset: .55 }, { transform: 'rotate(-3deg) scale(1.03)', offset: .8 }, { transform: 'rotate(0) scale(1)' }], { duration: 650, easing: 'ease-out' });
       return;
     }
+    const ar = e.target.closest('.pz-arr');
+    if (ar) { if (ar.disabled) return; const pan = $('#pzBoard .pz-pan'); paper('tap'); if (pan) pan.scrollBy({ left: (ar.dataset.act === 'pan-l' ? -1 : 1) * pan.clientWidth * .7, behavior: motion() ? 'smooth' : 'auto' }); return; }
     const s = e.target.closest('.pz-s'); if (!s) return;
     if (s.classList.contains('off')) { paper('down'); say(L('아직 비어 있어요', 'Still empty')); return; }
     paper('tap');
     const t = TALES.find(x => x.id === s.dataset.id);
-    if (t && castSet(t.id).length) { castView = t.id; drawStickers(); say(shown(t).title); return; }     // 동화 스티커 톡 = 그 동화의 캐릭터 세트 보기
-    if (t) say(shown(t).title);     // 제목 읽기 + 들썩 (동화로 들어가지는 않는다)
-    if (motion()) s.animate([{ transform: 'rotate(0) scale(1)' }, { transform: 'rotate(-9deg) scale(1.12)', offset: .25 }, { transform: 'rotate(7deg) scale(1.08)', offset: .55 }, { transform: 'rotate(-3deg) scale(1.03)', offset: .8 }, { transform: 'rotate(0) scale(1)' }], { duration: 650, easing: 'ease-out' });
+    if (t && has(t.id) && has2(t.id) && castSet(t.id).length) { castView = t.id; drawStickers(); say(shown(t).title); return; }     // 동화 스티커 톡 = 그 동화의 캐릭터 세트 보기
+    if (t) say(shown(t).title);     // 제목 읽기 + 살짝 들림 (동화로 들어가지는 않는다)
+    const pp = s.closest('.pzp') || $(`#pzBoard .pzp[data-k="${s.dataset.id}-${s.dataset.part}"]`);
+    if (pp && motion()) pp.animate([{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-8px) scale(1.04)', offset: .35 }, { transform: 'translateY(0) scale(1)' }], { duration: 520, easing: 'ease-out' });
   });
+  $('#pzBoard').addEventListener('keydown', e => { const s = e.target.closest && e.target.closest('.pz-s'); if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); s.dispatchEvent(new MouseEvent('click', { bubbles: true })); } });
   $('#pzPlate').addEventListener('click', e => {
     if (!e.target.closest('[data-act="pz-open"]')) return;
     paper('tap'); pickKind = 'star'; openFlow('pick', { id: null, sel: null });
@@ -1313,7 +1416,7 @@
       b.setAttribute('aria-label', L(TABS[k].ko, TABS[k].en));
       b.querySelector('.tab-lb').textContent = L(TABS[k].ko, TABS[k].en);
     });
-    document.querySelectorAll('.view').forEach(v => { v.hidden = v.dataset.view !== curTab; });
+    document.querySelectorAll('.view').forEach(v => { if (!v.dataset.leaving) v.hidden = v.dataset.view !== curTab; });
     $('#home').dataset.tab = curTab;
     $('#nTitle').textContent = L('잠자리 이야기', 'Bedtime stories');
     $('#nightEmptyT').textContent = L('읽어 주기는 준비 중이에요', 'Read-aloud is getting ready');
@@ -1323,22 +1426,45 @@
     $('#emptyReset').textContent = L('전체 보기', 'Show all');
     if (curTab === 'stickers') drawStickers();
   }
-  /* 새 탭의 구멍이 열리고(스프링) 이전 구멍은 오므라든다. 한 번 톡으로 바로 바뀌고 이름을 한 번 읽어 준다 */
+  /* 탭 내용 바꾸기 (§5-2): 이전 뷰는 140ms 에 24px 밀려 나가고 새 뷰는 반대쪽 24px 에서 220ms 로 들어온다(동시에 시작).
+     방향은 탭 순서(동화 → 잠자리 → 스티커북이 오른쪽). 움직임 줄이기면 120ms 크로스페이드만 */
+  const TAB_ORDER = Object.keys(TABS), EASE = 'cubic-bezier(.2,.8,.2,1)';
+  let leaving = null;
+  const viewOf = k => document.querySelector(`.view[data-view="${k}"]`);
+  function leaveDone() {
+    if (!leaving) return;
+    const v = leaving; leaving = null;
+    if (v._anim) { v._anim.cancel(); v._anim = null; }
+    delete v.dataset.leaving;
+    v.style.cssText = '';
+    v.hidden = v.dataset.view !== curTab;
+  }
+  function swapViews(prev, k) {
+    const ov = viewOf(prev), nv = viewOf(k);
+    if (!ov || !nv || !ov.animate) return;
+    const rm = RM.matches, mv = rm ? 0 : 24, dir = TAB_ORDER.indexOf(k) > TAB_ORDER.indexOf(prev) ? 1 : -1;
+    Object.assign(ov.style, { position: 'absolute', left: ov._r.l + 'px', top: ov._r.t + 'px', width: ov._r.w + 'px', height: ov._r.h + 'px', margin: '0', pointerEvents: 'none', zIndex: '0' });
+    leaving = ov;
+    ov._anim = ov.animate([{ opacity: 1, transform: 'translateX(0)' }, { opacity: 0, transform: `translateX(${-mv * dir}px)` }], { duration: rm ? 120 : 140, easing: EASE, fill: 'forwards' });
+    ov._anim.onfinish = leaveDone;
+    nv.animate([{ opacity: 0, transform: `translateX(${mv * dir}px)` }, { opacity: 1, transform: 'none' }], { duration: rm ? 120 : 220, easing: EASE });
+  }
+  /* 새 탭의 구멍이 열리고(그림 72% → 100%, 감빛 고리) 이전 구멍은 닫힌다 — 움직임은 CSS(.tab.on). 한 번 톡으로 바로 바뀌고 이름을 한 번 읽어 준다 */
   function setTab(k, o = {}) {
     if (!TABS[k]) k = 'tales';
     const prev = curTab;
     if (k === prev && !o.force) return;
+    leaveDone();
+    const ov = !o.silent && prev && prev !== k && viewOf(prev);
+    if (ov && !ov.hidden) { ov._r = { l: ov.offsetLeft, t: ov.offsetTop, w: ov.offsetWidth, h: ov.offsetHeight }; ov.dataset.leaving = '1'; }
     curTab = k;
     paintTabs();
+    if (ov && ov.dataset.leaving) swapViews(prev, k);
     if (!o.silent) { try { localStorage.setItem(TAB_KEY, k); } catch (e) { /* 기억 못 해도 이 화면은 바뀐다 */ } }
     if (!o.silent && location.hash !== '#' + k) { try { history.replaceState(null, '', location.pathname + location.search + '#' + k); } catch (e) { /* 무시 */ } }
     if (o.silent) return;
     paper('tap');
     say(k === 'stickers' && Entitlements.stickerCount() === 0 ? L('스티커북. 동화를 끝까지 하면 스티커가 생겨요', 'Sticker Book. Finish a tale to get a sticker') : L(TABS[k].say, TABS[k].en));
-    const hole = tabBtns.find(b => b.dataset.tab === k).querySelector('.hole');
-    play(.4, t => { const s = spring(t, .5, 15); hole.style.scale = (.78 + .22 * s).toFixed(4); }, () => { hole.style.scale = ''; });
-    const old = prev && tabBtns.find(b => b.dataset.tab === prev).querySelector('.hole');
-    if (old) play(.25, t => { old.style.scale = (1 - .1 * Math.sin(Math.PI * clamp(t / .25))).toFixed(4); }, () => { old.style.scale = ''; });
   }
   $('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) setTab(b.dataset.tab); });
   $('#tabs').addEventListener('keydown', e => {
@@ -1351,7 +1477,7 @@
   addEventListener('hashchange', () => { const k = tabFromHash(); if (k) setTab(k); });
   /* 스티커북 탭 구멍 가장자리의 구리색 점: 종이별이 5개 모였을 때만 (앱 모드) */
   function paintTabBadge() {
-    const on = Entitlements.appMode() && Entitlements.starBalance() >= Entitlements.STAR_NEED;
+    const on = (Entitlements.appMode() && Entitlements.starBalance() >= Entitlements.STAR_NEED) || (curTab !== 'stickers' && pzNew().length > 0);
     tabBtns.find(b => b.dataset.tab === 'stickers').querySelector('.tab-badge').hidden = !on;
   }
   /* 탭 그림(assets/ui/tab_<탭>.webp, 목록은 assets/ui/ui.js)이 들어오면 임시 동그라미 대신 쓴다. 없는 파일은 요청하지 않는다 */
@@ -1390,13 +1516,13 @@
     if (lang === 'en') title.textContent = 'Tok Tok Tale Theater';
     else {
       title.className = 'splash-wordmark';
-      title.src = 'assets/v3w/sp_wordmark_v1.webp';
+      title.src = 'assets/v3w/sp_logo_v1.webp';
       title.alt = '톡톡 동화극장';
     }
     fallback.append(title); sp.append(fallback);
     sp.addEventListener('pointerdown', complete);
     pending = setTimeout(complete, 2500);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
-    import('./engine/splash/start.js?v=20261027letter1')
+    import('./engine/splash/start.js?v=20261028logo5')
       .then(({ startSplash }) => {
         if (finished) return;
         clearTimeout(pending);
@@ -1419,6 +1545,21 @@
   let startTab = tabFromHash();
   if (!startTab) try { const m = localStorage.getItem(TAB_KEY); if (TABS[m]) startTab = m; } catch (e) { /* 기억 없음 */ }
   setTab(startTab || 'tales', { silent: true, force: true });
+  requestAnimationFrame(() => requestAnimationFrame(() => $('#tabs').classList.add('ready')));   // 첫 그림 뒤부터 탭 구멍이 움직인다
+
+  /* ── 누름 반응 (§5-3): pointerdown 에서 .is-pressed, pointerup·cancel 에서 뗀다. 모양은 CSS 가 정한다 ── */
+  const PRESS = '.tab, .card, .pz-b, .pick, .pl-tile, .round, .pz-arr, .cast-back, .pz-open, .b-go, .b-play, .b-chip, .hero-nav, .hero-play, .ticket, .pl-top, .pl-b, .g-item, .gate-opt';
+  let pressed = null;
+  const unpress = () => { if (pressed) { pressed.classList.remove('is-pressed'); pressed = null; } };
+  document.addEventListener('pointerdown', e => {
+    unpress();
+    if (e.button) return;
+    const el = e.target.closest && e.target.closest(PRESS);
+    if (!el || el.disabled) return;
+    pressed = el; el.classList.add('is-pressed');
+  }, true);
+  ['pointerup', 'pointercancel', 'dragstart'].forEach(ev => addEventListener(ev, unpress, true));
+  addEventListener('blur', unpress);
 
   intro();
   /* 목소리: 기본은 ElevenLabs, ?voice=tc 면 Typecast로, ?voice=el 이면 다시 기본으로 */

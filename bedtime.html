@@ -8,51 +8,55 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23222B45'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23141A2C'/%3E%3Ccircle cx='17' cy='17' r='7' fill='%23EDE6D6'/%3E%3C/svg%3E">
 <title>잠자리 이어 듣기</title>
 <style>
 /* 잠자리 이어 듣기 플레이어 (docs/BEDTIME_PLAN.md §4-2): 어두운 남색 종이 한 장 위에 표지 구멍 하나. 소품·장식 없음 */
 @font-face{font-family:'Pretendard Local';font-style:normal;font-weight:45 920;font-display:swap;src:url(assets/fonts/PretendardVariable.woff2) format('woff2')}
 :root {
-  --paper: #1F2A56;      /* 밤 종이 한 장 */
-  --hole: #172044;       /* 구멍 속 */
-  --cream: #F5EFE9;      /* 글자·단추 종이 */
-  --cream-2: #C9CFE0;    /* 보조 글자 */
-  --copper: #C98A5B;
+  /* 토큰 이름은 홈(home.css, UI_REDESIGN §3)과 같다 */
+  --night: #1F2A56;          /* 밤 종이 한 장 */
+  --night-deep: #172044;     /* 구멍 속 */
+  --paper: #F5EFE9;          /* 단추 종이(크림) */
+  --ink-on-night: #F5EFE9;   /* 밤 종이 위 글자 */
+  --ink-on-night-2: #C9CFE0; /* 밤 종이 위 보조 글자 */
+  --reward: #C98A5B;
   --warm-dark: #2E241C;
   --font: 'Pretendard Local', 'Pretendard', -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body { margin: 0; height: 100%; background: var(--paper); color: var(--cream); font-family: var(--font); overflow: hidden; }
+html, body { margin: 0; height: 100%; background: var(--night); color: var(--ink-on-night); font-family: var(--font); overflow: hidden; }
 body { padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); -webkit-user-select: none; user-select: none; }
 button, a { font: inherit; color: inherit; }
 #stage { position: absolute; inset: 0; padding: max(env(safe-area-inset-top), 12px) 20px 20px; display: grid; gap: 14px 28px;
   grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto;
   grid-template-areas: "top meta" "cover txt" "ctl ctl"; align-items: center; }
-#homeBtn { grid-area: top; justify-self: start; width: 56px; height: 56px; border-radius: 50%; border: 0; background: var(--cream); color: var(--paper); display: grid; place-items: center; cursor: pointer; text-decoration: none;
+#homeBtn { grid-area: top; justify-self: start; width: 56px; height: 56px; border-radius: 50%; border: 0; background: var(--paper); color: var(--night); display: grid; place-items: center; cursor: pointer; text-decoration: none;
   box-shadow: 0 1px 2px rgba(46, 36, 28, .35), 0 6px 14px -4px rgba(46, 36, 28, .5); }
 #homeBtn svg { width: 28px; height: 28px; }
-#meta { grid-area: meta; justify-self: end; text-align: right; font-size: 15px; font-weight: 600; letter-spacing: .06em; color: var(--cream-2); }
+#meta { grid-area: meta; justify-self: end; text-align: right; font-size: 15px; font-weight: 600; letter-spacing: .06em; color: var(--ink-on-night-2); }
 #coverWrap { grid-area: cover; min-height: 0; min-width: 0; display: grid; place-items: center; }
-#hole { position: relative; width: min(100%, calc((100vh - 230px) * 16 / 9)); aspect-ratio: 16 / 9; max-height: 100%; border-radius: 22px; overflow: hidden; background: var(--hole);
+#hole { position: relative; width: min(100%, calc((100vh - 230px) * 16 / 9)); aspect-ratio: 16 / 9; max-height: 100%; border-radius: 22px; overflow: hidden; background: var(--night-deep);
   box-shadow: inset 0 3px 10px rgba(0, 0, 0, .45); }
 #hole::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 4px 10px rgba(46, 36, 28, .55), inset 0 -1px 0 rgba(245, 239, 233, .35); }
 .cv { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .6s ease; }
 .cv.on { opacity: 1; }
 #txt { grid-area: txt; min-width: 0; align-self: center; display: flex; flex-direction: column; gap: 10px; }
 #ttl { margin: 0; font-size: clamp(24px, 3.2vw, 38px); font-weight: 800; letter-spacing: .08em; line-height: 1.25; }
-#card { margin: 0; min-height: 1.4em; font-size: clamp(17px, 2vw, 24px); font-weight: 600; letter-spacing: .08em; color: var(--cream-2); }
-#bubble { margin: 6px 0 0; min-height: 3.6em; font-size: clamp(18px, 2.1vw, 26px); font-weight: 500; line-height: 1.55; letter-spacing: .03em; color: var(--cream); }
+#card { margin: 0; min-height: 1.4em; font-size: clamp(17px, 2vw, 24px); font-weight: 600; letter-spacing: .08em; color: var(--ink-on-night-2); }
+#bubble { margin: 6px 0 0; min-height: 3.6em; font-size: clamp(18px, 2.1vw, 26px); font-weight: 500; line-height: 1.55; letter-spacing: .03em; color: var(--ink-on-night); }
 #bubble[hidden] { display: block; visibility: hidden; }
-#next { margin: 0; font-size: 14px; letter-spacing: .06em; color: var(--cream-2); }
+#next { margin: 0; font-size: 14px; letter-spacing: .06em; color: var(--ink-on-night-2); }
 #ctl { grid-area: ctl; display: flex; justify-content: center; gap: 36px; }
-.cbtn { width: 96px; height: 96px; border-radius: 50%; border: 0; background: var(--cream); color: var(--paper); display: grid; place-items: center; cursor: pointer;
+.cbtn { width: 96px; height: 96px; border-radius: 50%; border: 0; background: var(--paper); color: var(--night); display: grid; place-items: center; cursor: pointer;
   box-shadow: 0 1px 2px rgba(46, 36, 28, .35), 0 8px 18px -4px rgba(46, 36, 28, .55); }
 .cbtn:active, #homeBtn:active { transform: translateY(1px); box-shadow: inset 2px 3px 6px rgba(46, 36, 28, .35); }
-.cbtn svg { width: 44px; height: 44px; }
-.cbtn:focus-visible, #homeBtn:focus-visible, #startBtn:focus-visible { outline: 3px solid var(--copper); outline-offset: 4px; }
-#startBtn { display: none; min-width: 237px; min-height: 80px; padding: 0 36px; border: 0; border-radius: 40px; background: var(--cream); color: var(--paper); font-size: 24px; font-weight: 800; letter-spacing: .1em; cursor: pointer;
+.cbtn svg, .cbtn img { width: 44px; height: 44px; display: block; object-fit: contain; -webkit-user-drag: none; }
+.cbtn img.play { translate: 6% 0; }   /* 세모는 오른쪽으로 살짝 민다 */
+.cbtn:focus-visible, #homeBtn:focus-visible, #startBtn:focus-visible { outline: 3px solid var(--reward); outline-offset: 4px; }
+#startBtn { display: none; min-width: 237px; min-height: 80px; padding: 0 36px; border: 0; border-radius: 40px; background: var(--paper); color: var(--night); font-size: 24px; font-weight: 800; letter-spacing: .1em; cursor: pointer;
   box-shadow: 0 1px 2px rgba(46, 36, 28, .35), 0 8px 18px -4px rgba(46, 36, 28, .55); }
-#plan { margin: 0; font-size: 15px; line-height: 1.5; letter-spacing: .04em; color: var(--cream-2); display: none; }
+#plan { margin: 0; font-size: 15px; line-height: 1.5; letter-spacing: .04em; color: var(--ink-on-night-2); display: none; }
 #empty { display: none; margin: 0; font-size: 20px; line-height: 1.5; letter-spacing: .05em; }
 #end { grid-area: txt; display: none; flex-direction: column; gap: 14px; align-self: center; font-size: 22px; font-weight: 600; letter-spacing: .1em; }
 @keyframes hint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
@@ -106,15 +110,15 @@ body.dim[data-state="end"] #veil { opacity: .96; }
   <div id="end"><span id="endT">다 들었어요</span></div>
   <div id="ctl">
     <button type="button" class="cbtn" id="pauseBtn" aria-label="멈춤"></button>
-    <button type="button" class="cbtn" id="nextBtn" aria-label="건너뛰기"><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M8 7 28 22 8 37Z" fill="currentColor"/><rect x="31" y="7" width="6" height="30" rx="1" fill="currentColor"/></svg></button>
+    <button type="button" class="cbtn" id="nextBtn" aria-label="건너뛰기"><img src="assets/ui/ic_skip.webp" alt="" aria-hidden="true" draggable="false"></button>
   </div>
 </main>
 <div id="veil" aria-hidden="true"></div>
 <script>/* 영어 자료(읽기 녹음)가 들어오는 자리 — 홈 제목 녹음 파일이 NARRATION_CLIPS(_EN) 를 만든다 */</script>
 <script src="audio.js?v=20261028amb"></script>
 <script src="tales/catalog.js?v=20261027pub2"></script>
-<script src="entitlements.js?v=20261027cast1"></script>
+<script src="entitlements.js?v=20261028pz1"></script>
 <script src="home_narration_el.js?v=20261022r"></script>
-<script src="bedtime.js?v=20261027bd1"></script>
+<script src="bedtime.js?v=20261028ui3"></script>
 </body>
 </html>
