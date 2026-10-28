@@ -254,10 +254,10 @@
     })();
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
-    const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ CLIMB = 6000, BRAID = 2600, RISE = 2200, WALK = 3600;   // 속도 상수 (SPEC §2-7)
+    const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ CLIMB = 4500 /* 2026-10-29 6000→4500 */, BRAID = 1800 /* 2026-10-29 2600→1800 */, RISE = 2200, WALK = 3600;   // 속도 상수 (SPEC §2-7)
     const say = async text => { await T.say(text); await sleep(GAP); };
     /* 그림 컷(CLAUDE.md §5-2, SPEC 컷신 표): 사건 직후 컷을 띄우고 그 위에서 기존 대사 한 줄을 읽는다. 톡하면 바로 닫힌다 */
-    const CUT_HOLD = 4200;
+    const CUT_HOLD = 2600;   /* 2026-10-29 4200→2600 (컷 멈춤 줄임) */
     const cutSay = async (k, sfxName, line) => { const c = T.cutImage([{ src: src(k), sfx: sfxName, hold: CUT_HOLD }], { hold: CUT_HOLD }); await say(line); await c; };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };         // 말풍선 없는 소리(허밍)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
@@ -401,7 +401,7 @@
       const creak = (async () => { while (climbing) { AudioFX.sfx('creak', .25); await sleep(1500); } })();
       if (pops) { T.pop(TX + 165, 380, tr('영차, 영차')); setTimeout(() => T.pop(TX + 165, 380, tr('영차, 영차')), 2200); }
       await who.move(TX + HOOK_DX + 2, FL + WIN_DY + 60, CLIMB, 'linear');
-      climbing = false; await Promise.all([sway, creak]);
+      climbing = false; await sway;   /* 삐걱 소리 고리의 1.5초 쉼까지 기다리지 않는다 */
       await fadeOut(T, who, 400);
     }
     async function notesUp(x, y) {
