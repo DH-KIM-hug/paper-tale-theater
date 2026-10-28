@@ -810,60 +810,9 @@
     JACQUES.forEach(([k, str, ly], li) => { for (let r = 0; r < 2; r++) T.parseSong(str).forEach((n, ni) => { SONG.push(n); LINE.push({ k, li, ni, ly }); }); });
     const SONG1 = [], LINE1 = []; // 한 번씩만 (톡 뒤 합창용)
     JACQUES.forEach(([k, str, ly], li) => T.parseSong(str).forEach((n, ni) => { SONG1.push(n); LINE1.push({ k, li, ni, ly }); }));
-    /* 새로 지은 C장조 4/4 행진곡: 2마디씩 여섯 구절, 48박 × .46초 = 22.08초.
-       audio.js에 piano/marimba 전용 음색은 없다. 기존 T.tone의 정수 배음과 짧은 감쇠로 타건음을 만든다. */
-    const ODE = T.parseSong([
-      'C4:1 E4:1 G4:1 E4:1 D4:1 G4:1 C5:2',
-      'E4:1 G4:1 A4:1 G4:1 F4:1 E4:1 D4:2',
-      'C4:1 C4:.5 D4:.5 E4:1 G4:1 A4:1 G4:1 E4:2',
-      'F4:1 A4:1 G4:1 E4:1 D4:1 D4:1 G4:2',
-      'C5:1 G4:1 E4:1 G4:1 A4:1 F4:1 D4:2',
-      'G4:1 E4:.5 F4:.5 G4:1 B4:1 C5:1 G4:1 C4:2',
-    ].join(' '));
-    const BARS = [4, 3, 4, 3, 5, 3, 4, 3, 4, 3, 5, 3];
-    const ODE_ORDER = ['cat', 'dog', 'rooster', 'donkey'];
-    const WHO = []; BARS.forEach((c, bi) => { for (let i = 0; i < c; i++) WHO.push(ODE_ORDER[Math.floor(bi / 2) % 4]); });
-    if (WHO.length !== 44 || WHO.length !== ODE.length) throw new Error('March: note/performer count mismatch');
-    const ODE_BEAT = .46, ODE_ROOTS = ['C3', 'G2', 'C3', 'G2', 'C3', 'C3', 'F2', 'G2', 'C3', 'F2', 'G2', 'C3'];
-    const piano = (f, d, when, vol) => {
-      T.tone(f, Math.min(d * .85, .48), { type: 'sine', vol, when });
-      T.tone(f * 2, .11, { type: 'sine', vol: vol * .38, when });
-      T.tone(f * 3, .055, { type: 'sine', vol: vol * .16, when });
-    };
-    const marimba = (f, d, when, vol) => {
-      T.tone(f, Math.min(d * .65, .28), { type: 'sine', vol, when });
-      T.tone(f * 4, .045, { type: 'sine', vol: vol * .24, when });
-    };
-    const ODE_VOICE = {
-      donkey: (f, d, w, v) => piano(f * .5, d, w, v),
-      dog: (f, d, w, v) => piano(f, d, w, v),
-      cat: (f, d, w, v) => marimba(f, d, w, v),
-      rooster: (f, d, w, v) => marimba(f * 2, d, w, v * .8),
-    };
-    // 첫 콜백에서 모든 음을 오디오 시계에 예약한다. 화면 콜백의 대기 오차가 박자에 쌓이지 않는다.
-    const odeVoice = (n, d, i) => {
-      if (i !== 0) return;
-      let start = 0, elapsed = 0;
-      BARS.forEach((count, bi) => {
-        let beat = 0;
-        ODE.slice(start, start + count).forEach(([pitch, length], ni) => {
-          ODE_VOICE[WHO[start + ni]](T.hz(pitch), length * ODE_BEAT, elapsed * ODE_BEAT, beat === 0 ? .23 : .17);
-          beat += length; elapsed += length;
-        });
-        // 1·3박 저음, 2·4박 짧은 화음으로 행진의 강박을 분명하게 한다.
-        const barTime = (elapsed - 4) * ODE_BEAT, root = T.hz(ODE_ROOTS[bi]);
-        for (let b = 0; b < 4; b++) {
-          const when = barTime + b * ODE_BEAT;
-          if (b % 2 === 0) piano(root, .3, when, b === 0 ? .13 : .09);
-          else { marimba(root * 2, .15, when, .06); marimba(root * 3, .15, when, .04); }
-        }
-        start += count;
-      });
-    };
-    const odeHop = i => { const a = cast[WHO[i]]; a.hop(18, 280); note(T, a.x + 20, a.y - 100 * a.scale, [C.bean, C.pine, C.persimmon][i % 3]); };
     // Load metadata only; sound starts at the existing post-gesture story cues.
     const musicRoot = new URL('../../audio/bremen/', document.baseURI);
-    // 마지막 연주: 픽사베이 'Vienna March'(juliush) 22초 · 약 100BPM · 4박마다 구절(timing_vienna.json). 못 불러오면 합성 행진곡(marchFallback).
+    // 마지막 연주: 픽사베이 'Vienna March'(juliush) 22초 · 약 100BPM · 4박마다 구절(timing_vienna.json). 시작도 못 하면 동물 환호(cheerFallback).
     const timingReady = fetch(new URL('timing_vienna.json', musicRoot))
       .then(r => { if (!r.ok) throw new Error('music timing'); return r.json(); }).catch(() => null);
     const burstTimingReady = fetch(new URL('bigband_burst_cues.json', musicRoot))
@@ -874,49 +823,101 @@
       if (a.parts.art) a.parts.flash('sing');
       note(T, a.x + 20, a.y - 100 * a.scale, C.gold);
     };
+    /* 녹음 음악 (2026-10-29 고침): 휴대폰 느린 망에서 빅밴드가 8초 안에 안 나오거나 10초 멈추면 합성 밴드로 갈아타서
+       '녹음 → 기계음'이 이어 들렸다. 이제는
+       ① 동화 시작과 장면 앞에서 빅밴드·마지막 행진곡을 미리 불러 두고(warmMusic),
+       ② 녹음이 한 번 소리 나기 시작하면 절대 합성음으로 바꾸지 않는다: 멈추면 기다리고 다시 틀며, 정말 끊기면(15초 진행 없음·오류) 소리를 줄여 끝내고 이야기를 잇는다.
+       ③ 녹음이 아예 시작도 못 했을 때만 대신 소리(fallback)를 쓴다 — 놀이판은 진짜 동물 소리 노래·동물 환호(기계음 합성 아님), 읽어 주기는 조용히 넘어간다. */
+    const MUSIC_START_MS = 6000, MUSIC_GIVE_UP_MS = 15000;
+    const musicSlots = {}; // 이름 → { media, track, dead }
+    const MUSIC_FILE = { bigband_burst: 'bigband_burst.mp3', finale_march: 'finale_march_vienna.mp3' };
+    const musicTracks = {};
+    // 박자표(구절 시각)가 늦게 와도 음악은 바로 튼다: 파일 이름은 알고 있으니, 구절은 도착하는 대로 채운다(그 전 구절은 몸짓 없이)
+    const musicTrack = async name => {
+      if (!musicTracks[name]) {
+        const track = musicTracks[name] = { file: MUSIC_FILE[name], phrases: [] };
+        (name === 'bigband_burst' ? burstTimingReady : timingReady).then(timing => {
+          const t = timing && timing[name];
+          if (t && t.file) track.file = t.file;
+          if (t && Array.isArray(t.phrases)) track.phrases = t.phrases;
+        });
+      }
+      const track = musicTracks[name];
+      await Promise.race([name === 'bigband_burst' ? burstTimingReady : timingReady, new Promise(resolve => setTimeout(resolve, 1500))]);
+      return track.file ? track : null;
+    };
+    const musicSlot = (name, track) => {
+      let s = musicSlots[name];
+      if (s && s.media && !s.media.error) return s;
+      const media = new Audio(new URL(track.file, musicRoot).href);
+      media.preload = 'auto';
+      try { media.load(); } catch (e) { /* 무시 */ }
+      s = musicSlots[name] = { media, track, dead: s ? s.dead : false };
+      return s;
+    };
+    const warmMusic = () => ['bigband_burst', 'finale_march'].forEach(name => { musicTrack(name).then(track => { if (track) musicSlot(name, track); }).catch(() => { /* 소리 없이도 진행 */ }); });
+    warmMusic(); // 동화 시작에 미리
     // maxMs: 읽어 주기는 동사 하나를 8초까지만 기다리므로, 그 안에서 소리를 줄여 끝낸다(다음 낭독과 음악이 겹치지 않게)
     async function recordedMusic(name, fallback, onPhrase = musicHop, maxMs = 0) {
-      let media, frame, watchdog, startTimer, capTimer, fadeTimer, disposed = false;
+      const t0 = performance.now();
+      let outcome = 'nostart';
       try {
-        const timing = await Promise.race([name === 'bigband_burst' ? burstTimingReady : timingReady, new Promise(resolve => setTimeout(() => resolve(null), 4000))]);
-        const track = timing && timing[name];
-        if (!track || !Array.isArray(track.phrases)) throw new Error('missing music timing');
-        media = new Audio(new URL(track.file, musicRoot).href);
-        media.preload = 'auto';
-        await new Promise((resolve, reject) => {
-          let next = 0, lastTime = -1, lastProgress = performance.now();
-          const fail = () => reject(new Error('music playback failed'));
-          media.onerror = fail;
-          media.onended = resolve;
-          const tick = () => {
-            if (media.currentTime !== lastTime) { lastTime = media.currentTime; lastProgress = performance.now(); }
-            while (next < track.phrases.length && track.phrases[next].start_seconds <= media.currentTime) onPhrase(track.phrases[next++]);
-            frame = requestAnimationFrame(tick);
-          };
-          // A stalled or rejected load must also release the story to synthesis.
-          watchdog = setInterval(() => { if (performance.now() - lastProgress > 10000) fail(); }, 500);
-          startTimer = setTimeout(fail, 8000);
-          media.play().then(() => {
-            if (disposed) return; clearTimeout(startTimer); tick();
-            if (maxMs) capTimer = setTimeout(() => { // 끝 0.6초 동안 소리를 줄이고 마친다
-              const v0 = media.volume; let k = 0;
-              fadeTimer = setInterval(() => { k++; media.volume = Math.max(0, v0 * (1 - k / 12)); if (k >= 12) { clearInterval(fadeTimer); resolve(); } }, 50);
-            }, Math.max(0, maxMs - 600));
-          }, fail);
-        });
-        return;
-      } catch (e) {
-        // Stop partial playback before restarting the original synthesized score.
-        if (media) media.pause();
-      } finally {
-        disposed = true;
-        cancelAnimationFrame(frame); clearInterval(watchdog); clearTimeout(startTimer); clearTimeout(capTimer); clearInterval(fadeTimer);
-        if (media) { media.pause(); media.onended = media.onerror = null; media.removeAttribute('src'); media.load(); }
-      }
+        const track = await musicTrack(name);
+        if (track) {
+          const slot = musicSlot(name, track), media = slot.media;
+          try { media.pause(); media.currentTime = 0; media.volume = 1; } catch (e) { /* 무시 */ }
+          // 한 번 시작 못 한 곡은 다음엔 짧게만 기다린다(이미 받아졌으면 바로 나온다)
+          const startMs = maxMs ? Math.max(1500, maxMs - 1500 - (performance.now() - t0)) : (slot.dead ? 1500 : MUSIC_START_MS);
+          outcome = await new Promise(resolve => {
+            let next = 0, started = false, done = false, frame = 0, fadeIv = null, lastTime = 0, lastProgress = performance.now(), kick = 0;
+            const timers = [];
+            const fire = () => { const t = media.currentTime; while (next < track.phrases.length && track.phrases[next].start_seconds <= t) { const p = track.phrases[next++]; if (t - p.start_seconds < .8) onPhrase(p); } }; // 늦게 온 구절표의 지난 구절은 몰아서 뛰지 않는다
+            const tick = () => { if (done) return; fire(); frame = requestAnimationFrame(tick); };
+            const finish = r => {
+              if (done) return; done = true;
+              clearInterval(iv); clearInterval(fadeIv); timers.forEach(clearTimeout); cancelAnimationFrame(frame);
+              media.onended = media.onerror = media.ontimeupdate = null;
+              try { media.pause(); } catch (e) { /* 무시 */ }
+              resolve(r);
+            };
+            const fadeOut = (r, ms = 600) => { // 소리를 줄이며 끝낸다 (합성음으로 갈아타지 않는다)
+              if (done || fadeIv) return;
+              const v0 = media.volume, n = Math.max(1, Math.round(ms / 50)); let k = 0;
+              fadeIv = setInterval(() => { k++; try { media.volume = Math.max(0, v0 * (1 - k / n)); } catch (e) { /* 무시 */ } if (k >= n) finish(r); }, 50);
+            };
+            const progress = () => {
+              const t = media.currentTime;
+              if (t !== lastTime) { lastTime = t; lastProgress = performance.now(); }
+              if (!started && t > 0) {
+                started = true; tick();
+                if (maxMs) timers.push(setTimeout(() => fadeOut('done'), Math.max(0, t0 + maxMs - 600 - performance.now())));
+              }
+            };
+            media.ontimeupdate = progress;
+            media.onended = () => { fire(); finish('done'); };
+            media.onerror = () => finish(started ? 'cut' : 'nostart');
+            const iv = setInterval(() => {
+              progress();
+              const now = performance.now();
+              if (!started) { if (now - t0 > startMs) finish('nostart'); return; }
+              if (fadeIv) return;
+              if (now - lastProgress > MUSIC_GIVE_UP_MS) { fadeOut('cut', 400); return; } // 정말 끊겼다: 조용히 끝내고 이야기를 잇는다
+              if (media.paused && !media.ended && now - kick > 1000) { kick = now; media.play().catch(() => { /* 다음 틱에 다시 */ }); } // 멈췄으면 다시 튼다
+            }, 250);
+            media.play().catch(() => { if (!started) finish('nostart'); });
+          });
+          if (outcome === 'nostart') { slot.dead = true; warmMusic(); }
+          else slot.dead = false;
+          try { media.currentTime = 0; media.volume = 1; } catch (e) { /* 다음에 다시 쓴다 */ }
+        }
+      } catch (e) { /* 아래에서 정리 */ }
+      if (outcome !== 'nostart') return;
+      if (maxMs) return; // 읽어 주기: 시작도 못 한 음악은 조용히 넘어간다
       await fallback();
     }
-    const marchFallback = () => T.playMelody(ODE, { beat: ODE_BEAT, voice: odeVoice, onNote: odeHop });
-    const roundFallback = () => T.playMelody(SONG, { beat: .42, voice: (n, d, i) => SING[LINE[i].k](T.hz(n), d), onNote: i => { if (LINE[i].ni === 0) musicHop({ friend: LINE[i].k }); } });
+    /* 녹음이 아예 시작하지 못했을 때만 쓰는 대신 소리: 합성 악기 대신 진짜 동물 소리(아직 못 불러온 음은 몸짓·가사만) */
+    const animalSongFallback = (onNote) => T.playMelody(SONG1, { beat: .4, voice: (n, d, i) => { const k = LINE1[i].k, rate = Math.min(1.7, Math.max(.6, T.hz(n) / T.hz('E4'))); AudioFX.animalNote(k, rate, k === 'donkey' ? .55 : .7, 0, Math.min(.9, d * 1.5)); }, onNote: i => (onNote ? onNote(i) : (LINE1[i].ni === 0 && musicHop({ friend: LINE1[i].k }))) });
+    const cheerFallback = async () => { for (let r = 0; r < 2; r++) for (const a of band) { a.cry(.7); a.hop(22, 300); await sleep(320); } };
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
        장면 자리·크기·카메라는 놀이판 그 장면 그대로(FIX). 대본 좌표는 놀이판 그림과 맞지 않아 쓰지 않는다. */
@@ -1094,7 +1095,7 @@
         if (op === 'flap') { flap(a); T.pop(a.x, 40, '푸드덕!', C.persimmon); return; }
       };
       const acts = {
-        set(k) { if (k === 'mill') amb('birds_chirp_1', .25, 4); else if (k === 'walk') amb('crickets_night_1', .25, 4); else if (k === 'dark') amb('crickets_night_2', .25, 4); else if (k === 'morning') amb('birds_chirp_2', .25, 4); else stopAmb(); if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
+        set(k) { if (k === 'house_pov' || k === 'house_wide' || k === 'morning') warmMusic(); if (k === 'mill') amb('birds_chirp_1', .25, 4); else if (k === 'walk') amb('crickets_night_1', .25, 4); else if (k === 'dark') amb('crickets_night_2', .25, 4); else if (k === 'morning') amb('birds_chirp_2', .25, 4); else stopAmb(); if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
         cam(a) { camW(); },
         bush(op) { if (bsh) bsh.animate([{ translate: '0 0' }, { translate: '-6px 0' }, { translate: '6px 0' }, { translate: '0 0' }], { duration: 400, iterations: 2 }); },
         window(op) { // 불빛이 켜진다 (오두막 창)
@@ -1108,7 +1109,7 @@
         band(op, a1) {
           if (op === 'sing') {
             if (!rI() && (key === 'house_wide' || key === 'morning')) {
-              return recordedMusic(key === 'morning' ? 'finale_march' : 'bigband_burst', key === 'morning' ? marchFallback : roundFallback, musicHop, 6500)
+              return recordedMusic(key === 'morning' ? 'finale_march' : 'bigband_burst', null, musicHop, 6500) // 읽어 주기: 시작 못 하면 조용히
                 .then(() => { if (key === 'morning') T.confetti(); });
             }
             if (rI()) return;
@@ -1526,6 +1527,7 @@
 
     /* ---------- 8. 창문 안 (닭의 시점) ---------- */
     const rb = [C.pine, C.bean, C.bark].map(c => mk('robber', c));
+    warmMusic(); // 음악 대폭발 장면 앞에서 한 번 더 (실패했던 불러오기를 다시)
     let coins;
     await T.sceneCard('창문 안', () => {
       T.clear();
@@ -1570,7 +1572,6 @@
     /* 〈프레르 자크〉(프랑스 전래 동요): 네 친구가 한 줄씩 돌아가며 노래한다 */
     let lyr = null;
     const LYR = hw.art ? { y: 232, size: Math.round(Math.min(28, visW() / 1.9 / 7.5)) } : { y: 80 }; // 카메라를 당긴 장면은 가사도 보이는 칸 안(위쪽)에 작게
-    const singVoice = (n, d, i) => SING[LINE[i].k](T.hz(n), d);
     /* 진짜 동물 소리(sounds/animals/*.mp3)를 음높이만 바꿔 한 음씩: 아직 못 불러왔으면 악기 소리로 */
     const animalVoice = (n, d, i) => {
       const k = LINE1[i].k, rate = Math.min(1.7, Math.max(.6, T.hz(n) / T.hz('E4')));
@@ -1592,7 +1593,7 @@
       lyr = T.lyric(translated.includes('|') ? translated.split('|') : phrase.lyrics, LYR);
       lyr.set(0);
     };
-    await recordedMusic('bigband_burst', () => T.playMelody(SONG, { beat: .42, voice: singVoice, onNote: i => singNote(i) }), roundPhrase);
+    await recordedMusic('bigband_burst', () => animalSongFallback(i => singNote(i, LINE1)), roundPhrase); // 녹음이 시작도 못 했을 때만 동물 소리 노래
     lyr && lyr.clear(); lyr = null;
     await sleep(400);
     /* 톡 한 번(2026-10-21): 탑을 한 번 누르면 네 친구가 차례로 자기 소리를 내고(당나귀 히힝 · 강아지 멍멍 · 고양이 야옹 · 닭 꼬끼오),
@@ -1752,12 +1753,12 @@
       if (!pic(T, T.world, 'bell', hx('rooster') + 37, 136, 20, 35)) T.paper(T.world, [['path', { d: 'M500 158 Q512 130 524 158 Z', fill: C.gold }]]);
       camSnap(500, 280, 1);
     });
-    AudioFX.sfx('bell', .4);
+    AudioFX.sfx('bell', .4); warmMusic();
     await say('아침이 밝았어요. 친구 넷은 이 집이 참 좋았어요.');
     await say('"브레멘은 못 갔지만, 여기가 우리 집이야!"');
     T.finale();
     await say('기쁨의 노래를 연주해요!'); // 따라 누르기 없이 들려주기만 (2026-10-19)
-    await recordedMusic('finale_march', marchFallback);
+    await recordedMusic('finale_march', cheerFallback); // 녹음이 시작도 못 했을 때만 동물 환호
     await sleep(500);
     await sleep(400);
     band.forEach((a, i) => setTimeout(() => { a.cry(.6); a.hop(24, 380); }, i * 200));
