@@ -257,12 +257,14 @@
     /* 소리 큐: 재생(놀이)에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
+    /* 대금 한 소절(2026-10-29): 밤이 내리는 순간과 까치의 희생에만. 놀이 .3, 읽기 ×0.8. 기다리지 않는다 */
+    const daeg = () => { try { const o = { vol: T.reading() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const SCENE_AMB = { mg_bg_path: 'birds_chirp_1', mg_bg_night: 'crickets_night_1', mg_bg_dawn: 'birds_chirp_2' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); dress(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     const P = T.viewWidth() < 990;
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['intro_cozy', 'beomjong', 'beomjong_synth', 'bonk', 'whoosh', 'creak', 'step_grass', 'step_wood', 'swish', 'paper_up', 'paper_down', 'sparkle', 'tada', 'door', 'thud', 'pop', 'splash', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'rustle_1', 'bow_arrow_1', 'zip_away', 'pull_pop', 'surprise_sting', 'wing_flap_1', 'ding_glock', 'whistle_down', 'party_horn', 'shimmer', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5']);
+    AudioFX.preloadSfx(['intro_cozy', 'daegeum', 'beomjong', 'beomjong_synth', 'bonk', 'whoosh', 'creak', 'step_grass', 'step_wood', 'swish', 'paper_up', 'paper_down', 'sparkle', 'tada', 'door', 'thud', 'pop', 'splash', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'rustle_1', 'bow_arrow_1', 'zip_away', 'pull_pop', 'surprise_sting', 'wing_flap_1', 'ding_glock', 'whistle_down', 'party_horn', 'shimmer', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5']);
     const loads = [T.preload(src('mg2_layer_moon_perch')), ...BGS.map(k => T.preload(bgSrc(k)).then(ok => { bgOK[k] = ok; })), ...CUTS.map(k => T.preload(src(k)).then(ok => { cutOk[k] = ok; }))];
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
     await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
@@ -492,6 +494,7 @@
     })();
     /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초>. 소리는 대사를 막지 않는다 */
     Object.assign(READ_ACTS, {
+      daeg() { daeg(); },
       snd(n, v = .7, d = 0) { try { const f = () => { try { AudioFX.sfx(n, +v * .8); } catch (e) { /* */ } }; +d > 0 ? setTimeout(f, +d) : f(); } catch (e) { /* */ } },
       amb(n, v = .2, d = 4) { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
     });
@@ -614,6 +617,7 @@
       put(T, sch, X(300, 420), FL, { look: 'walk', to: 'right' });
       if (P) camSnap(420, 280, 1);
     }, sch.pos);
+    daeg(); // 해가 지고 캄캄해지는 산길 — 대금
     const steps4 = stepLoop(520, .35);
     const walk4 = sch.move(X(560, 560), FL, 6000, 'linear'); follow(540, 6000);
     (async () => { for (let i = 0; i < 11; i++) { sch.hop(5, 480); await sleep(520); } })();
@@ -709,6 +713,7 @@
       await sleep(Math.max(0, STRIKE_GAP - (performance.now() - t0)));
     };
     for (const k of [1, 2, 3]) await strike(k);
+    daeg(); // 힘이 다한 까치들 — 대금
     await cutSay('mg_cut_ring', S.L39);
     dad.look('tired'); mom.look('tired');
     put(T, dad, X(430, 440), 300, { look: 'tired' }); put(T, mom, X(560, 560), 300, { look: 'tired' });

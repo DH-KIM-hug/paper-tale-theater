@@ -506,6 +506,9 @@
      "text": "어느새 해가 지고, 산길은 캄캄해졌어요.",
      "src": "reuse",
      "en": "Soon the sun went down, and the mountain path grew dark.",
+     "before": [
+      "daeg"
+     ],
      "segs": [
       [
        "nar",
@@ -1079,7 +1082,8 @@
       ]
      ],
      "before": [
-      "cut:ring"
+      "cut:ring",
+      "daeg"
      ]
     },
     {

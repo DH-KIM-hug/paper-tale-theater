@@ -502,6 +502,9 @@
     {
      "text": "어느새 해가 지고, 산길은 캄캄해졌어요.",
      "src": "reuse",
+     "before": [
+      "daeg"
+     ],
      "segs": [
       [
        "nar",
@@ -1072,7 +1075,8 @@
       ]
      ],
      "before": [
-      "cut:ring"
+      "cut:ring",
+      "daeg"
      ]
     },
     {
