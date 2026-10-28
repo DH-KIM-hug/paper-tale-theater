@@ -151,7 +151,7 @@
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
     })();
-    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['intro_korean_happy', 'pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
+    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['intro_korean_happy', 'daegeum', 'pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, say, camSnap } = T;
     const tr = T.tr;
@@ -162,6 +162,8 @@
     const later = (ms, name, v) => setTimeout(() => cue(name, v), ms);
     const note = (i, v = .8) => cue('marimba_' + Math.min(8, Math.max(1, i)), v);   // 세기: 한 번에 한 음, 올라간다
     const SCENE_AMB = { field: 'birds_chirp_2', village: 'birds_chirp_1' };
+    /* 대금 한 소절(2026-10-29): 이웃에게 나누는 마음, 소동 뒤의 조용한 뉘우침에만(웃기는 순간엔 쓰지 않는다). 놀이 .3, 읽기 ×0.8 */
+    const daeg = () => { try { const o = { vol: T.reading() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const scene = (key, cx) => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); dress(T, key); pan(cx); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
@@ -293,6 +295,7 @@
     };
     /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초>. 소리는 대사를 막지 않는다 */
     Object.assign(READ_ACTS, {
+      daeg: () => daeg(),
       snd: (n, v = .7, d = 0) => { try { +d > 0 ? later(+d, n, +v) : cue(n, +v); } catch (e) { /* */ } },
       amb: (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
     });
@@ -369,6 +372,7 @@
       scene('village');
       put(T, farmer, 500, 540, { look: 'share', to: 'left' });
     }, farmer.pos);
+    daeg(); // 이웃에게 나누는 마음 — 대금
     await say('착한 농부는 혼자만 쓰지 않았어요. 이웃 다섯 집에 쌀을 나눠 주러 갔어요.');
     const spots = [78, 297, 500, 719, 922];
     let rest = spots.map((x, i) => ({ x, i }));
@@ -477,6 +481,7 @@
     scene('hallwide');
     olds.forEach(o => hide(o)); hide(jar);
     put(T, cracked, 700, 505); put(T, rich, 300, 505, { look: 'shout', to: 'right' }); put(T, father, 500, 505, { look: 'peek', to: 'right' });
+    daeg(); // 소동이 끝난 뒤의 조용함 — 대금
     await say('쨍그랑! 항아리가 깨지자 일곱 명은 사라지고, 진짜 아버지만 남았어요.');
     await say('"아버지, 죄송해요. 욕심을 부려서 소동이 났어요."');
     await Promise.all([rich.hop(24, 400), father.hop(20, 400)]);

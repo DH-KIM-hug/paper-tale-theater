@@ -449,6 +449,9 @@
     {
      "text": "착한 농부는 혼자만 쓰지 않았어요. 이웃 다섯 집에 쌀을 나눠 주러 갔어요.",
      "src": "reuse",
+     "before": [
+      "daeg"
+     ],
      "segs": [
       [
        "nar",
@@ -1004,7 +1007,8 @@
       "fathers:hide",
       "jar:hide",
       "cracked:show",
-      "father:at:500,505:peek:right"
+      "father:at:500,505:peek:right",
+      "daeg"
      ]
     },
     {
