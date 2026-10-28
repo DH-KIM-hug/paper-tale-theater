@@ -343,6 +343,17 @@
   }
 
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_magic', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_magic', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, say, camSnap, tr } = T;
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
@@ -350,7 +361,7 @@
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { night_sea: 'waves', beach: 'seagull_1', garden: 'birds_chirp_2', deck: 'waves', dawn_sea: 'waves', morning_sea: 'seagull_2' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); T._cover = null; bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
-    try { AudioFX.preloadSfx(['step_wood', 'step_grass', 'bubbles', 'sparkle', 'gulp', 'thud', 'splash', 'splash_big', 'whoosh', 'swish', 'tada', 'bell', 'doop', 'giggle_xylo', 'slide_up', 'blow_long', 'paper_down', 'pow', 'boom', 'waves', 'seagull_1', 'seagull_2', 'birds_chirp_2', 'thunder', 'whistle_down', 'ding_glock', 'pot_boil', 'shimmer', 'question', 'chime_up', 'party_horn']); } catch (e) { /* */ }
+    try { AudioFX.preloadSfx(['intro_magic', 'step_wood', 'step_grass', 'bubbles', 'sparkle', 'gulp', 'thud', 'splash', 'splash_big', 'whoosh', 'swish', 'tada', 'bell', 'doop', 'giggle_xylo', 'slide_up', 'blow_long', 'paper_down', 'pow', 'boom', 'waves', 'seagull_1', 'seagull_2', 'birds_chirp_2', 'thunder', 'whistle_down', 'ding_glock', 'pot_boil', 'shimmer', 'question', 'chime_up', 'party_horn']); } catch (e) { /* */ }
     const P = T.viewWidth() < 990;   /* 세로 화면: 가운데 일부만 보인다 → 카메라가 따라간다 */
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -408,6 +419,7 @@
     const bob = (a, px, ms, n = Infinity) => a.pos.animate([{ translate: '0 0' }, { translate: `0 ${px}px` }, { translate: '0 0' }], { duration: ms, iterations: n, easing: 'ease-in-out' });
 
     /* ===== 읽어 주기 (docs/READ_MODE.md): 조작·배움 놀이 없이 같은 그림으로 읽어 준다. 놀이판 흐름은 아래 그대로 ===== */
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {
       let sn = 0;                       /* 몇 번째 장면(set 을 부른 횟수). 같은 배경이 두 번 나와도 구분 */
       let frontList = [], bobAnim = null;
@@ -663,6 +675,7 @@
     palaceFront();
     if (P) camSnap(440, 280, 1);
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     bubblesUp(T, X(520, 500), 420, 8);
     sisters.hop(8, 600); king.hop(6, 600);
     await say('깊고 깊은 바다 밑에 인어 나라가 있었어요. 바다 왕님과 할머니, 여섯 공주가 살았지요.');
