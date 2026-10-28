@@ -99,8 +99,8 @@
     try { AudioFX.preloadSfx(SFX_NAMES); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
-    const amb = (n, vol = .28, dur = 4) => { try { if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
-    const sfx = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const amb = (n, vol = .28, dur = 4) => { try { if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
     let b1Seen = 0;
     let ambScene = null;
     const sceneAmb = k => {
@@ -594,6 +594,7 @@
       4: async () => { // 문 쪽으로 도망치다 구석의 할멈을 폴짝 뛰어넘는다
         const over = sleep(Math.max(0, (POS.grannyCorner - 60 - tiger.x) / 360 * 1000)).then(() => {
           if (granny.pos.style.display !== 'none') grannyMood('scared');
+          sfx('whistle_up', .7);
           return anim(tiger.body, [{ transform: 'translateY(0px)' }, { transform: 'translateY(-120px)', offset: .5 }, { transform: 'translateY(0px)' }], { duration: 520, easing: 'ease-in-out' });
         });
         await Promise.all([walk(tiger, POS.tigerStage[4], 360), over]);
@@ -717,7 +718,7 @@
       },
       rolled: a => { rolled.pos.style.display = a === 'show' ? '' : 'none'; },
       cut: id => showCut(id, 4000, id !== 'myeongseok'),
-      fx: n => (n === 'win' ? AudioFX.sting('win') : AudioFX[n] && AudioFX[n]()),
+      fx: n => { if (n === 'slide') sfx('whistle_down', .7); return n === 'win' ? AudioFX.sting('win') : AudioFX[n] && AudioFX[n](); },
       pop(spec) {
         const [x, y, ...w] = String(spec).split(','), word = w.join(',');
         impact(x === 'tiger' ? tiger.x + 30 : num(x), num(y), word, word === '어흥!' ? '#c0392b' : undefined);
