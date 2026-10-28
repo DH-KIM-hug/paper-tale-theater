@@ -532,12 +532,23 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { el, sleep, camTo, camWide, camSnap } = T;
     /* 짧은 소리 대사(귀 배지·컷 비명)가 끝난 뒤에 내레이션을 시작한다 — 엔진은 4초만 기다려서 긴 대사는 내레이터와 겹쳤다 */
     const say = async text => { await AudioFX.voiceIdle(10000); return T.say(text); };
     const stageWrap = T.root.querySelector('#stageWrap');
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['fire_crackle', 'crickets_night_1', 'crickets_night_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'tada', 'whistle_down', 'whistle_wobble', 'shimmer']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_korean', 'fire_crackle', 'crickets_night_1', 'crickets_night_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'tada', 'whistle_down', 'whistle_wobble', 'shimmer']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -1167,9 +1178,11 @@
       pop: spec => { const [x, y, ...w] = String(spec).split(','); T.pop(+x, +y, w.join(','), C.bean); },
       shake: () => T.shake(),
     };
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     await say('옛날 옛날 산골 오막살이에 엄마와 오누이가 살았어요.');
     for (const [ki, k] of [boy, girl].entries()) {
       const greet = () => T.tap(k.pos, { prompt: '오빠랑 동생을 톡 눌러서 "다녀오세요!" 해 봐요!' });
