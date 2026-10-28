@@ -208,12 +208,23 @@
   }
 
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_adventure', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_adventure', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { sleep, say, camSnap } = T;
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'bee_buzz', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'tiptoe_pizz', 'peek_pop', 'ding_glock', 'question', 'zip_away', 'whistle_down', 'surprise_sting', 'sleepy_tuba', 'pop_appear', 'party_horn', 'knock', 'pop', 'whoosh', 'door', 'creak', 'thud']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_adventure', 'birds_chirp_1', 'bee_buzz', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'tiptoe_pizz', 'peek_pop', 'ding_glock', 'question', 'zip_away', 'whistle_down', 'surprise_sting', 'sleepy_tuba', 'pop_appear', 'party_horn', 'knock', 'pop', 'whoosh', 'door', 'creak', 'thud']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const pan = (cx = 500) => camSnap(T.viewWidth() < 990 ? cx : 500, 280, 1);
@@ -441,6 +452,7 @@
       READ_ACTS.amb = (n, v, d) => { try { if (!T.readInstant()) AudioFX.ambient(n, { vol: +v || .15, dur: +d || 3, fadeIn: 1 }); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) return T.readPlay(READ_ACTS);
 
     /* --- 1. 바구니 싸기 --- */
@@ -452,6 +464,7 @@
     const TABLE_Y = 336; // 그림 속 식탁 윗면(무대 x 300~570, y≈327)
     put(T, bread, 370, TABLE_Y); put(T, milk, 440, TABLE_Y); put(T, apple, 510, TABLE_Y);
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     await say('엄마가 빨간 모자에게 말했어요. "할머니가 아프시단다. 맛있는 걸 가져다 드리렴."');
     let askG1 = '빵, 우유, 사과를 바구니에 담아요!'; // 안내는 첫 번째 누름에만 (T.ask)
     const askOnce1 = f => { const g = askG1; askG1 = null; return g ? T.ask(g, f) : f(); };
