@@ -42,7 +42,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "강아지: \"늙어서 사냥을 못 한다고 내보내졌어요.\"": {
   "t": "Dog: \"I got too old to hunt, so I was sent away.\"",
-  "c": "audio/el/bremen/en/dog_d2d1fac7cf.mp3"
+  "c": "audio/el/bremen/en/dog_bdf64b31c7.mp3"
  },
  "당나귀: \"그럼 우리 같이 브레멘에 가서 음악가가 되자!\"": {
   "t": "Donkey: \"Then come with us! Let's go to Bremen and be musicians together!\"",
@@ -65,7 +65,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "강아지: \"우리랑 같이 가자! 브레멘에서 노래하자!\"": {
   "t": "Dog: \"Come with us! Let's sing in Bremen!\"",
-  "c": "audio/el/bremen/en/dog_9818ace859.mp3"
+  "c": "audio/el/bremen/en/dog_4655838de7.mp3"
  },
  "고양이: \"야옹, 나도 노래라면 자신 있어!\"": {
   "t": "Cat: \"Meow, I can sing too!\"",

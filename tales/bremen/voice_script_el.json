@@ -1,9 +1,9 @@
 {
- "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, donkey=Roger, dog=Will, cat=Laura, rooster=Jessica, miller=Namchun, robber=Callum, boss=Brian",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, donkey=Roger, dog=Munni(순무 강아지와 같은 목소리·설정. 사용자 결정 2026-10-29: 동화 간 목소리 겹침 금지 규칙의 예외), cat=Laura, rooster=Jessica, miller=Namchun, robber=Callum, boss=Brian",
  "voices": {
   "nar": "Lb7qkOn5hF8p7qfCDH8q",
   "donkey": "CwhRBWXzGAHq8TQ4Fs17",
-  "dog": "bIHbv24MWmeRgasZH58o",
+  "dog": "VOGEEZj2Kly5dP9LrQy8",
   "cat": "FGY2WhTYpPnrIDTdsKH5",
   "rooster": "cgSgspJ2msm6clMCkdW9",
   "miller": "5ON5Fnz24cnOozEQfGAm",
@@ -30,8 +30,8 @@
    "style": 0.45
   },
   "dog": {
-   "stability": 0.35,
-   "style": 0.45
+   "stability": 0.3,
+   "style": 0.5
   },
   "cat": {
    "stability": 0.35,
@@ -248,7 +248,7 @@
      "dog",
      "늙어서 사냥을 못 한다고 내보내졌어요.",
      "sad:1.4",
-     "[sad, resigned, soft]"
+     "[sad, resigned, soft, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -298,7 +298,7 @@
      "dog",
      "우리랑 같이 가자! 브레멘에서 노래하자!",
      "happy",
-     "[cheerful, excited]"
+     "[cheerful, excited, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },
@@ -584,7 +584,7 @@
      "dog",
      "아이고, 무거워! 나는 위로 갈래~",
      "toneup:1.3",
-     "[groaning, playful, puffing]"
+     "[groaning, playful, puffing, childlike, baby voice, lisping, very young child, giggly]"
     ]
    ]
   },

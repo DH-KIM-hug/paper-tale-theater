@@ -10,7 +10,7 @@ Object.assign(NARRATION_CLIPS, {
  "덤불 뒤에서 멍멍!": "audio/el/bremen/nar_481633fbbb.mp3",
  "덤불 뒤에서 늙은 강아지가 엉금엉금 나왔어요.": "audio/el/bremen/nar_aa02479c3e.mp3",
  "강아지가 헉헉, 혀를 쭉 내밀었어요.": "audio/el/bremen/nar_ee72286475.mp3",
- "강아지: \"늙어서 사냥을 못 한다고 내보내졌어요.\"": "audio/el/bremen/dog_b9de8d53d7.mp3",
+ "강아지: \"늙어서 사냥을 못 한다고 내보내졌어요.\"": "audio/el/bremen/dog_d8bb39309c.mp3",
  "당나귀: \"그럼 우리 같이 브레멘에 가서 음악가가 되자!\"": "audio/el/bremen/donkey_3222a8e8e3.mp3",
  "두 친구가 마을 길을 터벅터벅 걷는데, 담장 위에서 소리가 났어요.": "audio/el/bremen/nar_3d9c7710a0.mp3",
  "담장 위에서 야옹~": "audio/el/bremen/nar_11c6556d51.mp3",
@@ -18,7 +18,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/bremen/nar_a6e7279dba.mp3",
   "audio/el/bremen/cat_31fe75d792.mp3"
  ],
- "강아지: \"우리랑 같이 가자! 브레멘에서 노래하자!\"": "audio/el/bremen/dog_798ccba0d2.mp3",
+ "강아지: \"우리랑 같이 가자! 브레멘에서 노래하자!\"": "audio/el/bremen/dog_3f16d96b71.mp3",
  "고양이: \"야옹, 나도 노래라면 자신 있어!\"": "audio/el/bremen/cat_4b0bff280a.mp3",
  "고양이는 담장에서 사뿐사뿐 뛰어내려 친구들 곁에 섰어요.": "audio/el/bremen/nar_fd8cbcd9a5.mp3",
  "세 친구가 마을 집 앞을 지나가고 있었어요.": "audio/el/bremen/nar_728d97d4e5.mp3",
