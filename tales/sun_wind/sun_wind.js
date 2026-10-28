@@ -565,7 +565,7 @@
     });
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'leaves_footsteps', 'cicada', 'stream_1', 'balloon', 'whistle_down']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'leaves_footsteps', 'cicada', 'stream_1', 'wind_gust', 'whistle_down']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -691,7 +691,7 @@
           rW.p.puff.style.transition = 'transform .5s'; rW.p.puff.style.transform = rW.p.art ? 'scale(.94,.88)' : 'scale(.85,.75)';
           if (rPant) rPant.cancel();
           rPant = rW.p.puff.animate([{ scale: '1 1' }, { scale: '1.06 1.1' }, { scale: '1 1' }], { duration: 700, iterations: Infinity });
-          if (!inst()) { SND.pant(T); short('balloon', .5, 2.5); }
+          if (!inst()) { SND.pant(T); short('wind_gust', .6, 2.6); }
           return;
         }
         console.warn('[read] wind 동사 모름', verb);
@@ -932,7 +932,7 @@
     /* --- 4. 바람 헉헉 --- */
     await camWide(700);
     vo('cut_pant'); // 컷 속 바람의 헉헉 (말풍선 없음)
-    short('balloon', .5, 2.5);
+    short('wind_gust', .6, 2.6);
     await (cutArt(T, 'cut_pant', null, 2400) || T.cut(svg => {
       T.actor(svg, 200, 160, g => { const p = drawWind(T, g); p.wrinkles.setAttribute('opacity', 1); p.sweat.setAttribute('opacity', 1); p.setMouth('tired'); p.puff.style.transform = p.art ? 'scale(.94,.88)' : 'scale(.85,.72)'; }, { scale: 1.5 });
       T.el('text', { x: 200, y: 285, 'text-anchor': 'middle', 'font-size': 58, fill: C.indigo, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('헉헉…') }, svg);

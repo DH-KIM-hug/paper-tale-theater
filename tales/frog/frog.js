@@ -284,7 +284,7 @@
   async function run(T) {
     const { el, sleep, say, actor, camTo, camWide, camSnap } = T;
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon_fly', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -413,7 +413,7 @@
         }
         if (verb === 'flying') {
           if (rShiver) { rShiver.cancel(); rShiver = null; }
-          momArt.set('flying'); if (!inst()) short('balloon', .5, 2.5);
+          momArt.set('flying'); if (!inst()) short('balloon_fly', .6, 2);
           mom.body.style.transition = 'transform 3s linear'; mom.body.style.transform = 'scale(1.6)';
           const fz = T.portrait() ? .72 : 1; if (fz < 1) camSnap(500, 280, fz);
           const fk = Math.min(1, (T.viewWidth() / 2 / fz - 150) / 320), FX = x => Math.round(500 + (x - 500) * fk);
@@ -681,7 +681,7 @@
       T.el('text', { x: 200, y: 175, 'text-anchor': 'middle', 'font-size': 90, fill: '#A93B32', stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('뻥!') }, svg);
     }, { sfx: 'boom' }));
     babies.forEach(b => b.parts.hands.setAttribute('opacity', 0));
-    momArt.set('flying'); short('balloon', .5, 2.5);
+    momArt.set('flying'); short('balloon_fly', .6, 2);
     mom.body.style.transition = 'transform 3s linear';
     mom.body.style.transform = 'scale(1.6)';
     // 세로 화면: 살짝 물러서고, 보이는 폭 안에서만 날아다닌다 (가로는 fz = fk = 1)
