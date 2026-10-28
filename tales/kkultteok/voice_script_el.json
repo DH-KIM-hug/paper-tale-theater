@@ -5,7 +5,7 @@
   "oppa": "tapn1QwocNXk3viVSowa",
   "agi": "VOGEEZj2Kly5dP9LrQy8",
   "dark": "MIl0Flub6Sc9KSkX2A42",
-  "dog": "rBkiq5ZQ43ogwd6i4uIQ"
+  "dog": "VOGEEZj2Kly5dP9LrQy8"
  },
  "models": {
   "nar": "eleven_v4",
@@ -48,7 +48,7 @@
   "dark",
   "dog"
  ],
- "notes": "ElevenLabs 배정: nar=Lily, nuna(다현)=Annie, oppa(이현)=Sparkles, agi(은우)=Munni(아기 말투 태그), dark(아기 먹구름)=Mithi, dog(꿀떡이)=Peanut | 2026-10-17 새 원고(tale-y c3-sound, 콘티판)로 다시 씀",
+ "notes": "ElevenLabs 배정: nar=Lily, nuna(다현)=Annie, oppa(이현)=Sparkles, agi(은우)=Munni(아기 말투 태그), dark(아기 먹구름)=Mithi, dog(꿀떡이)=Munni(순무 강아지와 같은 목소리·설정, 사용자 결정 2026-10-29) | 2026-10-17 새 원고(tale-y c3-sound, 콘티판)로 다시 씀",
  "lines": [
   {
    "text": "해가 쨍쨍한 날, 다현이와 이현이와 은우는 꿀떡이랑 산책을 나가요.",
