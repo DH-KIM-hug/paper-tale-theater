@@ -264,7 +264,7 @@
     const n = heroList.length;
     $('#heroPrev').hidden = $('#heroNext').hidden = n < 2;
     $('#heroPlay').setAttribute('aria-label', L(`${name} 이야기 시작`, `Start ${name}`));
-    document.querySelectorAll('#rows .card').forEach(c => c.classList.toggle('sel', c.dataset.id === heroId));
+    paintRowSel();
     $('#heroStrip').textContent = name;
   }
   function heroStep(d) {
@@ -280,12 +280,19 @@
     const t = heroList.find(x => x.id === heroId);
     sayTitle(shown(t).title, t.id);
   }
-  /* 작은 타일 톡 = 제목 읽기 + 큰 동화로 올라옴(스크롤했으면 맨 위로 부드럽게) */
-  function heroSelect(id) {
-    heroId = id; heroDir = 0; renderHero();
+  /* 작은 타일 톡 = 그 자리에서 고르기(2026-10-29 사용자 결정: 위로 올라가며 스크롤되던 것을 없앴다).
+     첫 톡 = 제목·테마 소리 + 제자리에서 살짝 들림·감빛 테두리, 같은 타일 두 번째 톡 = 열기. 큰 동화도 같은 동화로 바뀌지만 화면은 움직이지 않는다 */
+  let rowSel = null;
+  const paintRowSel = () => document.querySelectorAll('#rows .card').forEach(c => {
+    const on = c.dataset.id === rowSel;
+    if (c.classList.contains('sel') && !on) c.getAnimations().forEach(a => a.cancel());
+    c.classList.toggle('sel', on);
+  });
+  function heroSelect(id, c) {
+    rowSel = id; heroId = id; heroDir = 0; renderHero();
     const t = heroList.find(x => x.id === id);
     if (t) sayTitle(shown(t).title, t.id);
-    try { $('#view-tales').scrollTo({ top: 0, behavior: motion() ? 'smooth' : 'auto' }); $('#rows').scrollTo({ top: 0, behavior: motion() ? 'smooth' : 'auto' }); } catch (e) { /* 스크롤 못 해도 큰 동화는 바뀐다 */ }
+    if (c && motion()) c.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px) scale(1.03)' }, { transform: 'translateY(-4px) scale(1.015)' }], { duration: 300, easing: 'cubic-bezier(.3,1.5,.5,1)', fill: 'forwards' });
   }
   {
     $('#heroPrev').addEventListener('click', () => heroStep(-1));
@@ -474,7 +481,7 @@
       sayTitle(L(`${shown(t).title}. 곧 열려요.`, `${shown(t).title}. Coming soon.`), t.id);
       return;
     }
-    if (!inHero && c.dataset.id !== heroId) { e.preventDefault(); paper('tap'); heroSelect(c.dataset.id); return; }
+    if (!inHero && c.dataset.id !== rowSel) { e.preventDefault(); paper('tap'); heroSelect(c.dataset.id, c); return; }
     paper('tap');
     try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (err) { /* 무시 */ }
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;   // 새 탭 열기는 그대로
