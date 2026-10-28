@@ -1008,33 +1008,48 @@
       mouse = mk(T, T.world, ROPES[0] - 52, 545, drawMouse, 1.5); mouse.face('right');
     }, mouse.pos);
     const cnt = counter(T, 10);
-    await say('생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!');
-    q = Promise.resolve();
-    const cutRope = i => {
-      q = q.then(async () => {
-        const x = ROPES[i];
-        if (T.portrait()) camTo(x, 280, 1, 220); // 세로 화면: 카메라가 생쥐를 따라 옆으로
-        if (i > 0) { squeak(T, 1500); mouse.hop(20, 220); await mouse.move(x - 52, 545, 220); }
-        mouse.parts.teeth.setAttribute('opacity', 1);
-        gnaw(T); T.tone([2600, 2000], .05, { type: 'square', vol: .05, when: .1 });
-        setTimeout(() => sfx('marimba_' + Math.min(8, i + 1), .55), 380); // 줄마다 한 음씩 올라가며 센다
-        const r = ropes[i];
-        r.mid.remove();
-        r.bot.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
-        r.top.animate([{ transform: 'rotate(0)' }, { transform: `rotate(${i % 2 ? 6 : -6}deg)` }], { duration: 400, fill: 'forwards', easing: 'ease-out' });
-        r.top.style.opacity = '.45';
-        T.pop(x, 400, i % 2 ? '톡!' : '사각!', C.bean);
-        cnt.fill(i);
-        Narrator.speak(NUMS[i]);
-        hRopes.setAttribute('opacity', 1 - (i + 1) / 12);
-        if (i === 2) { lion.parts.paws.animate([{ translate: '0 0' }, { translate: '-10px -40px' }, { translate: '0 0' }], 700); }
-        if (i === 5) { lion.parts.hg.animate([{ rotate: '0deg' }, { rotate: '-8deg' }, { rotate: '8deg' }, { rotate: '0deg' }], 700); }
-        await sleep(950); // 숫자 하나를 다 듣고 다음 줄로 (2026-10-20: 너무 빨랐음)
-        mouse.parts.teeth.setAttribute('opacity', 0);
-      });
+    /* 2026-10-28 사용자 결정: 아이가 열 번 톡 눌러 줄을 하나씩 끊고, 누를 때마다 숫자(하나…열)를 소리 내어 센다.
+       (연타는 한 번이면 저절로 — §2 — 의 예외: 세기 배움 조작.) 누르는 곳은 지금 끊을 줄 둘레의 큰 투명 판.
+       한 줄을 끊고 숫자 소리가 끝날 때까지 판이 닫혀 있어서, 빨리 눌러도 숫자 소리가 겹치지 않는다. */
+    const hit = el('g', {}, T.world);
+    const hitR = el('rect', { x: -75, y: 240, width: 150, height: 340, fill: 'transparent' }, hit);
+    const hitDot = el('rect', { x: -10, y: 495, width: 20, height: 20, fill: 'transparent', 'data-hand': 1 }, hit); // 손가락 힌트는 끊을 자리(줄 아래쪽)
+    const aimHit = i => { hitR.setAttribute('x', ROPES[i] - 75); hitDot.setAttribute('x', ROPES[i] - 10); };
+    aimHit(0);
+    if (T.portrait()) camTo(ROPES[0], 280, 1, 300);
+    const cutRope = async i => {
+      const x = ROPES[i];
+      mouse.parts.teeth.setAttribute('opacity', 1);
+      mouse.body.animate([{ rotate: '0deg' }, { rotate: '6deg' }, { rotate: '-3deg' }, { rotate: '6deg' }, { rotate: '0deg' }], { duration: 380 }); // 오물오물 갉기
+      gnaw(T); T.tone([2600, 2000], .05, { type: 'square', vol: .05, when: .1 });
+      setTimeout(() => sfx('marimba_' + Math.min(8, i + 1), .55), 380); // 줄마다 한 음씩 올라가며 센다
+      const r = ropes[i];
+      r.mid.remove();
+      r.bot.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
+      r.top.animate([{ transform: 'rotate(0)' }, { transform: `rotate(${i % 2 ? 6 : -6}deg)` }], { duration: 400, fill: 'forwards', easing: 'ease-out' });
+      r.top.style.opacity = '.45';
+      T.pop(x, 400, i % 2 ? '톡!' : '사각!', C.bean);
+      cnt.fill(i);
+      const said = Narrator.speak(NUMS[i]).catch(() => { /* 소리 실패는 무시 */ });
+      hRopes.setAttribute('opacity', 1 - (i + 1) / 12);
+      if (i === 2) { lion.parts.paws.animate([{ translate: '0 0' }, { translate: '-10px -40px' }, { translate: '0 0' }], 700); }
+      if (i === 5) { lion.parts.hg.animate([{ rotate: '0deg' }, { rotate: '-8deg' }, { rotate: '8deg' }, { rotate: '0deg' }], 700); }
+      await Promise.all([sleep(700), Promise.race([said, sleep(2500)])]); // 숫자 하나를 다 듣고 나서야 다음 줄을 누를 수 있다
+      mouse.parts.teeth.setAttribute('opacity', 0);
+      if (i < 9) { // 다음 줄로 폴짝 옮겨 가서 기다린다
+        const nx = ROPES[i + 1];
+        if (T.portrait()) camTo(nx, 280, 1, 220); // 세로 화면: 카메라가 생쥐를 따라 옆으로
+        squeak(T, 1500); mouse.hop(20, 220); await mouse.move(nx - 52, 545, 220);
+      }
     };
-    for (let i = 0; i < 10; i++) { cutRope(i); await sleep(250); } // 하나부터 열까지 저절로 (줄마다 숫자를 세며 끊는다)
-    await q;
+    const NET_PROMPT = '톡톡 눌러서 그물을 갉아요!';
+    for (let i = 0; i < 10; i++) {
+      aimHit(i);
+      if (i === 0) await T.ask('생쥐가 작은 이빨로 그물을 갉아요. 톡톡 눌러서 한 줄씩 끊어 봐요!', () => T.tap(hit, { prompt: NET_PROMPT }));
+      else await T.tap(hit, { prompt: NET_PROMPT });
+      await cutRope(i);
+    }
+    hit.remove();
     sfx('party_horn', .6);
     await sleep(500);
     cnt.remove();
