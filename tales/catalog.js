@@ -8,6 +8,7 @@
      also    (선택) 덧붙는 이야기 태그들. 예: ['princess'] = 공주 동화. origin 은 그대로 두고
              필터에서만 함께 잡힌다. 앞으로 공주 동화(라푼젤, 인어공주, 잠자는 숲속의 공주,
              미녀와 야수, 완두콩 공주, 개구리 왕자)는 origin 은 원작 갈래로, also: ['princess'] 를 붙인다.
+             동물이 주인공인 이솝 밖 동화(아기 돼지 삼형제·늑대와 아기 염소·브레멘·미운 아기 오리·곰 세 마리·까치)는 also: ['animal'] → 홈 '동물 이야기' 줄에도 나온다(2026-10-28 사용자 지적).
      skills  배우는 것 태그 1~3개 (TAGS.skill 의 key): count | size | order | sort | spot | sound | shape | season | heart | position(위치말: 위·아래·옆).
              hideUnused: true 인 태그(position)는 그 태그를 가진 동화가 하나도 없으면 칩을 숨긴다.
      line    보호자용 한 줄 소개 (아이는 못 읽어도 된다)
@@ -146,7 +147,7 @@ const TALES = (() => {
       <path d="M130 42 L110 50 L130 46Z" fill="${c.gd}"/><rect x="136" y="48" width="4" height="30" fill="${c.sn}"/></g>` },
 
   /* ───────── 만드는 중 (파일이 생기면 저절로 열린다) ───────── */
-  { id: 'goldilocks', title: '골디락스와 곰 세 마리', origin: 'world', skills: ['size', 'shape', 'heart'], ready: true, read: true, readMin: 6,
+  { id: 'goldilocks', title: '골디락스와 곰 세 마리', origin: 'world', also: ['animal'], skills: ['size', 'shape', 'heart'], ready: true, read: true, readMin: 6,
     line: '큰 그릇은 큰 곰, 작은 의자는 아기 곰. 크기대로 주인을 찾아 줘요.',
     en: { title: 'Goldilocks and the Three Bears', line: 'Big bowl for the big bear, little chair for Baby Bear. Match each one by size.' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
@@ -157,7 +158,7 @@ const TALES = (() => {
       <circle cx="142" cy="46" r="11" fill="${c.am}"/><circle cx="142" cy="50" r="8" fill="${c.sk}"/>${eye(139, 50, 1.4)}
       <path d="M134 58 h16 l4 26 h-24z" fill="${c.lf}"/></g>` },
 
-  { id: 'bremen', title: '브레멘 음악대', origin: 'world', skills: ['sound', 'order', 'size'], ready: true, read: true, readMin: 7,
+  { id: 'bremen', title: '브레멘 음악대', origin: 'world', also: ['animal'], skills: ['sound', 'order', 'size'], ready: true, read: true, readMin: 7,
     line: '소리로 친구를 알아맞히고, 큰 동물부터 차례로 탑을 쌓아요.',
     en: { title: 'The Bremen Town Musicians', line: 'Guess each friend by sound, then stack a tower from the biggest animal up.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/>
@@ -178,7 +179,7 @@ const TALES = (() => {
       <rect x="100" y="54" width="44" height="34" fill="${c.bk}"/><path d="M96 56 L122 36 L148 56Z" fill="${c.rd}"/><rect x="116" y="68" width="12" height="20" fill="${c.am}"/>
       <circle cx="96" cy="20" r="2" fill="#C9D3E2"/><circle cx="140" cy="16" r="2" fill="#C9D3E2"/><circle cx="118" cy="26" r="2" fill="#C9D3E2"/></g>` },
 
-  { id: 'ugly_duckling', title: '미운 아기 오리', origin: 'world', skills: ['heart', 'order'], ready: true, read: true, readMin: 8,
+  { id: 'ugly_duckling', title: '미운 아기 오리', origin: 'world', also: ['animal'], skills: ['heart', 'order'], ready: true, read: true, readMin: 8,
     line: '놀림받던 아기 오리의 마음을 알아주고, 백조로 자라는 순서를 맞춰요.',
     en: { title: 'The Ugly Duckling', line: 'Understand the teased duckling\'s feelings, then put its growing-up steps in order.' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
@@ -188,7 +189,7 @@ const TALES = (() => {
       <path d="M112 44 l8 3 -8 3z" fill="${c.ps}"/>${eye(108, 44, 1.4)}</g>` },
 
   /* ───────── 계획된 동화 (TALES_PLAN_2) ───────── */
-  { id: 'three_pigs', title: '아기 돼지 삼형제', origin: 'world', skills: ['count', 'order', 'size'], ready: true, read: true, readMin: 7,
+  { id: 'three_pigs', title: '아기 돼지 삼형제', origin: 'world', also: ['animal'], skills: ['count', 'order', 'size'], ready: true, read: true, readMin: 7,
     line: '짚 집, 나무 집, 벽돌 집. 벽돌을 톡톡 쌓아 막내 집을 지켜요.',
     en: { title: 'The Three Little Pigs', line: 'A straw house, a wood house, a brick house. Stack the bricks tap by tap to keep the youngest pig safe.' },
     art: `<rect width="160" height="110" fill="${c.cr}"/>
@@ -199,7 +200,7 @@ const TALES = (() => {
       <path d="M114 64 h38 M114 76 h38 M126 52 v12 M140 64 v12 M126 76 v12" stroke="${c.cr}" stroke-width="1.6"/>
       <circle cx="133" cy="94" r="9" fill="${c.ck}"/><ellipse cx="133" cy="97" rx="4" ry="3" fill="#D98888"/></g>` },
 
-  { id: 'wolf_goats', title: '늑대와 일곱 마리 아기 염소', origin: 'world', skills: ['count', 'spot', 'heart'], ready: true, read: true, readMin: 8,
+  { id: 'wolf_goats', title: '늑대와 일곱 마리 아기 염소', origin: 'world', also: ['animal'], skills: ['count', 'spot', 'heart'], ready: true, read: true, readMin: 8,
     line: '시계 안, 이불 밑, 커튼 뒤. 숨은 아기 염소를 하나씩 세며 찾아요.',
     en: { title: 'The Wolf and the Seven Kids', line: 'Behind the clock, under the quilt, inside the laundry: find the hidden little goats one by one.' },
     art: `<rect width="160" height="110" fill="${c.am}"/>
@@ -271,7 +272,7 @@ const TALES = (() => {
       <path d="M100 72 h22 l-3 14 h-16z" fill="${c.gd}"/><path d="M104 72 q7 -10 14 0" stroke="${c.gd}" stroke-width="2.5" fill="none"/>
       <circle cx="20" cy="80" r="5" fill="${c.rd}"/><circle cx="34" cy="84" r="5" fill="${c.am}"/><circle cx="138" cy="82" r="5" fill="${c.sn}"/></g>` },
 
-  { id: 'magpie', title: '은혜 갚은 까치', origin: 'korean', skills: ['sound', 'count', 'heart'], ready: true, read: true, readMin: 8,
+  { id: 'magpie', title: '은혜 갚은 까치', origin: 'korean', also: ['animal'], skills: ['sound', 'count', 'heart'], ready: true, read: true, readMin: 8,
     line: '둥지의 아기 까치는 몇 마리? 숫자를 골라요. 밤에 종을 울려 은혜를 갚는 까치 이야기.',
     en: { title: 'The Grateful Magpie', line: 'How many baby magpies are in the nest? Pick the number. At night the magpies ring the bell to repay a kindness.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/>

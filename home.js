@@ -304,7 +304,7 @@
     { k: 'recent', ko: '최근 본', en: 'Recently played', pick: () => readList(recentKey).map(id => TALES.find(t => t.id === id)).filter(Boolean) },
     { k: 'original', ko: '창작 동화', en: 'Original tales', pick: () => TALES.filter(t => t.origin === 'original') },
     { k: 'princess', ko: '공주', en: 'Princesses', pick: () => TALES.filter(t => (t.also || []).includes('princess')) },
-    { k: 'aesop', ko: '동물 이야기', en: 'Animal tales', pick: () => TALES.filter(t => t.origin === 'aesop') },
+    { k: 'aesop', ko: '동물 이야기', en: 'Animal tales', pick: () => TALES.filter(t => t.origin === 'aesop' || (t.also || []).includes('animal')) },
     { k: 'korean', ko: '우리나라 옛이야기', en: 'Korean tales', pick: () => TALES.filter(t => t.origin === 'korean') },
     { k: 'world', ko: '세계 옛이야기', en: 'World tales', pick: () => TALES.filter(t => t.origin === 'world') }
   ];
