@@ -169,6 +169,7 @@ img.ic { object-fit: contain; -webkit-user-drag: none; }
   color: var(--logo-ink);
   filter: url(#cut);
 }
+.logo .lt:nth-child(-n+3) { color: var(--act); }   /* 로고 조합(docs/LOGO_PLAN.md): '톡톡'은 감빛, '동화극장'은 남색 */
 .lt.gap { margin-left: calc(var(--logo) * .26); }
 .lt.w { margin-right: calc(var(--logo) * .12); }
 

@@ -14,13 +14,13 @@ export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
   host.setAttribute('role', 'dialog');
   host.setAttribute('aria-modal', 'true');
   host.setAttribute('aria-label', en ? 'Tok Tok Tale Theater' : '톡톡 동화극장');
-  host.innerHTML = '<div class="splash-stage" aria-hidden="true"></div><div class="splash-fallback"><span class="splash-book" aria-hidden="true"></span><strong></strong></div><button class="splash-skip" type="button"></button>';
+  host.innerHTML = '<div class="splash-stage" aria-hidden="true"></div><div class="splash-fallback"><strong></strong></div><button class="splash-skip" type="button"></button>';
   const fallbackTitle = host.querySelector('strong');
   if (en) fallbackTitle.textContent = 'Tok Tok Tale Theater';
   else {
     const wordmark = document.createElement('img');
     wordmark.className = 'splash-wordmark';
-    wordmark.src = new URL('../../assets/v3w/sp_wordmark_v1.webp', import.meta.url).href;
+    wordmark.src = new URL('../../assets/v3w/sp_logo_c2_v1.webp', import.meta.url).href;
     wordmark.alt = '톡톡 동화극장';
     fallbackTitle.replaceWith(wordmark);
   }
@@ -63,7 +63,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
     timer = setTimeout(finish, 500);
     return { finish };
   }
-  import('./scene.js?v=20261027letter1').then(async ({ createSplashScene }) => {
+  import('./scene.js?v=20261028c2final1').then(async ({ createSplashScene }) => {
     if (closed) return;
     const building = createSplashScene(host.querySelector('.splash-stage'), {
       lang, signal: abort.signal,

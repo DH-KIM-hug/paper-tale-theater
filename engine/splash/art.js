@@ -1,4 +1,3 @@
-// Artwork bounds: trim transparent padding without copying or changing images.
 export const ART = {
   "rab_rabbit_run_c": {
     "size": [
@@ -96,30 +95,6 @@ export const ART = {
       596
     ]
   },
-  "rab_cloud_small": {
-    "size": [
-      535,
-      311
-    ],
-    "box": [
-      2,
-      2,
-      533,
-      309
-    ]
-  },
-  "rab_sun_small": {
-    "size": [
-      638,
-      631
-    ],
-    "box": [
-      3,
-      3,
-      635,
-      628
-    ]
-  },
   "rp_layer_tree_front": {
     "size": [
       412,
@@ -130,42 +105,6 @@ export const ART = {
       2,
       410,
       598
-    ]
-  },
-  "rp_layer_flowers_front_a": {
-    "size": [
-      849,
-      600
-    ],
-    "box": [
-      3,
-      3,
-      846,
-      597
-    ]
-  },
-  "rp_layer_flower_band_mid": {
-    "size": [
-      900,
-      337
-    ],
-    "box": [
-      3,
-      3,
-      897,
-      334
-    ]
-  },
-  "sb_layer_rose_bush": {
-    "size": [
-      900,
-      497
-    ],
-    "box": [
-      3,
-      4,
-      897,
-      494
     ]
   },
   "cf4_prop_grass_tuft": {
@@ -204,16 +143,16 @@ export const ART = {
       975
     ]
   },
-  "sp_wordmark_v1": {
+  "sp_logo_c2_v1": {
     "size": [
-      1683,
-      935
+      1024,
+      1193
     ],
     "box": [
-      196,
-      45,
-      1497,
-      891
+      146,
+      13,
+      881,
+      1126
     ]
   }
 };

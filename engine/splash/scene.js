@@ -1,7 +1,7 @@
 import * as THREE from './vendor/three.module.js';
-import { ART } from './art.js?v=20261027letter1';
+import { ART } from './art.js?v=20261028c2final1';
 
-export const DURATION = 6.4;
+export const DURATION = 7.4;
 const CREAM = '#F5EFE9';
 const clamp = x => Math.max(0, Math.min(1, x));
 const smooth = x => { x = clamp(x); return x * x * (3 - 2 * x); };
@@ -66,39 +66,12 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     scene.add(key);
     const floor = new THREE.Mesh(
       ownGeometry(new THREE.PlaneGeometry(70, 60)),
-      ownMaterial(new THREE.ShadowMaterial({ color: '#50402f', opacity: .13 }))
+      ownMaterial(new THREE.ShadowMaterial({ color: '#50402f', opacity: .035 }))
     );
     floor.position.z = -.75;
     floor.receiveShadow = true;
     scene.add(floor);
 
-    // Fine paper fibers, deterministic so scrubbing/export never changes the surface.
-    const canvas = document.createElement('canvas');
-    canvas.width = canvas.height = 128;
-    const context = canvas.getContext('2d');
-    const pixels = context.createImageData(128, 128);
-    let seed = 937;
-    for (let i = 0; i < pixels.data.length; i += 4) {
-      seed = (seed * 16807) % 2147483647;
-      const v = 235 + seed % 20;
-      pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = v;
-      pixels.data[i + 3] = 255;
-    }
-    context.putImageData(pixels, 0, 0);
-    const grain = ownTexture(new THREE.CanvasTexture(canvas));
-    grain.colorSpace = THREE.SRGBColorSpace;
-    grain.wrapS = grain.wrapT = THREE.RepeatWrapping;
-    grain.repeat.set(4, 3);
-
-    function paper(shape, color, depth = .035, texture = grain) {
-      const mesh = new THREE.Mesh(
-        ownGeometry(new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: false, curveSegments: 40 })),
-        ownMaterial(new THREE.MeshStandardMaterial({ color, map: texture, roughness: 1, side: THREE.DoubleSide }))
-      );
-      mesh.castShadow = mesh.receiveShadow = true;
-      return mesh;
-    }
-    function shapeFrom(draw) { const s = new THREE.Shape(); draw(s); return s; }
     // Newly illustrated transparent ground, shared at its natural aspect ratio.
     function ground(width) {
       const { box: [l, t, r, b] } = ART.sp_ground_meadow_v1;
@@ -108,13 +81,13 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     }
     const loader = new THREE.TextureLoader();
     // All loads settle before cleanup, including the failed-load/early-skip path.
-    const results = await Promise.allSettled(Object.keys(ART).filter(name => name !== 'sp_wordmark_v1' || lang !== 'en').map(async name => {
+    const results = await Promise.allSettled(Object.keys(ART).filter(name => name !== 'sp_logo_c2_v1' || lang !== 'en').map(async name => {
       const map = await loader.loadAsync(artURL(name));
       if (disposed) { map.dispose(); return null; }
       ownTexture(map);
       // The originals remain untouched. A bounded GPU copy is enough for these small paper actors.
       const image = map.image;
-      const edge = name === 'sp_ground_meadow_v1' || name === 'sp_wordmark_v1' ? 1536 : name === 'sp_castle_v1' ? 1024 : 768;
+      const edge = name === 'sp_ground_meadow_v1' || name === 'sp_logo_c2_v1' ? 1536 : name === 'sp_castle_v1' ? 1024 : 768;
       const scale = Math.min(1, edge / Math.max(image.width, image.height));
       if (scale < 1) {
         const reduced = document.createElement('canvas');
@@ -148,7 +121,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       return mesh;
     }
     const animated = [];
-    function place(group, mesh, x, y, z, start, { tilt = 0, from = 'top', drop = 7 } = {}) {
+    function place(group, mesh, x, y, z, start, { tilt = 0, from = 'top', drop = 1.1 } = {}) {
       const pivot = new THREE.Group();
       pivot.add(mesh);
       group.add(pivot);
@@ -157,51 +130,33 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     }
 
     // No enclosure, no frame: the landscape itself is the falling paper.
-    const common = new THREE.Group(), forest = new THREE.Group(), garden = new THREE.Group();
-    world.add(common, forest, garden);
-    const cloud = place(common, cutout('rab_cloud_small', .85), -3.6, 2.5, -.3, .08, { tilt: -.12 });
-    place(common, cutout('rab_sun_small', 1.25), 3.55, 2.6, -.3, .2, { tilt: .18 });
-    place(common, cutout('rab_cloud_small', .55), 4.8, 1.6, -.1, .42, { tilt: -.1 });
-
-    const hillFar = paper(shapeFrom(s => {
-      s.moveTo(-5.9, -1.9);
-      s.bezierCurveTo(-6.2, -1, -4.4, 1.2, -2.3, .5);
-      s.bezierCurveTo(-.7, .05, .1, .7, 1.7, .7);
-      s.bezierCurveTo(4.6, .8, 6.1, -.8, 5.9, -1.9);
-      s.bezierCurveTo(3.7, -2.8, -4, -2.8, -5.9, -1.9);
-    }), '#bbce9a');
-    place(forest, hillFar, 0, -.25, -.2, .05, { tilt: -.075 });
+    const landscape = new THREE.Group(), foliage = new THREE.Group(), forest = new THREE.Group(), garden = new THREE.Group();
+    world.add(landscape, foliage, forest, garden);
     const meadow = ground(11.3);
-    place(forest, meadow, 0, -1.55, .05, .25, { tilt: .06 });
-    const tree = place(forest, cutout('rp_layer_tree_front', 4.4), -4.45, .6, .2, .38, { tilt: -.12 });
-    place(forest, cutout('rab_layer_flower_bush_front', 1.2), -3.7, -1.7, .65, .65, { tilt: -.07 });
-    place(forest, cutout('rab_layer_grass_front', 1), 4.6, -1.7, .65, .72, { tilt: .09 });
-    place(forest, cutout('cf4_prop_grass_tuft', .32), -2.25, -2.27, .7, .76, { tilt: -.04 });
-    place(forest, cutout('cf4_prop_grass_tuft', .4), 3.35, -2.15, .7, .81, { tilt: .05 });
+    place(landscape, meadow, 0, -1.55, .05, .12, { tilt: .015, drop: .45 });
+    place(forest, cutout('rp_layer_tree_front', 4.4), -4.45, .6, .2, .25, { tilt: -.025, drop: 1.4 });
+    place(foliage, cutout('rab_layer_flower_bush_front', 1.2), -3.7, -1.7, .65, .38, { tilt: -.02, drop: .5 });
+    place(foliage, cutout('rab_layer_grass_front', 1), 4.6, -1.7, .65, .45, { tilt: .02, drop: .5 });
+    place(landscape, cutout('cf4_prop_grass_tuft', .32), -2.25, -2.27, .7, .76, { tilt: -.04 });
+    place(landscape, cutout('cf4_prop_grass_tuft', .4), 3.35, -2.15, .7, .81, { tilt: .05 });
     const rabbit = cutout('rab_rabbit_run_c', 2.35);
     forest.add(rabbit);
     const turtle = cutout('rab_turtle_walk', 1.55);
     forest.add(turtle);
 
-    // A paper castle garden, built around existing tower/flower/character cutouts.
-    const lawn = ground(11.4);
-    place(garden, lawn, 0, -1.65, .03, 2.65, { tilt: -.06 });
+    // A castle and three actors share the existing paper stage.
+    // Keep the same stage floor and foreground foliage through both stories.
     // A complete newly illustrated paper castle replaces the block wall and reused towers.
     const palace = cutout('sp_castle_v1', 4.9);
-    place(garden, palace, 0, .8, -.2, 2.6, { tilt: .055 });
-    place(garden, cutout('cf4_prop_grass_tuft', .34), -1.25, -2.29, .91, 3.1, { tilt: -.04 });
-    place(garden, cutout('cf4_prop_grass_tuft', .3), 2.7, -2.08, .91, 3.2, { tilt: .04 });
+    place(garden, palace, 0, .8, .15, 2.65, { tilt: .015, drop: .8 });
     const princesses = new THREE.Group();
     garden.add(princesses);
     const princessArt = [cutout('cd2_cind_gown', 3.2), cutout('sw_snow_stand', 3.2), cutout('sb_pr_wave', 3.2)];
     princessArt.forEach((mesh, i) => {
-      place(princesses, mesh, (i - 1) * 2.2, -.12, .36 + i * .03, 3.04 + i * .13, { from: 'bottom', drop: 1.6, tilt: (1 - i) * .035 });
+      place(princesses, mesh, (i - 1) * 2.2, -.12, .36 + i * .03, 3.04 + i * .13, { from: 'bottom', drop: .6, tilt: (1 - i) * .035 });
     });
-    const roseL = place(garden, cutout('sb_layer_rose_bush', 1.1), -4.05, -1.65, .9, 2.98, { tilt: -.08 });
-    const roseR = place(garden, cutout('rp_layer_flowers_front_a', 1.25), 4.1, -1.65, .9, 3.08, { tilt: .08 });
-    const flowerBand = place(garden, cutout('rp_layer_flower_band_mid', .9), 0, -2.15, .82, 3.17, { tilt: -.035 });
 
-    // Final title is an open composition, not another card arriving in front of the story.
+    // Complete symbol + wordmark lockup, presented alone at the end.
     // Korean is a custom-drawn asset, independent of font loading. Keep the English title local.
     if (lang === 'en') await Promise.race([document.fonts.load('750 90px "Pretendard Local"'), new Promise(resolve => setTimeout(resolve, 700))]);
     if (disposed) throw new DOMException('Aborted', 'AbortError');
@@ -224,35 +179,21 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       title = textPiece('Tale Theater', 155, '#65513F', 7.4);
       title.position.set(0, -.18, 1.02); logo.add(title);
     } else {
-      const { box: [l, t, r, b] } = ART.sp_wordmark_v1;
-      wordmark = cutout('sp_wordmark_v1', 5.2 * (b - t) / (r - l));
+      wordmark = cutout('sp_logo_c2_v1', 4.6);
       wordmark.material.depthWrite = false;
       wordmark.castShadow = false;
       wordmark.position.set(0, .85, 1.02); logo.add(wordmark);
     }
     const titlePieces = wordmark ? [wordmark] : [tok, title];
-    const book = new THREE.Group(); logo.add(book); book.position.set(0, 2.25, .95);
-    const pageL = paper(shapeFrom(s => { s.moveTo(-.65, .17); s.quadraticCurveTo(-.25, .23, 0, .04); s.lineTo(0, -.3); s.quadraticCurveTo(-.3, -.1, -.65, -.16); s.closePath(); }), '#8fa67d');
-    const pageR = paper(shapeFrom(s => { s.moveTo(.65, .17); s.quadraticCurveTo(.25, .23, 0, .04); s.lineTo(0, -.3); s.quadraticCurveTo(.3, -.1, .65, -.16); s.closePath(); }), '#dbbc80');
-    book.add(pageL, pageR);
-    const finalRabbit = cutout('rab_rabbit_congrats_c', 1.55);
-    finalRabbit.position.set(-2.2, -1.75, .28); finalRabbit.scale.x = -1; logo.add(finalRabbit);
-    const finalTurtle = cutout('rab_turtle_walk', 1.05);
-    finalTurtle.position.set(2.1, -1.9, .28); finalTurtle.scale.x = -1; logo.add(finalTurtle);
-    const footerFlowerL = cutout('rp_layer_flowers_front_a', .9);
-    const footerFlowerR = cutout('rab_layer_grass_front', .85);
-    footerFlowerL.position.set(-3.9, -2, .3); footerFlowerR.position.set(3.9, -2, .3);
-    logo.add(footerFlowerL, footerFlowerR);
-    // Two small pieces of grass under the friends leave the title's center open.
-    const finalMeadow = new THREE.Group();
-    const rabbitGrass = ground(2.5);
-    rabbitGrass.position.set(-2.2, -.18, 0);
-    const turtleGrass = ground(2.3);
-    turtleGrass.position.set(2.1, -.07, 0);
-    finalMeadow.add(rabbitGrass, turtleGrass);
-    finalMeadow.position.set(0, -2.34, .06); logo.add(finalMeadow);
-
-    const gardenPieces = animated.filter(a => a.pivot.parent === garden);
+    const friends = new THREE.Group(); world.add(friends);
+    const finalRabbit = cutout('rab_rabbit_congrats_c', 1.45);
+    finalRabbit.position.set(-3.65, -2.08, .6); finalRabbit.scale.x = -1;
+    const finalTurtle = cutout('rab_turtle_walk', 1);
+    finalTurtle.position.set(3.65, -2.3, .6); finalTurtle.scale.x = -1;
+    friends.add(finalRabbit, finalTurtle);
+    // One persistent stage; only the cast and scenery change.
+    const forestMeshes = [];
+    forest.traverse(o => { if (o.isMesh) forestMeshes.push(o); });
     let width = 1, height = 1;
     function renderAt(time) {
       if (disposed) return;
@@ -261,6 +202,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       const portrait = camera.aspect < 1;
       const change = smooth((t - 2.55) / .9);
       const finish = smooth((t - 4.55) / 1.0);
+      const clearStage = smooth((t - 5.7) / .65);
       for (const a of animated) {
         const p = out((t - a.start) / (a.from === 'bottom' ? .55 : .85));
         a.pivot.visible = t >= a.start;
@@ -274,9 +216,15 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
         }
       }
       forest.visible = t < 3.45;
-      forest.position.set(-12 * change, -.2 * change, 0);
-      forest.rotation.z = .055 * change;
-      // The rabbit joins the slower turtle, then the whole forest clears to the left.
+      forest.position.set(-1.4 * change, 0, 0);
+      for (const mesh of forestMeshes) { mesh.material.opacity = 1 - change; mesh.castShadow = change < .4; }
+      forest.rotation.z = 0;
+      landscape.visible = true;
+      landscape.scale.setScalar(mix(1, .85, finish));
+      landscape.position.y = -.75 * finish;
+      foliage.scale.setScalar(mix(1, .85, finish));
+      foliage.position.y = -.75 * finish;
+      // The rabbit joins the slower turtle, then the forest gently dissolves.
       const run = smooth((t - .88) / 1.2);
       rabbit.visible = t >= .88;
       rabbit.position.set(mix(-6.7, -.85, run), -1.05 + .18 * Math.sin(Math.PI * clamp((t - .88) / .5)) + .12 * Math.sin(Math.PI * clamp((t - 1.45) / .5)), .5);
@@ -285,44 +233,38 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       turtle.visible = t >= .95;
       turtle.position.set(mix(3.7, 1.95, walk), -1.42 + .025 * Math.sin(walk * Math.PI * 4), .55);
       turtle.scale.x = -1;
-      garden.visible = t >= 2.6 && finish < 1;
-      garden.position.set(0, 0, 0);
-      // After the greeting, the garden splits around the open title instead of being covered by a plaque.
-      for (const a of gardenPieces) {
-        const direction = a.x === 0 ? (a.pivot === flowerBand ? -1 : 1) : Math.sign(a.x);
-        a.pivot.position.x += direction * 10 * finish;
-        a.pivot.rotation.z += direction * finish * .08;
+      garden.visible = t >= 2.65;
+      // First frame the logo with the miniature stage, then leave the logo alone.
+      garden.scale.setScalar(mix(1, .53, finish));
+      garden.position.set(0, -2.05 * finish, 0);
+      for (const group of [landscape, foliage, garden]) {
+        group.visible = (group !== garden || t >= 2.65) && clearStage < 1;
+        group.traverse(mesh => {
+          if (!mesh.isMesh) return;
+          const arrival = mesh.parent.parent === princesses ? smooth((t - (3.04 + princessArt.indexOf(mesh) * .13)) / .2) : 1;
+          mesh.material.opacity = arrival * (1 - clearStage);
+          mesh.castShadow = clearStage < .4;
+        });
       }
-      princesses.position.y = -6 * finish;
-      princesses.rotation.z = -.03 * finish;
-      floor.position.z = mix(-.75, -.04, finish);
-      common.position.y = (portrait ? 1.5 : 0) - finish * .25;
-      common.scale.setScalar(1 - .2 * finish);
-      cloud.rotation.z = Math.sin(t * .7) * .018;
+      floor.position.z = -.75;
       logo.visible = t >= 4.85;
-      const reveal = smooth((t - 4.85) / .95);
-      logo.position.y = -.3 * (1 - reveal);
-      logo.scale.setScalar((.94 + .06 * reveal) * (portrait ? 1.22 : 1));
-      if (wordmark) wordmark.position.y = portrait ? .65 : .85;
+      const reveal = smooth((t - 4.85) / .65);
+      logo.position.y = mix(1.6, .2, clearStage) - .12 * (1 - reveal);
+      logo.scale.setScalar(mix(.78, 1, clearStage) * (.985 + .015 * reveal));
+      if (wordmark) wordmark.position.y = 0;
       else {
-        tok.position.y = portrait ? 1.2 : 1;
-        title.position.y = portrait ? -.05 : -.18;
+        tok.position.y = .6;
+        title.position.y = -.6;
       }
-      book.position.y = portrait ? (wordmark ? 3.2 : 3) : wordmark ? 3.05 : 2.25;
-      finalRabbit.position.y = portrait ? -2.4 : -1.75;
-      finalTurtle.position.y = portrait ? -2.55 : -1.9;
-      footerFlowerL.position.y = footerFlowerR.position.y = portrait ? -2.65 : -2;
-      finalMeadow.position.y = portrait ? -3 : -2.34;
-      finalMeadow.scale.setScalar(reveal);
       for (const mesh of titlePieces) mesh.material.opacity = reveal;
-      book.scale.setScalar(reveal);
-      for (const mesh of [finalRabbit, finalTurtle, footerFlowerL, footerFlowerR]) {
-        mesh.material.opacity = reveal;
-        mesh.visible = reveal > 0;
+      friends.visible = reveal > 0 && clearStage < 1;
+      for (const mesh of [finalRabbit, finalTurtle]) {
+        mesh.material.opacity = reveal * (1 - clearStage);
+        mesh.castShadow = reveal > .6 && clearStage < .4;
       }
       // Slight parallax while the paper is assembling; a still, readable finish.
-      const view = 1 - smooth(t / 2.7);
-      camera.position.set(view * 1.8, view * 1.1 + .2, 20);
+      const view = 1 - smooth(t / 1.8);
+      camera.position.set(view * .35, view * .2 + .2, 20);
       camera.lookAt(0, .15, 0);
       renderer.render(scene, camera);
     }
@@ -335,7 +277,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       camera.aspect = width / height;
       const portrait = camera.aspect < 1;
       // Keep paper, faces and the title inside a central safe area on phone and iPad.
-      const halfHeight = portrait ? Math.max(6.2, 6.55 / camera.aspect) : 5.3;
+      const halfHeight = portrait ? Math.max(5.8, 5.6 / camera.aspect) : 5.3;
       camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(halfHeight / 20));
       camera.updateProjectionMatrix();
       if (draw) renderAt(current);

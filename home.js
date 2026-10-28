@@ -138,7 +138,7 @@
   /* ── 그림 딱지: 글자 없이 그림으로 (잠김 = 자물쇠, 이번 주 무료 = 별, 만드는 중 = 가위). 생성 그림 assets/ui/badge_<kind>.webp 가
      ui.js 의 UI_ART 에 올라오면 그것을 쓰고, 그 전에는 작은 기호(코드)로 대신한다 ── */
   const UIA = new Set(window.UI_ART || []);
-  const uiImg = (key, cls = '') => `<img class="ui ${cls}" src="assets/ui/${key}.webp" alt="" aria-hidden="true" draggable="false" decoding="async">`;
+  const uiImg = (key, cls = '') => `<img class="ui ${cls}" src="assets/ui/${key}.webp${key === 'logo_mark' ? '?v=moon1' : ''}" alt="" aria-hidden="true" draggable="false" decoding="async">`;
   const BADGE_SVG = {
     lock: '<svg viewBox="0 0 48 56"><path d="M13 24v-7a11 11 0 0 1 22 0v7" fill="none" stroke="#5C6784" stroke-width="5" stroke-linecap="round"/><rect x="6" y="22" width="36" height="28" rx="5" fill="#5C6784"/><circle cx="24" cy="35" r="4" fill="#F5EFE9"/><rect x="22" y="35" width="4" height="9" rx="2" fill="#F5EFE9"/></svg>',
     week: '<svg viewBox="0 0 48 48"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z" fill="#C98A5B"/></svg>',
@@ -1485,7 +1485,7 @@
     const key = 'tab_' + b.dataset.tab, hole = b.querySelector('.hole');
     if (!(window.UI_ART || []).includes(key)) return;
     hole.classList.add('art');
-    hole.insertAdjacentHTML('afterbegin', `<img class="tab-art" src="assets/ui/${key}.webp" alt="" aria-hidden="true" draggable="false">`);
+    hole.insertAdjacentHTML('afterbegin', `<img class="tab-art" src="assets/ui/${key}.webp${key === 'logo_mark' ? '?v=moon1' : ''}" alt="" aria-hidden="true" draggable="false">`);
   });
   /* 빈 상태·잠자리 머리 그림(assets/ui/empty_shelf · empty_night · night_head .webp)도 UI_ART 에 올라오면 그림으로 */
   [['#empty .empty-pic', 'empty_shelf'], ['#nightEmpty .empty-pic', 'empty_night'], ['#pzEmpty .empty-pic', 'empty_stickers'], ['#nHole', 'night_head']].forEach(([sel, key]) => {
@@ -1516,13 +1516,13 @@
     if (lang === 'en') title.textContent = 'Tok Tok Tale Theater';
     else {
       title.className = 'splash-wordmark';
-      title.src = 'assets/v3w/sp_logo_v1.webp';
+      title.src = 'assets/v3w/sp_logo_c2_v1.webp';
       title.alt = '톡톡 동화극장';
     }
     fallback.append(title); sp.append(fallback);
     sp.addEventListener('pointerdown', complete);
     pending = setTimeout(complete, 2500);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
-    import('./engine/splash/start.js?v=20261028logo5')
+    import('./engine/splash/start.js?v=20261028c2final1')
       .then(({ startSplash }) => {
         if (finished) return;
         clearTimeout(pending);
