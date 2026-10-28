@@ -17,71 +17,71 @@ const NARRATION_CLIPS = {
  "위치말": "audio/el/home/nar_b5e2d9ec67.mp3",
  "이야기 전체": "audio/el/home/nar_98671a6390.mp3",
  "배우는 것 전체": "audio/el/home/nar_af10150d2c.mp3",
- "모든 동화가 열렸어요!": "audio/el/home/nar_db9e858c5c.mp3",
+ "모든 동화가 열렸어요!": "audio/el/home/nar_b7fbad7573.mp3",
  "자동 재생": "audio/el/home/nar_871b7f4a38.mp3",
- "읽어 주기": "audio/el/home/nar_e80ac40513.mp3",
- "팥죽할멈과 호랑이": "audio/el/home/nar_ee3ff7bca7.mp3",
- "팥죽할멈과 호랑이. 곧 열려요.": "audio/el/home/nar_815dc46b31.mp3",
- "황소와 개구리": "audio/el/home/nar_bb78391d04.mp3",
- "황소와 개구리. 곧 열려요.": "audio/el/home/nar_880dd33409.mp3",
- "토끼와 거북이": "audio/el/home/nar_fb661f9937.mp3",
- "토끼와 거북이. 곧 열려요.": "audio/el/home/nar_c2c70bae2e.mp3",
- "해와 달이 된 오누이": "audio/el/home/nar_8819176214.mp3",
- "해와 달이 된 오누이. 곧 열려요.": "audio/el/home/nar_578a18b4aa.mp3",
- "해와 바람": "audio/el/home/nar_5efbd7d5ae.mp3",
- "해와 바람. 곧 열려요.": "audio/el/home/nar_2974940434.mp3",
- "커다란 순무": "audio/el/home/nar_71861ffb02.mp3",
- "커다란 순무. 곧 열려요.": "audio/el/home/nar_07767e8999.mp3",
- "사자와 생쥐": "audio/el/home/nar_f5e21678ea.mp3",
- "사자와 생쥐. 곧 열려요.": "audio/el/home/nar_cee229948a.mp3",
- "여우와 두루미": "audio/el/home/nar_1b0a15bdba.mp3",
- "여우와 두루미. 곧 열려요.": "audio/el/home/nar_13daf2846a.mp3",
- "골디락스와 곰 세 마리": "audio/el/home/nar_c890775060.mp3",
- "골디락스와 곰 세 마리. 곧 열려요.": "audio/el/home/nar_77111b5ca8.mp3",
- "브레멘 음악대": "audio/el/home/nar_69c95cb973.mp3",
- "브레멘 음악대. 곧 열려요.": "audio/el/home/nar_2276b6c496.mp3",
- "개미와 베짱이": "audio/el/home/nar_e20406fb67.mp3",
- "개미와 베짱이. 곧 열려요.": "audio/el/home/nar_f3c4a3ab84.mp3",
- "미운 아기 오리": "audio/el/home/nar_a1fb80502b.mp3",
- "미운 아기 오리. 곧 열려요.": "audio/el/home/nar_c23ce1cdec.mp3",
- "아기 돼지 삼형제": "audio/el/home/nar_6c60e2e7a2.mp3",
- "아기 돼지 삼형제. 곧 열려요.": "audio/el/home/nar_4e47a1bedf.mp3",
- "늑대와 일곱 마리 아기 염소": "audio/el/home/nar_f26ca529f0.mp3",
- "늑대와 일곱 마리 아기 염소. 곧 열려요.": "audio/el/home/nar_e41c187cf4.mp3",
- "콩쥐 팥쥐": "audio/el/home/nar_2abbbe8686.mp3",
- "콩쥐 팥쥐. 곧 열려요.": "audio/el/home/nar_0c11fdacab.mp3",
- "구름 공장": "audio/el/home/nar_e3a9281fb0.mp3",
- "구름 공장. 곧 열려요.": "audio/el/home/nar_2e29eb39c3.mp3",
- "헨젤과 그레텔": "audio/el/home/nar_d8368592c6.mp3",
- "헨젤과 그레텔. 곧 열려요.": "audio/el/home/nar_5e81f860a0.mp3",
- "신데렐라": "audio/el/home/nar_dbef3b430b.mp3",
- "신데렐라. 곧 열려요.": "audio/el/home/nar_4b75886940.mp3",
- "흥부와 놀부": "audio/el/home/nar_3789143b17.mp3",
- "흥부와 놀부. 곧 열려요.": "audio/el/home/nar_d06c00996e.mp3",
- "빨간 모자": "audio/el/home/nar_da0e4165f6.mp3",
- "빨간 모자. 곧 열려요.": "audio/el/home/nar_2a0db5b11d.mp3",
- "은혜 갚은 까치": "audio/el/home/nar_67cc72e9df.mp3",
- "은혜 갚은 까치. 곧 열려요.": "audio/el/home/nar_9a30bad121.mp3",
- "요술 항아리": "audio/el/home/nar_7ff7a922f1.mp3",
- "요술 항아리. 곧 열려요.": "audio/el/home/nar_8407ebb7a9.mp3",
- "백설공주": "audio/el/home/nar_b3ff6e8cd5.mp3",
- "백설공주. 곧 열려요.": "audio/el/home/nar_25e2307af4.mp3",
- "인어공주": "audio/el/home/nar_20847659b4.mp3",
- "인어공주. 곧 열려요.": "audio/el/home/nar_2da69738e0.mp3",
- "미녀와 야수": "audio/el/home/nar_e5175d9342.mp3",
- "미녀와 야수. 곧 열려요.": "audio/el/home/nar_a89978e218.mp3",
- "나의 빨간 자동차": "audio/el/home/nar_ecb7ff6686.mp3",
- "나의 빨간 자동차. 곧 열려요.": "audio/el/home/nar_43df849061.mp3",
- "유니콘을 찾아서": "audio/el/home/nar_b1c3d5510c.mp3",
- "유니콘을 찾아서. 곧 열려요.": "audio/el/home/nar_143d465ec2.mp3",
- "완두콩 공주": "audio/el/home/nar_ecc7aaba23.mp3",
- "완두콩 공주. 곧 열려요.": "audio/el/home/nar_9197f4aae8.mp3",
- "라푼젤": "audio/el/home/nar_6606842cd1.mp3",
- "라푼젤. 곧 열려요.": "audio/el/home/nar_b81b72917d.mp3",
- "개구리 왕자": "audio/el/home/nar_12a3891edf.mp3",
- "개구리 왕자. 곧 열려요.": "audio/el/home/nar_657c957fbf.mp3",
- "잠자는 숲속의 공주": "audio/el/home/nar_d9c3d73aa9.mp3",
- "잠자는 숲속의 공주. 곧 열려요.": "audio/el/home/nar_8c3d9e162d.mp3",
+ "읽어 주기": "audio/el/home/nar_f7c2bd56a7.mp3",
+ "팥죽할멈과 호랑이": "audio/el/home/nar_7b4471807c.mp3",
+ "팥죽할멈과 호랑이. 곧 열려요.": "audio/el/home/nar_0aaa2b55cf.mp3",
+ "황소와 개구리": "audio/el/home/nar_b9970e8996.mp3",
+ "황소와 개구리. 곧 열려요.": "audio/el/home/nar_6b6b8957ff.mp3",
+ "토끼와 거북이": "audio/el/home/nar_a2dae5cf76.mp3",
+ "토끼와 거북이. 곧 열려요.": "audio/el/home/nar_f35be5e144.mp3",
+ "해와 달이 된 오누이": "audio/el/home/nar_32f54cce0b.mp3",
+ "해와 달이 된 오누이. 곧 열려요.": "audio/el/home/nar_c88aad969e.mp3",
+ "해와 바람": "audio/el/home/nar_0439ec72fa.mp3",
+ "해와 바람. 곧 열려요.": "audio/el/home/nar_20582c5cc5.mp3",
+ "커다란 순무": "audio/el/home/nar_0202424301.mp3",
+ "커다란 순무. 곧 열려요.": "audio/el/home/nar_580a3a6c78.mp3",
+ "사자와 생쥐": "audio/el/home/nar_94b53d8317.mp3",
+ "사자와 생쥐. 곧 열려요.": "audio/el/home/nar_4476797f21.mp3",
+ "여우와 두루미": "audio/el/home/nar_fd32ace0aa.mp3",
+ "여우와 두루미. 곧 열려요.": "audio/el/home/nar_38f89e935f.mp3",
+ "골디락스와 곰 세 마리": "audio/el/home/nar_67b6d37647.mp3",
+ "골디락스와 곰 세 마리. 곧 열려요.": "audio/el/home/nar_22f8c96f84.mp3",
+ "브레멘 음악대": "audio/el/home/nar_6ae2e0ad8e.mp3",
+ "브레멘 음악대. 곧 열려요.": "audio/el/home/nar_47de18c0f1.mp3",
+ "개미와 베짱이": "audio/el/home/nar_3d360435ad.mp3",
+ "개미와 베짱이. 곧 열려요.": "audio/el/home/nar_da23773828.mp3",
+ "미운 아기 오리": "audio/el/home/nar_350703d064.mp3",
+ "미운 아기 오리. 곧 열려요.": "audio/el/home/nar_ce9eecd422.mp3",
+ "아기 돼지 삼형제": "audio/el/home/nar_c81eb098f3.mp3",
+ "아기 돼지 삼형제. 곧 열려요.": "audio/el/home/nar_1a43db9f72.mp3",
+ "늑대와 일곱 마리 아기 염소": "audio/el/home/nar_bd30d7ee75.mp3",
+ "늑대와 일곱 마리 아기 염소. 곧 열려요.": "audio/el/home/nar_5bfa3f7d0a.mp3",
+ "콩쥐 팥쥐": "audio/el/home/nar_a5f6983dbb.mp3",
+ "콩쥐 팥쥐. 곧 열려요.": "audio/el/home/nar_b023c02285.mp3",
+ "구름 공장": "audio/el/home/nar_c6bba72ac3.mp3",
+ "구름 공장. 곧 열려요.": "audio/el/home/nar_c58e104ef6.mp3",
+ "헨젤과 그레텔": "audio/el/home/nar_960d7b3d73.mp3",
+ "헨젤과 그레텔. 곧 열려요.": "audio/el/home/nar_baa1af05c2.mp3",
+ "신데렐라": "audio/el/home/nar_d820210cad.mp3",
+ "신데렐라. 곧 열려요.": "audio/el/home/nar_4251f2f4d5.mp3",
+ "흥부와 놀부": "audio/el/home/nar_e7e88bb961.mp3",
+ "흥부와 놀부. 곧 열려요.": "audio/el/home/nar_811af6e6a6.mp3",
+ "빨간 모자": "audio/el/home/nar_bad71ff170.mp3",
+ "빨간 모자. 곧 열려요.": "audio/el/home/nar_1e282e1bab.mp3",
+ "은혜 갚은 까치": "audio/el/home/nar_be06e4c3c1.mp3",
+ "은혜 갚은 까치. 곧 열려요.": "audio/el/home/nar_d1435acafc.mp3",
+ "요술 항아리": "audio/el/home/nar_12a844fd8e.mp3",
+ "요술 항아리. 곧 열려요.": "audio/el/home/nar_6ab3a495dd.mp3",
+ "백설공주": "audio/el/home/nar_1a8136104f.mp3",
+ "백설공주. 곧 열려요.": "audio/el/home/nar_d7a4b77b1d.mp3",
+ "인어공주": "audio/el/home/nar_0b28c014f8.mp3",
+ "인어공주. 곧 열려요.": "audio/el/home/nar_321c063171.mp3",
+ "미녀와 야수": "audio/el/home/nar_8c3cbe483d.mp3",
+ "미녀와 야수. 곧 열려요.": "audio/el/home/nar_2976761e01.mp3",
+ "나의 빨간 자동차": "audio/el/home/nar_521c43c3f9.mp3",
+ "나의 빨간 자동차. 곧 열려요.": "audio/el/home/nar_8adaef1422.mp3",
+ "유니콘을 찾아서": "audio/el/home/nar_8b719f87b4.mp3",
+ "유니콘을 찾아서. 곧 열려요.": "audio/el/home/nar_f85eb03759.mp3",
+ "완두콩 공주": "audio/el/home/nar_9a7e18ae05.mp3",
+ "완두콩 공주. 곧 열려요.": "audio/el/home/nar_55683a119d.mp3",
+ "라푼젤": "audio/el/home/nar_c9b63d33c9.mp3",
+ "라푼젤. 곧 열려요.": "audio/el/home/nar_bc4b8999da.mp3",
+ "개구리 왕자": "audio/el/home/nar_10bfdfcac7.mp3",
+ "개구리 왕자. 곧 열려요.": "audio/el/home/nar_f1ba9520f9.mp3",
+ "잠자는 숲속의 공주": "audio/el/home/nar_93bb24a012.mp3",
+ "잠자는 숲속의 공주. 곧 열려요.": "audio/el/home/nar_49f352ffca.mp3",
  "콩쥐팥쥐": "audio/el/home/nar_d94d40abb6.mp3",
  "할머니(만세)": "audio/el/home/nar_c651827492.mp3",
  "호랑이(서기)": "audio/el/home/nar_c29bdc2183.mp3",
@@ -290,80 +290,80 @@ const NARRATION_CLIPS = {
  "우리 옛이야기": "audio/el/home/nar_acec84f351.mp3",
  "이솝 동물 친구": "audio/el/home/nar_24783ede1c.mp3",
  "세계 명작": "audio/el/home/nar_47e24dde4c.mp3",
- "동화 놀이": "audio/el/home/nar_5ce0485b4f.mp3",
- "스티커북": "audio/el/home/nar_a492b91abc.mp3",
- "스티커북. 동화를 끝까지 하면 스티커가 생겨요": "audio/el/home/nar_ffe4c8326c.mp3",
- "이 조합의 이야기는 아직 없어요": "audio/el/home/nar_dc555a9dd3.mp3",
- "이 동화는 잠겨 있어요. 어른과 함께 열어요.": "audio/el/home/nar_6ad4df43ff.mp3",
+ "동화 놀이": "audio/el/home/nar_d40f3ad262.mp3",
+ "스티커북": "audio/el/home/nar_dda26a3efc.mp3",
+ "스티커북. 동화를 끝까지 하면 스티커가 생겨요": "audio/el/home/nar_d9274f2685.mp3",
+ "이 조합의 이야기는 아직 없어요": "audio/el/home/nar_f6a0ed9dcd.mp3",
+ "이 동화는 잠겨 있어요. 어른과 함께 열어요.": "audio/el/home/nar_20c6e9601c.mp3",
  "퍼즐": "audio/el/home/nar_4c637e4eeb.mp3",
  "스티커": "audio/el/home/nar_a7ebc52b85.mp3",
- "공주 퍼즐을 다 모았어요!": "audio/el/home/nar_fd535c6b94.mp3",
- "우리 옛이야기를 다 모았어요!": "audio/el/home/nar_47679a6e48.mp3",
- "이솝 동물 친구를 다 모았어요!": "audio/el/home/nar_9865f743ad.mp3",
- "세계 명작을 다 모았어요!": "audio/el/home/nar_0cf1bbdf8c.mp3",
- "창작 동화를 다 모았어요!": "audio/el/home/nar_25ff62bd02.mp3",
- "팥죽할멈과 호랑이 이야기가 열렸어요!": "audio/el/home/nar_4734c6f395.mp3",
- "팥죽할멈과 호랑이 친구들을 다 모았어요!": "audio/el/home/nar_44cd634e1d.mp3",
- "황소와 개구리 이야기가 열렸어요!": "audio/el/home/nar_0ae6db6f47.mp3",
- "황소와 개구리 친구들을 다 모았어요!": "audio/el/home/nar_91a7a8910d.mp3",
- "토끼와 거북이 이야기가 열렸어요!": "audio/el/home/nar_bc01c8713c.mp3",
- "토끼와 거북이 친구들을 다 모았어요!": "audio/el/home/nar_7fb5db1bfe.mp3",
- "해와 달이 된 오누이 이야기가 열렸어요!": "audio/el/home/nar_82ea7bc7e5.mp3",
- "해와 달이 된 오누이 친구들을 다 모았어요!": "audio/el/home/nar_ca25de3f26.mp3",
- "해와 바람 이야기가 열렸어요!": "audio/el/home/nar_f96c3539ef.mp3",
- "해와 바람 친구들을 다 모았어요!": "audio/el/home/nar_5afefbccb0.mp3",
- "커다란 순무 이야기가 열렸어요!": "audio/el/home/nar_23b526397d.mp3",
- "커다란 순무 친구들을 다 모았어요!": "audio/el/home/nar_bc52824bd9.mp3",
- "사자와 생쥐 이야기가 열렸어요!": "audio/el/home/nar_1be5b4b4b9.mp3",
- "사자와 생쥐 친구들을 다 모았어요!": "audio/el/home/nar_7550c4b692.mp3",
- "여우와 두루미 이야기가 열렸어요!": "audio/el/home/nar_eb26a548f2.mp3",
- "여우와 두루미 친구들을 다 모았어요!": "audio/el/home/nar_f2fda988b4.mp3",
- "골디락스와 곰 세 마리 이야기가 열렸어요!": "audio/el/home/nar_2320d6b98a.mp3",
- "골디락스와 곰 세 마리 친구들을 다 모았어요!": "audio/el/home/nar_7afb15859f.mp3",
- "브레멘 음악대 이야기가 열렸어요!": "audio/el/home/nar_5c4fe7e213.mp3",
- "브레멘 음악대 친구들을 다 모았어요!": "audio/el/home/nar_ffd77e4ecb.mp3",
- "개미와 베짱이 이야기가 열렸어요!": "audio/el/home/nar_3a49cfb7ec.mp3",
- "개미와 베짱이 친구들을 다 모았어요!": "audio/el/home/nar_f17fdc6ba3.mp3",
- "미운 아기 오리 이야기가 열렸어요!": "audio/el/home/nar_a383d4b1e8.mp3",
- "미운 아기 오리 친구들을 다 모았어요!": "audio/el/home/nar_c31c312682.mp3",
- "아기 돼지 삼형제 이야기가 열렸어요!": "audio/el/home/nar_2f233c8ed1.mp3",
- "아기 돼지 삼형제 친구들을 다 모았어요!": "audio/el/home/nar_819cc0712c.mp3",
- "늑대와 일곱 마리 아기 염소 이야기가 열렸어요!": "audio/el/home/nar_e3402f95d7.mp3",
- "늑대와 일곱 마리 아기 염소 친구들을 다 모았어요!": "audio/el/home/nar_d2bb41bf68.mp3",
- "콩쥐 팥쥐 이야기가 열렸어요!": "audio/el/home/nar_64b2953a7f.mp3",
- "콩쥐 팥쥐 친구들을 다 모았어요!": "audio/el/home/nar_112d58cc9f.mp3",
- "구름 공장 이야기가 열렸어요!": "audio/el/home/nar_51685856f8.mp3",
- "구름 공장 친구들을 다 모았어요!": "audio/el/home/nar_c1f47d1457.mp3",
- "헨젤과 그레텔 이야기가 열렸어요!": "audio/el/home/nar_abcbdc3efe.mp3",
- "헨젤과 그레텔 친구들을 다 모았어요!": "audio/el/home/nar_63e65c3524.mp3",
- "신데렐라 이야기가 열렸어요!": "audio/el/home/nar_6c6fd12496.mp3",
- "신데렐라 친구들을 다 모았어요!": "audio/el/home/nar_118a2de78f.mp3",
- "흥부와 놀부 이야기가 열렸어요!": "audio/el/home/nar_7ac715b543.mp3",
- "흥부와 놀부 친구들을 다 모았어요!": "audio/el/home/nar_9d7de7dac6.mp3",
- "빨간 모자 이야기가 열렸어요!": "audio/el/home/nar_de588f3ae2.mp3",
- "빨간 모자 친구들을 다 모았어요!": "audio/el/home/nar_1e8c8b3f94.mp3",
- "은혜 갚은 까치 이야기가 열렸어요!": "audio/el/home/nar_03eb996fe4.mp3",
- "은혜 갚은 까치 친구들을 다 모았어요!": "audio/el/home/nar_40c1280207.mp3",
- "요술 항아리 이야기가 열렸어요!": "audio/el/home/nar_0b00304799.mp3",
- "요술 항아리 친구들을 다 모았어요!": "audio/el/home/nar_9121b6292a.mp3",
- "백설공주 이야기가 열렸어요!": "audio/el/home/nar_e0e8b225e3.mp3",
- "백설공주 친구들을 다 모았어요!": "audio/el/home/nar_62a6b344c5.mp3",
- "인어공주 이야기가 열렸어요!": "audio/el/home/nar_c6b9ea1636.mp3",
- "인어공주 친구들을 다 모았어요!": "audio/el/home/nar_9c33076d76.mp3",
- "미녀와 야수 이야기가 열렸어요!": "audio/el/home/nar_0c206be6cc.mp3",
- "미녀와 야수 친구들을 다 모았어요!": "audio/el/home/nar_bbfcb93def.mp3",
- "나의 빨간 자동차 이야기가 열렸어요!": "audio/el/home/nar_f7e2639f1d.mp3",
- "나의 빨간 자동차 친구들을 다 모았어요!": "audio/el/home/nar_1dc453d9aa.mp3",
- "유니콘을 찾아서 이야기가 열렸어요!": "audio/el/home/nar_85d0170bf1.mp3",
- "유니콘을 찾아서 친구들을 다 모았어요!": "audio/el/home/nar_f1270dea5f.mp3",
- "완두콩 공주 이야기가 열렸어요!": "audio/el/home/nar_6d2fecc83b.mp3",
- "완두콩 공주 친구들을 다 모았어요!": "audio/el/home/nar_5699d66ade.mp3",
- "라푼젤 이야기가 열렸어요!": "audio/el/home/nar_d1f5af4355.mp3",
- "라푼젤 친구들을 다 모았어요!": "audio/el/home/nar_f78510df3f.mp3",
- "개구리 왕자 이야기가 열렸어요!": "audio/el/home/nar_7d7fcab70a.mp3",
- "개구리 왕자 친구들을 다 모았어요!": "audio/el/home/nar_0ec985324d.mp3",
- "잠자는 숲속의 공주 이야기가 열렸어요!": "audio/el/home/nar_18b84687f1.mp3",
- "잠자는 숲속의 공주 친구들을 다 모았어요!": "audio/el/home/nar_dadd06af89.mp3"
+ "공주 퍼즐을 다 모았어요!": "audio/el/home/nar_87d996eb72.mp3",
+ "우리 옛이야기를 다 모았어요!": "audio/el/home/nar_4be8722af3.mp3",
+ "이솝 동물 친구를 다 모았어요!": "audio/el/home/nar_952a6339b7.mp3",
+ "세계 명작을 다 모았어요!": "audio/el/home/nar_66c01ad189.mp3",
+ "창작 동화를 다 모았어요!": "audio/el/home/nar_a22a6b82e8.mp3",
+ "팥죽할멈과 호랑이 이야기가 열렸어요!": "audio/el/home/nar_a68bf57200.mp3",
+ "팥죽할멈과 호랑이 친구들을 다 모았어요!": "audio/el/home/nar_714e02c131.mp3",
+ "황소와 개구리 이야기가 열렸어요!": "audio/el/home/nar_a9046badc1.mp3",
+ "황소와 개구리 친구들을 다 모았어요!": "audio/el/home/nar_5241e590b0.mp3",
+ "토끼와 거북이 이야기가 열렸어요!": "audio/el/home/nar_0bf2a1aa2b.mp3",
+ "토끼와 거북이 친구들을 다 모았어요!": "audio/el/home/nar_912710ac68.mp3",
+ "해와 달이 된 오누이 이야기가 열렸어요!": "audio/el/home/nar_fffb0eefc8.mp3",
+ "해와 달이 된 오누이 친구들을 다 모았어요!": "audio/el/home/nar_853c64f120.mp3",
+ "해와 바람 이야기가 열렸어요!": "audio/el/home/nar_744f3ad4bd.mp3",
+ "해와 바람 친구들을 다 모았어요!": "audio/el/home/nar_2bfbcf7c98.mp3",
+ "커다란 순무 이야기가 열렸어요!": "audio/el/home/nar_543c3da0be.mp3",
+ "커다란 순무 친구들을 다 모았어요!": "audio/el/home/nar_a6e251b1c4.mp3",
+ "사자와 생쥐 이야기가 열렸어요!": "audio/el/home/nar_a82eb68e53.mp3",
+ "사자와 생쥐 친구들을 다 모았어요!": "audio/el/home/nar_4241469689.mp3",
+ "여우와 두루미 이야기가 열렸어요!": "audio/el/home/nar_87f7096ff9.mp3",
+ "여우와 두루미 친구들을 다 모았어요!": "audio/el/home/nar_aa771c6c33.mp3",
+ "골디락스와 곰 세 마리 이야기가 열렸어요!": "audio/el/home/nar_23f12a3d8f.mp3",
+ "골디락스와 곰 세 마리 친구들을 다 모았어요!": "audio/el/home/nar_f7009e2565.mp3",
+ "브레멘 음악대 이야기가 열렸어요!": "audio/el/home/nar_3192d5f14d.mp3",
+ "브레멘 음악대 친구들을 다 모았어요!": "audio/el/home/nar_a336944457.mp3",
+ "개미와 베짱이 이야기가 열렸어요!": "audio/el/home/nar_4885efa347.mp3",
+ "개미와 베짱이 친구들을 다 모았어요!": "audio/el/home/nar_6ed10ee5c7.mp3",
+ "미운 아기 오리 이야기가 열렸어요!": "audio/el/home/nar_851dc94579.mp3",
+ "미운 아기 오리 친구들을 다 모았어요!": "audio/el/home/nar_6e6d8e64d3.mp3",
+ "아기 돼지 삼형제 이야기가 열렸어요!": "audio/el/home/nar_55a727d949.mp3",
+ "아기 돼지 삼형제 친구들을 다 모았어요!": "audio/el/home/nar_adfe5d7a08.mp3",
+ "늑대와 일곱 마리 아기 염소 이야기가 열렸어요!": "audio/el/home/nar_75df50a36d.mp3",
+ "늑대와 일곱 마리 아기 염소 친구들을 다 모았어요!": "audio/el/home/nar_ff981a18a5.mp3",
+ "콩쥐 팥쥐 이야기가 열렸어요!": "audio/el/home/nar_a7c41287dd.mp3",
+ "콩쥐 팥쥐 친구들을 다 모았어요!": "audio/el/home/nar_60bd386593.mp3",
+ "구름 공장 이야기가 열렸어요!": "audio/el/home/nar_b1c086c43d.mp3",
+ "구름 공장 친구들을 다 모았어요!": "audio/el/home/nar_6dca79586a.mp3",
+ "헨젤과 그레텔 이야기가 열렸어요!": "audio/el/home/nar_217d41b6f6.mp3",
+ "헨젤과 그레텔 친구들을 다 모았어요!": "audio/el/home/nar_b1bc3ac799.mp3",
+ "신데렐라 이야기가 열렸어요!": "audio/el/home/nar_8bfb5b680b.mp3",
+ "신데렐라 친구들을 다 모았어요!": "audio/el/home/nar_27ae859bd7.mp3",
+ "흥부와 놀부 이야기가 열렸어요!": "audio/el/home/nar_0c3377aa8b.mp3",
+ "흥부와 놀부 친구들을 다 모았어요!": "audio/el/home/nar_8d8c5fc0cb.mp3",
+ "빨간 모자 이야기가 열렸어요!": "audio/el/home/nar_751bde90c3.mp3",
+ "빨간 모자 친구들을 다 모았어요!": "audio/el/home/nar_4ca158fb49.mp3",
+ "은혜 갚은 까치 이야기가 열렸어요!": "audio/el/home/nar_9ec93657c1.mp3",
+ "은혜 갚은 까치 친구들을 다 모았어요!": "audio/el/home/nar_fdccfb653f.mp3",
+ "요술 항아리 이야기가 열렸어요!": "audio/el/home/nar_94dd352223.mp3",
+ "요술 항아리 친구들을 다 모았어요!": "audio/el/home/nar_b6538c9cf7.mp3",
+ "백설공주 이야기가 열렸어요!": "audio/el/home/nar_d3d8022b54.mp3",
+ "백설공주 친구들을 다 모았어요!": "audio/el/home/nar_db3cb2fa50.mp3",
+ "인어공주 이야기가 열렸어요!": "audio/el/home/nar_8c578b99ba.mp3",
+ "인어공주 친구들을 다 모았어요!": "audio/el/home/nar_5287cee5fb.mp3",
+ "미녀와 야수 이야기가 열렸어요!": "audio/el/home/nar_79c1552fac.mp3",
+ "미녀와 야수 친구들을 다 모았어요!": "audio/el/home/nar_26c9a6bb3d.mp3",
+ "나의 빨간 자동차 이야기가 열렸어요!": "audio/el/home/nar_0b97de0fcf.mp3",
+ "나의 빨간 자동차 친구들을 다 모았어요!": "audio/el/home/nar_f71d051aef.mp3",
+ "유니콘을 찾아서 이야기가 열렸어요!": "audio/el/home/nar_2dfdbcd402.mp3",
+ "유니콘을 찾아서 친구들을 다 모았어요!": "audio/el/home/nar_45fac19a55.mp3",
+ "완두콩 공주 이야기가 열렸어요!": "audio/el/home/nar_322500d307.mp3",
+ "완두콩 공주 친구들을 다 모았어요!": "audio/el/home/nar_c6577b597c.mp3",
+ "라푼젤 이야기가 열렸어요!": "audio/el/home/nar_b545ab94fd.mp3",
+ "라푼젤 친구들을 다 모았어요!": "audio/el/home/nar_ade73c4a36.mp3",
+ "개구리 왕자 이야기가 열렸어요!": "audio/el/home/nar_f3a5db77b0.mp3",
+ "개구리 왕자 친구들을 다 모았어요!": "audio/el/home/nar_9b439a69f9.mp3",
+ "잠자는 숲속의 공주 이야기가 열렸어요!": "audio/el/home/nar_3a0878564c.mp3",
+ "잠자는 숲속의 공주 친구들을 다 모았어요!": "audio/el/home/nar_d7aec40f6a.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -700,127 +700,127 @@ const NARRATION_CLIPS_EN = {
  },
  "The Tiger and the Red Bean Porridge": {
   "t": "The Tiger and the Red Bean Porridge",
-  "c": "audio/el/home/en/nar_191b11787b.mp3"
+  "c": "audio/el/home/en/nar_77c76840ca.mp3"
  },
  "The Ox and the Frog": {
   "t": "The Ox and the Frog",
-  "c": "audio/el/home/en/nar_9762a2e01a.mp3"
+  "c": "audio/el/home/en/nar_0c3b064a65.mp3"
  },
  "The Rabbit and the Turtle": {
   "t": "The Rabbit and the Turtle",
-  "c": "audio/el/home/en/nar_f60e293437.mp3"
+  "c": "audio/el/home/en/nar_1c111c4d3c.mp3"
  },
  "The Sun and the Moon": {
   "t": "The Sun and the Moon",
-  "c": "audio/el/home/en/nar_65e2f90e00.mp3"
+  "c": "audio/el/home/en/nar_9ed86b206f.mp3"
  },
  "The Sun and the Wind": {
   "t": "The Sun and the Wind",
-  "c": "audio/el/home/en/nar_e69f58e3b5.mp3"
+  "c": "audio/el/home/en/nar_92c797d54f.mp3"
  },
  "The Giant Turnip": {
   "t": "The Giant Turnip",
-  "c": "audio/el/home/en/nar_e09d8255bc.mp3"
+  "c": "audio/el/home/en/nar_f930ea713c.mp3"
  },
  "The Lion and the Mouse": {
   "t": "The Lion and the Mouse",
-  "c": "audio/el/home/en/nar_75e71d7b2a.mp3"
+  "c": "audio/el/home/en/nar_3ca441c8c1.mp3"
  },
  "The Fox and the Crane": {
   "t": "The Fox and the Crane",
-  "c": "audio/el/home/en/nar_0453cca3de.mp3"
+  "c": "audio/el/home/en/nar_bb52b5816f.mp3"
  },
  "Goldilocks and the Three Bears": {
   "t": "Goldilocks and the Three Bears",
-  "c": "audio/el/home/en/nar_76655a4c6d.mp3"
+  "c": "audio/el/home/en/nar_1c8a874171.mp3"
  },
  "The Bremen Town Musicians": {
   "t": "The Bremen Town Musicians",
-  "c": "audio/el/home/en/nar_0a41ff193a.mp3"
+  "c": "audio/el/home/en/nar_5ba29ac437.mp3"
  },
  "The Ant and the Grasshopper": {
   "t": "The Ant and the Grasshopper",
-  "c": "audio/el/home/en/nar_87a39b991c.mp3"
+  "c": "audio/el/home/en/nar_0d810cb84b.mp3"
  },
  "The Ugly Duckling": {
   "t": "The Ugly Duckling",
-  "c": "audio/el/home/en/nar_aa806654c0.mp3"
+  "c": "audio/el/home/en/nar_9111f40d5a.mp3"
  },
  "The Three Little Pigs": {
   "t": "The Three Little Pigs",
-  "c": "audio/el/home/en/nar_fbfede5560.mp3"
+  "c": "audio/el/home/en/nar_5903141e80.mp3"
  },
  "The Wolf and the Seven Kids": {
   "t": "The Wolf and the Seven Kids",
-  "c": "audio/el/home/en/nar_60c1425ef4.mp3"
+  "c": "audio/el/home/en/nar_92f3c352dd.mp3"
  },
  "Kongjwi and Patjwi": {
   "t": "Kongjwi and Patjwi",
-  "c": "audio/el/home/en/nar_fe9e8ab6d6.mp3"
+  "c": "audio/el/home/en/nar_536ee4486e.mp3"
  },
  "The Cloud Factory": {
   "t": "The Cloud Factory",
-  "c": "audio/el/home/en/nar_c88e6a06f9.mp3"
+  "c": "audio/el/home/en/nar_3f2dceed77.mp3"
  },
  "Hansel and Gretel": {
   "t": "Hansel and Gretel",
-  "c": "audio/el/home/en/nar_cd986154a4.mp3"
+  "c": "audio/el/home/en/nar_5c75e2dfba.mp3"
  },
  "Cinderella": {
   "t": "Cinderella",
-  "c": "audio/el/home/en/nar_c81d246305.mp3"
+  "c": "audio/el/home/en/nar_fd3b4bfd3c.mp3"
  },
  "Heungbu and Nolbu": {
   "t": "Heungbu and Nolbu",
-  "c": "audio/el/home/en/nar_07bf7755a1.mp3"
+  "c": "audio/el/home/en/nar_22a65de97d.mp3"
  },
  "Little Red Riding Hood": {
   "t": "Little Red Riding Hood",
-  "c": "audio/el/home/en/nar_098489da46.mp3"
+  "c": "audio/el/home/en/nar_34a53e5111.mp3"
  },
  "The Grateful Magpie": {
   "t": "The Grateful Magpie",
-  "c": "audio/el/home/en/nar_8f3cbd165c.mp3"
+  "c": "audio/el/home/en/nar_094ac907f5.mp3"
  },
  "The Magic Jar": {
   "t": "The Magic Jar",
-  "c": "audio/el/home/en/nar_abf59d92b0.mp3"
+  "c": "audio/el/home/en/nar_77f21503c4.mp3"
  },
  "Snow White": {
   "t": "Snow White",
-  "c": "audio/el/home/en/nar_bcbed47236.mp3"
+  "c": "audio/el/home/en/nar_c828b6d0e7.mp3"
  },
  "The Little Mermaid": {
   "t": "The Little Mermaid",
-  "c": "audio/el/home/en/nar_86ec2f1f4d.mp3"
+  "c": "audio/el/home/en/nar_3f580ea499.mp3"
  },
  "Beauty and the Beast": {
   "t": "Beauty and the Beast",
-  "c": "audio/el/home/en/nar_4d0c17a6a3.mp3"
+  "c": "audio/el/home/en/nar_027a60390a.mp3"
  },
  "My Red Car": {
   "t": "My Red Car",
-  "c": "audio/el/home/en/nar_d6fecc4398.mp3"
+  "c": "audio/el/home/en/nar_09291d1f1d.mp3"
  },
  "Finding the Unicorn": {
   "t": "Finding the Unicorn",
-  "c": "audio/el/home/en/nar_aa0df85f45.mp3"
+  "c": "audio/el/home/en/nar_2a243e6f30.mp3"
  },
  "The Princess and the Pea": {
   "t": "The Princess and the Pea",
-  "c": "audio/el/home/en/nar_3dc9c584ac.mp3"
+  "c": "audio/el/home/en/nar_770b3e44ad.mp3"
  },
  "Rapunzel": {
   "t": "Rapunzel",
-  "c": "audio/el/home/en/nar_1a0301f3a4.mp3"
+  "c": "audio/el/home/en/nar_76c08216dc.mp3"
  },
  "The Frog Prince": {
   "t": "The Frog Prince",
-  "c": "audio/el/home/en/nar_3171078982.mp3"
+  "c": "audio/el/home/en/nar_0fb7103083.mp3"
  },
  "The Sleeping Beauty": {
   "t": "The Sleeping Beauty",
-  "c": "audio/el/home/en/nar_69f0b2b235.mp3"
+  "c": "audio/el/home/en/nar_b5b7fe2d2b.mp3"
  },
  "Still empty": {
   "t": "Still empty",
@@ -1664,31 +1664,31 @@ const NARRATION_CLIPS_EN = {
  },
  "Tale Play": {
   "t": "Tale Play",
-  "c": "audio/el/home/en/nar_96fe764e50.mp3"
+  "c": "audio/el/home/en/nar_1ef30fed31.mp3"
  },
  "Read to Me": {
   "t": "Read to Me",
-  "c": "audio/el/home/en/nar_c01e982834.mp3"
+  "c": "audio/el/home/en/nar_bb905e0c26.mp3"
  },
  "Sticker Book": {
   "t": "Sticker Book",
-  "c": "audio/el/home/en/nar_9d7b5f5a1b.mp3"
+  "c": "audio/el/home/en/nar_4192240005.mp3"
  },
  "Sticker Book. Finish a tale to get a sticker": {
   "t": "Sticker Book. Finish a tale to get a sticker",
-  "c": "audio/el/home/en/nar_ccc1baa2d4.mp3"
+  "c": "audio/el/home/en/nar_caf37c1602.mp3"
  },
  "No tales match yet": {
   "t": "No tales match yet",
-  "c": "audio/el/home/en/nar_a45b15a9e5.mp3"
+  "c": "audio/el/home/en/nar_d20417f515.mp3"
  },
  "This tale is locked. Open it together with a grown-up.": {
   "t": "This tale is locked. Open it together with a grown-up.",
-  "c": "audio/el/home/en/nar_06ef6e1974.mp3"
+  "c": "audio/el/home/en/nar_6a19cb88a8.mp3"
  },
  "Every tale is open!": {
   "t": "Every tale is open!",
-  "c": "audio/el/home/en/nar_c77ea4d8af.mp3"
+  "c": "audio/el/home/en/nar_3807368bf0.mp3"
  },
  "Puzzle": {
   "t": "Puzzle",
@@ -1700,394 +1700,394 @@ const NARRATION_CLIPS_EN = {
  },
  "You finished the Princess Puzzle!": {
   "t": "You finished the Princess Puzzle!",
-  "c": "audio/el/home/en/nar_131c48cd49.mp3"
+  "c": "audio/el/home/en/nar_aee946829f.mp3"
  },
  "You finished the Korean Tales!": {
   "t": "You finished the Korean Tales!",
-  "c": "audio/el/home/en/nar_95377cc6fa.mp3"
+  "c": "audio/el/home/en/nar_7d94f8038d.mp3"
  },
  "You finished the Aesop Animals!": {
   "t": "You finished the Aesop Animals!",
-  "c": "audio/el/home/en/nar_2bc7c86311.mp3"
+  "c": "audio/el/home/en/nar_6abb634588.mp3"
  },
  "You finished the World Classics!": {
   "t": "You finished the World Classics!",
-  "c": "audio/el/home/en/nar_2cb9d94d50.mp3"
+  "c": "audio/el/home/en/nar_dd5dd9ffdd.mp3"
  },
  "You finished the Original Tales!": {
   "t": "You finished the Original Tales!",
-  "c": "audio/el/home/en/nar_f41c6172fc.mp3"
+  "c": "audio/el/home/en/nar_25657137b4.mp3"
  },
  "The Tiger and the Red Bean Porridge is open!": {
   "t": "The Tiger and the Red Bean Porridge is open!",
-  "c": "audio/el/home/en/nar_9b7cff7eeb.mp3"
+  "c": "audio/el/home/en/nar_9d331db4f0.mp3"
  },
  "You collected all the friends of The Tiger and the Red Bean Porridge!": {
   "t": "You collected all the friends of The Tiger and the Red Bean Porridge!",
-  "c": "audio/el/home/en/nar_62faf25dcf.mp3"
+  "c": "audio/el/home/en/nar_b6170da6c3.mp3"
  },
  "The Tiger and the Red Bean Porridge. Coming soon.": {
   "t": "The Tiger and the Red Bean Porridge. Coming soon.",
-  "c": "audio/el/home/en/nar_1471a969ff.mp3"
+  "c": "audio/el/home/en/nar_58716e42ac.mp3"
  },
  "The Ox and the Frog is open!": {
   "t": "The Ox and the Frog is open!",
-  "c": "audio/el/home/en/nar_a24bc5c9c8.mp3"
+  "c": "audio/el/home/en/nar_1f3f8d4790.mp3"
  },
  "You collected all the friends of The Ox and the Frog!": {
   "t": "You collected all the friends of The Ox and the Frog!",
-  "c": "audio/el/home/en/nar_40f9b91089.mp3"
+  "c": "audio/el/home/en/nar_2aec3fb6fb.mp3"
  },
  "The Ox and the Frog. Coming soon.": {
   "t": "The Ox and the Frog. Coming soon.",
-  "c": "audio/el/home/en/nar_7a77a8c03b.mp3"
+  "c": "audio/el/home/en/nar_2736e22d4e.mp3"
  },
  "The Rabbit and the Turtle is open!": {
   "t": "The Rabbit and the Turtle is open!",
-  "c": "audio/el/home/en/nar_af409db5cb.mp3"
+  "c": "audio/el/home/en/nar_240e48a8b9.mp3"
  },
  "You collected all the friends of The Rabbit and the Turtle!": {
   "t": "You collected all the friends of The Rabbit and the Turtle!",
-  "c": "audio/el/home/en/nar_cd6ed9f9e7.mp3"
+  "c": "audio/el/home/en/nar_73de21cd07.mp3"
  },
  "The Rabbit and the Turtle. Coming soon.": {
   "t": "The Rabbit and the Turtle. Coming soon.",
-  "c": "audio/el/home/en/nar_d91b875a86.mp3"
+  "c": "audio/el/home/en/nar_787d16ab49.mp3"
  },
  "The Sun and the Moon is open!": {
   "t": "The Sun and the Moon is open!",
-  "c": "audio/el/home/en/nar_35a4a14ae3.mp3"
+  "c": "audio/el/home/en/nar_8ed547a833.mp3"
  },
  "You collected all the friends of The Sun and the Moon!": {
   "t": "You collected all the friends of The Sun and the Moon!",
-  "c": "audio/el/home/en/nar_9146bc1ce3.mp3"
+  "c": "audio/el/home/en/nar_51b1db69a4.mp3"
  },
  "The Sun and the Moon. Coming soon.": {
   "t": "The Sun and the Moon. Coming soon.",
-  "c": "audio/el/home/en/nar_9138518809.mp3"
+  "c": "audio/el/home/en/nar_d13fde97c0.mp3"
  },
  "The Sun and the Wind is open!": {
   "t": "The Sun and the Wind is open!",
-  "c": "audio/el/home/en/nar_cb97ba44c0.mp3"
+  "c": "audio/el/home/en/nar_14ecbb342e.mp3"
  },
  "You collected all the friends of The Sun and the Wind!": {
   "t": "You collected all the friends of The Sun and the Wind!",
-  "c": "audio/el/home/en/nar_e54e188591.mp3"
+  "c": "audio/el/home/en/nar_b8fee4ec03.mp3"
  },
  "The Sun and the Wind. Coming soon.": {
   "t": "The Sun and the Wind. Coming soon.",
-  "c": "audio/el/home/en/nar_8269962cd8.mp3"
+  "c": "audio/el/home/en/nar_df8f152cba.mp3"
  },
  "The Giant Turnip is open!": {
   "t": "The Giant Turnip is open!",
-  "c": "audio/el/home/en/nar_6575dfc7cc.mp3"
+  "c": "audio/el/home/en/nar_c62bc22c42.mp3"
  },
  "You collected all the friends of The Giant Turnip!": {
   "t": "You collected all the friends of The Giant Turnip!",
-  "c": "audio/el/home/en/nar_887722f483.mp3"
+  "c": "audio/el/home/en/nar_bae016841c.mp3"
  },
  "The Giant Turnip. Coming soon.": {
   "t": "The Giant Turnip. Coming soon.",
-  "c": "audio/el/home/en/nar_75541a2c35.mp3"
+  "c": "audio/el/home/en/nar_bad17dae83.mp3"
  },
  "The Lion and the Mouse is open!": {
   "t": "The Lion and the Mouse is open!",
-  "c": "audio/el/home/en/nar_cc0eb63147.mp3"
+  "c": "audio/el/home/en/nar_4717d16549.mp3"
  },
  "You collected all the friends of The Lion and the Mouse!": {
   "t": "You collected all the friends of The Lion and the Mouse!",
-  "c": "audio/el/home/en/nar_b7e440fadd.mp3"
+  "c": "audio/el/home/en/nar_4b07a10173.mp3"
  },
  "The Lion and the Mouse. Coming soon.": {
   "t": "The Lion and the Mouse. Coming soon.",
-  "c": "audio/el/home/en/nar_8e6c985f09.mp3"
+  "c": "audio/el/home/en/nar_a3a9f28880.mp3"
  },
  "The Fox and the Crane is open!": {
   "t": "The Fox and the Crane is open!",
-  "c": "audio/el/home/en/nar_13bbab7f8e.mp3"
+  "c": "audio/el/home/en/nar_42c1bad4e7.mp3"
  },
  "You collected all the friends of The Fox and the Crane!": {
   "t": "You collected all the friends of The Fox and the Crane!",
-  "c": "audio/el/home/en/nar_7017589a50.mp3"
+  "c": "audio/el/home/en/nar_872f772688.mp3"
  },
  "The Fox and the Crane. Coming soon.": {
   "t": "The Fox and the Crane. Coming soon.",
-  "c": "audio/el/home/en/nar_a532d7a63c.mp3"
+  "c": "audio/el/home/en/nar_d53040b617.mp3"
  },
  "Goldilocks and the Three Bears is open!": {
   "t": "Goldilocks and the Three Bears is open!",
-  "c": "audio/el/home/en/nar_77ca4af43f.mp3"
+  "c": "audio/el/home/en/nar_8754657bcf.mp3"
  },
  "You collected all the friends of Goldilocks and the Three Bears!": {
   "t": "You collected all the friends of Goldilocks and the Three Bears!",
-  "c": "audio/el/home/en/nar_da0913fd50.mp3"
+  "c": "audio/el/home/en/nar_459693129a.mp3"
  },
  "Goldilocks and the Three Bears. Coming soon.": {
   "t": "Goldilocks and the Three Bears. Coming soon.",
-  "c": "audio/el/home/en/nar_4e6c3ad841.mp3"
+  "c": "audio/el/home/en/nar_c9c296d4a6.mp3"
  },
  "The Bremen Town Musicians is open!": {
   "t": "The Bremen Town Musicians is open!",
-  "c": "audio/el/home/en/nar_df538ccc93.mp3"
+  "c": "audio/el/home/en/nar_f5893bc742.mp3"
  },
  "You collected all the friends of The Bremen Town Musicians!": {
   "t": "You collected all the friends of The Bremen Town Musicians!",
-  "c": "audio/el/home/en/nar_c2e0fd4ae2.mp3"
+  "c": "audio/el/home/en/nar_e35dbc335b.mp3"
  },
  "The Bremen Town Musicians. Coming soon.": {
   "t": "The Bremen Town Musicians. Coming soon.",
-  "c": "audio/el/home/en/nar_34aae38169.mp3"
+  "c": "audio/el/home/en/nar_2d0b2a09a4.mp3"
  },
  "The Ant and the Grasshopper is open!": {
   "t": "The Ant and the Grasshopper is open!",
-  "c": "audio/el/home/en/nar_893c212083.mp3"
+  "c": "audio/el/home/en/nar_31fdd9bbce.mp3"
  },
  "You collected all the friends of The Ant and the Grasshopper!": {
   "t": "You collected all the friends of The Ant and the Grasshopper!",
-  "c": "audio/el/home/en/nar_e4d214c3c7.mp3"
+  "c": "audio/el/home/en/nar_36202672aa.mp3"
  },
  "The Ant and the Grasshopper. Coming soon.": {
   "t": "The Ant and the Grasshopper. Coming soon.",
-  "c": "audio/el/home/en/nar_afd486d80a.mp3"
+  "c": "audio/el/home/en/nar_f3a86060c5.mp3"
  },
  "The Ugly Duckling is open!": {
   "t": "The Ugly Duckling is open!",
-  "c": "audio/el/home/en/nar_504b314533.mp3"
+  "c": "audio/el/home/en/nar_66929cf7f7.mp3"
  },
  "You collected all the friends of The Ugly Duckling!": {
   "t": "You collected all the friends of The Ugly Duckling!",
-  "c": "audio/el/home/en/nar_3ec85c065b.mp3"
+  "c": "audio/el/home/en/nar_9dd5ecb146.mp3"
  },
  "The Ugly Duckling. Coming soon.": {
   "t": "The Ugly Duckling. Coming soon.",
-  "c": "audio/el/home/en/nar_502ddf8063.mp3"
+  "c": "audio/el/home/en/nar_e475eb538e.mp3"
  },
  "The Three Little Pigs is open!": {
   "t": "The Three Little Pigs is open!",
-  "c": "audio/el/home/en/nar_06f1ad3ab9.mp3"
+  "c": "audio/el/home/en/nar_d69480e003.mp3"
  },
  "You collected all the friends of The Three Little Pigs!": {
   "t": "You collected all the friends of The Three Little Pigs!",
-  "c": "audio/el/home/en/nar_c90d472ee8.mp3"
+  "c": "audio/el/home/en/nar_c0166a6890.mp3"
  },
  "The Three Little Pigs. Coming soon.": {
   "t": "The Three Little Pigs. Coming soon.",
-  "c": "audio/el/home/en/nar_2e41065674.mp3"
+  "c": "audio/el/home/en/nar_2cfec69a3e.mp3"
  },
  "The Wolf and the Seven Kids is open!": {
   "t": "The Wolf and the Seven Kids is open!",
-  "c": "audio/el/home/en/nar_18937e2c03.mp3"
+  "c": "audio/el/home/en/nar_39dd8d940a.mp3"
  },
  "You collected all the friends of The Wolf and the Seven Kids!": {
   "t": "You collected all the friends of The Wolf and the Seven Kids!",
-  "c": "audio/el/home/en/nar_b52e946c10.mp3"
+  "c": "audio/el/home/en/nar_da05d88720.mp3"
  },
  "The Wolf and the Seven Kids. Coming soon.": {
   "t": "The Wolf and the Seven Kids. Coming soon.",
-  "c": "audio/el/home/en/nar_86a075936a.mp3"
+  "c": "audio/el/home/en/nar_b82128cb25.mp3"
  },
  "Kongjwi and Patjwi is open!": {
   "t": "Kongjwi and Patjwi is open!",
-  "c": "audio/el/home/en/nar_db4dc5be10.mp3"
+  "c": "audio/el/home/en/nar_66d1896cb2.mp3"
  },
  "You collected all the friends of Kongjwi and Patjwi!": {
   "t": "You collected all the friends of Kongjwi and Patjwi!",
-  "c": "audio/el/home/en/nar_8c85900daf.mp3"
+  "c": "audio/el/home/en/nar_4da05b7b6c.mp3"
  },
  "Kongjwi and Patjwi. Coming soon.": {
   "t": "Kongjwi and Patjwi. Coming soon.",
-  "c": "audio/el/home/en/nar_ad2e0732ba.mp3"
+  "c": "audio/el/home/en/nar_8f9dd75510.mp3"
  },
  "The Cloud Factory is open!": {
   "t": "The Cloud Factory is open!",
-  "c": "audio/el/home/en/nar_f14f4b5019.mp3"
+  "c": "audio/el/home/en/nar_4c4c7e12e0.mp3"
  },
  "You collected all the friends of The Cloud Factory!": {
   "t": "You collected all the friends of The Cloud Factory!",
-  "c": "audio/el/home/en/nar_a4abe7233b.mp3"
+  "c": "audio/el/home/en/nar_fee685ed3a.mp3"
  },
  "The Cloud Factory. Coming soon.": {
   "t": "The Cloud Factory. Coming soon.",
-  "c": "audio/el/home/en/nar_d58ed74e58.mp3"
+  "c": "audio/el/home/en/nar_64e11f155c.mp3"
  },
  "Hansel and Gretel is open!": {
   "t": "Hansel and Gretel is open!",
-  "c": "audio/el/home/en/nar_6a23f482b4.mp3"
+  "c": "audio/el/home/en/nar_c98b8d463e.mp3"
  },
  "You collected all the friends of Hansel and Gretel!": {
   "t": "You collected all the friends of Hansel and Gretel!",
-  "c": "audio/el/home/en/nar_90aeea141d.mp3"
+  "c": "audio/el/home/en/nar_f269a6d211.mp3"
  },
  "Hansel and Gretel. Coming soon.": {
   "t": "Hansel and Gretel. Coming soon.",
-  "c": "audio/el/home/en/nar_31017f68c2.mp3"
+  "c": "audio/el/home/en/nar_7eaeda7cc4.mp3"
  },
  "Cinderella is open!": {
   "t": "Cinderella is open!",
-  "c": "audio/el/home/en/nar_f5fc398ee5.mp3"
+  "c": "audio/el/home/en/nar_83aeecaca2.mp3"
  },
  "You collected all the friends of Cinderella!": {
   "t": "You collected all the friends of Cinderella!",
-  "c": "audio/el/home/en/nar_9de8cd8713.mp3"
+  "c": "audio/el/home/en/nar_9679c872ba.mp3"
  },
  "Cinderella. Coming soon.": {
   "t": "Cinderella. Coming soon.",
-  "c": "audio/el/home/en/nar_dabaab16a5.mp3"
+  "c": "audio/el/home/en/nar_66e2528b5c.mp3"
  },
  "Heungbu and Nolbu is open!": {
   "t": "Heungbu and Nolbu is open!",
-  "c": "audio/el/home/en/nar_6cbdbf49cc.mp3"
+  "c": "audio/el/home/en/nar_85dd8b70a3.mp3"
  },
  "You collected all the friends of Heungbu and Nolbu!": {
   "t": "You collected all the friends of Heungbu and Nolbu!",
-  "c": "audio/el/home/en/nar_21eea86a8e.mp3"
+  "c": "audio/el/home/en/nar_3ba83feef0.mp3"
  },
  "Heungbu and Nolbu. Coming soon.": {
   "t": "Heungbu and Nolbu. Coming soon.",
-  "c": "audio/el/home/en/nar_7eedf0f8ae.mp3"
+  "c": "audio/el/home/en/nar_e0f5cd26bb.mp3"
  },
  "Little Red Riding Hood is open!": {
   "t": "Little Red Riding Hood is open!",
-  "c": "audio/el/home/en/nar_262d5c987b.mp3"
+  "c": "audio/el/home/en/nar_2cdc27b0f6.mp3"
  },
  "You collected all the friends of Little Red Riding Hood!": {
   "t": "You collected all the friends of Little Red Riding Hood!",
-  "c": "audio/el/home/en/nar_41fe9e54a1.mp3"
+  "c": "audio/el/home/en/nar_33b6c2231e.mp3"
  },
  "Little Red Riding Hood. Coming soon.": {
   "t": "Little Red Riding Hood. Coming soon.",
-  "c": "audio/el/home/en/nar_e9038a7b7b.mp3"
+  "c": "audio/el/home/en/nar_291cdeab49.mp3"
  },
  "The Grateful Magpie is open!": {
   "t": "The Grateful Magpie is open!",
-  "c": "audio/el/home/en/nar_5ce28001b9.mp3"
+  "c": "audio/el/home/en/nar_dfbf26fd8f.mp3"
  },
  "You collected all the friends of The Grateful Magpie!": {
   "t": "You collected all the friends of The Grateful Magpie!",
-  "c": "audio/el/home/en/nar_40f27b5945.mp3"
+  "c": "audio/el/home/en/nar_bf541da19d.mp3"
  },
  "The Grateful Magpie. Coming soon.": {
   "t": "The Grateful Magpie. Coming soon.",
-  "c": "audio/el/home/en/nar_90da63da71.mp3"
+  "c": "audio/el/home/en/nar_33edbee949.mp3"
  },
  "The Magic Jar is open!": {
   "t": "The Magic Jar is open!",
-  "c": "audio/el/home/en/nar_9e25585e38.mp3"
+  "c": "audio/el/home/en/nar_6d4830aeff.mp3"
  },
  "You collected all the friends of The Magic Jar!": {
   "t": "You collected all the friends of The Magic Jar!",
-  "c": "audio/el/home/en/nar_90c8cbeace.mp3"
+  "c": "audio/el/home/en/nar_6246c0ec04.mp3"
  },
  "The Magic Jar. Coming soon.": {
   "t": "The Magic Jar. Coming soon.",
-  "c": "audio/el/home/en/nar_b203cb26ab.mp3"
+  "c": "audio/el/home/en/nar_6645f3e80a.mp3"
  },
  "Snow White is open!": {
   "t": "Snow White is open!",
-  "c": "audio/el/home/en/nar_32dd4a3e5a.mp3"
+  "c": "audio/el/home/en/nar_dccfb20f84.mp3"
  },
  "You collected all the friends of Snow White!": {
   "t": "You collected all the friends of Snow White!",
-  "c": "audio/el/home/en/nar_e0cb5823b1.mp3"
+  "c": "audio/el/home/en/nar_6906702391.mp3"
  },
  "Snow White. Coming soon.": {
   "t": "Snow White. Coming soon.",
-  "c": "audio/el/home/en/nar_63cb7d4a70.mp3"
+  "c": "audio/el/home/en/nar_67d112b2b2.mp3"
  },
  "The Little Mermaid is open!": {
   "t": "The Little Mermaid is open!",
-  "c": "audio/el/home/en/nar_ef1f9d5dc1.mp3"
+  "c": "audio/el/home/en/nar_ea1867b714.mp3"
  },
  "You collected all the friends of The Little Mermaid!": {
   "t": "You collected all the friends of The Little Mermaid!",
-  "c": "audio/el/home/en/nar_23d601b2b3.mp3"
+  "c": "audio/el/home/en/nar_6ad1ece57e.mp3"
  },
  "The Little Mermaid. Coming soon.": {
   "t": "The Little Mermaid. Coming soon.",
-  "c": "audio/el/home/en/nar_3b59cc1084.mp3"
+  "c": "audio/el/home/en/nar_c482de2d65.mp3"
  },
  "Beauty and the Beast is open!": {
   "t": "Beauty and the Beast is open!",
-  "c": "audio/el/home/en/nar_236a306bcd.mp3"
+  "c": "audio/el/home/en/nar_d392a29aa5.mp3"
  },
  "You collected all the friends of Beauty and the Beast!": {
   "t": "You collected all the friends of Beauty and the Beast!",
-  "c": "audio/el/home/en/nar_d0b7d54589.mp3"
+  "c": "audio/el/home/en/nar_c36f653c29.mp3"
  },
  "Beauty and the Beast. Coming soon.": {
   "t": "Beauty and the Beast. Coming soon.",
-  "c": "audio/el/home/en/nar_c1dfd26ebb.mp3"
+  "c": "audio/el/home/en/nar_8b1a98096d.mp3"
  },
  "My Red Car is open!": {
   "t": "My Red Car is open!",
-  "c": "audio/el/home/en/nar_911228eae7.mp3"
+  "c": "audio/el/home/en/nar_c8d0ab77fb.mp3"
  },
  "You collected all the friends of My Red Car!": {
   "t": "You collected all the friends of My Red Car!",
-  "c": "audio/el/home/en/nar_b17ca9ef61.mp3"
+  "c": "audio/el/home/en/nar_559b742c82.mp3"
  },
  "My Red Car. Coming soon.": {
   "t": "My Red Car. Coming soon.",
-  "c": "audio/el/home/en/nar_7ff09956c0.mp3"
+  "c": "audio/el/home/en/nar_422142641c.mp3"
  },
  "Finding the Unicorn is open!": {
   "t": "Finding the Unicorn is open!",
-  "c": "audio/el/home/en/nar_5c35b4c502.mp3"
+  "c": "audio/el/home/en/nar_a65cdedf9f.mp3"
  },
  "You collected all the friends of Finding the Unicorn!": {
   "t": "You collected all the friends of Finding the Unicorn!",
-  "c": "audio/el/home/en/nar_3b7328cdf6.mp3"
+  "c": "audio/el/home/en/nar_41252671aa.mp3"
  },
  "Finding the Unicorn. Coming soon.": {
   "t": "Finding the Unicorn. Coming soon.",
-  "c": "audio/el/home/en/nar_10584ca3f4.mp3"
+  "c": "audio/el/home/en/nar_1c2779aea6.mp3"
  },
  "The Princess and the Pea is open!": {
   "t": "The Princess and the Pea is open!",
-  "c": "audio/el/home/en/nar_3b1963df00.mp3"
+  "c": "audio/el/home/en/nar_aea95db84f.mp3"
  },
  "You collected all the friends of The Princess and the Pea!": {
   "t": "You collected all the friends of The Princess and the Pea!",
-  "c": "audio/el/home/en/nar_f990cd69c5.mp3"
+  "c": "audio/el/home/en/nar_54eedba513.mp3"
  },
  "The Princess and the Pea. Coming soon.": {
   "t": "The Princess and the Pea. Coming soon.",
-  "c": "audio/el/home/en/nar_cfba880316.mp3"
+  "c": "audio/el/home/en/nar_d31edd02fa.mp3"
  },
  "Rapunzel is open!": {
   "t": "Rapunzel is open!",
-  "c": "audio/el/home/en/nar_a5a6d007d8.mp3"
+  "c": "audio/el/home/en/nar_0fdb3c0d35.mp3"
  },
  "You collected all the friends of Rapunzel!": {
   "t": "You collected all the friends of Rapunzel!",
-  "c": "audio/el/home/en/nar_51524d2ce9.mp3"
+  "c": "audio/el/home/en/nar_21e3c95960.mp3"
  },
  "Rapunzel. Coming soon.": {
   "t": "Rapunzel. Coming soon.",
-  "c": "audio/el/home/en/nar_24dc76ddb3.mp3"
+  "c": "audio/el/home/en/nar_b189d134c8.mp3"
  },
  "The Frog Prince is open!": {
   "t": "The Frog Prince is open!",
-  "c": "audio/el/home/en/nar_62c0b8d78d.mp3"
+  "c": "audio/el/home/en/nar_1176d12f3d.mp3"
  },
  "You collected all the friends of The Frog Prince!": {
   "t": "You collected all the friends of The Frog Prince!",
-  "c": "audio/el/home/en/nar_e788124d38.mp3"
+  "c": "audio/el/home/en/nar_990b47f723.mp3"
  },
  "The Frog Prince. Coming soon.": {
   "t": "The Frog Prince. Coming soon.",
-  "c": "audio/el/home/en/nar_4b8178c7e2.mp3"
+  "c": "audio/el/home/en/nar_3d47c32c30.mp3"
  },
  "The Sleeping Beauty is open!": {
   "t": "The Sleeping Beauty is open!",
-  "c": "audio/el/home/en/nar_dffa8d931e.mp3"
+  "c": "audio/el/home/en/nar_bb0489e673.mp3"
  },
  "You collected all the friends of The Sleeping Beauty!": {
   "t": "You collected all the friends of The Sleeping Beauty!",
-  "c": "audio/el/home/en/nar_59cf8ed9fa.mp3"
+  "c": "audio/el/home/en/nar_5e79de75fc.mp3"
  },
  "The Sleeping Beauty. Coming soon.": {
   "t": "The Sleeping Beauty. Coming soon.",
-  "c": "audio/el/home/en/nar_d15b6975ca.mp3"
+  "c": "audio/el/home/en/nar_1101d11cb3.mp3"
  }
 };
