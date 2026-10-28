@@ -116,6 +116,9 @@
        null,
        "=[hushed, tense] 헨젤은 가슴이 콩닥콩닥 뛰었어요. [calm, resolute] 그래도 꼭 참고 생각했지요."
       ]
+     ],
+     "before": [
+      "sfx:drum:.2"
      ]
     }
    ]
@@ -143,6 +146,9 @@
        null,
        "[calm, warm storytelling]"
       ]
+     ],
+     "before": [
+      "sfx:ding_glock:.45"
      ]
     },
     {
@@ -386,6 +392,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5:400:.5",
       "set:trail",
       "hans:look:crumb",
       "crumbs:drop:5"
@@ -471,7 +478,8 @@
      ],
      "before": [
       "hans:look:sleep",
-      "gret:look:sleep"
+      "gret:look:sleep",
+      "sfx:sleepy_tuba:.4"
      ],
      "after": [
       "father:hide"
@@ -528,6 +536,9 @@
        null,
        "[hushed, gentle suspense]"
       ]
+     ],
+     "before": [
+      "animal:owl:.3"
      ]
     },
     {
@@ -688,6 +699,9 @@
        null,
        "=[sniffs, curious] 그때 달콤한 냄새가 솔솔 났어요. [gasps, delighted] 앗, 과자 집이에요!"
       ]
+     ],
+     "after": [
+      "sfx:ding_glock:.45"
      ]
     },
     {
@@ -741,6 +755,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5:400:.5",
       "set:roof",
       "candy:fix:5"
      ]
@@ -770,6 +785,7 @@
       ]
      ],
      "before": [
+      "sfxs:creak,surprise_sting:700:.5",
       "cut:witch"
      ]
     },
@@ -819,6 +835,9 @@
        null,
        "[amused, playful]"
       ]
+     ],
+     "before": [
+      "sfx:comic_brass:.5"
      ]
     },
     {
@@ -840,7 +859,8 @@
      ],
      "before": [
       "set:cage",
-      "hans:look:cage"
+      "hans:look:cage",
+      "sfx:latch_click:.5"
      ]
     },
     {
@@ -1050,6 +1070,7 @@
       ]
      ],
      "before": [
+      "sfx:zip_away:.5",
       "witch:look:broom",
       "fx:whoosh"
      ],
@@ -1124,7 +1145,8 @@
       ]
      ],
      "before": [
-      "duck:walk:500,540"
+      "duck:walk:500,540",
+      "animal:duck:.4"
      ],
      "after": [
       "cut:duck"
@@ -1325,6 +1347,9 @@
        null,
        "[gentle, warm, slow, closing storytelling]"
       ]
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     }
    ]

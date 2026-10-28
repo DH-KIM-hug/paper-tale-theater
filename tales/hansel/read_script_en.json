@@ -106,6 +106,9 @@
        "nar",
        "Hansel's heart went thump, thump, thump. But he stayed quiet and thought hard."
       ]
+     ],
+     "before": [
+      "sfx:drum:.2"
      ]
     }
    ]
@@ -134,6 +137,9 @@
        null,
        "[calm, warm storytelling]"
       ]
+     ],
+     "before": [
+      "sfx:ding_glock:.45"
      ]
     },
     {
@@ -361,6 +367,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5:400:.5",
       "set:trail",
       "hans:look:crumb",
       "crumbs:drop:5"
@@ -443,7 +450,8 @@
      ],
      "before": [
       "hans:look:sleep",
-      "gret:look:sleep"
+      "gret:look:sleep",
+      "sfx:sleepy_tuba:.4"
      ],
      "after": [
       "father:hide"
@@ -498,6 +506,9 @@
        "nar",
        "An owl hooted, hoo, hoo, somewhere in the dark forest."
       ]
+     ],
+     "before": [
+      "animal:owl:.3"
      ]
     },
     {
@@ -649,6 +660,9 @@
        "nar",
        "Then a sweet smell drifted by. Oh! A candy house!"
       ]
+     ],
+     "after": [
+      "sfx:ding_glock:.45"
      ]
     },
     {
@@ -698,6 +712,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5:400:.5",
       "set:roof",
       "candy:fix:5"
      ]
@@ -726,6 +741,7 @@
       ]
      ],
      "before": [
+      "sfxs:creak,surprise_sting:700:.5",
       "cut:witch"
      ]
     },
@@ -768,6 +784,9 @@
        "nar",
        "The witch stamped her feet, stomp, stomp."
       ]
+     ],
+     "before": [
+      "sfx:comic_brass:.5"
      ]
     },
     {
@@ -786,7 +805,8 @@
      ],
      "before": [
       "set:cage",
-      "hans:look:cage"
+      "hans:look:cage",
+      "sfx:latch_click:.5"
      ]
     },
     {
@@ -980,6 +1000,7 @@
       ]
      ],
      "before": [
+      "sfx:zip_away:.5",
       "witch:look:broom",
       "fx:whoosh"
      ],
@@ -1048,7 +1069,8 @@
       ]
      ],
      "before": [
-      "duck:walk:500,540"
+      "duck:walk:500,540",
+      "animal:duck:.4"
      ],
      "after": [
       "cut:duck"
@@ -1231,6 +1253,9 @@
        "nar",
        "Home is the coziest place. That is how the story of Hansel and Gretel ended."
       ]
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     }
    ]
