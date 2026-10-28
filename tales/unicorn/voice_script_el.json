@@ -38,8 +38,8 @@
    "style": 0.4
   },
   "uni": {
-   "stability": 0.55,
-   "style": 0.35
+   "stability": 0.6,
+   "style": 0.25
   }
  },
  "use_dir": [
@@ -564,7 +564,7 @@
      "uni",
      "나는 계속 여기 있었어.",
      null,
-     "[unicorn, soft, gentle, warm, slow, kind]"
+     "[soft, gentle, warm, slow, kind voice]"
     ]
    ]
   },
@@ -575,7 +575,7 @@
      "uni",
      "네가 친절한 걸 다 보고 있었어.",
      "happy",
-     "[unicorn, warm, tender, smiling, slow]"
+     "[warm, tender, smiling, slow voice]"
     ]
    ]
   },
@@ -707,7 +707,7 @@
      "uni",
      "고마워, 정말 예뻐!",
      "happy",
-     "[soft, warm, delighted, gentle]"
+     "[soft, warm, delighted, gentle voice]"
     ]
    ]
   }

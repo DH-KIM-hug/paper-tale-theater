@@ -1109,7 +1109,7 @@
        "uni",
        "나는 계속 여기 있었어.",
        null,
-       "[unicorn, soft, gentle, warm, slow, kind]"
+       "[soft, gentle, warm, slow, kind voice]"
       ]
      ]
     },
@@ -1121,7 +1121,7 @@
        "uni",
        "네가 친절한 걸 다 보고 있었어.",
        "happy",
-       "[unicorn, warm, tender, smiling, slow]"
+       "[warm, tender, smiling, slow voice]"
       ]
      ]
     },
@@ -1133,7 +1133,7 @@
        "uni",
        "양에게도, 사슴에게도, 말에게도 말이야.",
        "happy",
-       "[unicorn, warm, tender, smiling, slow]"
+       "[warm, tender, smiling, slow voice]"
       ]
      ]
     },
@@ -1253,7 +1253,7 @@
        "uni",
        "고마워, 정말 예뻐!",
        "happy",
-       "[soft, warm, delighted, gentle]"
+       "[soft, warm, delighted, gentle voice]"
       ]
      ]
     },
