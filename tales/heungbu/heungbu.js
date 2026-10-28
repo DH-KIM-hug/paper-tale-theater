@@ -26,7 +26,7 @@
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean_happy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
@@ -44,9 +44,9 @@
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_korean', 'birds_chirp_1', 'birds_chirp_2', 'stomach_growl', 'comic_brass', 'bonk', 'marimba_1', 'marimba_2', 'marimba_3', 'whistle_down', 'thud', 'harp_gliss', 'coins_1', 'party_horn', 'sad_trombone', 'surprise_sting', 'fall_crash', 'splash', 'pow', 'ding', 'pop', 'crash']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_korean_happy', 'birds_chirp_1', 'birds_chirp_2', 'stomach_growl', 'comic_brass', 'bonk', 'marimba_1', 'marimba_2', 'marimba_3', 'whistle_down', 'thud', 'harp_gliss', 'coins_1', 'party_horn', 'sad_trombone', 'surprise_sting', 'fall_crash', 'splash', 'pow', 'ding', 'pop', 'crash']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
-    const cut = (k, s = 'pop', hold = 3200) => T.cutImage([{ src: U('cut_' + k), sfx: s, hold }], { hold });
+    const cut = (k, s = 'pop', hold = 2600) => { hold = Math.min(hold, 2600); return T.cutImage([{ src: U('cut_' + k), sfx: s, hold }], { hold }); };   /* 2026-10-29 컷 멈춤은 2.6초까지(3200~3600 → 2600) */
 
     /* 층 소품: 누름 없음. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위). (cx, y) = 가운데·발끝, top 이면 윗변 */
     const L = {};
