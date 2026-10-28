@@ -520,6 +520,9 @@
        "Haaaam, I am so sleepy.",
        null
       ]
+     ],
+     "before": [
+      "snd:sleepy_tuba:.6"
      ]
     },
     {
@@ -909,6 +912,7 @@
       ]
      ],
      "before": [
+      "amb:birds_chirp_1:.2:4",
       "night:off"
      ]
     },
@@ -1152,7 +1156,15 @@
      "before": [
       "beds:eight",
       "fx:tada",
-      "glow:bigbed"
+      "glow:bigbed",
+      "snd:marimba_1:.8:0",
+      "snd:marimba_2:.8:380",
+      "snd:marimba_3:.8:760",
+      "snd:marimba_4:.8:1140",
+      "snd:marimba_5:.8:1520",
+      "snd:marimba_6:.8:1900",
+      "snd:marimba_7:.8:2280",
+      "snd:marimba_8:.8:2660"
      ]
     },
     {
@@ -1778,7 +1790,8 @@
       ]
      ],
      "before": [
-      "confetti"
+      "confetti",
+      "snd:party_horn:.9"
      ]
     }
    ]

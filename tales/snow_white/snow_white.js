@@ -260,7 +260,7 @@
     const say = async text => { await T.say(text); await sleep(700); };
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { if (T.reading() && document.hidden && /^marimba_/.test(name)) return true; /* 화면 꺼짐: 화음 방지 */ return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { forest_v2: 'crickets_night_2', hill_v2: 'birds_chirp_1' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     try { AudioFX.preloadSfx(['sparkle', 'thud', 'whoosh', 'knock', 'creak', 'door', 'gulp', 'chomp', 'squeak', 'paper_down', 'step_wood', 'tada', 'pop', 'slide_down', 'crickets_night_1', 'crickets_night_2', 'birds_chirp_1', 'surprise_sting', 'zip_away', 'sleepy_tuba', 'boing', 'tiptoe_pizz', 'ding_glock', 'hammer', 'pop_appear', 'whistle_down', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* */ }
@@ -516,7 +516,7 @@
             const i = +b;
             if (P && !inst()) follow(BPOS[i][0], 500);
             onBed(i, c);
-            if (!inst() && c !== 'bedcurl') { popSfx(T); snow.wiggle(3, 420); }
+            if (!inst() && c !== 'bedcurl') { (c === 'bedknees' || c === 'bedtoes') ? (cue('boing', .6) || popSfx(T)) : popSfx(T); snow.wiggle(3, 420); }
           } else if (a === 'window') {
             const winG = R.winG = T.el('g', {}, T.world);
             const id = 'swWin' + (++uid);
@@ -525,7 +525,7 @@
             T.el('rect', { x: WX - 20, y: SILL - 48, width: 40, height: 52, fill: '#4A3626' }, winG);
             put(T, snow, WX, SILL + 35, { look: 'receive', s: WS }); winG.appendChild(snow.pos);
           } else if (a === 'fall') {
-            hide(apple); sfx(T, 'slide_down');
+            hide(apple); cue('whistle_down', .6) || sfx(T, 'slide_down');
             return snow.move(WX, SILL + 35 + 70, 1500, 'ease-in').then(() => { hide(snow); if (R.winG) R.winG.style.display = 'none'; });
           }
           return null;
@@ -571,7 +571,7 @@
             put(T, plankD, X(670, 600), 548, { to: 'left' });
             for (let i = 0; i < 3; i++) {
               hammerD.wiggle(10, 360); plankD.hop(10, 360);
-              sfx(T, 'knock', () => T.tone([180, 90], .12, { type: 'square', vol: .12 }));
+              cue('hammer', .7) || sfx(T, 'knock', () => T.tone([180, 90], .12, { type: 'square', vol: .12 }));
               T.pop(X5 + [-60, 50, -10][i], 330, tr(['뚝딱!', '쿵쿵!', '뚝딱!'][i]));
               await sleep(700);
             }
@@ -656,14 +656,21 @@
         },
         sparkle: () => {
           if (R.set === 'queen_room') { sfx(T, 'sparkle'); mirrorShine(); } else if (R.set === 'hill') wake();
-          else sfx(T, 'sparkle');
+          else cue('ding_glock', .7) || sfx(T, 'sparkle');
         },
         shake: () => { T.shake(); if (R.set === 'queen_room') chandJolt(); },
         confetti: () => T.confetti(),
-        fx: n => { sfx(T, n, () => popSfx(T)); },
+        fx: n => {
+          if (n === 'thud' && cue('surprise_sting', .7)) return;      // 놀이판과 같게: 왕비 화남은 놀람 소리
+          if (n === 'whoosh' && cue('zip_away', .6)) return;
+          if (n === 'step_wood' && cue('tiptoe_pizz', .7)) return;
+          sfx(T, n, () => popSfx(T));
+        },
+        snd: (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } },
+        amb: (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
         pop: s => { const m = String(s).split(','); T.pop(+m[0], +m[1], tr(m.slice(2).join(','))); },
       };
-      return T.readPlay(READ_ACTS);
+      return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
 
     /* ===== 1. 거울 앞의 왕비 ===== */
