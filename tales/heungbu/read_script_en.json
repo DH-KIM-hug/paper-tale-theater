@@ -166,6 +166,9 @@
      "text": "흥부는 터벅터벅, 빈손으로 집에 돌아갔어요.",
      "src": "new",
      "en": "Heungbu trudged home, plod, plod, with empty hands.",
+     "before": [
+      "daeg"
+     ],
      "segs": [
       [
        "nar",
@@ -325,6 +328,9 @@
      "text": "제비들은 흥부네 지붕 위를 빙글 한 바퀴 돌고, 훨훨 날아갔어요.",
      "src": "new",
      "en": "The swallows circled once over Heungbu's roof, round and round, and flew away, flap, flap.",
+     "before": [
+      "daeg"
+     ],
      "segs": [
       [
        "nar",

@@ -43,8 +43,10 @@
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } }; // 소리 없이도 진행
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
+    /* 대금 한 소절(2026-10-29): 쓸쓸하거나 떠나보내는 순간에만. 놀이 .3, 읽기 ×0.8 */
+    const daeg = () => { try { const o = { vol: T.reading() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_korean_happy', 'birds_chirp_1', 'birds_chirp_2', 'stomach_growl', 'comic_brass', 'bonk', 'marimba_1', 'marimba_2', 'marimba_3', 'whistle_down', 'thud', 'harp_gliss', 'coins_1', 'party_horn', 'sad_trombone', 'surprise_sting', 'fall_crash', 'splash', 'pow', 'ding', 'pop', 'crash']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_korean_happy', 'birds_chirp_1', 'birds_chirp_2', 'stomach_growl', 'comic_brass', 'bonk', 'marimba_1', 'marimba_2', 'marimba_3', 'whistle_down', 'thud', 'harp_gliss', 'coins_1', 'party_horn', 'sad_trombone', 'surprise_sting', 'fall_crash', 'splash', 'pow', 'ding', 'pop', 'crash', 'daegeum']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     const cut = (k, s = 'pop', hold = 2600) => { hold = Math.min(hold, 2600); return T.cutImage([{ src: U('cut_' + k), sfx: s, hold }], { hold }); };   /* 2026-10-29 컷 멈춤은 2.6초까지(3200~3600 → 2600) */
 
@@ -286,6 +288,7 @@
     }
     if (READ_ACTS && typeof READ_ACTS === 'object') { // 짧은 배경 소리·동물 소리 동사: amb:이름:음량:초, animal:이름:음량
       READ_ACTS.amb = (n, v, d) => { try { if (!T.readInstant()) AudioFX.ambient(n, { vol: +v || .15, dur: +d || 3, fadeIn: 1 }); } catch (e) { /* 무시 */ } return null; };
+      READ_ACTS.daeg = () => { try { if (!T.readInstant()) daeg(); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
@@ -317,6 +320,7 @@
     sfx('bonk', .5);
     await say('형수가 주걱을 휘두르자 흥부 볼에 밥알이 붙었어요. 흥부는 그 밥알을 맛있게 먹었어요.');
     await say('흥부는 웃으며 말했어요. "괜찮아요. 밥알도 맛있어요!"');
+    daeg(); // 빈손으로 돌아가는 흥부 — 대금
     await h2.move(fx(120), GROUND, 900);
 
     /* 3. 제비집 */
@@ -354,6 +358,7 @@
     sfx('harp_gliss', .5); // 시간이 흘러 가을
     await say('가을이 되자 제비 가족은 따뜻한 남쪽 나라로 떠났어요.');
     await fly.move(1150, 240, 1400, 'ease-in');
+    daeg(); // 제비가 떠난 가을 하늘 — 대금
     await cut('south', 'pop', 3200);
 
     /* 5. 이듬해 봄, 박씨 */
