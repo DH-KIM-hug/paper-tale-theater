@@ -71,7 +71,22 @@
   }
   /* 썸네일(동화 그림) 톡 때 제목 읽기 — 보호자 '소리'에서 끌 수 있다(2026-10-29 사용자 요청). 탭 이름·안내는 그대로 읽는다 */
   const titleVoiceOff = () => { try { return localStorage.getItem('title_voice_off') === '1'; } catch (e) { return false; } };
-  function sayTitle(text) { if (!titleVoiceOff()) say(text); }
+  /* 제목과 함께 그 동화의 테마 효과음 한 번(2026-10-29 사용자 요청). 'a:' = sounds/animals, 나머지 = sounds/sfx. 2초 남짓 짧은 것만, 목소리보다 작게 */
+  const THEME_SFX = {
+    patjuk: 'a:tiger', frog: 'a:frog', rabbit: 'boing_steps', sunmoon: 'sparkle', sun_wind: 'blow', turnip: 'pull_pop',
+    lion_mouse: 'mouse_squeak_1', fox_crane: 'slurp_2', goldilocks: 'slurp_1', bremen: 'a:donkey', ant_grasshopper: 'pig_violin',
+    ugly_duckling: 'a:duck', three_pigs: 'a:pig', wolf_goats: 'knock_2', kongjwi: 'splash', kkultteok: 'bubbles', hansel: 'crunch',
+    cinderella: 'magic_wand', heungbu: 'coins_2', red_hood: 'knock', magpie: 'bell', magic_jar: 'cork', snow_white: 'chomp',
+    little_mermaid: 'splash_big', beauty_beast: 'harp_gliss', red_car: 'car_horn', unicorn: 'horse_neigh_1', princess_pea: 'cushion',
+    rapunzel: 'slide_down', frog_prince: 'ball_bounce', sleeping_beauty: 'yawn', witch_candy: 'theremin_wobble'
+  };
+  setTimeout(() => { try { AudioFX.preloadSfx(Object.values(THEME_SFX).filter(n => !n.startsWith('a:'))); } catch (e) { /* 무시 */ } }, 1500);
+  function themeSfx(id) {
+    const n = THEME_SFX[id];
+    if (!n || typeof AudioFX === 'undefined') return;
+    try { if (n.startsWith('a:')) AudioFX.animal(n.slice(2), .45); else AudioFX.sfx(n, .45); } catch (e) { /* 무시 */ }
+  }
+  function sayTitle(text, id) { if (titleVoiceOff()) return; if (id) themeSfx(id); say(text); }
   function fx(name) {
     try { if (typeof AudioFX !== 'undefined' && AudioFX[name]) AudioFX[name](); } catch (e) { /* 무시 */ }
   }
@@ -263,13 +278,13 @@
     paper('tap');
     renderHero();
     const t = heroList.find(x => x.id === heroId);
-    sayTitle(shown(t).title);
+    sayTitle(shown(t).title, t.id);
   }
   /* 작은 타일 톡 = 제목 읽기 + 큰 동화로 올라옴(스크롤했으면 맨 위로 부드럽게) */
   function heroSelect(id) {
     heroId = id; heroDir = 0; renderHero();
     const t = heroList.find(x => x.id === id);
-    if (t) sayTitle(shown(t).title);
+    if (t) sayTitle(shown(t).title, t.id);
     try { $('#view-tales').scrollTo({ top: 0, behavior: motion() ? 'smooth' : 'auto' }); $('#rows').scrollTo({ top: 0, behavior: motion() ? 'smooth' : 'auto' }); } catch (e) { /* 스크롤 못 해도 큰 동화는 바뀐다 */ }
   }
   {
@@ -456,7 +471,7 @@
       e.preventDefault();
       paper('down');
       peek(c);
-      sayTitle(L(`${shown(t).title}. 곧 열려요.`, `${shown(t).title}. Coming soon.`));
+      sayTitle(L(`${shown(t).title}. 곧 열려요.`, `${shown(t).title}. Coming soon.`), t.id);
       return;
     }
     if (!inHero && c.dataset.id !== heroId) { e.preventDefault(); paper('tap'); heroSelect(c.dataset.id); return; }
@@ -709,7 +724,7 @@
     if (k === 'sound') {
       h = `<h3>${name}</h3>
         <p class="how">${L('탭 이름과 안내는 늘 소리로 읽어 줘요. 아이가 아직 글을 못 읽기 때문이에요.', 'Tab names and guidance are always read aloud, since young children cannot read yet.')}</p>
-        ${switchHTML('titlevoice', !titleVoiceOff(), L('동화 그림을 누르면 제목 읽어 주기', 'Read the title when a tale picture is tapped'))}
+        ${switchHTML('titlevoice', !titleVoiceOff(), L('동화 그림을 누르면 제목과 테마 소리 들려주기', 'Play the title and theme sound when a tale picture is tapped'))}
         ${switchHTML('caption', !captionsOff(), L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'))}
         ${switchHTML('auto', autoOn(), L('자동 재생', 'Auto-play'))}
         <p class="how">${L('놀이 조작 없이 이야기만 흘러가요. 잠자리에 읽어 줄 때는 \'읽어 주기\' 탭을 써요.', 'The story plays on its own with no taps. For bedtime reading, use the Read to Me tab.')}</p>`;
@@ -998,7 +1013,7 @@
     if (pk) {
       paper('tap');
       if (flowCtx.sel === pk.dataset.id) { unlockSel(); return; }       // 같은 타일 다시 톡 = 열기
-      flowCtx.sel = pk.dataset.id; renderFlow(); sayTitle(title(flowCtx.sel));
+      flowCtx.sel = pk.dataset.id; renderFlow(); sayTitle(title(flowCtx.sel), flowCtx.sel);
       return;
     }
     const b = e.target.closest('[data-act]'); if (!b) return;
@@ -1132,7 +1147,7 @@
     const id = c.dataset.id, t = TALES.find(x => x.id === id);
     if (c.classList.contains('locked')) { paper('down'); peek(c); openLock(id); return; }
     if (nightSel !== id) {                                   // 첫 톡 = 제목 읽기 + 살짝 들림
-      nightSel = id; paper('tap'); paintNightSel(); sayTitle(shown(t).title);
+      nightSel = id; paper('tap'); paintNightSel(); sayTitle(shown(t).title, id);
       if (motion()) c.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px) scale(1.03)' }, { transform: 'translateY(-4px) scale(1.015)' }], { duration: 300, easing: 'cubic-bezier(.3,1.5,.5,1)', fill: 'forwards' });
       return;
     }
