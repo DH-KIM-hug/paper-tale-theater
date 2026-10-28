@@ -73,12 +73,23 @@
   const NUM = ['하나!', '둘!', '셋!', '넷!', '다섯!'];
 
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_adventure', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_adventure', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { sleep, say, camSnap } = T;
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['crickets_night_1', 'crickets_night_2', 'leaves_footsteps', 'birds_chirp_1', 'fire_crackle', 'stream_1', 'drum', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'sleepy_tuba', 'surprise_sting', 'comic_brass', 'latch_click', 'question', 'door_heavy_1', 'door_heavy_2', 'zip_away', 'party_horn', 'creak', 'squeak', 'crunch']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_adventure', 'crickets_night_1', 'crickets_night_2', 'leaves_footsteps', 'birds_chirp_1', 'fire_crackle', 'stream_1', 'drum', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'sleepy_tuba', 'surprise_sting', 'comic_brass', 'latch_click', 'question', 'door_heavy_1', 'door_heavy_2', 'zip_away', 'party_horn', 'creak', 'squeak', 'crunch']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     const fx = document.getElementById('fxL'); if (fx) fx.style.pointerEvents = 'none'; /* 말풍선·효과 글자는 누름을 받지 않는다 */
     const tr = T.tr;
@@ -444,6 +455,7 @@
       READ_ACTS.amb = (n, v, d) => { try { if (!T.readInstant()) AudioFX.ambient(n, { vol: +v || .15, dur: +d || 3, fadeIn: 1 }); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) return T.readPlay(READ_ACTS);
 
     /* --- 1. 집 안 밤: 문틈으로 엿듣기 --- */
@@ -462,6 +474,7 @@
     put(T, door, DOOR.edge + (DOOR.sill - DOOR.top) * aspOf('prop_door') / 2, DOOR.sill, { to: 'left', s: 1 / SC }); /* 배경 문틀에 맞춘 크기라 세로 화면에서도 줄이지 않는다. 손잡이는 틈 쪽 */
     await T.curtain(true);
     amb('crickets_night_1', { vol: .25, dur: 4 }); // 깊은 밤 귀뚜라미
+    intro.go(); // 시작 음악 (놀이)
     await say('옛날 옛날에 숲 옆 작은 집에 헨젤과 그레텔이 살았어요.');
     await say('그런데 집에는 먹을 것이 점점 떨어져, 찬장이 텅텅 비었지요.');
     await say('헨젤과 그레텔은 밤마다 배가 꼬르륵꼬르륵 울었어요.');
