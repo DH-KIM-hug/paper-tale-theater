@@ -285,7 +285,7 @@
     const say = async text => { await T.say(text); await sleep(gap); };
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { snow_forest_lb: 'winter_wind_1' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     try { AudioFX.preloadSfx(['sparkle', 'thud', 'womp', 'paper_up', 'paper_down', 'step_grass', 'blow_long', 'chomp', 'swish', 'pop', 'xylo_down', 'splash', 'tada', 'winter_wind_1', 'birds_chirp_1', 'horse_hooves_1', 'door_heavy_1', 'ding_glock', 'question', 'pull_pop', 'surprise_sting', 'whistle_down', 'water_drip', 'party_horn']); } catch (e) { /* */ }
@@ -416,12 +416,13 @@
               a.pos.style.opacity = 0;
               a.pos.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1400, fill: 'forwards' });
               a.move(a.x, FL, 1400, 'ease-out');
-              setTimeout(() => sfx(T, 'thud', .45), 700);
+              setTimeout(() => { cue('surprise_sting', .6) || sfx(T, 'thud', .45); }, 700);
               return null;
             }
             case 'transform': return T.anim(a.pos, [{ opacity: 1 }, { opacity: 0 }], 500).then(() => hide(a));
             case 'ride_off': {
-              (async () => { for (let i = 0; i < 6; i++) { AudioFX.sfx('step_grass'); a.hop(6, 420); await sleep(450); } })();
+              const hh = cue('horse_hooves_1', .6);   // 놀이판과 같게: 말발굽
+              (async () => { for (let i = 0; i < 6; i++) { if (!hh) AudioFX.sfx('step_grass'); a.hop(6, 420); await sleep(450); } })();
               setTimeout(() => T.pop(P ? a.x + 40 : a.x + 300, FL - 340, tr('따각따각')), 1300);
               a.move(1150, FL, 2800, 'linear').then(() => hide(a)); return null;
             }
@@ -466,7 +467,8 @@
         glow: n => { const g = { belle, beast, prince, bush5, ring }[n]; if (g) glow(g, n === 'prince' ? 1400 : 1200); },
         fx: n => {
           const V = { thud: .45, blow_long: .4, womp: .4, xylo_down: .5, splash: .5 };
-          if (n === 'sparkle') return sparkleSfx(T); if (n === 'pop') return popSfx(T);
+          if (n === 'sparkle') return sparkleSfx(T); if (n === 'pop') return cue('pull_pop', .8) || popSfx(T);
+          if (n === 'splash' && cue('water_drip', .6)) return null;
           if (n === 'tada') return sfx(T, 'tada', () => sparkleSfx(T));
           return sfx(T, n, V[n]);
         },
@@ -481,7 +483,7 @@
         hat: () => {
           put(T, hat, father.x, FL - 212 + 12); RF();
           hat.pos.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '40px 200px', rotate: '70deg' }], { duration: 600, easing: 'ease-in', fill: 'forwards' });
-          sfx(T, 'paper_down'); return null;
+          cue('whistle_down', .6) || sfx(T, 'paper_down'); return null;
         },
         table: op => {
           if (op === 'long') { put(T, tableL, tag === 'R07' ? X(570, 525) : X(560, 520), FL + 4); diningFront(); }
@@ -540,9 +542,11 @@
       /* 아침 장면 전환: 대본의 '꿈' 장면에서 벨이 잠들기 전 해 뜨고 지기를 기다린다 */
       const at0 = R.belle;
       R.belle = (op, ...r) => { if (cyc && op === 'at') { const c = cyc; cyc = null; return c.then(() => at0(op, ...r)); } return at0(op, ...r); };
+      R.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } return null; };
+      R.amb = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } return null; };
       return R;
     })();
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 가난해진 가족 ===== */
     scene('cottage');

@@ -390,6 +390,9 @@
       "set:dining",
       "father:at:560,505:eat",
       "table:long"
+     ],
+     "before": [
+      "snd:door_heavy_1:.5"
      ]
     },
     {
@@ -1645,7 +1648,8 @@
      ],
      "before": [
       "confetti",
-      "fx:tada"
+      "fx:tada",
+      "snd:party_horn:.8:900"
      ]
     },
     {
