@@ -69,6 +69,9 @@
     if (typeof Narrator === 'undefined') return;
     try { Narrator.speak(text, { bubble: false }); } catch (e) { /* 무시 */ }
   }
+  /* 썸네일(동화 그림) 톡 때 제목 읽기 — 보호자 '소리'에서 끌 수 있다(2026-10-29 사용자 요청). 탭 이름·안내는 그대로 읽는다 */
+  const titleVoiceOff = () => { try { return localStorage.getItem('title_voice_off') === '1'; } catch (e) { return false; } };
+  function sayTitle(text) { if (!titleVoiceOff()) say(text); }
   function fx(name) {
     try { if (typeof AudioFX !== 'undefined' && AudioFX[name]) AudioFX[name](); } catch (e) { /* 무시 */ }
   }
@@ -260,13 +263,13 @@
     paper('tap');
     renderHero();
     const t = heroList.find(x => x.id === heroId);
-    say(shown(t).title);
+    sayTitle(shown(t).title);
   }
   /* 작은 타일 톡 = 제목 읽기 + 큰 동화로 올라옴(스크롤했으면 맨 위로 부드럽게) */
   function heroSelect(id) {
     heroId = id; heroDir = 0; renderHero();
     const t = heroList.find(x => x.id === id);
-    if (t) say(shown(t).title);
+    if (t) sayTitle(shown(t).title);
     try { $('#view-tales').scrollTo({ top: 0, behavior: motion() ? 'smooth' : 'auto' }); $('#rows').scrollTo({ top: 0, behavior: motion() ? 'smooth' : 'auto' }); } catch (e) { /* 스크롤 못 해도 큰 동화는 바뀐다 */ }
   }
   {
@@ -453,7 +456,7 @@
       e.preventDefault();
       paper('down');
       peek(c);
-      say(L(`${shown(t).title}. 곧 열려요.`, `${shown(t).title}. Coming soon.`));
+      sayTitle(L(`${shown(t).title}. 곧 열려요.`, `${shown(t).title}. Coming soon.`));
       return;
     }
     if (!inHero && c.dataset.id !== heroId) { e.preventDefault(); paper('tap'); heroSelect(c.dataset.id); return; }
@@ -705,7 +708,8 @@
     let h = '';
     if (k === 'sound') {
       h = `<h3>${name}</h3>
-        <p class="how">${L('제목과 탭 이름은 늘 소리로 읽어 줘요. 아이가 아직 글을 못 읽기 때문이에요.', 'Titles and tab names are always read aloud, since young children cannot read yet.')}</p>
+        <p class="how">${L('탭 이름과 안내는 늘 소리로 읽어 줘요. 아이가 아직 글을 못 읽기 때문이에요.', 'Tab names and guidance are always read aloud, since young children cannot read yet.')}</p>
+        ${switchHTML('titlevoice', !titleVoiceOff(), L('동화 그림을 누르면 제목 읽어 주기', 'Read the title when a tale picture is tapped'))}
         ${switchHTML('caption', !captionsOff(), L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'))}
         ${switchHTML('auto', autoOn(), L('자동 재생', 'Auto-play'))}
         <p class="how">${L('놀이 조작 없이 이야기만 흘러가요. 잠자리에 읽어 줄 때는 \'읽어 주기\' 탭을 써요.', 'The story plays on its own with no taps. For bedtime reading, use the Read to Me tab.')}</p>`;
@@ -788,6 +792,7 @@
     const o = e.target.dataset && e.target.dataset.opt;
     if (o === 'caption') setFlag('captions_off', !e.target.checked);
     else if (o === 'auto') setFlag('auto_play', e.target.checked);
+    else if (o === 'titlevoice') setFlag('title_voice_off', !e.target.checked);
   });
   guardPane.addEventListener('click', e => {
     const chip = e.target.closest('.chip[data-row]');
@@ -993,7 +998,7 @@
     if (pk) {
       paper('tap');
       if (flowCtx.sel === pk.dataset.id) { unlockSel(); return; }       // 같은 타일 다시 톡 = 열기
-      flowCtx.sel = pk.dataset.id; renderFlow(); say(title(flowCtx.sel));
+      flowCtx.sel = pk.dataset.id; renderFlow(); sayTitle(title(flowCtx.sel));
       return;
     }
     const b = e.target.closest('[data-act]'); if (!b) return;
@@ -1127,7 +1132,7 @@
     const id = c.dataset.id, t = TALES.find(x => x.id === id);
     if (c.classList.contains('locked')) { paper('down'); peek(c); openLock(id); return; }
     if (nightSel !== id) {                                   // 첫 톡 = 제목 읽기 + 살짝 들림
-      nightSel = id; paper('tap'); paintNightSel(); say(shown(t).title);
+      nightSel = id; paper('tap'); paintNightSel(); sayTitle(shown(t).title);
       if (motion()) c.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px) scale(1.03)' }, { transform: 'translateY(-4px) scale(1.015)' }], { duration: 300, easing: 'cubic-bezier(.3,1.5,.5,1)', fill: 'forwards' });
       return;
     }
