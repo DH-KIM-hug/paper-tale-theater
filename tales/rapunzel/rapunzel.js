@@ -241,6 +241,17 @@
   }
 
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_magic', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_magic', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ CLIMB = 6000, BRAID = 2600, RISE = 2200, WALK = 3600;   // 속도 상수 (SPEC §2-7)
@@ -260,7 +271,7 @@
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const TX = X(640, 560);                        // 탑의 x (3·4·6·7·9장 공통)
     const HOOKX = X(905, 905);                     // 탑 안 창 오른쪽 벽의 고리 x
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'sparkle', 'tada', 'step_grass', 'pop', 'slide_up', 'slide_down', 'chop', 'knock', 'cork', 'creak', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'whistle_up', 'whistle_wobble', 'pull_pop', 'question', 'ding_glock', 'surprise_sting', 'horse_neigh_1', 'party_horn']);
+    AudioFX.preloadSfx(['intro_magic', 'paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'sparkle', 'tada', 'step_grass', 'pop', 'slide_up', 'slide_down', 'chop', 'knock', 'cork', 'creak', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'whistle_up', 'whistle_wobble', 'pull_pop', 'question', 'ding_glock', 'surprise_sting', 'horse_neigh_1', 'party_horn']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율로 ASP 를 덮어쓴다 */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -563,6 +574,7 @@
       RA.amb = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } };
       return RA;
     })();
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 담 너머 텃밭 (자동) ===== */
@@ -571,6 +583,7 @@
     put(T, mother, X(600, 470), FL, { look: 'window', to: 'right' });
     camSnap(P ? 420 : 500, 280, 1);
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     await say('옛날에 아기를 기다리는 부부가 살았어요. 아기가 곧 올 거예요.');
     setTimeout(() => T.pop(760, 120, tr('반짝!')), 1500);
     await say('담 너머 텃밭은 마녀 고텔의 마법 텃밭이라 아무도 들어가지 못했어요.');
