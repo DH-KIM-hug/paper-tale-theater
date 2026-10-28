@@ -239,6 +239,17 @@
   }
 
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_magic', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_magic', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { sleep, camSnap, tr } = T;
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ SAIL = 8000, COUNT_A = 1400, COUNT_B = 1300, CLIMB = 6000;   // §2-7 속도 상수
     const say = async text => { await T.say(text); await sleep(GAP); };
@@ -253,7 +264,7 @@
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const TX = X(560, 520);                        // 탑(침대) 가운데 x — 4·5·6·7·8장 공통
-    AudioFX.preloadSfx && AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'creak', 'boom', 'sparkle', 'tada', 'step_wood', 'poke', 'splash', 'bubbles', 'waves', 'rain_1', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'thunder', 'door_heavy_1', 'question', 'ding_glock', 'cushion', 'sleepy_tuba', 'party_horn', 'applause_1']);
+    AudioFX.preloadSfx && AudioFX.preloadSfx(['intro_magic', 'paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'creak', 'boom', 'sparkle', 'tada', 'step_wood', 'poke', 'splash', 'bubbles', 'waves', 'rain_1', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'thunder', 'door_heavy_1', 'question', 'ding_glock', 'cushion', 'sleepy_tuba', 'party_horn', 'applause_1']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 (FIXED_ASP 는 덮어쓰지 않는다) */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -473,6 +484,7 @@
         T.pop(x, +y, tr(txt), POPC[txt]);
       },
     };
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 진짜 공주를 찾아서 (톡 1 — 배) ===== */
@@ -484,6 +496,7 @@
     put(T, prince, X(300, 420), FL, { look: 'sigh' });
     if (P) camSnap(770, 280, 1);
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     await say('옛날에 진짜 공주와 결혼하고 싶은 왕자가 있었어요.');
     await T.ask('배를 톡 눌러 봐요.', () => T.tap(boat.hit, { prompt: '배를 톡 눌러 봐요.' }));
     sfx(T, 'swish', .35); T.pop(754, 200, tr('출렁출렁'));
