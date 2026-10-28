@@ -112,7 +112,7 @@
         brick: { n: 3, build: 'pig3_build', play: 'pig3_play', pigH: 215, playH: 215, pile: 'bricks', pileH: 140, house: 'house_brick', taps: 10, tick: 'thud' },
       };
       const LOT = { strawlot: 'straw', woodlot: 'wood', bricklot: 'brick' };
-      const rPIECE = { straw: ['#D9A94E', 34, 9], wood: ['#8A5E3C', 46, 9], brick: ['#A93B32', 28, 13] };
+      const rPIECE = { straw: [40, 41], wood: [50, 41], brick: [36, 20] };
       const hx = P ? 640 : 700, hy = P ? 420 : GROUND, houseH = P ? 310 : 390;
       const BL = P ? { pigX: 560, pigY: 548, pigS: .85, pileX: 735, pileY: 556 } : { pigX: 160, pigY: GROUND, pigS: 1, pileX: 385, pileY: 490 };
       let key = '', mode = '', kind = '', seen = {}, A = {}, house = null, stages = [], pile = null, glow = null, vh = [], vstages = [], vchain = Promise.resolve();
@@ -129,13 +129,10 @@
         try { an.cancel(); } catch (e) { /* 이미 끝남 */ }
       };
       const dropPieces = (k, x0, y0, x1, y1, n = 3) => {
-        const [col, w, h] = rPIECE[k];
+        const [w, h] = rPIECE[k];
         for (let i = 0; i < n; i++) {
           const g = T.el('g', {}, T.world); g.style.pointerEvents = 'none';
-          T.el('rect', { x: -w / 2 + 2, y: -h / 2 + 2, width: w, height: h, rx: 1.5, fill: '#2E241C', 'fill-opacity': .22 }, g);
-          T.el('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 1.5, fill: col }, g);
-          if (k === 'straw') T.el('rect', { x: -2, y: -h / 2, width: 4, height: h, fill: '#8A6A2E' }, g);
-          if (k === 'brick') T.el('rect', { x: -w / 2 + 3, y: -1, width: w - 6, height: 2, fill: '#E8D9BE', 'fill-opacity': .7 }, g);
+          T.el('image', { href: `../../assets/v3w/tp_chip_${k}.webp`, x: -w / 2, y: -h / 2, width: w, height: h }, g);
           const tx = x1 + (i - (n - 1) / 2) * 38, ty = y1 + (i % 2) * 8, mx = (x0 + tx) / 2, my = Math.min(y0, ty) - 90, rot = (i % 2 ? 1 : -1) * (14 + i * 6);
           g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
           const an = g.animate([
@@ -409,7 +406,7 @@
     }
 
     /* 3~5. 집 짓기: 짓는 단계 그림이 땅에서 위로 올라오며 쌓인다 (그림이 없으면 완성 그림만 올라온다) */
-    const PIECE = { straw: ['#D9A94E', 34, 9], wood: ['#8A5E3C', 46, 9], brick: ['#A93B32', 28, 13] };
+    const PIECE = { straw: [40, 41], wood: [50, 41], brick: [36, 20] };
     const stageArt = async kind => {
       const ok = await Promise.all([1, 2, 3].map(i => T.preload(U(`tp2_${kind}_s${i}`))));
       return ok.every(Boolean);
@@ -425,13 +422,10 @@
     }
     /* 얇고 납작한 종이 조각 몇 장이 더미에서 집 자리로 톡 떨어진다 */
     function drop(kind, x0, y0, x1, y1, n = 3) {
-      const [col, w, h] = PIECE[kind];
+      const [w, h] = PIECE[kind];
       for (let i = 0; i < n; i++) {
         const g = T.el('g', {}, T.world); g.style.pointerEvents = 'none';
-        T.el('rect', { x: -w / 2 + 2, y: -h / 2 + 2, width: w, height: h, rx: 1.5, fill: '#2E241C', 'fill-opacity': .22 }, g);
-        T.el('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 1.5, fill: col }, g);
-        if (kind === 'straw') T.el('rect', { x: -2, y: -h / 2, width: 4, height: h, fill: '#8A6A2E' }, g);
-        if (kind === 'brick') T.el('rect', { x: -w / 2 + 3, y: -1, width: w - 6, height: 2, fill: '#E8D9BE', 'fill-opacity': .7 }, g);
+        T.el('image', { href: `../../assets/v3w/tp_chip_${kind}.webp`, x: -w / 2, y: -h / 2, width: w, height: h }, g);
         const tx = x1 + (i - (n - 1) / 2) * 38, ty = y1 + (i % 2) * 8, mx = (x0 + tx) / 2, my = Math.min(y0, ty) - 90;
         const rot = (i % 2 ? 1 : -1) * (14 + i * 6);
         g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';

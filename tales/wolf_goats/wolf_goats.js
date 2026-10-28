@@ -184,10 +184,8 @@
           const cp = T.el('clipPath', { id: 'wgPawClip' }, T.world); T.el('rect', { x: -20, y: 374, width: 240, height: 200 }, cp);
           const holder = T.el('g', { 'clip-path': 'url(#wgPawClip)' }, T.world);
           paw = T.actor(holder, 95, 290, g => {
-            const w = T.el('g', { filter: 'url(#pp)', transform: 'scale(1.35)' }, g);
-            T.el('rect', { x: -21, y: -70, width: 42, height: 100, rx: 18, fill: '#F4F6FA' }, w);
-            T.el('ellipse', { cx: 0, cy: 34, rx: 31, ry: 22, fill: '#ECE9E3' }, w);
-            [[-19, 52], [0, 59], [19, 52]].forEach(([x, y]) => T.el('circle', { cx: x, cy: y, r: 10.5, fill: '#F4F6FA' }, w));
+            const w = T.el('g', { transform: 'translate(0 45) rotate(55)' }, g);
+            T.el('image', { href: A('wg_paw'), x: -131, y: -91, width: 170, height: 146 }, w);
           });
         }
         if (key === 'hide') {
@@ -435,11 +433,9 @@
     const clipId = 'wgPawClip';
     const cp = T.el('clipPath', { id: clipId }, T.world); T.el('rect', { x: -20, y: 374, width: 240, height: 200 }, cp);
     const pawHolder = T.el('g', { 'clip-path': `url(#${clipId})` }, T.world);
-    const paw = T.actor(pawHolder, 95, 290, g => { // 밀가루 묻은 하얀 발(종이 조각): 팔, 발바닥, 발가락 셋
-      const w = T.el('g', { filter: 'url(#pp)', transform: 'scale(1.35)' }, g);
-      T.el('rect', { x: -21, y: -70, width: 42, height: 100, rx: 18, fill: '#F4F6FA' }, w);
-      T.el('ellipse', { cx: 0, cy: 34, rx: 31, ry: 22, fill: '#ECE9E3' }, w);
-      [[-19, 52], [0, 59], [19, 52]].forEach(([x, y]) => T.el('circle', { cx: x, cy: y, r: 10.5, fill: '#F4F6FA' }, w));
+    const paw = T.actor(pawHolder, 95, 290, g => { // 밀가루 묻은 하얀 발(그림 wg_paw, 발바닥이 아래로 오게 돌림)
+      const w = T.el('g', { transform: 'translate(0 45) rotate(55)' }, g);
+      T.el('image', { href: A('wg_paw'), x: -131, y: -91, width: 170, height: 146 }, w);
     });
     kids = PAW_SPOTS.map(([x, y], i) => { const k = kid(T, i + 1, x, y, 85); k.look('left'); return k; }); // 모두 문 쪽을 본다
     if (portrait()) await T.camTo(180, 280, 1, 600); // 세로: 문이 왼쪽 끝이라 문 쪽으로

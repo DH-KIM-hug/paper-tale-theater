@@ -145,9 +145,8 @@
   const bob = el => el.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 900, iterations: 3, easing: 'ease-in-out' });
 
   function numCard(T, n, x, y, s = 1) {
-    const w = 100 * s, h = 130 * s;
-    const g = T.paper(T.world, [['rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 10 * s, fill: '#F6ECD8' }],
-      ['rect', { x: -w / 2 + 8 * s, y: -h / 2 + 8 * s, width: w - 16 * s, height: h - 16 * s, rx: 6 * s, fill: 'none', stroke: '#6B4A32', 'stroke-width': 3 * s }]],
+    const w = 100 * s, h = w * 684 / 500; // 카드 그림 mg2_card 비율
+    const g = T.paper(T.world, [['image', { href: AS + 'mg2_card.webp', x: -w / 2, y: -h / 2, width: w, height: h }]],
       { transform: `translate(${x},${y})` });
     T.el('text', { x: 0, y: 30 * s, 'text-anchor': 'middle', 'font-size': 86 * s, 'font-weight': 800, fill: '#A93B32', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: String(n) }, g);
     return { n, g, x, y };

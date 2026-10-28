@@ -50,7 +50,7 @@
     duck: 'v3w/fc_duck.webp', butterfly: 'v3w/fc_butterfly.webp', pot: 'v3w/fc_pot.webp',
     plate: 'v3w/fc_plate.webp', plate_empty: 'v3w/fc_plate_empty.webp', plate_soup: 'v3w/fc_plate_soup.webp',
     bottle: 'v3w/fc_bottle.webp', bowl: 'v3w/fc_bowl.webp', flower: 'v3w/fc_flower.webp',
-    mouth_crane: 'v3w/fc_mouth_crane.webp', mouth_fox: 'v3w/fc_mouth_fox.webp', mouth_duck: 'v3w/fc_mouth_duck.webp', mouth_butterfly: 'v3w/fc_mouth_butterfly.webp',
+    mouth_crane: 'v3w/fc_mouth_crane.webp', mouth_fox: 'v3w/fc_mouth_fox.webp', mouth_duck: 'v3w/fc_mouth_duck.webp', mouth_butterfly: 'v3w/fc_mouth_butterfly.webp', mouth_butterfly_straw: 'v3w/fc_mouth_butterfly_straw.webp',
     cut_peck: 'v3w/fc_cut_peck.webp', cut_lick: 'v3w/fc_cut_lick.webp', cut_stuck: 'v3w/fc_cut_stuck.webp', cut_sorry: 'v3w/fc_cut_sorry.webp',
     feast_table: 'v3w/fc_feast_table.webp', invite: 'v3w/fc_invite.webp',
   };
@@ -499,14 +499,14 @@
     plate: (T, g) => pic(T, g, 'plate', { box: [-58, -30.3, 116, 59.6] }) || T.paper(g, [['ellipse', { cx: 0, cy: 8, rx: 52, ry: 11, fill: C.cream, stroke: C.gold, 'stroke-width': 3 }], ['ellipse', { cx: 0, cy: 6, rx: 38, ry: 5, fill: C.amber }]]),
     bottle: (T, g) => { const s = T.el('g', { transform: 'translate(0,50) scale(.55)' }, g); DISH.bottle.draw(T, s); },
   };
-  /* 입 모양 카드: 그림이면 얼굴 그림을 동그랗게 오려 넣는다 (나비 빨대 입은 그림에 없어서 코드로 덧그린다) */
+  /* 입 모양 카드: 그림이면 얼굴 그림을 동그랗게 오려 넣는다 (나비 빨대 입은 그림에 없어서 빨대 그림 fc_mouth_butterfly_straw 를 덧얹는다) */
   function mouthArt(T, g, k) {
     const u = artUrl('mouth_' + k); if (!u) return false;
     const id = 'fcMouthClip' + (++clipN);
     const cp = T.el('clipPath', { id }, g); T.el('circle', { r: 76 }, cp);
     const im = T.el('image', { href: u, x: -76, y: -76, width: 152, height: 152, preserveAspectRatio: 'xMidYMid slice' }, g);
     im.setAttribute('clip-path', `url(#${id})`);
-    if (k === 'butterfly') [[C.cream, 11], [C.ink, 5]].forEach(([c, w]) => T.el('path', { d: 'M2 28 Q4 54 22 58 Q40 60 40 44 Q40 30 26 34', stroke: c, 'stroke-width': w, fill: 'none', 'stroke-linecap': 'round' }, g));
+    if (k === 'butterfly' && artUrl('mouth_butterfly_straw')) T.el('image', { href: artUrl('mouth_butterfly_straw'), x: -6, y: -78, width: 26.4, height: 56, transform: 'scale(1,-1)' }, g); // 말린 빨대 그림(돌돌 말린 쪽이 아래로 오게 뒤집음)
     return true;
   }
   const MOUTH_GB = {

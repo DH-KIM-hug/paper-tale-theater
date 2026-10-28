@@ -187,10 +187,9 @@
   }
   /* 종이 도형 (1장 고르기 보기): 셋 다 같은 금색·같은 크기 */
   function shape(T, kind, x, y, size) {
-    const g = T.el('g', { transform: `translate(${x},${y})` }, T.world), body = T.el('g', { filter: 'url(#pp)' }, g), s = size / 2, F = GOLD;
-    if (kind === 'circle') T.el('circle', { cx: 0, cy: 0, r: s, fill: F }, body);
-    else if (kind === 'square') T.el('rect', { x: -s, y: -s, width: size, height: size, rx: 4, fill: F }, body);
-    else T.el('path', { d: `M0 ${-s} L${s} ${s} L${-s} ${s} Z`, fill: F }, body);
+    const g = T.el('g', { transform: `translate(${x},${y})` }, T.world), body = T.el('g', { filter: 'url(#pp)' }, g), s = size / 2;
+    const h = size * ({ circle: 600 / 600, square: 600 / 598, triangle: 534 / 600 }[kind] || 1); // 그림 fp_shape_* 비율
+    T.el('image', { href: `${AS}fp_shape_${kind}.webp`, x: -s, y: s - h, width: size, height: h }, body);
     return { pos: g, body, x, y, kind, scale: 1 };
   }
   /* 물 파문 (3장) */

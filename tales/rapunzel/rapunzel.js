@@ -361,7 +361,7 @@
     }
 
     /* ---- 코드로 그리는 연출 (SPEC §5) ---- */
-    const sillPaper = () => T.paper(T.world, [['rect', { x: -40, y: -8, width: 80, height: 12, rx: 2, fill: BROWN }]], { transform: `translate(${TX},${FL + WIN_DY + 6})` });
+    const sillPaper = () => T.paper(T.world, [['image', { href: src('rp_sill'), x: -40, y: -10.6, width: 80, height: 80 * 193 / 900 }]], { transform: `translate(${TX},${FL + WIN_DY + 6})` });
     /* 마법 반짝: 별 셋 */
     function magic(x, y) {
       sparkleSfx(T);
