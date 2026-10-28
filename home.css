@@ -1053,7 +1053,9 @@ body.app .view[hidden] { display: none; }
 .g-head h2 { margin: 0; font-size: var(--fs-title-l); font-weight: 850; line-height: 1.15; letter-spacing: .04em; color: var(--ink); filter: url(#cut); }
 .g-close, .g-pback { display: inline-flex; align-items: center; gap: 6px; min-height: var(--hit-adult); min-width: var(--hit-adult); padding: 0 16px 0 10px; border: 2px solid var(--ink-3); border-radius: var(--r-pill);
   background: var(--paper); color: var(--ink); font: 700 18px/1.2 var(--font); letter-spacing: .04em; cursor: pointer; }
-.g-close svg, .g-pback svg { flex: none; width: 28px; height: 28px; }
+.g-close svg, .g-pback svg, .g-close img, .g-pback img { flex: none; width: 28px; height: 28px; }
+.g-back-ic { transform: scaleX(-1); }
+.g-item img.g-ic { flex: none; width: 32px; height: 32px; object-fit: contain; }
 .g-body { flex: 1; min-height: 0; display: grid; grid-template-columns: 320px minmax(0, 1fr); column-gap: var(--s-6); padding: 0 var(--pad); }
 .g-list { min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 4px 8px 24px 4px; scrollbar-width: none; }
 .g-list::-webkit-scrollbar, .g-pane::-webkit-scrollbar { display: none; }

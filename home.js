@@ -651,6 +651,8 @@
   }
 
   /* ── S9 보호자 영역: 아이패드·가로 = 2열(왼쪽 목록, 오른쪽 내용), 아이폰 세로 = 1열 push ── */
+  /* 뒤로 단추: 생성 그림 ic_arrow(오른쪽 화살)를 CSS 로 뒤집어 쓴다(.g-back-ic) */
+  const backIc = () => UIA.has('ic_arrow') ? uiImg('ic_arrow', 'g-back-ic') : '<svg aria-hidden="true"><use href="#i-back"/></svg>';
   const GI = {
     sound: '<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/>',
     time: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/>',
@@ -673,7 +675,7 @@
   function drawGuardList() {
     $('#guardTitle').textContent = L('보호자', 'Grown-ups');
     $('#guardCloseT').textContent = L('닫기', 'Close');
-    guardList.innerHTML = guardItems().map(i => `<button type="button" class="g-item${i.k === curGuard ? ' on' : ''}" data-k="${i.k}" aria-current="${i.k === curGuard}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${i.k === 'pass' ? '<use href="#i-ticket"/>' : GI[i.k]}</svg><span>${i.t}</span></button>`).join('');
+    guardList.innerHTML = guardItems().map(i => `<button type="button" class="g-item${i.k === curGuard ? ' on' : ''}" data-k="${i.k}" aria-current="${i.k === curGuard}">${UIA.has('g_' + i.k) ? uiImg('g_' + i.k, 'g-ic') : `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${i.k === 'pass' ? '<use href="#i-ticket"/>' : GI[i.k]}</svg>`}<span>${i.t}</span></button>`).join('');
   }
   function openGuard() {
     hint.hidden = true;
@@ -725,7 +727,7 @@
   }
   function drawGuardPane() {
     clearInterval(linkTick);
-    const k = curGuard, back = `<button type="button" class="g-pback" data-act="g-back"><svg aria-hidden="true"><use href="#i-back"/></svg>${L('보호자', 'Grown-ups')}</button>`;
+    const k = curGuard, back = `<button type="button" class="g-pback" data-act="g-back">${backIc()}${L('보호자', 'Grown-ups')}</button>`;
     const name = (guardItems().find(i => i.k === k) || {}).t || '';
     let h = '';
     if (k === 'sound') {
@@ -1548,6 +1550,9 @@
     hole.classList.add('art');
     hole.insertAdjacentHTML('afterbegin', `<img class="tab-art" src="assets/ui/${key}.webp${key === 'logo_mark' ? '?v=moon1' : ''}" alt="" aria-hidden="true" draggable="false">`);
   });
+  /* 보호자 톱니·닫기도 생성 그림으로(2026-10-29 사용자 지시: SVG 그림 → 이미지) */
+  if (UIA.has('ic_gear')) { const g = $('#parentBtn .gear-ic'); if (g) g.outerHTML = uiImg('ic_gear', 'gear-ic'); }
+  if (UIA.has('ic_arrow')) { const b = $('#guardClose svg'); if (b) b.outerHTML = backIc(); }
   /* 빈 상태·잠자리 머리 그림(assets/ui/empty_shelf · empty_night · night_head .webp)도 UI_ART 에 올라오면 그림으로 */
   [['#empty .empty-pic', 'empty_shelf'], ['#nightEmpty .empty-pic', 'empty_night'], ['#pzEmpty .empty-pic', 'empty_stickers'], ['#nHole', 'night_head']].forEach(([sel, key]) => {
     const el = $(sel); if (el && UIA.has(key)) el.insertAdjacentHTML('afterbegin', uiImg(key));
