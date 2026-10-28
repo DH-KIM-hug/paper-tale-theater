@@ -251,7 +251,7 @@
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };         // 말풍선 없는 소리(허밍)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { rp_bg_garden_night_lb: 'crickets_night_1', rp_bg_forest_day_v2: 'birds_chirp_1', rp_bg_forest_dusk_v2: 'birds_chirp_2', rp_bg_field_v2: 'birds_chirp_1' };
     const bgAmb = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };   // 배경이 바뀔 때마다(setBg) 이전 배경 소리를 끄고 새 장면 소리 시작
     const scene = key => { setBg(key); camSnap(500, 280, 1); };
@@ -492,7 +492,7 @@
       };
       const prop1 = (a, extra = {}) => ({ at: s => { const [x, y] = NUM(s); put(T, a, mx(x), extra.y != null ? extra.y : y); }, hop: () => { a.hop(6, 300); } });
       const SFX = { chop: [.6, () => T.tone([900, 300], .12, { type: 'square', vol: .18 })], cork: [.5], knock: [.5], step_grass: [.3], paper_down: [.4], paper_tap: [.4], swish: [.3], pop: [.4], tada: [] };
-      const CUTS = { caught: ['rp_cut_caught', () => AudioFX.sfx('sparkle', .5)], climb: ['rp_cut_climb', () => AudioFX.sfx('paper_up', .4)], peek: ['rp_cut_peek', null], snip: ['rp_cut_snip', () => AudioFX.sfx('chop', .5)], reunion: ['rp_cut_reunion', () => AudioFX.sfx('pop', .4)] };
+      const CUTS = { caught: ['rp_cut_caught', () => cue('surprise_sting', .6) || AudioFX.sfx('sparkle', .5)], climb: ['rp_cut_climb', () => AudioFX.sfx('paper_up', .4)], peek: ['rp_cut_peek', null], snip: ['rp_cut_snip', () => AudioFX.sfx('chop', .5)], reunion: ['rp_cut_reunion', () => AudioFX.sfx('pop', .4)] };
       const acts = {
         set(k) { n++; setBg(bgKey(k)); curBg = bgKey(k); winDrawn = false; if (curBg === 'rp_bg_room_v2') put(T, hook, HOOKX, 250); camTo0(500); },
         cam(s) { const [x, y, z] = NUM(s); if (x === 500 && P) camTo0(PCAM[n] || 500); else { camX = x; camSnap(x, y, z); } },
@@ -550,16 +550,20 @@
         petals() { petals(X(480, 400), X(800, 680)); },
         confetti() { T.confetti(); },
         glow(w) { glow(w === 'bird' ? bird : rabbit, 1200); },
-        fx(name) { const [v, f] = SFX[name] || [.4]; if (name === 'tada') return AudioFX.sfx('tada') || sparkleSfx(T); if (name === 'chop' || name === 'pop' || name === 'paper_down') return AudioFX.sfx(name, v, f); AudioFX.sfx(name, v, f); },
+        fx(name) { const [v, f] = SFX[name] || [.4]; if (name === 'cork' && cue('pull_pop', .8)) return; if (name === 'tada') return AudioFX.sfx('tada') || sparkleSfx(T); if (name === 'chop' || name === 'pop' || name === 'paper_down') return AudioFX.sfx(name, v, f); AudioFX.sfx(name, v, f); },
         pop(s) { const p = s.split(','); T.pop(popX(+p[0]), +p[1], tr(p.slice(2).join(','))); },
         cut(k) { const [f, sf] = CUTS[k]; curCut = T.cutImage([{ src: src(f), sfx: sf, hold: CUT_HOLD }], { hold: CUT_HOLD }); curCut.then(() => { curCut = null; }, () => { curCut = null; }); },
       };
       acts.rampion = (v, s) => { if (v === 'at') { const [x, y] = NUM(s); put(T, rampion, mx(x), y, { look: 'in' }); } else if (v === 'pull') { rampion.look('out'); rampion.move(rampion.x, FL - 60, 350, 'ease-out').then(() => rampion.move(father.x + 60, FL - 70, 400)); } };
       /* 컷이 떠 있는 동안에는 뒤따르는 동사(climb 제외: 컷 아래에서 오르기)가 컷이 끝나기를 기다린다 */
       const gate = f => (...a) => (curCut && !inst() ? curCut.then(() => f(...a)) : f(...a));
-      return Object.fromEntries(Object.entries(acts).map(([k, f]) => [k, ['cut', 'climb', 'set'].includes(k) ? f : gate(f)]));
+      const RA = Object.fromEntries(Object.entries(acts).map(([k, f]) => [k, ['cut', 'climb', 'set'].includes(k) ? f : gate(f)]));
+      /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초>. 소리는 대사·컷을 막지 않는다 */
+      RA.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } };
+      RA.amb = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } };
+      return RA;
     })();
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 담 너머 텃밭 (자동) ===== */
     scene('rp_bg_cottage');

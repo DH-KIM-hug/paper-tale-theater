@@ -629,7 +629,8 @@
       ]
      ],
      "before": [
-      "fx:step_grass"
+      "fx:step_grass",
+      "snd:horse_neigh_1:.5"
      ],
      "after": [
       "prince:walk:260,3500",
@@ -1391,7 +1392,8 @@
       "confetti",
       "fx:tada",
       "rap:hop",
-      "prince:hop"
+      "prince:hop",
+      "snd:party_horn:.9:700"
      ]
     },
     {
