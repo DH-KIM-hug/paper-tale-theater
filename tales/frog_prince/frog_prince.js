@@ -302,7 +302,7 @@
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(하나·둘·셋)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { if (T.reading() && document.hidden && /^marimba_/.test(name)) return true; /* 화면 꺼짐: 화음 방지 */ return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { fp_bg_yard_v2: 'birds_chirp_1', fp_bg_room_night_lb: 'crickets_night_1' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); dress(key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     /* 9장 변신: 밤 빛 상자 방 위에 밝은 방(room_v2)을 1.6초 크로스페이드로 얹는다(VISUAL_PLAN 재기획 2 판단 1) */
@@ -399,9 +399,9 @@
           if (op === 'hops') { const [x, n] = num(a[0]); return hops(T, frog, x, n, 420); }
           if (op === 'to_table') { hopSfx(T, .5); return arc(frog, 390, TABLE_TOP, 110, 600).then(() => frog.look('sit')); }
           if (op === 'throw') return (async () => {
-            frog.look('fly', 'right'); follow(BED.x - 80, 1100);
+            frog.look('fly', 'right'); cue('boing', .6); follow(BED.x - 80, 1100);
             await arc(frog, BED.x, BED.top - 62, 170, 1100);
-            sfx('paper_down', .4); frog.look('surprise');
+            cue('cushion', .5) || sfx('paper_down', .4); frog.look('surprise');
             pillow.body.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(.85)' }, { transform: 'scaleY(1)' }], { duration: 400 });
           })();
           return call(A.frog, 'frog')(op, ...a);
@@ -451,9 +451,12 @@
         pop(spec) { const [x, y, ...w] = String(spec).split(','), t = w.join(','); T.pop(+x, +y, tr(t), POPC[t]); },
         glow(w) { glow(w === 'ball' ? ball : prince, 1200); },
         confetti: () => T.confetti(),
+        /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초>. 소리는 대사를 막지 않는다 */
+        snd(n, v = .7, d = 0) { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } },
+        amb(n, v = .2, d = 4) { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
       };
     })();
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 성 뜰 (배움 놀이 1: 금공 모양 고르기 — 첫 조작) ===== */
     scene('fp_bg_yard_v2');

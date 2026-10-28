@@ -120,6 +120,9 @@
        null,
        "[calm, light, slow]"
       ]
+     ],
+     "before": [
+      "amb:stream_1:.25:4"
      ]
     },
     {
@@ -764,7 +767,10 @@
       ]
      ],
      "before": [
-      "prin:hop"
+      "prin:hop",
+      "snd:marimba_1:.8",
+      "snd:marimba_2:.8:500",
+      "snd:marimba_3:.8:1000"
      ]
     },
     {
@@ -908,7 +914,8 @@
      "before": [
       "fx:sparkle",
       "pop:720,170,팡!",
-      "flash"
+      "flash",
+      "snd:shimmer:.7:350"
      ],
      "after": [
       "frog:hide",
@@ -1015,7 +1022,8 @@
       "pop:470,205,반짝!",
       "prin:hop",
       "prince:hop",
-      "petals"
+      "petals",
+      "snd:ding_glock:.8:350"
      ]
     },
     {
@@ -1046,7 +1054,8 @@
      ],
      "before": [
       "confetti",
-      "fx:tada"
+      "fx:tada",
+      "snd:party_horn:.9:700"
      ]
     },
     {
