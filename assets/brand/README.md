@@ -43,3 +43,16 @@ Playwright가 다른 경로에 설치되었다면 `NODE_PATH`를 지정한다. �
 현재 활성 조합은 사용자 제공 투명 PNG 네 파일이다. `c2-logo-A-horizontal-{light,dark}.png`, `c2-logo-B-vertical-{light,dark}.png`를 브랜드 페이지에서 원본 그대로 표시·다운로드한다. Pretendard 880/800 조합이다. 크림 배경 스플래시·정지 폴백은 B 세로형 light를 사용하며 실행 파일은 `assets/v3w/sp_logo_c2_b_light_v1.webp`다. 기존 `c2-logo.svg/png`와 750 조합은 보관용이며 현재 실행에서 참조하지 않는다. 홈 마크 원본은 `assets/ui/logo_mark.webp`로, 내보내기 스크립트가 이전 c2-mark 파생본으로 덮어쓰지 않는다.
 
 새 A·B 로고를 유지하며 실행 파일만 다시 내보내려면 `python3 tools/brand/export_identity.py`를 사용한다. 이전 `build_c2_lockup.py`는 구 조합을 재현하는 보관용 도구다.
+
+## 영문 로고 — Toki Toki Tale
+
+사용자 확정 영문명은 **Toki Toki Tale**이다. Theater를 쓰지 않는다. 한글 C2 마크(`assets/ui/logo_mark.webp`)를 그대로 포함하고 Pretendard 880/800 라틴 글자를 윤곽선으로 구성했다. A 가로형은 마크 옆 두 줄, B 세로형은 마크 아래 한 줄 조합이다. light는 감빛/남색, dark는 밝은 감빛/크림이다. 심볼은 PNG를 포함하고 글자는 벡터 경로이므로 SVG는 하이브리드 조합본이다. PNG는 투명 렌더이며 로고 비례를 유지한다. 생성형 이미지 도구로 새로 그리거나 심볼을 수정하지 않았다.
+
+- `c2-logo-en-A-horizontal-{light,dark}.svg/png`
+- `c2-logo-en-B-vertical-{light,dark}.svg/png`
+- 영어 스플래시 실행용: `assets/v3w/sp_logo_c2_en_b_light_v1.webp`
+- 생성: `python3 tools/brand/build_english_logos.py` (fonttools·brotli·Pillow 필요)
+- PNG 렌더: `node tools/brand/render_english.cjs` (Playwright·Chrome 필요)
+- 실행 파일 변환: `python3 tools/brand/export_identity.py`
+
+영어 스플래시·정지 폴백은 동일한 B-light 이미지이며, 영어로 실행할 때 한국어 로고는 다운로드하지 않는다. 앱 제목과 접근성 이름도 Toki Toki Tale로 바꿨다.

@@ -361,10 +361,10 @@
     set('#guardList', L('보호자 항목', 'Grown-up items'));
   }
   function paintLogo() {
-    const logo = $('.logo'), words = lang === 'en' ? ['Tok', 'Tok', 'Tale', 'Theater'] : ['톡', '톡', '동', '화', '극', '장'], gapAt = 2;
-    logo.innerHTML = `<span class="sr">${L('톡톡 동화극장', 'Tok Tok Tale Theater')}</span>` +
-      words.map((w, i) => `<span class="lt${i === gapAt ? ' gap' : ''}${lang === 'en' && i < 3 ? ' w' : ''}" aria-hidden="true">${w}</span>`).join('');
-    document.title = L('톡톡 동화극장', 'Tok Tok Tale Theater');
+    const logo = $('.logo'), words = lang === 'en' ? ['Toki', 'Toki', 'Tale'] : ['톡', '톡', '동', '화', '극', '장'], gapAt = 2;
+    logo.innerHTML = `<span class="sr">${L('톡톡 동화극장', 'Toki Toki Tale')}</span>` +
+      words.map((w, i) => `<span class="lt${i === gapAt ? ' gap' : ''}${lang === 'en' && i < 2 ? ' w' : ''}" aria-hidden="true">${w}</span>`).join('');
+    document.title = L('톡톡 동화극장', 'Toki Toki Tale');
   }
   paintLang();
   /* 로고 마크(§6-2 logo_mark): 가로 = 레일 맨 위 48(pL 40), 세로 = 머리줄 워드마크 옆 36. 어느 쪽을 보일지는 CSS 가 정한다 */
@@ -1519,17 +1519,14 @@
     sp.replaceChildren();
     const fallback = document.createElement('div');
     fallback.className = 'splash-fallback';
-    const title = document.createElement(lang === 'en' ? 'strong' : 'img');
-    if (lang === 'en') title.textContent = 'Tok Tok Tale Theater';
-    else {
-      title.className = 'splash-wordmark';
-      title.src = 'assets/v3w/sp_logo_c2_b_light_v1.webp';
-      title.alt = '톡톡 동화극장';
-    }
+    const title = document.createElement('img');
+    title.className = 'splash-wordmark';
+    title.src = lang === 'en' ? 'assets/v3w/sp_logo_c2_en_b_light_v1.webp' : 'assets/v3w/sp_logo_c2_b_light_v1.webp';
+    title.alt = lang === 'en' ? 'Toki Toki Tale' : '톡톡 동화극장';
     fallback.append(title); sp.append(fallback);
     sp.addEventListener('pointerdown', complete);
     pending = setTimeout(complete, 2500);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
-    import('./engine/splash/start.js?v=20261028stage7')
+    import('./engine/splash/start.js?v=20261028english1')
       .then(({ startSplash }) => {
         if (finished) return;
         clearTimeout(pending);

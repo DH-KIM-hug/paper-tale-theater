@@ -1,4 +1,4 @@
-import { createSplashScene, DURATION } from '../../engine/splash/scene.js?v=20261028stage7';
+import { createSplashScene, DURATION } from '../../engine/splash/scene.js?v=20261028english1';
 const $ = s => document.querySelector(s);
 const isExport = new URLSearchParams(location.search).has('export');
 if (isExport) document.body.classList.add('export');

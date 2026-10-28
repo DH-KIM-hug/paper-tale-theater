@@ -115,14 +115,18 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
       });
       assert.deepEqual(result, { aborted: true, canvases: 0 });
     });
-    await run('English title works without the Korean lettering image', async page => {
-      let loadedKorean = false;
-      page.on('request', r => { if ((/sp_(wordmark|logo)_/.test(r.url()))) loadedKorean = true; });
+    await run('English logo loads without the Korean logo', async page => {
+      let loadedKorean = false, loadedEnglish = false;
+      page.on('request', r => {
+        if (r.url().includes('sp_logo_c2_b_light_v1.webp')) loadedKorean = true;
+        if (r.url().includes('sp_logo_c2_en_b_light_v1.webp')) loadedEnglish = true;
+      });
       await page.goto(base + '/docs/intro-three/?export=1&lang=en');
       await page.waitForFunction(() => window.introReady, null, { timeout: 20000 });
       await page.evaluate(() => window.renderAt(window.introDuration));
       await page.screenshot({ path: '/tmp/patjuk-intro-render/splash-english.png' });
       assert.equal(loadedKorean, false);
+      assert.equal(loadedEnglish, true);
     });
     await run('phone portrait and scrub reach final title', async page => {
       await page.goto(base + '/docs/intro-three/');

@@ -21,3 +21,6 @@ for p in Path('android/app/src/main/res').glob('mipmap-*/ic_launcher*.png'):
  size=Image.open(p).size
  im=Image.open('assets/brand/c2-icon-round.png' if p.stem.endswith('_round') else 'assets/brand/c2-icon.png')
  im=im.convert('RGBA' if p.stem.endswith('_round') else 'RGB').resize(size,Image.Resampling.LANCZOS);im.save(p)
+
+english=Image.open('assets/brand/c2-logo-en-B-vertical-light.png').convert('RGBA')
+english.save('assets/v3w/sp_logo_c2_en_b_light_v1.webp',lossless=True,exact=True)

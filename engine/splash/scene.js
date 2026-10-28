@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.js';
-import { ART } from './art.js?v=20261028stage7';
+import { ART } from './art.js?v=20261028english1';
 
 export const DURATION = 7.4;
 const CREAM = '#F5EFE9';
@@ -79,15 +79,16 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       mesh.castShadow = false;
       return mesh;
     }
+    const logoName = lang === 'en' ? 'sp_logo_c2_en_b_light_v1' : 'sp_logo_c2_b_light_v1';
     const loader = new THREE.TextureLoader();
     // All loads settle before cleanup, including the failed-load/early-skip path.
-    const results = await Promise.allSettled(Object.keys(ART).filter(name => name !== 'sp_logo_c2_b_light_v1' || lang !== 'en').map(async name => {
+    const results = await Promise.allSettled(Object.keys(ART).filter(name => !name.startsWith('sp_logo_') || name === logoName).map(async name => {
       const map = await loader.loadAsync(artURL(name));
       if (disposed) { map.dispose(); return null; }
       ownTexture(map);
       // The originals remain untouched. A bounded GPU copy is enough for these small paper actors.
       const image = map.image;
-      const edge = name === 'sp_ground_meadow_v1' || name === 'sp_logo_c2_b_light_v1' ? 1536 : name === 'sp_castle_v1' ? 1024 : 768;
+      const edge = name === 'sp_ground_meadow_v1' || name.startsWith('sp_logo_') ? 1536 : name === 'sp_castle_v1' ? 1024 : 768;
       const scale = Math.min(1, edge / Math.max(image.width, image.height));
       if (scale < 1) {
         const reduced = document.createElement('canvas');
@@ -174,35 +175,13 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       princesses.add(actor.shadow, actor.mesh);
     }
 
-    // Complete symbol + wordmark lockup, presented alone at the end.
-    // Korean is a custom-drawn asset, independent of font loading. Keep the English title local.
-    if (lang === 'en') await Promise.race([document.fonts.load('750 90px "Pretendard Local"'), new Promise(resolve => setTimeout(resolve, 700))]);
-    if (disposed) throw new DOMException('Aborted', 'AbortError');
-    const logo = new THREE.Group();
-    world.add(logo);
-    function textPiece(text, size, color, width) {
-      const c = document.createElement('canvas'); c.width = 1536; c.height = 512;
-      const x = c.getContext('2d');
-      x.fillStyle = color; x.textAlign = 'center'; x.textBaseline = 'middle';
-      x.font = `800 ${size}px "Pretendard Local", sans-serif`;
-      x.fillText(text, 768, 270);
-      const map = ownTexture(new THREE.CanvasTexture(c)); map.colorSpace = THREE.SRGBColorSpace;
-      const mesh = new THREE.Mesh(ownGeometry(new THREE.PlaneGeometry(width, width / 3)), ownMaterial(new THREE.MeshBasicMaterial({ map, transparent: true, toneMapped: false, depthWrite: false })));
-      return mesh;
-    }
-    let tok, title, wordmark;
-    if (lang === 'en') {
-      tok = textPiece('Tok Tok', 240, '#A9583F', 7.6);
-      tok.position.set(0, 1.0, 1.0); logo.add(tok);
-      title = textPiece('Tale Theater', 155, '#65513F', 7.4);
-      title.position.set(0, -.18, 1.02); logo.add(title);
-    } else {
-      wordmark = cutout('sp_logo_c2_b_light_v1', 4.6);
-      wordmark.material.depthWrite = false;
-      wordmark.castShadow = false;
-      wordmark.position.set(0, .85, 1.02); logo.add(wordmark);
-    }
-    const titlePieces = wordmark ? [wordmark] : [tok, title];
+    // Both languages share the C2 mark in image lockups, independent of font loading.
+    const logo = new THREE.Group(); world.add(logo);
+    const wordmark = cutout(logoName, 4.6);
+    wordmark.material.depthWrite = false;
+    wordmark.castShadow = false;
+    wordmark.position.set(0, 0, 1.02); logo.add(wordmark);
+    const titlePieces = [wordmark];
     const friends = new THREE.Group(); world.add(friends);
     const finalRabbit = cutout('rab_rabbit_congrats_c', 1.45);
     finalRabbit.position.set(-3.65, -2.08, .6); finalRabbit.scale.x = -1;
@@ -282,11 +261,6 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       const reveal = smooth((t - 5.15) / .4);
       logo.position.y = mix(1.6, .2, clearStage) - .12 * (1 - reveal);
       logo.scale.setScalar(mix(.78, 1, clearStage) * (.985 + .015 * reveal));
-      if (wordmark) wordmark.position.y = 0;
-      else {
-        tok.position.y = .6;
-        title.position.y = -.6;
-      }
       for (const mesh of titlePieces) mesh.material.opacity = reveal;
       const friendsArrival = smooth((t - 4.55) / .4);
       friends.visible = friendsArrival > 0 && clearStage < 1;

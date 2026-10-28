@@ -8,5 +8,10 @@
   "logo_horizontal_light": "assets/brand/c2-logo-A-horizontal-light.png",
   "logo_horizontal_dark": "assets/brand/c2-logo-A-horizontal-dark.png",
   "logo_vertical_light": "assets/brand/c2-logo-B-vertical-light.png",
-  "logo_vertical_dark": "assets/brand/c2-logo-B-vertical-dark.png"
+  "logo_vertical_dark": "assets/brand/c2-logo-B-vertical-dark.png",
+  "english_name": "Toki Toki Tale",
+  "logo_english_horizontal_light": "assets/brand/c2-logo-en-A-horizontal-light.png",
+  "logo_english_horizontal_dark": "assets/brand/c2-logo-en-A-horizontal-dark.png",
+  "logo_english_vertical_light": "assets/brand/c2-logo-en-B-vertical-light.png",
+  "logo_english_vertical_dark": "assets/brand/c2-logo-en-B-vertical-dark.png"
 }
