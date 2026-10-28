@@ -28,6 +28,18 @@ describe('state 합치기', () => {
     const m2 = mergeStates(st({ stickers: many(300).slice(100, 250) }), st({ stickers: many(150) }));
     expect(m1.stickers).toHaveLength(200); expect(m2.stickers).toEqual(m1.stickers);
   });
+  it('stickers2(위 조각) 합집합, 옛 기록에 필드가 없어도 된다, 상한 200, 검증', () => {
+    expect(mergeStates(st({ stickers2: ['a', 'b'] }), st({ stickers2: ['b', 'c'] })).stickers2).toEqual(['a', 'b', 'c']);
+    const old = { firstRun: null, earned: {}, waitUnlocked: [], owned: false };
+    expect(mergeStates(old, st({ stickers2: ['x'] })).stickers2).toEqual(['x']);
+    const many = n => Array.from({ length: n }, (_, i) => 's' + String(i).padStart(3, '0'));
+    const m1 = mergeStates(st({ stickers2: many(150) }), st({ stickers2: many(300).slice(100, 250) }));
+    const m2 = mergeStates(st({ stickers2: many(300).slice(100, 250) }), st({ stickers2: many(150) }));
+    expect(m1.stickers2).toHaveLength(200); expect(m2.stickers2).toEqual(m1.stickers2);
+    expect(sanitizeClientState({ stickers2: ['rabbit', 'rabbit', 'patjuk'] }).stickers2).toEqual(['rabbit', 'patjuk']);
+    expect(() => sanitizeClientState({ stickers2: ['A!'] })).toThrow();
+    expect(() => sanitizeClientState({ stickers2: Array.from({ length: 201 }, (_, i) => 'a' + i) })).toThrow();
+  });
   it('waitUnlocked 합집합 후 앞에서 2개만', () => {
     expect(mergeStates(st({ waitUnlocked: ['a'] }), st({ waitUnlocked: ['b', 'c'] })).waitUnlocked).toEqual(['a', 'b']);
   });

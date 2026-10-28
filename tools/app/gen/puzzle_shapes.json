@@ -1,0 +1,126 @@
+{
+ "kkultteok": {
+  "top": "assets/v3w/cf4_dog_sniff.webp",
+  "bot": "assets/v3w/cf4_cloud_one.webp"
+ },
+ "red_car": {
+  "top": "assets/v3w/cf4_cloud_car.webp",
+  "bot": "assets/v3w/rc_red_joy.webp"
+ },
+ "unicorn": {
+  "top": "assets/v3w/uc_prop_rainbow.webp",
+  "bot": "assets/v3w/uc_unicorn_stand.webp"
+ },
+ "cinderella": {
+  "top": "assets/v3w/cd2_prop_slipper.webp",
+  "bot": "assets/v3w/cd2_cind_gown.webp"
+ },
+ "snow_white": {
+  "top": "assets/v3w/sw_prop_apple.webp",
+  "bot": "assets/v3w/sw_snow_stand.webp"
+ },
+ "little_mermaid": {
+  "top": "assets/v3w/mer_item_starfish.webp",
+  "bot": "assets/v3w/mer_mer_swim.webp"
+ },
+ "beauty_beast": {
+  "top": "assets/v3w/bb_prop_rose.webp",
+  "bot": "assets/v3w/bb_beast_stand.webp"
+ },
+ "princess_pea": {
+  "top": "assets/v3w/pp_prop_lightning.webp",
+  "bot": "assets/v3w/pp_princess_wave.webp"
+ },
+ "rapunzel": {
+  "top": "assets/v3w/rp_bird.webp",
+  "bot": "assets/v3w/rp_rap_stand.webp"
+ },
+ "frog_prince": {
+  "top": "assets/v3w/fp_prop_ball.webp",
+  "bot": "assets/v3w/fp_frog_sit.webp"
+ },
+ "sleeping_beauty": {
+  "top": "assets/v3w/sb_prop_wheel.webp",
+  "bot": "assets/v3w/sb_pr_stand.webp"
+ },
+ "patjuk": {
+  "top": "assets/v3w/pj3_prop_jangdok.webp",
+  "bot": "assets/v3w/pj3_tiger_stand.webp"
+ },
+ "sunmoon": {
+  "top": "assets/v3w/sm_moon_plain.webp",
+  "bot": "assets/v3w/sm_tiger.webp"
+ },
+ "kongjwi": {
+  "top": "assets/v3w/kj_shoe_butterfly.webp",
+  "bot": "assets/v3w/kj_ox_stand.webp"
+ },
+ "heungbu": {
+  "top": "assets/v3w/hb_swallow_fly.webp",
+  "bot": "assets/v3w/hb_gourd2_closed.webp"
+ },
+ "magpie": {
+  "top": "assets/v3w/mg2_prop_bell.webp",
+  "bot": "assets/v3w/mg_mag_dad_sit.webp"
+ },
+ "magic_jar": {
+  "top": "assets/v3w/mj_rich_gold.webp",
+  "bot": "assets/v3w/mj_jarnf.webp"
+ },
+ "frog": {
+  "top": "assets/v3w/frog_mom_puffed.webp",
+  "bot": "assets/v3w/frog_ox_stand.webp"
+ },
+ "rabbit": {
+  "top": "assets/v3w/rab_carrot_trophy.webp",
+  "bot": "assets/v3w/rab_rabbit_run_c.webp"
+ },
+ "sun_wind": {
+  "top": "assets/v3w/sw_sun.webp",
+  "bot": "assets/v3w/sw_trav_walk.webp"
+ },
+ "lion_mouse": {
+  "top": "assets/v3w/lm_sun.webp",
+  "bot": "assets/v3w/lm_lion_stand.webp"
+ },
+ "fox_crane": {
+  "top": "assets/v3w/fc_butterfly.webp",
+  "bot": "assets/v3w/fc_crane_sorry.webp"
+ },
+ "ant_grasshopper": {
+  "top": "assets/v3w/ag_leaf_umbrella.webp",
+  "bot": "assets/v3w/ag_hopper_play.webp"
+ },
+ "turnip": {
+  "top": "assets/v3w/tn_watering_can.webp",
+  "bot": "assets/v3w/tn_turnip.webp"
+ },
+ "goldilocks": {
+  "top": "assets/v3w/gl_bear_baby.webp",
+  "bot": "assets/v3w/gl_bear_dad.webp"
+ },
+ "bremen": {
+  "top": "assets/v3w/br_rooster_sing.webp",
+  "bot": "assets/v3w/br_donkey.webp"
+ },
+ "ugly_duckling": {
+  "top": "assets/v3w/ud_swan_fly.webp",
+  "bot": "assets/v3w/ud_baby.webp"
+ },
+ "three_pigs": {
+  "top": "assets/v3w/tp_wolf_puff.webp",
+  "bot": "assets/v3w/tp_pig1_base.webp"
+ },
+ "wolf_goats": {
+  "top": "assets/v3w/wg_wolf_knock.webp",
+  "bot": "assets/v3w/wg_kid1_joy.webp"
+ },
+ "hansel": {
+  "top": "assets/v3w/hg_bird_peck.webp",
+  "bot": "assets/v3w/hg_witch_beckon.webp"
+ },
+ "red_hood": {
+  "top": "assets/v3w/rh_flower_rednf.webp",
+  "bot": "assets/v3w/rh_wolf_whisper.webp"
+ }
+}

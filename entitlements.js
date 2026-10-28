@@ -3,6 +3,7 @@
    · 기다무: 첫 실행 7일 뒤 1편, 14일 뒤 +1편을 골라 연다 (부모 확인은 홈 화면이 한다)
    · 종이별(Paper Star): 놀이로 동화를 끝까지 하면 하루 1개(앱 모드만), 5개를 모으면 1편을 골라 연다
    · 스티커: 놀이로 처음 끝까지 한 동화마다 1장(웹 공개판에서도 기기 안에 모은다). 읽어 주기·자동 재생 완주는 둘 다 주지 않는다(엔진이 finishPlay 를 부르지 않는다)
+   · 위 조각(stickers2): 같은 동화를 두 번째로 끝까지 놀았을 때 1장(아래 조각 stickers 가 이미 있으면 위 조각). 완주 횟수를 따로 세지 않는다
    · 캐릭터 스티커: 동화마다 세트(tales/stickers.js 의 STICKERS). 놀이로 끝까지 할 때마다 다음 그림 1장(첫 완주 포함, 하루 제한 없음). 세트를 다 모으면 더 주지 않는다
    · 전체 구매 4.99달러(한 번). 웹(공개 판)은 canPlay 가 언제나 true — 잠그지 않는다
    · 앱 모드 = window.Capacitor 가 있거나, 주소에 ?store=1 이 있거나, localStorage store_mode === '1'
@@ -79,6 +80,7 @@ const Entitlements = (() => {
       earned,
       starUnlocked: idList(s.starUnlocked, 100),
       stickers: idList(s.stickers, STICKER_MAX),
+      stickers2: idList(s.stickers2, STICKER_MAX),
       cast: castList(s.cast),
       waitUnlocked: idList(s.waitUnlocked, 2),
       owned: s.owned === true
@@ -100,6 +102,7 @@ const Entitlements = (() => {
       earned,
       starUnlocked: union(a.starUnlocked, b.starUnlocked, 100),
       stickers: capSorted(idList([...a.stickers, ...b.stickers], 100000), STICKER_MAX),
+      stickers2: capSorted(idList([...a.stickers2, ...b.stickers2], 100000), STICKER_MAX),
       cast: capSorted(castList([...a.cast, ...b.cast], 100000), CAST_MAX),
       waitUnlocked: union(a.waitUnlocked, b.waitUnlocked, 2),
       owned: a.owned || b.owned
@@ -200,6 +203,16 @@ const Entitlements = (() => {
     notify();
     return true;
   }
+  /* 위 조각: 아래 조각이 이미 있는 동화를 또 끝까지 했을 때 1장. 아래 조각이 없으면 false(그때는 addSticker 가 아래 조각을 준다) */
+  function addSticker2(taleId) {
+    if (!ID_RE.test(String(taleId))) return false;
+    const s = load();
+    if (!s.stickers.includes(taleId) || s.stickers2.includes(taleId) || s.stickers2.length >= STICKER_MAX) return false;
+    s.stickers2.push(taleId);
+    save(true);
+    notify();
+    return true;
+  }
   /* ───────── 캐릭터 스티커 세트 ─────────
      STICKERS[동화id] = [{ k, img, ko, en } …] (tales/stickers.js). img 가 없는 칸(그림 준비 중)은 받을 수 없다 */
   const castOf = id => {
@@ -220,7 +233,8 @@ const Entitlements = (() => {
   }
   /* 놀이 완주 한 번에 주는 보상을 묶어서: 엔진은 놀이로 끝까지 했을 때만 부른다 */
   function finishPlay(taleId, d) {
-    return { sticker: addSticker(taleId), star: earnStar(taleId, d), cast: addCast(taleId) };
+    const sticker = addSticker(taleId);                       // 처음이면 아래 조각, 아니면 위 조각
+    return { sticker, sticker2: sticker ? false : addSticker2(taleId), star: earnStar(taleId, d), cast: addCast(taleId) };
   }
   const starBalance = () => Math.max(0, balanceOf(load()));
   const earnedToday = d => !!load().earned[dateStr(d)];
@@ -418,7 +432,7 @@ const Entitlements = (() => {
     appMode, weekNumber, dateStr, freeThisWeek, status, canPlay, isFree, lockedChoices,
     purchase, restore, grantAll, revokeAll, setBridge, guard,
     state: () => load(), merge, normalize, balanceOf,
-    earnStar, addSticker, finishPlay, addCast, hasCast, castCount, castOf, hasSticker: id => load().stickers.includes(id), stickerCount: () => load().stickers.length, starBalance, earnedToday, starUnlock,
+    earnStar, addSticker, finishPlay, addCast, hasCast, castCount, castOf, hasSticker: id => load().stickers.includes(id), addSticker2, hasSticker2: id => load().stickers2.includes(id), stickerCount: () => load().stickers.length, sticker2Count: () => load().stickers2.length, starBalance, earnedToday, starUnlock,
     waitAvailable, waitDaysLeft, waitUnlock, daysSinceFirstRun,
     syncEnabled: enabled, sync, createLinkCode, redeemLinkCode, sendReceipt, cleanCode,
     isLinked: () => !!account(),

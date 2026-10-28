@@ -72,7 +72,7 @@ ok('합치기: firstRun 더 이른 쪽 · earned 날짜 합집합 · 같은 날 
   assert.deepEqual(E.merge(m, m), m);
   // 잘못된 값은 버린다
   const bad = E.normalize({ firstRun: 'x', earned: { 'zz': 'rabbit', '2026-01-01': 'BAD ID' }, starUnlocked: ['ok_id', 'No!'], waitUnlocked: 'x', owned: 'yes' });
-  assert.deepEqual(bad, { firstRun: '', earned: {}, starUnlocked: ['ok_id'], stickers: [], cast: [], waitUnlocked: [], owned: false });
+  assert.deepEqual(bad, { firstRun: '', earned: {}, starUnlocked: ['ok_id'], stickers: [], stickers2: [], cast: [], waitUnlocked: [], owned: false });
 });
 
 ok('종이별: 하루 1개, 잔액 = 모은 날 수 - 5 × 연 동화 수, 5개로 1편', () => {
@@ -93,15 +93,22 @@ ok('종이별: 하루 1개, 잔액 = 모은 날 수 - 5 × 연 동화 수, 5개�
 
 ok('스티커: 처음 한 번만, 웹에서도 쌓이고 종이별은 앱 모드만, finishPlay 는 둘을 묶어 돌려준다', () => {
   const { E, ctx } = boot({ ready: READY });
-  assert.deepEqual(E.finishPlay('rabbit', D(2026, 10, 1)), { sticker: true, star: true, cast: null });
-  assert.deepEqual(E.finishPlay('rabbit', D(2026, 10, 2)), { sticker: false, star: true, cast: null });   // 같은 동화는 스티커 한 번
-  assert.deepEqual(E.finishPlay('turnip', D(2026, 10, 2)), { sticker: true, star: false, cast: null });   // 오늘 별은 이미 받음
+  assert.deepEqual(E.finishPlay('rabbit', D(2026, 10, 1)), { sticker: true, sticker2: false, star: true, cast: null });
+  assert.deepEqual(E.finishPlay('rabbit', D(2026, 10, 2)), { sticker: false, sticker2: true, star: true, cast: null });   // 두 번째 완주 = 위 조각
+  assert.deepEqual(E.finishPlay('turnip', D(2026, 10, 2)), { sticker: true, sticker2: false, star: false, cast: null });   // 오늘 별은 이미 받음
   assert.deepEqual(E.state().stickers, ['rabbit', 'turnip']);
   assert.strictEqual(E.addSticker('Bad Id!'), false);
   assert.strictEqual(E.hasSticker('turnip'), true); assert.strictEqual(E.stickerCount(), 2);
   ctx.location.search = '?store=0';                                                         // 웹 공개판
-  assert.deepEqual(E.finishPlay('patjuk', D(2026, 10, 3)), { sticker: true, star: false, cast: null });
+  assert.deepEqual(E.finishPlay('patjuk', D(2026, 10, 3)), { sticker: true, sticker2: false, star: false, cast: null });
   assert.strictEqual(E.stickerCount(), 3);
+  // 위 조각: 아래 조각이 있는 동화의 두 번째 완주에서만, 한 번뿐, 세 번째부터는 없음
+  assert.deepEqual(E.state().stickers2, ['rabbit']); assert.strictEqual(E.hasSticker2('rabbit'), true); assert.strictEqual(E.hasSticker2('turnip'), false);
+  assert.deepEqual(E.finishPlay('rabbit', D(2026, 10, 4)), { sticker: false, sticker2: false, star: false, cast: null });
+  assert.strictEqual(E.addSticker2('patjuk'), true); assert.strictEqual(E.addSticker2('nothing'), false);   // 아래 조각 없는 동화는 위 조각 없음
+  assert.strictEqual(E.addSticker2('Bad Id!'), false); assert.strictEqual(E.sticker2Count(), 2);
+  assert.deepEqual(E.merge({ stickers2: ['a', 'b'] }, { stickers2: ['b', 'c', 'Bad!'] }).stickers2, ['a', 'b', 'c']);
+  assert.deepEqual(E.normalize({}).stickers2, []);
   // 상한 200
   const { E: F } = boot({ mem: { sync_state: JSON.stringify({ stickers: Array.from({ length: 200 }, (_, i) => 't' + i) }) } });
   assert.strictEqual(F.stickerCount(), 200); assert.strictEqual(F.addSticker('extra'), false);
@@ -113,8 +120,8 @@ ok('캐릭터 스티커: 완주마다 다음 한 장, 그림 없는 칸은 건�
   assert.strictEqual(E.finishPlay('rabbit', D(2026, 10, 1)).cast, null);                    // STICKERS 없음
   const { E: F, ctx: c2 } = boot({ ready: READY });
   vm.runInContext('var STICKERS = ' + JSON.stringify(set), c2);
-  assert.deepEqual(F.finishPlay('rabbit', D(2026, 10, 1)), { sticker: true, star: true, cast: 'a' });   // 첫 완주도 한 장
-  assert.deepEqual(F.finishPlay('rabbit', D(2026, 10, 1)), { sticker: false, star: false, cast: 'c' }); // 하루 제한 없음, 준비 중 칸 건너뜀
+  assert.deepEqual(F.finishPlay('rabbit', D(2026, 10, 1)), { sticker: true, sticker2: false, star: true, cast: 'a' });   // 첫 완주도 한 장
+  assert.deepEqual(F.finishPlay('rabbit', D(2026, 10, 1)), { sticker: false, sticker2: true, star: false, cast: 'c' }); // 하루 제한 없음, 준비 중 칸 건너뜀
   assert.strictEqual(F.finishPlay('rabbit', D(2026, 10, 2)).cast, null);                    // 다 모음
   assert.strictEqual(F.castCount('rabbit'), 2); assert.strictEqual(F.hasCast('rabbit', 'a'), true); assert.strictEqual(F.hasCast('rabbit', 'b'), false);
   assert.strictEqual(F.finishPlay('frog', D(2026, 10, 2)).cast, null);                      // 그 동화 항목 없음

@@ -5,7 +5,8 @@
      three.module.min.js 가 three.core.min.js 를 상대 경로로 import 하므로 vendor 폴더에 둘이 같이 있어야 한다.
    - 재료 원칙(CLAUDE.md §7): 카드·별은 전부 무광 MeshBasicMaterial. 광택·환경맵·하이라이트 없음.
      두께는 같은 모양 종이 조각을 겹쳐 만든 단면(크림), 그림자는 웜 다크. '반짝'은 주변 입자와 후광으로만.
-   - 사용: Reward3D.play({ items:[{kind:'sticker'|'cast'|'star', img:'경로', target:()=>DOMRect}], onAppear(kind), onLand(kind), onDone() })
+   - 퍼즐 조각(kind 'piece'·'piece2')은 조각 그림의 알파 모양 그대로 카드가 된다(직소 모양, 테두리 없음).
+   - 사용: Reward3D.play({ items:[{kind:'sticker'|'piece'(아래 조각)|'piece2'(위 조각)|'cast'|'star', img:'경로', target:()=>DOMRect}], onAppear(kind), onLand(kind), onDone() })
        → Promise<boolean>  (3D 로 보여 줬으면 true, WebGL/모듈이 없어 못 했으면 false = 호출한 쪽이 기존 DOM 연출로)
      kind 'star' 는 img 없이 별 모양 종이. 소리는 콜백에서 호출하는 쪽이 낸다.
    - prefers-reduced-motion: 회전·입자 없이 페이드만(날아가지도 않고 제자리에서 사라짐). */
@@ -59,8 +60,8 @@
   }
 
   /* 그림 → {sil(크림 실루엣), face(앞면), back(뒷면 별 새김), aspect}. 투명 그림이면 알파를 부풀려 오려 낸 스티커 테두리, 아니면 둥근 모서리 카드 */
-  function buildFaces(img) {
-    const pad = 22;
+  function buildFaces(img, exact) {
+    const pad = exact ? 6 : 22;   // exact(퍼즐 조각): 그림 알파 그대로 오린다 — 부풀린 스티커 테두리·흰 테두리 없음
     let iw = img ? img.naturalWidth : 1, ih = img ? img.naturalHeight : 1;
     if (!img) { iw = 3; ih = 4; }
     const k = (TEX_MAX - pad * 2) / Math.max(iw, ih);
@@ -70,20 +71,20 @@
       art = mkCanvas(dw, dh); const a = art.getContext('2d'); a.drawImage(img, 0, 0, dw, dh);
       const d = a.getImageData(0, 0, dw, dh).data; let clear = 0;
       for (let i = 3; i < d.length; i += 4 * 7) if (d[i] < 40) clear++;
-      cutout = clear / (d.length / 28) > 0.04;
+      cutout = exact || clear / (d.length / 28) > 0.04;
     }
     const sil = mkCanvas(W, H), s = sil.getContext('2d');
     if (cutout) {
       const m = mkCanvas(W, H), mc = m.getContext('2d');
       mc.drawImage(art, pad, pad); mc.globalCompositeOperation = 'source-in'; mc.fillStyle = CREAM; mc.fillRect(0, 0, W, H);
-      for (const r of [pad * .45, pad * .8]) for (let i = 0; i < 28; i++) { const an = i / 28 * Math.PI * 2; s.drawImage(m, Math.cos(an) * r, Math.sin(an) * r); }
+      if (!exact) for (const r of [pad * .45, pad * .8]) for (let i = 0; i < 28; i++) { const an = i / 28 * Math.PI * 2; s.drawImage(m, Math.cos(an) * r, Math.sin(an) * r); }
       s.drawImage(m, 0, 0);
     } else {
       s.fillStyle = CREAM; roundRect(s, 2, 2, W - 4, H - 4, Math.min(W, H) * .1); s.fill();
     }
     grain(s, W, H);
     const face = mkCanvas(W, H), f = face.getContext('2d');
-    f.drawImage(sil, 0, 0);
+    if (!(exact && art)) f.drawImage(sil, 0, 0);
     if (art) {
       if (cutout) f.drawImage(art, pad, pad);
       else { f.save(); roundRect(f, pad * .7, pad * .7, W - pad * 1.4, H - pad * 1.4, Math.min(W, H) * .06); f.clip(); f.drawImage(art, pad * .7, pad * .7, W - pad * 1.4, H - pad * 1.4); f.restore(); }
@@ -195,7 +196,7 @@
           const t1 = new THREE.Mesh(geo2, [topM, sideM]); t1.position.z = th / 2; spin.add(t1);
           const t2 = new THREE.Mesh(geo2, [topM, sideM]); t2.position.z = -th / 2 - th * .5; spin.add(t2);
         } else {
-          const F = buildFaces(imgs[i]);
+          const F = buildFaces(imgs[i], it.kind === 'piece' || it.kind === 'piece2');
           if (F.aspect >= 1) { w = S; h = S / F.aspect; } else { h = S; w = S * F.aspect; }
           const geo = track(new THREE.PlaneGeometry(w, h));
           const silT = tex(F.sil), faceT = tex(F.face), backT = tex(F.back);

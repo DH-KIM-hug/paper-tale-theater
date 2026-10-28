@@ -4,7 +4,7 @@ import { E } from './util.js';
 export const ID_RE = /^[a-z0-9_]{1,40}$/;
 export const CAST_RE = /^[a-z0-9_]{1,40}\.[a-z0-9_]{1,40}$/; // 캐릭터 스티커: <동화id>.<k>
 export const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-export const LIMITS = { earned: 400, starUnlocked: 100, stickers: 200, waitUnlocked: 2, cast: 400 };
+export const LIMITS = { earned: 400, starUnlocked: 100, stickers: 200, stickers2: 200, waitUnlocked: 2, cast: 400 };
 
 function validDate(s) {
   if (typeof s !== 'string' || !DATE_RE.test(s)) return false;
@@ -13,7 +13,7 @@ function validDate(s) {
 }
 
 export function emptyState(today = null) {
-  return { firstRun: today, earned: {}, starUnlocked: [], stickers: [], cast: [], waitUnlocked: [], owned: false };
+  return { firstRun: today, earned: {}, starUnlocked: [], stickers: [], stickers2: [], cast: [], waitUnlocked: [], owned: false };
 }
 
 // 클라이언트가 보낸 state 를 검사하고 정규화한다. 잘못되면 bad_request.
@@ -36,7 +36,7 @@ export function sanitizeClientState(input) {
       out.earned[k] = v;
     }
   }
-  for (const f of ['starUnlocked', 'stickers', 'waitUnlocked']) {
+  for (const f of ['starUnlocked', 'stickers', 'stickers2', 'waitUnlocked']) {
     if (input[f] == null) continue;
     const arr = input[f];
     if (!Array.isArray(arr) || arr.length > LIMITS[f]) throw E.badRequest();
@@ -73,6 +73,7 @@ export function mergeStates(a, b, trustedOwned = false) {
     earned: sortedEarned,
     starUnlocked: union(a.starUnlocked, b.starUnlocked),
     stickers: capSorted(union(a.stickers, b.stickers), LIMITS.stickers),
+    stickers2: capSorted(union(a.stickers2, b.stickers2), LIMITS.stickers2),
     cast: capSorted(union(a.cast, b.cast), LIMITS.cast),
     waitUnlocked: union(a.waitUnlocked, b.waitUnlocked).slice(0, LIMITS.waitUnlocked),
     owned: !!trustedOwned,
