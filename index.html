@@ -107,11 +107,11 @@
 
   <!-- 아이용 탭 3개: 같은 크림 종이에 뚫린 구멍. 선택 = 열린 구멍(색), 아닌 것 = 새김. 가로 = 왼쪽 레일, 세로 = 아래 막대 -->
   <nav id="tabs" class="tabs" role="tablist" aria-label="메뉴">
-    <button type="button" class="tab" role="tab" data-tab="tales" aria-controls="view-tales" aria-label="동화">
-      <span class="hole"><i class="dot" aria-hidden="true"></i></span><span class="tab-lb">동화</span>
+    <button type="button" class="tab" role="tab" data-tab="tales" aria-controls="view-tales" aria-label="동화 놀이">
+      <span class="hole"><i class="dot" aria-hidden="true"></i></span><span class="tab-lb">동화 놀이</span>
     </button>
-    <button type="button" class="tab" role="tab" data-tab="night" aria-controls="view-night" aria-label="잠자리">
-      <span class="hole"><i class="dot" aria-hidden="true"></i></span><span class="tab-lb">잠자리</span>
+    <button type="button" class="tab" role="tab" data-tab="night" aria-controls="view-night" aria-label="읽어 주기">
+      <span class="hole"><i class="dot" aria-hidden="true"></i></span><span class="tab-lb">읽어 주기</span>
     </button>
     <button type="button" class="tab" role="tab" data-tab="stickers" aria-controls="view-stickers" aria-label="스티커북">
       <span class="hole"><i class="dot" aria-hidden="true"></i></span><span class="tab-lb">스티커북</span>
@@ -143,7 +143,7 @@
       </div>
     </section>
     <!-- 잠자리 탭 (S2): 읽어 주기가 준비된 동화 -->
-    <section class="view night" id="view-night" data-view="night" role="tabpanel" aria-label="잠자리" hidden>
+    <section class="view night" id="view-night" data-view="night" role="tabpanel" aria-label="읽어 주기" hidden>
       <header class="n-head"><span class="n-hole" id="nHole" aria-hidden="true"></span><h2 id="nTitle">잠자리 이야기</h2></header>
       <div class="n-body" id="nightBody"></div>
       <div class="empty" id="nightEmpty" hidden>
@@ -217,7 +217,7 @@
 <!-- audio.js 의 Narrator 가 쓰는 말풍선 (홈에서는 작은 이름표로 보인다) -->
 <div id="bubble" hidden><p id="bubbleText"></p></div>
 
-<script src="audio.js?v=20261028amb"></script>
+<script src="audio.js?v=20261028nobubble1"></script>
 <script src="tales/catalog.js?v=20261027pub2"></script>
 <script src="tales/stickers.js?v=20261027cast1"></script>
 <script src="entitlements.js?v=20261028pz1"></script>
@@ -227,6 +227,6 @@
 <script src="assets/ui/ui.js?v=20261028ui3"></script>
 <script src="home_narration_el.js?v=20261028u"></script>
 <script src="review.js?v=20261024lb2"></script>
-<script src="home.js?v=20261028stkseg3"></script>
+<script src="home.js?v=20261028press1"></script>
 </body>
 </html>

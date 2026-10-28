@@ -67,15 +67,16 @@
   /* ── 소리 ── */
   function say(text) {
     if (typeof Narrator === 'undefined') return;
-    try { Narrator.speak(text); } catch (e) { /* 무시 */ }
+    try { Narrator.speak(text, { bubble: false }); } catch (e) { /* 무시 */ }
   }
   function fx(name) {
     try { if (typeof AudioFX !== 'undefined' && AudioFX[name]) AudioFX[name](); } catch (e) { /* 무시 */ }
   }
-  try { AudioFX.preloadSfx(['paper_up', 'paper_down', 'paper_turn', 'paper_tap']); } catch (e) { /* 무시 */ }
-  /* 종이 소리 (sounds/sfx/paper_*.mp3): 태그가 솟을 때 up, 눌려 들어갈 때 down, 동화로 넘어갈 때 turn, 그 밖의 톡 tap */
+  /* 누름 소리 (2026-10-28 사용자 요청으로 종이 소리 → 놀이 소리): 톡 = 방울 팝, 솟음 = 짧은 팝, 눌려 들어감(고르기) = 마림바 한 음, 동화로 넘어감 = 실로폰 오르막 */
+  const PRESS_SFX = { tap: 'pop_appear', up: 'pop', down: 'marimba_note', turn: 'xylo_up' };
+  try { AudioFX.preloadSfx(Object.values(PRESS_SFX)); } catch (e) { /* 무시 */ }
   function paper(kind) {
-    try { if (typeof AudioFX === 'undefined') return; if (AudioFX.sfx('paper_' + kind) === false) AudioFX.tap(); } catch (e) { /* 무시 */ }
+    try { if (typeof AudioFX === 'undefined') return; if (AudioFX.sfx(PRESS_SFX[kind] || PRESS_SFX.tap) === false) AudioFX.tap(); } catch (e) { /* 무시 */ }
   }
 
   /* ── 준비 상태: 만드는 중인 동화는 파일이 있으면 연다 ── */
@@ -354,8 +355,8 @@
     set('#hero', L('오늘의 동화', 'Featured tale'));
     set('#heroPrev', L('이전 동화', 'Previous tale'));
     set('#heroNext', L('다음 동화', 'Next tale'));
-    set('#view-tales', L('동화', 'Tales'));
-    set('#view-night', L('잠자리', 'Bedtime'));
+    set('#view-tales', L('동화 놀이', 'Tale Play'));
+    set('#view-night', L('읽어 주기', 'Read to Me'));
     set('#view-stickers', L('스티커북', 'Sticker Book'));
     set('#pzRow', L('퍼즐판', 'Puzzle boards'));
     set('#guardList', L('보호자 항목', 'Grown-up items'));
@@ -707,7 +708,7 @@
         <p class="how">${L('제목과 탭 이름은 늘 소리로 읽어 줘요. 아이가 아직 글을 못 읽기 때문이에요.', 'Titles and tab names are always read aloud, since young children cannot read yet.')}</p>
         ${switchHTML('caption', !captionsOff(), L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'))}
         ${switchHTML('auto', autoOn(), L('자동 재생', 'Auto-play'))}
-        <p class="how">${L('놀이 조작 없이 이야기만 흘러가요. 잠자리에 읽어 줄 때는 \'잠자리\' 탭의 읽어 주기를 써요.', 'The story plays on its own with no taps. For bedtime reading, use Read-aloud in the Bedtime tab.')}</p>`;
+        <p class="how">${L('놀이 조작 없이 이야기만 흘러가요. 잠자리에 읽어 줄 때는 \'읽어 주기\' 탭을 써요.', 'The story plays on its own with no taps. For bedtime reading, use the Read to Me tab.')}</p>`;
     } else if (k === 'time') {
       h = `<h3>${name}</h3>
         <div class="seg" id="timerOpts" role="group" aria-label="${name}">${TIMES.map(m => `<button type="button" class="${m === limitNow() ? 'on' : ''}" data-m="${m}" aria-pressed="${m === limitNow()}">${m ? m + L('분', ' min') : L('끄기', 'Off')}</button>`).join('')}</div>
@@ -985,7 +986,7 @@
     closeFlow(); closeGuard(); paintTabBadge();
     heroId = id; try { localStorage.setItem(lastKey, id); } catch (e) { /* 무시 */ }
     setTab('tales', { silent: true }); render({ anim: false });
-    say(L(`'${title(id)}'이(가) 열렸어요!`, `"${title(id)}" is open!`));
+    say(L(`${title(id)} 이야기가 열렸어요!`, `${title(id)} is open!`));
   }
   flowSheet.addEventListener('click', e => {
     const pk = e.target.closest('.pick');
@@ -1300,7 +1301,7 @@
     const b = e.target.closest('button[data-mode]'); if (!b || b.dataset.mode === stMode) return;
     stMode = b.dataset.mode; castView = ''; paper('tap');
     try { localStorage.setItem(MODE_KEY, stMode); } catch (err) { /* 무시 */ }
-    drawStickers(); say(stMode === 'cast' ? L('친구 스티커', 'Friend stickers') : L('퍼즐', 'Puzzle'));
+    drawStickers(); say(stMode === 'cast' ? L('스티커', 'Stickers') : L('퍼즐', 'Puzzle'));
   });
   function drawStickers() {
     const root = $('#pzRow'); if (!root) return;
@@ -1396,7 +1397,7 @@
     const bd = BOARDS.find(x => x.k === curBoard); if (bd) say(L(bd.ko, bd.en));
   });
   $('#pzBoard').addEventListener('click', e => {
-    if (e.target.closest('[data-act="cast-back"]')) { paper('tap'); castView = ''; drawStickers(); say(L('친구 스티커', 'Friend stickers')); return; }
+    if (e.target.closest('[data-act="cast-back"]')) { paper('tap'); castView = ''; drawStickers(); say(L('스티커', 'Stickers')); return; }
     const ct = e.target.closest('.ct');
     if (ct) { const t = TALES.find(x => x.id === ct.dataset.tale); paper('tap'); castView = ct.dataset.tale; drawStickers(); if (t) say(shown(t).title); return; }
     const cs = e.target.closest('.cs');
@@ -1430,10 +1431,10 @@
     const c = e.target.closest('.card'); if (c) activateNight(e, c);
   });
 
-  /* ── 탭 3개 (APP_SCREENS_PLAN §2): 동화 · 잠자리 · 스티커북. 해시 #tales #night #stickers, 마지막 탭은 기억한다 ── */
+  /* ── 탭 3개 (APP_SCREENS_PLAN §2): 동화 놀이 · 읽어 주기 · 스티커북(2026-10-28 사용자 결정 이름). 해시 #tales #night #stickers, 마지막 탭은 기억한다 ── */
   const TABS = {
-    tales:    { ko: '동화',   en: 'Tales',        say: '동화' },
-    night:    { ko: '잠자리', en: 'Bedtime',      say: '잠자리' },
+    tales:    { ko: '동화 놀이', en: 'Tale Play',  say: '동화 놀이' },
+    night:    { ko: '읽어 주기', en: 'Read to Me', say: '읽어 주기' },
     stickers: { ko: '스티커북', en: 'Sticker Book', say: '스티커북' }
   };
   const TAB_KEY = 'paperTheater.tab';

@@ -83,7 +83,6 @@ const NARRATION_CLIPS = {
  "잠자는 숲속의 공주": "audio/el/home/nar_d9c3d73aa9.mp3",
  "잠자는 숲속의 공주. 곧 열려요.": "audio/el/home/nar_8c3d9e162d.mp3",
  "콩쥐팥쥐": "audio/el/home/nar_d94d40abb6.mp3",
- /* 스티커·퍼즐 이름 (2026-10-28, gen_home.py 가 아니라 추가 생성) */
  "할머니(만세)": "audio/el/home/nar_c651827492.mp3",
  "호랑이(서기)": "audio/el/home/nar_c29bdc2183.mp3",
  "호랑이(넘어짐)": "audio/el/home/nar_90676ae46a.mp3",
@@ -290,7 +289,81 @@ const NARRATION_CLIPS = {
  "공주 퍼즐": "audio/el/home/nar_1525e0b507.mp3",
  "우리 옛이야기": "audio/el/home/nar_acec84f351.mp3",
  "이솝 동물 친구": "audio/el/home/nar_24783ede1c.mp3",
- "세계 명작": "audio/el/home/nar_47e24dde4c.mp3"
+ "세계 명작": "audio/el/home/nar_47e24dde4c.mp3",
+ "동화 놀이": "audio/el/home/nar_5ce0485b4f.mp3",
+ "스티커북": "audio/el/home/nar_a492b91abc.mp3",
+ "스티커북. 동화를 끝까지 하면 스티커가 생겨요": "audio/el/home/nar_ffe4c8326c.mp3",
+ "이 조합의 이야기는 아직 없어요": "audio/el/home/nar_dc555a9dd3.mp3",
+ "이 동화는 잠겨 있어요. 어른과 함께 열어요.": "audio/el/home/nar_6ad4df43ff.mp3",
+ "퍼즐": "audio/el/home/nar_4c637e4eeb.mp3",
+ "스티커": "audio/el/home/nar_a7ebc52b85.mp3",
+ "공주 퍼즐을 다 모았어요!": "audio/el/home/nar_fd535c6b94.mp3",
+ "우리 옛이야기를 다 모았어요!": "audio/el/home/nar_47679a6e48.mp3",
+ "이솝 동물 친구를 다 모았어요!": "audio/el/home/nar_9865f743ad.mp3",
+ "세계 명작을 다 모았어요!": "audio/el/home/nar_0cf1bbdf8c.mp3",
+ "창작 동화를 다 모았어요!": "audio/el/home/nar_25ff62bd02.mp3",
+ "팥죽할멈과 호랑이 이야기가 열렸어요!": "audio/el/home/nar_4734c6f395.mp3",
+ "팥죽할멈과 호랑이 친구들을 다 모았어요!": "audio/el/home/nar_44cd634e1d.mp3",
+ "황소와 개구리 이야기가 열렸어요!": "audio/el/home/nar_0ae6db6f47.mp3",
+ "황소와 개구리 친구들을 다 모았어요!": "audio/el/home/nar_91a7a8910d.mp3",
+ "토끼와 거북이 이야기가 열렸어요!": "audio/el/home/nar_bc01c8713c.mp3",
+ "토끼와 거북이 친구들을 다 모았어요!": "audio/el/home/nar_7fb5db1bfe.mp3",
+ "해와 달이 된 오누이 이야기가 열렸어요!": "audio/el/home/nar_82ea7bc7e5.mp3",
+ "해와 달이 된 오누이 친구들을 다 모았어요!": "audio/el/home/nar_ca25de3f26.mp3",
+ "해와 바람 이야기가 열렸어요!": "audio/el/home/nar_f96c3539ef.mp3",
+ "해와 바람 친구들을 다 모았어요!": "audio/el/home/nar_5afefbccb0.mp3",
+ "커다란 순무 이야기가 열렸어요!": "audio/el/home/nar_23b526397d.mp3",
+ "커다란 순무 친구들을 다 모았어요!": "audio/el/home/nar_bc52824bd9.mp3",
+ "사자와 생쥐 이야기가 열렸어요!": "audio/el/home/nar_1be5b4b4b9.mp3",
+ "사자와 생쥐 친구들을 다 모았어요!": "audio/el/home/nar_7550c4b692.mp3",
+ "여우와 두루미 이야기가 열렸어요!": "audio/el/home/nar_eb26a548f2.mp3",
+ "여우와 두루미 친구들을 다 모았어요!": "audio/el/home/nar_f2fda988b4.mp3",
+ "골디락스와 곰 세 마리 이야기가 열렸어요!": "audio/el/home/nar_2320d6b98a.mp3",
+ "골디락스와 곰 세 마리 친구들을 다 모았어요!": "audio/el/home/nar_7afb15859f.mp3",
+ "브레멘 음악대 이야기가 열렸어요!": "audio/el/home/nar_5c4fe7e213.mp3",
+ "브레멘 음악대 친구들을 다 모았어요!": "audio/el/home/nar_ffd77e4ecb.mp3",
+ "개미와 베짱이 이야기가 열렸어요!": "audio/el/home/nar_3a49cfb7ec.mp3",
+ "개미와 베짱이 친구들을 다 모았어요!": "audio/el/home/nar_f17fdc6ba3.mp3",
+ "미운 아기 오리 이야기가 열렸어요!": "audio/el/home/nar_a383d4b1e8.mp3",
+ "미운 아기 오리 친구들을 다 모았어요!": "audio/el/home/nar_c31c312682.mp3",
+ "아기 돼지 삼형제 이야기가 열렸어요!": "audio/el/home/nar_2f233c8ed1.mp3",
+ "아기 돼지 삼형제 친구들을 다 모았어요!": "audio/el/home/nar_819cc0712c.mp3",
+ "늑대와 일곱 마리 아기 염소 이야기가 열렸어요!": "audio/el/home/nar_e3402f95d7.mp3",
+ "늑대와 일곱 마리 아기 염소 친구들을 다 모았어요!": "audio/el/home/nar_d2bb41bf68.mp3",
+ "콩쥐 팥쥐 이야기가 열렸어요!": "audio/el/home/nar_64b2953a7f.mp3",
+ "콩쥐 팥쥐 친구들을 다 모았어요!": "audio/el/home/nar_112d58cc9f.mp3",
+ "구름 공장 이야기가 열렸어요!": "audio/el/home/nar_51685856f8.mp3",
+ "구름 공장 친구들을 다 모았어요!": "audio/el/home/nar_c1f47d1457.mp3",
+ "헨젤과 그레텔 이야기가 열렸어요!": "audio/el/home/nar_abcbdc3efe.mp3",
+ "헨젤과 그레텔 친구들을 다 모았어요!": "audio/el/home/nar_63e65c3524.mp3",
+ "신데렐라 이야기가 열렸어요!": "audio/el/home/nar_6c6fd12496.mp3",
+ "신데렐라 친구들을 다 모았어요!": "audio/el/home/nar_118a2de78f.mp3",
+ "흥부와 놀부 이야기가 열렸어요!": "audio/el/home/nar_7ac715b543.mp3",
+ "흥부와 놀부 친구들을 다 모았어요!": "audio/el/home/nar_9d7de7dac6.mp3",
+ "빨간 모자 이야기가 열렸어요!": "audio/el/home/nar_de588f3ae2.mp3",
+ "빨간 모자 친구들을 다 모았어요!": "audio/el/home/nar_1e8c8b3f94.mp3",
+ "은혜 갚은 까치 이야기가 열렸어요!": "audio/el/home/nar_03eb996fe4.mp3",
+ "은혜 갚은 까치 친구들을 다 모았어요!": "audio/el/home/nar_40c1280207.mp3",
+ "요술 항아리 이야기가 열렸어요!": "audio/el/home/nar_0b00304799.mp3",
+ "요술 항아리 친구들을 다 모았어요!": "audio/el/home/nar_9121b6292a.mp3",
+ "백설공주 이야기가 열렸어요!": "audio/el/home/nar_e0e8b225e3.mp3",
+ "백설공주 친구들을 다 모았어요!": "audio/el/home/nar_62a6b344c5.mp3",
+ "인어공주 이야기가 열렸어요!": "audio/el/home/nar_c6b9ea1636.mp3",
+ "인어공주 친구들을 다 모았어요!": "audio/el/home/nar_9c33076d76.mp3",
+ "미녀와 야수 이야기가 열렸어요!": "audio/el/home/nar_0c206be6cc.mp3",
+ "미녀와 야수 친구들을 다 모았어요!": "audio/el/home/nar_bbfcb93def.mp3",
+ "나의 빨간 자동차 이야기가 열렸어요!": "audio/el/home/nar_f7e2639f1d.mp3",
+ "나의 빨간 자동차 친구들을 다 모았어요!": "audio/el/home/nar_1dc453d9aa.mp3",
+ "유니콘을 찾아서 이야기가 열렸어요!": "audio/el/home/nar_85d0170bf1.mp3",
+ "유니콘을 찾아서 친구들을 다 모았어요!": "audio/el/home/nar_f1270dea5f.mp3",
+ "완두콩 공주 이야기가 열렸어요!": "audio/el/home/nar_6d2fecc83b.mp3",
+ "완두콩 공주 친구들을 다 모았어요!": "audio/el/home/nar_5699d66ade.mp3",
+ "라푼젤 이야기가 열렸어요!": "audio/el/home/nar_d1f5af4355.mp3",
+ "라푼젤 친구들을 다 모았어요!": "audio/el/home/nar_f78510df3f.mp3",
+ "개구리 왕자 이야기가 열렸어요!": "audio/el/home/nar_7d7fcab70a.mp3",
+ "개구리 왕자 친구들을 다 모았어요!": "audio/el/home/nar_0ec985324d.mp3",
+ "잠자는 숲속의 공주 이야기가 열렸어요!": "audio/el/home/nar_18b84687f1.mp3",
+ "잠자는 숲속의 공주 친구들을 다 모았어요!": "audio/el/home/nar_dadd06af89.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -625,246 +698,1396 @@ const NARRATION_CLIPS_EN = {
   "t": "Kongjwi and Patjwi",
   "c": "audio/el/home/en/nar_fe9e8ab6d6.mp3"
  },
- /* 스티커·퍼즐 이름 (2026-10-28, gen_home.py 가 아니라 추가 생성. 키 = say() 에 넘기는 영어 글) */
- "The Tiger and the Red Bean Porridge": {"t": "The Tiger and the Red Bean Porridge", "c": "audio/el/home/en/nar_191b11787b.mp3"},
- "The Ox and the Frog": {"t": "The Ox and the Frog", "c": "audio/el/home/en/nar_9762a2e01a.mp3"},
- "The Rabbit and the Turtle": {"t": "The Rabbit and the Turtle", "c": "audio/el/home/en/nar_f60e293437.mp3"},
- "The Sun and the Moon": {"t": "The Sun and the Moon", "c": "audio/el/home/en/nar_65e2f90e00.mp3"},
- "The Sun and the Wind": {"t": "The Sun and the Wind", "c": "audio/el/home/en/nar_e69f58e3b5.mp3"},
- "The Giant Turnip": {"t": "The Giant Turnip", "c": "audio/el/home/en/nar_e09d8255bc.mp3"},
- "The Lion and the Mouse": {"t": "The Lion and the Mouse", "c": "audio/el/home/en/nar_75e71d7b2a.mp3"},
- "The Fox and the Crane": {"t": "The Fox and the Crane", "c": "audio/el/home/en/nar_0453cca3de.mp3"},
- "Goldilocks and the Three Bears": {"t": "Goldilocks and the Three Bears", "c": "audio/el/home/en/nar_76655a4c6d.mp3"},
- "The Bremen Town Musicians": {"t": "The Bremen Town Musicians", "c": "audio/el/home/en/nar_0a41ff193a.mp3"},
- "The Ant and the Grasshopper": {"t": "The Ant and the Grasshopper", "c": "audio/el/home/en/nar_87a39b991c.mp3"},
- "The Ugly Duckling": {"t": "The Ugly Duckling", "c": "audio/el/home/en/nar_aa806654c0.mp3"},
- "The Three Little Pigs": {"t": "The Three Little Pigs", "c": "audio/el/home/en/nar_fbfede5560.mp3"},
- "The Wolf and the Seven Kids": {"t": "The Wolf and the Seven Kids", "c": "audio/el/home/en/nar_60c1425ef4.mp3"},
- "Kongjwi and Patjwi": {"t": "Kongjwi and Patjwi", "c": "audio/el/home/en/nar_fe9e8ab6d6.mp3"},
- "The Cloud Factory": {"t": "The Cloud Factory", "c": "audio/el/home/en/nar_c88e6a06f9.mp3"},
- "Hansel and Gretel": {"t": "Hansel and Gretel", "c": "audio/el/home/en/nar_cd986154a4.mp3"},
- "Cinderella": {"t": "Cinderella", "c": "audio/el/home/en/nar_c81d246305.mp3"},
- "Heungbu and Nolbu": {"t": "Heungbu and Nolbu", "c": "audio/el/home/en/nar_07bf7755a1.mp3"},
- "Little Red Riding Hood": {"t": "Little Red Riding Hood", "c": "audio/el/home/en/nar_098489da46.mp3"},
- "The Grateful Magpie": {"t": "The Grateful Magpie", "c": "audio/el/home/en/nar_8f3cbd165c.mp3"},
- "The Magic Jar": {"t": "The Magic Jar", "c": "audio/el/home/en/nar_abf59d92b0.mp3"},
- "Snow White": {"t": "Snow White", "c": "audio/el/home/en/nar_bcbed47236.mp3"},
- "The Little Mermaid": {"t": "The Little Mermaid", "c": "audio/el/home/en/nar_86ec2f1f4d.mp3"},
- "Beauty and the Beast": {"t": "Beauty and the Beast", "c": "audio/el/home/en/nar_4d0c17a6a3.mp3"},
- "My Red Car": {"t": "My Red Car", "c": "audio/el/home/en/nar_d6fecc4398.mp3"},
- "Finding the Unicorn": {"t": "Finding the Unicorn", "c": "audio/el/home/en/nar_aa0df85f45.mp3"},
- "The Princess and the Pea": {"t": "The Princess and the Pea", "c": "audio/el/home/en/nar_3dc9c584ac.mp3"},
- "Rapunzel": {"t": "Rapunzel", "c": "audio/el/home/en/nar_1a0301f3a4.mp3"},
- "The Frog Prince": {"t": "The Frog Prince", "c": "audio/el/home/en/nar_3171078982.mp3"},
- "The Sleeping Beauty": {"t": "The Sleeping Beauty", "c": "audio/el/home/en/nar_69f0b2b235.mp3"},
- "Still empty": {"t": "Still empty", "c": "audio/el/home/en/nar_bf2bf7032b.mp3"},
- "Princess Puzzle": {"t": "Princess Puzzle", "c": "audio/el/home/en/nar_19d18dba4c.mp3"},
- "Korean Tales": {"t": "Korean Tales", "c": "audio/el/home/en/nar_b7492a1220.mp3"},
- "Aesop Animals": {"t": "Aesop Animals", "c": "audio/el/home/en/nar_155096ca7e.mp3"},
- "World Classics": {"t": "World Classics", "c": "audio/el/home/en/nar_02fd5ff5ed.mp3"},
- "Original Tales": {"t": "Original Tales", "c": "audio/el/home/en/nar_8da1e24025.mp3"},
- "Sun": {"t": "Sun", "c": "audio/el/home/en/nar_efb553b8ad.mp3"},
- "Wind": {"t": "Wind", "c": "audio/el/home/en/nar_87f8c5eaa1.mp3"},
- "Duck": {"t": "Duck", "c": "audio/el/home/en/nar_d4954b30bf.mp3"},
- "Swan": {"t": "Swan", "c": "audio/el/home/en/nar_de052fce14.mp3"},
- "Toad": {"t": "Toad", "c": "audio/el/home/en/nar_b54935852a.mp3"},
- "Wolf": {"t": "Wolf", "c": "audio/el/home/en/nar_cdf02296bb.mp3"},
- "Mama": {"t": "Mama", "c": "audio/el/home/en/nar_7aaf010e70.mp3"},
- "King": {"t": "King", "c": "audio/el/home/en/nar_897ac554a9.mp3"},
- "Tiger": {"t": "Tiger", "c": "audio/el/home/en/nar_15ecc7476f.mp3"},
- "Fairy": {"t": "Fairy", "c": "audio/el/home/en/nar_2d9abedb48.mp3"},
- "Queen": {"t": "Queen", "c": "audio/el/home/en/nar_facc8d1199.mp3"},
- "Turtle": {"t": "Turtle", "c": "audio/el/home/en/nar_d5e50d7b71.mp3"},
- "Mortar": {"t": "Mortar", "c": "audio/el/home/en/nar_db953e0454.mp3"},
- "Sister": {"t": "Sister", "c": "audio/el/home/en/nar_79971e4ae2.mp3"},
- "Donkey": {"t": "Donkey", "c": "audio/el/home/en/nar_a91d13f671.mp3"},
- "Patjwi": {"t": "Patjwi", "c": "audio/el/home/en/nar_855ff92b6d.mp3"},
- "Father": {"t": "Father", "c": "audio/el/home/en/nar_fcac6dc13e.mp3"},
- "Prince": {"t": "Prince", "c": "audio/el/home/en/nar_b83cb2140c.mp3"},
- "Hunter": {"t": "Hunter", "c": "audio/el/home/en/nar_6c87ac3f45.mp3"},
- "Brother": {"t": "Brother", "c": "audio/el/home/en/nar_0a1442dc9f.mp3"},
- "Chestnut": {"t": "Chestnut", "c": "audio/el/home/en/nar_d8e1e05d0f.mp3"},
- "Duckling": {"t": "Duckling", "c": "audio/el/home/en/nar_31e36bbbce.mp3"},
- "Black ox": {"t": "Black ox", "c": "audio/el/home/en/nar_ac995eb3d4.mp3"},
- "Bluebird": {"t": "Bluebird", "c": "audio/el/home/en/nar_667f3427ad.mp3"},
- "Sea king": {"t": "Sea king", "c": "audio/el/home/en/nar_fd3269ddf6.mp3"},
- "Papa bear": {"t": "Papa bear", "c": "audio/el/home/en/nar_86a203c9fa.mp3"},
- "Mama bear": {"t": "Mama bear", "c": "audio/el/home/en/nar_3fac0ce2df.mp3"},
- "Baby bear": {"t": "Baby bear", "c": "audio/el/home/en/nar_09f8ece93b.mp3"},
- "First pig": {"t": "First pig", "c": "audio/el/home/en/nar_3d7d716b71.mp3"},
- "Third pig": {"t": "Third pig", "c": "audio/el/home/en/nar_7e75e4ccc4.mp3"},
- "Mama goat": {"t": "Mama goat", "c": "audio/el/home/en/nar_591dcbd6c3.mp3"},
- "Sea witch": {"t": "Sea witch", "c": "audio/el/home/en/nar_2158e08a12.mp3"},
- "Ambulance": {"t": "Ambulance", "c": "audio/el/home/en/nar_8e01726c91.mp3"},
- "Tow truck": {"t": "Tow truck", "c": "audio/el/home/en/nar_6f3ff44392.mp3"},
- "Uncle frog": {"t": "Uncle frog", "c": "audio/el/home/en/nar_38bb7537ea.mp3"},
- "Second pig": {"t": "Second pig", "c": "audio/el/home/en/nar_c548cb0168.mp3"},
- "Police car": {"t": "Police car", "c": "audio/el/home/en/nar_960f5608c4.mp3"},
- "Fire truck": {"t": "Fire truck", "c": "audio/el/home/en/nar_040d2df08b.mp3"},
- "Old Gothel": {"t": "Old Gothel", "c": "audio/el/home/en/nar_06aa452c34.mp3"},
- "Blue fairy": {"t": "Blue fairy", "c": "audio/el/home/en/nar_4e0511a13a.mp3"},
- "Mother frog": {"t": "Mother frog", "c": "audio/el/home/en/nar_4febdd9e74.mp3"},
- "Cat (happy)": {"t": "Cat (happy)", "c": "audio/el/home/en/nar_37b2bb9944.mp3"},
- "Fox (sorry)": {"t": "Fox (sorry)", "c": "audio/el/home/en/nar_b8d703e24d.mp3"},
- "Crane (sad)": {"t": "Crane (sad)", "c": "audio/el/home/en/nar_c5d8e8e973.mp3"},
- "Baby magpie": {"t": "Baby magpie", "c": "audio/el/home/en/nar_785435115f.mp3"},
- "Grandfather": {"t": "Grandfather", "c": "audio/el/home/en/nar_14ee52088b.mp3"},
- "Grandmother": {"t": "Grandmother", "c": "audio/el/home/en/nar_6cbd6140e0.mp3"},
- "Deer (hurt)": {"t": "Deer (hurt)", "c": "audio/el/home/en/nar_5065a0154d.mp3"},
- "Orange bird": {"t": "Orange bird", "c": "audio/el/home/en/nar_4d77d43f1f.mp3"},
- "Wind (tired)": {"t": "Wind (tired)", "c": "audio/el/home/en/nar_62dc4f68b0.mp3"},
- "Girl (happy)": {"t": "Girl (happy)", "c": "audio/el/home/en/nar_43b8f1c36a.mp3"},
- "Ant (winter)": {"t": "Ant (winter)", "c": "audio/el/home/en/nar_3f6217148f.mp3"},
- "Wolf (tired)": {"t": "Wolf (tired)", "c": "audio/el/home/en/nar_a0492c88c6.mp3"},
- "Nolbu's wife": {"t": "Nolbu's wife", "c": "audio/el/home/en/nar_ceb68f664a.mp3"},
- "Beast (ring)": {"t": "Beast (ring)", "c": "audio/el/home/en/nar_934d30ba8d.mp3"},
- "King (happy)": {"t": "King (happy)", "c": "audio/el/home/en/nar_af4c38c9be.mp3"},
- "Ox (standing)": {"t": "Ox (standing)", "c": "audio/el/home/en/nar_fd602857d8.mp3"},
- "Puppy (happy)": {"t": "Puppy (happy)", "c": "audio/el/home/en/nar_9f48c3d7d7.mp3"},
- "Mouse (happy)": {"t": "Mouse (happy)", "c": "audio/el/home/en/nar_117965d970.mp3"},
- "Fox (licking)": {"t": "Fox (licking)", "c": "audio/el/home/en/nar_f93e12d702.mp3"},
- "Dog (singing)": {"t": "Dog (singing)", "c": "audio/el/home/en/nar_08d85582e1.mp3"},
- "Cat (singing)": {"t": "Cat (singing)", "c": "audio/el/home/en/nar_a06f100b5b.mp3"},
- "Ant (in coat)": {"t": "Ant (in coat)", "c": "audio/el/home/en/nar_17e798ebd4.mp3"},
- "Swan (flying)": {"t": "Swan (flying)", "c": "audio/el/home/en/nar_f11ddbe6ce.mp3"},
- "Kongjwi (wet)": {"t": "Kongjwi (wet)", "c": "audio/el/home/en/nar_963268fed3.mp3"},
- "Nolbu (proud)": {"t": "Nolbu (proud)", "c": "audio/el/home/en/nar_2d12302d54.mp3"},
- "Father magpie": {"t": "Father magpie", "c": "audio/el/home/en/nar_2e9362f6cb.mp3"},
- "Mother magpie": {"t": "Mother magpie", "c": "audio/el/home/en/nar_461fac7f2f.mp3"},
- "Belle (happy)": {"t": "Belle (happy)", "c": "audio/el/home/en/nar_a80b34a72b.mp3"},
- "Sheep (happy)": {"t": "Sheep (happy)", "c": "audio/el/home/en/nar_0ea2eb32a1.mp3"},
- "Horse (happy)": {"t": "Horse (happy)", "c": "audio/el/home/en/nar_a32eeb42d4.mp3"},
- "Queen (happy)": {"t": "Queen (happy)", "c": "audio/el/home/en/nar_91b454ca4b.mp3"},
- "Baby princess": {"t": "Baby princess", "c": "audio/el/home/en/nar_cc9f3f7234.mp3"},
- "Tiger (fallen)": {"t": "Tiger (fallen)", "c": "audio/el/home/en/nar_5198d68f88.mp3"},
- "Ox (flustered)": {"t": "Ox (flustered)", "c": "audio/el/home/en/nar_e39e379905.mp3"},
- "Turtle (medal)": {"t": "Turtle (medal)", "c": "audio/el/home/en/nar_234eebb8ec.mp3"},
- "Wind (blowing)": {"t": "Wind (blowing)", "c": "audio/el/home/en/nar_0e2e1de20b.mp3"},
- "Lion (worried)": {"t": "Lion (worried)", "c": "audio/el/home/en/nar_2209f66e26.mp3"},
- "Fox (standing)": {"t": "Fox (standing)", "c": "audio/el/home/en/nar_a035f89c33.mp3"},
- "Robber (brown)": {"t": "Robber (brown)", "c": "audio/el/home/en/nar_c01f42f4c0.mp3"},
- "Robber (green)": {"t": "Robber (green)", "c": "audio/el/home/en/nar_19ff46670b.mp3"},
- "Ant (standing)": {"t": "Ant (standing)", "c": "audio/el/home/en/nar_7a41947293.mp3"},
- "Ant (carrying)": {"t": "Ant (carrying)", "c": "audio/el/home/en/nar_2394e9afd5.mp3"},
- "Duckling (sad)": {"t": "Duckling (sad)", "c": "audio/el/home/en/nar_7bc932f4d2.mp3"},
- "Wolf (huffing)": {"t": "Wolf (huffing)", "c": "audio/el/home/en/nar_71cb376405.mp3"},
- "Wolf (fleeing)": {"t": "Wolf (fleeing)", "c": "audio/el/home/en/nar_2ca0fe6ece.mp3"},
- "Hansel (happy)": {"t": "Hansel (happy)", "c": "audio/el/home/en/nar_cc63116369.mp3"},
- "Mouse coachman": {"t": "Mouse coachman", "c": "audio/el/home/en/nar_2acc5c0c2d.mp3"},
- "Heungbu (glad)": {"t": "Heungbu (glad)", "c": "audio/el/home/en/nar_d9abf11381.mp3"},
- "Heungbu's wife": {"t": "Heungbu's wife", "c": "audio/el/home/en/nar_b8e025a5e8.mp3"},
- "Dwarf (hammer)": {"t": "Dwarf (hammer)", "c": "audio/el/home/en/nar_b999e50766.mp3"},
- "Sheep (crying)": {"t": "Sheep (crying)", "c": "audio/el/home/en/nar_e44d25a859.mp3"},
- "Horse (hungry)": {"t": "Horse (hungry)", "c": "audio/el/home/en/nar_8a05745692.mp3"},
- "Prince (happy)": {"t": "Prince (happy)", "c": "audio/el/home/en/nar_ce9b9b6a71.mp3"},
- "Frog (sitting)": {"t": "Frog (sitting)", "c": "audio/el/home/en/nar_4952d31c87.mp3"},
- "Frog (hopping)": {"t": "Frog (hopping)", "c": "audio/el/home/en/nar_8953de3c82.mp3"},
- "Granny (scared)": {"t": "Granny (scared)", "c": "audio/el/home/en/nar_602e4b93fd.mp3"},
- "Raccoon referee": {"t": "Raccoon referee", "c": "audio/el/home/en/nar_6070cc08d2.mp3"},
- "Mother (waving)": {"t": "Mother (waving)", "c": "audio/el/home/en/nar_3fbaa6ee34.mp3"},
- "Grandma (happy)": {"t": "Grandma (happy)", "c": "audio/el/home/en/nar_ff31b84dd8.mp3"},
- "Lion (standing)": {"t": "Lion (standing)", "c": "audio/el/home/en/nar_99e65ac7f9.mp3"},
- "Lion (laughing)": {"t": "Lion (laughing)", "c": "audio/el/home/en/nar_fa1cd03d3f.mp3"},
- "Lion (sleeping)": {"t": "Lion (sleeping)", "c": "audio/el/home/en/nar_5f809ed160.mp3"},
- "Mouse (walking)": {"t": "Mouse (walking)", "c": "audio/el/home/en/nar_a743d8eebe.mp3"},
- "Mouse (gnawing)": {"t": "Mouse (gnawing)", "c": "audio/el/home/en/nar_d72e93d616.mp3"},
- "Wolf (knocking)": {"t": "Wolf (knocking)", "c": "audio/el/home/en/nar_2a4a161587.mp3"},
- "Kongjwi (bride)": {"t": "Kongjwi (bride)", "c": "audio/el/home/en/nar_b75aa09a36.mp3"},
- "Gretel (eating)": {"t": "Gretel (eating)", "c": "audio/el/home/en/nar_28f77ac340.mp3"},
- "Hansel (dozing)": {"t": "Hansel (dozing)", "c": "audio/el/home/en/nar_0c7ed59a07.mp3"},
- "Fairy godmother": {"t": "Fairy godmother", "c": "audio/el/home/en/nar_0dbbfa29f1.mp3"},
- "Lady (greeting)": {"t": "Lady (greeting)", "c": "audio/el/home/en/nar_12b2ad83d5.mp3"},
- "Snake (fleeing)": {"t": "Snake (fleeing)", "c": "audio/el/home/en/nar_6151cc75e7.mp3"},
- "Rich man (gold)": {"t": "Rich man (gold)", "c": "audio/el/home/en/nar_a3e2d5d417.mp3"},
- "Dwarf (smiling)": {"t": "Dwarf (smiling)", "c": "audio/el/home/en/nar_5b1a45f890.mp3"},
- "Red car (tired)": {"t": "Red car (tired)", "c": "audio/el/home/en/nar_e5ab6c8ced.mp3"},
- "Deer (relieved)": {"t": "Deer (relieved)", "c": "audio/el/home/en/nar_21bab73078.mp3"},
- "Tiger (standing)": {"t": "Tiger (standing)", "c": "audio/el/home/en/nar_347c798d74.mp3"},
- "Rabbit (running)": {"t": "Rabbit (running)", "c": "audio/el/home/en/nar_7ca2b89cae.mp3"},
- "Turtle (walking)": {"t": "Turtle (walking)", "c": "audio/el/home/en/nar_c210f82eb1.mp3"},
- "Tiger (slipping)": {"t": "Tiger (slipping)", "c": "audio/el/home/en/nar_a548dfa867.mp3"},
- "Grandpa (fallen)": {"t": "Grandpa (fallen)", "c": "audio/el/home/en/nar_bd5c8b8744.mp3"},
- "Mouse (pleading)": {"t": "Mouse (pleading)", "c": "audio/el/home/en/nar_b4a0f79cc4.mp3"},
- "Crane (standing)": {"t": "Crane (standing)", "c": "audio/el/home/en/nar_bbffcc6d55.mp3"},
- "Donkey (singing)": {"t": "Donkey (singing)", "c": "audio/el/home/en/nar_f47d521010.mp3"},
- "Duckling (happy)": {"t": "Duckling (happy)", "c": "audio/el/home/en/nar_658ed100df.mp3"},
- "Kongjwi (hoeing)": {"t": "Kongjwi (hoeing)", "c": "audio/el/home/en/nar_4a1cad9408.mp3"},
- "White baby cloud": {"t": "White baby cloud", "c": "audio/el/home/en/nar_7999b475b3.mp3"},
- "Swallow (ribbon)": {"t": "Swallow (ribbon)", "c": "audio/el/home/en/nar_8d2f08320f.mp3"},
- "Swallow (flying)": {"t": "Swallow (flying)", "c": "audio/el/home/en/nar_402760ce39.mp3"},
- "Red Hood (happy)": {"t": "Red Hood (happy)", "c": "audio/el/home/en/nar_4a64cee316.mp3"},
- "Belle (standing)": {"t": "Belle (standing)", "c": "audio/el/home/en/nar_1d3e733353.mp3"},
- "Beast (standing)": {"t": "Beast (standing)", "c": "audio/el/home/en/nar_9785bb2d7e.mp3"},
- "Belle (kneeling)": {"t": "Belle (kneeling)", "c": "audio/el/home/en/nar_ed713e61b8.mp3"},
- "Rapunzel (happy)": {"t": "Rapunzel (happy)", "c": "audio/el/home/en/nar_d598d1f6e0.mp3"},
- "Father (shocked)": {"t": "Father (shocked)", "c": "audio/el/home/en/nar_28ba621c1d.mp3"},
- "Frog (surprised)": {"t": "Frog (surprised)", "c": "audio/el/home/en/nar_503c7452ad.mp3"},
- "Granny (cheering)": {"t": "Granny (cheering)", "c": "audio/el/home/en/nar_3978c49c7b.mp3"},
- "Baby frog (awake)": {"t": "Baby frog (awake)", "c": "audio/el/home/en/nar_5abd1881b2.mp3"},
- "Rabbit (sleeping)": {"t": "Rabbit (sleeping)", "c": "audio/el/home/en/nar_7ce6653b19.mp3"},
- "Tiger (as mother)": {"t": "Tiger (as mother)", "c": "audio/el/home/en/nar_d998891b43.mp3"},
- "Rooster (singing)": {"t": "Rooster (singing)", "c": "audio/el/home/en/nar_58ea6a7524.mp3"},
- "Dark cloud (bump)": {"t": "Dark cloud (bump)", "c": "audio/el/home/en/nar_bc2fa65803.mp3"},
- "Gretel (thinking)": {"t": "Gretel (thinking)", "c": "audio/el/home/en/nar_baebaa9d8e.mp3"},
- "Witch (beckoning)": {"t": "Witch (beckoning)", "c": "audio/el/home/en/nar_73af8b82d7.mp3"},
- "Cinderella (gown)": {"t": "Cinderella (gown)", "c": "audio/el/home/en/nar_eaa1817caf.mp3"},
- "Scholar (walking)": {"t": "Scholar (walking)", "c": "audio/el/home/en/nar_55e63a94e8.mp3"},
- "Red car (smiling)": {"t": "Red car (smiling)", "c": "audio/el/home/en/nar_31c0342edd.mp3"},
- "Red car (running)": {"t": "Red car (running)", "c": "audio/el/home/en/nar_65fb930af4.mp3"},
- "Princess (waving)": {"t": "Princess (waving)", "c": "audio/el/home/en/nar_c7c81ace28.mp3"},
- "Princess (sleepy)": {"t": "Princess (sleepy)", "c": "audio/el/home/en/nar_d0fb2d09a7.mp3"},
- "Princess (crying)": {"t": "Princess (crying)", "c": "audio/el/home/en/nar_94cd554703.mp3"},
- "Princess (waking)": {"t": "Princess (waking)", "c": "audio/el/home/en/nar_38c4b0485b.mp3"},
- "Rabbit (waking up)": {"t": "Rabbit (waking up)", "c": "audio/el/home/en/nar_8a2cbeccd8.mp3"},
- "Siblings (hugging)": {"t": "Siblings (hugging)", "c": "audio/el/home/en/nar_e89037d06b.mp3"},
- "Traveler (walking)": {"t": "Traveler (walking)", "c": "audio/el/home/en/nar_68de8860a2.mp3"},
- "Grandpa (standing)": {"t": "Grandpa (standing)", "c": "audio/el/home/en/nar_484a0eb903.mp3"},
- "Baby bear (crying)": {"t": "Baby bear (crying)", "c": "audio/el/home/en/nar_2ac609d586.mp3"},
- "Young bird (happy)": {"t": "Young bird (happy)", "c": "audio/el/home/en/nar_4e6bff305a.mp3"},
- "Baby cloud (sorry)": {"t": "Baby cloud (sorry)", "c": "audio/el/home/en/nar_843eb8aa76.mp3"},
- "Heungbu (greeting)": {"t": "Heungbu (greeting)", "c": "audio/el/home/en/nar_6d55151967.mp3"},
- "Red Hood (walking)": {"t": "Red Hood (walking)", "c": "audio/el/home/en/nar_e8b4ea61e2.mp3"},
- "Grandma (cheering)": {"t": "Grandma (cheering)", "c": "audio/el/home/en/nar_566eb2fc66.mp3"},
- "Snow White (awake)": {"t": "Snow White (awake)", "c": "audio/el/home/en/nar_416c76a61c.mp3"},
- "Unicorn (standing)": {"t": "Unicorn (standing)", "c": "audio/el/home/en/nar_58916e52b3.mp3"},
- "Rapunzel (singing)": {"t": "Rapunzel (singing)", "c": "audio/el/home/en/nar_03c1204fa5.mp3"},
- "Mother frog (dizzy)": {"t": "Mother frog (dizzy)", "c": "audio/el/home/en/nar_a109cf9076.mp3"},
- "Traveler (in shirt)": {"t": "Traveler (in shirt)", "c": "audio/el/home/en/nar_069c5e3d46.mp3"},
- "First pig (running)": {"t": "First pig (running)", "c": "audio/el/home/en/nar_635badffca.mp3"},
- "Second pig (fiddle)": {"t": "Second pig (fiddle)", "c": "audio/el/home/en/nar_bb81273358.mp3"},
- "First kid (hopping)": {"t": "First kid (hopping)", "c": "audio/el/home/en/nar_a644fe47a7.mp3"},
- "Fifth kid (hopping)": {"t": "Fifth kid (hopping)", "c": "audio/el/home/en/nar_67ac7d1ed3.mp3"},
- "Cinderella (crying)": {"t": "Cinderella (crying)", "c": "audio/el/home/en/nar_f1099e1085.mp3"},
- "Scholar (surprised)": {"t": "Scholar (surprised)", "c": "audio/el/home/en/nar_10555ae0cc.mp3"},
- "Rich man (shouting)": {"t": "Rich man (shouting)", "c": "audio/el/home/en/nar_11fd04682c.mp3"},
- "Rich man (hurrying)": {"t": "Rich man (hurrying)", "c": "audio/el/home/en/nar_22a813c34d.mp3"},
- "Princess (standing)": {"t": "Princess (standing)", "c": "audio/el/home/en/nar_47080bef95.mp3"},
- "Rapunzel (standing)": {"t": "Rapunzel (standing)", "c": "audio/el/home/en/nar_94c072b33d.mp3"},
- "Grasshopper (winter)": {"t": "Grasshopper (winter)", "c": "audio/el/home/en/nar_7f1c8aee23.mp3"},
- "Second kid (hopping)": {"t": "Second kid (hopping)", "c": "audio/el/home/en/nar_28c76f6a50.mp3"},
- "Baby cloud (huddled)": {"t": "Baby cloud (huddled)", "c": "audio/el/home/en/nar_650c86c955.mp3"},
- "First sister (proud)": {"t": "First sister (proud)", "c": "audio/el/home/en/nar_db4b8b789e.mp3"},
- "Red Hood (surprised)": {"t": "Red Hood (surprised)", "c": "audio/el/home/en/nar_351553fae5.mp3"},
- "Grandfather (fallen)": {"t": "Grandfather (fallen)", "c": "audio/el/home/en/nar_6729cd0a4d.mp3"},
- "Snow White (running)": {"t": "Snow White (running)", "c": "audio/el/home/en/nar_f0840c9a1d.mp3"},
- "Little Mermaid (sad)": {"t": "Little Mermaid (sad)", "c": "audio/el/home/en/nar_ddfdd5302f.mp3"},
- "Goldilocks (standing)": {"t": "Goldilocks (standing)", "c": "audio/el/home/en/nar_2dbc075616.mp3"},
- "Goldilocks (sleeping)": {"t": "Goldilocks (sleeping)", "c": "audio/el/home/en/nar_bf06878df7.mp3"},
- "Grasshopper (playing)": {"t": "Grasshopper (playing)", "c": "audio/el/home/en/nar_364ffb9c5d.mp3"},
- "Mama goat (surprised)": {"t": "Mama goat (surprised)", "c": "audio/el/home/en/nar_707b6c0d82.mp3"},
- "Dark cloud (marching)": {"t": "Dark cloud (marching)", "c": "audio/el/home/en/nar_effe1f67b0.mp3"},
- "Baby cloud (floating)": {"t": "Baby cloud (floating)", "c": "audio/el/home/en/nar_eef3c79a4e.mp3"},
- "Cinderella (standing)": {"t": "Cinderella (standing)", "c": "audio/el/home/en/nar_6e5904d3d9.mp3"},
- "Grandmother (sharing)": {"t": "Grandmother (sharing)", "c": "audio/el/home/en/nar_464a436e2c.mp3"},
- "Snow White (standing)": {"t": "Snow White (standing)", "c": "audio/el/home/en/nar_2167de68c1.mp3"},
- "Goldilocks (surprised)": {"t": "Goldilocks (surprised)", "c": "audio/el/home/en/nar_b658d935c1.mp3"},
- "Young bird (trembling)": {"t": "Young bird (trembling)", "c": "audio/el/home/en/nar_e5a540bc98.mp3"},
- "Mother frog (puffed up)": {"t": "Mother frog (puffed up)", "c": "audio/el/home/en/nar_8316fa4c4f.mp3"},
- "Rabbit (congratulating)": {"t": "Rabbit (congratulating)", "c": "audio/el/home/en/nar_299bfe6314.mp3"},
- "Traveler (holding coat)": {"t": "Traveler (holding coat)", "c": "audio/el/home/en/nar_9fcc2875cf.mp3"},
- "Grasshopper (shivering)": {"t": "Grasshopper (shivering)", "c": "audio/el/home/en/nar_cd734b9f39.mp3"},
- "Baby cloud (looking up)": {"t": "Baby cloud (looking up)", "c": "audio/el/home/en/nar_2530b31f44.mp3"},
- "Little Mermaid (dancing)": {"t": "Little Mermaid (dancing)", "c": "audio/el/home/en/nar_2c5913e612.mp3"},
- "Little Mermaid (standing)": {"t": "Little Mermaid (standing)", "c": "audio/el/home/en/nar_584884cf70.mp3"},
- "Little Mermaid (swimming)": {"t": "Little Mermaid (swimming)", "c": "audio/el/home/en/nar_463e8bbfa3.mp3"}
+ "The Tiger and the Red Bean Porridge": {
+  "t": "The Tiger and the Red Bean Porridge",
+  "c": "audio/el/home/en/nar_191b11787b.mp3"
+ },
+ "The Ox and the Frog": {
+  "t": "The Ox and the Frog",
+  "c": "audio/el/home/en/nar_9762a2e01a.mp3"
+ },
+ "The Rabbit and the Turtle": {
+  "t": "The Rabbit and the Turtle",
+  "c": "audio/el/home/en/nar_f60e293437.mp3"
+ },
+ "The Sun and the Moon": {
+  "t": "The Sun and the Moon",
+  "c": "audio/el/home/en/nar_65e2f90e00.mp3"
+ },
+ "The Sun and the Wind": {
+  "t": "The Sun and the Wind",
+  "c": "audio/el/home/en/nar_e69f58e3b5.mp3"
+ },
+ "The Giant Turnip": {
+  "t": "The Giant Turnip",
+  "c": "audio/el/home/en/nar_e09d8255bc.mp3"
+ },
+ "The Lion and the Mouse": {
+  "t": "The Lion and the Mouse",
+  "c": "audio/el/home/en/nar_75e71d7b2a.mp3"
+ },
+ "The Fox and the Crane": {
+  "t": "The Fox and the Crane",
+  "c": "audio/el/home/en/nar_0453cca3de.mp3"
+ },
+ "Goldilocks and the Three Bears": {
+  "t": "Goldilocks and the Three Bears",
+  "c": "audio/el/home/en/nar_76655a4c6d.mp3"
+ },
+ "The Bremen Town Musicians": {
+  "t": "The Bremen Town Musicians",
+  "c": "audio/el/home/en/nar_0a41ff193a.mp3"
+ },
+ "The Ant and the Grasshopper": {
+  "t": "The Ant and the Grasshopper",
+  "c": "audio/el/home/en/nar_87a39b991c.mp3"
+ },
+ "The Ugly Duckling": {
+  "t": "The Ugly Duckling",
+  "c": "audio/el/home/en/nar_aa806654c0.mp3"
+ },
+ "The Three Little Pigs": {
+  "t": "The Three Little Pigs",
+  "c": "audio/el/home/en/nar_fbfede5560.mp3"
+ },
+ "The Wolf and the Seven Kids": {
+  "t": "The Wolf and the Seven Kids",
+  "c": "audio/el/home/en/nar_60c1425ef4.mp3"
+ },
+ "Kongjwi and Patjwi": {
+  "t": "Kongjwi and Patjwi",
+  "c": "audio/el/home/en/nar_fe9e8ab6d6.mp3"
+ },
+ "The Cloud Factory": {
+  "t": "The Cloud Factory",
+  "c": "audio/el/home/en/nar_c88e6a06f9.mp3"
+ },
+ "Hansel and Gretel": {
+  "t": "Hansel and Gretel",
+  "c": "audio/el/home/en/nar_cd986154a4.mp3"
+ },
+ "Cinderella": {
+  "t": "Cinderella",
+  "c": "audio/el/home/en/nar_c81d246305.mp3"
+ },
+ "Heungbu and Nolbu": {
+  "t": "Heungbu and Nolbu",
+  "c": "audio/el/home/en/nar_07bf7755a1.mp3"
+ },
+ "Little Red Riding Hood": {
+  "t": "Little Red Riding Hood",
+  "c": "audio/el/home/en/nar_098489da46.mp3"
+ },
+ "The Grateful Magpie": {
+  "t": "The Grateful Magpie",
+  "c": "audio/el/home/en/nar_8f3cbd165c.mp3"
+ },
+ "The Magic Jar": {
+  "t": "The Magic Jar",
+  "c": "audio/el/home/en/nar_abf59d92b0.mp3"
+ },
+ "Snow White": {
+  "t": "Snow White",
+  "c": "audio/el/home/en/nar_bcbed47236.mp3"
+ },
+ "The Little Mermaid": {
+  "t": "The Little Mermaid",
+  "c": "audio/el/home/en/nar_86ec2f1f4d.mp3"
+ },
+ "Beauty and the Beast": {
+  "t": "Beauty and the Beast",
+  "c": "audio/el/home/en/nar_4d0c17a6a3.mp3"
+ },
+ "My Red Car": {
+  "t": "My Red Car",
+  "c": "audio/el/home/en/nar_d6fecc4398.mp3"
+ },
+ "Finding the Unicorn": {
+  "t": "Finding the Unicorn",
+  "c": "audio/el/home/en/nar_aa0df85f45.mp3"
+ },
+ "The Princess and the Pea": {
+  "t": "The Princess and the Pea",
+  "c": "audio/el/home/en/nar_3dc9c584ac.mp3"
+ },
+ "Rapunzel": {
+  "t": "Rapunzel",
+  "c": "audio/el/home/en/nar_1a0301f3a4.mp3"
+ },
+ "The Frog Prince": {
+  "t": "The Frog Prince",
+  "c": "audio/el/home/en/nar_3171078982.mp3"
+ },
+ "The Sleeping Beauty": {
+  "t": "The Sleeping Beauty",
+  "c": "audio/el/home/en/nar_69f0b2b235.mp3"
+ },
+ "Still empty": {
+  "t": "Still empty",
+  "c": "audio/el/home/en/nar_bf2bf7032b.mp3"
+ },
+ "Princess Puzzle": {
+  "t": "Princess Puzzle",
+  "c": "audio/el/home/en/nar_19d18dba4c.mp3"
+ },
+ "Korean Tales": {
+  "t": "Korean Tales",
+  "c": "audio/el/home/en/nar_b7492a1220.mp3"
+ },
+ "Aesop Animals": {
+  "t": "Aesop Animals",
+  "c": "audio/el/home/en/nar_155096ca7e.mp3"
+ },
+ "World Classics": {
+  "t": "World Classics",
+  "c": "audio/el/home/en/nar_02fd5ff5ed.mp3"
+ },
+ "Original Tales": {
+  "t": "Original Tales",
+  "c": "audio/el/home/en/nar_8da1e24025.mp3"
+ },
+ "Sun": {
+  "t": "Sun",
+  "c": "audio/el/home/en/nar_efb553b8ad.mp3"
+ },
+ "Wind": {
+  "t": "Wind",
+  "c": "audio/el/home/en/nar_87f8c5eaa1.mp3"
+ },
+ "Duck": {
+  "t": "Duck",
+  "c": "audio/el/home/en/nar_d4954b30bf.mp3"
+ },
+ "Swan": {
+  "t": "Swan",
+  "c": "audio/el/home/en/nar_de052fce14.mp3"
+ },
+ "Toad": {
+  "t": "Toad",
+  "c": "audio/el/home/en/nar_b54935852a.mp3"
+ },
+ "Wolf": {
+  "t": "Wolf",
+  "c": "audio/el/home/en/nar_cdf02296bb.mp3"
+ },
+ "Mama": {
+  "t": "Mama",
+  "c": "audio/el/home/en/nar_7aaf010e70.mp3"
+ },
+ "King": {
+  "t": "King",
+  "c": "audio/el/home/en/nar_897ac554a9.mp3"
+ },
+ "Tiger": {
+  "t": "Tiger",
+  "c": "audio/el/home/en/nar_15ecc7476f.mp3"
+ },
+ "Fairy": {
+  "t": "Fairy",
+  "c": "audio/el/home/en/nar_2d9abedb48.mp3"
+ },
+ "Queen": {
+  "t": "Queen",
+  "c": "audio/el/home/en/nar_facc8d1199.mp3"
+ },
+ "Turtle": {
+  "t": "Turtle",
+  "c": "audio/el/home/en/nar_d5e50d7b71.mp3"
+ },
+ "Mortar": {
+  "t": "Mortar",
+  "c": "audio/el/home/en/nar_db953e0454.mp3"
+ },
+ "Sister": {
+  "t": "Sister",
+  "c": "audio/el/home/en/nar_79971e4ae2.mp3"
+ },
+ "Donkey": {
+  "t": "Donkey",
+  "c": "audio/el/home/en/nar_a91d13f671.mp3"
+ },
+ "Patjwi": {
+  "t": "Patjwi",
+  "c": "audio/el/home/en/nar_855ff92b6d.mp3"
+ },
+ "Father": {
+  "t": "Father",
+  "c": "audio/el/home/en/nar_fcac6dc13e.mp3"
+ },
+ "Prince": {
+  "t": "Prince",
+  "c": "audio/el/home/en/nar_b83cb2140c.mp3"
+ },
+ "Hunter": {
+  "t": "Hunter",
+  "c": "audio/el/home/en/nar_6c87ac3f45.mp3"
+ },
+ "Brother": {
+  "t": "Brother",
+  "c": "audio/el/home/en/nar_0a1442dc9f.mp3"
+ },
+ "Chestnut": {
+  "t": "Chestnut",
+  "c": "audio/el/home/en/nar_d8e1e05d0f.mp3"
+ },
+ "Duckling": {
+  "t": "Duckling",
+  "c": "audio/el/home/en/nar_31e36bbbce.mp3"
+ },
+ "Black ox": {
+  "t": "Black ox",
+  "c": "audio/el/home/en/nar_ac995eb3d4.mp3"
+ },
+ "Bluebird": {
+  "t": "Bluebird",
+  "c": "audio/el/home/en/nar_667f3427ad.mp3"
+ },
+ "Sea king": {
+  "t": "Sea king",
+  "c": "audio/el/home/en/nar_fd3269ddf6.mp3"
+ },
+ "Papa bear": {
+  "t": "Papa bear",
+  "c": "audio/el/home/en/nar_86a203c9fa.mp3"
+ },
+ "Mama bear": {
+  "t": "Mama bear",
+  "c": "audio/el/home/en/nar_3fac0ce2df.mp3"
+ },
+ "Baby bear": {
+  "t": "Baby bear",
+  "c": "audio/el/home/en/nar_09f8ece93b.mp3"
+ },
+ "First pig": {
+  "t": "First pig",
+  "c": "audio/el/home/en/nar_3d7d716b71.mp3"
+ },
+ "Third pig": {
+  "t": "Third pig",
+  "c": "audio/el/home/en/nar_7e75e4ccc4.mp3"
+ },
+ "Mama goat": {
+  "t": "Mama goat",
+  "c": "audio/el/home/en/nar_591dcbd6c3.mp3"
+ },
+ "Sea witch": {
+  "t": "Sea witch",
+  "c": "audio/el/home/en/nar_2158e08a12.mp3"
+ },
+ "Ambulance": {
+  "t": "Ambulance",
+  "c": "audio/el/home/en/nar_8e01726c91.mp3"
+ },
+ "Tow truck": {
+  "t": "Tow truck",
+  "c": "audio/el/home/en/nar_6f3ff44392.mp3"
+ },
+ "Uncle frog": {
+  "t": "Uncle frog",
+  "c": "audio/el/home/en/nar_38bb7537ea.mp3"
+ },
+ "Second pig": {
+  "t": "Second pig",
+  "c": "audio/el/home/en/nar_c548cb0168.mp3"
+ },
+ "Police car": {
+  "t": "Police car",
+  "c": "audio/el/home/en/nar_960f5608c4.mp3"
+ },
+ "Fire truck": {
+  "t": "Fire truck",
+  "c": "audio/el/home/en/nar_040d2df08b.mp3"
+ },
+ "Old Gothel": {
+  "t": "Old Gothel",
+  "c": "audio/el/home/en/nar_06aa452c34.mp3"
+ },
+ "Blue fairy": {
+  "t": "Blue fairy",
+  "c": "audio/el/home/en/nar_4e0511a13a.mp3"
+ },
+ "Mother frog": {
+  "t": "Mother frog",
+  "c": "audio/el/home/en/nar_4febdd9e74.mp3"
+ },
+ "Cat (happy)": {
+  "t": "Cat (happy)",
+  "c": "audio/el/home/en/nar_37b2bb9944.mp3"
+ },
+ "Fox (sorry)": {
+  "t": "Fox (sorry)",
+  "c": "audio/el/home/en/nar_b8d703e24d.mp3"
+ },
+ "Crane (sad)": {
+  "t": "Crane (sad)",
+  "c": "audio/el/home/en/nar_c5d8e8e973.mp3"
+ },
+ "Baby magpie": {
+  "t": "Baby magpie",
+  "c": "audio/el/home/en/nar_785435115f.mp3"
+ },
+ "Grandfather": {
+  "t": "Grandfather",
+  "c": "audio/el/home/en/nar_14ee52088b.mp3"
+ },
+ "Grandmother": {
+  "t": "Grandmother",
+  "c": "audio/el/home/en/nar_6cbd6140e0.mp3"
+ },
+ "Deer (hurt)": {
+  "t": "Deer (hurt)",
+  "c": "audio/el/home/en/nar_5065a0154d.mp3"
+ },
+ "Orange bird": {
+  "t": "Orange bird",
+  "c": "audio/el/home/en/nar_4d77d43f1f.mp3"
+ },
+ "Wind (tired)": {
+  "t": "Wind (tired)",
+  "c": "audio/el/home/en/nar_62dc4f68b0.mp3"
+ },
+ "Girl (happy)": {
+  "t": "Girl (happy)",
+  "c": "audio/el/home/en/nar_43b8f1c36a.mp3"
+ },
+ "Ant (winter)": {
+  "t": "Ant (winter)",
+  "c": "audio/el/home/en/nar_3f6217148f.mp3"
+ },
+ "Wolf (tired)": {
+  "t": "Wolf (tired)",
+  "c": "audio/el/home/en/nar_a0492c88c6.mp3"
+ },
+ "Nolbu's wife": {
+  "t": "Nolbu's wife",
+  "c": "audio/el/home/en/nar_ceb68f664a.mp3"
+ },
+ "Beast (ring)": {
+  "t": "Beast (ring)",
+  "c": "audio/el/home/en/nar_934d30ba8d.mp3"
+ },
+ "King (happy)": {
+  "t": "King (happy)",
+  "c": "audio/el/home/en/nar_af4c38c9be.mp3"
+ },
+ "Ox (standing)": {
+  "t": "Ox (standing)",
+  "c": "audio/el/home/en/nar_fd602857d8.mp3"
+ },
+ "Puppy (happy)": {
+  "t": "Puppy (happy)",
+  "c": "audio/el/home/en/nar_9f48c3d7d7.mp3"
+ },
+ "Mouse (happy)": {
+  "t": "Mouse (happy)",
+  "c": "audio/el/home/en/nar_117965d970.mp3"
+ },
+ "Fox (licking)": {
+  "t": "Fox (licking)",
+  "c": "audio/el/home/en/nar_f93e12d702.mp3"
+ },
+ "Dog (singing)": {
+  "t": "Dog (singing)",
+  "c": "audio/el/home/en/nar_08d85582e1.mp3"
+ },
+ "Cat (singing)": {
+  "t": "Cat (singing)",
+  "c": "audio/el/home/en/nar_a06f100b5b.mp3"
+ },
+ "Ant (in coat)": {
+  "t": "Ant (in coat)",
+  "c": "audio/el/home/en/nar_17e798ebd4.mp3"
+ },
+ "Swan (flying)": {
+  "t": "Swan (flying)",
+  "c": "audio/el/home/en/nar_f11ddbe6ce.mp3"
+ },
+ "Kongjwi (wet)": {
+  "t": "Kongjwi (wet)",
+  "c": "audio/el/home/en/nar_963268fed3.mp3"
+ },
+ "Nolbu (proud)": {
+  "t": "Nolbu (proud)",
+  "c": "audio/el/home/en/nar_2d12302d54.mp3"
+ },
+ "Father magpie": {
+  "t": "Father magpie",
+  "c": "audio/el/home/en/nar_2e9362f6cb.mp3"
+ },
+ "Mother magpie": {
+  "t": "Mother magpie",
+  "c": "audio/el/home/en/nar_461fac7f2f.mp3"
+ },
+ "Belle (happy)": {
+  "t": "Belle (happy)",
+  "c": "audio/el/home/en/nar_a80b34a72b.mp3"
+ },
+ "Sheep (happy)": {
+  "t": "Sheep (happy)",
+  "c": "audio/el/home/en/nar_0ea2eb32a1.mp3"
+ },
+ "Horse (happy)": {
+  "t": "Horse (happy)",
+  "c": "audio/el/home/en/nar_a32eeb42d4.mp3"
+ },
+ "Queen (happy)": {
+  "t": "Queen (happy)",
+  "c": "audio/el/home/en/nar_91b454ca4b.mp3"
+ },
+ "Baby princess": {
+  "t": "Baby princess",
+  "c": "audio/el/home/en/nar_cc9f3f7234.mp3"
+ },
+ "Tiger (fallen)": {
+  "t": "Tiger (fallen)",
+  "c": "audio/el/home/en/nar_5198d68f88.mp3"
+ },
+ "Ox (flustered)": {
+  "t": "Ox (flustered)",
+  "c": "audio/el/home/en/nar_e39e379905.mp3"
+ },
+ "Turtle (medal)": {
+  "t": "Turtle (medal)",
+  "c": "audio/el/home/en/nar_234eebb8ec.mp3"
+ },
+ "Wind (blowing)": {
+  "t": "Wind (blowing)",
+  "c": "audio/el/home/en/nar_0e2e1de20b.mp3"
+ },
+ "Lion (worried)": {
+  "t": "Lion (worried)",
+  "c": "audio/el/home/en/nar_2209f66e26.mp3"
+ },
+ "Fox (standing)": {
+  "t": "Fox (standing)",
+  "c": "audio/el/home/en/nar_a035f89c33.mp3"
+ },
+ "Robber (brown)": {
+  "t": "Robber (brown)",
+  "c": "audio/el/home/en/nar_c01f42f4c0.mp3"
+ },
+ "Robber (green)": {
+  "t": "Robber (green)",
+  "c": "audio/el/home/en/nar_19ff46670b.mp3"
+ },
+ "Ant (standing)": {
+  "t": "Ant (standing)",
+  "c": "audio/el/home/en/nar_7a41947293.mp3"
+ },
+ "Ant (carrying)": {
+  "t": "Ant (carrying)",
+  "c": "audio/el/home/en/nar_2394e9afd5.mp3"
+ },
+ "Duckling (sad)": {
+  "t": "Duckling (sad)",
+  "c": "audio/el/home/en/nar_7bc932f4d2.mp3"
+ },
+ "Wolf (huffing)": {
+  "t": "Wolf (huffing)",
+  "c": "audio/el/home/en/nar_71cb376405.mp3"
+ },
+ "Wolf (fleeing)": {
+  "t": "Wolf (fleeing)",
+  "c": "audio/el/home/en/nar_2ca0fe6ece.mp3"
+ },
+ "Hansel (happy)": {
+  "t": "Hansel (happy)",
+  "c": "audio/el/home/en/nar_cc63116369.mp3"
+ },
+ "Mouse coachman": {
+  "t": "Mouse coachman",
+  "c": "audio/el/home/en/nar_2acc5c0c2d.mp3"
+ },
+ "Heungbu (glad)": {
+  "t": "Heungbu (glad)",
+  "c": "audio/el/home/en/nar_d9abf11381.mp3"
+ },
+ "Heungbu's wife": {
+  "t": "Heungbu's wife",
+  "c": "audio/el/home/en/nar_b8e025a5e8.mp3"
+ },
+ "Dwarf (hammer)": {
+  "t": "Dwarf (hammer)",
+  "c": "audio/el/home/en/nar_b999e50766.mp3"
+ },
+ "Sheep (crying)": {
+  "t": "Sheep (crying)",
+  "c": "audio/el/home/en/nar_e44d25a859.mp3"
+ },
+ "Horse (hungry)": {
+  "t": "Horse (hungry)",
+  "c": "audio/el/home/en/nar_8a05745692.mp3"
+ },
+ "Prince (happy)": {
+  "t": "Prince (happy)",
+  "c": "audio/el/home/en/nar_ce9b9b6a71.mp3"
+ },
+ "Frog (sitting)": {
+  "t": "Frog (sitting)",
+  "c": "audio/el/home/en/nar_4952d31c87.mp3"
+ },
+ "Frog (hopping)": {
+  "t": "Frog (hopping)",
+  "c": "audio/el/home/en/nar_8953de3c82.mp3"
+ },
+ "Granny (scared)": {
+  "t": "Granny (scared)",
+  "c": "audio/el/home/en/nar_602e4b93fd.mp3"
+ },
+ "Raccoon referee": {
+  "t": "Raccoon referee",
+  "c": "audio/el/home/en/nar_6070cc08d2.mp3"
+ },
+ "Mother (waving)": {
+  "t": "Mother (waving)",
+  "c": "audio/el/home/en/nar_3fbaa6ee34.mp3"
+ },
+ "Grandma (happy)": {
+  "t": "Grandma (happy)",
+  "c": "audio/el/home/en/nar_ff31b84dd8.mp3"
+ },
+ "Lion (standing)": {
+  "t": "Lion (standing)",
+  "c": "audio/el/home/en/nar_99e65ac7f9.mp3"
+ },
+ "Lion (laughing)": {
+  "t": "Lion (laughing)",
+  "c": "audio/el/home/en/nar_fa1cd03d3f.mp3"
+ },
+ "Lion (sleeping)": {
+  "t": "Lion (sleeping)",
+  "c": "audio/el/home/en/nar_5f809ed160.mp3"
+ },
+ "Mouse (walking)": {
+  "t": "Mouse (walking)",
+  "c": "audio/el/home/en/nar_a743d8eebe.mp3"
+ },
+ "Mouse (gnawing)": {
+  "t": "Mouse (gnawing)",
+  "c": "audio/el/home/en/nar_d72e93d616.mp3"
+ },
+ "Wolf (knocking)": {
+  "t": "Wolf (knocking)",
+  "c": "audio/el/home/en/nar_2a4a161587.mp3"
+ },
+ "Kongjwi (bride)": {
+  "t": "Kongjwi (bride)",
+  "c": "audio/el/home/en/nar_b75aa09a36.mp3"
+ },
+ "Gretel (eating)": {
+  "t": "Gretel (eating)",
+  "c": "audio/el/home/en/nar_28f77ac340.mp3"
+ },
+ "Hansel (dozing)": {
+  "t": "Hansel (dozing)",
+  "c": "audio/el/home/en/nar_0c7ed59a07.mp3"
+ },
+ "Fairy godmother": {
+  "t": "Fairy godmother",
+  "c": "audio/el/home/en/nar_0dbbfa29f1.mp3"
+ },
+ "Lady (greeting)": {
+  "t": "Lady (greeting)",
+  "c": "audio/el/home/en/nar_12b2ad83d5.mp3"
+ },
+ "Snake (fleeing)": {
+  "t": "Snake (fleeing)",
+  "c": "audio/el/home/en/nar_6151cc75e7.mp3"
+ },
+ "Rich man (gold)": {
+  "t": "Rich man (gold)",
+  "c": "audio/el/home/en/nar_a3e2d5d417.mp3"
+ },
+ "Dwarf (smiling)": {
+  "t": "Dwarf (smiling)",
+  "c": "audio/el/home/en/nar_5b1a45f890.mp3"
+ },
+ "Red car (tired)": {
+  "t": "Red car (tired)",
+  "c": "audio/el/home/en/nar_e5ab6c8ced.mp3"
+ },
+ "Deer (relieved)": {
+  "t": "Deer (relieved)",
+  "c": "audio/el/home/en/nar_21bab73078.mp3"
+ },
+ "Tiger (standing)": {
+  "t": "Tiger (standing)",
+  "c": "audio/el/home/en/nar_347c798d74.mp3"
+ },
+ "Rabbit (running)": {
+  "t": "Rabbit (running)",
+  "c": "audio/el/home/en/nar_7ca2b89cae.mp3"
+ },
+ "Turtle (walking)": {
+  "t": "Turtle (walking)",
+  "c": "audio/el/home/en/nar_c210f82eb1.mp3"
+ },
+ "Tiger (slipping)": {
+  "t": "Tiger (slipping)",
+  "c": "audio/el/home/en/nar_a548dfa867.mp3"
+ },
+ "Grandpa (fallen)": {
+  "t": "Grandpa (fallen)",
+  "c": "audio/el/home/en/nar_bd5c8b8744.mp3"
+ },
+ "Mouse (pleading)": {
+  "t": "Mouse (pleading)",
+  "c": "audio/el/home/en/nar_b4a0f79cc4.mp3"
+ },
+ "Crane (standing)": {
+  "t": "Crane (standing)",
+  "c": "audio/el/home/en/nar_bbffcc6d55.mp3"
+ },
+ "Donkey (singing)": {
+  "t": "Donkey (singing)",
+  "c": "audio/el/home/en/nar_f47d521010.mp3"
+ },
+ "Duckling (happy)": {
+  "t": "Duckling (happy)",
+  "c": "audio/el/home/en/nar_658ed100df.mp3"
+ },
+ "Kongjwi (hoeing)": {
+  "t": "Kongjwi (hoeing)",
+  "c": "audio/el/home/en/nar_4a1cad9408.mp3"
+ },
+ "White baby cloud": {
+  "t": "White baby cloud",
+  "c": "audio/el/home/en/nar_7999b475b3.mp3"
+ },
+ "Swallow (ribbon)": {
+  "t": "Swallow (ribbon)",
+  "c": "audio/el/home/en/nar_8d2f08320f.mp3"
+ },
+ "Swallow (flying)": {
+  "t": "Swallow (flying)",
+  "c": "audio/el/home/en/nar_402760ce39.mp3"
+ },
+ "Red Hood (happy)": {
+  "t": "Red Hood (happy)",
+  "c": "audio/el/home/en/nar_4a64cee316.mp3"
+ },
+ "Belle (standing)": {
+  "t": "Belle (standing)",
+  "c": "audio/el/home/en/nar_1d3e733353.mp3"
+ },
+ "Beast (standing)": {
+  "t": "Beast (standing)",
+  "c": "audio/el/home/en/nar_9785bb2d7e.mp3"
+ },
+ "Belle (kneeling)": {
+  "t": "Belle (kneeling)",
+  "c": "audio/el/home/en/nar_ed713e61b8.mp3"
+ },
+ "Rapunzel (happy)": {
+  "t": "Rapunzel (happy)",
+  "c": "audio/el/home/en/nar_d598d1f6e0.mp3"
+ },
+ "Father (shocked)": {
+  "t": "Father (shocked)",
+  "c": "audio/el/home/en/nar_28ba621c1d.mp3"
+ },
+ "Frog (surprised)": {
+  "t": "Frog (surprised)",
+  "c": "audio/el/home/en/nar_503c7452ad.mp3"
+ },
+ "Granny (cheering)": {
+  "t": "Granny (cheering)",
+  "c": "audio/el/home/en/nar_3978c49c7b.mp3"
+ },
+ "Baby frog (awake)": {
+  "t": "Baby frog (awake)",
+  "c": "audio/el/home/en/nar_5abd1881b2.mp3"
+ },
+ "Rabbit (sleeping)": {
+  "t": "Rabbit (sleeping)",
+  "c": "audio/el/home/en/nar_7ce6653b19.mp3"
+ },
+ "Tiger (as mother)": {
+  "t": "Tiger (as mother)",
+  "c": "audio/el/home/en/nar_d998891b43.mp3"
+ },
+ "Rooster (singing)": {
+  "t": "Rooster (singing)",
+  "c": "audio/el/home/en/nar_58ea6a7524.mp3"
+ },
+ "Dark cloud (bump)": {
+  "t": "Dark cloud (bump)",
+  "c": "audio/el/home/en/nar_bc2fa65803.mp3"
+ },
+ "Gretel (thinking)": {
+  "t": "Gretel (thinking)",
+  "c": "audio/el/home/en/nar_baebaa9d8e.mp3"
+ },
+ "Witch (beckoning)": {
+  "t": "Witch (beckoning)",
+  "c": "audio/el/home/en/nar_73af8b82d7.mp3"
+ },
+ "Cinderella (gown)": {
+  "t": "Cinderella (gown)",
+  "c": "audio/el/home/en/nar_eaa1817caf.mp3"
+ },
+ "Scholar (walking)": {
+  "t": "Scholar (walking)",
+  "c": "audio/el/home/en/nar_55e63a94e8.mp3"
+ },
+ "Red car (smiling)": {
+  "t": "Red car (smiling)",
+  "c": "audio/el/home/en/nar_31c0342edd.mp3"
+ },
+ "Red car (running)": {
+  "t": "Red car (running)",
+  "c": "audio/el/home/en/nar_65fb930af4.mp3"
+ },
+ "Princess (waving)": {
+  "t": "Princess (waving)",
+  "c": "audio/el/home/en/nar_c7c81ace28.mp3"
+ },
+ "Princess (sleepy)": {
+  "t": "Princess (sleepy)",
+  "c": "audio/el/home/en/nar_d0fb2d09a7.mp3"
+ },
+ "Princess (crying)": {
+  "t": "Princess (crying)",
+  "c": "audio/el/home/en/nar_94cd554703.mp3"
+ },
+ "Princess (waking)": {
+  "t": "Princess (waking)",
+  "c": "audio/el/home/en/nar_38c4b0485b.mp3"
+ },
+ "Rabbit (waking up)": {
+  "t": "Rabbit (waking up)",
+  "c": "audio/el/home/en/nar_8a2cbeccd8.mp3"
+ },
+ "Siblings (hugging)": {
+  "t": "Siblings (hugging)",
+  "c": "audio/el/home/en/nar_e89037d06b.mp3"
+ },
+ "Traveler (walking)": {
+  "t": "Traveler (walking)",
+  "c": "audio/el/home/en/nar_68de8860a2.mp3"
+ },
+ "Grandpa (standing)": {
+  "t": "Grandpa (standing)",
+  "c": "audio/el/home/en/nar_484a0eb903.mp3"
+ },
+ "Baby bear (crying)": {
+  "t": "Baby bear (crying)",
+  "c": "audio/el/home/en/nar_2ac609d586.mp3"
+ },
+ "Young bird (happy)": {
+  "t": "Young bird (happy)",
+  "c": "audio/el/home/en/nar_4e6bff305a.mp3"
+ },
+ "Baby cloud (sorry)": {
+  "t": "Baby cloud (sorry)",
+  "c": "audio/el/home/en/nar_843eb8aa76.mp3"
+ },
+ "Heungbu (greeting)": {
+  "t": "Heungbu (greeting)",
+  "c": "audio/el/home/en/nar_6d55151967.mp3"
+ },
+ "Red Hood (walking)": {
+  "t": "Red Hood (walking)",
+  "c": "audio/el/home/en/nar_e8b4ea61e2.mp3"
+ },
+ "Grandma (cheering)": {
+  "t": "Grandma (cheering)",
+  "c": "audio/el/home/en/nar_566eb2fc66.mp3"
+ },
+ "Snow White (awake)": {
+  "t": "Snow White (awake)",
+  "c": "audio/el/home/en/nar_416c76a61c.mp3"
+ },
+ "Unicorn (standing)": {
+  "t": "Unicorn (standing)",
+  "c": "audio/el/home/en/nar_58916e52b3.mp3"
+ },
+ "Rapunzel (singing)": {
+  "t": "Rapunzel (singing)",
+  "c": "audio/el/home/en/nar_03c1204fa5.mp3"
+ },
+ "Mother frog (dizzy)": {
+  "t": "Mother frog (dizzy)",
+  "c": "audio/el/home/en/nar_a109cf9076.mp3"
+ },
+ "Traveler (in shirt)": {
+  "t": "Traveler (in shirt)",
+  "c": "audio/el/home/en/nar_069c5e3d46.mp3"
+ },
+ "First pig (running)": {
+  "t": "First pig (running)",
+  "c": "audio/el/home/en/nar_635badffca.mp3"
+ },
+ "Second pig (fiddle)": {
+  "t": "Second pig (fiddle)",
+  "c": "audio/el/home/en/nar_bb81273358.mp3"
+ },
+ "First kid (hopping)": {
+  "t": "First kid (hopping)",
+  "c": "audio/el/home/en/nar_a644fe47a7.mp3"
+ },
+ "Fifth kid (hopping)": {
+  "t": "Fifth kid (hopping)",
+  "c": "audio/el/home/en/nar_67ac7d1ed3.mp3"
+ },
+ "Cinderella (crying)": {
+  "t": "Cinderella (crying)",
+  "c": "audio/el/home/en/nar_f1099e1085.mp3"
+ },
+ "Scholar (surprised)": {
+  "t": "Scholar (surprised)",
+  "c": "audio/el/home/en/nar_10555ae0cc.mp3"
+ },
+ "Rich man (shouting)": {
+  "t": "Rich man (shouting)",
+  "c": "audio/el/home/en/nar_11fd04682c.mp3"
+ },
+ "Rich man (hurrying)": {
+  "t": "Rich man (hurrying)",
+  "c": "audio/el/home/en/nar_22a813c34d.mp3"
+ },
+ "Princess (standing)": {
+  "t": "Princess (standing)",
+  "c": "audio/el/home/en/nar_47080bef95.mp3"
+ },
+ "Rapunzel (standing)": {
+  "t": "Rapunzel (standing)",
+  "c": "audio/el/home/en/nar_94c072b33d.mp3"
+ },
+ "Grasshopper (winter)": {
+  "t": "Grasshopper (winter)",
+  "c": "audio/el/home/en/nar_7f1c8aee23.mp3"
+ },
+ "Second kid (hopping)": {
+  "t": "Second kid (hopping)",
+  "c": "audio/el/home/en/nar_28c76f6a50.mp3"
+ },
+ "Baby cloud (huddled)": {
+  "t": "Baby cloud (huddled)",
+  "c": "audio/el/home/en/nar_650c86c955.mp3"
+ },
+ "First sister (proud)": {
+  "t": "First sister (proud)",
+  "c": "audio/el/home/en/nar_db4b8b789e.mp3"
+ },
+ "Red Hood (surprised)": {
+  "t": "Red Hood (surprised)",
+  "c": "audio/el/home/en/nar_351553fae5.mp3"
+ },
+ "Grandfather (fallen)": {
+  "t": "Grandfather (fallen)",
+  "c": "audio/el/home/en/nar_6729cd0a4d.mp3"
+ },
+ "Snow White (running)": {
+  "t": "Snow White (running)",
+  "c": "audio/el/home/en/nar_f0840c9a1d.mp3"
+ },
+ "Little Mermaid (sad)": {
+  "t": "Little Mermaid (sad)",
+  "c": "audio/el/home/en/nar_ddfdd5302f.mp3"
+ },
+ "Goldilocks (standing)": {
+  "t": "Goldilocks (standing)",
+  "c": "audio/el/home/en/nar_2dbc075616.mp3"
+ },
+ "Goldilocks (sleeping)": {
+  "t": "Goldilocks (sleeping)",
+  "c": "audio/el/home/en/nar_bf06878df7.mp3"
+ },
+ "Grasshopper (playing)": {
+  "t": "Grasshopper (playing)",
+  "c": "audio/el/home/en/nar_364ffb9c5d.mp3"
+ },
+ "Mama goat (surprised)": {
+  "t": "Mama goat (surprised)",
+  "c": "audio/el/home/en/nar_707b6c0d82.mp3"
+ },
+ "Dark cloud (marching)": {
+  "t": "Dark cloud (marching)",
+  "c": "audio/el/home/en/nar_effe1f67b0.mp3"
+ },
+ "Baby cloud (floating)": {
+  "t": "Baby cloud (floating)",
+  "c": "audio/el/home/en/nar_eef3c79a4e.mp3"
+ },
+ "Cinderella (standing)": {
+  "t": "Cinderella (standing)",
+  "c": "audio/el/home/en/nar_6e5904d3d9.mp3"
+ },
+ "Grandmother (sharing)": {
+  "t": "Grandmother (sharing)",
+  "c": "audio/el/home/en/nar_464a436e2c.mp3"
+ },
+ "Snow White (standing)": {
+  "t": "Snow White (standing)",
+  "c": "audio/el/home/en/nar_2167de68c1.mp3"
+ },
+ "Goldilocks (surprised)": {
+  "t": "Goldilocks (surprised)",
+  "c": "audio/el/home/en/nar_b658d935c1.mp3"
+ },
+ "Young bird (trembling)": {
+  "t": "Young bird (trembling)",
+  "c": "audio/el/home/en/nar_e5a540bc98.mp3"
+ },
+ "Mother frog (puffed up)": {
+  "t": "Mother frog (puffed up)",
+  "c": "audio/el/home/en/nar_8316fa4c4f.mp3"
+ },
+ "Rabbit (congratulating)": {
+  "t": "Rabbit (congratulating)",
+  "c": "audio/el/home/en/nar_299bfe6314.mp3"
+ },
+ "Traveler (holding coat)": {
+  "t": "Traveler (holding coat)",
+  "c": "audio/el/home/en/nar_9fcc2875cf.mp3"
+ },
+ "Grasshopper (shivering)": {
+  "t": "Grasshopper (shivering)",
+  "c": "audio/el/home/en/nar_cd734b9f39.mp3"
+ },
+ "Baby cloud (looking up)": {
+  "t": "Baby cloud (looking up)",
+  "c": "audio/el/home/en/nar_2530b31f44.mp3"
+ },
+ "Little Mermaid (dancing)": {
+  "t": "Little Mermaid (dancing)",
+  "c": "audio/el/home/en/nar_2c5913e612.mp3"
+ },
+ "Little Mermaid (standing)": {
+  "t": "Little Mermaid (standing)",
+  "c": "audio/el/home/en/nar_584884cf70.mp3"
+ },
+ "Little Mermaid (swimming)": {
+  "t": "Little Mermaid (swimming)",
+  "c": "audio/el/home/en/nar_463e8bbfa3.mp3"
+ },
+ "Tale Play": {
+  "t": "Tale Play",
+  "c": "audio/el/home/en/nar_96fe764e50.mp3"
+ },
+ "Read to Me": {
+  "t": "Read to Me",
+  "c": "audio/el/home/en/nar_c01e982834.mp3"
+ },
+ "Sticker Book": {
+  "t": "Sticker Book",
+  "c": "audio/el/home/en/nar_9d7b5f5a1b.mp3"
+ },
+ "Sticker Book. Finish a tale to get a sticker": {
+  "t": "Sticker Book. Finish a tale to get a sticker",
+  "c": "audio/el/home/en/nar_ccc1baa2d4.mp3"
+ },
+ "No tales match yet": {
+  "t": "No tales match yet",
+  "c": "audio/el/home/en/nar_a45b15a9e5.mp3"
+ },
+ "This tale is locked. Open it together with a grown-up.": {
+  "t": "This tale is locked. Open it together with a grown-up.",
+  "c": "audio/el/home/en/nar_06ef6e1974.mp3"
+ },
+ "Every tale is open!": {
+  "t": "Every tale is open!",
+  "c": "audio/el/home/en/nar_c77ea4d8af.mp3"
+ },
+ "Puzzle": {
+  "t": "Puzzle",
+  "c": "audio/el/home/en/nar_45dee47efd.mp3"
+ },
+ "Stickers": {
+  "t": "Stickers",
+  "c": "audio/el/home/en/nar_9db0511b17.mp3"
+ },
+ "You finished the Princess Puzzle!": {
+  "t": "You finished the Princess Puzzle!",
+  "c": "audio/el/home/en/nar_131c48cd49.mp3"
+ },
+ "You finished the Korean Tales!": {
+  "t": "You finished the Korean Tales!",
+  "c": "audio/el/home/en/nar_95377cc6fa.mp3"
+ },
+ "You finished the Aesop Animals!": {
+  "t": "You finished the Aesop Animals!",
+  "c": "audio/el/home/en/nar_2bc7c86311.mp3"
+ },
+ "You finished the World Classics!": {
+  "t": "You finished the World Classics!",
+  "c": "audio/el/home/en/nar_2cb9d94d50.mp3"
+ },
+ "You finished the Original Tales!": {
+  "t": "You finished the Original Tales!",
+  "c": "audio/el/home/en/nar_f41c6172fc.mp3"
+ },
+ "The Tiger and the Red Bean Porridge is open!": {
+  "t": "The Tiger and the Red Bean Porridge is open!",
+  "c": "audio/el/home/en/nar_9b7cff7eeb.mp3"
+ },
+ "You collected all the friends of The Tiger and the Red Bean Porridge!": {
+  "t": "You collected all the friends of The Tiger and the Red Bean Porridge!",
+  "c": "audio/el/home/en/nar_62faf25dcf.mp3"
+ },
+ "The Tiger and the Red Bean Porridge. Coming soon.": {
+  "t": "The Tiger and the Red Bean Porridge. Coming soon.",
+  "c": "audio/el/home/en/nar_1471a969ff.mp3"
+ },
+ "The Ox and the Frog is open!": {
+  "t": "The Ox and the Frog is open!",
+  "c": "audio/el/home/en/nar_a24bc5c9c8.mp3"
+ },
+ "You collected all the friends of The Ox and the Frog!": {
+  "t": "You collected all the friends of The Ox and the Frog!",
+  "c": "audio/el/home/en/nar_40f9b91089.mp3"
+ },
+ "The Ox and the Frog. Coming soon.": {
+  "t": "The Ox and the Frog. Coming soon.",
+  "c": "audio/el/home/en/nar_7a77a8c03b.mp3"
+ },
+ "The Rabbit and the Turtle is open!": {
+  "t": "The Rabbit and the Turtle is open!",
+  "c": "audio/el/home/en/nar_af409db5cb.mp3"
+ },
+ "You collected all the friends of The Rabbit and the Turtle!": {
+  "t": "You collected all the friends of The Rabbit and the Turtle!",
+  "c": "audio/el/home/en/nar_cd6ed9f9e7.mp3"
+ },
+ "The Rabbit and the Turtle. Coming soon.": {
+  "t": "The Rabbit and the Turtle. Coming soon.",
+  "c": "audio/el/home/en/nar_d91b875a86.mp3"
+ },
+ "The Sun and the Moon is open!": {
+  "t": "The Sun and the Moon is open!",
+  "c": "audio/el/home/en/nar_35a4a14ae3.mp3"
+ },
+ "You collected all the friends of The Sun and the Moon!": {
+  "t": "You collected all the friends of The Sun and the Moon!",
+  "c": "audio/el/home/en/nar_9146bc1ce3.mp3"
+ },
+ "The Sun and the Moon. Coming soon.": {
+  "t": "The Sun and the Moon. Coming soon.",
+  "c": "audio/el/home/en/nar_9138518809.mp3"
+ },
+ "The Sun and the Wind is open!": {
+  "t": "The Sun and the Wind is open!",
+  "c": "audio/el/home/en/nar_cb97ba44c0.mp3"
+ },
+ "You collected all the friends of The Sun and the Wind!": {
+  "t": "You collected all the friends of The Sun and the Wind!",
+  "c": "audio/el/home/en/nar_e54e188591.mp3"
+ },
+ "The Sun and the Wind. Coming soon.": {
+  "t": "The Sun and the Wind. Coming soon.",
+  "c": "audio/el/home/en/nar_8269962cd8.mp3"
+ },
+ "The Giant Turnip is open!": {
+  "t": "The Giant Turnip is open!",
+  "c": "audio/el/home/en/nar_6575dfc7cc.mp3"
+ },
+ "You collected all the friends of The Giant Turnip!": {
+  "t": "You collected all the friends of The Giant Turnip!",
+  "c": "audio/el/home/en/nar_887722f483.mp3"
+ },
+ "The Giant Turnip. Coming soon.": {
+  "t": "The Giant Turnip. Coming soon.",
+  "c": "audio/el/home/en/nar_75541a2c35.mp3"
+ },
+ "The Lion and the Mouse is open!": {
+  "t": "The Lion and the Mouse is open!",
+  "c": "audio/el/home/en/nar_cc0eb63147.mp3"
+ },
+ "You collected all the friends of The Lion and the Mouse!": {
+  "t": "You collected all the friends of The Lion and the Mouse!",
+  "c": "audio/el/home/en/nar_b7e440fadd.mp3"
+ },
+ "The Lion and the Mouse. Coming soon.": {
+  "t": "The Lion and the Mouse. Coming soon.",
+  "c": "audio/el/home/en/nar_8e6c985f09.mp3"
+ },
+ "The Fox and the Crane is open!": {
+  "t": "The Fox and the Crane is open!",
+  "c": "audio/el/home/en/nar_13bbab7f8e.mp3"
+ },
+ "You collected all the friends of The Fox and the Crane!": {
+  "t": "You collected all the friends of The Fox and the Crane!",
+  "c": "audio/el/home/en/nar_7017589a50.mp3"
+ },
+ "The Fox and the Crane. Coming soon.": {
+  "t": "The Fox and the Crane. Coming soon.",
+  "c": "audio/el/home/en/nar_a532d7a63c.mp3"
+ },
+ "Goldilocks and the Three Bears is open!": {
+  "t": "Goldilocks and the Three Bears is open!",
+  "c": "audio/el/home/en/nar_77ca4af43f.mp3"
+ },
+ "You collected all the friends of Goldilocks and the Three Bears!": {
+  "t": "You collected all the friends of Goldilocks and the Three Bears!",
+  "c": "audio/el/home/en/nar_da0913fd50.mp3"
+ },
+ "Goldilocks and the Three Bears. Coming soon.": {
+  "t": "Goldilocks and the Three Bears. Coming soon.",
+  "c": "audio/el/home/en/nar_4e6c3ad841.mp3"
+ },
+ "The Bremen Town Musicians is open!": {
+  "t": "The Bremen Town Musicians is open!",
+  "c": "audio/el/home/en/nar_df538ccc93.mp3"
+ },
+ "You collected all the friends of The Bremen Town Musicians!": {
+  "t": "You collected all the friends of The Bremen Town Musicians!",
+  "c": "audio/el/home/en/nar_c2e0fd4ae2.mp3"
+ },
+ "The Bremen Town Musicians. Coming soon.": {
+  "t": "The Bremen Town Musicians. Coming soon.",
+  "c": "audio/el/home/en/nar_34aae38169.mp3"
+ },
+ "The Ant and the Grasshopper is open!": {
+  "t": "The Ant and the Grasshopper is open!",
+  "c": "audio/el/home/en/nar_893c212083.mp3"
+ },
+ "You collected all the friends of The Ant and the Grasshopper!": {
+  "t": "You collected all the friends of The Ant and the Grasshopper!",
+  "c": "audio/el/home/en/nar_e4d214c3c7.mp3"
+ },
+ "The Ant and the Grasshopper. Coming soon.": {
+  "t": "The Ant and the Grasshopper. Coming soon.",
+  "c": "audio/el/home/en/nar_afd486d80a.mp3"
+ },
+ "The Ugly Duckling is open!": {
+  "t": "The Ugly Duckling is open!",
+  "c": "audio/el/home/en/nar_504b314533.mp3"
+ },
+ "You collected all the friends of The Ugly Duckling!": {
+  "t": "You collected all the friends of The Ugly Duckling!",
+  "c": "audio/el/home/en/nar_3ec85c065b.mp3"
+ },
+ "The Ugly Duckling. Coming soon.": {
+  "t": "The Ugly Duckling. Coming soon.",
+  "c": "audio/el/home/en/nar_502ddf8063.mp3"
+ },
+ "The Three Little Pigs is open!": {
+  "t": "The Three Little Pigs is open!",
+  "c": "audio/el/home/en/nar_06f1ad3ab9.mp3"
+ },
+ "You collected all the friends of The Three Little Pigs!": {
+  "t": "You collected all the friends of The Three Little Pigs!",
+  "c": "audio/el/home/en/nar_c90d472ee8.mp3"
+ },
+ "The Three Little Pigs. Coming soon.": {
+  "t": "The Three Little Pigs. Coming soon.",
+  "c": "audio/el/home/en/nar_2e41065674.mp3"
+ },
+ "The Wolf and the Seven Kids is open!": {
+  "t": "The Wolf and the Seven Kids is open!",
+  "c": "audio/el/home/en/nar_18937e2c03.mp3"
+ },
+ "You collected all the friends of The Wolf and the Seven Kids!": {
+  "t": "You collected all the friends of The Wolf and the Seven Kids!",
+  "c": "audio/el/home/en/nar_b52e946c10.mp3"
+ },
+ "The Wolf and the Seven Kids. Coming soon.": {
+  "t": "The Wolf and the Seven Kids. Coming soon.",
+  "c": "audio/el/home/en/nar_86a075936a.mp3"
+ },
+ "Kongjwi and Patjwi is open!": {
+  "t": "Kongjwi and Patjwi is open!",
+  "c": "audio/el/home/en/nar_db4dc5be10.mp3"
+ },
+ "You collected all the friends of Kongjwi and Patjwi!": {
+  "t": "You collected all the friends of Kongjwi and Patjwi!",
+  "c": "audio/el/home/en/nar_8c85900daf.mp3"
+ },
+ "Kongjwi and Patjwi. Coming soon.": {
+  "t": "Kongjwi and Patjwi. Coming soon.",
+  "c": "audio/el/home/en/nar_ad2e0732ba.mp3"
+ },
+ "The Cloud Factory is open!": {
+  "t": "The Cloud Factory is open!",
+  "c": "audio/el/home/en/nar_f14f4b5019.mp3"
+ },
+ "You collected all the friends of The Cloud Factory!": {
+  "t": "You collected all the friends of The Cloud Factory!",
+  "c": "audio/el/home/en/nar_a4abe7233b.mp3"
+ },
+ "The Cloud Factory. Coming soon.": {
+  "t": "The Cloud Factory. Coming soon.",
+  "c": "audio/el/home/en/nar_d58ed74e58.mp3"
+ },
+ "Hansel and Gretel is open!": {
+  "t": "Hansel and Gretel is open!",
+  "c": "audio/el/home/en/nar_6a23f482b4.mp3"
+ },
+ "You collected all the friends of Hansel and Gretel!": {
+  "t": "You collected all the friends of Hansel and Gretel!",
+  "c": "audio/el/home/en/nar_90aeea141d.mp3"
+ },
+ "Hansel and Gretel. Coming soon.": {
+  "t": "Hansel and Gretel. Coming soon.",
+  "c": "audio/el/home/en/nar_31017f68c2.mp3"
+ },
+ "Cinderella is open!": {
+  "t": "Cinderella is open!",
+  "c": "audio/el/home/en/nar_f5fc398ee5.mp3"
+ },
+ "You collected all the friends of Cinderella!": {
+  "t": "You collected all the friends of Cinderella!",
+  "c": "audio/el/home/en/nar_9de8cd8713.mp3"
+ },
+ "Cinderella. Coming soon.": {
+  "t": "Cinderella. Coming soon.",
+  "c": "audio/el/home/en/nar_dabaab16a5.mp3"
+ },
+ "Heungbu and Nolbu is open!": {
+  "t": "Heungbu and Nolbu is open!",
+  "c": "audio/el/home/en/nar_6cbdbf49cc.mp3"
+ },
+ "You collected all the friends of Heungbu and Nolbu!": {
+  "t": "You collected all the friends of Heungbu and Nolbu!",
+  "c": "audio/el/home/en/nar_21eea86a8e.mp3"
+ },
+ "Heungbu and Nolbu. Coming soon.": {
+  "t": "Heungbu and Nolbu. Coming soon.",
+  "c": "audio/el/home/en/nar_7eedf0f8ae.mp3"
+ },
+ "Little Red Riding Hood is open!": {
+  "t": "Little Red Riding Hood is open!",
+  "c": "audio/el/home/en/nar_262d5c987b.mp3"
+ },
+ "You collected all the friends of Little Red Riding Hood!": {
+  "t": "You collected all the friends of Little Red Riding Hood!",
+  "c": "audio/el/home/en/nar_41fe9e54a1.mp3"
+ },
+ "Little Red Riding Hood. Coming soon.": {
+  "t": "Little Red Riding Hood. Coming soon.",
+  "c": "audio/el/home/en/nar_e9038a7b7b.mp3"
+ },
+ "The Grateful Magpie is open!": {
+  "t": "The Grateful Magpie is open!",
+  "c": "audio/el/home/en/nar_5ce28001b9.mp3"
+ },
+ "You collected all the friends of The Grateful Magpie!": {
+  "t": "You collected all the friends of The Grateful Magpie!",
+  "c": "audio/el/home/en/nar_40f27b5945.mp3"
+ },
+ "The Grateful Magpie. Coming soon.": {
+  "t": "The Grateful Magpie. Coming soon.",
+  "c": "audio/el/home/en/nar_90da63da71.mp3"
+ },
+ "The Magic Jar is open!": {
+  "t": "The Magic Jar is open!",
+  "c": "audio/el/home/en/nar_9e25585e38.mp3"
+ },
+ "You collected all the friends of The Magic Jar!": {
+  "t": "You collected all the friends of The Magic Jar!",
+  "c": "audio/el/home/en/nar_90c8cbeace.mp3"
+ },
+ "The Magic Jar. Coming soon.": {
+  "t": "The Magic Jar. Coming soon.",
+  "c": "audio/el/home/en/nar_b203cb26ab.mp3"
+ },
+ "Snow White is open!": {
+  "t": "Snow White is open!",
+  "c": "audio/el/home/en/nar_32dd4a3e5a.mp3"
+ },
+ "You collected all the friends of Snow White!": {
+  "t": "You collected all the friends of Snow White!",
+  "c": "audio/el/home/en/nar_e0cb5823b1.mp3"
+ },
+ "Snow White. Coming soon.": {
+  "t": "Snow White. Coming soon.",
+  "c": "audio/el/home/en/nar_63cb7d4a70.mp3"
+ },
+ "The Little Mermaid is open!": {
+  "t": "The Little Mermaid is open!",
+  "c": "audio/el/home/en/nar_ef1f9d5dc1.mp3"
+ },
+ "You collected all the friends of The Little Mermaid!": {
+  "t": "You collected all the friends of The Little Mermaid!",
+  "c": "audio/el/home/en/nar_23d601b2b3.mp3"
+ },
+ "The Little Mermaid. Coming soon.": {
+  "t": "The Little Mermaid. Coming soon.",
+  "c": "audio/el/home/en/nar_3b59cc1084.mp3"
+ },
+ "Beauty and the Beast is open!": {
+  "t": "Beauty and the Beast is open!",
+  "c": "audio/el/home/en/nar_236a306bcd.mp3"
+ },
+ "You collected all the friends of Beauty and the Beast!": {
+  "t": "You collected all the friends of Beauty and the Beast!",
+  "c": "audio/el/home/en/nar_d0b7d54589.mp3"
+ },
+ "Beauty and the Beast. Coming soon.": {
+  "t": "Beauty and the Beast. Coming soon.",
+  "c": "audio/el/home/en/nar_c1dfd26ebb.mp3"
+ },
+ "My Red Car is open!": {
+  "t": "My Red Car is open!",
+  "c": "audio/el/home/en/nar_911228eae7.mp3"
+ },
+ "You collected all the friends of My Red Car!": {
+  "t": "You collected all the friends of My Red Car!",
+  "c": "audio/el/home/en/nar_b17ca9ef61.mp3"
+ },
+ "My Red Car. Coming soon.": {
+  "t": "My Red Car. Coming soon.",
+  "c": "audio/el/home/en/nar_7ff09956c0.mp3"
+ },
+ "Finding the Unicorn is open!": {
+  "t": "Finding the Unicorn is open!",
+  "c": "audio/el/home/en/nar_5c35b4c502.mp3"
+ },
+ "You collected all the friends of Finding the Unicorn!": {
+  "t": "You collected all the friends of Finding the Unicorn!",
+  "c": "audio/el/home/en/nar_3b7328cdf6.mp3"
+ },
+ "Finding the Unicorn. Coming soon.": {
+  "t": "Finding the Unicorn. Coming soon.",
+  "c": "audio/el/home/en/nar_10584ca3f4.mp3"
+ },
+ "The Princess and the Pea is open!": {
+  "t": "The Princess and the Pea is open!",
+  "c": "audio/el/home/en/nar_3b1963df00.mp3"
+ },
+ "You collected all the friends of The Princess and the Pea!": {
+  "t": "You collected all the friends of The Princess and the Pea!",
+  "c": "audio/el/home/en/nar_f990cd69c5.mp3"
+ },
+ "The Princess and the Pea. Coming soon.": {
+  "t": "The Princess and the Pea. Coming soon.",
+  "c": "audio/el/home/en/nar_cfba880316.mp3"
+ },
+ "Rapunzel is open!": {
+  "t": "Rapunzel is open!",
+  "c": "audio/el/home/en/nar_a5a6d007d8.mp3"
+ },
+ "You collected all the friends of Rapunzel!": {
+  "t": "You collected all the friends of Rapunzel!",
+  "c": "audio/el/home/en/nar_51524d2ce9.mp3"
+ },
+ "Rapunzel. Coming soon.": {
+  "t": "Rapunzel. Coming soon.",
+  "c": "audio/el/home/en/nar_24dc76ddb3.mp3"
+ },
+ "The Frog Prince is open!": {
+  "t": "The Frog Prince is open!",
+  "c": "audio/el/home/en/nar_62c0b8d78d.mp3"
+ },
+ "You collected all the friends of The Frog Prince!": {
+  "t": "You collected all the friends of The Frog Prince!",
+  "c": "audio/el/home/en/nar_e788124d38.mp3"
+ },
+ "The Frog Prince. Coming soon.": {
+  "t": "The Frog Prince. Coming soon.",
+  "c": "audio/el/home/en/nar_4b8178c7e2.mp3"
+ },
+ "The Sleeping Beauty is open!": {
+  "t": "The Sleeping Beauty is open!",
+  "c": "audio/el/home/en/nar_dffa8d931e.mp3"
+ },
+ "You collected all the friends of The Sleeping Beauty!": {
+  "t": "You collected all the friends of The Sleeping Beauty!",
+  "c": "audio/el/home/en/nar_59cf8ed9fa.mp3"
+ },
+ "The Sleeping Beauty. Coming soon.": {
+  "t": "The Sleeping Beauty. Coming soon.",
+  "c": "audio/el/home/en/nar_d15b6975ca.mp3"
+ }
 };

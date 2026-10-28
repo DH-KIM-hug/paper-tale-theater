@@ -619,11 +619,11 @@ const Narrator = (() => {
   /* 클립 경로에서 배역을 읽는다: audio/tc/tiger_ab12cd34ef.mp3, audio/tc/frog/mom_…mp3 → 'tiger', 'mom' (없으면 내레이터) */
   const roleOf = url => (/\/([a-z]+)_[0-9a-f]{10}\.mp3$/.exec(url) || [, 'nar'])[1];
 
-  async function speak(text, { keep = false, onSeg, simultaneous = false, recordedOnly = false } = {}) {
+  async function speak(text, { keep = false, onSeg, simultaneous = false, recordedOnly = false, bubble = true } = {}) {
     const gen = ++speakGen;
     AudioFX.stopNarration(); // 겹침 방지: 진행 중인 클립 중단
     const en = englishOn() && NARRATION_CLIPS_EN[text]; // 영어 자료가 없는 문장은 한국어로
-    showBubble(en ? en.t : text);
+    if (bubble) showBubble(en ? en.t : text); else hideBubble();     // 홈은 말풍선 없이 목소리만(2026-10-28 사용자 결정)
     const clip = en ? en.c : (typeof NARRATION_CLIPS !== 'undefined') && NARRATION_CLIPS[text];
     if (clip) {
       await AudioFX.voiceIdle(recordedOnly ? null : 4000); // 컷신 대사가 끝난 뒤 이어서
