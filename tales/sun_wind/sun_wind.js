@@ -550,6 +550,17 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { el, sleep, say, camTo, camWide, camSnap, josa } = T;
     T.fx.style.pointerEvents = 'none';
     const stageWrap = T.root.querySelector('#stageWrap');
@@ -565,7 +576,7 @@
     });
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; // 말풍선 없는 소리 대사
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'leaves_footsteps', 'cicada', 'stream_1', 'wind_gust', 'whistle_down']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_cozy', 'birds_chirp_1', 'leaves_footsteps', 'cicada', 'stream_1', 'wind_gust', 'whistle_down']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -816,6 +827,7 @@
       cam(a) { if (a === 'wide') return; const [x, y, z] = String(a).split(',').map(Number); return inst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 700); },
     };
     const READ_ACTS = { set: R.set, sun: R.sun, wind: R.wind, man: R.man, leaves: R.leaves, flap: R.flap, sweat: R.sweat, breeze: R.breeze, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam };
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
 
@@ -827,6 +839,7 @@
     sky1.drift.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(30px)' }, { transform: 'translateX(0)' }], { duration: 6000, iterations: Infinity });
     await T.curtain(true);
     amb('birds_chirp_1');
+    intro.go(); // 시작 음악 (놀이)
     await say('하늘 높이 해님과 바람이 살았어요.');
     await sleep(500); // 해님은 저절로 반짝 (2026-10-20)
     spinRays(S1); S1.hop(26); sparkles(T, S1.x, S1.y, 130, 8); T.pop(S1.x, 110, '반짝!', C.persimmon);
