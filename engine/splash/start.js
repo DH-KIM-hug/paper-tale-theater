@@ -63,7 +63,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
     timer = setTimeout(finish, 500);
     return { finish };
   }
-  import('./scene.js?v=20261028c2ab2').then(async ({ createSplashScene }) => {
+  import('./scene.js?v=20261028stage7').then(async ({ createSplashScene }) => {
     if (closed) return;
     const building = createSplashScene(host.querySelector('.splash-stage'), {
       lang, signal: abort.signal,

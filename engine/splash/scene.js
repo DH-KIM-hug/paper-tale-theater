@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.js';
-import { ART } from './art.js?v=20261028c2ab2';
+import { ART } from './art.js?v=20261028stage7';
 
 export const DURATION = 7.4;
 const CREAM = '#F5EFE9';
@@ -134,7 +134,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     world.add(landscape, foliage, forest, garden);
     const meadow = ground(11.3);
     place(landscape, meadow, 0, -1.55, .05, .12, { tilt: .015, drop: .45 });
-    place(forest, cutout('rp_layer_tree_front', 4.4), -4.45, .6, .2, .25, { tilt: -.025, drop: 1.4 });
+    const tree = place(forest, cutout('rp_layer_tree_front', 4.4), -4.45, .6, .2, .25, { tilt: -.025, drop: 1.4 });
     place(foliage, cutout('rab_layer_flower_bush_front', 1.2), -3.7, -1.7, .65, .38, { tilt: -.02, drop: .5 });
     place(foliage, cutout('rab_layer_grass_front', 1), 4.6, -1.7, .65, .45, { tilt: .02, drop: .5 });
     place(landscape, cutout('cf4_prop_grass_tuft', .32), -2.25, -2.27, .7, .76, { tilt: -.04 });
@@ -147,15 +147,32 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     // A castle and three actors share the existing paper stage.
     // Keep the same stage floor and foreground foliage through both stories.
     // A complete newly illustrated paper castle replaces the block wall and reused towers.
-    const palace = cutout('sp_castle_v1', 4.9);
-    const gardenStart = 3.04;
-    place(garden, palace, 0, .8, .15, gardenStart, { from: 'bottom', tilt: .015, drop: .6 });
-    const princesses = new THREE.Group();
-    garden.add(princesses);
-    const princessArt = [cutout('cd2_cind_gown', 3.2), cutout('sw_snow_stand', 3.2), cutout('sb_pr_wave', 3.2)];
-    princessArt.forEach((mesh, i) => {
-      place(princesses, mesh, (i - 1) * 2.2, -.12, .36 + i * .03, gardenStart, { from: 'bottom', drop: .6, tilt: (1 - i) * .035 });
-    });
+    const gardenStart = 2.95;
+    const palace = cutout('sp_castle_v1', 4.0);
+    palace.position.set(.6, .35, .15); garden.add(palace);
+    const princesses = new THREE.Group(); garden.add(princesses);
+    // People enter from the wings; the castle stays in its final background position.
+    const cast = [
+      { height: 2.8, mesh: cutout('cd2_cind_gown', 2.8), x: -2.15, y: -.42, z: .5, fromX: -3.65, start: 3.04 },
+      { height: 2.6, mesh: cutout('sw_snow_stand', 2.6), x: -.05, y: -.65, z: .4, fromX: -.85, start: 3.18 },
+      { height: 2.75, mesh: cutout('sb_pr_wave', 2.75), x: 2.05, y: -.48, z: .65, fromX: 3.55, start: 3.1 }
+    ];
+    const shadowCanvas = document.createElement('canvas');
+    shadowCanvas.width = shadowCanvas.height = 64;
+    const shadowContext = shadowCanvas.getContext('2d');
+    const shadowGradient = shadowContext.createRadialGradient(32, 32, 0, 32, 32, 32);
+    shadowGradient.addColorStop(0, 'rgba(60, 49, 35, .13)');
+    shadowGradient.addColorStop(1, 'rgba(60, 49, 35, 0)');
+    shadowContext.fillStyle = shadowGradient; shadowContext.fillRect(0, 0, 64, 64);
+    const contactMap = ownTexture(new THREE.CanvasTexture(shadowCanvas));
+    contactMap.colorSpace = THREE.SRGBColorSpace;
+    for (const actor of cast) {
+      actor.shadow = new THREE.Mesh(
+        ownGeometry(new THREE.PlaneGeometry(actor.height * .23, .12)),
+        ownMaterial(new THREE.MeshBasicMaterial({ map: contactMap, transparent: true, depthWrite: false, toneMapped: false }))
+      );
+      princesses.add(actor.shadow, actor.mesh);
+    }
 
     // Complete symbol + wordmark lockup, presented alone at the end.
     // Korean is a custom-drawn asset, independent of font loading. Keep the English title local.
@@ -201,9 +218,9 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       current = Math.max(0, Math.min(DURATION, time));
       const t = current;
       const portrait = camera.aspect < 1;
-      const change = smooth((t - 2.55) / .9);
-      const finish = smooth((t - 4.55) / 1.0);
-      const clearStage = smooth((t - 5.7) / .65);
+      const change = smooth((t - 2.45) / .5);
+      const finish = smooth((t - 4.45) / .65);
+      const clearStage = smooth((t - 5.95) / .6);
       for (const a of animated) {
         const p = out((t - a.start) / (a.from === 'bottom' ? .55 : .85));
         a.pivot.visible = t >= a.start;
@@ -216,41 +233,53 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
           mesh.customDepthMaterial.opacity = opacity;
         }
       }
-      forest.visible = t < 3.45;
-      forest.position.set(-1.4 * change, 0, 0);
-      for (const mesh of forestMeshes) { mesh.material.opacity = 1 - change; mesh.castShadow = change < .4; }
-      forest.rotation.z = 0;
+      forest.visible = t < gardenStart;
+      forest.position.set(0, 0, 0);
+      const exitOpacity = 1 - smooth((t - 2.78) / .17);
+      for (const mesh of forestMeshes) { mesh.material.opacity = exitOpacity; mesh.castShadow = exitOpacity > .8; }
+      tree.position.x -= 1.4 * change;
       landscape.visible = true;
       landscape.scale.setScalar(mix(1, .85, finish));
       landscape.position.y = -.75 * finish;
       foliage.scale.setScalar(mix(1, .85, finish));
       foliage.position.y = -.75 * finish;
-      // The rabbit joins the slower turtle, then the forest gently dissolves.
+      // Old actors leave toward opposite wings and clear before the next cast enters.
       const run = smooth((t - .88) / 1.2);
       rabbit.visible = t >= .88;
-      rabbit.position.set(mix(-6.7, -.85, run), -1.05 + .18 * Math.sin(Math.PI * clamp((t - .88) / .5)) + .12 * Math.sin(Math.PI * clamp((t - 1.45) / .5)), .5);
+      rabbit.position.set(mix(-6.7, -.85, run) - 3.25 * change, -1.05 + .18 * Math.sin(Math.PI * clamp((t - .88) / .5)) + .12 * Math.sin(Math.PI * clamp((t - 1.45) / .5)), .5);
       rabbit.rotation.z = .025 * Math.sin(Math.PI * run * 4) * (1 - run);
       const walk = smooth((t - .95) / 1.4);
       turtle.visible = t >= .95;
-      turtle.position.set(mix(3.7, 1.95, walk), -1.42 + .025 * Math.sin(walk * Math.PI * 4), .55);
+      turtle.position.set(mix(3.7, 1.95, walk) + 2.55 * change, -1.42 + .025 * Math.sin(walk * Math.PI * 4), .55);
       turtle.scale.x = -1;
       garden.visible = t >= gardenStart;
       // First frame the logo with the miniature stage, then leave the logo alone.
       garden.scale.setScalar(mix(1, .53, finish));
-      garden.position.set(0, -2.05 * finish, 0);
-      for (const group of [landscape, foliage, garden]) {
-        group.visible = (group !== garden || t >= gardenStart) && clearStage < 1;
+      garden.position.set(0, -1.9 * finish, 0);
+      for (const group of [landscape, foliage]) {
+        group.visible = clearStage < 1;
         group.traverse(mesh => {
           if (!mesh.isMesh) return;
-          // Castle and cast share the same lift and fade; no empty castle beat.
-          const arrival = group === garden ? smooth((t - gardenStart) / .2) : 1;
-          mesh.material.opacity = arrival * (1 - clearStage);
+          mesh.material.opacity = 1 - clearStage;
           mesh.castShadow = clearStage < .4;
         });
       }
+      garden.visible = t >= gardenStart && clearStage < 1;
+      palace.material.opacity = smooth((t - gardenStart) / .4) * (1 - clearStage);
+      palace.castShadow = t >= 3.35 && clearStage < .4;
+      for (const actor of cast) {
+        const arrival = smooth((t - actor.start) / .52);
+        actor.mesh.visible = t >= actor.start;
+        actor.mesh.position.set(mix(actor.fromX, actor.x, arrival), actor.y, actor.z);
+        actor.mesh.material.opacity = smooth((t - actor.start) / .12) * (1 - clearStage);
+        actor.mesh.castShadow = arrival > .5 && clearStage < .4;
+        actor.shadow.visible = actor.mesh.visible;
+        actor.shadow.position.set(actor.mesh.position.x, actor.y - actor.height / 2 + .02, actor.z - .02);
+        actor.shadow.material.opacity = actor.mesh.material.opacity;
+      }
       floor.position.z = -.75;
-      logo.visible = t >= 4.85;
-      const reveal = smooth((t - 4.85) / .65);
+      logo.visible = t >= 5.15;
+      const reveal = smooth((t - 5.15) / .4);
       logo.position.y = mix(1.6, .2, clearStage) - .12 * (1 - reveal);
       logo.scale.setScalar(mix(.78, 1, clearStage) * (.985 + .015 * reveal));
       if (wordmark) wordmark.position.y = 0;
@@ -259,10 +288,13 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
         title.position.y = -.6;
       }
       for (const mesh of titlePieces) mesh.material.opacity = reveal;
-      friends.visible = reveal > 0 && clearStage < 1;
+      const friendsArrival = smooth((t - 4.55) / .4);
+      friends.visible = friendsArrival > 0 && clearStage < 1;
+      finalRabbit.position.x = mix(-4, -3.65, friendsArrival);
+      finalTurtle.position.x = mix(4, 3.65, friendsArrival);
       for (const mesh of [finalRabbit, finalTurtle]) {
-        mesh.material.opacity = reveal * (1 - clearStage);
-        mesh.castShadow = reveal > .6 && clearStage < .4;
+        mesh.material.opacity = friendsArrival * (1 - clearStage);
+        mesh.castShadow = friendsArrival > .8 && clearStage < .4;
       }
       // Slight parallax while the paper is assembling; a still, readable finish.
       const view = 1 - smooth(t / 1.8);
