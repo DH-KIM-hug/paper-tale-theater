@@ -780,6 +780,12 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 .pz-hit { position: absolute; display: block; pointer-events: auto; cursor: pointer; }
 .pz-glow { position: absolute; inset: -26px; z-index: 0; border-radius: 40px; background: #FBE9C8; filter: blur(26px); opacity: 0; pointer-events: none; }
 .pz-defs { position: absolute; width: 0; height: 0; }
+/* 동화별 캐릭터 스티커북 문: 동화 칸 아래 가운데에 올린 크림 원 + 구리 숫자 조각 */
+.cast-go { --cg: clamp(56px, calc(var(--cell) * .32), 96px); position: absolute; z-index: 3; bottom: calc(var(--cg) * .12); width: var(--cg); height: var(--cg); margin-left: calc(var(--cg) / -2); padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; background: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); transition: transform var(--t-1) var(--ease); }
+.cast-go img { width: 80%; height: 80%; object-fit: contain; display: block; pointer-events: none; }
+.cast-go b { position: absolute; right: -6px; top: -6px; min-width: 28px; height: 28px; padding: 0 6px; border-radius: 14px; display: grid; place-items: center; font-size: 15px; font-weight: 800; color: #fff; background: var(--reward); box-shadow: var(--sh-1); }
+.cast-go:active { transform: scale(.94); }
+.cast-go:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
 
 /* 판 이름(title-l, 오린 글자) · 조각 수 · 화살표 80(올린 크림 원) */
 .pz-head { grid-area: head; position: relative; display: flex; align-items: center; gap: var(--s-4); min-width: 0; margin: 0; }
