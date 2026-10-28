@@ -341,7 +341,7 @@
           return a.move(x, y, 900);
         }
       };
-      const CUTH = { tail: [2600], whisper: [3200], dash: [2400, 'whoosh'], gulp: [2600], granwolf: [3000], jumpup: [2600, 'thud'], hiccup: [3200, 'pop'] }; // 잠자리용: pow 대신 부드러운 소리
+      const CUTH = { tail: [2600], whisper: [2600], dash: [2400, 'whoosh'], gulp: [2600], granwolf: [2600], jumpup: [2600, 'thud'], hiccup: [2600, 'pop'] }; // 잠자리용: pow 대신 부드러운 소리
       const acts = {
         set(k) {
           if (rI()) { build(k); return; }
@@ -403,7 +403,7 @@
           })();
         },
         cut(k) {
-          const [hold, sfx] = CUTH[k] || [3000];
+          const [hold, sfx] = CUTH[k] || [2600];
           return T.cutImage([{ src: cutSrc(k), sfx, hold }], { hold });
         },
         fx(n) {
@@ -523,7 +523,7 @@
     sfx('tiptoe_pizz', .6); // 늑대가 슬그머니
     await say('나무 옆에서 늑대가 슬그머니 나왔어요. "빨간 모자 아가씨, 어디 가니?"');
     await say('"할머니 댁에 가요." 빨간 모자가 대답했어요.');
-    await T.cutImage([{ src: cutSrc('whisper'), hold: 3200 }], { hold: 3200 });
+    await T.cutImage([{ src: cutSrc('whisper'), hold: 2600 }], { hold: 2600 });
     await say('"꽃을 따 가면 할머니가 참 좋아하실 텐데~"');
     hood.look('joy'); await hood.hop(34, 420);
     sfx('ding_glock', .5); // 꽃을 따 가자는 생각
@@ -606,7 +606,7 @@
     await say('"들어오렴~" 안에서 쉰 목소리가 들렸어요.');
 
     /* --- 8. 이상한 할머니 --- */
-    await T.cutImage([{ src: cutSrc('granwolf'), hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('granwolf'), hold: 2600 }], { hold: 2600 });
     await T.sceneCard('이상해요', () => {
       scene('bed', P ? 470 : 590);
       put(T, wolf, 335, 472, { look: 'granny', to: 'left' });
@@ -679,7 +679,7 @@
       wolf.wiggle(6 + i * 2, 260); hunter.hop(12, 260); sfx('marimba_' + i, .6) || popSfx(T); // 간지럼 한 번에 한 음
       T.pop(780, 300 - i * 6, ['킥', '킥킥', '키득', '하하', '꺄르르!'][i - 1] || '킥');
     } });
-    await T.cutImage([{ src: cutSrc('hiccup'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
+    await T.cutImage([{ src: cutSrc('hiccup'), sfx: 'pop', hold: 2600 }], { hold: 2600 });
     hunter.look('laugh');
     wolf.look('hiccup'); wolf.place(760, 510);
     put(T, granny, 900, 510, { look: 'pop', to: 'left' });
