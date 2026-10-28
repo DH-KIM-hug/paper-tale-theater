@@ -310,7 +310,8 @@
       "cut:wet",
       "kong:look:wet",
       "jar:leak",
-      "amb:stream_2:.15:3"
+      "amb:stream_2:.15:3",
+      "daeg"
      ]
     },
     {
@@ -589,6 +590,9 @@
     {
      "text": "이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.",
      "src": "reuse",
+     "before": [
+      "daeg"
+     ],
      "segs": [
       [
        "nar",
@@ -1025,6 +1029,9 @@
     {
      "text": "\"콩쥐야, 그동안 미안했어.\" 새엄마와 팥쥐가 고개를 숙였어요.",
      "src": "reuse",
+     "before": [
+      "daeg"
+     ],
      "segs": [
       [
        "step",

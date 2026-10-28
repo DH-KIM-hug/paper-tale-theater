@@ -99,8 +99,10 @@
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
+    /* 대금 한 소절(2026-10-29): 울상·밤·용서처럼 조용하고 애틋한 순간에만. 놀이 .3, 읽기 ×0.8 */
+    const daeg = () => { try { const o = { vol: T.reading() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_cozy2', 'birds_chirp_1', 'birds_chirp_2', 'stream_1', 'stream_2', 'loom_spin', 'crowd_murmur_1', 'broom_1', 'dig_soil', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'boing', 'shimmer', 'chime_up', 'whistle_down', 'splash', 'question', 'party_horn', 'ding_glock', 'pop_appear']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['daegeum', 'intro_cozy2', 'birds_chirp_1', 'birds_chirp_2', 'stream_1', 'stream_2', 'loom_spin', 'crowd_murmur_1', 'broom_1', 'dig_soil', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'boing', 'shimmer', 'chime_up', 'whistle_down', 'splash', 'question', 'party_horn', 'ding_glock', 'pop_appear']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const tr = T.tr;
@@ -295,6 +297,7 @@
     }
     if (READ_ACTS && typeof READ_ACTS === 'object') { // 짧은 배경 소리·동물 소리 동사: amb:이름:음량:초, animal:이름:음량
       READ_ACTS.amb = (n, v, d) => { try { if (!T.readInstant()) AudioFX.ambient(n, { vol: +v || .15, dur: +d || 3, fadeIn: 1 }); } catch (e) { /* 무시 */ } return null; };
+      READ_ACTS.daeg = () => { try { if (!T.readInstant()) daeg(); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
@@ -345,6 +348,7 @@
     await T.ask('물동이를 톡톡톡 눌러서 물을 세 번 부어 봐요!', () => T.mash(pail.pos, { count: 3, prompt: '물동이를 톡톡톡! 물을 부어요.', onStep: i => {
       pail.hop(14, 260); sfx('marimba_' + i, .6) || popSfx(T); pourDrops(pail, jar); leakDrops(jar); T.pop(pail.x, pail.y - 290, tr(NUM[i - 1])); // 붓는 만큼 한 음씩
     } }));
+    daeg(); // 물이 새어 울상이 된 콩쥐 — 대금
     await T.cutImage([{ src: cutSrc('wet'), sfx: 'pop', hold: 2600 }], { hold: 2600 });
     scene('jar');
     put(T, kong, 400, 505, { look: 'wet', to: 'right' }); put(T, jar, 560, 505);
@@ -402,6 +406,7 @@
       put(T, kong, 520, 505, { look: 'loom', to: 'right' }); // 2026-10-20 새 콩쥐 베틀 그림은 베틀이 그림 속에 있어 따로 놓던 베틀 소품은 뺌
     }, kong.pos);
     amb('loom_spin', { vol: .22, dur: 4 }); // 베틀 찰칵
+    daeg(); // 밤늦도록 베를 짜는 콩쥐 — 대금
     await say('이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.');
     put(T, fairy, 640, 400, { look: 'float', to: 'left' }); fairy.pos.animate([{ opacity: 0 }, { opacity: 1 }], 500);
     sfx('shimmer', .4); // 원작의 선녀: 반짝 한 번
@@ -483,6 +488,7 @@
       put(T, cakes, 500, 548);
     }, kong.pos);
     await say('콩쥐와 원님은 혼례를 올렸어요. 콩쥐는 곱게 차린 신부가 되었어요.');
+    daeg(); // 사과와 용서 — 대금
     await say('"콩쥐야, 그동안 미안했어." 새엄마와 팥쥐가 고개를 숙였어요.');
     await say('콩쥐는 웃으며 말했어요. "괜찮아요. 우리 같이 지내요."');
     await Promise.all([step.hop(20, 400), pat.hop(20, 400)]);
