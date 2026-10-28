@@ -339,11 +339,10 @@
     await say('옛날 옛날에 아기 돼지 삼 형제가 살았어요.');
     await say('엄마 돼지가 말했어요. "이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴."');
     mama.wiggle(6, 700);
-    const first = ['첫째!', '둘째!', '셋째!'];
     for (let i = 0; i < 3; i++) {
       await look(pigs[i].x - 40);
-      await sleep(400); // 아기 돼지 소개는 저절로 (2026-10-20)
-      pigs[i].hop(40); T.pop(pigs[i].x, 250, first[i]); sfx('pop');
+      await sleep(400); // 아기 돼지 소개는 저절로 (2026-10-20), '첫째!' 말풍선은 뺌 (2026-10-28)
+      pigs[i].hop(40); sfx('pop');
       await sleep(700);
     }
     await look(500);
