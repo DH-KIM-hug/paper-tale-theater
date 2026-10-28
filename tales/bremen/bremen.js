@@ -599,13 +599,24 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_adventure', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_adventure', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { el, sleep, say, actor, camTo, camWide, camSnap, josa } = T;
     // 가로는 1.3배 상한. 탑을 조금 키워 창 앞 전경에 두고, 세로 구도는 유지한다.
     const wideTower = () => narrow() ? HW_T : { x: 612, y: 410, s: .48 };
     const wideCamera = () => narrow() ? HW_CAM : [545, 300, 1.8];
     const S = makeSounds(T);
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'whistle_up', 'ding_glock', 'coins_1', 'zip_away', 'tiptoe_pizz', 'comic_brass']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_adventure', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'whistle_up', 'ding_glock', 'coins_1', 'zip_away', 'tiptoe_pizz', 'comic_brass']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -1202,6 +1213,7 @@
       ['donkey', 'dog', 'cat', 'rooster', 'miller', 'owl'].forEach(n => { acts[n] = actorVerb(n); });
       return acts;
     })();
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     /* ---------- 1. 방앗간 당나귀 (와이드) ---------- */
@@ -1215,6 +1227,7 @@
     camSnap(DX, 330, 1.25);
     await T.curtain(true);
     amb('birds_chirp_1');
+    intro.go(); // 시작 음악 (놀이)
     await say('옛날 옛날, 방앗간에 늙은 당나귀가 살았어요.');
     await sleep(300); // 당나귀 히힝은 저절로 (2026-10-19)
     cast.donkey.cry(); cast.donkey.hop(20); T.pop(DX + 40, 220, '히힝~', C.bean);
