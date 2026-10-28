@@ -253,6 +253,17 @@
     } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
   }
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_magic', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_magic', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     if (AudioFX.preloadMusic) AudioFX.preloadMusic(['magic_awaken']);
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
@@ -263,7 +274,7 @@
     const cue = (name, v) => { try { if (T.reading() && document.hidden && /^marimba_/.test(name)) return true; /* 화면 꺼짐: 화음 방지 */ return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { forest_v2: 'crickets_night_2', hill_v2: 'birds_chirp_1' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
-    try { AudioFX.preloadSfx(['sparkle', 'thud', 'whoosh', 'knock', 'creak', 'door', 'gulp', 'chomp', 'squeak', 'paper_down', 'step_wood', 'tada', 'pop', 'slide_down', 'crickets_night_1', 'crickets_night_2', 'birds_chirp_1', 'surprise_sting', 'zip_away', 'sleepy_tuba', 'boing', 'tiptoe_pizz', 'ding_glock', 'hammer', 'pop_appear', 'whistle_down', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* */ }
+    try { AudioFX.preloadSfx(['intro_magic', 'sparkle', 'thud', 'whoosh', 'knock', 'creak', 'door', 'gulp', 'chomp', 'squeak', 'paper_down', 'step_wood', 'tada', 'pop', 'slide_down', 'crickets_night_1', 'crickets_night_2', 'birds_chirp_1', 'surprise_sting', 'zip_away', 'sleepy_tuba', 'boing', 'tiptoe_pizz', 'ding_glock', 'hammer', 'pop_appear', 'whistle_down', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* */ }
     const P = T.viewWidth() < 990; /* 세로 화면: 가운데 일부만 보인다 → 카메라가 주인공을 따라간다 */
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -346,6 +357,7 @@
     };
 
     /* ===== 읽어 주기 (docs/READ_MODE.md §10): 놀이판 연출 함수를 동사 이름으로 묶은 맵. 놀이판 흐름은 아래 그대로 ===== */
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {
       const inst = () => T.readInstant();
       const R = { set: '', mf: null, night: null, ffly: null, bedsG: null, winG: null, glass: null, tinted: false, fr: [], laid: false, worryHill: false, crewN: null, crewE: null };
@@ -676,6 +688,7 @@
     /* ===== 1. 거울 앞의 왕비 ===== */
     let mf = mirrorRoom();
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     if (!P) T.camTo(500, 240, 1.06, 2500).then(() => T.camTo(500, 280, 1, 1500));   /* 홀 위쪽(샹들리에·창)을 천천히 보여 주고 돌아온다 */
     await say('옛날 어느 나라에 눈처럼 하얀 얼굴의 공주가 살았어요. 이름은 백설공주였어요.');
     await say('왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.');
