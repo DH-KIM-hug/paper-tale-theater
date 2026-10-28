@@ -457,7 +457,7 @@
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy2', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy2', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
@@ -465,8 +465,21 @@
     })();
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { el, sleep, say, actor, camTo, camWide, camSnap, josa } = T;
+    /* 안내 + 조작 (T.ask 와 같다). 2026-10-29 '순무 초반 씨앗 쪽 대사 겹침': 안내 녹음을 아직 받는 중에 아이가 누르면
+       엔진의 Narrator.stop() 은 받는 중인 녹음을 막지 못해, 늦게 받아진 안내가 다음 대사와 겹쳐 울렸다.
+       누른 뒤 안내가 아직 안 끝났으면 안내 말하기가 완전히 끝날 때까지 계속 끊고 나서 다음 대사로 간다 */
+    const askAuto = () => { try { return (window.parent !== window && /verify=1/.test(location.search)) || localStorage.getItem('auto_play') === '1' || sessionStorage.getItem('auto_once') === '1'; } catch (e) { return false; } };
+    const ask = async (text, start) => {
+      if (askAuto()) return T.ask(text, start);
+      const r = start();
+      let spoken = false;
+      const sp = Narrator.speak(text).catch(() => { /* 소리 실패는 무시 */ }).finally(() => { spoken = true; });
+      const v = await r;
+      if (!spoken) { Narrator.stop(); const iv = setInterval(() => Narrator.stop(), 40); await Promise.race([sp, sleep(9000)]); clearInterval(iv); }
+      return v;
+    };
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['intro_cozy', 'birds_chirp_1', 'pot_boil', 'whistle_down', 'comic_brass', 'drumroll_crash']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_cozy2', 'birds_chirp_1', 'pot_boil', 'whistle_down', 'comic_brass', 'drumroll_crash']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -564,7 +577,7 @@
         T.pop(i % 2 ? 640 : 360, 180, '영차!', C.bean);
       };
       const tapIt = () => T.tap(turnip.pos, { prompt });
-      await (lead ? T.ask(lead, tapIt) : tapIt()); // 한 번 톡 → 영차 다섯 번 저절로 (2026-10-19)
+      await (lead ? ask(lead, tapIt) : tapIt()); // 한 번 톡 → 영차 다섯 번 저절로 (2026-10-19)
       for (let i = 1; i <= 5; i++) { pullStep(i); await sleep(420); }
       await sleep(400);
       rise += gain;
@@ -576,7 +589,7 @@
       const bOk = badge(T, left ? 250 : 750, 320, 92, okKey, sc[okKey]);
       const bNo = badge(T, left ? 750 : 250, 320, 92, noKey, sc[noKey]);
       T.fitRow([bOk, bNo]); // 세로 화면: 보이는 폭 안으로
-      await T.ask(q, () => T.choose([
+      await ask(q, () => T.choose([
         { el: bOk, ok: true },
         { el: bNo, ok: false, onWrong: async () => { noSound && noSound(); await T.anim(bNo, [{ translate: '0 0' }, { translate: '-10px 0' }, { translate: '10px 0' }, { translate: '0 0' }], 400); } },
       ], { prompt: q, where, who }));
@@ -956,7 +969,7 @@
     amb('birds_chirp_1');
     intro.go(); // 시작 음악 (놀이)
     await say('봄이 왔어요. 할아버지가 텃밭에 구멍을 팠어요.');
-    await T.ask('"순무야, 크게 자라라." 씨앗을 톡 눌러 봐요!', () => T.tap(seed, { prompt: '씨앗을 톡 눌러 봐요!' }));
+    await ask('"순무야, 크게 자라라." 씨앗을 톡 눌러 봐요!', () => T.tap(seed, { prompt: '씨앗을 톡 눌러 봐요!' }));
     await T.anim(seed, [{ transform: 'translate(496px,378px)' }, { transform: 'translate(462px,330px)' }, { transform: 'translate(430px,468px) scale(.6)' }], { duration: 600, easing: 'ease-in' });
     seed.remove();
     AudioFX.sfx('pop'); T.pop(430, 400, '쏙!', C.pine);
@@ -1025,7 +1038,7 @@
       cast.grandpa.pose(POSE.pull(18)); setTimeout(() => cast.grandpa.pose(POSE.stand()), 260);
       T.pop(i % 2 ? 700 : 560, 300, '영차!', C.bean);
     };
-    await T.ask('할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!', () => T.tap(cast.grandpa.pos, { prompt: '할아버지를 톡 눌러서 영차!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await ask('할아버지가 순무 잎을 꽉 잡았어요. 톡 눌러서 영차!', () => T.tap(cast.grandpa.pos, { prompt: '할아버지를 톡 눌러서 영차!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 5; i++) { await pullGrandpa(i); await sleep(420); }
     await sleep(300);
     await say('순무는 꿈쩍도 안 해요.');
@@ -1170,7 +1183,7 @@
     });
     squeak(T);
     padHit(T, cast.mouse.pos);
-    await T.ask('흙구멍에서 찍찍 소리가 나요. 톡 눌러 봐요!', () => T.tap(cast.mouse.pos, { prompt: '흙구멍의 생쥐를 톡!' }));
+    await ask('흙구멍에서 찍찍 소리가 나요. 톡 눌러 봐요!', () => T.tap(cast.mouse.pos, { prompt: '흙구멍의 생쥐를 톡!' }));
     mouseClip(false); squeak(T);
     cast.mouse.face('right'); // 2026-10-20 쪼르르 달려 나올 때 오른쪽을 본다 (왼쪽을 보고 오른쪽으로 걷지 않게)
     T.world.appendChild(cast.mouse.pos);
@@ -1194,7 +1207,7 @@
 
     /* --- 9. 쑥! (다 함께 톡톡) --- */
     lbFade(T, 'garden'); // 해 질 녘 라이트박스: 마지막 당기기
-    await T.ask('이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!', () => T.mash(turnip.pos, { count: 4, prompt: '순무를 톡톡 눌러요. 영~차!', onStep: i => {
+    await ask('이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!', () => T.mash(turnip.pos, { count: 4, prompt: '순무를 톡톡 눌러요. 영~차!', onStep: i => {
       const p = i / 4;
       line.forEach(a => a.pose(POSE.pull(6 + p * 20)));
       turnip.place(TX, GROUND - rise - p * 22);
@@ -1286,7 +1299,7 @@
       /* 세로: 누르는 자리 짧은 변 88px 이상. 장면 카드가 막 걷힌 직후엔 화면 배율이 바뀌는 중일 수 있어 1초 뒤 한 번 더 잰다 */
       const pad = () => { if (T.portrait()) opts.forEach(o => padHit(T, o.el)); }, padT = setTimeout(pad, 1000);
       pad();
-      await T.ask(k === 0 ? '누가 먼저 순무를 잡았지? 차례대로 톡 눌러 봐요!' : q, () => T.choose(opts, { prompt: q, who: `${josa(good.name, '이에요/예요')}! 반짝이는 친구를 눌러 봐요!` }));
+      await ask(k === 0 ? '누가 먼저 순무를 잡았지? 차례대로 톡 눌러 봐요!' : q, () => T.choose(opts, { prompt: q, who: `${josa(good.name, '이에요/예요')}! 반짝이는 친구를 눌러 봐요!` }));
       clearTimeout(padT);
       done.add(good);
       good.pos.style.filter = '';
@@ -1306,7 +1319,7 @@
     const dots = [0, 1, 2, 3, 4, 5].map(i => el('circle', { cx: 380 + i * 48, cy: 118, r: 17, fill: C.cream, stroke: C.gold, 'stroke-width': 5 }, ui));
     const NUM = ['하나', '둘', '셋', '넷', '다섯', '여섯'];
     padHit(T, pot);
-    await T.ask('순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!', () => T.mash(pot, { count: 6, prompt: '냄비를 톡 눌러서 한 그릇씩!', onStep: i => {
+    await ask('순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!', () => T.mash(pot, { count: 6, prompt: '냄비를 톡 눌러서 한 그릇씩!', onStep: i => {
       const a = line[i - 1];
       const bowl = T.el('g', {}, T.world);
       if (!pic(T, bowl, 'soup_bowl', -25, -17, 50, 50 * 119 / 153)) T.paper(bowl, [['path', { d: 'M-22 -8 H22 Q20 14 0 15 Q-20 14 -22 -8 Z', fill: C.snow }], ['ellipse', { cx: 0, cy: -8, rx: 22, ry: 5, fill: C.amber }]]);
