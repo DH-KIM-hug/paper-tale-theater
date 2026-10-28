@@ -1,6 +1,6 @@
 /* 아기 돼지 삼형제 — 목업 (그림 파일은 assets/v3w/tp_*.webp, 낭독 파일 없이 글자만으로 진행) */
 (() => {
-  const NF = { pig3_base: 'v2', pig3_build: 'v2', pig3_play: 'v2', bricks: 'nf', straw: 'nf', wood: 'nf', cut_splash: 'nf', cut_tired: 'v2', cut_crawl: 'v2', bg_brick_out: 'v2' }; // 얼굴 없는/통일한 새 그림(파일 이름 끝 글자)
+  const NF = { pig3_base: 'v2', pig3_build: 'v2', pig3_play: 'v2', bricks: 'nf', straw: 'nf', wood: 'nf', cut_splash: '_in', cut_tired: 'v2', cut_crawl: 'v2', bg_brick_out: 'v2' }; // 얼굴 없는/통일한 새 그림(파일 이름 끝 글자)
   const U = n => /^tp2_/.test(n) ? `../../assets/v3w/${n}.webp` : `../../assets/v3w/tp_${n}${NF[n] || ''}.webp`;
   const SZ = {
     pig1_base: [365, 480], pig1_build: [471, 480], pig1_flee: [407, 480], pig1_joy: [361, 480], pig1_play: [342, 480],
@@ -41,7 +41,11 @@
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'rustle_1', 'pot_boil', 'toy_flute', 'question', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'chop', 'ding_glock', 'tiptoe_pizz', 'fall_crash', 'sad_trombone', 'latch_click', 'knock', 'comic_brass', 'zip_away', 'party_horn', 'pop_appear', 'drumroll_crash', 'blow', 'pop', 'thud', 'ding', 'boom', 'pig_flute', 'pig_violin', 'drum']); AudioFX.preloadMusic(['pigs_band']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'rustle_1', 'pot_boil', 'toy_flute', 'question', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'chop', 'ding_glock', 'tiptoe_pizz', 'fall_crash', 'sad_trombone', 'latch_click', 'knock', 'comic_brass', 'zip_away', 'party_horn', 'pop_appear', 'drumroll_crash', 'blow', 'pop', 'thud', 'ding', 'boom', 'pig_flute', 'pig_violin', 'drum', 'rustle_2', 'hammer']); AudioFX.preloadMusic(['pigs_band']); } catch (e) { /* 무시 */ }
+    /* 집 짓기 숫자 목소리 (2026-10-28 사용자 요청): 같은 내레이터의 공용 숫자 클립(audio/el/count) */
+    if (typeof NARRATION_CLIPS !== 'undefined') NUM.forEach((n, i) => { NARRATION_CLIPS[n] = NARRATION_CLIPS[n] || `audio/el/count/ko_${i + 1}.mp3`; });
+    if (typeof NARRATION_CLIPS_EN !== 'undefined') NUM.forEach((n, i) => { NARRATION_CLIPS_EN[n] = NARRATION_CLIPS_EN[n] || { t: ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'][i], c: `audio/el/count/en_${i + 1}.mp3` }; });
+    const MAT = { straw: ['rustle_1', 'rustle_2'], wood: ['hammer'], brick: ['thud'] }; // 쌓을 때 재료 소리
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
 
     const still = () => T.reading && T.reading() && T.readInstant && T.readInstant();
@@ -442,7 +446,9 @@
       let cur = null; // 지금 보이는 단계 그림
       const target = [L.houseX, L.houseY - L.houseH * .25];
       const step = async i => {
-        if (tick === 'chop') sfx('chop'); else sfx(i <= 8 ? 'marimba_' + i : 'marimba_note', .6); // 쌓을 때마다 한 음씩 올라간다
+        const mat = MAT[kind] || []; if (mat.length) sfx(mat[(i - 1) % mat.length], .7); else if (tick === 'chop') sfx('chop');
+        sfx(i <= 8 ? 'marimba_' + i : 'marimba_note', .45); // 쌓을 때마다 한 음씩 올라간다
+        if (NUM[i - 1]) Narrator.speak(NUM[i - 1]).catch(() => { /* 소리 실패는 무시 */ }); // 하나, 둘, 셋…
         pig.hop(26, 300); pile.wiggle(6, 300);
         T.pop(L.pileX, P ? 380 : 330, NUM[i - 1] || '톡');
         drop(kind, L.pileX, L.pileY - pileH * .5, target[0], target[1]);
