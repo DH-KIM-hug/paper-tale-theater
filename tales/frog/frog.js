@@ -282,9 +282,20 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_playful', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_playful', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { el, sleep, say, actor, camTo, camWide, camSnap } = T;
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon_fly', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon_fly', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -527,10 +538,12 @@
     let rShiver = null, rChartFloor = 470, rChart = [];
     const fadeInR = (n, ms = 500) => n.animate([{ opacity: 0 }, { opacity: 1 }], ms);
     const READ_ACTS = { set: R.set, babies: R.babies, baby: R.baby, mom: R.mom, ox: R.ox, chart: R.chart, uncle: R.uncle, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam, chorus: R.chorus };
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     await T.curtain(true);
     amb('birds_chirp_1');
+    intro.go(); // 시작 음악 (놀이)
     await say('연못에 아침이 왔어요. 아기 개구리들이 아직 쿨쿨 자고 있네요.');
     for (const [bi, b] of babies.entries()) {
       const wake = () => T.tap(b.pos, { prompt: '자고 있는 아기 개구리를 톡 눌러 봐요!' });
