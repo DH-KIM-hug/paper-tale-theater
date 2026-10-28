@@ -599,7 +599,7 @@
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean_happy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
@@ -607,7 +607,7 @@
     })();
     const { el, paper, sleep, say, actor, camTo, camSnap, camWide } = T;
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['intro_korean', 'birds_chirp_1', 'birds_chirp_2', 'stream_1', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_korean_happy', 'birds_chirp_1', 'birds_chirp_2', 'stream_1', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -946,7 +946,7 @@
         } });
       },
       cut(k) {
-        const spec = { wake: ['cut_wake', 'hop', 2200], dash: ['cut_dash', 'whoosh', 3400], photo: ['cut_photo', 'poke', 2600] }[k];
+        const spec = { wake: ['cut_wake', 'hop', 2200], dash: ['cut_dash', 'whoosh', 2800], photo: ['cut_photo', 'poke', 2600] }[k];
         if (!spec) return;
         return cutArt(T, ...spec, k === 'dash' ? () => setTimeout(() => AudioFX.whoosh(), 1800) : undefined);
       },
@@ -1563,7 +1563,7 @@
     await say('응원하던 친구들이 모두 일어났어요!');
     if (ART.cut_dash) { // 그림 컷 한 장으로: 쌩(첫 효과음) … 쌩(1.8초 뒤 두 번째 효과음)
       let t2;
-      await cutArt(T, 'cut_dash', 'whoosh', 3400, () => { t2 = setTimeout(() => { AudioFX.whoosh(); setRace(.8, null, 800); }, 1800); });
+      await cutArt(T, 'cut_dash', 'whoosh', 2800, () => { t2 = setTimeout(() => { AudioFX.whoosh(); setRace(.8, null, 800); }, 1800); });
       clearTimeout(t2); setRace(.8, null, 800);
     } else {
     await T.cut(svg => {
