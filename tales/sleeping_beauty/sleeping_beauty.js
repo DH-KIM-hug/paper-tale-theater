@@ -289,7 +289,7 @@
       let nt = null;
       if (!sun) { nt = tint(T, '#1F2A56', 0); T.anim(nt, [{ opacity: 0 }, { opacity: .25 }], 300); }
       if (k === 2 && onSun3) onSun3();
-      await g.animate([{ transform: 'translate(-60px,250px)' }, { transform: 'translate(500px,70px)', offset: .5 }, { transform: 'translate(1060px,250px)' }], { duration: 1500, easing: 'linear' }).finished.catch(() => {});
+      await g.animate([{ transform: 'translate(-60px,250px)' }, { transform: 'translate(500px,70px)', offset: .5 }, { transform: 'translate(1060px,250px)' }], { duration: 1100, easing: 'linear' }).finished.catch(() => {});   /* 2026-10-29 1500→1100: 해·달 다섯 번이 8초를 넘겨 읽어 주기 시간 제한에 걸렸다 */
       g.remove();
       if (nt) { await T.anim(nt, [{ opacity: .25 }, { opacity: 0 }], 300); nt.remove(); }
     }
@@ -859,16 +859,16 @@
     for (let i = 0; i < 6; i++) {
       const f = fairies[i];
       put(T, f, X(-80, 250), FL, { look: 'stand' });
-      await walk(T, f, GIFT_X, FL, 1800, { snd: 'step_wood', vol: .25 });
+      await walk(T, f, GIFT_X, FL, 1400, { snd: 'step_wood', vol: .25 });   /* 2026-10-29 선물 사이 쉼 줄임: 걸음 1800→1400, 쉼 500→200, 나감 900→700 */
       f.look('wand');
       twinkle(T, f.x + WAND_TIP[0], FL + WAND_TIP[1], COLOR[i]); sparkleSfx(T);
       put(T, gifts[i], 500, FL - 205); fadeIn(gifts[i], 300);
       const up = gifts[i].move(500, FL - 295, 1600, 'ease-out');
       await Promise.all([say(L4[i]), up]);
       fadeOut(T, gifts[i], 400);
-      await sleep(500);
+      await sleep(200);
       f.look('stand');
-      await f.move(X(50 + 70 * i, -200), FL, 900, 'ease-out');
+      await f.move(X(50 + 70 * i, -200), FL, 700, 'ease-out');
     }
     for (let i = 0; i < 6; i++) {      // 여섯 색 별 아치(요람 위, 천천히 깜빡)
       const t = i / 5, x = 380 + 240 * t, y = 230 - 40 * Math.sin(Math.PI * t), r = 11;
@@ -1012,7 +1012,7 @@
       twinkle(T, a.x, FL - a.h * .7, '#9CC7DD', 4, 30);
       a.look('sleep');
       T.pop(a.x, FL - a.h - 80, tr('쿨쿨'), '#1F2A56'); T.tone([320, 220], .3, { type: 'sine', vol: .08 });
-      await sleep(1000);
+      await sleep(500);   /* 2026-10-29 1000→500 */
     }
     const l31 = say(S.L31);
     if (P) T.camTo(470, 280, 1, 800);   // 세로: 잠든 공주·침대로 돌아와 밤이 내리는 것을 본다
@@ -1149,7 +1149,7 @@
     bell.wiggle(12, 900); setTimeout(() => bell.wiggle(12, 900), 950); T.pop(500, 60, tr('딸랑'), '#D9A94E');
     setTimeout(async () => { for (let i = 0; i < 8; i++) { glow(plates[i], 400); await sleep(100); } }, 4200);
     await l42;
-    await sleep(1500);
+    await sleep(600);   /* 2026-10-29 1500→600 */
     old.hop(6, 400);
     await say(S.L43);
     const allHit = hitRect(T, 0, 80, 1000, 480);
