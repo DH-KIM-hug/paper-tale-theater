@@ -608,9 +608,9 @@
     try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'whistle_up', 'ding_glock', 'coins_1', 'zip_away', 'tiptoe_pizz', 'comic_brass']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
-    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
-    const cue = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
-    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const cue = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) vol *= .8; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
     const pop0 = T.pop; T = { ...T, pop: (x, y, w, c) => pop0(clampX(x, 60 + [...T.tr(w)].length * 12), y, w, c) };
 
@@ -1038,6 +1038,7 @@
           })();
         }
         if (key === 'walk' && n === 'rooster' && !rI()) { // 나무 꼭대기로
+          cue('whistle_up', .7);
           return (async () => { flap(a); await a.move(WALK ? 520 : L(620, 560), 150, 700, 'ease-out'); scroll.push(a.pos); })();
         }
         if (n === 'owl' || n === 'miller') return;
@@ -1078,7 +1079,7 @@
         if (op === 'flap') { flap(a); T.pop(a.x, 40, '푸드덕!', C.persimmon); return; }
       };
       const acts = {
-        set(k) { if (k === 'walk') amb('crickets_night_1', .2, 4); else if (k === 'dark') amb('crickets_night_2', .2, 4); else if (k === 'morning') amb('birds_chirp_2', .2, 4); else stopAmb(); if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
+        set(k) { if (k === 'mill') amb('birds_chirp_1', .25, 4); else if (k === 'walk') amb('crickets_night_1', .25, 4); else if (k === 'dark') amb('crickets_night_2', .25, 4); else if (k === 'morning') amb('birds_chirp_2', .25, 4); else stopAmb(); if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
         cam(a) { camW(); },
         bush(op) { if (bsh) bsh.animate([{ translate: '0 0' }, { translate: '-6px 0' }, { translate: '6px 0' }, { translate: '0 0' }], { duration: 400, iterations: 2 }); },
         window(op) { // 불빛이 켜진다 (오두막 창)
@@ -1117,6 +1118,7 @@
           if (op === 'wobble') { stacked.forEach((a, i) => setTimeout(() => a.lean.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-5deg)' }, { transform: 'rotate(5deg)' }, { transform: 'rotate(0deg)' }], { duration: 500, iterations: 2 }), i * 60)); AudioFX.sfx('creak', .6); return; }
           if (op !== 'stack') return;
           const g = cast[who];
+          if (who === 'rooster' && !rI()) setTimeout(() => cue('ding_glock', .8), 900);
           if (key === 'house_wide') { // 놀이판 와이드: 탑 전체가 한 덩이로 서 있다
             const k = stacked.length; if (k === 0) top = { x: WT.x, y: WT.y };
             put(g, top.x, top.y, WT.s); stacked.push(g);
@@ -1145,10 +1147,11 @@
         robbers(op) {
           if (op === 'show') {
             if (key === 'house_wide') { const RS = hw && hw.art ? .38 : .72; rRb.forEach(r => { put(r, hw.art ? 459 : 380, hw.art ? 352 : 488, RS, 'left'); r.pos.style.opacity = '0'; }); return; }
-            if (key === 'house_pov') { (async () => { for (let i = 0; i < 3; i++) { S.jingle(); rRb.forEach((r, j) => setTimeout(() => r.hop(10, 260), j * 90)); await sleep(900); } })(); }
+            if (key === 'house_pov') { short('coins_1', .5, 2.2); (async () => { for (let i = 0; i < 3; i++) { S.jingle(); rRb.forEach((r, j) => setTimeout(() => r.hop(10, 260), j * 90)); await sleep(900); } })(); }
             return;
           }
           if (op === 'flee') {
+            if (!rI()) cue('zip_away', .7);
             AudioFX.sfx('door'); if (hw) hw.door.style.transform = 'scaleX(.1)';
             return (async () => {
               for (let i = 0; i < 3; i++) {
@@ -1164,7 +1167,7 @@
         },
         robber(op, a1) {
           const th = rRb[0];
-          if (op === 'enter') return walk(th, STOPS[0], 486, 1800, false);
+          if (op === 'enter') { if (!rI()) short('tiptoe_pizz', .6, 3.5); return walk(th, STOPS[0], 486, 1800, false); }
           if (op === 'exit') return walk(th, STOPS[4], 486, 900, false);
           if (op === 'hit') {
             const idx = SPOTS.findIndex(q => q[0] === a1);
@@ -1182,6 +1185,7 @@
         },
         cut(k) {
           if (k === 'monster') return T.cutImage([{ src: artUrl('cut_monster'), hold: 2200 }], { hold: 2200 });
+          if (k === 'ghost') { if (!rI()) cue('comic_brass', .6); }
           if (k === 'ghost') return T.cutImage([{ src: artUrl('cut_ghost'), hold: 3000 }], { hold: 3000 });
         },
         fx(n) {
