@@ -1469,6 +1469,9 @@
        "When you give way with a loving heart, that heart stays behind as something good.",
        null
       ]
+     ],
+     "before": [
+      "snd:party_horn:.8"
      ]
     }
    ]

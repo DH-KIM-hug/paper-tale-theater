@@ -1463,6 +1463,9 @@
        null,
        "[warm, gentle, closing lesson, slow]"
       ]
+     ],
+     "before": [
+      "snd:party_horn:.8"
      ]
     }
    ]

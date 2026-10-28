@@ -347,7 +347,7 @@
     const { sleep, say, camSnap, tr } = T;
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { night_sea: 'waves', beach: 'seagull_1', garden: 'birds_chirp_2', deck: 'waves', dawn_sea: 'waves', morning_sea: 'seagull_2' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); T._cover = null; bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     try { AudioFX.preloadSfx(['step_wood', 'step_grass', 'bubbles', 'sparkle', 'gulp', 'thud', 'splash', 'splash_big', 'whoosh', 'swish', 'tada', 'bell', 'doop', 'giggle_xylo', 'slide_up', 'blow_long', 'paper_down', 'pow', 'boom', 'waves', 'seagull_1', 'seagull_2', 'birds_chirp_2', 'thunder', 'whistle_down', 'ding_glock', 'pot_boil', 'shimmer', 'question', 'chime_up', 'party_horn']); } catch (e) { /* */ }
@@ -471,7 +471,11 @@
         },
         follow: x => { if (P && !inst()) T.camTo(+x, 280, 1, 700); },
         confetti: () => { T.confetti(); },
-        fx: name => { sfx(T, name, name === 'tada' ? () => sparkleSfx(T) : name === 'sparkle' ? () => sparkleSfx(T) : null); },
+        fx: name => {
+          if (name === 'slide_up' && cue('chime_up', .7)) return;          // 놀이판과 같게: 거품이 됨은 chime_up
+          if (name === 'sparkle' && cue('ding_glock', .8)) return;          // 왕자 깨어남은 딩
+          sfx(T, name, name === 'tada' ? () => sparkleSfx(T) : name === 'sparkle' ? () => sparkleSfx(T) : null);
+        },
         pop: (...a) => { const [x, y, ...t] = a.join(':').split(','); T.pop(PX(+x), +y, tr(t.join(','))); },
         glow: nm => { glow(NAMES[nm]); },
         bubbles: arg => { const [x, y, n] = arg.split(','); bubblesUp(T, PX(+x), +y, +n, 140); },
@@ -490,7 +494,7 @@
         shell: (op, xy) => { const [x, y] = xy.split(','); put(T, shell, PX(+x), +y); },
         cauldron: (op, xy) => {
           if (op === 'at') { const [x, y] = xy.split(','); put(T, cauldron, PX(+x), +y, { look: 'dim', s: .85 }); refront(); return; }
-          cauldron.look('glow'); sfx(T, 'bubbles');
+          cauldron.look('glow'); cue('pot_boil', .7) || sfx(T, 'bubbles');
           put(T, potion, cauldron.x + 44, cauldron.y - 150, { look: 'empty' }); fadeIn(potion, 400);
           sleep(600).then(() => { potion.look('full'); glow(potion, 1000); sfx(T, 'sparkle'); });
         },
@@ -514,7 +518,7 @@
             return;
           }
           if (sn === 2) { ship.wiggle(2, 700); return; }
-          T.shake(); sfx(T, 'thud'); return ship.wiggle(4, 900);
+          T.shake(); cue('thunder', .5) || sfx(T, 'thud'); return ship.wiggle(4, 900);
         },
         storm: () => {
           put(T, clouds[0], X(300, 380), 150); put(T, clouds[1], X(760, 620), 120);
@@ -634,7 +638,7 @@
             put(T, a, ship.x - 120, ship.y + DECK_DY, { look: 'stand', to: 'left' });
             return (async () => {
               await a.move(a.x, WATER - 40, 620, 'ease-in');
-              sfx(T, 'splash_big');
+              if (cue('whistle_down', .6)) setTimeout(() => AudioFX.sfx('splash_big'), 550); else sfx(T, 'splash_big');
               a.look('float', 'left'); await a.move(ship.x - 150, WATER + 10, 500, 'ease-out');
             })();
           }
@@ -642,7 +646,9 @@
       };
       const READ_ACTS = { ...R, set: R.set };
       Object.entries(NAMES).forEach(([nm, a]) => { READ_ACTS[nm] = AV(nm, a); });
-      return T.readPlay(READ_ACTS);
+      READ_ACTS.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } };
+      READ_ACTS.amb = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } };
+      return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
 
     /* ===== 1. 바다 밑 궁전 (배움 놀이: 뜨고 가라앉기) ===== */
