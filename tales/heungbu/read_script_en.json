@@ -108,6 +108,9 @@
        "heung",
        "Sister-in-law, could I please have just one spoonful of rice?"
       ]
+     ],
+     "before": [
+      "sfx:stomach_growl:.5"
      ]
     },
     {
@@ -123,6 +126,9 @@
        "nwife",
        "There is no rice here! Go away!"
       ]
+     ],
+     "before": [
+      "sfx:comic_brass:.5"
      ]
     },
     {
@@ -137,7 +143,8 @@
      ],
      "before": [
       "spr:nwife:hop",
-      "fx:pop"
+      "fx:pop",
+      "sfx:bonk:.5"
      ]
     },
     {
@@ -218,6 +225,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3:500:.5",
       "spr:chicks:hop"
      ]
     },
@@ -232,6 +240,7 @@
       ]
      ],
      "before": [
+      "sfx:whistle_down:.45",
       "chick:fall"
      ]
     },
@@ -307,6 +316,9 @@
      ],
      "after": [
       "swallow:fly:1200"
+     ],
+     "before": [
+      "sfx:harp_gliss:.4"
      ]
     },
     {
@@ -359,6 +371,9 @@
        null,
        "[calm, warm storytelling]"
       ]
+     ],
+     "before": [
+      "sfx:harp_gliss:.4"
      ]
     },
     {
@@ -450,6 +465,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3:500:.5",
       "vine:grow",
       "gourds:show:3",
       "pop:560,200,쑥쑥쑥!"
@@ -483,6 +499,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3:500:.5",
       "cut:rice",
       "rice:pour:3"
      ]
@@ -512,7 +529,8 @@
       "gourd:saw:1",
       "treasure:show",
       "fx:ding",
-      "cut:treasure"
+      "cut:treasure",
+      "sfx:coins_1:.45"
      ]
     },
     {
@@ -529,6 +547,9 @@
       "gourd:saw:2",
       "house:new",
       "cut:house"
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     }
    ]
@@ -570,6 +591,9 @@
        "nol",
        "I will be rich too!"
       ]
+     ],
+     "before": [
+      "sfx:comic_brass:.5"
      ]
     },
     {
@@ -677,7 +701,8 @@
      ],
      "before": [
       "gourd:saw:0",
-      "fx:saw"
+      "fx:saw",
+      "sfx:marimba_1:.5"
      ]
     },
     {
@@ -693,7 +718,8 @@
      "before": [
       "mud:splash",
       "fx:splash",
-      "cut:mud"
+      "cut:mud",
+      "sfx:sad_trombone:.5"
      ]
     },
     {
@@ -716,7 +742,8 @@
      ],
      "before": [
       "gourd:saw:1",
-      "cut:dok"
+      "cut:dok",
+      "sfxs:marimba_2,surprise_sting:700:.5"
      ]
     },
     {
@@ -730,7 +757,8 @@
       ]
      ],
      "before": [
-      "gourd:saw:2"
+      "gourd:saw:2",
+      "sfx:marimba_3:.5"
      ]
     },
     {
@@ -744,6 +772,7 @@
       ]
      ],
      "before": [
+      "sfx:fall_crash:.4",
       "house:collapse",
       "fx:crash",
       "shake",
@@ -829,6 +858,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3:600:.5",
       "rice:send:3"
      ]
     },
@@ -883,6 +913,9 @@
      "before": [
       "cut:hug",
       "fx:ding"
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     },
     {
