@@ -359,7 +359,7 @@
     })();
     const { sleep, camSnap, tr } = T;
     T.cardSpeed(.6);   /* 장면 전환을 빠르게(기본의 60%) */
-    const GAP = 700, SCENE_END = 1500, DRIVE = 6300, LINE_DRIVE = 8400, SIREN_GAP = 4000;
+    const GAP = 700, SCENE_END = 1500, DRIVE = 4800, LINE_DRIVE = 6800, SIREN_GAP = 2600;   /* 2026-10-29 대사 없이 달리기만 기다리던 쉼 줄임: DRIVE 6300→4800, LINE_DRIVE 8400→6800, 소리 인사 4000→2600, 장면 끝 달리기 6000→4200 */
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(삐뽀삐뽀!·톡!…)
     /* 장난감나라 세상(2026-10-24): 4장 블록 · 5장 색칠 · 6장 봉제 인형 · 7·9장 기찻길 놀이판 · 8장 소꿉놀이 → _v3. 나머지는 _v2 */
@@ -890,7 +890,7 @@
     const l16 = say(S.L16), stopR4c = rattle(.25, 1200);
     follow(800, DRIVE);
     fadeOut(T, thiefA, 700); fadeOut(T, thiefB, 700);   // 잡힌 도둑은 차들이 떠날 때 사라진다(차가 도둑 위를 지나가지 않게)
-    const go4 = [drive(police, 900, FL, 6000, 'ease-out'), sleep(400).then(() => { red.look('run'); return drive(red, 730, FL, 6000, 'ease-out'); })];   // 장면 끝에도 차가 화면 안에 남는다(빈 배경으로 넘어가지 않게)
+    const go4 = [drive(police, 900, FL, 4200, 'ease-out'), sleep(400).then(() => { red.look('run'); return drive(red, 730, FL, 4200, 'ease-out'); })];   // 장면 끝에도 차가 화면 안에 남는다(빈 배경으로 넘어가지 않게)
     await Promise.all([...go4, l16]);
     stopR4c();
     await sleep(SCENE_END);
@@ -951,8 +951,8 @@
     await Promise.all(smokes);
     put(T, police, -200, FL, { look: 'run' }); put(T, red, -120, FL, { look: 'run' });
     const stopR5 = rattle(.25, 1200);
-    follow(440, 3800);
-    await Promise.all([drive(police, X(150, 300), FL, 3800, 'ease-out'), sleep(300).then(() => drive(red, X(330, 440), FL, 3800, 'ease-out'))]);
+    follow(440, 2800);
+    await Promise.all([drive(police, X(150, 300), FL, 2800, 'ease-out'), sleep(300).then(() => drive(red, X(330, 440), FL, 2800, 'ease-out'))]);
     stopR5();
     red.hop(8, 300); await say(S.L20);
     fire.look('joy'); fire.hop(8, 300); await say(S.L21);
@@ -960,7 +960,7 @@
     const l22 = say(S.L22), stopR5b = rattle(.25, 1200);
     follow(750, 6000);
     const E5 = chain(900, ['fire', 'red', 'police'], 12);
-    await Promise.all([drive(police, E5.police, FL, 6000, 'ease-out'), sleep(400).then(() => drive(red, E5.red, FL, 6000, 'ease-out')), drive(fire, E5.fire, FL, 6000, 'ease-out'), l22]);
+    await Promise.all([drive(police, E5.police, FL, 4200, 'ease-out'), sleep(400).then(() => drive(red, E5.red, FL, 4200, 'ease-out')), drive(fire, E5.fire, FL, 4200, 'ease-out'), l22]);
     stopR5b();
     await sleep(SCENE_END);
 
@@ -1008,16 +1008,16 @@
     await Promise.all([fadeOut(T, bear, 500), fadeOut(T, rabbit, 500)]);
     put(T, police, -250, FL, { look: 'run' }); put(T, red, -130, FL, { look: 'run' }); put(T, fire, -400, FL, { look: 'run' });
     const stopR6b = rattle(.25, 1200);
-    follow(500, 3800);
-    await Promise.all([drive(police, X(120, 300), FL, 3800, 'ease-out'), sleep(300).then(() => drive(red, X(300, 440), FL, 3800, 'ease-out')), sleep(300).then(() => drive(fire, X(-60, 100), FL, 3800, 'ease-out'))]);
+    follow(500, 2800);
+    await Promise.all([drive(police, X(120, 300), FL, 2800, 'ease-out'), sleep(300).then(() => drive(red, X(300, 440), FL, 2800, 'ease-out')), sleep(300).then(() => drive(fire, X(-60, 100), FL, 2800, 'ease-out'))]);
     stopR6b();
     red.hop(8, 300); await say(S.L25);
     amb.look('joy'); amb.hop(8, 300); await say(S.L26);
     amb.look('run');
     const l27 = say(S.L27), stopR6c = rattle(.25, 1200);
-    follow(560, 6000);
+    follow(560, 4200);
     const E6 = chain(640, ['amb', 'red', 'police', 'fire'], 12);
-    await Promise.all([drive(police, E6.police, FL, 6000, 'ease-out'), drive(red, E6.red, FL, 6000, 'ease-out'), drive(fire, E6.fire, FL, 6000, 'ease-out'), drive(amb, E6.amb, FL, 6000, 'ease-out'), l27]);
+    await Promise.all([drive(police, E6.police, FL, 4200, 'ease-out'), drive(red, E6.red, FL, 4200, 'ease-out'), drive(fire, E6.fire, FL, 4200, 'ease-out'), drive(amb, E6.amb, FL, 4200, 'ease-out'), l27]);
     stopR6c();
     await sleep(SCENE_END);
 
@@ -1079,7 +1079,7 @@
     const stopR8b = rattle(.45, 900);
     setTimeout(() => T.pop(tow.x, FL - 150, tr('덜컹덜컹')), 0); setTimeout(() => T.pop(tow.x, FL - 150, tr('덜컹덜컹')), 3500);
     follow(TOW8 - 96, 9500);
-    await Promise.all([drive(tow, TOW8, LANE_T, 9500, 'linear', 4), l33]);
+    await Promise.all([drive(tow, TOW8, LANE_T, 7000, 'linear', 4), l33]);   /* 2026-10-29 9500→7000 */
     stopR8b();
     tow.hop(8, 300); await say(S.L34);
     tow.look('pull'); sfx('creak', .4);
