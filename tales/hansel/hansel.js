@@ -4,6 +4,9 @@
 (() => {
   const AS = '../../assets/v3w/';
   const GROUND = 505;
+  /* 새장 장면 크기 (2026-10-29 사용자: 새장 속 헨젤은 너무 크고 그레텔은 너무 작음. 눈 사이 간격 실측 1.5배 차이를 반씩 나눔):
+     새장 그림(헨젤+새장)·자물쇠는 0.82배, 그레텔과 풀려난 헨젤은 1.22배 */
+  const CAGE_H = .82, CAGE_S = 1.22;
   const ASP = { father: .9727, father_wood: .806, hans_walk: .5838, hans_crumb: .6747, hans_doze: .8791, hans_eat: .5029, hans_cage: .6165,
     hans_joy: .6743, gret_walk: .6396, gret_doze: .7929, gret_eat: .6471, gret_clever: .7404, gret_push: .8225, gret_duck: .7038, gret_key: .7363,
     witch_beckon: .7515, witch_grope: .9245, witch_oven: .8086, bird_peck: 1.2067, bird_crumb: 1.1685, duck_ride: 1.1204, duck_ride2: 1.1275,
@@ -169,10 +172,10 @@
       T.el('rect', { x: x - 34, y: y - 48, width: 68, height: 110, fill: 'rgba(0,0,0,0)' }, g);
       return g;
     };
-    const lockAt = (x, y) => {
+    const lockAt = (x, y, k = 1) => {
       const g = T.el('g', { filter: 'url(#pp)' }, T.world);
-      pic('hg_lock', x - 32.5, y - 36, 65, 82, g); /* 475×600 */
-      T.el('polygon', { points: STAR(x, y + 16, 10), fill: '#6B4A1E' }, g); /* 별 모양 구멍 표시(고르기 정답 단서)는 코드로 남긴다 */
+      pic('hg_lock', x - 32.5 * k, y - 36 * k, 65 * k, 82 * k, g); /* 475×600 */
+      T.el('polygon', { points: STAR(x, y + 16 * k, 10 * k), fill: '#6B4A1E' }, g); /* 별 모양 구멍 표시(고르기 정답 단서)는 코드로 남긴다 */
       return g;
     };
 
@@ -229,7 +232,7 @@
             ? { hans: [L(400, 440), G, { look: 'walk', to: 'right' }], gret: [L(500, 540), G, { look: 'walk', to: 'right' }] }
             : { hans: [L(380, 420), G, { look: 'walk', to: 'right' }], gret: [L(470, 480), G, { look: 'walk', to: 'right' }], witch: [L(640, 590), G, { look: 'beckon', to: 'left' }] },
           roof: { gret: [L(390, 420), G, { look: 'eat', to: 'left' }], hans: [L(500, 520), G, { look: 'walk', to: 'left' }] },
-          cage: { hans: [140, 490, { look: 'cage', to: 'left' }], gret: [L(340, 300), G, { look: 'clever', to: 'left' }] },
+          cage: { hans: [140, 490, { look: 'cage', to: 'left', s: CAGE_H }], gret: [L(340, 300), G, { look: 'clever', to: 'left', s: CAGE_S }] },
           oven: { hans: [L(250, 380), G, { look: 'joy', to: 'right' }], gret: [L(400, 445), G, { look: 'clever', to: 'right' }], witch: [L(760, 640), G, { look: 'grope', to: 'left' }] },
           river: { hans: [L(380, 420), G + 12, { look: 'walk', to: 'right' }], gret: [L(470, 490), G + 12, { look: 'walk', to: 'right' }], duck: [L(820, 640), 470, { look: 'a', to: 'left' }] },
         };
@@ -257,7 +260,7 @@
           holes = [[446, 108], [502, 108], [557, 108], [623, 108], [535, 150]];
           holeRings = holes.map(([x, y]) => T.el('circle', { cx: x, cy: y, r: 18, fill: 'none', stroke: '#FFD54F', 'stroke-width': 3, 'stroke-dasharray': '5 4', opacity: .6 }, T.world));
         }
-        if (k === 'cage') { lock = lockAt(L(231, 209), 357); }
+        if (k === 'cage') { lock = lockAt(L(215, 197), 381, CAGE_H); }
       };
       const posOf = (n, spec) => {
         const f = fixOf(key, n);
@@ -315,7 +318,7 @@
           return T.sceneCard(tr(CARDS[k] || ''), () => {
             build(k);
             if (k === 'trail') { const f = fixOf('trail', 'gret'), g = fixOf('trail', 'hans'); put(T, gret, f[0], f[1], f[2]); put(T, hans, g[0], g[1], g[2]); }
-            if (k === 'cage') { const f = fixOf('cage', 'hans'), g = fixOf('cage', 'gret'); put(T, hans, f[0], f[1], f[2]); hans.setScale(SC); put(T, gret, g[0], g[1], g[2]); }
+            if (k === 'cage') { const f = fixOf('cage', 'hans'), g = fixOf('cage', 'gret'); put(T, hans, f[0], f[1], f[2]); hans.setScale(SC * CAGE_H); put(T, gret, g[0], g[1], g[2]); if (lock) T.world.appendChild(lock); } /* 자물쇠가 새장 그림 뒤로 숨지 않게 맨 앞으로 */
           });
         },
         cam(a) { camSnap(CXM[key] || (a === 'wide' ? 500 : (P ? +a : 500)), 280, 1); },
@@ -367,7 +370,7 @@
           })();
         },
         keys(op) {
-          const kc = keyAt(L(470, 160), 440, 'circle'), ks = keyAt(L(570, 225), 440, 'tri'), kt = keyAt(L(670, 290), 440, 'star');
+          const kc = keyAt(L(470, 410), 440, 'circle'), ks = keyAt(L(570, 500), 440, 'tri'), kt = keyAt(L(670, 590), 440, 'star');
           keys = [kc, ks, kt];
           keys.forEach(k => k.animate([{ opacity: 0, transform: 'translateY(-20px)' }, { opacity: 1, transform: 'translateY(0)' }], 350));
         },
@@ -378,7 +381,7 @@
           return (async () => {
             await sleep(500);
             if (lock) lock.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
-            put(T, hans, L(250, 215), GROUND, { look: 'joy', to: 'left' });
+            put(T, hans, L(250, 215), GROUND, { look: 'joy', to: 'left', s: CAGE_S });
             hans.hop(34, 420);
           })();
         },
@@ -723,12 +726,12 @@
     await T.sceneCard(tr('새장'), () => {
       scene('cage', CX);
       put(T, hans, 140, 490, { look: 'cage', to: 'left', s: 1 });
-      put(T, gret, L(340, 300), GROUND, { look: 'clever', to: 'left' });
+      put(T, gret, L(340, 300), GROUND, { look: 'clever', to: 'left', s: CAGE_S });
     }, hans.pos);
-    hans.setScale(SC); /* 새장 그림 하나를 배경의 새장 자리에 맞춘다 */
-    const lock = lockAt(L(231, 209), 357);
+    hans.setScale(SC * CAGE_H); /* 새장 그림 하나를 배경의 새장 자리에 맞춘다 */
+    const lock = lockAt(L(215, 197), 381, CAGE_H);
     await say('그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.');
-    const kc = keyAt(L(470, 160), 440, 'circle'), ks = keyAt(L(570, 225), 440, 'tri'), kt = keyAt(L(670, 290), 440, 'star');
+    const kc = keyAt(L(470, 410), 440, 'circle'), ks = keyAt(L(570, 500), 440, 'tri'), kt = keyAt(L(670, 590), 440, 'star');
     const keys = [kc, ks, kt];
     keys.forEach(k => k.animate([{ opacity: 0, transform: 'translateY(-20px)' }, { opacity: 1, transform: 'translateY(0)' }], 350));
     await say('동그라미, 세모, 별 모양. 그레텔은 자물쇠 구멍을 요리조리 살펴보았어요.');
@@ -739,7 +742,7 @@
     gret.look('key'); gret.hop(14, 300); T.pop(L(251, 224), L(170, 317), tr('찰칵!'));
     await sleep(500);
     lock.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
-    put(T, hans, L(250, 215), GROUND, { look: 'joy', to: 'left' });
+    put(T, hans, L(250, 215), GROUND, { look: 'joy', to: 'left', s: CAGE_S });
     hans.hop(34, 420);
     sfx('latch_click', .7);
     await say('찰칵! 새장이 열렸어요. 헨젤이 폴짝 뛰어나왔어요!');
