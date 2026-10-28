@@ -1530,7 +1530,19 @@ const Tale = (() => {
       a.onfinish = a.oncancel = () => { el.remove(); res(); };
     });
     const pulse = el => { if (!calm) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(.96)' }, { transform: 'scale(1)' }], { duration: 520, easing: 'ease-out' }); };
-    const say = t => { try { Narrator.speak(tr(t)); } catch (e) { /* 소리 없이 */ } };
+    /* 보상 말(퍼즐 조각·스티커·종이별)은 홈과 같은 Lily 녹음(home_narration_el.js)을 받아 합친다. 녹음이 없으면 브라우저 말하기(TTS)라 감정 없이 들렸다 (2026-10-29) */
+    const rewardClips = (async () => {
+      try {
+        const m = new Function((await (await fetch(ROOT_URL + 'home_narration_el.js?v=20261029rw1')).text()) + '; return [NARRATION_CLIPS, NARRATION_CLIPS_EN];')();
+        if (typeof NARRATION_CLIPS === 'undefined') window.NARRATION_CLIPS = {};
+        ['퍼즐 조각을 받았어요!', '그림이 완성됐어요!', '새 친구 스티커!', '스티커를 받았어요!', '종이별 하나 받았어요!', '다섯 개! 동화를 하나 열 수 있어요'].forEach(ko => {
+          if (m[0][ko] && !NARRATION_CLIPS[ko]) NARRATION_CLIPS[ko] = ROOT_URL + m[0][ko];
+          const en = ENGINE_EN[ko], e = en && m[1][en];
+          if (e && typeof NARRATION_CLIPS_EN !== 'undefined' && !NARRATION_CLIPS_EN[en]) NARRATION_CLIPS_EN[en] = { t: en, c: ROOT_URL + e.c };
+        });
+      } catch (e) { /* 녹음 없이 */ }
+    })();
+    const say = t => { rewardClips.then(() => { try { Narrator.speak(tr(t)); } catch (e) { /* 소리 없이 */ } }); };
     const sfx = (n, v) => { try { AudioFX.sfx(n, v); } catch (e) { /* 소리 없이 */ } };
     /* 3D 보상 연출: 퍼즐 스티커 → 캐릭터 스티커 → 종이별(받은 것만)이 가운데서 튀어나와 돌고 반짝이며 스티커북 구멍·별 접시로 날아든다.
        효과음·음성은 나타날 때(onAppear), 쟁반 갱신·통통은 착지할 때(onLand). WebGL 이 없거나 모듈을 못 불러오면 false → 기존 DOM 연출 */
@@ -1551,7 +1563,7 @@ const Tale = (() => {
         if (wantStar) items.push({ kind: 'star', target: () => (dots[Math.max(0, Math.min(need, after) - 1)] || plate).getBoundingClientRect() });
         if (!items.length) return true;
         let said = Promise.resolve(), castShown = false;
-        const queue = t => { said = said.then(() => { try { return Narrator.speak(tr(t)); } catch (e) { return null; } }).catch(() => {}); };
+        const queue = t => { said = said.then(() => rewardClips).then(() => { try { return Narrator.speak(tr(t)); } catch (e) { return null; } }).catch(() => {}); };
         const ok = await Reward3D.play({
           items,
           onAppear: k => {

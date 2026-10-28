@@ -363,7 +363,13 @@ const NARRATION_CLIPS = {
  "개구리 왕자 이야기가 열렸어요!": "audio/el/home/nar_f3a5db77b0.mp3",
  "개구리 왕자 친구들을 다 모았어요!": "audio/el/home/nar_9b439a69f9.mp3",
  "잠자는 숲속의 공주 이야기가 열렸어요!": "audio/el/home/nar_3a0878564c.mp3",
- "잠자는 숲속의 공주 친구들을 다 모았어요!": "audio/el/home/nar_d7aec40f6a.mp3"
+ "잠자는 숲속의 공주 친구들을 다 모았어요!": "audio/el/home/nar_d7aec40f6a.mp3",
+ "퍼즐 조각을 받았어요!": "audio/el/home/nar_29c2ee284b.mp3",
+ "그림이 완성됐어요!": "audio/el/home/nar_3371a18d57.mp3",
+ "새 친구 스티커!": "audio/el/home/nar_499ea035ed.mp3",
+ "스티커를 받았어요!": "audio/el/home/nar_a32901623d.mp3",
+ "종이별 하나 받았어요!": "audio/el/home/nar_21397caebf.mp3",
+ "다섯 개! 동화를 하나 열 수 있어요": "audio/el/home/nar_bba9cce12d.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -2089,5 +2095,29 @@ const NARRATION_CLIPS_EN = {
  "The Sleeping Beauty. Coming soon.": {
   "t": "The Sleeping Beauty. Coming soon.",
   "c": "audio/el/home/en/nar_1101d11cb3.mp3"
+ },
+ "You got a puzzle piece!": {
+  "t": "You got a puzzle piece!",
+  "c": "audio/el/home/en/nar_5c47da4d1a.mp3"
+ },
+ "The picture is complete!": {
+  "t": "The picture is complete!",
+  "c": "audio/el/home/en/nar_7cabd90a17.mp3"
+ },
+ "A new friend sticker!": {
+  "t": "A new friend sticker!",
+  "c": "audio/el/home/en/nar_330bc827bb.mp3"
+ },
+ "You got a sticker!": {
+  "t": "You got a sticker!",
+  "c": "audio/el/home/en/nar_b17027876f.mp3"
+ },
+ "You got a Paper Star!": {
+  "t": "You got a Paper Star!",
+  "c": "audio/el/home/en/nar_1cdb15c0a3.mp3"
+ },
+ "Five stars! You can open a tale.": {
+  "t": "Five stars! You can open a tale.",
+  "c": "audio/el/home/en/nar_6c4d69a724.mp3"
  }
 };
