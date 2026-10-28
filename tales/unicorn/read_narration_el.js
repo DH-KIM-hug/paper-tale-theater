@@ -60,16 +60,16 @@ Object.assign(NARRATION_CLIPS, {
  "다현이가 천천히 뒤를 돌아보았어요.": "audio/el/unicorn/nar_b15923332d.mp3",
  "달빛 아래, 하얀 유니콘이 서 있었어요.": "audio/el/unicorn/nar_89d116ba54.mp3",
  "유니콘이 다현이에게 다정하게 말했어요.": "audio/el/unicorn/nar_4ca6dd141b.mp3",
- "나는 계속 여기 있었어.": "audio/el/unicorn/uni_6a1bb9a74c.mp3",
- "네가 친절한 걸 다 보고 있었어.": "audio/el/unicorn/uni_c469c13c85.mp3",
- "양에게도, 사슴에게도, 말에게도 말이야.": "audio/el/unicorn/uni_ff46bde28b.mp3",
+ "나는 계속 여기 있었어.": "audio/el/unicorn/uni_e9587a612d.mp3",
+ "네가 친절한 걸 다 보고 있었어.": "audio/el/unicorn/uni_05b1a8fcc8.mp3",
+ "양에게도, 사슴에게도, 말에게도 말이야.": "audio/el/unicorn/uni_5b527dc510.mp3",
  "유니콘…!": "audio/el/unicorn/kid_3ab07dbfa3.mp3",
  "다현이의 눈이 반짝반짝 빛났어요. 가슴이 콩닥콩닥 뛰었지요.": "audio/el/unicorn/nar_ce04e13ae7.mp3",
  "다현이는 유니콘을 꼭 안았어요.": "audio/el/unicorn/nar_812353b733.mp3",
  "다음 날 아침, 다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.": "audio/el/unicorn/nar_3a05f82ba3.mp3",
  "다현이는 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": "audio/el/unicorn/nar_47ba578853.mp3",
  "유니콘이 다현이에게 고맙다고 말했어요.": "audio/el/unicorn/nar_fb69fd349f.mp3",
- "고마워, 정말 예뻐!": "audio/el/unicorn/uni_33d25c23ae.mp3",
+ "고마워, 정말 예뻐!": "audio/el/unicorn/uni_3644ca3450.mp3",
  "너도 누군가에게 친절하면, 너만의 유니콘을 만날 수 있답니다.": "audio/el/unicorn/nar_4be3431181.mp3"
 });
 Object.assign(VOICE_LINES, {});

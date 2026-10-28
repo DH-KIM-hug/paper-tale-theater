@@ -242,15 +242,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "나는 계속 여기 있었어.": {
   "t": "I was here all along.",
-  "c": "audio/el/unicorn/en/uni_0f479296fd.mp3"
+  "c": "audio/el/unicorn/en/uni_b633c51263.mp3"
  },
  "네가 친절한 걸 다 보고 있었어.": {
   "t": "I saw how kind you were, every time.",
-  "c": "audio/el/unicorn/en/uni_6ca5cd4529.mp3"
+  "c": "audio/el/unicorn/en/uni_9f9554b51d.mp3"
  },
  "양에게도, 사슴에게도, 말에게도 말이야.": {
   "t": "To the sheep, to the deer, and to the horse, too.",
-  "c": "audio/el/unicorn/en/uni_b692db35cd.mp3"
+  "c": "audio/el/unicorn/en/uni_19f72aff13.mp3"
  },
  "유니콘…!": {
   "t": "A unicorn...!",
@@ -278,7 +278,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "고마워, 정말 예뻐!": {
   "t": "Thank you. It's so pretty!",
-  "c": "audio/el/unicorn/en/uni_0fd9db41c8.mp3"
+  "c": "audio/el/unicorn/en/uni_19dd11632b.mp3"
  },
  "너도 누군가에게 친절하면, 너만의 유니콘을 만날 수 있답니다.": {
   "t": "If you are kind to someone, you can meet a unicorn of your very own.",

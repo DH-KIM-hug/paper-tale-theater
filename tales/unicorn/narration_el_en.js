@@ -186,11 +186,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "나는 계속 여기 있었어.": {
   "t": "I was here all along.",
-  "c": "audio/el/unicorn/en/uni_0f479296fd.mp3"
+  "c": "audio/el/unicorn/en/uni_b633c51263.mp3"
  },
  "네가 친절한 걸 다 보고 있었어.": {
   "t": "I saw how kind you were, every time.",
-  "c": "audio/el/unicorn/en/uni_6ca5cd4529.mp3"
+  "c": "audio/el/unicorn/en/uni_9f9554b51d.mp3"
  },
  "유니콘…!": {
   "t": "A unicorn...!",
@@ -238,7 +238,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "고마워, 정말 예뻐!": {
   "t": "Thank you. It's so pretty!",
-  "c": "audio/el/unicorn/en/uni_0fd9db41c8.mp3"
+  "c": "audio/el/unicorn/en/uni_19dd11632b.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {

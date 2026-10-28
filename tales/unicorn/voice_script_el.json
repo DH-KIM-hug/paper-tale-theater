@@ -1,12 +1,12 @@
 {
- "notes": "ElevenLabs 목소리 배정(2026-10-22, PLAN 확정 사항): nar=Huelyn(여자 내레이터 돌려 쓰기 — 라푼젤 Annie 다음; 느리고 따뜻하게), kid=Annie(아이 \"나\", 성별 중립·이름 없음, 맑고 또렷하게), sheep=Yoojin(양, 밝고 친근 — 훌쩍이다 웃음), deer=Namchun(사슴, 낮고 순한 어른 목소리로 \"아야\"), horse=Klamon(말, 밝은 청년 — \"꼬르륵\" 소리와 \"고마워\"), uni=Sora(유니콘, 나긋하고 따뜻한 낭독 톤, stability .55 로 차분하게). 한 편 안에서 목소리가 겹치지 않는다. 수세기(4장 가시 셋)는 nar 의 extra n1~n3 목소리만, 화면 숫자 글자 없음. 조작 안내 문장은 조작이 있는 장면(1·2·4·10)에만. 교훈은 대사로 읽지 않는다(끝 화면 글자만, ui). 모델 eleven_v4, 배역별 settings.",
+ "notes": "ElevenLabs 목소리 배정(2026-10-22, PLAN 확정 사항): nar=Huelyn(여자 내레이터 돌려 쓰기 — 라푼젤 Annie 다음; 느리고 따뜻하게), kid=Annie(아이 \"나\", 성별 중립·이름 없음, 맑고 또렷하게), sheep=Yoojin(양, 밝고 친근 — 훌쩍이다 웃음), deer=Namchun(사슴, 낮고 순한 어른 목소리로 \"아야\"), horse=Klamon(말, 밝은 청년 — \"꼬르륵\" 소리와 \"고마워\"), uni=경 Kyung(유니콘, 따뜻하고 차분하고 서두르지 않는 낭독 톤, 2026-10-28 사용자 선택 — Sora 는 울림이 있어 교체, stability .6 style .25). 한 편 안에서 목소리가 겹치지 않는다. 수세기(4장 가시 셋)는 nar 의 extra n1~n3 목소리만, 화면 숫자 글자 없음. 조작 안내 문장은 조작이 있는 장면(1·2·4·10)에만. 교훈은 대사로 읽지 않는다(끝 화면 글자만, ui). 모델 eleven_v4, 배역별 settings.",
  "voices": {
   "nar": "gnWujHp24oqX3I03lRbU",
   "kid": "Lb7qkOn5hF8p7qfCDH8q",
   "sheep": "Cm89zxZzEGaMu7ajYw2K",
   "deer": "5ON5Fnz24cnOozEQfGAm",
   "horse": "dnZGOA54w68T7vLLPFTp",
-  "uni": "JpGoUJuLFthrFkcdBy4k"
+  "uni": "JQaWvPoEUkcuOTfxFYpJ"
  },
  "models": {
   "nar": "eleven_v4",
