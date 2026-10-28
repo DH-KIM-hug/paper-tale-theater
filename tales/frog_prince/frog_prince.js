@@ -308,7 +308,7 @@
     })();
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
-    const GAP = 700, SCENE_END = 1500, LOOK = 1500;   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */   // LOOK: 장면이 바뀐 뒤 그림을 둘러보는 쉼(목표 7분)
+    const GAP = 700, SCENE_END = 1500, LOOK = 500;   /* 2026-10-29 LOOK 1500→500 (장면 넘김 뒤 쉼이 길다) */   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */   // LOOK: 장면이 바뀐 뒤 그림을 둘러보는 쉼(목표 7분)
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(하나·둘·셋)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
@@ -530,7 +530,7 @@
       prin.look('stand'); await prin.wiggle(5, 500);
     })();
     await say(S.L4); await t2;
-    await sleep(1800);
+    await sleep(600);   /* 2026-10-29 1800→600 */
     await sleep(SCENE_END);
 
     /* ===== 3. 풍덩 (공이 가라앉고 공주가 운다) ===== */
