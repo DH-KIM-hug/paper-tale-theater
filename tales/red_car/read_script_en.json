@@ -188,7 +188,8 @@
      ],
      "before": [
       "car:red:look:tired:right",
-      "pop:420,400,톡!"
+      "pop:420,400,톡!",
+      "snd:whistle_down:.5"
      ]
     },
     {
@@ -353,6 +354,9 @@
        null,
        "[calm, warm, gentle storytelling]"
       ]
+     ],
+     "before": [
+      "snd:harp_gliss:.6"
      ]
     }
    ]
@@ -933,7 +937,9 @@
      "before": [
       "car:red:look:tired",
       "car:red:wiggle",
-      "pop:500,380,툭"
+      "pop:500,380,툭",
+      "snd:whistle_down:.5",
+      "snd:thud:.3:500"
      ]
     },
     {
@@ -1087,6 +1093,9 @@
        null,
        "[calm, warm, gentle storytelling]"
       ]
+     ],
+     "before": [
+      "bg:train:.25:4"
      ]
     },
     {
@@ -1236,7 +1245,8 @@
       "car:police:hop",
       "car:fire:hop",
       "car:amb:hop",
-      "car:tow:hop"
+      "car:tow:hop",
+      "snd:party_horn:.9"
      ]
     },
     {

@@ -355,7 +355,7 @@
     const V3 = { rc_bg_road_a: '_v3', rc_bg_road_b: '_v3', rc_bg_road_c: '_v3', rc_bg_road_long: '_v3', rc_bg_road_hill: '_v4' };   // 8장: 장난감 정비소(v4, 소꿉놀이 v3 은 쓰지 않음)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb4 = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { rc_bg_yard: 'birds_chirp_1', rc_bg_playground: 'birds_chirp_2' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } fronts = []; T.clear(); bgImage(T, key + (V3[key] || '_v2')); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb4(SCENE_AMB[key]); };
     /* 레이어 소품(누름을 받지 않는다). mid: 배우보다 먼저 put → 뒤 / front: 앞 가림 층, fronts 에 넣어 늘 맨 앞 */
@@ -492,7 +492,7 @@
       water.body.style.transformOrigin = `${ox}px ${oy}px`;
       const tr0 = `rotate(${ang}rad) scale(`;
       const an = water.body.animate([{ transform: tr0 + '.05)', opacity: .6 }, { transform: tr0 + sc + ')', opacity: 1 }], { duration: 380, easing: 'ease-out', fill: 'forwards' });
-      sfx('splash', .35); T.pop(f.x, f.y - 110, tr('쉭쉭!'));
+      cue('water_pour_1', .4) || sfx('splash', .35); T.pop(f.x, f.y - 110, tr('쉭쉭!'));
       await an.finished;
     };
     const rRide = () => {
@@ -661,7 +661,7 @@
         if (verb !== 'click') return;
         put(T, hook, tow.x + HOOK_DX, tow.y + HOOK_DY, { to: 'right', s: HOOK_S });
         await Promise.all([tow.move(red.x + TOWGAP, LANE_T, 700, 'ease-in-out'), hook.move(red.x + TOWGAP + HOOK_DX, hook.y, 700, 'ease-in-out')]);
-        sfx('knock', .6);
+        cue('latch_click', .6) || sfx('knock', .6);
         red.look('hooked'); red.place(red.x, LANE_R); glow(red, 600); red.hop(4, 260);
       },
       convoy(verb) {
@@ -730,8 +730,11 @@
     };
     /* settle: 장면 넘김 전에 달리던 차가 다 멈추기를 기다린다(엔진이 넘김 시간 제한 밖에서 부른다) */
     const READ_ACTS = { settle: flightsDone, set: R.set, cam: R.cam, kid: R.kid, car: R.car, toys: R.toys, hand: R.hand, bfly: R.bfly, thieves: R.thieves, house: R.house, flames: R.flames, dolls: R.dolls, amb: R.amb, hook: R.hook, convoy: R.convoy, vo: R.vo, fx: R.fx, pop: R.pop, confetti: R.confetti };
+    /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · bg:<이름>:<볼륨>:<초> (amb 는 구급차 동사라 bg 로) */
+    READ_ACTS.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } };
+    READ_ACTS.bg = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } };
     if (T.reading()) {
-      return T.readPlay(READ_ACTS);
+      return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
 
     /* ===== 1. 언제나 함께 (배움 놀이 1: 빨간 것 찾기 — 첫 조작) ===== */
