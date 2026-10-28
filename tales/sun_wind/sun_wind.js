@@ -1191,7 +1191,7 @@
       w.wear(); M8.P.face('big'); M8.hop(16);
       T.pop(M8.x + 185, 380, w.cloth, C.bean); // 몸 옆 (세로 화면 보이는 폭 안)
       if (wi === 0) await say('옷도 저절로 바뀐대요!');   // 첫 번째 눌렀을 때 옷이 바뀌는 걸 보며 안내
-      await sleep(1800); // 바뀐 날씨를 잠깐 보여 준다
+      await sleep(1200); // 바뀐 날씨를 잠깐 보여 준다 (2026-10-29: 1.8 → 1.2초)
     }
     if (wfx) { wfx.remove(); wfx = null; }
     PL.sky.setAttribute('fill', SKY.day); PL.ground.setAttribute('fill', C.grass); setOutfit(M8.P, 'shirt'); M8.P.face('big');
