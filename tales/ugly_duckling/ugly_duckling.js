@@ -45,6 +45,9 @@
     face_happy: 'v3w/ud_face_happy.webp', face_sad: 'v3w/ud_face_sad.webp', face_scared: 'v3w/ud_face_scared.webp', face_angry: 'v3w/ud_face_angry.webp',
     face_swan_happy: 'v3w/ud_face_swan_happy.webp', face_swan_sad: 'v3w/ud_face_swan_sad.webp', face_swan_scared: 'v3w/ud_face_swan_scared.webp', face_swan_angry: 'v3w/ud_face_swan_angry.webp',
     cut_hatch: 'v3w/ud_cut_hatch.webp', cut_reflect: null,
+    /* 2026-10-29 코드 도형 → 그림 */
+    ice: 'v3w/ud_ice.webp', ice_chip: 'v3w/ud_ice_chip.webp', ice_cracks: 'v3w/ud_ice_cracks.webp', egg_crack: 'v3w/ud_egg_crack.webp',
+    purr_waves: 'v3w/ud_purr_waves.webp', drop: 'v3w/cm_drop.webp', badge: 'v3w/cm_badge_plate.webp', hand: 'ui/hand3.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -619,7 +622,7 @@
   }
   function card(T, x, y, r, draw, label) {
     const g = T.el('g', { transform: `translate(${x},${y})` }, document.getElementById('stage'));
-    T.paper(g, [['circle', { r, fill: C.cream, stroke: C.gold, 'stroke-width': Math.max(4, r * .09) }]]);
+    const R = r * 1.045; pic(T, g, 'badge', -R, -R, 2 * R, 2 * R); // 크림 원판+금테 그림
     const inner = T.el('g', { transform: `scale(${r / 84})` }, g);
     draw(inner);
     if (label) T.el('text', { y: r + Math.max(22, r * .34), 'text-anchor': 'middle', 'font-size': Math.max(22, r * .34), fill: C.bean, stroke: C.cream, 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(label) }, g);
@@ -658,7 +661,41 @@
   });
 
   /* 손 (쓰다듬기) */
-  const HAND_D = 'M22 30 V10 a5 5 0 0 1 10 0 V28 M32 26 a5 5 0 0 1 10 0 V30 M42 28 a5 5 0 0 1 10 0 V40 C52 52 44 60 34 60 C24 60 18 54 14 46 L8 36 a5 5 0 0 1 8 -5 L22 38 Z';
+  /* 2026-10-29 코드 도형 → 그림: 얼음판·얼음 조각·얼음 금, 알 금, 쓰다듬는 손 */
+  const ICE_BOX = [349, 293, 250, 250 * 400 / 848]; // 얼음판 그림 상자(dy 0 기준): 아기 오리 발끝(470,345)이 윗면 가운데
+  const ICE_SHEET = [[330, 338], [372, 322], [450, 316], [540, 320], [600, 334], [618, 352], [580, 372], [500, 380], [410, 378], [348, 366]];
+  const ICE_SHARDS = [[[330, 338], [372, 322], [430, 330], [410, 352], [348, 366]], [[372, 322], [450, 316], [470, 336], [430, 330]], [[450, 316], [540, 320], [520, 346], [470, 336]],
+    [[540, 320], [600, 334], [618, 352], [560, 350]], [[348, 366], [410, 352], [440, 372], [410, 378]], [[470, 336], [520, 346], [500, 380], [440, 372]], [[520, 346], [560, 350], [580, 372], [500, 380]]];
+  const iceMap = ([x, y]) => [ICE_BOX[0] + (x - 330) / 288 * ICE_BOX[2], ICE_BOX[1] + (y - 316) / 64 * ICE_BOX[3]]; // 옛 얼음판 좌표 → 그림 상자
+  const icePath = pts => 'M' + pts.map(p => iceMap(p).join(' ')).join(' L') + ' Z';
+  function iceSheet(T, g) { pic(T, g, 'ice', ...ICE_BOX); }
+  function iceCollarArt(T, g) { // 얼어붙은 발: 발 둘레 얼음 조각 셋
+    [[441, 350, -10], [473, 352, 6], [505, 350, -4]].forEach(([x, y, r]) => pic(T, T.el('g', { transform: `rotate(${r} ${x} ${y})` }, g), 'ice_chip', x - 14, y - 15, 28, 29.5));
+  }
+  function iceCrack(T, g, i) { // 금 한 장을 단계마다 크고 진하게
+    const u = artUrl('ice_cracks'); if (!u) return;
+    g.replaceChildren(); const w = 36 + i * 14, h = w * 600 / 574;
+    T.el('image', { href: u, x: 474 - w / 2, y: 352 - h / 2, width: w, height: h, opacity: Math.min(1, .4 + i * .1), preserveAspectRatio: 'none' }, g);
+  }
+  function iceBit(T) { const g = T.el('g', {}, T.fx); pic(T, g, 'ice_chip', -8, -8.5, 16, 17); return g; } // 튀는 얼음 부스러기
+  function iceShards(T, shards) { // 깨진 얼음: 얼음판 그림을 조각 모양으로 잘라 벌린다
+    const [bx, by, bw, bh] = ICE_BOX; // 뚫린 물: 얼음판 윗면 크기만큼
+    T.el('path', { d: 'M' + ICE_SHEET.map(([x, y]) => [bx + bw * (.06 + .88 * (x - 330) / 288), by + bh * (.1 + .66 * (y - 316) / 64)].join(' ')).join(' L') + ' Z', fill: '#8FB2C9' }, shards);
+    ICE_SHARDS.forEach((pts, k) => {
+      const id = 'udIce' + (++clipN), g = T.el('g', {}, shards);
+      T.el('path', { d: icePath(pts) }, T.el('clipPath', { id }, g));
+      pic(T, T.el('g', { 'clip-path': `url(#${id})` }, g), 'ice', ...ICE_BOX);
+      const [cx, cy] = iceMap([pts.reduce((u, q) => u + q[0], 0) / pts.length, pts.reduce((u, q) => u + q[1], 0) / pts.length]);
+      const [ox, oy] = iceMap([470, 350]), ang = Math.atan2(cy - oy, cx - ox), rot = (k % 2 ? 1 : -1) * (4 + k);
+      g.animate([{ transform: 'translate(0px,0px)' }, { transform: `translate(${cx + Math.cos(ang) * 14}px,${cy + Math.sin(ang) * 8}px) rotate(${rot}deg) translate(${-cx}px,${-cy}px)` }], { duration: 450, easing: 'ease-out', fill: 'forwards' });
+    });
+  }
+  function eggCrack(T, g, i, n) { // 알 금: 지그재그 금 한 장을 왼쪽부터 i/n 만큼 드러낸다
+    const u = artUrl('egg_crack'); if (!u) return;
+    if (!g._clip) { const id = 'udEgg' + (++clipN); g._clip = T.el('rect', { x: -35, y: -64, width: 0, height: 30 }, T.el('clipPath', { id }, g)); T.el('image', { href: u, x: -33, y: -54, width: 66, height: 66 * 166 / 900, preserveAspectRatio: 'none', 'clip-path': `url(#${id})` }, g); }
+    g._clip.setAttribute('width', 70 * i / n);
+  }
+  function petHand(T, g) { const h = 88, w = h * 200 / 363; pic(T, T.el('g', { transform: 'rotate(200 -20 9)' }, g), 'hand', -20 - w / 2, 9 - h / 2, w, h); } // 손가락이 아래로: 내려온 자리(hx+40,hy-70)에서 손끝이 머리 위(hx+5,hy-20)에 닿는다
 
   /* ================= 이야기 ================= */
   async function run(T) {
@@ -880,14 +917,13 @@
         }
         if (k === 'winter') {
           kyR = winterHighBG(T) ? 345 : 372;
-          const dy = kyR - 345, SHEET = [[330, 338], [372, 322], [450, 316], [540, 320], [600, 334], [618, 352], [580, 372], [500, 380], [410, 378], [348, 366]];
-          const poly = (g, pts, fill) => el('path', { d: 'M' + pts.map(q => q.join(' ')).join(' L') + ' Z', fill }, g);
+          const dy = kyR - 345;
           icePatchR = el('g', { transform: `translate(0,${dy})` }, T.world);
-          poly(icePatchR, SHEET.map(([x, y]) => [x, y + 7]), '#9DBBD0'); poly(icePatchR, SHEET, '#EAF4F9');
+          iceSheet(T, icePatchR);
           icePatchR._cracks = el('g', {}, icePatchR);
           put(hero, 470, kyR, 1.35, 'left'); hero.setForm('young');
           iceCollarR = el('g', { transform: `translate(0,${dy})` }, T.world);
-          [[[424, 348], [440, 338], [458, 343], [452, 355], [430, 357]], [[455, 346], [472, 340], [492, 345], [488, 357], [462, 358]], [[488, 348], [504, 341], [522, 348], [512, 358], [492, 358]]].forEach(pts => { poly(iceCollarR, pts.map(([x, y]) => [x, y + 3]), '#9DBBD0'); poly(iceCollarR, pts, '#DDEBF3'); });
+          iceCollarArt(T, iceCollarR);
           hero.setMood('sad');
           A.farmer = cast(T, 'farmer', 1200, bgUrl('winter') ? FARM_ART.y : kyR - 20, 1.2);
           snowR = setInterval(() => {
@@ -1035,8 +1071,7 @@
           }
           if (a1 === 'big') {
             return (async () => {
-              const CR = ['M-10 -60 L-2 -52 L-8 -44', 'M-8 -44 L4 -38 L0 -30', 'M-2 -52 L12 -56 L20 -48', 'M20 -48 L30 -52'];
-              for (let i = 0; i < 4; i++) { crack(T); el('path', { d: CR[i], stroke: C.bark, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, hero.parts.crack); hero.wiggle(8, 300); await sleep(350); }
+              for (let i = 0; i < 4; i++) { crack(T); eggCrack(T, hero.parts.crack, i + 1, 4); hero.wiggle(8, 300); await sleep(350); }
               hero.setForm('baby'); hero.setScale(hero.art ? 1.4 : 1.1);
               const [hx0, hy0] = hero.headPt();
               hatR = el('g', {}, T.fx);
@@ -1055,7 +1090,7 @@
         },
         tear(op) {
           const [hx, hy] = hero.headPt();
-          const d = el('ellipse', { cx: hx + 14, cy: hy + 6, rx: 5, ry: 8, fill: '#9FD0EA' }, T.fx);
+          const d = el('g', {}, T.fx); pic(T, d, 'drop', hx + 14 - 6.2, hy + 6 - 9, 12.3, 18); // 눈물 그림
           d.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: 'translateY(60px)', opacity: 0 }], { duration: 700, easing: 'ease-in' }).finished.then(() => d.remove());
         },
         swim(op) {
@@ -1089,31 +1124,22 @@
         },
         ice(op) {
           if (op !== 'crack') return;
-          const ICR = ['M430 335 L450 352 L440 366', 'M520 330 L540 346 L560 340', 'M395 350 L375 362', 'M545 358 L568 368', 'M462 322 L474 338', 'M492 372 L512 376'];
           const farmer = A.farmer, ky = kyR;
           return (async () => {
             for (let i = 1; i <= 6; i++) {
               AudioFX.sfx('chop', .6) || T.tone([900, 300], .1, { type: 'square', vol: .12 });
               if (farmer && farmer.parts.arm) { farmer.parts.arm.style.transform = 'rotate(24deg)'; setTimeout(() => farmer.parts.arm.style.transform = '', 160); }
-              el('path', { d: ICR[i - 1], stroke: '#7FA6BC', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, icePatchR._cracks);
+              iceCrack(T, icePatchR._cracks, i);
               for (let k2 = 0; k2 < 3; k2++) {
-                const bit = T.paper(T.fx, [['path', { d: 'M0 -8 L9 0 L2 9 L-8 4 Z', fill: '#E6F1F6' }]]);
+                const bit = iceBit(T);
                 const x0 = 420 + Math.random() * 100, dx = (Math.random() - .5) * 180;
                 bit.animate([{ transform: `translate(${x0}px,${ky - 2}px)` }, { transform: `translate(${x0 + dx / 2}px,${ky - 70}px) rotate(90deg)` }, { transform: `translate(${x0 + dx}px,${ky + 20}px) rotate(200deg)`, opacity: 0 }], { duration: 700 }).finished.then(() => bit.remove());
               }
               await sleep(330);
             }
-            const dy = ky - 345, SHEET = [[330, 338], [372, 322], [450, 316], [540, 320], [600, 334], [618, 352], [580, 372], [500, 380], [410, 378], [348, 366]];
-            const poly = (g, pts, fill) => el('path', { d: 'M' + pts.map(q => q.join(' ')).join(' L') + ' Z', fill }, g);
+            const dy = ky - 345;
             const shards = el('g', { transform: `translate(0,${dy})` }, T.world); T.world.insertBefore(shards, hero.pos);
-            poly(shards, SHEET.map(([x, y]) => [x + (x < 470 ? -4 : 4), y + 5]), '#8FB2C9');
-            [[[330, 338], [372, 322], [430, 330], [410, 352], [348, 366]], [[372, 322], [450, 316], [470, 336], [430, 330]], [[450, 316], [540, 320], [520, 346], [470, 336]], [[540, 320], [600, 334], [618, 352], [560, 350]], [[348, 366], [410, 352], [440, 372], [410, 378]], [[470, 336], [520, 346], [500, 380], [440, 372]], [[520, 346], [560, 350], [580, 372], [500, 380]]].forEach((pts, k2) => {
-              const g = el('g', {}, shards), cx = pts.reduce((u, q) => u + q[0], 0) / pts.length, cy = pts.reduce((u, q) => u + q[1], 0) / pts.length;
-              poly(g, pts.map(([x, y]) => [x, y + 4]), '#9DBBD0'); poly(g, pts, '#EAF4F9');
-              const ang = Math.atan2(cy - 350, cx - 470);
-              g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
-              g.animate([{ transform: 'translate(0,0) rotate(0deg)' }, { transform: `translate(${Math.cos(ang) * 14}px,${Math.sin(ang) * 8}px) rotate(${(k2 % 2 ? 1 : -1) * (4 + k2)}deg)` }], { duration: 450, easing: 'ease-out', fill: 'forwards' });
-            });
+            iceShards(T, shards);
             icePatchR.remove(); iceCollarR.remove();
             AudioFX.sfx('crash', .5); quack(T); hero.hop(30);
             hero.parts.wing.style.transform = ''; T.world.appendChild(hero.pos);
@@ -1213,11 +1239,10 @@
     await sleep(500);
     sfx('duckling_peep', .5);
     await say('노란 아기 오리 넷이 나왔어요. 삐약삐약!');
-    const CR = ['M-10 -60 L-2 -52 L-8 -44', 'M-8 -44 L4 -38 L0 -30', 'M-2 -52 L12 -56 L20 -48', 'M20 -48 L30 -52', 'M-10 -60 L-24 -56 L-32 -62', 'M0 -30 L14 -26 L26 -30'];
     await T.ask('어? 제일 큰 알은 아직이에요. 톡! 두드려 볼까요?', () => T.tap(hero.pos, { prompt: '큰 알을 톡!' })); // 한 번 톡 하면 금이 저절로 간다
     for (let i = 1; i <= 6; i++) {
       crack(T);
-      el('path', { d: CR[i - 1], stroke: C.bark, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, hero.parts.crack);
+      eggCrack(T, hero.parts.crack, i, 6);
       hero.wiggle(8, 300);
       if (i % 2 === 0) T.pop(hero.x + 80, hero.y - 150, '쩍!', C.bark);
       await sleep(450);
@@ -1300,7 +1325,7 @@
     {
       const [hx, hy] = hero.headPt();
       const hand = el('g', {}, T.fx);
-      el('path', { d: HAND_D, fill: C.cream, stroke: C.bark, 'stroke-width': 3, 'stroke-linejoin': 'round', transform: 'scale(1.6) rotate(200 32 32)' }, hand);
+      petHand(T, hand);
       const frames = []; for (let k = 0; k < 2; k++) frames.push({ transform: `translate(${hx + 60}px,${hy - 110}px)` }, { transform: `translate(${hx + 40}px,${hy - 70}px)` });
       frames.push({ transform: `translate(${hx + 60}px,${hy - 110}px)` });
       T.tone([523, 659], .3, { type: 'sine', vol: .12 }); T.tone([659, 784], .3, { type: 'sine', vol: .12, when: .4 });
@@ -1445,22 +1470,17 @@
 
     /* --- 8. 얼음 (겨울 호수 하이앵글) --- */
     let icePatch, iceCollar, farmer, ky = 372;
-    const poly = (g, pts, fill, extra = {}) => el('path', { d: 'M' + pts.map(q => q.join(' ')).join(' L') + ' Z', fill, ...extra }, g);
-    const SHEET = [[330, 338], [372, 322], [450, 316], [540, 320], [600, 334], [618, 352], [580, 372], [500, 380], [410, 378], [348, 366]]; // 2026-10-20 가위로 오린 납작한 얼음판(가운데 470) — 언 호수 270~388 위
     await T.sceneCard('겨울', () => {
       T.clear(); ky = winterHighBG(T) ? 345 : 372; // 그림: 언 호수가 270~388 → 얼음판과 아기 오리를 호수 한가운데에
       const dy = ky - 345;
       icePatch = el('g', { transform: `translate(0,${dy})` }, T.world);
-      poly(icePatch, SHEET.map(([x, y]) => [x, y + 7]), '#9DBBD0'); // 얼음 두께(아래 옆면)
-      poly(icePatch, SHEET, '#EAF4F9'); // 위 얼음판
+      iceSheet(T, icePatch); // 그림: 납작한 얼음판(가운데 470) — 언 호수 270~388 위
       icePatch._cracks = el('g', {}, icePatch); // 금은 얼음판 위에만 그린다
       el('rect', { x: 330, y: 316, width: 290, height: 70, fill: '#fff', opacity: 0 }, icePatch);
       put(hero, 470, ky, 1.35, 'left');
       // 얼어붙은 발: 발 둘레에 얼음 조각 셋이 앞을 덮는다 (아기 오리 → 얼음 앞 테 순서)
       iceCollar = el('g', { transform: `translate(0,${dy})` }, T.world);
-      [[[424, 348], [440, 338], [458, 343], [452, 355], [430, 357]], [[455, 346], [472, 340], [492, 345], [488, 357], [462, 358]], [[488, 348], [504, 341], [522, 348], [512, 358], [492, 358]]].forEach(pts => {
-        poly(iceCollar, pts.map(([x, y]) => [x, y + 3]), '#9DBBD0'); poly(iceCollar, pts, '#DDEBF3');
-      });
+      iceCollarArt(T, iceCollar);
       hero.setMood('sad');
       farmer = cast(T, 'farmer', 1200, bgUrl('winter') ? FARM_ART.y : ky - 20, 1.2);
     }, hero.pos);
@@ -1488,14 +1508,13 @@
     await farmer.move(bgUrl('winter') ? FARM_ART.x : 640, farmer.y, 1600);
     hero.face('right'); // 다가온 농부 할아버지를 본다
     await say('그때 농부 할아버지가 지나가다 아기 오리를 보았어요. "저런, 얼음에 발이 붙었구나!"');
-    const ICR = ['M430 335 L450 352 L440 366', 'M520 330 L540 346 L560 340', 'M395 350 L375 362', 'M545 358 L568 368', 'M462 322 L474 338', 'M492 372 L512 376'];
     hero.pos.style.pointerEvents = 'none';
     for (let i = 1; i <= 6; i++) { // 2026-10-20 톡 없이 저절로: 농부가 얼음을 콩콩
       AudioFX.sfx('chop', .6) || T.tone([900, 300], .1, { type: 'square', vol: .12 });
       farmer.parts.arm.style.transform = 'rotate(24deg)'; setTimeout(() => farmer.parts.arm.style.transform = '', 160);
-      el('path', { d: ICR[i - 1], stroke: '#7FA6BC', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, icePatch._cracks);
+      iceCrack(T, icePatch._cracks, i);
       for (let k = 0; k < 3; k++) {
-        const bit = T.paper(T.fx, [['path', { d: 'M0 -8 L9 0 L2 9 L-8 4 Z', fill: '#E6F1F6' }]]);
+        const bit = iceBit(T);
         const x0 = 420 + Math.random() * 100, dx = (Math.random() - .5) * 180;
         bit.animate([{ transform: `translate(${x0}px,${ky - 2}px)` }, { transform: `translate(${x0 + dx / 2}px,${ky - 70}px) rotate(90deg)` }, { transform: `translate(${x0 + dx}px,${ky + 20}px) rotate(200deg)`, opacity: 0 }], { duration: 700 }).finished.then(() => bit.remove());
       }
@@ -1506,15 +1525,7 @@
     {
       const dy = ky - 345, shards = el('g', { transform: `translate(0,${dy})` }, T.world);
       T.world.insertBefore(shards, hero.pos);
-      poly(shards, SHEET.map(([x, y]) => [x + (x < 470 ? -4 : 4), y + 5]), '#8FB2C9'); // 뚫린 물
-      [[[330, 338], [372, 322], [430, 330], [410, 352], [348, 366]], [[372, 322], [450, 316], [470, 336], [430, 330]], [[450, 316], [540, 320], [520, 346], [470, 336]],
-        [[540, 320], [600, 334], [618, 352], [560, 350]], [[348, 366], [410, 352], [440, 372], [410, 378]], [[470, 336], [520, 346], [500, 380], [440, 372]], [[520, 346], [560, 350], [580, 372], [500, 380]]].forEach((pts, k) => {
-        const g = el('g', {}, shards), cx = pts.reduce((u, q) => u + q[0], 0) / pts.length, cy = pts.reduce((u, q) => u + q[1], 0) / pts.length;
-        poly(g, pts.map(([x, y]) => [x, y + 4]), '#9DBBD0'); poly(g, pts, '#EAF4F9');
-        const ang = Math.atan2(cy - 350, cx - 470);
-        g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
-        g.animate([{ transform: 'translate(0,0) rotate(0deg)' }, { transform: `translate(${Math.cos(ang) * 14}px,${Math.sin(ang) * 8}px) rotate(${(k % 2 ? 1 : -1) * (4 + k)}deg)` }], { duration: 450, easing: 'ease-out', fill: 'forwards' });
-      });
+      iceShards(T, shards); // 그림: 얼음판 그림을 조각으로 잘라 벌린다
     }
     icePatch.remove(); iceCollar.remove(); hero.pos.style.pointerEvents = '';
     AudioFX.sfx('crash', .5);
@@ -1568,7 +1579,7 @@
     {
       const sl = slots(3), r = Math.min(sl.r, 72);
       const opts = shuffle([
-        { k: 'purr', label: '가르릉', ok: false, icon: (T, g) => { DRAW.cat(T, T.el('g', { transform: 'translate(10,40) scale(1.1)' }, g)); T.el('path', { d: 'M-50 -40 q10 -10 20 0 t20 0', stroke: C.bark, 'stroke-width': 4, fill: 'none' }, g); } },
+        { k: 'purr', label: '가르릉', ok: false, icon: (T, g) => { DRAW.cat(T, T.el('g', { transform: 'translate(10,40) scale(1.1)' }, g)); pic(T, T.el('g', { transform: 'translate(-60,0) scale(-1,1)' }, g), 'purr_waves', -46, -60, 32.2, 40); } }, // 가르릉 소리 물결 그림(고양이에게서 왼쪽으로 퍼진다)
         { k: 'egg', label: '알 낳기', ok: false, icon: (T, g) => { if (prop(T, g, 'egg_nest', 0, 4, 126)) return; T.paper(g, [['ellipse', { cy: 34, rx: 52, ry: 14, fill: C.cattail }], ['ellipse', { cy: 30, rx: 44, ry: 10, fill: C.gold }]]); if (!sprite(T, T.el('g', { transform: 'translate(0,40)' }, g), 'egg', .95)) T.paper(g, [['ellipse', { cy: -4, rx: 30, ry: 38, fill: '#EFE6D2', stroke: C.bark, 'stroke-width': 3 }]]); } }, // 그림: 짚 둥지 위 알 한 알. 없으면 점박이 알 그림 + 짚 둥지
         { k: 'swim', label: '헤엄', ok: true, icon: (T, g) => { if (prop(T, g, 'icon_swim', 0, 2, 104)) return; HERO.baby(T, T.el('g', { transform: 'translate(4,24) scale(.8)' }, g), 'happy'); T.paper(g, [['path', { d: 'M-66 20 Q-50 8 -34 20 Q-18 8 -2 20 Q14 8 30 20 Q46 8 62 20 V60 H-66 Z', fill: C.water }]]); } }, // 그림: 물에 뜬 아기 오리(발은 물속 — 물색으로 메움)
       ]);

@@ -39,6 +39,7 @@
     net: 'v3w/lm_net.webp', hole_stump: 'v3w/lm_hole_stump.webp',
     lion_paw: 'v3w/lm_lion_paw.webp', paw_pad: 'v3w/lm_paw_pad.webp', paw_toe: 'v3w/lm_paw_toe.webp', print_lion: 'v3w/lm_print_lionc.webp', print_mouse: 'v3w/lm_print_mousec.webp',
     tooth_lion: 'v3w/lm_tooth_lionc.webp', tooth_mouse: 'v3w/lm_tooth_mousec.webp',
+    rope_v: 'v3w/lm_rope_v.webp', rope_h: 'v3w/lm_rope_h.webp', stick: 'v3w/lm_stick.webp', // 2026-10-29 코드 도형 → 그림
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -56,6 +57,26 @@
     }
     return wrap;
   }
+  /* 그물 밧줄 클로즈업(2026-10-29 코드 선 → 그림): 밧줄 그림을 무늬로 이어 붙인다. 세로 줄 폭 14(x=120+84i 가 무늬 칸 14와 맞물리게 x=1), 가로 줄 폭 10 */
+  function ropeNet(T, parent, xs) {
+    const defs = T.el('defs', {}, parent);
+    const pv = T.el('pattern', { id: 'lmRopeV', x: 1, y: 70, width: 14, height: 136, patternUnits: 'userSpaceOnUse' }, defs);
+    T.el('image', { href: artUrl('rope_v'), x: 0, y: -6, width: 14, height: 14 * 900 / 85, preserveAspectRatio: 'none' }, pv); // 끝의 풀린 올은 빼고 가운데만 이어 붙인다
+    const ph = T.el('pattern', { id: 'lmRopeH', x: 100, y: 5, width: 112, height: 10, patternUnits: 'userSpaceOnUse' }, defs);
+    T.el('image', { href: artUrl('rope_h'), x: -4, y: 0, width: 120, height: 10, preserveAspectRatio: 'none' }, ph);
+    const hR = T.el('g', { filter: 'url(#pp)' }, parent);
+    [150, 250, 350, 450].forEach(y => T.el('rect', { x: 100, y: y - 5, width: 800, height: 10, fill: 'url(#lmRopeH)' }, hR));
+    const ropes = xs.map(x => {
+      const g = T.el('g', { filter: 'url(#pp)' }, parent);
+      const R = (y, h) => T.el('rect', { x: x - 7, y, width: 14, height: h, fill: 'url(#lmRopeV)' }, g);
+      const top = R(70, 426), mid = R(496, 18), bot = R(514, 26);
+      top.style.transformBox = 'view-box'; top.style.transformOrigin = `${x}px 70px`;
+      return { x, g, top, bot, mid };
+    });
+    return { hR, ropes };
+  }
+  /* 생쥐 받침 막대(2026-10-29 코드 네모 → 그림): (mx, my)=생쥐 발끝, 길이 160 나무 막대를 눕혀 깐다 */
+  function mouseStick(T, mx, my) { pic(T, T.el('g', { transform: `translate(${mx},${my + 11}) rotate(-90)` }, T.world), 'stick', -160 * 119 / 600 / 2, -80, 160 * 119 / 600, 160); }
   const BG_EDGE = { savanna: ['#8fbabc', '#a78540'], grass: ['#9cc8d0', '#d8a471'], night_forest: ['#292f58', '#2d393a'], night_net: ['#463778', '#272422'], morning: ['#93b8d3', '#a98147'], morning_nosun: ['#fab082', '#81673f'], board: ['#a5c5de', '#d09555'] };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   function bgImage(T, key, parent) {
@@ -411,18 +432,8 @@
         } else if (rScene === 'night2') {
           nightNetBG(T);
           rLion = mk(T, T.world, 560, 520, drawLionLie, 2); rLion.parts.eyes('open');
-          const defs = el('defs', {}, T.world), pat = el('pattern', { id: 'lmRopePat', width: 12, height: 12, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)' }, defs);
-          el('rect', { width: 12, height: 12, fill: C.rope }, pat); el('rect', { width: 12, height: 5, fill: '#B98F4E' }, pat);
-          rHR = el('g', { stroke: 'url(#lmRopePat)', 'stroke-width': 9, 'stroke-linecap': 'round' }, T.world);
-          [150, 250, 350, 450].forEach(y => el('line', { x1: 100, y1: y, x2: 900, y2: y }, rHR));
           const RP = [...Array(10)].map((_, i) => 120 + i * 84);
-          rRopes = RP.map(x => {
-            const g = el('g', { stroke: 'url(#lmRopePat)', 'stroke-width': 12, 'stroke-linecap': 'round' }, T.world);
-            const top = el('line', { x1: x, y1: 70, x2: x, y2: 496 }, g), bot = el('line', { x1: x, y1: 514, x2: x, y2: 540 }, g);
-            el('line', { x1: x, y1: 496, x2: x, y2: 514 }, g).classList.add('mid');
-            top.style.transformBox = 'view-box'; top.style.transformOrigin = `${x}px 70px`;
-            return { x, g, top, bot, mid: g.querySelector('.mid') };
-          });
+          ({ hR: rHR, ropes: rRopes } = ropeNet(T, T.world, RP)); // 그림: 밧줄 그림 무늬
           newMouse(RP[0] - 52, 545, 1.5, 'right');
           if (rPt()) camSnap(RP[0], 280, 1);
         } else if (rScene === 'morning') {
@@ -626,7 +637,7 @@
             toe = T.paper(bigPaw, [['circle', { cx: 490, cy: 280, r: 40, fill: C.lionDk }]]);
           }
           const m = mk(T, T.world, MX, MY, drawMouse, PT ? 1.1 : 1.3);
-          el('rect', { x: MX - 80, y: MY, width: 160, height: 10, rx: 5, fill: C.bark }, T.world);
+          mouseStick(T, MX, MY);
           if (PT) camSnap(500, 280, .75);
           if (!inst()) { toe.style.filter = 'url(#hintGlow)'; toe.animate([{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], { duration: 700, iterations: 2 }); m.hop(20); squeak(T); }
           return;
@@ -876,7 +887,7 @@
       toes = [[250, 280], [325, 240], [415, 240], [490, 280]].map(([x, y]) => T.paper(bigPaw, [['circle', { cx: x, cy: y, r: 40, fill: C.lionDk }]]));
     }
     mouse = mk(T, T.world, MX, MY, drawMouse, PT ? 1.1 : 1.3);
-    el('rect', { x: MX - 80, y: MY, width: 160, height: 10, rx: 5, fill: C.bark }, T.world);
+    mouseStick(T, MX, MY);
     if (PT) camSnap(500, 280, .75);
     await say('사자 발과 생쥐를 나란히 놓아 볼까요?');
     const toe = toes[3]; toe.style.filter = 'url(#hintGlow)';
@@ -1006,18 +1017,7 @@
     await T.sceneCard('사각사각', () => {
       T.clear(); nightNetBG(T);
       lion = mk(T, T.world, 560, 520, drawLionLie, 2); lion.parts.eyes('open');
-      const defs = el('defs', {}, T.world), pat = el('pattern', { id: 'lmRopePat', width: 12, height: 12, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(40)' }, defs);
-      el('rect', { width: 12, height: 12, fill: C.rope }, pat); el('rect', { width: 12, height: 5, fill: '#B98F4E' }, pat);
-      hRopes = el('g', { stroke: 'url(#lmRopePat)', 'stroke-width': 9, 'stroke-linecap': 'round' }, T.world);
-      [150, 250, 350, 450].forEach(y => el('line', { x1: 100, y1: y, x2: 900, y2: y }, hRopes));
-      ropes = ROPES.map(x => {
-        const g = el('g', { stroke: 'url(#lmRopePat)', 'stroke-width': 12, 'stroke-linecap': 'round' }, T.world);
-        const top = el('line', { x1: x, y1: 70, x2: x, y2: 496 }, g);
-        const bot = el('line', { x1: x, y1: 514, x2: x, y2: 540 }, g);
-        el('line', { x1: x, y1: 496, x2: x, y2: 514 }, g).classList.add('mid');
-        top.style.transformBox = 'view-box'; top.style.transformOrigin = `${x}px 70px`;
-        return { g, top, bot, mid: g.querySelector('.mid') };
-      });
+      ({ hR: hRopes, ropes } = ropeNet(T, T.world, ROPES)); // 그림: 밧줄 그림 무늬(세로 10 · 가로 4)
       mouse = mk(T, T.world, ROPES[0] - 52, 545, drawMouse, 1.5); mouse.face('right');
     }, mouse.pos);
     const cnt = counter(T, 10);

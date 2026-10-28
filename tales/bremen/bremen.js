@@ -10,7 +10,7 @@
 
   /* ================= 페이퍼아트 그림 (assets/v3w/br_*.webp) =================
      null이거나 파일을 못 불러오면 그 자리는 아래 임시 도형(그레이박스)으로 그린다. 새 그림이 나오면 여기 한 줄만 바꾸면 된다.
-     배경은 장면마다 한 장을 무대에 꽉 채워 깐다. 캄캄한 방(darkRoomBG)은 실루엣+빛나는 눈 연출이라 코드 그림 그대로(기획).
+     배경은 장면마다 한 장을 무대에 꽉 채워 깐다. 캄캄한 방(darkRoomBG)도 2026-10-29 그림 한 장(br_bg_darkroom)으로 바꿨다(실루엣+빛나는 눈 연출은 그대로).
      - bg_wall · bg_roof: 담장 위 흰 고양이 · 지붕 위 수탉이 그려져 나와서 지웠다 (코드가 그 자리에 고양이 · 닭을 둔다)
      - bg_forest_night · house_low · house_wide: 그림책 밤처럼 조금 밝게 */
   const AS = '../../assets/';
@@ -21,6 +21,7 @@
     mill: 'v3w/br_bg_mill_v2.webp', road: 'v3w/br_bg_road_v2.webp', wall: 'v3w/br_bg_wall.webp', roof: 'v3w/br_bg_roof.webp', meadow: 'v3w/br_bg_meadow_v2.webp',
     forest: 'v3w/br_bg_forest_night.webp', house_low: 'v3w/br_lb_window_glow_v3.webp', house_pov: 'v3w/br_bg_house_pov.webp',
     house_wide: 'v3w/br_lb_house_burst.webp', morning: 'v3w/br_bg_morning_v2.webp', walk_lb: 'v3w/br_lb_walk_moon.webp',
+    darkroom: 'v3w/br_bg_darkroom.webp', // 2026-10-29 캄캄한 집 안(코드 도형이던 배경)
     walk: 'v3w/br2_bg_walk.webp', // 2026-10-21 밤 숲길 (옆에서 본 평평한 길: 걷는 동물이 길 위에 선다)
   };
   /* 배우·소품·컷 (모두 왼쪽을 본다)
@@ -36,6 +37,7 @@
     // 빛 상자 탑 장면(7장)에서만 쓰는 실루엣 동물(VISUAL_PLAN §4-4): 기존 그림과 같은 자세·방향, 눈 구멍 하나
     donkey_sil: 'v3w/br_lb_sil_donkey.webp', dog_sil: 'v3w/br_lb_sil_dog.webp', cat_sil: 'v3w/br_lb_sil_cat.webp', rooster_sil: 'v3w/br_lb_sil_rooster.webp',
     drum: 'v3w/br_drum.webp', horn: 'v3w/br_horn.webp', fiddle: 'v3w/br_fiddle.webp', bell: 'v3w/br_bell.webp', // 우리 집 악기 (바이올린 옆에 따로 그려진 리본 조각은 지움)
+    eyes: 'v3w/br_eyes.webp', note: 'v3w/cm_note.webp', dizzy: 'v3w/cm_dizzy_stars.webp', badge: 'v3w/cm_badge_plate.webp', // 2026-10-29 코드 도형 → 그림
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -67,7 +69,7 @@
   const ROBBER = { '#3F6B4F': 'robber_green', '#A93B32': 'robber_red', '#6B4A32': 'robber_brown' };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const BG_EDGE = { mill: ['#7fc3ec', '#eed0ad'], road: ['#7fab9c', '#b9b268'], wall: ['#9bd1f4', '#384830'], roof: ['#fef9bf', '#795e3a'], meadow: ['#8ec3e4', '#395432'],
-    forest: ['#002552', '#4b6261'], walk: ['#15224a', '#1d3631'], walk_lb: ['#7264a3', '#5f473f'], house_low: ['#4e444d', '#714936'], house_pov: ['#fdecc0', '#c79a5d'], house_wide: ['#7b5ca4', '#544649'], morning: ['#90cae6', '#b9a57b'] };
+    forest: ['#002552', '#4b6261'], walk: ['#15224a', '#1d3631'], walk_lb: ['#7264a3', '#5f473f'], house_low: ['#4e444d', '#714936'], house_pov: ['#fdecc0', '#c79a5d'], house_wide: ['#7b5ca4', '#544649'], darkroom: ['#141a30', '#1d2132'], morning: ['#90cae6', '#b9a57b'] };
   /* 층 소품(br_layer_*, 누름 없음): 폭/높이. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위). (cx, y) = 가운데·발끝, top 이면 윗변. 앞 소품은 세로 화면 가운데(285~715) 밖 */
   const LASP = { flowerbush_front: 1.075, wildflowers_mid: 3.8298, swirl_branch: .785, ivy_top: .505, sil_fir: 1.005 };
   const still = T => T.reading && T.reading() && T.readInstant && T.readInstant();
@@ -534,18 +536,8 @@
     paper(b, [['rect', { x: -300, y: 488, width: 1600, height: 300, fill: '#3E5A3A' }]]);
     return { door, win };
   }
-  function darkRoomBG(T, sx = {}) {
-    const tr = (k, x0) => ({ transform: `translate(${(sx[k] ?? x0) - x0},0)` });
-    const { paper, el } = T, b = T.bg;
-    sky(T, C.night);
-    paper(b, [['rect', { x: -300, y: 470, width: 1600, height: 300, fill: '#0E1228' }]]);
-    // 아궁이 · 문 · 짚더미 · 들보 (희미한 윤곽)
-    paper(b, [['path', { d: 'M100 480 V360 Q180 300 260 360 V480 Z', fill: '#262A44' }], ['path', { d: 'M130 480 V400 Q180 360 230 400 V480 Z', fill: '#0A0C1C' }]], tr('cat', 180));
-    paper(b, [['rect', { x: 400, y: 300, width: 110, height: 180, fill: '#20243D' }]], tr('dog', 470));
-    paper(b, [['ellipse', { cx: 680, cy: 480, rx: 120, ry: 40, fill: '#2E2A30' }]], tr('donkey', 690));
-    paper(b, [['rect', { x: -300, y: 120, width: 1600, height: 22, fill: '#262A44' }]]);
-    paper(b, [['rect', { x: 960, y: 290, width: 90, height: 190, fill: '#2A3150' }]]);
-  }
+  /* 캄캄한 집 안(2026-10-29 코드 도형 → 그림 br_bg_darkroom): 문(x≈115) · 아궁이(입구 435~675, 가운데 551) · 선반 윗면 y≈131 · 짚더미(x≈940) */
+  function darkRoomBG(T) { bgImage(T, 'darkroom'); }
   function morningBG(T, strawX = 180, ovenX = 860) {
     const { paper, el } = T, b = T.bg;
     if (bgImage(T, 'morning')) return true; // 그림: 짚더미(왼쪽 x≈55) · 집 문(457) · 아궁이(860) · 지붕 윗선 y≈170
@@ -574,7 +566,7 @@
   const BADGE = { dog: [10, 30, 1.25], cat: [4, 36, 1.4], rooster: [0, 40, 1.2], donkey: [20, 46, .62] };
   function badge(T, x, y, r, key) {
     const g = T.el('g', { transform: `translate(${x},${y})` }, document.getElementById('stage'));
-    T.paper(g, [['circle', { r, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }]]);
+    const R = r + 4; pic(T, g, 'badge', -R, -R, 2 * R, 2 * R); // 크림 원판+금테 그림
     const ak = LOOKS[key] && LOOKS[key].home;
     if (ak && artUrl(ak)) { // 그림 배지: 원 안 1.45r 상자에 평소 그림을 맞춘다
       const [, , as] = SPR[ak], box = r * 1.45, w = as > 1 ? box : box * as, h = as > 1 ? box / as : box;
@@ -586,17 +578,15 @@
     DRAW[key](T, inner);
     return g;
   }
-  function note(T, x, y, fill = C.bean) {
+  function note(T, x, y) { // 음표 그림 한 장 (예전에 색만 다르던 음표는 같은 그림으로)
     const g = T.el('g', { transform: `translate(${x},${y})` }, T.fx);
-    T.el('ellipse', { cx: 0, cy: 0, rx: 9, ry: 7, fill, transform: 'rotate(-20)' }, g);
-    T.el('rect', { x: 6, y: -34, width: 4, height: 34, fill }, g);
-    T.el('path', { d: 'M10 -34 Q24 -26 20 -12', stroke: fill, 'stroke-width': 4, fill: 'none' }, g);
+    pic(T, g, 'note', -9, -35, 32, 42);
     g.animate([{ transform: `translate(${x}px,${y}px)`, opacity: 1 }, { transform: `translate(${x + 30}px,${y - 90}px)`, opacity: 0 }], { duration: 1400, fill: 'forwards' })
       .finished.then(() => g.remove());
   }
   function stars(T, x, y) {
     const g = T.el('g', {}, T.fx);
-    for (let k = 0; k < 3; k++) T.el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(26 0)` }, g);
+    pic(T, g, 'dizzy', -36, -19, 72, 37.6); // 어질 별 셋 그림
     g.animate([{ transform: `translate(${x}px,${y}px) rotate(0deg)` }, { transform: `translate(${x}px,${y}px) rotate(360deg)` }], { duration: 1100, iterations: Infinity });
     return g;
   }
@@ -941,8 +931,8 @@
       const WAIT_W = { donkey: 200, dog: 135, cat: 105, rooster: 100 };
       const WTS = bgArt('house_wide') ? .36 : .72;
       const WT = bgArt('house_wide') ? wideTower() : { x: 615, y: 488, s: WTS };
-      const SPOTS = L([['cat', 180, 478, .95], ['dog', 470, 478, .95], ['donkey', 690, 486, .95], ['rooster', 860, 120, .95]], [['cat', 320, 478, .8], ['dog', 440, 478, .8], ['donkey', 590, 486, .8], ['rooster', 665, 120, .8]]);
-      const STOPS = L([300, 380, 590, 800, 1150], [485, 540, 720, 700, 1150]); // 세로: 도둑이 눈빛(머리) 오른쪽에 서서 눈을 가리지 않게(2026-10-27 화면에서 잼)
+      const SPOTS = L([['cat', 560, 478, .95], ['dog', 300, 478, .95], ['donkey', 830, 486, .95], ['rooster', 780, 128, .95]], [['cat', 520, 478, .8], ['dog', 240, 478, .8], ['donkey', 700, 486, .8], ['rooster', 420, 128, .8]]); // 2026-10-29 그림 배경(br_bg_darkroom)에 맞춤: 고양이=아궁이 앞, 강아지=문 앞, 당나귀=짚더미, 닭=선반 들보 위
+      const STOPS = L([680, 420, 700, 640, 1150], [630, 350, 590, 520, 1150]); // 도둑이 눈빛(머리)을 가리지 않는 자리
       const SPOT5 = L({ donkey: [200, 1.05], dog: [420, 1.05], cat: [590, 1.05], rooster: [770, 1.05] }, { donkey: [390, .75], dog: [492, .75], cat: [584, .75], rooster: [648, .75] });
       const HOME = bgArt('morning')
         ? L({ donkey: [150, 476, .95], dog: [470, 476, .95], cat: [860, 462, .95], rooster: [520, 172, .95] }, { donkey: [370, 476, .8], dog: [490, 476, .8], cat: [640, 462, .8], rooster: [500, 172, .8] })
@@ -1017,7 +1007,7 @@
           camW(); return;
         }
         if (k === 'dark') {
-          darkRoomBG(T, Object.fromEntries(SPOTS.map(([q, x]) => [q, x])));
+          darkRoomBG(T);
           SPOTS.forEach(([q, x, y, s]) => { put(cast[q], x, y, s, q === 'rooster' ? 'left' : 'right'); cast[q].lean.style.filter = 'brightness(.14)'; doze(cast[q]); });
           const th = rRb[0]; put(th, 1100, 486, 1, 'left'); th.lean.style.filter = 'brightness(.6)'; th.parts.mouth.setAttribute('ry', 2);
           camSnap(500, 280, 1); return;
@@ -1661,13 +1651,12 @@
     await say('친구 넷은 남은 음식을 냠냠 먹고, 불을 끄고 잠이 들었어요.');
 
     /* ---------- 10. 도둑의 정찰 (캄캄한 집 안, 눈만 보임) ---------- */
-    const SPOTS = L([['cat', 180, 478, .95], ['dog', 470, 478, .95], ['donkey', 690, 486, .95], ['rooster', 860, 120, .95]],
-      [['cat', 320, 478, .8], ['dog', 440, 478, .8], ['donkey', 590, 486, .8], ['rooster', 665, 120, .8]]);
-    const STOPS = L([300, 380, 590, 800, 1150], [485, 540, 720, 700, 1150]); // 세로: 도둑이 눈빛(머리) 오른쪽에 서서 눈을 가리지 않게(2026-10-27 화면에서 잼)
+    const SPOTS = L([['cat', 560, 478, .95], ['dog', 300, 478, .95], ['donkey', 830, 486, .95], ['rooster', 780, 128, .95]], [['cat', 520, 478, .8], ['dog', 240, 478, .8], ['donkey', 700, 486, .8], ['rooster', 420, 128, .8]]); // 2026-10-29 그림 배경(br_bg_darkroom)에 맞춤: 고양이=아궁이 앞, 강아지=문 앞, 당나귀=짚더미, 닭=선반 들보 위
+    const STOPS = L([680, 420, 700, 640, 1150], [630, 350, 590, 520, 1150]); // 도둑이 눈빛(머리)을 가리지 않는 자리
     const thief = rb[0];
     await T.sceneCard('캄캄한 밤', () => {
       amb('crickets_night_2', .25, 4);
-      T.clear(); darkRoomBG(T, Object.fromEntries(SPOTS.map(([k, x]) => [k, x])));
+      T.clear(); darkRoomBG(T);
       SPOTS.forEach(([k, x, y, s]) => { put(cast[k], x, y, s, k === 'rooster' ? 'left' : 'right'); cast[k].lean.style.filter = 'brightness(.14)'; doze(cast[k]); });
       put(thief, 1100, 486, 1, 'left');
       thief.lean.style.filter = 'brightness(.6)'; thief.parts.mouth.setAttribute('ry', 2);
@@ -1686,7 +1675,7 @@
       const a = cast[k], [ex, ey] = EYE[k], s = a.scale * (a.flip === -1 ? -1 : 1);
       const eyes = el('g', { transform: `translate(${a.x + ex * s},${a.y + ey * a.scale})` }, T.world);
       el('circle', { r: Math.min(56, Math.max(36, a.y + ey * a.scale - 6)), fill: "#fff", opacity: 0 }, eyes); // 들보 위 닭: 누름 원이 무대 위로 넘치지 않게 (세로·가로 모두)
-      [-9, 9].forEach(dx => el('ellipse', { cx: dx, cy: 0, rx: 6, ry: 8, fill: '#FFE066' }, eyes));
+      pic(T, eyes, 'eyes', -20, -7.6, 40, 15.1, { shadow: false }); // 어둠 속 노란 눈 그림
       eyes.animate([{ opacity: .2 }, { opacity: 1 }], { duration: 500, fill: 'forwards' });
       T.tone(1400, .1, { type: 'sine', vol: .08 });
       const R = REACT[k];

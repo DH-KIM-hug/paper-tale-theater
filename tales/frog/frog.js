@@ -32,6 +32,8 @@
     cut_splash: 'v3w/frog_cut_splash.webp', cut_jump: 'v3w/frog_cut_jump.webp',
   };
   const A = p => '../../assets/' + p;
+  /* 어질 별 셋 그림 (2026-10-29 코드 도형 → 그림): 머리 위 (0,0) 가운데 */
+  const dizzyStars = (T, g) => T.el('image', { href: A('v3w/cm_dizzy_stars.webp'), x: -38, y: -20, width: 76, height: 76 * 313 / 600, preserveAspectRatio: 'none', filter: 'url(#pp)' }, g);
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
   const EDGE = { bg_pond: ['#8cc9e6', '#634b38'], bg_meadow: ['#7fc1eb', '#749447'], bg_chart: ['#eadac4', '#a9b068'], bg_night: ['#373267', '#ca9f51'] };
   /* 장면 그림 한 장을 무대 전체에 (없으면 false → 임시 도형 배경) */
@@ -262,7 +264,7 @@
   function badge(T, x, y, drawIcon) {
     const ui = document.getElementById('stage');
     const g = T.el('g', { transform: `translate(${x},${y})` }, ui);
-    T.paper(g, [['circle', { r: 70, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }]]);
+    T.el('image', { href: A('v3w/cm_badge_plate.webp'), x: -74, y: -74, width: 148, height: 148, preserveAspectRatio: 'none', filter: 'url(#pp)' }, g); // 크림 원판+금테 그림
     drawIcon(g);
     return g;
   }
@@ -442,7 +444,7 @@
           mom.place(500, 468); momArt.set('dizzy'); if (!inst()) sfx('whistle_down', .7);
           if (!inst()) {
             const stars = el('g', { transform: 'translate(500,370)' }, T.fx);
-            for (let k = 0; k < 3; k++) el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(28 0)` }, stars);
+            dizzyStars(T, stars);
             stars.animate([{ transform: 'translate(500px,370px) rotate(0)' }, { transform: 'translate(500px,370px) rotate(360deg)' }], { duration: 1200, iterations: 3 });
             [0, .15, .3].forEach(w => T.tone([700, 500], .12, { type: 'triangle', vol: .14, when: w }));
             setTimeout(() => stars.remove(), 3800);
@@ -723,7 +725,7 @@
     await (cutArt(T, [['cut_splash', 'splash', 2200]]) || AudioFX.splash());
     T.pop(500, 400, '퐁당!', C.indigo);
     const stars = el('g', { transform: 'translate(500,370)' }, T.fx);
-    for (let k = 0; k < 3; k++) el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(28 0)` }, stars);
+    dizzyStars(T, stars);
     stars.animate([{ transform: 'translate(500px,370px) rotate(0)' }, { transform: 'translate(500px,370px) rotate(360deg)' }], { duration: 1200, iterations: 3 });
     [0, .15, .3].forEach(w => T.tone([700, 500], .12, { type: 'triangle', vol: .14, when: w }));
     await say('엄마개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.');
