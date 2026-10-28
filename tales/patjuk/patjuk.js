@@ -79,6 +79,17 @@
   let played = false; // 두 번째부터(다시 보기)는 오프닝·인트로 없이 바로 놀이
 
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { el, sleep, anim } = T;
     const $ = s => document.querySelector(s);
     const say = t => T.say(t);
@@ -95,7 +106,7 @@
     FRIENDS.forEach(f => preCut('wrong_' + f.id));
     if (typeof NARRATION_CLIPS !== 'undefined') AudioFX.preloadAll(Object.values(NARRATION_CLIPS).flat());
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    const SFX_NAMES = ['birds_chirp_1', 'winter_wind_1', 'crickets_night_1', 'crickets_night_2', 'waves', 'whistle_down', 'whistle_up'];
+    const SFX_NAMES = ['intro_korean', 'birds_chirp_1', 'winter_wind_1', 'crickets_night_1', 'crickets_night_2', 'waves', 'whistle_down', 'whistle_up'];
     try { AudioFX.preloadSfx(SFX_NAMES); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
@@ -726,6 +737,7 @@
       shake: () => T.shake(),
       confetti: () => T.confetti(),
     };
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) { const rr = await T.readPlay(READ_ACTS); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } return rr; }
 
     /* ================= 시작: 종이 조리개가 열리며 낮 팥밭이 보인다 ================= */
@@ -737,6 +749,7 @@
       camSnap(500, 280, 1);
       await sleep(300);
       await T.curtain(true);
+      intro.go(); // 시작 음악 (놀이)
     }
 
     /* ================= 인트로 ================= */
