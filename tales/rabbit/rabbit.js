@@ -599,8 +599,8 @@
     try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'stream_1', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
-    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
-    const sfx = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
     const SCENE_AMB = { '초대장 돌리기': ['birds_chirp_2', .25, 3], '개울': ['stream_1', .28, 4], '숲속 잔치': ['crickets_night_1', .25, 4] }; // 장면 카드 이름 → 장소 소리 (장면 처음 몇 초만)
     const wrap = T.root.querySelector('#stageWrap');
@@ -737,7 +737,8 @@
         rabbit.pos.remove(); turtle.pos.remove();
         rabbitReset(); turtleReset(); R.lying = false; R.podium = false; R.tneck = 1;
         R.set = k;
-        if (k === 'village' && !R.sawVillage) { R.sawVillage = 1; amb('birds_chirp_1'); } else if (k === 'grass_low') amb('stream_1', .2, 4); else stopAmb();
+        if (k === 'dream') sfx('sleepy_tuba', .6); // 쿨쿨 잠든 바로 다음 장면
+        if (k === 'village' && !R.sawVillage) { R.sawVillage = 1; amb('birds_chirp_1'); } else if (k === 'alley') amb('birds_chirp_2', .25, 3); else if (k === 'grass_low') amb('stream_1', .28, 4); else if (k === 'party') amb('crickets_night_1', .25, 4); else stopAmb();
         (DRAW[k] || (() => artBG(T, 'bg_' + k)))();
         if (k === 'shade') { // 이불은 배우보다 앞, 덮은 뒤라면 덮인 자리로
           RD.blanket = el('g', { transform: 'translate(220 470)' }, T.world);
@@ -786,7 +787,7 @@
         if (a === 'tilt') { tp.tilt(+b); return; }
         if (a === 'swim') { tp.swim(b !== 'off'); return; }
         if (a === 'medal') { tp.wearMedal(true); return; }
-        if (a === 'walk') { const [x, y, ms] = nums(b); if (!turtle.pos.isConnected) put(turtle, turtle.x, turtle.y); walk(ms); return turtle.move(x, y, ms, 'linear'); }
+        if (a === 'walk') { const [x, y, ms] = nums(b); if (x === 760 && y === 472 && !instant()) sfx('ding_glock', .8); if (!turtle.pos.isConnected) put(turtle, turtle.x, turtle.y); walk(ms); return turtle.move(x, y, ms, 'linear'); }
         if (a === 'steps') { // 놀이판 '한 발 한 발' (누르기 없이 저절로)
           return (async () => {
             const n = +b || 4, dx = R.set === 'grass_low' ? 22 : 36;
@@ -829,6 +830,7 @@
           })();
         }
         if (a === 'tiptoe') { // 쉿, 살금살금: 자는 토끼 앞을 다섯 걸음
+          if (!instant()) sfx('tiptoe_pizz', .8);
           return (async () => {
             for (let i = 0; i < 5; i++) {
               tp.step(i % 2); T.tone(880 + (i % 2) * 110, .08, { type: 'triangle', vol: .12 });
