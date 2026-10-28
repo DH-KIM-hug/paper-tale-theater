@@ -278,6 +278,17 @@
     } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
   }
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_magic', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_magic', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     if (AudioFX.preloadMusic) AudioFX.preloadMusic(['magic_awaken']);
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
@@ -288,7 +299,7 @@
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { snow_forest_lb: 'winter_wind_1' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
-    try { AudioFX.preloadSfx(['sparkle', 'thud', 'womp', 'paper_up', 'paper_down', 'step_grass', 'blow_long', 'chomp', 'swish', 'pop', 'xylo_down', 'splash', 'tada', 'winter_wind_1', 'birds_chirp_1', 'horse_hooves_1', 'door_heavy_1', 'ding_glock', 'question', 'pull_pop', 'surprise_sting', 'whistle_down', 'water_drip', 'party_horn']); } catch (e) { /* */ }
+    try { AudioFX.preloadSfx(['intro_magic', 'sparkle', 'thud', 'womp', 'paper_up', 'paper_down', 'step_grass', 'blow_long', 'chomp', 'swish', 'pop', 'xylo_down', 'splash', 'tada', 'winter_wind_1', 'birds_chirp_1', 'horse_hooves_1', 'door_heavy_1', 'ding_glock', 'question', 'pull_pop', 'surprise_sting', 'whistle_down', 'water_drip', 'party_horn']); } catch (e) { /* */ }
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -546,6 +557,7 @@
       R.amb = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } return null; };
       return R;
     })();
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 가난해진 가족 ===== */
@@ -556,6 +568,7 @@
     put(T, sisb, X(870, 700), FL + 4, { look: 'pout' });
     if (P) camSnap(520, 280, 1);
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     await say('옛날에 상인에게 딸이 셋 있었어요. 막내 벨은 마음이 고와서 모두 \'미녀\'라고 불렀어요.');
     const w1 = father.wiggle(4, 600);
     await say('어느 날 배들이 가라앉아, 가족은 시골 작은 집으로 갔어요.');
