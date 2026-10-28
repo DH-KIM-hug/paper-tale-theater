@@ -554,8 +554,8 @@
     try { AudioFX.preloadSfx(['birds_chirp_1', 'pot_boil', 'water_pour_1', 'crickets_night_1', 'boing', 'whistle_down', 'surprise_sting', 'question']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
-    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
-    const cue = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const cue = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
     /* 대사 연출: 목소리 주인에게 카메라, 여우와 두루미가 서로 마주 봄 (장면마다 새 배우라 함수로) */
     const direct = (getFox, getCrane) => T.director({ cast: { fox: getFox, crane: getCrane }, listener: r => (r === 'fox' ? 'crane' : 'fox') });
@@ -657,7 +657,8 @@
       },
     };
     const rSet = key => {
-      if (key === 'forest' && !rs.sawForest) { rs.sawForest = 1; amb('birds_chirp_1'); } else if (key === 'kitchen' && !rs.kn) amb('pot_boil', .2, 4); else if (key === 'feast_night') amb('crickets_night_1', .2, 4); else stopAmb();
+      if (key === 'forest' && !rs.sawForest) { rs.sawForest = 1; amb('birds_chirp_1'); } else if (key === 'kitchen' && !rs.kn) amb('pot_boil', .25, 3); else if (key === 'feast_night') amb('crickets_night_1', .25, 4); else stopAmb();
+      if (key === 'split') setTimeout(() => cue('question', .7), 4000);
       T.clear(); rs.tag = key; rs.pot = rs.tbl = rs.bottle = rs.plateD = rs.inv = null; rs.party = {}; rs.plates = {};
       if (key === 'kitchen') { rs.kn++; if (rs.kn === 2) { rs.tag = 'high'; return rSets.high(); } return rSets.kitchen(); }
       if (key === 'feast_day') return rSets.feast(false);
@@ -734,6 +735,7 @@
         })();
       }
       if (verb === 'stuck') return (async () => {
+        if (!inst()) cue('surprise_sting', .7);
         const mouth = rs.mouth;
         await sleep(300);
         await fox.move(360, 500, 400);
@@ -753,6 +755,7 @@
         rs.wag = fox.parts.tail.animate([{ transform: 'rotate(-16deg)' }, { transform: 'rotate(16deg)' }], { duration: 260, iterations: Infinity, direction: 'alternate' });
       })();
       if (verb === 'pop') return (async () => {
+        if (!inst()) cue('whistle_down', .7);
         if (rs.kick) { rs.kick.cancel(); rs.wag.cancel(); rs.kick = rs.wag = null; }
         const mouth = rs.mouth;
         fox.parts.all.style.transform = '';
@@ -817,6 +820,7 @@
       bottle: () => {
         if (rs.tag === 'pondhouse') {
           const b = dish(T, T.world, 'bottle', 820, 510, 1.0); rs.bottle = b;
+          if (!inst()) amb('water_pour_1', .25, 3);
           if (!inst()) { b.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400); sfx(T, 'pop'); }
           return;
         }
@@ -832,6 +836,7 @@
       cut: k => cutArt('cut_' + k, cutFB(), { sfx: k === 'sorry' ? 'ding' : k === 'peck' ? 'poke' : undefined, hold: k === 'sorry' ? 2600 : k === 'peck' ? 2600 : 2200 }),
       fx: n => {
         if (n === 'boing') return sfx(T, 'boing');
+        if (n === 'hop' && rs.tag === 'forest' && !inst()) { setTimeout(() => cue('boing', .7), 700); }
         if (n === 'bubble') return bubbleSnd(T);
         if (n === 'grumble') return T.tone([500, 300], .5, { type: 'sine', vol: .14 });
         if (n === 'pop') return sfx(T, 'pop');
