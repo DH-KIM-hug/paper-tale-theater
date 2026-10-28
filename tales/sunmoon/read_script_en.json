@@ -1158,6 +1158,9 @@
      "text": "호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.",
      "src": "reuse",
      "en": "The tiger is getting closer and closer. The brother and sister put their hands together.",
+     "before": [
+      "daeg"
+     ],
      "segs": [
       [
        "nar",

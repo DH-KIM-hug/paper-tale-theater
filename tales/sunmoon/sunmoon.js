@@ -548,12 +548,14 @@
     const say = async text => { await AudioFX.voiceIdle(10000); return T.say(text); };
     const stageWrap = T.root.querySelector('#stageWrap');
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['intro_night', 'fire_crackle', 'crickets_night_1', 'crickets_night_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'tada', 'whistle_down', 'whistle_wobble', 'shimmer']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_night', 'fire_crackle', 'crickets_night_1', 'crickets_night_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'tada', 'whistle_down', 'whistle_wobble', 'shimmer', 'daegeum']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
     const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
     const short = (n, vol = .6, dur = 2) => { try { if (isRead()) vol *= .8; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    /* 대금 한 소절(2026-10-29): 깜깜한 밤·하늘에 비는 순간처럼 조용하고 쓸쓸할 때만. 놀이 .3, 읽기 ×0.8. 기다리지 않는다 */
+    const daeg = () => { try { const o = { vol: isRead() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     /* 배경 그림 미리 불러오기: 첫 장면 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 없는 파일은 그레이박스로 */
@@ -1019,7 +1021,8 @@
       await tree.to(...rTREE_WIDE, .58, 900);
     };
     const READ_ACTS = {
-      set: key => { if (key === 'kitchen') amb('fire_crackle', .25, 3); else if (key === 'hill2') amb('crickets_night_1', .25, 4); else if (key === 'backyard') amb('crickets_night_2', .25, 4); else stopAmb(); return rSet(key); },
+      set: key => { if (key === 'kitchen') amb('fire_crackle', .25, 3); else if (key === 'hill2') { amb('crickets_night_1', .25, 4); daeg(); } else if (key === 'backyard') amb('crickets_night_2', .25, 4); else stopAmb(); return rSet(key); },
+      daeg: () => daeg(),
       cam: (a, b) => {
         if (a === 'wide') return rInst() ? camSnap(500, 280, 1) : camWide(600);
         if (a === 'snap') { const [x, y, z] = String(b).split(',').map(Number); return camSnap(x, y, z || 1); }
@@ -1293,7 +1296,7 @@
     let rock, given = 0, TX = 820, hideY = 610, peekY = 480;
     for (let n = 0; n < 3; n++) {
       await T.sceneCard(['첫째 고개', '둘째 고개', '셋째 고개'][n], () => {
-        if (n === 2) amb('crickets_night_1', .25, 4); else stopAmb();
+        if (n === 2) { amb('crickets_night_1', .25, 4); daeg(); } else stopAmb(); // 깜깜한 밤 — 대금
         T.clear(); camSnap(500, 280, 1);
         rock = null;
         if (bgUrl('hill' + n)) {
@@ -1844,6 +1847,7 @@
     await tree.to(...TREE_WIDE, .58, 900);
     boy.P.pose('hug'); girl.P.pose('hug');
     const tr3 = tremble(boy), tr4 = tremble(girl);
+    daeg(); // 하늘에 비는 오누이 — 대금
     await say('호랑이가 점점 가까이 올라와요. 오누이는 두 손을 모았어요.');
     await say('"하늘님, 튼튼한 동아줄을 내려 주세요!"');
     tr3.cancel(); tr4.cancel();
