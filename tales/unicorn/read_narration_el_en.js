@@ -228,9 +228,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Pit-pat, pit-pat. Quiet footsteps came closer and closer.",
   "c": "audio/el/unicorn/en/nar_5bece4681f.mp3"
  },
- "다현이가 천천히 뒤를 돌아보았어요.": {
-  "t": "Dahyun slowly turned around.",
-  "c": "audio/el/unicorn/en/nar_f9b15ad578.mp3"
+ "다현이 뒤에 누가 왔을까요?": {
+  "t": "Who came up behind Dahyun?",
+  "c": "audio/el/unicorn/en/nar_8aea402ab6.mp3"
  },
  "달빛 아래, 하얀 유니콘이 서 있었어요.": {
   "t": "There in the moonlight stood a white unicorn.",

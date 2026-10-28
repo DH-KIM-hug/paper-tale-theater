@@ -57,7 +57,7 @@ Object.assign(NARRATION_CLIPS, {
  "다현이는 그 길을 계속 걷고 있었어요.": "audio/el/unicorn/nar_fbcdd873f6.mp3",
  "그때, 뒤에서 작은 소리가 났어요.": "audio/el/unicorn/nar_ad3575e791.mp3",
  "사박, 사박. 조용한 발소리가 점점 가까워졌어요.": "audio/el/unicorn/nar_5397a06caf.mp3",
- "다현이가 천천히 뒤를 돌아보았어요.": "audio/el/unicorn/nar_b15923332d.mp3",
+ "다현이 뒤에 누가 왔을까요?": "audio/el/unicorn/nar_0b0fd9b991.mp3",
  "달빛 아래, 하얀 유니콘이 서 있었어요.": "audio/el/unicorn/nar_89d116ba54.mp3",
  "유니콘이 다현이에게 다정하게 말했어요.": "audio/el/unicorn/nar_4ca6dd141b.mp3",
  "나는 계속 여기 있었어.": "audio/el/unicorn/uni_e9587a612d.mp3",
