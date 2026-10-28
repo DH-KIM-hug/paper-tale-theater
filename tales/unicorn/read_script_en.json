@@ -1044,28 +1044,30 @@
      ]
     },
     {
-     "text": "다현이가 천천히 뒤를 돌아보았어요.",
-     "src": "reuse",
-     "en": "Dahyun slowly turned around.",
+     "text": "다현이 뒤에 누가 왔을까요?",
+     "src": "new",
+     "en": "Who came up behind Dahyun?",
      "segs": [
       [
        "nar",
-       "Dahyun slowly turned around.",
+       "Who came up behind Dahyun?",
        null
       ]
      ],
      "before": [
-      "cut:uc_cut2_turn",
-      "kid:look:turn:right",
-      "kid:hop"
-     ],
-     "after": [
-      "snd:harp_gliss:.6",
+      "follow:545,900",
       "uni:look:stand:left",
       "uni:at:930,FL",
-      "uni:walk:700,FL,1200",
+      "uni:walk:760,FL,1400",
       "uni:glow"
-     ]
+     ],
+     "after": [
+      "kid:look:walk:right",
+      "kid:hop",
+      "snd:swish:.45",
+      "cut:uc_cut2_turn"
+     ],
+     "needs_audio": true
     }
    ]
   },

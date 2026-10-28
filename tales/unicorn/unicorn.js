@@ -268,7 +268,7 @@
     L27: "진짜 유니콘은… 없나 봐.",
     L28: "다현이는 땅만 보며 터벅터벅 걸었어요.",
     L29: "그때, 뒤에서 작은 소리가 났어요.",
-    L30: "다현이가 천천히 뒤를 돌아보았어요.",
+    L30: "다현이 뒤에 누가 왔을까요?",
     L31: "달빛 아래, 하얀 유니콘이 서 있었어요.",
     L32: "나는 계속 여기 있었어.",
     L33: "네가 친절한 걸 다 보고 있었어.",
@@ -307,6 +307,16 @@
         [T.world, T.fx].forEach(g => g.animate([{ transform: css(old) }, { transform: css(VX) }], { duration: CONT_MS, easing: 'ease-in-out' }));
       }
       camAt(500, 280, 1);
+      bgZoom(0);
+    };
+    /* 세로 '진짜 유니콘'(2026-10-29 사용자: 크림색 여백 삭제): 카메라를 .6 배로 물려 달까지 보이면 배경 그림 위아래 밖(크림)이 보인다.
+       배경 층만 달(878, 280) 기준으로 1.6 배 키워 보이는 높이(약 -187~747)를 덮고, 달·무리가 오른쪽 끝에 잘리지 않게 770 으로 옮긴다. 달 무리(halo)도 배경 층이라 같이 커진다 */
+    let bgZ = 0;
+    const bgZoom = z => {
+      z = P ? z : 0; if (z === bgZ) return;
+      const css = v => (v ? `translate(770px, 280px) scale(${v}) translate(-878px, -280px)` : 'none');
+      if (CONT) T.bg.animate([{ transform: css(bgZ) }, { transform: css(z) }], { duration: CONT_MS, easing: 'ease-in-out' });
+      T.bg.style.transform = css(z); bgZ = z;
     };
     const camAt = (x, y, z) => (CONT ? T.camTo(x, y, z, CONT_MS) : camSnap(x, y, z));
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
@@ -415,7 +425,7 @@
     const SHORT = { uc_bg2_hill: 'hill', uc_bg2_cloudland: 'cloudland', uc_bg2_night_forest: 'forest', uc_bg2_waterfall: 'waterfall', uc_bg2_dusk_road: 'dusk', uc_bg2_moon_night: 'moon' };
     const PMAP = {
       hill1: { 520: 400 }, cloudland1: { 470: 400 }, cloudland2: { 560: 420, 660: 520, 700: 560, 790: 640, 880: 700 }, forest1: { 400: 455 },
-      waterfall2: { 310: 290 }, dusk1: { 430: 380 }, moon1: { 500: 440, 430: 500, 830: 690, 700: 640, 930: 760 }, moon2: { 585: 705 },
+      waterfall2: { 310: 290 }, dusk1: { 430: 380 }, moon1: { 500: 440, 430: 500, 830: 690, 700: 640, 930: 760, 760: 640 }, moon2: { 585: 705 },
     };
     let rTag = '', rTok = 0, rPicked = false; const rSeen = {};
     const px = x => (P && PMAP[rTag] && PMAP[rTag][x] != null ? PMAP[rTag][x] : x);
@@ -506,7 +516,7 @@
       },
       moon2() {
         scene('uc_bg2_moon_night', 500, 1);
-        if (P) camAt(790, 280, .6);
+        if (P) { camAt(790, 280, .6); bgZoom(1.6); }
         put(T, halo, 878, 86 + HT.uc_mid_moon_halo / 2); T.bg.appendChild(halo.pos); halo.pos.style.opacity = 0;
         put(T, kid, X(420, 650), FL, { look: 'stand' });
         put(T, uni, X(720, 840), FL, { look: 'stand', to: 'left' }); if (!CONT) uni.pos.style.opacity = 0;
@@ -853,21 +863,22 @@
     await sleep(300);
     vo('steps');   // 녹음 한 조각에 '사박…' 세 번(0.2·1.6·3.0초) — 말풍선을 거기에 맞춘다(옛: 조각을 세 번 틀어 아홉 번)
     for (let i = 0; i < 3; i++) { T.pop(X(830, 560), FL - 345, tr('사박, 사박')); await sleep(i < 2 ? 1400 : 1200); }
-    await T.cutImage([{ src: src('uc_cut2_turn'), hold: 2600 }]);
-    kid.look('turn', 'right'); kid.hop(6, 400);                       // 뒤를 돌아본다 (고개를 오른쪽 어깨 너머로)
-    const l30 = say(S.L30);
-    /* 유니콘이 덤불 뒤에서 걸어 나와 땅(길) 위에 선다: 다현이 쪽(왼쪽)을 보는 서기 자세, 덤불이 뒷다리를 가린다(z: 덤불 아래).
-       옛: 뒷모습 그림을 덤불 앞으로 올려 덤불 위에 떠 보였다(2026-10-28 '유니콘 이상') */
+    /* 2026-10-29 구도 바꿈('뒷모습 여전히 이상'): 뒤돌아보는 그림을 쓰지 않는다. 다현이가 모르는 사이 유니콘이 덤불 뒤에서 먼저 나오고(아이들이 먼저 본다),
+       "누가 왔을까요?" 뒤에 다현이가 옆모습으로 돌아서며 만남 컷. 유니콘은 덤불이 뒷다리를 가리게(z: 덤불 아래) 둘 사이를 띄워 선다 */
     uni.look('stand', 'left'); uni.place(X(930, 760), FL); T.world.insertBefore(uni.pos, cbush.pos);   // 덤불 바로 뒤(뿔 끝만 보임)에서 시작
-    await uni.move(X(700, 640), FL, 1200, 'ease-in-out'); glow(uni, 1800);
-    await l30;
+    if (P) follow(545, 900);   // 세로: 덤불 왼쪽으로 나온 유니콘이 화면 안에
+    await uni.move(X(760, 640), FL, 1400, 'ease-in-out'); glow(uni, 1800);
+    await say(S.L30);
+    kid.look('walk', 'right'); kid.hop(10, 380); sfx('swish', .45);   // 휙 돌아선다(하프는 다음 장면 만남에)
+    await sleep(700);
+    await T.cutImage([{ src: src('uc_cut2_turn'), hold: 2600 }]);
     await sleep(SCENE_END);
 
     /* ===== 10. 진짜 유니콘 (인사 톡) — 가까이, 둘만 ===== */
     /* 같은 달밤: 넘김 없이 이어 간다. 가로는 둘 다 제자리, 세로는 카메라가 달 쪽으로 가며 다현이가 걸어가고 유니콘은 달빛 아래에 다시 나타난다 */
     await next(tr('진짜 유니콘'), 'uc_bg2_moon_night', () => {
       scene('uc_bg2_moon_night', 500, 1);                              // 세로도 월드 확대 없이 카메라를 달 쪽으로 옮겨 달·고리·두 주인공이 함께 보이게 한다
-      if (P) camAt(790, 280, .6);                                    // 세로: 보이는 폭 약 433(x 575~1000) — 배경 달(878)과 무리가 화면 안
+      if (P) { camAt(790, 280, .6); bgZoom(1.6); }                  // 세로: 보이는 폭 약 433(x 575~1000) — 배경 달(878)과 무리가 화면 안, 배경은 위아래 여백 없게 키움
       put(T, halo, 878, 86 + HT.uc_mid_moon_halo / 2); T.bg.appendChild(halo.pos);   // 배경 층에 붙여 배경 달 둘레에
       halo.pos.style.opacity = 0;   // 달 둘레 7색 무리
       put(T, kid, X(420, 650), FL, { look: 'stand' });

@@ -1033,28 +1033,30 @@
      ]
     },
     {
-     "text": "다현이가 천천히 뒤를 돌아보았어요.",
-     "src": "reuse",
+     "text": "다현이 뒤에 누가 왔을까요?",
+     "src": "new",
      "segs": [
       [
        "nar",
-       "다현이가 천천히 뒤를 돌아보았어요.",
+       "다현이 뒤에 누가 왔을까요?",
        null,
-       "[soft, slow, suspense, gentle]"
+       "[soft, hushed, playful suspense, a question to the listener]"
       ]
      ],
      "before": [
-      "cut:uc_cut2_turn",
-      "kid:look:turn:right",
-      "kid:hop"
-     ],
-     "after": [
-      "snd:harp_gliss:.6",
+      "follow:545,900",
       "uni:look:stand:left",
       "uni:at:930,FL",
-      "uni:walk:700,FL,1200",
+      "uni:walk:760,FL,1400",
       "uni:glow"
-     ]
+     ],
+     "after": [
+      "kid:look:walk:right",
+      "kid:hop",
+      "snd:swish:.45",
+      "cut:uc_cut2_turn"
+     ],
+     "needs_audio": true
     }
    ]
   },

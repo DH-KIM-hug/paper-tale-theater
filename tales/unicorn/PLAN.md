@@ -325,7 +325,7 @@
 | L21 | nar | 말은 다현이의 간식 바구니를 보고 있어요. | The horse is looking at Dahyun's snack basket. |
 | L24 | horse | 고마워, 다현아! 정말 맛있었어. | Thank you, Dahyun! That was so yummy. |
 | L28 | nar | 다현이는 땅만 보며 터벅터벅 걸었어요. | Dahyun trudged along, looking only at the ground. |
-| L30 | nar | 다현이가 천천히 뒤를 돌아보았어요. | Slowly, Dahyun turned around. |
+| L30 | nar | 다현이 뒤에 누가 왔을까요? (2026-10-29 구도 바꿈: 유니콘이 먼저 나오고, 다현이는 옆모습으로 돌아섬. 뒷모습 그림 안 씀) | Who came up behind Dahyun? |
 | L32 | uni | 다현아, 나는 계속 여기 있었어. | Dahyun, I was here all along. |
 | L36 | nar | 다현이는 유니콘을 꼭 안았어요. | Dahyun hugged the unicorn tight. |
 - 13줄, 한국어 약 290자 + 영어 약 600자.
