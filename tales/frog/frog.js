@@ -507,7 +507,7 @@
         if (!inst()) fadeInR(runcle.pos);
       },
       cut(k) {
-        const SF = { monster: ['cut_monster', 'surprise', 3000], pop: ['cut_pop', 'boom'], fly: ['cut_fly', 'whoosh', 2000], splash: ['cut_splash', 'splash', 2200], jump: ['cut_jump', 'boing', 3000] };
+        const SF = { monster: ['cut_monster', 'surprise', 2600], pop: ['cut_pop', 'boom'], fly: ['cut_fly', 'whoosh', 2000], splash: ['cut_splash', 'splash', 2200], jump: ['cut_jump', 'boing', 2600] };
         const c = SF[k]; if (!c) return console.warn('[read] cut 모름', k);
         if (k === 'splash') { stopFly(); momReset(); mom.place(500, 468); camSnap(500, 280, 1); }
         return cutArt(T, [c]);
@@ -613,7 +613,7 @@
       babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(babyS); b.place(pads[[0, 1, 4][i]][0], pads[[0, 1, 4][i]][1]); });
     });
     babies.forEach(b => b.hop(30));
-    await cutArt(T, [['cut_monster', 'surprise']], 3000); // 그림 컷: 아기들이 본 '괴물' (대사와 겹치면 연출 카메라가 못 돌아온다 → 따로)
+    await cutArt(T, [['cut_monster', 'surprise']], 2600); // 그림 컷: 아기들이 본 '괴물' (대사와 겹치면 연출 카메라가 못 돌아온다 → 따로)
     await say('"엄마! 산처럼 커다란 괴물을 봤어요!"');
     await say('엄마개구리가 말했어요. "흥, 얼마나 컸는데?"');
 
@@ -760,7 +760,7 @@
     AudioFX.thud(); T.shake(); T.pop(oxActor.x, oxActor.y - 190, '쿵!'); vo('ox_thud');
     oxArt.set('stand');
     await say('쿵! 황소는 폴짝 뛰지 못했어요. 누가 더 멀리 뛸까요? 개구리!');
-    await cutArt(T, [['cut_jump', 'hop', 3000]]);
+    await cutArt(T, [['cut_jump', 'hop', 2600]]);
 
     /* --- 10. 밤 연못 합창 --- */
     await T.sceneCard('밤 연못', () => {
