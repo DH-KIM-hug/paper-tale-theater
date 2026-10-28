@@ -217,16 +217,16 @@
         img(art, 'v3w/pj3_tiger_eyehurt.webp', -49, -130, 98, 130, 'xMidYMax meet', { class: 'tpose', 'data-pose': 'eyehurt' });
         const ov = el('g', { class: 'toverlay' }, art);
         el('path', { id: 'pjEyeHurt', opacity: 0, d: 'M-73 -81 l14 14 M-59 -81 l-14 14', stroke: '#2c1a10', 'stroke-width': 4.5, 'stroke-linecap': 'round' }, ov);
-        const band = (p, x, y, r, s = 8) => { const b = el('g', { fill: '#efe0bd', transform: `translate(${x},${y}) rotate(${r})` }, p); el('rect', { x: -s, y: -s / 3, width: s * 2, height: s * .66, rx: s / 3 }, b); el('rect', { x: -s / 3, y: -s, width: s * .66, height: s * 2, rx: s / 3 }, b); };
-        const w0 = el('g', { id: 'pjWnd0', opacity: 0 }, ov); el('circle', { cx: -66, cy: -66, r: 7, fill: '#f2a7a0', opacity: .85 }, w0); band(w0, -60, -90, -20);
-        const w1 = el('g', { id: 'pjWnd1', opacity: 0 }, ov); el('circle', { cx: -80, cy: -62, r: 6, fill: '#f2a7a0', opacity: .9 }, w1); band(w1, -80, -60, 18);
+        /* 2026-10-29 덧그림을 그림으로 (jobs_svgfix.json): 상처 pj_scratch(536×600)·반창고 pj_bandage(600×595)·혹 pj_bump(600×400)·어질 별 cm_dizzy_stars(600×313) */
+        const scratch = (p, x, y, h) => img(p, 'v3w/pj_scratch.webp', x - h * .447, y - h / 2, h * .893, h);
+        const band = (p, x, y, r, s = 8) => { const b = el('g', { transform: `translate(${x},${y}) rotate(${r})` }, p); img(b, 'v3w/pj_bandage.webp', -s * 1.15, -s * 1.15, s * 2.3, s * 2.3); };
+        const w0 = el('g', { id: 'pjWnd0', opacity: 0 }, ov); scratch(w0, -66, -66, 17); band(w0, -60, -90, -20);
+        const w1 = el('g', { id: 'pjWnd1', opacity: 0 }, ov); scratch(w1, -80, -62, 15); band(w1, -80, -60, 18);
         const w2 = el('g', { id: 'pjWnd2', opacity: 0, fill: '#8a6a45' }, ov); [[46, -26, 4], [57, -21, 3], [52, -34, 2.6]].forEach(([cx, cy, r]) => el('circle', { cx, cy, r }, w2));
-        const w3 = el('g', { id: 'pjWnd3', opacity: 0 }, ov); el('circle', { cx: 60, cy: -44, r: 5, fill: '#f2a7a0', opacity: .9 }, w3); band(w3, 60, -44, 20, 9);
-        const w4 = el('g', { id: 'pjWnd4', opacity: 0 }, ov); el('ellipse', { cx: -52, cy: -104, rx: 11, ry: 9, fill: '#f0b26a' }, w4); el('ellipse', { cx: -55, cy: -107, rx: 4, ry: 3, fill: '#f8d9a8' }, w4);
-        const dz = el('g', { id: 'pjDizzy', opacity: 0, fill: '#ffd54f', transform: 'translate(8,24)' }, ov);
-        el('path', { class: 'dz', d: 'M-58 -136 l3 6 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1 Z' }, dz);
-        el('path', { class: 'dz d1', d: 'M-80 -130 l2.4 5 5.6 .8 -4 4 .8 5.6 -4.8 -2.4 -4.8 2.4 .8 -5.6 -4 -4 5.6 -.8 Z' }, dz);
-        el('path', { class: 'dz d2', d: 'M-36 -130 l2.4 5 5.6 .8 -4 4 .8 5.6 -4.8 -2.4 -4.8 2.4 .8 -5.6 -4 -4 5.6 -.8 Z' }, dz);
+        const w3 = el('g', { id: 'pjWnd3', opacity: 0 }, ov); scratch(w3, 60, -44, 13); band(w3, 60, -44, 20, 9);
+        const w4 = el('g', { id: 'pjWnd4', opacity: 0 }, ov); img(w4, 'v3w/pj_bump.webp', -66, -114, 27, 18); // 혹 (아래 끝 y -96 이 머리에 붙는다)
+        const dz = el('g', { id: 'pjDizzy', opacity: 0, transform: 'translate(8,24)' }, ov);
+        img(dz, 'v3w/cm_dizzy_stars.webp', -86, -145, 56, 29, 'xMidYMid meet', { class: 'dz' });
       });
       a.art = art;
       return a;
@@ -705,8 +705,7 @@
           AudioFX.splash();
           impact(950, 420, '풍덩!', '#3e6a8a');
           const sp = el('g', { transform: 'translate(962,478)' }, T.fx);
-          el('path', { d: 'M0 0 Q-16 -34 -30 -10 M0 0 Q0 -44 14 -14 M0 0 Q20 -30 30 -6', stroke: '#8fb8dd', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, sp);
-          [[-22, -30, 5], [8, -40, 6], [28, -24, 4.6]].forEach(([cx, cy, r]) => el('circle', { cx, cy, r, fill: '#bcd8ee' }, sp));
+          img(sp, 'v3w/pj_splash.webp', -35, -56, 70, 60); // 물보라 그림
           anim(sp, [{ opacity: 0 }, { opacity: 1 }, { opacity: 1 }, { opacity: 0 }], 900).then(() => sp.remove());
           anim(fact('jige'), [{ transform: 'translate(215px,0px)' }, { transform: 'translate(0px,0px)' }], { duration: 900, easing: 'ease-in-out' }).then(() => { fact('jige').style.transform = ''; });
           return;
@@ -1046,8 +1045,7 @@
         impact(950, 420, '풍덩!', '#3e6a8a');
         showCut('jige'); // 물보라와 동시 (기다리지 않음)
         const sp = el('g', { transform: 'translate(962,478)' }, T.fx);
-        el('path', { d: 'M0 0 Q-16 -34 -30 -10 M0 0 Q0 -44 14 -14 M0 0 Q20 -30 30 -6', stroke: '#8fb8dd', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, sp);
-        [[-22, -30, 5], [8, -40, 6], [28, -24, 4.6]].forEach(([cx, cy, r]) => el('circle', { cx, cy, r, fill: '#bcd8ee' }, sp));
+        img(sp, 'v3w/pj_splash.webp', -35, -56, 70, 60); // 물보라 그림
         anim(sp, [{ opacity: 0 }, { opacity: 1 }, { opacity: 1 }, { opacity: 0 }], 900).then(() => sp.remove());
         await anim(act('jige'), [{ transform: 'translate(215px,0px)' }, { transform: 'translate(0px,0px)' }], { duration: 900, easing: 'ease-in-out' });
         act('jige').style.transform = '';

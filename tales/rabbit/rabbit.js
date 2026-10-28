@@ -51,6 +51,9 @@
     ins_tambourine: 'v3w/rab_ins_tambourine.webp', ins_drum: 'v3w/rab_ins_drum.webp', ins_xylophone: 'v3w/rab_ins_xylophone.webp', ins_horn: 'v3w/rab_ins_horn.webp',
     ins_bell: 'v3w/rab_ins_bell.webp', ins_snare: 'v3w/rab_ins_snare.webp', ins_jingle: 'v3w/rab_ins_jingle.webp', ins_flute: 'v3w/rab_ins_flute.webp',
     envelope: 'v3w/rab_envelope.webp',
+    /* 2026-10-29 코드 도형을 대신하는 그림 (jobs_svgfix.json): 결승선 체크 띠·결승 테이프(성한 것/끊어진 것)·골목 문 뒤 구멍·음표·배지 원판·응원 금별 */
+    finish_band: 'v3w/rab_finish_band.webp', tape: 'v3w/rab_tape.webp', tape_broken: 'v3w/rab_tape_broken.webp', hole: 'v3w/rab_hole.webp',
+    note: 'v3w/cm_note.webp', badge_plate: 'v3w/cm_badge_plate.webp', star_one: 'ui/star_one.webp',
   };
   const A = p => '../../assets/' + p;
   /* 배경 그림 둘레 색 [위, 아래] — 세로 화면에서 물러설 때(줌아웃) 그림 밖을 채운다 */
@@ -441,7 +444,7 @@
         if (a.star) return;
         const h = k === 'owl' ? 142 : 152;
         a.star = T.el('g', { transform: `translate(0 ${-h})` }, a.body);
-        const s = T.paper(a.star, [['path', { d: 'M0 -22 L6.5 -7 L22 -6 L10 4.5 L13.5 20 L0 11.5 L-13.5 20 L-10 4.5 L-22 -6 L-6.5 -7 Z', fill: '#FFD54F', stroke: C.persimmon, 'stroke-width': 3, 'stroke-linejoin': 'round' }]]);
+        const s = T.paper(a.star, [['image', { href: '../../assets/' + ART.star_one, x: -25, y: -25, width: 50, height: 50 }]]); // 금별 그림
         s.style.transformBox = 'fill-box'; s.style.transformOrigin = 'center';
         T.anim(s, [{ transform: 'scale(0) rotate(-90deg)' }, { transform: 'scale(1.35) rotate(10deg)' }, { transform: 'scale(1) rotate(0)' }], 480);
       };
@@ -477,9 +480,38 @@
   }
   function noteShape(T, x, y, color = C.bean) {
     const g = T.el('g', {}, T.fx);
-    T.el('ellipse', { cx: x, cy: y, rx: 9, ry: 7, fill: color, transform: `rotate(-20 ${x} ${y})` }, g);
-    T.el('path', { d: `M${x + 8} ${y - 2} V${y - 34} Q${x + 18} ${y - 26} ${x + 22} ${y - 18}`, stroke: color, 'stroke-width': 4, fill: 'none' }, g);
+    T.el('image', { href: A(ART.note), x: x - 9, y: y - 34, width: 31, height: 41, filter: 'url(#pp)' }, g); // 음표 그림 (색은 그림 한 가지)
     g.animate([{ transform: 'translate(0,0)', opacity: 1 }, { transform: `translate(${-20 + Math.random() * 40}px,-80px)`, opacity: 0 }], { duration: 1500, fill: 'forwards' }).finished.then(() => g.remove());
+  }
+  /* 골목 동그란 문 뒤 어두운 구멍 (rab_hole 600×440 의 어두운 속을 문 크기 타원으로 오려 낸다) */
+  let holeN = 0;
+  function holeArt(T, x, y) {
+    const id = 'rabHole' + (++holeN), g = T.el('g', {}, T.bg);
+    T.el('ellipse', { cx: x, cy: y, rx: 24, ry: 28 }, T.el('clipPath', { id }, g));
+    T.el('image', { href: A(ART.hole), x: x - 305 * .22, y: y - 268 * .22, width: 600 * .22, height: 440 * .22, 'clip-path': `url(#${id})` }, g);
+    return g;
+  }
+  /* 길 위 결승선 체크 띠 (세로로 눕힘: 무대 x 760~788, y 400~508) */
+  function finishBand(T) {
+    const g = T.el('g', { transform: 'translate(774 454) rotate(90)', filter: 'url(#pp)' }, T.bg);
+    T.el('image', { href: A(ART.finish_band), x: -54, y: -13, width: 108, height: 25, preserveAspectRatio: 'none' }, g);
+    return g;
+  }
+  /* 결승 테이프 (무대 x 790, y 376~476 세로): 처음엔 rab_tape 한 장, snap() 하면 rab_tape_broken 의 두 조각으로 바뀌고
+     top·bot 이 각자 위 끝(376)·아래 끝(476)을 축으로 벌어진다 (부른 쪽이 transform 을 준다) */
+  let tapeN = 0;
+  function tapeArt(T) {
+    const n = ++tapeN, rot = 'translate(790 426) rotate(90)';
+    const whole = T.el('g', { transform: rot, filter: 'url(#pp)' }, T.world);
+    T.el('image', { href: A(ART.tape), x: -55, y: -13, width: 110, height: 26, preserveAspectRatio: 'none' }, whole);
+    const half = (k, cx, cw) => {
+      const g = T.el('g', { opacity: 0 }, T.world), inner = T.el('g', { transform: rot, filter: 'url(#pp)' }, g), id = `rabTape${n}${k}`;
+      T.el('rect', { x: cx, y: -30, width: cw, height: 60 }, T.el('clipPath', { id }, inner));
+      T.el('image', { href: A(ART.tape_broken), x: -55, y: -20, width: 110, height: 40, 'clip-path': `url(#${id})` }, inner);
+      return g;
+    };
+    const top = half('t', -60, 61.6), bot = half('b', 1.6, 60);
+    return { top, bot, snap: () => { whole.style.display = 'none'; top.setAttribute('opacity', 1); bot.setAttribute('opacity', 1); } };
   }
   /* 소리 퀴즈 카드 (화면 고정 UI — 카메라 영향 없음): 동물 그림이 든 동그란 종이. slot 0 = 왼쪽, 1 = 오른쪽.
      세로 화면은 보이는 폭이 좁아 둘이 나란히 들어가게 줄인다 */
@@ -487,7 +519,7 @@
     const vw = T.viewWidth(), pt = vw < 990;
     const s = pt ? Math.min(1, (vw - 36) / 4 / 80) : 1, dx = pt ? 80 * s + 8 : 230;
     const g = T.el('g', { transform: `translate(${500 + (slot ? dx : -dx)},${pt ? 440 : 420}) scale(${s.toFixed(3)})` }, document.getElementById('stage'));
-    T.paper(g, [['circle', { r: 80, fill: C.cream, stroke: C.gold, 'stroke-width': 7 }]]);
+    T.el('image', { href: A(ART.badge_plate), x: -84, y: -84, width: 168, height: 168, filter: 'url(#pp)' }, g); // 크림 원판 + 금테 (그림)
     if (ART['aud_' + k]) T.el('image', { href: A(ART['aud_' + k]), x: -62, y: -66, width: 124, height: 124, preserveAspectRatio: 'xMidYMid meet' }, g);
     else { const p = drawAnimal(T, T.el('g', { transform: 'translate(0 50) scale(.95)' }, g), k); show(p.legs, 1); }
     return g;
@@ -687,7 +719,7 @@
       alley: () => {
         artBG(T, 'bg_alley');
         RD.houses = [[193, 316], [392, 316], [601, 316], [807, 316]].map(([x, y]) => {
-          T.el('ellipse', { cx: x, cy: y, rx: 24, ry: 28, fill: C.ink }, T.bg);
+          holeArt(T, x, y);
           const door = artPiece(T, 'bg_alley', ['ellipse', { cx: x, cy: y, rx: 27, ry: 31 }], T.bg);
           return { door, x, hinge: x - 27, ay: 400, ky: 280 };
         });
@@ -729,13 +761,12 @@
       dusk: () => artBG(T, 'bg_dusk'),
       finish: () => {
         artBG(T, 'bg_finish');
-        for (let r = 0; r < 6; r++) el('rect', { x: 760 + (r % 2) * 14, y: 400 + r * 18, width: 14, height: 18, fill: C.snow }, T.bg);
+        finishBand(T);
         const s = 440 / 884, w = 770 * s, x0 = 800 - 38 * s;
         el('image', { href: A(ART.finish_post), x: x0, y: 60, width: w, height: 440, filter: 'url(#pp)' }, el('g', { transform: `matrix(-1,0,0,1,${(2 * x0 + w).toFixed(1)},0)` }, T.world));
         el('text', { x: (x0 + w - 405 * s).toFixed(1), y: 60 + 195 * s + 11, 'text-anchor': 'middle', 'font-size': 30, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('결승') }, T.world);
-        RD.tapeTop = el('rect', { x: 786, y: 376, width: 8, height: 50, fill: C.bean }, T.world);
-        RD.tapeBot = el('rect', { x: 786, y: 426, width: 8, height: 50, fill: C.bean }, T.world);
-        if (R.tapeBroken) { RD.tapeTop.setAttribute('transform', 'rotate(-70 790 376)'); RD.tapeBot.setAttribute('transform', 'rotate(70 790 476)'); }
+        const tp = tapeArt(T); RD.tapeTop = tp.top; RD.tapeBot = tp.bot; RD.tapeSnap = tp.snap;
+        if (R.tapeBroken) { tp.snap(); RD.tapeTop.setAttribute('transform', 'rotate(-70 790 376)'); RD.tapeBot.setAttribute('transform', 'rotate(70 790 476)'); }
       },
       party: () => artBG(T, 'bg_party'),
     };
@@ -914,7 +945,7 @@
       bar: a => bar.show(a === 'show'),
       tape: () => {
         R.tapeBroken = true; if (!RD.tapeTop) return;
-        AudioFX.pop();
+        AudioFX.pop(); RD.tapeSnap();
         return tween(500, t => { RD.tapeTop.setAttribute('transform', `rotate(${-70 * t} 790 376)`); RD.tapeBot.setAttribute('transform', `rotate(${70 * t} 790 476)`); });
       },
       photo: () => { // 찰칵! 하얀 빛 한 번
@@ -1005,7 +1036,7 @@
       if (artBG(T, 'bg_alley')) {
         // 그림 속 동그란 문 네 개: 문 뒤 어두운 구멍 + 문 조각(같은 그림을 오려 겹침) = 톡 대상
         houses = [[193, 316], [392, 316], [601, 316], [807, 316]].map(([x, y]) => {
-          T.el('ellipse', { cx: x, cy: y, rx: 24, ry: 28, fill: C.ink }, T.bg);
+          holeArt(T, x, y);
           const door = artPiece(T, 'bg_alley', ['ellipse', { cx: x, cy: y, rx: 27, ry: 31 }], T.bg);
           // 문 조각은 배경 그림 전체를 오려 낸 것이라 누르는 자리가 문 크기뿐이다 → 문 둘레에 투명 타원을 더 깔아 짧은 변 80px 이상 (2026-10-22)
           const hit = T.el('ellipse', { cx: x, cy: y, rx: 50, ry: 56, fill: '#000', 'fill-opacity': 0 }, T.bg);
@@ -1531,7 +1562,7 @@
     await say('막대를 봐요! 거북이가 결승선 코앞이에요!');
 
     /* --- 13. 마지막 한 발 --- */
-    let tapeTop, tapeBot;
+    let tapeTop, tapeBot, tapeSnap;
     await scene('마지막 한 발', () => {
       if (artBG(T, 'bg_finish')) { // 그림 결승 문은 멀리 있다 → 관객은 길 양옆, 결승 기둥·테이프는 임시 도형으로 앞에
         seat(KINDS.map((k, i) => [k, [50, 125, 200, 275, 655, 725, 875, 945][i], 408, .5]));
@@ -1541,7 +1572,7 @@
       paper(T.bg, [['rect', { x: -300, y: 344, width: 1600, height: 400, fill: C.grass }], ['rect', { x: -300, y: 400, width: 1600, height: 110, fill: C.dirt }]]);
       seat(KINDS.map((k, i) => [k, 70 + i * 122, 336, .55]));
       }
-      for (let r = 0; r < 6; r++) el('rect', { x: 760 + (r % 2) * 14, y: 400 + r * 18, width: 14, height: 18, fill: C.snow }, T.bg);
+      finishBand(T);
       if (ART.finish_post) {
         /* 그림 결승 기둥+체크 깃발(770×884, 기둥이 왼쪽 끝 x 12~63, 빈 판 x 258~553 · y 115~275): 기둥 높이 440(y 60~500)에 맞추면 깃발이 383 폭이라
            무대 오른쪽 밖으로 나가므로 좌우를 뒤집어 깃발이 길 위(왼쪽)로 나부끼게 한다. 기둥 가운데가 x 800. 글자는 빈 판에 코드로 */
@@ -1555,8 +1586,7 @@
       }
       turtleReset(); put(turtle, 540, 476, 1.5);
       rabbitReset(); rp.pose('run'); put(rabbit, -200, 472, 1);
-      tapeTop = el('rect', { x: 786, y: 376, width: 8, height: 50, fill: C.bean }, T.world);
-      tapeBot = el('rect', { x: 786, y: 426, width: 8, height: 50, fill: C.bean }, T.world);
+      ({ top: tapeTop, bot: tapeBot, snap: tapeSnap } = tapeArt(T));
       bar.show(true); setRace(.6, .92, 0);
     });
     KINDS.forEach((k, i) => setTimeout(() => aud[k].cheer(i % 3 ? '' : null, true), i * 120));
@@ -1582,7 +1612,7 @@
     walk(1800, 450);
     speedLines(T, 10, 900);
     setTimeout(() => {
-      AudioFX.pop(); T.pop(790, 330, '골인!', C.bean);
+      AudioFX.pop(); T.pop(790, 330, '골인!', C.bean); tapeSnap();
       tween(500, t => { tapeTop.setAttribute('transform', `rotate(${-70 * t} 790 376)`); tapeBot.setAttribute('transform', `rotate(${70 * t} 790 476)`); });
     }, 1150);
     follow(640, 2000); // 세로 화면: 결승선 쪽으로

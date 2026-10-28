@@ -77,6 +77,9 @@
     treetop: 'v3w/sm_treetop.webp', well_water: 'v3w/sm_well_water.webp', basket_empty: 'v3w/sm_basket_empty.webp',
     cloud_cream: 'v3w/sm_cloud_cream.webp', cloud_lilac: 'v3w/sm_cloud_lilac.webp', icon_ear: 'v3w/sm_icon_ear.webp',
     cut_roar: 'v3w/sm_cut_roar_night.webp',
+    /* 2026-10-29 코드 도형을 대신하는 그림 (jobs_svgfix.json): 창호지 문 호랑이 그림자, 나무 참기름 줄기, 도끼 자국, 어질 별, 배지 원판 */
+    tiger_shadow: 'v3w/sm_tiger_shadow.webp', oil_stream: 'v3w/sm_oil_stream.webp',
+    axe_mark: 'v3w/sm_axe_mark.webp', dizzy: 'v3w/cm_dizzy_stars.webp', badge_plate: 'v3w/cm_badge_plate.webp',
   };
   const artOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -100,6 +103,21 @@
     return pa;
   }
   /* 그림 컷 (없으면 null → 부른 쪽이 임시 컷) */
+  /* 문밖 호랑이 그림자 (창호지에 비친 실루엣 그림, 꼬리가 오른쪽 = 오누이 쪽을 본다) */
+  function tigerShadow(T, doorArt) {
+    const sil = T.el('g', { opacity: .3, transform: doorArt ? 'translate(-88 0)' : '', style: 'pointer-events:none' }, T.bg);
+    T.el('image', { href: AS + ART.tiger_shadow, x: 595, y: 185, width: 260, height: 300, transform: 'translate(1450 0) scale(-1 1)' }, sil);
+    return sil;
+  }
+  /* 나무 기둥을 타고 흐르는 참기름 줄기 두 가닥 (clip 상자가 위에서부터 열린다) */
+  function oilArt(T, og) {
+    const u = AS + ART.oil_stream; // 224×900 — 위쪽 넓은 깔때기는 clip(y 40) 위로 숨기고, 기둥에 맞게 가늘게 늘린다
+    const g = T.el('g', { opacity: .88, filter: 'url(#pp)' }, og);
+    T.el('image', { href: u, x: 628 - 36, y: -40, width: 72, height: 580, preserveAspectRatio: 'none' }, g);
+    T.el('image', { href: u, x: 664 - 28, y: 0, width: 56, height: 440, preserveAspectRatio: 'none', transform: 'translate(1328 0) scale(-1 1)' }, g);
+  }
+  /* 머리 위 어질 별 (그림 한 장, 가운데 0,0) */
+  function dizzyArt(T, p) { T.el('image', { href: AS + ART.dizzy, x: -65, y: -34, width: 130, height: 68, filter: 'url(#pp)' }, p); }
   const cutArt = (T, key, sfx, hold, onShow) => (artUrl(key) ? T.cutImage([{ src: artUrl(key), sfx, hold }], { hold, onShow }) : null);
   /* 동아줄 그림: 줄 끝 한 장(아래)을 그대로 두고, 그 위는 같은 그림의 윗부분(꼬임 주기만큼)을 하늘 끝까지 이어 붙인다.
      ROPE: [그림 폭, 높이, 이어 붙일 윗부분 높이(px, 꼬임 주기의 배수)] */
@@ -444,7 +462,7 @@
   /* 화면 고정 배지 (카메라 영향 없음) */
   function badge(T, x, y, r, drawIcon) {
     const g = T.el('g', { transform: `translate(${x},${y})` }, document.getElementById('stage'));
-    T.paper(g, [['circle', { r, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }]]);
+    T.el('image', { href: AS + ART.badge_plate, x: -r - 4, y: -r - 4, width: 2 * r + 8, height: 2 * r + 8, filter: 'url(#pp)' }, g); // 크림 원판 + 금테 (그림)
     drawIcon(g);
     g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
     return g;
@@ -617,7 +635,7 @@
       const tree = rs.tree = mkView(T, T.world);
       const ta = treeArt(T, tree, rTREE_S, TREE_PX.trunk, [640, 570]); if (ta) dress(T, 'tree');
       if (ta) {
-        const [mx, my] = ta.at(TREE_PX.moon); el('circle', { cx: mx, cy: my, r: 40, fill: C.cream, opacity: .95 }, tree);
+        const [mx, my] = ta.at(TREE_PX.moon); el('image', { href: AS + ART.moon_plain, x: mx - 41, y: my - 40, width: 82, height: 81, opacity: .95 }, tree);
         boy = mkBoy(T, tree, kidsUp ? rTOP.b[0] : 610, kidsUp ? rTOP.b[1] : 560, 1);
         girl = mkGirl(T, tree, kidsUp ? rTOP.g[0] : 560, kidsUp ? rTOP.g[1] : 560, .92);
         return;
@@ -664,8 +682,7 @@
       },
       door() {
         const doorArt = doorBG(T);
-        const sil = el('g', { opacity: .3, transform: doorArt ? 'translate(-88 0)' : '' }, T.bg);
-        [['ellipse', { cx: 690, cy: 400, rx: 80, ry: 80 }], ['ellipse', { cx: 690, cy: 270, rx: 72, ry: 62 }], ['circle', { cx: 638, cy: 212, r: 20 }], ['circle', { cx: 742, cy: 212, r: 20 }], ['path', { d: 'M760 420 Q830 420 822 350 Q818 320 838 310', stroke: C.stripe, 'stroke-width': 18, fill: 'none', 'stroke-linecap': 'round' }]].forEach(([t, a]) => el(t, { fill: C.stripe, ...a }, sil));
+        tigerShadow(T, doorArt);
         el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.amber, opacity: .12 }, T.fx);
         boy = mkBoy(T, T.world, PT ? 320 : 200, 540); girl = mkGirl(T, T.world, PT ? 450 : 340, 540);
       },
@@ -704,11 +721,7 @@
         const oil = rs.oil = el('g', {}, rs.tree);
         const oc = el('clipPath', { id: 'oilRun' }, oil); oil.__clip = el('rect', { x: 560, y: 40, width: 170, height: 0 }, oc);
         const og = el('g', { 'clip-path': 'url(#oilRun)' }, oil);
-        el('path', { d: 'M606 40 Q600 200 610 330 Q598 420 612 520 Q640 548 670 522 Q684 420 672 330 Q682 200 676 40 Z', fill: '#E3A53A', opacity: .28 }, og);
-        [[-26, 40, 300, 12], [-14, 60, 470, 16], [-1, 40, 400, 11], [11, 90, 535, 18], [24, 40, 360, 13], [33, 140, 450, 10]].forEach(([dx, y0, y1, w]) => {
-          const x = 641 + dx;
-          el('path', { d: `M${x - w * .32} ${y0} L${x - w * .22} ${y1 - w * 1.3} C${x - w * .62} ${y1 - w * .5} ${x - w * .45} ${y1 + w * .55} ${x} ${y1 + w * .55} C${x + w * .45} ${y1 + w * .55} ${x + w * .62} ${y1 - w * .5} ${x + w * .22} ${y1 - w * 1.3} L${x + w * .32} ${y0} Z`, fill: '#E9A83C', opacity: .8 }, og);
-        });
+        oilArt(T, og);
         rs.tree.insertBefore(oil, t.pos);
         const bottle = rs.bottle = el('g', {}, rs.tree);
         el('rect', { x: 860, y: 330, width: 170, height: 240, fill: 'transparent' }, bottle);
@@ -977,7 +990,7 @@
         t.P.wear('bump'); t.P.oMouth(); t.P.setBelly(1.5);
         await t.move(500, 540, 450, 'ease-in');
         const stars3 = el('g', {}, T.fx);
-        for (let k = 0; k < 3; k++) el('path', { d: 'M0 -12 L4 -4 12 -4 5 2 8 12 0 6 -8 12 -5 2 -12 -4 -4 -4 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(46 0)` }, stars3);
+        dizzyArt(T, stars3);
         stars3.animate([{ transform: 'translate(500px,245px) rotate(0)' }, { transform: 'translate(500px,245px) rotate(360deg)' }], { duration: 1200, iterations: 3 });
         setTimeout(() => stars3.remove(), 3700);
       })();
@@ -1007,7 +1020,7 @@
       const tr1 = tremble(sb), tr2 = tremble(sg);
       if (!treeArt(T, bot, 1.8, TREE_PX.trunkMid, [500, 480])) { sky(T, bot, '#2A3558'); T.paper(bot, [['rect', { x: 430, y: 280, width: 140, height: 400, fill: C.bark }]]); }
       const notches = el('g', {}, bot);
-      for (let k = 0; k < 14; k++) el('path', { d: `M440 ${160 + k * 40} L470 ${172 + k * 40}`, stroke: '#4A3222', 'stroke-width': 6, 'stroke-linecap': 'round' }, notches);
+      for (let k = 0; k < 14; k++) el('image', { href: AS + ART.axe_mark, x: 440, y: 148 + k * 40, width: 30, height: 35, filter: 'url(#pp)' }, notches); // 도끼 자국 그림 (V자)
       const st = mkTiger(T, bot, 470, 580, .9); st.P.wear('scarf'); st.P.setBelly(2.4); st.P.wear('axe');
       el('rect', { x: -1400, y: 274, width: 3800, height: 12, fill: C.gold }, split);
       let ny = 0;
@@ -1400,8 +1413,7 @@
     await T.sceneCard('똑똑똑', () => {
       T.clear(); const doorArt = doorBG(T);
       // 문밖 호랑이 그림자: 그림 문이면 오른쪽 가운데 문 창호지(무대 x 512~692)에 비친다
-      const sil = el('g', { opacity: .3, transform: doorArt ? 'translate(-88 0)' : '' }, T.bg);
-      [['ellipse', { cx: 690, cy: 400, rx: 80, ry: 80 }], ['ellipse', { cx: 690, cy: 270, rx: 72, ry: 62 }], ['circle', { cx: 638, cy: 212, r: 20 }], ['circle', { cx: 742, cy: 212, r: 20 }], ['path', { d: 'M760 420 Q830 420 822 350 Q818 320 838 310', stroke: C.stripe, 'stroke-width': 18, fill: 'none', 'stroke-linecap': 'round' }]].forEach(([t, a]) => el(t, { fill: C.stripe, ...a }, sil));
+      tigerShadow(T, doorArt);
       el('rect', { x: -1400, y: -1400, width: 3800, height: 3400, fill: C.amber, opacity: .12 }, T.fx);
       T.world.appendChild(boy.pos); boy.place(PT ? 320 : 200, 540);
       T.world.appendChild(girl.pos); girl.place(PT ? 450 : 340, 540);
@@ -1646,7 +1658,7 @@
       /* 그림 나무: 기둥 가운데가 x 640·땅 y 570 → 우물은 왼쪽(x 100~330), 오른쪽 굵은 가지 위가 오누이 자리(TOP) */
       const ta = treeArt(T, tree, TREE_S, TREE_PX.trunk, [640, 570]); if (ta) dress(T, 'tree');
       if (ta) {
-        const [mx, my] = ta.at(TREE_PX.moon); el('circle', { cx: mx, cy: my, r: 40, fill: C.cream, opacity: .95 }, tree);
+        const [mx, my] = ta.at(TREE_PX.moon); el('image', { href: AS + ART.moon_plain, x: mx - 41, y: my - 40, width: 82, height: 81, opacity: .95 }, tree);
         well = el('g', {}, tree); // 우물은 그림 속에
         boy = mkBoy(T, tree, kidsUp ? TOP.b[0] : 610, kidsUp ? TOP.b[1] : 560, 1);
         girl = mkGirl(T, tree, kidsUp ? TOP.g[0] : 560, kidsUp ? TOP.g[1] : 560, .92);
@@ -1764,14 +1776,8 @@
       oil = el('g', {}, tree);
       const oc = el('clipPath', { id: 'oilRun' }, oil); oil.__clip = el('rect', { x: 560, y: 40, width: 170, height: 0 }, oc);
       const og = el('g', { 'clip-path': 'url(#oilRun)' }, oil);
-      // 기둥이 젖은 듯 얇은 기름막 (가장자리가 물결) + 길이·굵기가 다른 기름 방울 줄기 6개 (아래끝이 동글게 맺힘) + 짧은 반짝임
-      el('path', { d: 'M606 40 Q600 200 610 330 Q598 420 612 520 Q640 548 670 522 Q684 420 672 330 Q682 200 676 40 Z', fill: '#E3A53A', opacity: .28 }, og);
-      [[-26, 40, 300, 12], [-14, 60, 470, 16], [-1, 40, 400, 11], [11, 90, 535, 18], [24, 40, 360, 13], [33, 140, 450, 10]].forEach(([dx, y0, y1, w]) => {
-        const x = 641 + dx;
-        el('path', { d: `M${x - w * .32} ${y0} Q${x - w * .28} ${y1 - 70} ${x - w * .22} ${y1 - w * 1.3} C${x - w * .62} ${y1 - w * .5} ${x - w * .45} ${y1 + w * .55} ${x} ${y1 + w * .55} C${x + w * .45} ${y1 + w * .55} ${x + w * .62} ${y1 - w * .5} ${x + w * .22} ${y1 - w * 1.3} Q${x + w * .28} ${y1 - 70} ${x + w * .32} ${y0} Z`, fill: '#D9952A', opacity: .78 }, og);
-        el('ellipse', { cx: x - w * .14, cy: y1 - w * .05, rx: w * .14, ry: w * .22, fill: '#FFF2C8', opacity: .9 }, og);
-        el('path', { d: `M${x - w * .08} ${y1 - 120} Q${x - w * .12} ${y1 - 90} ${x - w * .1} ${y1 - 66}`, stroke: '#FFE6A0', 'stroke-width': 2.5, fill: 'none', 'stroke-linecap': 'round', opacity: .8 }, og);
-      });
+      // 기름 줄기 그림 두 가닥 (sm_oil_stream)
+      oilArt(T, og);
       tree.insertBefore(oil, t.pos);
       bottle = el('g', {}, tree);
       el('rect', { x: 860, y: 330, width: 170, height: 240, fill: 'transparent' }, bottle);
@@ -1827,7 +1833,7 @@
       T.paper(bot, [['rect', { x: 430, y: 280, width: 140, height: 400, fill: C.bark }]]);
     }
     const notches = el('g', {}, bot);
-    for (let k = 0; k < 14; k++) el('path', { d: `M440 ${160 + k * 40} L470 ${172 + k * 40}`, stroke: '#4A3222', 'stroke-width': 6, 'stroke-linecap': 'round' }, notches);
+    for (let k = 0; k < 14; k++) el('image', { href: AS + ART.axe_mark, x: 440, y: 148 + k * 40, width: 30, height: 35, filter: 'url(#pp)' }, notches); // 도끼 자국 그림 (V자)
     const st = mkTiger(T, bot, 470, 580, .9);
     st.P.wear('scarf'); st.P.setBelly(2.4); st.P.wear('axe');
     el('rect', { x: -1400, y: 274, width: 3800, height: 12, fill: C.gold }, split);
@@ -1978,7 +1984,7 @@
       }
     });
     const stars3 = el('g', {}, T.fx);
-    for (let k = 0; k < 3; k++) el('path', { d: 'M0 -12 L4 -4 12 -4 5 2 8 12 0 6 -8 12 -5 2 -12 -4 -4 -4 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(46 0)` }, stars3);
+    dizzyArt(T, stars3);
     stars3.animate([{ transform: 'translate(500px,245px) rotate(0)' }, { transform: 'translate(500px,245px) rotate(360deg)' }], { duration: 1200, iterations: 3 });
     await say('"아이코 내 엉덩이! 아이코 내 머리!" 호랑이 머리에 동그란 혹이 났어요.');
     stars3.remove();
