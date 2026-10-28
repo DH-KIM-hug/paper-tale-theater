@@ -14,7 +14,7 @@
 <script>try { if (localStorage.getItem('lang') === 'en') document.write('<script src="narration_en.js"><\/script>'); } catch (e) { /* 영어 자료 없이 한국어로 */ }</script>
 <script>try { const q = new URLSearchParams(location.search).get('voice'); if (q === 'tc') localStorage.setItem('voice', 'tc'); else if (q === 'el') localStorage.removeItem('voice'); if (localStorage.getItem('voice') !== 'tc') document.write('<script src="narration_el.js"><\/script>' + (localStorage.getItem('lang') === 'en' ? '<script src="narration_el_en.js"><\/script>' : '')); } catch (e) { /* ElevenLabs 없이 Typecast 로 */ }</script>
 <script src="../../entitlements.js?v=20261028pz1"></script>
-<script src="../../audio.js?v=20261028amb"></script>
+<script src="../../audio.js?v=20261029cancel"></script>
 <script src="../../engine/tale.js?v=20261029img1"></script>
 <script src="magpie.js?v=20261029gap"></script>
 </body>

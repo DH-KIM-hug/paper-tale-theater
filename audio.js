@@ -105,6 +105,11 @@ const AudioFX = (() => {
   const narBlob = {};
   const narHelpers = [];
   let pairEnds = [], pairGen = 0;
+  /* 멈춤 세대 (2026-10-29): stopNarration 마다 narGen 이 오르고 narStopP 가 풀린다.
+     받는(fetch)·푸는(decode) 중인 클립은 기다림을 narStopP 와 경주시켜, 멈추면 곧바로 끝내고 늦게 받아져도 울리지 않는다 */
+  let narGen = 0, narStop = null, narStopP = new Promise(r => { narStop = r; });
+  const CUT = {};
+  const untilStop = (p, stopP) => Promise.race([p, stopP.then(() => CUT)]);
   function mediaNarration(on) {
     mediaNar = !!on;
     if (!mediaNar) return;
@@ -116,12 +121,17 @@ const AudioFX = (() => {
     narHelpers.forEach(el => { el.src = SILENT; const p = el.play(); if (p) p.then(() => { if (!pairEnds.length) el.pause(); }, () => {}); });
     try { narEl.src = SILENT; const p = narEl.play(); if (p && p.then) p.then(() => { if (!narEnd) narEl.pause(); }, () => {}); } catch (e) { /* 무시 */ }
   }
-  async function playMedia(url) {
+  async function playMedia(url, gen, stopP) {
     let u = narBlob[url];
     if (!u) {
-      try { const bytes = await fetchBytes(url); u = narBlob[url] = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' })); }
+      try {
+        const bytes = await untilStop(fetchBytes(url), stopP);
+        if (bytes === CUT) return;               // 받는 동안 멈춤: 재생하지 않고 바로 끝
+        u = narBlob[url] = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' }));
+      }
       catch (e) { u = clipUrl(url); }
     }
+    if (gen !== narGen) return;
     return new Promise((resolve, reject) => {
       const el = narEl;
       if (narEnd) narEnd(true);
@@ -366,8 +376,11 @@ const AudioFX = (() => {
     /* 켜 둔 배경 소리를 모두 끈다. 장면이 바뀔 때·동화가 끝날 때 부른다(화면을 떠나면 저절로 꺼진다) */
     stopAmbient(fadeSec = .8) { ambs.slice().forEach(h => { try { h.stop(fadeSec); } catch (e) { /* 무시 */ } }); },
     async playUrl(url, { recordedOnly = false } = {}) {
-      if (mediaNar && narEl) { try { return await playMedia(url); } catch (e) { if (recordedOnly) throw e; /* <audio> 실패 → Web Audio 로 */ } }
-      const buf = await loadClip(url);
+      const gen = narGen, stopP = narStopP; // 이 뒤에 stopNarration 이 오면 받기가 끝나도 재생하지 않는다
+      if (mediaNar && narEl) { try { return await playMedia(url, gen, stopP); } catch (e) { if (recordedOnly) throw e; /* <audio> 실패 → Web Audio 로 */ } }
+      if (gen !== narGen) return;
+      const buf = await untilStop(loadClip(url), stopP);
+      if (buf === CUT || gen !== narGen) return;
       const c = ensure();
       return new Promise(resolve => {
         const src = c.createBufferSource();
@@ -380,14 +393,14 @@ const AudioFX = (() => {
       });
     },
     async playTogether(urls) {
-      const gen = pairGen;
+      const gen = pairGen, stopP = narStopP;
       if (urls.length > narHelpers.length) throw new Error('too many simultaneous voices');
       // 모두 받은 뒤 한 작업 안에서 play: 늦게 받아진 목소리 때문에 합창이 벌어지지 않는다.
-      const sources = await Promise.all(urls.map(async url => {
+      const sources = await untilStop(Promise.all(urls.map(async url => {
         if (!narBlob[url]) narBlob[url] = URL.createObjectURL(new Blob([await fetchBytes(url)], { type: 'audio/mpeg' }));
         return narBlob[url];
-      }));
-      if (gen !== pairGen) return;
+      })), stopP);
+      if (sources === CUT || gen !== pairGen) return;
       narInfo.t = Date.now(); narInfo.dur = 0; narInfo.n++;
       const jobs = sources.map((src, i) => new Promise((resolve, reject) => {
         const el = narHelpers[i];
@@ -426,6 +439,7 @@ const AudioFX = (() => {
     voiceIdle(ms = 4000) { if (ms === null) return voiceDone; return Promise.race([voiceDone, new Promise(r => setTimeout(r, ms))]); },
     stopNarration() {
       pairGen++;
+      narGen++; const s = narStop; narStopP = new Promise(r => { narStop = r; }); s(); // 받는 중인 클립도 취소
       narHelpers.forEach(el => el.pause());
       [...pairEnds].forEach(fin => fin(true));
       if (narSrc) { try { narSrc.stop(); } catch (e) { /* 무시 */ } narSrc = null; }
@@ -434,6 +448,8 @@ const AudioFX = (() => {
     /* 읽어 주기: 내레이션을 <audio> 로 (on) / Web Audio 로 (off). on 은 시작 단추 누름 안에서 부른다 */
     mediaNarration,
     narInfo: () => ({ ...narInfo }),
+    /* 다음 stopNarration 때 풀리는 약속: 내레이터가 기다림(컷신 대사 끝)을 멈춤과 경주시키는 데 쓴다 */
+    narStopped: () => narStopP,
     /* 잠금 화면 일시정지·재생 (Media Session) */
     narHold(on) {
       narHeld = !!on;
@@ -626,8 +642,12 @@ const Narrator = (() => {
     if (bubble) showBubble(en ? en.t : text); else hideBubble();     // 홈은 말풍선 없이 목소리만(2026-10-28 사용자 결정)
     const clip = en ? en.c : (typeof NARRATION_CLIPS !== 'undefined') && NARRATION_CLIPS[text];
     if (clip) {
-      await AudioFX.voiceIdle(recordedOnly ? null : 4000); // 컷신 대사가 끝난 뒤 이어서
+      /* 이 말하기 뒤에 멈춤(Narrator.stop·AudioFX.stopNarration)이 오면 cut: 기다림을 바로 끝내고 남은 조각도 틀지 않는다 */
+      let cut = false;
+      const stopped = AudioFX.narStopped().then(() => { cut = true; });
+      await Promise.race([AudioFX.voiceIdle(recordedOnly ? null : 4000), stopped]); // 컷신 대사가 끝난 뒤 이어서
       if (gen !== speakGen) return;
+      if (cut) { if (!keep) hideBubble(); return; }
       try {
         // 배열이면 배역별 세그먼트를 순서대로 이어서 재생
         const list = Array.isArray(clip) ? clip : [clip];
@@ -635,6 +655,7 @@ const Narrator = (() => {
           await AudioFX.playTogether(list);
         } else for (const url of list) {
           if (gen !== speakGen) return; // 중간에 다른 내레이션이 시작됨
+          if (cut) break;               // 멈춤 요청: 남은 조각은 건너뛴다
           if (onSeg) try { onSeg(roleOf(url)); } catch (e) { /* 연출 실패는 무시 */ }
           await AudioFX.playUrl(url, { recordedOnly });
         }
