@@ -200,12 +200,23 @@
   const cutArt = (T, k, sfxFn) => cutOk[k] ? T.cutImage([{ src: artSrc('cut_' + k + '_v2'), sfx: sfxFn, hold: 2200 }], { hold: 2200 }) : Promise.resolve();   /* 컷은 새 배경 기준 v2 (2026-10-22 결정 2) */
 
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_magic', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_magic', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { sleep, say, camSnap, tr } = T;
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const sx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['fire_crackle', 'crickets_night_1', 'crowd_murmur_1', 'shimmer', 'chime_up', 'horse_neigh_1', 'horse_hooves_1', 'question', 'surprise_sting', 'xylo_down', 'knock', 'ding_glock', 'party_horn', 'whoosh', 'sparkle', 'swish', 'bell', 'tada', 'creak', 'ding']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_magic', 'fire_crackle', 'crickets_night_1', 'crowd_murmur_1', 'shimmer', 'chime_up', 'horse_neigh_1', 'horse_hooves_1', 'question', 'surprise_sting', 'xylo_down', 'knock', 'ding_glock', 'party_horn', 'whoosh', 'sparkle', 'swish', 'bell', 'tada', 'creak', 'ding']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
@@ -651,6 +662,7 @@
       READ_ACTS.amb = (n, v, d) => { try { if (!T.readInstant()) AudioFX.ambient(n, { vol: +v || .15, dur: +d || 3, fadeIn: 1 }); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) return T.readPlay(READ_ACTS);
 
     /* ===== 1. 재투성이 ===== */
@@ -666,6 +678,7 @@
     if (P) camSnap(520, 280, 1);
     await T.curtain(true);
     amb('fire_crackle', { vol: .25, dur: 4 }); // 아궁이 타닥
+    intro.go(); // 시작 음악 (놀이)
     await say('옛날에 마음씨 고운 아가씨가 살았어요.');
     step.hop(10, 320);
     await say('넌 부엌 일을 해!');
