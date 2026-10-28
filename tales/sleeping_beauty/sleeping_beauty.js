@@ -328,9 +328,9 @@
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(count1~7)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { if (T.reading() && document.hidden && /^marimba_/.test(name)) return true; /* 화면 꺼짐: 화음 방지 */ return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { sb_bg_hall_v2: 'crowd_murmur_1', sb_bg_outside_v2: 'birds_chirp_1' };
-    const bgAmb = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } if (SCENE_AMB[key] && !(T.reading() && key === 'sb_bg_hall_v2')) amb(SCENE_AMB[key], key === 'sb_bg_hall_v2' ? .2 : .28); };   // 읽기는 잔치 웅성 대신 조용히   // 배경이 바뀔 때마다(setBg) 이전 배경 소리를 끄고 새 장면 소리 시작
+    const bgAmb = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } if (SCENE_AMB[key]) amb(SCENE_AMB[key], key === 'sb_bg_hall_v2' ? .2 : .28); };   // 읽기는 잔치 웅성 대신 조용히   // 배경이 바뀔 때마다(setBg) 이전 배경 소리를 끄고 새 장면 소리 시작
     const scene = key => { setBg(key); camSnap(500, 280, 1); };
     const P = T.viewWidth() < 990;                 // 세로 화면
     const X = (l, p) => (P ? p : l);
@@ -624,7 +624,7 @@
         },
         match(verb) {
           if (verb === 'strips') return (async () => {
-            for (let i = 0; i < 7; i++) { strips.push(strip(T, SX(i), TABLE_Y + 2 + 10 * RS, FL - 205 * RS - 6)); sfx(T, 'paper_tap', .3); await sleep(450); }
+            for (let i = 0; i < 7; i++) { strips.push(strip(T, SX(i), TABLE_Y + 2 + 10 * RS, FL - 205 * RS - 6)); cue('marimba_' + (i + 1), .8) || sfx(T, 'paper_tap', .3); await sleep(450); }
           })();
           if (verb === 'clear') { const ss = strips; strips = []; ss.forEach(s => s.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' })); return sleep(300).then(() => ss.forEach(s => s.remove())); }
         },
@@ -712,6 +712,9 @@
         twinkle(spec) { const [x, y, c] = String(spec).split(','); twinkle(T, +x, +y, c, 6, 60); },
         sparkle() { sparkleSfx(T); },
         confetti() { T.confetti(); },
+        /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초>. 소리는 대사를 막지 않는다 */
+        snd(n, v = .7, d = 0) { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } },
+        amb(n, v = .2, d = 4) { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
         fx(n) {
           if (n === 'sparkle') return sparkleSfx(T);
           if (n === 'bell') return sfx(T, 'bell', .5, () => T.tone([1320, 1760], .25, { type: 'sine', vol: .12 }));
@@ -728,7 +731,7 @@
       };
       return R;
     })();
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 기다리던 아기 (톡 1: 요람) ===== */
     scene('sb_bg_room_v2');

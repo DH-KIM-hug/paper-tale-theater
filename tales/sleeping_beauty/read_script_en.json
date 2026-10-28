@@ -961,6 +961,7 @@
       ]
      ],
      "after": [
+      "snd:sleepy_tuba:.5",
       "young:sleep_all"
      ]
     },
@@ -1250,6 +1251,9 @@
        null,
        "[calm, warm storytelling]"
       ]
+     ],
+     "before": [
+      "amb:birds_chirp_2:.2:4"
      ]
     },
     {
@@ -1277,7 +1281,8 @@
      ],
      "before": [
       "twinkle:500,400,#F2B366",
-      "sparkle"
+      "sparkle",
+      "snd:shimmer:.7:400"
      ],
      "after": [
       "pr:wake"
@@ -1324,7 +1329,10 @@
      ],
      "before": [
       "sleepers:wake",
-      "fx:hop"
+      "fx:hop",
+      "snd:boing:.4",
+      "snd:boing:.4:200",
+      "snd:boing:.4:400"
      ]
     },
     {
@@ -1392,7 +1400,8 @@
       "pr:look:wave",
       "prince:look:wave",
       "confetti",
-      "fx:tada"
+      "fx:tada",
+      "snd:party_horn:.9:700"
      ]
     },
     {
