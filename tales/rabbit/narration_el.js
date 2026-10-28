@@ -135,7 +135,7 @@ Object.assign(NARRATION_CLIPS, {
 });
 Object.assign(VOICE_LINES, {
  "laugh_pig": "audio/el/rabbit/pig_4b439159ec.mp3",
- "cheer_dog": "audio/el/rabbit/dog_09f1dacd6a.mp3",
+ "cheer_dog": "audio/el/rabbit/dog_ed3f419d98.mp3",
  "cheer_duck": "audio/el/rabbit/duck_487cd79b48.mp3",
  "cheer_sheep": "audio/el/rabbit/sheep_78f597325c.mp3",
  "wake_rabbit": "audio/el/rabbit/rabbit_b6d9df1b2e.mp3"

@@ -6,7 +6,7 @@
   "duck": "cgSgspJ2msm6clMCkdW9",
   "cow": "CwhRBWXzGAHq8TQ4Fs17",
   "pig": "4tLzQecqf3Jg3zct76Fm",
-  "dog": "DGDjWy2CQ8Ishu0meQte",
+  "dog": "VOGEEZj2Kly5dP9LrQy8",
   "sheep": "ZjAPD4f11zlnEnZpKDgo"
  },
  "lines": [
@@ -1283,7 +1283,7 @@
     "dog",
     "힘내!",
     "happy:1.4",
-    "[cheering, energetic, excited, shouting]"
+    "[cheering, energetic, excited, shouting, childlike, baby voice, lisping, very young child, giggly]"
    ]
   ],
   "cheer_duck": [
@@ -1343,8 +1343,8 @@
    "style": 0.5
   },
   "dog": {
-   "stability": 0.35,
-   "style": 0.45
+   "stability": 0.3,
+   "style": 0.5
   },
   "cow": {
    "stability": 0.35,
@@ -1365,5 +1365,5 @@
   "dog",
   "sheep"
  ],
- "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, rabbit=Liam, turtle=Eunha, duck=Jessica, cow=Roger, pig=Austin, dog=Chaemong, sheep=Haemi"
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Annie, rabbit=Liam, turtle=Eunha, duck=Jessica, cow=Roger, pig=Austin, dog=Munni(순무 강아지와 같은 목소리·설정, 사용자 결정 2026-10-29), sheep=Haemi"
 }
