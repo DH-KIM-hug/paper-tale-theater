@@ -128,7 +128,7 @@
   const prop = (T, f, x, y, h) => figure(T, x, y, h, { a: f }, 'a');
   const knock = () => { AudioFX.sfx('knock', .9); };
   const sting = k => AudioFX.sting && AudioFX.sting(k);
-  const cutArt = (T, f, sfx, hold = 3200) => T.cutImage([{ src: A(f), sfx, hold }], { hold });
+  const cutArt = (T, f, sfx, hold = 2600) => T.cutImage([{ src: A(f), sfx, hold }], { hold });
   const hide = a => show(a.pos, 0);
   const appear = a => show(a.pos, 1);
 
@@ -583,7 +583,7 @@
     await say('늑대는 흠뻑 젖은 채 멀리멀리 도망갔어요.');
 
     /* --- 10. 춤 --- */
-    await cutArt(T, 'wg_cut_dance', 'win', 4200);
+    await cutArt(T, 'wg_cut_dance', 'win', 3000);
     await scene('모두 모였어요', () => { bg(T, 'well'); });
     const md = mama(T, 500, 470, 260, 'dance');
     kids = [1, 2, 3, 4, 5, 6, 7].map((n, i) => { const k = kid(T, n, KX(i), 525, 90); k.pose('joy'); return k; });
