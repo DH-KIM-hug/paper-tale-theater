@@ -568,9 +568,9 @@
     try { AudioFX.preloadSfx(['birds_chirp_1', 'leaves_footsteps', 'cicada', 'stream_1', 'balloon', 'whistle_down']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
-    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
-    const sfx = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
-    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) vol *= .8; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     /* 그림 미리 불러오기: 첫 장면(하늘·해·바람) 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
@@ -584,7 +584,7 @@
        바람·해님으로 외투를 벗기는 흐름(단추·땀·부채질·훌러덩)은 눌러서 하던 단계를 대본 줄에 맞춰 하나씩 한다. */
     const inst = () => T.readInstant();
     const rPt = () => T.portrait();
-    let rSawSky = 0, rScene = '', rFieldN = 0, rS = null, rW = null, rN = null, rF = null, rHB = null, rST = null, rFlying = null, rPant = null, rBabble = null, rHatGone = false, rButtoned = false, rWalkBob = null, rFlapShut = false;
+    let rCicada = 0, rSawSky = 0, rScene = '', rFieldN = 0, rS = null, rW = null, rN = null, rF = null, rHB = null, rST = null, rFlying = null, rPant = null, rBabble = null, rHatGone = false, rButtoned = false, rWalkBob = null, rFlapShut = false;
     const rOn = a => a && a.pos.isConnected;
     const rAim = () => { if (rOn(rW)) aimWind(rW, rOn(rN) ? rN : rOn(rS) ? rS : 500); };
     const rSync = () => { T.world.__sw = [rS, rW]; T.world.__man = rN; };
@@ -615,7 +615,7 @@
         if (rBabble) { clearInterval(rBabble); rBabble = null; }
         if (rPant) { rPant.cancel(); rPant = null; }
         rScene = key; rS = rW = rN = rF = rHB = rST = rFlying = null; rFlapShut = false; rSync();
-        if (key === 'sky' && !rSawSky) { rSawSky = 1; amb('birds_chirp_1'); } else if (key === 'stream') amb('stream_1', .2, 4); else stopAmb();
+        if (key === 'sky' && !rSawSky) { rSawSky = 1; amb('birds_chirp_1'); } else if (key === 'stream') amb('stream_1', .25, 4); else if (key === 'high') amb('leaves_footsteps', .25, 3); else stopAmb();
         T.clear();
         if (key === 'sky') {
           const pt = rPt(), sky1 = skyBG(T, pt ? 335 : 290);
@@ -645,6 +645,7 @@
         if (verb === 'smile') { if (!inst()) rS.hop(14, 400); return; }
         if (verb === 'shine') {
           const lv = +a;
+          if (rScene === 'field' && !rCicada && !inst()) { rCicada = 1; amb('cicada', .25, 4); }
           if (inst()) return;
           rS.pos.style.opacity = '';
           spinRays(rS); SND.warm(T, lv); sparkles(T, rS.x, rS.y, 120, 8); rS.hop(16, 500);
@@ -690,7 +691,7 @@
           rW.p.puff.style.transition = 'transform .5s'; rW.p.puff.style.transform = rW.p.art ? 'scale(.94,.88)' : 'scale(.85,.75)';
           if (rPant) rPant.cancel();
           rPant = rW.p.puff.animate([{ scale: '1 1' }, { scale: '1.06 1.1' }, { scale: '1 1' }], { duration: 700, iterations: Infinity });
-          if (!inst()) SND.pant(T);
+          if (!inst()) { SND.pant(T); short('balloon', .5, 2.5); }
           return;
         }
         console.warn('[read] wind 동사 모름', verb);
@@ -778,6 +779,7 @@
       leaves() { if (rF) leaves(T, 10, ...rF.tree, rOn(rW) ? windDir(rW) : 1); },
       flap(onoff) {
         const N = needMan(), on = onoff === 'on';
+        if (!on && rPant && !inst()) sfx('whistle_down', .7); // 바람 헉헉 끝: 볼이 쭈글쭈글
         if (rScene === 'field' && rFieldN === 4) {   /* 누가 이겼을까: 바람이 불면 외투를 꽉 여미고, 해님이 비추면 벗는다 */
           if (on) { rFlapShut = true; setOutfit(N.P, 'coatShut', 'cross', { buttons: 4 }); N.P.face('cold'); if (!N.__shiver) N.__shiver = shiver(N); }
           else { if (N.__shiver) { N.__shiver.cancel(); N.__shiver = null; } }
