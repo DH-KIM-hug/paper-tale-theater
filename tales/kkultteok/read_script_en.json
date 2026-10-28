@@ -268,7 +268,8 @@
      "before": [
       "chimney:cloud",
       "fx:pong",
-      "pop:500,200,퐁!"
+      "pop:500,200,퐁!",
+      "sfx:pop_appear:.5"
      ]
     },
     {
@@ -316,7 +317,8 @@
       ]
      ],
      "before": [
-      "clouds:shapes"
+      "clouds:shapes",
+      "sfx:chime_up:.45"
      ]
     },
     {
@@ -797,6 +799,7 @@
       ]
      ],
      "before": [
+      "sfx:zip_away:.5",
       "flue:up:puppy",
       "fx:whoosh",
       "dog:look:lookup:right",
@@ -1222,6 +1225,7 @@
       ]
      ],
      "before": [
+      "sfx:zip_away:.5",
       "flue:up:baby",
       "fx:whoosh",
       "fx:pong"
@@ -1526,7 +1530,8 @@
      "before": [
       "set:14_soil_v2",
       "soil:sprout",
-      "pop:400,380,쑥!"
+      "pop:400,380,쑥!",
+      "sfx:whistle_up:.45"
      ]
     },
     {
@@ -1541,7 +1546,8 @@
      ],
      "before": [
       "soil:flower",
-      "pop:520,360,활짝!"
+      "pop:520,360,활짝!",
+      "sfx:pop_appear:.5"
      ]
     },
     {
@@ -1556,7 +1562,8 @@
      ],
      "before": [
       "soil:berry",
-      "pop:640,380,빨갛게!"
+      "pop:640,380,빨갛게!",
+      "sfx:ding_glock:.45"
      ]
     },
     {
@@ -1657,6 +1664,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5,marimba_6,marimba_7:380:.5",
       "rainbow:count"
      ]
     },
@@ -1805,6 +1813,9 @@
        "nar",
        "Rainy days and sunny days, every one of them is precious."
       ]
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     }
    ]
