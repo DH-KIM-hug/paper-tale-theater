@@ -106,12 +106,14 @@
     FRIENDS.forEach(f => preCut('wrong_' + f.id));
     if (typeof NARRATION_CLIPS !== 'undefined') AudioFX.preloadAll(Object.values(NARRATION_CLIPS).flat());
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    const SFX_NAMES = ['intro_cozy', 'birds_chirp_1', 'winter_wind_1', 'crickets_night_1', 'crickets_night_2', 'waves', 'whistle_down', 'whistle_up'];
+    const SFX_NAMES = ['intro_cozy', 'birds_chirp_1', 'winter_wind_1', 'crickets_night_1', 'crickets_night_2', 'waves', 'whistle_down', 'whistle_up', 'daegeum'];
     try { AudioFX.preloadSfx(SFX_NAMES); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
     const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    /* 대금 한 소절(2026-10-29): 조용하고 쓸쓸한 순간에만. 놀이 .3, 읽기 ×0.8. 기다리지 않고 try/catch */
+    const daeg = () => { try { const o = { vol: isRead() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     let b1Seen = 0;
     let ambScene = null;
     const sceneAmb = k => {
@@ -119,7 +121,7 @@
       if (prev === k) return;
       try { AudioFX.stopAmbient(.4); } catch (e) { /* 무시 */ }
       if (k === 'A') amb('birds_chirp_1');
-      else if (k === 'B1') amb(b1Seen++ ? 'crickets_night_1' : 'winter_wind_1');
+      else if (k === 'B1') { const first = !b1Seen++; amb(first ? 'winter_wind_1' : 'crickets_night_1'); if (first) daeg(); } // 동짓날 저녁, 홀로 우는 할멈
       else if (k === 'B2') amb('crickets_night_2');
     };
 
