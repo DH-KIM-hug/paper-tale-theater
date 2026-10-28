@@ -531,7 +531,7 @@
       house.set(ruinKey, houseH * .7);
       pg.forEach(p => { p.show(true); p.hop(30, 350); });
       await say(lines[2]);
-      await T.cutImage([{ src: U(cutKey), hold: 3200 }]);
+      await T.cutImage([{ src: U(cutKey), hold: 2600 }]);
       pg.forEach((p, i) => { p.set(pigKeys[i].replace('base', 'flee')); p.move(1200, hy, 1100 + i * 150); });
       await sleep(900);
       await say(lines[3]);
@@ -583,11 +583,11 @@
     } });
     await say('후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!');
     wolf2.set('wolf_tired', 230); sfx('sad_trombone', .6); // 늑대가 지쳐서 풀썩
-    await T.cutImage([{ src: U('cut_tired'), hold: 3200 }]);
+    await T.cutImage([{ src: U('cut_tired'), hold: 2600 }]);
     await say('늑대는 숨이 차서 털썩 주저앉았어요.');
 
     /* 10. 굴뚝 */
-    await T.cutImage([{ src: U('cut_crawl'), hold: 3200 }]);
+    await T.cutImage([{ src: U('cut_crawl'), hold: 2600 }]);
     sfx('tiptoe_pizz', .6);
     await say('늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.');
     await T.sceneCard('보글보글', () => { bg('chimney'); T.camSnap(500, 280, 1); });
@@ -602,10 +602,10 @@
     } });
     sfx('drumroll_crash', .6); // 늑대가 내려오기 전
     await say('보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.');
-    await T.cutImage([{ src: U('cut_chimney'), hold: 2600 }, { src: U('cut_splash'), hold: 3200, sfx: 'splash' }]);
+    await T.cutImage([{ src: U('cut_chimney'), hold: 2600 }, { src: U('cut_splash'), hold: 2600, sfx: 'splash' }]);
     sfx('comic_brass', .6);
     await say('"앗, 뜨거워!"');
-    await T.cutImage([{ src: U('cut_launch'), hold: 3400, sfx: 'zip_away' }]);
+    await T.cutImage([{ src: U('cut_launch'), hold: 2600, sfx: 'zip_away' }]);
     await say('늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.');
 
     /* 11. 벽돌 마을 */
@@ -636,7 +636,7 @@
     // 진짜 악기 연주 (2026-10-28): 피리·바이올린·북이 함께 6.4초. 못 불러오면 합성음 4번
     let bandMusic = null; try { bandMusic = AudioFX.music('pigs_band', { vol: .5, dur: 6.4, fade: .8 }); } catch (e) { bandMusic = null; }
     for (let r = 0; r < (bandMusic ? 10 : 4); r++) { if (!bandMusic) tune([392, 523, 440, 587]); band.forEach((b, i) => setTimeout(() => b.hop(28, 350), i * 150)); await sleep(bandMusic ? 640 : 900); }
-    await T.cutImage([{ src: U('cut_village'), hold: 3600 }]);
+    await T.cutImage([{ src: U('cut_village'), hold: 2600 }]);
     sfx('party_horn', .6);
     await say('삼 형제는 튼튼한 집에서 오래오래 행복하게 살았어요.');
     stopAmb(.8);
