@@ -670,6 +670,7 @@
       ]
      ],
      "before": [
+      "amb:birds_chirp_2:.2:4",
       "pea:wiggle",
       "pop:720,215,하암"
      ]
@@ -684,6 +685,9 @@
        "The princess's eyes were droopy, and out came a big yawn, yaaawn.",
        null
       ]
+     ],
+     "before": [
+      "snd:sleepy_tuba:.6"
      ]
     },
     {
@@ -919,7 +923,9 @@
       "prince:look:joy",
       "confetti",
       "fx:tada",
-      "pop:475,215,안녕!"
+      "pop:475,215,안녕!",
+      "snd:party_horn:.9:600",
+      "snd:applause_1:.4:1500"
      ]
     },
     {

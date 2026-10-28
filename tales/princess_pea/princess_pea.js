@@ -245,7 +245,7 @@
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(수 세기 n1~n20)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { if (T.reading() && document.hidden && name === 'cushion') return true; /* 화면 꺼짐: 스무 번이 한꺼번에 울리지 않게 */ return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { pp_bg_room_day_v2: 'waves', pp_bg_gate_night_lb: 'rain_1', pp_bg_guest_night_lb: 'crickets_night_1', pp_bg_yard_day_v2: 'birds_chirp_1' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); newRig(T); dress(key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     if (T.fx) T.fx.style.pointerEvents = 'none';  // 빗줄기·꽃잎·'뚝뚝' 같은 효과 조각이 톡 대상을 덮지 않게
@@ -411,7 +411,7 @@
       },
       lightning: async () => {
         bolt.pos.animate([{ opacity: 0 }, { opacity: 1, offset: .15 }, { opacity: 1, offset: .5 }, { opacity: 0 }], { duration: 450 });
-        sfx(T, 'boom', .35, () => T.tone([120, 60], .4, { type: 'square', vol: .12 })); await sleep(500);
+        cue('thunder', .45) || sfx(T, 'boom', .35, () => T.tone([120, 60], .4, { type: 'square', vol: .12 })); await sleep(500);
       },
       door: cmd => {
         if (cmd === 'knock') { doorC.wiggle(4, 300); sfx(T, 'knock', .6, () => T.tone([900, 400], .1, { vol: .2 })); return sleep(700); }
@@ -439,7 +439,7 @@
             for (let i = from; i < to; i++) {
               const m = mats[i];
               put(T, m, PILE_X, FL - 100); inRig(m); rig.appendChild(peaB.pos);
-              m.move(TX, BOARD_TOP - i * MAT_H, 450, 'ease-out'); sfx(T, 'paper_down', .35);
+              m.move(TX, BOARD_TOP - i * MAT_H, 450, 'ease-out'); cue('cushion', .45) || sfx(T, 'paper_down', .35);
               if (i >= 15) hide(pile[19 - i]);
               if (i === 9 || i === 19) setTimeout(towerShake, 450);
               await sleep(480);
@@ -465,13 +465,15 @@
       sparkle: () => sparkleSfx(T),
       shake: () => T.shake(),
       confetti: () => T.confetti(),
-      fx: n => { sfx(T, n, n === 'tada' ? undefined : .4, n === 'tada' ? () => sparkleSfx(T) : undefined); },
+      snd: (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } },
+      amb: (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
+      fx: n => { if (n === 'creak' && cue('door_heavy_1', .6)) return; sfx(T, n, n === 'tada' ? undefined : .4, n === 'tada' ? () => sparkleSfx(T) : undefined); },
       pop: s => {
         const [x0, y, ...t] = s.split(','), txt = t.join(','), x = P ? Math.max(rcamP - 110, Math.min(rcamP + 110, +x0)) : +x0;
         T.pop(x, +y, tr(txt), POPC[txt]);
       },
     };
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 진짜 공주를 찾아서 (톡 1 — 배) ===== */
     scene('pp_bg_room_day_v2');
