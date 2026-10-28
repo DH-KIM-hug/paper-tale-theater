@@ -20,7 +20,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
   else {
     const wordmark = document.createElement('img');
     wordmark.className = 'splash-wordmark';
-    wordmark.src = new URL('../../assets/v3w/sp_logo_c2_v1.webp', import.meta.url).href;
+    wordmark.src = new URL('../../assets/v3w/sp_logo_c2_b_light_v1.webp', import.meta.url).href;
     wordmark.alt = '톡톡 동화극장';
     fallbackTitle.replaceWith(wordmark);
   }
@@ -63,7 +63,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
     timer = setTimeout(finish, 500);
     return { finish };
   }
-  import('./scene.js?v=20261028c2final1').then(async ({ createSplashScene }) => {
+  import('./scene.js?v=20261028c2ab2').then(async ({ createSplashScene }) => {
     if (closed) return;
     const building = createSplashScene(host.querySelector('.splash-stage'), {
       lang, signal: abort.signal,

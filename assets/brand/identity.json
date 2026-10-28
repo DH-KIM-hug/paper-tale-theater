@@ -1,8 +1,12 @@
 {
   "active": "C2",
   "icon": "assets/brand/c2-icon.png",
-  "mark": "assets/brand/c2-mark.png",
-  "logo": "assets/brand/c2-logo.png",
+  "mark": "assets/ui/logo_mark.webp",
+  "logo": "assets/brand/c2-logo-B-vertical-light.png",
   "source_icon": "assets/raw/logo_gpt/logo_C2_icon.png",
-  "source_mark": "assets/raw/logo_gpt/logo_C2_mark.png"
+  "source_mark": "assets/raw/logo_gpt/logo_C2_mark.png",
+  "logo_horizontal_light": "assets/brand/c2-logo-A-horizontal-light.png",
+  "logo_horizontal_dark": "assets/brand/c2-logo-A-horizontal-dark.png",
+  "logo_vertical_light": "assets/brand/c2-logo-B-vertical-light.png",
+  "logo_vertical_dark": "assets/brand/c2-logo-B-vertical-dark.png"
 }

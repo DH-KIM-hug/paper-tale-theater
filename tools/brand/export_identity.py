@@ -6,8 +6,8 @@ for src,dst in [('assets/icons/favicon-512.png','door-icon.png'),('assets/ui/log
  p=archive/dst
  if not p.exists():shutil.copy2(src,p)
 # Runtime formats; original vectors and raster exports stay available in assets/brand.
-logo=Image.open('assets/brand/c2-logo.png').convert('RGBA');logo.save('assets/v3w/sp_logo_c2_v1.webp',lossless=True)
-mark=Image.open('assets/brand/c2-mark.png').convert('RGBA');mark.thumbnail((512,512),Image.Resampling.LANCZOS);mark.save('assets/ui/logo_mark.webp',lossless=True)
+logo=Image.open('assets/brand/c2-logo-B-vertical-light.png').convert('RGBA');logo.save('assets/v3w/sp_logo_c2_b_light_v1.webp',lossless=True,exact=True)
+# The current UI mark is maintained in assets/ui/logo_mark.webp; do not replace it from an older derivative.
 for n in [16,32,192,512,1024,180]:
  im=Image.open('assets/brand/c2-icon.png').convert('RGB').resize((n,n),Image.Resampling.LANCZOS)
  name='apple-touch-icon.png' if n==180 else ('app-icon-1024.png' if n==1024 else f'favicon-{n}.png');im.save(Path('assets/icons')/name)

@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.js';
-import { ART } from './art.js?v=20261028c2final1';
+import { ART } from './art.js?v=20261028c2ab2';
 
 export const DURATION = 7.4;
 const CREAM = '#F5EFE9';
@@ -81,13 +81,13 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     }
     const loader = new THREE.TextureLoader();
     // All loads settle before cleanup, including the failed-load/early-skip path.
-    const results = await Promise.allSettled(Object.keys(ART).filter(name => name !== 'sp_logo_c2_v1' || lang !== 'en').map(async name => {
+    const results = await Promise.allSettled(Object.keys(ART).filter(name => name !== 'sp_logo_c2_b_light_v1' || lang !== 'en').map(async name => {
       const map = await loader.loadAsync(artURL(name));
       if (disposed) { map.dispose(); return null; }
       ownTexture(map);
       // The originals remain untouched. A bounded GPU copy is enough for these small paper actors.
       const image = map.image;
-      const edge = name === 'sp_ground_meadow_v1' || name === 'sp_logo_c2_v1' ? 1536 : name === 'sp_castle_v1' ? 1024 : 768;
+      const edge = name === 'sp_ground_meadow_v1' || name === 'sp_logo_c2_b_light_v1' ? 1536 : name === 'sp_castle_v1' ? 1024 : 768;
       const scale = Math.min(1, edge / Math.max(image.width, image.height));
       if (scale < 1) {
         const reduced = document.createElement('canvas');
@@ -148,12 +148,13 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     // Keep the same stage floor and foreground foliage through both stories.
     // A complete newly illustrated paper castle replaces the block wall and reused towers.
     const palace = cutout('sp_castle_v1', 4.9);
-    place(garden, palace, 0, .8, .15, 2.65, { tilt: .015, drop: .8 });
+    const gardenStart = 3.04;
+    place(garden, palace, 0, .8, .15, gardenStart, { from: 'bottom', tilt: .015, drop: .6 });
     const princesses = new THREE.Group();
     garden.add(princesses);
     const princessArt = [cutout('cd2_cind_gown', 3.2), cutout('sw_snow_stand', 3.2), cutout('sb_pr_wave', 3.2)];
     princessArt.forEach((mesh, i) => {
-      place(princesses, mesh, (i - 1) * 2.2, -.12, .36 + i * .03, 3.04 + i * .13, { from: 'bottom', drop: .6, tilt: (1 - i) * .035 });
+      place(princesses, mesh, (i - 1) * 2.2, -.12, .36 + i * .03, gardenStart, { from: 'bottom', drop: .6, tilt: (1 - i) * .035 });
     });
 
     // Complete symbol + wordmark lockup, presented alone at the end.
@@ -179,7 +180,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       title = textPiece('Tale Theater', 155, '#65513F', 7.4);
       title.position.set(0, -.18, 1.02); logo.add(title);
     } else {
-      wordmark = cutout('sp_logo_c2_v1', 4.6);
+      wordmark = cutout('sp_logo_c2_b_light_v1', 4.6);
       wordmark.material.depthWrite = false;
       wordmark.castShadow = false;
       wordmark.position.set(0, .85, 1.02); logo.add(wordmark);
@@ -233,15 +234,16 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       turtle.visible = t >= .95;
       turtle.position.set(mix(3.7, 1.95, walk), -1.42 + .025 * Math.sin(walk * Math.PI * 4), .55);
       turtle.scale.x = -1;
-      garden.visible = t >= 2.65;
+      garden.visible = t >= gardenStart;
       // First frame the logo with the miniature stage, then leave the logo alone.
       garden.scale.setScalar(mix(1, .53, finish));
       garden.position.set(0, -2.05 * finish, 0);
       for (const group of [landscape, foliage, garden]) {
-        group.visible = (group !== garden || t >= 2.65) && clearStage < 1;
+        group.visible = (group !== garden || t >= gardenStart) && clearStage < 1;
         group.traverse(mesh => {
           if (!mesh.isMesh) return;
-          const arrival = mesh.parent.parent === princesses ? smooth((t - (3.04 + princessArt.indexOf(mesh) * .13)) / .2) : 1;
+          // Castle and cast share the same lift and fade; no empty castle beat.
+          const arrival = group === garden ? smooth((t - gardenStart) / .2) : 1;
           mesh.material.opacity = arrival * (1 - clearStage);
           mesh.castShadow = clearStage < .4;
         });

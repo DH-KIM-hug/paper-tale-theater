@@ -1516,13 +1516,13 @@
     if (lang === 'en') title.textContent = 'Tok Tok Tale Theater';
     else {
       title.className = 'splash-wordmark';
-      title.src = 'assets/v3w/sp_logo_c2_v1.webp';
+      title.src = 'assets/v3w/sp_logo_c2_b_light_v1.webp';
       title.alt = '톡톡 동화극장';
     }
     fallback.append(title); sp.append(fallback);
     sp.addEventListener('pointerdown', complete);
     pending = setTimeout(complete, 2500);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
-    import('./engine/splash/start.js?v=20261028c2final1')
+    import('./engine/splash/start.js?v=20261028c2ab2')
       .then(({ startSplash }) => {
         if (finished) return;
         clearTimeout(pending);
