@@ -594,9 +594,20 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { el, paper, sleep, say, actor, camTo, camSnap, camWide } = T;
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'stream_1', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_korean', 'birds_chirp_1', 'birds_chirp_2', 'stream_1', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -955,6 +966,7 @@
     { const at0 = READ_ACTS.turtle; READ_ACTS.turtle = (a, b) => (a === 'at' && R.podium ? put(turtle, 490, 402, 1.25) : at0(a, b)); }
     /* 꿈속 토끼는 시상대 1등 자리 (놀이판 자리) */
     { const at0 = READ_ACTS.rabbit; READ_ACTS.rabbit = (a, b) => (a === 'at' && R.set === 'dream' ? put(rabbit, 502, 314, .9) : at0(a, b)); }
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
 
     /* ===== 1막 — 경주를 열자 ===== */
@@ -966,6 +978,7 @@
     put(rabbit, T.portrait() ? 1060 : 1150, gy1, 1);
     await T.curtain(true);
     amb('birds_chirp_1');
+    intro.go(); // 시작 음악 (놀이)
     walk(2600);
     turtle.move(T.portrait() ? 400 : 330, gy1, 2600, 'linear');
     await say('숲속 마을에 아침이 왔어요.');
