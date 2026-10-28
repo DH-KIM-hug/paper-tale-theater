@@ -1202,7 +1202,7 @@
         cut(k) {
           if (k === 'monster') return T.cutImage([{ src: artUrl('cut_monster'), hold: 2200 }], { hold: 2200 });
           if (k === 'ghost') { if (!rI()) cue('comic_brass', .6); }
-          if (k === 'ghost') return T.cutImage([{ src: artUrl('cut_ghost'), hold: 3000 }], { hold: 3000 });
+          if (k === 'ghost') return T.cutImage([{ src: artUrl('cut_ghost'), hold: 2600 }], { hold: 2600 });
         },
         fx(n) {
           if (n === 'crash') { S.boom(); if (hw) { band.slice().reverse().forEach((a, i) => a.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, delay: i * 80, fill: 'forwards' })); try { hw.win.firstChild.nextSibling.setAttribute('fill', '#FFE39A'); } catch (e) { /* 무시 */ } } }
@@ -1279,7 +1279,7 @@
     clearInterval(pant); cast.dog.parts.tongue.setAttribute('opacity', 0);
     await say('당나귀: "그럼 우리 같이 브레멘에 가서 음악가가 되자!"');
     cast.dog.cry(); cast.dog.hop(34); T.pop(DOGX, 330, '좋아!', C.pine);
-    await sleep(700);
+    await sleep(450); // 장면 끝 (2026-10-29 대사 사이 기다림 줄임)
 
     /* ---------- 3. 담장 위 누구? ② 고양이 (로우앵글) ---------- */
     const WALLC = [575, Math.round(135 - .273 * (575 - 500)) + 3];
@@ -1310,7 +1310,7 @@
     await cast.cat.move(bgArt('wall') ? 545 : L(600, 590), bgArt('wall') ? 250 : 180, 350, 'ease-out');
     await cast.cat.move(L(450, 565), 550, 400, 'ease-in');
     cast.cat.setScale(L(1.05, .9)); cast.cat.cry(); T.pop(L(450, 565), 380, '폴짝!', C.persimmon);
-    await sleep(600);
+    await sleep(400);
 
     /* ---------- 4. 지붕 위 누구? ③ 닭 (농가 지붕 로우앵글) ---------- */
     const ROOFC = [805, Math.round(121 + .18 * (805 - 784)) + 3];
@@ -1386,7 +1386,7 @@
         sing(good, true);
         icons[i].style.opacity = '1';
         T.anim(icons[i], [{ translate: '0 0' }, { translate: '0 -10px' }, { translate: '0 0' }], 300);
-        await sleep(700);
+        await sleep(450);
       }
       S.chord(392 + r * 60);
       band.forEach((a, i) => setTimeout(() => a.hop(16, 320), i * 100));
@@ -1697,7 +1697,7 @@
       T.pop(a.x, Math.max(120, a.y - 150 * a.scale), R.pop, C.bean);
       thief.parts.mouth.setAttribute('ry', 8);
       thief.hop(50, 420); T.shake();
-      await sleep(700);
+      await sleep(500);
       await say(R.say);
       a.lean.style.filter = 'brightness(.14)'; doze(a);
       thief.parts.mouth.setAttribute('ry', 2);
@@ -1721,7 +1721,7 @@
     await sleep(1200);
     const told = vo('cut_ghost');
     cue('comic_brass', .6);
-    await (artUrl('cut_ghost') ? T.cutImage([{ src: artUrl('cut_ghost'), hold: 3000 }], { hold: 3000 }) : T.cut(svg => {
+    await (artUrl('cut_ghost') ? T.cutImage([{ src: artUrl('cut_ghost'), hold: 2600 }], { hold: 2600 }) : T.cut(svg => {
       const cells = [['cat', 0, 0, '귀신?', 1.25], ['dog', 200, 0, '콕?', 1.2], ['donkey', 0, 150, '거인?', .6], ['rooster', 200, 150, '재판관?', 1.2]];
       T.el('rect', { x: 0, y: 0, width: 400, height: 300, fill: C.cream }, svg);
       T.el('path', { d: 'M200 0 V300 M0 150 H400', stroke: C.bark, 'stroke-width': 6 }, svg);
@@ -1729,7 +1729,7 @@
         const g = T.el('g', { transform: `translate(${x + 84},${y + 140}) scale(${s})` }, svg); drawLook(T, g, k, k === 'donkey' ? 'home' : 'sing');
         T.el('text', { x: x + 160, y: y + 38, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(w) }, svg);
       });
-    }, { hold: 3000 }));
+    }, { hold: 2600 }));
     if (!told) S.giggle();
     await say('사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.');
 
@@ -1759,7 +1759,6 @@
     T.finale();
     await say('기쁨의 노래를 연주해요!'); // 따라 누르기 없이 들려주기만 (2026-10-19)
     await recordedMusic('finale_march', cheerFallback); // 녹음이 시작도 못 했을 때만 동물 환호
-    await sleep(500);
     await sleep(400);
     band.forEach((a, i) => setTimeout(() => { a.cry(.6); a.hop(24, 380); }, i * 200));
     T.confetti(); S.chord(523);
