@@ -458,8 +458,8 @@
     try { AudioFX.preloadSfx(['birds_chirp_1', 'pot_boil', 'whistle_down', 'comic_brass', 'drumroll_crash']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
-    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
-    const sfx = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     /* 그림 미리 불러오기: 배우·순무·첫 배경을 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
@@ -711,7 +711,7 @@
     };
     const READ_ACTS = {
       set(k) {
-        if (k === 'spring' && !R.sawSpring) { R.sawSpring = 1; amb('birds_chirp_1'); } else if (k === 'feast') amb('pot_boil', .2, 4); else stopAmb();
+        if (k === 'spring' && !R.sawSpring) { R.sawSpring = 1; amb('birds_chirp_1'); } else if (k === 'feast') amb('pot_boil', .25, 4); else stopAmb();
         if (k === 'spring') { // 놀이판 1장: 봄 텃밭, 구멍과 씨앗
           resetMisc(); T.clear(); R.view = 'spring'; R.step = 0; rise = 0;
           R.bgp = gardenBG(T, { season: 'spring' });
@@ -779,6 +779,7 @@
       pull: n => { if (+n === 6 && R.view !== 'lowangle') lbFade(T, 'garden', rInstant() ? 0 : 1200); return pullRead(+n); },
       async grandpa(a) {
         if (a !== 'fall') return;
+        if (!rInstant()) sfx('whistle_down', .7);
         const g = cast.grandpa;
         g.sitDown();
         await g.move(g.x + 80, g.y, 350, 'ease-out');
@@ -839,6 +840,7 @@
       },
       async cut(k) {
         if (k === 'glare') {
+          if (!rInstant()) sfx('comic_brass', .6);
           const g = artUrl('cut_glare') && T.cutImage([{ src: artUrl('cut_glare'), hold: 2200 }], { hold: 2200, onShow: () => voiceLine('cut_glare', 300) });
           await (g || T.cut(svg => {
             const dogG = T.el('g', { transform: 'translate(70,262) scale(-2.3,2.3)' }, svg); DRAW.dog(T, dogG);
@@ -854,6 +856,7 @@
           T.el('text', { x: 200, y: 64, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 9, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(word) }, svg);
         };
         if (k === 'heave') { // 영~ 차~ 두 장 (코드 컷)
+          if (!rInstant()) sfx('drumroll_crash', .8);
           await T.cut(svg => cutTurnip(svg, 230, .6, '영~'), { hold: 1100 });
           await T.cut(svg => cutTurnip(svg, 190, .6, '차~'), { hold: 1100 });
           return;
