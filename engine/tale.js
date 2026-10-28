@@ -1007,8 +1007,10 @@ const Tale = (() => {
   const THUMBS_V = '20261022e';
   const taleId = () => { const m = location.pathname.match(/\/tales\/([^/]+)\//); return m ? decodeURIComponent(m[1]) : ''; };
   /* 읽어 주기 단추의 펼친 책 (종이 두 장) */
-  const BOOK_SVG = '<svg class="book" viewBox="0 0 24 20" aria-hidden="true"><path class="l" d="M11.2 4.2 Q7 1.6 1.6 2.4 V16.6 Q7 15.8 11.2 18.2Z"/><path class="r" d="M12.8 4.2 Q17 1.6 22.4 2.4 V16.6 Q17 15.8 12.8 18.2Z"/></svg>';
-  const PLAY_SVG = '<svg class="play" viewBox="0 0 10 11" aria-hidden="true"><path d="M1.2 1.1 Q1.2 .2 2 .6 L9.2 4.8 Q9.9 5.5 9.2 6.2 L2 10.4 Q1.2 10.8 1.2 9.9Z"/></svg>';
+  /* 단추 그림은 앱 UI 생성 그림(assets/ui/*.webp)을 쓴다(2026-10-29 사용자 지시: SVG 그림 → 이미지) */
+  const uiPic = (k, cls = '') => `<img class="uipic ${cls}" src="${ROOT_URL}assets/ui/${k}.webp" alt="" aria-hidden="true" draggable="false">`;
+  const BOOK_SVG = uiPic('ic_book', 'book');
+  const PLAY_SVG = uiPic('ic_play', 'play');
   /* 시작·끝 화면의 구멍 그림: 밝은 종이 = <id>_light.webp(THUMBS2L), 어두운 종이 = <id>.webp(THUMBS2). 없으면 빈 구멍 */
   function heroes() {
     const id = taleId(), dark = { matches: false, addEventListener() {} }; // 다크 모드 없음: 늘 밝은 종이
@@ -1148,12 +1150,12 @@ const Tale = (() => {
     <div id="hand" hidden>${handSvg()}</div>
     <button class="pill" id="finBtn" hidden>${tr('끝내기')}</button>
   </div>
-  <div id="rotateHint"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3" fill="none" stroke="#C98A5B" stroke-width="2.6"/><circle cx="16" cy="25" r="1.6" fill="#C98A5B"/></svg>${tr('돌려서 크게 보기')}</div>
+  <div id="rotateHint">${uiPic('ic_rotate')}${tr('돌려서 크게 보기')}</div>
   <div id="bubble" hidden><p id="bubbleText"></p></div>
   <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
-    <a class="homeIcon" id="homeIcon" href="${home}" aria-label="${tr('처음으로')}"><svg viewBox="0 0 48 48" aria-hidden="true"><path class="a" d="M24 7 L43 24 H5Z"/><rect class="b" x="11" y="23" width="26" height="18" rx="1.5"/><rect class="a" x="20" y="29" width="8" height="12" rx="1"/></svg></a>
-    ${AUTO() ? '<i class="autobadge" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5"/><path d="M9.2 7.2 Q9.2 6.3 10 6.8 L17 11.2 Q17.6 12 17 12.8 L10 17.2 Q9.2 17.7 9.2 16.8Z"/></svg></i>' : ''}
+    <a class="homeIcon" id="homeIcon" href="${home}" aria-label="${tr('처음으로')}">${uiPic('ic_home')}</a>
+    ${AUTO() ? `<i class="autobadge" aria-hidden="true">${uiPic('ic_play')}</i>` : ''}
     <img class="keyimg" alt="" decoding="async">
     <div class="hero plain"><img alt="" decoding="async"></div>
     <div class="words">
@@ -1170,8 +1172,8 @@ const Tale = (() => {
       <h2 class="paperword ttl" aria-label="${tr(endTitle)}">${letters(tr(endTitle))}</h2>
       <p class="sub" id="endMsg" hidden></p>
       <div class="rbtns">
-        <a class="rbtn" id="homeBtn" href="${home}" aria-label="${tr('홈으로')}"><svg viewBox="0 0 48 48" aria-hidden="true"><path class="a" d="M24 7 L43 24 H5Z"/><rect class="b" x="11" y="23" width="26" height="18" rx="1.5"/><rect class="a" x="20" y="29" width="8" height="12" rx="1"/></svg></a>
-        <button type="button" class="rbtn" id="againBtn" aria-label="${tr('한 번 더')}"><svg viewBox="0 0 48 48" aria-hidden="true"><path class="s" d="M38 24 A14 14 0 1 1 31 11.8"/><path class="a" d="M26 4 L38 11 L28 20Z"/></svg></button>
+        <a class="rbtn" id="homeBtn" href="${home}" aria-label="${tr('홈으로')}">${uiPic('ic_home')}</a>
+        <button type="button" class="rbtn" id="againBtn" aria-label="${tr('한 번 더')}">${uiPic('ic_again')}</button>
       </div>
     </div>
     <div class="aw-tray" id="awTray" hidden>
@@ -1516,7 +1518,7 @@ const Tale = (() => {
       if (award.star && app && !es.hidden) {
         if (award.sticker || award.sticker2 || award.cast) await sleep(800);
         const slot = dots[Math.max(0, Math.min(need, after) - 1)];
-        await fly('<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z"/></svg>', 'star', (award.sticker || award.sticker2 || award.cast) ? book.getBoundingClientRect() : es.querySelector('.bwin').getBoundingClientRect(), slot.getBoundingClientRect(), 1100);
+        await fly(uiPic('star_one'), 'star', (award.sticker || award.sticker2 || award.cast) ? book.getBoundingClientRect() : es.querySelector('.bwin').getBoundingClientRect(), slot.getBoundingClientRect(), 1100);
         paintPlate(Math.min(need, after)); pulse(plate);
         sfx(after >= need ? 'tada' : 'sparkle', .7);               // 별 반짝(Pixabay Magic Twinkle), 다섯 개째는 짧은 팡파르(Kenney CC0)
         say(after >= need ? '다섯 개! 동화를 하나 열 수 있어요' : '종이별 하나 받았어요!');
