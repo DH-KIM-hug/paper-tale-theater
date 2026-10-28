@@ -21,7 +21,7 @@
     uc_sheep_jump: 1.2683, uc_sheep_happy: 1.09, uc_deer_relief: 0.7933, uc_horse_happy: 1.2433,
     uc_prop_block_yellow: 1.0233, uc_prop_block_blue: 1.015,
     /* 2026-10-22 연출 재기획 그림(PLAN §9): 다현이 공주 옷 · 숨는 자세 · 중간 소품 · 앞 가림 조각 */
-    uc_kid2_stand: 0.565, uc_kid2_walk: 0.5983, uc_kid2_sad: 0.5517, uc_kid2_tired: 0.5517, uc_kid2_turn: 0.5417, uc_kid2_turn3: 0.5633, uc_kid2_hug: 0.6633, uc_kid2_wave: 0.6567,
+    uc_kid2_stand: 0.565, uc_kid2_walk: 0.5983, uc_kid2_sad: 0.5517, uc_kid2_tired: 0.5517, uc_kid2_turn: 0.5417, uc_kid2_turn3: 0.5633, uc_kid2_turn4: 0.53, uc_kid2_hug: 0.6633, uc_kid2_wave: 0.6567,
     uc_unicorn_hide_cloud: 1.18, uc_unicorn_peek_cloud_horn: 0.9083, uc_unicorn_peek_tree: 0.9633, uc_unicorn_peek_spray: 1.015, uc_unicorn_hide_bush: 1.7274,
     uc_mid_sheep_home: 1.3433, uc_mid_bush_corner: 1.3867, uc_mid_moon_halo: 1.085,
     uc_fg_grass_flowers: 1.3833, uc_fg_cloud_hill: 2.4862, uc_fg_cloud_bank: 0.7333, uc_fg_cloud_wisp: 2.8846, uc_fg_tree_trunk: 0.6183, uc_fg_pine_branch: 1.5,
@@ -42,7 +42,7 @@
     uc_prop_waterfall: 300, uc_prop_rainbow: 200, uc_prop_basket: 66, uc_prop_horn_bands: 40,
     uc_hint_tail: 90, uc_hint_silhouette: 150, uc_hint_tree_gap: 260, uc_hint_spray_eye: 70, uc_hint_horn_tip: 110,
     /* 다현이(공주 옷, 2026-10-22): 머리카락 덩어리 폭(위 절반의 갈색 조각 폭)을 서기와 같게 잰 값. 돌아봄은 옆얼굴이라 머리카락 높이로 */
-    uc_kid2_stand: 230, uc_kid2_walk: 237, uc_kid2_sad: 236, uc_kid2_tired: 240, uc_kid2_turn: 244, uc_kid2_turn3: 228, uc_kid2_hug: 230, uc_kid2_wave: 238,
+    uc_kid2_stand: 230, uc_kid2_walk: 237, uc_kid2_sad: 236, uc_kid2_tired: 240, uc_kid2_turn: 244, uc_kid2_turn3: 228, uc_kid2_turn4: 251, uc_kid2_hug: 230, uc_kid2_wave: 238,
     /* 숨는 자세(§8-3): 눈·얼굴 크기와 다리 길이를 서기(270)와 나란히 놓고 맞춘 값. 덤불 자세는 낮고 길게 엎드려 그림 높이가 작다 */
     uc_unicorn_peek_tree: 270, uc_unicorn_peek_spray: 268, uc_unicorn_peek_cloud_horn: 282, uc_unicorn_hide_cloud: 245, uc_unicorn_hide_bush: 160,
     uc_mid_sheep_home: 280, uc_mid_bush_corner: 260, uc_mid_moon_halo: 330,
@@ -62,7 +62,7 @@
     uc_unicorn_stand: 'left', uc_unicorn_back: 'right', uc_sheep_cry: 'left', uc_sheep_jump: 'left', uc_sheep_happy: 'left',
     uc_deer_hurt: 'left', uc_deer_relief: 'left', uc_horse_hungry: 'left', uc_horse_happy: 'left', uc_hint_silhouette: 'left',
     /* 2026-10-22 새 그림(눈으로 본 쪽): 다현이 걷기·돌아봄·지침(고개 숙여 오른쪽 아래를 봄, 발끝도 오른쪽 — 2026-10-22 다시 봄)은 오른쪽, 서기·슬픔·안기·손 흔들기는 앞모습. 숨는 자세 다섯은 모두 왼쪽 */
-    uc_kid2_walk: 'right', uc_kid2_turn: 'right', uc_kid2_turn3: 'right', uc_kid2_tired: 'right', uc_kid2_stand: 'front', uc_kid2_sad: 'front', uc_kid2_hug: 'front', uc_kid2_wave: 'front',
+    uc_kid2_walk: 'right', uc_kid2_turn: 'right', uc_kid2_turn3: 'right', uc_kid2_turn4: 'right', uc_kid2_tired: 'right', uc_kid2_stand: 'front', uc_kid2_sad: 'front', uc_kid2_hug: 'front', uc_kid2_wave: 'front',
     uc_unicorn_hide_cloud: 'left', uc_unicorn_peek_cloud_horn: 'left', uc_unicorn_peek_tree: 'left', uc_unicorn_peek_spray: 'left', uc_unicorn_hide_bush: 'left',
   };
   const FL = 490;                       // 바닥(발끝 y)
@@ -293,14 +293,22 @@
     const card = (t, fn, f) => T.sceneCard(t, () => { refreshP(); fn(); }, f);
     const X = (l, p) => (P ? p : l);
     let VX = { lx: 500, ps: 1 };
+    /* 같은 배경 이어 가기(2026-10-29 사용자: '같은 배경인데 왜 책장이 넘어가지?'): CONT 동안 scene() 은 배경을 지우지 않고,
+       화면 틀·카메라는 CONT_MS 동안 부드럽게 옮긴다. curKey = 지금 깔린 배경 */
+    let CONT = false, CONT_MS = 700, curKey = null;
     /* 장면 시작: 세로에서는 월드·효과 층을 ps 배로 줄여 landscape 좌표 lx 가 화면 가운데에 오게 한다 */
     const setView = (lx, ps = .75) => {
       T.fx.style.pointerEvents = 'none';
-      VX = { lx, ps };
+      const old = VX; VX = { lx, ps };
       const t = P ? `translate(500 ${FL}) scale(${ps}) translate(${-lx} ${-FL})` : '';
       [T.world, T.fx].forEach(g => (t ? g.setAttribute('transform', t) : g.removeAttribute('transform')));
-      camSnap(500, 280, 1);
+      if (CONT && P && (old.lx !== lx || old.ps !== ps)) {
+        const css = v => `translate(500px, ${FL}px) scale(${v.ps}) translate(${-v.lx}px, ${-FL}px)`;
+        [T.world, T.fx].forEach(g => g.animate([{ transform: css(old) }, { transform: css(VX) }], { duration: CONT_MS, easing: 'ease-in-out' }));
+      }
+      camAt(500, 280, 1);
     };
+    const camAt = (x, y, z) => (CONT ? T.camTo(x, y, z, CONT_MS) : camSnap(x, y, z));
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
@@ -312,7 +320,13 @@
       if (!go()) setTimeout(go, 900);   // 아직 못 받았으면 한 번 더
     };
     const SCENE_AMB = { uc_bg2_hill: 'birds_chirp_1', uc_bg2_night_forest: 'crickets_night_1', uc_bg2_waterfall: 'waterfall', uc_bg2_moon_night: 'crickets_night_2' };
-    const scene = (key, lx, ps) => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); setView(lx, ps); if (SCENE_AMB[key]) amb(SCENE_AMB[key], key === 'uc_bg2_waterfall' ? .22 : .28); };
+    /* 돌려주는 값: 같은 배경을 이어 가면 true (배경·폭포 물보라·배경 소리를 그대로 둔다) */
+    const scene = (key, lx, ps) => {
+      if (CONT && key === curKey) { setView(lx, ps); return true; }
+      curKey = key;
+      try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); setView(lx, ps); if (SCENE_AMB[key]) amb(SCENE_AMB[key], key === 'uc_bg2_waterfall' ? .22 : .28);
+      return false;
+    };
     /* 세로 화면: 가지처럼 화면 밖에서 들어오는 조각을 보이는 가장자리 너머(over 화면 px)에 붙인다(기기마다 보이는 폭이 달라 계산). 가로는 그대로 x */
     const edgeX = (a, side, x, over = 24) => {
       if (!P) return x;
@@ -332,8 +346,9 @@
     CUTS.forEach(k => T.preload(src(k)));
     await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);   // 진짜 4초(검증 화면 건너뛰기의 빠른 sleep 에 지지 않게 — 그림이 다 받아진 뒤 장면을 그린다)
     const pz = (who, ps, pre = who) => Object.fromEntries(ps.map(p => [p, ['uc_' + pre + '_' + p, HT['uc_' + pre + '_' + p]]]));
-    /* 다현이(공주 옷, PLAN §13). 뒤돌아보기(turn)는 2026-10-28 새 그림 uc_kid2_turn3: 몸은 걷던 쪽(왼쪽) 옆모습, 고개만 오른쪽 뒤로 — 머리카락 폭으로 높이 228 */
-    const kid = mk(T, { ...pz('kid', ['stand', 'walk', 'sad', 'tired'], 'kid2'), turn: ['uc_kid2_turn3', HT.uc_kid2_turn3], ...pz('kid', ['hug', 'wave'], 'kid2') });
+    /* 다현이(공주 옷, PLAN §13). 뒤돌아보기(turn)는 2026-10-29 새 그림 uc_kid2_turn4: 걸어가던(왼쪽 안쪽) 3/4 뒷모습, 고개만 오른쪽 어깨 너머 옆얼굴로 유니콘 쪽을 본다
+       (turn3 은 몸 옆모습·얼굴 정면이라 '이상'). 머리카락 덩어리 폭(서기와 같은 120)으로 높이 251 */
+    const kid = mk(T, { ...pz('kid', ['stand', 'walk', 'sad', 'tired'], 'kid2'), turn: ['uc_kid2_turn4', HT.uc_kid2_turn4], ...pz('kid', ['hug', 'wave'], 'kid2') });
     /* 유니콘: 서기·뒷모습 + 장소별 숨는 자세 다섯(PLAN §8-2). 가리는 물체는 z 순서로 덮는다(반투명 없음) */
     const uni = mk(T, { ...pz('unicorn', ['stand', 'back']), ...pz('unicorn', ['hide_cloud', 'peek_cloud_horn', 'peek_tree', 'peek_spray', 'hide_bush']) });
     const sheep = mk(T, pz('sheep', ['cry', 'jump', 'happy']));
@@ -350,6 +365,43 @@
     const ALL = [kid, uni, sheep, deer, horse, ...Object.values(flowers), cloud, bush, rainbow, basket, bands, ...thorns, home, cbush, halo, ...Object.values(FG)];
     ALL.forEach(hide);
     T.director(null);
+    /* 같은 배경에서 다음 장면으로 이어 가기 (책장 넘김 없음). fn = 그 장면의 배치(scene() 포함).
+       배치 전후를 견주어: 그대로인 것은 두고, 걷는 인물(walk)은 새 자리로 걸어가고, 사라질 것은 흐려지고, 새로 놓일 것은 나타난다.
+       숨은 유니콘처럼 걷지 않는 것이 자리를 바꾸면 흐려졌다가(가림 조각이 다 나타난 뒤) 새 자리에서 나타난다.
+       keep = 지금 자리를 지킬 인물(다음 대사에서 곧 걸어가는 경우) */
+    const WALKERS = [kid, sheep, deer, horse];
+    const cont = async (fn, { keep = [], walk = [], ms = 700 } = {}) => {
+      const was = new Map(ALL.map(a => [a, { vis: a.pos.isConnected && a.pos.style.display !== 'none' && a.pos.style.opacity !== '0', x: a.x, y: a.y }]));
+      ALL.forEach(hide);
+      CONT = true; CONT_MS = ms;
+      try { fn(); } finally { CONT = false; }
+      const now = a => a.pos.isConnected && a.pos.style.display !== 'none';
+      const ph1 = [], swap = [];
+      for (const a of ALL) {
+        const w = was.get(a), n = now(a);
+        if (w.vis && n) {
+          if (keep.includes(a)) { a.place(w.x, w.y); continue; }
+          if (Math.abs(w.x - a.x) + Math.abs(w.y - a.y) < 2) continue;
+          const nx = a.x, ny = a.y;
+          if (WALKERS.includes(a) || walk.includes(a)) {
+            const k = a.cur, d = a.want; a.place(w.x, w.y);
+            const go = nx >= w.x ? 'right' : 'left';   // 가는 쪽을 보고 걷다가, 닿으면 장면의 자세·방향으로
+            if (a === kid) a.look('walk', go); else a.turn(go);
+            ph1.push((async () => { const st = stepSfx(.15, 600); await drive(a, nx, ny, ms, 'ease-in-out', 4); st(); a.look(k, d); })());
+          } else { a.place(w.x, w.y); swap.push([a, nx, ny]); }
+        } else if (w.vis && !n) { a.pos.style.display = ''; ph1.push(fadeOut(T, a, ms)); }
+        else if (!w.vis && n && a.pos.style.opacity !== '0') ph1.push(T.anim(a.pos, [{ opacity: 0 }, { opacity: 1 }], ms));
+      }
+      swap.forEach(([a]) => ph1.push(T.anim(a.pos, [{ opacity: 1 }, { opacity: 0 }], ms * .6).then(() => { a.pos.style.opacity = '0'; })));
+      await Promise.all(ph1);
+      await Promise.all(swap.map(async ([a, x, y]) => { a.place(x, y); await T.anim(a.pos, [{ opacity: 0 }, { opacity: 1 }], ms * .8); a.pos.style.opacity = ''; }));
+    };
+    /* 놀이판 장면 시작: 배경이 같으면 넘김 없이 이어 가고, 다르면(또는 화면을 돌렸으면) 책장 넘김 */
+    const next = (label, key, fn, focus, opt) => {
+      const p0 = P; refreshP();
+      if (key === curKey && P === p0 && !document.hidden) return cont(fn, typeof opt === 'function' ? opt() : opt);
+      return card(label, fn, focus);
+    };
     /* 사슴 다리의 가시 자리(사슴 가운데 x·바닥 y 기준 오프셋, 누운 사슴 그림 도착 뒤 다시 잰다) */
     const THORN = [[-52, -42], [-72, -35], [-92, -28]];
     const POPY = a => FL - a.h - 30;      // 말풍선 글자: 머리 위쪽 (인물 얼굴을 가리지 않는다)
@@ -391,14 +443,19 @@
       put(T, kid, kidX, FL, { look: kidLook, to: 'right' });
       pineAt(); put(T, FG.fern_night, X(70, 290), 600);
     };
+    let sprayBox = null; const UNI_SINK = 88;   // 물보라 속 유니콘을 거품 속으로 내리는 깊이(월드 px)
     const fallsL = (kidX, withBasket) => {
-      scene('uc_bg2_waterfall', 420, .55);
+      const same = scene('uc_bg2_waterfall', 420, .55);
       /* 폭포에 붙은 것(물보라 퐁퐁·무지개·물보라 속 유니콘·물보라 조각)은 배경 층에 둔다(세로 화면에서도 배경 폭포 발과 맞게) */
       put(T, rainbow, 690, 400, { look: 'a' });
-      put(T, uni, FALL.x + 43, FALL.lake + 22, { look: 'peek_spray', to: 'left', s: .62 });   // 머리·뿔·갈기만 물보라 가운데 낮은 틈 위로
+      /* 숨은 유니콘(2026-10-29 사용자: 물보라를 고친 뒤 '너무 잘 보임'): 물보라 거품 속에 몸을 묻고 뿔 끝과 갈기 한 가닥만 거품 위로 살짝.
+         대사는 유니콘을 말하지 않는다(찾는 아이만 보는 숨은 그림) — 10장 '나는 계속 여기 있었어'에서 밝혀진다.
+         거품 밑으로 내려간 몸은 거품 아래끝(수면)에서 잘라 호수 위로 비치지 않게 한다: id 없는 겹 svg 창(책장 넘김 복제에서도 그대로 잘림) */
+      if (!same || !sprayBox || !sprayBox.isConnected) sprayBox = T.el('svg', { x: 0, y: 0, width: 1100, height: FALL.lake + 6, overflow: 'hidden' }, T.bg);
+      put(T, uni, FALL.x + 43, FALL.lake + 22 + UNI_SINK, { look: 'peek_spray', to: 'left', s: .62 });
       put(T, FG.spray2, FALL.x, FALL.lake + 24);                                              // 아래가 둥근 거품 줄(네모 아님) — 폭포 떨어지는 자리 수면 위
-      [rainbow, uni, FG.spray2].forEach(a => T.bg.appendChild(a.pos));
-      fallsAnim(T);
+      T.bg.appendChild(rainbow.pos); T.bg.appendChild(sprayBox); sprayBox.appendChild(uni.pos); T.bg.appendChild(FG.spray2.pos);
+      if (!same) fallsAnim(T);   // 이어 가면 물보라 퐁퐁은 이미 돈다
       put(T, horse, X(470, 450), FL, { look: 'hungry', to: 'left' });
       put(T, kid, kidX, FL, { look: 'walk', to: 'right' });
       put(T, basket, kid.x + 85, FL, { look: 'a' }); if (!withBasket) hide(basket);
@@ -449,10 +506,10 @@
       },
       moon2() {
         scene('uc_bg2_moon_night', 500, 1);
-        if (P) camSnap(790, 280, .6);
+        if (P) camAt(790, 280, .6);
         put(T, halo, 878, 86 + HT.uc_mid_moon_halo / 2); T.bg.appendChild(halo.pos); halo.pos.style.opacity = 0;
         put(T, kid, X(420, 650), FL, { look: 'stand' });
-        put(T, uni, X(720, 840), FL, { look: 'stand', to: 'left' }); uni.pos.style.opacity = 0;
+        put(T, uni, X(720, 840), FL, { look: 'stand', to: 'left' }); if (!CONT) uni.pos.style.opacity = 0;
       },
       hill2() {
         scene('uc_bg2_hill', X(400, 450));
@@ -491,7 +548,7 @@
       if (verb === 'hide') return aft(a, () => hide(a));
       if (verb === 'front') { if (name === 'kid') sfx('paper_up', .5); T.world.appendChild(a.pos); if (name === 'uni') T.world.appendChild(FG.fern_night.pos); return; }
       if (verb === 'glow') return aft(a, () => glow(a, 1500));
-      if (verb === 'fade') { a.pos.style.opacity = ''; fadeIn(a, 1400); return; }
+      if (verb === 'fade') { if (a.pos.style.opacity !== '0') return glow(a, 1500); a.pos.style.opacity = ''; fadeIn(a, 1400); return; }   // 이어 온 장면이면 이미 서 있다
       if (verb === 'wiggle') return aft(a, () => a.wiggle(3, 300));
       if (verb === 'jump') {   /* 구름에서 포물선으로 뛰어내림 (놀이판 그대로) */
         const land = kid.x + 150, sx = a.x, sy = a.y;
@@ -506,8 +563,9 @@
       set(key) {
         refreshP();
         const k = SHORT[key]; rSeen[k] = (rSeen[k] || 0) + 1; rTag = k + rSeen[k]; rTok++;
-        ALL.forEach(a => { hide(a); a._mv = null; });
-        (LAYOUT[rTag] || (() => console.warn('[read] 장면 모름', rTag)))();
+        const lay = () => { ALL.forEach(a => { hide(a); a._mv = null; }); (LAYOUT[rTag] || (() => console.warn('[read] 장면 모름', rTag)))(); };
+        if (rCont) { rCont = false; return cont(lay, RCONT_OPT[rTag] ? RCONT_OPT[rTag]() : {}); }   // 같은 배경: 넘김 없이 이어 감(아래 RW.sceneCard)
+        lay();
         if (rTag === 'hill1') intro();
         if (rTag === 'cloudland1') baa(.45, 1500);   // 구름 섬에 혼자 앉은 양
       },
@@ -559,12 +617,25 @@
         if (n === 'whoosh') return sfx('whoosh', .4);
         return sfx(n);
       },
-      confetti() { T.confetti(); sfx('tada') || sparkleSfx(T); },
+      confetti() { T.confetti(); },   // 안는 순간 소리는 대본 snd:chime_up (옛 tada·파티 나팔은 2026-10-29 사용자 '별로')
     };
     /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초> */
     R.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } };
     R.amb = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } };
-    if (T.reading()) return T.readPlay(R).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    /* 같은 배경이 이어지는 장면(구름 나라→길 찾기, 별빛 숲→사슴의 뿔, 무지개 폭포→간식 나누기, 사박사박→진짜 유니콘)은
+       책장을 넘기지 않는다(2026-10-29 사용자). 엔진 readPlay 는 장면마다 this.sceneCard 를 부르므로, 동화 쪽에서 감싼 T(RW)를 넘겨
+       다음 장면 배경(대본의 card → set)이 지금 배경과 같으면 넘김 없이 차리기(set → cont)만 한다 */
+    let rCont = false;
+    const RCONT_OPT = { cloudland2: () => ({ keep: [kid, sheep] }), moon2: () => (P ? { ms: 1300 } : { keep: [kid, uni] }) };
+    const CARDSET = {};
+    if (T.reading()) await Promise.all(['read_script_el.json', 'read_script_en.json'].map(f => fetch(f, { cache: 'no-cache' }).then(r => (r.ok ? r.json() : null))
+      .then(j => { if (j && Array.isArray(j.scenes)) j.scenes.forEach(s => { if (s.card) CARDSET[s.card] = s.set; }); }).catch(() => {})));
+    const RW = Object.create(T);
+    RW.sceneCard = (label, change, focus) => {
+      if (CARDSET[label] && CARDSET[label] === curKey && (T.viewWidth() < 990) === P && !document.hidden) { rCont = true; if (change) change(); rCont = false; return Promise.resolve(); }
+      return T.sceneCard(label, change, focus);
+    };
+    if (T.reading()) return T.readPlay.call(RW, R).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 설렘 (배움 놀이: 꽃 선물 색 고르기 — 첫 조작) — 멀리서 넓게 ===== */
     const ANS = Object.keys(FLOWER)[Math.floor(Math.random() * 7)];   // 오늘 유니콘에게 줄 꽃 색(7색 중 하나)
@@ -637,14 +708,15 @@
     await sleep(SCENE_END);
 
     /* ===== 3. 길 찾기 — 옆에서 트래킹, 양의 집에 닿아 헤어진다 ===== */
-    await card(tr('길 찾기'), () => {
+    /* 같은 구름 나라: 넘김 없이 이어 간다. 다현이·양은 선 자리에서 곧 함께 걸어간다 */
+    await next(tr('길 찾기'), 'uc_bg2_cloudland', () => {
       scene('uc_bg2_cloudland', 480, .7);
       put(T, uni, X(935, 755), FL + 2, { look: 'peek_cloud_horn', to: 'left' });  // 양의 집 지붕 왼쪽 위로 뿔·귀만
       put(T, home, X(880, 700), FL + 6);
       put(T, kid, X(150, 330), FL, { look: 'walk', to: 'right' });
       put(T, sheep, kid.x + 150, FL, { look: 'happy', to: 'left' });
       put(T, FG.cloud_wisp, X(110, 250), 600);
-    }, kid.pos);
+    }, kid.pos, { keep: [kid, sheep] });
     await say(S.L8);
     kid.hop(10, 300);
     sheep.turn('right');                                  // 둘 다 가는 쪽(오른쪽)을 본다 — 양이 앞서고 손을 잡는다
@@ -710,7 +782,7 @@
     await sleep(SCENE_END);
 
     /* ===== 5. 사슴의 뿔 · 아쉬움 — 같은 세트, 가까이 ===== */
-    await card(tr('사슴의 뿔'), () => forest('sad', X(400, 455)), kid.pos);
+    await next(tr('사슴의 뿔'), 'uc_bg2_night_forest', () => forest('sad', X(400, 455)), kid.pos);   // 같은 숲: 넘김 없이
     await say(S.L17);
     await sleep(500);   // 뿔을 가만히 보는 쉼
     await say(S.L18);
@@ -730,7 +802,7 @@
     await sleep(SCENE_END);
 
     /* ===== 7. 간식 나누기 — 같은 세트 ===== */
-    await card(tr('간식 나누기'), () => falls(X(250, 250), true), kid.pos);
+    await next(tr('간식 나누기'), 'uc_bg2_waterfall', () => falls(X(250, 250), true), kid.pos);   // 같은 폭포: 넘김 없이
     kid.hop(10, 320);
     await say(S.L22);
     sfx('paper_up', .5);
@@ -792,16 +864,18 @@
     await sleep(SCENE_END);
 
     /* ===== 10. 진짜 유니콘 (인사 톡) — 가까이, 둘만 ===== */
-    await card(tr('진짜 유니콘'), () => {
+    /* 같은 달밤: 넘김 없이 이어 간다. 가로는 둘 다 제자리, 세로는 카메라가 달 쪽으로 가며 다현이가 걸어가고 유니콘은 달빛 아래에 다시 나타난다 */
+    await next(tr('진짜 유니콘'), 'uc_bg2_moon_night', () => {
       scene('uc_bg2_moon_night', 500, 1);                              // 세로도 월드 확대 없이 카메라를 달 쪽으로 옮겨 달·고리·두 주인공이 함께 보이게 한다
-      if (P) camSnap(790, 280, .6);                                    // 세로: 보이는 폭 약 433(x 575~1000) — 배경 달(878)과 무리가 화면 안
+      if (P) camAt(790, 280, .6);                                    // 세로: 보이는 폭 약 433(x 575~1000) — 배경 달(878)과 무리가 화면 안
       put(T, halo, 878, 86 + HT.uc_mid_moon_halo / 2); T.bg.appendChild(halo.pos);   // 배경 층에 붙여 배경 달 둘레에
       halo.pos.style.opacity = 0;   // 달 둘레 7색 무리
       put(T, kid, X(420, 650), FL, { look: 'stand' });
-      put(T, uni, X(720, 840), FL, { look: 'stand', to: 'left' }); uni.pos.style.opacity = 0;
-    }, uni.pos);
+      put(T, uni, X(720, 840), FL, { look: 'stand', to: 'left' }); if (!CONT) uni.pos.style.opacity = 0;   // 이어 가면 이미 걸어 나와 있다
+    }, uni.pos, () => (P ? { ms: 1300 } : { keep: [kid, uni] }));
     cue('harp_gliss', .6) || cue('shimmer', .6);   // 만나는 순간: 잔잔한 마법 하프(옛 북 굴림은 사용자가 '이상'하다고 함)
-    uni.pos.style.opacity = ''; fadeIn(uni, 1400); glow(uni, 1500);
+    if (uni.pos.style.opacity === '0') { uni.pos.style.opacity = ''; fadeIn(uni, 1400); }
+    glow(uni, 1500);
     halo.pos.style.opacity = ''; fadeIn(halo, 2400);
     await sleep(1500);
     await say(S.L31);
@@ -822,7 +896,7 @@
     kid.look('hug'); T.world.appendChild(kid.pos);
     sfx('paper_up', .5);
     await kid.move(uni.x - 135, FL, 700, 'ease-out');
-    T.confetti(); sfx('party_horn', .9) || sfx('tada') || sparkleSfx(T);
+    T.confetti(); cue('chime_up', .5) || sparkleSfx(T);   // 안는 순간: 포근한 반짝 소리(2026-10-29 사용자: 옛 파티 나팔 '별로')
     for (let i = 0; i < 2; i++) await Promise.all([kid.hop(22, 480), uni.hop(14, 480)]);
     await say(S.L36);
     await sleep(SCENE_END);
