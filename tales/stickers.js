@@ -1,7 +1,8 @@
 /* 동화별 캐릭터 스티커 세트 — 동화마다 10칸. 기존 스프라이트 + 새로 그릴 칸(img: null, plan: true).
    · 받는 순서 = 이 배열 순서에서 img 가 있는 것만. img 가 없는 칸은 받을 수 없고 화면에 보이지도 않는다(그림이 들어오면 보임).
    · 새 그림은 assets/stickers/<동화id>/<k>.webp 로 두고 img 만 채운다. k 는 소문자·숫자·밑줄 40자 이하(서버가 같은 규칙으로 검사).
-   · 가족·실제 아이를 바탕으로 한 인물(구름 공장의 아이들·강아지, 빨간 자동차의 이현이, 유니콘의 다현이)은 공개 콘텐츠 규칙(CLAUDE.md §1)에 따라 넣지 않았다. */
+   · 가족·실제 아이를 바탕으로 한 인물(구름 공장의 아이들·강아지, 빨간 자동차의 이현이, 유니콘의 다현이)은 처음 만들 때 공개 콘텐츠 규칙(CLAUDE.md §1)에 따라 넣지 않았다.
+     2026-10-27 사용자 결정으로 창작 동화 넷은 스티커에도 아이 캐릭터를 쓸 수 있다(사탕 마녀의 핼러윈은 다현이 포함). */
 const STICKERS = {
   patjuk: [
     { k: 'granny_cheer', img: 'assets/v3w/pj3_granny_cheer.webp', ko: '할머니(만세)', en: 'Granny (cheering)' },
@@ -326,6 +327,18 @@ const STICKERS = {
     { k: 'unicorn_back', img: null, plan: true, ko: '유니콘(뒷모습)', en: 'Unicorn (from behind)' },  // 새 그림: 무지개 갈기를 보이며 돌아선 유니콘
     { k: 'sheep_mom', img: null, plan: true, ko: '엄마 양', en: 'Mother sheep' },  // 새 그림: 방울을 단 엄마 양
     { k: 'sheep_jump', img: null, plan: true, ko: '양(폴짝)', en: 'Sheep (jumping)' },  // 새 그림: 신나서 뛰는 양
+  ],
+  witch_candy: [  // 다현이 = 사용자 결정(2026-10-28) 공개 예외 — CLAUDE.md §1
+    { k: 'kid_stand', img: 'assets/v3w/wc_kid_stand.webp', ko: '다현이(꼬마 마법사)', en: 'Dahyun (little wizard)' },
+    { k: 'witch_giggle', img: 'assets/v3w/wc_witch_giggle.webp', ko: '사탕 마녀(키득)', en: 'Candy witch (giggling)' },
+    { k: 'cat_sit', img: 'assets/v3w/wc_cat_sit.webp', ko: '호박이', en: 'Pumpkin the cat' },
+    { k: 'rabbit_happy', img: 'assets/v3w/wc_rabbit_happy.webp', ko: '토끼(별 망토)', en: 'Rabbit (star cape)' },
+    { k: 'bear_happy', img: 'assets/v3w/wc_bear_happy.webp', ko: '곰(호박 옷)', en: 'Bear (pumpkin costume)' },
+    { k: 'fox_happy', img: 'assets/v3w/wc_fox_happy.webp', ko: '여우(달 모자)', en: 'Fox (moon hat)' },
+    { k: 'tf_strawberry', img: 'assets/v3w/wc_kid_tf_strawberry.webp', ko: '딸기 다현이', en: 'Strawberry Dahyun' },
+    { k: 'ghost', img: 'assets/v3w/wc_ghost.webp', ko: '유령', en: 'Ghost' },
+    { k: 'pumpkin_lantern', img: 'assets/v3w/wc_prop_pumpkin_lantern.webp', ko: '핼러윈 호박', en: 'Jack-o\'-lantern' },
+    { k: 'tf_pumpkin', img: 'assets/v3w/wc_kid_tf_pumpkin.webp', ko: '호박 다현이', en: 'Pumpkin Dahyun' },
   ],
   princess_pea: [
     { k: 'princess_stand', img: 'assets/v3w/pp_princess_stand.webp', ko: '공주(서기)', en: 'Princess (standing)' },

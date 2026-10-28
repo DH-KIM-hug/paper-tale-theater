@@ -332,11 +332,22 @@ const Tale = (() => {
       good.el.style.filter = 'url(#hintGlow)'; pulse(good.el);
       await nap(1200); if (!p.done) firePtr(good.el);
     },
+    fill: async (a, p) => {
+      const items = a[0] || [], o = a[1] || {}; await nap(900); if (p.done) return;
+      let plan = o.auto ? o.auto(items, o) : null;
+      if (!plan || !plan.length) {   // 무작위 1~2종류, 종류마다 1~2개
+        const keys = [...new Set(items.map(i => i.key))], pick = keys.sort(() => Math.random() - .5).slice(0, Math.min(o.maxKinds || 2, 1 + Math.floor(Math.random() * 2)));
+        plan = pick.flatMap(k => { const c = items.filter(i => i.key === k); return c.sort(() => Math.random() - .5).slice(0, 1 + Math.floor(Math.random() * 2)); });
+      }
+      for (const it of plan) { if (p.done) return; firePtr((it && it.el) || items[it].el); await nap(1100); }
+      if (!p.done) { await nap(500); if (!p.done && o.done) firePtr(o.done); }
+    },
     free: async (a, p) => { const ts = a[0] || []; let i = 0; await nap(900); while (!p.done && ts.length) { firePtr(ts[i++ % ts.length].el); await nap(900); } },
   };
   const autoInput = (name, fn) => {
     const f = input(fn);
     return (...a) => {
+      if (name === 'tap' && a[1] && a[1].timeout && (VERIFY || AUTO())) return Promise.resolve(!!a[1].autoResult);   // 시간 제한 톡: 자동·검증은 누르지 않는다
       if (VERIFY) {
         if (name === 'free') a = [a[0], Math.min(a[1] || 15000, 8000)];
         const p = { done: false }, r = f(...a);
@@ -388,7 +399,8 @@ const Tale = (() => {
   }
 
   /* ---------- 조작 1: 톡 ---------- */
-  function tap(target, { prompt } = {}) {
+  function tap(target, { prompt, timeout } = {}) {
+    if (timeout) return tapTimed(target, timeout);
     return new Promise(res => {
       arm(target, true);
       const h = helper({ target, prompt });
@@ -399,6 +411,73 @@ const Tale = (() => {
         arm(target, false); h.stop(); AudioFX.tap(); res();
       };
       target.addEventListener('pointerdown', on);
+    });
+  }
+  /* 시간 제한 톡(선택 톡): T.tap(대상, { timeout: 6000 }) → 시간 안에 누르면 true, 지나면 false.
+     손가락 힌트는 2초 뒤 한 번만, 12초 재안내 없음. 자동 재생·검증 모드는 누르지 않고 false (autoInput 에서 처리) */
+  function tapTimed(target, ms) {
+    return new Promise(res => {
+      arm(target, true);
+      const t1 = setTimeout(() => showHand(target), 2000);
+      const end = v => { clearTimeout(t1); clearTimeout(t2); target.removeEventListener('pointerdown', on); arm(target, false); hideHand(); res(v); };
+      const t2 = setTimeout(() => end(false), ms);
+      const on = e => { e.stopPropagation(); if (busy) return; AudioFX.tap(); end(true); };
+      target.addEventListener('pointerdown', on);
+    });
+  }
+
+  /* ---------- 조작: 채우기(fill) — 틀린 답 없이 여러 대상을 톡해 넣고 '끝' 대상을 누르면 끝 ----------
+     T.fill(items, { done, maxKinds, allow, onPut, onReject, onEmpty, prompt, auto })
+       items: [{ el, key, ... }]  — 모두 정답. 같은 대상을 다시 누르면 하나 더 들어간다
+       done:  '끝' 대상(국자). 하나도 안 넣었으면 끝나지 않고 onEmpty() 만 부른다
+       maxKinds: 받는 key 종류 수 상한 — 새 종류가 상한을 넘으면 받지 않고 onReject(item)
+       allow(item, state): false 면 받지 않고 onReject(item). state = { order, kinds, count }
+       onPut(item, n, state): 받아들일 때 부른다(기다리지 않는다). n = 지금까지 넣은 개수
+       onReject(item, state): 기본은 좌우 흔들림
+       auto(items, state): 자동 재생이 누를 item 배열(회전마다 중복 없이 고르는 것은 동화 쪽이 정한다). 없으면 무작위 1~2종류
+     → Promise<{ order: item[], kinds: Set, count }>
+     손가락: 아무것도 안 넣었으면 5초 뒤 대상을 돌아가며, 넣은 뒤에는 20초 뒤 done. 12초 재안내(prompt) */
+  function fill(items, { done, maxKinds = 0, allow, onPut, onReject, onEmpty, prompt } = {}) {
+    return new Promise(res => {
+      const st = { order: [], kinds: new Set(), count: 0 };
+      let over = false, t1, t2, lap = 0;
+      const stopT = () => { clearTimeout(t1); clearTimeout(t2); hideHand(); };
+      const rearm = () => {
+        stopT();
+        if (over || AUTO()) return;
+        const none = st.order.length === 0;
+        t1 = setTimeout(() => { if (over) return; showHand(none ? items[lap++ % items.length].el : done); }, none ? 5000 : 20000);
+        if (prompt) t2 = setTimeout(() => { if (!over) Narrator.speak(prompt); }, 12000);
+      };
+      const finish = () => {
+        over = true; stopT();
+        items.forEach(it => { it.el.removeEventListener('pointerdown', it._on); arm(it.el, false); });
+        done.removeEventListener('pointerdown', onDone); arm(done, false);
+        AudioFX.tap(); res(st);
+      };
+      const onDone = e => {
+        e.stopPropagation(); if (busy || over) return;
+        if (!st.order.length) { onEmpty && onEmpty(); rearm(); return; }
+        finish();
+      };
+      items.forEach(it => {
+        arm(it.el, true);
+        it._on = e => {
+          e.stopPropagation(); if (busy || over) return;
+          rearm();
+          const newKind = !st.kinds.has(it.key);
+          if ((maxKinds && newKind && st.kinds.size >= maxKinds) || (allow && allow(it, st) === false)) {
+            AudioFX.miss && AudioFX.miss();
+            if (onReject) onReject(it, st); else wiggleEl(it.el);
+            return;
+          }
+          st.order.push(it); st.kinds.add(it.key); st.count = st.order.length;
+          if (onPut) { const r = onPut(it, st.count, st); if (r && r.catch) r.catch(er => console.warn('fill onPut', er)); }
+        };
+        it.el.addEventListener('pointerdown', it._on);
+      });
+      arm(done, true); done.addEventListener('pointerdown', onDone);
+      rearm();
     });
   }
 
@@ -1651,6 +1730,22 @@ const Tale = (() => {
     const getJSON = async f => { try { const r = await fetch(f, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch (e) { return null; } };
     const sc = (en && await getJSON('read_script_en.json')) || await getJSON('read_script_el.json');
     if (!sc || !Array.isArray(sc.scenes)) { console.warn('[read] 대본이 없어 끝냅니다'); await W.curtain(true); return ''; }
+    /* 회전 분기(rounds 가 있는 대본만): scenes 중 variant 가 있는 장면은 그 회전(round)에 뽑힌 결과일 때만 남긴다.
+       뽑기 = 중복 없이 rounds 개 — 주소 ?mix=pumpkin,bat 이면 고정, 아니면 지난번에 안 본 것(localStorage 'read_seen_<tale>')을 먼저 섞어서 */
+    if (sc.rounds && sc.variants && Array.isArray(sc.variants.keys)) {
+      const keys = sc.variants.keys, n = sc.rounds, sk = 'read_seen_' + (sc.tale || taleId());
+      let chosen = [];
+      try { chosen = (new URLSearchParams(location.search).get('mix') || '').split(',').filter(k => keys.includes(k)).slice(0, n); } catch (e) { /* 고정 없음 */ }
+      if (chosen.length < n) {
+        let seen = []; try { seen = JSON.parse(localStorage.getItem(sk) || '[]'); } catch (e) { /* 기록 없음 */ }
+        const shuf = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
+        const pool = [...shuf(keys.filter(k => !seen.includes(k) && !chosen.includes(k))), ...shuf(keys.filter(k => seen.includes(k) && !chosen.includes(k)))];
+        chosen = [...chosen, ...pool].slice(0, n);
+      }
+      try { const seen = JSON.parse(localStorage.getItem(sk) || '[]'); const next = [...seen.filter(k => !chosen.includes(k)), ...chosen]; localStorage.setItem(sk, JSON.stringify(next.slice(-keys.length))); } catch (e) { /* 기록 없이 */ }
+      sc.scenes = sc.scenes.filter(x => !x.variant || x.variant === chosen[(x.round || 1) - 1]);
+      sc.chosen = chosen; console.log('[read] 회전 결과:', chosen.join(', '));
+    }
     await loadReadClips(en);
     try { AudioFX.prefetchClips && AudioFX.prefetchClips(); } catch (e) { /* 미리 받기 없이 */ }
     /* 클립 키 확인: 녹음이 없는 줄은 건너뛴다(브라우저 TTS 로 읽지 않는다, 2026-10-27 사용자 결정) → 콘솔과 window.__READ 에 남긴다 */
@@ -1660,7 +1755,7 @@ const Tale = (() => {
         return typeof NARRATION_CLIPS !== 'undefined' && !!NARRATION_CLIPS[t];
       } catch (e) { return false; }
     };
-    const log = window.__READ = { tale: sc.tale, lang: en ? 'en' : 'ko', scenes: sc.scenes.length, lines: 0, missing: [], unknown: [], said: 0, done: false };
+    const log = window.__READ = { chosen: sc.chosen, tale: sc.tale, lang: en ? 'en' : 'ko', scenes: sc.scenes.length, lines: 0, missing: [], unknown: [], said: 0, done: false };
     sc.scenes.forEach(s => (s.lines || []).forEach(l => { log.lines++; if (!has(l.text)) log.missing.push(l.text); }));
     console.log(`[read] ${sc.tale} ${log.lang}: ${log.scenes}장면 ${log.lines}줄, 클립 없음 ${log.missing.length}`);
     log.missing.forEach(t => console.warn('[read] 클립 없음(건너뜀):', t));
@@ -1775,7 +1870,10 @@ const Tale = (() => {
           const l = lines[j];
           await waitHeld();
           await runAll(l.before);
-          await sayGuarded(l.text, l.simultaneous === true);
+          /* l.voice: 합창과 글자가 같은 한 사람 줄은 VOICE_LINES 키로 먼저 재생(NARRATION_CLIPS 키 충돌 피함). 키가 없으면 보통 대사 */
+          const vu = l.voice && Narrator.voiceLine ? Narrator.voiceLine(l.voice) : null;
+          if (vu && AudioFX.voice) await guard(Promise.resolve(AudioFX.voice(vu)), '목소리 ' + l.voice, () => 8000);
+          else await sayGuarded(l.text, l.simultaneous === true);
           log.said++;
           await runAll(l.after);
           await gap(j === lines.length - 1 ? READ_SCENE_END : READ_GAP);
@@ -1795,7 +1893,7 @@ const Tale = (() => {
     cardSpeed: k => { cardK = k; }, el, paper, anim, actor, sleep, say, ask, director, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,
-    tap: autoInput('tap', tap), mash: autoInput('mash', mash), choose: autoInput('choose', choose), swipe: autoInput('swipe', swipe), hold: autoInput('hold', hold), free: autoInput('free', free),
+    tap: autoInput('tap', tap), mash: autoInput('mash', mash), choose: autoInput('choose', choose), swipe: autoInput('swipe', swipe), hold: autoInput('hold', hold), fill: autoInput('fill', fill), free: autoInput('free', free),
     autoplay: AUTO, autoDo,
     reading: () => reading, readPlay, readInstant: () => readInstant,
     get bg() { return bgL; }, get world() { return world; }, get fx() { return fxL; }, get root() { return root; },

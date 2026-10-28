@@ -42,7 +42,7 @@ def main():
     td = os.path.join(ROOT, 'tales', tale)
     read = '--read' in sys.argv
     def flat(f):  # 읽기 대본: 장면별 줄을 한 목록으로
-        d = json.load(open(os.path.join(td, f))); d['lines'] = [l for sc in d['scenes'] for l in sc['lines']]; return d
+        d = json.load(open(os.path.join(td, f))); d['lines'] = [l for sc in d['scenes'] for l in sc['lines'] if l.get('src') != 'chorus' and not l.get('voice')]; return d  # src: chorus 는 mix_chorus_el.py 가 겹쳐 만든 합창 클립을 쓰므로 여기서 만들지 않는다
     spec = flat('read_script_en.json' if en else 'read_script_el.json') if read else json.load(open(os.path.join(td, 'voice_script_en.json' if en else 'voice_script_el.json')))
     EL = json.load(open(os.path.join(td, 'voice_script_el.json')))
     if read: EL = {**EL, 'lines': flat('read_script_el.json')['lines'], 'extra': {}}  # 영어 연기 지시는 읽기 한국어 대본에서

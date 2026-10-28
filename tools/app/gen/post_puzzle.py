@@ -42,7 +42,7 @@ ORDER = {                           # 판별 동화 순서 (docs/PUZZLE_PLAN.md 
     'korean':   ['patjuk', 'sunmoon', 'kongjwi', 'heungbu', 'magpie', 'magic_jar'],
     'aesop':    ['frog', 'rabbit', 'sun_wind', 'lion_mouse', 'fox_crane', 'ant_grasshopper'],
     'world':    ['turnip', 'goldilocks', 'bremen', 'ugly_duckling', 'three_pigs', 'wolf_goats', 'hansel', 'red_hood'],
-    'original': ['kkultteok', 'red_car', 'unicorn'],
+    'original': ['kkultteok', 'red_car', 'unicorn', 'witch_candy'],
 }
 SHAPES = json.load(open(os.path.join(G, 'tools/app/gen/puzzle_shapes.json')))
 

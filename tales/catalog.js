@@ -345,6 +345,10 @@ const TALES = (() => {
       <rect x="40" y="30" width="24" height="30" rx="9" fill="${c.sn}" transform="rotate(-18 52 56)"/><path d="M42 30 L46 8 L52 28Z" fill="${c.cr}"/>
       ${['#A93B32', '#E8703A', '#D9A94E', '#3F6B4F', '#3E7CB1', '#1F2A56', '#7B4F8C'].map((k, i) => `<rect x="${58 + i * 3}" y="34" width="3.4" height="22" fill="${k}"/>`).join('')}
       ${eye(48, 42, 2.2)}</g>` },
+  { id: 'witch_candy', title: '사탕 마녀의 핼러윈', origin: 'original', skills: ['count', 'spot', 'heart'], ready: true, read: true, readEn: true, readMin: 8,
+    line: '사탕 마녀의 초대장을 받은 다현이와 친구들. 아기 용 콧물, 병아리 방귀, 괴물 응가, 소방차, 개구리… 우스운 재료를 골라 솥에 넣고 세어요. 빨강과 노랑을 섞으면 무슨 색? 사탕을 먹으면 딸기, 오리, 박쥐, 호박으로 뿅 변신! 마지막엔 모두 함께 검정 유령 사탕을 먹고 오~우~.',
+    en: { title: "The Candy Witch's Halloween", line: 'Dahyun and her friends get an invitation from the Candy Witch. Baby-dragon snot, chick toots, monster poo, a fire truck, a frog... pick the silly ingredients, drop them in the cauldron and count. Mix red and yellow: what colour do you get? Eat the candy and turn into a strawberry, a duck, a bat or a glowing pumpkin. Last of all, everyone eats a black ghost candy and marches around going oooh.' },
+    art: `<rect width="160" height="110" fill="${c.ind}"/><g class="pc"><circle cx="128" cy="24" r="12" fill="${c.cr}"/><rect y="88" width="160" height="22" fill="${c.bk}"/><ellipse cx="80" cy="74" rx="30" ry="22" fill="#1A1410"/><circle cx="40" cy="80" r="12" fill="${c.ps}"/></g>` },
   { id: 'princess_pea', title: '완두콩 공주', origin: 'world', also: ['princess'], skills: ['count', 'size', 'position'], ready: true, read: true, readMin: 5,
     line: '제일 작은 것과 제일 큰 것을 고르고, 매트리스 스무 장을 세고, 위와 아래를 찾아요. 비에 젖은 아가씨가 완두콩 한 알로 진짜 공주임을 보여요.',
     en: { title: 'The Princess and the Pea', line: 'Pick the smallest and the biggest, count twenty mattresses and find top and bottom. A rain-soaked girl shows she is a true princess with a single pea.' },

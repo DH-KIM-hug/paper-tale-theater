@@ -11,6 +11,10 @@
   "top": "assets/v3w/uc_prop_rainbow.webp",
   "bot": "assets/v3w/uc_unicorn_stand.webp"
  },
+ "witch_candy": {
+  "top": "assets/v3w/wc_prop_pumpkin_lantern.webp",
+  "bot": "assets/v3w/wc_ghost.webp"
+ },
  "cinderella": {
   "top": "assets/v3w/cd2_prop_slipper.webp",
   "bot": "assets/v3w/cd2_cind_gown.webp"

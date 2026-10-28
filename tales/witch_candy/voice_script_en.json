@@ -1,0 +1,1550 @@
+{
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "kid": "Lb7qkOn5hF8p7qfCDH8q",
+  "witch": "FGY2WhTYpPnrIDTdsKH5",
+  "cat": "ygoBNrnmTEdu5NtDTmAY",
+  "rabbit": "XjGYkUkzth8BPs29fmcV",
+  "bear": "rBkiq5ZQ43ogwd6i4uIQ",
+  "fox": "MIl0Flub6Sc9KSkX2A42"
+ },
+ "lines": [
+  {
+   "text": "핼러윈 밤이에요. 바람을 타고 무언가 팔랑팔랑 날아왔어요.",
+   "en": "It's Halloween night. Something came fluttering, fluttering on the wind.",
+   "segs": [
+    [
+     "nar",
+     "It's Halloween night. Something came fluttering, fluttering on the wind.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어? 초대장이다! 솥이랑 사탕 그림!",
+   "en": "Oh? An invitation! There's a cauldron and candy on it!",
+   "segs": [
+    [
+     "kid",
+     "Oh? An invitation! There's a cauldron and candy on it!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "거리 끝 사탕 가게 창이 환하게 켜졌어요.",
+   "en": "At the end of the street, the candy shop window lit up bright.",
+   "segs": [
+    [
+     "nar",
+     "At the end of the street, the candy shop window lit up bright.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "어서 와, 친구들! 나는 사탕 마녀야. 어머, 모자가 또 거꾸로네.",
+   "en": "Come in, come in, friends! I'm the Candy Witch. Oh my, my hat is upside down again.",
+   "segs": [
+    [
+     "witch",
+     "Come in, come in, friends! I'm the Candy Witch. Oh my, my hat is upside down again.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "다현이랑 친구들은 사탕 가게로 쪼르르 들어갔어요.",
+   "en": "Dahyun and her friends scurried right into the candy shop.",
+   "segs": [
+    [
+     "nar",
+     "Dahyun and her friends scurried right into the candy shop.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "오늘은 핼러윈 특별 사탕을 만들 거야. 먼저 솥을 끓여야지.",
+   "en": "Today we're making special Halloween candy. First, we have to get the cauldron bubbling.",
+   "segs": [
+    [
+     "witch",
+     "Today we're making special Halloween candy. First, we have to get the cauldron bubbling.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "장작을 톡 눌러 불을 지펴요.",
+   "en": "Tap the firewood to light the fire.",
+   "segs": [
+    [
+     "nar",
+     "Tap the firewood to light the fire.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "화르륵! 불이 활활, 솥이 뽀글뽀글 끓기 시작했어요.",
+   "en": "Whoosh! The fire blazed, and the cauldron began to bubble, bubble, bubble.",
+   "segs": [
+    [
+     "nar",
+     "Whoosh! The fire blazed, and the cauldron began to bubble, bubble, bubble.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "냐옹!",
+   "en": "Meow!",
+   "segs": [
+    [
+     "cat",
+     "Meow!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "핼러윈 사탕 재료야! 빨간 건 아기 용 콧물이랑 소방차, 노란 건 호박 등이랑 병아리 방귀!",
+   "en": "These are the Halloween candy ingredients! For red, baby dragon snot and a fire truck. For yellow, a pumpkin lantern and chick toots!",
+   "segs": [
+    [
+     "witch",
+     "These are the Halloween candy ingredients! For red, baby dragon snot and a fire truck. For yellow, a pumpkin lantern and chick toots!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "파란 건 괴물 응가랑 파란 생선, 초록은 개구리랑 공룡!",
+   "en": "For blue, monster poo and a blue fish. And for green, a frog and a dinosaur!",
+   "segs": [
+    [
+     "witch",
+     "For blue, monster poo and a blue fish. And for green, a frog and a dinosaur!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "으엑! 콧물이랑 응가요?",
+   "en": "Eww! Snot and poo?",
+   "segs": [
+    [
+     "kid",
+     "Eww! Snot and poo?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "냐… 냄새!",
+   "en": "Nya... stinky!",
+   "segs": [
+    [
+     "cat",
+     "Nya... stinky!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "히히, 색을 섞으면 새 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?",
+   "en": "Hee hee, mix the colours and you get a brand-new colour candy. What happens when you eat it is... a secret! Shall we make some together?",
+   "segs": [
+    [
+     "witch",
+     "Hee hee, mix the colours and you get a brand-new colour candy. What happens when you eat it is... a secret! Shall we make some together?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "네, 내가 할래요!",
+   "en": "Yes! I want to do it!",
+   "segs": [
+    [
+     "kid",
+     "Yes! I want to do it!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 다현이가 먼저, 마지막엔 다 같이!",
+   "en": "Then Dahyun goes first, and at the very end, all together!",
+   "segs": [
+    [
+     "witch",
+     "Then Dahyun goes first, and at the very end, all together!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "넣고 싶은 재료를 톡 눌러 솥에 넣어요. 다 넣었으면 국자를 톡!",
+   "en": "Tap the ingredients you want to drop into the cauldron. When you're done, tap the ladle!",
+   "segs": [
+    [
+     "nar",
+     "Tap the ingredients you want to drop into the cauldron. When you're done, tap the ladle!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+   "en": "Dahyun, you put them in. One or lots, it's all good.",
+   "segs": [
+    [
+     "witch",
+     "Dahyun, you put them in. One or lots, it's all good.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "세 가지는 맨 마지막에!",
+   "en": "Three colours? That's for the very end!",
+   "segs": [
+    [
+     "witch",
+     "Three colours? That's for the very end!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "하나는 넣어야지!",
+   "en": "You have to put in at least one!",
+   "segs": [
+    [
+     "witch",
+     "You have to put in at least one!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "다 넣었지? 그럼 저어 보자!",
+   "en": "All in? Then let's stir!",
+   "segs": [
+    [
+     "witch",
+     "All in? Then let's stir!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "자, 저어 보자. 뽀글뽀글…",
+   "en": "Here we go, stir, stir. Bubble, bubble...",
+   "segs": [
+    [
+     "witch",
+     "Here we go, stir, stir. Bubble, bubble...",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 노랑을 섞으면 무슨 색일까?",
+   "en": "What colour do you get when you mix red and yellow?",
+   "segs": [
+    [
+     "witch",
+     "What colour do you get when you mix red and yellow?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "노랑이랑 파랑을 섞으면 무슨 색일까?",
+   "en": "What colour do you get when you mix yellow and blue?",
+   "segs": [
+    [
+     "witch",
+     "What colour do you get when you mix yellow and blue?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 파랑을 섞으면 무슨 색일까?",
+   "en": "What colour do you get when you mix red and blue?",
+   "segs": [
+    [
+     "witch",
+     "What colour do you get when you mix red and blue?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 초록을 섞으면 무슨 색일까?",
+   "en": "What colour do you get when you mix red and green?",
+   "segs": [
+    [
+     "witch",
+     "What colour do you get when you mix red and green?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 노랑을 섞으면 무슨 색일까?",
+   "en": "What colour do you get when you mix green and yellow?",
+   "segs": [
+    [
+     "witch",
+     "What colour do you get when you mix green and yellow?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 파랑을 섞으면 무슨 색일까?",
+   "en": "What colour do you get when you mix green and blue?",
+   "segs": [
+    [
+     "witch",
+     "What colour do you get when you mix green and blue?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 노랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "en": "What colour will red and yellow make? Tap to choose.",
+   "segs": [
+    [
+     "nar",
+     "What colour will red and yellow make? Tap to choose.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "노랑이랑 파랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "en": "What colour will yellow and blue make? Tap to choose.",
+   "segs": [
+    [
+     "nar",
+     "What colour will yellow and blue make? Tap to choose.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 파랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "en": "What colour will red and blue make? Tap to choose.",
+   "segs": [
+    [
+     "nar",
+     "What colour will red and blue make? Tap to choose.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 초록을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "en": "What colour will red and green make? Tap to choose.",
+   "segs": [
+    [
+     "nar",
+     "What colour will red and green make? Tap to choose.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 노랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "en": "What colour will green and yellow make? Tap to choose.",
+   "segs": [
+    [
+     "nar",
+     "What colour will green and yellow make? Tap to choose.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 파랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "en": "What colour will green and blue make? Tap to choose.",
+   "segs": [
+    [
+     "nar",
+     "What colour will green and blue make? Tap to choose.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 주황이에요.",
+   "en": "That one's orange.",
+   "segs": [
+    [
+     "nar",
+     "That one's orange.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 초록이에요.",
+   "en": "That one's green.",
+   "segs": [
+    [
+     "nar",
+     "That one's green.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 보라예요.",
+   "en": "That one's purple.",
+   "segs": [
+    [
+     "nar",
+     "That one's purple.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그건 갈색이에요.",
+   "en": "That one's brown.",
+   "segs": [
+    [
+     "nar",
+     "That one's brown.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 주황!",
+   "en": "That's right, orange!",
+   "segs": [
+    [
+     "witch",
+     "That's right, orange!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 초록!",
+   "en": "That's right, green!",
+   "segs": [
+    [
+     "witch",
+     "That's right, green!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 보라!",
+   "en": "That's right, purple!",
+   "segs": [
+    [
+     "witch",
+     "That's right, purple!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 갈색!",
+   "en": "That's right, brown!",
+   "segs": [
+    [
+     "witch",
+     "That's right, brown!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "빨강만 넣었으니… 빨강 그대로!",
+   "en": "Only red went in... so it stays red!",
+   "segs": [
+    [
+     "witch",
+     "Only red went in... so it stays red!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "노랑만 넣었으니… 노랑 그대로!",
+   "en": "Only yellow went in... so it stays yellow!",
+   "segs": [
+    [
+     "witch",
+     "Only yellow went in... so it stays yellow!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "파랑만 넣었으니… 파랑 그대로!",
+   "en": "Only blue went in... so it stays blue!",
+   "segs": [
+    [
+     "witch",
+     "Only blue went in... so it stays blue!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "초록만 넣었으니… 초록 그대로!",
+   "en": "Only green went in... so it stays green!",
+   "segs": [
+    [
+     "witch",
+     "Only green went in... so it stays green!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+   "en": "Pop! Candies came popping out of the cauldron.",
+   "segs": [
+    [
+     "nar",
+     "Pop! Candies came popping out of the cauldron.",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "먼저 먹어 봐.",
+   "en": "You try one first.",
+   "segs": [
+    [
+     "witch",
+     "You try one first.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "콧물로 만든 건데… 으웩…",
+   "en": "But it's made from snot... eww...",
+   "segs": [
+    [
+     "kid",
+     "But it's made from snot... eww...",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …딸기 사탕이다!",
+   "en": "Huh? It's yummy! ...It's strawberry candy!",
+   "segs": [
+    [
+     "kid",
+     "Huh? It's yummy! ...It's strawberry candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …오리 사탕이다!",
+   "en": "Huh? It's yummy! ...It's duck candy!",
+   "segs": [
+    [
+     "kid",
+     "Huh? It's yummy! ...It's duck candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …물고기 사탕이다!",
+   "en": "Huh? It's yummy! ...It's fish candy!",
+   "segs": [
+    [
+     "kid",
+     "Huh? It's yummy! ...It's fish candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …개구리 사탕이다!",
+   "en": "Huh? It's yummy! ...It's frog candy!",
+   "segs": [
+    [
+     "kid",
+     "Huh? It's yummy! ...It's frog candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …호박 사탕이다!",
+   "en": "Huh? It's yummy! ...It's pumpkin candy!",
+   "segs": [
+    [
+     "kid",
+     "Huh? It's yummy! ...It's pumpkin candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …박쥐 사탕이다!",
+   "en": "Huh? It's yummy! ...It's bat candy!",
+   "segs": [
+    [
+     "kid",
+     "Huh? It's yummy! ...It's bat candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …초콜릿 사탕이다!",
+   "en": "Huh? It's yummy! ...It's chocolate candy!",
+   "segs": [
+    [
+     "kid",
+     "Huh? It's yummy! ...It's chocolate candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 딸기 사탕이다!",
+   "en": "Yum... it's strawberry candy!",
+   "segs": [
+    [
+     "kid",
+     "Yum... it's strawberry candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 오리 사탕이다!",
+   "en": "Yum... it's duck candy!",
+   "segs": [
+    [
+     "kid",
+     "Yum... it's duck candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 물고기 사탕이다!",
+   "en": "Yum... it's fish candy!",
+   "segs": [
+    [
+     "kid",
+     "Yum... it's fish candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 개구리 사탕이다!",
+   "en": "Yum... it's frog candy!",
+   "segs": [
+    [
+     "kid",
+     "Yum... it's frog candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 호박 사탕이다!",
+   "en": "Yum... it's pumpkin candy!",
+   "segs": [
+    [
+     "kid",
+     "Yum... it's pumpkin candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 박쥐 사탕이다!",
+   "en": "Yum... it's bat candy!",
+   "segs": [
+    [
+     "kid",
+     "Yum... it's bat candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 초콜릿 사탕이다!",
+   "en": "Yum... it's chocolate candy!",
+   "segs": [
+    [
+     "kid",
+     "Yum... it's chocolate candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이가 빨간 딸기가 됐어요!",
+   "en": "Poof! Dahyun turned into a red strawberry!",
+   "segs": [
+    [
+     "nar",
+     "Poof! Dahyun turned into a red strawberry!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이 발이 오리발이 됐어요!",
+   "en": "Poof! Dahyun's feet turned into duck feet!",
+   "segs": [
+    [
+     "nar",
+     "Poof! Dahyun's feet turned into duck feet!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이한테 물고기 꼬리가 생겼어요!",
+   "en": "Poof! Dahyun grew a fish tail!",
+   "segs": [
+    [
+     "nar",
+     "Poof! Dahyun grew a fish tail!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이가 초록 개구리가 됐어요!",
+   "en": "Poof! Dahyun turned into a green frog!",
+   "segs": [
+    [
+     "nar",
+     "Poof! Dahyun turned into a green frog!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!",
+   "en": "Poof! Dahyun's cheeks and tummy glowed like a pumpkin!",
+   "segs": [
+    [
+     "nar",
+     "Poof! Dahyun's cheeks and tummy glowed like a pumpkin!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이 등에 박쥐 날개가 돋았어요!",
+   "en": "Poof! Bat wings sprouted on Dahyun's back!",
+   "segs": [
+    [
+     "nar",
+     "Poof! Bat wings sprouted on Dahyun's back!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이 입에 초콜릿 수염이 났어요!",
+   "en": "Poof! Dahyun grew a chocolate moustache!",
+   "segs": [
+    [
+     "nar",
+     "Poof! Dahyun grew a chocolate moustache!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "데굴데굴, 멈춰 줘요~!",
+   "en": "Rolly, rolly, roll... somebody stop me!",
+   "segs": [
+    [
+     "kid",
+     "Rolly, rolly, roll... somebody stop me!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "꽥꽥… 어? 내 발이!",
+   "en": "Quack, quack... huh? My feet!",
+   "segs": [
+    [
+     "kid",
+     "Quack, quack... huh? My feet!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "하늘에서 수영이다!",
+   "en": "I'm swimming in the sky!",
+   "segs": [
+    [
+     "kid",
+     "I'm swimming in the sky!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "개굴! 지붕까지 폴짝!",
+   "en": "Ribbit! Hop, all the way up to the roof!",
+   "segs": [
+    [
+     "kid",
+     "Ribbit! Hop, all the way up to the roof!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "내 배가 등불이 됐어!",
+   "en": "My tummy turned into a lantern!",
+   "segs": [
+    [
+     "kid",
+     "My tummy turned into a lantern!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "파닥파닥, 달님 안녕!",
+   "en": "Flap, flap, hello, Moon!",
+   "segs": [
+    [
+     "kid",
+     "Flap, flap, hello, Moon!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "주르륵… 나 녹아요~",
+   "en": "Drip, drip... I'm melting!",
+   "segs": [
+    [
+     "kid",
+     "Drip, drip... I'm melting!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "히히, 핼러윈 마법이야!",
+   "en": "Hee hee, it's Halloween magic!",
+   "segs": [
+    [
+     "witch",
+     "Hee hee, it's Halloween magic!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "마지막에 다 같이!",
+   "en": "At the end, all together!",
+   "segs": [
+    [
+     "witch",
+     "At the end, all together!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "길을 데굴데굴 굴러가다 호박 등에 통!",
+   "en": "She rolled and rolled down the street and bonked into a pumpkin lantern!",
+   "segs": [
+    [
+     "nar",
+     "She rolled and rolled down the street and bonked into a pumpkin lantern!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "뒤뚱뒤뚱, 호박이도 뒤뚱뒤뚱.",
+   "en": "Waddle, waddle, and Pumpkin the cat waddled too.",
+   "segs": [
+    [
+     "nar",
+     "Waddle, waddle, and Pumpkin the cat waddled too.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "보름달 둘레를 보글보글 헤엄쳤어요.",
+   "en": "She swam, bubble bubble, all around the full moon.",
+   "segs": [
+    [
+     "nar",
+     "She swam, bubble bubble, all around the full moon.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.",
+   "en": "Hop, hop, hop! She waved from up on the roof.",
+   "segs": [
+    [
+     "nar",
+     "Hop, hop, hop! She waved from up on the roof.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "깜깜한 길이 다현이 덕분에 환해졌어요.",
+   "en": "The dark street grew bright, all thanks to Dahyun.",
+   "segs": [
+    [
+     "nar",
+     "The dark street grew bright, all thanks to Dahyun.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "박쥐 친구들이랑 달 앞을 빙글 돌았어요.",
+   "en": "She circled in front of the moon with her bat friends.",
+   "segs": [
+    [
+     "nar",
+     "She circled in front of the moon with her bat friends.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "납작해졌다가… 뿅!",
+   "en": "She went flat as a pancake... then poof!",
+   "segs": [
+    [
+     "nar",
+     "She went flat as a pancake... then poof!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "어디 가!",
+   "en": "Where are you going!",
+   "segs": [
+    [
+     "witch",
+     "Where are you going!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "녹았다!",
+   "en": "She melted!",
+   "segs": [
+    [
+     "witch",
+     "She melted!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+   "en": "Poof! Dahyun was back to normal.",
+   "segs": [
+    [
+     "nar",
+     "Poof! Dahyun was back to normal.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 다른 색으로 해 볼까?",
+   "en": "This time, shall we try a different colour?",
+   "segs": [
+    [
+     "witch",
+     "This time, shall we try a different colour?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "재료를 톡! 다 넣으면 국자!",
+   "en": "Tap the ingredients! When you're done, the ladle!",
+   "segs": [
+    [
+     "nar",
+     "Tap the ingredients! When you're done, the ladle!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아까랑 같네? 다음엔 다른 색도 해 봐!",
+   "en": "Same as before? Next time, try a different colour too!",
+   "segs": [
+    [
+     "witch",
+     "Same as before? Next time, try a different colour too!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "한 번 더 할래?",
+   "en": "Want to do it one more time?",
+   "segs": [
+    [
+     "witch",
+     "Want to do it one more time?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "한 번 더 하려면 솥을 톡 눌러요.",
+   "en": "To go one more time, tap the cauldron.",
+   "segs": [
+    [
+     "nar",
+     "To go one more time, tap the cauldron.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "솥 물이 쏴아, 다시 맑아졌어요.",
+   "en": "Whoosh, the cauldron water turned clear again.",
+   "segs": [
+    [
+     "nar",
+     "Whoosh, the cauldron water turned clear again.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!",
+   "en": "Last of all, the special Halloween candy! We put in every single colour. All together!",
+   "segs": [
+    [
+     "witch",
+     "Last of all, the special Halloween candy! We put in every single colour. All together!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "전부 다요?",
+   "en": "Every single one?",
+   "segs": [
+    [
+     "kid",
+     "Every single one?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 빨강, 노랑, 파랑, 초록 다 넣어요! 톡 눌러요.",
+   "en": "This time, put in red, yellow, blue and green, all of them! Tap!",
+   "segs": [
+    [
+     "nar",
+     "This time, put in red, yellow, blue and green, all of them! Tap!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "하나, 둘, 셋, 넷! 색을 전부 섞으면…",
+   "en": "One, two, three, four! When you mix all the colours...",
+   "segs": [
+    [
+     "nar",
+     "One, two, three, four! When you mix all the colours...",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "뽀글뽀글… 펑!",
+   "en": "Bubble, bubble... POP!",
+   "segs": [
+    [
+     "witch",
+     "Bubble, bubble... POP!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "까만 사탕이 나왔어요!",
+   "en": "Out came a black candy!",
+   "segs": [
+    [
+     "nar",
+     "Out came a black candy!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "으웩… 냠. 어? 입이 까매졌다! 유령 사탕이다~",
+   "en": "Eww... yum. Huh? My lips turned black! It's ghost candy!",
+   "segs": [
+    [
+     "kid",
+     "Eww... yum. Huh? My lips turned black! It's ghost candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "히히, 나도!",
+   "en": "Hee hee, me too!",
+   "segs": [
+    [
+     "witch",
+     "Hee hee, me too!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "마녀도, 호박이도, 친구들도 까만 입술로…",
+   "en": "The witch, Pumpkin the cat and the friends, all with black lips...",
+   "segs": [
+    [
+     "nar",
+     "The witch, Pumpkin the cat and the friends, all with black lips...",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "유령 흉내를 내며 마을을 한 바퀴 돌았어요. 하나도 안 무서워요, 다 웃고 있거든요.",
+   "en": "They marched around the village pretending to be ghosts. Not scary at all, because everyone was laughing.",
+   "segs": [
+    [
+     "nar",
+     "They marched around the village pretending to be ghosts. Not scary at all, because everyone was laughing.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "자, 약속! 남은 사탕 다 나와라!",
+   "en": "Now, as promised! All the leftover candy, come on out!",
+   "segs": [
+    [
+     "witch",
+     "Now, as promised! All the leftover candy, come on out!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "솥에서 사탕이 퐁퐁퐁 쏟아졌어요. 모두 하나씩… 마녀는 두 개!",
+   "en": "Candy came pouring out of the cauldron, pop, pop, pop. One for everyone... and two for the witch!",
+   "segs": [
+    [
+     "nar",
+     "Candy came pouring out of the cauldron, pop, pop, pop. One for everyone... and two for the witch!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "히히, 나는 두 개!",
+   "en": "Hee hee, two for me!",
+   "segs": [
+    [
+     "witch",
+     "Hee hee, two for me!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "뿅, 뿅, 뿅! 딸기, 개구리, 오리, 박쥐, 물고기, 호박… 다 같이 변신!",
+   "en": "Poof, poof, poof! Strawberry, frog, duck, bat, fish, pumpkin... everyone changed together!",
+   "segs": [
+    [
+     "nar",
+     "Poof, poof, poof! Strawberry, frog, duck, bat, fish, pumpkin... everyone changed together!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 모두 원래대로.",
+   "en": "Poof! Everyone back to normal.",
+   "segs": [
+    [
+     "nar",
+     "Poof! Everyone back to normal.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "다현이 덕분에 사탕이 가득! 내년에도 같이 섞자.",
+   "en": "Thanks to Dahyun, we have candy galore! Let's mix again next year.",
+   "segs": [
+    [
+     "witch",
+     "Thanks to Dahyun, we have candy galore! Let's mix again next year.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "네! 다음엔 다른 색으로요!",
+   "en": "Yes! Next time, with different colours!",
+   "segs": [
+    [
+     "kid",
+     "Yes! Next time, with different colours!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "사탕 마녀를 톡 눌러 인사해요.",
+   "en": "Tap the Candy Witch to say goodbye.",
+   "segs": [
+    [
+     "nar",
+     "Tap the Candy Witch to say goodbye.",
+     null
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "n1": [
+   [
+    "nar",
+    "One!",
+    "toneup"
+   ]
+  ],
+  "n2": [
+   [
+    "nar",
+    "Two!",
+    "toneup"
+   ]
+  ],
+  "n3": [
+   [
+    "nar",
+    "Three!",
+    "toneup"
+   ]
+  ],
+  "n4": [
+   [
+    "nar",
+    "Four!",
+    "toneup"
+   ]
+  ],
+  "n5": [
+   [
+    "nar",
+    "Five!",
+    "toneup"
+   ]
+  ],
+  "yuck": [
+   [
+    "kid",
+    "Eww...",
+    null
+   ]
+  ],
+  "ghost_kid": [
+   [
+    "kid",
+    "Oooh... oooh...",
+    "happy"
+   ]
+  ],
+  "ghost_all": [
+   [
+    "kid",
+    "Oooh... oooh...",
+    "happy"
+   ],
+   [
+    "witch",
+    "Oooh... oooh...",
+    "happy"
+   ],
+   [
+    "cat",
+    "Oooh... oooh...",
+    "happy"
+   ],
+   [
+    "rabbit",
+    "Oooh... oooh...",
+    "happy"
+   ],
+   [
+    "bear",
+    "Oooh... oooh...",
+    "happy"
+   ],
+   [
+    "fox",
+    "Oooh... oooh...",
+    "happy"
+   ]
+  ],
+  "happy_all": [
+   [
+    "kid",
+    "Happy Halloween! Oooh!",
+    "toneup"
+   ],
+   [
+    "witch",
+    "Happy Halloween! Oooh!",
+    "toneup"
+   ],
+   [
+    "cat",
+    "Happy Halloween! Oooh!",
+    "toneup"
+   ],
+   [
+    "rabbit",
+    "Happy Halloween! Oooh!",
+    "toneup"
+   ],
+   [
+    "bear",
+    "Happy Halloween! Oooh!",
+    "toneup"
+   ],
+   [
+    "fox",
+    "Happy Halloween! Oooh!",
+    "toneup"
+   ]
+  ],
+  "ch_wow": [
+   [
+    "rabbit",
+    "Wow!",
+    "toneup"
+   ],
+   [
+    "bear",
+    "Wow!",
+    "toneup"
+   ],
+   [
+    "fox",
+    "Wow!",
+    "toneup"
+   ]
+  ],
+  "ch_bubble": [
+   [
+    "rabbit",
+    "Bubble, bubble!",
+    "happy"
+   ],
+   [
+    "bear",
+    "Bubble, bubble!",
+    "happy"
+   ],
+   [
+    "fox",
+    "Bubble, bubble!",
+    "happy"
+   ]
+  ],
+  "ch_metoo": [
+   [
+    "rabbit",
+    "Me too!",
+    "toneup"
+   ],
+   [
+    "bear",
+    "Me too!",
+    "toneup"
+   ],
+   [
+    "fox",
+    "Me too!",
+    "toneup"
+   ]
+  ],
+  "ch_wantto": [
+   [
+    "rabbit",
+    "I want to do it too!",
+    "happy"
+   ],
+   [
+    "bear",
+    "I want to do it too!",
+    "happy"
+   ],
+   [
+    "fox",
+    "I want to do it too!",
+    "happy"
+   ]
+  ],
+  "ch_black": [
+   [
+    "rabbit",
+    "It's black!",
+    "toneup"
+   ],
+   [
+    "bear",
+    "It's black!",
+    "toneup"
+   ],
+   [
+    "fox",
+    "It's black!",
+    "toneup"
+   ]
+  ],
+  "ch_yuckyum": [
+   [
+    "rabbit",
+    "Eww!... Huh? It's yummy!",
+    "happy"
+   ],
+   [
+    "bear",
+    "Eww!... Huh? It's yummy!",
+    "happy"
+   ],
+   [
+    "fox",
+    "Eww!... Huh? It's yummy!",
+    "happy"
+   ]
+  ]
+ },
+ "chorus": {
+  "ghost_all": "Oooh... oooh...",
+  "happy_all": "Happy Halloween! Oooh!",
+  "ch_wow": "Wow!",
+  "ch_bubble": "Bubble, bubble!",
+  "ch_metoo": "Me too!",
+  "ch_wantto": "I want to do it too!",
+  "ch_black": "It's black!",
+  "ch_yuckyum": "Eww!... Huh? It's yummy!"
+ },
+ "ui": {
+  "사탕 마녀의 핼러윈": "The Candy Witch's Halloween",
+  "다음엔 다른 색을 섞어 볼까요?": "Next time, shall we mix different colours?",
+  "초대장이 날아왔어요": "An Invitation Flies In",
+  "뽀글뽀글 솥을 끓여요": "Bubble, Bubble, Cauldron",
+  "으엑, 이게 재료라고?": "Eww, These Are Ingredients?",
+  "솥에 퐁퐁": "Plop Into the Pot",
+  "펑! 무슨 색?": "Pop! What Colour?",
+  "뿅! 몸이 변했어요": "Poof! A New Body",
+  "이번엔 다 넣어요!": "Now Put Them All In!",
+  "유령 사탕이다~": "Ghost Candy!",
+  "모두 변신! 해피 핼러윈!": "Everyone Changes! Happy Halloween!",
+  "다른 색으로": "A Different Colour",
+  "한 번 더!": "One More Time!",
+  "뿅!": "Poof!",
+  "펑!": "Pop!",
+  "퐁!": "Plop!",
+  "뚝!": "Drip!",
+  "삐뽀삐뽀!": "Nee-naw nee-naw!",
+  "붕~": "Bzzz~",
+  "뿡!": "Toot!",
+  "꽥!": "Quack!",
+  "뿌직!": "Squelch!",
+  "첨벙!": "Splash!",
+  "철썩!": "Splosh!",
+  "개굴!": "Ribbit!",
+  "크앙!": "Rawr!",
+  "화르륵!": "Whoosh!",
+  "뽀글뽀글": "Bubble, bubble",
+  "쏴아": "Whoosh",
+  "데굴데굴": "Rolly rolly",
+  "뒤뚱뒤뚱": "Waddle waddle",
+  "파닥파닥": "Flap flap",
+  "주르륵": "Drip drip",
+  "폴짝!": "Hop!",
+  "통!": "Bonk!",
+  "냠": "Yum",
+  "톡": "Tap",
+  "하나": "One",
+  "둘": "Two",
+  "셋": "Three",
+  "넷": "Four",
+  "다섯": "Five",
+  "빨강": "Red",
+  "노랑": "Yellow",
+  "파랑": "Blue",
+  "초록": "Green",
+  "주황": "Orange",
+  "보라": "Purple",
+  "갈색": "Brown",
+  "검정": "Black",
+  "딸기 사탕": "Strawberry candy",
+  "오리 사탕": "Duck candy",
+  "물고기 사탕": "Fish candy",
+  "개구리 사탕": "Frog candy",
+  "호박 사탕": "Pumpkin candy",
+  "박쥐 사탕": "Bat candy",
+  "초콜릿 사탕": "Chocolate candy",
+  "유령 사탕": "Ghost candy",
+  "다현이": "Dahyun",
+  "사탕 마녀": "the Candy Witch",
+  "호박이": "Pumpkin",
+  "토끼": "Rabbit",
+  "곰": "Bear",
+  "여우": "Fox",
+  "해피 핼러윈!": "Happy Halloween!"
+ }
+}

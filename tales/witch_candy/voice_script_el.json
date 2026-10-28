@@ -1,0 +1,1569 @@
+{
+ "notes": "ElevenLabs 목소리 배정(2026-10-28, PLAN §3 제안을 확정안으로): nar=Lily(여자 내레이터 돌려 쓰기 Lily→Huelyn→Annie — 직전 창작편 유니콘이 Huelyn, 다음 차례 Annie는 이 편에서 다현이 목소리라 건너뛰고 Lily; 따뜻하고 장난기 있는 낭독), kid=Annie(다현이 — 여자아이, 「유니콘을 찾아서」·「구름 공장」의 다현이와 같은 목소리로 동화끼리 같은 아이), witch=Laura(사탕 마녀 — 다정·엉뚱, 밝고 괴짜스러운 목소리. Matilda는 나쁜 마녀 목소리라 쓰지 않음. 대안 Chaemong), cat=Hopsi(호박이 — 꼬마 목소리 돌려 쓰기, \"냐옹\"·코 막기), rabbit=Teddy, bear=Peanut(짧은 합창 역은 영어 아이 목소리), fox=Mithi(꼬마 목소리). 한 편 안에서 목소리가 겹치지 않고 내레이터와도 다르다. 모델 eleven_v4, 배역별 settings(마녀는 stability를 낮춰 표정 크게). 세기: extra n1~n5(하나~다섯)는 nar 목소리로 새로 녹음 — 공용 숫자 클립 audio/el/count/ko_*.mp3 는 Annie(사자와 생쥐 내레이터) 목소리라 이 편 내레이터(Lily)와 맞지 않아 재사용하지 않음. 7장 \"하나, 둘, 셋, 넷\"은 n1~n4 를 넣을 때마다 + 줄 하나. 합창: 친구 셋(rabbit·bear·fox) 합창 6줄(ch_wow·ch_bubble·ch_metoo·ch_wantto·ch_black·ch_yuckyum)과 여섯 목소리 합창 2줄(ghost_all \"오~~우~~\"·happy_all \"해피 핼러윈! 오~우~!\")은 extra 에 배역마다 따로 녹음하고 mix_chorus_el.py(red_car 방식)로 겹쳐 chorus 항목의 문장 키로 NARRATION_CLIPS 에 넣는다. 다현이 혼자 \"오~~우~~\"(8장)는 합창과 글자가 같아 lines 가 아니라 extra.ghost_kid(VOICE_LINES)로 둔다(코드가 자막을 따로 띄움). 결과별 대사 8벌: 색 질문 q_*(6) · 정답 ok_*(4) · 한 색 one_*(4) · 사탕 이름 yum_*(7, 1회전 \"어? 맛있다! …○○ 사탕이다!\") · yum2_*(7, 2·3회전 \"냠… ○○ 사탕이다!\", PLAN §5-2) · 변신 tf_nar_*(7) · 변신 대사 tf_kid_*(7) · 동작 tf_act_*(7) + 딸기 \"어디 가!\"·초콜릿 \"녹았다!\". 회전 전환 6줄(r_*). 5장 색 고르기: 마녀 질문 q_*(6) 뒤 T.ask 안내 ask_*(6, \"○○이랑 ○○을 섞으면 무슨 색이 될까요? 톡 눌러요.\" — 장면표·witch_candy.js 템플릿과 같은 글자), 오답 wrong_*(4, \"그건 ○○이에요.\" — 코드가 T.say 로 부르므로 lines). 판단: 5장 \"콧물로 만든 건데… 으웩…\"은 PLAN 글자 그대로지만 콧물을 안 넣은 판에서는 코드가 extra.yuck 로 대신한다. 조작 안내 문장은 조작이 있는 장면(2·4·5·6²끝·7·9)에만. 교훈 없음(뒷표지 글 \"다음엔 다른 색을 섞어 볼까요?\"는 ui 글자만). 제목 「사탕 마녀의 핼러윈」(2026-10-28 사용자 확정).",
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "kid": "Lb7qkOn5hF8p7qfCDH8q",
+  "witch": "FGY2WhTYpPnrIDTdsKH5",
+  "cat": "ygoBNrnmTEdu5NtDTmAY",
+  "rabbit": "XjGYkUkzth8BPs29fmcV",
+  "bear": "rBkiq5ZQ43ogwd6i4uIQ",
+  "fox": "MIl0Flub6Sc9KSkX2A42"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "kid": "eleven_v4",
+  "witch": "eleven_v4",
+  "cat": "eleven_v4",
+  "rabbit": "eleven_v4",
+  "bear": "eleven_v4",
+  "fox": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "kid": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "witch": {
+   "stability": 0.35,
+   "style": 0.55
+  },
+  "cat": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "rabbit": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "bear": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "fox": {
+   "stability": 0.4,
+   "style": 0.5
+  }
+ },
+ "use_dir": [
+  "nar",
+  "kid",
+  "witch",
+  "cat",
+  "rabbit",
+  "bear",
+  "fox"
+ ],
+ "lines": [
+  {
+   "text": "핼러윈 밤이에요. 바람을 타고 무언가 팔랑팔랑 날아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "핼러윈 밤이에요. 바람을 타고 무언가 팔랑팔랑 날아왔어요.",
+     null,
+     "[warm, playful storytelling, slow, clear, cosy Halloween night, never scary]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 초대장이다! 솥이랑 사탕 그림!",
+   "segs": [
+    [
+     "kid",
+     "어? 초대장이다! 솥이랑 사탕 그림!",
+     "happy",
+     "[young girl, surprised and delighted, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "거리 끝 사탕 가게 창이 환하게 켜졌어요.",
+   "segs": [
+    [
+     "nar",
+     "거리 끝 사탕 가게 창이 환하게 켜졌어요.",
+     "toneup",
+     "[bright, excited storytelling, bouncy, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "어서 와, 친구들! 나는 사탕 마녀야. 어머, 모자가 또 거꾸로네.",
+   "segs": [
+    [
+     "witch",
+     "어서 와, 친구들! 나는 사탕 마녀야. 어머, 모자가 또 거꾸로네.",
+     "happy",
+     "[kind quirky witch, warm, giggly, a little silly, never scary]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이랑 친구들은 사탕 가게로 쪼르르 들어갔어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이랑 친구들은 사탕 가게로 쪼르르 들어갔어요.",
+     null,
+     "[warm, playful storytelling, slow, clear, cosy Halloween night, never scary]"
+    ]
+   ]
+  },
+  {
+   "text": "오늘은 핼러윈 특별 사탕을 만들 거야. 먼저 솥을 끓여야지.",
+   "segs": [
+    [
+     "witch",
+     "오늘은 핼러윈 특별 사탕을 만들 거야. 먼저 솥을 끓여야지.",
+     "happy",
+     "[kind quirky witch, warm, giggly, a little silly, never scary]"
+    ]
+   ]
+  },
+  {
+   "text": "장작을 톡 눌러 불을 지펴요.",
+   "segs": [
+    [
+     "nar",
+     "장작을 톡 눌러 불을 지펴요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "화르륵! 불이 활활, 솥이 뽀글뽀글 끓기 시작했어요.",
+   "segs": [
+    [
+     "nar",
+     "화르륵! 불이 활활, 솥이 뽀글뽀글 끓기 시작했어요.",
+     "toneup",
+     "[bright, excited storytelling, bouncy, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "냐옹!",
+   "segs": [
+    [
+     "cat",
+     "냐옹!",
+     "happy",
+     "[kitten, small high meow-like voice, cute]"
+    ]
+   ]
+  },
+  {
+   "text": "핼러윈 사탕 재료야! 빨간 건 아기 용 콧물이랑 소방차, 노란 건 호박 등이랑 병아리 방귀!",
+   "segs": [
+    [
+     "witch",
+     "핼러윈 사탕 재료야! 빨간 건 아기 용 콧물이랑 소방차, 노란 건 호박 등이랑 병아리 방귀!",
+     "happy",
+     "[kind quirky witch, proud, showing off, giggly]"
+    ]
+   ]
+  },
+  {
+   "text": "파란 건 괴물 응가랑 파란 생선, 초록은 개구리랑 공룡!",
+   "segs": [
+    [
+     "witch",
+     "파란 건 괴물 응가랑 파란 생선, 초록은 개구리랑 공룡!",
+     "happy",
+     "[kind quirky witch, proud, showing off, giggly]"
+    ]
+   ]
+  },
+  {
+   "text": "으엑! 콧물이랑 응가요?",
+   "segs": [
+    [
+     "kid",
+     "으엑! 콧물이랑 응가요?",
+     null,
+     "[young girl, grossed out but giggling, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "냐… 냄새!",
+   "segs": [
+    [
+     "cat",
+     "냐… 냄새!",
+     null,
+     "[kitten, pinching its nose, comic, small]"
+    ]
+   ]
+  },
+  {
+   "text": "히히, 색을 섞으면 새 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?",
+   "segs": [
+    [
+     "witch",
+     "히히, 색을 섞으면 새 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?",
+     "happy",
+     "[kind quirky witch, giggly, a teasing pause before 비밀, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "네, 내가 할래요!",
+   "segs": [
+    [
+     "kid",
+     "네, 내가 할래요!",
+     "happy",
+     "[young girl, eager, bold, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "그럼 다현이가 먼저, 마지막엔 다 같이!",
+   "segs": [
+    [
+     "witch",
+     "그럼 다현이가 먼저, 마지막엔 다 같이!",
+     "happy",
+     "[kind quirky witch, warm, giggly, a little silly, never scary]"
+    ]
+   ]
+  },
+  {
+   "text": "넣고 싶은 재료를 톡 눌러 솥에 넣어요. 다 넣었으면 국자를 톡!",
+   "segs": [
+    [
+     "nar",
+     "넣고 싶은 재료를 톡 눌러 솥에 넣어요. 다 넣었으면 국자를 톡!",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+   "segs": [
+    [
+     "witch",
+     "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "happy",
+     "[kind quirky witch, warm, giggly, a little silly, never scary]"
+    ]
+   ]
+  },
+  {
+   "text": "세 가지는 맨 마지막에!",
+   "segs": [
+    [
+     "witch",
+     "세 가지는 맨 마지막에!",
+     null,
+     "[kind quirky witch, playful, gently stopping, no scolding]"
+    ]
+   ]
+  },
+  {
+   "text": "하나는 넣어야지!",
+   "segs": [
+    [
+     "witch",
+     "하나는 넣어야지!",
+     null,
+     "[kind quirky witch, playful, encouraging]"
+    ]
+   ]
+  },
+  {
+   "text": "다 넣었지? 그럼 저어 보자!",
+   "segs": [
+    [
+     "witch",
+     "다 넣었지? 그럼 저어 보자!",
+     "happy",
+     "[kind quirky witch, warm, giggly, a little silly, never scary]"
+    ]
+   ]
+  },
+  {
+   "text": "자, 저어 보자. 뽀글뽀글…",
+   "segs": [
+    [
+     "witch",
+     "자, 저어 보자. 뽀글뽀글…",
+     null,
+     "[kind quirky witch, stirring rhythm, building, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 노랑을 섞으면 무슨 색일까?",
+   "segs": [
+    [
+     "witch",
+     "빨강이랑 노랑을 섞으면 무슨 색일까?",
+     null,
+     "[kind quirky witch, asking a riddle, curious, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "노랑이랑 파랑을 섞으면 무슨 색일까?",
+   "segs": [
+    [
+     "witch",
+     "노랑이랑 파랑을 섞으면 무슨 색일까?",
+     null,
+     "[kind quirky witch, asking a riddle, curious, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 파랑을 섞으면 무슨 색일까?",
+   "segs": [
+    [
+     "witch",
+     "빨강이랑 파랑을 섞으면 무슨 색일까?",
+     null,
+     "[kind quirky witch, asking a riddle, curious, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 초록을 섞으면 무슨 색일까?",
+   "segs": [
+    [
+     "witch",
+     "빨강이랑 초록을 섞으면 무슨 색일까?",
+     null,
+     "[kind quirky witch, asking a riddle, curious, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 노랑을 섞으면 무슨 색일까?",
+   "segs": [
+    [
+     "witch",
+     "초록이랑 노랑을 섞으면 무슨 색일까?",
+     null,
+     "[kind quirky witch, asking a riddle, curious, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 파랑을 섞으면 무슨 색일까?",
+   "segs": [
+    [
+     "witch",
+     "초록이랑 파랑을 섞으면 무슨 색일까?",
+     null,
+     "[kind quirky witch, asking a riddle, curious, clear, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 노랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "빨강이랑 노랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "노랑이랑 파랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "노랑이랑 파랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 파랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "빨강이랑 파랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 초록을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "빨강이랑 초록을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 노랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "초록이랑 노랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 파랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "초록이랑 파랑을 섞으면 무슨 색이 될까요? 톡 눌러요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 주황이에요.",
+   "segs": [
+    [
+     "nar",
+     "그건 주황이에요.",
+     null,
+     "[kind, gentle, encouraging, no scolding]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 초록이에요.",
+   "segs": [
+    [
+     "nar",
+     "그건 초록이에요.",
+     null,
+     "[kind, gentle, encouraging, no scolding]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 보라예요.",
+   "segs": [
+    [
+     "nar",
+     "그건 보라예요.",
+     null,
+     "[kind, gentle, encouraging, no scolding]"
+    ]
+   ]
+  },
+  {
+   "text": "그건 갈색이에요.",
+   "segs": [
+    [
+     "nar",
+     "그건 갈색이에요.",
+     null,
+     "[kind, gentle, encouraging, no scolding]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 주황!",
+   "segs": [
+    [
+     "witch",
+     "맞아요, 주황!",
+     "happy",
+     "[kind quirky witch, praising, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 초록!",
+   "segs": [
+    [
+     "witch",
+     "맞아요, 초록!",
+     "happy",
+     "[kind quirky witch, praising, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 보라!",
+   "segs": [
+    [
+     "witch",
+     "맞아요, 보라!",
+     "happy",
+     "[kind quirky witch, praising, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "맞아요, 갈색!",
+   "segs": [
+    [
+     "witch",
+     "맞아요, 갈색!",
+     "happy",
+     "[kind quirky witch, praising, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강만 넣었으니… 빨강 그대로!",
+   "segs": [
+    [
+     "witch",
+     "빨강만 넣었으니… 빨강 그대로!",
+     "happy",
+     "[kind quirky witch, a thinking pause, then bright reveal]"
+    ]
+   ]
+  },
+  {
+   "text": "노랑만 넣었으니… 노랑 그대로!",
+   "segs": [
+    [
+     "witch",
+     "노랑만 넣었으니… 노랑 그대로!",
+     "happy",
+     "[kind quirky witch, a thinking pause, then bright reveal]"
+    ]
+   ]
+  },
+  {
+   "text": "파랑만 넣었으니… 파랑 그대로!",
+   "segs": [
+    [
+     "witch",
+     "파랑만 넣었으니… 파랑 그대로!",
+     "happy",
+     "[kind quirky witch, a thinking pause, then bright reveal]"
+    ]
+   ]
+  },
+  {
+   "text": "초록만 넣었으니… 초록 그대로!",
+   "segs": [
+    [
+     "witch",
+     "초록만 넣었으니… 초록 그대로!",
+     "happy",
+     "[kind quirky witch, a thinking pause, then bright reveal]"
+    ]
+   ]
+  },
+  {
+   "text": "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+   "segs": [
+    [
+     "nar",
+     "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+     "toneup",
+     "[bright, excited storytelling, bouncy, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "먼저 먹어 봐.",
+   "segs": [
+    [
+     "witch",
+     "먼저 먹어 봐.",
+     "happy",
+     "[kind quirky witch, gentle, offering, a little mischievous]"
+    ]
+   ]
+  },
+  {
+   "text": "콧물로 만든 건데… 으웩…",
+   "segs": [
+    [
+     "kid",
+     "콧물로 만든 건데… 으웩…",
+     null,
+     "[young girl, hesitant, grossed out, comic, small voice]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …딸기 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "어? 맛있다! …딸기 사탕이다!",
+     "happy",
+     "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …오리 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "어? 맛있다! …오리 사탕이다!",
+     "happy",
+     "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …물고기 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "어? 맛있다! …물고기 사탕이다!",
+     "happy",
+     "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …개구리 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "어? 맛있다! …개구리 사탕이다!",
+     "happy",
+     "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …호박 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "어? 맛있다! …호박 사탕이다!",
+     "happy",
+     "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …박쥐 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "어? 맛있다! …박쥐 사탕이다!",
+     "happy",
+     "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 맛있다! …초콜릿 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "어? 맛있다! …초콜릿 사탕이다!",
+     "happy",
+     "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 딸기 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "냠… 딸기 사탕이다!",
+     "happy",
+     "[young girl, munching, then bright shout]"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 오리 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "냠… 오리 사탕이다!",
+     "happy",
+     "[young girl, munching, then bright shout]"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 물고기 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "냠… 물고기 사탕이다!",
+     "happy",
+     "[young girl, munching, then bright shout]"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 개구리 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "냠… 개구리 사탕이다!",
+     "happy",
+     "[young girl, munching, then bright shout]"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 호박 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "냠… 호박 사탕이다!",
+     "happy",
+     "[young girl, munching, then bright shout]"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 박쥐 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "냠… 박쥐 사탕이다!",
+     "happy",
+     "[young girl, munching, then bright shout]"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 초콜릿 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "냠… 초콜릿 사탕이다!",
+     "happy",
+     "[young girl, munching, then bright shout]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이가 빨간 딸기가 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이가 빨간 딸기가 됐어요!",
+     "toneup",
+     "[bright, magical, excited storytelling, a pop on 뿅]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이 발이 오리발이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이 발이 오리발이 됐어요!",
+     "toneup",
+     "[bright, magical, excited storytelling, a pop on 뿅]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이한테 물고기 꼬리가 생겼어요!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이한테 물고기 꼬리가 생겼어요!",
+     "toneup",
+     "[bright, magical, excited storytelling, a pop on 뿅]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이가 초록 개구리가 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이가 초록 개구리가 됐어요!",
+     "toneup",
+     "[bright, magical, excited storytelling, a pop on 뿅]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!",
+     "toneup",
+     "[bright, magical, excited storytelling, a pop on 뿅]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이 등에 박쥐 날개가 돋았어요!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이 등에 박쥐 날개가 돋았어요!",
+     "toneup",
+     "[bright, magical, excited storytelling, a pop on 뿅]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이 입에 초콜릿 수염이 났어요!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이 입에 초콜릿 수염이 났어요!",
+     "toneup",
+     "[bright, magical, excited storytelling, a pop on 뿅]"
+    ]
+   ]
+  },
+  {
+   "text": "데굴데굴, 멈춰 줘요~!",
+   "segs": [
+    [
+     "kid",
+     "데굴데굴, 멈춰 줘요~!",
+     "happy",
+     "[young girl, dizzy, rolling, laughing, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "꽥꽥… 어? 내 발이!",
+   "segs": [
+    [
+     "kid",
+     "꽥꽥… 어? 내 발이!",
+     "happy",
+     "[young girl, quacking playfully, then surprised]"
+    ]
+   ]
+  },
+  {
+   "text": "하늘에서 수영이다!",
+   "segs": [
+    [
+     "kid",
+     "하늘에서 수영이다!",
+     "happy",
+     "[young girl, joyful, floating, wonder]"
+    ]
+   ]
+  },
+  {
+   "text": "개굴! 지붕까지 폴짝!",
+   "segs": [
+    [
+     "kid",
+     "개굴! 지붕까지 폴짝!",
+     "happy",
+     "[young girl, bouncy, a frog croak then a hop shout]"
+    ]
+   ]
+  },
+  {
+   "text": "내 배가 등불이 됐어!",
+   "segs": [
+    [
+     "kid",
+     "내 배가 등불이 됐어!",
+     "happy",
+     "[young girl, amazed, giggling, warm]"
+    ]
+   ]
+  },
+  {
+   "text": "파닥파닥, 달님 안녕!",
+   "segs": [
+    [
+     "kid",
+     "파닥파닥, 달님 안녕!",
+     "happy",
+     "[young girl, flapping, joyful, calling to the moon]"
+    ]
+   ]
+  },
+  {
+   "text": "주르륵… 나 녹아요~",
+   "segs": [
+    [
+     "kid",
+     "주르륵… 나 녹아요~",
+     "happy",
+     "[young girl, voice sliding down comically, melting, laughing]"
+    ]
+   ]
+  },
+  {
+   "text": "히히, 핼러윈 마법이야!",
+   "segs": [
+    [
+     "witch",
+     "히히, 핼러윈 마법이야!",
+     "happy",
+     "[kind quirky witch, giggly, proud]"
+    ]
+   ]
+  },
+  {
+   "text": "마지막에 다 같이!",
+   "segs": [
+    [
+     "witch",
+     "마지막에 다 같이!",
+     "happy",
+     "[kind quirky witch, warm, giggly, a little silly, never scary]"
+    ]
+   ]
+  },
+  {
+   "text": "길을 데굴데굴 굴러가다 호박 등에 통!",
+   "segs": [
+    [
+     "nar",
+     "길을 데굴데굴 굴러가다 호박 등에 통!",
+     "happy",
+     "[playful storytelling, rhythmic on the sound words, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "뒤뚱뒤뚱, 호박이도 뒤뚱뒤뚱.",
+   "segs": [
+    [
+     "nar",
+     "뒤뚱뒤뚱, 호박이도 뒤뚱뒤뚱.",
+     "happy",
+     "[playful storytelling, rhythmic on the sound words, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "보름달 둘레를 보글보글 헤엄쳤어요.",
+   "segs": [
+    [
+     "nar",
+     "보름달 둘레를 보글보글 헤엄쳤어요.",
+     "happy",
+     "[playful storytelling, rhythmic on the sound words, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.",
+   "segs": [
+    [
+     "nar",
+     "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.",
+     "happy",
+     "[playful storytelling, rhythmic on the sound words, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "깜깜한 길이 다현이 덕분에 환해졌어요.",
+   "segs": [
+    [
+     "nar",
+     "깜깜한 길이 다현이 덕분에 환해졌어요.",
+     "happy",
+     "[playful storytelling, rhythmic on the sound words, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "박쥐 친구들이랑 달 앞을 빙글 돌았어요.",
+   "segs": [
+    [
+     "nar",
+     "박쥐 친구들이랑 달 앞을 빙글 돌았어요.",
+     "happy",
+     "[playful storytelling, rhythmic on the sound words, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "납작해졌다가… 뿅!",
+   "segs": [
+    [
+     "nar",
+     "납작해졌다가… 뿅!",
+     "happy",
+     "[playful storytelling, rhythmic on the sound words, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "어디 가!",
+   "segs": [
+    [
+     "witch",
+     "어디 가!",
+     "toneup",
+     "[kind quirky witch, calling after her, comic, not angry]"
+    ]
+   ]
+  },
+  {
+   "text": "녹았다!",
+   "segs": [
+    [
+     "witch",
+     "녹았다!",
+     "toneup",
+     "[kind quirky witch, surprised, giggling]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+     null,
+     "[warm, settling, a pop on 뿅, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 다른 색으로 해 볼까?",
+   "segs": [
+    [
+     "witch",
+     "이번엔 다른 색으로 해 볼까?",
+     "happy",
+     "[kind quirky witch, inviting, curious]"
+    ]
+   ]
+  },
+  {
+   "text": "재료를 톡! 다 넣으면 국자!",
+   "segs": [
+    [
+     "nar",
+     "재료를 톡! 다 넣으면 국자!",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "아까랑 같네? 다음엔 다른 색도 해 봐!",
+   "segs": [
+    [
+     "witch",
+     "아까랑 같네? 다음엔 다른 색도 해 봐!",
+     null,
+     "[kind quirky witch, amused, gently suggesting, no scolding]"
+    ]
+   ]
+  },
+  {
+   "text": "한 번 더 할래?",
+   "segs": [
+    [
+     "witch",
+     "한 번 더 할래?",
+     "happy",
+     "[kind quirky witch, inviting, playful]"
+    ]
+   ]
+  },
+  {
+   "text": "한 번 더 하려면 솥을 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "한 번 더 하려면 솥을 톡 눌러요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "솥 물이 쏴아, 다시 맑아졌어요.",
+   "segs": [
+    [
+     "nar",
+     "솥 물이 쏴아, 다시 맑아졌어요.",
+     null,
+     "[calm, a soft whoosh on 쏴아, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!",
+   "segs": [
+    [
+     "witch",
+     "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!",
+     "toneup",
+     "[kind quirky witch, big announcement, excited, rallying]"
+    ]
+   ]
+  },
+  {
+   "text": "전부 다요?",
+   "segs": [
+    [
+     "kid",
+     "전부 다요?",
+     null,
+     "[young girl, wide-eyed, surprised]"
+    ]
+   ]
+  },
+  {
+   "text": "이번엔 빨강, 노랑, 파랑, 초록 다 넣어요! 톡 눌러요.",
+   "segs": [
+    [
+     "nar",
+     "이번엔 빨강, 노랑, 파랑, 초록 다 넣어요! 톡 눌러요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "하나, 둘, 셋, 넷! 색을 전부 섞으면…",
+   "segs": [
+    [
+     "nar",
+     "하나, 둘, 셋, 넷! 색을 전부 섞으면…",
+     "toneup",
+     "[bright counting, clear beats, then a suspenseful trailing pause]"
+    ]
+   ]
+  },
+  {
+   "text": "뽀글뽀글… 펑!",
+   "segs": [
+    [
+     "witch",
+     "뽀글뽀글… 펑!",
+     "toneup",
+     "[kind quirky witch, bubbling rhythm then a big surprised pop]"
+    ]
+   ]
+  },
+  {
+   "text": "까만 사탕이 나왔어요!",
+   "segs": [
+    [
+     "nar",
+     "까만 사탕이 나왔어요!",
+     "toneup",
+     "[bright, excited storytelling, bouncy, clear]"
+    ]
+   ]
+  },
+  {
+   "text": "으웩… 냠. 어? 입이 까매졌다! 유령 사탕이다~",
+   "segs": [
+    [
+     "kid",
+     "으웩… 냠. 어? 입이 까매졌다! 유령 사탕이다~",
+     "happy",
+     "[young girl, hesitant then munching, surprised, then gleeful playful ghost voice at the end]"
+    ]
+   ]
+  },
+  {
+   "text": "히히, 나도!",
+   "segs": [
+    [
+     "witch",
+     "히히, 나도!",
+     "happy",
+     "[kind quirky witch, giggly, eager]"
+    ]
+   ]
+  },
+  {
+   "text": "마녀도, 호박이도, 친구들도 까만 입술로…",
+   "segs": [
+    [
+     "nar",
+     "마녀도, 호박이도, 친구들도 까만 입술로…",
+     null,
+     "[playful storytelling, listing, building up to a chorus, trailing]"
+    ]
+   ]
+  },
+  {
+   "text": "유령 흉내를 내며 마을을 한 바퀴 돌았어요. 하나도 안 무서워요, 다 웃고 있거든요.",
+   "segs": [
+    [
+     "nar",
+     "유령 흉내를 내며 마을을 한 바퀴 돌았어요. 하나도 안 무서워요, 다 웃고 있거든요.",
+     "happy",
+     "[warm, amused storytelling, marching rhythm, reassuring and smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "자, 약속! 남은 사탕 다 나와라!",
+   "segs": [
+    [
+     "witch",
+     "자, 약속! 남은 사탕 다 나와라!",
+     "toneup",
+     "[kind quirky witch, a playful spell, big and bright]"
+    ]
+   ]
+  },
+  {
+   "text": "솥에서 사탕이 퐁퐁퐁 쏟아졌어요. 모두 하나씩… 마녀는 두 개!",
+   "segs": [
+    [
+     "nar",
+     "솥에서 사탕이 퐁퐁퐁 쏟아졌어요. 모두 하나씩… 마녀는 두 개!",
+     "happy",
+     "[bright storytelling, bouncy pops, amused on the last words]"
+    ]
+   ]
+  },
+  {
+   "text": "히히, 나는 두 개!",
+   "segs": [
+    [
+     "witch",
+     "히히, 나는 두 개!",
+     "happy",
+     "[kind quirky witch, cheeky, giggly]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅, 뿅, 뿅! 딸기, 개구리, 오리, 박쥐, 물고기, 호박… 다 같이 변신!",
+   "segs": [
+    [
+     "nar",
+     "뿅, 뿅, 뿅! 딸기, 개구리, 오리, 박쥐, 물고기, 호박… 다 같이 변신!",
+     "toneup",
+     "[excited storytelling, three pops, listing with glee, big finish]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 모두 원래대로.",
+   "segs": [
+    [
+     "nar",
+     "뿅! 모두 원래대로.",
+     null,
+     "[warm, settling, a pop on 뿅]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이 덕분에 사탕이 가득! 내년에도 같이 섞자.",
+   "segs": [
+    [
+     "witch",
+     "다현이 덕분에 사탕이 가득! 내년에도 같이 섞자.",
+     "happy",
+     "[kind quirky witch, grateful, warm, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "네! 다음엔 다른 색으로요!",
+   "segs": [
+    [
+     "kid",
+     "네! 다음엔 다른 색으로요!",
+     "happy",
+     "[young girl, happy, promising, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "사탕 마녀를 톡 눌러 인사해요.",
+   "segs": [
+    [
+     "nar",
+     "사탕 마녀를 톡 눌러 인사해요.",
+     null,
+     "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "n1": [
+   [
+    "nar",
+    "하나!",
+    "toneup",
+    "[bright, clear, slow counting, one word, bouncy]"
+   ]
+  ],
+  "n2": [
+   [
+    "nar",
+    "둘!",
+    "toneup",
+    "[bright, clear, slow counting, one word, bouncy]"
+   ]
+  ],
+  "n3": [
+   [
+    "nar",
+    "셋!",
+    "toneup",
+    "[bright, clear, slow counting, one word, bouncy]"
+   ]
+  ],
+  "n4": [
+   [
+    "nar",
+    "넷!",
+    "toneup",
+    "[bright, clear, slow counting, one word, bouncy]"
+   ]
+  ],
+  "n5": [
+   [
+    "nar",
+    "다섯!",
+    "toneup",
+    "[bright, clear, slow counting, one word, bouncy]"
+   ]
+  ],
+  "yuck": [
+   [
+    "kid",
+    "으엑…",
+    null,
+    "[young girl, grossed out, comic, short]"
+   ]
+  ],
+  "ghost_kid": [
+   [
+    "kid",
+    "오~~우~~",
+    "happy",
+    "[young girl, playful ghost oooh, two arms up, giggling, not scary]"
+   ]
+  ],
+  "ghost_all": [
+   [
+    "kid",
+    "오~~우~~",
+    "happy",
+    "[young girl, playful ghost oooh, two arms up, giggling, not scary]"
+   ],
+   [
+    "witch",
+    "오~~우~~",
+    "happy",
+    "[kind quirky witch, silly wobbly ghost oooh, giggling, not scary]"
+   ],
+   [
+    "cat",
+    "오~~우~~",
+    "happy",
+    "[kitten, meowing the oooh like nya-oo, cute, not scary]"
+   ],
+   [
+    "rabbit",
+    "오~~우~~",
+    "happy",
+    "[small child, playful ghost oooh, giggling]"
+   ],
+   [
+    "bear",
+    "오~~우~~",
+    "happy",
+    "[small child, round low playful ghost oooh, giggling]"
+   ],
+   [
+    "fox",
+    "오~~우~~",
+    "happy",
+    "[small child, playful ghost oooh, giggling]"
+   ]
+  ],
+  "happy_all": [
+   [
+    "kid",
+    "해피 핼러윈! 오~우~!",
+    "toneup",
+    "[young girl, cheering, then a playful ghost oooh]"
+   ],
+   [
+    "witch",
+    "해피 핼러윈! 오~우~!",
+    "toneup",
+    "[kind quirky witch, cheering, then a silly ghost oooh]"
+   ],
+   [
+    "cat",
+    "해피 핼러윈! 오~우~!",
+    "toneup",
+    "[kitten, cheering meow-like, then a nya-oo]"
+   ],
+   [
+    "rabbit",
+    "해피 핼러윈! 오~우~!",
+    "toneup",
+    "[small child, cheering, then a ghost oooh]"
+   ],
+   [
+    "bear",
+    "해피 핼러윈! 오~우~!",
+    "toneup",
+    "[small child, cheering, then a ghost oooh]"
+   ],
+   [
+    "fox",
+    "해피 핼러윈! 오~우~!",
+    "toneup",
+    "[small child, cheering, then a ghost oooh]"
+   ]
+  ],
+  "ch_wow": [
+   [
+    "rabbit",
+    "우와!",
+    "toneup",
+    "[amazed, bright, together]"
+   ],
+   [
+    "bear",
+    "우와!",
+    "toneup",
+    "[amazed, bright, together]"
+   ],
+   [
+    "fox",
+    "우와!",
+    "toneup",
+    "[amazed, bright, together]"
+   ]
+  ],
+  "ch_bubble": [
+   [
+    "rabbit",
+    "뽀글뽀글!",
+    "happy",
+    "[gleeful, bouncy, chanting the bubbling sound]"
+   ],
+   [
+    "bear",
+    "뽀글뽀글!",
+    "happy",
+    "[gleeful, bouncy, chanting the bubbling sound]"
+   ],
+   [
+    "fox",
+    "뽀글뽀글!",
+    "happy",
+    "[gleeful, bouncy, chanting the bubbling sound]"
+   ]
+  ],
+  "ch_metoo": [
+   [
+    "rabbit",
+    "나도!",
+    "toneup",
+    "[eager, bright, hand up]"
+   ],
+   [
+    "bear",
+    "나도!",
+    "toneup",
+    "[eager, bright, hand up]"
+   ],
+   [
+    "fox",
+    "나도!",
+    "toneup",
+    "[eager, bright, hand up]"
+   ]
+  ],
+  "ch_wantto": [
+   [
+    "rabbit",
+    "나도 하고 싶다!",
+    "happy",
+    "[eager, envious but happy, bouncy]"
+   ],
+   [
+    "bear",
+    "나도 하고 싶다!",
+    "happy",
+    "[eager, envious but happy, bouncy]"
+   ],
+   [
+    "fox",
+    "나도 하고 싶다!",
+    "happy",
+    "[eager, envious but happy, bouncy]"
+   ]
+  ],
+  "ch_black": [
+   [
+    "rabbit",
+    "까맣다!",
+    "toneup",
+    "[amazed, wide-eyed, together]"
+   ],
+   [
+    "bear",
+    "까맣다!",
+    "toneup",
+    "[amazed, wide-eyed, together]"
+   ],
+   [
+    "fox",
+    "까맣다!",
+    "toneup",
+    "[amazed, wide-eyed, together]"
+   ]
+  ],
+  "ch_yuckyum": [
+   [
+    "rabbit",
+    "으웩!… 어? 맛있다!",
+    "happy",
+    "[grossed out, a pause, then surprised and delighted]"
+   ],
+   [
+    "bear",
+    "으웩!… 어? 맛있다!",
+    "happy",
+    "[grossed out, a pause, then surprised and delighted]"
+   ],
+   [
+    "fox",
+    "으웩!… 어? 맛있다!",
+    "happy",
+    "[grossed out, a pause, then surprised and delighted]"
+   ]
+  ]
+ },
+ "chorus": {
+  "ghost_all": "오~~우~~",
+  "happy_all": "해피 핼러윈! 오~우~!",
+  "ch_wow": "우와!",
+  "ch_bubble": "뽀글뽀글!",
+  "ch_metoo": "나도!",
+  "ch_wantto": "나도 하고 싶다!",
+  "ch_black": "까맣다!",
+  "ch_yuckyum": "으웩!… 어? 맛있다!"
+ }
+}
