@@ -1131,7 +1131,7 @@
       butterfly.style.transform = `translate(${nx - 60}px,${230 - (i % 2) * 40}px)`;
     };
     // 저절로 (2026-10-19 톡 조작 정리)
-    for (let i = 1; i <= 3; i++) { await walkStep(i); await sleep(1300); }
+    for (let i = 1; i <= 3; i++) { await walkStep(i); await sleep(1000); }
     area.remove();
     if (goldi.setHold) goldi.setHold(true);
     await sleep(700);
