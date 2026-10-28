@@ -139,16 +139,16 @@
     /* 종이로 오린 작은 그림들 (눈 없는 것만) */
     const crumbAt = (x, y) => {
       const g = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, T.world);
-      T.el('ellipse', { cx: x, cy: y, rx: 13, ry: 9, fill: '#F3DFA8' }, g);
-      T.el('ellipse', { cx: x - 3, cy: y - 2, rx: 6, ry: 3.5, fill: '#FFF3CD' }, g);
+      pic('hg_crumb', x - 14, y - 12, 28, 24.7, g);
       g.animate([{ transform: 'translateY(-26px)', opacity: 0 }, { transform: 'translateY(0)', opacity: 1 }], { duration: 260, easing: 'ease-out' });
       return g;
     };
-    const CANDY = ['#E26D6D', '#F3C969', '#6FA8DC'];
+    /* 그림 한 장(v3w)을 상자에 넣는다 */
+    const pic = (f, x, y, w, h, parent, extra = {}) => T.el('image', { href: AS + f + '.webp', x, y, width: w, height: h, preserveAspectRatio: 'none', ...extra }, parent);
     const candyAt = (x, y, i) => {
-      const g = T.el('g', { filter: 'url(#pp)' }, T.world), c = CANDY[i % 3], r = 16;
-      if (i % 2 === 0) { T.el('circle', { cx: x, cy: y, r, fill: c }, g); T.el('circle', { cx: x - 4, cy: y - 4, r: 6, fill: '#fff', opacity: .45 }, g); }
-      else { T.el('polygon', { points: `${x},${y - r} ${x + r * 1.1},${y + r * .8} ${x - r * 1.1},${y + r * .8}`, fill: c }, g); T.el('circle', { cx: x - 3, cy: y + 2, r: 4, fill: '#fff', opacity: .45 }, g); }
+      const g = T.el('g', { filter: 'url(#pp)' }, T.world);
+      if (i % 2 === 0) pic('hg_candy_round', x - 24, y - 17, 48, 34, g); /* 동그란 사탕(양쪽 포장지) 600×426 */
+      else pic('hg_candy_tri', x - 17, y - 16, 34, 31.3, g); /* 세모 사탕 600×552 */
       return g;
     };
     const STAR = (x, y, R) => Array.from({ length: 10 }, (_, k) => { const a = -Math.PI / 2 + k * Math.PI / 5, r = k % 2 ? R * .45 : R; return `${x + r * Math.cos(a)},${y + r * Math.sin(a)}`; }).join(' ');
@@ -162,21 +162,17 @@
     };
     /* 열쇠: 머리 모양만 다른 금빛 열쇠. 손가락이 닿기 쉽게 투명한 큰 칸을 깐다 */
     const keyAt = (x, y, kind) => {
-      const g = T.el('g', { filter: 'url(#pp)' }, T.world), gold = '#E3B33C', dk = '#C99A2B';
-      T.el('rect', { x: x - 6, y: y, width: 12, height: 52, fill: gold }, g);
-      T.el('rect', { x: x + 6, y: y + 30, width: 14, height: 8, fill: gold }, g); T.el('rect', { x: x + 6, y: y + 44, width: 10, height: 8, fill: gold }, g);
-      if (kind === 'circle') T.el('circle', { cx: x, cy: y - 12, r: 22, fill: gold }, g);
-      else if (kind === 'square') T.el('rect', { x: x - 20, y: y - 32, width: 40, height: 40, rx: 4, fill: gold }, g);
-      else T.el('polygon', { points: STAR(x, y - 12, 27), fill: gold }, g);
-      T.el('circle', { cx: x, cy: y - 12, r: 6, fill: dk }, g);
+      const g = T.el('g', { filter: 'url(#pp)' }, T.world);
+      /* 그림은 가로(머리 왼쪽)라 90도 돌려 머리를 위로 세운다. 길이 112(y-44~y+68), 폭은 그림 비율대로 */
+      const len = 112, wd = len * { circle: 392 / 900, square: 376 / 900, star: 400 / 791 }[kind];
+      pic('hg_key_' + kind, -len / 2, -wd / 2, len, wd, g, { transform: `translate(${x},${y + 12}) rotate(90)` });
       T.el('rect', { x: x - 34, y: y - 48, width: 68, height: 110, fill: 'rgba(0,0,0,0)' }, g);
       return g;
     };
     const lockAt = (x, y) => {
       const g = T.el('g', { filter: 'url(#pp)' }, T.world);
-      T.el('path', { d: `M${x - 14} ${y} v-22 a14 14 0 0 1 28 0 v22`, fill: 'none', stroke: '#B9B3A8', 'stroke-width': 7 }, g);
-      T.el('rect', { x: x - 28, y, width: 56, height: 46, rx: 8, fill: '#E3B33C' }, g);
-      T.el('polygon', { points: STAR(x, y + 23, 14), fill: '#6B4A1E' }, g);
+      pic('hg_lock', x - 32.5, y - 36, 65, 82, g); /* 475×600 */
+      T.el('polygon', { points: STAR(x, y + 16, 10), fill: '#6B4A1E' }, g); /* 별 모양 구멍 표시(고르기 정답 단서)는 코드로 남긴다 */
       return g;
     };
 
@@ -254,8 +250,7 @@
         if (k === 'glade') {
           [L(330, 392), L(680, 612)].forEach(bx => {
             const g = T.el('g', { filter: 'url(#pp)' }, T.world);
-            T.el('ellipse', { cx: bx, cy: GROUND - 22, rx: 54, ry: 30, fill: '#5E8A3E' }, g); T.el('ellipse', { cx: bx - 12, cy: GROUND - 32, rx: 30, ry: 16, fill: '#76A24D' }, g);
-            [[-30, -20], [-12, -34], [8, -18], [26, -32], [38, -14], [-4, -8], [16, -4], [-36, -4]].forEach(([dx, dy]) => { T.el('circle', { cx: bx + dx, cy: GROUND + dy, r: 7, fill: '#D93A3A' }, g); T.el('circle', { cx: bx + dx - 2, cy: GROUND + dy - 2, r: 2, fill: '#fff', opacity: .55 }, g); });
+            pic('hg_layer_berry_bush_front', bx - 54, GROUND + 6 - 101, 108, 101, g); /* 산딸기 덤불 642×600 */
           });
         }
         if (k === 'roof') {
@@ -391,8 +386,8 @@
         hat(op) { // 모자가 휙 (오린 검은 종이 모자)
           const g = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, T.world);
           const x = witch.x, y = witch.y - 240;
-          T.el('polygon', { points: `${x - 34},${y} ${x + 34},${y} ${x + 6},${y - 70}`, fill: '#3A2E3F' }, g);
-          T.el('rect', { x: x - 48, y, width: 96, height: 10, fill: '#2B2230' }, g);
+          pic('hg_witch_hat', x - 48, y - 72, 96, 82, g); /* 마녀 모자 600×512 */
+          g.style.transformBox = 'fill-box'; g.style.transformOrigin = '50% 50%'; /* 모자 제자리에서 돈다(전에는 화면 원점 기준으로 돌아 발밑으로 갔다) */
           g.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: 'translate(160px,-170px) rotate(300deg)', opacity: 0 }], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
           setTimeout(() => g.remove(), 1100);
         },
@@ -608,8 +603,7 @@
     }, hans.pos);
     [L(330, 392), L(680, 612)].forEach(bx => {
       const g = T.el('g', { filter: 'url(#pp)' }, T.world);
-      T.el('ellipse', { cx: bx, cy: GROUND - 22, rx: 54, ry: 30, fill: '#5E8A3E' }, g); T.el('ellipse', { cx: bx - 12, cy: GROUND - 32, rx: 30, ry: 16, fill: '#76A24D' }, g);
-      [[-30, -20], [-12, -34], [8, -18], [26, -32], [38, -14], [-4, -8], [16, -4], [-36, -4]].forEach(([dx, dy]) => { T.el('circle', { cx: bx + dx, cy: GROUND + dy, r: 7, fill: '#D93A3A' }, g); T.el('circle', { cx: bx + dx - 2, cy: GROUND + dy - 2, r: 2, fill: '#fff', opacity: .55 }, g); });
+      pic('hg_layer_berry_bush_front', bx - 54, GROUND + 6 - 101, 108, 101, g); /* 산딸기 덤불 642×600 */
       g.animate([{ opacity: 0 }, { opacity: 1 }], 500);
     });
     put(T, hans, L(430, 445), GROUND, { look: 'eat', to: 'right' }); put(T, gret, L(540, 555), GROUND, { look: 'eat', to: 'left' });
@@ -631,7 +625,7 @@
     await say('"오빠, 무서워…" 그레텔이 헨젤의 손을 꼭 잡았어요.');
     await sleep(700); /* 저절로 */
     popSfx(T); gret.hop(14, 300); hans.move(gret.x - L(46, 40), GROUND, 420); T.pop(gret.x, gret.y - 215, tr('꼭!'));
-    [-26, 0, 26].forEach((dx, k) => { const h = T.el('path', { d: 'M0 8 C-14 -4 -12 -16 0 -9 C12 -16 14 -4 0 8 Z', fill: '#E8607A', 'pointer-events': 'none', transform: `translate(${gret.x + dx - 22},${gret.y - 150})` }, T.world);
+    [-26, 0, 26].forEach((dx, k) => { const h = T.el('g', { 'pointer-events': 'none', transform: `translate(${gret.x + dx - 22},${gret.y - 150})` }, T.world); pic('wc_prop_fx_heart', -15, -17, 30, 27, h);
       h.animate([{ translate: '0 0', opacity: 0 }, { opacity: 1, offset: .2 }, { translate: `${dx / 2}px -60px`, opacity: 0 }], { duration: 1100, delay: k * 140, easing: 'ease-out', fill: 'both' }); setTimeout(() => h.remove(), 1600); });
     await say('"괜찮아, 빵 부스러기 길을 따라가자!" 헨젤이 말했어요.');
 

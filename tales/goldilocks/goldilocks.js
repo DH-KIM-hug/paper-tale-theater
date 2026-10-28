@@ -36,6 +36,8 @@
   ART.cut_eyes = 'v3w/gl_cut_eyes2.webp';   // 다시 뽑은 눈 마주침 컷: 무대 순서(골디락스 · 아기 · 엄마 · 아빠)
   ART.flower_g = 'v3w/fc_flower.webp';      // 숲길 바닥에 핀 꽃 (따러 허리를 숙인다)
   ART.butterfly = 'v3w/fc_butterfly.webp';  // 숲길 나비는 여우와 두루미 그림을 작게
+  /* 2026-10-29 코드 도형 → 그림: 김·얼음·방석·어질 별 */
+  ART.steam = 'v3w/gl_steam.webp'; ART.ice = 'v3w/gl_ice.webp'; ART.cushion = 'v3w/gl_cushion.webp'; ART.dizzy = 'v3w/cm_dizzy_stars.webp';
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
   const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
@@ -285,8 +287,9 @@
   }
   /* 김 한 줄 */
   function steam(T, parent, x, y, s = 1) {
-    const p = T.el('path', { d: 'M0 0 q-12 -18 0 -36 q12 -18 0 -36', stroke: C.snow, 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round', opacity: .85,
-      transform: `translate(${x},${y}) scale(${s})` }, parent);
+    /* 김 그림(454×600): 높이 72, 아래 가운데 = (x, y) */
+    const p = T.el('g', { class: 'glSteam', opacity: .85, transform: `translate(${x},${y}) scale(${s})` }, parent);
+    T.el('image', { href: AS + ART.steam, x: -27, y: -72, width: 54.5, height: 72, preserveAspectRatio: 'none' }, p);
     p.animate([{ translate: '0 0', opacity: .9 }, { translate: '0 -14px', opacity: .35 }, { translate: '0 0', opacity: .9 }], { duration: 1400 + Math.random() * 500, iterations: Infinity });
     return p;
   }
@@ -630,7 +633,7 @@
     const duskWalk = (ms = 2000) => { AudioFX.sfx('step_wood', .5); const xs = [840, 710, 600].map(X); return Promise.all(B.map((b, i) => sleep(i * 150).then(() => b.move(xs[i], 518, ms, 'ease-out')))); };
     const stars = (x, y) => {
       const g = el('g', {}, T.fx);
-      for (let k = 0; k < 3; k++) el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(26 0)` }, g);
+      pic(T, g, 'dizzy', { box: [-38, -20, 76, 39.7] }); // 어질 별 셋 그림(600×313)
       g.animate([{ transform: `translate(${x}px,${y}px) rotate(0deg)` }, { transform: `translate(${x}px,${y}px) rotate(360deg)` }], { duration: 1100, iterations: Infinity });
       return g;
     };
@@ -716,7 +719,7 @@
         const bx = [290, 520, 740].map(X), R = 110, BCY = 300;
         rs.tops = bx.map((x, i) => bowlTop(T, T.world, x, BCY, R * SIZE[i]));
         for (let k = 0; k < 4; k++) steam(T, rs.tops[0], bx[0] - 50 + k * 34, BCY + 20, 1.3);
-        [[-26, -14], [18, -26], [4, 22], [-10, 6]].forEach(([dx, dy], k) => T.paper(rs.tops[1], [['rect', { x: bx[1] + dx - 11, y: BCY + dy - 11, width: 22, height: 22, rx: 4, fill: C.snow, stroke: '#CFE0E6', 'stroke-width': 3, transform: `rotate(${k * 20} ${bx[1] + dx} ${BCY + dy})` }]]));
+        pic(T, rs.tops[1], 'ice', { box: [bx[1] - 37, BCY - 36, 70, 63.8] }); // 얼음 네 조각 그림(600×547)
         steam(T, rs.tops[2], bx[2], BCY + 10, .7);
         rs.goldiFn = () => put(goldi, 500, P() ? 715 : 600, 1.25);
         rs.goldiFn(); rView();
@@ -897,7 +900,7 @@
             goldi.move(nx, 505, 600); goldi.hop(18, 300);
             AudioFX.sfx('step_grass', .6) || T.tone(300, .1);
             const fx = nx + 85, fl = el('g', {}, T.world); fl.style.transform = tf(fx, 508, .01);
-            bouquetFlower(T, fl, 1);
+            if (!pic(T, fl, 'flower_g')) bouquetFlower(T, fl, 1);
             const gf = rs.groundFlowers[i - 1];
             setTimeout(() => { if (!goldi.art) goldi.lean.style.transform = 'rotate(26deg) scale(1,.9)'; setTimeout(() => { gf.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: 'forwards' }); AudioFX.sfx('pop', .6) || T.tone(700, .1); pop(nx, 200 + (i % 2) * 70, `꽃 ${NUM[i - 1]}!`, C.persimmon); }, 260); setTimeout(() => { goldi.lean.style.transform = ''; }, 620); }, 620);
             rs.butterfly.animate([{ transform: rs.butterfly.style.transform }, { transform: `translate(${nx - 60}px,${230 - (i % 2) * 40}px)` }], { duration: 900, easing: 'ease-in-out', fill: 'forwards' });
@@ -961,7 +964,7 @@
         })();
         if (verb === 'eat') return (async () => {
           const i = rSizeIdx(a1);
-          if (i === 2) { goldi.setFace('happy'); for (let k = 0; k < 3; k++) { AudioFX.chomp(); await sleep(450); } const t = rs.tops[2]; if (t.setEmpty) t.setEmpty(); else { const inner = t.querySelectorAll('circle')[1]; if (inner) inner.setAttribute('fill', '#C9B48E'); } [...t.querySelectorAll('path')].forEach(p => p.remove()); return; }
+          if (i === 2) { goldi.setFace('happy'); for (let k = 0; k < 3; k++) { AudioFX.chomp(); await sleep(450); } const t = rs.tops[2]; if (t.setEmpty) t.setEmpty(); else { const inner = t.querySelectorAll('circle')[1]; if (inner) inner.setAttribute('fill', '#C9B48E'); } [...t.querySelectorAll('.glSteam')].forEach(p => p.remove()); return; }
           goldi.hop(14, 300); AudioFX.chomp(); await sleep(500);
         })();
         if (verb === 'sit') return (async () => {
@@ -970,7 +973,7 @@
           if (i === 0) { goldi.hop(40, 400); goldi.setFace('o'); goldi.legs.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(14deg)' }, { transform: 'rotate(-14deg)' }, { transform: 'rotate(0deg)' }], { duration: 600, iterations: 3 }); }
           if (i === 1) {
             goldi.setFace('o'); AudioFX.cushion();
-            rs.cush = T.paper(T.world, [['ellipse', { cx: c.x, cy: c.seatTop + 30, rx: 70, ry: 30, fill: c.art ? '#F28C1C' : C.persimmon }]]);
+            rs.cush = pic(T, T.world, 'cushion', { box: [c.x - 62, c.seatTop + 5, 124, 92.6] }); // 방석 그림(600×448)
             if (!rInst()) await goldi.move(c.x, goldi.y + 46, 600, 'ease-in'); else goldi.place(c.x, goldi.y + 46);
           }
           if (i === 2) { goldi.hop(16, 300); goldi.setFace('happy'); }
@@ -1099,7 +1102,7 @@
     const pickFlower = async (nx, i) => {
       const fx = nx + 85, tf = (x, y, k) => `translate(${x}px,${y}px) scale(${k})`;
       const fl = el('g', {}, T.world); fl.style.transform = tf(fx, 508, .01);
-      bouquetFlower(T, fl, 1);
+      if (!pic(T, fl, 'flower_g')) bouquetFlower(T, fl, 1);
       await sleep(650);
       if (!fl.isConnected) return;
       fl.animate([{ transform: tf(fx, 508, .01) }, { transform: tf(fx, 508, 1.8) }], { duration: 350, easing: 'ease-out', fill: 'forwards' });
@@ -1170,7 +1173,7 @@
       const bx = [290, 520, 740].map(X), R = 110, BCY = 300; // 새 배경: 왼쪽 토마토·오른쪽 도마가 있어 그릇은 가운데로 모으고 조금 내린다
       tops = bx.map((x, i) => bowlTop(T, T.world, x, BCY, R * SIZE[i]));
       for (let k = 0; k < 4; k++) steam(T, tops[0], bx[0] - 50 + k * 34, BCY + 20, 1.3);
-      [[-26, -14], [18, -26], [4, 22], [-10, 6]].forEach(([dx, dy], k) => T.paper(tops[1], [['rect', { x: bx[1] + dx - 11, y: BCY + dy - 11, width: 22, height: 22, rx: 4, fill: C.snow, stroke: '#CFE0E6', 'stroke-width': 3, transform: `rotate(${k * 20} ${bx[1] + dx} ${BCY + dy})` }]]));
+      pic(T, tops[1], 'ice', { box: [bx[1] - 37, BCY - 36, 70, 63.8] }); // 얼음 네 조각 그림(600×547)
       steam(T, tops[2], bx[2], BCY + 10, .7);
       put(goldi, 500, P() ? 715 : 600, 1.25);
       view();
@@ -1195,7 +1198,7 @@
     for (let k = 0; k < 3; k++) { AudioFX.chomp(); pop(X(760), 130, '냠냠!', C.persimmon); await sleep(500); }
     if (tops[2].setEmpty) tops[2].setEmpty();
     else { const inner = tops[2].querySelectorAll('circle')[1]; if (inner) inner.setAttribute('fill', '#C9B48E'); }
-    [...tops[2].querySelectorAll('path')].forEach(p => p.remove()); // 김
+    [...tops[2].querySelectorAll('.glSteam')].forEach(p => p.remove()); // 김
     await say('딱 좋아요! 냠냠, 작은 그릇을 다 먹어 버렸어요.');
 
     /* ---------- 6. 의자 세 개 (거실 와이드) ---------- */
@@ -1220,7 +1223,7 @@
       } },
       { el: chairs[1].g, ok: false, onWrong: async () => {
         sitOn(chairs[1]); goldi.setFace('o'); AudioFX.cushion();
-        cushFront = T.paper(T.world, [['ellipse', { cx: chairs[1].x, cy: chairs[1].seatTop + 30, rx: 70, ry: 30, fill: chairs[1].art ? '#F28C1C' : C.persimmon }]]);
+        cushFront = pic(T, T.world, 'cushion', { box: [chairs[1].x - 62, chairs[1].seatTop + 5, 124, 92.6] }); // 방석 그림(600×448)
         cushFront.style.opacity = '0'; cushFront.style.transition = 'opacity .4s'; void cushFront.getBoundingClientRect(); cushFront.style.opacity = '1';
         await goldi.move(chairs[1].x, goldi.y + 46, 600, 'ease-in');
         pop(chairs[1].x, 180, '폭신~', C.persimmon);

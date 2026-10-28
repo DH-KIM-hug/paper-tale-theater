@@ -48,6 +48,8 @@
     mouse_stand: 'v3w/tn2_mouse_stand.webp', mouse_pull: 'v3w/tn2_mouse_pull.webp', mouse_fall: 'v3w/tn2_mouse_fall.webp', mouse_cheer: 'v3w/tn2_mouse_cheer.webp',
     dog_jump: 'v3w/tn_dog_jump5.webp', cat_sit: 'v3w/tn_cat_sit.webp', girl_badge: 'v3w/tn2_girl_stand.webp', dog_badge: 'v3w/tn2_dog_stand.webp', cow: 'v3w/rab_aud_cow.webp', pig: 'v3w/rab_aud_pig.webp',
     cut_glare: 'v3w/tn_cut_glare5.webp', cut_pop: 'v3w/tn_cut_pop2nf.webp',
+    /* 2026-10-29 코드 도형 → 그림: 씨앗 구멍·물방울·어질 별·배지 원판 */
+    seed_hole: 'v3w/tn_seed_hole.webp', drop: 'v3w/cm_drop.webp', dizzy: 'v3w/cm_dizzy_stars.webp', badge_plate: 'v3w/cm_badge_plate.webp',
   };
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
@@ -410,7 +412,7 @@
   const BADGE = { girl: ['girl_badge', .54], dog: ['dog_badge', .9444], cat: ['cat_sit', .9567], cow: ['cow', 207 / 271], pig: ['pig', 257 / 320] };
   function badge(T, x, y, r, key, s) {
     const g = T.el('g', { transform: `translate(${x},${y})` }, document.getElementById('stage'));
-    T.paper(g, [['circle', { r, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }]]);
+    pic(T, g, 'badge_plate', -r - 4, -r - 4, 2 * r + 8, 2 * r + 8); // 크림 원판 + 금테 그림
     const ak = BADGE[key];
     if (ak && artUrl(ak[0])) { // 그림 배지: 원 안 1.4r 상자에 맞춘다
       const [k, as] = ak, box = r * 1.4, w = as > 1 ? box : box * as, h = as > 1 ? box / as : box;
@@ -423,7 +425,7 @@
   }
   function stars(T, x, y) {
     const g = T.el('g', {}, T.fx);
-    for (let k = 0; k < 3; k++) T.el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(26 0)` }, g);
+    pic(T, g, 'dizzy', -38, -20, 76, 39.7); // 어질 별 셋 그림(600×313)
     g.animate([{ transform: `translate(${x}px,${y}px) rotate(0deg)` }, { transform: `translate(${x}px,${y}px) rotate(360deg)` }], { duration: 1100, iterations: Infinity });
     return g;
   }
@@ -669,7 +671,7 @@
         R.can.setAttribute('transform', art ? 'translate(352,208) rotate(28)' : 'translate(330,230) rotate(28)');
         R.can.animate([{ opacity: 0 }, { opacity: 1, offset: .2 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 900 });
         for (let d = 0; d < 5; d++) {
-          const dr = el('ellipse', { cx: (art ? 394 : 395) + d * 9, cy: art ? 240 : 290, rx: 4, ry: 7, fill: '#6FA8C8' }, T.fx);
+          const dr = el('image', { href: AS + ART.drop, x: (art ? 394 : 395) + d * 9 - 4.8, y: (art ? 240 : 290) - 7, width: 9.6, height: 14, preserveAspectRatio: 'none' }, T.fx); // 물방울 그림(411×600)
           dr.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(150px)', opacity: 0 }], { duration: 600, delay: d * 70 }).finished.then(() => dr.remove());
         }
         AudioFX.sfx('splash', .4) || AudioFX.splash();
@@ -739,7 +741,7 @@
         if (k === 'spring') { // 놀이판 1장: 봄 텃밭, 구멍과 씨앗
           resetMisc(); T.clear(); R.view = 'spring'; R.step = 0; rise = 0;
           R.bgp = gardenBG(T, { season: 'spring' });
-          R.hole = el('ellipse', { cx: 430, cy: 470, rx: 40, ry: 12, fill: '#3E2A1A' }, T.world);
+          R.hole = pic(T, el('g', {}, T.world), 'seed_hole', 430 - 46, 470 - 28.6, 92, 57.2); // 씨앗 구멍 그림(600×373)
           R.seed = el('g', {}, T.world);
           if (!pic(T, R.seed, 'seed', -22, -28, 44, 56)) T.paper(R.seed, [['ellipse', { cx: 0, cy: 0, rx: 19, ry: 25, fill: C.bark }], ['ellipse', { cx: -6, cy: -8, rx: 6, ry: 9, fill: '#9C7550' }]]);
           R.seed.setAttribute('transform', 'translate(496,378)');
@@ -757,7 +759,7 @@
         await T.anim(R.seed, [{ transform: 'translate(496px,378px)' }, { transform: 'translate(462px,330px)' }, { transform: 'translate(430px,468px) scale(.6)' }], { duration: 600, easing: 'ease-in' });
         R.seed.remove(); R.seed = null;
         AudioFX.sfx('pop');
-        if (R.hole) R.hole.setAttribute('fill', C.soilDark);
+        if (R.hole) R.hole.style.opacity = '.45'; // 흙을 덮었다
       },
       sprout(a) {
         if (a !== 'show') return;
@@ -959,7 +961,7 @@
     /* --- 1. 씨 뿌리기 (텃밭 봄) --- */
     let bgp = gardenBG(T, { season: 'spring' });
     put(cast.grandpa, 560);
-    const hole = el('ellipse', { cx: 430, cy: 470, rx: 40, ry: 12, fill: '#3E2A1A' }, T.world);
+    const hole = pic(T, el('g', {}, T.world), 'seed_hole', 430 - 46, 470 - 28.6, 92, 57.2); // 씨앗 구멍 그림(600×373)
     const seed = el('g', {}, T.world);
     el('circle', { cx: 0, cy: 0, r: 46, fill: '#fff', opacity: 0 }, seed);
     if (!pic(T, seed, 'seed', -22, -28, 44, 56)) T.paper(seed, [['ellipse', { cx: 0, cy: 0, rx: 19, ry: 25, fill: C.bark }], ['ellipse', { cx: -6, cy: -8, rx: 6, ry: 9, fill: '#9C7550' }]]); // 첫 탭 목표라 눈에 띄게 크게
@@ -973,7 +975,7 @@
     await T.anim(seed, [{ transform: 'translate(496px,378px)' }, { transform: 'translate(462px,330px)' }, { transform: 'translate(430px,468px) scale(.6)' }], { duration: 600, easing: 'ease-in' });
     seed.remove();
     AudioFX.sfx('pop'); T.pop(430, 400, '쏙!', C.pine);
-    hole.setAttribute('fill', C.soilDark);
+    hole.style.opacity = '.45'; // 흙을 덮었다
     await say('씨앗이 흙 속으로 쏙 들어갔어요.');
 
     /* --- 2. 무럭무럭 (봄 → 여름) --- */
@@ -1004,7 +1006,7 @@
         can.setAttribute('transform', canArt ? 'translate(352,208) rotate(28)' : 'translate(330,230) rotate(28)');
         can.animate([{ opacity: 0 }, { opacity: 1, offset: .2 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 900 });
         for (let d = 0; d < 5; d++) {
-          const dr = el('ellipse', { cx: (canArt ? 394 : 395) + d * 9, cy: canArt ? 240 : 290, rx: 4, ry: 7, fill: '#6FA8C8' }, T.fx);
+          const dr = el('image', { href: AS + ART.drop, x: (canArt ? 394 : 395) + d * 9 - 4.8, y: (canArt ? 240 : 290) - 7, width: 9.6, height: 14, preserveAspectRatio: 'none' }, T.fx); // 물방울 그림(411×600)
           dr.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(150px)', opacity: 0 }], { duration: 600, delay: d * 70 }).finished.then(() => dr.remove());
         }
         AudioFX.sfx('splash', .4) || AudioFX.splash();

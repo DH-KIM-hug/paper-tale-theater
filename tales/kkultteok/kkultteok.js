@@ -111,11 +111,15 @@
     };
     /* 굴뚝 연기: 바람을 따라 한쪽으로 휘어 오르는 길(2차 곡선). 김 덩이는 이 길을 따라 커지며 옅게 흐른다 */
     const qpt = (p0, c, p1, t) => [(1 - t) * (1 - t) * p0[0] + 2 * (1 - t) * t * c[0] + t * t * p1[0], (1 - t) * (1 - t) * p0[1] + 2 * (1 - t) * t * c[1] + t * t * p1[1]];
-    /* 연기 한 덩이: 겹친 동그라미 셋(옅은 회백색 종이 + 아래쪽 그늘). 구름 그림이 아니라 연기 모양 */
+    /* 연기 한 덩이: 연기 그림(rc_prop_smoke 484×600)의 뭉게 머리만 둥글게 오려(꼬리 빼고) 44×34 덩이로. 그림이 회색이라 '하얀 김'에 맞게 밝게 */
+    let smokeClip = null;
     const smokeBlob = () => {
+      if (!smokeClip || !smokeClip.isConnected) {
+        smokeClip = el('clipPath', { id: 'kjSmokeClip', clipPathUnits: 'objectBoundingBox' }, el('defs', {}, T.fx));
+        el('ellipse', { cx: .5, cy: .34, rx: .5, ry: .33 }, smokeClip);
+      }
       const g = el('g', {}, T.fx);
-      [[-9, 3, 11], [6, -4, 13], [14, 6, 9]].forEach(([cx, cy, r]) => el('circle', { cx: cx + 1.5, cy: cy + 3, r, fill: '#CFCBC4', opacity: .55 }, g));
-      [[-9, 3, 11], [6, -4, 13], [14, 6, 9]].forEach(([cx, cy, r]) => el('circle', { cx, cy, r, fill: '#F3F2EE' }, g));
+      el('image', { href: AS + 'rc_prop_smoke.webp', x: -22, y: -17, width: 44, height: 54.5, preserveAspectRatio: 'none', 'clip-path': 'url(#kjSmokeClip)', style: 'filter:brightness(1.45)' }, g);
       return g;
     };
     /* 연기 한 덩이가 굴뚝(p0)에서 c 를 거쳐 p1 쪽으로 upto(0~1) 만큼 흘러가며 커진다 */
@@ -162,23 +166,19 @@
     function startRain(x0 = 0, x1 = 1000, y0 = -20, n = 22) {
       stopRain(); rainG = el('g', {}, T.fx);
       for (let k = 0; k < n; k++) {
-        const x = x0 + (x1 - x0) * ((k * 0.618) % 1), d = el('path', { d: 'M0 -10 C6 0 7 6 0 8 C-7 6 -6 0 0 -10Z', fill: '#6FB1E0', stroke: '#fff', 'stroke-width': 1.5 }, rainG);
+        const x = x0 + (x1 - x0) * ((k * 0.618) % 1), d = el('image', { href: AS + 'cm_drop.webp', x: -6.5, y: -10.5, width: 13, height: 19, preserveAspectRatio: 'none' }, rainG); // 빗방울 그림(411×600)
         d.animate([{ transform: `translate(${x}px,${y0}px)`, opacity: 0 }, { transform: `translate(${x}px,${y0 + 30}px)`, opacity: 1, offset: .15 }, { transform: `translate(${x - 12}px,${G + 10}px)`, opacity: .9, offset: .9 }, { transform: `translate(${x - 14}px,${G + 20}px)`, opacity: 0 }],
           { duration: 1500, delay: (k * 97) % 1500, iterations: Infinity });
       }
     }
     function stopRain() { if (rainG) { rainG.remove(); rainG = null; } }
-    const BOLT = 'M18 0 L-14 44 L2 44 L-12 92 L28 36 L10 36 Z';
     /* 마음 카드 (골라요) */
     const feelCard = (cx, cy, kind, label) => {
       const g = el('g', { transform: `translate(${cx},${cy}) scale(1)` }, T.fx);   // 세로에서도 카드 짧은 변이 화면 80px 이상 (2026-10-22: .85→1)
-      const inner = el('g', {}, g); const plain = (par, shapes) => shapes.forEach(([t, a]) => el(t, a, par)); plain(inner, [ // 필터 없이 (Safari)
-        ['rect', { x: -70, y: -50, width: 140, height: 100, rx: 20, fill: '#F6ECD8', stroke: '#6B4A32', 'stroke-width': 3 }],
-        ['circle', { cx: 0, cy: -8, r: 24, fill: kind === 'sad' ? '#9DB4C8' : '#F6C945' }],
-        ['circle', { cx: -8, cy: -13, r: 3.4, fill: '#2E241C' }], ['circle', { cx: 8, cy: -13, r: 3.4, fill: '#2E241C' }],
-        ['path', { d: kind === 'sad' ? 'M-9 4 Q0 -2 9 4' : 'M-10 0 Q0 12 10 0', fill: 'none', stroke: '#2E241C', 'stroke-width': 3, 'stroke-linecap': 'round' }],
-        ...(kind === 'sad' ? [['path', { d: 'M-12 -6 q-3 8 0 10 q3 -2 0 -10z', fill: '#6FB1E0' }]] : [])]);
-      const t = el('text', { x: 0, y: 44, 'text-anchor': 'middle', 'font-size': 22, 'font-weight': 800, fill: '#2E241C', 'font-family': "'Pretendard Variable', Pretendard, sans-serif" }, inner); t.textContent = tr(label);
+      const inner = el('g', {}, g); // 필터 없이 (Safari)
+      el('rect', { x: -70, y: -62, width: 140, height: 134, fill: 'transparent' }, inner); // 누름판(카드 + 이름)
+      el('image', { href: AS + 'kj_card_' + kind + '.webp', x: -50, y: -62, width: 100, height: kind === 'sad' ? 98.3 : 97.5, preserveAspectRatio: 'none' }, inner); // 마음 카드 그림(600×590·600×585)
+      const t = el('text', { x: 0, y: 62, 'text-anchor': 'middle', 'font-size': 22, 'font-weight': 800, fill: '#2E241C', stroke: '#F6ECD8', 'stroke-width': 5, 'paint-order': 'stroke', 'stroke-linejoin': 'round', 'font-family': "'Pretendard Variable', Pretendard, sans-serif" }, inner); t.textContent = tr(label);
       g.style.pointerEvents = 'all';
       return g;
     };
@@ -962,7 +962,7 @@
       });
       baby.move(620, 190, 900, 'ease-in'); await sleep(900); T.shake(); AudioFX.sfx('bonk') || popSfx(T); morph(baby, 'sorry');
       await say('하늘에서 아기 먹구름이 큰 먹구름과 쿵!');
-      const bg = el('g', { transform: 'translate(640,250) scale(.9)' }, T.world); T.paper(bg, [['path', { d: BOLT, fill: '#FFD43B', stroke: '#E8A317', 'stroke-width': 3 }]]); el('circle', { cx: 8, cy: 46, r: 62, fill: 'transparent' }, bg);
+      const bg = el('g', { transform: 'translate(640,250) scale(.9)' }, T.world); el('image', { href: AS + 'pp_prop_lightning.webp', x: -9, y: -2, width: 33.6, height: 96, preserveAspectRatio: 'none', filter: 'url(#pp)' }, bg); el('circle', { cx: 8, cy: 46, r: 62, fill: 'transparent' }, bg);
       await T.ask('번개를 톡!', () => T.tap(bg, { prompt: '번개를 톡!' }));
       const fl = el('rect', { x: -40, y: -24, width: 1080, height: 620, fill: '#fff', opacity: 0 }, T.fx);
       fl.animate([{ opacity: 0 }, { opacity: .85 }, { opacity: 0 }, { opacity: .5 }, { opacity: 0 }], { duration: 700 }).onfinish = () => fl.remove();
