@@ -122,6 +122,9 @@
        null,
        "[calm, gentle]"
       ]
+     ],
+     "before": [
+      "sfx:door_heavy_1:.45"
      ]
     }
    ]
@@ -350,6 +353,9 @@
      ],
      "after": [
       "wolf:walk:300,520"
+     ],
+     "before": [
+      "sfx:ding_glock:.45"
      ]
     },
     {
@@ -626,7 +632,8 @@
       ]
      ],
      "before": [
-      "wolf:walk:500,540"
+      "wolf:walk:500,540",
+      "sfx:tiptoe_pizz:.5"
      ]
     },
     {
@@ -841,7 +848,8 @@
      ],
      "before": [
       "fx:snore",
-      "pop:620,330,쿨쿨~"
+      "pop:620,330,쿨쿨~",
+      "sfx:sleepy_tuba:.4"
      ]
     },
     {
@@ -943,7 +951,8 @@
      ],
      "before": [
       "fx:snip",
-      "pop:640,300,슥삭!"
+      "pop:640,300,슥삭!",
+      "sfx:zipper:.5"
      ],
      "after": [
       "mama:walk:220,530"
@@ -961,6 +970,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5,marimba_6:350:.5",
       "belly:pop:6"
      ]
     },
@@ -1150,6 +1160,7 @@
       ]
      ],
      "before": [
+      "sfx:whistle_down:.5",
       "fx:splash",
       "cut:splash"
      ],
@@ -1171,6 +1182,9 @@
      ],
      "after": [
       "wolf:walk:1250,520"
+     ],
+     "before": [
+      "sfx:comic_brass:.5"
      ]
     },
     {
@@ -1224,7 +1238,8 @@
      ],
      "before": [
       "kids:dance",
-      "fx:ding"
+      "fx:ding",
+      "sfx:party_horn:.5"
      ]
     },
     {
