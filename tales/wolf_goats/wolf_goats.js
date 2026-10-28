@@ -133,12 +133,23 @@
   const appear = a => show(a.pos, 1);
 
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_adventure', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_adventure', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { sleep, say } = T;
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'stream_1', 'door_heavy_1', 'ding_glock', 'clock_tick', 'question', 'tiptoe_pizz', 'zip_away', 'sleepy_tuba', 'zipper', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'whistle_down', 'comic_brass', 'party_horn', 'knock', 'door', 'crunch']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_adventure', 'birds_chirp_1', 'stream_1', 'door_heavy_1', 'ding_glock', 'clock_tick', 'question', 'tiptoe_pizz', 'zip_away', 'sleepy_tuba', 'zipper', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'whistle_down', 'comic_brass', 'party_horn', 'knock', 'door', 'crunch']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     const portrait = () => T.viewWidth() < 990;
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
@@ -365,12 +376,14 @@
       READ_ACTS.sfx = (n, v) => { try { if (!T.readInstant()) AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.sfxs = (list, step, v) => { try { if (T.readInstant()) return null; String(list).split(',').forEach((n, i) => setTimeout(() => { try { AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } }, i * (+step || 260))); } catch (e) { /* 무시 */ } return null; };
     }
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) return T.readPlay(READ_ACTS);
 
     /* --- 1. 부엌 --- */
     bg(T, 'kitchen');
     const mm = mama(T, 330, 478); lineUp();
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     await say('아주 먼 옛날, 엄마 염소와 일곱 마리 아기 염소가 살았어요.');
     await hopAll(kids); AudioFX.jingle();
     await say('어느 날, 엄마 염소가 바구니를 들고 말했어요.');
