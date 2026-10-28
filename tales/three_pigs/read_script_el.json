@@ -300,7 +300,8 @@
      "before": [
       "pig1:set:play",
       "pop:500,300,삐리리~",
-      "sfx:ding_glock:.5"
+      "sfx:ding_glock:.5",
+      "sfx:pig_flute:.35"
      ]
     }
    ]
@@ -373,7 +374,8 @@
      "before": [
       "pig2:set:play",
       "pop:500,300,깽깽~",
-      "sfx:ding_glock:.5"
+      "sfx:ding_glock:.5",
+      "sfx:pig_violin:.35"
      ]
     }
    ]
@@ -491,7 +493,8 @@
      ],
      "before": [
       "house:reveal:brick",
-      "fx:ding"
+      "fx:ding",
+      "sfx:drum:.3"
      ]
     }
    ]
@@ -1216,7 +1219,8 @@
       ]
      ],
      "before": [
-      "fx:ding"
+      "fx:ding",
+      "music:pigs_band:.4:6.4:.8"
      ],
      "after": [
       "cut:village"

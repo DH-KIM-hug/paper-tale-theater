@@ -41,7 +41,7 @@
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'rustle_1', 'pot_boil', 'toy_flute', 'question', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'chop', 'ding_glock', 'tiptoe_pizz', 'fall_crash', 'sad_trombone', 'latch_click', 'knock', 'comic_brass', 'zip_away', 'party_horn', 'pop_appear', 'drumroll_crash', 'blow', 'pop', 'thud', 'ding', 'boom']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['birds_chirp_1', 'rustle_1', 'pot_boil', 'toy_flute', 'question', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'chop', 'ding_glock', 'tiptoe_pizz', 'fall_crash', 'sad_trombone', 'latch_click', 'knock', 'comic_brass', 'zip_away', 'party_horn', 'pop_appear', 'drumroll_crash', 'blow', 'pop', 'thud', 'ding', 'boom', 'pig_flute', 'pig_violin', 'drum']); AudioFX.preloadMusic(['pigs_band']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
 
     const still = () => T.reading && T.reading() && T.readInstant && T.readInstant();
@@ -324,6 +324,7 @@
        기다리지 않고(null 반환), 실패해도 낭독을 막지 않는다. 낭독 전에 장면이 순식간에 놓이는 중(readInstant)에는 울리지 않는다. */
     if (READ_ACTS && typeof READ_ACTS === 'object') {
       READ_ACTS.sfx = (n, v) => { try { if (!T.readInstant()) AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } return null; };
+      READ_ACTS.music = (n, v, d, f) => { try { if (!T.readInstant()) AudioFX.music(n, { vol: +v || .3, dur: +d || undefined, fade: +f || .8 }); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.sfxs = (list, step, v) => { try { if (T.readInstant()) return null; String(list).split(',').forEach((n, i) => setTimeout(() => { try { AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } }, i * (+step || 260))); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) return T.readPlay(READ_ACTS);
@@ -468,7 +469,9 @@
       pig.set(play, playH * L.pigS); await look(L.houseX);
       sfx('ding_glock'); T.confetti();
       await say(done);
-      tune(tick === 'chop' ? [392, 440, 494, 523] : [523, 494, 440, 392]); pig.hop(40, 500);
+      // 진짜 악기 소리 (2026-10-28): 첫째 피리, 둘째 바이올린, 셋째 북. 못 불러오면 합성음으로 대신
+      if (!sfx(kind === 'straw' ? 'pig_flute' : kind === 'wood' ? 'pig_violin' : 'drum', .5)) tune(tick === 'chop' ? [392, 440, 494, 523] : [523, 494, 440, 392]);
+      pig.hop(40, 500);
       await sleep(700);
     }
     await build({ label: '첫째의 짚 집', bgKey: 'strawlot', pigKey: 'pig1_build', pigH: 245, playH: 245, pileKey: 'straw', pileH: 95, houseKey: 'house_straw', kind: 'straw',
@@ -609,7 +612,9 @@
     await say('하나, 둘, 셋! 튼튼한 벽돌 집이 세 채가 되었어요.');
     band.forEach((b, i) => b.set(['pig1_play', 'pig2_play', 'pig3_play'][i], 150));
     T.confetti();
-    for (let r = 0; r < 4; r++) { tune([392, 523, 440, 587]); band.forEach((b, i) => setTimeout(() => b.hop(28, 350), i * 150)); await sleep(900); }
+    // 진짜 악기 연주 (2026-10-28): 피리·바이올린·북이 함께 6.4초. 못 불러오면 합성음 4번
+    let bandMusic = null; try { bandMusic = AudioFX.music('pigs_band', { vol: .5, dur: 6.4, fade: .8 }); } catch (e) { bandMusic = null; }
+    for (let r = 0; r < (bandMusic ? 10 : 4); r++) { if (!bandMusic) tune([392, 523, 440, 587]); band.forEach((b, i) => setTimeout(() => b.hop(28, 350), i * 150)); await sleep(bandMusic ? 640 : 900); }
     await T.cutImage([{ src: U('cut_village'), hold: 3600 }]);
     sfx('party_horn', .6);
     await say('삼 형제는 튼튼한 집에서 오래오래 행복하게 살았어요.');
