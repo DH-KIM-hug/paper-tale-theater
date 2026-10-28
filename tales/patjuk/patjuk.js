@@ -84,7 +84,7 @@
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
@@ -106,7 +106,7 @@
     FRIENDS.forEach(f => preCut('wrong_' + f.id));
     if (typeof NARRATION_CLIPS !== 'undefined') AudioFX.preloadAll(Object.values(NARRATION_CLIPS).flat());
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    const SFX_NAMES = ['intro_korean', 'birds_chirp_1', 'winter_wind_1', 'crickets_night_1', 'crickets_night_2', 'waves', 'whistle_down', 'whistle_up'];
+    const SFX_NAMES = ['intro_cozy', 'birds_chirp_1', 'winter_wind_1', 'crickets_night_1', 'crickets_night_2', 'waves', 'whistle_down', 'whistle_up'];
     try { AudioFX.preloadSfx(SFX_NAMES); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
@@ -422,9 +422,9 @@
     /* 타격 순간 무대를 살짝 밀기 */
     const punch = () => stage.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.04)' }, { transform: 'scale(1)' }], { duration: 260, easing: 'ease-out' });
 
-    /* 만화 컷 (그림): 친구마다 두 장, 틀리면 비웃는 한 장. 4초 뒤 자동, 탭하면 빨리 */
+    /* 만화 컷 (그림): 친구마다 두 장, 틀리면 비웃는 한 장. 2.6초 뒤 자동, 탭하면 빨리 (2026-10-29: 4초 → 2.6초, 컷 사이 쉼 줄임) */
     let lastCut = Promise.resolve();
-    function showCut(id, hold = 4000, split = true) {
+    function showCut(id, hold = 2600, split = true) {
       const keys = id.startsWith('wrong_') ? [id] : [id, id + '_b'];
       const V = new Proxy({}, { get: (_, k) => Narrator.voiceLine(k) || undefined });
       // 컷 속 목소리: 첫 장(친구가 치는 순간) = 친구의 외침, 둘째 장(_b, 호랑이 반응) = 호랑이 비명.
@@ -728,7 +728,7 @@
         }
       },
       rolled: a => { rolled.pos.style.display = a === 'show' ? '' : 'none'; },
-      cut: id => showCut(id, 4000, id !== 'myeongseok'),
+      cut: id => showCut(id, 2600, id !== 'myeongseok'),
       fx: n => { if (n === 'slide') sfx('whistle_down', .7); return n === 'win' ? AudioFX.sting('win') : AudioFX[n] && AudioFX[n](); },
       pop(spec) {
         const [x, y, ...w] = String(spec).split(','), word = w.join(',');
@@ -929,7 +929,7 @@
         impact(fr.gx, fr.gy + fr.by - 30, '어라?', '#7a6a55');
       }
       // 다른 세트의 친구를 눌러도 비웃는 컷은 항상 뜬다
-      await showCut('wrong_' + f.id, 3600);
+      await showCut('wrong_' + f.id, 2800);
       AudioFX.miss();
       await say(f.fail);
       misses++;
@@ -1013,7 +1013,7 @@
       async myeongseok() {
         AudioFX.roll();
         impact(560, 400, '돌돌돌!');
-        showCut('myeongseok', 4000, false); // 말리는 동안 컷 (기다리지 않음 → 목소리는 첫 장에 몰아서)
+        showCut('myeongseok', 2600, false); // 말리는 동안 컷 (기다리지 않음 → 목소리는 첫 장에 몰아서)
         await anim(act('myeongseok'), [{ transform: 'translate(0px,0px) rotate(0deg)' }, { transform: 'translate(-10px,-40px) rotate(-360deg) scale(1.25)' }, { transform: 'translate(0px,-6px) rotate(-720deg) scale(1.1)' }], { duration: 900, easing: 'ease-in-out' });
         pose(null);
         tiger.pos.style.opacity = 0;
