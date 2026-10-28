@@ -1060,10 +1060,10 @@
       "kid:hop"
      ],
      "after": [
-      "snd:drumroll_crash:.6",
-      "uni:look:back:right",
-      "uni:front",
-      "uni:walk:830,FL-30,1200",
+      "snd:harp_gliss:.6",
+      "uni:look:stand:left",
+      "uni:at:930,FL",
+      "uni:walk:700,FL,1200",
       "uni:glow"
      ]
     }

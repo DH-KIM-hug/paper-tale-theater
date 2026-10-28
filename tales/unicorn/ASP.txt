@@ -43,7 +43,7 @@ kid2_hug: 0.6633
 kid2_wave: 0.6567
 mid_sheep_home: 1.3433
 mid_bush_corner: 1.3867
-mid_moon_halo: 1.0867
+mid_moon_halo: 1.085
 fg_grass_flowers: 1.3833
 fg_cloud_hill: 2.4862
 fg_cloud_bank: 0.7333
@@ -53,3 +53,5 @@ fg_pine_branch: 1.5
 fg_spray: 0.835
 fg_bare_branch: 1.5598
 fg_fern_night: 1.315
+fg_spray2: 1.9313
+kid2_turn3: 0.5633
