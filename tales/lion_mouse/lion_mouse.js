@@ -325,10 +325,21 @@
 
   /* ================= 이야기 ================= */
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_playful', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_playful', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     const { el, sleep, say, camTo, camWide, camSnap, josa } = T;
     const LION = '사자', MOUSE = '생쥐';
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'whistle_wobble', 'surprise_sting', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'party_horn']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_playful', 'level_win', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'whistle_wobble', 'surprise_sting', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'party_horn']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -648,7 +659,7 @@
             if (!inst()) { await sleep(520); rMouse.parts.teeth.setAttribute('opacity', 0); }
           }
           rRopeDone = Math.max(rRopeDone, to);
-          if (to >= 10 && !inst()) sfx('party_horn', .6);
+          if (to >= 10 && !inst()) sfx('level_win', .6);
         })();
       },
       scroll(verb) {
@@ -686,6 +697,7 @@
       cam(a) { if (a === 'wide') return; const [x, y, z] = String(a).split(',').map(Number); return inst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 700); },
     };
     const READ_ACTS = { set: k => { if (k === 'savanna' && !R.sawSav) { R.sawSav = 1; amb('birds_chirp_1'); } else if (k === 'night_net') amb('crickets_night_1', .25, 4); else if (k === 'morning') amb('birds_chirp_2', .25, 4); else stopAmb(); return R.set(k); }, lion: R.lion, mouse: R.mouse, bubble: R.bubble, board: R.board, net: R.net, scroll: R.scroll, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam };
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {
       T.director({ cast: { lion: () => rLion, mouse: () => rMouse }, listener: r => (r === 'lion' ? 'mouse' : 'lion'), noFace: ['lion'] });
       const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr;
@@ -707,6 +719,7 @@
     const snoring = setInterval(() => snore(T), 2600);
     await T.curtain(true);
     amb('birds_chirp_1');
+    intro.go(); // 시작 음악 (놀이)
     snore(T);
     await say('나무 그늘에서 사자가 쿨쿨 낮잠을 자요.');
     await sleep(1600); // 콧방울은 저절로 퐁 (2026-10-19: 톡 조작 줄임)
@@ -1050,7 +1063,7 @@
       await cutRope(i);
     }
     hit.remove();
-    sfx('party_horn', .6);
+    sfx('level_win', .6); // 열 줄을 다 끊었어요 — 레벨 클리어 소리
     await sleep(500);
     cnt.remove();
     await (cutArt('cut_gnaw', { sfx: () => gnaw(T), hold: 1600 }) || Promise.resolve()); // 싹둑! (그림 컷만)
