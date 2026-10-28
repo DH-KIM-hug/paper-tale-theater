@@ -540,9 +540,9 @@
     try { AudioFX.preloadSfx(['fire_crackle', 'crickets_night_1', 'crickets_night_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'tada', 'whistle_down', 'whistle_wobble', 'shimmer']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
-    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
-    const sfx = (n, v = .9) => { try { if (isRead()) return false; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
-    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) vol *= .8; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     /* 배경 그림 미리 불러오기: 첫 장면 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 없는 파일은 그레이박스로 */
@@ -959,6 +959,7 @@
       if (verb === 'axe') return rAxe();
       if (verb === 'rope') return (async () => { t.face('left'); await t.move(500, 250, 1600, 'ease-in-out'); })();
       if (verb === 'fall') return (async () => {
+        if (!rInst()) sfx('whistle_down', .7);
         const ropeG = rs.rrope; if (ropeG) ropeG.remove();
         t.P.wear('bump'); t.P.oMouth(); t.P.setBelly(1.5);
         await t.move(500, 540, 450, 'ease-in');
@@ -1007,7 +1008,7 @@
       await tree.to(...rTREE_WIDE, .58, 900);
     };
     const READ_ACTS = {
-      set: key => { if (key === 'kitchen') amb('fire_crackle', .2, 3); else if (key === 'hill2') amb('crickets_night_1', .2, 4); else if (key === 'backyard') amb('crickets_night_2', .2, 4); else stopAmb(); return rSet(key); },
+      set: key => { if (key === 'kitchen') amb('fire_crackle', .25, 3); else if (key === 'hill2') amb('crickets_night_1', .25, 4); else if (key === 'backyard') amb('crickets_night_2', .25, 4); else stopAmb(); return rSet(key); },
       cam: (a, b) => {
         if (a === 'wide') return rInst() ? camSnap(500, 280, 1) : camWide(600);
         if (a === 'snap') { const [x, y, z] = String(b).split(',').map(Number); return camSnap(x, y, z || 1); }
@@ -1038,11 +1039,12 @@
           if (rs.tag === 'kitchen') {
             for (let i = 0; i < n && i < rs.plateCakes.length; i++) {
               const c = rs.plateCakes[i], [x1, y1] = rToBasket(i);
-              T.tone(500 + i * 90, .15, { type: 'triangle', vol: .18 });
+              if (rInst() || sfx('marimba_' + Math.min(8, i + 1), .8) === false) T.tone(500 + i * 90, .15, { type: 'triangle', vol: .18 });
               c.g.setAttribute('opacity', 0);
               await rFly(c.x, c.y, x1, y1, 1.8, 450, c.k);
               mom.P.setCakes(i + 1); mom.P.holdBasket(true); AudioFX.pop();
             }
+            if (!rInst()) sfx('tada', .7);
             return;
           }
           const t = rs.tiger || rTiger;
@@ -1128,7 +1130,7 @@
         if (verb === 'bad') return (async () => {   // 호랑이도 하늘에 빌자 낡은 줄이 스르르
           const g = rs.rrope = el('g', {}, T.world);
           if (!ropeArt(T, g, 'rope_bad', 500, 300, .35)) T.paper(g, [['path', { d: 'M500 -3400 V260 Q515 320 493 380', stroke: '#9A8466', 'stroke-width': 8, fill: 'none', 'stroke-dasharray': '40 7' }]]);
-          AudioFX.bell();
+          AudioFX.bell(); if (!rInst()) short('whistle_wobble', .6, 1.8);
           await T.anim(g, [{ transform: 'translateY(-700px)' }, { transform: 'translateY(0)' }], { duration: 1500, easing: 'ease-out' });
         })();
         if (verb === 'snap') return (async () => { creak(T); const g = rs.rrope; if (g) { T.anim(g, [{ transform: 'translateY(0)', opacity: 1 }, { transform: 'translateY(-500px)', opacity: 0 }], { duration: 900 }); } })();
