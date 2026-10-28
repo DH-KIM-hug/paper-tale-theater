@@ -242,7 +242,7 @@
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
@@ -250,7 +250,7 @@
     })();
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
-    let GAP = 900; const SCENE_END = 2000, CUT_HOLD = 4200, STRIKE_GAP = 4500, FAINT_GAP = 2800;
+    let GAP = 600; const SCENE_END = 1500, CUT_HOLD = 2600, STRIKE_GAP = 4500, FAINT_GAP = 2200;   /* 2026-10-29 쉼 줄임: 대사 사이 900→600, 장면 끝 2000→1500, 컷 4200→2600, 먼 종소리 2800→2200 (종 울림 STRIKE_GAP 은 그대로) */
     let early = true;   // 첫 조작(활 톡)까지는 숨을 짧게 (시작 30초 안에 첫 조작)
     const say = async text => { await T.say(text); await sleep(early ? 300 : GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };
@@ -262,7 +262,7 @@
     const P = T.viewWidth() < 990;
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['intro_korean', 'beomjong', 'beomjong_synth', 'bonk', 'whoosh', 'creak', 'step_grass', 'step_wood', 'swish', 'paper_up', 'paper_down', 'sparkle', 'tada', 'door', 'thud', 'pop', 'splash', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'rustle_1', 'bow_arrow_1', 'zip_away', 'pull_pop', 'surprise_sting', 'wing_flap_1', 'ding_glock', 'whistle_down', 'party_horn', 'shimmer', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5']);
+    AudioFX.preloadSfx(['intro_cozy', 'beomjong', 'beomjong_synth', 'bonk', 'whoosh', 'creak', 'step_grass', 'step_wood', 'swish', 'paper_up', 'paper_down', 'sparkle', 'tada', 'door', 'thud', 'pop', 'splash', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'rustle_1', 'bow_arrow_1', 'zip_away', 'pull_pop', 'surprise_sting', 'wing_flap_1', 'ding_glock', 'whistle_down', 'party_horn', 'shimmer', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5']);
     const loads = [T.preload(src('mg2_layer_moon_perch')), ...BGS.map(k => T.preload(bgSrc(k)).then(ok => { bgOK[k] = ok; })), ...CUTS.map(k => T.preload(src(k)).then(ok => { cutOk[k] = ok; }))];
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
     await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
@@ -715,7 +715,7 @@
     [dad, mom].forEach(b => { fadeIn(b, 900); b.move(b.x, 480, 1600, 'ease-in'); });
     cue('whistle_down', .4) || sfx('paper_down', .4);
     await say(S.L40);
-    await sleep(2500); await sleep(SCENE_END);
+    await sleep(900); await sleep(SCENE_END);   /* 까치가 내려앉는(1.6초) 끝까지만 */
 
     /* ===== 8. 새벽 (자동) ===== */
     let dawn;
