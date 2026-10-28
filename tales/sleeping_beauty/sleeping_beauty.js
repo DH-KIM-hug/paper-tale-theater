@@ -321,6 +321,17 @@
     } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
   }
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_magic', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_magic', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ WALK = 3000;
@@ -339,7 +350,7 @@
     const S_ROW = T.viewWidth() < 300 ? .36 : .55, SGAP = S_ROW === .36 ? 32 : 50;
     const SLOT = i => 112 + 108 * i, SLOTP = i => 500 - 3.5 * SGAP + SGAP * i;
     const SX = i => X(SLOT(i), SLOTP(i)), RS = X(1, S_ROW);
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'hop', 'crowd_murmur_1', 'birds_chirp_1', 'birds_chirp_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'question', 'ding_glock', 'sleepy_tuba', 'shimmer', 'boing', 'party_horn']);
+    AudioFX.preloadSfx(['intro_magic', 'paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'hop', 'crowd_murmur_1', 'birds_chirp_1', 'birds_chirp_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'question', 'ding_glock', 'sleepy_tuba', 'shimmer', 'boing', 'party_horn']);
     const S = {
       L1: "왕과 왕비는 오래오래 아기를 기다렸어요. 드디어 예쁜 공주님이 태어났어요!",
       L2: "온 나라 사람들을 불러 잔치를 열자!",
@@ -731,6 +742,7 @@
       };
       return R;
     })();
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 기다리던 아기 (톡 1: 요람) ===== */
@@ -742,6 +754,7 @@
     const cradleHit = hitRect(T, 500 - 115, FL + 4 - 180, 230, 180);
     if (P) camSnap(500, 280, 1);
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     await say(S.L1);
     await sleep(300);
     const l2 = say(S.L2); king.hop(8, 300);
