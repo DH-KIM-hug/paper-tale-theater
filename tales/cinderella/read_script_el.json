@@ -543,6 +543,9 @@
        null,
        "[bright, delighted, wonder]"
       ]
+     ],
+     "before": [
+      "sfx:horse_neigh_1:.4"
      ]
     },
     {
@@ -703,6 +706,9 @@
      "after": [
       "prop:coach:at:1200,470",
       "cast:cind:hide"
+     ],
+     "before": [
+      "sfx:horse_hooves_1:.45"
      ]
     }
    ]
@@ -938,7 +944,8 @@
       ]
      ],
      "before": [
-      "cast:cind:look:run:left"
+      "cast:cind:look:run:left",
+      "sfx:surprise_sting:.5"
      ]
     },
     {
@@ -1020,7 +1027,8 @@
      ],
      "before": [
       "cut:stairs_slipper",
-      "fx:ding"
+      "fx:ding",
+      "sfx:xylo_down:.45"
      ]
     },
     {
@@ -1128,6 +1136,9 @@
        null,
        "[calm, warm storytelling]"
       ]
+     ],
+     "before": [
+      "sfx:knock:.5"
      ]
     },
     {
@@ -1247,7 +1258,8 @@
       ]
      ],
      "before": [
-      "fx:sparkle"
+      "fx:sparkle",
+      "sfx:ding_glock:.45"
      ]
     },
     {
@@ -1408,6 +1420,9 @@
        null,
        "[warm, gentle, wise, slow, concluding]"
       ]
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     }
    ]
