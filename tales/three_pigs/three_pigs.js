@@ -1,6 +1,6 @@
 /* 아기 돼지 삼형제 — 목업 (그림 파일은 assets/v3w/tp_*.webp, 낭독 파일 없이 글자만으로 진행) */
 (() => {
-  const NF = { bricks: 'nf', straw: 'nf', wood: 'nf', cut_splash: 'nf', cut_tired: 'v2', cut_crawl: 'v2', bg_brick_out: 'v2' }; // 얼굴 없는/통일한 새 그림(파일 이름 끝 글자)
+  const NF = { pig3_base: 'v2', pig3_build: 'v2', pig3_play: 'v2', bricks: 'nf', straw: 'nf', wood: 'nf', cut_splash: 'nf', cut_tired: 'v2', cut_crawl: 'v2', bg_brick_out: 'v2' }; // 얼굴 없는/통일한 새 그림(파일 이름 끝 글자)
   const U = n => /^tp2_/.test(n) ? `../../assets/v3w/${n}.webp` : `../../assets/v3w/tp_${n}${NF[n] || ''}.webp`;
   const SZ = {
     pig1_base: [365, 480], pig1_build: [471, 480], pig1_flee: [407, 480], pig1_joy: [361, 480], pig1_play: [342, 480],
