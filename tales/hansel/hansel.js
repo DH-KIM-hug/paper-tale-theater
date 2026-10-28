@@ -403,11 +403,11 @@
           put(T, door, DOOR.edge + (DOOR.sill - DOOR.top) * aspOf('prop_door') / 2, DOOR.sill, { to: 'left', s: 1 / SC });
         },
         cut(k) {
-          const HOLD = { pebbles: 3200, bird: 3200, eat: 3200, witch: 3200, slam: 3200, duck: 3400, hug: 3600 };
+          const HOLD = { pebbles: 2600, bird: 2600, eat: 2600, witch: 2600, slam: 2600, duck: 2600, hug: 3000 };   /* 2026-10-29 컷 멈춤 줄임(3200~3600 → 2600, 껴안기 3000) */
           if (k === 'eat') { gret.look('eat'); hans.look('eat'); AudioFX.sfx('crunch') || popSfx(T); gret.hop(16, 300); }
           if (k === 'bird') bird.look('peck');
           if (k === 'duck') duck.look('b');
-          const pr = T.cutImage([{ src: cutSrc(k), sfx: k === 'slam' ? 'door_heavy_2' : 'pop', hold: HOLD[k] || 3200 }], { hold: HOLD[k] || 3200 });
+          const pr = T.cutImage([{ src: cutSrc(k), sfx: k === 'slam' ? 'door_heavy_2' : 'pop', hold: HOLD[k] || 2600 }], { hold: HOLD[k] || 2600 });
           if (k === 'hug') return pr.then(() => { // 안아 올린 뒤 모두 모인 자리
             put(T, father, 500, GROUND, { look: 'hug', to: 'left' });
             put(T, hans, L(400, 440), GROUND, { look: 'joy', to: 'left' }); put(T, gret, L(600, 565), GROUND, { look: 'clever', to: 'left' });
@@ -651,7 +651,7 @@
     await say('작은 새가 빵 부스러기를 물고 있어요.');
     await sleep(700); /* 저절로 */
     bird.hop(18, 300); AudioFX.sfx('squeak') || popSfx(T); T.pop(bird.x, bird.y - 110, tr('짹짹!'));
-    await T.cutImage([{ src: cutSrc('bird'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
+    await T.cutImage([{ src: cutSrc('bird'), sfx: 'pop', hold: 2600 }], { hold: 2600 });
     scene('ground');
     put(T, hans, L(400, 425), GROUND, { look: 'walk', to: 'right' }); put(T, gret, L(490, 500), GROUND, { look: 'walk', to: 'right' });
     put(T, bird, L(640, 590), GROUND + 10, { look: 'peck', to: 'left' });
@@ -675,7 +675,7 @@
     await say('벽은 쿠키, 지붕은 사탕이에요.');
     await sleep(700); /* 저절로 냠냠 */
     gret.look('eat'); hans.look('eat'); AudioFX.sfx('crunch') || popSfx(T); gret.hop(16, 300); T.pop(gret.x, gret.y - 215, tr('냠냠!'));
-    await T.cutImage([{ src: cutSrc('eat'), sfx: 'pop', hold: 3200 }], { hold: 3200 });
+    await T.cutImage([{ src: cutSrc('eat'), sfx: 'pop', hold: 2600 }], { hold: 2600 });
     hans.hop(12, 300); setTimeout(() => gret.hop(12, 300), 500);
     await say('헨젤은 쿠키 벽을 와삭, 그레텔은 사탕 지붕을 오도독 깨물었어요.');
     await say('너무 맛있어서 둘은 배가 빵빵해졌어요.');
@@ -710,7 +710,7 @@
     put(T, witch, L(640, 590), GROUND, { look: 'beckon', to: 'left' }); fadeIn(witch);
     sfx('creak', .8);
     await say('그때 문이 열리고 마녀 할머니가 나왔어요.');
-    await T.cutImage([{ src: cutSrc('witch'), sfx: 'surprise_sting', hold: 3200 }], { hold: 3200 });
+    await T.cutImage([{ src: cutSrc('witch'), sfx: 'surprise_sting', hold: 2600 }], { hold: 2600 });
     await say('"내 과자 집을 누가 먹었니!" 마녀가 투덜거렸어요.');
     await say('마녀는 과자를 아끼는 심술쟁이 할머니였어요.');
     witch.hop(10, 260); setTimeout(() => witch.hop(10, 260), 400); /* 발을 쿵쿵 */
@@ -770,7 +770,7 @@
     witch.look('oven', 'left'); witch.hop(10, 300);
     await T.ask('마녀가 화덕 안을 들여다봐요. 그레텔을 톡! 화덕 문을 쾅 밀어요.', () => T.tap(gret.pos, { prompt: '그레텔을 톡! 쾅 밀어요.' }));
     gret.look('push', 'right'); sfx('door_heavy_2', .8); T.shake(); wig('beam0', 3, 700); wig('beam1', 3, 700); T.pop(L(500, 500), 330, tr('쾅!')); /* 2026-10-20 쾅 소리 */
-    await T.cutImage([{ src: cutSrc('slam'), sfx: null, hold: 3200 }], { hold: 3200 });
+    await T.cutImage([{ src: cutSrc('slam'), sfx: null, hold: 2600 }], { hold: 2600 });
     await say('쾅! 마녀는 깜짝 놀라 모자가 휙 날아갔어요.');
     scene('oven');
     put(T, hans, L(300, 380), GROUND, { look: 'joy', to: 'right' }); put(T, gret, L(440, 480), GROUND, { look: 'clever', to: 'right' });
@@ -797,7 +797,7 @@
     await say('그때 흰 오리가 헤엄쳐 왔어요.');
     await sleep(700); /* 저절로 */
     duck.look('b'); duck.hop(14, 300); AudioFX.animal('duck', .5) || AudioFX.sfx('squeak') || popSfx(T); wig('reedL', 3, 400); wig('reedR', 3, 400); T.pop(duck.x, duck.y - 150, tr('꽥꽥!'));
-    await T.cutImage([{ src: cutSrc('duck'), sfx: 'pop', hold: 3400 }], { hold: 3400 });
+    await T.cutImage([{ src: cutSrc('duck'), sfx: 'pop', hold: 2600 }], { hold: 2600 });
     scene('river');
     put(T, duck, L(640, 570), 470, { look: 'b', to: 'left' });
     put(T, hans, L(380, 420), GROUND + 12, { look: 'walk', to: 'right' }); put(T, gret, L(470, 490), GROUND + 12, { look: 'walk', to: 'right' });
@@ -831,7 +831,7 @@
     await say('"헨젤! 그레텔!" 아빠가 달려왔어요.');
     await sleep(700); /* 저절로 */
     popSfx(T); father.hop(20, 300);
-    await T.cutImage([{ src: cutSrc('hug'), sfx: 'pop', hold: 3600 }], { hold: 3600 });
+    await T.cutImage([{ src: cutSrc('hug'), sfx: 'pop', hold: 3000 }], { hold: 3000 });
     scene('cottage');
     put(T, father, 500, GROUND, { look: 'hug', to: 'left' });
     put(T, hans, L(400, 440), GROUND, { look: 'joy', to: 'left' }); put(T, gret, L(600, 565), GROUND, { look: 'clever', to: 'left' });
