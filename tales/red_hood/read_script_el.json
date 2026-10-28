@@ -69,6 +69,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3:450:.5",
       "basket:fill",
       "fx:pop"
      ]
@@ -236,6 +237,7 @@
       ]
      ],
      "before": [
+      "sfx:peek_pop:.5",
       "cut:tail"
      ]
     }
@@ -269,6 +271,9 @@
        "normal",
        "[smooth, sly, fake-friendly]"
       ]
+     ],
+     "before": [
+      "sfx:tiptoe_pizz:.5"
      ]
     },
     {
@@ -332,6 +337,9 @@
        null,
        "[gentle, uh-oh]"
       ]
+     ],
+     "before": [
+      "sfx:ding_glock:.45"
      ]
     }
    ]
@@ -449,6 +457,7 @@
       ]
      ],
      "before": [
+      "sfx:zip_away:.5",
       "wolf:walk:1200,480"
      ],
      "after": [
@@ -484,6 +493,9 @@
       "set:cottage",
       "cam:snap:480,310,2.2",
       "fx:knock"
+     ],
+     "after": [
+      "sfx:whistle_down:.5"
      ]
     },
     {
@@ -728,6 +740,7 @@
       ]
      ],
      "after": [
+      "sfx:surprise_sting:.5",
       "cut:jumpup",
       "fx:pow"
      ]
@@ -816,7 +829,8 @@
      ],
      "before": [
       "wolf:look:sleep",
-      "pop:430,300,쿨쿨…"
+      "pop:430,300,쿨쿨…",
+      "sfx:sleepy_tuba:.4"
      ]
     }
    ]
@@ -894,6 +908,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5:300:.5",
       "wolf:tickle",
       "fx:giggle",
       "pop:430,300,킥킥"
@@ -915,7 +930,8 @@
      ],
      "before": [
       "granny:pop",
-      "fx:pop"
+      "fx:pop",
+      "sfx:pop_appear:.5"
      ]
     },
     {
@@ -942,7 +958,8 @@
       ]
      ],
      "before": [
-      "wolf:look:flee"
+      "wolf:look:flee",
+      "sfx:zip_away:.5"
      ],
      "after": [
       "wolf:walk:1200,470",
@@ -1109,6 +1126,9 @@
      "before": [
       "pinky:hook",
       "fx:ding"
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     },
     {
