@@ -287,9 +287,9 @@
     try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
-    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
-    const sfx = (n, v = .9) => { try { if (isRead()) return; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
-    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) vol *= .8; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     // 세로 화면: 글자가 보이는 폭 밖으로 잘려 나가지 않게 안쪽으로 모은다
@@ -341,6 +341,7 @@
       ribbit: () => croak(T, 400), splash: () => AudioFX.splash(), thud: () => AudioFX.thud(), whoosh: () => AudioFX.whoosh(),
       boing: () => AudioFX.sfx('hop') || AudioFX.hop(),
     };
+    let rDrum = 0, rBoing = 0;
     const R = {
       set(key) {
         stopFly(); rScene = key; rpeek = null; rSilh = false; rMomJump = false; rStars = null; momReset();
@@ -383,6 +384,7 @@
         if (verb === 'hop') {
           if (rScene === 'meadow' && rSteps < 3) {
             rSteps++;
+            if (!inst() && rMeadow === 1 && !rBoing) { rBoing = 1; sfx('boing_steps', .7); }
             if (inst()) { babies.forEach((b, i) => b.place(meadowX(i), 490)); return; }
             babies.forEach((b, k) => setTimeout(() => { croak(T, 380 + k * 40); b.move(meadowX(k), 490, 420); b.hop(40, 420); }, k * 90));
             if (T.portrait()) camTo(meadowX(1), 280, 1, 500);
@@ -411,7 +413,7 @@
         }
         if (verb === 'flying') {
           if (rShiver) { rShiver.cancel(); rShiver = null; }
-          momArt.set('flying');
+          momArt.set('flying'); if (!inst()) short('balloon', .5, 2.5);
           mom.body.style.transition = 'transform 3s linear'; mom.body.style.transform = 'scale(1.6)';
           const fz = T.portrait() ? .72 : 1; if (fz < 1) camSnap(500, 280, fz);
           const fk = Math.min(1, (T.viewWidth() / 2 / fz - 150) / 320), FX = x => Math.round(500 + (x - 500) * fk);
@@ -426,7 +428,7 @@
         if (verb === 'dizzy') {
           stopFly(); if (rShiver) { rShiver.cancel(); rShiver = null; } momReset();
           camSnap(500, 280, 1);
-          mom.place(500, 468); momArt.set('dizzy');
+          mom.place(500, 468); momArt.set('dizzy'); if (!inst()) sfx('whistle_down', .7);
           if (!inst()) {
             const stars = el('g', { transform: 'translate(500,370)' }, T.fx);
             for (let k = 0; k < 3; k++) el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(28 0)` }, stars);
@@ -451,6 +453,7 @@
       ox(verb, part) {
         if (verb === 'hide') { if (rox && rox.pos.isConnected) rox.pos.remove(); return; }
         if (verb === 'show') {
+          if (!inst() && !rDrum) { rDrum = 1; sfx('drumroll_crash', .8); }
           const o = oxShow('stand'); rSilh = true; o.body.style.filter = 'brightness(.18)';   /* 아직 무엇인지 모르는 어두운 그림자 */
           if (!inst()) fadeInR(o.pos);
           return;
@@ -470,7 +473,7 @@
           const o = oxShow(verb);
           if (hadPeek) { const p = rpeek; rpeek = null; rPeekPart = ''; o.body.style.filter = ''; rSilh = false; return (async () => { await p.hide(); T.world.appendChild(o.pos); await camTo(500, 280, 1, 900); if (!inst()) meadowSun(T, true); })(); }
           if (rSilh) { o.body.style.filter = ''; rSilh = false; }
-          if (verb === 'jumpfail' && !inst()) { T.anim(o.pos, [{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], 400); }
+          if (verb === 'jumpfail' && !inst()) { sfx('whistle_up', .7); T.anim(o.pos, [{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], 400); }
           return;
         }
         console.warn('[read] ox 동사 모름', verb);
@@ -517,7 +520,7 @@
           const TW = T.parseSong('C4:1 C4:1 G4:1 G4:1 A4:1 A4:1 G4:2 F4:1 F4:1 E4:1 E4:1 D4:1 D4:1 C4:2');
           return T.playMelody(TW, { beat: .5, voice: (n, d, i) => { croakNote(n, d); if (i === 0 || i === 7) bass(); }, onNote: i => frogs[i % 4].hop(22, 300) });
         }
-        if (verb === 'fade') { babies.forEach(b => b.parts.lids.setAttribute('opacity', 1)); return; }
+        if (verb === 'fade') { babies.forEach(b => b.parts.lids.setAttribute('opacity', 1)); if (!inst()) sfx('sleepy_tuba', .6); return; }
       },
     };
     const SIZES_R = [1, 1.35, 1.7, 2.05, 2.4, 2.75, 3.1, 3.4, 3.65];
