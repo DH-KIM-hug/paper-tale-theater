@@ -160,11 +160,11 @@
       if (!loop) setTimeout(() => p.remove(), 1300 + delay);
       return p;
     };
-    /* 열쇠: 머리 모양만 다른 금빛 열쇠. 손가락이 닿기 쉽게 투명한 큰 칸을 깐다 */
+    /* 열쇠: 머리 모양만 다른 금빛 열쇠(동그라미·세모·별 — 대사에 맞춰 네모 → 세모, 2026-10-29). 손가락이 닿기 쉽게 투명한 큰 칸을 깐다 */
     const keyAt = (x, y, kind) => {
       const g = T.el('g', { filter: 'url(#pp)' }, T.world);
       /* 그림은 가로(머리 왼쪽)라 90도 돌려 머리를 위로 세운다. 길이 112(y-44~y+68), 폭은 그림 비율대로 */
-      const len = 112, wd = len * { circle: 392 / 900, square: 376 / 900, star: 400 / 791 }[kind];
+      const len = 112, wd = len * { circle: 392 / 900, tri: 400 / 755, star: 400 / 791 }[kind];
       pic('hg_key_' + kind, -len / 2, -wd / 2, len, wd, g, { transform: `translate(${x},${y + 12}) rotate(90)` });
       T.el('rect', { x: x - 34, y: y - 48, width: 68, height: 110, fill: 'rgba(0,0,0,0)' }, g);
       return g;
@@ -367,7 +367,7 @@
           })();
         },
         keys(op) {
-          const kc = keyAt(L(470, 160), 440, 'circle'), ks = keyAt(L(570, 225), 440, 'square'), kt = keyAt(L(670, 290), 440, 'star');
+          const kc = keyAt(L(470, 160), 440, 'circle'), ks = keyAt(L(570, 225), 440, 'tri'), kt = keyAt(L(670, 290), 440, 'star');
           keys = [kc, ks, kt];
           keys.forEach(k => k.animate([{ opacity: 0, transform: 'translateY(-20px)' }, { opacity: 1, transform: 'translateY(0)' }], 350));
         },
@@ -728,7 +728,7 @@
     hans.setScale(SC); /* 새장 그림 하나를 배경의 새장 자리에 맞춘다 */
     const lock = lockAt(L(231, 209), 357);
     await say('그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.');
-    const kc = keyAt(L(470, 160), 440, 'circle'), ks = keyAt(L(570, 225), 440, 'square'), kt = keyAt(L(670, 290), 440, 'star');
+    const kc = keyAt(L(470, 160), 440, 'circle'), ks = keyAt(L(570, 225), 440, 'tri'), kt = keyAt(L(670, 290), 440, 'star');
     const keys = [kc, ks, kt];
     keys.forEach(k => k.animate([{ opacity: 0, transform: 'translateY(-20px)' }, { opacity: 1, transform: 'translateY(0)' }], 350));
     await say('동그라미, 세모, 별 모양. 그레텔은 자물쇠 구멍을 요리조리 살펴보았어요.');

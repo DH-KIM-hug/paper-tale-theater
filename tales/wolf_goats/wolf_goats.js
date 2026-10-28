@@ -191,9 +191,7 @@
         if (key === 'hide') {
           quilt = prop(T, 'wg_quilt', QX, 548, 150); laundry = prop(T, 'wg_laundry', LX, 550, 110); clk = figure(T, CX, 445, 330, { a: 'wg_clock', open: 'wg_clock_open' }, 'a');
           doorway = T.el('g', { opacity: 0 }, T.world);
-          T.el('rect', { x: 8, y: 8, width: 176, height: 364, fill: '#BFD9EA' }, doorway);
-          T.el('rect', { x: 8, y: 250, width: 176, height: 122, fill: '#7FA25A' }, doorway);
-          T.el('rect', { x: 0, y: 4, width: 22, height: 372, fill: '#A87444', filter: 'url(#pp)' }, doorway);
+          T.el('image', { href: A('wg_door_view'), x: 0, y: 4, width: 186, height: 372, preserveAspectRatio: 'none' }, doorway); // 열린 문 너머 바깥(하늘·풀밭·젖혀진 문짝) 그림 420×840 (2026-10-29, 옛 코드 네모 3장 대신)
           const wk = wolf(T, 100, 420, ['knock'], 'knock'); wk.face('right'); hide(wk); wolfs.wk = wk; W = wk;
         }
         if (key === 'messy') { clk = figure(T, 86, 492, 450, { a: 'wg_clock', open: 'wg_clock_open' }, 'a'); }
@@ -457,9 +455,7 @@
     const QX = 300, LX = 525, CX = 720;
     const quilt = prop(T, 'wg_quilt', QX, 548, 150), laundry = prop(T, 'wg_laundry', LX, 550, 110), clock = figure(T, CX, 445, 330, { a: 'wg_clock', open: 'wg_clock_open' }, 'a'); // 시계는 벽 앞
     const doorway = T.el('g', { opacity: 0 }, T.world); // 열린 문: 바깥 하늘·풀밭 조각과 젖혀진 문짝
-    T.el('rect', { x: 8, y: 8, width: 176, height: 364, fill: '#BFD9EA' }, doorway);
-    T.el('rect', { x: 8, y: 250, width: 176, height: 122, fill: '#7FA25A' }, doorway);
-    T.el('rect', { x: 0, y: 4, width: 22, height: 372, fill: '#A87444', filter: 'url(#pp)' }, doorway);
+    T.el('image', { href: A('wg_door_view'), x: 0, y: 4, width: 186, height: 372, preserveAspectRatio: 'none' }, doorway); // 열린 문 너머 바깥(하늘·풀밭·젖혀진 문짝) 그림 420×840 (2026-10-29, 옛 코드 네모 3장 대신)
     const wk = wolf(T, 100, 420, ['knock'], 'knock'); wk.face('right'); hide(wk);
     kids = PAW_SPOTS.map(([x, y], i) => { const k = kid(T, i + 1, x, y, 85); k.look('left'); return k; });
     if (portrait()) await T.camTo(180, 280, 1, 600);

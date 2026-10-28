@@ -283,9 +283,9 @@
   async function sunMoon(T, onSun3) {
     for (let k = 0; k < 5; k++) {
       const sun = k % 2 === 0;
-      /* 해·달 그림 (2026-10-29): 얼굴 없는 해 sm_sun_plain(632×619)·보름달 sm_moon_plain(630×625) */
+      /* 해·달 그림 (2026-10-29): 얼굴 없는 해 sm_sun_plain(632×619)·초승달 sb_moon_crescent(539×600, 사용자 결정으로 보름달 대신) */
       const g = T.paper(T.world, [sun ? ['image', { href: AS + 'sm_sun_plain.webp', x: -55, y: -55 * 619 / 632, width: 110, height: 110 * 619 / 632, preserveAspectRatio: 'none' }]
-        : ['image', { href: AS + 'sm_moon_plain.webp', x: -32, y: -32 * 625 / 630, width: 64, height: 64 * 625 / 630, preserveAspectRatio: 'none' }]], {});
+        : ['image', { href: AS + 'sb_moon_crescent.webp', x: -27, y: -30, width: 60 * 539 / 600, height: 60, preserveAspectRatio: 'none' }]], {});
       g.style.pointerEvents = 'none';
       T.world.insertBefore(g, T.world.firstChild);
       let nt = null;
@@ -873,8 +873,8 @@
       await f.move(X(50 + 70 * i, -200), FL, 700, 'ease-out');
     }
     for (let i = 0; i < 6; i++) {      // 여섯 색 별 아치(요람 위, 천천히 깜빡)
-      const t = i / 5, x = 380 + 240 * t, y = 230 - 40 * Math.sin(Math.PI * t), r = 13;   /* 별 그림 rp_prop_star(592×600) 여섯 개 (2026-10-29, 옛 여섯 색 코드 별 대신) */
-      const st = T.el('image', { href: AS + 'rp_prop_star.webp', x: -r, y: -r * 600 / 592, width: 2 * r, height: 2 * r * 600 / 592, preserveAspectRatio: 'none', transform: `translate(${x},${y})`, filter: 'url(#pp)' }, T.fx);
+      const t = i / 5, x = 380 + 240 * t, y = 230 - 40 * Math.sin(Math.PI * t), r = 13;   /* 여섯 색 네 갈래 별 그림 sb_star_0~5(300×355, 빨강·주황·금·초록·파랑·보라, 2026-10-29) */
+      const st = T.el('image', { href: AS + `sb_star_${i}.webp`, x: -r * 300 / 355, y: -r, width: 2 * r * 300 / 355, height: 2 * r, preserveAspectRatio: 'none', transform: `translate(${x},${y})`, filter: 'url(#pp)' }, T.fx);
       st.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: i * 120, fill: 'backwards' }).finished.then(() => st.animate([{ opacity: 1 }, { opacity: .45 }, { opacity: 1 }], { duration: 1800, iterations: Infinity }), () => {});
     }
     const l17 = say(S.L17); baby.hop(3, 500); await sleep(550); baby.hop(3, 500); await l17;

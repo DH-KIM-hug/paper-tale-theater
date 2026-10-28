@@ -111,15 +111,10 @@
     };
     /* 굴뚝 연기: 바람을 따라 한쪽으로 휘어 오르는 길(2차 곡선). 김 덩이는 이 길을 따라 커지며 옅게 흐른다 */
     const qpt = (p0, c, p1, t) => [(1 - t) * (1 - t) * p0[0] + 2 * (1 - t) * t * c[0] + t * t * p1[0], (1 - t) * (1 - t) * p0[1] + 2 * (1 - t) * t * c[1] + t * t * p1[1]];
-    /* 연기 한 덩이: 연기 그림(rc_prop_smoke 484×600)의 뭉게 머리만 둥글게 오려(꼬리 빼고) 44×34 덩이로. 그림이 회색이라 '하얀 김'에 맞게 밝게 */
-    let smokeClip = null;
+    /* 연기 한 덩이: 흰 연기 그림 kj_smoke_white(600×493)를 44×36 덩이로 (2026-10-29 사용자 결정: 다른 동화 회색 연기를 잘라 밝히던 것 대신 새로 그림) */
     const smokeBlob = () => {
-      if (!smokeClip || !smokeClip.isConnected) {
-        smokeClip = el('clipPath', { id: 'kjSmokeClip', clipPathUnits: 'objectBoundingBox' }, el('defs', {}, T.fx));
-        el('ellipse', { cx: .5, cy: .34, rx: .5, ry: .33 }, smokeClip);
-      }
       const g = el('g', {}, T.fx);
-      el('image', { href: AS + 'rc_prop_smoke.webp', x: -22, y: -17, width: 44, height: 54.5, preserveAspectRatio: 'none', 'clip-path': 'url(#kjSmokeClip)', style: 'filter:brightness(1.45)' }, g);
+      el('image', { href: AS + 'kj_smoke_white.webp', x: -22, y: -18, width: 44, height: 44 * 493 / 600, preserveAspectRatio: 'none' }, g);
       return g;
     };
     /* 연기 한 덩이가 굴뚝(p0)에서 c 를 거쳐 p1 쪽으로 upto(0~1) 만큼 흘러가며 커진다 */

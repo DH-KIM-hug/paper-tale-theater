@@ -143,7 +143,8 @@
     p.vest = none(); p.scarf = none(); p.hat = none(); p.armDown = none(); p.armUp = none(); p.load = none();
     p.mouth = el('path', { d: '', opacity: 0 }, g);
     p.sweat = el('g', { opacity: 0 }, g);
-    (p.looks.ant_coat ? [[-52, -168], [-8, -182]] : [[-66, -96], [-14, -104]]).forEach(([x, y]) => el('image', { href: AS + 'v3w/cm_drop.webp', x: x - 4.8, y, width: 9.6, height: 14, preserveAspectRatio: 'none' }, p.sweat)); // 외투 그림은 키가 커서 땀을 머리 옆에. 땀방울 그림 cm_drop (2026-10-29)
+    // 외투 그림(ag_ant_coat)에는 머리에 땀방울 셋이 이미 그려져 있어 덧그리지 않는다(2026-10-29: 덧그린 땀이 머리 위 허공에 떠 있던 것 고침). 그림이 없을 때만 땀방울 그림 cm_drop
+    if (!p.looks.ant_coat) [[-66, -96], [-14, -104]].forEach(([x, y]) => el('image', { href: AS + 'v3w/cm_drop.webp', x: x - 4.8, y, width: 9.6, height: 14, preserveAspectRatio: 'none' }, p.sweat));
     antLook(p);
     return p;
   }
