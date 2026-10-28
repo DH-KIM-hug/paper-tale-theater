@@ -143,7 +143,7 @@
     p.vest = none(); p.scarf = none(); p.hat = none(); p.armDown = none(); p.armUp = none(); p.load = none();
     p.mouth = el('path', { d: '', opacity: 0 }, g);
     p.sweat = el('g', { opacity: 0 }, g);
-    (p.looks.ant_coat ? [[-52, -168], [-8, -182]] : [[-66, -96], [-14, -104]]).forEach(([x, y]) => el('path', { d: `M${x} ${y} q-5 8 0 12 q5 -4 0 -12 Z`, fill: '#9FC6DE' }, p.sweat)); // 외투 그림은 키가 커서 땀을 머리 옆에
+    (p.looks.ant_coat ? [[-52, -168], [-8, -182]] : [[-66, -96], [-14, -104]]).forEach(([x, y]) => el('image', { href: AS + 'v3w/cm_drop.webp', x: x - 4.8, y, width: 9.6, height: 14, preserveAspectRatio: 'none' }, p.sweat)); // 외투 그림은 키가 커서 땀을 머리 옆에. 땀방울 그림 cm_drop (2026-10-29)
     antLook(p);
     return p;
   }
@@ -582,7 +582,7 @@
   const shuffle = arr => arr.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(v => v[1]);
   function badge(T, x, y, drawIcon, r = 78, sc = 1) {
     const g = T.el('g', { transform: `translate(${x},${y}) scale(${sc})` }, stageUI());
-    T.paper(g, [['circle', { r, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }]]);
+    T.paper(g, [['image', { href: AS + 'v3w/cm_badge_plate.webp', x: -(r + 4), y: -(r + 4) * 600 / 599, width: 2 * (r + 4), height: 2 * (r + 4) * 600 / 599, preserveAspectRatio: 'none' }]]);   /* 크림 원판+금테 그림 (2026-10-29) */
     drawIcon(T, g);
     return g;
   }

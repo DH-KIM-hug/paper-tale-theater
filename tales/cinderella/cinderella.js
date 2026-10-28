@@ -146,10 +146,9 @@
   /* 밤빛 한 장 (백설공주 tint 와 같은 코드): 배경 위, 인물 아래 */
   const tint = (T, fill, op) => T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill, opacity: op }, T.bg);
 
-  /* 시계 숫자: 그림에는 12·3·6·9만 있어서, 나머지 숫자(1·2·4·5·7·8·10·11)를 코드로 그린다.
-     그림의 눈금 자리(원본 그림 픽셀 좌표)를 얼굴색 원판으로 덮고 같은 크기·색의 숫자를 얹는다. */
+  /* 시계 카드 숫자: 카드 그림에는 12·3·6·9만 있어서, 나머지 숫자(1·2·4·5·7·8·10·11)를 코드로 그린다.
+     그림의 눈금 자리(원본 그림 픽셀 좌표)를 얼굴색 원판으로 덮고 같은 크기·색의 숫자를 얹는다. (큰 벽시계는 숫자 12개가 다 있는 cd_clock_full 그림, 2026-10-29) */
   const TICKS = {
-    clock: { W: 593, H: 600, c: '#ECDAC0', dh: 59, p: { 1: [402, 122], 2: [475, 194], 4: [474, 393], 5: [403, 463], 7: [187, 462], 8: [118, 394], 10: [116, 195], 11: [189, 123] } },
     card: { W: 520, H: 524, c: '#EEDDBA', dh: 62, p: { 1: [352, 116], 2: [410, 175], 4: [410, 345], 5: [351, 403], 7: [168, 403], 8: [110, 345], 10: [109, 174], 11: [168, 116] } } };
   function numerals(T, g, kind, x, y, w, h) {
     const t = TICKS[kind], sx = w / t.W, sy = h / t.H, fs = t.dh * sy / .74;
@@ -165,12 +164,12 @@
     });
   }
 
-  /* 큰 벽시계: 빈 시계판 그림 + 짧은 바늘·긴 바늘 그림(위를 가리키는 그림을 돌린다). 구멍(바늘 아래 끝)이 시계 가운데 */
+  /* 큰 벽시계: 숫자 12개가 다 있는 시계판 그림(cd_clock_full, 2026-10-29) + 짧은 바늘·긴 바늘 그림(위를 가리키는 그림을 돌린다). 구멍(바늘 아래 끝)이 시계 가운데 */
+  const CLOCK_FULL = AS + 'cd_clock_full.webp', CLOCK_FULL_ASP = 792 / 800;
   function wallClock(T, cx, cy, D) {
     const g = T.el('g', { filter: 'url(#pp)' }, T.world);
-    const fw = D, fh = D / (ASP.clock || 1);
-    T.el('image', { href: artSrc('clock'), x: cx - fw / 2, y: cy - fh / 2, width: fw, height: fh, preserveAspectRatio: 'none' }, g);
-    numerals(T, g, 'clock', cx - fw / 2, cy - fh / 2, fw, fh);
+    const fw = D, fh = D / CLOCK_FULL_ASP;
+    T.el('image', { href: CLOCK_FULL, x: cx - fw / 2, y: cy - fh / 2, width: fw, height: fh, preserveAspectRatio: 'none' }, g);
     const hand = (f, L) => {
       const w = L * (ASP[f] || .2), hg = T.el('g', {}, g);
       T.el('image', { href: artSrc(f), x: cx - w / 2, y: cy - (L - w / 2), width: w, height: L, preserveAspectRatio: 'none' }, hg);
@@ -225,7 +224,7 @@
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); }; /* 말풍선 없는 소리 대사 (수 세기) */
 
-    const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...Object.keys(ASP).map(k => T.preload(artSrc(k)))];
+    const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...Object.keys(ASP).map(k => T.preload(artSrc(k))), T.preload(CLOCK_FULL), T.preload(AS + 'cm_chain.webp')];
     const cutLoads = CUTS.map(k => T.preload(artSrc('cut_' + k + '_v2')).then(ok => { cutOk[k] = ok; }));
     await Promise.race([Promise.all([...loads, ...cutLoads]), new Promise(r => setTimeout(r, 4000))]);
 
@@ -249,7 +248,12 @@
     ALL.forEach(hide);
     /* ---- 층 소품 (VISUAL_PLAN §3~8): 누름을 받지 않는다. 높이는 무대 px (mk 가 K 배 하므로 나눠 넘김) ---- */
     const D = (f, h) => { const a = prop(T, 'layer_' + f, h / K); a.pos.style.pointerEvents = 'none'; return a; };
-    const chainOf = a => { const ch = T.el('rect', { x: -2, y: -a.h - 400, width: 4, height: 404, fill: '#6B4A32' }, a.body); a.body.insertBefore(ch, a.body.firstChild); };
+    /* 샹들리에 사슬: 사슬 그림(cm_chain, 고리 5개) 을 위로 이어 붙인다 (2026-10-29, 옛 갈색 막대 대신) */
+    const chainOf = a => {
+      const cw = 14, chh = cw * 900 / 171, ch = T.el('g', {}, a.body);
+      for (let y = -a.h + 6 - chh; y > -a.h - 420 - chh; y -= chh) T.el('image', { href: AS + 'cm_chain.webp', x: -cw / 2, y, width: cw, height: chh, preserveAspectRatio: 'none' }, ch);
+      a.body.insertBefore(ch, a.body.firstChild);
+    };
     const L = {
       chand: [D('chandelier', 150), D('chandelier', 150)], chandS: D('chandelier_small', 110),
       swag: [D('curtain_swag', 120), D('curtain_swag', 120)], curtain: D('curtain_side', 420), cand: D('candelabra', 180),

@@ -283,7 +283,9 @@
   async function sunMoon(T, onSun3) {
     for (let k = 0; k < 5; k++) {
       const sun = k % 2 === 0;
-      const g = T.paper(T.world, [sun ? ['circle', { r: 34, fill: '#F2B366' }] : ['path', { d: 'M0,-30 A30,30 0 1,1 0,30 A22,22 0 1,0 0,-30Z', fill: CREAM }]], {});
+      /* 해·달 그림 (2026-10-29): 얼굴 없는 해 sm_sun_plain(632×619)·보름달 sm_moon_plain(630×625) */
+      const g = T.paper(T.world, [sun ? ['image', { href: AS + 'sm_sun_plain.webp', x: -55, y: -55 * 619 / 632, width: 110, height: 110 * 619 / 632, preserveAspectRatio: 'none' }]
+        : ['image', { href: AS + 'sm_moon_plain.webp', x: -32, y: -32 * 625 / 630, width: 64, height: 64 * 625 / 630, preserveAspectRatio: 'none' }]], {});
       g.style.pointerEvents = 'none';
       T.world.insertBefore(g, T.world.firstChild);
       let nt = null;
@@ -871,8 +873,8 @@
       await f.move(X(50 + 70 * i, -200), FL, 700, 'ease-out');
     }
     for (let i = 0; i < 6; i++) {      // 여섯 색 별 아치(요람 위, 천천히 깜빡)
-      const t = i / 5, x = 380 + 240 * t, y = 230 - 40 * Math.sin(Math.PI * t), r = 11;
-      const st = T.el('path', { d: `M0 ${-r} L${r * .3} ${-r * .3} L${r} 0 L${r * .3} ${r * .3} L0 ${r} L${-r * .3} ${r * .3} L${-r} 0 L${-r * .3} ${-r * .3} Z`, fill: COLOR[i], transform: `translate(${x},${y})`, filter: 'url(#pp)' }, T.fx);
+      const t = i / 5, x = 380 + 240 * t, y = 230 - 40 * Math.sin(Math.PI * t), r = 13;   /* 별 그림 rp_prop_star(592×600) 여섯 개 (2026-10-29, 옛 여섯 색 코드 별 대신) */
+      const st = T.el('image', { href: AS + 'rp_prop_star.webp', x: -r, y: -r * 600 / 592, width: 2 * r, height: 2 * r * 600 / 592, preserveAspectRatio: 'none', transform: `translate(${x},${y})`, filter: 'url(#pp)' }, T.fx);
       st.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: i * 120, fill: 'backwards' }).finished.then(() => st.animate([{ opacity: 1 }, { opacity: .45 }, { opacity: 1 }], { duration: 1800, iterations: Infinity }), () => {});
     }
     const l17 = say(S.L17); baby.hop(3, 500); await sleep(550); baby.hop(3, 500); await l17;

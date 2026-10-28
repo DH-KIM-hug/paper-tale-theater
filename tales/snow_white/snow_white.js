@@ -132,6 +132,12 @@
 
   let uid = 0;
   /* 배경 위에 얇은 색 한 장 (해 질 녘·밤). 인물은 그 위에 있어 그대로 보인다 */
+  /* 창 너머 어두운 방 (2026-10-29): sn_window_dark(600×496, 덧문 달린 창 그림)의 방 안쪽(그림 픽셀 163~440 × 75~420)만
+     창 구멍(폭 40·높이 52 상자, 바깥 clip 이 둥근 창 모양으로 자른다)에 맞춰 넣는다. 창틀·덧문은 구멍 밖이라 잘려 안 보인다 */
+  function darkRoom(T, g, WX, SILL) {
+    const k = 52 / 345, w = 600 * k, h = 496 * k;
+    return T.el('image', { href: AS + 'sn_window_dark.webp', x: WX - (163 + 277 / 2) * k, y: SILL - 48 - 75 * k, width: w, height: h, preserveAspectRatio: 'none' }, g);
+  }
   const tint = (T, fill, op) => T.el('rect', { x: -60, y: -40, width: 1120, height: 660, fill, opacity: op }, T.bg);
 
   /* 거울 속 백설 얼굴: 거울 유리(타원) 안에서 은빛 파문과 함께 천천히 떠오른다 */
@@ -321,8 +327,10 @@
       blue: D('bird_blue', 34, 'right'), robin: D('bird_robin', 34, 'right'), rabbit: D('rabbit', 56), fawn: D('fawn', 95, 'left'),
       bf: [D('butterfly', 26), D('butterfly', 26), D('butterfly', 26)], ffront: [D('flowers_front', 100), D('flowers_front', 100)],
     };
-    /* 샹들리에 사슬: 그림 위 끝에서 화면 밖까지 Bark Brown 띠 한 장 */
-    { const ch = T.el('rect', { x: -2, y: -150 - 400, width: 4, height: 404, fill: '#6B4A32' }, L.chand.body); L.chand.body.insertBefore(ch, L.chand.body.firstChild); }
+    /* 샹들리에 사슬: 그림 위 끝에서 화면 밖까지 사슬 그림(cm_chain)을 이어 붙인다 (2026-10-29, 옛 갈색 띠 대신) */
+    { const ch = T.el('g', {}, L.chand.body), cw = 14, chh = cw * 900 / 171;
+      for (let y = -150 + 6 - chh; y > -150 - 420 - chh; y -= chh) T.el('image', { href: AS + 'cm_chain.webp', x: -cw / 2, y, width: cw, height: chh, preserveAspectRatio: 'none' }, ch);
+      L.chand.body.insertBefore(ch, L.chand.body.firstChild); }
     Object.values(L).flat().forEach(hide);
     /* 앞 가림 층을 맨 앞으로 (뒤에 put 한 배우보다 앞) */
     const front = (...as) => as.forEach(a => { if (a.pos.style.display !== 'none') T.world.appendChild(a.pos); });
@@ -534,7 +542,7 @@
             const id = 'swWin' + (++uid);
             T.el('rect', { x: WX - 17, y: SILL - 44, width: 34, height: 44, rx: 15 }, T.el('clipPath', { id }, winG));
             winG.setAttribute('clip-path', `url(#${id})`);
-            T.el('rect', { x: WX - 20, y: SILL - 48, width: 40, height: 52, fill: '#4A3626' }, winG);
+            darkRoom(T, winG, WX, SILL);
             put(T, snow, WX, SILL + 35, { look: 'receive', s: WS }); winG.appendChild(snow.pos);
           } else if (a === 'fall') {
             hide(apple); cue('whistle_down', .6) || sfx(T, 'slide_down');
@@ -980,7 +988,7 @@
       const id = 'swWin' + (++uid);
       T.el('rect', { x: WX - 17, y: SILL - 44, width: 34, height: 44, rx: 15 }, T.el('clipPath', { id }, winG));
       winG.setAttribute('clip-path', `url(#${id})`);
-      T.el('rect', { x: WX - 20, y: SILL - 48, width: 40, height: 52, fill: '#4A3626' }, winG);   /* 창 너머 어두운 방 */
+      darkRoom(T, winG, WX, SILL);   /* 창 너머 어두운 방 */
       put(T, snow, WX, SILL + 35, { look: 'receive', s: WS }); winG.appendChild(snow.pos);
       put(T, granny, 560, 356, { to: 'left', s: FAR });
       if (!P) put(T, L.fern[0], 110, 448, { s: FAR });

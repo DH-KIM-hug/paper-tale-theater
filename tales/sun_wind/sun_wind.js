@@ -54,6 +54,7 @@
     cloud_rain: 'v3w/sw_cloud_rain.webp', cloud_snow: 'v3w/sw_cloud_snow.webp',
     cut_hat: 'v3w/sw_cut_hat.webp', cut_hold: 'v3w/sw_cut_hold.webp', cut_pant: 'v3w/sw_cut_pant2.webp', cut_off: 'v3w/sw_cut_off.webp', cut_shake: 'v3w/sw_cut_shake.webp',
   };
+  const DROP = AS + 'v3w/cm_drop.webp';   /* 물방울 그림(411×600): 나그네 땀·비구름 빗방울 */
   const artOK = {}, bgOK = {};
   const artUrl = k => (ART[k] && artOK[k] !== false ? AS + ART[k] : null);
   const bgUrl = k => (BG[k] && bgOK[k] !== false ? AS + BG[k] : null);
@@ -215,7 +216,7 @@
       P.hat = el('g', {}, g);
       hatArt(T, P.hat).setAttribute('transform', `translate(0 ${HOLD_HAT_Y}) scale(${68 / HAT_ART[0]})`);
       P.sweat = el('g', { opacity: 0 }, g);
-      [[56, -22], [-60, -8]].forEach(([x, y]) => el('path', { d: `M${x} ${y} q-8 14 0 17 q8 -3 0 -17 Z`, fill: '#9CC7E6' }, P.sweat));
+      [[56, -22], [-60, -8]].forEach(([x, y]) => el('image', { href: DROP, x: x - 6.2, y, width: 12.4, height: 18, preserveAspectRatio: 'none' }, P.sweat));   /* 땀방울 그림 (2026-10-29) */
       P.cloth = el('g', {}, g); P.mouth = el('g', {}, g);
       P.face = k => { P.faceK = k; }; // 얼굴은 그림마다 정해져 있다
       return P;
@@ -538,7 +539,7 @@
   /* 골라요 판: 동그란 종이 배지 (월드 좌표) */
   function badge(T, x, y, drawIcon, r = 78) {
     const g = T.el('g', { transform: `translate(${x},${y})` }, T.world);
-    T.paper(g, [['circle', { r, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }]]);
+    T.paper(g, [['image', { href: AS + 'v3w/cm_badge_plate.webp', x: -(r + 4), y: -(r + 4) * 600 / 599, width: 2 * (r + 4), height: 2 * (r + 4) * 600 / 599, preserveAspectRatio: 'none' }]]);   /* 크림 원판+금테 그림 (2026-10-29) */
     drawIcon(g);
     return g;
   }
@@ -1155,8 +1156,8 @@
       T.clear(); PL = playBG(T);
       M8 = traveler(T, 500, 520, 1.15, 'shirt', 'down'); M8.P.face('smile');
       btns.sun = sun(T, 130, 200, .55);
-      // 비구름 그림(300×159, 구름 몸통만)은 가운데 위에, 빗방울 셋은 코드로 그 아래. 눈구름 그림(300×290)은 눈송이까지 한 장
-      btns.rain = T.actor(T.world, 370, 200, g => (pic(T, g, 'cloud_rain', -72, -52, 144, 144 * 159 / 160) && T.paper(g, [-30, 0, 30].map(x => ['path', { d: `M${x} 34 q-7 12 0 15 q7 -3 0 -15 Z`, fill: '#6E8FB0' }]))) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: C.rain }], ['circle', { cx: 6, cy: -18, r: 42, fill: C.rain }], ['circle', { cx: 44, cy: 6, r: 32, fill: C.rain }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: C.rain }],
+      // 비구름 그림(300×159, 구름 몸통만)은 가운데 위에, 빗방울 셋은 물방울 그림(cm_drop)으로 그 아래. 눈구름 그림(300×290)은 눈송이까지 한 장
+      btns.rain = T.actor(T.world, 370, 200, g => (pic(T, g, 'cloud_rain', -72, -52, 144, 144 * 159 / 160) && T.paper(g, [-30, 0, 30].map(x => ['image', { href: DROP, x: x - 6.2, y: 33, width: 12.4, height: 18, preserveAspectRatio: 'none' }]))) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: C.rain }], ['circle', { cx: 6, cy: -18, r: 42, fill: C.rain }], ['circle', { cx: 44, cy: 6, r: 32, fill: C.rain }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: C.rain }],
         ...[-30, 0, 30].map(x => ['path', { d: `M${x} 52 q-7 12 0 15 q7 -3 0 -15 Z`, fill: '#6E8FB0' }])]));
       btns.wind = wind(T, 630, 200, .5);
       btns.snowc = T.actor(T.world, 870, 200, g => pic(T, g, 'cloud_snow', -72, -66, 144, 144 * 281 / 300) || T.paper(g, [['circle', { cx: -34, cy: 4, r: 34, fill: '#E6EEF4' }], ['circle', { cx: 6, cy: -18, r: 42, fill: '#E6EEF4' }], ['circle', { cx: 44, cy: 6, r: 32, fill: '#E6EEF4' }], ['rect', { x: -60, y: 0, width: 130, height: 36, rx: 18, fill: '#E6EEF4' }],

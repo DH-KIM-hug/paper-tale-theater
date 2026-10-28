@@ -511,7 +511,7 @@
           sleep(600).then(() => { potion.look('full'); glow(potion, 1000); sfx(T, 'sparkle'); });
         },
         pearl: async () => {
-          const pearl = T.el('circle', { cx: 0, cy: 0, r: 8, fill: '#F6ECD8', stroke: '#F2B366', 'stroke-width': 2 }, T.world);
+          const pearl = T.el('image', { href: AS + 'mer_pearl.webp', x: -10, y: -10 * 600 / 596, width: 20, height: 20 * 600 / 596, preserveAspectRatio: 'none' }, T.world);   /* 목소리 진주 그림 (2026-10-29) */
           const mx = mer.x + mer.w * .28, my = mer.y - mer.h * .70;
           potion.move(mer.x + 36, mer.y - 120, 1200).then(() => hide(potion), () => hide(potion));
           await T.anim(pearl, [{ transform: `translate(${mx}px,${my}px)` }, { transform: `translate(${mx + 90}px,${my - 120}px)` }], { duration: 500, easing: 'ease-out' });
@@ -862,7 +862,7 @@
     sparkle(T, cauldron.x, cauldron.y - 120, 110, 20);
     put(T, potion, cauldron.x + 44, cauldron.y - 150, { look: 'empty' }); fadeIn(potion, 400);
     sleep(600).then(() => { potion.look('full'); glow(potion, 1000); sfx(T, 'sparkle'); });
-    const pearl = T.el('circle', { cx: 0, cy: 0, r: 8, fill: '#F6ECD8', stroke: '#F2B366', 'stroke-width': 2 }, T.world);
+    const pearl = T.el('image', { href: AS + 'mer_pearl.webp', x: -10, y: -10 * 600 / 596, width: 20, height: 20 * 600 / 596, preserveAspectRatio: 'none' }, T.world);   /* 목소리 진주 그림 (2026-10-29) */
     const mx = mer.x + mer.w * .28, my = mer.y - mer.h * .70;
     await T.anim(pearl, [{ transform: `translate(${mx}px,${my}px)` }, { transform: `translate(${mx + 90}px,${my - 120}px)` }], { duration: 500, easing: 'ease-out' });
     await T.anim(pearl, [{ transform: `translate(${mx + 90}px,${my - 120}px)` }, { transform: `translate(${shell.x}px,${shell.y - 30}px)` }], { duration: 700, easing: 'ease-in' });

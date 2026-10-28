@@ -36,6 +36,7 @@
   const bgSrc = k => AS + 'bb_bg_' + k + (GLOW[k] ? '_glow' : '') + '.webp', artSrc = k => AS + 'bb_' + k + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const hOf = f => HT[f] || 200;
+  const SUN = AS + 'sm_sun_plain.webp';   /* 하늘을 지나는 해 (일주일이 지나가는 연출). sw_sun 은 얼굴이 있는 해님 캐릭터라 소품 해로는 얼굴 없는 그림을 쓴다 */
   const artOK = {}, bgOK = {};       // 그림 파일이 실제로 있는지 (preload 결과)
 
   /* ================= 자리표시(그림이 없을 때) ================= */
@@ -250,8 +251,8 @@
   /* 가로 화면은 배경 문의 놋쇠 문패 위에 글자만 얹고, 세로 화면(문이 안 보임)은 종이 문패를 벽에 단다 */
   function namePlate(T, x, y, onDoor) {
     const g = onDoor ? T.el('g', { transform: `translate(${x},${y})` }, T.world)
-      : T.paper(T.world, [['rect', { x: -72, y: -26, width: 144, height: 52, rx: 9, fill: '#F6ECD8' }],
-        ['rect', { x: -64, y: -18, width: 128, height: 36, rx: 6, fill: 'none', stroke: '#6B4A32', 'stroke-width': 3 }]], { transform: `translate(${x},${y})` });
+      : T.el('g', { transform: `translate(${x},${y})`, filter: 'url(#pp)' }, T.world);
+    if (!onDoor) T.el('image', { href: AS + 'bb_nameplate.webp', x: -75, y: -75 * 348 / 900, width: 150, height: 150 * 348 / 900, preserveAspectRatio: 'none' }, g);   /* 종이 문패 그림 (2026-10-29) */
     const label = T.tr('벨의 방');
     T.el('text', { x: 0, y: 9, 'text-anchor': 'middle', 'font-size': label.length > 8 ? 17 : onDoor ? 22 : 24, 'font-weight': 800, fill: onDoor ? '#5A3A22' : '#A93B32', 'font-family': FONT, text: label }, g);
     return { g, glow: ms => { g.style.filter = 'url(#hintGlow)'; setTimeout(() => { g.style.filter = ''; }, ms); } };
@@ -521,7 +522,7 @@
           return (async () => { put(T, ring, belle.x + 22, FL - 100); fadeIn(ring); await ring.move(tableS.x, FL - 110 + 4, 900); sparkle(T, tableS.x, FL - 120, 60, 8); })();
         },
         sun: () => {
-          const sun = T.el('circle', { cx: 0, cy: 0, r: 28, fill: '#F2B366' }, T.bg);
+          const sun = T.el('image', { href: SUN, x: -44, y: -44 * 619 / 632, width: 88, height: 88 * 619 / 632, preserveAspectRatio: 'none' }, T.bg);   /* 얼굴 없는 해 그림 (2026-10-29) */
           sun.animate([{ translate: '120px 170px' }, { translate: '500px 50px' }, { translate: '880px 170px' }], { duration: 1700, iterations: 3 });
           const nt = tint(T, '#1F2A56', 0);
           nt.animate([{ opacity: 0 }, { opacity: .35, offset: .5 }, { opacity: 0 }], { duration: 1700, iterations: 3 }).finished.then(() => { nt.setAttribute('opacity', .35); sun.remove(); }, () => {});
@@ -872,7 +873,7 @@
     belle.wiggle(3, 500);
     await say('그럴까…');
     {
-      const sun = T.el('circle', { cx: 0, cy: 0, r: 28, fill: '#F2B366' }, T.bg);
+      const sun = T.el('image', { href: SUN, x: -44, y: -44 * 619 / 632, width: 88, height: 88 * 619 / 632, preserveAspectRatio: 'none' }, T.bg);   /* 얼굴 없는 해 그림 (2026-10-29) */
       sun.animate([{ translate: '120px 170px' }, { translate: '500px 50px' }, { translate: '880px 170px' }], { duration: 1700, iterations: 3 });
       const nt = tint(T, '#1F2A56', 0);
       nt.animate([{ opacity: 0 }, { opacity: .35, offset: .5 }, { opacity: 0 }], { duration: 1700, iterations: 3 }).finished.then(() => { nt.setAttribute('opacity', .35); sun.remove(); }, () => {});
