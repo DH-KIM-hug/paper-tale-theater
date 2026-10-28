@@ -140,7 +140,18 @@
   const hoeRows = n => n <= 3 ? [n] : n === 4 ? [2, 2] : n === 5 ? [3, 2] : [3, 3];   // 아래 줄부터 채워 항아리 위로 솟아오른다
 
   async function run(T) {
-    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
+    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['intro_korean', 'pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, say, camSnap } = T;
     const tr = T.tr;
@@ -285,6 +296,7 @@
       snd: (n, v = .7, d = 0) => { try { +d > 0 ? later(+d, n, +v) : cue(n, +v); } catch (e) { /* */ } },
       amb: (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
     });
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {   // 읽어 주기: 아래 놀이 흐름은 돌지 않는다
       return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
@@ -293,6 +305,7 @@
     scene('field');
     put(T, farmer, 460, 480, { look: 'hoe', to: 'right' });
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     await say('옛날 옛날에 마음씨 착한 농부가 살았어요.');
     await T.ask('농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!', () => T.tap(farmer.pos, { prompt: '농부를 톡! 괭이질을 해요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { await plow(i); await sleep(450); }
