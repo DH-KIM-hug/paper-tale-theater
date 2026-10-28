@@ -99,7 +99,8 @@
      ],
      "before": [
       "sweep:dust",
-      "pop:440,250,싹싹!"
+      "pop:440,250,싹싹!",
+      "sfx:broom_1:.45"
      ]
     },
     {
@@ -204,7 +205,8 @@
      ],
      "before": [
       "ox:at:560,520",
-      "ox:fade"
+      "ox:fade",
+      "animal:cow:.4"
      ],
      "after": [
       "cut:ox"
@@ -226,6 +228,9 @@
        null,
        "[cheerful, grateful, childlike]"
       ]
+     ],
+     "before": [
+      "sfx:dig_soil:.35"
      ]
     }
    ]
@@ -286,6 +291,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3:700:.5",
       "pail:pour:3"
      ]
     },
@@ -303,7 +309,8 @@
      "before": [
       "cut:wet",
       "kong:look:wet",
-      "jar:leak"
+      "jar:leak",
+      "amb:stream_2:.15:3"
      ]
     },
     {
@@ -362,7 +369,8 @@
       ]
      ],
      "before": [
-      "toad:hop"
+      "toad:hop",
+      "sfx:boing:.5"
      ]
     },
     {
@@ -392,6 +400,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3:700:.5",
       "set:well",
       "kong:look:pour",
       "pail:pour:3"
@@ -517,6 +526,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4,marimba_5:420:.5",
       "sparrows:peck:5"
      ]
     },
@@ -646,7 +656,8 @@
      ],
      "before": [
       "kong:look:shoes",
-      "fairy:look:give"
+      "fairy:look:give",
+      "sfx:chime_up:.45"
      ]
     },
     {
@@ -712,6 +723,7 @@
       ]
      ],
      "before": [
+      "sfxs:marimba_1,marimba_2,marimba_3,marimba_4:500:.5",
       "kong:cross:4"
      ],
      "after": [
@@ -730,6 +742,7 @@
       ]
      ],
      "before": [
+      "sfx:whistle_down:.5",
       "fx:splash"
      ],
      "after": [
@@ -1095,6 +1108,9 @@
        null,
        "[gentle, warm, slow, closing storytelling]"
       ]
+     ],
+     "after": [
+      "sfx:party_horn:.5"
      ]
     }
    ]
