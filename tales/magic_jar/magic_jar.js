@@ -145,13 +145,13 @@
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean_happy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
     })();
-    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['intro_korean', 'pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
+    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['intro_korean_happy', 'pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, say, camSnap } = T;
     const tr = T.tr;
@@ -201,7 +201,7 @@
     const CUT_SFX = { clink: () => cue('ding_glock', .8) || AudioFX.sfx('pop'), buried: () => cue('coins_1', .7) || AudioFX.sfx('pop'),
       plop: () => { if (cue('whistle_down', .7)) later(650, 'splash', .4); else AudioFX.sfx('pop'); }, eight: () => cue('tada', .7) || AudioFX.sfx('pop'),
       hungry: () => cue('comic_brass', .7) || AudioFX.sfx('pop'), smash: () => AudioFX.sfx('pottery_break') || AudioFX.sfx('pow') };
-    const cutVerb = k => T.cutImage([{ src: cutSrc(k), sfx: CUT_SFX[k] || (k === 'twohoes' || k === 'coins' ? 'shimmer' : 'pop'), hold: 3000 }], { hold: 3000 });
+    const cutVerb = k => T.cutImage([{ src: cutSrc(k), sfx: CUT_SFX[k] || (k === 'twohoes' || k === 'coins' ? 'shimmer' : 'pop'), hold: 2600 }], { hold: 2600 });   /* 2026-10-29 컷 멈춤 3000 → 2600 */
     const READ_ACTS = {
       set: k => scene(k),
       cam: s => { const [x, y, z] = nums(s); camSnap(x, y, z); },
@@ -309,7 +309,7 @@
     await say('옛날 옛날에 마음씨 착한 농부가 살았어요.');
     await T.ask('농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!', () => T.tap(farmer.pos, { prompt: '농부를 톡! 괭이질을 해요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { await plow(i); await sleep(450); }
-    await T.cutImage([{ src: cutSrc('clink'), sfx: () => cue('ding_glock', .8) || AudioFX.sfx('pop'), hold: 2800 }], { hold: 2800 });
+    await T.cutImage([{ src: cutSrc('clink'), sfx: () => cue('ding_glock', .8) || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
     await say('쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.');
 
     /* --- 2. 항아리 캐내기 --- */
@@ -336,7 +336,7 @@
     await say('농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.');
     await sleep(500);
     await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260); lyWig('chili', 3, 400);
-    await T.cutImage([{ src: cutSrc('twohoes'), sfx: () => AudioFX.sfx('shimmer') || AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('twohoes'), sfx: () => AudioFX.sfx('shimmer') || AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
     await say('"어머나! 괭이가 두 개가 되었어요!" 아내가 깜짝 놀랐어요.');
     const hoes = [], nHoe = rnd(3, 6);
     let nCoin; do nCoin = rnd(4, 8); while (nCoin === nHoe);
@@ -350,7 +350,7 @@
     await wife.hop(30, 400);
 
     /* --- 4. 엽전 --- */
-    await T.cutImage([{ src: cutSrc('coins'), sfx: () => AudioFX.sfx('shimmer') || AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('coins'), sfx: () => AudioFX.sfx('shimmer') || AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
     scene('jarfront');
     hoes.forEach(h => hide(h));
     put(T, jar, 520, 500); put(T, farmer, 270, 500, { look: 'count', to: 'right' }); put(T, wife, 780, 500, { look: 'clap', to: 'left' });
@@ -432,7 +432,7 @@
     };
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 3; i++) { await goldIn(i); await sleep(500); }
-    await T.cutImage([{ src: cutSrc('buried'), sfx: () => cue('coins_1', .7) || AudioFX.sfx('pop'), hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('buried'), sfx: () => cue('coins_1', .7) || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
     scene('hall');
     put(T, jar, 650, 505); golds.forEach(g => { g.pos.style.display = ''; T.world.appendChild(g.pos); });
     put(T, rich, 330, 505, { look: 'pinned', to: 'left' });
@@ -451,7 +451,7 @@
     await say('그때 부자의 아버지가 다가와 항아리 속을 들여다보았어요. "이게 뭐냐?"');
     await sleep(500);
     await father.move(fx(T, 660), 505, 700);
-    await T.cutImage([{ src: cutSrc('plop'), sfx: () => { if (cue('whistle_down', .7)) later(650, 'splash', .4); else AudioFX.sfx('pop'); }, hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('plop'), sfx: () => { if (cue('whistle_down', .7)) later(650, 'splash', .4); else AudioFX.sfx('pop'); }, hold: 2600 }], { hold: 2600 });
     scene('hallwide');
     put(T, jar, 700, 505); put(T, rich, 240, 505, { look: 'shout', to: 'right' });
     await say('풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.');
@@ -460,11 +460,11 @@
       put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .62 : 1, raw: tight(T) });
       o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); note(i) || popSfx(T); vo('n' + i);
     } }));
-    await T.cutImage([{ src: cutSrc('eight'), sfx: () => cue('tada', .7) || AudioFX.sfx('pop'), hold: 3200 }], { hold: 3200 });
+    await T.cutImage([{ src: cutSrc('eight'), sfx: () => cue('tada', .7) || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
     await say('아버지가 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 여덟 명이나 되었어요.');
     await say('"내가 진짜 아버지다!" "아니야, 내가 진짜야!" 모두 서로 자기가 진짜라고 우겼어요.');
     olds.forEach((o, i) => o.hop(14 + (i % 3) * 4, 300));
-    await T.cutImage([{ src: cutSrc('hungry'), sfx: () => cue('comic_brass', .7) || AudioFX.sfx('pop'), hold: 3200 }], { hold: 3200 });
+    await T.cutImage([{ src: cutSrc('hungry'), sfx: () => cue('comic_brass', .7) || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
     rich.look('hurry', 'right');
     const dash = (async () => { for (const x of [150, 330, 180, 300]) { rich.turn(x > rich.x ? 'right' : 'left'); await rich.move(fx(T, x), 505, 600); } })();
     await say('"배고프다! 밥 줘라!" 부자는 쟁반을 들고 이리저리 뛰어다녔어요.');
@@ -473,7 +473,7 @@
     /* --- 9. 항아리가 깨졌어요 --- */
     await say('부자는 지쳐서 외쳤어요. "이게 다 항아리 때문이야! 이제 그만!"');
     await sleep(500);
-    await T.cutImage([{ src: cutSrc('smash'), sfx: () => AudioFX.sfx('pottery_break') || AudioFX.sfx('pow'), hold: 3000 }], { hold: 3000 });
+    await T.cutImage([{ src: cutSrc('smash'), sfx: () => AudioFX.sfx('pottery_break') || AudioFX.sfx('pow'), hold: 2600 }], { hold: 2600 });
     scene('hallwide');
     olds.forEach(o => hide(o)); hide(jar);
     put(T, cracked, 700, 505); put(T, rich, 300, 505, { look: 'shout', to: 'right' }); put(T, father, 500, 505, { look: 'peek', to: 'right' });
