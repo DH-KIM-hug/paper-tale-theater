@@ -72,7 +72,7 @@
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy2', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy2', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
@@ -83,7 +83,7 @@
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_cozy', 'birds_chirp_1', 'birds_chirp_2', 'steam_hiss', 'water_drip', 'rain_1', 'pop_appear', 'chime_up', 'zip_away', 'question', 'thunder', 'whistle_up', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'party_horn', 'creak', 'ding', 'bonk', 'bell', 'gulp', 'splash', 'splash_big', 'blow', 'whoosh', 'sparkle', 'cork']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_cozy2', 'birds_chirp_1', 'birds_chirp_2', 'steam_hiss', 'water_drip', 'rain_1', 'pop_appear', 'chime_up', 'zip_away', 'question', 'thunder', 'whistle_up', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'party_horn', 'creak', 'ding', 'bonk', 'bell', 'gulp', 'splash', 'splash_big', 'blow', 'whoosh', 'sparkle', 'cork']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const tr = T.tr, el = T.el;
@@ -500,11 +500,11 @@
       },
       async cut(k) {
         if (k === 'hug') {
-          await T.cutImage([{ src: src('cut_hug'), sfx: 'swish', hold: 3200 }], { hold: 3200 });
+          await T.cutImage([{ src: src('cut_hug'), sfx: 'swish', hold: 3000 }], { hold: 3000 });
           put(T, nuna, X(440, 450), G, { look: 'hug', to: 'right' }); put(T, oppa, X(520, 510), G, { look: 'hug', to: 'left' }); put(T, agi, X(480, 480), G + 6, { look: 'hug', to: 'right' });
           return;
         }
-        if (k === 'rainbow') await T.cutImage([{ src: src('cut_rainbow'), sfx: 'sparkle', hold: 3000 }], { hold: 3000 });
+        if (k === 'rainbow') await T.cutImage([{ src: src('cut_rainbow'), sfx: 'sparkle', hold: 2600 }], { hold: 2600 });
       },
       rain(verb) {
         if (verb === 'start') { RS.rd = 0; return; }
@@ -969,7 +969,7 @@
       T.shake(); sfx('thunder', .4) || AudioFX.sfx('boom', .5) || T.tone([110, 55], .6, { type: 'sawtooth', vol: .08 }); T.pop(500, 150, tr('번쩍!'), '#E8A317'); bg.remove(); // 천둥은 부드럽게
       kids.forEach(k => k.look('eek'));
       await say('번쩍! 우르릉 쾅!');
-      await T.cutImage([{ src: src('cut_hug'), sfx: 'swish', hold: 3200 }], { hold: 3200 });
+      await T.cutImage([{ src: src('cut_hug'), sfx: 'swish', hold: 3000 }], { hold: 3000 });
       put(T, nuna, X(440, 450), G, { look: 'hug', to: 'right' }); put(T, oppa, X(520, 510), G, { look: 'hug', to: 'left' }); put(T, agi, X(480, 480), G + 6, { look: 'hug', to: 'right' });
       await say('"으악!" 삼남매는 서로 꼭 껴안아요.');
       await say('"미안, 미안! 인사한 거야!"');
@@ -1095,7 +1095,7 @@
       baby.pos.getAnimations().forEach(an => an.cancel()); baby.setScale(s0 * .55); baby.place(bx, by - 10); baby.pos.style.opacity = .85;
       baby.hop(16, 400); popSfx(T, true); T.pop(baby.x, baby.y - 140, tr('퐁!'));
       await say('하얀 아기 구름이 방긋 웃어요. 퐁!');
-      await T.cutImage([{ src: src('cut_rainbow'), sfx: 'sparkle', hold: 3000 }], { hold: 3000 });
+      await T.cutImage([{ src: src('cut_rainbow'), sfx: 'sparkle', hold: 2600 }], { hold: 2600 });
       await say('"구름은 여기서 오는 거였어!"');
       await say('꿀떡이는 젖은 흙에 코를 대고 킁킁.');
     });
