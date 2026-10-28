@@ -331,9 +331,9 @@
     try { AudioFX.preloadSfx(['birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'whistle_wobble', 'surprise_sting', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'party_horn']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
-    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = Math.min(vol, .2); dur = Math.min(dur, 4); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
-    const sfx = (n, v = .9) => { try { if (isRead()) return false; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
-    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) return; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
+    const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
+    const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
+    const short = (n, vol = .6, dur = 2) => { try { if (isRead()) vol *= .8; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
 
     /* 그림 미리 불러오기: 첫 장면 그림·생쥐를 기다리고(최대 3초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
@@ -441,7 +441,7 @@
         if (verb === 'sleep') { P.eyes('shut'); return; }
         if (verb === 'wake') {
           P.eyes('open');
-          if (!inst() && rScene === 'grass') { P.eyes('sleepy'); P.mouth('open'); roar(T, .25); setTimeout(() => P.mouth('smile'), 600); }
+          if (!inst() && rScene === 'grass') { sfx('surprise_sting', .7); P.eyes('sleepy'); P.mouth('open'); roar(T, .25); setTimeout(() => P.mouth('smile'), 600); }
           return;
         }
         if (verb === 'paw') {
@@ -526,6 +526,7 @@
         if (verb === 'slide') {
           const slide = rLion.parts.art ? [[831, 265], [850, 341], [915, 500]] : [[925, 250], [975, 360], [880, 500]];
           if (inst()) { m.place(slide[2][0], slide[2][1]); return; }
+          short('whistle_wobble', .6, 1.6);
           return (async () => {
             m.body.style.transform = 'rotate(-35deg)';
             T.tone([1400, 500], .9, { type: 'sine', vol: .12 });
@@ -635,7 +636,7 @@
             if (rPt() && !inst()) camTo(x, 280, 1, 220);
             if (i > 0 && !inst()) { squeak(T, 1500); rMouse.hop(20, 220); await rMouse.move(x - 52, 545, 220); }
             else if (inst()) rMouse.place(x - 52, 545);
-            if (!inst()) { rMouse.parts.teeth.setAttribute('opacity', 1); gnaw(T); T.tone([2600, 2000], .05, { type: 'square', vol: .05, when: .1 }); }
+            if (!inst()) { rMouse.parts.teeth.setAttribute('opacity', 1); gnaw(T); T.tone([2600, 2000], .05, { type: 'square', vol: .05, when: .1 }); setTimeout(() => sfx('marimba_' + Math.min(8, i + 1), .55), 380); }
             r.mid.remove();
             r.bot.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
             r.top.animate([{ transform: 'rotate(0)' }, { transform: `rotate(${i % 2 ? 6 : -6}deg)` }], { duration: 400, fill: 'forwards', easing: 'ease-out' });
@@ -647,6 +648,7 @@
             if (!inst()) { await sleep(520); rMouse.parts.teeth.setAttribute('opacity', 0); }
           }
           rRopeDone = Math.max(rRopeDone, to);
+          if (to >= 10 && !inst()) sfx('party_horn', .6);
         })();
       },
       scroll(verb) {
@@ -683,7 +685,7 @@
       },
       cam(a) { if (a === 'wide') return; const [x, y, z] = String(a).split(',').map(Number); return inst() ? camSnap(x, y, z || 1) : camTo(x, y, z || 1, 700); },
     };
-    const READ_ACTS = { set: k => { if (k === 'savanna' && !R.sawSav) { R.sawSav = 1; amb('birds_chirp_1'); } else if (k === 'night_net') amb('crickets_night_1', .2, 4); else if (k === 'morning') amb('birds_chirp_2', .2, 4); else stopAmb(); return R.set(k); }, lion: R.lion, mouse: R.mouse, bubble: R.bubble, board: R.board, net: R.net, scroll: R.scroll, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam };
+    const READ_ACTS = { set: k => { if (k === 'savanna' && !R.sawSav) { R.sawSav = 1; amb('birds_chirp_1'); } else if (k === 'night_net') amb('crickets_night_1', .25, 4); else if (k === 'morning') amb('birds_chirp_2', .25, 4); else stopAmb(); return R.set(k); }, lion: R.lion, mouse: R.mouse, bubble: R.bubble, board: R.board, net: R.net, scroll: R.scroll, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam };
     if (T.reading()) {
       T.director({ cast: { lion: () => rLion, mouse: () => rMouse }, listener: r => (r === 'lion' ? 'mouse' : 'lion'), noFace: ['lion'] });
       const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr;
