@@ -237,6 +237,17 @@
     } catch (e) { /* 크기를 못 재면 그대로 둔다 */ }
   }
   async function run(T) {
+    /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    const intro = (() => {
+      let h = null, on = true;
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const go = (delay = 0) => {
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        if (delay) setTimeout(f, delay); else f();
+      };
+      try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
+      return { go, stop };
+    })();
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, camSnap, tr } = T;
     let GAP = 900; const SCENE_END = 2000, CUT_HOLD = 4200, STRIKE_GAP = 4500, FAINT_GAP = 2800;
@@ -251,7 +262,7 @@
     const P = T.viewWidth() < 990;
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['beomjong', 'beomjong_synth', 'bonk', 'whoosh', 'creak', 'step_grass', 'step_wood', 'swish', 'paper_up', 'paper_down', 'sparkle', 'tada', 'door', 'thud', 'pop', 'splash', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'rustle_1', 'bow_arrow_1', 'zip_away', 'pull_pop', 'surprise_sting', 'wing_flap_1', 'ding_glock', 'whistle_down', 'party_horn', 'shimmer', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5']);
+    AudioFX.preloadSfx(['intro_korean', 'beomjong', 'beomjong_synth', 'bonk', 'whoosh', 'creak', 'step_grass', 'step_wood', 'swish', 'paper_up', 'paper_down', 'sparkle', 'tada', 'door', 'thud', 'pop', 'splash', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'rustle_1', 'bow_arrow_1', 'zip_away', 'pull_pop', 'surprise_sting', 'wing_flap_1', 'ding_glock', 'whistle_down', 'party_horn', 'shimmer', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5']);
     const loads = [T.preload(src('mg2_layer_moon_perch')), ...BGS.map(k => T.preload(bgSrc(k)).then(ok => { bgOK[k] = ok; })), ...CUTS.map(k => T.preload(src(k)).then(ok => { cutOk[k] = ok; }))];
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
     await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
@@ -484,6 +495,7 @@
       snd(n, v = .7, d = 0) { try { const f = () => { try { AudioFX.sfx(n, +v * .8); } catch (e) { /* */ } }; +d > 0 ? setTimeout(f, +d) : f(); } catch (e) { /* */ } },
       amb(n, v = .2, d = 4) { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
     });
+    if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {
       try { AudioFX.preloadSfx(['surprise_sting', 'rustle_1', 'pull_pop', 'bow_arrow_1', 'marimba_1', 'marimba_2', 'marimba_3', 'wing_flap_1', 'party_horn', 'zip_away', 'whistle_down']); } catch (e) { /* */ }
       return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
@@ -493,6 +505,7 @@
     scene('mg_bg_path');
     put(T, sch, X(-120, -120), FL, { look: 'walk', to: 'right' });
     await T.curtain(true);
+    intro.go(); // 시작 음악 (놀이)
     const steps1 = stepLoop(520, .5);
     const walk1 = sch.move(X(520, 500), FL, 7000, 'linear'); setTimeout(() => lyWig('pileL', 3, 400), 1200);
     (async () => { for (let i = 0; i < 13; i++) { sch.hop(5, 480); await sleep(520); } })();
