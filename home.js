@@ -1173,16 +1173,27 @@
   const has2 = id => { try { return Entitlements.hasSticker2(id); } catch (e) { return false; } };
   const pzGot = t => (has(t.id) ? 1 : 0) + (has2(t.id) ? 1 : 0);
   const starSvg = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z"/></svg>';
-  let curBoard = '', pendingCel = [], celebrating = false, castView = '';
-  try { curBoard = localStorage.getItem(BOARD_KEY) || ''; } catch (e) { /* 기억 없음 */ }
+  let curBoard = '', pendingCel = [], celebrating = false, castView = '', stMode = 'puzzle';
+  const MODE_KEY = 'paperTheater.stkMode';     // 스티커북 탭 안의 갈래: 'puzzle'(퍼즐판) | 'cast'(동화별 친구 스티커북)
+  try { curBoard = localStorage.getItem(BOARD_KEY) || ''; stMode = localStorage.getItem(MODE_KEY) === 'cast' ? 'cast' : 'puzzle'; } catch (e) { /* 기억 없음 */ }
   const stickImg = (id, off) => { const s = stickerSrc(id); return s ? `<img src="${s}" alt="" draggable="false" decoding="async"${off ? ' class="sil"' : ''}>` : ''; };
   /* 캐릭터 스티커 세트(tales/stickers.js): 그림이 있는 칸만 받을 수 있다. 그림 없는 칸(새로 그릴 자리)은 맨 뒤에 흐린 빈 구멍(글자 없음) */
   const castSet = id => { try { const a = typeof STICKERS !== 'undefined' && STICKERS[id]; return Array.isArray(a) ? a : []; } catch (e) { return []; } };
   const hasCast = (id, k) => { try { return Entitlements.hasCast(id, k); } catch (e) { return false; } };
+  const castGot = id => castSet(id).filter(c => c.img && hasCast(id, c.k));      // 받은 친구 스티커(받은 순서)
   const CAST_DONE_KEY = 'paperTheater.castDone';
   const castDone = () => { try { const o = JSON.parse(localStorage.getItem(CAST_DONE_KEY) || '{}'); return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } };
   /* 퍼즐 칸 위의 작은 진행 점: 10칸 중 받은 만큼 채운다 */
   const castDots = id => { const set = castSet(id); if (!set.length) return ''; return `<span class="cast-dots" aria-hidden="true">${set.map(c => `<i class="${hasCast(id, c.k) ? 'on' : c.img ? '' : 'plan'}"></i>`).join('')}</span>`; };
+  /* 스티커 갈래 첫 화면: 친구 스티커를 받은 동화마다 둥근 표지 + 받은 수. 누르면 그 동화의 10칸 스티커북(drawCast) */
+  function drawCastList(tales) {
+    const n = tales.reduce((m, t) => m + castGot(t.id).length, 0);
+    const cell = t0 => { const t = shown(t0), g = castGot(t0.id), src = tileSrc(t0.id) || g[g.length - 1].img;
+      return `<button type="button" class="cs ct" data-tale="${t0.id}" aria-label="${t.title} ${g.length} / ${castSet(t0.id).length}"><img src="${src}" alt="" draggable="false" decoding="async"><b>${g.length}</b></button>`; };
+    const body = tales.length ? `<div class="cast-grid list"><i class="pz-glow" aria-hidden="true"></i>${tales.map(cell).join('')}</div>`
+      : `<p class="cast-none">${L('동화를 끝까지 보면 친구 스티커가 생겨요', 'Finish a tale to get a friend sticker')}</p>`;
+    $('#pzBoard').innerHTML = `<div class="pz-win">${body}</div><div class="pz-head"><h2>${L('친구 스티커', 'Friend Stickers')}</h2><span class="pz-n">${n}</span></div>`;
+  }
   function drawCast() {
     const t0 = TALES.find(x => x.id === castView), set = castSet(castView);
     if (!t0 || !set.length) { castView = ''; return false; }
@@ -1280,6 +1291,17 @@
       return `<div class="pzp${got ? ' got' : ''}${q.obj ? ' obj' : ''}" data-k="${t0.id}-${row ? 'bot' : 'top'}" style="${sty}">${art}${hit}</div>`;
     }).join('');
   }
+  /* 스티커북 탭 맨 위 갈래 단추: 퍼즐 | 스티커 */
+  function paintSeg() {
+    $('#stkSeg').querySelectorAll('button').forEach(b => { const on = b.dataset.mode === stMode; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); b.textContent = b.dataset.mode === 'cast' ? L('스티커', 'Stickers') : L('퍼즐', 'Puzzle'); });
+    $('#view-stickers').classList.toggle('cast-on', stMode === 'cast');
+  }
+  $('#stkSeg').addEventListener('click', e => {
+    const b = e.target.closest('button[data-mode]'); if (!b || b.dataset.mode === stMode) return;
+    stMode = b.dataset.mode; castView = ''; paper('tap');
+    try { localStorage.setItem(MODE_KEY, stMode); } catch (err) { /* 무시 */ }
+    drawStickers(); say(stMode === 'cast' ? L('친구 스티커', 'Friend stickers') : L('퍼즐', 'Puzzle'));
+  });
   function drawStickers() {
     const root = $('#pzRow'); if (!root) return;
     const rec = doneRec(), bs = BOARDS.map(b => ({ b, list: pieces(b) })).filter(x => x.list.length);
@@ -1295,6 +1317,9 @@
     const seeing = curTab === 'stickers', fresh = seeing ? pzNew() : [];
     if (curTab === 'stickers' && pendingCel.length) { curBoard = pendingCel[0]; }
     else if (fresh.length) { const fb = bs.find(x => x.list.some(t => fresh.some(f => f.startsWith(t.id + '-')))); if (fb) { curBoard = fb.b.k; castView = ''; } }
+    if ((curTab === 'stickers' && pendingCel.length) || fresh.length) stMode = 'puzzle';     // 새 조각·판 완성은 퍼즐에서 보여 준다
+    paintSeg();
+    root.hidden = stMode === 'cast';
     if (!bs.some(x => x.b.k === curBoard)) { const withSt = bs.find(x => x.list.some(t => has(t.id))); curBoard = (withSt || bs[0]).b.k; }
     root.innerHTML = bs.map(({ b, list }) => {
       const gotN = cnt(list), all = list.length * 2, done = !!rec[b.k], on = b.k === curBoard, last = [...list].reverse().find(t => has(t.id));
@@ -1303,19 +1328,21 @@
         <span class="pz-hole${art ? '' : ' empty'}">${art}${done ? `<i class="pz-done">${starSvg}</i>` : ''}</span>
         <span class="pz-cnt">${gotN} / ${all}</span><span class="pz-nm">${L(b.ko, b.en)}</span></button>`;
     }).join('');
+    if (stMode === 'cast') {
+      const castTales = TALES.filter(t => castGot(t.id).length);
+      if (pendingCel.length && curTab === 'stickers') castView = '';
+      if (!(castView && drawCast())) drawCastList(castTales);
+      drawPlate(); if (seeing) { pzSeenSave(); paintTabBadge(); }
+      if (curTab === 'stickers' && pendingCel.length && !celebrating) { const k2 = pendingCel.shift(); requestAnimationFrame(() => celebrate(k2)); }
+      return;
+    }
+    castView = '';
     const cur = bs.find(x => x.b.k === curBoard), list = cur.list, gotN = cnt(list), all = list.length * 2, complete = gotN === all;
-    if (pendingCel.length && curTab === 'stickers') castView = '';
-    if (castView && drawCast()) { drawPlate(); if (seeing) { pzSeenSave(); paintTabBadge(); } return; }
     const arrow = (act, d) => `<button type="button" class="pz-arr" data-act="${act}" aria-label="${act === 'pan-l' ? L('왼쪽으로', 'Left') : L('오른쪽으로', 'Right')}">${arrowIc(d)}</button>`;
     /* 빈 조각을 먼저, 받은 조각을 나중에 그린다. 그 사이 층(.pz-hits)에 작은 받은 조각의 넓힌 톡 영역(72)을 둔다 → 빈 조각보다 위, 받은 조각보다 아래 */
     const parts = list.flatMap((t, i) => [[i, 0, has2(t.id)], [i, 1, has(t.id)]]);
     const html = want => parts.filter(p => p[2] === want).map(p => pieceHTML(list, p[0], p[1])).join('');
-    /* 동화별 캐릭터 스티커북 들어가는 문: 친구 스티커를 하나라도 받은 동화 칸 아래에 둥근 스티커(마지막 받은 친구 + 받은 수) */
-    const castGo = list.map((t, i) => {
-      const got = castSet(t.id).filter(c => c.img && hasCast(t.id, c.k)); if (!got.length) return '';
-      return `<button type="button" class="cast-go" data-cast="${t.id}" style="left:calc(var(--cell)*${i + .5})" aria-label="${shown(t).title} ${L('친구 스티커', 'friend stickers')} ${got.length}"><img src="${got[got.length - 1].img}" alt="" draggable="false" decoding="async"><b>${got.length}</b></button>`;
-    }).join('');
-    $('#pzBoard').innerHTML = PZ_INSET + `<div class="pz-win"><div class="pz-pan${complete ? ' complete' : ''}" style="--n:${list.length}"><div class="pz-track"><i class="pz-glow" aria-hidden="true"></i>${html(false)}<div class="pz-hits" aria-hidden="true"></div>${html(true)}${castGo}</div></div></div>
+    $('#pzBoard').innerHTML = PZ_INSET + `<div class="pz-win"><div class="pz-pan${complete ? ' complete' : ''}" style="--n:${list.length}"><div class="pz-track"><i class="pz-glow" aria-hidden="true"></i>${html(false)}<div class="pz-hits" aria-hidden="true"></div>${html(true)}</div></div></div>
       <div class="pz-head"><h2>${L(cur.b.ko, cur.b.en)}</h2><span class="pz-n">${gotN} / ${all}</span>${rec[cur.b.k] ? `<i class="pz-done">${starSvg}</i>` : ''}<span class="pz-arrs">${arrow('pan-l', 'M30 8L14 24l16 16')}${arrow('pan-r', 'M18 8l16 16-16 16')}</span></div>`;
     const pan = $('#pzBoard .pz-pan'), k = cur.b.k;
     pan.addEventListener('scroll', () => { pzScroll[k] = pan.scrollLeft; pzArrows(); }, { passive: true });
@@ -1369,7 +1396,9 @@
     const bd = BOARDS.find(x => x.k === curBoard); if (bd) say(L(bd.ko, bd.en));
   });
   $('#pzBoard').addEventListener('click', e => {
-    if (e.target.closest('[data-act="cast-back"]')) { paper('tap'); castView = ''; drawStickers(); const bd = BOARDS.find(x => x.k === curBoard); if (bd) say(L(bd.ko, bd.en)); return; }
+    if (e.target.closest('[data-act="cast-back"]')) { paper('tap'); castView = ''; drawStickers(); say(L('친구 스티커', 'Friend stickers')); return; }
+    const ct = e.target.closest('.ct');
+    if (ct) { const t = TALES.find(x => x.id === ct.dataset.tale); paper('tap'); castView = ct.dataset.tale; drawStickers(); if (t) say(shown(t).title); return; }
     const cs = e.target.closest('.cs');
     if (cs) {                                                  // 캐릭터 세트 칸: 받은 칸 = 이름 읽기 + 들썩, 빈 칸 = 안내
       if (cs.classList.contains('off')) { paper('down'); say(L('아직 비어 있어요', 'Still empty')); return; }
@@ -1377,15 +1406,12 @@
       if (motion()) cs.animate([{ transform: 'rotate(0) scale(1)' }, { transform: 'rotate(-9deg) scale(1.12)', offset: .25 }, { transform: 'rotate(7deg) scale(1.08)', offset: .55 }, { transform: 'rotate(-3deg) scale(1.03)', offset: .8 }, { transform: 'rotate(0) scale(1)' }], { duration: 650, easing: 'ease-out' });
       return;
     }
-    const go = e.target.closest('.cast-go');
-    if (go) { const t = TALES.find(x => x.id === go.dataset.cast); paper('tap'); castView = go.dataset.cast; drawStickers(); if (t) say(shown(t).title); return; }
     const ar = e.target.closest('.pz-arr');
     if (ar) { if (ar.disabled) return; const pan = $('#pzBoard .pz-pan'); paper('tap'); if (pan) pan.scrollBy({ left: (ar.dataset.act === 'pan-l' ? -1 : 1) * pan.clientWidth * .7, behavior: motion() ? 'smooth' : 'auto' }); return; }
     const s = e.target.closest('.pz-s'); if (!s) return;
     if (s.classList.contains('off')) { paper('down'); say(L('아직 비어 있어요', 'Still empty')); return; }
     paper('tap');
     const t = TALES.find(x => x.id === s.dataset.id);
-    if (t && castSet(t.id).some(c => c.img && hasCast(t.id, c.k))) { castView = t.id; drawStickers(); say(shown(t).title); return; }     // 동화 스티커 톡 = 그 동화의 캐릭터 세트 보기
     if (t) say(shown(t).title);     // 제목 읽기 + 살짝 들림 (동화로 들어가지는 않는다)
     const pp = s.closest('.pzp') || $(`#pzBoard .pzp[data-k="${s.dataset.id}-${s.dataset.part}"]`);
     if (pp && motion()) pp.animate([{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-8px) scale(1.04)', offset: .35 }, { transform: 'translateY(0) scale(1)' }], { duration: 520, easing: 'ease-out' });

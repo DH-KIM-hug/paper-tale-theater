@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=moon1">
 <meta name="copyright" content="Copyright © 2026 DH-KIM-hug. All rights reserved. Not open source.">
 <title>톡톡 동화극장</title>
-<link rel="stylesheet" href="home.css?v=20261028castgo1">
+<link rel="stylesheet" href="home.css?v=20261028stkseg3">
 </head>
 <body>
 <!-- 공용 SVG: 종이 조각 그림자 필터 + 태그 아이콘 (글을 못 읽는 아이가 그림으로 알아본다) -->
@@ -152,8 +152,9 @@
         <button type="button" class="ticket big" id="nightGo">동화 탭으로</button>
       </div>
     </section>
-    <!-- 스티커북 탭 (S3): 퍼즐판 5개 + 종이별 접시 -->
+    <!-- 스티커북 탭 (S3): 갈래(퍼즐 | 스티커) · 퍼즐판 5개 + 종이별 접시 · 동화별 친구 스티커북 -->
     <section class="view stk" id="view-stickers" data-view="stickers" role="tabpanel" aria-label="스티커북" hidden>
+      <div class="stk-seg" id="stkSeg" role="tablist" aria-label="스티커북 갈래"><button type="button" role="tab" data-mode="puzzle">퍼즐</button><button type="button" role="tab" data-mode="cast">스티커</button></div>
       <div class="pz-row" id="pzRow" role="tablist" aria-label="퍼즐판"></div>
       <div class="pz-main" id="pzMain">
         <div class="pz-board" id="pzBoard"></div>
@@ -226,6 +227,6 @@
 <script src="assets/ui/ui.js?v=20261028ui3"></script>
 <script src="home_narration_el.js?v=20261028u"></script>
 <script src="review.js?v=20261024lb2"></script>
-<script src="home.js?v=20261028castgo1-stage7-english1"></script>
+<script src="home.js?v=20261028stkseg3"></script>
 </body>
 </html>

@@ -742,6 +742,11 @@ body.app .n-grid .card { height: 100%; }
 body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-star: 40px; --pz-open: 96px; --pz-pad: 16px; --pz-chrome: 424px; }
 .view.stk { container-type: inline-size; display: flex; flex-direction: column; gap: var(--s-4); overflow-y: auto; overflow-x: hidden; scrollbar-width: none; padding-bottom: max(20px, env(safe-area-inset-bottom)); overscroll-behavior: contain; }
 .pz-row[hidden], .pz-main[hidden] { display: none; }
+/* 갈래 단추 (퍼즐 | 스티커): 크림 바탕에 올린 두 칸, 고른 칸 = 감빛 조각 */
+.stk-seg { flex: none; display: flex; gap: var(--s-2); width: min(100%, 420px); padding: 6px; border-radius: 40px; background: var(--paper-dn); box-shadow: var(--cut); }
+.stk-seg button { flex: 1 1 0; min-height: 64px; border: 0; border-radius: 32px; background: none; color: var(--ink-2); font: inherit; font-size: var(--fs-title-s, 22px); font-weight: 800; letter-spacing: .08em; cursor: pointer; touch-action: manipulation; transition: background-color var(--t-1) var(--ease), color var(--t-1) var(--ease); }
+.stk-seg button.on { background: var(--act); color: var(--ink-on-act, #fff); box-shadow: var(--lift-hi), var(--sh-1); }
+.stk-seg button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 /* 판 선택 (§7-4): 올린 크림 원 88(그림 꽉 참) + 숫자 24 + 이름 16. 선택 = 감빛 테 4 + --sh-2, 나머지 = --sh-1 (회색 처리 없음) */
 .pz-row { flex: none; display: flex; gap: var(--s-5); overflow-x: auto; padding: 8px 6px 2px; scrollbar-width: none; }
 .pz-b { position: relative; flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 2px 4px; border: 0; background: none; cursor: pointer; color: var(--ink-2); touch-action: manipulation; }
@@ -780,12 +785,8 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 .pz-hit { position: absolute; display: block; pointer-events: auto; cursor: pointer; }
 .pz-glow { position: absolute; inset: -26px; z-index: 0; border-radius: 40px; background: #FBE9C8; filter: blur(26px); opacity: 0; pointer-events: none; }
 .pz-defs { position: absolute; width: 0; height: 0; }
-/* 동화별 캐릭터 스티커북 문: 동화 칸 아래 가운데에 올린 크림 원 + 구리 숫자 조각 */
-.cast-go { --cg: clamp(56px, calc(var(--cell) * .32), 96px); position: absolute; z-index: 3; bottom: calc(var(--cg) * .12); width: var(--cg); height: var(--cg); margin-left: calc(var(--cg) / -2); padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; background: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); transition: transform var(--t-1) var(--ease); }
-.cast-go img { width: 80%; height: 80%; object-fit: contain; display: block; pointer-events: none; }
-.cast-go b { position: absolute; right: -6px; top: -6px; min-width: 28px; height: 28px; padding: 0 6px; border-radius: 14px; display: grid; place-items: center; font-size: 15px; font-weight: 800; color: #fff; background: var(--reward); box-shadow: var(--sh-1); }
-.cast-go:active { transform: scale(.94); }
-.cast-go:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+/* 친구 스티커 판의 동화 칸: 받은 수는 구리 숫자 조각 */
+.cs.ct b { position: absolute; right: 2%; top: 2%; min-width: 30px; height: 30px; padding: 0 7px; border-radius: 15px; display: grid; place-items: center; font-size: 16px; font-weight: 800; color: #fff; background: var(--reward); box-shadow: var(--sh-1); }
 
 /* 판 이름(title-l, 오린 글자) · 조각 수 · 화살표 80(올린 크림 원) */
 .pz-head { grid-area: head; position: relative; display: flex; align-items: center; gap: var(--s-4); min-width: 0; margin: 0; }
@@ -826,6 +827,14 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 .cs img.sil { filter: brightness(0); opacity: .12; width: 70%; height: 70%; }
 .cs.plan { background: var(--paper-dn); box-shadow: none; opacity: .5; cursor: default; }
 .cs:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+/* 받은 친구 스티커 = 그림 모양대로 흰 칼선 테두리가 둘린 스티커(§7-1 스티커 예외). 원판 없이 그림만, 빈 칸은 눌린 실루엣 */
+.cast-grid .cs:not(.ct):not(.off):not(.plan) { background: none; box-shadow: none; }
+.cast-grid .cs:not(.ct):not(.off) img { width: 86%; height: 86%; filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 3px 4px rgba(46, 36, 28, .35)); }
+.cast-grid .cs.off { background: none; box-shadow: none; }
+.cast-grid .cs.off img.sil { width: 80%; height: 80%; opacity: .14; }
+.cs.ct img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.cast-grid.list { grid-auto-flow: row; grid-template-rows: none; grid-auto-rows: var(--cs); grid-template-columns: repeat(auto-fit, var(--cs)); justify-content: center; align-content: start; overflow-x: hidden; overflow-y: auto; }
+.cast-none { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; padding: var(--s-5); text-align: center; font-size: var(--fs-title-s, 22px); font-weight: 700; color: var(--ink-2); }
 .cast-dots { display: none; }
 
 /* P 아이패드 세로: 판 선택 → 판 960×540 → 이름·화살표 줄 → 접시 줄(가운데) */
@@ -861,6 +870,10 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
   .pz-plate.full .plate-n { display: none; }
   .cast-grid { --cs: calc((var(--pw) * 9 / 16 - 2 * var(--s-3) - var(--s-2)) / 2); gap: var(--s-2); padding: var(--s-3); justify-content: start; }
   .view.stk > .empty { grid-column: 1 / -1; }
+  .view.stk { grid-template-rows: auto minmax(0, 1fr); }
+  .stk-seg { grid-column: 1 / -1; width: 320px; padding: 4px; }
+  .stk-seg button { min-height: 48px; font-size: 18px; }
+  .view.stk.cast-on .pz-main { grid-column: 1 / -1; }
 }
 
 /* ═════════ 종이 풍경 스플래시 ═════════ */
