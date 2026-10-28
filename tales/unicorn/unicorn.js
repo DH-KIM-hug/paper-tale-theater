@@ -1,5 +1,5 @@
 /* 유니콘을 찾아서 — 창작 동화. 기획: tales/unicorn/PLAN.md (2026-10-22), 그림 작업표: tools/app/gen/jobs_unicorn.json
-   조작 4번: 1장 꽃 선물 고르기(7색 중 하나, 고르기 1회 — 2026-10-22 블록 대신) · 2장 구름 톡 · 4장 가시 세기(톡 1회 → 목소리만 하나·둘·셋) · 10장 유니콘 인사 톡. 연타 없음, 줄거리 선택 없음. 교훈 대사 없음(끝 글자만).
+   조작 4번: 1장 꽃 선물 고르기(7색 중 하나, 고르기 1회 — 2026-10-22 블록 대신) · 2장 구름 톡 · 4장 가시 세기(가시마다 톡 → 직접 쏙 뽑기, 목소리만 하나·둘·셋 — 2026-10-28) · 10장 유니콘 인사 톡. 연타 없음, 줄거리 선택 없음. 교훈 대사 없음(끝 글자만).
    시선(PLAN 장면표): 1 아이→구름(앞모습 위 보기) · 2 양→아이 · 3 아이→양 · 4 사슴→아이 · 5 아이→사슴 뿔 · 6 말→간식 · 7 말→아이 · 8 아이→땅(왼쪽으로 걸음) · 9 아이 뒤돌아봄(유니콘 뒷모습) · 10 유니콘→아이(정면).
    그림이 보는 쪽(NAT): 양·사슴·말·유니콘(서기)은 왼쪽, 아이 걷기·슬픔·지침은 오른쪽, 아이 서기·안기는 앞모습, 아이 돌아봄은 뒷모습(고개를 오른쪽 어깨 너머로), 유니콘 뒷모습은 오른쪽 위로 걸어가는 뒷모습.
    그래서 아이는 왼쪽, 동물은 오른쪽에 두고 서로 마주 본다. 도망·이동하는 인물은 가는 쪽을 본다(뒤집기).
@@ -314,7 +314,7 @@
     const scene = (key, lx, ps) => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); setView(lx, ps); if (SCENE_AMB[key]) amb(SCENE_AMB[key], key === 'uc_bg2_waterfall' ? .22 : .28); };
     const follow = (x, ms = 800) => (P ? T.camTo(500 + (x - VX.lx) * VX.ps, 280, 1, ms) : Promise.resolve());
     const H = n => (P ? n / VX.ps : n);               // 화면 크기를 지키는 누르는 자리
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding', 'birds_chirp_1', 'crickets_night_1', 'crickets_night_2', 'waterfall', 'question', 'ding_glock', 'boing', 'stomach_growl', 'horse_neigh_1', 'drumroll_crash', 'shimmer', 'party_horn']);
+    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding', 'birds_chirp_1', 'crickets_night_1', 'crickets_night_2', 'waterfall', 'question', 'ding_glock', 'boing', 'stomach_growl', 'horse_neigh_1', 'drumroll_crash', 'shimmer', 'party_horn', 'pull_pop', 'chime_up']);
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
@@ -508,10 +508,11 @@
         for (let i = 0; i < 3; i++) {   /* 쏙, 쏙, 쏙 (놀이판 가시 빼기, 숫자 목소리 없이) */
           deer.wiggle(3, 300);
           const t = thorns[i], tx = t.x, ty = t.y;
-          sfx('pop', .5);
+          sfx('pull_pop', .64, () => sfx('pop', .5));   // 읽기 볼륨 = 놀이 ×0.8
           await T.anim(t.pos, [{ transform: `translate(${tx}px,${ty}px)`, opacity: 1 }, { transform: `translate(${tx - 30}px,${ty - 80}px)`, opacity: 0 }], 650);
           hide(t); await sleep(400);
         }
+        sfx('chime_up', .4);
       },
       fg(name, a1) { if (a1 === 'wiggle' && FG[name]) return wiggleEl(T, FG[name].pos); },
       cut(n) { return T.cutImage([{ src: src(n), hold: n.endsWith('hug') ? 4200 : 3600 }]); },
@@ -642,7 +643,7 @@
     await l11;
     await sleep(SCENE_END);
 
-    /* ===== 4. 별빛 숲 (배움 놀이 2: 세기 — 톡 1회, 목소리만) — 낮게, 둥치 사이로 ===== */
+    /* ===== 4. 별빛 숲 (배움 놀이 2: 세기 — 가시마다 톡 3회, 목소리만) — 낮게, 둥치 사이로 ===== */
     const forest = (kidLook, kidX) => {
       scene('uc_bg2_night_forest', 590, .65);
       put(T, uni, X(30, 260), FL - 10, { look: 'peek_tree', to: 'right' });   // 둥치 뒤에서 얼굴 반쪽·눈 하나
@@ -659,20 +660,28 @@
     await say(S.L13);
     deer.hop(4, 500);
     thorns.forEach((t, i) => { put(T, t, deer.x + THORN[i][0], FL + THORN[i][1], { look: 'a' }); fadeIn(t, 500); });
-    hitBox(T, thorns[0], H(P ? 100 : 110), H(P ? 90 : 100));
-    bob(thorns[0].pos);
-    await T.ask(S.L14, () => T.tap(thorns[0].hit, { prompt: S.L14 }));
-    unhit(thorns[0]);
-    await T.cutImage([{ src: src('uc_cut2_thorns'), hold: 3600 }]);
-    for (let i = 0; i < 3; i++) {                          // 하나 · 둘 · 셋 (목소리만, 화면 숫자 글자 없음)
+    /* 가시 빼기(2026-10-28 사용자 지시: 아이가 가시마다 직접 톡 → 그 가시가 쏙 뽑힌다). 하나 · 둘 · 셋 은 목소리만, 화면 숫자 글자 없음.
+       가시끼리 가까워 누르는 상자가 겹치므로 지금 차례 가시만 누름을 받는다 */
+    for (let i = 0; i < 3; i++) {
+      const t = thorns[i];
+      thorns.forEach((o, j) => { o.pos.style.pointerEvents = j === i ? '' : 'none'; });
+      hitBox(T, t, H(P ? 100 : 110), H(P ? 90 : 100));
+      const b = t.pos.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 900, iterations: Infinity });
+      if (i === 0) await T.ask(S.L14, () => T.tap(t.hit, { prompt: S.L14 }));
+      else await T.tap(t.hit, { prompt: S.L14 });
+      b.cancel(); unhit(t);
       deer.wiggle(3, 300);
-      const t = thorns[i], tx = t.x, ty = t.y;
-      sfx('pop', .5);
-      const v = voWait('n' + (i + 1));
-      await T.anim(t.pos, [{ transform: `translate(${tx}px,${ty}px)`, opacity: 1 }, { transform: `translate(${tx - 30}px,${ty - 80}px)`, opacity: 0 }], 650);
-      hide(t); await v; await sleep(500);
+      sfx('pull_pop', .8, () => sfx('pop', .5));
+      const v = voWait('n' + (i + 1)), tx = t.x, ty = t.y;
+      await T.anim(t.pos, [{ transform: `translate(${tx}px,${ty}px)`, opacity: 1, offset: 0 },
+        { transform: `translate(${tx + 6}px,${ty - 4}px)`, opacity: 1, offset: .25 },     // 살짝 당겨지고
+        { transform: `translate(${tx - 30}px,${ty - 80}px)`, opacity: 0, offset: 1 }], 700);   // 쏙 빠진다
+      hide(t); await v;
     }
-    sparkleSfx(T);
+    thorns.forEach(o => { o.pos.style.pointerEvents = ''; });
+    sfx('chime_up', .5, () => sparkleSfx(T));
+    await sleep(400);
+    await T.cutImage([{ src: src('uc_cut2_thorns'), hold: 3600 }]);   // 컷: 가시를 다 뺀 모습(빠진 가시가 풀밭에 놓여 있음)
     await say(S.L15);
     deer.look('relief', 'left'); deer.hop(10, 400);
     await say(S.L16);
