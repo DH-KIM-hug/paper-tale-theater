@@ -251,7 +251,7 @@
       return { go, stop };
     })();
     const { sleep, camSnap, tr } = T;
-    const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ SAIL = 8000, COUNT_A = 1400, COUNT_B = 1300, CLIMB = 6000;   // §2-7 속도 상수
+    const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ SAIL = 5000 /* 2026-10-29 8000→5000: 배가 오가는 동안 대사 없이 16초를 기다렸다 */, COUNT_A = 1400, COUNT_B = 1300, CLIMB = 6000;   // §2-7 속도 상수
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(수 세기 n1~n20)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
@@ -590,7 +590,7 @@
     ], { prompt: '셋 중에서 제일 작은 것은 뭘까요? 눌러 봐요.' }));
     reward(peaC); T.pop(peaC.x, peaC.y - 70, tr('반짝!'));
     await say('맞아요, 완두콩이 제일 작아요!');
-    await sleep(1400);
+    await sleep(500);
     cue('question', .6);
     await T.ask('그럼 제일 큰 것은 뭘까요? 눌러 봐요.', () => T.choose([
       { el: matC.hit, ok: true },
@@ -679,7 +679,7 @@
       { el: zTop, ok: false, onWrong: async () => { await wiggleEl(T, zTop); await say('거긴 탑의 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.'); } },
     ], { prompt: '완두콩은 어디 있을까요? 탑의 위? 아래?' }));
     glow(peaB, 1500); peaB.hop(10, 360); cue('ding_glock', .8) || sparkleSfx(T); T.pop(TX, 420, tr('반짝!'));
-    await say('맞아요! 완두콩은 맨 아래에 있어요.'); await sleep(1200);
+    await say('맞아요! 완두콩은 맨 아래에 있어요.'); await sleep(400);
     cue('question', .6);
     await T.ask('공주님은 어디서 잘까요? 위? 아래?', () => T.choose([
       { el: zTop, ok: true },
@@ -723,9 +723,9 @@
       })();
       await say('뭔가 딱딱한 게 있는 것 같아…'); await t;
     }
-    await sleep(2500);
+    await sleep(600);   /* 2026-10-29 쉼 줄임: 2500→600, 뒤척 1600→900 */
     await rigTo(T, RIG_UP, 1600);
-    pea.look('lie_b'); await sleep(1600); pea.look('lie_a'); await sleep(1600);
+    pea.look('lie_b'); await sleep(900); pea.look('lie_a'); await sleep(900);
     await sleep(SCENE_END);
 
     /* ===== 8. 아침 인사 (자동) ===== */
@@ -749,7 +749,7 @@
     await queen.move(pea.x - 85, FL, 700, 'ease-out');
     T.pop(queen.x - 95, FL - 240, tr('꼬옥')); queen.hop(10, 360); pea.hop(10, 360); topStars(3);
     prince.look('joy'); prince.hop(12, 360);
-    await sleep(2500);
+    await sleep(1200);   /* 2026-10-29 2500→1200 */
 
     /* ===== 9. 진짜 공주 (톡 3 — 유리 상자, 마지막 인사) ===== */
     await T.sceneCard(tr('진짜 공주'), () => {
