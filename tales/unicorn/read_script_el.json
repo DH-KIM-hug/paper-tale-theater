@@ -246,7 +246,8 @@
       "fx:hop",
       "cut:uc_cut2_sheep_jump",
       "sheep:look:jump:left",
-      "sheep:jump:kid+150"
+      "sheep:jump:kid+150",
+      "snd:boing:.6:250"
      ],
      "after": [
       "pop:sheep,폴짝!"
@@ -361,7 +362,8 @@
      "before": [
       "sheep:turn:left",
       "sheep:hop",
-      "fx:sparkle"
+      "fx:sparkle",
+      "snd:ding_glock:.7:400"
      ]
     },
     {
@@ -710,7 +712,8 @@
      ],
      "before": [
       "horse:hop",
-      "pop:horse,꼬르륵…"
+      "pop:horse,꼬르륵…",
+      "snd:stomach_growl:.6"
      ]
     },
     {
@@ -803,7 +806,8 @@
      "before": [
       "horse:look:happy:left",
       "pop:horse,냠냠",
-      "horse:hop:3"
+      "horse:hop:3",
+      "snd:horse_neigh_1:.5:600"
      ],
      "after": [
       "basket:hide"
@@ -1045,6 +1049,7 @@
       "kid:hop"
      ],
      "after": [
+      "snd:drumroll_crash:.6",
       "uni:look:back:right",
       "uni:front",
       "uni:walk:830,FL-30,1200",
@@ -1162,7 +1167,8 @@
      "before": [
       "uni:glow",
       "fx:sparkle",
-      "pop:uni,반짝!"
+      "pop:uni,반짝!",
+      "snd:shimmer:.7:500"
      ]
     },
     {
@@ -1183,7 +1189,8 @@
       "kid:walk:585,700",
       "confetti",
       "kid:hop",
-      "uni:hop"
+      "uni:hop",
+      "snd:party_horn:.9:500"
      ]
     }
    ]

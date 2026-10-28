@@ -309,7 +309,7 @@
     };
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
-    const cue = (name, v) => { try { return T.reading() ? false : AudioFX.sfx(name, v); } catch (e) { return false; } };
+    const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { uc_bg2_hill: 'birds_chirp_1', uc_bg2_night_forest: 'crickets_night_1', uc_bg2_waterfall: 'waterfall', uc_bg2_moon_night: 'crickets_night_2' };
     const scene = (key, lx, ps) => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); setView(lx, ps); if (SCENE_AMB[key]) amb(SCENE_AMB[key], key === 'uc_bg2_waterfall' ? .22 : .28); };
     const follow = (x, ms = 800) => (P ? T.camTo(500 + (x - VX.lx) * VX.ps, 280, 1, ms) : Promise.resolve());
@@ -539,7 +539,10 @@
       },
       confetti() { T.confetti(); sfx('tada') || sparkleSfx(T); },
     };
-    if (T.reading()) return T.readPlay(R);
+    /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초> */
+    R.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } };
+    R.amb = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } };
+    if (T.reading()) return T.readPlay(R).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 설렘 (배움 놀이: 꽃 선물 색 고르기 — 첫 조작) — 멀리서 넓게 ===== */
     const ANS = Object.keys(FLOWER)[Math.floor(Math.random() * 7)];   // 오늘 유니콘에게 줄 꽃 색(7색 중 하나)
