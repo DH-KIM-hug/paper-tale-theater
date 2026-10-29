@@ -86,7 +86,7 @@
     wc_cat_sit: 'left', wc_cat_nose: 'left', wc_cat_reach: 'left', wc_cat_waddle: 'right', wc_cat_ghost: 'right' };
   ['rabbit', 'bear', 'fox'].forEach(w => { NAT[`wc_${w}_stand`] = 'right'; NAT[`wc_${w}_reach`] = 'left'; NAT[`wc_${w}_happy`] = 'front'; NAT[`wc_${w}_ghost`] = 'right'; });
 
-  const COL = { r: '#E04B3C', y: '#F2C94E', b: '#3A6FD8', g: '#6FB94A', orange: '#F28C28', green: '#6FB94A', purple: '#7A5AA6', brown: '#6B4A32', black: '#1A1410', water: '#D9E4EE' };
+  const COL = { r: '#E04B3C', y: '#F2C94E', b: '#3A6FD8', blue: '#3A6FD8', g: '#6FB94A', orange: '#F28C28', green: '#6FB94A', purple: '#7A5AA6', brown: '#6B4A32', black: '#1A1410', water: '#D9E4EE' };
   const KO = { r: '빨강', y: '노랑', b: '파랑', g: '초록' };
   /* 결과표(PLAN §4-2): 들어간 색 집합 → 결과 */
   const RES = {
@@ -100,9 +100,11 @@
   function resultOf(kinds) {
     const ks = [...kinds];
     if (ks.length === 1) { const k = ks[0]; return { res: { r: 'strawberry', y: 'duck', b: 'fish', g: 'frog' }[k], color: k, single: k }; }
-    const m = MIX_RES[MIXKEY[ks.join('')]]; return { res: m[0], color: m[1], pair: PAIRS.find(p => p.every(x => kinds.has(x))) };
+    const key = MIXKEY[ks.join('')], pair = PAIRS.find(p => p.every(x => kinds.has(x)));
+    if (key === 'gb' && Math.random() < .5) return { res: 'fish', color: 'blue', pair };   // 파랑+초록은 파랑(물고기)이나 초록(개구리) 무작위(2026-10-29 사용자)
+    const m = MIX_RES[key]; return { res: m[0], color: m[1], pair };
   }
-  const COLOR_KO = { orange: '주황', green: '초록', purple: '보라', brown: '갈색' };
+  const COLOR_KO = { orange: '주황', green: '초록', purple: '보라', brown: '갈색', blue: '파란' };
   const comboFor = res => ({ strawberry: [['r']], duck: [['y']], fish: [['b']], frog: [['g'], ['g', 'y'], ['g', 'b'], ['y', 'b']], pumpkin: [['r', 'y']], bat: [['r', 'b']], choco: [['r', 'g']] }[res]);
 
   /* ---------- 대사 (PLAN §5·§7 문장 그대로) ---------- */
@@ -525,7 +527,7 @@
     const hasClip = t => { try { return !!((typeof NARRATION_CLIPS_EN !== 'undefined' && NARRATION_CLIPS_EN[t]) || (typeof NARRATION_CLIPS !== 'undefined' && NARRATION_CLIPS[t])); } catch (e) { return false; } };
     const sayResult = async rs => {
       const t = resultLine(rs);
-      T.pop(POT.cx, POT.cy - 70, tr(rs.single ? KO[rs.single] : COLOR_KO[rs.color]), COL[rs.color]);
+      T.pop(POT.cx, POT.cy - 70, tr(rs.single ? KO[rs.single] : rs.color === 'blue' ? KO.b : COLOR_KO[rs.color]), COL[rs.color]);
       if (hasClip(t)) return say(t);
       if (rs.single) return say(`${KO[rs.single]}만 넣었으니… ${KO[rs.single]} 그대로!`);
       await T.say(t, { recordedOnly: true, keep: true }); await sleep(Math.min(3600, 1400 + t.length * 60));

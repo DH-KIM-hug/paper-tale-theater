@@ -76,6 +76,7 @@ Object.assign(NARRATION_CLIPS, {
  "빨강이랑 초록을 섞었더니 갈색이 됐어요!": "audio/el/witch_candy/nar_46171a7ae1.mp3",
  "초록이랑 노랑을 섞었더니 초록색이 됐어요!": "audio/el/witch_candy/nar_4784ad29e5.mp3",
  "초록이랑 파랑을 섞었더니 초록색이 됐어요!": "audio/el/witch_candy/nar_a16e0f3d0d.mp3",
+ "초록이랑 파랑을 섞었더니 파란색이 됐어요!": "audio/el/witch_candy/nar_fd9ba4edef.mp3",
  "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!": "audio/el/witch_candy/nar_5fa700e740.mp3",
  "노랑만 넣었더니 노란 오리 사탕이 됐어요!": "audio/el/witch_candy/nar_cc0966697a.mp3",
  "파랑만 넣었더니 파란 물고기 사탕이 됐어요!": "audio/el/witch_candy/nar_ab2e8d85e8.mp3",

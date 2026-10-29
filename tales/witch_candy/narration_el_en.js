@@ -304,6 +304,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Green and blue mixed together made green!",
   "c": "audio/el/witch_candy/en/nar_b90996aa47.mp3"
  },
+ "초록이랑 파랑을 섞었더니 파란색이 됐어요!": {
+  "t": "Green and blue mixed together made blue!",
+  "c": "audio/el/witch_candy/en/nar_239e3fd580.mp3"
+ },
  "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!": {
   "t": "Only red went in, so it became a red strawberry candy!",
   "c": "audio/el/witch_candy/en/nar_a671c7f4b2.mp3"

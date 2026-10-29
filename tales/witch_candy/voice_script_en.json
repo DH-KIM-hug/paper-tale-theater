@@ -846,6 +846,17 @@
    ]
   },
   {
+   "text": "초록이랑 파랑을 섞었더니 파란색이 됐어요!",
+   "en": "Green and blue mixed together made blue!",
+   "segs": [
+    [
+     "nar",
+     "Green and blue mixed together made blue!",
+     "toneup"
+    ]
+   ]
+  },
+  {
    "text": "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!",
    "en": "Only red went in, so it became a red strawberry candy!",
    "segs": [
