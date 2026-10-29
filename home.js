@@ -59,7 +59,7 @@
   const valid = (row, list) => (Array.isArray(list) ? list : []).filter(k => TAGS[row].some(t => t.key === k));
   const sel = { origin: new Set(valid('origin', saved.origin)), skill: new Set(valid('skill', saved.skill)) };
   /* 웹도 앱과 같은 화면(탭 3개, 동화 탭은 큰 동화 하나 + 작은 목록, 첫 톡 = 제목 듣기, 두 번째 톡 = 열기).
-     storeMode = 앱 스토어 모드(스플래시·잠금·결제). 화면 배치와는 별개다. 옛 선반(?layout=shelf)은 탭을 도입하며 없앴다. */
+     storeMode = 앱 스토어 모드(잠금·결제). 화면 배치와는 별개다. 옛 선반(?layout=shelf)은 탭을 도입하며 없앴다. */
   const storeMode = typeof Entitlements !== 'undefined' && Entitlements.appMode();
   document.body.classList.add('app');
   if (storeMode) document.body.classList.add('store');
@@ -1560,7 +1560,7 @@
   paintTabBadge();
   Entitlements.onChange(() => { paintTabBadge(); requestRender(); });
 
-  /* 앱 시작: 실제 종이 풍경으로 만든 Three.js 스플래시. 웹은 ?splash=1 로 확인. */
+  /* 앱·웹 첫 접속: 세션당 한 번 스플래시. ?splash=1 은 강제 재생. */
   function splash(done) {
     const sp = $('#splash');
     let finished = false, pending;
@@ -1596,8 +1596,8 @@
   }
 
   function intro() {
-    let first = storeMode;
-    if (storeMode) try { first = !sessionStorage.getItem('paperTheater.splash'); sessionStorage.setItem('paperTheater.splash', '1'); } catch (e) { /* 무시 */ }
+    let first = true;
+    try { first = !sessionStorage.getItem('paperTheater.splash'); sessionStorage.setItem('paperTheater.splash', '1'); } catch (e) { /* 저장소를 못 쓰면 첫 화면을 표시 */ }
     if (new URLSearchParams(location.search).get('splash') === '1') first = true;
     update({ anim: false });
     if (first && location.hash !== '#parent') splash(() => update({ intro: true, delay: .04, step: .035 }));

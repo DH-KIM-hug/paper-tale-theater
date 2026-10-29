@@ -70,14 +70,21 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
       assert.equal(requested, false);
       assert.ok(await page.locator('#hero').isVisible());
     }, { reducedMotion: 'reduce' });
-    await run('ordinary web opens home without splash download', async page => {
+    await run('ordinary web plays once and reload skips splash download', async page => {
       let requested = false;
       page.on('request', r => { if (r.url().includes('/engine/splash/')) requested = true; });
       await page.goto(base + '/');
+      await page.locator('#splash.splash-ready').waitFor({ timeout: 15000 });
+      assert.equal(requested, true);
+      await page.getByRole('button', { name: '시작', exact: true }).click();
+      await page.locator('#splash').waitFor({ state: 'hidden' });
+      requested = false;
+      await page.reload();
       assert.ok(await page.locator('#splash').isHidden());
       assert.equal(requested, false);
     });
     await run('all scenes are warmed before playback', async page => {
+      await page.addInitScript(() => sessionStorage.setItem('paperTheater.splash', '1'));
       await page.goto(base + '/');
       const stats = await page.evaluate(async () => {
         const { createSplashScene } = await import('/engine/splash/scene.js');
@@ -97,6 +104,7 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
       assert.equal(stats.afterTextures, stats.textures, 'A texture uploaded during playback');
     });
     await run('skip during GPU preparation cleans up', async page => {
+      await page.addInitScript(() => sessionStorage.setItem('paperTheater.splash', '1'));
       await page.goto(base + '/');
       const result = await page.evaluate(async () => {
         const { createSplashScene } = await import('/engine/splash/scene.js');
