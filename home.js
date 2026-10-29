@@ -1088,7 +1088,7 @@
   function btGo(mode) {
     paper('tap');
     try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (e) { /* 무시 */ }
-    location.href = 'bedtime.html?mode=' + mode;
+    location.href = 'bedtime.html?mode=' + mode + '&auto=1';   // 누르면 바로 재생(2026-10-30 사용자 요청). 막히면 플레이어가 '듣기 시작' 단추를 보인다
   }
   /* 재생목록 편집 시트(보호자): 순서·추가·빼기, 최대 5편 */
   let btDraft = [];

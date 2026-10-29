@@ -276,6 +276,13 @@
     $('#plan').textContent = L(`${Q.length}편 · `, `${Q.length} tale${Q.length > 1 ? 's' : ''} · `) + Q.map(title).join(' → ');
     state('start');
     setTimeout(() => { if (!B.started) $('#startBtn').classList.add('hint'); }, 5000);
+    /* 홈 카드에서 왔으면(&auto=1) 단추를 기다리지 않고 바로 시작(2026-10-30 사용자 요청). 앱(WKWebView)은 소리 자동 재생이 되지만
+       웹 브라우저는 페이지를 옮기면 누름이 이어지지 않아 막힐 수 있다 — 무음 한 번으로 먼저 시험하고, 막히면 '듣기 시작' 단추를 그대로 둔다 */
+    if (P.get('auto') === '1') {
+      const probe = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=');
+      probe.setAttribute('playsinline', '');
+      Promise.resolve().then(() => probe.play()).then(() => { probe.pause(); begin(); }).catch(() => { /* 단추로 시작 */ });
+    }
   }
   init();
 })();
