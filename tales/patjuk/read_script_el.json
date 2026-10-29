@@ -1172,6 +1172,9 @@
        "[gentle, slow, bedtime storytelling]"
       ]
      ],
+     "before": [
+      "fx:finale"
+     ],
      "after": [
       "cam:wide"
      ]

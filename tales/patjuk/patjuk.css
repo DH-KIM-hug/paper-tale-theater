@@ -43,8 +43,9 @@
 .pj-steam .p2 { animation-delay: .9s; }
 .pj-steam .p3 { animation-delay: 1.7s; }
 @keyframes rise { 0% { transform: translateY(0); opacity: .8; } 100% { transform: translateY(-46px); opacity: 0; } }
-.pj-fire { transform-box: fill-box; transform-origin: center; animation: glowPulse 1.7s ease-in-out infinite alternate; }
-@keyframes glowPulse { from { transform: scale(.94); opacity: .14; } to { transform: scale(1.06); opacity: .24; } }
+.pj-fire { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker .9s ease-in-out infinite alternate; }
+.pj-fire.f2 { animation-delay: .45s; animation-duration: 1.1s; }
+@keyframes flicker { from { transform: scale(.9, .86) rotate(-3deg); opacity: .85; } to { transform: scale(1.04, 1.1) rotate(3deg); opacity: 1; } }
 .pj-snow circle { transform-box: fill-box; animation: snowfall 10s linear infinite; }
 @keyframes snowfall {
   0% { transform: translate(0, -40px); opacity: 0; } 8% { opacity: 1; }

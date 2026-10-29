@@ -1161,6 +1161,9 @@
        "smart"
       ]
      ],
+     "before": [
+      "fx:finale"
+     ],
      "after": [
       "cam:wide"
      ]
