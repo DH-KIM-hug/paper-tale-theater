@@ -19,7 +19,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
   const fallbackTitle = host.querySelector('strong');
   const wordmark = document.createElement('img');
   wordmark.className = 'splash-wordmark';
-  wordmark.src = new URL(v2 ? `../../assets/v3w/sp2_logo_closed_${en ? 'en' : 'ko'}.webp` : en ? '../../assets/v3w/sp_logo_c2_en_b_light_v1.webp' : '../../assets/v3w/sp_logo_c2_b_light_v1.webp', import.meta.url).href;
+  wordmark.src = new URL(en ? '../../assets/v3w/sp_logo_c2_en_b_light_v1.webp' : '../../assets/v3w/sp_logo_c2_b_light_v1.webp', import.meta.url).href;
   wordmark.alt = en ? 'Toki Toki Tale' : '톡톡 동화극장';
   fallbackTitle.replaceWith(wordmark);
   const skip = host.querySelector('button');
@@ -87,11 +87,16 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
     clearTimeout(timer);
     const total = scene.duration;
     // 효과음: 미리 받아 두고 시각이 지나면 한 번씩(웹은 첫 접속에 자동 재생이 막혀 소리 없이 지나갈 수 있다)
-    const cues = (scene.cues || []).map(([at, name, vol]) => {
+    const cues = (scene.cues || []).map(([at, name, vol, dur]) => {
       const a = new Audio(new URL(`../../sounds/sfx/${name}.mp3`, import.meta.url).href);
       a.preload = 'auto'; a.volume = vol; sounds.push(a);
-      return { at, a, done: false };
+      return { at, a, vol, dur, done: false };
     });
+    // 긴 소리(새소리 등)는 앞부분만: dur 초 뒤 0.3초 동안 줄이고 멈춘다
+    const cut = c => setTimeout(() => {
+      let k = 0;
+      const step = setInterval(() => { k++; try { c.a.volume = c.vol * Math.max(0, 1 - k / 6); if (k >= 6) { clearInterval(step); c.a.pause(); } } catch (e) { clearInterval(step); } }, 50);
+    }, c.dur * 1000);
     function reveal() {   // 홈 로고 마크 자리로 날아가며 홈을 드러낸다
       if (revealed) return;
       revealed = true;
@@ -109,7 +114,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
       if (closed) return;
       started ??= now;
       const t = (now - started) / 1000;
-      for (const c of cues) if (!c.done && t >= c.at) { c.done = true; if (t - c.at < .25) c.a.play().catch(() => {}); }
+      for (const c of cues) if (!c.done && t >= c.at) { c.done = true; if (t - c.at < .25) { c.a.play().catch(() => {}); if (c.dur) cut(c); } }
       if (scene.flyAt != null && t >= scene.flyAt) reveal();
       scene.renderAt(Math.min(t, scene.duration));
       if (scene.flyAt == null && t > total - .24) host.style.opacity = String(Math.max(0, (total - t) / .24));

@@ -1583,8 +1583,7 @@
     fallback.className = 'splash-fallback';
     const title = document.createElement('img');
     title.className = 'splash-wordmark';
-    title.src = SPLASH_V2 ? `assets/v3w/sp2_logo_closed_${lang === 'en' ? 'en' : 'ko'}.webp`   // 새 스플래시는 커튼이 닫힌 로고에서 시작
-      : lang === 'en' ? 'assets/v3w/sp_logo_c2_en_b_light_v1.webp' : 'assets/v3w/sp_logo_c2_b_light_v1.webp';
+    title.src = lang === 'en' ? 'assets/v3w/sp_logo_c2_en_b_light_v1.webp' : 'assets/v3w/sp_logo_c2_b_light_v1.webp';
     title.alt = lang === 'en' ? 'Toki Toki Tale' : '톡톡 동화극장';
     fallback.append(title); sp.append(fallback);
     sp.addEventListener('pointerdown', complete);
