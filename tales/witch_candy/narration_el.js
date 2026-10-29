@@ -39,7 +39,7 @@ Object.assign(NARRATION_CLIPS, {
  "으엑! 콧물이요?": "audio/el/witch_candy/kid_7310e30f3a.mp3",
  "으엑! 응가요?": "audio/el/witch_candy/kid_0643a1f715.mp3",
  "냐… 냄새!": "audio/el/witch_candy/cat_c88e6a17c0.mp3",
- "히히, 색을 섞으면 새 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?": "audio/el/witch_candy/witch_0561e1f6d2.mp3",
+ "히히, 색을 섞으면 다른 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?": "audio/el/witch_candy/witch_6156c88cce.mp3",
  "네, 제가 할게요!": "audio/el/witch_candy/kid_6641e2d47a.mp3",
  "그럼 다현이가 먼저, 마지막엔 다 같이!": "audio/el/witch_candy/witch_dbb2e39b22.mp3",
  "넣고 싶은 재료를 톡 눌러 솥에 넣어요.": "audio/el/witch_candy/nar_347a477bcb.mp3",

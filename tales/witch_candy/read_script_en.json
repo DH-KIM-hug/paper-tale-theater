@@ -264,12 +264,12 @@
      "src": "reuse"
     },
     {
-     "text": "히히, 색을 섞으면 새 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?",
-     "en": "Hee hee, mix the colours and you get a brand-new colour candy. What happens when you eat it is... a secret! Shall we make some together?",
+     "text": "히히, 색을 섞으면 다른 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?",
+     "en": "Hee hee, mix the colours and you get a different colour candy. What happens when you eat it is... a secret! Shall we make some together?",
      "segs": [
       [
        "witch",
-       "Hee hee, mix the colours and you get a brand-new colour candy. What happens when you eat it is... a secret! Shall we make some together?",
+       "Hee hee, mix the colours and you get a different colour candy. What happens when you eat it is... a secret! Shall we make some together?",
        "happy"
       ]
      ],

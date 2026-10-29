@@ -40,9 +40,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Nya... stinky!",
   "c": "audio/el/witch_candy/en/cat_02ebcdc440.mp3"
  },
- "히히, 색을 섞으면 새 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?": {
-  "t": "Hee hee, mix the colours and you get a brand-new colour candy. What happens when you eat it is... a secret! Shall we make some together?",
-  "c": "audio/el/witch_candy/en/witch_bd8c089934.mp3"
+ "히히, 색을 섞으면 다른 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?": {
+  "t": "Hee hee, mix the colours and you get a different colour candy. What happens when you eat it is... a secret! Shall we make some together?",
+  "c": "audio/el/witch_candy/en/witch_b746cb8583.mp3"
  },
  "네, 제가 할게요!": {
   "t": "Yes! I want to do it!",
