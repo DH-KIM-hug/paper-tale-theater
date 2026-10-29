@@ -175,12 +175,12 @@
    ]
   },
   {
-   "text": "호박 등이랑",
-   "en": "the pumpkin lantern and",
+   "text": "노란 호박 등이랑",
+   "en": "the yellow pumpkin lantern and",
    "segs": [
     [
      "nar",
-     "the pumpkin lantern and",
+     "the yellow pumpkin lantern and",
      null
     ]
    ]
@@ -307,12 +307,12 @@
    ]
   },
   {
-   "text": "호박 등을 넣었어요!",
-   "en": "the pumpkin lantern went in!",
+   "text": "노란 호박 등을 넣었어요!",
+   "en": "the yellow pumpkin lantern went in!",
    "segs": [
     [
      "nar",
-     "the pumpkin lantern went in!",
+     "the yellow pumpkin lantern went in!",
      "toneup"
     ]
    ]

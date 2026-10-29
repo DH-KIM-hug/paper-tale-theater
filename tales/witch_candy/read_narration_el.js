@@ -48,7 +48,7 @@ Object.assign(NARRATION_CLIPS, {
  "뿅! 다현이가 초록 개구리가 됐어요!": "audio/el/witch_candy/nar_ece9e19f39.mp3",
  "개굴! 지붕까지 폴짝!": "audio/el/witch_candy/kid_a2b9bea673.mp3",
  "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.": "audio/el/witch_candy/nar_037911e22b.mp3",
- "다현이는 아기 용 콧물이랑 호박 등을 솥에 넣었어요. 뚝, 퐁!": "audio/el/witch_candy/nar_fee1c68de2.mp3",
+ "다현이는 아기 용 콧물이랑 노란 호박 등을 솥에 넣었어요. 뚝, 퐁!": "audio/el/witch_candy/nar_88ba8b3ebf.mp3",
  "빨강이랑 노랑을 섞었더니 주황색이 됐어요!": "audio/el/witch_candy/nar_d9b35a495b.mp3",
  "냠… 호박 사탕이다!": "audio/el/witch_candy/kid_448d0e48a6.mp3",
  "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!": "audio/el/witch_candy/nar_dff1f028ec.mp3",

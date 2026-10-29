@@ -224,11 +224,11 @@
    ]
   },
   {
-   "text": "호박 등이랑",
+   "text": "노란 호박 등이랑",
    "segs": [
     [
      "nar",
-     "호박 등이랑",
+     "노란 호박 등이랑",
      null,
      "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
     ]
@@ -356,11 +356,11 @@
    ]
   },
   {
-   "text": "호박 등을 넣었어요!",
+   "text": "노란 호박 등을 넣었어요!",
    "segs": [
     [
      "nar",
-     "호박 등을 넣었어요!",
+     "노란 호박 등을 넣었어요!",
      "toneup",
      "[playful storytelling, clear, finishing the sentence brightly]"
     ]

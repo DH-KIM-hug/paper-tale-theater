@@ -192,9 +192,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Hop, hop, hop! She waved from up on the roof.",
   "c": "audio/el/witch_candy/en/nar_5e596d6d47.mp3"
  },
- "다현이는 아기 용 콧물이랑 호박 등을 솥에 넣었어요. 뚝, 퐁!": {
-  "t": "Dahyun dropped baby dragon snot and the pumpkin lantern into the cauldron. Drip, plop!",
-  "c": "audio/el/witch_candy/en/nar_8a1abc911b.mp3"
+ "다현이는 아기 용 콧물이랑 노란 호박 등을 솥에 넣었어요. 뚝, 퐁!": {
+  "t": "Dahyun dropped baby dragon snot and the yellow pumpkin lantern into the cauldron. Drip, plop!",
+  "c": "audio/el/witch_candy/en/nar_ebf7bf02cb.mp3"
  },
  "빨강이랑 노랑을 섞었더니 주황색이 됐어요!": {
   "t": "Red and yellow mixed together made orange!",

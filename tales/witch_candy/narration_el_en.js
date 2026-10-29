@@ -60,9 +60,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "the ladybug and",
   "c": "audio/el/witch_candy/en/nar_e8c0c4c10e.mp3"
  },
- "호박 등이랑": {
-  "t": "the pumpkin lantern and",
-  "c": "audio/el/witch_candy/en/nar_0c06003e6e.mp3"
+ "노란 호박 등이랑": {
+  "t": "the yellow pumpkin lantern and",
+  "c": "audio/el/witch_candy/en/nar_757816cf32.mp3"
  },
  "병아리 방귀랑": {
   "t": "chick fart and",
@@ -108,9 +108,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "the ladybug went in!",
   "c": "audio/el/witch_candy/en/nar_5beeb90818.mp3"
  },
- "호박 등을 넣었어요!": {
-  "t": "the pumpkin lantern went in!",
-  "c": "audio/el/witch_candy/en/nar_dbf3e0e290.mp3"
+ "노란 호박 등을 넣었어요!": {
+  "t": "the yellow pumpkin lantern went in!",
+  "c": "audio/el/witch_candy/en/nar_f89d5dbad0.mp3"
  },
  "병아리 방귀를 넣었어요!": {
   "t": "chick fart went in!",
