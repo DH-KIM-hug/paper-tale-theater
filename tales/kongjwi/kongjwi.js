@@ -8,7 +8,9 @@
     kong_wet: 0.8294, loom: 1.0240, ox_stand: 0.8526, ox_walk: 1.5771, pail: 1.0608, pat_dressed: 0.6433, pat_eat: 0.8316,
     pat_shy: 0.5786, ricecake: 1.2600, shoe_butterfly: 2.0949, shoe_peony: 2.0693, shoe_plum: 2.0959, sparrow_flock: 1.0225,
     sparrow_one: 1.0704, step_dressed: 0.7247, step_order: 0.7370, step_shy: 0.7208, toad_idle: 1.2000, toad_plug: 1.2019,
-    won_shoe: 0.5745, won_stand: 0.4757, kong_oneshoe: 0.7733, shoe_blue: 2.0930, shoe_yellow: 2.0930, };
+    won_shoe: 0.5745, won_stand: 0.4757, kong_oneshoe: 0.7733, shoe_blue: 2.0930, shoe_yellow: 2.0930,
+    /* 2026-10-30 꽃신 색 맞춤: 콩쥐가 신은 꽃신을 개울에 빠지는 나비 꽃신(분홍 바탕·장미빛 앞코·꽃·나비)과 같은 짝으로 다시 그림(_v2). 인물·틀은 원본과 같아 높이도 그대로 */
+    kong_shoes_v2: 0.8350, kong_step_r_v2: 0.8367, kong_step_l_v2: 0.8600, kong_oneshoe_v2: 0.7733, };
   /* 2026-10-20 새 그림은 그림 크기(세로 픽셀)가 옛 그림과 달라서, 옛 그림과 같은 픽셀 축척이 되도록 높이에 곱하는 비율 */
   const RS = { drum: 0.918, fairy_float: 0.706, fairy_give: 0.789, gong: 0.948, kong_hoe: 0.994, kong_loom: 0.821,
     kong_pour: 0.940, /* 2026-10-20 크기 일관성: 물 붓기 자세가 같은 자리의 젖은 자세보다 머리 폭 17% 작아서 0.786 → 0.940 */ kong_sweep: 0.936, pail: 0.870, pat_dressed: 0.877, pat_eat: 0.849,
@@ -163,20 +165,21 @@
       return lost.move(1080, 466, 4200, 'ease-in').then(() => hide(lost));
     };
     /* 2026-10-30 크기를 키운 뒤 인물 자리(놀이판·읽어 주기 같이). [x, y, 배율]. 세로 화면(P, 휴대폰은 보이는 폭 약 390: 305~695)은 안쪽으로 모은다.
-       혼례(마지막 장면)는 넷이 붙어 겹치던 것을 가로는 넓게 벌리고, 세로는 넷을 한 비율로 함께 줄여 멀리서 보는 것처럼 모두 보이게 한다(휴대폰 .72, 보이는 폭이 넓은 아이패드 세로는 폭에 맞춰 1 까지) */
+       혼례(마지막 장면)는 넷이 붙어 겹치던 것을 가로는 넓게 벌리고, 세로는 넷을 한 비율로 함께 줄여 멀리서 보는 것처럼 모두 보이게 한다(휴대폰 .72, 보이는 폭이 넓은 아이패드 세로는 폭에 맞춰 .84 까지) */
     const SPOT = {
       yard: { kong: P ? [385, 505] : [430, 505], step: P ? [545, 505] : [620, 505], pat: P ? [640, 505] : [800, 505] },
       field: { kong: P ? [375, 505] : [380, 505], ox: P ? [515, 520] : [575, 520], step: P ? [635, 505] : [770, 505] },
       mat: { kong: [390, 505], step: P ? [665, 505] : [760, 505] },
       loom: { kong: P ? [390, 505] : [430, 505], fairy: P ? [610, 420] : [720, 420], kongGift: P ? [400, 505] : [430, 505], fairyGive: P ? [575, 505] : [600, 505] },
       feast: { step: P ? [375, 490] : [330, 490], pat: P ? [500, 490] : [470, 490], kong: P ? [615, 490] : [650, 490] },
-      wedding: P ? (f => ({ won: [500 - 148 * f, 505, Math.min(1, .72 * f)], kong: [500 - 42 * f, 505, Math.min(1, .72 * f)], step: [500 + 70 * f, 505, Math.min(1, .72 * f)], pat: [500 + 150 * f, 505, Math.min(1, .72 * f)], cakes: [500, 548, Math.min(1, .8 * f)] }))(Math.min(1.38, Math.max(1, T.viewWidth() / 390)))
+      /* 2026-10-30 사용자 지시: 아이패드 세로에서 넷의 발이 화면 아래에 잘림 → 세로 배율 상한 1 → .84, 발 자리 505 → 492(아래 여유), 떡 548 → 538 */
+      wedding: P ? ((f, s) => ({ won: [500 - 148 * f, 492, s], kong: [500 - 42 * f, 492, s], step: [500 + 70 * f, 492, s], pat: [500 + 150 * f, 492, s], cakes: [500, 538, Math.min(.85, .8 * f)] }))(...(f => [f, Math.min(.84, .72 * f)])(Math.min(1.38, Math.max(1, T.viewWidth() / 390))))
         : { won: [280, 505], kong: [430, 505], step: [600, 505], pat: [740, 505], cakes: [515, 548] },
     };
     const spot = (k, n) => SPOT[k] && SPOT[k][n];
     const putAt = (a, k, n, o = {}) => { const [x, y, s = 1] = spot(k, n); return put(T, a, x, y, { ...o, s }); };
 
-    const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k))), ...['kong_step_r', 'kong_step_l', 'kong_oneshoe', 'water_drop', 'water_surface', 'wave_front'].map(k => T.preload(AS + 'kj_' + k + '.webp'))];   // 걸음 자세는 장면 중간에 바뀌므로 미리 불러 둔다
+    const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k))), ...['kong_step_r_v2', 'kong_step_l_v2', 'kong_oneshoe_v2', 'water_drop', 'water_surface', 'wave_front'].map(k => T.preload(AS + 'kj_' + k + '.webp'))];   // 걸음 자세는 장면 중간에 바뀌므로 미리 불러 둔다
     await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
 
     /* 2026-10-30 전체 크기 점검(§4-1, 사용자 지시 "선녀가 너무 작다, 팥쥐·새엄마도 이상해"). 아래 높이는 그림(webp)에서 같은 부위를 재서 정했다.
@@ -190,11 +193,11 @@
        두꺼비 눈 사이: 가만 .448 · 막기 .465 → 66 · 70 → 66 · 66.  소는 콩쥐보다 작았다(170) → 230.
        참새 떼 한 마리는 혼자 참새의 약 1/3 크기였다 → 떼 높이 90 → 150 (한 마리 약 0.75배, 하늘 높이 멀리 날아오는 만큼만 작게) */
     const kong = mk(T, { sweep: ['kong_sweep', 240, 'left'], hoe: ['kong_hoe', 225, 'left'], pour: ['kong_pour', 232, 'left'],
-      loom: ['kong_loom', 299, 'left'], shoes: ['kong_shoes', 212, 'left'],
+      loom: ['kong_loom', 299, 'left'], shoes: ['kong_shoes_v2', 212, 'left'],
       /* 2026-10-24 징검다리 걸음: 오른발·왼발 번갈아 디디는 옆모습(오른쪽을 봄) */
-      stepR: ['kong_step_r', 214, 'right'], stepL: ['kong_step_l', 214, 'right'], bride: ['kong_bride', 245, 'left'], wet: ['kong_wet', 221, 'left'],
+      stepR: ['kong_step_r_v2', 214, 'right'], stepL: ['kong_step_l_v2', 214, 'right'], bride: ['kong_bride', 245, 'left'], wet: ['kong_wet', 221, 'left'],
       /* 2026-10-30 꽃신 한 짝을 잃은 콩쥐: 한 발은 꽃신, 한 발은 버선. 오른쪽(물 쪽)을 보는 옆모습 */
-      oneshoe: ['kong_oneshoe', 221, 'right'] });
+      oneshoe: ['kong_oneshoe_v2', 221, 'right'] });
     const step = mk(T, { order: ['step_order', 293, 'right'], dressed: ['step_dressed', 293, 'left'], shy: ['step_shy', 293, 'left'] });
     const pat = mk(T, { eat: ['pat_eat', 186, 'left'], dressed: ['pat_dressed', 239, 'left'], shy: ['pat_shy', 230, 'left'] });
     const toad = mk(T, { idle: ['toad_idle', 150, 'left'], plug: ['toad_plug', 141, 'left'] });
