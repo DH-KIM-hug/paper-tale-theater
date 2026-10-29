@@ -263,6 +263,17 @@
    ]
   },
   {
+   "text": "구운 초록 대파랑",
+   "en": "the grilled green onion and",
+   "segs": [
+    [
+     "nar",
+     "the grilled green onion and",
+     null
+    ]
+   ]
+  },
+  {
    "text": "아기 용 콧물을 넣었어요!",
    "en": "baby dragon snot went in!",
    "segs": [
@@ -379,6 +390,17 @@
     [
      "nar",
      "the green dinosaur went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "구운 초록 대파를 넣었어요!",
+   "en": "the grilled green onion went in!",
+   "segs": [
+    [
+     "nar",
+     "the grilled green onion went in!",
      "toneup"
     ]
    ]

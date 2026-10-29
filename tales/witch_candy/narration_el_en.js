@@ -92,6 +92,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "the green dinosaur and",
   "c": "audio/el/witch_candy/en/nar_8c7d6dcd01.mp3"
  },
+ "구운 초록 대파랑": {
+  "t": "the grilled green onion and",
+  "c": "audio/el/witch_candy/en/nar_fb35991384.mp3"
+ },
  "아기 용 콧물을 넣었어요!": {
   "t": "baby dragon snot went in!",
   "c": "audio/el/witch_candy/en/nar_e29e23a9ce.mp3"
@@ -135,6 +139,10 @@ Object.assign(NARRATION_CLIPS_EN, {
  "초록 공룡을 넣었어요!": {
   "t": "the green dinosaur went in!",
   "c": "audio/el/witch_candy/en/nar_ac20d08b1a.mp3"
+ },
+ "구운 초록 대파를 넣었어요!": {
+  "t": "the grilled green onion went in!",
+  "c": "audio/el/witch_candy/en/nar_176571fd1e.mp3"
  },
  "으엑! 콧물이요?": {
   "t": "Eww! Snot?",

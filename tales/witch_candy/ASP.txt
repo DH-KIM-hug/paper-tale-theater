@@ -94,3 +94,4 @@ prop_flame_big: 0.75
 prop_shelf_cell: 1.0133
 ghost: 1.0083
 witch_magic: 0.86
+prop_ing_leek: 0.9733

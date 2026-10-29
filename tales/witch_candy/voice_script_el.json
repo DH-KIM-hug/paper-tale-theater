@@ -312,6 +312,17 @@
    ]
   },
   {
+   "text": "구운 초록 대파랑",
+   "segs": [
+    [
+     "nar",
+     "구운 초록 대파랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
    "text": "아기 용 콧물을 넣었어요!",
    "segs": [
     [
@@ -427,6 +438,17 @@
     [
      "nar",
      "초록 공룡을 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "구운 초록 대파를 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "구운 초록 대파를 넣었어요!",
      "toneup",
      "[playful storytelling, clear, finishing the sentence brightly]"
     ]

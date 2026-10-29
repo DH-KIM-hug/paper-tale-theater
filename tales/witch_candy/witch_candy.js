@@ -61,7 +61,7 @@
     wc_prop_invite: .965, wc_prop_pumpkin_lantern: 1.0117, wc_prop_bunting: 4.1667, wc_prop_web: .9717, wc_prop_bat_sil: 2.1327, wc_prop_cauldron: 1.1133, wc_prop_firewood: 1.6605,
     wc_prop_flame_small: .765, wc_prop_flame_big: .7467, wc_prop_smoke_puff: 1.115, wc_prop_pot_flat: 2.3077, wc_prop_pot_swirl: 1.0167, wc_prop_shelf_box: 1.9231, wc_prop_shelf_cell: 1.0133,
     wc_prop_ing_snot: .8417, wc_prop_ing_firetruck: 1.3433, wc_prop_ing_ladybug: 1.0483, wc_prop_ing_fart: 1.1683, wc_prop_ing_duck: 1.0583, wc_prop_ing_poo: 1.0583, wc_prop_ing_stink: .5933,
-    wc_prop_ing_fly: .925, wc_prop_ing_fish: 1.2317, wc_prop_ing_wave: 1.9868, wc_prop_ing_frog: 1.095, wc_prop_ing_dino: 1.315,
+    wc_prop_ing_fly: .925, wc_prop_ing_fish: 1.2317, wc_prop_ing_wave: 1.9868, wc_prop_ing_frog: 1.095, wc_prop_ing_dino: 1.315, wc_prop_ing_leek: 0.9733,
     wc_prop_ladle: 1.0633, wc_prop_table: 2.1127, wc_prop_sample_orange: .56, wc_prop_sample_green: .5533, wc_prop_sample_purple: .565, wc_prop_sample_brown: .5033, wc_prop_sparkle_pop: 1.005,
     wc_prop_candy_strawberry: 1.7893, wc_prop_candy_duck: .7133, wc_prop_candy_fish: 1.6729, wc_prop_candy_frog: .6067, wc_prop_candy_pumpkin: 1.833, wc_prop_candy_bat: 1.0617,
     wc_prop_candy_choco: .6933, wc_prop_candy_ghost: 2.0362, wc_prop_candy_jar: .93, wc_prop_plate_white: 1.7208, wc_prop_sign_candy: .8,
@@ -70,11 +70,11 @@
     /* 변신 컷 인물 큰 그림(post: 마젠타 오림, 이 작업에서 만든 webp) */
     wc_cut_tf_strawberry: 1.0702, wc_cut_tf_duck: .8111, wc_cut_tf_fish: 1.0022, wc_cut_tf_frog: .8311, wc_cut_tf_pumpkin: .7589, wc_cut_tf_bat: 1.1984, wc_cut_tf_choco: .69, wc_cut_tf_ghost: .8867,
   };
-  const ING = [   // 재료 11개 (PLAN §4-1): id, 색 key, 이름. 호박 등(lantern)은 wc_prop_pumpkin_lantern 그림을 같이 쓴다(PLAN §17 ③)
+  const ING = [   // 재료 12개(2026-10-29 구운 초록 대파 추가) (PLAN §4-1): id, 색 key, 이름. 호박 등(lantern)은 wc_prop_pumpkin_lantern 그림을 같이 쓴다(PLAN §17 ③)
     { id: 'snot', key: 'r', name: '아기 용 콧물' }, { id: 'firetruck', key: 'r', name: '소방차' }, { id: 'ladybug', key: 'r', name: '무당벌레' },
     { id: 'lantern', key: 'y', name: '호박 등' }, { id: 'fart', key: 'y', name: '병아리 방귀' }, { id: 'duck', key: 'y', name: '고무 오리' },
     { id: 'poo', key: 'b', name: '괴물 응가' }, { id: 'fish', key: 'b', name: '파란 생선' }, { id: 'wave', key: 'b', name: '파란 파도' },
-    { id: 'frog', key: 'g', name: '개구리' }, { id: 'dino', key: 'g', name: '공룡' },
+    { id: 'frog', key: 'g', name: '개구리' }, { id: 'dino', key: 'g', name: '공룡' }, { id: 'leek', key: 'g', name: '구운 대파' },
   ];
   const ingF = id => (id === 'lantern' ? 'wc_prop_pumpkin_lantern' : 'wc_prop_ing_' + id);
   const CANDY = ['strawberry', 'duck', 'fish', 'frog', 'pumpkin', 'bat', 'choco', 'ghost'];
@@ -303,6 +303,7 @@
       fish: () => cue('splash', .6),
       wave: () => cue(['splash_big'], .6),
       frog: () => { cue('animals/frog', .7); setTimeout(() => cue('pop', .5), 300); },
+      leek: () => { cue('fire_crackle', .5); setTimeout(() => cue('pop', .5), 300); },   // 구운 대파: 지글지글
       dino: () => { cue(['dino_roar', 'animals/tiger_2'], .45, tn([1000, 1500], .3, { type: 'square' })); setTimeout(() => cue('pop', .5), 350); },
     };
     const count = n => { const k = 'n' + n; const u = typeof Narrator !== 'undefined' && Narrator.voiceLine(k); if (u && AudioFX.voice) AudioFX.voice(u); else cue('marimba_' + Math.min(5, n), .5); };
@@ -413,10 +414,10 @@
           const g0 = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, SG); sprite(T, g0, 'wc_prop_shelf_box', sx, sy, sw, sh);
           const cx = [108, 240, 367, 532, 660, 788].map(v => sx + v * s), cy = [140, 307].map(v => sy + v * s);
           [0, 1, 2].forEach(i => cellsPos.push([cx[i], cy[0]])); [3, 4, 5].forEach(i => cellsPos.push([cx[i], cy[0]]));
-          [0, 1, 2].forEach(i => cellsPos.push([cx[i], cy[1]])); [3, 4].forEach(i => cellsPos.push([cx[i], cy[1]]));
+          [0, 1, 2].forEach(i => cellsPos.push([cx[i], cy[1]])); [3, 4, 5].forEach(i => cellsPos.push([cx[i], cy[1]]));
         } else {
           const colX = [396, 500, 604], rowY = i => 48 + i * 90;
-          ['r', 'y', 'b', 'g'].forEach((c, ri) => (c === 'g' ? [0, 1] : [0, 1, 2]).forEach(ci => cellsPos.push([colX[ci], rowY(ri)])));
+          ['r', 'y', 'b', 'g'].forEach((c, ri) => [0, 1, 2].forEach(ci => cellsPos.push([colX[ci], rowY(ri)])));
           cellsPos.forEach(([x, y]) => { const g0 = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, SG); pic(T, g0, 'wc_prop_shelf_cell', x, y, 102, 96); });
         }
         ING.forEach((it, i) => {
@@ -534,7 +535,7 @@
     };
     /* 넣은 재료 말하기: voice_script 의 앞 줄(ING_FRONT)·뒤 줄(ING_BACK) 클립을 한 줄로 이어 붙여 재생(글자는 한 문장).
        녹음이 없으면 말풍선만 보이고 넘어간다 */
-    const ING_KO = { snot: '아기 용 콧물', firetruck: '빨간 소방차', ladybug: '무당벌레', lantern: '호박 등', fart: '병아리 방귀', duck: '고무 오리', poo: '괴물 응가', fish: '파란 생선', wave: '파란 파도', frog: '초록 개구리', dino: '초록 공룡' };
+    const ING_KO = { snot: '아기 용 콧물', firetruck: '빨간 소방차', ladybug: '무당벌레', lantern: '호박 등', fart: '병아리 방귀', duck: '고무 오리', poo: '괴물 응가', fish: '파란 생선', wave: '파란 파도', frog: '초록 개구리', dino: '초록 공룡', leek: '구운 초록 대파' };
     const bat = w => (w.charCodeAt(w.length - 1) - 0xAC00) % 28 !== 0;
     const ingFront = id => ING_KO[id] + (bat(ING_KO[id]) ? '이랑' : '랑');
     const ingBack = id => ING_KO[id] + (bat(ING_KO[id]) ? '을' : '를') + ' 넣었어요!';
