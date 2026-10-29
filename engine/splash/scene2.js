@@ -26,7 +26,7 @@ export const CUES = [
   [.95, 'paper_up', .55], [1.12, 'paper_up', .4],
   [1.45, 'hop', .45], [1.8, 'hop', .4], [2.15, 'hop', .35], [1.62, 'step_grass', .35],
   [2.36, 'paper_down', .45], [2.47, 'paper_up', .55], [2.62, 'shimmer', .4], [3.02, 'sparkle', .45],
-  [3.14, 'swish', .55], [3.56, 'whoosh', .3], [4.24, 'swish', .35],
+  [3.1, 'pop', .35], [3.14, 'swish', .55], [3.56, 'whoosh', .3], [4.24, 'swish', .35], [4.56, 'latch_click', .4],
   [4.15, 'paper_tap', .7], [4.3, 'paper_tap', .7], [4.48, 'paper_up', .45], [4.74, 'chime_up', .4]
 ];
 
@@ -65,7 +65,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
   try {
     const L = LOCKUP[lang === 'en' ? 'en' : 'ko'];
     const FILES = {
-      mark: 'assets/ui/logo_mark.webp', stage: 'assets/v3w/sp2_stage_hd.webp', curtain: 'assets/v3w/sp2_curtain.webp',
+      mark: 'assets/ui/logo_mark.webp', stage: 'assets/v3w/sp2_stage_hd.webp', curtain: 'assets/v3w/sp2_curtain.webp', band: 'assets/v3w/sp2_band.webp',
       ...Object.fromEntries(L.pieces.map(p => [p[0], `assets/v3w/${p[0]}.webp`])),
       ...Object.fromEntries(['sp_ground_meadow_v1', 'sp_castle_v1', 'rp_layer_tree_front', 'rab_layer_flower_bush_front', 'cf4_prop_grass_tuft',
         'rab_rabbit_run_c', 'rab_turtle_walk', 'cd2_cind_gown', 'sw_snow_stand', 'sb_pr_wave'].map(n => [n, `assets/v3w/${n}.webp`]))
@@ -76,7 +76,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       if (disposed) { map.dispose(); return null; }
       own(textures, map);
       const image = map.image;
-      const edge = name === 'stage' || name === 'curtain' || name.startsWith('sp2_') ? 1536 : name === 'sp_castle_v1' || name === 'sp_ground_meadow_v1' ? 1024 : 768;
+      const edge = name === 'stage' || name === 'curtain' || name === 'band' || name.startsWith('sp2_') ? 1536 : name === 'sp_castle_v1' || name === 'sp_ground_meadow_v1' ? 1024 : 768;
       const k = Math.min(1, edge / Math.max(image.width, image.height));
       if (k < 1) {
         const c = document.createElement('canvas');
@@ -116,20 +116,22 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       return { tex, grow: [(w + pad * 2) / w, (h + pad * 2) / h] };
     }
     const basic = (map, extra = {}) => own(materials, new THREE.MeshBasicMaterial({ map, transparent: true, depthTest: false, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, ...extra }));
-    /* 종이 한 장. anchor 'bottom' = 아래 가운데가 원점(접혀 일어서는 판), 'center' = 가운데 */
+    /* 종이 한 장. anchor 'bottom' = 아래 가운데가 원점(접혀 일어서는 판), 'center' = 가운데, 'left' = 왼쪽 가운데(옆으로 펴지는 커튼) */
     function paper(name, h, { anchor = 'bottom', order = 10, shadow = true, w } = {}) {
       w ??= h * aspect(name);
       const pivot = new THREE.Group();
       const geo = own(geometries, new THREE.PlaneGeometry(w, h));
       if (anchor === 'bottom') geo.translate(0, h / 2, 0);
+      if (anchor === 'left') geo.translate(w / 2, 0, 0);
       const mesh = new THREE.Mesh(geo, basic(maps.get(name)));
       mesh.renderOrder = order;
       if (shadow) {
         const s = silhouette(name);
         const sg = own(geometries, new THREE.PlaneGeometry(w * s.grow[0], h * s.grow[1]));
         if (anchor === 'bottom') sg.translate(0, h / 2, 0);
+        if (anchor === 'left') sg.translate(w / 2, 0, 0);
         const sm = new THREE.Mesh(sg, basic(s.tex, { opacity: .2 }));
-        sm.position.set(h * .02, -h * .03, 0); sm.renderOrder = order - .5;
+        sm.position.set(anchor === 'left' ? 0 : h * .02, -h * .03, 0); sm.renderOrder = order - .5;
         pivot.add(sm); pivot.userData.shadow = sm;
       }
       pivot.add(mesh); pivot.userData.mesh = mesh;
@@ -170,13 +172,15 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     ];
     for (const a of cast) root.add(a.p);
 
-    // 커튼 두 장: 열림 = 아치 바깥(크림 종이 뒤), 닫힘 = 가운데서 겹침
-    const CW = 228, CH = 450, CY = 30;
-    const curtains = [-1, 1].map(side => {
-      const c = paper('curtain', CH, { anchor: 'center', order: 30, w: CW });
-      c.userData.mesh.scale.x = side;   // 오른쪽은 뒤집어 씀(물결 가장자리가 가운데로)
-      root.add(c); return { c, side };
-    });
+    // 커튼은 로고의 왼쪽 묶인 커튼이 직접 닫힌다(2026-10-29 사용자 지시): 금색 끈이 풀려 떨어지면 묶인 커튼(무대 그림에 그려진 것)
+    // 자리에 같은 빨강의 편 커튼(sp2_curtain)이 묶인 폭으로 나타나 오른쪽 끝까지 펴진다. 열 때는 거꾸로 모이고 끈이 날아와 다시 묶는다.
+    // 끈 sp2_band 는 sp2_stage_hd 에서 오려 낸 것(마크 좌표 상자 43.8~127.3, 245.5~289.1)
+    const CL = 40, CTIED = 170, CFULL = 480, CH = 450, CY = 30;
+    const curtain = paper('curtain', CH, { anchor: 'left', order: 30, w: CTIED });
+    at(curtain, CL, CY + CH / 2); root.add(curtain);
+    const BAND = [43.8, 245.5, 127.3, 289.1];
+    const band = paper('band', BAND[3] - BAND[1], { anchor: 'center', order: 31, w: BAND[2] - BAND[0] });
+    root.add(band);
 
     // 크림 종이(구멍 뚫린 판)와 구멍 안쪽 그림자
     const hole = new THREE.Path();
@@ -287,11 +291,15 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
         at(a.p, mix(a.from, a.x, k), a.y - 4 * Math.abs(Math.sin(Math.PI * k * 3)) * (1 - k));
       }
       // 커튼: 3.14초에 닫히고 4.24초에 열린다
-      const shut = inout((t - 3.14) / .36) * (1 - inout((t - 4.24) / .38));
-      for (const { c, side } of curtains) {
-        at(c, 256 + side * mix(CW / 2 + 216, CW / 2 - 8, shut), CY + CH / 2);
-        c.visible = shut > .001;
-      }
+      // 커튼: 3.12초 끈이 풀리며 펴지기 시작(3.5초 다 덮음), 4.24초부터 모여 4.56초 묶인 모양으로
+      const spread = inout((t - 3.12) / .38) * (1 - inout((t - 4.24) / .32));
+      curtain.visible = t >= 3.12 && t < 4.56;
+      curtain.scale.x = mix(1, CFULL / CTIED, spread);
+      // 끈: 풀릴 때는 톡 튀었다가 아래로 떨어져 창 밖으로, 묶을 때는 아래에서 올라와 제자리에
+      const off = t < 4 ? clamp((t - 3.1) / .42) : 1 - out((t - 4.3) / .26);
+      band.visible = off > 0 && off < 1;
+      at(band, (BAND[0] + BAND[2]) / 2 + 30 * off, (BAND[1] + BAND[3]) / 2 - 22 * Math.sin(Math.PI * Math.min(1, off * 2.2)) + 260 * off * off);
+      band.rotation.z = -.9 * off;
       // 글자: 들판·성과 같은 종이 판. 다가가기 시작하면 차례로 눕고, 로고 크기로 돌아오면 '톡'·'톡'·'동화극장' 차례로 일어선다
       for (const p of pieces) {
         const up = t < p.land ? 1 - (clamp((t - p.fall) / .22) ** 2) : back((t - p.land) / LAND);
