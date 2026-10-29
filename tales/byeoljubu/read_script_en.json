@@ -1,0 +1,1224 @@
+{
+ "mode": "read",
+ "tale": "byeoljubu",
+ "lang": "en",
+ "title": "The Rabbit and the Terrapin",
+ "voices_from": "voice_script_el.json",
+ "moral": "Do not follow sweet words right away. When things are hard, stay calm and think.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 기획 PLAN.md, 놀이판 11장 → 읽기 12장(11장 끝 용궁을 따로 셈). 조작·배움 놀이를 뺐다: 2장 바다·뭍 가르기(안내·오답 줄), 3~4장 방향 고르기 안내 셋과 오답 줄, 6장 자라 등 톡 안내, 8장 얼굴 카드 안내·오답 줄, 10장 토끼 톡 안내. 고르기·톡은 저절로 정답대로 진행한다(가르기는 자라, 길은 정답 길, 얼굴은 놀란 얼굴 — 얼굴 카드 없이 컷으로 바로). 간은 원작 그대로 말하고 그림은 순화(칼·피 없음). src: reuse = 놀이판 줄 그대로(녹음 공유), new = 새 내레이터 줄(녹음 필요). 새 줄은 모두 nar, 의성어·의태어를 넣었다. 교훈은 마지막 장면 마지막 줄로 이야기 말투로 한 번 읽는다(READ_MODE §3-5). 용왕(king)은 Typecast(tc) 배역이라 새 대사를 주지 않았다.",
+ "acts": {
+  "set:<chamber|hall|shore|fork1|meetClose|dusk|gate|throne|throneClose|morning|sage|healed>": "장면 배치(놀이판 LAY 그대로). 첫 장면 chamber 에서 여는 음악",
+  "beat:<이름>[:인자][:인자]": "놀이판과 같은 연출 조각(byeoljubu.js 의 B). 예: beat:goPath:left:600 = 정답 길을 따라 걸어감, beat:toFork2 = 숲 ②로 카메라 이동, beat:toDive = 바다 속 세트",
+  "cut:<bj_cut_volunteer|bj_cut_dive|bj_cut_shock|bj_cut_hop|bj_cut_medicine>": "컷 그림(cutImage 3초)",
+  "snd:<이름>[:볼륨][:지연ms] | look:<배우>:<자세>[:<방향>] | view:<lx>[:ms]": "효과음·자세·세로 화면 가운데"
+ },
+ "scenes": [
+  {
+   "key": "R01_chamber",
+   "card": "The Sick Dragon King",
+   "set": "chamber",
+   "enter": [],
+   "lines": [
+    {
+     "text": "깊고 깊은 바다 밑에 용궁이 있어요.",
+     "src": "reuse",
+     "en": "Deep, deep under the sea, there is a sea palace.",
+     "segs": [
+      [
+       "nar",
+       "Deep, deep under the sea, there is a sea palace.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "산호 기둥 사이로 물방울이 보글보글 올라가요.",
+     "src": "new",
+     "en": "Little bubbles float up, blub, blub, between the coral pillars.",
+     "segs": [
+      [
+       "nar",
+       "Little bubbles float up, blub, blub, between the coral pillars.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "용왕님이 병이 났어요. 콜록, 콜록.",
+     "src": "reuse",
+     "en": "The Dragon King is sick. Cough, cough.",
+     "segs": [
+      [
+       "nar",
+       "The Dragon King is sick. Cough, cough.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:cough"
+     ]
+    },
+    {
+     "text": "아이고, 온몸이 아프구나.",
+     "src": "reuse",
+     "en": "Oh dear, my whole body aches.",
+     "segs": [
+      [
+       "king",
+       "Oh dear, my whole body aches.",
+       "sad:1.0"
+      ]
+     ]
+    },
+    {
+     "text": "잉어 의원이 약탕기를 들고 곰곰이 생각했어요.",
+     "src": "new",
+     "en": "The carp doctor held his medicine pot and thought very hard.",
+     "segs": [
+      [
+       "nar",
+       "The carp doctor held his medicine pot and thought very hard.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "뭍에 사는 토끼의 간을 드시면 나아요.",
+     "src": "reuse",
+     "en": "If you eat the liver of a rabbit that lives on land, you will get better.",
+     "segs": [
+      [
+       "doctor",
+       "If you eat the liver of a rabbit that lives on land, you will get better.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:doctorBow"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_hall",
+   "card": "Who Will Go?",
+   "set": "hall",
+   "enter": [],
+   "lines": [
+    {
+     "text": "용왕님은 신하들을 모두 큰 방으로 불렀어요.",
+     "src": "new",
+     "en": "The Dragon King called all his courtiers into the great hall.",
+     "segs": [
+      [
+       "nar",
+       "The Dragon King called all his courtiers into the great hall.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "누가 토끼 간을 가져오겠느냐?",
+     "src": "reuse",
+     "en": "Who will bring me a rabbit's liver?",
+     "segs": [
+      [
+       "king",
+       "Who will bring me a rabbit's liver?",
+       "normal"
+      ]
+     ],
+     "before": [
+      "beat:ask"
+     ]
+    },
+    {
+     "text": "제가요! 다리가 여덟이니 제일 빨라요!",
+     "src": "reuse",
+     "en": "Me! I have eight legs, so I am the fastest!",
+     "segs": [
+      [
+       "octo",
+       "Me! I have eight legs, so I am the fastest!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:boast"
+     ]
+    },
+    {
+     "text": "문어님, 뭍에서는 다리가 미끌미끌해서 못 걸어요.",
+     "src": "reuse",
+     "en": "Mr. Octopus, on land your legs are too slippery to walk.",
+     "segs": [
+      [
+       "jara",
+       "Mr. Octopus, on land your legs are too slippery to walk.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:argue"
+     ]
+    },
+    {
+     "text": "걸을 수 있다니까!",
+     "src": "reuse",
+     "en": "I can too walk!",
+     "segs": [
+      [
+       "octo",
+       "I can too walk!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:huff"
+     ]
+    },
+    {
+     "text": "문어는 먹물 속에서 뻐끔뻐끔. 물고기들은 뭍에 가면 숨을 못 쉬어요.",
+     "src": "reuse",
+     "en": "The octopus puffs and puffs inside his ink cloud. And fish cannot breathe on land.",
+     "segs": [
+      [
+       "nar",
+       "The octopus puffs and puffs inside his ink cloud. And fish cannot breathe on land.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:inkClear"
+     ]
+    },
+    {
+     "text": "신하들 가운데 물에서도 뭍에서도 걸을 수 있는 건 자라뿐이었어요.",
+     "src": "new",
+     "en": "Of all the courtiers, only the terrapin could walk both in the water and on land.",
+     "segs": [
+      [
+       "nar",
+       "Of all the courtiers, only the terrapin could walk both in the water and on land.",
+       null
+      ]
+     ],
+     "after": [
+      "beat:chosen"
+     ]
+    },
+    {
+     "text": "저는 물에서도 뭍에서도 걸을 수 있어요.",
+     "src": "reuse",
+     "en": "I can walk in the water and on land.",
+     "segs": [
+      [
+       "jara",
+       "I can walk in the water and on land.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "자라가 가거라. 화공은 토끼를 그려 주어라.",
+     "src": "reuse",
+     "en": "Terrapin, you go. Painter, draw a rabbit for him.",
+     "segs": [
+      [
+       "king",
+       "Terrapin, you go. Painter, draw a rabbit for him.",
+       "normal"
+      ]
+     ],
+     "before": [
+      "beat:kingSends"
+     ]
+    },
+    {
+     "text": "화공이 토끼 그림을 그렸어요. 귀는 길쭉, 꼬리는 짧게.",
+     "src": "reuse",
+     "en": "The painter drew a rabbit. Long ears, and a short tail.",
+     "segs": [
+      [
+       "nar",
+       "The painter drew a rabbit. Long ears, and a short tail.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:paint"
+     ],
+     "after": [
+      "cut:bj_cut_volunteer"
+     ]
+    },
+    {
+     "text": "이 그림을 들고 토끼를 찾겠습니다!",
+     "src": "reuse",
+     "en": "I will take this picture and find the rabbit!",
+     "segs": [
+      [
+       "jara",
+       "I will take this picture and find the rabbit!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:takeScroll"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_shore",
+   "card": "The Terrapin on Land",
+   "set": "shore",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 바다 위로 올라왔어요. 햇빛이 눈부셔요.",
+     "src": "reuse",
+     "en": "The terrapin came up out of the sea. The sunlight is dazzling.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin came up out of the sea. The sunlight is dazzling.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:crawlUp"
+     ]
+    },
+    {
+     "text": "뭍은 이렇게 환하구나!",
+     "src": "reuse",
+     "en": "The land is so bright!",
+     "segs": [
+      [
+       "jara",
+       "The land is so bright!",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "처음 보는 뭍에서 자라는 두리번두리번 길을 찾았어요.",
+     "src": "new",
+     "en": "On this new land, the terrapin looked this way and that for the path.",
+     "segs": [
+      [
+       "nar",
+       "On this new land, the terrapin looked this way and that for the path.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "갈매기님, 이 동물 어디 있소?",
+     "src": "reuse",
+     "en": "Mr. Seagull, where is this animal?",
+     "segs": [
+      [
+       "jara",
+       "Mr. Seagull, where is this animal?",
+       null
+      ]
+     ],
+     "before": [
+      "beat:show"
+     ]
+    },
+    {
+     "text": "토끼네! 저 산에 살아. 왼쪽으로 가시오.",
+     "src": "reuse",
+     "en": "That is a rabbit! It lives on that mountain. Go left.",
+     "segs": [
+      [
+       "gull",
+       "That is a rabbit! It lives on that mountain. Go left.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:gullPoint"
+     ]
+    },
+    {
+     "text": "왼쪽, 왼쪽.",
+     "src": "reuse",
+     "en": "Left, left.",
+     "segs": [
+      [
+       "jara",
+       "Left, left.",
+       null
+      ]
+     ],
+     "after": [
+      "beat:goPath:left:600"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_forest",
+   "card": "The Mountain Path",
+   "set": "fork1",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 엉금엉금 산으로 올라갔어요.",
+     "src": "reuse",
+     "en": "The terrapin crawled slowly, slowly up the mountain.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin crawled slowly, slowly up the mountain.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "다람쥐님, 이 동물 어디 있소?",
+     "src": "reuse",
+     "en": "Miss Squirrel, where is this animal?",
+     "segs": [
+      [
+       "jara",
+       "Miss Squirrel, where is this animal?",
+       null
+      ]
+     ],
+     "before": [
+      "beat:show"
+     ]
+    },
+    {
+     "text": "토끼? 오른쪽으로 가시오.",
+     "src": "reuse",
+     "en": "A rabbit? Go right.",
+     "segs": [
+      [
+       "squirrel",
+       "A rabbit? Go right.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:squirrelPoint"
+     ]
+    },
+    {
+     "text": "자라는 오른쪽 길로 숲 속 깊이 들어갔어요.",
+     "src": "new",
+     "en": "The terrapin took the path on the right, deep into the forest.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin took the path on the right, deep into the forest.",
+       null
+      ]
+     ],
+     "after": [
+      "beat:goPath:right:500",
+      "beat:toFork2"
+     ]
+    },
+    {
+     "text": "멧돼지님, 이 동물 어디 있소?",
+     "src": "reuse",
+     "en": "Mr. Boar, where is this animal?",
+     "segs": [
+      [
+       "jara",
+       "Mr. Boar, where is this animal?",
+       null
+      ]
+     ],
+     "before": [
+      "beat:show"
+     ]
+    },
+    {
+     "text": "토끼는 저 바위 뒤에. 가운데로 가시오.",
+     "src": "reuse",
+     "en": "The rabbit is behind that rock. Go straight up the middle.",
+     "segs": [
+      [
+       "boar",
+       "The rabbit is behind that rock. Go straight up the middle.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:boarPoint"
+     ]
+    },
+    {
+     "text": "가운데 길 끝, 커다란 바위 뒤에서 무언가 바스락거렸어요.",
+     "src": "new",
+     "en": "At the end of the middle path, something rustled behind a big rock.",
+     "segs": [
+      [
+       "nar",
+       "At the end of the middle path, something rustled behind a big rock.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:goPath:mid:1580",
+      "beat:toMeet"
+     ]
+    },
+    {
+     "text": "누가 나를 찾아?",
+     "src": "reuse",
+     "en": "Who is looking for me?",
+     "segs": [
+      [
+       "rabbit",
+       "Who is looking for me?",
+       null
+      ]
+     ],
+     "before": [
+      "beat:rabbitPops"
+     ]
+    },
+    {
+     "text": "귀는 길쭉, 꼬리는 짧고… 똑같다! 토끼님이구나.",
+     "src": "reuse",
+     "en": "Long ears, a short tail... the same! You are the rabbit.",
+     "segs": [
+      [
+       "jara",
+       "Long ears, a short tail... the same! You are the rabbit.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:compare"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_sweet",
+   "card": "Sweet Words",
+   "set": "meetClose",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 공손하게 인사하고 달콤한 말을 꺼냈어요.",
+     "src": "new",
+     "en": "The terrapin bowed politely and began to say sweet things.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin bowed politely and began to say sweet things.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "토끼님, 용궁에 가면 높은 벼슬을 드려요.",
+     "src": "reuse",
+     "en": "Mr. Rabbit, come to the sea palace and you will get a high post.",
+     "segs": [
+      [
+       "jara",
+       "Mr. Rabbit, come to the sea palace and you will get a high post.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "맛있는 것도 잔뜩 있어요.",
+     "src": "reuse",
+     "en": "And there are lots of tasty treats.",
+     "segs": [
+      [
+       "jara",
+       "And there are lots of tasty treats.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:perk"
+     ]
+    },
+    {
+     "text": "토끼는 벼슬 모자와 떡을 떠올리며 싱글벙글 웃었어요.",
+     "src": "new",
+     "en": "The rabbit pictured a fine official's hat and rice cakes, and grinned and grinned.",
+     "segs": [
+      [
+       "nar",
+       "The rabbit pictured a fine official's hat and rice cakes, and grinned and grinned.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:tempted"
+     ]
+    },
+    {
+     "text": "벼슬? 맛있는 것? 좋아, 갈래!",
+     "src": "reuse",
+     "en": "A high post? Tasty treats? Yes, I will go!",
+     "segs": [
+      [
+       "rabbit",
+       "A high post? Tasty treats? Yes, I will go!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:grab"
+     ]
+    },
+    {
+     "text": "토끼는 덥석 따라나섰어요. 좋은 것만 생각했거든요.",
+     "src": "reuse",
+     "en": "The rabbit followed right away. He only thought about the good things.",
+     "segs": [
+      [
+       "nar",
+       "The rabbit followed right away. He only thought about the good things.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_dive",
+   "card": "Splash!",
+   "set": "dusk",
+   "enter": [],
+   "lines": [
+    {
+     "text": "해가 뉘엿뉘엿 질 무렵, 둘은 바닷가에 닿았어요.",
+     "src": "new",
+     "en": "As the sun was setting, the two of them reached the seashore.",
+     "segs": [
+      [
+       "nar",
+       "As the sun was setting, the two of them reached the seashore.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "제 등에 타세요. 꼭 잡으세요!",
+     "src": "reuse",
+     "en": "Climb on my back. Hold on tight!",
+     "segs": [
+      [
+       "jara",
+       "Climb on my back. Hold on tight!",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "토끼가 자라 등에 올라 등딱지를 꼭 잡자, 풍덩!",
+     "src": "new",
+     "en": "The rabbit climbed onto the terrapin's back and held on tight. Splash!",
+     "segs": [
+      [
+       "nar",
+       "The rabbit climbed onto the terrapin's back and held on tight. Splash!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:hopOn"
+     ],
+     "after": [
+      "beat:splash",
+      "cut:bj_cut_dive",
+      "beat:toDive"
+     ]
+    },
+    {
+     "text": "자라는 토끼를 업고 바다 속으로 들어갔어요.",
+     "src": "reuse",
+     "en": "The terrapin carried the rabbit down into the sea.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin carried the rabbit down into the sea.",
+       null
+      ]
+     ],
+     "after": [
+      "beat:descend"
+     ]
+    },
+    {
+     "text": "물고기 떼가 반짝반짝 지나가고, 미역이 살랑살랑 흔들렸어요.",
+     "src": "new",
+     "en": "Shiny fish swam by, and the seaweed swayed, swish, swish.",
+     "segs": [
+      [
+       "nar",
+       "Shiny fish swam by, and the seaweed swayed, swish, swish.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "우와, 물고기다! 바다 속은 파랗구나.",
+     "src": "reuse",
+     "en": "Wow, fish! It is so blue under the sea.",
+     "segs": [
+      [
+       "rabbit",
+       "Wow, fish! It is so blue under the sea.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:fishLook"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_gate",
+   "card": "The Sea Palace",
+   "set": "gate",
+   "enter": [],
+   "lines": [
+    {
+     "text": "용궁에 다 왔어요. 문이 차례로 열려요.",
+     "src": "reuse",
+     "en": "Here is the sea palace. The doors open, one by one.",
+     "segs": [
+      [
+       "nar",
+       "Here is the sea palace. The doors open, one by one.",
+       null
+      ]
+     ],
+     "after": [
+      "beat:doorOpen:0"
+     ]
+    },
+    {
+     "text": "어서 오세요!",
+     "src": "reuse",
+     "en": "Welcome!",
+     "segs": [
+      [
+       "crab",
+       "Welcome!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:crabHello"
+     ]
+    },
+    {
+     "text": "자라와 토끼는 둘째 문, 셋째 문을 지나 안으로 들어갔어요.",
+     "src": "new",
+     "en": "The terrapin and the rabbit went through the second door and the third door.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin and the rabbit went through the second door and the third door.",
+       null
+      ]
+     ],
+     "after": [
+      "beat:walkTo:400",
+      "beat:doorOpen:1",
+      "beat:walkTo:640",
+      "beat:doorOpen:2"
+     ]
+    },
+    {
+     "text": "우와, 진주랑 산호가 반짝반짝!",
+     "src": "reuse",
+     "en": "Wow, pearls and coral, all sparkly!",
+     "segs": [
+      [
+       "rabbit",
+       "Wow, pearls and coral, all sparkly!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:sparkle"
+     ]
+    },
+    {
+     "text": "자, 용왕님께 가요.",
+     "src": "reuse",
+     "en": "Now, let us go to the Dragon King.",
+     "segs": [
+      [
+       "jara",
+       "Now, let us go to the Dragon King.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:jaraBack"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_liver",
+   "card": "Give Me Your Liver",
+   "set": "throne",
+   "enter": [],
+   "lines": [
+    {
+     "text": "커다란 옥좌에 앉은 용왕님이 토끼를 내려다보았어요.",
+     "src": "new",
+     "en": "The Dragon King, on his great throne, looked down at the rabbit.",
+     "segs": [
+      [
+       "nar",
+       "The Dragon King, on his great throne, looked down at the rabbit.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "토끼야, 잘 왔다. 네 간을 다오.",
+     "src": "reuse",
+     "en": "Rabbit, welcome. Give me your liver.",
+     "segs": [
+      [
+       "king",
+       "Rabbit, welcome. Give me your liver.",
+       "normal"
+      ]
+     ],
+     "before": [
+      "beat:kingAsks"
+     ]
+    },
+    {
+     "text": "토끼는 깜짝 놀라 뒤로 벌러덩 넘어졌어요.",
+     "src": "new",
+     "en": "The rabbit was so surprised, he fell right over backwards.",
+     "segs": [
+      [
+       "nar",
+       "The rabbit was so surprised, he fell right over backwards.",
+       null
+      ]
+     ],
+     "before": [
+      "cut:bj_cut_shock",
+      "beat:fall"
+     ]
+    },
+    {
+     "text": "네?! 제 간을요?",
+     "src": "reuse",
+     "en": "What?! My liver?",
+     "segs": [
+      [
+       "rabbit",
+       "What?! My liver?",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "토끼는 그제야 알았어요. 자라가 거짓말을 한 거예요.",
+     "src": "reuse",
+     "en": "Only then did the rabbit understand. The terrapin had told a lie.",
+     "segs": [
+      [
+       "nar",
+       "Only then did the rabbit understand. The terrapin had told a lie.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "어떡하지… 겁먹지 말고 생각하자.",
+     "src": "reuse",
+     "en": "What do I do... Do not be scared. Think.",
+     "segs": [
+      [
+       "rabbit",
+       "What do I do... Do not be scared. Think.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:think"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_trick",
+   "card": "The Rabbit's Trick",
+   "set": "throneClose",
+   "enter": [],
+   "lines": [
+    {
+     "text": "용왕님, 저는 간을 꺼내서 산속 바위에 널어 두고 왔어요.",
+     "src": "reuse",
+     "en": "Your Majesty, I took my liver out and left it drying on a rock in the mountains.",
+     "segs": [
+      [
+       "rabbit",
+       "Your Majesty, I took my liver out and left it drying on a rock in the mountains.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:clever"
+     ]
+    },
+    {
+     "text": "자라님이 미리 말을 안 해 줬어요. 가서 가져올게요!",
+     "src": "reuse",
+     "en": "The terrapin did not tell me before. I will go and get it!",
+     "segs": [
+      [
+       "rabbit",
+       "The terrapin did not tell me before. I will go and get it!",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "그래? 그럼 얼른 가져오너라.",
+     "src": "reuse",
+     "en": "Is that so? Then go and bring it quickly.",
+     "segs": [
+      [
+       "king",
+       "Is that so? Then go and bring it quickly.",
+       "normal"
+      ]
+     ],
+     "before": [
+      "beat:nod"
+     ]
+    },
+    {
+     "text": "용왕님은 토끼 말을 믿었어요.",
+     "src": "reuse",
+     "en": "The Dragon King believed the rabbit.",
+     "segs": [
+      [
+       "nar",
+       "The Dragon King believed the rabbit.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "토끼는 속으로 휴, 하고 숨을 내쉬었어요.",
+     "src": "new",
+     "en": "Inside, the rabbit let out a quiet sigh of relief.",
+     "segs": [
+      [
+       "nar",
+       "Inside, the rabbit let out a quiet sigh of relief.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "제가 모시고 다녀오겠습니다.",
+     "src": "reuse",
+     "en": "I will take him there and back.",
+     "segs": [
+      [
+       "jara",
+       "I will take him there and back.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:jaraDoubt",
+      "beat:jaraBow"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_land",
+   "card": "Back to Land",
+   "set": "morning",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 토끼를 업고 다시 뭍으로 갔어요.",
+     "src": "reuse",
+     "en": "The terrapin carried the rabbit back to land.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin carried the rabbit back to land.",
+       null
+      ]
+     ],
+     "after": [
+      "beat:arrive"
+     ]
+    },
+    {
+     "text": "바위 위에 올라선 토끼가 자라를 내려다보며 웃었어요.",
+     "src": "new",
+     "en": "Standing on top of a rock, the rabbit looked down at the terrapin and laughed.",
+     "segs": [
+      [
+       "nar",
+       "Standing on top of a rock, the rabbit looked down at the terrapin and laughed.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "자라님, 간을 꺼내 놓고 다니는 동물이 어디 있어요? 하하!",
+     "src": "reuse",
+     "en": "Mr. Terrapin, what animal takes its liver out and leaves it behind? Ha ha!",
+     "segs": [
+      [
+       "rabbit",
+       "Mr. Terrapin, what animal takes its liver out and leaves it behind? Ha ha!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:laugh"
+     ]
+    },
+    {
+     "text": "이제 달콤한 말엔 안 속을 거야!",
+     "src": "reuse",
+     "en": "I will never be fooled by sweet words again!",
+     "segs": [
+      [
+       "rabbit",
+       "I will never be fooled by sweet words again!",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "아이고… 속았구나.",
+     "src": "reuse",
+     "en": "Oh dear... I was tricked.",
+     "segs": [
+      [
+       "jara",
+       "Oh dear... I was tricked.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:tricked"
+     ]
+    },
+    {
+     "text": "안녕!",
+     "src": "reuse",
+     "en": "Bye-bye!",
+     "segs": [
+      [
+       "rabbit",
+       "Bye-bye!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:wave"
+     ],
+     "after": [
+      "cut:bj_cut_hop",
+      "beat:runAway"
+     ]
+    },
+    {
+     "text": "토끼는 숲으로 깡충깡충 달아났어요.",
+     "src": "new",
+     "en": "The rabbit hopped away, hop, hop, into the forest.",
+     "segs": [
+      [
+       "nar",
+       "The rabbit hopped away, hop, hop, into the forest.",
+       null
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_sage",
+   "card": "The Mountain Spirit's Medicine",
+   "set": "sage",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 바닷가에 엎드려 한숨을 쉬었어요.",
+     "src": "reuse",
+     "en": "The terrapin lay down on the beach and sighed.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin lay down on the beach and sighed.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:sigh"
+     ]
+    },
+    {
+     "text": "용왕님께 뭐라고 하지…",
+     "src": "reuse",
+     "en": "What will I tell the Dragon King...",
+     "segs": [
+      [
+       "jara",
+       "What will I tell the Dragon King...",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "그때, 산신령이 나타났어요.",
+     "src": "reuse",
+     "en": "Just then, the mountain spirit appeared.",
+     "segs": [
+      [
+       "nar",
+       "Just then, the mountain spirit appeared.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:sageAppears"
+     ]
+    },
+    {
+     "text": "자라야, 애쓴 마음이 갸륵하구나. 이 약을 용왕님께 드려라.",
+     "src": "reuse",
+     "en": "Terrapin, you tried so hard for your king. Take this medicine to the Dragon King.",
+     "segs": [
+      [
+       "sage",
+       "Terrapin, you tried so hard for your king. Take this medicine to the Dragon King.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:give"
+     ],
+     "after": [
+      "cut:bj_cut_medicine"
+     ]
+    },
+    {
+     "text": "고맙습니다, 산신령님!",
+     "src": "reuse",
+     "en": "Thank you, mountain spirit!",
+     "segs": [
+      [
+       "jara",
+       "Thank you, mountain spirit!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:thanks"
+     ]
+    },
+    {
+     "text": "자라는 약을 안고 바다로 돌아갔어요.",
+     "src": "reuse",
+     "en": "The terrapin hugged the medicine and went back to the sea.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin hugged the medicine and went back to the sea.",
+       null
+      ]
+     ],
+     "after": [
+      "beat:swimHome"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R12_healed",
+   "card": null,
+   "set": "healed",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 용궁으로 돌아와 용왕님께 약을 드렸어요.",
+     "src": "new",
+     "en": "The terrapin came back to the sea palace and gave the medicine to the Dragon King.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin came back to the sea palace and gave the medicine to the Dragon King.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "아, 이제 다 나았다!",
+     "src": "reuse",
+     "en": "Ah, now I am all better!",
+     "segs": [
+      [
+       "king",
+       "Ah, now I am all better!",
+       "happy:1.3"
+      ]
+     ],
+     "before": [
+      "beat:well"
+     ]
+    },
+    {
+     "text": "용궁에 웃음이 돌아왔어요.",
+     "src": "reuse",
+     "en": "Laughter came back to the sea palace.",
+     "segs": [
+      [
+       "nar",
+       "Laughter came back to the sea palace.",
+       null
+      ]
+     ],
+     "after": [
+      "beat:cheer"
+     ]
+    },
+    {
+     "text": "달콤한 말에 덥석 따라가지 않고, 어려울 땐 차분히 생각하면 돼요.",
+     "src": "new",
+     "en": "Do not follow sweet words right away, and when things are hard, stay calm and think.",
+     "segs": [
+      [
+       "nar",
+       "Do not follow sweet words right away, and when things are hard, stay calm and think.",
+       null
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

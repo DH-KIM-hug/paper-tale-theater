@@ -1,0 +1,1224 @@
+{
+ "mode": "read",
+ "tale": "byeoljubu",
+ "lang": "ko",
+ "title": "별주부전",
+ "voices_from": "voice_script_el.json",
+ "moral": "달콤한 말에 덥석 따라가지 말아요. 어려울 땐 차분히 생각해요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 기획 PLAN.md, 놀이판 11장 → 읽기 12장(11장 끝 용궁을 따로 셈). 조작·배움 놀이를 뺐다: 2장 바다·뭍 가르기(안내·오답 줄), 3~4장 방향 고르기 안내 셋과 오답 줄, 6장 자라 등 톡 안내, 8장 얼굴 카드 안내·오답 줄, 10장 토끼 톡 안내. 고르기·톡은 저절로 정답대로 진행한다(가르기는 자라, 길은 정답 길, 얼굴은 놀란 얼굴 — 얼굴 카드 없이 컷으로 바로). 간은 원작 그대로 말하고 그림은 순화(칼·피 없음). src: reuse = 놀이판 줄 그대로(녹음 공유), new = 새 내레이터 줄(녹음 필요). 새 줄은 모두 nar, 의성어·의태어를 넣었다. 교훈은 마지막 장면 마지막 줄로 이야기 말투로 한 번 읽는다(READ_MODE §3-5). 용왕(king)은 Typecast(tc) 배역이라 새 대사를 주지 않았다.",
+ "acts": {
+  "set:<chamber|hall|shore|fork1|meetClose|dusk|gate|throne|throneClose|morning|sage|healed>": "장면 배치(놀이판 LAY 그대로). 첫 장면 chamber 에서 여는 음악",
+  "beat:<이름>[:인자][:인자]": "놀이판과 같은 연출 조각(byeoljubu.js 의 B). 예: beat:goPath:left:600 = 정답 길을 따라 걸어감, beat:toFork2 = 숲 ②로 카메라 이동, beat:toDive = 바다 속 세트",
+  "cut:<bj_cut_volunteer|bj_cut_dive|bj_cut_shock|bj_cut_hop|bj_cut_medicine>": "컷 그림(cutImage 3초)",
+  "snd:<이름>[:볼륨][:지연ms] | look:<배우>:<자세>[:<방향>] | view:<lx>[:ms]": "효과음·자세·세로 화면 가운데"
+ },
+ "scenes": [
+  {
+   "key": "R01_chamber",
+   "card": "아픈 용왕님",
+   "set": "chamber",
+   "enter": [],
+   "lines": [
+    {
+     "text": "깊고 깊은 바다 밑에 용궁이 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "깊고 깊은 바다 밑에 용궁이 있어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "산호 기둥 사이로 물방울이 보글보글 올라가요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "산호 기둥 사이로 물방울이 보글보글 올라가요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "용왕님이 병이 났어요. 콜록, 콜록.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "용왕님이 병이 났어요. 콜록, 콜록.",
+       null,
+       "[gentle, a little worried, soft coughs on 콜록]"
+      ]
+     ],
+     "before": [
+      "beat:cough"
+     ]
+    },
+    {
+     "text": "아이고, 온몸이 아프구나.",
+     "src": "reuse",
+     "segs": [
+      [
+       "king",
+       "아이고, 온몸이 아프구나.",
+       "sad:1.0",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "잉어 의원이 약탕기를 들고 곰곰이 생각했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "잉어 의원이 약탕기를 들고 곰곰이 생각했어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "뭍에 사는 토끼의 간을 드시면 나아요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "doctor",
+       "뭍에 사는 토끼의 간을 드시면 나아요.",
+       null,
+       "[clear, careful, polite doctor, crisp]"
+      ]
+     ],
+     "before": [
+      "beat:doctorBow"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_hall",
+   "card": "누가 갈까요?",
+   "set": "hall",
+   "enter": [],
+   "lines": [
+    {
+     "text": "용왕님은 신하들을 모두 큰 방으로 불렀어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "용왕님은 신하들을 모두 큰 방으로 불렀어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "누가 토끼 간을 가져오겠느냐?",
+     "src": "reuse",
+     "segs": [
+      [
+       "king",
+       "누가 토끼 간을 가져오겠느냐?",
+       "normal",
+       null
+      ]
+     ],
+     "before": [
+      "beat:ask"
+     ]
+    },
+    {
+     "text": "제가요! 다리가 여덟이니 제일 빨라요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "octo",
+       "제가요! 다리가 여덟이니 제일 빨라요!",
+       null,
+       "[boastful, fast, proud, show-off]"
+      ]
+     ],
+     "before": [
+      "beat:boast"
+     ]
+    },
+    {
+     "text": "문어님, 뭍에서는 다리가 미끌미끌해서 못 걸어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "문어님, 뭍에서는 다리가 미끌미끌해서 못 걸어요.",
+       null,
+       "[polite, calm, slow, gently correcting]"
+      ]
+     ],
+     "before": [
+      "beat:argue"
+     ]
+    },
+    {
+     "text": "걸을 수 있다니까!",
+     "src": "reuse",
+     "segs": [
+      [
+       "octo",
+       "걸을 수 있다니까!",
+       null,
+       "[huffy, puffed cheeks, comic, stamping]"
+      ]
+     ],
+     "before": [
+      "beat:huff"
+     ]
+    },
+    {
+     "text": "문어는 먹물 속에서 뻐끔뻐끔. 물고기들은 뭍에 가면 숨을 못 쉬어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "문어는 먹물 속에서 뻐끔뻐끔. 물고기들은 뭍에 가면 숨을 못 쉬어요.",
+       null,
+       "[playful, amused, warm storytelling]"
+      ]
+     ],
+     "before": [
+      "beat:inkClear"
+     ]
+    },
+    {
+     "text": "신하들 가운데 물에서도 뭍에서도 걸을 수 있는 건 자라뿐이었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "신하들 가운데 물에서도 뭍에서도 걸을 수 있는 건 자라뿐이었어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "after": [
+      "beat:chosen"
+     ]
+    },
+    {
+     "text": "저는 물에서도 뭍에서도 걸을 수 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "저는 물에서도 뭍에서도 걸을 수 있어요.",
+       null,
+       "[polite, calm, quietly proud]"
+      ]
+     ]
+    },
+    {
+     "text": "자라가 가거라. 화공은 토끼를 그려 주어라.",
+     "src": "reuse",
+     "segs": [
+      [
+       "king",
+       "자라가 가거라. 화공은 토끼를 그려 주어라.",
+       "normal",
+       null
+      ]
+     ],
+     "before": [
+      "beat:kingSends"
+     ]
+    },
+    {
+     "text": "화공이 토끼 그림을 그렸어요. 귀는 길쭉, 꼬리는 짧게.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "화공이 토끼 그림을 그렸어요. 귀는 길쭉, 꼬리는 짧게.",
+       null,
+       "[warm storytelling, light, rhythmic on 길쭉 and 짧게]"
+      ]
+     ],
+     "before": [
+      "beat:paint"
+     ],
+     "after": [
+      "cut:bj_cut_volunteer"
+     ]
+    },
+    {
+     "text": "이 그림을 들고 토끼를 찾겠습니다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "이 그림을 들고 토끼를 찾겠습니다!",
+       null,
+       "[polite, determined, bowing]"
+      ]
+     ],
+     "before": [
+      "beat:takeScroll"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03_shore",
+   "card": "뭍에 오른 자라",
+   "set": "shore",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 바다 위로 올라왔어요. 햇빛이 눈부셔요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "자라는 바다 위로 올라왔어요. 햇빛이 눈부셔요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "beat:crawlUp"
+     ]
+    },
+    {
+     "text": "뭍은 이렇게 환하구나!",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "뭍은 이렇게 환하구나!",
+       null,
+       "[amazed, squinting, slow]"
+      ]
+     ]
+    },
+    {
+     "text": "처음 보는 뭍에서 자라는 두리번두리번 길을 찾았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "처음 보는 뭍에서 자라는 두리번두리번 길을 찾았어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "갈매기님, 이 동물 어디 있소?",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "갈매기님, 이 동물 어디 있소?",
+       null,
+       "[polite, asking, holding up a picture]"
+      ]
+     ],
+     "before": [
+      "beat:show"
+     ]
+    },
+    {
+     "text": "토끼네! 저 산에 살아. 왼쪽으로 가시오.",
+     "src": "reuse",
+     "segs": [
+      [
+       "gull",
+       "토끼네! 저 산에 살아. 왼쪽으로 가시오.",
+       null,
+       "[bright, quick, chirpy]"
+      ]
+     ],
+     "before": [
+      "beat:gullPoint"
+     ]
+    },
+    {
+     "text": "왼쪽, 왼쪽.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "왼쪽, 왼쪽.",
+       null,
+       "[muttering to himself, steady walking rhythm]"
+      ]
+     ],
+     "after": [
+      "beat:goPath:left:600"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_forest",
+   "card": "산길",
+   "set": "fork1",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 엉금엉금 산으로 올라갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "자라는 엉금엉금 산으로 올라갔어요.",
+       null,
+       "[warm storytelling, slow, rhythmic on 엉금엉금]"
+      ]
+     ]
+    },
+    {
+     "text": "다람쥐님, 이 동물 어디 있소?",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "다람쥐님, 이 동물 어디 있소?",
+       null,
+       "[polite, asking, holding up a picture]"
+      ]
+     ],
+     "before": [
+      "beat:show"
+     ]
+    },
+    {
+     "text": "토끼? 오른쪽으로 가시오.",
+     "src": "reuse",
+     "segs": [
+      [
+       "squirrel",
+       "토끼? 오른쪽으로 가시오.",
+       null,
+       "[quick, high, bouncy]"
+      ]
+     ],
+     "before": [
+      "beat:squirrelPoint"
+     ]
+    },
+    {
+     "text": "자라는 오른쪽 길로 숲 속 깊이 들어갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "자라는 오른쪽 길로 숲 속 깊이 들어갔어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "after": [
+      "beat:goPath:right:500",
+      "beat:toFork2"
+     ]
+    },
+    {
+     "text": "멧돼지님, 이 동물 어디 있소?",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "멧돼지님, 이 동물 어디 있소?",
+       null,
+       "[polite, asking, holding up a picture]"
+      ]
+     ],
+     "before": [
+      "beat:show"
+     ]
+    },
+    {
+     "text": "토끼는 저 바위 뒤에. 가운데로 가시오.",
+     "src": "reuse",
+     "segs": [
+      [
+       "boar",
+       "토끼는 저 바위 뒤에. 가운데로 가시오.",
+       null,
+       "[gruff, short, friendly, sniffing]"
+      ]
+     ],
+     "before": [
+      "beat:boarPoint"
+     ]
+    },
+    {
+     "text": "가운데 길 끝, 커다란 바위 뒤에서 무언가 바스락거렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "가운데 길 끝, 커다란 바위 뒤에서 무언가 바스락거렸어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "beat:goPath:mid:1580",
+      "beat:toMeet"
+     ]
+    },
+    {
+     "text": "누가 나를 찾아?",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "누가 나를 찾아?",
+       null,
+       "[curious, bright, bouncy]"
+      ]
+     ],
+     "before": [
+      "beat:rabbitPops"
+     ]
+    },
+    {
+     "text": "귀는 길쭉, 꼬리는 짧고… 똑같다! 토끼님이구나.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "귀는 길쭉, 꼬리는 짧고… 똑같다! 토끼님이구나.",
+       null,
+       "[comparing slowly, then delighted]"
+      ]
+     ],
+     "before": [
+      "beat:compare"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_sweet",
+   "card": "달콤한 말",
+   "set": "meetClose",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 공손하게 인사하고 달콤한 말을 꺼냈어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "자라는 공손하게 인사하고 달콤한 말을 꺼냈어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "토끼님, 용궁에 가면 높은 벼슬을 드려요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "토끼님, 용궁에 가면 높은 벼슬을 드려요.",
+       null,
+       "[sweet, persuasive, smooth]"
+      ]
+     ]
+    },
+    {
+     "text": "맛있는 것도 잔뜩 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "맛있는 것도 잔뜩 있어요.",
+       null,
+       "[sweet, persuasive, tempting]"
+      ]
+     ],
+     "before": [
+      "beat:perk"
+     ]
+    },
+    {
+     "text": "토끼는 벼슬 모자와 떡을 떠올리며 싱글벙글 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "토끼는 벼슬 모자와 떡을 떠올리며 싱글벙글 웃었어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "beat:tempted"
+     ]
+    },
+    {
+     "text": "벼슬? 맛있는 것? 좋아, 갈래!",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "벼슬? 맛있는 것? 좋아, 갈래!",
+       null,
+       "[excited, greedy, quick]"
+      ]
+     ],
+     "before": [
+      "beat:grab"
+     ]
+    },
+    {
+     "text": "토끼는 덥석 따라나섰어요. 좋은 것만 생각했거든요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토끼는 덥석 따라나섰어요. 좋은 것만 생각했거든요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_dive",
+   "card": "풍덩!",
+   "set": "dusk",
+   "enter": [],
+   "lines": [
+    {
+     "text": "해가 뉘엿뉘엿 질 무렵, 둘은 바닷가에 닿았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "해가 뉘엿뉘엿 질 무렵, 둘은 바닷가에 닿았어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "제 등에 타세요. 꼭 잡으세요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "제 등에 타세요. 꼭 잡으세요!",
+       null,
+       "[polite, kind, a little urgent]"
+      ]
+     ]
+    },
+    {
+     "text": "토끼가 자라 등에 올라 등딱지를 꼭 잡자, 풍덩!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "토끼가 자라 등에 올라 등딱지를 꼭 잡자, 풍덩!",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "beat:hopOn"
+     ],
+     "after": [
+      "beat:splash",
+      "cut:bj_cut_dive",
+      "beat:toDive"
+     ]
+    },
+    {
+     "text": "자라는 토끼를 업고 바다 속으로 들어갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "자라는 토끼를 업고 바다 속으로 들어갔어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "after": [
+      "beat:descend"
+     ]
+    },
+    {
+     "text": "물고기 떼가 반짝반짝 지나가고, 미역이 살랑살랑 흔들렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "물고기 떼가 반짝반짝 지나가고, 미역이 살랑살랑 흔들렸어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "우와, 물고기다! 바다 속은 파랗구나.",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "우와, 물고기다! 바다 속은 파랗구나.",
+       null,
+       "[amazed, delighted, bright]"
+      ]
+     ],
+     "before": [
+      "beat:fishLook"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_gate",
+   "card": "용궁 구경",
+   "set": "gate",
+   "enter": [],
+   "lines": [
+    {
+     "text": "용궁에 다 왔어요. 문이 차례로 열려요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "용궁에 다 왔어요. 문이 차례로 열려요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "after": [
+      "beat:doorOpen:0"
+     ]
+    },
+    {
+     "text": "어서 오세요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "crab",
+       "어서 오세요!",
+       null,
+       "[loud, cheerful, short, guard]"
+      ]
+     ],
+     "before": [
+      "beat:crabHello"
+     ]
+    },
+    {
+     "text": "자라와 토끼는 둘째 문, 셋째 문을 지나 안으로 들어갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "자라와 토끼는 둘째 문, 셋째 문을 지나 안으로 들어갔어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "after": [
+      "beat:walkTo:400",
+      "beat:doorOpen:1",
+      "beat:walkTo:640",
+      "beat:doorOpen:2"
+     ]
+    },
+    {
+     "text": "우와, 진주랑 산호가 반짝반짝!",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "우와, 진주랑 산호가 반짝반짝!",
+       null,
+       "[amazed, delighted]"
+      ]
+     ],
+     "before": [
+      "beat:sparkle"
+     ]
+    },
+    {
+     "text": "자, 용왕님께 가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "자, 용왕님께 가요.",
+       null,
+       "[polite, calm]"
+      ]
+     ],
+     "before": [
+      "beat:jaraBack"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_liver",
+   "card": "간을 다오",
+   "set": "throne",
+   "enter": [],
+   "lines": [
+    {
+     "text": "커다란 옥좌에 앉은 용왕님이 토끼를 내려다보았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "커다란 옥좌에 앉은 용왕님이 토끼를 내려다보았어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "토끼야, 잘 왔다. 네 간을 다오.",
+     "src": "reuse",
+     "segs": [
+      [
+       "king",
+       "토끼야, 잘 왔다. 네 간을 다오.",
+       "normal",
+       null
+      ]
+     ],
+     "before": [
+      "beat:kingAsks"
+     ]
+    },
+    {
+     "text": "토끼는 깜짝 놀라 뒤로 벌러덩 넘어졌어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "토끼는 깜짝 놀라 뒤로 벌러덩 넘어졌어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "cut:bj_cut_shock",
+      "beat:fall"
+     ]
+    },
+    {
+     "text": "네?! 제 간을요?",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "네?! 제 간을요?",
+       null,
+       "[shocked, high, surprised]"
+      ]
+     ]
+    },
+    {
+     "text": "토끼는 그제야 알았어요. 자라가 거짓말을 한 거예요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "토끼는 그제야 알았어요. 자라가 거짓말을 한 거예요.",
+       null,
+       "[serious but gentle storytelling]"
+      ]
+     ]
+    },
+    {
+     "text": "어떡하지… 겁먹지 말고 생각하자.",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "어떡하지… 겁먹지 말고 생각하자.",
+       null,
+       "[whispering, to himself, slow, steadying]"
+      ]
+     ],
+     "before": [
+      "beat:think"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09_trick",
+   "card": "토끼의 꾀",
+   "set": "throneClose",
+   "enter": [],
+   "lines": [
+    {
+     "text": "용왕님, 저는 간을 꺼내서 산속 바위에 널어 두고 왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "용왕님, 저는 간을 꺼내서 산속 바위에 널어 두고 왔어요.",
+       null,
+       "[confident, clever, calm]"
+      ]
+     ],
+     "before": [
+      "beat:clever"
+     ]
+    },
+    {
+     "text": "자라님이 미리 말을 안 해 줬어요. 가서 가져올게요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "자라님이 미리 말을 안 해 줬어요. 가서 가져올게요!",
+       null,
+       "[confident, bright, helpful]"
+      ]
+     ]
+    },
+    {
+     "text": "그래? 그럼 얼른 가져오너라.",
+     "src": "reuse",
+     "segs": [
+      [
+       "king",
+       "그래? 그럼 얼른 가져오너라.",
+       "normal",
+       null
+      ]
+     ],
+     "before": [
+      "beat:nod"
+     ]
+    },
+    {
+     "text": "용왕님은 토끼 말을 믿었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "용왕님은 토끼 말을 믿었어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "토끼는 속으로 휴, 하고 숨을 내쉬었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "토끼는 속으로 휴, 하고 숨을 내쉬었어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "제가 모시고 다녀오겠습니다.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "제가 모시고 다녀오겠습니다.",
+       null,
+       "[polite, a little doubtful]"
+      ]
+     ],
+     "before": [
+      "beat:jaraDoubt",
+      "beat:jaraBow"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10_land",
+   "card": "다시 뭍으로",
+   "set": "morning",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 토끼를 업고 다시 뭍으로 갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "자라는 토끼를 업고 다시 뭍으로 갔어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "after": [
+      "beat:arrive"
+     ]
+    },
+    {
+     "text": "바위 위에 올라선 토끼가 자라를 내려다보며 웃었어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "바위 위에 올라선 토끼가 자라를 내려다보며 웃었어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "자라님, 간을 꺼내 놓고 다니는 동물이 어디 있어요? 하하!",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "자라님, 간을 꺼내 놓고 다니는 동물이 어디 있어요? 하하!",
+       null,
+       "[cheeky, laughing, light]"
+      ]
+     ],
+     "before": [
+      "beat:laugh"
+     ]
+    },
+    {
+     "text": "이제 달콤한 말엔 안 속을 거야!",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "이제 달콤한 말엔 안 속을 거야!",
+       null,
+       "[firm, bright, decided]"
+      ]
+     ]
+    },
+    {
+     "text": "아이고… 속았구나.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "아이고… 속았구나.",
+       null,
+       "[sighing, deflated, comic]"
+      ]
+     ],
+     "before": [
+      "beat:tricked"
+     ]
+    },
+    {
+     "text": "안녕!",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "안녕!",
+       null,
+       "[cheerful, waving]"
+      ]
+     ],
+     "before": [
+      "beat:wave"
+     ],
+     "after": [
+      "cut:bj_cut_hop",
+      "beat:runAway"
+     ]
+    },
+    {
+     "text": "토끼는 숲으로 깡충깡충 달아났어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "토끼는 숲으로 깡충깡충 달아났어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11_sage",
+   "card": "산신령의 약",
+   "set": "sage",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 바닷가에 엎드려 한숨을 쉬었어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "자라는 바닷가에 엎드려 한숨을 쉬었어요.",
+       null,
+       "[soft, slow, a little sad]"
+      ]
+     ],
+     "before": [
+      "beat:sigh"
+     ]
+    },
+    {
+     "text": "용왕님께 뭐라고 하지…",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "용왕님께 뭐라고 하지…",
+       null,
+       "[sad, quiet, sighing]"
+      ]
+     ]
+    },
+    {
+     "text": "그때, 산신령이 나타났어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "그때, 산신령이 나타났어요.",
+       null,
+       "[soft wonder, slow]"
+      ]
+     ],
+     "before": [
+      "beat:sageAppears"
+     ]
+    },
+    {
+     "text": "자라야, 애쓴 마음이 갸륵하구나. 이 약을 용왕님께 드려라.",
+     "src": "reuse",
+     "segs": [
+      [
+       "sage",
+       "자라야, 애쓴 마음이 갸륵하구나. 이 약을 용왕님께 드려라.",
+       null,
+       "[warm, kind old man, clear, gentle]"
+      ]
+     ],
+     "before": [
+      "beat:give"
+     ],
+     "after": [
+      "cut:bj_cut_medicine"
+     ]
+    },
+    {
+     "text": "고맙습니다, 산신령님!",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "고맙습니다, 산신령님!",
+       null,
+       "[grateful, relieved, bright]"
+      ]
+     ],
+     "before": [
+      "beat:thanks"
+     ]
+    },
+    {
+     "text": "자라는 약을 안고 바다로 돌아갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "자라는 약을 안고 바다로 돌아갔어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "after": [
+      "beat:swimHome"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R12_healed",
+   "card": null,
+   "set": "healed",
+   "enter": [],
+   "lines": [
+    {
+     "text": "자라는 용궁으로 돌아와 용왕님께 약을 드렸어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "자라는 용궁으로 돌아와 용왕님께 약을 드렸어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ]
+    },
+    {
+     "text": "아, 이제 다 나았다!",
+     "src": "reuse",
+     "segs": [
+      [
+       "king",
+       "아, 이제 다 나았다!",
+       "happy:1.3",
+       null
+      ]
+     ],
+     "before": [
+      "beat:well"
+     ]
+    },
+    {
+     "text": "용궁에 웃음이 돌아왔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "용궁에 웃음이 돌아왔어요.",
+       null,
+       "[warm, happy, gentle ending]"
+      ]
+     ],
+     "after": [
+      "beat:cheer"
+     ]
+    },
+    {
+     "text": "달콤한 말에 덥석 따라가지 않고, 어려울 땐 차분히 생각하면 돼요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "달콤한 말에 덥석 따라가지 않고, 어려울 땐 차분히 생각하면 돼요.",
+       null,
+       "[warm, gentle, slow, closing the story]"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

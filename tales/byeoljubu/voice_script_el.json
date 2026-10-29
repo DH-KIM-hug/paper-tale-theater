@@ -1,0 +1,853 @@
+{
+ "notes": "별주부전(byeoljubu) 놀이판 대사. 기획 tales/byeoljubu/PLAN.md, 목소리 tales/byeoljubu/VOICES.md(2026-10-30 확정): nar=Gyeorina, rabbit=Sparkles for Kids, jara=Hoon, king=tc(Typecast Changbae tc_60ad08c829e878c3c7d73965, ssfm-v30 — tools/typecast/gen_tale.py 로 용왕 줄만, 팥죽 halmi 방식), octo=Deoksu, doctor=wisdom, crab=Harry, gull=Yoojin, squirrel=Sejin, boar=Callum, sage=Bongpal. 한 편 안에서 목소리 겹침 없음. 모델 eleven_v4. 조작 안내 문장은 조작이 있는 장면(2·3·4·6·8·10)에만. 교훈은 대사로 읽지 않는다(끝 화면 글자만). 8장 토끼 속마음 줄은 속삭임. 영어판은 같은 목소리, 속도 0.9.",
+ "voices": {
+  "nar": "1gYuTfEwELcoEo96wnGj",
+  "rabbit": "tapn1QwocNXk3viVSowa",
+  "jara": "86GErZIiGJsPO3g7QNxZ",
+  "king": "tc",
+  "octo": "IAETYMYM3nJvjnlkVTKI",
+  "doctor": "Pyj2w3lxZ0VMpAJ4CmRu",
+  "crab": "wMrz30qBeYiSkAtnZGtn",
+  "gull": "Cm89zxZzEGaMu7ajYw2K",
+  "squirrel": "oZLQ9kHPMuIyd7Ja0YNU",
+  "boar": "N2lVS1w4EtoT3dr4eOWO",
+  "sage": "PLfpgtLkFW07fDYbUiRJ"
+ },
+ "tc_voice_ids": {
+  "king": "tc_60ad08c829e878c3c7d73965"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "rabbit": "eleven_v4",
+  "jara": "eleven_v4",
+  "king": "eleven_v4",
+  "octo": "eleven_v4",
+  "doctor": "eleven_v4",
+  "crab": "eleven_v4",
+  "gull": "eleven_v4",
+  "squirrel": "eleven_v4",
+  "boar": "eleven_v4",
+  "sage": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.35
+  },
+  "rabbit": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "jara": {
+   "stability": 0.5,
+   "style": 0.3
+  },
+  "king": {
+   "stability": 0.5,
+   "style": 0.3
+  },
+  "octo": {
+   "stability": 0.35,
+   "style": 0.55
+  },
+  "doctor": {
+   "stability": 0.5,
+   "style": 0.3
+  },
+  "crab": {
+   "stability": 0.35,
+   "style": 0.5
+  },
+  "gull": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "squirrel": {
+   "stability": 0.35,
+   "style": 0.55
+  },
+  "boar": {
+   "stability": 0.4,
+   "style": 0.45
+  },
+  "sage": {
+   "stability": 0.5,
+   "style": 0.35
+  }
+ },
+ "use_dir": [
+  "nar",
+  "rabbit",
+  "jara",
+  "king",
+  "octo",
+  "doctor",
+  "crab",
+  "gull",
+  "squirrel",
+  "boar",
+  "sage"
+ ],
+ "lines": [
+  {
+   "text": "깊고 깊은 바다 밑에 용궁이 있어요.",
+   "segs": [
+    [
+     "nar",
+     "깊고 깊은 바다 밑에 용궁이 있어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "용왕님이 병이 났어요. 콜록, 콜록.",
+   "segs": [
+    [
+     "nar",
+     "용왕님이 병이 났어요. 콜록, 콜록.",
+     null,
+     "[gentle, a little worried, soft coughs on 콜록]"
+    ]
+   ]
+  },
+  {
+   "text": "아이고, 온몸이 아프구나.",
+   "segs": [
+    [
+     "king",
+     "아이고, 온몸이 아프구나.",
+     "sad:1.0",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "뭍에 사는 토끼의 간을 드시면 나아요.",
+   "segs": [
+    [
+     "doctor",
+     "뭍에 사는 토끼의 간을 드시면 나아요.",
+     null,
+     "[clear, careful, polite doctor, crisp]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 토끼 간을 가져오겠느냐?",
+   "segs": [
+    [
+     "king",
+     "누가 토끼 간을 가져오겠느냐?",
+     "normal",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "제가요! 다리가 여덟이니 제일 빨라요!",
+   "segs": [
+    [
+     "octo",
+     "제가요! 다리가 여덟이니 제일 빨라요!",
+     null,
+     "[boastful, fast, proud, show-off]"
+    ]
+   ]
+  },
+  {
+   "text": "문어님, 뭍에서는 다리가 미끌미끌해서 못 걸어요.",
+   "segs": [
+    [
+     "jara",
+     "문어님, 뭍에서는 다리가 미끌미끌해서 못 걸어요.",
+     null,
+     "[polite, calm, slow, gently correcting]"
+    ]
+   ]
+  },
+  {
+   "text": "걸을 수 있다니까!",
+   "segs": [
+    [
+     "octo",
+     "걸을 수 있다니까!",
+     null,
+     "[huffy, puffed cheeks, comic, stamping]"
+    ]
+   ]
+  },
+  {
+   "text": "문어는 먹물 속에서 뻐끔뻐끔. 물고기들은 뭍에 가면 숨을 못 쉬어요.",
+   "segs": [
+    [
+     "nar",
+     "문어는 먹물 속에서 뻐끔뻐끔. 물고기들은 뭍에 가면 숨을 못 쉬어요.",
+     null,
+     "[playful, amused, warm storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "뭍에서도 걸을 수 있는 친구를 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "뭍에서도 걸을 수 있는 친구를 톡 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "저는 물 밖에선 숨을 못 쉬어요…",
+   "segs": [
+    [
+     "doctor",
+     "저는 물 밖에선 숨을 못 쉬어요…",
+     null,
+     "[gentle, a little sorry]"
+    ]
+   ]
+  },
+  {
+   "text": "나… 나는 미끌미끌…",
+   "segs": [
+    [
+     "octo",
+     "나… 나는 미끌미끌…",
+     null,
+     "[embarrassed, stammering, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "저는 물에서도 뭍에서도 걸을 수 있어요.",
+   "segs": [
+    [
+     "jara",
+     "저는 물에서도 뭍에서도 걸을 수 있어요.",
+     null,
+     "[polite, calm, quietly proud]"
+    ]
+   ]
+  },
+  {
+   "text": "자라가 가거라. 화공은 토끼를 그려 주어라.",
+   "segs": [
+    [
+     "king",
+     "자라가 가거라. 화공은 토끼를 그려 주어라.",
+     "normal",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "화공이 토끼 그림을 그렸어요. 귀는 길쭉, 꼬리는 짧게.",
+   "segs": [
+    [
+     "nar",
+     "화공이 토끼 그림을 그렸어요. 귀는 길쭉, 꼬리는 짧게.",
+     null,
+     "[warm storytelling, light, rhythmic on 길쭉 and 짧게]"
+    ]
+   ]
+  },
+  {
+   "text": "이 그림을 들고 토끼를 찾겠습니다!",
+   "segs": [
+    [
+     "jara",
+     "이 그림을 들고 토끼를 찾겠습니다!",
+     null,
+     "[polite, determined, bowing]"
+    ]
+   ]
+  },
+  {
+   "text": "자라는 바다 위로 올라왔어요. 햇빛이 눈부셔요.",
+   "segs": [
+    [
+     "nar",
+     "자라는 바다 위로 올라왔어요. 햇빛이 눈부셔요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "뭍은 이렇게 환하구나!",
+   "segs": [
+    [
+     "jara",
+     "뭍은 이렇게 환하구나!",
+     null,
+     "[amazed, squinting, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "갈매기님, 이 동물 어디 있소?",
+   "segs": [
+    [
+     "jara",
+     "갈매기님, 이 동물 어디 있소?",
+     null,
+     "[polite, asking, holding up a picture]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼네! 저 산에 살아. 왼쪽으로 가시오.",
+   "segs": [
+    [
+     "gull",
+     "토끼네! 저 산에 살아. 왼쪽으로 가시오.",
+     null,
+     "[bright, quick, chirpy]"
+    ]
+   ]
+  },
+  {
+   "text": "왼쪽 길을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "왼쪽 길을 톡 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting, stress 왼쪽]"
+    ]
+   ]
+  },
+  {
+   "text": "어? 이쪽이 아니네.",
+   "segs": [
+    [
+     "jara",
+     "어? 이쪽이 아니네.",
+     null,
+     "[puzzled, comic, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "왼쪽, 왼쪽.",
+   "segs": [
+    [
+     "jara",
+     "왼쪽, 왼쪽.",
+     null,
+     "[muttering to himself, steady walking rhythm]"
+    ]
+   ]
+  },
+  {
+   "text": "자라는 엉금엉금 산으로 올라갔어요.",
+   "segs": [
+    [
+     "nar",
+     "자라는 엉금엉금 산으로 올라갔어요.",
+     null,
+     "[warm storytelling, slow, rhythmic on 엉금엉금]"
+    ]
+   ]
+  },
+  {
+   "text": "다람쥐님, 이 동물 어디 있소?",
+   "segs": [
+    [
+     "jara",
+     "다람쥐님, 이 동물 어디 있소?",
+     null,
+     "[polite, asking, holding up a picture]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼? 오른쪽으로 가시오.",
+   "segs": [
+    [
+     "squirrel",
+     "토끼? 오른쪽으로 가시오.",
+     null,
+     "[quick, high, bouncy]"
+    ]
+   ]
+  },
+  {
+   "text": "오른쪽 길을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "오른쪽 길을 톡 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting, stress 오른쪽]"
+    ]
+   ]
+  },
+  {
+   "text": "멧돼지님, 이 동물 어디 있소?",
+   "segs": [
+    [
+     "jara",
+     "멧돼지님, 이 동물 어디 있소?",
+     null,
+     "[polite, asking, holding up a picture]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 저 바위 뒤에. 가운데로 가시오.",
+   "segs": [
+    [
+     "boar",
+     "토끼는 저 바위 뒤에. 가운데로 가시오.",
+     null,
+     "[gruff, short, friendly, sniffing]"
+    ]
+   ]
+  },
+  {
+   "text": "가운데 길을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "가운데 길을 톡 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting, stress 가운데]"
+    ]
+   ]
+  },
+  {
+   "text": "누가 나를 찾아?",
+   "segs": [
+    [
+     "rabbit",
+     "누가 나를 찾아?",
+     null,
+     "[curious, bright, bouncy]"
+    ]
+   ]
+  },
+  {
+   "text": "귀는 길쭉, 꼬리는 짧고… 똑같다! 토끼님이구나.",
+   "segs": [
+    [
+     "jara",
+     "귀는 길쭉, 꼬리는 짧고… 똑같다! 토끼님이구나.",
+     null,
+     "[comparing slowly, then delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼님, 용궁에 가면 높은 벼슬을 드려요.",
+   "segs": [
+    [
+     "jara",
+     "토끼님, 용궁에 가면 높은 벼슬을 드려요.",
+     null,
+     "[sweet, persuasive, smooth]"
+    ]
+   ]
+  },
+  {
+   "text": "맛있는 것도 잔뜩 있어요.",
+   "segs": [
+    [
+     "jara",
+     "맛있는 것도 잔뜩 있어요.",
+     null,
+     "[sweet, persuasive, tempting]"
+    ]
+   ]
+  },
+  {
+   "text": "벼슬? 맛있는 것? 좋아, 갈래!",
+   "segs": [
+    [
+     "rabbit",
+     "벼슬? 맛있는 것? 좋아, 갈래!",
+     null,
+     "[excited, greedy, quick]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 덥석 따라나섰어요. 좋은 것만 생각했거든요.",
+   "segs": [
+    [
+     "nar",
+     "토끼는 덥석 따라나섰어요. 좋은 것만 생각했거든요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "제 등에 타세요. 꼭 잡으세요!",
+   "segs": [
+    [
+     "jara",
+     "제 등에 타세요. 꼭 잡으세요!",
+     null,
+     "[polite, kind, a little urgent]"
+    ]
+   ]
+  },
+  {
+   "text": "자라 등을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "자라 등을 톡 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "자라는 토끼를 업고 바다 속으로 들어갔어요.",
+   "segs": [
+    [
+     "nar",
+     "자라는 토끼를 업고 바다 속으로 들어갔어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "우와, 물고기다! 바다 속은 파랗구나.",
+   "segs": [
+    [
+     "rabbit",
+     "우와, 물고기다! 바다 속은 파랗구나.",
+     null,
+     "[amazed, delighted, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "용궁에 다 왔어요. 문이 차례로 열려요.",
+   "segs": [
+    [
+     "nar",
+     "용궁에 다 왔어요. 문이 차례로 열려요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "어서 오세요!",
+   "segs": [
+    [
+     "crab",
+     "어서 오세요!",
+     null,
+     "[loud, cheerful, short, guard]"
+    ]
+   ]
+  },
+  {
+   "text": "우와, 진주랑 산호가 반짝반짝!",
+   "segs": [
+    [
+     "rabbit",
+     "우와, 진주랑 산호가 반짝반짝!",
+     null,
+     "[amazed, delighted]"
+    ]
+   ]
+  },
+  {
+   "text": "자, 용왕님께 가요.",
+   "segs": [
+    [
+     "jara",
+     "자, 용왕님께 가요.",
+     null,
+     "[polite, calm]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼야, 잘 왔다. 네 간을 다오.",
+   "segs": [
+    [
+     "king",
+     "토끼야, 잘 왔다. 네 간을 다오.",
+     "normal",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 어떤 얼굴이 됐을까요? 놀란 얼굴을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "토끼는 어떤 얼굴이 됐을까요? 놀란 얼굴을 톡 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "웃을 때가 아니에요.",
+   "segs": [
+    [
+     "nar",
+     "웃을 때가 아니에요.",
+     null,
+     "[kind, gentle, no scolding]"
+    ]
+   ]
+  },
+  {
+   "text": "네?! 제 간을요?",
+   "segs": [
+    [
+     "rabbit",
+     "네?! 제 간을요?",
+     null,
+     "[shocked, high, surprised]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 그제야 알았어요. 자라가 거짓말을 한 거예요.",
+   "segs": [
+    [
+     "nar",
+     "토끼는 그제야 알았어요. 자라가 거짓말을 한 거예요.",
+     null,
+     "[serious but gentle storytelling]"
+    ]
+   ]
+  },
+  {
+   "text": "어떡하지… 겁먹지 말고 생각하자.",
+   "segs": [
+    [
+     "rabbit",
+     "어떡하지… 겁먹지 말고 생각하자.",
+     null,
+     "[whispering, to himself, slow, steadying]"
+    ]
+   ]
+  },
+  {
+   "text": "용왕님, 저는 간을 꺼내서 산속 바위에 널어 두고 왔어요.",
+   "segs": [
+    [
+     "rabbit",
+     "용왕님, 저는 간을 꺼내서 산속 바위에 널어 두고 왔어요.",
+     null,
+     "[confident, clever, calm]"
+    ]
+   ]
+  },
+  {
+   "text": "자라님이 미리 말을 안 해 줬어요. 가서 가져올게요!",
+   "segs": [
+    [
+     "rabbit",
+     "자라님이 미리 말을 안 해 줬어요. 가서 가져올게요!",
+     null,
+     "[confident, bright, helpful]"
+    ]
+   ]
+  },
+  {
+   "text": "그래? 그럼 얼른 가져오너라.",
+   "segs": [
+    [
+     "king",
+     "그래? 그럼 얼른 가져오너라.",
+     "normal",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "용왕님은 토끼 말을 믿었어요.",
+   "segs": [
+    [
+     "nar",
+     "용왕님은 토끼 말을 믿었어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "제가 모시고 다녀오겠습니다.",
+   "segs": [
+    [
+     "jara",
+     "제가 모시고 다녀오겠습니다.",
+     null,
+     "[polite, a little doubtful]"
+    ]
+   ]
+  },
+  {
+   "text": "자라는 토끼를 업고 다시 뭍으로 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "자라는 토끼를 업고 다시 뭍으로 갔어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "자라님, 간을 꺼내 놓고 다니는 동물이 어디 있어요? 하하!",
+   "segs": [
+    [
+     "rabbit",
+     "자라님, 간을 꺼내 놓고 다니는 동물이 어디 있어요? 하하!",
+     null,
+     "[cheeky, laughing, light]"
+    ]
+   ]
+  },
+  {
+   "text": "이제 달콤한 말엔 안 속을 거야!",
+   "segs": [
+    [
+     "rabbit",
+     "이제 달콤한 말엔 안 속을 거야!",
+     null,
+     "[firm, bright, decided]"
+    ]
+   ]
+  },
+  {
+   "text": "아이고… 속았구나.",
+   "segs": [
+    [
+     "jara",
+     "아이고… 속았구나.",
+     null,
+     "[sighing, deflated, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "토끼를 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "토끼를 톡 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "안녕!",
+   "segs": [
+    [
+     "rabbit",
+     "안녕!",
+     null,
+     "[cheerful, waving]"
+    ]
+   ]
+  },
+  {
+   "text": "자라는 바닷가에 엎드려 한숨을 쉬었어요.",
+   "segs": [
+    [
+     "nar",
+     "자라는 바닷가에 엎드려 한숨을 쉬었어요.",
+     null,
+     "[soft, slow, a little sad]"
+    ]
+   ]
+  },
+  {
+   "text": "용왕님께 뭐라고 하지…",
+   "segs": [
+    [
+     "jara",
+     "용왕님께 뭐라고 하지…",
+     null,
+     "[sad, quiet, sighing]"
+    ]
+   ]
+  },
+  {
+   "text": "그때, 산신령이 나타났어요.",
+   "segs": [
+    [
+     "nar",
+     "그때, 산신령이 나타났어요.",
+     null,
+     "[soft wonder, slow]"
+    ]
+   ]
+  },
+  {
+   "text": "자라야, 애쓴 마음이 갸륵하구나. 이 약을 용왕님께 드려라.",
+   "segs": [
+    [
+     "sage",
+     "자라야, 애쓴 마음이 갸륵하구나. 이 약을 용왕님께 드려라.",
+     null,
+     "[warm, kind old man, clear, gentle]"
+    ]
+   ]
+  },
+  {
+   "text": "고맙습니다, 산신령님!",
+   "segs": [
+    [
+     "jara",
+     "고맙습니다, 산신령님!",
+     null,
+     "[grateful, relieved, bright]"
+    ]
+   ]
+  },
+  {
+   "text": "자라는 약을 안고 바다로 돌아갔어요.",
+   "segs": [
+    [
+     "nar",
+     "자라는 약을 안고 바다로 돌아갔어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "아, 이제 다 나았다!",
+   "segs": [
+    [
+     "king",
+     "아, 이제 다 나았다!",
+     "happy:1.3",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "용궁에 웃음이 돌아왔어요.",
+   "segs": [
+    [
+     "nar",
+     "용궁에 웃음이 돌아왔어요.",
+     null,
+     "[warm, happy, gentle ending]"
+    ]
+   ]
+  }
+ ],
+ "extra": {}
+}

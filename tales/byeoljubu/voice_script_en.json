@@ -1,0 +1,815 @@
+{
+ "voices": {
+  "nar": "1gYuTfEwELcoEo96wnGj",
+  "rabbit": "tapn1QwocNXk3viVSowa",
+  "jara": "86GErZIiGJsPO3g7QNxZ",
+  "king": "tc",
+  "octo": "IAETYMYM3nJvjnlkVTKI",
+  "doctor": "Pyj2w3lxZ0VMpAJ4CmRu",
+  "crab": "wMrz30qBeYiSkAtnZGtn",
+  "gull": "Cm89zxZzEGaMu7ajYw2K",
+  "squirrel": "oZLQ9kHPMuIyd7Ja0YNU",
+  "boar": "N2lVS1w4EtoT3dr4eOWO",
+  "sage": "PLfpgtLkFW07fDYbUiRJ"
+ },
+ "lines": [
+  {
+   "text": "깊고 깊은 바다 밑에 용궁이 있어요.",
+   "en": "Deep, deep under the sea, there is a sea palace.",
+   "segs": [
+    [
+     "nar",
+     "Deep, deep under the sea, there is a sea palace.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "용왕님이 병이 났어요. 콜록, 콜록.",
+   "en": "The Dragon King is sick. Cough, cough.",
+   "segs": [
+    [
+     "nar",
+     "The Dragon King is sick. Cough, cough.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아이고, 온몸이 아프구나.",
+   "en": "Oh dear, my whole body aches.",
+   "segs": [
+    [
+     "king",
+     "Oh dear, my whole body aches.",
+     "sad:1.0"
+    ]
+   ]
+  },
+  {
+   "text": "뭍에 사는 토끼의 간을 드시면 나아요.",
+   "en": "If you eat the liver of a rabbit that lives on land, you will get better.",
+   "segs": [
+    [
+     "doctor",
+     "If you eat the liver of a rabbit that lives on land, you will get better.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "누가 토끼 간을 가져오겠느냐?",
+   "en": "Who will bring me a rabbit's liver?",
+   "segs": [
+    [
+     "king",
+     "Who will bring me a rabbit's liver?",
+     "normal"
+    ]
+   ]
+  },
+  {
+   "text": "제가요! 다리가 여덟이니 제일 빨라요!",
+   "en": "Me! I have eight legs, so I am the fastest!",
+   "segs": [
+    [
+     "octo",
+     "Me! I have eight legs, so I am the fastest!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "문어님, 뭍에서는 다리가 미끌미끌해서 못 걸어요.",
+   "en": "Mr. Octopus, on land your legs are too slippery to walk.",
+   "segs": [
+    [
+     "jara",
+     "Mr. Octopus, on land your legs are too slippery to walk.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "걸을 수 있다니까!",
+   "en": "I can too walk!",
+   "segs": [
+    [
+     "octo",
+     "I can too walk!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "문어는 먹물 속에서 뻐끔뻐끔. 물고기들은 뭍에 가면 숨을 못 쉬어요.",
+   "en": "The octopus puffs and puffs inside his ink cloud. And fish cannot breathe on land.",
+   "segs": [
+    [
+     "nar",
+     "The octopus puffs and puffs inside his ink cloud. And fish cannot breathe on land.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "뭍에서도 걸을 수 있는 친구를 톡 눌러 봐요.",
+   "en": "Tap the friend who can walk on land too.",
+   "segs": [
+    [
+     "nar",
+     "Tap the friend who can walk on land too.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "저는 물 밖에선 숨을 못 쉬어요…",
+   "en": "I cannot breathe out of the water...",
+   "segs": [
+    [
+     "doctor",
+     "I cannot breathe out of the water...",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "나… 나는 미끌미끌…",
+   "en": "M-me... I am all slippery...",
+   "segs": [
+    [
+     "octo",
+     "M-me... I am all slippery...",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "저는 물에서도 뭍에서도 걸을 수 있어요.",
+   "en": "I can walk in the water and on land.",
+   "segs": [
+    [
+     "jara",
+     "I can walk in the water and on land.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라가 가거라. 화공은 토끼를 그려 주어라.",
+   "en": "Terrapin, you go. Painter, draw a rabbit for him.",
+   "segs": [
+    [
+     "king",
+     "Terrapin, you go. Painter, draw a rabbit for him.",
+     "normal"
+    ]
+   ]
+  },
+  {
+   "text": "화공이 토끼 그림을 그렸어요. 귀는 길쭉, 꼬리는 짧게.",
+   "en": "The painter drew a rabbit. Long ears, and a short tail.",
+   "segs": [
+    [
+     "nar",
+     "The painter drew a rabbit. Long ears, and a short tail.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "이 그림을 들고 토끼를 찾겠습니다!",
+   "en": "I will take this picture and find the rabbit!",
+   "segs": [
+    [
+     "jara",
+     "I will take this picture and find the rabbit!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라는 바다 위로 올라왔어요. 햇빛이 눈부셔요.",
+   "en": "The terrapin came up out of the sea. The sunlight is dazzling.",
+   "segs": [
+    [
+     "nar",
+     "The terrapin came up out of the sea. The sunlight is dazzling.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "뭍은 이렇게 환하구나!",
+   "en": "The land is so bright!",
+   "segs": [
+    [
+     "jara",
+     "The land is so bright!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "갈매기님, 이 동물 어디 있소?",
+   "en": "Mr. Seagull, where is this animal?",
+   "segs": [
+    [
+     "jara",
+     "Mr. Seagull, where is this animal?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "토끼네! 저 산에 살아. 왼쪽으로 가시오.",
+   "en": "That is a rabbit! It lives on that mountain. Go left.",
+   "segs": [
+    [
+     "gull",
+     "That is a rabbit! It lives on that mountain. Go left.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "왼쪽 길을 톡 눌러 봐요.",
+   "en": "Tap the path on the left.",
+   "segs": [
+    [
+     "nar",
+     "Tap the path on the left.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어? 이쪽이 아니네.",
+   "en": "Huh? Not this way.",
+   "segs": [
+    [
+     "jara",
+     "Huh? Not this way.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "왼쪽, 왼쪽.",
+   "en": "Left, left.",
+   "segs": [
+    [
+     "jara",
+     "Left, left.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라는 엉금엉금 산으로 올라갔어요.",
+   "en": "The terrapin crawled slowly, slowly up the mountain.",
+   "segs": [
+    [
+     "nar",
+     "The terrapin crawled slowly, slowly up the mountain.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "다람쥐님, 이 동물 어디 있소?",
+   "en": "Miss Squirrel, where is this animal?",
+   "segs": [
+    [
+     "jara",
+     "Miss Squirrel, where is this animal?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "토끼? 오른쪽으로 가시오.",
+   "en": "A rabbit? Go right.",
+   "segs": [
+    [
+     "squirrel",
+     "A rabbit? Go right.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "오른쪽 길을 톡 눌러 봐요.",
+   "en": "Tap the path on the right.",
+   "segs": [
+    [
+     "nar",
+     "Tap the path on the right.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "멧돼지님, 이 동물 어디 있소?",
+   "en": "Mr. Boar, where is this animal?",
+   "segs": [
+    [
+     "jara",
+     "Mr. Boar, where is this animal?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 저 바위 뒤에. 가운데로 가시오.",
+   "en": "The rabbit is behind that rock. Go straight up the middle.",
+   "segs": [
+    [
+     "boar",
+     "The rabbit is behind that rock. Go straight up the middle.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "가운데 길을 톡 눌러 봐요.",
+   "en": "Tap the path in the middle.",
+   "segs": [
+    [
+     "nar",
+     "Tap the path in the middle.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "누가 나를 찾아?",
+   "en": "Who is looking for me?",
+   "segs": [
+    [
+     "rabbit",
+     "Who is looking for me?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "귀는 길쭉, 꼬리는 짧고… 똑같다! 토끼님이구나.",
+   "en": "Long ears, a short tail... the same! You are the rabbit.",
+   "segs": [
+    [
+     "jara",
+     "Long ears, a short tail... the same! You are the rabbit.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "토끼님, 용궁에 가면 높은 벼슬을 드려요.",
+   "en": "Mr. Rabbit, come to the sea palace and you will get a high post.",
+   "segs": [
+    [
+     "jara",
+     "Mr. Rabbit, come to the sea palace and you will get a high post.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "맛있는 것도 잔뜩 있어요.",
+   "en": "And there are lots of tasty treats.",
+   "segs": [
+    [
+     "jara",
+     "And there are lots of tasty treats.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "벼슬? 맛있는 것? 좋아, 갈래!",
+   "en": "A high post? Tasty treats? Yes, I will go!",
+   "segs": [
+    [
+     "rabbit",
+     "A high post? Tasty treats? Yes, I will go!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 덥석 따라나섰어요. 좋은 것만 생각했거든요.",
+   "en": "The rabbit followed right away. He only thought about the good things.",
+   "segs": [
+    [
+     "nar",
+     "The rabbit followed right away. He only thought about the good things.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "제 등에 타세요. 꼭 잡으세요!",
+   "en": "Climb on my back. Hold on tight!",
+   "segs": [
+    [
+     "jara",
+     "Climb on my back. Hold on tight!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라 등을 톡 눌러 봐요.",
+   "en": "Tap the terrapin's back.",
+   "segs": [
+    [
+     "nar",
+     "Tap the terrapin's back.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라는 토끼를 업고 바다 속으로 들어갔어요.",
+   "en": "The terrapin carried the rabbit down into the sea.",
+   "segs": [
+    [
+     "nar",
+     "The terrapin carried the rabbit down into the sea.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "우와, 물고기다! 바다 속은 파랗구나.",
+   "en": "Wow, fish! It is so blue under the sea.",
+   "segs": [
+    [
+     "rabbit",
+     "Wow, fish! It is so blue under the sea.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "용궁에 다 왔어요. 문이 차례로 열려요.",
+   "en": "Here is the sea palace. The doors open, one by one.",
+   "segs": [
+    [
+     "nar",
+     "Here is the sea palace. The doors open, one by one.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어서 오세요!",
+   "en": "Welcome!",
+   "segs": [
+    [
+     "crab",
+     "Welcome!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "우와, 진주랑 산호가 반짝반짝!",
+   "en": "Wow, pearls and coral, all sparkly!",
+   "segs": [
+    [
+     "rabbit",
+     "Wow, pearls and coral, all sparkly!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자, 용왕님께 가요.",
+   "en": "Now, let us go to the Dragon King.",
+   "segs": [
+    [
+     "jara",
+     "Now, let us go to the Dragon King.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "토끼야, 잘 왔다. 네 간을 다오.",
+   "en": "Rabbit, welcome. Give me your liver.",
+   "segs": [
+    [
+     "king",
+     "Rabbit, welcome. Give me your liver.",
+     "normal"
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 어떤 얼굴이 됐을까요? 놀란 얼굴을 톡 눌러 봐요.",
+   "en": "What face did the rabbit make? Tap the surprised face.",
+   "segs": [
+    [
+     "nar",
+     "What face did the rabbit make? Tap the surprised face.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "웃을 때가 아니에요.",
+   "en": "This is no time to smile.",
+   "segs": [
+    [
+     "nar",
+     "This is no time to smile.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "네?! 제 간을요?",
+   "en": "What?! My liver?",
+   "segs": [
+    [
+     "rabbit",
+     "What?! My liver?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "토끼는 그제야 알았어요. 자라가 거짓말을 한 거예요.",
+   "en": "Only then did the rabbit understand. The terrapin had told a lie.",
+   "segs": [
+    [
+     "nar",
+     "Only then did the rabbit understand. The terrapin had told a lie.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "어떡하지… 겁먹지 말고 생각하자.",
+   "en": "What do I do... Do not be scared. Think.",
+   "segs": [
+    [
+     "rabbit",
+     "What do I do... Do not be scared. Think.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "용왕님, 저는 간을 꺼내서 산속 바위에 널어 두고 왔어요.",
+   "en": "Your Majesty, I took my liver out and left it drying on a rock in the mountains.",
+   "segs": [
+    [
+     "rabbit",
+     "Your Majesty, I took my liver out and left it drying on a rock in the mountains.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라님이 미리 말을 안 해 줬어요. 가서 가져올게요!",
+   "en": "The terrapin did not tell me before. I will go and get it!",
+   "segs": [
+    [
+     "rabbit",
+     "The terrapin did not tell me before. I will go and get it!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그래? 그럼 얼른 가져오너라.",
+   "en": "Is that so? Then go and bring it quickly.",
+   "segs": [
+    [
+     "king",
+     "Is that so? Then go and bring it quickly.",
+     "normal"
+    ]
+   ]
+  },
+  {
+   "text": "용왕님은 토끼 말을 믿었어요.",
+   "en": "The Dragon King believed the rabbit.",
+   "segs": [
+    [
+     "nar",
+     "The Dragon King believed the rabbit.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "제가 모시고 다녀오겠습니다.",
+   "en": "I will take him there and back.",
+   "segs": [
+    [
+     "jara",
+     "I will take him there and back.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라는 토끼를 업고 다시 뭍으로 갔어요.",
+   "en": "The terrapin carried the rabbit back to land.",
+   "segs": [
+    [
+     "nar",
+     "The terrapin carried the rabbit back to land.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라님, 간을 꺼내 놓고 다니는 동물이 어디 있어요? 하하!",
+   "en": "Mr. Terrapin, what animal takes its liver out and leaves it behind? Ha ha!",
+   "segs": [
+    [
+     "rabbit",
+     "Mr. Terrapin, what animal takes its liver out and leaves it behind? Ha ha!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "이제 달콤한 말엔 안 속을 거야!",
+   "en": "I will never be fooled by sweet words again!",
+   "segs": [
+    [
+     "rabbit",
+     "I will never be fooled by sweet words again!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아이고… 속았구나.",
+   "en": "Oh dear... I was tricked.",
+   "segs": [
+    [
+     "jara",
+     "Oh dear... I was tricked.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "토끼를 톡 눌러 봐요.",
+   "en": "Tap the rabbit.",
+   "segs": [
+    [
+     "nar",
+     "Tap the rabbit.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "안녕!",
+   "en": "Bye-bye!",
+   "segs": [
+    [
+     "rabbit",
+     "Bye-bye!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라는 바닷가에 엎드려 한숨을 쉬었어요.",
+   "en": "The terrapin lay down on the beach and sighed.",
+   "segs": [
+    [
+     "nar",
+     "The terrapin lay down on the beach and sighed.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "용왕님께 뭐라고 하지…",
+   "en": "What will I tell the Dragon King...",
+   "segs": [
+    [
+     "jara",
+     "What will I tell the Dragon King...",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "그때, 산신령이 나타났어요.",
+   "en": "Just then, the mountain spirit appeared.",
+   "segs": [
+    [
+     "nar",
+     "Just then, the mountain spirit appeared.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라야, 애쓴 마음이 갸륵하구나. 이 약을 용왕님께 드려라.",
+   "en": "Terrapin, you tried so hard for your king. Take this medicine to the Dragon King.",
+   "segs": [
+    [
+     "sage",
+     "Terrapin, you tried so hard for your king. Take this medicine to the Dragon King.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "고맙습니다, 산신령님!",
+   "en": "Thank you, mountain spirit!",
+   "segs": [
+    [
+     "jara",
+     "Thank you, mountain spirit!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라는 약을 안고 바다로 돌아갔어요.",
+   "en": "The terrapin hugged the medicine and went back to the sea.",
+   "segs": [
+    [
+     "nar",
+     "The terrapin hugged the medicine and went back to the sea.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아, 이제 다 나았다!",
+   "en": "Ah, now I am all better!",
+   "segs": [
+    [
+     "king",
+     "Ah, now I am all better!",
+     "happy:1.3"
+    ]
+   ]
+  },
+  {
+   "text": "용궁에 웃음이 돌아왔어요.",
+   "en": "Laughter came back to the sea palace.",
+   "segs": [
+    [
+     "nar",
+     "Laughter came back to the sea palace.",
+     null
+    ]
+   ]
+  }
+ ],
+ "extra": {},
+ "ui": {
+  "별주부전": "The Rabbit and the Terrapin",
+  "달콤한 말에 덥석 따라가지 말아요. 어려울 땐 차분히 생각해요.": "Do not follow sweet words right away. When things are hard, stay calm and think.",
+  "아픈 용왕님": "The Sick Dragon King",
+  "누가 갈까요?": "Who Will Go?",
+  "뭍에 오른 자라": "The Terrapin on Land",
+  "산길": "The Mountain Path",
+  "달콤한 말": "Sweet Words",
+  "풍덩!": "Splash!",
+  "용궁 구경": "The Sea Palace",
+  "간을 다오": "Give Me Your Liver",
+  "토끼의 꾀": "The Rabbit's Trick",
+  "다시 뭍으로": "Back to Land",
+  "산신령의 약": "The Mountain Spirit's Medicine",
+  "콜록, 콜록": "Cough, cough",
+  "뿌웅!": "Pfff!",
+  "퐁!": "Poof!",
+  "쓱쓱": "Swish swish",
+  "촤락!": "Flap!",
+  "끼룩!": "Squawk!",
+  "통!": "Plunk!",
+  "킁킁": "Sniff sniff",
+  "통통": "Boing boing",
+  "반짝!": "Sparkle!",
+  "뿅": "Boop",
+  "폴짝!": "Hop!",
+  "똑같다!": "The same!",
+  "짠!": "Ta-da!",
+  "덥석!": "Grab!",
+  "하하!": "Ha ha!",
+  "안녕!": "Bye-bye!",
+  "보글보글": "Blub blub",
+  "끄덕끄덕": "Nod nod",
+  "엉금엉금": "Crawl, crawl",
+  "뻐끔뻐끔": "Puff puff",
+  "휴…": "Sigh...",
+  "쫑긋!": "Perk!"
+ }
+}
