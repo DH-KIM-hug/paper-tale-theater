@@ -852,6 +852,13 @@
     /* 같은 배경이 이어지는 장면(부엌 → 부엌: 1장 끝 → 재료 선반 → 솥에 퐁퐁 → 초콜릿 변신 → 다른 색으로 → 다 넣어요 → 유령 사탕)은
        책장을 넘기지 않는다(2026-10-29 사용자, 유니콘 10f0cfa0 방식). 엔진 readPlay 는 장면마다 this.sceneCard 를 부르므로 감싼 T(RW)를 넘긴다.
        몇 번째 장면 넘김인지 세어, 엔진과 같은 규칙(회전 결과 window.__READ.chosen)으로 거른 대본에서 다음 장면 배경(set)을 찾는다 */
+    /* 배경 음악: 「산왕의 궁전에서」 오르골(픽사베이, sounds/CREDITS.md) — 놀이·읽어 주기 내내 작게 되풀이(2026-10-29 사용자) */
+    const BGM = 'mountain_king_box';
+    AudioFX.preloadMusic([BGM]);
+    let bgmOn = true, bgmH = null;
+    const bgmLoop = () => { if (!bgmOn) return; bgmH = AudioFX.music(BGM, { vol: .16, fade: .8 }); if (!bgmH) { setTimeout(bgmLoop, 800); return; } bgmH.done.then(() => { bgmH = null; bgmLoop(); }); };
+    const bgmStop = () => { bgmOn = false; if (bgmH) bgmH.stop(1.5); };
+
     if (T.reading()) {
       const en = (() => { try { return typeof englishOn === 'function' && englishOn(); } catch (e) { return false; } })();
       const getJ = f => fetch(f, { cache: 'no-cache' }).then(r => (r.ok ? r.json() : null)).catch(() => null);
@@ -865,15 +872,9 @@
         if (nx && nx.set && nx.set === curBg && !document.hidden) return cont(change);
         return T.sceneCard(label, change, focus);
       };
-      return T.readPlay.call(RW, READ_ACTS);
+      bgmLoop();
+      try { return await T.readPlay.call(RW, READ_ACTS); } finally { bgmStop(); }
     }
-
-    /* 배경 음악: 「산왕의 궁전에서」 오르골(픽사베이, sounds/CREDITS.md) — 놀이 내내 작게 되풀이(2026-10-29 사용자). 읽어 주기에는 틀지 않는다 */
-    const BGM = 'mountain_king_box';
-    AudioFX.preloadMusic([BGM]);
-    let bgmOn = true, bgmH = null;
-    const bgmLoop = () => { if (!bgmOn) return; bgmH = AudioFX.music(BGM, { vol: .16, fade: .8 }); if (!bgmH) { setTimeout(bgmLoop, 800); return; } bgmH.done.then(() => { bgmH = null; bgmLoop(); }); };
-    const bgmStop = () => { bgmOn = false; if (bgmH) bgmH.stop(1.5); };
 
     /* ================= 1. 초대장 ================= */
     const street = () => {
