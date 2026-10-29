@@ -1212,12 +1212,12 @@
     await mom.move(1180, 500, 1800);
 
     /* --- 2. 떡 받아 오기 (부잣집 부엌) ---
-       세 고개 수 놀이(2지선다): 첫째 1~5개, 둘째 1~10개, 셋째 = 남은 떡(1~5개). 부엌에서는 그 합계만큼 받는다 */
+       세 고개 수 놀이(2지선다): 부엌에서 떡 열 개를 세어 받으니, 세 고개 합이 늘 10(2026-10-30 사용자). 첫째 1~5개, 셋째 = 남은 떡 1~5개, 둘째 = 나머지(1~8개) */
     const NUMS = ['하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열'];
     const CNT = ['한', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉', '열']; // "개" 앞에서는 한·두·세·네 (하나 개 ✕)
     const rint = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
-    const ASKS = [rint(1, 5), rint(1, 10), rint(1, 5)];
-    const TOTAL = ASKS[0] + ASKS[1] + ASKS[2];
+    const TOTAL = 10;
+    const ASKS = (() => { const a = rint(1, 5), c = Math.min(rint(1, 5), TOTAL - 1 - a); return [a, TOTAL - a - c, c]; })();
     let plateCakes = [];
     await T.sceneCard('부잣집 부엌', () => {
       amb('fire_crackle', .25, 3);
