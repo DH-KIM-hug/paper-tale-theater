@@ -467,19 +467,7 @@
     })();
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { el, sleep, say, actor, camTo, camWide, camSnap, josa } = T;
-    /* 안내 + 조작 (T.ask 와 같다). 2026-10-29 '순무 초반 씨앗 쪽 대사 겹침': 안내 녹음을 아직 받는 중에 아이가 누르면
-       엔진의 Narrator.stop() 은 받는 중인 녹음을 막지 못해, 늦게 받아진 안내가 다음 대사와 겹쳐 울렸다.
-       누른 뒤 안내가 아직 안 끝났으면 안내 말하기가 완전히 끝날 때까지 계속 끊고 나서 다음 대사로 간다 */
-    const askAuto = () => { try { return (window.parent !== window && /verify=1/.test(location.search)) || localStorage.getItem('auto_play') === '1' || sessionStorage.getItem('auto_once') === '1'; } catch (e) { return false; } };
-    const ask = async (text, start) => {
-      if (askAuto()) return T.ask(text, start);
-      const r = start();
-      let spoken = false;
-      const sp = Narrator.speak(text).catch(() => { /* 소리 실패는 무시 */ }).finally(() => { spoken = true; });
-      const v = await r;
-      if (!spoken) { Narrator.stop(); const iv = setInterval(() => Narrator.stop(), 40); await Promise.race([sp, sleep(9000)]); clearInterval(iv); }
-      return v;
-    };
+    const ask = (text, start) => T.ask(text, start);   // 안내 + 조작. 옛 순무 전용 겹침 막기는 audio.js 취소 수정(2026-10-29)으로 필요 없어져 뺐다
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
     try { AudioFX.preloadSfx(['intro_cozy2', 'birds_chirp_1', 'pot_boil', 'whistle_down', 'comic_brass', 'drumroll_crash']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
