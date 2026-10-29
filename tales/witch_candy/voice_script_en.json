@@ -857,23 +857,12 @@
    ]
   },
   {
-   "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
-   "en": "Green and blue mixed together made green!",
+   "text": "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
+   "en": "Green and blue mixed together made teal!",
    "segs": [
     [
      "nar",
-     "Green and blue mixed together made green!",
-     "toneup"
-    ]
-   ]
-  },
-  {
-   "text": "초록이랑 파랑을 섞었더니 파란색이 됐어요!",
-   "en": "Green and blue mixed together made blue!",
-   "segs": [
-    [
-     "nar",
-     "Green and blue mixed together made blue!",
+     "Green and blue mixed together made teal!",
      "toneup"
     ]
    ]
@@ -1484,23 +1473,23 @@
    ]
   },
   {
-   "text": "이번엔 빨강, 노랑, 파랑, 초록 다 넣어요! 톡 눌러요.",
-   "en": "This time, put in red, yellow, blue and green, all of them! Tap!",
+   "text": "이번엔 빨강, 노랑, 파랑 다 넣어요! 톡 눌러요.",
+   "en": "This time, put in red, yellow and blue, all of them! Tap!",
    "segs": [
     [
      "nar",
-     "This time, put in red, yellow, blue and green, all of them! Tap!",
+     "This time, put in red, yellow and blue, all of them! Tap!",
      null
     ]
    ]
   },
   {
-   "text": "하나, 둘, 셋, 넷! 색을 전부 섞으면…",
-   "en": "One, two, three, four! When you mix all the colours...",
+   "text": "하나, 둘, 셋! 색을 전부 섞으면…",
+   "en": "One, two, three! When you mix all the colours...",
    "segs": [
     [
      "nar",
-     "One, two, three, four! When you mix all the colours...",
+     "One, two, three! When you mix all the colours...",
      "toneup"
     ]
    ]

@@ -906,22 +906,11 @@
    ]
   },
   {
-   "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
+   "text": "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
    "segs": [
     [
      "nar",
-     "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
-     "toneup",
-     "[warm storyteller, delighted reveal, clear colour words]"
-    ]
-   ]
-  },
-  {
-   "text": "초록이랑 파랑을 섞었더니 파란색이 됐어요!",
-   "segs": [
-    [
-     "nar",
-     "초록이랑 파랑을 섞었더니 파란색이 됐어요!",
+     "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
      "toneup",
      "[warm storyteller, delighted reveal, clear colour words]"
     ]
@@ -1533,22 +1522,22 @@
    ]
   },
   {
-   "text": "이번엔 빨강, 노랑, 파랑, 초록 다 넣어요! 톡 눌러요.",
+   "text": "이번엔 빨강, 노랑, 파랑 다 넣어요! 톡 눌러요.",
    "segs": [
     [
      "nar",
-     "이번엔 빨강, 노랑, 파랑, 초록 다 넣어요! 톡 눌러요.",
+     "이번엔 빨강, 노랑, 파랑 다 넣어요! 톡 눌러요.",
      null,
      "[friendly, clear, inviting, a tiny pause before 톡]"
     ]
    ]
   },
   {
-   "text": "하나, 둘, 셋, 넷! 색을 전부 섞으면…",
+   "text": "하나, 둘, 셋! 색을 전부 섞으면…",
    "segs": [
     [
      "nar",
-     "하나, 둘, 셋, 넷! 색을 전부 섞으면…",
+     "하나, 둘, 셋! 색을 전부 섞으면…",
      "toneup",
      "[bright counting, clear beats, then a suspenseful trailing pause]"
     ]

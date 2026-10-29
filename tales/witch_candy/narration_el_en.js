@@ -308,13 +308,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Green and yellow mixed together made green!",
   "c": "audio/el/witch_candy/en/nar_ab0f8ee2d2.mp3"
  },
- "초록이랑 파랑을 섞었더니 초록색이 됐어요!": {
-  "t": "Green and blue mixed together made green!",
-  "c": "audio/el/witch_candy/en/nar_b90996aa47.mp3"
- },
- "초록이랑 파랑을 섞었더니 파란색이 됐어요!": {
-  "t": "Green and blue mixed together made blue!",
-  "c": "audio/el/witch_candy/en/nar_239e3fd580.mp3"
+ "초록이랑 파랑을 섞었더니 청록색이 됐어요!": {
+  "t": "Green and blue mixed together made teal!",
+  "c": "audio/el/witch_candy/en/nar_7eb39bdd78.mp3"
  },
  "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!": {
   "t": "Only red went in, so it became a red strawberry candy!",
@@ -536,13 +532,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Every single one?",
   "c": "audio/el/witch_candy/en/kid_42ffac1dca.mp3"
  },
- "이번엔 빨강, 노랑, 파랑, 초록 다 넣어요! 톡 눌러요.": {
-  "t": "This time, put in red, yellow, blue and green, all of them! Tap!",
-  "c": "audio/el/witch_candy/en/nar_e14eb37f0f.mp3"
+ "이번엔 빨강, 노랑, 파랑 다 넣어요! 톡 눌러요.": {
+  "t": "This time, put in red, yellow and blue, all of them! Tap!",
+  "c": "audio/el/witch_candy/en/nar_f394daaa7f.mp3"
  },
- "하나, 둘, 셋, 넷! 색을 전부 섞으면…": {
-  "t": "One, two, three, four! When you mix all the colours...",
-  "c": "audio/el/witch_candy/en/nar_d33a06fda5.mp3"
+ "하나, 둘, 셋! 색을 전부 섞으면…": {
+  "t": "One, two, three! When you mix all the colours...",
+  "c": "audio/el/witch_candy/en/nar_d6c7383dba.mp3"
  },
  "뽀글뽀글… 펑!": {
   "t": "Bubble, bubble... POP!",

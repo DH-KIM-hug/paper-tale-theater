@@ -1211,18 +1211,6 @@
      ]
     },
     {
-     "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
-     "en": "Green and blue mixed together made green!",
-     "segs": [
-      [
-       "nar",
-       "Green and blue mixed together made green!",
-       "toneup"
-      ]
-     ],
-     "src": "new"
-    },
-    {
      "text": "먼저 먹어 봐.",
      "en": "You try one first.",
      "segs": [
@@ -2917,18 +2905,6 @@
      ]
     },
     {
-     "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
-     "en": "Green and blue mixed together made green!",
-     "segs": [
-      [
-       "nar",
-       "Green and blue mixed together made green!",
-       "toneup"
-      ]
-     ],
-     "src": "new"
-    },
-    {
      "text": "냠… 개구리 사탕이다!",
      "en": "Yum... it's frog candy!",
      "segs": [
@@ -3691,12 +3667,12 @@
      "src": "reuse"
     },
     {
-     "text": "다현이가 하나씩, 하나씩, 퐁퐁퐁퐁 넣었어요.",
-     "en": "Dahyun dropped them in one by one. Plop, plop, plop, plop!",
+     "text": "다현이가 하나씩, 하나씩, 퐁퐁퐁 넣었어요.",
+     "en": "Dahyun dropped them in one by one. Plop, plop, plop!",
      "segs": [
       [
        "nar",
-       "Dahyun dropped them in one by one. Plop, plop, plop, plop!",
+       "Dahyun dropped them in one by one. Plop, plop, plop!",
        "happy"
       ]
      ],
@@ -3705,22 +3681,22 @@
       "kid:look:reach"
      ],
      "after": [
-      "pot:drop:snot,fart,poo,frog"
+      "pot:drop:snot,fart,poo"
      ]
     },
     {
-     "text": "하나, 둘, 셋, 넷! 색을 전부 섞으면…",
-     "en": "One, two, three, four! When you mix all the colours...",
+     "text": "하나, 둘, 셋! 색을 전부 섞으면…",
+     "en": "One, two, three! When you mix all the colours...",
      "segs": [
       [
        "nar",
-       "One, two, three, four! When you mix all the colours...",
+       "One, two, three! When you mix all the colours...",
        "toneup"
       ]
      ],
      "src": "reuse",
      "after": [
-      "pot:swirl:red,yellow,blue,green"
+      "pot:swirl:red,yellow,blue"
      ]
     },
     {

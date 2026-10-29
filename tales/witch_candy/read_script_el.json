@@ -1211,18 +1211,6 @@
      ]
     },
     {
-     "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
-     "segs": [
-      [
-       "nar",
-       "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
-       "toneup",
-       "[warm storyteller, delighted reveal, clear colour words]"
-      ]
-     ],
-     "src": "new"
-    },
-    {
      "text": "먼저 먹어 봐.",
      "segs": [
       [
@@ -2917,18 +2905,6 @@
      ]
     },
     {
-     "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
-     "segs": [
-      [
-       "nar",
-       "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
-       "toneup",
-       "[warm storyteller, delighted reveal, clear colour words]"
-      ]
-     ],
-     "src": "new"
-    },
-    {
      "text": "냠… 개구리 사탕이다!",
      "segs": [
       [
@@ -3691,13 +3667,13 @@
      "src": "reuse"
     },
     {
-     "text": "다현이가 하나씩, 하나씩, 퐁퐁퐁퐁 넣었어요.",
+     "text": "다현이가 하나씩, 하나씩, 퐁퐁퐁 넣었어요.",
      "segs": [
       [
        "nar",
-       "다현이가 하나씩, 하나씩, 퐁퐁퐁퐁 넣었어요.",
+       "다현이가 하나씩, 하나씩, 퐁퐁퐁 넣었어요.",
        "happy",
-       "[playful storytelling, four bouncy plops]"
+       "[playful storytelling, three bouncy plops]"
       ]
      ],
      "src": "new",
@@ -3705,22 +3681,22 @@
       "kid:look:reach"
      ],
      "after": [
-      "pot:drop:snot,fart,poo,frog"
+      "pot:drop:snot,fart,poo"
      ]
     },
     {
-     "text": "하나, 둘, 셋, 넷! 색을 전부 섞으면…",
+     "text": "하나, 둘, 셋! 색을 전부 섞으면…",
      "segs": [
       [
        "nar",
-       "하나, 둘, 셋, 넷! 색을 전부 섞으면…",
+       "하나, 둘, 셋! 색을 전부 섞으면…",
        "toneup",
        "[bright counting, clear beats, then a suspenseful trailing pause]"
       ]
      ],
      "src": "reuse",
      "after": [
-      "pot:swirl:red,yellow,blue,green"
+      "pot:swirl:red,yellow,blue"
      ]
     },
     {

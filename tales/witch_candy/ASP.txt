@@ -56,7 +56,7 @@ fg_jar_shelf_front: 0.7133
 fg_web_corner: 0.9967
 fg_roof_sil: 2.7439
 kid_walk: 0.6517
-kid_yuck: 0.715
+kid_yuck: 0.6833
 kid_reach: 0.7317
 kid_point: 0.615
 kid_yum: 0.6

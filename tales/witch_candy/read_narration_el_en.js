@@ -172,10 +172,6 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Dahyun dropped the green frog and the blue wave into the cauldron. Ribbit, splosh!",
   "c": "audio/el/witch_candy/en/nar_88cce59910.mp3"
  },
- "초록이랑 파랑을 섞었더니 초록색이 됐어요!": {
-  "t": "Green and blue mixed together made green!",
-  "c": "audio/el/witch_candy/en/nar_b90996aa47.mp3"
- },
  "냠… 개구리 사탕이다!": {
   "t": "Yum... it's frog candy!",
   "c": "audio/el/witch_candy/en/kid_ebba83cbae.mp3"
@@ -288,13 +284,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Every single one?",
   "c": "audio/el/witch_candy/en/kid_42ffac1dca.mp3"
  },
- "다현이가 하나씩, 하나씩, 퐁퐁퐁퐁 넣었어요.": {
-  "t": "Dahyun dropped them in one by one. Plop, plop, plop, plop!",
-  "c": "audio/el/witch_candy/en/nar_7791af8494.mp3"
+ "다현이가 하나씩, 하나씩, 퐁퐁퐁 넣었어요.": {
+  "t": "Dahyun dropped them in one by one. Plop, plop, plop!",
+  "c": "audio/el/witch_candy/en/nar_3166f3e34c.mp3"
  },
- "하나, 둘, 셋, 넷! 색을 전부 섞으면…": {
-  "t": "One, two, three, four! When you mix all the colours...",
-  "c": "audio/el/witch_candy/en/nar_d33a06fda5.mp3"
+ "하나, 둘, 셋! 색을 전부 섞으면…": {
+  "t": "One, two, three! When you mix all the colours...",
+  "c": "audio/el/witch_candy/en/nar_d6c7383dba.mp3"
  },
  "뽀글뽀글… 펑!": {
   "t": "Bubble, bubble... POP!",

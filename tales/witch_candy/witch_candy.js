@@ -32,7 +32,7 @@
     rabbit: ['stand', 'reach', 'happy', 'ghost'], bear: ['stand', 'reach', 'happy', 'ghost'], fox: ['stand', 'reach', 'happy', 'ghost'],
   };
   const HT = {
-    wc_kid_stand: 230, wc_kid_walk: 224, wc_kid_yuck: 221, wc_kid_reach: 215, wc_kid_point: 229, wc_kid_yum: 230, wc_kid_ghost: 232,
+    wc_kid_stand: 230, wc_kid_walk: 224, wc_kid_yuck: 226, wc_kid_reach: 215, wc_kid_point: 229, wc_kid_yum: 230, wc_kid_ghost: 232,
     wc_kid_tf_strawberry: 233, wc_kid_tf_strawberry_ball: 173, wc_kid_tf_duck: 219, wc_kid_tf_fish: 204, wc_kid_tf_frog_jump: 221, wc_kid_tf_frog_sit: 215,
     wc_kid_tf_pumpkin: 232, wc_kid_tf_bat_up: 194, wc_kid_tf_bat_down: 194, wc_kid_tf_choco: 229, wc_kid_tf_choco_flat: 152,
     wc_witch_stand: 368, wc_witch_present: 365, wc_witch_stir: 356, wc_witch_surprise: 365, wc_witch_giggle: 355, wc_witch_ghost: 373,
@@ -50,7 +50,7 @@
   };
   /* ASP.txt (2026-10-29) */
   const ASP = {
-    wc_kid_stand: .6, wc_kid_walk: .6517, wc_kid_yuck: .715, wc_kid_reach: .7317, wc_kid_point: .615, wc_kid_yum: .6, wc_kid_ghost: .69,
+    wc_kid_stand: .6, wc_kid_walk: .6517, wc_kid_yuck: .6833, wc_kid_reach: .7317, wc_kid_point: .615, wc_kid_yum: .6, wc_kid_ghost: .69,
     wc_kid_tf_strawberry: .66, wc_kid_tf_strawberry_ball: .8083, wc_kid_tf_duck: .6683, wc_kid_tf_fish: 1.0517, wc_kid_tf_frog_jump: .79, wc_kid_tf_frog_sit: .7033,
     wc_kid_tf_pumpkin: .6783, wc_kid_tf_bat_up: 1.1167, wc_kid_tf_bat_down: 1.0883, wc_kid_tf_choco: .605, wc_kid_tf_choco_flat: .9983,
     wc_witch_stand: .715, wc_witch_present: .7583, wc_witch_stir: .695, wc_witch_surprise: .72, wc_witch_giggle: .62, wc_witch_ghost: .7233, wc_witch_magic: .86, wc_ghost: 1.0083,
@@ -86,7 +86,7 @@
     wc_cat_sit: 'left', wc_cat_nose: 'left', wc_cat_reach: 'left', wc_cat_waddle: 'right', wc_cat_ghost: 'right' };
   ['rabbit', 'bear', 'fox'].forEach(w => { NAT[`wc_${w}_stand`] = 'right'; NAT[`wc_${w}_reach`] = 'left'; NAT[`wc_${w}_happy`] = 'front'; NAT[`wc_${w}_ghost`] = 'right'; });
 
-  const COL = { r: '#E04B3C', y: '#F2C94E', b: '#3A6FD8', blue: '#3A6FD8', g: '#6FB94A', orange: '#F28C28', green: '#6FB94A', purple: '#7A5AA6', brown: '#6B4A32', black: '#1A1410', water: '#D9E4EE' };
+  const COL = { r: '#E04B3C', y: '#F2C94E', b: '#3A6FD8', blue: '#3A6FD8', teal: '#2A9D8F', g: '#6FB94A', orange: '#F28C28', green: '#6FB94A', purple: '#7A5AA6', brown: '#6B4A32', black: '#1A1410', water: '#D9E4EE' };
   const KO = { r: '빨강', y: '노랑', b: '파랑', g: '초록' };
   /* 결과표(PLAN §4-2): 들어간 색 집합 → 결과 */
   const RES = {
@@ -101,10 +101,10 @@
     const ks = [...kinds];
     if (ks.length === 1) { const k = ks[0]; return { res: { r: 'strawberry', y: 'duck', b: 'fish', g: 'frog' }[k], color: k, single: k }; }
     const key = MIXKEY[ks.join('')], pair = PAIRS.find(p => p.every(x => kinds.has(x)));
-    if (key === 'gb' && Math.random() < .5) return { res: 'fish', color: 'blue', pair };   // 파랑+초록은 파랑(물고기)이나 초록(개구리) 무작위(2026-10-29 사용자)
+    if (key === 'gb') return { res: Math.random() < .5 ? 'fish' : 'frog', color: 'teal', pair };   // 파랑+초록은 청록(2026-10-29 사용자) — 사탕은 물고기·개구리 무작위
     const m = MIX_RES[key]; return { res: m[0], color: m[1], pair };
   }
-  const COLOR_KO = { orange: '주황', green: '초록', purple: '보라', brown: '갈색', blue: '파란' };
+  const COLOR_KO = { orange: '주황', green: '초록', purple: '보라', brown: '갈색', blue: '파란', teal: '청록' };
   const comboFor = res => ({ strawberry: [['r']], duck: [['y']], fish: [['b']], frog: [['g'], ['g', 'y'], ['g', 'b'], ['y', 'b']], pumpkin: [['r', 'y']], bat: [['r', 'b']], choco: [['r', 'g']] }[res]);
 
   /* ---------- 대사 (PLAN §5·§7 문장 그대로) ---------- */
@@ -118,7 +118,7 @@
     R2: "이번엔 다른 색으로 해 볼까?", R2a: "재료를 톡!", RSAME: "아까랑 같네? 다음엔 다른 색도 해 봐!", RMORE: "한 번 더 할래?", RMOREa: "한 번 더 하려면 솥을 톡 눌러요.", RCLEAR: "솥 물이 쏴아, 다시 맑아졌어요.",
     E1: "자, 저어 보자. 뽀글뽀글…", E2: "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.", E3: "먼저 먹어 봐.", E4: "콧물로 만든 건데… 으웩…",
     F1: "히히, 핼러윈 마법이야!", F2: "나도 하고 싶다!", F3: "마지막에 다 같이!", F4: "뿅! 다현이는 다시 원래대로 돌아왔어요.",
-    G1: "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!", G2: "전부 다요?", G3: "이번엔 빨강, 노랑, 파랑, 초록 다 넣어요! 톡 눌러요.", G4: "하나, 둘, 셋, 넷! 색을 전부 섞으면…", G5: "뽀글뽀글… 펑!", G6: "까만 사탕이 나왔어요!", G7: "까맣다!",
+    G1: "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!", G2: "전부 다요?", G3: "이번엔 빨강, 노랑, 파랑 다 넣어요! 톡 눌러요.", G4: "하나, 둘, 셋! 색을 전부 섞으면…", G5: "뽀글뽀글… 펑!", G6: "까만 사탕이 나왔어요!", G7: "까맣다!",
     H1: "어? 입이 까매졌다! 유령 사탕이다~", H2: "오~~우~~", H3: "히히, 나도!", H4: "마녀도, 호박이도, 친구들도 까만 입술로…", H5: "유령 흉내를 내며 마을을 한 바퀴 돌았어요. 하나도 안 무서워요, 다 웃고 있거든요.",
     I1: "자, 약속! 남은 사탕 다 나와라!", I2: "솥에서 사탕이 퐁퐁퐁 쏟아졌어요. 모두 하나씩… 마녀는 두 개!", I3: "히히, 나는 두 개!", I4: "으웩!… 어? 맛있다!", I5: "뿅, 뿅, 뿅! 딸기, 개구리, 오리, 박쥐, 물고기, 호박… 다 같이 변신!",
     I6: "뿅! 모두 원래대로.", I7: "다현이 덕분에 사탕이 가득! 내년에도 같이 섞자.", I8: "네! 다음엔 다른 색으로요!", I9: "사탕 마녀를 톡 눌러 인사해요.", I10: "해피 핼러윈! 오~우~!",
@@ -376,7 +376,7 @@
     const PH = HT.wc_prop_cauldron * KS, PW = PH * ASP.wc_prop_cauldron;
     const POT = { cx: 0, cy: 0, rx: PW * .302, ry: PH * .072 };
     const potAt = (cx, bottom) => { POT.cx = cx; POT.cy = bottom - PH * (1 - .113); };
-    const potHome = () => potAt(X(880, 500), X(FL - 40, 515));
+    const potHome = () => potAt(X(790, 500), X(FL - 40, 515));
     /* 부엌에서 다현이는 늘 솥을 본다(2026-10-29 사용자: '왜 자꾸 왼쪽 보지, 솥을 보자') — 서기·걷기·뻗기·가리키기·냠·으엑 자세만, 변신·유령 행진은 그대로 */
     { const turn0 = kid.turn; kid.turn = d => turn0(d !== 'front' && curBg === 'wc_bg_kitchen' && /^(stand|walk|reach|point|yum|yuck)$/.test(kid.cur) && POT.cx && Math.abs(kid.x - POT.cx) > 20 ? (kid.x < POT.cx ? 'right' : 'left') : d); }
     potHome();
@@ -409,7 +409,7 @@
       if (shelf) {
         const cellsPos = [], SG = k.shelfG = T.el('g', {}, T.world);   // 선반 한 덩어리(읽어 주기가 shelf:show 로 켠다)
         if (!P) {
-          const sw = 550, sh = sw / ASP.wc_prop_shelf_box, sx = 170, sy = FL - sh, s = sw / 900;   // 왼쪽 끝(-40~170)은 친구들 자리, 선반 위는 호박이 자리
+          const sw = 550, sh = sw / ASP.wc_prop_shelf_box, sx = 85, sy = FL - sh, s = sw / 900;   // 2026-10-29 왼쪽으로 당김(마녀가 화면 오른쪽 밖으로 잘리던 것) — 왼쪽 끝은 친구들 자리, 선반 위는 호박이 자리
           k.shelfTop = [sx + sw * .9, sy + 12];
           const g0 = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, SG); sprite(T, g0, 'wc_prop_shelf_box', sx, sy, sw, sh);
           const cx = [108, 240, 367, 532, 660, 788].map(v => sx + v * s), cy = [140, 307].map(v => sy + v * s);
@@ -520,7 +520,7 @@
     const hasClip = t => { try { return !!((typeof NARRATION_CLIPS_EN !== 'undefined' && NARRATION_CLIPS_EN[t]) || (typeof NARRATION_CLIPS !== 'undefined' && NARRATION_CLIPS[t])); } catch (e) { return false; } };
     const sayResult = async rs => {
       const t = resultLine(rs);
-      T.pop(POT.cx, POT.cy - 70, tr(rs.single ? KO[rs.single] : rs.color === 'blue' ? KO.b : COLOR_KO[rs.color]), COL[rs.color]);
+      T.pop(POT.cx, POT.cy - 70, tr(rs.single ? KO[rs.single] : COLOR_KO[rs.color]), COL[rs.color]);
       if (hasClip(t)) return say(t);
       if (rs.single) return say(`${KO[rs.single]}만 넣었으니… ${KO[rs.single]} 그대로!`);
       await T.say(t, { recordedOnly: true, keep: true }); await sleep(Math.min(3600, 1400 + t.length * 60));
@@ -568,9 +568,14 @@
       cue(['theremin_wobble', 'whistle_wobble'], .45);
       ghost.body.style.transformBox = 'fill-box'; ghost.body.style.transformOrigin = '50% 50%';
       await ghost.body.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(-1)', offset: .3 }, { transform: 'scaleX(-1)', offset: .7 }, { transform: 'scaleX(1)' }], { duration: 1100, easing: 'ease-in-out' }).finished;   // 한 번 뒤돌아보고
+      /* 화면 가운데로 다가오며 커지다가 화면 밖으로 나가듯 사라진다(2026-10-29 사용자) */
+      if (ghostBob) { ghostBob.cancel(); ghostBob = null; }
+      const sc = ghost.scale || 1, tx = P ? VX.lx : 500, ty = P ? FL + (280 - FL) / PS : 280;
+      const dx = (tx - ghost.x) / sc, dy = (ty - (ghost.y - ghost.h * sc / 2)) / sc;
+      cue('whoosh', .5); cue(['theremin_wobble', 'whistle_wobble'], .4);
+      await ghost.body.animate([{ transform: 'translate(0px, 0px) scale(1)', opacity: 1 }, { transform: `translate(${dx * .7}px, ${dy * .7}px) scale(3)`, opacity: 1, offset: .6 }, { transform: `translate(${dx}px, ${dy}px) scale(9)`, opacity: 0 }], { duration: 1300, easing: 'ease-in', fill: 'forwards' }).finished;
       cue('pop', .5); cue('sparkle', .4);
-      await ghost.pos.animate([{ opacity: 1, translate: '0 0' }, { opacity: 0, translate: '0 -40px' }], { duration: 600, easing: 'ease-in' }).finished;   // 뿅 사라짐
-      hide(ghost); if (ghostBob) { ghostBob.cancel(); ghostBob = null; }
+      hide(ghost); ghost.body.getAnimations().forEach(n => n.cancel()); if (ghostBob) { ghostBob.cancel(); ghostBob = null; }
     };
     /* 유령 사탕은 흰 접시 위(PLAN §6 검정 사탕 대비): 솥 위에 접시째 떠오른다 */
     function ghostPlate() {
@@ -589,7 +594,7 @@
       const tab = T.el('g', {}, T.world), th = HT.wc_prop_table * X(1, .95), tw = th * ASP.wc_prop_table, tx = X(280, 500), ty = X(FL, 350) - th;
       const tg = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, tab); sprite(T, tg, 'wc_prop_table', tx - tw / 2, ty, tw, th);
       const step = tw * .22, cells = items.map((it, i) => {
-        const cx = tx + (i - 1.5) * step, cy = ty - 26;
+        const cx = tx + (i - (items.length - 1) / 2) * step, cy = ty - 26;
         const g = tapFirst ? hitZone(T, tab, cx, cy, H(i === 0 ? 90 : step - 4), H(90)) : T.el('g', { 'pointer-events': 'none' }, tab);
         const ig = T.el('g', { 'pointer-events': 'none', filter: 'url(#pp)' }, g); pic(T, ig, ingF(it.id), cx, cy, step - 8, 60);
         return { ...it, el: g, cx, cy };
@@ -598,7 +603,7 @@
     }
     function setLook() {   // 마녀·호박이·친구들을 부엌 기본 자리에. 세로: 선반이 폭을 다 써서 인물은 솥 양옆 아래로 작게, 호박이·친구들은 화면 밖
       const FY = P ? PFY : FL;
-      cast([[witch, X(1010, 668), FY, { look: 'present', to: 'left', s: P ? .6 : .85 }], [kid, X(765, 340), FY, { look: 'stand', to: 'left', s: P ? .6 : .85 }]]);
+      cast([[witch, X(925, 668), FY, { look: 'present', to: 'left', s: P ? .6 : .85 }], [kid, X(680, 340), FY, { look: 'stand', to: 'left', s: P ? .6 : .85 }]]);
       if (!P) {   // 친구 셋은 선반 왼쪽 끝 바닥(조금 뒤라 .72), 호박이는 선반 위(PLAN §5 7장 '호박이는 선반 위')
         FRS.forEach((f, i) => put(T, f, 5 + i * 50, FL - 14, { look: 'stand', to: 'right', s: .72 }));
         if (K && K.shelfTop) put(T, cat, K.shelfTop[0], K.shelfTop[1], { look: 'sit', to: 'right', s: .85 }); else put(T, cat, 60, FL, { look: 'sit', to: 'right', s: .85 });
@@ -664,8 +669,8 @@
       if (inKit()) {
         if (P) { if (a === kid) return [340, PFY, .6]; if (a === witch) return [668, PFY, .6]; if (a === cat) return [596, PFY, .55]; return null; }
         const shelfOn = K && K.shelfG && K.shelfG.style.display !== 'none', tab = !!rs.tabG;
-        if (a === witch) return [1010, FL, .85];
-        if (shelfOn) { if (a === kid) return [765, FL, kidS]; if (a === cat) return K.shelfTop ? [K.shelfTop[0], K.shelfTop[1], .85] : [60, FL, .85]; return [5 + fi * 50, FL - 14, .72]; }
+        if (a === witch) return [925, FL, .85];
+        if (shelfOn) { if (a === kid) return [680, FL, kidS]; if (a === cat) return K.shelfTop ? [K.shelfTop[0], K.shelfTop[1], .85] : [60, FL, .85]; return [5 + fi * 50, FL - 14, .72]; }
         if (tab) { if (a === kid) return [570, FL, kidS]; if (a === cat) return [50, FL, .9]; return [190 + fi * 100, FL - 40, .8]; }
         if (a === kid) return [500, FL, kidS]; if (a === cat) return [680, FL, .85]; return [200 + fi * 95, FL, .85];
       }
@@ -781,7 +786,7 @@
       ladle() { return null; },   // 국자 없음
       table(cmd) {
         if (cmd !== 'four') return null;
-        const tf = tableFour(['snot', 'fart', 'poo', 'frog'].map(id => ING.find(i => i.id === id)), false); rs.tabG = tf.tab;
+        const tf = tableFour(['snot', 'fart', 'poo'].map(id => ING.find(i => i.id === id)), false); rs.tabG = tf.tab;
         tf.cells.forEach(c => { rs.tab[c.id] = [c.cx, c.cy]; });
         return null;
       },
@@ -989,7 +994,7 @@
       stopStir();
       witch.look('surprise', 'front');
       const clearSmoke = await smoke();
-      potFlat(RES[rs.res].plate, false);
+      potFlat(rs.color === 'teal' ? COL.teal : RES[rs.res].plate, false);
       const cand = candyPop(rs.res);
       clearSmoke(); K.bub && K.bub.remove(); bubbles();
       await say(S.E2);
@@ -1087,7 +1092,7 @@
       await say(S.F4);
       if (long) { witch.look('giggle', 'left'); await say(S.F1); FRS.forEach(f => f.hop(10, 300)); cue('pop', .4); await sleep(500); await say(S.F3); }   // 친구들 '나도 하고 싶다!' 뺌
       if (!K || !K.cells.length || res !== 'choco') await back();
-      else { kid.look('stand', 'left'); put(T, kid, X(765, 340), X(FL, PFY), { look: 'stand', to: 'left', s: X(.85, .6) }); }
+      else { kid.look('stand', 'left'); put(T, kid, X(680, 340), X(FL, PFY), { look: 'stand', to: 'left', s: X(.85, .6) }); }
     }
 
     /* ================= 7. 이번엔 다 넣어요 ================= */
@@ -1099,7 +1104,7 @@
     });
     /* 탁자 위 재료 넷 (이번 판에서 안 쓴 것 우선) */
     const lastIds = new Set(); const pickIng = key => { const c = ING.filter(i => i.key === key); return c[Math.floor(Math.random() * c.length)]; };
-    const four = ['r', 'y', 'b', 'g'].map(pickIng);
+    const four = ['r', 'y', 'b'].map(pickIng);   // 마지막은 빨·노·파 셋(2026-10-29 사용자: 초록 빼고)
     const { tab, cells: tcell } = tableFour(four, true);
     witch.look('present', 'left'); await say(S.G1);
     kid.look('yuck', 'left'); await say(S.G2);
@@ -1108,7 +1113,7 @@
     const sevenPut = (c, n) => { land7.push(fly(c).then(() => { plop(c); if (!K.kinds.includes(c.key)) { K.kinds.push(c.key); if (K.kinds.length === 1) potFlat(COL[c.key]); else potSwirl(K.kinds); } count(n); })); };
     /* 네 가지를 다현이가 하나씩 톡(2026-10-29 사용자: '7장은 4개니깐 하나씩 선택하게') — 넣은 것은 다시 받지 않고, 넷이면 저절로 끝 */
     await T.ask(S.G3, () => T.fill(tcell, {
-      maxCount: 4, prompt: S.G3,
+      maxCount: 3, prompt: S.G3,
       allow: (c, st) => !st.order.includes(c),
       onPut: (c, n) => { c.el.getAnimations().forEach(a => a.cancel()); c.el.classList.remove('tap-target'); sevenPut(c, n); kid.look('reach', 'right'); setTimeout(() => kid.look('stand', 'right'), 800); kid.hop(8, 260); },
       onReject: () => {},
