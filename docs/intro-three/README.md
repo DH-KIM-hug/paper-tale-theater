@@ -28,7 +28,7 @@
 
 ## 앱 연결과 수명 관리
 
-- 앱과 일반 웹 모두 세션 첫 진입에 재생하고, 같은 탭의 새로고침·동화에서 홈으로 돌아올 때는 반복하지 않는다. `?splash=1`은 강제 미리보기다.
+- 첫 화면에는 늘 재생한다: 앱을 켤 때, 웹 접속, 새로고침. 동화·잠자리 화면에서 홈으로 돌아올 때(링크·뒤로 가기)만 건너뛴다. `?splash=1`은 강제 미리보기, `?splash=0`은 끔이다.
 - 화면 탭 또는 Enter·Space·Escape로 바로 건너뛴다.
 - 움직임 줄이기는 Three.js를 다운로드하지 않고 정지 로고만 잠깐 표시한다.
 - 모듈·애셋 실패, WebGL 컨텍스트 손실, 백그라운드 전환 시 홈으로 이동한다.
@@ -46,6 +46,6 @@
 
 ## 검증과 참고 영상
 
-`NODE_PATH=/tmp/patjuk-intro-render/node_modules node tools/dev/check_splash.cjs`로 건너뛰기·실제 재생 시간·세션 재진입·준비 중 종료·실패 대체·움직임 줄이기·일반 웹·영문·세로 화면·재생 중 새 셰이더/텍스처 발생 여부를 확인한다. Playwright와 Chrome이 필요하다.
+`NODE_PATH=/tmp/patjuk-intro-render/node_modules node tools/dev/check_splash.cjs`로 건너뛰기·실제 재생 시간·새로고침 재생·동화에서 돌아오면 건너뜀·준비 중 종료·실패 대체·움직임 줄이기·일반 웹·영문·세로 화면·재생 중 새 셰이더/텍스처 발생 여부를 확인한다. Playwright와 Chrome이 필요하다.
 
 `render.cjs`는 같은 장면을 1440×900, 30fps, 6.35초 무음 `opening-three.mp4`로 저장한다. Playwright·Chrome·ffmpeg가 필요하다. 앱은 이 동영상 파일을 다운로드하지 않는다.

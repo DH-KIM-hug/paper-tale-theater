@@ -1560,7 +1560,7 @@
   paintTabBadge();
   Entitlements.onChange(() => { paintTabBadge(); requestRender(); });
 
-  /* 앱·웹 첫 접속: 세션당 한 번 스플래시(로고 안으로 들어갔다 나오기, engine/splash). 동화에서 홈으로 돌아올 때는 다시 나오지 않는다. ?splash=1 은 강제 재생 */
+  /* 첫 화면엔 늘 스플래시(로고 안으로 들어갔다 나오기, engine/splash) — 앱을 켤 때·웹 접속·새로고침마다. 동화에서 홈으로 돌아올 때만 나오지 않는다. ?splash=1 강제 재생, ?splash=0 끔 */
   function splash(done) {
     const sp = $('#splash');
     let finished = false, shown = false, pending;
@@ -1596,10 +1596,20 @@
       .catch(complete);
   }
 
+  /* 앱 안의 다른 화면(동화·잠자리·스티커)에서 홈으로 돌아온 것인가: 링크로 왔거나 뒤로 가기. 새로 켜기·새로고침은 아니다 */
+  function backFromApp() {
+    try {
+      const nav = performance.getEntriesByType('navigation')[0];
+      if (nav && nav.type === 'reload') return false;
+      if (nav && nav.type === 'back_forward') return true;
+      return !!document.referrer && new URL(document.referrer).origin === location.origin;
+    } catch (e) { return false; }
+  }
+
   function intro() {
-    let first = true;
-    try { first = !sessionStorage.getItem('paperTheater.splash'); sessionStorage.setItem('paperTheater.splash', '1'); } catch (e) { /* 저장소를 못 쓰면 첫 화면을 표시 */ }
-    if (['1', '2'].includes(new URLSearchParams(location.search).get('splash'))) first = true;
+    const q = new URLSearchParams(location.search).get('splash');
+    let first = q === '0' ? false : !backFromApp();
+    if (['1', '2'].includes(q)) first = true;
     update({ anim: false });
     if (first && location.hash !== '#parent') splash(() => update({ intro: true, delay: .04, step: .035 }));
     else update({ intro: true, delay: .02, step: .03 });

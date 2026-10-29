@@ -25,7 +25,7 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
       assert.equal(await page.locator('[inert]').count(), 0);
       assert.ok(await page.locator('#hero').isVisible());
     });
-    await run('automatic finish, once per app session', async page => {
+    await run('automatic finish, again on reload', async page => {
       await page.addInitScript(() => {
         window.__splashTiming = {};
         new MutationObserver(() => {
@@ -42,9 +42,7 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
       console.log(`  Playback measured: ${(elapsed / 1000).toFixed(2)}s`);
       assert.equal(await page.locator('#splash canvas').count(), 0);
       await page.reload();
-      await page.waitForFunction(() => document.querySelector('#hero') && !document.querySelector('#hero').hidden);
-      assert.ok(await page.locator('#splash').isHidden());
-      assert.equal(await page.locator('#splash canvas').count(), 0);
+      await page.locator('#splash.splash-ready').waitFor({ timeout: 15000 });
     });
     await run('tap during module loading never starts late', async page => {
       await page.route('**/engine/splash/start.js*', async route => { await new Promise(r => setTimeout(r, 800)); await route.continue(); });
@@ -70,7 +68,7 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
       assert.equal(requested, false);
       assert.ok(await page.locator('#hero').isVisible());
     }, { reducedMotion: 'reduce' });
-    await run('ordinary web plays once and reload skips splash download', async page => {
+    await run('ordinary web plays, coming home from a tale skips splash download', async page => {
       let requested = false;
       page.on('request', r => { if (r.url().includes('/engine/splash/')) requested = true; });
       await page.goto(base + '/');
@@ -78,14 +76,18 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
       assert.equal(requested, true);
       await page.getByRole('button', { name: '시작', exact: true }).click();
       await page.locator('#splash').waitFor({ state: 'hidden' });
+      await page.goto(base + '/tales/lion_mouse/');
       requested = false;
-      await page.reload();
+      await page.evaluate(() => { location.href = '../../index.html'; });
+      await page.waitForFunction(() => document.querySelector('#hero') && !document.querySelector('#hero').hidden);
       assert.ok(await page.locator('#splash').isHidden());
       assert.equal(requested, false);
+      await page.goBack(); await page.goForward();
+      await page.waitForFunction(() => document.querySelector('#hero') && !document.querySelector('#hero').hidden);
+      assert.ok(await page.locator('#splash').isHidden());
     });
     await run('all scenes are warmed before playback', async page => {
-      await page.addInitScript(() => sessionStorage.setItem('paperTheater.splash', '1'));
-      await page.goto(base + '/');
+      await page.goto(base + '/?splash=0');
       const stats = await page.evaluate(async () => {
         const { createSplashScene } = await import('/engine/splash/scene.js');
         const host = document.createElement('div');
@@ -104,8 +106,7 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
       assert.equal(stats.afterTextures, stats.textures, 'A texture uploaded during playback');
     });
     await run('skip during GPU preparation cleans up', async page => {
-      await page.addInitScript(() => sessionStorage.setItem('paperTheater.splash', '1'));
-      await page.goto(base + '/');
+      await page.goto(base + '/?splash=0');
       const result = await page.evaluate(async () => {
         const { createSplashScene } = await import('/engine/splash/scene.js');
         const host = document.createElement('div');
