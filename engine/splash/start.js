@@ -1,8 +1,9 @@
 /** App lifecycle: skip immediately, never block the home on WebGL or artwork loading. */
 // 앱과 미리보기 모두 scene.duration의 원래 속도로 재생한다. 별도 압축 시간은 두지 않는다.
-export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
+// v2: 새 스플래시(scene2.js — 로고 안으로 들어갔다 나오기, 효과음, 홈 로고 자리로 날아가며 홈을 드러냄). onReveal = 홈이 드러나기 시작할 때 한 번
+export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = null, v2 = false } = {}) {
   const en = lang === 'en';
-  let closed = false, raf = 0, timer = 0, loadTimer = 0, scene;
+  let closed = false, raf = 0, timer = 0, loadTimer = 0, scene, revealed = false, sounds = [];
   const abort = new AbortController();
   const beforeFocus = document.activeElement;
   const background = [...document.body.children].filter(el => el !== host && !['SCRIPT', 'STYLE', 'SVG'].includes(el.tagName));
@@ -23,12 +24,15 @@ export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
   fallbackTitle.replaceWith(wordmark);
   const skip = host.querySelector('button');
   skip.setAttribute('aria-label', en ? 'Start' : '시작');   // 글자는 보이지 않는다(저절로 끝남). 보조기기·키보드용 이름만
-  skip.focus({ preventScroll: true });
+  skip.focus({ preventScroll: true, focusVisible: false });   // 키보드 이름표용 단추라 초점 테두리는 그리지 않는다
   function finish() {
     if (closed) return;
     closed = true;
     clearTimeout(timer); clearTimeout(loadTimer); cancelAnimationFrame(raf);
     abort.abort(); scene?.destroy();
+    for (const a of sounds) { try { a.pause(); } catch (e) { /* 무시 */ } }
+    document.body.classList.remove('splash-flying');
+    host.style.background = '';
     host.removeEventListener('pointerdown', finish);
     host.removeEventListener('keydown', onKey);
     host.removeEventListener('webglcontextlost', finish, true);
@@ -39,6 +43,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
     host.classList.remove('splash-ready');
     host.replaceChildren();
     background.forEach((el, i) => { el.inert = inertBefore[i]; });
+    if (!revealed) onReveal?.();
     onDone();
     if (beforeFocus && beforeFocus !== document.body && beforeFocus.isConnected) beforeFocus.focus({ preventScroll: true });
   }
@@ -60,7 +65,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
     timer = setTimeout(finish, 500);
     return { finish };
   }
-  import('./scene.js?v=20261028english1').then(async ({ createSplashScene }) => {
+  import(v2 ? './scene2.js?v=20261029sp2' : './scene.js?v=20261028english1').then(async ({ createSplashScene }) => {
     if (closed) return;
     const building = createSplashScene(host.querySelector('.splash-stage'), {
       lang, signal: abort.signal,
@@ -81,6 +86,22 @@ export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
     clearTimeout(loadTimer);
     clearTimeout(timer);
     const total = scene.duration;
+    // 효과음: 미리 받아 두고 시각이 지나면 한 번씩(웹은 첫 접속에 자동 재생이 막혀 소리 없이 지나갈 수 있다)
+    const cues = (scene.cues || []).map(([at, name, vol]) => {
+      const a = new Audio(new URL(`../../sounds/sfx/${name}.mp3`, import.meta.url).href);
+      a.preload = 'auto'; a.volume = vol; sounds.push(a);
+      return { at, a, done: false };
+    });
+    function reveal() {   // 홈 로고 마크 자리로 날아가며 홈을 드러낸다
+      if (revealed) return;
+      revealed = true;
+      const mark = [...document.querySelectorAll('.logo-mark')].find(el => el.getBoundingClientRect().width > 0);
+      if (mark) scene.flyTo(mark.getBoundingClientRect());
+      document.body.classList.add('splash-flying');
+      host.style.background = 'transparent';
+      background.forEach((el, i) => { el.inert = inertBefore[i]; });
+      onReveal?.();
+    }
     timer = setTimeout(finish, (total + .6) * 1000);
     host.classList.add('splash-ready');
     let started;
@@ -88,8 +109,10 @@ export function startSplash(host, { lang = 'ko', onDone = () => {} } = {}) {
       if (closed) return;
       started ??= now;
       const t = (now - started) / 1000;
+      for (const c of cues) if (!c.done && t >= c.at) { c.done = true; if (t - c.at < .25) c.a.play().catch(() => {}); }
+      if (scene.flyAt != null && t >= scene.flyAt) reveal();
       scene.renderAt(Math.min(t, scene.duration));
-      if (t > total - .24) host.style.opacity = String(Math.max(0, (total - t) / .24));
+      if (scene.flyAt == null && t > total - .24) host.style.opacity = String(Math.max(0, (total - t) / .24));
       if (t >= total) { finish(); return; }
       raf = requestAnimationFrame(frame);
     };

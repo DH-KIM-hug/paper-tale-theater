@@ -1560,10 +1560,12 @@
   paintTabBadge();
   Entitlements.onChange(() => { paintTabBadge(); requestRender(); });
 
-  /* 앱·웹 첫 접속: 세션당 한 번 스플래시. ?splash=1 은 강제 재생. */
+  /* 앱·웹 첫 접속: 세션당 한 번 스플래시. ?splash=1 은 강제 재생, ?splash=2 는 새 스플래시(로고 안으로 들어갔다 나오기) 미리 보기. */
+  const SPLASH_V2 = new URLSearchParams(location.search).get('splash') === '2';
   function splash(done) {
     const sp = $('#splash');
-    let finished = false, pending;
+    let finished = false, shown = false, pending;
+    const reveal = () => { if (!shown) { shown = true; done(); } };   // 새 스플래시는 로고가 날아가는 동안 홈을 먼저 드러낸다
     const complete = () => {
       if (finished) return;
       finished = true;
@@ -1571,8 +1573,9 @@
       sp.removeEventListener('pointerdown', complete);
       sp.hidden = true;
       sp.setAttribute('aria-hidden', 'true');
-      done();
+      reveal();
     };
+    sp.classList.toggle('v2', SPLASH_V2);
     // Branded static first paint while the optional 3D module loads.
     sp.hidden = false;
     sp.replaceChildren();
@@ -1585,12 +1588,12 @@
     fallback.append(title); sp.append(fallback);
     sp.addEventListener('pointerdown', complete);
     pending = setTimeout(complete, 2500);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
-    import('./engine/splash/start.js?v=20261028english1')
+    import('./engine/splash/start.js?v=20261029sp2')
       .then(({ startSplash }) => {
         if (finished) return;
         clearTimeout(pending);
         sp.removeEventListener('pointerdown', complete);
-        startSplash(sp, { lang, onDone: complete });
+        startSplash(sp, { lang, onDone: complete, onReveal: reveal, v2: SPLASH_V2 });
       })
       .catch(complete);
   }
@@ -1598,7 +1601,7 @@
   function intro() {
     let first = true;
     try { first = !sessionStorage.getItem('paperTheater.splash'); sessionStorage.setItem('paperTheater.splash', '1'); } catch (e) { /* 저장소를 못 쓰면 첫 화면을 표시 */ }
-    if (new URLSearchParams(location.search).get('splash') === '1') first = true;
+    if (['1', '2'].includes(new URLSearchParams(location.search).get('splash'))) first = true;
     update({ anim: false });
     if (first && location.hash !== '#parent') splash(() => update({ intro: true, delay: .04, step: .035 }));
     else update({ intro: true, delay: .02, step: .03 });

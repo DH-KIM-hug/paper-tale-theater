@@ -7,7 +7,7 @@ G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 sys.path.insert(0, os.path.join(G, 'tools/gpu_night'))
 from chromakey import key_magenta
 only = set(sys.argv[1:])
-for j in json.load(open(os.path.join(G, 'tools/app/gen/jobs_svgfix.json'))):
+for j in json.load(open(os.path.join(G, f"tools/app/gen/jobs_{os.environ.get('JOBS', 'svgfix')}.json"))):
     if only and j['id'] not in only: continue
     src = os.path.join(G, j['out']); dst = os.path.join(G, j['final']); W, H = j['size']
     if not os.path.exists(src): print('없음', j['id']); continue

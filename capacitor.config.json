@@ -6,5 +6,6 @@
     "contentInset": "never",
     "allowsLinkPreview": false,
     "limitsNavigationsToAppBoundDomains": false
-  }
+  },
+  "backgroundColor": "#F5EFE9"
 }

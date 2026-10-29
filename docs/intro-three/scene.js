@@ -1,4 +1,5 @@
-import { createSplashScene, DURATION } from '../../engine/splash/scene.js?v=20261028english1';
+// ?v2=1 = 새 스플래시(scene2.js)
+const { createSplashScene, DURATION } = await import(new URLSearchParams(location.search).has('v2') ? '../../engine/splash/scene2.js?v=20261029sp2' : '../../engine/splash/scene.js?v=20261028english1');
 const $ = s => document.querySelector(s);
 const isExport = new URLSearchParams(location.search).has('export');
 if (isExport) document.body.classList.add('export');
@@ -6,6 +7,7 @@ let current = 0, playing = false, previous = 0;
 try {
   const scene = await createSplashScene($('#viewport'), { lang: new URLSearchParams(location.search).get('lang') || 'ko' });
   window.introDuration = DURATION;
+  window.splashScene = scene;   // 확인 도구가 flyTo(홈 로고 자리) 등을 부를 수 있게
   window.renderAt = t => {
     current = Math.min(DURATION, Math.max(0, t));
     scene.renderAt(current);
