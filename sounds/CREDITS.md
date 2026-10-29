@@ -50,6 +50,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | 파일 | 원본 | 만든 이 | 라이선스 | 사용 구간 |
 |---|---|---|---|---|
 | `music/magic_awaken.mp3` | Pixabay "Outro Gentle & Magical Christmas Music" — grand_project-a-christmas-dream_outro-gentle-amp-magical-christmas-music-625440.mp3 | grand_project | Pixabay Content License (출처 표기 불필요) | 전체 16.2초, 음량 -4dB·끝 페이드. 백설공주 깨어남·미녀와 야수 저주 풀림 |
+| `music/mountain_king_box.mp3` | Pixabay "Grieg - In the Hall of the Mountain King (Peer Gynt) Music Box" — gregorquendel-grieg-in-the-hall-of-the-mountain-king-peer-gynt-music-box-188474.mp3 | Gregor Quendel (편곡·연주), 원곡 그리그(1875, 공개 곡) | Pixabay Content License (출처 표기 불필요) | 앞 쉼 0.6초 자르고 61.4초, 모노 64k, 끝 페이드. 사탕 마녀의 핼러윈 놀이 배경 음악(되풀이) |
 | `sfx/magic_wand.mp3` | Pixabay "Magic Wand" — freesound_community-magic-wand-6214.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 0.1~2.7초(2.6초), 앞뒤 페이드. 요술 항아리 불려 내기 |
 
 ## 효과음 (Kenney, CC0 — 출처 표시 의무 없음)

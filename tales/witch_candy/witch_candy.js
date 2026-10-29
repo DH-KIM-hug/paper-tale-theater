@@ -868,6 +868,13 @@
       return T.readPlay.call(RW, READ_ACTS);
     }
 
+    /* 배경 음악: 「산왕의 궁전에서」 오르골(픽사베이, sounds/CREDITS.md) — 놀이 내내 작게 되풀이(2026-10-29 사용자). 읽어 주기에는 틀지 않는다 */
+    const BGM = 'mountain_king_box';
+    AudioFX.preloadMusic([BGM]);
+    let bgmOn = true, bgmH = null;
+    const bgmLoop = () => { if (!bgmOn) return; bgmH = AudioFX.music(BGM, { vol: .16, fade: .8 }); if (!bgmH) { setTimeout(bgmLoop, 800); return; } bgmH.done.then(() => { bgmH = null; bgmLoop(); }); };
+    const bgmStop = () => { bgmOn = false; if (bgmH) bgmH.stop(1.5); };
+
     /* ================= 1. 초대장 ================= */
     const street = () => {
       T.clear(); bgImage(T, 'wc_bg_street'); setView(500);
@@ -877,6 +884,7 @@
     };
     street();
     await T.curtain(true);
+    bgmLoop();
     amb('winter_wind_1', .15, 4);
     const sayA1 = say(S.A1);
     const invs = [0, 1, 2, 3].map(i => { const a = prop(T, 'wc_prop_invite'); put(T, a, -50, 150 + i * 30); return a; });
@@ -1200,6 +1208,7 @@
     await say(S.I10);
     await sleep(2000);
     try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    bgmStop();
     T.finale(); await sleep(1500);
     return '다음엔 다른 색을 섞어 볼까요?';
   }
