@@ -6,13 +6,13 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/patjuk/tiger_1201f31b26.mp3"
  ],
  "\"호랑이야, 동짓날에 맛있는 팥죽을 쑤어 줄게. 그때까지 기다려 다오.\" 호랑이는 어슬렁어슬렁 돌아갔어요.": [
-  "audio/el/patjuk/halmi_977743c491.mp3",
+  "audio/tc/patjuk/halmi_4e86a149c3.mp3",
   "audio/el/patjuk/nar_a2bfddd4e4.mp3"
  ],
  "드디어 동짓날이 되었어요. 할멈은 팥죽을 쑤면서 훌쩍훌쩍 울었어요.": "audio/el/patjuk/nar_3d01d2df4f.mp3",
  "깜깜한 밤이 되었어요. 어흥! 호랑이가 어슬렁어슬렁 찾아왔어요!": "audio/el/patjuk/nar_eb528785a4.mp3",
  "\"얘들아, 도와줘!\" 친구들을 순서대로 눌러서 호랑이를 혼내 주세요!": [
-  "audio/el/patjuk/halmi_7ef9b4b8eb.mp3",
+  "audio/tc/patjuk/halmi_9c541854d8.mp3",
   "audio/el/patjuk/nar_134478b429.mp3"
  ],
  "데굴데굴~ 알밤이 굴러왔어요. \"할멈, 팥죽 한 그릇 주면 도와줄게!\" 알밤은 팥죽을 얻어먹고 뜨거운 아궁이 속에 쏙 숨었어요.": [
@@ -65,7 +65,7 @@ Object.assign(NARRATION_CLIPS, {
  "지게가 호랑이를 번쩍 지고 가서 바다에 풍덩! 던져 버렸어요!": "audio/el/patjuk/nar_5a4b3efd5c.mp3",
  "지게가 낑낑… 힘센 호랑이를 들 수가 없어요!": "audio/el/patjuk/nar_0a9b89a0fd.mp3",
  "\"호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.\" 할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요. 누가 먼저 혼내 줄까요?": [
-  "audio/el/patjuk/halmi_cba1d1cd68.mp3",
+  "audio/tc/patjuk/halmi_1f85964d2c.mp3",
   "audio/el/patjuk/nar_8b75195af4.mp3"
  ],
  "\"앗, 뜨거워! 눈이야!\" 호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요. 다음은 누구일까요?": [
@@ -146,5 +146,5 @@ Object.assign(VOICE_LINES, {
  "hi_jeolgu": "audio/tc/jeolgu_6842ec2a53.mp3",
  "hi_myeongseok": "audio/tc/myeongseok_7778850fee.mp3",
  "hi_jige": "audio/tc/jige_070bd2ce3a.mp3",
- "hi_halmi": "audio/el/patjuk/halmi_ee03002a56.mp3"
+ "hi_halmi": "audio/tc/patjuk/halmi_84cee8dc2e.mp3"
 });

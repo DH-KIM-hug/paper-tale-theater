@@ -30,7 +30,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"호랑이야, 동짓날에 맛있는 팥죽을 쑤어 줄게. 그때까지 기다려 다오.\" 호랑이는 어슬렁어슬렁 돌아갔어요.": {
   "t": "Tiger, on the longest night of the year, I'll cook you some yummy red bean porridge. Please wait until then. The tiger prowled away, slow and heavy.",
   "c": [
-   "audio/el/patjuk/en/halmi_34e39f78dc.mp3",
+   "audio/tc/patjuk/en/halmi_1d1910dba0.mp3",
    "audio/el/patjuk/en/nar_dfcedb3622.mp3"
   ]
  },
@@ -48,7 +48,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"오늘 밤 호랑이가 오면 나는 어떡하지.\"": {
   "t": "What will I do when the tiger comes tonight?",
-  "c": "audio/el/patjuk/en/halmi_c360bcd110.mp3"
+  "c": "audio/tc/patjuk/en/halmi_22db99b000.mp3"
  },
  "그때 부엌문 밖에서 작은 소리가 들렸어요.": {
   "t": "Just then, a tiny sound came from outside the kitchen door.",
@@ -124,11 +124,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"얘들아, 도와줘!\"": {
   "t": "Friends, help me!",
-  "c": "audio/el/patjuk/en/halmi_0ae5b5e45f.mp3"
+  "c": "audio/tc/patjuk/en/halmi_613493f1da.mp3"
  },
  "\"호랑이가 오면 모두 힘을 모아 주렴.\"": {
   "t": "When the tiger comes, let us all work together.",
-  "c": "audio/el/patjuk/en/halmi_5f503a1d7c.mp3"
+  "c": "audio/tc/patjuk/en/halmi_a9ae6308f8.mp3"
  },
  "깜깜한 밤이 되었어요. 어흥! 호랑이가 어슬렁어슬렁 찾아왔어요!": {
   "t": "It was a dark, dark night. Roar! The tiger came prowling back!",
@@ -141,7 +141,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.\" 할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요.": {
   "t": "Tiger, before we eat the porridge, please watch the fire for me. At Grandma's words, the tiger squatted down by the fireplace.",
   "c": [
-   "audio/el/patjuk/en/halmi_87f7aa408f.mp3",
+   "audio/tc/patjuk/en/halmi_3620465818.mp3",
    "audio/el/patjuk/en/nar_b6629d2707.mp3"
   ]
  },
@@ -228,7 +228,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"고맙다, 얘들아. 너희 덕분에 살았구나.\"": {
   "t": "Thank you, my dear friends. You saved me.",
-  "c": "audio/el/patjuk/en/halmi_9a737b578b.mp3"
+  "c": "audio/tc/patjuk/en/halmi_8f0edc068e.mp3"
  },
  "알밤도, 자라도, 쇠똥도, 송곳도, 절구도, 멍석도, 지게도 모두 후루룩 배불리 먹었지요.": {
   "t": "The chestnut, the turtle, the dung, the awl, the mortar, the mat and the carrier all went slurp, slurp, until their tummies were full.",

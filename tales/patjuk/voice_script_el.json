@@ -1,7 +1,7 @@
 {
  "voices": {
   "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "halmi": "gnWujHp24oqX3I03lRbU",
+  "halmi": "tc",
   "tiger": "nPczCjzI2devNBz1zQrb",
   "bam": "tc",
   "jara": "tc",
@@ -1005,5 +1005,8 @@
   "myeongseok",
   "jige"
  ],
- "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, halmi=Huelyn, tiger=Brian, bam=tc, jara=tc, ddong=tc, songgot=tc, jeolgu=tc, myeongseok=tc, jige=tc. tc 배역은 Typecast 클립 그대로"
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, halmi=tc(순이 Sooni, 2026-10-30), tiger=Brian, bam=tc, jara=tc, ddong=tc, songgot=tc, jeolgu=tc, myeongseok=tc, jige=tc. tc 배역은 Typecast 클립 그대로 할멈 클립은 audio/tc/patjuk/(en/)halmi_*.mp3 (Typecast ssfm-v30, -19.5 LUFS), 맵은 narration_el*.js 에서 직접 바꿨다(gen_tale.py 를 다시 돌리면 halmi 가 옛 audio/tc/halmi_* 로 되돌아가니 주의)",
+ "tc_voice_ids": {
+  "halmi": "tc_60ad0841061ee28740ec2e1c"
+ }
 }

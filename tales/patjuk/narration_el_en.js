@@ -14,7 +14,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"호랑이야, 동짓날에 맛있는 팥죽을 쑤어 줄게. 그때까지 기다려 다오.\" 호랑이는 어슬렁어슬렁 돌아갔어요.": {
   "t": "Tiger, on the longest night of the year, I'll cook you some yummy red bean porridge. Please wait until then. The tiger prowled away, slow and heavy.",
   "c": [
-   "audio/el/patjuk/en/halmi_34e39f78dc.mp3",
+   "audio/tc/patjuk/en/halmi_1d1910dba0.mp3",
    "audio/el/patjuk/en/nar_dfcedb3622.mp3"
   ]
  },
@@ -29,7 +29,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"얘들아, 도와줘!\" 친구들을 순서대로 눌러서 호랑이를 혼내 주세요!": {
   "t": "Friends, help me! Tap your friends, one after another, to give that tiger a lesson!",
   "c": [
-   "audio/el/patjuk/en/halmi_0ae5b5e45f.mp3",
+   "audio/tc/patjuk/en/halmi_613493f1da.mp3",
    "audio/el/patjuk/en/nar_b2ae93019e.mp3"
   ]
  },
@@ -148,7 +148,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.\" 할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요. 누가 먼저 혼내 줄까요?": {
   "t": "Tiger, before we eat the porridge, please watch the fire for me. At Grandma's words, the tiger squatted down by the fireplace. Who should teach the tiger a lesson first?",
   "c": [
-   "audio/el/patjuk/en/halmi_87f7aa408f.mp3",
+   "audio/tc/patjuk/en/halmi_3620465818.mp3",
    "audio/el/patjuk/en/nar_e1116562f4.mp3"
   ]
  },
@@ -296,5 +296,5 @@ Object.assign(VOICE_LINES_EN, {
  "hi_jeolgu": "audio/tc/patjuk/en/jeolgu_a0b7759582.mp3",
  "hi_myeongseok": "audio/tc/patjuk/en/myeongseok_4c6d778b79.mp3",
  "hi_jige": "audio/tc/patjuk/en/jige_0064c5490b.mp3",
- "hi_halmi": "audio/el/patjuk/en/halmi_60c1091cb2.mp3"
+ "hi_halmi": "audio/tc/patjuk/en/halmi_5ed1654a44.mp3"
 });

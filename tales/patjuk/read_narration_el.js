@@ -11,7 +11,7 @@ Object.assign(NARRATION_CLIPS, {
  "할멈은 깜짝 놀라 호미를 떨어뜨렸어요. 다리가 후들후들 떨렸지요.": "audio/el/patjuk/nar_99f60a39b9.mp3",
  "할멈은 떨리는 목소리로 말했어요.": "audio/el/patjuk/nar_c7ad2f98f7.mp3",
  "\"호랑이야, 동짓날에 맛있는 팥죽을 쑤어 줄게. 그때까지 기다려 다오.\" 호랑이는 어슬렁어슬렁 돌아갔어요.": [
-  "audio/el/patjuk/halmi_977743c491.mp3",
+  "audio/tc/patjuk/halmi_4e86a149c3.mp3",
   "audio/el/patjuk/nar_a2bfddd4e4.mp3"
  ],
  "할멈은 호랑이가 사라진 산길을 한참 바라보았어요.": "audio/el/patjuk/nar_f1bd8441d5.mp3",
@@ -19,7 +19,7 @@ Object.assign(NARRATION_CLIPS, {
  "드디어 동짓날이 되었어요. 할멈은 팥죽을 쑤면서 훌쩍훌쩍 울었어요.": "audio/el/patjuk/nar_3d01d2df4f.mp3",
  "동짓날 저녁, 할멈은 집 안 부엌에 있었어요.": "audio/el/patjuk/nar_4fe6c73a5d.mp3",
  "보글보글, 구수한 팥죽 냄새가 부엌에 가득했지요.": "audio/el/patjuk/nar_bc352e11f1.mp3",
- "\"오늘 밤 호랑이가 오면 나는 어떡하지.\"": "audio/el/patjuk/halmi_f6d0aedc25.mp3",
+ "\"오늘 밤 호랑이가 오면 나는 어떡하지.\"": "audio/tc/patjuk/halmi_229198d50a.mp3",
  "그때 부엌문 밖에서 작은 소리가 들렸어요.": "audio/el/patjuk/nar_3b72e746dc.mp3",
  "데굴데굴~ 알밤이 굴러왔어요. \"할멈, 팥죽 한 그릇 주면 도와줄게!\" 알밤은 팥죽을 얻어먹고 뜨거운 아궁이 속에 쏙 숨었어요.": [
   "audio/el/patjuk/nar_84e0a6a590.mp3",
@@ -61,13 +61,13 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/patjuk/nar_9b39ac0e3f.mp3"
  ],
  "할멈은 눈물을 닦고 친구들에게 소곤소곤 속삭였어요.": "audio/el/patjuk/nar_ff3009e625.mp3",
- "\"얘들아, 도와줘!\"": "audio/el/patjuk/halmi_7ef9b4b8eb.mp3",
- "\"호랑이가 오면 모두 힘을 모아 주렴.\"": "audio/el/patjuk/halmi_dfb70b529f.mp3",
+ "\"얘들아, 도와줘!\"": "audio/tc/patjuk/halmi_9c541854d8.mp3",
+ "\"호랑이가 오면 모두 힘을 모아 주렴.\"": "audio/tc/patjuk/halmi_5d75845372.mp3",
  "할멈은 다시 부엌으로 들어가 친구들과 호랑이를 기다렸어요.": "audio/el/patjuk/nar_8f3bffb479.mp3",
  "깜깜한 밤이 되었어요. 어흥! 호랑이가 어슬렁어슬렁 찾아왔어요!": "audio/el/patjuk/nar_eb528785a4.mp3",
  "\"할멈, 약속대로 왔다. 팥죽을 먹고 나서 너를 잡아먹겠다!\"": "audio/el/patjuk/tiger_3c80faeb88.mp3",
  "\"호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.\" 할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요.": [
-  "audio/el/patjuk/halmi_cba1d1cd68.mp3",
+  "audio/tc/patjuk/halmi_1f85964d2c.mp3",
   "audio/el/patjuk/nar_8099f6a445.mp3"
  ],
  "할멈은 부엌 구석으로 살금살금 물러났어요.": "audio/el/patjuk/nar_2dd9436806.mp3",
@@ -100,7 +100,7 @@ Object.assign(NARRATION_CLIPS, {
  "호랑이가 떠나자 친구들이 마당으로 모였어요.": "audio/el/patjuk/nar_003f172ae3.mp3",
  "만세! 호랑이를 물리쳤어요! 할멈은 친구들과 맛있는 팥죽을 나누어 먹었답니다.": "audio/el/patjuk/nar_39e47fe668.mp3",
  "할멈은 마당으로 총총 나와 친구들을 꼬옥 안아 주었어요.": "audio/el/patjuk/nar_d042f7f408.mp3",
- "\"고맙다, 얘들아. 너희 덕분에 살았구나.\"": "audio/el/patjuk/halmi_27e2267f6f.mp3",
+ "\"고맙다, 얘들아. 너희 덕분에 살았구나.\"": "audio/tc/patjuk/halmi_a2104e85a4.mp3",
  "알밤도, 자라도, 쇠똥도, 송곳도, 절구도, 멍석도, 지게도 모두 후루룩 배불리 먹었지요.": "audio/el/patjuk/nar_9b1a94fddf.mp3",
  "작은 친구들이 힘을 모으면 커다란 호랑이도 물리칠 수 있답니다.": "audio/el/patjuk/nar_e2e7a1d863.mp3"
 });
