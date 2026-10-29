@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """iOS 실행 화면(2732 정사각, 꽉 채움): 크림 #F5EFE9 바탕 가운데 B 세로형 로고를 너비 900px 로.
-새 스플래시(engine/splash/scene2.js LAUNCH_LOGO = 900/2732, home.css .splash.v2)의 첫 화면과 같은 크기·자리라 실행 화면 → 웹 첫 화면이 튀지 않는다.
+스플래시(engine/splash/scene.js LAUNCH_LOGO = 900/2732, home.css .splash-wordmark)의 첫 화면과 같은 크기·자리라 실행 화면 → 웹 첫 화면이 튀지 않는다.
 마크는 assets/ui/logo_mark.webp, 글자는 build_splash_letters.py 의 큰 조각(sp2_ko_*)으로 다시 짜서 선명하게.
   ~/.venvs/paper-tale/bin/python tools/brand/build_launch_splash.py"""
 from pathlib import Path

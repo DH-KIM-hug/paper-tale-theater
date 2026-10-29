@@ -38,7 +38,7 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
       await page.locator('#splash.splash-ready').waitFor({ timeout: 15000 });
       await page.locator('#splash').waitFor({ state: 'hidden', timeout: 12000 });
       const elapsed = await page.evaluate(() => window.__splashTiming.ended - window.__splashTiming.ready);
-      assert.ok(elapsed >= 7100 && elapsed < 9500, `Expected native-speed 7.4s playback, got ${elapsed}ms`);
+      assert.ok(elapsed >= 6100 && elapsed < 8600, `Expected native-speed 6.35s playback, got ${elapsed}ms`);
       console.log(`  Playback measured: ${(elapsed / 1000).toFixed(2)}s`);
       assert.equal(await page.locator('#splash canvas').count(), 0);
       await page.reload();
@@ -95,7 +95,7 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
         try {
           const before = scene.renderer.info.programs.length;
           const textures = scene.renderer.info.memory.textures;
-          for (const time of [.1, .4, .75, 1.1, 2.1, 2.8, 3.2, 4.2, 4.9, 5.4, 6.4]) scene.renderAt(time);
+          for (const time of [.1, .4, .7, 1.1, 1.4, 2.1, 2.8, 3.2, 3.6, 4.2, 4.6, 4.9, 5.4, 6]) scene.renderAt(time);
           return { before, after: scene.renderer.info.programs.length, textures, afterTextures: scene.renderer.info.memory.textures };
         } finally { scene.destroy(); host.remove(); }
       });
@@ -126,8 +126,8 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
     await run('English logo loads without the Korean logo', async page => {
       let loadedKorean = false, loadedEnglish = false;
       page.on('request', r => {
-        if (r.url().includes('sp_logo_c2_b_light_v1.webp')) loadedKorean = true;
-        if (r.url().includes('sp_logo_c2_en_b_light_v1.webp')) loadedEnglish = true;
+        if (r.url().includes('sp2_ko_')) loadedKorean = true;
+        if (r.url().includes('sp2_en_')) loadedEnglish = true;
       });
       await page.goto(base + '/docs/intro-three/?export=1&lang=en');
       await page.waitForFunction(() => window.introReady, null, { timeout: 20000 });

@@ -1,7 +1,7 @@
 /** App lifecycle: skip immediately, never block the home on WebGL or artwork loading. */
 // 앱과 미리보기 모두 scene.duration의 원래 속도로 재생한다. 별도 압축 시간은 두지 않는다.
-// v2: 새 스플래시(scene2.js — 로고 안으로 들어갔다 나오기, 효과음, 홈 로고 자리로 날아가며 홈을 드러냄). onReveal = 홈이 드러나기 시작할 때 한 번
-export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = null, v2 = false } = {}) {
+// 스플래시(scene.js — 로고 안으로 들어갔다 나오기, 효과음, 홈 로고 자리로 날아가며 홈을 드러냄). onReveal = 홈이 드러나기 시작할 때 한 번
+export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = null } = {}) {
   const en = lang === 'en';
   let closed = false, raf = 0, timer = 0, loadTimer = 0, scene, revealed = false, sounds = [];
   const abort = new AbortController();
@@ -65,7 +65,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
     timer = setTimeout(finish, 500);
     return { finish };
   }
-  import(v2 ? './scene2.js?v=20261029sp2' : './scene.js?v=20261028english1').then(async ({ createSplashScene }) => {
+  import('./scene.js?v=20261030sp5').then(async ({ createSplashScene }) => {
     if (closed) return;
     const building = createSplashScene(host.querySelector('.splash-stage'), {
       lang, signal: abort.signal,
@@ -115,9 +115,8 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
       started ??= now;
       const t = (now - started) / 1000;
       for (const c of cues) if (!c.done && t >= c.at) { c.done = true; if (t - c.at < .25) { c.a.play().catch(() => {}); if (c.dur) cut(c); } }
-      if (scene.flyAt != null && t >= scene.flyAt) reveal();
+      if (t >= scene.flyAt) reveal();
       scene.renderAt(Math.min(t, scene.duration));
-      if (scene.flyAt == null && t > total - .24) host.style.opacity = String(Math.max(0, (total - t) / .24));
       if (t >= total) { finish(); return; }
       raf = requestAnimationFrame(frame);
     };

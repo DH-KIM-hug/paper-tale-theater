@@ -1,5 +1,4 @@
-// ?v2=1 = 새 스플래시(scene2.js)
-const { createSplashScene, DURATION } = await import(new URLSearchParams(location.search).has('v2') ? '../../engine/splash/scene2.js?v=20261029sp2' : '../../engine/splash/scene.js?v=20261028english1');
+import { createSplashScene, DURATION } from '../../engine/splash/scene.js?v=20261030sp5';
 const $ = s => document.querySelector(s);
 const isExport = new URLSearchParams(location.search).has('export');
 if (isExport) document.body.classList.add('export');
@@ -13,7 +12,7 @@ try {
     scene.renderAt(current);
     $('#timeline').value = current;
     $('#time').textContent = `${current.toFixed(1)} / ${DURATION.toFixed(1)}`;
-    $('#chapter').textContent = current < 1.1 ? '작은 무대가 열리고' : current < 2.65 ? '토끼와 거북이를 만나고' : current < 4.8 ? '공주들의 정원으로' : '톡톡, 이야기가 시작돼요';
+    $('#chapter').textContent = current < 1 ? '로고 안으로' : current < 1.5 ? '아침이 밝고' : current < 2.6 ? '토끼와 거북이를 만나고' : current < 3.3 ? '공주들의 성' : current < 4.45 ? '밤이 되고' : '톡톡, 이야기가 시작돼요';
   };
   $('#timeline').max = DURATION;
   $('#loading').remove();
