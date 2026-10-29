@@ -19,7 +19,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
   const fallbackTitle = host.querySelector('strong');
   const wordmark = document.createElement('img');
   wordmark.className = 'splash-wordmark';
-  wordmark.src = new URL(en ? '../../assets/v3w/sp_logo_c2_en_b_light_v1.webp' : '../../assets/v3w/sp_logo_c2_b_light_v1.webp', import.meta.url).href;
+  wordmark.src = new URL(v2 ? `../../assets/v3w/sp2_logo_closed_${en ? 'en' : 'ko'}.webp` : en ? '../../assets/v3w/sp_logo_c2_en_b_light_v1.webp' : '../../assets/v3w/sp_logo_c2_b_light_v1.webp', import.meta.url).href;
   wordmark.alt = en ? 'Toki Toki Tale' : '톡톡 동화극장';
   fallbackTitle.replaceWith(wordmark);
   const skip = host.querySelector('button');

@@ -2,13 +2,14 @@ import * as THREE from './vendor/three.module.js';
 import { ART } from './art.js?v=20261028english1';
 import { ARCH, MARK_BOX, LOCKUP } from './art2.js?v=20261029sp2';
 
-/* 새 스플래시 「로고 안으로 들어갔다 나오기」(2026-10-29 사용자 결정 A).
-   로고(아치 창 + 글자)에서 시작 → 글자가 떨어지고 아치 창 안으로 다가감 → 창 안 밤 무대에서 들판이 일어서고 토끼·거북이가 지나감
-   → 성이 일어서고 공주 셋이 들어와 인사 → 커튼이 닫힘 → 뒤로 빠져 다시 로고 크기 → 커튼이 열리고 글자 '톡'·'톡'·'동화극장'이 내려앉음
-   → 아치가 홈 로고 마크 자리로 날아감. 사라지는 것은 투명해지지 않고 걸어 나가거나 종이가 눕듯 접힌다.
+/* 새 스플래시 「로고 안으로 들어갔다 나오기」(2026-10-29 사용자 결정 A, 10-30 커튼·낮밤 수정).
+   커튼이 다 닫힌 로고(아치 창 + 글자)에서 시작 → 글자가 눕고 창 안으로 다가감 → 커튼이 활짝 열리며 낮 무대(줄에 매달린 해)
+   → 들판이 일어서고 토끼·거북이가 지나감 → 성이 일어서고 공주 셋이 들어옴 → 해가 끌려 올라가고 달·별 그려진 밤 하늘 막이 내려옴
+   → 공주들은 옆으로 나가고 소품이 누움 → 커튼이 로고처럼 왼쪽에 묶인 모양까지만 닫힘 → 뒤로 빠져 로고 → 글자 '톡'·'톡'·'동화극장'이 일어섬
+   → 아치가 홈 로고 마크 자리로 날아감. 커튼은 늘 맨 앞 층(무대와 배우는 그 뒤). 사라지는 것은 투명해지지 않고 걸어 나가거나 접혀 눕는다.
    좌표: '마크 픽셀' = assets/ui/logo_mark.webp(512) 위 좌표. 화면 = 직교 카메라, 1단위 = CSS 1px. */
-export const DURATION = 5.5;
-export const FLY_AT = 5.05;
+export const DURATION = 6.35;
+export const FLY_AT = 5.9;
 const LAND = .26;   // 글자 판이 일어서는 시간
 const CREAM = '#F5EFE9';
 const LAUNCH_LOGO = 900 / 2732;   // iOS 실행 화면(2732 정사각, 꽉 채움)에서 로고 너비 비율 — 정지 첫 화면·첫 장면이 같은 크기
@@ -23,11 +24,13 @@ const url = path => new URL(`../../${path}`, import.meta.url).href;
 /** 효과음 [시각(초), sounds/sfx 이름, 음량]. 재생은 start.js 가 맡는다 */
 export const CUES = [
   [.36, 'whoosh', .32], [.4, 'paper_down', .35],
-  [.95, 'paper_up', .55], [1.12, 'paper_up', .4],
-  [1.45, 'hop', .45], [1.8, 'hop', .4], [2.15, 'hop', .35], [1.62, 'step_grass', .35],
-  [2.36, 'paper_down', .45], [2.47, 'paper_up', .55], [2.62, 'shimmer', .4], [3.02, 'sparkle', .45],
-  [3.1, 'pop', .35], [3.14, 'swish', .55], [3.56, 'whoosh', .3], [4.24, 'swish', .35], [4.56, 'latch_click', .4],
-  [4.15, 'paper_tap', .7], [4.3, 'paper_tap', .7], [4.48, 'paper_up', .45], [4.74, 'chime_up', .4]
+  [.95, 'swish', .55], [1.05, 'harp_gliss', .35],
+  [1.2, 'paper_up', .5], [1.32, 'paper_up', .35],
+  [1.55, 'hop', .45], [1.88, 'hop', .4], [2.2, 'hop', .35], [1.66, 'step_grass', .35],
+  [2.45, 'paper_down', .45], [2.55, 'paper_up', .55], [2.7, 'shimmer', .4], [3.08, 'sparkle', .45],
+  [3.2, 'slide_up', .35], [3.32, 'slide_down', .35], [3.8, 'sparkle', .4],
+  [4.0, 'paper_down', .4], [4.05, 'swish', .4], [4.42, 'latch_click', .4], [4.47, 'whoosh', .28],
+  [5.1, 'paper_tap', .7], [5.25, 'paper_tap', .7], [5.43, 'paper_up', .45], [5.62, 'chime_up', .4]
 ];
 
 /** 홈이 쓰는 로고 너비(CSS px). home.css 의 .splash.v2 .splash-wordmark 와 같은 식 */
@@ -65,7 +68,8 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
   try {
     const L = LOCKUP[lang === 'en' ? 'en' : 'ko'];
     const FILES = {
-      mark: 'assets/ui/logo_mark.webp', stage: 'assets/v3w/sp2_stage_hd.webp', curtain: 'assets/v3w/sp2_curtain.webp', band: 'assets/v3w/sp2_band.webp',
+      mark: 'assets/ui/logo_mark.webp', curtain: 'assets/v3w/sp2_curtain.webp', band: 'assets/v3w/sp2_band.webp',
+      ...Object.fromEntries(['sp2_day_full', 'sp2_night_sky', 'sp2_floor', 'sp2_curtain_tied', 'sp2_sun'].map(n => [n, `assets/v3w/${n}.webp`])),
       ...Object.fromEntries(L.pieces.map(p => [p[0], `assets/v3w/${p[0]}.webp`])),
       ...Object.fromEntries(['sp_ground_meadow_v1', 'sp_castle_v1', 'rp_layer_tree_front', 'rab_layer_flower_bush_front', 'cf4_prop_grass_tuft',
         'rab_rabbit_run_c', 'rab_turtle_walk', 'cd2_cind_gown', 'sw_snow_stand', 'sb_pr_wave'].map(n => [n, `assets/v3w/${n}.webp`]))
@@ -76,7 +80,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       if (disposed) { map.dispose(); return null; }
       own(textures, map);
       const image = map.image;
-      const edge = name === 'stage' || name === 'curtain' || name === 'band' || name.startsWith('sp2_') ? 1536 : name === 'sp_castle_v1' || name === 'sp_ground_meadow_v1' ? 1024 : 768;
+      const edge = name === 'curtain' || name === 'band' || name.startsWith('sp2_') ? 1536 : name === 'sp_castle_v1' || name === 'sp_ground_meadow_v1' ? 1024 : 768;
       const k = Math.min(1, edge / Math.max(image.width, image.height));
       if (k < 1) {
         const c = document.createElement('canvas');
@@ -143,41 +147,52 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     /* 무대(마크 픽셀 공간). root 의 크기·위치로 로고 크기 ↔ 화면 가득을 오간다 */
     const root = new THREE.Group(); scene.add(root);
     const [mx0, my0, mx1, my1] = MARK_BOX;
+    // 끝에서 로고 마크 그림으로 넘긴다(묶인 커튼·밤 무대가 로고와 같은 모습이 된 뒤, 뒤로 빠지는 동안)
     const markPlane = new THREE.Mesh(own(geometries, new THREE.PlaneGeometry(512, 512)), basic(maps.get('mark'), { transparent: true }));
-    at(markPlane, 256, 256).renderOrder = 1; root.add(markPlane);
-    // 큰 무대 그림(sp2_stage_hd, 1274×1354): 마크에 맞춘 자리 x0 43.5, y0 30, 0.33 마크 픽셀/그림 픽셀
-    const SW = 1274 * .33, SH = 1354 * .33;
-    const stage = new THREE.Mesh(own(geometries, new THREE.PlaneGeometry(SW, SH)), basic(maps.get('stage')));
-    at(stage, 43.5 + SW / 2, 30 + SH / 2).renderOrder = 2; root.add(stage);
+    at(markPlane, 256, 256).renderOrder = 26; root.add(markPlane);
+    // 무대 판(tools/brand/build_splash_stage.py, 1274×1354): 마크에 맞춘 자리 x0 43.5, y0 30, 0.33 마크 픽셀/그림 픽셀
+    const BX = 43.5, BY = 30, BK = .33, SW = 1274 * BK, SH = 1354 * BK;
+    const board = (name, order, top = 0, h = 1354 - top) => {
+      const m = new THREE.Mesh(own(geometries, new THREE.PlaneGeometry(SW, h * BK)), basic(maps.get(name)));
+      m.renderOrder = order; root.add(m); return { m, x: BX + SW / 2, y: BY + (top + h / 2) * BK };
+    };
+    const day = board('sp2_day_full', 2), night = board('sp2_night_sky', 4, 0, 1250), floor = board('sp2_floor', 5, 941);
+    at(day.m, day.x, day.y); at(floor.m, floor.x, floor.y);
+    // 해: 줄에 매달려 로고의 달 자리(322, 205)에, 저녁이 되면 끌려 올라간다. 그림 500×1024 중 해 가운데 y 774
+    const SUN_H = 307, sun = paper('sp2_sun', SUN_H, { anchor: 'center', order: 3, shadow: false });
+    root.add(sun);
+    const sunY = 205 - 774 * SUN_H / 1024 + SUN_H / 2;
 
     // 1막 들판·나무·수풀(접혀 있다가 일어선다), 2막 성
     const flaps = [];
     const flap = (name, h, x, y, start, dur = .38, order = 10) => {
       const p = at(paper(name, h, { order }), x, y); root.add(p); flaps.push({ p, start, dur }); return p;
     };
-    const meadow = flap('sp_ground_meadow_v1', 110, 290, 472, .95, .4, 6);
-    const tree = flap('rp_layer_tree_front', 150, 418, 440, 1.08, .36, 8);
-    const bush = flap('rab_layer_flower_bush_front', 40, 196, 455, 1.15, .32, 12);
-    const tuft = flap('cf4_prop_grass_tuft', 26, 360, 458, 1.2, .3, 12);
-    const castle = flap('sp_castle_v1', 150, 300, 432, 2.47, .42, 7);
-    const scene1 = [tree, bush, tuft];
+    const meadow = flap('sp_ground_meadow_v1', 110, 290, 472, 1.2, .4, 6);
+    const tree = flap('rp_layer_tree_front', 150, 418, 440, 1.3, .36, 8);
+    const bush = flap('rab_layer_flower_bush_front', 40, 196, 455, 1.35, .32, 12);
+    const tuft = flap('cf4_prop_grass_tuft', 26, 360, 458, 1.4, .3, 12);
+    const castle = flap('sp_castle_v1', 150, 300, 432, 2.55, .42, 7);
+    const scene1 = [tree, bush, tuft], scene2 = [meadow, castle];
 
     // 배우: 토끼·거북이는 왼쪽에서 들어와 오른쪽으로 나가고(프레임 뒤로 가려짐), 공주들은 양옆에서 들어와 선다
     const rabbit = paper('rab_rabbit_run_c', 92, { order: 20 }); root.add(rabbit);
     const turtle = paper('rab_turtle_walk', 44, { order: 19 }); root.add(turtle);
     const cast = [
-      { p: paper('cd2_cind_gown', 112, { order: 22 }), from: 20, x: 212, y: 458, start: 2.68 },
-      { p: paper('sw_snow_stand', 104, { order: 21 }), from: 30, x: 296, y: 452, start: 2.82 },
-      { p: paper('sb_pr_wave', 110, { order: 23 }), from: 500, x: 384, y: 460, start: 2.74 }
+      { p: paper('cd2_cind_gown', 112, { order: 22 }), from: 20, x: 212, y: 458, start: 2.75, exit: -70 },
+      { p: paper('sw_snow_stand', 104, { order: 21 }), from: 30, x: 296, y: 452, start: 2.89, exit: -60 },
+      { p: paper('sb_pr_wave', 110, { order: 23 }), from: 500, x: 384, y: 460, start: 2.81, exit: 560 }
     ];
     for (const a of cast) root.add(a.p);
 
-    // 커튼은 로고의 왼쪽 묶인 커튼이 직접 닫힌다(2026-10-29 사용자 지시): 금색 끈이 풀려 떨어지면 묶인 커튼(무대 그림에 그려진 것)
-    // 자리에 같은 빨강의 편 커튼(sp2_curtain)이 묶인 폭으로 나타나 오른쪽 끝까지 펴진다. 열 때는 거꾸로 모이고 끈이 날아와 다시 묶는다.
-    // 끈 sp2_band 는 sp2_stage_hd 에서 오려 낸 것(마크 좌표 상자 43.8~127.3, 245.5~289.1)
+    // 커튼(늘 맨 앞): 처음엔 편 커튼(sp2_curtain)이 창을 다 덮고 있다가 왼쪽으로 모두 걷힌다. 끝에서 왼쪽에서 묶인 폭만큼 나와
+    // 금색 끈이 올라와 묶이면 로고의 묶인 커튼(sp2_curtain_tied, 무대 그림에서 오린 것)으로 바뀐다.
+    // 끈 sp2_band 도 무대 그림에서 오려 낸 것(마크 좌표 상자 43.8~127.3, 245.5~289.1)
     const CL = 40, CTIED = 170, CFULL = 480, CH = 450, CY = 30;
     const curtain = paper('curtain', CH, { anchor: 'left', order: 30, w: CTIED });
     at(curtain, CL, CY + CH / 2); root.add(curtain);
+    const tied = paper('sp2_curtain_tied', SH, { anchor: 'center', order: 25 });
+    at(tied, BX + 507 * BK / 2, BY + SH / 2); root.add(tied);
     const BAND = [43.8, 245.5, 127.3, 289.1];
     const band = paper('band', BAND[3] - BAND[1], { anchor: 'center', order: 31, w: BAND[2] - BAND[0] });
     root.add(band);
@@ -218,7 +233,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       const [x0, y0] = toMark(l, t), [x1, y1] = toMark(r, b);
       const p = paper(name, y1 - y0, { order: 50, shadow: false, w: x1 - x0 });   // 바닥선이 접는 축
       words.add(p);
-      return { p, x: (x0 + x1) / 2, y: y1, fall: .36 + i * .06, land: [4.05, 4.2, 4.38][i] };
+      return { p, x: (x0 + x1) / 2, y: y1, fall: .36 + i * .06, land: [5, 5.15, 5.33][i] };
     });
     const logoC = toMark(L.size[0] / 2, L.size[1] / 2);
 
@@ -231,7 +246,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     }
     // 마크 점 p 가 화면 가운데 기준 (p - c)·m 에 오도록
     const place = (g, m, cx, cy) => { g.scale.setScalar(m); g.position.set(-cx * m, cy * m, 0); };
-    function zoomAt(t) { return t < 2 ? inout((t - .35) / .75) : 1 - inout((t - 3.55) / .7); }
+    function zoomAt(t) { return t < 3 ? inout((t - .35) / .7) : 1 - inout((t - 4.45) / .7); }
 
     function renderAt(time) {
       if (disposed) return;
@@ -254,50 +269,56 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       place(root, m, cx, cy);
       place(words, m0, logoC[0], logoC[1]);
 
-      // 배경: 로고 크기에선 원래 마크 그림, 다가가는 동안 큰 그림으로(움직이는 중에 넘긴다)
-      const hd = smooth((t - .45) / .25) * (1 - smooth((t - 3.95) / .25));
-      stage.material.opacity = hd;
-      stage.visible = hd > 0;
+      // 끝: 묶인 커튼·밤 무대가 로고와 같아진 뒤, 뒤로 빠지는 동안 로고 마크 그림으로. 다 넘어가면 무대 판은 치운다
+      const markIn = smooth((t - 4.5) / .25), staged = markIn < 1;
+      markPlane.visible = markIn > 0;
+      day.m.visible = floor.m.visible = staged;
+      // 낮 → 밤: 해는 줄에 끌려 위로, 달·별 그려진 밤 하늘 막은 위에서 내려온다(무대 배경막). 바닥은 그대로
+      at(sun, 322, sunY - 330 * inout((t - 3.2) / .42));
+      sun.visible = t < 3.62;
+      const drop = out((t - 3.3) / .45);
+      night.m.visible = drop > 0 && staged;
+      at(night.m, night.x, night.y - SH * (1 - drop));
       rim.material.opacity = z;
       rim.visible = z > .01;
       // 날아가는 동안 크림 종이는 홈 바탕으로 녹아든다(구멍 바깥은 원래 마크 그림의 투명 여백)
       sheet.material.opacity = 1 - smooth((t - FLY_AT) / .3);
       sheet.visible = sheet.material.opacity > 0;
-      markPlane.material.opacity = flyRect ? 1 : sheet.material.opacity;
+      markPlane.material.opacity = markIn * (flyRect ? 1 : sheet.material.opacity);
       renderer.setClearAlpha(sheet.material.opacity);
 
       // 일어서는 판: 바닥선을 축으로 누워 있다가(-90°) 선다. 1막 소품은 2.36초에 다시 눕는다
       for (const f of flaps) {
         let up = back((t - f.start) / f.dur);
-        if (scene1.includes(f.p)) up *= 1 - inout((t - 2.36) / .26);
-        if (t >= 3.5) up = 0;   // 커튼 뒤에서 치움
+        if (scene1.includes(f.p)) up *= 1 - inout((t - 2.45) / .26);
+        if (scene2.includes(f.p)) up *= 1 - inout((t - 4) / .26);
         f.p.rotation.x = -Math.PI / 2 * (1 - Math.min(1, up));
         f.p.scale.y = up > 1 ? up : 1;
         f.p.visible = up > .001;
       }
       // 토끼: 세 번 깡충 뛰며 왼쪽 → 오른쪽 밖으로
-      const run = clamp((t - 1.35) / 1.05);
-      rabbit.visible = t >= 1.35 && run < 1;
+      const run = clamp((t - 1.45) / 1.05);
+      rabbit.visible = t >= 1.45 && run < 1;
       at(rabbit, mix(0, 530, run), 456 - 30 * Math.abs(Math.sin(Math.PI * run * 3)));
       rabbit.rotation.z = -.08 * Math.cos(Math.PI * run * 3);
       // 거북이: 느릿느릿 뒤따라 오른쪽 밖으로
-      const walk = clamp((t - 1.55) / 1.75);
-      turtle.visible = t >= 1.55 && walk < 1 && t < 3.5;
+      const walk = clamp((t - 1.6) / 1.6);
+      turtle.visible = t >= 1.6 && walk < 1;
       at(turtle, mix(0, 500, walk), 462 - 1.5 * Math.abs(Math.sin(Math.PI * walk * 9)));
       // 공주들: 양옆에서 걸어 들어와 선다(걸음마다 살짝 통통)
-      for (const a of cast) {
-        const k = out((t - a.start) / .55);
-        a.p.visible = t >= a.start && t < 3.5;
-        at(a.p, mix(a.from, a.x, k), a.y - 4 * Math.abs(Math.sin(Math.PI * k * 3)) * (1 - k));
-      }
-      // 커튼: 3.14초에 닫히고 4.24초에 열린다
-      // 커튼: 3.12초 끈이 풀리며 펴지기 시작(3.5초 다 덮음), 4.24초부터 모여 4.56초 묶인 모양으로
-      const spread = inout((t - 3.12) / .38) * (1 - inout((t - 4.24) / .32));
-      curtain.visible = t >= 3.12 && t < 4.56;
-      curtain.scale.x = mix(1, CFULL / CTIED, spread);
-      // 끈: 풀릴 때는 톡 튀었다가 아래로 떨어져 창 밖으로, 묶을 때는 아래에서 올라와 제자리에
-      const off = t < 4 ? clamp((t - 3.1) / .42) : 1 - out((t - 4.3) / .26);
-      band.visible = off > 0 && off < 1;
+      // 공주들: 양옆에서 걸어 들어와 서고, 밤이 되면 옆(커튼·창 밖)으로 걸어 나간다
+      cast.forEach((a, i) => {
+        const k = out((t - a.start) / .55), e = inout((t - 3.9 - i * .05) / .45);
+        a.p.visible = t >= a.start && e < 1;
+        at(a.p, mix(mix(a.from, a.x, k), a.exit, e), a.y - 4 * Math.abs(Math.sin(Math.PI * k * 3)) * (1 - k) - 4 * Math.abs(Math.sin(Math.PI * e * 3)));
+      });
+      // 커튼: 처음엔 다 덮음 → .95~1.4초 왼쪽으로 모두 걷힘. 4.05~4.38초 왼쪽에서 묶인 폭만큼 나오고, 끈이 올라와 묶이면 묶인 커튼으로
+      const width = t < 3 ? CFULL * (1 - inout((t - .95) / .45)) : CTIED * inout((t - 4.05) / .33);
+      curtain.visible = width > 2 && t < 4.4;
+      curtain.scale.x = Math.max(width, 1) / CTIED;
+      tied.visible = t >= 4.4 && markIn < 1;
+      const off = 1 - out((t - 4.2) / .22);
+      band.visible = t >= 4.2 && t < 4.42;
       at(band, (BAND[0] + BAND[2]) / 2 + 30 * off, (BAND[1] + BAND[3]) / 2 - 22 * Math.sin(Math.PI * Math.min(1, off * 2.2)) + 260 * off * off);
       band.rotation.z = -.9 * off;
       // 글자: 들판·성과 같은 종이 판. 다가가기 시작하면 차례로 눕고, 로고 크기로 돌아오면 '톡'·'톡'·'동화극장' 차례로 일어선다
@@ -329,7 +350,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     try { await renderer.compileAsync(scene, camera); }
     finally { preparing = false; if (disposed) release(); }
     if (disposed) throw new DOMException('Aborted', 'AbortError');
-    for (const t of [.3, 1, 1.8, 2.9, 3.3, 4.4]) renderAt(t);
+    for (const t of [.3, 1.2, 1.8, 2.9, 3.5, 4.3, 4.6, 5.4]) renderAt(t);
     const gl = renderer.getContext();
     const fence = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
     if (fence) {

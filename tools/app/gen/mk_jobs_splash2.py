@@ -35,5 +35,30 @@ jobs = [{
         'Matte hand-cut cardstock paper with visible fine paper fibres, flat single-colour pieces, short soft warm shadows under each cut edge. '
         'NO text, NO gloss, NO gradients inside paper pieces (only the moon glow), NO faces.'),
 }]
+
+# 2026-10-30 사용자 지시: 처음엔 커튼이 다 닫혀 있다가 열리며 낮 무대 → 해가 올라가고 달이 내려와 밤 → 커튼은 로고처럼 묶인 모양까지만 닫힘.
+# 무대 배경은 커튼 없이(커튼은 따로 움직임), 해·달은 줄에 매달린 따로 된 소품.
+STAGE_REF = 'assets/raw/restyle/splash2/sp2_stage_hd.png'
+COMMON_BG = ('Fill the WHOLE square: NO arch shape, NO border, NO frame, NO curtain anywhere (the red curtain of the reference is REMOVED; '
+    'the sky simply continues where it was). The straw-gold scalloped stage edge and the orange stage floor stay at EXACTLY the same height, size and shape as in the reference '
+    'and now continue across the FULL width to both side edges. '
+    'Matte hand-cut cardstock paper with visible fine paper fibres, flat single-colour pieces, short soft warm shadows under each cut edge. NO text, NO gloss, NO gradients, NO faces.')
+jobs.append({'id': 'sp2_bg_night', 'kind': 'bg', 'aspect': 'square 1:1', 'refs': [STAGE_REF], 'size': [1536, 1536],
+    'out': f'{RAW}/sp2_bg_night.png', 'final': 'assets/v3w/sp2_bg_night.webp',
+    'prompt': ('The reference image is our paper-art night theatre stage. Recreate THE SAME stage, same framing and scale, as a high-resolution square image, '
+        'but WITHOUT the moon and WITHOUT its string (the moon is added later as a separate piece): only the navy paper night sky (#1F2A56) with the same small gold paper stars '
+        'in the same places, plus two more small stars on the left side. ' + COMMON_BG)})
+jobs.append({'id': 'sp2_bg_day', 'kind': 'bg', 'aspect': 'square 1:1', 'refs': [STAGE_REF], 'size': [1536, 1536],
+    'out': f'{RAW}/sp2_bg_day.png', 'final': 'assets/v3w/sp2_bg_day.webp',
+    'prompt': ('The reference image is our paper-art night theatre stage. Recreate THE SAME stage, same framing and scale, as a high-resolution square image, but in DAYTIME: '
+        'the sky is a soft light sky-blue paper (#9FD3EA) with three small simple white paper clouds (#F4F6FA) in the upper half, NO stars, NO moon, NO sun, NO string. ' + COMMON_BG)})
+def prop(id, subject):
+    jobs.append({'id': id, 'kind': 'sprite', 'aspect': 'portrait 2:3', 'refs': [STAGE_REF], 'size': [500, 1100],
+        'out': f'{RAW}/{id}.png', 'final': f'assets/v3w/{id}.webp', 'prompt': HEAD + 'SUBJECT AND POSE:\n' + subject + TAIL})
+prop('sp2_moon', 'An OBJECT: a theatre stage prop MOON: a round cream paper full-moon disc (#F6E7C1), exactly like the moon in the reference image, hanging from ONE long thin straight '
+     'straw-gold (#D9A94E) paper string that goes straight up from the top of the disc to the very top edge of the image. The string is about 1.4 times as long as the disc diameter. NO glow, NO face, NO stars.')
+prop('sp2_sun', 'An OBJECT: a theatre stage prop SUN: a round warm yellow paper disc (#F7C548) with a ring of short chunky triangular paper rays in orange (#F29F3D) around it, '
+     'hanging from ONE long thin straight straw-gold (#D9A94E) paper string that goes straight up from the top of the rays to the very top edge of the image. '
+     'The string is about 1.2 times as long as the sun diameter. NO face, NO eyes, NO mouth, NO glow.')
 json.dump(jobs, open(f'{G}/tools/app/gen/jobs_splash2.json', 'w'), ensure_ascii=False, indent=1)
 print(len(jobs), 'jobs')
