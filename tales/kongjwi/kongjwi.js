@@ -8,12 +8,12 @@
     kong_wet: 0.8294, loom: 1.0240, ox_stand: 0.8526, ox_walk: 1.5771, pail: 1.0608, pat_dressed: 0.6433, pat_eat: 0.8316,
     pat_shy: 0.5786, ricecake: 1.2600, shoe_butterfly: 2.0949, shoe_peony: 2.0693, shoe_plum: 2.0959, sparrow_flock: 1.0225,
     sparrow_one: 1.0704, step_dressed: 0.7247, step_order: 0.7370, step_shy: 0.7208, toad_idle: 1.2000, toad_plug: 1.2019,
-    won_shoe: 0.5745, won_stand: 0.4757, };
+    won_shoe: 0.5745, won_stand: 0.4757, kong_oneshoe: 0.7733, shoe_blue: 2.0930, shoe_yellow: 2.0930, };
   /* 2026-10-20 새 그림은 그림 크기(세로 픽셀)가 옛 그림과 달라서, 옛 그림과 같은 픽셀 축척이 되도록 높이에 곱하는 비율 */
   const RS = { drum: 0.918, fairy_float: 0.706, fairy_give: 0.789, gong: 0.948, kong_hoe: 0.994, kong_loom: 0.821,
     kong_pour: 0.940, /* 2026-10-20 크기 일관성: 물 붓기 자세가 같은 자리의 젖은 자세보다 머리 폭 17% 작아서 0.786 → 0.940 */ kong_sweep: 0.936, pail: 0.870, pat_dressed: 0.877, pat_eat: 0.849,
     step_dressed: 0.846, step_order: 0.853, step_shy: 0.757, toad_idle: 0.976, won_shoe: 0.940, };
-  const NF = new Set(['basket_r', 'basket_y', 'buk', 'drum', 'gong', 'loom', 'pail', 'ricecake', 'shoe_peony', 'shoe_plum']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
+  const NF = new Set(['basket_r', 'basket_y', 'buk', 'drum', 'gong', 'loom', 'pail', 'ricecake', 'shoe_peony', 'shoe_plum', 'shoe_blue', 'shoe_yellow']); // 얼굴 없는 새 그림(파일 이름 끝에 nf)
   /* 서 있는 콩쥐(신부·젖은·꽃신)는 새 그림이 작게 그려져서 비율 대신 높이를 직접 정함 */
   const BGS = ['yard', 'field', 'jar', 'jarbottom', 'mat', 'loom', 'stream', 'feast', 'gate', 'wedding'];
   const CUTS = ['ox', 'wet', 'toad', 'sparrows', 'fairy', 'splash', 'shy'];
@@ -152,35 +152,62 @@
        세로 화면(보이는 폭 약 430)은 카메라가 콩쥐를 따라 옆으로 간다(가로는 clampCam 이 500 에 묶어 그대로) */
     const STONES = [298, 432, 570, 700], STONE_Y = 440, BANK = [170, 520], WATER_FRONT = '#3F87C6';
     const followCam = (x, ms = 380) => { if (P) return ms ? camTo(x, 280, 1, ms) : camSnap(x, 280, 1); };
+    /* 2026-10-30 꽃신이 너무 컸다(높이 34 = 콩쥐 발 꽃신의 2.5배) → 콩쥐 발에 신은 꽃신과 같은 크기(높이 16)로. 물결 조각도 같은 비율로 줄임 */
     const driftShoe = () => {
-      const lost = prop(T, 'shoe_butterfly', 34); put(T, lost, STONES[3] + 60, 470, { to: 'right' });
+      const lost = prop(T, 'shoe_butterfly', 16); put(T, lost, STONES[3] + 60, 470, { to: 'right' });
       followCam(STONES[3] + 60, 0);
       const wv = T.el('g', { style: 'pointer-events:none', filter: 'url(#pp)' }, lost.pos);   // 물결 종이 조각 두 장(물빛 + 흰 물마루)
-      T.el('image', { href: AS + 'kj_wave_front.webp', x: -56, y: -17, width: 112, height: 25, preserveAspectRatio: 'none' }, wv);   // 2026-10-24 코드 물결 → 종이 물결 그림(kj_wave_front)
+      T.el('image', { href: AS + 'kj_wave_front.webp', x: -30, y: -8, width: 60, height: 13, preserveAspectRatio: 'none' }, wv);   // 2026-10-24 코드 물결 → 종이 물결 그림(kj_wave_front)
       lost.pos.animate([{ opacity: 0 }, { opacity: 1 }], 300);
-      if (!still()) lost.body.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '0 -4px', rotate: '-4deg' }, { translate: '0 0', rotate: '0deg' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
+      if (!still()) lost.body.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '0 -2px', rotate: '-4deg' }, { translate: '0 0', rotate: '0deg' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
       return lost.move(1080, 466, 4200, 'ease-in').then(() => hide(lost));
     };
+    /* 2026-10-30 크기를 키운 뒤 인물 자리(놀이판·읽어 주기 같이). [x, y, 배율]. 세로 화면(P, 휴대폰은 보이는 폭 약 390: 305~695)은 안쪽으로 모은다.
+       혼례(마지막 장면)는 넷이 붙어 겹치던 것을 가로는 넓게 벌리고, 세로는 넷을 한 비율로 함께 줄여 멀리서 보는 것처럼 모두 보이게 한다(휴대폰 .72, 보이는 폭이 넓은 아이패드 세로는 폭에 맞춰 1 까지) */
+    const SPOT = {
+      yard: { kong: P ? [385, 505] : [430, 505], step: P ? [545, 505] : [620, 505], pat: P ? [640, 505] : [800, 505] },
+      field: { kong: P ? [375, 505] : [380, 505], ox: P ? [515, 520] : [575, 520], step: P ? [635, 505] : [770, 505] },
+      mat: { kong: [390, 505], step: P ? [665, 505] : [760, 505] },
+      loom: { kong: P ? [390, 505] : [430, 505], fairy: P ? [610, 420] : [720, 420], kongGift: P ? [400, 505] : [430, 505], fairyGive: P ? [575, 505] : [600, 505] },
+      feast: { step: P ? [375, 490] : [330, 490], pat: P ? [500, 490] : [470, 490], kong: P ? [615, 490] : [650, 490] },
+      wedding: P ? (f => ({ won: [500 - 148 * f, 505, Math.min(1, .72 * f)], kong: [500 - 42 * f, 505, Math.min(1, .72 * f)], step: [500 + 70 * f, 505, Math.min(1, .72 * f)], pat: [500 + 150 * f, 505, Math.min(1, .72 * f)], cakes: [500, 548, Math.min(1, .8 * f)] }))(Math.min(1.38, Math.max(1, T.viewWidth() / 390)))
+        : { won: [280, 505], kong: [430, 505], step: [600, 505], pat: [740, 505], cakes: [515, 548] },
+    };
+    const spot = (k, n) => SPOT[k] && SPOT[k][n];
+    const putAt = (a, k, n, o = {}) => { const [x, y, s = 1] = spot(k, n); return put(T, a, x, y, { ...o, s }); };
 
-    const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k))), ...['kong_step_r', 'kong_step_l', 'water_drop', 'water_surface', 'wave_front'].map(k => T.preload(AS + 'kj_' + k + '.webp'))];   // 걸음 자세는 장면 중간에 바뀌므로 미리 불러 둔다
+    const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k))), ...['kong_step_r', 'kong_step_l', 'kong_oneshoe', 'water_drop', 'water_surface', 'wave_front'].map(k => T.preload(AS + 'kj_' + k + '.webp'))];   // 걸음 자세는 장면 중간에 바뀌므로 미리 불러 둔다
     await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
 
-    const kong = mk(T, { sweep: ['kong_sweep', 230, 'left'], hoe: ['kong_hoe', 230, 'left'], pour: ['kong_pour', 230, 'left'],
-      loom: ['kong_loom', 230, 'left'], shoes: ['kong_shoes', 215, 'left'],
-      /* 2026-10-24 징검다리 걸음: 오른발·왼발 번갈아 디디는 옆모습(오른쪽을 봄). 높이 200 = 꽃신 자세(215)와 머리 폭이 같게 잰 값(§4-1) */
-      stepR: ['kong_step_r', 200, 'right'], stepL: ['kong_step_l', 200, 'right'], bride: ['kong_bride', 235, 'left'], wet: ['kong_wet', 225, 'left'] });
-    const step = mk(T, { order: ['step_order', 240, 'right'], dressed: ['step_dressed', 240, 'left'], shy: ['step_shy', 240, 'left'] });
-    const pat = mk(T, { eat: ['pat_eat', 190, 'left'], dressed: ['pat_dressed', 210, 'left'], shy: ['pat_shy', 210, 'left'] });
-    const toad = mk(T, { idle: ['toad_idle', 150, 'left'], plug: ['toad_plug', 150, 'left'] });
-    const ox = prop(T, 'ox_stand', 170);
-    const fairy = mk(T, { float: ['fairy_float', 250, 'left'], give: ['fairy_give', 250, 'left'] });
-    const won = mk(T, { stand: ['won_stand', 250, 'left'], shoe: ['won_shoe', 250, 'left'] });
+    /* 2026-10-30 전체 크기 점검(§4-1, 사용자 지시 "선녀가 너무 작다, 팥쥐·새엄마도 이상해"). 아래 높이는 그림(webp)에서 같은 부위를 재서 정했다.
+       화면 크기 = 그림 속 부위 픽셀 / 그림 높이 × (높이 × RS). '머리' = (머리카락 바깥 폭 + 머리 꼭대기~턱 길이) / 2, 그림 높이에 대한 비율.
+       콩쥐 머리 비율: 쓸기 .364 · 괭이 .367 · 붓기 .376 · 베틀 .334 · 꽃신 .386 · 젖음 .371 · 걸음 .384 · 한 짝 .371 · 신부(정면, 머리카락이 납작) .308
+         → 고치기 전 화면 머리 78 · 84 · 81 · 63(베틀) · 83 · 83 · 77 · – · 72 → 모두 82 로 맞춤(신부는 정면이라 얼굴 폭이 커서 76 에서 멈춤)
+       새엄마 머리(올림머리 포함) .332 · .334 · 쪽 폭만 .362(부채 자세) → 고치기 전 68 → 83. 키 약 250 (콩쥐 약 215 보다 크다, 어른)
+       선녀 머리 .259(내려옴) · .255(줌) → 고치기 전 46 · 50 (콩쥐 82 의 절반 남짓이라 너무 작았다) → 83 · 82. 키 약 320(어른, 몸이 길게 그려짐)
+       팥쥐는 정면이라 얼굴 폭(볼~볼, 귀 빼고): 먹기 .392 · 차림 .296 · 부끄럼 .270 → 고치기 전 63 · 55 · 57 → 모두 62 (콩쥐 신부 얼굴 폭 68 보다 조금 작게)
+       원님은 갓 때문에 얼굴 폭과 갓 꼭대기~턱: 서기 .214/.346 · 꽃신 .208/.342 → 고치기 전 얼굴 54 · 49 → 62 · 61 (키 약 290, 어른)
+       두꺼비 눈 사이: 가만 .448 · 막기 .465 → 66 · 70 → 66 · 66.  소는 콩쥐보다 작았다(170) → 230.
+       참새 떼 한 마리는 혼자 참새의 약 1/3 크기였다 → 떼 높이 90 → 150 (한 마리 약 0.75배, 하늘 높이 멀리 날아오는 만큼만 작게) */
+    const kong = mk(T, { sweep: ['kong_sweep', 240, 'left'], hoe: ['kong_hoe', 225, 'left'], pour: ['kong_pour', 232, 'left'],
+      loom: ['kong_loom', 299, 'left'], shoes: ['kong_shoes', 212, 'left'],
+      /* 2026-10-24 징검다리 걸음: 오른발·왼발 번갈아 디디는 옆모습(오른쪽을 봄) */
+      stepR: ['kong_step_r', 214, 'right'], stepL: ['kong_step_l', 214, 'right'], bride: ['kong_bride', 245, 'left'], wet: ['kong_wet', 221, 'left'],
+      /* 2026-10-30 꽃신 한 짝을 잃은 콩쥐: 한 발은 꽃신, 한 발은 버선. 오른쪽(물 쪽)을 보는 옆모습 */
+      oneshoe: ['kong_oneshoe', 221, 'right'] });
+    const step = mk(T, { order: ['step_order', 293, 'right'], dressed: ['step_dressed', 293, 'left'], shy: ['step_shy', 293, 'left'] });
+    const pat = mk(T, { eat: ['pat_eat', 186, 'left'], dressed: ['pat_dressed', 239, 'left'], shy: ['pat_shy', 230, 'left'] });
+    const toad = mk(T, { idle: ['toad_idle', 150, 'left'], plug: ['toad_plug', 141, 'left'] });
+    const ox = prop(T, 'ox_stand', 230);
+    const fairy = mk(T, { float: ['fairy_float', 453, 'left'], give: ['fairy_give', 408, 'left'] });
+    const won = mk(T, { stand: ['won_stand', 290, 'left'], shoe: ['won_shoe', 312, 'left'] });
     const pail = prop(T, 'pail', 80), jar = prop(T, 'hangari', 170);
-    const flock = prop(T, 'sparrow_flock', 90);
-    widen(T, pail, 100, 100); widen(T, flock, 120, 100);
+    const flock = prop(T, 'sparrow_flock', 150);
+    widen(T, pail, 100, 100); widen(T, flock, 140, 120);
     const sparrows = Array.from({ length: 5 }, () => prop(T, 'sparrow_one', 56));
     const basketY = prop(T, 'basket_y', 80), basketR = prop(T, 'basket_r', 80);
-    const shoeB = prop(T, 'shoe_butterfly', 44), shoeP = prop(T, 'shoe_peony', 44), shoeM = prop(T, 'shoe_plum', 44);
+    /* 2026-10-30 꽃신 고르기가 너무 어려워(세 켤레가 거의 같음) 틀린 두 켤레를 하늘색 물방울(shoeP 자리)·노랑 잎(shoeM 자리)으로 바꿈. 같은 신발 틀이라 높이 44 그대로 */
+    const shoeB = prop(T, 'shoe_butterfly', 44), shoeP = prop(T, 'shoe_blue', 44), shoeM = prop(T, 'shoe_yellow', 44);
     [shoeB, shoeP, shoeM].forEach(a => widen(T, a, 100, 90));
     const drum = prop(T, 'buk', 84), buk = prop(T, 'drum', 84), gong = prop(T, 'gong', 84); [drum, buk, gong].forEach(a => widen(T, a, 100, 100)); // 2026-10-20 새 그림은 'buk'이 큰 북, 'drum'이 장구라서 파일을 맞바꿈
     const cakes = prop(T, 'ricecake', 76), loomProp = prop(T, 'loom', 190);
@@ -193,15 +220,17 @@
       let key = '', water = null;
       const rI = () => T.readInstant();
       const nums = s => String(s).split(',').map(Number);
-      /* 세로 화면은 놀이판처럼 몇몇 자리를 안쪽으로 */
-      const PXMAP = { yard: { step: 600, pat: 690 }, field: { step: 660, ox: 520 }, mat: { step: 660 } };
-      const px = (n, x) => (P && PXMAP[key] && PXMAP[key][n] != null ? PXMAP[key][n] : x);
+      /* 인물 자리는 놀이판과 같은 SPOT 표를 먼저 쓴다(가로·세로 다름). 표에 없으면 대본 좌표 */
       const fadeIn = a => a.pos.animate([{ opacity: 0 }, { opacity: 1 }], 450);
       const CUT_HOLD = { ox: 2600, wet: 2600, toad: 2600, sparrows: 2600, fairy: 2600, splash: 2600, shy: 2600 }; // 2026-10-29: 3~3.2초 → 2.6초
       const actorVerb = (n, a) => (op, spec) => {
-        if (op === 'at') { const [x, y = GROUND] = nums(spec); if (n === 'toad' && key === 'jar') { put(T, a, ...TOAD_SIDE); return; } put(T, a, px(n, x), y); return; }
+        if (op === 'at') {
+          const [x, y = GROUND] = nums(spec); if (n === 'toad' && key === 'jar') { put(T, a, ...TOAD_SIDE); return; }
+          if (spot(BG_OF[key], n)) { putAt(a, BG_OF[key], n); return; }
+          put(T, a, x, y); return;
+        }
         if (op === 'look') {
-          if (n === 'kong' && spec === 'shoes' && key === 'loom') put(T, a, 450, 505); // 선녀가 옷을 주는 자리 (놀이판)
+          if (n === 'kong' && spec === 'shoes' && key === 'loom') putAt(a, 'loom', 'kongGift'); // 선녀가 옷을 주는 자리 (놀이판)
           a.look(spec); return;
         }
         if (op === 'to') { a.turn(spec); return; }
@@ -234,7 +263,7 @@
         cam() { camSnap(500, 280, 1); if (key === 'stream') followCam(kong.x, 0); },
         prop(id, op, spec) {
           const a = PR[id]; if (!a) return;
-          if (op === 'at') { const [x, y] = nums(spec); put(T, a, x, y); return; }
+          if (op === 'at') { if (id === 'cakes' && spot(BG_OF[key], 'cakes')) { putAt(a, BG_OF[key], 'cakes'); return; } const [x, y] = nums(spec); put(T, a, x, y); return; }
           if (op === 'hide') hide(a);
         },
         sweep() { return (async () => { for (let i = 0; i < 3; i++) { kong.hop(14, 300); popSfx(T); await sleep(450); } })(); },
@@ -286,7 +315,7 @@
       Object.keys(A).forEach(n => { acts[n] = actorVerb(n, A[n]); });
       acts.sparrow = acts.sparrows;
       /* 선녀가 옷을 줄 때는 땅으로 내려온다 */
-      const fa = acts.fairy; acts.fairy = (op, spec) => { if (op === 'look' && spec === 'give' && key === 'loom') put(T, fairy, 580, 505, { to: 'left' }); return fa(op, spec); };
+      const fa = acts.fairy; acts.fairy = (op, spec) => { if (op === 'look' && spec === 'give' && key === 'loom') putAt(fairy, 'loom', 'fairyGive', { to: 'left' }); return fa(op, spec); };
       return acts;
     })();
     /* 읽어 주기 효과음 동사 (2026-10-28 사용자 결정: 놀이판과 같은 효과음). 대본 before/after 에 sfx:이름:음량, sfxs:이름들:간격ms:음량 으로 넣는다.
@@ -305,9 +334,9 @@
 
     /* --- 1. 마당 쓸기 --- */
     scene('yard');
-    put(T, kong, 440, 505, { look: 'sweep', to: 'right' });
-    put(T, step, P ? 600 : 620, 505, { look: 'order', to: 'left' });
-    put(T, pat, P ? 690 : 800, 505, { look: 'eat', to: 'left' });
+    putAt(kong, 'yard', 'kong', { look: 'sweep', to: 'right' });
+    putAt(step, 'yard', 'step', { look: 'order', to: 'left' });
+    putAt(pat, 'yard', 'pat', { look: 'eat', to: 'left' });
     await T.curtain(true);
     amb('birds_chirp_1', { vol: .25, dur: 4 }); // 아침 마당 새소리
     intro.go(); // 시작 음악 (놀이)
@@ -324,12 +353,12 @@
     /* --- 2. 소가 밭을 갈아요 --- */
     await T.sceneCard(tr('밭'), () => {
       scene('field');
-      put(T, kong, P ? 380 : 400, 505, { look: 'hoe', to: 'right' });
-      put(T, step, P ? 660 : 720, 505, { look: 'order', to: 'left' });
+      putAt(kong, 'field', 'kong', { look: 'hoe', to: 'right' });
+      putAt(step, 'field', 'step', { look: 'order', to: 'left' });
     }, kong.pos);
     await say('"이 밭을 다 갈아 놓아라!" 새엄마가 말했어요.');
     await say('밭은 너무 넓어서 콩쥐는 한숨이 나왔어요.');
-    put(T, ox, P ? 520 : 560, 520, { to: 'left' }); ox.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400);
+    putAt(ox, 'field', 'ox', { to: 'left' }); ox.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400);
     AudioFX.animal('cow', .5);
     await say('그때 검은 소가 나타났어요. "음메~ 내가 도와줄게!"');
     await sleep(500);
@@ -378,7 +407,7 @@
     await T.sceneCard(tr('멍석'), () => {
       scene('mat');
       put(T, kong, 390, 505, { look: 'sweep', to: 'right' });
-      put(T, step, P ? 660 : 740, 505, { look: 'order', to: 'left' });
+      putAt(step, 'mat', 'step', { look: 'order', to: 'left' });
       put(T, basketY, 500, 535); put(T, basketR, 590, 535);
     }, kong.pos);
     await say('"겉겨를 벗겨서 쌀을 가져오너라!" 새엄마가 말했어요.');
@@ -403,19 +432,19 @@
     /* --- 5. 선녀와 고운 옷 --- */
     await T.sceneCard(tr('베틀'), () => {
       scene('loom');
-      put(T, kong, 520, 505, { look: 'loom', to: 'right' }); // 2026-10-20 새 콩쥐 베틀 그림은 베틀이 그림 속에 있어 따로 놓던 베틀 소품은 뺌
+      putAt(kong, 'loom', 'kong', { look: 'loom', to: 'right' }); // 2026-10-20 새 콩쥐 베틀 그림은 베틀이 그림 속에 있어 따로 놓던 베틀 소품은 뺌
     }, kong.pos);
     amb('loom_spin', { vol: .22, dur: 4 }); // 베틀 찰칵
     daeg(); // 밤늦도록 베를 짜는 콩쥐 — 대금
     await say('이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.');
-    put(T, fairy, 640, 400, { look: 'float', to: 'left' }); fairy.pos.animate([{ opacity: 0 }, { opacity: 1 }], 500);
+    putAt(fairy, 'loom', 'fairy', { look: 'float', to: 'left' }); fairy.pos.animate([{ opacity: 0 }, { opacity: 1 }], 500);
     sfx('shimmer', .4); // 원작의 선녀: 반짝 한 번
     await say('그때 하늘에서 선녀가 내려왔어요. "착한 콩쥐야, 선물을 줄게!"');
     await sleep(500);
     fairy.look('give'); popSfx(T);
     await T.cutImage([{ src: cutSrc('fairy'), sfx: 'pop', hold: 2600 }], { hold: 2600 });
     scene('loom');
-    put(T, kong, 450, 505, { look: 'shoes', to: 'right' }); put(T, fairy, 580, 505, { look: 'give', to: 'left' });
+    putAt(kong, 'loom', 'kongGift', { look: 'shoes', to: 'right' }); putAt(fairy, 'loom', 'fairyGive', { look: 'give', to: 'left' });
     sfx('chime_up', .5); // 선물을 받아 옷이 바뀐다
     await say('콩쥐는 곱디고운 옷과 나비 꽃신을 받았어요. "고맙습니다, 선녀님!"');
     await kong.hop(30, 400);
@@ -436,7 +465,7 @@
     { const next = STONES.filter(x => x > kong.x + 10); for (let i = 1; i <= next.length; i++) { await cross(i, next[i - 1]); await sleep(400); } }
     await T.cutImage([{ src: cutSrc('splash'), sfx: 'pop', hold: 2600 }], { hold: 2600 });
     scene('stream');
-    put(T, kong, STONES[3], STONE_Y, { look: 'shoes', to: 'right' });
+    put(T, kong, STONES[3], STONE_Y, { look: 'oneshoe', to: 'right' }); // 2026-10-30 꽃신 한 짝을 잃고 버선발로 서서 물을 바라봄
     sfx('whistle_down', .5); setTimeout(() => sfx('splash', .35), 450); // 꽃신이 퐁당
     const drift = driftShoe();
     await say('풍덩! 꽃신 한 짝이 개울에 빠졌어요. 꽃신은 둥둥 떠내려갔어요.');
@@ -446,9 +475,9 @@
     /* --- 7. 잔치 --- */
     await T.sceneCard(tr('잔치'), () => {
       scene('feast');
-      put(T, step, 410, 490, { look: 'dressed', to: 'right' });
-      put(T, pat, 500, 490, { look: 'dressed', to: 'right' });
-      put(T, kong, 590, 490, { look: 'shoes', to: 'left' });
+      putAt(step, 'feast', 'step', { look: 'dressed', to: 'right' });
+      putAt(pat, 'feast', 'pat', { look: 'dressed', to: 'right' });
+      putAt(kong, 'feast', 'kong', { look: 'oneshoe', to: 'left' }); // 한 짝만 신고 온 콩쥐
       put(T, drum, 400, 560); put(T, buk, 500, 560); put(T, gong, 600, 560);
     }, kong.pos);
     amb('crowd_murmur_1', { vol: .2, dur: 4 }); // 잔치 웅성웅성
@@ -474,18 +503,19 @@
       { key: 'p', el: shoeP.pos, ok: false }, { key: 'b', el: shoeB.pos, ok: true }, { key: 'm', el: shoeM.pos, ok: false }],
       { prompt: '나비 꽃신을 톡!', where: '나비가 그려진 꽃신을 찾아봐요.', who: '반짝이는 꽃신을 톡!' }));
     clinkSfx(T); shoeB.hop(24, 320);
+    hide(shoeP); hide(shoeM); // 콩쥐가 설 자리를 비운다
+    put(T, kong, 640, 505, { look: 'shoes', to: 'left' }); kong.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400); // 꽃신을 신는 콩쥐(두 짝 다 신은 꽃신 자세는 이때만)
     await say('원님이 콩쥐에게 꽃신을 신겨 주었어요. 꼭 맞았어요!');
-    put(T, kong, 640, 505, { look: 'shoes', to: 'left' });
     await sleep(500);
     popSfx(T); kong.hop(34, 400);
 
     /* --- 9. 화해와 함께하는 잔치 --- */
     await T.sceneCard(tr('혼례'), () => {
       scene('wedding');
-      put(T, kong, 482, 505, { look: 'bride', to: 'left' });
-      put(T, won, 407, 505, { look: 'stand', to: 'right' });
-      put(T, step, 557, 505, { look: 'shy', to: 'left' }); put(T, pat, 622, 505, { look: 'shy', to: 'left' });
-      put(T, cakes, 500, 548);
+      putAt(won, 'wedding', 'won', { look: 'stand', to: 'right' });
+      putAt(kong, 'wedding', 'kong', { look: 'bride', to: 'left' });
+      putAt(step, 'wedding', 'step', { look: 'shy', to: 'left' }); putAt(pat, 'wedding', 'pat', { look: 'shy', to: 'left' });
+      putAt(cakes, 'wedding', 'cakes');
     }, kong.pos);
     await say('콩쥐와 원님은 혼례를 올렸어요. 콩쥐는 곱게 차린 신부가 되었어요.');
     daeg(); // 사과와 용서 — 대금

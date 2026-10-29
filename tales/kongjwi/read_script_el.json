@@ -9,7 +9,7 @@
  "acts": {
   "set:<yard|field|well|jar|mat|loom|stream|feast|office|wedding>": "장면 세트(scene(key): T.clear + bgImage + camSnap)",
   "cam:wide": "카메라",
-  "<kong|step|pat|ox|toad|fairy|won|flock|sparrow>:at:<x,y> | :look:<sweep|hoe|pour|wet|loom|shoes|bride|order|eat|dressed|shy|idle|float|give|shoe|stand> | :to:<left|right> | :walk:<x,y> | :hide | :hop | :fade": "배우 자리(put)·그림(look)·방향·걷기·보이기",
+  "<kong|step|pat|ox|toad|fairy|won|flock|sparrow>:at:<x,y> | :look:<sweep|hoe|pour|wet|loom|shoes|oneshoe|bride|order|eat|dressed|shy|idle|float|give|shoe|stand> | :to:<left|right> | :walk:<x,y> | :hide | :hop | :fade": "배우 자리(put)·그림(look)·방향·걷기·보이기",
   "prop:<jar|pail|basketY|basketR|drum|buk|gong|shoeP|shoeB|shoeM|cakes>:at:<x,y> | prop:<id>:hide | sweep:dust | pail:pour:<n> | jar:leak | jar:full | sparrows:peck:<n> | kong:cross:<n> | shoe:drift | shoe:fit": "소품·연출(쓸기 먼지·물 붓기·독 새기·채우기·참새 쪼기·징검다리 건너기·꽃신 떠내려가기·신기기)",
   "cut:<ox|wet|toad|sparrows|fairy|splash|shy>": "그림 컷(cutImage)",
   "fx:<pop|drum|gong|splash|sparkle> | pop:<x,y,글자>": "효과음·의성어"
@@ -20,7 +20,7 @@
    "card": "마당",
    "set": "yard",
    "enter": [
-    "kong:at:440,505",
+    "kong:at:430,505",
     "kong:look:sweep",
     "kong:to:right",
     "step:at:620,505",
@@ -122,10 +122,10 @@
    "card": "밭",
    "set": "field",
    "enter": [
-    "kong:at:400,505",
+    "kong:at:380,505",
     "kong:look:hoe",
     "kong:to:right",
-    "step:at:720,505",
+    "step:at:770,505",
     "step:look:order",
     "step:to:left",
     "cam:wide"
@@ -204,7 +204,7 @@
       ]
      ],
      "before": [
-      "ox:at:560,520",
+      "ox:at:575,520",
       "ox:fade",
       "animal:cow:.4"
      ],
@@ -438,7 +438,7 @@
     "kong:at:390,505",
     "kong:look:sweep",
     "kong:to:right",
-    "step:at:740,505",
+    "step:at:760,505",
     "step:look:order",
     "step:to:left",
     "prop:basketY:at:500,535",
@@ -568,7 +568,7 @@
    "card": "베틀",
    "set": "loom",
    "enter": [
-    "kong:at:520,505",
+    "kong:at:430,505",
     "kong:look:loom",
     "kong:to:right",
     "cam:wide"
@@ -632,7 +632,7 @@
       ]
      ],
      "before": [
-      "fairy:at:640,400",
+      "fairy:at:720,420",
       "fairy:look:float",
       "fairy:fade",
       "fx:sparkle"
@@ -746,6 +746,7 @@
       ]
      ],
      "before": [
+      "kong:look:oneshoe",
       "sfx:whistle_down:.5",
       "fx:splash"
      ],
@@ -775,12 +776,12 @@
    "card": "잔치",
    "set": "feast",
    "enter": [
-    "step:at:410,490",
+    "step:at:330,490",
     "step:look:dressed",
-    "pat:at:500,490",
+    "pat:at:470,490",
     "pat:look:dressed",
-    "kong:at:590,490",
-    "kong:look:shoes",
+    "kong:at:650,490",
+    "kong:look:oneshoe",
     "kong:to:left",
     "prop:drum:at:400,560",
     "prop:buk:at:500,560",
@@ -958,6 +959,8 @@
       ]
      ],
      "before": [
+      "prop:shoeP:hide",
+      "prop:shoeM:hide",
       "kong:at:640,505",
       "kong:look:shoes",
       "kong:to:left"
@@ -987,17 +990,17 @@
    "card": "혼례",
    "set": "wedding",
    "enter": [
-    "kong:at:482,505",
+    "kong:at:430,505",
     "kong:look:bride",
     "kong:to:left",
-    "won:at:407,505",
+    "won:at:280,505",
     "won:look:stand",
     "won:to:right",
-    "step:at:557,505",
+    "step:at:600,505",
     "step:look:shy",
-    "pat:at:622,505",
+    "pat:at:740,505",
     "pat:look:shy",
-    "prop:cakes:at:500,548",
+    "prop:cakes:at:515,548",
     "cam:wide"
    ],
    "lines": [
