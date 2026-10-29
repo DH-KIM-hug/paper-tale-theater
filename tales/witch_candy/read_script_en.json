@@ -13,6 +13,8 @@
    "duck",
    "fish",
    "frog",
+   "kiwi",
+   "croc",
    "pumpkin",
    "bat",
    "choco"
@@ -23,10 +25,12 @@
    "strawberry": "red",
    "duck": "yellow",
    "fish": "blue",
-   "frog": "green",
+   "frog": "teal",
    "pumpkin": "orange",
    "bat": "purple",
-   "choco": "brown"
+   "choco": "brown",
+   "kiwi": "lime",
+   "croc": "green"
   },
   "mix": {
    "strawberry": "snot,firetruck → red,red",
@@ -35,7 +39,9 @@
    "frog": "frog,wave → green,blue",
    "pumpkin": "snot,lantern → red,yellow",
    "bat": "ladybug,fish → red,blue",
-   "choco": "firetruck,dino → red,green"
+   "choco": "firetruck,dino → red,green",
+   "kiwi": "fart,leek → yellow,green",
+   "croc": "dino,leek → green,green"
   }
  },
  "acts": {
@@ -1192,7 +1198,7 @@
       "witch:look:stir"
      ],
      "after": [
-      "pot:pop:green"
+      "pot:pop:teal"
      ]
     },
     {
@@ -1209,6 +1215,18 @@
      "after": [
       "candy:jar:frog"
      ]
+    },
+    {
+     "text": "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
+     "en": "Green and blue mixed together made teal!",
+     "segs": [
+      [
+       "nar",
+       "Green and blue mixed together made teal!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -1260,12 +1278,12 @@
    ],
    "lines": [
     {
-     "text": "뿅! 다현이가 초록 개구리가 됐어요!",
-     "en": "Poof! Dahyun turned into a green frog!",
+     "text": "뿅! 다현이가 청록 개구리가 됐어요!",
+     "en": "Poof! Dahyun turned into a teal frog!",
      "segs": [
       [
        "nar",
-       "Poof! Dahyun turned into a green frog!",
+       "Poof! Dahyun turned into a teal frog!",
        "toneup"
       ]
      ],
@@ -2135,6 +2153,508 @@
    ]
   },
   {
+   "key": "R04_kiwi_r1",
+   "card": "Plop Into the Pot",
+   "round": 1,
+   "variant": "kiwi",
+   "set": "wc_bg_kitchen",
+   "enter": [
+    "shelf:show",
+    "ladle:show",
+    "witch:look:present",
+    "witch:at:900",
+    "cat:look:sit",
+    "cat:at:80",
+    "kid:look:stand",
+    "kid:at:560",
+    "friends:at:30,80,130",
+    "pot:clear",
+    "cam:pot"
+   ],
+   "lines": [
+    {
+     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "en": "Dahyun, you put them in. One or lots, it's all good.",
+     "segs": [
+      [
+       "witch",
+       "Dahyun, you put them in. One or lots, it's all good.",
+       "happy"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "다현이는 병아리 방귀랑 구운 초록 대파를 솥에 넣었어요. 뿡, 지글지글!",
+     "en": "Dahyun dropped chick toots and the grilled green onion into the cauldron. Toot, sizzle!",
+     "segs": [
+      [
+       "nar",
+       "Dahyun dropped chick toots and the grilled green onion into the cauldron. Toot, sizzle!",
+       "happy"
+      ]
+     ],
+     "src": "new",
+     "before": [
+      "kid:look:reach"
+     ],
+     "after": [
+      "pot:drop:fart,leek"
+     ]
+    },
+    {
+     "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+     "en": "One, two! The cauldron water swirled round and round, and its colour changed.",
+     "segs": [
+      [
+       "nar",
+       "One, two! The cauldron water swirled round and round, and its colour changed.",
+       "toneup"
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "pot:swirl:yellow,green"
+     ]
+    },
+    {
+     "text": "다 넣었지? 그럼 저어 보자!",
+     "en": "All in? Then let's stir!",
+     "segs": [
+      [
+       "witch",
+       "All in? Then let's stir!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:stir"
+     ],
+     "after": [
+      "pot:pop:lime"
+     ]
+    },
+    {
+     "text": "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+     "en": "Pop! Candies came popping out of the cauldron.",
+     "segs": [
+      [
+       "nar",
+       "Pop! Candies came popping out of the cauldron.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "candy:jar:kiwi"
+     ]
+    },
+    {
+     "text": "초록이랑 노랑을 섞었더니 연두색이 됐어요!",
+     "en": "Green and yellow mixed together made lime green!",
+     "segs": [
+      [
+       "nar",
+       "Green and yellow mixed together made lime green!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "먼저 먹어 봐.",
+     "en": "You try one first.",
+     "segs": [
+      [
+       "witch",
+       "You try one first.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:giggle"
+     ]
+    },
+    {
+     "text": "냠… 키위 사탕이다!",
+     "en": "Yum... it's kiwi candy!",
+     "segs": [
+      [
+       "kid",
+       "Yum... it's kiwi candy!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:front"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_kiwi_r1",
+   "card": "Poof! A New Body",
+   "round": 1,
+   "variant": "kiwi",
+   "set": "wc_bg_street",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:480",
+    "witch:look:stand:left",
+    "witch:at:820",
+    "cat:look:sit",
+    "cat:at:700",
+    "friends:at:140,220,300",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "뿅! 다현이가 동그란 연두 키위가 됐어요!",
+     "en": "Poof! Dahyun turned into a round lime-green kiwi!",
+     "segs": [
+      [
+       "nar",
+       "Poof! Dahyun turned into a round lime-green kiwi!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "cut:tf_kiwi"
+     ],
+     "after": [
+      "kid:tf:kiwi"
+     ]
+    },
+    {
+     "text": "보송보송… 간지러워! 히히!",
+     "en": "So fuzzy... it tickles! Hee hee!",
+     "segs": [
+      [
+       "kid",
+       "So fuzzy... it tickles! Hee hee!",
+       "happy"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "히히, 핼러윈 마법이야!",
+     "en": "Hee hee, it's Halloween magic!",
+     "segs": [
+      [
+       "witch",
+       "Hee hee, it's Halloween magic!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:surprise"
+     ],
+     "after": [
+      "friends:hop"
+     ]
+    },
+    {
+     "text": "마지막에 다 같이!",
+     "en": "At the end, all together!",
+     "segs": [
+      [
+       "witch",
+       "At the end, all together!",
+       "happy"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.",
+     "en": "Boing, boing, boing! She bounced down the street like a kiwi ball.",
+     "segs": [
+      [
+       "nar",
+       "Boing, boing, boing! She bounced down the street like a kiwi ball.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:act:kiwi"
+     ]
+    },
+    {
+     "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+     "en": "Poof! Dahyun was back to normal.",
+     "segs": [
+      [
+       "nar",
+       "Poof! Dahyun was back to normal.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:tf:none"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_croc_r1",
+   "card": "Plop Into the Pot",
+   "round": 1,
+   "variant": "croc",
+   "set": "wc_bg_kitchen",
+   "enter": [
+    "shelf:show",
+    "ladle:show",
+    "witch:look:present",
+    "witch:at:900",
+    "cat:look:sit",
+    "cat:at:80",
+    "kid:look:stand",
+    "kid:at:560",
+    "friends:at:30,80,130",
+    "pot:clear",
+    "cam:pot"
+   ],
+   "lines": [
+    {
+     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "en": "Dahyun, you put them in. One or lots, it's all good.",
+     "segs": [
+      [
+       "witch",
+       "Dahyun, you put them in. One or lots, it's all good.",
+       "happy"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "다현이는 초록 공룡이랑 구운 초록 대파를 솥에 넣었어요. 쿵, 지글지글!",
+     "en": "Dahyun dropped the green dinosaur and the grilled green onion into the cauldron. Stomp, sizzle!",
+     "segs": [
+      [
+       "nar",
+       "Dahyun dropped the green dinosaur and the grilled green onion into the cauldron. Stomp, sizzle!",
+       "happy"
+      ]
+     ],
+     "src": "new",
+     "before": [
+      "kid:look:reach"
+     ],
+     "after": [
+      "pot:drop:dino,leek"
+     ]
+    },
+    {
+     "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+     "en": "One, two! The cauldron water swirled round and round, and its colour changed.",
+     "segs": [
+      [
+       "nar",
+       "One, two! The cauldron water swirled round and round, and its colour changed.",
+       "toneup"
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "pot:swirl:green,green"
+     ]
+    },
+    {
+     "text": "다 넣었지? 그럼 저어 보자!",
+     "en": "All in? Then let's stir!",
+     "segs": [
+      [
+       "witch",
+       "All in? Then let's stir!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:stir"
+     ],
+     "after": [
+      "pot:pop:green"
+     ]
+    },
+    {
+     "text": "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+     "en": "Pop! Candies came popping out of the cauldron.",
+     "segs": [
+      [
+       "nar",
+       "Pop! Candies came popping out of the cauldron.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "candy:jar:croc"
+     ]
+    },
+    {
+     "text": "초록만 넣었더니 초록 악어 사탕이 됐어요!",
+     "en": "Only green went in, so it became a green crocodile candy!",
+     "segs": [
+      [
+       "nar",
+       "Only green went in, so it became a green crocodile candy!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "먼저 먹어 봐.",
+     "en": "You try one first.",
+     "segs": [
+      [
+       "witch",
+       "You try one first.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:giggle"
+     ]
+    },
+    {
+     "text": "냠… 악어 사탕이다!",
+     "en": "Yum... it's crocodile candy!",
+     "segs": [
+      [
+       "kid",
+       "Yum... it's crocodile candy!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:front"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_croc_r1",
+   "card": "Poof! A New Body",
+   "round": 1,
+   "variant": "croc",
+   "set": "wc_bg_shop_front",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:480",
+    "witch:look:stand:left",
+    "witch:at:820",
+    "cat:look:sit",
+    "cat:at:700",
+    "friends:at:140,220,300",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
+     "en": "Poof! Dahyun grew a green crocodile tail!",
+     "segs": [
+      [
+       "nar",
+       "Poof! Dahyun grew a green crocodile tail!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "cut:tf_croc"
+     ],
+     "after": [
+      "kid:tf:croc"
+     ]
+    },
+    {
+     "text": "앙! 앙! 나는 악어다!",
+     "en": "Snap! Snap! I'm a crocodile!",
+     "segs": [
+      [
+       "kid",
+       "Snap! Snap! I'm a crocodile!",
+       "happy"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "히히, 핼러윈 마법이야!",
+     "en": "Hee hee, it's Halloween magic!",
+     "segs": [
+      [
+       "witch",
+       "Hee hee, it's Halloween magic!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:surprise"
+     ],
+     "after": [
+      "friends:hop"
+     ]
+    },
+    {
+     "text": "마지막에 다 같이!",
+     "en": "At the end, all together!",
+     "segs": [
+      [
+       "witch",
+       "At the end, all together!",
+       "happy"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.",
+     "en": "She crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
+     "segs": [
+      [
+       "nar",
+       "She crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:act:croc"
+     ]
+    },
+    {
+     "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+     "en": "Poof! Dahyun was back to normal.",
+     "segs": [
+      [
+       "nar",
+       "Poof! Dahyun was back to normal.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:tf:none"
+     ]
+    }
+   ]
+  },
+  {
    "key": "R04_strawberry_r2",
    "card": "A Different Colour",
    "round": 2,
@@ -2886,7 +3406,7 @@
       "witch:look:stir"
      ],
      "after": [
-      "pot:pop:green"
+      "pot:pop:teal"
      ]
     },
     {
@@ -2903,6 +3423,18 @@
      "after": [
       "candy:jar:frog"
      ]
+    },
+    {
+     "text": "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
+     "en": "Green and blue mixed together made teal!",
+     "segs": [
+      [
+       "nar",
+       "Green and blue mixed together made teal!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse"
     },
     {
      "text": "냠… 개구리 사탕이다!",
@@ -2939,12 +3471,12 @@
    ],
    "lines": [
     {
-     "text": "뿅! 다현이가 초록 개구리가 됐어요!",
-     "en": "Poof! Dahyun turned into a green frog!",
+     "text": "뿅! 다현이가 청록 개구리가 됐어요!",
+     "en": "Poof! Dahyun turned into a teal frog!",
      "segs": [
       [
        "nar",
-       "Poof! Dahyun turned into a green frog!",
+       "Poof! Dahyun turned into a teal frog!",
        "toneup"
       ]
      ],
@@ -3603,6 +4135,420 @@
       [
        "kid",
        "Drip, drip... I'm melting!",
+       "happy"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+     "en": "Poof! Dahyun was back to normal.",
+     "segs": [
+      [
+       "nar",
+       "Poof! Dahyun was back to normal.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:tf:none"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_kiwi_r2",
+   "card": "A Different Colour",
+   "round": 2,
+   "variant": "kiwi",
+   "set": "wc_bg_kitchen",
+   "enter": [
+    "shelf:show",
+    "ladle:show",
+    "witch:look:present",
+    "witch:at:900",
+    "cat:look:sit",
+    "cat:at:80",
+    "kid:look:stand",
+    "kid:at:560",
+    "friends:at:30,80,130",
+    "pot:clear",
+    "cam:pot"
+   ],
+   "lines": [
+    {
+     "text": "이번엔 다른 색으로 해 볼까?",
+     "en": "This time, shall we try a different colour?",
+     "segs": [
+      [
+       "witch",
+       "This time, shall we try a different colour?",
+       "happy"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "솥 물이 쏴아, 다시 맑아졌어요.",
+     "en": "Whoosh, the cauldron water turned clear again.",
+     "segs": [
+      [
+       "nar",
+       "Whoosh, the cauldron water turned clear again.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "pot:clear"
+     ]
+    },
+    {
+     "text": "다현이는 병아리 방귀랑 구운 초록 대파를 솥에 넣었어요. 뿡, 지글지글!",
+     "en": "Dahyun dropped chick toots and the grilled green onion into the cauldron. Toot, sizzle!",
+     "segs": [
+      [
+       "nar",
+       "Dahyun dropped chick toots and the grilled green onion into the cauldron. Toot, sizzle!",
+       "happy"
+      ]
+     ],
+     "src": "new",
+     "before": [
+      "kid:look:reach"
+     ],
+     "after": [
+      "pot:drop:fart,leek"
+     ]
+    },
+    {
+     "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+     "en": "One, two! The cauldron water swirled round and round, and its colour changed.",
+     "segs": [
+      [
+       "nar",
+       "One, two! The cauldron water swirled round and round, and its colour changed.",
+       "toneup"
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "pot:swirl:yellow,green"
+     ]
+    },
+    {
+     "text": "자, 저어 보자. 뽀글뽀글…",
+     "en": "Here we go, stir, stir. Bubble, bubble...",
+     "segs": [
+      [
+       "witch",
+       "Here we go, stir, stir. Bubble, bubble...",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:stir"
+     ],
+     "after": [
+      "pot:pop:lime"
+     ]
+    },
+    {
+     "text": "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+     "en": "Pop! Candies came popping out of the cauldron.",
+     "segs": [
+      [
+       "nar",
+       "Pop! Candies came popping out of the cauldron.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "candy:jar:kiwi"
+     ]
+    },
+    {
+     "text": "초록이랑 노랑을 섞었더니 연두색이 됐어요!",
+     "en": "Green and yellow mixed together made lime green!",
+     "segs": [
+      [
+       "nar",
+       "Green and yellow mixed together made lime green!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "냠… 키위 사탕이다!",
+     "en": "Yum... it's kiwi candy!",
+     "segs": [
+      [
+       "kid",
+       "Yum... it's kiwi candy!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yum"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_kiwi_r2",
+   "card": "One More Time!",
+   "round": 2,
+   "variant": "kiwi",
+   "set": "wc_bg_street",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:480",
+    "witch:look:stand:left",
+    "witch:at:820",
+    "cat:look:sit",
+    "cat:at:700",
+    "friends:at:140,220,300",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "뿅! 다현이가 동그란 연두 키위가 됐어요!",
+     "en": "Poof! Dahyun turned into a round lime-green kiwi!",
+     "segs": [
+      [
+       "nar",
+       "Poof! Dahyun turned into a round lime-green kiwi!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "cut:tf_kiwi"
+     ],
+     "after": [
+      "kid:tf:kiwi",
+      "kid:act:kiwi:short"
+     ]
+    },
+    {
+     "text": "보송보송… 간지러워! 히히!",
+     "en": "So fuzzy... it tickles! Hee hee!",
+     "segs": [
+      [
+       "kid",
+       "So fuzzy... it tickles! Hee hee!",
+       "happy"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+     "en": "Poof! Dahyun was back to normal.",
+     "segs": [
+      [
+       "nar",
+       "Poof! Dahyun was back to normal.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:tf:none"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_croc_r2",
+   "card": "A Different Colour",
+   "round": 2,
+   "variant": "croc",
+   "set": "wc_bg_kitchen",
+   "enter": [
+    "shelf:show",
+    "ladle:show",
+    "witch:look:present",
+    "witch:at:900",
+    "cat:look:sit",
+    "cat:at:80",
+    "kid:look:stand",
+    "kid:at:560",
+    "friends:at:30,80,130",
+    "pot:clear",
+    "cam:pot"
+   ],
+   "lines": [
+    {
+     "text": "이번엔 다른 색으로 해 볼까?",
+     "en": "This time, shall we try a different colour?",
+     "segs": [
+      [
+       "witch",
+       "This time, shall we try a different colour?",
+       "happy"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "솥 물이 쏴아, 다시 맑아졌어요.",
+     "en": "Whoosh, the cauldron water turned clear again.",
+     "segs": [
+      [
+       "nar",
+       "Whoosh, the cauldron water turned clear again.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "pot:clear"
+     ]
+    },
+    {
+     "text": "다현이는 초록 공룡이랑 구운 초록 대파를 솥에 넣었어요. 쿵, 지글지글!",
+     "en": "Dahyun dropped the green dinosaur and the grilled green onion into the cauldron. Stomp, sizzle!",
+     "segs": [
+      [
+       "nar",
+       "Dahyun dropped the green dinosaur and the grilled green onion into the cauldron. Stomp, sizzle!",
+       "happy"
+      ]
+     ],
+     "src": "new",
+     "before": [
+      "kid:look:reach"
+     ],
+     "after": [
+      "pot:drop:dino,leek"
+     ]
+    },
+    {
+     "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+     "en": "One, two! The cauldron water swirled round and round, and its colour changed.",
+     "segs": [
+      [
+       "nar",
+       "One, two! The cauldron water swirled round and round, and its colour changed.",
+       "toneup"
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "pot:swirl:green,green"
+     ]
+    },
+    {
+     "text": "자, 저어 보자. 뽀글뽀글…",
+     "en": "Here we go, stir, stir. Bubble, bubble...",
+     "segs": [
+      [
+       "witch",
+       "Here we go, stir, stir. Bubble, bubble...",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:stir"
+     ],
+     "after": [
+      "pot:pop:green"
+     ]
+    },
+    {
+     "text": "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+     "en": "Pop! Candies came popping out of the cauldron.",
+     "segs": [
+      [
+       "nar",
+       "Pop! Candies came popping out of the cauldron.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "candy:jar:croc"
+     ]
+    },
+    {
+     "text": "초록만 넣었더니 초록 악어 사탕이 됐어요!",
+     "en": "Only green went in, so it became a green crocodile candy!",
+     "segs": [
+      [
+       "nar",
+       "Only green went in, so it became a green crocodile candy!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "냠… 악어 사탕이다!",
+     "en": "Yum... it's crocodile candy!",
+     "segs": [
+      [
+       "kid",
+       "Yum... it's crocodile candy!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yum"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_croc_r2",
+   "card": "One More Time!",
+   "round": 2,
+   "variant": "croc",
+   "set": "wc_bg_shop_front",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:480",
+    "witch:look:stand:left",
+    "witch:at:820",
+    "cat:look:sit",
+    "cat:at:700",
+    "friends:at:140,220,300",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
+     "en": "Poof! Dahyun grew a green crocodile tail!",
+     "segs": [
+      [
+       "nar",
+       "Poof! Dahyun grew a green crocodile tail!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "cut:tf_croc"
+     ],
+     "after": [
+      "kid:tf:croc",
+      "kid:act:croc:short"
+     ]
+    },
+    {
+     "text": "앙! 앙! 나는 악어다!",
+     "en": "Snap! Snap! I'm a crocodile!",
+     "segs": [
+      [
+       "kid",
+       "Snap! Snap! I'm a crocodile!",
        "happy"
       ]
      ],

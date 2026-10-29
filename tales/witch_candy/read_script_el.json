@@ -13,6 +13,8 @@
    "duck",
    "fish",
    "frog",
+   "kiwi",
+   "croc",
    "pumpkin",
    "bat",
    "choco"
@@ -23,10 +25,12 @@
    "strawberry": "red",
    "duck": "yellow",
    "fish": "blue",
-   "frog": "green",
+   "frog": "teal",
    "pumpkin": "orange",
    "bat": "purple",
-   "choco": "brown"
+   "choco": "brown",
+   "kiwi": "lime",
+   "croc": "green"
   },
   "mix": {
    "strawberry": "snot,firetruck → red,red",
@@ -35,7 +39,9 @@
    "frog": "frog,wave → green,blue",
    "pumpkin": "snot,lantern → red,yellow",
    "bat": "ladybug,fish → red,blue",
-   "choco": "firetruck,dino → red,green"
+   "choco": "firetruck,dino → red,green",
+   "kiwi": "fart,leek → yellow,green",
+   "croc": "dino,leek → green,green"
   }
  },
  "acts": {
@@ -1192,7 +1198,7 @@
       "witch:look:stir"
      ],
      "after": [
-      "pot:pop:green"
+      "pot:pop:teal"
      ]
     },
     {
@@ -1209,6 +1215,18 @@
      "after": [
       "candy:jar:frog"
      ]
+    },
+    {
+     "text": "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "reuse"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -1260,11 +1278,11 @@
    ],
    "lines": [
     {
-     "text": "뿅! 다현이가 초록 개구리가 됐어요!",
+     "text": "뿅! 다현이가 청록 개구리가 됐어요!",
      "segs": [
       [
        "nar",
-       "뿅! 다현이가 초록 개구리가 됐어요!",
+       "뿅! 다현이가 청록 개구리가 됐어요!",
        "toneup",
        "[bright, magical, excited storytelling, a pop on 뿅]"
       ]
@@ -2135,6 +2153,508 @@
    ]
   },
   {
+   "key": "R04_kiwi_r1",
+   "card": "솥에 퐁퐁",
+   "round": 1,
+   "variant": "kiwi",
+   "set": "wc_bg_kitchen",
+   "enter": [
+    "shelf:show",
+    "ladle:show",
+    "witch:look:present",
+    "witch:at:900",
+    "cat:look:sit",
+    "cat:at:80",
+    "kid:look:stand",
+    "kid:at:560",
+    "friends:at:30,80,130",
+    "pot:clear",
+    "cam:pot"
+   ],
+   "lines": [
+    {
+     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "segs": [
+      [
+       "witch",
+       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "happy",
+       "[kind quirky witch, warm, giggly, a little silly, never scary]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "다현이는 병아리 방귀랑 구운 초록 대파를 솥에 넣었어요. 뿡, 지글지글!",
+     "segs": [
+      [
+       "nar",
+       "다현이는 병아리 방귀랑 구운 초록 대파를 솥에 넣었어요. 뿡, 지글지글!",
+       "happy",
+       "[playful storytelling, two funny sound words]"
+      ]
+     ],
+     "src": "new",
+     "before": [
+      "kid:look:reach"
+     ],
+     "after": [
+      "pot:drop:fart,leek"
+     ]
+    },
+    {
+     "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+     "segs": [
+      [
+       "nar",
+       "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+       "toneup",
+       "[bright counting then wondering, swirling rhythm]"
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "pot:swirl:yellow,green"
+     ]
+    },
+    {
+     "text": "다 넣었지? 그럼 저어 보자!",
+     "segs": [
+      [
+       "witch",
+       "다 넣었지? 그럼 저어 보자!",
+       "happy",
+       "[kind quirky witch, warm, giggly, a little silly, never scary]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:stir"
+     ],
+     "after": [
+      "pot:pop:lime"
+     ]
+    },
+    {
+     "text": "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+     "segs": [
+      [
+       "nar",
+       "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+       "toneup",
+       "[bright, excited storytelling, bouncy, clear]"
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "candy:jar:kiwi"
+     ]
+    },
+    {
+     "text": "초록이랑 노랑을 섞었더니 연두색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "초록이랑 노랑을 섞었더니 연두색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "먼저 먹어 봐.",
+     "segs": [
+      [
+       "witch",
+       "먼저 먹어 봐.",
+       "happy",
+       "[kind quirky witch, gentle, offering, a little mischievous]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:giggle"
+     ]
+    },
+    {
+     "text": "냠… 키위 사탕이다!",
+     "segs": [
+      [
+       "kid",
+       "냠… 키위 사탕이다!",
+       "happy",
+       "[young girl, munching, then bright shout]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:front"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_kiwi_r1",
+   "card": "뿅! 몸이 변했어요",
+   "round": 1,
+   "variant": "kiwi",
+   "set": "wc_bg_street",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:480",
+    "witch:look:stand:left",
+    "witch:at:820",
+    "cat:look:sit",
+    "cat:at:700",
+    "friends:at:140,220,300",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "뿅! 다현이가 동그란 연두 키위가 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "뿅! 다현이가 동그란 연두 키위가 됐어요!",
+       "toneup",
+       "[bright, magical, excited storytelling, a pop on 뿅]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "cut:tf_kiwi"
+     ],
+     "after": [
+      "kid:tf:kiwi"
+     ]
+    },
+    {
+     "text": "보송보송… 간지러워! 히히!",
+     "segs": [
+      [
+       "kid",
+       "보송보송… 간지러워! 히히!",
+       "happy",
+       "[young girl, giggly, ticklish, squirming with laughter]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "히히, 핼러윈 마법이야!",
+     "segs": [
+      [
+       "witch",
+       "히히, 핼러윈 마법이야!",
+       "happy",
+       "[kind quirky witch, giggly, proud]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:surprise"
+     ],
+     "after": [
+      "friends:hop"
+     ]
+    },
+    {
+     "text": "마지막에 다 같이!",
+     "segs": [
+      [
+       "witch",
+       "마지막에 다 같이!",
+       "happy",
+       "[kind quirky witch, warm, giggly, a little silly, never scary]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.",
+     "segs": [
+      [
+       "nar",
+       "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.",
+       "happy",
+       "[playful storytelling, rhythmic on the sound words, smiling]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:act:kiwi"
+     ]
+    },
+    {
+     "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+     "segs": [
+      [
+       "nar",
+       "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+       null,
+       "[warm, settling, a pop on 뿅, gentle]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:tf:none"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_croc_r1",
+   "card": "솥에 퐁퐁",
+   "round": 1,
+   "variant": "croc",
+   "set": "wc_bg_kitchen",
+   "enter": [
+    "shelf:show",
+    "ladle:show",
+    "witch:look:present",
+    "witch:at:900",
+    "cat:look:sit",
+    "cat:at:80",
+    "kid:look:stand",
+    "kid:at:560",
+    "friends:at:30,80,130",
+    "pot:clear",
+    "cam:pot"
+   ],
+   "lines": [
+    {
+     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "segs": [
+      [
+       "witch",
+       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "happy",
+       "[kind quirky witch, warm, giggly, a little silly, never scary]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "다현이는 초록 공룡이랑 구운 초록 대파를 솥에 넣었어요. 쿵, 지글지글!",
+     "segs": [
+      [
+       "nar",
+       "다현이는 초록 공룡이랑 구운 초록 대파를 솥에 넣었어요. 쿵, 지글지글!",
+       "happy",
+       "[playful storytelling, two funny sound words]"
+      ]
+     ],
+     "src": "new",
+     "before": [
+      "kid:look:reach"
+     ],
+     "after": [
+      "pot:drop:dino,leek"
+     ]
+    },
+    {
+     "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+     "segs": [
+      [
+       "nar",
+       "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+       "toneup",
+       "[bright counting then wondering, swirling rhythm]"
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "pot:swirl:green,green"
+     ]
+    },
+    {
+     "text": "다 넣었지? 그럼 저어 보자!",
+     "segs": [
+      [
+       "witch",
+       "다 넣었지? 그럼 저어 보자!",
+       "happy",
+       "[kind quirky witch, warm, giggly, a little silly, never scary]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:stir"
+     ],
+     "after": [
+      "pot:pop:green"
+     ]
+    },
+    {
+     "text": "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+     "segs": [
+      [
+       "nar",
+       "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+       "toneup",
+       "[bright, excited storytelling, bouncy, clear]"
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "candy:jar:croc"
+     ]
+    },
+    {
+     "text": "초록만 넣었더니 초록 악어 사탕이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "초록만 넣었더니 초록 악어 사탕이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "먼저 먹어 봐.",
+     "segs": [
+      [
+       "witch",
+       "먼저 먹어 봐.",
+       "happy",
+       "[kind quirky witch, gentle, offering, a little mischievous]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:giggle"
+     ]
+    },
+    {
+     "text": "냠… 악어 사탕이다!",
+     "segs": [
+      [
+       "kid",
+       "냠… 악어 사탕이다!",
+       "happy",
+       "[young girl, munching, then bright shout]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:front"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_croc_r1",
+   "card": "뿅! 몸이 변했어요",
+   "round": 1,
+   "variant": "croc",
+   "set": "wc_bg_shop_front",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:480",
+    "witch:look:stand:left",
+    "witch:at:820",
+    "cat:look:sit",
+    "cat:at:700",
+    "friends:at:140,220,300",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
+     "segs": [
+      [
+       "nar",
+       "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
+       "toneup",
+       "[bright, magical, excited storytelling, a pop on 뿅]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "cut:tf_croc"
+     ],
+     "after": [
+      "kid:tf:croc"
+     ]
+    },
+    {
+     "text": "앙! 앙! 나는 악어다!",
+     "segs": [
+      [
+       "kid",
+       "앙! 앙! 나는 악어다!",
+       "happy",
+       "[young girl, playful pretend-scary chomp sounds, giggling]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "히히, 핼러윈 마법이야!",
+     "segs": [
+      [
+       "witch",
+       "히히, 핼러윈 마법이야!",
+       "happy",
+       "[kind quirky witch, giggly, proud]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:surprise"
+     ],
+     "after": [
+      "friends:hop"
+     ]
+    },
+    {
+     "text": "마지막에 다 같이!",
+     "segs": [
+      [
+       "witch",
+       "마지막에 다 같이!",
+       "happy",
+       "[kind quirky witch, warm, giggly, a little silly, never scary]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.",
+     "segs": [
+      [
+       "nar",
+       "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.",
+       "happy",
+       "[playful storytelling, slow creeping then a sudden snap, smiling]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:act:croc"
+     ]
+    },
+    {
+     "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+     "segs": [
+      [
+       "nar",
+       "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+       null,
+       "[warm, settling, a pop on 뿅, gentle]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:tf:none"
+     ]
+    }
+   ]
+  },
+  {
    "key": "R04_strawberry_r2",
    "card": "다른 색으로",
    "round": 2,
@@ -2886,7 +3406,7 @@
       "witch:look:stir"
      ],
      "after": [
-      "pot:pop:green"
+      "pot:pop:teal"
      ]
     },
     {
@@ -2903,6 +3423,18 @@
      "after": [
       "candy:jar:frog"
      ]
+    },
+    {
+     "text": "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "reuse"
     },
     {
      "text": "냠… 개구리 사탕이다!",
@@ -2939,11 +3471,11 @@
    ],
    "lines": [
     {
-     "text": "뿅! 다현이가 초록 개구리가 됐어요!",
+     "text": "뿅! 다현이가 청록 개구리가 됐어요!",
      "segs": [
       [
        "nar",
-       "뿅! 다현이가 초록 개구리가 됐어요!",
+       "뿅! 다현이가 청록 개구리가 됐어요!",
        "toneup",
        "[bright, magical, excited storytelling, a pop on 뿅]"
       ]
@@ -3604,6 +4136,420 @@
        "주르륵… 나 녹아요~",
        "happy",
        "[young girl, voice sliding down comically, melting, laughing]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+     "segs": [
+      [
+       "nar",
+       "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+       null,
+       "[warm, settling, a pop on 뿅, gentle]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:tf:none"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_kiwi_r2",
+   "card": "다른 색으로",
+   "round": 2,
+   "variant": "kiwi",
+   "set": "wc_bg_kitchen",
+   "enter": [
+    "shelf:show",
+    "ladle:show",
+    "witch:look:present",
+    "witch:at:900",
+    "cat:look:sit",
+    "cat:at:80",
+    "kid:look:stand",
+    "kid:at:560",
+    "friends:at:30,80,130",
+    "pot:clear",
+    "cam:pot"
+   ],
+   "lines": [
+    {
+     "text": "이번엔 다른 색으로 해 볼까?",
+     "segs": [
+      [
+       "witch",
+       "이번엔 다른 색으로 해 볼까?",
+       "happy",
+       "[kind quirky witch, inviting, curious]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "솥 물이 쏴아, 다시 맑아졌어요.",
+     "segs": [
+      [
+       "nar",
+       "솥 물이 쏴아, 다시 맑아졌어요.",
+       null,
+       "[calm, a soft whoosh on 쏴아, gentle]"
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "pot:clear"
+     ]
+    },
+    {
+     "text": "다현이는 병아리 방귀랑 구운 초록 대파를 솥에 넣었어요. 뿡, 지글지글!",
+     "segs": [
+      [
+       "nar",
+       "다현이는 병아리 방귀랑 구운 초록 대파를 솥에 넣었어요. 뿡, 지글지글!",
+       "happy",
+       "[playful storytelling, two funny sound words]"
+      ]
+     ],
+     "src": "new",
+     "before": [
+      "kid:look:reach"
+     ],
+     "after": [
+      "pot:drop:fart,leek"
+     ]
+    },
+    {
+     "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+     "segs": [
+      [
+       "nar",
+       "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+       "toneup",
+       "[bright counting then wondering, swirling rhythm]"
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "pot:swirl:yellow,green"
+     ]
+    },
+    {
+     "text": "자, 저어 보자. 뽀글뽀글…",
+     "segs": [
+      [
+       "witch",
+       "자, 저어 보자. 뽀글뽀글…",
+       null,
+       "[kind quirky witch, stirring rhythm, building, playful]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:stir"
+     ],
+     "after": [
+      "pot:pop:lime"
+     ]
+    },
+    {
+     "text": "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+     "segs": [
+      [
+       "nar",
+       "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+       "toneup",
+       "[bright, excited storytelling, bouncy, clear]"
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "candy:jar:kiwi"
+     ]
+    },
+    {
+     "text": "초록이랑 노랑을 섞었더니 연두색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "초록이랑 노랑을 섞었더니 연두색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "냠… 키위 사탕이다!",
+     "segs": [
+      [
+       "kid",
+       "냠… 키위 사탕이다!",
+       "happy",
+       "[young girl, munching, then bright shout]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yum"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_kiwi_r2",
+   "card": "한 번 더!",
+   "round": 2,
+   "variant": "kiwi",
+   "set": "wc_bg_street",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:480",
+    "witch:look:stand:left",
+    "witch:at:820",
+    "cat:look:sit",
+    "cat:at:700",
+    "friends:at:140,220,300",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "뿅! 다현이가 동그란 연두 키위가 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "뿅! 다현이가 동그란 연두 키위가 됐어요!",
+       "toneup",
+       "[bright, magical, excited storytelling, a pop on 뿅]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "cut:tf_kiwi"
+     ],
+     "after": [
+      "kid:tf:kiwi",
+      "kid:act:kiwi:short"
+     ]
+    },
+    {
+     "text": "보송보송… 간지러워! 히히!",
+     "segs": [
+      [
+       "kid",
+       "보송보송… 간지러워! 히히!",
+       "happy",
+       "[young girl, giggly, ticklish, squirming with laughter]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+     "segs": [
+      [
+       "nar",
+       "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+       null,
+       "[warm, settling, a pop on 뿅, gentle]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:tf:none"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_croc_r2",
+   "card": "다른 색으로",
+   "round": 2,
+   "variant": "croc",
+   "set": "wc_bg_kitchen",
+   "enter": [
+    "shelf:show",
+    "ladle:show",
+    "witch:look:present",
+    "witch:at:900",
+    "cat:look:sit",
+    "cat:at:80",
+    "kid:look:stand",
+    "kid:at:560",
+    "friends:at:30,80,130",
+    "pot:clear",
+    "cam:pot"
+   ],
+   "lines": [
+    {
+     "text": "이번엔 다른 색으로 해 볼까?",
+     "segs": [
+      [
+       "witch",
+       "이번엔 다른 색으로 해 볼까?",
+       "happy",
+       "[kind quirky witch, inviting, curious]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "솥 물이 쏴아, 다시 맑아졌어요.",
+     "segs": [
+      [
+       "nar",
+       "솥 물이 쏴아, 다시 맑아졌어요.",
+       null,
+       "[calm, a soft whoosh on 쏴아, gentle]"
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "pot:clear"
+     ]
+    },
+    {
+     "text": "다현이는 초록 공룡이랑 구운 초록 대파를 솥에 넣었어요. 쿵, 지글지글!",
+     "segs": [
+      [
+       "nar",
+       "다현이는 초록 공룡이랑 구운 초록 대파를 솥에 넣었어요. 쿵, 지글지글!",
+       "happy",
+       "[playful storytelling, two funny sound words]"
+      ]
+     ],
+     "src": "new",
+     "before": [
+      "kid:look:reach"
+     ],
+     "after": [
+      "pot:drop:dino,leek"
+     ]
+    },
+    {
+     "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+     "segs": [
+      [
+       "nar",
+       "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
+       "toneup",
+       "[bright counting then wondering, swirling rhythm]"
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "pot:swirl:green,green"
+     ]
+    },
+    {
+     "text": "자, 저어 보자. 뽀글뽀글…",
+     "segs": [
+      [
+       "witch",
+       "자, 저어 보자. 뽀글뽀글…",
+       null,
+       "[kind quirky witch, stirring rhythm, building, playful]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "witch:look:stir"
+     ],
+     "after": [
+      "pot:pop:green"
+     ]
+    },
+    {
+     "text": "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+     "segs": [
+      [
+       "nar",
+       "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.",
+       "toneup",
+       "[bright, excited storytelling, bouncy, clear]"
+      ]
+     ],
+     "src": "reuse",
+     "after": [
+      "candy:jar:croc"
+     ]
+    },
+    {
+     "text": "초록만 넣었더니 초록 악어 사탕이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "초록만 넣었더니 초록 악어 사탕이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "reuse"
+    },
+    {
+     "text": "냠… 악어 사탕이다!",
+     "segs": [
+      [
+       "kid",
+       "냠… 악어 사탕이다!",
+       "happy",
+       "[young girl, munching, then bright shout]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yum"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_croc_r2",
+   "card": "한 번 더!",
+   "round": 2,
+   "variant": "croc",
+   "set": "wc_bg_shop_front",
+   "enter": [
+    "kid:look:stand",
+    "kid:at:480",
+    "witch:look:stand:left",
+    "witch:at:820",
+    "cat:look:sit",
+    "cat:at:700",
+    "friends:at:140,220,300",
+    "cam:wide"
+   ],
+   "lines": [
+    {
+     "text": "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
+     "segs": [
+      [
+       "nar",
+       "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
+       "toneup",
+       "[bright, magical, excited storytelling, a pop on 뿅]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "cut:tf_croc"
+     ],
+     "after": [
+      "kid:tf:croc",
+      "kid:act:croc:short"
+     ]
+    },
+    {
+     "text": "앙! 앙! 나는 악어다!",
+     "segs": [
+      [
+       "kid",
+       "앙! 앙! 나는 악어다!",
+       "happy",
+       "[young girl, playful pretend-scary chomp sounds, giggling]"
       ]
      ],
      "src": "reuse"

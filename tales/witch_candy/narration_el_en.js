@@ -304,10 +304,6 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Red and green mixed together made brown!",
   "c": "audio/el/witch_candy/en/nar_3100f126b7.mp3"
  },
- "초록이랑 노랑을 섞었더니 초록색이 됐어요!": {
-  "t": "Green and yellow mixed together made green!",
-  "c": "audio/el/witch_candy/en/nar_ab0f8ee2d2.mp3"
- },
  "초록이랑 파랑을 섞었더니 청록색이 됐어요!": {
   "t": "Green and blue mixed together made teal!",
   "c": "audio/el/witch_candy/en/nar_7eb39bdd78.mp3"
@@ -323,10 +319,6 @@ Object.assign(NARRATION_CLIPS_EN, {
  "파랑만 넣었더니 파란 물고기 사탕이 됐어요!": {
   "t": "Only blue went in, so it became a blue fish candy!",
   "c": "audio/el/witch_candy/en/nar_a905601b0e.mp3"
- },
- "초록만 넣었더니 초록 개구리 사탕이 됐어요!": {
-  "t": "Only green went in, so it became a green frog candy!",
-  "c": "audio/el/witch_candy/en/nar_2afd1f9589.mp3"
  },
  "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.": {
   "t": "Pop! Candies came popping out of the cauldron.",
@@ -407,10 +399,6 @@ Object.assign(NARRATION_CLIPS_EN, {
  "뿅! 다현이한테 물고기 꼬리가 생겼어요!": {
   "t": "Poof! Dahyun grew a fish tail!",
   "c": "audio/el/witch_candy/en/nar_bf1937dcfc.mp3"
- },
- "뿅! 다현이가 초록 개구리가 됐어요!": {
-  "t": "Poof! Dahyun turned into a green frog!",
-  "c": "audio/el/witch_candy/en/nar_97ad00d7be.mp3"
  },
  "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!": {
   "t": "Poof! Dahyun's cheeks and tummy glowed like a pumpkin!",
@@ -595,6 +583,50 @@ Object.assign(NARRATION_CLIPS_EN, {
  "사탕 마녀를 톡 눌러 인사해요.": {
   "t": "Tap the Candy Witch to say goodbye.",
   "c": "audio/el/witch_candy/en/nar_bb6d20c5cb.mp3"
+ },
+ "초록이랑 노랑을 섞었더니 연두색이 됐어요!": {
+  "t": "Green and yellow mixed together made lime green!",
+  "c": "audio/el/witch_candy/en/nar_dd483740b3.mp3"
+ },
+ "초록만 넣었더니 초록 악어 사탕이 됐어요!": {
+  "t": "Only green went in, so it became a green crocodile candy!",
+  "c": "audio/el/witch_candy/en/nar_69dc4c1246.mp3"
+ },
+ "냠… 키위 사탕이다!": {
+  "t": "Yum... it's kiwi candy!",
+  "c": "audio/el/witch_candy/en/kid_ab67d6046a.mp3"
+ },
+ "냠… 악어 사탕이다!": {
+  "t": "Yum... it's crocodile candy!",
+  "c": "audio/el/witch_candy/en/kid_cd5ec9a852.mp3"
+ },
+ "뿅! 다현이가 동그란 연두 키위가 됐어요!": {
+  "t": "Poof! Dahyun turned into a round lime-green kiwi!",
+  "c": "audio/el/witch_candy/en/nar_009fa039bc.mp3"
+ },
+ "보송보송… 간지러워! 히히!": {
+  "t": "So fuzzy... it tickles! Hee hee!",
+  "c": "audio/el/witch_candy/en/kid_0c1cc7b3c2.mp3"
+ },
+ "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.": {
+  "t": "Boing, boing, boing! She bounced down the street like a kiwi ball.",
+  "c": "audio/el/witch_candy/en/nar_53cb401b69.mp3"
+ },
+ "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!": {
+  "t": "Poof! Dahyun grew a green crocodile tail!",
+  "c": "audio/el/witch_candy/en/nar_fc940a2f28.mp3"
+ },
+ "앙! 앙! 나는 악어다!": {
+  "t": "Snap! Snap! I'm a crocodile!",
+  "c": "audio/el/witch_candy/en/kid_3dfc8e05d0.mp3"
+ },
+ "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.": {
+  "t": "She crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
+  "c": "audio/el/witch_candy/en/nar_5318e8a8c6.mp3"
+ },
+ "뿅! 다현이가 청록 개구리가 됐어요!": {
+  "t": "Poof! Dahyun turned into a teal frog!",
+  "c": "audio/el/witch_candy/en/nar_3b5f99df21.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {

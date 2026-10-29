@@ -895,17 +895,6 @@
    ]
   },
   {
-   "text": "초록이랑 노랑을 섞었더니 초록색이 됐어요!",
-   "segs": [
-    [
-     "nar",
-     "초록이랑 노랑을 섞었더니 초록색이 됐어요!",
-     "toneup",
-     "[warm storyteller, delighted reveal, clear colour words]"
-    ]
-   ]
-  },
-  {
    "text": "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
    "segs": [
     [
@@ -944,17 +933,6 @@
     [
      "nar",
      "파랑만 넣었더니 파란 물고기 사탕이 됐어요!",
-     "toneup",
-     "[warm storyteller, delighted reveal, clear colour words]"
-    ]
-   ]
-  },
-  {
-   "text": "초록만 넣었더니 초록 개구리 사탕이 됐어요!",
-   "segs": [
-    [
-     "nar",
-     "초록만 넣었더니 초록 개구리 사탕이 됐어요!",
      "toneup",
      "[warm storyteller, delighted reveal, clear colour words]"
     ]
@@ -1175,17 +1153,6 @@
     [
      "nar",
      "뿅! 다현이한테 물고기 꼬리가 생겼어요!",
-     "toneup",
-     "[bright, magical, excited storytelling, a pop on 뿅]"
-    ]
-   ]
-  },
-  {
-   "text": "뿅! 다현이가 초록 개구리가 됐어요!",
-   "segs": [
-    [
-     "nar",
-     "뿅! 다현이가 초록 개구리가 됐어요!",
      "toneup",
      "[bright, magical, excited storytelling, a pop on 뿅]"
     ]
@@ -1694,6 +1661,127 @@
      "사탕 마녀를 톡 눌러 인사해요.",
      null,
      "[friendly, clear, inviting, a tiny pause before 톡]"
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 노랑을 섞었더니 연두색이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "초록이랑 노랑을 섞었더니 연두색이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "초록만 넣었더니 초록 악어 사탕이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "초록만 넣었더니 초록 악어 사탕이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 키위 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "냠… 키위 사탕이다!",
+     "happy",
+     "[young girl, munching, then bright shout]"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 악어 사탕이다!",
+   "segs": [
+    [
+     "kid",
+     "냠… 악어 사탕이다!",
+     "happy",
+     "[young girl, munching, then bright shout]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이가 동그란 연두 키위가 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이가 동그란 연두 키위가 됐어요!",
+     "toneup",
+     "[bright, magical, excited storytelling, a pop on 뿅]"
+    ]
+   ]
+  },
+  {
+   "text": "보송보송… 간지러워! 히히!",
+   "segs": [
+    [
+     "kid",
+     "보송보송… 간지러워! 히히!",
+     "happy",
+     "[young girl, giggly, ticklish, squirming with laughter]"
+    ]
+   ]
+  },
+  {
+   "text": "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.",
+     "happy",
+     "[playful storytelling, rhythmic on the sound words, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
+     "toneup",
+     "[bright, magical, excited storytelling, a pop on 뿅]"
+    ]
+   ]
+  },
+  {
+   "text": "앙! 앙! 나는 악어다!",
+   "segs": [
+    [
+     "kid",
+     "앙! 앙! 나는 악어다!",
+     "happy",
+     "[young girl, playful pretend-scary chomp sounds, giggling]"
+    ]
+   ]
+  },
+  {
+   "text": "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.",
+   "segs": [
+    [
+     "nar",
+     "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.",
+     "happy",
+     "[playful storytelling, slow creeping then a sudden snap, smiling]"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이가 청록 개구리가 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "뿅! 다현이가 청록 개구리가 됐어요!",
+     "toneup",
+     "[bright, magical, excited storytelling, a pop on 뿅]"
     ]
    ]
   }

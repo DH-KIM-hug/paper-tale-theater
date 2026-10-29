@@ -846,17 +846,6 @@
    ]
   },
   {
-   "text": "초록이랑 노랑을 섞었더니 초록색이 됐어요!",
-   "en": "Green and yellow mixed together made green!",
-   "segs": [
-    [
-     "nar",
-     "Green and yellow mixed together made green!",
-     "toneup"
-    ]
-   ]
-  },
-  {
    "text": "초록이랑 파랑을 섞었더니 청록색이 됐어요!",
    "en": "Green and blue mixed together made teal!",
    "segs": [
@@ -896,17 +885,6 @@
     [
      "nar",
      "Only blue went in, so it became a blue fish candy!",
-     "toneup"
-    ]
-   ]
-  },
-  {
-   "text": "초록만 넣었더니 초록 개구리 사탕이 됐어요!",
-   "en": "Only green went in, so it became a green frog candy!",
-   "segs": [
-    [
-     "nar",
-     "Only green went in, so it became a green frog candy!",
      "toneup"
     ]
    ]
@@ -1127,17 +1105,6 @@
     [
      "nar",
      "Poof! Dahyun grew a fish tail!",
-     "toneup"
-    ]
-   ]
-  },
-  {
-   "text": "뿅! 다현이가 초록 개구리가 됐어요!",
-   "en": "Poof! Dahyun turned into a green frog!",
-   "segs": [
-    [
-     "nar",
-     "Poof! Dahyun turned into a green frog!",
      "toneup"
     ]
    ]
@@ -1645,6 +1612,127 @@
      "nar",
      "Tap the Candy Witch to say goodbye.",
      null
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 노랑을 섞었더니 연두색이 됐어요!",
+   "en": "Green and yellow mixed together made lime green!",
+   "segs": [
+    [
+     "nar",
+     "Green and yellow mixed together made lime green!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "초록만 넣었더니 초록 악어 사탕이 됐어요!",
+   "en": "Only green went in, so it became a green crocodile candy!",
+   "segs": [
+    [
+     "nar",
+     "Only green went in, so it became a green crocodile candy!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 키위 사탕이다!",
+   "en": "Yum... it's kiwi candy!",
+   "segs": [
+    [
+     "kid",
+     "Yum... it's kiwi candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "냠… 악어 사탕이다!",
+   "en": "Yum... it's crocodile candy!",
+   "segs": [
+    [
+     "kid",
+     "Yum... it's crocodile candy!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이가 동그란 연두 키위가 됐어요!",
+   "en": "Poof! Dahyun turned into a round lime-green kiwi!",
+   "segs": [
+    [
+     "nar",
+     "Poof! Dahyun turned into a round lime-green kiwi!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "보송보송… 간지러워! 히히!",
+   "en": "So fuzzy... it tickles! Hee hee!",
+   "segs": [
+    [
+     "kid",
+     "So fuzzy... it tickles! Hee hee!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.",
+   "en": "Boing, boing, boing! She bounced down the street like a kiwi ball.",
+   "segs": [
+    [
+     "nar",
+     "Boing, boing, boing! She bounced down the street like a kiwi ball.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
+   "en": "Poof! Dahyun grew a green crocodile tail!",
+   "segs": [
+    [
+     "nar",
+     "Poof! Dahyun grew a green crocodile tail!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "앙! 앙! 나는 악어다!",
+   "en": "Snap! Snap! I'm a crocodile!",
+   "segs": [
+    [
+     "kid",
+     "Snap! Snap! I'm a crocodile!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.",
+   "en": "She crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
+   "segs": [
+    [
+     "nar",
+     "She crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "text": "뿅! 다현이가 청록 개구리가 됐어요!",
+   "en": "Poof! Dahyun turned into a teal frog!",
+   "segs": [
+    [
+     "nar",
+     "Poof! Dahyun turned into a teal frog!",
+     "toneup"
     ]
    ]
   }

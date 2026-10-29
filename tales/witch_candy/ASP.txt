@@ -38,7 +38,7 @@ prop_sparkle_pop: 1.005
 prop_candy_strawberry: 1.7682
 prop_candy_duck: 0.7133
 prop_candy_fish: 1.6575
-prop_candy_frog: 0.6083
+prop_candy_frog: 0.5717
 prop_candy_pumpkin: 1.8109
 prop_candy_bat: 1.0633
 prop_candy_choco: 0.6933
@@ -65,8 +65,8 @@ kid_tf_strawberry: 0.66
 kid_tf_strawberry_ball: 0.8083
 kid_tf_duck: 0.6683
 kid_tf_fish: 1.0517
-kid_tf_frog_jump: 0.79
-kid_tf_frog_sit: 0.7033
+kid_tf_frog_jump: 0.765
+kid_tf_frog_sit: 0.7517
 kid_tf_pumpkin: 0.6783
 kid_tf_bat_up: 1.1167
 kid_tf_bat_down: 1.0883
@@ -96,3 +96,7 @@ ghost: 1.0083
 witch_magic: 0.86
 prop_ing_leek: 0.9733
 prop_ing_lantern: 1.01
+kid_tf_kiwi: 0.6583
+kid_tf_croc: 0.795
+prop_candy_kiwi: 1.8595
+prop_candy_croc: 1.19

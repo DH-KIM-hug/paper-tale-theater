@@ -26,14 +26,14 @@
        곰(기준 230): 얼굴 폭(귀 빼고) stand 265 · reach 266 · happy 280 · ghost 265
        여우(기준 230): 얼굴 폭(볼털 포함) stand 305 · reach 303 · happy 331 · ghost 300 */
   const POSES = {
-    kid: ['stand', 'walk', 'yuck', 'reach', 'point', 'yum', 'ghost', 'tf_strawberry', 'tf_strawberry_ball', 'tf_duck', 'tf_fish', 'tf_frog_jump', 'tf_frog_sit', 'tf_pumpkin', 'tf_bat_up', 'tf_bat_down', 'tf_choco', 'tf_choco_flat'],
+    kid: ['stand', 'walk', 'yuck', 'reach', 'point', 'yum', 'ghost', 'tf_strawberry', 'tf_strawberry_ball', 'tf_duck', 'tf_fish', 'tf_frog_jump', 'tf_frog_sit', 'tf_pumpkin', 'tf_bat_up', 'tf_bat_down', 'tf_choco', 'tf_choco_flat', 'tf_kiwi', 'tf_croc'],
     witch: ['stand', 'present', 'stir', 'magic', 'surprise', 'giggle', 'ghost'],
     cat: ['sit', 'nose', 'reach', 'waddle', 'ghost'],
     rabbit: ['stand', 'reach', 'happy', 'ghost'], bear: ['stand', 'reach', 'happy', 'ghost'], fox: ['stand', 'reach', 'happy', 'ghost'],
   };
   const HT = {
     wc_kid_stand: 230, wc_kid_walk: 224, wc_kid_yuck: 226, wc_kid_reach: 215, wc_kid_point: 229, wc_kid_yum: 230, wc_kid_ghost: 232,
-    wc_kid_tf_strawberry: 233, wc_kid_tf_strawberry_ball: 173, wc_kid_tf_duck: 219, wc_kid_tf_fish: 204, wc_kid_tf_frog_jump: 221, wc_kid_tf_frog_sit: 215,
+    wc_kid_tf_strawberry: 233, wc_kid_tf_strawberry_ball: 173, wc_kid_tf_duck: 219, wc_kid_tf_fish: 204, wc_kid_tf_frog_jump: 209, wc_kid_tf_frog_sit: 219, wc_kid_tf_kiwi: 217, wc_kid_tf_croc: 221,
     wc_kid_tf_pumpkin: 232, wc_kid_tf_bat_up: 194, wc_kid_tf_bat_down: 194, wc_kid_tf_choco: 229, wc_kid_tf_choco_flat: 152,
     wc_witch_stand: 368, wc_witch_present: 365, wc_witch_stir: 356, wc_witch_surprise: 365, wc_witch_giggle: 355, wc_witch_ghost: 373,
     wc_witch_magic: 356,   // 마법으로 젓기(2026-10-29 새 그림): 민트 머리 폭 345/600 → stand(334/600, 368)과 같은 머리 폭
@@ -51,7 +51,7 @@
   /* ASP.txt (2026-10-29) */
   const ASP = {
     wc_kid_stand: .6, wc_kid_walk: .6517, wc_kid_yuck: .6833, wc_kid_reach: .7317, wc_kid_point: .615, wc_kid_yum: .6, wc_kid_ghost: .69,
-    wc_kid_tf_strawberry: .66, wc_kid_tf_strawberry_ball: .8083, wc_kid_tf_duck: .6683, wc_kid_tf_fish: 1.0517, wc_kid_tf_frog_jump: .79, wc_kid_tf_frog_sit: .7033,
+    wc_kid_tf_strawberry: .66, wc_kid_tf_strawberry_ball: .8083, wc_kid_tf_duck: .6683, wc_kid_tf_fish: 1.0517, wc_kid_tf_frog_jump: .765, wc_kid_tf_frog_sit: .7517, wc_kid_tf_kiwi: .6583, wc_kid_tf_croc: .795,
     wc_kid_tf_pumpkin: .6783, wc_kid_tf_bat_up: 1.1167, wc_kid_tf_bat_down: 1.0883, wc_kid_tf_choco: .605, wc_kid_tf_choco_flat: .9983,
     wc_witch_stand: .715, wc_witch_present: .7583, wc_witch_stir: .695, wc_witch_surprise: .72, wc_witch_giggle: .62, wc_witch_ghost: .7233, wc_witch_magic: .86, wc_ghost: 1.0083,
     wc_cat_sit: .6317, wc_cat_nose: .675, wc_cat_reach: .9917, wc_cat_waddle: .8467, wc_cat_ghost: .7067,
@@ -63,12 +63,12 @@
     wc_prop_ing_snot: .8417, wc_prop_ing_firetruck: 1.3433, wc_prop_ing_ladybug: 1.0483, wc_prop_ing_fart: 1.1683, wc_prop_ing_duck: 1.0583, wc_prop_ing_poo: 1.0583, wc_prop_ing_stink: .5933,
     wc_prop_ing_fly: .925, wc_prop_ing_fish: 1.2317, wc_prop_ing_wave: 1.9868, wc_prop_ing_frog: 1.095, wc_prop_ing_dino: 1.315, wc_prop_ing_leek: 0.9733, wc_prop_ing_lantern: 1.01,
     wc_prop_ladle: 1.0633, wc_prop_table: 2.1127, wc_prop_sample_orange: .56, wc_prop_sample_green: .5533, wc_prop_sample_purple: .565, wc_prop_sample_brown: .5033, wc_prop_sparkle_pop: 1.005,
-    wc_prop_candy_strawberry: 1.7893, wc_prop_candy_duck: .7133, wc_prop_candy_fish: 1.6729, wc_prop_candy_frog: .6067, wc_prop_candy_pumpkin: 1.833, wc_prop_candy_bat: 1.0617,
+    wc_prop_candy_strawberry: 1.7893, wc_prop_candy_duck: .7133, wc_prop_candy_fish: 1.6729, wc_prop_candy_frog: .5717, wc_prop_candy_kiwi: 1.8595, wc_prop_candy_croc: 1.19, wc_prop_candy_pumpkin: 1.833, wc_prop_candy_bat: 1.0617,
     wc_prop_candy_choco: .6933, wc_prop_candy_ghost: 2.0362, wc_prop_candy_jar: .93, wc_prop_plate_white: 1.7208, wc_prop_sign_candy: .8,
     wc_prop_fx_bubble: .9933, wc_prop_fx_heart: 1.1117, wc_prop_fx_feather: .555,
     wc_fg_pumpkin_pile: 1.3217, wc_fg_leaves_front: 1.2367, wc_fg_fence_candy: 1.9068, wc_fg_jar_shelf_front: .7133, wc_fg_web_corner: .995, wc_fg_roof_sil: 2.7439,
     /* 변신 컷 인물 큰 그림(post: 마젠타 오림, 이 작업에서 만든 webp) */
-    wc_cut_tf_strawberry: 1.0702, wc_cut_tf_duck: .8111, wc_cut_tf_fish: 1.0022, wc_cut_tf_frog: .8311, wc_cut_tf_pumpkin: .7589, wc_cut_tf_bat: 1.1984, wc_cut_tf_choco: .69, wc_cut_tf_ghost: .8867,
+    wc_cut_tf_strawberry: 1.0702, wc_cut_tf_duck: .8111, wc_cut_tf_fish: 1.0022, wc_cut_tf_frog: .8322, wc_cut_tf_kiwi: .7667, wc_cut_tf_croc: .8744, wc_cut_tf_pumpkin: .7589, wc_cut_tf_bat: 1.1984, wc_cut_tf_choco: .69, wc_cut_tf_ghost: .8867,
   };
   const ING = [   // 재료 12개(2026-10-29 구운 초록 대파 추가) (PLAN §4-1): id, 색 key, 이름. 호박 등(lantern)은 노란 호박 등 그림 wc_prop_ing_lantern
     { id: 'snot', key: 'r', name: '아기 용 콧물' }, { id: 'firetruck', key: 'r', name: '소방차' }, { id: 'ladybug', key: 'r', name: '무당벌레' },
@@ -77,35 +77,35 @@
     { id: 'frog', key: 'g', name: '개구리' }, { id: 'dino', key: 'g', name: '공룡' }, { id: 'leek', key: 'g', name: '구운 대파' },
   ];
   const ingF = id => 'wc_prop_ing_' + id;   // 호박 등 재료는 노란 호박 등(wc_prop_ing_lantern, 2026-10-29 사용자: 노랑 칸인데 주황이라 이상)
-  const CANDY = ['strawberry', 'duck', 'fish', 'frog', 'pumpkin', 'bat', 'choco', 'ghost'];
+  const CANDY = ['strawberry', 'duck', 'fish', 'frog', 'kiwi', 'croc', 'pumpkin', 'bat', 'choco', 'ghost'];
   /* 보는 쪽(그림을 눈으로 보고 정함, 2026-10-29). 정면은 방향을 못 바꾼다.
      PLAN §10-1 과 다른 것: 다현이 yuck 은 오른쪽(얼굴이 오른쪽으로 돌아 있음 → 왼쪽을 볼 때 뒤집음), point 오른쪽, 호박이 reach 는 왼쪽(엎드려 왼쪽으로 뻗음) */
   const NAT = { wc_kid_stand: 'right', wc_kid_walk: 'right', wc_kid_yuck: 'right', wc_kid_reach: 'left', wc_kid_point: 'right', wc_kid_yum: 'front', wc_kid_ghost: 'right', wc_kid_tf_strawberry: 'front', wc_kid_tf_strawberry_ball: 'front',
-    wc_kid_tf_duck: 'right', wc_kid_tf_fish: 'right', wc_kid_tf_frog_jump: 'right', wc_kid_tf_frog_sit: 'front', wc_kid_tf_pumpkin: 'front', wc_kid_tf_bat_up: 'right', wc_kid_tf_bat_down: 'right', wc_kid_tf_choco: 'front', wc_kid_tf_choco_flat: 'front',
+    wc_kid_tf_duck: 'right', wc_kid_tf_fish: 'right', wc_kid_tf_frog_jump: 'right', wc_kid_tf_frog_sit: 'front', wc_kid_tf_kiwi: 'front', wc_kid_tf_croc: 'right', wc_kid_tf_pumpkin: 'front', wc_kid_tf_bat_up: 'right', wc_kid_tf_bat_down: 'right', wc_kid_tf_choco: 'front', wc_kid_tf_choco_flat: 'front',
     wc_witch_stand: 'left', wc_witch_present: 'left', wc_witch_stir: 'right', wc_witch_surprise: 'front', wc_witch_giggle: 'left', wc_witch_ghost: 'right', wc_witch_magic: 'left', wc_ghost: 'left',
     wc_cat_sit: 'left', wc_cat_nose: 'left', wc_cat_reach: 'left', wc_cat_waddle: 'right', wc_cat_ghost: 'right' };
   ['rabbit', 'bear', 'fox'].forEach(w => { NAT[`wc_${w}_stand`] = 'right'; NAT[`wc_${w}_reach`] = 'left'; NAT[`wc_${w}_happy`] = 'front'; NAT[`wc_${w}_ghost`] = 'right'; });
 
-  const COL = { r: '#E04B3C', y: '#F2C94E', b: '#3A6FD8', blue: '#3A6FD8', teal: '#2A9D8F', g: '#6FB94A', orange: '#F28C28', green: '#6FB94A', purple: '#7A5AA6', brown: '#6B4A32', black: '#1A1410', water: '#D9E4EE' };
+  const COL = { r: '#E04B3C', y: '#F2C94E', b: '#3A6FD8', blue: '#3A6FD8', teal: '#2A9D8F', lime: '#A8CF45', g: '#6FB94A', orange: '#F28C28', green: '#6FB94A', purple: '#7A5AA6', brown: '#6B4A32', black: '#1A1410', water: '#D9E4EE' };
   const KO = { r: '빨강', y: '노랑', b: '파랑', g: '초록' };
   /* 결과표(PLAN §4-2): 들어간 색 집합 → 결과 */
   const RES = {
-    strawberry: { ko: '딸기', color: 'r', plate: COL.r }, duck: { ko: '오리', color: 'y', plate: COL.y }, fish: { ko: '물고기', color: 'b', plate: COL.b }, frog: { ko: '개구리', color: 'g', plate: COL.green },
+    strawberry: { ko: '딸기', color: 'r', plate: COL.r }, duck: { ko: '오리', color: 'y', plate: COL.y }, fish: { ko: '물고기', color: 'b', plate: COL.b }, frog: { ko: '개구리', color: 'teal', plate: COL.teal },
+    kiwi: { ko: '키위', color: 'lime', plate: COL.lime }, croc: { ko: '악어', color: 'green', plate: COL.green },   // 2026-10-30 사용자: 연두 = 키위, 초록 = 악어, 청록 = 개구리
     pumpkin: { ko: '호박', color: 'orange', plate: COL.orange }, bat: { ko: '박쥐', color: 'purple', plate: COL.purple }, choco: { ko: '초콜릿', color: 'brown', plate: COL.brown },
   };
   const PAIRS = [['r', 'y'], ['y', 'b'], ['r', 'b'], ['r', 'g'], ['g', 'y'], ['g', 'b']];      // 질문 문장 속 순서 (빨노·노파·빨파·빨초·초노·초파)
-  const MIX_RES = { ry: ['pumpkin', 'orange'], rb: ['bat', 'purple'], rg: ['choco', 'brown'], yb: ['frog', 'green'], gy: ['frog', 'green'], gb: ['frog', 'green'] };
+  const MIX_RES = { ry: ['pumpkin', 'orange'], rb: ['bat', 'purple'], rg: ['choco', 'brown'], yb: ['croc', 'green'], gy: ['kiwi', 'lime'], gb: ['frog', 'teal'] };
   const SORT = k => [...k].sort().join('');
   const MIXKEY = { ry: 'ry', yr: 'ry', br: 'rb', rb: 'rb', gr: 'rg', rg: 'rg', by: 'yb', yb: 'yb', gy: 'gy', yg: 'gy', bg: 'gb', gb: 'gb' };
   function resultOf(kinds) {
     const ks = [...kinds];
-    if (ks.length === 1) { const k = ks[0]; return { res: { r: 'strawberry', y: 'duck', b: 'fish', g: 'frog' }[k], color: k, single: k }; }
+    if (ks.length === 1) { const k = ks[0]; return { res: { r: 'strawberry', y: 'duck', b: 'fish', g: 'croc' }[k], color: k, single: k }; }
     const key = MIXKEY[ks.join('')], pair = PAIRS.find(p => p.every(x => kinds.has(x)));
-    if (key === 'gb') return { res: Math.random() < .5 ? 'fish' : 'frog', color: 'teal', pair };   // 파랑+초록은 청록(2026-10-29 사용자) — 사탕은 물고기·개구리 무작위
     const m = MIX_RES[key]; return { res: m[0], color: m[1], pair };
   }
-  const COLOR_KO = { orange: '주황', green: '초록', purple: '보라', brown: '갈색', blue: '파란', teal: '청록' };
-  const comboFor = res => ({ strawberry: [['r']], duck: [['y']], fish: [['b']], frog: [['g'], ['g', 'y'], ['g', 'b'], ['y', 'b']], pumpkin: [['r', 'y']], bat: [['r', 'b']], choco: [['r', 'g']] }[res]);
+  const COLOR_KO = { orange: '주황', green: '초록', purple: '보라', brown: '갈색', teal: '청록', lime: '연두' };
+  const comboFor = res => ({ strawberry: [['r']], duck: [['y']], fish: [['b']], frog: [['g', 'b']], kiwi: [['g', 'y']], croc: [['g'], ['y', 'b']], pumpkin: [['r', 'y']], bat: [['r', 'b']], choco: [['r', 'g']] }[res]);
 
   /* ---------- 대사 (PLAN §5·§7 문장 그대로) ---------- */
   const S = {
@@ -122,9 +122,9 @@
     H1: "어? 입이 까매졌다! 유령 사탕이다~", H2: "오~~우~~", H3: "히히, 나도!", H4: "마녀도, 호박이도, 친구들도 까만 입술로…", H5: "유령 흉내를 내며 마을을 한 바퀴 돌았어요. 하나도 안 무서워요, 다 웃고 있거든요.",
     I1: "자, 약속! 남은 사탕 다 나와라!", I2: "솥에서 사탕이 퐁퐁퐁 쏟아졌어요. 모두 하나씩… 마녀는 두 개!", I3: "히히, 나는 두 개!", I4: "으웩!… 어? 맛있다!", I5: "뿅, 뿅, 뿅! 딸기, 개구리, 오리, 박쥐, 물고기, 호박… 다 같이 변신!",
     I6: "뿅! 모두 원래대로.", I7: "다현이 덕분에 사탕이 가득! 내년에도 같이 섞자.", I8: "네! 다음엔 다른 색으로요!", I9: "사탕 마녀를 톡 눌러 인사해요.", I10: "해피 핼러윈! 오~우~!",
-    NTF: { strawberry: "뿅! 다현이가 빨간 딸기가 됐어요!", duck: "뿅! 다현이 발이 오리발이 됐어요!", fish: "뿅! 다현이한테 물고기 꼬리가 생겼어요!", frog: "뿅! 다현이가 초록 개구리가 됐어요!", pumpkin: "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!", bat: "뿅! 다현이 등에 박쥐 날개가 돋았어요!", choco: "뿅! 다현이 입에 초콜릿 수염이 났어요!" },
-    KTF: { strawberry: "데굴데굴, 멈춰 줘요~!", duck: "꽥꽥… 어? 내 발이!", fish: "하늘에서 수영이다!", frog: "개굴! 지붕까지 폴짝!", pumpkin: "내 배가 등불이 됐어!", bat: "파닥파닥, 달님 안녕!", choco: "주르륵… 나 녹아요~" },
-    NACT: { strawberry: "길을 데굴데굴 굴러가다 호박 등에 통!", duck: "뒤뚱뒤뚱, 호박이도 뒤뚱뒤뚱.", fish: "보름달 둘레를 보글보글 헤엄쳤어요.", frog: "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.", pumpkin: "깜깜한 길이 다현이 덕분에 환해졌어요.", bat: "박쥐 친구들이랑 달 앞을 빙글 돌았어요.", choco: "납작해졌다가… 뿅!" },
+    NTF: { strawberry: "뿅! 다현이가 빨간 딸기가 됐어요!", duck: "뿅! 다현이 발이 오리발이 됐어요!", fish: "뿅! 다현이한테 물고기 꼬리가 생겼어요!", frog: "뿅! 다현이가 청록 개구리가 됐어요!", kiwi: "뿅! 다현이가 동그란 연두 키위가 됐어요!", croc: "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!", pumpkin: "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!", bat: "뿅! 다현이 등에 박쥐 날개가 돋았어요!", choco: "뿅! 다현이 입에 초콜릿 수염이 났어요!" },
+    KTF: { strawberry: "데굴데굴, 멈춰 줘요~!", duck: "꽥꽥… 어? 내 발이!", fish: "하늘에서 수영이다!", frog: "개굴! 지붕까지 폴짝!", kiwi: "보송보송… 간지러워! 히히!", croc: "앙! 앙! 나는 악어다!", pumpkin: "내 배가 등불이 됐어!", bat: "파닥파닥, 달님 안녕!", choco: "주르륵… 나 녹아요~" },
+    NACT: { strawberry: "길을 데굴데굴 굴러가다 호박 등에 통!", duck: "뒤뚱뒤뚱, 호박이도 뒤뚱뒤뚱.", fish: "보름달 둘레를 보글보글 헤엄쳤어요.", frog: "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.", kiwi: "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.", croc: "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.", pumpkin: "깜깜한 길이 다현이 덕분에 환해졌어요.", bat: "박쥐 친구들이랑 달 앞을 빙글 돌았어요.", choco: "납작해졌다가… 뿅!" },
   };
   const eum = w => ((w.charCodeAt(w.length - 1) - 0xAC00) % 28 ? '이에요' : '예요');
 
@@ -138,7 +138,7 @@
     const ch = /^wc_(kid|witch|cat|rabbit|bear|fox)_(.+)$/.exec(f);
     if (ch) {
       const [, who, pose] = ch, r = Math.min(h * .21, w * .26), tf = /^tf_/.test(pose);
-      const body = tf ? (/strawberry/.test(pose) ? '#E04B3C' : /duck/.test(pose) ? '#F2C94E' : /fish/.test(pose) ? '#3A6FD8' : /frog/.test(pose) ? '#6FB94A' : /pumpkin/.test(pose) ? '#F28C28' : /bat/.test(pose) ? '#7A5AA6' : '#6B4A32') : who === 'kid' ? '#5A3F7A' : WHOCOL[who];
+      const body = tf ? (/strawberry/.test(pose) ? '#E04B3C' : /duck/.test(pose) ? '#F2C94E' : /fish/.test(pose) ? '#3A6FD8' : /frog/.test(pose) ? '#2A9D8F' : /kiwi/.test(pose) ? '#A8CF45' : /croc/.test(pose) ? '#6FB94A' : /pumpkin/.test(pose) ? '#F28C28' : /bat/.test(pose) ? '#7A5AA6' : '#6B4A32') : who === 'kid' ? '#5A3F7A' : WHOCOL[who];
       T.el('rect', { x: w * .2, y: 2 * r - 4, width: w * .6, height: h - 2 * r + 4, rx: 10, fill: body }, g);
       T.el('circle', { cx: w / 2, cy: r + 2, r, fill: WHOCOL[who] }, g);
       if (who === 'witch') T.el('path', { d: `M${w / 2 - r * 1.2} ${r * .4} L${w / 2} ${-r * .6} L${w / 2 + r * 1.2} ${r * .4}Z`, fill: '#5A3F7A' }, g);
@@ -150,7 +150,7 @@
     const nm = nameOf(f);
     let m;
     if ((m = /^wc_prop_ing_(.+)$/.exec(f))) { const it = ING.find(i => i.id === m[1]); T.el('rect', { width: w, height: h, rx: 10, fill: COL[it.key] }, g); label(it.name, w / 2, h / 2 + 4, 10, it.key === 'y' ? INK : CREAM); return g; }
-    if ((m = /^wc_prop_candy_(.+)$/.exec(f))) { const c = { strawberry: '#E04B3C', duck: '#F2C94E', fish: '#3A6FD8', frog: '#6FB94A', pumpkin: '#F28C28', bat: '#7A5AA6', choco: '#6B4A32', ghost: '#1A1410' }[m[1]]; T.el('circle', { cx: w / 2, cy: h / 2, r: Math.min(w, h) / 2, fill: c }, g); T.el('circle', { cx: w * .38, cy: h * .35, r: Math.min(w, h) * .08, fill: '#FBF3D5' }, g); label((WORD[m[1]] || m[1]) + ' 사탕', w / 2, h + 12, 11, CREAM); return g; }
+    if ((m = /^wc_prop_candy_(.+)$/.exec(f))) { const c = { strawberry: '#E04B3C', duck: '#F2C94E', fish: '#3A6FD8', frog: '#2A9D8F', kiwi: '#A8CF45', croc: '#6FB94A', pumpkin: '#F28C28', bat: '#7A5AA6', choco: '#6B4A32', ghost: '#1A1410' }[m[1]]; T.el('circle', { cx: w / 2, cy: h / 2, r: Math.min(w, h) / 2, fill: c }, g); T.el('circle', { cx: w * .38, cy: h * .35, r: Math.min(w, h) * .08, fill: '#FBF3D5' }, g); label((WORD[m[1]] || m[1]) + ' 사탕', w / 2, h + 12, 11, CREAM); return g; }
     if ((m = /^wc_prop_sample_(.+)$/.exec(f))) { T.el('circle', { cx: w / 2, cy: h / 2, r: Math.min(w, h) / 2, fill: COL[m[1]] }, g); return g; }
     switch (f) {
       case 'wc_prop_firewood': T.el('rect', { x: 0, y: h * .3, width: w, height: h * .7, rx: 6, fill: '#6B4A32' }, g); label('장작', w / 2, h * .8, 12, CREAM); break;
@@ -696,7 +696,7 @@
       const st = stepTimer(); cue(['theremin_wobble', 'whistle_wobble'], .35);
       await Promise.all(list.map((a, i) => a.move(Math.min(a.x + (P ? 120 : 380), 960), a.y, ms, 'linear'))); st();
     }
-    const TFPOSE = { strawberry: 'tf_strawberry', duck: 'tf_duck', fish: 'tf_fish', frog: 'tf_frog_jump', pumpkin: 'tf_pumpkin', bat: 'tf_bat_up', choco: 'tf_choco', none: 'stand' };
+    const TFPOSE = { strawberry: 'tf_strawberry', duck: 'tf_duck', fish: 'tf_fish', frog: 'tf_frog_jump', kiwi: 'tf_kiwi', croc: 'tf_croc', pumpkin: 'tf_pumpkin', bat: 'tf_bat_up', choco: 'tf_choco', none: 'stand' };
     /* 변신 동작 한 바퀴(PLAN §4-2). short 는 4~5초. 한 동사 8초 제한 안에 끝낸다 */
     async function tfMotion(res, short) {
       const ms = short ? 3600 : 6200, x0 = kid.x, y0 = kid.y, run = Math.min(P ? 90 : 260, 960 - x0);
@@ -718,6 +718,14 @@
         kid.look('tf_frog_jump', 'right'); cue('animals/frog', .7);
         for (let i = 0; i < 3; i++) { cue('spring', .5) || cue('hop', .5); await kid.move(x0 + (i + 1) * (run / 3), FL - (i + 1) * 50, 400, 'ease-out'); cue('thud', .3); }
         kid.look('tf_frog_sit', 'front'); kid.hop(10, 300); await sleep(short ? 500 : 1200); kid.look('tf_frog_jump', 'right'); await kid.move(x0, y0, 500, 'ease-in');
+      } else if (res === 'kiwi') {
+        kid.look('tf_kiwi', 'front'); cue('giggle_xylo', .5);
+        for (let i = 0; i < 4; i++) { cue('boing', .5) || cue('hop', .5); await kid.move(x0 + (i + 1) * (run / 4), FL - 70, 260, 'ease-out'); await kid.move(kid.x, y0, 260, 'ease-in'); }
+        await kid.move(x0, y0, 500, 'ease-in-out');
+      } else if (res === 'croc') {
+        kid.look('tf_croc', 'right'); const cr = kid.body.animate([{ transform: 'rotate(-3deg)' }, { transform: 'rotate(3deg)' }], { duration: 380, iterations: Infinity, direction: 'alternate' });
+        const st = stepTimer(); await kid.move(x0 + run * .7, y0, ms * .6, 'linear'); st(); cr.cancel();
+        cue('chomp', .7); T.pop(kid.x + 40, FL - 160, tr('앙!'), '#3F6B4F'); if (shown(cat)) cat.hop(30, 360); await sleep(700); await kid.move(x0, y0, 600, 'ease-in-out');
       } else if (res === 'pumpkin') {
         kid.look('tf_pumpkin', 'front'); cue('shimmer', .6);
         const gl = glow(T, T.world, kid.x, FL - 90, 190); T.world.insertBefore(gl, kid.pos); gl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 800, fill: 'forwards' });
@@ -727,7 +735,7 @@
       }
     }
     const COLK = { red: 'r', yellow: 'y', blue: 'b', green: 'g' };
-    const PLATE = { red: COL.r, yellow: COL.y, blue: COL.b, green: COL.green, orange: COL.orange, purple: COL.purple, brown: COL.brown, black: COL.black };
+    const PLATE = { red: COL.r, yellow: COL.y, blue: COL.b, green: COL.green, teal: COL.teal, lime: COL.lime, orange: COL.orange, purple: COL.purple, brown: COL.brown, black: COL.black };
     const cellOf = id => { const c = K.cells.find(x => x.id === id); const t = rs.tab[id]; return t ? { ...c, cx: t[0], cy: t[1] } : c; };
     const READ_ACTS = {
       set(bg) {
@@ -823,7 +831,7 @@
         if (cmd === 'pour') {
           if (inst() || !K) return null;
           cue('magic_wand', .5);
-          for (let i = 0; i < 7; i++) { const a = candyProp(T, CANDY[i], 56); put(T, a, POT.cx, POT.cy); const tx = POT.cx - 150 + i * 50, ty = FL + 10 - (i % 3) * 8; a.pos.animate([{ transform: `translate(${POT.cx}px,${POT.cy}px)` }, { transform: `translate(${(POT.cx + tx) / 2}px,${POT.cy - 150}px)`, offset: .5 }, { transform: `translate(${tx}px,${ty}px)` }], { duration: 700, delay: i * 110, fill: 'forwards', easing: 'ease-in' }); setTimeout(() => cue('pop', .5), i * 110 + 400); }
+          for (let i = 0; i < 9; i++) { const a = candyProp(T, CANDY[i], 56); put(T, a, POT.cx, POT.cy); const tx = POT.cx - 160 + i * 40, ty = FL + 10 - (i % 3) * 8; a.pos.animate([{ transform: `translate(${POT.cx}px,${POT.cy}px)` }, { transform: `translate(${(POT.cx + tx) / 2}px,${POT.cy - 150}px)`, offset: .5 }, { transform: `translate(${tx}px,${ty}px)` }], { duration: 700, delay: i * 110, fill: 'forwards', easing: 'ease-in' }); setTimeout(() => cue('pop', .5), i * 110 + 400); }
           cue('rattle', .5); return sleep(1500);
         }
         return null;
@@ -842,7 +850,7 @@
     /* kid:tf:<변신|none> (자세 교체 + 반짝) · kid:act:<변신>[:short] (동작 한 바퀴) 는 kid 동사에 이어 붙인다 */
     const kidBase = READ_ACTS.kid;
     READ_ACTS.kid = (cmd, a, b) => {
-      if (cmd === 'tf') { kid.look(TFPOSE[a] || 'stand', /pumpkin|strawberry$|choco|frog_sit/.test(TFPOSE[a] || '') ? 'front' : 'right'); kid.pos.style.opacity = ''; if (!inst() && a !== 'none') { cue('slide_up', .5); cue('chime_up', .5); T.pop(kid.x, FL - 220, tr('뿅!'), '#F28C28'); return sleep(500); } if (!inst() && a === 'none') { cue('slide_up', .5); cue('sparkle', .6); return sleep(300); } return null; }
+      if (cmd === 'tf') { kid.look(TFPOSE[a] || 'stand', /pumpkin|strawberry$|choco|frog_sit|kiwi/.test(TFPOSE[a] || '') ? 'front' : 'right'); kid.pos.style.opacity = ''; if (!inst() && a !== 'none') { cue('slide_up', .5); cue('chime_up', .5); T.pop(kid.x, FL - 220, tr('뿅!'), '#F28C28'); return sleep(500); } if (!inst() && a === 'none') { cue('slide_up', .5); cue('sparkle', .6); return sleep(300); } return null; }
       if (cmd === 'act') return inst() ? null : tfMotion(a, b === 'short');
       if (cmd === 'march') { kid.look('ghost', 'right'); if (!inst()) { kid.hop(10, 300); cue(['theremin_wobble', 'whistle_wobble'], .4); } return null; }
       return kidBase(cmd, a, b);
@@ -994,7 +1002,7 @@
       stopStir();
       witch.look('surprise', 'front');
       const clearSmoke = await smoke();
-      potFlat(rs.color === 'teal' ? COL.teal : RES[rs.res].plate, false);
+      potFlat(COL[rs.color] || RES[rs.res].plate, false);
       const cand = candyPop(rs.res);
       clearSmoke(); K.bub && K.bub.remove(); bubbles();
       await say(S.E2);
@@ -1074,6 +1082,20 @@
         for (let i = 0; i < 3; i++) { cue('spring', .5) || cue('hop', .5); await kid.move(x1 + 60 + (i + 1) * X(110, 60), FL - (i + 1) * 60, 450, 'ease-out'); cue('thud', .3); }
         kid.look('tf_frog_sit', 'front'); cue('animals/frog', .6); kid.hop(10, 300); await sleep(act / 2);
         kid.look('tf_frog_jump', 'left'); await kid.move(x1 + 60, FL, 600, 'ease-in'); kid.look('tf_frog_jump', 'right'); await L;
+      } else if (res === 'kiwi') {   // 동그란 연두 키위: 거리를 통통 튀어 간다
+        await out('wc_bg_street', () => { friendsWatch(); put(T, kid, x1, FL, { look: 'tf_kiwi', to: 'right' }); });
+        cue('pop', .7); const L = lines(); cue('giggle_xylo', .5);
+        const n = long ? 6 : 4, step = (x2 - 120 - x1) / n, hop = act / n;
+        for (let i = 0; i < n; i++) { cue('boing', .5) || cue('hop', .5); await kid.move(x1 + (i + .5) * step, FL - 90, hop / 2, 'ease-out'); await kid.move(x1 + (i + 1) * step, FL, hop / 2, 'ease-in'); cue('thud', .3); }
+        await kid.move(x1 + 100, FL, 900, 'ease-in-out'); await L;
+      } else if (res === 'croc') {   // 초록 악어 꼬리: 엉금엉금 기어가다 앙! 호박이 깜짝
+        await out('wc_bg_shop_front', () => { friendsWatch(); put(T, kid, X(360, 380), FL, { look: 'tf_croc', to: 'right' }); put(T, cat, X(640, 560), FL, { look: 'sit', to: 'left' }); });
+        cue('pop', .7); const L = lines();
+        const cr = kid.body.animate([{ transform: 'rotate(-3deg)' }, { transform: 'rotate(3deg)' }], { duration: 380, iterations: Infinity, direction: 'alternate' });
+        const st = setInterval(() => cue('step_wood', .25), 500); rs.stops.push(() => clearInterval(st));
+        await kid.move(X(540, 470), FL, act * .6, 'linear'); clearInterval(st); cr.cancel();
+        cue('chomp', .8); T.pop(kid.x + 40, FL - 170, tr('앙!'), '#3F6B4F'); cat.hop(36, 380); cue('whistle_up', .5);
+        await sleep(act * .3); await L;
       } else if (res === 'pumpkin') {
         await out('wc_bg_shop_front', () => { friendsWatch(); put(T, kid, X(450, 400), FL, { look: 'tf_pumpkin', to: 'right' });
           const dark = T.el('rect', { x: -40, y: -24, width: 1080, height: 620, fill: '#141B3D', opacity: .4, 'pointer-events': 'none' }, T.bg);
@@ -1181,7 +1203,7 @@
     });
     cue('magic_wand', .5); witch.look('present', 'left'); await say(S.I1);
     const pile = [];
-    for (let i = 0; i < 7; i++) { const c = CANDY[i], a = candyProp(T, c, 56); put(T, a, POT.cx, POT.cy); const tx = POT.cx - 150 + i * 50 + (i % 2) * 8, ty = FL + 10 - (i % 3) * 8; a.pos.animate([{ transform: `translate(${POT.cx}px,${POT.cy}px)` }, { transform: `translate(${(POT.cx + tx) / 2}px,${POT.cy - 150}px)`, offset: .5 }, { transform: `translate(${tx}px,${ty}px)` }], { duration: 700, delay: i * 110, fill: 'forwards', easing: 'ease-in' }); setTimeout(() => cue('pop', .5), i * 110 + 400); pile.push(a); }
+    for (let i = 0; i < 9; i++) { const c = CANDY[i], a = candyProp(T, c, 56); put(T, a, POT.cx, POT.cy); const tx = POT.cx - 160 + i * 40 + (i % 2) * 6, ty = FL + 10 - (i % 3) * 8; a.pos.animate([{ transform: `translate(${POT.cx}px,${POT.cy}px)` }, { transform: `translate(${(POT.cx + tx) / 2}px,${POT.cy - 150}px)`, offset: .5 }, { transform: `translate(${tx}px,${ty}px)` }], { duration: 700, delay: i * 110, fill: 'forwards', easing: 'ease-in' }); setTimeout(() => cue('pop', .5), i * 110 + 400); pile.push(a); }
     cue('rattle', .5);
     await say(S.I2);
     witch.look('giggle', 'left'); await say(S.I3);
