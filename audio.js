@@ -588,30 +588,10 @@ const AudioFX = (() => {
   return api;
 })();
 
-/* ===== 내레이션 (TTS + 말풍선) ===== */
+/* ===== 내레이션 (녹음 + 말풍선) ===== */
 const Narrator = (() => {
   const bubble = () => document.getElementById('bubble');
   const bubbleText = () => document.getElementById('bubbleText');
-  let koVoice = null;
-  let voicesReady = false;
-
-  function pickVoice() {
-    if (!('speechSynthesis' in window)) return;
-    const vs = speechSynthesis.getVoices();
-    if (vs.length) voicesReady = true;
-    // 품질 좋은 음성 우선: 애플 유나 > 신경망/자연어 계열 > 네트워크 음성 > 나머지
-    const ko = vs.filter(v => v.lang && v.lang.toLowerCase().startsWith('ko'));
-    const rank = v =>
-      (/yuna|유나/i.test(v.name) ? 4 : 0) +
-      (/natural|neural|sunhi|injoon|premium|enhanced/i.test(v.name) ? 3 : 0) +
-      (/google/i.test(v.name) ? 2 : 0) +
-      (v.localService ? 0 : 1);
-    koVoice = ko.sort((a, b) => rank(b) - rank(a))[0] || null;
-  }
-  if ('speechSynthesis' in window) {
-    pickVoice();
-    speechSynthesis.onvoiceschanged = pickVoice;
-  }
 
   /* 보호자 메뉴에서 대사 자막을 껐으면 글 상자를 띄우지 않는다 (목소리는 그대로) */
   const captionsOff = () => { try { return localStorage.getItem('captions_off') === '1'; } catch (e) { return false; } };
@@ -628,7 +608,7 @@ const Narrator = (() => {
 
   function hideBubble() { bubble().hidden = true; }
 
-  /* 말하기: ① 사전 녹음 신경망 음성 → ② 브라우저 TTS → ③ 말풍선만 (순서대로 폴백)
+  /* 말하기: ① 사전 녹음 신경망 음성 → ② 말풍선만(녹음이 없거나 실패하면 소리 없이)
      세대 카운터로, 뒤이어 시작된 내레이션의 말풍선을 앞선 호출이 지우지 못하게 한다 */
   let speakGen = 0;
 
@@ -663,46 +643,24 @@ const Narrator = (() => {
         return;
       } catch (e) {
         if (recordedOnly) { if (!keep && gen === speakGen) hideBubble(); throw e; }
-        /* 클립 실패 → 브라우저 TTS 폴백 */
+        /* 클립 실패 → 말풍선만 */
       }
     }
     if (recordedOnly) { if (!keep && gen === speakGen) hideBubble(); return; }
-    return speakTTS(en ? en.t : text, keep, gen, !!en);
+    return speakTTS(en ? en.t : text, keep, gen);
   }
 
-  function speakTTS(text, keep, gen, english) {
+  /* 녹음이 없는 문장: 기계 목소리(브라우저 TTS)로 읽지 않고 말없이 넘어간다(2026-10-29 사용자 결정: 'TTS 할 거면 아예 말을 하지 마').
+     말풍선만 읽을 만큼 띄웠다가 닫아서 이야기 속도는 그대로 둔다 */
+  function speakTTS(text, keep, gen) {
     return new Promise(resolve => {
-      const fallbackMs = Math.min(9000, text.length * 145 + 900);
-      let done = false;
-      const finish = () => {
-        if (done) return;
-        done = true;
-        if (!keep && gen === speakGen) hideBubble();
-        resolve();
-      };
-      if ('speechSynthesis' in window && (voicesReady || speechSynthesis.getVoices().length)) {
-        if (!koVoice) pickVoice();
-        try { speechSynthesis.cancel(); } catch (e) { /* 무시 */ }
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = english ? 'en-US' : 'ko-KR';
-        if (koVoice && !english) u.voice = koVoice;
-        u.rate = 0.95;
-        u.pitch = 1.1;
-        u.onend = finish;
-        u.onerror = finish;
-        speechSynthesis.speak(u);
-        // TTS가 멈추는 경우 대비 안전 타이머
-        setTimeout(finish, fallbackMs * 2.2);
-      } else {
-        setTimeout(finish, fallbackMs);
-      }
+      setTimeout(() => { if (!keep && gen === speakGen) hideBubble(); resolve(); }, Math.min(9000, text.length * 145 + 900));
     });
   }
 
   function stop() {
     speakGen++; // 진행 중인 speak 루프가 다음 세그먼트로 넘어가지 않게 무효화
     AudioFX.stopNarration();
-    if ('speechSynthesis' in window) { try { speechSynthesis.cancel(); } catch (e) { /* 무시 */ } }
     hideBubble();
   }
 
