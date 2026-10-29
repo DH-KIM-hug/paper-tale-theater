@@ -14,6 +14,9 @@ def key_magenta(src, dst, pad=12):
     r, g, b = a[..., 0], a[..., 1], a[..., 2]
     m = np.minimum(r, b) - g
     alpha = np.clip((70 - m) * 255 / 40, 0, 255)  # m>=70 완전 투명, m<=30 불투명, 사이는 부드럽게
+    # 보라·자주 종이(#7B4F8C 는 m≈44)가 반투명해지지 않게: 진짜 배경(m>=150) 둘레 4px 안에서만 지운다(2026-10-29 사용자: 보라가 반투명)
+    core = Image.fromarray(((m >= 150) * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(9))
+    alpha = np.where(np.asarray(core) > 0, alpha, 255)
     # 가장자리 마젠타 번짐 빼기: 빨강·파랑을 초록 쪽으로 당긴다
     spill = (m > 10) & (alpha > 0)
     out = a.copy()

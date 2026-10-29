@@ -5,7 +5,7 @@
  "title": "사탕 마녀의 핼러윈",
  "voices_from": "voice_script_el.json",
  "moral": "",
- "notes": "읽어 주기 대본(docs/READ_MODE.md). 창작 동화 「사탕 마녀의 핼러윈」(PLAN.md, 2026-10-28). 놀이판 9장(4·5·6장 회전 블록) → 읽기: 공통 6장면(1·2·3·7·8·9) + 회전 블록 장면(4·5 합침 + 6) × 결과 7벌 × 2회전. 회전 구조(PLAN §13): scenes[] 에 round(1|2)·variant(strawberry|duck|fish|frog|pumpkin|bat|choco) 가 붙은 장면은 그 회전에 뽑힌 결과일 때만 재생한다. rounds=2 고정, 회전마다 아직 안 나온 결과에서 무작위(중복 없이), ?mix=<variant>[,<variant>] 로 고정. 엔진 변경 필요: readPlay 시작 때 variant 가 있는 장면들을 회전별로 하나씩 고르는 필터(아래 variants 항목 참고) — 지금 readPlay 는 scenes 를 전부 차례로 돈다. 조작을 뺀 자리: 2장 장작 톡 → \"다현이가 장작에 불씨를 톡 올렸어요.\"(new), 4장 자유 넣기 → 결과별 재료 묘사 \"다현이는 ○○이랑 ○○를 솥에 넣었어요. 소리, 소리!\"(new 7벌, 열한 재료가 한 번씩은 나오게 짝지음) + \"하나, 둘! 솥 물이 빙글빙글…\"(new), 5장 색 고르기 → 마녀 질문(reuse) + 다현이 대답 \"음… ○○!\"(new 4벌) + 마녀 \"맞아요, ○○!\"(reuse), 사탕 먹기 → \"다현이는 눈을 꼭 감고…\"(new), 7장 재료 톡 → \"다현이가 하나, 토끼랑 곰이랑 여우가 하나씩…\"(new), 9장 인사 톡 → \"다현이가 사탕 마녀 손을 잡고 폴짝 뛰었어요.\"(new). 조작 안내 문장·오답 줄·숫자 클립 없음. 2회전은 PLAN §5-2 대로 짧게(마녀 \"이번엔 다른 색으로 해 볼까?\" + 솥 물 쏴아, \"먼저 먹어 봐\"·으웩 없음, 사탕 이름은 \"냠… ○○ 사탕이다!\", 변신은 내레이션 변신 줄 + 다현이 대사 + 뿅 원래대로만). 2회전 장면 카드는 \"다른 색으로\"·\"한 번 더!\"(카드 없이 잇고 싶으면 엔진에서 round≥2 카드 생략). \"콧물로 만든 건데… 으웩…\"은 콧물이 들어간 결과(딸기·호박)의 1회전에만. 합창(우와·뽀글뽀글·나도·나도 하고 싶다·까맣다·으웩 맛있다·오~~우~~·해피 핼러윈)은 voice_script extra 의 배역별 녹음을 mix_chorus_el.py 로 겹친 것을 그대로 쓴다(src: chorus, simultaneous). 다현이 혼자 \"오~~우~~\"는 voice: ghost_kid(VOICE_LINES)로 — 합창과 글자가 같아 NARRATION_CLIPS 키가 겹치므로 엔진/코드가 voice 키를 우선 재생해야 한다. src: reuse = 놀이판 줄·녹음 그대로, new = 새 문장(녹음 필요, 내레이터 15 + 다현이 4). 새 문장은 장면마다 의성어·의태어 2개 이상. 교훈 없음(moral 비움). 제목 「사탕 마녀의 핼러윈」(2026-10-28 사용자 확정).",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md). 창작 동화 「사탕 마녀의 핼러윈」(PLAN.md, 2026-10-28). 놀이판 9장(4·5·6장 회전 블록) → 읽기: 공통 6장면(1·2·3·7·8·9) + 회전 블록 장면(4·5 합침 + 6) × 결과 7벌 × 2회전. 회전 구조(PLAN §13): scenes[] 에 round(1|2)·variant(strawberry|duck|fish|frog|pumpkin|bat|choco) 가 붙은 장면은 그 회전에 뽑힌 결과일 때만 재생한다. rounds=2 고정, 회전마다 아직 안 나온 결과에서 무작위(중복 없이), ?mix=<variant>[,<variant>] 로 고정. 엔진 변경 필요: readPlay 시작 때 variant 가 있는 장면들을 회전별로 하나씩 고르는 필터(아래 variants 항목 참고) — 지금 readPlay 는 scenes 를 전부 차례로 돈다. 조작을 뺀 자리: 2장 장작 톡 → \"다현이가 장작에 불씨를 톡 올렸어요.\"(new), 4장 자유 넣기 → 결과별 재료 묘사 \"다현이는 ○○이랑 ○○를 솥에 넣었어요. 소리, 소리!\"(new 7벌, 열한 재료가 한 번씩은 나오게 짝지음) + \"하나, 둘! 솥 물이 빙글빙글…\"(new), 5장 색 고르기 → 마녀 질문(reuse) + 다현이 대답 \"음… ○○!\"(new 4벌) + 마녀 \"맞아요, ○○!\"(reuse), 사탕 먹기 → \"다현이는 눈을 꼭 감고…\"(new), 7장 재료 톡 → \"다현이가 하나, 토끼랑 곰이랑 여우가 하나씩…\"(new), 9장 인사 톡 → \"다현이가 사탕 마녀 손을 잡고 폴짝 뛰었어요.\"(new). 조작 안내 문장·오답 줄·숫자 클립 없음. 2회전은 PLAN §5-2 대로 짧게(마녀 \"이번엔 다른 색으로 해 볼까?\" + 솥 물 쏴아, \"먼저 먹어 봐\"·으웩 없음, 사탕 이름은 \"냠… ○○ 사탕이다!\", 변신은 내레이션 변신 줄 + 다현이 대사 + 뿅 원래대로만). 2회전 장면 카드는 \"다른 색으로\"·\"한 번 더!\"(카드 없이 잇고 싶으면 엔진에서 round≥2 카드 생략). \"콧물로 만든 건데… 으웩…\"은 콧물이 들어간 결과(딸기·호박)의 1회전에만. 합창(우와·뽀글뽀글·나도·나도 하고 싶다·까맣다·으웩 맛있다·오~~우~~·해피 핼러윈)은 voice_script extra 의 배역별 녹음을 mix_chorus_el.py 로 겹친 것을 그대로 쓴다(src: chorus, simultaneous). 다현이 혼자 \"오~~우~~\"는 voice: ghost_kid(VOICE_LINES)로 — 합창과 글자가 같아 NARRATION_CLIPS 키가 겹치므로 엔진/코드가 voice 키를 우선 재생해야 한다. src: reuse = 놀이판 줄·녹음 그대로, new = 새 문장(녹음 필요, 내레이터 15 + 다현이 4). 새 문장은 장면마다 의성어·의태어 2개 이상. 교훈 없음(moral 비움). 제목 「사탕 마녀의 핼러윈」(2026-10-28 사용자 확정). 【2026-10-29 바뀜】 5장 색 질문·다현이 대답·\"맞아요\"·\"○만 넣었으니… 그대로\" 줄을 빼고, 젓기 줄 뒤에 바로 pot:pop → \"펑!\" → 결과 알림 줄(nar, new: \"○이랑 ○을 섞었더니 ○색이 됐어요!\" / \"○만 넣었더니 ○ ○ 사탕이 됐어요!\")을 넣었다. 친구들 합창 줄(우와·뽀글뽀글·나도·나도 하고 싶다·까맣다·으웩 맛있다)은 뺐다(통통 뛰기 동사는 앞 줄로 옮김). 같은 배경 장면은 넘김 없이 이어 간다(witch_candy.js RW.sceneCard). 【2026-10-29 대사 검토】 3장 재료 설명(빨간 건…/파란 건…)과 \"으엑! 콧물이랑 응가요?\"를 뺐다. 4장 넣기 줄 뒤에 콧물·응가를 넣은 판만 다현이 \"으엑! 콧물이요?\"/\"으엑! 응가요?\"(둘 다면 \"콧물이랑 응가요?\"). 마녀 첫인사는 모자 문장을 잘랐다(hat_pop → hop). \"네, 내가 할래요!\" → \"네, 제가 할게요!\".",
  "rounds": 2,
  "variants": {
   "keys": [
@@ -94,32 +94,8 @@
      "src": "reuse",
      "before": [
       "kid:hop"
-     ]
-    },
-    {
-     "text": "우와!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "우와!",
-       "toneup",
-       "[amazed, bright, together]"
-      ],
-      [
-       "bear",
-       "우와!",
-       "toneup",
-       "[amazed, bright, together]"
-      ],
-      [
-       "fox",
-       "우와!",
-       "toneup",
-       "[amazed, bright, together]"
-      ]
-     ]
+     ],
+     "after": []
     },
     {
      "text": "거리 끝 사탕 가게 창이 환하게 켜졌어요.",
@@ -137,11 +113,11 @@
      ]
     },
     {
-     "text": "어서 와, 친구들! 나는 사탕 마녀야. 어머, 모자가 또 거꾸로네.",
+     "text": "어서 와, 친구들! 나는 사탕 마녀야.",
      "segs": [
       [
        "witch",
-       "어서 와, 친구들! 나는 사탕 마녀야. 어머, 모자가 또 거꾸로네.",
+       "어서 와, 친구들! 나는 사탕 마녀야.",
        "happy",
        "[kind quirky witch, warm, giggly, a little silly, never scary]"
       ]
@@ -156,7 +132,7 @@
       "friends:at:180,260,300"
      ],
      "after": [
-      "witch:hat_pop"
+      "witch:hop"
      ]
     },
     {
@@ -252,33 +228,8 @@
      "src": "reuse",
      "before": [
       "cat:hop"
-     ]
-    },
-    {
-     "text": "뽀글뽀글!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "뽀글뽀글!",
-       "happy",
-       "[gleeful, bouncy, chanting the bubbling sound]"
-      ],
-      [
-       "bear",
-       "뽀글뽀글!",
-       "happy",
-       "[gleeful, bouncy, chanting the bubbling sound]"
-      ],
-      [
-       "fox",
-       "뽀글뽀글!",
-       "happy",
-       "[gleeful, bouncy, chanting the bubbling sound]"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     }
@@ -300,51 +251,6 @@
     "cam:shelf"
    ],
    "lines": [
-    {
-     "text": "핼러윈 사탕 재료야! 빨간 건 아기 용 콧물이랑 소방차, 노란 건 호박 등이랑 병아리 방귀!",
-     "segs": [
-      [
-       "witch",
-       "핼러윈 사탕 재료야! 빨간 건 아기 용 콧물이랑 소방차, 노란 건 호박 등이랑 병아리 방귀!",
-       "happy",
-       "[kind quirky witch, proud, showing off, giggly]"
-      ]
-     ],
-     "src": "reuse",
-     "after": [
-      "shelf:point:red,yellow"
-     ]
-    },
-    {
-     "text": "파란 건 괴물 응가랑 파란 생선, 초록은 개구리랑 공룡!",
-     "segs": [
-      [
-       "witch",
-       "파란 건 괴물 응가랑 파란 생선, 초록은 개구리랑 공룡!",
-       "happy",
-       "[kind quirky witch, proud, showing off, giggly]"
-      ]
-     ],
-     "src": "reuse",
-     "after": [
-      "shelf:point:blue,green"
-     ]
-    },
-    {
-     "text": "으엑! 콧물이랑 응가요?",
-     "segs": [
-      [
-       "kid",
-       "으엑! 콧물이랑 응가요?",
-       null,
-       "[young girl, grossed out but giggling, comic]"
-      ]
-     ],
-     "src": "reuse",
-     "before": [
-      "kid:look:yuck"
-     ]
-    },
     {
      "text": "냐… 냄새!",
      "segs": [
@@ -373,11 +279,11 @@
      ]
     },
     {
-     "text": "네, 내가 할래요!",
+     "text": "네, 제가 할게요!",
      "segs": [
       [
        "kid",
-       "네, 내가 할래요!",
+       "네, 제가 할게요!",
        "happy",
        "[young girl, eager, bold, bright]"
       ]
@@ -386,33 +292,8 @@
      "before": [
       "kid:look:stand",
       "kid:hop"
-     ]
-    },
-    {
-     "text": "나도!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "나도!",
-       "toneup",
-       "[eager, bright, hand up]"
-      ],
-      [
-       "bear",
-       "나도!",
-       "toneup",
-       "[eager, bright, hand up]"
-      ],
-      [
-       "fox",
-       "나도!",
-       "toneup",
-       "[eager, bright, hand up]"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -481,6 +362,24 @@
      ]
     },
     {
+     "text": "으엑! 콧물이요?",
+     "segs": [
+      [
+       "kid",
+       "으엑! 콧물이요?",
+       null,
+       "[young girl, grossed out but giggling, comic]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
+     ]
+    },
+    {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
      "segs": [
       [
@@ -508,19 +407,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강만 넣었으니… 빨강 그대로!",
-     "segs": [
-      [
-       "witch",
-       "빨강만 넣었으니… 빨강 그대로!",
-       "happy",
-       "[kind quirky witch, a thinking pause, then bright reveal]"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:red"
      ]
@@ -539,6 +426,18 @@
      "after": [
       "candy:jar:strawberry"
      ]
+    },
+    {
+     "text": "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -662,33 +561,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "bear",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "fox",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -826,19 +700,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "노랑만 넣었으니… 노랑 그대로!",
-     "segs": [
-      [
-       "witch",
-       "노랑만 넣었으니… 노랑 그대로!",
-       "happy",
-       "[kind quirky witch, a thinking pause, then bright reveal]"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:yellow"
      ]
@@ -857,6 +719,18 @@
      "after": [
       "candy:jar:duck"
      ]
+    },
+    {
+     "text": "노랑만 넣었더니 노란 오리 사탕이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "노랑만 넣었더니 노란 오리 사탕이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -965,33 +839,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "bear",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "fox",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -1072,11 +921,11 @@
      "src": "reuse"
     },
     {
-     "text": "다현이는 괴물 응가랑 파란 생선를 솥에 넣었어요. 퐁, 첨벙!",
+     "text": "다현이는 괴물 응가랑 파란 생선을 솥에 넣었어요. 퐁, 첨벙!",
      "segs": [
       [
        "nar",
-       "다현이는 괴물 응가랑 파란 생선를 솥에 넣었어요. 퐁, 첨벙!",
+       "다현이는 괴물 응가랑 파란 생선을 솥에 넣었어요. 퐁, 첨벙!",
        null,
        "[playful storytelling, comic on the sound words, clear]"
       ]
@@ -1087,6 +936,24 @@
      ],
      "after": [
       "pot:drop:poo,fish"
+     ]
+    },
+    {
+     "text": "으엑! 응가요?",
+     "segs": [
+      [
+       "kid",
+       "으엑! 응가요?",
+       null,
+       "[young girl, grossed out but giggling, comic]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
      ]
     },
     {
@@ -1117,19 +984,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "파랑만 넣었으니… 파랑 그대로!",
-     "segs": [
-      [
-       "witch",
-       "파랑만 넣었으니… 파랑 그대로!",
-       "happy",
-       "[kind quirky witch, a thinking pause, then bright reveal]"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:blue"
      ]
@@ -1148,6 +1003,18 @@
      "after": [
       "candy:jar:fish"
      ]
+    },
+    {
+     "text": "파랑만 넣었더니 파란 물고기 사탕이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "파랑만 넣었더니 파란 물고기 사탕이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -1256,33 +1123,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "bear",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "fox",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -1408,46 +1250,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "초록이랑 파랑을 섞으면 무슨 색일까?",
-     "segs": [
-      [
-       "witch",
-       "초록이랑 파랑을 섞으면 무슨 색일까?",
-       null,
-       "[kind quirky witch, asking a riddle, curious, clear, slow]"
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 초록!",
-     "segs": [
-      [
-       "kid",
-       "음… 초록!",
-       "happy",
-       "[young girl, thinking, then a confident answer]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 초록!",
-     "segs": [
-      [
-       "witch",
-       "맞아요, 초록!",
-       "happy",
-       "[kind quirky witch, praising, delighted]"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:green"
      ]
@@ -1466,6 +1269,18 @@
      "after": [
       "candy:jar:frog"
      ]
+    },
+    {
+     "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -1574,33 +1389,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "bear",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "fox",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -1681,11 +1471,11 @@
      "src": "reuse"
     },
     {
-     "text": "다현이는 아기 용 콧물이랑 호박 등를 솥에 넣었어요. 뚝, 퐁!",
+     "text": "다현이는 아기 용 콧물이랑 호박 등을 솥에 넣었어요. 뚝, 퐁!",
      "segs": [
       [
        "nar",
-       "다현이는 아기 용 콧물이랑 호박 등를 솥에 넣었어요. 뚝, 퐁!",
+       "다현이는 아기 용 콧물이랑 호박 등을 솥에 넣었어요. 뚝, 퐁!",
        null,
        "[playful storytelling, comic on the sound words, clear]"
       ]
@@ -1696,6 +1486,24 @@
      ],
      "after": [
       "pot:drop:snot,lantern"
+     ]
+    },
+    {
+     "text": "으엑! 콧물이요?",
+     "segs": [
+      [
+       "kid",
+       "으엑! 콧물이요?",
+       null,
+       "[young girl, grossed out but giggling, comic]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
      ]
     },
     {
@@ -1726,46 +1534,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 노랑을 섞으면 무슨 색일까?",
-     "segs": [
-      [
-       "witch",
-       "빨강이랑 노랑을 섞으면 무슨 색일까?",
-       null,
-       "[kind quirky witch, asking a riddle, curious, clear, slow]"
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 주황!",
-     "segs": [
-      [
-       "kid",
-       "음… 주황!",
-       "happy",
-       "[young girl, thinking, then a confident answer]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 주황!",
-     "segs": [
-      [
-       "witch",
-       "맞아요, 주황!",
-       "happy",
-       "[kind quirky witch, praising, delighted]"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:orange"
      ]
@@ -1784,6 +1553,18 @@
      "after": [
       "candy:jar:pumpkin"
      ]
+    },
+    {
+     "text": "빨강이랑 노랑을 섞었더니 주황색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "빨강이랑 노랑을 섞었더니 주황색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -1907,33 +1688,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "bear",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "fox",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -2014,11 +1770,11 @@
      "src": "reuse"
     },
     {
-     "text": "다현이는 무당벌레랑 파란 생선를 솥에 넣었어요. 붕, 첨벙!",
+     "text": "다현이는 무당벌레랑 파란 생선을 솥에 넣었어요. 붕, 첨벙!",
      "segs": [
       [
        "nar",
-       "다현이는 무당벌레랑 파란 생선를 솥에 넣었어요. 붕, 첨벙!",
+       "다현이는 무당벌레랑 파란 생선을 솥에 넣었어요. 붕, 첨벙!",
        null,
        "[playful storytelling, comic on the sound words, clear]"
       ]
@@ -2059,46 +1815,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 파랑을 섞으면 무슨 색일까?",
-     "segs": [
-      [
-       "witch",
-       "빨강이랑 파랑을 섞으면 무슨 색일까?",
-       null,
-       "[kind quirky witch, asking a riddle, curious, clear, slow]"
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 보라!",
-     "segs": [
-      [
-       "kid",
-       "음… 보라!",
-       "happy",
-       "[young girl, thinking, then a confident answer]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 보라!",
-     "segs": [
-      [
-       "witch",
-       "맞아요, 보라!",
-       "happy",
-       "[kind quirky witch, praising, delighted]"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:purple"
      ]
@@ -2117,6 +1834,18 @@
      "after": [
       "candy:jar:bat"
      ]
+    },
+    {
+     "text": "빨강이랑 파랑을 섞었더니 보라색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "빨강이랑 파랑을 섞었더니 보라색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -2225,33 +1954,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "bear",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "fox",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -2332,11 +2036,11 @@
      "src": "reuse"
     },
     {
-     "text": "다현이는 빨간 소방차랑 초록 공룡를 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
+     "text": "다현이는 빨간 소방차랑 초록 공룡을 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
      "segs": [
       [
        "nar",
-       "다현이는 빨간 소방차랑 초록 공룡를 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
+       "다현이는 빨간 소방차랑 초록 공룡을 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
        null,
        "[playful storytelling, comic on the sound words, clear]"
       ]
@@ -2377,46 +2081,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 초록을 섞으면 무슨 색일까?",
-     "segs": [
-      [
-       "witch",
-       "빨강이랑 초록을 섞으면 무슨 색일까?",
-       null,
-       "[kind quirky witch, asking a riddle, curious, clear, slow]"
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 갈색!",
-     "segs": [
-      [
-       "kid",
-       "음… 갈색!",
-       "happy",
-       "[young girl, thinking, then a confident answer]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 갈색!",
-     "segs": [
-      [
-       "witch",
-       "맞아요, 갈색!",
-       "happy",
-       "[kind quirky witch, praising, delighted]"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:brown"
      ]
@@ -2435,6 +2100,18 @@
      "after": [
       "candy:jar:choco"
      ]
+    },
+    {
+     "text": "빨강이랑 초록을 섞었더니 갈색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "빨강이랑 초록을 섞었더니 갈색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -2543,33 +2220,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "bear",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ],
-      [
-       "fox",
-       "나도 하고 싶다!",
-       "happy",
-       "[eager, envious but happy, bouncy]"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -2695,6 +2347,24 @@
      ]
     },
     {
+     "text": "으엑! 콧물이요?",
+     "segs": [
+      [
+       "kid",
+       "으엑! 콧물이요?",
+       null,
+       "[young girl, grossed out but giggling, comic]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
+     ]
+    },
+    {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
      "segs": [
       [
@@ -2722,19 +2392,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강만 넣었으니… 빨강 그대로!",
-     "segs": [
-      [
-       "witch",
-       "빨강만 넣었으니… 빨강 그대로!",
-       "happy",
-       "[kind quirky witch, a thinking pause, then bright reveal]"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:red"
      ]
@@ -2753,6 +2411,18 @@
      "after": [
       "candy:jar:strawberry"
      ]
+    },
+    {
+     "text": "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 딸기 사탕이다!",
@@ -2929,19 +2599,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "노랑만 넣었으니… 노랑 그대로!",
-     "segs": [
-      [
-       "witch",
-       "노랑만 넣었으니… 노랑 그대로!",
-       "happy",
-       "[kind quirky witch, a thinking pause, then bright reveal]"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:yellow"
      ]
@@ -2960,6 +2618,18 @@
      "after": [
       "candy:jar:duck"
      ]
+    },
+    {
+     "text": "노랑만 넣었더니 노란 오리 사탕이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "노랑만 넣었더니 노란 오리 사탕이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 오리 사탕이다!",
@@ -3091,11 +2761,11 @@
      ]
     },
     {
-     "text": "다현이는 괴물 응가랑 파란 생선를 솥에 넣었어요. 퐁, 첨벙!",
+     "text": "다현이는 괴물 응가랑 파란 생선을 솥에 넣었어요. 퐁, 첨벙!",
      "segs": [
       [
        "nar",
-       "다현이는 괴물 응가랑 파란 생선를 솥에 넣었어요. 퐁, 첨벙!",
+       "다현이는 괴물 응가랑 파란 생선을 솥에 넣었어요. 퐁, 첨벙!",
        null,
        "[playful storytelling, comic on the sound words, clear]"
       ]
@@ -3106,6 +2776,24 @@
      ],
      "after": [
       "pot:drop:poo,fish"
+     ]
+    },
+    {
+     "text": "으엑! 응가요?",
+     "segs": [
+      [
+       "kid",
+       "으엑! 응가요?",
+       null,
+       "[young girl, grossed out but giggling, comic]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
      ]
     },
     {
@@ -3136,19 +2824,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "파랑만 넣었으니… 파랑 그대로!",
-     "segs": [
-      [
-       "witch",
-       "파랑만 넣었으니… 파랑 그대로!",
-       "happy",
-       "[kind quirky witch, a thinking pause, then bright reveal]"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:blue"
      ]
@@ -3167,6 +2843,18 @@
      "after": [
       "candy:jar:fish"
      ]
+    },
+    {
+     "text": "파랑만 넣었더니 파란 물고기 사탕이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "파랑만 넣었더니 파란 물고기 사탕이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 물고기 사탕이다!",
@@ -3343,46 +3031,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "초록이랑 파랑을 섞으면 무슨 색일까?",
-     "segs": [
-      [
-       "witch",
-       "초록이랑 파랑을 섞으면 무슨 색일까?",
-       null,
-       "[kind quirky witch, asking a riddle, curious, clear, slow]"
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 초록!",
-     "segs": [
-      [
-       "kid",
-       "음… 초록!",
-       "happy",
-       "[young girl, thinking, then a confident answer]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 초록!",
-     "segs": [
-      [
-       "witch",
-       "맞아요, 초록!",
-       "happy",
-       "[kind quirky witch, praising, delighted]"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:green"
      ]
@@ -3401,6 +3050,18 @@
      "after": [
       "candy:jar:frog"
      ]
+    },
+    {
+     "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 개구리 사탕이다!",
@@ -3532,11 +3193,11 @@
      ]
     },
     {
-     "text": "다현이는 아기 용 콧물이랑 호박 등를 솥에 넣었어요. 뚝, 퐁!",
+     "text": "다현이는 아기 용 콧물이랑 호박 등을 솥에 넣었어요. 뚝, 퐁!",
      "segs": [
       [
        "nar",
-       "다현이는 아기 용 콧물이랑 호박 등를 솥에 넣었어요. 뚝, 퐁!",
+       "다현이는 아기 용 콧물이랑 호박 등을 솥에 넣었어요. 뚝, 퐁!",
        null,
        "[playful storytelling, comic on the sound words, clear]"
       ]
@@ -3547,6 +3208,24 @@
      ],
      "after": [
       "pot:drop:snot,lantern"
+     ]
+    },
+    {
+     "text": "으엑! 콧물이요?",
+     "segs": [
+      [
+       "kid",
+       "으엑! 콧물이요?",
+       null,
+       "[young girl, grossed out but giggling, comic]"
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
      ]
     },
     {
@@ -3577,46 +3256,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 노랑을 섞으면 무슨 색일까?",
-     "segs": [
-      [
-       "witch",
-       "빨강이랑 노랑을 섞으면 무슨 색일까?",
-       null,
-       "[kind quirky witch, asking a riddle, curious, clear, slow]"
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 주황!",
-     "segs": [
-      [
-       "kid",
-       "음… 주황!",
-       "happy",
-       "[young girl, thinking, then a confident answer]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 주황!",
-     "segs": [
-      [
-       "witch",
-       "맞아요, 주황!",
-       "happy",
-       "[kind quirky witch, praising, delighted]"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:orange"
      ]
@@ -3635,6 +3275,18 @@
      "after": [
       "candy:jar:pumpkin"
      ]
+    },
+    {
+     "text": "빨강이랑 노랑을 섞었더니 주황색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "빨강이랑 노랑을 섞었더니 주황색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 호박 사탕이다!",
@@ -3766,11 +3418,11 @@
      ]
     },
     {
-     "text": "다현이는 무당벌레랑 파란 생선를 솥에 넣었어요. 붕, 첨벙!",
+     "text": "다현이는 무당벌레랑 파란 생선을 솥에 넣었어요. 붕, 첨벙!",
      "segs": [
       [
        "nar",
-       "다현이는 무당벌레랑 파란 생선를 솥에 넣었어요. 붕, 첨벙!",
+       "다현이는 무당벌레랑 파란 생선을 솥에 넣었어요. 붕, 첨벙!",
        null,
        "[playful storytelling, comic on the sound words, clear]"
       ]
@@ -3811,46 +3463,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 파랑을 섞으면 무슨 색일까?",
-     "segs": [
-      [
-       "witch",
-       "빨강이랑 파랑을 섞으면 무슨 색일까?",
-       null,
-       "[kind quirky witch, asking a riddle, curious, clear, slow]"
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 보라!",
-     "segs": [
-      [
-       "kid",
-       "음… 보라!",
-       "happy",
-       "[young girl, thinking, then a confident answer]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 보라!",
-     "segs": [
-      [
-       "witch",
-       "맞아요, 보라!",
-       "happy",
-       "[kind quirky witch, praising, delighted]"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:purple"
      ]
@@ -3869,6 +3482,18 @@
      "after": [
       "candy:jar:bat"
      ]
+    },
+    {
+     "text": "빨강이랑 파랑을 섞었더니 보라색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "빨강이랑 파랑을 섞었더니 보라색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 박쥐 사탕이다!",
@@ -4000,11 +3625,11 @@
      ]
     },
     {
-     "text": "다현이는 빨간 소방차랑 초록 공룡를 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
+     "text": "다현이는 빨간 소방차랑 초록 공룡을 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
      "segs": [
       [
        "nar",
-       "다현이는 빨간 소방차랑 초록 공룡를 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
+       "다현이는 빨간 소방차랑 초록 공룡을 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
        null,
        "[playful storytelling, comic on the sound words, clear]"
       ]
@@ -4045,46 +3670,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 초록을 섞으면 무슨 색일까?",
-     "segs": [
-      [
-       "witch",
-       "빨강이랑 초록을 섞으면 무슨 색일까?",
-       null,
-       "[kind quirky witch, asking a riddle, curious, clear, slow]"
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 갈색!",
-     "segs": [
-      [
-       "kid",
-       "음… 갈색!",
-       "happy",
-       "[young girl, thinking, then a confident answer]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 갈색!",
-     "segs": [
-      [
-       "witch",
-       "맞아요, 갈색!",
-       "happy",
-       "[kind quirky witch, praising, delighted]"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:brown"
      ]
@@ -4103,6 +3689,18 @@
      "after": [
       "candy:jar:choco"
      ]
+    },
+    {
+     "text": "빨강이랑 초록을 섞었더니 갈색이 됐어요!",
+     "segs": [
+      [
+       "nar",
+       "빨강이랑 초록을 섞었더니 갈색이 됐어요!",
+       "toneup",
+       "[warm storyteller, delighted reveal, clear colour words]"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 초콜릿 사탕이다!",
@@ -4228,19 +3826,18 @@
      "src": "reuse"
     },
     {
-     "text": "다현이가 하나, 토끼랑 곰이랑 여우가 하나씩, 퐁퐁퐁퐁 넣었어요.",
+     "text": "다현이가 하나씩, 하나씩, 퐁퐁퐁퐁 넣었어요.",
      "segs": [
       [
        "nar",
-       "다현이가 하나, 토끼랑 곰이랑 여우가 하나씩, 퐁퐁퐁퐁 넣었어요.",
+       "다현이가 하나씩, 하나씩, 퐁퐁퐁퐁 넣었어요.",
        "happy",
        "[playful storytelling, four bouncy plops]"
       ]
      ],
      "src": "new",
      "before": [
-      "kid:look:reach",
-      "friends:look:reach"
+      "kid:look:reach"
      ],
      "after": [
       "pot:drop:snot,fart,poo,frog"
@@ -4292,33 +3889,8 @@
      "src": "reuse",
      "before": [
       "candy:plate:ghost"
-     ]
-    },
-    {
-     "text": "까맣다!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "까맣다!",
-       "toneup",
-       "[amazed, wide-eyed, together]"
-      ],
-      [
-       "bear",
-       "까맣다!",
-       "toneup",
-       "[amazed, wide-eyed, together]"
-      ],
-      [
-       "fox",
-       "까맣다!",
-       "toneup",
-       "[amazed, wide-eyed, together]"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     }
@@ -4523,32 +4095,8 @@
      "src": "reuse",
      "before": [
       "witch:look:giggle"
-     ]
-    },
-    {
-     "text": "으웩!… 어? 맛있다!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "으웩!… 어? 맛있다!",
-       "happy",
-       "[grossed out, a pause, then surprised and delighted]"
-      ],
-      [
-       "bear",
-       "으웩!… 어? 맛있다!",
-       "happy",
-       "[grossed out, a pause, then surprised and delighted]"
-      ],
-      [
-       "fox",
-       "으웩!… 어? 맛있다!",
-       "happy",
-       "[grossed out, a pause, then surprised and delighted]"
-      ]
-     ]
+     ],
+     "after": []
     },
     {
      "text": "뿅, 뿅, 뿅! 딸기, 개구리, 오리, 박쥐, 물고기, 호박… 다 같이 변신!",

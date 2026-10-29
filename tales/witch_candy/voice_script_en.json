@@ -43,12 +43,12 @@
    ]
   },
   {
-   "text": "어서 와, 친구들! 나는 사탕 마녀야. 어머, 모자가 또 거꾸로네.",
-   "en": "Come in, come in, friends! I'm the Candy Witch. Oh my, my hat is upside down again.",
+   "text": "어서 와, 친구들! 나는 사탕 마녀야.",
+   "en": "Come in, come in, friends! I'm the Candy Witch.",
    "segs": [
     [
      "witch",
-     "Come in, come in, friends! I'm the Candy Witch. Oh my, my hat is upside down again.",
+     "Come in, come in, friends! I'm the Candy Witch.",
      "happy"
     ]
    ]
@@ -142,6 +142,270 @@
    ]
   },
   {
+   "text": "아기 용 콧물이랑",
+   "en": "baby dragon snot and",
+   "segs": [
+    [
+     "nar",
+     "baby dragon snot and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "빨간 소방차랑",
+   "en": "the red fire truck and",
+   "segs": [
+    [
+     "nar",
+     "the red fire truck and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "무당벌레랑",
+   "en": "the ladybug and",
+   "segs": [
+    [
+     "nar",
+     "the ladybug and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "호박 등이랑",
+   "en": "the pumpkin lantern and",
+   "segs": [
+    [
+     "nar",
+     "the pumpkin lantern and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "병아리 방귀랑",
+   "en": "chick fart and",
+   "segs": [
+    [
+     "nar",
+     "chick fart and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "고무 오리랑",
+   "en": "the rubber duck and",
+   "segs": [
+    [
+     "nar",
+     "the rubber duck and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "괴물 응가랑",
+   "en": "monster poo and",
+   "segs": [
+    [
+     "nar",
+     "monster poo and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "파란 생선이랑",
+   "en": "the blue fish and",
+   "segs": [
+    [
+     "nar",
+     "the blue fish and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "파란 파도랑",
+   "en": "the blue wave and",
+   "segs": [
+    [
+     "nar",
+     "the blue wave and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "초록 개구리랑",
+   "en": "the green frog and",
+   "segs": [
+    [
+     "nar",
+     "the green frog and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "초록 공룡이랑",
+   "en": "the green dinosaur and",
+   "segs": [
+    [
+     "nar",
+     "the green dinosaur and",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "아기 용 콧물을 넣었어요!",
+   "en": "baby dragon snot went in!",
+   "segs": [
+    [
+     "nar",
+     "baby dragon snot went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "빨간 소방차를 넣었어요!",
+   "en": "the red fire truck went in!",
+   "segs": [
+    [
+     "nar",
+     "the red fire truck went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "무당벌레를 넣었어요!",
+   "en": "the ladybug went in!",
+   "segs": [
+    [
+     "nar",
+     "the ladybug went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "호박 등을 넣었어요!",
+   "en": "the pumpkin lantern went in!",
+   "segs": [
+    [
+     "nar",
+     "the pumpkin lantern went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "병아리 방귀를 넣었어요!",
+   "en": "chick fart went in!",
+   "segs": [
+    [
+     "nar",
+     "chick fart went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "고무 오리를 넣었어요!",
+   "en": "the rubber duck went in!",
+   "segs": [
+    [
+     "nar",
+     "the rubber duck went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "괴물 응가를 넣었어요!",
+   "en": "monster poo went in!",
+   "segs": [
+    [
+     "nar",
+     "monster poo went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "파란 생선을 넣었어요!",
+   "en": "the blue fish went in!",
+   "segs": [
+    [
+     "nar",
+     "the blue fish went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "파란 파도를 넣었어요!",
+   "en": "the blue wave went in!",
+   "segs": [
+    [
+     "nar",
+     "the blue wave went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "초록 개구리를 넣었어요!",
+   "en": "the green frog went in!",
+   "segs": [
+    [
+     "nar",
+     "the green frog went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "초록 공룡을 넣었어요!",
+   "en": "the green dinosaur went in!",
+   "segs": [
+    [
+     "nar",
+     "the green dinosaur went in!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "으엑! 콧물이요?",
+   "en": "Eww! Snot?",
+   "segs": [
+    [
+     "kid",
+     "Eww! Snot?",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "으엑! 응가요?",
+   "en": "Eww! Poo?",
+   "segs": [
+    [
+     "kid",
+     "Eww! Poo?",
+     null
+    ]
+   ]
+  },
+  {
    "text": "냐… 냄새!",
    "en": "Nya... stinky!",
    "segs": [
@@ -164,7 +428,7 @@
    ]
   },
   {
-   "text": "네, 내가 할래요!",
+   "text": "네, 제가 할게요!",
    "en": "Yes! I want to do it!",
    "segs": [
     [
@@ -186,12 +450,12 @@
    ]
   },
   {
-   "text": "넣고 싶은 재료를 톡 눌러 솥에 넣어요. 다 넣었으면 국자를 톡!",
-   "en": "Tap the ingredients you want to drop into the cauldron. When you're done, tap the ladle!",
+   "text": "넣고 싶은 재료를 톡 눌러 솥에 넣어요.",
+   "en": "Tap the ingredients you want to drop into the cauldron.",
    "segs": [
     [
      "nar",
-     "Tap the ingredients you want to drop into the cauldron. When you're done, tap the ladle!",
+     "Tap the ingredients you want to drop into the cauldron.",
      null
     ]
    ]
@@ -512,6 +776,116 @@
      "witch",
      "Only green went in... so it stays green!",
      "happy"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 노랑을 섞었더니 주황색이 됐어요!",
+   "en": "Red and yellow mixed together made orange!",
+   "segs": [
+    [
+     "nar",
+     "Red and yellow mixed together made orange!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "노랑이랑 파랑을 섞었더니 초록색이 됐어요!",
+   "en": "Yellow and blue mixed together made green!",
+   "segs": [
+    [
+     "nar",
+     "Yellow and blue mixed together made green!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 파랑을 섞었더니 보라색이 됐어요!",
+   "en": "Red and blue mixed together made purple!",
+   "segs": [
+    [
+     "nar",
+     "Red and blue mixed together made purple!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 초록을 섞었더니 갈색이 됐어요!",
+   "en": "Red and green mixed together made brown!",
+   "segs": [
+    [
+     "nar",
+     "Red and green mixed together made brown!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 노랑을 섞었더니 초록색이 됐어요!",
+   "en": "Green and yellow mixed together made green!",
+   "segs": [
+    [
+     "nar",
+     "Green and yellow mixed together made green!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
+   "en": "Green and blue mixed together made green!",
+   "segs": [
+    [
+     "nar",
+     "Green and blue mixed together made green!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!",
+   "en": "Only red went in, so it became a red strawberry candy!",
+   "segs": [
+    [
+     "nar",
+     "Only red went in, so it became a red strawberry candy!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "노랑만 넣었더니 노란 오리 사탕이 됐어요!",
+   "en": "Only yellow went in, so it became a yellow duck candy!",
+   "segs": [
+    [
+     "nar",
+     "Only yellow went in, so it became a yellow duck candy!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "파랑만 넣었더니 파란 물고기 사탕이 됐어요!",
+   "en": "Only blue went in, so it became a blue fish candy!",
+   "segs": [
+    [
+     "nar",
+     "Only blue went in, so it became a blue fish candy!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "text": "초록만 넣었더니 초록 개구리 사탕이 됐어요!",
+   "en": "Only green went in, so it became a green frog candy!",
+   "segs": [
+    [
+     "nar",
+     "Only green went in, so it became a green frog candy!",
+     "toneup"
     ]
    ]
   },
@@ -1000,12 +1374,12 @@
    ]
   },
   {
-   "text": "재료를 톡! 다 넣으면 국자!",
-   "en": "Tap the ingredients! When you're done, the ladle!",
+   "text": "재료를 톡!",
+   "en": "Tap the ingredients!",
    "segs": [
     [
      "nar",
-     "Tap the ingredients! When you're done, the ladle!",
+     "Tap the ingredients!",
      null
     ]
    ]

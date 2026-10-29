@@ -5,7 +5,7 @@
  "title": "The Candy Witch's Halloween",
  "voices_from": "voice_script_el.json",
  "moral": "",
- "notes": "English read-aloud script, same scenes and line order as read_script_el.json (ko text is the clip key, en is what is spoken; voices and acting directions come from voice_script_el.json). Title: The Candy Witch's Halloween. Child: Dahyun (girl). The witch is 'the Candy Witch', the cat is 'Pumpkin'. Natural read-aloud English, UK spelling 'colour' as in the catalogue line. Round block: scenes with round/variant are played only when that result is picked for that round (rounds=2, no repeats). See ko notes for the engine change.",
+ "notes": "English read-aloud script, same scenes and line order as read_script_el.json (ko text is the clip key, en is what is spoken; voices and acting directions come from voice_script_el.json). Title: The Candy Witch's Halloween. Child: Dahyun (girl). The witch is 'the Candy Witch', the cat is 'Pumpkin'. Natural read-aloud English, UK spelling 'colour' as in the catalogue line. Round block: scenes with round/variant are played only when that result is picked for that round (rounds=2, no repeats). See ko notes for the engine change. [2026-10-29] Colour quiz lines removed; after the stir line the pot pops and a narrator result line (\"Red and blue mixed together made purple!\" / \"Only red went in, so it became a red strawberry candy!\") follows the Pop line. Friends-only chorus lines removed. Same-background scenes continue without a page turn. [2026-10-29 line review] Scene 3 ingredient intro and \"Snot and poo?\" removed; after the drop line, kid says \"Eww! Snot?\"/\"Eww! Poo?\" only when snot/poo went in. Witch greeting trimmed (hat sentence cut). Kid \"Yes! I want to do it!\" key text changed to 네, 제가 할게요!.",
  "rounds": 2,
  "variants": {
   "keys": [
@@ -94,30 +94,8 @@
      "src": "reuse",
      "before": [
       "kid:hop"
-     ]
-    },
-    {
-     "text": "우와!",
-     "en": "Wow!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "Wow!",
-       "toneup"
-      ],
-      [
-       "bear",
-       "Wow!",
-       "toneup"
-      ],
-      [
-       "fox",
-       "Wow!",
-       "toneup"
-      ]
-     ]
+     ],
+     "after": []
     },
     {
      "text": "거리 끝 사탕 가게 창이 환하게 켜졌어요.",
@@ -135,12 +113,12 @@
      ]
     },
     {
-     "text": "어서 와, 친구들! 나는 사탕 마녀야. 어머, 모자가 또 거꾸로네.",
-     "en": "Come in, come in, friends! I'm the Candy Witch. Oh my, my hat is upside down again.",
+     "text": "어서 와, 친구들! 나는 사탕 마녀야.",
+     "en": "Come in, come in, friends! I'm the Candy Witch.",
      "segs": [
       [
        "witch",
-       "Come in, come in, friends! I'm the Candy Witch. Oh my, my hat is upside down again.",
+       "Come in, come in, friends! I'm the Candy Witch.",
        "happy"
       ]
      ],
@@ -154,7 +132,7 @@
       "friends:at:180,260,300"
      ],
      "after": [
-      "witch:hat_pop"
+      "witch:hop"
      ]
     },
     {
@@ -250,31 +228,8 @@
      "src": "reuse",
      "before": [
       "cat:hop"
-     ]
-    },
-    {
-     "text": "뽀글뽀글!",
-     "en": "Bubble, bubble!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "Bubble, bubble!",
-       "happy"
-      ],
-      [
-       "bear",
-       "Bubble, bubble!",
-       "happy"
-      ],
-      [
-       "fox",
-       "Bubble, bubble!",
-       "happy"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     }
@@ -296,51 +251,6 @@
     "cam:shelf"
    ],
    "lines": [
-    {
-     "text": "핼러윈 사탕 재료야! 빨간 건 아기 용 콧물이랑 소방차, 노란 건 호박 등이랑 병아리 방귀!",
-     "en": "These are the Halloween candy ingredients! For red, baby dragon snot and a fire truck. For yellow, a pumpkin lantern and chick toots!",
-     "segs": [
-      [
-       "witch",
-       "These are the Halloween candy ingredients! For red, baby dragon snot and a fire truck. For yellow, a pumpkin lantern and chick toots!",
-       "happy"
-      ]
-     ],
-     "src": "reuse",
-     "after": [
-      "shelf:point:red,yellow"
-     ]
-    },
-    {
-     "text": "파란 건 괴물 응가랑 파란 생선, 초록은 개구리랑 공룡!",
-     "en": "For blue, monster poo and a blue fish. And for green, a frog and a dinosaur!",
-     "segs": [
-      [
-       "witch",
-       "For blue, monster poo and a blue fish. And for green, a frog and a dinosaur!",
-       "happy"
-      ]
-     ],
-     "src": "reuse",
-     "after": [
-      "shelf:point:blue,green"
-     ]
-    },
-    {
-     "text": "으엑! 콧물이랑 응가요?",
-     "en": "Eww! Snot and poo?",
-     "segs": [
-      [
-       "kid",
-       "Eww! Snot and poo?",
-       null
-      ]
-     ],
-     "src": "reuse",
-     "before": [
-      "kid:look:yuck"
-     ]
-    },
     {
      "text": "냐… 냄새!",
      "en": "Nya... stinky!",
@@ -369,7 +279,7 @@
      ]
     },
     {
-     "text": "네, 내가 할래요!",
+     "text": "네, 제가 할게요!",
      "en": "Yes! I want to do it!",
      "segs": [
       [
@@ -382,31 +292,8 @@
      "before": [
       "kid:look:stand",
       "kid:hop"
-     ]
-    },
-    {
-     "text": "나도!",
-     "en": "Me too!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "Me too!",
-       "toneup"
-      ],
-      [
-       "bear",
-       "Me too!",
-       "toneup"
-      ],
-      [
-       "fox",
-       "Me too!",
-       "toneup"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -475,6 +362,24 @@
      ]
     },
     {
+     "text": "으엑! 콧물이요?",
+     "en": "Eww! Snot?",
+     "segs": [
+      [
+       "kid",
+       "Eww! Snot?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
+     ]
+    },
+    {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
      "en": "One, two! The cauldron water swirled round and round, and its colour changed.",
      "segs": [
@@ -502,19 +407,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강만 넣었으니… 빨강 그대로!",
-     "en": "Only red went in... so it stays red!",
-     "segs": [
-      [
-       "witch",
-       "Only red went in... so it stays red!",
-       "happy"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:red"
      ]
@@ -533,6 +426,18 @@
      "after": [
       "candy:jar:strawberry"
      ]
+    },
+    {
+     "text": "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!",
+     "en": "Only red went in, so it became a red strawberry candy!",
+     "segs": [
+      [
+       "nar",
+       "Only red went in, so it became a red strawberry candy!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -656,31 +561,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "en": "I want to do it too!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "bear",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "fox",
-       "I want to do it too!",
-       "happy"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -818,19 +700,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "노랑만 넣었으니… 노랑 그대로!",
-     "en": "Only yellow went in... so it stays yellow!",
-     "segs": [
-      [
-       "witch",
-       "Only yellow went in... so it stays yellow!",
-       "happy"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:yellow"
      ]
@@ -849,6 +719,18 @@
      "after": [
       "candy:jar:duck"
      ]
+    },
+    {
+     "text": "노랑만 넣었더니 노란 오리 사탕이 됐어요!",
+     "en": "Only yellow went in, so it became a yellow duck candy!",
+     "segs": [
+      [
+       "nar",
+       "Only yellow went in, so it became a yellow duck candy!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -957,31 +839,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "en": "I want to do it too!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "bear",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "fox",
-       "I want to do it too!",
-       "happy"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -1062,7 +921,7 @@
      "src": "reuse"
     },
     {
-     "text": "다현이는 괴물 응가랑 파란 생선를 솥에 넣었어요. 퐁, 첨벙!",
+     "text": "다현이는 괴물 응가랑 파란 생선을 솥에 넣었어요. 퐁, 첨벙!",
      "en": "Dahyun dropped the monster poo and the blue fish into the cauldron. Plop, splash!",
      "segs": [
       [
@@ -1077,6 +936,24 @@
      ],
      "after": [
       "pot:drop:poo,fish"
+     ]
+    },
+    {
+     "text": "으엑! 응가요?",
+     "en": "Eww! Poo?",
+     "segs": [
+      [
+       "kid",
+       "Eww! Poo?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
      ]
     },
     {
@@ -1107,19 +984,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "파랑만 넣었으니… 파랑 그대로!",
-     "en": "Only blue went in... so it stays blue!",
-     "segs": [
-      [
-       "witch",
-       "Only blue went in... so it stays blue!",
-       "happy"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:blue"
      ]
@@ -1138,6 +1003,18 @@
      "after": [
       "candy:jar:fish"
      ]
+    },
+    {
+     "text": "파랑만 넣었더니 파란 물고기 사탕이 됐어요!",
+     "en": "Only blue went in, so it became a blue fish candy!",
+     "segs": [
+      [
+       "nar",
+       "Only blue went in, so it became a blue fish candy!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -1246,31 +1123,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "en": "I want to do it too!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "bear",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "fox",
-       "I want to do it too!",
-       "happy"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -1396,46 +1250,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "초록이랑 파랑을 섞으면 무슨 색일까?",
-     "en": "What colour do you get when you mix green and blue?",
-     "segs": [
-      [
-       "witch",
-       "What colour do you get when you mix green and blue?",
-       null
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 초록!",
-     "en": "Hmm... green!",
-     "segs": [
-      [
-       "kid",
-       "Hmm... green!",
-       "happy"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 초록!",
-     "en": "That's right, green!",
-     "segs": [
-      [
-       "witch",
-       "That's right, green!",
-       "happy"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:green"
      ]
@@ -1454,6 +1269,18 @@
      "after": [
       "candy:jar:frog"
      ]
+    },
+    {
+     "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
+     "en": "Green and blue mixed together made green!",
+     "segs": [
+      [
+       "nar",
+       "Green and blue mixed together made green!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -1562,31 +1389,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "en": "I want to do it too!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "bear",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "fox",
-       "I want to do it too!",
-       "happy"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -1667,7 +1471,7 @@
      "src": "reuse"
     },
     {
-     "text": "다현이는 아기 용 콧물이랑 호박 등를 솥에 넣었어요. 뚝, 퐁!",
+     "text": "다현이는 아기 용 콧물이랑 호박 등을 솥에 넣었어요. 뚝, 퐁!",
      "en": "Dahyun dropped baby dragon snot and the pumpkin lantern into the cauldron. Drip, plop!",
      "segs": [
       [
@@ -1682,6 +1486,24 @@
      ],
      "after": [
       "pot:drop:snot,lantern"
+     ]
+    },
+    {
+     "text": "으엑! 콧물이요?",
+     "en": "Eww! Snot?",
+     "segs": [
+      [
+       "kid",
+       "Eww! Snot?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
      ]
     },
     {
@@ -1712,46 +1534,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 노랑을 섞으면 무슨 색일까?",
-     "en": "What colour do you get when you mix red and yellow?",
-     "segs": [
-      [
-       "witch",
-       "What colour do you get when you mix red and yellow?",
-       null
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 주황!",
-     "en": "Hmm... orange!",
-     "segs": [
-      [
-       "kid",
-       "Hmm... orange!",
-       "happy"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 주황!",
-     "en": "That's right, orange!",
-     "segs": [
-      [
-       "witch",
-       "That's right, orange!",
-       "happy"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:orange"
      ]
@@ -1770,6 +1553,18 @@
      "after": [
       "candy:jar:pumpkin"
      ]
+    },
+    {
+     "text": "빨강이랑 노랑을 섞었더니 주황색이 됐어요!",
+     "en": "Red and yellow mixed together made orange!",
+     "segs": [
+      [
+       "nar",
+       "Red and yellow mixed together made orange!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -1893,31 +1688,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "en": "I want to do it too!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "bear",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "fox",
-       "I want to do it too!",
-       "happy"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -1998,7 +1770,7 @@
      "src": "reuse"
     },
     {
-     "text": "다현이는 무당벌레랑 파란 생선를 솥에 넣었어요. 붕, 첨벙!",
+     "text": "다현이는 무당벌레랑 파란 생선을 솥에 넣었어요. 붕, 첨벙!",
      "en": "Dahyun dropped the ladybug and the blue fish into the cauldron. Bzzz, splash!",
      "segs": [
       [
@@ -2043,46 +1815,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 파랑을 섞으면 무슨 색일까?",
-     "en": "What colour do you get when you mix red and blue?",
-     "segs": [
-      [
-       "witch",
-       "What colour do you get when you mix red and blue?",
-       null
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 보라!",
-     "en": "Hmm... purple!",
-     "segs": [
-      [
-       "kid",
-       "Hmm... purple!",
-       "happy"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 보라!",
-     "en": "That's right, purple!",
-     "segs": [
-      [
-       "witch",
-       "That's right, purple!",
-       "happy"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:purple"
      ]
@@ -2101,6 +1834,18 @@
      "after": [
       "candy:jar:bat"
      ]
+    },
+    {
+     "text": "빨강이랑 파랑을 섞었더니 보라색이 됐어요!",
+     "en": "Red and blue mixed together made purple!",
+     "segs": [
+      [
+       "nar",
+       "Red and blue mixed together made purple!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -2209,31 +1954,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "en": "I want to do it too!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "bear",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "fox",
-       "I want to do it too!",
-       "happy"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -2314,7 +2036,7 @@
      "src": "reuse"
     },
     {
-     "text": "다현이는 빨간 소방차랑 초록 공룡를 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
+     "text": "다현이는 빨간 소방차랑 초록 공룡을 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
      "en": "Dahyun dropped the red fire truck and the green dinosaur into the cauldron. Nee-naw nee-naw, rawr!",
      "segs": [
       [
@@ -2359,46 +2081,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 초록을 섞으면 무슨 색일까?",
-     "en": "What colour do you get when you mix red and green?",
-     "segs": [
-      [
-       "witch",
-       "What colour do you get when you mix red and green?",
-       null
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 갈색!",
-     "en": "Hmm... brown!",
-     "segs": [
-      [
-       "kid",
-       "Hmm... brown!",
-       "happy"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 갈색!",
-     "en": "That's right, brown!",
-     "segs": [
-      [
-       "witch",
-       "That's right, brown!",
-       "happy"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:brown"
      ]
@@ -2417,6 +2100,18 @@
      "after": [
       "candy:jar:choco"
      ]
+    },
+    {
+     "text": "빨강이랑 초록을 섞었더니 갈색이 됐어요!",
+     "en": "Red and green mixed together made brown!",
+     "segs": [
+      [
+       "nar",
+       "Red and green mixed together made brown!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "먼저 먹어 봐.",
@@ -2525,31 +2220,8 @@
      "src": "reuse",
      "before": [
       "witch:look:surprise"
-     ]
-    },
-    {
-     "text": "나도 하고 싶다!",
-     "en": "I want to do it too!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "bear",
-       "I want to do it too!",
-       "happy"
-      ],
-      [
-       "fox",
-       "I want to do it too!",
-       "happy"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     },
@@ -2675,6 +2347,24 @@
      ]
     },
     {
+     "text": "으엑! 콧물이요?",
+     "en": "Eww! Snot?",
+     "segs": [
+      [
+       "kid",
+       "Eww! Snot?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
+     ]
+    },
+    {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
      "en": "One, two! The cauldron water swirled round and round, and its colour changed.",
      "segs": [
@@ -2702,19 +2392,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강만 넣었으니… 빨강 그대로!",
-     "en": "Only red went in... so it stays red!",
-     "segs": [
-      [
-       "witch",
-       "Only red went in... so it stays red!",
-       "happy"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:red"
      ]
@@ -2733,6 +2411,18 @@
      "after": [
       "candy:jar:strawberry"
      ]
+    },
+    {
+     "text": "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!",
+     "en": "Only red went in, so it became a red strawberry candy!",
+     "segs": [
+      [
+       "nar",
+       "Only red went in, so it became a red strawberry candy!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 딸기 사탕이다!",
@@ -2909,19 +2599,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "노랑만 넣었으니… 노랑 그대로!",
-     "en": "Only yellow went in... so it stays yellow!",
-     "segs": [
-      [
-       "witch",
-       "Only yellow went in... so it stays yellow!",
-       "happy"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:yellow"
      ]
@@ -2940,6 +2618,18 @@
      "after": [
       "candy:jar:duck"
      ]
+    },
+    {
+     "text": "노랑만 넣었더니 노란 오리 사탕이 됐어요!",
+     "en": "Only yellow went in, so it became a yellow duck candy!",
+     "segs": [
+      [
+       "nar",
+       "Only yellow went in, so it became a yellow duck candy!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 오리 사탕이다!",
@@ -3071,7 +2761,7 @@
      ]
     },
     {
-     "text": "다현이는 괴물 응가랑 파란 생선를 솥에 넣었어요. 퐁, 첨벙!",
+     "text": "다현이는 괴물 응가랑 파란 생선을 솥에 넣었어요. 퐁, 첨벙!",
      "en": "Dahyun dropped the monster poo and the blue fish into the cauldron. Plop, splash!",
      "segs": [
       [
@@ -3086,6 +2776,24 @@
      ],
      "after": [
       "pot:drop:poo,fish"
+     ]
+    },
+    {
+     "text": "으엑! 응가요?",
+     "en": "Eww! Poo?",
+     "segs": [
+      [
+       "kid",
+       "Eww! Poo?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
      ]
     },
     {
@@ -3116,19 +2824,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "파랑만 넣었으니… 파랑 그대로!",
-     "en": "Only blue went in... so it stays blue!",
-     "segs": [
-      [
-       "witch",
-       "Only blue went in... so it stays blue!",
-       "happy"
-      ]
      ],
-     "src": "reuse",
      "after": [
       "pot:pop:blue"
      ]
@@ -3147,6 +2843,18 @@
      "after": [
       "candy:jar:fish"
      ]
+    },
+    {
+     "text": "파랑만 넣었더니 파란 물고기 사탕이 됐어요!",
+     "en": "Only blue went in, so it became a blue fish candy!",
+     "segs": [
+      [
+       "nar",
+       "Only blue went in, so it became a blue fish candy!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 물고기 사탕이다!",
@@ -3323,46 +3031,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "초록이랑 파랑을 섞으면 무슨 색일까?",
-     "en": "What colour do you get when you mix green and blue?",
-     "segs": [
-      [
-       "witch",
-       "What colour do you get when you mix green and blue?",
-       null
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 초록!",
-     "en": "Hmm... green!",
-     "segs": [
-      [
-       "kid",
-       "Hmm... green!",
-       "happy"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 초록!",
-     "en": "That's right, green!",
-     "segs": [
-      [
-       "witch",
-       "That's right, green!",
-       "happy"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:green"
      ]
@@ -3381,6 +3050,18 @@
      "after": [
       "candy:jar:frog"
      ]
+    },
+    {
+     "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
+     "en": "Green and blue mixed together made green!",
+     "segs": [
+      [
+       "nar",
+       "Green and blue mixed together made green!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 개구리 사탕이다!",
@@ -3512,7 +3193,7 @@
      ]
     },
     {
-     "text": "다현이는 아기 용 콧물이랑 호박 등를 솥에 넣었어요. 뚝, 퐁!",
+     "text": "다현이는 아기 용 콧물이랑 호박 등을 솥에 넣었어요. 뚝, 퐁!",
      "en": "Dahyun dropped baby dragon snot and the pumpkin lantern into the cauldron. Drip, plop!",
      "segs": [
       [
@@ -3527,6 +3208,24 @@
      ],
      "after": [
       "pot:drop:snot,lantern"
+     ]
+    },
+    {
+     "text": "으엑! 콧물이요?",
+     "en": "Eww! Snot?",
+     "segs": [
+      [
+       "kid",
+       "Eww! Snot?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "before": [
+      "kid:look:yuck"
+     ],
+     "after": [
+      "kid:look:stand"
      ]
     },
     {
@@ -3557,46 +3256,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 노랑을 섞으면 무슨 색일까?",
-     "en": "What colour do you get when you mix red and yellow?",
-     "segs": [
-      [
-       "witch",
-       "What colour do you get when you mix red and yellow?",
-       null
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 주황!",
-     "en": "Hmm... orange!",
-     "segs": [
-      [
-       "kid",
-       "Hmm... orange!",
-       "happy"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 주황!",
-     "en": "That's right, orange!",
-     "segs": [
-      [
-       "witch",
-       "That's right, orange!",
-       "happy"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:orange"
      ]
@@ -3615,6 +3275,18 @@
      "after": [
       "candy:jar:pumpkin"
      ]
+    },
+    {
+     "text": "빨강이랑 노랑을 섞었더니 주황색이 됐어요!",
+     "en": "Red and yellow mixed together made orange!",
+     "segs": [
+      [
+       "nar",
+       "Red and yellow mixed together made orange!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 호박 사탕이다!",
@@ -3746,7 +3418,7 @@
      ]
     },
     {
-     "text": "다현이는 무당벌레랑 파란 생선를 솥에 넣었어요. 붕, 첨벙!",
+     "text": "다현이는 무당벌레랑 파란 생선을 솥에 넣었어요. 붕, 첨벙!",
      "en": "Dahyun dropped the ladybug and the blue fish into the cauldron. Bzzz, splash!",
      "segs": [
       [
@@ -3791,46 +3463,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 파랑을 섞으면 무슨 색일까?",
-     "en": "What colour do you get when you mix red and blue?",
-     "segs": [
-      [
-       "witch",
-       "What colour do you get when you mix red and blue?",
-       null
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 보라!",
-     "en": "Hmm... purple!",
-     "segs": [
-      [
-       "kid",
-       "Hmm... purple!",
-       "happy"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 보라!",
-     "en": "That's right, purple!",
-     "segs": [
-      [
-       "witch",
-       "That's right, purple!",
-       "happy"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:purple"
      ]
@@ -3849,6 +3482,18 @@
      "after": [
       "candy:jar:bat"
      ]
+    },
+    {
+     "text": "빨강이랑 파랑을 섞었더니 보라색이 됐어요!",
+     "en": "Red and blue mixed together made purple!",
+     "segs": [
+      [
+       "nar",
+       "Red and blue mixed together made purple!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 박쥐 사탕이다!",
@@ -3980,7 +3625,7 @@
      ]
     },
     {
-     "text": "다현이는 빨간 소방차랑 초록 공룡를 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
+     "text": "다현이는 빨간 소방차랑 초록 공룡을 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
      "en": "Dahyun dropped the red fire truck and the green dinosaur into the cauldron. Nee-naw nee-naw, rawr!",
      "segs": [
       [
@@ -4025,46 +3670,7 @@
      "src": "reuse",
      "before": [
       "witch:look:stir"
-     ]
-    },
-    {
-     "text": "빨강이랑 초록을 섞으면 무슨 색일까?",
-     "en": "What colour do you get when you mix red and green?",
-     "segs": [
-      [
-       "witch",
-       "What colour do you get when you mix red and green?",
-       null
-      ]
      ],
-     "src": "reuse"
-    },
-    {
-     "text": "음… 갈색!",
-     "en": "Hmm... brown!",
-     "segs": [
-      [
-       "kid",
-       "Hmm... brown!",
-       "happy"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:point"
-     ]
-    },
-    {
-     "text": "맞아요, 갈색!",
-     "en": "That's right, brown!",
-     "segs": [
-      [
-       "witch",
-       "That's right, brown!",
-       "happy"
-      ]
-     ],
-     "src": "reuse",
      "after": [
       "pot:pop:brown"
      ]
@@ -4083,6 +3689,18 @@
      "after": [
       "candy:jar:choco"
      ]
+    },
+    {
+     "text": "빨강이랑 초록을 섞었더니 갈색이 됐어요!",
+     "en": "Red and green mixed together made brown!",
+     "segs": [
+      [
+       "nar",
+       "Red and green mixed together made brown!",
+       "toneup"
+      ]
+     ],
+     "src": "new"
     },
     {
      "text": "냠… 초콜릿 사탕이다!",
@@ -4208,19 +3826,18 @@
      "src": "reuse"
     },
     {
-     "text": "다현이가 하나, 토끼랑 곰이랑 여우가 하나씩, 퐁퐁퐁퐁 넣었어요.",
-     "en": "Dahyun dropped one in, then Rabbit, Bear and Fox dropped one each. Plop, plop, plop, plop!",
+     "text": "다현이가 하나씩, 하나씩, 퐁퐁퐁퐁 넣었어요.",
+     "en": "Dahyun dropped them in one by one. Plop, plop, plop, plop!",
      "segs": [
       [
        "nar",
-       "Dahyun dropped one in, then Rabbit, Bear and Fox dropped one each. Plop, plop, plop, plop!",
+       "Dahyun dropped them in one by one. Plop, plop, plop, plop!",
        "happy"
       ]
      ],
      "src": "new",
      "before": [
-      "kid:look:reach",
-      "friends:look:reach"
+      "kid:look:reach"
      ],
      "after": [
       "pot:drop:snot,fart,poo,frog"
@@ -4272,31 +3889,8 @@
      "src": "reuse",
      "before": [
       "candy:plate:ghost"
-     ]
-    },
-    {
-     "text": "까맣다!",
-     "en": "It's black!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "It's black!",
-       "toneup"
-      ],
-      [
-       "bear",
-       "It's black!",
-       "toneup"
-      ],
-      [
-       "fox",
-       "It's black!",
-       "toneup"
-      ]
      ],
-     "before": [
+     "after": [
       "friends:hop"
      ]
     }
@@ -4496,30 +4090,8 @@
      "src": "reuse",
      "before": [
       "witch:look:giggle"
-     ]
-    },
-    {
-     "text": "으웩!… 어? 맛있다!",
-     "en": "Eww!... Huh? It's yummy!",
-     "simultaneous": true,
-     "src": "chorus",
-     "segs": [
-      [
-       "rabbit",
-       "Eww!... Huh? It's yummy!",
-       "happy"
-      ],
-      [
-       "bear",
-       "Eww!... Huh? It's yummy!",
-       "happy"
-      ],
-      [
-       "fox",
-       "Eww!... Huh? It's yummy!",
-       "happy"
-      ]
-     ]
+     ],
+     "after": []
     },
     {
      "text": "뿅, 뿅, 뿅! 딸기, 개구리, 오리, 박쥐, 물고기, 호박… 다 같이 변신!",

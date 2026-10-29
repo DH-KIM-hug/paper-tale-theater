@@ -12,9 +12,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "At the end of the street, the candy shop window lit up bright.",
   "c": "audio/el/witch_candy/en/nar_82227981ea.mp3"
  },
- "어서 와, 친구들! 나는 사탕 마녀야. 어머, 모자가 또 거꾸로네.": {
-  "t": "Come in, come in, friends! I'm the Candy Witch. Oh my, my hat is upside down again.",
-  "c": "audio/el/witch_candy/en/witch_5abdbd6845.mp3"
+ "어서 와, 친구들! 나는 사탕 마녀야.": {
+  "t": "Come in, come in, friends! I'm the Candy Witch.",
+  "c": "audio/el/witch_candy/en/witch_e94ae4a6bc.mp3"
  },
  "다현이랑 친구들은 사탕 가게로 쪼르르 들어갔어요.": {
   "t": "Dahyun and her friends scurried right into the candy shop.",
@@ -48,6 +48,102 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Eww! Snot and poo?",
   "c": "audio/el/witch_candy/en/kid_c79bf0a6df.mp3"
  },
+ "아기 용 콧물이랑": {
+  "t": "baby dragon snot and",
+  "c": "audio/el/witch_candy/en/nar_e71eca7b52.mp3"
+ },
+ "빨간 소방차랑": {
+  "t": "the red fire truck and",
+  "c": "audio/el/witch_candy/en/nar_21f99e02c1.mp3"
+ },
+ "무당벌레랑": {
+  "t": "the ladybug and",
+  "c": "audio/el/witch_candy/en/nar_e8c0c4c10e.mp3"
+ },
+ "호박 등이랑": {
+  "t": "the pumpkin lantern and",
+  "c": "audio/el/witch_candy/en/nar_0c06003e6e.mp3"
+ },
+ "병아리 방귀랑": {
+  "t": "chick fart and",
+  "c": "audio/el/witch_candy/en/nar_f0b60c511f.mp3"
+ },
+ "고무 오리랑": {
+  "t": "the rubber duck and",
+  "c": "audio/el/witch_candy/en/nar_d9a1058d56.mp3"
+ },
+ "괴물 응가랑": {
+  "t": "monster poo and",
+  "c": "audio/el/witch_candy/en/nar_f663dc659c.mp3"
+ },
+ "파란 생선이랑": {
+  "t": "the blue fish and",
+  "c": "audio/el/witch_candy/en/nar_69482836e0.mp3"
+ },
+ "파란 파도랑": {
+  "t": "the blue wave and",
+  "c": "audio/el/witch_candy/en/nar_a5e9b31cfd.mp3"
+ },
+ "초록 개구리랑": {
+  "t": "the green frog and",
+  "c": "audio/el/witch_candy/en/nar_9487ab6d24.mp3"
+ },
+ "초록 공룡이랑": {
+  "t": "the green dinosaur and",
+  "c": "audio/el/witch_candy/en/nar_8c7d6dcd01.mp3"
+ },
+ "아기 용 콧물을 넣었어요!": {
+  "t": "baby dragon snot went in!",
+  "c": "audio/el/witch_candy/en/nar_e29e23a9ce.mp3"
+ },
+ "빨간 소방차를 넣었어요!": {
+  "t": "the red fire truck went in!",
+  "c": "audio/el/witch_candy/en/nar_ce3e99a9ee.mp3"
+ },
+ "무당벌레를 넣었어요!": {
+  "t": "the ladybug went in!",
+  "c": "audio/el/witch_candy/en/nar_5beeb90818.mp3"
+ },
+ "호박 등을 넣었어요!": {
+  "t": "the pumpkin lantern went in!",
+  "c": "audio/el/witch_candy/en/nar_dbf3e0e290.mp3"
+ },
+ "병아리 방귀를 넣었어요!": {
+  "t": "chick fart went in!",
+  "c": "audio/el/witch_candy/en/nar_a1dd9fffc1.mp3"
+ },
+ "고무 오리를 넣었어요!": {
+  "t": "the rubber duck went in!",
+  "c": "audio/el/witch_candy/en/nar_ca4b61a7d1.mp3"
+ },
+ "괴물 응가를 넣었어요!": {
+  "t": "monster poo went in!",
+  "c": "audio/el/witch_candy/en/nar_9d7c96af1f.mp3"
+ },
+ "파란 생선을 넣었어요!": {
+  "t": "the blue fish went in!",
+  "c": "audio/el/witch_candy/en/nar_7cd59e192d.mp3"
+ },
+ "파란 파도를 넣었어요!": {
+  "t": "the blue wave went in!",
+  "c": "audio/el/witch_candy/en/nar_dcfabd4c59.mp3"
+ },
+ "초록 개구리를 넣었어요!": {
+  "t": "the green frog went in!",
+  "c": "audio/el/witch_candy/en/nar_33b064bfcb.mp3"
+ },
+ "초록 공룡을 넣었어요!": {
+  "t": "the green dinosaur went in!",
+  "c": "audio/el/witch_candy/en/nar_ac20d08b1a.mp3"
+ },
+ "으엑! 콧물이요?": {
+  "t": "Eww! Snot?",
+  "c": "audio/el/witch_candy/en/kid_abf9ae67f0.mp3"
+ },
+ "으엑! 응가요?": {
+  "t": "Eww! Poo?",
+  "c": "audio/el/witch_candy/en/kid_17d45e17b9.mp3"
+ },
  "냐… 냄새!": {
   "t": "Nya... stinky!",
   "c": "audio/el/witch_candy/en/cat_02ebcdc440.mp3"
@@ -56,7 +152,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Hee hee, mix the colours and you get a brand-new colour candy. What happens when you eat it is... a secret! Shall we make some together?",
   "c": "audio/el/witch_candy/en/witch_bd8c089934.mp3"
  },
- "네, 내가 할래요!": {
+ "네, 제가 할게요!": {
   "t": "Yes! I want to do it!",
   "c": "audio/el/witch_candy/en/kid_ebd73379ad.mp3"
  },
@@ -64,9 +160,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then Dahyun goes first, and at the very end, all together!",
   "c": "audio/el/witch_candy/en/witch_217fd6a394.mp3"
  },
- "넣고 싶은 재료를 톡 눌러 솥에 넣어요. 다 넣었으면 국자를 톡!": {
-  "t": "Tap the ingredients you want to drop into the cauldron. When you're done, tap the ladle!",
-  "c": "audio/el/witch_candy/en/nar_70f1c20fe2.mp3"
+ "넣고 싶은 재료를 톡 눌러 솥에 넣어요.": {
+  "t": "Tap the ingredients you want to drop into the cauldron.",
+  "c": "audio/el/witch_candy/en/nar_7161fe9cba.mp3"
  },
  "다현이가 넣어 줘. 하나든 여러 개든 좋아.": {
   "t": "Dahyun, you put them in. One or lots, it's all good.",
@@ -183,6 +279,46 @@ Object.assign(NARRATION_CLIPS_EN, {
  "초록만 넣었으니… 초록 그대로!": {
   "t": "Only green went in... so it stays green!",
   "c": "audio/el/witch_candy/en/witch_e7bd61e8f0.mp3"
+ },
+ "빨강이랑 노랑을 섞었더니 주황색이 됐어요!": {
+  "t": "Red and yellow mixed together made orange!",
+  "c": "audio/el/witch_candy/en/nar_dc6c04aea5.mp3"
+ },
+ "노랑이랑 파랑을 섞었더니 초록색이 됐어요!": {
+  "t": "Yellow and blue mixed together made green!",
+  "c": "audio/el/witch_candy/en/nar_c522eae492.mp3"
+ },
+ "빨강이랑 파랑을 섞었더니 보라색이 됐어요!": {
+  "t": "Red and blue mixed together made purple!",
+  "c": "audio/el/witch_candy/en/nar_dfaa090a21.mp3"
+ },
+ "빨강이랑 초록을 섞었더니 갈색이 됐어요!": {
+  "t": "Red and green mixed together made brown!",
+  "c": "audio/el/witch_candy/en/nar_3100f126b7.mp3"
+ },
+ "초록이랑 노랑을 섞었더니 초록색이 됐어요!": {
+  "t": "Green and yellow mixed together made green!",
+  "c": "audio/el/witch_candy/en/nar_ab0f8ee2d2.mp3"
+ },
+ "초록이랑 파랑을 섞었더니 초록색이 됐어요!": {
+  "t": "Green and blue mixed together made green!",
+  "c": "audio/el/witch_candy/en/nar_b90996aa47.mp3"
+ },
+ "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!": {
+  "t": "Only red went in, so it became a red strawberry candy!",
+  "c": "audio/el/witch_candy/en/nar_a671c7f4b2.mp3"
+ },
+ "노랑만 넣었더니 노란 오리 사탕이 됐어요!": {
+  "t": "Only yellow went in, so it became a yellow duck candy!",
+  "c": "audio/el/witch_candy/en/nar_edf11d12c1.mp3"
+ },
+ "파랑만 넣었더니 파란 물고기 사탕이 됐어요!": {
+  "t": "Only blue went in, so it became a blue fish candy!",
+  "c": "audio/el/witch_candy/en/nar_a905601b0e.mp3"
+ },
+ "초록만 넣었더니 초록 개구리 사탕이 됐어요!": {
+  "t": "Only green went in, so it became a green frog candy!",
+  "c": "audio/el/witch_candy/en/nar_2afd1f9589.mp3"
  },
  "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.": {
   "t": "Pop! Candies came popping out of the cauldron.",
@@ -360,9 +496,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "This time, shall we try a different colour?",
   "c": "audio/el/witch_candy/en/witch_0e042db686.mp3"
  },
- "재료를 톡! 다 넣으면 국자!": {
-  "t": "Tap the ingredients! When you're done, the ladle!",
-  "c": "audio/el/witch_candy/en/nar_7295eb3216.mp3"
+ "재료를 톡!": {
+  "t": "Tap the ingredients!",
+  "c": "audio/el/witch_candy/en/nar_70ef62e4ae.mp3"
  },
  "아까랑 같네? 다음엔 다른 색도 해 봐!": {
   "t": "Same as before? Next time, try a different colour too!",

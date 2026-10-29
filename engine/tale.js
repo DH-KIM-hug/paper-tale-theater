@@ -429,30 +429,35 @@ const Tale = (() => {
   /* ---------- 조작: 채우기(fill) — 틀린 답 없이 여러 대상을 톡해 넣고 '끝' 대상을 누르면 끝 ----------
      T.fill(items, { done, maxKinds, allow, onPut, onReject, onEmpty, prompt, auto })
        items: [{ el, key, ... }]  — 모두 정답. 같은 대상을 다시 누르면 하나 더 들어간다
-       done:  '끝' 대상(국자). 하나도 안 넣었으면 끝나지 않고 onEmpty() 만 부른다
+       done:  '끝' 대상(국자). 하나도 안 넣었으면 끝나지 않고 onEmpty() 만 부른다. 없어도 된다(maxCount·idleDone 으로 끝냄)
        maxKinds: 받는 key 종류 수 상한 — 새 종류가 상한을 넘으면 받지 않고 onReject(item)
+       maxCount: 이만큼 넣으면 '끝'을 누르지 않아도 저절로 끝난다(2026-10-29 사탕 마녀: 재료 두 개면 바로 젓기)
+       idleDone: 하나 이상 넣은 뒤 이 ms 동안 더 넣지 않으면 저절로 끝난다
        allow(item, state): false 면 받지 않고 onReject(item). state = { order, kinds, count }
        onPut(item, n, state): 받아들일 때 부른다(기다리지 않는다). n = 지금까지 넣은 개수
        onReject(item, state): 기본은 좌우 흔들림
        auto(items, state): 자동 재생이 누를 item 배열(회전마다 중복 없이 고르는 것은 동화 쪽이 정한다). 없으면 무작위 1~2종류
      → Promise<{ order: item[], kinds: Set, count }>
      손가락: 아무것도 안 넣었으면 5초 뒤 대상을 돌아가며, 넣은 뒤에는 20초 뒤 done. 12초 재안내(prompt) */
-  function fill(items, { done, maxKinds = 0, allow, onPut, onReject, onEmpty, prompt } = {}) {
+  function fill(items, { done, maxKinds = 0, maxCount = 0, idleDone = 0, allow, onPut, onReject, onEmpty, prompt } = {}) {
     return new Promise(res => {
       const st = { order: [], kinds: new Set(), count: 0 };
-      let over = false, t1, t2, lap = 0;
-      const stopT = () => { clearTimeout(t1); clearTimeout(t2); hideHand(); };
+      let over = false, t1, t2, t3, lap = 0;
+      const stopT = () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); hideHand(); };
       const rearm = () => {
         stopT();
-        if (over || AUTO()) return;
+        if (over) return;
         const none = st.order.length === 0;
-        t1 = setTimeout(() => { if (over) return; showHand(none ? items[lap++ % items.length].el : done); }, none ? 5000 : 20000);
+        if (idleDone && !none) t3 = setTimeout(() => { if (!over) finish(); }, idleDone);
+        if (AUTO()) return;
+        t1 = setTimeout(() => { if (over) return; showHand(none || !done ? items[lap++ % items.length].el : done); }, none || !done ? 5000 : 20000);
         if (prompt) t2 = setTimeout(() => { if (!over) Narrator.speak(prompt); }, 12000);
       };
       const finish = () => {
+        if (over) return;
         over = true; stopT();
         items.forEach(it => { it.el.removeEventListener('pointerdown', it._on); arm(it.el, false); });
-        done.removeEventListener('pointerdown', onDone); arm(done, false);
+        if (done) { done.removeEventListener('pointerdown', onDone); arm(done, false); }
         AudioFX.tap(); res(st);
       };
       const onDone = e => {
@@ -473,10 +478,11 @@ const Tale = (() => {
           }
           st.order.push(it); st.kinds.add(it.key); st.count = st.order.length;
           if (onPut) { const r = onPut(it, st.count, st); if (r && r.catch) r.catch(er => console.warn('fill onPut', er)); }
+          if (maxCount && st.count >= maxCount) finish(); else rearm();   // 넣은 뒤의 기다림(손가락·idleDone)을 새로 잰다
         };
         it.el.addEventListener('pointerdown', it._on);
       });
-      arm(done, true); done.addEventListener('pointerdown', onDone);
+      if (done) { arm(done, true); done.addEventListener('pointerdown', onDone); }
       rearm();
     });
   }

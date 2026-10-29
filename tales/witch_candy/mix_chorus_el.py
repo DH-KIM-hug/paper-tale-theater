@@ -39,10 +39,15 @@ def mix(urls, outdir, reldir):
         subprocess.run(args + ['-filter_complex', f, '-map', '[out]', '-ac', '1', '-b:a', '96k', dst], check=True)
     return rel
 
+# 2026-10-29 사용자: '친구들 대사 그냥 없애줘' — 여섯 목소리 합창(오~~우~~·해피 핼러윈)에서 토끼·곰·여우 목소리를 뺀다(다현이·마녀·호박이만).
+# 친구들만의 합창(ch_*)은 놀이·읽기에서 쓰지 않지만 파일은 그대로 만들어 둔다
+NO_FRIENDS = {'ghost_all', 'happy_all'}
+def voices(key, urls):
+    return [u for u in urls if not re.search(r'/(rabbit|bear|fox)_[0-9a-f]{10}\.mp3$', u)] if key in NO_FRIENDS else urls
 ko, en = {}, {}
 for key, text in spec.items():
-    ko[text] = mix(ko_v[key], 'audio/el/witch_candy/chorus', 'audio/el/witch_candy/chorus')
-    en[text] = {'t': en_spec[key][0][1], 'c': mix(en_v[key], 'audio/el/witch_candy/chorus/en', 'audio/el/witch_candy/chorus/en')}
+    ko[text] = mix(voices(key, ko_v[key]), 'audio/el/witch_candy/chorus', 'audio/el/witch_candy/chorus')
+    en[text] = {'t': en_spec[key][0][1], 'c': mix(voices(key, en_v[key]), 'audio/el/witch_candy/chorus/en', 'audio/el/witch_candy/chorus/en')}
 for d, used in (('audio/el/witch_candy/chorus', {os.path.basename(v) for v in ko.values()}), ('audio/el/witch_candy/chorus/en', {os.path.basename(v['c']) for v in en.values()})):
     for fn in os.listdir(os.path.join(ROOT, d)):
         if fn.endswith('.mp3') and fn not in used: os.remove(os.path.join(ROOT, d, fn))

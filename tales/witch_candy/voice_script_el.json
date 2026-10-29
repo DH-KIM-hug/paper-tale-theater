@@ -92,11 +92,11 @@
    ]
   },
   {
-   "text": "어서 와, 친구들! 나는 사탕 마녀야. 어머, 모자가 또 거꾸로네.",
+   "text": "어서 와, 친구들! 나는 사탕 마녀야.",
    "segs": [
     [
      "witch",
-     "어서 와, 친구들! 나는 사탕 마녀야. 어머, 모자가 또 거꾸로네.",
+     "어서 와, 친구들! 나는 사탕 마녀야.",
      "happy",
      "[kind quirky witch, warm, giggly, a little silly, never scary]"
     ]
@@ -191,6 +191,270 @@
    ]
   },
   {
+   "text": "아기 용 콧물이랑",
+   "segs": [
+    [
+     "nar",
+     "아기 용 콧물이랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "빨간 소방차랑",
+   "segs": [
+    [
+     "nar",
+     "빨간 소방차랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "무당벌레랑",
+   "segs": [
+    [
+     "nar",
+     "무당벌레랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "호박 등이랑",
+   "segs": [
+    [
+     "nar",
+     "호박 등이랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "병아리 방귀랑",
+   "segs": [
+    [
+     "nar",
+     "병아리 방귀랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "고무 오리랑",
+   "segs": [
+    [
+     "nar",
+     "고무 오리랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "괴물 응가랑",
+   "segs": [
+    [
+     "nar",
+     "괴물 응가랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "파란 생선이랑",
+   "segs": [
+    [
+     "nar",
+     "파란 생선이랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "파란 파도랑",
+   "segs": [
+    [
+     "nar",
+     "파란 파도랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "초록 개구리랑",
+   "segs": [
+    [
+     "nar",
+     "초록 개구리랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "초록 공룡이랑",
+   "segs": [
+    [
+     "nar",
+     "초록 공룡이랑",
+     null,
+     "[playful storytelling, clear, the sentence keeps going — light rising end, no full stop]"
+    ]
+   ]
+  },
+  {
+   "text": "아기 용 콧물을 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "아기 용 콧물을 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "빨간 소방차를 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "빨간 소방차를 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "무당벌레를 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "무당벌레를 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "호박 등을 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "호박 등을 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "병아리 방귀를 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "병아리 방귀를 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "고무 오리를 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "고무 오리를 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "괴물 응가를 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "괴물 응가를 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "파란 생선을 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "파란 생선을 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "파란 파도를 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "파란 파도를 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "초록 개구리를 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "초록 개구리를 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "초록 공룡을 넣었어요!",
+   "segs": [
+    [
+     "nar",
+     "초록 공룡을 넣었어요!",
+     "toneup",
+     "[playful storytelling, clear, finishing the sentence brightly]"
+    ]
+   ]
+  },
+  {
+   "text": "으엑! 콧물이요?",
+   "segs": [
+    [
+     "kid",
+     "으엑! 콧물이요?",
+     null,
+     "[young girl, grossed out but giggling, comic]"
+    ]
+   ]
+  },
+  {
+   "text": "으엑! 응가요?",
+   "segs": [
+    [
+     "kid",
+     "으엑! 응가요?",
+     null,
+     "[young girl, grossed out but giggling, comic]"
+    ]
+   ]
+  },
+  {
    "text": "냐… 냄새!",
    "segs": [
     [
@@ -213,11 +477,11 @@
    ]
   },
   {
-   "text": "네, 내가 할래요!",
+   "text": "네, 제가 할게요!",
    "segs": [
     [
      "kid",
-     "네, 내가 할래요!",
+     "네, 제가 할게요!",
      "happy",
      "[young girl, eager, bold, bright]"
     ]
@@ -235,11 +499,11 @@
    ]
   },
   {
-   "text": "넣고 싶은 재료를 톡 눌러 솥에 넣어요. 다 넣었으면 국자를 톡!",
+   "text": "넣고 싶은 재료를 톡 눌러 솥에 넣어요.",
    "segs": [
     [
      "nar",
-     "넣고 싶은 재료를 톡 눌러 솥에 넣어요. 다 넣었으면 국자를 톡!",
+     "넣고 싶은 재료를 톡 눌러 솥에 넣어요.",
      null,
      "[friendly, clear, inviting, a tiny pause before 톡]"
     ]
@@ -561,6 +825,116 @@
      "초록만 넣었으니… 초록 그대로!",
      "happy",
      "[kind quirky witch, a thinking pause, then bright reveal]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 노랑을 섞었더니 주황색이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "빨강이랑 노랑을 섞었더니 주황색이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "노랑이랑 파랑을 섞었더니 초록색이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "노랑이랑 파랑을 섞었더니 초록색이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 파랑을 섞었더니 보라색이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "빨강이랑 파랑을 섞었더니 보라색이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강이랑 초록을 섞었더니 갈색이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "빨강이랑 초록을 섞었더니 갈색이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 노랑을 섞었더니 초록색이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "초록이랑 노랑을 섞었더니 초록색이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "초록이랑 파랑을 섞었더니 초록색이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "빨강만 넣었더니 빨간 딸기 사탕이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "노랑만 넣었더니 노란 오리 사탕이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "노랑만 넣었더니 노란 오리 사탕이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "파랑만 넣었더니 파란 물고기 사탕이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "파랑만 넣었더니 파란 물고기 사탕이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
+    ]
+   ]
+  },
+  {
+   "text": "초록만 넣었더니 초록 개구리 사탕이 됐어요!",
+   "segs": [
+    [
+     "nar",
+     "초록만 넣었더니 초록 개구리 사탕이 됐어요!",
+     "toneup",
+     "[warm storyteller, delighted reveal, clear colour words]"
     ]
    ]
   },
@@ -1049,11 +1423,11 @@
    ]
   },
   {
-   "text": "재료를 톡! 다 넣으면 국자!",
+   "text": "재료를 톡!",
    "segs": [
     [
      "nar",
-     "재료를 톡! 다 넣으면 국자!",
+     "재료를 톡!",
      null,
      "[friendly, clear, inviting, a tiny pause before 톡]"
     ]
