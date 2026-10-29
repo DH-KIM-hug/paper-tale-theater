@@ -455,42 +455,12 @@
      ]
     },
     {
-     "text": "콧물로 만든 건데… 으웩…",
-     "en": "But it's made from snot... eww...",
+     "text": "냠… 딸기 사탕이다!",
+     "en": "Yum... it's strawberry candy!",
      "segs": [
       [
        "kid",
-       "But it's made from snot... eww...",
-       null
-      ]
-     ],
-     "src": "reuse",
-     "before": [
-      "kid:look:yuck"
-     ]
-    },
-    {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "en": "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-     "segs": [
-      [
-       "nar",
-       "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-       null
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …딸기 사탕이다!",
-     "en": "Huh? It's yummy! ...It's strawberry candy!",
-     "segs": [
-      [
-       "kid",
-       "Huh? It's yummy! ...It's strawberry candy!",
+       "Yum... it's strawberry candy!",
        "happy"
       ]
      ],
@@ -748,27 +718,12 @@
      ]
     },
     {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "en": "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-     "segs": [
-      [
-       "nar",
-       "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-       null
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …오리 사탕이다!",
-     "en": "Huh? It's yummy! ...It's duck candy!",
+     "text": "냠… 오리 사탕이다!",
+     "en": "Yum... it's duck candy!",
      "segs": [
       [
        "kid",
-       "Huh? It's yummy! ...It's duck candy!",
+       "Yum... it's duck candy!",
        "happy"
       ]
      ],
@@ -1032,27 +987,12 @@
      ]
     },
     {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "en": "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-     "segs": [
-      [
-       "nar",
-       "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-       null
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …물고기 사탕이다!",
-     "en": "Huh? It's yummy! ...It's fish candy!",
+     "text": "냠… 물고기 사탕이다!",
+     "en": "Yum... it's fish candy!",
      "segs": [
       [
        "kid",
-       "Huh? It's yummy! ...It's fish candy!",
+       "Yum... it's fish candy!",
        "happy"
       ]
      ],
@@ -1298,27 +1238,12 @@
      ]
     },
     {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "en": "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-     "segs": [
-      [
-       "nar",
-       "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-       null
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …개구리 사탕이다!",
-     "en": "Huh? It's yummy! ...It's frog candy!",
+     "text": "냠… 개구리 사탕이다!",
+     "en": "Yum... it's frog candy!",
      "segs": [
       [
        "kid",
-       "Huh? It's yummy! ...It's frog candy!",
+       "Yum... it's frog candy!",
        "happy"
       ]
      ],
@@ -1582,42 +1507,12 @@
      ]
     },
     {
-     "text": "콧물로 만든 건데… 으웩…",
-     "en": "But it's made from snot... eww...",
+     "text": "냠… 호박 사탕이다!",
+     "en": "Yum... it's pumpkin candy!",
      "segs": [
       [
        "kid",
-       "But it's made from snot... eww...",
-       null
-      ]
-     ],
-     "src": "reuse",
-     "before": [
-      "kid:look:yuck"
-     ]
-    },
-    {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "en": "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-     "segs": [
-      [
-       "nar",
-       "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-       null
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …호박 사탕이다!",
-     "en": "Huh? It's yummy! ...It's pumpkin candy!",
-     "segs": [
-      [
-       "kid",
-       "Huh? It's yummy! ...It's pumpkin candy!",
+       "Yum... it's pumpkin candy!",
        "happy"
       ]
      ],
@@ -1863,27 +1758,12 @@
      ]
     },
     {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "en": "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-     "segs": [
-      [
-       "nar",
-       "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-       null
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …박쥐 사탕이다!",
-     "en": "Huh? It's yummy! ...It's bat candy!",
+     "text": "냠… 박쥐 사탕이다!",
+     "en": "Yum... it's bat candy!",
      "segs": [
       [
        "kid",
-       "Huh? It's yummy! ...It's bat candy!",
+       "Yum... it's bat candy!",
        "happy"
       ]
      ],
@@ -2129,27 +2009,12 @@
      ]
     },
     {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "en": "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-     "segs": [
-      [
-       "nar",
-       "Dahyun squeezed her eyes shut and popped the candy into her mouth.",
-       null
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …초콜릿 사탕이다!",
-     "en": "Huh? It's yummy! ...It's chocolate candy!",
+     "text": "냠… 초콜릿 사탕이다!",
+     "en": "Yum... it's chocolate candy!",
      "segs": [
       [
        "kid",
-       "Huh? It's yummy! ...It's chocolate candy!",
+       "Yum... it's chocolate candy!",
        "happy"
       ]
      ],
@@ -3912,12 +3777,12 @@
    ],
    "lines": [
     {
-     "text": "으웩… 냠. 어? 입이 까매졌다! 유령 사탕이다~",
-     "en": "Eww... yum. Huh? My lips turned black! It's ghost candy!",
+     "text": "어? 입이 까매졌다! 유령 사탕이다~",
+     "en": "Huh? My lips turned black! It's ghost candy!",
      "segs": [
       [
        "kid",
-       "Eww... yum. Huh? My lips turned black! It's ghost candy!",
+       "Huh? My lips turned black! It's ghost candy!",
        "happy"
       ]
      ],

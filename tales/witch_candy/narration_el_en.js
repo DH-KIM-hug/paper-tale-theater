@@ -540,9 +540,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Out came a black candy!",
   "c": "audio/el/witch_candy/en/nar_1d9aea43ae.mp3"
  },
- "으웩… 냠. 어? 입이 까매졌다! 유령 사탕이다~": {
-  "t": "Eww... yum. Huh? My lips turned black! It's ghost candy!",
-  "c": "audio/el/witch_candy/en/kid_27c51be270.mp3"
+ "어? 입이 까매졌다! 유령 사탕이다~": {
+  "t": "Huh? My lips turned black! It's ghost candy!",
+  "c": "audio/el/witch_candy/en/kid_473fb13869.mp3"
  },
  "히히, 나도!": {
   "t": "Hee hee, me too!",

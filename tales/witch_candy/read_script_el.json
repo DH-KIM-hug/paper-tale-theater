@@ -455,43 +455,13 @@
      ]
     },
     {
-     "text": "콧물로 만든 건데… 으웩…",
+     "text": "냠… 딸기 사탕이다!",
      "segs": [
       [
        "kid",
-       "콧물로 만든 건데… 으웩…",
-       null,
-       "[young girl, hesitant, grossed out, comic, small voice]"
-      ]
-     ],
-     "src": "reuse",
-     "before": [
-      "kid:look:yuck"
-     ]
-    },
-    {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "segs": [
-      [
-       "nar",
-       "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-       null,
-       "[gentle, a little suspense, playful]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …딸기 사탕이다!",
-     "segs": [
-      [
-       "kid",
-       "어? 맛있다! …딸기 사탕이다!",
+       "냠… 딸기 사탕이다!",
        "happy",
-       "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+       "[young girl, munching, then bright shout]"
       ]
      ],
      "src": "reuse",
@@ -748,28 +718,13 @@
      ]
     },
     {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "segs": [
-      [
-       "nar",
-       "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-       null,
-       "[gentle, a little suspense, playful]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …오리 사탕이다!",
+     "text": "냠… 오리 사탕이다!",
      "segs": [
       [
        "kid",
-       "어? 맛있다! …오리 사탕이다!",
+       "냠… 오리 사탕이다!",
        "happy",
-       "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+       "[young girl, munching, then bright shout]"
       ]
      ],
      "src": "reuse",
@@ -1032,28 +987,13 @@
      ]
     },
     {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "segs": [
-      [
-       "nar",
-       "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-       null,
-       "[gentle, a little suspense, playful]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …물고기 사탕이다!",
+     "text": "냠… 물고기 사탕이다!",
      "segs": [
       [
        "kid",
-       "어? 맛있다! …물고기 사탕이다!",
+       "냠… 물고기 사탕이다!",
        "happy",
-       "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+       "[young girl, munching, then bright shout]"
       ]
      ],
      "src": "reuse",
@@ -1298,28 +1238,13 @@
      ]
     },
     {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "segs": [
-      [
-       "nar",
-       "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-       null,
-       "[gentle, a little suspense, playful]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …개구리 사탕이다!",
+     "text": "냠… 개구리 사탕이다!",
      "segs": [
       [
        "kid",
-       "어? 맛있다! …개구리 사탕이다!",
+       "냠… 개구리 사탕이다!",
        "happy",
-       "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+       "[young girl, munching, then bright shout]"
       ]
      ],
      "src": "reuse",
@@ -1582,43 +1507,13 @@
      ]
     },
     {
-     "text": "콧물로 만든 건데… 으웩…",
+     "text": "냠… 호박 사탕이다!",
      "segs": [
       [
        "kid",
-       "콧물로 만든 건데… 으웩…",
-       null,
-       "[young girl, hesitant, grossed out, comic, small voice]"
-      ]
-     ],
-     "src": "reuse",
-     "before": [
-      "kid:look:yuck"
-     ]
-    },
-    {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "segs": [
-      [
-       "nar",
-       "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-       null,
-       "[gentle, a little suspense, playful]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …호박 사탕이다!",
-     "segs": [
-      [
-       "kid",
-       "어? 맛있다! …호박 사탕이다!",
+       "냠… 호박 사탕이다!",
        "happy",
-       "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+       "[young girl, munching, then bright shout]"
       ]
      ],
      "src": "reuse",
@@ -1863,28 +1758,13 @@
      ]
     },
     {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "segs": [
-      [
-       "nar",
-       "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-       null,
-       "[gentle, a little suspense, playful]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …박쥐 사탕이다!",
+     "text": "냠… 박쥐 사탕이다!",
      "segs": [
       [
        "kid",
-       "어? 맛있다! …박쥐 사탕이다!",
+       "냠… 박쥐 사탕이다!",
        "happy",
-       "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+       "[young girl, munching, then bright shout]"
       ]
      ],
      "src": "reuse",
@@ -2129,28 +2009,13 @@
      ]
     },
     {
-     "text": "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-     "segs": [
-      [
-       "nar",
-       "다현이는 눈을 꼭 감고 사탕을 입에 쏙 넣었어요.",
-       null,
-       "[gentle, a little suspense, playful]"
-      ]
-     ],
-     "src": "new",
-     "before": [
-      "kid:look:yum"
-     ]
-    },
-    {
-     "text": "어? 맛있다! …초콜릿 사탕이다!",
+     "text": "냠… 초콜릿 사탕이다!",
      "segs": [
       [
        "kid",
-       "어? 맛있다! …초콜릿 사탕이다!",
+       "냠… 초콜릿 사탕이다!",
        "happy",
-       "[young girl, surprised then delighted, a pause after 맛있다, bright shout at the end]"
+       "[young girl, munching, then bright shout]"
       ]
      ],
      "src": "reuse",
@@ -3912,11 +3777,11 @@
    ],
    "lines": [
     {
-     "text": "으웩… 냠. 어? 입이 까매졌다! 유령 사탕이다~",
+     "text": "어? 입이 까매졌다! 유령 사탕이다~",
      "segs": [
       [
        "kid",
-       "으웩… 냠. 어? 입이 까매졌다! 유령 사탕이다~",
+       "어? 입이 까매졌다! 유령 사탕이다~",
        "happy",
        "[young girl, hesitant then munching, surprised, then gleeful playful ghost voice at the end]"
       ]

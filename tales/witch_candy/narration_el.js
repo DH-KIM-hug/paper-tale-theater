@@ -135,7 +135,7 @@ Object.assign(NARRATION_CLIPS, {
  "하나, 둘, 셋, 넷! 색을 전부 섞으면…": "audio/el/witch_candy/nar_10a17ad714.mp3",
  "뽀글뽀글… 펑!": "audio/el/witch_candy/witch_5bc53e1a91.mp3",
  "까만 사탕이 나왔어요!": "audio/el/witch_candy/nar_d140ff7536.mp3",
- "으웩… 냠. 어? 입이 까매졌다! 유령 사탕이다~": "audio/el/witch_candy/kid_27661bf059.mp3",
+ "어? 입이 까매졌다! 유령 사탕이다~": "audio/el/witch_candy/kid_a7e1e7cf74.mp3",
  "히히, 나도!": "audio/el/witch_candy/witch_2a00bd019b.mp3",
  "마녀도, 호박이도, 친구들도 까만 입술로…": "audio/el/witch_candy/nar_7e7d86dddd.mp3",
  "유령 흉내를 내며 마을을 한 바퀴 돌았어요. 하나도 안 무서워요, 다 웃고 있거든요.": "audio/el/witch_candy/nar_4ecdef21e8.mp3",

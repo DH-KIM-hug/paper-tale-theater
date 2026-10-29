@@ -82,7 +82,7 @@
      PLAN §10-1 과 다른 것: 다현이 yuck 은 오른쪽(얼굴이 오른쪽으로 돌아 있음 → 왼쪽을 볼 때 뒤집음), point 오른쪽, 호박이 reach 는 왼쪽(엎드려 왼쪽으로 뻗음) */
   const NAT = { wc_kid_stand: 'right', wc_kid_walk: 'right', wc_kid_yuck: 'right', wc_kid_reach: 'left', wc_kid_point: 'right', wc_kid_yum: 'front', wc_kid_ghost: 'right', wc_kid_tf_strawberry: 'front', wc_kid_tf_strawberry_ball: 'front',
     wc_kid_tf_duck: 'right', wc_kid_tf_fish: 'right', wc_kid_tf_frog_jump: 'right', wc_kid_tf_frog_sit: 'front', wc_kid_tf_pumpkin: 'front', wc_kid_tf_bat_up: 'right', wc_kid_tf_bat_down: 'right', wc_kid_tf_choco: 'front', wc_kid_tf_choco_flat: 'front',
-    wc_witch_stand: 'left', wc_witch_present: 'left', wc_witch_stir: 'right', wc_witch_surprise: 'front', wc_witch_giggle: 'left', wc_witch_ghost: 'right', wc_witch_magic: 'left', wc_ghost: 'front',
+    wc_witch_stand: 'left', wc_witch_present: 'left', wc_witch_stir: 'right', wc_witch_surprise: 'front', wc_witch_giggle: 'left', wc_witch_ghost: 'right', wc_witch_magic: 'left', wc_ghost: 'left',
     wc_cat_sit: 'left', wc_cat_nose: 'left', wc_cat_reach: 'left', wc_cat_waddle: 'right', wc_cat_ghost: 'right' };
   ['rabbit', 'bear', 'fox'].forEach(w => { NAT[`wc_${w}_stand`] = 'right'; NAT[`wc_${w}_reach`] = 'left'; NAT[`wc_${w}_happy`] = 'front'; NAT[`wc_${w}_ghost`] = 'right'; });
 
@@ -117,7 +117,7 @@
     E1: "자, 저어 보자. 뽀글뽀글…", E2: "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.", E3: "먼저 먹어 봐.", E4: "콧물로 만든 건데… 으웩…",
     F1: "히히, 핼러윈 마법이야!", F2: "나도 하고 싶다!", F3: "마지막에 다 같이!", F4: "뿅! 다현이는 다시 원래대로 돌아왔어요.",
     G1: "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!", G2: "전부 다요?", G3: "이번엔 빨강, 노랑, 파랑, 초록 다 넣어요! 톡 눌러요.", G4: "하나, 둘, 셋, 넷! 색을 전부 섞으면…", G5: "뽀글뽀글… 펑!", G6: "까만 사탕이 나왔어요!", G7: "까맣다!",
-    H1: "으웩… 냠. 어? 입이 까매졌다! 유령 사탕이다~", H2: "오~~우~~", H3: "히히, 나도!", H4: "마녀도, 호박이도, 친구들도 까만 입술로…", H5: "유령 흉내를 내며 마을을 한 바퀴 돌았어요. 하나도 안 무서워요, 다 웃고 있거든요.",
+    H1: "어? 입이 까매졌다! 유령 사탕이다~", H2: "오~~우~~", H3: "히히, 나도!", H4: "마녀도, 호박이도, 친구들도 까만 입술로…", H5: "유령 흉내를 내며 마을을 한 바퀴 돌았어요. 하나도 안 무서워요, 다 웃고 있거든요.",
     I1: "자, 약속! 남은 사탕 다 나와라!", I2: "솥에서 사탕이 퐁퐁퐁 쏟아졌어요. 모두 하나씩… 마녀는 두 개!", I3: "히히, 나는 두 개!", I4: "으웩!… 어? 맛있다!", I5: "뿅, 뿅, 뿅! 딸기, 개구리, 오리, 박쥐, 물고기, 호박… 다 같이 변신!",
     I6: "뿅! 모두 원래대로.", I7: "다현이 덕분에 사탕이 가득! 내년에도 같이 섞자.", I8: "네! 다음엔 다른 색으로요!", I9: "사탕 마녀를 톡 눌러 인사해요.", I10: "해피 핼러윈! 오~우~!",
     NTF: { strawberry: "뿅! 다현이가 빨간 딸기가 됐어요!", duck: "뿅! 다현이 발이 오리발이 됐어요!", fish: "뿅! 다현이한테 물고기 꼬리가 생겼어요!", frog: "뿅! 다현이가 초록 개구리가 됐어요!", pumpkin: "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!", bat: "뿅! 다현이 등에 박쥐 날개가 돋았어요!", choco: "뿅! 다현이 입에 초콜릿 수염이 났어요!" },
@@ -250,7 +250,7 @@
   const candyProp = (T, c, b) => { const f = 'wc_prop_candy_' + c; return prop(T, f, fitWH(f, b * 1.3, b)[1]); };
   function put(T, a, x, y, { look, to, s = 1 } = {}) {
     T.world.appendChild(a.pos); a.pos.getAnimations().forEach(n => n.cancel()); a.pos.style.display = ''; a.pos.style.opacity = '';
-    a.setScale(s); if (look) a.look(look, to || 'right'); else a.turn(to || a.want);
+    a.setScale(s); a.x = x; if (look) a.look(look, to || 'right'); else a.turn(to || a.want);   // x 를 먼저 둔다: 다현이 시선(솥 쪽)이 새 자리로 정해진다
     a.place(x, y); a.body.style.transform = ''; a.body.style.filter = ''; a.body.style.opacity = '';
     return a;
   }
@@ -374,6 +374,8 @@
     const POT = { cx: 0, cy: 0, rx: PW * .302, ry: PH * .072 };
     const potAt = (cx, bottom) => { POT.cx = cx; POT.cy = bottom - PH * (1 - .113); };
     const potHome = () => potAt(X(880, 500), X(FL - 40, 515));
+    /* 부엌에서 다현이는 늘 솥을 본다(2026-10-29 사용자: '왜 자꾸 왼쪽 보지, 솥을 보자') — 서기·걷기·뻗기·가리키기·냠·으엑 자세만, 변신·유령 행진은 그대로 */
+    { const turn0 = kid.turn; kid.turn = d => turn0(d !== 'front' && curBg === 'wc_bg_kitchen' && /^(stand|walk|reach|point|yum|yuck)$/.test(kid.cur) && POT.cx && Math.abs(kid.x - POT.cx) > 20 ? (kid.x < POT.cx ? 'right' : 'left') : d); }
     potHome();
     let K = null;                           // 지금 장면의 부엌 도구
     let lit = false;                        // 2장에서 장작에 불을 붙인 뒤로는 부엌마다 큰 불(2026-10-29 사용자: 솥 밑이 불타고 있어야)
@@ -634,6 +636,7 @@
     const rounds3 = QS.get('rounds') === '3';
     const mixArg = (QS.get('mix') || '').split(',').filter(Boolean);
     const autoMode = T.autoplay() || (() => { try { return window.parent !== window && QS.get('verify') === '1'; } catch (e) { return false; } })();
+    const usedIng = new Set();               // 이미 넣은 재료 — 다음 회전 선반에서 빈칸(2026-10-29 사용자)
     const used = [];                         // 지금까지 나온 결과 (자동 재생은 중복 없이)
     let lastRes = '';
     const pickAuto = (round) => {
@@ -918,8 +921,7 @@
     cue('fire_crackle', .7); cue('whoosh', .5); T.pop(K.wood.getBBox ? POT.cx : POT.cx, POT.cy + 20, tr('화르륵!'), '#E8703A');
     bubbles(); amb('pot_boil', .2, 6);
     await say(S.B3);
-    cat.hop(8, 300); cue('animals/cat', .4); T.pop(cat.x, FL - cat.h - 20, tr('냐옹!'));
-    await say(S.B4);
+    cat.hop(8, 300); await say(S.B4);   // 효과음 고양이·말풍선 '냐옹!'은 뺐다 — 녹음 '냐옹!'과 겹쳐 두 번 울렸다(2026-10-29)
     FRS.forEach(f => f.hop(8, 300)); cue('pop', .4); await sleep(600);   // 친구들 '뽀글뽀글!' 뺌
     await sleep(1200);
 
@@ -948,10 +950,12 @@
       else await say(S.D1);
       const bigAsk = first ? S.D2 : S.R2a;
       kid.look('reach', 'left');
-      K.cells.forEach(c => bob(c.el));
+      K.cells.forEach(c => { if (usedIng.has(c.id)) c.el.style.visibility = 'hidden'; });
+      const cells = K.cells.filter(c => !usedIng.has(c.id));
+      cells.forEach(c => bob(c.el));
       const landing = [];                    // 날아가는 재료(솥에 닿아야 색이 바뀐다) — 젓기 전에 다 닿기를 기다린다
       /* 재료 두 개를 넣으면 저절로 끝(2026-10-29 사용자: '넣고 국자 누르는게 어려워'). 하나만 넣고 9초 더 안 넣으면 그 하나로 */
-      const result = await T.ask(bigAsk, () => T.fill(K.cells, {
+      const result = await T.ask(bigAsk, () => T.fill(cells, {
         maxKinds: 2, maxCount: 2, idleDone: 9000, prompt: bigAsk,
         onPut: async (c, n) => {
           kid.hop(6, 260);
@@ -964,9 +968,10 @@
         },
         onReject: async c => { cue('doop', .4) || cue('pop', .3); c.el.animate([{ translate: '0 0' }, { translate: '-8px 0' }, { translate: '8px 0' }, { translate: '0 0' }], 360); },
         /* 자동 재생: 늘 두 개(한 색이면 같은 색 재료 둘 — 빨강 둘 = 딸기) */
-        auto: () => { const ks = pickAuto(round), ids = []; (ks.length === 1 ? [ks[0], ks[0]] : ks).forEach(k => { const c = ING.filter(i => i.key === k && !ids.includes(i.id)); ids.push(c[Math.floor(Math.random() * c.length)].id); }); return ids.map(id => K.cells.find(c => c.id === id)); },
+        auto: () => { const ks = pickAuto(round), ids = []; (ks.length === 1 ? [ks[0], ks[0]] : ks).forEach(k => { const c = ING.filter(i => i.key === k && !ids.includes(i.id)); const f = c.filter(i => !usedIng.has(i.id)), pool = f.length ? f : c; ids.push(pool[Math.floor(Math.random() * pool.length)].id); }); return ids.map(id => K.cells.find(c => c.id === id)); },
       }));
       K.cells.forEach(c => { c.el.classList.remove('tap-target'); });
+      result.order.forEach(c => usedIng.add(c.id));
       await Promise.all(landing); await sleep(350);
       const kinds = result.kinds, rs = resultOf(kinds), resKo = RES[rs.res].ko;
       kid.look('stand', 'left');
@@ -988,14 +993,10 @@
       if (lastRes === rs.res) { witch.look('giggle', 'left'); await say(S.RSAME); }
       witch.look('present', 'left');
       kid.look('yum', 'front'); K.swirlAnim = null;
-      if (first) {
-        await say(S.E3);
-        kid.look('yuck', 'left'); cue('whistle_down', .5);
-        if (result.order.some(c => c.id === 'snot')) await say(S.E4);          // 콧물이 들어간 판만 "콧물로 만든 건데… 으웩…"
-        else { T.pop(kid.x, FL - kid.h - 10, tr('으엑…'), '#3F6B4F'); await voWait('yuck'); await sleep(GAP); }   // 아니면 extra.yuck 
-        cue('chomp', .5); kid.look('yum', 'front'); cue('ding_glock', .5); cue('harp_gliss', .4);
-        await say(`어? 맛있다! …${resKo} 사탕이다!`);
-      } else { cue('chomp', .5); await say(`냠… ${resKo} 사탕이다!`); }
+      /* 맛없을 줄 알았다는 으웩·'어? 맛있다!'는 뺐다(2026-10-29 사용자) — 1회전만 마녀가 '먼저 먹어 봐', 늘 '냠… ○○ 사탕이다!' */
+      if (first) await say(S.E3);
+      cue('chomp', .5); kid.look('yum', 'front'); if (first) { cue('ding_glock', .5); cue('harp_gliss', .4); }
+      await say(`냠… ${resKo} 사탕이다!`);
       cand.pos.style.display = 'none';
       seenAdd(rs.res); used.push(rs.res); lastRes = rs.res;
       /* ---- 6. 뿅! 몸이 변했어요 ---- */
@@ -1141,12 +1142,13 @@
     cue(['theremin_wobble', 'whistle_wobble'], .5); await say(S.H2);      // 모두 합창 '오~~우~~'(chorus_el.js)
     const march = async (bg, xs) => {
       const all = [kid, witch, cat, ...FRS], kit = bg === curBg && bg === 'wc_bg_kitchen', fy = kit ? X(FL, PFY) : FL;
-      const ms = kit ? X(.85, .6) : X(.9, .7);   // 부엌은 부엌 크기(솥과 같은 비율)
-      const line = () => { all.forEach((a, i) => put(T, a, xs[0] - i * (P ? 40 : 70), fy, { to: 'right', s: ms })); all.forEach(a => a.look('ghost', 'right')); };
+      const ms = kit ? X(.85, .6) : X(.9, .7), sp = P ? 52 : 70;   // 부엌은 부엌 크기(솥과 같은 비율)
+      const line = () => { all.map((a, i) => [a, i]).reverse().forEach(([a, i]) => put(T, a, xs[0] - i * sp, fy, { to: 'right', s: ms }));   // 뒤에서부터 놓아 맨 앞 다현이가 맨 위(마녀 뒤에 가려지지 않게)
+      all.forEach(a => a.look('ghost', 'right')); };
       /* 같은 부엌(7장 → 8장): 넘김 없이 솥은 그대로 두고, 여섯이 왼쪽에 한 줄로 걸어가 선다(2026-10-29) */
       if (kit) await cont(() => { K = kitchen({ shelf: false, ladle: false }); potFlat(COL.black, false); bubbles(); line(); });
       else { await T.curtain(false); T.clear(); bgImage(T, bg); setView(500); line(); await T.curtain(true); }
-      const sp = P ? 40 : 70, gs = ms;
+      const gs = ms;
       ghostJoin(xs[0] - 6 * sp - 20, fy, gs); fadeIn(ghost, 600);   // 맨 뒤에 몰래 붙은 진짜 유령
       const st = setInterval(() => cue('step_wood', .25), 500);
       cue('theremin_wobble', .4) || cue('whistle_wobble', .4);
