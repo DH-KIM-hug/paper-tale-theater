@@ -416,14 +416,14 @@
           [0, 1, 2].forEach(i => cellsPos.push([cx[i], cy[0]])); [3, 4, 5].forEach(i => cellsPos.push([cx[i], cy[0]]));
           [0, 1, 2].forEach(i => cellsPos.push([cx[i], cy[1]])); [3, 4, 5].forEach(i => cellsPos.push([cx[i], cy[1]]));
         } else {
-          const colX = [396, 500, 604], rowY = i => 48 + i * 90;
+          const colX = [400, 500, 600], rowY = i => 42 + i * 82;   // 칸을 조금 좁혀 맨 아랫줄이 솥 입을 가리지 않게(2026-10-29 사용자)
           ['r', 'y', 'b', 'g'].forEach((c, ri) => [0, 1, 2].forEach(ci => cellsPos.push([colX[ci], rowY(ri)])));
-          cellsPos.forEach(([x, y]) => { const g0 = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, SG); pic(T, g0, 'wc_prop_shelf_cell', x, y, 102, 96); });
+          cellsPos.forEach(([x, y]) => { const g0 = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, SG); pic(T, g0, 'wc_prop_shelf_cell', x, y, 96, 88); });
         }
         ING.forEach((it, i) => {
           const [cx, cy] = cellsPos[i];
-          const g = hitZone(T, SG, cx, cy, P ? 90 : 80, P ? 90 : 84);   // 가로 칸 간격 78~81(화면 1024 폭에서 80px 이상)
-          const ig = T.el('g', { 'pointer-events': 'none', filter: 'url(#pp)' }, g); pic(T, ig, ingF(it.id), cx, cy + 4, P ? 70 : 64, P ? 66 : 62);
+          const g = hitZone(T, SG, cx, cy, P ? 86 : 80, P ? 82 : 84);   // 가로 칸 간격 78~81(화면 1024 폭에서 80px 이상)
+          const ig = T.el('g', { 'pointer-events': 'none', filter: 'url(#pp)' }, g); pic(T, ig, ingF(it.id), cx, cy + 4, P ? 66 : 64, P ? 62 : 62);
           if (it.id === 'poo') { pic(T, ig, 'wc_prop_ing_stink', cx - 22, cy - 30, 22, 30); pic(T, ig, 'wc_prop_ing_fly', cx + 26, cy - 30, 22, 22); }   // 응가 칸: 냄새 선·파리(PLAN §10-2)
           k.cells.push({ ...it, el: g, cx, cy });
         });
@@ -432,7 +432,8 @@
       if (ladle) {
         /* 세로는 거울로 뒤집어 오른쪽에 건다: 손잡이가 선반 초록 줄 빈 칸 쪽으로 가서 재료 칸(누르는 대상)과 겹치지 않는다 */
         const lh = HT.wc_prop_ladle * KS, lw = lh * ASP.wc_prop_ladle, lx = P ? POT.cx + POT.rx * .45 - lw * .21 : POT.cx - POT.rx * .45 - lw * .79, ly = POT.cy + 4 - lh * .82;
-        const lg = hitZone(T, T.world, lx + lw * .5, ly + lh * .5, H(P ? 100 : 110), H(P ? 100 : 110));
+        const lg = T.el('g', { 'pointer-events': 'none' }, T.world);   // 국자는 누르지 않는다(누름 영역이 세로 대파 칸을 덮던 것 고침) — 선반 뒤로 놓는다
+        if (k.shelfG) T.world.insertBefore(lg, k.shelfG);
         const li = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none', transform: P ? `translate(${2 * lx + lw} 0) scale(-1 1)` : '' }, lg); sprite(T, li, 'wc_prop_ladle', lx, ly, lw, lh);
         lg.style.transformBox = 'fill-box'; lg.style.transformOrigin = P ? '20% 80%' : '80% 80%';
         k.ladle = lg; k.ladleXY = [lx + lw * .5, ly + lh * .5];
@@ -610,7 +611,7 @@
       if (!P) {   // 친구 셋은 선반 왼쪽 끝 바닥(조금 뒤라 .72), 호박이는 선반 위(PLAN §5 7장 '호박이는 선반 위')
         FRS.forEach((f, i) => put(T, f, 5 + i * 50, FL - 14, { look: 'stand', to: 'right', s: .72 }));
         if (K && K.shelfTop) put(T, cat, K.shelfTop[0], K.shelfTop[1], { look: 'sit', to: 'right', s: .85 }); else put(T, cat, 60, FL, { look: 'sit', to: 'right', s: .85 });
-      } else { FRS.forEach(hide); hide(cat); }
+      } else { FRS.forEach(hide); put(T, cat, 596, PFY, { look: 'sit', to: 'left', s: .55 }); }   // 세로: 호박이는 솥 오른쪽 앞(마녀 발치) — 3장 '냐… 냄새!' 대사가 있으니 보여야 한다(2026-10-29 사용자)
     }
     /* 컷(그림이 있으면 cutImage, 없으면 자리표시 컷) */
     const cutMock = (label, color = '#F28C28', hold = 2400) => T.cut(svg => {
@@ -670,7 +671,7 @@
     const layoutFor = (a, x, fi) => {
       const kidS = inKit() ? X(.85, .6) : 1;
       if (inKit()) {
-        if (P) { if (a === kid) return [340, PFY, .6]; if (a === witch) return [668, PFY, .6]; return null; }
+        if (P) { if (a === kid) return [340, PFY, .6]; if (a === witch) return [668, PFY, .6]; if (a === cat) return [596, PFY, .55]; return null; }
         const shelfOn = K && K.shelfG && K.shelfG.style.display !== 'none', tab = !!rs.tabG;
         if (a === witch) return [1010, FL, .85];
         if (shelfOn) { if (a === kid) return [765, FL, kidS]; if (a === cat) return K.shelfTop ? [K.shelfTop[0], K.shelfTop[1], .85] : [60, FL, .85]; return [5 + fi * 50, FL - 14, .72]; }
