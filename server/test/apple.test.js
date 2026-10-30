@@ -84,8 +84,15 @@ describe('POST /v1/receipt/apple', () => {
   });
   it('루트 인증서가 설정되지 않으면 500', async () => {
     const env = makeEnv();
+    env.APPLE_ROOT_CA_G3_PEM = '-----BEGIN CERTIFICATE-----\nPLACEHOLDER\n-----END CERTIFICATE-----';   // 비밀값이 자리표시자인 경우
     const a = await newAccount(env);
     const r = await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: 'a.b.c' } });
     expect(r.status).toBe(500);
+  });
+  it('코드에 넣은 진짜 애플 루트 인증서로는 엉터리 영수증을 422 로 거절', async () => {
+    const env = makeEnv();
+    const a = await newAccount(env);
+    const r = await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: 'a.b.c' } });
+    expect(r.status).toBe(422);
   });
 });

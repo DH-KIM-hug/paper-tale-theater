@@ -22,7 +22,8 @@ public class StorePlugin: CAPPlugin, CAPBridgedPlugin {
         updates = Task.detached { [weak self] in
             for await result in Transaction.updates {
                 if case .verified(let tx) = result { await tx.finish() }
-                self?.notifyListeners("ownedChanged", data: ["owned": await Self.ownsUnlockAll()])
+                // 영수증(JWS)도 함께 보내 앱이 서버에 올릴 수 있게(가족 공유·다른 기기에서 산 구매·환불 반영)
+                self?.notifyListeners("ownedChanged", data: await Self.ownedResult())
             }
         }
     }
