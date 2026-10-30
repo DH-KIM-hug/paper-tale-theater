@@ -297,11 +297,13 @@
     })();
     const { el, sleep, say, actor, camTo, camWide, camSnap } = T;
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    /* 끝은 축하 음악 대신 자장가(2026-10-31 사용자): 제목에 'Music Box Sleep Lullaby'라고 적힌 intro_night(12초). 내레이션 동안은 엔진이 낮춘다 */
+    /* 끝은 축하 음악 대신 자장가(2026-10-31 사용자): 제목에 'Music Box Sleep Lullaby'라고 적힌 intro_night(12초)를 두 번 겹쳐 이은 frog_lullaby_long(21.5초).
+       마지막 개구리 합창과 같이 시작해 잠드는 대사까지 이어진다(사용자: 개구리 우는 것과 노래를 같이). 내레이션 동안은 엔진이 낮춘다 */
     let lullEnd = 0;
-    const lullaby = () => { try { const o = { vol: T.reading() ? .3 : .45, loop: false, fadeIn: .5, dur: 12 }; lullEnd = Date.now() + 12000; if (!AudioFX.ambient('intro_night', o)) setTimeout(() => { try { AudioFX.ambient('intro_night', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const LULL = 'frog_lullaby_long', LULL_S = 21.5;
+    const lullaby = () => { try { const o = { vol: T.reading() ? .3 : .45, loop: false, fadeIn: .5, dur: LULL_S }; lullEnd = Date.now() + LULL_S * 1000; if (!AudioFX.ambient(LULL, o)) setTimeout(() => { try { AudioFX.ambient(LULL, o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const lullabyWait = () => (lullEnd ? sleep(Math.max(0, Math.min(8000, lullEnd - Date.now() - 600))) : Promise.resolve());
-    try { AudioFX.preloadSfx(['intro_night', 'intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon_fly', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_night', 'frog_lullaby_long', 'intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon_fly', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
     const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_haydn_pizz']); } catch (e) { /* 무시 */ }
@@ -799,10 +801,10 @@
     await say('이번에는 개구리를 톡톡 눌러서 같이 불러요!');
     await T.followMelody(TWINKLE, { beat: .5, targetFor: i => frogs[i % 4].pos, voice, onNote: i => frogs[i % 4].hop(26, 300), others: [{ el: uncle.pos, onTap: bass }] });
     await sleep(400);
-    /* 끝: 온 가족이 한 번 더 함께 */
+    /* 끝: 온 가족이 한 번 더 함께 — 자장가도 같이 시작 */
+    lullaby();
     T.playMelody(TWINKLE, { beat: .5, voice, onNote: () => choir.forEach(f => f.hop(18, 300)) });
     await sleep(7200);
-    lullaby();
     await say('개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.');
     await lullabyWait();
     stopAmb();

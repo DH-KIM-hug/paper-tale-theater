@@ -741,6 +741,7 @@
       ]
      ],
      "after": [
+      "lullaby",
       "chorus:sing"
      ]
     },
@@ -771,7 +772,6 @@
       ]
      ],
      "before": [
-      "lullaby",
       "chorus:fade"
      ]
     },
