@@ -17,7 +17,7 @@
      마당 초가·돌담·감나무, 마을 집 다섯, 대문·계단·돌사자, 병풍·마루, 땅속 뚜껑, 잔치 초가 자리는 옛 그림과 겹쳐 같다(±1%).
      라이트박스는 2장 땅속·10장 잔치 둘(7장 금 더미는 코드 반짝) */
   /* 2026-10-23 사용자 결정: 밭(field)·땅속(pit 라이트박스)·부잣집 대문(richgate)·큰 방(hall·hallwide)은 옛 그림으로 되돌림(짝 소품·땅속 빛 연출도 뺌) */
-  const BGV = { jarfront: 'jarfront_v2', village: 'village_v2', feast: 'feast_lb' };
+  const BGV = { pit: 'pit_empty', jarfront: 'jarfront_v2', village: 'village_v2', feast: 'feast_lb' };
   /* 층 소품(mj_layer_*, 누름 없음) 그림 폭/높이 */
   const LAR = { persimmon_branch: .965, cosmos_front: 1.075, sparrow: 1.0333, chili_string: .5983, blossom_branch: .8783, pine_branch: 1.055, peony_front: 1.105,
     lantern: .3667, roots_sil: 1.2783, soil_sil: 4.4776, lantern_sil: 2.381, bush_sil: 1.15 };
@@ -176,7 +176,7 @@
       pinned: ['rich_pinned', 190, 'left'], hurry: ['rich_hurry', 240, 'left'] });
     const jar = prop(T, 'jar', 170), cracked = prop(T, 'jar_cracked', 130);
     const hoe = prop(T, 'hoe', 100); // 2026-10-20 새 괭이 그림은 정사각형 그림이라 높이를 키움
-    const olds = Array.from({ length: 8 }, (_, i) => mk(T, { a: ['father_fightA', 180, 'left'], b: ['father_fightB', 180, 'left'] }));
+    const olds = Array.from({ length: 8 }, (_, i) => mk(T, { a: ['father_fightA', 210, 'left'], b: ['father_fightB', 210, 'left'] })   /* 진짜 아버지(peek 210)와 같은 얼굴 크기 — 180 은 너무 작음(2026-10-30 사용자) */);
     const father = mk(T, { peek: ['father_peek', 210, 'left'], fall: ['father_fall', 150, 'left'] });
 
     const plow = i => {
@@ -188,6 +188,17 @@
       farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
     };
     const sparrowHop = x => { const n = 'sp' + x; lyHop(n, 8, 220); setTimeout(() => lyHop(n, 8, 220), 260); };
+    /* 땅속 항아리: 땅선(y≈370) 아래를 가려 두고 y 를 줄일수록 솟아오른다. 배경(pit_empty)에는 항아리가 없다(2026-10-30 사용자: 배경 항아리와 겹침) */
+    let pitG = null;
+    const bury = y => {
+      if (!pitG || !pitG.isConnected) {
+        const svg = T.world.ownerSVGElement;
+        if (!svg.querySelector('#mjPitClip')) { const cp = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath'); cp.id = 'mjPitClip'; cp.setAttribute('clipPathUnits', 'userSpaceOnUse'); T.el('rect', { x: -2000, y: -2000, width: 5000, height: 2370 }, cp); (svg.querySelector('defs') || svg).appendChild(cp); }
+        pitG = T.el('g', { 'clip-path': 'url(#mjPitClip)' }, T.world);
+      }
+      put(T, jar, 500, y); pitG.appendChild(jar.pos);
+    };
+    const unbury = () => { put(T, jar, 500, 430); if (pitG) { pitG.remove(); pitG = null; } };
     const jarGlint = () => { sparkle(T, jar.x, 345, 6, 60); lyHop('sp1', 6, 200); };
     const goldGlint = i => { sparkle(T, 560 + i * 90, 380, 10, 80, ['#EBD08A', '#F6ECD8']); };
     /* ===== 읽어 주기 동사 맵: 놀이판 장면·배우·컷 함수를 감싼 얇은 함수 (대본 read_script_el.json) ===== */
@@ -227,7 +238,8 @@
         if (op === 'show') { jar.pos.style.display = ''; jar.pos.style.opacity = 1; return; }
         if (op === 'hide') return hide(jar);
         if (op === 'hop') return jar.hop(14, 260);
-        if (op === 'dig') { jar.pos.style.display = ''; jar.pos.style.opacity = 1; return jar.hop(40, 500); }
+        if (op === 'bury') return bury(+r[0] || 525);
+        if (op === 'dig') { unbury(); return jar.hop(40, 500); }
         if (op === 'lend') return (async () => { await sleep(300); await jar.move(fx(T, 700), 520, 600); hide(jar); })();
         console.warn('[read] 요술 항아리: 모르는 항아리 동작', op);
       },
@@ -271,7 +283,7 @@
         n = +n;
         for (let i = 1; i <= n; i++) {
           const o = olds[i - 1]; o.pos.style.pointerEvents = 'none';
-          put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .62 : 1, raw: tight(T) });
+          put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .72 : 1, raw: tight(T) });
           if (!T.readInstant()) { o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); note(i) || popSfx(T); await sleep(450); }
         }
       },
@@ -321,27 +333,19 @@
     await T.sceneCard(tr('땅속'), () => {
       scene('pit');
       put(T, farmer, 680, 520, { look: 'pull', to: 'left' });
-      put(T, jar, 500, 430); jar.pos.style.display = 'none';
+      bury(525);   // 테두리만 살짝 보인다
     }, farmer.pos);
     await say('땅속에서 둥근 뚜껑이 보여요.');
     /* 땅 파기는 저절로, 항아리 당기기는 손으로(2026-10-30 사용자) — 세 번 파서 뚜껑이 드러나면, 농부를 누를 때마다 한 번 영차 당긴다 */
-    for (let i = 1; i <= 3; i++) { dig(i); await sleep(500); }
-    /* 항아리는 땅선(그림 속 뚜껑 아래, y≈370) 아래를 가려 두고, 당길 때마다 위로 솟는다 — 반투명하게 나타나던 것은 어색(2026-10-30 사용자) */
-    const svgNS = 'http://www.w3.org/2000/svg', svg = T.world.ownerSVGElement;
-    const cp = document.createElementNS(svgNS, 'clipPath'); cp.id = 'mjPitClip'; cp.setAttribute('clipPathUnits', 'userSpaceOnUse');
-    T.el('rect', { x: -2000, y: -2000, width: 5000, height: 2370 }, cp); (svg.querySelector('defs') || svg).appendChild(cp);
-    const pit = T.el('g', { 'clip-path': 'url(#mjPitClip)' }, T.world);
-    const rise = y => { put(T, jar, 500, y); pit.appendChild(jar.pos); };
-    rise(560);   // 다 묻힘
+    for (let i = 1; i <= 3; i++) { dig(i); bury([0, 518, 511, 505][i]); await sleep(500); }
     const PULL = '농부를 톡! 눌러서 항아리를 당겨 봐요!';
     for (let i = 1; i <= 3; i++) {
       if (i === 1) await T.ask(PULL, () => T.tap(farmer.pos, { prompt: PULL })); else await T.tap(farmer.pos, { prompt: PULL });
       pull(i);
-      if (i < 3) { rise([0, 505, 455][i]); jar.hop(8, 260); }
+      if (i < 3) { bury([0, 475, 445][i]); jar.hop(8, 260); }
       await sleep(350);
     }
-    put(T, jar, 500, 430); pit.remove(); cp.remove();
-    jar.hop(40, 500); cue('pull_pop', .8);
+    unbury(); jar.hop(40, 500); cue('pull_pop', .8);
     farmer.look('amaze');
     await say('쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.');
 
@@ -395,19 +399,20 @@
     let rest = spots.map((x, i) => ({ x, i }));
     for (let n = 0; n < 5; n++) {
       let got;
+      /* 다섯 집 모두 손으로 톡(2026-10-30 사용자: 쌀 나눠 주기는 수동) */
+      const RICE = '집을 톡! 쌀을 나눠 줘요.';
+      const ask = f => (n === 0 ? T.ask(RICE, f) : f());
       if (tight(T)) {
         /* 세로 화면: 집을 하나씩 카메라가 따라가며 보여 주고, 눌러야 하는 집은 늘 화면 안에 있다 */
         got = { key: rest[0] };
         await Promise.all([T.camTo(got.key.x, 280, 1, 600), farmer.move(got.key.x, 540, 600)]);
         const el = hot(T, got.key.x, 400, 80);
-        if (n === 0) await T.tap(el, { prompt: '집을 톡! 쌀을 나눠 줘요.' }); else await sleep(400); // 한 번 누르면 나머지는 저절로
+        await ask(() => T.tap(el, { prompt: RICE }));
         el.remove();
       } else {
-        if (n > 0) { got = { key: rest[0] }; await sleep(400); } else {
         const opts = rest.map(r => ({ key: r, el: hot(T, r.x, 400, 70), ok: true }));
-        got = await T.choose(opts, { prompt: '집을 톡! 쌀을 나눠 줘요.' });
+        got = await ask(() => T.choose(opts, { prompt: RICE }));
         opts.forEach(o => o.el.remove());
-        }
       }
       rest = rest.filter(r => r !== got.key);
       const sack = prop(T, 'rice', 62); put(T, sack, farmer.x, 440, { raw: true });
@@ -478,7 +483,7 @@
     await say('풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.');
     await T.ask('"아버지가 어디 계시지?" 항아리를 여덟 번 톡톡 눌러서 아버지를 세어 봐요!', () => T.mash(jar.pos, { count: 8, prompt: '항아리를 여덟 번 톡톡! 아버지를 세어 봐요.', onStep: i => {
       const o = olds[i - 1]; o.pos.style.pointerEvents = 'none';   // 항아리 위·옆에 쌓이는 아버지 그림이 눌림을 가로채지 않게
-      put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .62 : 1, raw: tight(T) });
+      put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .72 : 1, raw: tight(T) });
       o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); note(i) || popSfx(T); vo('n' + i);
     } }));
     await T.cutImage([{ src: cutSrc('eight'), sfx: () => cue('tada', .7) || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
