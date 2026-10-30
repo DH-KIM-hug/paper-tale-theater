@@ -818,6 +818,13 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 .cast-none { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; padding: var(--s-5); text-align: center; font-size: var(--fs-title-s, 22px); font-weight: 700; color: var(--ink-2); word-break: keep-all; }
 .cast-dots { display: none; }
 
+/* L 아이패드 가로: 판을 화면 높이 안에서 최대한 넓게(2026-10-30 사용자: 넓게) — 판 고르기 원을 줄이고 이름은 숨겨 위 줄을 낮춘다 */
+@media (min-width: 1000px) and (min-height: 640px) and (orientation: landscape) {
+  body.app { --pz-c: 64px; --pz-chrome: 300px; }
+  .pz-row { gap: var(--s-4); padding-top: 4px; }
+  .pz-nm { display: none; }
+  .pz-cnt { font-size: 18px; }
+}
 /* P 아이패드 세로: 판 선택 → 판 960×540 → 이름·화살표 줄 → 접시 줄(가운데) */
 @media (orientation: portrait) {
   .pz-main { grid-template-columns: minmax(0, 1fr); grid-template-areas: "win" "head" "plate"; }
@@ -897,7 +904,7 @@ body.app .shelf::-webkit-scrollbar { display: none; }   /* 큰 그림과 목록�
 @media (max-width: 420px) { .link-code { font-size: 32px; } }
 
 /* ═════════ 탭 껍데기 (APP_SCREENS_PLAN §2): 가로 = 왼쪽 레일, 세로 = 아래 막대. 톱니는 늘 오른쪽 위 ═════════ */
-:root { --rail: 128px; --hole-w: 64px; --hole-h: 40px; --tab-ic: 28px; --bar-h: 0px; }
+:root { --rail: 92px; --hole-w: 56px; --hole-h: 36px; --tab-ic: 26px; --bar-h: 0px; }   /* 레일 폭 128 → 92(2026-10-30 사용자: 아이패드 왼쪽이 너무 넓다) */
 body.app #home {
   position: relative; z-index: 1; height: 100%;
   display: grid;
@@ -919,7 +926,7 @@ body.app .view[hidden] { display: none; }
   padding: max(var(--pad), env(safe-area-inset-top)) 0 max(var(--pad), env(safe-area-inset-bottom)) env(safe-area-inset-left); }
 .tab {
   position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px;
-  min-width: 88px; min-height: 72px; padding: 6px 4px 4px; border: 0; background: none; cursor: pointer; color: var(--ink-off);
+  min-width: 76px; min-height: 72px; padding: 6px 4px 4px; border: 0; background: none; cursor: pointer; color: var(--ink-off);
   touch-action: manipulation; transition: color var(--t-1) var(--ease);
 }
 .tab.on { color: var(--ink); }
@@ -972,7 +979,7 @@ body.app .view[hidden] { display: none; }
 }
 /* 아이폰 가로: 좁은 레일 */
 @media (orientation: landscape) and (max-height: 520px) {
-  :root { --rail: 96px; --hole-w: 56px; --hole-h: 34px; --tab-ic: 24px; }
+  :root { --rail: 80px; --hole-w: 52px; --hole-h: 32px; --tab-ic: 22px; }
   .tabs { gap: var(--s-3); }
   .gear { top: max(10px, env(safe-area-inset-top)); }
 }
