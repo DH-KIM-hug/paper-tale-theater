@@ -8,7 +8,7 @@
    · 11 자라→바닥→왼쪽 위(산신령), 산신령→오른쪽 아래 / 용궁: 용왕→왼쪽, 모두→오른쪽(용왕).
    그림이 보는 쪽(NAT)은 그림을 눈으로 보고 적었다. 길 안내 자세(갈매기·다람쥐·멧돼지 가리키기)는 'fixed' — 코드에서 절대 뒤집지 않는다(PLAN §방향 고르기).
    화면 방향(가로 1000×560 월드, 바닥 FL=490). 세로 화면은 보이는 폭이 약 430(폰)~640(아이패드)이라 장면마다 꼭 보여야 할 폭(nw)에 맞춰 월드·효과 층을 줄이고(원근) 가운데 lx 를 화면 가운데에 둔다.
-   배경 층(T.bg)은 줄이지 않고 lx 만큼 옆으로 민다(숲 두 장 이어 붙인 세트·바다 속 세로 세트에서 카메라가 따라감).
+   배경 층(T.bg)은 줄이지 않고 lx 만큼 옆으로 민다(이어 그린 긴 숲 한 장·바다 속 세로 세트에서 카메라가 따라감).
    그림이 없으면(아직 생성 전) 같은 크기의 종이 자리표시(색 네모 + 이름표)를 그린다. */
 (() => {
   const AS = '../../assets/v3w/';
@@ -32,7 +32,7 @@
     bj_prop_face_shock: 104, bj_prop_face_happy: 104, bj_prop_door_coral: 374, bj_prop_door_coral_open: 374, bj_prop_door_pearl: 374, bj_prop_door_pearl_open: 374,
     bj_prop_door_gold: 374, bj_prop_door_gold_open: 374, bj_prop_feast: 150, bj_prop_thought: 150, bj_prop_rock_shore: 120, bj_prop_splash: 170, bj_prop_medicine_bag: 46,
     bj_prop_path_left: 210, bj_prop_path_mid: 230, bj_prop_path_right: 210, bj_prop_scroll_rolled: 36,
-    bj_fg_coral_left: 230, bj_fg_kelp_curtain: 330, bj_fg_shell_big: 120, bj_fg_fern_mushroom: 180, bj_fg_maple_branch: 200, bj_fg_trunk: 640, bj_fg_wave_front: 120,
+    bj_fg_coral_left: 230, bj_fg_kelp_curtain: 330, bj_fg_shell_big: 120, bj_fg_fern_mushroom: 180, bj_fg_maple_branch: 200, bj_fg_wave_front: 120,
   };
   const WID = { bj_prop_bed: 560, bj_prop_painter_desk: 150 };
   /* 그림이 보는 쪽: left·right·front(뒤집지 않음)·fixed(방향 그림, 뒤집기 금지) */
@@ -52,10 +52,13 @@
     prop: '', fg: '', door: '문', path: '길', face: '얼굴 카드', bed: '침상', throne: '옥좌', scroll: '족자', ink: '먹물', feast: '잔치 상', thought: '상상', rock: '바위', splash: '물보라', medicine: '약', acorn: '도토리',
   };
   const FL = 490;
-  const BGS = ['bj_bg_chamber', 'bj_bg_chamber_bright', 'bj_bg_hall', 'bj_bg_shore_day', 'bj_bg_shore_dusk', 'bj_bg_shore_morning', 'bj_bg_forest_a', 'bj_bg_forest_b', 'bj_bg_gate', 'bj_bg_dive'];
+  const BGS = ['bj_bg_chamber', 'bj_bg_chamber_bright', 'bj_bg_hall', 'bj_bg_shore_day', 'bj_bg_shore_dusk', 'bj_bg_shore_morning', 'bj_bg_forest', 'bj_bg_gate', 'bj_bg_dive'];
   const CUTS = ['bj_cut_volunteer', 'bj_cut_dive', 'bj_cut_shock', 'bj_cut_hop', 'bj_cut_medicine'];
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 902 / 1600 };
   const DIVEBOX = { x: -40, y: -24, w: 1080, h: 1620 };
+  /* 4·5장 숲: 숲 입구(forest_a)를 오른쪽으로 두 번 이어 그려(bj_bg_forest_ext1·ext2) 한 장으로 합친 긴 그림 3527×902. 월드 x -40~2336.
+     다람쥐 큰 나무 밑동 ≈ 700~850, 가운데 빈 풀밭 ≈ 1050~1850(길 조각·자라), 회색 바위 무리 ≈ 1900~2140(멧돼지 옆) */
+  const FORESTBOX = { x: -40, y: -24, w: 1080 * 3527 / 1600, h: 1080 * 902 / 1600 };
   const artOK = {}, bgOK = {}, DASP = {};   // DASP: 세로 긴 배경의 실제 비율
   const INK = '#2E241C', FONT = "'Pretendard Variable', Pretendard, sans-serif";
   /* 빛 상자(6장 바다 속, PLAN §빛 상자): 2026-10-30 생성분(bj_bg_dive_lb)이 빛 상자가 아니라(가로 그림, 실루엣 없음) 검수 탈락 → 보통 다층 bj_bg_dive 를 쓴다.
@@ -239,14 +242,10 @@
       T.el('text', { x: 500 + dx, y: 52, 'text-anchor': 'middle', 'font-size': 22, 'font-weight': 700, fill: '#6B4A32', 'font-family': FONT, text: '(그림 자리) ' + key }, g);
       return g;
     };
-    let seam = null;
     const drawBg = key => {
       T.bg.innerHTML = '';
-      if (key === 'forest') {   // 숲 두 장을 나란히: ① x -40~1040, ② x 1040~2120. 이음매는 큰 나무 둥치(배경 층)로 가린다
-        bgImg('bj_bg_forest_a', BGBOX); bgImg('bj_bg_forest_b', BGBOX, 1080);
-        const [w, h] = size('bj_fg_trunk');
-        seam = T.el('g', { filter: 'url(#pp)' }, T.bg); sprite(T, seam, 'bj_fg_trunk', 1040 - w / 2, 585 - h, w, h);
-      } else if (key === 'dive') { const k = DIVE_LB && bgOK.bj_bg_dive_lb ? 'bj_bg_dive_lb' : 'bj_bg_dive'; DIVEBOX.h = 1080 / (DASP[k] || 1080 / 1620); bgImg(k, DIVEBOX); }
+      if (key === 'forest') bgImg('bj_bg_forest', FORESTBOX);   // 이어 그린 긴 숲 한 장(카메라 lx 500 → 1580 으로 오른쪽으로 옮겨 간다)
+      else if (key === 'dive') { const k = DIVE_LB && bgOK.bj_bg_dive_lb ? 'bj_bg_dive_lb' : 'bj_bg_dive'; DIVEBOX.h = 1080 / (DASP[k] || 1080 / 1620); bgImg(k, DIVEBOX); }
       else bgImg(key, BGBOX);
     };
     const SCENE_AMB = { bj_bg_chamber: ['bubbles', .2], bj_bg_hall: ['bubbles', .2], bj_bg_gate: ['bubbles', .2], bj_bg_shore_day: ['waves', .22], bj_bg_shore_dusk: ['waves', .2], bj_bg_shore_morning: ['waves', .2], forest: ['birds_chirp_1', .22], dive: ['bubbles', .25] };
@@ -511,7 +510,7 @@
         await walk(jara, ex, ey + 40, 900, 'linear', 2);
         await fadeOut(T, jara, 400); jara.setScale(1);
       },
-      async toFork2() {   // 숲 ① → ② : 카메라가 오른쪽으로 옮겨 간다(두 장 이어 붙인 숲)
+      async toFork2() {   // 숲 ① → ② : 카메라가 오른쪽으로 옮겨 간다(이어 그린 긴 숲 한 장)
         lay('fork2'); view({ lx: 500 }); hide(jara); hide(rolled);
         const pre = [paths.left, paths.mid, paths.right, boar]; pre.forEach(a => { a.pos.style.opacity = 0; });
         await B.pan(1580, rd() ? 1500 : 1800);
@@ -737,7 +736,7 @@
     await B.goPath('left', 600); await l18;
     await sleep(600);
 
-    /* ===== 4. 산길 — 숲 두 장(①→②), 카메라가 오른쪽으로 (배움: 방향 2단계 = 오른쪽, 3단계 = 가운데) ===== */
+    /* ===== 4. 산길 — 긴 숲 한 장(①→②), 카메라가 오른쪽으로 (배움: 방향 2단계 = 오른쪽, 3단계 = 가운데) ===== */
     await T.sceneCard(tr('산길'), () => lay('fork1'), jara.pos);
     await say(S.L19);
     await B.show();
