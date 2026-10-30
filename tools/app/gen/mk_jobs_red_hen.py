@@ -30,7 +30,7 @@ C = {  # 인물 설명(PLAN 등장인물 표)
            'Very round, about 1.3 heads tall. NO ribbon, NO bow, NO clothes.'),
  'cat': ('a lazy CAT: body dust grey (#C6BFB4) with slate (#5A554E) stripes on the back, head and tail; belly, muzzle and paw tips snow white (#F4F6FA); '
          'a shell-pink (#F8D7E0) nose; a sunny-yellow (#F2C94E) collar with a small round marigold (#F2B134) bell. Proportions: a cute storybook cat with a BIG ROUND HEAD and a small round body, about 2 heads tall (like a toddler picture book), pointed ears, long tail. NOT orange, NOT black.'),
- 'dog': ('the family puppy DOG of this app (the same dog as in the other stories): a small fluffy cream-white (#F6EEDD) puppy with soft feathered fur edges on the chest, tail and legs; ONE ear standing up with the tip folded forward and the other ear flopped, both ears honey orange (#E9B871) with a shell-pink inner ear; a honey-orange patch over one eye and the top of the head, a white blaze down the middle of the face; a few small scattered honey-orange spots on the back and legs; a fluffy plume tail curled up; a round ink (#2A2A2A) nose, shell-pink cheeks; a sky-blue (#3E7CB1) collar. NO harness. NOT tan, NOT brown.'),
+ 'dog': ('the family puppy DOG of this app (the same dog as in the other stories): a small fluffy cream-white (#F6EEDD) puppy with soft feathered fur edges on the chest, tail and legs; ONE ear standing up with the tip folded forward, solid honey orange (#E9B871) with a shell-pink inner ear; the OTHER ear flopped down, WHITE-CREAM with a few small honey-orange speckles on it (a speckled ear, NOT a solid orange ear); a honey-orange patch over one eye and the top of the head, a white blaze down the middle of the face; a few small scattered honey-orange spots on the back and legs; a fluffy plume tail curled up; a round ink (#2A2A2A) nose, shell-pink cheeks; a sky-blue (#3E7CB1) collar. NO harness. NOT tan, NOT brown.'),
  'pig': ('a slow sleepy PIG: body blossom pink (#F2A7B5), round snout and the inside of the ears salmon (#F4A27A), two or three small cocoa (#4E3524) '
          'mud spots on the body, a curly tail. NO clothes at all.'),
 }
@@ -96,7 +96,7 @@ char('hen', 'hen_speak_calm', 'SIDE VIEW FACING RIGHT, both wings folded neatly 
 char('hen', 'hen_eat', 'three-quarter view, one wing tip raised to her beak as if taking a bite (the wing tip is EMPTY; the food is added later), eyes happily closed, chewing.', '7·10', H, note='먹는 음식은 코드로 붙임')
 char('hen', 'hen_happy', 'FRONT VIEW, both wings spread wide open, big happy smile, a little hop.', '8·9', H)
 char('hen', 'hen_point', 'SIDE VIEW FACING LEFT, one wing tip pointing DOWN and forward to the ground in front of her, looking DOWN, explaining kindly.', '8', H)
-char('hen', 'hen_place', 'SIDE VIEW FACING RIGHT, leaning forward with both wing tips reaching DOWN to the right as if gently placing something on a plate (the wing tips are EMPTY), looking DOWN.', '9', H, note='얹는 재료는 코드로')
+char('hen', 'hen_place', 'SIDE VIEW FACING RIGHT, leaning forward with both wing tips reaching DOWN to the right as if gently placing something on a plate (the wing tips are EMPTY), looking DOWN. Her FACE must be clearly visible in profile (eye, beak, cheek) — do NOT turn her away, the headscarf must not cover the face.', '9', H, note='얹는 재료는 코드로')
 char('hen', 'hen_pour', 'SIDE VIEW FACING RIGHT, tipping a lagoon (#4FB3C9) milk bottle with a snow-white milk stream (flat paper strips) pouring down at the right, looking DOWN.', '10', H, note='우유병 포함')
 char('hen', 'hen_wave', 'FRONT VIEW, one wing waving high above her head, big smile, eyes happy.', '10', H)
 # ── 병아리 ──
@@ -109,7 +109,7 @@ char('chick', 'chick_eat', 'SIDE VIEW FACING LEFT, bending down pecking at crumb
 char('cat', 'cat_sit', 'sitting in SIDE VIEW FACING LEFT, tail curled around the paws, sleepy half-closed eyes, looking left.', '1·4·8', note='기준 자세: 머리 폭, 크기표 앉기 0.7')
 char('cat', 'cat_lie_fence', 'lying stretched out flat on its belly, side view, front paws dangling down, tail hanging, eyes CLOSED, lazy and relaxed (no fence drawn; the fence is placed under it later).', '1', 'cat_sit', shape='wide', note='울타리는 배경')
 char('cat', 'cat_yawn', 'sitting, FRONT VIEW, a big wide yawn (mouth open in a round O, eyes squeezed shut), one paw raised to the mouth.', '1', 'cat_sit')
-char('cat', 'cat_peek', 'ONLY the head and the two front paws, as if peeking over the top of a fence or a window sill: the bottom edge is cut STRAIGHT across under the chin and paws. Facing RIGHT, eyes open, curious.', '3·5·7', 'cat_sit', note='울타리·창 뒤에서 얼굴만. 창에서는 뒤집음')
+char('cat', 'cat_peek', 'ONLY the head and the two front paws, as if peeking over the top of a fence or a window sill: the bottom edge is cut STRAIGHT across under the chin and paws. Facing RIGHT, eyes open, curious. NO body, NO legs, NO tail: the picture ends right under the chin with the two front paws resting on that straight bottom edge.', '3·5·7', 'cat_sit', note='울타리·창 뒤에서 얼굴만. 창에서는 뒤집음')
 char('cat', 'cat_sniff', 'standing on all fours, head and nose lifted up to the UPPER LEFT, sniffing a nice smell, eyes closed dreamily.', '6', 'cat_sit', shape='wide')
 char('cat', 'cat_raise', 'sitting, facing LEFT, one front paw raised high "me!", eyes wide open, eager.', '7', 'cat_sit')
 char('cat', 'cat_run', 'running happily on its hind legs in SIDE VIEW to the RIGHT, both front paws held out forward together as if carrying a small thing (the paws are EMPTY), eyes wide awake and bright, smiling.', '8', 'cat_sit', note='재료(치즈·꿀)는 코드로 앞발에. 뒤집기 가능')
@@ -198,6 +198,7 @@ CARD = 'a portrait paper-cream (#F6ECD8) card with rounded corners and NO border
 for k, d in [('seed', 'a kraft seed sack with wheat seeds'), ('wheat', 'one ripe golden wheat plant'), ('flour', 'a sand flour sack with a blue label'),
              ('bread', 'a round golden loaf of bread'), ('pizza', 'a round flat pizza base with a golden rim'), ('pancake', 'a stack of three golden pancakes')]:
     prop(f'prop_card_{k}', CARD + d + '.', '8', ref=None if k == 'seed' else 'prop_card_seed', note='순서 카드 0.6')
+    if k != 'seed': jobs[-1]['prompt'] = jobs[-1]['prompt'].replace('SUBJECT AND POSE:\n', 'SUBJECT AND POSE:\nThe CARD itself MUST be drawn: a cream portrait card exactly like the card in the reference image, with the small picture INSIDE it. Do NOT draw the food alone without the card.\n', 1)
 prop('prop_card_slot', 'an empty portrait card-sized rectangle of plain sand (#E9DCC0) paper with rounded corners, slightly recessed, nothing on it.', '8', ref='prop_card_seed')
 prop('prop_face_sad', CARD.replace('NO letters; in its centre a small picture of ', 'NO letters; on it a simple drawn face of the red hen (cherry red head, persimmon comb, marigold beak, sky-blue headscarf) looking GLUM: eyebrows tilted down, beak closed. ').rstrip(' of'),
      '1', note='얼굴 카드(그림 속 그림이라 얼굴 있음)')
@@ -310,8 +311,8 @@ key('back_tall', "COMPOSITION (most important):\nA portrait 2:3 picture. The 'af
 # 개 기준 자세: 첫 그림(모양 확정)을 모양 참고로, 다른 동화 강아지를 색 참고로 (사용자 2026-10-30: 모습은 그대로, 색만 다른 강아지와 같게)
 for j in jobs:
     if j['id'] == 'hen_dog_sit':
-        j['refs'] = [RAW + '_rej/hen_dog_sit_v2_cream.png', RAW + '_ref_app_dog.png']; j['pass'] = 1
-        j['prompt'] = j['prompt'].replace('SUBJECT AND POSE:\n', 'SUBJECT AND POSE:\nTWO reference images: the FIRST shows only the sitting POSE, the size and the viewing direction (side view facing left) — keep that pose. The SECOND shows what THIS dog really looks like (the family puppy of the app) — draw exactly that dog: its head shape, one ear up with a folded tip and one ear flopped, the eye patch, the fluffy feathered fur, the plume tail, the spots and the colours. Do NOT copy the blue harness of the second image; give it a sky-blue collar instead.\n', 1)
+        j['refs'] = [RAW + '_rej/hen_dog_sit_v3_ears.png']; j['pass'] = 1
+        j['prompt'] = j['prompt'].replace('SUBJECT AND POSE:\n', 'SUBJECT AND POSE:\nONE reference image: this is exactly the dog — keep its shape, sitting pose, size, face, fluffy fur, plume tail, spots and sky-blue collar EXACTLY. Change ONLY the ears: the standing ear (with the folded tip) stays solid honey orange; the flopped ear becomes WHITE-CREAM like the body with a few small honey-orange speckles. Make the body fur a little whiter cream (#F6EEDD).\n', 1)
 json.dump(jobs, open(os.path.join(G, 'tools/app/gen/jobs_red_hen.json'), 'w'), ensure_ascii=False, indent=1)
 from collections import Counter
 print(len(jobs), Counter((j['kind'], j['pass']) for j in jobs))
