@@ -1557,6 +1557,17 @@ const Tale = (() => {
       }
     } catch (e) { /* 미리보기 전용 */ }
     $('#startBtn').onclick = () => { playForced = true; try { sessionStorage.removeItem('read_once'); } catch (e) { /* 무시 */ } start(); };   // 놀이를 직접 고르면 ?read=1 이어도 놀이판
+    /* 시작 화면 제목 = 홈 배너와 같은 제목 레터링(assets/banner/<id>_title.webp, 흰 글자 — 2026-10-30 사용자).
+       글자 모양만 빌려 오고 색은 시작 화면 글자색(--let-top·--let-bot, 키아트에 따라 크림 또는 갈색)으로 칠한다. 영어이거나 그림이 없으면 글자 그대로 */
+    if (!englishOn() && taleId()) {
+      const h = $('#startScreen .ttl'), src = ROOT_URL + 'assets/banner/' + taleId() + '_title.webp', im = new Image();
+      im.onload = () => {
+        const ar = im.naturalWidth / im.naturalHeight;
+        h.classList.add('art');
+        h.innerHTML = `<span class="ttl-art" style="--ar:${ar.toFixed(3)};--th:${ar < 3 ? 2.4 : 1.4}em;-webkit-mask-image:url('${src}');mask-image:url('${src}')"></span>`;
+      };
+      if (h) im.src = src;
+    }
     /* 시작 화면: 제목을 톡 하면 한 번 읽어 준다 (홈 제목 녹음이 있으면 그 목소리, 없으면 브라우저 말하기) */
     {
       let clips = null, busyT = false;

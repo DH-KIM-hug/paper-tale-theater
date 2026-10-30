@@ -128,6 +128,11 @@ svg text { font-weight: 800; }
   padding: 0 .015em;
 }
 .paperword i.sp { width: .28em; }
+/* 제목 레터링 그림(홈 배너와 같은 글자): 모양은 그림의 알파, 색은 오린 글자와 같은 두 색 그러데이션. 그늘은 .paperword 의 filter 가 그대로 */
+.paperword.art { line-height: 0; }
+.ttl-art { display: inline-block; vertical-align: top; width: calc(var(--ar) * var(--th)); max-width: 88vw; aspect-ratio: var(--ar);
+  background: linear-gradient(172deg, var(--let-top) 8%, var(--let-bot) 78%);
+  -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; }
 .paperword br + i, .paperword .ln { display: block; }
 
 /* ─── 말풍선: 종이 쪽지 한 장 ─── */
