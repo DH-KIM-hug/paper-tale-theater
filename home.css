@@ -888,6 +888,8 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 .pz-pb.go { color: #fff; background: var(--act); box-shadow: 0 3px 10px rgba(217, 98, 47, .3); }
 /* 흩어진 조각: 끌 수 있다. 끄는 동안 제자리(.pz-ghost)가 노랗게 반짝이고, 착 붙으면 반짝이 별(.pz-spark)이 튄다 */
 .pz-sec.play .pz-hits { display: none; }
+.pzp.fill .pz-s path { pointer-events: none; }   /* 자투리는 누름을 받지 않는다(아래 빈 모양 조각이 받는다) */
+.pzp.fill { filter: none; }
 .pzp.loose { pointer-events: auto; touch-action: none; cursor: grab; z-index: 3; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .28)); transition: filter var(--t-1) var(--ease); }
 .pzp.drag { z-index: 6; cursor: grabbing; filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .32)); }
 .pz-ghost { pointer-events: none; z-index: 1; animation: pzGhost .9s ease-in-out infinite; }

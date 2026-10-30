@@ -1310,9 +1310,12 @@
     if (!Array.isArray(seen)) { pzSeenSave(); return []; }
     return gotKeys().filter(k => !seen.includes(k));
   }
+  /* 자투리(모양 없는 둘레 조각)는 처음부터 채워 둔다 — 판이 처음부터 한 장의 풍경으로 보이고, 아이가 모으는 것은 인물·물건 모양 조각뿐(2026-10-30 사용자).
+     layout 이 없는 새 동화의 네모 조각은 모양 조각으로 친다 */
   function pieceHTML(bk, list, i, row) {
-    const t0 = list[i], t = shown(t0), got = row ? has(t0.id) : has2(t0.id);
-    return pzBox(bk, t0.id, i, row).map((q, k) => {
+    const t0 = list[i], t = shown(t0), earned = row ? has(t0.id) : has2(t0.id), qs = pzBox(bk, t0.id, i, row), shaped = qs.some(q => q.obj);
+    return qs.map((q, k) => {
+      const filler = shaped && !q.obj, got = earned || filler;
       const id = `${bk}-${t0.id}-${row}-${k}`;
       const sty = `left:calc(var(--cell)*${q.x / PZ_S});top:calc(var(--cell)*${q.y / PZ_S});width:calc(var(--cell)*${q.w / PZ_S});height:calc(var(--cell)*${q.h / PZ_S})`;
       let art;
@@ -1323,7 +1326,7 @@
         art = `<svg class="pz-art" viewBox="0 0 ${q.w} ${q.h}" aria-hidden="true"><defs><clipPath id="pzc-${id}"><path d="${q.path}"/></clipPath></defs><rect width="${q.w}" height="${q.h}" fill="#E9DFD3" clip-path="url(#pzc-${id})"/><g clip-path="url(#pzc-${id})">${im}</g></svg>`;
       }
       const hit = `<svg class="pz-s${got ? '' : ' off'}" viewBox="0 0 ${q.w} ${q.h}" data-id="${t0.id}" data-part="${row ? 'bot' : 'top'}"${k ? ' tabindex="-1" aria-hidden="true"' : ` tabindex="0" role="${got ? 'button' : 'img'}" aria-label="${got ? t.title : L('아직 비어 있어요', 'Still empty')}"`}><path d="${q.path}" fill="transparent" pointer-events="all"/></svg>`;
-      return `<div class="pzp${got ? ' got' : ''}${q.obj ? ' obj' : ''}" data-k="${t0.id}-${row ? 'bot' : 'top'}" style="${sty}">${art}${hit}</div>`;
+      return `<div class="pzp${got ? ' got' : ''}${q.obj ? ' obj' : ''}${filler ? ' fill' : ''}" data-k="${t0.id}-${row ? 'bot' : 'top'}" style="${sty}">${art}${hit}</div>`;
     }).join('');
   }
   /* 갈래 표시: 옛 '퍼즐 | 스티커' 단추는 숨기고(탭이 대신한다) 화면 클래스만 맞춘다 */
@@ -1335,7 +1338,7 @@
     const gotN = list.reduce((n, t) => n + pzGot(t), 0), all = list.length * 2, complete = gotN === all;
     /* 빈 조각을 먼저, 받은 조각을 나중에 그린다. 그 사이 층(.pz-hits)에 작은 받은 조각의 넓힌 톡 영역(72)을 둔다 → 빈 조각보다 위, 받은 조각보다 아래 */
     const parts = list.flatMap((t, i) => [[i, 0, has2(t.id)], [i, 1, has(t.id)]]);
-    const html = want => parts.filter(p => p[2] === want).map(p => pieceHTML(b.k, list, p[0], p[1])).join('');
+    const html = want => parts.filter(p => p[2] === want).map(p => pieceHTML(b.k, list, p[0], p[1])).join('');   // 못 받은 묶음의 자투리도 채워진 채 아래 층에
     const play = gotN ? `<span class="pz-play"><button type="button" class="pz-pb" data-act="scatter">${L('흩어지기', 'Scatter')}</button><button type="button" class="pz-pb go" data-act="gather">${L('모으기', 'Gather')}</button></span>` : '';
     return `<section class="pz-sec" data-b="${b.k}"><div class="pz-head"><h2>${L(b.ko, b.en)}</h2><span class="pz-n">${gotN} / ${all}</span>${done ? `<i class="pz-done">${starSvg}</i>` : ''}${play}</div>
       <div class="pz-win" style="--n:${list.length}"><div class="pz-pan${complete ? ' complete' : ''}" style="--n:${list.length}"><div class="pz-track"><i class="pz-glow" aria-hidden="true"></i>${html(false)}<div class="pz-hits" aria-hidden="true"></div>${html(true)}</div></div></div></section>`;
@@ -1422,7 +1425,7 @@
   function pzScatter(sec) {
     const tr = sec.querySelector('.pz-track'), TW = tr.offsetWidth, H = tr.offsetHeight, cell = H / 2;
     sec.classList.add('play');
-    sec.querySelectorAll('.pzp.got').forEach(p => {
+    sec.querySelectorAll('.pzp.got:not(.fill)').forEach(p => {   // 흩어지는 건 받은 모양 조각만(자투리는 판에 그대로)
       const w = p.offsetWidth, h = p.offsetHeight, cx = p.offsetLeft + w / 2;
       const tx = Math.max(0, Math.min(TW - w, cx - w / 2 + (Math.random() - .5) * cell * 3)), ty = Math.random() * Math.max(0, H - h);
       p.classList.add('loose');
