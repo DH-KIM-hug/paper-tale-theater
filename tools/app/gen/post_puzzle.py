@@ -39,7 +39,7 @@ SEAM_IN, SEAM_OUT = 60, 460         # 이음매 붙이기(tools/app/gen/jobs_pzs
 
 ORDER = {                           # 판별 동화 순서 (docs/PUZZLE_PLAN.md 배치표, 끝에만 추가한다)
     'princess': ['cinderella', 'snow_white', 'little_mermaid', 'beauty_beast', 'princess_pea', 'rapunzel', 'frog_prince', 'sleeping_beauty'],
-    'korean':   ['patjuk', 'sunmoon', 'kongjwi', 'heungbu', 'magpie', 'magic_jar'],
+    'korean':   ['patjuk', 'sunmoon', 'kongjwi', 'heungbu', 'magpie', 'magic_jar', 'byeoljubu'],
     'aesop':    ['frog', 'rabbit', 'sun_wind', 'lion_mouse', 'fox_crane', 'ant_grasshopper'],
     'world':    ['turnip', 'goldilocks', 'bremen', 'ugly_duckling', 'three_pigs', 'wolf_goats', 'hansel', 'red_hood'],
     'original': ['kkultteok', 'red_car', 'unicorn', 'witch_candy'],

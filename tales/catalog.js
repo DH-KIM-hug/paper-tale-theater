@@ -292,6 +292,17 @@ const TALES = (() => {
       <circle cx="18" cy="84" r="6" fill="${c.am}"/><circle cx="32" cy="84" r="6" fill="${c.am}"/><circle cx="128" cy="84" r="6" fill="${c.am}"/><circle cx="142" cy="84" r="6" fill="${c.am}"/>
       <circle cx="25" cy="74" r="6" fill="${c.am}"/><circle cx="135" cy="74" r="6" fill="${c.am}"/></g>` },
 
+  { id: 'byeoljubu', title: '별주부전', origin: 'korean', also: ['animal'], skills: ['position', 'sort', 'spot'], ready: true, read: true, readEn: true, readMin: 6,
+    line: '별주부라는 벼슬을 가진 자라가 용왕님의 약을 구하러 토끼를 찾아요.',
+    en: { title: 'The Rabbit and the Terrapin', line: 'A terrapin with the court title Byeoljubu goes looking for a rabbit to find medicine for the sick Dragon King.' },
+    art: `<rect width="160" height="110" fill="#2A7A8C"/>
+      <g class="pc"><path d="M0 70 Q40 62 80 70 T160 68 V110 H0Z" fill="#3FA9B5"/><rect y="92" width="160" height="18" fill="#E9DCC0"/>
+      <ellipse cx="64" cy="80" rx="34" ry="13" fill="#4F3826"/><circle cx="54" cy="78" r="3" fill="#C9A574"/><circle cx="70" cy="76" r="3" fill="#C9A574"/>
+      <path d="M30 80 q-10 -2 -18 -8" stroke="#A89F6B" stroke-width="7" fill="none" stroke-linecap="round"/><rect x="6" y="64" width="14" height="5" rx="2" fill="${c.ink}"/>
+      <rect x="104" y="58" width="22" height="34" rx="10" fill="#C9A574"/><rect x="104" y="64" width="22" height="16" rx="4" fill="#3E7CB1"/>
+      <circle cx="115" cy="50" r="12" fill="#C9A574"/><rect x="106" y="18" width="7" height="26" rx="3.5" fill="#C9A574"/><rect x="118" y="18" width="7" height="26" rx="3.5" fill="#C9A574"/>
+      ${eye(111, 48)}${eye(119, 48)}</g>` },
+
   { id: 'snow_white', title: '백설공주', origin: 'world', also: ['princess'], skills: ['count', 'heart'], ready: true, read: true, readMin: 13,
     line: '난쟁이 집 침대를 하나부터 여덟까지 세고, 낯선 사람이 주는 건 어른에게 먼저 물어봐요.',
     en: { title: 'Snow White', line: 'Count the beds in the dwarfs\' house from one to eight, and ask a grown-up before taking things from strangers.' },

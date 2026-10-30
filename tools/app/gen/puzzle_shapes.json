@@ -15,6 +15,10 @@
   "top": "assets/v3w/wc_prop_pumpkin_lantern.webp",
   "bot": "assets/v3w/wc_ghost.webp"
  },
+ "byeoljubu": {
+  "top": "assets/v3w/bj_rabbit_hop.webp",
+  "bot": "assets/v3w/bj_jara_stand.webp"
+ },
  "cinderella": {
   "top": "assets/v3w/cd2_prop_slipper.webp",
   "bot": "assets/v3w/cd2_cind_gown.webp"

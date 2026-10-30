@@ -268,6 +268,18 @@ const STICKERS = {
     { k: 'wife_surprise', img: null, plan: true, ko: '할머니(놀람)', en: 'Grandmother (surprised)' },  // 새 그림: 항아리 속 쌀을 보고 놀란 할머니
     { k: 'rich_pinned', img: null, plan: true, ko: '부자(깔림)', en: 'Rich man (stuck)' },  // 새 그림: 금덩이 더미에 앉은 부자
   ],
+  byeoljubu: [
+    { k: 'rabbit_wave', img: 'assets/v3w/bj_rabbit_wave.webp', ko: '토끼', en: 'Rabbit' },
+    { k: 'jara_walk_up', img: 'assets/v3w/bj_jara_walk_up.webp', ko: '자라(별주부)', en: 'Terrapin (Byeoljubu)' },
+    { k: 'king_well', img: 'assets/v3w/bj_king_well.webp', ko: '용왕님', en: 'Dragon King' },
+    { k: 'octopus_boast', img: 'assets/v3w/bj_octopus_boast.webp', ko: '문어(뻐김)', en: 'Octopus (boasting)' },
+    { k: 'doctor', img: 'assets/v3w/bj_doctor.webp', ko: '잉어 의원', en: 'Carp doctor' },
+    { k: 'shrimp_painter', img: 'assets/v3w/bj_shrimp_painter.webp', ko: '새우 화공', en: 'Shrimp painter' },
+    { k: 'crab_guard', img: 'assets/v3w/bj_crab_guard.webp', ko: '게 병사', en: 'Crab guard' },
+    { k: 'squirrel_sit', img: 'assets/v3w/bj_squirrel_sit.webp', ko: '다람쥐', en: 'Squirrel' },
+    { k: 'rabbit_hop', img: 'assets/v3w/bj_rabbit_hop.webp', ko: '토끼(깡충)', en: 'Rabbit (hopping)' },
+    { k: 'sage_give', img: 'assets/v3w/bj_sage_give.webp', ko: '산신령', en: 'Mountain sage' },
+  ],
   snow_white: [
     { k: 'snow_stand', img: 'assets/v3w/sw_snow_stand.webp', ko: '백설공주(서기)', en: 'Snow White (standing)' },
     { k: 'dwarf_smile', img: 'assets/v3w/sw_dwarf_smile.webp', ko: '난쟁이(방긋)', en: 'Dwarf (smiling)' },

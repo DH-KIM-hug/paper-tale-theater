@@ -81,19 +81,19 @@
 | 판 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
 |---|---|---|---|---|---|---|---|---|
 | 공주 princess | cinderella | snow_white | little_mermaid | beauty_beast | princess_pea | rapunzel | frog_prince | sleeping_beauty |
-| 옛이야기 korean | patjuk | sunmoon | kongjwi | heungbu | magpie | magic_jar | | |
+| 옛이야기 korean | patjuk | sunmoon | kongjwi | heungbu | magpie | magic_jar | byeoljubu | |
 | 이솝 aesop | frog | rabbit | sun_wind | lion_mouse | fox_crane | ant_grasshopper | | |
 | 세계 명작 world | turnip | goldilocks | bremen | ugly_duckling | three_pigs | wolf_goats | hansel | red_hood |
-| 창작 original (시범) | kkultteok | red_car | unicorn | | | | | |
+| 창작 original (시범) | kkultteok | red_car | unicorn | witch_candy | | | | |
 
 ```js
 /* tales/puzzle.js — 스티커북 퍼즐 배치표(조각 순서). 끝에만 추가한다(docs/PUZZLE_PLAN.md §5). */
 window.PUZZLE = {
   princess: ['cinderella', 'snow_white', 'little_mermaid', 'beauty_beast', 'princess_pea', 'rapunzel', 'frog_prince', 'sleeping_beauty'],
-  korean:   ['patjuk', 'sunmoon', 'kongjwi', 'heungbu', 'magpie', 'magic_jar'],
+  korean:   ['patjuk', 'sunmoon', 'kongjwi', 'heungbu', 'magpie', 'magic_jar', 'byeoljubu'],
   aesop:    ['frog', 'rabbit', 'sun_wind', 'lion_mouse', 'fox_crane', 'ant_grasshopper'],
   world:    ['turnip', 'goldilocks', 'bremen', 'ugly_duckling', 'three_pigs', 'wolf_goats', 'hansel', 'red_hood'],
-  original: ['kkultteok', 'red_car', 'unicorn'],
+  original: ['kkultteok', 'red_car', 'unicorn', 'witch_candy'],
 };
 ```
 
@@ -211,6 +211,7 @@ python3 tools/app/gen/run_simple.py puzzle piece_kkultteok piece_red_car piece_u
 | piece_heungbu | 흥부와 놀부 | 박 넝쿨 초가 앞, 박씨 든 흥부, 톱 걸린 박 | hb_heung_glad |
 | piece_magpie | 은혜 갚은 까치 | 산사 종루 앞, 날개 편 어미 까치, 소나무 | mg_mag_mom_fly |
 | piece_magic_jar | 요술 항아리 | 밭의 큰 항아리 옆, 호미 든 농부, 엽전 무더기 | mj_farmer_amaze |
+| piece_byeoljubu | 별주부전 | 바닷가 모래밭, 손 흔드는 토끼와 올려다보는 자라(사모), 단풍나무·바위 (판 그림 pano_korean_3 왼쪽 칸, 이음매 seam_korean_2) | bj_rabbit_wave, bj_jara_stand |
 | piece_frog | 황소와 개구리 | 연못 둑 바위 앞 엄마 개구리, 수련 잎 | frog_mom |
 | piece_rabbit | 토끼와 거북이 | 결승 깃발 옆 메달 건 거북이, 이정표 | rab_turtle_medal |
 | piece_sun_wind | 해와 바람 | 하늘의 해(얼굴 있음)와 울타리에 걸린 외투 — 해는 하늘 띠 안 무대 구역 위쪽 | sw_sun |
