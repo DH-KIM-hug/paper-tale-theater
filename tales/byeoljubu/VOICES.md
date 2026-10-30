@@ -4,7 +4,7 @@ PLAN.md 「목소리 배정 제안」의 유형표를 실제 voice_id 로 정한
 
 ## 용왕 (사용자 결정: 용왕만 할아버지 목소리로 해 보기)
 
-**확정(2026-10-30 사용자): 용왕 = 3번 Changbae(창배), Typecast `tc_60ad08c829e878c3c7d73965`.** 산신령은 Bongpal 그대로. 디자인 보이스 bj_king_design0/1 은 쓰지 않음(계정에서 지워도 됨).
+**확정(2026-10-30 사용자): 용왕 = 3번 Changbae(창배), Typecast `tc_60ad08c829e878c3c7d73965`.** 산신령은 Bongpal 그대로. **영어 용왕은 ElevenLabs Bill(`pqHfZKP75CvOlQylNhV4`, old·american·wise) — 2026-10-30 사용자: Typecast 새 녹음은 추가 비용이라 영어 성우만 바꿈. `voice_script_el.json` 의 `voices_en` 이 영어판 배역 목소리를 덮어쓴다(gen_tale.py --lang en). 예전 Typecast 영어 클립 `audio/tc/byeoljubu/en/` 은 더 안 씀.** 디자인 보이스 bj_king_design0/1 은 쓰지 않음(계정에서 지워도 됨).
 샘플은 용왕 대사 3줄(① "아이고, 온몸이 아프구나." 힘없게 ② "누가 토끼 간을 가져오겠느냐?" ③ "아, 이제 다 나았다!" 밝게)로 만들었다. 파일은 작업 폴더 `scratchpad/bjvoice/king_<번호>_<이름>_line<k>.mp3`(-19.5 LUFS). 받아쓰기(whisper)는 아래 표.
 
 | # | 이름 | 출처 | voice_id | 메타데이터 | 받아쓰기 |

@@ -1,5 +1,8 @@
 {
  "notes": "별주부전(byeoljubu) 놀이판 대사. 기획 tales/byeoljubu/PLAN.md, 목소리 tales/byeoljubu/VOICES.md(2026-10-30 확정): nar=Gyeorina, rabbit=Sparkles for Kids, jara=Hoon, king=tc(Typecast Changbae tc_60ad08c829e878c3c7d73965, ssfm-v30 — tools/typecast/gen_tale.py 로 용왕 줄만, 팥죽 halmi 방식), octo=Deoksu, doctor=wisdom, crab=Harry, gull=Yoojin, squirrel=Sejin, boar=Callum, sage=Bongpal. 한 편 안에서 목소리 겹침 없음. 모델 eleven_v4. 조작 안내 문장은 조작이 있는 장면(2·3·4·6·8·10)에만. 교훈은 대사로 읽지 않는다(끝 화면 글자만). 8장 토끼 속마음 줄은 속삭임. 영어판은 같은 목소리, 속도 0.9.",
+ "voices_en": {
+  "king": "pqHfZKP75CvOlQylNhV4"
+ },
  "voices": {
   "nar": "1gYuTfEwELcoEo96wnGj",
   "rabbit": "tapn1QwocNXk3viVSowa",

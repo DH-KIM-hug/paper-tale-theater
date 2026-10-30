@@ -10,7 +10,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아이고, 온몸이 아프구나.": {
   "t": "Oh dear, my whole body aches.",
-  "c": "audio/tc/byeoljubu/en/king_e96aca5500.mp3"
+  "c": "audio/el/byeoljubu/en/king_bc72fdf730.mp3"
  },
  "뭍에 사는 토끼의 간을 드시면 나아요.": {
   "t": "If you eat the liver of a rabbit that lives on land, you will get better.",
@@ -18,7 +18,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "누가 토끼 간을 가져오겠느냐?": {
   "t": "Who will bring me a rabbit's liver?",
-  "c": "audio/tc/byeoljubu/en/king_a06d9448e6.mp3"
+  "c": "audio/el/byeoljubu/en/king_c9a45c18a1.mp3"
  },
  "제가요! 다리가 여덟이니 제일 빨라요!": {
   "t": "Me! I have eight legs, so I am the fastest!",
@@ -54,7 +54,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라가 가거라. 화공은 토끼를 그려 주어라.": {
   "t": "Terrapin, you go. Painter, draw a rabbit for him.",
-  "c": "audio/tc/byeoljubu/en/king_e084f60197.mp3"
+  "c": "audio/el/byeoljubu/en/king_175c6a3835.mp3"
  },
  "화공이 토끼 그림을 그렸어요. 귀는 길쭉, 꼬리는 짧게.": {
   "t": "The painter drew a rabbit. Long ears, and a short tail.",
@@ -178,7 +178,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "토끼야, 잘 왔다. 너의 간을 다오.": {
   "t": "Rabbit, welcome. Give me your liver.",
-  "c": "audio/tc/byeoljubu/en/king_a881839005.mp3"
+  "c": "audio/el/byeoljubu/en/king_54185c2cee.mp3"
  },
  "토끼는 어떤 얼굴이 됐을까요? 놀란 얼굴을 톡 눌러 봐요.": {
   "t": "What face did the rabbit make? Tap the surprised face.",
@@ -210,7 +210,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "그래? 그럼 얼른 가져오너라.": {
   "t": "Is that so? Then go and bring it quickly.",
-  "c": "audio/tc/byeoljubu/en/king_c617e2f262.mp3"
+  "c": "audio/el/byeoljubu/en/king_d1e3b5b9ef.mp3"
  },
  "용왕님은 토끼 말을 믿었어요.": {
   "t": "The Dragon King believed the rabbit.",
@@ -270,7 +270,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아, 이제 다 나았다!": {
   "t": "Ah, now I am all better!",
-  "c": "audio/tc/byeoljubu/en/king_d4f5298577.mp3"
+  "c": "audio/el/byeoljubu/en/king_9be022036a.mp3"
  },
  "용궁에 웃음이 돌아왔어요.": {
   "t": "Laughter came back to the sea palace.",

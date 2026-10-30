@@ -46,7 +46,7 @@ def main():
     spec = flat('read_script_en.json' if en else 'read_script_el.json') if read else json.load(open(os.path.join(td, 'voice_script_en.json' if en else 'voice_script_el.json')))
     EL = json.load(open(os.path.join(td, 'voice_script_el.json')))
     if read: EL = {**EL, 'lines': flat('read_script_el.json')['lines'], 'extra': {}}  # 영어 연기 지시는 읽기 한국어 대본에서
-    V = EL['voices']; MODELS = EL.get('models') or {}; SET = EL.get('settings') or {}; USE_DIR = EL.get('use_dir')  # None 이면 모든 배역
+    V = {**EL['voices'], **((EL.get('voices_en') or {}) if en else {})}; MODELS = EL.get('models') or {}; SET = EL.get('settings') or {}; USE_DIR = EL.get('use_dir')  # None 이면 모든 배역
     ONLY = set(sys.argv[sys.argv.index('--only') + 1].split(',')) if '--only' in sys.argv else None  # 시범: 줄 번호(L1.1, Xcut_bam.0)만 만든다
     for r in V: assert r.isalpha() and r.islower(), f'배역 이름은 영어 소문자만: {r}'
     sub = 'en/' if en else ''
