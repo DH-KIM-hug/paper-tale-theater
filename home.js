@@ -174,6 +174,7 @@
   const MONO = {
     tales: '<path fill-rule="evenodd" d="M2.5 5.2c3.2-1.3 6.3-1.1 9 .9v14.2c-2.7-1.7-5.8-1.9-9-.7zM21.5 5.2c-3.2-1.3-6.3-1.1-9 .9v14.2c2.7-1.7 5.8-1.9 9-.7z"/>',
     night: '<path d="M13.6 3.2a8.6 8.6 0 1 0 7.2 13.4A7 7 0 0 1 13.6 3.2z"/><path d="M19.2 2.6l.8 1.7 1.9.3-1.4 1.3.3 1.9-1.6-.9-1.7.9.4-1.9-1.4-1.3 1.9-.3z"/>',   // 달 + 별(2026-10-30 사용자 고름)
+    puzzle: '<path d="M9 3.6a2.2 2.2 0 0 1 4.4 0V5.2h3.8a1 1 0 0 1 1 1V10h-1.6a2.2 2.2 0 0 0 0 4.4h1.6v3.8a1 1 0 0 1-1 1h-3.8v-1.6a2.2 2.2 0 0 0-4.4 0v1.6H5.2a1 1 0 0 1-1-1v-3.8h1.6a2.2 2.2 0 0 0 0-4.4H4.2V6.2a1 1 0 0 1 1-1H9z"/>',
     stickers: '<path fill-rule="evenodd" d="M6 2.5h11.5a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2.5 2.5 0 0 1-2.5-2.5v-14A2.5 2.5 0 0 1 6 2.5zM12 6.8l1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z"/>',
     recent: '<path fill-rule="evenodd" d="M12 2.5a9.5 9.5 0 1 1 0 19 9.5 9.5 0 0 1 0-19zM11 6.5v6.2l4.3 2.6 1-1.7-3.3-2V6.5z"/>',
     week: '<path fill-rule="evenodd" d="M5 4h2V2.5h2V4h6V2.5h2V4h2a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM5 9v10h14V9zm7 1.5l1.1 2.3 2.5.3-1.8 1.7.4 2.5-2.2-1.2-2.2 1.2.4-2.5-1.8-1.7 2.5-.3z"/>',
@@ -1180,7 +1181,7 @@
      (tools/app/gen/post_puzzle.py 가 만든다). 목록에 없는 새 동화는 카탈로그 순서로 맨 뒤에 붙고, 그림이 없는 조각은 동화 썸네일을 같은 모양으로 오려 쓴다 */
   const PZ_DONE_KEY = 'paperTheater.puzzleDone2';
   let PZ = null;
-  try { fetch('assets/ui/puzzle_layout.json?v=20261030bj2').then(r => r.ok ? r.json() : null).then(j => { if (j && j.boards) { PZ = j; if (curTab === 'stickers') drawStickers(); } }).catch(() => { /* 없으면 썸네일 조각 */ }); } catch (e) { /* 무시 */ }
+  try { fetch('assets/ui/puzzle_layout.json?v=20261030bj2').then(r => r.ok ? r.json() : null).then(j => { if (j && j.boards) { PZ = j; if (stkTab()) drawStickers(); } }).catch(() => { /* 없으면 썸네일 조각 */ }); } catch (e) { /* 무시 */ }
   const pieces = b => {
     const all = TALES.filter(b.has), ord = (PZ && PZ.boards[b.k] && PZ.boards[b.k].tales) || [];
     return [...ord.map(id => all.find(t => t.id === id)).filter(Boolean), ...all.filter(t => !ord.includes(t.id))];
@@ -1201,8 +1202,9 @@
   const pzGot = t => (has(t.id) ? 1 : 0) + (has2(t.id) ? 1 : 0);
   const starSvg = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z"/></svg>';
   let curBoard = '', pendingCel = [], celebrating = false, castView = '', stMode = 'puzzle';
-  const MODE_KEY = 'paperTheater.stkMode';     // 스티커북 탭 안의 갈래: 'puzzle'(퍼즐판) | 'cast'(동화별 친구 스티커북)
-  try { curBoard = localStorage.getItem(BOARD_KEY) || ''; stMode = localStorage.getItem(MODE_KEY) === 'cast' ? 'cast' : 'puzzle'; } catch (e) { /* 기억 없음 */ }
+  /* 퍼즐 탭과 스티커북 탭(2026-10-30 사용자: 따로 나눔)은 같은 화면(#view-stickers)을 쓰고 탭이 갈래를 정한다: 퍼즐 = 퍼즐판, 스티커북 = 동화별 친구 스티커 */
+  const stkTab = () => curTab === 'puzzle' || curTab === 'stickers';
+  try { curBoard = localStorage.getItem(BOARD_KEY) || ''; } catch (e) { /* 기억 없음 */ }
   const stickImg = (id, off) => { const s = stickerSrc(id); return s ? `<img src="${s}" alt="" draggable="false" decoding="async"${off ? ' class="sil"' : ''}>` : ''; };
   /* 캐릭터 스티커 세트(tales/stickers.js): 그림이 있는 칸만 받을 수 있다. 그림 없는 칸(새로 그릴 자리)은 맨 뒤에 흐린 빈 구멍(글자 없음) */
   const castSet = id => { try { const a = typeof STICKERS !== 'undefined' && STICKERS[id]; return Array.isArray(a) ? a : []; } catch (e) { return []; } };
@@ -1284,7 +1286,7 @@
       return `<span class="pz-s pz-hit" data-id="${t.id}" data-part="${row ? 'bot' : 'top'}" style="left:${l.toFixed(1)}px;top:${tp.toFixed(1)}px;width:${W.toFixed(1)}px;height:${H.toFixed(1)}px"></span>`;
     })).join('');
   }
-  addEventListener('resize', () => { if (curTab === 'stickers') pzHits(); });
+  addEventListener('resize', () => { if (curTab === 'puzzle') pzHits(); });
   /* 화살표: 판 끝에 닿으면 그쪽 원은 꺼진 모양(§7-9 비활성) */
   function pzArrows() {
     const pan = $('#pzBoard .pz-pan'); if (!pan) return;
@@ -1318,17 +1320,11 @@
       return `<div class="pzp${got ? ' got' : ''}${q.obj ? ' obj' : ''}" data-k="${t0.id}-${row ? 'bot' : 'top'}" style="${sty}">${art}${hit}</div>`;
     }).join('');
   }
-  /* 스티커북 탭 맨 위 갈래 단추: 퍼즐 | 스티커 */
+  /* 갈래 표시: 옛 '퍼즐 | 스티커' 단추는 숨기고(탭이 대신한다) 화면 클래스만 맞춘다 */
   function paintSeg() {
     $('#stkSeg').querySelectorAll('button').forEach(b => { const on = b.dataset.mode === stMode; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); b.textContent = b.dataset.mode === 'cast' ? L('스티커', 'Stickers') : L('퍼즐', 'Puzzle'); });
     $('#view-stickers').classList.toggle('cast-on', stMode === 'cast');
   }
-  $('#stkSeg').addEventListener('click', e => {
-    const b = e.target.closest('button[data-mode]'); if (!b || b.dataset.mode === stMode) return;
-    stMode = b.dataset.mode; castView = ''; paper('tap');
-    try { localStorage.setItem(MODE_KEY, stMode); } catch (err) { /* 무시 */ }
-    drawStickers(); say(stMode === 'cast' ? L('스티커', 'Stickers') : L('퍼즐', 'Puzzle'));
-  });
   function drawStickers() {
     const root = $('#pzRow'); if (!root) return;
     const rec = doneRec(), bs = BOARDS.map(b => ({ b, list: pieces(b) })).filter(x => x.list.length);
@@ -1341,10 +1337,10 @@
     $('#pzMain').hidden = bs.length === 0;
     root.hidden = bs.length === 0;
     if (!bs.length) return;
-    const seeing = curTab === 'stickers', fresh = seeing ? pzNew() : [];
-    if (curTab === 'stickers' && pendingCel.length) { curBoard = pendingCel[0]; }
+    stMode = curTab === 'stickers' ? 'cast' : 'puzzle';
+    const seeing = curTab === 'puzzle', fresh = seeing ? pzNew() : [];
+    if (seeing && pendingCel.length) { curBoard = pendingCel[0]; }
     else if (fresh.length) { const fb = bs.find(x => x.list.some(t => fresh.some(f => f.startsWith(t.id + '-')))); if (fb) { curBoard = fb.b.k; castView = ''; } }
-    if ((curTab === 'stickers' && pendingCel.length) || fresh.length) stMode = 'puzzle';     // 새 조각·판 완성은 퍼즐에서 보여 준다
     paintSeg();
     root.hidden = stMode === 'cast';
     if (!bs.some(x => x.b.k === curBoard)) { const withSt = bs.find(x => x.list.some(t => has(t.id))); curBoard = (withSt || bs[0]).b.k; }
@@ -1357,10 +1353,8 @@
     }).join('');
     if (stMode === 'cast') {
       const castTales = TALES.filter(t => castGot(t.id).length);
-      if (pendingCel.length && curTab === 'stickers') castView = '';
       if (!(castView && drawCast())) drawCastList(castTales);
-      drawPlate(); if (seeing) { pzSeenSave(); paintTabBadge(); }
-      if (curTab === 'stickers' && pendingCel.length && !celebrating) { const k2 = pendingCel.shift(); requestAnimationFrame(() => celebrate(k2)); }
+      drawPlate();
       return;
     }
     castView = '';
@@ -1385,7 +1379,7 @@
       pzSeenSave(); paintTabBadge();
     }
     drawPlate();
-    if (curTab === 'stickers' && pendingCel.length && !celebrating) { const k2 = pendingCel.shift(); requestAnimationFrame(() => celebrate(k2)); }
+    if (curTab === 'puzzle' && pendingCel.length && !celebrating) { const k2 = pendingCel.shift(); requestAnimationFrame(() => celebrate(k2)); }
   }
   /* 종이별 접시(앱 모드만): 별 0~5개, 5개면 [동화 하나 열기] → S12 종이별 모드 */
   function drawPlate() {
@@ -1413,7 +1407,7 @@
     glow.animate([{ opacity: 0, transform: 'scale(.4)' }, { opacity: .95, transform: 'scale(1)', offset: .35 }, { opacity: 0, transform: 'scale(1.25)' }], { duration: 1800, easing: 'ease-out' });
     g.querySelectorAll('.pzp').forEach((s, i) => s.animate([{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-10px) scale(1.04)', offset: .45 }, { transform: 'translateY(0) scale(1)' }], { duration: 900, delay: 200 + Math.floor(i / 2) * 140, easing: 'ease-in-out' }));
     const host = confetti();
-    setTimeout(() => { host.remove(); celebrating = false; if (pendingCel.length && curTab === 'stickers') drawStickers(); }, 3600);
+    setTimeout(() => { host.remove(); celebrating = false; if (pendingCel.length && curTab === 'puzzle') drawStickers(); }, 3600);
   }
   $('#pzRow').addEventListener('click', e => {
     const b = e.target.closest('.pz-b'); if (!b) return;
@@ -1457,11 +1451,13 @@
     const c = e.target.closest('.card'); if (c) activateNight(e, c);
   });
 
-  /* ── 탭 3개 (APP_SCREENS_PLAN §2): 동화 놀이 · 읽어 주기 · 스티커북(2026-10-28 사용자 결정 이름). 해시 #tales #night #stickers, 마지막 탭은 기억한다 ── */
+  /* ── 탭 4개 (APP_SCREENS_PLAN §2): 동화 놀이 · 읽어 주기 · 퍼즐 · 스티커북(2026-10-30 사용자: 퍼즐과 스티커를 따로). 해시 #tales #night #puzzle #stickers, 마지막 탭은 기억한다.
+     퍼즐·스티커북은 같은 화면(data-view="stickers")을 쓴다 ── */
   const TABS = {
-    tales:    { ko: '동화 놀이', en: 'Tale Play',  say: '동화 놀이' },
-    night:    { ko: '읽어 주기', en: 'Read to Me', say: '읽어 주기' },
-    stickers: { ko: '스티커북', en: 'Sticker Book', say: '스티커북' }
+    tales:    { ko: '동화 놀이', en: 'Tale Play',  say: '동화 놀이', view: 'tales' },
+    night:    { ko: '읽어 주기', en: 'Read to Me', say: '읽어 주기', view: 'night' },
+    puzzle:   { ko: '퍼즐',     en: 'Puzzle',     say: '퍼즐',     view: 'stickers' },
+    stickers: { ko: '스티커북', en: 'Sticker Book', say: '스티커북', view: 'stickers' }
   };
   const TAB_KEY = 'paperTheater.tab';
   let curTab = '';
@@ -1476,7 +1472,7 @@
       b.setAttribute('aria-label', L(TABS[k].ko, TABS[k].en));
       b.querySelector('.tab-lb').textContent = L(TABS[k].ko, TABS[k].en);
     });
-    document.querySelectorAll('.view').forEach(v => { if (!v.dataset.leaving) v.hidden = v.dataset.view !== curTab; });
+    document.querySelectorAll('.view').forEach(v => { if (!v.dataset.leaving) v.hidden = v.dataset.view !== TABS[curTab].view; });
     $('#home').dataset.tab = curTab;
     $('#nTitle').textContent = L('잠자리 이야기', 'Bedtime stories');
     $('#nightEmptyT').textContent = L('읽어 주기는 준비 중이에요', 'Read-aloud is getting ready');
@@ -1484,20 +1480,20 @@
     $('#pzEmptyT').textContent = L('동화를 끝까지 하면 스티커가 생겨요', 'Finish a tale to get a sticker');
     $('#emptyT').textContent = L('이 조합의 이야기는 아직 없어요', 'No tales match yet');
     $('#emptyReset').textContent = L('전체 보기', 'Show all');
-    if (curTab === 'stickers') drawStickers();
+    if (stkTab()) drawStickers();
   }
   /* 탭 내용 바꾸기 (§5-2): 이전 뷰는 140ms 에 24px 밀려 나가고 새 뷰는 반대쪽 24px 에서 220ms 로 들어온다(동시에 시작).
      방향은 탭 순서(동화 → 잠자리 → 스티커북이 오른쪽). 움직임 줄이기면 120ms 크로스페이드만 */
   const TAB_ORDER = Object.keys(TABS), EASE = 'cubic-bezier(.2,.8,.2,1)';
   let leaving = null;
-  const viewOf = k => document.querySelector(`.view[data-view="${k}"]`);
+  const viewOf = k => document.querySelector(`.view[data-view="${TABS[k] ? TABS[k].view : k}"]`);
   function leaveDone() {
     if (!leaving) return;
     const v = leaving; leaving = null;
     if (v._anim) { v._anim.cancel(); v._anim = null; }
     delete v.dataset.leaving;
     v.style.cssText = '';
-    v.hidden = v.dataset.view !== curTab;
+    v.hidden = v.dataset.view !== TABS[curTab].view;
   }
   function swapViews(prev, k) {
     const ov = viewOf(prev), nv = viewOf(k);
@@ -1515,7 +1511,7 @@
     const prev = curTab;
     if (k === prev && !o.force) return;
     leaveDone();
-    const ov = !o.silent && prev && prev !== k && viewOf(prev);
+    const ov = !o.silent && prev && prev !== k && TABS[prev].view !== TABS[k].view && viewOf(prev);   // 퍼즐 ↔ 스티커북은 같은 화면이라 밀지 않고 바로 다시 그린다
     if (ov && !ov.hidden) { ov._r = { l: ov.offsetLeft, t: ov.offsetTop, w: ov.offsetWidth, h: ov.offsetHeight }; ov.dataset.leaving = '1'; }
     curTab = k;
     paintTabs();
@@ -1524,7 +1520,7 @@
     if (!o.silent && location.hash !== '#' + k) { try { history.replaceState(null, '', location.pathname + location.search + '#' + k); } catch (e) { /* 무시 */ } }
     if (o.silent) return;
     paper('tap');
-    say(k === 'stickers' && Entitlements.stickerCount() === 0 ? L('스티커북. 동화를 끝까지 하면 스티커가 생겨요', 'Sticker Book. Finish a tale to get a sticker') : L(TABS[k].say, TABS[k].en));
+    say(TABS[k].view === 'stickers' && Entitlements.stickerCount() === 0 ? L(`${TABS[k].say}. 동화를 끝까지 하면 생겨요`, `${TABS[k].en}. Finish a tale to get one`) : L(TABS[k].say, TABS[k].en));
   }
   $('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) setTab(b.dataset.tab); });
   $('#tabs').addEventListener('keydown', e => {
@@ -1535,10 +1531,10 @@
     setTab(nb.dataset.tab); nb.focus();
   });
   addEventListener('hashchange', () => { const k = tabFromHash(); if (k) setTab(k); });
-  /* 스티커북 탭 구멍 가장자리의 구리색 점: 종이별이 5개 모였을 때만 (앱 모드) */
+  /* 탭 알림 점: 퍼즐 = 새 조각이 있을 때(퍼즐 탭을 보고 있지 않을 때), 스티커북 = 종이별이 5개 모였을 때(앱 모드) */
   function paintTabBadge() {
-    const on = (Entitlements.appMode() && Entitlements.starBalance() >= Entitlements.STAR_NEED) || (curTab !== 'stickers' && pzNew().length > 0);
-    tabBtns.find(b => b.dataset.tab === 'stickers').querySelector('.tab-badge').hidden = !on;
+    tabBtns.find(b => b.dataset.tab === 'puzzle').querySelector('.tab-badge').hidden = !(curTab !== 'puzzle' && pzNew().length > 0);
+    tabBtns.find(b => b.dataset.tab === 'stickers').querySelector('.tab-badge').hidden = !(Entitlements.appMode() && Entitlements.starBalance() >= Entitlements.STAR_NEED);
   }
   /* 탭 기호: 단색(홈 UI 2판). 고른 탭은 CSS 가 진한 먹색 + 흰 알약으로 */
   tabBtns.forEach(b => { b.querySelector('.hole').innerHTML = mono(b.dataset.tab, 'tab-ic'); });

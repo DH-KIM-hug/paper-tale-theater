@@ -722,7 +722,7 @@ body.app .n-grid .card { height: 100%; }
 /* ═════════ 스티커북 탭 (S3, UI_REDESIGN §4-3·§7-4~7-6): 판 선택 위 한 줄 → 퍼즐판 창 한 겹(바탕에 뚫린 창, 안은 크래프트) → 판 이름·화살표·접시 한 줄 ═════════ */
 body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-star: 40px; --pz-open: 96px; --pz-pad: 16px; --pz-chrome: 424px; }
 .view.stk { container-type: inline-size; display: flex; flex-direction: column; gap: var(--s-4); overflow-y: auto; overflow-x: hidden; scrollbar-width: none; padding-bottom: max(20px, env(safe-area-inset-bottom)); overscroll-behavior: contain; }
-.pz-row[hidden], .pz-main[hidden] { display: none; }
+.pz-row[hidden], .pz-main[hidden], .stk-seg[hidden] { display: none; }
 /* 갈래 단추 (퍼즐 | 스티커): 크림 바탕에 올린 두 칸, 고른 칸 = 감빛 조각 */
 .stk-seg { flex: none; display: flex; gap: var(--s-2); width: min(100%, 420px); padding: 6px; border-radius: 40px; background: var(--paper-dn); box-shadow: var(--cut); }
 .stk-seg button { flex: 1 1 0; min-height: 64px; border: 0; border-radius: 32px; background: none; color: var(--ink-2); font: inherit; font-size: var(--fs-title-s, 22px); font-weight: 800; letter-spacing: .08em; cursor: pointer; touch-action: manipulation; transition: background-color var(--t-1) var(--ease), color var(--t-1) var(--ease); }
@@ -815,7 +815,7 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 .cast-grid .cs.off img.sil { width: 80%; height: 80%; opacity: .14; }
 .cs.ct img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 .cast-grid.list { grid-auto-flow: row; grid-template-rows: none; grid-auto-rows: var(--cs); grid-template-columns: repeat(auto-fit, var(--cs)); justify-content: center; align-content: start; overflow-x: hidden; overflow-y: auto; }
-.cast-none { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; padding: var(--s-5); text-align: center; font-size: var(--fs-title-s, 22px); font-weight: 700; color: var(--ink-2); }
+.cast-none { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; padding: var(--s-5); text-align: center; font-size: var(--fs-title-s, 22px); font-weight: 700; color: var(--ink-2); word-break: keep-all; }
 .cast-dots { display: none; }
 
 /* P 아이패드 세로: 판 선택 → 판 960×540 → 이름·화살표 줄 → 접시 줄(가운데) */
