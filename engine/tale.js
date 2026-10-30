@@ -1335,8 +1335,8 @@ const Tale = (() => {
       const f = now => {
         const t = Math.min(1, (now - t0) / ms), k = Math.min(1, t / .8), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
         const x = e * 102;
-        L.style.transform = `translateX(${-x}%)`; R.style.transform = `translateX(${x}%)`;
-        const sway = Math.sin(Math.PI * k) * 3; L.style.setProperty('--sw', `${-sway}deg`); R.style.setProperty('--sw', `${sway}deg`);
+        const sway = Math.sin(Math.PI * k) * 3;
+        L.style.transform = `translateX(${-x}%) skewX(${-sway}deg)`; R.style.transform = `translateX(${x}%) skewX(${sway}deg)`;
         const v = Math.max(0, (t - .45) / .55); V.style.transform = `translateY(${(-100 * v * v).toFixed(2)}%)`;
         if (t < 1) requestAnimationFrame(f); else { clearTimeout(fallback); gone(); }
       };

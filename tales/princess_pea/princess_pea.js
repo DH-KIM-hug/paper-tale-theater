@@ -251,7 +251,7 @@
       return { go, stop };
     })();
     const { sleep, camSnap, tr } = T;
-    const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ SAIL = 5000 /* 2026-10-29 8000→5000: 배가 오가는 동안 대사 없이 16초를 기다렸다 */, COUNT_A = 1400, COUNT_B = 1300, CLIMB = 6000;   // §2-7 속도 상수
+    const GAP = 700, SCENE_END = 1500,   /* 2026-10-22 대사 뒤·장면 끝 쉼을 줄임(전환이 느리다는 지적) */ SAIL = 5000 /* 2026-10-29 8000→5000: 배가 오가는 동안 대사 없이 16초를 기다렸다 */, CLIMB = 6000;   // §2-7 속도 상수
     const say = async text => { await T.say(text); await sleep(GAP); };
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(수 세기 n1~n20)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
@@ -614,7 +614,7 @@
     queen.look('wink');
     await sleep(SCENE_END);
 
-    /* ===== 5. 매트리스 스무 장 (배움 놀이 2: 수 세기 1~20, 톡 2번) ===== */
+    /* ===== 5. 매트리스 스무 장 (배움 놀이 2: 수 세기 1~20, 한 장에 톡 한 번 — 2026-10-31) ===== */
     const PILE_X = X(850, 700);
     let bedHit;
     await T.sceneCard(tr('매트리스 스무 장'), () => {
@@ -630,23 +630,25 @@
       if (P) camSnap(TX, 280, 1);
     }, board.pos);
     bob(pile[4].pos);
-    await T.ask('완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.', () => T.tap(bedHit, { prompt: '완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.' }));
-    const stack = async (from, to, gap) => {
-      for (let i = from; i < to; i++) {
-        const m = mats[i];
-        put(T, m, PILE_X, FL - 100); inRig(m); rig.appendChild(peaB.pos); rig.appendChild(bedHit);
-        m.move(TX, BOARD_TOP - i * MAT_H, 450, 'ease-out');
-        cue('cushion', .45) || sfx(T, 'paper_down', .35);
-        if (i >= 15) hide(pile[19 - i]);
-        vo('n' + (i + 1));
-        if (i === 9 || i === 19) setTimeout(towerShake, 450);
-        await sleep(gap);
-      }
+    /* 2026-10-31 사용자: 세기는 다시 손으로 — 한 번 톡에 매트리스 한 장, 왕비가 그 수를 말한다(사자와 생쥐 그물 세기와 같은 방식).
+       숫자 소리가 끝날 때까지 다음 톡은 받지 않아 숫자가 겹치지 않는다. */
+    const MAT_PROMPT = '완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.';
+    const stackOne = async i => {
+      const m = mats[i];
+      put(T, m, PILE_X, FL - 100); inRig(m); rig.appendChild(peaB.pos); rig.appendChild(bedHit);
+      m.move(TX, BOARD_TOP - i * MAT_H, 450, 'ease-out');
+      cue('cushion', .45) || sfx(T, 'paper_down', .35);
+      if (i >= 15) hide(pile[19 - i]);
+      const said = vo('n' + (i + 1));
+      if (i === 9 || i === 19) setTimeout(towerShake, 450);
+      await Promise.all([sleep(450), Promise.race([said || sleep(0), sleep(2500)])]);
     };
-    await stack(0, 10, COUNT_A);
-    bob(pile[4].pos);
-    await T.ask('열! 아직 더 있어요. 한 번 더 톡!', () => T.tap(bedHit, { prompt: '열! 아직 더 있어요. 한 번 더 톡!' }));
-    await stack(10, 20, COUNT_B);
+    for (let i = 0; i < 20; i++) {
+      if (i === 0) await T.ask(MAT_PROMPT, () => T.tap(bedHit, { prompt: MAT_PROMPT }));
+      else if (i === 10) { bob(pile[4].pos); await T.ask('열! 아직 더 있어요. 한 번 더 톡!', () => T.tap(bedHit, { prompt: MAT_PROMPT })); }
+      else await T.tap(bedHit, { prompt: MAT_PROMPT });
+      await stackOne(i);
+    }
     await sleep(400);
     await say('스물! 매트리스가 스무 장이에요.');
     for (let j = 0; j < 4; j++) {

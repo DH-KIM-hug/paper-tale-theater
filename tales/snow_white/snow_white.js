@@ -907,7 +907,7 @@
     await say('와아, 고맙습니다!');
     await sleep(400);
 
-    /* ===== 8. 침대 여덟 개 (배움 놀이: 세기 — 톡 한 번, 1~8 저절로) ===== */
+    /* ===== 8. 침대 여덟 개 (배움 놀이: 세기 — 침대마다 톡, 1~8) ===== */
     /* 작은 침대 일곱(두 줄로 엇갈려, 왼쪽부터 1~7) + 오른쪽 큰 침대(8) */
     const SX = [70, 160, 250, 340, 430, 520, 610], SYs = i => (i % 2 ? 552 : 496), SS = i => (i % 2 ? .82 : .74), SY = 552, BIGX = 790;
     let bedsG;
@@ -922,15 +922,18 @@
       T.world.appendChild(snow.pos);
       if (P) camSnap(SX[2], 280, 1);
     }, bigBed.pos);
-    await T.ask('침대가 몇 개일까요? 톡 눌러 봐요.', () => T.tap(bedsG, { prompt: '침대가 몇 개일까요? 톡 눌러 봐요.' }));
-    const all = [...beds, bigBed];
+    /* 2026-10-31 사용자: 세기는 다시 손으로 — 아이가 침대를 하나씩 골라 누르면 누른 차례대로 수를 말한다(아직 안 센 침대만 눌림).
+       숫자 소리가 끝나야 다음 톡을 받는다 */
+    const left = [...beds, bigBed];
     for (let i = 0; i < 8; i++) {
-      const b = all[i];
+      const pick = () => T.choose(left.map(x => ({ el: x.pos, ok: true, b: x })), { prompt: '침대가 몇 개일까요? 톡 눌러 봐요.' });
+      const { b } = i === 0 ? await T.ask('침대가 몇 개일까요? 톡 눌러 봐요.', pick) : await pick();
+      left.splice(left.indexOf(b), 1);
       if (P) T.camTo(Math.min(Math.max(b.x, SX[2]), BIGX), 280, 1, 450);
-      AudioFX.countBeat && AudioFX.countBeat(i + 1); cue('marimba_' + (i + 1), .8) || popSfx(T); vo('n' + (i + 1));
-      glow(b, 800); b.hop(i === 7 ? 18 : 12, 360);
-      T.pop(b.x, i === 7 ? 220 : (i % 2 ? 250 : 190), tr(NUM[i]));
-      await sleep(i === 6 ? 1300 : 950);                  /* 일곱 다음에 한 박 쉬고 큰 침대 */
+      AudioFX.countBeat && AudioFX.countBeat(i + 1); cue('marimba_' + (i + 1), .8) || popSfx(T); const said = vo('n' + (i + 1));
+      glow(b, 800); b.hop(b === bigBed ? 18 : 12, 360);
+      T.pop(b.x, b === bigBed ? 220 : (b.y > 520 ? 250 : 190), tr(NUM[i]));
+      await Promise.all([sleep(500), Promise.race([said || sleep(0), sleep(2500)])]);
     }
     if (P) T.camTo(560, 280, 1, 700);
     dwarfs.hop(14, 360);

@@ -457,9 +457,8 @@
       // 막: 천천히 끌려 나오다 가운데서 살짝 겹치며 멈춘다(무게감). 폭마다 끝자락이 조금 늦게 따라와 흔들린다
       const k = clamp((t - .04) / .6), e = k < 1 ? 1 - Math.pow(1 - k, 3) * (1 - 1.6 * k * (1 - k)) : 1;
       const x = (1 - e) * 102 - 1.2 * Math.sin(Math.PI * clamp((t - .5) / .25));
-      L.style.transform = `translateX(${-x}%)`; R.style.transform = `translateX(${x}%)`;
       const sway = Math.sin(Math.PI * k) * 3;
-      L.style.setProperty('--sw', `${sway}deg`); R.style.setProperty('--sw', `${-sway}deg`);
+      L.style.transform = `translateX(${-x}%) skewX(${sway}deg)`; R.style.transform = `translateX(${x}%) skewX(${-sway}deg)`;
       V.style.transform = `translateY(${(-100 * (1 - eo(t / .35))).toFixed(2)}%)`;
     }, () => { clearTimeout(fallback); go(); });
   }

@@ -789,7 +789,7 @@
     await say('호박이 황금 마차가 되었어요!');
     cind.look('joy'); cind.hop(12, 340);
 
-    /* ===== 5. 생쥐 여섯 마리 (배움 놀이: 세기 — 덫을 톡 한 번, 1~6 저절로) ===== */
+    /* ===== 5. 생쥐 여섯 마리 (배움 놀이: 세기 — 덫을 톡 할 때마다 한 마리, 1~6) ===== */
     const TX = X(600, 560);
     const MX = X([420, 500, 580, 660, 740, 820], [470, 530, 590, 470, 530, 590]), MY = X([FL, FL, FL, FL, FL, FL], [FL - 30, FL - 30, FL - 30, FL + 6, FL + 6, FL + 6]);
     await T.sceneCard(tr('생쥐 여섯 마리'), () => {
@@ -804,18 +804,19 @@
     }, trap.pos);
     await say('쥐덫에 생쥐가 있구나. 몇 마리일까?');
     trap.pos.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 700, iterations: 4 });
-    await T.ask('쥐덫을 톡 눌러 봐요.', () => T.tap(trap.pos, { prompt: '쥐덫을 톡 눌러 봐요.' }));
-    sfx(T, 'creak', () => popSfx(T)); trap.wiggle(6, 300);
-    await sleep(400);
+    /* 2026-10-31 사용자: 세기는 다시 손으로 — 쥐덫을 톡 할 때마다 생쥐가 한 마리씩 나오고 그 수를 말한다. 숫자 소리가 끝나야 다음 톡을 받는다 */
     for (let i = 0; i < 6; i++) {
+      if (i === 0) await T.ask('쥐덫을 톡 눌러 봐요.', () => T.tap(trap.pos, { prompt: '쥐덫을 톡 눌러 봐요.' }));
+      else await T.tap(trap.pos, { prompt: '쥐덫을 톡 눌러 봐요.' });
+      sfx(T, 'creak', () => popSfx(T)); trap.wiggle(6, 300);
       const m = mice[i];
       put(T, m, TX, FL - 20, { to: 'right' });
       m.turn(MX[i] < TX ? 'left' : 'right'); // 가는 쪽을 본다
-      AudioFX.countBeat && AudioFX.countBeat(i + 1); popSfx(T); vo('n' + (i + 1));
+      AudioFX.countBeat && AudioFX.countBeat(i + 1); const said = vo('n' + (i + 1));
       await m.move(MX[i], MY[i], 420, 'ease-out');
       m.hop(12, 300); glow(m, 700);
       T.pop(MX[i] - (i === 5 ? 90 : 0), MY[i] - (i === 5 ? 170 : 230), tr(NUM[i]));
-      await sleep(650);
+      await Promise.all([sleep(400), Promise.race([said || sleep(0), sleep(2500)])]);
     }
     await say('생쥐가 여섯 마리! 하얀 말 여섯 마리가 되었어요.');
     /* 생쥐가 반짝 → 말 여섯 마리가 마차 앞에 두 줄로 */
