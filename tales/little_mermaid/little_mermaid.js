@@ -366,6 +366,9 @@
     const SCENE_AMB = { night_sea: 'waves', beach: 'seagull_1', garden: 'birds_chirp_2', deck: 'waves', dawn_sea: 'waves', morning_sea: 'seagull_2' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); T._cover = null; bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     try { AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'step_wood', 'step_grass', 'bubbles', 'sparkle', 'gulp', 'thud', 'splash', 'splash_big', 'whoosh', 'swish', 'tada', 'bell', 'doop', 'giggle_xylo', 'slide_up', 'blow_long', 'paper_down', 'pow', 'boom', 'waves', 'seagull_1', 'seagull_2', 'birds_chirp_2', 'thunder', 'whistle_down', 'ding_glock', 'pot_boil', 'shimmer', 'question', 'chime_up', 'party_horn']); } catch (e) { /* */ }
+    /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
+    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['classical_aquarium', 'classical_clair_de_lune_piano']); } catch (e) { /* 무시 */ }
     const P = T.viewWidth() < 990;   /* 세로 화면: 가운데 일부만 보인다 → 카메라가 따라간다 */
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -665,6 +668,7 @@
       Object.entries(NAMES).forEach(([nm, a]) => { READ_ACTS[nm] = AV(nm, a); });
       READ_ACTS.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } };
       READ_ACTS.amb = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } };
+      if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
       return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
 
@@ -808,6 +812,7 @@
       if (P) camSnap(500, 280, 1);
     }, prince.pos);
     bob(mer, -3, 600, 3);
+    classical('clair_de_lune_piano'); // 폭풍 뒤 고요한 모래밭: 드뷔시 〈달빛〉(피아노) 18초
     await say('인어공주는 왕자님을 모래밭에 눕히고, 바위 뒤에 숨었어요.');
     put(T, lady, 1100, 510, { look: 'stand', to: 'left' }); sfx(T, 'step_grass');
     await lady.move(X(720, 660), 510, 1800);
@@ -834,6 +839,7 @@
       camSnap(X(490, 500), 330, 1.3);
     }, granny.pos);
     mer.hop(6, 400);
+    classical('aquarium'); // 바다 밑 궁전 이야기: 생상스 〈동물의 사육제〉 중 수족관 18초
     await say('할머니, 사람은 어떻게 살아요?');
     granny.look('hand'); bubblesUp(T, granny.x - 40, granny.y - 200, 3, 120);
     await say('사람은 땅 위에서 살고, 우리는 바다에서 살지. 사람에겐 별처럼 영원히 남는 마음이 있단다.');

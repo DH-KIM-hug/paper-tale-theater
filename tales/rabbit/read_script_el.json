@@ -566,7 +566,8 @@
       "fx:whoosh",
       "speedlines",
       "rabbit:hop",
-      "pop:530,300,쌩!"
+      "pop:530,300,쌩!",
+      "classical:cancan"
      ],
      "after": [
       "race:0.6,0.04"

@@ -338,7 +338,7 @@
             await sleep(wait); if (!my()) return; await k.move(xx, G - 6, 1500, 'ease-in-out'); if (!my()) return;
             const x0 = k.x, y0 = k.y, f = k.flip, s0 = k.scale;
             await k.pos.animate([{ transform: `translate(${x0}px,${y0}px) scale(${f * s0},${s0})`, opacity: 1 }, { transform: `translate(${DX}px,${DOORY + 20}px) scale(${f * s0 * .6},${s0 * .6})`, opacity: 1, offset: .6 },
-              { transform: `translate(${DX}px,${DOORY}px) scale(${f * s0 * .5},${s0 * .5})`, opacity: 0 }], { duration: 1300, easing: 'ease-in', fill: 'forwards' }).finished;
+              { transform: `translate(${DX}px,${DOORY}px) scale(${f * s0 * .5},${s0 * .5})`, opacity: 0 }], { duration: 1300, easing: 'ease-in', fill: 'forwards' }).finished.catch(() => { /* 장면이 넘어가 취소됨 */ });
             hide(k);
           };
           enter(dog, DX - 10, 0); kids.forEach((k, i) => enter(k, DX - 25 + i * 22, 900 + i * 450));
@@ -719,7 +719,7 @@
         const x0 = k.x, y0 = k.y, f = k.flip, s0 = k.scale;
         await k.pos.animate([{ transform: `translate(${x0}px,${y0}px) scale(${f * s0},${s0})`, opacity: 1 },
           { transform: `translate(${DX}px,${DOORY + 20}px) scale(${f * s0 * .6},${s0 * .6})`, opacity: 1, offset: .6 },
-          { transform: `translate(${DX}px,${DOORY}px) scale(${f * s0 * .5},${s0 * .5})`, opacity: 0 }], { duration: 1300, easing: 'ease-in', fill: 'forwards' }).finished;
+          { transform: `translate(${DX}px,${DOORY}px) scale(${f * s0 * .5},${s0 * .5})`, opacity: 0 }], { duration: 1300, easing: 'ease-in', fill: 'forwards' }).finished.catch(() => { /* 장면이 넘어가 취소됨 */ });
         hide(k);
       };
       const inn = Promise.all([enter(dog, DX - 10, 0), ...kids.map((k, i) => enter(k, DX - 25 + i * 22, 900 + i * 450))]);

@@ -148,7 +148,8 @@
       ]
      ],
      "before": [
-      "sfx:ding_glock:.45"
+      "sfx:ding_glock:.45",
+      "classical:clair_de_lune_box"
      ]
     },
     {
@@ -687,6 +688,9 @@
        null,
        "[calm, warm storytelling]"
       ]
+     ],
+     "before": [
+      "classical:fur_elise_box"
      ]
     },
     {

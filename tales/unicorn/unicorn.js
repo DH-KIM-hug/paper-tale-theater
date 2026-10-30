@@ -354,6 +354,9 @@
     const follow = (x, ms = 800) => (P ? T.camTo(500 + (x - VX.lx) * VX.ps, 280, 1, ms) : Promise.resolve());
     const H = n => (P ? n / VX.ps : n);               // 화면 크기를 지키는 누르는 자리
     AudioFX.preloadSfx(['finale_fairy', 'paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding', 'birds_chirp_1', 'crickets_night_1', 'crickets_night_2', 'waterfall', 'question', 'ding_glock', 'boing', 'stomach_growl', 'horse_neigh_1', 'harp_gliss', 'shimmer', 'intro_unicorn_guitar', 'party_horn', 'pull_pop', 'chime_up']);
+    /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
+    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['classical_swan_lake_piano']); } catch (e) { /* 무시 */ }
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
@@ -650,6 +653,7 @@
       if (CARDSET[label] && CARDSET[label] === curKey && (T.viewWidth() < 990) === P && !document.hidden) { rCont = true; if (change) change(); rCont = false; return Promise.resolve(); }
       return T.sceneCard(label, change, focus);
     };
+    if (R && typeof R === 'object') R.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
     if (T.reading()) return T.readPlay.call(RW, R).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 설렘 (배움 놀이: 꽃 선물 색 고르기 — 첫 조작) — 멀리서 넓게 ===== */
@@ -893,6 +897,7 @@
     if (uni.pos.style.opacity === '0') { uni.pos.style.opacity = ''; fadeIn(uni, 1400); }
     glow(uni, 1500);
     halo.pos.style.opacity = ''; fadeIn(halo, 2400);
+    classical('swan_lake_piano'); // 달빛 아래 하얀 유니콘: 차이콥스키 〈백조의 호수〉(피아노 판) 18초
     await sleep(1500);
     await say(S.L31);
     await say(S.L32);

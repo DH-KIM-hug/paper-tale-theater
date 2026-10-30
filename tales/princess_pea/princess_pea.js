@@ -269,6 +269,9 @@
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const TX = X(560, 520);                        // 탑(침대) 가운데 x — 4·5·6·7·8장 공통
     AudioFX.preloadSfx && AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'creak', 'boom', 'sparkle', 'tada', 'step_wood', 'poke', 'splash', 'bubbles', 'waves', 'rain_1', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'thunder', 'door_heavy_1', 'question', 'ding_glock', 'cushion', 'sleepy_tuba', 'party_horn', 'applause_1']);
+    /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
+    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['classical_morning_mood_flute']); } catch (e) { /* 무시 */ }
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 (FIXED_ASP 는 덮어쓰지 않는다) */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -490,6 +493,7 @@
       },
     };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
+    if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
     if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 진짜 공주를 찾아서 (톡 1 — 배) ===== */
@@ -746,6 +750,7 @@
       if (P) camSnap(520, 280, 1);
     }, pea.pos);
     pea.wiggle(3, 500); cue('sleepy_tuba', .6); T.pop(pea.x, FL - 290, tr('하암'), '#1F2A56');
+    classical('morning_mood_flute'); // 성의 아침: 그리그 〈아침 기분〉(제목에 플루트라고 적힌 녹음) 18초
     await say('아침이 되었어요. 공주가 사다리를 내려왔어요.');
     await say('잘 잤니?');
     pea.look('honest'); pea.hop(8, 300);

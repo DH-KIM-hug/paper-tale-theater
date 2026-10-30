@@ -363,10 +363,10 @@
     const GATE_VIEW = { lx: 525, nw: 950 }, GATE_DUO_P0 = 168, GATE_DUO_P = 205, GATE_CRAB_P = 412, GATE_FRONT = 52, GATE_CRAB_FRONT = 60;
     const gateFloorY = d => FL + d / ES(GATE_VIEW.nw);
     const LAY = {
-      chamber() {   // 1장: 용궁 침전. 용왕은 머리 오른쪽, 의원·문어·게는 머리맡 오른쪽에서 왼쪽(용왕)을 본다
+      chamber() {   // 1장: 용궁 침전. 용왕은 누워서 오른쪽(의원·문어·게)을 본다 — 옛 배치는 머리가 오른쪽이라 신하들을 등졌다(2026-10-31 사용자). 의원·문어·게는 왼쪽(용왕)을 본다
         scene('bj_bg_chamber', { lx: 560, nw: 800 });
         put(T, bed, 350, FL + 4, { look: 'a', s: .9 });
-        put(T, king, 370, FL - bed.h * .9 * .6, { look: 'lie', to: 'right' });
+        put(T, king, 330, FL - bed.h * .9 * .6, { look: 'lie', to: 'left' });
         put(T, pot, 610, FL + 4, { look: 'a' });
         put(T, octo, 950, FL - 6, { look: 'stand', to: 'left' });
         put(T, doctor, 790, FL, { to: 'left' });

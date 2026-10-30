@@ -97,6 +97,9 @@
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     try { AudioFX.preloadSfx(['finale_happy', 'intro_adventure', 'crickets_night_1', 'crickets_night_2', 'leaves_footsteps', 'birds_chirp_1', 'fire_crackle', 'stream_1', 'drum', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'sleepy_tuba', 'surprise_sting', 'comic_brass', 'latch_click', 'question', 'door_heavy_1', 'door_heavy_2', 'zip_away', 'party_horn', 'creak', 'squeak', 'crunch']); } catch (e) { /* 무시 */ }
+    /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
+    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['classical_clair_de_lune_box', 'classical_fur_elise_box']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     const fx = document.getElementById('fxL'); if (fx) fx.style.pointerEvents = 'none'; /* 말풍선·효과 글자는 누름을 받지 않는다 */
     const tr = T.tr;
@@ -459,6 +462,7 @@
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
+    if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
     if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); return rr; } // 끝 음악이 끝날 때까지 기다림(화면을 꺼도 계속)
 
     /* --- 1. 집 안 밤: 문틈으로 엿듣기 --- */
@@ -504,6 +508,7 @@
     }, hans.pos);
     T.cardSpeed(1);
     const glints = pebbles.map((p, i) => sparkleAt(PX[i], GROUND, i * 300));
+    classical('clair_de_lune_box'); // 달빛에 반짝이는 조약돌: 드뷔시 〈달빛〉(오르골 판) 18초
     await say('헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!');
     await T.ask('헨젤을 톡! 조약돌을 주워요.', () => T.tap(hans.pos, { prompt: '헨젤을 톡! 조약돌을 주워요.' })); /* 안내 도중에도 눌린다 (첫 조작 30초 안) */
     hans.hop(10, 240); glints.forEach(g => g.remove());
@@ -673,6 +678,7 @@
       put(T, gret, L(500, 540), GROUND, { look: 'walk', to: 'right' });
     }, gret.pos);
     sfx('ding_glock', .5); // 과자 집 발견
+    classical('fur_elise_box'); // 달콤한 과자 집: 베토벤 〈엘리제를 위하여〉(오르골 판) 18초
     await say('그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!');
     await say('벽은 쿠키, 지붕은 사탕이에요.');
     await sleep(700); /* 저절로 냠냠 */

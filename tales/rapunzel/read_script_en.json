@@ -635,7 +635,8 @@
      ],
      "before": [
       "fx:step_grass",
-      "snd:horse_neigh_1:.5"
+      "snd:horse_neigh_1:.5",
+      "classical:songs_without_words"
      ],
      "after": [
       "prince:walk:260,3500",

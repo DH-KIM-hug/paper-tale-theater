@@ -353,6 +353,9 @@
     const SLOT = i => 112 + 108 * i, SLOTP = i => 500 - 3.5 * SGAP + SGAP * i;
     const SX = i => X(SLOT(i), SLOTP(i)), RS = X(1, S_ROW);
     AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'hop', 'crowd_murmur_1', 'birds_chirp_1', 'birds_chirp_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'question', 'ding_glock', 'sleepy_tuba', 'shimmer', 'boing', 'party_horn']);
+    /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
+    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['classical_brahms_lullaby_box', 'classical_gymnopedie1']); } catch (e) { /* 무시 */ }
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 서양 명작 동화 끝 음악 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
     let finaleEnd = 0;
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
@@ -749,6 +752,7 @@
       return R;
     })();
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
+    if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
     if (T.reading()) READ_ACTS.finale = () => { finaleMusic(); return null; }; return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 기다리던 아기 (톡 1: 요람) ===== */
@@ -861,6 +865,7 @@
       put(T, queen, X(820, 740), FL, { look: 'joy' });
       camSnap(X(500, 470), 280, 1);
     }, cradle.pos);
+    classical('brahms_lullaby_box'); // 요정들의 선물 잔치: 브람스 〈자장가〉(제목에 오르골이라고 적힌 녹음, 아기에게 주는 선물) 18초
     const GIFT_X = X(400, 410), L4 = [S.L11, S.L12, S.L13, S.L14, S.L15, S.L16];
     for (let i = 0; i < 6; i++) {
       const f = fairies[i];
@@ -1094,6 +1099,7 @@
     }, cook.pos);
     hitBox(T, bird, 90, 90); hitBox(T, dog, 120, 100); hitBox(T, kid, 110, 210); hitBox(T, guardB, 120, 230);
     L.pot_rack.wiggle(2, 800);
+    classical('gymnopedie1'); // 쥐 죽은 듯 잠든 궁전에 살금살금: 사티 〈짐노페디〉 1번(피아노) 18초
     await walk(T, prince, X(150, 395), FL, 2000, { h: 4, hd: 420, snd: 'step_wood', vol: .2 });
     const l36 = say(S.L36); T.pop(prince.x, FL - 295, tr('쉿'), '#1F2A56'); await l36;
     await say(S.L37);

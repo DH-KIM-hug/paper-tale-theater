@@ -216,6 +216,9 @@
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'fire_crackle', 'crickets_night_1', 'crowd_murmur_1', 'shimmer', 'chime_up', 'horse_neigh_1', 'horse_hooves_1', 'question', 'surprise_sting', 'xylo_down', 'knock', 'ding_glock', 'party_horn', 'whoosh', 'sparkle', 'swish', 'bell', 'tada', 'creak', 'ding']); } catch (e) { /* 무시 */ }
+    /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
+    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['classical_blue_danube_box']); } catch (e) { /* 무시 */ }
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 서양 명작 동화 끝 음악 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
     let finaleEnd = 0;
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
@@ -672,6 +675,7 @@
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     READ_ACTS.finale = () => { finaleMusic(); return null; };
+    if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
     if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { stopAmb(.5); });
 
     /* ===== 1. 재투성이 ===== */
@@ -903,6 +907,7 @@
     }, cind.pos);
     if (!P) T.camTo(500, 280, 1, 2600);
     amb('crowd_murmur_1', { vol: .2, dur: 4 }); // 무도회장 웅성웅성
+    classical('blue_danube_box'); // 첫째 밤 무도회: 슈트라우스 〈푸른 도나우〉(오르골 판) 18초
     await say('궁전에 가니 모두 신데렐라를 바라보았어요.');
     await say('함께 춤춰요.');
     /* 빙글빙글 (서로 손을 잡은 채 좌우로 오간다) */

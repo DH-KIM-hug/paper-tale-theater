@@ -703,6 +703,9 @@
        null,
        "[calm, warm storytelling]"
       ]
+     ],
+     "before": [
+      "classical:vivaldi_winter"
      ]
     },
     {
@@ -1154,7 +1157,8 @@
      "before": [
       "fx:chime",
       "pop:500,250,백조!",
-      "sfx:ding_glock:.45"
+      "sfx:ding_glock:.45",
+      "classical:swan_cello"
      ]
     },
     {

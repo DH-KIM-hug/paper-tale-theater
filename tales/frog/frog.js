@@ -302,6 +302,9 @@
     const lullaby = () => { try { const o = { vol: T.reading() ? .3 : .45, loop: false, fadeIn: .5, dur: 12 }; lullEnd = Date.now() + 12000; if (!AudioFX.ambient('intro_night', o)) setTimeout(() => { try { AudioFX.ambient('intro_night', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const lullabyWait = () => (lullEnd ? sleep(Math.max(0, Math.min(8000, lullEnd - Date.now() - 600))) : Promise.resolve());
     try { AudioFX.preloadSfx(['intro_night', 'intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon_fly', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
+    /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
+    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['classical_haydn_pizz']); } catch (e) { /* 무시 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -545,6 +548,7 @@
     const fadeInR = (n, ms = 500) => n.animate([{ opacity: 0 }, { opacity: 1 }], ms);
     const READ_ACTS = { lullaby: () => { lullaby(); return null; }, set: R.set, babies: R.babies, baby: R.baby, mom: R.mom, ox: R.ox, chart: R.chart, uncle: R.uncle, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam, chorus: R.chorus };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
+    if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
     if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await lullabyWait(); stopAmb(); return rr; }   // 자장가가 끝날 때까지(화면을 꺼도 계속)
 
     await T.curtain(true);
@@ -756,6 +760,7 @@
       mom.place(x, y); if (T.portrait()) camTo(x, 280, 1, 420);
     };
     await T.tap(mom.pos, { prompt: '엄마개구리를 톡 눌러서 폴짝!' }); // 한 번 누르면 연잎 다섯 장을 저절로 (2026-10-19)
+    classical('haydn_pizz'); // 연잎 위 폴짝폴짝: 하이든 F장조 소나타(제목에 바이올린 피치카토라고 적힌 편곡) 18초
     for (let i = 1; i <= 5; i++) { padStep(); await sleep(650); }
     await sleep(500);
     oxArt.set('stand');

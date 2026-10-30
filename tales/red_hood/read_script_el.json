@@ -211,6 +211,9 @@
      ],
      "after": [
       "hood:walk:600,520"
+     ],
+     "before": [
+      "classical:moment_musical3"
      ]
     },
     {

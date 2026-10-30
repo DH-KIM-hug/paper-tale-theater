@@ -432,6 +432,9 @@
        null,
        "[calm, warm storytelling]"
       ]
+     ],
+     "before": [
+      "classical:clair_de_lune_piano"
      ]
     },
     {
@@ -566,7 +569,8 @@
       ]
      ],
      "before": [
-      "mer:hop"
+      "mer:hop",
+      "classical:aquarium"
      ]
     },
     {

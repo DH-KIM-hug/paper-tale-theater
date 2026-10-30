@@ -720,6 +720,9 @@
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     try { AudioFX.preloadSfx(['intro_night', 'birds_chirp_1', 'birds_chirp_2', 'rustle_1', 'winter_wind_1', 'fire_crackle', 'waves', 'duckling_peep', 'geese_swan', 'surprise_sting', 'harp_gliss', 'cat_purr', 'question', 'whistle_up', 'drumroll_crash', 'ding_glock', 'party_horn', 'finale_happy']); } catch (e) { /* 무시 */ }
+    /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
+    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    try { AudioFX.preloadSfx(['classical_swan_cello', 'classical_vivaldi_winter']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     /* 그림 미리 불러오기: 배우와 첫 배경을 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
@@ -1205,6 +1208,7 @@
       READ_ACTS.sfxs = (list, step, v) => { try { if (T.readInstant()) return null; String(list).split(',').forEach((n, i) => setTimeout(() => { try { AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } }, i * (+step || 260))); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
+    if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
     if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); return rr; }
 
     /* ============ 1막 ============ */
@@ -1496,6 +1500,7 @@
     }, 260);
     const shiver = hero.body.animate([{ translate: '0 0' }, { translate: '2px 0' }, { translate: '-2px 0' }], { duration: 120, iterations: Infinity });
     amb('winter_wind_1', { vol: .25, dur: 4 }); // 찬바람
+    classical('vivaldi_winter'); // 꽁꽁 언 호수에서 덜덜: 비발디 〈사계〉 겨울 1악장(현악 합주) 18초
     await say('추운 겨울이 왔어요. 호수가 꽁꽁 얼어서 발이 얼음에 붙어 버렸어요.');
     await say('아기 오리가 날개로 몸을 감싸서 따뜻하게!');
     let warmed = false;
@@ -1675,6 +1680,7 @@
     await camWide(1400);
     swanCall(T); sfx('ding_glock', .5); T.pop(640, 110, '백조!', C.indigo);
     await sleep(900); // 백조 울음이 끝나고 "어? 이게 나야?"
+    classical('swan_cello'); // 물에 비친 하얀 백조: 생상스 〈동물의 사육제〉 중 백조(첼로 판) 18초
     await say('"어? 이게 나야?" 아기 오리는 하얀 백조였어요!');
     await orderGame([
       { label: '알', icon: growthIcon('egg') }, { label: '아기', icon: growthIcon('baby') },
