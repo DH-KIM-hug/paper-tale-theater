@@ -357,7 +357,11 @@
     const layPaths = cx => { const s = PS(); ['left', 'mid', 'right'].forEach(k => put(T, paths[k], cx + PATH[k][0] * s * (k === 'mid' ? 0 : 1) * .78, FL + 30, { look: 'a', s })); };
     /* 7장 대문: 문 가운데 x(왼쪽·가운데·오른쪽), 문 크기, 게 병사·자라 자리. 세로 화면은 고를 때 문 셋이 다 보이게 GATE_VIEW 로 넓힌다 */
     const GATE_X = [455, 670, 885], GATE_S = .7, GATE_CRAB = 362, GATE_DUO = 140, DOOR_K = ['left', 'mid', 'right'];
-    const GATE_VIEW = { lx: 585, nw: 900 };   // 자라·토끼·게 병사와 문 셋이 함께 보이게(폰 세로에서 문 칸 짧은 변 약 87px)
+    /* 세로 고르기 화면(2026-10-30 사용자 지적: 자라·토끼가 왼쪽 끝에 반쯤 잘림): 보이는 월드 폭 950(x 50~1000) — 문 셋 + 왼쪽 문 앞 자라·토끼 한 마리 자리(폭 294).
+       폰 세로에서 문 칸 짧은 변 약 82px. 자라·토끼는 문 앞 돌바닥 띠 안쪽(배경 기준 FL 아래 GATE_FRONT)으로 한 걸음 나와 서서 문 칸을 가리지 않는다.
+       게 병사는 왼쪽 문 앞 아래(돌바닥)에서 손님(왼쪽)을 본다. 세로 월드 배율이 화면마다 달라 바닥 깊이는 배경 단위로 정하고 월드로 바꾼다 */
+    const GATE_VIEW = { lx: 525, nw: 950 }, GATE_DUO_P0 = 168, GATE_DUO_P = 205, GATE_CRAB_P = 412, GATE_FRONT = 52, GATE_CRAB_FRONT = 60;
+    const gateFloorY = d => FL + d / ES(GATE_VIEW.nw);
     const LAY = {
       chamber() {   // 1장: 용궁 침전. 용왕은 머리 오른쪽, 의원·문어·게는 머리맡 오른쪽에서 왼쪽(용왕)을 본다
         scene('bj_bg_chamber', { lx: 560, nw: 800 });
@@ -419,10 +423,10 @@
         put(T, FG.kelp_curtain, X(960, 700), 300);
       },
       gate() {      // 7장: 용궁 대문. 문 셋(왼쪽·가운데·오른쪽) 중 게 병사가 말한 문 하나만 열린다. 토끼는 자라 등에 탄 채(겹쳐 가려지지 않게)
-        scene('bj_bg_gate', { lx: 330, nw: 600 });
+        scene('bj_bg_gate', { lx: 315, nw: 600 });   // 세로: 배경 왼쪽 끝(-40)이 비지 않는 가장 왼쪽 근처
         GATE_X.forEach((x, i) => put(T, doors[i], x, FL + 4, { look: 'closed', s: GATE_S }));   // 문 높이 0.7배(문 셋이 한 화면에)
         put(T, crab1, GATE_CRAB, FL, { to: 'left' });   // 게 병사: 첫 문 앞 왼쪽, 손님(왼쪽)을 본다
-        put(T, jara, GATE_DUO, FL, { look: 'stand', to: 'right' }); seatRabbit('stand');   // 자라·토끼: 둘 다 오른쪽(게·문)을 본다
+        put(T, jara, X(GATE_DUO, GATE_DUO_P0), FL, { look: 'stand', to: 'right' }); seatRabbit('stand');   // 자라·토끼: 둘 다 오른쪽(게·문)을 본다
         put(T, FG.coral_left, -10, 600);
       },
       throne() {    // 8·9장: 옥좌 앞. 용왕이 위에서 왼쪽 아래(토끼)를 본다
@@ -581,12 +585,18 @@
       /* 문 고르기: k = left·mid·right(화면 기준). 고른 문만 열리고, 그 문 뒤에 잔칫상이 보인다 */
       async gateArrive() {   // 자라가 토끼를 태우고 왼쪽에서 들어와 게 병사 앞에 선다
         jara.look('stand', 'right'); jara.place(-220, FL); seatRabbit('stand'); sfx('tiptoe_pizz', .35);
-        await moveDuo(GATE_DUO, FL, 1800, 'ease-out', 'stand');
+        await moveDuo(X(GATE_DUO, GATE_DUO_P0), FL, 1800, 'ease-out', 'stand');   // 세로는 꼬리가 화면 왼쪽 끝에 잘리지 않게 조금 오른쪽
       },
       async crabHello() { crab1.hop(10, 300); sfx('drum', .4); },
       async crabSays() {    // 게 병사가 문을 말한다. 세로 화면은 문 셋이 다 보이게 넓힌다
         crab1.hop(12, 320); sfx('knock', .4);
-        if (P) await view(GATE_VIEW, 900);
+        if (P) {   // 넓히면서 자라·토끼는 문 앞 돌바닥 왼쪽으로, 게 병사는 왼쪽 문 앞 아래로 한 걸음 나온다(둘 다 문 칸을 가리지 않음)
+          await sleep(340);
+          await Promise.all([view(GATE_VIEW, 900), moveDuo(GATE_DUO_P, gateFloorY(GATE_FRONT), 900, 'ease-in-out', 'stand'),
+            walk(crab1, GATE_CRAB_P, gateFloorY(GATE_CRAB_FRONT), 900, 'ease-in-out', 5),
+            FG.coral_left.move(-75, FG.coral_left.y, 900, 'ease-in-out')]);   // 앞 산호는 자라 꼬리를 덮지 않게 왼쪽 끝으로 비켜 남긴다
+          T.world.appendChild(crab1.pos);   // 게 병사가 자라 머리 앞(더 앞 바닥)
+        }
       },
       async doorOpen(k) {
         const i = typeof k === 'number' ? k : DOOR_K.indexOf(k), d = doors[i];
@@ -597,11 +607,12 @@
       },
       async goDoor(k) {     // 자라(토끼를 태운 채)가 고른 문 왼쪽 앞까지 간다(열린 문이 가려지지 않게). 게 병사는 길을 비켜 그 문 오른쪽 옆에 선다
         const i = DOOR_K.indexOf(k), x = GATE_X[i]; T.world.appendChild(jara.pos); T.world.appendChild(rabbit.pos);
-        if (P) view({ lx: Math.min(Math.max(x - 110, 330), 760), nw: 640 }, 1400);
+        if (P) view({ lx: Math.min(Math.max(x - 110, 330), 760, BGBOX.x + BGBOX.w - T.viewWidth() / 2 - 2), nw: 640 }, 1400);   // 배경 오른쪽 끝이 비지 않게(아이패드 세로 오른쪽 문)
         sfx('tiptoe_pizz', .35);
         const ms = rd() ? 1500 : 1700;
         await Promise.all([moveDuo(x - 200, FL, ms, 'ease-in-out', 'stand'),
-          i < 2 ? walk(crab1, (GATE_X[i] + GATE_X[i + 1]) / 2, FL, Math.min(900, ms), 'ease-out', 6) : null]);
+          i < 2 ? walk(crab1, (GATE_X[i] + GATE_X[i + 1]) / 2, FL, Math.min(900, ms), 'ease-out', 6)
+            : crab1.y !== FL ? walk(crab1, GATE_CRAB, FL, Math.min(900, ms), 'ease-out', 6) : null]);   // 세로: 앞 바닥에 나와 있던 게 병사는 첫 문 옆 제자리로
       },
       async sparkle() { rabbit.look('ride', 'right'); sfx('sparkle', .5); popAt(rabbit.x + 40, headY(rabbit), '반짝!', '#D9A94E'); await rabbit.hop(8, 300); },
       async jaraBack() { await jara.hop(4, 260); },   // 자라는 문(오른쪽)을 본 채, 등 위 토끼에게 말한다
@@ -848,10 +859,10 @@
           el: hitWorld(d, GATE_X[i], FL + 4 - dh / 2, dw, dh), ok: k === dk,
           onWrong: async () => {
             sfx('peek_pop', .5); popAt(GATE_X[i], FL - dh - 10, '뿅');
-            const x0 = jara.x;
-            await moveDuo(x0 + 40, FL, 350, 'ease-out', 'stand');
+            const x0 = jara.x, y0 = jara.y;   // 세로에서는 문 앞 돌바닥 자리(y0)에서 그대로 움찔
+            await moveDuo(x0 + 40, y0, 350, 'ease-out', 'stand');
             await T.say(S.WRONG);
-            await moveDuo(x0, FL, 350, 'ease-in', 'stand');
+            await moveDuo(x0, y0, 350, 'ease-in', 'stand');
           },
         };
       });
