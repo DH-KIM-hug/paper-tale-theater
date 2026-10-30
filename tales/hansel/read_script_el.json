@@ -1348,8 +1348,8 @@
        "[gentle, warm, slow, closing storytelling]"
       ]
      ],
-     "after": [
-      "sfx:party_horn:.5"
+     "before": [
+      "finale"
      ]
     }
    ]

@@ -297,7 +297,11 @@
     })();
     const { el, sleep, say, actor, camTo, camWide, camSnap } = T;
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon_fly', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
+    /* 끝은 축하 음악 대신 자장가(2026-10-31 사용자): 제목에 'Music Box Sleep Lullaby'라고 적힌 intro_night(12초). 내레이션 동안은 엔진이 낮춘다 */
+    let lullEnd = 0;
+    const lullaby = () => { try { const o = { vol: T.reading() ? .3 : .45, loop: false, fadeIn: .5, dur: 12 }; lullEnd = Date.now() + 12000; if (!AudioFX.ambient('intro_night', o)) setTimeout(() => { try { AudioFX.ambient('intro_night', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const lullabyWait = () => (lullEnd ? sleep(Math.max(0, Math.min(8000, lullEnd - Date.now() - 600))) : Promise.resolve());
+    try { AudioFX.preloadSfx(['intro_night', 'intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon_fly', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -539,9 +543,9 @@
     const SIZES_R = [1, 1.35, 1.7, 2.05, 2.4, 2.75, 3.1, 3.4, 3.65];
     let rShiver = null, rChartFloor = 470, rChart = [];
     const fadeInR = (n, ms = 500) => n.animate([{ opacity: 0 }, { opacity: 1 }], ms);
-    const READ_ACTS = { set: R.set, babies: R.babies, baby: R.baby, mom: R.mom, ox: R.ox, chart: R.chart, uncle: R.uncle, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam, chorus: R.chorus };
+    const READ_ACTS = { lullaby: () => { lullaby(); return null; }, set: R.set, babies: R.babies, baby: R.baby, mom: R.mom, ox: R.ox, chart: R.chart, uncle: R.uncle, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam, chorus: R.chorus };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await lullabyWait(); stopAmb(); return rr; }   // 자장가가 끝날 때까지(화면을 꺼도 계속)
 
     await T.curtain(true);
     amb('birds_chirp_1');
@@ -793,8 +797,9 @@
     /* 끝: 온 가족이 한 번 더 함께 */
     T.playMelody(TWINKLE, { beat: .5, voice, onNote: () => choir.forEach(f => f.hop(18, 300)) });
     await sleep(7200);
+    lullaby();
     await say('개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.');
-    sfx('sleepy_tuba', .6);
+    await lullabyWait();
     stopAmb();
     return '개구리는 개구리대로 멋져요!';
   }

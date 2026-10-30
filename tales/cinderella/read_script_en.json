@@ -1400,7 +1400,8 @@
      "before": [
       "cast:sis1:look:stand:left",
       "cast:sis2:look:stand:left",
-      "pop:500,230,하하!"
+      "pop:500,230,하하!",
+      "finale"
      ]
     },
     {
@@ -1413,9 +1414,6 @@
        "A kind heart can forgive even those who were unkind to us.",
        null
       ]
-     ],
-     "after": [
-      "sfx:party_horn:.5"
      ]
     }
    ]

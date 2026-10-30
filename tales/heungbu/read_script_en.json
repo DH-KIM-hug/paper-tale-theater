@@ -919,9 +919,6 @@
      "before": [
       "cut:hug",
       "fx:ding"
-     ],
-     "after": [
-      "sfx:party_horn:.5"
      ]
     },
     {
@@ -944,6 +941,9 @@
        "nar",
        "After that, Heungbu and Nolbu lived happily together for a very long time. A kind heart brings good fortune back."
       ]
+     ],
+     "before": [
+      "finale"
      ]
     }
    ]

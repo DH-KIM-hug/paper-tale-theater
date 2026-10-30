@@ -1904,7 +1904,8 @@
       ]
      ],
      "before": [
-      "dog:look:nose"
+      "dog:look:nose",
+      "finale"
      ]
     },
     {
@@ -1917,9 +1918,6 @@
        null,
        "[gentle, warm, slow, closing]"
       ]
-     ],
-     "after": [
-      "sfx:party_horn:.5"
      ]
     }
    ]

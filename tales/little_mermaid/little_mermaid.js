@@ -358,10 +358,14 @@
     const { sleep, say, camSnap, tr } = T;
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): Pixabay 녹음 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다렸다가 끝 처리 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { night_sea: 'waves', beach: 'seagull_1', garden: 'birds_chirp_2', deck: 'waves', dawn_sea: 'waves', morning_sea: 'seagull_2' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); T._cover = null; bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
-    try { AudioFX.preloadSfx(['intro_magic', 'step_wood', 'step_grass', 'bubbles', 'sparkle', 'gulp', 'thud', 'splash', 'splash_big', 'whoosh', 'swish', 'tada', 'bell', 'doop', 'giggle_xylo', 'slide_up', 'blow_long', 'paper_down', 'pow', 'boom', 'waves', 'seagull_1', 'seagull_2', 'birds_chirp_2', 'thunder', 'whistle_down', 'ding_glock', 'pot_boil', 'shimmer', 'question', 'chime_up', 'party_horn']); } catch (e) { /* */ }
+    try { AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'step_wood', 'step_grass', 'bubbles', 'sparkle', 'gulp', 'thud', 'splash', 'splash_big', 'whoosh', 'swish', 'tada', 'bell', 'doop', 'giggle_xylo', 'slide_up', 'blow_long', 'paper_down', 'pow', 'boom', 'waves', 'seagull_1', 'seagull_2', 'birds_chirp_2', 'thunder', 'whistle_down', 'ding_glock', 'pot_boil', 'shimmer', 'question', 'chime_up', 'party_horn']); } catch (e) { /* */ }
     const P = T.viewWidth() < 990;   /* 세로 화면: 가운데 일부만 보인다 → 카메라가 따라간다 */
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -483,6 +487,7 @@
         },
         follow: x => { if (P && !inst()) T.camTo(+x, 280, 1, 700); },
         confetti: () => { T.confetti(); },
+        finale: () => { finaleMusic(); },   // 맨 끝 축하 음악(2026-10-31 사용자 지시)
         fx: name => {
           if (name === 'slide_up' && cue('chime_up', .7)) return;          // 놀이판과 같게: 거품이 됨은 chime_up
           if (name === 'sparkle' && cue('ding_glock', .8)) return;          // 왕자 깨어남은 딩
@@ -660,7 +665,7 @@
       Object.entries(NAMES).forEach(([nm, a]) => { READ_ACTS[nm] = AV(nm, a); });
       READ_ACTS.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } };
       READ_ACTS.amb = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } };
-      return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+      return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
 
     /* ===== 1. 바다 밑 궁전 (배움 놀이: 뜨고 가라앉기) ===== */
@@ -1051,10 +1056,10 @@
     ship.body.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.05)' }, { transform: 'scale(1)' }], 900);
     ship.hop(10, 600); ship.move(ship.x - 60, ship.y, 1800);
     prince.hop(10, 460); lady.hop(10, 460); gulls.forEach(g => g.hop(16, 500));
-    glow(mer, 1400); mer.hop(14, 500); T.confetti(); sfx(T, 'party_horn', () => sfx(T, 'tada', () => sparkleSfx(T)));
+    glow(mer, 1400); mer.hop(14, 500); finaleMusic(); T.confetti();
     await say('사랑하는 마음은 사라지지 않아요. 안녕, 또 만나요!');
     await say('사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.');
-    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    try { await finaleWait(); AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.';
   }

@@ -1072,9 +1072,6 @@
      "before": [
       "pinky:hook",
       "fx:ding"
-     ],
-     "after": [
-      "sfx:party_horn:.5"
      ]
     },
     {
@@ -1086,6 +1083,9 @@
        "nar",
        "A promise to Mother is a promise to keep."
       ]
+     ],
+     "before": [
+      "finale"
      ]
     }
    ]

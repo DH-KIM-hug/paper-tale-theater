@@ -1045,8 +1045,8 @@
        "A kind heart brings help. And that is how the story of Kongjwi and Patjwi ended."
       ]
      ],
-     "after": [
-      "sfx:party_horn:.5"
+     "before": [
+      "finale"
      ]
     }
    ]

@@ -1293,6 +1293,9 @@
        "Say \"I'm sorry,\" and you can be friends again.",
        "happy:1.1"
       ]
+     ],
+     "before": [
+      "finale"
      ]
     }
    ]

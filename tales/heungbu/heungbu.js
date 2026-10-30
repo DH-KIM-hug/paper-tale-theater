@@ -46,7 +46,12 @@
     /* 대금 한 소절(2026-10-29): 쓸쓸하거나 떠나보내는 순간에만. 놀이 .3, 읽기 ×0.8 */
     const daeg = () => { try { const o = { vol: T.reading() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_korean_happy', 'birds_chirp_1', 'birds_chirp_2', 'stomach_growl', 'comic_brass', 'bonk', 'marimba_1', 'marimba_2', 'marimba_3', 'whistle_down', 'thud', 'harp_gliss', 'coins_1', 'party_horn', 'sad_trombone', 'surprise_sting', 'fall_crash', 'splash', 'pow', 'ding', 'pop', 'crash', 'daegeum']); } catch (e) { /* 무시 */ }
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 전래동화 끝 음악 finale_korean(9.5초, sounds/CREDITS.md). 내레이션이 읽히는 동안은 엔진이 자동으로 낮춘다(ambient 덕킹).
+       끝 화면 전에 곡 끝(페이드)까지 기다린다. 읽어 주기도 같은 곡(화면을 꺼도 끝까지 재생) */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_korean', o)) setTimeout(() => { try { AudioFX.ambient('finale_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
+    try { AudioFX.preloadSfx(['finale_korean', 'intro_korean_happy', 'birds_chirp_1', 'birds_chirp_2', 'stomach_growl', 'comic_brass', 'bonk', 'marimba_1', 'marimba_2', 'marimba_3', 'whistle_down', 'thud', 'harp_gliss', 'coins_1', 'party_horn', 'sad_trombone', 'surprise_sting', 'fall_crash', 'splash', 'pow', 'ding', 'pop', 'crash', 'daegeum']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     const cut = (k, s = 'pop', hold = 2600) => { hold = Math.min(hold, 2600); return T.cutImage([{ src: U('cut_' + k), sfx: s, hold }], { hold }); };   /* 2026-10-29 컷 멈춤은 2.6초까지(3200~3600 → 2600) */
 
@@ -288,11 +293,12 @@
     }
     if (READ_ACTS && typeof READ_ACTS === 'object') { // 짧은 배경 소리·동물 소리 동사: amb:이름:음량:초, animal:이름:음량
       READ_ACTS.amb = (n, v, d) => { try { if (!T.readInstant()) AudioFX.ambient(n, { vol: +v || .15, dur: +d || 3, fadeIn: 1 }); } catch (e) { /* 무시 */ } return null; };
+      READ_ACTS.finale = () => { try { if (!T.readInstant()) finaleMusic(); } catch (e) { /* 무시 */ } return null; }; // 읽어 주기 맨 끝 축하 음악(2026-10-31)
       READ_ACTS.daeg = () => { try { if (!T.readInstant()) daeg(); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } return rr; }
 
     /* 1. 봄 하늘 */
     scene('sky_spring');
@@ -466,9 +472,11 @@
     }
     await say('쌀자루가 하나, 둘, 셋! 놀부는 눈물이 핑 돌았어요.');
     await T.ask('흥부를 톡! 눌러서 모두 함께 만세!', () => T.tap(live(hg), { prompt: '흥부를 톡! 모두 만세!' }));
-    T.confetti(); sfx('party_horn', .6); falling('petal', 6, 22, { loop: false });
+    T.confetti(); falling('petal', 6, 22, { loop: false });
+    finaleMusic();
     await Promise.all([hg.hop(40, 500), hj.hop(30, 500), ns2.hop(30, 500)]);
     await say('흥부와 놀부는 그 뒤로 사이좋게 오래오래 살았대요. 착한 마음은 복이 되어 돌아와요.');
+    await finaleWait();
     T.finale(); stopAmb(.8);
     return '착한 마음은 복이 되어 돌아와요!';
   }

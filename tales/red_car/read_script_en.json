@@ -1245,8 +1245,7 @@
       "car:police:hop",
       "car:fire:hop",
       "car:amb:hop",
-      "car:tow:hop",
-      "snd:party_horn:.9"
+      "car:tow:hop"
      ]
     },
     {
@@ -1273,6 +1272,9 @@
        "nar",
        "When we help each other, we can travel together down roads we could never travel alone."
       ]
+     ],
+     "before": [
+      "finale"
      ]
     }
    ]

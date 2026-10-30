@@ -1801,7 +1801,8 @@
       ]
      ],
      "before": [
-      "dog:look:nose"
+      "dog:look:nose",
+      "finale"
      ]
     },
     {
@@ -1813,9 +1814,6 @@
        "nar",
        "Rainy days and sunny days, every one of them is precious."
       ]
-     ],
-     "after": [
-      "sfx:party_horn:.5"
      ]
     }
    ]

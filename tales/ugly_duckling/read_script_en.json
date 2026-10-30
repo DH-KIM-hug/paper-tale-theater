@@ -1290,8 +1290,8 @@
        "happy:1.2"
       ]
      ],
-     "after": [
-      "sfx:party_horn:.5"
+     "before": [
+      "finale"
      ]
     }
    ]

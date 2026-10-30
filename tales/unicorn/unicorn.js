@@ -321,6 +321,10 @@
     const camAt = (x, y, z) => (CONT ? T.camTo(x, y, z, CONT_MS) : camSnap(x, y, z));
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): Pixabay 녹음 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다렸다가 끝 처리 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     /* 양 울음 '메~' (sounds/animals/sheep 두 가지를 번갈아): 양이 나올 때·뛰어내릴 때·집이 보일 때·인사할 때. 읽어 주기는 ×0.8 */
     const baa = (v, d = 0) => setTimeout(() => { try { AudioFX.animal('sheep', T.reading() ? v * .8 : v); } catch (e) { /* */ } }, d);
@@ -349,7 +353,7 @@
     const pineAt = () => { put(T, FG.pine_branch, 900, 210); if (P) FG.pine_branch.place(edgeX(FG.pine_branch, 'right', 900), 210); };   // 가지 밑동(그림 오른쪽 위)이 화면 오른쪽 밖
     const follow = (x, ms = 800) => (P ? T.camTo(500 + (x - VX.lx) * VX.ps, 280, 1, ms) : Promise.resolve());
     const H = n => (P ? n / VX.ps : n);               // 화면 크기를 지키는 누르는 자리
-    AudioFX.preloadSfx(['paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding', 'birds_chirp_1', 'crickets_night_1', 'crickets_night_2', 'waterfall', 'question', 'ding_glock', 'boing', 'stomach_growl', 'horse_neigh_1', 'harp_gliss', 'shimmer', 'intro_unicorn_guitar', 'party_horn', 'pull_pop', 'chime_up']);
+    AudioFX.preloadSfx(['finale_fairy', 'paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding', 'birds_chirp_1', 'crickets_night_1', 'crickets_night_2', 'waterfall', 'question', 'ding_glock', 'boing', 'stomach_growl', 'horse_neigh_1', 'harp_gliss', 'shimmer', 'intro_unicorn_guitar', 'party_horn', 'pull_pop', 'chime_up']);
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
@@ -580,6 +584,7 @@
         if (rTag === 'cloudland1') baa(.45, 1500);   // 구름 섬에 혼자 앉은 양
       },
       kid: actorVerb('kid'), uni: actorVerb('uni'), sheep: actorVerb('sheep'), deer: actorVerb('deer'), horse: actorVerb('horse'),
+      finale() { finaleMusic(); },   // 맨 끝 축하 음악(2026-10-31 사용자 지시)
       cam() { /* 카메라는 set 이 정한다 (cam:wide = 장면 기본, cam:moon = moon2 레이아웃) */ },
       follow(a) { if (inst()) return; const [x, ms] = String(a).split(',').map(Number); follow(px(x), ms || 800); },
       cloud() {}, bush() {}, rainbow() {}, home() {}, cbush() {},
@@ -645,7 +650,7 @@
       if (CARDSET[label] && CARDSET[label] === curKey && (T.viewWidth() < 990) === P && !document.hidden) { rCont = true; if (change) change(); rCont = false; return Promise.resolve(); }
       return T.sceneCard(label, change, focus);
     };
-    if (T.reading()) return T.readPlay.call(RW, R).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    if (T.reading()) return T.readPlay.call(RW, R).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 설렘 (배움 놀이: 꽃 선물 색 고르기 — 첫 조작) — 멀리서 넓게 ===== */
     const ANS = Object.keys(FLOWER)[Math.floor(Math.random() * 7)];   // 오늘 유니콘에게 줄 꽃 색(7색 중 하나)
@@ -926,13 +931,13 @@
     kid.look('stand'); sfx('paper_up', .4);
     const endSay = say(S['F_END_' + ANS]);
     await gift.move(uni.x + MANE[0], FL + MANE[1], 1200, 'ease-in-out');
-    glow(uni, 1200); sparkleSfx(T); T.pop(uni.x + MANE[0], FL + MANE[1] - 70, tr('반짝!'), '#D9A94E');
+    finaleMusic(); glow(uni, 1200); sparkleSfx(T); T.pop(uni.x + MANE[0], FL + MANE[1] - 70, tr('반짝!'), '#D9A94E');
     await endSay;
     uni.hop(10, 420);
     await say(S.H2);
     kid.look('wave'); kid.hop(12, 360);
     await sleep(1500);
-    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    try { await finaleWait(); AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '너도 누군가에게 친절하면, 너만의 유니콘을 만날 수 있어.';
   }

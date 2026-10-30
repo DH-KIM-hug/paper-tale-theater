@@ -1141,6 +1141,9 @@
      ],
      "after": [
       "sfxs:marimba_2,marimba_4,marimba_6,marimba_8:450:.5"
+     ],
+     "before": [
+      "finale"
      ]
     },
     {
@@ -1153,9 +1156,6 @@
        "By getting ready ahead and sharing together, even winter was warm.",
        "happy:1.3"
       ]
-     ],
-     "after": [
-      "sfx:party_horn:.5"
      ]
     }
    ]

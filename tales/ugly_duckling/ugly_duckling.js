@@ -715,7 +715,11 @@
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_night', 'birds_chirp_1', 'birds_chirp_2', 'rustle_1', 'winter_wind_1', 'fire_crackle', 'waves', 'duckling_peep', 'geese_swan', 'surprise_sting', 'harp_gliss', 'cat_purr', 'question', 'whistle_up', 'drumroll_crash', 'ding_glock', 'party_horn']); } catch (e) { /* 무시 */ }
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 픽사베이 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다린 뒤 끈다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
+    try { AudioFX.preloadSfx(['intro_night', 'birds_chirp_1', 'birds_chirp_2', 'rustle_1', 'winter_wind_1', 'fire_crackle', 'waves', 'duckling_peep', 'geese_swan', 'surprise_sting', 'harp_gliss', 'cat_purr', 'question', 'whistle_up', 'drumroll_crash', 'ding_glock', 'party_horn', 'finale_happy']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     /* 그림 미리 불러오기: 배우와 첫 배경을 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
@@ -1195,12 +1199,13 @@
     })();
     /* 읽어 주기 효과음 동사 (2026-10-28 사용자 결정: 놀이판과 같은 효과음). 대본 before/after 에 sfx:이름:음량, sfxs:이름들:간격ms:음량 으로 넣는다.
        기다리지 않고(null 반환), 실패해도 낭독을 막지 않는다. 낭독 전에 장면이 순식간에 놓이는 중(readInstant)에는 울리지 않는다. */
+    if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.finale = () => { finaleMusic(); return null; }; // 끝 축하 음악 (2026-10-31 사용자 지시)
     if (READ_ACTS && typeof READ_ACTS === 'object') {
       READ_ACTS.sfx = (n, v) => { try { if (!T.readInstant()) AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.sfxs = (list, step, v) => { try { if (T.readInstant()) return null; String(list).split(',').forEach((n, i) => setTimeout(() => { try { AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } }, i * (+step || 260))); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); return rr; }
 
     /* ============ 1막 ============ */
     /* --- 1. 알 깨기 (둥지 하이앵글, 여름) --- */
@@ -1715,8 +1720,9 @@
       if (i === dancers.length - 1) swanCall(T);
       await sleep(500);
     }
-    T.confetti(); sfx('party_horn', .6) || AudioFX.sfx('bell', .5) || AudioFX.bell();
+    T.confetti(); finaleMusic();
     await say('다르게 생겼던 아기 오리는 이렇게 멋진 백조로 자랐답니다.');
+    await finaleWait();
     stopAmb(.8);
     return '달라도 괜찮아요. 모두 저마다 멋지게 자라요!';
   }

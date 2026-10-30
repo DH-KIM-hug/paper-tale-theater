@@ -1161,7 +1161,7 @@
      ],
      "before": [
       "fx:ding",
-      "music:pigs_band:.4:6.4:.8"
+      "music:pigs_band_long:.35:22:2"
      ],
      "after": [
       "cut:village"
@@ -1198,9 +1198,6 @@
        "nar",
        "A strong house is built carefully, one piece at a time."
       ]
-     ],
-     "after": [
-      "sfx:party_horn:.5"
      ]
     }
    ]

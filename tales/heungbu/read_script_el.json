@@ -987,9 +987,6 @@
      "before": [
       "cut:hug",
       "fx:ding"
-     ],
-     "after": [
-      "sfx:party_horn:.5"
      ]
     },
     {
@@ -1014,6 +1011,9 @@
        null,
        "[gentle, warm, slow, closing storytelling]"
       ]
+     ],
+     "before": [
+      "finale"
      ]
     }
    ]

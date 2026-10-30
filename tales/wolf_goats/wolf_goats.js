@@ -149,8 +149,12 @@
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_adventure', 'birds_chirp_1', 'stream_1', 'door_heavy_1', 'ding_glock', 'clock_tick', 'question', 'tiptoe_pizz', 'zip_away', 'sleepy_tuba', 'zipper', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'whistle_down', 'comic_brass', 'party_horn', 'knock', 'door', 'crunch']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_adventure', 'birds_chirp_1', 'stream_1', 'door_heavy_1', 'ding_glock', 'clock_tick', 'question', 'tiptoe_pizz', 'zip_away', 'sleepy_tuba', 'zipper', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'whistle_down', 'comic_brass', 'party_horn', 'knock', 'door', 'crunch', 'finale_happy']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     const portrait = () => T.viewWidth() < 990;
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const scene = (label, fn) => T.sceneCard(label, () => { T.clear(); T.camSnap(500, 280, 1); fn(); });
@@ -370,10 +374,11 @@
        기다리지 않고(null 반환), 실패해도 낭독을 막지 않는다. 낭독 전에 장면이 순식간에 놓이는 중(readInstant)에는 울리지 않는다. */
     if (READ_ACTS && typeof READ_ACTS === 'object') {
       READ_ACTS.sfx = (n, v) => { try { if (!T.readInstant()) AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } return null; };
+      READ_ACTS.finale = () => { try { if (!T.readInstant()) finaleMusic(); } catch (e) { /* 무시 */ } return null; }; // 맨 끝 축하 음악(2026-10-31 사용자)
       READ_ACTS.sfxs = (list, step, v) => { try { if (T.readInstant()) return null; String(list).split(',').forEach((n, i) => setTimeout(() => { try { AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } }, i * (+step || 260))); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); return rr; }
 
     /* --- 1. 부엌 --- */
     bg(T, 'kitchen');
@@ -581,13 +586,14 @@
     kids = [1, 2, 3, 4, 5, 6, 7].map((n, i) => { const k = kid(T, n, KX(i), 525, 90); k.pose('joy'); return k; });
     T.finale();
     await say('엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.');
-    await hopAll(kids, 34); md.hop(30, 400); T.confetti(); sfx('party_horn', .6) || AudioFX.sting('win');
+    await hopAll(kids, 34); md.hop(30, 400); T.confetti(); finaleMusic(); // 맨 끝 축하 음악(2026-10-31 사용자)
     // 가운데 아기 염소를 톡톡: 누를 때마다 엄마와 아기 염소들이 차례로 폴짝 (자유 놀이 없음)
     const dance = () => { AudioFX.tap(); md.hop(30, 340); kids.forEach((k, j) => setTimeout(() => k.hop(30, 340), j * 70)); };
     await T.ask('아기 염소를 톡! 눌러 같이 춤춰 봐요!', () => T.tap(kids[3].widen(), { prompt: '아기 염소를 톡! 눌러 같이 춤춰 봐요!' })); // 한 번 누르면 나머지는 저절로
     for (let i = 1; i <= 3; i++) { dance(); await sleep(700); }
     await sleep(700);
     await say('엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.');
+    await finaleWait();
     stopAmb(.8);
     return '엄마 목소리를 잘 기억해요!';
   }

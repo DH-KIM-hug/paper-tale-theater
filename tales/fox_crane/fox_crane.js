@@ -561,12 +561,16 @@
     const { el, sleep, say, actor, camTo, camSnap, josa } = T;
     let fox, crane;
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['intro_playful', 'birds_chirp_1', 'pot_boil', 'water_pour_1', 'crickets_night_1', 'boing', 'whistle_down', 'surprise_sting', 'question']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_playful', 'birds_chirp_1', 'pot_boil', 'water_pour_1', 'crickets_night_1', 'boing', 'whistle_down', 'surprise_sting', 'question', 'finale_happy']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
     const cue = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: isRead() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     /* 대사 연출: 목소리 주인에게 카메라, 여우와 두루미가 서로 마주 봄 (장면마다 새 배우라 함수로) */
     const direct = (getFox, getCrane) => T.director({ cast: { fox: getFox, crane: getCrane }, listener: r => (r === 'fox' ? 'crane' : 'fox') });
     direct(() => fox, () => crane);
@@ -854,10 +858,11 @@
         return sfx(T, n);
       },
       pop: spec => { const [x, y, ...w] = String(spec).split(','); T.pop(+x, +y, w.join(','), C.bean); },
+      finale: () => { if (!inst()) finaleMusic(); return null; }, // 맨 끝 축하 음악(2026-10-31 사용자)
     };
     const rStirBubble = () => { if (rs.pot) bubbleSnd(T); };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); return rr; }
 
     /* --- 1. 초대장 (숲길 와이드) --- */
     forestBG(T);
@@ -1224,8 +1229,9 @@
       await (firstFriend ? T.ask('친구들을 톡톡 눌러 봐요. 냠냠 맛있게 먹어요!', tapF) : tapF()); firstFriend = false;
       await eat(T, party[k], plates[k]); vo('yum_' + k);
     }
-    T.confetti(); AudioFX.fanfare && AudioFX.fanfare();
+    T.confetti(); finaleMusic(); // 합성 팡파르 대신 끝 축하 음악(2026-10-31 사용자)
     await say('배부르게 먹고, 모두 행복하게 웃었답니다.');
+    await finaleWait(); stopAmb();
     return '친구 입장이 되어 보면 모두 즐거워요!';
   }
 

@@ -300,7 +300,11 @@
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { snow_forest_lb: 'winter_wind_1' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
-    try { AudioFX.preloadSfx(['intro_magic', 'sparkle', 'thud', 'womp', 'paper_up', 'paper_down', 'step_grass', 'blow_long', 'chomp', 'swish', 'pop', 'xylo_down', 'splash', 'tada', 'winter_wind_1', 'birds_chirp_1', 'horse_hooves_1', 'door_heavy_1', 'ding_glock', 'question', 'pull_pop', 'surprise_sting', 'whistle_down', 'water_drip', 'party_horn']); } catch (e) { /* */ }
+    try { AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'sparkle', 'thud', 'womp', 'paper_up', 'paper_down', 'step_grass', 'blow_long', 'chomp', 'swish', 'pop', 'xylo_down', 'splash', 'tada', 'winter_wind_1', 'birds_chirp_1', 'horse_hooves_1', 'door_heavy_1', 'ding_glock', 'question', 'pull_pop', 'surprise_sting', 'whistle_down', 'water_drip', 'party_horn']); } catch (e) { /* */ }
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 서양 명작 동화 끝 음악 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -559,7 +563,7 @@
       return R;
     })();
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    if (T.reading()) READ_ACTS.finale = () => { finaleMusic(); return null; }; return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 가난해진 가족 ===== */
     scene('cottage');
@@ -954,11 +958,12 @@
     await say('아버지와 언니들도 달려왔어요.');
     await fam;
     if (P) T.camTo(520, 280, 1, 800);
-    T.confetti(); sfx(T, 'party_horn', () => sfx(T, 'tada', () => sparkleSfx(T)));
+    finaleMusic();
+    T.confetti();
     [belle, prince, father, sisa, sisb].forEach((a, i) => setTimeout(() => a.hop(16 + (i % 3) * 2, 460), i * 120));
     await say('모두 함께 궁전에서 행복하게 살았어요.');
     await say('겉모습이 아니라 마음을 봐요.');
-    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '겉모습이 아니라 마음을 봐요.';
   }

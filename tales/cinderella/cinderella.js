@@ -215,7 +215,11 @@
     const sx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_magic', 'fire_crackle', 'crickets_night_1', 'crowd_murmur_1', 'shimmer', 'chime_up', 'horse_neigh_1', 'horse_hooves_1', 'question', 'surprise_sting', 'xylo_down', 'knock', 'ding_glock', 'party_horn', 'whoosh', 'sparkle', 'swish', 'bell', 'tada', 'creak', 'ding']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'fire_crackle', 'crickets_night_1', 'crowd_murmur_1', 'shimmer', 'chime_up', 'horse_neigh_1', 'horse_hooves_1', 'question', 'surprise_sting', 'xylo_down', 'knock', 'ding_glock', 'party_horn', 'whoosh', 'sparkle', 'swish', 'bell', 'tada', 'creak', 'ding']); } catch (e) { /* 무시 */ }
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 서양 명작 동화 끝 음악 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const scene = key => { T.clear(); bgImage(T, key); camSnap(500, 280, 1); };
@@ -667,7 +671,8 @@
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    READ_ACTS.finale = () => { finaleMusic(); return null; };
+    if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { stopAmb(.5); });
 
     /* ===== 1. 재투성이 ===== */
     scene('kitchen_v2');
@@ -1130,13 +1135,13 @@
     await Promise.all([sis1.hop(12, 360), sis2.hop(12, 360)]);
     if (P) T.camTo(480, 280, 1, 500);
     await T.ask('신데렐라에게 톡 인사해요!', () => T.tap(cind.pos, { prompt: '신데렐라에게 톡 인사해요!' }));
-    T.confetti(); sx('party_horn', .6) || sfx(T, 'tada', () => sparkleSfx(T));
+    finaleMusic(); T.confetti();
     L.garland.hop(6, 420); if (chandDots) chandDots.style.display = '';
     glow(cind, 1200);
     await Promise.all([cind.hop(20, 460), sis1.hop(16, 460), sis2.hop(16, 460), prince.hop(12, 460)]);
     await say('모두 함께 웃었어요.');
     await say('착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.');
-    T.finale(); stopAmb(.8);
+    await finaleWait(); T.finale(); stopAmb(.8);
     await sleep(1500);
     return '착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.';
   }

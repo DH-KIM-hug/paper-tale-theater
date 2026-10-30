@@ -52,7 +52,7 @@
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_playful', 'level_win', 'birds_chirp_1', 'rustle_1', 'pot_boil', 'toy_flute', 'question', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'chop', 'ding_glock', 'tiptoe_pizz', 'fall_crash', 'sad_trombone', 'latch_click', 'knock', 'comic_brass', 'zip_away', 'party_horn', 'pop_appear', 'drumroll_crash', 'blow', 'pop', 'thud', 'ding', 'boom', 'pig_flute', 'pig_violin', 'drum', 'rustle_2', 'hammer_1', 'hammer_2']); AudioFX.preloadMusic(['pigs_band']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_playful', 'level_win', 'birds_chirp_1', 'rustle_1', 'pot_boil', 'toy_flute', 'question', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'chop', 'ding_glock', 'tiptoe_pizz', 'fall_crash', 'sad_trombone', 'latch_click', 'knock', 'comic_brass', 'zip_away', 'party_horn', 'pop_appear', 'drumroll_crash', 'blow', 'pop', 'thud', 'ding', 'boom', 'pig_flute', 'pig_violin', 'drum', 'rustle_2', 'hammer_1', 'hammer_2']); AudioFX.preloadMusic(['pigs_band', 'pigs_band_long']); } catch (e) { /* 무시 */ }
     /* 집 짓기 숫자 목소리 (2026-10-28 사용자 요청): 같은 내레이터의 공용 숫자 클립(audio/el/count) */
     if (typeof NARRATION_CLIPS !== 'undefined') NUM.forEach((n, i) => { NARRATION_CLIPS[n] = NARRATION_CLIPS[n] || `audio/el/count/ko_${i + 1}.mp3`; });
     if (typeof NARRATION_CLIPS_EN !== 'undefined') NUM.forEach((n, i) => { NARRATION_CLIPS_EN[n] = NARRATION_CLIPS_EN[n] || { t: ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'][i], c: `audio/el/count/en_${i + 1}.mp3` }; });
@@ -577,6 +577,11 @@
     await T.sceneCard('보글보글', () => { bg('chimney'); T.camSnap(500, 280, 1); });
     const fire = hit(425, 290, 150, 100); // 2026-10-20 새 배경: 벽난로 불이 무대 y≈345 (옛 그림은 바닥 근처였다)
     const glow = fireGlow(T);
+    /* 굴뚝 장면에 배경만 덩그러니 → 삼 형제가 불 옆에서 지켜보다 늑대가 내려올 때 덜덜(2026-10-31 사용자) */
+    const huddle = (portrait() ? [330, 395, 460] : [150, 250, 350]).map((x, i) => {
+      const p = sprite(['pig1_base', 'pig2_base', 'pig3_base'][i], x, portrait() ? 125 : 175, portrait() ? 560 : 520); p.pos.style.pointerEvents = 'none'; return p;
+    });
+    const shiver = () => { const id = setInterval(() => huddle.forEach((p, i) => setTimeout(() => p.wiggle(4, 160), i * 50)), 200); T.pop(portrait() ? 395 : 250, portrait() ? 400 : 300, '덜덜'); return () => clearInterval(id); };
     amb('pot_boil', { vol: .25, dur: 4 }); // 솥 보글보글
     await say('아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.');
     await T.mash(fire, { count: 5, prompt: '불을 톡톡 눌러서 크게 해 줘요.', onStep: i => {
@@ -585,7 +590,9 @@
       T.pop(500 + (Math.random() - .5) * 100, 250, '보글');
     } });
     sfx('drumroll_crash', .6); // 늑대가 내려오기 전
+    const stopShiver = shiver();
     await say('보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.');
+    stopShiver();
     await T.cutImage([{ src: U('cut_chimney'), hold: 2600 }, { src: U('cut_splash'), hold: 2600, sfx: 'splash' }]);
     sfx('comic_brass', .6);
     await say('"앗, 뜨거워!"');
@@ -618,10 +625,10 @@
     band.forEach((b, i) => b.set(['pig1_play', 'pig2_play', 'pig3_play'][i], 150));
     T.confetti();
     // 진짜 악기 연주 (2026-10-28): 피리·바이올린·북이 함께 6.4초. 못 불러오면 합성음 4번
-    let bandMusic = null; try { bandMusic = AudioFX.music('pigs_band', { vol: .5, dur: 6.4, fade: .8 }); } catch (e) { bandMusic = null; }
+    /* 끝 음악은 마지막 말까지 이어서(2026-10-31 사용자: 곧 꺼지고 '뿌~' 나팔이 남) — 긴 판(약 22초)이 없으면 옛 6.4초 */
+    let bandMusic = null; try { bandMusic = AudioFX.music('pigs_band_long', { vol: .45, fade: 2 }) || AudioFX.music('pigs_band', { vol: .5, dur: 6.4, fade: .8 }); } catch (e) { bandMusic = null; }
     for (let r = 0; r < (bandMusic ? 10 : 4); r++) { if (!bandMusic) tune([392, 523, 440, 587]); band.forEach((b, i) => setTimeout(() => b.hop(28, 350), i * 150)); await sleep(bandMusic ? 640 : 900); }
     await T.cutImage([{ src: U('cut_village'), hold: 2600 }]);
-    sfx('party_horn', .6);
     await say('삼 형제는 튼튼한 집에서 오래오래 행복하게 살았어요.');
     stopAmb(.8);
     return '튼튼한 집은 하나씩 정성껏 쌓아서 만들어요!';

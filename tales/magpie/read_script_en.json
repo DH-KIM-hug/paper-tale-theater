@@ -1490,10 +1490,10 @@
      ],
      "before": [
       "confetti",
-      "fx:tada",
       "sch:hop",
       "mom:hop",
-      "dad:hop"
+      "dad:hop",
+      "finale"
      ]
     },
     {
@@ -1506,9 +1506,6 @@
        "A heart that remembers kindness and gives it back is as warm as this.",
        null
       ]
-     ],
-     "after": [
-      "snd:party_horn:.7"
      ]
     }
    ]

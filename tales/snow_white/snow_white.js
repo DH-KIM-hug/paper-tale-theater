@@ -280,7 +280,11 @@
     const cue = (name, v) => { try { if (T.reading() && document.hidden && /^marimba_/.test(name)) return true; /* 화면 꺼짐: 화음 방지 */ return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { forest_v2: 'crickets_night_2', hill_v2: 'birds_chirp_1' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
-    try { AudioFX.preloadSfx(['intro_magic', 'sparkle', 'thud', 'whoosh', 'knock', 'creak', 'door', 'gulp', 'chomp', 'squeak', 'paper_down', 'step_wood', 'tada', 'pop', 'slide_down', 'crickets_night_1', 'crickets_night_2', 'birds_chirp_1', 'surprise_sting', 'zip_away', 'sleepy_tuba', 'boing', 'tiptoe_pizz', 'ding_glock', 'hammer', 'pop_appear', 'whistle_down', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* */ }
+    try { AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'sparkle', 'thud', 'whoosh', 'knock', 'creak', 'door', 'gulp', 'chomp', 'squeak', 'paper_down', 'step_wood', 'tada', 'pop', 'slide_down', 'crickets_night_1', 'crickets_night_2', 'birds_chirp_1', 'surprise_sting', 'zip_away', 'sleepy_tuba', 'boing', 'tiptoe_pizz', 'ding_glock', 'hammer', 'pop_appear', 'whistle_down', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* */ }
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 서양 명작 동화 끝 음악 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     const P = T.viewWidth() < 990; /* 세로 화면: 가운데 일부만 보인다 → 카메라가 주인공을 따라간다 */
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
@@ -690,7 +694,7 @@
         amb: (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
         pop: s => { const m = String(s).split(','); T.pop(+m[0], +m[1], tr(m.slice(2).join(','))); },
       };
-      return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+      READ_ACTS.finale = () => { finaleMusic(); return null; }; return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
 
     /* ===== 1. 거울 앞의 왕비 ===== */
@@ -1155,9 +1159,10 @@
     await say('낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.');
     await sleep(300);
     await say('왕비는 멀리 떠났어요');
-    T.confetti(); cue('party_horn', .9);
+    finaleMusic();
+    T.confetti();
     await Promise.all([snow.hop(20, 460), crewE.hopAll(20, 460), prince.hop(14, 460)]);
-    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
     T.finale();
     await sleep(1500);
     return '낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.';

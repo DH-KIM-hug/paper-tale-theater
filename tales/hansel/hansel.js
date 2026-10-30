@@ -92,7 +92,11 @@
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_adventure', 'crickets_night_1', 'crickets_night_2', 'leaves_footsteps', 'birds_chirp_1', 'fire_crackle', 'stream_1', 'drum', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'sleepy_tuba', 'surprise_sting', 'comic_brass', 'latch_click', 'question', 'door_heavy_1', 'door_heavy_2', 'zip_away', 'party_horn', 'creak', 'squeak', 'crunch']); } catch (e) { /* 무시 */ }
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 픽사베이 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
+    try { AudioFX.preloadSfx(['finale_happy', 'intro_adventure', 'crickets_night_1', 'crickets_night_2', 'leaves_footsteps', 'birds_chirp_1', 'fire_crackle', 'stream_1', 'drum', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'sleepy_tuba', 'surprise_sting', 'comic_brass', 'latch_click', 'question', 'door_heavy_1', 'door_heavy_2', 'zip_away', 'party_horn', 'creak', 'squeak', 'crunch']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     const fx = document.getElementById('fxL'); if (fx) fx.style.pointerEvents = 'none'; /* 말풍선·효과 글자는 누름을 받지 않는다 */
     const tr = T.tr;
@@ -451,10 +455,11 @@
     }
     if (READ_ACTS && typeof READ_ACTS === 'object') { // 짧은 배경 소리·동물 소리 동사: amb:이름:음량:초, animal:이름:음량
       READ_ACTS.amb = (n, v, d) => { try { if (!T.readInstant()) AudioFX.ambient(n, { vol: +v || .15, dur: +d || 3, fadeIn: 1 }); } catch (e) { /* 무시 */ } return null; };
+      READ_ACTS.finale = () => { finaleMusic(); return null; }; // 끝 음악(2026-10-31)
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); return rr; } // 끝 음악이 끝날 때까지 기다림(화면을 꺼도 계속)
 
     /* --- 1. 집 안 밤: 문틈으로 엿듣기 --- */
     scene('house_night', L(500, 790)); /* 세로 화면은 오른쪽 끝(문틀)까지 보이게 */
@@ -846,7 +851,7 @@
     amb('crickets_night_2', { vol: .2, dur: 4 }); // 포근한 밤
     await say('그날 밤, 둘은 포근한 이불 속에서 새근새근 잠이 들었답니다.');
     await say('우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.');
-    T.finale(); stopAmb(.8);
+    T.finale(); finaleMusic(); await finaleWait(); stopAmb(.8);
     return '우리 집이 제일 포근해요!';
   }
 

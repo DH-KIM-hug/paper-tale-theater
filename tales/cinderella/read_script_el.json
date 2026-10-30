@@ -1407,7 +1407,8 @@
      "before": [
       "cast:sis1:look:stand:left",
       "cast:sis2:look:stand:left",
-      "pop:500,230,하하!"
+      "pop:500,230,하하!",
+      "finale"
      ]
     },
     {
@@ -1420,9 +1421,6 @@
        null,
        "[warm, gentle, wise, slow, concluding]"
       ]
-     ],
-     "after": [
-      "sfx:party_horn:.5"
      ]
     }
    ]

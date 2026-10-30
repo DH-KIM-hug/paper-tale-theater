@@ -1126,9 +1126,6 @@
      "before": [
       "pinky:hook",
       "fx:ding"
-     ],
-     "after": [
-      "sfx:party_horn:.5"
      ]
     },
     {
@@ -1141,6 +1138,9 @@
        null,
        "[warm, gentle, slow, closing]"
       ]
+     ],
+     "before": [
+      "finale"
      ]
     }
    ]

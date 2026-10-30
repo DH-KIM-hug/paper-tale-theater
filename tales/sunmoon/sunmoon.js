@@ -566,7 +566,7 @@
     const say = async text => { await AudioFX.voiceIdle(10000); return T.say(text); };
     const stageWrap = T.root.querySelector('#stageWrap');
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['intro_night', 'fire_crackle', 'crickets_night_1', 'crickets_night_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'tada', 'whistle_down', 'whistle_wobble', 'shimmer', 'daegeum']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['finale_korean', 'intro_night', 'fire_crackle', 'crickets_night_1', 'crickets_night_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'tada', 'whistle_down', 'whistle_wobble', 'shimmer', 'daegeum']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -575,6 +575,11 @@
     /* 대금 한 소절(2026-10-29): 깜깜한 밤·하늘에 비는 순간처럼 조용하고 쓸쓸할 때만. 놀이 .3, 읽기 ×0.8. 기다리지 않는다 */
     const daeg = () => { try { const o = { vol: isRead() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 전래동화 끝 음악 finale_korean(9.5초, sounds/CREDITS.md). 내레이션이 읽히는 동안은 엔진이 자동으로 낮춘다(ambient 덕킹).
+       끝 화면 전에 곡 끝(페이드)까지 기다린다. 읽어 주기도 같은 곡(화면을 꺼도 끝까지 재생) */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_korean', o)) setTimeout(() => { try { AudioFX.ambient('finale_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
 
     /* 배경 그림 미리 불러오기: 첫 장면 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 없는 파일은 그레이박스로 */
     const loads = {};
@@ -1187,6 +1192,7 @@
         if (n === 'pop') return AudioFX.pop();
         if (n === 'bell') return AudioFX.bell();
         if (n === 'jingle') return AudioFX.jingle();
+        if (n === 'finale') { try { if (!T.readInstant()) finaleMusic(); } catch (e) { /* 무시 */ } return; }
         if (n === 'boom') return AudioFX.sfx('boom');
         if (n === 'knock') { [0, 260, 520].forEach(t => setTimeout(() => AudioFX.sfx('knock'), t)); return; }
         return AudioFX.sfx(n);
@@ -1195,7 +1201,7 @@
       shake: () => T.shake(),
     };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); return rr; }
 
     await T.curtain(true);
     intro.go(); // 시작 음악 (놀이)
@@ -2070,7 +2076,9 @@
     await T.ask('해님이나 달님을 톡 눌러 봐요! 낮이 되고, 밤이 돼요.', () => T.tap(boyMoon.pos)); setSky(false); AudioFX.bell(); boyMoon.hop(24); await sleep(1200); // 달님을 톡 → 밤
     await T.tap(girlSun.pos); setSky(true); AudioFX.jingle(); girlSun.hop(24); await sleep(1200); // 해님을 톡 → 낮
     setSky(true);
+    finaleMusic();
     await say('해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.');
+    await finaleWait();
     return '해님 달님이 늘 우리를 비춰 줘요!';
   }
 

@@ -1450,7 +1450,7 @@
       "glow:mer",
       "mer:hop",
       "confetti",
-      "fx:tada"
+      "finale"
      ]
     },
     {
@@ -1463,9 +1463,6 @@
        null,
        "[warm, gentle, closing lesson, slow]"
       ]
-     ],
-     "before": [
-      "snd:party_horn:.8"
      ]
     }
    ]

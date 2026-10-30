@@ -224,7 +224,11 @@
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_adventure', 'birds_chirp_1', 'bee_buzz', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'tiptoe_pizz', 'peek_pop', 'ding_glock', 'question', 'zip_away', 'whistle_down', 'surprise_sting', 'sleepy_tuba', 'pop_appear', 'party_horn', 'knock', 'pop', 'whoosh', 'door', 'creak', 'thud']); } catch (e) { /* 무시 */ }
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 픽사베이 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다린 뒤 끈다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
+    try { AudioFX.preloadSfx(['intro_adventure', 'birds_chirp_1', 'bee_buzz', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'tiptoe_pizz', 'peek_pop', 'ding_glock', 'question', 'zip_away', 'whistle_down', 'surprise_sting', 'sleepy_tuba', 'pop_appear', 'party_horn', 'knock', 'pop', 'whoosh', 'door', 'creak', 'thud', 'finale_happy']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const pan = (cx = 500) => camSnap(T.viewWidth() < 990 ? cx : 500, 280, 1);
@@ -448,12 +452,13 @@
       READ_ACTS.sfx = (n, v) => { try { if (!T.readInstant()) AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.sfxs = (list, step, v) => { try { if (T.readInstant()) return null; String(list).split(',').forEach((n, i) => setTimeout(() => { try { AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } }, i * (+step || 260))); } catch (e) { /* 무시 */ } return null; };
     }
+    if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.finale = () => { finaleMusic(); return null; }; // 끝 축하 음악 (2026-10-31 사용자 지시)
     if (READ_ACTS && typeof READ_ACTS === 'object') { // 짧은 배경 소리·동물 소리 동사: amb:이름:음량:초, animal:이름:음량
       READ_ACTS.amb = (n, v, d) => { try { if (!T.readInstant()) AudioFX.ambient(n, { vol: +v || .15, dur: +d || 3, fadeIn: 1 }); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); return rr; }
 
     /* --- 1. 바구니 싸기 --- */
     scene('kitchen');
@@ -718,8 +723,9 @@
     await T.tap(live(hood), { prompt: '빨간 모자를 톡! 다시 약속해요.' });
     popSfx(T); T.pop(hood.x, 200, '약속!');
     await Promise.all([hood.hop(40, 500), granny.hop(20, 500)]);
-    T.confetti(); sfx('party_horn', .6);
+    T.confetti(); finaleMusic();
     await say('빨간 모자는 새끼손가락을 걸고, 오늘 일을 오래오래 기억했어요.');
+    await finaleWait();
     T.finale(); stopAmb(.8);
     return '빨간 모자가 약속을 꼭 지켜요!';
   }

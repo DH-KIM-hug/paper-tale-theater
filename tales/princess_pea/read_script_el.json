@@ -913,10 +913,9 @@
       "pea:look:wave",
       "prince:look:joy",
       "confetti",
-      "fx:tada",
       "pop:475,215,안녕!",
-      "snd:party_horn:.9:600",
-      "snd:applause_1:.4:1500"
+      "snd:applause_1:.4:1500",
+      "finale"
      ]
     },
     {

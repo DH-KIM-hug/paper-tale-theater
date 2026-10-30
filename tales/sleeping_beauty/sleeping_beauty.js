@@ -352,7 +352,11 @@
     const S_ROW = T.viewWidth() < 300 ? .36 : .55, SGAP = S_ROW === .36 ? 32 : 50;
     const SLOT = i => 112 + 108 * i, SLOTP = i => 500 - 3.5 * SGAP + SGAP * i;
     const SX = i => X(SLOT(i), SLOTP(i)), RS = X(1, S_ROW);
-    AudioFX.preloadSfx(['intro_magic', 'paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'hop', 'crowd_murmur_1', 'birds_chirp_1', 'birds_chirp_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'question', 'ding_glock', 'sleepy_tuba', 'shimmer', 'boing', 'party_horn']);
+    AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'baby_giggle', 'bell', 'door', 'creak', 'step_wood', 'step_grass', 'blow', 'pop', 'doop', 'hop', 'crowd_murmur_1', 'birds_chirp_1', 'birds_chirp_2', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'question', 'ding_glock', 'sleepy_tuba', 'shimmer', 'boing', 'party_horn']);
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 서양 명작 동화 끝 음악 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     const S = {
       L1: "왕과 왕비는 오래오래 아기를 기다렸어요. 드디어 예쁜 공주님이 태어났어요!",
       L2: "온 나라 사람들을 불러 잔치를 열자!",
@@ -745,7 +749,7 @@
       return R;
     })();
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    if (T.reading()) READ_ACTS.finale = () => { finaleMusic(); return null; }; return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 기다리던 아기 (톡 1: 요람) ===== */
     scene('sb_bg_room_v2');
@@ -1160,9 +1164,10 @@
     allHit.remove();
     pr.look('wave'); prince.look('wave');
     [...fairies, young, old, king, queen, pr, prince].forEach((a, i) => setTimeout(() => a.hop(10, 400), i * 120));
-    T.confetti(); sfx(T, 'party_horn', .9, () => sfx(T, 'tada', .5, () => sparkleSfx(T)));
+    finaleMusic();
+    T.confetti();
     await say(S.L44);
-    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
     T.finale(); await sleep(2500);
     return '아무도 빼놓지 않아요. 잊힌 사람의 마음은 아프답니다.';
   }

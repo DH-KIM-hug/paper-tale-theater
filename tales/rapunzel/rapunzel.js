@@ -271,7 +271,11 @@
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const TX = X(640, 560);                        // 탑의 x (3·4·6·7·9장 공통)
     const HOOKX = X(905, 905);                     // 탑 안 창 오른쪽 벽의 고리 x
-    AudioFX.preloadSfx(['intro_magic', 'paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'sparkle', 'tada', 'step_grass', 'pop', 'slide_up', 'slide_down', 'chop', 'knock', 'cork', 'creak', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'whistle_up', 'whistle_wobble', 'pull_pop', 'question', 'ding_glock', 'surprise_sting', 'horse_neigh_1', 'party_horn']);
+    AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'paper_down', 'paper_up', 'paper_tap', 'swish', 'whoosh', 'sparkle', 'tada', 'step_grass', 'pop', 'slide_up', 'slide_down', 'chop', 'knock', 'cork', 'creak', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'whistle_up', 'whistle_wobble', 'pull_pop', 'question', 'ding_glock', 'surprise_sting', 'horse_neigh_1', 'party_horn']);
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 서양 명작 동화 끝 음악 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율로 ASP 를 덮어쓴다 */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -575,7 +579,7 @@
       return RA;
     })();
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    if (T.reading()) READ_ACTS.finale = () => { finaleMusic(); return null; }; return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 담 너머 텃밭 (자동) ===== */
     scene('rp_bg_cottage');
@@ -936,13 +940,14 @@
     rap.look('short_hold', 'left'); prince.look('hold', 'right');
     AudioFX.sfx('pop', .4);
     petals(X(480, 400), X(800, 680));
-    T.confetti(); (cue('party_horn', .9) || AudioFX.sfx('tada') || sparkleSfx(T));
+    finaleMusic();
+    T.confetti();
     rap.hop(14, 400); prince.hop(14, 400);
     const l46 = cutSay('rp_cut_reunion', () => AudioFX.sfx('pop', .4), '두 사람은 손을 꼭 잡고 성으로 떠났어요.');
     await sleep(900); rap.hop(14, 400); prince.hop(14, 400);
     await l46;
     await say('마녀 고텔은 텃밭으로 돌아갔어요.');
-    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '포기하지 않으면 다시 만날 수 있어요.';
   }

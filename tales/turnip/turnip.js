@@ -469,12 +469,16 @@
     const { el, sleep, say, actor, camTo, camWide, camSnap, josa } = T;
     const ask = (text, start) => T.ask(text, start);   // 안내 + 조작. 옛 순무 전용 겹침 막기는 audio.js 취소 수정(2026-10-29)으로 필요 없어져 뺐다
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['intro_cozy2', 'birds_chirp_1', 'pot_boil', 'whistle_down', 'comic_brass', 'drumroll_crash']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['intro_cozy2', 'finale_happy', 'birds_chirp_1', 'pot_boil', 'whistle_down', 'comic_brass', 'drumroll_crash']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
     const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: isRead() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? T.sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
 
     /* 그림 미리 불러오기: 배우·순무·첫 배경을 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
     const loads = {};
@@ -942,9 +946,10 @@
         const [x, y, z = 1] = rNum(a);
         return camGo([x, y, z]);
       },
+      finale: () => { if (!rInstant()) finaleMusic(); return null; }, // 맨 끝 축하 음악(2026-10-31 사용자)
     };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); return rr; }
 
     /* --- 1. 씨 뿌리기 (텃밭 봄) --- */
     let bgp = gardenBG(T, { season: 'spring' });
@@ -1324,9 +1329,10 @@
     await say('여섯 그릇, 여섯 명! 딱 맞아요.');
     line.forEach((a, i) => setTimeout(() => { a.hop(18, 320); T.tone(440 + i * 30, .12, { type: 'triangle', vol: .1 }); }, i * 150));
     T.pop(500, 230, '냠냠!', C.persimmon);
-    T.confetti(); AudioFX.sfx('bell', .5);
+    T.confetti(); AudioFX.sfx('bell', .5); finaleMusic(); // 맨 끝 축하 음악(2026-10-31 사용자)
     lbFade(T, 'feast'); // 잔치 밤 라이트박스
     await say('모두 함께 맛있게 먹었답니다.');
+    await finaleWait(); stopAmb();
     clearInterval(steam); ui.remove();
     return '작은 힘도 모이면 커다란 힘이 돼요!';
   }

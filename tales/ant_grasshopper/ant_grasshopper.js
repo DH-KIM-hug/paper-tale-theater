@@ -673,7 +673,11 @@
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'rain_1', 'winter_wind_1', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'party_horn', 'boing', 'question', 'xylo_down', 'stomach_growl', 'applause_1', 'ding_glock', 'page_turn', 'page_turn_big', 'step_grass', 'knock', 'creak', 'door']); } catch (e) { /* 무시 */ }
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 픽사베이 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
+    try { AudioFX.preloadSfx(['intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'rain_1', 'winter_wind_1', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'finale_happy', 'party_horn', 'boing', 'question', 'xylo_down', 'stomach_growl', 'applause_1', 'ding_glock', 'page_turn', 'page_turn_big', 'step_grass', 'knock', 'creak', 'door']); } catch (e) { /* 무시 */ }
     AudioFX.preloadMusic(['vivaldi_spring', 'vivaldi_spring3', 'vivaldi_summer1', 'vivaldi_summer3', 'vivaldi_autumn1', 'vivaldi_winter', 'vivaldi_winter1']);
     /* 계절 음악 (2026-10-20): 계절 장면마다 〈사계〉 해당 곡. 한 번에 한 곡만 — 새로 틀면 앞 곡은 서서히 끈다. 목소리 밑에 깔리게 작게(vol .3) */
     let bgm = null;
@@ -1012,11 +1016,12 @@
     /* 읽어 주기 효과음 동사 (2026-10-28 사용자 결정: 놀이판과 같은 효과음). 대본 before/after 에 sfx:이름:음량, sfxs:이름들:간격ms:음량 으로 넣는다.
        기다리지 않고(null 반환), 실패해도 낭독을 막지 않는다. 낭독 전에 장면이 순식간에 놓이는 중(readInstant)에는 울리지 않는다. */
     if (READ_ACTS && typeof READ_ACTS === 'object') {
+      READ_ACTS.finale = () => { finaleMusic(); return null; }; // 끝 음악(2026-10-31)
       READ_ACTS.sfx = (n, v) => { try { if (!T.readInstant()) AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.sfxs = (list, step, v) => { try { if (T.readInstant()) return null; String(list).split(',').forEach((n, i) => setTimeout(() => { try { AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } }, i * (+step || 260))); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); return rr; } // 끝 음악이 끝날 때까지 기다림(화면을 꺼도 계속)
 
     await T.curtain(true);
     amb('birds_chirp_1', { vol: .25, dur: 4 }); // 여름 아침 새소리
@@ -1421,12 +1426,13 @@
       await say(`${k + 1}번, ${name}!`);
       if (AudioFX.slice(SEASON_MUSIC[want.s], 0, 2.4, .6)) await sleep(2500); // 그 계절의 〈사계〉 한 소절
     }
-    T.finale();
-    SND.sparkle(T); T.confetti(); sfx('party_horn', .7) || (AudioFX.fanfare && AudioFX.fanfare());
+    T.finale(); finaleMusic();
+    SND.sparkle(T); T.confetti();
     await say('봄, 여름, 가을, 겨울! 계절은 빙글빙글 돌아요.');
     cards.forEach(c => c.g.remove()); veil.remove();
     workers.forEach((a, i) => setTimeout(() => a.hop(20), i * 90)); hop.hop(26);
     await say('미리 준비하고 함께 나누니, 겨울도 따뜻했답니다.');
+    await finaleWait();
     stopAmb(.8);
     return '미리 준비하고, 함께 나누면 모두 따뜻해요!';
   }

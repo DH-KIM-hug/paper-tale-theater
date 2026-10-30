@@ -312,6 +312,10 @@
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(하나·둘·셋)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): Pixabay 녹음 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다렸다가 끝 처리 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     const cue = (name, v) => { try { if (T.reading() && document.hidden && /^marimba_/.test(name)) return true; /* 화면 꺼짐: 화음 방지 */ return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { fp_bg_yard_v2: 'birds_chirp_1', fp_bg_room_night_lb: 'crickets_night_1' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); dress(key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
@@ -324,7 +328,7 @@
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['intro_magic', 'hop', 'ball_bounce', 'splash', 'splash_big', 'bubbles', 'knock', 'door', 'step_grass', 'step_wood', 'paper_up', 'paper_down', 'swish', 'sparkle', 'tada', 'chomp', 'pop', 'birds_chirp_1', 'crickets_night_1', 'stream_1', 'question', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'cushion', 'boing', 'shimmer', 'party_horn']);
+    AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'hop', 'ball_bounce', 'splash', 'splash_big', 'bubbles', 'knock', 'door', 'step_grass', 'step_wood', 'paper_up', 'paper_down', 'swish', 'sparkle', 'tada', 'chomp', 'pop', 'birds_chirp_1', 'crickets_night_1', 'stream_1', 'question', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'cushion', 'boing', 'shimmer', 'party_horn']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -461,13 +465,14 @@
         pop(spec) { const [x, y, ...w] = String(spec).split(','), t = w.join(','); T.pop(+x, +y, tr(t), POPC[t]); },
         glow(w) { glow(w === 'ball' ? ball : prince, 1200); },
         confetti: () => T.confetti(),
+        finale: () => { finaleMusic(); },   // 맨 끝 축하 음악(2026-10-31 사용자 지시)
         /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초>. 소리는 대사를 막지 않는다 */
         snd(n, v = .7, d = 0) { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } },
         amb(n, v = .2, d = 4) { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
       };
     })();
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 성 뜰 (배움 놀이 1: 금공 모양 고르기 — 첫 조작) ===== */
     scene('fp_bg_yard_v2');
@@ -757,9 +762,9 @@
       await ball.move(prin.x - 30, FL - 110, 600, 'ease-in-out'); bounceSfx(T, .6);
       await ball.move(510, FL + 2, 600, 'ease-in');
     })();
-    await say(S.L38); await tb;
-    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
-    T.finale(); sfx('party_horn', .9) || sfx('tada') || sparkleSfx(T);
+    finaleMusic(); await say(S.L38); await tb;
+    try { await finaleWait(); AudioFX.stopAmbient(); } catch (e) { /* */ }
+    T.finale();
     await sleep(2500);
     return '한 약속은 지켜요.';
   }

@@ -4831,6 +4831,9 @@
      "after": [
       "all:hop",
       "confetti"
+     ],
+     "before": [
+      "finale"
      ]
     },
     {

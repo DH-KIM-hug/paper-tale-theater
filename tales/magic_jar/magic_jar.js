@@ -151,7 +151,7 @@
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
     })();
-    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['intro_korean_happy', 'daegeum', 'pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil_1', 'dig_soil_2', 'dig_soil_3', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
+    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['finale_korean', 'intro_korean_happy', 'daegeum', 'pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil_1', 'dig_soil_2', 'dig_soil_3', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, say, camSnap } = T;
     const tr = T.tr;
@@ -165,6 +165,11 @@
     /* 대금 한 소절(2026-10-29): 이웃에게 나누는 마음, 소동 뒤의 조용한 뉘우침에만(웃기는 순간엔 쓰지 않는다). 놀이 .3, 읽기 ×0.8 */
     const daeg = () => { try { const o = { vol: T.reading() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const scene = (key, cx) => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); dress(T, key); pan(cx); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 전래동화 끝 음악 finale_korean(9.5초, sounds/CREDITS.md). 내레이션이 읽히는 동안은 엔진이 자동으로 낮춘다(ambient 덕킹).
+       끝 화면 전에 곡 끝(페이드)까지 기다린다. 읽어 주기도 같은 곡(화면을 꺼도 끝까지 재생) */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_korean', o)) setTimeout(() => { try { AudioFX.ambient('finale_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
 
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
     await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
@@ -312,10 +317,11 @@
       daeg: () => daeg(),
       snd: (n, v = .7, d = 0) => { try { +d > 0 ? later(+d, n, +v) : cue(n, +v); } catch (e) { /* */ } },
       amb: (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
+      finale: () => { try { if (!T.readInstant()) finaleMusic(); } catch (e) { /* 무시 */ } }, // 읽어 주기 맨 끝 축하 음악(2026-10-31)
     });
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {   // 읽어 주기: 아래 놀이 흐름은 돌지 않는다
-      return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+      return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
 
     /* --- 1. 밭 --- */
@@ -524,10 +530,11 @@
     }
     await say('"모두 고맙네!" 모두 둘러앉아 맛있게 먹었어요.');
     await sleep(600);   /* 마지막 톡 없음: 만세는 저절로 */
-    T.confetti(); cue('party_horn', .9);
+    T.confetti(); finaleMusic();
     await Promise.all([farmer.hop(40, 500), wife.hop(30, 500), rich.hop(30, 500), father.hop(24, 500)]);
     await say('나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.');
-    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    await finaleWait();
+    try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
     T.finale();
     return '나누면 기쁨이 커져요!';
   }

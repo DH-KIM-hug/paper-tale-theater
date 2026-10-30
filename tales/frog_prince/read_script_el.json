@@ -1054,8 +1054,7 @@
      ],
      "before": [
       "confetti",
-      "fx:tada",
-      "snd:party_horn:.9:700"
+      "finale"
      ]
     },
     {

@@ -289,7 +289,7 @@
     const cue = (names, v = .6, fb) => { for (const n of [].concat(names)) if (playS(n, v)) return true; if (fb) fb(); return false; };
     const tn = (f, d = .25, o = {}) => () => T.tone(f, d, { vol: .16, ...o });
     const SFXN = ['paper_turn', 'wing_flap_2', 'ding', 'ding_glock', 'ding_glock_2', 'whistle_up', 'whistle_down', 'whistle_wobble', 'bell', 'fire_crackle', 'whoosh', 'pot_boil', 'water_drip', 'fire_siren', 'bee_buzz', 'pop', 'harp_gliss', 'harp_gliss_2', 'chime_up', 'drum', 'squeak', 'splash', 'splash_big', 'pow', 'boom', 'cymbal', 'slide_up', 'slide_down', 'sparkle', 'shimmer', 'tada', 'wing_flap_1', 'party_horn', 'cushion', 'boing', 'spring', 'xylo_up', 'step_wood', 'giggle_xylo', 'chomp', 'gulp', 'zip', 'doop', 'paper_up', 'paper_down', 'knock', 'door', 'hop', 'toy_flute',
-      'toot_kazoo', 'squelch', 'dino_roar', 'theremin_wobble', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'crickets_night_1', 'winter_wind_1'];
+      'toot_kazoo', 'squelch', 'dino_roar', 'theremin_wobble', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'crickets_night_1', 'winter_wind_1', 'finale_happy'];
     AudioFX.preloadSfx(SFXN); ['duck', 'frog', 'cat', 'tiger_2'].forEach(n => { try { AudioFX.animal(n, 0); } catch (e) { /* */ } });
     const amb = (name, v = .25, d = 4) => { try { AudioFX.ambient(name, { vol: v, dur: d }); } catch (e) { /* */ } };
     const ingSfx = {
@@ -844,6 +844,7 @@
         const m = /^tf_(.+)$/.exec(id); if (m) return cutTf(m[1]);
         return null;
       },
+      finale() { if (!inst()) finaleMusic(); return null; }, // 맨 끝 축하 음악(2026-10-31 사용자)
       confetti() { if (!inst()) { T.confetti(); cue('party_horn', .8) || cue('tada', .6); cue('shimmer', .5); } return null; },
       settle() { stopStir(); if (rs.cand) { hide(rs.cand); rs.cand = null; } rs.stops.forEach(f => f()); rs.stops = []; ALL.forEach(a => { try { a.body.getAnimations().forEach(n => n.cancel()); } catch (e) { /* */ } }); return null; },
     };
@@ -864,6 +865,10 @@
     let bgmOn = true, bgmH = null;
     const bgmLoop = () => { if (!bgmOn) return; bgmH = AudioFX.music(BGM, { vol: .16, fade: .8 }); if (!bgmH) { setTimeout(bgmLoop, 800); return; } bgmH.done.then(() => { bgmH = null; bgmLoop(); }); };
     const bgmStop = () => { bgmOn = false; if (bgmH) bgmH.stop(1.5); };
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 finale_happy(9.5초, sounds/CREDITS.md). 배경 음악(mountain_king_box)은 0.8초에 걸쳐 끄고 바꾼다. 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { bgmOn = false; if (bgmH) bgmH.stop(.8); const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
 
     if (T.reading()) {
       const en = (() => { try { return typeof englishOn === 'function' && englishOn(); } catch (e) { return false; } })();
@@ -879,7 +884,7 @@
         return T.sceneCard(label, change, focus);
       };
       bgmLoop();
-      try { return await T.readPlay.call(RW, READ_ACTS); } finally { bgmStop(); }
+      try { const rr = await T.readPlay.call(RW, READ_ACTS); await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } return rr; } finally { bgmStop(); }
     }
 
     /* ================= 1. 초대장 ================= */
@@ -1223,11 +1228,12 @@
     witch.pos.parentNode.appendChild(wh); witch.look('present', 'left');
     wh.animate([{ translate: '0 0' }, { translate: '0 -6px' }, { translate: '0 0' }], { duration: 900, iterations: 3 });
     await T.ask(S.I9, () => T.tap(wh, { prompt: S.I9 }));
-    T.confetti(); cue('party_horn', .8) || cue('tada', .6); cue('shimmer', .5);
+    T.confetti(); cue('shimmer', .5); finaleMusic(); // 맨 끝 축하 음악(2026-10-31 사용자)
     [kid, witch, cat, ...FRS].forEach(a => a.hop(24, 400)); setTimeout(() => [kid, witch, cat, ...FRS].forEach(a => a.hop(24, 400)), 500);
     cue(['theremin_wobble', 'whistle_wobble'], .4);
     await say(S.I10);
     await sleep(2000);
+    await finaleWait();
     try { AudioFX.stopAmbient(); } catch (e) { /* */ }
     bgmStop();
     T.finale(); await sleep(1500);

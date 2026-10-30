@@ -561,13 +561,17 @@
     })();
     const { el, sleep, say, actor, camTo, camSnap, josa } = T;
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['intro_cozy', 'birds_chirp_1', 'birds_chirp_2', 'pot_boil', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'surprise_sting', 'whistle_down', 'zip_away', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['finale_happy', 'intro_cozy', 'birds_chirp_1', 'birds_chirp_2', 'pot_boil', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'surprise_sting', 'whistle_down', 'zip_away', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
     const cue = (n, v = .9) => { try { if (isRead()) v *= .8; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
     const short = (n, vol = .6, dur = 2) => { try { if (isRead()) vol *= .8; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 픽사베이 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     /* 세로 화면(무대 양옆이 잘림): 카메라를 조금 물리고(Z) 가로 자리를 가운데로 모은다(K) */
     const P = () => window.matchMedia('(orientation: portrait)').matches;
     const K = .7, Z = .62;
@@ -1018,9 +1022,10 @@
         return AudioFX.sfx(n);
       },
       pop: spec => { const [x, y, ...w] = String(spec).split(','); pop(+x, +y, w.join(','), C.persimmon); },
+      finale: () => { finaleMusic(); return null; }, // 끝 음악(2026-10-31). 놀이판은 끝 노래 〈곰 세 마리〉 녹음이 있어 따로 넣지 않음
     });
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); return rr; } // 끝 음악이 끝날 때까지 기다림(화면을 꺼도 계속)
 
     /* ---------- 1. 곰 집 아침 (부엌 와이드) ---------- */
     kitchenBG(T);

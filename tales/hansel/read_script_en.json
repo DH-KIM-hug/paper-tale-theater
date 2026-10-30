@@ -1254,8 +1254,8 @@
        "Home is the coziest place. That is how the story of Hansel and Gretel ended."
       ]
      ],
-     "after": [
-      "sfx:party_horn:.5"
+     "before": [
+      "finale"
      ]
     }
    ]

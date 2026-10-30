@@ -1328,8 +1328,8 @@
        "[warm, tender, gentle, closing]"
       ]
      ],
-     "after": [
-      "sfx:party_horn:.5"
+     "before": [
+      "finale"
      ]
     }
    ]

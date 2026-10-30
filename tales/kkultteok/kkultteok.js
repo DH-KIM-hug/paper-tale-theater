@@ -83,7 +83,11 @@
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_cozy2', 'birds_chirp_1', 'birds_chirp_2', 'steam_hiss', 'water_drip', 'rain_1', 'pop_appear', 'chime_up', 'zip_away', 'question', 'thunder', 'whistle_up', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'party_horn', 'creak', 'ding', 'bonk', 'bell', 'gulp', 'splash', 'splash_big', 'blow', 'whoosh', 'sparkle', 'cork']); } catch (e) { /* 무시 */ }
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): Pixabay 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다렸다가 끝 처리 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
+    try { AudioFX.preloadSfx(['intro_cozy2', 'finale_happy', 'birds_chirp_1', 'birds_chirp_2', 'steam_hiss', 'water_drip', 'rain_1', 'pop_appear', 'chime_up', 'zip_away', 'question', 'thunder', 'whistle_up', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'party_horn', 'creak', 'ding', 'bonk', 'bell', 'gulp', 'splash', 'splash_big', 'blow', 'whoosh', 'sparkle', 'cork']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const tr = T.tr, el = T.el;
@@ -587,10 +591,11 @@
     }
     if (READ_ACTS && typeof READ_ACTS === 'object') { // 짧은 배경 소리·동물 소리 동사: amb:이름:음량:초, animal:이름:음량
       READ_ACTS.amb = (n, v, d) => { try { if (!T.readInstant()) AudioFX.ambient(n, { vol: +v || .15, dur: +d || 3, fadeIn: 1 }); } catch (e) { /* 무시 */ } return null; };
+      READ_ACTS.finale = () => { finaleMusic(); return null; };   // 맨 끝 축하 음악(2026-10-31 사용자 지시)
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } return r; });
 
     const SCENES = [];
     const S = f => SCENES.push(f);
@@ -1134,9 +1139,10 @@
       await say('멀리 굴뚝에서 작은 구름이 퐁! 퐁!');
       agi.look('wave', 'right'); agi.hop(10, 300);
       await say('은우가 뒤를 돌아보며 손을 흔들어요. "퐁!"');
+      finaleMusic();
       await say('꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.');
-      await home;
-      T.finale(); sfx('party_horn', .6);
+      await home; await finaleWait();
+      T.finale();
     });
 
     let start = 0;

@@ -256,6 +256,10 @@
     const vo = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };   // 말풍선 없는 소리(수 세기 n1~n20)
     /* 소리 큐: 놀이에서만 만화 소리, 읽어 주기에서는 장면 시작 배경 소리(낮은 볼륨·4초 이내)만 */
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
+    /* 맨 끝 축하 음악(2026-10-31 사용자 지시): Pixabay 녹음 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다렸다가 끝 처리 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     const cue = (name, v) => { try { if (T.reading() && document.hidden && name === 'cushion') return true; /* 화면 꺼짐: 스무 번이 한꺼번에 울리지 않게 */ return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { pp_bg_room_day_v2: 'waves', pp_bg_gate_night_lb: 'rain_1', pp_bg_guest_night_lb: 'crickets_night_1', pp_bg_yard_day_v2: 'birds_chirp_1' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); newRig(T); dress(key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
@@ -264,7 +268,7 @@
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     const TX = X(560, 520);                        // 탑(침대) 가운데 x — 4·5·6·7·8장 공통
-    AudioFX.preloadSfx && AudioFX.preloadSfx(['intro_magic', 'paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'creak', 'boom', 'sparkle', 'tada', 'step_wood', 'poke', 'splash', 'bubbles', 'waves', 'rain_1', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'thunder', 'door_heavy_1', 'question', 'ding_glock', 'cushion', 'sleepy_tuba', 'party_horn', 'applause_1']);
+    AudioFX.preloadSfx && AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'creak', 'boom', 'sparkle', 'tada', 'step_wood', 'poke', 'splash', 'bubbles', 'waves', 'rain_1', 'crickets_night_1', 'birds_chirp_1', 'birds_chirp_2', 'thunder', 'door_heavy_1', 'question', 'ding_glock', 'cushion', 'sleepy_tuba', 'party_horn', 'applause_1']);
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 (FIXED_ASP 는 덮어쓰지 않는다) */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -476,6 +480,7 @@
       sparkle: () => sparkleSfx(T),
       shake: () => T.shake(),
       confetti: () => T.confetti(),
+      finale: () => { finaleMusic(); },   // 맨 끝 축하 음악(2026-10-31 사용자 지시)
       snd: (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } },
       amb: (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } },
       fx: n => { if (n === 'creak' && cue('door_heavy_1', .6)) return; sfx(T, n, n === 'tada' ? undefined : .4, n === 'tada' ? () => sparkleSfx(T) : undefined); },
@@ -485,7 +490,7 @@
       },
     };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 진짜 공주를 찾아서 (톡 1 — 배) ===== */
     scene('pp_bg_room_day_v2');
@@ -772,10 +777,10 @@
     glow(peaM, 1500); peaM.hop(10, 360); cue('ding_glock', .8) || sparkleSfx(T); T.pop(kase.x, kase.y - 190, tr('반짝!'));
     [L.bunting, L.bunting2].forEach(g => g.wiggle(6, 700));
     pea.look('wave'); prince.look('joy'); pea.hop(12, 360); prince.hop(12, 360);
-    T.confetti(); sfx(T, 'party_horn', .9, () => sfx(T, 'tada', undefined, () => sparkleSfx(T))); setTimeout(() => cue('applause_1', .4), 900);
+    finaleMusic(); T.confetti(); setTimeout(() => cue('applause_1', .4), 900);
     T.pop(X(475, 495), FL - 290, tr('안녕!'));
     await say('안녕!');
-    await sleep(2500); try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    await sleep(2500); try { await finaleWait(); AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '느낀 것을 솔직하게 말하는 마음이 진짜 공주의 마음이에요.';
   }

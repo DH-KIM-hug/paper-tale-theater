@@ -1186,8 +1186,8 @@
      ],
      "before": [
       "kids:dance",
-      "fx:ding",
-      "sfx:party_horn:.5"
+      "finale",
+      "fx:ding"
      ]
     },
     {
