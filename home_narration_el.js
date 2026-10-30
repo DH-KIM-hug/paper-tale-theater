@@ -369,7 +369,35 @@ const NARRATION_CLIPS = {
  "새 친구 스티커!": "audio/el/home/nar_499ea035ed.mp3",
  "스티커를 받았어요!": "audio/el/home/nar_a32901623d.mp3",
  "종이별 하나 받았어요!": "audio/el/home/nar_21397caebf.mp3",
- "다섯 개! 동화를 하나 열 수 있어요": "audio/el/home/nar_bba9cce12d.mp3"
+ "다섯 개! 동화를 하나 열 수 있어요": "audio/el/home/nar_bba9cce12d.mp3",
+ "별주부전": "audio/el/home/nar_bad642617d.mp3",
+ "별주부전. 곧 열려요.": "audio/el/home/nar_ee7fbe094e.mp3",
+ "별주부전 이야기가 열렸어요!": "audio/el/home/nar_487f5308a0.mp3",
+ "별주부전 친구들을 다 모았어요!": "audio/el/home/nar_41290c1472.mp3",
+ "사탕 마녀의 핼러윈": "audio/el/home/nar_51e123f3c8.mp3",
+ "사탕 마녀의 핼러윈. 곧 열려요.": "audio/el/home/nar_cca2ddd4ea.mp3",
+ "사탕 마녀의 핼러윈 이야기가 열렸어요!": "audio/el/home/nar_9891e722be.mp3",
+ "사탕 마녀의 핼러윈 친구들을 다 모았어요!": "audio/el/home/nar_911db2003c.mp3",
+ "토끼": "audio/el/home/nar_68d418d3e6.mp3",
+ "자라(별주부)": "audio/el/home/nar_1580d605dd.mp3",
+ "용왕님": "audio/el/home/nar_39af2e974e.mp3",
+ "문어(뻐김)": "audio/el/home/nar_ac1df25816.mp3",
+ "잉어 의원": "audio/el/home/nar_02d2f200be.mp3",
+ "새우 화공": "audio/el/home/nar_231d302547.mp3",
+ "게 병사": "audio/el/home/nar_63f9251787.mp3",
+ "다람쥐": "audio/el/home/nar_7d656f9e99.mp3",
+ "토끼(깡충)": "audio/el/home/nar_8bb5288083.mp3",
+ "산신령": "audio/el/home/nar_3f9f4605ea.mp3",
+ "다현이(꼬마 마법사)": "audio/el/home/nar_5649ab8229.mp3",
+ "사탕 마녀(키득)": "audio/el/home/nar_5e7cec0521.mp3",
+ "호박이": "audio/el/home/nar_e5464268d6.mp3",
+ "토끼(별 망토)": "audio/el/home/nar_569abee651.mp3",
+ "곰(호박 옷)": "audio/el/home/nar_a6388840a4.mp3",
+ "여우(달 모자)": "audio/el/home/nar_f385795903.mp3",
+ "딸기 다현이": "audio/el/home/nar_3bc36030c1.mp3",
+ "유령": "audio/el/home/nar_a26f897999.mp3",
+ "핼러윈 호박": "audio/el/home/nar_e975d07cc6.mp3",
+ "호박 다현이": "audio/el/home/nar_f32ece17fd.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -2119,5 +2147,133 @@ const NARRATION_CLIPS_EN = {
  "Five stars! You can open a tale.": {
   "t": "Five stars! You can open a tale.",
   "c": "audio/el/home/en/nar_6c4d69a724.mp3"
+ },
+ "별주부전": {
+  "t": "The Rabbit and the Terrapin",
+  "c": "audio/el/home/en/nar_17e7b7e3b5.mp3"
+ },
+ "별주부전. 곧 열려요.": {
+  "t": "The Rabbit and the Terrapin. Opening soon.",
+  "c": "audio/el/home/en/nar_d60208a153.mp3"
+ },
+ "The Rabbit and the Terrapin": {
+  "t": "The Rabbit and the Terrapin",
+  "c": "audio/el/home/en/nar_17e7b7e3b5.mp3"
+ },
+ "The Rabbit and the Terrapin is open!": {
+  "t": "The Rabbit and the Terrapin is open!",
+  "c": "audio/el/home/en/nar_0a0343c4ca.mp3"
+ },
+ "You collected all the friends of The Rabbit and the Terrapin!": {
+  "t": "You collected all the friends of The Rabbit and the Terrapin!",
+  "c": "audio/el/home/en/nar_4e731dfad6.mp3"
+ },
+ "The Rabbit and the Terrapin. Coming soon.": {
+  "t": "The Rabbit and the Terrapin. Coming soon.",
+  "c": "audio/el/home/en/nar_8e923febfa.mp3"
+ },
+ "사탕 마녀의 핼러윈": {
+  "t": "The Candy Witch's Halloween",
+  "c": "audio/el/home/en/nar_0325a6e1aa.mp3"
+ },
+ "사탕 마녀의 핼러윈. 곧 열려요.": {
+  "t": "The Candy Witch's Halloween. Opening soon.",
+  "c": "audio/el/home/en/nar_0fad71d989.mp3"
+ },
+ "The Candy Witch's Halloween": {
+  "t": "The Candy Witch's Halloween",
+  "c": "audio/el/home/en/nar_0325a6e1aa.mp3"
+ },
+ "The Candy Witch's Halloween is open!": {
+  "t": "The Candy Witch's Halloween is open!",
+  "c": "audio/el/home/en/nar_79ac6c21e9.mp3"
+ },
+ "You collected all the friends of The Candy Witch's Halloween!": {
+  "t": "You collected all the friends of The Candy Witch's Halloween!",
+  "c": "audio/el/home/en/nar_66c6767195.mp3"
+ },
+ "The Candy Witch's Halloween. Coming soon.": {
+  "t": "The Candy Witch's Halloween. Coming soon.",
+  "c": "audio/el/home/en/nar_b0ce57575e.mp3"
+ },
+ "Rabbit": {
+  "t": "Rabbit",
+  "c": "audio/el/home/en/nar_e760667673.mp3"
+ },
+ "Terrapin (Byeoljubu)": {
+  "t": "Terrapin (Byeoljubu)",
+  "c": "audio/el/home/en/nar_ae2b348fe5.mp3"
+ },
+ "Dragon King": {
+  "t": "Dragon King",
+  "c": "audio/el/home/en/nar_79f3ddd7cb.mp3"
+ },
+ "Octopus (boasting)": {
+  "t": "Octopus (boasting)",
+  "c": "audio/el/home/en/nar_a67b5586a7.mp3"
+ },
+ "Carp doctor": {
+  "t": "Carp doctor",
+  "c": "audio/el/home/en/nar_c59b4c3b3f.mp3"
+ },
+ "Shrimp painter": {
+  "t": "Shrimp painter",
+  "c": "audio/el/home/en/nar_127b2e1db5.mp3"
+ },
+ "Crab guard": {
+  "t": "Crab guard",
+  "c": "audio/el/home/en/nar_60462b5f72.mp3"
+ },
+ "Squirrel": {
+  "t": "Squirrel",
+  "c": "audio/el/home/en/nar_ed2341dc4e.mp3"
+ },
+ "Rabbit (hopping)": {
+  "t": "Rabbit (hopping)",
+  "c": "audio/el/home/en/nar_1e0755cf61.mp3"
+ },
+ "Mountain sage": {
+  "t": "Mountain sage",
+  "c": "audio/el/home/en/nar_661ecc2c5a.mp3"
+ },
+ "Dahyun (little wizard)": {
+  "t": "Dahyun (little wizard)",
+  "c": "audio/el/home/en/nar_157ea4f85c.mp3"
+ },
+ "Candy witch (giggling)": {
+  "t": "Candy witch (giggling)",
+  "c": "audio/el/home/en/nar_99d57a5538.mp3"
+ },
+ "Pumpkin the cat": {
+  "t": "Pumpkin the cat",
+  "c": "audio/el/home/en/nar_80ebc704d8.mp3"
+ },
+ "Rabbit (star cape)": {
+  "t": "Rabbit (star cape)",
+  "c": "audio/el/home/en/nar_fa1417ac21.mp3"
+ },
+ "Bear (pumpkin costume)": {
+  "t": "Bear (pumpkin costume)",
+  "c": "audio/el/home/en/nar_c7167ceb13.mp3"
+ },
+ "Fox (moon hat)": {
+  "t": "Fox (moon hat)",
+  "c": "audio/el/home/en/nar_d58585cdef.mp3"
+ },
+ "Strawberry Dahyun": {
+  "t": "Strawberry Dahyun",
+  "c": "audio/el/home/en/nar_0f5cacfd25.mp3"
+ },
+ "Ghost": {
+  "t": "Ghost",
+  "c": "audio/el/home/en/nar_7f5a8945ce.mp3"
+ },
+ "Jack-o'-lantern": {
+  "t": "Jack-o'-lantern",
+  "c": "audio/el/home/en/nar_7b13185779.mp3"
+ },
+ "Pumpkin Dahyun": {
+  "t": "Pumpkin Dahyun",
+  "c": "audio/el/home/en/nar_caaaf2d84d.mp3"
  }
 };
