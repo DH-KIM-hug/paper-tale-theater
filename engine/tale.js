@@ -683,7 +683,7 @@ const Tale = (() => {
       f.appendChild(fs); b.appendChild(bs); l.append(b, f); return { l, f, b, fs, bs };
     };
     /* 종이 책장: 세로 띠 N개를 책등부터 이어 붙인다(띠마다 앞 띠에 대해 조금씩 더 돈다) → 책등 쪽이 먼저 들리고 끝이 늦게 따라오며 휜다 */
-    const W0 = innerWidth, H0 = innerHeight, N = 10, sw = W0 / N;
+    const W0 = innerWidth, H0 = innerHeight, N = 8, sw = W0 / N;   // 띠 8개(10 → 8, 아이패드 렉)
     const paperLeaf = () => {
       const l = document.createElement('div'); l.className = 'leaf paper';
       const strips = []; let parent = l;
@@ -757,7 +757,7 @@ const Tale = (() => {
     const done = () => {
       if (cleaned) return; cleaned = true;
       ss.classList.remove('asCover'); ss.hidden = true; home.insertBefore(ss, next);
-      ov.remove(); under.remove(); desk.remove(); Object.assign(root.style, { transform: '', transformOrigin: '', zIndex: '', background: '' });
+      ov.remove(); under.remove(); desk.remove(); Object.assign(root.style, { transform: '', transformOrigin: '', zIndex: '', background: '', willChange: '' });
     };
     const fallback = setTimeout(() => { if (bookCover) { bookCover = null; } done(); }, 9000);   // 첫 장면이 막을 열지 않으면 그냥 걷는다
     bookCover = () => new Promise(res => {
@@ -777,6 +777,7 @@ const Tale = (() => {
         && imgCache[src].img && imgCache[src].img.naturalWidth);
       const pool = bgs.length ? bgs : [`${ROOT_URL}assets/thumbs/${id}_key_${portrait ? 'tall' : 'wide'}.webp`];
       flips.slice(1).forEach((p, i) => setArt(p, pool[i % pool.length]));
+      pool.slice(0, NP).forEach(src => { const im = imgCache[src] && imgCache[src].img; if (im && im.decode) im.decode().catch(() => {}); });
       // 넘김 시각: 4장을 그림이 보일 만큼 천천히, 뒤로 갈수록 조금씩 빨라진다(10-30 사용자: 너무 빠름)
       const gaps = [290, 235, 195], starts = [0]; gaps.forEach(g => starts.push(starts[starts.length - 1] + g));
       const pageFrom = 950, durOf = i => 720 - i * 40, lastLand = pageFrom + starts[NP - 1] + durOf(NP - 1);
@@ -784,6 +785,8 @@ const Tale = (() => {
       try { AudioFX.sfx('page_turn_big', .9) || paperTurn(); } catch (e) { /* 소리 없이 */ }
       starts.forEach((st, i) => { setTimeout(() => { try { AudioFX.sfx('page_turn', .5); } catch (e) { /* 소리 없이 */ } }, pageFrom + st + 140); });
       root.style.transformOrigin = '0 0'; root.style.zIndex = '1'; root.style.background = 'var(--page-grain), var(--paper)';
+      // 움직이는 층은 처음 한 번만 그리고 GPU 가 옮기게(무대 SVG·책상 그림자 필터를 매 장면 다시 그리지 않는다)
+      [bk, root, under, desk].forEach(e => { e.style.willChange = 'transform'; });
       /* 카메라: 손에 든 책을 그대로 보는 거리. 살짝만 물러나(책등·아래 단면이 보이게) 앞으로 조금 기울었다가, 다 넘기면 제자리로.
          책등(왼쪽)은 화면 왼쪽 안쪽에 두어 넘어간 장이 왼쪽에 얇게 쌓이는 것이 보이게 한다 */
       const S1 = portrait ? .8 : .84, bookH = H + 2 * Bd + Dp;
@@ -818,12 +821,11 @@ const Tale = (() => {
           const th = Math.PI * k, curl = .9 * Math.sin(th), ang = f => (th - curl * f * f) * 180 / Math.PI, sh = a => (Math.sin(a * Math.PI / 180) * .45).toFixed(3);
           let prev = 0;
           p.strips.forEach((s, j) => {
-            const a = ang((j + .5) / N), aL = ang(j / N), aR = ang((j + 1) / N);
+            const a = ang((j + .5) / N);
             s.st.style.transform = (j ? '' : persp) + `rotateY(${(-(a - prev)).toFixed(2)}deg)`; prev = a;
             const up = a > 90; s.f.style.visibility = up ? 'hidden' : ''; s.b.style.visibility = up ? '' : 'hidden';
-            // 그늘은 띠 안에서 이웃 띠와 이어지게(양 끝 기울기로 그라데이션) — 띠마다 계단이 지지 않게
-            s.fs.style.background = `linear-gradient(90deg, rgba(46,36,28,${sh(aL)}), rgba(46,36,28,${sh(aR)}))`;
-            s.bs.style.background = `linear-gradient(270deg, rgba(46,36,28,${sh(aL)}), rgba(46,36,28,${sh(aR)}))`;
+            // 그늘은 띠마다 한 색의 투명도만 바꾼다(그라데이션을 매 장면 다시 그리면 아이패드에서 버벅임 — 2026-10-30 사용자)
+            s.fs.style.opacity = s.bs.style.opacity = sh(a);
           });
         });
         gut.style.opacity = (c * smoothK(clamp(kC * 2))).toFixed(3);
