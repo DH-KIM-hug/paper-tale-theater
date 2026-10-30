@@ -454,12 +454,12 @@
    ]
   },
   {
-   "text": "용궁에 다 왔어요. 문이 차례로 열려요.",
-   "en": "Here is the sea palace. The doors open, one by one.",
+   "text": "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
+   "en": "Here is the sea palace. There are three big doors.",
    "segs": [
     [
      "nar",
-     "Here is the sea palace. The doors open, one by one.",
+     "Here is the sea palace. There are three big doors.",
      null
     ]
    ]
@@ -471,6 +471,105 @@
     [
      "crab",
      "Welcome!",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "왼쪽 문으로 들어오시오.",
+   "en": "Come in through the left door.",
+   "segs": [
+    [
+     "crab",
+     "Come in through the left door.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "가운데 문으로 들어오시오.",
+   "en": "Come in through the middle door.",
+   "segs": [
+    [
+     "crab",
+     "Come in through the middle door.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "오른쪽 문으로 들어오시오.",
+   "en": "Come in through the right door.",
+   "segs": [
+    [
+     "crab",
+     "Come in through the right door.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "왼쪽 문을 톡 눌러 봐요.",
+   "en": "Tap the door on the left.",
+   "segs": [
+    [
+     "nar",
+     "Tap the door on the left.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "가운데 문을 톡 눌러 봐요.",
+   "en": "Tap the door in the middle.",
+   "segs": [
+    [
+     "nar",
+     "Tap the door in the middle.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "오른쪽 문을 톡 눌러 봐요.",
+   "en": "Tap the door on the right.",
+   "segs": [
+    [
+     "nar",
+     "Tap the door on the right.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라가 토끼를 업고 왼쪽 문으로 갔어요.",
+   "en": "The terrapin carried the rabbit to the left door.",
+   "segs": [
+    [
+     "nar",
+     "The terrapin carried the rabbit to the left door.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라가 토끼를 업고 가운데 문으로 갔어요.",
+   "en": "The terrapin carried the rabbit to the middle door.",
+   "segs": [
+    [
+     "nar",
+     "The terrapin carried the rabbit to the middle door.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "자라가 토끼를 업고 오른쪽 문으로 갔어요.",
+   "en": "The terrapin carried the rabbit to the right door.",
+   "segs": [
+    [
+     "nar",
+     "The terrapin carried the rabbit to the right door.",
      null
     ]
    ]

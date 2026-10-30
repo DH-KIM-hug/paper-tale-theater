@@ -530,11 +530,11 @@
    ]
   },
   {
-   "text": "용궁에 다 왔어요. 문이 차례로 열려요.",
+   "text": "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
    "segs": [
     [
      "nar",
-     "용궁에 다 왔어요. 문이 차례로 열려요.",
+     "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
      null,
      "[calm, warm storytelling, slow, unhurried]"
     ]
@@ -548,6 +548,105 @@
      "어서 오세요!",
      null,
      "[loud, cheerful, short, guard]"
+    ]
+   ]
+  },
+  {
+   "text": "왼쪽 문으로 들어오시오.",
+   "segs": [
+    [
+     "crab",
+     "왼쪽 문으로 들어오시오.",
+     null,
+     "[loud, cheerful, short, guard]"
+    ]
+   ]
+  },
+  {
+   "text": "가운데 문으로 들어오시오.",
+   "segs": [
+    [
+     "crab",
+     "가운데 문으로 들어오시오.",
+     null,
+     "[loud, cheerful, short, guard]"
+    ]
+   ]
+  },
+  {
+   "text": "오른쪽 문으로 들어오시오.",
+   "segs": [
+    [
+     "crab",
+     "오른쪽 문으로 들어오시오.",
+     null,
+     "[loud, cheerful, short, guard]"
+    ]
+   ]
+  },
+  {
+   "text": "왼쪽 문을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "왼쪽 문을 톡 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "가운데 문을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "가운데 문을 톡 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "오른쪽 문을 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "오른쪽 문을 톡 눌러 봐요.",
+     null,
+     "[friendly, clear, inviting]"
+    ]
+   ]
+  },
+  {
+   "text": "자라가 토끼를 업고 왼쪽 문으로 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "자라가 토끼를 업고 왼쪽 문으로 갔어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "자라가 토끼를 업고 가운데 문으로 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "자라가 토끼를 업고 가운데 문으로 갔어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
+    ]
+   ]
+  },
+  {
+   "text": "자라가 토끼를 업고 오른쪽 문으로 갔어요.",
+   "segs": [
+    [
+     "nar",
+     "자라가 토끼를 업고 오른쪽 문으로 갔어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried]"
     ]
    ]
   },

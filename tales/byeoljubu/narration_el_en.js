@@ -160,13 +160,49 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Wow, fish! It is so blue under the sea.",
   "c": "audio/el/byeoljubu/en/rabbit_b04143222c.mp3"
  },
- "용궁에 다 왔어요. 문이 차례로 열려요.": {
-  "t": "Here is the sea palace. The doors open, one by one.",
-  "c": "audio/el/byeoljubu/en/nar_8238c71e28.mp3"
+ "용궁에 다 왔어요. 커다란 문이 세 개 있어요.": {
+  "t": "Here is the sea palace. There are three big doors.",
+  "c": "audio/el/byeoljubu/en/nar_cf0a2c6824.mp3"
  },
  "어서 오세요!": {
   "t": "Welcome!",
   "c": "audio/el/byeoljubu/en/crab_b226e2afba.mp3"
+ },
+ "왼쪽 문으로 들어오시오.": {
+  "t": "Come in through the left door.",
+  "c": "audio/el/byeoljubu/en/crab_5758457762.mp3"
+ },
+ "가운데 문으로 들어오시오.": {
+  "t": "Come in through the middle door.",
+  "c": "audio/el/byeoljubu/en/crab_a87d124091.mp3"
+ },
+ "오른쪽 문으로 들어오시오.": {
+  "t": "Come in through the right door.",
+  "c": "audio/el/byeoljubu/en/crab_3958b2c9d6.mp3"
+ },
+ "왼쪽 문을 톡 눌러 봐요.": {
+  "t": "Tap the door on the left.",
+  "c": "audio/el/byeoljubu/en/nar_2f2e264360.mp3"
+ },
+ "가운데 문을 톡 눌러 봐요.": {
+  "t": "Tap the door in the middle.",
+  "c": "audio/el/byeoljubu/en/nar_c3cb73d7fe.mp3"
+ },
+ "오른쪽 문을 톡 눌러 봐요.": {
+  "t": "Tap the door on the right.",
+  "c": "audio/el/byeoljubu/en/nar_8a987f36b7.mp3"
+ },
+ "자라가 토끼를 업고 왼쪽 문으로 갔어요.": {
+  "t": "The terrapin carried the rabbit to the left door.",
+  "c": "audio/el/byeoljubu/en/nar_5ff1a50a65.mp3"
+ },
+ "자라가 토끼를 업고 가운데 문으로 갔어요.": {
+  "t": "The terrapin carried the rabbit to the middle door.",
+  "c": "audio/el/byeoljubu/en/nar_09d63514b1.mp3"
+ },
+ "자라가 토끼를 업고 오른쪽 문으로 갔어요.": {
+  "t": "The terrapin carried the rabbit to the right door.",
+  "c": "audio/el/byeoljubu/en/nar_df79a66507.mp3"
  },
  "우와, 진주랑 산호가 반짝반짝!": {
   "t": "Wow, pearls and coral, all sparkly!",

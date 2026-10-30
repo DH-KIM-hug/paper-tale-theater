@@ -176,17 +176,21 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Wow, fish! It is so blue under the sea.",
   "c": "audio/el/byeoljubu/en/rabbit_b04143222c.mp3"
  },
- "용궁에 다 왔어요. 문이 차례로 열려요.": {
-  "t": "Here is the sea palace. The doors open, one by one.",
-  "c": "audio/el/byeoljubu/en/nar_8238c71e28.mp3"
+ "용궁에 다 왔어요. 커다란 문이 세 개 있어요.": {
+  "t": "Here is the sea palace. There are three big doors.",
+  "c": "audio/el/byeoljubu/en/nar_cf0a2c6824.mp3"
  },
  "어서 오세요!": {
   "t": "Welcome!",
   "c": "audio/el/byeoljubu/en/crab_b226e2afba.mp3"
  },
- "자라와 토끼는 둘째 문, 셋째 문을 지나 안으로 들어갔어요.": {
-  "t": "The terrapin and the rabbit went through the second door and the third door.",
-  "c": "audio/el/byeoljubu/en/nar_19ca9b4aab.mp3"
+ "왼쪽 문으로 들어오시오.": {
+  "t": "Come in through the left door.",
+  "c": "audio/el/byeoljubu/en/crab_5758457762.mp3"
+ },
+ "자라가 토끼를 업고 왼쪽 문으로 갔어요.": {
+  "t": "The terrapin carried the rabbit to the left door.",
+  "c": "audio/el/byeoljubu/en/nar_5ff1a50a65.mp3"
  },
  "우와, 진주랑 산호가 반짝반짝!": {
   "t": "Wow, pearls and coral, all sparkly!",
@@ -195,6 +199,22 @@ Object.assign(NARRATION_CLIPS_EN, {
  "자, 용왕님께 가요.": {
   "t": "Now, let us go to the Dragon King.",
   "c": "audio/el/byeoljubu/en/jara_2ffcadf0f7.mp3"
+ },
+ "가운데 문으로 들어오시오.": {
+  "t": "Come in through the middle door.",
+  "c": "audio/el/byeoljubu/en/crab_a87d124091.mp3"
+ },
+ "자라가 토끼를 업고 가운데 문으로 갔어요.": {
+  "t": "The terrapin carried the rabbit to the middle door.",
+  "c": "audio/el/byeoljubu/en/nar_09d63514b1.mp3"
+ },
+ "오른쪽 문으로 들어오시오.": {
+  "t": "Come in through the right door.",
+  "c": "audio/el/byeoljubu/en/crab_3958b2c9d6.mp3"
+ },
+ "자라가 토끼를 업고 오른쪽 문으로 갔어요.": {
+  "t": "The terrapin carried the rabbit to the right door.",
+  "c": "audio/el/byeoljubu/en/nar_df79a66507.mp3"
  },
  "커다란 옥좌에 앉은 용왕님이 토끼를 내려다보았어요.": {
   "t": "The Dragon King, on his great throne, looked down at the rabbit.",

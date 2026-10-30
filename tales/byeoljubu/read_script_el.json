@@ -12,6 +12,15 @@
   "cut:<bj_cut_volunteer|bj_cut_dive|bj_cut_shock|bj_cut_hop|bj_cut_medicine>": "컷 그림(cutImage 3초)",
   "snd:<이름>[:볼륨][:지연ms] | look:<배우>:<자세>[:<방향>] | view:<lx>[:ms]": "효과음·자세·세로 화면 가운데"
  },
+ "rounds": 1,
+ "variants": {
+  "keys": [
+   "left",
+   "mid",
+   "right"
+  ],
+  "note": "7장 용궁 대문: 게 병사가 말하는 문(화면 기준 왼쪽·가운데·오른쪽) 하나를 회차마다 무작위로. 놀이판은 아이가 그 문을 고른다"
+ },
  "scenes": [
   {
    "key": "R01_chamber",
@@ -687,24 +696,26 @@
    ]
   },
   {
-   "key": "R07_gate",
+   "key": "R07_gate_left",
+   "variant": "left",
+   "round": 1,
    "card": "용궁 구경",
    "set": "gate",
    "enter": [],
    "lines": [
     {
-     "text": "용궁에 다 왔어요. 문이 차례로 열려요.",
+     "text": "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
      "src": "reuse",
      "segs": [
       [
        "nar",
-       "용궁에 다 왔어요. 문이 차례로 열려요.",
+       "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
        null,
        "[calm, warm storytelling, slow, unhurried]"
       ]
      ],
-     "after": [
-      "beat:doorOpen:0"
+     "before": [
+      "beat:gateArrive"
      ]
     },
     {
@@ -723,21 +734,36 @@
      ]
     },
     {
-     "text": "자라와 토끼는 둘째 문, 셋째 문을 지나 안으로 들어갔어요.",
-     "src": "new",
+     "text": "왼쪽 문으로 들어오시오.",
+     "src": "reuse",
+     "segs": [
+      [
+       "crab",
+       "왼쪽 문으로 들어오시오.",
+       null,
+       "[loud, cheerful, short, guard]"
+      ]
+     ],
+     "before": [
+      "beat:crabSays"
+     ]
+    },
+    {
+     "text": "자라가 토끼를 업고 왼쪽 문으로 갔어요.",
+     "src": "reuse",
      "segs": [
       [
        "nar",
-       "자라와 토끼는 둘째 문, 셋째 문을 지나 안으로 들어갔어요.",
+       "자라가 토끼를 업고 왼쪽 문으로 갔어요.",
        null,
        "[calm, warm storytelling, slow, unhurried]"
       ]
      ],
+     "before": [
+      "beat:doorOpen:left"
+     ],
      "after": [
-      "beat:walkTo:400",
-      "beat:doorOpen:1",
-      "beat:walkTo:640",
-      "beat:doorOpen:2"
+      "beat:goDoor:left"
      ]
     },
     {
@@ -768,6 +794,221 @@
      ],
      "before": [
       "beat:jaraBack"
+     ],
+     "after": [
+      "beat:enterDoor"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_gate_mid",
+   "variant": "mid",
+   "round": 1,
+   "card": "용궁 구경",
+   "set": "gate",
+   "enter": [],
+   "lines": [
+    {
+     "text": "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "beat:gateArrive"
+     ]
+    },
+    {
+     "text": "어서 오세요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "crab",
+       "어서 오세요!",
+       null,
+       "[loud, cheerful, short, guard]"
+      ]
+     ],
+     "before": [
+      "beat:crabHello"
+     ]
+    },
+    {
+     "text": "가운데 문으로 들어오시오.",
+     "src": "reuse",
+     "segs": [
+      [
+       "crab",
+       "가운데 문으로 들어오시오.",
+       null,
+       "[loud, cheerful, short, guard]"
+      ]
+     ],
+     "before": [
+      "beat:crabSays"
+     ]
+    },
+    {
+     "text": "자라가 토끼를 업고 가운데 문으로 갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "자라가 토끼를 업고 가운데 문으로 갔어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "beat:doorOpen:mid"
+     ],
+     "after": [
+      "beat:goDoor:mid"
+     ]
+    },
+    {
+     "text": "우와, 진주랑 산호가 반짝반짝!",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "우와, 진주랑 산호가 반짝반짝!",
+       null,
+       "[amazed, delighted]"
+      ]
+     ],
+     "before": [
+      "beat:sparkle"
+     ]
+    },
+    {
+     "text": "자, 용왕님께 가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "자, 용왕님께 가요.",
+       null,
+       "[polite, calm]"
+      ]
+     ],
+     "before": [
+      "beat:jaraBack"
+     ],
+     "after": [
+      "beat:enterDoor"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_gate_right",
+   "variant": "right",
+   "round": 1,
+   "card": "용궁 구경",
+   "set": "gate",
+   "enter": [],
+   "lines": [
+    {
+     "text": "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "beat:gateArrive"
+     ]
+    },
+    {
+     "text": "어서 오세요!",
+     "src": "reuse",
+     "segs": [
+      [
+       "crab",
+       "어서 오세요!",
+       null,
+       "[loud, cheerful, short, guard]"
+      ]
+     ],
+     "before": [
+      "beat:crabHello"
+     ]
+    },
+    {
+     "text": "오른쪽 문으로 들어오시오.",
+     "src": "reuse",
+     "segs": [
+      [
+       "crab",
+       "오른쪽 문으로 들어오시오.",
+       null,
+       "[loud, cheerful, short, guard]"
+      ]
+     ],
+     "before": [
+      "beat:crabSays"
+     ]
+    },
+    {
+     "text": "자라가 토끼를 업고 오른쪽 문으로 갔어요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "nar",
+       "자라가 토끼를 업고 오른쪽 문으로 갔어요.",
+       null,
+       "[calm, warm storytelling, slow, unhurried]"
+      ]
+     ],
+     "before": [
+      "beat:doorOpen:right"
+     ],
+     "after": [
+      "beat:goDoor:right"
+     ]
+    },
+    {
+     "text": "우와, 진주랑 산호가 반짝반짝!",
+     "src": "reuse",
+     "segs": [
+      [
+       "rabbit",
+       "우와, 진주랑 산호가 반짝반짝!",
+       null,
+       "[amazed, delighted]"
+      ]
+     ],
+     "before": [
+      "beat:sparkle"
+     ]
+    },
+    {
+     "text": "자, 용왕님께 가요.",
+     "src": "reuse",
+     "segs": [
+      [
+       "jara",
+       "자, 용왕님께 가요.",
+       null,
+       "[polite, calm]"
+      ]
+     ],
+     "before": [
+      "beat:jaraBack"
+     ],
+     "after": [
+      "beat:enterDoor"
      ]
     }
    ]

@@ -1,11 +1,12 @@
 /* 별주부전 — 전래동화(수궁가 계, 산신령 선약 판본). 기획: tales/byeoljubu/PLAN.md (2026-10-30 확정), 그림 작업표: tools/app/gen/jobs_byeoljubu.json
-   조작 5곳(모두 T.ask: 안내 음성과 누르기 동시): 2장 바다·뭍 가르기(잉어·자라·문어 중 자라) · 3~4장 방향 고르기 3단계(왼쪽 → 오른쪽 → 가운데, 화면 기준) ·
-   6장 풍덩 톡(자라 등) · 8장 놀란 얼굴 찾기(얼굴 카드 둘) · 10장 인사 톡(토끼). 연타·세기·줄거리 선택 없음. 교훈은 끝 화면 글자만.
+   조작 6곳(모두 T.ask: 안내 음성과 누르기 동시): 2장 바다·뭍 가르기(잉어·자라·문어 중 자라) · 3~4장 방향 고르기 3단계(왼쪽 → 오른쪽 → 가운데, 화면 기준) ·
+   6장 풍덩 톡(자라 등) · 7장 문 고르기(게 병사가 무작위로 말한 왼쪽·가운데·오른쪽 문, 2026-10-30 사용자 지시) · 8장 놀란 얼굴 찾기(얼굴 카드 둘) · 10장 인사 톡(토끼).
+   연타·세기·줄거리 선택 없음. 교훈은 끝 화면 글자만.
    시선(PLAN 장면표): 1 용왕→의원(오른쪽 위)·의원·문어·게→용왕(왼쪽) · 2 용왕→신하(왼쪽), 문어 오른쪽 위→왼쪽(자라), 자라→오른쪽(문어)→오른쪽 위(용왕)
    · 3 자라→갈매기(오른쪽 위)→길, 갈매기→족자(왼쪽 아래)·왼쪽 가리킴 · 4 자라→다람쥐·멧돼지(오른쪽), 토끼→자라(왼쪽) · 5 마주 봄, 토끼 솔깃(오른쪽 위)
-   · 6 토끼→아래, 자라→왼쪽(바다) / 바다 속 토끼→오른쪽 위(물고기) · 7 둘 다 오른쪽, 마지막에 자라→왼쪽(토끼), 게→왼쪽(손님)
+   · 6 토끼→아래, 자라→왼쪽(바다) / 바다 속 토끼→오른쪽 위(물고기) · 7 토끼는 자라 등에 탄 채 둘 다 오른쪽(게 병사·문), 게→왼쪽(손님)
    · 8 용왕→왼쪽 아래(토끼), 토끼→오른쪽 위, 자라→바닥 · 9 같은 자리, 자라→왼쪽(토끼) · 10 토끼(바위)→왼쪽 아래(자라)→오른쪽(숲), 자라→오른쪽 위→바닥
-   · 11 자라→바닥→왼쪽 위(산신령), 산신령→오른쪽 아래 / 용궁: 용왕→왼쪽, 모두→오른쪽(용왕).
+   · 11 자라→바닥→왼쪽(산신령), 산신령→오른쪽(자라), 약을 받은 뒤 산신령은 빛과 함께 사라짐 / 용궁: 용왕→왼쪽, 모두→오른쪽(용왕).
    그림이 보는 쪽(NAT)은 그림을 눈으로 보고 적었다. 길 안내 자세(갈매기·다람쥐·멧돼지 가리키기)는 'fixed' — 코드에서 절대 뒤집지 않는다(PLAN §방향 고르기).
    화면 방향(가로 1000×560 월드, 바닥 FL=490). 세로 화면은 보이는 폭이 약 430(폰)~640(아이패드)이라 장면마다 꼭 보여야 할 폭(nw)에 맞춰 월드·효과 층을 줄이고(원근) 가운데 lx 를 화면 가운데에 둔다.
    배경 층(T.bg)은 줄이지 않고 lx 만큼 옆으로 민다(이어 그린 긴 숲 한 장·바다 속 세로 세트에서 카메라가 따라감).
@@ -156,8 +157,12 @@
     ASK_DIVE: "자라 등을 톡 눌러 봐요.",
     L31: "자라는 토끼를 업고 바다 속으로 들어갔어요.",
     L32: "우와, 물고기다! 바다 속은 파랗구나.",
-    L33: "용궁에 다 왔어요. 문이 차례로 열려요.",
+    L33: "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
     L34: "어서 오세요!",
+    /* 7장 문 고르기(2026-10-30 사용자 지시): 게 병사가 무작위로 왼쪽·가운데·오른쪽 문 하나를 말하고 아이가 그 문을 고른다(화면 기준) */
+    DOOR_SAY: { left: "왼쪽 문으로 들어오시오.", mid: "가운데 문으로 들어오시오.", right: "오른쪽 문으로 들어오시오." },
+    ASK_DOOR: { left: "왼쪽 문을 톡 눌러 봐요.", mid: "가운데 문을 톡 눌러 봐요.", right: "오른쪽 문을 톡 눌러 봐요." },
+    DOOR_GO: { left: "자라가 토끼를 업고 왼쪽 문으로 갔어요.", mid: "자라가 토끼를 업고 가운데 문으로 갔어요.", right: "자라가 토끼를 업고 오른쪽 문으로 갔어요." },
     L35: "우와, 진주랑 산호가 반짝반짝!",
     L36: "자, 용왕님께 가요.",
     L37: "토끼야, 잘 왔다. 너의 간을 다오.",
@@ -211,10 +216,15 @@
       const go = () => { try { return AudioFX.ambient('intro_korean', { vol: rd() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }); } catch (e) { return true; } };
       if (!go()) setTimeout(go, 900);
     };
+    /* 맨 끝 축하 음악(2026-10-30 사용자 지시): 팥죽과 같은 픽사베이 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹).
+       효과음 팡파르(sting win)·파티 나팔 대신. 끝 화면 전에 곡 끝(페이드)까지 기다렸다가 남은 소리를 0.5초에 걸쳐 끈다 */
+    let finaleEnd = 0;
+    const finaleMusic = () => { try { const o = { vol: rd() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     const daegeum = () => { try { AudioFX.ambient('daegeum', { vol: rd() ? .22 : .28, loop: false, fadeIn: .3, dur: 6.5 }); } catch (e) { /* */ } };   // 11장 바닷가 한숨(조용한 한 순간)
     AudioFX.preloadSfx(['intro_korean', 'daegeum', 'bubbles', 'waves', 'birds_chirp_1', 'birds_chirp_2', 'question', 'slide_up', 'slide_down', 'toot_kazoo', 'cork', 'pop_out', 'peek_pop', 'ding_glock', 'xylo_up', 'xylo_down',
       'broom_1', 'swish', 'paper_up', 'paper_down', 'seagull_1', 'seagull_2', 'tiptoe_pizz', 'knock', 'doop', 'boing', 'boing_steps', 'squeak', 'sparkle', 'spring', 'harp_gliss', 'splash', 'splash_big', 'whoosh',
-      'door_heavy_1', 'door_heavy_2', 'marimba_1', 'marimba_3', 'marimba_5', 'tada', 'drum', 'giggle_xylo', 'whistle_down', 'zip_away', 'shimmer', 'chime_up', 'party_horn', 'surprise_sting', 'water_drip', 'magic_wand', 'pop', 'ding']);
+      'door_heavy_1', 'door_heavy_2', 'marimba_1', 'marimba_3', 'marimba_5', 'tada', 'drum', 'giggle_xylo', 'whistle_down', 'zip_away', 'shimmer', 'chime_up', 'party_horn', 'surprise_sting', 'water_drip', 'magic_wand', 'pop', 'ding', 'finale_happy']);
 
     /* ---------- 화면(view): lx = 화면 가운데에 올 월드 x, nw = 세로 화면에 보여야 할 월드 폭, vy = 아래로 내려간 양(바다 속) ---------- */
     let V = { lx: 500, nw: 1000, vy: 0 }, bgKey = null;
@@ -300,13 +310,22 @@
 
     /* ---------- 누르는 자리 ---------- */
     /* 화면 크기 w×h(가로 월드 px) 투명 사각. (dx, dy) = 발끝 기준 가운데 위치. 세로는 월드가 줄어든 만큼 키운다 */
-    function hitBox(a, w, h, dy = null, dx = 0) {
-      const sc = a.scale || 1, lw = H(w) / sc, lh = H(h) / sc, cy = dy == null ? -a.h / 2 : dy / sc;
-      const r = T.el('rect', { x: dx / sc - lw / 2, y: cy - lh / 2, width: lw, height: lh, fill: '#000', 'fill-opacity': 0 }, a.pos);
-      a.pos.insertBefore(r, a.body); a.hitRect = r; a.pos.style.pointerEvents = 'all';
+    /* 누름은 투명 사각(rect)만 받는다. 예전에는 a.pos 전체에 pointer-events:all 을 걸어 그림(image)의 네모 칸까지 누름을 받았고,
+       3·4장 길 그림은 서로 넓게 겹쳐(오른쪽 길 그림 칸이 가운데 길을 덮음) 가운데 길을 눌러도 '이쪽이 아니네'가 나왔다(2026-10-30 사용자 지적) */
+    function hitRect(a, lx, ly, lw, lh) {
+      const r = T.el('rect', { x: lx, y: ly, width: lw, height: lh, fill: '#000', 'fill-opacity': 0 }, a.pos);
+      r.style.pointerEvents = 'all';
+      a.pos.insertBefore(r, a.body); a.hitRect = r; a.pos.style.pointerEvents = 'none';
       T.world.appendChild(a.pos);
       return a.pos;
     }
+    function hitBox(a, w, h, dy = null, dx = 0) {
+      const sc = a.scale || 1, lw = H(w) / sc, lh = H(h) / sc, cy = dy == null ? -a.h / 2 : dy / sc;
+      return hitRect(a, dx / sc - lw / 2, cy - lh / 2, lw, lh);
+    }
+    /* 월드 좌표 그대로의 누르는 자리(가운데 cx, cy, 폭 w, 높이 h) — 세로 화면에서 키우지 않는다(서로 겹치지 않게 칸을 나눌 때) */
+    const hitWorld = (a, cx, cy, w, h) => { const sc = a.scale || 1; return hitRect(a, (cx - a.x) / sc - w / sc / 2, (cy - a.y) / sc - h / sc / 2, w / sc, h / sc); };
+    const pxPer = () => { try { const m = T.world.getScreenCTM(); return (m && m.a) || 1; } catch (e) { return 1; } };   // 월드 1 = 화면 몇 px(지금 카메라 기준)
     const unhit = a => { if (a.hitRect) { a.hitRect.remove(); a.hitRect = null; } a.pos.style.pointerEvents = ''; };
     const popAt = (x, y, word, col) => T.pop(x, y, tr(word), col);
     const headY = a => a.y - a.h * (a.scale || 1) - 30;
@@ -336,6 +355,9 @@
     const PS = () => (P ? .9 : 1.3);   // 길 크기(가로 1.3배, 세로는 모아서 .9배)
     const pathEnd = (k, cx) => { const s = PS(); return [cx + (k === 'left' ? -1 : k === 'right' ? 1 : 0) * 190 * s, FL + 30 - (paths[k].h - 20) * s]; };
     const layPaths = cx => { const s = PS(); ['left', 'mid', 'right'].forEach(k => put(T, paths[k], cx + PATH[k][0] * s * (k === 'mid' ? 0 : 1) * .78, FL + 30, { look: 'a', s })); };
+    /* 7장 대문: 문 가운데 x(왼쪽·가운데·오른쪽), 문 크기, 게 병사·자라 자리. 세로 화면은 고를 때 문 셋이 다 보이게 GATE_VIEW 로 넓힌다 */
+    const GATE_X = [455, 670, 885], GATE_S = .7, GATE_CRAB = 362, GATE_DUO = 140, DOOR_K = ['left', 'mid', 'right'];
+    const GATE_VIEW = { lx: 585, nw: 900 };   // 자라·토끼·게 병사와 문 셋이 함께 보이게(폰 세로에서 문 칸 짧은 변 약 87px)
     const LAY = {
       chamber() {   // 1장: 용궁 침전. 용왕은 머리 오른쪽, 의원·문어·게는 머리맡 오른쪽에서 왼쪽(용왕)을 본다
         scene('bj_bg_chamber', { lx: 560, nw: 800 });
@@ -396,13 +418,11 @@
         put(T, jara, 520, 300, { look: 'swim', to: 'left' }); seatRabbit('swim');
         put(T, FG.kelp_curtain, X(960, 700), 300);
       },
-      gate() {      // 7장: 용궁 대문. 문 셋이 저절로 차례로 열린다
+      gate() {      // 7장: 용궁 대문. 문 셋(왼쪽·가운데·오른쪽) 중 게 병사가 말한 문 하나만 열린다. 토끼는 자라 등에 탄 채(겹쳐 가려지지 않게)
         scene('bj_bg_gate', { lx: 330, nw: 600 });
-        doors.forEach((d, i) => put(T, d, 420 + i * 235, FL + 4, { look: 'closed', s: .78 }));   // 문 높이 0.78배(문 셋이 한 화면에)
-        put(T, feast, 890, FL - 20, { look: 'a', s: .8 }); T.world.insertBefore(feast.pos, doors[2].pos);
-        put(T, crab1, 300, FL, { to: 'left' }); put(T, crab2, 540, FL, { to: 'left' });
-        put(T, rabbit, 70, FL, { look: 'stand', to: 'right' });
-        put(T, jara, 180, FL, { look: 'walk', to: 'right' });
+        GATE_X.forEach((x, i) => put(T, doors[i], x, FL + 4, { look: 'closed', s: GATE_S }));   // 문 높이 0.7배(문 셋이 한 화면에)
+        put(T, crab1, GATE_CRAB, FL, { to: 'left' });   // 게 병사: 첫 문 앞 왼쪽, 손님(왼쪽)을 본다
+        put(T, jara, GATE_DUO, FL, { look: 'stand', to: 'right' }); seatRabbit('stand');   // 자라·토끼: 둘 다 오른쪽(게·문)을 본다
         put(T, FG.coral_left, -10, 600);
       },
       throne() {    // 8·9장: 옥좌 앞. 용왕이 위에서 왼쪽 아래(토끼)를 본다
@@ -421,9 +441,12 @@
         put(T, FG.wave_front, 120, 615);
       },
       sage() {      // 11장 앞: 같은 바닷가. 자라는 엎드려 있고, 산신령은 왼쪽에 나타난다
-        scene('bj_bg_shore_morning', { lx: 470, nw: 580 });
-        put(T, jara, X(560, 545), FL, { look: 'sad', to: 'left' });
-        put(T, sage, X(320, 380), FL, { look: 'stand', to: 'right' }); hide(sage);
+        /* 10장과 같은 바닷가·같은 화면(lx 500, nw 640): 토끼가 올라섰던 바위와 자라 자리를 그대로 둔다 — 넘김 없이 이어 가므로 바위가 사라지거나
+           자라가 순간 이동하지 않게(2026-10-30 사용자 지적). 산신령은 자라 왼쪽(바다 쪽)에 나타난다 */
+        scene('bj_bg_shore_morning', { lx: 500, nw: 640 });
+        put(T, rock, X(730, 660), FL + 4, { look: 'a' });
+        put(T, jara, 330, FL, { look: 'sad', to: 'left' });
+        put(T, sage, X(110, 120), FL, { look: 'stand', to: 'right' }); hide(sage);
         put(T, FG.wave_front, 120, 615);
       },
       healed() {    // 11장 끝: 밝아진 용궁 침전. 용왕은 오른쪽 침상에서 일어나 앉고, 모두 오른쪽(용왕)을 본다
@@ -555,21 +578,37 @@
       },
       async fishLook() { rabbit.look('ride', 'right'); sfx('marimba_5', .45); popAt(rabbit.x + 60, headY(rabbit), '보글보글', '#4FB3C9'); await rabbit.hop(6, 300); },
       /* 7장 */
-      async doorOpen(i) {
-        const d = doors[i]; sfx(i % 2 ? 'door_heavy_2' : 'door_heavy_1', .5); sfx('xylo_up', .35, 400);
+      /* 문 고르기: k = left·mid·right(화면 기준). 고른 문만 열리고, 그 문 뒤에 잔칫상이 보인다 */
+      async gateArrive() {   // 자라가 토끼를 태우고 왼쪽에서 들어와 게 병사 앞에 선다
+        jara.look('stand', 'right'); jara.place(-220, FL); seatRabbit('stand'); sfx('tiptoe_pizz', .35);
+        await moveDuo(GATE_DUO, FL, 1800, 'ease-out', 'stand');
+      },
+      async crabHello() { crab1.hop(10, 300); sfx('drum', .4); },
+      async crabSays() {    // 게 병사가 문을 말한다. 세로 화면은 문 셋이 다 보이게 넓힌다
+        crab1.hop(12, 320); sfx('knock', .4);
+        if (P) await view(GATE_VIEW, 900);
+      },
+      async doorOpen(k) {
+        const i = typeof k === 'number' ? k : DOOR_K.indexOf(k), d = doors[i];
+        put(T, feast, GATE_X[i], FL - 20, { look: 'a', s: .7 }); T.world.insertBefore(feast.pos, d.pos);   // 열린 문 사이로 잔칫상
+        sfx(i % 2 ? 'door_heavy_2' : 'door_heavy_1', .5); sfx('xylo_up', .35, 400);
         await T.anim(d.pos, [{ opacity: 1 }, { opacity: .3 }], 250); d.look('open'); await T.anim(d.pos, [{ opacity: .3 }, { opacity: 1 }], 300); d.pos.style.opacity = '';
         glow(d, 600);
       },
-      async walkTo(x, ms = 1600) {
-        jara.look('walk', 'right'); rabbit.look('hop', 'right');
-        if (P) view({ lx: Math.max(330, x - 60) }, ms);
+      async goDoor(k) {     // 자라(토끼를 태운 채)가 고른 문 왼쪽 앞까지 간다(열린 문이 가려지지 않게). 게 병사는 길을 비켜 그 문 오른쪽 옆에 선다
+        const i = DOOR_K.indexOf(k), x = GATE_X[i]; T.world.appendChild(jara.pos); T.world.appendChild(rabbit.pos);
+        if (P) view({ lx: Math.min(Math.max(x - 110, 330), 760), nw: 640 }, 1400);
         sfx('tiptoe_pizz', .35);
-        await Promise.all([walk(jara, x + 110, FL, ms, 'linear', 3), walk(rabbit, x, FL, ms, 'linear', 8)]);
-        jara.look('walk', 'right'); rabbit.look('amazed', 'right');
+        const ms = rd() ? 1500 : 1700;
+        await Promise.all([moveDuo(x - 200, FL, ms, 'ease-in-out', 'stand'),
+          i < 2 ? walk(crab1, (GATE_X[i] + GATE_X[i + 1]) / 2, FL, Math.min(900, ms), 'ease-out', 6) : null]);
       },
-      async crabHello() { crab1.hop(10, 300); crab2.hop(10, 300); sfx('drum', .4); },
-      async sparkle() { rabbit.look('amazed', 'right'); sfx('sparkle', .5); popAt(rabbit.x + 30, headY(rabbit), '반짝!', '#D9A94E'); await rabbit.hop(8, 300); },
-      async jaraBack() { jara.look('stand', 'left'); await jara.hop(4, 260); },
+      async sparkle() { rabbit.look('ride', 'right'); sfx('sparkle', .5); popAt(rabbit.x + 40, headY(rabbit), '반짝!', '#D9A94E'); await rabbit.hop(8, 300); },
+      async jaraBack() { await jara.hop(4, 260); },   // 자라는 문(오른쪽)을 본 채, 등 위 토끼에게 말한다
+      async enterDoor() {   // 둘이 문 안으로 들어가며 사라진다
+        await moveDuo(jara.x + 170, FL - 6, 800, 'ease-in', 'stand');
+        await Promise.all([fadeOut(T, jara, 500), fadeOut(T, rabbit, 500)]);
+      },
       /* 8장 */
       async kingAsks() { king.look('point', 'left'); await look(640); },
       async cards() {
@@ -620,21 +659,23 @@
         if (!inst()) await T.anim(c, [{ opacity: 0 }, { opacity: 1 }], 900);
         sage.pos.style.display = ''; sage.look('stand', 'right'); T.world.appendChild(sage.pos);
         if (!inst()) await fadeIn(T, sage, 900);
-        jara.look('receive', 'left'); look(450);
+        jara.look('receive', 'left'); look(250);
       },
-      async give() {
-        sage.look('give', 'right'); sfx('paper_up', .4);
-        put(T, bag, sage.x + 105, FL - 60, { look: 'a' }); await fadeIn(T, bag, 300);
-        await bag.move(jara.x - 60, FL - 120, 900, 'ease-in-out'); glow(bag, 800); sfx('chime_up', .55);
+      /* 약 주머니는 늘 하나만 보인다(2026-10-30 사용자 지적: 약이 두 개). 산신령 서기 그림은 허리에, 건네기 그림은 손에 주머니가 그려져 있으므로
+         따로 소품(bag)을 띄우지 않는다. 건네기(컷) 뒤에는 자라 그림이 등에 진 주머니(carry)로 바뀌고, 산신령은 빛과 함께 사라진다 */
+      async give() { sage.look('give', 'right'); sfx('paper_up', .4); glow(sage, 900); sfx('chime_up', .55, 300); await sleep(300); },
+      async thanks() {
+        jara.look('carry', 'left'); sfx('shimmer', .4);
+        const gone = Promise.all([fadeOut(T, sage, 900), glowEl ? T.anim(glowEl, [{ opacity: 1 }, { opacity: 0 }], 900).then(() => { if (glowEl) glowEl.style.opacity = 0; }) : null]);
+        await jara.hop(10, 360); await gone;
       },
-      async thanks() { await fadeOut(T, bag, 300); jara.look('stand', 'left'); await jara.hop(10, 360); },
       async swimHome() {
-        sage.look('stand', 'right'); jara.look('carry', 'left'); sfx('splash', .45, 600);
-        if (P) view({ lx: 380 }, 1400);
+        jara.look('carry', 'left'); sfx('splash', .45, 600);
+        if (P) view({ lx: 260 }, 1400);
         await walk(jara, 120, FL + 20, 1600, 'ease-in', 2); await fadeOut(T, jara, 400);
       },
-      async well() { king.look('well', 'left'); sting('win'); T.confetti(); popAt(king.x - 40, headY(king) + 20, '반짝!', '#D9A94E'); await king.hop(14, 420); },
-      async cheer() { for (const a of [octo, jara, doctor, crab1]) { a.hop(12, 360); await sleep(120); } sfx('party_horn', .4); },
+      async well() { king.look('well', 'left'); finaleMusic(); T.confetti(); popAt(king.x - 40, headY(king) + 20, '반짝!', '#D9A94E'); await king.hop(14, 420); },
+      async cheer() { for (const a of [octo, jara, doctor, crab1]) { a.hop(12, 360); await sleep(120); } },
     };
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): set = 장면 배치(LAY), beat:<이름>[:인자] = 위 연출 조각, 그 밖 cut·snd·pop ================= */
@@ -652,7 +693,7 @@
         look(who, pose, dir) { const a = { rabbit, jara, king, octo, gull, squirrel, boar, sage }[who]; if (a) a.look(pose, dir); },
         view(lx, ms) { return view({ lx: +lx }, +ms || 800); },
       };
-      return T.readPlay(R).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+      return T.readPlay(R).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } });
     }
 
     /* ===== 1. 아픈 용왕님 — 용궁 침전, 가까이 눈높이 ===== */
@@ -703,9 +744,12 @@
     /* ===== 3. 뭍에 오른 자라 — 바닷가 낮 (배움: 방향 고르기 1단계 = 왼쪽) ===== */
     /* 방향 고르기: 길 셋(화면 왼쪽·가운데·오른쪽)의 끝 표식 둘레가 누르는 자리. 오답 = 뿅 + 그 길로 한 걸음 갔다가 돌아옴 + "어? 이쪽이 아니네." */
     const choosePath = async (ans, ask, cx) => {
+      /* 누르는 칸: 길 끝(ex)을 가운데로 한 세로 칸 셋, 서로 겹치지 않게 폭 = 길 끝 사이 간격 - 16. 위는 길 끝 조금 위, 아래는 자라 등 근처까지(짧은 변 화면 100px 이상). 자라·족자·다른 길 그림은 누름을 받지 않는다 */
+      const gapW = 190 * PS() - 16, ppx = pxPer();
       const os = ['left', 'mid', 'right'].map(k => {
         const p = paths[k], [ex, ey] = pathEnd(k, cx);
-        const el = hitBox(p, 150, 140, (ey + 40) - p.y, ex - p.x);
+        const top = ey - 24, bot = Math.max(k === 'mid' ? FL - 20 : FL - 70, top + 110 / ppx);   // 가운데 길은 자라 등(족자) 바로 밑까지 곧게 내려오므로 더 길게
+        const el = hitWorld(p, ex, (top + bot) / 2, Math.max(gapW, 0), bot - top);
         return {
           el, ok: k === ans,
           onWrong: async () => {
@@ -786,20 +830,44 @@
     await say(S.L32);
     await sleep(SCENE_END);
 
-    /* ===== 7. 용궁 구경 — 문 셋이 저절로 차례로 열린다(세기 없음) ===== */
-    await T.sceneCard(tr('용궁 구경'), () => lay('gate'), rabbit.pos);
+    /* ===== 7. 용궁 구경 — 문 고르기(배움: 위치어 왼쪽·가운데·오른쪽, 화면 기준). 게 병사가 무작위로 문 하나를 말한다 ===== */
+    await T.sceneCard(tr('용궁 구경'), () => { lay('gate'); jara.place(-220, FL); seatRabbit('stand'); }, jara.pos);
     const l33 = say(S.L33);
-    await sleep(600); await B.doorOpen(0); await l33;
+    await B.gateArrive(); await l33;
     await B.crabHello();
     await say(S.L34);
-    await B.walkTo(400);
-    await B.doorOpen(1);
-    await B.walkTo(640);
-    await B.doorOpen(2);
+    const dk = DOOR_K[Math.floor(Math.random() * 3)];
+    await B.crabSays();
+    await say(S.DOOR_SAY[dk]);
+    {
+      /* 누르는 칸: 문 그림 크기의 월드 칸(서로 겹치지 않게 폭 = 문 간격 - 15) */
+      const dw = GATE_X[1] - GATE_X[0] - 15;
+      const os = DOOR_K.map((k, i) => {
+        const d = doors[i], dh = d.h * GATE_S;
+        return {
+          el: hitWorld(d, GATE_X[i], FL + 4 - dh / 2, dw, dh), ok: k === dk,
+          onWrong: async () => {
+            sfx('peek_pop', .5); popAt(GATE_X[i], FL - dh - 10, '뿅');
+            const x0 = jara.x;
+            await moveDuo(x0 + 40, FL, 350, 'ease-out', 'stand');
+            await T.say(S.WRONG);
+            await moveDuo(x0, FL, 350, 'ease-in', 'stand');
+          },
+        };
+      });
+      doors.forEach(d => bob(d.pos, 2));
+      await T.ask(S.ASK_DOOR[dk], () => T.choose(os, { prompt: S.ASK_DOOR[dk] }));
+      doors.forEach(unhit);
+    }
+    sfx('ding_glock', .6);
+    await B.doorOpen(dk);
+    const lgo = say(S.DOOR_GO[dk]);
+    await B.goDoor(dk); await lgo;
     await B.sparkle();
     await say(S.L35);
     await B.jaraBack();
     await say(S.L36);
+    await B.enterDoor();
     await sleep(SCENE_END);
 
     /* ===== 8. 간을 다오 — 옥좌 앞, 낮게 (배움: 놀란 얼굴 찾기) ===== */
@@ -875,7 +943,8 @@
     await B.cheer();
     await say(S.L58);
     await sleep(1500);
-    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    await finaleWait();
+    try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return MORAL;
   }

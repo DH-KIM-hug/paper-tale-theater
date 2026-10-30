@@ -12,6 +12,15 @@
   "cut:<bj_cut_volunteer|bj_cut_dive|bj_cut_shock|bj_cut_hop|bj_cut_medicine>": "컷 그림(cutImage 3초)",
   "snd:<이름>[:볼륨][:지연ms] | look:<배우>:<자세>[:<방향>] | view:<lx>[:ms]": "효과음·자세·세로 화면 가운데"
  },
+ "rounds": 1,
+ "variants": {
+  "keys": [
+   "left",
+   "mid",
+   "right"
+  ],
+  "note": "7장 용궁 대문: 게 병사가 말하는 문(화면 기준 왼쪽·가운데·오른쪽) 하나를 회차마다 무작위로. 놀이판은 아이가 그 문을 고른다"
+ },
  "scenes": [
   {
    "key": "R01_chamber",
@@ -687,24 +696,26 @@
    ]
   },
   {
-   "key": "R07_gate",
+   "key": "R07_gate_left",
+   "variant": "left",
+   "round": 1,
    "card": "The Sea Palace",
    "set": "gate",
    "enter": [],
    "lines": [
     {
-     "text": "용궁에 다 왔어요. 문이 차례로 열려요.",
+     "text": "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
      "src": "reuse",
-     "en": "Here is the sea palace. The doors open, one by one.",
+     "en": "Here is the sea palace. There are three big doors.",
      "segs": [
       [
        "nar",
-       "Here is the sea palace. The doors open, one by one.",
+       "Here is the sea palace. There are three big doors.",
        null
       ]
      ],
-     "after": [
-      "beat:doorOpen:0"
+     "before": [
+      "beat:gateArrive"
      ]
     },
     {
@@ -723,21 +734,36 @@
      ]
     },
     {
-     "text": "자라와 토끼는 둘째 문, 셋째 문을 지나 안으로 들어갔어요.",
-     "src": "new",
-     "en": "The terrapin and the rabbit went through the second door and the third door.",
+     "text": "왼쪽 문으로 들어오시오.",
+     "src": "reuse",
+     "en": "Come in through the left door.",
      "segs": [
       [
-       "nar",
-       "The terrapin and the rabbit went through the second door and the third door.",
+       "crab",
+       "Come in through the left door.",
        null
       ]
      ],
+     "before": [
+      "beat:crabSays"
+     ]
+    },
+    {
+     "text": "자라가 토끼를 업고 왼쪽 문으로 갔어요.",
+     "src": "reuse",
+     "en": "The terrapin carried the rabbit to the left door.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin carried the rabbit to the left door.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:doorOpen:left"
+     ],
      "after": [
-      "beat:walkTo:400",
-      "beat:doorOpen:1",
-      "beat:walkTo:640",
-      "beat:doorOpen:2"
+      "beat:goDoor:left"
      ]
     },
     {
@@ -768,6 +794,221 @@
      ],
      "before": [
       "beat:jaraBack"
+     ],
+     "after": [
+      "beat:enterDoor"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_gate_mid",
+   "variant": "mid",
+   "round": 1,
+   "card": "The Sea Palace",
+   "set": "gate",
+   "enter": [],
+   "lines": [
+    {
+     "text": "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
+     "src": "reuse",
+     "en": "Here is the sea palace. There are three big doors.",
+     "segs": [
+      [
+       "nar",
+       "Here is the sea palace. There are three big doors.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:gateArrive"
+     ]
+    },
+    {
+     "text": "어서 오세요!",
+     "src": "reuse",
+     "en": "Welcome!",
+     "segs": [
+      [
+       "crab",
+       "Welcome!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:crabHello"
+     ]
+    },
+    {
+     "text": "가운데 문으로 들어오시오.",
+     "src": "reuse",
+     "en": "Come in through the middle door.",
+     "segs": [
+      [
+       "crab",
+       "Come in through the middle door.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:crabSays"
+     ]
+    },
+    {
+     "text": "자라가 토끼를 업고 가운데 문으로 갔어요.",
+     "src": "reuse",
+     "en": "The terrapin carried the rabbit to the middle door.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin carried the rabbit to the middle door.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:doorOpen:mid"
+     ],
+     "after": [
+      "beat:goDoor:mid"
+     ]
+    },
+    {
+     "text": "우와, 진주랑 산호가 반짝반짝!",
+     "src": "reuse",
+     "en": "Wow, pearls and coral, all sparkly!",
+     "segs": [
+      [
+       "rabbit",
+       "Wow, pearls and coral, all sparkly!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:sparkle"
+     ]
+    },
+    {
+     "text": "자, 용왕님께 가요.",
+     "src": "reuse",
+     "en": "Now, let us go to the Dragon King.",
+     "segs": [
+      [
+       "jara",
+       "Now, let us go to the Dragon King.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:jaraBack"
+     ],
+     "after": [
+      "beat:enterDoor"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_gate_right",
+   "variant": "right",
+   "round": 1,
+   "card": "The Sea Palace",
+   "set": "gate",
+   "enter": [],
+   "lines": [
+    {
+     "text": "용궁에 다 왔어요. 커다란 문이 세 개 있어요.",
+     "src": "reuse",
+     "en": "Here is the sea palace. There are three big doors.",
+     "segs": [
+      [
+       "nar",
+       "Here is the sea palace. There are three big doors.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:gateArrive"
+     ]
+    },
+    {
+     "text": "어서 오세요!",
+     "src": "reuse",
+     "en": "Welcome!",
+     "segs": [
+      [
+       "crab",
+       "Welcome!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:crabHello"
+     ]
+    },
+    {
+     "text": "오른쪽 문으로 들어오시오.",
+     "src": "reuse",
+     "en": "Come in through the right door.",
+     "segs": [
+      [
+       "crab",
+       "Come in through the right door.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:crabSays"
+     ]
+    },
+    {
+     "text": "자라가 토끼를 업고 오른쪽 문으로 갔어요.",
+     "src": "reuse",
+     "en": "The terrapin carried the rabbit to the right door.",
+     "segs": [
+      [
+       "nar",
+       "The terrapin carried the rabbit to the right door.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:doorOpen:right"
+     ],
+     "after": [
+      "beat:goDoor:right"
+     ]
+    },
+    {
+     "text": "우와, 진주랑 산호가 반짝반짝!",
+     "src": "reuse",
+     "en": "Wow, pearls and coral, all sparkly!",
+     "segs": [
+      [
+       "rabbit",
+       "Wow, pearls and coral, all sparkly!",
+       null
+      ]
+     ],
+     "before": [
+      "beat:sparkle"
+     ]
+    },
+    {
+     "text": "자, 용왕님께 가요.",
+     "src": "reuse",
+     "en": "Now, let us go to the Dragon King.",
+     "segs": [
+      [
+       "jara",
+       "Now, let us go to the Dragon King.",
+       null
+      ]
+     ],
+     "before": [
+      "beat:jaraBack"
+     ],
+     "after": [
+      "beat:enterDoor"
      ]
     }
    ]
