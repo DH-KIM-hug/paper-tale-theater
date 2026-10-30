@@ -1345,3 +1345,15 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
   .pl-th { width: 52px; height: 39px; }
   .pl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+
+/* 극장 막(홈 카드 → 동화): 빨간 색지 주름 커튼 그림(ui_curtain_panel, 오른쪽 폭은 뒤집기) + 위 휘장 그림. 홈(home.css)과 같은 모양 */
+.curt { position: fixed; inset: 0; z-index: 90; overflow: hidden; pointer-events: none; }
+.curt .cp { position: absolute; top: 0; bottom: 0; width: 51vw; transform-origin: 50% 0; background: #A93B32; }   /* 그림이 오기 전에도 막은 막 */
+.curt .cp.l { left: 0; transform: translateX(-102%); } .curt .cp.r { right: 0; transform: translateX(102%); }
+.curt.shut .cp { transform: none; }
+.curt .cp::before { content: ''; position: absolute; inset: 0; background: url(assets/ui/ui_curtain_panel.webp) center / 100% 100% no-repeat; transform: skewX(var(--sw, 0deg)); transform-origin: 50% 0; }
+.curt .cp.r::before { transform: scaleX(-1) skewX(var(--sw, 0deg)); }
+.curt .cp.l { filter: drop-shadow(6px 0 8px rgba(46,36,28,.35)); } .curt .cp.r { filter: drop-shadow(-6px 0 8px rgba(46,36,28,.35)); }
+.curt .val { position: absolute; left: -2vw; right: -2vw; top: 0; height: max(90px, 17vh); background: url(assets/v3w/cd2_layer_curtain_swag.webp) center top / 100% 100% no-repeat; transform: translateY(-100%); filter: drop-shadow(0 6px 8px rgba(46,36,28,.35)); }
+.curt.shut .val { transform: none; }

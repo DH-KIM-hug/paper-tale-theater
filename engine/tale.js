@@ -1308,20 +1308,26 @@ const Tale = (() => {
       document.head.appendChild(sc);
     });
   }
-  /* 들어올 때: 홈의 카드가 닫고 간 종이 조리개가 가운데에서 다시 열린다 */
+  /* 들어올 때: 홈에서 닫고 온 극장 막(빨간 종이 커튼 두 폭 + 휘장)이 준비되면 양쪽으로 열린다(2026-10-30 조리개 → 커튼) */
   function arrive(ready) {
     const a = document.createElement('div');
-    a.id = 'arrive'; a.innerHTML = '<i class="lid"></i>';
+    a.id = 'arrive'; a.className = 'curt shut';
+    a.innerHTML = `<div class="cp l"></div><div class="cp r"></div><div class="val"></div>`;
     document.body.appendChild(a);
     const gone = () => a.remove();
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) { gone(); return; }
-    const fallback = setTimeout(gone, 2500);
+    const fallback = setTimeout(gone, 2800);
+    const L = a.querySelector('.l'), R = a.querySelector('.r'), V = a.querySelector('.val');
     Promise.race([ready, sleep(450)]).then(() => {
-      const lid = a.firstChild, R = Math.hypot(innerWidth, innerHeight) / 2 + 30, t0 = performance.now(), ms = 620;
+      a.classList.remove('shut');
+      const t0 = performance.now(), ms = 900;
       const f = now => {
-        const k = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - k, 3);
-        lid.style.width = lid.style.height = (2 * R * e).toFixed(1) + 'px';
-        if (k < 1) requestAnimationFrame(f); else { clearTimeout(fallback); gone(); }
+        const t = Math.min(1, (now - t0) / ms), k = Math.min(1, t / .8), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        const x = e * 102;
+        L.style.transform = `translateX(${-x}%)`; R.style.transform = `translateX(${x}%)`;
+        const sway = Math.sin(Math.PI * k) * 3; L.style.setProperty('--sw', `${-sway}deg`); R.style.setProperty('--sw', `${sway}deg`);
+        const v = Math.max(0, (t - .45) / .55); V.style.transform = `translateY(${(-100 * v * v).toFixed(2)}%)`;
+        if (t < 1) requestAnimationFrame(f); else { clearTimeout(fallback); gone(); }
       };
       requestAnimationFrame(f);
     });

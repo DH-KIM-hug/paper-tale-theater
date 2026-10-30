@@ -407,9 +407,15 @@
 
   /* ── 카드 누르기 ── */
   let leavingPage = false;
-  /* 카드 → 무대: 구멍 속 그림이 화면 가득 커지고(동그란 구멍은 동그랗게), 이어서 남색 종이가
-     조리개처럼 가운데로 오므라들며 닫히면 동화로 넘어간다. 닫힌 종이가 페이지를 불러오는 틈을 가려 준다.
-     전부 0.72초. 애니메이션이 멈춰도 1.2초 뒤엔 넘어간다. */
+  /* 카드 → 무대: 극장 막(빨간 종이 커튼 두 폭)이 양쪽에서 닫히고, 위에서 휘장이 내려온다. 닫힌 막이 동화 페이지를 불러오는 틈을 가리고,
+     동화 쪽(tale.js arrive)에서 같은 막이 열리며 책 표지(시작 화면)가 보인다. 2026-10-30 사용자: 조리개 대신 커튼.
+     전부 0.75초. 애니메이션이 멈춰도 1.2초 뒤엔 넘어간다. */
+  const curtainEl = () => {
+    const c = document.createElement('div'); c.className = 'curt';
+    c.innerHTML = `<div class="cp l"></div><div class="cp r"></div><div class="val"></div>`;
+    document.body.appendChild(c); return c;
+  };
+  try { addEventListener('load', () => setTimeout(() => ['assets/ui/ui_curtain_panel.webp', 'assets/v3w/cd2_layer_curtain_swag.webp'].forEach(u => { new Image().src = u; }), 1500)); } catch (e) { /* 무시 */ }   // 막 그림 미리(동화 쪽은 캐시로)
   function openTale(card) {
     const href = card.getAttribute('href');
     if (leavingPage) return;
@@ -419,36 +425,26 @@
     let gone = false;
     const go = () => { if (!gone) { gone = true; location.href = href; } };
     if (!motion()) { go(); return; }
-    const hole = card.querySelector('.thumb'), art = hole.querySelector('.art'), r = hole.getBoundingClientRect();
-    const round = !hole.classList.contains('full');
-    const vw = innerWidth, vh = innerHeight;
-    const W = round ? Math.hypot(vw, vh) : Math.max(vw, vh), X = (vw - W) / 2, Y = (vh - W) / 2, s0 = r.width / W;
-    const ov = $('#stageOut'), veil = ov.querySelector('.so-veil'), box = ov.querySelector('.so-box'), lid = ov.querySelector('.so-iris');
-    box.className = 'so-box ' + [...hole.classList].filter(c => c !== 'thumb').join(' ');
-    box.innerHTML = art.tagName === 'IMG'
-      ? `<img class="art" src="${art.currentSrc || art.getAttribute('src')}" alt="">`
-      : `<svg class="art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice">${art.innerHTML}</svg>`;
-    box.style.width = box.style.height = W + 'px';
-    const D = Math.hypot(vw, vh) * 1.04;
-    ov.hidden = false;
+    const c = curtainEl(), L = c.querySelector('.l'), R = c.querySelector('.r'), V = c.querySelector('.val');
     const fallback = setTimeout(go, 1200);
-    setTimeout(() => paper('turn'), 380);
+    setTimeout(() => paper('turn'), 120);
     card.classList.add('anim');
-    play(.72, t => {
+    play(.75, t => {
       card.style.scale = (1 - .04 * Math.sin(Math.PI * clamp(t / .14))).toFixed(4);
-      veil.style.opacity = (.8 * eo(t / .3)).toFixed(3);
-      const k = eio((t - .04) / .42);
-      box.style.transform = `translate(${lerp(r.left, X, k).toFixed(2)}px, ${lerp(r.top, Y, k).toFixed(2)}px) scale(${lerp(s0, 1, k).toFixed(4)})`;
-      const q = eio((t - .4) / .32), d = Math.max(0, D * (1 - q));
-      lid.style.width = lid.style.height = d.toFixed(1) + 'px';
-      lid.style.opacity = t < .4 ? '0' : '1';
+      // 막: 천천히 끌려 나오다 가운데서 살짝 겹치며 멈춘다(무게감). 폭마다 끝자락이 조금 늦게 따라와 흔들린다
+      const k = clamp((t - .04) / .6), e = k < 1 ? 1 - Math.pow(1 - k, 3) * (1 - 1.6 * k * (1 - k)) : 1;
+      const x = (1 - e) * 102 - 1.2 * Math.sin(Math.PI * clamp((t - .5) / .25));
+      L.style.transform = `translateX(${-x}%)`; R.style.transform = `translateX(${x}%)`;
+      const sway = Math.sin(Math.PI * k) * 3;
+      L.style.setProperty('--sw', `${sway}deg`); R.style.setProperty('--sw', `${-sway}deg`);
+      V.style.transform = `translateY(${(-100 * (1 - eo(t / .35))).toFixed(2)}%)`;
     }, () => { clearTimeout(fallback); go(); });
   }
   /* 뒤로 가기로 돌아왔을 때(페이지 캐시) 전환 막을 걷는다 */
   addEventListener('pageshow', e => {
     if (!e.persisted) return;
     leavingPage = false;
-    $('#stageOut').hidden = true;
+    $('#stageOut').hidden = true; document.querySelectorAll('.curt').forEach(c => c.remove());
     document.querySelectorAll('.card.anim').forEach(c => { untf(c); c.classList.remove('anim'); });
   });
 
