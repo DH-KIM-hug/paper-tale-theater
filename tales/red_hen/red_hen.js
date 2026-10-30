@@ -321,9 +321,9 @@
       const set = () => {
         yard(); setView(X(500, 500));
         fg('hen_fg_flower_bush', X(30, 230), 590, 150); fg('hen_fg_grass_tuft', X(985, 760), 585, 90);
-        put(T, cat, X(330, 330), 308, { look: 'lie_fence', to: 'left' });
-        put(T, dog, X(705, 650), X(394, 372), { look: 'lie', to: 'left' });
-        put(T, pig, X(870, 645), X(530, 582), { look: 'mud', to: 'left' });
+        put(T, cat, X(330, 378), 308, { look: 'lie_fence', to: 'left' });
+        put(T, dog, X(705, 625), X(394, 372), { look: 'lie', to: 'left' });
+        put(T, pig, X(870, 620), X(530, 582), { look: 'mud', to: 'left' });
         put(T, hen, X(530, 490), X(482, 470), { look: 'hold_sack', to: 'left' });
         chicksAt(X([430, 382, 334], [350, 412, 474]), X(505, 550), { to: 'right' });
       };
@@ -380,9 +380,9 @@
         fg('hen_fg_grass_tuft', X(990, 715), 585, 90);
         S.sack = hitZone(T, T.world, X(330, 430), FL - 40, H(96), H(96));
         stand(T, S.sack, 'hen_prop_seed_sack', X(330, 430), FL + 4);
-        put(T, hen, X(230, 345), FL + 8, { look: 'stand', to: 'right' });
+        put(T, hen, X(230, 368), FL + 8, { look: 'stand', to: 'right' });
         chicksAt([X(140, 330), X(100, 375), X(60, 420)], FL + 40, { to: 'right' });
-        if (P) chicksAt([300, 345, 390], FL + 50, { to: 'right' });
+        if (P) chicksAt([335, 378, 421], FL + 50, { to: 'right' });
       };
     }
     const sunPatch = () => {   // 배경에 그려진 해를 하늘색 종이로 덮고(같은 하늘 한 장), 움직이는 해 소품을 그 자리에 놓는다
@@ -410,7 +410,7 @@
       await walk;
       /* 물 주기: 물뿌리개 자세로 돌아오며 쪼르르 */
       hen.look('water', 'left'); cue(['water_pour_1', 'water_drip'], .45);
-      const back = hen.move(X(260, 360), hen.y, 3000, 'linear');
+      const back = hen.move(X(260, 368), hen.y, 3000, 'linear');
       await sayP;
       const wp = word('water', hen.x - X(70, 40), hen.y - 210);
       await back; await wp; await sleep(300);
@@ -436,14 +436,14 @@
     }
 
     /* ================= 3. 누가 베어 줄래? ================= */
-    const ROW3 = () => (P ? [560, 640] : [600, 700, 800, 900]);
+    const ROW3 = () => (P ? [510, 570] : [600, 700, 800, 900]);
     function s3() {
       return () => {
-        T.clear(); bgImage('hen_bg_field_gold'); S = {}; setView(X(500, 420));
+        T.clear(); bgImage('hen_bg_field_gold'); S = {}; setView(X(500, 410));
         S.plants = ROW3().map(x => ({ x, g: stand(T, T.world, 'hen_prop_wheat_gold', x, ROWY) }));
         /* 울타리 너머 친구 셋(얼굴만): 오른쪽(암탉)을 본다 */
-        [[cat, X(150, 240)], [dog, X(250, 320)], [pig, X(365, 415)]].forEach(([a, x]) => put(T, a, x, 262, { look: 'peek', to: 'right', s: 1 }));
-        put(T, hen, X(520, 520), FL + 8, { look: 'stand', to: 'left' });
+        [[cat, X(150, 250)], [dog, X(250, 310)], [pig, X(365, 370)]].forEach(([a, x]) => put(T, a, x, 262, { look: 'peek', to: 'right', s: 1 }));
+        put(T, hen, X(520, 470), FL + 8, { look: 'stand', to: 'left' });
         chicksAt([X(440, 380), X(400, 335), X(360, 425)], FL + 40, { to: 'right' });
         fg('hen_fg_wheat_ears', X(975, 640), 590, 170);
       };
@@ -460,7 +460,7 @@
       const sayC4 = say('C4');
       hen.look('cut', 'right');
       for (const p of S.plants) {
-        await hen.move(p.x - X(70, 60), hen.y, 600, 'ease-in-out');
+        await hen.move(p.x - X(70, 80), hen.y, 600, 'ease-in-out');
         cue(['chop', 'swish'], .45);
         p.g.remove(); p.g = stand(T, T.world, 'hen_prop_wheat_cut', p.x + 10, FL - 12);
         T.world.appendChild(hen.pos);
@@ -485,16 +485,16 @@
     const MILL = { hx: 215, hy: 88, door: [214, 214] };
     function s4() {
       return () => {
-        T.clear(); bgImage('hen_bg_mill'); S = {}; setView(X(500, 380));
+        T.clear(); bgImage('hen_bg_mill'); S = {}; setView(X(500, 400));
         const sh = HT.hen_prop_mill_sails, sw = sh * ASP.hen_prop_mill_sails;
         S.sails = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, T.bg);
         sprite(T, S.sails, 'hen_prop_mill_sails', MILL.hx - sw / 2, MILL.hy - sh / 2, sw, sh);
         S.sails.style.transformBox = 'view-box'; S.sails.style.transformOrigin = `${MILL.hx}px ${MILL.hy}px`;
         S.spin = S.sails.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], { duration: 9000, iterations: Infinity });
-        put(T, cat, X(250, 230), 548, { look: 'lie_fence', to: 'left' });
-        put(T, dog, X(430, 350), 552, { look: 'lie', to: 'left' });
-        put(T, pig, X(610, 480), 560, { look: 'mud', to: 'left' });
-        put(T, hen, X(870, 610), X(472, 440), { look: 'carry', to: 'left' });
+        put(T, cat, X(250, 280), 548, { look: 'lie_fence', to: 'left' });
+        put(T, dog, X(430, 375), 552, { look: 'lie', to: 'left' });
+        put(T, pig, X(610, 465), 560, { look: 'mud', to: 'left' });
+        put(T, hen, X(870, 495), X(472, 440), { look: 'carry', to: 'left' });
         chicksAt([X(950, 600), X(985, 630), X(1015, 660)], X(480, 448), { to: 'left' });
         if (P) chicks.forEach(hide);
         fg('hen_fg_grass_tuft', X(1000, 600), 600, 80);
@@ -610,11 +610,11 @@
     /* ================= 6. 빵이 구워져요 (늦은 오후, 오븐 빛) ================= */
     function s6() {
       return () => {
-        kitchen('hen_bg_kitchen_lb'); setView(X(500, 560));
-        oven(X(870, 680), FK, false, X(KS, .92));
+        kitchen('hen_bg_kitchen_lb'); setView(X(500, 630));
+        oven(X(870, 740), FK, false, X(KS, .92));
         if (!P) stand(T, S.mid, 'hen_prop_shelf', 255, 212 + 119, 119);
-        put(T, hen, X(630, 500), FK + 4, { look: 'sit_wait', to: 'right', s: KS });
-        chicksAt(X([540, 495, 450], [420, 470, 520]), FK + X(30, 40), { look: 'look_up', to: 'right', s: KS });
+        put(T, hen, X(630, 530), FK + 4, { look: 'sit_wait', to: 'right', s: KS });
+        chicksAt(X([540, 495, 450], [460, 500, 545]), FK + X(30, 40), { look: 'look_up', to: 'right', s: KS });
         if (!P) fg('hen_fg_pot_plant', -10, 590, 130);
       };
     }
@@ -641,7 +641,7 @@
       const sm = T.el('g', { 'pointer-events': 'none' }, T.fx);
       [0, 1, 2].forEach(i => { const g = T.el('g', {}, sm); stand(T, g, 'hen_prop_smell', 0, 0, 100); g.animate([{ transform: `translate(${hen.x - 20 + i * 30}px,${hen.y - 170}px)`, opacity: 0 }, { opacity: .95, offset: .3 }, { transform: `translate(${720 + i * 50}px,${120}px)`, opacity: 0 }], { duration: 2600, delay: i * 500, iterations: 2 }); });
       cue('harp_gliss_2', .35);
-      winPut(cat, 670, 'sniff', 'left', .78); winPut(dog, 790, 'sniff', 'left', .72); winPut(pig, 895, 'sniff', 'left', .6);
+      winPut(cat, X(670, 650), 'sniff', 'left', X(.78, .66)); winPut(dog, X(790, 715), 'sniff', 'left', X(.72, .6)); winPut(pig, X(895, 772), 'sniff', 'left', X(.6, .48));
       FRS.forEach(f => { f.pos.animate([{ opacity: 0 }, { opacity: 1 }], 600); });
       const sn = setInterval(() => { FRS.forEach((f, i) => setTimeout(() => f.hop(6, 240), i * 120)); cue('toot_kazoo', .2); }, 900);
       await say('F5');
@@ -652,18 +652,18 @@
     /* ================= 7. 누가 먹어 줄래? ================= */
     function s7() {
       return () => {
-        kitchen('hen_bg_kitchen_lb'); setView(X(500, 560));
+        kitchen('hen_bg_kitchen_lb'); setView(X(500, 630));
         oven(X(1010, 1010), FK, false, KS);
-        S.top = table(X(580, 610), X(420, 330));
+        S.top = table(X(580, 640), X(420, 330));
         S.food = T.el('g', {}, S.mid);
-        stand(T, S.food, 'hen_prop_plate', X(580, 610), S.top + 8, 30 * KP);
-        S.bread = stand(T, S.food, 'hen_prop_bread', X(580, 610), S.top - 2, 64 * KP);
-        put(T, hen, X(290, 430), FK + 6, { look: 'speak_calm', to: 'right', s: KS });
-        chicksAt(X([470, 690, 735], [520, 690, 735]), S.top + 6, { look: 'stand', to: 'right', s: KS });
+        stand(T, S.food, 'hen_prop_plate', X(580, 640), S.top + 8, 30 * KP);
+        S.bread = stand(T, S.food, 'hen_prop_bread', X(580, 640), S.top - 2, 64 * KP);
+        put(T, hen, X(290, 505), FK + 6, { look: 'speak_calm', to: 'right', s: KS });
+        chicksAt(X([470, 690, 735], [550, 720, 765]), S.top + 6, { look: 'stand', to: 'right', s: KS });
         chicks[1].turn('left'); chicks[2].turn('left');
         T.world.appendChild(S.mid); chicks.forEach(c => T.world.appendChild(c.pos)); T.world.appendChild(hen.pos);
         if (!P) fg('hen_fg_pot_plant', -10, 590, 130);
-        winPut(cat, 675, 'raise', 'left', .85); winPut(dog, 800, 'raise', 'left', .78); winPut(pig, 900, 'raise', 'left', .64);
+        winPut(cat, X(675, 655), 'raise', 'left', X(.85, .7)); winPut(dog, X(800, 722), 'raise', 'left', X(.78, .64)); winPut(pig, X(900, 765), 'raise', 'left', X(.64, .5));
       };
     }
     async function p7() {
@@ -675,7 +675,7 @@
       await say('G5');
       await say('G6');
       /* 먹기: 빵 조각을 들고 냠냠(조각은 코드로 붙임) */
-      S.bread.remove(); S.bread = stand(T, S.food, 'hen_prop_bread', X(580, 610), S.top - 2, 48 * KP);
+      S.bread.remove(); S.bread = stand(T, S.food, 'hen_prop_bread', X(580, 640), S.top - 2, 48 * KP);
       hen.look('eat', 'right'); hen.hold('hen_prop_bread', 40);
       chicksLook('eat'); chicks[0].turn('right'); chicks[1].turn('left'); chicks[2].turn('left');
       const nom = setInterval(() => cue(['chomp', 'marimba_2'], .3), 700);
@@ -695,7 +695,7 @@
       return () => {
         yard('hen_bg_yard_morning'); setView(X(500, 480));
         if (!P) fg('hen_fg_flower_bush', -30, 590, 150);
-        put(T, hen, X(250, 360), FL, { look: 'bread' });
+        put(T, hen, X(250, 385), FL, { look: 'bread' });
         chicksAt(X([170, 130, 90], [300, 335, 420]), FL + 20, { to: 'right' });
         if (P) chicksAt([310, 345, 420], FL + 50, { to: 'right' });
         FRS.forEach(hide);
@@ -708,7 +708,7 @@
       await say('H2');
       bgm(null);
       /* 셋이 재료를 들고 달려온다(재료 그림은 앞발에 코드로 붙임) */
-      const stops = X([500, 655, 825], [480, 585, 690]);
+      const stops = X([500, 655, 825], [450, 520, 575]);
       const runners = [[dog, D.bring[0]], [cat, D.bring[1]], [pig, D.bring[2]]];
       runners.forEach(([a, ing], i) => { put(T, a, X(1100, 800) + i * 120, FL, { look: 'run', to: 'left', s: P ? .85 : 1 }); a.hold(ING(ing), P ? 50 : 54); });
       const steps = setInterval(() => cue('step_grass', .3), 260);
@@ -786,7 +786,7 @@
         const [px] = PLATE();
         S.dish = T.el('g', {}, S.mid);
         S.base = T.el('g', {}, S.dish);
-        put(T, hen, X(830, 685), behind(S.top), { look: 'stand', to: 'left', s: KS });
+        put(T, hen, X(830, 612), behind(S.top), { look: 'stand', to: 'left', s: KS });
         if (!P) {
           put(T, cat, 75, FK, { look: 'stand_help', to: 'right', s: KS });
           put(T, dog, 575, behind(S.top) - 6, { look: 'stand_help', to: 'right', s: KS });
@@ -889,18 +889,18 @@
     /* ================= 10. 다 같이 냠냠 ================= */
     function s10() {
       return () => {
-        yard(); setView(X(500, 520));
-        const tw = X(520, 450), tx = X(730, 610), th = tw / ASP.hen_prop_table_long;
+        yard(); setView(X(500, 540));
+        const tw = X(520, 400), tx = X(730, 590), th = tw / ASP.hen_prop_table_long;
         S.tableTop = FL + 6 - th * .92;
-        put(T, cat, X(585, 485), S.tableTop + 34, { look: 'eat', to: 'left' }); cat.hold(D.piece, 48);
-        put(T, dog, X(735, 610), S.tableTop + 40, { look: 'eat', to: 'left' }); dog.hold(D.piece, 48);
-        put(T, pig, X(885, 735), S.tableTop + 52, { look: 'eat', to: 'left' }); pig.hold(D.piece, 48);
+        put(T, cat, X(585, 470), S.tableTop + 34, { look: 'eat', to: 'left' }); cat.hold(D.piece, 48);
+        put(T, dog, X(735, 565), S.tableTop + 40, { look: 'eat', to: 'left' }); dog.hold(D.piece, 48);
+        put(T, pig, X(885, 655), S.tableTop + 52, { look: 'eat', to: 'left' }); pig.hold(D.piece, 48);
         S.tab = stand(T, T.world, 'hen_prop_table_long', tx, FL + 6, th);
         S.onTab = T.el('g', {}, T.world);
-        X([600, 740, 880], [500, 615, 730]).forEach(x => { stand(T, S.onTab, 'hen_prop_plate', x, S.tableTop + 14, 24); stand(T, S.onTab, 'hen_prop_cup', x + 38, S.tableTop + 10, 34); });
-        put(T, hen, X(380, 330), FL + 8, { look: 'stand', to: 'right' });
+        X([600, 740, 880], [470, 565, 655]).forEach(x => { stand(T, S.onTab, 'hen_prop_plate', x, S.tableTop + 14, 24); stand(T, S.onTab, 'hen_prop_cup', x + 38, S.tableTop + 10, 34); });
+        put(T, hen, X(380, 432), FL + 8, { look: 'stand', to: 'right' });
         chicksAt(X([300, 255, 210], [260, 215, 300]), FL + 36, { look: 'stand', to: 'right' });
-        if (P) chicksAt([270, 320, 370], FL + 62, { look: 'stand', to: 'right' });
+        if (P) chicksAt([380, 415, 455], FL + 62, { look: 'stand', to: 'right' });
         if (!P) fg('hen_fg_flower_bush', 0, 590, 150);
       };
     }
@@ -991,7 +991,7 @@
             return (async () => {
               await rs.sowP; if (t !== tok) return;
               hen.look('water', 'left'); cue(['water_pour_1', 'water_drip'], .45);
-              await hen.move(X(260, 360), hen.y, 2400, 'linear'); if (t !== tok) return;
+              await hen.move(X(260, 368), hen.y, 2400, 'linear'); if (t !== tok) return;
               await word('water', hen.x - X(70, 40), hen.y - 210);
               hen.look('stand', 'right');
             })();
@@ -1019,7 +1019,7 @@
             hen.look('cut', 'right');
             rs.reapP = (async () => {
               for (const p of S.plants) {
-                await hen.move(p.x - X(70, 60), hen.y, 600, 'ease-in-out'); if (t !== tok) return;
+                await hen.move(p.x - X(70, 80), hen.y, 600, 'ease-in-out'); if (t !== tok) return;
                 cue(['chop', 'swish'], .45);
                 p.g.remove(); p.g = stand(T, T.world, 'hen_prop_wheat_cut', p.x + 10, FL - 12);
                 T.world.appendChild(hen.pos);
@@ -1131,7 +1131,7 @@
             const sm = rs.sm = T.el('g', { 'pointer-events': 'none' }, T.fx);
             [0, 1, 2].forEach(i => { const g = T.el('g', {}, sm); stand(T, g, 'hen_prop_smell', 0, 0, 100); g.animate([{ transform: `translate(${hen.x - 20 + i * 30}px,${hen.y - 170}px)`, opacity: 0 }, { opacity: .95, offset: .3 }, { transform: `translate(${720 + i * 50}px,${120}px)`, opacity: 0 }], { duration: 2600, delay: i * 500, iterations: 2 }); });
             cue('harp_gliss_2', .35);
-            winPut(cat, 670, 'sniff', 'left', .78); winPut(dog, 790, 'sniff', 'left', .72); winPut(pig, 895, 'sniff', 'left', .6);
+            winPut(cat, X(670, 650), 'sniff', 'left', X(.78, .66)); winPut(dog, X(790, 715), 'sniff', 'left', X(.72, .6)); winPut(pig, X(895, 772), 'sniff', 'left', X(.6, .48));
             FRS.forEach(f => { f.pos.animate([{ opacity: 0 }, { opacity: 1 }], 600); });
             every(() => { FRS.forEach((f, i) => setTimeout(() => f.hop(6, 240), i * 120)); cue('toot_kazoo', .2); }, 900);
           } else if (cmd === 'smellEnd') { rs.iv.forEach(clearInterval); rs.iv = []; if (rs.sm) rs.sm.remove(); }
@@ -1141,7 +1141,7 @@
         k7(cmd) {
           if (inst()) return null;
           if (cmd === 'eat') {
-            S.bread.remove(); S.bread = stand(T, S.food, 'hen_prop_bread', X(580, 610), S.top - 2, 48 * KP);
+            S.bread.remove(); S.bread = stand(T, S.food, 'hen_prop_bread', X(580, 640), S.top - 2, 48 * KP);
             hen.look('eat', 'right'); hen.hold('hen_prop_bread', 40);
             chicksLook('eat'); chicks[0].turn('right'); chicks[1].turn('left'); chicks[2].turn('left');
             every(() => cue(['chomp', 'marimba_2'], .3), 700);
@@ -1158,7 +1158,7 @@
           const t = tok;
           if (cmd === 'run') {
             cue('animals/rooster', .45); cue('birds_chirp_1', .3);
-            const stops = X([500, 655, 825], [480, 585, 690]);
+            const stops = X([500, 655, 825], [450, 520, 575]);
             const runners = rs.runners = [[dog, D.bring[0]], [cat, D.bring[1]], [pig, D.bring[2]]];
             runners.forEach(([a, ing], i) => { put(T, a, X(1100, 800) + i * 120, FL, { look: 'run', to: 'left', s: P ? .85 : 1 }); a.hold(ING(ing), P ? 50 : 54); });
             const steps = setInterval(() => cue('step_grass', .3), 260);
