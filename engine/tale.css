@@ -535,3 +535,41 @@ svg text { font-weight: 800; }
   #startScreen .pills .pill.go, #startScreen .pills .pill.go.read { min-height: 72px; min-width: 220px; font-size: 22px; }
   #startScreen .homeIcon, #endScreen.back .rbtn { width: 72px; height: 72px; }
 }
+
+/* 책 표지로 열기(모든 동화 기본, ?open=iris 는 옛 조리개): 표지·책장은 책등(왼쪽 끝)을 축으로 넘어간다. 크기·자리는 JS 가 #tale 과 같이 맞춘다 */
+#bookOpen { position: fixed; inset: 0; z-index: 95; pointer-events: none; }
+#bookOpen .bk { position: absolute; left: 0; top: 0; width: 100vw; height: 100%; transform-origin: 0 0; }
+#bookOpen .leaf { position: absolute; inset: 0; transform-origin: 0 50%; transform-style: preserve-3d; }
+#bookOpen .face { position: absolute; inset: 0; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background: #F3EBDD center / cover no-repeat; box-shadow: inset 0 0 0 1px rgba(46,36,28,.1); }
+#bookOpen .face.back { transform: rotateY(180deg); }
+#bookOpen .shade { position: absolute; inset: 0; opacity: 0; pointer-events: none; z-index: 60;
+  background: linear-gradient(90deg, rgba(46,36,28,.85), rgba(46,36,28,.35) 40%, rgba(46,36,28,.15)); }
+#bookOpen .face.back .shade { background: linear-gradient(270deg, rgba(46,36,28,.85), rgba(46,36,28,.35) 40%, rgba(46,36,28,.15)); }
+/* 표지 안쪽 면지: 남색 종이에 별 무늬 */
+#bookOpen .cover .face.back { background:
+  radial-gradient(circle at 22% 28%, #F2C230 0 3px, transparent 4px) 0 0 / 72px 72px,
+  radial-gradient(circle at 68% 72%, #F6ECD8 0 2.5px, transparent 3.5px) 0 0 / 72px 72px,
+  radial-gradient(circle at 80% 20%, #E8703A 0 2px, transparent 3px) 0 0 / 72px 72px, #1F2A56; }
+#bookOpen .gutter { position: absolute; left: 0; top: 0; width: 12%; height: 100%; z-index: 5;
+  background: linear-gradient(90deg, rgba(46,36,28,.32), rgba(46,36,28,0)); }
+#startScreen.asCover .pills, #startScreen.asCover .homeIcon, #startScreen.asCover .startHint, #startScreen.asCover .autobadge { visibility: hidden; }
+/* 책 두께(책등·아래 단면)와 책상 그림자: #tale 밑 층 */
+#bookUnder { position: fixed; left: 0; top: 0; width: 100vw; height: 100%; z-index: 0; pointer-events: none; transform-origin: 0 0; }
+#bookUnder svg { position: absolute; top: 0; overflow: visible; }
+#bookUnder .foot { position: absolute; top: 0; border-radius: 6px; box-shadow: 10px 22px 40px rgba(46,36,28,.34), 2px 6px 10px rgba(46,36,28,.22); }
+#bookOpen .hinge { position: absolute; top: 0; bottom: 0; left: 3.2%; width: 3px; z-index: 61;
+  background: linear-gradient(90deg, rgba(46,36,28,.28) 0 1.5px, rgba(255,255,255,.35) 1.5px 3px); }
+/* 종이 책장 띠: 앞 띠의 오른쪽 끝에 붙어 조금 더 돈다 */
+#bookOpen .leaf.paper { transform-style: preserve-3d; }
+#bookOpen .strip { position: absolute; top: 0; height: 100%; transform-origin: 0 50%; transform-style: preserve-3d; }
+#bookOpen .strip > .face { box-shadow: none; }
+/* 책 밑 책상(크림 종이 + 색지 깔개 + 색종이 조각) */
+#bookDesk { position: fixed; left: 0; top: 0; width: 100vw; height: 100%; z-index: 0; pointer-events: none; transform-origin: 0 0; background: var(--paper); }
+#bookDesk svg { position: absolute; }
+#bookOpen .strip .shade { opacity: 1; }
+#bookOpen .face.flat { width: 100%; }
+#bookOpen .leaf.paper .face { background-color: var(--paper, #F5EFE9); background-repeat: no-repeat; }
+/* 6판: 양장 표지 테두리(판지 색이 둘레에 얇게) — 시작 화면 위에 얹는다 */
+#bookOpen .rim { position: absolute; inset: 0; z-index: 61; pointer-events: none; opacity: 0;
+  box-shadow: inset 0 0 0 max(6px, 1.1vmin) var(--rim, #A93B32), inset 0 0 0 calc(max(6px, 1.1vmin) + 2px) rgba(46,36,28,.18); }

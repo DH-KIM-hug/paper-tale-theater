@@ -649,6 +649,7 @@ const Tale = (() => {
   let veilOpen = false;
   function shutVeil() { const v = $('#veil'); veilOpen = false; root.classList.remove('open'); v.hidden = false; v.classList.add('shut'); v.querySelector('.lid').style.width = v.querySelector('.lid').style.height = '0px'; }
   async function curtain(open) {
+    if (open && bookCover) { const go = bookCover; bookCover = null; veilOpen = true; root.classList.add('open'); $('#veil').hidden = true; return go(); }
     if (!open) await restIfDue();
     root.classList.toggle('open', open);
     if (open === veilOpen) return sleep(120);
@@ -661,6 +662,175 @@ const Tale = (() => {
     if (open) { await lidTo(v, W / 2, H / 2, 0, far, 1100, easeInOut); v.hidden = true; }
     else await lidTo(v, W / 2, H / 2, far, 0, 1000, easeInOut);
     if (!document.hidden) await sleep(Math.max(0, 1250 - (performance.now() - t0)));
+  }
+  /* 책 표지로 열기(2026-10-30 8판, 모든 동화 기본): 시작 화면 = 손에 든 그림책의 표지. '이야기 시작'을 누르면 책이 살짝만 물러나
+     (책등·두께가 보이게) 표지가 책등(왼쪽)을 축으로 넘어가고, 장면 그림 책장이 한 장씩 촤르르 넘어간 뒤, 드러난 책장(= 첫 장면 #tale)이
+     제자리로 돌아오며 이야기가 시작된다. 펼친 두 면이 아니라 한 면짜리 책이라 화면 밖으로 밀려나는 면이 없다.
+     첫 장면은 표지가 덮고 있는 동안 차려지고, 첫 curtain(true) 에서 펼친다 */
+  let bookCover = null;
+  function bookWanted() {
+    try { if (new URLSearchParams(location.search).get('open') === 'iris') return false; } catch (e) { /* 기본 = 책 */ }   // 2026-10-30 사용자: 8판으로 기본. ?open=iris 는 옛 조리개
+    return !matchMedia('(prefers-reduced-motion: reduce)').matches && !document.hidden;
+  }
+  function bookArm() {
+    const ss = $('#startScreen'), id = taleId();
+    const ov = document.createElement('div'); ov.id = 'bookOpen';
+    const bk = document.createElement('div'); bk.className = 'bk';
+    const leaf = () => {
+      const l = document.createElement('div'); l.className = 'leaf';
+      const f = document.createElement('div'); f.className = 'face front'; const b = document.createElement('div'); b.className = 'face back';
+      const fs = document.createElement('i'); fs.className = 'shade'; const bs = fs.cloneNode();
+      f.appendChild(fs); b.appendChild(bs); l.append(b, f); return { l, f, b, fs, bs };
+    };
+    /* 종이 책장: 세로 띠 N개를 책등부터 이어 붙인다(띠마다 앞 띠에 대해 조금씩 더 돈다) → 책등 쪽이 먼저 들리고 끝이 늦게 따라오며 휜다 */
+    const W0 = innerWidth, H0 = innerHeight, N = 10, sw = W0 / N;
+    const paperLeaf = () => {
+      const l = document.createElement('div'); l.className = 'leaf paper';
+      const strips = []; let parent = l;
+      for (let j = 0; j < N; j++) {
+        const st = document.createElement('div'); st.className = 'strip';
+        Object.assign(st.style, { left: (j ? sw : 0) + 'px', width: (sw + 1) + 'px' });
+        const f = document.createElement('div'); f.className = 'face front'; const b = document.createElement('div'); b.className = 'face back';
+        const fs = document.createElement('i'); fs.className = 'shade'; const bs = fs.cloneNode(); f.appendChild(fs); b.appendChild(bs);
+        st.append(b, f); parent.appendChild(st); parent = st; strips.push({ st, f, b, fs, bs });
+      }
+      // 누워 있을 때(넘기기 전·후)는 띠 대신 한 장으로: 띠 이음새가 보이지 않게
+      const flatF = document.createElement('div'); flatF.className = 'face flat';
+      const flatB = document.createElement('div'); flatB.className = 'face flat'; Object.assign(flatB.style, { left: -W0 + 'px', display: 'none' });
+      l.append(flatF, flatB);
+      return { l, strips, flatF, flatB };
+    };
+    /* 책장 앞면 = 장면 그림 한 장 전체(화면을 꽉 채우는 크기). 띠마다 제 몫만 보인다. 뒷면은 그림 없는 책장 종이 */
+    /* 그림 자리 = 첫 장면 배경 그림이 놓인 자리(세로 화면은 위 무대, 아래는 대사 종이) → 책장마다 그림책처럼 '그림 + 종이 여백'이 같고,
+       마지막에 드러나는 첫 장면과 모양이 맞는다 */
+    let R = { x: 0, y: 0, w: W0, h: H0 };
+    const setArt = (p, src) => {
+      const im = imgCache[src] && imgCache[src].img, iw = (im && im.naturalWidth) || 16, ih = (im && im.naturalHeight) || 9;
+      const k = Math.max(R.w / iw, R.h / ih), bw = iw * k, bh = ih * k, ox = R.x + (R.w - bw) / 2, oy = R.y + (R.h - bh) / 2;
+      p.strips.forEach(({ f }, j) => Object.assign(f.style, { backgroundImage: `url(${src})`, backgroundSize: `${bw}px ${bh}px`, backgroundPosition: `${ox - j * sw}px ${oy}px` }));
+      Object.assign(p.flatF.style, { backgroundImage: `url(${src})`, backgroundSize: `${bw}px ${bh}px`, backgroundPosition: `${ox}px ${oy}px` });
+    };
+    const NP = 4, pages = [...Array(NP)].map(paperLeaf);
+    pages.reverse().forEach(p => bk.appendChild(p.l));
+    const cover = leaf(); cover.l.classList.add('cover');
+    bk.appendChild(cover.l);
+    const gut = document.createElement('i'); gut.className = 'gutter'; bk.appendChild(gut);
+    const hinge = document.createElement('i'); hinge.className = 'hinge'; cover.f.appendChild(hinge);   // 표지의 책등 쪽 접힘 홈
+    const rim = document.createElement('i'); rim.className = 'rim'; rim.style.setProperty('--rim', (window.BACKACCENT || {})[id] || '#A93B32'); cover.f.appendChild(rim);   // 양장 표지 판지 테두리(물러날 때 드러남)
+    ov.appendChild(bk); document.body.appendChild(ov);
+    /* 책 두께: #tale 밑에 깔리는 층(같은 크기·자리) — 왼쪽 책등 + 아래 단면(표지 판지·책장 더미·뒤표지 판지). 판지 색 = 뒤표지 리본 색 */
+    const Bd = Math.round(Math.min(W0, H0) * .022), Dp = Math.round(Math.min(W0, H0) * .05), Sp = Math.round(Math.min(W0, H0) * .045);
+    const board = (window.BACKACCENT || {})[id] || '#A93B32', edgeC = '#EFE6D4', lineC = 'rgba(120,95,60,.28)';
+    const pagesBand = (x, y, w) => `<rect x="${x}" y="${y}" width="${w}" height="${Dp}" fill="${edgeC}"/>` +
+      [.2, .38, .55, .72, .88].map(f => `<rect x="${x}" y="${(y + Dp * f).toFixed(1)}" width="${w}" height="1" fill="${lineC}"/>`).join('');
+    const boardBand = (x, y, w) => `<rect x="${x}" y="${y}" width="${w}" height="${Bd}" fill="${board}"/><rect x="${x}" y="${y + Bd - 1}" width="${w}" height="1" fill="rgba(46,36,28,.25)"/>`;
+    const under = document.createElement('div'); under.id = 'bookUnder';
+    under.innerHTML = `<i class="foot"></i><svg viewBox="${-Sp} 0 ${W0 + Sp + Bd} ${H0 + 2 * Bd + Dp + 2}" width="${W0 + Sp + Bd}" height="${H0 + 2 * Bd + Dp + 2}" style="left:${-Sp}px">
+      <rect x="${-Sp}" y="0" width="${Sp + 4}" height="${H0 + 2 * Bd + Dp}" rx="${Sp * .55}" fill="${board}"/>
+      <rect x="${(-Sp * .42).toFixed(1)}" y="0" width="1.5" height="${H0 + 2 * Bd + Dp}" fill="rgba(46,36,28,.22)"/>
+      <rect x="${W0}" y="${Bd}" width="${Bd}" height="${H0 + Dp}" fill="${edgeC}"/>
+      ${boardBand(0, H0, W0 + Bd)}${pagesBand(0, H0 + Bd, W0 + Bd)}${boardBand(0, H0 + Bd + Dp, W0 + Bd)}</svg>`;
+    document.body.insertBefore(under, root);
+    /* 책상: 크래프트 깔개 한 장 + 책 둘레에 흩어진 색종이 조각 몇 개(책이 조금만 물러나므로 가장자리에만 보인다) */
+    const desk = document.createElement('div'); desk.id = 'bookDesk';
+    let sd = 7; const rnd = () => ((sd = (sd * 9301 + 49297) % 233280) / 233280);
+    const COLS = ['#F2C230', '#E8703A', '#3E7CB1', '#5DAA4A', '#D8708F', '#7B4F8C'], u = Math.min(W0, H0) * .035;
+    const bits = [];
+    for (let i = 0; i < 60; i++) {
+      const x = -W0 * .5 + rnd() * W0 * 2, y = -H0 * .3 + rnd() * H0 * 1.6;
+      if (x > -Sp - u && x < W0 + Bd + u && y > -u && y < H0 + 2 * Bd + Dp + u) continue;   // 책 자리는 비움
+      const c = COLS[Math.floor(rnd() * COLS.length)], r = u * (.45 + rnd() * .55), rot = (rnd() * 360).toFixed(0), kind = rnd();
+      const shape = kind < .4 ? `<polygon points="${[...Array(10)].map((_, q) => { const a = q * Math.PI / 5, rr = q % 2 ? r * .45 : r; return `${(Math.sin(a) * rr).toFixed(1)},${(-Math.cos(a) * rr).toFixed(1)}`; }).join(' ')}"/>`
+        : kind < .75 ? `<circle r="${(r * .6).toFixed(1)}"/>` : `<polygon points="0,${-r} ${(r * .87).toFixed(1)},${(r * .5).toFixed(1)} ${(-r * .87).toFixed(1)},${(r * .5).toFixed(1)}"/>`;
+      bits.push(`<g transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) rotate(${rot})" fill="${c}">${shape}</g>`);
+    }
+    desk.innerHTML = `<svg viewBox="${-W0} ${-H0} ${3 * W0} ${3 * H0}" width="${3 * W0}" height="${3 * H0}" style="left:${-W0}px;top:${-H0}px">
+      <defs><filter id="bdSh" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="${u * .08}" dy="${u * .14}" stdDeviation="${u * .1}" flood-color="#2E241C" flood-opacity=".3"/></filter></defs>
+      <rect x="${-W0}" y="${-H0}" width="${3 * W0}" height="${3 * H0}" fill="#EBDFC8"/><g filter="url(#bdSh)">${bits.join('')}</g></svg>`;
+    document.body.insertBefore(desk, under);
+    const foot = under.querySelector('.foot');
+    Object.assign(foot.style, { left: -Sp + 'px', width: (W0 + Sp + Bd) + 'px', height: (H0 + 2 * Bd + Dp) + 'px' });
+    // 시작 화면을 표지 앞면으로 옮긴다(단추·힌트는 숨김). 끝나면 제자리로
+    const home = ss.parentNode, next = ss.nextSibling;
+    ss.classList.add('asCover'); cover.f.prepend(ss);
+    let cleaned = false;
+    const done = () => {
+      if (cleaned) return; cleaned = true;
+      ss.classList.remove('asCover'); ss.hidden = true; home.insertBefore(ss, next);
+      ov.remove(); under.remove(); desk.remove(); Object.assign(root.style, { transform: '', transformOrigin: '', zIndex: '', background: '' });
+    };
+    const fallback = setTimeout(() => { if (bookCover) { bookCover = null; } done(); }, 9000);   // 첫 장면이 막을 열지 않으면 그냥 걷는다
+    bookCover = () => new Promise(res => {
+      const W = innerWidth, H = innerHeight, portrait = H > W;
+      const t0 = performance.now(), ease = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2, clamp = k => Math.max(0, Math.min(1, k));
+      const lerp = (a, b, k) => a + (b - a) * k, smoothK = k => k * k * (3 - 2 * k), outK = k => 1 - Math.pow(1 - k, 3);
+      const flips = [cover, ...pages.slice().reverse()];   // 표지 → 위 장부터
+      // 책장 그림: 이 동화가 불러 둔 장면 배경만(컷·표지 그림은 넣지 않는다). 모자라면 돌려 쓴다
+      // 지금 첫 장면에 깔린 그림(마지막에 드러날 장면)과 판·액자 그림은 빼서, 책장마다 다른 장면이 넘어가게 한다
+      const nameOf = u => String(u).split('/').pop().split('?')[0];
+      const bgEl = [...root.querySelectorAll('img,image')].find(e => /_(bg|lb)[0-9]*_/.test(e.getAttribute('src') || e.getAttribute('href') || ''));
+      const sr = (bgEl || $('#stageWrap')).getBoundingClientRect(), wr = $('#stageWrap').getBoundingClientRect();
+      const rx = Math.max(sr.left, wr.left), ry = Math.max(sr.top, wr.top), rw = Math.min(sr.right, wr.right) - rx, rh = Math.min(sr.bottom, wr.bottom) - ry;
+      if (rw > 50 && rh > 50) R = { x: rx, y: ry, w: rw, h: rh };
+      const onStage = new Set([...root.querySelectorAll('img,image')].map(e => nameOf(e.getAttribute('src') || e.getAttribute('href') || '')));
+      const bgs = Object.keys(imgCache).filter(src => /_(bg|lb)[0-9]*_/.test(src) && !/board|frame|card|table/.test(src) && !onStage.has(nameOf(src))
+        && imgCache[src].img && imgCache[src].img.naturalWidth);
+      const pool = bgs.length ? bgs : [`${ROOT_URL}assets/thumbs/${id}_key_${portrait ? 'tall' : 'wide'}.webp`];
+      flips.slice(1).forEach((p, i) => setArt(p, pool[i % pool.length]));
+      // 넘김 시각: 4장을 그림이 보일 만큼 천천히, 뒤로 갈수록 조금씩 빨라진다(10-30 사용자: 너무 빠름)
+      const gaps = [290, 235, 195], starts = [0]; gaps.forEach(g => starts.push(starts[starts.length - 1] + g));
+      const pageFrom = 950, durOf = i => 720 - i * 40, lastLand = pageFrom + starts[NP - 1] + durOf(NP - 1);
+      const T = { settle: [0, 700], cover: [380, 1240], fit: [lastLand + 100, lastLand + 900] };   // 물러남 → 표지, 다 넘긴 뒤 한숨 쉬고 천천히 맞춤
+      try { AudioFX.sfx('page_turn_big', .9) || paperTurn(); } catch (e) { /* 소리 없이 */ }
+      starts.forEach((st, i) => { setTimeout(() => { try { AudioFX.sfx('page_turn', .5); } catch (e) { /* 소리 없이 */ } }, pageFrom + st + 140); });
+      root.style.transformOrigin = '0 0'; root.style.zIndex = '1'; root.style.background = 'var(--page-grain), var(--paper)';
+      /* 카메라: 손에 든 책을 그대로 보는 거리. 살짝만 물러나(책등·아래 단면이 보이게) 앞으로 조금 기울었다가, 다 넘기면 제자리로.
+         책등(왼쪽)은 화면 왼쪽 안쪽에 두어 넘어간 장이 왼쪽에 얇게 쌓이는 것이 보이게 한다 */
+      const S1 = portrait ? .8 : .84, bookH = H + 2 * Bd + Dp;
+      const X1 = portrait ? W * .15 : W * .11, Y1 = (H - S1 * bookH) / 2 - H * .005, TILT = portrait ? 9 : 11;
+      const f = now => {
+        const ms = now - t0;
+        const kS = ease(clamp((ms - T.settle[0]) / (T.settle[1] - T.settle[0]))), kC = clamp((ms - T.cover[0]) / (T.cover[1] - T.cover[0]));
+        const kF = ease(clamp((ms - T.fit[0]) / (T.fit[1] - T.fit[0])));
+        const c = kF > 0 ? 1 - kF : kS, drift = smoothK(clamp((ms - T.settle[1]) / (T.fit[0] - T.settle[1])));
+        const S = lerp(1, S1 * (1 + .025 * drift), c), X = lerp(0, X1, c), Y = lerp(0, Y1, c);
+        const tilt = c * lerp(TILT, TILT * .7, drift), P = Math.max(W, H) * 1.6;
+        const tf = `translate(${W / 2}px, ${H / 2}px) perspective(${P.toFixed(0)}px) rotateX(${tilt.toFixed(2)}deg) translate(${-W / 2}px, ${-H / 2}px) `
+          + `translate(${X.toFixed(1)}px, ${Y.toFixed(1)}px) scale(${S.toFixed(4)})`;
+        bk.style.transform = tf; root.style.transform = tf; under.style.transform = tf; desk.style.transform = tf;
+        under.style.opacity = desk.style.opacity = c.toFixed(3); rim.style.opacity = hinge.style.opacity = kS.toFixed(3);   // 처음·끝은 화면 = 책장 한 장(두께·책상 없음)
+        const persp = `perspective(${(Math.max(W, H) * 2.6).toFixed(0)}px) `;
+        flips.forEach((p, i) => {
+          const k = i ? ease(clamp((ms - pageFrom - starts[i - 1]) / durOf(i - 1))) : kC;
+          p.l.style.zIndex = k > .5 ? 10 + i : 10 + flips.length - i;   // 넘어간 장은 왼쪽 더미 위로
+          if (!p.strips) {   // 표지 = 단단한 판지: 들리면서(살짝 앞으로 뜸) 곧게 넘어간다. 빛을 등지면 어두워진다
+            const kk = ease(k), lift = Math.sin(Math.PI * kk);
+            p.l.style.transform = persp + `translateZ(${(lift * W * .02).toFixed(1)}px) rotateY(${(-180 * kk).toFixed(2)}deg)`;
+            p.fs.style.opacity = (Math.min(1, kk * 2) * .55).toFixed(3); p.bs.style.opacity = (Math.max(0, 1 - (kk - .5) * 2) * .5).toFixed(3);
+            p.f.style.visibility = kk > .5 ? 'hidden' : ''; p.b.style.visibility = kk > .5 ? '' : 'hidden';   // 표지 앞면(시작 화면)은 자기 층이라 backface 로 안 숨는다
+            return;
+          }
+          // 종이: 띠 j 의 기울기 = θ − 휨·(j/N)²(휨 = 0.9·sinθ) — 넘어가는 동안 끝이 뒤처져 둥글게 휘고, 다 넘어가면 펴진다
+          const moving = k > 0 && k < 1;
+          p.flatF.style.display = k <= 0 ? '' : 'none'; p.flatB.style.display = k >= 1 ? '' : 'none';
+          p.strips[0].st.style.display = moving ? '' : 'none';
+          if (!moving) return;
+          const th = Math.PI * k, curl = .9 * Math.sin(th), ang = f => (th - curl * f * f) * 180 / Math.PI, sh = a => (Math.sin(a * Math.PI / 180) * .45).toFixed(3);
+          let prev = 0;
+          p.strips.forEach((s, j) => {
+            const a = ang((j + .5) / N), aL = ang(j / N), aR = ang((j + 1) / N);
+            s.st.style.transform = (j ? '' : persp) + `rotateY(${(-(a - prev)).toFixed(2)}deg)`; prev = a;
+            const up = a > 90; s.f.style.visibility = up ? 'hidden' : ''; s.b.style.visibility = up ? '' : 'hidden';
+            // 그늘은 띠 안에서 이웃 띠와 이어지게(양 끝 기울기로 그라데이션) — 띠마다 계단이 지지 않게
+            s.fs.style.background = `linear-gradient(90deg, rgba(46,36,28,${sh(aL)}), rgba(46,36,28,${sh(aR)}))`;
+            s.bs.style.background = `linear-gradient(270deg, rgba(46,36,28,${sh(aL)}), rgba(46,36,28,${sh(aR)}))`;
+          });
+        });
+        gut.style.opacity = (c * smoothK(clamp(kC * 2))).toFixed(3);
+        if (ms < T.fit[1]) requestAnimationFrame(f); else { clearTimeout(fallback); done(); res(); }
+      };
+      requestAnimationFrame(f);
+    });
   }
   /* 동그라미 장면 전환 (옛날 만화식 아이리스). focus: 동그라미가 모일 요소(주인공). 없으면 가운데
      닫힘 → 주인공 둘레에서 잠깐 멈춤 → 완전히 닫힘 → 장면 이름(오린 종이 글자) → change() → 톡 튀며 열림 */
@@ -1334,7 +1504,9 @@ const Tale = (() => {
       if (PT.due()) { PT.run(false); await restShow(); }
       PT.run(true);
       AudioFX.prefetchClips && AudioFX.prefetchClips(); // 이 동화의 녹음을 미리 받아 둔다 (대사가 늦게 나오지 않게)
-      $('#startScreen').hidden = true; $('#endScreen').hidden = true;
+      if (!$('#startScreen').hidden && bookWanted()) bookArm();   // 시작 화면이 표지가 되어 첫 장면 위를 덮는다
+      else $('#startScreen').hidden = true;
+      $('#endScreen').hidden = true;
       clear(); camSnap(500, 280, 1); shutVeil();
       busy = true; $('#finBtn').hidden = true;
       const msg = await run(api);
