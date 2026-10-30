@@ -44,7 +44,7 @@ Object.assign(NARRATION_CLIPS, {
  "어서 오세요!": "audio/el/byeoljubu/crab_45184ee0c8.mp3",
  "우와, 진주랑 산호가 반짝반짝!": "audio/el/byeoljubu/rabbit_110dbc3365.mp3",
  "자, 용왕님께 가요.": "audio/el/byeoljubu/jara_1a0e881fcd.mp3",
- "토끼야, 잘 왔다. 네 간을 다오.": "audio/tc/byeoljubu/king_4ba71f4bbd.mp3",
+ "토끼야, 잘 왔다. 너의 간을 다오.": "audio/tc/byeoljubu/king_9269942b99.mp3",
  "토끼는 어떤 얼굴이 됐을까요? 놀란 얼굴을 톡 눌러 봐요.": "audio/el/byeoljubu/nar_d5f7c6f6a5.mp3",
  "웃을 때가 아니에요.": "audio/el/byeoljubu/nar_6189c372e5.mp3",
  "네?! 제 간을요?": "audio/el/byeoljubu/rabbit_f1785c04b8.mp3",

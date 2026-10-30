@@ -12,7 +12,7 @@ const NARRATION_CLIPS_EN = {
   "t": "Terrapin, you go. Painter, draw a rabbit for him.",
   "c": "audio/tc/byeoljubu/en/king_e084f60197.mp3"
  },
- "토끼야, 잘 왔다. 네 간을 다오.": {
+ "토끼야, 잘 왔다. 너의 간을 다오.": {
   "t": "Rabbit, welcome. Give me your liver.",
   "c": "audio/tc/byeoljubu/en/king_a881839005.mp3"
  },
@@ -107,7 +107,7 @@ const TEXT_EN = {
  "어서 오세요!": "Welcome!",
  "우와, 진주랑 산호가 반짝반짝!": "Wow, pearls and coral, all sparkly!",
  "자, 용왕님께 가요.": "Now, let us go to the Dragon King.",
- "토끼야, 잘 왔다. 네 간을 다오.": "Rabbit, welcome. Give me your liver.",
+ "토끼야, 잘 왔다. 너의 간을 다오.": "Rabbit, welcome. Give me your liver.",
  "토끼는 어떤 얼굴이 됐을까요? 놀란 얼굴을 톡 눌러 봐요.": "What face did the rabbit make? Tap the surprised face.",
  "웃을 때가 아니에요.": "This is no time to smile.",
  "네?! 제 간을요?": "What?! My liver?",

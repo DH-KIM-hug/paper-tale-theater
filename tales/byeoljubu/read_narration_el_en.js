@@ -200,7 +200,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The Dragon King, on his great throne, looked down at the rabbit.",
   "c": "audio/el/byeoljubu/en/nar_46eacd1395.mp3"
  },
- "토끼야, 잘 왔다. 네 간을 다오.": {
+ "토끼야, 잘 왔다. 너의 간을 다오.": {
   "t": "Rabbit, welcome. Give me your liver.",
   "c": "audio/tc/byeoljubu/en/king_a881839005.mp3"
  },

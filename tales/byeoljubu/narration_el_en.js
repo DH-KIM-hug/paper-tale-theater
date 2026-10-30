@@ -176,7 +176,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Now, let us go to the Dragon King.",
   "c": "audio/el/byeoljubu/en/jara_2ffcadf0f7.mp3"
  },
- "토끼야, 잘 왔다. 네 간을 다오.": {
+ "토끼야, 잘 왔다. 너의 간을 다오.": {
   "t": "Rabbit, welcome. Give me your liver.",
   "c": "audio/tc/byeoljubu/en/king_a881839005.mp3"
  },
