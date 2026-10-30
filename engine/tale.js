@@ -1262,8 +1262,17 @@ const Tale = (() => {
   /* 읽어 주기 단추의 펼친 책 (종이 두 장) */
   /* 단추 그림은 앱 UI 생성 그림(assets/ui/*.webp)을 쓴다(2026-10-29 사용자 지시: SVG 그림 → 이미지) */
   const uiPic = (k, cls = '') => `<img class="uipic ${cls}" src="${ROOT_URL}assets/ui/${k}.webp" alt="" aria-hidden="true" draggable="false">`;
-  const BOOK_SVG = uiPic('ic_book', 'book');
-  const PLAY_SVG = uiPic('ic_play', 'play');
+  /* 화면 단추 기호는 단색(홈 UI 2판, 2026-10-30 사용자: 홈 아이콘도 모노톤). 색은 단추가 정한다(currentColor) */
+  const MONO = {
+    ic_home: '<path d="M12 3.2L2.6 11a1 1 0 0 0 .6 1.8H5V20a1 1 0 0 0 1 1h4.2v-5.4h3.6V21H18a1 1 0 0 0 1-1v-7.2h1.8a1 1 0 0 0 .6-1.8z"/>',
+    ic_again: '<path d="M12 4a8 8 0 0 1 7.3 4.7l1.6-.9a.8.8 0 0 1 1.2.8l-.6 4.6a.8.8 0 0 1-1.1.6l-4.2-1.9a.8.8 0 0 1-.1-1.4l1.5-.9A5.4 5.4 0 1 0 17.4 15a1.3 1.3 0 0 1 2.3 1.2A8 8 0 1 1 12 4z"/>',
+    ic_play: '<path d="M8 5.2v13.6a1 1 0 0 0 1.5.9l10.6-6.8a1 1 0 0 0 0-1.7L9.5 4.3A1 1 0 0 0 8 5.2z"/>',
+    ic_book: '<path fill-rule="evenodd" d="M2.5 5.2c3.2-1.3 6.3-1.1 9 .9v14.2c-2.7-1.7-5.8-1.9-9-.7zM21.5 5.2c-3.2-1.3-6.3-1.1-9 .9v14.2c2.7-1.7 5.8-1.9 9-.7z"/>',
+    ic_rotate: '<path fill-rule="evenodd" d="M7 2h7a2 2 0 0 1 2 2v9h-2V5H7v14h4v2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 15a1 1 0 0 1 1-1h5a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-5a1 1 0 0 1-1-1z"/><path d="M18.5 4.5a4 4 0 0 1 3 3.8h1.2l-2 2.4-2-2.4h1.2a2.4 2.4 0 0 0-1.6-2.2z"/>'
+  };
+  const monoPic = (k, cls = '') => `<svg class="uipic mono ${cls}" viewBox="0 0 24 24" aria-hidden="true">${MONO[k]}</svg>`;
+  const BOOK_SVG = monoPic('ic_book', 'book');
+  const PLAY_SVG = monoPic('ic_play', 'play');
   /* 시작·끝 화면의 구멍 그림: 밝은 종이 = <id>_light.webp(THUMBS2L), 어두운 종이 = <id>.webp(THUMBS2). 없으면 빈 구멍 */
   function heroes() {
     const id = taleId(), dark = { matches: false, addEventListener() {} }; // 다크 모드 없음: 늘 밝은 종이
@@ -1385,12 +1394,12 @@ const Tale = (() => {
     document.title = tr(title);
     readOpt = !!read; // 읽어 주기(READ_ACTS)를 갖춘 동화만
     const home = ROOT_URL + 'index.html';
-    /* 시작 화면 두 변형(APP_SCREENS_PLAN S5): 동화 탭에서 = 큰 '이야기 시작' + 작은 '읽어 주기', 잠자리 탭에서(?read=1) = 큰 '읽어 주기' + 작은 '놀이' */
-    const PLAYB = `<button class="pill go" id="startBtn">${PLAY_SVG}${tr('이야기 시작')}</button>`;
+    /* 시작 화면 두 변형(APP_SCREENS_PLAN S5): 동화 탭에서 = 감빛 '이야기 시작' 하나(읽어 주기는 잠자리 탭이 맡는다, 2026-10-30 사용자), 잠자리 탭에서(?read=1) = 큰 '읽어 주기' + 작은 '놀이' */
+    const PLAYB = `<button class="pill go" id="startBtn"><svg class="play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6a1 1 0 0 0 1.5.9l10.6-6.8a1 1 0 0 0 0-1.7L9.5 4.3A1 1 0 0 0 8 5.2z"/></svg>${tr('이야기 시작')}</button>`;
     const PLAYS = `<button class="pill" id="startBtn">${PLAY_SVG}${tr('놀이')}</button>`;
     const READB = hide => `<button class="pill read" id="readBtn" type="button"${hide ? ' hidden' : ''}>${BOOK_SVG}${tr('읽어 주기')}</button>`;
     const readFirst = readOpt && READ_Q;
-    const startPills = readFirst ? READB(false).replace('pill read', 'pill go read') + PLAYS : PLAYB + READB(true);
+    const startPills = readFirst ? READB(false).replace('pill read', 'pill go read') + PLAYS : PLAYB;
     document.body.insertAdjacentHTML('beforeend', `
 <div id="tale">
   <div id="stageWrap">
@@ -1409,12 +1418,12 @@ const Tale = (() => {
     <div id="hand" hidden>${handSvg()}</div>
     <button class="pill" id="finBtn" hidden>${tr('끝내기')}</button>
   </div>
-  <div id="rotateHint">${uiPic('ic_rotate')}${tr('돌려서 크게 보기')}</div>
+  <div id="rotateHint">${monoPic('ic_rotate')}${tr('돌려서 크게 보기')}</div>
   <div id="bubble" hidden><p id="bubbleText"></p></div>
   <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
-    <a class="homeIcon" id="homeIcon" href="${home}" aria-label="${tr('처음으로')}">${uiPic('ic_home')}</a>
-    ${AUTO() ? `<i class="autobadge" aria-hidden="true">${uiPic('ic_play')}</i>` : ''}
+    <a class="homeIcon" id="homeIcon" href="${home}" aria-label="${tr('처음으로')}">${monoPic('ic_home')}</a>
+    ${AUTO() ? `<i class="autobadge" aria-hidden="true">${monoPic('ic_play')}</i>` : ''}
     <img class="keyimg" alt="" decoding="async">
     <div class="hero plain"><img alt="" decoding="async"></div>
     <div class="words">
@@ -1431,8 +1440,8 @@ const Tale = (() => {
       <h2 class="paperword ttl" aria-label="${tr(endTitle)}">${letters(tr(endTitle))}</h2>
       <p class="sub" id="endMsg" hidden></p>
       <div class="rbtns">
-        <a class="rbtn" id="homeBtn" href="${home}" aria-label="${tr('홈으로')}">${uiPic('ic_home')}</a>
-        <button type="button" class="rbtn" id="againBtn" aria-label="${tr('한 번 더')}">${uiPic('ic_again')}</button>
+        <a class="rbtn" id="homeBtn" href="${home}" aria-label="${tr('홈으로')}">${monoPic('ic_home')}<span>${tr('홈으로')}</span></a>
+        <button type="button" class="rbtn go" id="againBtn" aria-label="${tr('한 번 더')}">${monoPic('ic_again')}<span>${tr('한 번 더')}</span></button>
       </div>
     </div>
     <div class="aw-tray" id="awTray" hidden>

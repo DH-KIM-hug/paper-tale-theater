@@ -348,6 +348,14 @@ svg text { font-weight: 800; }
 /* 시작 화면: 주 버튼(이야기 시작)이 분명하게 크고, 보조(처음으로)는 작고 조용하게 */
 #startScreen .pills .pill:not(.go) { min-height: 44px; min-width: 0; padding: 0 18px; font-size: clamp(14px, 2vmin, 16px); font-weight: 500; opacity: .88; }
 #startScreen .pills .pill.go { min-height: 72px; min-width: 230px; }
+/* 시작 단추 = 홈 배너 알약과 같은 감빛 + 흰 세모(홈 UI 2판). 누르라는 뜻으로 둘레 빛이 천천히 번졌다 사라진다 */
+#startScreen .pills .pill.go { position: relative; color: #fff; background: #D9622F; font-weight: 800;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .12), 0 6px 18px rgba(217, 98, 47, .35); }
+#startScreen .pills .pill.go svg.play { fill: #fff; width: .95em; height: .95em; margin-left: -.15em; }
+#startScreen .pills .pill.go::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 0 rgba(217, 98, 47, .45); animation: goGlow 2.4s ease-out infinite; pointer-events: none; }
+#startScreen .pills .pill.go:active { background: #B94E20; box-shadow: inset 0 2px 4px rgba(0, 0, 0, .18); }
+@keyframes goGlow { 0% { box-shadow: 0 0 0 0 rgba(217, 98, 47, .45); } 70%, 100% { box-shadow: 0 0 0 16px rgba(217, 98, 47, 0); } }
+@media (prefers-reduced-motion: reduce) { #startScreen .pills .pill.go::after { animation: none; } }
 #startScreen .ttl { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 @media (orientation: landscape) and (max-height: 520px) {
   #startScreen .pills .pill.go { min-height: 56px; min-width: 168px; }
@@ -464,6 +472,19 @@ svg text { font-weight: 800; }
 #endScreen.back .rbtn .s { fill: none; stroke: var(--accent); stroke-width: 6.5; stroke-linecap: butt; }
 #endScreen.back .rbtn:active { transform: translateY(2px); box-shadow: inset 0 1.5px 0 #FFFDF4, 1px 2px 2px rgba(70, 48, 30, .3); }
 #endScreen.back .rbtn:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+/* 끝 화면 2판(2026-10-30, 홈 UI 2판과 같은 말씨): 창은 옅은 회색 그림자만, 제목은 시작 화면 레터링처럼 흰 글자 + 진한 그늘,
+   단추는 글자 있는 알약 둘 — 흰 [홈으로](먹색 기호) · 감빛 [한 번 더](흰 기호). 오린 종이 버튼·음각 창 그늘은 쓰지 않는다 */
+#endScreen.back .bwin { box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 6px 22px rgba(0, 0, 0, .14); }
+#endScreen.back .bwin::after { display: none; }
+#endScreen.back .ttl { color: #FFFDF6; filter: drop-shadow(0 2px 0 rgba(60, 30, 15, .55)) drop-shadow(0 4px 10px rgba(30, 15, 5, .45)); }
+#endScreen.back .ttl i { background: none; -webkit-text-fill-color: #FFFDF6; }
+#endScreen.back .rbtn { justify-content: center; padding: 0 clamp(22px, 3vmin, 30px) 0 clamp(18px, 2.4vmin, 24px); gap: 10px; border-radius: 999px;
+  color: #23262F; background: #FFFFFF; box-shadow: 0 0 0 1px rgba(0, 0, 0, .04), 0 3px 12px rgba(0, 0, 0, .12);
+  font-family: var(--font); font-size: clamp(18px, 2.6vmin, 22px); font-weight: 800; white-space: nowrap; }
+#endScreen.back .rbtn svg { width: 1.15em; height: 1.15em; flex: none; }
+#endScreen.back .rbtn.go { color: #fff; background: #D9622F; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .12), 0 6px 18px rgba(217, 98, 47, .35); }
+#endScreen.back .rbtn:active { transform: translateY(2px); box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15); }
+#endScreen.back .rbtn.go:active { background: #B94E20; }
 #endScreen.back .endconf { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 6; }
 #endScreen.back .endconf span { position: absolute; top: -20px; width: 11px; height: 11px; border-radius: 2px; animation: fall linear forwards; box-shadow: 1px 2px 2px rgba(60, 36, 24, .22); }
 @media (orientation: portrait) {
@@ -503,6 +524,11 @@ svg text { font-weight: 800; }
   background: var(--white); box-shadow: inset 0 1.5px 0 var(--hi-top), 2px 4px 5px var(--sh-drop), 4px 9px 14px var(--sh-drop-2);
 }
 #startScreen .homeIcon svg, #startScreen .homeIcon img { width: 54%; height: 54%; display: block; object-fit: contain; }
+/* 단색 기호(홈 UI 2판): 단추 글자색을 따른다. 흰 동그라미 단추는 먹색 기호 + 옅은 회색 그림자 */
+.uipic.mono { display: block; fill: currentColor; }
+#startScreen .homeIcon { color: #23262F; box-shadow: 0 0 0 1px rgba(0, 0, 0, .04), 0 2px 10px rgba(0, 0, 0, .10); }
+#startScreen .homeIcon svg.mono { width: 46%; height: 46%; }
+#rotateHint svg.mono, #rotateHint svg.mono * { fill: currentColor; stroke: none; }
 #startScreen .homeIcon .a { fill: var(--reward); } #startScreen .homeIcon .b { fill: var(--ink-4); }
 #startScreen .homeIcon:active { transform: translateY(2px); }
 #startScreen .homeIcon:focus-visible { outline: 2px solid var(--reward); outline-offset: 3px; }
@@ -535,14 +561,16 @@ svg text { font-weight: 800; }
 /* ═════════ 시작·끝 화면 단추 크기 (UI_REDESIGN §7-9): 아이 1차 알약 = 높이 88·폭 ≥280·글자 24 850, 아이 2차 원(집·한 번 더) = 88. 아이폰(세로·가로) = 72. 모양·색은 그대로 ═════════ */
 #startScreen .pills .pill.go, #startScreen .pills .pill.go.read { min-height: 88px; min-width: 280px; font-size: 24px; font-weight: 850; }
 #startScreen .homeIcon { width: 88px; height: 88px; }
-#endScreen.back .rbtn { width: 88px; height: 88px; }
+#endScreen.back .rbtn { width: auto; min-width: 180px; height: 80px; font-size: 22px; }
 @media (orientation: landscape) and (max-height: 520px) {
   #startScreen .pills .pill.go, #startScreen .pills .pill.go.read { min-height: 72px; min-width: 200px; font-size: 20px; }
-  #startScreen .homeIcon, #endScreen.back .rbtn { width: 72px; height: 72px; }
+  #startScreen .homeIcon { width: 72px; height: 72px; }
+  #endScreen.back .rbtn { min-width: 140px; height: 64px; font-size: 19px; }
 }
 @media (orientation: portrait) and (max-width: 600px) {
   #startScreen .pills .pill.go, #startScreen .pills .pill.go.read { min-height: 72px; min-width: 220px; font-size: 22px; }
-  #startScreen .homeIcon, #endScreen.back .rbtn { width: 72px; height: 72px; }
+  #startScreen .homeIcon { width: 72px; height: 72px; }
+  #endScreen.back .rbtn { min-width: 140px; height: 64px; font-size: 19px; padding: 0 20px 0 16px; }
 }
 
 /* 책 표지로 열기(모든 동화 기본, ?open=iris 는 옛 조리개): 표지·책장은 책등(왼쪽 끝)을 축으로 넘어간다. 크기·자리는 JS 가 #tale 과 같이 맞춘다 */
