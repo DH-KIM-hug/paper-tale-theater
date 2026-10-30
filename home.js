@@ -360,7 +360,7 @@
       const list = r.k === 'week' || r.k === 'recent' ? r.pick().filter(t => vis.has(t.id)) : byRank(r.pick().filter(t => vis.has(t.id)));
       if (!list.length) return '';
       return `<section class="row" data-row="${r.k}" aria-label="${L(r.ko, r.en)}"><h3 class="row-h"><span class="row-ic">${rowIcon(r.k)}</span><span class="row-t">${L(r.ko, r.en)}</span></h3>
-        <div class="row-scroll">${list.map(t => `<div class="slot" data-id="${t.id}">${cardHTML(t)}</div>`).join('')}</div></section>`;
+        <div class="row-scroll">${list.map(t => `<div class="slot" data-id="${t.id}">${cardHTML(t)}</div>`).join('')}</div><i class="row-bar" aria-hidden="true"><b></b></i></section>`;
     }).join('');
     const none = seen.length === 0;
     $('#empty').hidden = !none;
@@ -495,6 +495,18 @@
     openTale(c);
   }
   $('#rows').addEventListener('click', activate);
+  // 분류 카드 가로 넘김: 넘기는 동안만 얇은 막대가 보였다가 0.8초 뒤 사라짐(웹 기본 막대는 숨김)
+  $('#rows').addEventListener('scroll', e => {
+    const sc = e.target;
+    if (!sc.classList || !sc.classList.contains('row-scroll')) return;
+    const bar = sc.nextElementSibling, w = sc.scrollWidth, cw = sc.clientWidth;
+    if (!bar || w <= cw + 1) return;
+    const th = bar.firstElementChild, k = cw / w, tw = Math.max(24, bar.clientWidth * k);
+    th.style.width = tw + 'px';
+    th.style.transform = `translateX(${(bar.clientWidth - tw) * sc.scrollLeft / (w - cw)}px)`;
+    bar.classList.add('on');
+    clearTimeout(bar._t); bar._t = setTimeout(() => bar.classList.remove('on'), 800);
+  }, { capture: true, passive: true });
   $('#heroSlot').addEventListener('click', activate);
   const cardKey = e => {
     if ((e.key === 'Enter' || e.key === ' ') && (e.target.classList.contains('closed') || e.target.classList.contains('locked'))) { e.preventDefault(); e.target.click(); }
