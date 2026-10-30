@@ -12,8 +12,12 @@
       "en": "Once upon a time, a kind farmer lived in a village."
     },
     {
-      "text": "농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!",
-      "en": "The farmer worked hard in his field. Tap the farmer to dig!"
+      "text": "농부는 밭을 열심히 갈았어요.",
+      "en": "The farmer worked hard in his field."
+    },
+    {
+      "text": "농부를 톡! 눌러서 땅을 파 봐요!",
+      "en": "Tap the farmer to dig!"
     },
     {
       "text": "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.",
@@ -384,16 +388,6 @@
     {
       "text": "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.",
       "en": "Sharing makes joy grow. And that is how the story of the magic jar ended."
-    },
-    {
-      "text": "농부를 톡! 괭이질을 해요.",
-      "en": "Tap the farmer! Dig with the hoe.",
-      "segs": [
-        [
-          "nar",
-          "Tap the farmer! Dig with the hoe."
-        ]
-      ]
     }
   ],
   "ui": {

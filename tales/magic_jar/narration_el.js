@@ -1,7 +1,8 @@
 /* magic_jar — ElevenLabs 배역 내레이션 (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS, {
  "옛날 옛날에 마음씨 착한 농부가 살았어요.": "audio/el/magic_jar/nar_ec6f0122ba.mp3",
- "농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!": "audio/el/magic_jar/nar_5617e8a99d.mp3",
+ "농부는 밭을 열심히 갈았어요.": "audio/el/magic_jar/nar_5b75e441d2.mp3",
+ "농부를 톡! 눌러서 땅을 파 봐요!": "audio/el/magic_jar/nar_5257014b4f.mp3",
  "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.": "audio/el/magic_jar/nar_8932b13d91.mp3",
  "땅속에서 둥근 뚜껑이 보여요.": "audio/el/magic_jar/nar_38b0ebe7ff.mp3",
  "쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.": "audio/el/magic_jar/nar_426ebecf4f.mp3",
@@ -98,8 +99,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/magic_jar/nar_233192f497.mp3"
  ],
  "농부를 톡! 모두 함께 만세!": "audio/el/magic_jar/nar_a9a7901636.mp3",
- "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.": "audio/el/magic_jar/nar_c91bdd904b.mp3",
- "농부를 톡! 괭이질을 해요.": "audio/el/magic_jar/nar_ffdcc9f189.mp3"
+ "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.": "audio/el/magic_jar/nar_c91bdd904b.mp3"
 });
 Object.assign(VOICE_LINES, {
  "n1": "audio/el/magic_jar/nar_6b62895987.mp3",

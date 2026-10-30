@@ -151,7 +151,7 @@
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
     })();
-    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['intro_korean_happy', 'daegeum', 'pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
+    try { AudioFX.sfx('magic_wand', 0); AudioFX.preloadSfx(['intro_korean_happy', 'daegeum', 'pop', 'ding', 'pow', 'tada', 'magic_wand', 'shimmer', 'birds_chirp_1', 'birds_chirp_2', 'dig_soil_1', 'dig_soil_2', 'dig_soil_3', 'ding_glock', 'pull_pop', 'coins_1', 'coins_2', 'zip_away', 'door_heavy_2', 'whistle_down', 'splash', 'comic_brass', 'pottery_break', 'pop_appear', 'party_horn', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8']); } catch (e) { /* 요술 봉 소리 미리 불러오기 */ }
     if (T.fx) T.fx.style.pointerEvents = 'none';   // 효과 글자(pop)가 누르는 대상을 덮지 않게
     const { sleep, say, camSnap } = T;
     const tr = T.tr;
@@ -180,10 +180,10 @@
     const father = mk(T, { peek: ['father_peek', 210, 'left'], fall: ['father_fall', 150, 'left'] });
 
     const plow = i => {
-      farmer.hop(16, 300); cue('dig_soil', .5) || AudioFX.sfx('pop'); T.pop(farmer.x + 90, farmer.y - 300, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
+      farmer.hop(16, 300); cue('dig_soil_' + i, .6) || AudioFX.sfx('pop');   // 삽질 한 번 소리(옛 dig_soil 6.8초를 겹쳐 울려 이상했음 — 2026-10-30 사용자) T.pop(farmer.x + 90, farmer.y - 300, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
     };
     const pull = i => {
-      farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
+      farmer.hop(14, 300); cue('dig_soil_' + i, .6) || popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
     };
     const sparrowHop = x => { const n = 'sp' + x; lyHop(n, 8, 220); setTimeout(() => lyHop(n, 8, 220), 260); };
     const jarGlint = () => { sparkle(T, jar.x, 345, 6, 60); lyHop('sp1', 6, 200); };
@@ -310,7 +310,7 @@
     await T.curtain(true);
     intro.go(); // 시작 음악 (놀이)
     await say('옛날 옛날에 마음씨 착한 농부가 살았어요.');
-    await T.ask('농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!', () => T.tap(farmer.pos, { prompt: '농부를 톡! 괭이질을 해요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await say('농부는 밭을 열심히 갈았어요.');   // 누르기 없이 저절로(2026-10-30 사용자: 첫 장면은 그냥 넘기기)
     for (let i = 1; i <= 3; i++) { await plow(i); await sleep(450); }
     await T.cutImage([{ src: cutSrc('clink'), sfx: () => cue('ding_glock', .8) || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
     await say('쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.');
@@ -322,8 +322,13 @@
       put(T, jar, 500, 430); jar.pos.style.opacity = 0;
     }, farmer.pos);
     await say('땅속에서 둥근 뚜껑이 보여요.');
-    // 저절로 (2026-10-19 톡 조작 정리)
-    for (let i = 1; i <= 3; i++) { await pull(i); await sleep(450); }
+    /* 땅 파기는 손으로(2026-10-30 사용자: 너무 자동) — 농부를 누를 때마다 한 번 파고, 항아리가 조금씩 드러난다 */
+    const DIG = '농부를 톡! 눌러서 땅을 파 봐요!';
+    for (let i = 1; i <= 3; i++) {
+      if (i === 1) await T.ask(DIG, () => T.tap(farmer.pos, { prompt: DIG })); else await T.tap(farmer.pos, { prompt: DIG });
+      pull(i); jar.pos.style.opacity = [0, .3, .6, 1][i];
+      await sleep(350);
+    }
     jar.pos.style.opacity = 1; jar.hop(40, 500); cue('pull_pop', .8);
     farmer.look('amaze');
     await say('쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.');

@@ -178,6 +178,27 @@
    "sec": 6.8
   }
  ],
+ "dig_soil_1": [
+  {
+   "file": "sfx/dig_soil_1.mp3",
+   "kind": "oneshot",
+   "sec": 0.6
+  }
+ ],
+ "dig_soil_2": [
+  {
+   "file": "sfx/dig_soil_2.mp3",
+   "kind": "oneshot",
+   "sec": 0.65
+  }
+ ],
+ "dig_soil_3": [
+  {
+   "file": "sfx/dig_soil_3.mp3",
+   "kind": "oneshot",
+   "sec": 0.7
+  }
+ ],
  "coins": [
   {
    "file": "sfx/coins_1.mp3",

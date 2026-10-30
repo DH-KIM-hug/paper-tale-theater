@@ -183,6 +183,9 @@ Pixabay 검색 페이지가 자동 접속을 막아 소리 파일을 받지 못�
 | `sfx/leaves_footsteps.mp3` | Pixabay "Footsteps Walking Boots Leaves Autumn 1" — soundreality-footsteps-walking-boots-leaves-autumn-1-422735.mp3 | SoundReality | Pixabay Content License (출처 표기 불필요) | 원본 3초부터 8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
 | `sfx/hammer.mp3` | Pixabay "Hitting nails with Hammer" — freesound_community-hitting-nails-with-hammer-38478.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 3.8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
 | `sfx/dig_soil.mp3` | Pixabay "Digging with shovel" — freesound_community-digging-with-shovel-63069.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0.2초부터 6.8초, 앞뒤 무음 정리·페이드·음량 맞춤 |
+| `sfx/dig_soil_1.mp3` | Pixabay "Digging with shovel" — freesound_community-digging-with-shovel-63069.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | dig_soil.mp3 의 0초부터 0.6초, 삽질 한 번만 잘라 페이드 |
+| `sfx/dig_soil_2.mp3` | Pixabay "Digging with shovel" — freesound_community-digging-with-shovel-63069.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | dig_soil.mp3 의 1.6초부터 0.65초, 삽질 한 번만 잘라 페이드 |
+| `sfx/dig_soil_3.mp3` | Pixabay "Digging with shovel" — freesound_community-digging-with-shovel-63069.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | dig_soil.mp3 의 5.0초부터 0.7초, 삽질 한 번만 잘라 페이드 |
 | `sfx/coins_1.mp3` | Pixabay "Coins Jingle" — yuliana-yurukova-coins-jingle-275765.mp3 | yuliana-yurukova | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 2.9초, 앞뒤 무음 정리·페이드·음량 맞춤 |
 | `sfx/coins_2.mp3` | Pixabay "clink jingle coins" — prmodrai-clink-jingle-coins-399024.mp3 | Prmodrai | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 0.4초, 앞뒤 무음 정리·페이드·음량 맞춤 |
 | `sfx/latch_click.mp3` | Pixabay "Door Lock" — freesound_community-door-lock-82542.mp3 | freesound_community | Pixabay Content License (출처 표기 불필요) | 원본 0초부터 0.9초, 앞뒤 무음 정리·페이드·음량 맞춤 |

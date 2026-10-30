@@ -4,9 +4,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Once upon a time, a kind farmer lived in a village.",
   "c": "audio/el/magic_jar/en/nar_e603270fab.mp3"
  },
- "농부는 밭을 열심히 갈았어요. 농부를 톡! 눌러서 밭을 갈아 봐요!": {
-  "t": "The farmer worked hard in his field. Tap the farmer to dig!",
-  "c": "audio/el/magic_jar/en/nar_9fe34f5e90.mp3"
+ "농부는 밭을 열심히 갈았어요.": {
+  "t": "The farmer worked hard in his field.",
+  "c": "audio/el/magic_jar/en/nar_9d3bdb06d9.mp3"
+ },
+ "농부를 톡! 눌러서 땅을 파 봐요!": {
+  "t": "Tap the farmer to dig!",
+  "c": "audio/el/magic_jar/en/nar_584680dcef.mp3"
  },
  "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.": {
   "t": "Clang! The hoe hit something hard.",
@@ -281,10 +285,6 @@ Object.assign(NARRATION_CLIPS_EN, {
  "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.": {
   "t": "Sharing makes joy grow. And that is how the story of the magic jar ended.",
   "c": "audio/el/magic_jar/en/nar_8711d03d6d.mp3"
- },
- "농부를 톡! 괭이질을 해요.": {
-  "t": "Tap the farmer! Dig with the hoe.",
-  "c": "audio/el/magic_jar/en/nar_71db7db308.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {
