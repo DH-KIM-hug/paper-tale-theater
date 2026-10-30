@@ -2,15 +2,15 @@
 Object.assign(NARRATION_CLIPS_EN, {
  "깊고 깊은 바다 밑에 용궁이 있어요.": {
   "t": "Deep, deep under the sea, there is a sea palace.",
-  "c": "audio/el/byeoljubu/en/nar_64c713704a.mp3"
+  "c": "audio/el/byeoljubu/en/nar_82fcf3041e.mp3"
  },
  "산호 기둥 사이로 물방울이 보글보글 올라가요.": {
   "t": "Little bubbles float up, blub, blub, between the coral pillars.",
-  "c": "audio/el/byeoljubu/en/nar_9bd4932f61.mp3"
+  "c": "audio/el/byeoljubu/en/nar_d0c2051df5.mp3"
  },
  "용왕님이 병이 났어요. 콜록, 콜록.": {
   "t": "The Dragon King is sick. Cough, cough.",
-  "c": "audio/el/byeoljubu/en/nar_ef4ff0ee1d.mp3"
+  "c": "audio/el/byeoljubu/en/nar_04340184e9.mp3"
  },
  "아이고, 온몸이 아프구나.": {
   "t": "Oh dear, my whole body aches.",
@@ -18,7 +18,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "잉어 의원이 약탕기를 들고 곰곰이 생각했어요.": {
   "t": "The carp doctor held his medicine pot and thought very hard.",
-  "c": "audio/el/byeoljubu/en/nar_c470c83bf6.mp3"
+  "c": "audio/el/byeoljubu/en/nar_a6656b30e4.mp3"
  },
  "뭍에 사는 토끼의 간을 드시면 나아요.": {
   "t": "If you eat the liver of a rabbit that lives on land, you will get better.",
@@ -26,7 +26,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "용왕님은 신하들을 모두 큰 방으로 불렀어요.": {
   "t": "The Dragon King called all his courtiers into the great hall.",
-  "c": "audio/el/byeoljubu/en/nar_3a1141766a.mp3"
+  "c": "audio/el/byeoljubu/en/nar_b0bc9a2559.mp3"
  },
  "누가 토끼 간을 가져오겠느냐?": {
   "t": "Who will bring me a rabbit's liver?",
@@ -46,11 +46,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "문어는 먹물 속에서 뻐끔뻐끔. 물고기들은 뭍에 가면 숨을 못 쉬어요.": {
   "t": "The octopus puffs and puffs inside his ink cloud. And fish cannot breathe on land.",
-  "c": "audio/el/byeoljubu/en/nar_43d77995cf.mp3"
+  "c": "audio/el/byeoljubu/en/nar_3eb1520e68.mp3"
  },
  "신하들 가운데 물에서도 뭍에서도 걸을 수 있는 건 자라뿐이었어요.": {
   "t": "Of all the courtiers, only the terrapin could walk both in the water and on land.",
-  "c": "audio/el/byeoljubu/en/nar_e28ebc6631.mp3"
+  "c": "audio/el/byeoljubu/en/nar_c55ca190ba.mp3"
  },
  "저는 물에서도 뭍에서도 걸을 수 있어요.": {
   "t": "I can walk in the water and on land.",
@@ -62,7 +62,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "화공이 토끼 그림을 그렸어요. 귀는 길쭉, 꼬리는 짧게.": {
   "t": "The painter drew a rabbit. Long ears, and a short tail.",
-  "c": "audio/el/byeoljubu/en/nar_d3089c94ef.mp3"
+  "c": "audio/el/byeoljubu/en/nar_96d672d854.mp3"
  },
  "이 그림을 들고 토끼를 찾겠습니다!": {
   "t": "I will take this picture and find the rabbit!",
@@ -70,7 +70,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라는 바다 위로 올라왔어요. 햇빛이 눈부셔요.": {
   "t": "The terrapin came up out of the sea. The sunlight is dazzling.",
-  "c": "audio/el/byeoljubu/en/nar_e8cab115af.mp3"
+  "c": "audio/el/byeoljubu/en/nar_bbadbe0a08.mp3"
  },
  "뭍은 이렇게 환하구나!": {
   "t": "The land is so bright!",
@@ -78,7 +78,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "처음 보는 뭍에서 자라는 두리번두리번 길을 찾았어요.": {
   "t": "On this new land, the terrapin looked this way and that for the path.",
-  "c": "audio/el/byeoljubu/en/nar_8b29b8dd85.mp3"
+  "c": "audio/el/byeoljubu/en/nar_cf82a63ac7.mp3"
  },
  "갈매기님, 이 동물 어디 있소?": {
   "t": "Mr. Seagull, where is this animal?",
@@ -94,7 +94,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라는 엉금엉금 산으로 올라갔어요.": {
   "t": "The terrapin crawled slowly, slowly up the mountain.",
-  "c": "audio/el/byeoljubu/en/nar_cedb766814.mp3"
+  "c": "audio/el/byeoljubu/en/nar_60c475a86a.mp3"
  },
  "다람쥐님, 이 동물 어디 있소?": {
   "t": "Miss Squirrel, where is this animal?",
@@ -106,7 +106,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라는 오른쪽 길로 숲 속 깊이 들어갔어요.": {
   "t": "The terrapin took the path on the right, deep into the forest.",
-  "c": "audio/el/byeoljubu/en/nar_42483ab891.mp3"
+  "c": "audio/el/byeoljubu/en/nar_e505a1ba0a.mp3"
  },
  "멧돼지님, 이 동물 어디 있소?": {
   "t": "Mr. Boar, where is this animal?",
@@ -118,7 +118,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "가운데 길 끝, 커다란 바위 뒤에서 무언가 바스락거렸어요.": {
   "t": "At the end of the middle path, something rustled behind a big rock.",
-  "c": "audio/el/byeoljubu/en/nar_c639aa9d8b.mp3"
+  "c": "audio/el/byeoljubu/en/nar_1c66067e61.mp3"
  },
  "누가 나를 찾아?": {
   "t": "Who is looking for me?",
@@ -130,7 +130,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라는 공손하게 인사하고 달콤한 말을 꺼냈어요.": {
   "t": "The terrapin bowed politely and began to say sweet things.",
-  "c": "audio/el/byeoljubu/en/nar_31e86cee34.mp3"
+  "c": "audio/el/byeoljubu/en/nar_1df5049d2b.mp3"
  },
  "토끼님, 용궁에 가면 높은 벼슬을 드려요.": {
   "t": "Mr. Rabbit, come to the sea palace and you will get a high post.",
@@ -142,7 +142,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "토끼는 벼슬 모자와 떡을 떠올리며 싱글벙글 웃었어요.": {
   "t": "The rabbit pictured a fine official's hat and rice cakes, and grinned and grinned.",
-  "c": "audio/el/byeoljubu/en/nar_704de54bc4.mp3"
+  "c": "audio/el/byeoljubu/en/nar_f569c188be.mp3"
  },
  "벼슬? 맛있는 것? 좋아, 갈래!": {
   "t": "A high post? Tasty treats? Yes, I will go!",
@@ -150,11 +150,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "토끼는 덥석 따라나섰어요. 좋은 것만 생각했거든요.": {
   "t": "The rabbit followed right away. He only thought about the good things.",
-  "c": "audio/el/byeoljubu/en/nar_95a66eacf6.mp3"
+  "c": "audio/el/byeoljubu/en/nar_87cada239c.mp3"
  },
  "해가 뉘엿뉘엿 질 무렵, 둘은 바닷가에 닿았어요.": {
   "t": "As the sun was setting, the two of them reached the seashore.",
-  "c": "audio/el/byeoljubu/en/nar_7ec1460dc6.mp3"
+  "c": "audio/el/byeoljubu/en/nar_8e37b5864c.mp3"
  },
  "제 등에 타세요. 꼭 잡으세요!": {
   "t": "Climb on my back. Hold on tight!",
@@ -162,15 +162,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "토끼가 자라 등에 올라 등딱지를 꼭 잡자, 풍덩!": {
   "t": "The rabbit climbed onto the terrapin's back and held on tight. Splash!",
-  "c": "audio/el/byeoljubu/en/nar_a7b014739f.mp3"
+  "c": "audio/el/byeoljubu/en/nar_52e5964df7.mp3"
  },
  "자라는 토끼를 업고 바다 속으로 들어갔어요.": {
   "t": "The terrapin carried the rabbit down into the sea.",
-  "c": "audio/el/byeoljubu/en/nar_5ce843739d.mp3"
+  "c": "audio/el/byeoljubu/en/nar_bee0648aa3.mp3"
  },
  "물고기 떼가 반짝반짝 지나가고, 미역이 살랑살랑 흔들렸어요.": {
   "t": "Shiny fish swam by, and the seaweed swayed, swish, swish.",
-  "c": "audio/el/byeoljubu/en/nar_5a4a8ca0b6.mp3"
+  "c": "audio/el/byeoljubu/en/nar_8281dd10e3.mp3"
  },
  "우와, 물고기다! 바다 속은 파랗구나.": {
   "t": "Wow, fish! It is so blue under the sea.",
@@ -178,7 +178,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "용궁에 다 왔어요. 커다란 문이 세 개 있어요.": {
   "t": "Here is the sea palace. There are three big doors.",
-  "c": "audio/el/byeoljubu/en/nar_cf0a2c6824.mp3"
+  "c": "audio/el/byeoljubu/en/nar_bd146c8208.mp3"
  },
  "어서 오세요!": {
   "t": "Welcome!",
@@ -190,7 +190,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라가 토끼를 업고 왼쪽 문으로 갔어요.": {
   "t": "The terrapin carried the rabbit to the left door.",
-  "c": "audio/el/byeoljubu/en/nar_5ff1a50a65.mp3"
+  "c": "audio/el/byeoljubu/en/nar_9879e798a9.mp3"
  },
  "우와, 진주랑 산호가 반짝반짝!": {
   "t": "Wow, pearls and coral, all sparkly!",
@@ -206,7 +206,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라가 토끼를 업고 가운데 문으로 갔어요.": {
   "t": "The terrapin carried the rabbit to the middle door.",
-  "c": "audio/el/byeoljubu/en/nar_09d63514b1.mp3"
+  "c": "audio/el/byeoljubu/en/nar_292817bc15.mp3"
  },
  "오른쪽 문으로 들어오시오.": {
   "t": "Come in through the right door.",
@@ -214,11 +214,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라가 토끼를 업고 오른쪽 문으로 갔어요.": {
   "t": "The terrapin carried the rabbit to the right door.",
-  "c": "audio/el/byeoljubu/en/nar_df79a66507.mp3"
+  "c": "audio/el/byeoljubu/en/nar_bc040093b3.mp3"
  },
  "커다란 옥좌에 앉은 용왕님이 토끼를 내려다보았어요.": {
   "t": "The Dragon King, on his great throne, looked down at the rabbit.",
-  "c": "audio/el/byeoljubu/en/nar_46eacd1395.mp3"
+  "c": "audio/el/byeoljubu/en/nar_dc20dee054.mp3"
  },
  "토끼야, 잘 왔다. 너의 간을 다오.": {
   "t": "Rabbit, welcome. Give me your liver.",
@@ -226,7 +226,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "토끼는 깜짝 놀라 뒤로 벌러덩 넘어졌어요.": {
   "t": "The rabbit was so surprised, he fell right over backwards.",
-  "c": "audio/el/byeoljubu/en/nar_09b2452fe1.mp3"
+  "c": "audio/el/byeoljubu/en/nar_73eb7cdcc4.mp3"
  },
  "네?! 제 간을요?": {
   "t": "What?! My liver?",
@@ -234,7 +234,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "토끼는 그제야 알았어요. 자라가 거짓말을 한 거예요.": {
   "t": "Only then did the rabbit understand. The terrapin had told a lie.",
-  "c": "audio/el/byeoljubu/en/nar_15a5f7c2d0.mp3"
+  "c": "audio/el/byeoljubu/en/nar_96ca46f8de.mp3"
  },
  "어떡하지… 겁먹지 말고 생각하자.": {
   "t": "What do I do... Do not be scared. Think.",
@@ -254,11 +254,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "용왕님은 토끼 말을 믿었어요.": {
   "t": "The Dragon King believed the rabbit.",
-  "c": "audio/el/byeoljubu/en/nar_05b99c7239.mp3"
+  "c": "audio/el/byeoljubu/en/nar_1cd6818dc8.mp3"
  },
  "토끼는 속으로 휴, 하고 숨을 내쉬었어요.": {
   "t": "Inside, the rabbit let out a quiet sigh of relief.",
-  "c": "audio/el/byeoljubu/en/nar_84c4ec5760.mp3"
+  "c": "audio/el/byeoljubu/en/nar_d545345f73.mp3"
  },
  "제가 모시고 다녀오겠습니다.": {
   "t": "I will take him there and back.",
@@ -266,11 +266,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라는 토끼를 업고 다시 뭍으로 갔어요.": {
   "t": "The terrapin carried the rabbit back to land.",
-  "c": "audio/el/byeoljubu/en/nar_03742992fb.mp3"
+  "c": "audio/el/byeoljubu/en/nar_6be61843ae.mp3"
  },
  "바위 위에 올라선 토끼가 자라를 내려다보며 웃었어요.": {
   "t": "Standing on top of a rock, the rabbit looked down at the terrapin and laughed.",
-  "c": "audio/el/byeoljubu/en/nar_48d290f34f.mp3"
+  "c": "audio/el/byeoljubu/en/nar_9cac1d8b25.mp3"
  },
  "자라님, 간을 꺼내 놓고 다니는 동물이 어디 있어요? 하하!": {
   "t": "Mr. Terrapin, what animal takes its liver out and leaves it behind? Ha ha!",
@@ -290,11 +290,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "토끼는 숲으로 깡충깡충 달아났어요.": {
   "t": "The rabbit hopped away, hop, hop, into the forest.",
-  "c": "audio/el/byeoljubu/en/nar_0c38d9b518.mp3"
+  "c": "audio/el/byeoljubu/en/nar_5c4edd7c2f.mp3"
  },
  "자라는 바닷가에 엎드려 한숨을 쉬었어요.": {
   "t": "The terrapin lay down on the beach and sighed.",
-  "c": "audio/el/byeoljubu/en/nar_43017c1d4e.mp3"
+  "c": "audio/el/byeoljubu/en/nar_f05b9df4f7.mp3"
  },
  "용왕님께 뭐라고 하지…": {
   "t": "What will I tell the Dragon King...",
@@ -302,7 +302,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "그때, 산신령이 나타났어요.": {
   "t": "Just then, the mountain spirit appeared.",
-  "c": "audio/el/byeoljubu/en/nar_659120b81c.mp3"
+  "c": "audio/el/byeoljubu/en/nar_9d2bec3bb7.mp3"
  },
  "자라야, 애쓴 마음이 갸륵하구나. 이 약을 용왕님께 드려라.": {
   "t": "Terrapin, you tried so hard for your king. Take this medicine to the Dragon King.",
@@ -314,11 +314,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라는 약을 안고 바다로 돌아갔어요.": {
   "t": "The terrapin hugged the medicine and went back to the sea.",
-  "c": "audio/el/byeoljubu/en/nar_db0f6ec580.mp3"
+  "c": "audio/el/byeoljubu/en/nar_47451da937.mp3"
  },
  "자라는 용궁으로 돌아와 용왕님께 약을 드렸어요.": {
   "t": "The terrapin came back to the sea palace and gave the medicine to the Dragon King.",
-  "c": "audio/el/byeoljubu/en/nar_7d2d229316.mp3"
+  "c": "audio/el/byeoljubu/en/nar_b5af90c306.mp3"
  },
  "아, 이제 다 나았다!": {
   "t": "Ah, now I am all better!",
@@ -326,11 +326,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "용궁에 웃음이 돌아왔어요.": {
   "t": "Laughter came back to the sea palace.",
-  "c": "audio/el/byeoljubu/en/nar_b562505ae7.mp3"
+  "c": "audio/el/byeoljubu/en/nar_6751610e6b.mp3"
  },
  "달콤한 말에 덥석 따라가지 않고, 어려울 땐 차분히 생각하면 돼요.": {
   "t": "Do not follow sweet words right away, and when things are hard, stay calm and think.",
-  "c": "audio/el/byeoljubu/en/nar_762c7c111a.mp3"
+  "c": "audio/el/byeoljubu/en/nar_e310137003.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});
