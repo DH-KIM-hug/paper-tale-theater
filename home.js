@@ -152,7 +152,7 @@
   const PIC2L = new Set(window.THUMBS2L || []);
   const PIC = new Set(window.THUMBS || []);
   const TILE = new Set(window.TILES || []);
-  const BAN = new Set(window.BANNERS || []), TTL = new Set(window.TITLES || []);   // 맨 위 배너 그림 · 제목 레터링 (assets/banner, post_banner.py)
+  const BAN = new Set(window.BANNERS || []), TTL = new Set(window.TITLES || []), TTL_EN = new Set(window.TITLES_EN || []);   // 맨 위 배너 그림 · 제목 레터링 (assets/banner, post_banner.py)
   const imgAttrs = 'class="art" alt="" loading="lazy" decoding="async"';
 
   /* ── 그림 딱지: 글자 없이 그림으로 (잠김 = 자물쇠, 이번 주 무료 = 별, 만드는 중 = 가위). 생성 그림 assets/ui/badge_<kind>.webp 가
@@ -267,8 +267,8 @@
   /* 넘기기 (§5-5): 지금 그림은 반대쪽으로 40px 밀리며 200ms 에 사라지고 새 그림은 같은 쪽 40px 에서 320ms 로 들어온다.
      제목은 60ms 늦게 16px 이동하며 바뀐다. 움직임 줄이기 = 160ms 크로스페이드 */
   let heroLock = 0;
-  const heroTitleHTML = t => lang === 'ko' && TTL.has(t.id)
-    ? `<img class="hero-tl" src="assets/banner/${t.id}_title.webp" alt="${shown(t).title}" draggable="false" decoding="async">` : shown(t).title;
+  const heroTitleHTML = t => (lang === 'en' ? TTL_EN : TTL).has(t.id)   // 영어 모드는 영어 레터링(<id>_title_en.webp, 2026-10-31)
+    ? `<img class="hero-tl" src="assets/banner/${t.id}_title${lang === 'en' ? '_en' : ''}.webp" alt="${shown(t).title}" draggable="false" decoding="async">` : shown(t).title;
   function renderHero() {
     const hero = $('#hero');
     hero.hidden = heroList.length === 0;

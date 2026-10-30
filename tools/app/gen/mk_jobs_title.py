@@ -24,3 +24,27 @@ for t, title in T:
                  'prompt': P.format(title=title, lines=lines)})
 json.dump(jobs, open(f'{G}/tools/app/gen/jobs_title.json', 'w'), ensure_ascii=False, indent=1)
 print(len(jobs), 'jobs')
+
+# 영어 제목 레터링(2026-10-31 사용자: 영어도 레터링) — 같은 글꼴 식구의 굵은 기하 산세리프, assets/raw/title/<id>_title_en.png
+#   python3 tools/app/gen/run_simple.py title_en title_en_patjuk ...
+PE = """Use case: logo-brand
+Asset type: transparent production English hand-lettered story title for a children's picture-book app, placed in white over a colourful paper-art banner picture.
+Text verbatim, exactly these words with this capitalisation and punctuation, no other text: "{title}".
+Primary request: a title lettering in the SAME family as the app's logo wordmark: a heavy, chunky, geometric sans-serif display lettering — extra-bold even-weight strokes with no thick/thin modulation, round geometric bowls, straight stems, slightly softened corners, sturdy letters, tight but clear letter spacing. Friendly and modern like a children's app logo, NOT script, NOT brush, NOT handwritten, NOT serif. Give it a little picture-book charm through proportions only (slightly playful letter sizes and a lively baseline), never through decorations. Small words like "the", "and", "of" may be set a little smaller. {lines}
+Colour: solid warm white (#FFFCF5) only, one flat colour. Every letter clear and spelled exactly right.
+Style: flat solid shapes, crisp finished edges, open counters, bold enough to read at small size over a picture. No grunge. No floating dots, decorations, icons, sparkles, characters or frames. No 3D, bevel, emboss, shadows, gradients, outlines or puffiness.
+Composition: left-aligned title that fills the canvas with modest transparent margins. TRUE transparent background and transparent counters. One final title only."""
+jobs = []
+for p in re.split(r"\n  \{ id: '", src)[1:]:
+    t = p.split("'")[0]
+    m = re.search(r"""en: \{ title: (?:'((?:[^'\\]|\\.)+)'|"([^"]+)")""", p)
+    if not m: continue
+    title = (m.group(1) or m.group(2)).replace("\\'", "'")
+    n = len(title)
+    lines = ('Set it on one line.' if n <= 14 else
+             'Set it on two left-aligned lines, breaking only between words, balanced in length.' if n <= 30 else
+             'Set it on two or three left-aligned lines, breaking only between words.')
+    jobs.append({'id': f'title_en_{t}', 'kind': 'sprite', 'aspect': 'landscape 3:2', 'out': f'assets/raw/title/{t}_title_en.png', 'refs': [],
+                 'prompt': PE.format(title=title, lines=lines)})
+json.dump(jobs, open(f'{G}/tools/app/gen/jobs_title_en.json', 'w'), ensure_ascii=False, indent=1)
+print(len(jobs), 'en jobs')
