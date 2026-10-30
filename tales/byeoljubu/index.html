@@ -10,10 +10,10 @@
 <link rel="stylesheet" href="../../engine/tale.css?v=20261029img1">
 </head>
 <body>
-<!-- 녹음: 용왕(king) = Typecast(narration.js 에 tools/typecast/gen_tale.py 가 채움), 나머지 = ElevenLabs(narration_el.js · narration_el_en.js).
-     녹음 전이라 narration_el*.js 는 아직 없다 — tools/elevenlabs/gen_tale.py byeoljubu 로 만든 뒤 unicorn/index.html 처럼 아래에 불러오기 줄을 더한다 -->
+<!-- 녹음: 용왕(king) = Typecast(narration.js · narration_en.js), 나머지 = ElevenLabs(narration_el.js · narration_el_en.js) -->
 <script src="narration.js?v=20261030a"></script>
 <script>try { if (localStorage.getItem('lang') === 'en') document.write('<script src="narration_en.js?v=20261030a"><\/script>'); } catch (e) { /* 영어 자료 없이 한국어로 */ }</script>
+<script>try { document.write('<script src="narration_el.js?v=20261030b"><\/script>' + (localStorage.getItem('lang') === 'en' ? '<script src="narration_el_en.js?v=20261030b"><\/script>' : '')); } catch (e) { document.write('<script src="narration_el.js?v=20261030b"><\/script>'); }</script>
 <script src="../../entitlements.js?v=20261028pz1"></script>
 <script src="../../audio.js?v=20261029nottsx"></script>
 <script src="../../engine/tale.js?v=20261029rw1"></script>

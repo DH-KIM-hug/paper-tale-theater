@@ -1,5 +1,30 @@
-/* byeoljubu — 영어 모드 화면 글자 (내레이션은 narration_el_en.js 가 채운다; tools/elevenlabs/gen_tale.py --lang en) */
-const NARRATION_CLIPS_EN = {};
+/* byeoljubu — Typecast 배역 내레이션 (영어) (tools/typecast/gen_tale.py가 voice_script_en.json에서 생성, 손으로 고치지 말 것) */
+const NARRATION_CLIPS_EN = {
+ "아이고, 온몸이 아프구나.": {
+  "t": "Oh dear, my whole body aches.",
+  "c": "audio/tc/byeoljubu/en/king_e96aca5500.mp3"
+ },
+ "누가 토끼 간을 가져오겠느냐?": {
+  "t": "Who will bring me a rabbit's liver?",
+  "c": "audio/tc/byeoljubu/en/king_a06d9448e6.mp3"
+ },
+ "자라가 가거라. 화공은 토끼를 그려 주어라.": {
+  "t": "Terrapin, you go. Painter, draw a rabbit for him.",
+  "c": "audio/tc/byeoljubu/en/king_e084f60197.mp3"
+ },
+ "토끼야, 잘 왔다. 네 간을 다오.": {
+  "t": "Rabbit, welcome. Give me your liver.",
+  "c": "audio/tc/byeoljubu/en/king_a881839005.mp3"
+ },
+ "그래? 그럼 얼른 가져오너라.": {
+  "t": "Is that so? Then go and bring it quickly.",
+  "c": "audio/tc/byeoljubu/en/king_c617e2f262.mp3"
+ },
+ "아, 이제 다 나았다!": {
+  "t": "Ah, now I am all better!",
+  "c": "audio/tc/byeoljubu/en/king_d4f5298577.mp3"
+ }
+};
 const VOICE_LINES_EN = {};
 const TEXT_EN = {
  "별주부전": "The Rabbit and the Terrapin",

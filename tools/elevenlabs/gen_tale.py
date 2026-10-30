@@ -57,7 +57,7 @@ def main():
     if any(v == 'tc' for v in V.values()) and os.path.exists(TCF):
         src = open(TCF).read()
         for nm in ('NARRATION_CLIPS', 'VOICE_LINES'):
-            m = re.search(r'const ' + nm + (r'_EN' if en else '') + r' = (\{.*?\n\});', src, re.S)
+            m = re.search(r'const ' + nm + (r'_EN' if en else '') + r' = (\{\}|\{.*?\n\});', src, re.S)
             if m: TC[nm] = {k: (v['c'] if isinstance(v, dict) else v) for k, v in json.loads(m.group(1)).items()}  # 영어 쪽은 {t, c} 모양
     def tc_url(group, key, si, role):
         v = (TC.get(group) or {}).get(key)
