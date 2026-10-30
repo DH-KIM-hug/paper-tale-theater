@@ -145,9 +145,11 @@ const AudioFX = (() => {
       narEnd = fin;
       el.onended = () => fin(true);
       el.onerror = () => fin(false);
-      el.onloadedmetadata = () => { if (isFinite(el.duration)) narInfo.dur = el.duration; };
+      const rate = slowEn(url) ? EN_RATE : 1;
+      el.onloadedmetadata = () => { if (isFinite(el.duration)) narInfo.dur = el.duration / rate; };
       narInfo.t = Date.now(); narInfo.dur = 0; narInfo.n++;
       el.src = u;
+      setRate(el, rate);
       if (narHeld) return; // 잠금 화면에서 일시정지 중: 다시 재생을 누르면 이어서
       const p = el.play();
       if (p && p.catch) p.catch(() => fin(false));
@@ -180,12 +182,50 @@ const AudioFX = (() => {
     for (let k = 0; k < 4; k++) next();
   }
 
+  /* 영어 천천히 (2026-10-30 사용자: 영어만 0.9배): ElevenLabs 영어 클립(audio/el/…/en/)은 보통 속도로 녹음돼 있어
+     재생할 때 0.9배로 늘린다. Typecast 영어(audio/tc/)는 녹음 때 이미 0.9배라 그대로. 음 높이는 그대로 둔다 */
+  const EN_RATE = 0.9;
+  const slowEn = url => typeof url === 'string' && /(^|\/)audio\/el\/.*\/en\//.test(url);
+  /* 목소리 늘리기(WSOLA): 40ms 창을 반씩 겹쳐 붙이되, 이어 붙일 자리를 앞 조각과 가장 닮은 곳에서 찾아 음 높이를 지킨다 */
+  function stretchBuffer(c, buf, rate) {
+    const sr = buf.sampleRate, N = Math.round(sr * .04) & ~1, Hs = N / 2, Ha = Hs * rate, tol = Math.round(N / 4);
+    const inLen = buf.length, outLen = Math.ceil(inLen / rate) + N;
+    const mono = new Float32Array(inLen);
+    for (let ch = 0; ch < buf.numberOfChannels; ch++) { const d = buf.getChannelData(ch); for (let i = 0; i < inLen; i++) mono[i] += d[i]; }
+    const win = new Float32Array(N); for (let i = 0; i < N; i++) win[i] = .5 - .5 * Math.cos(2 * Math.PI * i / N);
+    const starts = []; let prev = 0;
+    for (let k = 0; k * Hs + N < outLen; k++) {
+      const nominal = Math.round(k * Ha);
+      if (nominal + N + tol >= inLen) break;
+      let best = nominal;
+      if (k > 0) {
+        const ref = prev + Hs; let bestC = -Infinity;            // 앞 조각이 자연스럽게 이어졌을 자리
+        for (let d = -tol; d <= tol; d += 2) {
+          const s = nominal + d; if (s < 0) continue;
+          let cc = 0; for (let i = 0; i < Hs; i += 4) cc += mono[ref + i] * mono[s + i];
+          if (cc > bestC) { bestC = cc; best = s; }
+        }
+      }
+      starts.push(best); prev = best;
+    }
+    const out = c.createBuffer(buf.numberOfChannels, starts.length * Hs + N, sr);
+    for (let ch = 0; ch < buf.numberOfChannels; ch++) {
+      const d = buf.getChannelData(ch), o = out.getChannelData(ch);
+      starts.forEach((s, k) => { const at = k * Hs; for (let i = 0; i < N; i++) o[at + i] += d[s + i] * win[i]; });
+    }
+    return out;
+  }
+  /* <audio> 쪽(읽어 주기): 재생 속도만 바꾸고 음 높이는 지킨다. src 를 바꾸면 기본 속도로 돌아가는 브라우저가 있어 src 뒤에 둔다 */
+  function setRate(el, rate) {
+    try { el.preservesPitch = el.webkitPreservesPitch = el.mozPreservesPitch = true; el.defaultPlaybackRate = rate; el.playbackRate = rate; } catch (e) { /* 무시 */ }
+  }
   async function loadClip(url) {
     const c = ensure();
     if (!c) throw new Error('no-audio-ctx');
     if (!narBuffers[url]) {
       const bytes = await fetchBytes(url);
-      narBuffers[url] = await c.decodeAudioData(bytes.slice(0)); // slice: 미리 받은 원본은 다시 쓸 수 있게 남긴다
+      const buf = await c.decodeAudioData(bytes.slice(0)); // slice: 미리 받은 원본은 다시 쓸 수 있게 남긴다
+      narBuffers[url] = slowEn(url) ? stretchBuffer(c, buf, EN_RATE) : buf;
     }
     return narBuffers[url];
   }
@@ -406,9 +446,11 @@ const AudioFX = (() => {
         const el = narHelpers[i];
         const fin = ok => { el.onended = el.onerror = el.onloadedmetadata = el.onplaying = null; pairEnds = pairEnds.filter(f => f !== fin); ok ? resolve() : reject(new Error('simultaneous media failed')); };
         pairEnds.push(fin); el.onended = () => fin(true); el.onerror = () => fin(false);
-        el.onloadedmetadata = () => { if (isFinite(el.duration)) narInfo.dur = Math.max(narInfo.dur, el.duration); };
+        const rate = slowEn(urls[i]) ? EN_RATE : 1;
+        el.onloadedmetadata = () => { if (isFinite(el.duration)) narInfo.dur = Math.max(narInfo.dur, el.duration / rate); };
         el.onplaying = () => console.log('[read] simultaneous start', urls[i], performance.now());
         el.src = src;
+        setRate(el, rate);
       }));
       sources.forEach((_, i) => { if (!narHeld) narHelpers[i].play().catch(() => { const el = narHelpers[i]; if (el.onerror) el.onerror(); }); });
       try { await Promise.all(jobs); }
