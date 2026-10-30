@@ -1418,11 +1418,13 @@
      [모으기] = 남은 조각이 모두 제자리로. 다 맞추면 짧게 축하. 위치는 transform 만 바꾸므로 판을 다시 그리면 늘 맞춰진 모습이다 */
   const pzOff = p => ({ x: +p.dataset.dx || 0, y: +p.dataset.dy || 0, r: +p.dataset.dr || 0 });
   const pzSet = (p, x, y, r) => { p.dataset.dx = x; p.dataset.dy = y; p.dataset.dr = r; p.style.transform = x || y || r ? `translate(${x}px, ${y}px) rotate(${r}deg)` : ''; };
+  /* 흩어지기: 판 전체에 흩어지되 조각마다 제 칸 둘레(칸 하나 반 안)에 떨어진다 — 휴대폰처럼 판을 옆으로 넘겨 보는 화면에서도 조각과 제자리가 같이 보인다 */
   function pzScatter(sec) {
-    const tr = sec.querySelector('.pz-track'), pan = sec.querySelector('.pz-pan'), W = pan.clientWidth, H = tr.offsetHeight, x0 = pan.scrollLeft;
+    const tr = sec.querySelector('.pz-track'), TW = tr.offsetWidth, H = tr.offsetHeight, cell = H / 2;
     sec.classList.add('play');
     sec.querySelectorAll('.pzp.got').forEach(p => {
-      const w = p.offsetWidth, h = p.offsetHeight, tx = x0 + Math.random() * Math.max(0, W - w), ty = Math.random() * Math.max(0, H - h);
+      const w = p.offsetWidth, h = p.offsetHeight, cx = p.offsetLeft + w / 2;
+      const tx = Math.max(0, Math.min(TW - w, cx - w / 2 + (Math.random() - .5) * cell * 3)), ty = Math.random() * Math.max(0, H - h);
       p.classList.add('loose');
       p.animate([{ transform: p.style.transform || 'none' }, { transform: `translate(${tx - p.offsetLeft}px, ${ty - p.offsetTop}px) rotate(${(Math.random() - .5) * 30}deg)` }], { duration: motion() ? 420 : 1, easing: 'cubic-bezier(.2,.8,.2,1)' });
       pzSet(p, Math.round(tx - p.offsetLeft), Math.round(ty - p.offsetTop), Math.round((Math.random() - .5) * 30));
@@ -1457,11 +1459,24 @@
     const p = e.target.closest('.pz-sec.play .pzp.loose'); if (!p || e.button) return;
     e.preventDefault();
     const o = pzOff(p);
-    pzDrag = { p, id: e.pointerId, sx: e.clientX - o.x, sy: e.clientY - o.y, ghost: pzGhost(p) };
+    pzDrag = { p, id: e.pointerId, sx: e.clientX - o.x, sy: e.clientY - o.y, cx: e.clientX, cy: e.clientY, ghost: pzGhost(p) };
     p.classList.add('drag'); try { p.setPointerCapture(e.pointerId); } catch (err) { /* 무시 */ }
     pzSet(p, o.x, o.y, 0);
   });
-  addEventListener('pointermove', e => { if (!pzDrag || e.pointerId !== pzDrag.id) return; pzSet(pzDrag.p, Math.round(e.clientX - pzDrag.sx), Math.round(e.clientY - pzDrag.sy), 0); });
+  /* 끄는 동안 판 가장자리에 손가락이 닿으면 판이 그쪽으로 천천히 넘어간다(넘어간 만큼 조각도 따라간다) */
+  let pzEdge = 0;
+  const pzEdgeTick = () => {
+    if (!pzDrag) { pzEdge = 0; return; }
+    const pan = pzDrag.p.closest('.pz-pan'), r = pan.getBoundingClientRect(), x = pzDrag.cx, v = x < r.left + 40 ? -8 : x > r.right - 40 ? 8 : 0;
+    if (v) { const before = pan.scrollLeft; pan.scrollLeft += v; const d = pan.scrollLeft - before; if (d) { pzDrag.sx -= d; pzSet(pzDrag.p, Math.round(pzDrag.cx - pzDrag.sx), Math.round(pzDrag.cy - pzDrag.sy), 0); } }
+    pzEdge = requestAnimationFrame(pzEdgeTick);
+  };
+  addEventListener('pointermove', e => {
+    if (!pzDrag || e.pointerId !== pzDrag.id) return;
+    pzDrag.cx = e.clientX; pzDrag.cy = e.clientY;
+    pzSet(pzDrag.p, Math.round(e.clientX - pzDrag.sx), Math.round(e.clientY - pzDrag.sy), 0);
+    if (!pzEdge) pzEdge = requestAnimationFrame(pzEdgeTick);
+  });
   const pzDrop = e => {
     if (!pzDrag || e.pointerId !== pzDrag.id) return;
     const { p, ghost } = pzDrag; pzDrag = null; p.classList.remove('drag'); ghost.remove();
