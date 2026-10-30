@@ -551,13 +551,8 @@
     sfx('latch_click', .7); // 빗장 철컥
     const inside = [sprite('pig1_base', 300, 210), sprite('pig2_base', 440, 210), sprite('pig3_base', 580, 210)];
     await look(440, 200);
-    let askG1 = '삼 형제는 모두 모였어요. 하나, 둘, 셋을 세어 볼까요?'; // 안내는 첫 번째 누름에만 (T.ask)
-    const askOnce1 = f => { const g = askG1; askG1 = null; return g ? T.ask(g, f) : f(); };
-    for (let i = 0; i < 3; i++) {
-      await look(inside[i].x);
-      await askOnce1(() => T.tap(inside[i].pos, { prompt: '아기 돼지를 톡 눌러요.' }));
-      inside[i].hop(36); T.pop(inside[i].x, 260, NUM[i]); sfx('marimba_' + (i + 1), .6);
-    }
+    await say('삼 형제는 모두 모였어요.');   // 하나·둘·셋 세기는 뺌(2026-10-31 사용자)
+    inside.forEach(p => p.hop(24));
     await say('"셋이서 함께라서 무섭지 않아!"');
     await T.sceneCard('쿵쿵쿵!', () => { bg('brick_out'); T.camSnap(450, 280, 1); });
     const wolf2 = sprite('wolf_puff', 230, 210);

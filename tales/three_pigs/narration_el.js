@@ -63,7 +63,7 @@ Object.assign(NARRATION_CLIPS, {
  "짚은 너무 가벼워요. 다시 골라 봐요.": "audio/el/three_pigs/nar_f9bf7b9b5c.mp3",
  "벽돌 집이 가장 튼튼해요!": "audio/el/three_pigs/nar_3ffc110997.mp3",
  "맞아요! 가장 튼튼한 벽돌 집이에요. 삼 형제는 문을 꼭 닫았어요.": "audio/el/three_pigs/nar_0bf0b7559b.mp3",
- "삼 형제는 모두 모였어요. 하나, 둘, 셋을 세어 볼까요?": "audio/el/three_pigs/nar_480c53df9d.mp3",
+ "삼 형제는 모두 모였어요.": "audio/el/three_pigs/nar_49cbbe2c9a.mp3",
  "아기 돼지를 톡 눌러요.": "audio/el/three_pigs/nar_05db384808.mp3",
  "\"셋이서 함께라서 무섭지 않아!\"": "audio/el/three_pigs/pigc_20620d6d32.mp3",
  "늑대가 벽돌 집에 왔어요. \"아기 돼지야, 문 열어라!\"": [

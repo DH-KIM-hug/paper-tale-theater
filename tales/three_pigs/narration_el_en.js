@@ -183,9 +183,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "That's right! It's the strongest brick house. The three brothers shut the door tight.",
   "c": "audio/el/three_pigs/en/nar_be19103d44.mp3"
  },
- "삼 형제는 모두 모였어요. 하나, 둘, 셋을 세어 볼까요?": {
-  "t": "All three brothers were together. Shall we count them: one, two, three?",
-  "c": "audio/el/three_pigs/en/nar_6a1b502509.mp3"
+ "삼 형제는 모두 모였어요.": {
+  "t": "All three brothers were together.",
+  "c": "audio/el/three_pigs/en/nar_1a76fdb626.mp3"
  },
  "아기 돼지를 톡 눌러요.": {
   "t": "Tap a little pig.",
