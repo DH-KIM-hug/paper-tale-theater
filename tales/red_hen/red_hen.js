@@ -292,8 +292,8 @@
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
 
     const dishQ = QS.get('dish');
-    const DISH = DISHES[dishQ] ? dishQ : Object.keys(DISHES)[Math.floor(Math.random() * 3)];
-    const D = DISHES[DISH];
+    let DISH = DISHES[dishQ] ? dishQ : Object.keys(DISHES)[Math.floor(Math.random() * 3)];
+    let D = DISHES[DISH];
     const cutPic = async (id, hold = 3400) => { if (await T.preload(src(id))) { cue(['slide_up'], .5); await T.cutImage([{ src: src(id), hold }]); } };
 
     /* ================= 장면 차리기 ================= */
@@ -936,6 +936,354 @@
       [4, '방앗간 — 밀가루!', 'hen_bg_mill', s4, p4], [5, '누가 빵을 만들어 줄래?', 'hen_bg_kitchen', s5, p5], [6, '빵이 구워져요', 'hen_bg_kitchen_lb', s6, p6],
       [7, '누가 먹어 줄래?', 'hen_bg_kitchen_lb', s7, p7], [8, '다음 날 아침 — 우리도 할게!', 'hen_bg_yard_morning', s8, p8],
       [9, { sandwich: '다 같이 샌드위치', pizza: '다 같이 피자', pancake: '다 같이 팬케이크' }[DISH], 'hen_bg_kitchen', s9, p9], [10, '다 같이 냠냠', 'hen_bg_yard', s10, p10]];
+    /* ================= 읽어 주기 (docs/READ_MODE.md · read_script_el.json) =================
+       조작(톡·찾기·카드 고르기)은 모두 빼고 같은 그림 위에서 이야기만 읽는다. 장면 차리기는 놀이판의 s1~s10 을 그대로 부르고,
+       찾기·카드는 저절로 이뤄지게 한다. 두 번째 요리는 판마다 무작위(window.__READ.chosen[0], ?mix=pizza 로 고정).
+       배경에서 도는 일(씨 심기·밀 베기·냄새 선 등)은 verb 가 Promise 를 돌려주지 않고 시작만 한다. 장면이 바뀌면 tok 를 올려 멈춘다 */
+    if (T.reading()) {
+      const inst = () => T.readInstant();
+      let tok = 0, rs = { iv: [] };
+      const every = (fn, ms) => { const i = setInterval(fn, ms); rs.iv.push(i); return i; };
+      const stopAll = () => { rs.iv.forEach(clearInterval); rs = { iv: [] }; };
+      const actor = a => (cmd, k, d) => {
+        if (cmd === 'look') a.look(k, d || a.want);
+        else if (cmd === 'turn') a.turn(k);
+        else if (cmd === 'hop') { if (!inst()) a.hop(10, 300); }
+        return null;
+      };
+      const R = {
+        set(n) {
+          tok++; stopAll();
+          const ch = window.__READ && window.__READ.chosen && window.__READ.chosen[0];
+          if (ch && DISHES[ch]) { DISH = ch; D = DISHES[ch]; }
+          ALL.forEach(a => { try { a.hold(null); a.pos.getAnimations().forEach(x => x.cancel()); } catch (e) { /* */ } });
+          if (+n === 1) return SC[0][3]().then(f => f());   // 1장 차리기만 async
+          SC[+n - 1][3]()();
+          return null;
+        },
+        hen: actor(hen), cat: actor(cat), dog: actor(dog), pig: actor(pig),
+        chicks(cmd, k, d) { if (cmd === 'look') chicksLook(k, d); else if (cmd === 'hop' && !inst()) chicksHop(); return null; },
+        friends(cmd, k) { if (cmd === 'hop') { if (!inst()) FRS.forEach(f => f.hop(6, 260)); } else if (cmd === 'turn') FRS.forEach(f => f.turn(k)); return null; },
+        cue(n, v) { if (!inst()) cue(n.replace('~', '/'), +v || .4); return null; },
+        bgm(k) { bgm(k === 'off' ? null : k); return null; },
+        word(k) { if (inst()) return null; return word(k, hen.x, hen.y - 230); },
+        cut(id) { if (inst()) return null; return cutPic(id); },
+        /* 2장 */
+        field(cmd) {
+          if (inst()) return null;
+          const t = tok;
+          if (cmd === 'sack') { if (S.sack) S.sack.style.display = 'none'; hen.look('hold_sack', 'right'); cue('drum', .4) || cue('knock', .4); }
+          else if (cmd === 'sow') {
+            hen.look('sow', 'right');
+            const xs = ROW(); rs.plants = [];
+            const walk = hen.move(xs[xs.length - 1] + 40, hen.y, 3600, 'linear');
+            rs.sowP = (async () => {
+              for (const x of xs) {
+                await sleep(3600 / xs.length); if (t !== tok) return;
+                cue('dig_soil_1', .3) || cue('pop', .3);
+                const g = T.el('g', {}, S.plants); rs.plants.push({ x, g });
+                stand(T, g, 'hen_prop_sprout', x, ROWY);
+                g.animate([{ transform: 'scale(1,0)', transformOrigin: `${x}px ${ROWY}px` }, { transform: 'scale(1,1)', transformOrigin: `${x}px ${ROWY}px` }], 300);
+              }
+              await walk;
+            })();
+          } else if (cmd === 'water') {
+            return (async () => {
+              await rs.sowP; if (t !== tok) return;
+              hen.look('water', 'left'); cue(['water_pour_1', 'water_drip'], .45);
+              await hen.move(X(260, 360), hen.y, 2400, 'linear'); if (t !== tok) return;
+              await word('water', hen.x - X(70, 40), hen.y - 210);
+              hen.look('stand', 'right');
+            })();
+          } else if (cmd === 'grow') {
+            sunPatch();
+            const sun = T.el('g', { 'pointer-events': 'none' }, T.bg); stand(T, sun, 'hen_prop_sun', 0, 0, 96);
+            const dusk = T.el('rect', { x: -60, y: -40, width: 1120, height: 650, fill: '#F4A261', opacity: 0, 'pointer-events': 'none' }, T.bg);
+            cue(['shimmer', 'chime_up'], .35);
+            sun.animate([{ transform: 'translate(74px,77px)' }, { transform: 'translate(500px,30px)', offset: .5 }, { transform: 'translate(1010px,160px)' }], { duration: 3600, easing: 'ease-in-out', fill: 'forwards' });
+            dusk.animate([{ opacity: 0 }, { opacity: 0 }, { opacity: .38 }, { opacity: 0 }], { duration: 4200, fill: 'forwards' });
+            const gw = f => { cue('slide_up', .4); (rs.plants || []).forEach(p => { p.g.innerHTML = ''; stand(T, p.g, f, p.x, ROWY); p.g.animate([{ transform: 'scale(1,.6)', transformOrigin: `${p.x}px ${ROWY}px` }, { transform: 'scale(1,1)', transformOrigin: `${p.x}px ${ROWY}px` }], 420); }); };
+            (async () => {
+              await sleep(1800); if (t !== tok) return; gw('hen_prop_wheat_young');
+              await sleep(1800); if (t !== tok) return; gw('hen_prop_wheat_gold');
+              sun.animate([{ transform: 'translate(-80px,120px)' }, { transform: 'translate(74px,77px)' }], { duration: 900, fill: 'forwards' });
+            })();
+          }
+          return null;
+        },
+        /* 3장: 밀 베기는 이야기 줄과 함께 시작하고, 다음 줄 앞에서 끝낸다 */
+        reap(cmd) {
+          if (inst()) return null;
+          const t = tok;
+          if (cmd === 'start') {
+            hen.look('cut', 'right');
+            rs.reapP = (async () => {
+              for (const p of S.plants) {
+                await hen.move(p.x - X(70, 60), hen.y, 600, 'ease-in-out'); if (t !== tok) return;
+                cue(['chop', 'swish'], .45);
+                p.g.remove(); p.g = stand(T, T.world, 'hen_prop_wheat_cut', p.x + 10, FL - 12);
+                T.world.appendChild(hen.pos);
+                await sleep(350);
+              }
+            })();
+            return null;
+          }
+          return (async () => {
+            await rs.reapP; if (t !== tok) return;
+            S.plants.forEach(p => p.g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, fill: 'forwards' }));
+            const bx = S.plants[0].x + X(40, 0);
+            const bundle = stand(T, T.world, 'hen_prop_wheat_bundle', bx, FL - 4);
+            bundle.animate([{ transform: 'translateY(-30px)', opacity: 0 }, { transform: 'translateY(0)', opacity: 1 }], 400);
+            T.world.appendChild(hen.pos); chicks.forEach(c => T.world.appendChild(c.pos));
+            cue('rattle', .4); hen.look('happy'); chicksLook('hop'); chicksHop();
+          })();
+        },
+        /* 4장 방앗간 */
+        mill(cmd) {
+          if (cmd === 'walk') {
+            const path = X([[760, 400, .85], [560, 335, .68], [380, 280, .55], [255, 222, .42]], [[510, 345, .8], [350, 290, .62], [255, 222, .42]]);
+            if (inst()) { const [x, y, s] = path[path.length - 1]; hen.setScale(s); hen.place(x, y); return null; }
+            const t = tok;
+            return (async () => {
+              const steps = every(() => cue('step_grass', .25), 420);
+              for (const [x, y, s] of path) {
+                if (t !== tok) return;
+                const sc = hen.scale;
+                await hen.pos.animate([{ transform: tfm(hen.x, hen.y, hen.flip, sc) }, { transform: tfm(x, y, hen.flip, s) }], { duration: 1000, easing: 'linear' }).finished;
+                hen.setScale(s); hen.place(x, y);
+              }
+              clearInterval(steps);
+            })();
+          }
+          if (inst()) return null;
+          if (cmd === 'grind') {
+            S.spin.updatePlaybackRate(4); cue('drum', .4);
+            every(() => cue(['knock', 'drum'], .3), 600);
+            hen.look('stand', 'right');
+            S.bin = T.el('g', { 'pointer-events': 'none' }, T.world);
+            stand(T, S.bin, 'hen_prop_flour_bin_empty', MILL.door[0] + 46, MILL.door[1] + 6, 46);
+          } else if (cmd === 'flour') {
+            rs.iv.forEach(clearInterval); rs.iv = []; cue('rattle', .5);
+            if (S.bin) { S.bin.innerHTML = ''; stand(T, S.bin, 'hen_prop_flour_bin', MILL.door[0] + 46, MILL.door[1] + 6, 50); }
+            S.spin.updatePlaybackRate(1);
+            return word('flour', MILL.door[0] + 46, MILL.door[1] - 80);
+          }
+          return null;
+        },
+        /* 5장 부엌: 반죽 */
+        k5(cmd) {
+          if (inst()) return null;
+          const t = tok;
+          if (cmd === 'pass') {
+            [[pig, 470], [dog, 360], [cat, 260]].forEach(([a, x]) => winPut(a, x + 150, 'run', 'right', .68));
+            rs.passP = Promise.all(FRS.map(a => a.move(a.x + X(420, 420), a.y, 5200, 'linear')));
+          } else if (cmd === 'passEnd') {
+            return (async () => { await rs.passP; if (t !== tok) return; FRS.forEach(hide); chicksLook('stand', 'left'); hen.look('ask', 'left'); })();
+          } else if (cmd === 'bring') {
+            return (async () => {
+              hen.look('ask', 'left');
+              for (const id of ['flour', 'water']) {
+                const c = S.cells.find(x => x.id === id); c.el.style.visibility = 'hidden';
+                await fly(ING(id), c.cx, c.cy, BOWLX(), S.top - 20, 74); if (t !== tok) return;
+                if (id === 'flour') { cue('rattle', .5); S.bowl0.style.display = 'none'; S.bowl.style.display = ''; } else cue(['water_pour_1', 'water_drip'], .5);
+                await word(id, BOWLX(), S.top - 120); if (t !== tok) return;
+              }
+            })();
+          } else if (cmd === 'knead') {
+            hen.move(BOWLX() + X(40, 40), hen.y, 500); S.bowl.style.display = 'none';
+            hen.look('knead', 'left'); hen.place(hen.x, S.top + 6 + hen.h * hen.scale * .08);
+            every(() => { hen.body.animate([{ transform: 'scale(1,1)' }, { transform: 'scale(1.03,.97)' }, { transform: 'scale(1,1)' }], 400); cue('marimba_1', .3); }, 520);
+          } else if (cmd === 'butter') {
+            rs.iv.forEach(clearInterval); rs.iv = [];
+            const bc = S.cells.find(x => x.id === 'butter'); if (bc) bc.el.style.visibility = 'hidden';
+            S.tin = stand(T, S.mid, 'hen_prop_tin', BOWLX() - 70, S.top + 8, 40 * KP);
+            hen.look('butter', 'left'); cue('swish', .4);
+          } else if (cmd === 'butterWord') {
+            return word('butter', hen.x - 60, S.top - 150).then(() => hen.look('stand', 'right'));
+          } else if (cmd === 'oven') {
+            return (async () => {
+              if (S.oven) { const [ox, oy] = ovenWin(); S.tin.remove(); await fly('hen_prop_tin', BOWLX() - 70, S.top - 10, ox, oy, 60); cue('door', .5) || cue('knock', .5); cue('fire_crackle', .4); }
+              else { S.tin.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }); cue('door', .5); }
+            })();
+          }
+          return null;
+        },
+        /* 6장 오븐 */
+        k6(cmd) {
+          if (inst()) return null;
+          const t = tok;
+          if (cmd === 'glow') {
+            const [ox, oy] = ovenWin();
+            const gl = glow(T, S.mid, ox, oy, 150, '#F2B366', .9); S.mid.insertBefore(gl, S.mid.firstChild);
+            gl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1200, fill: 'forwards' });
+            rs.gl2 = glow(T, T.fx, ox, oy, 60, '#FBF3D5', .75); rs.gl2.animate([{ opacity: .6 }, { opacity: 1 }, { opacity: .6 }], { duration: 1600, iterations: Infinity });
+            cue('fire_crackle', .3); cue('shimmer', .35);
+          } else if (cmd === 'open') {
+            return (async () => {
+              cue('bell', .6) || cue('ding', .6);
+              oven(...S.ovenAt.slice(0, 2), true, S.ovenAt[2]); T.world.appendChild(hen.pos); chicks.forEach(c => T.world.appendChild(c.pos));
+              await cutPic('hen_cut_oven'); if (t !== tok) return;
+              if (rs.gl2) rs.gl2.remove();
+              hen.look('bread'); hen.move(hen.x - X(30, 0), FK + 4, 400); cue('harp_gliss', .5); cue('chime_up', .4);
+              chicksLook('hop', 'right'); chicksHop();
+            })();
+          } else if (cmd === 'smell') {
+            const sm = rs.sm = T.el('g', { 'pointer-events': 'none' }, T.fx);
+            [0, 1, 2].forEach(i => { const g = T.el('g', {}, sm); stand(T, g, 'hen_prop_smell', 0, 0, 100); g.animate([{ transform: `translate(${hen.x - 20 + i * 30}px,${hen.y - 170}px)`, opacity: 0 }, { opacity: .95, offset: .3 }, { transform: `translate(${720 + i * 50}px,${120}px)`, opacity: 0 }], { duration: 2600, delay: i * 500, iterations: 2 }); });
+            cue('harp_gliss_2', .35);
+            winPut(cat, 670, 'sniff', 'left', .78); winPut(dog, 790, 'sniff', 'left', .72); winPut(pig, 895, 'sniff', 'left', .6);
+            FRS.forEach(f => { f.pos.animate([{ opacity: 0 }, { opacity: 1 }], 600); });
+            every(() => { FRS.forEach((f, i) => setTimeout(() => f.hop(6, 240), i * 120)); cue('toot_kazoo', .2); }, 900);
+          } else if (cmd === 'smellEnd') { rs.iv.forEach(clearInterval); rs.iv = []; if (rs.sm) rs.sm.remove(); }
+          return null;
+        },
+        /* 7장 */
+        k7(cmd) {
+          if (inst()) return null;
+          if (cmd === 'eat') {
+            S.bread.remove(); S.bread = stand(T, S.food, 'hen_prop_bread', X(580, 610), S.top - 2, 48 * KP);
+            hen.look('eat', 'right'); hen.hold('hen_prop_bread', 40);
+            chicksLook('eat'); chicks[0].turn('right'); chicks[1].turn('left'); chicks[2].turn('left');
+            every(() => cue(['chomp', 'marimba_2'], .3), 700);
+          } else if (cmd === 'eatEnd') { rs.iv.forEach(clearInterval); rs.iv = []; return cutPic('hen_cut_eat'); }
+          else if (cmd === 'shy') {
+            [[cat, 'sit'], [dog, 'sit'], [pig, 'stand']].forEach(([a, k]) => { a.look(k, 'left'); a.place(a.x, a.y + 14); });
+            cue('whistle_down', .3);
+          } else if (cmd === 'shyEnd') hen.hold(null);
+          return null;
+        },
+        /* 8장 다음 날 아침 */
+        k8(cmd, a1) {
+          if (inst()) return null;
+          const t = tok;
+          if (cmd === 'run') {
+            cue('animals/rooster', .45); cue('birds_chirp_1', .3);
+            const stops = X([500, 655, 825], [480, 585, 690]);
+            const runners = rs.runners = [[dog, D.bring[0]], [cat, D.bring[1]], [pig, D.bring[2]]];
+            runners.forEach(([a, ing], i) => { put(T, a, X(1100, 800) + i * 120, FL, { look: 'run', to: 'left', s: P ? .85 : 1 }); a.hold(ING(ing), P ? 50 : 54); });
+            const steps = setInterval(() => cue('step_grass', .3), 260);
+            return Promise.all(runners.map(([a], i) => sleep(i * 300).then(() => a.move(stops[i], FL, 1700, 'ease-out')))).then(() => { clearInterval(steps); hen.look('stand', 'right'); });
+          }
+          if (cmd === 'hopWord') {
+            const [a, ing] = rs.runners[+a1];
+            a.hop(10, 280);
+            const [ix, iy] = a.holdAt();
+            return word(ing, ix, iy - 70);
+          }
+          if (cmd === 'sit') { rs.runners.forEach(([a]) => a.hold(null)); dog.look('sit', 'left'); cat.look('sit', 'left'); pig.look('stand', 'left'); }
+          else if (cmd === 'cards') {
+            const order = ['hen_prop_card_seed', 'hen_prop_card_wheat', 'hen_prop_card_flour', D.card];
+            const CW = 84, CH = 112;
+            const slotXY = i => X([290 + i * 112, 205], [356 + i * 96, 150]);
+            if (!P) { cast([[dog, 750, FL, { look: 'sit', to: 'left' }], [pig, 950, FL + 14, { look: 'mud', to: 'left' }], [cat, 850, FL + 4, { look: 'sit', to: 'left' }]]); put(T, hen, 175, FL, { look: 'point', to: 'right' }); chicksAt([235, 120, 75], FL + 30, { to: 'right' }); }
+            else { FRS.forEach(hide); put(T, hen, 345, FL + 40, { look: 'point', to: 'right', s: .9 }); chicksAt([400, 315, null], FL + 60, { to: 'right' }); }
+            const slots = T.el('g', { 'pointer-events': 'none' }, T.fx);
+            [0, 1, 2, 3].forEach(i => { const [x, y] = slotXY(i); pic(T, T.el('g', { filter: 'url(#pp)' }, slots), 'hen_prop_card_slot', x, y, CW + 4, CH + 4); });
+            cue('paper_turn', .5);
+            rs.cards = [];
+            return (async () => {
+              for (let i = 0; i < 4; i++) {
+                if (t !== tok) return;
+                const [x, y] = slotXY(i), g = T.el('g', { 'pointer-events': 'none' }, T.fx), pg = T.el('g', { filter: 'url(#pp)' }, g);
+                pic(T, pg, order[i], x, y, CW, CH);
+                g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
+                g.animate([{ transform: 'translateY(-30px) scale(.6)', opacity: 0 }, { transform: 'translateY(0) scale(1)', opacity: 1 }], 400);
+                rs.cards.push(g); cue('paper_down', .4) || cue('ding_glock', .4);
+                await sleep(650);
+              }
+            })();
+          } else if (cmd === 'bounce') {
+            (async () => { for (let i = 0; i < 4; i++) { if (t !== tok) return; const c = rs.cards && rs.cards[i]; if (c) c.animate([{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], 420); cue('marimba_' + (i + 1), .4); await sleep(560); } })();
+          }
+          return null;
+        },
+        /* 9장 두 번째 요리 */
+        k9(cmd, id) {
+          const px = PLATE()[0];
+          if (cmd === 'init') { rs.stackY = S.top - 2 - SLH * .5; return null; }
+          if (inst()) return null;
+          const t = tok;
+          const LAYW = 160;
+          const addLayer = (lid) => {
+            const f = LAYER[DISH][lid]; if (!f) return;
+            if (DISH === 'sandwich') { const h = LAYW / ASP[f] * .55; standWH(S.dish, f, px, rs.stackY + h * .5, LAYW, h); rs.stackY -= h * .42; }
+            else if (DISH === 'pizza') { const g = stand(T, S.dish, f, px, S.top - 2, PZH); g.dataset.layer = lid; }
+            else if (DISH === 'pancake') {
+              if (lid === 'honey') { S.base.innerHTML = ''; stand(T, S.base, 'hen_prop_pancake_layer_honey', px, S.top + 8, PKH * ASP.hen_prop_pancake_stack / ASP.hen_prop_pancake_layer_honey); }
+              else { const w = 120, h = w / ASP[f], g = stand(T, S.dish, f, px + (lid === 'banana' ? 14 : -14), S.panTop + h * (lid === 'banana' ? .75 : .35), h); g.dataset.layer = lid; }
+            }
+          };
+          if (cmd === 'add') {
+            return (async () => {
+              const c = S.cells.find(x => x.id === id); if (c) c.el.style.visibility = 'hidden';
+              chicks.forEach((k, i) => setTimeout(() => k.hop(8, 240), i * 80));
+              await fly(ING(id), c ? c.cx : hen.x, c ? c.cy : hen.y - 100, px, S.top - 30, 70); if (t !== tok) return;
+              hen.look('place', 'left'); cue('pop', .5); addLayer(id);
+              if (DISH === 'pancake' && id === 'honey') cue('slide_down', .4);
+            })();
+          }
+          if (cmd === 'word') return word(id, px, S.top - (id === 'bread' ? 170 : 150));
+          if (cmd === 'eggword') { hen.look('place', 'left'); cue('pop', .4); return word('egg', px, S.top - 130); }
+          if (cmd === 'knead') { hen.look('knead', 'left'); every(() => cue('marimba_1', .3), 500); }
+          else if (cmd === 'pan') { rs.iv.forEach(clearInterval); rs.iv = []; S.base.innerHTML = ''; stand(T, S.base, 'hen_prop_fry_pan', px, S.top + 4, 52); cue('steam_hiss', .4) || cue('fire_crackle', .4); }
+          else if (cmd === 'stack') { S.base.innerHTML = ''; stand(T, S.base, 'hen_prop_pancake_stack', px, S.top + 8, PKH); S.panTop = S.top + 8 - PKH * .72; cue('pop_appear', .5) || cue('pop', .5); }
+          else if (cmd === 'top') {
+            return (async () => {
+              await fly('hen_prop_bread_slice', hen.x - 40, hen.y - 120, px, rs.stackY, 110); if (t !== tok) return;
+              stand(T, S.dish, 'hen_prop_bread_slice', px, rs.stackY + SLH * .55, SLH); cue('pop', .8);
+            })();
+          } else if (cmd === 'rest') {
+            const rest = S.cells.find(x => x.el.style.visibility !== 'hidden' && !D.ask.includes(x.id));
+            (DISH === 'pizza' ? cat : dog).hop(12, 300);
+            if (rest) rest.el.animate([{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(30px)' }], { duration: 500, fill: 'forwards' });
+            cue('giggle_xylo', .4) || cue('pop', .4);
+          } else if (cmd === 'oven') {
+            return (async () => {
+              S.dish.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
+              cue('door', .4); await sleep(1300); if (t !== tok) return; cue('bell', .6) || cue('ding', .6);
+              S.dish.getAnimations().forEach(a => a.cancel());
+              [...S.dish.children].forEach(n => { if (n !== S.base) n.remove(); });
+              S.base.innerHTML = ''; stand(T, S.base, 'hen_prop_plate', px, S.top + 10, 30 * KP); stand(T, S.base, 'hen_prop_pizza_whole', px, S.top - 2, PZH);
+            })();
+          } else if (cmd === 'done') {
+            hen.look('happy'); chicksLook('hop'); chicksHop(); FRS.forEach(f => f.hop(12, 300));
+            cue('cymbal', .3); cue('chime_up', .5);
+          }
+          return null;
+        },
+        /* 10장 */
+        k10(cmd, a1) {
+          if (inst()) return null;
+          if (cmd === 'pour') { hen.look('pour', 'right'); cue(['water_pour_1', 'water_drip'], .4); rs.cup = stand(T, T.world, 'hen_prop_cup', hen.x + hen.w * .45, FL + 10, 30); }
+          else if (cmd === 'pourEnd') { if (rs.cup) rs.cup.remove(); hen.look('stand', 'right'); }
+          else if (cmd === 'nom') { const a = { cat, dog, pig }[a1]; a.hop(8, 260); cue(['chomp', 'chomp_2'], .35); }
+          else if (cmd === 'finale') {
+            bgm(null);
+            hen.look('wave'); cue('animals/rooster', .5);
+            T.confetti(); finaleMusic();
+            ALL.forEach((a, i) => { if (shown(a)) setTimeout(() => a.hop(20, 380), i * 70); });
+          }
+          return null;
+        },
+        settle() { stopAll(); return null; },
+      };
+      const en = (() => { try { return typeof englishOn === 'function' && englishOn(); } catch (e) { return false; } })();
+      const getJ = f => fetch(f, { cache: 'no-cache' }).then(r => (r.ok ? r.json() : null)).catch(() => null);
+      const sc = (en && await getJ('read_script_en.json')) || await getJ('read_script_el.json');
+      let list = null, idx = 0;
+      const RW = Object.create(T);
+      /* 부엌이 이어지는 장면(5·6·7)은 책장을 넘기지 않고 같은 배경 위에서 잇는다 */
+      RW.sceneCard = (label, change, focus) => {
+        idx++;
+        if (!list && sc && Array.isArray(sc.scenes)) { const ch = (window.__READ && window.__READ.chosen) || []; list = sc.scenes.filter(x => !x.variant || x.variant === ch[(x.round || 1) - 1]); }
+        const nx = list && list[idx];
+        const nbg = nx && nx.set != null && SC[+nx.set - 1] ? SC[+nx.set - 1][2] : null;
+        if (nbg && KITCHEN.test(nbg) && KITCHEN.test(curBg) && !document.hidden) return cont(change);
+        return T.sceneCard(label, change, focus);
+      };
+      try { const rr = await T.readPlay.call(RW, R); await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } return rr; } finally { bgm(null); stopAll(); }
+    }
+
     const from = Math.max(1, Math.min(10, +QS.get('from') || 1));
     window.__rh = { dish: DISH, scene: 0 };
     let first = true;
@@ -954,5 +1302,5 @@
     return '일할 때 같이 하면 먹을 때도 같이 먹어요.';
   }
 
-  Tale.mount({ title: '빨간 암탉', subtitle: '', read: false, run: T => run(Tale.api) });
+  Tale.mount({ title: '빨간 암탉', subtitle: '', read: true, run: T => run(Tale.api) });
 })();

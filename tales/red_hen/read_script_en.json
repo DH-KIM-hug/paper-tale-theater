@@ -1,0 +1,1831 @@
+{
+ "mode": "read",
+ "tale": "red_hen",
+ "lang": "en",
+ "title": "The Little Red Hen",
+ "voices_from": "voice_script_el.json",
+ "moral": "일할 때 같이 하면 먹을 때도 같이 먹어요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md, 2026-10-31). 놀이판 10장 그대로(조작 전용 장면 없음). 조작을 뺀 자리: 1장 얼굴 카드(A7) → A8 줄만, 2장 자루 톡(B1a) → 새 줄 \"씨앗 자루를 열었어요\", 5장 찾기 → 새 줄 \"병아리들이 밀가루와 물을 가져왔어요\", 8장 순서 카드 → 카드가 저절로 놓이고 H12 줄, 9장 재료 찾기 → 새 줄 \"○, ○, ○를 차례로 얹었어요\"(판마다), 10장 인사 톡(J7) → 바로 합창 J8. 낱말 이름 부르기(W_*)는 낱말당 한 번 남김. 두 번째 요리(8·9장)는 sandwich|pizza|pancake 중 무작위(rounds=1, ?mix= 로 고정). 합창(C2·I_done_*·J8)은 chorus_el.js 의 겹친 클립. 새 줄은 내레이터 5개.",
+ "rounds": 1,
+ "variants": {
+  "keys": [
+   "sandwich",
+   "pizza",
+   "pancake"
+  ],
+  "rounds": 1,
+  "rule": "variant 가 없는 장면 + variant == chosen[0] 인 장면만 재생"
+ },
+ "scenes": [
+  {
+   "key": "R01_seed",
+   "card": "Who Will Plant It?",
+   "set": "1",
+   "enter": [],
+   "lines": [
+    {
+     "text": "농장에 빨간 암탉이 살았어요. 병아리 셋이랑요.",
+     "en": "On a farm lived a little red hen, with her three chicks.",
+     "segs": [
+      [
+       "nar",
+       "On a farm lived a little red hen, with her three chicks.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "A1",
+     "before": [
+      "bgm:open",
+      "cue:animals~rooster:.5"
+     ]
+    },
+    {
+     "text": "어느 날, 암탉이 밀 씨앗을 찾았어요.",
+     "en": "One day, the hen found some wheat seeds.",
+     "segs": [
+      [
+       "nar",
+       "One day, the hen found some wheat seeds.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "A2",
+     "before": [
+      "chicks:hop"
+     ]
+    },
+    {
+     "text": "이 씨앗을 심으면 밀이 자라. 누가 심어 줄래?",
+     "en": "If we plant these seeds, wheat will grow. Who will help me plant them?",
+     "segs": [
+      [
+       "hen",
+       "If we plant these seeds, wheat will grow. Who will help me plant them?",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "A3",
+     "before": [
+      "hen:look:hold_sack:left"
+     ]
+    },
+    {
+     "text": "하암… 난 싫어.",
+     "en": "Yawn… Not I.",
+     "segs": [
+      [
+       "cat",
+       "Yawn… Not I.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "A4",
+     "before": [
+      "hen:look:stand:left",
+      "cue:yawn:.4",
+      "cat:look:lie_fence:left"
+     ],
+     "after": [
+      "cue:toot_kazoo:.35"
+     ]
+    },
+    {
+     "text": "난 싫어, 낮잠 잘래!",
+     "en": "Not I! I want a nap!",
+     "segs": [
+      [
+       "dog",
+       "Not I! I want a nap!",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "A5",
+     "before": [
+      "hen:look:stand:right",
+      "cue:animals~dog:.3"
+     ],
+     "after": [
+      "cue:toot_kazoo:.35"
+     ]
+    },
+    {
+     "text": "난 싫어… 쩝.",
+     "en": "Not I… smack, smack.",
+     "segs": [
+      [
+       "pig",
+       "Not I… smack, smack.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "A6",
+     "before": [
+      "cue:animals~pig:.3"
+     ],
+     "after": [
+      "cue:toot_kazoo:.35"
+     ]
+    },
+    {
+     "text": "암탉은 조금 시무룩했어요. 하지만 금방 기운을 냈지요.",
+     "en": "The hen felt a little sad. But soon she cheered up.",
+     "segs": [
+      [
+       "nar",
+       "The hen felt a little sad. But soon she cheered up.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "A8",
+     "before": [
+      "bgm:off",
+      "hen:look:sad:left",
+      "cue:whistle_down:.35"
+     ]
+    },
+    {
+     "text": "그럼 나 혼자 할게!",
+     "en": "Then I will do it myself!",
+     "segs": [
+      [
+       "hen",
+       "Then I will do it myself!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "A9",
+     "before": [
+      "hen:look:determined",
+      "hen:hop",
+      "cue:xylo_up:.5"
+     ]
+    },
+    {
+     "text": "삐약! 우리도!",
+     "en": "Peep! Us too!",
+     "segs": [
+      [
+       "chick",
+       "Peep! Us too!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "A10",
+     "before": [
+      "chicks:look:hop",
+      "chicks:hop"
+     ],
+     "after": [
+      "chicks:look:stand:right"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02_plant",
+   "card": "Plant the Seeds, Water Them",
+   "set": "2",
+   "enter": [],
+   "lines": [
+    {
+     "text": "암탉은 씨앗 자루를 열었어요.",
+     "en": "The hen opened the sack of seeds.",
+     "segs": [
+      [
+       "nar",
+       "The hen opened the sack of seeds.",
+       null
+      ]
+     ],
+     "src": "new",
+     "before": [
+      "hen:look:stand:right"
+     ],
+     "after": [
+      "field:sack"
+     ]
+    },
+    {
+     "text": "씨앗아, 쑥쑥 자라라.",
+     "en": "Little seeds, grow, grow, grow.",
+     "segs": [
+      [
+       "hen",
+       "Little seeds, grow, grow, grow.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "B1"
+    },
+    {
+     "text": "암탉은 씨앗을 심고 물을 주었어요. 쪼르르.",
+     "en": "The hen planted the seeds and gave them water. Trickle, trickle.",
+     "segs": [
+      [
+       "nar",
+       "The hen planted the seeds and gave them water. Trickle, trickle.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "B2",
+     "before": [
+      "field:sow"
+     ],
+     "after": [
+      "field:water"
+     ]
+    },
+    {
+     "text": "해가 뜨고 지고, 또 뜨고… 밀이 쑥쑥 자랐어요!",
+     "en": "The sun rose and set, and rose again… and the wheat grew tall!",
+     "segs": [
+      [
+       "nar",
+       "The sun rose and set, and rose again… and the wheat grew tall!",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "B3",
+     "before": [
+      "field:grow"
+     ],
+     "after": [
+      "cut:hen_cut_grow"
+     ]
+    },
+    {
+     "text": "삐약! 키가 커졌다!",
+     "en": "Peep! It got so tall!",
+     "segs": [
+      [
+       "chick",
+       "Peep! It got so tall!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "B4",
+     "before": [
+      "hen:look:look_up:right",
+      "chicks:look:look_up:right",
+      "chicks:hop"
+     ]
+    },
+    {
+     "text": "밀이 노랗게 익었네.",
+     "en": "The wheat is golden and ripe.",
+     "segs": [
+      [
+       "hen",
+       "The wheat is golden and ripe.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "B5"
+    }
+   ]
+  },
+  {
+   "key": "R03_reap",
+   "card": "Who Will Cut It?",
+   "set": "3",
+   "enter": [],
+   "lines": [
+    {
+     "text": "밀이 다 익었어. 누가 베어 줄래?",
+     "en": "The wheat is ripe. Who will help me cut it?",
+     "segs": [
+      [
+       "hen",
+       "The wheat is ripe. Who will help me cut it?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "C1",
+     "before": [
+      "hen:look:stand:left"
+     ]
+    },
+    {
+     "text": "난 싫어!",
+     "en": "Not I!",
+     "segs": [],
+     "src": "chorus",
+     "from": "ch_C2",
+     "before": [
+      "friends:hop"
+     ],
+     "after": [
+      "cue:toot_kazoo:.4"
+     ]
+    },
+    {
+     "text": "그럼 나 혼자 할게.",
+     "en": "Then I will do it myself.",
+     "segs": [
+      [
+       "hen",
+       "Then I will do it myself.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "C3",
+     "before": [
+      "friends:turn:left",
+      "hen:look:determined"
+     ]
+    },
+    {
+     "text": "암탉은 밀을 베어 단으로 묶었어요.",
+     "en": "The hen cut the wheat and tied it into a bundle.",
+     "segs": [
+      [
+       "nar",
+       "The hen cut the wheat and tied it into a bundle.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "C4",
+     "before": [
+      "reap:start"
+     ]
+    },
+    {
+     "text": "영차, 영차!",
+     "en": "Heave-ho, heave-ho!",
+     "segs": [
+      [
+       "chick",
+       "Heave-ho, heave-ho!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "C5",
+     "before": [
+      "reap:end"
+     ],
+     "after": [
+      "chicks:look:stand:right"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04_mill",
+   "card": "The Mill: Flour!",
+   "set": "4",
+   "enter": [],
+   "lines": [
+    {
+     "text": "누가 방앗간에 가져가 줄래?",
+     "en": "Who will help me take it to the mill?",
+     "segs": [
+      [
+       "hen",
+       "Who will help me take it to the mill?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "D1",
+     "before": [
+      "hen:look:carry:left"
+     ]
+    },
+    {
+     "text": "난 싫어!",
+     "en": "Not I!",
+     "segs": [],
+     "src": "chorus",
+     "from": "ch_C2",
+     "before": [
+      "friends:hop"
+     ],
+     "after": [
+      "cue:toot_kazoo:.4"
+     ]
+    },
+    {
+     "text": "그럼 나 혼자 갈게.",
+     "en": "Then I will go by myself.",
+     "segs": [
+      [
+       "hen",
+       "Then I will go by myself.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "D2",
+     "after": [
+      "mill:walk"
+     ]
+    },
+    {
+     "text": "풍차가 빙글빙글, 밀을 곱게 빻았어요.",
+     "en": "Round and round went the windmill, grinding the wheat fine.",
+     "segs": [
+      [
+       "nar",
+       "Round and round went the windmill, grinding the wheat fine.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "D3",
+     "before": [
+      "mill:grind"
+     ],
+     "after": [
+      "cut:hen_cut_mill",
+      "mill:flour"
+     ]
+    },
+    {
+     "text": "하얀 밀가루다!",
+     "en": "White flour!",
+     "segs": [
+      [
+       "hen",
+       "White flour!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "D4",
+     "before": [
+      "hen:look:happy",
+      "cue:harp_gliss:.45"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05_dough",
+   "card": "Who Will Make the Bread?",
+   "set": "5",
+   "enter": [],
+   "lines": [
+    {
+     "text": "누가 빵을 만들어 줄래?",
+     "en": "Who will help me make the bread?",
+     "segs": [
+      [
+       "hen",
+       "Who will help me make the bread?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "E1",
+     "before": [
+      "hen:look:stand:right",
+      "k5:pass"
+     ]
+    },
+    {
+     "text": "난 싫어!",
+     "en": "Not I!",
+     "segs": [],
+     "src": "chorus",
+     "from": "ch_C2",
+     "before": [
+      "friends:turn:left"
+     ],
+     "after": [
+      "cue:toot_kazoo:.4"
+     ]
+    },
+    {
+     "text": "그럼 나 혼자 만들게. 얘들아, 도와줄래?",
+     "en": "Then I will make it myself. Chicks, will you help me?",
+     "segs": [
+      [
+       "hen",
+       "Then I will make it myself. Chicks, will you help me?",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E2",
+     "before": [
+      "friends:turn:right"
+     ]
+    },
+    {
+     "text": "네!",
+     "en": "Yes!",
+     "segs": [
+      [
+       "chick",
+       "Yes!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E3",
+     "before": [
+      "chicks:look:hop",
+      "chicks:hop"
+     ]
+    },
+    {
+     "text": "병아리들이 밀가루와 물을 가져왔어요.",
+     "en": "The chicks brought flour and water.",
+     "segs": [
+      [
+       "nar",
+       "The chicks brought flour and water.",
+       null
+      ]
+     ],
+     "src": "new",
+     "before": [
+      "k5:passEnd"
+     ],
+     "after": [
+      "k5:bring"
+     ]
+    },
+    {
+     "text": "조물조물, 반죽이 말랑말랑해졌어요.",
+     "en": "Squish, squish. The dough got soft and squishy.",
+     "segs": [
+      [
+       "nar",
+       "Squish, squish. The dough got soft and squishy.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "E6",
+     "before": [
+      "k5:knead"
+     ]
+    },
+    {
+     "text": "틀에 버터를 바르고…",
+     "en": "Some butter in the pan…",
+     "segs": [
+      [
+       "hen",
+       "Some butter in the pan…",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "E7",
+     "before": [
+      "k5:butter"
+     ],
+     "after": [
+      "k5:butterWord"
+     ]
+    },
+    {
+     "text": "오븐에 쏙!",
+     "en": "And into the oven!",
+     "segs": [
+      [
+       "hen",
+       "And into the oven!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E8",
+     "before": [
+      "hen:look:stand:right"
+     ],
+     "after": [
+      "k5:oven"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06_oven",
+   "card": "The Bread Bakes",
+   "set": "6",
+   "enter": [],
+   "lines": [
+    {
+     "text": "오븐이 따끈따끈, 부엌이 환해졌어요.",
+     "en": "The oven grew warm, and the kitchen glowed.",
+     "segs": [
+      [
+       "nar",
+       "The oven grew warm, and the kitchen glowed.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "F1",
+     "before": [
+      "k6:glow"
+     ]
+    },
+    {
+     "text": "삐약, 언제 돼요?",
+     "en": "Peep, is it ready yet?",
+     "segs": [
+      [
+       "chick",
+       "Peep, is it ready yet?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "F2",
+     "before": [
+      "chicks:hop",
+      "cue:duckling_peep:.35"
+     ]
+    },
+    {
+     "text": "조금만 더.",
+     "en": "Just a little longer.",
+     "segs": [
+      [
+       "hen",
+       "Just a little longer.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "F3",
+     "after": [
+      "k6:open"
+     ]
+    },
+    {
+     "text": "빵이 다 구워졌어요! 노릇노릇, 고소한 냄새가 솔솔.",
+     "en": "The bread is ready! Golden brown, with a yummy smell drifting out.",
+     "segs": [
+      [
+       "nar",
+       "The bread is ready! Golden brown, with a yummy smell drifting out.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "F4",
+     "after": [
+      "word:bread"
+     ]
+    },
+    {
+     "text": "냄새가 마당까지 퍼졌어요. 고양이도, 개도, 돼지도 코를 킁킁.",
+     "en": "The smell drifted out to the yard. The cat, the dog and the pig went sniff, sniff.",
+     "segs": [
+      [
+       "nar",
+       "The smell drifted out to the yard. The cat, the dog and the pig went sniff, sniff.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "F5",
+     "before": [
+      "k6:smell"
+     ],
+     "after": [
+      "k6:smellEnd"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07_nobody",
+   "card": "Who Will Eat It?",
+   "set": "7",
+   "enter": [],
+   "lines": [
+    {
+     "text": "누가 이 빵을 먹어 줄래?",
+     "en": "Who will help me eat this bread?",
+     "segs": [
+      [
+       "hen",
+       "Who will help me eat this bread?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "G1",
+     "before": [
+      "hen:look:speak_calm:right"
+     ]
+    },
+    {
+     "text": "내가!",
+     "en": "I will!",
+     "segs": [
+      [
+       "cat",
+       "I will!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G2",
+     "before": [
+      "cat:hop",
+      "cue:pop:.4"
+     ]
+    },
+    {
+     "text": "나!",
+     "en": "Me!",
+     "segs": [
+      [
+       "dog",
+       "Me!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G3",
+     "before": [
+      "dog:hop",
+      "cue:pop:.45"
+     ]
+    },
+    {
+     "text": "나도!",
+     "en": "Me too!",
+     "segs": [
+      [
+       "pig",
+       "Me too!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G4",
+     "before": [
+      "pig:hop",
+      "cue:pop:.5"
+     ]
+    },
+    {
+     "text": "아니. 심을 때도, 벨 때도, 만들 때도 너희는 싫다고 했지.",
+     "en": "No. When I planted, when I cut, and when I baked, you all said, \"Not I.\"",
+     "segs": [
+      [
+       "hen",
+       "No. When I planted, when I cut, and when I baked, you all said, \"Not I.\"",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G5"
+    },
+    {
+     "text": "그러니 이 빵은 나랑 병아리들이 먹을게.",
+     "en": "So my chicks and I will eat this bread.",
+     "segs": [
+      [
+       "hen",
+       "So my chicks and I will eat this bread.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G6"
+    },
+    {
+     "text": "암탉과 병아리들은 빵을 냠냠 맛있게 먹었어요.",
+     "en": "The hen and her chicks ate the bread. Yum, yum!",
+     "segs": [
+      [
+       "nar",
+       "The hen and her chicks ate the bread. Yum, yum!",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "G7",
+     "before": [
+      "k7:eat"
+     ],
+     "after": [
+      "k7:eatEnd"
+     ]
+    },
+    {
+     "text": "친구들은 창밖에서 조용히 바라보았어요. 그제야 알았거든요.",
+     "en": "Their friends watched quietly through the window. Now they understood.",
+     "segs": [
+      [
+       "nar",
+       "Their friends watched quietly through the window. Now they understood.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G8",
+     "before": [
+      "k7:shy"
+     ],
+     "after": [
+      "k7:shyEnd"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08_sandwich",
+   "card": "Next Morning: Sandwiches",
+   "set": "8",
+   "enter": [],
+   "lines": [
+    {
+     "text": "다음 날 아침, 암탉이 빵을 또 구웠어요.",
+     "en": "The next morning, the hen baked bread again.",
+     "segs": [
+      [
+       "nar",
+       "The next morning, the hen baked bread again.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H1",
+     "before": [
+      "bgm:morning",
+      "cue:animals~rooster:.45",
+      "cue:birds_chirp_1:.3"
+     ]
+    },
+    {
+     "text": "그런데 이번엔 친구들이 먼저 달려왔어요!",
+     "en": "But this time, her friends came running first!",
+     "segs": [
+      [
+       "nar",
+       "But this time, her friends came running first!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H2",
+     "after": [
+      "bgm:off",
+      "k8:run"
+     ]
+    },
+    {
+     "text": "암탉아, 우리도 할게! 토마토 가져왔어.",
+     "en": "Hen, we want to help! I brought a tomato.",
+     "segs": [
+      [
+       "dog",
+       "Hen, we want to help! I brought a tomato.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H3_tomato",
+     "after": [
+      "k8:hopWord:0"
+     ]
+    },
+    {
+     "text": "나는 치즈!",
+     "en": "I brought cheese!",
+     "segs": [
+      [
+       "cat",
+       "I brought cheese!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H4_cheese",
+     "after": [
+      "k8:hopWord:1"
+     ]
+    },
+    {
+     "text": "나는 상추…",
+     "en": "I brought lettuce…",
+     "segs": [
+      [
+       "pig",
+       "I brought lettuce…",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H5_lettuce",
+     "after": [
+      "k8:hopWord:2"
+     ]
+    },
+    {
+     "text": "좋아! 그럼 오늘은 다 같이 샌드위치를 만들자.",
+     "en": "Wonderful! Then today, let's all make sandwiches together.",
+     "segs": [
+      [
+       "hen",
+       "Wonderful! Then today, let's all make sandwiches together.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H6_sandwich",
+     "before": [
+      "hen:look:happy",
+      "cue:xylo_up:.5",
+      "chicks:hop"
+     ]
+    },
+    {
+     "text": "근데 빵은 어떻게 만들어?",
+     "en": "But how do you make bread?",
+     "segs": [
+      [
+       "dog",
+       "But how do you make bread?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H7",
+     "before": [
+      "k8:sit"
+     ]
+    },
+    {
+     "text": "씨앗부터 차례대로 보여 줄게.",
+     "en": "I'll show you, one step at a time, starting with the seeds.",
+     "segs": [
+      [
+       "hen",
+       "I'll show you, one step at a time, starting with the seeds.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H8",
+     "before": [
+      "hen:look:point:right"
+     ],
+     "after": [
+      "k8:cards"
+     ]
+    },
+    {
+     "text": "씨앗, 밀, 밀가루, 그리고 빵!",
+     "en": "Seeds, wheat, flour, and then bread!",
+     "segs": [
+      [
+       "hen",
+       "Seeds, wheat, flour, and then bread!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H12_sandwich",
+     "before": [
+      "k8:bounce"
+     ],
+     "after": [
+      "chicks:hop",
+      "friends:hop"
+     ]
+    }
+   ],
+   "variant": "sandwich",
+   "round": 1
+  },
+  {
+   "key": "R08_pizza",
+   "card": "Next Morning: Pizza",
+   "set": "8",
+   "enter": [],
+   "lines": [
+    {
+     "text": "다음 날 아침, 암탉이 빵을 또 구웠어요.",
+     "en": "The next morning, the hen baked bread again.",
+     "segs": [
+      [
+       "nar",
+       "The next morning, the hen baked bread again.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H1",
+     "before": [
+      "bgm:morning",
+      "cue:animals~rooster:.45",
+      "cue:birds_chirp_1:.3"
+     ]
+    },
+    {
+     "text": "그런데 이번엔 친구들이 먼저 달려왔어요!",
+     "en": "But this time, her friends came running first!",
+     "segs": [
+      [
+       "nar",
+       "But this time, her friends came running first!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H2",
+     "after": [
+      "bgm:off",
+      "k8:run"
+     ]
+    },
+    {
+     "text": "암탉아, 우리도 할게! 토마토 가져왔어.",
+     "en": "Hen, we want to help! I brought a tomato.",
+     "segs": [
+      [
+       "dog",
+       "Hen, we want to help! I brought a tomato.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H3_tomato",
+     "after": [
+      "k8:hopWord:0"
+     ]
+    },
+    {
+     "text": "나는 치즈!",
+     "en": "I brought cheese!",
+     "segs": [
+      [
+       "cat",
+       "I brought cheese!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H4_cheese",
+     "after": [
+      "k8:hopWord:1"
+     ]
+    },
+    {
+     "text": "나는 옥수수…",
+     "en": "I brought corn…",
+     "segs": [
+      [
+       "pig",
+       "I brought corn…",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H5_corn",
+     "after": [
+      "k8:hopWord:2"
+     ]
+    },
+    {
+     "text": "좋아! 그럼 오늘은 다 같이 피자를 만들자.",
+     "en": "Wonderful! Then today, let's all make a pizza together.",
+     "segs": [
+      [
+       "hen",
+       "Wonderful! Then today, let's all make a pizza together.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H6_pizza",
+     "before": [
+      "hen:look:happy",
+      "cue:xylo_up:.5",
+      "chicks:hop"
+     ]
+    },
+    {
+     "text": "근데 빵은 어떻게 만들어?",
+     "en": "But how do you make bread?",
+     "segs": [
+      [
+       "dog",
+       "But how do you make bread?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H7",
+     "before": [
+      "k8:sit"
+     ]
+    },
+    {
+     "text": "씨앗부터 차례대로 보여 줄게.",
+     "en": "I'll show you, one step at a time, starting with the seeds.",
+     "segs": [
+      [
+       "hen",
+       "I'll show you, one step at a time, starting with the seeds.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H8",
+     "before": [
+      "hen:look:point:right"
+     ],
+     "after": [
+      "k8:cards"
+     ]
+    },
+    {
+     "text": "씨앗, 밀, 밀가루, 그리고 피자 반죽!",
+     "en": "Seeds, wheat, flour, and then pizza dough!",
+     "segs": [
+      [
+       "hen",
+       "Seeds, wheat, flour, and then pizza dough!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H12_pizza",
+     "before": [
+      "k8:bounce"
+     ],
+     "after": [
+      "chicks:hop",
+      "friends:hop"
+     ]
+    }
+   ],
+   "variant": "pizza",
+   "round": 1
+  },
+  {
+   "key": "R08_pancake",
+   "card": "Next Morning: Pancakes",
+   "set": "8",
+   "enter": [],
+   "lines": [
+    {
+     "text": "다음 날 아침, 암탉이 빵을 또 구웠어요.",
+     "en": "The next morning, the hen baked bread again.",
+     "segs": [
+      [
+       "nar",
+       "The next morning, the hen baked bread again.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H1",
+     "before": [
+      "bgm:morning",
+      "cue:animals~rooster:.45",
+      "cue:birds_chirp_1:.3"
+     ]
+    },
+    {
+     "text": "그런데 이번엔 친구들이 먼저 달려왔어요!",
+     "en": "But this time, her friends came running first!",
+     "segs": [
+      [
+       "nar",
+       "But this time, her friends came running first!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H2",
+     "after": [
+      "bgm:off",
+      "k8:run"
+     ]
+    },
+    {
+     "text": "암탉아, 우리도 할게! 딸기 가져왔어.",
+     "en": "Hen, we want to help! I brought a strawberry.",
+     "segs": [
+      [
+       "dog",
+       "Hen, we want to help! I brought a strawberry.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H3_strawberry",
+     "after": [
+      "k8:hopWord:0"
+     ]
+    },
+    {
+     "text": "나는 꿀!",
+     "en": "I brought honey!",
+     "segs": [
+      [
+       "cat",
+       "I brought honey!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H4_honey",
+     "after": [
+      "k8:hopWord:1"
+     ]
+    },
+    {
+     "text": "나는 바나나…",
+     "en": "I brought a banana…",
+     "segs": [
+      [
+       "pig",
+       "I brought a banana…",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H5_banana",
+     "after": [
+      "k8:hopWord:2"
+     ]
+    },
+    {
+     "text": "좋아! 그럼 오늘은 다 같이 팬케이크를 만들자.",
+     "en": "Wonderful! Then today, let's all make pancakes together.",
+     "segs": [
+      [
+       "hen",
+       "Wonderful! Then today, let's all make pancakes together.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H6_pancake",
+     "before": [
+      "hen:look:happy",
+      "cue:xylo_up:.5",
+      "chicks:hop"
+     ]
+    },
+    {
+     "text": "근데 빵은 어떻게 만들어?",
+     "en": "But how do you make bread?",
+     "segs": [
+      [
+       "dog",
+       "But how do you make bread?",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H7",
+     "before": [
+      "k8:sit"
+     ]
+    },
+    {
+     "text": "씨앗부터 차례대로 보여 줄게.",
+     "en": "I'll show you, one step at a time, starting with the seeds.",
+     "segs": [
+      [
+       "hen",
+       "I'll show you, one step at a time, starting with the seeds.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H8",
+     "before": [
+      "hen:look:point:right"
+     ],
+     "after": [
+      "k8:cards"
+     ]
+    },
+    {
+     "text": "씨앗, 밀, 밀가루, 그리고 팬케이크!",
+     "en": "Seeds, wheat, flour, and then pancakes!",
+     "segs": [
+      [
+       "hen",
+       "Seeds, wheat, flour, and then pancakes!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H12_pancake",
+     "before": [
+      "k8:bounce"
+     ],
+     "after": [
+      "chicks:hop",
+      "friends:hop"
+     ]
+    }
+   ],
+   "variant": "pancake",
+   "round": 1
+  },
+  {
+   "key": "R09_sandwich",
+   "card": "Sandwiches Together",
+   "set": "9",
+   "enter": [
+    "k9:init"
+   ],
+   "lines": [
+    {
+     "text": "빵 위에 하나씩 얹자. 얘들아, 집어 줄래?",
+     "en": "Let's put things on the bread, one at a time. Can you pass them to me?",
+     "segs": [
+      [
+       "hen",
+       "Let's put things on the bread, one at a time. Can you pass them to me?",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I1_sandwich",
+     "before": [
+      "hen:look:ask:left",
+      "friends:look:stand_help"
+     ]
+    },
+    {
+     "text": "상추, 토마토, 치즈를 차례로 얹었어요.",
+     "en": "Lettuce, tomato, cheese: one on top of the other.",
+     "segs": [
+      [
+       "nar",
+       "Lettuce, tomato, cheese: one on top of the other.",
+       null
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "k9:add:lettuce",
+      "k9:word:lettuce",
+      "k9:add:tomato",
+      "k9:word:tomato",
+      "k9:add:cheese",
+      "k9:word:cheese"
+     ]
+    },
+    {
+     "text": "달걀은 내가! 내가 낳은 거야.",
+     "en": "The egg is from me! I laid it myself.",
+     "segs": [
+      [
+       "hen",
+       "The egg is from me! I laid it myself.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I_egg",
+     "before": [
+      "hen:look:happy"
+     ],
+     "after": [
+      "k9:add:egg",
+      "k9:word:egg"
+     ]
+    },
+    {
+     "text": "마지막으로 빵을 덮으면…",
+     "en": "And last, bread on top…",
+     "segs": [
+      [
+       "hen",
+       "And last, bread on top…",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I_top",
+     "before": [
+      "hen:look:place:left"
+     ],
+     "after": [
+      "k9:top",
+      "k9:word:bread"
+     ]
+    },
+    {
+     "text": "샌드위치 완성!",
+     "en": "Our sandwich is ready!",
+     "segs": [],
+     "src": "chorus",
+     "from": "ch_I_done_sandwich",
+     "before": [
+      "k9:done"
+     ],
+     "after": [
+      "cut:hen_cut_sandwich",
+      "k9:word:sandwich"
+     ]
+    }
+   ],
+   "variant": "sandwich",
+   "round": 1
+  },
+  {
+   "key": "R09_pizza",
+   "card": "Pizza Together",
+   "set": "9",
+   "enter": [
+    "k9:init"
+   ],
+   "lines": [
+    {
+     "text": "반죽을 동글납작하게 펴고…",
+     "en": "I roll the dough out round and flat…",
+     "segs": [
+      [
+       "hen",
+       "I roll the dough out round and flat…",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I0_pizza",
+     "before": [
+      "hen:look:knead:left"
+     ]
+    },
+    {
+     "text": "반죽 위에 하나씩 얹자. 얘들아, 집어 줄래?",
+     "en": "Let's put things on the dough, one at a time. Can you pass them to me?",
+     "segs": [
+      [
+       "hen",
+       "Let's put things on the dough, one at a time. Can you pass them to me?",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I1_pizza",
+     "before": [
+      "hen:look:ask:left",
+      "friends:look:stand_help"
+     ]
+    },
+    {
+     "text": "토마토, 치즈, 옥수수를 차례로 얹었어요.",
+     "en": "Tomato, cheese, corn: one on top of the other.",
+     "segs": [
+      [
+       "nar",
+       "Tomato, cheese, corn: one on top of the other.",
+       null
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "k9:add:tomato",
+      "k9:word:tomato",
+      "k9:add:cheese",
+      "k9:word:cheese",
+      "k9:add:corn",
+      "k9:word:corn"
+     ]
+    },
+    {
+     "text": "딸기는 피자에 안 넣어!",
+     "en": "Strawberries don't go on pizza!",
+     "segs": [
+      [
+       "cat",
+       "Strawberries don't go on pizza!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I_nostraw",
+     "before": [
+      "k9:rest"
+     ]
+    },
+    {
+     "text": "오븐에 쏙!",
+     "en": "And into the oven!",
+     "segs": [
+      [
+       "hen",
+       "And into the oven!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E8",
+     "before": [
+      "hen:look:stand:right"
+     ],
+     "after": [
+      "k9:oven"
+     ]
+    },
+    {
+     "text": "피자 완성!",
+     "en": "Our pizza is ready!",
+     "segs": [],
+     "src": "chorus",
+     "from": "ch_I_done_pizza",
+     "before": [
+      "k9:done"
+     ],
+     "after": [
+      "cut:hen_cut_pizza",
+      "k9:word:pizza"
+     ]
+    }
+   ],
+   "variant": "pizza",
+   "round": 1
+  },
+  {
+   "key": "R09_pancake",
+   "card": "Pancakes Together",
+   "set": "9",
+   "enter": [
+    "k9:init"
+   ],
+   "lines": [
+    {
+     "text": "먼저 반죽을 만들자. 밀가루랑 우유를 넣고…",
+     "en": "First, let's make the batter. Flour and milk…",
+     "segs": [
+      [
+       "hen",
+       "First, let's make the batter. Flour and milk…",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I0_pancake",
+     "before": [
+      "hen:look:knead:left",
+      "k9:knead"
+     ]
+    },
+    {
+     "text": "달걀은 내가! 내가 낳은 거야.",
+     "en": "The egg is from me! I laid it myself.",
+     "segs": [
+      [
+       "hen",
+       "The egg is from me! I laid it myself.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I_egg",
+     "after": [
+      "k9:eggword"
+     ]
+    },
+    {
+     "text": "팬에 지글지글, 팬케이크가 구워졌어요.",
+     "en": "Sizzle, sizzle in the pan. The pancakes are cooked!",
+     "segs": [
+      [
+       "nar",
+       "Sizzle, sizzle in the pan. The pancakes are cooked!",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I0b_pancake",
+     "before": [
+      "k9:pan"
+     ],
+     "after": [
+      "k9:stack"
+     ]
+    },
+    {
+     "text": "팬케이크 위에 하나씩 얹자. 얘들아, 집어 줄래?",
+     "en": "Let's put things on the pancakes, one at a time. Can you pass them to me?",
+     "segs": [
+      [
+       "hen",
+       "Let's put things on the pancakes, one at a time. Can you pass them to me?",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I1_pancake",
+     "before": [
+      "hen:look:ask:left",
+      "friends:look:stand_help"
+     ]
+    },
+    {
+     "text": "딸기, 바나나, 꿀을 차례로 올렸어요.",
+     "en": "Strawberry, banana, honey: one on top of the other.",
+     "segs": [
+      [
+       "nar",
+       "Strawberry, banana, honey: one on top of the other.",
+       null
+      ]
+     ],
+     "src": "new",
+     "after": [
+      "k9:add:strawberry",
+      "k9:word:strawberry",
+      "k9:add:banana",
+      "k9:word:banana",
+      "k9:add:honey"
+     ]
+    },
+    {
+     "text": "꿀이 주르르.",
+     "en": "Drip, drip goes the honey.",
+     "segs": [
+      [
+       "nar",
+       "Drip, drip goes the honey.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I_honeydrip",
+     "after": [
+      "k9:word:honey"
+     ]
+    },
+    {
+     "text": "토마토는 팬케이크에 안 넣어!",
+     "en": "Tomatoes don't go on pancakes!",
+     "segs": [
+      [
+       "dog",
+       "Tomatoes don't go on pancakes!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I_notomato",
+     "before": [
+      "k9:rest"
+     ]
+    },
+    {
+     "text": "팬케이크 완성!",
+     "en": "Our pancakes are ready!",
+     "segs": [],
+     "src": "chorus",
+     "from": "ch_I_done_pancake",
+     "before": [
+      "k9:done"
+     ],
+     "after": [
+      "cut:hen_cut_pancake",
+      "k9:word:pancake"
+     ]
+    }
+   ],
+   "variant": "pancake",
+   "round": 1
+  },
+  {
+   "key": "R10_feast",
+   "card": "Everyone Eats Together",
+   "set": "10",
+   "enter": [],
+   "lines": [
+    {
+     "text": "모두 나무 아래 둘러앉았어요.",
+     "en": "Everyone sat together under the big tree.",
+     "segs": [
+      [
+       "nar",
+       "Everyone sat together under the big tree.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "J1"
+    },
+    {
+     "text": "우유도 한 잔씩!",
+     "en": "And a cup of milk for everyone!",
+     "segs": [
+      [
+       "hen",
+       "And a cup of milk for everyone!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "J2",
+     "before": [
+      "k10:pour"
+     ],
+     "after": [
+      "word:milk",
+      "k10:pourEnd"
+     ]
+    },
+    {
+     "text": "같이 만드니까 더 맛있다!",
+     "en": "It tastes even better when we make it together!",
+     "segs": [
+      [
+       "cat",
+       "It tastes even better when we make it together!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "J3",
+     "before": [
+      "k10:nom:cat"
+     ]
+    },
+    {
+     "text": "내일도 도울게!",
+     "en": "I'll help tomorrow, too!",
+     "segs": [
+      [
+       "dog",
+       "I'll help tomorrow, too!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "J4",
+     "before": [
+      "k10:nom:dog"
+     ]
+    },
+    {
+     "text": "나도… 냠.",
+     "en": "Me too… yum.",
+     "segs": [
+      [
+       "pig",
+       "Me too… yum.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "J5",
+     "before": [
+      "k10:nom:pig"
+     ]
+    },
+    {
+     "text": "일할 때 같이 하면 먹을 때도 같이 먹어요. 같이 만들면 더 맛있어요.",
+     "en": "When we work together, we eat together. And food tastes better when we make it together.",
+     "segs": [
+      [
+       "nar",
+       "When we work together, we eat together. And food tastes better when we make it together.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "J6",
+     "after": [
+      "bgm:feast"
+     ]
+    },
+    {
+     "text": "잘 먹겠습니다!",
+     "en": "Let's eat!",
+     "segs": [],
+     "src": "chorus",
+     "from": "ch_J8",
+     "before": [
+      "k10:finale"
+     ]
+    }
+   ]
+  }
+ ]
+}

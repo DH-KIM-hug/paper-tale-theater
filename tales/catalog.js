@@ -360,7 +360,7 @@ const TALES = (() => {
     line: '사탕 마녀의 초대장을 받은 다현이와 친구들. 아기 용 콧물, 병아리 방귀, 괴물 응가, 소방차, 개구리… 우스운 재료를 골라 솥에 넣고 세어요. 빨강과 노랑을 섞으면 무슨 색? 사탕을 먹으면 딸기, 오리, 박쥐, 호박으로 뿅 변신! 마지막엔 모두 함께 검정 유령 사탕을 먹고 오~우~.',
     en: { title: "The Candy Witch's Halloween", line: 'Dahyun and her friends get an invitation from the Candy Witch. Baby-dragon snot, chick toots, monster poo, a fire truck, a frog... pick the silly ingredients, drop them in the cauldron and count. Mix red and yellow: what colour do you get? Eat the candy and turn into a strawberry, a duck, a bat or a glowing pumpkin. Last of all, everyone eats a black ghost candy and marches around going oooh.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/><g class="pc"><circle cx="128" cy="24" r="12" fill="${c.cr}"/><rect y="88" width="160" height="22" fill="${c.bk}"/><ellipse cx="80" cy="74" rx="30" ry="22" fill="#1A1410"/><circle cx="40" cy="80" r="12" fill="${c.ps}"/></g>` },
-  { id: 'red_hen', title: '빨간 암탉', origin: 'world', also: ['animal'], skills: ['spot', 'order', 'heart'], ready: true, read: false, readMin: 8,
+  { id: 'red_hen', title: '빨간 암탉', origin: 'world', also: ['animal'], skills: ['spot', 'order', 'heart'], ready: true, read: true, readEn: true, readMin: 6,
     line: '빨간 암탉이 혼자 밀을 심어 빵을 굽고, 다음 날엔 친구들과 샌드위치나 피자나 팬케이크를 만들어요. 밀가루·토마토·딸기 같은 재료 이름을 배우고, 씨앗에서 빵까지 순서를 맞춰요.',
     en: { title: 'The Little Red Hen', line: 'The little red hen plants wheat and bakes bread all by herself. The next day, her friends help make sandwiches, pizza or pancakes. Learn the names of foods like flour, tomato and strawberry, and put seed-to-bread in order.' },
     art: `<rect width="160" height="110" fill="#CDE6F7"/>
