@@ -15,7 +15,7 @@ Copyright © 2026 DH-KIM-hug. All rights reserved.
 전래 동화와 이솝 우화, 세계 명작(그림 형제, 샤를 페로, 안데르센 등)은 원작이 공공 영역에 있지만, 여기서 쓴 글·그림·음성·연출은 이 프로젝트의 저작물입니다.
 
 ## 제3자 자료
-효과음과 소리는 `sounds/CREDITS.md`에 출처와 라이선스를 적었습니다(BigSoundBank CC0, Freesound CC0 등). 음성 합성은 ElevenLabs, Typecast 등 서비스 약관에 따라 생성된 것입니다.
+효과음과 음악은 `sounds/CREDITS.md`에 출처와 라이선스를 적었습니다(BigSoundBank CC0, Freesound CC0·CC BY, Pixabay 등 상업 이용 가능 자료). 그림은 OpenAI 이미지 생성(ChatGPT·Codex)으로, 음성은 ElevenLabs·Typecast의 상업 이용 요금제로 생성했습니다. 생성 결과물의 권리는 저작자에게 있습니다.
 
 ## 문의
 사용 허락이나 협업은 저작자에게 먼저 문의해 주세요.

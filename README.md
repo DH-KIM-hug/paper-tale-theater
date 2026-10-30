@@ -104,14 +104,11 @@ python3 -m http.server 8765
 - [`docs/PUZZLE_PLAN.md`](docs/PUZZLE_PLAN.md): 스티커북 퍼즐판
 - [`docs/MONETIZATION.md`](docs/MONETIZATION.md): 앱의 무료·구매 정책
 
-## 라이선스·사용 조건
+## 그림·소리·음성 출처
 
-**비상업적 용도(개인·교육·연구)로만 사용할 수 있습니다.**
-
-- **그림:** 페이퍼아트 그림은 [Qwen-Image 2.1](https://huggingface.co/Qwen/Qwen-Image-2.1)로 생성했습니다. 이 모델은 [Qwen Research License](https://huggingface.co/Qwen/Qwen-Image-2.1/blob/main/LICENSE)를 따르며 **상업적 이용이 금지**되어 있습니다(상업 이용은 Qwen의 별도 상업 라이선스 필요). 이 저장소의 그림도 같은 조건으로 비상업적 용도로만 제공합니다. Built with Qwen.
-- **코드:** 비상업적 용도로 자유롭게 보고, 고치고, 공유할 수 있습니다. 상업적 이용은 저작자와 따로 협의해야 합니다.
-- **소리:** 효과음·음악은 각 파일의 라이선스를 따릅니다(CC0 / CC BY / CC BY-SA / Pixabay). 출처와 조건은 [`sounds/CREDITS.md`](sounds/CREDITS.md)에 있고, CC BY·CC BY-SA 소리는 출처 표시가 필요합니다.
-- **내레이션 음성:** [Typecast](https://typecast.ai)와 [ElevenLabs](https://elevenlabs.io) 음성으로 합성했습니다(각 서비스 이용약관을 따름). 예전 2.5D 버전(`legacy.html`)의 음성은 GPT-SoVITS로 합성했습니다.
+- **그림:** 페이퍼아트 그림은 OpenAI 이미지 생성(ChatGPT·Codex)으로 만들고 다듬었습니다. 상업적 이용이 가능한 조건으로 생성했으며, 그림의 권리는 저작자에게 있습니다.
+- **내레이션 음성:** [Typecast](https://typecast.ai)와 [ElevenLabs](https://elevenlabs.io)의 상업 이용이 허용되는 요금제로 합성했습니다. 예전 2.5D 버전(`legacy.html`)의 음성은 GPT-SoVITS로 합성했습니다.
+- **효과음·음악:** 상업적 이용이 가능한 라이선스(CC0 / CC BY / CC BY-SA / Pixabay Content License)의 자료만 씁니다. 출처와 조건은 [`sounds/CREDITS.md`](sounds/CREDITS.md)에 있고, CC BY·CC BY-SA 소리는 그곳에 출처를 표시했습니다.
 
 ## 저작권
 이 프로젝트는 **오픈소스가 아닙니다.** 그림, 음성, 대본, 캐릭터, 코드의 저작권은 저작자에게 있으며, 허락 없는 복제·재배포·상업적 사용을 금지합니다. 자세한 내용은 [COPYRIGHT.md](COPYRIGHT.md)를 참고하세요.
