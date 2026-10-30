@@ -313,6 +313,12 @@ for j in jobs:
     if j['id'] == 'hen_dog_sit':
         j['refs'] = [RAW + '_rej/hen_dog_sit_v3_ears.png']; j['pass'] = 1
         j['prompt'] = j['prompt'].replace('SUBJECT AND POSE:\n', 'SUBJECT AND POSE:\nONE reference image: this is exactly the dog — keep its shape, sitting pose, size, face, fluffy fur, plume tail, spots and sky-blue collar EXACTLY. Change ONLY the ears: the standing ear (with the folded tip) stays solid honey orange; the flopped ear becomes WHITE-CREAM like the body with a few small honey-orange speckles. Make the body fur a little whiter cream (#F6EEDD).\n', 1)
+# 그림 도구는 참고 그림을 5장까지만 받는다: 넘치면 소품(글로 설명함)·서 있는 암탉부터 뺀다
+for j in jobs:
+    for drop in ('prop_', 'hen_hen_stand'):
+        while len(j['refs']) > 5 and any(drop in r for r in j['refs']):
+            j['refs'].remove(next(r for r in j['refs'] if drop in r))
+    assert len(j['refs']) <= 5, j['id']
 json.dump(jobs, open(os.path.join(G, 'tools/app/gen/jobs_red_hen.json'), 'w'), ensure_ascii=False, indent=1)
 from collections import Counter
 print(len(jobs), Counter((j['kind'], j['pass']) for j in jobs))
