@@ -17,12 +17,12 @@
   /* 그림 비율(폭/높이). preload 가 실제 그림 비율로 덮어쓴다 */
   const ASP = {};
   /* 높이(px, scale 1, 토끼 서기 = 170). §4-1: 자세마다 같은 부위 폭으로 잰 값 — 토끼 머리 폭(귀 제외), 자라 등딱지 길이, 용왕 얼굴 폭, 문어 머리 폭, 산신령 머리 폭.
-     WID 에 있으면 폭으로 정한다(가로로 긴 소품). 기획 비율: 토끼 1 : 자라 길이 1.3(높이 0.55) : 용왕 앉기 2.4 : 문어 1.2 : 게 0.5 : 멧돼지 0.9 : 산신령 1.7 */
+     WID 에 있으면 폭으로 정한다(가로로 긴 소품). 기획 비율: 토끼 1 : 자라 등딱지 길이 1.05(사모 포함 높이 1.0) : 용왕 앉기 2.4 : 문어 1.2 : 게 0.5 : 멧돼지 0.9 : 산신령 1.7 */
   const HT = {
     /* 토끼: 눈 흰자 지름을 서기와 같게 잰 값(2026-10-30, eyes.py) */
     bj_rabbit_stand: 170, bj_rabbit_hop: 133, bj_rabbit_tempted: 182, bj_rabbit_ride: 178, bj_rabbit_amazed: 162, bj_rabbit_shock: 143, bj_rabbit_clever: 166, bj_rabbit_wave: 174,
-    /* 자라: 등딱지 길이 = 221(토끼 1.3배)이 되게 그림마다 등딱지 폭 비율을 재서 정한 높이(2026-10-30, 격자 사진) */
-    bj_jara_stand: 157, bj_jara_walk: 151, bj_jara_up: 240, bj_jara_argue: 170, bj_jara_bow: 101, bj_jara_scroll: 245, bj_jara_compare: 170, bj_jara_swim: 136, bj_jara_sad: 115, bj_jara_receive: 194, bj_jara_carry: 136,
+    /* 자라(2026-10-30 다시 그림: 목 짧고 둥근 등딱지): 등딱지 길이 ≈ 178(토끼 1.05배). 옆 자세는 등딱지 긴 축, 앉은 자세(족자·비교·받기)·절은 사모 폭을 서기와 같게 잰 높이 */
+    bj_jara_stand: 175, bj_jara_walk: 169, bj_jara_up: 213, bj_jara_argue: 180, bj_jara_bow: 140, bj_jara_scroll: 214, bj_jara_compare: 199, bj_jara_swim: 165, bj_jara_sad: 124, bj_jara_receive: 201, bj_jara_carry: 170,
     /* 용왕: 눈 흰자로 앉기(408)와 맞춤. 끄덕은 눈을 감아 앉기와 같은 구도로 408 */
     bj_king_sit: 408, bj_king_lie: 236, bj_king_point: 408, bj_king_nod: 408, bj_king_well: 373,
     /* 문어: 머리(몸통 원) 폭을 서기와 나란히 놓고 맞춘 값 */
@@ -334,7 +334,7 @@
     const hopLoop = async (a, ms, h = 4, d = 380) => { const end = Date.now() + ms; while (Date.now() < end - d) await a.hop(h, d); };
     const walk = (a, x, y, ms, ease = 'linear', h = 3) => (inst() ? (a.place(x, y), Promise.resolve()) : Promise.all([a.move(x, y, ms, ease), hopLoop(a, ms, h)]));
     /* 토끼를 자라 등에 얹기(토끼 앉기 그림 = 자라 등딱지 위). 토끼는 자라와 같이 움직인다 */
-    const RIDE = { stand: [10, -52], swim: [0, -62], sad: [10, -46] };
+    const RIDE = { stand: [6, -90], swim: [-4, -95], sad: [4, -63] };   // 새 자라(둥근 등딱지) 꼭대기: 서기 143·헤엄 144·엎드림 122 위
     const riding = { on: false };
     const seatRabbit = (k = 'stand') => {
       const o = RIDE[k] || RIDE.stand, f = jara.flip === -1 ? -1 : 1;
@@ -347,7 +347,7 @@
       await Promise.all([jara.move(x, y, ms, ease), rabbit.move(x + o[0] * f * jara.scale, y + o[1] * jara.scale, ms, ease)]);
     };
     /* 자라 등의 말린 족자(3~5장): 자라 서기 그림 위에 얹는다 */
-    const putRolled = () => { put(T, rolled, jara.x + (jara.flip === -1 ? -1 : 1) * jara.w * .14, jara.y - jara.h * .6, { look: 'a' }); };
+    const putRolled = () => { put(T, rolled, jara.x + (jara.flip === -1 ? -1 : 1) * jara.w * .1, jara.y - jara.h * .78, { look: 'a' }); };
 
     /* ================= 장면 배치 (놀이판·읽어 주기 같이 씀) ================= */
     /* 길 셋(3·4장): 자라가 선 갈림길 가운데 cx 에서 위로 부채꼴. 가로 끝 x ≈ cx-250 / cx / cx+250, 세로는 .75 배로 모아 cx-190 / cx / cx+190 */
