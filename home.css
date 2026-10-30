@@ -885,8 +885,8 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 .splash-wordmark { display: block; width: min(32.94vmax, 84vw, 70vh); height: auto; object-fit: contain; }
 .splash-fallback strong { font-size: clamp(25px, 5vw, 52px); font-weight: 750; }
 .splash-ready .splash-fallback { display: none; }
-.splash-skip { position: absolute; bottom: max(5%, calc(env(safe-area-inset-bottom) + 18px)); left: 50%; transform: translateX(-50%); min-width: 140px; min-height: 52px; padding: 12px 24px; border: 0; border-radius: 28px; background: transparent; color: #79634E; font: 500 15px var(--font); letter-spacing: .06em; cursor: pointer; }
-.splash-skip:focus-visible { outline: 2px solid #AA8B67; outline-offset: 3px; }
+.splash-skip { -webkit-tap-highlight-color: transparent; position: absolute; bottom: max(5%, calc(env(safe-area-inset-bottom) + 18px)); left: 50%; transform: translateX(-50%); min-width: 140px; min-height: 52px; padding: 12px 24px; border: 0; border-radius: 28px; background: transparent; color: #79634E; font: 500 15px var(--font); letter-spacing: .06em; cursor: pointer; }
+.splash-skip:focus, .splash-skip:focus-visible { outline: none; }   /* 글자 없는 보조기기용 단추라 아이패드에서 빈 테두리만 보이지 않게 */
 .splash-flying .logo-mark { visibility: hidden; }
 
 /* 영어 로고(Tok Tok Tale Theater)는 한글보다 길어서 폰 한 줄에서 EN 버튼과 겹친다 → 좁은 화면에서는 글자를 줄여 로고 칸 안에 넣는다 */

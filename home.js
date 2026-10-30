@@ -1586,7 +1586,7 @@
     fallback.append(title); sp.append(fallback);
     sp.addEventListener('pointerdown', complete);
     pending = setTimeout(complete, 2500);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
-    import('./engine/splash/start.js?v=20261030sp5')
+    import('./engine/splash/start.js?v=20261030sp6')
       .then(({ startSplash }) => {
         if (finished) return;
         clearTimeout(pending);

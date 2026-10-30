@@ -1,5 +1,6 @@
 /** App lifecycle: skip immediately, never block the home on WebGL or artwork loading. */
-// 앱과 미리보기 모두 scene.duration의 원래 속도로 재생한다. 별도 압축 시간은 두지 않는다.
+// 앱과 미리보기 모두 scene.duration 을 SLOW 배 늘려 재생한다(2026-10-30 사용자: 전환이 너무 빠름 → 1.3배, 효과음 시작 시각도 같이 늦춤)
+const SLOW = 1.3;
 // 스플래시(scene.js — 로고 안으로 들어갔다 나오기, 효과음, 홈 로고 자리로 날아가며 홈을 드러냄). onReveal = 홈이 드러나기 시작할 때 한 번
 export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = null } = {}) {
   const en = lang === 'en';
@@ -107,13 +108,13 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
       background.forEach((el, i) => { el.inert = inertBefore[i]; });
       onReveal?.();
     }
-    timer = setTimeout(finish, (total + .6) * 1000);
+    timer = setTimeout(finish, (total * SLOW + .6) * 1000);
     host.classList.add('splash-ready');
     let started;
     const frame = now => {
       if (closed) return;
       started ??= now;
-      const t = (now - started) / 1000;
+      const t = (now - started) / 1000 / SLOW;   // 장면 시각(늘린 만큼 천천히 흐름)
       for (const c of cues) if (!c.done && t >= c.at) { c.done = true; if (t - c.at < .25) { c.a.play().catch(() => {}); if (c.dur) cut(c); } }
       if (t >= scene.flyAt) reveal();
       scene.renderAt(Math.min(t, scene.duration));
