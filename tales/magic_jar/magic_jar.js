@@ -5,7 +5,7 @@
   const GROUND = 505;
   const ASP = { coin: 1.0064, farmer_amaze: 0.8628, farmer_count: 0.8194, farmer_feast: 0.9316, farmer_hoe: 0.9299, farmer_pull: 1.0085,
     farmer_share: 0.5386, father_fall: 0.9149, father_fightA: 0.6563, father_fightB: 0.7567, father_peek: 0.7839, fwife: 0.5973,
-    fwife_share: 0.6010, gold: 1.2430, hoe: 1., jar: 0.9759, jar_cracked: 1.1566, rice: 1.0036, rich_gold: 0.7145, rich_grab: 0.8183,
+    fwife_share: 0.6010, gold: 1.2430, hoe: 1., jar: 0.9759, jar_cracked: 1.1566, rice: 1.0036, rich_gold: 0.7145, rich_grab: 0.82,
     rich_hurry: 0.7843, rich_pinned: 1.0612, rich_shout: 0.7496, table: 1.3065, };
   /* 2026-10-20 새 그림은 그림 크기(세로 픽셀)가 옛 그림과 달라서, 옛 그림과 같은 픽셀 축척이 되도록 높이에 곱하는 비율 */
   const RS = { coin: 0.958, farmer_amaze: 0.823, farmer_count: 0.736, farmer_feast: 0.856, farmer_hoe: 0.774, farmer_pull: 0.800, /* 2026-10-20 크기 일관성: 허리 숙인 당기기 자세가 모자 폭 기준 다른 농부보다 16% 작아서 0.671 → 0.800 */
