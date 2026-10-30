@@ -299,7 +299,9 @@
     dots.hidden = heroList.length < 2;
     dots.innerHTML = heroList.map(x => `<button type="button" class="hd${x.id === heroId ? ' on' : ''}" data-id="${x.id}" aria-label="${shown(x).title}"${x.id === heroId ? ' aria-current="true"' : ''}></button>`).join('');
   }
-  function heroStep(d, to) {
+  let heroTouchAt = 0;
+  const HOVER = matchMedia('(hover: hover)');               // 마우스를 배너에 올려 두면 멈춤(터치 기기는 누른 뒤 남는 hover 무시)
+  function heroStep(d, to, auto) {
     if (heroList.length < 2) return;
     const now = performance.now();
     if (now < heroLock) return;                              // 넘기는 동안 다시 누름은 무시(연타 방지)
@@ -307,11 +309,21 @@
     const i = heroList.findIndex(t => t.id === heroId);
     heroId = to || heroList[(i + d + heroList.length) % heroList.length].id;
     heroDir = d;
-    paper('tap');
+    if (!auto) { heroTouchAt = now; paper('tap'); }
     renderHero();
+    if (auto) return;                                        // 저절로 넘길 때는 소리·제목 읽기 없음
     const t = heroList.find(x => x.id === heroId);
     sayTitle(shown(t).title, t.id);
   }
+  /* 배너는 6초마다 저절로 다음 동화로 — 손으로 넘긴 뒤 10초는 쉬고, 배너가 안 보이거나(다른 탭·동화 중·스크롤로 위로 사라짐·앱 뒤로) 움직임 줄이기면 멈춘다 */
+  setInterval(() => {
+    const hz = $('#hero');
+    if (!motion() || document.hidden || !hz || hz.hidden || !hz.offsetParent || (HOVER.matches && hz.matches(':hover'))) return;
+    if (performance.now() - heroTouchAt < 10000) return;
+    const r = hz.getBoundingClientRect();
+    if (r.bottom < r.height / 2 || r.top > innerHeight) return;
+    heroStep(1, null, true);
+  }, 6000);
   {
     /* 감빛 알약 = 배너 그림 톡과 같은 동작(잠긴 동화는 잠김 쪽지, 열린 동화는 커튼 → 동화) */
     $('#heroPlay').addEventListener('click', () => { const c = $('#heroSlot .card:not(.hero-old)'); if (c) c.click(); });
@@ -322,7 +334,7 @@
     });
     let sx = null;
     const hz = $('#hero');
-    hz.addEventListener('pointerdown', e => { sx = e.clientX; });
+    hz.addEventListener('pointerdown', e => { sx = e.clientX; heroTouchAt = performance.now(); });
     hz.addEventListener('pointerup', e => { if (sx !== null && Math.abs(e.clientX - sx) > 70) { heroStep(e.clientX < sx ? 1 : -1); hz.dataset.swiped = '1'; setTimeout(() => { delete hz.dataset.swiped; }, 50); } sx = null; });
     let wheelAt = 0;
     hz.addEventListener('wheel', e => {  // 트랙패드 가로 쓸기로도 넘긴다(세로 스크롤은 목록을 내린다)
