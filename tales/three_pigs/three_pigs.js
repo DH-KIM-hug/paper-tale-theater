@@ -52,11 +52,11 @@
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['intro_playful', 'level_win', 'birds_chirp_1', 'rustle_1', 'pot_boil', 'toy_flute', 'question', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'chop', 'ding_glock', 'tiptoe_pizz', 'fall_crash', 'sad_trombone', 'latch_click', 'knock', 'comic_brass', 'zip_away', 'party_horn', 'pop_appear', 'drumroll_crash', 'blow', 'pop', 'thud', 'ding', 'boom', 'pig_flute', 'pig_violin', 'drum', 'rustle_2', 'hammer']); AudioFX.preloadMusic(['pigs_band']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['intro_playful', 'level_win', 'birds_chirp_1', 'rustle_1', 'pot_boil', 'toy_flute', 'question', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'chop', 'ding_glock', 'tiptoe_pizz', 'fall_crash', 'sad_trombone', 'latch_click', 'knock', 'comic_brass', 'zip_away', 'party_horn', 'pop_appear', 'drumroll_crash', 'blow', 'pop', 'thud', 'ding', 'boom', 'pig_flute', 'pig_violin', 'drum', 'rustle_2', 'hammer_1', 'hammer_2']); AudioFX.preloadMusic(['pigs_band']); } catch (e) { /* 무시 */ }
     /* 집 짓기 숫자 목소리 (2026-10-28 사용자 요청): 같은 내레이터의 공용 숫자 클립(audio/el/count) */
     if (typeof NARRATION_CLIPS !== 'undefined') NUM.forEach((n, i) => { NARRATION_CLIPS[n] = NARRATION_CLIPS[n] || `audio/el/count/ko_${i + 1}.mp3`; });
     if (typeof NARRATION_CLIPS_EN !== 'undefined') NUM.forEach((n, i) => { NARRATION_CLIPS_EN[n] = NARRATION_CLIPS_EN[n] || { t: ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'][i], c: `audio/el/count/en_${i + 1}.mp3` }; });
-    const MAT = { straw: ['rustle_1', 'rustle_2'], wood: ['hammer'], brick: ['thud'] }; // 쌓을 때 재료 소리
+    const MAT = { straw: ['rustle_1', 'rustle_2'], wood: ['hammer_1', 'hammer_2'], brick: ['thud'] }; // 쌓을 때 재료 소리(망치는 한 번 치는 소리 — 3.8초 hammer 는 너무 김, 2026-10-31 사용자)
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
 
     const still = () => T.reading && T.reading() && T.readInstant && T.readInstant();
@@ -441,6 +441,7 @@
       const stages = await mkStages(kind, L.houseX, L.houseH, L.houseY);
       const house = sprite(houseKey, L.houseX, L.houseH, L.houseY); house.show(false); house.pos.style.pointerEvents = 'none';
       const pig = sprite(pigKey, L.pigX, pigH * L.pigS, L.pigY);
+      if (kind !== 'brick') pig.face('right');   // 첫째·둘째 망치질 그림은 왼쪽을 봐서 집(오른쪽)을 등졌다 — 집 쪽으로 뒤집음(2026-10-31 사용자)
       const pile = sprite(pileKey, L.pileX, pileH * (P ? .85 : 1), L.pileY);
       await look(P ? L.houseX : L.pileX, 200);
       await say(line);
@@ -475,7 +476,7 @@
         if (tease && i === tease.at) await say(tease.line);
       }
       pile.show(false);
-      pig.set(play, playH * L.pigS); await look(L.houseX);
+      pig.face('left'); pig.set(play, playH * L.pigS); await look(L.houseX);
       sfx('level_win', .6); T.confetti();
       await say(done);
       // 진짜 악기 소리 (2026-10-28): 첫째 피리, 둘째 바이올린, 셋째 북. 못 불러오면 합성음으로 대신

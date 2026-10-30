@@ -171,6 +171,20 @@
    "sec": 3.8
   }
  ],
+ "hammer_1": [
+  {
+   "file": "sfx/hammer_1.mp3",
+   "kind": "oneshot",
+   "sec": 0.45
+  }
+ ],
+ "hammer_2": [
+  {
+   "file": "sfx/hammer_2.mp3",
+   "kind": "oneshot",
+   "sec": 0.45
+  }
+ ],
  "dig_soil": [
   {
    "file": "sfx/dig_soil.mp3",
