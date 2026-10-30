@@ -2,10 +2,11 @@ import * as THREE from './vendor/three.module.js';
 import { ART } from './art.js?v=20261028english1';
 import { ARCH, MARK_BOX, LOCKUP } from './art2.js?v=20261029sp2';
 
-/* 새 스플래시 「로고 안으로 들어갔다 나오기」(2026-10-29 사용자 결정 A, 10-30 수정: 커튼은 움직이지 않고 밤 → 아침 → 밤).
+/* 새 스플래시 「로고 안으로 들어갔다 나오기」(2026-10-29 사용자 결정 A, 10-30 수정: 커튼은 움직이지 않고 밤 → 아침 → 밤,
+   10-30 안쪽 이야기를 '커튼콜'로 — 사용자가 시안 A·B·C 중 A 선택).
    로고(아치 창 + 글자)에서 시작 → 글자가 눕고 창 안으로 다가감 → 달·별 그린 밤 하늘 막이 걷혀 올라가고 해가 줄에 매달려 내려옴(아침)
-   → 들판이 일어서고 토끼·거북이가 지나감 → 성이 일어서고 공주 셋이 들어옴 → 해가 끌려 올라가고 밤 하늘 막이 다시 내려옴
-   → 공주들은 옆으로 나가고 소품이 누움 → 뒤로 빠져 처음과 같은 로고 → 글자 '톡'·'톡'·'동화극장'이 일어섬 → 아치가 홈 로고 마크 자리로 날아감.
+   → 동화 친구들(사자·신데렐라는 왼쪽, 호랑이·토끼·거북이는 오른쪽에서)이 차례로 걸어 들어와 줄 서고 다 같이 인사(호랑이는 인사 자세, 별이 반짝 올라감)
+   → 해가 끌려 올라가고 밤 하늘 막이 다시 내려옴 → 친구들은 접혀 누움 → 뒤로 빠져 처음과 같은 로고 → 글자 '톡'·'톡'·'동화극장'이 일어섬 → 아치가 홈 로고 마크 자리로 날아감.
    커튼은 로고처럼 왼쪽에 묶인 채 늘 맨 앞(무대와 배우는 그 뒤). 사라지는 것은 투명해지지 않고 걸어 나가거나 접혀 눕는다.
    좌표: '마크 픽셀' = assets/ui/logo_mark.webp(512) 위 좌표. 화면 = 직교 카메라, 1단위 = CSS 1px. */
 export const DURATION = 6.35;
@@ -25,11 +26,12 @@ const url = path => new URL(`../../${path}`, import.meta.url).href;
 export const CUES = [
   [.36, 'whoosh', .32], [.4, 'paper_down', .35],
   [1.0, 'slide_up', .35], [1.08, 'slide_down', .3], [1.15, 'birds_chirp_1', .25, 1.8],
-  [1.3, 'paper_up', .5], [1.42, 'paper_up', .35],
-  [1.65, 'hop', .45], [1.98, 'hop', .4], [2.3, 'hop', .35], [1.76, 'step_grass', .35],
-  [2.55, 'paper_down', .45], [2.65, 'paper_up', .55], [2.8, 'shimmer', .4], [3.18, 'sparkle', .45],
-  [3.3, 'slide_up', .35], [3.42, 'slide_down', .35], [3.9, 'sparkle', .4],
-  [4.1, 'paper_down', .4], [4.47, 'whoosh', .28],
+  [1.35, 'paper_up', .4], [1.42, 'paper_up', .3],
+  [1.55, 'step_grass', .35], [1.85, 'step_grass', .35], [2.15, 'hop', .35], [2.43, 'hop', .35], [2.55, 'hop', .25],   // 친구들이 차례로 들어옴
+  [2.0, 'pop', .3], [2.3, 'pop', .3], [2.6, 'pop', .3], [2.9, 'pop', .3],
+  [2.95, 'shimmer', .4], [3.05, 'cheer', .22, 1.1], [3.15, 'sparkle', .45],   // 다 같이 인사
+  [3.3, 'slide_up', .35], [3.42, 'slide_down', .35], [3.9, 'sparkle', .35],
+  [3.97, 'paper_down', .4], [4.47, 'whoosh', .28],
   [5.1, 'paper_tap', .7], [5.25, 'paper_tap', .7], [5.43, 'paper_up', .45], [5.62, 'chime_up', .4]
 ];
 
@@ -71,8 +73,8 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       mark: 'assets/ui/logo_mark.webp',
       ...Object.fromEntries(['sp2_day_full', 'sp2_night_sky', 'sp2_floor', 'sp2_curtain_tied', 'sp2_sun'].map(n => [n, `assets/v3w/${n}.webp`])),
       ...Object.fromEntries(L.pieces.map(p => [p[0], `assets/v3w/${p[0]}.webp`])),
-      ...Object.fromEntries(['sp_ground_meadow_v1', 'sp_castle_v1', 'rp_layer_tree_front', 'rab_layer_flower_bush_front', 'cf4_prop_grass_tuft',
-        'rab_rabbit_run_c', 'rab_turtle_walk', 'cd2_cind_gown', 'sw_snow_stand', 'sb_pr_wave'].map(n => [n, `assets/v3w/${n}.webp`]))
+      ...Object.fromEntries(['lm_lion_stand', 'cd2_cind_gown', 'pj3_tiger_stand', 'pj3_tiger_bow', 'rab_rabbit_run_c', 'rab_turtle_walk', 'rab_layer_flower_bush_front', 'cf4_prop_grass_tuft'].map(n => [n, `assets/v3w/${n}.webp`])),
+      star_one: 'assets/ui/star_one.webp'
     };
     const loader = new THREE.TextureLoader();
     const results = await Promise.allSettled(Object.entries(FILES).map(async ([name, path]) => {
@@ -163,28 +165,18 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     root.add(sun);
     const sunY = 205 - 774 * SUN_H / 1024 + SUN_H / 2;
 
-    // 1막 들판·나무·수풀(접혀 있다가 일어선다), 2막 성
+    /* 무대 안 이야기: 커튼콜(동화 친구들이 차례로 들어와 줄 서고 다 같이 인사) */
     const flaps = [];
-    const flap = (name, h, x, y, start, dur = .38, order = 10) => {
-      const p = at(paper(name, h, { order }), x, y); root.add(p); flaps.push({ p, start, dur }); return p;
-    };
-    const meadow = flap('sp_ground_meadow_v1', 110, 290, 472, 1.3, .4, 6);
-    const tree = flap('rp_layer_tree_front', 150, 418, 440, 1.4, .36, 8);
-    const bush = flap('rab_layer_flower_bush_front', 40, 196, 455, 1.45, .32, 12);
-    const tuft = flap('cf4_prop_grass_tuft', 26, 360, 458, 1.5, .3, 12);
-    const castle = flap('sp_castle_v1', 150, 300, 432, 2.65, .42, 7);
-    const scene1 = [tree, bush, tuft], scene2 = [meadow, castle];
-
-    // 배우: 토끼·거북이는 왼쪽에서 들어와 오른쪽으로 나가고(프레임 뒤로 가려짐), 공주들은 양옆에서 들어와 선다
-    const rabbit = paper('rab_rabbit_run_c', 92, { order: 20 }); root.add(rabbit);
-    const turtle = paper('rab_turtle_walk', 44, { order: 19 }); root.add(turtle);
-    const cast = [
-      { p: paper('cd2_cind_gown', 112, { order: 22 }), from: 20, x: 212, y: 458, start: 2.85, exit: -70 },
-      { p: paper('sw_snow_stand', 104, { order: 21 }), from: 30, x: 296, y: 452, start: 2.99, exit: -60 },
-      { p: paper('sb_pr_wave', 110, { order: 23 }), from: 500, x: 384, y: 460, start: 2.91, exit: 560 }
-    ];
-    for (const a of cast) root.add(a.p);
-
+    const flap = (name, h, x, y, start, dur = .38, order = 10, down = 4.0) => { const p = at(paper(name, h, { order }), x, y); root.add(p); flaps.push({ p, start, dur, down }); return p; };
+    const actors = [];
+    {
+      flap('rab_layer_flower_bush_front', 40, 160, 462, 1.35, .3, 30); flap('cf4_prop_grass_tuft', 26, 455, 462, 1.42, .3, 30);
+      [['lm_lion_stand', 104, 178, 1.5, -1], ['cd2_cind_gown', 136, 252, 1.8, -1], ['pj3_tiger_stand', 98, 346, 2.1, 1], ['rab_rabbit_run_c', 82, 428, 2.38, 1]].forEach(([n, h, x, st, side], i) =>
+        { const p = paper(n, h, { order: n === 'cd2_cind_gown' ? 24 : 20 + i }); root.add(p); actors.push({ p, n, x, y: 446, st, from: side < 0 ? 40 : 520, i }); });   // 신데렐라는 호랑이 앞
+      const tt = paper('rab_turtle_walk', 40, { order: 25 }); root.add(tt); actors.push({ p: tt, n: 'turtle', x: 440, y: 452, st: 2.5, from: 540, i: 4 });
+      const bow = paper('pj3_tiger_bow', 98, { order: 22 }); root.add(bow); actors.tigerBow = bow;
+      actors.stars = [0, 1, 2, 3, 4].map(i => { const p = paper('star_one', 22 + (i % 2) * 8, { anchor: 'center', order: 30, shadow: false }); root.add(p); return p; });
+    }
     // 커튼: 로고처럼 왼쪽에 묶인 커튼(sp2_curtain_tied, 무대 그림에서 오린 것)이 늘 맨 앞. 움직이지 않는다(2026-10-30 사용자 결정)
     const tied = paper('sp2_curtain_tied', SH, { anchor: 'center', order: 25 });
     at(tied, BX + 507 * BK / 2, BY + SH / 2); root.add(tied);
@@ -229,12 +221,13 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     });
     const logoC = toMark(L.size[0] / 2, L.size[1] / 2);
 
-    let W = 1, H = 1, m0 = 1, m1 = 1, c1 = [256, 251];
+    let W = 1, H = 1, m0 = 1, m1 = 1, c1 = [256, 251], squeeze = 1;
     function layout() {
       m0 = logoWidth(W, H) / L.size[0] / sxl;   // CSS px / 마크 픽셀(로고 크기)
       const portrait = W < H;
       m1 = Math.min(.94 * H / 430, (portrait ? 1.22 : 1.2) * W / 405);
       c1 = [portrait ? 270 : 256, 251];
+      squeeze = portrait ? .8 : 1;   // 세로 화면은 무대가 좁아 친구들 줄을 가운데로 모은다(왼쪽 커튼·오른쪽 끝에 가리지 않게)
     }
     // 마크 점 p 가 화면 가운데 기준 (p - c)·m 에 오도록
     const place = (g, m, cx, cy) => { g.scale.setScalar(m); g.position.set(-cx * m, cy * m, 0); };
@@ -280,31 +273,31 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       markPlane.material.opacity = markIn * (flyRect ? 1 : sheet.material.opacity);
       renderer.setClearAlpha(sheet.material.opacity);
 
-      // 일어서는 판: 바닥선을 축으로 누워 있다가(-90°) 선다. 1막 소품은 2.36초에 다시 눕는다
       for (const f of flaps) {
-        let up = back((t - f.start) / f.dur);
-        if (scene1.includes(f.p)) up *= 1 - inout((t - 2.55) / .26);
-        if (scene2.includes(f.p)) up *= 1 - inout((t - 4.1) / .26);
-        f.p.rotation.x = -Math.PI / 2 * (1 - Math.min(1, up));
-        f.p.scale.y = up > 1 ? up : 1;
-        f.p.visible = up > .001;
+        const up = back((t - f.start) / f.dur) * (1 - inout((t - f.down) / .26));
+        f.p.rotation.x = -Math.PI / 2 * (1 - Math.min(1, up)); f.p.scale.y = up > 1 ? up : 1; f.p.visible = up > .001;
       }
-      // 토끼: 세 번 깡충 뛰며 왼쪽 → 오른쪽 밖으로
-      const run = clamp((t - 1.55) / 1.05);
-      rabbit.visible = t >= 1.55 && run < 1;
-      at(rabbit, mix(0, 530, run), 456 - 30 * Math.abs(Math.sin(Math.PI * run * 3)));
-      rabbit.rotation.z = -.08 * Math.cos(Math.PI * run * 3);
-      // 거북이: 느릿느릿 뒤따라 오른쪽 밖으로
-      const walk = clamp((t - 1.7) / 1.6);
-      turtle.visible = t >= 1.7 && walk < 1;
-      at(turtle, mix(0, 500, walk), 462 - 1.5 * Math.abs(Math.sin(Math.PI * walk * 9)));
-      // 공주들: 양옆에서 걸어 들어와 서고, 밤이 되면 옆(커튼·창 밖)으로 걸어 나간다
-      cast.forEach((a, i) => {
-        const k = out((t - a.start) / .55), e = inout((t - 4 - i * .05) / .45);
-        a.p.visible = t >= a.start && e < 1;
-        at(a.p, mix(mix(a.from, a.x, k), a.exit, e), a.y - 4 * Math.abs(Math.sin(Math.PI * k * 3)) * (1 - k) - 4 * Math.abs(Math.sin(Math.PI * e * 3)));
-      });
-      // 글자: 들판·성과 같은 종이 판. 다가가기 시작하면 차례로 눕고, 로고 크기로 돌아오면 '톡'·'톡'·'동화극장' 차례로 일어선다
+      const fold = (p, k) => { p.rotation.x = -Math.PI / 2 * k; p.visible = k < .999; };   // 접혀 눕기
+      {
+        const BOW = 2.95;
+        actors.forEach(a => {
+          const k = out((t - a.st) / .55), hop = Math.abs(Math.sin(Math.PI * k * 3)) * (1 - k);
+          a.p.visible = t >= a.st;
+          const ax = 300 + (a.x - 300) * squeeze;
+          at(a.p, mix(a.from, ax, k), a.y - 9 * hop);
+          const b = Math.sin(Math.PI * clamp((t - BOW - a.i * .05) / .55));   // 인사: 앞으로 숙였다(납작) 다시
+          a.p.scale.set(1, 1 - .16 * b, 1);
+          fold(a.p, inout((t - 3.95 - a.i * .04) / .26));
+          if (!a.p.visible || t < a.st) a.p.visible = false;
+          if (a.n === 'pj3_tiger_stand') { const bowing = b > .2; actors.tigerBow.visible = a.p.visible && bowing; at(actors.tigerBow, a.p.position.x, -a.p.position.y); actors.tigerBow.rotation.x = a.p.rotation.x; if (bowing) a.p.visible = false; }
+        });
+        if (t < BOW) actors.tigerBow.visible = false;
+        actors.stars.forEach((p, i) => {
+          const k = clamp((t - BOW - .1 - i * .06) / .7); p.visible = k > 0 && k < 1;
+          at(p, 200 + i * 60 + 10 * Math.sin(i * 2), 330 - 90 * out(k) + (i % 2) * 20); p.scale.setScalar(Math.max(.001, Math.sin(Math.PI * k) * 1.3)); p.rotation.z = k * 3 + i;
+        });
+      }
+      // 글자: 무대 소품과 같은 종이 판. 다가가기 시작하면 차례로 눕고, 로고 크기로 돌아오면 '톡'·'톡'·'동화극장' 차례로 일어선다
       for (const p of pieces) {
         const up = t < p.land ? 1 - (clamp((t - p.fall) / .22) ** 2) : back((t - p.land) / LAND);
         at(p.p, p.x, p.y);
