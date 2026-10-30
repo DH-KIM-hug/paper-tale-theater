@@ -29,9 +29,8 @@ C = {  # 인물 설명(PLAN 등장인물 표)
  'chick': ('a small round baby CHICK: body sunny yellow (#F2C94E), little wings honey (#F6D27A), tiny beak and legs tangerine (#F28C28). '
            'Very round, about 1.3 heads tall. NO ribbon, NO bow, NO clothes.'),
  'cat': ('a lazy CAT: body dust grey (#C6BFB4) with slate (#5A554E) stripes on the back, head and tail; belly, muzzle and paw tips snow white (#F4F6FA); '
-         'a shell-pink (#F8D7E0) nose; a sunny-yellow (#F2C94E) collar with a small round marigold (#F2B134) bell. Pointed ears, long tail. NOT orange, NOT black.'),
- 'dog': ('a playful DOG: body kraft tan (#C9A574), floppy ears and one patch on the back cocoa (#4E3524), chest paper cream (#F6ECD8), a sky-blue '
-         '(#3E7CB1) collar, a round ink (#2A2A2A) nose. Short tail.'),
+         'a shell-pink (#F8D7E0) nose; a sunny-yellow (#F2C94E) collar with a small round marigold (#F2B134) bell. Proportions: a cute storybook cat with a BIG ROUND HEAD and a small round body, about 2 heads tall (like a toddler picture book), pointed ears, long tail. NOT orange, NOT black.'),
+ 'dog': ('a playful puppy DOG coloured exactly like the puppy used in the other stories of this app: body soft cream (#F3E8D2), the two floppy ears, a patch around one eye and a few round spots on the back in honey orange (#F0C070) with a slightly deeper honey (#E4A854) on the ear tips, a cream fluffy tail, a sky-blue (#3E7CB1) collar, a round ink (#2A2A2A) nose. NOT tan, NOT brown, NO cocoa patches.'),
  'pig': ('a slow sleepy PIG: body blossom pink (#F2A7B5), round snout and the inside of the ears salmon (#F4A27A), two or three small cocoa (#4E3524) '
          'mud spots on the body, a curly tail. NO clothes at all.'),
 }
@@ -308,6 +307,11 @@ key('back_tall', "COMPOSITION (most important):\nA portrait 2:3 picture. The 'af
     'Stacked from top to bottom: the leafy crown of the big tree and a peach morning sky; in the middle the red hen waving with the three chicks; at the bottom the cat, the dog and the pig side by side holding pieces of food, smiling. All faces clearly visible.',
     ['hen_wave', 'chick_hop', 'cat_eat', 'dog_eat', 'pig_eat'], 'assets/raw/keyart_gpt/red_hen_backt_v1.png', 'portrait 2:3')
 
+# 개 기준 자세: 첫 그림(모양 확정)을 모양 참고로, 다른 동화 강아지를 색 참고로 (사용자 2026-10-30: 모습은 그대로, 색만 다른 강아지와 같게)
+for j in jobs:
+    if j['id'] == 'hen_dog_sit':
+        j['refs'] = [RAW + '_rej/hen_dog_sit_v1_tan.png', RAW + '_ref_app_dog.png']; j['pass'] = 1
+        j['prompt'] = j['prompt'].replace('SUBJECT AND POSE:\n', 'SUBJECT AND POSE:\nTWO reference images: the FIRST shows the exact SHAPE, pose, size and face of this dog — keep it exactly (same outline, ears, sitting pose, tongue, collar). The SECOND shows the COLOURS of the puppy in the other stories — repaint the first dog with those colours only (cream body, honey-orange ears, eye patch and spots). Do NOT copy the harness or the pose of the second image.\n', 1)
 json.dump(jobs, open(os.path.join(G, 'tools/app/gen/jobs_red_hen.json'), 'w'), ensure_ascii=False, indent=1)
 from collections import Counter
 print(len(jobs), Counter((j['kind'], j['pass']) for j in jobs))
