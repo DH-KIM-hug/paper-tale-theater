@@ -1,4 +1,4 @@
-import * as THREE from './vendor/three.module.js';
+import * as THREE from '../vendor/three.module.min.js';
 import { ART } from './art.js?v=20261028english1';
 import { ARCH, MARK_BOX, LOCKUP } from './art2.js?v=20261029sp2';
 
@@ -123,7 +123,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     }
     const basic = (map, extra = {}) => own(materials, new THREE.MeshBasicMaterial({ map, transparent: true, depthTest: false, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, ...extra }));
     /* 종이 한 장. anchor 'bottom' = 아래 가운데가 원점(접혀 일어서는 판), 'center' = 가운데, 'left' = 왼쪽 가운데(옆으로 펴지는 커튼) */
-    function paper(name, h, { anchor = 'bottom', order = 10, shadow = true, w } = {}) {
+    function paper(name, h, { anchor = 'bottom', order = 10, shadow = true, w, flip = false } = {}) {
       w ??= h * aspect(name);
       const pivot = new THREE.Group();
       const geo = own(geometries, new THREE.PlaneGeometry(w, h));
@@ -141,6 +141,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
         pivot.add(sm); pivot.userData.shadow = sm;
       }
       pivot.add(mesh); pivot.userData.mesh = mesh;
+      if (flip) for (const o of pivot.children) o.scale.x = -1;   // 좌우 뒤집기: 걷는 쪽을 보게(그림자는 그대로 오른쪽 아래)
       return pivot;
     }
     const at = (obj, x, y) => { obj.position.set(x, -y, 0); return obj; };   // 마크 픽셀(y 아래로) → 장면(y 위로)
@@ -169,11 +170,13 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     const flaps = [];
     const flap = (name, h, x, y, start, dur = .38, order = 10, down = 4.0) => { const p = at(paper(name, h, { order }), x, y); root.add(p); flaps.push({ p, start, dur, down }); return p; };
     const actors = [];
+    // 그림이 보는 쪽(신데렐라는 정면): 들어오는 쪽을 등지고 걷도록 왼쪽에서 오는 인물은 오른쪽을, 오른쪽에서 오는 인물은 왼쪽을 보게 뒤집는다
+    const FACES_LEFT = new Set(['lm_lion_stand', 'pj3_tiger_stand']), FRONT = new Set(['cd2_cind_gown']);
     {
       flap('rab_layer_flower_bush_front', 40, 160, 462, 1.35, .3, 30); flap('cf4_prop_grass_tuft', 26, 455, 462, 1.42, .3, 30);
       [['lm_lion_stand', 104, 178, 1.5, -1], ['cd2_cind_gown', 136, 252, 1.8, -1], ['pj3_tiger_stand', 98, 346, 2.1, 1], ['rab_rabbit_run_c', 82, 428, 2.38, 1]].forEach(([n, h, x, st, side], i) =>
-        { const p = paper(n, h, { order: n === 'cd2_cind_gown' ? 24 : 20 + i }); root.add(p); actors.push({ p, n, x, y: 446, st, from: side < 0 ? 40 : 520, i }); });   // 신데렐라는 호랑이 앞
-      const tt = paper('rab_turtle_walk', 40, { order: 25 }); root.add(tt); actors.push({ p: tt, n: 'turtle', x: 440, y: 452, st: 2.5, from: 540, i: 4 });
+        { const p = paper(n, h, { order: n === 'cd2_cind_gown' ? 24 : 20 + i, flip: !FRONT.has(n) && FACES_LEFT.has(n) === side < 0 }); root.add(p); actors.push({ p, n, x, y: 446, st, from: side < 0 ? 40 : 520, i }); });   // 신데렐라는 호랑이 앞
+      const tt = paper('rab_turtle_walk', 40, { order: 25, flip: true }); root.add(tt); actors.push({ p: tt, n: 'turtle', x: 440, y: 452, st: 2.5, from: 540, i: 4 });   // 거북이 그림은 오른쪽을 본다
       const bow = paper('pj3_tiger_bow', 98, { order: 22 }); root.add(bow); actors.tigerBow = bow;
       actors.stars = [0, 1, 2, 3, 4].map(i => { const p = paper('star_one', 22 + (i % 2) * 8, { anchor: 'center', order: 30, shadow: false }); root.add(p); return p; });
     }

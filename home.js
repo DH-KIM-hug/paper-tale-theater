@@ -1581,8 +1581,8 @@
     title.alt = lang === 'en' ? 'Toki Toki Tale' : '톡톡 동화극장';
     fallback.append(title); sp.append(fallback);
     sp.addEventListener('pointerdown', complete);
-    pending = setTimeout(complete, 2500);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
-    import('./engine/splash/start.js?v=20261030cc4')
+    pending = setTimeout(complete, 5000);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
+    import('./engine/splash/start.js?v=20261030sp5')
       .then(({ startSplash }) => {
         if (finished) return;
         clearTimeout(pending);

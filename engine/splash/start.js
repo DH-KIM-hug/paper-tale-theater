@@ -59,14 +59,14 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
   host.addEventListener('webglcontextlost', finish, true);
   document.addEventListener('visibilitychange', visibility);
   // A hard upper bound also covers a stalled module download/first shader compilation.
-  timer = setTimeout(finish, 12000);
-  loadTimer = setTimeout(finish, 2800);
+  timer = setTimeout(finish, 15000);
+  loadTimer = setTimeout(finish, 5000);
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     clearTimeout(loadTimer); clearTimeout(timer);
     timer = setTimeout(finish, 500);
     return { finish };
   }
-  import('./scene.js?v=20261030cc4').then(async ({ createSplashScene }) => {
+  import('./scene.js?v=20261030sp5').then(async ({ createSplashScene }) => {
     if (closed) return;
     const building = createSplashScene(host.querySelector('.splash-stage'), {
       lang, signal: abort.signal,
@@ -75,12 +75,12 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
         // watchdog still covers the entire preparation, and taps remain enabled.
         if (closed) return;
         clearTimeout(loadTimer);
-        loadTimer = setTimeout(finish, 2800);
+        loadTimer = setTimeout(finish, 5000);
       }
     });
     // GPU initialization can be synchronous; give the subsequent artwork loads their own budget.
     clearTimeout(loadTimer);
-    loadTimer = setTimeout(finish, 2800);
+    loadTimer = setTimeout(finish, 5000);
     const result = await building;
     if (closed) { result.destroy(); return; }
     scene = result;

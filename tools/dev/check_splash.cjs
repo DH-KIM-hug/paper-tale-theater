@@ -54,7 +54,7 @@ const base = process.env.SPLASH_BASE || 'http://127.0.0.1:8879';
       assert.ok(await page.locator('#hero').isVisible());
     });
     await run('missing WebGL module falls through to home', async page => {
-      await page.route('**/engine/splash/vendor/three.module.js', route => route.abort());
+      await page.route('**/engine/vendor/three.module.min.js', route => route.abort());
       await page.goto(base + '/?splash=1');
       await page.locator('#splash').waitFor({ state: 'hidden', timeout: 12000 });
       assert.ok(await page.locator('#hero').isVisible());
