@@ -1189,8 +1189,8 @@
   /* 조각 모양: tools/app/gen/post_puzzle.py 가 판 그림을 물건 모양 조각(구름·강아지·자동차 …)과 모양 없는 조각으로 빈틈없이 나눈다. 조각마다 상자(x,y,w,h: 판 좌표 px, 칸 512)와 SVG 경로.
      layout 에 없는 새 동화는 칸 반쪽 네모 조각(썸네일)으로 보이고, post_puzzle.py 를 다시 돌리면 조각 퍼즐이 된다 */
   const PZ_S = 512;
-  const pzBox = (id, col, row) => {                                                 // 그 동화 칸의 위(row 0)·아래(row 1) 조각 묶음
-    const e = PZ && PZ.boards[curBoard] && PZ.boards[curBoard].pieces[id], q = e && e[row ? 'bot' : 'top'];
+  const pzBox = (bk, id, col, row) => {                                             // 판 bk 의 그 동화 칸 위(row 0)·아래(row 1) 조각 묶음
+    const e = PZ && PZ.boards[bk] && PZ.boards[bk].pieces[id], q = e && e[row ? 'bot' : 'top'];
     if (Array.isArray(q) && q.length) return q;
     const h = PZ_S;                                                                 // layout 에 없는 새 동화: 칸을 위·아래 반씩 네모 조각 하나로
     return [{ file: null, x: col * PZ_S, y: row ? h : 0, w: PZ_S, h, path: `M0 0H${PZ_S}V${h}H0Z` }];
@@ -1201,7 +1201,7 @@
   const has2 = id => { try { return Entitlements.hasSticker2(id); } catch (e) { return false; } };
   const pzGot = t => (has(t.id) ? 1 : 0) + (has2(t.id) ? 1 : 0);
   const starSvg = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z"/></svg>';
-  let curBoard = '', pendingCel = [], celebrating = false, castView = '', stMode = 'puzzle';
+  let curBoard = '', pendingCel = [], celebrating = false, stMode = 'puzzle';
   /* 퍼즐 탭과 스티커북 탭(2026-10-30 사용자: 따로 나눔)은 같은 화면(#view-stickers)을 쓰고 탭이 갈래를 정한다: 퍼즐 = 퍼즐판, 스티커북 = 동화별 친구 스티커 */
   const stkTab = () => curTab === 'puzzle' || curTab === 'stickers';
   try { curBoard = localStorage.getItem(BOARD_KEY) || ''; } catch (e) { /* 기억 없음 */ }
@@ -1213,38 +1213,50 @@
   const CAST_DONE_KEY = 'paperTheater.castDone';
   const castDone = () => { try { const o = JSON.parse(localStorage.getItem(CAST_DONE_KEY) || '{}'); return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } };
   /* 퍼즐 칸 위의 작은 진행 점: 10칸 중 받은 만큼 채운다 */
-  const castDots = id => { const set = castSet(id); if (!set.length) return ''; return `<span class="cast-dots" aria-hidden="true">${set.map(c => `<i class="${hasCast(id, c.k) ? 'on' : c.img ? '' : 'plan'}"></i>`).join('')}</span>`; };
-  /* 스티커 갈래 첫 화면: 친구 스티커를 받은 동화마다 둥근 표지 + 받은 수. 누르면 그 동화의 10칸 스티커북(drawCast) */
-  function drawCastList(tales) {
-    const n = tales.reduce((m, t) => m + castGot(t.id).length, 0);
-    const cell = t0 => { const t = shown(t0), g = castGot(t0.id), src = tileSrc(t0.id) || g[g.length - 1].img;
-      return `<button type="button" class="cs ct" data-tale="${t0.id}" aria-label="${t.title} ${g.length} / ${castSet(t0.id).length}"><img src="${src}" alt="" draggable="false" decoding="async"><b>${g.length}</b></button>`; };
-    const body = tales.length ? `<div class="cast-grid list"><i class="pz-glow" aria-hidden="true"></i>${tales.map(cell).join('')}</div>`
-      : `<p class="cast-none">${L('동화를 끝까지 보면 친구 스티커가 생겨요', 'Finish a tale to get a friend sticker')}</p>`;
-    $('#pzBoard').innerHTML = `<div class="pz-win">${body}</div><div class="pz-head"><h2>${L('친구 스티커', 'Friend Stickers')}</h2><span class="pz-n">${n}</span></div>`;
+  /* ── 퍼즐 탭·스티커북 탭 (2026-10-30 사용자): 판(퍼즐) / 동화(스티커)마다 흰 카드 한 장씩 위아래로 쌓고, 맨 위 동그라미를 누르면 그 카드로 내려간다.
+     화살표 없음 — 아이패드는 판 하나가 한눈에 다 보이고, 휴대폰은 판을 옆으로 쓸어 본다. 퍼즐 카드에는 [흩어지기]·[모으기]: 받은 조각이 흩어지고, 끌어다 제자리 가까이 놓으면 착 붙는다 ── */
+  const stkSec = k => $(`#pzBoard .pz-sec[data-b="${k}"], #pzBoard .pz-sec[data-tale="${k}"]`);
+  function jumpTo(k, smooth = true) {
+    const sec = stkSec(k), v = $('#view-stickers'), row = $('#pzRow'); if (!sec || !v) return;
+    const top = sec.getBoundingClientRect().top - v.getBoundingClientRect().top + v.scrollTop - (row.hidden ? 0 : row.offsetHeight) - 8;
+    v.scrollTo({ top: Math.max(0, top), behavior: smooth && motion() ? 'smooth' : 'auto' });
   }
-  function drawCast() {
-    const t0 = TALES.find(x => x.id === castView), set = castSet(castView);
-    if (!t0 || !set.length) { castView = ''; return false; }
-    const t = shown(t0), ready = set.filter(c => c.img), plan = set.filter(c => !c.img);
-    const got = ready.filter(c => hasCast(castView, c.k)).length, whole = !plan.length && got === ready.length && ready.length > 0;
+  /* 지금 보고 있는 카드의 동그라미를 켠다(스크롤을 따라) */
+  function paintRowOn() {
+    const v = $('#view-stickers'), row = $('#pzRow'); if (!v || row.hidden) return;
+    const line = row.getBoundingClientRect().bottom + 24, secs = [...document.querySelectorAll('#pzBoard .pz-sec')];
+    const cur = secs.find(x => x.getBoundingClientRect().bottom > line) || secs[secs.length - 1]; if (!cur) return;
+    const k = cur.dataset.b || cur.dataset.tale;
+    row.querySelectorAll('.pz-b').forEach(b => { const on = b.dataset.go === k; b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'true' : 'false'); });
+    if (cur.dataset.b) { curBoard = k; try { localStorage.setItem(BOARD_KEY, k); } catch (e) { /* 무시 */ } }
+  }
+  $('#view-stickers').addEventListener('scroll', () => paintRowOn(), { passive: true });
+  /* 스티커북: 친구 스티커를 받은 동화마다 10칸 카드. 받은 칸 = 칼선 스티커, 빈 칸 = 흐린 실루엣, 그림 없는 칸 = 흐린 빈 자리 */
+  function castCard(id) {
+    const t = shown(TALES.find(x => x.id === id)), set = castSet(id), ready = set.filter(c => c.img), plan = set.filter(c => !c.img);
+    const got = ready.filter(c => hasCast(id, c.k)).length, whole = !plan.length && got === ready.length && ready.length > 0;
     const cell = c => {
       if (!c.img) return `<span class="cs plan" aria-hidden="true"></span>`;
-      const g = hasCast(castView, c.k), nm = lang === 'en' ? c.en : c.ko;
-      return g ? `<button type="button" class="cs" data-k="${c.k}" aria-label="${nm}"><img src="${c.img}" alt="" draggable="false" decoding="async"></button>`
+      const nm = lang === 'en' ? c.en : c.ko;
+      return hasCast(id, c.k) ? `<button type="button" class="cs" data-k="${c.k}" aria-label="${nm}"><img src="${c.img}" alt="" draggable="false" decoding="async"></button>`
         : `<span class="cs off" data-k="${c.k}" role="img" aria-label="${L('아직 비어 있어요', 'Still empty')}"><img class="sil" src="${c.img}" alt="" draggable="false" decoding="async"></span>`;
     };
-    $('#pzBoard').innerHTML = `<div class="pz-head"><button type="button" class="cast-back" data-act="cast-back" aria-label="${L('뒤로', 'Back')}">${arrowIc('M30 8L14 24l16 16')}</button><h2>${t.title}</h2><span class="pz-n">${got} / ${set.length}</span></div>
-      <div class="pz-win"><div class="cast-grid${whole ? ' complete' : ''}"><i class="pz-glow" aria-hidden="true"></i>${[...ready, ...plan].map(cell).join('')}</div></div>`;
-    if (whole) {                                    // 친구들을 다 모았으면 한 번 축하
-      const rec = castDone();
-      if (!rec[castView] && curTab === 'stickers' && !celebrating) {
-        rec[castView] = true; try { localStorage.setItem(CAST_DONE_KEY, JSON.stringify(rec)); } catch (e) { /* 기록 못 해도 이번 화면에서는 보인다 */ }
-        const id = castView;
-        requestAnimationFrame(() => celebrateCast(id));
-      }
+    return `<section class="pz-sec cs-sec" data-tale="${id}"><div class="pz-head"><h2>${t.title}</h2><span class="pz-n">${got} / ${set.length}</span></div>
+      <div class="cast-grid${whole ? ' complete' : ''}"><i class="pz-glow" aria-hidden="true"></i>${[...ready, ...plan].map(cell).join('')}</div></section>`;
+  }
+  function drawCastAll() {
+    const tales = TALES.filter(t => castGot(t.id).length), root = $('#pzRow');
+    root.hidden = !tales.length;
+    root.innerHTML = tales.map(t0 => { const t = shown(t0), g = castGot(t0.id), n = castSet(t0.id).length, src = tileSrc(t0.id) || g[g.length - 1].img;
+      return `<button type="button" class="pz-b" data-go="${t0.id}" aria-label="${t.title} ${g.length} / ${n}"><span class="pz-hole"><img src="${src}" alt="" draggable="false" decoding="async"></span><span class="pz-cnt">${g.length} / ${n}</span></button>`; }).join('');
+    $('#pzBoard').innerHTML = tales.length ? tales.map(t => castCard(t.id)).join('') : `<p class="cast-none">${L('동화를 끝까지 보면 친구 스티커가 생겨요', 'Finish a tale to get a friend sticker')}</p>`;
+    paintRowOn();
+    /* 친구들을 다 모은 동화가 처음 생기면 그 카드로 내려가 한 번 축하 */
+    const rec = castDone(), whole = tales.find(t => { const set = castSet(t.id); return !rec[t.id] && set.length && set.every(c => c.img && hasCast(t.id, c.k)); });
+    if (whole && curTab === 'stickers' && !celebrating) {
+      rec[whole.id] = true; try { localStorage.setItem(CAST_DONE_KEY, JSON.stringify(rec)); } catch (e) { /* 기록 못 해도 이번 화면에서는 보인다 */ }
+      jumpTo(whole.id); setTimeout(() => celebrateCast(whole.id), 450);
     }
-    return true;
   }
   function confetti() {
     const host = document.createElement('div'); host.className = 'confetti'; document.body.appendChild(host);
@@ -1257,8 +1269,8 @@
     return host;
   }
   function celebrateCast(id) {
-    const t0 = TALES.find(x => x.id === id), g = $('#pzBoard .cast-grid');
-    if (!t0 || !g || castView !== id) return;
+    const t0 = TALES.find(x => x.id === id), sec = stkSec(id), g = sec && sec.querySelector('.cast-grid');
+    if (!t0 || !g) return;
     celebrating = true;
     try { AudioFX.sfx('tada', .7); setTimeout(() => AudioFX.sfx('cheer', .5), 700); } catch (e) { /* 소리 없이 */ }
     const t = shown(t0);
@@ -1271,30 +1283,24 @@
   /* 조각 묶음(판 좌표의 상자에 하나씩 놓는다): 받음 = 조각 그림(없으면 동화 썸네일을 같은 모양으로 오림) · 못 받음 = 눌린 빈 자리. 눌림 영역은 조각 모양 그대로(투명 경로).
      묶음의 첫 조각만 키보드·화면 읽기 대상이고 나머지는 같은 동작을 하는 눌림 영역이다 */
   const pzScroll = {};
-  const arrowIc = d => UIA.has('ic_arrow') ? uiImg('ic_arrow') : `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  let pzLists = {};
   /* 조각 톡 반경 (§7-5): 받은 조각 묶음의 상자가 72px 보다 작으면 가운데에 72px 투명 톡 영역을 깐다(빈 조각 위·받은 조각 아래 층) */
-  let pzCur = null;
   function pzHits() {
-    const tr = $('#pzBoard .pz-track'), box = tr && tr.querySelector('.pz-hits'); if (!box || !pzCur) return;
-    const cell = tr.offsetHeight / 2, list = pzCur.list; if (!cell) return;
-    box.innerHTML = list.flatMap((t, i) => [0, 1].map(row => {
-      if (!(row ? has(t.id) : has2(t.id))) return '';
-      const qs = pzBox(t.id, i, row), x0 = Math.min(...qs.map(q => q.x)), y0 = Math.min(...qs.map(q => q.y)), x1 = Math.max(...qs.map(q => q.x + q.w)), y1 = Math.max(...qs.map(q => q.y + q.h));
-      const f = cell / PZ_S, w = (x1 - x0) * f, h = (y1 - y0) * f;
-      if (Math.min(w, h) >= 72) return '';
-      const W = Math.max(72, w), H = Math.max(72, h), l = Math.max(0, Math.min(tr.offsetWidth - W, (x0 + x1) / 2 * f - W / 2)), tp = Math.max(0, Math.min(tr.offsetHeight - H, (y0 + y1) / 2 * f - H / 2));
-      return `<span class="pz-s pz-hit" data-id="${t.id}" data-part="${row ? 'bot' : 'top'}" style="left:${l.toFixed(1)}px;top:${tp.toFixed(1)}px;width:${W.toFixed(1)}px;height:${H.toFixed(1)}px"></span>`;
-    })).join('');
+    document.querySelectorAll('#pzBoard .pz-sec[data-b]').forEach(sec => {
+      const bk = sec.dataset.b, list = pzLists[bk], tr = sec.querySelector('.pz-track'), box = tr && tr.querySelector('.pz-hits'); if (!box || !list) return;
+      const cell = tr.offsetHeight / 2; if (!cell) return;
+      box.innerHTML = list.flatMap((t, i) => [0, 1].map(row => {
+        if (!(row ? has(t.id) : has2(t.id))) return '';
+        const qs = pzBox(bk, t.id, i, row), x0 = Math.min(...qs.map(q => q.x)), y0 = Math.min(...qs.map(q => q.y)), x1 = Math.max(...qs.map(q => q.x + q.w)), y1 = Math.max(...qs.map(q => q.y + q.h));
+        const f = cell / PZ_S, w = (x1 - x0) * f, h = (y1 - y0) * f;
+        if (Math.min(w, h) >= 72) return '';
+        const W = Math.max(72, w), H = Math.max(72, h), l = Math.max(0, Math.min(tr.offsetWidth - W, (x0 + x1) / 2 * f - W / 2)), tp = Math.max(0, Math.min(tr.offsetHeight - H, (y0 + y1) / 2 * f - H / 2));
+        return `<span class="pz-s pz-hit" data-id="${t.id}" data-part="${row ? 'bot' : 'top'}" style="left:${l.toFixed(1)}px;top:${tp.toFixed(1)}px;width:${W.toFixed(1)}px;height:${H.toFixed(1)}px"></span>`;
+      })).join('');
+    });
   }
   addEventListener('resize', () => { if (curTab === 'puzzle') pzHits(); });
-  /* 화살표: 판 끝에 닿으면 그쪽 원은 꺼진 모양(§7-9 비활성) */
-  function pzArrows() {
-    const pan = $('#pzBoard .pz-pan'); if (!pan) return;
-    const l = $('#pzBoard [data-act="pan-l"]'), r = $('#pzBoard [data-act="pan-r"]');
-    if (l) l.disabled = pan.scrollLeft <= 2;
-    if (r) r.disabled = pan.scrollLeft >= pan.scrollWidth - pan.clientWidth - 2;
-  }
-  /* 처음 보는 조각(끝 화면에서 받아 온 것): 홈 스티커북 탭에 구리 점, 스티커북을 열면 한 번 들썩. 기록이 없으면 지금 있는 것을 본 것으로 */
+  /* 처음 보는 조각(끝 화면에서 받아 온 것): 홈 퍼즐 탭에 구리 점, 퍼즐 탭을 열면 한 번 들썩. 기록이 없으면 지금 있는 것을 본 것으로 */
   const PZ_SEEN_KEY = 'paperTheater.pzSeen';
   const gotKeys = () => TALES.flatMap(t => [has(t.id) ? t.id + '-bot' : '', has2(t.id) ? t.id + '-top' : '']).filter(Boolean);
   const pzSeenSave = () => { try { localStorage.setItem(PZ_SEEN_KEY, JSON.stringify(gotKeys())); } catch (e) { /* 기억 못 하면 점이 남지 않는다 */ } };
@@ -1304,10 +1310,10 @@
     if (!Array.isArray(seen)) { pzSeenSave(); return []; }
     return gotKeys().filter(k => !seen.includes(k));
   }
-  function pieceHTML(list, i, row) {
+  function pieceHTML(bk, list, i, row) {
     const t0 = list[i], t = shown(t0), got = row ? has(t0.id) : has2(t0.id);
-    return pzBox(t0.id, i, row).map((q, k) => {
-      const id = `${t0.id}-${row}-${k}`;
+    return pzBox(bk, t0.id, i, row).map((q, k) => {
+      const id = `${bk}-${t0.id}-${row}-${k}`;
       const sty = `left:calc(var(--cell)*${q.x / PZ_S});top:calc(var(--cell)*${q.y / PZ_S});width:calc(var(--cell)*${q.w / PZ_S});height:calc(var(--cell)*${q.h / PZ_S})`;
       let art;
       if (!got) art = `<svg class="pz-art" viewBox="0 0 ${q.w} ${q.h}" aria-hidden="true"><path d="${q.path}" fill="#E9DFD2" filter="url(#pzInset)"/></svg>`;
@@ -1325,8 +1331,20 @@
     $('#stkSeg').querySelectorAll('button').forEach(b => { const on = b.dataset.mode === stMode; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); b.textContent = b.dataset.mode === 'cast' ? L('스티커', 'Stickers') : L('퍼즐', 'Puzzle'); });
     $('#view-stickers').classList.toggle('cast-on', stMode === 'cast');
   }
+  function boardCard(b, list, done) {
+    const gotN = list.reduce((n, t) => n + pzGot(t), 0), all = list.length * 2, complete = gotN === all;
+    /* 빈 조각을 먼저, 받은 조각을 나중에 그린다. 그 사이 층(.pz-hits)에 작은 받은 조각의 넓힌 톡 영역(72)을 둔다 → 빈 조각보다 위, 받은 조각보다 아래 */
+    const parts = list.flatMap((t, i) => [[i, 0, has2(t.id)], [i, 1, has(t.id)]]);
+    const html = want => parts.filter(p => p[2] === want).map(p => pieceHTML(b.k, list, p[0], p[1])).join('');
+    const play = gotN ? `<span class="pz-play"><button type="button" class="pz-pb" data-act="scatter">${L('흩어지기', 'Scatter')}</button><button type="button" class="pz-pb go" data-act="gather">${L('모으기', 'Gather')}</button></span>` : '';
+    return `<section class="pz-sec" data-b="${b.k}"><div class="pz-head"><h2>${L(b.ko, b.en)}</h2><span class="pz-n">${gotN} / ${all}</span>${done ? `<i class="pz-done">${starSvg}</i>` : ''}${play}</div>
+      <div class="pz-win" style="--n:${list.length}"><div class="pz-pan${complete ? ' complete' : ''}" style="--n:${list.length}"><div class="pz-track"><i class="pz-glow" aria-hidden="true"></i>${html(false)}<div class="pz-hits" aria-hidden="true"></div>${html(true)}</div></div></div></section>`;
+  }
   function drawStickers() {
     const root = $('#pzRow'); if (!root) return;
+    stMode = curTab === 'stickers' ? 'cast' : 'puzzle';
+    paintSeg();
+    if (stMode === 'cast') { $('#pzEmpty').hidden = true; $('#pzMain').hidden = false; drawCastAll(); drawPlate(); return; }
     const rec = doneRec(), bs = BOARDS.map(b => ({ b, list: pieces(b) })).filter(x => x.list.length);
     const cnt = list => list.reduce((n, t) => n + pzGot(t), 0);
     /* 판을 다 채웠으면 기록(한 번 기록하면 새 조각이 생겨도 '완성' 표시는 남는다) */
@@ -1337,49 +1355,36 @@
     $('#pzMain').hidden = bs.length === 0;
     root.hidden = bs.length === 0;
     if (!bs.length) return;
-    stMode = curTab === 'stickers' ? 'cast' : 'puzzle';
-    const seeing = curTab === 'puzzle', fresh = seeing ? pzNew() : [];
-    if (seeing && pendingCel.length) { curBoard = pendingCel[0]; }
-    else if (fresh.length) { const fb = bs.find(x => x.list.some(t => fresh.some(f => f.startsWith(t.id + '-')))); if (fb) { curBoard = fb.b.k; castView = ''; } }
-    paintSeg();
-    root.hidden = stMode === 'cast';
-    if (!bs.some(x => x.b.k === curBoard)) { const withSt = bs.find(x => x.list.some(t => has(t.id))); curBoard = (withSt || bs[0]).b.k; }
+    const fresh = pzNew();
     root.innerHTML = bs.map(({ b, list }) => {
-      const gotN = cnt(list), all = list.length * 2, done = !!rec[b.k], on = b.k === curBoard, last = [...list].reverse().find(t => has(t.id));
+      const gotN = cnt(list), all = list.length * 2, done = !!rec[b.k], last = [...list].reverse().find(t => has(t.id));
       const art = UIA.has('puzzle_' + b.k) ? uiImg('puzzle_' + b.k, 'pz-art') : stickImg((last || list[0]).id);
-      return `<button type="button" class="pz-b${on ? ' on' : ''}${done ? ' done' : ''}" role="tab" data-b="${b.k}" aria-selected="${on}" aria-label="${L(b.ko, b.en)} ${gotN}/${all}${done ? ', ' + L('완성', 'complete') : ''}">
+      return `<button type="button" class="pz-b${done ? ' done' : ''}" data-go="${b.k}" aria-label="${L(b.ko, b.en)} ${gotN}/${all}${done ? ', ' + L('완성', 'complete') : ''}">
         <span class="pz-hole${art ? '' : ' empty'}">${art}${done ? `<i class="pz-done">${starSvg}</i>` : ''}</span>
         <span class="pz-cnt">${gotN} / ${all}</span><span class="pz-nm">${L(b.ko, b.en)}</span></button>`;
     }).join('');
-    if (stMode === 'cast') {
-      const castTales = TALES.filter(t => castGot(t.id).length);
-      if (!(castView && drawCast())) drawCastList(castTales);
-      drawPlate();
-      return;
-    }
-    castView = '';
-    const cur = bs.find(x => x.b.k === curBoard), list = cur.list, gotN = cnt(list), all = list.length * 2, complete = gotN === all;
-    const arrow = (act, d) => `<button type="button" class="pz-arr" data-act="${act}" aria-label="${act === 'pan-l' ? L('왼쪽으로', 'Left') : L('오른쪽으로', 'Right')}">${arrowIc(d)}</button>`;
-    /* 빈 조각을 먼저, 받은 조각을 나중에 그린다. 그 사이 층(.pz-hits)에 작은 받은 조각의 넓힌 톡 영역(72)을 둔다 → 빈 조각보다 위, 받은 조각보다 아래 */
-    const parts = list.flatMap((t, i) => [[i, 0, has2(t.id)], [i, 1, has(t.id)]]);
-    const html = want => parts.filter(p => p[2] === want).map(p => pieceHTML(list, p[0], p[1])).join('');
-    $('#pzBoard').innerHTML = PZ_INSET + `<div class="pz-win"><div class="pz-pan${complete ? ' complete' : ''}" style="--n:${list.length}"><div class="pz-track"><i class="pz-glow" aria-hidden="true"></i>${html(false)}<div class="pz-hits" aria-hidden="true"></div>${html(true)}</div></div></div>
-      <div class="pz-head"><h2>${L(cur.b.ko, cur.b.en)}</h2><span class="pz-n">${gotN} / ${all}</span>${rec[cur.b.k] ? `<i class="pz-done">${starSvg}</i>` : ''}<span class="pz-arrs">${arrow('pan-l', 'M30 8L14 24l16 16')}${arrow('pan-r', 'M18 8l16 16-16 16')}</span></div>`;
-    const pan = $('#pzBoard .pz-pan'), k = cur.b.k;
-    pan.addEventListener('scroll', () => { pzScroll[k] = pan.scrollLeft; pzArrows(); }, { passive: true });
-    const firstOpen = Math.max(0, list.findIndex(t => pzGot(t) < 2));
-    const freshAt = fresh.length ? list.findIndex(t => fresh.some(f => f.startsWith(t.id + '-'))) : -1;
-    if (freshAt >= 0) pzScroll[k] = null;
-    const at = freshAt >= 0 ? freshAt : firstOpen;
-    pan.scrollLeft = pzScroll[k] != null ? pzScroll[k] : (complete || at < 1 ? 0 : pan.scrollWidth / list.length * (at - .15));
-    pzCur = { list }; pzHits(); pzArrows();
+    pzLists = {}; bs.forEach(x => { pzLists[x.b.k] = x.list; });
+    $('#pzBoard').innerHTML = PZ_INSET + bs.map(({ b, list }) => boardCard(b, list, !!rec[b.k])).join('');
+    /* 판마다 옆 위치: 처음 보는 조각 → 기억한 위치 → 처음 비어 있는 칸 */
+    bs.forEach(({ b, list }) => {
+      const pan = stkSec(b.k).querySelector('.pz-pan'), k = b.k;
+      pan.addEventListener('scroll', () => { pzScroll[k] = pan.scrollLeft; }, { passive: true });
+      const firstOpen = Math.max(0, list.findIndex(t => pzGot(t) < 2)), freshAt = fresh.length ? list.findIndex(t => fresh.some(f => f.startsWith(t.id + '-'))) : -1;
+      if (freshAt >= 0) pzScroll[k] = null;
+      const at = freshAt >= 0 ? freshAt : firstOpen;
+      pan.scrollLeft = pzScroll[k] != null ? pzScroll[k] : (cnt(list) === list.length * 2 || at < 1 ? 0 : pan.scrollWidth / list.length * (at - .15));
+    });
+    pzHits();
+    /* 내려갈 판: 완성 축하 → 처음 보는 조각 → 지난번에 보던 판 */
+    const fb = fresh.length ? bs.find(x => x.list.some(t => fresh.some(f => f.startsWith(t.id + '-')))) : null;
+    const target = pendingCel[0] || (fb && fb.b.k);   // 새 소식이 없으면 맨 위(첫 판)부터
+    if (target && stkSec(target)) jumpTo(target, false); else $('#view-stickers').scrollTop = 0;
+    paintRowOn();
     /* 보상 받기 연결 (§5-7 ④): 처음 보는 조각은 자리에서 한 번 들썩(108% → 100%, 240ms), 본 것으로 적고 탭의 구리 점을 끈다 */
-    if (seeing) {
-      if (motion()) fresh.forEach(f => $('#pzBoard').querySelectorAll(`.pzp[data-k="${f}"]`).forEach(p => p.animate([{ transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 240, delay: 260, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' })));
-      pzSeenSave(); paintTabBadge();
-    }
+    if (motion()) fresh.forEach(f => $('#pzBoard').querySelectorAll(`.pzp[data-k="${f}"]`).forEach(p => p.animate([{ transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 240, delay: 260, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' })));
+    pzSeenSave(); paintTabBadge();
     drawPlate();
-    if (curTab === 'puzzle' && pendingCel.length && !celebrating) { const k2 = pendingCel.shift(); requestAnimationFrame(() => celebrate(k2)); }
+    if (pendingCel.length && !celebrating) { const k2 = pendingCel.shift(); requestAnimationFrame(() => celebrate(k2)); }
   }
   /* 종이별 접시(앱 모드만): 별 0~5개, 5개면 [동화 하나 열기] → S12 종이별 모드 */
   function drawPlate() {
@@ -1397,8 +1402,8 @@
   }
   /* 판 완성 연출 한 번: 종이 뒤에서 빛이 번지고, 스티커들이 차례로 뒤집히고, 색종이가 흩날린다 + 음성 */
   function celebrate(k) {
-    const b = BOARDS.find(x => x.k === k), g = $('#pzBoard .pz-track');
-    if (!b || !g || curBoard !== k) return;
+    const b = BOARDS.find(x => x.k === k), sec = stkSec(k), g = sec && sec.querySelector('.pz-track');
+    if (!b || !g) return;
     celebrating = true;
     try { AudioFX.sfx('tada', .7); setTimeout(() => AudioFX.sfx('cheer', .5), 700); } catch (e) { /* 소리 없이 */ }   // 팡파르(Kenney CC0) 뒤 박수(Pixabay)
     say(L(b.say, `You finished the ${b.en}!`));
@@ -1409,32 +1414,94 @@
     const host = confetti();
     setTimeout(() => { host.remove(); celebrating = false; if (pendingCel.length && curTab === 'puzzle') drawStickers(); }, 3600);
   }
+  /* 퍼즐 놀이: [흩어지기] = 받은 조각이 판 안 아무 데나 흩어진다(살짝 기울어짐) · 조각을 끌어 제자리 가까이(칸의 30% 안) 놓으면 착 붙는다 ·
+     [모으기] = 남은 조각이 모두 제자리로. 다 맞추면 짧게 축하. 위치는 transform 만 바꾸므로 판을 다시 그리면 늘 맞춰진 모습이다 */
+  const pzOff = p => ({ x: +p.dataset.dx || 0, y: +p.dataset.dy || 0, r: +p.dataset.dr || 0 });
+  const pzSet = (p, x, y, r) => { p.dataset.dx = x; p.dataset.dy = y; p.dataset.dr = r; p.style.transform = x || y || r ? `translate(${x}px, ${y}px) rotate(${r}deg)` : ''; };
+  function pzScatter(sec) {
+    const tr = sec.querySelector('.pz-track'), pan = sec.querySelector('.pz-pan'), W = pan.clientWidth, H = tr.offsetHeight, x0 = pan.scrollLeft;
+    sec.classList.add('play');
+    sec.querySelectorAll('.pzp.got').forEach(p => {
+      const w = p.offsetWidth, h = p.offsetHeight, tx = x0 + Math.random() * Math.max(0, W - w), ty = Math.random() * Math.max(0, H - h);
+      p.classList.add('loose');
+      p.animate([{ transform: p.style.transform || 'none' }, { transform: `translate(${tx - p.offsetLeft}px, ${ty - p.offsetTop}px) rotate(${(Math.random() - .5) * 30}deg)` }], { duration: motion() ? 420 : 1, easing: 'cubic-bezier(.2,.8,.2,1)' });
+      pzSet(p, Math.round(tx - p.offsetLeft), Math.round(ty - p.offsetTop), Math.round((Math.random() - .5) * 30));
+    });
+    try { AudioFX.sfx('pop', .5); } catch (e) { /* 소리 없이 */ }
+    say(L('조각을 끌어서 제자리에 놓아 봐요', 'Drag the pieces back into place'));
+  }
+  function pzGather(sec) {
+    sec.querySelectorAll('.pzp.loose').forEach((p, i) => {
+      const o = pzOff(p);
+      if (motion()) p.animate([{ transform: `translate(${o.x}px, ${o.y}px) rotate(${o.r}deg)` }, { transform: 'none' }], { duration: 420, delay: i * 25, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' });
+      pzSet(p, 0, 0, 0); p.classList.remove('loose');
+    });
+    sec.classList.remove('play');
+  }
+  /* 조각을 누르거나 끄는 동안 제자리가 반짝인다(조각 모양 그대로 빛나는 자리) — 2026-10-30 사용자 */
+  const pzGhost = p => { const g = p.cloneNode(true); g.className = 'pzp pz-ghost'; g.removeAttribute('data-k'); g.style.transform = ''; ['dx', 'dy', 'dr'].forEach(k => delete g.dataset[k]); p.parentNode.insertBefore(g, p.parentNode.firstChild.nextSibling); return g; };
+  /* 착 붙으면 조각 둘레로 반짝이 별이 튄다 */
+  function pzSparkle(p) {
+    if (!motion()) return;
+    const tr = p.parentNode, cx = p.offsetLeft + p.offsetWidth / 2, cy = p.offsetTop + p.offsetHeight / 2, R = Math.max(p.offsetWidth, p.offsetHeight) * .6 + 18;
+    for (let i = 0; i < 10; i++) {
+      const sp = document.createElement('i'); sp.className = 'pz-spark'; sp.innerHTML = starSvg; tr.appendChild(sp);
+      const a = i / 10 * Math.PI * 2 + Math.random() * .4, d = R * (.8 + Math.random() * .5);
+      sp.style.left = cx + 'px'; sp.style.top = cy + 'px';
+      sp.animate([{ transform: 'translate(-50%, -50%) scale(.2)', opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(a) * d}px), calc(-50% + ${Math.sin(a) * d}px)) scale(1) rotate(${(Math.random() - .5) * 180}deg)`, opacity: 0 }], { duration: 650 + Math.random() * 250, easing: 'cubic-bezier(.2,.8,.2,1)' }).onfinish = () => sp.remove();
+    }
+    p.animate([{ filter: 'drop-shadow(0 0 0 rgba(255,214,90,0))' }, { filter: 'drop-shadow(0 0 14px rgba(255,214,90,1))', offset: .3 }, { filter: 'drop-shadow(0 0 0 rgba(255,214,90,0))' }], { duration: 900, easing: 'ease-out' });
+  }
+  let pzDrag = null;
+  $('#pzBoard').addEventListener('pointerdown', e => {
+    const p = e.target.closest('.pz-sec.play .pzp.loose'); if (!p || e.button) return;
+    e.preventDefault();
+    const o = pzOff(p);
+    pzDrag = { p, id: e.pointerId, sx: e.clientX - o.x, sy: e.clientY - o.y, ghost: pzGhost(p) };
+    p.classList.add('drag'); try { p.setPointerCapture(e.pointerId); } catch (err) { /* 무시 */ }
+    pzSet(p, o.x, o.y, 0);
+  });
+  addEventListener('pointermove', e => { if (!pzDrag || e.pointerId !== pzDrag.id) return; pzSet(pzDrag.p, Math.round(e.clientX - pzDrag.sx), Math.round(e.clientY - pzDrag.sy), 0); });
+  const pzDrop = e => {
+    if (!pzDrag || e.pointerId !== pzDrag.id) return;
+    const { p, ghost } = pzDrag; pzDrag = null; p.classList.remove('drag'); ghost.remove();
+    const o = pzOff(p), sec = p.closest('.pz-sec'), cell = sec.querySelector('.pz-track').offsetHeight / 2;
+    if (Math.hypot(o.x, o.y) < cell * .3) {                              // 제자리 가까이 → 착
+      if (motion()) p.animate([{ transform: `translate(${o.x}px, ${o.y}px)` }, { transform: 'scale(1.06)' }, { transform: 'none' }], { duration: 260, easing: 'ease-out' });
+      pzSet(p, 0, 0, 0); p.classList.remove('loose'); paper('tap'); pzSparkle(p);
+      try { AudioFX.sfx('sparkle', .5); } catch (err) { /* 소리 없이 */ }
+      if (!sec.querySelector('.pzp.loose')) {                           // 다 맞췄다
+        sec.classList.remove('play');
+        try { AudioFX.sfx('tada', .6); } catch (err) { /* 소리 없이 */ }
+        say(L('다 맞췄어요!', 'All done!'));
+        if (motion()) { const host = confetti(); setTimeout(() => host.remove(), 3000); }
+      }
+    }
+  };
+  addEventListener('pointerup', pzDrop); addEventListener('pointercancel', pzDrop);
   $('#pzRow').addEventListener('click', e => {
     const b = e.target.closest('.pz-b'); if (!b) return;
-    curBoard = b.dataset.b; castView = ''; paper('tap');
-    try { localStorage.setItem(BOARD_KEY, curBoard); } catch (err) { /* 무시 */ }
-    drawStickers();
-    const bd = BOARDS.find(x => x.k === curBoard); if (bd) say(L(bd.ko, bd.en));
+    paper('tap'); jumpTo(b.dataset.go);
+    const bd = BOARDS.find(x => x.k === b.dataset.go), t = TALES.find(x => x.id === b.dataset.go);
+    if (bd) say(L(bd.ko, bd.en)); else if (t) say(shown(t).title);
   });
   $('#pzBoard').addEventListener('click', e => {
-    if (e.target.closest('[data-act="cast-back"]')) { paper('tap'); castView = ''; drawStickers(); say(L('스티커', 'Stickers')); return; }
-    const ct = e.target.closest('.ct');
-    if (ct) { const t = TALES.find(x => x.id === ct.dataset.tale); paper('tap'); castView = ct.dataset.tale; drawStickers(); if (t) say(shown(t).title); return; }
+    const pb = e.target.closest('.pz-pb');
+    if (pb) { const sec = pb.closest('.pz-sec'); paper('tap'); if (pb.dataset.act === 'scatter') pzScatter(sec); else pzGather(sec); return; }
     const cs = e.target.closest('.cs');
     if (cs) {                                                  // 캐릭터 세트 칸: 받은 칸 = 이름 읽기 + 들썩, 빈 칸 = 안내
       if (cs.classList.contains('off')) { paper('down'); say(L('아직 비어 있어요', 'Still empty')); return; }
-      const c = castSet(castView).find(x => x.k === cs.dataset.k); paper('tap'); if (c) say(L(c.ko, c.en));
+      const c = castSet(cs.closest('.cs-sec').dataset.tale).find(x => x.k === cs.dataset.k); paper('tap'); if (c) say(L(c.ko, c.en));
       if (motion()) cs.animate([{ transform: 'rotate(0) scale(1)' }, { transform: 'rotate(-9deg) scale(1.12)', offset: .25 }, { transform: 'rotate(7deg) scale(1.08)', offset: .55 }, { transform: 'rotate(-3deg) scale(1.03)', offset: .8 }, { transform: 'rotate(0) scale(1)' }], { duration: 650, easing: 'ease-out' });
       return;
     }
-    const ar = e.target.closest('.pz-arr');
-    if (ar) { if (ar.disabled) return; const pan = $('#pzBoard .pz-pan'); paper('tap'); if (pan) pan.scrollBy({ left: (ar.dataset.act === 'pan-l' ? -1 : 1) * pan.clientWidth * .7, behavior: motion() ? 'smooth' : 'auto' }); return; }
+    if (e.target.closest('.pz-sec.play')) return;           // 퍼즐 놀이 중에는 조각 톡 = 끌기
     const s = e.target.closest('.pz-s'); if (!s) return;
     if (s.classList.contains('off')) { paper('down'); say(L('아직 비어 있어요', 'Still empty')); return; }
     paper('tap');
     const t = TALES.find(x => x.id === s.dataset.id);
     if (t) say(shown(t).title);     // 제목 읽기 + 살짝 들림 (동화로 들어가지는 않는다)
-    const pp = s.closest('.pzp') || $(`#pzBoard .pzp[data-k="${s.dataset.id}-${s.dataset.part}"]`);
+    const pp = s.closest('.pzp') || s.closest('.pz-sec').querySelector(`.pzp[data-k="${s.dataset.id}-${s.dataset.part}"]`);
     if (pp && motion()) pp.animate([{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-8px) scale(1.04)', offset: .35 }, { transform: 'translateY(0) scale(1)' }], { duration: 520, easing: 'ease-out' });
   });
   $('#pzBoard').addEventListener('keydown', e => { const s = e.target.closest && e.target.closest('.pz-s'); if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); s.dispatchEvent(new MouseEvent('click', { bubbles: true })); } });
@@ -1610,7 +1677,7 @@
   requestAnimationFrame(() => requestAnimationFrame(() => $('#tabs').classList.add('ready')));   // 첫 그림 뒤부터 탭 구멍이 움직인다
 
   /* ── 누름 반응 (§5-3): pointerdown 에서 .is-pressed, pointerup·cancel 에서 뗀다. 모양은 CSS 가 정한다 ── */
-  const PRESS = '.tab, .card, .pz-b, .pick, .pl-tile, .round, .pz-arr, .cast-back, .pz-open, .b-go, .b-play, .b-chip, .hero-play, .hd, .ticket, .pl-top, .pl-b, .g-item, .gate-opt';
+  const PRESS = '.tab, .card, .pz-b, .pick, .pl-tile, .round, .pz-pb, .pz-open, .b-go, .b-play, .b-chip, .hero-play, .hd, .ticket, .pl-top, .pl-b, .g-item, .gate-opt';
   let pressed = null;
   const unpress = () => { if (pressed) { pressed.classList.remove('is-pressed'); pressed = null; } };
   document.addEventListener('pointerdown', e => {

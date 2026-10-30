@@ -818,6 +818,13 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 .cast-none { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; padding: var(--s-5); text-align: center; font-size: var(--fs-title-s, 22px); font-weight: 700; color: var(--ink-2); word-break: keep-all; }
 .cast-dots { display: none; }
 
+/* 아이패드: 판 하나를 한눈에 — 칸 크기를 판 폭 ÷ 동화 수로 줄여 긴 그림 전체가 창 안에 들어온다(창 높이도 거기에 맞춘다).
+   휴대폰은 칸이 너무 작아지므로 지금처럼 옆으로 넘긴다 (2026-10-30 사용자: 퍼즐판은 더 길다) */
+@media (min-width: 700px) {
+  .pz-win[style*="--n"] { aspect-ratio: auto; height: min(calc(var(--pw) * 9 / 16), calc((var(--pw) - 2 * var(--pz-pad)) / var(--n) * 2 + 2 * var(--pz-pad))); }
+  .pz-pan { --cell: min(calc((var(--pw) * 9 / 16 - 2 * var(--pz-pad)) / 2), calc((var(--pw) - 2 * var(--pz-pad)) / var(--n))); }
+}
+.pz-arrs[hidden] { display: none; }
 /* L 아이패드 가로: 판을 화면 높이 안에서 최대한 넓게(2026-10-30 사용자: 넓게) — 판 고르기 원을 줄이고 이름은 숨겨 위 줄을 낮춘다 */
 @media (min-width: 1000px) and (min-height: 640px) and (orientation: landscape) {
   body.app { --pz-c: 64px; --pz-chrome: 300px; }
@@ -862,6 +869,43 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
   .stk-seg { grid-column: 1 / -1; width: 320px; padding: 4px; }
   .stk-seg button { min-height: 48px; font-size: 18px; }
   .view.stk.cast-on .pz-main { grid-column: 1 / -1; }
+}
+
+/* ═════════ 퍼즐·스티커북 2판 (2026-10-30 사용자): 판·동화마다 흰 카드를 위아래로 쌓고, 맨 위 동그라미 줄은 붙어 있다(누르면 그 카드로 내려감). 화살표 없음 ═════════ */
+.view.stk { display: block; }
+.pz-row { position: sticky; top: 0; z-index: 8; background: var(--paper); margin: 0 -8px; padding: 8px 8px 12px; }
+.pz-main { --pw: calc(100cqw - 28px); display: flex; flex-direction: column; align-items: stretch; gap: var(--s-4); width: 100%; max-width: none; padding-bottom: 28px; }
+.pz-board { display: flex; flex-direction: column; gap: var(--s-4); }
+.pz-sec { background: var(--card); border-radius: var(--r-l); box-shadow: var(--sh-1); padding: 12px 14px 14px; }
+.pz-sec .pz-head { display: flex; align-items: center; gap: var(--s-3); margin: 0 0 10px; min-height: 44px; }
+.pz-sec .pz-head h2 { font-size: var(--fs-title); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pz-sec .pz-win { width: 100%; }
+.pz-plate { justify-content: center; }
+/* 퍼즐 놀이 단추: [흩어지기] 흰 알약 · [모으기] 감빛 알약 */
+.pz-play { margin-left: auto; display: flex; gap: 8px; flex: none; }
+.pz-pb { height: 44px; padding: 0 18px; border: 0; border-radius: var(--r-pill); font: inherit; font-size: 15px; font-weight: 800; white-space: nowrap; cursor: pointer; touch-action: manipulation;
+  color: var(--ink); background: var(--card); box-shadow: var(--sh-1); }
+.pz-pb.go { color: #fff; background: var(--act); box-shadow: 0 3px 10px rgba(217, 98, 47, .3); }
+/* 흩어진 조각: 끌 수 있다. 끄는 동안 제자리(.pz-ghost)가 노랗게 반짝이고, 착 붙으면 반짝이 별(.pz-spark)이 튄다 */
+.pz-sec.play .pz-hits { display: none; }
+.pzp.loose { pointer-events: auto; touch-action: none; cursor: grab; z-index: 3; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .28)); transition: filter var(--t-1) var(--ease); }
+.pzp.drag { z-index: 6; cursor: grabbing; filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .32)); }
+.pz-ghost { pointer-events: none; z-index: 1; animation: pzGhost .9s ease-in-out infinite; }
+.pz-ghost .pz-art { opacity: .55; }
+@keyframes pzGhost { 0%, 100% { filter: drop-shadow(0 0 3px rgba(255, 214, 90, .7)); } 50% { filter: drop-shadow(0 0 14px rgba(255, 214, 90, 1)) drop-shadow(0 0 5px rgba(255, 244, 190, 1)); } }
+.pz-spark { position: absolute; z-index: 9; width: 20px; height: 20px; pointer-events: none; }
+.pz-spark svg { display: block; width: 100%; height: 100%; fill: #FFD24A; }
+@media (prefers-reduced-motion: reduce) { .pz-ghost { animation: none; filter: drop-shadow(0 0 8px rgba(255, 214, 90, 1)); } }
+/* 스티커북 카드: 10칸 격자(아이패드 5열, 휴대폰 4열) */
+.cs-sec .cast-grid { position: relative; inset: auto; display: grid; grid-auto-flow: row; grid-template-rows: none; grid-auto-rows: auto; grid-template-columns: repeat(auto-fill, minmax(116px, 1fr)); gap: 10px; padding: 0; overflow: visible; }
+.cs-sec .cs { width: 100%; height: auto; aspect-ratio: 1; }
+.view.stk .cast-none { position: static; padding: 40px 16px; }
+@media (orientation: portrait) and (max-width: 699px) { .cs-sec .cast-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .pz-pb { padding: 0 14px; font-size: 14px; } }
+/* 휴대폰 가로도 같은 쌓기(왼쪽 세로 열 없이) */
+@media (orientation: landscape) and (max-height: 520px) {
+  .view.stk { display: block; overflow-y: auto; }
+  .pz-row { flex-direction: row; overflow-x: auto; overflow-y: hidden; }
+  .pz-main { --pw: calc(100cqw - 28px); width: 100%; display: flex; }
 }
 
 /* ═════════ 종이 풍경 스플래시 ═════════ */
