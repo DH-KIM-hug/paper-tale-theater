@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<meta name="theme-color" content="#F5EFE9">
+<meta name="theme-color" content="#F3F3F1">
 <meta name="color-scheme" content="light">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=moon1">
 <meta name="copyright" content="Copyright © 2026 DH-KIM-hug. All rights reserved. Not open source.">
 <title>톡톡 동화극장</title>
-<link rel="stylesheet" href="home.css?v=20261030cu2">
+<link rel="stylesheet" href="home.css?v=20261030ui2">
 </head>
 <body>
 <!-- 공용 SVG: 종이 조각 그림자 필터 + 태그 아이콘 (글을 못 읽는 아이가 그림으로 알아본다) -->
@@ -105,7 +105,7 @@
     <span class="filter-on" id="filterOn" hidden></span>
   </header>
 
-  <!-- 아이용 탭 3개: 같은 크림 종이에 뚫린 구멍. 선택 = 열린 구멍(색), 아닌 것 = 새김. 가로 = 왼쪽 레일, 세로 = 아래 막대 -->
+  <!-- 아이용 탭 3개: 단색 기호 + 이름. 선택 = 진한 먹색 + 흰 알약(2026-10-30 홈 UI 2판). 가로 = 왼쪽 레일, 세로 = 아래 막대 -->
   <nav id="tabs" class="tabs" role="tablist" aria-label="메뉴">
     <button type="button" class="tab" role="tab" data-tab="tales" aria-controls="view-tales" aria-label="동화 놀이">
       <span class="hole"><i class="dot" aria-hidden="true"></i></span><span class="tab-lb">동화 놀이</span>
@@ -120,21 +120,17 @@
   </nav>
 
   <main class="views" id="views">
-    <!-- 동화 탭: 큰 동화 하나(좌우 화살표로 넘김) + 아래 작은 목록 -->
+    <!-- 동화 탭: 맨 위 꽉 찬 추천 배너(좌우로 쓸어 넘김, 아래 점) + 분류별 흰 카드 -->
     <section class="view shelf" id="view-tales" data-view="tales" role="tabpanel" aria-label="동화">
-      <!-- 큰 동화 (§4-1·§7-1): 바탕에 뚫린 그림 창 + 제목·감빛 놀이 시작 원·화살표. 배치는 화면마다 CSS 가 바꾼다 -->
+      <!-- 추천 배너: 16:9 장면 그림 위에 제목 레터링 · 감빛 알약(시작하기/열어 보기) · 점 -->
       <section class="hero" id="hero" aria-label="오늘의 동화" hidden>
         <div class="hero-win"><div class="hero-slot" id="heroSlot"></div></div>
         <div class="hero-info">
           <h2 class="hero-t" id="heroTitle"></h2>
-          <button type="button" class="hero-play" id="heroPlay" aria-label="이야기 시작"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg></button>
-          <div class="hero-arrows">
-            <button type="button" class="hero-nav prev" id="heroPrev" aria-label="이전 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-            <button type="button" class="hero-nav next" id="heroNext" aria-label="다음 동화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          </div>
+          <button type="button" class="hero-play" id="heroPlay" aria-label="이야기 시작"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6a1 1 0 0 0 1.5.9l10.6-6.8a1 1 0 0 0 0-1.7L9.5 4.3A1 1 0 0 0 8 5.2z" fill="currentColor"/></svg><svg class="hp-lock" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M7.5 10V8a4.5 4.5 0 0 1 9 0v2h.5a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V12a2 2 0 0 1 2-2zm2.2 0h4.6V8a2.3 2.3 0 0 0-4.6 0zM12 13.6a1.5 1.5 0 0 0-.8 2.8V18h1.6v-1.6a1.5 1.5 0 0 0-.8-2.8z" fill="currentColor"/></svg><span class="hp-l" id="heroPlayL">시작하기</span></button>
         </div>
+        <div class="hero-dots" id="heroDots" role="group" aria-label="추천 동화"></div>
       </section>
-      <div class="hero-strip" id="heroStrip" role="button" tabindex="-1" hidden aria-hidden="true"></div>
       <div class="rows" id="rows"></div>
       <div class="empty" id="empty" hidden>
         <span class="empty-pic" aria-hidden="true"></span>
@@ -225,8 +221,9 @@
 <script src="assets/thumbs/tiles.js?v=20261030bj2"></script>
 <script src="assets/icons/icons.js?v=20261029img1"></script>
 <script src="assets/ui/ui.js?v=20261029img1"></script>
+<script src="assets/banner/banners.js?v=20261030ui2"></script>
 <script src="home_narration_el.js?v=20261030bjwc1"></script>
 <script src="review.js?v=20261024lb2"></script>
-<script src="home.js?v=20261030sp5"></script>
+<script src="home.js?v=20261030ui2"></script>
 </body>
 </html>

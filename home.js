@@ -58,7 +58,7 @@
   const saved = load();
   const valid = (row, list) => (Array.isArray(list) ? list : []).filter(k => TAGS[row].some(t => t.key === k));
   const sel = { origin: new Set(valid('origin', saved.origin)), skill: new Set(valid('skill', saved.skill)) };
-  /* 웹도 앱과 같은 화면(탭 3개, 동화 탭은 큰 동화 하나 + 작은 목록, 첫 톡 = 제목 듣기, 두 번째 톡 = 열기).
+  /* 웹도 앱과 같은 화면(탭 3개, 동화 탭은 추천 배너 + 분류별 목록, 카드 한 번 톡 = 열기).
      storeMode = 앱 스토어 모드(잠금·결제). 화면 배치와는 별개다. 옛 선반(?layout=shelf)은 탭을 도입하며 없앴다. */
   const storeMode = typeof Entitlements !== 'undefined' && Entitlements.appMode();
   document.body.classList.add('app');
@@ -152,6 +152,7 @@
   const PIC2L = new Set(window.THUMBS2L || []);
   const PIC = new Set(window.THUMBS || []);
   const TILE = new Set(window.TILES || []);
+  const BAN = new Set(window.BANNERS || []), TTL = new Set(window.TITLES || []);   // 맨 위 배너 그림 · 제목 레터링 (assets/banner, post_banner.py)
   const imgAttrs = 'class="art" alt="" loading="lazy" decoding="async"';
 
   /* ── 그림 딱지: 글자 없이 그림으로 (잠김 = 자물쇠, 이번 주 무료 = 별, 만드는 중 = 가위). 생성 그림 assets/ui/badge_<kind>.webp 가
@@ -169,18 +170,34 @@
     week: '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z" fill="#C98A5B"/></svg>',
     recent: '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="#DDD2C4"/><circle cx="24" cy="24" r="14" fill="#F5EFE9"/><path d="M24 14v11l7 4" stroke="#5C6784" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>'
   };
-  const rowIcon = k => UIA.has('row_' + k) ? uiImg('row_' + k, 'ic') : (ROW_SVG[k] || icon(k));
+  /* 홈 UI 2판(2026-10-30): 아래 탭·서가 줄 머리는 단색 기호(currentColor). 생성 단색 아이콘이 들어오기 전 임시 */
+  const MONO = {
+    tales: '<path fill-rule="evenodd" d="M2.5 5.2c3.2-1.3 6.3-1.1 9 .9v14.2c-2.7-1.7-5.8-1.9-9-.7zM21.5 5.2c-3.2-1.3-6.3-1.1-9 .9v14.2c2.7-1.7 5.8-1.9 9-.7z"/>',
+    night: '<path d="M11.2 1.8a5 5 0 1 0 6.3 6.6 4.1 4.1 0 0 1-6.3-6.6z"/><path d="M5 15.5c4.6-1.4 9.4-1.4 14 0a2.6 2.6 0 0 1 0 5c-4.6 1.4-9.4 1.4-14 0a2.6 2.6 0 0 1 0-5z"/>',
+    stickers: '<path fill-rule="evenodd" d="M6 2.5h11.5a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2.5 2.5 0 0 1-2.5-2.5v-14A2.5 2.5 0 0 1 6 2.5zM12 6.8l1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z"/>',
+    recent: '<path fill-rule="evenodd" d="M12 2.5a9.5 9.5 0 1 1 0 19 9.5 9.5 0 0 1 0-19zM11 6.5v6.2l4.3 2.6 1-1.7-3.3-2V6.5z"/>',
+    week: '<path fill-rule="evenodd" d="M5 4h2V2.5h2V4h6V2.5h2V4h2a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM5 9v10h14V9zm7 1.5l1.1 2.3 2.5.3-1.8 1.7.4 2.5-2.2-1.2-2.2 1.2.4-2.5-1.8-1.7 2.5-.3z"/>',
+    original: '<path fill-rule="evenodd" d="M15.6 3.2l5.2 5.2L9 20.2l-6 1 1-6zM14.5 5.7l-.7.7 3.8 3.8.7-.7z"/>',
+    princess: '<path d="M3 7.5l4.5 4L12 4l4.5 7.5L21 7.5 19 18H5z"/><rect x="5" y="19" width="14" height="2.4" rx="1"/>',
+    korean: '<path d="M2 10.5c3.2 0 6.5-2.3 10-6.5 3.5 4.2 6.8 6.5 10 6.5v1.8H2z"/><path fill-rule="evenodd" d="M5 13.5h14V21H5zM10 16v5h4v-5z"/>',
+    aesop: '<path d="M4 3l5 5h6l5-5v9a8 8 0 0 1-16 0z"/>',
+    world: '<path fill-rule="evenodd" d="M3 6h3v2h2V6h3v2h2V6h3v2h2V6h3v15H3zm7 9v6h4v-6a2 2 0 0 0-4 0z"/>',
+    all: '<path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"/>'
+  };
+  const mono = (k, cls = 'ic mono') => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${MONO[k]}</svg>`;
+  const rowIcon = k => MONO[k] ? mono(k) : UIA.has('row_' + k) ? uiImg('row_' + k, 'ic') : (ROW_SVG[k] || icon(k));
 
   /* 임시 스티커·구멍 그림 경로: 동화 그림 중 사각 종이 썸네일(_tile)을 쓴다 */
   const tileSrc = id => TILE.has(id) ? `assets/thumbs/${id}_tile.webp` : PIC2L.has(id) ? `assets/thumbs/${id}_light.webp` : (PIC2.has(id) || PIC.has(id)) ? `assets/thumbs/${id}.webp` : '';
 
   /* 큰 동화도 작은 목록과 같은 4:3 타일을 쓴다. 키아트(_key_wide/_key_tall)는 동화 시작 화면 전용(2026-10-13 사용자 결정) —
      홈에 넣으면 키아트의 종이 바탕이 홈 카드 안에서 따로 노는 네모로 보인다 */
-  function holeHTML(t, open, st) {
+  function holeHTML(t, open, st, big) {
     /* 구멍을 덮는 종이 마개: 잠김·만드는 중. 확인 전의 '만드는 중'(웹)은 덮지 않는다 */
     /* 마개는 '만드는 중'에만. 잠김은 크림 반투명 종이(CSS) + 오른쪽 아래 모서리 자물쇠, 이번 주 무료는 오른쪽 위 모서리 별(§7-2) — 얼굴을 가리지 않는다 */
     const making = st !== 'locked' && !open && !(t.making && !probed);
     const plug = (making ? `<span class="plug" aria-hidden="true">${badge('making')}</span>` : '') + (st === 'locked' ? badge('lock') : '') + (st === 'week' ? badge('week') : '');
+    if (big && BAN.has(t.id)) return `<span class="thumb full banner"><img class="art" alt="" decoding="async" src="assets/banner/${t.id}.webp">${plug}</span>`;
     // 밝은 종이 한 가지만 쓴다 (다크 모드 없음). 밝은 판이 없으면 남색 판이라도
     if (TILE.has(t.id)) return `<span class="thumb full tile"><img ${imgAttrs} src="assets/thumbs/${t.id}_tile.webp">${plug}</span>`;
     const dk = PIC2.has(t.id), lt = PIC2L.has(t.id), base = `assets/thumbs/${t.id}`;
@@ -215,7 +232,7 @@
     }
     const extra = o.night ? `<span class="rmin">${t0.readMin ? L(`${t0.readMin}분`, `${t0.readMin} min`) : ''}${lang === 'en' && !t0.readEn ? `<em>${L('한국어만', 'Korean only')}</em>` : ''}</span>` : '';
     const inner = `${rvTag}
-      ${holeHTML(t, open, st)}
+      ${holeHTML(t, open, st, o.big)}
       <span class="label"><strong class="title">${t.title}</strong>${extra}</span>`;
     const href = `tales/${t.folder || t.id}/index.html${o.night ? '?read=1' : ''}`;
     const attrs = `data-id="${t.id}" data-origin="${t.origin}"${o.night ? ' data-night="1"' : ''}`;
@@ -227,8 +244,8 @@
       : `<div class="card closed" role="button" tabindex="0" aria-disabled="true" aria-label="${t.title}, ${L('곧 열려요', 'coming soon')}" ${attrs}>${inner}</div>`;
   }
 
-  /* ── 앱 화면의 큰 동화(히어로): 화살표를 톡 눌러 넘기고, 큰 카드를 톡 눌러 연다. 옆으로 밀어도 넘어간다(덤) ──
-     큰 동화 아래에는 제목만 둔다(보호자용 한 줄 소개·태그 아이콘은 보호자 영역 '동화 찾기'로 옮겼다). 잠긴·만드는 중 동화는 올라오지 않는다 */
+  /* ── 맨 위 추천 배너(홈 UI 2판, 2026-10-30): 좌우 꽉 찬 16:9 장면 그림 + 제목 레터링 + 감빛 알약(시작하기 / 잠기면 열어 보기) + 아래 점.
+     좌우로 쓸면 다음 추천 동화, 위아래 스크롤은 목록과 같이 내려간다. 그림을 톡 해도 알약과 같다 ── */
   let heroId = null, heroList = [], heroDir = 0;
   const lastKey = 'paperTheater.last', recentKey = 'paperTheater.recent', recentReadKey = 'paperTheater.recentRead';
   const APP_VERSION = '1.0.0';   // package.json 과 같게 (보호자 영역 '정보'에 보임)
@@ -236,13 +253,25 @@
   function pushRecent(id) {
     try { localStorage.setItem(recentKey, JSON.stringify([id, ...readList(recentKey).filter(x => x !== id)].slice(0, 8))); } catch (e) { /* 기억 못 해도 동화는 열린다 */ }
   }
-  /* 넘기기 (§5-5): 창은 그대로, 지금 그림은 반대쪽으로 40px 밀리며 200ms 에 사라지고 새 그림은 같은 쪽 40px 에서 320ms 로 들어온다.
+  /* 추천 5편: 열린 동화(잠긴 것 포함) 중에서 날마다 바뀌는 순서로 고른다 — 같은 날엔 같은 추천 */
+  const HERO_N = 5;
+  function pickHero(pool) {
+    const d = new Date(), seed0 = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    let x = seed0 % 2147483647 || 1;
+    const rnd = () => (x = x * 48271 % 2147483647) / 2147483647;
+    const a = pool.slice();
+    for (let i = a.length - 1; i > 0; i--) { const k = Math.floor(rnd() * (i + 1)); [a[i], a[k]] = [a[k], a[i]]; }
+    return a.slice(0, HERO_N);
+  }
+  /* 넘기기 (§5-5): 지금 그림은 반대쪽으로 40px 밀리며 200ms 에 사라지고 새 그림은 같은 쪽 40px 에서 320ms 로 들어온다.
      제목은 60ms 늦게 16px 이동하며 바뀐다. 움직임 줄이기 = 160ms 크로스페이드 */
   let heroLock = 0;
+  const heroTitleHTML = t => lang === 'ko' && TTL.has(t.id)
+    ? `<img class="hero-tl" src="assets/banner/${t.id}_title.webp" alt="${shown(t).title}" draggable="false" decoding="async">` : shown(t).title;
   function renderHero() {
     const hero = $('#hero');
     hero.hidden = heroList.length === 0;
-    if (!heroList.length) { $('#heroStrip').hidden = true; return; }
+    if (!heroList.length) return;
     if (!heroList.some(t => t.id === heroId)) heroId = heroList[0].id;
     const t = heroList.find(x => x.id === heroId), name = shown(t).title;
     const slot = $('#heroSlot'), tt = $('#heroTitle'), dir = heroDir;
@@ -255,71 +284,54 @@
       slot.insertAdjacentHTML('beforeend', cardHTML(t, { big: true }));
       old.animate([{ transform: 'none', opacity: 1 }, { transform: `translateX(${-dir * mv}px)`, opacity: 0 }], { duration: rm ? 160 : 200, easing: E, fill: 'forwards' }).onfinish = () => old.remove();
       slot.lastElementChild.animate([{ transform: `translateX(${dir * mv}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: rm ? 160 : 320, easing: E });
-      tt.textContent = name;
+      tt.innerHTML = heroTitleHTML(t);
       tt.animate([{ transform: `translateX(${dir * (rm ? 0 : 16)}px)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: rm ? 160 : 260, delay: rm ? 0 : 60, easing: E, fill: 'backwards' });
     } else {
       slot.innerHTML = cardHTML(t, { big: true });
-      tt.textContent = name;
+      tt.innerHTML = heroTitleHTML(t);
     }
-    const n = heroList.length;
-    $('#heroPrev').hidden = $('#heroNext').hidden = n < 2;
-    $('#heroPlay').setAttribute('aria-label', L(`${name} 이야기 시작`, `Start ${name}`));
-    paintRowSel();
-    $('#heroStrip').textContent = name;
+    const locked = isOpen(t) && Entitlements.status(t.id) === 'locked';
+    $('#heroPlayL').textContent = locked ? L('열어 보기', 'Unlock') : L('시작하기', 'Start');
+    $('#heroPlay').classList.toggle('lock', locked);
+    $('#heroPlay').setAttribute('aria-label', locked ? L(`${name} 열어 보기`, `Unlock ${name}`) : L(`${name} 시작하기`, `Start ${name}`));
+    const dots = $('#heroDots');
+    dots.hidden = heroList.length < 2;
+    dots.innerHTML = heroList.map(x => `<button type="button" class="hd${x.id === heroId ? ' on' : ''}" data-id="${x.id}" aria-label="${shown(x).title}"${x.id === heroId ? ' aria-current="true"' : ''}></button>`).join('');
   }
-  function heroStep(d) {
+  function heroStep(d, to) {
     if (heroList.length < 2) return;
     const now = performance.now();
     if (now < heroLock) return;                              // 넘기는 동안 다시 누름은 무시(연타 방지)
     heroLock = now + 320;
     const i = heroList.findIndex(t => t.id === heroId);
-    heroId = heroList[(i + d + heroList.length) % heroList.length].id;
+    heroId = to || heroList[(i + d + heroList.length) % heroList.length].id;
     heroDir = d;
     paper('tap');
     renderHero();
     const t = heroList.find(x => x.id === heroId);
     sayTitle(shown(t).title, t.id);
   }
-  /* 작은 타일 톡 = 그 자리에서 고르기(2026-10-29 사용자 결정: 위로 올라가며 스크롤되던 것을 없앴다).
-     첫 톡 = 제목·테마 소리 + 제자리에서 살짝 들림·감빛 테두리, 같은 타일 두 번째 톡 = 열기. 큰 동화도 같은 동화로 바뀌지만 화면은 움직이지 않는다 */
-  let rowSel = null;
-  const paintRowSel = () => document.querySelectorAll('#rows .card').forEach(c => {
-    const on = c.dataset.id === rowSel;
-    if (c.classList.contains('sel') && !on) c.getAnimations().forEach(a => a.cancel());
-    c.classList.toggle('sel', on);
-  });
-  function heroSelect(id, c) {
-    rowSel = id; heroId = id; heroDir = 0; renderHero();
-    const t = heroList.find(x => x.id === id);
-    if (t) sayTitle(shown(t).title, t.id);
-    if (c && motion()) c.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px) scale(1.03)' }, { transform: 'translateY(-4px) scale(1.015)' }], { duration: 300, easing: 'cubic-bezier(.3,1.5,.5,1)', fill: 'forwards' });
-  }
   {
-    $('#heroPrev').addEventListener('click', () => heroStep(-1));
-    $('#heroNext').addEventListener('click', () => heroStep(1));
-    /* 감빛 놀이 시작 원 = 큰 동화 창 톡과 같은 동작(조리개 → 동화) */
+    /* 감빛 알약 = 배너 그림 톡과 같은 동작(잠긴 동화는 잠김 쪽지, 열린 동화는 커튼 → 동화) */
     $('#heroPlay').addEventListener('click', () => { const c = $('#heroSlot .card:not(.hero-old)'); if (c) c.click(); });
-    /* 생성 그림(ic_play·ic_arrow)이 있으면 임시 기호 대신 */
-    if (UIA.has('ic_play')) $('#heroPlay').innerHTML = uiImg('ic_play');
-    if (UIA.has('ic_arrow')) ['#heroPrev', '#heroNext'].forEach(s => { $(s).innerHTML = uiImg('ic_arrow'); });
+    $('#heroDots').addEventListener('click', e => {
+      const b = e.target.closest('.hd'); if (!b || b.dataset.id === heroId) return;
+      const i = heroList.findIndex(t => t.id === heroId), k = heroList.findIndex(t => t.id === b.dataset.id);
+      heroStep(k > i ? 1 : -1, b.dataset.id);
+    });
     let sx = null;
     const hz = $('#hero');
     hz.addEventListener('pointerdown', e => { sx = e.clientX; });
     hz.addEventListener('pointerup', e => { if (sx !== null && Math.abs(e.clientX - sx) > 70) { heroStep(e.clientX < sx ? 1 : -1); hz.dataset.swiped = '1'; setTimeout(() => { delete hz.dataset.swiped; }, 50); } sx = null; });
     let wheelAt = 0;
-    hz.addEventListener('wheel', e => {  // 트랙패드·마우스 스크롤로도 큰 그림 넘기기
-      const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      if (Math.abs(d) < 12) return;
+    hz.addEventListener('wheel', e => {  // 트랙패드 가로 쓸기로도 넘긴다(세로 스크롤은 목록을 내린다)
+      if (Math.abs(e.deltaX) < 12 || Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
       e.preventDefault();
       const now = performance.now();
       if (now - wheelAt < 450) return;
-      wheelAt = now; heroStep(d > 0 ? 1 : -1);
+      wheelAt = now; heroStep(e.deltaX > 0 ? 1 : -1);
     }, { passive: false });
     hz.addEventListener('click', e => { if (hz.dataset.swiped) { e.preventDefault(); e.stopPropagation(); } }, true);
-    /* 큰 동화가 스크롤로 가려지면 머리줄 아래에 얇은 제목 띠만 남긴다. 띠를 톡 = 맨 위로 */
-    const strip = $('#heroStrip');
-    if (window.IntersectionObserver) new IntersectionObserver(es => { const e = es[es.length - 1]; strip.hidden = e.intersectionRatio > .25 || $('#hero').hidden; }, { root: $('#view-tales'), threshold: [0, .1, .25, .5, 1] }).observe(hz);   // 큰 동화가 4분의 3 넘게 가려지면 띠
-    strip.addEventListener('click', () => { paper('tap'); try { $('#view-tales').scrollTo({ top: 0, behavior: motion() ? 'smooth' : 'auto' }); } catch (e) { /* 무시 */ } });
   }
 
   /* ── S1 서가 줄 7개: 이번 주 무료(앱 모드만) · 최근 본 · 창작 · 공주 · 동물(이솝) · 우리나라 · 세계. 비는 줄은 숨기고, 같은 동화가 여러 줄에 나와도 된다.
@@ -342,8 +354,7 @@
     const rowsEl = $('#rows');
     const seen = TALES.filter(t => inScope(t) && match(t));
     const vis = new Set(seen.map(t => t.id));
-    heroList = TALES.filter(t => vis.has(t.id) && playable(t));
-    try { if (!heroId) heroId = localStorage.getItem(lastKey); } catch (e) { /* 무시 */ }
+    heroList = pickHero(TALES.filter(t => vis.has(t.id) && isOpen(t)));
     rowsEl.innerHTML = ROWS.map(r => {
       const list = r.k === 'week' || r.k === 'recent' ? r.pick().filter(t => vis.has(t.id)) : byRank(r.pick().filter(t => vis.has(t.id)));
       if (!list.length) return '';
@@ -378,8 +389,7 @@
     set('#tabs', L('메뉴', 'Menu'));
     set('#parentBtn', L('보호자 메뉴: 1초 동안 누르세요. 화면 읽기 기능을 쓰면 두 번 탭해도 열려요', 'Grown-up menu: press and hold for 1 second. With a screen reader, double-tap'));
     set('#hero', L('오늘의 동화', 'Featured tale'));
-    set('#heroPrev', L('이전 동화', 'Previous tale'));
-    set('#heroNext', L('다음 동화', 'Next tale'));
+    set('#heroDots', L('추천 동화', 'Featured tales'));
     set('#view-tales', L('동화 놀이', 'Tale Play'));
     set('#view-night', L('읽어 주기', 'Read to Me'));
     set('#view-stickers', L('스티커북', 'Sticker Book'));
@@ -477,7 +487,6 @@
       sayTitle(L(`${shown(t).title}. 곧 열려요.`, `${shown(t).title}. Coming soon.`), t.id);
       return;
     }
-    if (!inHero && c.dataset.id !== rowSel) { e.preventDefault(); paper('tap'); heroSelect(c.dataset.id, c); return; }
     paper('tap');
     try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (err) { /* 무시 */ }
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;   // 새 탭 열기는 그대로
@@ -1040,9 +1049,8 @@
   addEventListener('online', refreshGuard); addEventListener('offline', refreshGuard);
 
   /* ── S2 잠자리 탭: 읽어 주기가 준비된 동화만(카탈로그 read: true — 대본·녹음 맵·readPlay 가 있는지는 tools/app/check_read_flags.mjs 가 확인).
-     타일 톡 = 제목 읽기 + 살짝 들림, 같은 타일 다시 톡 = 그 동화의 읽어 주기 시작 화면(?read=1). 잠긴 동화는 S4. 영어 모드에서는 영어 읽기 녹음이 있는 동화가 먼저 ── */
+     타일 톡 = 바로 그 동화의 읽어 주기 시작 화면(?read=1, 홈 UI 2판: 한 번에 들어간다). 잠긴 동화는 S4. 영어 모드에서는 영어 읽기 녹음이 있는 동화가 먼저 ── */
   ROW_SVG.all = '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M22.4 11Q14 6 4 7.6V37Q14 35.4 22.4 40Z" fill="#C98A5B"/><path d="M25.6 11Q34 6 44 7.6V37Q34 35.4 25.6 40Z" fill="#DDD2C4"/></svg>';
-  let nightSel = '';
   const nightList = () => {
     const l = TALES.filter(t => t.read && inScope(t) && isOpen(t));
     return lang === 'en' ? [...l.filter(t => t.readEn), ...l.filter(t => !t.readEn)] : l;
@@ -1144,18 +1152,11 @@
     const sec = (k, ko, en, items) => items.length ? `<section class="n-sec" data-row="${k}" aria-label="${L(ko, en)}"><h3 class="row-h"><span class="row-ic">${rowIcon(k)}</span><span class="row-t">${L(ko, en)}</span></h3>
       <div class="n-grid">${items.map(t => `<div class="slot" data-id="${t.id}">${cardHTML(t, { night: true })}</div>`).join('')}</div></section>` : '';
     body.innerHTML = btHTML() + sec('recent', '최근 들은', 'Recently heard', recent) + sec('all', '모든 이야기', 'All tales', list);
-    paintNightSel();
   }
-  const paintNightSel = () => document.querySelectorAll('#nightBody .card').forEach(c => c.classList.toggle('sel', c.dataset.id === nightSel));
   function activateNight(e, c) {
     e.preventDefault();
-    const id = c.dataset.id, t = TALES.find(x => x.id === id);
+    const id = c.dataset.id;
     if (c.classList.contains('locked')) { paper('down'); peek(c); openLock(id); return; }
-    if (nightSel !== id) {                                   // 첫 톡 = 제목 읽기 + 살짝 들림
-      nightSel = id; paper('tap'); paintNightSel(); sayTitle(shown(t).title, id);
-      if (motion()) c.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px) scale(1.03)' }, { transform: 'translateY(-4px) scale(1.015)' }], { duration: 300, easing: 'cubic-bezier(.3,1.5,.5,1)', fill: 'forwards' });
-      return;
-    }
     paper('tap');
     try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (err) { /* 무시 */ }
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
@@ -1539,13 +1540,8 @@
     const on = (Entitlements.appMode() && Entitlements.starBalance() >= Entitlements.STAR_NEED) || (curTab !== 'stickers' && pzNew().length > 0);
     tabBtns.find(b => b.dataset.tab === 'stickers').querySelector('.tab-badge').hidden = !on;
   }
-  /* 탭 그림(assets/ui/tab_<탭>.webp, 목록은 assets/ui/ui.js)이 들어오면 임시 동그라미 대신 쓴다. 없는 파일은 요청하지 않는다 */
-  tabBtns.forEach(b => {
-    const key = 'tab_' + b.dataset.tab, hole = b.querySelector('.hole');
-    if (!(window.UI_ART || []).includes(key)) return;
-    hole.classList.add('art');
-    hole.insertAdjacentHTML('afterbegin', `<img class="tab-art" src="assets/ui/${key}.webp${key === 'logo_mark' ? '?v=moon1' : ''}" alt="" aria-hidden="true" draggable="false">`);
-  });
+  /* 탭 기호: 단색(홈 UI 2판). 고른 탭은 CSS 가 진한 먹색 + 흰 알약으로 */
+  tabBtns.forEach(b => { b.querySelector('.hole').innerHTML = mono(b.dataset.tab, 'tab-ic'); });
   /* 보호자 톱니·닫기도 생성 그림으로(2026-10-29 사용자 지시: SVG 그림 → 이미지) */
   if (UIA.has('ic_gear')) { const g = $('#parentBtn .gear-ic'); if (g) g.outerHTML = uiImg('ic_gear', 'gear-ic'); }
   if (UIA.has('ic_arrow')) { const b = $('#guardClose svg'); if (b) b.outerHTML = backIc(); }
@@ -1618,7 +1614,7 @@
   requestAnimationFrame(() => requestAnimationFrame(() => $('#tabs').classList.add('ready')));   // 첫 그림 뒤부터 탭 구멍이 움직인다
 
   /* ── 누름 반응 (§5-3): pointerdown 에서 .is-pressed, pointerup·cancel 에서 뗀다. 모양은 CSS 가 정한다 ── */
-  const PRESS = '.tab, .card, .pz-b, .pick, .pl-tile, .round, .pz-arr, .cast-back, .pz-open, .b-go, .b-play, .b-chip, .hero-nav, .hero-play, .ticket, .pl-top, .pl-b, .g-item, .gate-opt';
+  const PRESS = '.tab, .card, .pz-b, .pick, .pl-tile, .round, .pz-arr, .cast-back, .pz-open, .b-go, .b-play, .b-chip, .hero-play, .hd, .ticket, .pl-top, .pl-b, .g-item, .gate-opt';
   let pressed = null;
   const unpress = () => { if (pressed) { pressed.classList.remove('is-pressed'); pressed = null; } };
   document.addEventListener('pointerdown', e => {
