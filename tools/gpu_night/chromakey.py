@@ -16,9 +16,12 @@ def key_magenta(src, dst, pad=12):
     alpha = np.clip((70 - m) * 255 / 40, 0, 255)  # m>=70 완전 투명, m<=30 불투명, 사이는 부드럽게
     # 보라·자주 종이(#7B4F8C 는 m≈44)가 반투명해지지 않게: 진짜 배경(m>=150) 둘레 4px 안에서만 지운다(2026-10-29 사용자: 보라가 반투명)
     core = Image.fromarray(((m >= 150) * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(9))
-    alpha = np.where(np.asarray(core) > 0, alpha, 255)
-    # 가장자리 마젠타 번짐 빼기: 빨강·파랑을 초록 쪽으로 당긴다
-    spill = (m > 10) & (alpha > 0)
+    # 배경에 떨어진 짙은 마젠타 그림자(m>60)는 둘레 15px 띠까지 지운다 — 보라 종이(m≈44)와 빨강이 파랑보다 센 분홍·장미 종이(r-b>=45)는 그대로
+    band = np.asarray(Image.fromarray(((m >= 150) * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(31))) > 0
+    alpha = np.where((np.asarray(core) > 0) | (band & (m > 60) & (r - b < 45)), alpha, 255)
+    # 가장자리 마젠타 번짐 빼기: 빨강·파랑을 초록 쪽으로 당긴다. 배경 둘레에서만 —
+    # 그림 전체에 하면 분홍·장미빛 종이가 자줏빛으로 깎인다(2026-10-30 콩쥐 꽃신)
+    spill = (alpha > 0) & (((m > 10) & (np.asarray(core) > 0)) | (band & (m > 35) & (r - b < 45)))
     out = a.copy()
     out[..., 0] = np.where(spill, np.minimum(r, g + 30), r)
     out[..., 2] = np.where(spill, np.minimum(b, g + 30), b)
