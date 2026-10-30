@@ -1179,7 +1179,7 @@
      (tools/app/gen/post_puzzle.py 가 만든다). 목록에 없는 새 동화는 카탈로그 순서로 맨 뒤에 붙고, 그림이 없는 조각은 동화 썸네일을 같은 모양으로 오려 쓴다 */
   const PZ_DONE_KEY = 'paperTheater.puzzleDone2';
   let PZ = null;
-  try { fetch('assets/ui/puzzle_layout.json?v=20261030bj1').then(r => r.ok ? r.json() : null).then(j => { if (j && j.boards) { PZ = j; if (curTab === 'stickers') drawStickers(); } }).catch(() => { /* 없으면 썸네일 조각 */ }); } catch (e) { /* 무시 */ }
+  try { fetch('assets/ui/puzzle_layout.json?v=20261030bj2').then(r => r.ok ? r.json() : null).then(j => { if (j && j.boards) { PZ = j; if (curTab === 'stickers') drawStickers(); } }).catch(() => { /* 없으면 썸네일 조각 */ }); } catch (e) { /* 무시 */ }
   const pieces = b => {
     const all = TALES.filter(b.has), ord = (PZ && PZ.boards[b.k] && PZ.boards[b.k].tales) || [];
     return [...ord.map(id => all.find(t => t.id === id)).filter(Boolean), ...all.filter(t => !ord.includes(t.id))];
@@ -1308,7 +1308,7 @@
       const sty = `left:calc(var(--cell)*${q.x / PZ_S});top:calc(var(--cell)*${q.y / PZ_S});width:calc(var(--cell)*${q.w / PZ_S});height:calc(var(--cell)*${q.h / PZ_S})`;
       let art;
       if (!got) art = `<svg class="pz-art" viewBox="0 0 ${q.w} ${q.h}" aria-hidden="true"><path d="${q.path}" fill="#E9DFD2" filter="url(#pzInset)"/></svg>`;
-      else if (q.file) art = `<img class="pz-art" src="assets/ui/${q.file}?v=20261030bj1" alt="" draggable="false" decoding="async">`;
+      else if (q.file) art = `<img class="pz-art" src="assets/ui/${q.file}?v=20261030bj2" alt="" draggable="false" decoding="async">`;
       else {
         const im = [i - 1, i, i + 1].filter(c => c >= 0 && c < list.length).map(c => { const src = tileSrc(list[c].id); return src ? `<image href="${src}" x="${c * PZ_S - q.x}" y="${-q.y}" width="${PZ_S}" height="${PZ_S * 2}" preserveAspectRatio="xMidYMid slice"/>` : ''; }).join('');
         art = `<svg class="pz-art" viewBox="0 0 ${q.w} ${q.h}" aria-hidden="true"><defs><clipPath id="pzc-${id}"><path d="${q.path}"/></clipPath></defs><rect width="${q.w}" height="${q.h}" fill="#E9DFD3" clip-path="url(#pzc-${id})"/><g clip-path="url(#pzc-${id})">${im}</g></svg>`;
