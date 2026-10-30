@@ -1,12 +1,12 @@
 {
- "notes": "빨간 암탉 녹음 대본(2026-10-31 코드와 함께 작성). voices 는 녹음 전에 정한다(PLAN §목소리 배정 제안: nar 차분한 여성 이야기꾼, hen 씩씩한 엄마, chick 높은 아이 목소리, cat 나른한 젊은 여성, dog 장난스러운 젊은 남성, pig 느리고 굵은 남성). ElevenLabs 만. 합창(chorus3 = 고양이·개·돼지 \"난 싫어!\", chorus = 다섯 배역)은 extra 에 배역마다 따로 녹음해 mix_chorus_el.py(witch_candy 방식)로 겹친 뒤 chorus 의 문장 키로 NARRATION_CLIPS 에 넣는다. 낱말 클립(W_*)은 내레이터 목소리, 영어는 앱에서 0.9배. 영어 낱말은 받아쓰기(mlx_whisper)로 반복·발음 검사.",
+ "notes": "빨간 암탉 녹음 대본(2026-10-31 코드와 함께 작성). voices 는 녹음 전에 정한다(PLAN §목소리 배정 제안: nar 차분한 여성 이야기꾼, hen 씩씩한 엄마, chick 높은 아이 목소리, cat 나른한 젊은 여성, dog 장난스러운 젊은 남성, pig 느리고 굵은 남성). ElevenLabs 만. 합창(chorus3 = 고양이·개·돼지 \"난 싫어!\", chorus = 다섯 배역)은 extra 에 배역마다 따로 녹음해 mix_chorus_el.py(witch_candy 방식)로 겹친 뒤 chorus 의 문장 키로 NARRATION_CLIPS 에 넣는다. 낱말 클립(W_*)은 내레이터 목소리, 영어는 앱에서 0.9배. 영어 낱말은 받아쓰기(mlx_whisper)로 반복·발음 검사. 목소리 확정(2026-10-31): nar=Gyeorina(따뜻한 이야기꾼), hen=수진(밝고 다정한 엄마), chick=baby_Mithi(아이), cat=Yeonjin(나른·무심), dog=Leo(젊은 남성), pig=Deoksu(굵고 느릿). 브레멘 개(Munni)·고양이(Laura)와 다른 목소리.",
  "voices": {
-  "nar": "",
-  "hen": "",
-  "chick": "",
-  "cat": "",
-  "dog": "",
-  "pig": ""
+  "nar": "1gYuTfEwELcoEo96wnGj",
+  "hen": "9cino9hfS3ougiPeFvp1",
+  "chick": "MIl0Flub6Sc9KSkX2A42",
+  "cat": "Mwr1G7n3SF7eQxbSp4At",
+  "dog": "zBfkllpYmUyxwRyQt8Zw",
+  "pig": "IAETYMYM3nJvjnlkVTKI"
  },
  "lines": [
   {
@@ -1083,7 +1083,7 @@
     [
      "nar",
      "꿀!",
-     "toneup"
+     null
     ]
    ]
   },
@@ -1573,5 +1573,39 @@
   "ch_I_done_pizza": "피자 완성!",
   "ch_I_done_pancake": "팬케이크 완성!",
   "ch_J8": "잘 먹겠습니다!"
+ },
+ "models": {
+  "nar": "eleven_v4",
+  "hen": "eleven_v4",
+  "chick": "eleven_v4",
+  "cat": "eleven_v4",
+  "dog": "eleven_v4",
+  "pig": "eleven_v4"
+ },
+ "settings": {
+  "nar": {
+   "stability": 0.45,
+   "style": 0.4
+  },
+  "hen": {
+   "stability": 0.45,
+   "style": 0.45
+  },
+  "chick": {
+   "stability": 0.4,
+   "style": 0.5
+  },
+  "cat": {
+   "stability": 0.5,
+   "style": 0.4
+  },
+  "dog": {
+   "stability": 0.35,
+   "style": 0.55
+  },
+  "pig": {
+   "stability": 0.45,
+   "style": 0.45
+  }
  }
 }
