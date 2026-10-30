@@ -64,7 +64,7 @@
     wc_prop_ing_fly: .925, wc_prop_ing_fish: 1.2317, wc_prop_ing_wave: 1.9868, wc_prop_ing_frog: 1.095, wc_prop_ing_dino: 1.315, wc_prop_ing_leek: 0.9733, wc_prop_ing_lantern: 1.01,
     wc_prop_ladle: 1.0633, wc_prop_table: 2.1127, wc_prop_sample_orange: .56, wc_prop_sample_green: .5533, wc_prop_sample_purple: .565, wc_prop_sample_brown: .5033, wc_prop_sparkle_pop: 1.005,
     wc_prop_candy_strawberry: 1.7893, wc_prop_candy_duck: .7133, wc_prop_candy_fish: 1.6729, wc_prop_candy_frog: .5717, wc_prop_candy_kiwi: 1.8595, wc_prop_candy_croc: 1.19, wc_prop_candy_pumpkin: 1.833, wc_prop_candy_bat: 1.0617,
-    wc_prop_candy_choco: .6933, wc_prop_candy_ghost: 2.0362, wc_prop_candy_jar: .93, wc_prop_plate_white: 1.7208, wc_prop_sign_candy: .8,
+    wc_prop_candy_choco: 1.8153, wc_prop_candy_ghost: 2.0362, wc_prop_candy_jar: .93, wc_prop_plate_white: 1.7208, wc_prop_sign_candy: .8,
     wc_prop_fx_bubble: .9933, wc_prop_fx_heart: 1.1117, wc_prop_fx_feather: .555,
     wc_fg_pumpkin_pile: 1.3217, wc_fg_leaves_front: 1.2367, wc_fg_fence_candy: 1.9068, wc_fg_jar_shelf_front: .7133, wc_fg_web_corner: .995, wc_fg_roof_sil: 2.7439,
     /* 변신 컷 인물 큰 그림(post: 마젠타 오림, 이 작업에서 만든 webp) */

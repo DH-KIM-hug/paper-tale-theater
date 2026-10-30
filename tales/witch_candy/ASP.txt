@@ -41,7 +41,7 @@ prop_candy_fish: 1.6575
 prop_candy_frog: 0.5717
 prop_candy_pumpkin: 1.8109
 prop_candy_bat: 1.0633
-prop_candy_choco: 0.6933
+prop_candy_choco: 1.8153
 prop_candy_ghost: 2.0362
 prop_candy_jar: 0.93
 prop_plate_white: 1.7143
