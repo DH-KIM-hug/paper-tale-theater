@@ -280,6 +280,18 @@ const STICKERS = {
     { k: 'rabbit_hop', img: 'assets/v3w/bj_rabbit_hop.webp', ko: '토끼(깡충)', en: 'Rabbit (hopping)' },
     { k: 'sage_give', img: 'assets/v3w/bj_sage_give.webp', ko: '산신령', en: 'Mountain sage' },
   ],
+  red_hen: [   // 기존 동화 스프라이트(2026-10-31)
+    { k: 'hen_bread', img: 'assets/v3w/hen_hen_bread.webp', ko: '빨간 암탉(빵)', en: 'Little Red Hen (bread)' },
+    { k: 'chick_hop', img: 'assets/v3w/hen_chick_hop.webp', ko: '병아리(폴짝)', en: 'Chick (hopping)' },
+    { k: 'cat_raise', img: 'assets/v3w/hen_cat_raise.webp', ko: '고양이', en: 'Cat' },
+    { k: 'dog_raise', img: 'assets/v3w/hen_dog_raise.webp', ko: '개', en: 'Dog' },
+    { k: 'pig_raise', img: 'assets/v3w/hen_pig_raise.webp', ko: '돼지', en: 'Pig' },
+    { k: 'hen_water', img: 'assets/v3w/hen_hen_water.webp', ko: '빨간 암탉(물 주기)', en: 'Little Red Hen (watering)' },
+    { k: 'cat_yawn', img: 'assets/v3w/hen_cat_yawn.webp', ko: '고양이(하품)', en: 'Cat (yawning)' },
+    { k: 'pig_mud', img: 'assets/v3w/hen_pig_mud.webp', ko: '돼지(진흙)', en: 'Pig (in the mud)' },
+    { k: 'dog_lie', img: 'assets/v3w/hen_dog_lie.webp', ko: '개(낮잠)', en: 'Dog (napping)' },
+    { k: 'hen_wave', img: 'assets/v3w/hen_hen_wave.webp', ko: '빨간 암탉(인사)', en: 'Little Red Hen (waving)' },
+  ],
   snow_white: [
     { k: 'snow_stand', img: 'assets/v3w/sw_snow_stand.webp', ko: '백설공주(서기)', en: 'Snow White (standing)' },
     { k: 'dwarf_smile', img: 'assets/v3w/sw_dwarf_smile.webp', ko: '난쟁이(방긋)', en: 'Dwarf (smiling)' },

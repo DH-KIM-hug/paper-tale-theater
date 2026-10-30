@@ -360,6 +360,17 @@ const TALES = (() => {
     line: '사탕 마녀의 초대장을 받은 다현이와 친구들. 아기 용 콧물, 병아리 방귀, 괴물 응가, 소방차, 개구리… 우스운 재료를 골라 솥에 넣고 세어요. 빨강과 노랑을 섞으면 무슨 색? 사탕을 먹으면 딸기, 오리, 박쥐, 호박으로 뿅 변신! 마지막엔 모두 함께 검정 유령 사탕을 먹고 오~우~.',
     en: { title: "The Candy Witch's Halloween", line: 'Dahyun and her friends get an invitation from the Candy Witch. Baby-dragon snot, chick toots, monster poo, a fire truck, a frog... pick the silly ingredients, drop them in the cauldron and count. Mix red and yellow: what colour do you get? Eat the candy and turn into a strawberry, a duck, a bat or a glowing pumpkin. Last of all, everyone eats a black ghost candy and marches around going oooh.' },
     art: `<rect width="160" height="110" fill="${c.ind}"/><g class="pc"><circle cx="128" cy="24" r="12" fill="${c.cr}"/><rect y="88" width="160" height="22" fill="${c.bk}"/><ellipse cx="80" cy="74" rx="30" ry="22" fill="#1A1410"/><circle cx="40" cy="80" r="12" fill="${c.ps}"/></g>` },
+  { id: 'red_hen', title: '빨간 암탉', origin: 'world', also: ['animal'], skills: ['spot', 'order', 'heart'], ready: true, read: false, readMin: 8,
+    line: '빨간 암탉이 혼자 밀을 심어 빵을 굽고, 다음 날엔 친구들과 샌드위치나 피자나 팬케이크를 만들어요. 밀가루·토마토·딸기 같은 재료 이름을 배우고, 씨앗에서 빵까지 순서를 맞춰요.',
+    en: { title: 'The Little Red Hen', line: 'The little red hen plants wheat and bakes bread all by herself. The next day, her friends help make sandwiches, pizza or pancakes. Learn the names of foods like flour, tomato and strawberry, and put seed-to-bread in order.' },
+    art: `<rect width="160" height="110" fill="#CDE6F7"/>
+      <g class="pc"><rect y="84" width="160" height="26" fill="#B5D36B"/>
+      ${[112, 126, 140].map(x => `<path d="M${x} 84 v-40" stroke="${c.gd}" stroke-width="3"/><ellipse cx="${x}" cy="40" rx="5" ry="10" fill="${c.gd}"/>`).join('')}
+      <ellipse cx="62" cy="66" rx="26" ry="22" fill="#E04B3C"/><path d="M78 56 q16 -6 18 8 q-8 2 -18 0z" fill="${c.rd}"/>
+      <circle cx="48" cy="42" r="14" fill="#E04B3C"/><path d="M38 34 q10 -16 22 -2 q-6 10 -22 2z" fill="#3E7CB1"/><circle cx="56" cy="30" r="5" fill="${c.ps}"/>
+      <path d="M34 44 l-8 3 l8 3z" fill="#F2B134"/>${eye(44, 42, 1.8)}<circle cx="50" cy="48" r="3" fill="#F8D7E0"/>
+      <path d="M52 62 h22 v16 q-11 8 -22 0z" fill="${c.cr}"/><path d="M56 88 v8 M68 88 v8" stroke="#F28C28" stroke-width="2.5"/>
+      <circle cx="30" cy="88" r="7" fill="#F2C94E"/><circle cx="90" cy="90" r="6" fill="#F2C94E"/></g>` },
   { id: 'princess_pea', title: '완두콩 공주', origin: 'world', also: ['princess'], skills: ['count', 'size', 'position'], ready: true, read: true, readMin: 5,
     line: '제일 작은 것과 제일 큰 것을 고르고, 매트리스 스무 장을 세고, 위와 아래를 찾아요. 비에 젖은 아가씨가 완두콩 한 알로 진짜 공주임을 보여요.',
     en: { title: 'The Princess and the Pea', line: 'Pick the smallest and the biggest, count twenty mattresses and find top and bottom. A rain-soaked girl shows she is a true princess with a single pea.' },
