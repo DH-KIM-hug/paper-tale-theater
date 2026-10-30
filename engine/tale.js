@@ -1434,7 +1434,6 @@ const Tale = (() => {
       <div class="pills" id="startPills">${startPills}</div>
       ${note ? `<p class="note">${note}</p>` : ''}
     </div>
-    <div class="startHint" id="startHint" hidden aria-hidden="true">${handSvg()}</div>
   </div>
   <div id="endScreen" class="screen back" hidden>
     <div class="bwin"><img class="bimg" alt="" decoding="async"></div>
@@ -1643,18 +1642,9 @@ const Tale = (() => {
         start();
       });
     } }
-    /* 시작 화면 열림: 제목을 한 번 읽어 주고(소리가 막혀 있으면 조용히 넘어간다), 5초 동안 아무 입력이 없으면 큰 버튼 위에 손가락 힌트 */
+    /* 시작 화면 열림: 제목을 한 번 읽어 준다(소리가 막혀 있으면 조용히 넘어간다). 시작 버튼 위 손가락 힌트는 뺐다(2026-10-31 사용자) */
     {
-      const ss = $('#startScreen'), sh = $('#startHint');
-      let idle = 0;
-      const place = () => {
-        const b = $('#startPills .go') || $('#startBtn'), r = b.getBoundingClientRect(), w = ss.getBoundingClientRect();
-        sh.style.left = (r.left - w.left + r.width / 2 - 18) + 'px'; sh.style.top = (r.top - w.top - 40) + 'px';
-      };
-      const hide = () => { sh.hidden = true; clearTimeout(idle); };
-      const arm = () => { clearTimeout(idle); if (ss.hidden || launching || running) return; idle = setTimeout(() => { if (ss.hidden || launching || running) return; place(); sh.hidden = false; }, 5000); };
-      ss.addEventListener('pointerdown', () => { sh.hidden = true; arm(); });
-      arm();
+      const ss = $('#startScreen');
       /* 제목 읽기: 시작 화면이 열리고 0.5초 뒤 한 번 (자동 재생·검수 회차는 제외) */
       setTimeout(() => { if (!AUTO() && !VERIFY && !ss.hidden && !launching && !running) { const tt = $('#startScreen .ttl'); if (tt) tt.click(); } }, 500);
     }
