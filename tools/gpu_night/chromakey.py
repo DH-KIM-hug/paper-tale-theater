@@ -21,7 +21,8 @@ def key_magenta(src, dst, pad=12):
     alpha = np.where((np.asarray(core) > 0) | (band & (m > 60) & (r - b < 45)), alpha, 255)
     # 가장자리 마젠타 번짐 빼기: 빨강·파랑을 초록 쪽으로 당긴다. 배경 둘레에서만 —
     # 그림 전체에 하면 분홍·장미빛 종이가 자줏빛으로 깎인다(2026-10-30 콩쥐 꽃신)
-    spill = (alpha > 0) & (((m > 10) & (np.asarray(core) > 0)) | (band & (m > 35) & (r - b < 45)))
+    # 둘레 띠에서는 짙은 그림자(m>55)만 — 보라 종이(m≈44) 가장자리가 잿빛 띠로 깎이지 않게
+    spill = (alpha > 0) & (((m > 10) & (np.asarray(core) > 0)) | (band & (m > 55) & (r - b < 45)))
     out = a.copy()
     out[..., 0] = np.where(spill, np.minimum(r, g + 30), r)
     out[..., 2] = np.where(spill, np.minimum(b, g + 30), b)
