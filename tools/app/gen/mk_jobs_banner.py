@@ -40,6 +40,7 @@ S = {
  'turnip': ('Grandpa stands amazed in his vegetable garden beside giant turnip leaves sprouting from the ground.', 'day'),
  'ugly_duckling': ('Mother duck sits by the pond watching her eggs hatch; little yellow ducklings and one big grey duckling look around.', 'day'),
  'unicorn': ('The little girl sets off into a magical forest with a map, looking for the unicorn; a rainbow glimmers between the trees.', 'day'),
+ 'red_hen': ('On a sunny farm the little red hen in her cream apron and blue headscarf finds a few grains of wheat on the ground, her three little chicks around her, while on the RIGHT side the grey striped cat dozes on the fence, and the cream-white puppy (exactly like the third reference image: one honey-orange ear standing with a folded tip, the other ear flopped and white with honey speckles, honey eye patch, sky-blue collar) lies in the grass next to the pink pig sitting in a mud puddle. Nothing on the left side except grass and the barn far behind.', 'day'),
  'witch_candy': ('On Halloween night the friendly witch and the little girl stand by a big cauldron among glowing pumpkin lanterns, ready to make candy, the black cat beside them.', 'night'),
  'wolf_goats': ('Mother goat leaves the little house with a basket, waving goodbye, while her seven little kids wave back from the doorway.', 'day'),
 }
@@ -61,7 +62,7 @@ for t, (scene, tod) in S.items():
     tall = f'assets/raw/banner/refs/{t}_key_tall.png'   # 지금 시작 화면 그림(옛 restyle 인물 그림은 머리색 등이 달라서 쓰지 않는다)
     if not os.path.exists(f'{G}/{tall}'):
         subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', f'{G}/assets/thumbs/{t}_key_tall.webp', f'{G}/{tall}'], check=True)
-    refs = [tile, tall]
+    refs = [tile, tall] + (['assets/raw/restyle/red_hen/hen_dog_sit.png'] if t == 'red_hen' else [])
     pr = a + 'COMPOSITION (most important):\n' + COMP.format(scene=scene) + '\n\n' + b
     pr = pr.replace('from the upper-left (warm sunset daylight)', 'from the upper-left (warm daylight)' if tod == 'day' else 'from the upper-right (soft moonlight with a warm lantern glow)')
     pr = pr.replace('Match the characters in the reference images exactly', 'Match the characters (same hair colour, clothes, faces) and the paper-art style of the reference images exactly')
