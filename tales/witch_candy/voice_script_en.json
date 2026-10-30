@@ -21,12 +21,12 @@
    ]
   },
   {
-   "text": "어? 초대장이다! 솥이랑 사탕 그림!",
-   "en": "Oh? An invitation! There's a cauldron and candy on it!",
+   "text": "어? 초대장이다!",
+   "en": "Oh? An invitation!",
    "segs": [
     [
      "kid",
-     "Oh? An invitation! There's a cauldron and candy on it!",
+     "Oh? An invitation!",
      "happy"
     ]
    ]
@@ -456,17 +456,6 @@
     [
      "kid",
      "Yes! I want to do it!",
-     "happy"
-    ]
-   ]
-  },
-  {
-   "text": "그럼 다현이가 먼저, 마지막엔 다 같이!",
-   "en": "Then Dahyun goes first, and at the very end, all together!",
-   "segs": [
-    [
-     "witch",
-     "Then Dahyun goes first, and at the very end, all together!",
      "happy"
     ]
    ]
@@ -1231,17 +1220,6 @@
    ]
   },
   {
-   "text": "마지막에 다 같이!",
-   "en": "At the end, all together!",
-   "segs": [
-    [
-     "witch",
-     "At the end, all together!",
-     "happy"
-    ]
-   ]
-  },
-  {
    "text": "길을 데굴데굴 굴러가다 호박 등에 통!",
    "en": "She rolled and rolled down the street and bonked into a pumpkin lantern!",
    "segs": [
@@ -1418,12 +1396,12 @@
    ]
   },
   {
-   "text": "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!",
-   "en": "Last of all, the special Halloween candy! We put in every single colour. All together!",
+   "text": "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.",
+   "en": "Last of all, the special Halloween candy! We put in every single colour.",
    "segs": [
     [
      "witch",
-     "Last of all, the special Halloween candy! We put in every single colour. All together!",
+     "Last of all, the special Halloween candy! We put in every single colour.",
      "toneup"
     ]
    ]

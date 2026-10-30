@@ -4,9 +4,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "It's Halloween night. Something came fluttering, fluttering on the wind.",
   "c": "audio/el/witch_candy/en/nar_017e159ec7.mp3"
  },
- "어? 초대장이다! 솥이랑 사탕 그림!": {
-  "t": "Oh? An invitation! There's a cauldron and candy on it!",
-  "c": "audio/el/witch_candy/en/kid_4da09ba994.mp3"
+ "어? 초대장이다!": {
+  "t": "Oh? An invitation!",
+  "c": "audio/el/witch_candy/en/kid_6a160f342d.mp3"
  },
  "거리 끝 사탕 가게 창이 환하게 켜졌어요.": {
   "t": "At the end of the street, the candy shop window lit up bright.",
@@ -47,10 +47,6 @@ Object.assign(NARRATION_CLIPS_EN, {
  "네, 제가 할게요!": {
   "t": "Yes! I want to do it!",
   "c": "audio/el/witch_candy/en/kid_ebd73379ad.mp3"
- },
- "그럼 다현이가 먼저, 마지막엔 다 같이!": {
-  "t": "Then Dahyun goes first, and at the very end, all together!",
-  "c": "audio/el/witch_candy/en/witch_217fd6a394.mp3"
  },
  "다현이가 넣어 줘. 하나든 여러 개든 좋아.": {
   "t": "Dahyun, you put them in. One or lots, it's all good.",
@@ -99,10 +95,6 @@ Object.assign(NARRATION_CLIPS_EN, {
  "히히, 핼러윈 마법이야!": {
   "t": "Hee hee, it's Halloween magic!",
   "c": "audio/el/witch_candy/en/witch_7b7a770421.mp3"
- },
- "마지막에 다 같이!": {
-  "t": "At the end, all together!",
-  "c": "audio/el/witch_candy/en/witch_f1e01527b4.mp3"
  },
  "길을 데굴데굴 굴러가다 호박 등에 통!": {
   "t": "She rolled and rolled down the street and bonked into a pumpkin lantern!",
@@ -328,9 +320,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Here we go, stir, stir. Bubble, bubble...",
   "c": "audio/el/witch_candy/en/witch_d1cf09ac2f.mp3"
  },
- "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!": {
-  "t": "Last of all, the special Halloween candy! We put in every single colour. All together!",
-  "c": "audio/el/witch_candy/en/witch_38ff4a02af.mp3"
+ "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.": {
+  "t": "Last of all, the special Halloween candy! We put in every single colour.",
+  "c": "audio/el/witch_candy/en/witch_0a1021313f.mp3"
  },
  "전부 다요?": {
   "t": "Every single one?",

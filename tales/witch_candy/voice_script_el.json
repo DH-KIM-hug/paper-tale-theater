@@ -70,11 +70,11 @@
    ]
   },
   {
-   "text": "어? 초대장이다! 솥이랑 사탕 그림!",
+   "text": "어? 초대장이다!",
    "segs": [
     [
      "kid",
-     "어? 초대장이다! 솥이랑 사탕 그림!",
+     "어? 초대장이다!",
      "happy",
      "[young girl, surprised and delighted, bright]"
     ]
@@ -506,17 +506,6 @@
      "네, 제가 할게요!",
      "happy",
      "[young girl, eager, bold, bright]"
-    ]
-   ]
-  },
-  {
-   "text": "그럼 다현이가 먼저, 마지막엔 다 같이!",
-   "segs": [
-    [
-     "witch",
-     "그럼 다현이가 먼저, 마지막엔 다 같이!",
-     "happy",
-     "[kind quirky witch, warm, giggly, a little silly, never scary]"
     ]
    ]
   },
@@ -1280,17 +1269,6 @@
    ]
   },
   {
-   "text": "마지막에 다 같이!",
-   "segs": [
-    [
-     "witch",
-     "마지막에 다 같이!",
-     "happy",
-     "[kind quirky witch, warm, giggly, a little silly, never scary]"
-    ]
-   ]
-  },
-  {
    "text": "길을 데굴데굴 굴러가다 호박 등에 통!",
    "segs": [
     [
@@ -1467,11 +1445,11 @@
    ]
   },
   {
-   "text": "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!",
+   "text": "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.",
    "segs": [
     [
      "witch",
-     "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!",
+     "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.",
      "toneup",
      "[kind quirky witch, big announcement, excited, rallying]"
     ]

@@ -109,16 +109,16 @@
 
   /* ---------- 대사 (PLAN §5·§7 문장 그대로) ---------- */
   const S = {
-    A1: "핼러윈 밤이에요. 바람을 타고 무언가 팔랑팔랑 날아왔어요.", A2: "어? 초대장이다! 솥이랑 사탕 그림!", A3: "우와!", A4: "거리 끝 사탕 가게 창이 환하게 켜졌어요.",
+    A1: "핼러윈 밤이에요. 바람을 타고 무언가 팔랑팔랑 날아왔어요.", A2: "어? 초대장이다!", A3: "우와!", A4: "거리 끝 사탕 가게 창이 환하게 켜졌어요.",
     A5: "어서 와, 친구들! 나는 사탕 마녀야.", A6: "다현이랑 친구들은 사탕 가게로 쪼르르 들어갔어요.",
     B1: "오늘은 핼러윈 특별 사탕을 만들 거야. 먼저 솥을 끓여야지.", B2: "장작을 톡 눌러 불을 지펴요.", B3: "화르륵! 불이 활활, 솥이 뽀글뽀글 끓기 시작했어요.", B4: "냐옹!", B5: "뽀글뽀글!",
     C1: "핼러윈 사탕 재료야! 빨간 건 아기 용 콧물이랑 소방차, 노란 건 호박 등이랑 병아리 방귀!", C2: "파란 건 괴물 응가랑 파란 생선, 초록은 개구리랑 공룡!", C3: "으엑! 콧물이랑 응가요?", C3s: "으엑! 콧물이요?", C3p: "으엑! 응가요?", C4: "냐… 냄새!",
-    C5: "히히, 색을 섞으면 다른 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?", C6: "네, 제가 할게요!", C7: "나도!", C8: "그럼 다현이가 먼저, 마지막엔 다 같이!",
+    C5: "히히, 색을 섞으면 다른 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?", C6: "네, 제가 할게요!", C7: "나도!",
     D1: "다현이가 넣어 줘. 하나든 여러 개든 좋아.", D2: "넣고 싶은 재료를 톡 눌러 솥에 넣어요.", D3: "으엑…", D4: "다 넣었지? 그럼 저어 보자!", D5: "세 가지는 맨 마지막에!", D6: "하나는 넣어야지!",
     R2: "이번엔 다른 색으로 해 볼까?", R2a: "재료를 톡!", RSAME: "아까랑 같네? 다음엔 다른 색도 해 봐!", RMORE: "한 번 더 할래?", RMOREa: "한 번 더 하려면 솥을 톡 눌러요.", RCLEAR: "솥 물이 쏴아, 다시 맑아졌어요.",
     E1: "자, 저어 보자. 뽀글뽀글…", E2: "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.", E3: "먼저 먹어 봐.", E4: "콧물로 만든 건데… 으웩…",
-    F1: "히히, 핼러윈 마법이야!", F2: "나도 하고 싶다!", F3: "마지막에 다 같이!", F4: "뿅! 다현이는 다시 원래대로 돌아왔어요.",
-    G1: "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!", G2: "전부 다요?", G3: "이번엔 빨강, 노랑, 파랑 다 넣어요! 톡 눌러요.", G4: "하나, 둘, 셋! 색을 전부 섞으면…", G5: "뽀글뽀글… 펑!", G6: "까만 사탕이 나왔어요!", G7: "까맣다!",
+    F1: "히히, 핼러윈 마법이야!", F2: "나도 하고 싶다!", F4: "뿅! 다현이는 다시 원래대로 돌아왔어요.",
+    G1: "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.", G2: "전부 다요?", G3: "이번엔 빨강, 노랑, 파랑 다 넣어요! 톡 눌러요.", G4: "하나, 둘, 셋! 색을 전부 섞으면…", G5: "뽀글뽀글… 펑!", G6: "까만 사탕이 나왔어요!", G7: "까맣다!",
     H1: "어? 입이 까매졌다! 유령 사탕이다~", H2: "오~~우~~", H3: "히히, 나도!", H4: "마녀도, 호박이도, 친구들도 까만 입술로…", H5: "유령 흉내를 내며 마을을 한 바퀴 돌았어요. 하나도 안 무서워요, 다 웃고 있거든요.",
     I1: "자, 약속! 남은 사탕 다 나와라!", I2: "솥에서 사탕이 퐁퐁퐁 쏟아졌어요. 모두 하나씩… 마녀는 두 개!", I3: "히히, 나는 두 개!", I4: "으웩!… 어? 맛있다!", I5: "뿅, 뿅, 뿅! 딸기, 개구리, 오리, 박쥐, 물고기, 호박… 다 같이 변신!",
     I6: "뿅! 모두 원래대로.", I7: "다현이 덕분에 사탕이 가득! 내년에도 같이 섞자.", I8: "네! 다음엔 다른 색으로요!", I9: "사탕 마녀를 톡 눌러 인사해요.", I10: "해피 핼러윈! 오~우~!",
@@ -951,7 +951,6 @@
     await say(S.C5);
     kid.hop(10, 300); cue('ding_glock', .5); await say(S.C6);
     FRS.forEach(f => f.hop(10, 300)); cue('pop', .4); await sleep(500);   // 친구들 '나도!' 뺌
-    witch.look('present', 'left'); await say(S.C8);
     await sleep(600);
 
     /* ================= 4·5·6 회전 블록 ================= */
@@ -974,8 +973,9 @@
       /* 재료 두 개를 넣으면 저절로 끝(2026-10-29 사용자: '넣고 국자 누르는게 어려워'). 하나만 넣고 9초 더 안 넣으면 그 하나로 */
       const result = await T.ask(bigAsk, () => T.fill(cells, {
         maxKinds: 2, maxCount: 2, idleDone: 9000, prompt: bigAsk,
+        allow: (c, st) => !st.order.includes(c),   // 같은 재료는 두 번 못 넣는다(2026-10-30 사용자)
         onPut: async (c, n) => {
-          kid.hop(6, 260);
+          kid.hop(6, 260); c.el.style.visibility = 'hidden';   // 넣은 재료는 선반에서 바로 사라진다(2026-10-30 사용자)
           landing.push(fly(c).then(() => {
             plop(c);
             if (!K.kinds.includes(c.key)) { K.kinds.push(c.key); if (K.kinds.length === 1) { potFlat(COL[c.key]); cue('rattle', .4) || cue('pop', .3); } else { potSwirl(K.kinds); cue(['whistle_up', 'xylo_up'], .35); } }
@@ -1112,7 +1112,7 @@
       /* 뿅 원래대로 */
       cue('slide_up', .5); cue('sparkle', .6); T.pop(kid.x, FL - 220, tr('뿅!'), '#F28C28');
       await say(S.F4);
-      if (long) { witch.look('giggle', 'left'); await say(S.F1); FRS.forEach(f => f.hop(10, 300)); cue('pop', .4); await sleep(500); await say(S.F3); }   // 친구들 '나도 하고 싶다!' 뺌
+      if (long) { witch.look('giggle', 'left'); await say(S.F1); FRS.forEach(f => f.hop(10, 300)); cue('pop', .4); await sleep(500); }   // 친구들 '나도 하고 싶다!' 뺌
       if (!K || !K.cells.length || res !== 'choco') await back();
       else { kid.look('stand', 'left'); put(T, kid, X(680, 340), X(FL, PFY), { look: 'stand', to: 'left', s: X(.85, .6) }); }
     }
@@ -1171,7 +1171,7 @@
     cat.look('ghost', 'right'); FRS.forEach(f => f.look('ghost', 'right'));
     await say(S.H4);
     cue(['theremin_wobble', 'whistle_wobble'], .5); await say(S.H2);      // 모두 합창 '오~~우~~'(chorus_el.js)
-    const march = async (bg, xs) => {
+    const march = async (bg, xs, onOpen) => {
       const all = [kid, witch, cat, ...FRS], kit = bg === curBg && bg === 'wc_bg_kitchen', fy = kit ? X(FL, PFY) : FL;
       const ms = kit ? X(.85, .6) : X(.9, .7), sp = P ? 52 : 70;   // 부엌은 부엌 크기(솥과 같은 비율)
       const line = () => { all.map((a, i) => [a, i]).reverse().forEach(([a, i]) => put(T, a, xs[0] - i * sp, fy, { to: 'right', s: ms }));   // 뒤에서부터 놓아 맨 앞 다현이가 맨 위(마녀 뒤에 가려지지 않게)
@@ -1179,6 +1179,7 @@
       /* 같은 부엌(7장 → 8장): 넘김 없이 솥은 그대로 두고, 여섯이 왼쪽에 한 줄로 걸어가 선다(2026-10-29) */
       if (kit) await cont(() => { K = kitchen({ shelf: false, ladle: false }); potFlat(COL.black, false); bubbles(); line(); });
       else { await T.curtain(false); T.clear(); bgImage(T, bg); setView(500); line(); await T.curtain(true); }
+      const said = onOpen && onOpen();
       const gs = ms;
       ghostJoin(xs[0] - 6 * sp - 20, fy, gs); fadeIn(ghost, 600);   // 맨 뒤에 몰래 붙은 진짜 유령
       const st = setInterval(() => cue('step_wood', .25), 500);
@@ -1186,11 +1187,10 @@
       await Promise.all([...all.map((a, i) => a.move(xs[1] - i * sp, fy, 3200, 'linear')), ghost.move(xs[1] - 6 * sp - 20, ghost.y, 3200, 'linear')]);
       clearInterval(st);
       if (bg === 'wc_bg_street') await ghostBye();
+      await said;
     };
-    const mm = say(S.H5);
     await march('wc_bg_kitchen', [X(80, 300), X(780, 640)]);
-    await march('wc_bg_street', [X(80, 300), X(780, 640)]);
-    await mm;
+    await march('wc_bg_street', [X(80, 300), X(780, 640)], () => say(S.H5));   // '마을을 한 바퀴'는 거리 장면이 열린 뒤에(2026-10-30 사용자: 부엌에서 말하면 마을이 아님)
     await cutPic('wc_cut_parade', '한 줄 유령 행진', '#1A1410');
 
     /* ================= 9. 모두 변신! ================= */

@@ -1,7 +1,7 @@
 /* witch_candy — ElevenLabs 배역 내레이션 (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS, {
  "핼러윈 밤이에요. 바람을 타고 무언가 팔랑팔랑 날아왔어요.": "audio/el/witch_candy/nar_528b65b1f3.mp3",
- "어? 초대장이다! 솥이랑 사탕 그림!": "audio/el/witch_candy/kid_07a79ffef7.mp3",
+ "어? 초대장이다!": "audio/el/witch_candy/kid_cd699ad4ed.mp3",
  "거리 끝 사탕 가게 창이 환하게 켜졌어요.": "audio/el/witch_candy/nar_9393cb63b9.mp3",
  "어서 와, 친구들! 나는 사탕 마녀야.": "audio/el/witch_candy/witch_ec9a0f320c.mp3",
  "다현이랑 친구들은 사탕 가게로 쪼르르 들어갔어요.": "audio/el/witch_candy/nar_f4066af88f.mp3",
@@ -41,7 +41,6 @@ Object.assign(NARRATION_CLIPS, {
  "냐… 냄새!": "audio/el/witch_candy/cat_c88e6a17c0.mp3",
  "히히, 색을 섞으면 다른 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?": "audio/el/witch_candy/witch_6156c88cce.mp3",
  "네, 제가 할게요!": "audio/el/witch_candy/kid_6641e2d47a.mp3",
- "그럼 다현이가 먼저, 마지막엔 다 같이!": "audio/el/witch_candy/witch_dbb2e39b22.mp3",
  "넣고 싶은 재료를 톡 눌러 솥에 넣어요.": "audio/el/witch_candy/nar_347a477bcb.mp3",
  "다현이가 넣어 줘. 하나든 여러 개든 좋아.": "audio/el/witch_candy/witch_4e98c23af5.mp3",
  "세 가지는 맨 마지막에!": "audio/el/witch_candy/witch_74028c1fe8.mp3",
@@ -111,7 +110,6 @@ Object.assign(NARRATION_CLIPS, {
  "파닥파닥, 달님 안녕!": "audio/el/witch_candy/kid_8604307690.mp3",
  "주르륵… 나 녹아요~": "audio/el/witch_candy/kid_4654c8b635.mp3",
  "히히, 핼러윈 마법이야!": "audio/el/witch_candy/witch_975263e796.mp3",
- "마지막에 다 같이!": "audio/el/witch_candy/witch_19cbbe15f2.mp3",
  "길을 데굴데굴 굴러가다 호박 등에 통!": "audio/el/witch_candy/nar_60e02c7eb9.mp3",
  "뒤뚱뒤뚱, 호박이도 뒤뚱뒤뚱.": "audio/el/witch_candy/nar_6abeeea29e.mp3",
  "보름달 둘레를 보글보글 헤엄쳤어요.": "audio/el/witch_candy/nar_9ef7af6f8e.mp3",
@@ -128,7 +126,7 @@ Object.assign(NARRATION_CLIPS, {
  "한 번 더 할래?": "audio/el/witch_candy/witch_ace1badba1.mp3",
  "한 번 더 하려면 솥을 톡 눌러요.": "audio/el/witch_candy/nar_cfa1613016.mp3",
  "솥 물이 쏴아, 다시 맑아졌어요.": "audio/el/witch_candy/nar_5850c26a2b.mp3",
- "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!": "audio/el/witch_candy/witch_7ca9dab89e.mp3",
+ "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.": "audio/el/witch_candy/witch_82b7adddc8.mp3",
  "전부 다요?": "audio/el/witch_candy/kid_686153fb5f.mp3",
  "이번엔 빨강, 노랑, 파랑 다 넣어요! 톡 눌러요.": "audio/el/witch_candy/nar_bf43b0fecc.mp3",
  "하나, 둘, 셋! 색을 전부 섞으면…": "audio/el/witch_candy/nar_686695f38a.mp3",

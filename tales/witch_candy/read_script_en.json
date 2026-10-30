@@ -88,12 +88,12 @@
      ]
     },
     {
-     "text": "어? 초대장이다! 솥이랑 사탕 그림!",
-     "en": "Oh? An invitation! There's a cauldron and candy on it!",
+     "text": "어? 초대장이다!",
+     "en": "Oh? An invitation!",
      "segs": [
       [
        "kid",
-       "Oh? An invitation! There's a cauldron and candy on it!",
+       "Oh? An invitation!",
        "happy"
       ]
      ],
@@ -302,18 +302,6 @@
      "after": [
       "friends:hop"
      ]
-    },
-    {
-     "text": "그럼 다현이가 먼저, 마지막엔 다 같이!",
-     "en": "Then Dahyun goes first, and at the very end, all together!",
-     "segs": [
-      [
-       "witch",
-       "Then Dahyun goes first, and at the very end, all together!",
-       "happy"
-      ]
-     ],
-     "src": "reuse"
     }
    ]
   },
@@ -541,18 +529,6 @@
      "after": [
       "friends:hop"
      ]
-    },
-    {
-     "text": "마지막에 다 같이!",
-     "en": "At the end, all together!",
-     "segs": [
-      [
-       "witch",
-       "At the end, all together!",
-       "happy"
-      ]
-     ],
-     "src": "reuse"
     },
     {
      "text": "길을 데굴데굴 굴러가다 호박 등에 통!",
@@ -804,18 +780,6 @@
      "after": [
       "friends:hop"
      ]
-    },
-    {
-     "text": "마지막에 다 같이!",
-     "en": "At the end, all together!",
-     "segs": [
-      [
-       "witch",
-       "At the end, all together!",
-       "happy"
-      ]
-     ],
-     "src": "reuse"
     },
     {
      "text": "뒤뚱뒤뚱, 호박이도 뒤뚱뒤뚱.",
@@ -1075,18 +1039,6 @@
      ]
     },
     {
-     "text": "마지막에 다 같이!",
-     "en": "At the end, all together!",
-     "segs": [
-      [
-       "witch",
-       "At the end, all together!",
-       "happy"
-      ]
-     ],
-     "src": "reuse"
-    },
-    {
      "text": "보름달 둘레를 보글보글 헤엄쳤어요.",
      "en": "She swam, bubble bubble, all around the full moon.",
      "segs": [
@@ -1324,18 +1276,6 @@
      "after": [
       "friends:hop"
      ]
-    },
-    {
-     "text": "마지막에 다 같이!",
-     "en": "At the end, all together!",
-     "segs": [
-      [
-       "witch",
-       "At the end, all together!",
-       "happy"
-      ]
-     ],
-     "src": "reuse"
     },
     {
      "text": "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.",
@@ -1595,18 +1535,6 @@
      ]
     },
     {
-     "text": "마지막에 다 같이!",
-     "en": "At the end, all together!",
-     "segs": [
-      [
-       "witch",
-       "At the end, all together!",
-       "happy"
-      ]
-     ],
-     "src": "reuse"
-    },
-    {
      "text": "깜깜한 길이 다현이 덕분에 환해졌어요.",
      "en": "The dark street grew bright, all thanks to Dahyun.",
      "segs": [
@@ -1846,18 +1774,6 @@
      ]
     },
     {
-     "text": "마지막에 다 같이!",
-     "en": "At the end, all together!",
-     "segs": [
-      [
-       "witch",
-       "At the end, all together!",
-       "happy"
-      ]
-     ],
-     "src": "reuse"
-    },
-    {
      "text": "박쥐 친구들이랑 달 앞을 빙글 돌았어요.",
      "en": "She circled in front of the moon with her bat friends.",
      "segs": [
@@ -2095,18 +2011,6 @@
      "after": [
       "friends:hop"
      ]
-    },
-    {
-     "text": "마지막에 다 같이!",
-     "en": "At the end, all together!",
-     "segs": [
-      [
-       "witch",
-       "At the end, all together!",
-       "happy"
-      ]
-     ],
-     "src": "reuse"
     },
     {
      "text": "납작해졌다가… 뿅!",
@@ -2360,18 +2264,6 @@
      ]
     },
     {
-     "text": "마지막에 다 같이!",
-     "en": "At the end, all together!",
-     "segs": [
-      [
-       "witch",
-       "At the end, all together!",
-       "happy"
-      ]
-     ],
-     "src": "reuse"
-    },
-    {
      "text": "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.",
      "en": "Boing, boing, boing! She bounced down the street like a kiwi ball.",
      "segs": [
@@ -2609,18 +2501,6 @@
      "after": [
       "friends:hop"
      ]
-    },
-    {
-     "text": "마지막에 다 같이!",
-     "en": "At the end, all together!",
-     "segs": [
-      [
-       "witch",
-       "At the end, all together!",
-       "happy"
-      ]
-     ],
-     "src": "reuse"
     },
     {
      "text": "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.",
@@ -4589,12 +4469,12 @@
    ],
    "lines": [
     {
-     "text": "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야. 다 같이!",
-     "en": "Last of all, the special Halloween candy! We put in every single colour. All together!",
+     "text": "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.",
+     "en": "Last of all, the special Halloween candy! We put in every single colour.",
      "segs": [
       [
        "witch",
-       "Last of all, the special Halloween candy! We put in every single colour. All together!",
+       "Last of all, the special Halloween candy! We put in every single colour.",
        "toneup"
       ]
      ],
