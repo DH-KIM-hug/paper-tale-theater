@@ -1204,7 +1204,7 @@
      (tools/app/gen/post_puzzle.py 가 만든다). 목록에 없는 새 동화는 카탈로그 순서로 맨 뒤에 붙고, 그림이 없는 조각은 동화 썸네일을 같은 모양으로 오려 쓴다 */
   const PZ_DONE_KEY = 'paperTheater.puzzleDone2';
   let PZ = null;
-  try { fetch('assets/ui/puzzle_layout.json?v=20261030bj2').then(r => r.ok ? r.json() : null).then(j => { if (j && j.boards) { PZ = j; if (stkTab()) drawStickers(); } }).catch(() => { /* 없으면 썸네일 조각 */ }); } catch (e) { /* 무시 */ }
+  try { fetch('assets/ui/puzzle_layout.json?v=20261031jg1').then(r => r.ok ? r.json() : null).then(j => { if (j && j.boards) { PZ = j; if (stkTab()) drawStickers(); } }).catch(() => { /* 없으면 썸네일 조각 */ }); } catch (e) { /* 무시 */ }
   const pieces = b => {
     const all = TALES.filter(b.has), ord = (PZ && PZ.boards[b.k] && PZ.boards[b.k].tales) || [];
     return [...ord.map(id => all.find(t => t.id === id)).filter(Boolean), ...all.filter(t => !ord.includes(t.id))];

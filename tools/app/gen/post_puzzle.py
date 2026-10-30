@@ -8,6 +8,7 @@
 동화 1편 = 판의 한 칸(가로 512). 조각마다 무게중심이 든 칸의 동화에 속하고, 위·아래 묶음으로 나뉜다.
 받는 순서: 처음 완주 = bot 묶음(아래, 주인공 모양 조각 + 둘레 자투리) · 두 번째 완주 = top 묶음(위, 하늘·소품 모양 조각 + 둘레 자투리).
 
+  ※ 2026-10-31 사용자 결정으로 기본은 직소: 동화마다 위·아래 조각 2개, 판 테두리는 곧게, 안쪽 이음새에 둥근 꼭지(자투리 없음). 아래 물건 모양 방식은 --shapes
   ~/.venvs/paper-tale/bin/python tools/app/gen/post_puzzle.py original            # 판 하나 (조각 그림 + 배치 정보)
   ~/.venvs/paper-tale/bin/python tools/app/gen/post_puzzle.py                     # 모든 판 (파노라마 없는 판은 배치 정보에서 빈 칸)
   --preview <폴더>   미리보기 png 를 그 폴더에(기본 assets/raw/puzzle_gpt/)
@@ -135,6 +136,62 @@ def partition(obj_lab, board, step=FILL_STEP):
                 full[m] = np.bincount(full[ring]).argmax()
     return full
 
+def faces(img):
+    """살구빛 얼굴 덩어리(종이 인물 얼굴) → 보호할 타원 [(cx, cy, rx, ry)]: 얼굴 둘레 + 그 아래 윗몸까지. 성벽 같은 오인식이 섞여도 조각 안에 통째로 들 뿐이다"""
+    hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV); h, s_, v = (hsv[..., k].astype(int) for k in range(3))
+    m = cv2.morphologyEx(((h >= 4) & (h <= 18) & (s_ >= 40) & (s_ <= 120) & (v >= 200)).astype(np.uint8), cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
+    n, _, st, _ = cv2.connectedComponentsWithStats(m); out = []
+    for j in range(1, n):
+        x, y, w, hh, ar = st[j]
+        if ar < 900 or not (.5 < w / hh < 2): continue
+        r = max(w, hh) / 2; out.append((x + w / 2, y + hh / 2 + r * .6, r * 1.6, r * 2.3))
+    return out
+
+def jigsaw(n, board, img):
+    """2026-10-31 사용자 결정: 자투리 없이 동화마다 조각 2개. 판 바깥 테두리는 곧게. 위·아래 반으로 딱 가르지 않고(격자 느낌 없이)
+    조각마다 크기·모양·자리가 제각각이다: 동화 칸마다 씨앗 2개를 엇갈린 높이·옆자리에 흩고, 크게 휘게 한 공간에서 가장 가까운 씨앗으로 나눈 뒤
+    조각 마스크를 흐려 가장 진한 쪽을 고르면 경계가 매끈한 곡선이 된다(똑같은 꼭지 없음, 판 이름으로 고정한 난수).
+    인물 얼굴(+윗몸)은 한 조각 안에 통째로 넣어 경계가 얼굴을 가로지르지 않게 한다(faces).
+    돌려주는 번호 지도: 동화 i 의 위쪽 씨앗 조각 = 2i+1, 아래쪽 = 2i+2"""
+    W = n * S; rnd = np.random.default_rng(fnv(board + ':jig4'))
+    seeds = []
+    for i in range(n):
+        up = rnd.uniform(.16, .40) * PH; dn = rnd.uniform(.60, .86) * PH
+        dx = rnd.uniform(.22, .36) * S * rnd.choice((-1, 1))              # 두 씨앗을 칸 안에서 서로 엇갈리게
+        seeds += [((i + .5) * S + dx, up), ((i + .5) * S - dx, dn)]
+    K = len(seeds); Q = 2; h, w = PH // Q, W // Q
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+    noise = [cv2.GaussianBlur(rnd.standard_normal((h, w)).astype(np.float32), (0, 0), 55) for _ in range(2)]
+    noise = [nz / (np.abs(nz).max() + 1e-6) * 130 / Q for nz in noise]
+    xw, yw = xx + noise[0], yy + noise[1]
+    best = np.full((h, w), 1e12, np.float32); lab = np.zeros((h, w), np.int32)
+    for k, (sx, sy) in enumerate(seeds):
+        d = np.sqrt((xw - sx / Q) ** 2 + ((yw - sy / Q) * 1.15) ** 2); m = d < best; best[m] = d[m]; lab[m] = k + 1
+    prot = []                                                            # 보호 타원(1/Q 해상도 마스크)
+    for cx, cy, rx, ry in faces(img):
+        pm = np.zeros((h, w), np.uint8); cv2.ellipse(pm, (int(cx / Q), int(cy / Q)), (int(rx / Q), int(ry / Q)), 0, 0, 360, 1, -1); prot.append(pm.astype(bool))
+    def protect(L):
+        for pm in prot: L[pm] = np.bincount(L[pm], minlength=K + 1).argmax()
+        return L
+    for _ in range(2):
+        lab = protect(lab)
+        soft = np.stack([cv2.GaussianBlur((lab == k + 1).astype(np.float32), (0, 0), 10) for k in range(K)])
+        lab = (np.argmax(soft, 0) + 1).astype(np.int32)
+    lab = protect(lab)
+    full = cv2.resize(lab.astype(np.float32), (W, PH), interpolation=cv2.INTER_NEAREST).astype(np.int32)
+    sm = np.stack([cv2.GaussianBlur((full == k + 1).astype(np.float32), (0, 0), 4) for k in range(K)])
+    full = (np.argmax(sm, 0) + 1).astype(np.int32); del sm
+    for _ in range(3):                                                   # 떨어져 나온 부스러기는 가장 많이 닿은 이웃으로
+        for c in range(1, K + 1):
+            nn, cc, st, _ = cv2.connectedComponentsWithStats((full == c).astype(np.uint8))
+            if nn <= 2: continue
+            keep = 1 + np.argmax(st[1:, cv2.CC_STAT_AREA])
+            for j in range(1, nn):
+                if j == keep: continue
+                m = cc == j; ring = cv2.dilate(m.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool) & ~m
+                full[m] = np.bincount(full[ring]).argmax()
+    return full
+
 def seam_mask(orig, sm):
     """이음매 붙이기 마스크(1 = 이어 그린 그림). 이음매 왼쪽·오른쪽 띠(SEAM_IN~SEAM_OUT)에서 두 그림의 색 차이가 가장 작은 세로 길(행마다 한 칸까지만 옆으로)을
     동적 계획법으로 찾아 그 안쪽만 이어 그린 그림을 쓴다. 직선으로 섞으면 어긋난 나무·집이 반투명하게 겹쳐 보이기 때문이다. 경계는 4px 만 부드럽게"""
@@ -175,15 +232,17 @@ def run(board, preview_dir, make_images=True):
         a = seam_mask(big[:, x0:x0 + PW], sm)[..., None]
         big[:, x0:x0 + PW] = big[:, x0:x0 + PW] * (1 - a) + sm * a
     big = np.clip(big, 0, 255).astype(np.uint8)[:, :W]
-    avoid = np.zeros((PH // 4, W // 4 + 1), np.uint8); objs = []          # 물건 조각: 주인공(아래)을 판 전체에 먼저, 위 조각은 겹치지 않게
-    for part in ('bot', 'top'):
-        for i, tid in enumerate(tales):
-            sh = SHAPES.get(tid)
-            if not sh or part not in sh: continue
-            poly, m = place(sh[part], i, part, avoid, n); avoid |= m; objs.append((i, part, poly))
-    obj_lab = np.zeros((PH, W), np.int32)
-    for j, (_, _, poly) in enumerate(objs): cv2.fillPoly(obj_lab, [np.round(np.array(poly)).astype(np.int32)], j + 1)
-    lab = partition(obj_lab, board)
+    if JIG: lab = jigsaw(n, board, big); objs = []
+    else:
+        avoid = np.zeros((PH // 4, W // 4 + 1), np.uint8); objs = []          # 물건 조각: 주인공(아래)을 판 전체에 먼저, 위 조각은 겹치지 않게
+        for part in ('bot', 'top'):
+            for i, tid in enumerate(tales):
+                sh = SHAPES.get(tid)
+                if not sh or part not in sh: continue
+                poly, m = place(sh[part], i, part, avoid, n); avoid |= m; objs.append((i, part, poly))
+        obj_lab = np.zeros((PH, W), np.int32)
+        for j, (_, _, poly) in enumerate(objs): cv2.fillPoly(obj_lab, [np.round(np.array(poly)).astype(np.int32)], j + 1)
+        lab = partition(obj_lab, board)
     for tid in tales:                                                    # 이 판 동화의 옛 조각 그림은 지운다(조각 수가 바뀔 수 있다)
         for f in glob.glob(os.path.join(UI, f'pz_{tid}_top*.webp')) + glob.glob(os.path.join(UI, f'pz_{tid}_bot*.webp')): os.remove(f)
     made = []
@@ -191,7 +250,8 @@ def run(board, preview_dir, make_images=True):
         m = (lab == c).astype(np.uint8)
         if not m.any(): continue
         ys, xs = np.nonzero(m); bx, by, bx1, by1 = xs.min(), ys.min(), xs.max() + 1, ys.max() + 1
-        if c <= len(objs): col, part, _ = objs[c - 1]; isobj = True
+        if JIG: col, part, isobj = (c - 1) // 2, ('top', 'bot')[(c - 1) % 2], True
+        elif c <= len(objs): col, part, _ = objs[c - 1]; isobj = True
         else:
             col = min(n - 1, int(xs.mean() // S)); part = 'top' if ys.mean() < SPLIT else 'bot'; isobj = False
         tid = tales[col]; grp = rec['pieces'][tid][part]
@@ -209,7 +269,7 @@ def run(board, preview_dir, make_images=True):
             for k, e in enumerate(rec['pieces'][tid][part]):
                 e['file'] = f'pz_{tid}_{part}_{k}.webp'
     for e, im, _, _ in made: im.save(os.path.join(UI, e['file']), 'WEBP', quality=90, alpha_quality=100, method=6)
-    print(f'{board}: 물건 조각 {len(objs)} · 자투리 조각 {len(made) - len(objs)}')
+    print(f'{board}: ' + (f'직소 조각 {len(made)}' if JIG else f'물건 조각 {len(objs)} · 자투리 조각 {len(made) - len(objs)}'))
     os.makedirs(preview_dir, exist_ok=True)
     def board_img(got):                                                  # 빈 자리(눌린 판) 위에 받은 조각을 끼운 모습
         cv = Image.new('RGBA', (W + 80, PH + 80), (245, 239, 233, 255))
@@ -246,8 +306,10 @@ def seam_sources():
         c = Image.new('RGB', (PW, PH)); c.paste(A.crop((PW // 2, 0, PW, PH)), (0, 0)); c.paste(B.crop((0, 0, PW // 2, PH)), (PW // 2, 0))
         c.save(os.path.join(G, j['src'])); print('이음매 참고 ->', j['src'])
 
+JIG = '--shapes' not in sys.argv                                         # 기본 = 직소 2조각(2026-10-31). --shapes 는 옛 물건 모양 + 자투리
+
 def main():
-    args = sys.argv[1:]; prev = RAW
+    args = [a for a in sys.argv[1:] if a != '--shapes']; prev = RAW
     if '--seamsrc' in args: return seam_sources()
     if '--preview' in args:
         i = args.index('--preview'); prev = os.path.abspath(args[i + 1]); del args[i:i + 2]
