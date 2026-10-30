@@ -8,9 +8,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The farmer worked hard in his field.",
   "c": "audio/el/magic_jar/en/nar_9d3bdb06d9.mp3"
  },
- "농부를 톡! 눌러서 땅을 파 봐요!": {
-  "t": "Tap the farmer to dig!",
-  "c": "audio/el/magic_jar/en/nar_584680dcef.mp3"
+ "농부를 톡! 눌러서 항아리를 당겨 봐요!": {
+  "t": "Tap the farmer to pull the jar!",
+  "c": "audio/el/magic_jar/en/nar_15bd9028bd.mp3"
  },
  "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.": {
   "t": "Clang! The hoe hit something hard.",

@@ -169,7 +169,7 @@
     const loads = [...BGS.map(k => T.preload(bgSrc(k))), ...CUTS.map(k => T.preload(cutSrc(k)))];
     await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
 
-    const farmer = mk(T, { hoe: ['farmer_hoe', 250, 'left'], pull: ['farmer_pull', 250, 'left'], amaze: ['farmer_amaze', 250, 'left'],
+    const farmer = mk(T, { hoe: ['farmer_hoe', 250, 'left'], pull: ['farmer_pull', 250, 'right'], amaze: ['farmer_amaze', 250, 'left'],
       count: ['farmer_count', 250, 'left'], share: ['farmer_share', 200, 'left'], feast: ['farmer_feast', 250, 'left'] }); /* 2026-10-20 크기 일관성: 나눠 주기(share) 자세는 모자 폭이 다른 농부보다 22% 커서 250 → 200 */
     const wife = mk(T, { clap: ['fwife', 250, 'left'], share: ['fwife_share', 250, 'left'] });
     const rich = mk(T, { shout: ['rich_shout', 260, 'left'], grab: ['rich_grab', 260, 'left'], gold: ['rich_gold', 260, 'left'],
@@ -180,10 +180,12 @@
     const father = mk(T, { peek: ['father_peek', 210, 'left'], fall: ['father_fall', 150, 'left'] });
 
     const plow = i => {
-      farmer.hop(16, 300); cue('dig_soil_' + i, .6) || AudioFX.sfx('pop');   // 삽질 한 번 소리(옛 dig_soil 6.8초를 겹쳐 울려 이상했음 — 2026-10-30 사용자) T.pop(farmer.x + 90, farmer.y - 300, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
+      // 삽질 한 번 소리(옛 dig_soil 6.8초를 겹쳐 울려 이상했음 — 2026-10-30 사용자)
+      farmer.hop(16, 300); cue('dig_soil_' + i, .6) || AudioFX.sfx('pop'); T.pop(farmer.x + 90, farmer.y - 300, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
     };
+    const dig = i => { farmer.hop(10, 260); cue('dig_soil_' + i, .6) || AudioFX.sfx('pop'); };   // 땅속: 삽질 한 번
     const pull = i => {
-      farmer.hop(14, 300); cue('dig_soil_' + i, .6) || popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
+      farmer.hop(14, 300); popSfx(T); T.pop(farmer.x - 60, farmer.y - 310, tr(['영차!', '영차영차!', '으랏차!'][i - 1]));
     };
     const sparrowHop = x => { const n = 'sp' + x; lyHop(n, 8, 220); setTimeout(() => lyHop(n, 8, 220), 260); };
     const jarGlint = () => { sparkle(T, jar.x, 345, 6, 60); lyHop('sp1', 6, 200); };
@@ -318,18 +320,28 @@
     /* --- 2. 항아리 캐내기 --- */
     await T.sceneCard(tr('땅속'), () => {
       scene('pit');
-      put(T, farmer, 700, 520, { look: 'pull', to: 'left' });
-      put(T, jar, 500, 430); jar.pos.style.opacity = 0;
+      put(T, farmer, 680, 520, { look: 'pull', to: 'left' });
+      put(T, jar, 500, 430); jar.pos.style.display = 'none';
     }, farmer.pos);
     await say('땅속에서 둥근 뚜껑이 보여요.');
-    /* 땅 파기는 손으로(2026-10-30 사용자: 너무 자동) — 농부를 누를 때마다 한 번 파고, 항아리가 조금씩 드러난다 */
-    const DIG = '농부를 톡! 눌러서 땅을 파 봐요!';
+    /* 땅 파기는 저절로, 항아리 당기기는 손으로(2026-10-30 사용자) — 세 번 파서 뚜껑이 드러나면, 농부를 누를 때마다 한 번 영차 당긴다 */
+    for (let i = 1; i <= 3; i++) { dig(i); await sleep(500); }
+    /* 항아리는 땅선(그림 속 뚜껑 아래, y≈370) 아래를 가려 두고, 당길 때마다 위로 솟는다 — 반투명하게 나타나던 것은 어색(2026-10-30 사용자) */
+    const svgNS = 'http://www.w3.org/2000/svg', svg = T.world.ownerSVGElement;
+    const cp = document.createElementNS(svgNS, 'clipPath'); cp.id = 'mjPitClip'; cp.setAttribute('clipPathUnits', 'userSpaceOnUse');
+    T.el('rect', { x: -2000, y: -2000, width: 5000, height: 2370 }, cp); (svg.querySelector('defs') || svg).appendChild(cp);
+    const pit = T.el('g', { 'clip-path': 'url(#mjPitClip)' }, T.world);
+    const rise = y => { put(T, jar, 500, y); pit.appendChild(jar.pos); };
+    rise(560);   // 다 묻힘
+    const PULL = '농부를 톡! 눌러서 항아리를 당겨 봐요!';
     for (let i = 1; i <= 3; i++) {
-      if (i === 1) await T.ask(DIG, () => T.tap(farmer.pos, { prompt: DIG })); else await T.tap(farmer.pos, { prompt: DIG });
-      pull(i); jar.pos.style.opacity = [0, .3, .6, 1][i];
+      if (i === 1) await T.ask(PULL, () => T.tap(farmer.pos, { prompt: PULL })); else await T.tap(farmer.pos, { prompt: PULL });
+      pull(i);
+      if (i < 3) { rise([0, 505, 455][i]); jar.hop(8, 260); }
       await sleep(350);
     }
-    jar.pos.style.opacity = 1; jar.hop(40, 500); cue('pull_pop', .8);
+    put(T, jar, 500, 430); pit.remove(); cp.remove();
+    jar.hop(40, 500); cue('pull_pop', .8);
     farmer.look('amaze');
     await say('쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.');
 

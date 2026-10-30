@@ -2,7 +2,7 @@
 Object.assign(NARRATION_CLIPS, {
  "옛날 옛날에 마음씨 착한 농부가 살았어요.": "audio/el/magic_jar/nar_ec6f0122ba.mp3",
  "농부는 밭을 열심히 갈았어요.": "audio/el/magic_jar/nar_5b75e441d2.mp3",
- "농부를 톡! 눌러서 땅을 파 봐요!": "audio/el/magic_jar/nar_5257014b4f.mp3",
+ "농부를 톡! 눌러서 항아리를 당겨 봐요!": "audio/el/magic_jar/nar_c280489333.mp3",
  "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.": "audio/el/magic_jar/nar_8932b13d91.mp3",
  "땅속에서 둥근 뚜껑이 보여요.": "audio/el/magic_jar/nar_38b0ebe7ff.mp3",
  "쑥! 커다란 항아리가 나왔어요. 농부는 눈이 동그래졌어요.": "audio/el/magic_jar/nar_426ebecf4f.mp3",
