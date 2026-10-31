@@ -587,6 +587,7 @@ body.app .hero[hidden] { display: none; }
   margin: 0 0 var(--hero-pb) var(--hero-px); pointer-events: none;
   font-size: var(--fs-display); font-weight: 850; line-height: 1.15; letter-spacing: 0; color: #fff; text-shadow: 0 1px 8px rgba(0, 0, 0, .35); word-break: keep-all; overflow-wrap: anywhere; }
 .hero-tl { display: block; width: auto; max-width: 100%; height: auto; max-height: var(--tl-h); filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .35)); -webkit-user-drag: none; }
+.hero-tl.lt2 { filter: drop-shadow(0 3px 8px rgba(0, 0, 0, .22)); }   /* 새 레터링은 크림 받침이 있어 그림자는 옅게 */
 .hero-play { grid-area: win; align-self: end; justify-self: end; z-index: 7; flex: none; display: inline-flex; align-items: center; gap: calc(var(--play) * .14); height: var(--play); margin: 0 var(--hero-px) var(--hero-pb) 0;
   padding: 0 calc(var(--play) * .44) 0 calc(var(--play) * .36); border: 0; border-radius: var(--r-pill); cursor: pointer; touch-action: manipulation;
   color: #fff; background-color: var(--act); box-shadow: 0 4px 14px rgba(217, 98, 47, .30); font-size: calc(var(--play) * .33); font-weight: 800; letter-spacing: .02em; white-space: nowrap; }

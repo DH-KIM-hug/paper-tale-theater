@@ -274,7 +274,10 @@
   /* 넘기기 (§5-5): 지금 그림은 반대쪽으로 40px 밀리며 200ms 에 사라지고 새 그림은 같은 쪽 40px 에서 320ms 로 들어온다.
      제목은 60ms 늦게 16px 이동하며 바뀐다. 움직임 줄이기 = 160ms 크로스페이드 */
   let heroLock = 0;
-  const heroTitleHTML = t => (lang === 'en' ? TTL_EN : TTL).has(t.id)   // 영어 모드는 영어 레터링(<id>_title_en.webp, 2026-10-31)
+  /* 배너 제목도 카드와 같은 동화별 콘셉트 레터링(2026-10-31 사용자). 없으면 옛 흰 레터링, 그것도 없으면 글자 */
+  const heroTitleHTML = t => ltOn(t.id)
+    ? `<img class="hero-tl lt2" src="assets/thumbs/${t.id}_lt${lang === 'en' ? '_en' : ''}.webp?v=c2" alt="${shown(t).title}" draggable="false" decoding="async">`
+    : (lang === 'en' ? TTL_EN : TTL).has(t.id)   // 영어 모드는 영어 레터링(<id>_title_en.webp, 2026-10-31)
     ? `<img class="hero-tl" src="assets/banner/${t.id}_title${lang === 'en' ? '_en' : ''}.webp" alt="${shown(t).title}" draggable="false" decoding="async">` : shown(t).title;
   function renderHero() {
     const hero = $('#hero');
