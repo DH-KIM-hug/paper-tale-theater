@@ -761,9 +761,12 @@
       mom.pos.animate([{ transform: `translate(${mom.x}px,${mom.y}px) scale(1.2)` }, { transform: `translate(${(mom.x + x) / 2}px,${y - 120}px) scale(1.2)` }, { transform: `translate(${x}px,${y}px) scale(1.2)` }], { duration: 420, easing: 'ease-out' });
       mom.place(x, y); if (T.portrait()) camTo(x, 280, 1, 420);
     };
-    await T.tap(mom.pos, { prompt: '엄마개구리를 톡 눌러서 폴짝!' }); // 한 번 누르면 연잎 다섯 장을 저절로 (2026-10-19)
-    classical('haydn_pizz'); // 연잎 위 폴짝폴짝: 하이든 F장조 소나타(제목에 바이올린 피치카토라고 적힌 편곡) 18초
-    for (let i = 1; i <= 5; i++) { padStep(); await sleep(650); }
+    /* 연잎 다섯 장을 한 장씩 톡해서 폴짝(2026-10-31 사용자: 자동 말고 다 누르게) */
+    for (let i = 1; i <= 5; i++) {
+      await T.tap(mom.pos, { prompt: '엄마개구리를 톡 눌러서 폴짝!' });
+      if (i === 1) classical('haydn_pizz'); // 연잎 위 폴짝폴짝: 하이든 F장조 소나타(제목에 바이올린 피치카토라고 적힌 편곡) 18초
+      padStep(); await sleep(480);
+    }
     await sleep(500);
     oxArt.set('stand');
     await say('황소도 따라 뛰어 볼까요? 하나, 둘…');
@@ -795,12 +798,9 @@
     const BAR = [0, 7]; // 받침음이 들어가는 음 번호
     const voice = (n, d, i) => { croakNote(n, d); if (BAR.includes(i)) bass(); };
     T.finale();
-    await say('밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 먼저 들어 봐요!');
+    await say('밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요.');
     await T.playMelody(TWINKLE, { beat: .5, voice, onNote: i => frogs[i % 4].hop(22, 300) });
-    await sleep(500);
-    await say('이번에는 개구리를 톡톡 눌러서 같이 불러요!');
-    await T.followMelody(TWINKLE, { beat: .5, targetFor: i => frogs[i % 4].pos, voice, onNote: i => frogs[i % 4].hop(26, 300), others: [{ el: uncle.pos, onTap: bass }] });
-    await sleep(400);
+    await sleep(500);   // 음마다 개구리 누르기(followMelody)는 뺐다(2026-10-31 사용자: 너무 힘듦)
     /* 끝: 온 가족이 한 번 더 함께 — 자장가도 같이 시작 */
     lullaby();
     T.playMelody(TWINKLE, { beat: .5, voice, onNote: () => choir.forEach(f => f.hop(18, 300)) });

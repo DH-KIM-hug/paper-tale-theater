@@ -220,9 +220,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Thud! The ox couldn't hop. Who can jump farther? The frog!",
   "c": "audio/el/frog/en/nar_15090060a5.mp3"
  },
- "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 먼저 들어 봐요!": {
-  "t": "Night came. Uncle Frog, wearing a bow tie, came to visit. The frog family sings a song. Listen first!",
-  "c": "audio/el/frog/en/nar_c13b6feda2.mp3"
+ "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요.": {
+  "t": "Night came. Uncle Frog, wearing a bow tie, came to visit. The frog family sings a song.",
+  "c": "audio/el/frog/en/nar_c4f730fa40.mp3"
  },
  "이번에는 개구리를 톡톡 눌러서 같이 불러요!": {
   "t": "This time, tap the frogs and sing along!",

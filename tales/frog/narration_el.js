@@ -64,7 +64,7 @@ Object.assign(NARRATION_CLIPS, {
  "엄마개구리를 톡 눌러서 폴짝!": "audio/el/frog/nar_9dc30c2c71.mp3",
  "황소도 따라 뛰어 볼까요? 하나, 둘…": "audio/el/frog/nar_a2860e4d1d.mp3",
  "쿵! 황소는 폴짝 뛰지 못했어요. 누가 더 멀리 뛸까요? 개구리!": "audio/el/frog/nar_fd36f8b8e8.mp3",
- "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요. 먼저 들어 봐요!": "audio/el/frog/nar_ced45df8e3.mp3",
+ "밤이 되었어요. 나비넥타이를 맨 삼촌 개구리가 놀러 왔어요. 개구리 가족이 노래를 불러요.": "audio/el/frog/nar_79a8661af9.mp3",
  "이번에는 개구리를 톡톡 눌러서 같이 불러요!": "audio/el/frog/nar_73fc6f4f5b.mp3",
  "개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.": "audio/el/frog/nar_755934b71c.mp3"
 });
