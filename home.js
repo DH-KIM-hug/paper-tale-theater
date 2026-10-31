@@ -1296,7 +1296,9 @@
       if (!c.img) return `<span class="cs plan" aria-hidden="true"></span>`;
       const nm = lang === 'en' ? c.en : c.ko;
       const sh = Entitlements.isShiny(id + '.' + c.k);
-      return hasCast(id, c.k) ? `<button type="button" class="cs${sh ? ' shiny' : shineMode ? ' pickable' : ''}" data-k="${c.k}" aria-label="${nm}${sh ? ', ' + L('반짝 스티커', 'sparkly sticker') : ''}"><img src="${c.img}" alt="" draggable="false" decoding="async"></button>`
+      /* 반짝 스티커: 무지갯빛 홀로그램 테두리 + 스티커 모양으로 스치는 빛줄기 + 깜빡이는 반짝이 셋 */
+      const holo = sh ? `<i class="sweep" style="-webkit-mask-image:url('${c.img}');mask-image:url('${c.img}')"></i><i class="tw t1">✦</i><i class="tw t2">✦</i><i class="tw t3">✦</i>` : '';
+      return hasCast(id, c.k) ? `<button type="button" class="cs${sh ? ' shiny' : shineMode ? ' pickable' : ''}" data-k="${c.k}" aria-label="${nm}${sh ? ', ' + L('반짝 스티커', 'sparkly sticker') : ''}"><img src="${c.img}" alt="" draggable="false" decoding="async">${holo}</button>`
         : `<span class="cs off" data-k="${c.k}" role="img" aria-label="${L('아직 비어 있어요', 'Still empty')}"><img class="sil" src="${c.img}" alt="" draggable="false" decoding="async"></span>`;
     };
     return `<section class="pz-sec cs-sec" data-tale="${id}"><div class="pz-head"><h2>${t.title}</h2><span class="pz-n">${got} / ${set.length}</span></div>

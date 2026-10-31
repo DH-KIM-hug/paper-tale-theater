@@ -835,14 +835,25 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 .cast-grid .cs:not(.ct):not(.off):not(.plan) { background: none; box-shadow: none; }
 .cast-grid .cs:not(.ct):not(.off) img { width: 86%; height: 86%; filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 3px 4px rgba(46, 36, 28, .35)); }
 .cast-grid .cs.off { background: none; box-shadow: none; }
-/* 반짝 스티커: 별 조각과 같은 빛이 숨 쉬듯 번지고, 무지갯빛 테 */
-.cast-grid .cs.shiny img { animation: shinyGlow 2.2s ease-in-out infinite; }
-@keyframes shinyGlow { 0%, 100% { filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 0 6px rgba(186, 140, 255, .9)) drop-shadow(0 0 10px rgba(120, 200, 255, .6)); }
-  50% { filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 0 12px rgba(255, 200, 120, .95)) drop-shadow(0 0 18px rgba(186, 140, 255, .8)); } }
-.cast-grid .cs.shiny::after { content: '✦'; position: absolute; right: 4%; top: 2%; font-size: 18px; color: #FFE8A8; text-shadow: 0 0 6px rgba(186, 140, 255, .9); pointer-events: none; }
+/* 반짝 스티커(홀로그램): 테두리가 분홍→금→물빛→보라로 돌고, 스티커 모양 안으로 빛줄기가 스치고, 반짝이 셋이 번갈아 깜빡 */
+.cast-grid .cs.shiny img { animation: holoEdge 3s linear infinite; }
+@keyframes holoEdge {
+  0%, 100% { filter: drop-shadow(3px 0 0 #FFB3D9) drop-shadow(-3px 0 0 #FFB3D9) drop-shadow(0 3px 0 #FFB3D9) drop-shadow(0 -3px 0 #FFB3D9) drop-shadow(0 0 8px rgba(255, 150, 210, .8)); }
+  25% { filter: drop-shadow(3px 0 0 #FFE08A) drop-shadow(-3px 0 0 #FFE08A) drop-shadow(0 3px 0 #FFE08A) drop-shadow(0 -3px 0 #FFE08A) drop-shadow(0 0 10px rgba(255, 210, 110, .85)); }
+  50% { filter: drop-shadow(3px 0 0 #9EF0E6) drop-shadow(-3px 0 0 #9EF0E6) drop-shadow(0 3px 0 #9EF0E6) drop-shadow(0 -3px 0 #9EF0E6) drop-shadow(0 0 8px rgba(110, 220, 230, .8)); }
+  75% { filter: drop-shadow(3px 0 0 #C7B2FF) drop-shadow(-3px 0 0 #C7B2FF) drop-shadow(0 3px 0 #C7B2FF) drop-shadow(0 -3px 0 #C7B2FF) drop-shadow(0 0 10px rgba(170, 130, 255, .85)); }
+}
+.cast-grid .cs.shiny .sweep { position: absolute; inset: 7%; z-index: 2; pointer-events: none; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center;
+  background: linear-gradient(115deg, transparent 0 38%, rgba(255, 255, 255, .9) 45%, rgba(255, 220, 245, .75) 50%, rgba(190, 235, 255, .7) 55%, transparent 62% 100%) no-repeat; background-size: 300% 100%; background-position: 130% 0; animation: holoSweep 3.2s ease-in-out infinite; }
+@keyframes holoSweep { 0%, 35% { background-position: 130% 0; } 75%, 100% { background-position: -30% 0; } }
+.cast-grid .cs.shiny .tw { position: absolute; z-index: 3; font-style: normal; line-height: 1; color: #FFC23A; text-shadow: 0 0 4px #fff, 0 0 8px rgba(255, 200, 80, .9), 0 0 12px rgba(186, 140, 255, .8); pointer-events: none; animation: twinkle 1.8s ease-in-out infinite; }
+.cast-grid .cs.shiny .t1 { right: 0; top: 0; font-size: 26px; }
+.cast-grid .cs.shiny .t2 { left: 2%; top: 28%; font-size: 17px; animation-delay: .6s; }
+.cast-grid .cs.shiny .t3 { right: 10%; bottom: 6%; font-size: 20px; animation-delay: 1.2s; }
+@keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0); } 40%, 60% { opacity: 1; transform: scale(1.1) rotate(25deg); } }
 .cast-grid .cs.pickable:not(.ct):not(.off):not(.plan) { border-radius: 50%; background: #F6F1FF; box-shadow: 0 0 0 3px #C9B6F2; animation: pickBob 1.2s ease-in-out infinite; }
 @keyframes pickBob { 50% { transform: translateY(-4px); } }
-@media (prefers-reduced-motion: reduce) { .cast-grid .cs.shiny img, .cast-grid .cs.pickable { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .cast-grid .cs.shiny img, .cast-grid .cs.shiny .sweep, .cast-grid .cs.pickable { animation: none; } .cast-grid .cs.shiny .tw { animation: none; opacity: 1; } }
 .shine-go { min-height: 56px; padding: 0 22px; border: 0; border-radius: var(--r-pill); background: var(--card); box-shadow: var(--sh-1), inset 0 0 0 2px #C9B6F2; font-size: 16px; font-weight: 800; color: var(--ink); cursor: pointer; white-space: nowrap; }
 .shine-go.on { box-shadow: var(--sh-1), inset 0 0 0 2px var(--ink-3); color: var(--ink-2); }
 .cast-grid .cs.off img.sil { width: 80%; height: 80%; opacity: .14; }
