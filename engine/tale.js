@@ -527,7 +527,7 @@ const Tale = (() => {
       h.stop(); // 골라요는 정답 위치를 먼저 알려주지 않는다 — 12초 재안내만
       let t2 = prompt ? setTimeout(() => Narrator.speak(prompt), 12000) : null;
       /* 세로 휴대폰(2026-10-31 사용자): 고를 것을 무대 아래 빈 곳에 크게 꺼내 놓는다(무대 속 것도 그대로 눌린다) */
-      const tray = $('#choiceTray'), useTray = tray && !AUTO() && !VERIFY && matchMedia('(orientation: portrait) and (max-width: 700px)').matches;
+      const tray = $('#choiceTray'), useTray = tray && !AUTO() && !VERIFY && matchMedia('(orientation: portrait)').matches;
       const sync = () => { if (!useTray) return; options.forEach(o => { if (o._tb) { o._tb.style.opacity = o.el.style.opacity || ''; o._tb.classList.toggle('hint', !!o.el.style.filter); } }); };
       if (useTray) {
         tray.innerHTML = '';
