@@ -434,6 +434,7 @@
           const ig = T.el('g', { 'pointer-events': 'none', filter: 'url(#pp)' }, g); pic(T, ig, ingF(it.id), cx, cy + 4, P ? 66 : 64, P ? 62 : 62);
           if (it.id === 'poo') { pic(T, ig, 'wc_prop_ing_stink', cx - 22, cy - 30, 22, 30); pic(T, ig, 'wc_prop_ing_fly', cx + 26, cy - 30, 22, 22); }   // 응가 칸: 냄새 선·파리(PLAN §10-2)
           k.cells.push({ ...it, el: g, cx, cy });
+          try { if (usedIng.has(it.id)) g.style.visibility = 'hidden'; } catch (e) { /* 첫 부엌: 아직 넣은 재료 없음 */ }   // 부엌을 다시 그려도 넣은 재료는 빈칸(2026-10-31 사용자: 중간중간 다시 생김)
         });
       } else if (!P && jars) { const g0 = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, T.fx); sprite(T, g0, 'wc_fg_jar_shelf_front', -24, FL - HT.wc_fg_jar_shelf_front + 40, HT.wc_fg_jar_shelf_front * ASP.wc_fg_jar_shelf_front, HT.wc_fg_jar_shelf_front); }   // 선반이 없는 2장만 왼쪽 앞 가림(병 선반)
       /* 국자는 없앴다(2026-10-29 사용자) — 마녀가 마법으로 젓는다 */
@@ -462,6 +463,9 @@
       K.swirlAnim = rot.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], { duration: 8000, iterations: Infinity });
     }
     const potClear = (fade = true) => { K.kinds = []; potFlat(COL.water, fade); };
+    /* 지난 회전 결과 색: 변신 뒤 부엌으로 돌아와도 '솥 물이 쏴아, 다시 맑아졌어요' 전까지는 그 색 그대로(2026-10-31 사용자) */
+    let potCol = null;
+    const potKeep = () => { if (potCol) { K.kinds = []; potFlat(potCol, false); } else potClear(false); };
     function bubbles(on = true) {
       if (!on) { K.bub && K.bub.remove(); return; }
       const g = K.bub = T.el('g', { 'pointer-events': 'none' }, T.world);
@@ -825,14 +829,15 @@
           return null;
         }
         if (!K) return null;
-        if (cmd === 'clear') { potClear(false); K.bub && K.bub.remove(); bubbles(); if (!inst()) cue('rattle', .4); }
+        if (cmd === 'keep') { potKeep(); return null; }   // 지난 결과 색 그대로(RCLEAR 대사의 pot:clear 가 맑게)
+        if (cmd === 'clear') { potCol = null; potClear(false); K.bub && K.bub.remove(); bubbles(); if (!inst()) cue('rattle', .4); }
         else if (cmd === 'boil') { bubbles(); if (!inst()) amb('pot_boil', .2, 4); }
         else if (cmd === 'swirl') { const ks = [...new Set(String(arg).split(',').map(c => COLK[c]))]; if (ks.length === 1) potFlat(COL[ks[0]], !inst()); else potSwirl(ks); if (!inst()) cue(['whistle_up', 'xylo_up'], .35); }
         else if (cmd === 'drop') {
           if (inst()) return null;
           return (async () => { for (const id of String(arg).split(',')) { const c = cellOf(id); kid.hop(6, 260); await fly(c); plop(c); await sleep(450); } })();
         }
-        else if (cmd === 'pop') { stopStir(); if (inst()) { potFlat(PLATE[arg], false); return null; } return (async () => { const clr = await smoke(); potFlat(PLATE[arg], false); clr(); })(); }
+        else if (cmd === 'pop') { stopStir(); potCol = PLATE[arg]; if (inst()) { potFlat(PLATE[arg], false); return null; } return (async () => { const clr = await smoke(); potFlat(PLATE[arg], false); clr(); })(); }
         else if (cmd === 'bigpop') { stopStir(); if (inst()) { potFlat(COL.black, false); return null; } return (async () => { const clr = await smoke(true); potFlat(COL.black, false); clr(); })(); }
         else if (cmd === 'outside') {   // 9장: 가게 앞에 끌어낸 솥
           potAt(500, X(FL + 10, FL + 10));
@@ -1027,7 +1032,7 @@
       stopStir();
       witch.look('surprise', 'front');
       const clearSmoke = await smoke();
-      potFlat(COL[rs.color] || RES[rs.res].plate, false);
+      potCol = COL[rs.color] || RES[rs.res].plate; potFlat(potCol, false);
       const cand = candyPop(rs.res);
       clearSmoke(); K.bub && K.bub.remove(); bubbles();
       await say(S.E2);
@@ -1052,7 +1057,7 @@
         again = !!yes || rounds3 && autoMode;
         if (!again) break;
       } else again = false;
-      if (again) { K.kinds = []; cue('rattle', .5) || cue('slide_down', .4); potClear(); await say(S.RCLEAR); }
+      if (again) { K.kinds = []; potCol = null; cue('rattle', .5) || cue('slide_down', .4); potClear(); await say(S.RCLEAR); }
     }
     amb('pot_boil', .15, 4);
 
@@ -1066,7 +1071,7 @@
       kid.pos.style.pointerEvents = 'none';
       const act = !long ? 4500 : 8500;
       const lines = async () => { await say(tfN); await say(S.KTF[res]); if (res === 'strawberry') { witch.look('surprise', 'front'); await say('어디 가!'); } if (res === 'choco') await say('녹았다!'); if (long) await say(S.NACT[res]); };
-      const back = async () => { const f = () => { K = kitchen({ shelf: true, ladle: true }); setLook(); potClear(false); bubbles(); }; if (curBg === 'wc_bg_kitchen') return cont(f); await T.curtain(false); f(); await T.curtain(true); };
+      const back = async () => { const f = () => { K = kitchen({ shelf: true, ladle: true }); setLook(); potKeep(); bubbles(); }; if (curBg === 'wc_bg_kitchen') return cont(f); await T.curtain(false); f(); await T.curtain(true); };
       /* 구경꾼(시선 PLAN §5 6장: 마녀·친구들·호박이 → 다현이). 마녀·호박이는 오른쪽에서 왼쪽을, 친구 셋은 왼쪽 끝에서 오른쪽을 본다 */
       const friendsWatch = () => { cast([[witch, X(890, 650), FL, { look: 'surprise', to: 'left' }], [cat, X(780, 600), FL, { look: 'sit', to: 'left' }]]); if (!P) FRS.forEach((f, i) => put(T, f, 250 - i * 95, FL, { look: 'stand', to: 'right' })); else FRS.forEach(hide); };
       /* 변신 효과 조각(PLAN §10-2 fx): 다현이 지금 자리(움직이는 중에도)에서 퐁퐁 */

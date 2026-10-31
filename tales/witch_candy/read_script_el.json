@@ -2550,7 +2550,7 @@
     "kid:look:stand",
     "kid:at:560",
     "friends:at:30,80,130",
-    "pot:clear",
+    "pot:keep",
     "cam:pot"
    ],
    "lines": [
@@ -2775,7 +2775,7 @@
     "kid:look:stand",
     "kid:at:560",
     "friends:at:30,80,130",
-    "pot:clear",
+    "pot:keep",
     "cam:pot"
    ],
    "lines": [
@@ -2982,7 +2982,7 @@
     "kid:look:stand",
     "kid:at:560",
     "friends:at:30,80,130",
-    "pot:clear",
+    "pot:keep",
     "cam:pot"
    ],
    "lines": [
@@ -3207,7 +3207,7 @@
     "kid:look:stand",
     "kid:at:560",
     "friends:at:30,80,130",
-    "pot:clear",
+    "pot:keep",
     "cam:pot"
    ],
    "lines": [
@@ -3414,7 +3414,7 @@
     "kid:look:stand",
     "kid:at:560",
     "friends:at:30,80,130",
-    "pot:clear",
+    "pot:keep",
     "cam:pot"
    ],
    "lines": [
@@ -3639,7 +3639,7 @@
     "kid:look:stand",
     "kid:at:560",
     "friends:at:30,80,130",
-    "pot:clear",
+    "pot:keep",
     "cam:pot"
    ],
    "lines": [
@@ -3846,7 +3846,7 @@
     "kid:look:stand",
     "kid:at:560",
     "friends:at:30,80,130",
-    "pot:clear",
+    "pot:keep",
     "cam:pot"
    ],
    "lines": [
@@ -4053,7 +4053,7 @@
     "kid:look:stand",
     "kid:at:560",
     "friends:at:30,80,130",
-    "pot:clear",
+    "pot:keep",
     "cam:pot"
    ],
    "lines": [
@@ -4260,7 +4260,7 @@
     "kid:look:stand",
     "kid:at:560",
     "friends:at:30,80,130",
-    "pot:clear",
+    "pot:keep",
     "cam:pot"
    ],
    "lines": [
