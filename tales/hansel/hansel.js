@@ -210,6 +210,7 @@
     const witch = mk(T, { beckon: ['witch_beckon', 270, 'left'], grope: ['witch_grope', 260, 'right'], oven: ['witch_oven', 255, 'left'] });
     const bird = mk(T, { crumb: ['bird_crumb', 80, 'left'], peck: ['bird_peck', 70, 'left'] });
     const duck = mk(T, { a: ['duck_ride', 135, 'right'], b: ['duck_ride2', 135, 'right'] });
+    T.faces({ hans, gret, father, step, witch, bird, duck }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자)
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): 대본 read_script_el.json 의 동사 → 놀이판 연출을 감싼 얇은 함수 =================
        장면 자리·자세·크기는 놀이판 그 장면 그대로(FIX 표). 대본 좌표는 놀이판 그림과 맞지 않아 FIX 가 우선한다. */

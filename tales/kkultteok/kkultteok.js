@@ -198,6 +198,7 @@
     const dog = mk(T, Object.fromEntries(Object.entries(DOGH).map(([k, h]) => [k, ['dog_' + k, h]])), true);
     const baby = mk(T, { huddle: ['baby_huddle', 130], wide: ['baby_wide', 140], up: ['baby_up', 150], sorry: ['baby_sorry', 140], white: ['baby_white', 140] }, false);
     const kids = [nuna, oppa, agi];
+    T.faces({ nuna, oppa, agi, dark: baby }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자). dark = 아기 먹구름
     const allHide = () => [nuna, oppa, agi, dog, baby].forEach(hide);
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 아래 놀이판 연출을 누르기 없이 감싼 얇은 함수 =================

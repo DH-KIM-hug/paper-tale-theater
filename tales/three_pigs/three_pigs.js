@@ -81,9 +81,12 @@
       T.el('image', { href: BGF[key] ? `../../assets/v3w/tp_${BGF[key]}.webp` : U('bg_' + key), x: BG.x, y: BG.y, width: BG.w, height: BG.h, preserveAspectRatio: 'none' }, T.bg);
       dress(key);
     }
+    const latest = {}; // 그림 이름 앞머리(pig1·mama·wolf)마다 가장 최근에 만든 배우(장면마다 새로 만든다)
+    T.faces({ piga: () => latest.pig1, pigb: () => latest.pig2, pigc: () => latest.pig3, mom: () => latest.mama, wolf: () => latest.wolf }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자)
     function sprite(name, x, h, y = GROUND) {
       let im;
       const a = T.actor(T.world, x, y, b => { im = T.el('image', { filter: 'url(#pp)', preserveAspectRatio: 'none' }, b); });
+      latest[name.split('_')[0]] = a;
       a.h = h;
       a.set = (n, hh = a.h) => {
         a.h = hh; const [, h0] = SZ[n], [nw, nh] = NW[n] || SZ[n], w = hh * nw / h0, h = hh * nh / h0;

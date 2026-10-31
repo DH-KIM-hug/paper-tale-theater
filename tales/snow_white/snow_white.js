@@ -312,6 +312,9 @@
     const granny = prop(T, 'granny_basket', 215, 'left');
     const prince = prop(T, 'prince', 228);
     const mirror = prop(T, 'prop_mirror', 230);
+    /* 말하는 인물 얼굴(세로 휴대폰 대사 상자). 난쟁이 일곱은 혼자 그림이 셋(망치·널빤지·웃음)뿐이라 돌려 쓴다 */
+    T.faces({ snow, queen, hunter, granny, prince, mirror,
+      dwarfa: hammerD, dwarfb: plankD, dwarfc: smileD, dwarfd: hammerD, dwarfe: plankD, dwarff: smileD, dwarfg: hammerD });
     const door = makeDoor(T);
     const table = prop(T, 'prop_table', 165);
     const chairs = Array.from({ length: 7 }, (_, i) => prop(T, i === 6 ? 'prop_chair_7' : 'prop_chair', 84));

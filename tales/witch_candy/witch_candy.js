@@ -330,6 +330,7 @@
     const fr = { rabbit: mk(T, pz('rabbit', POSES.rabbit)), bear: mk(T, pz('bear', POSES.bear)), fox: mk(T, pz('fox', POSES.fox)) };
     const FRS = Object.values(fr);
     const ALL = [kid, witch, cat, ...FRS];
+    T.faces({ kid, witch, cat, ...fr }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자)
     const loadBase = () => {
       ALL.forEach(a => { hide(a); a.pos.style.pointerEvents = 'none'; });
     };

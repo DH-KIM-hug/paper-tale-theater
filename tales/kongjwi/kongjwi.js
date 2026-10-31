@@ -213,6 +213,7 @@
     const flock = prop(T, 'sparrow_flock', 150);
     widen(T, pail, 100, 100); widen(T, flock, 140, 120);
     const sparrows = Array.from({ length: 5 }, () => prop(T, 'sparrow_one', 56));
+    T.faces({ kong, step, pat, toad, ox, fairy, won, sparrow: sparrows[0] }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자). 참새는 한 마리 그림
     const basketY = prop(T, 'basket_y', 80), basketR = prop(T, 'basket_r', 80);
     /* 2026-10-30 꽃신 고르기가 너무 어려워(세 켤레가 거의 같음) 틀린 두 켤레를 하늘색 물방울(shoeP 자리)·노랑 잎(shoeM 자리)으로 바꿈. 같은 신발 틀이라 높이 44 그대로 */
     const shoeB = prop(T, 'shoe_butterfly', 44), shoeP = prop(T, 'shoe_blue', 44), shoeM = prop(T, 'shoe_yellow', 44);

@@ -101,8 +101,10 @@
   const JOY_MUL = { 1: 1.26 };
   /* 아기 염소 그림이 원래 보는 쪽(몸통 반대쪽, 2026-10-22 측정). look(방향)으로 그쪽을 보게 뒤집는다 */
   const KID_SIDE = { 1: 'left', 2: 'left', 3: 'left', 4: 'right', 5: 'left', 6: 'right', 7: 'right' };
+  const LAST = {}; // 배역마다 가장 최근에 만든 배우(장면마다 새로 만든다) — 대사 상자 얼굴용
   const kid = (T, n, x, y, h = 90) => {
     const k = figure(T, x, y, h, { base: `wg_kid${n}_base`, joy: `wg_kid${n}_joy` }, 'base', JOY_MUL[n] ? { joy: JOY_MUL[n] } : {});
+    LAST.kid = k;
     k.look = d => k.face(d === KID_SIDE[n] ? 'left' : 'right');
     return k;
   };
@@ -113,7 +115,7 @@
   const wolf = (T, x, y, keys, first) => {
     const poses = {}, mul = {}, s0 = WOLF_H[first] / DIM[WP[first]][1];
     keys.forEach(k => { poses[k] = WP[k]; mul[k] = (WOLF_H[k] / DIM[WP[k]][1]) / s0; });
-    return figure(T, x, y, WOLF_H[first], poses, first, mul);
+    return (LAST.wolf = figure(T, x, y, WOLF_H[first], poses, first, mul));
   };
   /* 떠오르며 사라지는 작은 글자(음표·반짝이·zZ·밀가루 가루). 누름을 받지 않는다 */
   const floaty = (T, x, y, ch, color, size = 40, delay = 0) => new Promise(r => setTimeout(r, delay)).then(() => {
@@ -123,8 +125,8 @@
     a.onfinish = () => t.remove();
   });
   const PAW_SPOTS = [[235, 470], [295, 505], [355, 462], [410, 520], [465, 478], [525, 512], [580, 468]]; // 하얀 발 장면: 문 쪽을 보는 아기 염소 자리
-  const mama = (T, x, y, h = 270, first = 'basket') => figure(T, x, y, h, {
-    basket: 'wg_mama_basket', warn: 'wg_mama_warn', surprise: 'wg_mama_surprise', scissors: 'wg_mama_scissors', dance: 'wg_mama_dance' }, first);
+  const mama = (T, x, y, h = 270, first = 'basket') => (LAST.mom = figure(T, x, y, h, {
+    basket: 'wg_mama_basket', warn: 'wg_mama_warn', surprise: 'wg_mama_surprise', scissors: 'wg_mama_scissors', dance: 'wg_mama_dance' }, first));
   const prop = (T, f, x, y, h) => figure(T, x, y, h, { a: f }, 'a');
   const knock = () => { AudioFX.sfx('knock', .9); };
   const sting = k => AudioFX.sting && AudioFX.sting(k);
@@ -156,6 +158,7 @@
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     const portrait = () => T.viewWidth() < 990;
+    T.faces({ mom: () => LAST.mom, wolf: () => LAST.wolf, kid: () => LAST.kid }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자). 아기 염소는 가장 최근에 놓인 한 마리
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const scene = (label, fn) => T.sceneCard(label, () => { T.clear(); T.camSnap(500, 280, 1); fn(); });
     const hopAll = (list, h = 24) => Promise.all(list.map((a, i) => sleep(i * 70).then(() => a.hop(h, 360))));

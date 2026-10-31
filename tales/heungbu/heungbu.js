@@ -144,9 +144,12 @@
       if (!a._hit) { a._hit = T.el('rect', { x: -w / 2, y: -Math.max(a.h || 0, 90), width: w, height: Math.max(a.h || 0, 90), fill: '#000', 'fill-opacity': 0 }, a.pos); a.pos.insertBefore(a._hit, a.pos.firstChild); }
       a.pos.style.pointerEvents = 'auto'; return a.pos;
     };
+    const latest = {}; // 배역마다 가장 최근에 만든 그림 배우(장면마다 새로 만든다)
+    T.faces({ heung: () => latest.heung, nol: () => latest.nol, nwife: () => latest.nwife }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자). 도깨비는 컷 그림뿐이라 뺀다
     function spr(name, x, h, y = GROUND) {
       let im;
       const a = T.actor(T.world, fx(x), y, b => { im = T.el('image', { filter: 'url(#pp)', preserveAspectRatio: 'none' }, b); });
+      latest[name.split('_')[0]] = a;
       a.pos.style.pointerEvents = 'none';
       a.set = (n, hh = a.h0) => {
         a.h0 = hh; hh *= K; a.h = hh; const w = hh * AR[n];

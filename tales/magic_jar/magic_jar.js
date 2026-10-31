@@ -183,6 +183,7 @@
     const hoe = prop(T, 'hoe', 100); // 2026-10-20 새 괭이 그림은 정사각형 그림이라 높이를 키움
     const olds = Array.from({ length: 8 }, (_, i) => mk(T, { a: ['father_fightA', 210, 'left'], b: ['father_fightB', 210, 'left'] })   /* 진짜 아버지(peek 210)와 같은 얼굴 크기 — 180 은 너무 작음(2026-10-30 사용자) */);
     const father = mk(T, { peek: ['father_peek', 210, 'left'], fall: ['father_fall', 150, 'left'] });
+    T.faces({ farmer, wife, rich, father }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자)
 
     const plow = i => {
       // 삽질 한 번 소리(옛 dig_soil 6.8초를 겹쳐 울려 이상했음 — 2026-10-30 사용자)
