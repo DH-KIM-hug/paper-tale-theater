@@ -137,7 +137,7 @@ const Tale = (() => {
     try {
       showFace(null);   // 새 대사마다 얼굴을 지우고, 배역 대사면 연출(seg)이 다시 붙인다
       if (VERIFY) await vSay(text, d);
-      else await Narrator.speak(text, { ...options, ...(d ? { onSeg: d.seg } : {}) });
+      else await Narrator.speak(text, { ...options, ...(d ? { onSeg: d.seg } : faceMap ? { onSeg: faceSeg } : {}) });
     }
     finally { if (d) d.end(); busy = was; }
   }
@@ -204,7 +204,7 @@ const Tale = (() => {
     vLine = text;
     const go = vGo();
     showFace(null);
-    Narrator.speak(text, d ? { onSeg: d.seg } : {}).catch(() => { /* 소리 실패는 무시 */ });
+    Narrator.speak(text, d ? { onSeg: d.seg } : faceMap ? { onSeg: faceSeg } : {}).catch(() => { /* 소리 실패는 무시 */ });
     await go;
     Narrator.stop();
   }
@@ -234,6 +234,10 @@ const Tale = (() => {
     f.classList.toggle('flip', (a.flip || 1) < 0);
     f.hidden = false; if (bub) bub.classList.add('has-face');
   }
+  /* 얼굴만(카메라·돌아보기 없이): T.faces({배역: actor | () => actor}) — 배역 표(director)가 없는 동화도 대사 상자에 말하는 인물 얼굴을 띄운다 */
+  let faceMap = null;
+  const faces = map => { faceMap = map || null; };
+  const faceSeg = role => { const a = faceMap && faceMap[role]; showFace(role === 'nar' || !a ? null : (typeof a === 'function' ? a() : a)); };
   function director(cfg) {
     if (!cfg) { dir = null; return; }
     const moveCam = cfg.camTo || camTo;
@@ -2165,7 +2169,7 @@ const Tale = (() => {
 
   const api = {
     finale, hz, semi, parseSong, timbre, playMelody, followMelody, holdMelody, lyric,
-    cardSpeed: k => { cardK = k; }, el, paper, anim, actor, sleep, say, ask, director, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
+    cardSpeed: k => { cardK = k; }, el, paper, anim, actor, sleep, say, ask, director, faces, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,
     tap: autoInput('tap', tap), mash: autoInput('mash', mash), choose: autoInput('choose', choose), swipe: autoInput('swipe', swipe), hold: autoInput('hold', hold), fill: autoInput('fill', fill), free: autoInput('free', free),
