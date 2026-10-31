@@ -73,7 +73,7 @@
   /* 그림 안 자리(그림 폭·높이 비율, 왼쪽 위 0,0 — 뒤집기 전 그림 기준): 병아리 리본(머리 위) · 들고 오는 재료(앞발) · 먹는 음식(입 앞) */
   const BOW = { hen_chick_stand: [.44, .07], hen_chick_look_up: [.6, .06], hen_chick_hop: [.5, .05], hen_chick_carry: [.5, .05], hen_chick_eat: [.33, .15] };
   const HOLD = { hen_dog_run: [.9, .38], hen_cat_run: [.92, .42], hen_pig_run: [.94, .38], hen_chick_carry: [.5, -.08],
-    hen_hen_eat: [.12, .36], hen_cat_eat: [.14, .33], hen_dog_eat: [.16, .3], hen_pig_eat: [.16, .3], hen_chick_eat: [.1, .5] };
+    hen_hen_eat: [.12, .36], hen_cat_eat: [.18, .46], hen_dog_eat: [.13, .43], hen_pig_eat: [.22, .5], hen_chick_eat: [.1, .5] };   // 고양이·개·돼지가 먹는 조각은 입 앞에 떠 있지 않고 앞발 사이에(2026-10-31 사용자: 케이크 붕 뜸)
 
   /* ---------- 두 번째 요리(PLAN §두 번째 요리) ---------- */
   const DISHES = {
@@ -798,7 +798,8 @@
         if (!P) T.world.appendChild(cat.pos);
         /* 재료 칸: 가로 = 왼쪽 탁자 위 네 칸, 세로 = 위쪽 2×2 */
         S.cellsG = T.el('g', {}, T.world);
-        const pos = P ? [[400, 120], [515, 120], [400, 235], [515, 235]] : [[115, S.top - 50], [235, S.top - 50], [355, S.top - 50], [475, S.top - 50]];
+        const pos = P ? [[360, 75], [475, 75], [360, 182], [475, 182]] :   // 세로: 아래 줄이 병아리·팬케이크에 겹쳐서(2026-10-31 사용자) 위로·왼쪽으로
+           [[115, S.top - 50], [235, S.top - 50], [355, S.top - 50], [475, S.top - 50]];
         S.cells = D.cells.map((id, i) => cell(S.cellsG, id, pos[i][0], pos[i][1], 104, 100));
         if (DISH !== 'pancake') stand(T, S.base, 'hen_prop_plate', px, S.top + 10, 30 * KP);
         if (DISH === 'sandwich') stand(T, S.base, 'hen_prop_bread_slice', px, S.top - 2, SLH);
