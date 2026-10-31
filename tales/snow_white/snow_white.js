@@ -926,10 +926,12 @@
       put(T, dwarfs, 340, 470, { s: .8 });                /* 난쟁이들은 침대 뒤 벽 앞에 */
       put(T, snow, 930, 552, { look: 'stand' });
       bedsG = T.el('g', {}, T.world);
-      [0, 2, 4, 6, 1, 3, 5].forEach(i => { put(T, beds[i], SX[i], SYs(i), { s: SS(i) }); bedsG.appendChild(beds[i].pos); });
-      put(T, bigBed, BIGX, SY + 2); bedsG.appendChild(bigBed.pos);
-      T.world.appendChild(snow.pos);
-      if (P) camSnap(SX[2], 280, 1);
+      /* 세로 화면(보이는 폭 약 430)은 큰 침대가 화면 밖이었다(2026-10-31 사용자) → 여덟 개를 가운데에 작게 모아 둔다: 뒷줄 작은 침대 넷, 앞줄 작은 침대 셋 + 큰 침대 */
+      const PB = { 0: [330, 490, .58], 2: [415, 490, .58], 4: [500, 490, .58], 6: [585, 490, .58], 1: [330, 552, .64], 3: [415, 552, .64], 5: [500, 552, .64] };
+      [0, 2, 4, 6, 1, 3, 5].forEach(i => { if (P) put(T, beds[i], PB[i][0], PB[i][1], { s: PB[i][2] }); else put(T, beds[i], SX[i], SYs(i), { s: SS(i) }); bedsG.appendChild(beds[i].pos); });
+      if (P) put(T, bigBed, 632, SY + 2, { s: .6 }); else put(T, bigBed, BIGX, SY + 2); bedsG.appendChild(bigBed.pos);
+      if (P) hide(snow); else T.world.appendChild(snow.pos);
+      if (P) camSnap(500, 280, 1);
     }, bigBed.pos);
     /* 2026-10-31 사용자: 세기는 다시 손으로 — 아이가 침대를 하나씩 골라 누르면 누른 차례대로 수를 말한다(아직 안 센 침대만 눌림).
        숫자 소리가 끝나야 다음 톡을 받는다 */
@@ -938,13 +940,12 @@
       const pick = () => T.choose(left.map(x => ({ el: x.pos, ok: true, b: x })), { prompt: '침대가 몇 개일까요? 톡 눌러 봐요.' });
       const { b } = i === 0 ? await T.ask('침대가 몇 개일까요? 톡 눌러 봐요.', pick) : await pick();
       left.splice(left.indexOf(b), 1);
-      if (P) T.camTo(Math.min(Math.max(b.x, SX[2]), BIGX), 280, 1, 450);
+      b.pos.style.pointerEvents = 'none';   // 센 침대는 더 눌리지 않고, 뒤에 겹친 침대 누름을 가로채지 않게
       AudioFX.countBeat && AudioFX.countBeat(i + 1); cue('marimba_' + (i + 1), .8) || popSfx(T); const said = vo('n' + (i + 1));
       glow(b, 800); b.hop(b === bigBed ? 18 : 12, 360);
-      T.pop(b.x, b === bigBed ? 220 : (b.y > 520 ? 250 : 190), tr(NUM[i]));
+      T.pop(b.x, P ? (b.y > 520 ? 330 : 280) : b === bigBed ? 220 : (b.y > 520 ? 250 : 190), tr(NUM[i]));
       await Promise.all([sleep(500), Promise.race([said || sleep(0), sleep(2500)])]);
     }
-    if (P) T.camTo(560, 280, 1, 700);
     dwarfs.hop(14, 360);
     await say('작은 침대 일곱 개, 큰 침대 하나, 모두 여덟 개!');
     snow.hop(16, 360);
