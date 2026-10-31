@@ -1277,7 +1277,7 @@
     root.hidden = !tales.length;
     root.innerHTML = tales.map(t0 => { const t = shown(t0), g = castGot(t0.id), n = castSet(t0.id).length, src = tileSrc(t0.id) || g[g.length - 1].img;
       return `<button type="button" class="pz-b" data-go="${t0.id}" aria-label="${t.title} ${g.length} / ${n}"><span class="pz-hole"><img src="${src}" alt="" draggable="false" decoding="async"></span><span class="pz-cnt">${g.length} / ${n}</span></button>`; }).join('');
-    $('#pzBoard').innerHTML = tales.length ? tales.map(t => castCard(t.id)).join('') : `<div class="cast-none"><span class="cn-slots" aria-hidden="true">${'<svg viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/></svg>'.repeat(5)}</span><p>${L('동화를 끝까지 보면 친구 스티커가 생겨요', 'Finish a tale to get a friend sticker')}</p></div>`;   // 빈 상태: 흐린 별 자리 5칸 + 안내 한 줄
+    $('#pzBoard').innerHTML = tales.length ? tales.map(t => castCard(t.id)).join('') : `<div class="cast-none"><span class="cn-slots" aria-hidden="true">${'<i></i>'.repeat(5)}</span><p>${L('동화를 끝까지 보면 친구 스티커가 생겨요', 'Finish a tale to get a friend sticker')}</p></div>`;   // 빈 상태: 흐린 스티커 자리 5칸 + 안내 한 줄(별 모양은 종이별과 헷갈려서 쓰지 않는다)
     paintRowOn();
     /* 친구들을 다 모은 동화가 처음 생기면 그 카드로 내려가 한 번 축하 */
     const rec = castDone(), whole = tales.find(t => { const set = castSet(t.id); return !rec[t.id] && set.length && set.every(c => c.img && hasCast(t.id, c.k)); });
