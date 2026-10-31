@@ -1274,7 +1274,7 @@ const Tale = (() => {
       if (only >= 0 && k !== only) continue;
       const a = -90 + k * 72;
       defs += `<clipPath id="${u}-${k}"><polygon points="${C},${C} ${pt(a - 36)} ${pt(a + 36)}"/></clipPath>`;
-      body += `<g clip-path="url(#${u}-${k})" class="${only >= 0 || k < n ? 'on' : 'off'}"><image href="${ROOT_URL}assets/ui/star_one.webp" width="100" height="100"/></g>`;
+      body += `<g clip-path="url(#${u}-${k})" class="${only >= 0 || k < n ? 'on' : 'off'}"><image href="${ROOT_URL}assets/ui/star_one.webp?v=s3b" width="100" height="100"/></g>`;
     }
     const cuts = only >= 0 ? '' : [...Array(5)].map((_, k) => `<line x1="${C}" y1="${C}" x2="${(C + 50 * Math.cos(rad(-54 + k * 72))).toFixed(1)}" y2="${(C + 50 * Math.sin(rad(-54 + k * 72))).toFixed(1)}"/>`).join('');
     return `<svg class="star-pc" viewBox="0 0 100 100" aria-hidden="true"><defs>${defs}</defs>${body}<g class="cuts">${cuts}</g></svg>`;
