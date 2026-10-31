@@ -269,6 +269,14 @@
   async function run(T) {
     const { sleep, camSnap, tr } = T;
     T.cardSpeed(.6);
+    /* 유령 소리 '오~~우~~'는 말이 아니라 소리라 영어에서도 한국어 녹음(솔로·합창)을 쓴다 — 영어판 다현이 녹음이 이상함(2026-10-31 사용자) */
+    try {
+      if (typeof englishOn === 'function' && englishOn()) {
+        if (typeof VOICE_LINES_EN !== 'undefined' && VOICE_LINES.ghost_kid) VOICE_LINES_EN.ghost_kid = VOICE_LINES.ghost_kid;
+        const ko = NARRATION_CLIPS['오~~우~~'], en = NARRATION_CLIPS_EN['오~~우~~'];
+        if (ko && en) en.c = ko;
+      }
+    } catch (e) { /* 영어 녹음 그대로 */ }
     const GAP = 700;
     const say = async text => { await T.say(text); await sleep(GAP); };
     const P = T.viewWidth() < 990;
@@ -688,10 +696,22 @@
       else if (cmd === 'hop') { if (!inst()) { a.hop(14, 320); cue('pop', .4); return sleep(340); } }
       else if (cmd === 'front') { const k = { kid: 'yum', witch: 'surprise', cat: 'reach' }[who]; lookA(a, who, k, 'left'); if (who === 'kid' && rs.cand) { hide(rs.cand); rs.cand = null; } }   // 사탕을 먹었다
       else if (cmd === 'hat_pop') { if (!inst()) { a.hop(18, 360); cue('slide_up', .5); cue('pop', .5); T.pop(a.x, FL - a.h - 20, tr('뿅!'), '#7A5AA6'); return sleep(400); } }
-      else if (cmd === 'march') { if (!inst()) return marchOnce([a], 1800); }
+      else if (cmd === 'march') { if (!inst()) { a.hop(10, 300); cue(['theremin_wobble', 'whistle_wobble'], .35); return sleep(340); } }   // 부엌 안에서는 걷지 않는다(행진은 마을에서만, 2026-10-31 사용자)
       return null;
     };
     const stepTimer = () => { const id = setInterval(() => cue('step_wood', .25), 500); rs.stops.push(() => clearInterval(id)); return () => clearInterval(id); };
+    /* 읽어 주기 8장 마을 행진: 한 줄이 오른쪽 밖으로 나갔다가 왼쪽 밖에서 다시 들어와 두 바퀴, 맨 뒤 진짜 유령은 끝에 인사하고 사라진다 */
+    async function march2(list) {
+      const sp = X(70, 40), x0 = list[0].x, ys = list.map(a => a.y), s = X(.9, .7), st = stepTimer();
+      const gx = x => x - list.length * sp - X(20, 10), offR = 1100 + list.length * sp + 60, offL = -100;
+      const go = (from, to, ms) => Promise.all([...list.map((a, i) => a.move(to - i * sp, ys[i], ms, 'linear')), ghost.move(gx(to), ghost.y, ms, 'linear')]);
+      cue(['theremin_wobble', 'whistle_wobble'], .35);
+      await go(x0, offR, 5200);
+      list.forEach((a, i) => put(T, a, offL - i * sp, ys[i], { look: 'ghost', to: 'right', s })); ghostJoin(gx(offL), FL, s);
+      cue(['theremin_wobble', 'whistle_wobble'], .35);
+      await go(offL, X(780, 640), 3600); st();
+      await ghostBye();
+    }
     async function marchOnce(list, ms) {
       const st = stepTimer(); cue(['theremin_wobble', 'whistle_wobble'], .35);
       await Promise.all(list.map((a, i) => a.move(Math.min(a.x + (P ? 120 : 380), 960), a.y, ms, 'linear'))); st();
@@ -751,7 +771,7 @@
           const L = [kid, witch, cat, ...FRS];
           L.forEach((a, i) => { put(T, a, X(80, 300) - i * X(70, 40), FL, { look: 'ghost', to: 'right', s: X(.9, .7) }); if (P && FRS.includes(a)) hide(a); });
           { const vis = L.filter(a => a.pos.style.display !== 'none'), last = vis.reduce((m, a) => (a.x < m.x ? a : m)); ghostJoin(last.x - X(90, 50), FL, X(.9, .7)); }   // 맨 뒤(보이는 마지막 사람 뒤) 진짜 유령, 대사 없음
-          if (!inst()) return marchOnce([...L.filter(a => a.pos.style.display !== 'none'), ghost], 3200).then(ghostBye);
+          if (!inst()) return march2(L.filter(a => a.pos.style.display !== 'none'));   // 마을에서 두 바퀴(2026-10-31 사용자)
         }
         return null;
       },
@@ -772,7 +792,7 @@
         else if (cmd === 'walk' || cmd === 'march') {
           if (inst()) return null;
           const vis = L.map(x => x[0]).filter(a => a.pos.style.display !== 'none');
-          if (cmd === 'march' && inKit() && vis.length) { const last = vis.reduce((m, a) => (a.x < m.x ? a : m)); ghostJoin(last.x - X(90, 50), last.y, last.scale); fadeIn(ghost, 600); vis.push(ghost); }   // 부엌 행진: 맨 뒤 진짜 유령
+          if (cmd === 'march' && inKit()) { vis.forEach(a => a.hop(10, 300)); cue(['theremin_wobble', 'whistle_wobble'], .35); return sleep(340); }   // 부엌 안에서는 걷지 않는다(행진은 마을에서만, 2026-10-31 사용자)
           return marchOnce(vis, cmd === 'march' ? 3200 : 2200);
         }
         return null;
@@ -1176,25 +1196,31 @@
     cat.look('ghost', 'right'); FRS.forEach(f => f.look('ghost', 'right'));
     await say(S.H4);
     cue(['theremin_wobble', 'whistle_wobble'], .5); await say(S.H2);      // 모두 합창 '오~~우~~'(chorus_el.js)
+    /* 행진은 마을(거리)에서만 두 바퀴(2026-10-31 사용자: 부엌 안에서는 돌지 않는다). 첫 바퀴는 오른쪽 화면 밖으로 나가고, 왼쪽 밖에서 다시 들어와 두 번째 바퀴 */
     const march = async (bg, xs, onOpen) => {
-      const all = [kid, witch, cat, ...FRS], kit = bg === curBg && bg === 'wc_bg_kitchen', fy = kit ? X(FL, PFY) : FL;
-      const ms = kit ? X(.85, .6) : X(.9, .7), sp = P ? 52 : 70;   // 부엌은 부엌 크기(솥과 같은 비율)
-      const line = () => { all.map((a, i) => [a, i]).reverse().forEach(([a, i]) => put(T, a, xs[0] - i * sp, fy, { to: 'right', s: ms }));   // 뒤에서부터 놓아 맨 앞 다현이가 맨 위(마녀 뒤에 가려지지 않게)
-      all.forEach(a => a.look('ghost', 'right')); };
-      /* 같은 부엌(7장 → 8장): 넘김 없이 솥은 그대로 두고, 여섯이 왼쪽에 한 줄로 걸어가 선다(2026-10-29) */
-      if (kit) await cont(() => { K = kitchen({ shelf: false, ladle: false }); potFlat(COL.black, false); bubbles(); line(); });
-      else { await T.curtain(false); T.clear(); bgImage(T, bg); setView(500); line(); await T.curtain(true); }
+      const all = [kid, witch, cat, ...FRS], fy = FL, ms = X(.9, .7), sp = P ? 52 : 70;
+      const gx = x => x - 6 * sp - 20;   // 맨 뒤에 몰래 붙은 진짜 유령 자리(맨 앞 x 기준)
+      const line = x0 => { all.map((a, i) => [a, i]).reverse().forEach(([a, i]) => put(T, a, x0 - i * sp, fy, { to: 'right', s: ms }));   // 뒤에서부터 놓아 맨 앞 다현이가 맨 위(마녀 뒤에 가려지지 않게)
+        all.forEach(a => a.look('ghost', 'right')); ghostJoin(gx(x0), fy, ms); };
+      const speed = (xs[1] - xs[0]) / 3200;   // 한 바퀴 걸음 빠르기(px/ms)
+      const go = async (x0, x1) => {
+        const d = Math.round((x1 - x0) / speed);
+        await Promise.all([...all.map((a, i) => a.move(x1 - i * sp, fy, d, 'linear')), ghost.move(gx(x1), ghost.y, d, 'linear')]);
+      };
+      await T.curtain(false); T.clear(); bgImage(T, bg); setView(500); line(xs[0]); await T.curtain(true);
       const said = onOpen && onOpen();
-      const gs = ms;
-      ghostJoin(xs[0] - 6 * sp - 20, fy, gs); fadeIn(ghost, 600);   // 맨 뒤에 몰래 붙은 진짜 유령
+      fadeIn(ghost, 600);
       const st = setInterval(() => cue('step_wood', .25), 500);
       cue('theremin_wobble', .4) || cue('whistle_wobble', .4);
-      await Promise.all([...all.map((a, i) => a.move(xs[1] - i * sp, fy, 3200, 'linear')), ghost.move(xs[1] - 6 * sp - 20, ghost.y, 3200, 'linear')]);
+      const offR = 1100 + 6 * sp + 40, offL = -100;   // 맨 뒤 유령까지 오른쪽 밖으로 / 다현이가 왼쪽 밖에서 출발
+      await go(xs[0], offR);
+      line(offL);
+      cue('theremin_wobble', .4) || cue('whistle_wobble', .4);
+      await go(offL, xs[1]);
       clearInterval(st);
-      if (bg === 'wc_bg_street') await ghostBye();
+      await ghostBye();
       await said;
     };
-    await march('wc_bg_kitchen', [X(80, 300), X(780, 640)]);
     await march('wc_bg_street', [X(80, 300), X(780, 640)], () => say(S.H5));   // '마을을 한 바퀴'는 거리 장면이 열린 뒤에(2026-10-30 사용자: 부엌에서 말하면 마을이 아님)
     await cutPic('wc_cut_parade', '한 줄 유령 행진', '#1A1410');
 
