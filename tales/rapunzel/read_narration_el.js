@@ -19,7 +19,7 @@ Object.assign(NARRATION_CLIPS, {
  "숲속에 문도 계단도 없는 높은 탑이 쑥 솟았어요. 창문은 꼭대기에 하나뿐이에요.": "audio/el/rapunzel/nar_93f58ee80d.mp3",
  "고텔은 라푼젤을 탑 꼭대기 방에 살게 했어요.": "audio/el/rapunzel/nar_67efeda5f3.mp3",
  "자, 잠겨라. 밖은 위험하단다. 여기가 제일 안전해.": "audio/el/rapunzel/gothel_f4ca1854ac.mp3",
- "지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.": "audio/el/rapunzel/nar_139c827159.mp3",
+ "창문 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.": "audio/el/rapunzel/nar_92c7ccacbc.mp3",
  "새는 짹짹, 토끼는 깡충깡충, 라푼젤은 창가에서 빙긋 웃었어요.": "audio/el/rapunzel/nar_09e065bb38.mp3",
  "그 뒤로 고텔은 찾아올 때마다 탑 아래에서 외쳤어요.": "audio/el/rapunzel/nar_10ec9fd07f.mp3",
  "라푼젤, 라푼젤, 머리를 내려 줘!": "audio/el/rapunzel/gothel_97e70ac6be.mp3",

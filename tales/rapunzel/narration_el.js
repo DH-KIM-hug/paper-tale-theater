@@ -13,7 +13,7 @@ Object.assign(NARRATION_CLIPS, {
  "라푼젤이 열두 살이 되자, 마녀는 지팡이를 톡 두드렸어요.": "audio/el/rapunzel/nar_cf100de579.mp3",
  "숲속에 문도 계단도 없는 높은 탑이 쑥 솟았어요. 창문은 꼭대기에 하나뿐이에요.": "audio/el/rapunzel/nar_93f58ee80d.mp3",
  "자, 잠겨라. 밖은 위험하단다. 여기가 제일 안전해.": "audio/el/rapunzel/gothel_f4ca1854ac.mp3",
- "지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.": "audio/el/rapunzel/nar_139c827159.mp3",
+ "창문 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.": "audio/el/rapunzel/nar_92c7ccacbc.mp3",
  "탑 위에 있는 새를 톡, 눌러 봐요.": "audio/el/rapunzel/nar_9631c7a459.mp3",
  "그건 탑 아래에 있는 토끼예요. 위를 봐요.": "audio/el/rapunzel/nar_7f347ae8cd.mp3",
  "맞아요, 탑 위에 새!": "audio/el/rapunzel/nar_d4e63a2238.mp3",

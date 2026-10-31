@@ -1,7 +1,7 @@
 /* 라푼젤 — 그림 형제 「라푼젤」(1857) 원작 그대로. 기획: tales/rapunzel/PLAN.md, 상세: SPEC.md (2026-10-21)
    톡 3번(2장 라푼젤 풀 · 4장 창문 · 10장 손잡기), 배움 놀이 2개(3장 위·아래 · 5장 긴 것·짧은 것), 연타 없음, 줄거리 선택 없음, 수세기 없음. 교훈 대사 없음.
    사람은 모두 머리 크기가 같다(2.5등신, HT 는 머리 폭으로 맞춤). 어른은 키만 조금 크다(212~215). 원근 축소 s 없음.
-   탑은 소품(rp_prop_tower, 높이 445)이고 숲 배경(낮·해질녘)에 얹는다. 창문 고리·땋은 머리·오르는 사람은 모두 탑 좌표(SPEC §2-8)에서 계산한다.
+   탑은 소품(rp_prop_tower_v3, 꼭대기가 화면 위로 나가는 굵은 몸통, 높이 526)이고 숲 배경(낮·해질녘)에 얹는다. 탑 밖 장면은 사람을 0.65배(멀리서 본 원근), 실내는 1.4~1.5배. 창문 고리·땋은 머리·오르는 사람은 모두 탑 좌표(SPEC §2-8)에서 계산한다.
    마법은 "지팡이 톡 → 별 셋 반짝 → 결과". 소품은 얼굴 없음. 피·아픔 없음.
    시안(목업) 모드: 그림 파일이 아직 없으면 같은 크기·자리에 종이 자리표시(색 도형 + 한글 이름표)를 그린다(beauty_beast.js 와 같은 방식).
    그림: assets/v3w/rp_*.webp (목록 tools/app/gen/jobs_rapunzel.json). 그림이 생기면 코드 변경 없이 자동으로 바뀐다(ASP 는 실제 비율로 덮어씀). */
@@ -14,10 +14,10 @@
     rp_father_stand: .46, rp_father_climb: .95, rp_father_pull: .95, rp_father_shock: .55, rp_mother_window: .46,
     rp_prince_stand: .48, rp_prince_ride: 1.05, rp_prince_hide: .85, rp_prince_climb: .42, rp_prince_sad: .50, rp_prince_float: .62, rp_prince_hold: .62,
     rp_horse_stand: 1.25, rp_bird: 1.05, rp_rabbit: .80,
-    rp_prop_tower: .36, rp_prop_braid: .13, rp_prop_braid_cut: .45, rp_prop_hook: .75, rp_prop_silk: 1.1, rp_prop_cradle_baby: 1.25, rp_prop_rampion: 1.0, rp_prop_rampion_pulled: .85,
+    rp_prop_tower_v3: .3271, rp_prop_braid: .13, rp_prop_braid_cut: .45, rp_prop_hook: .75, rp_prop_silk: 1.1, rp_prop_cradle_baby: 1.25, rp_prop_rampion: 1.0, rp_prop_rampion_pulled: .85,
     rp_layer_branch_silhouette_lb: .8767, rp_layer_tree_front: .6867, rp_layer_bush_flower_front: 1.6304, rp_layer_wildflowers_mid: 1.7143, rp_layer_mushrooms: .9717, rp_layer_butterfly: 1.295,
     rp_layer_tower_ivy: 1.5929, rp_layer_flower_pot: .6717, rp_layer_flowers_front_a: 1.415, rp_layer_flowers_front_b: 1.5625, rp_layer_flower_band_mid: 2.6706,
-    rp_prop_ribbon_long: 8.0, rp_prop_ribbon_mid: 5.4, rp_prop_ribbon_short: 2.7, rp_prop_note: .62, rp_prop_petal: .62, rp_prop_star: 1.0, rp_prop_wind: 1.9,
+    rp_prop_ribbon2_pink: 6.0, rp_prop_ribbon2_blue: 4.0, rp_prop_ribbon2_yellow: 2.6667, rp_prop_note: .62, rp_prop_petal: .62, rp_prop_star: 1.0, rp_prop_wind: 1.9,
   };
   /* 높이: 사람은 머리 폭으로 맞춘다(기준 rp_rap_stand 200). 그림이 오면 SPEC §2-2 대로 재서 고친다 */
   const HT = {
@@ -26,7 +26,7 @@
     rp_father_stand: 212, rp_father_climb: 190, rp_father_pull: 150, rp_father_shock: 222, rp_mother_window: 212,
     rp_prince_stand: 212, rp_prince_hold: 212, rp_prince_ride: 300, rp_prince_hide: 150, rp_prince_sad: 205, rp_prince_float: 220, rp_prince_climb: 235,
     rp_horse_stand: 230, rp_bird: 40, rp_rabbit: 56,
-    rp_prop_tower: 445, rp_prop_braid: 300, rp_prop_braid_cut: 110, rp_prop_hook: 24, rp_prop_silk: 40, rp_prop_cradle_baby: 90, rp_prop_rampion: 70, rp_prop_rampion_pulled: 86,
+    rp_prop_tower_v3: 526, rp_prop_braid: 344, rp_prop_braid_cut: 110, rp_prop_hook: 24, rp_prop_silk: 40, rp_prop_cradle_baby: 90, rp_prop_rampion: 70, rp_prop_rampion_pulled: 86,
     /* 레이어 소품(VISUAL_PLAN §5): 배경을 꾸미는 종이 조각. 누름을 받지 않는다 */
     rp_layer_branch_silhouette_lb: 200, rp_layer_tree_front: 520, rp_layer_bush_flower_front: 120, rp_layer_wildflowers_mid: 110, rp_layer_mushrooms: 70, rp_layer_butterfly: 34,
     rp_layer_tower_ivy: 120, rp_layer_flower_pot: 50, rp_layer_flowers_front_a: 120, rp_layer_flowers_front_b: 120, rp_layer_flower_band_mid: 100,
@@ -40,11 +40,18 @@
     rp_horse_stand: 'right', rp_bird: 'left', rp_rabbit: 'left', rp_prop_wind: 'right',
   };
   const FL = 505;                                                    // 바닥(발끝 y)
-  const TOWER_H = 445, WIN_DY = -300, HOOK_DX = 40, BRAID_H = 300;   // 탑 좌표계 (SPEC §2-8)
+  /* 실내(오두막·탑 안)는 배경 가구가 커서 사람이 작아 보였다(2026-10-31 사용자) → 사람·사람 소품만 실내에서 키운다. setBg 가 정하고 put 이 쓴다 */
+  const INDOOR = { rp_bg_cottage: 1.4, rp_bg_room_v2: 1.5, rp_bg_forest_day_v2: .65, rp_bg_forest_dusk_v2: .65 };   // 탑 밖은 멀리서 본 장면이라 사람·말을 줄인다(원근)
+  let IN_S = 1;
+  /* 탑 좌표계(2026-10-31 다시): 탑은 꼭대기가 화면 위로 나가는 굵은 몸통(rp_prop_tower_v3, 폭 172·높이 526, 발끝 FL+10).
+     창 안쪽은 y 34~154, 창턱 153~169. WIN_DY = 창턱 가운데(161) - FL. 땋은 머리는 창턱에서 바닥까지 344. 새는 창 아치 위(BIRD_Y) */
+  const WIN_DY = -344, HOOK_DX = 14, BIRD_Y = 32;
   const BGS = ['rp_bg_cottage', 'rp_bg_garden_night_lb', 'rp_bg_forest_day_v2', 'rp_bg_room_v2', 'rp_bg_forest_dusk_v2', 'rp_bg_field_v2', 'rp_bg_forest_night_lb'];   // _lb: 빛 상자(VISUAL_PLAN 재기획 2, 2026-10-24) — 밤 텃밭, 9장 끝 밤 숲(크로스페이드)
   /* 2026-10-28 사용자 결정(§7-1 빛 예외): 밤 텃밭 달의 단단한 주황 고리 → 달에서 흐려지는 반투명 달무리(_glow, 같은 구도·담·고랑 자리) */
   const GLOW = { rp_bg_garden_night_lb: 1 };
-  const src = k => AS + k + (GLOW[k] ? '_glow' : '') + '.webp';
+  /* 오르기 자세는 땋은 머리를 두 손으로 잡은 뒷모습으로 다시 그림(2026-10-31 사용자: 오르는 장면이 이상함) */
+  const ALIAS = { rp_gothel_climb: 'rp_gothel_climb2', rp_prince_climb: 'rp_prince_climb2' };
+  const src = k => AS + (ALIAS[k] || k) + (GLOW[k] ? '_glow' : '') + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};
 
@@ -52,8 +59,8 @@
   const WHO = { rap: '라푼젤', gothel: '고텔', father: '아버지', mother: '어머니', prince: '왕자' };
   const POSE = { stand: '서기', window: '창가', wrap: '머리 감기', sing: '노래', surprise: '놀람', joy: '기쁨', short_shock: '단발 놀람', short_sing: '단발 노래', short_hold: '단발 손잡기',
     point: '가리킴', wand: '지팡이', scissors: '가위', cradle: '요람', climb: '오르기', pull: '풀 뽑기', shock: '놀람', ride: '말 탐', hide: '숨기', sad: '슬픔', float: '떠오름', hold: '손잡기' };
-  const PROPN = { rp_horse_stand: '말', rp_bird: '새', rp_rabbit: '토끼', rp_prop_tower: '탑', rp_prop_braid: '땋은 머리', rp_prop_braid_cut: '잘린 머리', rp_prop_hook: '고리', rp_prop_silk: '비단실',
-    rp_prop_cradle_baby: '요람', rp_prop_rampion: '라푼젤 풀', rp_prop_rampion_pulled: '뽑힌 풀', rp_prop_ribbon_long: '긴 리본', rp_prop_ribbon_mid: '중간 리본', rp_prop_ribbon_short: '짧은 리본',
+  const PROPN = { rp_horse_stand: '말', rp_bird: '새', rp_rabbit: '토끼', rp_prop_tower_v3: '탑', rp_prop_braid: '땋은 머리', rp_prop_braid_cut: '잘린 머리', rp_prop_hook: '고리', rp_prop_silk: '비단실',
+    rp_prop_cradle_baby: '요람', rp_prop_rampion: '라푼젤 풀', rp_prop_rampion_pulled: '뽑힌 풀', rp_prop_ribbon2_pink: '긴 리본', rp_prop_ribbon2_blue: '중간 리본', rp_prop_ribbon2_yellow: '짧은 리본',
     rp_prop_note: '음표', rp_prop_petal: '꽃잎', rp_prop_star: '별', rp_prop_wind: '바람' };
   const BODYC = { rap: '#B9CF7A', gothel: '#3F6B4F', father: '#6B4A32', mother: '#F6ECD8', prince: '#A93B32' };
   const SKIN = '#F2D9B8', CREAM = '#F6ECD8', GOLD = '#D9A94E', RED = '#A93B32', BROWN = '#6B4A32', GREEN = '#3F6B4F', INK = '#2E241C', FONT = "'Pretendard Variable', Pretendard, sans-serif";
@@ -207,7 +214,7 @@
   const prop = (T, f, h) => mk(T, { a: [f, h] });
   function put(T, a, x, y, { look, to } = {}) {
     T.world.appendChild(a.pos); a.pos.getAnimations().forEach(n => n.cancel()); a.pos.style.display = ''; a.pos.style.opacity = '';
-    a.setScale(1); if (look) a.look(look, to); else if (to) a.turn(to);
+    a.setScale(a.inS ? IN_S : 1); if (look) a.look(look, to); else if (to) a.turn(to);
     a.place(x, y); a.body.style.transform = ''; a.body.style.filter = '';
     return a;
   }
@@ -285,8 +292,9 @@
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
     ['rp_cut_caught', 'rp_cut_climb', 'rp_cut_peek', 'rp_cut_snip', 'rp_cut_reunion'].forEach(k => loads.push(T.preload(src(k))));
     await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
-    // 리본 높이는 길이에서 계산: 그림이 와서 ASP 가 바뀌어도 길이 180/120/60 이 유지된다
-    HT.rp_prop_ribbon_long = 180 / ASP.rp_prop_ribbon_long; HT.rp_prop_ribbon_mid = 120 / ASP.rp_prop_ribbon_mid; HT.rp_prop_ribbon_short = 60 / ASP.rp_prop_ribbon_short;
+    /* 리본(2026-10-31 다시 그림, 사용자: 리본 디자인이 별로): 분홍 긴 것·파랑 중간·노랑 짧은 것, 굵기는 같고 길이만 300/200/133. 높이는 길이에서 계산 */
+    const RIB = { long: 'rp_prop_ribbon2_pink', mid: 'rp_prop_ribbon2_blue', short: 'rp_prop_ribbon2_yellow' }, RLEN = { long: 300, mid: 200, short: 133 };
+    Object.keys(RIB).forEach(k => { HT[RIB[k]] = RLEN[k] / ASP[RIB[k]]; });
 
     /* ---- 배우 ---- */
     const pz = (who, names) => Object.fromEntries(names.map(n => [n, ['rp_' + who + '_' + n, HT['rp_' + who + '_' + n]]]));
@@ -296,11 +304,11 @@
     const mother = mk(T, pz('mother', ['window']));
     const prince = mk(T, pz('prince', ['stand', 'ride', 'hide', 'climb', 'sad', 'float', 'hold']));
     const horse = prop(T, 'rp_horse_stand', HT.rp_horse_stand), bird = prop(T, 'rp_bird', HT.rp_bird), rabbit = prop(T, 'rp_rabbit', HT.rp_rabbit);
-    const tower = prop(T, 'rp_prop_tower', HT.rp_prop_tower), braid = prop(T, 'rp_prop_braid', HT.rp_prop_braid), braidCut = prop(T, 'rp_prop_braid_cut', HT.rp_prop_braid_cut);
+    const tower = prop(T, 'rp_prop_tower_v3', HT.rp_prop_tower_v3), braid = prop(T, 'rp_prop_braid', HT.rp_prop_braid), braidCut = prop(T, 'rp_prop_braid_cut', HT.rp_prop_braid_cut);
     const hook = prop(T, 'rp_prop_hook', HT.rp_prop_hook), cradle = prop(T, 'rp_prop_cradle_baby', HT.rp_prop_cradle_baby);
     const silks = [0, 1, 2].map(() => prop(T, 'rp_prop_silk', HT.rp_prop_silk)), silk = silks[0];
     const rampion = mk(T, { in: ['rp_prop_rampion', HT.rp_prop_rampion], out: ['rp_prop_rampion_pulled', HT.rp_prop_rampion_pulled] });
-    const ribbons = { long: prop(T, 'rp_prop_ribbon_long', HT.rp_prop_ribbon_long), mid: prop(T, 'rp_prop_ribbon_mid', HT.rp_prop_ribbon_mid), short: prop(T, 'rp_prop_ribbon_short', HT.rp_prop_ribbon_short) };
+    const ribbons = Object.fromEntries(Object.keys(RIB).map(k => [k, prop(T, RIB[k], HT[RIB[k]])]));
     const notes = [0, 1, 2].map(() => prop(T, 'rp_prop_note', HT.rp_prop_note)), stars = [0, 1, 2].map(() => prop(T, 'rp_prop_star', HT.rp_prop_star)), wind = prop(T, 'rp_prop_wind', HT.rp_prop_wind);
     /* 레이어 소품(VISUAL_PLAN §4): 중간 층은 world 맨 뒤(배우보다 먼저), 앞 가림 층은 fx(배우 위, 누름 없음) */
     const deco = k => prop(T, 'rp_layer_' + k, HT['rp_layer_' + k]);
@@ -308,6 +316,7 @@
     const flies = [0, 1].map(() => deco('butterfly'));
     const ALL = [...Object.values(L), ...flies, rap, gothel, father, mother, prince, horse, bird, rabbit, tower, braid, braidCut, hook, ...silks, cradle, rampion, ...Object.values(ribbons), ...notes, ...stars, wind];
     ALL.forEach(hide);
+    [rap, gothel, father, mother, prince, horse, cradle, braidCut, ...silks].forEach(a => { a.inS = true; });   // 실내에서 IN_S 배
     T.director({ cast: { rap, gothel, father, mother, prince }, noFace: ['rap', 'gothel', 'father', 'mother', 'prince'] });
 
     /* ---- 배경 꾸밈: 중간 층·앞 가림 층·반딧불·나비 (VISUAL_PLAN §4) ---- */
@@ -348,7 +357,7 @@
         butterflies(P ? [400, 100, 500, 160] : [110, 90, 330, 190]);
       }
     }
-    const setBg = key => { bgAmb(key); T.clear(); hide(branchSil); L.tree_front.body.style.transition = ''; L.tree_front.body.style.filter = ''; bgImage(T, key); dress(key); };
+    const setBg = key => { IN_S = INDOOR[key] || 1; bgAmb(key); T.clear(); hide(branchSil); L.tree_front.body.style.transition = ''; L.tree_front.body.style.filter = ''; bgImage(T, key); dress(key); };
     /* 9장 끝 "숲을 걷고 또 걸었어요": 해질녘 숲 위에 밤 빛 상자 숲을 3초 크로스페이드로 얹는다(VISUAL_PLAN 재기획 2 B·판단 1).
        앞 큰 나무는 밤빛 실루엣으로 낮추고, 들꽃·꽃 덤불은 걷고, 왼쪽 위에 전나무 가지 실루엣(가로만, 탑 쪽 x 300 안 넘음) */
     const branchSil = deco('branch_silhouette_lb'); hide(branchSil);
@@ -368,7 +377,7 @@
     }
 
     /* ---- 코드로 그리는 연출 (SPEC §5) ---- */
-    const sillPaper = () => T.paper(T.world, [['image', { href: src('rp_sill'), x: -40, y: -10.6, width: 80, height: 80 * 193 / 900 }]], { transform: `translate(${TX},${FL + WIN_DY + 6})` });
+    const sillPaper = () => T.paper(T.world, [['image', { href: src('rp_tower_v3_sill'), x: -64, y: 153, width: 148, height: 148 * 62 / 570 }]], { transform: `translate(${TX},0)` });   // 탑 그림의 창턱을 오려 라푼젤 앞에 한 번 더
     /* 마법 반짝: 별 셋 */
     function magic(x, y) {
       sparkleSfx(T);
@@ -406,8 +415,8 @@
       let climbing = true;
       const sway = (async () => { while (climbing) await who.wiggle(3, 700); })();
       const creak = (async () => { while (climbing) { AudioFX.sfx('creak', .25); await sleep(1500); } })();
-      if (pops) { T.pop(TX + 165, 380, tr('영차, 영차')); setTimeout(() => T.pop(TX + 165, 380, tr('영차, 영차')), 2200); }
-      await who.move(TX + HOOK_DX + 2, FL + WIN_DY + 60, CLIMB, 'linear');
+      if (pops) { T.pop(TX + 165, 380, tr('영차, 영차')); setTimeout(() => { if (climbing) T.pop(TX + 165, 380, tr('영차, 영차')); }, 2200); }   // 다 오른 뒤(다음 장면)에 글자가 남지 않게
+      await who.move(TX + HOOK_DX + 2, FL + WIN_DY + who.h * who.scale * .85, CLIMB, 'linear');   // 손이 창턱에 닿을 때까지
       climbing = false; await sway;   /* 삐걱 소리 고리의 1.5초 쉼까지 기다리지 않는다 */
       await fadeOut(T, who, 400);
     }
@@ -450,9 +459,8 @@
     }
     /* 탑 밖 장면의 무대: 탑 → (라푼젤 창가 → 가림판) → 고리 → 새·토끼 */
     function towerSet({ withRap = true } = {}) {
-      put(T, tower, TX, FL);
+      put(T, tower, TX, FL + 10);
       if (withRap) { put(T, rap, TX, FL + WIN_DY + 4, { look: 'window' }); sillPaper(); }
-      put(T, hook, TX + HOOK_DX, FL + WIN_DY - 4);
     }
     const popAt = (a, dx, y, txt) => T.pop(a.x + dx, y, tr(txt));
 
@@ -474,7 +482,7 @@
       const popX = x => { const v = mx(x); return P ? Math.max(camX - 110, Math.min(camX + 110, v)) : v; };
       const camTo0 = x => { camX = x; camSnap(x, 280, 1); };
       const bgSet = key => { setBg(key); curBg = key; winDrawn = false; if (key === 'rp_bg_room_v2') put(T, hook, HOOKX, 250); };
-      const winKit = () => { if (winDrawn) return; winDrawn = true; put(T, hook, TX + HOOK_DX, FL + WIN_DY - 4); sillPaper(); };
+      const winKit = () => { if (winDrawn) return; winDrawn = true; sillPaper(); };   // 고리는 탑 그림에 있다
       const inst = () => T.readInstant();
       const place = (a, s, k, d) => { const [x, y] = NUM(s); return put(T, a, mx(x), y, { look: k, to: d }); };
       const actor = (a, extra = {}) => ({
@@ -528,16 +536,16 @@
         },
         rap: (v, ...a) => A.rap[v](...a), gothel: (v, ...a) => A.gothel[v](...a), father: (v, ...a) => A.father[v](...a), mother: (v, ...a) => A.mother[v](...a), prince: (v, ...a) => A.prince[v](...a),
         horse: (v, s) => { if (v === 'at') { const [x] = NUM(s); put(T, horse, mx(x), FL); } },
-        bird: (v, s) => { if (v === 'at') { const [x] = NUM(s); put(T, bird, mx(x), FL - TOWER_H + 16); } else if (v === 'hop') bird.hop(6, 300); },
+        bird: (v, s) => { if (v === 'at') { const [x] = NUM(s); put(T, bird, mx(x), BIRD_Y); } else if (v === 'hop') bird.hop(6, 300); },
         rabbit: (v, s) => { if (v === 'at') { const [x] = NUM(s); put(T, rabbit, mx(x), FL); } else if (v === 'hop') rabbit.hop(6, 300); },
         tower(v, arg) {
           if (v === 'set') { towerSet({ withRap: arg !== 'norap' }); winDrawn = true; }
-          else if (v === 'rise') { put(T, tower, TX, FL); towerRise(); }
+          else if (v === 'rise') { put(T, tower, TX, FL + 10); towerRise(); }
         },
         braid: v => (v === 'down' ? braidDown() : braidUp()),
         braidcut(v) {
           if (v === 'down') return (async () => { await fadeOut(T, braidCut, 300); await braidDown(); })();
-          const room = curBg === 'rp_bg_room_v2', hx = room ? HOOKX : TX + HOOK_DX, hy = room ? 250 + 110 : FL + WIN_DY - 4 + 110;
+          const room = curBg === 'rp_bg_room_v2', hx = room ? HOOKX : TX + HOOK_DX, hy = room ? 250 + 110 : FL + WIN_DY + 110 * IN_S;
           if (inst() || !braidCut.pos.isConnected || braidCut.pos.style.display === 'none') { put(T, braidCut, hx, hy); return; }
           return (async () => { await braidCut.move(hx, hy, 800, 'ease-in-out'); AudioFX.sfx('paper_up', .4); })();
         },
@@ -553,8 +561,8 @@
           if (k === 1) show(silks[0], 70, 400); else { show(silks[0], 70, 200); setTimeout(() => show(silks[1], 100, 400), 300); setTimeout(() => show(silks[2], 130, 400), 900); }
         },
         ribbon() {
-          const x = rap.x + 38; put(T, ribbons.long, x - 120, FL + 20); AudioFX.sfx('swish', .3);
-          return ribbons.long.move(x, FL - 14, 700, 'ease-in-out');
+          const x = rap.x + 30 * IN_S; put(T, ribbons.long, x - 120, FL + 20); ribbons.long.setScale(.32); AudioFX.sfx('swish', .3);
+          return ribbons.long.move(x, FL - 110 * IN_S, 700, 'ease-in-out');   // 땋은 머리 가운데 매듭
         },
         wind() {
           return (async () => {
@@ -653,22 +661,21 @@
     const knock = (async () => { await sleep(2000); gothel.hop(6, 300); AudioFX.sfx('knock', .5); T.pop(gothel.x + 70, FL - 260, tr('톡')); magic(TX, FL - 40); })();
     await say('라푼젤이 열두 살이 되자, 마녀는 지팡이를 톡 두드렸어요.');
     await knock;
-    put(T, tower, TX, FL);
+    put(T, tower, TX, FL + 10);
     const rise = towerRise();
     const s11 = say('숲속에 문도 계단도 없는 높은 탑이 쑥 솟았어요. 창문은 꼭대기에 하나뿐이에요.');
     await rise;
     put(T, rap, TX, FL + WIN_DY + 4, { look: 'window' }); fadeIn(rap, 400);
     const sill = sillPaper(); sill.animate([{ opacity: 0 }, { opacity: 1 }], 400);
-    put(T, hook, TX + HOOK_DX, FL + WIN_DY - 4);
     put(T, rabbit, TX - 85, FL); fadeIn(rabbit, 400);
-    put(T, bird, TX + 6, FL - TOWER_H + 16); fadeIn(bird, 400);
+    put(T, bird, TX + 6, BIRD_Y); fadeIn(bird, 400);
     T.world.appendChild(gothel.pos);
     await s11;
     setTimeout(() => magic(TX, FL - 40), 600); setTimeout(() => AudioFX.sfx('knock', .4), 600);
     await say('자, 잠겨라. 밖은 위험하단다. 여기가 제일 안전해.');
     gothel.look('stand');
     bird.hop(6, 300); setTimeout(() => rabbit.hop(6, 300), 1800);
-    await say('지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.');
+    await say('창문 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.');
     hitBox(T, bird, 90, 90); hitBox(T, rabbit, 90, 90);
     const Q1 = '탑 위에 있는 새를 톡, 눌러 봐요.', Q2 = '이번엔 탑 아래에 있는 토끼를 톡, 눌러 봐요.';
     cue('question', .6);
@@ -686,7 +693,7 @@
     await T.sceneCard(tr('머리를 내려요'), () => {
       scene('rp_bg_forest_day_v2');
       towerSet();
-      put(T, rabbit, TX - 85, FL); put(T, bird, TX + 6, FL - TOWER_H + 16);
+      put(T, rabbit, TX - 85, FL); put(T, bird, TX + 6, BIRD_Y);
       put(T, gothel, 470, FL, { look: 'stand' });
       camSnap(P ? 520 : 500, 280, 1);
     }, rap.pos);
@@ -707,7 +714,7 @@
     await sleep(SCENE_END);
 
     /* ===== 5. 탑 안의 노래 (배움 놀이 2: 긴 것·짧은 것) ===== */
-    const LEFT = X(150, 250), ys = P ? [380, 460, 540] : [436, 494, 552], LEN = { long: 180, mid: 120, short: 60 };
+    const LEFT = X(205, 250), ys = [440, 496, 552], LEN = RLEN;   // 왼쪽 끝을 맞춰 융단 위에 나란히(길이 비교)
     await T.sceneCard(tr('탑 안의 노래'), () => {
       scene('rp_bg_room_v2');
       put(T, hook, HOOKX, 250);
@@ -732,9 +739,14 @@
     } })), { prompt: Q3 }));
     glow(ribbons.long, 1200); cue('ding_glock', .8) || sparkleSfx(T); T.pop(LEFT + 200, 395, tr('반짝!'));
     await say('맞아요, 제일 긴 리본!');
-    const TIE = [38, -14];
-    AudioFX.sfx('swish', .3);
-    await ribbons.long.move(rap.x + TIE[0], FL + TIE[1], 700, 'ease-in-out');
+    const TIE = [30, -110];   // 땋은 머리 가운데(긴 리본) — 짧은 리본은 머리 끝
+    const tie = async (r, dx, dy) => {   // 리본이 날아가며 작아져 땋은 머리에 매듭으로 붙는다
+      AudioFX.sfx('swish', .3);
+      const mv = r.move(rap.x + dx * IN_S, FL + dy * IN_S, 700, 'ease-in-out');
+      for (const k of [.85, .7, .55, .42, .32]) { await sleep(120); r.setScale(k); }
+      await mv;
+    };
+    await tie(ribbons.long, TIE[0], TIE[1]);
     ribbons.long.pos.style.pointerEvents = 'none';
     cue('question', .6);
     await T.ask(Q4, () => T.choose([{ el: ribbons.short.hit, ok: true }, { el: ribbons.mid.hit, ok: false, onWrong: async () => {
@@ -742,10 +754,9 @@
     } }], { prompt: Q4 }));
     glow(ribbons.short, 1200); cue('ding_glock', .8) || sparkleSfx(T); T.pop(LEFT + 100, 395, tr('반짝!'));
     await say('맞아요, 제일 짧은 리본!');
-    AudioFX.sfx('swish', .3);
-    await ribbons.short.move(rap.x + TIE[0] + 26, FL + TIE[1] - 10, 700, 'ease-in-out');
+    await tie(ribbons.short, TIE[0] + 14, -20);
     Object.values(ribbons).forEach(unhit);
-    setTimeout(() => notesUp(rap.x - 40, FL - 230), 300);
+    setTimeout(() => notesUp(rap.x - 40 * IN_S, FL - 230 * IN_S), 300);
     await say('라푼젤은 리본을 묶은 머리를 창가에 늘어뜨리고 또 노래했어요.');
     await sleep(SCENE_END);
 
@@ -839,7 +850,7 @@
     await say('할머니, 할머니는 왜 왕자님보다 훨씬 무거워요?');
     gothel.hop(10, 300); gothel.wiggle(4, 500);
     await say('뭐라고? 왕자라니!');
-    await gothel.move(rap.x - 80, FL, 700, 'ease-in-out');
+    await gothel.move(rap.x - 80 * IN_S, FL, 700, 'ease-in-out');
     gothel.look('scissors', 'right');
     await sleep(400);
     AudioFX.sfx('chop', .6, () => T.tone([900, 300], .12, { type: 'square', vol: .18 }));
@@ -851,7 +862,7 @@
     gothel.look('wand', 'right');
     const l35 = (async () => {
       await sleep(1800);
-      AudioFX.sfx('knock', .5); magic(gothel.x + 40, FL - 260); T.pop(gothel.x - 70, 230, tr('톡'));
+      AudioFX.sfx('knock', .5); magic(gothel.x + 40, FL - 260 * IN_S); T.pop(gothel.x - 70, 230, tr('톡'));
       await sleep(800);
       await veil(T, () => { setBg('rp_bg_field_v2'); camSnap(X(500, 480), 280, 1); put(T, gothel, X(400, 400), FL, { look: 'stand' }); put(T, rap, X(560, 520), FL, { look: 'short_shock' }); });
       magic(X(480, 460), FL - 200);
@@ -865,7 +876,7 @@
     await T.sceneCard(tr('빈 탑'), () => {
       scene('rp_bg_forest_dusk_v2');
       towerSet({ withRap: false });
-      put(T, braidCut, TX + HOOK_DX, FL + WIN_DY - 4 + 110);
+      put(T, braidCut, TX + HOOK_DX, FL + WIN_DY + 110 * IN_S);
       put(T, prince, 470, FL, { look: 'stand' });
       camSnap(P ? 520 : 500, 280, 1);
     }, prince.pos);
@@ -898,7 +909,7 @@
     await Promise.all([s39, sleep(100)]);
     await veil(T, () => {
       setBg('rp_bg_forest_dusk_v2'); camSnap(X(500, 520), 280, 1);
-      put(T, tower, TX, FL); put(T, hook, TX + HOOK_DX, FL + WIN_DY - 4);
+      put(T, tower, TX, FL + 10);
       put(T, prince, TX + HOOK_DX, FL + WIN_DY - 40, { look: 'float' });
     });
     const land = (async () => {
@@ -927,6 +938,7 @@
       camSnap(P ? 560 : 500, 280, 1);
     }, rap.pos);
     const come = walk(prince, X(330, 420), FL, WALK, 'linear');
+    classical('songs_without_words'); // 들판 오두막 노래에도 숲에서 들리던 같은 곡(2026-10-31 사용자: 오두막에서 부를 땐 배경음이 안 나옴)
     await say('그때, 바람을 타고 노랫소리가 들려왔어요.');
     await hum(rap.x - 150, FL - 300);
     await come;

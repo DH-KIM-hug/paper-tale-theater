@@ -152,12 +152,12 @@
    ]
   },
   {
-   "text": "지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.",
-   "en": "On top of the roof sits a bird, and down below the tower sits a rabbit.",
+   "text": "창문 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.",
+   "en": "Above the window sits a bird, and down below the tower sits a rabbit.",
    "segs": [
     [
      "nar",
-     "On top of the roof sits a bird, and down below the tower sits a rabbit.",
+     "Above the window sits a bird, and down below the tower sits a rabbit.",
      null
     ]
    ]

@@ -52,9 +52,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Now, lock tight. The outside is dangerous. This is the safest place.",
   "c": "audio/el/rapunzel/en/gothel_96f077f01b.mp3"
  },
- "지붕 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.": {
-  "t": "On top of the roof sits a bird, and down below the tower sits a rabbit.",
-  "c": "audio/el/rapunzel/en/nar_f35d293d89.mp3"
+ "창문 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.": {
+  "t": "Above the window sits a bird, and down below the tower sits a rabbit.",
+  "c": "audio/el/rapunzel/en/nar_71cd2f81ae.mp3"
  },
  "탑 위에 있는 새를 톡, 눌러 봐요.": {
   "t": "Tap the bird on top of the tower.",
