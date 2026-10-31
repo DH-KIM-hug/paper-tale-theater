@@ -1436,6 +1436,7 @@ const Tale = (() => {
     <button class="pill" id="finBtn" hidden>${tr('끝내기')}</button>
   </div>
   <div id="rotateHint">${monoPic('ic_rotate')}${tr('돌려서 크게 보기')}</div>
+  <div id="ptTitle" aria-hidden="true"></div>
   <div id="bubble" hidden><p id="bubbleText"></p></div>
   <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
@@ -1492,8 +1493,13 @@ const Tale = (() => {
     fitStage(); portraitMQ.addEventListener ? portraitMQ.addEventListener('change', fitStage) : portraitMQ.addListener(fitStage);
     if (window.ResizeObserver) new ResizeObserver(() => fitFrame(portraitMQ.matches)).observe($('#stageWrap'));
     else addEventListener('resize', () => fitFrame(portraitMQ.matches));
+    /* '돌려서 크게 보기'는 처음 한 번만(2026-10-31 사용자: 세로 화면도 제대로 쓴다) */
     const hint = $('#rotateHint');
-    if (hint) { hint.onpointerdown = e => { e.stopPropagation(); hint.classList.add('gone'); }; setTimeout(() => hint.classList.add('gone'), 6000); } cam = $('#cam'); bgL = $('#bgL'); world = $('#world'); fxL = $('#fxL'); handEl = $('#hand');
+    let hintSeen = false; try { hintSeen = localStorage.getItem('rot_hint_seen') === '1'; localStorage.setItem('rot_hint_seen', '1'); } catch (e) { /* 저장 못 하면 매번 */ }
+    if (hint) { if (hintSeen) hint.classList.add('gone'); hint.onpointerdown = e => { e.stopPropagation(); hint.classList.add('gone'); }; setTimeout(() => hint.classList.add('gone'), 6000); }
+    /* 세로 휴대폰: 무대 위에 동화 레터링(홈 카드와 같은 그림), 아래에 대사(2026-10-31 사용자). CSS 가 세로일 때만 보인다 */
+    const ptT = $('#ptTitle');
+    if (ptT && taleId()) { const im = new Image(); im.alt = ''; im.draggable = false; im.onload = () => { ptT.appendChild(im); document.body.classList.add('pt-title'); }; im.src = ROOT_URL + 'assets/thumbs/' + taleId() + '_lt' + (englishOn() ? '_en' : '') + '.webp?v=c2'; } cam = $('#cam'); bgL = $('#bgL'); world = $('#world'); fxL = $('#fxL'); handEl = $('#hand');
     // 대사 건너뛰기: 무대 1초 꾹 (보호자용). 짧은 탭은 무시한다
     $('#tale').addEventListener('contextmenu', e => e.preventDefault()); // 길게 누를 때 뜨는 메뉴(이미지 저장 등) 막기
     let ht = null;
