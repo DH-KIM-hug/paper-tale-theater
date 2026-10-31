@@ -1287,13 +1287,16 @@
   }
   $('#view-stickers').addEventListener('scroll', () => paintRowOn(), { passive: true });
   /* 스티커북: 친구 스티커를 받은 동화마다 10칸 카드. 받은 칸 = 칼선 스티커, 빈 칸 = 흐린 실루엣, 그림 없는 칸 = 흐린 빈 자리 */
+  /* 반짝 스티커 고르기 중(별 카드의 '반짝 스티커 만들기'): 받은 스티커 중 아직 안 반짝이는 것을 톡 하면 별 하나로 반짝이게 */
+  let shineMode = false;
   function castCard(id) {
     const t = shown(TALES.find(x => x.id === id)), set = castSet(id), ready = set.filter(c => c.img), plan = set.filter(c => !c.img);
     const got = ready.filter(c => hasCast(id, c.k)).length, whole = !plan.length && got === ready.length && ready.length > 0;
     const cell = c => {
       if (!c.img) return `<span class="cs plan" aria-hidden="true"></span>`;
       const nm = lang === 'en' ? c.en : c.ko;
-      return hasCast(id, c.k) ? `<button type="button" class="cs" data-k="${c.k}" aria-label="${nm}"><img src="${c.img}" alt="" draggable="false" decoding="async"></button>`
+      const sh = Entitlements.isShiny(id + '.' + c.k);
+      return hasCast(id, c.k) ? `<button type="button" class="cs${sh ? ' shiny' : shineMode ? ' pickable' : ''}" data-k="${c.k}" aria-label="${nm}${sh ? ', ' + L('반짝 스티커', 'sparkly sticker') : ''}"><img src="${c.img}" alt="" draggable="false" decoding="async"></button>`
         : `<span class="cs off" data-k="${c.k}" role="img" aria-label="${L('아직 비어 있어요', 'Still empty')}"><img class="sil" src="${c.img}" alt="" draggable="false" decoding="async"></span>`;
     };
     return `<section class="pz-sec cs-sec" data-tale="${id}"><div class="pz-head"><h2>${t.title}</h2><span class="pz-n">${got} / ${set.length}</span></div>
@@ -1453,10 +1456,14 @@
     el.className = 'pz-plate' + (full ? ' full' : '');
     el.setAttribute('aria-label', L(`별 조각 ${n} / ${need}, 완성한 별 ${full}개`, `Star pieces ${n} / ${need}, ${full} stars`));
     const star = UIA.has('star_one') ? uiImg('star_one') : starSvg;
+    /* 다 산 사람(또는 잠긴 동화가 없을 때)은 별을 반짝 스티커에 쓴다(2026-10-31 사용자) */
+    const canShine = full > 0 && (Entitlements.state().owned || !Entitlements.lockedChoices().length) && Entitlements.shineChoices().length > 0;
+    if (!canShine) shineMode = false;
     /* 완성한 별은 모아 두는 선택권(2026-10-31 사용자): 잠긴 동화를 누르면 '별로 열기 ×N' 으로 쓴다 */
     el.innerHTML = `<div class="plate-art">${starPieces(n)}</div>
       <p class="plate-n"><small>${L('별 조각', 'Star pieces')}</small>${n} / ${need}</p>
-      ${full ? `<p class="plate-full">${star}<b>×${full}</b><small>${L('잠긴 동화를 열 수 있어요', 'Opens a locked tale')}</small></p>` : ''}`;
+      ${full ? `<p class="plate-full">${star}<b>×${full}</b><small>${canShine ? L('반짝 스티커를 만들 수 있어요', 'Makes a sparkly sticker') : L('잠긴 동화를 열 수 있어요', 'Opens a locked tale')}</small></p>` : ''}
+      ${canShine ? `<button type="button" class="shine-go${shineMode ? ' on' : ''}" data-act="shine">${shineMode ? L('그만두기', 'Cancel') : L('반짝 스티커 만들기', 'Make a sparkly sticker')}</button>` : ''}`;
   }
   /* 판 완성 연출 한 번: 종이 뒤에서 빛이 번지고, 스티커들이 차례로 뒤집히고, 색종이가 흩날린다 + 음성 */
   function celebrate(k) {
@@ -1564,6 +1571,15 @@
     const cs = e.target.closest('.cs');
     if (cs) {                                                  // 캐릭터 세트 칸: 받은 칸 = 이름 읽기 + 들썩, 빈 칸 = 안내
       if (cs.classList.contains('off')) { paper('down'); say(L('아직 비어 있어요', 'Still empty')); return; }
+      if (shineMode && cs.classList.contains('pickable')) {
+        const key = cs.closest('.cs-sec').dataset.tale + '.' + cs.dataset.k;
+        shineMode = false;
+        if (Entitlements.starShine(key)) { try { AudioFX.sfx('sparkle', .7); } catch (er) { /* 소리 없이 */ } say(L('반짝 스티커가 생겼어요!', 'You made a sparkly sticker!')); }
+        drawCastAll(); drawPlate(); paintTabBadge();
+        const n = $(`.cs-sec[data-tale="${key.split('.')[0]}"] .cs[data-k="${cs.dataset.k}"]`);
+        if (n && motion()) n.animate([{ transform: 'scale(.6) rotate(-20deg)' }, { transform: 'scale(1.25) rotate(8deg)', offset: .5 }, { transform: 'scale(1) rotate(0)' }], { duration: 700, easing: 'ease-out' });
+        return;
+      }
       const c = castSet(cs.closest('.cs-sec').dataset.tale).find(x => x.k === cs.dataset.k); paper('tap'); if (c) say(L(c.ko, c.en));
       if (motion()) cs.animate([{ transform: 'rotate(0) scale(1)' }, { transform: 'rotate(-9deg) scale(1.12)', offset: .25 }, { transform: 'rotate(7deg) scale(1.08)', offset: .55 }, { transform: 'rotate(-3deg) scale(1.03)', offset: .8 }, { transform: 'rotate(0) scale(1)' }], { duration: 650, easing: 'ease-out' });
       return;
@@ -1579,6 +1595,11 @@
   });
   $('#pzBoard').addEventListener('keydown', e => { const s = e.target.closest && e.target.closest('.pz-s'); if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); s.dispatchEvent(new MouseEvent('click', { bubbles: true })); } });
   $('#pzPlate').addEventListener('click', e => {
+    if (e.target.closest('[data-act="shine"]')) {
+      paper('tap'); shineMode = !shineMode; drawCastAll(); drawPlate();
+      if (shineMode) { say(L('반짝이게 할 스티커를 골라요', 'Pick a sticker to make sparkly')); const p = $('#view-stickers .cs.pickable'); if (p) p.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+      return;
+    }
     if (!e.target.closest('[data-act="pz-open"]')) return;
     paper('tap'); pickKind = 'star'; openFlow('pick', { id: null, sel: null });
   });

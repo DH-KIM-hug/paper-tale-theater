@@ -835,6 +835,16 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 .cast-grid .cs:not(.ct):not(.off):not(.plan) { background: none; box-shadow: none; }
 .cast-grid .cs:not(.ct):not(.off) img { width: 86%; height: 86%; filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 3px 4px rgba(46, 36, 28, .35)); }
 .cast-grid .cs.off { background: none; box-shadow: none; }
+/* 반짝 스티커: 별 조각과 같은 빛이 숨 쉬듯 번지고, 무지갯빛 테 */
+.cast-grid .cs.shiny img { animation: shinyGlow 2.2s ease-in-out infinite; }
+@keyframes shinyGlow { 0%, 100% { filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 0 6px rgba(186, 140, 255, .9)) drop-shadow(0 0 10px rgba(120, 200, 255, .6)); }
+  50% { filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 0 12px rgba(255, 200, 120, .95)) drop-shadow(0 0 18px rgba(186, 140, 255, .8)); } }
+.cast-grid .cs.shiny::after { content: '✦'; position: absolute; right: 4%; top: 2%; font-size: 18px; color: #FFE8A8; text-shadow: 0 0 6px rgba(186, 140, 255, .9); pointer-events: none; }
+.cast-grid .cs.pickable:not(.ct):not(.off):not(.plan) { border-radius: 50%; background: #F6F1FF; box-shadow: 0 0 0 3px #C9B6F2; animation: pickBob 1.2s ease-in-out infinite; }
+@keyframes pickBob { 50% { transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .cast-grid .cs.shiny img, .cast-grid .cs.pickable { animation: none; } }
+.shine-go { min-height: 56px; padding: 0 22px; border: 0; border-radius: var(--r-pill); background: var(--card); box-shadow: var(--sh-1), inset 0 0 0 2px #C9B6F2; font-size: 16px; font-weight: 800; color: var(--ink); cursor: pointer; white-space: nowrap; }
+.shine-go.on { box-shadow: var(--sh-1), inset 0 0 0 2px var(--ink-3); color: var(--ink-2); }
 .cast-grid .cs.off img.sil { width: 80%; height: 80%; opacity: .14; }
 .cs.ct img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 .cast-grid.list { grid-auto-flow: row; grid-template-rows: none; grid-auto-rows: var(--cs); grid-template-columns: repeat(auto-fit, var(--cs)); justify-content: center; align-content: start; overflow-x: hidden; overflow-y: auto; }

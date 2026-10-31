@@ -19,7 +19,8 @@ const Entitlements = (() => {
   const PER_WEEK = 4;
   const STAR_NEED = 5;                  // 종이별 5개 = 동화 1편
   const STICKER_MAX = 200;
-  const CAST_MAX = 400;                 // 캐릭터 스티커 '<동화id>.<k>' 합집합 상한(31편 × 10 + 여유)
+  const CAST_MAX = 400;
+  const SHINY_MAX = 100;                // 반짝 스티커(별 하나로 반짝이게 만든 캐릭터 스티커 '<동화id>.<k>', 2026-10-31)                 // 캐릭터 스티커 '<동화id>.<k>' 합집합 상한(31편 × 10 + 여유)
   const WAIT_AT = [7, 14];              // 첫 실행 며칠 뒤에 기다무 칸이 하나씩 열리는가
   const ID_RE = /^[a-z0-9_]{1,40}$/;
   const CAST_RE = /^[a-z0-9_]{1,40}\.[a-z0-9_]{1,40}$/;
@@ -82,6 +83,7 @@ const Entitlements = (() => {
       stickers: idList(s.stickers, STICKER_MAX),
       stickers2: idList(s.stickers2, STICKER_MAX),
       cast: castList(s.cast),
+      shiny: castList(s.shiny, SHINY_MAX),
       waitUnlocked: idList(s.waitUnlocked, 2),
       owned: s.owned === true
     };
@@ -104,11 +106,13 @@ const Entitlements = (() => {
       stickers: capSorted(idList([...a.stickers, ...b.stickers], 100000), STICKER_MAX),
       stickers2: capSorted(idList([...a.stickers2, ...b.stickers2], 100000), STICKER_MAX),
       cast: capSorted(castList([...a.cast, ...b.cast], 100000), CAST_MAX),
+      shiny: capSorted(castList([...a.shiny, ...b.shiny], 100000), SHINY_MAX),
       waitUnlocked: union(a.waitUnlocked, b.waitUnlocked, 2),
       owned: a.owned || b.owned
     });
   }
-  const balanceOf = s => Object.keys(s.earned).length - STAR_NEED * s.starUnlocked.length;
+  /* 별 하나(조각 5개)는 잠긴 동화 열기 또는 반짝 스티커 한 장에 쓴다 */
+  const balanceOf = s => Object.keys(s.earned).length - STAR_NEED * (s.starUnlocked.length + s.shiny.length);
 
   let st = null;                            // 메모리 속 state
   const listeners = new Set();
@@ -242,6 +246,17 @@ const Entitlements = (() => {
     const s = load();
     if (balanceOf(s) < STAR_NEED || !lockedChoices().includes(id)) return false;
     s.starUnlocked.push(id);
+    save(true); notify();
+    return true;
+  }
+
+  /* 반짝 스티커(2026-10-31 사용자: 다 산 사람에게 별 조각의 쓸 곳): 받은 캐릭터 스티커 한 장을 별 하나로 반짝이게 한다 */
+  const isShiny = key => load().shiny.includes(key);
+  const shineChoices = () => { const s = load(); return s.cast.filter(k => !s.shiny.includes(k)); };
+  function starShine(key) {
+    const s = load();
+    if (balanceOf(s) < STAR_NEED || !s.cast.includes(key) || s.shiny.includes(key) || s.shiny.length >= SHINY_MAX) return false;
+    s.shiny.push(key);
     save(true); notify();
     return true;
   }
@@ -432,7 +447,7 @@ const Entitlements = (() => {
     appMode, weekNumber, dateStr, freeThisWeek, status, canPlay, isFree, lockedChoices,
     purchase, restore, grantAll, revokeAll, setBridge, guard,
     state: () => load(), merge, normalize, balanceOf,
-    earnStar, addSticker, finishPlay, addCast, hasCast, castCount, castOf, hasSticker: id => load().stickers.includes(id), addSticker2, hasSticker2: id => load().stickers2.includes(id), stickerCount: () => load().stickers.length, sticker2Count: () => load().stickers2.length, starBalance, earnedToday, starUnlock,
+    earnStar, addSticker, finishPlay, addCast, hasCast, castCount, castOf, hasSticker: id => load().stickers.includes(id), addSticker2, hasSticker2: id => load().stickers2.includes(id), stickerCount: () => load().stickers.length, sticker2Count: () => load().stickers2.length, starBalance, earnedToday, starUnlock, isShiny, shineChoices, starShine,
     waitAvailable, waitDaysLeft, waitUnlock, daysSinceFirstRun,
     syncEnabled: enabled, sync, createLinkCode, redeemLinkCode, sendReceipt, cleanCode,
     isLinked: () => !!account(),

@@ -399,7 +399,9 @@ const NARRATION_CLIPS = {
  "핼러윈 호박": "audio/el/home/nar_e975d07cc6.mp3",
  "호박 다현이": "audio/el/home/nar_f32ece17fd.mp3",
  "별 조각 하나 받았어요!": "audio/el/home/nar_80f741cae2.mp3",
- "별이 완성됐어요! 동화를 하나 열 수 있어요": "audio/el/home/nar_f931973fd2.mp3"
+ "별이 완성됐어요! 동화를 하나 열 수 있어요": "audio/el/home/nar_f931973fd2.mp3",
+ "반짝 스티커가 생겼어요!": "audio/el/home/nar_3a8af06f35.mp3",
+ "반짝이게 할 스티커를 골라요": "audio/el/home/nar_95c01991aa.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -2285,5 +2287,13 @@ const NARRATION_CLIPS_EN = {
  "Your star is complete! You can open a tale.": {
   "t": "Your star is complete! You can open a tale.",
   "c": "audio/el/home/en/nar_4cc3562a28.mp3"
+ },
+ "You made a sparkly sticker!": {
+  "t": "You made a sparkly sticker!",
+  "c": "audio/el/home/en/nar_54b5cc8b76.mp3"
+ },
+ "Pick a sticker to make sparkly": {
+  "t": "Pick a sticker to make sparkly",
+  "c": "audio/el/home/en/nar_5dd86a7c64.mp3"
  }
 };

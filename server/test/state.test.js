@@ -86,3 +86,12 @@ describe('클라이언트 state 검사', () => {
     expect(() => sanitizeClientState({ starUnlocked: Array.from({ length: 101 }, (_, i) => 'a' + i) })).toThrow();
   });
 });
+
+describe('shiny 반짝 스티커', () => {
+  it('합집합이고 cast 와 같은 모양만 받는다', () => {
+    expect(mergeStates(st({ shiny: ['a.x'] }), st({ shiny: ['a.x', 'b.y'] })).shiny).toEqual(['a.x', 'b.y']);
+    expect(sanitizeClientState({}).shiny).toEqual([]);
+    expect(() => sanitizeClientState({ shiny: ['rabbit'] })).toThrow();
+    expect(() => sanitizeClientState({ shiny: Array.from({ length: 101 }, (_, i) => 'a.k' + i) })).toThrow();
+  });
+});

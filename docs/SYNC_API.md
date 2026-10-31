@@ -13,16 +13,17 @@
   "stickers": ["rabbit", "patjuk"],           // 퍼즐 아래 조각: 놀이로 처음 끝까지 한 동화 id(읽어 주기 제외). 합집합
   "stickers2": ["rabbit"],                    // 퍼즐 위 조각: 아래 조각이 있는 동화를 놀이로 두 번째 끝까지 한 동화 id. 합집합
   "cast": ["rabbit.rab_x", "patjuk.tiger_stand"],  // 캐릭터 스티커: "<동화id>.<k>". 놀이 완주마다 그 동화 세트의 다음 한 장. 합집합
+  "shiny": ["patjuk.tiger_stand"],             // 반짝 스티커: 별 하나(조각 5개)로 반짝이게 만든 cast 항목. 합집합 (2026-10-31)
   "waitUnlocked": ["hansel"],                  // 기다무로 연 동화 id(최대 2: 7일 뒤 1, 14일 뒤 1). 합집합 후 앞에서 2개만 유지
   "owned": false                               // 전체 구매. 영수증 검증으로만 true 가 된다. 한번 true 면 계속 true
 }
 ```
 - `cast` 항목은 `^[a-z0-9_]{1,40}\.[a-z0-9_]{1,40}$` (앞 = 동화 id, 뒤 = `tales/stickers.js` 의 k). 놀이 완주 때만 쌓인다(하루 제한 없음, 읽어 주기·자동 재생 제외). 옛 기록에 필드가 없어도 빈 목록으로 본다.
-- 종이별 잔액 = `Object.keys(earned).length - 5 * starUnlocked.length` (앱이 계산, 서버는 음수가 되는 상태를 거부하지 않고 그대로 합친다).
+- 별 조각 잔액 = `Object.keys(earned).length - 5 * (starUnlocked.length + shiny.length)` (앱이 계산, 서버는 음수가 되는 상태를 거부하지 않고 그대로 합친다). `shiny` 는 `cast` 와 같은 모양, 상한 100.
 - `stickers2` 는 `stickers` 와 같은 형식·합집합이다. 완주 횟수는 따로 세지 않고, 클라이언트가 '아래 조각이 이미 있으면 위 조각'으로 판정해 넣는다(2026-10-27). 옛 기록에 필드가 없어도 빈 목록으로 본다.
 - `earned`·`stickers`·`stickers2` 는 **놀이 모드 완주**에서만 쌓인다. 읽어 주기(잠자리)와 자동 재생 완주는 넣지 않는다(2026-10-27 사용자 결정).
 - `owned` 는 클라이언트가 PUT 으로 true 를 보내도 서버는 **무시**한다(영수증 엔드포인트만 올린다).
-- 동화 id 는 `tales/catalog.js` 의 id. 서버는 `^[a-z0-9_]{1,40}$` 만 허용하고 필드별 개수 상한을 둔다(earned ≤ 400, starUnlocked ≤ 100, stickers ≤ 200, stickers2 ≤ 200, cast ≤ 400, waitUnlocked ≤ 2). 상한을 넘는 합집합은 사전순 앞에서 자른다.
+- 동화 id 는 `tales/catalog.js` 의 id. 서버는 `^[a-z0-9_]{1,40}$` 만 허용하고 필드별 개수 상한을 둔다(earned ≤ 400, starUnlocked ≤ 100, stickers ≤ 200, stickers2 ≤ 200, cast ≤ 400, shiny ≤ 100, waitUnlocked ≤ 2). 상한을 넘는 합집합은 사전순 앞에서 자른다.
 
 ## 인증
 - 계정 = 무작위 `accountId`(UUID v4) + 무작위 `token`(32바이트 base64url). 서버는 token 의 SHA-256 해시만 저장한다.

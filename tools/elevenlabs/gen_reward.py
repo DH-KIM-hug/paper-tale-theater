@@ -10,7 +10,9 @@ jobs = [('퍼즐 조각을 받았어요!', 'You got a puzzle piece!', YAY), ('�
         ('새 친구 스티커!', 'A new friend sticker!', '[excited, giggly, delighted] '), ('스티커를 받았어요!', 'You got a sticker!', YAY),
         ('종이별 하나 받았어요!', 'You got a Paper Star!', YAY), ('다섯 개! 동화를 하나 열 수 있어요', 'Five stars! You can open a tale.', '[thrilled, amazed, cheering] '),
         # 2026-10-31 별 조각 다섯 개로 별 하나(사용자)
-        ('별 조각 하나 받았어요!', 'You got a star piece!', YAY), ('별이 완성됐어요! 동화를 하나 열 수 있어요', 'Your star is complete! You can open a tale.', '[thrilled, amazed, cheering] ')]
+        ('별 조각 하나 받았어요!', 'You got a star piece!', YAY), ('별이 완성됐어요! 동화를 하나 열 수 있어요', 'Your star is complete! You can open a tale.', '[thrilled, amazed, cheering] '),
+        # 2026-10-31 반짝 스티커(다 산 사람의 별 쓰기)
+        ('반짝 스티커가 생겼어요!', 'You made a sparkly sticker!', '[thrilled, amazed, cheering] '), ('반짝이게 할 스티커를 골라요', 'Pick a sticker to make sparkly', '[warm, curious, gentle] ')]
 def clip(text, lang, tag):
     sent = tag + text
     h = hashlib.md5(f"{g['VOICE']}|{g['MODEL']}|{sent}|{g['SET']}".encode()).hexdigest()[:10]
