@@ -1,22 +1,26 @@
 [
  {
-  "id": "star_v3a",
+  "id": "star_v4a",
   "kind": "sprite",
   "aspect": "square 1:1",
-  "out": "assets/raw/ui/star_v3a.png",
-  "refs": [
-   "/Users/house_of_4k2b/.claude/uploads/b4842b92-f585-4bc1-9ed2-20ae37209aff/c909abda-image.jpg"
-  ],
-  "prompt": "Use case: game UI reward collectible icon for a children's app (ages 3-4) — a magical \"star piece\" that kids collect.\nSubject: ONE sparkling crystal star with exactly FIVE sharp, evenly spaced points, perfectly upright (one point straight up), symmetrical, seen straight on, centred, filling about 88% of the square canvas.\nLook: smooth chunky points with clear facets, like a soft-cornered gem star.\nBright, magical and very pretty like a treasure gem in a mobile game: faceted cut-crystal planes, iridescent pastel colours (lavender, pink, violet, sky blue, aqua, a touch of gold), luminous inner glow at the centre, crisp white highlights on facet edges, a few tiny twinkle sparkles on the star itself. Clean and cute, not dark, not scary.\nNo face, no text, no frame, no extra objects. TRUE transparent background, no drop shadow, no glow halo outside the star (glow is added by the app).\nThe reference image shows the desired colour and crystal mood only; make a clean upright five-point star, not that shape."
+  "out": "assets/raw/ui/star_v4a.png",
+  "refs": [],
+  "prompt": "Use case: game UI reward collectible icon for a children's app (ages 3-4) — a magical \"star piece\" kids collect.\nSubject: ONE five-pointed star, perfectly upright (one point straight up), symmetrical, seen straight on, centred, filling about 86% of the square canvas.\nStyle: MINIMAL and clean, like a modern app icon. Slightly rounded points. Soft pastel gradient from warm white-gold at the centre to lavender and sky blue at the tips.\nIt must look like it is glowing with soft light from within: a bright luminous core fading gently toward the edges, a soft inner glow along the edges. Smooth simple shapes only — NO busy facets, NO many shards, NO glitter noise, no texture. At most one or two tiny twinkle sparkles.\nNo face, no text, no frame, no extra objects. TRUE transparent background, no drop shadow, no halo outside the star (the app adds the outer glow)."
  },
  {
-  "id": "star_v3b",
+  "id": "star_v4b",
   "kind": "sprite",
   "aspect": "square 1:1",
-  "out": "assets/raw/ui/star_v3b.png",
-  "refs": [
-   "/Users/house_of_4k2b/.claude/uploads/b4842b92-f585-4bc1-9ed2-20ae37209aff/c909abda-image.jpg"
-  ],
-  "prompt": "Use case: game UI reward collectible icon for a children's app (ages 3-4) — a magical \"star piece\" that kids collect.\nSubject: ONE sparkling crystal star with exactly FIVE sharp, evenly spaced points, perfectly upright (one point straight up), symmetrical, seen straight on, centred, filling about 88% of the square canvas.\nLook: slim, sharp crystal points with many small facets like a shard of a magic crystal, more sparkle.\nBright, magical and very pretty like a treasure gem in a mobile game: faceted cut-crystal planes, iridescent pastel colours (lavender, pink, violet, sky blue, aqua, a touch of gold), luminous inner glow at the centre, crisp white highlights on facet edges, a few tiny twinkle sparkles on the star itself. Clean and cute, not dark, not scary.\nNo face, no text, no frame, no extra objects. TRUE transparent background, no drop shadow, no glow halo outside the star (glow is added by the app).\nThe reference image shows the desired colour and crystal mood only; make a clean upright five-point star, not that shape."
+  "out": "assets/raw/ui/star_v4b.png",
+  "refs": [],
+  "prompt": "Use case: game UI reward collectible icon for a children's app (ages 3-4) — a magical \"star piece\" kids collect.\nSubject: ONE five-pointed star, perfectly upright (one point straight up), symmetrical, seen straight on, centred, filling about 86% of the square canvas.\nStyle: MINIMAL and clean, like a modern app icon. Crisp points with only five simple bevel planes (one ridge line from the centre to each point and each inner corner). Pale iridescent lavender-pink-aqua colours, translucent like frosted glass, white glowing centre.\nIt must look like it is glowing with soft light from within: a bright luminous core fading gently toward the edges, a soft inner glow along the edges. Smooth simple shapes only — NO busy facets, NO many shards, NO glitter noise, no texture. At most one or two tiny twinkle sparkles.\nNo face, no text, no frame, no extra objects. TRUE transparent background, no drop shadow, no halo outside the star (the app adds the outer glow)."
+ },
+ {
+  "id": "star_v4c",
+  "kind": "sprite",
+  "aspect": "square 1:1",
+  "out": "assets/raw/ui/star_v4c.png",
+  "refs": [],
+  "prompt": "Use case: game UI reward collectible icon for a children's app (ages 3-4) — a magical \"star piece\" kids collect.\nSubject: ONE five-pointed star, perfectly upright (one point straight up), symmetrical, seen straight on, centred, filling about 86% of the square canvas.\nStyle: MINIMAL and clean, like a modern app icon. Rounded soft points, puffy and cute. Warm luminous yellow-white core with a pale pink-violet rim, like a little glowing night-light star.\nIt must look like it is glowing with soft light from within: a bright luminous core fading gently toward the edges, a soft inner glow along the edges. Smooth simple shapes only — NO busy facets, NO many shards, NO glitter noise, no texture. At most one or two tiny twinkle sparkles.\nNo face, no text, no frame, no extra objects. TRUE transparent background, no drop shadow, no halo outside the star (the app adds the outer glow)."
  }
 ]
