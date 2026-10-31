@@ -1718,10 +1718,9 @@
     await say('먼저 들어 봐요! 신나는 행진곡이에요.');
     await T.playMelody(MARCH, { beat: .17, voice: marchVoice, onNote: marchHop });
     await sleep(500);
-    await say('이번에는 친구들을 톡톡 눌러서 같이 연주해요!');
-    await T.followMelody(MARCH.slice(0, 10), { beat: .17, targetFor: i => cast[WHO[i]].pos, voice: marchVoice, onNote: marchHop });
-    await sleep(400);
-    await sleep(400);
+    // 한 번 톡 하면 나머지는 저절로 함께 연주 (음마다 누르던 followMelody 는 너무 힘들어서 뺌 — 2026-11-01)
+    await T.ask('이번에는 친구들을 톡톡 눌러서 같이 연주해요!', () => T.tap(cast.pig.pos, { prompt: '이번에는 친구들을 톡톡 눌러서 같이 연주해요!' }));
+    await sleep(300);
     T.playMelody(MARCH, { beat: .17, voice: marchVoice, onNote: i => { marchHop(i); if (MARCH[i][1] >= 4) ['pig', 'dog', 'rooster', 'turtle', 'owl', 'cat'].forEach(k => cast[k].hop(30, 380)); } });
     await sleep(5800);
     AudioFX.sfx('cheer', .6);
