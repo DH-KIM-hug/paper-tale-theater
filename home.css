@@ -727,7 +727,7 @@ body.app .n-grid .card { height: 100%; }
 }
 
 /* ═════════ 스티커북 탭 (S3, UI_REDESIGN §4-3·§7-4~7-6): 판 선택 위 한 줄 → 퍼즐판 창 한 겹(바탕에 뚫린 창, 안은 크래프트) → 판 이름·화살표·접시 한 줄 ═════════ */
-body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-star: 40px; --pz-open: 96px; --pz-pad: 16px; --pz-chrome: 424px; }
+body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-star: 40px; --pz-open: 96px; --pz-pad: 16px; --pz-chrome: 424px; }
 .view.stk { container-type: inline-size; display: flex; flex-direction: column; gap: var(--s-4); overflow-y: auto; overflow-x: hidden; scrollbar-width: none; padding-bottom: max(20px, env(safe-area-inset-bottom)); overscroll-behavior: contain; }
 .pz-row[hidden], .pz-main[hidden], .stk-seg[hidden] { display: none; }
 /* 갈래 단추 (퍼즐 | 스티커): 크림 바탕에 올린 두 칸, 고른 칸 = 감빛 조각 */
@@ -791,14 +791,26 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 /* 종이별 접시 (§7-6): 바탕에 뚫린 타원 창 280×140 안에 접시 그림, 별 자리 40 다섯(간격 52, 중심 아래 6). 받은 별 = star_one, 빈 자리 = 눌린 원 */
 .pz-plate { grid-area: plate; display: flex; align-items: center; gap: var(--s-4); }
 .pz-plate[hidden] { display: none; }
-.plate-art { position: relative; flex: none; width: var(--pz-pw); height: var(--pz-ph); border-radius: 50%; overflow: hidden; background: var(--paper-deep); -webkit-mask-image: -webkit-radial-gradient(white, black); }
-.plate-art::after { content: ''; position: absolute; inset: 0; z-index: 2; border-radius: inherit; box-shadow: var(--cut); pointer-events: none; }
-.plate-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.25); }   /* 접시 그림 둘레 여백을 창 밖으로: 평평한 안쪽이 별 다섯 자리를 품게 */
-.plate-dots { position: absolute; inset: 0; z-index: 1; display: flex; align-items: center; justify-content: center; gap: calc(var(--pz-star) * .3); padding-top: calc(var(--pz-star) * .3); }
-.plate-dots i { flex: none; display: grid; place-items: center; width: var(--pz-star); height: var(--pz-star); border-radius: 50%; background: var(--paper-deep); box-shadow: inset 1px 2px 3px rgba(46, 36, 28, .28), inset 0 -1px 0 rgba(255, 255, 255, .6); }
-.plate-dots i.on { background: none; box-shadow: none; }
-.plate-dots i.on img, .plate-dots i.on svg { display: block; width: 100%; height: 100%; object-fit: contain; fill: var(--reward); filter: drop-shadow(0 1px 1px rgba(46, 36, 28, .3)); }
+.plate-art { position: relative; flex: none; width: var(--pz-ph); height: var(--pz-ph); padding: 8px; border-radius: var(--r-l); background: var(--card); box-shadow: var(--sh-1); }   /* 흰 카드에 별 하나(홈 UI 2판) */
+.star-pc { display: block; width: 100%; height: 100%; overflow: visible; }
+.star-pc .off { opacity: .22; filter: grayscale(1); }
+.star-pc .cuts line { stroke: var(--card); stroke-width: 1.6; }
+
+/* 별 조각은 반짝이는 수정(2026-10-31 사용자: 보상만 페이퍼아트 예외). 둘레 보랏빛이 숨 쉬듯 번지고, 다 모이면 더 밝게 */
+.star-pc:not(.mono) { animation: starGlow 2.4s ease-in-out infinite; }
+.star-pc:not(.mono) .off { opacity: .28; filter: grayscale(.7); }
+@keyframes starGlow { 0%, 100% { filter: drop-shadow(0 0 2px rgba(255, 255, 255, .9)) drop-shadow(0 0 5px rgba(186, 140, 255, .55)); } 50% { filter: drop-shadow(0 0 3px rgba(255, 255, 255, 1)) drop-shadow(0 0 11px rgba(170, 130, 255, .9)); } }
+.full .star-pc:not(.mono) { animation-duration: 1.4s; }
+@media (prefers-reduced-motion: reduce) { .star-pc:not(.mono) { animation: none; filter: drop-shadow(0 0 5px rgba(186, 140, 255, .6)); } }
 .plate-n { margin: 0; font-size: var(--fs-num); font-weight: 700; letter-spacing: .06em; color: var(--ink); white-space: nowrap; }
+.plate-n small { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0; color: var(--ink-2); }
+.plate-full { margin: 0; display: grid; grid-template-columns: 44px auto; align-items: center; column-gap: 6px; font-size: var(--fs-num); font-weight: 800; color: var(--ink); }
+.plate-full img, .plate-full svg { width: 44px; height: 44px; grid-row: span 2; filter: drop-shadow(0 0 6px rgba(170, 130, 255, .8)); }
+.plate-full small { font-size: 12px; font-weight: 700; color: var(--ink-2); white-space: nowrap; }
+.star-open { display: inline-flex; align-items: center; gap: 10px; min-height: 80px; margin: 0; padding: 8px 26px 8px 14px; border: 0; border-radius: var(--r-pill); background: var(--card); box-shadow: var(--sh-1), inset 0 0 0 2px #C9B6F2; font-size: 20px; font-weight: 800; color: var(--ink); cursor: pointer; }
+.star-open img, .star-open svg { width: 56px; height: 56px; filter: drop-shadow(0 0 6px rgba(170, 130, 255, .85)); }
+.star-open b { font-size: 18px; color: var(--ink-2); }
+.star-open.is-pressed { transform: scale(.96); }
 /* 별 5개면 감빛 원 96 [열기] (star_one 48) */
 .pz-open { flex: none; width: var(--pz-open); height: var(--pz-open); padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; background-color: var(--act); box-shadow: var(--lift-hi), var(--sh-2); }
 .pz-open img, .pz-open svg { display: block; width: calc(var(--pz-open) / 2); height: calc(var(--pz-open) / 2); object-fit: contain; fill: var(--reward); }
@@ -846,7 +858,7 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 }
 /* pP 아이폰 세로: 원 72(숫자만, 3.5개 보임), 판 358×201, 화살표 56, 접시 240×120 */
 @media (orientation: portrait) and (max-width: 699px) {
-  body.app { --pz-c: 72px; --pz-arr: 56px; --pz-pw: 240px; --pz-ph: 120px; --pz-star: 34px; --pz-open: 72px; --pz-pad: 10px; }
+  body.app { --pz-c: 72px; --pz-arr: 56px; --pz-pw: 240px; --pz-ph: 88px; --pz-star: 34px; --pz-open: 72px; --pz-pad: 10px; }
   .pz-row { gap: 26px; }
   .pz-nm { display: none; }
   .pz-head { gap: var(--s-3); }
@@ -856,7 +868,7 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
 }
 /* pL 아이폰 가로: 왼쪽 판 선택 세로 열(원 64, 숫자만) + 가운데 판 + 오른쪽 화살표·접시 세로 */
 @media (orientation: landscape) and (max-height: 520px) {
-  body.app { --pz-c: 60px; --pz-arr: 56px; --pz-pw: 76px; --pz-ph: 184px; --pz-star: 28px; --pz-open: 60px; --pz-pad: 10px; }
+  body.app { --pz-c: 60px; --pz-arr: 56px; --pz-pw: 76px; --pz-ph: 76px; --pz-star: 28px; --pz-open: 60px; --pz-pad: 10px; }
   .view.stk { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); column-gap: var(--s-3); overflow: hidden; padding-bottom: 6px; }
   .pz-row { flex-direction: column; overflow-y: auto; overflow-x: hidden; gap: var(--s-2); padding: 6px 6px 8px; }
   .pz-b { gap: 0; padding: 2px; }
@@ -867,8 +879,6 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 140px; --pz-st
   .pz-head h2, .pz-head .pz-n, .pz-head .pz-done { display: none; }
   .pz-arrs { margin: 0; gap: var(--s-3); }
   .pz-plate { flex-direction: column; gap: 6px; }
-  .plate-img { inset: auto; left: 50%; top: 50%; width: var(--pz-ph); height: var(--pz-pw); transform: translate(-50%, -50%) rotate(90deg) scale(1.25); }
-  .plate-dots { flex-direction: column; padding: 0; gap: 6px; }
   .pz-plate.full .plate-n { display: none; }
   .cast-grid { --cs: calc((var(--pw) * 9 / 16 - 2 * var(--s-3) - var(--s-2)) / 2); gap: var(--s-2); padding: var(--s-3); justify-content: start; }
   .view.stk > .empty { grid-column: 1 / -1; }
@@ -980,6 +990,15 @@ body.app .view[hidden] { display: none; }
 /* 톱니 기호의 가운데를 로고 글줄 가운데에, 기호 오른쪽 끝을 본문 오른쪽 여백에 맞춘다(단추 둘레 빈 자리만큼 당김) */
 .gear { margin: -13px -14px 0 0; }
 @media (orientation: portrait) and (max-width: 699px), (orientation: landscape) and (max-height: 520px) { .gear { margin: -6px -11px 0 0; } }
+/* 홈 머리 별 조각(앱 모드): 톱니 왼쪽, 단색. 받은 조각은 먹색, 아직은 연회색 */
+.star-chip { position: fixed; z-index: 12; top: max(var(--pad), env(safe-area-inset-top)); right: calc(max(var(--pad), env(safe-area-inset-right)) + 48px); width: 48px; height: 48px; margin: -9px 0 0; padding: 9px; border: 0; background: none; cursor: pointer; color: var(--gear); touch-action: manipulation; }
+.star-chip[hidden] { display: none; }
+.star-chip .star-pc.mono .on { fill: currentColor; }
+.star-chip .star-pc.mono .off { fill: var(--ink-off); opacity: .45; filter: none; }
+.star-chip .star-pc .cuts line { stroke: var(--paper); stroke-width: 3; }
+.star-chip .chip-n { position: absolute; right: -6px; bottom: 2px; min-width: 22px; padding: 0 5px; border-radius: var(--r-pill); background: var(--card); box-shadow: var(--sh-1); font-size: 12px; font-weight: 800; line-height: 18px; color: var(--ink); }   /* 완성한 별 수 */
+.star-chip.is-pressed { transform: scale(.94); }
+@media (orientation: portrait) and (max-width: 699px), (orientation: landscape) and (max-height: 520px) { .star-chip { right: calc(max(var(--pad), env(safe-area-inset-right)) + 40px); margin-top: -2px; } }
 
 /* 탭 (홈 UI 2판): 흰 막대 위 단색 기호 + 이름. 고른 탭 = 진한 먹색 + 기호 뒤 흰 알약(--sh-1), 나머지 = 연한 회색. 레일·막대는 1px 선으로만 나눈다 */
 .tabs { grid-area: tabs; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: var(--s-4); background: var(--card); box-shadow: 1px 0 0 rgba(0, 0, 0, .06);
@@ -1244,9 +1263,8 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .pick:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
 .flow-pick .sheet-btns .ticket { min-height: 64px; min-width: 120px; }
 .flow-pick .sheet-btns .ticket:disabled { opacity: .45; }
-.plate { display: flex; justify-content: center; gap: 10px; margin: 2px 0 14px; }
-.plate i { width: 36px; height: 36px; border-radius: 50%; background: var(--paper-dn); box-shadow: inset 1.5px 2px 3px var(--sh-cut), inset -1px -1px 0 var(--lip); }
-.plate i.on { background: var(--reward); box-shadow: 0 1px 2px var(--sh-drop); }
+.plate { display: flex; justify-content: center; margin: 2px 0 14px; }
+.plate .star-pc { width: 96px; height: 96px; }
 @media (orientation: portrait) { .pick-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (orientation: portrait) and (max-width: 520px) { .pick-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (orientation: landscape) and (max-height: 520px) {

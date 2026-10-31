@@ -750,7 +750,7 @@
         <dt>${L('이번 주 무료', 'Free this week')}</dt><dd>${names(Entitlements.freeThisWeek())}<small>${L('월요일마다 바뀌어요.', 'Changes every Monday.')}</small></dd>
         <dt>${L('열어 둔 동화', 'Opened tales')}</dt><dd>${Entitlements.state().owned ? L('모든 동화가 열려 있어요.', 'Every tale is open.') : names(opened)}</dd>
         <dt>${L('기다무', 'Waiting pass')}</dt><dd>${waitTxt}${wait ? `<button type="button" class="ticket alt" data-act="g-wait">${L('한 편 고르기', 'Pick a tale')}</button>` : ''}</dd>
-        <dt>${L('종이별', 'Paper Stars')}</dt><dd>${Math.min(stars, 99)} / ${need}${stars >= need && Entitlements.lockedChoices().length ? `<button type="button" class="ticket alt" data-act="g-star">${L('한 편 고르기', 'Pick a tale')}</button>` : ''}</dd>
+        <dt>${L('별 조각', 'Star pieces')}</dt><dd>${Math.min(stars, 99)} / ${need}${stars >= need && Entitlements.lockedChoices().length ? `<button type="button" class="ticket alt" data-act="g-star">${L('한 편 고르기', 'Pick a tale')}</button>` : ''}</dd>
       </dl>
       <p class="how buy-msg" id="gMsg" hidden></p>
       <div class="g-btns">
@@ -997,7 +997,7 @@
     const t = id && TALES.some(x => x.id === id) ? title(id) : '';
     const stars = Entitlements.starBalance(), need = Entitlements.STAR_NEED;
     if (step === 'lock') {
-      const canStar = stars >= need && Entitlements.lockedChoices().length > 0;
+      const canStar = stars >= need && Entitlements.lockedChoices().includes(id), nStar = Math.floor(stars / need);
       /* 그림 창은 가리지 않고, 자물쇠는 창의 오른쪽 아래 모서리에 걸친다. 색이 있는 단추는 종이별 원(구리)뿐 (§4-4) */
       flowSheet.innerHTML = `<div class="note">
         <div class="note-pic">${miniTile(id)}<span class="note-lock" aria-hidden="true">${UIA.has('badge_lock') ? uiImg('badge_lock') : LOCK_SVG}</span></div>
@@ -1005,7 +1005,7 @@
         <p class="note-sub">${L('잠겨 있어요', 'Locked')}</p>
         <div class="note-btns">
           <button type="button" class="round f-first" data-act="f-close" aria-label="${L('닫기', 'Close')}">${UIA.has('ic_close') ? uiImg('ic_close') : X_SVG}</button>
-          ${canStar ? `<button type="button" class="round star" data-act="f-star" aria-label="${L('종이별로 열기', 'Open with Paper Stars')}">${UIA.has('star_one') ? uiImg('star_one') : STAR_SVG}</button>` : ''}
+          ${canStar ? `<button type="button" class="star-open" data-act="f-star1" aria-label="${L(`별로 열기, 별 ${nStar}개 있어요`, `Open with a star, you have ${nStar}`)}">${UIA.has('star_one') ? uiImg('star_one') : STAR_SVG}<span>${L('별로 열기', 'Open with a star')}</span><b>×${nStar}</b></button>` : ''}
         </div>
         <button type="button" class="adult holdbtn" data-adult><span>${L('어른이 열기', 'Grown-ups open')}</span><small>${L('1초 꾹', 'hold 1 s')}</small></button>
         <p class="how">${L('이번 주 무료 동화는 월요일마다 바뀌어요.', 'The free tales change every Monday.')}</p>
@@ -1019,9 +1019,9 @@
         ${t ? `<div class="buy-head">${miniTile(id)}<p class="how">${L(`'${t}'은(는) 잠겨 있어요.`, `"${t}" is locked.`)}</p></div>` : ''}
         <div class="buy-cols">
           <section class="col"><h3>${L('이번 주 기다리기', 'Wait for this week')}</h3><p class="how">${L(`매주 월요일에 무료 동화가 바뀌어요. 이번 주: ${names}`, `The free tales change every Monday. This week: ${names}`)}</p><button type="button" class="ticket alt" data-act="f-close">${L('기다릴게요', 'I will wait')}</button></section>
-          <section class="col"><h3>${L('기다무·종이별', 'Waiting pass / Stars')}</h3><p class="how">${wait ? L('기다무로 한 편을 열 수 있어요.', 'You can open one with a waiting pass.') : left ? L(`기다무는 ${left}일 뒤에 열려요.`, `A waiting pass opens in ${left} days.`) : L('기다무를 모두 썼어요.', 'All waiting passes are used.')} ${L(`종이별 ${Math.min(stars, 99)}/${need}`, `Paper Stars ${Math.min(stars, 99)}/${need}`)}</p>
+          <section class="col"><h3>${L('기다무·종이별', 'Waiting pass / Stars')}</h3><p class="how">${wait ? L('기다무로 한 편을 열 수 있어요.', 'You can open one with a waiting pass.') : left ? L(`기다무는 ${left}일 뒤에 열려요.`, `A waiting pass opens in ${left} days.`) : L('기다무를 모두 썼어요.', 'All waiting passes are used.')} ${L(`완성한 별 ${Math.floor(stars / need)}개`, `${Math.floor(stars / need)} stars`)}</p>
             ${wait ? `<button type="button" class="ticket alt" data-act="f-wait">${L('기다무로 열기', 'Open with waiting pass')}</button>` : ''}
-            ${canStar ? `<button type="button" class="ticket alt" data-act="f-star">${L('종이별로 열기', 'Open with Paper Stars')}</button>` : ''}
+            ${canStar ? `<button type="button" class="ticket alt" data-act="${id ? 'f-star1' : 'f-star'}">${L(`별로 열기 ×${Math.floor(stars / need)}`, `Open with a star ×${Math.floor(stars / need)}`)}</button>` : ''}
             ${!wait && !canStar ? `<button type="button" class="ticket alt" disabled>${L('아직 열 수 없어요', 'Not yet')}</button>` : ''}</section>
           <section class="col"><h3>${L('모든 동화 열기', 'Unlock all tales')}</h3><p class="how">${L(`${Entitlements.PRICE}를 한 번만 내면 모든 동화가 열려요. 새로 나오는 동화도 함께요.`, `Pay ${Entitlements.PRICE} once to unlock every tale, including new ones.`)}</p><button type="button" class="ticket alt" data-act="f-buy">${L(`모두 열기 ${Entitlements.PRICE}`, `Unlock all ${Entitlements.PRICE}`)}</button></section>
         </div>
@@ -1030,7 +1030,7 @@
     } else if (step === 'pick') {
       const star = pickKind === 'star', list = Entitlements.lockedChoices();
       flowSheet.innerHTML = `<h2>${star ? L('종이별로 동화 열기', 'Open a tale with Paper Stars') : L('기다무로 동화 열기', 'Open a tale with a waiting pass')}</h2>
-        ${star ? `<div class="plate" aria-label="${L(`종이별 ${Math.min(stars, need)}개`, `${Math.min(stars, need)} Paper Stars`)}">${[...Array(need)].map((_, i) => `<i class="${i < stars ? 'on' : ''}"></i>`).join('')}</div>` : ''}
+        ${star ? `<div class="plate" aria-label="${L(`별 조각 ${Math.min(stars, need)}개`, `${Math.min(stars, need)} star pieces`)}">${starPieces(Math.min(stars, need))}</div>` : ''}
         <p class="how">${list.length ? L('열고 싶은 동화를 하나 골라요. 같은 동화를 한 번 더 톡 하면 열려요.', 'Pick one tale. Tap it again to open.') : L('지금 열 수 있는 잠긴 동화가 없어요.', 'No locked tales to open right now.')}</p>
         <div class="pick-list">${list.map(i => `<button type="button" class="pick${i === flowCtx.sel ? ' on' : ''}" data-id="${i}" aria-pressed="${i === flowCtx.sel}">${miniTile(i)}<span>${title(i)}</span></button>`).join('')}</div>
         <p class="how buy-msg" id="flowMsg" hidden></p>
@@ -1042,7 +1042,7 @@
     const ok = pickKind === 'star' ? Entitlements.starUnlock(id) : Entitlements.waitUnlock(id);
     if (!ok) {
       paper('down'); flowCtx.sel = null; renderFlow();
-      const m = $('#flowMsg'); m.textContent = L('열지 못했어요. 다시 골라 주세요.', 'Could not open it. Please pick again.'); m.hidden = false;
+      const m = $('#flowMsg'); if (m) { m.textContent = L('열지 못했어요. 다시 골라 주세요.', 'Could not open it. Please pick again.'); m.hidden = false; }
       return;
     }
     paper('tap');
@@ -1063,6 +1063,7 @@
     const act = b.dataset.act;
     if (act === 'f-close') closeFlow();
     else if (act === 'f-star') { pickKind = 'star'; paper('tap'); openFlow('pick', { sel: null }); }          // 종이별 고르기는 어른 확인 없이 (판단 #4 가)
+    else if (act === 'f-star1') { pickKind = 'star'; flowCtx.sel = flowCtx.id; unlockSel(); }                // 잠긴 동화에서 바로: 모아 둔 별 하나로 이 동화를 연다(2026-10-31 사용자: 별은 선택권, 바로 안 써도 됨)
     else if (act === 'f-wait') { pickKind = 'wait'; paper('tap'); openFlow('pick', { sel: null }); }
     else if (act === 'f-buy') doPurchase($('#flowMsg'));
     else if (act === 'f-restore') doRestore($('#flowMsg'));
@@ -1229,6 +1230,24 @@
   const has2 = id => { try { return Entitlements.hasSticker2(id); } catch (e) { return false; } };
   const pzGot = t => (has(t.id) ? 1 : 0) + (has2(t.id) ? 1 : 0);
   const starSvg = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z"/></svg>';
+  /* 별 조각(2026-10-31 사용자): 종이 별 그림(star_one)을 꼭지 다섯 개로 나눈다. 받은 조각은 색 그대로, 아직인 조각은 흐린 회색.
+     engine/tale.js 의 starPieces 와 같은 모양 */
+  let spUid = 0;
+  const STAR_N = 5;
+  function starPieces(n, mono = false) {
+    const u = 'sp' + (++spUid), C = 50, R = 80, rad = d => d * Math.PI / 180;
+    const pt = d => `${(C + R * Math.cos(rad(d))).toFixed(1)},${(C + R * Math.sin(rad(d))).toFixed(1)}`;
+    const src = !mono && UIA.has('star_one') ? 'assets/ui/star_one.webp' : '';
+    const star = [...Array(10)].map((_, i) => { const r = i % 2 ? 20 : 47, d = rad(-90 + i * 36); return `${(C + r * Math.cos(d)).toFixed(1)},${(C + r * Math.sin(d)).toFixed(1)}`; }).join(' ');
+    let defs = '', body = '';
+    for (let k = 0; k < STAR_N; k++) {
+      const a = -90 + k * 72;
+      defs += `<clipPath id="${u}-${k}"><polygon points="${C},${C} ${pt(a - 36)} ${pt(a + 36)}"/></clipPath>`;
+      body += `<g clip-path="url(#${u}-${k})" class="${k < n ? 'on' : 'off'}">${src ? `<image href="${src}" width="100" height="100"/>` : `<polygon points="${star}" stroke-linejoin="round"/>`}</g>`;
+    }
+    const cuts = [...Array(STAR_N)].map((_, k) => `<line x1="${C}" y1="${C}" x2="${(C + 50 * Math.cos(rad(-54 + k * 72))).toFixed(1)}" y2="${(C + 50 * Math.sin(rad(-54 + k * 72))).toFixed(1)}"/>`).join('');
+    return `<svg class="star-pc${mono ? ' mono' : ''}" viewBox="0 0 100 100" aria-hidden="true"><defs>${defs}</defs>${body}<g class="cuts">${cuts}</g></svg>`;
+  }
   let curBoard = '', pendingCel = [], celebrating = false, stMode = 'puzzle';
   /* 퍼즐 탭과 스티커북 탭(2026-10-30 사용자: 따로 나눔)은 같은 화면(#view-stickers)을 쓰고 탭이 갈래를 정한다: 퍼즐 = 퍼즐판, 스티커북 = 동화별 친구 스티커 */
   const stkTab = () => curTab === 'puzzle' || curTab === 'stickers';
@@ -1417,19 +1436,19 @@
     drawPlate();
     if (pendingCel.length && !celebrating) { const k2 = pendingCel.shift(); requestAnimationFrame(() => celebrate(k2)); }
   }
-  /* 종이별 접시(앱 모드만): 별 0~5개, 5개면 [동화 하나 열기] → S12 종이별 모드 */
+  /* 별 조각 카드(앱 모드만, 홈 UI 2판: 흰 카드에 종이 별 하나, 꼭지 다섯 조각): 조각 0~5개, 다 모으면 [동화 하나 열기] → S12 종이별 모드 */
   function drawPlate() {
     const el = $('#pzPlate'); if (!el) return;
     el.hidden = !storeMode;
     if (!storeMode) return;
-    const bal = Entitlements.starBalance(), need = Entitlements.STAR_NEED, n = Math.min(bal, need);
-    const canOpen = bal >= need && Entitlements.lockedChoices().length > 0;
-    el.className = 'pz-plate' + (bal >= need ? ' full' : '');
-    el.setAttribute('aria-label', L(`종이별 ${n} / ${need}`, `Paper Stars ${n} / ${need}`));
+    const bal = Entitlements.starBalance(), need = Entitlements.STAR_NEED, n = bal % need, full = Math.floor(bal / need);
+    el.className = 'pz-plate' + (full ? ' full' : '');
+    el.setAttribute('aria-label', L(`별 조각 ${n} / ${need}, 완성한 별 ${full}개`, `Star pieces ${n} / ${need}, ${full} stars`));
     const star = UIA.has('star_one') ? uiImg('star_one') : starSvg;
-    el.innerHTML = `<div class="plate-art">${UIA.has('star_plate') ? uiImg('star_plate', 'plate-img') : ''}<div class="plate-dots">${[...Array(need)].map((_, i) => `<i class="${i < n ? 'on' : ''}">${i < n ? star : ''}</i>`).join('')}</div></div>
-      <p class="plate-n">${n} / ${need}</p>
-      ${canOpen ? `<button type="button" class="pz-open" data-act="pz-open" aria-label="${L('종이별로 동화 하나 열기', 'Open a tale with Paper Stars')}">${star}</button>` : ''}`;
+    /* 완성한 별은 모아 두는 선택권(2026-10-31 사용자): 잠긴 동화를 누르면 '별로 열기 ×N' 으로 쓴다 */
+    el.innerHTML = `<div class="plate-art">${starPieces(n)}</div>
+      <p class="plate-n"><small>${L('별 조각', 'Star pieces')}</small>${n} / ${need}</p>
+      ${full ? `<p class="plate-full">${star}<b>×${full}</b><small>${L('잠긴 동화를 열 수 있어요', 'Opens a locked tale')}</small></p>` : ''}`;
   }
   /* 판 완성 연출 한 번: 종이 뒤에서 빛이 번지고, 스티커들이 차례로 뒤집히고, 색종이가 흩날린다 + 음성 */
   function celebrate(k) {
@@ -1644,8 +1663,16 @@
     setTab(nb.dataset.tab); nb.focus();
   });
   addEventListener('hashchange', () => { const k = tabFromHash(); if (k) setTab(k); });
-  /* 탭 알림 점: 퍼즐 = 새 조각이 있을 때(퍼즐 탭을 보고 있지 않을 때), 스티커북 = 종이별이 5개 모였을 때(앱 모드) */
+  /* 탭 알림 점: 퍼즐 = 새 조각이 있을 때(퍼즐 탭을 보고 있지 않을 때), 스티커북 = 종이별이 5개 모였을 때(앱 모드).
+     홈 머리 별 조각(2026-10-31 사용자): 톱니 왼쪽에 단색 별(받은 조각만 진하게), 누르면 스티커북 탭의 별 카드로 */
+  const starChip = $('#starChip');
+  starChip.addEventListener('click', () => { setTab('stickers'); setTimeout(() => { const p = $('#pzPlate'); if (p) p.scrollIntoView({ block: 'center', behavior: 'smooth' }); }, 350); });
   function paintTabBadge() {
+    const sb = Entitlements.starBalance(), need = Entitlements.STAR_NEED, sn = sb % need, sf = Math.floor(sb / need);
+    starChip.hidden = !Entitlements.appMode();
+    starChip.classList.toggle('full', sf > 0);
+    starChip.innerHTML = starPieces(sn, true) + (sf ? `<b class="chip-n">×${sf}</b>` : '');
+    starChip.setAttribute('aria-label', L(`별 조각 ${sn} / ${need}, 완성한 별 ${sf}개`, `Star pieces ${sn} / ${need}, ${sf} stars`));
     tabBtns.find(b => b.dataset.tab === 'puzzle').querySelector('.tab-badge').hidden = !(curTab !== 'puzzle' && pzNew().length > 0);
     tabBtns.find(b => b.dataset.tab === 'stickers').querySelector('.tab-badge').hidden = !(Entitlements.appMode() && Entitlements.starBalance() >= Entitlements.STAR_NEED);
   }
@@ -1723,7 +1750,7 @@
   requestAnimationFrame(() => requestAnimationFrame(() => $('#tabs').classList.add('ready')));   // 첫 그림 뒤부터 탭 구멍이 움직인다
 
   /* ── 누름 반응 (§5-3): pointerdown 에서 .is-pressed, pointerup·cancel 에서 뗀다. 모양은 CSS 가 정한다 ── */
-  const PRESS = '.tab, .card, .pz-b, .pick, .pl-tile, .round, .pz-pb, .pz-open, .b-go, .b-play, .b-chip, .hero-play, .hd, .ticket, .pl-top, .pl-b, .g-item, .gate-opt';
+  const PRESS = '.star-open, .star-chip, .tab, .card, .pz-b, .pick, .pl-tile, .round, .pz-pb, .pz-open, .b-go, .b-play, .b-chip, .hero-play, .hd, .ticket, .pl-top, .pl-b, .g-item, .gate-opt';
   let pressed = null;
   const unpress = () => { if (pressed) { pressed.classList.remove('is-pressed'); pressed = null; } };
   document.addEventListener('pointerdown', e => {

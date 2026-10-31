@@ -547,11 +547,19 @@ svg text { font-weight: 800; }
 #endScreen .aw-book { position: relative; width: 96px; height: 96px; border-radius: 50%; display: block; flex: none; overflow: hidden; background: #DCCBA8; box-shadow: inset 2px 3px 5px rgba(46, 36, 28, .32), inset -1px -1.5px 0 rgba(255, 252, 244, .7); }
 #endScreen .aw-hole { position: absolute; inset: 0; display: grid; place-items: center; }
 #endScreen .aw-hole img { width: 82%; height: 82%; border-radius: 50%; object-fit: cover; border: 4px solid #FBF7F1; box-shadow: 1px 3px 4px rgba(46, 36, 28, .35); }
-#endScreen .aw-plate { display: flex; align-items: center; justify-content: center; gap: 7px; min-width: 128px; height: 80px; padding: 0 16px; border-radius: 40px; background: #F6ECD8; box-shadow: inset 0 1.5px 0 #FFFDF4, 2px 4px 3px rgba(70, 48, 30, .28), 4px 9px 14px rgba(70, 48, 30, .14); text-decoration: none; }
+#endScreen .aw-plate { display: grid; place-items: center; width: 80px; height: 80px; padding: 8px; border-radius: 20px; background: #FFFFFF; box-shadow: 0 0 0 1px rgba(0, 0, 0, .04), 0 2px 8px rgba(0, 0, 0, .10); text-decoration: none; }   /* 별 조각 카드(홈 UI 2판) */
 #endScreen .aw-plate[hidden] { display: none; }
-#endScreen .aw-plate i { width: 17px; height: 17px; border-radius: 50%; background: #DCCBA8; box-shadow: inset 1px 1.5px 2px rgba(46, 36, 28, .3); }
-#endScreen .aw-plate i.on { background: var(--reward); box-shadow: 0 1px 2px rgba(46, 36, 28, .3); }
-#endScreen .aw-plate.full { background: #FBE9C8; box-shadow: 0 0 0 3px var(--reward), 2px 4px 3px rgba(70, 48, 30, .28), 4px 9px 14px rgba(70, 48, 30, .14); }
+.star-pc { display: block; width: 100%; height: 100%; overflow: visible; }
+.star-pc .off { opacity: .22; filter: grayscale(1); }
+.star-pc .cuts line { stroke: #FFFFFF; stroke-width: 1.6; }
+
+/* 별 조각은 반짝이는 수정(2026-10-31 사용자: 보상만 페이퍼아트 예외). 둘레 보랏빛이 숨 쉬듯 번지고, 다 모이면 더 밝게 */
+.star-pc:not(.mono) { animation: starGlow 2.4s ease-in-out infinite; }
+.star-pc:not(.mono) .off { opacity: .28; filter: grayscale(.7); }
+@keyframes starGlow { 0%, 100% { filter: drop-shadow(0 0 2px rgba(255, 255, 255, .9)) drop-shadow(0 0 5px rgba(186, 140, 255, .55)); } 50% { filter: drop-shadow(0 0 3px rgba(255, 255, 255, 1)) drop-shadow(0 0 11px rgba(170, 130, 255, .9)); } }
+.full .star-pc:not(.mono) { animation-duration: 1.4s; }
+@media (prefers-reduced-motion: reduce) { .star-pc:not(.mono) { animation: none; filter: drop-shadow(0 0 5px rgba(186, 140, 255, .6)); } }
+#endScreen .aw-plate.full { box-shadow: 0 0 0 3px var(--reward), 0 2px 8px rgba(0, 0, 0, .10); }
 .flyer { position: fixed; left: 0; top: 0; z-index: 70; width: 120px; height: 120px; pointer-events: none; will-change: transform; transform-origin: 50% 50%; }
 .flyer.stk img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 6px solid #FBF7F1; box-shadow: 2px 5px 7px rgba(46, 36, 28, .4); display: block; }
 .flyer.cast { width: 150px; height: 150px; }
@@ -559,7 +567,7 @@ svg text { font-weight: 800; }
 .flyer.star { width: 84px; height: 84px; }
 .flyer.star img { width: 100%; height: 100%; display: block; object-fit: contain; filter: drop-shadow(2px 4px 3px rgba(46, 36, 28, .35)); }
 .flyer.star svg { width: 100%; height: 100%; display: block; fill: var(--reward); filter: drop-shadow(2px 4px 3px rgba(46, 36, 28, .35)); }
-@media (orientation: landscape) and (max-height: 520px) { #endScreen .aw-book { width: 80px; height: 80px; } #endScreen .aw-plate { height: 64px; min-width: 112px; } }
+@media (orientation: landscape) and (max-height: 520px) { #endScreen .aw-book { width: 80px; height: 80px; } #endScreen .aw-plate { width: 64px; height: 64px; } }
 
 /* ═════════ 시작·끝 화면 단추 크기 (UI_REDESIGN §7-9): 아이 1차 알약 = 높이 88·폭 ≥280·글자 24 850, 아이 2차 원(집·한 번 더) = 88. 아이폰(세로·가로) = 72. 모양·색은 그대로 ═════════ */
 #startScreen .pills .pill.go, #startScreen .pills .pill.go.read { min-height: 88px; min-width: 280px; font-size: 24px; font-weight: 850; }

@@ -1,0 +1,22 @@
+[
+ {
+  "id": "star_v3a",
+  "kind": "sprite",
+  "aspect": "square 1:1",
+  "out": "assets/raw/ui/star_v3a.png",
+  "refs": [
+   "/Users/house_of_4k2b/.claude/uploads/b4842b92-f585-4bc1-9ed2-20ae37209aff/c909abda-image.jpg"
+  ],
+  "prompt": "Use case: game UI reward collectible icon for a children's app (ages 3-4) — a magical \"star piece\" that kids collect.\nSubject: ONE sparkling crystal star with exactly FIVE sharp, evenly spaced points, perfectly upright (one point straight up), symmetrical, seen straight on, centred, filling about 88% of the square canvas.\nLook: smooth chunky points with clear facets, like a soft-cornered gem star.\nBright, magical and very pretty like a treasure gem in a mobile game: faceted cut-crystal planes, iridescent pastel colours (lavender, pink, violet, sky blue, aqua, a touch of gold), luminous inner glow at the centre, crisp white highlights on facet edges, a few tiny twinkle sparkles on the star itself. Clean and cute, not dark, not scary.\nNo face, no text, no frame, no extra objects. TRUE transparent background, no drop shadow, no glow halo outside the star (glow is added by the app).\nThe reference image shows the desired colour and crystal mood only; make a clean upright five-point star, not that shape."
+ },
+ {
+  "id": "star_v3b",
+  "kind": "sprite",
+  "aspect": "square 1:1",
+  "out": "assets/raw/ui/star_v3b.png",
+  "refs": [
+   "/Users/house_of_4k2b/.claude/uploads/b4842b92-f585-4bc1-9ed2-20ae37209aff/c909abda-image.jpg"
+  ],
+  "prompt": "Use case: game UI reward collectible icon for a children's app (ages 3-4) — a magical \"star piece\" that kids collect.\nSubject: ONE sparkling crystal star with exactly FIVE sharp, evenly spaced points, perfectly upright (one point straight up), symmetrical, seen straight on, centred, filling about 88% of the square canvas.\nLook: slim, sharp crystal points with many small facets like a shard of a magic crystal, more sparkle.\nBright, magical and very pretty like a treasure gem in a mobile game: faceted cut-crystal planes, iridescent pastel colours (lavender, pink, violet, sky blue, aqua, a touch of gold), luminous inner glow at the centre, crisp white highlights on facet edges, a few tiny twinkle sparkles on the star itself. Clean and cute, not dark, not scary.\nNo face, no text, no frame, no extra objects. TRUE transparent background, no drop shadow, no glow halo outside the star (glow is added by the app).\nThe reference image shows the desired colour and crystal mood only; make a clean upright five-point star, not that shape."
+ }
+]

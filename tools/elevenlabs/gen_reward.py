@@ -8,7 +8,9 @@ K, E = json.loads(out)
 YAY = '[excited, delighted, bright, cheering] '
 jobs = [('퍼즐 조각을 받았어요!', 'You got a puzzle piece!', YAY), ('그림이 완성됐어요!', 'The picture is complete!', '[thrilled, amazed, cheering] '),
         ('새 친구 스티커!', 'A new friend sticker!', '[excited, giggly, delighted] '), ('스티커를 받았어요!', 'You got a sticker!', YAY),
-        ('종이별 하나 받았어요!', 'You got a Paper Star!', YAY), ('다섯 개! 동화를 하나 열 수 있어요', 'Five stars! You can open a tale.', '[thrilled, amazed, cheering] ')]
+        ('종이별 하나 받았어요!', 'You got a Paper Star!', YAY), ('다섯 개! 동화를 하나 열 수 있어요', 'Five stars! You can open a tale.', '[thrilled, amazed, cheering] '),
+        # 2026-10-31 별 조각 다섯 개로 별 하나(사용자)
+        ('별 조각 하나 받았어요!', 'You got a star piece!', YAY), ('별이 완성됐어요! 동화를 하나 열 수 있어요', 'Your star is complete! You can open a tale.', '[thrilled, amazed, cheering] ')]
 def clip(text, lang, tag):
     sent = tag + text
     h = hashlib.md5(f"{g['VOICE']}|{g['MODEL']}|{sent}|{g['SET']}".encode()).hexdigest()[:10]

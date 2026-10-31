@@ -397,7 +397,9 @@ const NARRATION_CLIPS = {
  "딸기 다현이": "audio/el/home/nar_3bc36030c1.mp3",
  "유령": "audio/el/home/nar_a26f897999.mp3",
  "핼러윈 호박": "audio/el/home/nar_e975d07cc6.mp3",
- "호박 다현이": "audio/el/home/nar_f32ece17fd.mp3"
+ "호박 다현이": "audio/el/home/nar_f32ece17fd.mp3",
+ "별 조각 하나 받았어요!": "audio/el/home/nar_80f741cae2.mp3",
+ "별이 완성됐어요! 동화를 하나 열 수 있어요": "audio/el/home/nar_f931973fd2.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -2275,5 +2277,13 @@ const NARRATION_CLIPS_EN = {
  "Pumpkin Dahyun": {
   "t": "Pumpkin Dahyun",
   "c": "audio/el/home/en/nar_caaaf2d84d.mp3"
+ },
+ "You got a star piece!": {
+  "t": "You got a star piece!",
+  "c": "audio/el/home/en/nar_919a963ca9.mp3"
+ },
+ "Your star is complete! You can open a tale.": {
+  "t": "Your star is complete! You can open a tale.",
+  "c": "audio/el/home/en/nar_4cc3562a28.mp3"
  }
 };

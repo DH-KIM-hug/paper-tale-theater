@@ -1264,6 +1264,21 @@ const Tale = (() => {
   /* 읽어 주기 단추의 펼친 책 (종이 두 장) */
   /* 단추 그림은 앱 UI 생성 그림(assets/ui/*.webp)을 쓴다(2026-10-29 사용자 지시: SVG 그림 → 이미지) */
   const uiPic = (k, cls = '') => `<img class="uipic ${cls}" src="${ROOT_URL}assets/ui/${k}.webp" alt="" aria-hidden="true" draggable="false">`;
+  /* 별 조각(2026-10-31 사용자): 종이 별 그림(star_one)을 꼭지 다섯 개로 나눈다. n = 받은 조각 수, only = 그 조각 하나만(날아오는 조각). home.js 의 starPieces 와 같은 모양 */
+  let spUid = 0;
+  function starPieces(n, only = -1) {
+    const u = 'sp' + (++spUid), C = 50, R = 80, rad = d => d * Math.PI / 180;
+    const pt = d => `${(C + R * Math.cos(rad(d))).toFixed(1)},${(C + R * Math.sin(rad(d))).toFixed(1)}`;
+    let defs = '', body = '';
+    for (let k = 0; k < 5; k++) {
+      if (only >= 0 && k !== only) continue;
+      const a = -90 + k * 72;
+      defs += `<clipPath id="${u}-${k}"><polygon points="${C},${C} ${pt(a - 36)} ${pt(a + 36)}"/></clipPath>`;
+      body += `<g clip-path="url(#${u}-${k})" class="${only >= 0 || k < n ? 'on' : 'off'}"><image href="${ROOT_URL}assets/ui/star_one.webp" width="100" height="100"/></g>`;
+    }
+    const cuts = only >= 0 ? '' : [...Array(5)].map((_, k) => `<line x1="${C}" y1="${C}" x2="${(C + 50 * Math.cos(rad(-54 + k * 72))).toFixed(1)}" y2="${(C + 50 * Math.sin(rad(-54 + k * 72))).toFixed(1)}"/>`).join('');
+    return `<svg class="star-pc" viewBox="0 0 100 100" aria-hidden="true"><defs>${defs}</defs>${body}<g class="cuts">${cuts}</g></svg>`;
+  }
   /* 화면 단추 기호는 단색(홈 UI 2판, 2026-10-30 사용자: 홈 아이콘도 모노톤). 색은 단추가 정한다(currentColor) */
   const MONO = {
     ic_home: '<path d="M12 3.2L2.6 11a1 1 0 0 0 .6 1.8H5V20a1 1 0 0 0 1 1h4.2v-5.4h3.6V21H18a1 1 0 0 0 1-1v-7.2h1.8a1 1 0 0 0 .6-1.8z"/>',
@@ -1363,7 +1378,7 @@ const Tale = (() => {
   const ENGINE_EN = { '끝내기': 'Exit', '돌려서 크게 보기': 'Rotate for a bigger view', '이야기 시작': 'Start story', '처음으로': 'Home', '다시 보기': 'Watch again', '끝!': 'The End!',
     '자동 재생': 'Auto play', '읽어 주기': 'Read to me', '오늘 동화 끝! 내일 또 만나요': 'The end! See you tomorrow', '한 번 더': 'Once more', '홈으로': 'Home',
     '오늘은 여기까지! 눈을 쉬어요': 'That is enough for today. Let our eyes rest.', '어른이 +10분': 'Grown-up: +10 min', '어른이 확인해 주세요': 'Grown-ups, please check', '닫기': 'Close',
-    '놀이': 'Play', '스티커북': 'Sticker Book', '종이별': 'Paper Stars', '스티커를 받았어요!': 'You got a sticker!', '종이별 하나 받았어요!': 'You got a Paper Star!', '다섯 개! 동화를 하나 열 수 있어요': 'Five stars! You can open a tale.', '새 친구 스티커!': 'A new friend sticker!', '퍼즐 조각을 받았어요!': 'You got a puzzle piece!', '그림이 완성됐어요!': 'The picture is complete!' };
+    '놀이': 'Play', '스티커북': 'Sticker Book', '별 조각': 'Star pieces', '스티커를 받았어요!': 'You got a sticker!', '별 조각 하나 받았어요!': 'You got a star piece!', '별이 완성됐어요! 동화를 하나 열 수 있어요': 'Your star is complete! You can open a tale.', '새 친구 스티커!': 'A new friend sticker!', '퍼즐 조각을 받았어요!': 'You got a puzzle piece!', '그림이 완성됐어요!': 'The picture is complete!' };
   const tr = ko => {
     if (!englishOn()) return ko;
     const t = typeof TEXT_EN !== 'undefined' && TEXT_EN[ko], c = NARRATION_CLIPS_EN[ko];
@@ -1447,7 +1462,7 @@ const Tale = (() => {
     </div>
     <div class="aw-tray" id="awTray" hidden>
       <a class="aw-book" id="awBook" href="${home}#stickers" aria-label="${tr('스티커북')}"><i class="aw-hole"></i></a>
-      <a class="aw-plate" id="awPlate" href="${home}#stickers" aria-label="${tr('종이별')}" hidden><i></i><i></i><i></i><i></i><i></i></a>
+      <a class="aw-plate" id="awPlate" href="${home}#stickers" aria-label="${tr('별 조각')}" hidden></a>
     </div>
     <div id="endConfetti" class="endconf"></div>
   </div>
@@ -1700,8 +1715,8 @@ const Tale = (() => {
     const bal = () => { try { return Entitlements.starBalance(); } catch (e) { return 0; } };
     const need = (typeof Entitlements !== 'undefined' && Entitlements.STAR_NEED) || 5;
     tray.hidden = false; plate.hidden = !app;
-    const dots = [...plate.children];
-    const paintPlate = n => dots.forEach((d, i) => d.classList.toggle('on', i < n));
+    /* 별 조각은 다섯 개마다 별 하나로 넘어가 모아 둔다(2026-10-31 사용자: 선택권). b = 지금 잔고, landed = 방금 받은 조각이 별을 채웠으면 꽉 찬 별을 보여 준다 */
+    const paintPlate = (b, landed) => { plate.innerHTML = starPieces(landed && b > 0 && b % need === 0 ? need : b % need); };
     const hole = book.querySelector('.aw-hole');
     /* 이미 받은 스티커는 쟁반 구멍에 붙어 있다 */
     let botSrc = null;                                            // 구멍에 붙는 그림 = 아래 조각(없으면 썸네일)
@@ -1711,7 +1726,7 @@ const Tale = (() => {
     if (had) hole.innerHTML = stk();
     const pzSay = k => (k === 'piece2' || (k === 'sticker' && award.sticker2)) ? '그림이 완성됐어요!' : '퍼즐 조각을 받았어요!';
     const after = bal();
-    paintPlate(award.star ? Math.min(need, Math.max(0, after - 1)) : Math.min(need, after));
+    paintPlate(award.star ? Math.max(0, after - 1) : after);
     const fly = (html, cls, from, to, ms) => new Promise(res => {
       if (calm) return res();
       const el = document.createElement('div'); el.className = 'flyer ' + cls; el.innerHTML = html; document.body.appendChild(el);
@@ -1729,9 +1744,9 @@ const Tale = (() => {
     /* 보상 말(퍼즐 조각·스티커·종이별)은 홈과 같은 Lily 녹음(home_narration_el.js)을 받아 합친다. 녹음이 없으면 브라우저 말하기(TTS)라 감정 없이 들렸다 (2026-10-29) */
     const rewardClips = (async () => {
       try {
-        const m = new Function((await (await fetch(ROOT_URL + 'home_narration_el.js?v=20261029rw1')).text()) + '; return [NARRATION_CLIPS, NARRATION_CLIPS_EN];')();
+        const m = new Function((await (await fetch(ROOT_URL + 'home_narration_el.js?v=20261031sp1')).text()) + '; return [NARRATION_CLIPS, NARRATION_CLIPS_EN];')();
         if (typeof NARRATION_CLIPS === 'undefined') window.NARRATION_CLIPS = {};
-        ['퍼즐 조각을 받았어요!', '그림이 완성됐어요!', '새 친구 스티커!', '스티커를 받았어요!', '종이별 하나 받았어요!', '다섯 개! 동화를 하나 열 수 있어요'].forEach(ko => {
+        ['퍼즐 조각을 받았어요!', '그림이 완성됐어요!', '새 친구 스티커!', '스티커를 받았어요!', '별 조각 하나 받았어요!', '별이 완성됐어요! 동화를 하나 열 수 있어요'].forEach(ko => {
           if (m[0][ko] && !NARRATION_CLIPS[ko]) NARRATION_CLIPS[ko] = ROOT_URL + m[0][ko];
           const en = ENGINE_EN[ko], e = en && m[1][en];
           if (e && typeof NARRATION_CLIPS_EN !== 'undefined' && !NARRATION_CLIPS_EN[en]) NARRATION_CLIPS_EN[en] = { t: en, c: ROOT_URL + e.c };
@@ -1756,23 +1771,23 @@ const Tale = (() => {
           const c = (Entitlements.castOf(id).find(x => x.k === award.cast)) || null;
           if (c) items.push({ kind: 'cast', img: /^(https?:|\/)/.test(c.img) ? c.img : ROOT_URL + c.img, target: () => hole.getBoundingClientRect() });
         }
-        if (wantStar) items.push({ kind: 'star', target: () => (dots[Math.max(0, Math.min(need, after) - 1)] || plate).getBoundingClientRect() });
+        if (wantStar) items.push({ kind: 'star', target: () => plate.getBoundingClientRect() });
         if (!items.length) return true;
         let said = Promise.resolve(), castShown = false;
         const queue = t => { said = said.then(() => rewardClips).then(() => { try { return Narrator.speak(tr(t)); } catch (e) { return null; } }).catch(() => {}); };
         const ok = await Reward3D.play({
           items,
           onAppear: k => {
-            if (k === 'star') { sfx(after >= need ? 'tada' : 'sparkle', .7); queue(after >= need ? '다섯 개! 동화를 하나 열 수 있어요' : '종이별 하나 받았어요!'); }
+            if (k === 'star') { sfx(after % need === 0 ? 'tada' : 'sparkle', .7); queue(after % need === 0 ? '별이 완성됐어요! 동화를 하나 열 수 있어요' : '별 조각 하나 받았어요!'); }
             else { sfx(k === 'piece2' ? 'tada' : 'pop', .8); queue(k === 'cast' ? '새 친구 스티커!' : pzSay(k)); }
           },
           onLand: k => {
-            if (k === 'star') { paintPlate(Math.min(need, after)); pulse(plate); if (after >= need) plate.classList.add('full'); }
+            if (k === 'star') { paintPlate(after, true); pulse(plate); if (after > 0 && after % need === 0) plate.classList.add('full'); }
             else { if (k === 'sticker' || k === 'piece') hole.innerHTML = stk(); pulse(book); }
           }
         });
         if (!ok) return false;
-        if (!es.hidden) { if (award.sticker || award.sticker2) hole.innerHTML = stk(); paintPlate(Math.min(need, after)); }
+        if (!es.hidden) { if (award.sticker || award.sticker2) hole.innerHTML = stk(); paintPlate(after, true); }
         return true;
       } catch (e) { return false; }
     };
@@ -1802,12 +1817,12 @@ const Tale = (() => {
       }
       if (award.star && app && !es.hidden) {
         if (award.sticker || award.sticker2 || award.cast) await sleep(800);
-        const slot = dots[Math.max(0, Math.min(need, after) - 1)];
-        await fly(uiPic('star_one'), 'star', (award.sticker || award.sticker2 || award.cast) ? book.getBoundingClientRect() : es.querySelector('.bwin').getBoundingClientRect(), slot.getBoundingClientRect(), 1100);
-        paintPlate(Math.min(need, after)); pulse(plate);
-        sfx(after >= need ? 'tada' : 'sparkle', .7);               // 별 반짝(Pixabay Magic Twinkle), 다섯 개째는 짧은 팡파르(Kenney CC0)
-        say(after >= need ? '다섯 개! 동화를 하나 열 수 있어요' : '종이별 하나 받았어요!');
-        if (after >= need) plate.classList.add('full');
+        const slot = plate, k = Math.max(0, Math.min(need, after) - 1);
+        await fly(starPieces(0, k), 'star', (award.sticker || award.sticker2 || award.cast) ? book.getBoundingClientRect() : es.querySelector('.bwin').getBoundingClientRect(), slot.getBoundingClientRect(), 1100);
+        paintPlate(after, true); pulse(plate);
+        sfx(after % need === 0 ? 'tada' : 'sparkle', .7);               // 별 반짝(Pixabay Magic Twinkle), 다섯 개째는 짧은 팡파르(Kenney CC0)
+        say(after % need === 0 ? '별이 완성됐어요! 동화를 하나 열 수 있어요' : '별 조각 하나 받았어요!');
+        if (after > 0 && after % need === 0) plate.classList.add('full');
       }
     })();
   }
