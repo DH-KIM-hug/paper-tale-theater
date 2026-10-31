@@ -433,6 +433,27 @@ svg text { font-weight: 800; }
   body.pt-title #stageWrap { margin-top: calc(env(safe-area-inset-top, 0px) + var(--tt) + 3svh); }
   body.pt-title #bubble { top: calc(env(safe-area-inset-top, 0px) + var(--tt) + 3svh + var(--pv) + 2.5svh); }
 }
+#ptBack { display: none; }
+@media (orientation: portrait) and (max-width: 700px) {
+  #tale { z-index: 1; }
+  #ptBack { display: block; position: fixed; inset: -8%; z-index: 0; pointer-events: none; background: no-repeat center / cover; filter: blur(22px) saturate(1.05); opacity: .75; transition: background-image .6s; }
+}
+/* 말하는 인물 얼굴: 대사 상자 왼쪽 위에 걸친 동그라미(세로 휴대폰만) */
+#bubbleFace { display: none; }
+#choiceTray[hidden] { display: none; }
+@media (orientation: portrait) and (max-width: 700px) {
+  #bubbleFace:not([hidden]) { display: block; position: absolute; left: 10px; top: 50%; margin-top: -29px; width: 58px; height: 58px; border-radius: 50%; background: #F3EEE6 no-repeat 50% 0 / 128% auto; box-shadow: 0 0 0 2px #fff, 0 2px 6px rgba(30, 20, 10, .18); }
+  #bubble.has-face { padding-left: 78px; min-height: 78px; display: flex; align-items: center; }   /* 얼굴 자리만큼 글을 비킨다 */
+  #bubbleFace.flip { transform: scaleX(-1); }
+  #bubble:not(.has-face) #bubbleFace { display: none; }
+  /* 고르기 판: 무대 아래 빈 곳에 고를 것을 크게 */
+  #choiceTray { position: absolute; z-index: 44; left: 12px; right: 12px; bottom: calc(env(safe-area-inset-bottom, 0px) + 3svh); display: flex; justify-content: center; gap: 12px; }
+  #choiceTray .ct-b { flex: 1 1 0; max-width: 132px; height: min(20svh, 132px); min-height: 88px; padding: 10px; border: 0; border-radius: 24px; background: #fff; box-shadow: 0 2px 10px rgba(30, 20, 10, .14), inset 0 0 0 2px rgba(201, 182, 242, .9); cursor: pointer; transition: opacity .4s, transform .15s; touch-action: manipulation; }
+  #choiceTray .ct-b svg { width: 100%; height: 100%; overflow: visible; }
+  #choiceTray .ct-b:active { transform: scale(.94); }
+  #choiceTray .ct-b.hint { box-shadow: 0 0 0 4px #FFC23A, 0 0 18px rgba(255, 194, 58, .8); animation: ctHint 1s ease-in-out infinite; }
+  @keyframes ctHint { 50% { transform: translateY(-6px); } }
+}
 #rotateHint.gone { opacity: 0; pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) {

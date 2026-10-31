@@ -135,6 +135,7 @@ const Tale = (() => {
     const was = busy; busy = true;
     const d = dir && dir.begin();
     try {
+      showFace(null);   // 새 대사마다 얼굴을 지우고, 배역 대사면 연출(seg)이 다시 붙인다
       if (VERIFY) await vSay(text, d);
       else await Narrator.speak(text, { ...options, ...(d ? { onSeg: d.seg } : {}) });
     }
@@ -202,6 +203,7 @@ const Tale = (() => {
     if (skip) return;
     vLine = text;
     const go = vGo();
+    showFace(null);
     Narrator.speak(text, d ? { onSeg: d.seg } : {}).catch(() => { /* 소리 실패는 무시 */ });
     await go;
     Narrator.stop();
@@ -221,6 +223,17 @@ const Tale = (() => {
      - 내레이터 대사가 나오거나 대사가 끝나면: 동화가 잡아 둔 원래 화면으로 돌아간다
      - 동화가 그 사이 카메라를 직접 움직이면 연출은 그 대사에서 손을 뗀다 */
   let dir = null;
+  /* 말하는 인물 얼굴(2026-10-31 사용자): 배우 그림(첫 image)의 머리 쪽을 동그라미에 담아 대사 상자 왼쪽 위에 붙인다. CSS 가 세로 휴대폰에서만 보인다 */
+  function showFace(a) {
+    const f = $('#bubbleFace'); if (!f) return;
+    let href = '';
+    try { const im = a && a.body && a.body.querySelector('image'); href = im ? (im.getAttribute('href') || im.getAttributeNS('http://www.w3.org/1999/xlink', 'href') || '') : ''; } catch (e) { href = ''; }
+    const bub = $('#bubble');
+    if (!href) { f.hidden = true; if (bub) bub.classList.remove('has-face'); return; }
+    f.style.backgroundImage = `url("${href}")`;
+    f.classList.toggle('flip', (a.flip || 1) < 0);
+    f.hidden = false; if (bub) bub.classList.add('has-face');
+  }
   function director(cfg) {
     if (!cfg) { dir = null; return; }
     const moveCam = cfg.camTo || camTo;
@@ -269,6 +282,7 @@ const Tale = (() => {
         };
         return {
           seg(role) {
+            showFace(role === 'nar' || !cfg.cast[role] ? null : get(role));   // 세로 휴대폰: 대사 상자에 말하는 인물 얼굴
             if (!ours()) return;
             if (role === 'nar' || !cfg.cast[role]) { if (moved) go(base.x, base.y, base.z); return; }
             const a = get(role);
@@ -508,6 +522,24 @@ const Tale = (() => {
       const h = helper({ target: good.el, prompt });
       h.stop(); // 골라요는 정답 위치를 먼저 알려주지 않는다 — 12초 재안내만
       let t2 = prompt ? setTimeout(() => Narrator.speak(prompt), 12000) : null;
+      /* 세로 휴대폰(2026-10-31 사용자): 고를 것을 무대 아래 빈 곳에 크게 꺼내 놓는다(무대 속 것도 그대로 눌린다) */
+      const tray = $('#choiceTray'), useTray = tray && !AUTO() && !VERIFY && matchMedia('(orientation: portrait) and (max-width: 700px)').matches;
+      const sync = () => { if (!useTray) return; options.forEach(o => { if (o._tb) { o._tb.style.opacity = o.el.style.opacity || ''; o._tb.classList.toggle('hint', !!o.el.style.filter); } }); };
+      if (useTray) {
+        tray.innerHTML = '';
+        options.forEach(o => {
+          let bb; try { bb = o.el.getBBox(); } catch (e) { bb = null; }
+          if (!bb || !bb.width) return;
+          const pad = Math.max(bb.width, bb.height) * .08, b = document.createElement('button');
+          b.type = 'button'; b.className = 'ct-b';
+          const c = o.el.cloneNode(true); c.removeAttribute('transform'); c.style.filter = ''; c.style.opacity = ''; c.style.translate = '';
+          b.innerHTML = `<svg viewBox="${bb.x - pad} ${bb.y - pad} ${bb.width + 2 * pad} ${bb.height + 2 * pad}" aria-hidden="true"></svg>`;
+          b.firstChild.appendChild(c);
+          b.addEventListener('pointerdown', async e => { await o._on(e); sync(); });
+          o._tb = b; tray.appendChild(b);
+        });
+        tray.hidden = !tray.children.length;
+      }
       options.forEach(o => {
         arm(o.el, true);
         o._on = async e => {
@@ -516,6 +548,7 @@ const Tale = (() => {
           locked = true; clearTimeout(t2);
           if (o.ok) {
             options.forEach(x => { x.el.removeEventListener('pointerdown', x._on); arm(x.el, false); x.el.style.filter = ''; x.el.style.opacity = ''; });
+            if (useTray) { tray.hidden = true; tray.innerHTML = ''; }
             AudioFX.ding(); res(o); return;
           }
           misses++;
@@ -528,7 +561,7 @@ const Tale = (() => {
             pulse(good.el);
             if (who) await say(who);
           }
-          locked = false;
+          locked = false; sync();
           t2 = prompt ? setTimeout(() => Narrator.speak(prompt), 12000) : null;
         };
         o.el.addEventListener('pointerdown', o._on);
@@ -1437,7 +1470,8 @@ const Tale = (() => {
   </div>
   <div id="rotateHint">${monoPic('ic_rotate')}${tr('돌려서 크게 보기')}</div>
   <div id="ptTitle" aria-hidden="true"></div>
-  <div id="bubble" hidden><p id="bubbleText"></p></div>
+  <div id="bubble" hidden><span id="bubbleFace" aria-hidden="true" hidden></span><p id="bubbleText"></p></div>
+  <div id="choiceTray" hidden></div>
   <div id="cutPanel" hidden></div>
   <div id="startScreen" class="screen">
     <a class="homeIcon" id="homeIcon" href="${home}" aria-label="${tr('처음으로')}">${monoPic('ic_home')}</a>
@@ -1500,6 +1534,12 @@ const Tale = (() => {
     /* 세로 휴대폰: 무대 위에 동화 레터링(홈 카드와 같은 그림), 아래에 대사(2026-10-31 사용자). CSS 가 세로일 때만 보인다 */
     const ptT = $('#ptTitle');
     if (ptT && taleId()) { const im = new Image(); im.alt = ''; im.draggable = false; im.onload = () => { ptT.appendChild(im); document.body.classList.add('pt-title'); }; im.src = ROOT_URL + 'assets/thumbs/' + taleId() + '_lt' + (englishOn() ? '_en' : '') + '.webp?v=c2'; } cam = $('#cam'); bgL = $('#bgL'); world = $('#world'); fxL = $('#fxL'); handEl = $('#hand');
+    /* 세로 휴대폰 바탕(2026-10-31 사용자 '가'): 지금 장면 배경 그림을 크게·흐리게 깔아 위 레터링·아래 대사 자리까지 장면 색으로 잇는다 */
+    { const back = document.createElement('div'); back.id = 'ptBack'; back.setAttribute('aria-hidden', 'true'); document.body.prepend(back);
+      let last = '';
+      const upd = () => { const im = bgL.querySelector('image'); const h = im ? (im.getAttribute('href') || im.getAttributeNS('http://www.w3.org/1999/xlink', 'href') || '') : '';
+        if (h && h !== last) { last = h; back.style.backgroundImage = `url("${h}")`; } };
+      new MutationObserver(upd).observe(bgL, { childList: true, subtree: true, attributes: true, attributeFilter: ['href'] }); upd(); }
     // 대사 건너뛰기: 무대 1초 꾹 (보호자용). 짧은 탭은 무시한다
     $('#tale').addEventListener('contextmenu', e => e.preventDefault()); // 길게 누를 때 뜨는 메뉴(이미지 저장 등) 막기
     let ht = null;
