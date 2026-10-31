@@ -402,7 +402,8 @@ const NARRATION_CLIPS = {
  "별이 완성됐어요! 동화를 하나 열 수 있어요": "audio/el/home/nar_f931973fd2.mp3",
  "반짝 스티커가 생겼어요!": "audio/el/home/nar_3a8af06f35.mp3",
  "반짝이게 할 스티커를 골라요": "audio/el/home/nar_95c01991aa.mp3",
- "친구 스티커가 생겼어요!": "audio/el/home/nar_2df210e8be.mp3"
+ "친구 스티커가 생겼어요!": "audio/el/home/nar_2df210e8be.mp3",
+ "동화 스티커를 받았어요!": "audio/el/home/nar_26c030ce25.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -2300,5 +2301,9 @@ const NARRATION_CLIPS_EN = {
  "You got a friend sticker!": {
   "t": "You got a friend sticker!",
   "c": "audio/el/home/en/nar_5dfcf4c8eb.mp3"
+ },
+ "You got a story sticker!": {
+  "t": "You got a story sticker!",
+  "c": "audio/el/home/en/nar_c8fa6c6c4f.mp3"
  }
 };

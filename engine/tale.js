@@ -1378,7 +1378,7 @@ const Tale = (() => {
   const ENGINE_EN = { '끝내기': 'Exit', '돌려서 크게 보기': 'Rotate for a bigger view', '이야기 시작': 'Start story', '처음으로': 'Home', '다시 보기': 'Watch again', '끝!': 'The End!',
     '자동 재생': 'Auto play', '읽어 주기': 'Read to me', '오늘 동화 끝! 내일 또 만나요': 'The end! See you tomorrow', '한 번 더': 'Once more', '홈으로': 'Home',
     '오늘은 여기까지! 눈을 쉬어요': 'That is enough for today. Let our eyes rest.', '어른이 +10분': 'Grown-up: +10 min', '어른이 확인해 주세요': 'Grown-ups, please check', '닫기': 'Close',
-    '놀이': 'Play', '스티커북': 'Sticker Book', '별 조각': 'Star pieces', '스티커를 받았어요!': 'You got a sticker!', '별 조각 하나 받았어요!': 'You got a star piece!', '별이 완성됐어요! 동화를 하나 열 수 있어요': 'Your star is complete! You can open a tale.', '친구 스티커가 생겼어요!': 'You got a friend sticker!', '퍼즐 조각을 받았어요!': 'You got a puzzle piece!', '그림이 완성됐어요!': 'The picture is complete!' };
+    '놀이': 'Play', '스티커북': 'Sticker Book', '별 조각': 'Star pieces', '스티커를 받았어요!': 'You got a sticker!', '별 조각 하나 받았어요!': 'You got a star piece!', '별이 완성됐어요! 동화를 하나 열 수 있어요': 'Your star is complete! You can open a tale.', '동화 스티커를 받았어요!': 'You got a story sticker!', '퍼즐 조각을 받았어요!': 'You got a puzzle piece!', '그림이 완성됐어요!': 'The picture is complete!' };
   const tr = ko => {
     if (!englishOn()) return ko;
     const t = typeof TEXT_EN !== 'undefined' && TEXT_EN[ko], c = NARRATION_CLIPS_EN[ko];
@@ -1750,9 +1750,9 @@ const Tale = (() => {
     /* 보상 말(퍼즐 조각·스티커·종이별)은 홈과 같은 Lily 녹음(home_narration_el.js)을 받아 합친다. 녹음이 없으면 브라우저 말하기(TTS)라 감정 없이 들렸다 (2026-10-29) */
     const rewardClips = (async () => {
       try {
-        const m = new Function((await (await fetch(ROOT_URL + 'home_narration_el.js?v=20261031fs1')).text()) + '; return [NARRATION_CLIPS, NARRATION_CLIPS_EN];')();
+        const m = new Function((await (await fetch(ROOT_URL + 'home_narration_el.js?v=20261031fs2')).text()) + '; return [NARRATION_CLIPS, NARRATION_CLIPS_EN];')();
         if (typeof NARRATION_CLIPS === 'undefined') window.NARRATION_CLIPS = {};
-        ['퍼즐 조각을 받았어요!', '그림이 완성됐어요!', '친구 스티커가 생겼어요!', '스티커를 받았어요!', '별 조각 하나 받았어요!', '별이 완성됐어요! 동화를 하나 열 수 있어요'].forEach(ko => {
+        ['퍼즐 조각을 받았어요!', '그림이 완성됐어요!', '동화 스티커를 받았어요!', '스티커를 받았어요!', '별 조각 하나 받았어요!', '별이 완성됐어요! 동화를 하나 열 수 있어요'].forEach(ko => {
           if (m[0][ko] && !NARRATION_CLIPS[ko]) NARRATION_CLIPS[ko] = ROOT_URL + m[0][ko];
           const en = ENGINE_EN[ko], e = en && m[1][en];
           if (e && typeof NARRATION_CLIPS_EN !== 'undefined' && !NARRATION_CLIPS_EN[en]) NARRATION_CLIPS_EN[en] = { t: en, c: ROOT_URL + e.c };
@@ -1785,7 +1785,7 @@ const Tale = (() => {
           items,
           onAppear: k => {
             if (k === 'star') { sfx(after % need === 0 ? 'tada' : 'sparkle', .7); queue(after % need === 0 ? '별이 완성됐어요! 동화를 하나 열 수 있어요' : '별 조각 하나 받았어요!'); }
-            else { sfx(k === 'piece2' ? 'tada' : 'pop', .8); queue(k === 'cast' ? '친구 스티커가 생겼어요!' : pzSay(k)); }
+            else { sfx(k === 'piece2' ? 'tada' : 'pop', .8); queue(k === 'cast' ? '동화 스티커를 받았어요!' : pzSay(k)); }
           },
           onLand: k => {
             if (k === 'star') { paintPlate(after, true); pulse(plate); if (after > 0 && after % need === 0) plate.classList.add('full'); }
@@ -1817,7 +1817,7 @@ const Tale = (() => {
           await fly(`<img alt="" draggable="false" src="${src}">`, 'cast', es.querySelector('.bwin').getBoundingClientRect(), hole.getBoundingClientRect(), 1300);
           pulse(book);
           sfx('pop', .8);
-          say('친구 스티커가 생겼어요!');
+          say('동화 스티커를 받았어요!');
           await sleep(900);
         }
       }
