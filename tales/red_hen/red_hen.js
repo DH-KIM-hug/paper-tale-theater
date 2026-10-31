@@ -441,8 +441,8 @@
       return () => {
         T.clear(); bgImage('hen_bg_field_gold'); S = {}; setView(X(500, 410));
         S.plants = ROW3().map(x => ({ x, g: stand(T, T.world, 'hen_prop_wheat_gold', x, ROWY) }));
-        /* 울타리 뒤 친구 셋(두 발로 서서 넘겨다봄): 오른쪽(암탉)을 본다. 배경에서 오린 울타리 나무를 앞에 다시 얹어 가로대 사이로 몸이 보이게 */
-        [[cat, X(140, 250)], [dog, X(240, 325)], [pig, X(385, 405)]].forEach(([a, x]) => put(T, a, x, 293, { look: 'stand_help', to: 'right', s: .9 }));
+        /* 울타리 뒤 친구 셋(앉거나 서서 넘겨다봄): 오른쪽(암탉)을 본다. 배경에서 오린 울타리 나무를 앞에 다시 얹어 가로대 사이로 몸이 보이게 */
+        [[pig, X(390, 425)], [dog, X(240, 300)], [cat, X(140, 240)]].forEach(([a, x]) => put(T, a, x, 293, { look: a === pig ? 'stand' : 'sit', to: 'right', s: .9 }));
         T.el('image', { href: src('hen_layer_fence_gold'), x: BGBOX.x + 212 * BGBOX.w / 1600, y: BGBOX.y + 365 * BGBOX.w / 1600, width: 498 * BGBOX.w / 1600, height: 113 * BGBOX.w / 1600, 'pointer-events': 'none' }, T.world);
         put(T, hen, X(520, 470), FL + 8, { look: 'stand', to: 'left' });
         chicksAt([X(440, 380), X(400, 335), X(360, 425)], FL + 40, { to: 'right' });
