@@ -7,7 +7,7 @@
 import glob, json, os
 from PIL import Image
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
-cards = []
+cards, cards_en = [], []
 for p in sorted(glob.glob(f'{G}/assets/raw/thumb2/*_tile.png')):
     t = os.path.basename(p)[:-len('_tile.png')]
     lp = f'{G}/assets/raw/title2/{t}_title.png'
@@ -18,5 +18,11 @@ for p in sorted(glob.glob(f'{G}/assets/raw/thumb2/*_tile.png')):
     if L.width > 640: L = L.resize((640, round(L.height * 640 / L.width)), Image.LANCZOS)
     L.save(f'{G}/assets/thumbs/{t}_lt.webp', 'WEBP', quality=88, method=6)
     cards.append(t)
-open(f'{G}/assets/thumbs/cards.js', 'w').write('/* tools/app/gen/post_thumb2.py 가 만든다: 새 카드 썸네일(<id>_card.webp)과 레터링(<id>_lt.webp)이 있는 동화 */\nwindow.CARDS = ' + json.dumps(cards) + ';\n')
-print(len(cards), 'cards')
+    ep = f'{G}/assets/raw/title2/{t}_title_en.png'            # 영어 레터링(있으면)
+    if os.path.exists(ep):
+        L = Image.open(ep).convert('RGBA'); L = L.crop(L.getchannel('A').point(lambda a: 255 if a > 20 else 0).getbbox())
+        if L.width > 640: L = L.resize((640, round(L.height * 640 / L.width)), Image.LANCZOS)
+        L.save(f'{G}/assets/thumbs/{t}_lt_en.webp', 'WEBP', quality=88, method=6)
+        cards_en.append(t)
+open(f'{G}/assets/thumbs/cards.js', 'w').write('/* tools/app/gen/post_thumb2.py 가 만든다: 새 카드 썸네일(<id>_card.webp)과 레터링(<id>_lt.webp, 영어 <id>_lt_en.webp)이 있는 동화 */\nwindow.CARDS = ' + json.dumps(cards) + ';\nwindow.CARDS_EN = ' + json.dumps(cards_en) + ';\n')
+print(len(cards), 'cards,', len(cards_en), 'en')

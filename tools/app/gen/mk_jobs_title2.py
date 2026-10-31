@@ -56,3 +56,26 @@ for t, title, concept in J:
                  'prompt': P.format(title=title, concept=concept, lines=lines)})
 json.dump(jobs, open(f'{G}/tools/app/gen/jobs_title2.json', 'w'), ensure_ascii=False, indent=1)
 print(len(jobs), 'jobs')
+
+# 영어 콘셉트 레터링(2026-10-31 사용자: 영어도) — 같은 재료·색·장식, 글자만 영어. assets/raw/title2/<id>_title_en.png
+#   python3 tools/app/gen/run_simple.py title2_en t2en_patjuk ...
+import re
+src = open(f'{G}/tales/catalog.js', encoding='utf-8').read()
+EN = {}
+for p in re.split(r"\n  \{ id: '", src)[1:]:
+    m = re.search(r"""en: \{ title: (?:'((?:[^'\\]|\\.)+)'|"([^"]+)")""", p)
+    if m: EN[p.split("'")[0]] = (m.group(1) or m.group(2)).replace("\\'", "'")
+PE = P.replace('Korean story-title lettering', 'English story-title lettering').replace(
+    'Text verbatim, exactly these Hangul syllables and spaces, no other text: "{title}". Every syllable spelled exactly right, natural Hangul proportions, 받침 kept close to its syllable.',
+    'Text verbatim, exactly these English words with this capitalisation and punctuation, no other text: "{title}". Every letter spelled exactly right. Small words like "the", "and", "of" may be set smaller.').replace(
+    'Lettering: heavy, chunky, friendly rounded display lettering,', 'Lettering: heavy, chunky, friendly rounded sans-serif display lettering,').replace(
+    'Concept for this tale: {concept}', 'Concept for this tale (the notes name Korean words of the Korean title; apply each colour and decoration to the matching English word instead, e.g. the tiger word, the witch word): {concept}')
+jobs = []
+for t, title, concept in J:
+    if t not in EN: continue
+    e = EN[t]
+    lines = 'Set it on one line.' if len(e) <= 14 else 'Set it on two lines, breaking only between words, centred and balanced.' if len(e) <= 30 else 'Set it on two or three lines, breaking only between words, centred.'
+    jobs.append({'id': f't2en_{t}', 'kind': 'sprite', 'aspect': 'landscape 3:2', 'out': f'assets/raw/title2/{t}_title_en.png', 'refs': [f'assets/raw/title2/{t}_title.png'],
+                 'prompt': PE.format(title=e, concept=concept, lines=lines) + '\nReference image: the Korean lettering of the same tale — match its colours, paper material, cream backing and decorations exactly; only the words change to English.'})
+json.dump(jobs, open(f'{G}/tools/app/gen/jobs_title2_en.json', 'w'), ensure_ascii=False, indent=1)
+print(len(jobs), 'en jobs')

@@ -152,8 +152,9 @@
   const PIC2L = new Set(window.THUMBS2L || []);
   const PIC = new Set(window.THUMBS || []);
   const TILE = new Set(window.TILES || []);
-  const CARD = new Set(window.CARDS || []);   // 새 카드 썸네일 + 동화별 레터링(assets/thumbs/<id>_card · _lt, post_thumb2.py, 2026-10-31)
+  const CARD = new Set(window.CARDS || []), CARD_EN = new Set(window.CARDS_EN || []);   // 새 카드 썸네일 + 동화별 레터링(assets/thumbs/<id>_card · _lt, post_thumb2.py, 2026-10-31)
   const BAN = new Set(window.BANNERS || []), TTL = new Set(window.TITLES || []), TTL_EN = new Set(window.TITLES_EN || []);   // 맨 위 배너 그림 · 제목 레터링 (assets/banner, post_banner.py)
+  const ltOn = id => CARD.has(id) && (lang === 'ko' || CARD_EN.has(id));
   const imgAttrs = 'class="art" alt="" loading="lazy" decoding="async"';
 
   /* ── 그림 딱지: 글자 없이 그림으로 (잠김 = 자물쇠, 이번 주 무료 = 별, 만드는 중 = 가위). 생성 그림 assets/ui/badge_<kind>.webp 가
@@ -203,8 +204,8 @@
     const plug = (making ? `<span class="plug" aria-hidden="true">${badge('making')}</span>` : '') + (st === 'locked' ? badge('lock') : '') + (st === 'week' ? badge('week') : '');
     if (big && BAN.has(t.id)) return `<span class="thumb full banner"><img class="art" alt="" decoding="async" src="assets/banner/${t.id}.webp">${plug}</span>`;
     // 밝은 종이 한 가지만 쓴다 (다크 모드 없음). 밝은 판이 없으면 남색 판이라도
-    /* 새 카드: 위쪽을 비워 그린 그림 + 동화별 레터링(한국어만. 영어 모드는 레터링 없이 아래 글자 제목) */
-    if (CARD.has(t.id)) return `<span class="thumb full tile card2"><img ${imgAttrs} src="assets/thumbs/${t.id}_card.webp?v=c1">${lang === 'ko' ? `<img class="lt" src="assets/thumbs/${t.id}_lt.webp?v=c1" alt="" aria-hidden="true" draggable="false" decoding="async">` : ''}${plug}</span>`;
+    /* 새 카드: 위쪽을 비워 그린 그림 + 동화별 레터링(영어 모드는 영어 레터링이 있을 때만, 없으면 아래 글자 제목) */
+    if (CARD.has(t.id)) return `<span class="thumb full tile card2"><img ${imgAttrs} src="assets/thumbs/${t.id}_card.webp?v=c2">${ltOn(t.id) ? `<img class="lt" src="assets/thumbs/${t.id}_lt${lang === 'en' ? '_en' : ''}.webp?v=c2" alt="" aria-hidden="true" draggable="false" decoding="async">` : ''}${plug}</span>`;
     if (TILE.has(t.id)) return `<span class="thumb full tile"><img ${imgAttrs} src="assets/thumbs/${t.id}_tile.webp">${plug}</span>`;
     const dk = PIC2.has(t.id), lt = PIC2L.has(t.id), base = `assets/thumbs/${t.id}`;
     if (lt || dk) return `<span class="thumb full"><img ${imgAttrs} src="${base}${lt ? '_light' : ''}.webp">${plug}</span>`;
@@ -237,7 +238,7 @@
       rvTag = `<span class="rv-badge${rvOk ? ' ok' : ''}" data-rv="${t.id}" title="${rv}">${rvOk ? '확인함' : '새 그림'}</span>`;
     }
     const extra = o.night ? `<span class="rmin">${t0.readMin ? L(`${t0.readMin}분`, `${t0.readMin} min`) : ''}${lang === 'en' && !t0.readEn ? `<em>${L('한국어만', 'Korean only')}</em>` : ''}</span>` : '';
-    const lt = lang === 'ko' && CARD.has(t.id) && !(o.big && BAN.has(t.id));   // 레터링이 제목을 대신하면 아래 글자 제목은 숨긴다(이름은 aria-label 로)
+    const lt = ltOn(t.id) && !(o.big && BAN.has(t.id));   // 레터링이 제목을 대신하면 아래 글자 제목은 숨긴다(이름은 aria-label 로)
     const inner = `${rvTag}
       ${holeHTML(t, open, st, o.big)}
       <span class="label">${lt ? '' : `<strong class="title">${t.title}</strong>`}${extra}</span>`;
