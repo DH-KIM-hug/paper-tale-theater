@@ -164,7 +164,8 @@
     week: '<svg viewBox="0 0 48 48"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z" fill="#C98A5B"/></svg>',
     making: '<svg viewBox="0 0 48 48"><path d="M17 30L37 6M31 30L11 6" stroke="#5C6784" stroke-width="4.5" stroke-linecap="round" fill="none"/><circle cx="13" cy="36" r="6.5" fill="none" stroke="#C98A5B" stroke-width="4"/><circle cx="35" cy="36" r="6.5" fill="none" stroke="#C98A5B" stroke-width="4"/></svg>'
   };
-  const badge = kind => `<span class="bdg bdg-${kind}" aria-hidden="true">${UIA.has('badge_' + kind) ? uiImg('badge_' + kind) : BADGE_SVG[kind]}</span>`;
+  /* 이번 주 무료는 감빛 그림 대신 구리 별 기호(감빛은 화면당 하나) */
+  const badge = kind => `<span class="bdg bdg-${kind}" aria-hidden="true">${kind !== 'week' && UIA.has('badge_' + kind) ? uiImg('badge_' + kind) : BADGE_SVG[kind]}</span>`;
   /* 서가 줄 머리 스티커(64px): assets/ui/row_<줄>.webp 가 있으면 그림, 없으면 태그 아이콘·작은 기호 */
   const ROW_SVG = {
     week: '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z" fill="#C98A5B"/></svg>',
@@ -347,11 +348,11 @@
     hz.addEventListener('click', e => { if (hz.dataset.swiped) { e.preventDefault(); e.stopPropagation(); } }, true);
   }
 
-  /* ── S1 서가 줄 7개: 이번 주 무료(앱 모드만) · 최근 본 · 창작 · 공주 · 동물(이솝) · 우리나라 · 세계. 비는 줄은 숨기고, 같은 동화가 여러 줄에 나와도 된다.
+  /* ── S1 서가 줄 7개: 최근 본 · 이번 주 무료(앱 모드만, 2026-10-31 사용자: 최근 본 아래) · 창작 · 공주 · 동물(이솝) · 우리나라 · 세계. 비는 줄은 숨기고, 같은 동화가 여러 줄에 나와도 된다.
      동화는 모두 origin 이 하나 있으므로 31편이 최소 한 줄에는 보인다 ── */
   const ROWS = [
-    { k: 'week', ko: '이번 주 무료', en: 'Free this week', pick: () => storeMode ? Entitlements.freeThisWeek().map(id => TALES.find(t => t.id === id)).filter(Boolean) : [] },
     { k: 'recent', ko: '최근 본', en: 'Recently played', pick: () => readList(recentKey).map(id => TALES.find(t => t.id === id)).filter(Boolean) },
+    { k: 'week', ko: '이번 주 무료', en: 'Free this week', pick: () => storeMode ? Entitlements.freeThisWeek().map(id => TALES.find(t => t.id === id)).filter(Boolean) : [] },
     { k: 'original', ko: '창작 동화', en: 'Original tales', pick: () => TALES.filter(t => t.origin === 'original') },
     { k: 'princess', ko: '공주', en: 'Princesses', pick: () => TALES.filter(t => (t.also || []).includes('princess')) },
     { k: 'aesop', ko: '동물 이야기', en: 'Animal tales', pick: () => TALES.filter(t => t.origin === 'aesop' || (t.also || []).includes('animal')) },
@@ -367,7 +368,9 @@
     const rowsEl = $('#rows');
     const seen = TALES.filter(t => inScope(t) && match(t));
     const vis = new Set(seen.map(t => t.id));
-    heroList = pickHero(TALES.filter(t => vis.has(t.id) && isOpen(t)));
+    /* 배너에는 지금 바로 볼 수 있는 동화만(잠긴 동화 홍보 금지, 2026-10-31 사용자). 모두 잠겼을 때만 열린 동화로 */
+    const heroPool = TALES.filter(t => vis.has(t.id) && playable(t));
+    heroList = pickHero(heroPool.length ? heroPool : TALES.filter(t => vis.has(t.id) && isOpen(t)));
     rowsEl.innerHTML = ROWS.map(r => {
       const list = r.k === 'week' || r.k === 'recent' ? r.pick().filter(t => vis.has(t.id)) : byRank(r.pick().filter(t => vis.has(t.id)));
       if (!list.length) return '';
@@ -704,7 +707,8 @@
   function drawGuardList() {
     $('#guardTitle').textContent = L('보호자', 'Grown-ups');
     $('#guardCloseT').textContent = L('닫기', 'Close');
-    guardList.innerHTML = guardItems().map(i => `<button type="button" class="g-item${i.k === curGuard ? ' on' : ''}" data-k="${i.k}" aria-current="${i.k === curGuard}">${UIA.has('g_' + i.k) ? uiImg('g_' + i.k, 'g-ic') : `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${i.k === 'pass' ? '<use href="#i-ticket"/>' : GI[i.k]}</svg>`}<span>${i.t}</span></button>`).join('');
+    /* 항목 아이콘은 컬러 생성 그림(g_*) 대신 단색 선 기호(홈 UI 2판) */
+    guardList.innerHTML = guardItems().map(i => `<button type="button" class="g-item${i.k === curGuard ? ' on' : ''}" data-k="${i.k}" aria-current="${i.k === curGuard}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${i.k === 'pass' ? '<use href="#i-ticket"/>' : GI[i.k]}</svg><span>${i.t}</span></button>`).join('');
   }
   function openGuard() {
     hint.hidden = true;
@@ -1272,7 +1276,7 @@
     root.hidden = !tales.length;
     root.innerHTML = tales.map(t0 => { const t = shown(t0), g = castGot(t0.id), n = castSet(t0.id).length, src = tileSrc(t0.id) || g[g.length - 1].img;
       return `<button type="button" class="pz-b" data-go="${t0.id}" aria-label="${t.title} ${g.length} / ${n}"><span class="pz-hole"><img src="${src}" alt="" draggable="false" decoding="async"></span><span class="pz-cnt">${g.length} / ${n}</span></button>`; }).join('');
-    $('#pzBoard').innerHTML = tales.length ? tales.map(t => castCard(t.id)).join('') : `<p class="cast-none">${L('동화를 끝까지 보면 친구 스티커가 생겨요', 'Finish a tale to get a friend sticker')}</p>`;
+    $('#pzBoard').innerHTML = tales.length ? tales.map(t => castCard(t.id)).join('') : `<div class="cast-none"><span class="cn-slots" aria-hidden="true">${'<svg viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/></svg>'.repeat(5)}</span><p>${L('동화를 끝까지 보면 친구 스티커가 생겨요', 'Finish a tale to get a friend sticker')}</p></div>`;   // 빈 상태: 흐린 별 자리 5칸 + 안내 한 줄
     paintRowOn();
     /* 친구들을 다 모은 동화가 처음 생기면 그 카드로 내려가 한 번 축하 */
     const rec = castDone(), whole = tales.find(t => { const set = castSet(t.id); return !rec[t.id] && set.length && set.every(c => c.img && hasCast(t.id, c.k)); });
@@ -1342,7 +1346,7 @@
       const id = `${bk}-${t0.id}-${row}-${k}`;
       const sty = `left:calc(var(--cell)*${q.x / PZ_S});top:calc(var(--cell)*${q.y / PZ_S});width:calc(var(--cell)*${q.w / PZ_S});height:calc(var(--cell)*${q.h / PZ_S})`;
       let art;
-      if (!got) art = `<svg class="pz-art" viewBox="0 0 ${q.w} ${q.h}" aria-hidden="true"><path d="${q.path}" fill="#E9DFD2" filter="url(#pzInset)"/></svg>`;
+      if (!got) art = `<svg class="pz-art" viewBox="0 0 ${q.w} ${q.h}" aria-hidden="true"><path d="${q.path}" fill="#ECECE9" stroke="#D6D4CF" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`;   // 빈 자리: 평평한 연회색 + 1px 선(홈 UI 2판)
       else if (q.file) art = `<img class="pz-art" src="assets/ui/${q.file}?v=20261030bj2" alt="" draggable="false" decoding="async">`;
       else {
         const im = [i - 1, i, i + 1].filter(c => c >= 0 && c < list.length).map(c => { const src = tileSrc(list[c].id); return src ? `<image href="${src}" x="${c * PZ_S - q.x}" y="${-q.y}" width="${PZ_S}" height="${PZ_S * 2}" preserveAspectRatio="xMidYMid slice"/>` : ''; }).join('');
