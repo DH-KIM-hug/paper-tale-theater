@@ -1726,7 +1726,7 @@ const Tale = (() => {
     const hole = book.querySelector('.aw-hole');
     /* 이미 받은 스티커는 쟁반 구멍에 붙어 있다 */
     let botSrc = null;                                            // 구멍에 붙는 그림 = 아래 조각(없으면 썸네일)
-    const stk = () => `<img alt="" draggable="false" src="${botSrc || ROOT_URL + 'assets/thumbs/' + id + '_tile.webp'}">`;
+    const stk = () => `<img alt="" draggable="false"${botSrc ? ' class="pc"' : ''} src="${botSrc || ROOT_URL + 'assets/thumbs/' + id + '_tile.webp'}">`;   // 퍼즐 조각은 동그랗게 자르지 않고 조각 모양 그대로(pc)
     const had = !award.sticker && (() => { try { return Entitlements.hasSticker(id); } catch (e) { return false; } })();
     const botP = pieceSrc('bot').then(u => { botSrc = u; if (had && !es.hidden) hole.innerHTML = stk(); });
     if (had) hole.innerHTML = stk();

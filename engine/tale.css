@@ -549,6 +549,7 @@ svg text { font-weight: 800; }
 #endScreen .aw-book { position: relative; width: 96px; height: 96px; border-radius: 50%; display: block; flex: none; overflow: hidden; background: #DCCBA8; box-shadow: inset 2px 3px 5px rgba(46, 36, 28, .32), inset -1px -1.5px 0 rgba(255, 252, 244, .7); }
 #endScreen .aw-hole { position: absolute; inset: 0; display: grid; place-items: center; }
 #endScreen .aw-hole img { width: 82%; height: 82%; border-radius: 50%; object-fit: cover; border: 4px solid #FBF7F1; box-shadow: 1px 3px 4px rgba(46, 36, 28, .35); }
+#endScreen .aw-hole img.pc { width: 78%; height: 78%; border-radius: 0; object-fit: contain; border: 0; box-shadow: none; filter: drop-shadow(1px 3px 3px rgba(46, 36, 28, .35)); }   /* 퍼즐 조각: 원으로 잘려 이상하게 보이던 것(2026-10-31 사용자) — 조각 모양 그대로 원 안에 */
 #endScreen .aw-plate { display: grid; place-items: center; width: 80px; height: 80px; padding: 8px; border-radius: 20px; background: #FFFFFF; box-shadow: 0 0 0 1px rgba(0, 0, 0, .04), 0 2px 8px rgba(0, 0, 0, .10); text-decoration: none; }   /* 별 조각 카드(홈 UI 2판) */
 #endScreen .aw-plate[hidden] { display: none; }
 .star-pc { display: block; width: 100%; height: 100%; overflow: visible; }
@@ -564,6 +565,7 @@ svg text { font-weight: 800; }
 #endScreen .aw-plate.full { box-shadow: 0 0 0 3px var(--reward), 0 2px 8px rgba(0, 0, 0, .10); }
 .flyer { position: fixed; left: 0; top: 0; z-index: 70; width: 120px; height: 120px; pointer-events: none; will-change: transform; transform-origin: 50% 50%; }
 .flyer.stk img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 6px solid #FBF7F1; box-shadow: 2px 5px 7px rgba(46, 36, 28, .4); display: block; }
+.flyer.stk img.pc { border-radius: 0; object-fit: contain; border: 0; box-shadow: none; filter: drop-shadow(2px 5px 5px rgba(46, 36, 28, .4)); }   /* 날아가는 퍼즐 조각도 조각 모양 그대로 */
 .flyer.cast { width: 150px; height: 150px; }
 .flyer.cast img { width: 100%; height: 100%; object-fit: contain; display: block; filter: drop-shadow(2px 5px 5px rgba(46, 36, 28, .4)); }
 .flyer.star { width: 84px; height: 84px; }
