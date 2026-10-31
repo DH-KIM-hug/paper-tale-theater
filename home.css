@@ -578,7 +578,7 @@ body.app .hero[hidden] { display: none; }
 .hero .thumb .art { inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; filter: none; -webkit-mask: none; mask: none; }
 .hero .thumb.tile img { filter: none; }
 .hero .label { display: none; }
-.hero .thumb > .bdg-week { top: 16px; right: 16px; width: 56px; height: 56px; }
+.hero .thumb > .bdg-week { top: 16px; left: 16px; right: auto; padding: 6px 16px; font-size: 18px; }
 .hero-info { display: contents; }
 .hero-t { grid-area: win; align-self: end; justify-self: start; z-index: 7; max-width: min(560px, calc(100% - 2 * var(--hero-px) - var(--play) * 3.2 - 16px));   /* 알약 자리를 비운다 */
   margin: 0 0 var(--hero-pb) var(--hero-px); pointer-events: none;
@@ -634,7 +634,9 @@ body.app .hero[hidden] { display: none; }
 /* 딱지 40: 그림 모서리 바깥으로 12px 걸친다 — 이번 주 무료 = 오른쪽 위, 잠김 = 오른쪽 아래 */
 .thumb > .bdg-week, .thumb > .bdg-lock { position: absolute; z-index: 3; width: 40px; height: 40px; padding: 0; border-radius: 0; background: none; box-shadow: none; pointer-events: none;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .18)); }
-.thumb > .bdg-week { top: -12px; right: -12px; }
+.thumb > .bdg-week { top: 8px; left: 8px; right: auto; width: auto; height: auto; padding: 3px 10px; border-radius: var(--r-pill); background: var(--card); box-shadow: var(--sh-1);
+  font-size: 13px; font-weight: 800; line-height: 1.4; letter-spacing: .02em; color: var(--ink); }   /* 이번 주 무료: 흰 알약 글자, 그림 안 왼쪽 위 */
+.row[data-row="week"] .thumb > .bdg-week { display: none; }   /* 줄 이름이 이미 '이번 주 무료' */
 .thumb > .bdg-lock { bottom: -12px; right: -12px; }
 
 /* 빈 상태 */

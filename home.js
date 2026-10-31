@@ -164,8 +164,9 @@
     week: '<svg viewBox="0 0 48 48"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z" fill="#C98A5B"/></svg>',
     making: '<svg viewBox="0 0 48 48"><path d="M17 30L37 6M31 30L11 6" stroke="#5C6784" stroke-width="4.5" stroke-linecap="round" fill="none"/><circle cx="13" cy="36" r="6.5" fill="none" stroke="#C98A5B" stroke-width="4"/><circle cx="35" cy="36" r="6.5" fill="none" stroke="#C98A5B" stroke-width="4"/></svg>'
   };
-  /* 이번 주 무료는 감빛 그림 대신 구리 별 기호(감빛은 화면당 하나) */
-  const badge = kind => `<span class="bdg bdg-${kind}" aria-hidden="true">${kind !== 'week' && UIA.has('badge_' + kind) ? uiImg('badge_' + kind) : BADGE_SVG[kind]}</span>`;
+  /* 이번 주 무료는 그림 대신 평평한 흰 알약 글자(홈 UI 2판, 2026-10-31 사용자: 튀어나온 별이 별로) */
+  const badge = kind => kind === 'week' ? `<span class="bdg bdg-week" aria-hidden="true">${L('무료', 'Free')}</span>`
+    : `<span class="bdg bdg-${kind}" aria-hidden="true">${UIA.has('badge_' + kind) ? uiImg('badge_' + kind) : BADGE_SVG[kind]}</span>`;
   /* 서가 줄 머리 스티커(64px): assets/ui/row_<줄>.webp 가 있으면 그림, 없으면 태그 아이콘·작은 기호 */
   const ROW_SVG = {
     week: '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l6 13 14 1.6-10.4 9.6 3 14L24 34 11.4 42.2l3-14L4 18.6 18 17z" fill="#C98A5B"/></svg>',
