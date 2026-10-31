@@ -1,0 +1,342 @@
+[
+ {
+  "id": "th2_patjuk",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/patjuk_tile.png",
+  "refs": [
+   "assets/thumbs/patjuk_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"팥죽할멈과 호랑이\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_frog",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/frog_tile.png",
+  "refs": [
+   "assets/thumbs/frog_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"황소와 개구리\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_rabbit",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/rabbit_tile.png",
+  "refs": [
+   "assets/thumbs/rabbit_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"토끼와 거북이\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_sunmoon",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/sunmoon_tile.png",
+  "refs": [
+   "assets/thumbs/sunmoon_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"해와 달이 된 오누이\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_sun_wind",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/sun_wind_tile.png",
+  "refs": [
+   "assets/thumbs/sun_wind_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"해와 바람\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_turnip",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/turnip_tile.png",
+  "refs": [
+   "assets/thumbs/turnip_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"커다란 순무\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_lion_mouse",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/lion_mouse_tile.png",
+  "refs": [
+   "assets/thumbs/lion_mouse_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"사자와 생쥐\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_fox_crane",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/fox_crane_tile.png",
+  "refs": [
+   "assets/thumbs/fox_crane_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"여우와 두루미\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_goldilocks",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/goldilocks_tile.png",
+  "refs": [
+   "assets/thumbs/goldilocks_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"골디락스와 곰 세 마리\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_bremen",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/bremen_tile.png",
+  "refs": [
+   "assets/thumbs/bremen_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"브레멘 음악대\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_ant_grasshopper",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/ant_grasshopper_tile.png",
+  "refs": [
+   "assets/thumbs/ant_grasshopper_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"개미와 베짱이\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_ugly_duckling",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/ugly_duckling_tile.png",
+  "refs": [
+   "assets/thumbs/ugly_duckling_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"미운 아기 오리\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_three_pigs",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/three_pigs_tile.png",
+  "refs": [
+   "assets/thumbs/three_pigs_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"아기 돼지 삼형제\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_wolf_goats",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/wolf_goats_tile.png",
+  "refs": [
+   "assets/thumbs/wolf_goats_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"늑대와 일곱 마리 아기 염소\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_kongjwi",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/kongjwi_tile.png",
+  "refs": [
+   "assets/thumbs/kongjwi_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"콩쥐 팥쥐\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_kkultteok",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/kkultteok_tile.png",
+  "refs": [
+   "assets/thumbs/kkultteok_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"구름 공장\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border.\nTale concept to show clearly: a small cute paper cloud factory building with chimneys stands in the lower right, and the white smoke puffing out of its chimneys rises and turns into fluffy white clouds that drift up across the sky. The three children and the dog stand in the lower left looking up at the clouds happily. The top 38% stays calm sky with only those soft clouds (no faces there)."
+ },
+ {
+  "id": "th2_hansel",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/hansel_tile.png",
+  "refs": [
+   "assets/thumbs/hansel_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"헨젤과 그레텔\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_cinderella",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/cinderella_tile.png",
+  "refs": [
+   "assets/thumbs/cinderella_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"신데렐라\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_heungbu",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/heungbu_tile.png",
+  "refs": [
+   "assets/thumbs/heungbu_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"흥부와 놀부\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_red_hood",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/red_hood_tile.png",
+  "refs": [
+   "assets/thumbs/red_hood_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"빨간 모자\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_magpie",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/magpie_tile.png",
+  "refs": [
+   "assets/thumbs/magpie_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"은혜 갚은 까치\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_magic_jar",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/magic_jar_tile.png",
+  "refs": [
+   "assets/thumbs/magic_jar_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"요술 항아리\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_byeoljubu",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/byeoljubu_tile.png",
+  "refs": [
+   "assets/thumbs/byeoljubu_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"별주부전\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_snow_white",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/snow_white_tile.png",
+  "refs": [
+   "assets/thumbs/snow_white_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"백설공주\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_little_mermaid",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/little_mermaid_tile.png",
+  "refs": [
+   "assets/thumbs/little_mermaid_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"인어공주\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_beauty_beast",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/beauty_beast_tile.png",
+  "refs": [
+   "assets/thumbs/beauty_beast_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"미녀와 야수\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_red_car",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/red_car_tile.png",
+  "refs": [
+   "assets/thumbs/red_car_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"나의 빨간 자동차\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_unicorn",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/unicorn_tile.png",
+  "refs": [
+   "assets/thumbs/unicorn_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"유니콘을 찾아서\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_witch_candy",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/witch_candy_tile.png",
+  "refs": [
+   "assets/thumbs/witch_candy_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"사탕 마녀의 핼러윈\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_red_hen",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/red_hen_tile.png",
+  "refs": [
+   "assets/thumbs/red_hen_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"빨간 암탉\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_princess_pea",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/princess_pea_tile.png",
+  "refs": [
+   "assets/thumbs/princess_pea_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"완두콩 공주\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_rapunzel",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/rapunzel_tile.png",
+  "refs": [
+   "assets/thumbs/rapunzel_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"라푼젤\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_frog_prince",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/frog_prince_tile.png",
+  "refs": [
+   "assets/thumbs/frog_prince_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"개구리 왕자\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ },
+ {
+  "id": "th2_sleeping_beauty",
+  "kind": "bg",
+  "aspect": "landscape 3:2",
+  "out": "assets/raw/thumb2/sleeping_beauty_tile.png",
+  "refs": [
+   "assets/thumbs/sleeping_beauty_tile.webp"
+  ],
+  "prompt": "Use case: children's picture-book app home-screen card thumbnail (ages 3-4), layered paper-cut collage art.\nReference image: the current thumbnail of the tale \"잠자는 숲속의 공주\". Keep the SAME characters with the SAME designs, colours, outfits, faces and paper-art style, and the same setting and palette. Characters are layered coloured-paper cut pieces with faces; props have no faces.\nPrimary request: RE-COMPOSE it as a fresh 3:2 picture with clear empty space at the top for a title lettering that will be added later:\n- The TOP 38% of the picture is calm, simple background only (sky, wall, night sky, sea water, etc. that belongs to the scene): no faces, no heads, no characters, no busy objects, no text there. A moon, a few soft clouds or a distant hill line at the far edges are fine.\n- The characters stand in the LOWER 62%, large and clearly visible, heads below the 40% line, faces turned toward the viewer, friendly expressions.\n- Keep every character and important object inside the central 88% of the width (the sides will be cropped to 4:3).\nStyle: flat matte coloured paper, one colour per piece, fine paper-fibre texture, soft short dark warm shadows between layers only; no gloss, no gradients inside pieces, no outlines, no photo textures. No text, no letters, no logos, no frame, no border."
+ }
+]

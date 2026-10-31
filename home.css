@@ -578,6 +578,9 @@ body.app .hero[hidden] { display: none; }
 .hero .thumb .art { inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; filter: none; -webkit-mask: none; mask: none; }
 .hero .thumb.tile img { filter: none; }
 .hero .label { display: none; }
+/* 새 카드 레터링: 그림 위쪽 가운데, 너비 84% · 높이 36% 안 */
+.thumb.card2 { position: relative; }
+.thumb.card2 .lt { position: absolute; z-index: 2; left: 50%; top: 3%; width: auto; height: auto; max-width: 84%; max-height: 36%; transform: translateX(-50%); object-fit: contain; pointer-events: none; }
 .hero .thumb > .bdg-week { top: 16px; left: 16px; right: auto; padding: 6px 16px; font-size: 18px; }
 .hero-info { display: contents; }
 .hero-t { grid-area: win; align-self: end; justify-self: start; z-index: 7; max-width: min(560px, calc(100% - 2 * var(--hero-px) - var(--play) * 3.2 - 16px));   /* 알약 자리를 비운다 */
