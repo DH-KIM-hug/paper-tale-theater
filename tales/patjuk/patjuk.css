@@ -121,9 +121,12 @@
 }
 /* 세로 휴대폰 새 배치(2026-10-31 사용자): 위 레터링 · 무대 · 대사 · 맨 아래 카드 두 줄. 카드 판은 흐린 장면 바탕 위에 투명하게 */
 @media (orientation: portrait) and (max-width: 700px) {
-  body.pt-title #tale:not(.reading) { --pv: 45svh; --tt: 11svh; }
-  body.pt-title #tray { background: none; box-shadow: none; gap: 8px; padding: 10px 12px calc(12px + env(safe-area-inset-bottom, 0px)); }
-  body.pt-title .card { min-height: 84px; }
+  body.pt-title #tale:not(.reading) { --pv: 43svh; --tt: 11svh; }
+  /* 카드는 무대 바로 아래(2026-10-31 사용자), 대사는 카드 아래. 카드 판 높이 = 84×2 + 줄 사이 8 + 위아래 10·10 = 196px */
+  body.pt-title #tray { margin-top: 0; background: none; box-shadow: none; gap: 8px; padding: 10px 12px; }
+  body.pt-title .card { min-height: 84px; height: 84px; }
+  body.pt-title #tale:not(.reading) ~ #bubble:not([hidden]) { top: calc(env(safe-area-inset-top, 0px) + var(--tt-p, 11svh) + 3svh + 43svh + 196px + 1svh); }
+  body.pt-title:has(#tray[hidden]) #tale:not(.reading) ~ #bubble { top: calc(env(safe-area-inset-top, 0px) + 11svh + 3svh + 43svh + 2.5svh); }
   body.pt-title .card img { width: 46px; height: 46px; }
   body.pt-title .card span { font-size: 15px; }
 }
