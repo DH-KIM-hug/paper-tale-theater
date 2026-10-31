@@ -1585,13 +1585,19 @@ const Tale = (() => {
     /* 시작 화면 제목 = 홈 배너와 같은 제목 레터링(assets/banner/<id>_title.webp, 흰 글자 — 2026-10-30 사용자).
        글자 모양만 빌려 오고 색은 시작 화면 글자색(--let-top·--let-bot, 키아트에 따라 크림 또는 갈색)으로 칠한다. 그림이 없으면 글자 그대로 */
     if (taleId()) {   // 영어 모드는 영어 레터링(_title_en, 2026-10-31). 그림이 없으면 글자 그대로
-      const h = $('#startScreen .ttl'), src = ROOT_URL + 'assets/banner/' + taleId() + (englishOn() ? '_title_en' : '_title') + '.webp', im = new Image();
-      im.onload = () => {
+      /* 2026-10-31 사용자: 홈 카드·배너와 같은 동화별 색지 레터링(assets/thumbs/<id>_lt(_en).webp)을 색 그대로 얹는다. 없으면 옛 흰 레터링 */
+      const h = $('#startScreen .ttl'), en = englishOn() ? '_en' : '';
+      const lt = ROOT_URL + 'assets/thumbs/' + taleId() + '_lt' + en + '.webp?v=c2', src = ROOT_URL + 'assets/banner/' + taleId() + (en ? '_title_en' : '_title') + '.webp';
+      const old = () => { const im = new Image(); im.onload = () => {
         const ar = im.naturalWidth / im.naturalHeight;
         h.classList.add('art');
         h.innerHTML = `<span class="ttl-art" style="--ar:${ar.toFixed(3)};--th:${ar < 3 ? 2.4 : 1.4}em;-webkit-mask-image:url('${src}');mask-image:url('${src}')"></span>`;
-      };
-      if (h) im.src = src;
+      }; im.src = src; };
+      if (h) { const im = new Image(); im.onload = () => {
+        const ar = im.naturalWidth / im.naturalHeight;
+        h.classList.add('art', 'art2');
+        h.innerHTML = `<img class="ttl-lt" src="${lt}" alt="" draggable="false" style="--ar:${ar.toFixed(3)};--th:${ar < 2.2 ? 3.2 : 2.3}em">`;
+      }; im.onerror = old; im.src = lt; }
     }
     /* 시작 화면: 제목을 톡 하면 한 번 읽어 준다 (홈 제목 녹음이 있으면 그 목소리, 없으면 브라우저 말하기) */
     {

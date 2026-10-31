@@ -133,6 +133,8 @@ svg text { font-weight: 800; }
 .ttl-art { display: inline-block; vertical-align: top; width: calc(var(--ar) * var(--th)); max-width: 88vw; aspect-ratio: var(--ar);
   background: #FFFDF6;
   -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; }
+.paperword.art2 { filter: drop-shadow(0 3px 8px rgba(30, 15, 5, .3)); }   /* 색지 레터링(크림 받침)은 그늘을 옅게 */
+.ttl-lt { display: inline-block; vertical-align: top; height: var(--th); width: auto; max-width: 88vw; max-height: calc(88vw / var(--ar)); object-fit: contain; -webkit-user-drag: none; }
 .paperword br + i, .paperword .ln { display: block; }
 
 /* ─── 말풍선: 종이 쪽지 한 장 ─── */
