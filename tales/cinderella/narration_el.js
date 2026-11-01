@@ -69,8 +69,8 @@ Object.assign(NARRATION_CLIPS, {
 Object.assign(VOICE_LINES, {
  "n1": "audio/el/cinderella/nar_879be36bd9.mp3",
  "n2": "audio/el/cinderella/nar_72e0abbc35.mp3",
- "n3": "audio/el/cinderella/nar_f3e5ea1693.mp3",
- "n4": "audio/el/cinderella/nar_0c8144e548.mp3",
+ "n3": "audio/el/cinderella/nar_f3e5ea1693_t.mp3",
+ "n4": "audio/el/cinderella/nar_0c8144e548_t.mp3",
  "n5": "audio/el/cinderella/nar_45a666cb2b.mp3",
  "n6": "audio/el/cinderella/nar_34be92c8ac.mp3"
 });
