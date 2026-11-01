@@ -949,6 +949,7 @@
       T.pop(b.x, P ? (b.y > 520 ? 330 : 280) : b === bigBed ? 220 : (b.y > 520 ? 250 : 190), tr(NUM[i]));
       await Promise.all([sleep(500), Promise.race([said || sleep(0), sleep(2500)])]);
     }
+    [...beds, bigBed].forEach(b => { b.pos.style.pointerEvents = ''; });   // 다 셌으면 다시 눌리게 — 그대로 두면 다음 색 찾기에서 어느 침대도 안 눌렸다(2026-11-01 사용자)
     dwarfs.hop(14, 360);
     await say('작은 침대 일곱 개, 큰 침대 하나, 모두 여덟 개!');
     snow.hop(16, 360);
