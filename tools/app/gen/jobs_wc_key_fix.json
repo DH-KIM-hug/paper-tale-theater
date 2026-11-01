@@ -1,0 +1,32 @@
+[
+  {
+    "id": "wc_key_wide",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "refs": [
+      "assets/raw/wc_key_fix/ref_wide.png"
+    ],
+    "out": "assets/raw/wc_key_fix/wc_key_wide.png",
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the orange tabby cat at the lower right has too many legs. Redraw only the cat so it has exactly FOUR legs: sitting, two front legs straight down with both front paws resting on the floor, one hind leg/haunch visible, tail curled around; it is giggling with eyes closed and a small smiling mouth, NO paw raised to its mouth. Everything else must stay pixel-identical in look. No text."
+  },
+  {
+    "id": "wc_key_tall",
+    "kind": "bg",
+    "aspect": "portrait 3:4",
+    "refs": [
+      "assets/raw/wc_key_fix/ref_tall.png"
+    ],
+    "out": "assets/raw/wc_key_fix/wc_key_tall.png",
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the orange tabby cat at the lower right has too many legs. Redraw only the cat so it has exactly FOUR legs: sitting, two front legs straight down with both front paws resting on the floor, one hind leg/haunch visible, tail curled around; it is giggling with eyes closed and a small smiling mouth, NO paw raised to its mouth. Everything else must stay pixel-identical in look. No text."
+  },
+  {
+    "id": "wc_key_wide2",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "refs": [
+      "assets/raw/wc_key_fix/wc_key_wide.png"
+    ],
+    "out": "assets/raw/wc_key_fix/wc_key_wide2.png",
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the small blue paper fish flying up out of the cauldron (center, between the yellow cloud and the witch's spoon) is malformed with a tail at both ends. Redraw only that fish as a normal simple side-view fish: one rounded head with ONE eye on the left end, one forked tail fin only on the right end, a small fin on top. Same blue color and size. Everything else, including the orange cat with four legs, stays exactly the same. No text."
+  }
+]

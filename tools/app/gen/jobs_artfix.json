@@ -1,0 +1,257 @@
+[
+  {
+    "id": "bremen_banner",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "refs": [
+      "assets/raw/artfix/ref_bremen_banner.png"
+    ],
+    "out": "assets/raw/artfix/bremen_banner.png",
+    "dest": "assets/banner/bremen.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the gray donkey has five legs (an extra front leg holding a stick). Redraw only the donkey with exactly FOUR legs all standing on the ground; if it holds something, it holds it in its mouth, not with a leg. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "wc_banner",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "refs": [
+      "assets/raw/artfix/ref_wc_banner.png"
+    ],
+    "out": "assets/raw/artfix/wc_banner.png",
+    "dest": "assets/banner/witch_candy.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the black cat at the lower right has five legs (two front paws on the ground plus an extra raised paw by the ribbon). Redraw only the black cat with exactly FOUR legs: sitting, two front paws on the ground, no raised paw. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "bremen_back_tall",
+    "kind": "bg",
+    "aspect": "portrait 3:4",
+    "refs": [
+      "assets/raw/artfix/ref_bremen_back_tall.png"
+    ],
+    "out": "assets/raw/artfix/bremen_back_tall.png",
+    "dest": "assets/thumbs/bremen_back_tall.webp",
+    "size": [
+      1000,
+      1150
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the cat at the lower right has five legs (two front paws holding the ukulele plus three feet on the ground). Redraw only the cat with exactly FOUR legs: two front paws holding the ukulele and two hind feet on the ground. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "fox_key_wide",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "refs": [
+      "assets/raw/artfix/ref_fox_key_wide.png"
+    ],
+    "out": "assets/raw/artfix/fox_key_wide.png",
+    "dest": "assets/thumbs/fox_crane_key_wide.webp",
+    "size": [
+      1672,
+      941
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the crane on the right has no eye and its thin black legs are tangled with the chair. Redraw only the crane: add one small round eye on its head, and give it exactly TWO clear thin legs standing, not tangled with the furniture. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "hen_back_wide",
+    "kind": "bg",
+    "aspect": "landscape 3:2",
+    "refs": [
+      "assets/raw/artfix/ref_hen_back_wide.png"
+    ],
+    "out": "assets/raw/artfix/hen_back_wide.png",
+    "dest": "assets/thumbs/red_hen_back_wide.webp",
+    "size": [
+      1200,
+      800
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the red hen in the upper middle has four wings (two holding bread plus two extra spread behind). Redraw only the hen with exactly TWO wings, both holding the bread. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "goats_back_tall",
+    "kind": "bg",
+    "aspect": "portrait 3:4",
+    "refs": [
+      "assets/raw/artfix/ref_goats_back_tall.png"
+    ],
+    "out": "assets/raw/artfix/goats_back_tall.png",
+    "dest": "assets/thumbs/wolf_goats_back_tall.webp",
+    "size": [
+      1000,
+      1150
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: this happy ending must show exactly SEVEN little goat kids, but only six are drawn. Add one more little goat kid of the same style and size next to the others so there are exactly seven kids plus the mother goat. Keep everything else the same. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "cind_key_wide",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "refs": [
+      "assets/raw/artfix/ref_cind_key_wide.png"
+    ],
+    "out": "assets/raw/artfix/cind_key_wide.png",
+    "dest": "assets/thumbs/cinderella_key_wide.webp",
+    "size": [
+      1672,
+      941
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: Cinderella is wearing both glass slippers while a third glass slipper also lies on the floor. Fix it so there are exactly TWO slippers in total: Cinderella wears ONE glass slipper on one foot, and the other foot is bare or in her stocking, and the one other glass slipper lies on the floor (or on the cushion) next to her. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "cind_key_tall",
+    "kind": "bg",
+    "aspect": "portrait 3:4",
+    "refs": [
+      "assets/raw/artfix/ref_cind_key_tall.png"
+    ],
+    "out": "assets/raw/artfix/cind_key_tall.png",
+    "dest": "assets/thumbs/cinderella_key_tall.webp",
+    "size": [
+      1086,
+      1448
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: Cinderella is wearing both glass slippers while a third glass slipper also lies on the floor. Fix it so there are exactly TWO slippers in total: Cinderella wears ONE glass slipper on one foot, and the other foot is bare or in her stocking, and the one other glass slipper lies on the floor (or on the cushion) next to her. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "cind_card",
+    "kind": "bg",
+    "aspect": "landscape 4:3",
+    "refs": [
+      "assets/raw/artfix/ref_cind_card.png"
+    ],
+    "out": "assets/raw/artfix/cind_card.png",
+    "dest": "assets/thumbs/cinderella_card.webp",
+    "size": [
+      720,
+      540
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: Cinderella is wearing both glass slippers while a third glass slipper also lies on the floor. Fix it so there are exactly TWO slippers in total: Cinderella wears ONE glass slipper on one foot, and the other foot is bare or in her stocking, and the one other glass slipper lies on the floor (or on the cushion) next to her. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "cind_tile",
+    "kind": "bg",
+    "aspect": "landscape 4:3",
+    "refs": [
+      "assets/raw/artfix/ref_cind_tile.png"
+    ],
+    "out": "assets/raw/artfix/cind_tile.png",
+    "dest": "assets/thumbs/cinderella_tile.webp",
+    "size": [
+      720,
+      540
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: Cinderella is wearing both glass slippers while a third glass slipper also lies on the floor. Fix it so there are exactly TWO slippers in total: Cinderella wears ONE glass slipper on one foot, and the other foot is bare or in her stocking, and the one other glass slipper lies on the floor (or on the cushion) next to her. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "kong_back_tall",
+    "kind": "bg",
+    "aspect": "portrait 3:4",
+    "refs": [
+      "assets/raw/artfix/ref_kong_back_tall.png"
+    ],
+    "out": "assets/raw/artfix/kong_back_tall.png",
+    "dest": "assets/thumbs/kongjwi_back_tall.webp",
+    "size": [
+      1000,
+      1150
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the magistrate is holding TWO flower shoes. He must hold exactly ONE flower shoe (a single embroidered Korean flower shoe). Remove the second shoe. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "sw_key_tall",
+    "kind": "bg",
+    "aspect": "portrait 3:4",
+    "refs": [
+      "assets/raw/artfix/ref_sw_key_tall.png"
+    ],
+    "out": "assets/raw/artfix/sw_key_tall.png",
+    "dest": "assets/thumbs/snow_white_key_tall.webp",
+    "size": [
+      1086,
+      1448
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: there are seven dwarfs, so the long table must have exactly SEVEN chairs in total (count them: four chairs on the far side behind the table and three chairs on the near side in front) and exactly SEVEN plates with SEVEN cups on the table. Remove the extra chairs. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "rc_back_wide",
+    "kind": "bg",
+    "aspect": "landscape 3:2",
+    "refs": [
+      "assets/raw/artfix/ref_rc_back_wide.png"
+    ],
+    "out": "assets/raw/artfix/rc_back_wide.png",
+    "dest": "assets/thumbs/red_car_back_wide.webp",
+    "size": [
+      1200,
+      800
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the little red car and the tow truck each have only one eye. Give the red car and the tow truck each exactly TWO simple round dot eyes side by side on the front (windshield area), and make sure the red stripe on the ambulance does not look like a mouth (a plain straight stripe). Everything else must stay the same. No new text."
+  },
+  {
+    "id": "rc_back_tall",
+    "kind": "bg",
+    "aspect": "portrait 3:4",
+    "refs": [
+      "assets/raw/artfix/ref_rc_back_tall.png"
+    ],
+    "out": "assets/raw/artfix/rc_back_tall.png",
+    "dest": "assets/thumbs/red_car_back_tall.webp",
+    "size": [
+      1000,
+      1150
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the little red car and the tow truck each have only one eye. Give the red car and the tow truck each exactly TWO simple round dot eyes side by side on the front (windshield area), and make sure the red stripe on the ambulance does not look like a mouth (a plain straight stripe). Everything else must stay the same. No new text."
+  },
+  {
+    "id": "goats_banner",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "refs": [
+      "assets/raw/artfix/ref_goats_banner.png"
+    ],
+    "out": "assets/raw/artfix/goats_banner.png",
+    "dest": "assets/banner/wolf_goats.webp",
+    "size": [
+      1600,
+      900
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: only six little goat kids are in the doorway. Add one more little goat kid of the same style and size so there are exactly SEVEN kids in the doorway, plus the mother goat. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "sunwind_key_wide",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "refs": [
+      "assets/raw/artfix/ref_sunwind_key_wide.png"
+    ],
+    "out": "assets/raw/artfix/sunwind_key_wide.png",
+    "dest": "assets/thumbs/sun_wind_key_wide.webp",
+    "size": [
+      1672,
+      941
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: the cloud (the wind) is blowing its swirling wind lines to the RIGHT, away from the traveler. Move the wind so the cloud blows its swirling wind lines toward the LEFT, toward the traveler in the red coat (wind lines between the cloud and the traveler). The cloud keeps the same face and place. Everything else must stay the same. No new text."
+  },
+  {
+    "id": "goats_key_wide",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "refs": [
+      "assets/raw/artfix/ref_goats_key_wide.png"
+    ],
+    "out": "assets/raw/artfix/goats_key_wide.png",
+    "dest": "assets/thumbs/wolf_goats_key_wide.webp",
+    "size": [
+      1672,
+      941
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical composition, characters, colors, paper-art style, frame, every object in the same place and size - with ONE fix: there is an extra gold clock pendulum hanging below the bottom of the frame between two green leaves, with its rod running up in front of the little goats. Remove that extra pendulum and its rod completely (keep the two green leaves as a small decoration, and keep the real pendulum inside the grandfather clock). Everything else must stay the same. No new text."
+  }
+]
