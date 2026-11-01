@@ -53,7 +53,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네, 예쁘게 해 드릴게요.": {
   "t": "Yes, I will make it pretty.",
-  "c": "audio/el/cinderella/en/cind_c8e879bf74.mp3"
+  "c": "audio/el/cinderella/en/cind_205ddc70d2.mp3"
  },
  "신데렐라는 언니 머리를 정성껏 땋고, 리본을 퐁 달아 주었어요.": {
   "t": "Cinderella braided her sister's hair ever so carefully and popped a ribbon on top. Pop!",
@@ -77,7 +77,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "나도 무도회에 가고 싶어요.": {
   "t": "I wish I could go to the ball, too.",
-  "c": "audio/el/cinderella/en/cind_c79615b86a.mp3"
+  "c": "audio/el/cinderella/en/cind_69837ead7b.mp3"
  },
  "그때 부엌에 환한 빛이 반짝반짝 비치더니, 누군가 사뿐 내려섰어요.": {
   "t": "Just then a bright light twinkled and sparkled in the kitchen, and someone floated gently down.",
@@ -153,7 +153,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "와, 정말 고맙습니다!": {
   "t": "Oh, thank you so much!",
-  "c": "audio/el/cinderella/en/cind_6214d36afd.mp3"
+  "c": "audio/el/cinderella/en/cind_371a010312.mp3"
  },
  "꼭 기억하렴. 밤 열두 시가 되면 마법이 풀린단다.": {
   "t": "Remember, dear. At midnight, the magic will end.",
@@ -161,7 +161,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네, 꼭 기억할게요!": {
   "t": "Yes, I will remember!",
-  "c": "audio/el/cinderella/en/cind_099d7e4184.mp3"
+  "c": "audio/el/cinderella/en/cind_d651723f11.mp3"
  },
  "신데렐라는 마차에 올라탔어요.": {
   "t": "Cinderella climbed into the coach.",
@@ -225,7 +225,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "앗, 열두 시예요!": {
   "t": "Oh no, it's twelve o'clock!",
-  "c": "audio/el/cinderella/en/cind_0d7c549af7.mp3"
+  "c": "audio/el/cinderella/en/cind_73db26c229.mp3"
  },
  "신데렐라는 왕자님의 손을 놓고 후다닥 달려 나갔어요.": {
   "t": "Cinderella let go of the prince's hand and dashed away, pitter-patter, as fast as she could.",
@@ -293,7 +293,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "저도 신어 봐도 될까요?": {
   "t": "May I try it on, too?",
-  "c": "audio/el/cinderella/en/cind_3ea19fb325.mp3"
+  "c": "audio/el/cinderella/en/cind_a300cd13c2.mp3"
  },
  "언니들은 피식 코웃음을 쳤지만, 왕자님은 고개를 끄덕였어요.": {
   "t": "The sisters snickered, tee-hee, but the prince nodded his head.",
@@ -336,11 +336,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "괜찮아요. 우리 함께 행복해요.": {
   "t": "It's all right. Let's be happy together.",
-  "c": "audio/el/cinderella/en/cind_1ca839f993.mp3"
+  "c": "audio/el/cinderella/en/cind_19df62d614.mp3"
  },
  "\"언니들, 이제 우리 사이좋게 지내요.\"": {
   "t": "Sisters, from now on, let us be kind to one another.",
-  "c": "audio/el/cinderella/en/cind_11a882c0b6.mp3"
+  "c": "audio/el/cinderella/en/cind_6a69a9ada0.mp3"
  },
  "모두 함께 웃었어요.": {
   "t": "Everyone laughed together.",

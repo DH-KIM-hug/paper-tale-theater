@@ -29,7 +29,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네, 예쁘게 해 드릴게요.": {
   "t": "Yes, I will make it pretty.",
-  "c": "audio/el/cinderella/en/cind_c8e879bf74.mp3"
+  "c": "audio/el/cinderella/en/cind_205ddc70d2.mp3"
  },
  "언니 머리를 톡 눌러 봐요.": {
   "t": "Tap your sister's hair!",
@@ -49,7 +49,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "나도 무도회에 가고 싶어요.": {
   "t": "I wish I could go to the ball, too.",
-  "c": "audio/el/cinderella/en/cind_c79615b86a.mp3"
+  "c": "audio/el/cinderella/en/cind_69837ead7b.mp3"
  },
  "그때 요정 대모가 나타났어요.": {
   "t": "Then her fairy godmother appeared.",
@@ -97,7 +97,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "와, 정말 고맙습니다!": {
   "t": "Oh, thank you so much!",
-  "c": "audio/el/cinderella/en/cind_6214d36afd.mp3"
+  "c": "audio/el/cinderella/en/cind_371a010312.mp3"
  },
  "꼭 기억하렴. 밤 열두 시가 되면 마법이 풀린단다.": {
   "t": "Remember, dear. At midnight, the magic will end.",
@@ -105,7 +105,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네, 꼭 기억할게요!": {
   "t": "Yes, I will remember!",
-  "c": "audio/el/cinderella/en/cind_099d7e4184.mp3"
+  "c": "audio/el/cinderella/en/cind_d651723f11.mp3"
  },
  "궁전에 가니 모두 신데렐라를 바라보았어요.": {
   "t": "When she arrived at the palace, everyone stared at Cinderella.",
@@ -165,7 +165,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "앗, 열두 시예요!": {
   "t": "Oh no, it's twelve o'clock!",
-  "c": "audio/el/cinderella/en/cind_0d7c549af7.mp3"
+  "c": "audio/el/cinderella/en/cind_73db26c229.mp3"
  },
  "신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.": {
   "t": "Cinderella ran down the stairs and lost one glass slipper.",
@@ -193,7 +193,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "저도 신어 봐도 될까요?": {
   "t": "May I try it on, too?",
-  "c": "audio/el/cinderella/en/cind_3ea19fb325.mp3"
+  "c": "audio/el/cinderella/en/cind_a300cd13c2.mp3"
  },
  "구두와 크기가 같은 발을 찾아봐요!": {
   "t": "Find the foot that is the same size as the slipper!",
@@ -228,7 +228,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "괜찮아요. 우리 함께 행복해요.": {
   "t": "It's all right. Let's be happy together.",
-  "c": "audio/el/cinderella/en/cind_1ca839f993.mp3"
+  "c": "audio/el/cinderella/en/cind_19df62d614.mp3"
  },
  "신데렐라에게 톡 인사해요!": {
   "t": "Tap to say hello to Cinderella!",
