@@ -14,7 +14,7 @@
     beast_lie_eyes: 1.6393, father_ride: 0.9717, father_eat: 0.4917, father_sleep: 0.78, father_shock: 0.47, father_rose: 0.4117,
     father_bed: 1.3167, father_well: 0.4833, sisa_plead: 0.46, sisa_gasp: 0.4717, sisa_joy: 0.5467, sisb_plead: 0.4767,
     sisb_gasp: 0.4783, sisb_joy: 0.5717, prop_rose: 0.6033, prop_rose_vase: 0.5733, prop_bush5: 1.1083, prop_bush2: 1.2167,
-    prop_table_small: 1.055, prop_table_long: 1.415, card_morning: 0.9067, card_noon: 0.905, card_night: 0.905, prop_mirror: 0.8267,
+    prop_table_small: 1.055, prop_table_long: 1.415, card_morning: 0.905, card_noon: 0.905, card_night: 0.905, prop_mirror: 0.8267,
     prop_ring: 0.8133, prop_dream: 1.1283, prop_spring: 1.4833, prop_glow: 0.9883, prop_hat: 1.4783,
     /* 화려하게 다시 그리기(VISUAL_PLAN.md, 2026-10-22): 궁전 장면 층 소품 (tools/app/gen/post_v2.py 로 오림) */
     layer_snow_fir_front: 0.575, layer_snow_bush: 1.8987, layer_chandelier: 0.845, layer_curtain: 0.42, layer_feast: 2.1951,
@@ -29,6 +29,9 @@
   const NAT = { belle_point: 'right', belle_run: 'right', belle_kneel: 'right', belle_sleep: 'left', father_bed: 'left',
     beast_lie: 'left', beast_lie_eyes: 'left', beast_ring: 'left', father_ride: 'right', horse_stand: 'right' };
   const FL = 528;                    // 바닥(발끝 y)
+  /* 실내 배경은 문·책장·촛대가 커서 사람이 작아 보인다(2026-11-01 사용자): 장면마다 사람·식탁만 키운다(발끝 기준). 소품은 그대로 */
+  const SCN = { cottage: 1.15, room_v2: 1.35, dining_v2: 1.3 };
+  let SC = 1;
   /* 사람 세계(시골집)는 그대로, 야수의 궁전 장면만 다층 v2 (VISUAL_PLAN) */
   const BGS = ['cottage', 'cottage_front', 'snow_forest_lb', 'dining_v2', 'garden_v2', 'garden_bloom_v2', 'room_v2'];
   /* 2026-10-28 사용자 결정(§7-1 빛 예외): 눈보라 숲은 성문에서 내려오던 불투명 크림 빛 띠 두 줄을 뺀 _glow 그림(같은 구도). 성문·창 둘레의 반투명 빛이 언덕을 따라 흐려진다 */
@@ -175,7 +178,7 @@
   const prop = (T, f, h) => mk(T, { a: [f, h] });
   function put(T, a, x, y, { look, to, s = 1 } = {}) {
     T.world.appendChild(a.pos); a.pos.getAnimations().forEach(n => n.cancel()); a.pos.style.display = ''; a.pos.style.opacity = '';
-    a.setScale(s); if (look) a.look(look, to); else if (to) a.turn(to);
+    a.setScale(s * (a.big ? SC : 1)); if (look) a.look(look, to); else if (to) a.turn(to);
     a.place(x, y); a.body.style.transform = ''; a.body.style.filter = '';
     return a;
   }
@@ -299,7 +302,7 @@
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { snow_forest_lb: 'winter_wind_1' };
-    const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
+    const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } SC = SCN[key] || 1; T.clear(); bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     try { AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'sparkle', 'thud', 'womp', 'paper_up', 'paper_down', 'step_grass', 'blow_long', 'chomp', 'swish', 'pop', 'xylo_down', 'splash', 'tada', 'winter_wind_1', 'birds_chirp_1', 'horse_hooves_1', 'door_heavy_1', 'ding_glock', 'question', 'pull_pop', 'surprise_sting', 'whistle_down', 'water_drip', 'party_horn']); } catch (e) { /* */ }
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
     const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
@@ -330,6 +333,7 @@
     const tableS = prop(T, 'prop_table_small', 110), tableL = prop(T, 'prop_table_long', 170);
     const mirror = prop(T, 'prop_mirror', 200), ring = prop(T, 'prop_ring', 22), dream = prop(T, 'prop_dream', 150);
     const spring = prop(T, 'prop_spring', 90), shine = prop(T, 'prop_glow', 220), hat = prop(T, 'prop_hat', 34);
+    [belle, beast, prince, father, sisa, sisb, tableL].forEach(a => { a.big = 1; });
     const ALL = [belle, beast, prince, father, sisa, sisb, horse, bush5, bush2, rose, ...vases, tableS, tableL, mirror, ring, dream, spring, shine, hat];
     ALL.forEach(hide);
     /* ---- 층 소품 (VISUAL_PLAN §4): 누름을 받지 않는다. 같은 소품은 어느 장면이든 같은 높이 ---- */
@@ -338,12 +342,13 @@
       curtain: [D('curtain', 520), D('curtain', 520)], feast: D('feast', 70), topiary: D('topiary_snow', 200), rose: D('rosebush_front', 150) };
     Object.values(L).flat().forEach(hide);
     /* 3장 눈보라 숲은 빛 상자(snow_forest_lb, VISUAL_PLAN 재기획 2 A): 앞 전나무·덤불은 낮 색이라 밤빛 실루엣처럼 낮춘다(이 소품은 3장에만 쓴다) */
+    L.feast.big = 1;
     [L.fir[0], L.fir[1], L.sbush].forEach(a => { a.pos.style.filter = 'brightness(.42) saturate(.55)'; });   // put() 이 body 필터를 비우므로 pos 에
     const front = (...as) => as.forEach(a => { if (a.pos.style.display !== 'none') T.world.appendChild(a.pos); });
     /* 연회장(3B·8장): 샹들리에(중간·위) → 배우·식탁 → 잔칫상(식탁 위) → 휘장 둘(앞) */
     const diningBack = () => { put(T, L.chand, X(500, 520), 180); };
     const diningFront = () => {
-      put(T, L.feast, tableL.x, FL + 4 - 170 * .72);
+      put(T, L.feast, tableL.x, FL + 4 - 170 * .72 * SC);
       put(T, L.curtain[0], 25, 580); put(T, L.curtain[1], 975, 580, { to: 'right' });
       front(L.curtain[0], L.curtain[1]);
     };
@@ -631,7 +636,7 @@
     cue('door_heavy_1', .5);
     await say('멀리 불빛! 커다란 궁전에 아무도 없고, 따뜻한 저녁상만 차려져 있었어요.');
     await h10;
-    T.clear(); bgImage(T, 'dining_v2'); camSnap(500, 280, 1);
+    SC = SCN.dining_v2; T.clear(); bgImage(T, 'dining_v2'); camSnap(500, 280, 1);
     diningBack();
     put(T, father, X(560, 520), FL, { look: 'eat' });
     put(T, tableL, X(560, 520), FL + 4);
@@ -787,8 +792,8 @@
     await T.sceneCard(tr('저녁마다'), () => {
       scene('dining_v2');
       diningBack();
-      put(T, belle, X(440, 450), FL, { look: 'sit' });
-      put(T, beast, X(700, 600), FL, { look: 'sit' });
+      put(T, belle, X(440, 395), FL, { look: 'sit' });
+      put(T, beast, X(700, 660), FL, { look: 'sit' });
       put(T, tableL, X(570, 525), FL + 4);
       diningFront();
       if (P) camSnap(520, 280, 1);
@@ -802,7 +807,7 @@
     beast.wiggle(3, 600);
     await say('그럼 내일 저녁에 또 올게.');
     await say('벨은 날마다 친절하게 대답했고, 둘은 친구가 되었어요.');
-    const cardS = X(170, 96), cardY = X(380, 360), cardX = X([250, 500, 750], [396, 500, 604]);
+    const cardS = X(170, 118), cardY = X(380, 360), cardX = X([250, 500, 750], [372, 500, 628]);
     const kinds = ['morning', 'noon', 'night'].sort(() => Math.random() - .5);
     const cards = kinds.map((k, i) => {
       const g = T.el('g', { filter: 'url(#pp)' }, T.world), f = 'card_' + k;

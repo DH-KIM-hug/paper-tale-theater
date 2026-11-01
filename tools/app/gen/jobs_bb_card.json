@@ -1,0 +1,47 @@
+[
+ {
+  "id": "bb_card_morning",
+  "kind": "bg",
+  "aspect": "square 1:1",
+  "refs": [
+   "assets/raw/bbcard/ref_noon.png"
+  ],
+  "out": "assets/raw/bbcard/bb_card_morning.png",
+  "sprite": true,
+  "size": [
+   500,
+   500
+  ],
+  "prompt": "A square window card for a picture quiz, 1:1, centered, filling most of the canvas on a plain solid magenta (#FF00FF) background. Hand-cut layered matte paper art: crisp cut edges, visible paper fibers, each paper piece one flat solid color, narrow soft warm-dark shadows between stacked layers, no gradients inside pieces, no gloss, no outlines. WINDOW FRAME (must be correct and identical on every card): a thick cream (#F6ECD8) paper frame with rounded outer corners, and a CROSS-SHAPED muntin: ONE vertical bar running the FULL height from the top frame to the bottom frame, and ONE horizontal bar running the FULL width from left frame to right frame, both bars meeting in the exact center, dividing the glass into FOUR EQUAL square panes. No broken or dangling bars, no stubs. The scene is seen THROUGH the glass behind the bars. At the bottom of the view, two rounded green paper hills. No text, no faces on the sun, moon, clouds or any object. SCENE = EARLY MORNING SUNRISE, must be instantly different from noon for a 3-year-old: the sky is warm pink and peach paper bands (pink #F4A7A0 above, peach-orange #F8C08A near the horizon), a BIG orange-yellow sun only HALF RISEN, its bottom half hidden behind the hills in the LOWER panes, with long straight paper rays fanning upward. On the left hill a small red-combed white rooster stands with its beak open, crowing. No clouds at the top. The top two panes are just pink sky. Use the reference only for the paper style and frame look."
+ },
+ {
+  "id": "bb_card_noon",
+  "kind": "bg",
+  "aspect": "square 1:1",
+  "refs": [
+   "assets/raw/bbcard/ref_noon.png"
+  ],
+  "out": "assets/raw/bbcard/bb_card_noon.png",
+  "sprite": true,
+  "size": [
+   500,
+   500
+  ],
+  "prompt": "A square window card for a picture quiz, 1:1, centered, filling most of the canvas on a plain solid magenta (#FF00FF) background. Hand-cut layered matte paper art: crisp cut edges, visible paper fibers, each paper piece one flat solid color, narrow soft warm-dark shadows between stacked layers, no gradients inside pieces, no gloss, no outlines. WINDOW FRAME (must be correct and identical on every card): a thick cream (#F6ECD8) paper frame with rounded outer corners, and a CROSS-SHAPED muntin: ONE vertical bar running the FULL height from the top frame to the bottom frame, and ONE horizontal bar running the FULL width from left frame to right frame, both bars meeting in the exact center, dividing the glass into FOUR EQUAL square panes. No broken or dangling bars, no stubs. The scene is seen THROUGH the glass behind the bars. At the bottom of the view, two rounded green paper hills. No text, no faces on the sun, moon, clouds or any object. SCENE = BRIGHT MIDDAY: a clear saturated sky-blue (#4FA3E0) sky, a round bright yellow sun high at the very TOP-CENTER (in the upper panes, just under the top frame) with short straight rays all around, two small white clouds. Green hills with one small round tree. Use the reference only for the paper style and frame look."
+ },
+ {
+  "id": "bb_card_night",
+  "kind": "bg",
+  "aspect": "square 1:1",
+  "refs": [
+   "assets/raw/bbcard/ref_noon.png"
+  ],
+  "out": "assets/raw/bbcard/bb_card_night.png",
+  "sprite": true,
+  "size": [
+   500,
+   500
+  ],
+  "prompt": "A square window card for a picture quiz, 1:1, centered, filling most of the canvas on a plain solid magenta (#FF00FF) background. Hand-cut layered matte paper art: crisp cut edges, visible paper fibers, each paper piece one flat solid color, narrow soft warm-dark shadows between stacked layers, no gradients inside pieces, no gloss, no outlines. WINDOW FRAME (must be correct and identical on every card): a thick cream (#F6ECD8) paper frame with rounded outer corners, and a CROSS-SHAPED muntin: ONE vertical bar running the FULL height from the top frame to the bottom frame, and ONE horizontal bar running the FULL width from left frame to right frame, both bars meeting in the exact center, dividing the glass into FOUR EQUAL square panes. No broken or dangling bars, no stubs. The scene is seen THROUGH the glass behind the bars. At the bottom of the view, two rounded green paper hills. No text, no faces on the sun, moon, clouds or any object. SCENE = NIGHT: deep indigo (#1F2A56) sky, a cream crescent moon in the upper right pane, five small cream stars, dark green hills. Use the reference only for the paper style and frame look."
+ }
+]
