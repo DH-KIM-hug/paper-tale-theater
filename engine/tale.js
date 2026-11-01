@@ -914,6 +914,7 @@ const Tale = (() => {
   }
   async function pageTurn(change) {
     if (document.hidden) { if (change) change(); return; } // 안 보일 때: 넘김 연출 없이 장면만 바꾼다
+    if (matchMedia('(orientation: portrait)').matches) return pageTurnFlat(change); // 세로 화면은 반 장이 너무 좁아 예전처럼 한 장째 넘긴다
     const wrap = $('#stageWrap'), W = wrap.clientWidth, H = wrap.clientHeight, h = W / 2;
     const half = (snap, left) => {   // 무대 크기 그대로 둔 복제본을 반쪽 창으로 본다
       const d = document.createElement('div'); d.className = 'half';
@@ -950,6 +951,44 @@ const Tale = (() => {
         bkDim.style.opacity = (deg > 90 ? .55 * s : 0).toFixed(3);
         under.style.opacity = (deg < 90 ? 1 - e * 1.6 : 0).toFixed(3);
         lshade.style.opacity = (deg > 90 ? Math.min(1, (deg - 90) / 60) * s * 1.4 : 0).toFixed(3);
+        if (k < 1) requestAnimationFrame(step); else res();
+      };
+      requestAnimationFrame(step);
+      setTimeout(res, D + 400); // 화면이 안 보일 때(rAF 멈춤) 대비
+    });
+    book.remove();
+  }
+  /* 세로 화면 책장 넘기기: 접히는 선(f)이 오른쪽 끝에서 왼쪽 끝으로 지나간다.
+     f 왼쪽 [0, 2f-W] = 아직 안 넘어간 지금 장면, [2f-W, f] = 넘어가며 접힌 종이 뒷면(가운데로 휜 그늘),
+     f 오른쪽 = 새 장면. 접힌 선 옆에 새 장면 쪽으로 그림자. 종이 끝이 살짝 기울어(위가 먼저) 넘어간다 */
+  async function pageTurnFlat(change) {
+    const wrap = $('#stageWrap'), W = wrap.clientWidth, H = wrap.clientHeight;
+    const book = document.createElement('div'); book.className = 'book flat';
+    const front = document.createElement('div'); front.className = 'front';
+    front.appendChild(snapStage());
+    const flap = document.createElement('div'); flap.className = 'flap';
+    const cast = document.createElement('div'); cast.className = 'cast';
+    book.append(front, cast, flap); wrap.appendChild(book);
+    if (change) change();
+    await sleep(40);
+    AudioFX.sfx('page_turn', .9) || paperTurn(); // 책장 한 장 넘기는 소리 (Mixkit 'Page turn single')
+    const D = 1300, tilt = H * .18; // 위쪽 모서리가 아래보다 tilt 만큼 앞서 간다
+    const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    const poly = pts => `polygon(${pts.map(([x, y]) => `${x.toFixed(1)}px ${y.toFixed(1)}px`).join(',')})`;
+    await new Promise(res => {
+      const t0 = performance.now();
+      const step = now => {
+        const k = Math.min(1, (now - t0) / D), e = ease(k);
+        const fb = W + tilt - (W + tilt * 2) * e; // 아래 끝의 접힌 선 x
+        const ft = fb - tilt;                      // 위 끝 (먼저 간다)
+        // 지금 장면: 접힌 선과, 그 너머로 접혀 덮인 부분을 뺀 왼쪽 조각
+        const ot = 2 * ft - W, ob = 2 * fb - W;
+        front.style.clipPath = poly([[0, 0], [Math.max(0, ot), 0], [Math.max(0, ob), H], [0, H]]);
+        // 접힌 뒷면: [2f-W, f] (위·아래 따로)
+        flap.style.clipPath = poly([[ot, 0], [ft, 0], [fb, H], [ob, H]]);
+        // 새 장면 위, 접힌 선 바로 오른쪽 그림자
+        cast.style.clipPath = poly([[ft, 0], [ft + 70, 0], [fb + 70, H], [fb, H]]);
+        cast.style.opacity = (k < .9 ? 1 : (1 - k) * 10).toFixed(2);
         if (k < 1) requestAnimationFrame(step); else res();
       };
       requestAnimationFrame(step);
