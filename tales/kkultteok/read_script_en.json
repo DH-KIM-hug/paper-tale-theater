@@ -1817,6 +1817,89 @@
      ]
     }
    ]
+  },
+  {
+   "key": "R_bed",
+   "card": "잘 자요",
+   "enter": [
+    "bed:open"
+   ],
+   "lines": [
+    {
+     "text": "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.",
+     "src": "new",
+     "en": "Night came. The three kids snuggled under the blanket.",
+     "segs": [
+      [
+       "nar",
+       "Night came. The three kids snuggled under the blanket.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "\"아기 구름도 자?\"",
+     "src": "new",
+     "en": "Is the baby cloud sleeping too?",
+     "segs": [
+      [
+       "agi",
+       "Is the baby cloud sleeping too?",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "창밖에서 하얀 아기 구름이 둥실 날아와 달님 앞에 폭신하게 누웠어요.",
+     "src": "new",
+     "en": "Outside the window, the little white cloud floated over and lay down softly in front of the moon.",
+     "segs": [
+      [
+       "nar",
+       "Outside the window, the little white cloud floated over and lay down softly in front of the moon.",
+       null
+      ]
+     ],
+     "before": [
+      "bed:cloud"
+     ]
+    },
+    {
+     "text": "\"잘 자, 아기 구름!\" 다현이와 이현이가 소곤소곤 말했어요.",
+     "src": "new",
+     "en": "\"Good night, little cloud!\" Dahyun and Ihyun whispered.",
+     "segs": [
+      [
+       "nuna",
+       "Good night, little cloud!",
+       null
+      ],
+      [
+       "nar",
+       "Dahyun and Ihyun whispered.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이도 새근새근, 모두 꿈나라로 갔어요.",
+     "src": "new",
+     "en": "Kkulddeok breathed softly too, and everyone drifted off to dreamland.",
+     "segs": [
+      [
+       "nar",
+       "Kkulddeok breathed softly too, and everyone drifted off to dreamland.",
+       null
+      ]
+     ],
+     "before": [
+      "bed:dim"
+     ],
+     "after": [
+      "bed:end"
+     ]
+    }
+   ]
   }
  ]
 }

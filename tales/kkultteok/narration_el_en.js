@@ -452,6 +452,29 @@ Object.assign(NARRATION_CLIPS_EN, {
  "보라!": {
   "t": "Purple!",
   "c": "audio/el/kkultteok/en/nar_95712b3358.mp3"
+ },
+ "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.": {
+  "t": "Night came. The three kids snuggled under the blanket.",
+  "c": "audio/el/kkultteok/en/nar_0825164a26.mp3"
+ },
+ "\"아기 구름도 자?\"": {
+  "t": "Is the baby cloud sleeping too?",
+  "c": "audio/el/kkultteok/en/agi_987651cb38.mp3"
+ },
+ "창밖에서 하얀 아기 구름이 둥실 날아와 달님 앞에 폭신하게 누웠어요.": {
+  "t": "Outside the window, the little white cloud floated over and lay down softly in front of the moon.",
+  "c": "audio/el/kkultteok/en/nar_f839444dde.mp3"
+ },
+ "\"잘 자, 아기 구름!\" 다현이와 이현이가 소곤소곤 말했어요.": {
+  "t": "\"Good night, little cloud!\" Dahyun and Ihyun whispered.",
+  "c": [
+   "audio/el/kkultteok/en/nuna_4d57d6ba11.mp3",
+   "audio/el/kkultteok/en/nar_183098b121.mp3"
+  ]
+ },
+ "꿀떡이도 새근새근, 모두 꿈나라로 갔어요.": {
+  "t": "Kkulddeok breathed softly too, and everyone drifted off to dreamland.",
+  "c": "audio/el/kkultteok/en/nar_0b8bfe9a4e.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});

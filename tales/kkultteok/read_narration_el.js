@@ -138,6 +138,14 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "\"또 놀러 와, 아기 구름아!\"": "audio/el/kkultteok/nuna_d2b90d148e.mp3",
  "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.": "audio/el/kkultteok/nar_e88091a79e.mp3",
- "비 오는 날도, 해 뜨는 날도 모두 소중하답니다.": "audio/el/kkultteok/nar_008957e93b.mp3"
+ "비 오는 날도, 해 뜨는 날도 모두 소중하답니다.": "audio/el/kkultteok/nar_008957e93b.mp3",
+ "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.": "audio/el/kkultteok/nar_ec7dee2b8b.mp3",
+ "\"아기 구름도 자?\"": "audio/el/kkultteok/agi_e0d16665f5.mp3",
+ "창밖에서 하얀 아기 구름이 둥실 날아와 달님 앞에 폭신하게 누웠어요.": "audio/el/kkultteok/nar_dca0da78c6.mp3",
+ "\"잘 자, 아기 구름!\" 다현이와 이현이가 소곤소곤 말했어요.": [
+  "audio/el/kkultteok/nuna_30b248b2ee.mp3",
+  "audio/el/kkultteok/nar_e0fef1d27b.mp3"
+ ],
+ "꿀떡이도 새근새근, 모두 꿈나라로 갔어요.": "audio/el/kkultteok/nar_828e89c5a4.mp3"
 });
 Object.assign(VOICE_LINES, {});

@@ -87,7 +87,22 @@
     let finaleEnd = 0;
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
-    try { AudioFX.preloadSfx(['intro_cozy2', 'finale_happy', 'birds_chirp_1', 'birds_chirp_2', 'steam_hiss', 'water_drip', 'rain_1', 'pop_appear', 'chime_up', 'zip_away', 'question', 'thunder', 'whistle_up', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'party_horn', 'creak', 'ding', 'bonk', 'bell', 'gulp', 'splash', 'splash_big', 'blow', 'whoosh', 'sparkle', 'cork']); } catch (e) { /* 무시 */ }
+    /* 잠자리 장면(2026-11-01 사용자 결정, engine/bedtime.js): 누르기 없는 큰 그림 한 장 — 하얀 아기 구름이 달 앞에 와서 눕고 방이 어둑해진다.
+       자리(u, v)는 그림 안 비율: 가로 cf4_bed_wide · 세로 cf4_bed_tall 을 따로 잰 것 */
+    const BED = { wide: src('bed_wide'), tall: src('bed_tall'), tallY: .4, focus: { w: [.42, .52], t: [.5, .6] }, moon: { w: [.879, .126], t: [.633, .104] } };
+    let bedB = null;
+    const bed = {
+      open() { bedB = Bedtime.open(T, BED); },
+      cloud() {
+        const B = bedB; if (!B) return;
+        const h = B.ih * .15, n = B.img(src('baby_sleep'), { w: [BED.moon.w[0], BED.moon.w[1] + .03], t: [BED.moon.t[0], BED.moon.t[1] + .03] }, h, 1.4968);
+        n.animate([{ transform: `translate(${h * 2.2}px,${-h * .4}px)`, opacity: 0 }, { opacity: 1, offset: .3 }, { transform: 'translate(0,0)', opacity: 1 }], { duration: document.hidden ? 1 : 3600, easing: 'ease-out', fill: 'forwards' });
+        setTimeout(() => B.dim(.22, 2400), 2600);   // 구름이 달을 가리면 방이 조금 어두워진다
+      },
+      dim() { if (bedB) { bedB.pan(.56, 4000); bedB.dim(.4, 3000); } },   // 세로 화면: 달에서 이불 위 꿀떡이 쪽으로 천천히 내려온다
+      end() { return bedB ? bedB.end(3500) : null; },
+    };
+    try { AudioFX.preloadSfx(['intro_cozy2', 'finale_happy', 'classical_brahms_lullaby_box', 'birds_chirp_1', 'birds_chirp_2', 'steam_hiss', 'water_drip', 'rain_1', 'pop_appear', 'chime_up', 'zip_away', 'question', 'thunder', 'whistle_up', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'party_horn', 'creak', 'ding', 'bonk', 'bell', 'gulp', 'splash', 'splash_big', 'blow', 'whoosh', 'sparkle', 'cork']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const tr = T.tr, el = T.el;
@@ -310,6 +325,7 @@
       },
     };
     const RA = {
+      bed(v) { return bed[v] ? bed[v]() : null; },   // 읽어 주기 잠자리 장면: bed:open|cloud|dim|end
       set(key) {
         const n = rSeen[key] = (rSeen[key] || 0) + 1; rTag = key + n; RS = {};
         stopAmb(.6);
@@ -1143,6 +1159,18 @@
       finaleMusic();
       await say('꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.');
       await home; await finaleWait();
+    });
+    /* --- 17. 잠자리 (2026-11-01): 누르기 없음. 삼남매·꿀떡이가 잠들고 아기 구름이 달 앞에 눕는다 --- */
+    S(async () => {
+      await T.sceneCard('', () => bed.open());
+      await say('밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.');
+      await say('"아기 구름도 자?"');
+      bed.cloud();
+      await say('창밖에서 하얀 아기 구름이 둥실 날아와 달님 앞에 폭신하게 누웠어요.');
+      await say('"잘 자, 아기 구름!" 다현이와 이현이가 소곤소곤 말했어요.');
+      bed.dim();
+      await say('꿀떡이도 새근새근, 모두 꿈나라로 갔어요.');
+      await bed.end();
       T.finale();
     });
 

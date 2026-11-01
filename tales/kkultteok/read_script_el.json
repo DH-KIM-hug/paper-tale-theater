@@ -1921,6 +1921,90 @@
      ]
     }
    ]
+  },
+  {
+   "key": "R_bed",
+   "card": "잘 자요",
+   "enter": [
+    "bed:open"
+   ],
+   "lines": [
+    {
+     "text": "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.",
+       null,
+       "[gentle, warm storyteller, slow, sleepy, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "\"아기 구름도 자?\"",
+     "src": "new",
+     "segs": [
+      [
+       "agi",
+       "아기 구름도 자?",
+       null,
+       "[baby voice, sleepy, whispering]"
+      ]
+     ]
+    },
+    {
+     "text": "창밖에서 하얀 아기 구름이 둥실 날아와 달님 앞에 폭신하게 누웠어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "창밖에서 하얀 아기 구름이 둥실 날아와 달님 앞에 폭신하게 누웠어요.",
+       null,
+       "[gentle, warm storyteller, slow, sleepy, soft]"
+      ]
+     ],
+     "before": [
+      "bed:cloud"
+     ]
+    },
+    {
+     "text": "\"잘 자, 아기 구름!\" 다현이와 이현이가 소곤소곤 말했어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nuna",
+       "잘 자, 아기 구름!",
+       null,
+       "[whispering, sleepy, gentle]"
+      ],
+      [
+       "nar",
+       "다현이와 이현이가 소곤소곤 말했어요.",
+       null,
+       "[gentle, warm storyteller, slow, sleepy, soft]"
+      ]
+     ]
+    },
+    {
+     "text": "꿀떡이도 새근새근, 모두 꿈나라로 갔어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "꿀떡이도 새근새근, 모두 꿈나라로 갔어요.",
+       null,
+       "[gentle, warm storyteller, slow, sleepy, soft, fading]"
+      ]
+     ],
+     "before": [
+      "bed:dim"
+     ],
+     "after": [
+      "bed:end"
+     ]
+    }
+   ]
   }
  ]
 }

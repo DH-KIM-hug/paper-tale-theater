@@ -575,6 +575,42 @@
   {
    "text": "보라!",
    "en": "Purple!"
+  },
+  {
+   "text": "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.",
+   "en": "Night came. The three kids snuggled under the blanket."
+  },
+  {
+   "text": "\"아기 구름도 자?\"",
+   "en": "Is the baby cloud sleeping too?",
+   "segs": [
+    [
+     "agi",
+     "Is the baby cloud sleeping too?"
+    ]
+   ]
+  },
+  {
+   "text": "창밖에서 하얀 아기 구름이 둥실 날아와 달님 앞에 폭신하게 누웠어요.",
+   "en": "Outside the window, the little white cloud floated over and lay down softly in front of the moon."
+  },
+  {
+   "text": "\"잘 자, 아기 구름!\" 다현이와 이현이가 소곤소곤 말했어요.",
+   "en": "\"Good night, little cloud!\" Dahyun and Ihyun whispered.",
+   "segs": [
+    [
+     "nuna",
+     "Good night, little cloud!"
+    ],
+    [
+     "nar",
+     "Dahyun and Ihyun whispered."
+    ]
+   ]
+  },
+  {
+   "text": "꿀떡이도 새근새근, 모두 꿈나라로 갔어요.",
+   "en": "Kkulddeok breathed softly too, and everyone drifted off to dreamland."
   }
  ],
  "ui": {
