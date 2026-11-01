@@ -370,6 +370,22 @@
     let finaleEnd = 0;
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
+    /* 잠자리 장면(2026-11-01 사용자 결정, engine/bedtime.js): 누르기 없는 큰 그림 한 장 — 차고의 네 대와 이현이 손의 빨간 자동차 전조등이 하나씩 꺼진다.
+       자리(u, v)는 그림 안 비율: 가로 rc_bed_wide · 세로 rc_bed_tall 을 따로 잰 것. 불빛은 조명이라 그라데이션(CLAUDE.md 7-1) */
+    const SLEEP = { wide: src('rc_bed_wide'), tall: src('rc_bed_tall'), tallY: .52, focus: { w: [.5, .55], t: [.5, .6] } };   // (BED 는 1장 침대 그림 자리)
+    const BED_LAMPS = [   // 견인차 → 경찰차 → 소방차 → 구급차(전조등 둘씩), 마지막이 빨간 자동차
+      [{ w: [.567, .69], t: [.148, .781] }, { w: [.612, .69], t: [.227, .781] }], [{ w: [.664, .697], t: [.336, .786] }, { w: [.708, .697], t: [.414, .786] }],
+      [{ w: [.762, .71], t: [.534, .802] }, { w: [.808, .71], t: [.617, .802] }], [{ w: [.858, .705], t: [.695, .802] }, { w: [.906, .705], t: [.781, .802] }],
+      [{ w: [.318, .462], t: [.578, .39] }]];
+    let bedB = null, bedGlows = [];
+    const bed = {
+      open() { bedB = Bedtime.open(T, SLEEP); const r = bedB.ih * .045; bedGlows = BED_LAMPS.map(g => g.map(p => bedB.glow(p, r, '#FFE9A8', .9))); },
+      async lights() {
+        for (const g of bedGlows) { g.forEach(n => bedB.fade(n, 0, 700)); try { if (!document.hidden) AudioFX.sfx('latch_click', .25); } catch (e) { /* 무시 */ } if (!document.hidden) await sleep(650); }
+      },
+      dim() { if (bedB) bedB.dim(.4, 3000); },
+      end() { return bedB ? bedB.end(3500) : null; },
+    };
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { rc_bg_yard: 'birds_chirp_1', rc_bg_playground: 'birds_chirp_2' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } fronts = []; T.clear(); bgImage(T, key + (V3[key] || '_v2')); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb4(SCENE_AMB[key]); };
@@ -407,7 +423,7 @@
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['intro_adventure', 'paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'squeak', 'door', 'creak', 'police_siren', 'fire_siren', 'ambulance_siren', 'fire_crackle', 'birds_chirp_1', 'birds_chirp_2', 'ding_glock', 'question', 'whistle_down', 'harp_gliss', 'pop_appear', 'water_pour_1', 'latch_click', 'train', 'party_horn', 'finale_happy']);
+    AudioFX.preloadSfx(['intro_adventure', 'paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'squeak', 'door', 'creak', 'police_siren', 'fire_siren', 'ambulance_siren', 'fire_crackle', 'birds_chirp_1', 'birds_chirp_2', 'ding_glock', 'question', 'whistle_down', 'harp_gliss', 'pop_appear', 'water_pour_1', 'latch_click', 'train', 'party_horn', 'finale_happy', 'classical_brahms_lullaby_box']);
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
     const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_vienna_march']); } catch (e) { /* 무시 */ }
@@ -747,7 +763,7 @@
       },
     };
     /* settle: 장면 넘김 전에 달리던 차가 다 멈추기를 기다린다(엔진이 넘김 시간 제한 밖에서 부른다) */
-    const READ_ACTS = { settle: flightsDone, set: R.set, cam: R.cam, kid: R.kid, car: R.car, toys: R.toys, hand: R.hand, bfly: R.bfly, thieves: R.thieves, house: R.house, flames: R.flames, dolls: R.dolls, amb: R.amb, hook: R.hook, convoy: R.convoy, vo: R.vo, fx: R.fx, pop: R.pop, confetti: R.confetti };
+    const READ_ACTS = { settle: flightsDone, set: R.set, cam: R.cam, kid: R.kid, car: R.car, toys: R.toys, hand: R.hand, bfly: R.bfly, thieves: R.thieves, house: R.house, flames: R.flames, dolls: R.dolls, amb: R.amb, hook: R.hook, convoy: R.convoy, vo: R.vo, fx: R.fx, pop: R.pop, confetti: R.confetti, bed: v => (bed[v] ? bed[v]() : null) };   // bed:open|lights|dim|end = 잠자리 장면
     /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · bg:<이름>:<볼륨>:<초> (amb 는 구급차 동사라 bg 로) */
     READ_ACTS.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } };
     READ_ACTS.finale = () => { finaleMusic(); }; // 끝 축하 음악 (2026-10-31 사용자 지시)
@@ -1187,6 +1203,17 @@
     await say('부릉부릉, 빵빵!');
     await finaleWait();
     try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+
+    /* ===== 11. 잠자리 (2026-11-01): 누르기 없음. 집 차고에 쏙, 전조등이 하나씩 꺼지고 이현이가 잠든다 ===== */
+    await T.sceneCard('', () => bed.open());
+    await say('집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.');
+    await say('"잘 자, 친구들."');
+    await say('"오늘 정말 긴 하루였어."');
+    const offs = bed.lights();
+    await say('자동차들의 불이 하나씩 꺼졌어요.');
+    await offs; bed.dim();
+    await say('이현이는 빨간 자동차를 손에 꼭 쥐고 쌔근쌔근 잠들었어요.');
+    await bed.end();
     T.finale(); await sleep(1500);
     return '서로 도우면 함께 갈 수 있어요.';
   }

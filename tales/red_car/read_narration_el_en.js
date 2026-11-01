@@ -295,6 +295,26 @@ Object.assign(NARRATION_CLIPS_EN, {
  "서로 도우면 혼자서는 못 가는 길도 함께 갈 수 있답니다.": {
   "t": "When we help each other, we can travel together down roads we could never travel alone.",
   "c": "audio/el/red_car/en/nar_fe00f76770.mp3"
+ },
+ "집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.": {
+  "t": "Back home, the cars parked side by side in the garage next to the bed.",
+  "c": "audio/el/red_car/en/nar_f927a034f9.mp3"
+ },
+ "\"잘 자, 친구들.\"": {
+  "t": "Good night, friends.",
+  "c": "audio/el/red_car/en/tow_f3028a4f0f.mp3"
+ },
+ "\"오늘 정말 긴 하루였어.\"": {
+  "t": "What a long day it was today.",
+  "c": "audio/el/red_car/en/red_280cf9fe20.mp3"
+ },
+ "자동차들의 불이 하나씩 꺼졌어요.": {
+  "t": "One by one, the cars' lights went out.",
+  "c": "audio/el/red_car/en/nar_9a8e0e6693.mp3"
+ },
+ "이현이는 빨간 자동차를 손에 꼭 쥐고 쌔근쌔근 잠들었어요.": {
+  "t": "Ihyun held the red car tight and fell fast asleep.",
+  "c": "audio/el/red_car/en/nar_9cdaa4340b.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});

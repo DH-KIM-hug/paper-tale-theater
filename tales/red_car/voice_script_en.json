@@ -756,6 +756,44 @@
      "toneup"
     ]
    ]
+  },
+  {
+   "text": "집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.",
+   "en": "Back home, the cars parked side by side in the garage next to the bed."
+  },
+  {
+   "text": "\"잘 자, 친구들.\"",
+   "en": "Good night, friends.",
+   "segs": [
+    [
+     "tow",
+     "Good night, friends."
+    ]
+   ]
+  },
+  {
+   "text": "\"오늘 정말 긴 하루였어.\"",
+   "en": "What a long day it was today.",
+   "segs": [
+    [
+     "red",
+     "What a long day it was today."
+    ]
+   ]
+  },
+  {
+   "text": "자동차들의 불이 하나씩 꺼졌어요.",
+   "en": "One by one, the cars' lights went out."
+  },
+  {
+   "text": "이현이는 빨간 자동차를 손에 꼭 쥐고 쌔근쌔근 잠들었어요.",
+   "en": "Ihyun held the red car tight and fell fast asleep.",
+   "segs": [
+    [
+     "nar",
+     "Ee-hyun held the red car tight and fell fast asleep."
+    ]
+   ]
   }
  ],
  "extra": {

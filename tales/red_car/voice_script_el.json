@@ -805,6 +805,61 @@
      "[bright send-off]"
     ]
    ]
+  },
+  {
+   "text": "집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.",
+   "segs": [
+    [
+     "nar",
+     "집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried, sleepy, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "\"잘 자, 친구들.\"",
+   "segs": [
+    [
+     "tow",
+     "잘 자, 친구들.",
+     null,
+     "[easygoing sturdy voice, warm, soft, sleepy]"
+    ]
+   ]
+  },
+  {
+   "text": "\"오늘 정말 긴 하루였어.\"",
+   "segs": [
+    [
+     "red",
+     "오늘 정말 긴 하루였어.",
+     null,
+     "[small voice, sleepy, content, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "자동차들의 불이 하나씩 꺼졌어요.",
+   "segs": [
+    [
+     "nar",
+     "자동차들의 불이 하나씩 꺼졌어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried, sleepy, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "이현이는 빨간 자동차를 손에 꼭 쥐고 쌔근쌔근 잠들었어요.",
+   "segs": [
+    [
+     "nar",
+     "이현이는 빨간 자동차를 손에 꼭 쥐고 쌔근쌔근 잠들었어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried, sleepy, soft]"
+    ]
+   ]
   }
  ],
  "extra": {

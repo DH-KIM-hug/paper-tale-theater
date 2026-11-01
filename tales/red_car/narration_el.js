@@ -67,7 +67,12 @@ Object.assign(NARRATION_CLIPS, {
  "와아! 내 빨간 자동차다!": "audio/el/red_car/child_13eb5a7c72.mp3",
  "경찰차랑 소방차, 구급차랑 견인차도 다 여기 있네!": "audio/el/red_car/child_839a47e07f.mp3",
  "이현이는 소중한 보물 자동차들을 모두 품에 안고 펄쩍펄쩍 기뻐했답니다.": "audio/el/red_car/nar_108e78ef55.mp3",
- "이제 모두 함께 집으로 출발!": "audio/el/red_car/nar_3ff6830287.mp3"
+ "이제 모두 함께 집으로 출발!": "audio/el/red_car/nar_3ff6830287.mp3",
+ "집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.": "audio/el/red_car/nar_830fd7c6b7.mp3",
+ "\"잘 자, 친구들.\"": "audio/el/red_car/tow_576c485562.mp3",
+ "\"오늘 정말 긴 하루였어.\"": "audio/el/red_car/red_298951654f.mp3",
+ "자동차들의 불이 하나씩 꺼졌어요.": "audio/el/red_car/nar_5f30aca1f5.mp3",
+ "이현이는 빨간 자동차를 손에 꼭 쥐고 쌔근쌔근 잠들었어요.": "audio/el/red_car/nar_b9e498de2c.mp3"
 });
 Object.assign(VOICE_LINES, {
  "siren_police": "audio/el/red_car/police_a182eeb428.mp3",

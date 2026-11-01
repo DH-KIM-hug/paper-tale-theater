@@ -46,9 +46,12 @@ Object.assign(NARRATION_CLIPS, {
  "구급차 삼촌! 우리랑 같이 이현이한테 가요!": "audio/el/red_car/red_3b232a323c.mp3",
  "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!": "audio/el/red_car/amb_61fb9d30c2.mp3",
  "구급차 삼촌도 든든하게 따라나섰어요.": "audio/el/red_car/nar_71f70baa86.mp3",
+ "병원을 떠난 친구 넷은 긴 길로 나왔어요.": "audio/el/red_car/nar_1034183bd4.mp3",
  "넷이서 나란히 달려요. 친구들이 소리로 인사했어요.": "audio/el/red_car/nar_7c71731eea.mp3",
  "경찰차는 삐뽀삐뽀, 소방차는 위이잉, 구급차는 삐용삐용!": "audio/el/red_car/nar_fa638e6d9c.mp3",
  "자, 다 같이 이현이한테 가자!": "audio/el/red_car/red_17f9c66e21.mp3",
+ "친구 넷은 씽씽, 바람을 가르며 신나게 달렸어요.": "audio/el/red_car/nar_5ceeaa60de.mp3",
+ "친구 넷이 언덕길에 다다랐어요.": "audio/el/red_car/nar_fd6adcb95a.mp3",
  "하지만 너무 오래 달린 빨간 자동차는 그만 툭, 멈춰 서고 말았어요.": "audio/el/red_car/nar_c40e3f1b1a.mp3",
  "아이고, 힘들어. 더는 못 가겠어…": "audio/el/red_car/red_cf6e9436d9.mp3",
  "바퀴가 무거워 꼼짝할 수가 없었지요.": "audio/el/red_car/nar_81beecf029.mp3",
@@ -71,8 +74,10 @@ Object.assign(NARRATION_CLIPS, {
  "자동차 친구들도 빵빵! 부릉부릉! 신이 나서 소리쳤어요.": "audio/el/red_car/nar_ed8aa87c95.mp3",
  "이제 모두 함께 집으로 출발!": "audio/el/red_car/nar_3ff6830287.mp3",
  "서로 도우면 혼자서는 못 가는 길도 함께 갈 수 있답니다.": "audio/el/red_car/nar_5bc5e90721.mp3",
- "병원을 떠난 친구 넷은 긴 길로 나왔어요.": "audio/el/red_car/nar_1034183bd4.mp3",
- "친구 넷은 씽씽, 바람을 가르며 신나게 달렸어요.": "audio/el/red_car/nar_5ceeaa60de.mp3",
- "친구 넷이 언덕길에 다다랐어요.": "audio/el/red_car/nar_fd6adcb95a.mp3"
+ "집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.": "audio/el/red_car/nar_830fd7c6b7.mp3",
+ "\"잘 자, 친구들.\"": "audio/el/red_car/tow_576c485562.mp3",
+ "\"오늘 정말 긴 하루였어.\"": "audio/el/red_car/red_298951654f.mp3",
+ "자동차들의 불이 하나씩 꺼졌어요.": "audio/el/red_car/nar_5f30aca1f5.mp3",
+ "이현이는 빨간 자동차를 손에 꼭 쥐고 쌔근쌔근 잠들었어요.": "audio/el/red_car/nar_b9e498de2c.mp3"
 });
 Object.assign(VOICE_LINES, {});
