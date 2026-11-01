@@ -21,7 +21,7 @@ Object.assign(NARRATION_CLIPS, {
  "뿔이에요! 반짝이는 걸 눌러 봐요!": "audio/el/frog/nar_76369eb7db.mp3",
  "맞아요, 뿔이에요!": "audio/el/frog/nar_13f93f97ee.mp3",
  "커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.": "audio/el/frog/nar_825fb78579.mp3",
- "\"엄마! 산처럼 커다란 괴물을 봤어요!\"": "audio/el/frog/baby_9f6e0970b0.mp3",
+ "\"엄마! 산처럼 커다란 괴물을 봤어요!\"": "audio/el/frog/baby_c6af0ba79d.mp3",
  "엄마개구리가 말했어요. \"흥, 얼마나 컸는데?\"": [
   "audio/el/frog/nar_f86c8e9e4b.mp3",
   "audio/el/frog/mom_854f9f3953.mp3"
@@ -59,7 +59,7 @@ Object.assign(NARRATION_CLIPS, {
  "엄마개구리는 원래 크기로 돌아왔어요. 어지러워도 깔깔깔 웃었답니다.": "audio/el/frog/nar_b034590808.mp3",
  "황소가 몸을 낮추고 다정하게 말했어요. \"크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!\"": [
   "audio/el/frog/nar_106ff3845e.mp3",
-  "audio/el/frog/ox_3db7f0ec30.mp3"
+  "audio/el/frog/ox_4dedef70a5.mp3"
  ],
  "엄마개구리를 톡 눌러서 폴짝!": "audio/el/frog/nar_9dc30c2c71.mp3",
  "황소도 따라 뛰어 볼까요? 하나, 둘…": "audio/el/frog/nar_a2860e4d1d.mp3",
@@ -70,5 +70,5 @@ Object.assign(NARRATION_CLIPS, {
 });
 Object.assign(VOICE_LINES, {
  "cut_pop": "audio/el/frog/mom_9f9f88c3d8.mp3",
- "ox_thud": "audio/el/frog/ox_0bda93c618.mp3"
+ "ox_thud": "audio/el/frog/ox_13e477a5d9.mp3"
 });

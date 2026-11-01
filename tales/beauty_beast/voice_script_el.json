@@ -2,12 +2,12 @@
  "notes": "ElevenLabs 목소리 배정(2026-10-20): nar=Huelyn(여자 내레이터 돌려 쓰기 — 백설공주 Lily, 신데렐라 Leejin 다음), belle=Yun(젊고 따뜻하고 맑은 여성, 신데렐라 오디션 후보 A-1; 신데렐라·백설과 같은 Luna를 세 번 쓰지 않는다), beast=George(깊고 따뜻한 남성 이야기꾼, Brian보다 부드럽게; 느리고 정중하게), prince=George(야수가 변한 모습이라 같은 목소리를 일부러 쓴다, 연기 지시만 밝게), father=Namchun(할아버지·아버지 원형), sisa=Chaemong(큰언니, 당돌), sisb=Laura(작은언니, 새침·통통). 신데렐라 언니들(Ailra·Sena)과 겹치지 않는다. 말·거울·반지는 목소리 없음. 모델 eleven_v4, 배역별 settings.",
  "voices": {
   "nar": "gnWujHp24oqX3I03lRbU",
-  "belle": "lFG74KW6EG0aRXg1kKfh",
-  "beast": "JBFqnCBsd6RMkjVDRZzb",
-  "father": "5ON5Fnz24cnOozEQfGAm",
+  "belle": "tnSpp4vdxKPjI9w0GnoV",
+  "beast": "qNkzaJoHLLdpvgh5tISm",
+  "father": "qAZH0aMXY8tw1QufPN0D",
   "sisa": "DGDjWy2CQ8Ishu0meQte",
   "sisb": "FGY2WhTYpPnrIDTdsKH5",
-  "prince": "JBFqnCBsd6RMkjVDRZzb"
+  "prince": "qNkzaJoHLLdpvgh5tISm"
  },
  "models": {
   "nar": "eleven_v4",

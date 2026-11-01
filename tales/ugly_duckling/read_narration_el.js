@@ -59,7 +59,7 @@ Object.assign(NARRATION_CLIPS, {
  "뿌우~ 나팔 같은 소리! 백조들이에요.": "audio/el/ugly_duckling/nar_58f464b756.mp3",
  "아기 오리는 오래오래 하늘을 올려다보았어요. \"나도 저렇게 날고 싶다.\"": [
   "audio/el/ugly_duckling/nar_f65becba38.mp3",
-  "audio/el/ugly_duckling/hero_d681095b1d.mp3"
+  "audio/el/ugly_duckling/hero_71781b2246.mp3"
  ],
  "호숫가에 혼자 남은 아기 오리 곁으로 눈이 내렸어요.": "audio/el/ugly_duckling/nar_77ef4b8250.mp3",
  "추운 겨울이 왔어요. 호수가 꽁꽁 얼어서 발이 얼음에 붙어 버렸어요.": "audio/el/ugly_duckling/nar_8f417bc2fb.mp3",
@@ -67,7 +67,7 @@ Object.assign(NARRATION_CLIPS, {
  "날개로 몸을 꼭 감쌌더니 조금 따뜻해졌어요.": "audio/el/ugly_duckling/nar_a359869b26.mp3",
  "그때 농부 할아버지가 지나가다 아기 오리를 보았어요. \"저런, 얼음에 발이 붙었구나!\"": [
   "audio/el/ugly_duckling/nar_5ad455cbe9.mp3",
-  "audio/el/ugly_duckling/farmer_5311dc7a54.mp3"
+  "audio/el/ugly_duckling/farmer_be92906735.mp3"
  ],
  "할아버지는 얼음을 쿵쿵 두드렸어요.": "audio/el/ugly_duckling/nar_15d91b10e4.mp3",
  "쩍! 얼음이 깨졌어요. 발이 쏙 빠졌어요!": "audio/el/ugly_duckling/nar_cae6eb8da2.mp3",
@@ -88,7 +88,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/ugly_duckling/nar_b10c20dd69.mp3"
  ],
  "\"그래도 헤엄은 내가 제일 잘해! 첨벙첨벙!\" 아기 오리가 자랑스럽게 말했어요.": [
-  "audio/el/ugly_duckling/hero_e1e31ea0bb.mp3",
+  "audio/el/ugly_duckling/hero_a929076933.mp3",
   "audio/el/ugly_duckling/nar_acb8adaedc.mp3"
  ],
  "고양이와 암탉이 고개를 끄덕였어요. \"그렇구나! 모두 잘하는 게 다르구나.\"": [
@@ -105,7 +105,7 @@ Object.assign(NARRATION_CLIPS, {
  "물결이 찰랑찰랑 잔잔해지자, 하얀 새 한 마리가 보였어요.": "audio/el/ugly_duckling/nar_c1e377703e.mp3",
  "길고 하얀 목, 커다란 하얀 날개…": "audio/el/ugly_duckling/nar_6e4975a442.mp3",
  "\"어? 이게 나야?\" 아기 오리는 하얀 백조였어요!": [
-  "audio/el/ugly_duckling/hero_988da55b61.mp3",
+  "audio/el/ugly_duckling/hero_f6bb0007f0.mp3",
   "audio/el/ugly_duckling/nar_e34437850f.mp3"
  ],
  "알, 아기, 어린 새, 그리고 백조! 이렇게 자랐어요.": "audio/el/ugly_duckling/nar_870f544c39.mp3",

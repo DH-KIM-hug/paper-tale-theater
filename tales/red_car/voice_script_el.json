@@ -2,12 +2,12 @@
  "notes": "ElevenLabs 목소리 배정(2026-10-21 확정): nar=Lily(여자 내레이터 돌려 쓰기, 이 편은 Lily), child=Sparkles for Kids(이현이, 남자아이 목소리 — 확정; 대사에 성별 어휘 없음), red=Munni(빨간 자동차, 작지만 용감 — 아기 말투 태그 없이 씩씩하게), police=Eric(경찰차 형아), fire=Bella(소방차 이모), amb=Namchun(구급차 삼촌), tow=Roger(견인차). 도둑 장난감·인형·나비는 목소리 없음. 사이렌(삐뽀삐뽀·위이잉·삐용삐용)과 부릉부릉은 효과음이 아니라 그 배역 목소리의 의성어(extra). \"부릉부릉, 빵빵!\"은 다섯 자동차 목소리로 따로 녹음한 extra.cheer 를 tales/red_car/mix_chorus_el.py 로 겹친다(chorus 항목). 모델 eleven_v4, 배역별 settings. 교훈은 대사로 말하지 않는다(9번 고마워 없음). 7번 사이렌 맞추기·9번 수세기 없음.",
  "voices": {
   "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "child": "tapn1QwocNXk3viVSowa",
-  "red": "VOGEEZj2Kly5dP9LrQy8",
-  "police": "cjVigY5qzO86Huf0OWal",
+  "child": "ygoBNrnmTEdu5NtDTmAY",
+  "red": "n7Wi4g1bhpw4Bs8HK5ph",
+  "police": "c6SfcYrb2t09NHXiT80T",
   "fire": "hpp4J3VqNfWAUOO0d1Us",
-  "amb": "5ON5Fnz24cnOozEQfGAm",
-  "tow": "CwhRBWXzGAHq8TQ4Fs17"
+  "amb": "qAZH0aMXY8tw1QufPN0D",
+  "tow": "EkK5I93UQWFDigLMpZcX"
  },
  "models": {
   "nar": "eleven_v4",

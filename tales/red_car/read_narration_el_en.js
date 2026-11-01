@@ -30,7 +30,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어! 나비다!": {
   "t": "Oh! A butterfly!",
-  "c": "audio/el/red_car/en/child_e24c557511.mp3"
+  "c": "audio/el/red_car/en/child_a5b895cb15.mp3"
  },
  "나비가 팔랑팔랑 날아가자, 이현이는 폴짝폴짝 따라갔어요.": {
   "t": "The butterfly fluttered away, flutter, flutter, and Ihyun went hopping after it, hop, hop.",
@@ -54,7 +54,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "잉잉, 내 빨간 자동차 어디 갔지?": {
   "t": "Boo-hoo, where did my red car go?",
-  "c": "audio/el/red_car/en/child_a5705050f6.mp3"
+  "c": "audio/el/red_car/en/child_93c308c9f4.mp3"
  },
  "이현이가 떠난 자리에 빨간 자동차만 혼자 남았어요.": {
   "t": "Ihyun went away, and the red car was left all alone on the grass.",
@@ -70,7 +70,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "부릉부릉! 이현이를 찾아 장난감 세상으로 가자!": {
   "t": "Vroom vroom! Let's go to Toy Land and find Ihyun!",
-  "c": "audio/el/red_car/en/red_b48b2434b6.mp3"
+  "c": "audio/el/red_car/en/red_b30198d051.mp3"
  },
  "끼이익, 장난감 세상의 커다란 문이 열렸어요.": {
   "t": "Creeeak! The great big gate of Toy Land swung open.",
@@ -94,7 +94,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "게 멈춰라!": {
   "t": "Stop right there!",
-  "c": "audio/el/red_car/en/police_55111b5a9a.mp3"
+  "c": "audio/el/red_car/en/police_63939c11ae.mp3"
  },
  "경찰차 장난감이 도둑 장난감들을 쫓아 씽씽 달리고 있었어요.": {
   "t": "A toy police car was zooming after some toy robbers.",
@@ -106,15 +106,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어? 너는 이현이가 잃어버렸던 경찰차 형아?!": {
   "t": "Huh? You're the police car Ihyun lost! Big brother police car!",
-  "c": "audio/el/red_car/en/red_ae258a8b49.mp3"
+  "c": "audio/el/red_car/en/red_02587094a1.mp3"
  },
  "우리 같이 이현이한테 가자!": {
   "t": "Let's go find Ihyun together!",
-  "c": "audio/el/red_car/en/red_06999a7f49.mp3"
+  "c": "audio/el/red_car/en/red_1d638a4c56.mp3"
  },
  "좋아! 도둑을 다 잡았으니 같이 가자!": {
   "t": "Sure! I've caught all the robbers, so let's go together!",
-  "c": "audio/el/red_car/en/police_ae60428e62.mp3"
+  "c": "audio/el/red_car/en/police_7b4d4bf92d.mp3"
  },
  "경찰차 형아가 앞장섰어요.": {
   "t": "Big brother police car led the way.",
@@ -146,7 +146,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어? 소방차 이모! 우리 같이 이현이 만나러 가요!": {
   "t": "Oh? Auntie fire truck! Come with us to find Ihyun!",
-  "c": "audio/el/red_car/en/red_aef27534d6.mp3"
+  "c": "audio/el/red_car/en/red_9b1b26d50a.mp3"
  },
  "그래그래! 불을 다 껐으니 같이 가자!": {
   "t": "Of course! The fire is out, so let's go together!",
@@ -174,11 +174,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "구급차 삼촌! 우리랑 같이 이현이한테 가요!": {
   "t": "Uncle ambulance! Come with us to find Ihyun!",
-  "c": "audio/el/red_car/en/red_db548e1594.mp3"
+  "c": "audio/el/red_car/en/red_e68e78eec3.mp3"
  },
  "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!": {
   "t": "All right, all right! I've brought the sick friends to the hospital, so now let's go to Ihyun!",
-  "c": "audio/el/red_car/en/amb_6caf0b4a2a.mp3"
+  "c": "audio/el/red_car/en/amb_79edf458a3.mp3"
  },
  "구급차 삼촌도 든든하게 따라나섰어요.": {
   "t": "Uncle ambulance came along too, strong and steady.",
@@ -198,7 +198,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자, 다 같이 이현이한테 가자!": {
   "t": "Come on, everyone, let's go to Ihyun!",
-  "c": "audio/el/red_car/en/red_50fd70576d.mp3"
+  "c": "audio/el/red_car/en/red_17543c977a.mp3"
  },
  "친구 넷은 씽씽, 바람을 가르며 신나게 달렸어요.": {
   "t": "The four friends zoomed along, zip, zip, slicing through the wind, happy as could be.",
@@ -214,7 +214,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아이고, 힘들어. 더는 못 가겠어…": {
   "t": "Oh dear, I'm so tired. I can't go any farther...",
-  "c": "audio/el/red_car/en/red_aec0544843.mp3"
+  "c": "audio/el/red_car/en/red_b843e713fd.mp3"
  },
  "바퀴가 무거워 꼼짝할 수가 없었지요.": {
   "t": "Its wheels felt so heavy it couldn't move at all.",
@@ -230,7 +230,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "걱정 마! 내가 도와줄게!": {
   "t": "Don't worry! I'll help you!",
-  "c": "audio/el/red_car/en/tow_eb312d5269.mp3"
+  "c": "audio/el/red_car/en/tow_0f99fb6df3.mp3"
  },
  "바로 이현이가 전에 잃어버렸던 주황색 견인차였어요!": {
   "t": "It was the orange tow truck Ihyun had lost long ago!",
@@ -242,11 +242,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "영차, 영차!": {
   "t": "Heave-ho, heave-ho!",
-  "c": "audio/el/red_car/en/tow_4f940617c5.mp3"
+  "c": "audio/el/red_car/en/tow_0e6440a0ea.mp3"
  },
  "\"고마워, 견인차야! 이제 다시 갈 수 있어!\"": {
   "t": "Thank you, tow truck! Now I can go again!",
-  "c": "audio/el/red_car/en/red_b236d6a359.mp3"
+  "c": "audio/el/red_car/en/red_b927f9a703.mp3"
  },
  "다섯 자동차 친구는 언덕을 지나 긴 길로 나왔어요.": {
   "t": "The five car friends went over the hill and out onto a long road.",
@@ -274,11 +274,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "와아! 내 빨간 자동차다!": {
   "t": "Wow! My red car!",
-  "c": "audio/el/red_car/en/child_cd1d5da54a.mp3"
+  "c": "audio/el/red_car/en/child_5840581374.mp3"
  },
  "경찰차랑 소방차, 구급차랑 견인차도 다 여기 있네!": {
   "t": "And the police car, the fire truck, the ambulance and the tow truck are all here too!",
-  "c": "audio/el/red_car/en/child_97a4479f8d.mp3"
+  "c": "audio/el/red_car/en/child_984f1fcdea.mp3"
  },
  "이현이는 소중한 보물 자동차들을 모두 품에 안고 펄쩍펄쩍 기뻐했답니다.": {
   "t": "Ihyun hugged all the precious toy cars and jumped for joy.",
@@ -302,11 +302,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"잘 자, 친구들.\"": {
   "t": "Good night, friends.",
-  "c": "audio/el/red_car/en/tow_f3028a4f0f.mp3"
+  "c": "audio/el/red_car/en/tow_990eab4941.mp3"
  },
  "\"오늘 정말 긴 하루였어.\"": {
   "t": "What a long day it was today.",
-  "c": "audio/el/red_car/en/red_280cf9fe20.mp3"
+  "c": "audio/el/red_car/en/red_2e8286ea1d.mp3"
  },
  "자동차들의 불이 하나씩 꺼졌어요.": {
   "t": "One by one, the cars' lights went out.",

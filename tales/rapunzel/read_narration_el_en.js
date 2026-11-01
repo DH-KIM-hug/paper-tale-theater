@@ -26,7 +26,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "내가 가져올게요.": {
   "t": "I'll go and get some for you.",
-  "c": "audio/el/rapunzel/en/father_a389aa456a.mp3"
+  "c": "audio/el/rapunzel/en/father_cb10a8cb83.mp3"
  },
  "밤이 되자, 아버지는 살금살금 담을 넘었어요.": {
   "t": "When night came, the father quietly climbed over the wall.",
@@ -38,19 +38,19 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "누구냐! 내 풀을 뽑다니!": {
   "t": "Who's there! Pulling up my rampion!",
-  "c": "audio/el/rapunzel/en/gothel_89ea1ee367.mp3"
+  "c": "audio/el/rapunzel/en/gothel_cf7932b13f.mp3"
  },
  "아, 아내가 너무너무 먹고 싶어 해서요.": {
   "t": "Oh! My wife wanted it so, so much.",
-  "c": "audio/el/rapunzel/en/father_3fd487dd40.mp3"
+  "c": "audio/el/rapunzel/en/father_759c08d869.mp3"
  },
  "내 풀을 가져가도 좋다. 대신 아기가 태어나면 내가 키우마.": {
   "t": "You may take my rampion. But when the baby is born, I shall raise it.",
-  "c": "audio/el/rapunzel/en/gothel_2e8bd86ce2.mp3"
+  "c": "audio/el/rapunzel/en/gothel_1f77702eca.mp3"
  },
  "네… 알겠어요.": {
   "t": "Yes... all right.",
-  "c": "audio/el/rapunzel/en/father_d0ce13d2c4.mp3"
+  "c": "audio/el/rapunzel/en/father_bfc845bd45.mp3"
  },
  "아기가 태어났어요. 마녀 고텔은 아기를 데려가 라푼젤이라고 이름 짓고 정성껏 키웠어요.": {
   "t": "The baby was born. The witch Gothel took her away, named her Rapunzel, and raised her with care.",
@@ -74,7 +74,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자, 잠겨라. 밖은 위험하단다. 여기가 제일 안전해.": {
   "t": "Now, lock tight. The outside is dangerous. This is the safest place.",
-  "c": "audio/el/rapunzel/en/gothel_96f077f01b.mp3"
+  "c": "audio/el/rapunzel/en/gothel_ba393edc74.mp3"
  },
  "창문 위에는 새 한 마리, 탑 아래에는 토끼 한 마리가 있어요.": {
   "t": "Above the window sits a bird, and down below the tower sits a rabbit.",
@@ -90,7 +90,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "라푼젤, 라푼젤, 머리를 내려 줘!": {
   "t": "Rapunzel, Rapunzel, let down your hair!",
-  "c": "audio/el/rapunzel/en/gothel_69481a0c44.mp3"
+  "c": "audio/el/rapunzel/en/gothel_f2e8d9c715.mp3"
  },
  "라푼젤은 창가에서 길게 땋은 머리를 풀어 내렸어요.": {
   "t": "Rapunzel let her long braid tumble down from the window.",
@@ -126,7 +126,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "내 노래가 숲 끝까지 닿았으면.": {
   "t": "I wish my song could reach the end of the forest.",
-  "c": "audio/el/rapunzel/en/rap_3a18176fc0.mp3"
+  "c": "audio/el/rapunzel/en/rap_808310b928.mp3"
  },
  "라푼젤은 제일 긴 리본으로 머리를 곱게 묶었어요.": {
   "t": "Rapunzel tied her hair up neatly with the longest ribbon.",
@@ -146,7 +146,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어디서 이렇게 고운 노래가 들리지?": {
   "t": "Where is that lovely song coming from?",
-  "c": "audio/el/rapunzel/en/prince_f58f9bbc98.mp3"
+  "c": "audio/el/rapunzel/en/prince_e4b0b741a9.mp3"
  },
  "왕자는 말에서 내려 노랫소리가 나는 탑으로 다가갔어요.": {
   "t": "The prince got off his horse and went toward the singing in the tower.",
@@ -170,7 +170,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아, 저렇게 올라가는구나!": {
   "t": "Ah, so that's how you get up there!",
-  "c": "audio/el/rapunzel/en/prince_0444a33641.mp3"
+  "c": "audio/el/rapunzel/en/prince_d409d59e4a.mp3"
  },
  "다음 날 저녁, 왕자는 탑 아래에서 외쳤어요.": {
   "t": "The next evening, the prince called out from the foot of the tower.",
@@ -178,7 +178,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "라푼젤, 라푼젤, 머리를 내려 줘요!": {
   "t": "Rapunzel, Rapunzel, let down your hair!",
-  "c": "audio/el/rapunzel/en/prince_96ea88aca7.mp3"
+  "c": "audio/el/rapunzel/en/prince_ece166888e.mp3"
  },
  "라푼젤이 내린 머리를 붙잡고 왕자가 영차영차 올라갔어요.": {
   "t": "The prince held the braid Rapunzel lowered and climbed up, heave-ho!",
@@ -190,15 +190,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어머, 할머니가 아니네?": {
   "t": "Oh my, you're not Grandmother?",
-  "c": "audio/el/rapunzel/en/rap_fd3032e9cf.mp3"
+  "c": "audio/el/rapunzel/en/rap_27233eaada.mp3"
  },
  "놀라게 해서 미안해요. 노래가 너무 고와서 왔어요. 저와 함께 성으로 가요.": {
   "t": "I'm sorry I startled you. Your song was so lovely that I came. Come with me to my castle.",
-  "c": "audio/el/rapunzel/en/prince_ab962a1a4c.mp3"
+  "c": "audio/el/rapunzel/en/prince_3ff9b6e71b.mp3"
  },
  "좋아요. 비단실을 가져오면 사다리를 엮을게요.": {
   "t": "All right. If you bring me silk thread, I'll weave a ladder.",
-  "c": "audio/el/rapunzel/en/rap_3583c29ef8.mp3"
+  "c": "audio/el/rapunzel/en/rap_71924ba331.mp3"
  },
  "왕자는 바깥세상 이야기를 조잘조잘 들려주었어요.": {
   "t": "The prince chattered on and on about the big wide world outside.",
@@ -222,11 +222,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "할머니, 할머니는 왜 왕자님보다 훨씬 무거워요?": {
   "t": "Grandmother, why are you so much heavier than the prince?",
-  "c": "audio/el/rapunzel/en/rap_e633aa2d14.mp3"
+  "c": "audio/el/rapunzel/en/rap_a52bb17ca1.mp3"
  },
  "뭐라고? 왕자라니!": {
   "t": "What? A prince!",
-  "c": "audio/el/rapunzel/en/gothel_7b6c04f1fd.mp3"
+  "c": "audio/el/rapunzel/en/gothel_e0add25d02.mp3"
  },
  "고텔은 부들부들 떨며 커다란 가위를 꺼냈어요.": {
   "t": "Gothel shook with anger, tremble, tremble, and pulled out a great big pair of scissors.",
@@ -258,7 +258,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "라푼젤은 여기 없다. 다시는 못 볼 거다. 자, 내려가라.": {
   "t": "Rapunzel is not here. You will never see her again. Now, down you go.",
-  "c": "audio/el/rapunzel/en/gothel_d019e590bb.mp3"
+  "c": "audio/el/rapunzel/en/gothel_1ba363dc67.mp3"
  },
  "휘익~ 마법 바람이 왕자를 탑 아래 풀숲에 사뿐 내려놓았어요.": {
   "t": "Whoosh... a magic wind set the prince gently down in the grass below the tower.",
@@ -266,7 +266,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "라푼젤… 어디로 갔을까.": {
   "t": "Rapunzel... where could she be?",
-  "c": "audio/el/rapunzel/en/prince_c41e8b4a94.mp3"
+  "c": "audio/el/rapunzel/en/prince_e2f33132ec.mp3"
  },
  "왕자는 슬픈 얼굴로 숲을 걷고 또 걸었어요.": {
   "t": "The prince walked and walked through the forest with a sad face.",
@@ -294,15 +294,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "이 노래는… 라푼젤!": {
   "t": "That song... Rapunzel!",
-  "c": "audio/el/rapunzel/en/prince_1a7c9a50fc.mp3"
+  "c": "audio/el/rapunzel/en/prince_21c1c5a4b3.mp3"
  },
  "왕자님! 찾아와 줬군요.": {
   "t": "Prince! You came and found me.",
-  "c": "audio/el/rapunzel/en/rap_c5157b4088.mp3"
+  "c": "audio/el/rapunzel/en/rap_5fc60d9524.mp3"
  },
  "포기하지 않길 잘했어요. 이제 함께 가요.": {
   "t": "I'm glad I never gave up. Let's go together now.",
-  "c": "audio/el/rapunzel/en/prince_9763d8449f.mp3"
+  "c": "audio/el/rapunzel/en/prince_d7269de86b.mp3"
  },
  "꽃잎이 팔랑팔랑 날리고, 두 사람은 손을 꼭 잡았어요.": {
   "t": "Petals fluttered down, flit, flit, and the two held hands tight.",

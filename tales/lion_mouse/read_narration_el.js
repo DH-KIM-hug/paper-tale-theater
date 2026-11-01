@@ -8,36 +8,36 @@ Object.assign(NARRATION_CLIPS, {
  "사자가 자는 나무 옆 풀밭으로 가 볼까요?": "audio/el/lion_mouse/nar_71c74a93ea.mp3",
  "작은 생쥐가 산책을 나왔어요. 풀이 숲처럼 커다래요!": "audio/el/lion_mouse/nar_88ae2113f6.mp3",
  "폴짝폴짝, 생쥐는 풀 사이를 신나게 뛰어다녔어요.": "audio/el/lion_mouse/nar_aec778f988.mp3",
- "어? 이건 뭐지? 폴짝!": "audio/el/lion_mouse/mouse_1e48cea215.mp3",
+ "어? 이건 뭐지? 폴짝!": "audio/el/lion_mouse/mouse_c574509b85.mp3",
  "생쥐가 잠든 사자의 갈기 위로 올라갔어요.": "audio/el/lion_mouse/nar_daa87b8f0b.mp3",
  "와아! 사자 갈기는 커다란 미끄럼틀이었어요. 쭈르륵~ 히히!": [
-  "audio/el/lion_mouse/mouse_453a64b8d1.mp3",
+  "audio/el/lion_mouse/mouse_17ee96e522.mp3",
   "audio/el/lion_mouse/nar_12f2a5d765.mp3",
-  "audio/el/lion_mouse/mouse_30f02bd160.mp3"
+  "audio/el/lion_mouse/mouse_007ce1f1d0.mp3"
  ],
  "어? 사자가 눈을 떴어요!": "audio/el/lion_mouse/nar_793fe18a66.mp3",
  "사자가 커다란 앞발로 생쥐 꼬리를 탁! 눌렀어요.": "audio/el/lion_mouse/nar_bda2a6962b.mp3",
  "사자가 하품하며 말했어요. \"하암~ 한입에 꿀꺽 해 버릴까?\"": [
   "audio/el/lion_mouse/nar_e392d07dfd.mp3",
-  "audio/el/lion_mouse/lion_3bfb92e1f2.mp3"
+  "audio/el/lion_mouse/lion_d6bf43d07b.mp3"
  ],
  "생쥐가 말했어요. \"살려 주시면 꼭 은혜 갚을게요!\"": [
   "audio/el/lion_mouse/nar_0db3e6f63d.mp3",
-  "audio/el/lion_mouse/mouse_13cff095a5.mp3"
+  "audio/el/lion_mouse/mouse_591a164c93.mp3"
  ],
  "생쥐는 덜덜 떨면서도 또박또박 말했어요.": "audio/el/lion_mouse/nar_03809d99b5.mp3",
  "생쥐가 두 손을 모았어요. \"제발요, 사자님~\"": [
   "audio/el/lion_mouse/nar_6c045db2ce.mp3",
-  "audio/el/lion_mouse/mouse_76eb72545b.mp3"
+  "audio/el/lion_mouse/mouse_40018a0694.mp3"
  ],
- "\"저는 작지만 이빨이 아주 튼튼하다고요!\"": "audio/el/lion_mouse/mouse_21dafafd6b.mp3",
+ "\"저는 작지만 이빨이 아주 튼튼하다고요!\"": "audio/el/lion_mouse/mouse_14547f3e77.mp3",
  "생쥐를 내려다보던 사자가 물었어요.": "audio/el/lion_mouse/nar_7d3ef1e4dc.mp3",
- "\"네가? 나를 도와준다고?\"": "audio/el/lion_mouse/lion_19e800bc73.mp3",
+ "\"네가? 나를 도와준다고?\"": "audio/el/lion_mouse/lion_4a091f3b11.mp3",
  "사자는 배를 잡고 껄껄, 땅이 쿵쿵 울리도록 웃었어요.": "audio/el/lion_mouse/nar_71ceff396f.mp3",
  "사자가 웃다가 앞발이 스르르 열렸어요.": "audio/el/lion_mouse/nar_59eea04c62.mp3",
  "생쥐가 쏙 빠져나왔어요. \"고맙습니다, 사자님!\"": [
   "audio/el/lion_mouse/nar_1ad43fa2d3.mp3",
-  "audio/el/lion_mouse/mouse_2dba9da43e.mp3"
+  "audio/el/lion_mouse/mouse_5e35f50010.mp3"
  ],
  "생쥐는 꼬리를 흔들며 다다다, 풀숲으로 달려갔어요.": "audio/el/lion_mouse/nar_9ce2096894.mp3",
  "생쥐가 떠난 뒤, 두 친구의 크기를 떠올려 볼까요?": "audio/el/lion_mouse/nar_20150b4909.mp3",
@@ -52,7 +52,7 @@ Object.assign(NARRATION_CLIPS, {
  "어흥, 어흥! 사자가 슬픈 목소리로 크게 울었어요.": "audio/el/lion_mouse/nar_d532f76e73.mp3",
  "쫑긋! 생쥐가 사자 목소리를 들었어요.": "audio/el/lion_mouse/nar_f88590eb05.mp3",
  "생쥐가 다다다 달려와 그물 앞에 섰어요.": "audio/el/lion_mouse/nar_e48bcb3dc5.mp3",
- "\"사자님, 제가 도와 드릴게요!\"": "audio/el/lion_mouse/mouse_e66ce7d6e0.mp3",
+ "\"사자님, 제가 도와 드릴게요!\"": "audio/el/lion_mouse/mouse_bfab81e08c.mp3",
  "달빛 아래, 생쥐가 사자를 감싼 그물에 매달렸어요.": "audio/el/lion_mouse/nar_a8bf4d99d8.mp3",
  "생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!": "audio/el/lion_mouse/nar_428c90aef3.mp3",
  "사각사각, 사각사각. 그물 줄이 하나씩 툭, 툭 끊어졌어요.": "audio/el/lion_mouse/nar_171b3636b0.mp3",
@@ -60,17 +60,17 @@ Object.assign(NARRATION_CLIPS, {
  "마지막 줄이 툭! 끊어지자 그물이 스르르 풀렸어요.": "audio/el/lion_mouse/nar_5c32c86090.mp3",
  "와아! 사자가 풀려났어요!": "audio/el/lion_mouse/nar_07070260cc.mp3",
  "풀려난 사자가 생쥐에게 다정하게 말했어요.": "audio/el/lion_mouse/nar_efe04955c6.mp3",
- "\"고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!\"": "audio/el/lion_mouse/lion_bc10a3dbd6.mp3",
- "\"제가 은혜 갚는다고 했지요?\"": "audio/el/lion_mouse/mouse_9e92ee718b.mp3",
+ "\"고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!\"": "audio/el/lion_mouse/lion_e46d5bca1d.mp3",
+ "\"제가 은혜 갚는다고 했지요?\"": "audio/el/lion_mouse/mouse_9fcef5685b.mp3",
  "밤이 지나고, 두 친구가 있는 초원에 해가 떴어요.": "audio/el/lion_mouse/nar_19cc7d68eb.mp3",
  "다음 날 아침, 사자가 생쥐를 등에 태웠어요. \"꽉 잡아!\"": [
   "audio/el/lion_mouse/nar_2470f66109.mp3",
-  "audio/el/lion_mouse/lion_fbcf1df5c6.mp3"
+  "audio/el/lion_mouse/lion_9b953ad72b.mp3"
  ],
  "다다다! 사자가 바람처럼 달리고, 생쥐는 갈기를 꼭 붙잡았어요.": "audio/el/lion_mouse/nar_57eb5c8401.mp3",
  "바람을 가르며 초원을 달려요! 신난다!": [
   "audio/el/lion_mouse/nar_626ec3a01d.mp3",
-  "audio/el/lion_mouse/mouse_25090c86a6.mp3"
+  "audio/el/lion_mouse/mouse_0eefd0b6c3.mp3"
  ],
  "둘은 깔깔, 하하 웃으며 초원을 한 바퀴 빙 돌았어요.": "audio/el/lion_mouse/nar_7830ecf6f0.mp3",
  "그날부터 사자와 생쥐는 둘도 없는 친구가 되었답니다.": "audio/el/lion_mouse/nar_1a285ce481.mp3",

@@ -178,7 +178,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The duckling gazed up at the sky for a long, long time. \"I want to fly like that, too.\"",
   "c": [
    "audio/el/ugly_duckling/en/nar_3fe4f640c7.mp3",
-   "audio/el/ugly_duckling/en/hero_d2ca097fe0.mp3"
+   "audio/el/ugly_duckling/en/hero_8832f23cae.mp3"
   ]
  },
  "호숫가에 혼자 남은 아기 오리 곁으로 눈이 내렸어요.": {
@@ -201,7 +201,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then an old farmer passed by and saw the duckling. \"Oh dear, your feet are stuck in the ice!\"",
   "c": [
    "audio/el/ugly_duckling/en/nar_7a9f92403b.mp3",
-   "audio/el/ugly_duckling/en/farmer_b13bd46672.mp3"
+   "audio/el/ugly_duckling/en/farmer_6628d6ccfa.mp3"
   ]
  },
  "할아버지는 얼음을 쿵쿵 두드렸어요.": {
@@ -258,7 +258,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"그래도 헤엄은 내가 제일 잘해! 첨벙첨벙!\" 아기 오리가 자랑스럽게 말했어요.": {
   "t": "\"But I swim the best! Splish, splash!\" the duckling said proudly.",
   "c": [
-   "audio/el/ugly_duckling/en/hero_26363f28b9.mp3",
+   "audio/el/ugly_duckling/en/hero_7e4cc95920.mp3",
    "audio/el/ugly_duckling/en/nar_45fa6b351d.mp3"
   ]
  },
@@ -308,7 +308,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"어? 이게 나야?\" 아기 오리는 하얀 백조였어요!": {
   "t": "\"Huh? Is that me?\" The duckling was a white swan!",
   "c": [
-   "audio/el/ugly_duckling/en/hero_cd768ed144.mp3",
+   "audio/el/ugly_duckling/en/hero_2556c6b4f5.mp3",
    "audio/el/ugly_duckling/en/nar_5e566c3cbc.mp3"
   ]
  },

@@ -24,7 +24,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "His sister-in-law said with an angry face. \"There is no rice here! Go away!\"",
   "c": [
    "audio/el/heungbu/en/nar_3c56931782.mp3",
-   "audio/el/heungbu/en/nwife_53927c0ab8.mp3"
+   "audio/el/heungbu/en/nwife_3ebde40ac6.mp3"
   ]
  },
  "형수가 주걱을 휘두르자 흥부 볼에 밥알이 붙었어요. 흥부는 그 밥알을 맛있게 먹었어요.": {
@@ -35,7 +35,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Heungbu said with a smile. \"It's okay. Even these grains are yummy!\"",
   "c": [
    "audio/el/heungbu/en/nar_7c8c279695.mp3",
-   "audio/el/heungbu/en/heung_0c73491c90.mp3"
+   "audio/el/heungbu/en/heung_5a9a13f7ed.mp3"
   ]
  },
  "흥부네 초가집 처마에는 제비 가족이 살았어요.": {
@@ -188,7 +188,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Heungbu smiled and said. \"Brother, it's okay. Let's live together!\"",
   "c": [
    "audio/el/heungbu/en/nar_4c6b21b167.mp3",
-   "audio/el/heungbu/en/heung_a7bff09f95.mp3"
+   "audio/el/heungbu/en/heung_37f4557d6f.mp3"
   ]
  },
  "쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.": {

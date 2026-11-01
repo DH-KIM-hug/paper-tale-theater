@@ -14,7 +14,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어서 와, 친구들! 나는 사탕 마녀야.": {
   "t": "Come in, come in, friends! I'm the Candy Witch.",
-  "c": "audio/el/witch_candy/en/witch_e94ae4a6bc.mp3"
+  "c": "audio/el/witch_candy/en/witch_d5a0917b4e.mp3"
  },
  "다현이랑 친구들은 사탕 가게로 쪼르르 들어갔어요.": {
   "t": "Dahyun and her friends scurried right into the candy shop.",
@@ -22,7 +22,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "오늘은 핼러윈 특별 사탕을 만들 거야. 먼저 솥을 끓여야지.": {
   "t": "Today we're making special Halloween candy. First, we have to get the cauldron bubbling.",
-  "c": "audio/el/witch_candy/en/witch_8b6e042877.mp3"
+  "c": "audio/el/witch_candy/en/witch_3c1385b401.mp3"
  },
  "다현이가 장작에 불씨를 톡 올렸어요.": {
   "t": "Dahyun popped a tiny spark onto the firewood.",
@@ -42,7 +42,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "히히, 색을 섞으면 다른 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?": {
   "t": "Hee hee, mix the colours and you get a different colour candy. What happens when you eat it is... a secret! Shall we make some together?",
-  "c": "audio/el/witch_candy/en/witch_b746cb8583.mp3"
+  "c": "audio/el/witch_candy/en/witch_8e3bee087f.mp3"
  },
  "네, 제가 할게요!": {
   "t": "Yes! I want to do it!",
@@ -50,7 +50,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이가 넣어 줘. 하나든 여러 개든 좋아.": {
   "t": "Dahyun, you put them in. One or lots, it's all good.",
-  "c": "audio/el/witch_candy/en/witch_5d99a51ad5.mp3"
+  "c": "audio/el/witch_candy/en/witch_0c45cd1a0c.mp3"
  },
  "다현이는 아기 용 콧물이랑 빨간 소방차를 솥에 넣었어요. 뚝, 삐뽀삐뽀!": {
   "t": "Dahyun dropped baby dragon snot and the red fire truck into the cauldron. Drip, nee-naw nee-naw!",
@@ -66,7 +66,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다 넣었지? 그럼 저어 보자!": {
   "t": "All in? Then let's stir!",
-  "c": "audio/el/witch_candy/en/witch_03bec28e29.mp3"
+  "c": "audio/el/witch_candy/en/witch_d87a1ac4d9.mp3"
  },
  "펑! 솥에서 사탕이 퐁퐁 튀어나왔어요.": {
   "t": "Pop! Candies came popping out of the cauldron.",
@@ -78,7 +78,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "먼저 먹어 봐.": {
   "t": "You try one first.",
-  "c": "audio/el/witch_candy/en/witch_836e21adca.mp3"
+  "c": "audio/el/witch_candy/en/witch_ec4ce08c14.mp3"
  },
  "냠… 딸기 사탕이다!": {
   "t": "Yum... it's strawberry candy!",
@@ -94,7 +94,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "히히, 핼러윈 마법이야!": {
   "t": "Hee hee, it's Halloween magic!",
-  "c": "audio/el/witch_candy/en/witch_7b7a770421.mp3"
+  "c": "audio/el/witch_candy/en/witch_3432a96314.mp3"
  },
  "길을 데굴데굴 굴러가다 호박 등에 통!": {
   "t": "She rolled and rolled down the street and bonked into a pumpkin lantern!",
@@ -102,7 +102,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어디 가!": {
   "t": "Where are you going!",
-  "c": "audio/el/witch_candy/en/witch_e9e95abdad.mp3"
+  "c": "audio/el/witch_candy/en/witch_1306619d21.mp3"
  },
  "뿅! 다현이는 다시 원래대로 돌아왔어요.": {
   "t": "Poof! Dahyun was back to normal.",
@@ -258,7 +258,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "녹았다!": {
   "t": "She melted!",
-  "c": "audio/el/witch_candy/en/witch_0d7d43f7ee.mp3"
+  "c": "audio/el/witch_candy/en/witch_a5a604f74b.mp3"
  },
  "다현이는 병아리 방귀랑 구운 초록 대파를 솥에 넣었어요. 뿡, 지글지글!": {
   "t": "Dahyun dropped chick toots and the grilled green onion into the cauldron. Toot, sizzle!",
@@ -310,7 +310,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "이번엔 다른 색으로 해 볼까?": {
   "t": "This time, shall we try a different colour?",
-  "c": "audio/el/witch_candy/en/witch_0e042db686.mp3"
+  "c": "audio/el/witch_candy/en/witch_009602eadf.mp3"
  },
  "솥 물이 쏴아, 다시 맑아졌어요.": {
   "t": "Whoosh, the cauldron water turned clear again.",
@@ -318,11 +318,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자, 저어 보자. 뽀글뽀글…": {
   "t": "Here we go, stir, stir. Bubble, bubble...",
-  "c": "audio/el/witch_candy/en/witch_d1cf09ac2f.mp3"
+  "c": "audio/el/witch_candy/en/witch_901633dc00.mp3"
  },
  "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.": {
   "t": "Last of all, the special Halloween candy! We put in every single colour.",
-  "c": "audio/el/witch_candy/en/witch_0a1021313f.mp3"
+  "c": "audio/el/witch_candy/en/witch_bc0952509c.mp3"
  },
  "전부 다요?": {
   "t": "Every single one?",
@@ -338,7 +338,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "뽀글뽀글… 펑!": {
   "t": "Bubble, bubble... POP!",
-  "c": "audio/el/witch_candy/en/witch_f481c25e51.mp3"
+  "c": "audio/el/witch_candy/en/witch_9095c8aa34.mp3"
  },
  "까만 사탕이 나왔어요!": {
   "t": "Out came a black candy!",
@@ -350,7 +350,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "히히, 나도!": {
   "t": "Hee hee, me too!",
-  "c": "audio/el/witch_candy/en/witch_87c2a51829.mp3"
+  "c": "audio/el/witch_candy/en/witch_ae4b4cc2d6.mp3"
  },
  "마녀도, 호박이도, 친구들도 까만 입술로…": {
   "t": "The witch, Pumpkin the cat and the friends, all with black lips...",
@@ -362,7 +362,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자, 약속! 남은 사탕 다 나와라!": {
   "t": "Now, as promised! All the leftover candy, come on out!",
-  "c": "audio/el/witch_candy/en/witch_9c1c96e68f.mp3"
+  "c": "audio/el/witch_candy/en/witch_6a9c6f6214.mp3"
  },
  "솥에서 사탕이 퐁퐁퐁 쏟아졌어요. 모두 하나씩… 마녀는 두 개!": {
   "t": "Candy came pouring out of the cauldron, pop, pop, pop. One for everyone... and two for the witch!",
@@ -370,7 +370,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "히히, 나는 두 개!": {
   "t": "Hee hee, two for me!",
-  "c": "audio/el/witch_candy/en/witch_3a78d17e1d.mp3"
+  "c": "audio/el/witch_candy/en/witch_27ca14ad3b.mp3"
  },
  "뿅, 뿅, 뿅! 딸기, 개구리, 오리, 박쥐, 물고기, 호박… 다 같이 변신!": {
   "t": "Poof, poof, poof! Strawberry, frog, duck, bat, fish, pumpkin... everyone changed together!",
@@ -382,7 +382,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이 덕분에 사탕이 가득! 내년에도 같이 섞자.": {
   "t": "Thanks to Dahyun, we have candy galore! Let's mix again next year.",
-  "c": "audio/el/witch_candy/en/witch_5662aee0f7.mp3"
+  "c": "audio/el/witch_candy/en/witch_0aadf8cec7.mp3"
  },
  "네! 다음엔 다른 색으로요!": {
   "t": "Yes! Next time, with different colours!",

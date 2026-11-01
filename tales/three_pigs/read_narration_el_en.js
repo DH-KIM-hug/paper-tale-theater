@@ -129,7 +129,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then a hungry wolf came along, sniff, sniff. Little pig, little pig, open the door!",
   "c": [
    "audio/el/three_pigs/en/nar_8c8e7e3bba.mp3",
-   "audio/el/three_pigs/en/wolf_987d832bf1.mp3"
+   "audio/el/three_pigs/en/wolf_74ed67a286.mp3"
   ]
  },
  "첫째가 말했어요. \"싫어요, 싫어요!\" 늑대가 말했어요. \"그럼 후~ 불어서 날려 버릴 테야!\"": {
@@ -138,7 +138,7 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/three_pigs/en/nar_365f71df2d.mp3",
    "audio/el/three_pigs/en/piga_861dc209e0.mp3",
    "audio/el/three_pigs/en/nar_7ffff205af.mp3",
-   "audio/el/three_pigs/en/wolf_4ee945d5e8.mp3"
+   "audio/el/three_pigs/en/wolf_7a40b82486.mp3"
   ]
  },
  "늑대는 볼을 빵빵하게 부풀렸어요. 후우~!": {
@@ -161,7 +161,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then the wolf came to the wood house too. Little pig, little pig, open the door!",
   "c": [
    "audio/el/three_pigs/en/nar_cb8e864c2a.mp3",
-   "audio/el/three_pigs/en/wolf_987d832bf1.mp3"
+   "audio/el/three_pigs/en/wolf_74ed67a286.mp3"
   ]
  },
  "첫째와 둘째가 말했어요. \"싫어요, 싫어요!\" 늑대가 말했어요. \"그럼 후~ 후~ 불어 주지!\"": {
@@ -170,7 +170,7 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/three_pigs/en/nar_8c20e4093a.mp3",
    "audio/el/three_pigs/en/pigb_8906c86ff0.mp3",
    "audio/el/three_pigs/en/nar_7ffff205af.mp3",
-   "audio/el/three_pigs/en/wolf_2ccd1a0b12.mp3"
+   "audio/el/three_pigs/en/wolf_848ebc9bd3.mp3"
   ]
  },
  "후~ 후~! 나무 집이 삐걱삐걱 흔들리더니…": {
@@ -217,14 +217,14 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The wolf came to the brick house. Little pig, little pig, open the door!",
   "c": [
    "audio/el/three_pigs/en/nar_bd1cf144cc.mp3",
-   "audio/el/three_pigs/en/wolf_2940ef76f3.mp3"
+   "audio/el/three_pigs/en/wolf_c9bd55afec.mp3"
   ]
  },
  "\"싫어요, 싫어요!\" \"그럼 후~ 후~ 불어 주지!\"": {
   "t": "No, no, no! Then I'll huff and puff and blow!",
   "c": [
    "audio/el/three_pigs/en/pigc_5b6f5786a4.mp3",
-   "audio/el/three_pigs/en/wolf_ba1a02018e.mp3"
+   "audio/el/three_pigs/en/wolf_8368d6d6ee.mp3"
   ]
  },
  "후~ 후~ 후~! 늑대는 얼굴이 새빨개지도록 불고 또 불었어요.": {
@@ -242,7 +242,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"흥, 그럼 다른 수를 써야지!\" 늑대는 눈을 데굴데굴 굴렸어요.": {
   "t": "\"Hmph! Then I will try another way!\" The wolf rolled his eyes around and around, thinking.",
   "c": [
-   "audio/el/three_pigs/en/wolf_07a4de95eb.mp3",
+   "audio/el/three_pigs/en/wolf_650ab63296.mp3",
    "audio/el/three_pigs/en/nar_ebfa1f39cf.mp3"
   ]
  },
@@ -276,7 +276,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"앗, 뜨거워!\"": {
   "t": "Ouch, it's hot!",
-  "c": "audio/el/three_pigs/en/wolf_a5ef0d0a4d.mp3"
+  "c": "audio/el/three_pigs/en/wolf_659dde1518.mp3"
  },
  "늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.": {
   "t": "The wolf whooshed up the chimney and ran far, far away. He never came back.",

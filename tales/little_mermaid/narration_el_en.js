@@ -110,11 +110,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다리를 갖고 싶다고? 좋아. 대신 네 고운 목소리를 다오.": {
   "t": "You want legs? Very well. But in return, give me your lovely voice.",
-  "c": "audio/el/little_mermaid/en/witch_b44f685ab9.mp3"
+  "c": "audio/el/little_mermaid/en/witch_cb6cd77e4e.mp3"
  },
  "다리는 조금 흔들흔들할 거야. 그리고 왕자가 다른 사람과 결혼하면, 너는 바다 거품이 된단다.": {
   "t": "Your legs will wobble a little. And if the prince marries someone else, you will turn into sea foam.",
-  "c": "audio/el/little_mermaid/en/witch_f754e351d8.mp3"
+  "c": "audio/el/little_mermaid/en/witch_46794d2efd.mp3"
  },
  "그래도 갈래요.": {
   "t": "I will go anyway.",
@@ -138,7 +138,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "누구세요? 어디서 왔어요?": {
   "t": "Who are you? Where did you come from?",
-  "c": "audio/el/little_mermaid/en/prince_b0d41a3000.mp3"
+  "c": "audio/el/little_mermaid/en/prince_11f4ee86d3.mp3"
  },
  "인어공주는 말을 못 해요. 그저 웃었지요.": {
   "t": "The little mermaid could not speak. She only smiled.",
@@ -146,11 +146,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "우리 궁전에서 지내요.": {
   "t": "Come and stay at our palace.",
-  "c": "audio/el/little_mermaid/en/prince_022a854707.mp3"
+  "c": "audio/el/little_mermaid/en/prince_00d25a212a.mp3"
  },
  "정원에 바다 친구가 섞였네. 바다에 사는 친구를 찾아봐요.": {
   "t": "Some sea friends got mixed into the garden. Let's find the friends that live in the sea.",
-  "c": "audio/el/little_mermaid/en/prince_e8c1f6b408.mp3"
+  "c": "audio/el/little_mermaid/en/prince_826e768eac.mp3"
  },
  "바다에 사는 친구는 누구일까요?": {
   "t": "Which friend lives in the sea?",
@@ -194,7 +194,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "바다에서 온 아이 같아요. 내 귀여운 동생처럼 지내요.": {
   "t": "You seem like a child from the sea. Stay with me like my sweet little sister.",
-  "c": "audio/el/little_mermaid/en/prince_57a25dcf75.mp3"
+  "c": "audio/el/little_mermaid/en/prince_7e1eea5086.mp3"
  },
  "인어공주는 흔들흔들해도 왕자님과 함께 춤추었어요.": {
   "t": "Even with wobbly steps, the little mermaid danced with the prince.",
@@ -202,7 +202,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "당신이 모래밭에서 저를 구해 준 분이군요!": {
   "t": "You are the one who saved me on the beach!",
-  "c": "audio/el/little_mermaid/en/prince_5b1930d87c.mp3"
+  "c": "audio/el/little_mermaid/en/prince_e19a3f22e6.mp3"
  },
  "왕자님은 이웃 나라 공주님과 결혼했어요. 인어공주는 말없이 웃었어요. 마음은 아팠지요.": {
   "t": "The prince married the princess of the neighbouring kingdom. The little mermaid smiled without a word. But her heart ached.",
@@ -243,14 +243,14 @@ Object.assign(NARRATION_CLIPS_EN, {
 });
 Object.assign(VOICE_LINES_EN, {
  "ch1": [
-  "audio/el/little_mermaid/en/sisa_3f79947001.mp3",
+  "audio/el/little_mermaid/en/sisa_2702977a3c.mp3",
   "audio/el/little_mermaid/en/sisb_50c1ce943f.mp3",
   "audio/el/little_mermaid/en/sisc_d5f3abe0af.mp3",
   "audio/el/little_mermaid/en/sisd_d291e46dca.mp3",
   "audio/el/little_mermaid/en/sise_7c1be607b2.mp3"
  ],
  "ch2": [
-  "audio/el/little_mermaid/en/sisa_069d4809a9.mp3",
+  "audio/el/little_mermaid/en/sisa_34792cc0f7.mp3",
   "audio/el/little_mermaid/en/sisb_f5c0724b74.mp3",
   "audio/el/little_mermaid/en/sisc_97f7c7a89a.mp3",
   "audio/el/little_mermaid/en/sisd_fef8cb7cc6.mp3",

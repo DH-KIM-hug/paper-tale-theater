@@ -85,7 +85,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"앗, 내 모자!\" 모자가 훨훨 날아갔어요.": {
   "t": "\"Oh no, my hat!\" The hat flew far, far away.",
   "c": [
-   "audio/el/sun_wind/en/man_552c7573f0.mp3",
+   "audio/el/sun_wind/en/man_4bc1bcc23a.mp3",
    "audio/el/sun_wind/en/nar_b9b6518a3f.mp3"
   ]
  },
@@ -96,7 +96,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"으으, 추워!\" 나그네는 외투를 꽉 여몄어요.": {
   "t": "\"Brrr, it's cold!\" The traveler held the coat tight.",
   "c": [
-   "audio/el/sun_wind/en/man_30ba7ed7ec.mp3",
+   "audio/el/sun_wind/en/man_ad8618ffab.mp3",
    "audio/el/sun_wind/en/nar_738eb6db7a.mp3"
   ]
  },
@@ -151,7 +151,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"아, 따뜻하다~\" 나그네가 단추를 풀었어요.": {
   "t": "\"Ahh, so warm~\" The traveler unbuttoned the coat.",
   "c": [
-   "audio/el/sun_wind/en/man_c87275f9a6.mp3",
+   "audio/el/sun_wind/en/man_d41a53a6b1.mp3",
    "audio/el/sun_wind/en/nar_8c16c60058.mp3"
   ]
  },
@@ -162,13 +162,13 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"아이, 더워!\" 모자로 부채질을 해요.": {
   "t": "\"Phew, it's hot!\" The traveler fans with the hat.",
   "c": [
-   "audio/el/sun_wind/en/man_676e747d26.mp3",
+   "audio/el/sun_wind/en/man_6a60821793.mp3",
    "audio/el/sun_wind/en/nar_6149750a72.mp3"
   ]
  },
  "\"휴우, 햇볕이 쨍쨍하니 외투는 필요 없겠네.\"": {
   "t": "Phew! With the sun blazing like this, I do not need this coat.",
-  "c": "audio/el/sun_wind/en/man_5257109bbe.mp3"
+  "c": "audio/el/sun_wind/en/man_da220a0aa5.mp3"
  },
  "훌러덩! 나그네가 외투를 벗었어요!": {
   "t": "Off it goes! The traveler took off the coat!",
@@ -231,7 +231,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"아, 시원해. 고마워, 바람아!\"": {
   "t": "\"Ahh, so cool. Thank you, Wind!\"",
-  "c": "audio/el/sun_wind/en/man_2bf5f470ba.mp3"
+  "c": "audio/el/sun_wind/en/man_1145476949.mp3"
  },
  "나그네는 외투를 돌돌 말아 베고 벌렁 드러누웠어요.": {
   "t": "The traveler rolled up his coat for a pillow and flopped down with a happy sigh.",

@@ -10,7 +10,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"순무야, 크게 자라라.\"": {
   "t": "\"Turnip, grow big and strong.\"",
-  "c": "audio/el/turnip/en/grandpa_9e0704d743.mp3"
+  "c": "audio/el/turnip/en/grandpa_2615a5a9a5.mp3"
  },
  "씨앗이 흙 속으로 쏙 들어갔어요.": {
   "t": "The seed slipped right into the soil.",
@@ -67,7 +67,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "아이코! 할아버지가 엉덩방아를 찧었어요.": {
   "t": "Oof! Grandpa plopped down on the ground.",
   "c": [
-   "audio/el/turnip/en/grandpa_872571e369.mp3",
+   "audio/el/turnip/en/grandpa_8bce65cb2d.mp3",
    "audio/el/turnip/en/nar_33cdac40fa.mp3"
   ]
  },
@@ -137,12 +137,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The puppy came bounding out. \"I'll help too!\"",
   "c": [
    "audio/el/turnip/en/nar_1744c2aea9.mp3",
-   "audio/el/turnip/en/dog_e3511ca22a.mp3"
+   "audio/el/turnip/en/dog_7966945ab9.mp3"
   ]
  },
  "\"멍멍! 저도 힘이 아주 세요!\"": {
   "t": "Woof woof! I am very, very strong!",
-  "c": "audio/el/turnip/en/dog_d5f9196ff9.mp3"
+  "c": "audio/el/turnip/en/dog_b65c7a7a49.mp3"
  },
  "강아지가 손녀 치마를 꼭 붙잡았어요. 영차!": {
   "t": "The puppy held the granddaughter's skirt tight. Heave-ho!",
@@ -232,7 +232,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"고맙다, 얘들아! 생쥐야, 너도 정말 고맙구나.\"": {
   "t": "Thank you, everyone! And thank you too, little mouse.",
-  "c": "audio/el/turnip/en/grandpa_e20a30274b.mp3"
+  "c": "audio/el/turnip/en/grandpa_aa46992388.mp3"
  },
  "순무를 뽑은 여섯은 집에 모였어요.": {
   "t": "After pulling up the turnip, all six gathered in the house.",

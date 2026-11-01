@@ -210,7 +210,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The duckling gazed up at the sky for a long, long time. \"I want to fly like that, too.\"",
   "c": [
    "audio/el/ugly_duckling/en/nar_3fe4f640c7.mp3",
-   "audio/el/ugly_duckling/en/hero_d2ca097fe0.mp3"
+   "audio/el/ugly_duckling/en/hero_8832f23cae.mp3"
   ]
  },
  "추운 겨울이 왔어요. 호수가 꽁꽁 얼어서 발이 얼음에 붙어 버렸어요.": {
@@ -229,7 +229,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then an old farmer passed by and saw the duckling. \"Oh dear, your feet are stuck in the ice!\"",
   "c": [
    "audio/el/ugly_duckling/en/nar_7a9f92403b.mp3",
-   "audio/el/ugly_duckling/en/farmer_b13bd46672.mp3"
+   "audio/el/ugly_duckling/en/farmer_6628d6ccfa.mp3"
   ]
  },
  "쩍! 얼음이 깨졌어요. 발이 쏙 빠졌어요!": {
@@ -329,7 +329,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"어? 이게 나야?\" 아기 오리는 하얀 백조였어요!": {
   "t": "\"Huh? Is that me?\" The duckling was a white swan!",
   "c": [
-   "audio/el/ugly_duckling/en/hero_cd768ed144.mp3",
+   "audio/el/ugly_duckling/en/hero_2556c6b4f5.mp3",
    "audio/el/ugly_duckling/en/nar_5e566c3cbc.mp3"
   ]
  },
@@ -351,7 +351,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"나는 다음이야~\"": {
   "t": "\"I'm next~\"",
-  "c": "audio/el/ugly_duckling/en/card_8d49a5fea5.mp3"
+  "c": "audio/el/ugly_duckling/en/card_815e3ff8c8.mp3"
  },
  "알이에요! 반짝이는 카드를 눌러 봐요.": {
   "t": "It's the egg! Tap the sparkling card.",
@@ -405,6 +405,6 @@ Object.assign(NARRATION_CLIPS_EN, {
  }
 });
 Object.assign(VOICE_LINES_EN, {
- "cut_purr": "audio/el/ugly_duckling/en/hero_e73b38f578.mp3",
- "cut_quack": "audio/el/ugly_duckling/en/hero_7161681efd.mp3"
+ "cut_purr": "audio/el/ugly_duckling/en/hero_32eb138797.mp3",
+ "cut_quack": "audio/el/ugly_duckling/en/hero_5fe3b6dc7e.mp3"
 });

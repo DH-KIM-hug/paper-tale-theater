@@ -16,7 +16,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Roar! One day, a big tiger appeared. Grandma, I'm going to eat you up!",
   "c": [
    "audio/el/patjuk/en/nar_cc937112d4.mp3",
-   "audio/el/patjuk/en/tiger_8434d2a85f.mp3"
+   "audio/el/patjuk/en/tiger_fc49c277a8.mp3"
   ]
  },
  "할멈은 깜짝 놀라 호미를 떨어뜨렸어요. 다리가 후들후들 떨렸지요.": {
@@ -136,7 +136,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"할멈, 약속대로 왔다. 팥죽을 먹고 나서 너를 잡아먹겠다!\"": {
   "t": "Grandma, I am here, just like I promised. First the porridge, and then I will eat you up!",
-  "c": "audio/el/patjuk/en/tiger_5b6b99a8a0.mp3"
+  "c": "audio/el/patjuk/en/tiger_7424746b76.mp3"
  },
  "\"호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.\" 할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요.": {
   "t": "Tiger, before we eat the porridge, please watch the fire for me. At Grandma's words, the tiger squatted down by the fireplace.",
@@ -152,7 +152,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"앗, 뜨거워! 눈이야!\" 호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요.": {
   "t": "Ow, hot! My eyes! The tiger dunked its face into the water jar to wash its eyes.",
   "c": [
-   "audio/el/patjuk/en/tiger_69d9a8cddc.mp3",
+   "audio/el/patjuk/en/tiger_948af6d864.mp3",
    "audio/el/patjuk/en/nar_b14dc1d6bc.mp3"
   ]
  },
@@ -163,7 +163,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"아야야!\" 호랑이가 깜짝 놀라 뒷걸음질을 쳤어요.": {
   "t": "Yowch! The tiger jumped in surprise and stumbled backward.",
   "c": [
-   "audio/el/patjuk/en/tiger_5d72c48374.mp3",
+   "audio/el/patjuk/en/tiger_5ecd8c0452.mp3",
    "audio/el/patjuk/en/nar_2221ddcd97.mp3"
   ]
  },
@@ -182,7 +182,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"엉엉, 아파!\" 호랑이가 문 쪽으로 도망가요.": {
   "t": "Boo-hoo, that hurts! The tiger ran away toward the door.",
   "c": [
-   "audio/el/patjuk/en/tiger_fd5257cc51.mp3",
+   "audio/el/patjuk/en/tiger_a68ce9c106.mp3",
    "audio/el/patjuk/en/nar_f57f69c1fc.mp3"
   ]
  },
@@ -208,7 +208,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"으악, 답답해! 꺼내 줘!\"": {
   "t": "Help! It is so tight in here! Let me out!",
-  "c": "audio/el/patjuk/en/tiger_75e0bd26d9.mp3"
+  "c": "audio/el/patjuk/en/tiger_aad5b7a159.mp3"
  },
  "지게가 호랑이를 번쩍 지고 가서 바다에 풍덩! 던져 버렸어요!": {
   "t": "Carrier hoisted the tiger up, carried the tiger off, and — splash! — tossed the tiger into the sea!",

@@ -2,10 +2,10 @@
  "notes": "ElevenLabs 목소리 배정(2026-10-21 SPEC): nar=Lily(여자 내레이터 순환 — 백설 Lily·신데렐라 Leejin·미녀와 야수 Huelyn·인어공주 Annie 다음이라 Lily), pea=Yoojin Kim(밝고 친근한 젊은 표준어 여성, 씩씩한 공주 — 백설·신데렐라·인어공주의 Luna, 벨의 Yun 과 겹치지 않게 새 목소리), prince=Klamon(밝고 따뜻한 청년 — 백설 Eric·신데렐라/인어 Sunjun·야수 George 와 다름; 1번은 한숨, 9번은 환함), queen=Huelyn(늘 웃는 늙은 왕비, 할머니 원형; 시험은 장난이므로 연기 지시는 늘 따뜻하게), king=Namchun(늙은 왕, 한 줄). 한 편 안에서 다섯 목소리가 모두 다르다. 수 세기 1~20은 왕비(queen) 목소리의 extra 클립 n1~n20 으로만 나오고 화면 글자(말풍선·팝)는 없다. 이불 스무 장은 세지 않는다. 교훈은 대사로 말하지 않는다(부제·끝 화면 글자만). 왕비의 포옹(8번)은 대사 없이 동작만. 합창 없음. 모델 eleven_v4, 배역별 settings.",
  "voices": {
   "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "pea": "Cm89zxZzEGaMu7ajYw2K",
-  "prince": "dnZGOA54w68T7vLLPFTp",
+  "pea": "piI8Kku0DcvcL6TTSeQt",
+  "prince": "a4CnuaYbALRvW39mDitg",
   "queen": "gnWujHp24oqX3I03lRbU",
-  "king": "5ON5Fnz24cnOozEQfGAm"
+  "king": "qAZH0aMXY8tw1QufPN0D"
  },
  "models": {
   "nar": "eleven_v4",

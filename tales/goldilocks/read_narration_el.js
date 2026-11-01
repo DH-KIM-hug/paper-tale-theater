@@ -7,7 +7,7 @@ Object.assign(NARRATION_CLIPS, {
  "엄마 곰이 맛있는 죽을 끓였어요. 그런데 너무 뜨거워요!": "audio/el/goldilocks/nar_d95c9d72c0.mp3",
  "후후, 후후! 곰 세 식구가 김이 모락모락 나는 죽을 불었어요.": "audio/el/goldilocks/nar_42ccbd3e10.mp3",
  "김이 줄었지만, 아직 뜨거워요.": "audio/el/goldilocks/nar_36bd5a8a56.mp3",
- "아빠 곰: \"죽이 식을 동안 산책 다녀오자!\"": "audio/el/goldilocks/dad_c5cdacffef.mp3",
+ "아빠 곰: \"죽이 식을 동안 산책 다녀오자!\"": "audio/el/goldilocks/dad_9b65ac0993.mp3",
  "곰 가족은 뚜벅뚜벅, 사이좋게 숲으로 나갔어요.": "audio/el/goldilocks/nar_792cab44b5.mp3",
  "숲속에는 금빛 머리 골디락스가 살았어요.": "audio/el/goldilocks/nar_e844211578.mp3",
  "골디락스는 콧노래를 흥얼흥얼, 깡충깡충 숲길을 걸었어요.": "audio/el/goldilocks/nar_2834db4c71.mp3",
@@ -61,7 +61,7 @@ Object.assign(NARRATION_CLIPS, {
  "골디락스는 쿨쿨 잠이 들었어요.": "audio/el/goldilocks/nar_40a7896162.mp3",
  "그때 곰 가족이 산책에서 돌아왔어요.": "audio/el/goldilocks/nar_d4d64f148c.mp3",
  "곰 세 식구는 식탁에 놓인 그릇들을 살펴보았어요.": "audio/el/goldilocks/nar_73b397c3c9.mp3",
- "아빠 곰: \"누가 내 죽을 먹었지?\"": "audio/el/goldilocks/dad_c8399e6ae2.mp3",
+ "아빠 곰: \"누가 내 죽을 먹었지?\"": "audio/el/goldilocks/dad_007f651af0.mp3",
  "엄마 곰도 그릇을 들여다보며 고개를 갸웃갸웃 기울였어요.": "audio/el/goldilocks/nar_ef99627e01.mp3",
  "아기 곰: \"내 죽을 다 먹어 버렸어!\"": "audio/el/goldilocks/baby_d3d4099c7b.mp3",
  "곰 가족은 식탁을 떠나 거실로 갔어요.": "audio/el/goldilocks/nar_7bdb11251e.mp3",
@@ -82,7 +82,7 @@ Object.assign(NARRATION_CLIPS, {
  "골디락스는 걸린 치마를 살살 빼냈어요.": "audio/el/goldilocks/nar_a4bf5e34d5.mp3",
  "골디락스와 곰 가족은 아래층 거실로 내려왔어요.": "audio/el/goldilocks/nar_ca75e33771.mp3",
  "골디락스: \"허락 없이 들어와서 미안해요.\"": "audio/el/goldilocks/goldi_2cb620b1e7.mp3",
- "아빠 곰: \"괜찮아. 다음엔 똑똑 하고 기다려 줘.\"": "audio/el/goldilocks/dad_781f3696d3.mp3",
+ "아빠 곰: \"괜찮아. 다음엔 똑똑 하고 기다려 줘.\"": "audio/el/goldilocks/dad_f9a1fe6d3d.mp3",
  "골디락스: \"아기 곰 의자, 같이 고칠래?\"": "audio/el/goldilocks/goldi_e99e58f368.mp3",
  "뚝딱뚝딱, 쿵쿵! 골디락스와 곰 가족이 함께 의자를 고쳤어요.": "audio/el/goldilocks/nar_7a6835cfca.mp3",
  "짠! 의자가 다 고쳐졌어요.": "audio/el/goldilocks/nar_9a921fb358.mp3",
@@ -91,8 +91,8 @@ Object.assign(NARRATION_CLIPS, {
  "엄마 곰이 새 죽을 끓였어요. 다 함께 먹어요!": "audio/el/goldilocks/nar_07a6592218.mp3",
  "작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.": "audio/el/goldilocks/nar_fdc7fb4ad1.mp3",
  "골디락스 그릇도 하나 더! 다 함께 냠냠.": "audio/el/goldilocks/nar_24a15e1d88.mp3",
+ "호록호록, 냠냠! 식구 넷이 둘러앉아 맛있게 먹었어요.": "audio/el/goldilocks/nar_c9723ff397.mp3",
  "골디락스와 곰 가족은 사이좋은 친구가 되었답니다.": "audio/el/goldilocks/nar_42720c5162.mp3",
- "\"미안해요\" 하면 다시 친구가 될 수 있답니다.": "audio/el/goldilocks/nar_b572709bed.mp3",
- "호록호록, 냠냠! 식구 넷이 둘러앉아 맛있게 먹었어요.": "audio/el/goldilocks/nar_c9723ff397.mp3"
+ "\"미안해요\" 하면 다시 친구가 될 수 있답니다.": "audio/el/goldilocks/nar_b572709bed.mp3"
 });
 Object.assign(VOICE_LINES, {});

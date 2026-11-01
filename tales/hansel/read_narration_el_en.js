@@ -22,7 +22,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"음… 아이들이 가엾은데…\" 아빠는 망설였어요.": {
   "t": "\"Hmm... the poor children...\" Father hesitated.",
   "c": [
-   "audio/el/hansel/en/father_ac6a07ae78.mp3",
+   "audio/el/hansel/en/father_35b2919c1e.mp3",
    "audio/el/hansel/en/nar_31e3fb4d9c.mp3"
   ]
  },
@@ -46,7 +46,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Hansel filled his pockets with pebbles. \"Now we'll be fine.\"",
   "c": [
    "audio/el/hansel/en/nar_54579fb880.mp3",
-   "audio/el/hansel/en/hans_8990853325.mp3"
+   "audio/el/hansel/en/hans_5f929aacc0.mp3"
   ]
  },
  "다음 날, 아빠는 둘을 데리고 숲 깊은 곳으로 갔어요.": {
@@ -80,7 +80,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"얘들아, 숲에 산딸기 따러 가자!\" 아빠가 말했어요.": {
   "t": "Children, let's go pick berries in the forest! said Papa.",
   "c": [
-   "audio/el/hansel/en/father_9d66362587.mp3",
+   "audio/el/hansel/en/father_4ecef487e2.mp3",
    "audio/el/hansel/en/nar_c880dd66e7.mp3"
   ]
  },
@@ -135,7 +135,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"괜찮아, 빵 부스러기 길을 따라가자!\" 헨젤이 말했어요.": {
   "t": "It's okay, let's follow the crumb trail! said Hansel.",
   "c": [
-   "audio/el/hansel/en/hans_fb37b6c700.mp3",
+   "audio/el/hansel/en/hans_5b4c3c7fde.mp3",
    "audio/el/hansel/en/nar_4854249f0d.mp3"
   ]
  },
@@ -197,7 +197,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"내 과자 집을 누가 먹었니!\" 마녀가 투덜거렸어요.": {
   "t": "Who ate my candy house? grumbled the witch.",
   "c": [
-   "audio/el/hansel/en/witch_c8984e6606.mp3",
+   "audio/el/hansel/en/witch_c7be10c383.mp3",
    "audio/el/hansel/en/nar_a69b381ca8.mp3"
   ]
  },
@@ -208,7 +208,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"내 사탕! 내 쿠키! 으으, 아까워라!\" 마녀는 발을 쿵쿵 굴렀어요.": {
   "t": "\"My candy! My cookies! Oh, what a waste!\" The witch stamped her feet, stomp, stomp.",
   "c": [
-   "audio/el/hansel/en/witch_47d627cfde.mp3",
+   "audio/el/hansel/en/witch_63f638b030.mp3",
    "audio/el/hansel/en/nar_5f7a57260d.mp3"
   ]
  },
@@ -216,7 +216,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The witch popped Hansel into a cage. Stay there until you pay for the candy!",
   "c": [
    "audio/el/hansel/en/nar_d3b547abe9.mp3",
-   "audio/el/hansel/en/witch_a526c1fc16.mp3"
+   "audio/el/hansel/en/witch_5415e50949.mp3"
   ]
  },
  "새장에 갇힌 헨젤 곁에서 그레텔은 빠져나갈 방법을 찾았어요.": {
@@ -245,7 +245,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"고마워, 그레텔!\" 헨젤이 말했어요.": {
   "t": "Thank you, Gretel! said Hansel.",
   "c": [
-   "audio/el/hansel/en/hans_02ef3ce601.mp3",
+   "audio/el/hansel/en/hans_4af6ae153c.mp3",
    "audio/el/hansel/en/nar_4854249f0d.mp3"
   ]
  },
@@ -276,13 +276,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The witch hopped on her broom and whooshed up the chimney. I won't come back again!",
   "c": [
    "audio/el/hansel/en/nar_ca8cd9b815.mp3",
-   "audio/el/hansel/en/witch_4fb5139c4f.mp3"
+   "audio/el/hansel/en/witch_aa0cb92a57.mp3"
   ]
  },
  "\"휴, 이제 집으로 가자!\" 헨젤이 그레텔의 손을 잡았어요.": {
   "t": "\"Phew! Now let us go home!\" Hansel took Gretel's hand.",
   "c": [
-   "audio/el/hansel/en/hans_c5ee1960b2.mp3",
+   "audio/el/hansel/en/hans_96526806d3.mp3",
    "audio/el/hansel/en/nar_1c5a4058e3.mp3"
   ]
  },
@@ -331,7 +331,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"헨젤! 그레텔!\" 아빠가 달려왔어요.": {
   "t": "Hansel! Gretel! Papa came running.",
   "c": [
-   "audio/el/hansel/en/father_8201f33e1b.mp3",
+   "audio/el/hansel/en/father_69a985d16d.mp3",
    "audio/el/hansel/en/nar_5a8c6d3da2.mp3"
   ]
  },
@@ -342,7 +342,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"찾았다! 보고 싶었어!\" 아빠가 말했어요.": {
   "t": "Found you! I missed you so much! said Papa.",
   "c": [
-   "audio/el/hansel/en/father_a0e00dc8e6.mp3",
+   "audio/el/hansel/en/father_46a1617f7f.mp3",
    "audio/el/hansel/en/nar_57ce984d44.mp3"
   ]
  },

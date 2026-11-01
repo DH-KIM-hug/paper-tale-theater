@@ -78,7 +78,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "훌쩍… 집에 어떻게 가지…": {
   "t": "Sniff... How do I get home...",
-  "c": "audio/el/unicorn/en/sheep_c5b8c2b766.mp3"
+  "c": "audio/el/unicorn/en/sheep_2a9028c462.mp3"
  },
  "양이 앉은 구름을 톡, 눌러 봐요.": {
   "t": "Tap the cloud the sheep is sitting on.",
@@ -98,7 +98,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "고마워! 이제 집이 보여!": {
   "t": "Thank you! I can see my home now!",
-  "c": "audio/el/unicorn/en/sheep_dfa5e38875.mp3"
+  "c": "audio/el/unicorn/en/sheep_1286ce367e.mp3"
  },
  "양은 집으로 돌아갔어요. 유니콘은 아직 보이지 않아요.": {
   "t": "The sheep went home. The unicorn was still nowhere to be seen.",
@@ -110,7 +110,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아야, 아야…": {
   "t": "Ouch, ouch...",
-  "c": "audio/el/unicorn/en/deer_bd270e6b68.mp3"
+  "c": "audio/el/unicorn/en/deer_664ec38815.mp3"
  },
  "사슴 다리에 가시가 박혔어요. 가시를 톡, 눌러 봐요. 살살 빼 줄게요.": {
   "t": "There are thorns in the deer's leg. Tap a thorn, and we will pull them out gently.",
@@ -122,7 +122,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "고마워! 이제 하나도 안 아파.": {
   "t": "Thank you! It doesn't hurt at all now.",
-  "c": "audio/el/unicorn/en/deer_14be33fde4.mp3"
+  "c": "audio/el/unicorn/en/deer_88fb6b83ee.mp3"
  },
  "다현이는 사슴의 작은 뿔을 가만히 보았어요.": {
   "t": "Dahyun looked quietly at the deer's little antlers.",
@@ -138,7 +138,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꼬르륵…": {
   "t": "Grrrumble...",
-  "c": "audio/el/unicorn/en/horse_d1899d043d.mp3"
+  "c": "audio/el/unicorn/en/horse_f6408ea330.mp3"
  },
  "말은 다현이의 간식 바구니를 보고 있어요.": {
   "t": "The horse was looking at Dahyun's snack basket.",
@@ -154,7 +154,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "고마워! 정말 맛있었어.": {
   "t": "Thank you! That was delicious.",
-  "c": "audio/el/unicorn/en/horse_e49554b7ac.mp3"
+  "c": "audio/el/unicorn/en/horse_d31522e814.mp3"
  },
  "너도… 유니콘은 아니구나.": {
   "t": "You're not... a unicorn either.",
@@ -186,11 +186,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "나는 계속 여기 있었어.": {
   "t": "I was here all along.",
-  "c": "audio/el/unicorn/en/uni_b633c51263.mp3"
+  "c": "audio/el/unicorn/en/uni_13b8589e81.mp3"
  },
  "네가 친절한 걸 다 보고 있었어.": {
   "t": "I saw how kind you were, every time.",
-  "c": "audio/el/unicorn/en/uni_9f9554b51d.mp3"
+  "c": "audio/el/unicorn/en/uni_da909726a0.mp3"
  },
  "유니콘…!": {
   "t": "A unicorn...!",
@@ -238,7 +238,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "고마워, 정말 예뻐!": {
   "t": "Thank you. It's so pretty!",
-  "c": "audio/el/unicorn/en/uni_19dd11632b.mp3"
+  "c": "audio/el/unicorn/en/uni_95ce706af9.mp3"
  },
  "그날 밤, 다현이는 포근한 이불 속에 누웠어요.": {
   "t": "That night, Dahyun lay down under her cozy blanket.",
@@ -250,7 +250,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"그럼. 언제나 여기 있어.\"": {
   "t": "Of course. I'm always right here.",
-  "c": "audio/el/unicorn/en/uni_68f88e82d0.mp3"
+  "c": "audio/el/unicorn/en/uni_2762e51555.mp3"
  },
  "창밖 언덕 위에서 유니콘 뿔이 반짝, 하늘에 별 하나가 켜졌어요.": {
   "t": "On the hill outside the window, the unicorn's horn twinkled, and a star lit up in the sky.",

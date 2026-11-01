@@ -134,8 +134,8 @@ Object.assign(NARRATION_CLIPS, {
  "화면을 톡 눌러 봐요!": "audio/el/rabbit/nar_94983fae25.mp3"
 });
 Object.assign(VOICE_LINES, {
- "laugh_pig": "audio/el/rabbit/pig_4b439159ec.mp3",
- "cheer_dog": "audio/el/rabbit/dog_ed3f419d98.mp3",
+ "laugh_pig": "audio/el/rabbit/pig_d88c1d7ba8.mp3",
+ "cheer_dog": "audio/el/rabbit/dog_ee14833dee.mp3",
  "cheer_duck": "audio/el/rabbit/duck_487cd79b48.mp3",
  "cheer_sheep": "audio/el/rabbit/sheep_78f597325c.mp3",
  "wake_rabbit": "audio/el/rabbit/rabbit_3ede431f96.mp3"

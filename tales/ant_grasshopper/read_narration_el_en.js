@@ -196,13 +196,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then the baby ant said, \"But Grasshopper looks so cold.\"",
   "c": [
    "audio/el/ant_grasshopper/en/nar_b750cc62e5.mp3",
-   "audio/el/ant_grasshopper/en/baby_e629f676dd.mp3"
+   "audio/el/ant_grasshopper/en/baby_f5cefac633.mp3"
   ]
  },
  "\"우리 창고엔 먹을 게 아주 많잖아요.\" 개미는 잠깐 생각하다가 빙긋 웃었어요.": {
   "t": "\"And our storeroom has lots and lots of food.\" The ant thought for a moment, and then smiled.",
   "c": [
-   "audio/el/ant_grasshopper/en/baby_a73c2259c9.mp3",
+   "audio/el/ant_grasshopper/en/baby_e2f1deabdb.mp3",
    "audio/el/ant_grasshopper/en/nar_d9f5f9f658.mp3"
   ]
  },

@@ -43,13 +43,13 @@ Object.assign(NARRATION_CLIPS, {
  "첫째는 짚 집에서 놀고 있었어요.": "audio/el/three_pigs/nar_4a8f8fc78b.mp3",
  "그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요. \"아기 돼지야, 문 열어라!\"": [
   "audio/el/three_pigs/nar_3b69d3463e.mp3",
-  "audio/el/three_pigs/wolf_bca8a389ae.mp3"
+  "audio/el/three_pigs/wolf_dfcd44f958.mp3"
  ],
  "첫째가 말했어요. \"싫어요, 싫어요!\" 늑대가 말했어요. \"그럼 후~ 불어서 날려 버릴 테야!\"": [
   "audio/el/three_pigs/nar_e6d111c017.mp3",
   "audio/el/three_pigs/piga_9034aa1032.mp3",
   "audio/el/three_pigs/nar_1b98d154fd.mp3",
-  "audio/el/three_pigs/wolf_73f7235a29.mp3"
+  "audio/el/three_pigs/wolf_2060345d9c.mp3"
  ],
  "늑대는 볼을 빵빵하게 부풀렸어요. 후우~!": "audio/el/three_pigs/nar_cefaea189b.mp3",
  "짚 집이 훨훨 날아가 버렸어요!": "audio/el/three_pigs/nar_e1e0b6005e.mp3",
@@ -57,13 +57,13 @@ Object.assign(NARRATION_CLIPS, {
  "첫째가 나무 집 안으로 후다닥 들어갔어요.": "audio/el/three_pigs/nar_1469774ce0.mp3",
  "늑대가 나무 집에도 왔어요. \"아기 돼지야, 문 열어라!\"": [
   "audio/el/three_pigs/nar_f53da4c050.mp3",
-  "audio/el/three_pigs/wolf_bca8a389ae.mp3"
+  "audio/el/three_pigs/wolf_dfcd44f958.mp3"
  ],
  "첫째와 둘째가 말했어요. \"싫어요, 싫어요!\" 늑대가 말했어요. \"그럼 후~ 후~ 불어 주지!\"": [
   "audio/el/three_pigs/nar_4e07790b3b.mp3",
   "audio/el/three_pigs/pigb_81f94893f9.mp3",
   "audio/el/three_pigs/nar_1b98d154fd.mp3",
-  "audio/el/three_pigs/wolf_733feb634a.mp3"
+  "audio/el/three_pigs/wolf_61e2f65ffa.mp3"
  ],
  "후~ 후~! 나무 집이 삐걱삐걱 흔들리더니…": "audio/el/three_pigs/nar_7cbc460574.mp3",
  "나무 집이 와르르 무너졌어요!": "audio/el/three_pigs/nar_b21c365f9a.mp3",
@@ -77,17 +77,17 @@ Object.assign(NARRATION_CLIPS, {
  "삼 형제가 숨은 벽돌 집 밖에서 발소리가 났어요.": "audio/el/three_pigs/nar_a5257ebfed.mp3",
  "늑대가 벽돌 집에 왔어요. \"아기 돼지야, 문 열어라!\"": [
   "audio/el/three_pigs/nar_20cb1b35cc.mp3",
-  "audio/el/three_pigs/wolf_40acb30e8b.mp3"
+  "audio/el/three_pigs/wolf_7899dd3490.mp3"
  ],
  "\"싫어요, 싫어요!\" \"그럼 후~ 후~ 불어 주지!\"": [
   "audio/el/three_pigs/pigc_f854716975.mp3",
-  "audio/el/three_pigs/wolf_733feb634a.mp3"
+  "audio/el/three_pigs/wolf_61e2f65ffa.mp3"
  ],
  "후~ 후~ 후~! 늑대는 얼굴이 새빨개지도록 불고 또 불었어요.": "audio/el/three_pigs/nar_2a1f3e11da.mp3",
  "후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!": "audio/el/three_pigs/nar_f451ae4d2a.mp3",
  "늑대는 숨이 차서 털썩 주저앉았어요.": "audio/el/three_pigs/nar_ed34ea7a0b.mp3",
  "\"흥, 그럼 다른 수를 써야지!\" 늑대는 눈을 데굴데굴 굴렸어요.": [
-  "audio/el/three_pigs/wolf_78f182d09f.mp3",
+  "audio/el/three_pigs/wolf_6a6f366c5a.mp3",
   "audio/el/three_pigs/nar_e8106c8ddf.mp3"
  ],
  "늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.": "audio/el/three_pigs/nar_2558a8824d.mp3",
@@ -97,7 +97,7 @@ Object.assign(NARRATION_CLIPS, {
  "장작을 넣자 불이 활활 타올랐어요.": "audio/el/three_pigs/nar_a981e9827d.mp3",
  "보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.": "audio/el/three_pigs/nar_ed7a174e07.mp3",
  "늑대 엉덩이가 뜨거운 솥에 닿았어요.": "audio/el/three_pigs/nar_59b9c24be5.mp3",
- "\"앗, 뜨거워!\"": "audio/el/three_pigs/wolf_2d0c94c7c6.mp3",
+ "\"앗, 뜨거워!\"": "audio/el/three_pigs/wolf_4584505897.mp3",
  "늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.": "audio/el/three_pigs/nar_dbe3a96560.mp3",
  "늑대가 떠난 뒤, 삼 형제는 집 밖으로 나왔어요.": "audio/el/three_pigs/nar_b6bfef55d5.mp3",
  "이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.": "audio/el/three_pigs/nar_90958a5726.mp3",

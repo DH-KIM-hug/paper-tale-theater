@@ -30,7 +30,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아빠 곰: \"죽이 식을 동안 산책 다녀오자!\"": {
   "t": "Papa Bear: \"Let's go for a walk while the porridge cools!\"",
-  "c": "audio/el/goldilocks/en/dad_0a848e3c59.mp3"
+  "c": "audio/el/goldilocks/en/dad_2056a0ed06.mp3"
  },
  "곰 가족은 뚜벅뚜벅, 사이좋게 숲으로 나갔어요.": {
   "t": "Off went the bear family into the woods, clomp, clomp, side by side.",
@@ -201,7 +201,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아빠 곰: \"누가 내 죽을 먹었지?\"": {
   "t": "Papa Bear: \"Who ate my porridge?\"",
-  "c": "audio/el/goldilocks/en/dad_b3cf8d943a.mp3"
+  "c": "audio/el/goldilocks/en/dad_9a662b94a1.mp3"
  },
  "엄마 곰도 그릇을 들여다보며 고개를 갸웃갸웃 기울였어요.": {
   "t": "Mama Bear peered into her bowl too and tilted her head, puzzled.",
@@ -276,7 +276,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아빠 곰: \"괜찮아. 다음엔 똑똑 하고 기다려 줘.\"": {
   "t": "Papa Bear: \"It's okay. Next time, knock and wait for us.\"",
-  "c": "audio/el/goldilocks/en/dad_0ceb6c437f.mp3"
+  "c": "audio/el/goldilocks/en/dad_24734ef1dd.mp3"
  },
  "골디락스: \"아기 곰 의자, 같이 고칠래?\"": {
   "t": "Goldilocks: \"Shall we fix Baby Bear's chair together?\"",

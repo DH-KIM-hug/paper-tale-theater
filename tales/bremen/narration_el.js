@@ -4,8 +4,8 @@ Object.assign(NARRATION_CLIPS, {
  "당나귀를 톡 눌러 봐요!": "audio/el/bremen/nar_7197385d76.mp3",
  "당나귀를 톡!": "audio/el/bremen/nar_f787ff4ce2.mp3",
  "당나귀는 오랫동안 무거운 곡식 자루를 날랐어요. 이제는 힘이 없어요.": "audio/el/bremen/nar_cb76b532f4.mp3",
- "주인: \"이제 일을 못 하겠구나. 너를 내보내야겠다.\"": "audio/el/bremen/miller_38412b089d.mp3",
- "당나귀: \"괜찮아! 브레멘에 가서 음악가가 될 거야!\"": "audio/el/bremen/donkey_2925d7a6fd.mp3",
+ "주인: \"이제 일을 못 하겠구나. 너를 내보내야겠다.\"": "audio/el/bremen/miller_7ba2bb4d4a.mp3",
+ "당나귀: \"괜찮아! 브레멘에 가서 음악가가 될 거야!\"": "audio/el/bremen/donkey_72c69e20d8.mp3",
  "당나귀가 길을 가는데, 덤불이 흔들흔들.": "audio/el/bremen/nar_87a2c71110.mp3",
  "덤불 뒤에서 멍멍! 누구일까요?": "audio/el/bremen/nar_37a7c910a8.mp3",
  "멍멍 하고 우는 친구는 누굴까? 다시 들어 봐요.": "audio/el/bremen/nar_cbaf84f6e9.mp3",
@@ -16,17 +16,17 @@ Object.assign(NARRATION_CLIPS, {
  "고양이예요! 반짝이는 친구를 눌러 봐요!": "audio/el/bremen/nar_e6217451d1.mp3",
  "닭이에요! 반짝이는 친구를 눌러 봐요!": "audio/el/bremen/nar_787550611b.mp3",
  "강아지가 헉헉, 혀를 쭉 내밀었어요.": "audio/el/bremen/nar_ee72286475.mp3",
- "강아지: \"늙어서 사냥을 못 한다고 내보내졌어요.\"": "audio/el/bremen/dog_243cf331b1.mp3",
- "당나귀: \"그럼 우리 같이 브레멘에 가서 음악가가 되자!\"": "audio/el/bremen/donkey_3222a8e8e3.mp3",
+ "강아지: \"늙어서 사냥을 못 한다고 내보내졌어요.\"": "audio/el/bremen/dog_84cd762c5a.mp3",
+ "당나귀: \"그럼 우리 같이 브레멘에 가서 음악가가 되자!\"": "audio/el/bremen/donkey_3c9387920c.mp3",
  "담장 위에서 야옹~ 누구일까요?": "audio/el/bremen/nar_918e9b7de6.mp3",
  "수염이 축 처진 고양이예요. \"쥐를 못 잡는다고 내보내졌어.\"": [
   "audio/el/bremen/nar_a6e7279dba.mp3",
   "audio/el/bremen/cat_31fe75d792.mp3"
  ],
- "강아지: \"우리랑 같이 가자! 브레멘에서 노래하자!\"": "audio/el/bremen/dog_c6fca5e3ad.mp3",
+ "강아지: \"우리랑 같이 가자! 브레멘에서 노래하자!\"": "audio/el/bremen/dog_b13dbd01a6.mp3",
  "지붕 위에서 꼬끼오! 누구일까요?": "audio/el/bremen/nar_8f59537653.mp3",
  "닭: \"이제 나는 필요 없대. 꼬끼오…\"": "audio/el/bremen/rooster_8fba94837a.mp3",
- "당나귀: \"우리랑 음악대 하자! 네 목소리 최고야!\"": "audio/el/bremen/donkey_b97219b4d6.mp3",
+ "당나귀: \"우리랑 음악대 하자! 네 목소리 최고야!\"": "audio/el/bremen/donkey_4f36d2a059.mp3",
  "당나귀, 강아지, 고양이, 닭. 친구 넷이 모였어요!": "audio/el/bremen/nar_cec7da8b51.mp3",
  "길가 풀밭에서 노래 연습을 해요. 당나귀가 먼저 들려줄게요. 잘 듣고 똑같이 톡톡!": "audio/el/bremen/nar_020e231e28.mp3",
  "이번엔 세 개! 잘 들어 봐요.": "audio/el/bremen/nar_eed55c372e.mp3",
@@ -49,14 +49,14 @@ Object.assign(NARRATION_CLIPS, {
  "맨 꼭대기는 누구?": "audio/el/bremen/nar_3e76ea6511.mp3",
  "당나귀 등에는 누가 올라갈까요?": "audio/el/bremen/nar_507d2694ba.mp3",
  "강아지 등에는 누가 올라갈까요?": "audio/el/bremen/nar_4f4941342d.mp3",
- "강아지: \"아이고, 무거워! 나는 위로 갈래~\"": "audio/el/bremen/dog_03f2e37870.mp3",
+ "강아지: \"아이고, 무거워! 나는 위로 갈래~\"": "audio/el/bremen/dog_6cf37a8deb.mp3",
  "고양이: \"아이고, 무거워! 나는 위로 갈래~\"": "audio/el/bremen/cat_c71565345f.mp3",
  "닭: \"아이고, 무거워! 나는 위로 갈래~\"": "audio/el/bremen/rooster_dfb01c2f70.mp3",
  "흔들흔들! 더 크고 무거운 친구가 먼저예요.": "audio/el/bremen/nar_3216e3d2e0.mp3",
  "당나귀가 맨 아래! 튼튼해요.": "audio/el/bremen/nar_d4db9fa677.mp3",
  "당나귀, 강아지, 고양이, 닭! 닭이 창문에 닿았어요!": "audio/el/bremen/nar_12f77293e7.mp3",
  "창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.": "audio/el/bremen/nar_ecb1969db2.mp3",
- "도둑: \"금화가 잔뜩이다! 하하하!\"": "audio/el/bremen/boss_28073fe04c.mp3",
+ "도둑: \"금화가 잔뜩이다! 하하하!\"": "audio/el/bremen/boss_68b9dc0ad7.mp3",
  "닭: \"우리 음악을 크게 들려주자!\"": "audio/el/bremen/rooster_1327f3113b.mp3",
  "도둑을 놀라게 할 노래예요. 먼저 들어 봐요!": "audio/el/bremen/nar_d6621018fc.mp3",
  "이번에는 노래하는 친구를 톡톡 눌러요!": "audio/el/bremen/nar_b64e450ff1.mp3",
@@ -80,7 +80,7 @@ Object.assign(NARRATION_CLIPS, {
  "도둑: \"그 집엔 귀신이 할퀴고, 누가 다리를 콕 찌르고, 거인이 쿵 차고, 지붕에선 재판관이 도둑 잡아라! 소리쳤어!\"": "audio/el/bremen/robber_dfca66fc93.mp3",
  "사실은 고양이, 강아지, 당나귀, 닭이었는데 말이에요! 도둑들은 다시는 오지 않았어요.": "audio/el/bremen/nar_7f6eebd2de.mp3",
  "아침이 밝았어요. 친구 넷은 이 집이 참 좋았어요.": "audio/el/bremen/nar_7a16a23243.mp3",
- "\"브레멘은 못 갔지만, 여기가 우리 집이야!\"": "audio/el/bremen/donkey_489305a337.mp3",
+ "\"브레멘은 못 갔지만, 여기가 우리 집이야!\"": "audio/el/bremen/donkey_da20b57529.mp3",
  "기쁨의 노래를 연주해요!": "audio/el/bremen/nar_5471b62b31.mp3",
  "이번에는 친구들을 톡톡 눌러서 같이 연주해요!": "audio/el/bremen/nar_6b1d23d62c.mp3",
  "함께라서 행복한 브레멘 음악대였답니다.": "audio/el/bremen/nar_99896ff930.mp3"
@@ -88,7 +88,7 @@ Object.assign(NARRATION_CLIPS, {
 Object.assign(VOICE_LINES, {
  "cut_monster": [
   "audio/el/bremen/robber_c0e0319a0b.mp3",
-  "audio/el/bremen/boss_843157b8b8.mp3"
+  "audio/el/bremen/boss_691329ad7b.mp3"
  ],
  "cut_ghost": "audio/el/bremen/robber_22e0ebe43a.mp3"
 });

@@ -14,7 +14,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "주인: \"이제 일을 못 하겠구나. 너를 내보내야겠다.\"": {
   "t": "Miller: \"You can't work anymore. I have to send you away.\"",
-  "c": "audio/el/bremen/en/miller_96cf9197fa.mp3"
+  "c": "audio/el/bremen/en/miller_a35d92c6eb.mp3"
  },
  "당나귀는 잠깐 슬펐지만, 곧 귀를 쫑긋 세웠어요.": {
   "t": "The donkey felt sad for a moment, but soon its ears perked right up.",
@@ -22,7 +22,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "당나귀: \"괜찮아! 브레멘에 가서 음악가가 될 거야!\"": {
   "t": "Donkey: \"That's okay! I'll go to Bremen and become a musician!\"",
-  "c": "audio/el/bremen/en/donkey_38f064a17c.mp3"
+  "c": "audio/el/bremen/en/donkey_dc1b58d200.mp3"
  },
  "당나귀가 길을 가는데, 덤불이 흔들흔들.": {
   "t": "The donkey walked along the road, and a bush began to wiggle and wobble.",
@@ -42,11 +42,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "강아지: \"늙어서 사냥을 못 한다고 내보내졌어요.\"": {
   "t": "Dog: \"I got too old to hunt, so I was sent away.\"",
-  "c": "audio/el/bremen/en/dog_bdf64b31c7.mp3"
+  "c": "audio/el/bremen/en/dog_4d2b21ce51.mp3"
  },
  "당나귀: \"그럼 우리 같이 브레멘에 가서 음악가가 되자!\"": {
   "t": "Donkey: \"Then come with us! Let's go to Bremen and be musicians together!\"",
-  "c": "audio/el/bremen/en/donkey_02846e86f2.mp3"
+  "c": "audio/el/bremen/en/donkey_14072ebea5.mp3"
  },
  "두 친구가 마을 길을 터벅터벅 걷는데, 담장 위에서 소리가 났어요.": {
   "t": "As the two friends plodded along the village road, a sound came from up on the wall.",
@@ -65,7 +65,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "강아지: \"우리랑 같이 가자! 브레멘에서 노래하자!\"": {
   "t": "Dog: \"Come with us! Let's sing in Bremen!\"",
-  "c": "audio/el/bremen/en/dog_4655838de7.mp3"
+  "c": "audio/el/bremen/en/dog_40a71f559a.mp3"
  },
  "고양이: \"야옹, 나도 노래라면 자신 있어!\"": {
   "t": "Cat: \"Meow, I can sing too!\"",
@@ -93,7 +93,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "당나귀: \"우리랑 음악대 하자! 네 목소리 최고야!\"": {
   "t": "Donkey: \"Join our band! Your voice is the best!\"",
-  "c": "audio/el/bremen/en/donkey_47538a3b88.mp3"
+  "c": "audio/el/bremen/en/donkey_3f76c183e9.mp3"
  },
  "닭은 푸드덕 날아 내려와 친구들 앞에 폴짝 섰어요.": {
   "t": "The rooster flapped down, flutter, flutter, and hopped right in front of the friends.",
@@ -181,11 +181,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "도둑: \"금화가 잔뜩이다! 하하하!\"": {
   "t": "Robber: \"Look at all this gold! Ha ha ha!\"",
-  "c": "audio/el/bremen/en/boss_0b04bb37b4.mp3"
+  "c": "audio/el/bremen/en/boss_950ad6fc97.mp3"
  },
  "도둑: \"이 빵도 고기도 냠냠, 다 내 거야!\"": {
   "t": "Robber: \"Yum, yum, all this bread and meat is mine, mine, mine!\"",
-  "c": "audio/el/bremen/en/boss_dbdb80fb50.mp3"
+  "c": "audio/el/bremen/en/boss_53b025ef0b.mp3"
  },
  "닭이 친구들에게 소곤소곤 속삭였어요.": {
   "t": "The rooster whispered, psst, psst, to its friends.",
@@ -301,11 +301,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"브레멘은 못 갔지만, 여기가 우리 집이야!\"": {
   "t": "\"We never got to Bremen, but this is our home!\"",
-  "c": "audio/el/bremen/en/donkey_b33c2391c4.mp3"
+  "c": "audio/el/bremen/en/donkey_bcc6efc5bc.mp3"
  },
  "당나귀: \"다 같이 있으니까 하나도 안 무서워!\"": {
   "t": "Donkey: \"With all of us together, nothing is scary at all!\"",
-  "c": "audio/el/bremen/en/donkey_34dcb18dfb.mp3"
+  "c": "audio/el/bremen/en/donkey_26651fadbe.mp3"
  },
  "닭: \"자, 이제 기쁨의 노래를 부르자! 꼬끼오!\"": {
   "t": "Rooster: \"Now let's sing our song of joy! Cock-a-doodle-doo!\"",

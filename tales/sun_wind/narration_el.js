@@ -24,12 +24,12 @@ Object.assign(NARRATION_CLIPS, {
  "더 세게, 톡!": "audio/el/sun_wind/nar_536fed7d82.mp3",
  "휘잉~ 나뭇잎이 날아가요!": "audio/el/sun_wind/nar_7d48a914fa.mp3",
  "\"앗, 내 모자!\" 모자가 훨훨 날아갔어요.": [
-  "audio/el/sun_wind/man_142733ebd4.mp3",
+  "audio/el/sun_wind/man_14bc1668c9.mp3",
   "audio/el/sun_wind/nar_113bd78933.mp3"
  ],
  "외투 자락이 펄럭펄럭!": "audio/el/sun_wind/nar_9a41773a1b.mp3",
  "\"으으, 추워!\" 나그네는 외투를 꽉 여몄어요.": [
-  "audio/el/sun_wind/man_19e263bfe1.mp3",
+  "audio/el/sun_wind/man_64fd341b7c.mp3",
   "audio/el/sun_wind/nar_a5cff03367.mp3"
  ],
  "단추까지 꼭꼭 채웠어요. 외투는 꼼짝도 안 해요!": "audio/el/sun_wind/nar_318f652479.mp3",
@@ -41,12 +41,12 @@ Object.assign(NARRATION_CLIPS, {
  "해님을 톡톡 눌러서 따뜻하게 비춰 줘요!": "audio/el/sun_wind/nar_b763fa48b1.mp3",
  "해님을 톡톡 눌러 봐요!": "audio/el/sun_wind/nar_42f3296f08.mp3",
  "\"아, 따뜻하다~\" 나그네가 단추를 풀었어요.": [
-  "audio/el/sun_wind/man_4c6260d7ba.mp3",
+  "audio/el/sun_wind/man_1826f5e666.mp3",
   "audio/el/sun_wind/nar_3d77fc90f2.mp3"
  ],
  "조금 더 톡톡!": "audio/el/sun_wind/nar_5b3b8a178e.mp3",
  "\"아이, 더워!\" 모자로 부채질을 해요.": [
-  "audio/el/sun_wind/man_b78424f9b7.mp3",
+  "audio/el/sun_wind/man_7112792135.mp3",
   "audio/el/sun_wind/nar_19fa188393.mp3"
  ],
  "한 번 더 톡톡!": "audio/el/sun_wind/nar_a50e4f0a9a.mp3",
@@ -76,7 +76,7 @@ Object.assign(NARRATION_CLIPS, {
  "시원한 물에 발을 퐁당 담갔어요.": "audio/el/sun_wind/nar_54b69649dc.mp3",
  "바람아, 이번엔 살살 불어 줄래? 톡, 살살~": "audio/el/sun_wind/nar_5bd3e774c7.mp3",
  "바람을 살살 톡톡 눌러 봐요!": "audio/el/sun_wind/nar_d10958a72a.mp3",
- "\"아, 시원해. 고마워, 바람아!\"": "audio/el/sun_wind/man_e21b13547b.mp3",
+ "\"아, 시원해. 고마워, 바람아!\"": "audio/el/sun_wind/man_9649bbca2e.mp3",
  "해님과 바람이 마주 보고 웃었어요.": "audio/el/sun_wind/nar_cacace9582.mp3",
  "\"우리, 사이좋게 지내자!\"": "audio/el/sun_wind/wind_cdb5957342.mp3",
  "하늘을 톡 눌러서 날씨를 바꿔 볼까요?": "audio/el/sun_wind/nar_0d76780d10.mp3",
@@ -86,7 +86,7 @@ Object.assign(NARRATION_CLIPS, {
 });
 Object.assign(VOICE_LINES, {
  "cut_pant": "audio/el/sun_wind/wind_9546dd147d.mp3",
- "cut_off": "audio/el/sun_wind/man_6bb3500dbf.mp3",
- "wrong_cold": "audio/el/sun_wind/man_f991b3ff49.mp3",
- "wrong_hot": "audio/el/sun_wind/man_1071ef03e1.mp3"
+ "cut_off": "audio/el/sun_wind/man_fb494c814d.mp3",
+ "wrong_cold": "audio/el/sun_wind/man_9f651cae01.mp3",
+ "wrong_hot": "audio/el/sun_wind/man_1941d0c9b1.mp3"
 });

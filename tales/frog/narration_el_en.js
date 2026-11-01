@@ -77,7 +77,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"엄마! 산처럼 커다란 괴물을 봤어요!\"": {
   "t": "\"Mama! I saw a monster as big as a mountain!\"",
-  "c": "audio/el/frog/en/baby_20d0f33979.mp3"
+  "c": "audio/el/frog/en/baby_83c82eca64.mp3"
  },
  "엄마개구리가 말했어요. \"흥, 얼마나 컸는데?\"": {
   "t": "Mama Frog said. \"Hmph, how big was it?\"",
@@ -205,7 +205,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The ox bent down low and said kindly. \"It's okay not to be big. You're a hopping champion!\"",
   "c": [
    "audio/el/frog/en/nar_2109548804.mp3",
-   "audio/el/frog/en/ox_7dfeaedca2.mp3"
+   "audio/el/frog/en/ox_6ef5d8bc1c.mp3"
   ]
  },
  "엄마개구리를 톡 눌러서 폴짝!": {
@@ -235,5 +235,5 @@ Object.assign(NARRATION_CLIPS_EN, {
 });
 Object.assign(VOICE_LINES_EN, {
  "cut_pop": "audio/el/frog/en/mom_223a4d59a5.mp3",
- "ox_thud": "audio/el/frog/en/ox_5c45869568.mp3"
+ "ox_thud": "audio/el/frog/en/ox_3d7e81d25a.mp3"
 });

@@ -82,7 +82,7 @@ Object.assign(NARRATION_CLIPS, {
  "\"그럼 겨울엔 춤이나 추렴!\"": "audio/el/ant_grasshopper/ant_72c67b9415.mp3",
  "그때 아기 개미가 말했어요. \"그래도 추워 보여요.\"": [
   "audio/el/ant_grasshopper/nar_ade4204029.mp3",
-  "audio/el/ant_grasshopper/baby_f309b680ea.mp3"
+  "audio/el/ant_grasshopper/baby_81674e6e45.mp3"
  ],
  "문을 톡 눌러서 활짝 열어 줄까요?": "audio/el/ant_grasshopper/nar_2c8f183155.mp3",
  "창고 문을 톡!": "audio/el/ant_grasshopper/nar_b5e19ad9f0.mp3",

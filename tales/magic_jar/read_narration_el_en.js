@@ -23,7 +23,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"어? 이게 무슨 소리지?\" 농부는 괭이질을 멈추고 고개를 갸웃했어요.": {
   "t": "Huh? What was that sound? The farmer stopped digging and tilted his head.",
   "c": [
-   "audio/el/magic_jar/en/farmer_46192cb99c.mp3",
+   "audio/el/magic_jar/en/farmer_89eff5b315.mp3",
    "audio/el/magic_jar/en/nar_209021dea2.mp3"
   ]
  },
@@ -85,7 +85,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"이번에는 다른 것도 넣어 볼까?\" 농부가 싱글벙글 웃으며 말했어요.": {
   "t": "Shall we try putting something else in? said the farmer with a big grin.",
   "c": [
-   "audio/el/magic_jar/en/farmer_aa471cb236.mp3",
+   "audio/el/magic_jar/en/farmer_bd69f2423e.mp3",
    "audio/el/magic_jar/en/nar_d3a461ebae.mp3"
   ]
  },
@@ -148,7 +148,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The kind farmer said with a smile. Please use it, and bring it back!",
   "c": [
    "audio/el/magic_jar/en/nar_bc2508de20.mp3",
-   "audio/el/magic_jar/en/farmer_b8e10a607e.mp3"
+   "audio/el/magic_jar/en/farmer_e2ff6a88ba.mp3"
   ]
  },
  "\"고맙네! 얼른 가져가야지, 헤헤.\" 부자는 항아리를 꼭 안고 달려갔어요.": {
@@ -196,7 +196,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then the rich man's father came and peeked into the jar. What is this?",
   "c": [
    "audio/el/magic_jar/en/nar_4b95901c3a.mp3",
-   "audio/el/magic_jar/en/father_52ee320ad6.mp3"
+   "audio/el/magic_jar/en/father_8681901004.mp3"
   ]
  },
  "아버지는 항아리 속을 들여다보려고 발꿈치를 들고 기우뚱기우뚱했어요.": {
@@ -222,15 +222,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"내가 진짜 아버지다!\" \"아니야, 내가 진짜야!\" 모두 서로 자기가 진짜라고 우겼어요.": {
   "t": "I am the real father! No, I am the real one! Each one insisted he was the real father.",
   "c": [
-   "audio/el/magic_jar/en/father_135d1b2926.mp3",
-   "audio/el/magic_jar/en/father_cb822b1f8b.mp3",
+   "audio/el/magic_jar/en/father_cc37b31d46.mp3",
+   "audio/el/magic_jar/en/father_29977fa96d.mp3",
    "audio/el/magic_jar/en/nar_6a8dc1c953.mp3"
   ]
  },
  "\"배고프다! 밥 줘라!\" 부자는 쟁반을 들고 이리저리 뛰어다녔어요.": {
   "t": "I am hungry! Give me food! The rich man ran around with a tray.",
   "c": [
-   "audio/el/magic_jar/en/father_b98d482d43.mp3",
+   "audio/el/magic_jar/en/father_24e37ce7f3.mp3",
    "audio/el/magic_jar/en/nar_9cd9b0bf80.mp3"
   ]
  },
@@ -288,7 +288,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"항아리는 깨졌지만, 함께 나누게 되었으니 됐어요.\" 농부가 빙그레 웃었어요.": {
   "t": "The jar may be broken, but now we all share, and that is what matters, said the farmer with a gentle smile.",
   "c": [
-   "audio/el/magic_jar/en/farmer_a115f5d596.mp3",
+   "audio/el/magic_jar/en/farmer_eeb2a160d5.mp3",
    "audio/el/magic_jar/en/nar_5ed3a587fc.mp3"
   ]
  },

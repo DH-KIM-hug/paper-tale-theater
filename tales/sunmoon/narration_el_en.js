@@ -72,7 +72,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 떡 한 개 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me one rice cake, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_2f2dc0a8b5.mp3"
+  "c": "audio/el/sunmoon/en/tiger_31e0b3a43e.mp3"
  },
  "호랑이가 떡 한 개를 달래요. 어느 접시를 줄까요?": {
   "t": "The tiger wants one rice cake. Which plate should we give?",
@@ -80,7 +80,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 떡 두 개 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me two rice cakes, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_674073145b.mp3"
+  "c": "audio/el/sunmoon/en/tiger_b48fe363d1.mp3"
  },
  "호랑이가 떡 두 개를 달래요. 어느 접시를 줄까요?": {
   "t": "The tiger wants two rice cakes. Which plate should we give?",
@@ -88,7 +88,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 떡 세 개 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me three rice cakes, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_5e4ef7f97c.mp3"
+  "c": "audio/el/sunmoon/en/tiger_b844489e19.mp3"
  },
  "호랑이가 떡 세 개를 달래요. 어느 접시를 줄까요?": {
   "t": "The tiger wants three rice cakes. Which plate should we give?",
@@ -96,7 +96,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 떡 네 개 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me four rice cakes, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_99748c0b1d.mp3"
+  "c": "audio/el/sunmoon/en/tiger_a20f287c22.mp3"
  },
  "호랑이가 떡 네 개를 달래요. 어느 접시를 줄까요?": {
   "t": "The tiger wants four rice cakes. Which plate should we give?",
@@ -104,7 +104,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 떡 다섯 개 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me five rice cakes, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_7caac6aea7.mp3"
+  "c": "audio/el/sunmoon/en/tiger_66a7be1cc2.mp3"
  },
  "호랑이가 떡 다섯 개를 달래요. 어느 접시를 줄까요?": {
   "t": "The tiger wants five rice cakes. Which plate should we give?",
@@ -112,7 +112,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 떡 여섯 개 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me six rice cakes, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_d836a38dd6.mp3"
+  "c": "audio/el/sunmoon/en/tiger_e9d6709e3e.mp3"
  },
  "호랑이가 떡 여섯 개를 달래요. 어느 접시를 줄까요?": {
   "t": "The tiger wants six rice cakes. Which plate should we give?",
@@ -120,7 +120,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 떡 일곱 개 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me seven rice cakes, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_966c098a66.mp3"
+  "c": "audio/el/sunmoon/en/tiger_536f20656d.mp3"
  },
  "호랑이가 떡 일곱 개를 달래요. 어느 접시를 줄까요?": {
   "t": "The tiger wants seven rice cakes. Which plate should we give?",
@@ -128,7 +128,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 떡 여덟 개 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me eight rice cakes, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_e61512adae.mp3"
+  "c": "audio/el/sunmoon/en/tiger_58bd8fada6.mp3"
  },
  "호랑이가 떡 여덟 개를 달래요. 어느 접시를 줄까요?": {
   "t": "The tiger wants eight rice cakes. Which plate should we give?",
@@ -136,7 +136,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 떡 아홉 개 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me nine rice cakes, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_2ea20e52b6.mp3"
+  "c": "audio/el/sunmoon/en/tiger_5398eeb0a1.mp3"
  },
  "호랑이가 떡 아홉 개를 달래요. 어느 접시를 줄까요?": {
   "t": "The tiger wants nine rice cakes. Which plate should we give?",
@@ -144,7 +144,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 떡 열 개 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me ten rice cakes, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_7b982b6e3d.mp3"
+  "c": "audio/el/sunmoon/en/tiger_d41ad84c74.mp3"
  },
  "호랑이가 떡 열 개를 달래요. 어느 접시를 줄까요?": {
   "t": "The tiger wants ten rice cakes. Which plate should we give?",
@@ -212,7 +212,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어흥! 남은 떡 몽땅 주면 안 잡아먹지!\"": {
   "t": "\"Roar! Give me all the leftover rice cakes, and I won't eat you!\"",
-  "c": "audio/el/sunmoon/en/tiger_19c2970110.mp3"
+  "c": "audio/el/sunmoon/en/tiger_092d5582c6.mp3"
  },
  "바구니에 남은 떡은 몇 개일까요? 세어 보고 접시를 골라요!": {
   "t": "How many rice cakes are left in the basket? Count them and pick a plate!",
@@ -226,7 +226,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "When the rice cakes were all gone, the tiger said, \"No more rice cakes? Then I'll have to eat you!\"",
   "c": [
    "audio/el/sunmoon/en/nar_f80748f9d4.mp3",
-   "audio/el/sunmoon/en/tiger_608a9faf47.mp3"
+   "audio/el/sunmoon/en/tiger_44cdaa691e.mp3"
   ]
  },
  "호랑이는 엄마를 꿀꺽 잡아먹고 말았어요.": {
@@ -241,7 +241,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Knock, knock, knock. \"Kids~ Mom's home. Open the door~\" The voice is rough and raspy.",
   "c": [
    "audio/el/sunmoon/en/nar_28874727f0.mp3",
-   "audio/el/sunmoon/en/tiger_e65e65a893.mp3",
+   "audio/el/sunmoon/en/tiger_6af16880b6.mp3",
    "audio/el/sunmoon/en/nar_4d4933212d.mp3"
   ]
  },
@@ -257,7 +257,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The brother said, \"That is not our mom's voice! Show us your hand!\"",
   "c": [
    "audio/el/sunmoon/en/nar_d10a1ed685.mp3",
-   "audio/el/sunmoon/en/boy_56d3cb0f74.mp3"
+   "audio/el/sunmoon/en/boy_b29960a635.mp3"
   ]
  },
  "진짜 엄마 손은 뭘까요? 잘 보고 골라 봐요!": {
@@ -270,7 +270,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어? 하얗긴 한데… 뾰족한 발톱이 있네!\"": {
   "t": "\"Huh? It is white, but... it has sharp claws!\"",
-  "c": "audio/el/sunmoon/en/boy_2836b3fd3b.mp3"
+  "c": "audio/el/sunmoon/en/boy_bb163bf911.mp3"
  },
  "진짜 엄마 손을 톡 골라 봐요!": {
   "t": "Tap the real Mom's hand!",
@@ -308,7 +308,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The brother whispered, \"Shh, let's tiptoe out the back door!\"",
   "c": [
    "audio/el/sunmoon/en/nar_d4592d18cd.mp3",
-   "audio/el/sunmoon/en/boy_0554a32d08.mp3"
+   "audio/el/sunmoon/en/boy_9aa4fe4bb3.mp3"
   ]
  },
  "오누이는 뒷문으로 살금살금 나왔어요. 화면을 톡톡 눌러서 달려요!": {
@@ -330,7 +330,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"얘들아~ 어디 갔니?\" 호랑이는 두리번두리번하다가 집 쪽으로 돌아갔어요.": {
   "t": "\"Kids~ where did you go?\" The tiger looked around and around, then went back toward the house.",
   "c": [
-   "audio/el/sunmoon/en/tiger_fff4be1de6.mp3",
+   "audio/el/sunmoon/en/tiger_08de02bf08.mp3",
    "audio/el/sunmoon/en/nar_ec9dbb2c92.mp3"
   ]
  },
@@ -354,7 +354,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The tiger came to the backyard. \"Aha! They are hiding in the well!\"",
   "c": [
    "audio/el/sunmoon/en/nar_8fc8e32cd2.mp3",
-   "audio/el/sunmoon/en/tiger_e5fef67bc1.mp3"
+   "audio/el/sunmoon/en/tiger_f97dc611ec.mp3"
   ]
  },
  "호랑이가 우물 속을 들여다봤어요. 우물 물에 오누이 얼굴이 비쳤거든요!": {
@@ -363,7 +363,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"두레박으로 건져야지~\" 영차!": {
   "t": "\"I'll scoop them up with the bucket~\" Heave-ho!",
-  "c": "audio/el/sunmoon/en/tiger_3b80124798.mp3"
+  "c": "audio/el/sunmoon/en/tiger_fad7e2f00c.mp3"
  },
  "첨벙! 두레박에는 물만 가득. 우물 속 오누이 얼굴을 톡 눌러 봐요!": {
   "t": "Splash! The bucket is full of just water. Tap the faces of the brother and sister in the well!",
@@ -380,7 +380,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"어? 위에서 웃음소리가?\" 호랑이가 고개를 번쩍 들었어요.": {
   "t": "\"Huh? A laugh from up above?\" The tiger looked up with a jerk.",
   "c": [
-   "audio/el/sunmoon/en/tiger_2fc8e86190.mp3",
+   "audio/el/sunmoon/en/tiger_aa32efac28.mp3",
    "audio/el/sunmoon/en/nar_44aabf0b61.mp3"
   ]
  },
@@ -388,14 +388,14 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The tiger looked up and asked, \"Kids, how did you climb up there?\"",
   "c": [
    "audio/el/sunmoon/en/nar_3f3f1381bb.mp3",
-   "audio/el/sunmoon/en/tiger_99b4b48808.mp3"
+   "audio/el/sunmoon/en/tiger_554b12ad2b.mp3"
   ]
  },
  "오빠가 꾀를 냈어요. \"참기름 바르고 올라왔지!\"": {
   "t": "The brother thought up a trick. \"We rubbed on sesame oil and climbed up!\"",
   "c": [
    "audio/el/sunmoon/en/nar_d19f7c1f6c.mp3",
-   "audio/el/sunmoon/en/boy_63574ca7f0.mp3"
+   "audio/el/sunmoon/en/boy_09d3b12522.mp3"
   ]
  },
  "참기름 병을 톡 눌러서 나무에 발라 줘요!": {
@@ -421,7 +421,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The brother said \"Shh!\" but... it was too late! The tiger had already heard!",
   "c": [
    "audio/el/sunmoon/en/nar_5458d25e24.mp3",
-   "audio/el/sunmoon/en/boy_18ab8bc33f.mp3",
+   "audio/el/sunmoon/en/boy_d221ed6048.mp3",
    "audio/el/sunmoon/en/nar_8523a223d7.mp3"
   ]
  },
@@ -435,7 +435,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"하늘님, 튼튼한 동아줄을 내려 주세요!\"": {
   "t": "\"Dear Sky, please send down a strong rope!\"",
-  "c": "audio/el/sunmoon/en/boy_9b24acb1a4.mp3"
+  "c": "audio/el/sunmoon/en/boy_932148aedb.mp3"
  },
  "하늘에서 줄이 두 개 내려왔어요! 어떤 줄을 잡을까요?": {
   "t": "Two ropes came down from the sky! Which rope should we grab?",
@@ -445,7 +445,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Creak... This rope is old!",
   "c": [
    "audio/el/sunmoon/en/nar_04df905cb1.mp3",
-   "audio/el/sunmoon/en/boy_587001d5d0.mp3"
+   "audio/el/sunmoon/en/boy_a3a427b9bc.mp3"
   ]
  },
  "굵고 반짝이는 튼튼한 줄을 톡 골라요!": {
@@ -487,7 +487,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"아이코 내 엉덩이! 아이코 내 머리!\" 호랑이 머리에 동그란 혹이 났어요.": {
   "t": "\"Ouch, my bottom! Ouch, my head!\" A round bump popped up on the tiger's head.",
   "c": [
-   "audio/el/sunmoon/en/tiger_652f483939.mp3",
+   "audio/el/sunmoon/en/tiger_c5d501ab30.mp3",
    "audio/el/sunmoon/en/nar_7be7d35be4.mp3"
   ]
  },
@@ -508,7 +508,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"그럼 우리 바꾸자!\"": {
   "t": "\"Then let's switch!\"",
-  "c": "audio/el/sunmoon/en/boy_56d14a3806.mp3"
+  "c": "audio/el/sunmoon/en/boy_6da230104c.mp3"
  },
  "그래서 동생은 해님, 오빠는 달님이 되었답니다.": {
   "t": "So the sister became the Sun, and the brother became the Moon.",
@@ -631,11 +631,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  }
 });
 Object.assign(VOICE_LINES_EN, {
- "cut_roar": "audio/el/sunmoon/en/tiger_b4c9bc97a3.mp3",
- "cut_mimic": "audio/el/sunmoon/en/tiger_9117c1e018.mp3",
- "cut_creak": "audio/el/sunmoon/en/tiger_53e35ee585.mp3",
- "cut_snap": "audio/el/sunmoon/en/tiger_aa80efc2ad.mp3",
- "cut_bump": "audio/el/sunmoon/en/tiger_10c6637c2b.mp3",
+ "cut_roar": "audio/el/sunmoon/en/tiger_1298cbc64e.mp3",
+ "cut_mimic": "audio/el/sunmoon/en/tiger_5c8cc9fd58.mp3",
+ "cut_creak": "audio/el/sunmoon/en/tiger_212f7e3154.mp3",
+ "cut_snap": "audio/el/sunmoon/en/tiger_25b2ea0144.mp3",
+ "cut_bump": "audio/el/sunmoon/en/tiger_919e4346cf.mp3",
  "call_mom": "audio/el/sunmoon/en/mom_a9a729f7cc.mp3",
- "call_tiger": "audio/el/sunmoon/en/tiger_65c6ecbb3f.mp3"
+ "call_tiger": "audio/el/sunmoon/en/tiger_28c057ab04.mp3"
 });

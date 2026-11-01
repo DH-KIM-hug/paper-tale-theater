@@ -34,7 +34,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어? 이건 뭐지? 폴짝!": {
   "t": "Huh? What's this? Hop!",
-  "c": "audio/el/lion_mouse/en/mouse_03c1bb8baf.mp3"
+  "c": "audio/el/lion_mouse/en/mouse_fe0b6f3750.mp3"
  },
  "생쥐가 잠든 사자의 갈기 위로 올라갔어요.": {
   "t": "The mouse climbed onto the sleeping lion’s mane.",
@@ -43,9 +43,9 @@ Object.assign(NARRATION_CLIPS_EN, {
  "와아! 사자 갈기는 커다란 미끄럼틀이었어요. 쭈르륵~ 히히!": {
   "t": "Wheee! The lion's mane was a great big slide. Whoosh! Hee hee!",
   "c": [
-   "audio/el/lion_mouse/en/mouse_d536a30d8f.mp3",
+   "audio/el/lion_mouse/en/mouse_640899c77e.mp3",
    "audio/el/lion_mouse/en/nar_1bae45f158.mp3",
-   "audio/el/lion_mouse/en/mouse_020e5c2afd.mp3"
+   "audio/el/lion_mouse/en/mouse_653a2b5ff4.mp3"
   ]
  },
  "어? 사자가 눈을 떴어요!": {
@@ -60,14 +60,14 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The lion yawned and said, \"Haaah... shall I gobble you up in one bite?\"",
   "c": [
    "audio/el/lion_mouse/en/nar_1bcf0c6257.mp3",
-   "audio/el/lion_mouse/en/lion_c89998f437.mp3"
+   "audio/el/lion_mouse/en/lion_2d1109934b.mp3"
   ]
  },
  "생쥐가 말했어요. \"살려 주시면 꼭 은혜 갚을게요!\"": {
   "t": "The mouse said, \"If you let me go, I promise I'll pay you back!\"",
   "c": [
    "audio/el/lion_mouse/en/nar_c9a018074a.mp3",
-   "audio/el/lion_mouse/en/mouse_b5d857c8d6.mp3"
+   "audio/el/lion_mouse/en/mouse_a6e2e1cadf.mp3"
   ]
  },
  "생쥐는 덜덜 떨면서도 또박또박 말했어요.": {
@@ -78,12 +78,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The mouse put both hands together. \"Please, Lion, please!\"",
   "c": [
    "audio/el/lion_mouse/en/nar_810e3a83ee.mp3",
-   "audio/el/lion_mouse/en/mouse_0baaf23c82.mp3"
+   "audio/el/lion_mouse/en/mouse_944a7073d9.mp3"
   ]
  },
  "\"저는 작지만 이빨이 아주 튼튼하다고요!\"": {
   "t": "I may be small, but my teeth are very, very strong!",
-  "c": "audio/el/lion_mouse/en/mouse_5c7e2b1806.mp3"
+  "c": "audio/el/lion_mouse/en/mouse_d961e07b60.mp3"
  },
  "생쥐를 내려다보던 사자가 물었어요.": {
   "t": "Looking down at the mouse, the lion asked a question.",
@@ -91,7 +91,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"네가? 나를 도와준다고?\"": {
   "t": "\"You? You'll help me?\"",
-  "c": "audio/el/lion_mouse/en/lion_5796fea14a.mp3"
+  "c": "audio/el/lion_mouse/en/lion_c2168b92bd.mp3"
  },
  "사자는 배를 잡고 껄껄, 땅이 쿵쿵 울리도록 웃었어요.": {
   "t": "The lion held his belly and roared with laughter, ho, ho, ho, until the ground shook.",
@@ -105,7 +105,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The mouse slipped right out. \"Thank you, Lion!\"",
   "c": [
    "audio/el/lion_mouse/en/nar_b018e89cbb.mp3",
-   "audio/el/lion_mouse/en/mouse_fea627cbca.mp3"
+   "audio/el/lion_mouse/en/mouse_d6a2e7672b.mp3"
   ]
  },
  "생쥐는 꼬리를 흔들며 다다다, 풀숲으로 달려갔어요.": {
@@ -162,7 +162,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"사자님, 제가 도와 드릴게요!\"": {
   "t": "\"Lion, I'll help you!\"",
-  "c": "audio/el/lion_mouse/en/mouse_690bd734ac.mp3"
+  "c": "audio/el/lion_mouse/en/mouse_864e847dec.mp3"
  },
  "달빛 아래, 생쥐가 사자를 감싼 그물에 매달렸어요.": {
   "t": "In the moonlight, the mouse clung to the net around the lion.",
@@ -194,11 +194,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!\"": {
   "t": "\"Thank you, little friend. Your tiny teeth saved me!\"",
-  "c": "audio/el/lion_mouse/en/lion_2f4407ef2c.mp3"
+  "c": "audio/el/lion_mouse/en/lion_c940641453.mp3"
  },
  "\"제가 은혜 갚는다고 했지요?\"": {
   "t": "\"Didn't I say I'd pay you back?\"",
-  "c": "audio/el/lion_mouse/en/mouse_f563b7b4ba.mp3"
+  "c": "audio/el/lion_mouse/en/mouse_e95cbb928e.mp3"
  },
  "밤이 지나고, 두 친구가 있는 초원에 해가 떴어요.": {
   "t": "The night passed, and the sun rose over the two friends on the plain.",
@@ -208,7 +208,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The next morning, the lion put the mouse on its back. \"Hold tight!\"",
   "c": [
    "audio/el/lion_mouse/en/nar_e9b3dbe0e0.mp3",
-   "audio/el/lion_mouse/en/lion_1fcb10d4f1.mp3"
+   "audio/el/lion_mouse/en/lion_cb52485e60.mp3"
   ]
  },
  "다다다! 사자가 바람처럼 달리고, 생쥐는 갈기를 꼭 붙잡았어요.": {
@@ -219,7 +219,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "They race across the meadow through the wind! Yippee!",
   "c": [
    "audio/el/lion_mouse/en/nar_8d152dc974.mp3",
-   "audio/el/lion_mouse/en/mouse_5158207fb0.mp3"
+   "audio/el/lion_mouse/en/mouse_acba5ccdda.mp3"
   ]
  },
  "둘은 깔깔, 하하 웃으며 초원을 한 바퀴 빙 돌았어요.": {

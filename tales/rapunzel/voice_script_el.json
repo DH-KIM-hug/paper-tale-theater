@@ -2,11 +2,11 @@
  "notes": "ElevenLabs 목소리 배정(2026-10-21, SPEC §6): nar=Annie(여자 내레이터 돌려 쓰기 Lily→Huelyn→Annie — 직전 두 편이 미녀와 야수 Huelyn·빨간 자동차 Lily 라 Annie; 부드럽고 사랑스러운 낭독), rap=Sora(신데렐라 오디션 A-2 \"Warm & Expressive Storyteller\", 젊은 서울 여성·표현이 풍부 — 허밍 \"라라라~\"와 기쁨·놀람 표정이 큰 역이라 선택. 공주 목소리로 Luna 는 백설·신데렐라·인어에 세 번, Yun 은 미녀에 써서 새 목소리를 쓴다. 허밍이 밋밋하면 Yoojin(Cm89zxZzEGaMu7ajYw2K, 밝고 친근)으로 바꾼다), gothel=Matilda(마녀·새엄마 원형, 헨젤 마녀·인어 마녀·백설 왕비와 같은 목소리 — 엄하고 투덜거리지만 소리 지르지 않게 연기 지시, stability .55 로 음색 고정. 헨젤 마녀와 너무 같게 들리면 Wisdom(Pyj2w3lxZ0VMpAJ4CmRu, 격식 있고 절제된 중년)으로), father=Namchun(할아버지·아버지 원형), mother=Bella(엄마 원형), prince=Klamon(N-5 한국어 전문 밝고 따뜻한 청년 — 백설 왕자 Eric·신데렐라·인어 왕자 Sunjun·미녀 George 와 다른 목소리; 미운 아기 오리에서 카드 한 줄만 썼던 목소리. 어색하면 Taehyun(T6CkalnggsFZDOXwglLf)). 아기·새·토끼·말은 목소리 없음. 허밍 \"라라라, 라라라~\"는 라푼젤 목소리의 extra.hum(말풍선 없음, vo). 수 세기 없음. 교훈은 대사로 읽지 않는다(끝 화면 글자만). 모델 eleven_v4, 배역별 settings.",
  "voices": {
   "nar": "Lb7qkOn5hF8p7qfCDH8q",
-  "rap": "JpGoUJuLFthrFkcdBy4k",
-  "gothel": "XrExE9yKIg1WjnnlVkGX",
-  "father": "5ON5Fnz24cnOozEQfGAm",
+  "rap": "5l5f8iK3YPeGga21rQIX",
+  "gothel": "TC0Zp7WVFzhA8zpTlRqV",
+  "father": "qAZH0aMXY8tw1QufPN0D",
   "mother": "hpp4J3VqNfWAUOO0d1Us",
-  "prince": "dnZGOA54w68T7vLLPFTp"
+  "prince": "a4CnuaYbALRvW39mDitg"
  },
  "models": {
   "nar": "eleven_v4",

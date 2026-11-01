@@ -2,10 +2,10 @@
  "notes": "ElevenLabs 목소리 배정(2026-10-20 재기획): nar=Huelyn(여자 내레이터 돌려 쓰기, 느리고 숨 쉬는 낭독), sch=Eric(젊은 남성), snake=Matilda(구렁이 아내 — 반드시 여자 목소리. 낮고 느리고 부드럽고 신비롭게, 무섭게 소리치지 않음. stability 0.6으로 음색을 고정, 해설 Huelyn과 뚜렷이 다르게 들려야 하며 너무 닮게 들리면 Haemi(ZjAPD4f11zlnEnZpKDgo)로 바꾼다), mom=Bella(엄마 원형), dad=Namchun(아버지 원형), chick=Peanut(아기 까치 합창, 짧은 대사만, 아기 말투 태그). 까치 친구들·종·화살은 목소리 없음. 모델 eleven_v4, 배역별 settings. 느린 진행이 목표이므로 해설 지시에 slow/unhurried/pause를 넣었다. 수 세기(n1~n5)는 또렷하고 천천히.",
  "voices": {
   "nar": "gnWujHp24oqX3I03lRbU",
-  "sch": "cjVigY5qzO86Huf0OWal",
+  "sch": "c6SfcYrb2t09NHXiT80T",
   "snake": "XrExE9yKIg1WjnnlVkGX",
   "mom": "hpp4J3VqNfWAUOO0d1Us",
-  "dad": "5ON5Fnz24cnOozEQfGAm",
+  "dad": "qAZH0aMXY8tw1QufPN0D",
   "chick": "rBkiq5ZQ43ogwd6i4uIQ"
  },
  "models": {

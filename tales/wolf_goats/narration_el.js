@@ -10,7 +10,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "엄마가 가고 얼마 뒤, 문밖에서 소리가 났어요.": "audio/el/wolf_goats/nar_99e9bad4bb.mp3",
  "\"얘들아, 엄마야. 문 열어 줘!\" 굵고 거친 목소리였어요.": [
-  "audio/el/wolf_goats/wolf_bc2f7ba31b.mp3",
+  "audio/el/wolf_goats/wolf_4467a84fcc.mp3",
   "audio/el/wolf_goats/nar_c3352fc353.mp3"
  ],
  "아기 염소들이 서로 쳐다보았어요.": "audio/el/wolf_goats/nar_731fa4cd0a.mp3",
@@ -23,16 +23,16 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/wolf_goats/nar_800fc548d1.mp3"
  ],
  "늑대는 곰곰이 생각했어요.": "audio/el/wolf_goats/nar_1e09e3d532.mp3",
- "\"목소리를 곱게 만들어야지. 분필을 먹어 볼까?\"": "audio/el/wolf_goats/wolf_ce05f5844b.mp3",
+ "\"목소리를 곱게 만들어야지. 분필을 먹어 볼까?\"": "audio/el/wolf_goats/wolf_6a8ef30a1a.mp3",
  "늑대의 목소리가 가늘고 고와졌어요.": "audio/el/wolf_goats/nar_429bd7ffdf.mp3",
- "\"얘들아, 엄마야. 문 열어 줘~\"": "audio/el/wolf_goats/wolf_aec1bbaaab.mp3",
+ "\"얘들아, 엄마야. 문 열어 줘~\"": "audio/el/wolf_goats/wolf_49832565ec.mp3",
  "\"그럼 문틈으로 발을 보여 주세요!\" 아기 염소들이 말했어요.": [
   "audio/el/wolf_goats/kid_3c4c821f40.mp3",
   "audio/el/wolf_goats/nar_b3d65a9f7f.mp3"
  ],
  "늑대는 밀가루를 발에 묻혀서, 하얀 발을 쑥 내밀었어요.": "audio/el/wolf_goats/nar_035cfda688.mp3",
  "\"에취!\" 늑대가 밀가루 재채기를 했어요.": [
-  "audio/el/wolf_goats/wolf_ae71a0da5a.mp3",
+  "audio/el/wolf_goats/wolf_46b742a20c.mp3",
   "audio/el/wolf_goats/nar_2846efcff7.mp3"
  ],
  "\"어? 하얀 발이야! 엄마다!\" 아기 염소들은 깜빡 속아서 문을 열었어요.": [
@@ -47,7 +47,7 @@ Object.assign(NARRATION_CLIPS, {
  "막내는 어디에 숨을까요?": "audio/el/wolf_goats/nar_8c738449c8.mp3",
  "막내는 키 큰 시계 속에 쏙 숨었어요. 아무도 몰랐어요.": "audio/el/wolf_goats/nar_176e03f6ef.mp3",
  "\"어디 숨었나? 다 찾아낼 테다!\" 늑대가 집 안을 뒤졌어요.": [
-  "audio/el/wolf_goats/wolf_ff2ebeb782.mp3",
+  "audio/el/wolf_goats/wolf_aea3526733.mp3",
   "audio/el/wolf_goats/nar_02d6c2423f.mp3"
  ],
  "늑대는 시계 속만 빼고, 아기 염소들을 모두 찾아내서 꿀꺽 삼켜 버렸어요.": "audio/el/wolf_goats/nar_a13df1a024.mp3",
@@ -74,10 +74,10 @@ Object.assign(NARRATION_CLIPS, {
  "\"이제 늑대 배에 돌멩이를 넣어 주자.\"": "audio/el/wolf_goats/mom_a44d00a642.mp3",
  "엄마가 바늘로 콕콕콕 꿰맸어요. 늑대는 아무것도 몰랐어요.": "audio/el/wolf_goats/nar_6d80106122.mp3",
  "잠에서 깬 늑대가 비틀비틀 일어났어요.": "audio/el/wolf_goats/nar_3ee2a12e5b.mp3",
- "\"아이고, 배가 무거워. 목이 말라!\"": "audio/el/wolf_goats/wolf_ea28389de0.mp3",
- "\"우물에서 물을 마셔야지.\"": "audio/el/wolf_goats/wolf_d1769f7927.mp3",
+ "\"아이고, 배가 무거워. 목이 말라!\"": "audio/el/wolf_goats/wolf_8605632f43.mp3",
+ "\"우물에서 물을 마셔야지.\"": "audio/el/wolf_goats/wolf_e645618485.mp3",
  "풍덩! 늑대가 우물에 빠졌어요.": "audio/el/wolf_goats/nar_2389d6901f.mp3",
- "\"으악, 차가워! 다시는 안 올 거야!\"": "audio/el/wolf_goats/wolf_f383d43981.mp3",
+ "\"으악, 차가워! 다시는 안 올 거야!\"": "audio/el/wolf_goats/wolf_dadfddafd7.mp3",
  "늑대는 흠뻑 젖은 채 멀리멀리 도망갔어요.": "audio/el/wolf_goats/nar_4c583ba1ca.mp3",
  "엄마와 일곱 아기 염소는 손을 잡고 신나게 춤을 추었어요.": "audio/el/wolf_goats/nar_5e0b86f07f.mp3",
  "아기 염소를 톡! 눌러 같이 춤춰 봐요!": "audio/el/wolf_goats/nar_a6915f21fe.mp3",

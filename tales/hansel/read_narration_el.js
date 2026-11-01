@@ -8,7 +8,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/hansel/nar_af42e95b79.mp3"
  ],
  "\"음… 아이들이 가엾은데…\" 아빠는 망설였어요.": [
-  "audio/el/hansel/father_a3e05834b4.mp3",
+  "audio/el/hansel/father_07f9f2ca03.mp3",
   "audio/el/hansel/nar_4bfc42e0f8.mp3"
  ],
  "헨젤은 가슴이 콩닥콩닥 뛰었어요. 그래도 꼭 참고 생각했지요.": "audio/el/hansel/nar_12ddb5c812.mp3",
@@ -17,7 +17,7 @@ Object.assign(NARRATION_CLIPS, {
  "헨젤은 하얀 조약돌을 하나, 또 하나, 주머니에 쏙쏙 넣었어요.": "audio/el/hansel/nar_c4a0b52ba7.mp3",
  "헨젤은 조약돌을 주머니에 가득 채웠어요. \"이제 괜찮아.\"": [
   "audio/el/hansel/nar_2691b0de98.mp3",
-  "audio/el/hansel/hans_f3be043d9f.mp3"
+  "audio/el/hansel/hans_9c80cdcdd8.mp3"
  ],
  "다음 날, 아빠는 둘을 데리고 숲 깊은 곳으로 갔어요.": "audio/el/hansel/nar_1967eab72f.mp3",
  "헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.": "audio/el/hansel/nar_55b9a180ce.mp3",
@@ -27,7 +27,7 @@ Object.assign(NARRATION_CLIPS, {
  "하지만 얼마 뒤, 새엄마가 또 아이들을 숲에 두고 오자고 했어요.": "audio/el/hansel/nar_453e5dce1b.mp3",
  "이번엔 밤에 문이 잠겨서, 조약돌을 주울 수 없었어요.": "audio/el/hansel/nar_e4a456c944.mp3",
  "\"얘들아, 숲에 산딸기 따러 가자!\" 아빠가 말했어요.": [
-  "audio/el/hansel/father_5cf68c000b.mp3",
+  "audio/el/hansel/father_cedd1e47e4.mp3",
   "audio/el/hansel/nar_26756620c0.mp3"
  ],
  "헨젤은 빵 부스러기로 길을 표시하기로 했어요.": "audio/el/hansel/nar_9c5debd116.mp3",
@@ -43,7 +43,7 @@ Object.assign(NARRATION_CLIPS, {
  "그레텔은 마음이 조금 무서웠어요.": "audio/el/hansel/nar_82ab2b2be7.mp3",
  "깜깜한 숲에서 부엉이가 부엉부엉 울었거든요.": "audio/el/hansel/nar_7322abfcf6.mp3",
  "\"괜찮아, 빵 부스러기 길을 따라가자!\" 헨젤이 말했어요.": [
-  "audio/el/hansel/hans_f83167cda3.mp3",
+  "audio/el/hansel/hans_e7b8a126b7.mp3",
   "audio/el/hansel/nar_52a19d6ddb.mp3"
  ],
  "헨젤과 그레텔은 왔던 숲길로 발길을 돌렸어요.": "audio/el/hansel/nar_837391a63c.mp3",
@@ -63,17 +63,17 @@ Object.assign(NARRATION_CLIPS, {
  "헨젤은 지붕에 빠진 사탕을 하나씩 다시 콕콕 붙여 주었지요.": "audio/el/hansel/nar_7404c6b8e4.mp3",
  "그때 문이 열리고 마녀 할머니가 나왔어요.": "audio/el/hansel/nar_2e48e4d4c3.mp3",
  "\"내 과자 집을 누가 먹었니!\" 마녀가 투덜거렸어요.": [
-  "audio/el/hansel/witch_7c3552792e.mp3",
+  "audio/el/hansel/witch_d331848ac9.mp3",
   "audio/el/hansel/nar_1d47274c3f.mp3"
  ],
  "마녀는 과자를 아끼는 심술쟁이 할머니였어요.": "audio/el/hansel/nar_d41bd871a3.mp3",
  "\"내 사탕! 내 쿠키! 으으, 아까워라!\" 마녀는 발을 쿵쿵 굴렀어요.": [
-  "audio/el/hansel/witch_6b52754ac1.mp3",
+  "audio/el/hansel/witch_606cb3f13d.mp3",
   "audio/el/hansel/nar_9218b0ebf0.mp3"
  ],
  "마녀는 헨젤을 새장에 쏙 넣어 버렸어요. \"과자 값을 낼 때까지 여기 있어!\"": [
   "audio/el/hansel/nar_b72f4dd293.mp3",
-  "audio/el/hansel/witch_08cda9ee22.mp3"
+  "audio/el/hansel/witch_ba87e9e0de.mp3"
  ],
  "새장에 갇힌 헨젤 곁에서 그레텔은 빠져나갈 방법을 찾았어요.": "audio/el/hansel/nar_06169847cb.mp3",
  "그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.": "audio/el/hansel/nar_20eb297922.mp3",
@@ -84,7 +84,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "찰칵! 새장이 열렸어요. 헨젤이 폴짝 뛰어나왔어요!": "audio/el/hansel/nar_c1ff0ff9b7.mp3",
  "\"고마워, 그레텔!\" 헨젤이 말했어요.": [
-  "audio/el/hansel/hans_ff66bc057d.mp3",
+  "audio/el/hansel/hans_4c49d861fe.mp3",
   "audio/el/hansel/nar_52a19d6ddb.mp3"
  ],
  "새장에서 나온 헨젤은 그레텔과 화덕 곁에 있었어요.": "audio/el/hansel/nar_54595b3cc2.mp3",
@@ -97,10 +97,10 @@ Object.assign(NARRATION_CLIPS, {
  "쾅! 마녀는 깜짝 놀라 모자가 휙 날아갔어요.": "audio/el/hansel/nar_a54b8fa448.mp3",
  "마녀는 빗자루를 타고 굴뚝으로 휘리릭 날아갔어요. \"다시는 안 올게~!\"": [
   "audio/el/hansel/nar_2c9a0a9951.mp3",
-  "audio/el/hansel/witch_8bb3fa7ae4.mp3"
+  "audio/el/hansel/witch_95a1fa09ed.mp3"
  ],
  "\"휴, 이제 집으로 가자!\" 헨젤이 그레텔의 손을 잡았어요.": [
-  "audio/el/hansel/hans_af61f73b38.mp3",
+  "audio/el/hansel/hans_83f0bac892.mp3",
   "audio/el/hansel/nar_6de5336abf.mp3"
  ],
  "집으로 가는 길에 넓은 강이 나왔어요. 다리가 없어요!": "audio/el/hansel/nar_521f7d0607.mp3",
@@ -119,12 +119,12 @@ Object.assign(NARRATION_CLIPS, {
  "강을 건넌 두 아이는 숲길을 따라 계속 걸었어요.": "audio/el/hansel/nar_9bd8b1c532.mp3",
  "저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.": "audio/el/hansel/nar_aef4bd583d.mp3",
  "\"헨젤! 그레텔!\" 아빠가 달려왔어요.": [
-  "audio/el/hansel/father_e0cc519dcd.mp3",
+  "audio/el/hansel/father_8c24df71b7.mp3",
   "audio/el/hansel/nar_9299de3b91.mp3"
  ],
  "아빠는 두 아이를 번쩍 안아 올려 빙글빙글 돌았어요.": "audio/el/hansel/nar_f7623fd8d3.mp3",
  "\"찾았다! 보고 싶었어!\" 아빠가 말했어요.": [
-  "audio/el/hansel/father_c3e0ae07ec.mp3",
+  "audio/el/hansel/father_ceab999c7b.mp3",
   "audio/el/hansel/nar_ae25a8def7.mp3"
  ],
  "헨젤과 그레텔은 마음이 따뜻하고 행복했어요.": "audio/el/hansel/nar_f8c11a65fc.mp3",

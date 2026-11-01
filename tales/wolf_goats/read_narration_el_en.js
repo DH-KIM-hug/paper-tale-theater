@@ -42,7 +42,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"얘들아, 엄마야. 문 열어 줘!\" 굵고 거친 목소리였어요.": {
   "t": "Children, it's Mother. Open the door! It was a rough voice.",
   "c": [
-   "audio/el/wolf_goats/en/wolf_4cf298b811.mp3",
+   "audio/el/wolf_goats/en/wolf_861fc6180f.mp3",
    "audio/el/wolf_goats/en/nar_4b2cdc4004.mp3"
   ]
  },
@@ -86,7 +86,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"목소리를 곱게 만들어야지. 분필을 먹어 볼까?\"": {
   "t": "I need a sweet voice. Shall I eat some chalk?",
-  "c": "audio/el/wolf_goats/en/wolf_6cf40ee879.mp3"
+  "c": "audio/el/wolf_goats/en/wolf_1c2841bac6.mp3"
  },
  "와작와작, 늑대는 분필을 우적우적 씹어 먹었어요.": {
   "t": "Crunch, crunch, munch, munch, the wolf chewed up the chalk.",
@@ -102,7 +102,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"얘들아, 엄마야. 문 열어 줘~\"": {
   "t": "Children, it's Mother. Open the door, please~",
-  "c": "audio/el/wolf_goats/en/wolf_173feb4a56.mp3"
+  "c": "audio/el/wolf_goats/en/wolf_ad951e8769.mp3"
  },
  "\"그럼 문틈으로 발을 보여 주세요!\" 아기 염소들이 말했어요.": {
   "t": "Then show us your paw through the crack! said the little goats.",
@@ -130,7 +130,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"에취!\" 늑대가 밀가루 재채기를 했어요.": {
   "t": "Achoo! The wolf sneezed flour.",
   "c": [
-   "audio/el/wolf_goats/en/wolf_0be275f7b1.mp3",
+   "audio/el/wolf_goats/en/wolf_35e0641737.mp3",
    "audio/el/wolf_goats/en/nar_88fbff451a.mp3"
   ]
  },
@@ -167,7 +167,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"어디 숨었나? 다 찾아낼 테다!\" 늑대가 집 안을 뒤졌어요.": {
   "t": "Where did you hide? I'll find every one of you! The wolf searched the house.",
   "c": [
-   "audio/el/wolf_goats/en/wolf_a7358ae2bf.mp3",
+   "audio/el/wolf_goats/en/wolf_840d066013.mp3",
    "audio/el/wolf_goats/en/nar_03554d139c.mp3"
   ]
  },
@@ -293,7 +293,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"아이고, 배가 무거워. 목이 말라!\"": {
   "t": "Oh dear, my tummy is so heavy. I'm thirsty!",
-  "c": "audio/el/wolf_goats/en/wolf_18574bb8c6.mp3"
+  "c": "audio/el/wolf_goats/en/wolf_0a39d5f6bd.mp3"
  },
  "뒤뚱뒤뚱, 늑대는 무거운 배를 안고 우물로 갔어요.": {
   "t": "Waddle, waddle, the wolf lugged his heavy tummy over to the well.",
@@ -301,12 +301,12 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"우물에서 물을 마셔야지.\"": {
   "t": "I must drink water from the well.",
-  "c": "audio/el/wolf_goats/en/wolf_3ac6490d6c.mp3"
+  "c": "audio/el/wolf_goats/en/wolf_1f9544f1ab.mp3"
  },
  "\"으으, 돌멩이가 왜 이리 무겁지?\" 늑대는 우물 안을 기웃기웃 들여다봤어요.": {
   "t": "\"Ugh, why are these stones so heavy?\" The wolf leaned over and peeked into the well.",
   "c": [
-   "audio/el/wolf_goats/en/wolf_92cc7e17c4.mp3",
+   "audio/el/wolf_goats/en/wolf_e28f2a77d9.mp3",
    "audio/el/wolf_goats/en/nar_5ab8c1db7b.mp3"
   ]
  },
@@ -316,7 +316,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"으악, 차가워! 다시는 안 올 거야!\"": {
   "t": "Yikes, it's cold! I'm never coming back!",
-  "c": "audio/el/wolf_goats/en/wolf_8454f6ee5a.mp3"
+  "c": "audio/el/wolf_goats/en/wolf_eb6dc365d7.mp3"
  },
  "늑대는 흠뻑 젖은 채 멀리멀리 도망갔어요.": {
   "t": "The wolf ran far, far away, dripping wet.",

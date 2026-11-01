@@ -1,17 +1,17 @@
 /* cinderella — ElevenLabs 배역 내레이션 (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */
 Object.assign(NARRATION_CLIPS, {
  "옛날에 마음씨 고운 아가씨가 살았어요.": "audio/el/cinderella/nar_a0da1a76a4.mp3",
- "넌 부엌 일을 해!": "audio/el/cinderella/step_5a9659fbeb.mp3",
+ "넌 부엌 일을 해!": "audio/el/cinderella/step_774aee65e7.mp3",
  "재투성이래요~ 재투성이래요~": [
-  "audio/el/cinderella/sisa_1dc5ae14e7.mp3",
+  "audio/el/cinderella/sisa_59620e7371.mp3",
   "audio/el/cinderella/sisb_a8ea5022aa.mp3"
  ],
  "그래서 아가씨는 신데렐라라고 불렸어요.": "audio/el/cinderella/nar_418d9af2d5.mp3",
  "어느 날, 궁전에서 무도회 편지가 왔어요.": "audio/el/cinderella/nar_383d9f7d6a.mp3",
- "신데렐라, 내 머리 좀 예쁘게 해 줘!": "audio/el/cinderella/sisa_c824af3aaa.mp3",
+ "신데렐라, 내 머리 좀 예쁘게 해 줘!": "audio/el/cinderella/sisa_7fff7ed6b8.mp3",
  "네, 예쁘게 해 드릴게요.": "audio/el/cinderella/cind_f78f144a30.mp3",
  "언니 머리를 톡 눌러 봐요.": "audio/el/cinderella/nar_380a6ed997.mp3",
- "어머, 예쁘다!": "audio/el/cinderella/sisa_ab951f546f.mp3",
+ "어머, 예쁘다!": "audio/el/cinderella/sisa_27b86feb0a.mp3",
  "언니들은 신이 나서 무도회에 갔어요.": "audio/el/cinderella/nar_77d5f287bb.mp3",
  "혼자 남은 신데렐라는 훌쩍훌쩍 울었어요.": "audio/el/cinderella/nar_9fa381cb28.mp3",
  "나도 무도회에 가고 싶어요.": "audio/el/cinderella/cind_66c890e94c.mp3",
@@ -30,7 +30,7 @@ Object.assign(NARRATION_CLIPS, {
  "꼭 기억하렴. 밤 열두 시가 되면 마법이 풀린단다.": "audio/el/cinderella/fairy_3a03e140eb.mp3",
  "네, 꼭 기억할게요!": "audio/el/cinderella/cind_fa81801ddb.mp3",
  "궁전에 가니 모두 신데렐라를 바라보았어요.": "audio/el/cinderella/nar_ad8cf5a18f.mp3",
- "함께 춤춰요.": "audio/el/cinderella/prince_f30141288b.mp3",
+ "함께 춤춰요.": "audio/el/cinderella/prince_c2a91be676.mp3",
  "신데렐라는 언니들에게도 오렌지를 나눠 주었어요.": "audio/el/cinderella/nar_126042f264.mp3",
  "어머, 고마워요!": "audio/el/cinderella/sisb_7ee343ead0.mp3",
  "언니들은 신데렐라를 알아보지 못했어요.": "audio/el/cinderella/nar_3624bfa804.mp3",
@@ -45,9 +45,9 @@ Object.assign(NARRATION_CLIPS, {
  "맞아요, 열두 시!": "audio/el/cinderella/nar_b604230866.mp3",
  "앗, 열두 시예요!": "audio/el/cinderella/cind_6b3a7c4302.mp3",
  "신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.": "audio/el/cinderella/nar_ca8a6d476c.mp3",
- "이 구두가 꼭 맞는 사람을 찾을 거예요.": "audio/el/cinderella/prince_d39646d5db.mp3",
+ "이 구두가 꼭 맞는 사람을 찾을 거예요.": "audio/el/cinderella/prince_d920aaa6a9.mp3",
  "왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.": "audio/el/cinderella/nar_5bea924f0b.mp3",
- "내 발이 들어갈 거야!": "audio/el/cinderella/sisa_bd1f7be95f.mp3",
+ "내 발이 들어갈 거야!": "audio/el/cinderella/sisa_fdcc3ae730.mp3",
  "내 발도 들어갈 거야!": "audio/el/cinderella/sisb_c270b23df9.mp3",
  "언니들의 발은 너무 커서 들어가지 않았어요.": "audio/el/cinderella/nar_199d56e59d.mp3",
  "저도 신어 봐도 될까요?": "audio/el/cinderella/cind_79d7206a0b.mp3",
@@ -58,7 +58,7 @@ Object.assign(NARRATION_CLIPS, {
  "신데렐라는 주머니에서 다른 한 짝을 꺼냈어요.": "audio/el/cinderella/nar_34a7a5063e.mp3",
  "요정 대모가 다시 고운 옷을 입혀 주었어요.": "audio/el/cinderella/nar_03d7b478c7.mp3",
  "신데렐라, 그동안 미안해. 정말 미안해.": [
-  "audio/el/cinderella/sisa_0726819fee.mp3",
+  "audio/el/cinderella/sisa_a67d8e0a0e.mp3",
   "audio/el/cinderella/sisb_9f05c05abe.mp3"
  ],
  "괜찮아요. 우리 함께 행복해요.": "audio/el/cinderella/cind_ca9e524238.mp3",

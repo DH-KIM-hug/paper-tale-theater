@@ -18,7 +18,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?": {
   "t": "Mirror, mirror, who is the fairest in the land?",
-  "c": "audio/el/snow_white/en/queen_ef973443eb.mp3"
+  "c": "audio/el/snow_white/en/queen_d10c572c20.mp3"
  },
  "왕비님도 예쁘지만, 백설공주가 더 예뻐요.": {
   "t": "The queen is lovely, but Snow White is even lovelier.",
@@ -34,7 +34,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "내가 제일이어야 해! 사냥꾼을 불러라!": {
   "t": "I must be the fairest! Call the hunter!",
-  "c": "audio/el/snow_white/en/queen_0026170b07.mp3"
+  "c": "audio/el/snow_white/en/queen_3f0e4178fd.mp3"
  },
  "왕비는 사냥꾼에게 소리쳤어요. 백설공주를 깊은 숲에 데려가서 버리고 오너라!": {
   "t": "The queen shouted at the hunter. Take Snow White deep into the forest and leave her there!",
@@ -58,7 +58,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "공주님, 저는 도저히 못 하겠어요. 멀리멀리 달아나세요.": {
   "t": "Princess, I just cannot do it. Run far, far away.",
-  "c": "audio/el/snow_white/en/hunter_c76d1743e9.mp3"
+  "c": "audio/el/snow_white/en/hunter_b4b42decaa.mp3"
  },
  "고맙습니다, 아저씨.": {
   "t": "Thank you, mister.",
@@ -182,11 +182,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "누가 내 의자에 앉았지?": {
   "t": "Who sat in my chair?",
-  "c": "audio/el/snow_white/en/dwarfa_ce84b5fb70.mp3"
+  "c": "audio/el/snow_white/en/dwarfa_dee4a64b88.mp3"
  },
  "누가 내 접시에서 먹었지?": {
   "t": "Who ate from my plate?",
-  "c": "audio/el/snow_white/en/dwarfb_c9b5e78cd1.mp3"
+  "c": "audio/el/snow_white/en/dwarfb_87c9ef6f31.mp3"
  },
  "누가 내 빵을 먹었지?": {
   "t": "Who ate my bread?",
@@ -211,8 +211,8 @@ Object.assign(NARRATION_CLIPS_EN, {
  "와아, 정말 예쁜 아이다! 깨우지 말자, 쉿!": {
   "t": "Wow, what a pretty girl! Let's not wake her. Shh!",
   "c": [
-   "audio/el/snow_white/en/dwarfa_690e8b5668.mp3",
-   "audio/el/snow_white/en/dwarfb_1513371635.mp3",
+   "audio/el/snow_white/en/dwarfa_2cc43d61d9.mp3",
+   "audio/el/snow_white/en/dwarfb_929fc5ce16.mp3",
    "audio/el/snow_white/en/dwarfc_cf10a24c80.mp3",
    "audio/el/snow_white/en/dwarfd_d1eaf9024d.mp3",
    "audio/el/snow_white/en/dwarfe_bf7924d6fa.mp3",
@@ -239,8 +239,8 @@ Object.assign(NARRATION_CLIPS_EN, {
  "그럼! 대신 우리가 일하러 간 사이, 낯선 사람에겐 절대 문을 열지 마!": {
   "t": "Of course! But while we are away at work, never open the door to a stranger!",
   "c": [
-   "audio/el/snow_white/en/dwarfa_ff9b534e92.mp3",
-   "audio/el/snow_white/en/dwarfb_26dec342f8.mp3",
+   "audio/el/snow_white/en/dwarfa_fe031c1b4a.mp3",
+   "audio/el/snow_white/en/dwarfb_3ec2dc09be.mp3",
    "audio/el/snow_white/en/dwarfc_905e397119.mp3",
    "audio/el/snow_white/en/dwarfd_e4928a6455.mp3",
    "audio/el/snow_white/en/dwarfe_ce3f61fccf.mp3",
@@ -271,8 +271,8 @@ Object.assign(NARRATION_CLIPS_EN, {
  "백설공주에게는 우리 침대가 너무 작아. 큰 침대를 만들어 주자!": {
   "t": "Our beds are too small for Snow White. Let's make her a big bed!",
   "c": [
-   "audio/el/snow_white/en/dwarfa_fbd16bed8d.mp3",
-   "audio/el/snow_white/en/dwarfb_2917ae4d89.mp3",
+   "audio/el/snow_white/en/dwarfa_141521590e.mp3",
+   "audio/el/snow_white/en/dwarfb_115f1ba24e.mp3",
    "audio/el/snow_white/en/dwarfc_a23c7d9426.mp3",
    "audio/el/snow_white/en/dwarfd_822f5026ac.mp3",
    "audio/el/snow_white/en/dwarfe_def6199d46.mp3",
@@ -363,8 +363,8 @@ Object.assign(NARRATION_CLIPS_EN, {
  "백설공주님, 일어나요! 일어나세요…": {
   "t": "Snow White, wake up! Please wake up...",
   "c": [
-   "audio/el/snow_white/en/dwarfa_3f79e74bc6.mp3",
-   "audio/el/snow_white/en/dwarfb_831560dcc2.mp3",
+   "audio/el/snow_white/en/dwarfa_75f99aa03c.mp3",
+   "audio/el/snow_white/en/dwarfb_e5580abee7.mp3",
    "audio/el/snow_white/en/dwarfc_610af0c6eb.mp3",
    "audio/el/snow_white/en/dwarfd_6c9aec3581.mp3",
    "audio/el/snow_white/en/dwarfe_59567c2aad.mp3",
@@ -394,7 +394,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "이 공주님을 제 성으로 모셔 가 정성껏 돌보고 싶어요.": {
   "t": "I would like to take this princess to my castle and take good care of her.",
-  "c": "audio/el/snow_white/en/prince_fea9815868.mp3"
+  "c": "audio/el/snow_white/en/prince_e941729806.mp3"
  },
  "그런데 관을 옮기다가 덜컹! 목에 걸렸던 사과 조각이 툭 빠졌어요.": {
   "t": "But as they carried the coffin, bump! The piece of apple stuck in her throat popped out.",
@@ -418,13 +418,13 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "이제 괜찮아요. 함께 성으로 가요.": {
   "t": "You are all right now. Let us go to the castle together.",
-  "c": "audio/el/snow_white/en/prince_a950e1851e.mp3"
+  "c": "audio/el/snow_white/en/prince_9160f5e186.mp3"
  },
  "만세! 백설공주가 깨어났다!": {
   "t": "Hooray! Snow White is awake!",
   "c": [
-   "audio/el/snow_white/en/dwarfa_9e89708008.mp3",
-   "audio/el/snow_white/en/dwarfb_f7754e32f9.mp3",
+   "audio/el/snow_white/en/dwarfa_1e2dd26c60.mp3",
+   "audio/el/snow_white/en/dwarfb_caa1f085c2.mp3",
    "audio/el/snow_white/en/dwarfc_bc712ff92d.mp3",
    "audio/el/snow_white/en/dwarfd_35001085bf.mp3",
    "audio/el/snow_white/en/dwarfe_32cbfcb858.mp3",

@@ -7,7 +7,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"순무야, 크게 자라라.\" 씨앗을 톡 눌러 봐요!": {
   "t": "\"Turnip, grow big and strong.\" Tap the seed!",
   "c": [
-   "audio/el/turnip/en/grandpa_9e0704d743.mp3",
+   "audio/el/turnip/en/grandpa_2615a5a9a5.mp3",
    "audio/el/turnip/en/nar_6e492ac48e.mp3"
   ]
  },
@@ -50,7 +50,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "아이코! 할아버지가 엉덩방아를 찧었어요.": {
   "t": "Oof! Grandpa plopped down on the ground.",
   "c": [
-   "audio/el/turnip/en/grandpa_872571e369.mp3",
+   "audio/el/turnip/en/grandpa_8bce65cb2d.mp3",
    "audio/el/turnip/en/nar_33cdac40fa.mp3"
   ]
  },
@@ -112,7 +112,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The puppy came bounding out. \"I'll help too!\"",
   "c": [
    "audio/el/turnip/en/nar_1744c2aea9.mp3",
-   "audio/el/turnip/en/dog_e3511ca22a.mp3"
+   "audio/el/turnip/en/dog_7966945ab9.mp3"
   ]
  },
  "강아지가 손녀 치마를 꼭 붙잡았어요. 영차!": {
@@ -139,10 +139,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Huh? The puppy and the cat are glaring at each other.",
   "c": "audio/el/turnip/en/nar_94f3ecf8a5.mp3"
  },
- "\"흥!\" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.": {
+ "\"흥, 알았어!\" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.": {
   "t": "\"Hmph!\" But the cat held the puppy's tail tight anyway.",
   "c": [
-   "audio/el/turnip/en/cat_e45ba3a800.mp3",
+   "audio/el/turnip/en/cat_36d0026a8b.mp3",
    "audio/el/turnip/en/nar_13005d32cd.mp3"
   ]
  },
@@ -235,7 +235,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "할아버지: \"나는 다음이야~\"": {
   "t": "Grandpa: \"I'm next~\"",
-  "c": "audio/el/turnip/en/grandpa_86fe7e034f.mp3"
+  "c": "audio/el/turnip/en/grandpa_dd8cd12565.mp3"
  },
  "할머니: \"나는 다음이야~\"": {
   "t": "Grandma: \"I'm next~\"",
@@ -247,7 +247,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "강아지: \"나는 다음이야~\"": {
   "t": "The puppy: \"I'm next~\"",
-  "c": "audio/el/turnip/en/dog_7c079e644e.mp3"
+  "c": "audio/el/turnip/en/dog_c129c27199.mp3"
  },
  "고양이: \"나는 다음이야~\"": {
   "t": "The cat: \"I'm next~\"",
@@ -279,12 +279,12 @@ Object.assign(NARRATION_CLIPS_EN, {
  }
 });
 Object.assign(VOICE_LINES_EN, {
- "call_grandma": "audio/el/turnip/en/grandpa_32178eb44b.mp3",
- "cut_glare": "audio/el/turnip/en/dog_7e372fd386.mp3",
+ "call_grandma": "audio/el/turnip/en/grandpa_51649cf0e4.mp3",
+ "cut_glare": "audio/el/turnip/en/dog_9954008c53.mp3",
  "squeak_mouse": "audio/el/turnip/en/mouse_7c0bf6c6c5.mp3",
- "cut_heave": "audio/el/turnip/en/grandpa_37488f4dad.mp3",
+ "cut_heave": "audio/el/turnip/en/grandpa_ee39b685e3.mp3",
  "flop": [
   "audio/el/turnip/en/mouse_dd19220a81.mp3",
-  "audio/el/turnip/en/grandpa_fce0ebeb81.mp3"
+  "audio/el/turnip/en/grandpa_ad8cf9d629.mp3"
  ]
 });

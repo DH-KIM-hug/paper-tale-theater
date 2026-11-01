@@ -2,12 +2,12 @@
 Object.assign(NARRATION_CLIPS, {
  "옛날 어느 나라에 눈처럼 하얀 얼굴의 공주가 살았어요. 이름은 백설공주였어요.": "audio/el/snow_white/nar_321c79540f.mp3",
  "왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.": "audio/el/snow_white/nar_b34fa74ddc.mp3",
- "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?": "audio/el/snow_white/queen_e9b10a2323.mp3",
+ "거울아, 거울아, 이 나라에서 누가 제일 예쁘니?": "audio/el/snow_white/queen_cc09641855.mp3",
  "왕비님도 예쁘지만, 백설공주가 더 예뻐요.": "audio/el/snow_white/mirror_076de25900.mp3",
  "왕비는 샘이 나서 얼굴이 빨개졌어요.": "audio/el/snow_white/nar_eaa0e41a36.mp3",
- "내가 제일이어야 해! 사냥꾼을 불러라!": "audio/el/snow_white/queen_7b265b6efa.mp3",
+ "내가 제일이어야 해! 사냥꾼을 불러라!": "audio/el/snow_white/queen_22e382d7a0.mp3",
  "사냥꾼은 백설공주를 깊은 숲으로 데려갔어요.": "audio/el/snow_white/nar_9b530a6c68.mp3",
- "공주님, 저는 도저히 못 하겠어요. 멀리멀리 달아나세요.": "audio/el/snow_white/hunter_cf7127ee32.mp3",
+ "공주님, 저는 도저히 못 하겠어요. 멀리멀리 달아나세요.": "audio/el/snow_white/hunter_6b7251f68f.mp3",
  "고맙습니다, 아저씨.": "audio/el/snow_white/snow_d56e152fee.mp3",
  "백설공주는 어두운 숲을 혼자 달리고 또 달렸어요.": "audio/el/snow_white/nar_86f6a21530.mp3",
  "날이 저물 무렵, 백설공주는 숲속에서 아주 작은 집을 찾았어요.": "audio/el/snow_white/nar_143de915d6.mp3",
@@ -25,8 +25,8 @@ Object.assign(NARRATION_CLIPS, {
  "몸을 동그랗게 웅크리면… 조금 작지만 포근해요. 잘 자요…": "audio/el/snow_white/snow_d78a3fd6e7.mp3",
  "백설공주는 스르르 잠이 들었어요.": "audio/el/snow_white/nar_c9b8cacc07.mp3",
  "밤이 되자, 산에서 일하던 일곱 난쟁이가 집으로 돌아왔어요.": "audio/el/snow_white/nar_919f89e9aa.mp3",
- "누가 내 의자에 앉았지?": "audio/el/snow_white/dwarfa_81f0906af9.mp3",
- "누가 내 접시에서 먹었지?": "audio/el/snow_white/dwarfb_d8588fbdb9.mp3",
+ "누가 내 의자에 앉았지?": "audio/el/snow_white/dwarfa_808906cc37.mp3",
+ "누가 내 접시에서 먹었지?": "audio/el/snow_white/dwarfb_eb47d095ad.mp3",
  "누가 내 빵을 먹었지?": "audio/el/snow_white/dwarfc_ecfd89a194.mp3",
  "누가 내 숟가락을 썼지?": "audio/el/snow_white/dwarfd_f07a601685.mp3",
  "누가 내 포크를 썼지?": "audio/el/snow_white/dwarfe_68c78dcdbc.mp3",
@@ -71,11 +71,11 @@ Object.assign(NARRATION_CLIPS, {
  "저녁에 돌아온 난쟁이들은 깜짝 놀랐어요.": "audio/el/snow_white/nar_d1b00fd661.mp3",
  "난쟁이들은 백설공주를 맑은 유리관에 눕히고, 날마다 곁을 지켰어요.": "audio/el/snow_white/nar_2bf3bde9e2.mp3",
  "어느 날, 이웃 나라 왕자님이 숲을 지나가다 백설공주를 보았어요.": "audio/el/snow_white/nar_b211df549b.mp3",
- "이 공주님을 제 성으로 모셔 가 정성껏 돌보고 싶어요.": "audio/el/snow_white/prince_2d3df9ccea.mp3",
+ "이 공주님을 제 성으로 모셔 가 정성껏 돌보고 싶어요.": "audio/el/snow_white/prince_9aac84b300.mp3",
  "그런데 관을 옮기다가 덜컹! 목에 걸렸던 사과 조각이 툭 빠졌어요.": "audio/el/snow_white/nar_cf7a82bdee.mp3",
  "백설공주의 손을 톡 눌러 볼까요?": "audio/el/snow_white/nar_058a6c133e.mp3",
  "어머, 제가 오래 잤나 봐요.": "audio/el/snow_white/snow_1bb2630522.mp3",
- "이제 괜찮아요. 함께 성으로 가요.": "audio/el/snow_white/prince_c2005013b7.mp3",
+ "이제 괜찮아요. 함께 성으로 가요.": "audio/el/snow_white/prince_a612756efc.mp3",
  "낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.": "audio/el/snow_white/nar_af5deb4be3.mp3",
  "왕비는 멀리 떠났어요": "audio/el/snow_white/nar_5d7288af29.mp3"
 });
@@ -89,8 +89,8 @@ Object.assign(VOICE_LINES, {
  "n7": "audio/el/snow_white/nar_b9eb19a4c5.mp3",
  "n8": "audio/el/snow_white/nar_97e6ab01c1.mp3",
  "ch1": [
-  "audio/el/snow_white/dwarfa_346a311637.mp3",
-  "audio/el/snow_white/dwarfb_43f65e1b42.mp3",
+  "audio/el/snow_white/dwarfa_a3e2104b10.mp3",
+  "audio/el/snow_white/dwarfb_695f77cd82.mp3",
   "audio/el/snow_white/dwarfc_70dbaadbe2.mp3",
   "audio/el/snow_white/dwarfd_593ed5344a.mp3",
   "audio/el/snow_white/dwarfe_fedda9d7b6.mp3",
@@ -98,8 +98,8 @@ Object.assign(VOICE_LINES, {
   "audio/el/snow_white/dwarfg_d7e0eeb40c.mp3"
  ],
  "ch2": [
-  "audio/el/snow_white/dwarfa_dd167c8674.mp3",
-  "audio/el/snow_white/dwarfb_8ccbce8dfe.mp3",
+  "audio/el/snow_white/dwarfa_a83ec4e006.mp3",
+  "audio/el/snow_white/dwarfb_80df3d092c.mp3",
   "audio/el/snow_white/dwarfc_9cf2f51363.mp3",
   "audio/el/snow_white/dwarfd_bee6e2222a.mp3",
   "audio/el/snow_white/dwarfe_7268d28f8f.mp3",
@@ -107,8 +107,8 @@ Object.assign(VOICE_LINES, {
   "audio/el/snow_white/dwarfg_1c77bd4570.mp3"
  ],
  "ch3": [
-  "audio/el/snow_white/dwarfa_4c662e13bf.mp3",
-  "audio/el/snow_white/dwarfb_d3a841d3d1.mp3",
+  "audio/el/snow_white/dwarfa_7115dd09ae.mp3",
+  "audio/el/snow_white/dwarfb_1cc52903cb.mp3",
   "audio/el/snow_white/dwarfc_91c1e6f472.mp3",
   "audio/el/snow_white/dwarfd_078aa70c6b.mp3",
   "audio/el/snow_white/dwarfe_b13a83fb3e.mp3",
@@ -116,8 +116,8 @@ Object.assign(VOICE_LINES, {
   "audio/el/snow_white/dwarfg_b66129b8b3.mp3"
  ],
  "ch4": [
-  "audio/el/snow_white/dwarfa_f96026659c.mp3",
-  "audio/el/snow_white/dwarfb_953bf8168f.mp3",
+  "audio/el/snow_white/dwarfa_df67944255.mp3",
+  "audio/el/snow_white/dwarfb_a1f5aaef6a.mp3",
   "audio/el/snow_white/dwarfc_e60a2e7fab.mp3",
   "audio/el/snow_white/dwarfd_333c2e9579.mp3",
   "audio/el/snow_white/dwarfe_1ec028e0c3.mp3",
@@ -125,8 +125,8 @@ Object.assign(VOICE_LINES, {
   "audio/el/snow_white/dwarfg_079719c3dd.mp3"
  ],
  "ch5": [
-  "audio/el/snow_white/dwarfa_886b4e91e2.mp3",
-  "audio/el/snow_white/dwarfb_96b09f9e2c.mp3",
+  "audio/el/snow_white/dwarfa_f0ecbbbec2.mp3",
+  "audio/el/snow_white/dwarfb_a71bc202f7.mp3",
   "audio/el/snow_white/dwarfc_bf18dd2fc5.mp3",
   "audio/el/snow_white/dwarfd_e19ce12138.mp3",
   "audio/el/snow_white/dwarfe_3a8f7dfac3.mp3",
@@ -134,8 +134,8 @@ Object.assign(VOICE_LINES, {
   "audio/el/snow_white/dwarfg_ac6426f454.mp3"
  ],
  "ch6": [
-  "audio/el/snow_white/dwarfa_d63384d77e.mp3",
-  "audio/el/snow_white/dwarfb_81cb679e27.mp3",
+  "audio/el/snow_white/dwarfa_7aafef8128.mp3",
+  "audio/el/snow_white/dwarfb_5f62435e18.mp3",
   "audio/el/snow_white/dwarfc_4d97fca488.mp3",
   "audio/el/snow_white/dwarfd_2b1a4ade0f.mp3",
   "audio/el/snow_white/dwarfe_79e84ccccd.mp3",

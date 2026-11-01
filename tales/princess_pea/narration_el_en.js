@@ -14,7 +14,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "온 세상을 다 가 봤지만, 진짜 공주인지 알 수 없었어요.": {
   "t": "I went all around the world, but I could never tell if a princess was a true princess.",
-  "c": "audio/el/princess_pea/en/prince_0e1c6a934a.mp3"
+  "c": "audio/el/princess_pea/en/prince_b4f27a54f1.mp3"
  },
  "그날 밤, 비가 쏟아지고 천둥이 우르릉!": {
   "t": "That night, the rain poured down and the thunder went rumble, rumble!",
@@ -30,11 +30,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "이 밤에 누구지?": {
   "t": "Who could it be at this hour?",
-  "c": "audio/el/princess_pea/en/king_8d45018fc3.mp3"
+  "c": "audio/el/princess_pea/en/king_abac0c5bcc.mp3"
  },
  "비를 맞았지만 괜찮아요. 저는 진짜 공주예요!": {
   "t": "I got caught in the rain, but I'm all right. I am a true princess!",
-  "c": "audio/el/princess_pea/en/pea_47a065c754.mp3"
+  "c": "audio/el/princess_pea/en/pea_0775fe3c53.mp3"
  },
  "어서 들어와 몸을 말리렴.": {
   "t": "Come in, dear, and dry yourself off.",
@@ -130,7 +130,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "와, 높다! 잘 자요.": {
   "t": "Wow, it's so high! Good night.",
-  "c": "audio/el/princess_pea/en/pea_8b049e10c6.mp3"
+  "c": "audio/el/princess_pea/en/pea_5667d7983a.mp3"
  },
  "밤이 깊었는데… 공주는 이리 뒤척, 저리 뒤척.": {
   "t": "Late into the night... the princess tossed this way, and turned that way.",
@@ -138,7 +138,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "뭔가 딱딱한 게 있는 것 같아…": {
   "t": "I think there's something hard in here...",
-  "c": "audio/el/princess_pea/en/pea_8dbb537867.mp3"
+  "c": "audio/el/princess_pea/en/pea_36a43cf081.mp3"
  },
  "아침이 되었어요. 공주가 사다리를 내려왔어요.": {
   "t": "Morning came. The princess climbed down the ladder.",
@@ -150,7 +150,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아니요, 솔직히 한숨도 못 잤어요. 뭔가 딱딱한 게 있어서 몸이 뻐근하고 졸려요.": {
   "t": "No. To be honest, I didn't sleep a wink. Something hard was in the bed, and now I'm stiff and sleepy.",
-  "c": "audio/el/princess_pea/en/pea_fa4d51db58.mp3"
+  "c": "audio/el/princess_pea/en/pea_97b9d08b6f.mp3"
  },
  "매트리스 스무 장 아래 완두콩을 느끼다니! 진짜 공주로구나!": {
   "t": "She felt the pea through twenty mattresses! She is a true princess!",
@@ -162,7 +162,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "진짜 공주님을 드디어 찾았어요!": {
   "t": "At last, I have found a true princess!",
-  "c": "audio/el/princess_pea/en/prince_29a2daf4d0.mp3"
+  "c": "audio/el/princess_pea/en/prince_80032d9cd8.mp3"
  },
  "완두콩은 박물관에 갔대요.": {
   "t": "And the pea was sent to a museum.",

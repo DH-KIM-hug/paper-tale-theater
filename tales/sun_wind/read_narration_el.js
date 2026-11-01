@@ -26,12 +26,12 @@ Object.assign(NARRATION_CLIPS, {
  "후우! 바람이 힘껏 불자 풀잎이 휘청휘청 흔들렸어요.": "audio/el/sun_wind/nar_3c33e6d5d4.mp3",
  "휘잉~ 나뭇잎이 날아가요!": "audio/el/sun_wind/nar_7d48a914fa.mp3",
  "\"앗, 내 모자!\" 모자가 훨훨 날아갔어요.": [
-  "audio/el/sun_wind/man_142733ebd4.mp3",
+  "audio/el/sun_wind/man_14bc1668c9.mp3",
   "audio/el/sun_wind/nar_113bd78933.mp3"
  ],
  "외투 자락이 펄럭펄럭!": "audio/el/sun_wind/nar_9a41773a1b.mp3",
  "\"으으, 추워!\" 나그네는 외투를 꽉 여몄어요.": [
-  "audio/el/sun_wind/man_19e263bfe1.mp3",
+  "audio/el/sun_wind/man_64fd341b7c.mp3",
   "audio/el/sun_wind/nar_a5cff03367.mp3"
  ],
  "단추까지 꼭꼭 채웠어요. 외투는 꼼짝도 안 해요!": "audio/el/sun_wind/nar_318f652479.mp3",
@@ -47,15 +47,15 @@ Object.assign(NARRATION_CLIPS, {
  "바람이 멈춘 들판에 나그네가 있었어요.": "audio/el/sun_wind/nar_52e6f2679a.mp3",
  "해님이 방긋 웃으며 따스한 햇살을 반짝반짝 쏟아 주었어요.": "audio/el/sun_wind/nar_d1a078587b.mp3",
  "\"아, 따뜻하다~\" 나그네가 단추를 풀었어요.": [
-  "audio/el/sun_wind/man_4c6260d7ba.mp3",
+  "audio/el/sun_wind/man_1826f5e666.mp3",
   "audio/el/sun_wind/nar_3d77fc90f2.mp3"
  ],
  "햇살이 점점 쨍쨍, 나그네 이마에 땀이 송골송골 맺혔어요.": "audio/el/sun_wind/nar_7fdbf1fdd6.mp3",
  "\"아이, 더워!\" 모자로 부채질을 해요.": [
-  "audio/el/sun_wind/man_b78424f9b7.mp3",
+  "audio/el/sun_wind/man_7112792135.mp3",
   "audio/el/sun_wind/nar_19fa188393.mp3"
  ],
- "\"휴우, 햇볕이 쨍쨍하니 외투는 필요 없겠네.\"": "audio/el/sun_wind/man_b3324faaea.mp3",
+ "\"휴우, 햇볕이 쨍쨍하니 외투는 필요 없겠네.\"": "audio/el/sun_wind/man_3655e68a42.mp3",
  "훌러덩! 나그네가 외투를 벗었어요!": "audio/el/sun_wind/nar_a8aab41f40.mp3",
  "바람이 깜짝 놀랐어요. \"우와, 해님이 해냈네!\"": [
   "audio/el/sun_wind/nar_6cd1b27292.mp3",
@@ -73,7 +73,7 @@ Object.assign(NARRATION_CLIPS, {
  "졸졸졸 흐르는 물소리에 나그네는 콧노래를 흥얼흥얼.": "audio/el/sun_wind/nar_1cef982c88.mp3",
  "바람아, 이번엔 살살 불어 줄래?": "audio/el/sun_wind/nar_82dcc27527.mp3",
  "살랑살랑~ 부드러운 바람이 나그네 뺨을 간질였어요.": "audio/el/sun_wind/nar_894c28d0af.mp3",
- "\"아, 시원해. 고마워, 바람아!\"": "audio/el/sun_wind/man_e21b13547b.mp3",
+ "\"아, 시원해. 고마워, 바람아!\"": "audio/el/sun_wind/man_9649bbca2e.mp3",
  "나그네는 외투를 돌돌 말아 베고 벌렁 드러누웠어요.": "audio/el/sun_wind/nar_e348b36662.mp3",
  "나그네가 쉬는 동안, 하늘에서는 해님과 바람이 만났어요.": "audio/el/sun_wind/nar_08947e7c37.mp3",
  "해님과 바람이 마주 보고 웃었어요.": "audio/el/sun_wind/nar_cacace9582.mp3",

@@ -4,21 +4,21 @@ Object.assign(NARRATION_CLIPS, {
  "콩쥐는 새엄마, 팥쥐와 함께 살았어요.": "audio/el/kongjwi/nar_8799c6d66a.mp3",
  "팥쥐는 날마다 뒹굴뒹굴 놀고, 떡을 냠냠 먹기만 했지요.": "audio/el/kongjwi/nar_ad6efa059b.mp3",
  "\"콩쥐야, 마당을 쓸어라!\" 새엄마가 말했어요.": [
-  "audio/el/kongjwi/step_d4d934c15f.mp3",
+  "audio/el/kongjwi/step_fce631e13b.mp3",
   "audio/el/kongjwi/nar_af42e95b79.mp3"
  ],
  "콩쥐는 빗자루를 들고 싹싹, 마당을 쓸었어요.": "audio/el/kongjwi/nar_204e967618.mp3",
  "마당이 깨끗해졌어요. 콩쥐는 방긋 웃었어요.": "audio/el/kongjwi/nar_702f7f0689.mp3",
  "마당 일을 마치자 새엄마가 콩쥐를 밭으로 데려갔어요.": "audio/el/kongjwi/nar_f91f232b0b.mp3",
  "\"이 밭을 다 갈아 놓아라!\" 새엄마가 말했어요.": [
-  "audio/el/kongjwi/step_5bd5b29210.mp3",
+  "audio/el/kongjwi/step_eb804b6183.mp3",
   "audio/el/kongjwi/nar_af42e95b79.mp3"
  ],
  "밭은 너무 넓어서 콩쥐는 한숨이 나왔어요.": "audio/el/kongjwi/nar_d11ba2b2a6.mp3",
  "콩쥐는 호미로 땅을 콕콕 파기 시작했어요. 땀이 뚝뚝 떨어졌지요.": "audio/el/kongjwi/nar_c7d06d3b6e.mp3",
  "그때 검은 소가 나타났어요. \"음메~ 내가 도와줄게!\"": [
   "audio/el/kongjwi/nar_7e1ca804a3.mp3",
-  "audio/el/kongjwi/ox_73bfdfa000.mp3"
+  "audio/el/kongjwi/ox_d3d50d0adb.mp3"
  ],
  "소가 쑥쑥 밭을 갈아 주었어요. \"고마워, 소야!\"": [
   "audio/el/kongjwi/nar_bc9c0ac527.mp3",
@@ -26,7 +26,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "밭일을 마친 콩쥐는 집 우물가로 돌아왔어요.": "audio/el/kongjwi/nar_e5d0a96387.mp3",
  "\"이 독에 물을 가득 채워라!\" 새엄마가 말했어요.": [
-  "audio/el/kongjwi/step_b8f9d7f86d.mp3",
+  "audio/el/kongjwi/step_5c8fa28863.mp3",
   "audio/el/kongjwi/nar_af42e95b79.mp3"
  ],
  "콩쥐는 물동이를 들고 우물을 오르락내리락, 물을 콸콸 부었어요.": "audio/el/kongjwi/nar_a686cd4d85.mp3",
@@ -45,7 +45,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "물을 다 채운 콩쥐에게 새엄마가 곡식을 가져왔어요.": "audio/el/kongjwi/nar_e75ff62c8f.mp3",
  "\"겉겨를 벗겨서 쌀을 가져오너라!\" 새엄마가 말했어요.": [
-  "audio/el/kongjwi/step_075041453b.mp3",
+  "audio/el/kongjwi/step_5142b1d59e.mp3",
   "audio/el/kongjwi/nar_af42e95b79.mp3"
  ],
  "곡식이 너무 많아서 콩쥐는 걱정이 되었어요.": "audio/el/kongjwi/nar_75f1e4d616.mp3",
@@ -99,7 +99,7 @@ Object.assign(NARRATION_CLIPS, {
  "얼마 뒤, 혼례 마당에 콩쥐와 원님이 나란히 섰어요.": "audio/el/kongjwi/nar_fcf8a9b051.mp3",
  "콩쥐와 원님은 혼례를 올렸어요. 콩쥐는 곱게 차린 신부가 되었어요.": "audio/el/kongjwi/nar_0c604082b4.mp3",
  "\"콩쥐야, 그동안 미안했어.\" 새엄마와 팥쥐가 고개를 숙였어요.": [
-  "audio/el/kongjwi/step_31e24cafda.mp3",
+  "audio/el/kongjwi/step_c26da41483.mp3",
   "audio/el/kongjwi/nar_162f2660b1.mp3"
  ],
  "콩쥐는 웃으며 말했어요. \"괜찮아요. 우리 같이 지내요.\"": [

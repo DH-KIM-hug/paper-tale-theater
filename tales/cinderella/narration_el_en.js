@@ -6,12 +6,12 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "넌 부엌 일을 해!": {
   "t": "You work in the kitchen!",
-  "c": "audio/el/cinderella/en/step_77eed6a27d.mp3"
+  "c": "audio/el/cinderella/en/step_2122e59eca.mp3"
  },
  "재투성이래요~ 재투성이래요~": {
   "t": "Ashy girl! Ashy girl!",
   "c": [
-   "audio/el/cinderella/en/sisa_53f27a77f8.mp3",
+   "audio/el/cinderella/en/sisa_8dc4f99e4b.mp3",
    "audio/el/cinderella/en/sisb_322e05f877.mp3"
   ]
  },
@@ -25,7 +25,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "신데렐라, 내 머리 좀 예쁘게 해 줘!": {
   "t": "Cinderella, do my hair nicely!",
-  "c": "audio/el/cinderella/en/sisa_94b1eeb2d2.mp3"
+  "c": "audio/el/cinderella/en/sisa_df4404b986.mp3"
  },
  "네, 예쁘게 해 드릴게요.": {
   "t": "Yes, I will make it pretty.",
@@ -37,7 +37,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어머, 예쁘다!": {
   "t": "Oh, how pretty!",
-  "c": "audio/el/cinderella/en/sisa_4ecbb4291b.mp3"
+  "c": "audio/el/cinderella/en/sisa_de9194fc9c.mp3"
  },
  "언니들은 신이 나서 무도회에 갔어요.": {
   "t": "The sisters happily went off to the ball.",
@@ -113,7 +113,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "함께 춤춰요.": {
   "t": "Please, dance with me.",
-  "c": "audio/el/cinderella/en/prince_4270ac8828.mp3"
+  "c": "audio/el/cinderella/en/prince_aa6de7c27c.mp3"
  },
  "신데렐라는 언니들에게도 오렌지를 나눠 주었어요.": {
   "t": "Cinderella shared oranges with her sisters, too.",
@@ -173,7 +173,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "이 구두가 꼭 맞는 사람을 찾을 거예요.": {
   "t": "I will find the person this slipper fits.",
-  "c": "audio/el/cinderella/en/prince_4ccf053675.mp3"
+  "c": "audio/el/cinderella/en/prince_7e337458c0.mp3"
  },
  "왕자님이 유리 구두를 들고 집집마다 찾아다녔어요.": {
   "t": "The prince carried the glass slipper from house to house.",
@@ -181,7 +181,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "내 발이 들어갈 거야!": {
   "t": "My foot will fit!",
-  "c": "audio/el/cinderella/en/sisa_e22f822ca2.mp3"
+  "c": "audio/el/cinderella/en/sisa_78098c99e9.mp3"
  },
  "내 발도 들어갈 거야!": {
   "t": "My foot will fit, too!",
@@ -222,7 +222,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "신데렐라, 그동안 미안해. 정말 미안해.": {
   "t": "Cinderella, we are sorry for all that time. We are truly sorry.",
   "c": [
-   "audio/el/cinderella/en/sisa_3e0b1c2e38.mp3",
+   "audio/el/cinderella/en/sisa_b5e1b55bf5.mp3",
    "audio/el/cinderella/en/sisb_dfc41526a0.mp3"
   ]
  },

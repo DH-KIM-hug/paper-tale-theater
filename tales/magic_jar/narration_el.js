@@ -49,7 +49,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\"": [
   "audio/el/magic_jar/nar_b5639c3d29.mp3",
-  "audio/el/magic_jar/farmer_7073a5ce5b.mp3",
+  "audio/el/magic_jar/farmer_2e7dacc5e1.mp3",
   "audio/el/magic_jar/nar_b4d1b18750.mp3"
  ],
  "\"고맙네! 얼른 가져가야지, 헤헤.\" 부자는 항아리를 꼭 안고 달려갔어요.": [
@@ -69,7 +69,7 @@ Object.assign(NARRATION_CLIPS, {
  "쏙! 부자가 빠져나왔어요. 다치지는 않았어요.": "audio/el/magic_jar/nar_2b3e33025b.mp3",
  "그때 부자의 아버지가 다가와 항아리 속을 들여다보았어요. \"이게 뭐냐?\"": [
   "audio/el/magic_jar/nar_a1bc34e9a3.mp3",
-  "audio/el/magic_jar/father_8880929edc.mp3"
+  "audio/el/magic_jar/father_783b692054.mp3"
  ],
  "풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.": "audio/el/magic_jar/nar_c066fdcad0.mp3",
  "\"아버지가 어디 계시지?\" 항아리를 여덟 번 톡톡 눌러서 아버지를 세어 봐요!": [
@@ -79,12 +79,12 @@ Object.assign(NARRATION_CLIPS, {
  "항아리를 여덟 번 톡톡! 아버지를 세어 봐요.": "audio/el/magic_jar/nar_417f7bcaa2.mp3",
  "아버지가 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 여덟 명이나 되었어요.": "audio/el/magic_jar/nar_8107ccb370.mp3",
  "\"내가 진짜 아버지다!\" \"아니야, 내가 진짜야!\" 모두 서로 자기가 진짜라고 우겼어요.": [
-  "audio/el/magic_jar/father_bc75a0d917.mp3",
-  "audio/el/magic_jar/father_766eec9688.mp3",
+  "audio/el/magic_jar/father_25f12cf7b5.mp3",
+  "audio/el/magic_jar/father_c7a89a39fe.mp3",
   "audio/el/magic_jar/nar_cb027e5473.mp3"
  ],
  "\"배고프다! 밥 줘라!\" 부자는 쟁반을 들고 이리저리 뛰어다녔어요.": [
-  "audio/el/magic_jar/father_4adcc0f0d6.mp3",
+  "audio/el/magic_jar/father_22ab5a8543.mp3",
   "audio/el/magic_jar/nar_560ba5ae03.mp3"
  ],
  "부자는 지쳐서 외쳤어요. \"이게 다 항아리 때문이야! 이제 그만!\"": [

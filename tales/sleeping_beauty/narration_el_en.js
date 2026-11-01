@@ -6,7 +6,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "온 나라 사람들을 불러 잔치를 열자!": {
   "t": "Let's invite the whole kingdom and hold a feast!",
-  "c": "audio/el/sleeping_beauty/en/king_0af7c518c2.mp3"
+  "c": "audio/el/sleeping_beauty/en/king_505df9b620.mp3"
  },
  "아기는 까르르 웃었어요.": {
   "t": "The baby giggled, tee-hee!",
@@ -58,11 +58,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어이쿠, 깜빡했어요. 미안해요.": {
   "t": "Oh dear, I forgot. I'm sorry.",
-  "c": "audio/el/sleeping_beauty/en/king_603dac3581.mp3"
+  "c": "audio/el/sleeping_beauty/en/king_c370982542.mp3"
  },
  "나는 맨 나중에 말할래.": {
   "t": "I'll speak last.",
-  "c": "audio/el/sleeping_beauty/en/young_8ca683c868.mp3"
+  "c": "audio/el/sleeping_beauty/en/young_1124fdc23c.mp3"
  },
  "예쁜 얼굴을 줄게.": {
   "t": "I give you a pretty face.",
@@ -70,7 +70,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "상냥한 마음을 줄게.": {
   "t": "I give you a kind heart.",
-  "c": "audio/el/sleeping_beauty/en/forange_b43042a0d9.mp3"
+  "c": "audio/el/sleeping_beauty/en/forange_949a049c7e.mp3"
  },
  "고운 말씨를 줄게.": {
   "t": "I give you sweet words.",
@@ -86,7 +86,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "피리 솜씨를 줄게.": {
   "t": "I give you the gift of playing the flute.",
-  "c": "audio/el/sleeping_beauty/en/fpurple_78120c9110.mp3"
+  "c": "audio/el/sleeping_beauty/en/fpurple_fbb12ff72d.mp3"
  },
  "아기는 쌔근쌔근 웃었어요.": {
   "t": "The baby smiled softly in her sleep.",
@@ -98,11 +98,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "영영이 아니에요. 백 년이 지나면 깨어날 거예요. 그리고 왕자님이 올 거예요.": {
   "t": "Not never. After a hundred years she will wake up. And a prince will come.",
-  "c": "audio/el/sleeping_beauty/en/young_fbeaf1946e.mp3"
+  "c": "audio/el/sleeping_beauty/en/young_3dda96a578.mp3"
  },
  "온 나라의 물레를 모두 치워라!": {
   "t": "Take away every spindle in the whole kingdom!",
-  "c": "audio/el/sleeping_beauty/en/king_fdce873e33.mp3"
+  "c": "audio/el/sleeping_beauty/en/king_4c3faa2241.mp3"
  },
  "물레는 모두 사라졌어요.": {
   "t": "Every spindle was gone.",
@@ -122,7 +122,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "실을 잣고 있단다. 물레를 치우라는 말은 못 들었거든.": {
   "t": "I'm spinning thread, dear. Nobody told me the spindles had to go.",
-  "c": "audio/el/sleeping_beauty/en/granny_dfc11a46d5.mp3"
+  "c": "audio/el/sleeping_beauty/en/granny_3840994126.mp3"
  },
  "할머니가 실을 잣고 있어요. 제일 긴 실은 어느 것일까요? 톡 눌러요.": {
   "t": "Grandma is spinning thread. Which thread is the longest? Tap it.",
@@ -166,7 +166,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어머나, 큰일 났네! 누구 없어요?": {
   "t": "Oh my, oh dear! Is anybody there?",
-  "c": "audio/el/sleeping_beauty/en/granny_1d78fae745.mp3"
+  "c": "audio/el/sleeping_beauty/en/granny_6d4ded7073.mp3"
  },
  "우리 아가, 막내 요정 말대로 백 년을 자는구나.": {
   "t": "My darling, just as the youngest fairy said, you will sleep a hundred years.",
@@ -174,7 +174,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "공주님이 혼자 깨면 외로울 거야. 모두 함께 자요.": {
   "t": "The princess would be lonely waking up alone. Let's all sleep together.",
-  "c": "audio/el/sleeping_beauty/en/young_ed12be2323.mp3"
+  "c": "audio/el/sleeping_beauty/en/young_24ea82c180.mp3"
  },
  "촛불도 잠들고, 성 둘레에는 가시덤불이 높이높이 자랐어요.": {
   "t": "The candles went to sleep too, and all around the castle, a thorn hedge grew higher and higher.",
@@ -186,11 +186,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "저 안에 공주님이 백 년째 자고 있대요.": {
   "t": "They say a princess has been sleeping in there for a hundred years.",
-  "c": "audio/el/sleeping_beauty/en/grandpa_45504f7030.mp3"
+  "c": "audio/el/sleeping_beauty/en/grandpa_f5f9cf6866.mp3"
  },
  "제가 가 볼게요.": {
   "t": "I'll go and see.",
-  "c": "audio/el/sleeping_beauty/en/prince_3cbf768e8e.mp3"
+  "c": "audio/el/sleeping_beauty/en/prince_bcc8f6806f.mp3"
  },
  "가시덤불이 왕자님에게만 길을 열어 주었어요.": {
   "t": "The thorn hedge opened a path, just for the prince.",
@@ -198,7 +198,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "쉿, 다들 자고 있어요.": {
   "t": "Shh, everyone is sleeping.",
-  "c": "audio/el/sleeping_beauty/en/prince_98ce9da9e6.mp3"
+  "c": "audio/el/sleeping_beauty/en/prince_1570d41ba5.mp3"
  },
  "왕자님은 발소리를 죽이고 걸었어요.": {
   "t": "The prince walked on tiptoe, as quietly as he could.",
@@ -250,7 +250,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "안녕하세요, 공주님.": {
   "t": "Hello, Princess.",
-  "c": "audio/el/sleeping_beauty/en/prince_81d10dc3b4.mp3"
+  "c": "audio/el/sleeping_beauty/en/prince_fe56cd515b.mp3"
  },
  "성 안의 모두가 기지개를 켰어요.": {
   "t": "Everyone in the castle stretched and woke up.",

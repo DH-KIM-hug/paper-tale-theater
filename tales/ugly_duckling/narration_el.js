@@ -67,14 +67,14 @@ Object.assign(NARRATION_CLIPS, {
  "뿌우~ 나팔 같은 소리! 백조들이에요.": "audio/el/ugly_duckling/nar_58f464b756.mp3",
  "아기 오리는 오래오래 하늘을 올려다보았어요. \"나도 저렇게 날고 싶다.\"": [
   "audio/el/ugly_duckling/nar_f65becba38.mp3",
-  "audio/el/ugly_duckling/hero_d681095b1d.mp3"
+  "audio/el/ugly_duckling/hero_71781b2246.mp3"
  ],
  "추운 겨울이 왔어요. 호수가 꽁꽁 얼어서 발이 얼음에 붙어 버렸어요.": "audio/el/ugly_duckling/nar_8f417bc2fb.mp3",
  "아기 오리가 날개로 몸을 감싸서 따뜻하게!": "audio/el/ugly_duckling/nar_d00d7698c9.mp3",
  "날개로 몸을 꼭 감쌌더니 조금 따뜻해졌어요.": "audio/el/ugly_duckling/nar_a359869b26.mp3",
  "그때 농부 할아버지가 지나가다 아기 오리를 보았어요. \"저런, 얼음에 발이 붙었구나!\"": [
   "audio/el/ugly_duckling/nar_5ad455cbe9.mp3",
-  "audio/el/ugly_duckling/farmer_5311dc7a54.mp3"
+  "audio/el/ugly_duckling/farmer_be92906735.mp3"
  ],
  "쩍! 얼음이 깨졌어요. 발이 쏙 빠졌어요!": "audio/el/ugly_duckling/nar_cae6eb8da2.mp3",
  "농부 할아버지가 아기 오리를 품에 폭 안았어요. 따뜻한 집으로 가요!": "audio/el/ugly_duckling/nar_18822c9b73.mp3",
@@ -108,14 +108,14 @@ Object.assign(NARRATION_CLIPS, {
  "아기 오리가 호숫가에 내려앉았어요. 물에 누가 비쳤을까요?": "audio/el/ugly_duckling/nar_e73b1f123c.mp3",
  "길고 하얀 목, 커다란 하얀 날개…": "audio/el/ugly_duckling/nar_6e4975a442.mp3",
  "\"어? 이게 나야?\" 아기 오리는 하얀 백조였어요!": [
-  "audio/el/ugly_duckling/hero_988da55b61.mp3",
+  "audio/el/ugly_duckling/hero_f6bb0007f0.mp3",
   "audio/el/ugly_duckling/nar_e34437850f.mp3"
  ],
  "어떻게 자랐는지 순서대로 톡! 맨 처음은 뭐였지?": "audio/el/ugly_duckling/nar_ca6a9d2109.mp3",
  "알 다음은 뭐였지?": "audio/el/ugly_duckling/nar_c8b2368c9a.mp3",
  "아기 다음은 뭐였지?": "audio/el/ugly_duckling/nar_8026660f17.mp3",
  "어린 새 다음은 뭐였지?": "audio/el/ugly_duckling/nar_068c074bbe.mp3",
- "\"나는 다음이야~\"": "audio/el/ugly_duckling/card_73fddb8512.mp3",
+ "\"나는 다음이야~\"": "audio/el/ugly_duckling/card_0315cf1af1.mp3",
  "알이에요! 반짝이는 카드를 눌러 봐요.": "audio/el/ugly_duckling/nar_63609840d1.mp3",
  "아기예요! 반짝이는 카드를 눌러 봐요.": "audio/el/ugly_duckling/nar_ba6efdc833.mp3",
  "어린 새예요! 반짝이는 카드를 눌러 봐요.": "audio/el/ugly_duckling/nar_3518a0eef7.mp3",
@@ -135,6 +135,6 @@ Object.assign(NARRATION_CLIPS, {
  "백조 얼굴을 잘 봐요. 눈썹이랑 입이 어떻게 생겼지?": "audio/el/ugly_duckling/nar_e851721e50.mp3"
 });
 Object.assign(VOICE_LINES, {
- "cut_purr": "audio/el/ugly_duckling/hero_67b98dd781.mp3",
- "cut_quack": "audio/el/ugly_duckling/hero_bd4017f594.mp3"
+ "cut_purr": "audio/el/ugly_duckling/hero_4080d4dfec.mp3",
+ "cut_quack": "audio/el/ugly_duckling/hero_ba2b8425ca.mp3"
 });

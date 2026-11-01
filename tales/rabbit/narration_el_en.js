@@ -464,8 +464,8 @@ Object.assign(NARRATION_CLIPS_EN, {
  }
 });
 Object.assign(VOICE_LINES_EN, {
- "laugh_pig": "audio/el/rabbit/en/pig_a897aab5cb.mp3",
- "cheer_dog": "audio/el/rabbit/en/dog_6cba54ec2d.mp3",
+ "laugh_pig": "audio/el/rabbit/en/pig_8b9558511c.mp3",
+ "cheer_dog": "audio/el/rabbit/en/dog_45b75b08fc.mp3",
  "cheer_duck": "audio/el/rabbit/en/duck_3f8b703c2b.mp3",
  "cheer_sheep": "audio/el/rabbit/en/sheep_175379f4bf.mp3",
  "wake_rabbit": "audio/el/rabbit/en/rabbit_ed99a0106d.mp3"

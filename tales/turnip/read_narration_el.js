@@ -2,7 +2,7 @@
 Object.assign(NARRATION_CLIPS, {
  "봄이 왔어요. 할아버지가 텃밭에 구멍을 팠어요.": "audio/el/turnip/nar_b8838b91a9.mp3",
  "할아버지 손바닥 위에 작은 씨앗 하나가 또르르 굴렀어요.": "audio/el/turnip/nar_aaa897bdc9.mp3",
- "\"순무야, 크게 자라라.\"": "audio/el/turnip/grandpa_0a01f6e043.mp3",
+ "\"순무야, 크게 자라라.\"": "audio/el/turnip/grandpa_15b923d90a.mp3",
  "씨앗이 흙 속으로 쏙 들어갔어요.": "audio/el/turnip/nar_a574f05455.mp3",
  "할아버지는 흙을 토닥토닥 덮어 주고 집으로 돌아갔어요.": "audio/el/turnip/nar_f1e73e829b.mp3",
  "며칠 뒤, 할아버지가 씨앗을 심은 텃밭에 나왔어요.": "audio/el/turnip/nar_9393251763.mp3",
@@ -17,7 +17,7 @@ Object.assign(NARRATION_CLIPS, {
  "영차! 할아버지가 잎을 힘껏 당겼어요.": "audio/el/turnip/nar_46d6fe0772.mp3",
  "순무는 꿈쩍도 안 해요.": "audio/el/turnip/nar_ad6379c47e.mp3",
  "아이코! 할아버지가 엉덩방아를 찧었어요.": [
-  "audio/el/turnip/grandpa_eeef729948.mp3",
+  "audio/el/turnip/grandpa_19ce1315cb.mp3",
   "audio/el/turnip/nar_91554e1ea4.mp3"
  ],
  "혼자서는 안 되겠어요. 할아버지가 할머니를 불러요!": "audio/el/turnip/nar_8992ec1f04.mp3",
@@ -42,12 +42,12 @@ Object.assign(NARRATION_CLIPS, {
  "덤불 뒤에서 멍멍!": "audio/el/turnip/nar_d7495ca7b7.mp3",
  "강아지가 뛰어나왔어요. \"나도 도울게요!\"": [
   "audio/el/turnip/nar_923b617162.mp3",
-  "audio/el/turnip/dog_295607b849.mp3"
+  "audio/el/turnip/dog_3541de2275.mp3"
  ],
- "\"멍멍! 저도 힘이 아주 세요!\"": "audio/el/turnip/dog_4059314bc7.mp3",
+ "\"멍멍! 저도 힘이 아주 세요!\"": "audio/el/turnip/dog_3e5abf3127.mp3",
  "강아지가 손녀 치마를 꼭 붙잡았어요. 영차!": "audio/el/turnip/nar_8acbb11652.mp3",
  "순무가 꿈틀, 조금 더 올라왔지만 아직도 뽑히지 않았어요.": "audio/el/turnip/nar_b5712cfad8.mp3",
- "텃밭에서는 강아지까지 넷이 힘을 쓰고 있었어요.": "audio/el/turnip/nar_c44f80b050.mp3",
+ "텃밭에서는 강아지까지 넷이 힘을 쓰고 있었어요.": "audio/el/turnip/nar_cdc960456d.mp3",
  "헛간 지붕에서 야옹!": "audio/el/turnip/nar_5261dae3bc.mp3",
  "고양이가 지붕에서 폴짝 내려왔어요.": "audio/el/turnip/nar_780bdf6fcc.mp3",
  "어? 강아지랑 고양이가 서로 째려봐요.": "audio/el/turnip/nar_719af83d16.mp3",
@@ -71,7 +71,7 @@ Object.assign(NARRATION_CLIPS, {
  "영차, 영차! 순무가 흔들흔들 움직이기 시작했어요.": "audio/el/turnip/nar_b9ff76f98d.mp3",
  "쑥! 커다란 순무가 뽑혔어요! 모두 벌렁 넘어졌어요.": "audio/el/turnip/nar_08637dc7c9.mp3",
  "작은 생쥐까지 모두 힘을 모았더니 뽑혔어요!": "audio/el/turnip/nar_088330846e.mp3",
- "\"고맙다, 얘들아! 생쥐야, 너도 정말 고맙구나.\"": "audio/el/turnip/grandpa_1fc41d4697.mp3",
+ "\"고맙다, 얘들아! 생쥐야, 너도 정말 고맙구나.\"": "audio/el/turnip/grandpa_7fb2595866.mp3",
  "순무를 뽑은 여섯은 집에 모였어요.": "audio/el/turnip/nar_4cc15e4362.mp3",
  "할아버지는 순무를 숭덩숭덩 썰고, 할머니는 커다란 냄비를 꺼냈어요.": "audio/el/turnip/nar_54e7f71abc.mp3",
  "맛있는 순무국을 끓였어요.": "audio/el/turnip/nar_4aaf80c65f.mp3",

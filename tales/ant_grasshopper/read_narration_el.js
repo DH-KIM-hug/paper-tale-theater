@@ -68,10 +68,10 @@ Object.assign(NARRATION_CLIPS, {
  "베짱이는 고개를 푹 숙이고 훌쩍훌쩍 울었어요.": "audio/el/ant_grasshopper/nar_950bbaf25b.mp3",
  "그때 아기 개미가 말했어요. \"그래도 추워 보여요.\"": [
   "audio/el/ant_grasshopper/nar_ade4204029.mp3",
-  "audio/el/ant_grasshopper/baby_f309b680ea.mp3"
+  "audio/el/ant_grasshopper/baby_81674e6e45.mp3"
  ],
  "\"우리 창고엔 먹을 게 아주 많잖아요.\" 개미는 잠깐 생각하다가 빙긋 웃었어요.": [
-  "audio/el/ant_grasshopper/baby_584ebfa865.mp3",
+  "audio/el/ant_grasshopper/baby_c8d6490c46.mp3",
   "audio/el/ant_grasshopper/nar_917e6e9bfd.mp3"
  ],
  "개미가 베짱이에게 다정하게 말했어요.": "audio/el/ant_grasshopper/nar_0496751924.mp3",

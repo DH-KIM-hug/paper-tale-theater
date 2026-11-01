@@ -19,7 +19,7 @@ Object.assign(NARRATION_CLIPS, {
  "김이 뭉치고, 뭉치고… 퐁! 구름이 됐어요.": "audio/el/kkultteok/nar_a5559d15ff.mp3",
  "\"구름이 여기서 오는구나!\"": "audio/el/kkultteok/nuna_07fc11e4c3.mp3",
  "\"퐁!\" 은우가 따라 해요.": [
-  "audio/el/kkultteok/agi_e139bd786a.mp3",
+  "audio/el/kkultteok/agi_6ace82461c.mp3",
   "audio/el/kkultteok/nar_9331384ee7.mp3"
  ],
  "구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.": "audio/el/kkultteok/nar_0d7247397b.mp3",
@@ -36,7 +36,7 @@ Object.assign(NARRATION_CLIPS, {
  "기다란 벨트 위로 물방울이 똑, 똑, 똑.": "audio/el/kkultteok/nar_2e6a92d5f0.mp3",
  "물방울들이 벨트를 따라 또르르, 또르르 굴러가요.": "audio/el/kkultteok/nar_dfa6c3f275.mp3",
  "이현이가 물방울에 손을 살짝 대 봐요.": "audio/el/kkultteok/nar_9849c17142.mp3",
- "\"앗, 차가워! 진짜 물방울이야!\"": "audio/el/kkultteok/oppa_15486a59c0.mp3",
+ "\"앗, 차가워! 진짜 물방울이야!\"": "audio/el/kkultteok/oppa_d1d1aae43d.mp3",
  "다현이는 후우— 바람을 불어 줘요.": "audio/el/kkultteok/nar_85cf90937a.mp3",
  "뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!": "audio/el/kkultteok/nar_efe9c72c3f.mp3",
  "하얀 구름이 둥실, 벨트 위로 떠올라요.": "audio/el/kkultteok/nar_4984ae7b4b.mp3",
@@ -78,7 +78,7 @@ Object.assign(NARRATION_CLIPS, {
  "토닥토닥, 쓰담쓰담. 아기 먹구름이 조금씩 고개를 들어요.": "audio/el/kkultteok/nar_ecb4692b45.mp3",
  "\"비 좋아! 장화 신고 첨벙첨벙!\"": "audio/el/kkultteok/nuna_ba11253e49.mp3",
  "\"첨벙첨벙!\" 이현이도 폴짝 뛰어요.": [
-  "audio/el/kkultteok/oppa_4dc6c065f7.mp3",
+  "audio/el/kkultteok/oppa_edb0b764af.mp3",
   "audio/el/kkultteok/nar_b8fe7cc0eb.mp3"
  ],
  "꿀떡이는 아기 먹구름 볼을 할짝.": "audio/el/kkultteok/nar_ae0eefb74f.mp3",
@@ -93,7 +93,7 @@ Object.assign(NARRATION_CLIPS, {
  "번쩍! 우르릉 쾅!": "audio/el/kkultteok/nar_e73bf45a5a.mp3",
  "하늘은 우르릉, 삼남매 가슴은 두근두근.": "audio/el/kkultteok/nar_f38026103f.mp3",
  "\"으악!\" 삼남매는 서로 꼭 껴안아요.": [
-  "audio/el/kkultteok/oppa_83ec331a09.mp3",
+  "audio/el/kkultteok/oppa_1099b29c7c.mp3",
   "audio/el/kkultteok/nar_6d3bf6b1e1.mp3"
  ],
  "하늘의 먹구름이 삼남매에게 말했어요.": "audio/el/kkultteok/nar_b4932a016d.mp3",
@@ -107,7 +107,7 @@ Object.assign(NARRATION_CLIPS, {
  "비가 내려요!": "audio/el/kkultteok/nar_fa3094f826.mp3",
  "삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!": "audio/el/kkultteok/nar_2d9d35cdb7.mp3",
  "\"첨벙!\" 은우가 제일 높이 뛰어요.": [
-  "audio/el/kkultteok/agi_3b425b17e1.mp3",
+  "audio/el/kkultteok/agi_e35549a871.mp3",
   "audio/el/kkultteok/nar_4fbc560c23.mp3"
  ],
  "장화 속까지 철벅철벅, 그래도 신이 나요.": "audio/el/kkultteok/nar_f54bd11911.mp3",
@@ -134,13 +134,13 @@ Object.assign(NARRATION_CLIPS, {
  "멀리 굴뚝에서 작은 구름이 퐁! 퐁!": "audio/el/kkultteok/nar_ad9e266930.mp3",
  "은우가 뒤를 돌아보며 손을 흔들어요. \"퐁!\"": [
   "audio/el/kkultteok/nar_0029de923a.mp3",
-  "audio/el/kkultteok/agi_e139bd786a.mp3"
+  "audio/el/kkultteok/agi_6ace82461c.mp3"
  ],
  "\"또 놀러 와, 아기 구름아!\"": "audio/el/kkultteok/nuna_d2b90d148e.mp3",
  "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.": "audio/el/kkultteok/nar_e88091a79e.mp3",
  "비 오는 날도, 해 뜨는 날도 모두 소중하답니다.": "audio/el/kkultteok/nar_008957e93b.mp3",
  "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.": "audio/el/kkultteok/nar_ec7dee2b8b.mp3",
- "\"아기 구름도 자?\"": "audio/el/kkultteok/agi_e0d16665f5.mp3",
+ "\"아기 구름도 자?\"": "audio/el/kkultteok/agi_3bf8e4e667.mp3",
  "창밖에서 하얀 아기 구름이 둥실 날아와 달님 앞에 폭신하게 누웠어요.": "audio/el/kkultteok/nar_dca0da78c6.mp3",
  "\"잘 자, 아기 구름!\" 다현이와 이현이가 소곤소곤 말했어요.": [
   "audio/el/kkultteok/nuna_30b248b2ee.mp3",

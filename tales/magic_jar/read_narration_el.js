@@ -6,7 +6,7 @@ Object.assign(NARRATION_CLIPS, {
  "영차, 영차! 이마에 땀방울이 송골송골 맺혔어요.": "audio/el/magic_jar/nar_d6effb0f6f.mp3",
  "쨍! 괭이 끝에 뭔가 딱딱한 게 닿았어요.": "audio/el/magic_jar/nar_8932b13d91.mp3",
  "\"어? 이게 무슨 소리지?\" 농부는 괭이질을 멈추고 고개를 갸웃했어요.": [
-  "audio/el/magic_jar/farmer_badb67980d.mp3",
+  "audio/el/magic_jar/farmer_ae5fb8feee.mp3",
   "audio/el/magic_jar/nar_eb5a399cc8.mp3"
  ],
  "농부는 밭에서 소리가 난 곳의 흙을 걷어 냈어요.": "audio/el/magic_jar/nar_1fbd38f3a0.mp3",
@@ -26,7 +26,7 @@ Object.assign(NARRATION_CLIPS, {
  "괭이가 하나, 둘, 셋! 농부와 아내는 손뼉을 쳤어요.": "audio/el/magic_jar/nar_f8da210ec9.mp3",
  "농부와 아내는 마당의 항아리 곁에 그대로 있었어요.": "audio/el/magic_jar/nar_d0922551e3.mp3",
  "\"이번에는 다른 것도 넣어 볼까?\" 농부가 싱글벙글 웃으며 말했어요.": [
-  "audio/el/magic_jar/farmer_02c912f2c3.mp3",
+  "audio/el/magic_jar/farmer_d37803a6c0.mp3",
   "audio/el/magic_jar/nar_bd4d77d613.mp3"
  ],
  "이번에는 엽전 하나를 넣어 봤어요. 와르르! 엽전이 쏟아져 나왔어요.": "audio/el/magic_jar/nar_e68849d2d3.mp3",
@@ -47,7 +47,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "마음씨 착한 농부는 웃으며 말했어요. \"필요하시면 쓰세요. 잘 쓰고 돌려주세요!\"": [
   "audio/el/magic_jar/nar_b5639c3d29.mp3",
-  "audio/el/magic_jar/farmer_7073a5ce5b.mp3"
+  "audio/el/magic_jar/farmer_2e7dacc5e1.mp3"
  ],
  "\"고맙네! 얼른 가져가야지, 헤헤.\" 부자는 항아리를 꼭 안고 달려갔어요.": [
   "audio/el/magic_jar/rich_5b597513d6.mp3",
@@ -68,7 +68,7 @@ Object.assign(NARRATION_CLIPS, {
  "소동을 듣고 부자의 아버지가 방으로 들어왔어요.": "audio/el/magic_jar/nar_d2a6ccf51c.mp3",
  "그때 부자의 아버지가 다가와 항아리 속을 들여다보았어요. \"이게 뭐냐?\"": [
   "audio/el/magic_jar/nar_a1bc34e9a3.mp3",
-  "audio/el/magic_jar/father_8880929edc.mp3"
+  "audio/el/magic_jar/father_783b692054.mp3"
  ],
  "아버지는 항아리 속을 들여다보려고 발꿈치를 들고 기우뚱기우뚱했어요.": "audio/el/magic_jar/nar_979d6cfe58.mp3",
  "풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.": "audio/el/magic_jar/nar_c066fdcad0.mp3",
@@ -76,12 +76,12 @@ Object.assign(NARRATION_CLIPS, {
  "그러자 항아리에서 아버지가 쑥, 또 쑥, 자꾸자꾸 나왔어요.": "audio/el/magic_jar/nar_b4847f2333.mp3",
  "아버지가 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 여덟 명이나 되었어요.": "audio/el/magic_jar/nar_8107ccb370.mp3",
  "\"내가 진짜 아버지다!\" \"아니야, 내가 진짜야!\" 모두 서로 자기가 진짜라고 우겼어요.": [
-  "audio/el/magic_jar/father_bc75a0d917.mp3",
-  "audio/el/magic_jar/father_766eec9688.mp3",
+  "audio/el/magic_jar/father_25f12cf7b5.mp3",
+  "audio/el/magic_jar/father_c7a89a39fe.mp3",
   "audio/el/magic_jar/nar_cb027e5473.mp3"
  ],
  "\"배고프다! 밥 줘라!\" 부자는 쟁반을 들고 이리저리 뛰어다녔어요.": [
-  "audio/el/magic_jar/father_4adcc0f0d6.mp3",
+  "audio/el/magic_jar/father_22ab5a8543.mp3",
   "audio/el/magic_jar/nar_560ba5ae03.mp3"
  ],
  "부잣집 방 안에서 부자는 아직도 밥을 나르고 있었어요.": "audio/el/magic_jar/nar_2172c5efd8.mp3",
@@ -100,7 +100,7 @@ Object.assign(NARRATION_CLIPS, {
  "부자는 농부를 찾아가 사과하고, 가진 것을 마을 사람들과 나누기로 했어요. 함께 잔치를 열어요!": "audio/el/magic_jar/nar_0ee4a159d8.mp3",
  "마당에 상이 차려지고, 맛있는 냄새가 솔솔 풍겼어요.": "audio/el/magic_jar/nar_5d8429fb9d.mp3",
  "\"항아리는 깨졌지만, 함께 나누게 되었으니 됐어요.\" 농부가 빙그레 웃었어요.": [
-  "audio/el/magic_jar/farmer_d60e0ee0d3.mp3",
+  "audio/el/magic_jar/farmer_2fd32f2bd9.mp3",
   "audio/el/magic_jar/nar_84b5aab818.mp3"
  ],
  "\"모두 고맙네!\" 모두 둘러앉아 맛있게 먹었어요.": [

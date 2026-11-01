@@ -8,13 +8,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Roar! One day, a big tiger appeared. Grandma, I'm going to eat you up!",
   "c": [
    "audio/el/patjuk/en/nar_cc937112d4.mp3",
-   "audio/el/patjuk/en/tiger_8434d2a85f.mp3"
+   "audio/el/patjuk/en/tiger_fc49c277a8.mp3"
   ]
  },
  "\"호랑이야, 동짓날에 맛있는 팥죽을 쑤어 줄게. 그때까지 기다려 다오.\" 호랑이는 어슬렁어슬렁 돌아갔어요.": {
   "t": "Tiger, on the longest night of the year, I'll cook you some yummy red bean porridge. Please wait until then. The tiger prowled away, slow and heavy.",
   "c": [
-   "audio/tc/patjuk/en/halmi_1d1910dba0.mp3",
+   "audio/tc/patjuk/en/halmi_b81dce2926.mp3",
    "audio/el/patjuk/en/nar_dfcedb3622.mp3"
   ]
  },
@@ -29,7 +29,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"얘들아, 도와줘!\" 친구들을 순서대로 눌러서 호랑이를 혼내 주세요!": {
   "t": "Friends, help me! Tap your friends, one after another, to give that tiger a lesson!",
   "c": [
-   "audio/tc/patjuk/en/halmi_613493f1da.mp3",
+   "audio/tc/patjuk/en/halmi_8c249f78e2.mp3",
    "audio/el/patjuk/en/nar_b2ae93019e.mp3"
   ]
  },
@@ -148,21 +148,21 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"호랑아, 팥죽 먹기 전에 아궁이 불 좀 봐주렴.\" 할멈의 말에 호랑이가 아궁이 앞에 쪼그려 앉았어요. 누가 먼저 혼내 줄까요?": {
   "t": "Tiger, before we eat the porridge, please watch the fire for me. At Grandma's words, the tiger squatted down by the fireplace. Who should teach the tiger a lesson first?",
   "c": [
-   "audio/tc/patjuk/en/halmi_3620465818.mp3",
+   "audio/tc/patjuk/en/halmi_59dc041a8f.mp3",
    "audio/el/patjuk/en/nar_e1116562f4.mp3"
   ]
  },
  "\"앗, 뜨거워! 눈이야!\" 호랑이가 눈을 씻으려고 물독에 얼굴을 쏙 넣었어요. 다음은 누구일까요?": {
   "t": "Ow, hot! My eyes! The tiger dunked its face into the water jar to wash its eyes. Who's next?",
   "c": [
-   "audio/el/patjuk/en/tiger_69d9a8cddc.mp3",
+   "audio/el/patjuk/en/tiger_948af6d864.mp3",
    "audio/el/patjuk/en/nar_3a77860891.mp3"
   ]
  },
  "\"아야야!\" 호랑이가 깜짝 놀라 뒷걸음질을 쳤어요. 다음은 누구죠?": {
   "t": "Yowch! The tiger jumped in surprise and stumbled backward. Who's next?",
   "c": [
-   "audio/el/patjuk/en/tiger_5d72c48374.mp3",
+   "audio/el/patjuk/en/tiger_5ecd8c0452.mp3",
    "audio/el/patjuk/en/nar_b3c1fbde61.mp3"
   ]
  },
@@ -173,7 +173,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"엉엉, 아파!\" 호랑이가 문 쪽으로 도망가요. 다음은 누구?": {
   "t": "Boo-hoo, that hurts! The tiger ran away toward the door. Who's next?",
   "c": [
-   "audio/el/patjuk/en/tiger_fd5257cc51.mp3",
+   "audio/el/patjuk/en/tiger_a68ce9c106.mp3",
    "audio/el/patjuk/en/nar_d863c86bf0.mp3"
   ]
  },
@@ -253,35 +253,35 @@ Object.assign(NARRATION_CLIPS_EN, {
 Object.assign(VOICE_LINES_EN, {
  "cut_bam": [
   "audio/tc/patjuk/en/bam_75d5f05d83.mp3",
-  "audio/el/patjuk/en/tiger_9696ec5050.mp3"
+  "audio/el/patjuk/en/tiger_296dcdccf3.mp3"
  ],
  "cut_jara": [
   "audio/tc/patjuk/en/jara_93d1ad19dd.mp3",
-  "audio/el/patjuk/en/tiger_ae580fa9df.mp3"
+  "audio/el/patjuk/en/tiger_e7d6a96916.mp3"
  ],
  "cut_ddong": [
   "audio/tc/patjuk/en/ddong_9d9a59dc43.mp3",
-  "audio/el/patjuk/en/tiger_5476bf6a65.mp3"
+  "audio/el/patjuk/en/tiger_d595c802e8.mp3"
  ],
  "cut_songgot": [
   "audio/tc/patjuk/en/songgot_86ebe61222.mp3",
-  "audio/el/patjuk/en/tiger_6b51092205.mp3"
+  "audio/el/patjuk/en/tiger_eacc1e0ea3.mp3"
  ],
  "cut_jeolgu": [
   "audio/tc/patjuk/en/jeolgu_0f47e41dc1.mp3",
-  "audio/el/patjuk/en/tiger_3c4ebbc962.mp3"
+  "audio/el/patjuk/en/tiger_c48ea6d657.mp3"
  ],
  "cut_myeongseok": [
   "audio/tc/patjuk/en/myeongseok_07df9b2436.mp3",
-  "audio/el/patjuk/en/tiger_04ecae54c5.mp3"
+  "audio/el/patjuk/en/tiger_588cdfcb6f.mp3"
  ],
  "cut_jige": [
   "audio/tc/patjuk/en/jige_26005f3124.mp3",
-  "audio/el/patjuk/en/tiger_f62e86e499.mp3"
+  "audio/el/patjuk/en/tiger_18610c4fd4.mp3"
  ],
- "cut_jige_b": "audio/el/patjuk/en/tiger_c27649b87e.mp3",
- "cut_wrong_1": "audio/el/patjuk/en/tiger_b4dc2a072b.mp3",
- "cut_wrong_2": "audio/el/patjuk/en/tiger_0f43c1faa2.mp3",
+ "cut_jige_b": "audio/el/patjuk/en/tiger_49a83020e6.mp3",
+ "cut_wrong_1": "audio/el/patjuk/en/tiger_541e46813a.mp3",
+ "cut_wrong_2": "audio/el/patjuk/en/tiger_175ee72f2b.mp3",
  "oops_bam": "audio/tc/patjuk/en/bam_b4ad92f967.mp3",
  "oops_jara": "audio/tc/patjuk/en/jara_9ae42de974.mp3",
  "oops_ddong": "audio/tc/patjuk/en/ddong_26a123d7fe.mp3",
@@ -296,5 +296,5 @@ Object.assign(VOICE_LINES_EN, {
  "hi_jeolgu": "audio/tc/patjuk/en/jeolgu_a0b7759582.mp3",
  "hi_myeongseok": "audio/tc/patjuk/en/myeongseok_4c6d778b79.mp3",
  "hi_jige": "audio/tc/patjuk/en/jige_0064c5490b.mp3",
- "hi_halmi": "audio/tc/patjuk/en/halmi_5ed1654a44.mp3"
+ "hi_halmi": "audio/tc/patjuk/en/halmi_d0d0c2348d.mp3"
 });

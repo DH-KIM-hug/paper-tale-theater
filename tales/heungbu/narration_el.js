@@ -7,12 +7,12 @@ Object.assign(NARRATION_CLIPS, {
  "흥부는 배가 고파서 형 집으로 밥을 얻으러 갔어요.": "audio/el/heungbu/nar_97a41ffda8.mp3",
  "형수는 화가 난 얼굴로 말했어요. \"밥이 어디 있어요! 저리 가요!\"": [
   "audio/el/heungbu/nar_9ead46bd3b.mp3",
-  "audio/el/heungbu/nwife_c0b27c4785.mp3"
+  "audio/el/heungbu/nwife_7f896e7896.mp3"
  ],
  "형수가 주걱을 휘두르자 흥부 볼에 밥알이 붙었어요. 흥부는 그 밥알을 맛있게 먹었어요.": "audio/el/heungbu/nar_33b77ebea7.mp3",
  "흥부는 웃으며 말했어요. \"괜찮아요. 밥알도 맛있어요!\"": [
   "audio/el/heungbu/nar_1c349bd6c2.mp3",
-  "audio/el/heungbu/heung_cd0b39f029.mp3"
+  "audio/el/heungbu/heung_4a1b7aa72b.mp3"
  ],
  "흥부네 초가집 처마에는 제비 가족이 살았어요.": "audio/el/heungbu/nar_dccc093b91.mp3",
  "아기 제비는 몇 마리일까요? 둥지를 톡톡톡 눌러서 세어 봐요!": "audio/el/heungbu/nar_39bdfd69b4.mp3",
@@ -63,7 +63,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "흥부가 활짝 웃으며 말했어요. \"형님, 괜찮아요. 우리 함께 살아요!\"": [
   "audio/el/heungbu/nar_b609ee44c4.mp3",
-  "audio/el/heungbu/heung_0ef4ab103b.mp3"
+  "audio/el/heungbu/heung_45261d2dfe.mp3"
  ],
  "쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.": "audio/el/heungbu/nar_c44167e2bd.mp3",
  "쌀자루를 톡! 형님께 보내요.": "audio/el/heungbu/nar_df590f1832.mp3",

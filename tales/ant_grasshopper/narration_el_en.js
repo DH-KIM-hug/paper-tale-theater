@@ -35,6 +35,46 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the yellow grain!",
   "c": "audio/el/ant_grasshopper/en/nar_ae4bab76be.mp3"
  },
+ "하나": {
+  "t": "One",
+  "c": "audio/el/ant_grasshopper/en/nar_578d1a04a5.mp3"
+ },
+ "둘": {
+  "t": "Two",
+  "c": "audio/el/ant_grasshopper/en/nar_11da4c2da9.mp3"
+ },
+ "셋": {
+  "t": "Three",
+  "c": "audio/el/ant_grasshopper/en/nar_8592221eb6.mp3"
+ },
+ "넷": {
+  "t": "Four",
+  "c": "audio/el/ant_grasshopper/en/nar_da708068cf.mp3"
+ },
+ "다섯": {
+  "t": "Five",
+  "c": "audio/el/ant_grasshopper/en/nar_fb959ae5e8.mp3"
+ },
+ "여섯": {
+  "t": "Six",
+  "c": "audio/el/ant_grasshopper/en/nar_b87ecdd2e1.mp3"
+ },
+ "일곱": {
+  "t": "Seven",
+  "c": "audio/el/ant_grasshopper/en/nar_3f9c4304b3.mp3"
+ },
+ "여덟": {
+  "t": "Eight",
+  "c": "audio/el/ant_grasshopper/en/nar_4d481165f1.mp3"
+ },
+ "아홉": {
+  "t": "Nine",
+  "c": "audio/el/ant_grasshopper/en/nar_c1bcd70424.mp3"
+ },
+ "열": {
+  "t": "Ten",
+  "c": "audio/el/ant_grasshopper/en/nar_76b560f7a2.mp3"
+ },
  "창고 칸이 가득 찼어요! 하나부터 열까지, 열 칸!": {
   "t": "The storeroom is full! From one to ten, ten rooms!",
   "c": "audio/el/ant_grasshopper/en/nar_eee11309e2.mp3"
@@ -213,7 +253,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then the baby ant said, \"But Grasshopper looks so cold.\"",
   "c": [
    "audio/el/ant_grasshopper/en/nar_b750cc62e5.mp3",
-   "audio/el/ant_grasshopper/en/baby_e629f676dd.mp3"
+   "audio/el/ant_grasshopper/en/baby_f5cefac633.mp3"
   ]
  },
  "문을 톡 눌러서 활짝 열어 줄까요?": {

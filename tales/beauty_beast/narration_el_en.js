@@ -10,7 +10,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "괜찮아요, 제가 집안일을 할게요.": {
   "t": "It's all right. I will do the housework.",
-  "c": "audio/el/beauty_beast/en/belle_e6da1a8aef.mp3"
+  "c": "audio/el/beauty_beast/en/belle_98847a7457.mp3"
  },
  "배 한 척이 돌아왔대요! 아버지가 도시로 떠나요.": {
   "t": "One of the ships came back! Father is leaving for the city.",
@@ -25,11 +25,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "저는 장미 한 송이면 돼요.": {
   "t": "A single rose is all I need.",
-  "c": "audio/el/beauty_beast/en/belle_7f43c67502.mp3"
+  "c": "audio/el/beauty_beast/en/belle_0981c7d312.mp3"
  },
  "그래, 다녀오마.": {
   "t": "All right. I will be back soon.",
-  "c": "audio/el/beauty_beast/en/father_b7a129c6b3.mp3"
+  "c": "audio/el/beauty_beast/en/father_f186160410.mp3"
  },
  "말을 톡 눌러 봐요.": {
   "t": "Tap the horse.",
@@ -49,7 +49,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "누구 계세요? …고맙게 먹겠습니다.": {
   "t": "Is anyone here? ... Thank you, I will gladly eat.",
-  "c": "audio/el/beauty_beast/en/father_479e3e6d17.mp3"
+  "c": "audio/el/beauty_beast/en/father_22b08b7e0a.mp3"
  },
  "아버지는 배불리 먹고, 푹신한 의자에서 잠이 들었어요.": {
   "t": "Father ate his fill and fell asleep in a soft armchair.",
@@ -85,7 +85,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "벨에게 줄 장미 한 송이만.": {
   "t": "Just one rose, for Belle.",
-  "c": "audio/el/beauty_beast/en/father_9ad47ecd68.mp3"
+  "c": "audio/el/beauty_beast/en/father_deb65ab814.mp3"
  },
  "그때 덤불 뒤에서 커다란 야수가 천천히 나왔어요.": {
   "t": "Then, from behind the bush, a huge Beast slowly came out.",
@@ -93,15 +93,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "내 장미를 꺾었구나. 재워 주고 먹여 줬는데.": {
   "t": "You picked my rose. After I gave you a bed and a meal.",
-  "c": "audio/el/beauty_beast/en/beast_34fe340aa4.mp3"
+  "c": "audio/el/beauty_beast/en/beast_bfcc6e0fa4.mp3"
  },
  "죄송해요, 나리. 막내딸이 부탁한 거예요.": {
   "t": "I am sorry, my lord. My youngest daughter asked for it.",
-  "c": "audio/el/beauty_beast/en/father_2fe23802a7.mp3"
+  "c": "audio/el/beauty_beast/en/father_cb9d0cc596.mp3"
  },
  "나리가 아니라 야수라고 불러라. 장미를 꺾었으니 벌을 받아야 해. 네가 돌아오든지, 딸 하나가 스스로 오든지.": {
   "t": "Do not call me lord. Call me Beast. You picked my rose, so you must be punished. Either you come back, or one of your daughters comes here of her own free will.",
-  "c": "audio/el/beauty_beast/en/beast_ee071be428.mp3"
+  "c": "audio/el/beauty_beast/en/beast_8281a5fdce.mp3"
  },
  "아버지는 장미를 들고 집으로 돌아왔어요.": {
   "t": "Father came home holding the rose.",
@@ -109,19 +109,19 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "야수가… 딸 하나를 보내라고 했단다.": {
   "t": "The Beast... said one of my daughters must go to him.",
-  "c": "audio/el/beauty_beast/en/father_d4d90c7d23.mp3"
+  "c": "audio/el/beauty_beast/en/father_9f2955c9e1.mp3"
  },
  "제 장미 때문이에요. 제가 갈게요.": {
   "t": "It is because of my rose. I will go.",
-  "c": "audio/el/beauty_beast/en/belle_46f0898d99.mp3"
+  "c": "audio/el/beauty_beast/en/belle_e604529f26.mp3"
  },
  "안 된다, 벨.": {
   "t": "No, Belle.",
-  "c": "audio/el/beauty_beast/en/father_e975e22b68.mp3"
+  "c": "audio/el/beauty_beast/en/father_cf86c2a73f.mp3"
  },
  "괜찮아요. 제가 가고 싶어요.": {
   "t": "It's all right. I want to go.",
-  "c": "audio/el/beauty_beast/en/belle_17356ba1ae.mp3"
+  "c": "audio/el/beauty_beast/en/belle_09f9bec0ad.mp3"
  },
  "아버지는 벨을 궁전까지 데려다주었어요.": {
   "t": "Father brought Belle all the way to the palace.",
@@ -129,15 +129,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "스스로 온 거니?": {
   "t": "Did you come here of your own free will?",
-  "c": "audio/el/beauty_beast/en/beast_929141423a.mp3"
+  "c": "audio/el/beauty_beast/en/beast_84b7419296.mp3"
  },
  "네.": {
   "t": "Yes.",
-  "c": "audio/el/beauty_beast/en/belle_212f1e7beb.mp3"
+  "c": "audio/el/beauty_beast/en/belle_8525ef3810.mp3"
  },
  "착하구나. 아버지는 내일 아침 집으로 가거라.": {
   "t": "You are a good girl. Your father shall go home tomorrow morning.",
-  "c": "audio/el/beauty_beast/en/beast_0298a3d5e1.mp3"
+  "c": "audio/el/beauty_beast/en/beast_43b7dcc81b.mp3"
  },
  "방 문에 '벨의 방'이라고 쓰여 있어요. 책도 많고, 장미도 있어요.": {
   "t": "On the door it says 'Belle's Room'. There are lots of books, and roses too.",
@@ -185,15 +185,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "벨, 잘 지냈니? 나와 결혼해 줄래?": {
   "t": "Belle, how are you? Will you marry me?",
-  "c": "audio/el/beauty_beast/en/beast_f492903577.mp3"
+  "c": "audio/el/beauty_beast/en/beast_c61153cb88.mp3"
  },
  "아니요, 야수님. 하지만 친구로 좋아해요.": {
   "t": "No, Beast. But I like you very much as a friend.",
-  "c": "audio/el/beauty_beast/en/belle_4a6d9c4ffd.mp3"
+  "c": "audio/el/beauty_beast/en/belle_d81cda7ae9.mp3"
  },
  "그럼 내일 저녁에 또 올게.": {
   "t": "Then I will come again tomorrow evening.",
-  "c": "audio/el/beauty_beast/en/beast_174a36344b.mp3"
+  "c": "audio/el/beauty_beast/en/beast_597b0cbaa5.mp3"
  },
  "벨은 날마다 친절하게 대답했고, 둘은 친구가 되었어요.": {
   "t": "Belle answered kindly every day, and the two became friends.",
@@ -233,19 +233,19 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아버지가 아파요…": {
   "t": "Father is ill...",
-  "c": "audio/el/beauty_beast/en/belle_7c881ded9b.mp3"
+  "c": "audio/el/beauty_beast/en/belle_d7a048797c.mp3"
  },
  "다녀와요. 하지만 일주일 뒤엔 꼭 돌아와요. 안 오면 나는 너무 슬플 거예요.": {
   "t": "Go to him. But come back in one week, without fail. If you do not, I will be so very sad.",
-  "c": "audio/el/beauty_beast/en/beast_812d5b725a.mp3"
+  "c": "audio/el/beauty_beast/en/beast_db87076091.mp3"
  },
  "자기 전에 이 반지를 탁자에 놓으면, 아침에 여기로 돌아와요.": {
   "t": "Put this ring on the table before you sleep, and in the morning you will be back here.",
-  "c": "audio/el/beauty_beast/en/beast_7444c44a66.mp3"
+  "c": "audio/el/beauty_beast/en/beast_988312fa6f.mp3"
  },
  "꼭 돌아올게요, 약속해요.": {
   "t": "I will come back. I promise.",
-  "c": "audio/el/beauty_beast/en/belle_ba092ff068.mp3"
+  "c": "audio/el/beauty_beast/en/belle_1eeed539c8.mp3"
  },
  "다음 날 아침, 벨은 집에 와 있었어요.": {
   "t": "The next morning, Belle was home.",
@@ -253,7 +253,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네 덕분에 다 나았다.": {
   "t": "Thanks to you, I am all better.",
-  "c": "audio/el/beauty_beast/en/father_929dc8178c.mp3"
+  "c": "audio/el/beauty_beast/en/father_18d3b654b4.mp3"
  },
  "조금만 더 있다 가. 응? 조금만 더.": {
   "t": "Stay just a little longer. Please? Just a little.",
@@ -264,7 +264,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "그럴까…": {
   "t": "Maybe I could...",
-  "c": "audio/el/beauty_beast/en/belle_523dc7b54f.mp3"
+  "c": "audio/el/beauty_beast/en/belle_9e7b28ebfa.mp3"
  },
  "해가 뜨고 지고, 일주일이 훌쩍 지났어요. 어느 밤, 벨은 꿈을 꾸었어요.": {
   "t": "The sun rose and set, and a whole week slipped by. One night, Belle had a dream.",
@@ -272,7 +272,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "야수님! 약속을 어겼어요. 돌아가야 해요.": {
   "t": "Beast! I broke my promise. I must go back.",
-  "c": "audio/el/beauty_beast/en/belle_da03fae4b9.mp3"
+  "c": "audio/el/beauty_beast/en/belle_9c71315d58.mp3"
  },
  "벨은 반지를 탁자에 놓고 다시 잠이 들었어요.": {
   "t": "Belle put the ring on the table and fell asleep again.",
@@ -284,7 +284,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "야수님, 일어나요!": {
   "t": "Beast, wake up!",
-  "c": "audio/el/beauty_beast/en/belle_de05021ced.mp3"
+  "c": "audio/el/beauty_beast/en/belle_020bfc28dd.mp3"
  },
  "샘물을 톡 눌러 봐요.": {
   "t": "Tap the spring water.",
@@ -292,11 +292,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "벨… 돌아왔구나.": {
   "t": "Belle... you came back.",
-  "c": "audio/el/beauty_beast/en/beast_806d7b65eb.mp3"
+  "c": "audio/el/beauty_beast/en/beast_3a89b10af1.mp3"
  },
  "사랑해요, 야수님. 제 남편이 되어 주세요.": {
   "t": "I love you, Beast. Please be my husband.",
-  "c": "audio/el/beauty_beast/en/belle_214e622d1d.mp3"
+  "c": "audio/el/beauty_beast/en/belle_2d33f41221.mp3"
  },
  "그러자 반짝! 야수가 멋진 왕자님으로 변했어요.": {
   "t": "And then, a flash of light! The Beast turned into a handsome prince.",
@@ -304,11 +304,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "고마워요, 벨. 겉모습만 보지 않고 내 마음을 봐 줬어요.": {
   "t": "Thank you, Belle. You did not judge me by my looks. You saw my heart.",
-  "c": "audio/el/beauty_beast/en/prince_7a716ef363.mp3"
+  "c": "audio/el/beauty_beast/en/prince_84ea2c7c9e.mp3"
  },
  "요정이 건 마법이 이제 풀렸어요.": {
   "t": "The fairy's spell is broken at last.",
-  "c": "audio/el/beauty_beast/en/prince_a86b86dc46.mp3"
+  "c": "audio/el/beauty_beast/en/prince_3e6c9eb30a.mp3"
  },
  "아버지와 언니들도 달려왔어요.": {
   "t": "Father and her sisters came running too.",

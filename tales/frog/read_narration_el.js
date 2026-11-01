@@ -21,7 +21,7 @@ Object.assign(NARRATION_CLIPS, {
  "뾰족한 것이 삐죽! 머리 위에 솟은 뿔이었어요.": "audio/el/frog/nar_030ed3297b.mp3",
  "커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.": "audio/el/frog/nar_825fb78579.mp3",
  "아기 개구리들은 헐레벌떡 연못으로 돌아왔어요.": "audio/el/frog/nar_6bff257257.mp3",
- "\"엄마! 산처럼 커다란 괴물을 봤어요!\"": "audio/el/frog/baby_9f6e0970b0.mp3",
+ "\"엄마! 산처럼 커다란 괴물을 봤어요!\"": "audio/el/frog/baby_c6af0ba79d.mp3",
  "아기 개구리들은 부들부들, 아직도 다리가 후들거렸어요.": "audio/el/frog/nar_1ff521bf6b.mp3",
  "엄마개구리가 말했어요. \"흥, 얼마나 컸는데?\"": [
   "audio/el/frog/nar_f86c8e9e4b.mp3",
@@ -45,7 +45,7 @@ Object.assign(NARRATION_CLIPS, {
  "그 뒤, 엄마개구리는 아기들과 황소가 있는 풀밭으로 갔어요.": "audio/el/frog/nar_6cf9cb6ce4.mp3",
  "황소가 몸을 낮추고 다정하게 말했어요. \"크지 않아도 괜찮아. 너는 폴짝 뛰기 선수잖아!\"": [
   "audio/el/frog/nar_106ff3845e.mp3",
-  "audio/el/frog/ox_3db7f0ec30.mp3"
+  "audio/el/frog/ox_4dedef70a5.mp3"
  ],
  "엄마개구리가 폴짝! 풀밭을 가로질러 멀리멀리 뛰었어요.": "audio/el/frog/nar_f44b0ccf87.mp3",
  "황소도 따라 뛰어 볼까요? 하나, 둘…": "audio/el/frog/nar_a2860e4d1d.mp3",

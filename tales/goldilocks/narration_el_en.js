@@ -34,7 +34,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아빠 곰: \"죽이 식을 동안 산책 다녀오자!\"": {
   "t": "Papa Bear: \"Let's go for a walk while the porridge cools!\"",
-  "c": "audio/el/goldilocks/en/dad_0a848e3c59.mp3"
+  "c": "audio/el/goldilocks/en/dad_2056a0ed06.mp3"
  },
  "숲속에는 금빛 머리 골디락스가 살았어요.": {
   "t": "In the woods lived a girl with golden hair, named Goldilocks.",
@@ -195,7 +195,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아빠 곰: \"누가 내 죽을 먹었지?\"": {
   "t": "Papa Bear: \"Who ate my porridge?\"",
-  "c": "audio/el/goldilocks/en/dad_b3cf8d943a.mp3"
+  "c": "audio/el/goldilocks/en/dad_9a662b94a1.mp3"
  },
  "그릇이 뒤죽박죽이에요. 주인을 찾아 줘요!": {
   "t": "The bowls are all mixed up. Help find each bowl's owner!",
@@ -235,7 +235,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아빠 곰: \"내 그릇은 더 커요~\"": {
   "t": "Papa Bear: \"My bowl is bigger~\"",
-  "c": "audio/el/goldilocks/en/dad_91cfe75c74.mp3"
+  "c": "audio/el/goldilocks/en/dad_fe7a7fc11b.mp3"
  },
  "이 작은 그릇은 누구 거예요?": {
   "t": "Whose is this small bowl?",
@@ -291,7 +291,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아빠 곰: \"내 의자는 더 커요~\"": {
   "t": "Papa Bear: \"My chair is bigger~\"",
-  "c": "audio/el/goldilocks/en/dad_68fd236e43.mp3"
+  "c": "audio/el/goldilocks/en/dad_999629590a.mp3"
  },
  "아기 곰: \"으앙, 내 의자가 부서졌어!\"": {
   "t": "Baby Bear: \"Waaah, my chair is broken!\"",
@@ -338,7 +338,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "아빠 곰: \"괜찮아. 다음엔 똑똑 하고 기다려 줘.\"": {
   "t": "Papa Bear: \"It's okay. Next time, knock and wait for us.\"",
-  "c": "audio/el/goldilocks/en/dad_0ceb6c437f.mp3"
+  "c": "audio/el/goldilocks/en/dad_24734ef1dd.mp3"
  },
  "골디락스: \"아기 곰 의자, 같이 고칠래?\"": {
   "t": "Goldilocks: \"Shall we fix Baby Bear's chair together?\"",
@@ -422,12 +422,12 @@ Object.assign(NARRATION_CLIPS_EN, {
  }
 });
 Object.assign(VOICE_LINES_EN, {
- "hi_dad": "audio/el/goldilocks/en/dad_109307612e.mp3",
+ "hi_dad": "audio/el/goldilocks/en/dad_4a4b2af3e1.mp3",
  "hi_mom": "audio/el/goldilocks/en/mom_dc9fbd3a27.mp3",
  "hi_baby": "audio/el/goldilocks/en/baby_45e80a2697.mp3",
- "mine_dad": "audio/el/goldilocks/en/dad_6abfccf360.mp3",
+ "mine_dad": "audio/el/goldilocks/en/dad_12db28c6c2.mp3",
  "mine_mom": "audio/el/goldilocks/en/mom_f99960e8f7.mp3",
- "chair_dad": "audio/el/goldilocks/en/dad_b1e4759102.mp3",
+ "chair_dad": "audio/el/goldilocks/en/dad_25c5fcc036.mp3",
  "chair_mom": "audio/el/goldilocks/en/mom_a613cbf6ee.mp3",
  "cut_hot": "audio/el/goldilocks/en/goldi_4a664870dd.mp3",
  "cut_cold": "audio/el/goldilocks/en/goldi_1ea88cdf50.mp3",

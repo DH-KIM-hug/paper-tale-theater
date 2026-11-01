@@ -43,7 +43,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The wolf slipped out from beside a tree. Little Red Riding Hood, where are you going?",
   "c": [
    "audio/el/red_hood/en/nar_5322cd97f2.mp3",
-   "audio/el/red_hood/en/wolf_5e3cd5cb6b.mp3"
+   "audio/el/red_hood/en/wolf_9a4d19110a.mp3"
   ]
  },
  "\"할머니 댁에 가요.\" 빨간 모자가 대답했어요.": {
@@ -55,7 +55,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"꽃을 따 가면 할머니가 참 좋아하실 텐데~\"": {
   "t": "Grandmother would love it if you picked some flowers~",
-  "c": "audio/el/red_hood/en/wolf_6fb0a9448b.mp3"
+  "c": "audio/el/red_hood/en/wolf_9ed41d178b.mp3"
  },
  "\"좋은 생각이에요!\" 빨간 모자는 엄마와 한 약속을 깜빡하고 말았어요.": {
   "t": "What a good idea! Red Hood forgot her promise to Mother.",
@@ -91,7 +91,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"들어오렴~\" 안에서 쉰 목소리가 들렸어요.": {
   "t": "Come in~ A hoarse voice came from inside.",
   "c": [
-   "audio/el/red_hood/en/wolf_8893f090c5.mp3",
+   "audio/el/red_hood/en/wolf_044a650f7c.mp3",
    "audio/el/red_hood/en/nar_b9ab8710cd.mp3"
   ]
  },
@@ -133,13 +133,13 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"이상한 코골이네? 할머니 댁에 무슨 일이 있나?\" 사냥꾼이 방 안으로 들어왔어요.": {
   "t": "What a strange snore! Is something wrong at Grandmother's house? The hunter came into the room.",
   "c": [
-   "audio/el/red_hood/en/hunter_9497a77903.mp3",
+   "audio/el/red_hood/en/hunter_de565e6aa6.mp3",
    "audio/el/red_hood/en/nar_be79ac4051.mp3"
   ]
  },
  "\"늑대잖아! 이럴 땐 간질간질 간지럼이 최고지!\"": {
   "t": "It's a wolf! At a time like this, a tickle is the best!",
-  "c": "audio/el/red_hood/en/hunter_51ab202335.mp3"
+  "c": "audio/el/red_hood/en/hunter_ce3f2143f2.mp3"
  },
  "늑대가 딸꾹! 하자 할머니가 퐁! 하고 튀어나왔어요. 할머니는 다치지 않고 멀쩡했어요!": {
   "t": "The wolf hiccupped, hic! and Grandmother popped out, pop! Grandmother was not hurt at all!",
@@ -149,7 +149,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The wolf was so startled that Run for your life! and he ran away out the window.",
   "c": [
    "audio/el/red_hood/en/nar_68cc1b9cf6.mp3",
-   "audio/el/red_hood/en/wolf_488e859d99.mp3",
+   "audio/el/red_hood/en/wolf_1f800f7168.mp3",
    "audio/el/red_hood/en/nar_256fdd2744.mp3"
   ]
  },
@@ -205,7 +205,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"네 말을 잘 들으려고 그렇지~\"": {
   "t": "All the better to hear you with~",
-  "c": "audio/el/red_hood/en/wolf_55cce867eb.mp3"
+  "c": "audio/el/red_hood/en/wolf_5fedd32789.mp3"
  },
  "\"할머니, 눈이 왜 이렇게 노랗고 커요?\"": {
   "t": "Grandmother, why are your eyes so big and yellow?",
@@ -213,7 +213,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"너를 잘 보려고 그렇지~\"": {
   "t": "All the better to see you with~",
-  "c": "audio/el/red_hood/en/wolf_d1e70b484e.mp3"
+  "c": "audio/el/red_hood/en/wolf_0923f41626.mp3"
  },
  "\"할머니, 입이 왜 이렇게 길어요?\"": {
   "t": "Grandmother, why is your mouth so long?",
@@ -221,7 +221,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"그건 말이지… 어흥! 놀랐지?\"": {
   "t": "Well, you see... Roar! Did I scare you?",
-  "c": "audio/el/red_hood/en/wolf_bc76bf3114.mp3"
+  "c": "audio/el/red_hood/en/wolf_22408870d7.mp3"
  },
  "사진 속 할머니와 달라 보이는 곳을 톡!": {
   "t": "Tap what looks different from Grandmother in the picture!",

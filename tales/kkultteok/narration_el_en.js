@@ -63,7 +63,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"퐁!\" 은우가 따라 해요.": {
   "t": "Pong! Eunwoo says it too.",
   "c": [
-   "audio/el/kkultteok/en/agi_81bf64c5a6.mp3",
+   "audio/el/kkultteok/en/agi_ba6f09856a.mp3",
    "audio/el/kkultteok/en/nar_7975e0fb27.mp3"
   ]
  },
@@ -250,7 +250,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"첨벙첨벙!\" 이현이도 폴짝 뛰어요.": {
   "t": "Splash, splash! Ihyun jumps too.",
   "c": [
-   "audio/el/kkultteok/en/oppa_85d253e1f5.mp3",
+   "audio/el/kkultteok/en/oppa_7e8be57cee.mp3",
    "audio/el/kkultteok/en/nar_18fc001aab.mp3"
   ]
  },
@@ -297,7 +297,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"으악!\" 삼남매는 서로 꼭 껴안아요.": {
   "t": "Eek! The three kids hug each other tight.",
   "c": [
-   "audio/el/kkultteok/en/oppa_834b0bb3be.mp3",
+   "audio/el/kkultteok/en/oppa_faecc0678a.mp3",
    "audio/el/kkultteok/en/nar_af2e950682.mp3"
   ]
  },
@@ -328,7 +328,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"첨벙!\" 은우가 제일 높이 뛰어요.": {
   "t": "Splash! Eunwoo jumps the highest.",
   "c": [
-   "audio/el/kkultteok/en/agi_1f132900f8.mp3",
+   "audio/el/kkultteok/en/agi_65b388ec29.mp3",
    "audio/el/kkultteok/en/nar_883fdea03e.mp3"
   ]
  },
@@ -394,7 +394,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Eunwoo looks back and waves. Pong!",
   "c": [
    "audio/el/kkultteok/en/nar_416ffbea21.mp3",
-   "audio/el/kkultteok/en/agi_81bf64c5a6.mp3"
+   "audio/el/kkultteok/en/agi_ba6f09856a.mp3"
   ]
  },
  "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.": {
@@ -459,7 +459,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"아기 구름도 자?\"": {
   "t": "Is the baby cloud sleeping too?",
-  "c": "audio/el/kkultteok/en/agi_987651cb38.mp3"
+  "c": "audio/el/kkultteok/en/agi_f13d7955fa.mp3"
  },
  "창밖에서 하얀 아기 구름이 둥실 날아와 달님 앞에 폭신하게 누웠어요.": {
   "t": "Outside the window, the little white cloud floated over and lay down softly in front of the moon.",

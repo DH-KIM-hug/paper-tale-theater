@@ -26,14 +26,14 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어? 이건 뭐지? 폴짝!": {
   "t": "Huh? What's this? Hop!",
-  "c": "audio/el/lion_mouse/en/mouse_03c1bb8baf.mp3"
+  "c": "audio/el/lion_mouse/en/mouse_fe0b6f3750.mp3"
  },
  "와아! 사자 갈기는 커다란 미끄럼틀이었어요. 쭈르륵~ 히히!": {
   "t": "Wheee! The lion's mane was a great big slide. Whoosh! Hee hee!",
   "c": [
-   "audio/el/lion_mouse/en/mouse_d536a30d8f.mp3",
+   "audio/el/lion_mouse/en/mouse_640899c77e.mp3",
    "audio/el/lion_mouse/en/nar_1bae45f158.mp3",
-   "audio/el/lion_mouse/en/mouse_020e5c2afd.mp3"
+   "audio/el/lion_mouse/en/mouse_653a2b5ff4.mp3"
   ]
  },
  "어? 사자가 눈을 떴어요!": {
@@ -48,14 +48,14 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The lion yawned and said, \"Haaah... shall I gobble you up in one bite?\"",
   "c": [
    "audio/el/lion_mouse/en/nar_1bcf0c6257.mp3",
-   "audio/el/lion_mouse/en/lion_c89998f437.mp3"
+   "audio/el/lion_mouse/en/lion_2d1109934b.mp3"
   ]
  },
  "생쥐가 말했어요. \"살려 주시면 꼭 은혜 갚을게요!\"": {
   "t": "The mouse said, \"If you let me go, I promise I'll pay you back!\"",
   "c": [
    "audio/el/lion_mouse/en/nar_c9a018074a.mp3",
-   "audio/el/lion_mouse/en/mouse_b5d857c8d6.mp3"
+   "audio/el/lion_mouse/en/mouse_a6e2e1cadf.mp3"
   ]
  },
  "생쥐를 톡 눌러서 부탁해 봐요.": {
@@ -70,12 +70,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The mouse put both hands together. \"Please, Lion, please!\"",
   "c": [
    "audio/el/lion_mouse/en/nar_810e3a83ee.mp3",
-   "audio/el/lion_mouse/en/mouse_0baaf23c82.mp3"
+   "audio/el/lion_mouse/en/mouse_944a7073d9.mp3"
   ]
  },
  "\"네가? 나를 도와준다고?\"": {
   "t": "\"You? You'll help me?\"",
-  "c": "audio/el/lion_mouse/en/lion_5796fea14a.mp3"
+  "c": "audio/el/lion_mouse/en/lion_c2168b92bd.mp3"
  },
  "사자가 웃다가 앞발이 스르르 열렸어요. 앞발을 톡 눌러 봐요!": {
   "t": "The lion laughed, and the big paw slowly opened. Tap the paw!",
@@ -89,7 +89,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The mouse slipped right out. \"Thank you, Lion!\"",
   "c": [
    "audio/el/lion_mouse/en/nar_b018e89cbb.mp3",
-   "audio/el/lion_mouse/en/mouse_fea627cbca.mp3"
+   "audio/el/lion_mouse/en/mouse_d6a2e7672b.mp3"
   ]
  },
  "사자 발과 생쥐를 나란히 놓아 볼까요?": {
@@ -182,7 +182,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"사자님, 제가 도와 드릴게요!\"": {
   "t": "\"Lion, I'll help you!\"",
-  "c": "audio/el/lion_mouse/en/mouse_690bd734ac.mp3"
+  "c": "audio/el/lion_mouse/en/mouse_864e847dec.mp3"
  },
  "생쥐가 작은 이빨로 그물을 갉아요. 톡톡 눌러서 한 줄씩 끊어 봐요!": {
   "t": "The mouse gnaws the net with tiny teeth. Tap, tap to cut one rope at a time!",
@@ -242,17 +242,17 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"고마워, 작은 친구. 작은 이빨이 나를 구해 줬구나!\"": {
   "t": "\"Thank you, little friend. Your tiny teeth saved me!\"",
-  "c": "audio/el/lion_mouse/en/lion_2f4407ef2c.mp3"
+  "c": "audio/el/lion_mouse/en/lion_c940641453.mp3"
  },
  "\"제가 은혜 갚는다고 했지요?\"": {
   "t": "\"Didn't I say I'd pay you back?\"",
-  "c": "audio/el/lion_mouse/en/mouse_f563b7b4ba.mp3"
+  "c": "audio/el/lion_mouse/en/mouse_e95cbb928e.mp3"
  },
  "다음 날 아침, 사자가 생쥐를 등에 태웠어요. \"꽉 잡아!\"": {
   "t": "The next morning, the lion put the mouse on its back. \"Hold tight!\"",
   "c": [
    "audio/el/lion_mouse/en/nar_e9b3dbe0e0.mp3",
-   "audio/el/lion_mouse/en/lion_1fcb10d4f1.mp3"
+   "audio/el/lion_mouse/en/lion_cb52485e60.mp3"
   ]
  },
  "톡톡 눌러서 달려요!": {
@@ -263,7 +263,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "They race across the meadow through the wind! Yippee!",
   "c": [
    "audio/el/lion_mouse/en/nar_8d152dc974.mp3",
-   "audio/el/lion_mouse/en/mouse_5158207fb0.mp3"
+   "audio/el/lion_mouse/en/mouse_acba5ccdda.mp3"
   ]
  },
  "사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!": {
@@ -284,9 +284,9 @@ Object.assign(NARRATION_CLIPS_EN, {
  }
 });
 Object.assign(VOICE_LINES_EN, {
- "cut_paw": "audio/el/lion_mouse/en/mouse_b3567ed31a.mp3",
- "cut_laugh": "audio/el/lion_mouse/en/lion_51a85e9fbb.mp3",
- "cut_net": "audio/el/lion_mouse/en/lion_5bf84e6ebe.mp3",
- "hi_mouse": "audio/el/lion_mouse/en/mouse_abbf9d6905.mp3",
- "hi_lion": "audio/el/lion_mouse/en/lion_726e296c38.mp3"
+ "cut_paw": "audio/el/lion_mouse/en/mouse_6dbe1e7435.mp3",
+ "cut_laugh": "audio/el/lion_mouse/en/lion_e70f87f667.mp3",
+ "cut_net": "audio/el/lion_mouse/en/lion_72e6b94083.mp3",
+ "hi_mouse": "audio/el/lion_mouse/en/mouse_b1cec9bab4.mp3",
+ "hi_lion": "audio/el/lion_mouse/en/lion_f81906fe91.mp3"
 });

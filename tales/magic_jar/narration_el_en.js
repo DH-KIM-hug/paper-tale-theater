@@ -174,7 +174,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The kind farmer said with a smile. \"Please use it, and bring it back!\"",
   "c": [
    "audio/el/magic_jar/en/nar_bc2508de20.mp3",
-   "audio/el/magic_jar/en/farmer_b8e10a607e.mp3",
+   "audio/el/magic_jar/en/farmer_e2ff6a88ba.mp3",
    "audio/el/magic_jar/en/nar_fcbaeb60ba.mp3"
   ]
  },
@@ -215,7 +215,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then the rich man's father came and peeked into the jar. What is this?",
   "c": [
    "audio/el/magic_jar/en/nar_4b95901c3a.mp3",
-   "audio/el/magic_jar/en/father_52ee320ad6.mp3"
+   "audio/el/magic_jar/en/father_8681901004.mp3"
   ]
  },
  "풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.": {
@@ -240,15 +240,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"내가 진짜 아버지다!\" \"아니야, 내가 진짜야!\" 모두 서로 자기가 진짜라고 우겼어요.": {
   "t": "I am the real father! No, I am the real one! Each one insisted he was the real father.",
   "c": [
-   "audio/el/magic_jar/en/father_135d1b2926.mp3",
-   "audio/el/magic_jar/en/father_cb822b1f8b.mp3",
+   "audio/el/magic_jar/en/father_cc37b31d46.mp3",
+   "audio/el/magic_jar/en/father_29977fa96d.mp3",
    "audio/el/magic_jar/en/nar_6a8dc1c953.mp3"
   ]
  },
  "\"배고프다! 밥 줘라!\" 부자는 쟁반을 들고 이리저리 뛰어다녔어요.": {
   "t": "I am hungry! Give me food! The rich man ran around with a tray.",
   "c": [
-   "audio/el/magic_jar/en/father_b98d482d43.mp3",
+   "audio/el/magic_jar/en/father_24e37ce7f3.mp3",
    "audio/el/magic_jar/en/nar_9cd9b0bf80.mp3"
   ]
  },

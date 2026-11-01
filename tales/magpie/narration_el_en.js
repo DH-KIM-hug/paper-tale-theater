@@ -18,7 +18,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "안 돼! 내가 아기 까치들을 지켜 줄게.": {
   "t": "Oh no! I will keep the baby magpies safe.",
-  "c": "audio/el/magpie/en/sch_f4e2d03806.mp3"
+  "c": "audio/el/magpie/en/sch_52dd6eb1da.mp3"
  },
  "선비가 활을 꺼냈어요. 선비를 톡 눌러 봐요.": {
   "t": "The scholar took out his bow. Tap the scholar.",
@@ -36,7 +36,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Thank you, kind scholar! We will repay your kindness, we promise.",
   "c": [
    "audio/el/magpie/en/mom_1c5c268d72.mp3",
-   "audio/el/magpie/en/dad_1b7856bf24.mp3"
+   "audio/el/magpie/en/dad_e25364c591.mp3"
   ]
  },
  "둥지 안에서 아기 까치들이 고개를 쏙 내밀었어요.": {
@@ -101,7 +101,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "오늘 밤은 어디서 자지? …어, 저기 불빛이!": {
   "t": "Where will I sleep tonight? ...Oh, a light over there!",
-  "c": "audio/el/magpie/en/sch_66861ce8d4.mp3"
+  "c": "audio/el/magpie/en/sch_7764a1f9f5.mp3"
  },
  "깊은 산속 외딴집에서 한 여인이 나왔어요.": {
   "t": "A woman came out of a lonely house deep in the mountains.",
@@ -113,7 +113,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "고맙습니다. 하룻밤만 신세 질게요.": {
   "t": "Thank you. Just for one night, if I may.",
-  "c": "audio/el/magpie/en/sch_c40699ca0c.mp3"
+  "c": "audio/el/magpie/en/sch_e02e04c5cd.mp3"
  },
  "선비는 따뜻한 방에서 금세 잠이 들었어요.": {
   "t": "In the warm room, the scholar soon fell asleep.",
@@ -137,7 +137,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "저는 그저 아기 까치들을 지키려 했을 뿐이에요. 제발 보내 주세요.": {
   "t": "I only wanted to protect the baby magpies. Please, let me go.",
-  "c": "audio/el/magpie/en/sch_b4b6c5a416.mp3"
+  "c": "audio/el/magpie/en/sch_fbf42e7536.mp3"
  },
  "좋아. 새벽이 오기 전에 저 산 위 절의 종이 세 번 울리면, 너를 놓아주마.": {
   "t": "Very well. If the temple bell on the mountain rings three times before dawn, I will let you go.",
@@ -149,7 +149,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "종소리… 종이 울려야 해. 어떡하지…": {
   "t": "The bell... the bell has to ring. What can I do...",
-  "c": "audio/el/magpie/en/sch_64d52f541a.mp3"
+  "c": "audio/el/magpie/en/sch_4fc37a8dd7.mp3"
  },
  "그때, 큰 소나무 둥지의 까치 가족은 잠들지 못하고 있었어요.": {
   "t": "Meanwhile, in the nest in the big pine tree, the magpie family could not sleep.",
@@ -161,7 +161,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "종! 절의 종을 울리면 돼요. 우리가 날아가요!": {
   "t": "The bell! We just have to ring the temple bell. Let's fly!",
-  "c": "audio/el/magpie/en/dad_5aecff1da6.mp3"
+  "c": "audio/el/magpie/en/dad_6e02e52bbc.mp3"
  },
  "아기들아, 둥지에서 꼭 기다리렴.": {
   "t": "Little ones, wait right here in the nest.",
@@ -181,7 +181,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "종을 쳐야 해. 우리 머리로, 온 힘을 다해!": {
   "t": "We must strike the bell. With our heads, with all our might!",
-  "c": "audio/el/magpie/en/dad_d858f48901.mp3"
+  "c": "audio/el/magpie/en/dad_c58b6f4689.mp3"
  },
  "종을 톡 눌러 봐요.": {
   "t": "Tap the bell.",
@@ -225,7 +225,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "종소리… 누가 종을 울렸을까? 가 봐야겠어!": {
   "t": "The bell... who could have rung it? I must go and see!",
-  "c": "audio/el/magpie/en/sch_3b89d69531.mp3"
+  "c": "audio/el/magpie/en/sch_a82843b3dc.mp3"
  },
  "선비는 산 위 절로 달려갔어요.": {
   "t": "The scholar ran up to the temple on the mountain.",
@@ -237,7 +237,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "까치야… 너희였구나. 나를 구하려고…": {
   "t": "Magpies... it was you. You did this to save me...",
-  "c": "audio/el/magpie/en/sch_1cfc54f2e1.mp3"
+  "c": "audio/el/magpie/en/sch_0bf1ca5f6f.mp3"
  },
  "선비는 까치들을 품에 안고, 시원한 물을 한 모금씩 먹여 주었어요.": {
   "t": "The scholar held the magpies gently and gave them each a sip of cool water.",
@@ -249,7 +249,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "은혜를 갚았으니, 이제 됐어요.": {
   "t": "We have repaid your kindness. That is enough.",
-  "c": "audio/el/magpie/en/dad_24614c15c2.mp3"
+  "c": "audio/el/magpie/en/dad_eb816722a7.mp3"
  },
  "그때 아기 까치들이 짹짹 울며 날아왔어요.": {
   "t": "Just then, the baby magpies came flying, chirping all the way.",
@@ -265,7 +265,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "고마워, 까치들아. 너희 마음, 평생 잊지 않을게.": {
   "t": "Thank you, magpies. I will never forget what you did for me.",
-  "c": "audio/el/magpie/en/sch_9f63dc77ea.mp3"
+  "c": "audio/el/magpie/en/sch_783ac2aca9.mp3"
  },
  "은혜를 잊지 않고 갚는 마음은, 이렇게 따뜻해요.": {
   "t": "A heart that remembers kindness and gives it back is as warm as this.",

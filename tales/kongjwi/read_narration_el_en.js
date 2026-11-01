@@ -15,7 +15,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"콩쥐야, 마당을 쓸어라!\" 새엄마가 말했어요.": {
   "t": "Kongjwi, sweep the yard! said her stepmother.",
   "c": [
-   "audio/el/kongjwi/en/step_2af1787857.mp3",
+   "audio/el/kongjwi/en/step_7b4248d71e.mp3",
    "audio/el/kongjwi/en/nar_8e73cd0ced.mp3"
   ]
  },
@@ -34,7 +34,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"이 밭을 다 갈아 놓아라!\" 새엄마가 말했어요.": {
   "t": "Plow this whole field! said her stepmother.",
   "c": [
-   "audio/el/kongjwi/en/step_9c385d3976.mp3",
+   "audio/el/kongjwi/en/step_75afca88c1.mp3",
    "audio/el/kongjwi/en/nar_8e73cd0ced.mp3"
   ]
  },
@@ -50,7 +50,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then a black ox appeared. Moo! I will help you!",
   "c": [
    "audio/el/kongjwi/en/nar_750b65c979.mp3",
-   "audio/el/kongjwi/en/ox_ea5e000caa.mp3"
+   "audio/el/kongjwi/en/ox_a0aa490658.mp3"
   ]
  },
  "소가 쑥쑥 밭을 갈아 주었어요. \"고마워, 소야!\"": {
@@ -67,7 +67,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"이 독에 물을 가득 채워라!\" 새엄마가 말했어요.": {
   "t": "Fill this big jar with water! said her stepmother.",
   "c": [
-   "audio/el/kongjwi/en/step_a3c328d8bf.mp3",
+   "audio/el/kongjwi/en/step_d966fac8a7.mp3",
    "audio/el/kongjwi/en/nar_8e73cd0ced.mp3"
   ]
  },
@@ -116,7 +116,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"겉겨를 벗겨서 쌀을 가져오너라!\" 새엄마가 말했어요.": {
   "t": "Peel the husks and bring me the rice! said her stepmother.",
   "c": [
-   "audio/el/kongjwi/en/step_bb838bbff2.mp3",
+   "audio/el/kongjwi/en/step_4b4f44c965.mp3",
    "audio/el/kongjwi/en/nar_8e73cd0ced.mp3"
   ]
  },
@@ -260,7 +260,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"콩쥐야, 그동안 미안했어.\" 새엄마와 팥쥐가 고개를 숙였어요.": {
   "t": "Kongjwi, I am sorry for everything. Her stepmother and Patjwi bowed their heads.",
   "c": [
-   "audio/el/kongjwi/en/step_2235070878.mp3",
+   "audio/el/kongjwi/en/step_28024c9bd0.mp3",
    "audio/el/kongjwi/en/nar_014caa45df.mp3"
   ]
  },
