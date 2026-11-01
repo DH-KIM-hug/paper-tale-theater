@@ -360,7 +360,7 @@
       scene('queen_room_v2');
       castleBack();
       put(T, mirror, X(250, 385), MY);
-      put(T, queen, X(470, 560), 528, { look: 'mirror', to: 'left' });
+      put(T, queen, X(470, 560), 528, { look: 'mirror', to: 'left', s: 1.2 });   // 큰 거울·창 옆에서 작아 보여 1.2배(2026-11-01 사용자 크기 점검). 왕비는 이 방에만 나온다
       const f = mirrorFace(T, X(250, 385), MCY);
       castleFront();
       return f;

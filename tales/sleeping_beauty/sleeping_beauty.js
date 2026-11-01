@@ -235,9 +235,12 @@
     return a;
   }
   const prop = (T, f, h) => mk(T, { a: [f, h] });
+  /* 실내 장면별 사람 배율(2026-11-01 사용자 크기 점검): 아기 방·부엌은 창·벽난로에 견줘 사람이 작아 보였다. 사람(a.big)만 키우고 소품은 그대로 */
+  const SCN = { sb_bg_room_v2: 1.12, sb_bg_kitchen_v2: 1.2 };   // 가로 화면만. 세로는 인물이 이미 촘촘해 키우면 서로 겹친다(아기 방 요정 여섯·왕, 부엌 왕자·식탁·요리사)
+  let SC = 1;
   function put(T, a, x, y, { look, to, s = 1 } = {}) {
     T.world.appendChild(a.pos); a.pos.getAnimations().forEach(n => n.cancel()); a.pos.style.display = ''; a.pos.style.opacity = ''; a.pos.style.translate = '';
-    a.setScale(s); if (look) a.look(look, to); else if (to) a.turn(to);
+    a.setScale(s * (a.big ? SC : 1)); if (look) a.look(look, to); else if (to) a.turn(to);
     a.place(x, y); a.body.style.transform = ''; a.body.style.filter = '';
     return a;
   }
@@ -490,7 +493,8 @@
         flicker(mid(L.candle_stand, X(60, 330), FL)); flicker(mid(L.candle_stand2, X(940, 670), FL));
       }
     }
-    const setBg = key => { bgAmb(key); T.clear(); bgImage(T, key); dress(key); };
+    [pr, king, queen, ...fairies, young, old, granny, prince, grandpa, maid, guardA, guardB, cook, kid].forEach(a => { a.big = 1; });
+    const setBg = key => { SC = P ? 1 : SCN[key] || 1; bgAmb(key); T.clear(); bgImage(T, key); dress(key); };
     T.director({ cast: { king, queen, princess: pr, fred: fairies[0], forange: fairies[1], fyellow: fairies[2], fgreen: fairies[3], fblue: fairies[4], fpurple: fairies[5], young, old, granny, prince, grandpa },
                  noFace: ['king', 'queen', 'princess', 'fred', 'forange', 'fyellow', 'fgreen', 'fblue', 'fpurple', 'young', 'old', 'granny', 'prince', 'grandpa'] });
     const PEEK_DX = -(curtain.w / 2 + 25);

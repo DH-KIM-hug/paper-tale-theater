@@ -35,11 +35,12 @@
   /* 무대 좌표 (발 기준 y=520) */
   /* 2026-10-23 스케일 점검: 부엌 배우가 커져서 ① 물독 옆(1) 335→370 (자라가 호랑이에 가리지 않게) ② 문(4) 885→855 (꼬리가 무대 밖으로 잘리지 않게)
      ③ 할멈 구석 620→660 (넘어진 호랑이 꼬리와 겹치지 않게) */
-  const POS = { tigerEnter: 1080, tigerStage: [270, 370, 430, 470, 855, 560, 640], grannyCook: 250, grannyCorner: 660, rolledSpot: 560 };
+  /* 2026-11-01: 부엌 배우를 1.8배로 키워 문(4) 855→815 (커진 호랑이 꼬리가 오른쪽 끝에서 잘렸다) */
+  const POS = { tigerEnter: 1080, tigerStage: [270, 370, 430, 470, 815, 560, 640], grannyCook: 250, grannyCorner: 660, rolledSpot: 560 };
   /* 2026-10-24 사용자 지시(§5-1): 할멈이 장면 안에서 왔다 갔다 돌지 않게 한 방향으로 둔다. 할멈 그림은 모두 왼쪽을 보고 그려져 있다.
      밭(A): 오른쪽(호랑이가 오고 사라지는 산길 쪽) · 동짓날 저녁 부엌(B1, 친구들이 오른쪽 부엌문으로 하나씩 온다): 오른쪽, 알밤이 올 때만 왼쪽(아궁이) */
   const GRANNY_FACE = { A: 'right', B1: 'right', B2: 'right' };
-  const STATION_CAM = [[240, 430, 1.5], [320, 430, 1.5], [420, 440, 1.4], [470, 450, 1.5], [860, 380, 1.32], [560, 440, 1.35], [640, 450, 1.3]];
+  const STATION_CAM = [[240, 430, 1.5], [320, 430, 1.5], [420, 440, 1.4], [470, 450, 1.5], [820, 380, 1.32], [560, 440, 1.35], [640, 450, 1.3]];
   const DOOR_X = { B1: 885, B2: 112 };
   const FRIEND_SET = { bam: 'B1', jara: 'B1', ddong: 'B1', songgot: 'B1', jeolgu: 'B1', myeongseok: 'B2', jige: 'B2' };
   /* 친구 자리 (발끝) · 그림 상자 [x, y, w, h] · 그림자 반지름 */
@@ -54,7 +55,8 @@
   };
   /* 2026-10-23 배경·스케일 점검: 부엌(B1) 1.25 → 1.45 — 할멈 키가 부엌문 높이의 약 0.75, 마당(B2)과 같은 크기(§4-1).
      호랑이는 할멈보다 조금 크게(TIGER_K): 선 그림 키 105 → 116 (할멈 116)·몸길이는 할멈 폭의 2배, 부엌문보다는 작다 */
-  const ACTOR_SCALE = { A: 2.1, B1: 1.45, B2: 1.45 };
+  /* 2026-11-01 사용자 크기 점검: 부엌 그림이 바뀌어 문이 높아져 할멈이 문의 0.6쯤으로 작아 보였다 → 부엌(B1) 1.45 → 1.8 (문의 약 0.75) */
+  const ACTOR_SCALE = { A: 2.1, B1: 1.8, B2: 1.45 };
   const TIGER_K = 1.1;
   /* 멍석말이 그림(마당에서만): 머리 크기를 마당의 선 호랑이와 같게 (볼 지름으로 잼: 멍석말이 그림 머리가 선 그림의 1.19배) */
   const ROLLED_S = ACTOR_SCALE.B2 * TIGER_K * 0.84;
@@ -620,7 +622,9 @@
           sfx('whistle_up', .7);
           return anim(tiger.body, [{ transform: 'translateY(0px)' }, { transform: 'translateY(-120px)', offset: .5 }, { transform: 'translateY(0px)' }], { duration: 520, easing: 'ease-in-out' });
         });
-        await Promise.all([walk(tiger, POS.tigerStage[4], 360), over]);
+        // 커진 호랑이(부엌 1.8배)가 문 앞에 서면 구석의 할멈과 겹쳐서, 뛰어넘은 뒤 할멈이 왼쪽으로 비켜선다(2026-11-01)
+        const aside = over.then(() => granny.pos.style.display !== 'none' && walk(granny, POS.grannyCorner - 110, 300).then(() => faceTo(granny, tiger)));
+        await Promise.all([walk(tiger, POS.tigerStage[4], 360), over, aside]);
       },
       5: () => walk(tiger, POS.tigerStage[5], 260),
       6: () => walk(tiger, POS.tigerStage[6], 260),
