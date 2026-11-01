@@ -361,11 +361,13 @@
 
           renderer.render(scene, camera);
           if (clock >= finishAt && !ended) { ended = true; resolve(); return; }
-          raf = requestAnimationFrame(frame);
+          raf = requestAnimationFrame(safe);
         };
-        raf = requestAnimationFrame(t => { last = t; frame(t); });
+        /* 한 프레임에서 오류가 나면 rAF 가 멈춰 덮개(overlay)가 끝 화면 단추를 영영 가렸다(2026-11-01 사탕 마녀: 홈·한 번 더가 안 눌림) → 오류면 바로 끝낸다 */
+        const safe = now => { try { frame(now); } catch (e) { console.warn('[Reward3D] 프레임 오류 → 끝냄', e); ended = true; resolve(); } };
+        raf = requestAnimationFrame(t => { last = t; safe(t); });
       });
-      await done;
+      await Promise.race([done, new Promise(r => setTimeout(r, 15000))]);   // 화면이 멈춰 rAF 가 안 돌아도 15초 뒤에는 덮개를 걷는다
       const stats = { frames, avgMs: frames > 1 ? +(sumDt / (frames - 1) * 1000).toFixed(2) : 0, maxMs: +(maxDt * 1000).toFixed(1), calm };
       Reward3D.lastStats = stats;
       cleanup();

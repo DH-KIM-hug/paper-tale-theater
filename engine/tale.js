@@ -1726,7 +1726,7 @@ const Tale = (() => {
     if (typeof Reward3D !== 'undefined') return Promise.resolve();
     return new Promise(res => {
       const sc = document.createElement('script');
-      sc.src = ROOT_URL + 'engine/reward3d.js?v=20261028pz1';
+      sc.src = ROOT_URL + 'engine/reward3d.js?v=20261101safe1';
       sc.onload = sc.onerror = () => res();
       document.head.appendChild(sc);
       setTimeout(res, 2500);
