@@ -19,7 +19,7 @@
      창문 안(식탁)은 새 그림의 잔치 음식이 식탁 앞 오림(POV_TABLE)과 맞지 않아 옛 그림. 담장·지붕은 그대로 */
   const BG = {
     mill: 'v3w/br_bg_mill_v2.webp', road: 'v3w/br_bg_road_v2.webp', wall: 'v3w/br_bg_wall.webp', roof: 'v3w/br_bg_roof.webp', meadow: 'v3w/br_bg_meadow_v2.webp',
-    forest: 'v3w/br_bg_forest_night.webp', house_low: 'v3w/br_lb_window_glow_v3.webp', house_pov: 'v3w/br_bg_house_pov.webp',
+    forest: 'v3w/br_bg_forest_night.webp', house_low: 'v3w/br_lb_window_glow_v4.webp', house_pov: 'v3w/br_bg_house_pov.webp',
     house_wide: 'v3w/br_lb_house_burst.webp', morning: 'v3w/br_bg_morning_v2.webp', walk_lb: 'v3w/br_lb_walk_moon.webp',
     darkroom: 'v3w/br_bg_darkroom.webp', // 2026-10-29 캄캄한 집 안(코드 도형이던 배경)
     walk: 'v3w/br2_bg_walk.webp', // 2026-10-21 밤 숲길 (옆에서 본 평평한 길: 걷는 동물이 길 위에 선다)
@@ -35,7 +35,7 @@
     robber_red: 'v3w/br_robber_red.webp', robber_green: 'v3w/br_robber_green.webp', robber_brown: 'v3w/br_robber_brown.webp',
     cut_crash: 'v3w/br_cut_crash5.webp', cut_monster: 'v3w/br_cut_monster.webp', cut_ghost: 'v3w/br_cut_ghost3.webp',
     // 빛 상자 탑 장면(7장)에서만 쓰는 실루엣 동물(VISUAL_PLAN §4-4): 기존 그림과 같은 자세·방향, 눈 구멍 하나
-    donkey_sil: 'v3w/br_lb_sil_donkey.webp', dog_sil: 'v3w/br_lb_sil_dog.webp', cat_sil: 'v3w/br_lb_sil_cat.webp', rooster_sil: 'v3w/br_lb_sil_rooster.webp',
+    donkey_sil: 'v3w/br_lb_sil_donkey_v2.webp', dog_sil: 'v3w/br_lb_sil_dog_v2.webp', cat_sil: 'v3w/br_lb_sil_cat_v2.webp', rooster_sil: 'v3w/br_lb_sil_rooster_v2.webp',
     drum: 'v3w/br_drum.webp', horn: 'v3w/br_horn.webp', fiddle: 'v3w/br_fiddle.webp', bell: 'v3w/br_bell.webp', // 우리 집 악기 (바이올린 옆에 따로 그려진 리본 조각은 지움)
     eyes: 'v3w/br_eyes.webp', note: 'v3w/cm_note.webp', dizzy: 'v3w/cm_dizzy_stars.webp', badge: 'v3w/cm_badge_plate.webp', // 2026-10-29 코드 도형 → 그림
   };
@@ -429,11 +429,11 @@
     el('rect', { x: -400, y: -400, width: 1800, height: 1400, fill: C.indigo, opacity: .45 }, b);
     return { trees, path };
   }
-  /* 빛 상자 탑 장면 앞층: 같은 배경 그림 아래 모서리의 짙은 풀 실루엣만 오려 둔 그림(그림 y 722~902)을 배우 앞(T.fx)에 한 번 더. 누름 없음 */
+  /* 빛 상자 탑 장면 앞층: 진짜 빛 상자 판(2026-11-01, 흰 종이 층에 뒤에서 빛을 입힌 그림)의 맨 앞 풀 층(그림 y 600~902)을 배우 앞(T.fx)에 얹는다. 누름 없음 */
   function lowFront(T) {
     if (!bgUrl('house_low')) return;
     const k = BGBOX.h / 902, g = T.el('g', { style: 'pointer-events:none' }, T.fx);
-    T.el('image', { href: AS + 'v3w/br_lb_window_grass.webp', x: BGBOX.x, y: BGBOX.y + 722 * k, width: BGBOX.w, height: 180 * k, preserveAspectRatio: 'none' }, g);
+    T.el('image', { href: AS + 'v3w/br_lb_window_grass_v2.webp', x: BGBOX.x, y: BGBOX.y + 600 * k, width: BGBOX.w, height: 302 * k, preserveAspectRatio: 'none' }, g);
   }
   /* 그림 벽의 높은 창(2026-10-21 새 그림에서 다시 쟀다): 유리 x 657..818, 위는 화면 밖에서 시작해 아래 y 180, 창턱 아래 y 222, 가운데 x≈737 */
   const LOW_WIN = { x0: 657, x1: 818, y0: -24, y1: 180 };

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "brl_far",
+    "refs": [
+      "assets/raw/br_lb2/ref/bg.png"
+    ],
+    "prompt": "Keep EXACTLY the same composition, positions and proportions as the reference image (a night yard below a house wall with a tall four-pane window at upper right, moon upper left), but draw ONLY this layer: the FAR layer: the big leafy tree on the upper left and the rounded bushes on the left and right sides behind the yard, cut as lacy paper with many small leaf holes; the round MOON is an empty circular hole (magenta). The house wall area and the sky are magenta. Plain WHITE paper only, single flat sheet cut with a craft knife, softly front-lit so it reads as white paper with subtle fiber texture and faint grey shadow along cut edges. Everything that is not this paper layer is perfectly FLAT solid magenta #FF00FF (including inside every hole) for chroma keying. No color on the paper, no faces, no text, no outlines, no box, no frame.",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "out": "assets/raw/br_lb2/brl_far.png"
+  },
+  {
+    "id": "brl_wall",
+    "refs": [
+      "assets/raw/br_lb2/ref/bg.png"
+    ],
+    "prompt": "Keep EXACTLY the same composition, positions and proportions as the reference image (a night yard below a house wall with a tall four-pane window at upper right, moon upper left), but draw ONLY this layer: the HOUSE WALL layer: the wall covering the upper-middle and right part of the frame down to the low stone ledge, with the tall window cut out as FOUR open pane holes (magenta) separated by thin paper window bars and a frame and sill, a few small rectangular brick shapes cut as thin outline slits, climbing ivy leaves along the right edge cut lacy. The sky at upper left and the yard below the ledge are magenta. Plain WHITE paper only, single flat sheet cut with a craft knife, softly front-lit so it reads as white paper with subtle fiber texture and faint grey shadow along cut edges. Everything that is not this paper layer is perfectly FLAT solid magenta #FF00FF (including inside every hole) for chroma keying. No color on the paper, no faces, no text, no outlines, no box, no frame.",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "out": "assets/raw/br_lb2/brl_wall.png"
+  },
+  {
+    "id": "brl_ground",
+    "refs": [
+      "assets/raw/br_lb2/ref/bg.png"
+    ],
+    "prompt": "Keep EXACTLY the same composition, positions and proportions as the reference image (a night yard below a house wall with a tall four-pane window at upper right, moon upper left), but draw ONLY this layer: the YARD GROUND layer: only the flat ground of the yard from the stone ledge down to the bottom of the frame, with a few small cut grass tufts and two small stones along the ledge, small dotted perforations scattered in the ground. Everything above the ledge is magenta. Plain WHITE paper only, single flat sheet cut with a craft knife, softly front-lit so it reads as white paper with subtle fiber texture and faint grey shadow along cut edges. Everything that is not this paper layer is perfectly FLAT solid magenta #FF00FF (including inside every hole) for chroma keying. No color on the paper, no faces, no text, no outlines, no box, no frame.",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "out": "assets/raw/br_lb2/brl_ground.png"
+  },
+  {
+    "id": "brl_front",
+    "refs": [
+      "assets/raw/br_lb2/ref/bg.png"
+    ],
+    "prompt": "Keep EXACTLY the same composition, positions and proportions as the reference image (a night yard below a house wall with a tall four-pane window at upper right, moon upper left), but draw ONLY this layer: the FRONT layer: only the tall dark grass clumps in the bottom-left and bottom-right corners, made lacy with fine blades and small seed-head holes. Everything else is magenta. Plain WHITE paper only, single flat sheet cut with a craft knife, softly front-lit so it reads as white paper with subtle fiber texture and faint grey shadow along cut edges. Everything that is not this paper layer is perfectly FLAT solid magenta #FF00FF (including inside every hole) for chroma keying. No color on the paper, no faces, no text, no outlines, no box, no frame.",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "out": "assets/raw/br_lb2/brl_front.png"
+  },
+  {
+    "id": "brl_donkey",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/br_lb2/ref/donkey.png"
+    ],
+    "prompt": "Paper puppet of a donkey. Same exact pose, direction, size and outline as the reference silhouette, now as a WHITE paper puppet cut-out with decorative knife-cut perforations inside the body (small leaf shapes, dots and short curved slits following the fur or feathers), and one small round eye hole. Centered, same framing as the reference. Plain WHITE paper only, single flat sheet cut with a craft knife, softly front-lit so it reads as white paper with subtle fiber texture and faint grey shadow along cut edges. Everything that is not this paper layer is perfectly FLAT solid magenta #FF00FF (including inside every hole) for chroma keying. No color on the paper, no faces, no text, no outlines, no box, no frame.",
+    "out": "assets/raw/br_lb2/brl_donkey.png"
+  },
+  {
+    "id": "brl_dog",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/br_lb2/ref/dog.png"
+    ],
+    "prompt": "Paper puppet of a dog. Same exact pose, direction, size and outline as the reference silhouette, now as a WHITE paper puppet cut-out with decorative knife-cut perforations inside the body (small leaf shapes, dots and short curved slits following the fur or feathers), and one small round eye hole. Centered, same framing as the reference. Plain WHITE paper only, single flat sheet cut with a craft knife, softly front-lit so it reads as white paper with subtle fiber texture and faint grey shadow along cut edges. Everything that is not this paper layer is perfectly FLAT solid magenta #FF00FF (including inside every hole) for chroma keying. No color on the paper, no faces, no text, no outlines, no box, no frame.",
+    "out": "assets/raw/br_lb2/brl_dog.png"
+  },
+  {
+    "id": "brl_cat",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/br_lb2/ref/cat.png"
+    ],
+    "prompt": "Paper puppet of a cat. Same exact pose, direction, size and outline as the reference silhouette, now as a WHITE paper puppet cut-out with decorative knife-cut perforations inside the body (small leaf shapes, dots and short curved slits following the fur or feathers), and one small round eye hole. Centered, same framing as the reference. Plain WHITE paper only, single flat sheet cut with a craft knife, softly front-lit so it reads as white paper with subtle fiber texture and faint grey shadow along cut edges. Everything that is not this paper layer is perfectly FLAT solid magenta #FF00FF (including inside every hole) for chroma keying. No color on the paper, no faces, no text, no outlines, no box, no frame.",
+    "out": "assets/raw/br_lb2/brl_cat.png"
+  },
+  {
+    "id": "brl_rooster",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/br_lb2/ref/rooster.png"
+    ],
+    "prompt": "Paper puppet of a rooster. Same exact pose, direction, size and outline as the reference silhouette, now as a WHITE paper puppet cut-out with decorative knife-cut perforations inside the body (small leaf shapes, dots and short curved slits following the fur or feathers), and one small round eye hole. Centered, same framing as the reference. Plain WHITE paper only, single flat sheet cut with a craft knife, softly front-lit so it reads as white paper with subtle fiber texture and faint grey shadow along cut edges. Everything that is not this paper layer is perfectly FLAT solid magenta #FF00FF (including inside every hole) for chroma keying. No color on the paper, no faces, no text, no outlines, no box, no frame.",
+    "out": "assets/raw/br_lb2/brl_rooster.png"
+  }
+]
