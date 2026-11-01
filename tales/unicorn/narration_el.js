@@ -59,7 +59,12 @@ Object.assign(NARRATION_CLIPS, {
  "다현이는 바구니 속 보라 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": "audio/el/unicorn/nar_affbff0544.mp3",
  "다현이는 바구니 속 파란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": "audio/el/unicorn/nar_e5ce328538.mp3",
  "다현이는 바구니 속 하얀 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": "audio/el/unicorn/nar_8f57bde930.mp3",
- "고마워, 정말 예뻐!": "audio/el/unicorn/uni_3644ca3450.mp3"
+ "고마워, 정말 예뻐!": "audio/el/unicorn/uni_3644ca3450.mp3",
+ "그날 밤, 다현이는 포근한 이불 속에 누웠어요.": "audio/el/unicorn/nar_0240d1d909.mp3",
+ "\"유니콘, 내일도 거기 있을 거지?\"": "audio/el/unicorn/kid_4a17465e54.mp3",
+ "\"그럼. 언제나 여기 있어.\"": "audio/el/unicorn/uni_4a2f68e374.mp3",
+ "창밖 언덕 위에서 유니콘 뿔이 반짝, 하늘에 별 하나가 켜졌어요.": "audio/el/unicorn/nar_ae6cc05a0a.mp3",
+ "다현이는 친절한 마음을 꼭 안고 스르르 잠이 들었어요.": "audio/el/unicorn/nar_7869859c03.mp3"
 });
 Object.assign(VOICE_LINES, {
  "n1": "audio/el/unicorn/nar_bd7ea59458.mp3",

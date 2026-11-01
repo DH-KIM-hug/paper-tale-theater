@@ -1289,6 +1289,84 @@
      ]
     }
    ]
+  },
+  {
+   "key": "R_bed",
+   "card": "잘 자요",
+   "enter": [
+    "bed:open"
+   ],
+   "lines": [
+    {
+     "text": "그날 밤, 다현이는 포근한 이불 속에 누웠어요.",
+     "src": "new",
+     "en": "That night, Dahyun lay down under her cozy blanket.",
+     "segs": [
+      [
+       "nar",
+       "That night, Dahyun lay down under her cozy blanket.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "\"유니콘, 내일도 거기 있을 거지?\"",
+     "src": "new",
+     "en": "Unicorn, will you be there tomorrow too?",
+     "segs": [
+      [
+       "kid",
+       "Unicorn, will you be there tomorrow too?",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "\"그럼. 언제나 여기 있어.\"",
+     "src": "new",
+     "en": "Of course. I'm always right here.",
+     "segs": [
+      [
+       "uni",
+       "Of course. I'm always right here.",
+       null
+      ]
+     ]
+    },
+    {
+     "text": "창밖 언덕 위에서 유니콘 뿔이 반짝, 하늘에 별 하나가 켜졌어요.",
+     "src": "new",
+     "en": "On the hill outside the window, the unicorn's horn twinkled, and a star lit up in the sky.",
+     "segs": [
+      [
+       "nar",
+       "On the hill outside the window, the unicorn's horn twinkled, and a star lit up in the sky.",
+       null
+      ]
+     ],
+     "before": [
+      "bed:star"
+     ]
+    },
+    {
+     "text": "다현이는 친절한 마음을 꼭 안고 스르르 잠이 들었어요.",
+     "src": "new",
+     "en": "Holding her kind heart close, Dahyun drifted off to sleep.",
+     "segs": [
+      [
+       "nar",
+       "Holding her kind heart close, Dahyun drifted off to sleep.",
+       null
+      ]
+     ],
+     "before": [
+      "bed:dim"
+     ],
+     "after": [
+      "bed:end"
+     ]
+    }
+   ]
   }
  ]
 }

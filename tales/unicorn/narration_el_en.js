@@ -239,6 +239,26 @@ Object.assign(NARRATION_CLIPS_EN, {
  "고마워, 정말 예뻐!": {
   "t": "Thank you. It's so pretty!",
   "c": "audio/el/unicorn/en/uni_19dd11632b.mp3"
+ },
+ "그날 밤, 다현이는 포근한 이불 속에 누웠어요.": {
+  "t": "That night, Dahyun lay down under her cozy blanket.",
+  "c": "audio/el/unicorn/en/nar_2217a15a7c.mp3"
+ },
+ "\"유니콘, 내일도 거기 있을 거지?\"": {
+  "t": "Unicorn, will you be there tomorrow too?",
+  "c": "audio/el/unicorn/en/kid_50bde63db9.mp3"
+ },
+ "\"그럼. 언제나 여기 있어.\"": {
+  "t": "Of course. I'm always right here.",
+  "c": "audio/el/unicorn/en/uni_68f88e82d0.mp3"
+ },
+ "창밖 언덕 위에서 유니콘 뿔이 반짝, 하늘에 별 하나가 켜졌어요.": {
+  "t": "On the hill outside the window, the unicorn's horn twinkled, and a star lit up in the sky.",
+  "c": "audio/el/unicorn/en/nar_b6411e3de4.mp3"
+ },
+ "다현이는 친절한 마음을 꼭 안고 스르르 잠이 들었어요.": {
+  "t": "Holding her kind heart close, Dahyun drifted off to sleep.",
+  "c": "audio/el/unicorn/en/nar_213896438f.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {

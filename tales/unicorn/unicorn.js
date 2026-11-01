@@ -325,6 +325,27 @@
     let finaleEnd = 0;
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
+    /* 잠자리 장면(2026-11-01 사용자 결정, engine/bedtime.js): 누르기 없는 큰 그림 한 장 — 창밖 언덕의 유니콘 뿔이 반짝, 하늘에 별 하나가 켜진다.
+       자리(u, v)는 그림 안 비율: 가로 uc_bed_wide · 세로 uc_bed_tall 을 따로 잰 것. 반짝임·별빛은 조명이라 그라데이션(CLAUDE.md 7-1) */
+    const BED = { wide: src('uc_bed_wide'), tall: src('uc_bed_tall'), tallX: .6, tallY: .42, focus: { w: [.45, .5], t: [.55, .5] }, horn: { w: [.815, .363], t: [.764, .276] }, star: { w: [.735, .33], t: [.66, .235] } };
+    let bedB = null;
+    const bed = {
+      open() { bedB = Bedtime.open(T, BED); },
+      async star() {
+        const B = bedB; if (!B) return;
+        const hg = B.glow(BED.horn, B.ih * .05, '#FFF6D8', 0);
+        hg.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: .2 }], { duration: document.hidden ? 1 : 1400, easing: 'ease-in-out', fill: 'forwards' });
+        sparkleSfx(T);
+        if (!document.hidden) await sleep(900);
+        /* 별: 종이 반짝이 한 조각(네 갈래, 달 금빛 한 색) + 뒤의 별빛 */
+        const [x, y] = B.at(BED.star), r = B.ih * .022, sg = B.glow(BED.star, r * 3.2, '#F6D27A', 0);
+        const st = T.el('path', { d: `M${x} ${y - r}Q${x + r * .18} ${y - r * .18} ${x + r} ${y}Q${x + r * .18} ${y + r * .18} ${x} ${y + r}Q${x - r * .18} ${y + r * .18} ${x - r} ${y}Q${x - r * .18} ${y - r * .18} ${x} ${y - r}Z`, fill: '#F6D27A', opacity: 0 });
+        B.put(st);
+        B.fade(sg, .9, 1200); B.fade(st, 1, 900); cue('chime_up', .35);
+      },
+      dim() { if (bedB) bedB.dim(.4, 3000); },
+      end() { return bedB ? bedB.end(3500) : null; },
+    };
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     /* 양 울음 '메~' (sounds/animals/sheep 두 가지를 번갈아): 양이 나올 때·뛰어내릴 때·집이 보일 때·인사할 때. 읽어 주기는 ×0.8 */
     const baa = (v, d = 0) => setTimeout(() => { try { AudioFX.animal('sheep', T.reading() ? v * .8 : v); } catch (e) { /* */ } }, d);
@@ -353,7 +374,7 @@
     const pineAt = () => { put(T, FG.pine_branch, 900, 210); if (P) FG.pine_branch.place(edgeX(FG.pine_branch, 'right', 900), 210); };   // 가지 밑동(그림 오른쪽 위)이 화면 오른쪽 밖
     const follow = (x, ms = 800) => (P ? T.camTo(500 + (x - VX.lx) * VX.ps, 280, 1, ms) : Promise.resolve());
     const H = n => (P ? n / VX.ps : n);               // 화면 크기를 지키는 누르는 자리
-    AudioFX.preloadSfx(['finale_fairy', 'paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding', 'birds_chirp_1', 'crickets_night_1', 'crickets_night_2', 'waterfall', 'question', 'ding_glock', 'boing', 'stomach_growl', 'horse_neigh_1', 'harp_gliss', 'shimmer', 'intro_unicorn_guitar', 'party_horn', 'pull_pop', 'chime_up']);
+    AudioFX.preloadSfx(['finale_fairy', 'paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding', 'birds_chirp_1', 'crickets_night_1', 'crickets_night_2', 'waterfall', 'question', 'ding_glock', 'boing', 'stomach_growl', 'horse_neigh_1', 'harp_gliss', 'shimmer', 'intro_unicorn_guitar', 'party_horn', 'pull_pop', 'chime_up', 'classical_brahms_lullaby_box']);
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
     const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_swan_lake_piano']); } catch (e) { /* 무시 */ }
@@ -636,6 +657,7 @@
         return sfx(n);
       },
       confetti() { T.confetti(); },   // 안는 순간 소리는 대본 snd:chime_up (옛 tada·파티 나팔은 2026-10-29 사용자 '별로')
+      bed(v) { return bed[v] ? bed[v]() : null; },   // 잠자리 장면: bed:open|star|dim|end
     };
     /* 읽어 주기 소리 큐 (2026-10-28): 대본 동사 snd:<이름>:<볼륨>:<지연ms> · amb:<이름>:<볼륨>:<초> */
     R.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } };
@@ -943,6 +965,17 @@
     kid.look('wave'); kid.hop(12, 360);
     await sleep(1500);
     try { await finaleWait(); AudioFX.stopAmbient(); } catch (e) { /* */ }
+
+    /* ===== 12. 잠자리 (2026-11-01): 누르기 없음. 창밖 언덕에서 유니콘이 지켜보고, 뿔이 반짝·별 하나가 켜진다 ===== */
+    await T.sceneCard('', () => bed.open());
+    await say('그날 밤, 다현이는 포근한 이불 속에 누웠어요.');
+    await say('"유니콘, 내일도 거기 있을 거지?"');
+    await say('"그럼. 언제나 여기 있어."');
+    const twinkle = bed.star();
+    await say('창밖 언덕 위에서 유니콘 뿔이 반짝, 하늘에 별 하나가 켜졌어요.');
+    await twinkle; bed.dim();
+    await say('다현이는 친절한 마음을 꼭 안고 스르르 잠이 들었어요.');
+    await bed.end();
     T.finale(); await sleep(1500);
     return '너도 누군가에게 친절하면, 너만의 유니콘을 만날 수 있어.';
   }

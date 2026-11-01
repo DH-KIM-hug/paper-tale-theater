@@ -710,6 +710,61 @@
      "[soft, warm, delighted, gentle voice]"
     ]
    ]
+  },
+  {
+   "text": "그날 밤, 다현이는 포근한 이불 속에 누웠어요.",
+   "segs": [
+    [
+     "nar",
+     "그날 밤, 다현이는 포근한 이불 속에 누웠어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried, sleepy, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "\"유니콘, 내일도 거기 있을 거지?\"",
+   "segs": [
+    [
+     "kid",
+     "유니콘, 내일도 거기 있을 거지?",
+     null,
+     "[child, sleepy, soft, dreamy]"
+    ]
+   ]
+  },
+  {
+   "text": "\"그럼. 언제나 여기 있어.\"",
+   "segs": [
+    [
+     "uni",
+     "그럼. 언제나 여기 있어.",
+     null,
+     "[soft, gentle, warm, slow, kind voice]"
+    ]
+   ]
+  },
+  {
+   "text": "창밖 언덕 위에서 유니콘 뿔이 반짝, 하늘에 별 하나가 켜졌어요.",
+   "segs": [
+    [
+     "nar",
+     "창밖 언덕 위에서 유니콘 뿔이 반짝, 하늘에 별 하나가 켜졌어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried, sleepy, soft]"
+    ]
+   ]
+  },
+  {
+   "text": "다현이는 친절한 마음을 꼭 안고 스르르 잠이 들었어요.",
+   "segs": [
+    [
+     "nar",
+     "다현이는 친절한 마음을 꼭 안고 스르르 잠이 들었어요.",
+     null,
+     "[calm, warm storytelling, slow, unhurried, sleepy, soft]"
+    ]
+   ]
   }
  ],
  "extra": {
