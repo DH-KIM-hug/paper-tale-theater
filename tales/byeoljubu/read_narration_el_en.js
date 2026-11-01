@@ -122,7 +122,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "누가 나를 찾아?": {
   "t": "Who is looking for me?",
-  "c": "audio/el/byeoljubu/en/rabbit_decadc82af.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_477b0fcc71.mp3"
  },
  "귀는 길쭉, 꼬리는 짧고… 똑같다! 토끼님이구나.": {
   "t": "Long ears, a short tail... the same! You are the rabbit.",
@@ -146,7 +146,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "벼슬? 맛있는 것? 좋아, 갈래!": {
   "t": "A high post? Tasty treats? Yes, I will go!",
-  "c": "audio/el/byeoljubu/en/rabbit_ec8c0b4fb2.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_c47c2800e6.mp3"
  },
  "토끼는 덥석 따라나섰어요. 좋은 것만 생각했거든요.": {
   "t": "The rabbit followed right away. He only thought about the good things.",
@@ -174,7 +174,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "우와, 물고기다! 바다 속은 파랗구나.": {
   "t": "Wow, fish! It is so blue under the sea.",
-  "c": "audio/el/byeoljubu/en/rabbit_b04143222c.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_6a275dac93.mp3"
  },
  "용궁에 다 왔어요. 커다란 문이 세 개 있어요.": {
   "t": "Here is the sea palace. There are three big doors.",
@@ -194,7 +194,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "우와, 진주랑 산호가 반짝반짝!": {
   "t": "Wow, pearls and coral, all sparkly!",
-  "c": "audio/el/byeoljubu/en/rabbit_2c688a3858.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_e1d54476bd.mp3"
  },
  "자, 용왕님께 가요.": {
   "t": "Now, let us go to the Dragon King.",
@@ -230,7 +230,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네?! 제 간을요?": {
   "t": "What?! My liver?",
-  "c": "audio/el/byeoljubu/en/rabbit_4a429d3f21.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_9fdc8f8566.mp3"
  },
  "토끼는 그제야 알았어요. 자라가 거짓말을 한 거예요.": {
   "t": "Only then did the rabbit understand. The terrapin had told a lie.",
@@ -238,15 +238,15 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어떡하지… 겁먹지 말고 생각하자.": {
   "t": "What do I do... Do not be scared. Think.",
-  "c": "audio/el/byeoljubu/en/rabbit_508a390a87.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_aaa7488001.mp3"
  },
  "용왕님, 저는 간을 꺼내서 산속 바위에 널어 두고 왔어요.": {
   "t": "Your Majesty, I took my liver out and left it drying on a rock in the mountains.",
-  "c": "audio/el/byeoljubu/en/rabbit_97c6d3009a.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_f7e0105ad0.mp3"
  },
  "자라님이 미리 말을 안 해 줬어요. 가서 가져올게요!": {
   "t": "The terrapin did not tell me before. I will go and get it!",
-  "c": "audio/el/byeoljubu/en/rabbit_322408cf0f.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_a4434b010f.mp3"
  },
  "그래? 그럼 얼른 가져오너라.": {
   "t": "Is that so? Then go and bring it quickly.",
@@ -274,11 +274,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자라님, 간을 꺼내 놓고 다니는 동물이 어디 있어요? 하하!": {
   "t": "Mr. Terrapin, what animal takes its liver out and leaves it behind? Ha ha!",
-  "c": "audio/el/byeoljubu/en/rabbit_daf3701c27.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_370e0fe70f.mp3"
  },
  "이제 달콤한 말엔 안 속을 거야!": {
   "t": "I will never be fooled by sweet words again!",
-  "c": "audio/el/byeoljubu/en/rabbit_9fdea1bc87.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_6aa16f7f68.mp3"
  },
  "아이고… 속았구나.": {
   "t": "Oh dear... I was tricked.",
@@ -286,7 +286,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "안녕!": {
   "t": "Bye-bye!",
-  "c": "audio/el/byeoljubu/en/rabbit_243bb9de3f.mp3"
+  "c": "audio/el/byeoljubu/en/rabbit_d041b9c985.mp3"
  },
  "토끼는 숲으로 깡충깡충 달아났어요.": {
   "t": "The rabbit hopped away, hop, hop, into the forest.",

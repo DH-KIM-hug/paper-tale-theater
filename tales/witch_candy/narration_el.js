@@ -168,7 +168,7 @@ Object.assign(VOICE_LINES, {
   "audio/el/witch_candy/kid_cfc4affa0e.mp3",
   "audio/el/witch_candy/witch_833c132997.mp3",
   "audio/el/witch_candy/cat_58fb241556.mp3",
-  "audio/el/witch_candy/rabbit_b9cfa3810e.mp3",
+  "audio/el/witch_candy/rabbit_c326a3a388.mp3",
   "audio/el/witch_candy/bear_ef730ec70b.mp3",
   "audio/el/witch_candy/fox_c0aae859b2.mp3"
  ],
@@ -176,37 +176,37 @@ Object.assign(VOICE_LINES, {
   "audio/el/witch_candy/kid_f6d2ec1928.mp3",
   "audio/el/witch_candy/witch_9788d7d671.mp3",
   "audio/el/witch_candy/cat_05d40827b7.mp3",
-  "audio/el/witch_candy/rabbit_5fb24c8127.mp3",
+  "audio/el/witch_candy/rabbit_98eea2729d.mp3",
   "audio/el/witch_candy/bear_ee11039b4f.mp3",
   "audio/el/witch_candy/fox_c1852a3225.mp3"
  ],
  "ch_wow": [
-  "audio/el/witch_candy/rabbit_d7d47c774c.mp3",
+  "audio/el/witch_candy/rabbit_30985aa319.mp3",
   "audio/el/witch_candy/bear_bfac5b53bf.mp3",
   "audio/el/witch_candy/fox_266d892a30.mp3"
  ],
  "ch_bubble": [
-  "audio/el/witch_candy/rabbit_3d267b5cee.mp3",
+  "audio/el/witch_candy/rabbit_514962cde4.mp3",
   "audio/el/witch_candy/bear_597c22dc10.mp3",
   "audio/el/witch_candy/fox_70e531ec06.mp3"
  ],
  "ch_metoo": [
-  "audio/el/witch_candy/rabbit_85a49a8800.mp3",
+  "audio/el/witch_candy/rabbit_2cd900e6cf.mp3",
   "audio/el/witch_candy/bear_021c2372ab.mp3",
   "audio/el/witch_candy/fox_fe14fdd916.mp3"
  ],
  "ch_wantto": [
-  "audio/el/witch_candy/rabbit_697464a135.mp3",
+  "audio/el/witch_candy/rabbit_a907526821.mp3",
   "audio/el/witch_candy/bear_ff305910eb.mp3",
   "audio/el/witch_candy/fox_6bdeabccee.mp3"
  ],
  "ch_black": [
-  "audio/el/witch_candy/rabbit_23234aa1f1.mp3",
+  "audio/el/witch_candy/rabbit_a432a6a4f5.mp3",
   "audio/el/witch_candy/bear_452233fe89.mp3",
   "audio/el/witch_candy/fox_6cb669d73b.mp3"
  ],
  "ch_yuckyum": [
-  "audio/el/witch_candy/rabbit_0490400cf1.mp3",
+  "audio/el/witch_candy/rabbit_dd58ff8bc2.mp3",
   "audio/el/witch_candy/bear_67c89357a5.mp3",
   "audio/el/witch_candy/fox_d7db1ddb14.mp3"
  ]

@@ -22,7 +22,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"안녕! 나는 깡충 토끼야!\"": {
   "t": "\"Hi! I'm Rabbit, the hoppy one!\"",
-  "c": "audio/el/rabbit/en/rabbit_6708067139.mp3"
+  "c": "audio/el/rabbit/en/rabbit_d40f11272f.mp3"
  },
  "숲속 길에서 토끼와 거북이가 마주 섰어요.": {
   "t": "Rabbit and Tortoise stood face to face on the forest path.",
@@ -36,7 +36,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The rabbit said, \"Hey, slowpoke! Want to race me?\"",
   "c": [
    "audio/el/rabbit/en/nar_9df94c8cd3.mp3",
-   "audio/el/rabbit/en/rabbit_0bb51738d4.mp3"
+   "audio/el/rabbit/en/rabbit_5d7f1a122e.mp3"
   ]
  },
  "거북이가 방긋 웃었어요. \"좋아!\"": {
@@ -56,7 +56,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"숲속 친구들한테 응원해 달라고 하자!\"": {
   "t": "\"Let's ask our forest friends to cheer for us!\"",
-  "c": "audio/el/rabbit/en/rabbit_e962704b98.mp3"
+  "c": "audio/el/rabbit/en/rabbit_a22da638a1.mp3"
  },
  "경주 소식을 전하려고 부엉이가 마을 집집마다 날아갔어요.": {
   "t": "Owl flew from house to house to tell everyone about the race.",
@@ -148,11 +148,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"거북이는 아직 한참 멀었겠지? 히히.\"": {
   "t": "That turtle must still be way, way back. Hee hee.",
-  "c": "audio/el/rabbit/en/rabbit_0c18c7b223.mp3"
+  "c": "audio/el/rabbit/en/rabbit_fa7577fad6.mp3"
  },
  "\"하암~ 한숨 자고 가도 되겠다~\"": {
   "t": "\"Yaaawn~ I can take a little nap~\"",
-  "c": "audio/el/rabbit/en/rabbit_b76441c319.mp3"
+  "c": "audio/el/rabbit/en/rabbit_28f6c8f207.mp3"
  },
  "토끼는 나무 아래에 벌렁 드러누워 하암~ 하품을 했어요.": {
   "t": "The rabbit flopped down under the tree and let out a big yaaawn.",
@@ -188,7 +188,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"아삭! 음~ 맛있다!\"": {
   "t": "\"Crunch! Mmm, yummy!\"",
-  "c": "audio/el/rabbit/en/rabbit_6552474d1d.mp3"
+  "c": "audio/el/rabbit/en/rabbit_9b3f7825b6.mp3"
  },
  "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~": {
   "t": "But the real rabbit is under the tree, snoring, zzz~",
@@ -272,7 +272,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The rabbit jumped right up! \"Oh no, I fell asleep!\"",
   "c": [
    "audio/el/rabbit/en/nar_b43ed78504.mp3",
-   "audio/el/rabbit/en/rabbit_1a11e5d6b6.mp3"
+   "audio/el/rabbit/en/rabbit_de3146ada0.mp3"
   ]
  },
  "거북이가 결승선 가까이 오자 친구들이 몸을 쭉 내밀었어요.": {
@@ -329,7 +329,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"축하해! 다음엔 나도 쉬지 않고 열심히 할게.\"": {
   "t": "\"Congratulations! Next time I'll work hard and never stop to rest.\"",
-  "c": "audio/el/rabbit/en/rabbit_6917a595eb.mp3"
+  "c": "audio/el/rabbit/en/rabbit_334e8df987.mp3"
  },
  "거북이도 말했어요. \"고마워! 우리 또 같이 달리자!\"": {
   "t": "The turtle said, \"Thank you! Let's race together again!\"",

@@ -6,16 +6,16 @@ Object.assign(NARRATION_CLIPS, {
  "\"안녕! 나는 거북이야.\"": "audio/el/rabbit/turtle_c08eaa6bda.mp3",
  "깡충깡충 토끼도 왔어요. 토끼를 톡!": "audio/el/rabbit/nar_62b9330e8a.mp3",
  "토끼를 톡 눌러 봐요!": "audio/el/rabbit/nar_e9b9d23530.mp3",
- "\"안녕! 나는 깡충 토끼야!\"": "audio/el/rabbit/rabbit_a004e555a2.mp3",
+ "\"안녕! 나는 깡충 토끼야!\"": "audio/el/rabbit/rabbit_f46137db1b.mp3",
  "토끼가 말했어요. \"느림보야, 나랑 달리기 할래?\"": [
   "audio/el/rabbit/nar_1577161b63.mp3",
-  "audio/el/rabbit/rabbit_9393e666af.mp3"
+  "audio/el/rabbit/rabbit_2644171f29.mp3"
  ],
  "거북이가 방긋 웃었어요. \"좋아!\"": [
   "audio/el/rabbit/nar_19bbba6642.mp3",
   "audio/el/rabbit/turtle_457d440d71.mp3"
  ],
- "\"숲속 친구들한테 응원해 달라고 하자!\"": "audio/el/rabbit/rabbit_1b0de6498d.mp3",
+ "\"숲속 친구들한테 응원해 달라고 하자!\"": "audio/el/rabbit/rabbit_1a44e2d194.mp3",
  "부엉이 우체부가 초대장을 가져왔어요.": "audio/el/rabbit/nar_9d0c5a80d2.mp3",
  "문을 톡 두드려 봐요. 누가 나올까?": "audio/el/rabbit/nar_c91eda0968.mp3",
  "이번 집도 문을 톡!": "audio/el/rabbit/nar_b2ca245e91.mp3",
@@ -51,7 +51,7 @@ Object.assign(NARRATION_CLIPS, {
  "화면을 톡톡 눌러 봐요!": "audio/el/rabbit/nar_44dea921e9.mp3",
  "금세 언덕 위 나무 그늘까지 왔어요.": "audio/el/rabbit/nar_43cb9ddb94.mp3",
  "뒤를 돌아보니… 거북이는 안 보여요!": "audio/el/rabbit/nar_be0769fee0.mp3",
- "\"하암~ 한숨 자고 가도 되겠다~\"": "audio/el/rabbit/rabbit_2f1c79db30.mp3",
+ "\"하암~ 한숨 자고 가도 되겠다~\"": "audio/el/rabbit/rabbit_c632babeff.mp3",
  "토끼를 푹 재워 줄까요?": "audio/el/rabbit/nar_91bb974ce2.mp3",
  "먼저 나뭇잎 이불을 톡!": "audio/el/rabbit/nar_0f7e72b522.mp3",
  "나뭇잎 이불을 톡 눌러 봐요!": "audio/el/rabbit/nar_5c03ebb3f9.mp3",
@@ -71,7 +71,7 @@ Object.assign(NARRATION_CLIPS, {
  "토끼가 꿈을 꿔요. 꿈속에서 1등을 했어요!": "audio/el/rabbit/nar_a0519faa0f.mp3",
  "상으로 커다란 당근을 받았어요. 당근을 톡!": "audio/el/rabbit/nar_cc19660b5b.mp3",
  "커다란 당근을 톡 눌러 봐요!": "audio/el/rabbit/nar_d81d359846.mp3",
- "\"아삭! 음~ 맛있다!\"": "audio/el/rabbit/rabbit_1b65a2a21f.mp3",
+ "\"아삭! 음~ 맛있다!\"": "audio/el/rabbit/rabbit_90a2c60d23.mp3",
  "하지만 진짜 토끼는 나무 아래에서 드르렁 쿨쿨~": "audio/el/rabbit/nar_310e068c07.mp3",
  "그동안 거북이는? 엉금엉금 걷고 있어요.": "audio/el/rabbit/nar_c1e6c1022b.mp3",
  "화면을 톡톡 눌러서 한 발 한 발 걸어요!": "audio/el/rabbit/nar_e1b6d43885.mp3",
@@ -99,7 +99,7 @@ Object.assign(NARRATION_CLIPS, {
  "닭을 톡 눌러 봐요!": "audio/el/rabbit/nar_008ce616c4.mp3",
  "토끼가 벌떡 일어났어요! \"앗, 내가 잠들었네!\"": [
   "audio/el/rabbit/nar_35dcdb7f27.mp3",
-  "audio/el/rabbit/rabbit_a996f4278e.mp3"
+  "audio/el/rabbit/rabbit_315bc64a75.mp3"
  ],
  "막대를 봐요! 거북이가 결승선 코앞이에요!": "audio/el/rabbit/nar_dbfcd4c30a.mp3",
  "응원하던 친구들이 모두 일어났어요!": "audio/el/rabbit/nar_128373154c.mp3",
@@ -113,7 +113,7 @@ Object.assign(NARRATION_CLIPS, {
  "반짝반짝 메달을 톡 눌러 봐요!": "audio/el/rabbit/nar_e9bbb8fa7c.mp3",
  "반짝반짝, 금메달이에요!": "audio/el/rabbit/nar_6e65e7205c.mp3",
  "토끼가 다가와 말했어요.": "audio/el/rabbit/nar_a80eee5bf6.mp3",
- "\"축하해! 다음엔 나도 쉬지 않고 열심히 할게.\"": "audio/el/rabbit/rabbit_c8b177bbc3.mp3",
+ "\"축하해! 다음엔 나도 쉬지 않고 열심히 할게.\"": "audio/el/rabbit/rabbit_4bbed0c63c.mp3",
  "거북이도 말했어요. \"고마워! 우리 또 같이 달리자!\"": [
   "audio/el/rabbit/nar_4e9a586f9a.mp3",
   "audio/el/rabbit/turtle_3288d0fe06.mp3"
@@ -138,5 +138,5 @@ Object.assign(VOICE_LINES, {
  "cheer_dog": "audio/el/rabbit/dog_ed3f419d98.mp3",
  "cheer_duck": "audio/el/rabbit/duck_487cd79b48.mp3",
  "cheer_sheep": "audio/el/rabbit/sheep_78f597325c.mp3",
- "wake_rabbit": "audio/el/rabbit/rabbit_b6d9df1b2e.mp3"
+ "wake_rabbit": "audio/el/rabbit/rabbit_3ede431f96.mp3"
 });

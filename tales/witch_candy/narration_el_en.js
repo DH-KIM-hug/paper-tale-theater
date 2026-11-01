@@ -633,7 +633,7 @@ Object.assign(VOICE_LINES_EN, {
   "audio/el/witch_candy/en/kid_348d860f70.mp3",
   "audio/el/witch_candy/en/witch_e4b255d14d.mp3",
   "audio/el/witch_candy/en/cat_ce064ffee3.mp3",
-  "audio/el/witch_candy/en/rabbit_052629ce34.mp3",
+  "audio/el/witch_candy/en/rabbit_54a0fd2277.mp3",
   "audio/el/witch_candy/en/bear_824cdf0cda.mp3",
   "audio/el/witch_candy/en/fox_ef3ee711af.mp3"
  ],
@@ -641,37 +641,37 @@ Object.assign(VOICE_LINES_EN, {
   "audio/el/witch_candy/en/kid_ff262a4f0c.mp3",
   "audio/el/witch_candy/en/witch_d9f5c54337.mp3",
   "audio/el/witch_candy/en/cat_8ee4f77b7f.mp3",
-  "audio/el/witch_candy/en/rabbit_69a9ee5acc.mp3",
+  "audio/el/witch_candy/en/rabbit_8c3d1038b9.mp3",
   "audio/el/witch_candy/en/bear_77ee3a4a4c.mp3",
   "audio/el/witch_candy/en/fox_a17d7a8edf.mp3"
  ],
  "ch_wow": [
-  "audio/el/witch_candy/en/rabbit_c796f3b5be.mp3",
+  "audio/el/witch_candy/en/rabbit_d13c028053.mp3",
   "audio/el/witch_candy/en/bear_f62db0738b.mp3",
   "audio/el/witch_candy/en/fox_18654ae2d8.mp3"
  ],
  "ch_bubble": [
-  "audio/el/witch_candy/en/rabbit_f3947a7a40.mp3",
+  "audio/el/witch_candy/en/rabbit_5fae3a4b3d.mp3",
   "audio/el/witch_candy/en/bear_b6eb168eed.mp3",
   "audio/el/witch_candy/en/fox_d6ad919326.mp3"
  ],
  "ch_metoo": [
-  "audio/el/witch_candy/en/rabbit_4fd038c0a5.mp3",
+  "audio/el/witch_candy/en/rabbit_a63754e778.mp3",
   "audio/el/witch_candy/en/bear_0c5ed0eca8.mp3",
   "audio/el/witch_candy/en/fox_824d6ba435.mp3"
  ],
  "ch_wantto": [
-  "audio/el/witch_candy/en/rabbit_2481732725.mp3",
+  "audio/el/witch_candy/en/rabbit_b80214526c.mp3",
   "audio/el/witch_candy/en/bear_91743056a4.mp3",
   "audio/el/witch_candy/en/fox_152536036f.mp3"
  ],
  "ch_black": [
-  "audio/el/witch_candy/en/rabbit_e8c6e66bb2.mp3",
+  "audio/el/witch_candy/en/rabbit_3aa5cc08f4.mp3",
   "audio/el/witch_candy/en/bear_632a9d3a14.mp3",
   "audio/el/witch_candy/en/fox_f2707a41d0.mp3"
  ],
  "ch_yuckyum": [
-  "audio/el/witch_candy/en/rabbit_13ed364e26.mp3",
+  "audio/el/witch_candy/en/rabbit_7c7ed2ee60.mp3",
   "audio/el/witch_candy/en/bear_06acdf723e.mp3",
   "audio/el/witch_candy/en/fox_b0a833a245.mp3"
  ]
