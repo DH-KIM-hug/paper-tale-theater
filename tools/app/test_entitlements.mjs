@@ -72,7 +72,7 @@ ok('합치기: firstRun 더 이른 쪽 · earned 날짜 합집합 · 같은 날 
   assert.deepEqual(E.merge(m, m), m);
   // 잘못된 값은 버린다
   const bad = E.normalize({ firstRun: 'x', earned: { 'zz': 'rabbit', '2026-01-01': 'BAD ID' }, starUnlocked: ['ok_id', 'No!'], waitUnlocked: 'x', owned: 'yes' });
-  assert.deepEqual(bad, { firstRun: '', earned: {}, starUnlocked: ['ok_id'], stickers: [], stickers2: [], cast: [], waitUnlocked: [], owned: false });
+  assert.deepEqual(bad, { firstRun: '', earned: {}, starUnlocked: ['ok_id'], stickers: [], stickers2: [], cast: [], shiny: [], waitUnlocked: [], owned: false });
 });
 
 ok('종이별: 하루 1개, 잔액 = 모은 날 수 - 5 × 연 동화 수, 5개로 1편', () => {

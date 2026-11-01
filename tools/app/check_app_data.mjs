@@ -13,7 +13,7 @@ for (const t of TALES) {
   const d = join(root, 'tales', t.folder || t.id);
   const ko = existsSync(join(d, 'read_script_el.json')) && existsSync(join(d, 'read_narration_el.js'));
   const en = existsSync(join(d, 'read_script_en.json')) && existsSync(join(d, 'read_narration_el_en.js'));
-  const acts = existsSync(join(d, (t.folder || t.id) + '.js')) && /T\.readPlay\(/.test(readFileSync(join(d, (t.folder || t.id) + '.js'), 'utf8'));
+  const acts = existsSync(join(d, (t.folder || t.id) + '.js')) && /T\.readPlay(\.call)?\(/.test(readFileSync(join(d, (t.folder || t.id) + '.js'), 'utf8'));
   const wantKo = ko && acts, wantEn = wantKo && en;
   if (!!t.read !== wantKo) { console.log(`어긋남 ${t.id}: read=${!!t.read}, 파일·readPlay=${wantKo}`); bad++; }
   if (t.read) for (const k of ['key_wide', 'key_tall', 'tile']) if (!existsSync(join(root, 'assets/thumbs', `${t.id}_${k}.webp`))) { console.log(`없음 ${t.id}: 잠자리 플레이어 표지 ${t.id}_${k}.webp`); bad++; }
