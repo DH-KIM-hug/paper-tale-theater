@@ -78,5 +78,15 @@
     ],
     "prompt": "Paper puppet of a rooster. Same exact pose, direction, size and outline as the reference silhouette, now as a WHITE paper puppet cut-out with decorative knife-cut perforations inside the body (small leaf shapes, dots and short curved slits following the fur or feathers), and one small round eye hole. Centered, same framing as the reference. Plain WHITE paper only, single flat sheet cut with a craft knife, softly front-lit so it reads as white paper with subtle fiber texture and faint grey shadow along cut edges. Everything that is not this paper layer is perfectly FLAT solid magenta #FF00FF (including inside every hole) for chroma keying. No color on the paper, no faces, no text, no outlines, no box, no frame.",
     "out": "assets/raw/br_lb2/brl_rooster.png"
+  },
+  {
+    "id": "brl_frame",
+    "kind": "bg",
+    "aspect": "landscape 16:9",
+    "refs": [
+      "assets/raw/br_lb2/ref/bg.png"
+    ],
+    "out": "assets/raw/br_lb2/brl_frame.png",
+    "prompt": "The FRONT frame layer of a paper light box (shadow box) for a night yard scene: only a thin decorative border around the edges, made of finely knife-cut lacy paper: on the LEFT edge a slender tree trunk whose leafy branches curve over the top-left corner, on the RIGHT edge climbing ivy and a thin vine, along the TOP edge a delicate garland of small leaves and a few hanging leaf sprigs that meet in the middle, along the BOTTOM edge a low strip of tiny grass blades and small flowers. Keep the border thin: the large open center (about 80% of the width and 80% of the height, a rounded arch shape with a flat bottom) must be completely empty magenta. Many small holes and leaf cut-outs inside the border pieces. Plain WHITE paper only, single flat sheet cut with a craft knife, softly front-lit so it reads as white paper with subtle fiber texture and faint grey shadow along cut edges. Everything that is not this paper layer is perfectly FLAT solid magenta #FF00FF (including inside every hole) for chroma keying. No color on the paper, no faces, no text, no outlines, no box."
   }
 ]

@@ -19,7 +19,7 @@
      창문 안(식탁)은 새 그림의 잔치 음식이 식탁 앞 오림(POV_TABLE)과 맞지 않아 옛 그림. 담장·지붕은 그대로 */
   const BG = {
     mill: 'v3w/br_bg_mill_v2.webp', road: 'v3w/br_bg_road_v2.webp', wall: 'v3w/br_bg_wall.webp', roof: 'v3w/br_bg_roof.webp', meadow: 'v3w/br_bg_meadow_v2.webp',
-    forest: 'v3w/br_bg_forest_night.webp', house_low: 'v3w/br_lb_window_glow_v4.webp', house_pov: 'v3w/br_bg_house_pov.webp',
+    forest: 'v3w/br_bg_forest_night.webp', house_low: 'v3w/br_lb_window_glow_v5.webp', house_pov: 'v3w/br_bg_house_pov.webp',
     house_wide: 'v3w/br_lb_house_burst.webp', morning: 'v3w/br_bg_morning_v2.webp', walk_lb: 'v3w/br_lb_walk_moon.webp',
     darkroom: 'v3w/br_bg_darkroom.webp', // 2026-10-29 캄캄한 집 안(코드 도형이던 배경)
     walk: 'v3w/br2_bg_walk.webp', // 2026-10-21 밤 숲길 (옆에서 본 평평한 길: 걷는 동물이 길 위에 선다)
@@ -35,7 +35,7 @@
     robber_red: 'v3w/br_robber_red.webp', robber_green: 'v3w/br_robber_green.webp', robber_brown: 'v3w/br_robber_brown.webp',
     cut_crash: 'v3w/br_cut_crash5.webp', cut_monster: 'v3w/br_cut_monster.webp', cut_ghost: 'v3w/br_cut_ghost3.webp',
     // 빛 상자 탑 장면(7장)에서만 쓰는 실루엣 동물(VISUAL_PLAN §4-4): 기존 그림과 같은 자세·방향, 눈 구멍 하나
-    donkey_sil: 'v3w/br_lb_sil_donkey_v2.webp', dog_sil: 'v3w/br_lb_sil_dog_v2.webp', cat_sil: 'v3w/br_lb_sil_cat_v2.webp', rooster_sil: 'v3w/br_lb_sil_rooster_v2.webp',
+    donkey_sil: 'v3w/br_lb_sil_donkey_v3.webp', dog_sil: 'v3w/br_lb_sil_dog_v3.webp', cat_sil: 'v3w/br_lb_sil_cat_v3.webp', rooster_sil: 'v3w/br_lb_sil_rooster_v3.webp',
     drum: 'v3w/br_drum.webp', horn: 'v3w/br_horn.webp', fiddle: 'v3w/br_fiddle.webp', bell: 'v3w/br_bell.webp', // 우리 집 악기 (바이올린 옆에 따로 그려진 리본 조각은 지움)
     eyes: 'v3w/br_eyes.webp', note: 'v3w/cm_note.webp', dizzy: 'v3w/cm_dizzy_stars.webp', badge: 'v3w/cm_badge_plate.webp', // 2026-10-29 코드 도형 → 그림
   };
@@ -429,11 +429,11 @@
     el('rect', { x: -400, y: -400, width: 1800, height: 1400, fill: C.indigo, opacity: .45 }, b);
     return { trees, path };
   }
-  /* 빛 상자 탑 장면 앞층: 진짜 빛 상자 판(2026-11-01, 흰 종이 층에 뒤에서 빛을 입힌 그림)의 맨 앞 풀 층(그림 y 600~902)을 배우 앞(T.fx)에 얹는다. 누름 없음 */
+  /* 빛 상자 탑 장면 앞층: 진짜 빛 상자 판(2026-11-01, 흰 종이 층에 뒤에서 빛을 입힌 그림)의 맨 앞 층(앞 풀 + 둘레 레이스 테두리, 그림 한 장 전체)을 배우 앞(T.fx)에 얹는다. 누름 없음 */
   function lowFront(T) {
     if (!bgUrl('house_low')) return;
     const k = BGBOX.h / 902, g = T.el('g', { style: 'pointer-events:none' }, T.fx);
-    T.el('image', { href: AS + 'v3w/br_lb_window_grass_v2.webp', x: BGBOX.x, y: BGBOX.y + 600 * k, width: BGBOX.w, height: 302 * k, preserveAspectRatio: 'none' }, g);
+    T.el('image', { href: AS + 'v3w/br_lb_window_front_v3.webp', x: BGBOX.x, y: BGBOX.y, width: BGBOX.w, height: 902 * k, preserveAspectRatio: 'none' }, g);
   }
   /* 그림 벽의 높은 창(2026-10-21 새 그림에서 다시 쟀다): 유리 x 657..818, 위는 화면 밖에서 시작해 아래 y 180, 창턱 아래 y 222, 가운데 x≈737 */
   const LOW_WIN = { x0: 657, x1: 818, y0: -24, y1: 180 };
@@ -445,8 +445,22 @@
     [['robber_green', 0, -22], ['robber_brown', 2, 22], ['robber_red', 1, 0]].forEach(([key, i, dx]) => {
       const [h, , aspect] = SPR[key], H = h * s, W = H * aspect, lift = i === 1 ? 6 : 0;
       const g = T.el('g', { 'data-dx': dx }, parent);
-      T.el('image', { href: artUrl(key), x: xs[i] - W / 2, y: bot - lift - H, width: W, height: H, preserveAspectRatio: 'xMidYMid meet', style: 'filter:brightness(.4)' }, g);
+      T.el('image', { href: artUrl(key), x: xs[i] - W / 2, y: bot - lift - H, width: W, height: H, preserveAspectRatio: 'xMidYMid meet', style: 'filter:brightness(.2) saturate(.5)' }, g);   // 2026-11-01 빛 상자 판: 창빛 앞 실루엣처럼 더 어둡게(색이 튀지 않게)
     });
+  }
+  /* 빛 상자 판의 살아 있는 빛(2026-11-01 사용자 요청): 배경 위·배우 뒤에 '빛 더하기(screen)' 층 하나 —
+     창(집 안 등불)은 촛불처럼 살짝 흔들리고, 달빛과 창빛 둘레는 숨 쉬듯 천천히 밝아졌다 어두워진다. 누름 없음 */
+  function lbLight(T, b) {
+    const el = T.el, id = 'br-lb-' + (++clipN), cx = (LOW_WIN.x0 + LOW_WIN.x1) / 2, cy = (LOW_WIN.y0 + LOW_WIN.y1) / 2 + 20;
+    const g = el('g', { style: 'mix-blend-mode:screen;pointer-events:none' }, b), defs = el('defs', {}, g);
+    const rad = (gid, x, y, r, stops) => { const rg = el('radialGradient', { id: gid, gradientUnits: 'userSpaceOnUse', cx: x, cy: y, r }, defs); stops.forEach(([o, c, a]) => el('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, rg)); };
+    rad(id + 'w', cx, cy, 330, [[0, '#FFE2A0', .55], [.35, '#FFB960', .22], [1, '#FF9A40', 0]]);
+    rad(id + 'm', 244, 68, 190, [[0, '#DDE3FF', .35], [1, '#9AA6FF', 0]]);
+    const breathe = el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: `url(#${id}m)` }, g);
+    const win = el('rect', { x: -60, y: -40, width: 1120, height: 660, fill: `url(#${id}w)` }, g);
+    breathe.animate([{ opacity: .55 }, { opacity: 1 }, { opacity: .55 }], { duration: 7000, iterations: Infinity, easing: 'ease-in-out' });
+    win.animate([{ opacity: .7 }, { opacity: .95, offset: .18 }, { opacity: .78, offset: .31 }, { opacity: 1, offset: .52 }, { opacity: .74, offset: .66 }, { opacity: .9, offset: .83 }, { opacity: .7 }],
+      { duration: 3400, iterations: Infinity, easing: 'ease-in-out' });
   }
   function houseLowBG(T, dx = 0, dy = 0) {
     const { paper, el } = T, b = T.bg;
@@ -455,6 +469,7 @@
       const sh = win.lastChild;
       const silhouettes = el('g', {}, sh);
       windowRobbers(T, silhouettes, [682, 739, 788], 220);
+      lbLight(T, b);
       return win;
     }
     sky(T, C.indigo);
@@ -724,8 +739,8 @@
     }
     async function towerSong(win) {
       if (win && win.lastChild) {
-        winBreath(win, .5, 1600);
-        win._glow.animate([{ opacity: .5 }, { opacity: .2 }], { duration: 900, delay: 1600, fill: 'forwards' });
+        winBreath(win, .9, 1600);   // 닭이 창에 닿으면 창빛이 확 밝아진다(빛 상자 판 2026-11-01)
+        win._glow.animate([{ opacity: .9 }, { opacity: .3 }], { duration: 900, delay: 1600, fill: 'forwards' });
       }
       for (const a of band) { a.cry(.35); a.hop(8, 260); note(T, a.x + 16, a.y - 90 * a.scale, [C.bean, C.gold, C.cream][band.indexOf(a) % 3]); await sleep(330); }
       const sh = win && win.lastChild && win.lastChild.lastChild;
