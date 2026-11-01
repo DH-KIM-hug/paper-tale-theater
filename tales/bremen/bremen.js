@@ -596,11 +596,12 @@
   /* ================= 이야기 ================= */
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    /* 2026-11-02 사용자 지시: 시작 음악 intro_adventure(웅장한 모험 음악, 첫 장면에 안 맞음) → 클래식 슈만 〈즐거운 농부〉(방앗간 당나귀). 제목에 '피아노'라고 적힌 픽사베이 녹음 처음 12초, sounds/CREDITS.md */
     const intro = (() => {
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_adventure', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_adventure', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('classical_happy_farmer', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('classical_happy_farmer', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
@@ -612,7 +613,7 @@
     const wideCamera = () => narrow() ? HW_CAM : [545, 300, 1.8];
     const S = makeSounds(T);
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
-    try { AudioFX.preloadSfx(['intro_adventure', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'whistle_up', 'ding_glock', 'coins_1', 'zip_away', 'tiptoe_pizz', 'comic_brass']); } catch (e) { /* 소리 없이도 진행 */ }
+    try { AudioFX.preloadSfx(['classical_happy_farmer', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'crickets_night_2', 'whistle_up', 'ding_glock', 'coins_1', 'zip_away', 'tiptoe_pizz', 'comic_brass']); } catch (e) { /* 소리 없이도 진행 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };

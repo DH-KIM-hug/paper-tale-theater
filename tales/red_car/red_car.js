@@ -347,11 +347,12 @@
 
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    /* 2026-11-02 사용자 지시: 시작 음악 intro_adventure(웅장한 모험 음악, 첫 장면에 안 맞음) → 클래식 슈만 〈어린이 정경〉 중 〈목마의 기사〉(장난감 목마). 제목에 '피아노'라고 적힌 픽사베이 녹음 처음 12초, sounds/CREDITS.md */
     const intro = (() => {
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_adventure', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_adventure', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('classical_rocking_horse', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('classical_rocking_horse', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
@@ -423,7 +424,7 @@
     const P = T.viewWidth() < 990;                 // 세로 화면(보이는 폭 약 260)
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
-    AudioFX.preloadSfx(['intro_adventure', 'paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'squeak', 'door', 'creak', 'police_siren', 'fire_siren', 'ambulance_siren', 'fire_crackle', 'birds_chirp_1', 'birds_chirp_2', 'ding_glock', 'question', 'whistle_down', 'harp_gliss', 'pop_appear', 'water_pour_1', 'latch_click', 'train', 'party_horn', 'finale_happy', 'classical_brahms_lullaby_box']);
+    AudioFX.preloadSfx(['classical_rocking_horse', 'paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'squeak', 'door', 'creak', 'police_siren', 'fire_siren', 'ambulance_siren', 'fire_crackle', 'birds_chirp_1', 'birds_chirp_2', 'ding_glock', 'question', 'whistle_down', 'harp_gliss', 'pop_appear', 'water_pour_1', 'latch_click', 'train', 'party_horn', 'finale_happy', 'classical_brahms_lullaby_box']);
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
     const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_vienna_march']); } catch (e) { /* 무시 */ }

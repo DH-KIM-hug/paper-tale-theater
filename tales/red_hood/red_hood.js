@@ -209,11 +209,12 @@
 
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    /* 2026-11-02 사용자 지시: 시작 음악 intro_adventure(웅장한 모험 음악, 첫 장면에 안 맞음) → 클래식 바흐 〈미뉴에트 G장조〉. 픽사베이 녹음(Music_For_Videos) 처음 12초, sounds/CREDITS.md */
     const intro = (() => {
       let h = null, on = true;
       const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
-        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_adventure', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_adventure', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+        const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('classical_bach_minuet_g', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('classical_bach_minuet_g', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
@@ -228,7 +229,7 @@
     let finaleEnd = 0;
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
-    try { AudioFX.preloadSfx(['intro_adventure', 'birds_chirp_1', 'bee_buzz', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'tiptoe_pizz', 'peek_pop', 'ding_glock', 'question', 'zip_away', 'whistle_down', 'surprise_sting', 'sleepy_tuba', 'pop_appear', 'party_horn', 'knock', 'pop', 'whoosh', 'door', 'creak', 'thud', 'finale_happy']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['classical_bach_minuet_g', 'birds_chirp_1', 'bee_buzz', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'tiptoe_pizz', 'peek_pop', 'ding_glock', 'question', 'zip_away', 'whistle_down', 'surprise_sting', 'sleepy_tuba', 'pop_appear', 'party_horn', 'knock', 'pop', 'whoosh', 'door', 'creak', 'thud', 'finale_happy']); } catch (e) { /* 무시 */ }
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
     const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_moment_musical3']); } catch (e) { /* 무시 */ }
