@@ -237,6 +237,42 @@ Object.assign(NARRATION_CLIPS_EN, {
  "작은 친구들이 힘을 모으면 커다란 호랑이도 물리칠 수 있답니다.": {
   "t": "When little friends work together, they can even send a great big tiger away.",
   "c": "audio/el/patjuk/en/nar_34cfc99f5a.mp3"
+ },
+ "그날도 할멈은 팥밭에서 일을 하고 있었어요.": {
+  "t": "That day, Granny was working in her bean field again.",
+  "c": "audio/el/patjuk/en/nar_b989a7c3e0.mp3"
+ },
+ "어느덧 찬바람 부는 겨울이 왔어요.": {
+  "t": "Soon, winter came with a chilly whoosh of wind.",
+  "c": "audio/el/patjuk/en/nar_1674ae35f4.mp3"
+ },
+ "동짓날 저녁, 할멈은 집 안 부엌에 있었어요.": {
+  "t": "That winter evening, Granny was in her kitchen at home.",
+  "c": "audio/el/patjuk/en/nar_2d1c083505.mp3"
+ },
+ "알밤과 자라가 숨은 부엌으로 또 친구들이 왔어요.": {
+  "t": "More friends came to the kitchen where Chestnut and Turtle were hiding.",
+  "c": "audio/el/patjuk/en/nar_42e5873c85.mp3"
+ },
+ "할멈은 부엌에서 마당 쪽 문가로 나갔어요.": {
+  "t": "Granny stepped out of the kitchen to the doorway by the yard.",
+  "c": "audio/el/patjuk/en/nar_9a7754f407.mp3"
+ },
+ "할멈은 다시 부엌으로 들어가 친구들과 호랑이를 기다렸어요.": {
+  "t": "Granny went back into the kitchen to wait for Tiger with her friends.",
+  "c": "audio/el/patjuk/en/nar_08360b1cae.mp3"
+ },
+ "할멈은 부엌 구석으로 살금살금 물러났어요.": {
+  "t": "Granny tiptoed back into a corner of the kitchen.",
+  "c": "audio/el/patjuk/en/nar_44adf4f9bc.mp3"
+ },
+ "물독에 입을 넣었던 호랑이가 부엌에서 몸을 부르르 떨었어요.": {
+  "t": "Tiger shivered in the kitchen after dipping his mouth into the water jar.",
+  "c": "audio/el/patjuk/en/nar_8dea8547aa.mp3"
+ },
+ "호랑이가 떠나자 친구들이 마당으로 모였어요.": {
+  "t": "Once Tiger was gone, the friends gathered in the yard.",
+  "c": "audio/el/patjuk/en/nar_eb76558fb2.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});
