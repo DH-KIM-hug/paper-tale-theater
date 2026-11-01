@@ -10,6 +10,7 @@ voice_script_el.json 은 voice_script.json 과 같은 모양이고 voices 의 �
   만들지 못한 줄은 덮어쓰지 않으므로 Typecast 클립이 그대로 쓰인다.
 감정: eleven_v3 면 happy→[cheerful] sad→[sad] angry→[angry] whisper→[whispers] toneup→[excited] tonedown→[calm] 태그를 보낼 글 앞에 붙인다.
 API 키는 ~/.config/elevenlabs/key (저장소에 두지 않음)."""
+from polish import polish  # 저장 직후 다듬기(polish.py)
 import json, os, re, sys, time, hashlib, urllib.request, urllib.error
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 KEY = open(os.path.expanduser('~/.config/elevenlabs/key')).read().strip()
@@ -28,7 +29,7 @@ def tts(path, voice, text, model=None, settings=None):
         r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(),
                                    {'xi-api-key': KEY, 'Content-Type': 'application/json'})
         try:
-            data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); return  # 실패하면 빈 파일을 남기지 않게 받은 뒤에 쓴다
+            data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); polish(path); return  # 실패하면 빈 파일을 남기지 않게 받은 뒤에 쓴다
         except urllib.error.HTTPError as e:
             if e.code in (429, 500, 502, 503) and attempt < 5: time.sleep(3 * (attempt + 1)); continue
             raise

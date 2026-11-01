@@ -4,6 +4,7 @@
 홈은 narration_tc.js 를 부르지 않으므로 출력 js 가 NARRATION_CLIPS / NARRATION_CLIPS_EN 를 직접 선언한다.
 영어 키도 한국어 문구(home.js 가 넘기는 글)다. 값은 {t: 영어 글, c: 클립}.
 모델 eleven_v4, 목소리 Lily. 있는 클립은 건너뛴다. API 키는 ~/.config/elevenlabs/key (출력하지 않음)."""
+from polish import polish  # 저장 직후 다듬기(polish.py)
 import json, os, re, sys, time, hashlib, subprocess, urllib.request, urllib.error
 KEY = open(os.path.expanduser('~/.config/elevenlabs/key')).read().strip()
 def tts(path, voice, text, model, settings):  # gen_tale.py 의 tts 와 같다 (gen_tale 은 import 하면 바로 실행돼서 복사)
@@ -11,7 +12,7 @@ def tts(path, voice, text, model, settings):  # gen_tale.py 의 tts 와 같다 (
     for attempt in range(6):
         r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(), {'xi-api-key': KEY, 'Content-Type': 'application/json'})
         try:
-            data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); return
+            data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); polish(path); return
         except urllib.error.HTTPError as e:
             if e.code in (429, 500, 502, 503) and attempt < 5: time.sleep(3 * (attempt + 1)); continue
             raise
