@@ -283,9 +283,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Everyone sat around and ate happily.",
   "c": "audio/el/kongjwi/en/nar_4272992963.mp3"
  },
- "착한 마음은 도움을 불러와요. 콩쥐팥쥐 이야기는 이렇게 끝났어요.": {
-  "t": "A kind heart brings help. And that is how the story of Kongjwi and Patjwi ended.",
-  "c": "audio/el/kongjwi/en/nar_ef7b5adb67.mp3"
+ "착한 마음은 도움을 불러와요.": {
+  "t": "A kind heart brings help.",
+  "c": "audio/el/kongjwi/en/nar_3d1d19f1cd.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});

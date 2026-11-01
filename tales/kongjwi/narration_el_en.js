@@ -222,9 +222,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap Kongjwi! Hooray together!",
   "c": "audio/el/kongjwi/en/nar_31f509b0f0.mp3"
  },
- "착한 마음은 도움을 불러와요. 콩쥐팥쥐 이야기는 이렇게 끝났어요.": {
-  "t": "A kind heart brings help. And that is how the story of Kongjwi and Patjwi ended.",
-  "c": "audio/el/kongjwi/en/nar_ef7b5adb67.mp3"
+ "착한 마음은 도움을 불러와요.": {
+  "t": "A kind heart brings help.",
+  "c": "audio/el/kongjwi/en/nar_3d1d19f1cd.mp3"
  },
  "콩쥐를 톡! 마당을 쓸어요.": {
   "t": "Tap Kongjwi! Sweep the yard.",

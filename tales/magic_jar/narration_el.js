@@ -99,7 +99,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/magic_jar/nar_233192f497.mp3"
  ],
  "농부를 톡! 모두 함께 만세!": "audio/el/magic_jar/nar_a9a7901636.mp3",
- "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.": "audio/el/magic_jar/nar_c91bdd904b.mp3"
+ "나누면 기쁨이 커져요.": "audio/el/magic_jar/nar_84d4dc626d.mp3"
 });
 Object.assign(VOICE_LINES, {
  "n1": "audio/el/magic_jar/nar_6b62895987.mp3",

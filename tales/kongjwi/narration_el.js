@@ -87,7 +87,7 @@ Object.assign(NARRATION_CLIPS, {
  "모두 함께 떡을 나눠 먹어요.": "audio/el/kongjwi/nar_670ea513b5.mp3",
  "모두 둘러앉아 맛있게 먹었어요. 콩쥐를 톡! 모두 함께 만세!": "audio/el/kongjwi/nar_92de037b0b.mp3",
  "콩쥐를 톡! 모두 함께 만세!": "audio/el/kongjwi/nar_504c5bab01.mp3",
- "착한 마음은 도움을 불러와요. 콩쥐팥쥐 이야기는 이렇게 끝났어요.": "audio/el/kongjwi/nar_0daa58ac14.mp3",
+ "착한 마음은 도움을 불러와요.": "audio/el/kongjwi/nar_7d4f3e3118.mp3",
  "콩쥐를 톡! 마당을 쓸어요.": "audio/el/kongjwi/nar_24fc70cbde.mp3",
  "콩쥐를 톡! 징검다리를 건너요.": "audio/el/kongjwi/nar_69f4f0f82c.mp3"
 });

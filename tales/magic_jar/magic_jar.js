@@ -533,7 +533,7 @@
     await sleep(600);   /* 마지막 톡 없음: 만세는 저절로 */
     T.confetti(); finaleMusic();
     await Promise.all([farmer.hop(40, 500), wife.hop(30, 500), rich.hop(30, 500), father.hop(24, 500)]);
-    await say('나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.');
+    await say('나누면 기쁨이 커져요.');
     await finaleWait();
     try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
     T.finale();

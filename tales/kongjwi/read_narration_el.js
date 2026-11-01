@@ -109,6 +109,6 @@ Object.assign(NARRATION_CLIPS, {
  "모두 함께 떡을 나눠 먹어요.": "audio/el/kongjwi/nar_670ea513b5.mp3",
  "쫀득쫀득 떡을 냠냠, 웃음소리가 하하 호호 울려 퍼졌어요.": "audio/el/kongjwi/nar_9347c2ebcb.mp3",
  "모두 둘러앉아 맛있게 먹었어요.": "audio/el/kongjwi/nar_3355fd99d9.mp3",
- "착한 마음은 도움을 불러와요. 콩쥐팥쥐 이야기는 이렇게 끝났어요.": "audio/el/kongjwi/nar_0daa58ac14.mp3"
+ "착한 마음은 도움을 불러와요.": "audio/el/kongjwi/nar_7d4f3e3118.mp3"
 });
 Object.assign(VOICE_LINES, {});

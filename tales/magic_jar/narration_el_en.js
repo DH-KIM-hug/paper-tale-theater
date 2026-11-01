@@ -282,9 +282,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the farmer! Hooray, everyone!",
   "c": "audio/el/magic_jar/en/nar_3ff204671d.mp3"
  },
- "나누면 기쁨이 커져요. 요술 항아리 이야기는 이렇게 끝났어요.": {
-  "t": "Sharing makes joy grow. And that is how the story of the magic jar ended.",
-  "c": "audio/el/magic_jar/en/nar_8711d03d6d.mp3"
+ "나누면 기쁨이 커져요.": {
+  "t": "Sharing makes joy grow.",
+  "c": "audio/el/magic_jar/en/nar_4a6f7ca85c.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {

@@ -544,7 +544,7 @@
     await T.ask('모두 둘러앉아 맛있게 먹었어요. 콩쥐를 톡! 모두 함께 만세!', () => T.tap(kong.pos, { prompt: '콩쥐를 톡! 모두 함께 만세!' }));
     T.confetti(); finaleMusic();
     await Promise.all([kong.hop(40, 500), won.hop(30, 500), step.hop(24, 500), pat.hop(24, 500)]);
-    await say('착한 마음은 도움을 불러와요. 콩쥐팥쥐 이야기는 이렇게 끝났어요.');
+    await say('착한 마음은 도움을 불러와요.');
     await finaleWait();
     T.finale(); stopAmb(.8);
     return '착한 마음은 도움을 불러와요!';
