@@ -1249,13 +1249,13 @@
      ]
     },
     {
-     "text": "우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.",
+     "text": "우리 집이 제일 포근해요.",
      "src": "reuse",
-     "en": "Home is the coziest place. That is how the story of Hansel and Gretel ended.",
+     "en": "Home is the coziest place.",
      "segs": [
       [
        "nar",
-       "Home is the coziest place. That is how the story of Hansel and Gretel ended."
+       "Home is the coziest place."
       ]
      ],
      "before": [

@@ -129,6 +129,6 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "헨젤과 그레텔은 마음이 따뜻하고 행복했어요.": "audio/el/hansel/nar_f8c11a65fc.mp3",
  "그날 밤, 둘은 포근한 이불 속에서 새근새근 잠이 들었답니다.": "audio/el/hansel/nar_a569d3a91b.mp3",
- "우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.": "audio/el/hansel/nar_ba9019985f.mp3"
+ "우리 집이 제일 포근해요.": "audio/el/hansel/nar_04fd81df41.mp3"
 });
 Object.assign(VOICE_LINES, {});

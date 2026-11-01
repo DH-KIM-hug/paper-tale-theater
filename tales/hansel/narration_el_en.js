@@ -49,6 +49,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap Hansel! Pick up the pebbles.",
   "c": "audio/el/hansel/en/nar_8c946e6814.mp3"
  },
+ "헨젤을 톡! 조약돌을 떨어뜨려요.": {
+  "t": "Tap Hansel! Drop a pebble.",
+  "c": "audio/el/hansel/en/nar_92f0771db3.mp3"
+ },
  "헨젤은 하얀 조약돌을 하나, 또 하나, 주머니에 쏙쏙 넣었어요.": {
   "t": "Hansel picked up the white pebbles, one, and another, and tucked them into his pockets, plop, plop.",
   "c": "audio/el/hansel/en/nar_8d02001839.mp3"
@@ -442,9 +446,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "That night, the two of them snuggled under their cozy blankets and fell fast asleep, zzz.",
   "c": "audio/el/hansel/en/nar_df5f23b2df.mp3"
  },
- "우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.": {
-  "t": "Home is the coziest place. That is how the story of Hansel and Gretel ended.",
-  "c": "audio/el/hansel/en/nar_1b61c82377.mp3"
+ "우리 집이 제일 포근해요.": {
+  "t": "Home is the coziest place.",
+  "c": "audio/el/hansel/en/nar_c84f273aa9.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});

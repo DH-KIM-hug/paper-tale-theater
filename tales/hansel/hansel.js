@@ -539,19 +539,21 @@
     amb('leaves_footsteps', { vol: .25, dur: 4 }); // 낙엽 바스락
     await say('뚜벅뚜벅, 셋은 숲속 깊이 들어갔어요. 나뭇잎이 바스락바스락 소리를 냈지요.');
     await walkIn;
-    const dropAuto = (async () => {
+    await say('헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.');
+    { /* 2026-11-01 사용자: 조약돌 내려놓기는 손으로 — 헨젤을 톡 할 때마다 한 개씩 떨어뜨리고 한 걸음 */
       const dx = L(60, 25); /* 다섯 걸음 뒤에도 셋 다 화면 안 */
+      const DROP = '헨젤을 톡! 조약돌을 떨어뜨려요.';
       for (let i = 0; i < 5; i++) {
+        if (i === 0) await T.ask(DROP, () => T.tap(hans.pos, { prompt: DROP }));
+        else await T.tap(hans.pos, { prompt: DROP });
         const px = hans.x - 34 * SC; /* 헨젤 발 뒤, 길 위 */
         put(T, pebbles[i], px, GROUND + 12, { to: 'right' }); fadeIn(pebbles[i], 260);
         sparkleAt(px, GROUND + 12, 0, false); popSfx(T); T.pop(px, i % 2 ? 120 : 95, tr('반짝!')); /* 머리 위 하늘(인물을 가리지 않게) */
         hans.hop(8, 220);
         await Promise.all([father.move(father.x + dx, GROUND, 400), gret.move(gret.x + dx, GROUND, 400), hans.move(hans.x + dx, GROUND, 400)]);
-        await sleep(450);
+        await sleep(150);
       }
-    })();
-    await say('헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.');
-    await dropAuto;
+    }
     hans.look('walk', 'right');
     const leave = father.move(1150, GROUND, 2600);
     await say('아빠는 둘을 숲에 남겨 두고 돌아갔어요.');
@@ -857,7 +859,7 @@
     scene('cottage_night'); /* 그날 밤 — 창문만 환한 집(모두 안에서 잔다) */
     amb('crickets_night_2', { vol: .2, dur: 4 }); // 포근한 밤
     await say('그날 밤, 둘은 포근한 이불 속에서 새근새근 잠이 들었답니다.');
-    await say('우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.');
+    await say('우리 집이 제일 포근해요.');
     T.finale(); finaleMusic(); await finaleWait(); stopAmb(.8);
     return '우리 집이 제일 포근해요!';
   }

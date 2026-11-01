@@ -116,6 +116,16 @@
    ]
   },
   {
+   "text": "헨젤을 톡! 조약돌을 떨어뜨려요.",
+   "en": "Tap Hansel! Drop a pebble.",
+   "segs": [
+    [
+     "nar",
+     "Tap Hansel! Drop a pebble."
+    ]
+   ]
+  },
+  {
    "text": "헨젤은 하얀 조약돌을 하나, 또 하나, 주머니에 쏙쏙 넣었어요.",
    "en": "Hansel picked up the white pebbles, one, and another, and tucked them into his pockets, plop, plop.",
    "segs": [
@@ -800,8 +810,8 @@
    ]
   },
   {
-   "text": "우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.",
-   "en": "Home is the coziest place. That is how the story of Hansel and Gretel ended."
+   "text": "우리 집이 제일 포근해요.",
+   "en": "Home is the coziest place."
   }
  ],
  "ui": {

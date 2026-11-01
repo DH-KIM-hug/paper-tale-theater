@@ -19,6 +19,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "헨젤은 살금살금 밖으로 나왔어요. 달빛에 조약돌이 반짝반짝!": "audio/el/hansel/nar_3e3bf1304e.mp3",
  "헨젤을 톡! 조약돌을 주워요.": "audio/el/hansel/nar_0afa650c2d.mp3",
+ "헨젤을 톡! 조약돌을 떨어뜨려요.": "audio/el/hansel/nar_d94d07e462.mp3",
  "헨젤은 하얀 조약돌을 하나, 또 하나, 주머니에 쏙쏙 넣었어요.": "audio/el/hansel/nar_c4a0b52ba7.mp3",
  "헨젤은 조약돌을 주머니에 가득 채웠어요. \"이제 괜찮아.\"": [
   "audio/el/hansel/nar_2691b0de98.mp3",
@@ -178,6 +179,6 @@ Object.assign(NARRATION_CLIPS, {
  "헨젤과 그레텔은 마음이 따뜻하고 행복했어요. 여러분은 기분이 어때요? 헨젤을 톡! 만세!": "audio/el/hansel/nar_e0a3a8d95c.mp3",
  "헨젤을 톡! 만세!": "audio/el/hansel/nar_9e0d1407e9.mp3",
  "그날 밤, 둘은 포근한 이불 속에서 새근새근 잠이 들었답니다.": "audio/el/hansel/nar_a569d3a91b.mp3",
- "우리 집이 제일 포근해요. 헨젤과 그레텔 이야기는 이렇게 끝났어요.": "audio/el/hansel/nar_ba9019985f.mp3"
+ "우리 집이 제일 포근해요.": "audio/el/hansel/nar_04fd81df41.mp3"
 });
 Object.assign(VOICE_LINES, {});
