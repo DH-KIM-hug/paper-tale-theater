@@ -1,8 +1,8 @@
 {
- "notes": "ElevenLabs 목소리 배정 (2026-10-20 SPEC): nar=Annie(여자 내레이터 순환 — 백설=Lily, 신데렐라=Leejin이라 Annie), mer=Luna(부드럽고 어린 여성, 백설·신데렐라의 루나 선택과 같은 목소리), granny=Huelyn(따뜻한 할머니), prince=Sunjun(젊은 남성, 신데렐라 왕자 계열), witch=Matilda(마녀 계열이지만 연기 지시로 신비롭고 부드럽게, 무섭지 않게), lady=Haemi(이웃 나라 공주=하얀 집 아가씨, 같은 사람), 언니 다섯=sisa Ailra(맏언니)·sisb Sena·sisc Laura·sisd Bella·sise Leejin. [언니들] 줄(ch1·ch2)은 다섯 목소리가 같은 문장을 따로 녹음하고 tales/little_mermaid/mix_chorus_el.py 가 겹친다(백설공주 mix_chorus_el.py 복사·수정). 수 세기 클립 없음. 바다 왕은 대사 없음. 목소리 없는 장면(6번 가마솥 톡 뒤 ~ 10번): 인어공주(mer) 대사 없음 — 마음은 내레이터가 말하고 화면은 표정과 \"…\" 종이 구름으로만 보인다. 허밍 효과음은 넣지 않는다(권장대로). 11번에서 바람이 되어 목소리가 돌아온다(mer 한 줄).",
+ "notes": "ElevenLabs 목소리 배정 (2026-10-20 SPEC): nar=Annie(여자 내레이터 순환 — 백설=Lily, 신데렐라=Leejin이라 Annie), mer=Hope upbeat and clear(2026-11-01 사용자: Luna 울림이 심해 교체), granny=Huelyn(따뜻한 할머니), prince=Sunjun(젊은 남성, 신데렐라 왕자 계열), witch=Matilda(마녀 계열이지만 연기 지시로 신비롭고 부드럽게, 무섭지 않게), lady=Haemi(이웃 나라 공주=하얀 집 아가씨, 같은 사람), 언니 다섯=sisa Ailra(맏언니)·sisb Sena·sisc Laura·sisd Bella·sise Leejin. [언니들] 줄(ch1·ch2)은 다섯 목소리가 같은 문장을 따로 녹음하고 tales/little_mermaid/mix_chorus_el.py 가 겹친다(백설공주 mix_chorus_el.py 복사·수정). 수 세기 클립 없음. 바다 왕은 대사 없음. 목소리 없는 장면(6번 가마솥 톡 뒤 ~ 10번): 인어공주(mer) 대사 없음 — 마음은 내레이터가 말하고 화면은 표정과 \"…\" 종이 구름으로만 보인다. 허밍 효과음은 넣지 않는다(권장대로). 11번에서 바람이 되어 목소리가 돌아온다(mer 한 줄).",
  "voices": {
   "nar": "Lb7qkOn5hF8p7qfCDH8q",
-  "mer": "Ss1VfT7ri4lqnvTDWII0",
+  "mer": "tnSpp4vdxKPjI9w0GnoV",
   "granny": "gnWujHp24oqX3I03lRbU",
   "prince": "VpI9YrC8mqZsi3NvIQzK",
   "witch": "XrExE9yKIg1WjnnlVkGX",

@@ -30,7 +30,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네, 할머니. 다녀올게요!": {
   "t": "Yes, Grandmother. I will be back soon!",
-  "c": "audio/el/little_mermaid/en/mer_4530f56ba7.mp3"
+  "c": "audio/el/little_mermaid/en/mer_1f6bda31ed.mp3"
  },
  "인어공주는 꼬리를 살랑살랑 흔들며 위로, 위로 헤엄쳐 올라갔어요.": {
   "t": "The little mermaid swished her tail, swish, swish, and swam up, up, up.",
@@ -54,7 +54,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"우와, 불꽃이 꽃처럼 활짝 피었어!\"": {
   "t": "Wow, the fireworks are blooming like flowers!",
-  "c": "audio/el/little_mermaid/en/mer_4167d699a7.mp3"
+  "c": "audio/el/little_mermaid/en/mer_ab867b5da3.mp3"
  },
  "인어공주가 배 위의 왕자님을 보며 속삭였어요.": {
   "t": "The little mermaid looked at the prince on the ship and whispered.",
@@ -62,7 +62,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "저 사람이 왕자님이구나.": {
   "t": "So that is the prince.",
-  "c": "audio/el/little_mermaid/en/mer_8093e6833e.mp3"
+  "c": "audio/el/little_mermaid/en/mer_293e6db7aa.mp3"
  },
  "인어공주는 눈을 동그랗게 뜨고 한참을 가만가만 바라보았어요.": {
   "t": "The little mermaid opened her eyes wide and gazed, ever so quietly, for a long, long time.",
@@ -86,7 +86,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "내가 도와줄게요!": {
   "t": "I will help you!",
-  "c": "audio/el/little_mermaid/en/mer_94d016bcdd.mp3"
+  "c": "audio/el/little_mermaid/en/mer_5e6eccc53c.mp3"
  },
  "인어공주는 왕자님의 머리를 물 위로 받쳐 주었어요.": {
   "t": "The little mermaid held the prince's head above the water.",
@@ -122,7 +122,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "왕자님이 깨어났어요. 다행이에요.": {
   "t": "The prince is awake. I am so glad.",
-  "c": "audio/el/little_mermaid/en/mer_5ea1b898f4.mp3"
+  "c": "audio/el/little_mermaid/en/mer_8d1f223ab3.mp3"
  },
  "인어공주는 바위 뒤에서 살금살금 바다로 돌아갔어요.": {
   "t": "From behind the rock, the little mermaid slipped back into the sea, quiet as can be.",
@@ -138,7 +138,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "할머니, 사람은 어떻게 살아요?": {
   "t": "Grandmother, how do people live?",
-  "c": "audio/el/little_mermaid/en/mer_9f6d3458ad.mp3"
+  "c": "audio/el/little_mermaid/en/mer_8258cec317.mp3"
  },
  "사람은 땅 위에서 살고, 우리는 바다에서 살지. 사람에겐 별처럼 영원히 남는 마음이 있단다.": {
   "t": "People live on the land, and we live in the sea. But people have a heart that lasts forever, like a star.",
@@ -150,7 +150,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "나도 왕자님 곁에서 그런 마음을 갖고 싶어요.": {
   "t": "I want to have a heart like that too, beside the prince.",
-  "c": "audio/el/little_mermaid/en/mer_5083fa2be5.mp3"
+  "c": "audio/el/little_mermaid/en/mer_acdb0caf4d.mp3"
  },
  "인어공주는 소용돌이 너머 바다 마녀를 찾아갔어요.": {
   "t": "The little mermaid swam past the whirlpool to find the sea witch.",
@@ -174,7 +174,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "그래도 갈래요.": {
   "t": "I will go anyway.",
-  "c": "audio/el/little_mermaid/en/mer_7c3b65de4d.mp3"
+  "c": "audio/el/little_mermaid/en/mer_82b41117ed.mp3"
  },
  "마녀가 가마솥을 휘휘 젓자, 반짝반짝 약이 생겼어요.": {
   "t": "The witch stirred the cauldron, swirl, swirl, and a sparkling potion appeared.",
@@ -342,7 +342,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "사랑하는 마음은 사라지지 않아요. 안녕, 또 만나요!": {
   "t": "A loving heart never disappears. Goodbye, see you again!",
-  "c": "audio/el/little_mermaid/en/mer_d9ace97de7.mp3"
+  "c": "audio/el/little_mermaid/en/mer_d65579d80b.mp3"
  },
  "사랑하는 마음으로 양보하면, 그 마음은 좋은 일이 되어 남아요.": {
   "t": "When you give way with a loving heart, that heart stays behind as something good.",
