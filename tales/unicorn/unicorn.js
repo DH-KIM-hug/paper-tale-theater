@@ -377,7 +377,7 @@
     AudioFX.preloadSfx(['finale_fairy', 'paper_down', 'paper_up', 'swish', 'whoosh', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'cushion', 'ding', 'birds_chirp_1', 'crickets_night_1', 'crickets_night_2', 'waterfall', 'question', 'ding_glock', 'boing', 'stomach_growl', 'horse_neigh_1', 'harp_gliss', 'shimmer', 'intro_unicorn_guitar', 'party_horn', 'pull_pop', 'chime_up', 'classical_brahms_lullaby_box']);
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
     const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
-    try { AudioFX.preloadSfx(['classical_swan_lake_piano']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['classical_arabesque_box']); } catch (e) { /* 무시 */ }
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
     Object.keys(ASP).forEach(k => { const pr = T.preload(src(k)); loads.push(pr.then(ok => { artOK[k] = ok; if (ok && pr.img && pr.img.naturalHeight) ASP[k] = pr.img.naturalWidth / pr.img.naturalHeight; })); });
@@ -919,7 +919,7 @@
     if (uni.pos.style.opacity === '0') { uni.pos.style.opacity = ''; fadeIn(uni, 1400); }
     glow(uni, 1500);
     halo.pos.style.opacity = ''; fadeIn(halo, 2400);
-    classical('swan_lake_piano'); // 달빛 아래 하얀 유니콘: 차이콥스키 〈백조의 호수〉(피아노 판) 18초
+    classical('arabesque_box'); // 달빛 아래 하얀 유니콘: 드뷔시 〈아라베스크〉 1번(제목에 오르골 편곡이라고 적힌 녹음) 18초. 〈백조의 호수〉는 단조라 다시 만나 안는 기쁜 장면과 어긋나 바꿈(2026-11-01 사용자 음악 점검)
     await sleep(1500);
     await say(S.L31);
     await say(S.L32);

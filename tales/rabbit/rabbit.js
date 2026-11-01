@@ -641,7 +641,9 @@
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
     try { AudioFX.preloadSfx(['intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'stream_1', 'crickets_night_1', 'sleepy_tuba', 'tiptoe_pizz', 'ding_glock']); } catch (e) { /* 소리 없이도 진행 */ }
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
-    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    /* classical('off'): 18초가 다 안 됐어도 서서히 끈다(토끼 낮잠 대사 밑에 빠른 캉캉이 남던 것, 2026-11-01 사용자 음악 점검) */
+    let clH = null, clT = 0;
+    const classical = n => { try { if (n === 'off') { clearTimeout(clT); clH && clH.stop(1.2); clH = null; return; } const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!(clH = AudioFX.ambient('classical_' + n, o))) clT = setTimeout(() => { try { clH = AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_cancan']); } catch (e) { /* 무시 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
@@ -1239,6 +1241,7 @@
     faceL(rabbit); rp.setEyes('open');
     await say('뒤를 돌아보니… 거북이는 안 보여요!');
     faceR(rabbit); rp.mouth('yawn'); rp.setEyes('half'); // 하품은 토끼 목소리로 (겹치던 합성음 뺌)
+    classical('off');
     await say('"하암~ 한숨 자고 가도 되겠다~"');
 
     /* --- 7. 토끼 재우기 --- */

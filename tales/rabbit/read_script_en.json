@@ -636,6 +636,7 @@
       ]
      ],
      "before": [
+      "classical:off",
       "rabbit:eyes:drowsy"
      ]
     }
