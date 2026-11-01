@@ -19,8 +19,15 @@ for i in ids:
             + (f"Pass these reference images in referenced_image_paths (read-only): {refs} . " if refs else '')
             + f"Save (copy) the generated image to {out} . No other file changes, no installs, no git. Reply only SAVED or FAILED <reason>.")
     for attempt in range(200):  # 한도에 걸리면 풀리는 시각까지 기다렸다 같은 그림을 다시
-        r = subprocess.run([CODEX, 'exec', '-s', 'workspace-write', '--skip-git-repo-check', '-C', G, inst], capture_output=True, text=True, timeout=900)
-        txt = r.stdout + r.stderr
+        # 시간 초과면 codex 프로세스 묶음째 끈다 — subprocess.run(timeout) 은 node 껍데기만 죽이고 안쪽 codex 가 고아로 남아
+        # 다음 그림들의 자리를 막았다(2026-11-01: 2시간 동안 한 장도 안 나옴). 끝나지 않은 그림은 FAIL 로 넘어가고 다음 id 를 그린다
+        pr = subprocess.Popen([CODEX, 'exec', '-s', 'workspace-write', '--skip-git-repo-check', '-C', G, inst], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, start_new_session=True)
+        try: so, se = pr.communicate(timeout=900)
+        except subprocess.TimeoutExpired:
+            try: os.killpg(pr.pid, 15)
+            except Exception: pass
+            so, se = pr.communicate(); so = (so or '') + ' TIMEOUT'
+        txt = (so or '') + (se or '')
         if os.path.exists(out) or not LIMIT_RE.search(txt): break
         until = wait_until(txt); print(f'{datetime.datetime.now():%H:%M} 한도 → {until:%m-%d %H:%M} 까지 대기', flush=True)
         time.sleep(min(60 * 60, max(60, (until - datetime.datetime.now()).total_seconds())))  # 1시간마다 다시 시도
