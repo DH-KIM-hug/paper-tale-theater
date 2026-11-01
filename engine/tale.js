@@ -900,47 +900,56 @@ const Tale = (() => {
     await lidTo(ir, W / 2, H / 2, 0, farFrom(W, H, W / 2, H / 2), 640 * cardK, easeOutBack);
     ir.hidden = true;
   }
-  /* 책장 넘기기 전환: 지금 장면을 종이 한 장으로 떠서(무대 SVG 복제) 오른쪽 가장자리부터 들려 왼쪽으로 넘긴다.
-     밑에서는 이미 다음 장면이 기다린다. 넘어가는 장 뒷면은 빈 종이, 들리는 동안 밑 장면에 그림자가 드리운다 */
+  /* 책장 넘기기 전환: 펼친 책처럼 가운데 접는 선(책등)을 축으로 오른쪽 반 장이 들려 왼쪽으로 넘어간다.
+     넘어가는 장 앞면 = 지금 장면 오른쪽 반, 뒷면 = 새 장면 왼쪽 반. 왼쪽 반은 장이 덮을 때까지 지금 장면 그대로,
+     오른쪽 밑에서는 이미 새 장면이 기다린다. 장이 서 있을수록 책등 쪽이 그늘지고, 밑 장면에 그림자가 드리운다 */
   let transitionMode = 'iris';
-  async function pageTurn(change) {
-    /* 책장 넘기기: 접히는 선(f)이 오른쪽 끝에서 왼쪽 끝으로 지나간다.
-       f 왼쪽 [0, 2f-W] = 아직 안 넘어간 지금 장면, [2f-W, f] = 넘어가며 접힌 종이 뒷면(가운데로 휜 그늘),
-       f 오른쪽 = 새 장면. 접힌 선 옆에 새 장면 쪽으로 그림자. 종이 끝이 살짝 기울어(위가 먼저) 넘어간다 */
-    if (document.hidden) { if (change) change(); return; } // 안 보일 때: 넘김 연출 없이 장면만 바꾼다
-    const wrap = $('#stageWrap'), stg = $('#stage'), W = wrap.clientWidth, H = wrap.clientHeight;
-    const book = document.createElement('div'); book.className = 'book';
-    const front = document.createElement('div'); front.className = 'front';
-    const snap = stg.cloneNode(true); snap.removeAttribute('id');
+  function snapStage() {
+    const snap = $('#stage').cloneNode(true); snap.removeAttribute('id');
     // 복제본 안의 id 는 모두 지운다 (filter 정의까지). 같은 id 가 둘이면 Safari 가 복제본의 #pp 를 붙잡고 있다가,
     // 복제본이 지워진 뒤 그 필터를 쓰는 그림(인물·소품·카드)을 통째로 안 그린다. 복제본의 url(#pp) 는 원래 무대의 정의를 쓴다
     snap.querySelector('defs') && snap.querySelector('defs').remove();
     snap.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
-    front.appendChild(snap);
-    const flap = document.createElement('div'); flap.className = 'flap';
-    const cast = document.createElement('div'); cast.className = 'cast';
-    book.append(front, cast, flap); wrap.appendChild(book);
+    return snap;
+  }
+  async function pageTurn(change) {
+    if (document.hidden) { if (change) change(); return; } // 안 보일 때: 넘김 연출 없이 장면만 바꾼다
+    const wrap = $('#stageWrap'), W = wrap.clientWidth, H = wrap.clientHeight, h = W / 2;
+    const half = (snap, left) => {   // 무대 크기 그대로 둔 복제본을 반쪽 창으로 본다
+      const d = document.createElement('div'); d.className = 'half';
+      snap.style.width = W + 'px'; snap.style.height = H + 'px'; snap.style.left = left + 'px';
+      d.appendChild(snap); return d;
+    };
+    const book = document.createElement('div'); book.className = 'book';
+    book.style.perspective = (W * 2.2).toFixed(0) + 'px';
+    const old = snapStage();
+    const lpage = half(old, 0); lpage.classList.add('lp');               // 왼쪽 반: 지금 장면
+    const under = document.createElement('div'); under.className = 'under'; // 오른쪽 밑 새 장면 위 그림자
+    const lshade = document.createElement('div'); lshade.className = 'lshade'; // 장이 내려앉는 왼쪽 그림자
+    const leaf = document.createElement('div'); leaf.className = 'leaf';
+    const fr = half(old.cloneNode(true), -h); fr.classList.add('fr');
+    const bk = document.createElement('div'); bk.className = 'half bk';
+    const frDim = document.createElement('i'), bkDim = document.createElement('i');
+    fr.appendChild(frDim); bk.appendChild(bkDim);
+    leaf.append(fr, bk);
+    lpage.appendChild(lshade);
+    book.append(lpage, under, leaf); wrap.appendChild(book);
     if (change) change();
     await sleep(40);
     AudioFX.sfx('page_turn', .9) || paperTurn(); // 책장 한 장 넘기는 소리 (Mixkit 'Page turn single')
-    const D = 1300, tilt = H * .18; // 위쪽 모서리가 아래보다 tilt 만큼 앞서 간다
+    const D = 1300;
     const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-    const poly = pts => `polygon(${pts.map(([x, y]) => `${x.toFixed(1)}px ${y.toFixed(1)}px`).join(',')})`;
+    let backed = false;
     await new Promise(res => {
       const t0 = performance.now();
       const step = now => {
-        const k = Math.min(1, (now - t0) / D), e = ease(k);
-        const fb = W + tilt - (W + tilt * 2) * e; // 아래 끝의 접힌 선 x
-        const ft = fb - tilt;                      // 위 끝 (먼저 간다)
-        // 지금 장면: 접힌 선과, 그 너머로 접혀 덮인 부분을 뺀 왼쪽 조각
-        const ot = 2 * ft - W, ob = 2 * fb - W;
-        front.style.clipPath = poly([[0, 0], [Math.max(0, ot), 0], [Math.max(0, ob), H], [0, H]]);
-        // 접힌 뒷면: [2f-W, f] (위·아래 따로)
-        flap.style.clipPath = poly([[ot, 0], [ft, 0], [fb, H], [ob, H]]);
-        flap.style.setProperty('--fx', ((ft + fb) / 2 / W * 100).toFixed(2) + '%');
-        // 새 장면 위, 접힌 선 바로 오른쪽 그림자
-        cast.style.clipPath = poly([[ft, 0], [ft + 70, 0], [fb + 70, H], [fb, H]]);
-        cast.style.opacity = (k < .9 ? 1 : (1 - k) * 10).toFixed(2);
+        const k = Math.min(1, (now - t0) / D), e = ease(k), deg = 180 * e, s = Math.sin(Math.PI * e);
+        if (!backed && deg > 60) { backed = true; bk.insertBefore(half(snapStage(), 0).firstChild, bkDim); } // 뒷면은 새 장면이 자리 잡은 뒤 뜬다
+        leaf.style.transform = `rotateY(${(-deg).toFixed(2)}deg)`;
+        frDim.style.opacity = (deg < 90 ? .55 * s : 0).toFixed(3);
+        bkDim.style.opacity = (deg > 90 ? .55 * s : 0).toFixed(3);
+        under.style.opacity = (deg < 90 ? 1 - e * 1.6 : 0).toFixed(3);
+        lshade.style.opacity = (deg > 90 ? Math.min(1, (deg - 90) / 60) * s * 1.4 : 0).toFixed(3);
         if (k < 1) requestAnimationFrame(step); else res();
       };
       requestAnimationFrame(step);
