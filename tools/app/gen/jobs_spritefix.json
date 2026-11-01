@@ -1,0 +1,302 @@
+[
+  {
+    "id": "sm_cut_roar_night",
+    "kind": "bg",
+    "aspect": "landscape 4:3",
+    "refs": [
+      "assets/raw/spritefix/ref_sm_cut_roar_night.png"
+    ],
+    "out": "assets/raw/spritefix/sm_cut_roar_night.png",
+    "sprite": false,
+    "size": [
+      800,
+      600
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: the tiger has five legs (one raised front paw plus two front paws on the rock plus two hind legs). Redraw only the tiger with exactly FOUR legs: one front paw raised, one front paw on the rock, two hind legs. Everything else must stay the same. No text."
+  },
+  {
+    "id": "hen_cut_pancake",
+    "kind": "bg",
+    "aspect": "landscape 4:3",
+    "refs": [
+      "assets/raw/spritefix/ref_hen_cut_pancake.png"
+    ],
+    "out": "assets/raw/spritefix/hen_cut_pancake.png",
+    "sprite": false,
+    "size": [
+      1200,
+      900
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: the hen has four wings (two raised behind plus two holding the plate in front). Redraw only the hen with exactly TWO wings, both holding the plate. Everything else must stay the same. No text."
+  },
+  {
+    "id": "hen_hen_carry",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_hen_hen_carry.png"
+    ],
+    "out": "assets/raw/spritefix/hen_hen_carry.png",
+    "sprite": true,
+    "size": [
+      620,
+      600
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: the hen has three wings (two supporting the wheat bundle plus one more on its body). Remove the extra wing so it has exactly TWO wings, both supporting the wheat bundle. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "hen_chick_hop",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_hen_chick_hop.png"
+    ],
+    "out": "assets/raw/spritefix/hen_chick_hop.png",
+    "sprite": true,
+    "size": [
+      572,
+      600
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: the chick has three wings and a stray purple paper piece sticking out behind. Make exactly TWO small wings, one on each side, and remove the purple piece. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "hen_chick_carry",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_hen_chick_carry.png"
+    ],
+    "out": "assets/raw/spritefix/hen_chick_carry.png",
+    "sprite": true,
+    "size": [
+      548,
+      600
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: the chick has three wing-shaped pieces (behind, middle of body, under the beak) and a stray purple piece. Make exactly TWO small wings holding what it carries, and remove the purple piece. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "rh_wolf_jump",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_rh_wolf_jump.png"
+    ],
+    "out": "assets/raw/spritefix/rh_wolf_jump.png",
+    "sprite": true,
+    "size": [
+      266,
+      237
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: the wolf has three front paws (two arms raised up plus an extra paw sticking out from the nightgown under the tail). Remove the extra paw so it has exactly two arms raised and two legs. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "tn2_mouse_cheer",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_tn2_mouse_cheer.png"
+    ],
+    "out": "assets/raw/spritefix/tn2_mouse_cheer.png",
+    "sprite": true,
+    "size": [
+      763,
+      900
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: the mouse has an extra black dot between its two eyes. Remove that extra dot so the face has exactly two eyes and one nose. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "ag_hopper_hat",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_ag_hopper_hat.png"
+    ],
+    "out": "assets/raw/spritefix/ag_hopper_hat.png",
+    "sprite": true,
+    "size": [
+      165,
+      189
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: this knitted hat is an object and must NOT have a face. Remove the eyes, mouth and cheeks from the hat; keep the plain knitted hat with its pattern. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "hb_gourd2_closed",
+    "kind": "sprite",
+    "aspect": "portrait 2:3",
+    "refs": [
+      "assets/raw/spritefix/ref_hb_gourd2_closed.png"
+    ],
+    "out": "assets/raw/spritefix/hb_gourd2_closed.png",
+    "sprite": true,
+    "size": [
+      421,
+      706
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: this gourd is an object and must NOT have a face. Remove the eyes, mouth and cheeks from the gourd; keep a plain gourd with its stem and leaf. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "rab_carrot_trophy",
+    "kind": "sprite",
+    "aspect": "portrait 2:3",
+    "refs": [
+      "assets/raw/spritefix/ref_rab_carrot_trophy.png"
+    ],
+    "out": "assets/raw/spritefix/rab_carrot_trophy.png",
+    "sprite": true,
+    "size": [
+      281,
+      494
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: the carrot on the trophy is an object and must NOT have a face. Remove the eyes, mouth and cheeks from the carrot; keep a plain carrot with green leaves. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "wc_cat_nose",
+    "kind": "sprite",
+    "aspect": "portrait 2:3",
+    "refs": [
+      "assets/raw/spritefix/ref_wc_cat_nose.png"
+    ],
+    "out": "assets/raw/spritefix/wc_cat_nose.png",
+    "sprite": true,
+    "size": [
+      406,
+      600
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: the cat seems to have three front paws (one paw covering its mouth plus two front paws on the floor). Make it exactly FOUR legs in total: one front paw covering its mouth, ONE front paw on the floor, and the hind leg(s) of the sitting cat; remove the extra front paw. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "hg_cut_witch",
+    "kind": "bg",
+    "aspect": "landscape 4:3",
+    "refs": [
+      "assets/raw/spritefix/ref_hg_cut_witch.png"
+    ],
+    "out": "assets/raw/spritefix/hg_cut_witch.png",
+    "sprite": false,
+    "size": [
+      1024,
+      768
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical pose, composition, colors, paper-art style, every part in the same place and size - with ONE fix: there is an extra disconnected hand on the top of the door frame. Remove that extra hand; the witch keeps only her own two hands. Everything else must stay the same. No text."
+  },
+  {
+    "id": "ag_ant_baby",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_ag_ant_baby.png"
+    ],
+    "out": "assets/raw/spritefix/ag_ant_baby.png",
+    "sprite": true,
+    "size": [
+      540,
+      532
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical cartoon ant character, same head, face, eyes, antennae, body segments, colors, paper-art style, clothing, pose direction, framing and size - with ONE fix: an ant is an insect and must have exactly SIX thin legs in total, all attached to the middle body segment (thorax): three pairs. Redraw only the legs so exactly six are visible (the far-side legs may be slightly behind the near-side ones), each ending in a small round foot. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "ag_ant_carry",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_ag_ant_carry.png"
+    ],
+    "out": "assets/raw/spritefix/ag_ant_carry.png",
+    "sprite": true,
+    "size": [
+      341,
+      325
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical cartoon ant character, same head, face, eyes, antennae, body segments, colors, paper-art style, clothing, pose direction, framing and size - with ONE fix: an ant is an insect and must have exactly SIX thin legs in total, all attached to the middle body segment (thorax): three pairs. Redraw only the legs so exactly six are visible (the far-side legs may be slightly behind the near-side ones), each ending in a small round foot. The two upper limbs still hold up the wheat ear. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "ag_ant_coat",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_ag_ant_coat.png"
+    ],
+    "out": "assets/raw/spritefix/ag_ant_coat.png",
+    "sprite": true,
+    "size": [
+      415,
+      458
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical cartoon ant character, same head, face, eyes, antennae, body segments, colors, paper-art style, clothing, pose direction, framing and size - with ONE fix: an ant is an insect and must have exactly SIX thin legs in total, all attached to the middle body segment (thorax): three pairs. Redraw only the legs so exactly six are visible (the far-side legs may be slightly behind the near-side ones), each ending in a small round foot. The legs come out below the coat; keep the coat. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "ag_ant_jacket3",
+    "kind": "sprite",
+    "aspect": "portrait 2:3",
+    "refs": [
+      "assets/raw/spritefix/ref_ag_ant_jacket3.png"
+    ],
+    "out": "assets/raw/spritefix/ag_ant_jacket3.png",
+    "sprite": true,
+    "size": [
+      579,
+      753
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical cartoon ant character, same head, face, eyes, antennae, body segments, colors, paper-art style, clothing, pose direction, framing and size - with ONE fix: an ant is an insect and must have exactly SIX thin legs in total, all attached to the middle body segment (thorax): three pairs. Redraw only the legs so exactly six are visible (the far-side legs may be slightly behind the near-side ones), each ending in a small round foot. Keep the yellow jacket. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "ag_ant_ring",
+    "kind": "sprite",
+    "aspect": "portrait 2:3",
+    "refs": [
+      "assets/raw/spritefix/ref_ag_ant_ring.png"
+    ],
+    "out": "assets/raw/spritefix/ag_ant_ring.png",
+    "sprite": true,
+    "size": [
+      483,
+      639
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical cartoon ant character, same head, face, eyes, antennae, body segments, colors, paper-art style, clothing, pose direction, framing and size - with ONE fix: an ant is an insect and must have exactly SIX thin legs in total, all attached to the middle body segment (thorax): three pairs. Redraw only the legs so exactly six are visible (the far-side legs may be slightly behind the near-side ones), each ending in a small round foot. Keep the swim ring around its body. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "ag_ant_stand",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_ag_ant_stand.png"
+    ],
+    "out": "assets/raw/spritefix/ag_ant_stand.png",
+    "sprite": true,
+    "size": [
+      443,
+      540
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical cartoon ant character, same head, face, eyes, antennae, body segments, colors, paper-art style, clothing, pose direction, framing and size - with ONE fix: an ant is an insect and must have exactly SIX thin legs in total, all attached to the middle body segment (thorax): three pairs. Redraw only the legs so exactly six are visible (the far-side legs may be slightly behind the near-side ones), each ending in a small round foot. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "ag_ant_tee",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_ag_ant_tee.png"
+    ],
+    "out": "assets/raw/spritefix/ag_ant_tee.png",
+    "sprite": true,
+    "size": [
+      462,
+      560
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical cartoon ant character, same head, face, eyes, antennae, body segments, colors, paper-art style, clothing, pose direction, framing and size - with ONE fix: an ant is an insect and must have exactly SIX thin legs in total, all attached to the middle body segment (thorax): three pairs. Redraw only the legs so exactly six are visible (the far-side legs may be slightly behind the near-side ones), each ending in a small round foot. Keep the T-shirt. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  },
+  {
+    "id": "ag_ant_winter",
+    "kind": "sprite",
+    "aspect": "square 1:1",
+    "refs": [
+      "assets/raw/spritefix/ref_ag_ant_winter.png"
+    ],
+    "out": "assets/raw/spritefix/ag_ant_winter.png",
+    "sprite": true,
+    "size": [
+      541,
+      640
+    ],
+    "prompt": "Reproduce the reference image EXACTLY - identical cartoon ant character, same head, face, eyes, antennae, body segments, colors, paper-art style, clothing, pose direction, framing and size - with ONE fix: an ant is an insect and must have exactly SIX thin legs in total, all attached to the middle body segment (thorax): three pairs. Redraw only the legs so exactly six are visible (the far-side legs may be slightly behind the near-side ones), each ending in a small round foot. One upper limb still holds the scarf end; keep the hat and scarf. Everything else must stay the same. No text. Keep the background a perfectly flat solid magenta #FF00FF everywhere around the figure (for chroma keying), same framing and size."
+  }
+]
