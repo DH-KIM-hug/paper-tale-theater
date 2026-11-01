@@ -119,7 +119,7 @@ Object.assign(NARRATION_CLIPS, {
  "큰 그릇이 반짝반짝! 눌러 봐요.": "audio/el/goldilocks/nar_b9ec203235.mp3",
  "중간 그릇이 반짝반짝! 눌러 봐요.": "audio/el/goldilocks/nar_f15a6423c3.mp3",
  "작은 그릇이 반짝반짝! 눌러 봐요.": "audio/el/goldilocks/nar_6c3f93d87c.mp3",
- "\"나는 다음이야~\"": "audio/el/goldilocks/bowl_2fceaa6703.mp3",
+ "\"나는 다음이야~\"": "audio/el/goldilocks/bowl_ee401933ce.mp3",
  "작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.": "audio/el/goldilocks/nar_fdc7fb4ad1.mp3",
  "골디락스 그릇도 하나 더! 다 함께 냠냠.": "audio/el/goldilocks/nar_24a15e1d88.mp3",
  "골디락스와 곰 가족은 사이좋은 친구가 되었답니다.": "audio/el/goldilocks/nar_42720c5162.mp3"

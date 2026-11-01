@@ -406,7 +406,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"나는 다음이야~\"": {
   "t": "\"I'm next~\"",
-  "c": "audio/el/goldilocks/en/bowl_1906a17076.mp3"
+  "c": "audio/el/goldilocks/en/bowl_f7fd47e9af.mp3"
  },
  "작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.": {
   "t": "Small bowl, medium bowl, big bowl! All filled in order.",

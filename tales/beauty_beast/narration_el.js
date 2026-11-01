@@ -5,7 +5,7 @@ Object.assign(NARRATION_CLIPS, {
  "괜찮아요, 제가 집안일을 할게요.": "audio/el/beauty_beast/belle_00a9ea4962.mp3",
  "배 한 척이 돌아왔대요! 아버지가 도시로 떠나요.": "audio/el/beauty_beast/nar_273200e1c0.mp3",
  "비단옷이요! 반지랑 리본도요!": [
-  "audio/el/beauty_beast/sisa_dd424e9ba4.mp3",
+  "audio/el/beauty_beast/sisa_2b39b86f76.mp3",
   "audio/el/beauty_beast/sisb_029be7be38.mp3"
  ],
  "저는 장미 한 송이면 돼요.": "audio/el/beauty_beast/belle_e3e5b6c961.mp3",
@@ -67,7 +67,7 @@ Object.assign(NARRATION_CLIPS, {
  "다음 날 아침, 벨은 집에 와 있었어요.": "audio/el/beauty_beast/nar_09849fec0c.mp3",
  "네 덕분에 다 나았다.": "audio/el/beauty_beast/father_6875b8493f.mp3",
  "조금만 더 있다 가. 응? 조금만 더.": [
-  "audio/el/beauty_beast/sisa_e1ad334057.mp3",
+  "audio/el/beauty_beast/sisa_9bb43a097d.mp3",
   "audio/el/beauty_beast/sisb_8825465912.mp3"
  ],
  "그럴까…": "audio/el/beauty_beast/belle_b2bfbabdda.mp3",

@@ -43,7 +43,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "비단옷이요! 반지랑 리본도요!": {
   "t": "A silk dress for me! And rings and ribbons too!",
   "c": [
-   "audio/el/beauty_beast/en/sisa_9e362b140b.mp3",
+   "audio/el/beauty_beast/en/sisa_2bef0bf8ec.mp3",
    "audio/el/beauty_beast/en/sisb_60a34f03d2.mp3"
   ]
  },
@@ -322,7 +322,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "조금만 더 있다 가. 응? 조금만 더.": {
   "t": "Stay just a little longer. Please? Just a little.",
   "c": [
-   "audio/el/beauty_beast/en/sisa_2ef4af419b.mp3",
+   "audio/el/beauty_beast/en/sisa_c2546dd7e9.mp3",
    "audio/el/beauty_beast/en/sisb_aa3e771f14.mp3"
   ]
  },

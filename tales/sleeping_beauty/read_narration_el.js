@@ -26,7 +26,7 @@ Object.assign(NARRATION_CLIPS, {
  "상냥한 마음을 줄게.": "audio/el/sleeping_beauty/forange_48e40e10ce.mp3",
  "고운 말씨를 줄게.": "audio/el/sleeping_beauty/fyellow_eed7e8900b.mp3",
  "사뿐사뿐 춤을 줄게.": "audio/el/sleeping_beauty/fgreen_583d8e48ff.mp3",
- "꾀꼬리 같은 노래를 줄게.": "audio/el/sleeping_beauty/fblue_3119530e94.mp3",
+ "꾀꼬리 같은 노래를 줄게.": "audio/el/sleeping_beauty/fblue_f423117963.mp3",
  "피리 솜씨를 줄게.": "audio/el/sleeping_beauty/fpurple_b6d40be2f5.mp3",
  "아기는 쌔근쌔근 웃었어요.": "audio/el/sleeping_beauty/nar_61c3ffe262.mp3",
  "여섯 요정이 선물을 주자 늙은 요정이 아기에게 말했어요.": "audio/el/sleeping_beauty/nar_3ce4604db5.mp3",

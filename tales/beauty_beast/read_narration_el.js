@@ -11,7 +11,7 @@ Object.assign(NARRATION_CLIPS, {
  "배 한 척이 돌아왔대요! 아버지가 도시로 떠나요.": "audio/el/beauty_beast/nar_273200e1c0.mp3",
  "언니들은 아버지에게 선물을 부탁했어요.": "audio/el/beauty_beast/nar_d7fa0d18b5.mp3",
  "비단옷이요! 반지랑 리본도요!": [
-  "audio/el/beauty_beast/sisa_dd424e9ba4.mp3",
+  "audio/el/beauty_beast/sisa_2b39b86f76.mp3",
   "audio/el/beauty_beast/sisb_029be7be38.mp3"
  ],
  "벨도 아버지에게 조용히 부탁했어요.": "audio/el/beauty_beast/nar_21a270b1ef.mp3",
@@ -83,7 +83,7 @@ Object.assign(NARRATION_CLIPS, {
  "네 덕분에 다 나았다.": "audio/el/beauty_beast/father_6875b8493f.mp3",
  "아버지가 나아지자 언니들이 벨을 붙잡았어요.": "audio/el/beauty_beast/nar_c232e5fca0.mp3",
  "조금만 더 있다 가. 응? 조금만 더.": [
-  "audio/el/beauty_beast/sisa_e1ad334057.mp3",
+  "audio/el/beauty_beast/sisa_9bb43a097d.mp3",
   "audio/el/beauty_beast/sisb_8825465912.mp3"
  ],
  "그럴까…": "audio/el/beauty_beast/belle_b2bfbabdda.mp3",

@@ -82,7 +82,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꾀꼬리 같은 노래를 줄게.": {
   "t": "I give you a song like a songbird.",
-  "c": "audio/el/sleeping_beauty/en/fblue_f93f443d44.mp3"
+  "c": "audio/el/sleeping_beauty/en/fblue_bac71c85c7.mp3"
  },
  "피리 솜씨를 줄게.": {
   "t": "I give you the gift of playing the flute.",
