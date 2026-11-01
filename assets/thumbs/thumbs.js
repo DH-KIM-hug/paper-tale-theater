@@ -1,7 +1,7 @@
 /* make_thumbs.py가 생성. THUMBS: 예전 크림 여백 그림, THUMBS2: 남색 종이 구멍, THUMBS2L: 밝은 종이 구멍(<id>_light.webp) */
 window.THUMBS = ["rabbit", "sun_wind"];
 window.THUMBS2 = ["frog", "patjuk", "sunmoon"];
-window.THUMBS2L = ["ant_grasshopper", "bremen", "cinderella", "fox_crane", "frog", "goldilocks", "hansel", "heungbu", "kongjwi", "lion_mouse", "magic_jar", "magpie", "patjuk", "rabbit", "red_hood", "sun_wind", "sunmoon", "three_pigs", "turnip", "ugly_duckling", "wolf_goats"];
+window.THUMBS2L = [];   // 2026-11-01 사용자: 라이트 썸네일(<id>_light.webp) 모두 삭제 — 시작 그림·카드·타일만 쓴다
 /* THUMBSKEY: 시작 화면 키아트(<id>_key_wide.webp + <id>_key_tall.webp 둘 다 있는 동화) */
 window.THUMBSKEY = ["ant_grasshopper", "bremen", "cinderella", "fox_crane", "frog", "goldilocks", "hansel", "heungbu", "kkultteok", "kongjwi", "lion_mouse", "little_mermaid", "magic_jar", "magpie", "patjuk", "rabbit", "red_hood", "snow_white", "sun_wind", "sunmoon", "three_pigs", "turnip", "ugly_duckling", "wolf_goats", "beauty_beast", "red_car", "frog_prince", "princess_pea", "sleeping_beauty", "rapunzel", "unicorn", "witch_candy", "byeoljubu", "red_hen"];
 /* THUMBSKEYLIGHT: 흰 종이 판 키아트(어두운 띠 없이 어두운 글자). 값 = 종이 색. tools/app/keyart/<id>.json의 "light" */
