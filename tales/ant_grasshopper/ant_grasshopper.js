@@ -1032,7 +1032,7 @@
     await sleep(700);
     const bw = bowing(hop.p);
     T.pop(360, 230, '띠리링~', C.pine);
-    const spring = AudioFX.music('vivaldi_summer1', { vol: .8, dur: 18 }); // 비발디 〈사계〉 '여름' 1악장 (공개 라이선스 녹음, 2026-10-20 여름 장면에 맞춰 교체)
+    const spring = AudioFX.music('vivaldi_summer1', { vol: .8, dur: 18 }); // 비발디 〈사계〉 '여름' 1악장 (2026-10-20 여름 장면에 맞춰 교체, 2026-11-02 픽사베이 녹음으로 바꿈)
     if (spring) {
       const nt = setInterval(() => { notes(T, 300 + Math.random() * 110, 280); ants.forEach(a => a.hop(8, 260)); }, 700);
       await spring.done; clearInterval(nt);
@@ -1348,7 +1348,7 @@
     const dancers = [...home, ...guests];
     await say('베짱이가 겨울 노래를 들려줘요. 가만히 들어 봐요.');
     stopBgm(.3);
-    const winter = AudioFX.music('vivaldi_winter1', { vol: .9, dur: 26, fade: 2 }); // 비발디 〈사계〉 '겨울' 1악장 (2026-10-20 유명한 첫 악장으로 교체, 공개 라이선스 녹음)
+    const winter = AudioFX.music('vivaldi_winter1', { vol: .9, dur: 26, fade: 2 }); // 비발디 〈사계〉 '겨울' 1악장 (2026-10-20 유명한 첫 악장으로 교체, 2026-11-02 픽사베이 녹음으로 바꿈)
     if (winter) {
       const bw2 = bowing(hop.p);
       const sw = setInterval(() => { notes(T, 470, 360); dancers.forEach((a, i) => setTimeout(() => a.wiggle(5, 700), i * 120)); }, 1400);

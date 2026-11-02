@@ -56,7 +56,8 @@ const Tale = (() => {
         const from = `translate(${a.x}px,${a.y}px) scale(${a.flip * a.scale},${a.scale})`;
         const to = `translate(${nx}px,${ny}px) scale(${a.flip * a.scale},${a.scale})`;
         pos.removeAttribute('transform');
-        await anim(pos, [{ transform: from }, { transform: to }], { duration: dur, easing });
+        pos.classList.add('mv'); a.mvN = (a.mvN || 0) + 1;   // 걷는 동안은 흐림 없는 그림자(ppFast) — tale.css .mv
+        try { await anim(pos, [{ transform: from }, { transform: to }], { duration: dur, easing }); } finally { if (!--a.mvN) pos.classList.remove('mv'); }
         pos.style.transform = '';
         a.place(nx, ny);
       },
@@ -100,6 +101,10 @@ const Tale = (() => {
     const m = new DOMMatrix(getComputedStyle(cam).transform);
     if (m.a > 0) Object.assign(camState, { z: m.a, x: (500 - m.e) / m.a, y: (280 - m.f) / m.a });
   }
+  /* 움직이는 동안 가벼운 그림자(2026-11-02 사용자: 아이패드에서 사탕 마녀 유령 행진이 끊김). 사파리는 SVG 그림자 흐림(feDropShadow)을
+     CPU 로 매 프레임 다시 계산한다 → 인물이 걷거나 화면이 움직이는 동안만 흐림 없는 그림자(#ppFast)로 바꾸고, 멈추면 원래 그림자로 */
+  let camMvN = 0;
+  const camMv = d => { camMvN = Math.max(0, camMvN + d); const st = document.getElementById('stage'); if (st) st.classList.toggle('mv', camMvN > 0); };
   async function camTo(x, y, z = 1, dur = 800) {
     const mine = directing;
     if (mine && dirAnim) { syncCamFromScreen(); dirAnim.cancel(); dirAnim = null; }
@@ -112,6 +117,7 @@ const Tale = (() => {
     $('#frame').classList.toggle('out', z > 1.05);
     const a = cam.animate([{ transform: camT(camState.x, camState.y, camState.z) }, { transform: camT(x, y, z) }],
       { duration: dur, easing: 'cubic-bezier(.35,0,.25,1)', fill: 'forwards' });
+    camMv(1); a.finished.then(() => camMv(-1), () => camMv(-1));   // 화면이 움직이는 동안은 흐림 없는 그림자
     if (mine) { dirAnim = a; Object.assign(dirDest, { x, y, z }); }
     try { await a.finished; } catch (e) { return; } finally { if (!mine) taleMoving--; } // 연출 이동이 취소됨: 상태는 취소한 쪽이 맞췄다
     if (mine && dirAnim !== a) return;
@@ -1508,6 +1514,7 @@ const Tale = (() => {
     <svg id="stage" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
       <defs>
         <filter id="pp" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#2E241C" flood-opacity=".45"/></filter>
+        <filter id="ppFast" x="-2%" y="-2%" width="104%" height="112%"><feFlood flood-color="#2E241C" flood-opacity=".32"/><feComposite in2="SourceAlpha" operator="in"/><feOffset dy="4"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         <filter id="armGlow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#F6ECD8" flood-opacity=".9"/></filter>
         <filter id="hintGlow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#FFD54F" flood-opacity="1"/></filter>
       </defs>

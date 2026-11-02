@@ -92,7 +92,7 @@ const AudioFX = (() => {
   }
 
   /* ===== 사전 녹음 내레이션 재생 ===== */
-  const narBuffers = {};
+  const narBuffers = new Map(), narLoading = {}; // 푼 내레이션(최근 24개 LRU)·풀고 있는 중인 약속
   let narSrc = null, voiceSrc = null, voiceGen = 0, voiceDone = Promise.resolve();
   /* 지금 나오는 내레이션 조각: 시작 시각(ms)·길이(초, 모르면 0)·몇 번째 조각. 읽어 주기가 '오디오 길이 + 3초' 시간 제한에 쓴다 */
   const narInfo = { t: 0, dur: 0, n: 0 };
@@ -102,7 +102,8 @@ const AudioFX = (() => {
      <audio> 는 배경에서도 이어 재생되고 ended 이벤트로 다음 줄을 부를 수 있다(잠금 화면 '지금 재생'·Media Session 도 이 요소로).
      시작 단추를 누르는 순간(사용자 누름 안에서) 한 번 재생해 두어야 iOS 가 나중에 누름 없이 재생을 허락한다 */
   let narEl = null, mediaNar = false, narEnd = null, narHeld = false;
-  const narBlob = {};
+  const narBlob = new Map(); // 읽어 주기 blob 주소(최근 24개 LRU, 밀려나면 해제)
+  const blobFor = (url, bytes) => { const u = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' })); lruSet(narBlob, url, u, URL.revokeObjectURL); delete prefetched[url]; return u; };
   const narHelpers = [];
   let pairEnds = [], pairGen = 0;
   /* 멈춤 세대 (2026-10-29): stopNarration 마다 narGen 이 오르고 narStopP 가 풀린다.
@@ -122,12 +123,12 @@ const AudioFX = (() => {
     try { narEl.src = SILENT; const p = narEl.play(); if (p && p.then) p.then(() => { if (!narEnd) narEl.pause(); }, () => {}); } catch (e) { /* 무시 */ }
   }
   async function playMedia(url, gen, stopP) {
-    let u = narBlob[url];
+    let u = lruGet(narBlob, url);
     if (!u) {
       try {
         const bytes = await untilStop(fetchBytes(url), stopP);
         if (bytes === CUT) return;               // 받는 동안 멈춤: 재생하지 않고 바로 끝
-        u = narBlob[url] = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' }));
+        u = lruGet(narBlob, url) || blobFor(url, bytes);
       }
       catch (e) { u = clipUrl(url); }
     }
@@ -165,8 +166,39 @@ const AudioFX = (() => {
 
   /* 녹음 미리 받기: 동화를 시작하면 이 동화의 녹음 파일을 순서대로(동시에 4개씩) 받아 둔다.
      받은 파일(압축된 mp3)만 들고 있다가 말할 때 풀어 쓴다 → 대사가 바로 나온다 (메모리도 적게) */
-  const prefetched = {};
-  const fetchBytes = url => (prefetched[url] = prefetched[url] || fetch(clipUrl(url)).then(r => { if (!r.ok) throw new Error('fetch-fail'); return r.arrayBuffer(); }));
+  const prefetched = {};      // 받아 둔 압축 mp3 (풀거나 blob 으로 바꾼 뒤엔 버린다)
+  const rawFetch = (url, signal) => fetch(clipUrl(url), signal ? { signal } : undefined).then(r => { if (!r.ok) throw new Error('fetch-fail'); return r.arrayBuffer(); });
+  /* 재생용 받기: 미리 받는 중이면 그 약속을 쓰되, 미리 받기가 취소(abort)돼 끊겼으면 바로 다시 받는다 → 재생은 미리 받기에 기대지 않는다 */
+  const fetchBytes = url => {
+    let p = prefetched[url];
+    if (p) return p.catch(e => { if (prefetched[url] === p) delete prefetched[url]; if (e && e.name === 'AbortError') return fetchBytes(url); throw e; });
+    p = prefetched[url] = rawFetch(url);
+    p.catch(() => { if (prefetched[url] === p) delete prefetched[url]; });
+    return p;
+  };
+  /* 작은 LRU (2026-11-02): 풀어 둔 버퍼·blob 주소는 최근 24개만 들고 있다. 밀려난 것은 다시 부르면 받고 풀어 쓴다 */
+  const NAR_CAP = 24;
+  const lruGet = (m, k) => { if (!m.has(k)) return; const v = m.get(k); m.delete(k); m.set(k, v); return v; };
+  const lruSet = (m, k, v, drop) => { m.delete(k); m.set(k, v); while (m.size > NAR_CAP) { const o = m.keys().next().value; if (drop) drop(m.get(o)); m.delete(o); } };
+  let pf = null; // 미리 받기 상태 { all, i, ctl, timer, active }
+  function pfStop() {
+    if (!pf) return;
+    clearTimeout(pf.timer); pf.timer = 0;
+    if (pf.ctl) { try { pf.ctl.abort(); } catch (e) { /* 무시 */ } pf.ctl = null; } // 받는 중인 것은 끊고, 대기 중인 것은 시작하지 않는다
+    pf.active = 0;
+  }
+  function pfPump() {
+    if (!pf || pf.ctl) return;
+    const st = pf, ctl = st.ctl = new AbortController();
+    const next = () => {
+      if (st.ctl !== ctl || ctl.signal.aborted) return;
+      while (st.i < st.all.length && (narBlob.has(st.all[st.i]) || narBuffers.has(st.all[st.i]) || prefetched[st.all[st.i]])) st.i++; // 이미 있으면 건너뜀
+      if (st.i >= st.all.length) { st.active--; return; }
+      const u = st.all[st.i++], p = prefetched[u] = rawFetch(u, ctl.signal);
+      p.catch(() => { if (prefetched[u] === p) delete prefetched[u]; }).then(next);
+    };
+    st.active = 2; next(); next();
+  }
   function prefetchClips() {
     const all = [];
     const add = v => [].concat(v || []).forEach(u => { if (typeof u === 'string' && !all.includes(u)) all.push(u); });
@@ -177,15 +209,24 @@ const AudioFX = (() => {
       if (typeof NARRATION_CLIPS !== 'undefined') Object.values(NARRATION_CLIPS).forEach(add);
       if (typeof VOICE_LINES !== 'undefined') Object.values(VOICE_LINES).forEach(add);
     }
-    let i = 0;
-    const next = () => { if (i >= all.length) return; const u = all[i++]; fetchBytes(u).catch(() => { delete prefetched[u]; }).finally(next); };
-    for (let k = 0; k < 4; k++) next();
+    /* 첫 장면 그림 받기와 다투지 않게 1.5초 뒤에, 동시에 2개씩 받는다. 화면을 떠나면 끊는다 */
+    pfStop();
+    pf = { all, i: 0, ctl: null, timer: 0, active: 0 };
+    const st = pf;
+    st.timer = setTimeout(() => { st.timer = 0; if (pf === st && !(document.hidden && !mediaNar)) pfPump(); }, 1500);
   }
+  addEventListener('pagehide', pfStop);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { if (!mediaNar) pfStop(); }  // 읽어 주기(화면 꺼짐)는 이어 받는다. 재생은 미리 받기에 기대지 않는다
+    else if (pf && !pf.timer && !pf.ctl && pf.i < pf.all.length) pfPump();
+  });
 
   /* 영어 천천히 (2026-10-30 사용자: 영어만 0.9배): ElevenLabs 영어 클립(audio/el/…/en/)은 보통 속도로 녹음돼 있어
      재생할 때 0.9배로 늘린다. Typecast 영어(audio/tc/)는 녹음 때 이미 0.9배라 그대로. 음 높이는 그대로 둔다 */
   const EN_RATE = 0.9;
-  const slowEn = url => typeof url === 'string' && /(^|\/)audio\/el\/.*\/en\//.test(url);
+  /* 앱 묶음은 영어 클립을 미리 0.9배로 늘려 담는다(tools/app/build_www.sh 가 아래 줄을 true 로 바꾼다). true 면 재생 때 늘리지 않는다 */
+  const EN_PRESLOWED = false;
+  const slowEn = url => !EN_PRESLOWED && typeof url === 'string' && /(^|\/)audio\/el\/.*\/en\//.test(url);
   /* 목소리 늘리기(WSOLA): 40ms 창을 반씩 겹쳐 붙이되, 이어 붙일 자리를 앞 조각과 가장 닮은 곳에서 찾아 음 높이를 지킨다 */
   function stretchBuffer(c, buf, rate) {
     const sr = buf.sampleRate, N = Math.round(sr * .04) & ~1, Hs = N / 2, Ha = Hs * rate, tol = Math.round(N / 4);
@@ -222,12 +263,19 @@ const AudioFX = (() => {
   async function loadClip(url) {
     const c = ensure();
     if (!c) throw new Error('no-audio-ctx');
-    if (!narBuffers[url]) {
-      const bytes = await fetchBytes(url);
-      const buf = await c.decodeAudioData(bytes.slice(0)); // slice: 미리 받은 원본은 다시 쓸 수 있게 남긴다
-      narBuffers[url] = slowEn(url) ? stretchBuffer(c, buf, EN_RATE) : buf;
-    }
-    return narBuffers[url];
+    const hit = lruGet(narBuffers, url);
+    if (hit) return hit;
+    if (!narLoading[url]) narLoading[url] = (async () => {
+      try {
+        const bytes = await fetchBytes(url);
+        const buf = await c.decodeAudioData(bytes.slice(0));
+        delete prefetched[url]; // 푼 뒤엔 압축 원본을 버린다 (밀려나면 다시 받는다)
+        const out = slowEn(url) ? stretchBuffer(c, buf, EN_RATE) : buf;
+        lruSet(narBuffers, url, out);
+        return out;
+      } finally { delete narLoading[url]; }
+    })();
+    return narLoading[url];
   }
 
   /* ===== 실제 녹음 효과음·동물 소리 (sounds/). 못 불러오면 아래 합성음으로 대신한다 ===== */
@@ -437,8 +485,7 @@ const AudioFX = (() => {
       if (urls.length > narHelpers.length) throw new Error('too many simultaneous voices');
       // 모두 받은 뒤 한 작업 안에서 play: 늦게 받아진 목소리 때문에 합창이 벌어지지 않는다.
       const sources = await untilStop(Promise.all(urls.map(async url => {
-        if (!narBlob[url]) narBlob[url] = URL.createObjectURL(new Blob([await fetchBytes(url)], { type: 'audio/mpeg' }));
-        return narBlob[url];
+        return lruGet(narBlob, url) || (b => lruGet(narBlob, url) || blobFor(url, b))(await fetchBytes(url));
       })), stopP);
       if (sources === CUT || gen !== pairGen) return;
       narInfo.t = Date.now(); narInfo.dur = 0; narInfo.n++;
@@ -504,6 +551,7 @@ const AudioFX = (() => {
       mediaNar = false; narHeld = false;
       try { api.stopAmbient(.4); } catch (e) { /* 무시 */ }
       try { api.stopNarration(); } catch (e) { /* 무시 */ }
+      pfStop();
       if (narEl) { try { narEl.pause(); narEl.removeAttribute('src'); narEl.load(); } catch (e) { /* 무시 */ } }
       narHelpers.forEach(el => { try { el.pause(); el.removeAttribute('src'); } catch (e) { /* 무시 */ } });
       if (keepAlive) { try { keepAlive.pause(); } catch (e) { /* 무시 */ } }

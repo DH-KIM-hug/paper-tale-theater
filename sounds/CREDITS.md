@@ -1,7 +1,7 @@
 # 소리 크레딧
 
 게임에 쓰는 실제 녹음 소리의 출처와 라이선스. 원본에서 한 부분을 잘라 음량을 맞춘 뒤 mp3로 변환했다.
-CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따른다. 앱에 크레딧 화면을 만들 때 이 표를 그대로 옮긴다.
+앱에 들어가는 소리 가운데 CC BY-SA 라이선스 녹음은 없다(2026-11-02 비발디 녹음을 Pixabay 로 교체). 앱 크레딧 화면은 이 표를 그대로 옮긴다.
 
 ## 동물 소리 · 풍덩 (Wikimedia Commons)
 
@@ -26,17 +26,17 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 | `sfx/splash.mp3` | Bathtub water splashes.ogg | gradha | Public domain | https://commons.wikimedia.org/wiki/File:Bathtub_water_splashes.ogg |
 | `animals/donkey.mp3` | Pixabay "DONKEY" 에서 '이-아' 한 번만 남기도록 자름(1.1초, 앞뒤 페이드) | Stu9 | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/donkey-352696/ |
 
-## 클래식 녹음 (Wikimedia Commons, 비발디 〈사계〉 — 작곡은 공개 도메인, 녹음은 아래 라이선스)
+## 클래식 녹음 (비발디 〈사계〉, 개미와 베짱이 — 작곡은 공개 도메인, 녹음은 Pixabay. 2026-11-02 출시 점검: Wikimedia Commons CC BY-SA 4.0 녹음에서 교체)
 
 | 파일 | 원본 | 연주 | 라이선스 | 출처 |
 |---|---|---|---|---|
-| `music/vivaldi_spring.mp3` | Vivaldi - Four Seasons 1 Spring mvt 1 Allegro - John Harrison violin.oga (처음 40초) | John Harrison(바이올린), Robert Turizziani(지휘), Wichita State University Chamber Players, 2000년 라이브 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_1_Spring_mvt_1_Allegro_-_John_Harrison_violin.oga |
-| `music/vivaldi_winter.mp3` | 11 - Vivaldi Winter mvt 2 Largo - John Harrison violin.ogg (처음 30초, 음량 +10dB) | John Harrison(바이올린) 외, 위와 같은 녹음 모음 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:11_-_Vivaldi_Winter_mvt_2_Largo_-_John_Harrison_violin.ogg |
-| `music/vivaldi_spring3.mp3` | Vivaldi - Four Seasons 1 Spring mvt 3 Allegro - John Harrison violin.oga (처음 20초, 끝 페이드아웃, 음량 맞춤) | John Harrison(바이올린), Robert Turizziani(지휘), Wichita State University Chamber Players, 2000년 라이브 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_1_Spring_mvt_3_Allegro_-_John_Harrison_violin.oga |
-| `music/vivaldi_winter1.mp3` | Vivaldi - Four Seasons 4 Winter mvt 1 Allegro non molto - John Harrison violin.oga (처음 26초, 끝 페이드아웃, 음량 맞춤) | John Harrison(바이올린) 외, 위와 같은 녹음 모음 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_4_Winter_mvt_1_Allegro_non_molto_-_John_Harrison_violin.oga |
-| `music/vivaldi_summer1.mp3` | Vivaldi - Four Seasons 2 Summer mvt 1 Allegro non molto - John Harrison violin.oga (처음 20초, 끝 페이드아웃, 음량 맞춤) | John Harrison(바이올린), Robert Turizziani(지휘), Wichita State University Chamber Players, 2000년 라이브 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_2_Summer_mvt_1_Allegro_non_molto_-_John_Harrison_violin.oga |
-| `music/vivaldi_summer3.mp3` | Vivaldi - Four Seasons 2 Summer mvt 3 Presto - John Harrison violin.oga (처음 20초, 끝 페이드아웃, 음량 맞춤) | John Harrison(바이올린), Robert Turizziani(지휘), Wichita State University Chamber Players, 2000년 라이브 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_2_Summer_mvt_3_Presto_-_John_Harrison_violin.oga |
-| `music/vivaldi_autumn1.mp3` | Vivaldi - Four Seasons 3 Autumn mvt 1 Allegro - John Harrison violin.oga (처음 22초, 끝 페이드아웃, 음량 맞춤) | John Harrison(바이올린), Robert Turizziani(지휘), Wichita State University Chamber Players, 2000년 라이브 | **CC BY-SA 4.0** — 출처 표시 필요 | https://commons.wikimedia.org/wiki/File:Vivaldi_-_Four_Seasons_3_Autumn_mvt_1_Allegro_-_John_Harrison_violin.oga |
+| `music/vivaldi_spring.mp3` | Pixabay "Vivaldi - Four Seasons "Spring" - RV 269 - Arr. for Strings" — gregorquendel-vivaldi-four-seasons-quotspringquot-rv-269-arr-for-strings-190520.mp3 (봄 1악장, 원본 처음 40초, 제목·태그에 적힌 편성: 현악) | GregorQuendel (편곡·연주) | Pixabay Content License (출처 표기 불필요) | 앞 무음 제거·페이드(0.3s 인·1.5s 아웃)·모노 96k·옛 파일과 같은 음량. https://pixabay.com/music/classical-string-quartet-vivaldi-four-seasons-quotspringquot-rv-269-arr-for-strings-190520/ |
+| `music/vivaldi_winter.mp3` | Pixabay "Vivaldi - Winter - Largo" — abydos_music-vivaldi-winter-largo-185006.mp3 (겨울 2악장 라르고, 처음 30초, 제목·태그에 적힌 편성: 현악) | Abydos_Music (편곡·연주) | Pixabay Content License (출처 표기 불필요) | 앞 무음 제거·페이드(0.3s 인·1.5s 아웃)·모노 96k·옛 파일과 같은 음량. https://pixabay.com/music/classical-string-quartet-vivaldi-winter-largo-185006/ |
+| `music/vivaldi_spring3.mp3` | Pixabay "Vivaldi - Four Seasons "Spring" - RV 269 - Arr. for Strings" — gregorquendel-vivaldi-four-seasons-quotspringquot-rv-269-arr-for-strings-190520.mp3 (봄 3악장, 원본 5:11부터 20초(3악장 시작), 제목·태그에 적힌 편성: 현악) | GregorQuendel (편곡·연주) | Pixabay Content License (출처 표기 불필요) | 앞 무음 제거·페이드(0.3s 인·1.5s 아웃)·모노 96k·옛 파일과 같은 음량. https://pixabay.com/music/classical-string-quartet-vivaldi-four-seasons-quotspringquot-rv-269-arr-for-strings-190520/ |
+| `music/vivaldi_winter1.mp3` | Pixabay "Vivaldi - Winter - Allegro non molto" — abydos_music-vivaldi-winter-allegro-non-molto-185005.mp3 (겨울 1악장, 처음 26초, 제목·태그에 적힌 편성: 현악) | Abydos_Music (편곡·연주) | Pixabay Content License (출처 표기 불필요) | 앞 무음 제거·페이드(0.3s 인·1.5s 아웃)·모노 96k·옛 파일과 같은 음량. https://pixabay.com/music/classical-string-quartet-vivaldi-winter-allegro-non-molto-185005/ |
+| `music/vivaldi_summer1.mp3` | Pixabay "Vivaldi - Four Seasons "Summer" - RV 315 - Arr. for Strings" — gregorquendel-vivaldi-four-seasons-quotsummerquot-rv-315-arr-for-strings-190521.mp3 (여름 1악장, 원본 처음 20초, 제목·태그에 적힌 편성: 현악) | GregorQuendel (편곡·연주) | Pixabay Content License (출처 표기 불필요) | 앞 무음 제거·페이드(0.3s 인·1.5s 아웃)·모노 96k·옛 파일과 같은 음량. https://pixabay.com/music/classical-string-quartet-vivaldi-four-seasons-quotsummerquot-rv-315-arr-for-strings-190521/ |
+| `music/vivaldi_summer3.mp3` | Pixabay "Vivaldi - Summer - Presto" — abydos_music-vivaldi-summer-presto-183841.mp3 (여름 3악장 프레스토, 처음 20초, 제목·태그에 적힌 편성: 현악) | Abydos_Music (편곡·연주) | Pixabay Content License (출처 표기 불필요) | 앞 무음 제거·페이드(0.3s 인·1.5s 아웃)·모노 96k·옛 파일과 같은 음량. https://pixabay.com/music/classical-string-quartet-vivaldi-summer-presto-183841/ |
+| `music/vivaldi_autumn1.mp3` | Pixabay "Vivaldi - Autumn - Allegro" — abydos_music-vivaldi-autumn-allegro-183832.mp3 (가을 1악장, 처음 22초, 제목·태그에 적힌 편성: 현악) | Abydos_Music (편곡·연주) | Pixabay Content License (출처 표기 불필요) | 앞 무음 제거·페이드(0.3s 인·1.5s 아웃)·모노 96k·옛 파일과 같은 음량. https://pixabay.com/music/classical-string-quartet-vivaldi-autumn-allegro-183832/ |
 
 ## 브레멘 음악대 음악 (Pixabay, 파일은 `audio/bremen/` 에 있음)
 
@@ -61,7 +61,7 @@ CC BY-SA 소리를 잘라 만든 파일은 같은 CC BY-SA 라이선스를 따�
 ## 만화 컷 효과음 (AudioFX.sting 재료)
 
 원본에서 잘라내거나 여러 개를 섞은 뒤 음량을 맞췄다(loudnorm I=-16 TP=-1.5, 모노 44.1kHz, 96kbps mp3).
-효과음·동물 소리에는 출처 표시가 필요한 파일이 더 이상 없다(CC BY·CC BY-SA 였던 cymbal·오리·소·돼지·개·부엉이·개구리는 Pixabay 로 교체). 출처 표시가 필요한 것은 클래식 녹음(CC BY-SA 4.0)뿐이다.
+효과음·동물 소리에는 출처 표시가 필요한 파일이 더 이상 없다(CC BY·CC BY-SA 였던 cymbal·오리·소·돼지·개·부엉이·개구리는 Pixabay 로 교체). 클래식 녹음도 2026-11-02 Pixabay 로 바꿔 출처 표시가 필요한 소리는 없다.
 
 | 파일 | 원본 | 만든 이 | 라이선스 | 출처 |
 |---|---|---|---|---|
