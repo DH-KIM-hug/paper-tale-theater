@@ -102,6 +102,14 @@
     }
     const hit = (x, y, w, h) => T.el('rect', { x, y, width: w, height: h, fill: '#000', 'fill-opacity': 0 }, T.world);
     const tune = (notes, type = 'triangle') => notes.forEach((f, i) => T.tone(f, .22, { type, vol: .12, when: i * .2 }));
+    /* 읽어 주기에서 더한 대사를 놀이에도 (2026-11-01 사용자 결정: 인물 대사·살 붙이기·장면 잇기만, 조작을 말로 대신한 줄은 빼고).
+       녹음 맵은 index.html 이 read_narration_el(_en).js 로 합친다. 녹음이 없으면 말하지 않는다(TTS 금지) —
+       영어 모드는 영어 녹음이 있을 때만(엔진은 영어가 없으면 한국어 클립을 트므로 여기서 건너뛴다) */
+    const more = text => {
+      let ok = false;
+      try { ok = englishOn() ? !!(NARRATION_CLIPS_EN[text] && NARRATION_CLIPS_EN[text].c) : typeof NARRATION_CLIPS !== 'undefined' && !!NARRATION_CLIPS[text]; } catch (e) { ok = false; }
+      return ok ? say(text) : Promise.resolve();
+    };
 
     await Promise.all(['cut_strawhat', 'cut_planks', 'cut_tired', 'cut_crawl', 'cut_chimney', 'cut_splash', 'cut_launch', 'cut_village'].map(n => T.preload(U(n))));
 
@@ -355,10 +363,17 @@
     amb('birds_chirp_1', { vol: .25, dur: 4 }); // 풀밭 새소리
     sfx('toy_flute', .5);
     await say('옛날 옛날에 아기 돼지 삼 형제가 살았어요.');
+    await more('첫째는 피리를 삐리리, 둘째는 바이올린을 깽깽, 셋째는 책을 읽는 걸 좋아했지요.');
+    await more('풀밭에 엄마 돼지와 삼 형제가 모였어요.');
     await say('엄마 돼지가 말했어요. "이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴."');
     mama.wiggle(6, 700);   // 아기 돼지 한 마리씩 카메라로 비추며 띄우던 소개는 뺌(2026-10-31 사용자)
-    await sleep(500);
+    pigs.forEach((p, i) => p.move([360, 480, 600][i], p.y, 700)); // 엄마 품으로 (꼭 안아 주기)
+    await sleep(700);
+    pigs.forEach((p, i) => setTimeout(() => p.hop(18, 300), i * 100));
+    await more('"튼튼하게 지어야 한다!" 엄마 돼지는 삼 형제를 꼭 안아 주었어요.');
     await say('삼 형제는 엄마께 인사하고 길을 떠났어요.');
+    pigs.forEach((p, i) => p.move(1250 + i * 120, p.y, 2600 + i * 150)); // 나란히 총총 길을 떠난다
+    await more('셋은 나란히 총총, 신나게 걸어갔어요.');
 
     /* 1-2. 옷 맞히기 (이야기와 상관없는 관찰 놀이): 두 문제를 무작위로, 돼지 자리는 매번 섞는다 */
     {
@@ -388,7 +403,17 @@
     const fan = sprite('fan', 90, 190);
     const mats = [sprite('straw', 310, 95), sprite('wood', 520, 105), sprite('bricks', 720, 150)];
     if (portrait()) fan.show(false);
+    /* 2026-11-02 싱크: "삼 형제는 가게에 갔어요" 때 가게에 돼지가 없었다 → 벽돌 옆 빈자리에 셋이 재료 쪽을 보고 선다 */
+    /* 세로는 화면이 좁아 벽돌 옆이 안 보인다 → 재료 사이 조금 뒤쪽에(재료 그림 뒤로 깔아 누름을 가리지 않게) */
+    const shoppers = ['pig1_base', 'pig2_base', 'pig3_base'].map((k, i) => {
+      const P = portrait(), p = sprite(k, P ? [200, 415, 620][i] : 805 + i * 62, 150, P ? GROUND - 40 : GROUND);
+      p.face('left'); p.pos.style.pointerEvents = 'none';
+      if (P) mats[0].pos.parentNode.insertBefore(p.pos, mats[0].pos);
+      return p;
+    });
     await look(310, 200);
+    await more('삼 형제는 집 지을 재료를 사러 가게에 갔어요.');
+    await more('짚 한 묶음, 나무 한 더미, 벽돌 한 무더기가 나란히 있었지요.');
     await say('가게에서 바람을 불어 보기로 했어요.');
     const lesson = ['짚은 훨훨 날아가요. 아주 가벼워요.', '나무는 흔들흔들! 조금 튼튼해요.', '벽돌은 끄떡없어요! 아주 아주 튼튼해요.'];
     for (let i = 0; i < 3; i++) {
@@ -399,6 +424,7 @@
       if (i === 0) { mats[0].pos.style.transition = 'opacity 1s'; mats[0].pos.style.opacity = 0; mats[0].move(mats[0].x + 650, 250, 1100); }
       else if (i === 1) await mats[1].wiggle(14, 800);
       else { await sleep(500); T.pop(mats[2].x, 330, '끄떡없어!', '#3F6B4F'); }
+      shoppers.forEach((p, j) => setTimeout(() => p.hop(14, 260), j * 90));
       await say(lesson[i]);
     }
 
@@ -435,7 +461,7 @@
         an.finished.then(() => g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: 'forwards' }).finished).then(() => g.remove()).catch(() => g.remove());
       }
     }
-    async function build({ label, bgKey, pigKey, pigH, playH, pileKey, pileH, houseKey, kind, stageAt, taps, play, line, done, tick, tease }) {
+    async function build({ label, bgKey, pigKey, pigH, playH, pileKey, pileH, houseKey, kind, stageAt, taps, play, line, done, tick, tease, arrive, after }) {
       const P = portrait();
       // 가로: 돼지·더미는 왼쪽, 집은 오른쪽 땅 위. 세로: 집이 가운데, 돼지·더미는 집 앞(아래)
       const L = P ? { pigX: 560, pigY: 548, pigS: .85, pileX: 735, pileY: 556, houseX: 640, houseY: 420, houseH: 310 }
@@ -447,6 +473,7 @@
       if (kind !== 'brick') pig.face('right');   // 첫째·둘째 망치질 그림은 왼쪽을 봐서 집(오른쪽)을 등졌다 — 집 쪽으로 뒤집음(2026-10-31 사용자)
       const pile = sprite(pileKey, L.pileX, pileH * (P ? .85 : 1), L.pileY);
       await look(P ? L.houseX : L.pileX, 200);
+      if (arrive) await more(arrive); // 장면 잇기(읽어 주기 대사)
       await say(line);
       let cur = null; // 지금 보이는 단계 그림
       const target = [L.houseX, L.houseY - L.houseH * .25];
@@ -476,7 +503,19 @@
       for (let i = 1; i <= taps; i++) {
         await T.tap(pile.pos, { prompt: PILE_PROMPT });
         await step(i);
-        if (tease && i === tease.at) await say(tease.line);
+        if (tease && i === tease.at) {   // 2026-11-02 싱크: "형들이 놀렸어요" 때 형 둘이 오른쪽에서 들어와 놀리고 나간다(짓는 집 뒤쪽 땅)
+          const bx = P ? [800, 880] : [845, 925], by = L.pigY - (P ? 40 : 60);
+          const bros = [['pig1_play', 245], ['pig2_play', 214]].map(([k, h], j) => {
+            const b = sprite(k, 1300 + j * 120, h * L.pigS * .8, by); b.face('left'); b.pos.style.pointerEvents = 'none';
+            const back = stages[0] || house; back.pos.parentNode.insertBefore(b.pos, back.pos); return b;
+          });
+          bros.forEach((b, j) => b.move(bx[j], by, 900));
+          await sleep(700);
+          bros.forEach((b, j) => setTimeout(() => b.hop(20, 300), j * 150));
+          await say(tease.line);
+          bros.forEach((b, j) => b.move(1350 + j * 120, by, 1000));
+          setTimeout(() => bros.forEach(b => b.pos.remove()), 1100);
+        }
       }
       pile.show(false);
       pig.face('left'); pig.set(play, playH * L.pigS); await look(L.houseX);
@@ -486,20 +525,21 @@
       if (!sfx(kind === 'straw' ? 'pig_flute' : kind === 'wood' ? 'pig_violin' : 'drum', .5)) tune(tick === 'chop' ? [392, 440, 494, 523] : [523, 494, 440, 392]);
       pig.hop(40, 500);
       await sleep(700);
+      if (after) { pig.hop(24, 300); await more(after); } // 다 지은 뒤 인물 대사(읽어 주기 대사)
     }
     await build({ label: '첫째의 짚 집', bgKey: 'strawlot', pigKey: 'pig1_build', pigH: 245, playH: 245, pileKey: 'straw', pileH: 95, houseKey: 'house_straw', kind: 'straw',
-      stageAt: { 1: 1, 2: 2, 3: 3 }, taps: 3, play: 'pig1_play', tick: 'pop',
+      stageAt: { 1: 1, 2: 2, 3: 3 }, taps: 3, play: 'pig1_play', tick: 'pop', arrive: '가게를 떠난 첫째가 집 지을 터에 도착했어요.',
       line: '첫째는 짚으로 집을 짓기로 했어요. 짚을 톡톡톡 쌓아요!', done: '뚝딱! 짚 집이 완성됐어요. 첫째는 피리를 불며 놀았어요.' });
     await build({ label: '둘째의 나무 집', bgKey: 'woodlot', pigKey: 'pig2_build', pigH: 230, playH: 214, pileKey: 'wood', pileH: 100, houseKey: 'house_wood', kind: 'wood',
-      stageAt: { 1: 1, 3: 2, 5: 3 }, taps: 5, play: 'pig2_play', tick: 'chop',
+      stageAt: { 1: 1, 3: 2, 5: 3 }, taps: 5, play: 'pig2_play', tick: 'chop', arrive: '그동안 둘째도 자기 집 지을 터에 도착했어요.',
       line: '둘째는 나무로 집을 짓기로 했어요. 망치로 톡톡톡톡톡!', done: '쿵쾅쿵쾅! 나무 집이 완성됐어요. 둘째는 바이올린을 켜며 놀았어요.' });
     await build({ label: '셋째의 벽돌 집', bgKey: 'bricklot', pigKey: 'pig3_build', pigH: 215, playH: 215, pileKey: 'bricks', pileH: 140, houseKey: 'house_brick', kind: 'brick',
-      stageAt: { 3: 1, 6: 2, 9: 3 }, taps: 10, play: 'pig3_play', tick: 'thud',
+      stageAt: { 3: 1, 6: 2, 9: 3 }, taps: 10, play: 'pig3_play', tick: 'thud', arrive: '셋째도 자기 집 지을 터로 벽돌을 날랐어요.', after: '"튼튼하게 짓는 게 제일 중요해!" 셋째는 씩씩하게 말했어요.',
       tease: { at: 5, line: '형들이 놀렸어요. "아직도 해? 우리랑 놀자!" 그래도 셋째는 천천히 벽돌을 쌓았어요.' },
       line: '셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 열 장을 천천히 쌓아요.', done: '벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!' });
 
     /* 6~7. 늑대가 후~ */
-    async function blow({ label, bgKey, houseKey, ruinKey, cutKey, lines, pigKeys }) {
+    async function blow({ label, bgKey, houseKey, ruinKey, cutKey, lines, pigKeys, arrive }) {
       const P = portrait();
       const hx = P ? 640 : 700, hy = P ? 420 : GROUND, houseH = P ? 310 : 390, pigH = P ? 150 : 215;
       await T.sceneCard(label, () => { bg(bgKey); T.camSnap(P ? hx : 500, 280, 1); });
@@ -509,6 +549,7 @@
       const wy = P ? 548 : GROUND, wx = P ? 560 : 330, wh = P ? 170 : 230;
       const wolf = sprite('wolf_sniff', -160, wh, wy); wolf.face('right');
       await look(P ? hx : 500, 200);
+      if (arrive) await more(arrive); // 장면 잇기(읽어 주기 대사): 돼지는 집 안에 숨어 있다
       wolf.move(wx, wy, 1300); await sleep(700);
       sfx('tiptoe_pizz', .6); // 늑대가 살금살금
       await wolf.wiggle(5, 500);
@@ -528,10 +569,10 @@
       await sleep(900);
       await say(lines[3]);
     }
-    await blow({ label: '후~ 짚 집', bgKey: 'strawlot', houseKey: 'house_straw', ruinKey: 'house_straw_ruin', cutKey: 'cut_strawhat', pigKeys: ['pig1_base'],
+    await blow({ label: '후~ 짚 집', bgKey: 'strawlot', houseKey: 'house_straw', ruinKey: 'house_straw_ruin', cutKey: 'cut_strawhat', pigKeys: ['pig1_base'], arrive: '첫째는 짚 집에서 놀고 있었어요.',
       lines: ['그때 배고픈 늑대가 킁킁 냄새를 맡으며 왔어요. "아기 돼지야, 문 열어라!"', '첫째가 말했어요. "싫어요, 싫어요!" 늑대가 말했어요. "그럼 후~ 불어서 날려 버릴 테야!"',
         '짚 집이 훨훨 날아가 버렸어요!', '첫째는 둘째네 집으로 달려갔어요.'] });
-    await blow({ label: '후~ 나무 집', bgKey: 'woodlot', houseKey: 'house_wood', ruinKey: 'house_wood_ruin', cutKey: 'cut_planks', pigKeys: ['pig1_base', 'pig2_base'],
+    await blow({ label: '후~ 나무 집', bgKey: 'woodlot', houseKey: 'house_wood', ruinKey: 'house_wood_ruin', cutKey: 'cut_planks', pigKeys: ['pig1_base', 'pig2_base'], arrive: '첫째가 나무 집 안으로 후다닥 들어갔어요.',
       lines: ['늑대가 나무 집에도 왔어요. "아기 돼지야, 문 열어라!"', '첫째와 둘째가 말했어요. "싫어요, 싫어요!" 늑대가 말했어요. "그럼 후~ 후~ 불어 주지!"',
         '나무 집이 와르르 무너졌어요!', '아기 돼지 둘은 막내네 집으로 달려갔어요.'] });
 
@@ -539,7 +580,8 @@
     await T.sceneCard('어느 집으로?', () => { bg('field'); T.camSnap(500, 280, 1); });
     sfx('question', .6);
     const small = portrait(), gap = small ? 88 : 300, ch = small ? 76 : 270; // 세 집은 같은 높이 (벽돌만 튼튼해 보이게 키우지 않는다)
-    const choiceA = sprite('house_straw', 500 - gap, ch, 470), choiceB = sprite('house_wood', 500, ch, 470), choiceC = sprite('house_brick', 500 + gap, ch, 470);
+    /* 2026-11-02 싱크: 날아간 짚 집·무너진 나무 집이 멀쩡히 서 있었다 → 무너진 그림(늑대 장면과 같은 0.7배) */
+    const choiceA = sprite('house_straw_ruin', 500 - gap, ch * .7, 470), choiceB = sprite('house_wood_ruin', 500, ch * .7, 470), choiceC = sprite('house_brick', 500 + gap, ch, 470);
     const runners = [sprite('pig1_flee', 60, small ? 55 : 150, 540), sprite('pig2_flee', 150, small ? 55 : 150, 540)];
     await look(500, 200);
     const pick = await T.ask('두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?', () => T.choose([{ el: choiceA.pos }, { el: choiceB.pos }, { el: choiceC.pos, ok: true }],
@@ -562,6 +604,7 @@
     wolf2.face('right');
     const wall = hit(420, 190, 270, 290);
     await look(450, 200);
+    await more('삼 형제가 숨은 벽돌 집 밖에서 발소리가 났어요.');
     sfx('knock', .7);
     await say('늑대가 벽돌 집에 왔어요. "아기 돼지야, 문 열어라!"');
     await say('"싫어요, 싫어요!" "그럼 후~ 후~ 불어 주지!"');
@@ -572,11 +615,12 @@
     wolf2.set('wolf_tired', 230); sfx('sad_trombone', .6); // 늑대가 지쳐서 풀썩
     await T.cutImage([{ src: U('cut_tired'), hold: 2600 }]);
     await say('늑대는 숨이 차서 털썩 주저앉았어요.');
+    wolf2.wiggle(4, 600);
+    await more('"흥, 그럼 다른 수를 써야지!" 늑대는 눈을 데굴데굴 굴렸어요.');
 
     /* 10. 굴뚝 */
-    await T.cutImage([{ src: U('cut_crawl'), hold: 2600 }]);
     sfx('tiptoe_pizz', .6);
-    await say('늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.');
+    await Promise.all([T.cutImage([{ src: U('cut_crawl'), hold: 2600 }]), say('늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.')]);   // 2026-11-02 싱크: 컷이 대사 동안
     await T.sceneCard('보글보글', () => { bg('chimney'); T.camSnap(500, 280, 1); });
     const fire = hit(425, 290, 150, 100); // 2026-10-20 새 배경: 벽난로 불이 무대 y≈345 (옛 그림은 바닥 근처였다)
     const glow = fireGlow(T);
@@ -585,6 +629,9 @@
       const p = sprite(['pig1_base', 'pig2_base', 'pig3_base'][i], x, portrait() ? 125 : 175, portrait() ? 560 : 520); p.pos.style.pointerEvents = 'none'; return p;
     });
     const shiver = () => { const id = setInterval(() => huddle.forEach((p, i) => setTimeout(() => p.wiggle(4, 160), i * 50)), 200); T.pop(portrait() ? 395 : 250, portrait() ? 400 : 300, '덜덜'); return () => clearInterval(id); };
+    huddle.forEach((p, i) => setTimeout(() => p.hop(14, 260), i * 90)); // 귀를 쫑긋
+    await more('지붕에서 바스락바스락 소리가 났어요. 삼 형제는 귀를 쫑긋 세웠지요.');
+    await more('집 안의 삼 형제는 굴뚝 아래에 솥을 놓았어요.');
     amb('pot_boil', { vol: .25, dur: 4 }); // 솥 보글보글
     await say('아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.');
     await T.mash(fire, { count: 5, prompt: '불을 톡톡 눌러서 크게 해 줘요.', onStep: i => {
@@ -594,13 +641,14 @@
     } });
     sfx('drumroll_crash', .6); // 늑대가 내려오기 전
     const stopShiver = shiver();
-    await say('보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.');
+    /* 2026-11-02 싱크: 컷이 대사 앞뒤에 따로 떠서 "쑥 내려왔어요"·"앗, 뜨거워!"·"굴뚝으로 휙!" 동안 늑대가 없었다 → 컷마다 그 대사와 함께 */
+    await Promise.all([say('보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.'), sleep(1500).then(() => T.cutImage([{ src: U('cut_chimney'), hold: 2600 }]))]);   // 녹음 한 줄: '그때' 즈음 컷
     stopShiver();
-    await T.cutImage([{ src: U('cut_chimney'), hold: 2600 }, { src: U('cut_splash'), hold: 2600, sfx: 'splash' }]);
-    sfx('comic_brass', .6);
-    await say('"앗, 뜨거워!"');
-    await T.cutImage([{ src: U('cut_launch'), hold: 2600, sfx: 'zip_away' }]);
-    await say('늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.');
+    /* 풍덩 컷 동안 '엉덩이가 솥에 닿았어요'(읽어 주기 장면 잇기 대사)와 "앗, 뜨거워!" — 컷이 말보다 먼저 닫히지 않게 길게 */
+    let bump = null;
+    await T.cutImage([{ src: U('cut_splash'), hold: 4800, sfx: 'splash' }], { onShow: () => { bump = more('늑대 엉덩이가 뜨거운 솥에 닿았어요.').then(() => { sfx('comic_brass', .6); return say('"앗, 뜨거워!"'); }); } });
+    if (bump) await bump;
+    await Promise.all([T.cutImage([{ src: U('cut_launch'), hold: 2600, sfx: 'zip_away' }]), say('늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.')]);
 
     /* 11. 벽돌 마을 */
     await T.sceneCard('벽돌 마을', () => { bg('sunset'); T.camSnap(500, 280, 1); });
@@ -612,6 +660,7 @@
     const band = [sprite('pig1_base', 380, 140, 548), sprite('pig2_base', 500, 140, 548), sprite('pig3_base', 620, 140, 548)];
     band.forEach(b => { b.pos.style.pointerEvents = 'none'; }); // 앞에 선 돼지가 집 누름을 가로막지 않게
     await look(500, 200);
+    await more('늑대가 떠난 뒤, 삼 형제는 집 밖으로 나왔어요.');
     await say('이제 늑대는 오지 않아요. 아기 돼지들은 벽돌 집을 더 지었어요.');
     T.pop(500, 240, NUM[0]);
     for (let i = 1; i < 3; i++) {
@@ -631,7 +680,7 @@
     /* 끝 음악은 마지막 말까지 이어서(2026-10-31 사용자: 곧 꺼지고 '뿌~' 나팔이 남) — 긴 판(약 22초)이 없으면 옛 6.4초 */
     let bandMusic = null; try { bandMusic = AudioFX.music('pigs_band_long', { vol: .45, fade: 2 }) || AudioFX.music('pigs_band', { vol: .5, dur: 6.4, fade: .8 }); } catch (e) { bandMusic = null; }
     for (let r = 0; r < (bandMusic ? 10 : 4); r++) { if (!bandMusic) tune([392, 523, 440, 587]); band.forEach((b, i) => setTimeout(() => b.hop(28, 350), i * 150)); await sleep(bandMusic ? 640 : 900); }
-    await T.cutImage([{ src: U('cut_village'), hold: 2600 }]);
+    await Promise.all([T.cutImage([{ src: U('cut_village'), hold: 2600 }]), more('저녁 해가 뉘엿뉘엿, 굴뚝에서는 연기가 모락모락 피어올랐어요.')]);   // 2026-11-02 싱크: 마을 컷이 대사 동안
     await say('삼 형제는 튼튼한 집에서 오래오래 행복하게 살았어요.');
     stopAmb(.8);
     return '튼튼한 집은 하나씩 정성껏 쌓아서 만들어요!';
