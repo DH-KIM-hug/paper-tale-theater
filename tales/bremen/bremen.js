@@ -755,9 +755,11 @@
        주인·도둑은 뒤에서 만들어지므로 함수로 (아직 없으면 null) */
     const ref = f => () => { try { return f(); } catch (e) { return null; } };
     const vo = k => { const u = Narrator.voiceLine(k); return u && setTimeout(() => AudioFX.voice(u), 380); };
+    let lookout = false; // 나무 위 닭이 불빛을 볼 때: 청자 쪽으로 돌리지 않는다 (2026-11-02)
     T.director({
       cast: { ...cast, miller: ref(() => miller), robber: ref(() => rb[0]), boss: ref(() => rb[1]) },
       listener: (r, last) => {
+        if (r === 'rooster' && lookout) return null;
         if (r === 'robber') { // 방금 깨어난 친구에게 혼쭐 (들보 위 닭은 너무 높아 한 화면에 안 잡히니 도둑만)
           const w = band.find(a => a.lean.style.filter === 'brightness(1)');
           return w ? (w.key === 'rooster' ? null : w.key) : 'boss';
@@ -1419,9 +1421,9 @@
     for (let i = 1; i <= 3; i++) { await walkStep(i); await sleep(800); }
     area.remove();
     cue('whistle_up', .7);
-    await say('닭이 나무 꼭대기로 푸드덕 올라갔어요.');
-    flap(cast.rooster);
-    await cast.rooster.move(WALK ? 520 : L(620, 560), 150, 700, 'ease-out'); // 그림: 오두막 왼쪽 소나무 꼭대기(밀린 뒤 x≈525, 윗끝 y≈150)
+    flap(cast.rooster); // 대사와 함께 푸드덕 (2026-11-02: 대사 뒤에 날던 것)
+    await Promise.all([say('닭이 나무 꼭대기로 푸드덕 올라갔어요.'),
+      cast.rooster.move(WALK ? 520 : L(620, 560), 150, 700, 'ease-out')]); // 그림: 오두막 왼쪽 소나무 꼭대기(밀린 뒤 x≈525, 윗끝 y≈150)
     const glow = el('g', { transform: `translate(${GX},0)` }, T.bg);
     if (fb.art) { glow.setAttribute('transform', `translate(${fb.light[0] + tx},${fb.light[1]})`); el('rect', { x: -14, y: -14, width: 28, height: 29, fill: '#FFD27A', opacity: .75 }, glow); } // 그림 속 불빛 창이 한층 환해진다
     else {
@@ -1429,9 +1431,11 @@
       el('rect', { x: 876, y: 100, width: 48, height: 40, fill: C.amber }, glow);
     }
     glow.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 800, fill: 'forwards' });
-    cast.rooster.face('right');
+    cast.rooster.face('right'); // 오른쪽 불빛 창을 본다
     cast.rooster.cry(); T.pop(WALK ? 460 : L(700, 560), WALK ? 60 : 70, '불빛이다!', C.persimmon);
+    lookout = true;
     await say('닭: "저기 불빛이 보여요! 집이 있어요!"');
+    lookout = false;
 
     /* ---------- 7. 창문 탑 쌓기 (로우앵글 · 메인) ---------- */
     const lowArt = bgArt('house_low');

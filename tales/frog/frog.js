@@ -612,9 +612,17 @@
     await peek.hide();
     sfx('drumroll_crash', .8);
     await camTo(500, 280, 1, 1600);
+    // 황소 발치에 있던 아기 개구리 셋이 깜짝 뛰어올랐다가 대사와 함께 왼쪽으로 폴짝폴짝 달아난다 (2026-11-02: 장면에 아기들이 없던 것)
+    babies.forEach((b, i) => { T.world.appendChild(b.pos); b.setScale(.9); b.place(430 + i * 70, 536); }); // 황소 앞발 앞(양옆 앞 풀 층에 가리지 않는 가운데)
     T.shake(); moo(T); // 음매~는 황소 효과음으로
     meadowSun(T, true);
+    babies.forEach(b => b.hop(60, 380));
+    const flee = Promise.all(babies.map(async (b, i) => {
+      await sleep(900 + i * 140);
+      for (let k = 0; k < 4; k++) { if (!k) croak(T, 380 + i * 40); b.hop(46, 380); await b.move(b.x - 120, 536, 380); }
+    }));
     await say('커다란 황소였어요! 아기 개구리들은 깜짝 놀라 도망쳤어요.');
+    await flee;
     meadowSun(T, false);
 
     /* --- 4. 엄마! 괴물이에요! --- */

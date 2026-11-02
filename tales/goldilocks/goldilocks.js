@@ -624,6 +624,8 @@
       if (a.setFace) a.setFace('smile');
     };
     const headY = a => a.y - (a === goldi ? 150 : 215) * a.scale;
+    /* 새 죽 그릇(섞인 자리)을 주인 곰 앞으로: 아빠 X170 · 엄마 X390 · 아기 X820, 골디락스 X610 자리는 비운다 */
+    const toOwners = (list, ms) => Promise.all(list.map(b => { const nx = [X(170), X(390), X(820)][b.i]; const a = T.anim(b.g, [{ transform: `translate(${b.x}px,${b.y}px) scale(${b.s})` }, { transform: `translate(${nx}px,${b.y}px) scale(${b.s})` }], { duration: ms, easing: 'ease-in-out' }); b.x = nx; return a; }));
     /* 해 질 녘 집 앞 라이트박스(곰 가족이 돌아오는 첫 줄): 곰 뒤 반투명 빛 타원은 떠 있는 노란 원판처럼 보여 뺐다(2026-10-24 사용자 결정, 곰은 밝은 마당 흙 위라 묻히지 않음) */
     let glows8 = [];
     const unglow8 = () => { glows8.forEach(n => n.remove()); glows8 = []; };
@@ -685,7 +687,7 @@
       kitchen2() {
         kitchenBG(T);
         const TT = TABLE_TOP(), BY = TT + 30;
-        rs.bearsFn = () => { put(bears.dad, X(230), 520, 1.2); put(bears.mom, 500, TT + 50, .86); put(bears.baby, X(770), TT + 12, .6); };
+        rs.bearsFn = () => { put(bears.dad, X(230), 478, 1.2); /* 아빠 곰 턱·입이 그릇 위로 보이게 올림(2026-11-02) */ put(bears.mom, 500, TT + 50, .86); put(bears.baby, X(770), TT + 12, .6); };
         rs.bearsFn();
         tableFront(T, TT);
         rs.bowlsG = el('g', {}, T.world); rs.steams = [];
@@ -885,10 +887,11 @@
           const order = [rs.tb[2], rs.tb[1], rs.tb[0]];
           for (let k = 0; k < 3; k++) {
             const good = order[k]; good.setFull(true);
-            steam(T, T.world, good.x, good.y - BOWL_RIM() * good.s, good.s);
+            steam(T, good.g, 0, -BOWL_RIM(), 1); // 김은 그릇 안에(그릇과 같이 주인 앞으로 옮겨지게)
             T.tone(440 + k * 110, .25, { type: 'triangle', vol: .16 });
             await sleep(rInst() ? 0 : 600);
           }
+          await toOwners(rs.tb, rInst() ? 1 : 600);
           const gb = bowlSide(T, T.world, X(610), TABLE_TOP() + 102, .55, { full: true });
           gb.g.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400 });
           [bears.dad, bears.mom, goldi, bears.baby].forEach((a, i) => setTimeout(() => { a.hop(20, 320); AudioFX.chomp(); }, i * 180));
@@ -1053,7 +1056,7 @@
       amb('pot_boil', .25, 3);
       T.clear(); kitchenBG(T);
       const TT = TABLE_TOP(), BY = TT + 30; // 식탁 윗단 · 그릇 바닥 (곰 발은 식탁 뒤에 숨는다)
-      put(bears.dad, X(230), 520, 1.2); put(bears.mom, 500, TT + 50, .86); put(bears.baby, X(770), TT + 12, .6);
+      put(bears.dad, X(230), 478, 1.2); /* 아빠 곰 턱·입이 그릇 위로 보이게 올림(2026-11-02) */ put(bears.mom, 500, TT + 50, .86); put(bears.baby, X(770), TT + 12, .6);
       tableFront(T, TT);
       bowlsG = el('g', {}, T.world);
       el('rect', { x: 100, y: 160, width: 800, height: BY - 150, fill: '#fff', opacity: 0 }, bowlsG);
@@ -1165,8 +1168,8 @@
     pop(500, 150, '삐걱~', C.bark);
     await sleep(900);
     goldi.setFace('o');
-    await say('문이 삐걱 열렸어요. 골디락스가 살짝 들어가 봤어요.');
-    AudioFX.sfx('step_wood', .5);
+    await Promise.all([say('문이 삐걱 열렸어요. 골디락스가 살짝 들어가 봤어요.'), // 대사 뒷부분에 문 앞까지 걸어간다(2026-11-02 싱크 점검)
+      sleep(1100).then(() => { AudioFX.sfx('step_wood', .5); return goldi.move(500, 455, 1500); })]);
     goldi.pos.style.transition = 'opacity .8s'; goldi.pos.style.opacity = '0';
     await goldi.move(495, 412, 900);
     goldi.pos.style.transition = '';
@@ -1310,9 +1313,12 @@
 
     /* ---------- 8. 곰 가족 귀가: 그릇 주인 찾기 (곰 눈높이) ---------- */
     const floor8 = 530;
+    let tableBowls8 = [];
     const kitchen8 = () => {
       T.clear(); unglow8(); kitchenBG(T);
       sideTable(T, 330, 330, 340);
+      const tx8 = shuffle([410, 500, 590]); // 빈 그릇 세 개가 뒤죽박죽 탁자 위에(2026-11-02 싱크 점검)
+      tableBowls8 = SIZE.map((s, i) => bowlSide(T, T.world, tx8[i], 342, s * .6, { full: false }).g);
       shuffle([200, 500, 800].map(X)).forEach((x, i) => put(B[i], x, floor8, SIZE[i]));
       view();
     };
@@ -1333,11 +1339,12 @@
       const owner = B[i];
       const card = T.paper(T.fx, [['circle', { cx: 500, cy: 205, r: 105, fill: C.cream, stroke: C.gold, 'stroke-width': 8 }]]);
       card.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300 });
+      if (tableBowls8[i]) tableBowls8[i].style.display = 'none'; // 탁자 위 그릇을 집어 든다
       const bw = bowlSide(T, T.fx, 500, 250, SIZE[i], { full: false });
       bw.g.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], { duration: 400, easing: 'ease-out' });
       AudioFX.sfx('pop', .5);
       await whoseIs(bw.g, owner, `이 ${SNAME[i]} 그릇은 누구 거예요?`, '그릇');
-      const tx = owner.x, ty = floor8 - 12 * owner.scale; // 새 그릇 그림은 더 커서 곰 얼굴을 안 가리게 아래로
+      const tx = owner.x, ty = floor8 + 14; // 새 그릇 그림은 더 커서 곰 얼굴·입을 안 가리게 발 앞으로(2026-11-02 싱크 점검)
       card.remove();
       await T.anim(bw.g, [{ transform: `translate(500px,250px) scale(${SIZE[i]})` }, { transform: `translate(${tx}px,${ty}px) scale(${SIZE[i]})` }], { duration: 600, easing: 'ease-in-out' });
       owner.hop(20, 360);
@@ -1407,6 +1414,7 @@
     clearInterval(zz);
     paw.remove();
     goldi.pose(''); goldi.setFace('o');
+    goldi.pos.parentNode.appendChild(goldi.pos); // 이불 앞으로 벌떡 일어나 앉는다(이불에 가려 안 보이던 것, 2026-11-02 싱크 점검)
     goldi.place(500, 400); goldi.hop(50, 450);
     if (cue('surprise_sting', .7) === false) AudioFX.pop_out();
     pop(500, 300, '깜짝!', C.bean);
@@ -1492,7 +1500,7 @@
       else { await say(qs[k]); await pickBowl(); }
       done.add(good);
       good.setFull(true);
-      steam(T, T.world, good.x, good.y - BOWL_RIM() * good.s, good.s);
+      steam(T, good.g, 0, -BOWL_RIM(), 1); // 김은 그릇 안에(그릇과 같이 주인 앞으로 옮겨지게)
       const tag = T.paper(T.fx, [['circle', { cx: good.x - 85 * good.s - 30, cy: good.y - 40, r: 24, fill: C.cream, stroke: C.gold, 'stroke-width': 4 }]]);
       el('text', { x: good.x - 85 * good.s - 30, y: good.y - 30, 'text-anchor': 'middle', 'font-size': 28, fill: C.bean, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: k + 1 }, tag);
       T.tone(440 + k * 110, .25, { type: 'triangle', vol: .16 });
@@ -1500,6 +1508,7 @@
     T.finale();
     await say('작은 그릇, 중간 그릇, 큰 그릇! 차례대로 담았어요.');
     [...T.fx.children].forEach(n => n.remove());
+    await toOwners(tb, 600); // 그릇을 저마다 주인 앞으로(2026-11-02 싱크 점검)
     const gb = bowlSide(T, T.world, X(610), TABLE_TOP() + 102, .55, { full: true });
     gb.g.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400 });
     await say('골디락스 그릇도 하나 더! 다 함께 냠냠.');

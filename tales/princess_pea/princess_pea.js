@@ -727,12 +727,12 @@
       setTimeout(() => T.pop(X(TX - 180, TX - 60), 36, tr('뒤척뒤척'), '#1F2A56'), 2700);
       await say('밤이 깊었는데… 공주는 이리 뒤척, 저리 뒤척.');
       clearInterval(toss); pea.look('lie_a');
-      const t = (async () => {
-        rigTo(T, 0, 1500);
-        await sleep(1600); glow(peaB, 1600); peaB.hop(8, 400); sfx(T, 'poke', .3);
-        await sleep(1000); sfx(T, 'poke', .3);
-      })();
-      await say('뭔가 딱딱한 게 있는 것 같아…'); await t;
+      /* 공주가 말하는 동안은 위(공주)를 보여 주고, 말이 끝난 뒤 아래 완두콩으로 내려간다(말하는 중에 카메라가 내려가 공주가 잘리던 것, 2026-11-02 싱크 점검) */
+      const l29 = say('뭔가 딱딱한 게 있는 것 같아…'); pea.hop(4, 400); sfx(T, 'poke', .3);
+      await l29;
+      rigTo(T, 0, 1500);
+      await sleep(1600); glow(peaB, 1600); peaB.hop(8, 400); sfx(T, 'poke', .3);
+      await sleep(1000); sfx(T, 'poke', .3);
     }
     await sleep(600);   /* 2026-10-29 쉼 줄임: 2500→600, 뒤척 1600→900 */
     await rigTo(T, RIG_UP, 1600);

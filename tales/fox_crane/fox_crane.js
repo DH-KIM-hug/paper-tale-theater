@@ -60,14 +60,17 @@
   /* 2026-10-20 새 그림은 비율이 달라져서 상자 폭·높이를 새 그림 크기에 맞춰 다시 계산(같은 눈금) */
   /* 그림 상자 [x, y, w, h] (발끝 0,0 기준, 무대 단위) — 같은 인물은 자세가 바뀌어도 머리·몸 크기가 같게 맞췄다 (변환 스크립트 conv_fc.py) */
   const BOX = {
-    fox_stand: [-102, -168.4, 187.4, 168.4], fox_lick: [-106.2, -150.3, 172.9, 150.3], fox_sorry: [-84.5, -166, 166.3, 166], fox_stuck: [-108.6, -122.4, 122.6, 113.7],
+    fox_stand: [-102, -168.4, 187.4, 168.4], fox_lick: [-106.2, -150.3, 172.9, 150.3], fox_sorry: [-84.5, -166, 166.3, 166], fox_stuck: [-209.1, -215.4, 236, 218.8],
     crane_head: [-119.6, -249.8, 107.6, 139], crane_body: [-59.8, -183.4, 170.8, 183.4], crane_sad: [-100.6, -239.8, 208.3, 239.8], crane_sorry: [-99.9, -237.3, 207, 237.3], // 두루미: 새 그림은 머리(목 포함)와 몸이 따로 큰 조각 → 키 250에 맞춰 몸 배율 .369, 머리 .63배, 시무룩·미안 그림은 몸통 폭(420÷349·322 배)으로 몸 조각과 같은 크기
     duck: [-56, -129.8, 111.9, 129.8], butterfly: [-52.9, -129, 105.8, 86.3], pot: [-112.7, -219.4, 225.3, 219.4],
     plate: [-75, -77, 150, 77], plate_empty: [-73.8, -91, 147.6, 91], plate_soup: [-73.8, -86, 147.6, 86],
     bottle: [-45, -184.9, 90, 184.9], bowl: [-64, -98.3, 127.9, 98.3], flower: [-55.4, -129.7, 86.3, 129.7],
     invite: [-45, -68, 89.8, 67.6], feast_table: [30, 392, 940, 940 * 284 / 1200],
   };
-  const FOX_ART_NOSE = [-101, -115.4], FOX_STUCK_NOSE = [-66.9, -93.2];
+  /* 코 낀 여우(411×381): 그림 속 여우가 선 그림보다 작게 그려져 있다(귀 길이·꼬리 폭·볼 동그라미가 선 그림의 0.6배) → 상자를 1.93배(236 폭, 배율 .574)로 다시 잼 (2026-11-02, 예전 122.6 폭은 선 여우보다 훨씬 작아 보였다).
+     코 끝 px(140,98) = FOX_STUCK_NOSE, 발끝은 상자 바닥(무대 0) 근처 */
+  const FOX_STUCK_S = 236 / 411;
+  const FOX_ART_NOSE = [-101, -115.4], FOX_STUCK_NOSE = [-209.1 + 140 * FOX_STUCK_S, -215.4 + 98 * FOX_STUCK_S];
   const CRANE_ART_PIV = [-26.6, -138.2], CRANE_ART_TIP = [-119.6, -156.8];
   /* 그림 한 장: BOX 자리에. 바깥 g(그림자) 안에 그림 */
   let clipN = 0;
@@ -123,7 +126,7 @@
     const poses = {};
     ['fox_stand', 'fox_lick', 'fox_sorry'].forEach(k => { poses[k.slice(4)] = pic(T, head, k); });
     const legs = rotO(el('g', {}, head), ...FOX_STUCK_NOSE); // 코 낀 자세: 코를 축으로 대롱대롱
-    poses.stuck = pic(T, legs, 'fox_stuck', { clipX: -108.6 + 140 * .298 }); // 2026-10-20 새 그림: 코 끝 px(140,98)을 코 자리로, 그림 속 호리병(왼쪽)은 자른다
+    poses.stuck = pic(T, legs, 'fox_stuck', { clipX: -209.1 + 140 * FOX_STUCK_S }); // 2026-10-20 새 그림: 코 끝 px(140,98)을 코 자리로, 그림 속 호리병(왼쪽)은 자른다
     const setPose = n => Object.entries(poses).forEach(([k, p]) => { if (p) p.style.display = k === (poses[n] ? n : 'stand') ? '' : 'none'; });
     setPose('stand');
     hit(T, head, -110, -170, 215, 170);
@@ -1078,17 +1081,23 @@
     [0, .15, .3].forEach(w => T.tone([700, 500], .12, { type: 'triangle', vol: .14, when: w }));
     await say('뿅! 코가 빠졌어요. 엉덩방아 쿵!');
     stars.remove();
+    // 두루미가 병 곁으로 다가가 부리를 병 입구에 넣고, 대사와 함께 쪽쪽 먹는다 (2026-11-02: 멀리 선 채 대사 전에 다 먹던 것)
+    if (crane.parts.art && bgUrl('crane_room') && ARTMODE()) await crane.move(625, 500, 700);
     const cdeg = aimP(crane, [mouth[0] + (crane.parts.art ? 4 : 0), mouth[1] + 20]);
-    for (let k = 0; k < 2; k++) {
-      await T.anim(crane.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${cdeg}deg)` }], 300);
-      sipSnd(T); T.pop(crane.parts.art ? 800 : 760, 110, '쪽쪽', C.pine);
-      await sleep(350);
-      await T.anim(crane.parts.head, [{ transform: `rotate(${cdeg}deg)` }, { transform: 'rotate(0deg)' }], 300);
-    }
     fox.body.style.transform = ''; fox.face('right'); // 다시 두루미 쪽
     mood(fox, 'sad');
-    T.tone([500, 300], .5, { type: 'sine', vol: .14 });
+    const sipping = (async () => {
+      for (let k = 0; k < 3; k++) {
+        await T.anim(crane.parts.head, [{ transform: 'rotate(0deg)' }, { transform: `rotate(${cdeg}deg)` }], 300);
+        sipSnd(T); T.pop(mouth[0] + 70, mouth[1] - 20, '쪽쪽', C.pine);
+        await sleep(500);
+        await T.anim(crane.parts.head, [{ transform: `rotate(${cdeg}deg)` }, { transform: 'rotate(0deg)' }], 300);
+        await sleep(150);
+      }
+    })();
+    setTimeout(() => T.tone([500, 300], .5, { type: 'sine', vol: .14 }), 1600);
     await say('두루미는 긴 부리로 쪽쪽 먹었어요. 여우는 배가 꼬르륵, 속상했어요.');
+    await sipping;
 
     /* --- 6. 왜 못 먹었을까? (분할 화면) --- */
     let plateL, bottleR;
@@ -1131,12 +1140,18 @@
 
     /* --- 7. 알맞은 그릇 (잔치 식탁 정면, 메인) --- */
     let gL, tL, dL;
+    const hosts = {};
     await T.sceneCard('알맞은 그릇', () => {
       T.clear(); feastBG(T, false);
       gL = el('g', {}, T.world); tL = el('g', {}, T.world); dL = el('g', {}, T.world);
       feastTable(T, tL);
+      // 잔치를 연 여우·두루미가 처음부터 식탁 뒤에 마주 서 있다 (2026-11-02: 빈 식탁에 대사만 나오던 것). 차례가 오면 이 둘이 자리로 간다
+      const HF = bgUrl('feast_day') && ARTMODE() ? 440 : 400;
+      hosts.fox = guest(T, gL, 'fox', T.portrait() ? 430 : 400, HF); hosts.fox.face('right');
+      hosts.crane = guest(T, gL, 'crane', T.portrait() ? 640 : 680, HF);
       if (P1) camSnap(557, 280, Math.min(1, T.viewWidth() / 2 / 375)); // 세로 화면: 손님과 그릇 셋이 다 보이게
     }, fox.pos);
+    { const hc = hosts.crane; hosts.fox.hop(24); setTimeout(() => hc.hop(24), 300); } // hc: 대사가 빨리 끝나 차례가 hosts.crane 을 지운 뒤에도 뛰게
     await say('여우랑 두루미가 함께 잔치를 열었어요. 손님들도 와요!');
     await say('입 모양을 잘 보고, 알맞은 그릇을 골라 줘요!');
     const ROUNDS = [
@@ -1150,12 +1165,15 @@
     const FEET = bgUrl('feast_day') && ARTMODE() ? 440 : 400;
     // 세로 화면(양옆이 잘림): 손님을 조금 안쪽에 세우고, 손님과 그릇 셋이 다 보이게 살짝 물러선다. 가로는 그대로
     const GX = T.portrait() ? 250 : 190;
+    // 두루미 차례가 먼저라 여우는 그릇 자리 밖(오른쪽 끝)으로 비켜서서 기다린다
+    if (hosts.fox) { const hf = hosts.fox; hf.face('right'); hf.move(T.portrait() ? 760 : 985, FEET, 900).then(() => { if (!hf.busy) hf.face('left'); }); }
     for (const r of ROUNDS) {
       const gy = r.key === 'butterfly' ? 350 : FEET;
-      const g = guest(T, gL, r.key, 1150, gy);
+      const g = hosts[r.key] || guest(T, gL, r.key, 1150, gy);
+      if (hosts[r.key]) { delete hosts[r.key]; g.busy = true; g.face('left'); await sleep(200); }
       const name = GUESTS[r.key].name;
       const walk = setInterval(() => sfx(T, 'step_grass', () => T.tone([220, 160], .08, { type: 'triangle', vol: .1 }), .4), 400);
-      await g.move(GX, gy, 1500);
+      await g.move(GX, gy, Math.max(700, Math.abs(g.x - GX) * 1.6));
       clearInterval(walk);
       g.face('right');
       await g.hop(24);

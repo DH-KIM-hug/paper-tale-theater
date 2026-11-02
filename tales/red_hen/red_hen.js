@@ -496,8 +496,8 @@
         put(T, cat, X(250, 280), 548, { look: 'lie_fence', to: 'left' });
         put(T, dog, X(430, 375), 552, { look: 'lie', to: 'left' });
         put(T, pig, X(610, 465), 560, { look: 'mud', to: 'left' });
-        put(T, hen, X(870, 495), X(472, 440), { look: 'carry', to: 'left' });
-        chicksAt([X(950, 600), X(985, 630), X(1015, 660)], X(480, 448), { to: 'left' });
+        put(T, hen, X(830, 495), X(472, 440), { look: 'carry', to: 'left' });
+        chicksAt([X(900, 600), X(935, 630), X(968, 660)], X(480, 448), { to: 'left' }); /* 2026-11-02: 오른쪽 끝 병아리가 화면 밖으로 잘리지 않게 */
         if (P) chicks.forEach(hide);
         fg('hen_fg_grass_tuft', X(1000, 600), 600, 80);
       };
@@ -895,14 +895,16 @@
         yard(); setView(X(500, 540));
         const tw = X(520, 400), tx = X(730, 590), th = tw / ASP.hen_prop_table_long;
         S.tableTop = FL + 6 - th * .92;
-        put(T, cat, X(585, 470), S.tableTop + 34, { look: 'eat', to: 'left' }); cat.hold(D.piece, 48);
-        put(T, dog, X(735, 565), S.tableTop + 40, { look: 'eat', to: 'left' }); dog.hold(D.piece, 48);
-        put(T, pig, X(885, 655), S.tableTop + 52, { look: 'eat', to: 'left' }); pig.hold(D.piece, 48);
+        /* 2026-11-02 그림-대사 맞춤: 암탉도 식탁 왼쪽 끝에 둘러앉는다(식탁 뒤, 접시·우유 컵), 병아리는 식탁 왼쪽 옆. 친구들은 그만큼 오른쪽으로 */
+        put(T, hen, X(525, 405), S.tableTop + 30, { look: 'stand', to: 'right' });
+        put(T, cat, X(650, 495), S.tableTop + 34, { look: 'eat', to: 'left' }); cat.hold(D.piece, 48);
+        put(T, dog, X(780, 585), S.tableTop + 40, { look: 'eat', to: 'left' }); dog.hold(D.piece, 48);
+        put(T, pig, X(905, 665), S.tableTop + 52, { look: 'eat', to: 'left' }); pig.hold(D.piece, 48);
         S.tab = stand(T, T.world, 'hen_prop_table_long', tx, FL + 6, th);
         S.onTab = T.el('g', {}, T.world);
-        X([600, 740, 880], [470, 565, 655]).forEach(x => { stand(T, S.onTab, 'hen_prop_plate', x, S.tableTop + 14, 24); stand(T, S.onTab, 'hen_prop_cup', x + 38, S.tableTop + 10, 34); });
-        put(T, hen, X(380, 432), FL + 8, { look: 'stand', to: 'right' });
-        chicksAt(X([300, 255, 210], [260, 215, 300]), FL + 36, { look: 'stand', to: 'right' });
+        X([665, 785, 900], [495, 585, 665]).forEach(x => { stand(T, S.onTab, 'hen_prop_plate', x, S.tableTop + 14, 24); stand(T, S.onTab, 'hen_prop_cup', x + 38, S.tableTop + 10, 34); });
+        stand(T, S.onTab, 'hen_prop_plate', hen.x + X(10, 5), S.tableTop + 14, 24); /* 암탉 접시 — 컵은 우유를 따를 때 놓는다 */
+        chicksAt(X([440, 400, 360], [260, 215, 300]), FL + 36, { look: 'stand', to: 'right' });
         if (P) chicksAt([380, 415, 455], FL + 62, { look: 'stand', to: 'right' });
         if (!P) fg('hen_fg_flower_bush', 0, 590, 150);
       };
@@ -911,10 +913,9 @@
       await say('J1');
       /* 우유: 따르는 자세(우유병 그림 포함) + 컵 */
       hen.look('pour', 'right'); cue(['water_pour_1', 'water_drip'], .4);
-      const cupX = hen.x + hen.w * .45, cup = stand(T, T.world, 'hen_prop_cup', cupX, FL + 10, 30);
+      stand(T, T.world, 'hen_prop_cup', hen.x + hen.w * .45, S.tableTop + 10, 34); /* 식탁 위 암탉 컵에 따른다(식탁 앞에 놓여 줄기 끝을 받는다) */
       await say('J2');
       await word('milk', hen.x + 20, hen.y - 230);
-      cup.remove();
       hen.look('stand', 'right');
       const nom = (a, k) => { a.hop(8, 260); cue(['chomp', 'chomp_2'], .35); return say(k); };
       await nom(cat, 'J3'); await nom(dog, 'J4'); await nom(pig, 'J5');
@@ -1257,8 +1258,8 @@
         /* 10장 */
         k10(cmd, a1) {
           if (inst()) return null;
-          if (cmd === 'pour') { hen.look('pour', 'right'); cue(['water_pour_1', 'water_drip'], .4); rs.cup = stand(T, T.world, 'hen_prop_cup', hen.x + hen.w * .45, FL + 10, 30); }
-          else if (cmd === 'pourEnd') { if (rs.cup) rs.cup.remove(); hen.look('stand', 'right'); }
+          if (cmd === 'pour') { hen.look('pour', 'right'); cue(['water_pour_1', 'water_drip'], .4); rs.cup = stand(T, T.world, 'hen_prop_cup', hen.x + hen.w * .45, S.tableTop ? S.tableTop + 10 : FL + 10, 34); }
+          else if (cmd === 'pourEnd') { hen.look('stand', 'right'); } /* 컵은 식탁 위에 그대로 */
           else if (cmd === 'nom') { const a = { cat, dog, pig }[a1]; a.hop(8, 260); cue(['chomp', 'chomp_2'], .35); }
           else if (cmd === 'finale') {
             bgm(null);

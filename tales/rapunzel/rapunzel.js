@@ -656,11 +656,13 @@
     await T.sceneCard(tr('문 없는 탑'), () => {
       scene('rp_bg_forest_day_v2');
       put(T, gothel, 470, FL, { look: 'wand', to: 'right' });
+      put(T, rap, TX, FL, { look: 'stand', to: 'left' });   // 2026-11-02 싱크: "열두 살이 되자"에 라푼젤이 보이게(탑 자리에 서 있다가 마법으로 사라져 창가에)
       camSnap(P ? 520 : 500, 280, 1);
     }, gothel.pos);
     const knock = (async () => { await sleep(2000); gothel.hop(6, 300); AudioFX.sfx('knock', .5); T.pop(gothel.x + 70, FL - 260, tr('톡')); magic(TX, FL - 40); })();
     await say('라푼젤이 열두 살이 되자, 마녀는 지팡이를 톡 두드렸어요.');
     await knock;
+    magic(TX, FL - 40); await fadeOut(T, rap, 400);   // 대사가 끝난 뒤 마법으로 사라져 탑 창가에
     put(T, tower, TX, FL + 10);
     const rise = towerRise();
     const s11 = say('숲속에 문도 계단도 없는 높은 탑이 쑥 솟았어요. 창문은 꼭대기에 하나뿐이에요.');
@@ -875,15 +877,14 @@
     /* ===== 9. 빈 탑 (자동) ===== */
     await T.sceneCard(tr('빈 탑'), () => {
       scene('rp_bg_forest_dusk_v2');
-      towerSet({ withRap: false });
-      put(T, braidCut, TX + HOOK_DX, FL + WIN_DY + 110 * IN_S);
+      towerSet({ withRap: false });   // 2026-11-02 싱크: 잘린 머리는 마녀가 걸어 내려 줄 때(braidDown) 처음 보인다
       put(T, prince, 470, FL, { look: 'stand' });
       camSnap(P ? 520 : 500, 280, 1);
     }, prince.pos);
     await say('그날 저녁, 왕자는 아무것도 모르고 탑에 왔어요.');
     prince.hop(6, 400);
     await say('라푼젤, 라푼젤, 머리를 내려 줘요!');
-    const down9 = (async () => { await fadeOut(T, braidCut, 300); await braidDown(); })();
+    const down9 = braidDown();
     const s37 = say('마녀는 잘린 머리를 고리에 걸어 내려 주었어요.');
     await down9;
     await prince.move(TX + HOOK_DX + 2, FL, 900);
@@ -962,7 +963,17 @@
     rap.hop(14, 400); prince.hop(14, 400);
     const l46 = cutSay('rp_cut_reunion', () => AudioFX.sfx('pop', .4), '두 사람은 손을 꼭 잡고 성으로 떠났어요.');
     await sleep(900); rap.hop(14, 400); prince.hop(14, 400);
+    prince.turn('left');
+    const away = Promise.all([walk(rap, -200, FL, 2400, 'linear'), walk(prince, -120, FL, 2400, 'linear')]);   // 2026-11-02 싱크: 컷이 닫히면 두 사람이 떠나고
     await l46;
+    await away;
+    await veil(T, () => {   // 텃밭의 고텔(배경 소리를 끄는 setBg 대신 — 끝 음악이 이어지게)
+      IN_S = INDOOR.rp_bg_garden_night_lb || 1; T.clear(); hide(branchSil); bgImage(T, 'rp_bg_garden_night_lb'); dress('rp_bg_garden_night_lb');
+      camSnap(P ? 470 : 500, 280, 1);
+      put(T, rampion, 470, FL, { look: 'in' });
+      put(T, gothel, X(760, 620), FL, { look: 'stand', to: 'left' });
+    });
+    gothel.move(X(600, 560), FL, 1800, 'ease-out');
     await say('마녀 고텔은 텃밭으로 돌아갔어요.');
     await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
     T.finale(); await sleep(1500);

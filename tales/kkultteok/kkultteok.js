@@ -296,7 +296,7 @@
         else put(T, baby, X(110, 300), G - 10, { look: 'huddle', to: 'right' });
       },
       '10_corner_close'() {
-        put(T, baby, 470, 330, { look: 'huddle', to: 'right', s: 1.2 }); put(T, agi, X(330, 360), G, { look: 'pet', to: 'right' });
+        put(T, baby, 470, 405, { look: 'huddle', to: 'right', s: 1.2 }); /* 2026-11-02 싱크: 손·혀가 닿게 낮춤 */ put(T, agi, X(330, 360), G, { look: 'pet', to: 'right' });
         put(T, nuna, X(680, 600), G, { look: 'lookup', to: 'left' }); put(T, oppa, X(800, 640), G, { look: 'lookup', to: 'left' });
       },
       '12_storm'() {
@@ -313,8 +313,8 @@
       },
       '14_soil_v2'() {
         put(T, baby, X(780, 620), 120, { look: 'sorry', to: 'left' });
-        put(T, dog, X(860, 640), G + 20, { look: 'sniff', to: 'left' });
-        put(T, nuna, X(110, 300), G + 20, { look: 'crouch', to: 'right' }); put(T, agi, X(170, 330), G + 30, { look: 'crouch', to: 'right' }); put(T, oppa, X(920, 700), G + 20, { look: 'crouch', to: 'left' });
+        put(T, dog, X(720, 640), G + 20, { look: 'sniff', to: 'left' }); /* 2026-11-02 싱크: 이현이와 겹치지 않게 */
+        put(T, nuna, X(175, 300), G + 20, { look: 'crouch', to: 'right' }); put(T, agi, X(250, 330), G + 30, { look: 'crouch', to: 'right' }); put(T, oppa, X(830, 700), G + 20, { look: 'crouch', to: 'left' }); /* 2026-11-02 싱크: 화면 끝에 잘리던 삼남매를 안쪽으로 */
         startRain(0, 1000, -20, 6);
       },
       '15_rainbow_v2'() {
@@ -365,7 +365,7 @@
           const my = live(); kids.forEach((k, i) => k.move(1100 + i * 60, G, 1500 + i * 150, 'ease-in').then(() => { if (my()) hide(k); })); return;
         }
         if (rTag === '01_road2') {   // 왔던 길로 집에: 꿀떡이는 앞서 달리고 다현·이현이 뒤따른다 (은우는 손 흔들며 서 있다)
-          dog.move(X(-60, 260), G, 3800, 'linear'); nuna.move(X(160, 340), G, ms || 2500, 'linear'); oppa.move(X(260, 400), G, ms || 2500, 'linear'); return;
+          dog.move(X(105, 300), G, 3800, 'linear'); nuna.move(X(225, 370), G, ms || 2500, 'linear'); oppa.move(X(325, 430), G, ms || 2500, 'linear'); return;
         }
         kids.forEach(k => k.move(x, G, ms || 1500));
       },
@@ -373,11 +373,18 @@
         if (!onS(dog) && verb === 'look') { put(T, dog, X(580, 520), G, { look: a1, to: a2 || 'left' }); if (!inst()) fadeIn(dog, 300); return; }
         if (verb === 'look') return dog.look(a1, a2);
         if (verb === 'hop') return dog.hop(10, 260);
-        if (verb === 'sneeze') { const hx = RS.HOLE3 || 700; for (let k = 0; k < 5; k++) puff(hx + 20 - k * 10, 303 - k * 8); T.pop(dog.x + 20, dog.y - 280, tr('에취!')); return; }
+        if (verb === 'sneeze') { const hx = RS.HOLE3 || 700, hy = RS.HOLEY || 303; for (let k = 0; k < 5; k++) puff(hx + 20 - k * 10, hy - k * 8); T.pop(dog.x + 20, dog.y - 280, tr('에취!')); return; }
         if (verb === 'walk') {
           const [x, , ms] = String(a1).split(',').map(Number);
           if (rTag === '02_hill1') { const my = live(); dog.move(X(1180, 780), 330, ms + 400, 'ease-in').then(() => { if (my()) hide(dog); }); return; }
-          if (rTag === '06_press_v21') { RS.HOLE3 = 628; return dog.move(628 + 85, G, ms || 900); }
+          if (rTag === '06_press_v21') {   // 강아지 구름이 바닥으로 내려와 꿀떡이와 코끝을 맞댄다 (2026-11-02 싱크, 놀이판과 같게)
+            const dcl = RS.shapes && RS.shapes[2];
+            if (!dcl || !onS(dcl)) { RS.HOLE3 = 628; return dog.move(628 + 85, G, ms || 900); }
+            const DCX = X(560, 470), dcw = 110 * (ASP.cloud_dog || 1.2), dw = DOGH.nose * (ASP.dog_nose || 1.3);
+            dcl.pos.getAnimations().forEach(an => an.cancel()); dcl.flip = -1; dcl.place(dcl.x, dcl.y); RS.HOLE3 = DCX; RS.HOLEY = G - 68;
+            if (dog.cur !== 'nose') dog.look('nose', 'left');
+            return Promise.all([dcl.move(DCX, G - 8, ms || 900, 'ease-in-out'), dog.move(DCX + dcw / 2 + dw / 2 - 26, G, ms || 900)]);
+          }
           if (rTag === '09_bell_room2') return dog.move(baby.x + 120, G, ms || 1600, 'linear');
           return dog.move(x, G, ms || 1000);
         }
@@ -567,7 +574,7 @@
           setTimeout(() => { if (my()) bushes.forEach(b => morph(b, 's1')); }, 500);
           const BITS = [[240, 'berry_single'], [370, 'berry_flower'], [470, 'berry_single'], [560, 'berry_flower'], [640, 'berry_single'], [770, 'berry_single']];
           (async () => { await sleep(300); for (const [x, k] of BITS) { if (!my()) return; plant(k, x, FRONT + 6, 1); await sleep(100); } })();
-          dog.move(X(790, 610), G + 20, 900);
+          dog.move(X(745, 610), G + 20, 900);
           setTimeout(() => { if (my()) morph(baby, 'wide'); }, 2600);
         }
       },
@@ -705,12 +712,13 @@
       await T.ask('하늘의 구름을 톡! 무엇이 될까요?', () => T.tap(anyCloud, { prompt: '하늘의 구름을 톡! 무엇이 될까요?' })); // 한 번 누르면 나머지는 저절로
       anyCloud.remove();
       sfx('chime_up', .5); // 구름이 모양으로 바뀐다
-      await say('구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.'); // 구름이 모양으로 바뀌는 첫 순간의 내레이션 (2026-10-21)
+      const morphLine = say('구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.'); // 구름이 모양으로 바뀌는 첫 순간의 내레이션 (2026-10-21) — 말하는 동안 구름이 바뀐다 (2026-11-02 싱크)
       for (let i = 0; i < 3; i++) {
         if (i > 0) await sleep(400);
         morph(cl[i], 's'); cl[i].hop(14, 360); popSfx(T); puff(cl[i].x, cl[i].y - 70 * CS); T.pop(cl[i].x, cl[i].y + 30, tr(SKY[i][3]));
         kids[i].look('jump'); kids[i].hop(16, 320); await sleep(500); kids[i].look('lookup');
       }
+      await morphLine;
       await sleep(900);
     });
     /* --- 4. 커다란 문 --- */
@@ -821,10 +829,16 @@
       await Promise.all(outs);
       await say('퐁! 토끼 구름. 퐁! 고래 구름.');
       await say('퐁! 이번엔 강아지 구름.');
-      dog.look('nose', 'left'); await dog.move(HOLES[2][0] + 85, G, 900);
+      // 강아지 구름이 벨트에서 바닥으로 사뿐 내려와 꿀떡이 쪽을 보고, 꿀떡이가 다가가 코끝을 맞댄다 (2026-11-02 싱크: 벨트 위 구름과 바닥의 개가 멀리 떨어져 있었음)
+      const dcl = shapes[2], DCX = X(560, 470), DCY = G - 8, dcw = 110 * (ASP.cloud_dog || 1.2);
+      dcl.flip = -1; dcl.place(dcl.x, dcl.y);   // 그림은 왼쪽을 본다 → 뒤집어 오른쪽(꿀떡이 쪽)을 보게
+      const dcDown = dcl.move(DCX, DCY, 900, 'ease-in-out');
+      dog.look('nose', 'left');
+      const dw = DOGH.nose * (ASP.dog_nose || 1.3);
+      await Promise.all([dcDown, dog.move(DCX + dcw / 2 + dw / 2 - 26, G, 900)]);
       await say('꿀떡이가 강아지 구름과 코를 맞대요.');
       dog.look('sneeze', 'left'); AudioFX.sfx('cork') || popSfx(T);
-      for (let k = 0; k < 5; k++) puff(HOLES[2][0] + 20 - k * 10, BELT - 40 - k * 8);
+      for (let k = 0; k < 5; k++) puff(DCX + 20 - k * 10, DCY - 60 - k * 8);
       T.pop(dog.x + 20, dog.y - 280, tr('에취!'));
       await say('에취! 구름 조각이 사르르 날려요.');
     });
@@ -918,7 +932,7 @@
     S(async () => {
       await T.sceneCard('', () => {
         scene('10_corner_close', 480);
-        put(T, baby, 470, 330, { look: 'huddle', to: 'right', s: 1.2 });
+        put(T, baby, 470, 405, { look: 'huddle', to: 'right', s: 1.2 }); // 2026-11-02 싱크: 은우 손·꿀떡이 혀가 닿게 낮춤 (옛 330 은 손 위로 멀었다)
         put(T, agi, X(330, 360), G, { look: 'pet', to: 'right' });
         put(T, nuna, X(680, 600), G, { look: 'lookup', to: 'left' });
         put(T, oppa, X(800, 640), G, { look: 'lookup', to: 'left' });
@@ -1032,8 +1046,8 @@
         scene('14_soil_v2', 500);
         put(T, baby, X(780, 620), 120, { look: 'sorry', to: 'left' });
         // 2026-10-20 크기 일관성: 앞쪽(기준선이 더 아래)인데 0.8~0.9로 줄여져 있던 것을 1로 (다른 장면과 같은 크기)
-        put(T, dog, X(860, 640), G + 20, { look: 'sniff', to: 'left' });
-        put(T, nuna, X(110, 300), G + 20, { look: 'crouch', to: 'right' }); put(T, agi, X(170, 330), G + 30, { look: 'crouch', to: 'right' }); put(T, oppa, X(920, 700), G + 20, { look: 'crouch', to: 'left' });
+        put(T, dog, X(720, 640), G + 20, { look: 'sniff', to: 'left' }); /* 2026-11-02 싱크: 이현이와 겹치지 않게 */
+        put(T, nuna, X(175, 300), G + 20, { look: 'crouch', to: 'right' }); put(T, agi, X(250, 330), G + 30, { look: 'crouch', to: 'right' }); put(T, oppa, X(830, 700), G + 20, { look: 'crouch', to: 'left' }); /* 2026-11-02 싱크: 화면 끝에 잘리던 삼남매를 안쪽으로 */
         startRain(0, 1000, -20, 6);
       });
       const behind = baby.pos; // 꽃·딸기는 땅에서 자라 나오니 인물·강아지·구름보다 뒤에 둔다
@@ -1075,7 +1089,7 @@
       T.pop(PX(700), FRONT - 170, tr('빨갛게!'), '#A93B32');
       sfx('ding_glock', .5);
       await say('딸기가 빨갛게!');
-      dog.move(X(790, 610), G + 20, 900);
+      dog.move(X(745, 610), G + 20, 900);
       await say('꿀떡이는 딸기 냄새를 킁킁.');
       morph(baby, 'wide');
       await say('아기 먹구름이 내려다봐요. "어? 다들 웃고 있네!"');
@@ -1149,7 +1163,7 @@
       })();
       const C0 = [ch.x + 6, ch.y - 124], tgt = [[X(720, 600), 150], [X(600, 520), 120]];
       chimneyLoop(C0, [C0[0], C0[1] - 40], [C0[0] - 160, C0[1] - 70], { s0: .25, s1: .9 });
-      const home = Promise.all([dog.move(X(-60, 260), G, 3800, 'linear'), nuna.move(X(160, 340), G, 4200, 'linear'), oppa.move(X(260, 400), G, 4200, 'linear')]);
+      const home = Promise.all([dog.move(X(105, 300), G, 3800, 'linear'), nuna.move(X(225, 370), G, 4200, 'linear'), oppa.move(X(325, 430), G, 4200, 'linear')]); // 2026-11-02 싱크: 꿀떡이가 화면 밖(-60)으로 나가 버려 마지막 킁킁 대사 때 없던 것 → 화면 안에서 멈춘다
       await say('삼남매는 꿀떡이랑 왔던 길로 집에 가요.');
       await T.ask('굴뚝을 톡! 안녕!', () => T.tap(ch.pos, { prompt: '굴뚝을 톡! 안녕!' }));
       for (let k = 0; k < 2; k++) { smokeToCloud(c2[k], C0, [C0[0], C0[1] - 50], tgt[k], 2400, P ? .75 : 1); T.pop(C0[0] + 40, C0[1] - 30, tr('퐁!')); await sleep(700); }
@@ -1157,8 +1171,9 @@
       agi.look('wave', 'right'); agi.hop(10, 300);
       await say('은우가 뒤를 돌아보며 손을 흔들어요. "퐁!"');
       finaleMusic();
+      await home; dog.look('nose', 'right');   // 멈춰 서서 굴뚝(오른쪽) 쪽으로 코를 든다 (2026-11-02 싱크)
       await say('꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.');
-      await home; await finaleWait();
+      await finaleWait();
     });
     /* --- 17. 잠자리 (2026-11-01): 누르기 없음. 삼남매·꿀떡이가 잠들고 아기 구름이 달 앞에 눕는다 --- */
     S(async () => {

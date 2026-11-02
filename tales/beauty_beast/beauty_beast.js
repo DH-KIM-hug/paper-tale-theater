@@ -638,8 +638,9 @@
     await h10;
     SC = SCN.dining_v2; T.clear(); bgImage(T, 'dining_v2'); camSnap(500, 280, 1);
     diningBack();
-    put(T, father, X(560, 520), FL, { look: 'eat' });
-    put(T, tableL, X(560, 520), FL + 4);
+    // 아버지는 식탁 왼쪽 끝에 앉는다: 식탁 한가운데 뒤에 앉으면 과일 그릇·케이크가 얼굴을 가린다 (2026-11-02)
+    put(T, father, X(540, 450), FL, { look: 'eat' });
+    put(T, tableL, X(720, 600), FL + 4);
     diningFront();
     if (P) camSnap(520, 280, 1);
     await say('누구 계세요? …고맙게 먹겠습니다.');

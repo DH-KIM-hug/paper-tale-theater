@@ -1333,10 +1333,11 @@
         }
         T.world.appendChild(mom.pos); mom.setScale(1); mom.place(-120, 500); mom.face('right');
       });
+      const momWalk = mom.move(T.portrait() ? 370 : 300, 500, 1500); // 고개를 넘는다는 말과 함께 걸어 들어온다
       if (n === 0) await say('해가 뉘엿뉘엿 지고 있어요. 엄마가 첫째 고개를 넘어요.');
       else if (n === 1) await say('하늘이 붉어졌어요. 엄마가 둘째 고개를 넘어요.');
       else await say('깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.');
-      await mom.move(T.portrait() ? 370 : 300, 500, 1500);
+      await momWalk;
       await sleep(300);
       AudioFX.pop_out();
       await tiger.move(TX, peekY, 380, 'ease-out');
@@ -1625,13 +1626,18 @@
     // 저절로 (2026-10-19 톡 조작 정리)
     for (let i = 1; i <= 2; i++) { await runYard1(i); await sleep(150); }
     await sleep(700);
+    // 숨는다는 말과 함께 장독 뒤로 (말 뒤에 숨으면 말하는 동안 장독 앞에 서 있다)
+    const hiding = (async () => {
+      await sleep(900); // '앗, 호랑이가 오는 소리!' 뒤 '숨어요'쯤
+      AudioFX.slide();
+      const jarsG = hideJar.parentNode;
+      yard.insertBefore(boy.pos, jarsG); yard.insertBefore(girl.pos, jarsG);
+      // 장독대 위로 폴짝 → 큰 장독 뒤에 (그림 장독대는 안쪽이라 원근으로 작아진다)
+      await Promise.all([boy.move(YJ.hide[0], YJ.hideY, 500), girl.move(YJ.hide[1], YJ.hideY, 500), boy.hop(40, 500), girl.hop(40, 500)]);
+      boy.setScale(YJ.hideS); girl.setScale(YJ.hideS * .92);
+    })();
     await say('앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!');
-    AudioFX.slide();
-    const jarsG = hideJar.parentNode;
-    yard.insertBefore(boy.pos, jarsG); yard.insertBefore(girl.pos, jarsG);
-    // 장독대 위로 폴짝 → 큰 장독 뒤에 (그림 장독대는 안쪽이라 원근으로 작아진다)
-    await Promise.all([boy.move(YJ.hide[0], YJ.hideY, 500), girl.move(YJ.hide[1], YJ.hideY, 500), boy.hop(40, 500), girl.hop(40, 500)]);
-    boy.setScale(YJ.hideS); girl.setScale(YJ.hideS * .92);
+    await hiding;
     prowl = mkTiger(T, yard, YJ.prowl[0], 530, 1);
     prowl.P.wear('scarf'); prowl.P.setBelly(2.4); prowl.face('right');
     await prowl.move(YJ.prowl[1], 530, 1400);
@@ -1693,20 +1699,21 @@
       // 그림: 오르는 동안은 둘이 따로 기둥 앞면(x 640)에 도마뱀처럼 붙어 — 오빠가 먼저 한 칸, 동생이 조금 뒤에 따라 한 칸. 꼭대기에서 다시 선다
       const climbArt = gecko && i < 5;
       const by = i === 5 ? TOP.b[1] : 560 - i * CLIMB_STEP, gy = i === 5 ? TOP.g[1] : by + (climbArt ? 96 : 80);
+      let moving;
       if (climbArt) {
         boy.P.pose('climb'); girl.P.pose('climb');
-        boy.move(618, by - 30, 420); scramble(boy, i % 2 ? 1 : -1);
-        setTimeout(() => { girl.move(664, gy - 30, 420); scramble(girl, i % 2 ? -1 : 1); }, 230);
+        moving = Promise.all([boy.move(618, by - 30, 420), scramble(boy, i % 2 ? 1 : -1),
+          sleep(230).then(() => Promise.all([girl.move(664, gy - 30, 420), scramble(girl, i % 2 ? -1 : 1)]))]);
       } else {
         boy.P.pose('stand'); girl.P.pose('stand');
-        boy.move(i === 5 ? TOP.b[0] : 610, by, 420); girl.move(i === 5 ? TOP.g[0] : 560, gy, 420);
-        boy.hop(10, 420); girl.hop(10, 420);
+        moving = Promise.all([boy.move(i === 5 ? TOP.b[0] : 610, by, 420), girl.move(i === 5 ? TOP.g[0] : 560, gy, 420), boy.hop(10, 420), girl.hop(10, 420)]);
       }
       tree.to(560, Math.max(bgUrl('tree') ? 112 : -1e9, Math.min(280, by - 60)), 1, 420); // 그림 나무: 그림 위끝(y≈-168) 밖이 안 보이게
       setTimeout(() => T.pop(i % 2 || i >= 4 ? 300 : 760, 200, '영차!', C.pine), 420); // 다 올라간 뒤에 띄운다. 4·5번째는 오누이가 오른쪽 가지 끝으로 가므로 왼쪽에
+      return moving; // 동생은 0.23초 늦게 따라 오른다 — 다 오른 뒤에 다음 칸(안 기다리면 앞 칸 움직임이 꼭대기 자리를 덮어써 동생이 기둥 앞에 떠 있었다)
     };
     await T.ask('우물가에 커다란 나무가 있어요. 톡! 영차영차 올라가요.', () => T.tap(stageWrap, { prompt: '화면을 톡 눌러 봐요!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
-    for (let i = 1; i <= 5; i++) { await climbTree(i); await sleep(450); }
+    for (let i = 1; i <= 5; i++) { await climbTree(i); await sleep(250); }
     await sleep(600);
     await say('오누이는 나무 꼭대기까지 올라갔어요!');
     await tree.to(...TREE_WIDE, .58, 1400);
@@ -1942,10 +1949,26 @@
     for (let i = 1; i <= 6; i++) { await climbRope(i); await sleep(700); }
     await sleep(900);
     AudioFX.fanfare();
-    await say('구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!');
+    // 닿았다는 말과 함께 줄에서 내려 맨 위 구름(6겹째, 오른쪽 크림 구름 x≈660) 위에 선다
+    const CLOUD6 = 255 - 5 * 450 - 10, onCloud = CLOUD6 - 70;
+    await Promise.all([say('구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!'), (async () => {
+      await skyV.to(500, CLOUD6 - 150, 1, 700);
+      boy.P.pose('stand'); girl.P.pose('stand');
+      await Promise.all([boy.move(620, onCloud, 600), girl.move(720, onCloud, 600), boy.hop(40, 600), girl.hop(40, 600)]);
+    })()]);
 
     /* --- 14. 뚝! (컷 3장 + 수수밭) --- */
-    await say('호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.');
+    // 땅으로 내려다보면: 나무 꼭대기에 호랑이, 그 위로 낡은 줄이 스르르 (빌었다는 말과 함께)
+    const tgSky = mkTiger(T, skyV, 560, 510, 1); tgSky.P.wear('scarf'); tgSky.P.setBelly(2.4); tgSky.face('right');
+    const ropeOld = el('g', {}, skyV);
+    if (!ropeArt(T, ropeOld, 'rope_bad', 675, 478, .35)) T.paper(ropeOld, [['path', { d: 'M675 -3400 V200 Q690 260 668 320 Q690 380 675 440', stroke: '#9A8466', 'stroke-width': 8, fill: 'none', 'stroke-dasharray': '40 7' }]]);
+    ropeOld.style.transform = 'translateY(-900px)';
+    await Promise.all([say('호랑이도 하늘에 빌었어요. 그랬더니 낡은 줄이 스르르 내려왔어요.'), (async () => {
+      setTimeout(() => creak(T), 900);
+      await Promise.all([skyV.to(500, 280, 1, 1200), // 내려다보는 동안 줄도 함께 내려온다 (말하는 사이에 줄이 다 보이게)
+        T.anim(ropeOld, [{ transform: 'translateY(-900px)' }, { transform: 'translateY(0)' }], { duration: 1800, easing: 'ease-out' })]);
+      ropeOld.style.transform = '';
+    })()]);
     short('whistle_wobble', .6, 1.8);
     const cutText = (svg, t, s = 40) => el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': s, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr(t) }, svg);
     await T.cut(svg => {

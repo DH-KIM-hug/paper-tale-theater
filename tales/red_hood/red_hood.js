@@ -502,7 +502,7 @@
     await T.tap(live(hood), { prompt: '빨간 모자를 톡! 새끼손가락을 걸어요.' });
     popSfx(T); T.pop(500, 200, '약속!');
     lyHop('bird', 10, 300); setTimeout(() => lyHop('bird', 10, 300), 320);
-    await Promise.all([hood.hop(36, 450), mama.hop(20, 450)]);
+    await Promise.all([hood.move(535, 510, 500, 'ease-out'), hood.hop(36, 450), mama.hop(20, 450)]);   // 2026-11-02 싱크: 새끼손가락이 닿게 엄마 곁으로
     await say('엄마와 빨간 모자는 새끼손가락을 걸었어요.');
 
     /* --- 3. 숲길 --- */
@@ -523,8 +523,7 @@
     for (let i = 1; i <= 3; i++) { await trailStep(i); await sleep(600); }
     await sleep(500);
     sfx('peek_pop', .6);
-    await T.cutImage([{ src: cutSrc('tail'), hold: 2600 }], { hold: 2600 });
-    await say('어, 나무 뒤에서 뭔가 보슬보슬한 게 살짝 보였어요. 꼬리였나 봐요!');
+    await Promise.all([T.cutImage([{ src: cutSrc('tail'), hold: 2600 }], { hold: 2600 }), say('어, 나무 뒤에서 뭔가 보슬보슬한 게 살짝 보였어요. 꼬리였나 봐요!')]);   // 2026-11-02 싱크: 컷이 대사 동안 보이게
 
     /* --- 4. 늑대의 꾀 --- */
     await T.sceneCard('늑대', () => {
@@ -535,8 +534,7 @@
     sfx('tiptoe_pizz', .6); // 늑대가 슬그머니
     await say('나무 옆에서 늑대가 슬그머니 나왔어요. "빨간 모자 아가씨, 어디 가니?"');
     await say('"할머니 댁에 가요." 빨간 모자가 대답했어요.');
-    await T.cutImage([{ src: cutSrc('whisper'), hold: 2600 }], { hold: 2600 });
-    await say('"꽃을 따 가면 할머니가 참 좋아하실 텐데~"');
+    await Promise.all([T.cutImage([{ src: cutSrc('whisper'), hold: 2600 }], { hold: 2600 }), say('"꽃을 따 가면 할머니가 참 좋아하실 텐데~"')]);
     hood.look('joy'); await hood.hop(34, 420);
     sfx('ding_glock', .5); // 꽃을 따 가자는 생각
     await say('"좋은 생각이에요!" 빨간 모자는 엄마와 한 약속을 깜빡하고 말았어요.');
@@ -591,16 +589,14 @@
       put(T, wolf, -200, 535, { look: 'run', to: 'right' });
       runDots = splitDress(T);
     }, wolf.pos);
-    await say('위에서는 빨간 모자가 꽃을 따요. 아래에서는 늑대가 지름길로 달려가요!');
     hood.hop(16, 420);
-    sfx('zip_away', .6); followDots(runDots); // 늑대가 지름길로 쌩
-    await wolf.move(1200, 535, 2400, 'ease-in');
+    sfx('zip_away', .6); followDots(runDots); // 늑대가 지름길로 쌩 (2026-11-02 싱크: 대사와 함께 달린다)
+    await Promise.all([say('위에서는 빨간 모자가 꽃을 따요. 아래에서는 늑대가 지름길로 달려가요!'), wolf.move(1200, 535, 2400, 'ease-in')]);
     await T.cutImage([{ src: cutSrc('dash'), sfx: 'zip_away', hold: 2400 }], { hold: 2400 });
-    await T.cutImage([{ src: cutSrc('gulp'), hold: 2600 }], { hold: 2600 });
     await T.sceneCard('', () => { T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', P); camSnap(480, (T.viewWidth() < 990) ? 310 : 300, (T.viewWidth() < 990) ? 2.2 : 1.3); hide(hood); hide(wolf); }, wolf.pos); // 꿀꺽: 새는 놀라 날아간 뒤라 없다
     knock(T); setTimeout(() => sfx('whistle_down', .5), 1300); // 똑똑똑, 꿀꺽은 만화 소리로
-    await say('똑똑똑… 문이 닫히고… 꿀꺽!');
-    await T.sceneCard('', () => { scene('bed', 590); put(T, wolf, 430, 470, { look: 'granny', to: 'left' }); }, wolf.pos);
+    await Promise.all([say('똑똑똑… 문이 닫히고… 꿀꺽!'), T.cutImage([{ src: cutSrc('gulp'), hold: 2600 }], { hold: 2600 })]);   // 2026-11-02 싱크: 꿀꺽 컷이 대사 동안
+    await T.sceneCard('', () => { scene('bed', 590); put(T, frame, FRAME[0], FRAME[1], { s: FRAME[2] }); put(T, wolf, 430, 470, { look: 'granny', to: 'left' }); }, wolf.pos);   // 빈 액자 안에 할머니 사진(뒤 장면과 같게)
     await say('늑대는 할머니의 잠옷을 입고 침대에 누웠어요.');
 
     /* --- 7. 할머니 집 --- */

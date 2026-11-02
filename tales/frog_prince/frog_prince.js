@@ -623,9 +623,12 @@
       T.pop(DOOR.x + 40, 150, tr('똑똑!'), '#6B4A32');
     })();
     await say(S.L16); await t6;
-    put(T, frog, -60, FL, { look: 'hop', to: 'right' });
-    T.pop(DOOR.x - 20, FL - 130, tr('폴짝'));
-    await hops(T, frog, DOOR.x + 60, 3, 420);
+    /* 개구리는 문 밖(열린 문간의 어두운 바깥, 문턱 y≈381)에서 부른다 — 방 안으로 들어와 있으면 '문 좀 열어 줘요'와 안 맞는다 (2026-11-02).
+       문간은 방바닥보다 안쪽이라 원근만큼 조금 작게(.8) */
+    const DOOR_Y = 381;
+    put(T, frog, DOOR.x - 20, DOOR_Y, { look: 'hop', to: 'right', s: .8 }); fadeIn(frog, 400);
+    T.pop(DOOR.x + 30, DOOR_Y - 110, tr('폴짝'));
+    await hops(T, frog, DOOR.x + 45, 2, 420);
     frog.look('sit');
     frog.hop(8, 300); await say(S.L17);
     prin.look('refuse', 'left'); prin.move(prin.x + 40, FL, 500, 'ease-out');
@@ -701,10 +704,10 @@
       camSnap(520, 280, 1);
     }, prin.pos);
     await sleep(LOOK);
-    const t9 = (async () => {
-      put(T, frog, -60, FL, { look: 'hop', to: 'right' });
-      await hops(T, frog, 480, 4, 420);
-      frog.look('sit');
+    const t9 = (async () => { // 개구리는 오른쪽에서 폴짝폴짝 와서 공주와 침대 사이에 앉는다(공주 다리 앞을 지나가지 않게, 2026-11-02)
+      put(T, frog, 1060, FL, { look: 'hop', to: 'left' });
+      await hops(T, frog, 560, 4, 420);
+      frog.look('sit', 'left');
     })();
     await say(S.L29); await t9;
     frog.hop(6, 300); await say(S.L30);

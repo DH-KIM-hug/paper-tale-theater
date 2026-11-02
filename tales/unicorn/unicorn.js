@@ -450,6 +450,20 @@
        그래서 set 직후(T.readInstant()) enter 의 at·look·fg 동사는 놓여 있는 것을 건드리지 않는다. 세로 화면 x 는 놀이판 값(PMAP)으로 바꾼다. */
     const inst = () => T.readInstant();
     const rGift = flowers.red, RCLOUD_TOP = FL - 170, RMANE = () => [-uni.w * .14, -uni.h * .64];
+    /* 11장 꽃 꽂기 (2026-11-02 싱크): 다현이가 유니콘 코앞까지 걸어가 바구니를 내려놓고, 바구니에서 꽃을 꺼내 손을 뻗어 갈기에 꽂는다
+       (옛: 멀리 선 채 허공에서 꽃이 날아가고 바구니가 없었다). alive() 가 거짓이면(장면이 넘어감) 멈춘다 */
+    const giveFlower = async (g, alive = () => true) => {
+      kid.look('walk', 'right'); sfx('paper_up', .4);
+      await kid.move(uni.x - 185, FL, 900, 'ease-in-out'); if (!alive()) return false;
+      kid.look('stand');
+      put(T, basket, kid.x - 95, FL, { look: 'a' }); fadeIn(basket, 300);
+      put(T, g, basket.x, FL - 30, { look: 'a', s: .55 }); fadeIn(g, 300); T.world.insertBefore(g.pos, basket.pos);
+      await g.move(basket.x, FL - 120, 450, 'ease-out'); if (!alive()) return false;
+      T.world.appendChild(g.pos); kid.look('wave');   // 손을 유니콘 쪽(오른쪽)으로 뻗는다
+      const m = RMANE();
+      await g.move(uni.x + m[0], FL + m[1], 1100, 'ease-in-out');
+      return alive();
+    };
     const SHORT = { uc_bg2_hill: 'hill', uc_bg2_cloudland: 'cloudland', uc_bg2_night_forest: 'forest', uc_bg2_waterfall: 'waterfall', uc_bg2_dusk_road: 'dusk', uc_bg2_moon_night: 'moon' };
     const PMAP = {
       hill1: { 520: 400 }, cloudland1: { 470: 400 }, cloudland2: { 560: 420, 660: 520, 700: 560, 790: 640, 880: 700 }, forest1: { 400: 455 },
@@ -557,11 +571,8 @@
         const tok = rTok;   /* 대본에 동사가 없어: 첫 줄을 읽는 동안 기다렸다가 바구니 속 빨간 꽃을 갈기에 꽂아 준다 */
         setTimeout(async () => {
           if (tok !== rTok || rTag !== 'hill2') return;
-          kid.look('stand'); sfx('paper_up', .4);
-          put(T, rGift, kid.x + 40, FL - 100, { look: 'a', s: .55 }); fadeIn(rGift, 300);
+          if (!await giveFlower(rGift, () => tok === rTok)) return;
           const m = RMANE();
-          await rGift.move(uni.x + m[0], FL + m[1], 1200, 'ease-in-out');
-          if (tok !== rTok) return;
           glow(uni, 1200); sparkleSfx(T); T.pop(uni.x + m[0], FL + m[1] - 70, tr('반짝!'), '#D9A94E');
         }, 4200);
       },
@@ -954,10 +965,8 @@
     await say(S.H1);
     /* 갈기 자리(유니콘 서기 그림, 왼쪽을 봄): 그림 폭의 36%·높이의 36% — 꽃 밑동을 여기에 */
     const MANE = [-uni.w * .14, -uni.h * .64];
-    put(T, gift, kid.x + 40, FL - 100, { look: 'a', s: .55 }); fadeIn(gift, 300);
-    kid.look('stand'); sfx('paper_up', .4);
     const endSay = say(S['F_END_' + ANS]);
-    await gift.move(uni.x + MANE[0], FL + MANE[1], 1200, 'ease-in-out');
+    await giveFlower(gift);   // 걸어가 바구니를 내려놓고 꽃을 꺼내 손을 뻗어 갈기에 (2026-11-02 싱크)
     finaleMusic(); glow(uni, 1200); sparkleSfx(T); T.pop(uni.x + MANE[0], FL + MANE[1] - 70, tr('반짝!'), '#D9A94E');
     await endSay;
     uni.hop(10, 420);

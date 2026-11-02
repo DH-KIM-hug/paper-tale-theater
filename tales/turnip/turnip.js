@@ -1026,7 +1026,7 @@
       T.clear(); lowAngleBG(T);
       putTurnip(420, 480, 1.6);
       if (!bgFront(T, 'lowangle', 484)) T.paper(T.world, [['rect', { x: -300, y: 498, width: 1600, height: 300, fill: C.soil }]]);
-      put(cast.grandpa, 600, 500, .7, 'pull'); // 순무 잎을 꽉 잡은 그림
+      put(cast.grandpa, 665, 500, 1, 'pull'); // 순무 잎을 꽉 잡은 그림 — 앞 장면(텃밭, 크기 1)과 같은 크기, 두 손이 오른쪽 잎 끝에 닿게 (2026-11-02 그림·대사 맞춤: 옛 .7 은 작아 보이고 손이 잎에 안 닿았다)
     }, cast.grandpa.pos);
     const pullGrandpa = i => {
       chorus(T, 1); wobble();
@@ -1039,11 +1039,11 @@
     await say('순무는 꿈쩍도 안 해요.');
     sfx('whistle_down', .7); // 넘어지는 동안 휘리릭, 쿵은 그 뒤
     cast.grandpa.sitDown();
-    await cast.grandpa.move(680, 500, 350, 'ease-out'); await sleep(500);
+    await cast.grandpa.move(770, 500, 350, 'ease-out'); await sleep(500);
     await T.fitTo([cast.grandpa.pos], { dur: 300 }); // 세로 화면: 엉덩방아 찧은 할아버지가 화면 밖으로 나가지 않게
     stopAmb();
     thud(T); T.shake(); T.pop(cast.grandpa.x - 90, 340, '쿵!'); // 머리 왼쪽 위 (오른쪽은 세로 화면에서 잘린다)
-    const st1 = stars(T, 680, 395); // (킥킥 기계음은 뺐다: 할아버지 "아이코!"와 겹침)
+    const st1 = stars(T, 770, 350); // (킥킥 기계음은 뺐다: 할아버지 "아이코!"와 겹침)
     await say('아이코! 할아버지가 엉덩방아를 찧었어요.');
     st1.remove();
 
@@ -1150,6 +1150,8 @@
     await catDown;
     cast.cat.lean.style.transition = 'transform .28s ease-out';
     await T.sceneCard(null, () => sideView(5), cast.cat.pos);
+    // 째려보기: 강아지는 뒤(고양이 쪽)로 돌아보고, 고양이는 아직 꼬리를 안 잡고 서서 강아지를 본다 (2026-11-02 그림·대사 맞춤)
+    cast.dog.face('right'); cast.cat.look('stand'); cast.cat.pose(POSE.stand()); cast.cat.place(cast.cat.x + 45, cast.cat.y); // 얼굴이 겹치지 않게 한 걸음 떨어져서
     await say('어? 강아지랑 고양이가 서로 째려봐요.');
     sfx('comic_brass', .6);
     const glare = artUrl('cut_glare') && T.cutImage([{ src: artUrl('cut_glare'), hold: 2200 }], { hold: 2200, onShow: () => voiceLine('cut_glare', 300) });
@@ -1160,6 +1162,7 @@
       T.el('text', { x: 200, y: 60, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('째릿!') }, svg);
       voiceLine('cut_glare', 300);
     }, { hold: 2200 }));
+    cast.cat.place(cast.cat.x - 45, cast.cat.y); cast.dog.face('left'); cast.cat.look('pull'); cast.cat.pose(POSE.pull(4)); // 다시 줄을 서서 꼬리를 잡는다
     await say('"흥, 알았어!" 그래도 고양이가 강아지 꼬리를 꼭 잡았어요.');
     await pullRound(5, 10, '순무를 톡 눌러서 영차!');
 

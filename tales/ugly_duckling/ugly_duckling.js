@@ -1277,18 +1277,18 @@
     await say('엄마 오리가 말했어요. "어머, 이 아기는 크고 회색이구나. 그래도 괜찮아. 모두 내 아기란다!"');
 
     /* --- 2. 헤엄 줄 (연못 옆 모습) --- */
-    const LINE = [0, 1, 2, 3].map(k => 300 - k * 80);
+    const LINE = [0, 1, 2, 3].map(k => 380 - k * 80); // 2026-11-02 그림·대사 맞춤: 줄 전체를 오른쪽으로 80 — 맨 끝 회색 아기 오리(옛 x −40)가 첫 대사부터 화면 안에 보이게
     let unfloat = () => {};
     await T.sceneCard('연못', () => {
       T.clear();
       const art = pondSideBG(T); // 그림: 연못 물 띠가 253~398
       const WL = art ? 392 : 430; // 2026-10-20 새 그림은 연못(253~398) 한가운데 물 위에 뜬다: 발끝을 물 띠 안에 두고 몸 아래를 물 띠 조각이 가린다
-      put(mom, 390, WL + 3, 1.8, 'right'); // 오른쪽으로 헤엄쳐 가니 모두 오른쪽을 본다 (뒷걸음 X)
+      put(mom, 470, WL + 3, 1.8, 'right'); // 오른쪽으로 헤엄쳐 가니 모두 오른쪽을 본다 (뒷걸음 X)
       sibs.forEach((d, k) => put(d, LINE[k], WL, 1.3, 'right'));
-      put(hero, -40, WL + 1, 1.15, 'right');
+      put(hero, 60, WL + 1, 1.15, 'right');
       unfloat = swimmersFloat([mom, ...sibs, hero]);
       frontBand(T, 'pond', WL - 30, 398) || waterFront(T, WL - 28, C.water, .92);
-      if (narrow()) camSnap(250, 280, 1); // 세로: 줄 선 오리들 쪽을 비춘다
+      if (narrow()) camSnap(330, 280, 1); // 세로: 줄 선 오리들 쪽을 비춘다
     }, hero.pos);
     await say('엄마 오리가 아기들을 데리고 연못에 갔어요. 줄을 서서 헤엄쳐요.');
     const swimmers = [mom, ...sibs, hero];
@@ -1317,7 +1317,7 @@
       rooster = cast(T, 'rooster', 395, 512, 1.5); rooster.face('right');
       ducks = [cast(T, 'mom', 650, 505, 1.5), cast(T, 'mom', 750, 515, 1.6)];
       put(hero, 525, 525, 1.35);
-      put(mom, 960, 505, 1.85); // 엄마는 놀린 오리들(1.5)보다 확실히 크게 — 같은 흰 오리라 헷갈리지 않게
+      put(mom, 880, 505, 1.85); // 2026-11-02: 옛 x 960 은 오른쪽이 잘렸다 // 엄마는 놀린 오리들(1.5)보다 확실히 크게 — 같은 흰 오리라 헷갈리지 않게
       camSnap(narrow() ? 420 : 500, 280, 1); // 세로: 먼저 닭 쪽
     }, hero.pos);
     await say('농장 마당에 닭이랑 오리들이 모여 있어요.');
@@ -1431,9 +1431,12 @@
       el('text', { x: 200, y: 235, 'text-anchor': 'middle', 'font-size': 100, fill: C.amber, stroke: '#fff', 'stroke-width': 8, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('쾅!') }, svg);
     }, { hold: 1500, sfx: () => { sfx('surprise_sting', .9); } }); // 쾅! 컷이 뜨는 순간 — 무서운 총소리 대신 놀람 소리 하나 (2026-10-28 만화 소리 규칙)
     honk(T);
-    await say('저 멀리서 큰 소리가 났어요. 깜짝 놀란 기러기들이 모두 날아가 버렸어요.');
     geese.forEach((g, k) => { if (g.ripple) g.ripple.remove(); if (takeOff(T, g, 'goose_fly3')) g.face(k > 1 ? 'right' : 'left'); }); // 물결은 그 자리에 남고, 나는 자세로 가는 쪽을 본다
-    await Promise.all(geese.map((g, k) => g.move(g.x + (k - 1) * 200, -260, 1200 + k * 150, 'ease-in')));
+    // 2026-11-02 그림·대사 맞춤: '날아가 버렸어요' 를 읽는 동안 기러기들이 날아오른다 (옛: 대사 뒤에 날아감)
+    await Promise.all([
+      say('저 멀리서 큰 소리가 났어요. 깜짝 놀란 기러기들이 모두 날아가 버렸어요.'),
+      ...geese.map((g, k) => sleep(900).then(() => g.move(g.x + (k - 1) * 200, -260, 1600 + k * 200, 'ease-in'))),
+    ]);
     hero.setMood('scared'); hero.pose('scale(1.08,.84)');
     const tremble = hero.body.animate([{ translate: '0 0' }, { translate: '3px 0' }, { translate: '-3px 0' }], { duration: 140, iterations: Infinity });
     await askMood('scared', ['happy', 'scared', 'angry'], '혼자 남은 아기 오리 마음은 어떨까요?');
@@ -1543,7 +1546,7 @@
     await say('쩍! 얼음이 깨졌어요. 발이 쏙 빠졌어요!');
     hero.parts.wing.style.transform = '';
     T.world.appendChild(hero.pos);
-    const hugY = farmer.y - 57, hugX = farmer.x - 78; // 그림 농부: 앞으로 뻗은 두 손(발끝에서 -80,-121) 높이에 안긴다
+    const hugY = farmer.y - 85, hugX = farmer.x - 80; // 그림 농부: 앞으로 뻗은 두 손(발끝에서 -80,-121) 높이 = 아기 오리 가슴(옛 -57 은 옆에 서 있는 것처럼 보였다)
     hero.face('right'); hero.setScale(1); hero.move(hugX, hugY, 600).then(() => hero.face('left')); // 가는 동안은 오른쪽(이동 방향), 안긴 뒤 할아버지와 같은 쪽(가는 쪽)을 본다
     await say('농부 할아버지가 아기 오리를 품에 폭 안았어요. 따뜻한 집으로 가요!');
     // 농부는 왼쪽을 보고 서 있으니 보는 쪽(왼쪽)으로 걸어 나간다 (뒷걸음 X)

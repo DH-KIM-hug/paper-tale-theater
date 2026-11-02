@@ -822,7 +822,7 @@
     await T.sceneCard('잡혔다!', () => {
       T.clear(); grassForestBG(T);
       // 생쥐는 도망치려는 쪽(오른쪽)을 보고, 꼬리 끝이 사자 오른쪽 앞발(무대 x 737~818) 밑에 깔린다. 사자보다 먼저 깔아 앞발이 꼬리를 덮는다
-      mouse = mk(T, T.world, 812, 498, drawMouse, 1.6); mouse.face('left');
+      mouse = mk(T, T.world, 812, 498, drawMouse, 1.6); mouse.face('right'); // 생쥐 그림은 왼쪽을 본다 → 뒤집어 오른쪽(도망)을 보고, 꼬리가 왼쪽 앞발 밑에 깔린다(2026-11-02 싱크 점검)
       lion = mk(T, T.world, 640, 500, drawLionLie, 1.8); lion.face('right'); lion.parts.eyes('open');
       if (lion.parts.art) lion.place(520, 500);
       head = lionFace(T, lion.parts.hg, lion.parts.art);
@@ -841,7 +841,7 @@
     await say('생쥐가 말했어요. "살려 주시면 꼭 은혜 갚을게요!"');
     await sleep(500);
     // 부탁할 땐 사자를 돌아보며 두 손을 모은다 (꼬리는 아직 앞발 밑)
-    mouse.face('right');
+    mouse.face('left'); // 그림 그대로 = 왼쪽(사자 쪽)
     mouse.parts.arms.setAttribute('opacity', 0); mouse.parts.pray.setAttribute('opacity', 1);
     squeak(T, 1600); mouse.hop(16);
     T.pop(880, 380, '제발요~', C.pine);
@@ -969,13 +969,14 @@
     ], { prompt: '구멍에 쏙 들어갈 친구를 톡 눌러 봐요!', where: '사자는 너무 커서 코가 쿵! 부딪혀요. 작은 친구는 누구지?',
       who: `${josa(MOUSE, '이/가')} 들어갈 수 있어요. 반짝이는 친구를 눌러 봐요!` }));
     squeak(T);
-    await sm.move(HX + 20, 470, 500);
-    T.tone([900, 400], .2, { type: 'sine', vol: .12 });
-    T.pop(HX, 380, '쏙!', C.pine);
-    sm.pos.style.opacity = '0';
-    await sleep(600);
+    await Promise.all([say('맞아요! 작은 생쥐는 좁은 구멍도 쏙!'), (async () => { // 대사 동안 구멍 속에 있다가 끝날 즈음 반대쪽으로 나온다(대사 전에 이미 나와 있던 것, 2026-11-02 싱크 점검)
+      await sm.move(HX + 20, 470, 500);
+      T.tone([900, 400], .2, { type: 'sine', vol: .12 });
+      T.pop(HX, 380, '쏙!', C.pine);
+      sm.pos.style.opacity = '0';
+      await sleep(1600);
+    })()]);
     sm.pos.style.opacity = '1'; sm.face('right'); await sm.move(HX + 120, 470, 400); sm.hop(20);
-    await say('맞아요! 작은 생쥐는 좁은 구멍도 쏙!');
     await say('크면 큰 대로, 작으면 작은 대로 다 쓸모가 있어요.');
 
     /* --- 6. 그물 (밤 숲 하이앵글) --- */

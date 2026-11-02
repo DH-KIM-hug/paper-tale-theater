@@ -494,9 +494,11 @@
     await wk.move(420, 540, 1600);
     await say('"어디 숨었나? 다 찾아낼 테다!" 늑대가 집 안을 뒤졌어요.');
     wk.hop(30, 420); quilt.hop(14, 300); laundry.hop(14, 300); sfx('zip_away', .6); // 꿀꺽 대신 만화 소리 (2026-10-28)
+    // 배 컷은 '꿀꺽' 줄과 함께 떠서 다음 줄(포근한 뱃속)까지 보인다 (2026-11-02 그림·대사 맞춤)
+    const bellyCut = cutArt(T, 'wg_cut_belly', null, 8500);
     await say('늑대는 시계 속만 빼고, 아기 염소들을 모두 찾아내서 꿀꺽 삼켜 버렸어요.');
     await say('하지만 아기 염소들은 다치지 않았어요. 아주 따뜻하고 포근한 뱃속이었거든요.');
-    await cutArt(T, 'wg_cut_belly', null);
+    await bellyCut;
 
     /* --- 6. 엄마가 돌아왔어요 --- */
     await scene('엄마가 돌아왔어요', () => { bg(T, 'messy'); });

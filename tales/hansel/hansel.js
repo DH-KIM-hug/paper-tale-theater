@@ -632,12 +632,16 @@
     await say('"오빠, 이것도 먹어 봐!" 그레텔이 제일 큰 산딸기를 건넸어요.');
     hans.hop(12, 300);
     sfx('sleepy_tuba', .5);
-    await say('배가 부르니 졸려서 둘은 나무 밑에서 깜빡 잠이 들었어요.');
-    put(T, hans, L(430, 445), GROUND + 6, { look: 'doze' }); put(T, gret, L(540, 555), GROUND + 6, { look: 'doze' });
+    { /* 2026-11-02 그림-대사 맞춤: '졸려서'를 읽는 동안 잠든다(대사 뒤로 한 줄 밀려 있던 것) */
+      const dozing = say('배가 부르니 졸려서 둘은 나무 밑에서 깜빡 잠이 들었어요.');
+      await sleep(1400);
+      put(T, hans, L(430, 445), GROUND + 6, { look: 'doze' }); put(T, gret, L(540, 555), GROUND + 6, { look: 'doze' });
+      await dozing;
+    }
     await sleep(900);
     AudioFX.animal('owl', .3); // 밤 숲 부엉부엉
+    put(T, hans, L(430, 445), GROUND, { look: 'walk', to: 'right' }); put(T, gret, L(540, 555), GROUND, { look: 'walk', to: 'left' }); /* 눈을 떠 보니 — 대사와 함께 깬다 */
     await say('눈을 떠 보니 아빠가 보이지 않았어요. 둘은 길을 잃었어요.');
-    put(T, hans, L(430, 445), GROUND, { look: 'walk', to: 'right' }); put(T, gret, L(540, 555), GROUND, { look: 'walk', to: 'left' });
     await say('그레텔은 마음이 조금 무서웠어요.');
     await say('"오빠, 무서워…" 그레텔이 헨젤의 손을 꼭 잡았어요.');
     await sleep(700); /* 저절로 */
@@ -776,19 +780,25 @@
     amb('fire_crackle', { vol: .25, dur: 4 }); // 화덕 타닥
     await say('그때 마녀가 일어나 쿵쿵 걸어왔어요. 눈이 나빠서 더듬더듬 찾았어요.');
     await say('그레텔은 꾀가 났어요. "마녀님, 화덕 안에 반짝이는 게 있어요!"');
-    const stride = witch.move(witch.x - L(40, 20), GROUND, 900); /* 성큼성큼 화덕 쪽으로 */
+    witch.turn('right'); /* 화덕(오른쪽)을 본다 */
+    const stride = witch.move(witch.x + L(100, 20), GROUND, 900); /* 성큼성큼 화덕 쪽으로(오른쪽) */
     await say('"반짝이는 거? 어디, 어디?" 마녀는 화덕 쪽으로 성큼성큼 갔어요.');
     await stride;
-    witch.look('oven', 'left'); witch.hop(10, 300);
+    witch.look('oven', 'right'); witch.hop(10, 300); /* 화덕 입구를 들여다본다 */
     await T.ask('마녀가 화덕 안을 들여다봐요. 그레텔을 톡! 화덕 문을 쾅 밀어요.', () => T.tap(gret.pos, { prompt: '그레텔을 톡! 쾅 밀어요.' }));
     gret.look('push', 'right'); sfx('door_heavy_2', .8); T.shake(); wig('beam0', 3, 700); wig('beam1', 3, 700); T.pop(L(500, 500), 330, tr('쾅!')); /* 2026-10-20 쾅 소리 */
     await T.cutImage([{ src: cutSrc('slam'), sfx: null, hold: 2600 }], { hold: 2600 });
-    await say('쾅! 마녀는 깜짝 놀라 모자가 휙 날아갔어요.');
+    /* 2026-11-02 그림-대사 맞춤: 컷 뒤 장면을 대사 전에 다시 놓는다 — 마녀는 화덕 앞에서 깜짝 놀라 펄쩍(모자만 따로 된 그림은 없음), 다음 줄에 하늘로 날아간다 */
     scene('oven');
     put(T, hans, L(300, 380), GROUND, { look: 'joy', to: 'right' }); put(T, gret, L(440, 480), GROUND, { look: 'clever', to: 'right' });
     if (P) hide(hans);
-    await say('마녀는 빗자루를 타고 굴뚝으로 휘리릭 날아갔어요. "다시는 안 올게~!"');
+    put(T, witch, L(740, 605), GROUND, { look: 'grope', to: 'left' });
+    witch.hop(40, 420); setTimeout(() => witch.hop(24, 320), 500);
+    await say('쾅! 마녀는 깜짝 놀라 모자가 휙 날아갔어요.');
+    const flyAway = witch.move(witch.x + L(60, 30), -320, 1800, 'ease-in').then(() => hide(witch)); /* 굴뚝(위)으로 휘리릭 */
     sfx('zip_away', .6) || AudioFX.sfx('whoosh'); T.pop(L(500, 500), 300, tr('휘리릭!'));
+    await say('마녀는 빗자루를 타고 굴뚝으로 휘리릭 날아갔어요. "다시는 안 올게~!"');
+    await flyAway;
     gret.hop(24, 400); hans.hop(24, 400);
     await say('"휴, 이제 집으로 가자!" 헨젤이 그레텔의 손을 잡았어요.');
 
@@ -850,7 +860,7 @@
     await say('"찾았다! 보고 싶었어!" 아빠가 말했어요.');
     hans.hop(10, 300);
     await say('"아빠, 다시는 우리를 두고 가지 마세요." 헨젤이 말했어요.');
-    father.hop(10, 300);
+    father.hop(10, 300); hans.move(L(425, 455), GROUND, 500); gret.move(L(578, 550), GROUND, 500); /* 꼭 안기게 아빠 품으로 바짝 */
     await say('"그래, 다시는 안 그럴게. 약속할게." 아빠가 두 아이를 꼭 안았어요.');
     await T.ask('헨젤과 그레텔은 마음이 따뜻하고 행복했어요. 여러분은 기분이 어때요? 헨젤을 톡! 만세!', () => T.tap(hans.pos, { prompt: '헨젤을 톡! 만세!' }));
     T.pop(hans.x - 90, hans.y - 230, tr('만세!'));

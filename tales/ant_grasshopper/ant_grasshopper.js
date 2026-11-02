@@ -1229,14 +1229,17 @@
     wear(lead.p, ['scarf', 'hat']); crew.forEach(a => wear(a.p, ['scarf', 'hat']));
     lead.hop(24); sparkles(T, lead.x, lead.y - 90);
     await say('맞아요! 목도리와 털모자를 쓰니 따뜻해요.');
+    const goIn = (async () => { // 대사와 함께 창고로 들어간다 (2026-11-02: 대사 뒤에 움직이던 것)
+      for (const a of [...crew, lead]) {
+        SND.snowStep(T);
+        a.move(W.hole[0], W.hole[1] + 10, W.far ? 1600 : 1100).then(() => a.pos.remove());
+        a.body.animate(W.far ? [{ opacity: 1, transform: 'scale(1)' }, { opacity: 1, transform: 'scale(.5)', offset: .8 }, { opacity: 0, transform: 'scale(.4)' }] // 그림: 먼 구멍으로 갈수록 작게
+          : [{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: W.far ? 1600 : 1100, fill: 'forwards' });
+        await sleep(300);
+      }
+    })();
     await say('개미들은 따뜻한 창고로 쏙 들어갔어요.');
-    for (const a of [...crew, lead]) {
-      SND.snowStep(T);
-      a.move(W.hole[0], W.hole[1] + 10, W.far ? 1600 : 1100).then(() => a.pos.remove());
-      a.body.animate(W.far ? [{ opacity: 1, transform: 'scale(1)' }, { opacity: 1, transform: 'scale(.5)', offset: .8 }, { opacity: 0, transform: 'scale(.4)' }] // 그림: 먼 구멍으로 갈수록 작게
-        : [{ opacity: 1 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: W.far ? 1600 : 1100, fill: 'forwards' });
-      await sleep(300);
-    }
+    await goIn;
     stopBgm(1); stopAmb(.8);
     await sleep(1000);
     lead.body.getAnimations().forEach(x => x.cancel());
@@ -1305,13 +1308,14 @@
       T.clear(); K = cellarBG(T);
       // 개미 가족 + 베짱이는 큰 방에
       T.world.appendChild(hop.pos); hop.setScale(K.art ? .62 : .72); hop.place(500, K.hopY); hop.face('left'); hopperMode(hop.p, 'arms');
-      hopWarm(hop.p, true);
+      hopWarm(hop.p, false); // 목도리·털모자는 '나눠 줬어요' 대사에서 씌운다 (2026-11-02)
       (K.art ? [[362, .55], [418, .45], [628, .55]] : [[380, .62], [440, .5], [600, .62]]).forEach(([x, s], i) => { const a = ant(T, T.world, x, K.antY, s); a.face(x < 500 ? 'right' : 'left'); wear(a.p, i === 1 ? [] : ['scarf']); home.push(a); });
       T.world.appendChild(hop.pos);
       // 바깥 눈밭에서 기다리는 친구들
       FRIENDS.forEach((f, i) => { const a = mk(T, T.world, 760 + i * (artUrl(f.key) ? 96 : 72), K.snowY, f.draw, f.s * .8); a.f = f; guests.push(a); });
     }, hop.pos);
     await say('창고 안이 곡식이랑 도토리로 가득해요! 여름부터 미리 모은 덕분이에요.');
+    hopWarm(hop.p, true); hop.hop(20); sparkles(T, hop.x, hop.y - 90);
     await say('베짱이에게 목도리와 털모자도 나눠 줬어요.');
     await say('먹을 게 이렇게 많으니 친구들도 불러요!'); // 손님은 하나둘 저절로 들어온다 (2026-10-19)
     const cnt = counter(T, FRIENDS.length, 470, 150, K.art ? 36 : 96); // 그림: 손님이 눈 위(y 140)에서 기다려서 세로 화면 세기 판을 더 위로

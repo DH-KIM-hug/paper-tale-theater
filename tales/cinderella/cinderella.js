@@ -628,13 +628,13 @@
           if (P) T.camTo(720, 280, 1, 900);
         }
         if (k === 'fit' && on(cind) && on(prince)) {   /* 왕자가 다가와 구두를 신겨 준다 */
-          const toe = () => [cind.x + cind.w * .37, FL - cind.h * .1];
+          const toe = () => [cind.x + cind.w * .42, FL - cind.h * .2]; /* cd2_cind_sit 실측: 내민 맨발 가운데(폭 .42 오른쪽)·발바닥(높이 .2) — 구두 그림은 바닥 가운데가 기준 */
           if (P) T.camTo(600, 280, 1, 500);
           prince.look('slipper', 'left');
           await prince.move(cind.x + cind.w * .5 + 70, FL, 1000);
           prince.look('stand', 'left');
           put(T, slipper, prince.x - 40, FL - prince.h * .45, { to: 'right' });
-          await slipper.move(...toe(), 700);
+          await slipper.move(...toe(), 700); slipper.body.style.transformBox = 'fill-box'; slipper.body.style.transformOrigin = '50% 100%'; slipper.body.style.transform = 'rotate(-22deg)'; /* 들어 올린 발 각도에 맞춰 신긴다 */
           sparkle(T, toe()[0], toe()[1], 60, 8);
           await sleep(400);
         }
@@ -811,6 +811,9 @@
       put(T, rat, X(230, 300), FL + 10, { to: 'right' }); put(T, lizard, X(380, 420), FL + 14, { to: 'right' });
       if (P) { hide(cind); camSnap(TX, 280, 1); }
     }, trap.pos);
+    /* 2026-11-02 그림-대사 맞춤: 철망 쥐덫 안에 생쥐 한 마리가 보인다(덫 뒤에 두어 철망이 앞에 겹침). 톡 하면 나오고 다음 생쥐가 안에 들어 있다 */
+    const inTrap = m => { put(T, m, TX, FL - 14, { to: 'right' }); T.world.insertBefore(m.pos, trap.pos); };
+    inTrap(mice[0]);
     await say('쥐덫에 생쥐가 있구나. 몇 마리일까?');
     trap.pos.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 700, iterations: 4 });
     /* 2026-10-31 사용자: 세기는 다시 손으로 — 쥐덫을 톡 할 때마다 생쥐가 한 마리씩 나오고 그 수를 말한다. 숫자 소리가 끝나야 다음 톡을 받는다 */
@@ -823,6 +826,7 @@
       m.turn(MX[i] < TX ? 'left' : 'right'); // 가는 쪽을 본다
       AudioFX.countBeat && AudioFX.countBeat(i + 1); const said = vo('n' + (i + 1));
       await m.move(MX[i], MY[i], 420, 'ease-out');
+      if (i < 5) inTrap(mice[i + 1]); /* 다음 생쥐가 덫 안에서 기다린다 */
       m.hop(12, 300); glow(m, 700);
       T.pop(MX[i] - (i === 5 ? 90 : 0), MY[i] - (i === 5 ? 170 : 230), tr(NUM[i]));
       await Promise.all([sleep(400), Promise.race([said || sleep(0), sleep(2500)])]);
@@ -838,6 +842,7 @@
     /* 뒷줄(짝수) 말을 앞줄 뒤로 */
     [0, 2, 4].forEach(i => T.world.insertBefore(horses[i].pos, horses[1].pos));
     T.world.appendChild(coach.pos);
+    T.world.appendChild(fairy.pos); fairy.move(X(310, 400), FL, 500); /* 요정 대모는 말 앞에(말에 가리지 않게) 조금 왼쪽으로 비켜선다 */
     sx('horse_neigh_1', .4); // 말 히힝
     await sleep(600);
     sparkle(T, rat.x, FL - 30, 80, 8); sparkle(T, lizard.x, FL - 20, 70, 8);
@@ -1023,7 +1028,11 @@
     for (const [x, y] of ST.slice(2)) await cind.move(x, y, 750, 'linear');
     hide(cind);
     await cutArt(T, 'stairs_slipper', () => { sparkleSfx(T); setTimeout(() => AudioFX.sfx('ding') || popSfx(T), 400); });
+    /* 2026-11-02 그림-대사 맞춤: 달려 내려가는 대사 동안 신데렐라가 계단 아래쪽을 달려 나간다 */
+    put(T, cind, ST[2][0], ST[2][1], { look: 'run', to: 'left', s: SS });
+    const runOff = (async () => { await cind.move(ST[3][0], ST[3][1], 1300, 'linear'); await cind.move(ST[4][0], ST[4][1], 1300, 'linear'); hide(cind); })();
     await say('신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.');
+    await runOff;
     put(T, prince, 980, ST[0][1] - 10, { look: 'stand', to: 'left', s: SS });
     if (P) T.camTo(720, 280, 1, 900);
     await prince.move(ST[1][0] + 60, ST[1][1] - 6, 1300);
@@ -1093,12 +1102,12 @@
     /* 의자에 앉아 발을 내밀고, 왕자가 구두를 신겨 준다 */
     cind.look('sit', 'right');
     if (P) T.camTo(600, 280, 1, 500);
-    const toe = () => [cind.x + cind.w * .37, FL - cind.h * .1];
+    const toe = () => [cind.x + cind.w * .42, FL - cind.h * .2]; /* cd2_cind_sit 실측: 내민 맨발 가운데(폭 .42 오른쪽)·발바닥(높이 .2) — 구두 그림은 바닥 가운데가 기준 */
     prince.look('slipper', 'left');
     await prince.move(cind.x + cind.w * .5 + 70, FL, 1000);
     prince.look('stand');
     put(T, slipper, prince.x - 40, FL - prince.h * .45, { to: 'right' });
-    await slipper.move(...toe(), 700);
+    await slipper.move(...toe(), 700); slipper.body.style.transformBox = 'fill-box'; slipper.body.style.transformOrigin = '50% 100%'; slipper.body.style.transform = 'rotate(-22deg)'; /* 들어 올린 발 각도에 맞춰 신긴다 */
     sparkle(T, toe()[0], toe()[1], 60, 8);
     T.pop(toe()[0], toe()[1] - 60, tr('쏙!'));
     await sleep(500);

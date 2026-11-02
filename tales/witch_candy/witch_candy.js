@@ -235,14 +235,14 @@
       Object.entries(poses).forEach(([k, [f, h]]) => {
         const w = h * (ASP[f] || 1), wrap = T.el('g', { filter: 'url(#pp)' }, g);
         sprite(T, wrap, f, -w / 2, -h, w, h);
-        wrap.style.display = 'none'; looks[k] = { wrap, h, w, nat: NAT[f] || 'front' };
+        wrap.style.display = 'none'; looks[k] = { wrap, h, w, f, nat: NAT[f] || 'front' };
       });
     });
     a.want = 'right';
     const place0 = a.place;
     a.place = (nx, ny) => { place0(nx, ny); a.pos.querySelectorAll('.phl').forEach(t => t.setAttribute('transform', `translate(${t.dataset.cx},${t.dataset.cy}) scale(${a.flip},1)`)); };
     a.turn = d => { a.want = d; const n = looks[a.cur].nat; a.face(n === 'front' || n === d ? 'left' : 'right'); };
-    a.look = (k, d) => { Object.entries(looks).forEach(([n, l]) => { l.wrap.style.display = n === k ? '' : 'none'; }); a.cur = k; a.h = looks[k].h; a.w = looks[k].w; a.turn(d || a.want); };
+    a.look = (k, d) => { Object.entries(looks).forEach(([n, l]) => { l.wrap.style.display = n === k ? '' : 'none'; }); a.cur = k; a.f = looks[k].f; a.h = looks[k].h; a.w = looks[k].w; a.turn(d || a.want); };
     a.look(Object.keys(poses)[0]);
     a.pos.style.pointerEvents = 'none';           // 인물 그림은 누름을 받지 않는다(마녀 인사 톡만 hit 상자로)
     return a;
@@ -330,6 +330,7 @@
     const fr = { rabbit: mk(T, pz('rabbit', POSES.rabbit)), bear: mk(T, pz('bear', POSES.bear)), fox: mk(T, pz('fox', POSES.fox)) };
     const FRS = Object.values(fr);
     const ALL = [kid, witch, cat, ...FRS];
+    [kid, ...FRS].forEach(a => { const h0 = a.hop; a.hop = (h, d) => { const v = a.inv; if (v && v.pos.isConnected && v.pos.style.display !== 'none') v.hop(h, d); return h0(h, d); }; });   // 초대장을 든 채 뛰면 초대장도 같이
     T.faces({ kid, witch, cat, ...fr }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자)
     const loadBase = () => {
       ALL.forEach(a => { hide(a); a.pos.style.pointerEvents = 'none'; });
@@ -526,6 +527,49 @@
       cue(['pop', 'pop_out'], .6); setTimeout(() => cue('pop', .6), 250);
       return cand;
     };
+    /* 손 자리(2026-11-02 그림에서 잼): 그림 상자 왼쪽 위 기준 [가로, 세로] 비율, 그림 본래 방향. 손이 둘이면 둘 다(마녀: 흔드는 손·허리 손).
+       인물 크기·뒤집힘·배율을 따라 화면 자리를 낸다 — 초대장·사탕이 얼굴이 아니라 손에 내려앉게(2026-11-02 사용자) */
+    const HAND = { wc_kid_stand: [[.62, .68]], wc_rabbit_stand: [[.6, .71]], wc_bear_stand: [[.7, .63]], wc_fox_stand: [[.7, .69]], wc_witch_stand: [[.08, .2], [.85, .58]], wc_cat_sit: [[.3, .9]] };
+    const handXY = (a, i = 0) => { const hs = HAND[a.f] || [[.5, .62]], [hx, hy] = hs[Math.min(i, hs.length - 1)], s = a.scale || 1; return [a.x + (hx - .5) * a.w * s * a.flip, a.y - (1 - hy) * a.h * s]; };
+    /* 1장 초대장: 바람에 날아와 저마다 모은 두 손에 하나씩 내려앉는다(받는 순간 통). 들고 있는 동안은 인물이 뛰면 같이 뛴다 */
+    const INVH = HT.wc_prop_invite * .8;
+    const inviteFly = (tg, gap = 450, ms = 2200) => {
+      cue('paper_turn', .6); cue('wing_flap_2', .3);
+      return Promise.all(tg.map((t, i) => {
+        const a = prop(T, 'wc_prop_invite', INVH); put(T, a, -50, 150 + i * 30); t.inv = a;
+        return sleep(i * gap).then(async () => { const [hx, hy] = handXY(t); await a.move(hx, hy + INVH / 2, ms, 'ease-in-out'); cue('ding_glock', .5); t.hop(8, 300); });
+      }));
+    };
+    /* 9장 '모두 하나씩… 마녀는 두 개!': 솥에서 튀어 오른 사탕이 저마다 손에 하나씩, 마녀는 두 손에 하나씩 내려앉는다 */
+    const candyHands = () => {
+      [[kid, 'stand', 'right'], [fr.rabbit, 'stand', 'right'], [fr.bear, 'stand', 'right'], [fr.fox, 'stand', 'right'], [cat, 'sit', 'left'], [witch, 'stand', 'left']].forEach(([a, k, d]) => { if (shown(a)) a.look(k, d); });
+      cue('magic_wand', .5); cue('rattle', .5);
+      const give = [['strawberry', kid, 0], ['frog', fr.rabbit, 0], ['duck', fr.bear, 0], ['bat', fr.fox, 0], ['fish', cat, 0], ['pumpkin', witch, 0], ['choco', witch, 1]];
+      return give.filter(([, a]) => shown(a)).map(([c, a, hi], i) => {
+        const p = candyProp(T, c, 50); put(T, p, POT.cx, POT.cy);
+        const [tx, hy] = handXY(a, hi), ty = hy + p.h / 2;
+        p.pos.animate([{ transform: `translate(${POT.cx}px,${POT.cy}px)` }, { transform: `translate(${(POT.cx + tx) / 2}px,${Math.min(POT.cy, ty) - 140}px)`, offset: .5 }, { transform: `translate(${tx}px,${ty}px)` }], { duration: 800, delay: i * 140, fill: 'forwards', easing: 'ease-in' });
+        setTimeout(() => cue('pop', .5), i * 140 + 500);
+        return p;
+      });
+    };
+    /* 변신에서 '뿅! 원래대로': 변신 자세·몸 움직임·빛 층을 걷고 땅에 선 기본 자세로(2026-11-02 사용자: 호박 옷 그대로이던 것) */
+    const unTf = (fxs, y) => {
+      try { kid.body.getAnimations().forEach(n => n.cancel()); } catch (e) { /* */ }
+      kid.body.style.transform = ''; kid.body.style.transformOrigin = ''; kid.body.style.transformBox = '';
+      (fxs || []).forEach(n => { try { n.remove(); } catch (e) { /* */ } });
+      const d = shown(witch) ? (witch.x > kid.x ? 'right' : 'left') : 'right';
+      put(T, kid, kid.x, y == null ? kid.y : y, { look: 'stand', to: d, s: kid.scale });
+    };
+    /* 호박 변신 배 등불: 몸 뒤 큰 빛 + 배 앞 작은 빛(조명 층, 숨 쉬듯) */
+    const bellyGlow = () => {
+      const s = kid.scale || 1, h = HT.wc_kid_tf_pumpkin * s, by = kid.y - h * .33;
+      const back = glow(T, T.world, kid.x, by, 210, '#F6D27A', .95); T.world.insertBefore(back, kid.pos);
+      const front = glow(T, T.fx, kid.x, by, 62, '#FFE9A8', .75); front.style.mixBlendMode = 'screen';
+      back.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 800, fill: 'forwards' });
+      front.animate([{ opacity: .55 }, { opacity: 1 }, { opacity: .55 }], { duration: 1400, iterations: Infinity });
+      return [back, front];
+    };
     /* 결과 알림 줄(2026-10-29 사용자: 색 질문 대신 "빨강이랑 파랑을 섞었더니 보라색이 됐어요"). 녹음 전에는 한 색은 녹음된 옛 줄, 섞은 색은 말풍선만 */
     const ADJ = { r: '빨간', y: '노란', b: '파란', g: '초록' };
     const resultLine = rs => (rs.single ? `${KO[rs.single]}만 넣었더니 ${ADJ[rs.single]} ${RES[rs.res].ko} 사탕이 됐어요!`
@@ -604,7 +648,7 @@
     }
     /* 탁자(wc_prop_table) + 재료 넷(7장, 읽어 주기 table:four). 가로: 솥 왼쪽 바닥, 친구들은 탁자 뒤 / 세로: 솥 뒤 먼 바닥(위쪽) */
     function tableFour(items, tapFirst) {
-      const tab = T.el('g', {}, T.world), th = HT.wc_prop_table * X(1, .95), tw = th * ASP.wc_prop_table, tx = X(280, 500), ty = X(FL, 350) - th;
+      const tab = T.el('g', {}, T.world), th = HT.wc_prop_table * X(1, .95), tw = th * ASP.wc_prop_table, tx = X(340, 500), ty = X(FL, 350) - th;
       const tg = T.el('g', { filter: 'url(#pp)', 'pointer-events': 'none' }, tab); sprite(T, tg, 'wc_prop_table', tx - tw / 2, ty, tw, th);
       const step = tw * .22, cells = items.map((it, i) => {
         const cx = tx + (i - (items.length - 1) / 2) * step, cy = ty - 26;
@@ -684,16 +728,17 @@
         const shelfOn = K && K.shelfG && K.shelfG.style.display !== 'none', tab = !!rs.tabG;
         if (a === witch) return [925, FL, .85];
         if (shelfOn) { if (a === kid) return [680, FL, kidS]; if (a === cat) return K.shelfTop ? [K.shelfTop[0], K.shelfTop[1], .85] : [60, FL, .85]; return [5 + fi * 50, FL - 14, .72]; }
-        if (tab) { if (a === kid) return [570, FL, kidS]; if (a === cat) return [50, FL, .9]; return [190 + fi * 100, FL - 40, .8]; }
+        if (tab) { if (a === kid) return [570, FL, kidS]; if (a === cat) return [235, FL + 18, .9]; return [[25, 78, 130][fi] || 25, FL - 14, .72]; }   // 친구들은 탁자 왼쪽 끝 옆(재료가 얼굴을 가리지 않게), 호박이는 탁자 다리 앞(재료보다 낮게)
         if (a === kid) return [500, FL, kidS]; if (a === cat) return [680, FL, .85]; return [200 + fi * 95, FL, .85];
       }
       if (rs.bg === 'wc_bg_rooftops_lb' && a !== kid && a !== witch) return null;
+      if (rs.bg === 'wc_bg_street' && a === kid) return [X(Math.max(x, 490), 560), FL, 1];   // 친구 셋(370·260·150)과 겹치지 않게(놀이판 1장과 같은 간격)
       if (rs.bg === 'wc_bg_rooftops_lb' && a === witch) return [X(900, 650), FL, .7];
       if (!P && fi >= 0) return [rs.bg === 'wc_bg_street' ? [370, 260, 150][fi] : 290 - fi * 100, FL, 1];   // 친구 셋: 다현이 왼쪽에 한 줄(놀이판 1장과 같은 크기)
       if (P && fi >= 0) return rs.bg === 'wc_bg_street' ? [[470, 385, 300][fi], FL, 1] : null;   // 세로: 거리에서만 친구들(놀이판 1장과 같게)
       return [PX(x), FL, 1];
     };
-    const showA = (a, x, fi = -1) => { const L = layoutFor(a, x, fi); if (!L) { hide(a); return; } put(T, a, L[0], L[1], { s: L[2] }); if (rs.tabG) T.world.appendChild(rs.tabG); };
+    const showA = (a, x, fi = -1) => { const L = layoutFor(a, x, fi); if (!L) { hide(a); return; } put(T, a, L[0], L[1], { s: L[2] }); if (rs.tabG) { T.world.appendChild(rs.tabG); if (shown(cat)) T.world.appendChild(cat.pos); } };
     const lookA = (a, who, pose, dir) => { a.look(pose, dir || rdir(a, who, pose)); };
     const ATM = (who, a) => (cmd, arg, arg2) => {
       if (cmd === 'look') { if (who === 'witch' && arg === 'stir') { if (inst()) witch.look(MAGIC(), 'left'); else magicStir(); return null; } stopStir(); const pose = arg === 'stand' ? stand[who] : arg; lookA(a, who, pose, arg2); }
@@ -753,7 +798,7 @@
         cue('chomp', .7); T.pop(kid.x + 40, FL - 160, tr('앙!'), '#3F6B4F'); if (shown(cat)) cat.hop(30, 360); await sleep(700); await kid.move(x0, y0, 600, 'ease-in-out');
       } else if (res === 'pumpkin') {
         kid.look('tf_pumpkin', 'front'); cue('shimmer', .6);
-        const gl = glow(T, T.world, kid.x, FL - 90, 190); T.world.insertBefore(gl, kid.pos); gl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 800, fill: 'forwards' });
+        if (!rs.tfFx) rs.tfFx = bellyGlow();
         FRS.forEach(f => f.hop(10, 300)); await sleep(ms - 600);
       } else if (res === 'choco') {
         kid.look('tf_choco', 'left'); cue('slide_down', .6); await sleep(500); kid.look('tf_choco_flat', 'left'); cue('squelch', .5); T.pop(kid.x, FL - 120, tr('주르륵…'), '#6B4A32'); await sleep(ms / 2); kid.look('tf_choco', 'left');
@@ -764,7 +809,7 @@
     const cellOf = id => { const c = K.cells.find(x => x.id === id); const t = rs.tab[id]; return t ? { ...c, cx: t[0], cy: t[1] } : c; };
     const READ_ACTS = {
       set(bg) {
-        rs.bg = bg; rs.stops.forEach(f => f()); rs.stops = []; rs.tab = {}; rs.tabG = null; K = null; stopStir(); rs.cand = null; hide(ghost);
+        rs.bg = bg; rs.stops.forEach(f => f()); rs.stops = []; rs.tab = {}; rs.tabEl = null; rs.tabG = null; rs.pile = null; rs.tfFx = null; K = null; stopStir(); rs.cand = null; hide(ghost);
         if (bg === 'wc_bg_kitchen') { K = kitchen({ shelf: true, ladle: true }); K.shelfG.style.display = 'none'; potClear(false); }
         else {
           T.clear(); bgImage(T, bg); setView(500);
@@ -804,9 +849,8 @@
       },
       invites(cmd) {
         if (cmd !== 'fly' || inst()) return null;
-        cue('paper_turn', .6); cue('wing_flap_2', .3);
-        const tg = [kid, ...FRS], ps = [0, 1, 2, 3].map(i => { const a = prop(T, 'wc_prop_invite'); put(T, a, -50, 150 + i * 30); return a; });
-        return Promise.all(ps.map((a, i) => sleep(i * 400).then(async () => { await a.move(tg[i].x + 30, FL - 96, 2000, 'ease-in-out'); cue('ding_glock', .5); a.hop(10, 300); })));
+        inviteFly([kid, ...FRS].filter(shown), 400, 2000);   // 첫 줄과 함께 날아온다(기다리지 않음)
+        return null;
       },
       shop(cmd) { if (cmd === 'light' && !inst()) { cue('harp_gliss_2', .5) || cue('xylo_up', .5); const g = glow(T, T.bg, PX(960), 290, 110, '#F6D27A', .9); g.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 800, fill: 'forwards' }); return sleep(800); } return null; },
       fire(cmd) { if (cmd === 'light' && K) { lit = true; K.flameS.style.display = 'none'; K.flameB.style.display = ''; if (!inst()) { cue('knock', .6); cue('fire_crackle', .7); cue('whoosh', .5); T.pop(POT.cx, POT.cy + 20, tr('화르륵!'), '#E8703A'); return sleep(800); } } return null; },
@@ -820,7 +864,7 @@
       table(cmd) {
         if (cmd !== 'four') return null;
         const tf = tableFour(['snot', 'fart', 'poo'].map(id => ING.find(i => i.id === id)), false); rs.tabG = tf.tab;
-        tf.cells.forEach(c => { rs.tab[c.id] = [c.cx, c.cy]; });
+        rs.tabEl = {}; tf.cells.forEach(c => { rs.tab[c.id] = [c.cx, c.cy]; rs.tabEl[c.id] = c.el; });
         return null;
       },
       pot(cmd, arg) {
@@ -836,7 +880,7 @@
         else if (cmd === 'swirl') { const ks = [...new Set(String(arg).split(',').map(c => COLK[c]))]; if (ks.length === 1) potFlat(COL[ks[0]], !inst()); else potSwirl(ks); if (!inst()) cue(['whistle_up', 'xylo_up'], .35); }
         else if (cmd === 'drop') {
           if (inst()) return null;
-          return (async () => { for (const id of String(arg).split(',')) { const c = cellOf(id); kid.hop(6, 260); await fly(c); plop(c); await sleep(450); } })();
+          return (async () => { for (const id of String(arg).split(',')) { const c = cellOf(id); kid.hop(6, 260); const te = rs.tabEl && rs.tabEl[id]; if (te) te.style.visibility = 'hidden'; await fly(c); plop(c); await sleep(450); } })();
         }
         else if (cmd === 'pop') { stopStir(); potCol = PLATE[arg]; if (inst()) { potFlat(PLATE[arg], false); return null; } return (async () => { const clr = await smoke(); potFlat(PLATE[arg], false); clr(); })(); }
         else if (cmd === 'bigpop') { stopStir(); if (inst()) { potFlat(COL.black, false); return null; } return (async () => { const clr = await smoke(true); potFlat(COL.black, false); clr(); })(); }
@@ -856,9 +900,8 @@
         if (cmd === 'plate') { const gc = ghostPlate(); if (!inst()) { cue('harp_gliss', .6); cue('chime_up', .5); fadeIn(gc, 600); } return null; }
         if (cmd === 'pour') {
           if (inst() || !K) return null;
-          cue('magic_wand', .5);
-          for (let i = 0; i < 9; i++) { const a = candyProp(T, CANDY[i], 56); put(T, a, POT.cx, POT.cy); const tx = POT.cx - 160 + i * 40, ty = FL + 10 - (i % 3) * 8; a.pos.animate([{ transform: `translate(${POT.cx}px,${POT.cy}px)` }, { transform: `translate(${(POT.cx + tx) / 2}px,${POT.cy - 150}px)`, offset: .5 }, { transform: `translate(${tx}px,${ty}px)` }], { duration: 700, delay: i * 110, fill: 'forwards', easing: 'ease-in' }); setTimeout(() => cue('pop', .5), i * 110 + 400); }
-          cue('rattle', .5); return sleep(1500);
+          rs.pile = candyHands();   // 줄과 함께 손마다 하나씩(마녀는 둘) — 변신 컷에서 치운다
+          return null;
         }
         return null;
       },
@@ -866,18 +909,21 @@
         if (inst()) return null;
         if (id === 'gather') return cutPic('wc_cut_gather', '문 앞에 모인 친구들', '#F2B366');
         if (id === 'parade') return cutPic('wc_cut_parade', '한 줄 유령 행진', '#1A1410');
+        if (id === 'all_transform') { (rs.pile || []).forEach(hide); rs.pile = null; }
         if (id === 'all_transform') return cutPic('wc_cut_all_transform', '여섯이 한꺼번에 여덟 가지 변신', '#F28C28', 4000);
         const m = /^tf_(.+)$/.exec(id); if (m) return cutTf(m[1]);
         return null;
       },
       finale() { if (!inst()) finaleMusic(); return null; }, // 맨 끝 축하 음악(2026-10-31 사용자)
       confetti() { if (!inst()) { T.confetti(); cue('party_horn', .8) || cue('tada', .6); cue('shimmer', .5); } return null; },
-      settle() { stopStir(); if (rs.cand) { hide(rs.cand); rs.cand = null; } rs.stops.forEach(f => f()); rs.stops = []; ALL.forEach(a => { try { a.body.getAnimations().forEach(n => n.cancel()); } catch (e) { /* */ } }); return null; },
+      settle() { stopStir(); if (rs.cand) { hide(rs.cand); rs.cand = null; } (rs.pile || []).forEach(hide); rs.pile = null; rs.stops.forEach(f => f()); rs.stops = []; ALL.forEach(a => { try { a.body.getAnimations().forEach(n => n.cancel()); } catch (e) { /* */ } }); return null; },
     };
     /* kid:tf:<변신|none> (자세 교체 + 반짝) · kid:act:<변신>[:short] (동작 한 바퀴) 는 kid 동사에 이어 붙인다 */
     const kidBase = READ_ACTS.kid;
     READ_ACTS.kid = (cmd, a, b) => {
-      if (cmd === 'tf') { kid.look(TFPOSE[a] || 'stand', /pumpkin|strawberry$|choco|frog_sit|kiwi/.test(TFPOSE[a] || '') ? 'front' : 'right'); kid.pos.style.opacity = ''; if (!inst() && a !== 'none') { cue('slide_up', .5); cue('chime_up', .5); T.pop(kid.x, FL - 220, tr('뿅!'), '#F28C28'); return sleep(500); } if (!inst() && a === 'none') { cue('slide_up', .5); cue('sparkle', .6); return sleep(300); } return null; }
+      if (cmd === 'tf' && a === 'pumpkin' && !inst()) setTimeout(() => { if (kid.cur === 'tf_pumpkin' && !rs.tfFx) rs.tfFx = bellyGlow(); }, 0);
+      if (cmd === 'tf') { kid.look(TFPOSE[a] || 'stand', /pumpkin|strawberry$|choco|frog_sit|kiwi/.test(TFPOSE[a] || '') ? 'front' : 'right'); kid.pos.style.opacity = ''; if (!inst() && a !== 'none') { cue('slide_up', .5); cue('chime_up', .5); T.pop(kid.x, FL - 220, tr('뿅!'), '#F28C28'); return sleep(500); } if (a === 'none') { unTf(rs.tfFx, rs.bg === 'wc_bg_rooftops_lb' ? FL : kid.y); rs.tfFx = null; }
+        if (!inst() && a === 'none') { cue('slide_up', .5); cue('sparkle', .6); return sleep(300); } return null; }
       if (cmd === 'act') return inst() ? null : tfMotion(a, b === 'short');
       if (cmd === 'march') { kid.look('ghost', 'right'); if (!inst()) { kid.hop(10, 300); cue(['theremin_wobble', 'whistle_wobble'], .4); } return null; }
       return kidBase(cmd, a, b);
@@ -925,9 +971,7 @@
     bgmLoop();
     amb('winter_wind_1', .15, 4);
     const sayA1 = say(S.A1);
-    const invs = [0, 1, 2, 3].map(i => { const a = prop(T, 'wc_prop_invite'); put(T, a, -50, 150 + i * 30); return a; });
-    cue('paper_turn', .6); cue('wing_flap_2', .3);
-    invs.forEach((a, i) => { const tx = [kid, fr.rabbit, fr.bear, fr.fox][i]; setTimeout(async () => { await a.move(tx.x + (tx === kid ? 34 : 30), FL - 96, 2400, 'ease-in-out'); cue('ding_glock', .5); a.hop(10, 300); }, i * 500); });
+    inviteFly([kid, fr.rabbit, fr.bear, fr.fox].filter(shown), 500, 2400);   // 저마다 손에 하나씩
     await sayA1;
     await sleep(2000);
     kid.look('stand', 'right'); kid.hop(8, 300);
@@ -1067,7 +1111,7 @@
       const tfN = S.NTF[res];
       await cutTf(res);
       cue(['slide_up'], .6); cue('chime_up', .5);
-      const K6 = { x0: kid.x };
+      const K6 = { x0: kid.x }; let tfFx = [];
       const out = async (bg, then) => { if (bg === curBg) return cont(() => { if (bg !== 'wc_bg_kitchen') { T.clear(); bgImage(T, bg); setView(500); } then(); }); await T.curtain(false); T.clear(); bgImage(T, bg); setView(500); then(); await T.curtain(true); };   // 같은 배경(초콜릿 = 부엌)은 막 없이
       kid.pos.style.pointerEvents = 'none';
       const act = !long ? 4500 : 8500;
@@ -1130,8 +1174,7 @@
       } else if (res === 'pumpkin') {
         await out('wc_bg_shop_front', () => { friendsWatch(); put(T, kid, X(450, 400), FL, { look: 'tf_pumpkin', to: 'right' });
           const dark = T.el('rect', { x: -40, y: -24, width: 1080, height: 620, fill: '#141B3D', opacity: .4, 'pointer-events': 'none' }, T.bg);
-          const glowC = glow(T, T.world, kid.x, FL - 90, 200); T.world.insertBefore(glowC, kid.pos);
-          glowC.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 800, fill: 'forwards' }); });
+          tfFx = [dark, ...bellyGlow()]; });
         cue('pop', .7); cue('shimmer', .6); const L = lines();
         FRS.forEach(f => f.hop(10, 300)); await sleep(act); await L;
       } else {   // choco
@@ -1141,6 +1184,7 @@
         await sleep(act / 2); witch.look('surprise', 'front'); await L;
       }
       /* 뿅 원래대로 */
+      unTf(tfFx, res === 'choco' ? kid.y : FL); tfFx = [];
       cue('slide_up', .5); cue('sparkle', .6); T.pop(kid.x, FL - 220, tr('뿅!'), '#F28C28');
       await say(S.F4);
       if (long) { witch.look('giggle', 'left'); await say(S.F1); FRS.forEach(f => f.hop(10, 300)); cue('pop', .4); await sleep(500); }   // 친구들 '나도 하고 싶다!' 뺌
@@ -1151,14 +1195,15 @@
     /* ================= 7. 이번엔 다 넣어요 ================= */
     await next(tr('이번엔 다 넣어요!'), 'wc_bg_kitchen', () => {   // 같은 부엌: 넘김 없이 선반·국자가 걷히고 친구들이 탁자 쪽으로
       K = kitchen({ shelf: false, ladle: false }); setLook(); potClear(false); bubbles();
-      if (!P) FRS.forEach((f, i) => put(T, f, 190 + i * 100, FL - 40, { look: 'stand', to: 'right', s: .8 })); else FRS.forEach(hide);   // 친구들은 탁자 뒤(탁자가 나중에 그려져 앞)
+      if (!P) FRS.forEach((f, i) => put(T, f, [25, 78, 130][i], FL - 14, { look: 'stand', to: 'right', s: .72 })); else FRS.forEach(hide);   // 친구들은 탁자 왼쪽 끝 뒤(2026-11-02: 탁자 위 재료가 얼굴을 가리던 것), 호박이는 그 앞
       cast([[kid, X(570, 340), X(FL, PFY), { look: 'stand', to: 'right', s: X(.85, .6) }]]);
-      if (!P) cast([[cat, 50, FL, { look: 'sit', to: 'right', s: .9 }]]); else hide(cat);
+      if (!P) cast([[cat, 235, FL + 18, { look: 'sit', to: 'right', s: .9 }]]); else hide(cat);
     });
     /* 탁자 위 재료 넷 (이번 판에서 안 쓴 것 우선) */
     const lastIds = new Set(); const pickIng = key => { const c = ING.filter(i => i.key === key); return c[Math.floor(Math.random() * c.length)]; };
     const four = ['r', 'y', 'b'].map(pickIng);   // 마지막은 빨·노·파 셋(2026-10-29 사용자: 초록 빼고)
     const { tab, cells: tcell } = tableFour(four, true);
+    if (!P && shown(cat)) T.world.appendChild(cat.pos);   // 호박이는 탁자 다리 앞(누르는 재료보다 낮아 가리지 않는다)
     witch.look('present', 'left'); await say(S.G1);
     kid.look('yuck', 'left'); await say(S.G2);
     tcell.forEach(c => bob(c.el));
@@ -1168,7 +1213,7 @@
     await T.ask(S.G3, () => T.fill(tcell, {
       maxCount: 3, prompt: S.G3,
       allow: (c, st) => !st.order.includes(c),
-      onPut: (c, n) => { c.el.getAnimations().forEach(a => a.cancel()); c.el.classList.remove('tap-target'); sevenPut(c, n); kid.look('reach', 'right'); setTimeout(() => kid.look('stand', 'right'), 800); kid.hop(8, 260); },
+      onPut: (c, n) => { c.el.getAnimations().forEach(a => a.cancel()); c.el.classList.remove('tap-target'); c.el.style.visibility = 'hidden'; sevenPut(c, n); kid.look('reach', 'right'); setTimeout(() => kid.look('stand', 'right'), 800); kid.hop(8, 260); },
       onReject: () => {},
       auto: () => tcell.slice(),
     }));
@@ -1239,16 +1284,14 @@
       finaleCast();
     });
     cue('magic_wand', .5); witch.look('present', 'left'); await say(S.I1);
-    const pile = [];
-    for (let i = 0; i < 9; i++) { const c = CANDY[i], a = candyProp(T, c, 56); put(T, a, POT.cx, POT.cy); const tx = POT.cx - 160 + i * 40 + (i % 2) * 6, ty = FL + 10 - (i % 3) * 8; a.pos.animate([{ transform: `translate(${POT.cx}px,${POT.cy}px)` }, { transform: `translate(${(POT.cx + tx) / 2}px,${POT.cy - 150}px)`, offset: .5 }, { transform: `translate(${tx}px,${ty}px)` }], { duration: 700, delay: i * 110, fill: 'forwards', easing: 'ease-in' }); setTimeout(() => cue('pop', .5), i * 110 + 400); pile.push(a); }
-    cue('rattle', .5);
+    const pile = candyHands();   // 손마다 하나씩, 마녀는 두 손에 하나씩(2026-11-02: 바닥에 쏟아져 발을 가리던 것)
     await say(S.I2);
-    witch.look('giggle', 'left'); await say(S.I3);
+    witch.hop(10, 300); await say(S.I3);   // 두 손에 든 사탕이 보이게 서기 자세 그대로
     FRS.forEach(f => f.hop(8, 300)); cue('chomp_2', .5) || cue('chomp', .5); await sleep(900);   // 친구들 '으웩!… 어? 맛있다!' 뺌
     pile.forEach(a => { a.pos.style.display = 'none'; });
     cue('slide_up', .6); cue('chime_up', .6);
+    await cutPic('wc_cut_all_transform', '여섯이 한꺼번에 여덟 가지 변신', '#F28C28', 4000);   // 컷을 먼저(2026-11-02: '다 같이 변신!' 뒤에 나오던 것)
     await say(S.I5);
-    await cutPic('wc_cut_all_transform', '여섯이 한꺼번에 여덟 가지 변신', '#F28C28', 4000);
     cue('slide_up', .6); [kid, witch, cat, ...FRS].forEach((a, i) => setTimeout(() => { a.hop(14, 300); cue('pop', .4); }, i * 160));
     await sleep(1400);
     cue('sparkle', .6); T.pop(kid.x, FL - 240, tr('뿅!'), '#F28C28');

@@ -709,8 +709,11 @@
     await T.curtain(true);
     intro.go(); // 시작 음악 (놀이)
     if (!P) T.camTo(500, 240, 1.06, 2500).then(() => T.camTo(500, 280, 1, 1500));   /* 홀 위쪽(샹들리에·창)을 천천히 보여 주고 돌아온다 */
+    /* 2026-11-02 그림·대사 맞춤: 백설공주를 소개하는 첫 줄에 백설이 홀 오른쪽에 서 있다가, 거울 이야기로 넘어가면 사라진다.
+       왕비와 같은 방 배율(1.2)로 키 관계를 지킨다. 앞 층(촛대) 뒤, 왕비와 같은 층 */
+    put(T, snow, X(830, 700), 528, { look: 'stand', s: 1.2 }); T.world.insertBefore(snow.pos, queen.pos); fadeIn(snow, 500);
     await say('옛날 어느 나라에 눈처럼 하얀 얼굴의 공주가 살았어요. 이름은 백설공주였어요.');
-    await say('왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.');
+    await Promise.all([say('왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.'), fadeOut(T, snow, 600)]);
     await say('거울아, 거울아, 이 나라에서 누가 제일 예쁘니?');
     sfx(T, 'sparkle'); mf.show(); mirrorShine();
     await say('왕비님도 예쁘지만, 백설공주가 더 예뻐요.');
@@ -744,7 +747,7 @@
     L.fern[0].wiggle(4, 500);
     ffly.flies.slice(0, 2).forEach(({ f }) => f.parentNode && f.animate([{ translate: '0 0' }, { translate: '-300px 40px' }], { duration: 1600, fill: 'forwards', easing: 'ease-in', composite: 'add' }));
     await Promise.all([say('백설공주는 어두운 숲을 혼자 달리고 또 달렸어요.'),
-      (async () => { await snow.move(X(-120, 240), 530, 1600, 'ease-in'); hide(snow); })()]);
+      (async () => { await snow.move(X(-120, 240), 530, 3000, 'linear'); hide(snow); })()]);
 
     /* ===== 3. 작은 집 (톡 1: 첫 조작) ===== */
     const FAR = .62;                                       /* 집이 멀리 보이는 장면: 카메라를 당겨 화면 속 백설 크기는 다른 장면과 같다 */
@@ -983,6 +986,10 @@
       [0, 2, 4, 6, 1, 3, 5].forEach(i => put(T, beds[i], SX[i], SYs(i), { s: SS(i) }));
       put(T, bigBed, BIGX, SY + 2); put(T, dwarfs, 340, 470, { s: .8 }); T.world.insertBefore(dwarfs.pos, beds[0].pos); camSnap(560, 280, 1);
     }
+    /* 2026-11-02 그림·대사 맞춤: "모두 잘 자요"에 밤빛이 내리고 백설은 큰 침대에 눕는다(가로 화면. 세로는 백설이 이 장면에 없다).
+       난쟁이 잠든 그림은 없어 그대로 둔다 */
+    const bedNight = tint(T, '#1F2A56', 0); T.anim(bedNight, [{ opacity: 0 }, { opacity: .35 }], 900).then(() => bedNight.setAttribute('opacity', .35), () => {});
+    if (!P && snow.pos.style.display !== 'none') { put(T, snow, bigBed.x - 5, bigBed.y - 48, { look: 'coffin', to: 'left' }); T.pop(bigBed.x, bigBed.y - 150, tr('새근새근')); }
     await say('모두 잘 자요. 함께 지내서 행복해요.');
     await sleep(400);
 
@@ -1040,6 +1047,8 @@
     /* 저녁에 돌아온 난쟁이들 (같은 집 앞, 해 질 녘) */
     tint(T, '#E8703A', .16);
     put(T, worry, 520, 360, { s: FAR });
+    /* 2026-11-02 그림·대사 맞춤: 난쟁이들이 잠든 백설을 찾는다 — 집 앞 풀밭에 누운 백설(유리관과 같은 누운 그림, 머리 왼쪽), 난쟁이 앞 */
+    put(T, snow, X(370, 300), 384, { look: 'coffin', to: 'left', s: FAR }); fadeIn(snow, 500);
     await worry.move(X(360, 290), 360, 1400);
     await say('저녁에 돌아온 난쟁이들은 깜짝 놀랐어요.');
     worry.hop(8, 300);

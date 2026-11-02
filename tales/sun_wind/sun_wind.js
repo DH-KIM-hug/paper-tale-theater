@@ -497,8 +497,8 @@
     if (bgImage(T, 'stream')) { // 바위는 그림 왼쪽(윗면 y≈300). 개어 둔 외투는 바위 오른쪽 풀밭에
       layers(T, 'stream');
       const cw = 70, ch = cw * 360 / 360;
-      if (!pic(T, b, 'coat', 372 - cw / 2, 352 - ch, cw, ch)) paper(b, [['path', { d: 'M330 330 L410 322 L416 348 L326 352 Z', fill: C.bean }]]);
-      return { tufts: el('g', {}, b), art: true, seat: [215, 410] };
+      if (!pic(T, b, 'coat', 445 - cw / 2, 362 - ch, cw, ch)) paper(b, [['path', { d: 'M330 330 L410 322 L416 348 L326 352 Z', fill: C.bean }]]);
+      return { tufts: el('g', {}, b), art: true, seat: [300, 425] }; // 바위 오른쪽 끝에 앉아 발이 물가에 닿게(외투는 그 오른쪽 풀밭)
     }
     el('rect', { x: -200, y: -200, width: 1400, height: 1000, fill: SKY.day }, b);
     paper(b, [['path', { d: 'M-200 330 Q200 250 520 300 Q800 240 1200 310 V700 H-200 Z', fill: '#b9c98f' }]]);
@@ -657,6 +657,8 @@
           const [x, y] = String(a).split(',').map(Number);
           const hi = rScene === 'high', st = rScene === 'stream', pt = rPt();
           const fd = rScene === 'field', sx = hi ? (pt ? 300 : x) : x, sy = st ? 160 : fd ? 190 : y, s = hi ? .8 : st ? .7 : .85;
+          if (fd && rF && rF.light) { mkSun(680, 80, .8); return; } // 라이트박스 들길: 그림 속 해 자리
+          if (st && rST && rST.art) { mkSun(771, 62, .65); return; } // 개울 그림: 그림 속 해 자리
           mkSun(sx, sy, s); return;
         }
         if (verb === 'dim') { if (!rOn(rS)) mkSun(850, 120, .85); rS.pos.style.opacity = .4; return; }
@@ -772,7 +774,7 @@
           rButtoned = true;
           if (inst()) return;
           return (async () => {
-            await camTo(T.portrait() ? N.x : 500, T.portrait() ? N.y - 150 : 300, T.portrait() ? 1.7 : 1.3, 800);
+            await camTo(T.portrait() ? N.x : 430, T.portrait() ? N.y - 150 : 300, T.portrait() ? 1.7 : 1.2, 800); // 가로: 왼쪽 바람이 잘리지 않게
             for (let i = 0; i < 4; i++) { if (N.P.buttons[i]) N.P.buttons[i].setAttribute('opacity', 1); AudioFX.sfx('pop', .5) || AudioFX.pop(); await sleep(260); }
           })();
         }
@@ -939,7 +941,7 @@
         await say('"으으, 추워!" 나그네는 외투를 꽉 여몄어요.');
       },
       async () => {
-        await camTo(T.portrait() ? N.x : 500, T.portrait() ? N.y - 150 : 300, T.portrait() ? 1.7 : 1.3, 800);
+        await camTo(T.portrait() ? N.x : 430, T.portrait() ? N.y - 150 : 300, T.portrait() ? 1.7 : 1.2, 800); // 가로: 왼쪽 바람이 잘리지 않게
         for (let i = 0; i < 4; i++) { N.P.buttons[i].setAttribute('opacity', 1); AudioFX.sfx('pop', .5) || AudioFX.pop(); await sleep(260); }
         await say('단추까지 꼭꼭 채웠어요. 외투는 꼼짝도 안 해요!');
       },
@@ -964,7 +966,7 @@
     W.p.wrinkles.setAttribute('opacity', 1); W.p.sweat.setAttribute('opacity', 1);
     W.p.puff.style.transition = 'transform .5s'; W.p.puff.style.transform = W.p.art ? 'scale(.94,.88)' : 'scale(.85,.75)';
     const pant = W.p.puff.animate([{ scale: '1 1' }, { scale: '1.06 1.1' }, { scale: '1 1' }], { duration: 700, iterations: Infinity });
-    await camTo(T.portrait() ? W.x : 500, T.portrait() ? W.y + 40 : 280, T.portrait() ? 2.1 : 1.3, 900);
+    await camTo(T.portrait() ? W.x : 390, T.portrait() ? W.y + 40 : 280, T.portrait() ? 2.1 : 1.3, 900); // 가로: 바람이 화면 안에
     SND.pant(T);
     sfx('whistle_down', .7);
     await say('바람은 숨이 차서 헉헉, 볼이 쭈글쭈글해졌어요.');
@@ -990,10 +992,10 @@
       N = traveler(T, 520, 500, 1.25, 'coatShut', 'cross', { buttons: 4 }); N.P.face('cold');
       N.__shiver = shiver(N);
       W = aimWind(wind(T, 150, 200, .6), N); W.p.wrinkles.setAttribute('opacity', 1); W.p.setMouth('smile'); W.p.puffCheeks(.8);
-      SN = sun(T, 820, 190, .85);
+      SN = F.light ? sun(T, 680, 80, .8) : sun(T, 820, 190, .85); // 라이트박스 들길 그림에 해가 그려져 있다(무대 약 680,80) → 그 자리에 겹쳐 해가 하나로 보이게
       if (T.portrait()) camSnap(672, 280, Math.min(1, T.viewWidth() / 2 / 270)); // 세로 화면: 나그네와 해님이 함께 보이게
     }, N.pos);
-    const ring = el('circle', { cx: 820, cy: 190, r: 104, fill: 'none', stroke: C.gold, 'stroke-width': 10, 'stroke-dasharray': 654, 'stroke-dashoffset': 654, transform: 'rotate(-90 820 190)', class: 'hold-ring', opacity: 0 }, T.fx);
+    const ring = el('circle', { cx: SN.x, cy: SN.y, r: 104, fill: 'none', stroke: C.gold, 'stroke-width': 10, 'stroke-dasharray': 654, 'stroke-dashoffset': 654, transform: `rotate(-90 ${SN.x} ${SN.y})`, class: 'hold-ring', opacity: 0 }, T.fx);
     classical('morning_mood_flute'); // 포근해지는 해님 차례: 그리그 〈아침 기분〉(제목에 플루트라고 적힌 녹음) 18초
     await say('이번엔 해님 차례예요.');
     const warmLv = [[SKY.day, .08], [SKY.warm, .16], [SKY.hot, .26]];
@@ -1009,12 +1011,12 @@
       } });
       await T.ask(guide, warm);
       ring.setAttribute('opacity', 0);
-      SN.body.style.transform = ''; spinRays(SN); SND.warm(T, lv + 1); sparkles(T, 820, 190, 120, 8);
+      SN.body.style.transform = ''; spinRays(SN); SND.warm(T, lv + 1); sparkles(T, SN.x, SN.y, 120, 8);
       F.sky.setAttribute('fill', warmLv[lv][0]); F.warm.setAttribute('opacity', warmLv[lv][1]);
       if (F.light) F.light([.4, .75, 1][lv]); // 라이트박스: 톡톡마다 햇살 들판으로
       // 햇살 줄기
       for (let i = 0; i < 5; i++) {
-        const b = sunRay(T, 820, 190, 40 + i * 12);
+        const b = sunRay(T, SN.x, SN.y, 40 + i * 12);
         b.animate([{ opacity: 0 }, { opacity: .45 }, { opacity: 0 }], { duration: 1400, delay: i * 80 }).finished.then(() => b.remove());
       }
     };
@@ -1124,7 +1126,7 @@
       if (T.portrait()) camSnap(ST.art ? 330 : 440, 280, 1); // 앞 장면에서 물러선 카메라를 제자리로 (세로 화면만). 그림은 바위가 왼쪽
       N = traveler(T, ST.seat[0], ST.seat[1], 1.2, 'shirt', 'down', { sit: true }); N.P.face('smile');
       // 그림: 나그네가 왼쪽 바위에 앉으니 바람은 가운데 위에서 시작
-      WW = ST.art ? wind(T, 520, 165, .7) : wind(T, 170, 190, .7); SS = sun(T, ST.art ? 850 : 830, ST.art ? 160 : 170, .7);
+      WW = ST.art ? wind(T, 520, 165, .7) : wind(T, 170, 190, .7); SS = ST.art ? sun(T, 771, 62, .65) : sun(T, 830, 170, .7); // 그림: 개울 그림에 해가 그려져 있다(무대 약 771,55) → 겹쳐 하나로
       aimWind(WW, N); // 나그네 쪽으로 분다 (그림: 나그네가 왼쪽 바위)
     }, null);
     babble = SND.babble(T);
@@ -1144,8 +1146,9 @@
     } }));
     await say('"아, 시원해. 고마워, 바람아!"');
     WW.hop(20);
-    aimWind(WW, ST.art ? 660 : 600); // 이제 오른쪽 해님을 마주 본다 (악수 컷과 같은 자리: 바람 왼쪽, 해 오른쪽)
-    await Promise.all(ST.art ? [WW.move(450, 170, 1200), SS.move(660, 165, 1200)] : [WW.move(400, 180, 1200), SS.move(600, 170, 1200)]);
+    aimWind(WW, ST.art ? 771 : 600); // 이제 오른쪽 해님을 마주 본다 (악수 컷과 같은 자리: 바람 왼쪽, 해 오른쪽)
+    await Promise.all(ST.art ? [WW.move(590, 110, 1200)] : // 그림: 해는 그려진 해 자리에 두고 바람이 해 곁으로 간다
+      [WW.move(400, 180, 1200), SS.move(600, 170, 1200)]);
     await say('해님과 바람이 마주 보고 웃었어요.');
     await (cutArt(T, 'cut_shake', 'ding', 2400) || T.cut(svg => {
       const w = T.actor(svg, 130, 160, g => drawWind(T, g), { scale: 1 });

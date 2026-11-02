@@ -639,7 +639,9 @@
     const l17 = say(S.L17); await sleep(500); sch.hop(8, 300); await l17;
     const dusk = tint(T, '#1F2A56', 0);
     T.anim(dusk, [{ opacity: 0 }, { opacity: .3 }], 1500).then(() => dusk.setAttribute('opacity', .3));
-    T.pop(sch.x, FL - 260, tr('쿨쿨'));
+    /* 선비는 방 안으로 들어가 잠든다: 마당에 서 있지 않게 둘 다 집 안으로 사라지고, 불 켜진 창에 '쿨쿨'(잠자는 자세 그림이 없어서, 2026-11-02 싱크 점검) */
+    fadeOut(T, sch, 900); fadeOut(T, lady, 900);
+    setTimeout(() => T.pop(X(555, 555), 300, tr('쿨쿨')), 700);
     await say(S.L18);
     await sleep(SCENE_END);
 
@@ -664,18 +666,24 @@
     await sleep(SCENE_END);
 
     /* ===== 6. 달밤의 까치 (자동) ===== */
+    const NX6 = 620, RIM6 = 372;   // 가로 화면: 배경 소나무 가지 끝(가지 윗면 y≈339)에 얹은 둥지
     await T.sceneCard(tr('달밤의 까치'), () => {
       scene('mg_bg_moonnest');
-      put(T, dad, X(300, 400), FL - 160, { look: 'sit', to: 'right' });
-      put(T, mom, X(470, 540), FL - 160, { look: 'sit', to: 'left' });
-      /* 달밤 장면: 엄마·아빠 까치만 나온다 (새끼는 둥지에 있으므로 여기에 없음) */
+      put(T, dad, X(220, 400), FL - 160, { look: 'sit', to: 'right' });
+      put(T, mom, X(390, 540), FL - 160, { look: 'sit', to: 'left' });
+      /* 달밤 장면: 가로 화면은 소나무 가지 끝에 둥지와 아기 까치를 둔다(대사가 둥지·아기를 말하는데 안 보이던 것, 2026-11-02 싱크 점검). 세로 화면은 폭이 좁아 엄마·아빠만 */
+      if (!P) {
+        const RW6 = 130 + 28 * N, RH6 = RW6 / ASP.mg2_prop_nest_rim;
+        for (let i = 0; i < N; i++) put(T, chicks[i], NX6 + (i - (N - 1) / 2) * 44, RIM6 - .45 * RH6 - (i % 2 ? 0 : 4), { to: 'left' });
+        put(T, rim, NX6, RIM6, { s: RW6 / 200 });
+      }
       camSnap(P ? 420 : 500, 280, 1);
     }, dad.pos);
     await say(S.L27);
     const l28 = say(S.L28); mom.hop(10, 320); await l28;
     const l29 = say(S.L29); dad.hop(12, 320); await l29;
     mom.turn('right');
-    const cx6 = X(560 + (N - 1) * 26, 600 + (N - 1) * 22);
+    const cx6 = X(NX6, 600 + (N - 1) * 22);
     const l30 = say(S.L30); await sleep(900); chicks.slice(0, N).forEach(c => c.hop(8, 300)); vo('chirp2'); T.pop(cx6, FL - 260, tr('짹짹!')); await l30;
     hide(mom); hide(dad);
     const flock = [dad, mom, friends[0], friends[1], friends[2]], FS = [1, 1, .9, .9, .85];
@@ -688,7 +696,7 @@
     cue('wing_flap_1', .4) || sfx('whoosh', .3);
     await say(S.L31);
     await cutSay('mg_cut_flock', S.L32);
-    flock.forEach(hide); chicks.forEach(hide);
+    flock.forEach(hide); chicks.forEach(hide); hide(rim);
     await sleep(SCENE_END);
 
     /* ===== 7. 종탑 (톡 2: 종) ===== */
@@ -782,13 +790,22 @@
     }
     T.pop(mom.x, 480 - 150, tr('똑똑!'));
     await say(S.L49);
+    /* 물을 마시고 눈을 뜬다: 쓰러진(눈 감은) 자세 → 앉은 자세로, 선비 쪽(오른쪽)을 본다(끝까지 쓰러져 있어 죽은 듯 보이던 것, 2026-11-02 싱크 점검) */
+    dad.look('sit', 'right'); mom.look('sit', 'right');
     glow(mom, 1000); glow(dad, 1000); sparkleSfx(T);
     mom.hop(10, 420); dad.hop(10, 420);
     await say(S.L50); await say(S.L51);
-    const l52 = say(S.L52);
-    /* 새끼는 둥지에 있어야 하므로 종 장면(땅)에는 두지 않는다. 짹짹 소리만 */
+    /* 아기 까치들이 둥지에서 날아와 엄마·아빠 왼쪽에 내려앉는다(대사와 함께) */
     vo('chirp2');
-    await l52;
+    cue('wing_flap_1', .35);
+    await Promise.all([say(S.L52), ...chicks.slice(0, N).map((c, i) => {
+      const tx = X(330 - i * 50, 360 - i * 36), ty = 492 - (i % 2) * 8;
+      put(T, c, tx - 420, 120 + i * 20, { to: 'right' });
+      return sleep(i * 180).then(async () => {
+        const hops = (async () => { for (let j = 0; j < 4; j++) { c.hop(10, 260); await sleep(280); } })();
+        await c.move(tx, ty, 1300, 'ease-out'); await hops; T.pop(tx, ty - CH - 24, tr('짹!'));
+      });
+    })]);
     await cutSay('mg_cut_wake', S.L53);
     bob(sch.pos);
     await T.ask(S.L54, () => T.tap(sch.pos, { prompt: '선비를 톡 눌러 봐요.' }));

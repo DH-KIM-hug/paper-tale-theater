@@ -54,6 +54,7 @@
     try { AudioFX.preloadSfx(['finale_korean', 'intro_korean_happy', 'birds_chirp_1', 'birds_chirp_2', 'stomach_growl', 'comic_brass', 'bonk', 'marimba_1', 'marimba_2', 'marimba_3', 'whistle_down', 'thud', 'harp_gliss', 'coins_1', 'party_horn', 'sad_trombone', 'surprise_sting', 'fall_crash', 'splash', 'pow', 'ding', 'pop', 'crash', 'daegeum']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     const cut = (k, s = 'pop', hold = 2600) => { hold = Math.min(hold, 2600); return T.cutImage([{ src: U('cut_' + k), sfx: s, hold }], { hold }); };   /* 2026-10-29 컷 멈춤은 2.6초까지(3200~3600 → 2600) */
+    const cutSay = async (k, s, line) => { const c = cut(k, s); await say(line); await c; }; /* 컷이 대사와 함께 보이게(컷이 끝난 뒤 대사가 나오던 것, 2026-11-02 싱크 점검) */
 
     /* 층 소품: 누름 없음. 중간 층은 T.bg(배우 뒤), 앞 가림 층은 T.fx(배우 위). (cx, y) = 가운데·발끝, top 이면 윗변 */
     const L = {};
@@ -305,7 +306,7 @@
 
     /* 1. 봄 하늘 */
     scene('sky_spring');
-    const heung = spr('heung_hello', 500, 330);
+    const heung = spr('heung_hello', 380, 330), nol1 = spr('nol_proud', 640, 330); /* 첫 줄에 '형 놀부'도 함께 보이게(2026-11-02 싱크 점검) */
     await T.curtain(true);
     amb('birds_chirp_1', { vol: .25, dur: 4 }); // 아침 새소리
     intro.go(); // 시작 음악 (놀이)
@@ -317,7 +318,7 @@
     /* 2. 형 집 */
     await T.sceneCard('형의 집', () => {
       scene('nolkitchen', 500);
-      heung.pos.remove();
+      heung.pos.remove(); nol1.pos.remove();
     }, heung.pos);
     const h2 = spr('heung_hello', 400, 320), wife2 = spr('nwife', 640, 330);
     sfx('stomach_growl', .6);
@@ -386,7 +387,8 @@
       hp.hop(14, 260); sfx('pop'); T.pop(hp.x - 60, hp.y - 280, ['쑥!', '쑥쑥!', '쑥쑥쑥!'][i - 1]); await sleep(600);
     }
     await T.sceneCard('박이 열렸어요', () => { scene('yard', 560); });
-    const vine = spr('vine', 560, 360), hs = spr('heung_saw', 380, 300), hw2 = spr('hwife_joy', 195, 300); /* 2026-10-20 새 그림이 더 넓어 둘이 겹치던 것 벌림 */
+    const vine = spr('vine', 740, 360), hs = spr('heung_saw', 456, 300), hw2 = spr('hwife_joy', 195, 300); /* 2026-10-20 새 그림이 더 넓어 둘이 겹치던 것 벌림 */
+    hs.face('right'); /* 톱날이 박 쪽을 향하게 뒤집고 줄기는 박 뒤로(톱이 박 반대쪽을 보고 줄기가 흥부를 가리던 것, 2026-11-02 싱크 점검) */
     const gourds = [];
     await T.ask('쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!', () => T.mash(live(vine), { count: 3, prompt: '줄기를 톡톡톡! 박을 세어 봐요.', onStep: i => {
       const g = spr('gourd', cl(640, i - 1, 100), 140); g.hop(14, 260); gourds.push(g);
@@ -403,8 +405,7 @@
     await open(gourds[0], '슬근슬근!', '흥부 부부는 톱으로 박을 탔어요. 박을 톡! 눌러서 슬근슬근 타 봐요.');
     toLightbox();
     const autoOpen1 = async g => { await sleep(500); g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
-    await cut('rice_pour2', 'pop', 3600);
-    await say('첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.');
+    await cutSay('rice_pour2', 'pop', '첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.');
     const sacks = [];
     await T.ask('쌀자루를 톡톡톡 눌러서 세어 봐요!', () => T.mash(live(gourds[0]), { count: 3, prompt: '쌀자루를 톡톡톡! 세어 봐요.', onStep: i => {
       const s = spr('rice', cl(620, i - 1, 90), 90, 545); s.hop(14, 260); sacks.push(s);
@@ -417,23 +418,27 @@
     const tre = spr('treasure', 640, 130, 490); tre.place(gourds[1].x, 490); tre.hop(18, 300); sfx('coins_1', .5); // 금은보화 짤랑
     await say('두 번째 박에서는 반짝반짝 금은보화가 나왔어요!');
     await autoOpen1(gourds[2]);
-    await cut('house2', 'pop', 3600);
     sfx('party_horn', .6);
-    await say('세 번째 박에서는 작은 박 요정들이 나와 멋진 새집을 지어 주었어요!');
+    await cutSay('house2', 'pop', '세 번째 박에서는 작은 박 요정들이 나와 멋진 새집을 지어 주었어요!');
     T.confetti();
 
     /* 7. 놀부 소문 */
     await T.sceneCard('놀부네 집', () => { scene('nol_eaves', 500); });
-    const nol = spr('nol_proud', 400, 330), nw = spr('nwife', 620, 320);
+    const nol = spr('nol_proud', 560, 330), nw = spr('nwife', 300, 320); /* 놀부가 오른쪽 처마 제비집(x≈890) 쪽으로 가서 흔들게 자리 바꿈 */
     sfx('comic_brass', .6); // 욕심쟁이 놀부
     await say('소문을 들은 놀부는 배가 아팠어요. "나도 부자가 될 거야!"');
-    await say('놀부는 제비집을 마구 흔들었어요. 아기 제비가 떨어졌어요!');
-    nol.set('nol_shake'); nol.hop(18, 300); wig('pine', 4, 500);
-    const chick2 = spr('chick_fall', 720, 120, -30);
-    await chick2.move(fx(720), 480, 650, 'ease-in'); chick2.hop(10, 300);
-    await sleep(500); /* 저절로 받아 줘요 */
-    await chick2.move(fx(480), 430, 500, 'ease-out'); sfx('ding'); chick2.hop(12, 260);
-    nol.set('nol_wrap');
+    /* 대사와 함께: 처마 끝 제비집(배경 x≈890, y≈225) 밑으로 가서 흔들고, 아기 제비가 거기서 떨어진다(대사 뒤에 흔들던 것, 2026-11-02 싱크 점검) */
+    const chick2 = spr('chick_fall', 880, 120, 250); chick2.show(false);
+    await Promise.all([say('놀부는 제비집을 마구 흔들었어요. 아기 제비가 떨어졌어요!'), (async () => {
+      await nol.move(fx(781), GROUND, 700);
+      nol.face('right'); nol.set('nol_shake'); nol.hop(18, 300); wig('pine', 4, 500); /* 손이 오른쪽 위 제비집에 닿게 뒤집는다 */
+      await sleep(900);
+      chick2.show(true); sfx('whistle_down', .5);
+      await chick2.move(fx(880), 480, 650, 'ease-in'); chick2.hop(10, 300); sfx('thud', .4);
+    })()]);
+    await sleep(300); /* 저절로 받아 줘요 */
+    nol.face('left'); nol.set('nol_wrap');
+    await chick2.move(fx(861), 430, 500, 'ease-out'); sfx('ding'); chick2.hop(12, 260);
     setTimeout(() => { chick2.set('swallow_fly', 100); chick2.move(1150, 150, 1400, 'ease-in'); }, 3600);
     await say('놀부는 서둘러 천을 칭칭 감아 주었어요. "자, 이제 박씨를 가져와라!" 제비는 다치지 않고 날아갔어요.');
     await T.sceneCard('놀부네 마당', () => { scene('nolyard', 560); });
@@ -450,20 +455,20 @@
     };
     await nopen(ng[0], '슬근슬근!', '첫 번째 박을 톡!');
     const autoOpen = async g => { await sleep(500); g.hop(18, 300); ns.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
-    await cut('mud2', 'sad_trombone', 3400); // 욕심쟁이 놀부가 흠뻑
-    await say('콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.');
-    ns.set('nol_mud');
+    ns.set('nol_mud'); /* 컷이 걷히면 흙탕물에 젖은 놀부가 보이게 대사 전에 */
+    await cutSay('mud2', 'sad_trombone', '콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.'); // 욕심쟁이 놀부가 흠뻑
     await autoOpen(ng[1]);
-    await cut('dokkaebi', 'surprise_sting', 3400);
-    await say('이번에는 방망이를 든 도깨비가 쑥 나왔어요. "이 욕심쟁이야!" 도깨비는 놀부를 놀라게 하고 사라졌어요.');
+    await cutSay('dokkaebi', 'surprise_sting', '이번에는 방망이를 든 도깨비가 쑥 나왔어요. "이 욕심쟁이야!" 도깨비는 놀부를 놀라게 하고 사라졌어요.');
     await autoOpen(ng[2]);
-    await cut('collapse', 'fall_crash', 3600); wig('pine', 6, 600); // 와르르: 만화 소리
-    await say('와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.');
+    wig('pine', 6, 600); // 와르르: 만화 소리
+    await cutSay('collapse', 'fall_crash', '와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.');
 
     /* 8. 화해와 나눔 */
     await T.sceneCard('흥부네 집', () => { scene('giwa', 500); }); /* 부자가 된 흥부네는 기와집 */
-    const hg = spr('heung_glad', 415, 330), hj = spr('hwife_joy', 225, 310), ns2 = spr('nol_shy', 650, 320); /* 2026-10-20 새 그림 폭에 맞춰 벌림 */
+    const hg = spr('heung_glad', 415, 330), hj = spr('hwife_joy', 225, 310), ns2 = spr('nol_shy', 690, 320); /* 2026-10-20 새 그림 폭에 맞춰 벌림 */
+    ns2.set('nol_mud', 290); /* 흙투성이로 찾아온다(놀부네 마당의 흙탕물 자세·같은 크기 290), 고개 숙일 때 nol_shy 로(2026-11-02 싱크 점검) */
     await say('놀부는 흙투성이가 되어 흥부네 집을 찾아왔어요.');
+    ns2.set('nol_shy', 320);
     await say('놀부가 고개를 숙였어요. "동생아, 내가 잘못했다. 욕심을 부려서 미안하구나."');
     ns2.hop(10, 400);
     await say('흥부가 활짝 웃으며 말했어요. "형님, 괜찮아요. 우리 함께 살아요!"');

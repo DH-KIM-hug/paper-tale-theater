@@ -50,7 +50,7 @@
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const hOf = f => HT[f] || 200;
   const artOK = {}, bgOK = {};
-  const CRADLE_BABY = [0, -72], SPINDLE = [-70, -128], REACH_TIP = [74, -118], BED_TOP = -95, WAND_TIP = [58, -222];
+  const CRADLE_BABY = [0, -72], SPINDLE = [-70, -128], REACH_TIP = [58, -128], BED_TOP = -95, WAND_TIP = [58, -222];
   const COLOR = ['#A93B32', '#E8703A', '#D9A94E', '#3F6B4F', '#3E7CB1', '#7A4E86'];
 
   /* ================= 자리표시(그림이 없을 때) ================= */
@@ -709,7 +709,7 @@
           });
         },
         kitchen() {
-          put(T, shelf, X(760, 470), 150); put(T, bird, shelf.x + 45, shelf.y - 52, { to: 'left' });
+          put(T, shelf, X(760, 470), 150); put(T, bird, shelf.x + 45, shelf.y - 20, { to: 'left' });
           put(T, table, X(300, 430), FL); put(T, dog, table.x, FL, { look: 'sleep', to: 'left' });
           put(T, cook, X(560, 525), FL, { look: 'sleep' }); put(T, kid, X(640, 585), FL, { look: 'sleep' }); put(T, guardB, X(880, 665), FL, { look: 'sleep' });
           L.pot_rack.wiggle(2, 800);
@@ -989,6 +989,9 @@
     await sleep(500);
     pr.look('yawn'); T.pop(pr.x + 70, FL - 285, tr('하암'), '#8A7A60');
     await say(S.L27);
+    /* 2026-11-02 그림·대사 맞춤: "큰일 났네!" 전에 공주가 물레 옆 바닥에 스르르 쓰러진다(누움, 머리 왼쪽) */
+    pr.look('lie', 'left'); pr.place(pr.x - 70, FL); sfx(T, 'paper_down', .35);
+    pr.body.animate([{ opacity: .3 }, { opacity: 1 }], 350);
     granny.look('startle'); granny.hop(6, 300);
     await say(S.L28);
     put(T, king, X(-80, 300), FL, { look: 'worry' });
@@ -1092,7 +1095,7 @@
     await T.sceneCard(tr('잠든 궁전'), () => {
       scene('sb_bg_kitchen_v2');
       put(T, shelf, X(760, 470), 150);
-      put(T, bird, shelf.x + 45, shelf.y - 52, { to: 'left' });
+      put(T, bird, shelf.x + 45, shelf.y - 20, { to: 'left' });
       put(T, table, X(300, 430), FL);
       put(T, dog, table.x, FL, { look: 'sleep', to: 'left' });
       put(T, cook, X(560, 525), FL, { look: 'sleep' });

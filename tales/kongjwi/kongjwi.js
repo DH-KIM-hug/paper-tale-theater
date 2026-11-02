@@ -515,6 +515,9 @@
     clinkSfx(T); shoeB.hop(24, 320);
     hide(shoeP); hide(shoeM); // 콩쥐가 설 자리를 비운다
     put(T, kong, 640, 505, { look: 'shoes', to: 'left' }); kong.pos.animate([{ opacity: 0 }, { opacity: 1 }], 400); // 꽃신을 신는 콩쥐(두 짝 다 신은 꽃신 자세는 이때만)
+    /* 원님이 콩쥐 발치로 다가가 꽃신을 건넨다: 땅의 나비 꽃신은 콩쥐 발로 가서 사라지고(세 번째 신이 남던 것), 원님은 빈손 자세로(2026-11-02 싱크 점검) */
+    shoeB.move(kong.x - 30, 545, 500).then(() => hide(shoeB));
+    won.move(545, 505, 600).then(() => won.look('stand', 'right'));
     await say('원님이 콩쥐에게 꽃신을 신겨 주었어요. 꼭 맞았어요!');
     await sleep(500);
     popSfx(T); kong.hop(34, 400);
@@ -533,14 +536,14 @@
     await say('콩쥐는 웃으며 말했어요. "괜찮아요. 우리 같이 지내요."');
     await Promise.all([step.hop(20, 400), pat.hop(20, 400)]);
     await say('모두 함께 떡을 나눠 먹어요.');
-    const eaters = [won, step, pat];
+    const eaters = [won, kong, step, pat]; // 콩쥐도 함께 먹는다(2026-11-02 싱크 점검)
     const feed = i => {
       const who = eaters[i - 1], c = prop(T, 'ricecake', 30); put(T, c, cakes.x, cakes.y - 20);
       c.move(who.x, who.y - 110, 420, 'ease-in').then(() => { hide(c); who.hop(14, 240); });
-      cakes.hop(10, 220); popSfx(T); T.pop(who.x, who.y - 330, tr(['냠냠!', '쫀득!', '맛있다!'][i - 1]));
+      cakes.hop(10, 220); popSfx(T); T.pop(who.x, who.y - 330, tr(['냠냠!', '쫀득!', '맛있다!', '냠냠!'][i - 1]));
     };
     // 저절로 (2026-10-19 톡 조작 정리)
-    for (let i = 1; i <= 3; i++) { await feed(i); await sleep(500); }
+    for (let i = 1; i <= eaters.length; i++) { await feed(i); await sleep(500); }
     await T.ask('모두 둘러앉아 맛있게 먹었어요. 콩쥐를 톡! 모두 함께 만세!', () => T.tap(kong.pos, { prompt: '콩쥐를 톡! 모두 함께 만세!' }));
     T.confetti(); finaleMusic();
     await Promise.all([kong.hop(40, 500), won.hop(30, 500), step.hop(24, 500), pat.hop(24, 500)]);

@@ -581,8 +581,9 @@
         dagger: async op => {
           if (op === 'give') {
             if (dagger.pos.style.display === 'none') { put(T, dagger, sisters.x - sisters.w * .40, WATER - 12); fadeIn(dagger, 300); }
-            await dagger.move(mer.x, mer.y - mer.h * .38, 900); return;
+            dagger.body.style.rotate = '-90deg'; await dagger.move(mer.x + 33, mer.y - mer.h * .13, 900); return;   /* 칼집째 세워 두 손 높이에(놀이와 같게) */
           }
+          dagger.body.style.rotate = '';
           const SP = [430, WATER + 40];
           await dagger.move(mer.x - 120, mer.y - 260, 450, 'ease-out');
           await dagger.move(SP[0], SP[1], 650, 'ease-in'); hide(dagger);
@@ -955,16 +956,17 @@
     prince.look('stand');
     prince.hop(8, 360); mer.hop(6, 360);
     await say('바다에서 온 아이 같아요. 내 귀여운 동생처럼 지내요.');
-    put(T, mer, X(430, 430), GF, { look: 'dance', to: 'right', s: SC.garden });
-    put(T, prince, X(580, 580), GF, { look: 'dance', to: 'left', s: SC.garden });
+    const DY = GF - 108;   /* 연못(가운데 물) 위가 아니라 연못 뒤 풀밭에서 춤춘다(2026-11-02 싱크 점검) */
+    put(T, mer, X(430, 430), DY, { look: 'dance', to: 'right', s: SC.garden });
+    put(T, prince, X(580, 580), DY, { look: 'dance', to: 'left', s: SC.garden });
     front(...L.rose);
     petals(T, 6, X([120, 220, 800, 900], [330, 370, 640, 680]));   /* 얼굴 위는 지나지 않게 양옆에서만 */
     sfx(T, 'giggle_xylo');
     await Promise.all([say('인어공주는 흔들흔들해도 왕자님과 함께 춤추었어요.'), (async () => {
       for (let i = 0; i < 2; i++) {
-        await Promise.all([mer.move(mer.x - 30, GF, 600), prince.move(prince.x - 30, GF, 600)]);
-        await Promise.all([mer.move(mer.x + 30, GF, 600), prince.move(prince.x + 30, GF, 600)]);
-        if (!i) T.pop(mer.x, GF - 250 * SC.garden, tr('흔들흔들'));
+        await Promise.all([mer.move(mer.x - 30, DY, 600), prince.move(prince.x - 30, DY, 600)]);
+        await Promise.all([mer.move(mer.x + 30, DY, 600), prince.move(prince.x + 30, DY, 600)]);
+        if (!i) T.pop(mer.x, DY - 250 * SC.garden, tr('흔들흔들'));
       }
     })()]);
     await sleep(300);
@@ -1008,12 +1010,13 @@
     await say('해가 뜨기 전에 이걸 왕자에게 쓰면 너는 다시 인어가 돼. 그러지 않으면 거품이 되는 거야.', { simultaneous: true });
     follow(560);
     sfx(T, 'swish');
-    await dagger.move(mer.x, mer.y - mer.h * .38, 900);
+    dagger.body.style.rotate = '-90deg';   /* 칼집째 세워서(바닥 가운데를 축으로 돌면 가운데가 놓는 점) 두 손 높이에 — 머리·얼굴 위에 가로로 뜨던 것(2026-11-02 싱크 점검) */
+    await dagger.move(mer.x + 33, mer.y - mer.h * .13, 900);
     await Promise.all([say('인어공주는 잠든 왕자님과 공주님을 보았어요. 그리고 고개를 저었지요.'), (async () => {
       follow(ship.x); glow(prince, 1400); glow(lady, 1400); await sleep(2200);
       follow(560); mer.look('shake'); await mer.wiggle(4, 700); await mer.wiggle(4, 700);
     })()]);
-    mer.look('throw', 'left'); sfx(T, 'whoosh');
+    mer.look('throw', 'left'); sfx(T, 'whoosh'); dagger.body.style.rotate = '';
     const SP = [430, WATER + 40];
     await dagger.move(mer.x - 120, mer.y - 260, 450, 'ease-out');
     await dagger.move(SP[0], SP[1], 650, 'ease-in'); hide(dagger);

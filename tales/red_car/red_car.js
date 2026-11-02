@@ -478,9 +478,9 @@
     const RCY = id => (id === 'tow' && rTag === 'road_hill1' ? LANE_T : (rTag === 'playground1' ? FL + 6 : FL));
     const RKX = { 300: X(300, 420), 380: X(380, 400), 780: X(640, 600), 800: X(640, 600) };
     const RSPOTS = X([480, 600, 720], [495, 570, 645]);
-    const RTOW8 = 600 + LEN.red / 2 + 20 + LEN.tow / 2;
+    const RTOW8 = X(685, 600) + LEN.red / 2 + 20 + LEN.tow / 2;   // 2026-11-02 싱크: 놀이판 8장과 같게
     const RORD = ['tow', 'red', 'police', 'fire', 'amb'];
-    const RC7 = chain(845, ['red', 'police', 'fire', 'amb'], 30), RC8 = chain(600, ['red', 'police', 'fire', 'amb'], 20);
+    const RC7 = chain(845, ['red', 'police', 'fire', 'amb'], 30), RC8 = chain(X(685, 600), ['red', 'police', 'fire', 'amb'], X(12, 20));
     const REND9 = chain(880, RORD, 10); { const sh = REND9.tow - REND9.red - TOWGAP; RORD.slice(1).forEach(k => { REND9[k] += sh; }); }
     const REND10 = chain(X(520, 500), RORD, 6, S_TOY);
     const RE5 = chain(900, ['fire', 'red', 'police'], 12), RE6 = chain(640, ['amb', 'red', 'police', 'fire'], 12);
@@ -1082,7 +1082,7 @@
     await sleep(SCENE_END);
 
     /* ===== 8. 에구구, 지쳤어요 (톡 2 — 고리) ===== */
-    const C8 = chain(600, ['red', 'police', 'fire', 'amb'], 20), TOW8 = 600 + LEN.red / 2 + 20 + LEN.tow / 2;   // 견인차는 빨간 차 앞(오른쪽)
+    const C8X = X(685, 600), C8 = chain(C8X, ['red', 'police', 'fire', 'amb'], X(12, 20)), TOW8 = C8X + LEN.red / 2 + 20 + LEN.tow / 2;   // 2026-11-02 싱크: 가로 화면에서 구급차가 왼쪽 끝에 반쯤 잘리던 것 → 줄을 오른쪽으로 당기고 간격을 좁힘   // 견인차는 빨간 차 앞(오른쪽)
     await T.sceneCard(tr('에구구, 지쳤어요'), () => {
       scene('rc_bg_road_hill');
       put(T, amb, C8.amb - 260, FL, { look: 'run' }); put(T, fire, C8.fire - 260, FL, { look: 'run' }); put(T, police, C8.police - 260, FL, { look: 'run' }); put(T, red, C8.red - 260, FL, { look: 'run' });

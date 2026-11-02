@@ -367,8 +367,12 @@
     await say('농부가 괭이를 항아리 옆에 두려다 그만 항아리 속에 떨어뜨렸어요.');
     await sleep(500);
     await hoe.move(fx(T, 520), 400, 450, 'ease-in'); hide(hoe); jar.hop(14, 260); lyWig('chili', 3, 400);
-    await T.cutImage([{ src: cutSrc('twohoes'), sfx: () => AudioFX.sfx('shimmer') || AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
+    /* 컷과 대사를 함께, 컷이 걷히면 항아리 위로 솟은 괭이 두 개가 보이게(컷이 끝난 뒤 빈 무대에서 대사가 나오던 것, 2026-11-02 싱크 점검) */
+    const two = [-52, 52].map(dx => { const h = prop(T, 'hoe', 110); h.pos.style.pointerEvents = 'none'; put(T, h, fx(T, 520) + dx, 335, { raw: true }); return h; });
+    const twoCut = T.cutImage([{ src: cutSrc('twohoes'), sfx: () => AudioFX.sfx('shimmer') || AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
     await say('"어머나! 괭이가 두 개가 되었어요!" 아내가 깜짝 놀랐어요.');
+    await twoCut;
+    two.forEach(h => hide(h));   // 세기는 하나부터 다시 솟아오른다
     const hoes = [], nHoe = rnd(3, 6);
     let nCoin; do nCoin = rnd(4, 8); while (nCoin === nHoe);
     const hoeSpots = []; hoeRows(nHoe).forEach((cnt, r) => { for (let c = 0; c < cnt; c++) hoeSpots.push([fx(T, 520) + (c - (cnt - 1) / 2) * 105, 335 - r * 115]); });
@@ -386,7 +390,20 @@
     hoes.forEach(h => hide(h));
     put(T, jar, 520, 500); put(T, farmer, 270, 500, { look: 'count', to: 'right' }); put(T, wife, 780, 500, { look: 'clap', to: 'left' });
     cue('coins_1', .6);
-    await say('이번에는 엽전 하나를 넣어 봤어요. 와르르! 엽전이 쏟아져 나왔어요.');
+    /* 대사와 함께: 엽전 한 닢이 농부 손에서 항아리로 쏙 → 와르르 튀어나와 항아리 앞에 흩어진다(대사 동안 엽전이 안 보이던 것, 2026-11-02 싱크 점검) */
+    const burst = [];
+    await Promise.all([say('이번에는 엽전 하나를 넣어 봤어요. 와르르! 엽전이 쏟아져 나왔어요.'), (async () => {
+      const c0 = prop(T, 'coin', 40); c0.pos.style.pointerEvents = 'none'; put(T, c0, fx(T, 340), 400, { raw: true });
+      await c0.move(fx(T, 520), 340, 600, 'ease-in'); hide(c0); jar.hop(12, 240); jarGlint();
+      await sleep(900);
+      [-150, -95, -40, 40, 95, 150].forEach((dx, i) => {
+        const c = prop(T, 'coin', 46); c.pos.style.pointerEvents = 'none'; put(T, c, fx(T, 520), 340, { raw: true }); burst.push(c);
+        sleep(i * 70).then(() => c.move(fx(T, 520) + dx, 552 - (i % 2) * 14, 500, 'ease-out'));
+      });
+      clinkSfx(T); jar.hop(16, 300);
+    })()]);
+    await sleep(400);
+    burst.forEach(c => hide(c));   // 세기는 하나씩 다시 놓인다
     const csp = tight(T) ? (nCoin <= 5 ? 60 : 50) : (nCoin <= 5 ? 90 : 72);   // 엽전 사이 간격: 8개까지 가로·세로 화면 안에 들어오게
     await T.ask(`항아리를 ${KN[nCoin]} 번 톡톡 눌러서 엽전을 ${KN[nCoin]} 개 세어 봐요!`, () => T.mash(jar.pos, { count: nCoin, prompt: `항아리를 ${KN[nCoin]} 번 톡톡! 엽전을 세어 봐요.`, onStep: i => {
       const c = prop(T, 'coin', 52); c.pos.style.pointerEvents = 'none'; put(T, c, fx(T, 520) + (i - (nCoin + 1) / 2) * csp, 548, { raw: true });

@@ -83,7 +83,8 @@
       ]
      ],
      "src": "reuse",
-     "after": [
+     "after": [],
+     "before": [
       "invites:fly"
      ]
     },
@@ -4465,7 +4466,7 @@
     "kid:at:480",
     "friends:at:200,290,380",
     "pot:clear",
-    "cam:pot"
+    "cam:wide"
    ],
    "lines": [
     {
@@ -4589,7 +4590,8 @@
       ]
      ],
      "src": "reuse",
-     "after": [
+     "after": [],
+     "before": [
       "cut:tf_ghost",
       "kid:look:ghost"
      ]
@@ -4636,7 +4638,8 @@
       ]
      ],
      "src": "reuse",
-     "after": [
+     "after": [],
+     "before": [
       "all:look:ghost"
      ]
     },
@@ -4740,7 +4743,8 @@
       ]
      ],
      "src": "reuse",
-     "after": [
+     "after": [],
+     "before": [
       "candy:pour"
      ]
     },
@@ -4756,7 +4760,7 @@
      ],
      "src": "reuse",
      "before": [
-      "witch:look:giggle"
+      "witch:hop"
      ],
      "after": []
     },
@@ -4771,7 +4775,8 @@
       ]
      ],
      "src": "reuse",
-     "after": [
+     "after": [],
+     "before": [
       "cut:all_transform"
      ]
     },
