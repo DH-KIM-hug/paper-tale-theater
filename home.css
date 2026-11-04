@@ -32,12 +32,20 @@
   --ink-on-night-2: #C9CFE0;
   --ink-on-act: #222B45;   /* 20px 굵게 이상만 */
   --ink-on-kraft: #222B45;
-  /* 그림자: 중립 회색, 옅고 짧게 퍼지며 1px 테두리를 함께 둔다(레퍼런스: 국내 앱 카드) */
+  /* 그림자: 중립 회색만(색 그림자·글로우 금지), 옅고 짧게 퍼지며 1px 테두리를 함께 둔다. 역할마다 하나.
+     --sh-0 테두리만 | --sh-1 바닥에 놓인 면·카드·썸네일·선택 탭 알약 | --sh-2 누르는 알약·주인공 면(남색 카드 위 요소는 그림자 없이 면 밝기 차이)
+     --sh-3 떠 있는 팝업·쪽지 | --hairline 구분선·평평한 칸 테두리 한 가지 */
+  --hairline: rgba(0, 0, 0, .06);
   --sh-0: 0 0 0 1px rgba(0, 0, 0, .04);
   --sh-1: 0 0 0 1px rgba(0, 0, 0, .04), 0 2px 10px rgba(0, 0, 0, .07);
   --sh-2: 0 0 0 1px rgba(0, 0, 0, .04), 0 4px 16px rgba(0, 0, 0, .10);
-  --sh-3: 0 8px 28px rgba(0, 0, 0, .14);
-  --cut: inset 0 0 0 1px rgba(0, 0, 0, .05);   /* 옛 음각 구멍 → 평평한 칸 */
+  --sh-3: 0 0 0 1px rgba(0, 0, 0, .04), 0 8px 28px rgba(0, 0, 0, .14);
+  --rule: 0 1px 0 var(--hairline);                /* 행 구분선 */
+  --cut: inset 0 0 0 1px var(--hairline);         /* 평평한 칸·빈 칸·입력칸: 1px 테두리(음각 아님) */
+  /* 잘라낸 그림(필터)용: 제목·글자 조각 / 바닥에 놓인 조각 / 들고 옮기는 조각 */
+  --dsh-title: drop-shadow(0 3px 8px rgba(0, 0, 0, .22));
+  --dsh-rest: drop-shadow(0 2px 6px rgba(0, 0, 0, .12));
+  --dsh-lift: drop-shadow(0 10px 18px rgba(0, 0, 0, .18));
   --press: inset 0 1px 3px rgba(0, 0, 0, .10);
   --veil: rgba(20, 22, 28, .42);
   --lift-hi: 0 0 0 0 transparent;
@@ -61,7 +69,6 @@
   --sh-drop: rgba(0, 0, 0, .08);
   --sh-drop-2: rgba(0, 0, 0, .05);
   --hi-top: rgba(255, 255, 255, 1);    /* 솟은 종이 윗면의 빛 */
-  --edge-dn: rgba(46, 36, 28, .10);
   --line-soft: rgba(92, 103, 132, .25);
   --vignette: transparent; /* 밝은 모드는 종이를 평평하게: 썸네일 종이와 경계가 안 보이게 */
   --glow: transparent;
@@ -260,18 +267,6 @@ img.gear-ic { filter: grayscale(1) brightness(.62) contrast(1.1); }   /* 생성 
   background: var(--paper-deep);
   -webkit-mask-image: -webkit-radial-gradient(white, black); /* Safari: 둥근 overflow 안에서 transform 되는 그림 */
 }
-.thumb::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow:
-    inset 1px 1.5px 0 var(--sh-cut),
-    inset 4px 6px 8px var(--sh-cut-2),
-    inset -1px -1.5px 0 var(--lip);
-}
 .art { transition: transform .25s; }
 .thumb .art { position: absolute; display: block; }
 /* 옛 썸네일(크림 여백): 가운데 액자만 동그랗게 */
@@ -286,7 +281,6 @@ img.gear-ic { filter: grayscale(1) brightness(.62) contrast(1.1); }   /* 생성 
 .art .pc { filter: url(#pp); }
 /* 새 썸네일: 종이에 모양 구멍이 이미 뚫린 그림(밝은/어두운 판이 따로). 네모 그대로, 바깥 가장자리만 종이에 녹인다 */
 .thumb.full { border-radius: 0; background: none; -webkit-mask-image: none; overflow: visible; }
-.thumb.full::after { display: none; }
 .thumb.full img, .so-box.full img {
   inset: 0; width: 100%; height: 100%; object-fit: cover;
   -webkit-mask:
@@ -308,13 +302,13 @@ a.card:focus-visible .thumb { outline: 3px solid var(--ink); outline-offset: 4px
   width: min(44%, 88px); aspect-ratio: 1; border-radius: 50%;
   display: grid; place-items: center; pointer-events: none;
   background: var(--paper);
-  box-shadow: inset 1px 1px 0 var(--hi-top), inset -1px -1px 0 var(--edge-dn), 3px 5px 9px var(--sh-drop);
+  box-shadow: var(--sh-1);
 }
 .plug .bdg { width: 58%; height: 58%; }
 .bdg { display: block; }
 .bdg svg, .bdg img { display: block; width: 100%; height: 100%; object-fit: contain; }
 /* 이번 주 무료: 그림 모서리의 작은 별 딱지 */
-.bdg-week { position: absolute; z-index: 3; top: 8px; right: 8px; width: 34px; height: 34px; padding: 6px; border-radius: 50%; background: var(--paper); box-shadow: inset 1px 1px 0 var(--hi-top), 2px 3px 6px var(--sh-drop); }
+.bdg-week { position: absolute; z-index: 3; top: 8px; right: 8px; width: 34px; height: 34px; padding: 6px; border-radius: 50%; background: var(--paper); box-shadow: var(--sh-1); }
 
 .label { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 14px 4px 0; min-width: 0; flex: 1; text-align: center; }
 .title {
@@ -353,10 +347,10 @@ a.card:focus-visible .thumb { outline: 3px solid var(--ink); outline-offset: 4px
   border-color: transparent;
   color: var(--ink-on-act);
   background-color: var(--act);
-  box-shadow: var(--lift-hi), var(--sh-1);
+  box-shadow: var(--sh-1);
 }
 .sheet .ticket:not(.alt):not(.txt).is-pressed, .ticket.pri.is-pressed, .empty .ticket.is-pressed { background-color: var(--act-dn); }
-.empty .ticket { box-shadow: var(--lift-hi), var(--sh-2); }
+.empty .ticket { box-shadow: var(--sh-2); }
 .ticket.txt { min-width: 0; min-height: 48px; padding: 0 12px; border: 0; background: none; box-shadow: none; font-weight: 600; color: var(--ink-2); }
 .ticket.txt.is-pressed { transform: none; box-shadow: none !important; color: var(--ink); }
 .ticket:disabled, .sheet .ticket:disabled { border-color: transparent; background-color: var(--paper-dn); color: var(--ink-3); box-shadow: none; cursor: default; }
@@ -428,16 +422,17 @@ a.card:focus-visible .thumb { outline: 3px solid var(--ink); outline-offset: 4px
   background: var(--paper);
   color: var(--ink);
   border-radius: var(--r-sheet);
-  box-shadow: var(--lift-hi), var(--sh-3);
+  box-shadow: var(--sh-3);
 }
 .sheet h2 { margin: 0 0 12px; font-family: var(--font); font-size: var(--fs-title-l); font-weight: 850; line-height: 1.15; letter-spacing: .04em; color: var(--ink); }
 .how { margin: 0 0 16px; font-size: var(--fs-body); line-height: 1.6; letter-spacing: .01em; color: var(--ink-2); word-break: keep-all; }
 .how b { color: var(--ink); font-weight: 700; }
-.toggle { position: relative; display: flex; align-items: center; gap: var(--s-4); min-height: 72px; padding: 8px 0; font-size: 18px; font-weight: 600; line-height: 1.4; color: var(--ink); box-shadow: 0 1px 0 rgba(46, 36, 28, .10); cursor: pointer; word-break: keep-all; }
+.toggle { position: relative; display: flex; align-items: center; gap: var(--s-4); min-height: 72px; padding: 8px 0; font-size: 18px; font-weight: 600; line-height: 1.4; color: var(--ink); box-shadow: var(--rule); cursor: pointer; word-break: keep-all; }
 .toggle .tg-t { flex: 1; min-width: 0; }
+.toggle .tg-d { display: block; margin-top: 2px; font-size: 15px; font-weight: 500; line-height: 1.5; letter-spacing: .01em; color: var(--ink-2); }   /* 켜고 끄는 줄 안의 설명(구분선 위) */
 .toggle input { position: absolute; right: 0; top: 50%; width: 72px; height: 40px; margin: -20px 0 0; opacity: 0; cursor: pointer; }
-.sw { position: relative; flex: none; width: 72px; height: 40px; border-radius: var(--r-m); background-color: var(--paper-dn); box-shadow: inset 1px 2px 3px rgba(46, 36, 28, .18); transition: background-color var(--t-1) var(--ease); }
-.sw::after { content: ''; position: absolute; left: 4px; top: 4px; width: 32px; height: 32px; border-radius: 50%; background: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); transition: transform var(--t-1) var(--ease); }
+.sw { position: relative; flex: none; width: 72px; height: 40px; border-radius: var(--r-m); background-color: var(--paper-dn); box-shadow: var(--cut); transition: background-color var(--t-1) var(--ease); }
+.sw::after { content: ''; position: absolute; left: 4px; top: 4px; width: 32px; height: 32px; border-radius: 50%; background: var(--paper); box-shadow: var(--sh-1); transition: transform var(--t-1) var(--ease); }
 .toggle input:checked + .sw { background-color: var(--ink); box-shadow: none; }   /* 켜짐은 먹색: 감빛은 화면당 1차 행동 하나(홈 UI 2판) */
 .toggle input:checked + .sw::after { transform: translateX(32px); }
 .toggle input:focus-visible + .sw { outline: 2px solid var(--act); outline-offset: 3px; }
@@ -453,7 +448,7 @@ a.card:focus-visible .thumb { outline: 3px solid var(--ink); outline-offset: 4px
   padding: 10px 22px 11px;
   background: var(--grain), var(--paper);
   border-radius: 999px;
-  box-shadow: inset 1px 1px 0 var(--hi-top), 3px 6px 14px var(--sh-drop);
+  box-shadow: var(--sh-2);
   pointer-events: none;
 }
 #bubble[hidden] { display: none; }
@@ -552,7 +547,7 @@ a.card:focus-visible .thumb { outline: 3px solid var(--ink); outline-offset: 4px
 /* ═════════ 사각 종이 썸네일: 판 · 언덕 · 인물 셋뿐 ═════════ */
 .thumb.tile { aspect-ratio: 4 / 3; }
 .thumb.tile img, .so-box.tile img { -webkit-mask: none; mask: none; object-fit: cover; }
-.thumb.tile img { filter: drop-shadow(0 5px 8px rgba(46, 36, 28, .18)); }
+.thumb.tile img { filter: var(--dsh-title); }
 .so-box.tile { background: var(--paper); }
 
 /* ═════════ 동화 탭 (S1): 큰 동화 하나 + 서가 줄 (UI_REDESIGN §4-1·§7-1~7-3) ═════════ */
@@ -581,18 +576,17 @@ body.app .hero[hidden] { display: none; }
 /* 새 카드 레터링: 그림 위쪽 가운데, 너비 84% · 높이 36% 안 */
 .thumb.card2 { position: relative; }
 .thumb.card2 .lt { position: absolute; z-index: 2; left: 50%; top: 3%; width: auto; height: auto; max-width: 84%; max-height: 36%; transform: translateX(-50%); object-fit: contain; pointer-events: none; }
-.hero .thumb > .bdg-week { top: 16px; left: 16px; right: auto; padding: 6px 16px; font-size: 18px; }
+.hero .thumb > .bdg-week { top: 16px; bottom: auto; left: 16px; right: auto; width: auto; height: auto; padding: 6px 16px; font-size: 18px; white-space: nowrap; }
 .hero-info { display: contents; }
 .hero-t { grid-area: win; align-self: end; justify-self: start; z-index: 7; max-width: min(560px, calc(100% - 2 * var(--hero-px) - var(--play) * 3.2 - 16px));   /* 알약 자리를 비운다 */
   margin: 0 0 var(--hero-pb) var(--hero-px); pointer-events: none;
-  font-size: var(--fs-display); font-weight: 850; line-height: 1.15; letter-spacing: 0; color: #fff; text-shadow: 0 1px 8px rgba(0, 0, 0, .35); word-break: keep-all; overflow-wrap: anywhere; }
-.hero-tl { display: block; width: auto; max-width: 100%; height: auto; max-height: var(--tl-h); filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .35)); -webkit-user-drag: none; }
-.hero-tl.lt2 { filter: drop-shadow(0 3px 8px rgba(0, 0, 0, .22)); }   /* 새 레터링은 크림 받침이 있어 그림자는 옅게 */
+  font-size: var(--fs-display); font-weight: 850; line-height: 1.15; letter-spacing: 0; color: #fff; word-break: keep-all; overflow-wrap: anywhere; }
+.hero-tl { display: block; width: auto; max-width: 100%; height: auto; max-height: var(--tl-h); filter: var(--dsh-title); -webkit-user-drag: none; }
 .hero-play { grid-area: win; align-self: end; justify-self: end; z-index: 7; flex: none; display: inline-flex; align-items: center; gap: calc(var(--play) * .14); height: var(--play); margin: 0 var(--hero-px) var(--hero-pb) 0;
   padding: 0 calc(var(--play) * .44) 0 calc(var(--play) * .36); border: 0; border-radius: var(--r-pill); cursor: pointer; touch-action: manipulation;
-  color: #fff; background-color: var(--act); box-shadow: 0 4px 14px rgba(217, 98, 47, .30); font-size: calc(var(--play) * .33); font-weight: 800; letter-spacing: .02em; white-space: nowrap; }
+  color: #fff; background-color: var(--act-dn); box-shadow: var(--sh-2); font-size: calc(var(--play) * .33); font-weight: 800; letter-spacing: .02em; white-space: nowrap; }   /* 흰 글자 대비 5.0:1 (옛 --act 3.66:1), 모든 화면 같은 색 */
 .hero-play svg { display: block; flex: none; width: calc(var(--play) * .38); height: calc(var(--play) * .38); }
-.hero-play.is-pressed { transform: scale(.96); box-shadow: 0 4px 14px rgba(217, 98, 47, .30) !important; background-color: var(--act-dn); }
+.hero-play.is-pressed { transform: scale(.96); box-shadow: var(--sh-2) !important; background-color: #9C4119; }
 .hero-play .hp-lock, .hero-play.lock svg:first-child { display: none; }   /* 잠긴 동화: 세모 대신 자물쇠 + '열어 보기' */
 .hero-play.lock .hp-lock { display: block; }
 .hero .card.locked .thumb::before, .hero .thumb > .bdg-lock { display: none; }   /* 배너는 흐리게 덮지 않고, 잠김은 알약(자물쇠·열어 보기)으로만 */
@@ -600,16 +594,22 @@ body.app .hero[hidden] { display: none; }
 /* 점: 그림 아래 가운데. 단추는 24 높이로 누르기 쉽게, 보이는 점은 8 */
 .hero-dots { grid-area: win; align-self: end; justify-self: center; z-index: 7; display: flex; margin-bottom: 6px; }
 .hero-dots[hidden] { display: none; }
-.hd { position: relative; width: 20px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; transition: width var(--t-2) var(--ease); }
-.hd::after { content: ''; position: absolute; left: 6px; right: 6px; top: 8px; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .5); transition: background-color var(--t-2) var(--ease); }
-.hd.on { width: 34px; }
-.hd.on::after { background: #fff; }
-.hd-fill { position: absolute; left: 6px; right: 6px; top: 8px; height: 8px; border-radius: 4px; background: #fff; transform-origin: 0 50%; transform: scaleX(0); animation: heroFill 6000ms linear forwards; pointer-events: none; opacity: 0; } /* 차오름은 보이지 않게(2026-11-04 사용자: 차오르는 건 별로) — 6초 자동 넘김 시계로만 쓴다 */
+.hero-dots { position: relative; margin-bottom: 0; }
+.hero-dots::before { content: ''; position: absolute; z-index: -1; left: 8px; right: 8px; top: 50%; height: 20px; margin-top: -10px; border-radius: 10px; background: rgba(0, 0, 0, .3); pointer-events: none; }   /* 점 뒤 옅은 어두운 알약: 밝은 그림 위에서도 비선택 점이 보인다 */
+.hd { position: relative; width: 44px; height: 44px; padding: 0; border: 0; background: none; cursor: pointer; transition: width var(--t-2) var(--ease); }   /* 누름 영역 44×44, 보이는 점은 그대로 8px */
+.hd::after { content: ''; position: absolute; left: 18px; right: 18px; top: 18px; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .72); transition: background-color var(--t-2) var(--ease), left var(--t-2) var(--ease), right var(--t-2) var(--ease); }
+.hd.on { width: 56px; }
+.hd.on::after { background: #fff; left: 12px; right: 12px; }
+.hd-fill { position: absolute; left: 12px; right: 12px; top: 18px; height: 8px; border-radius: 4px; background: #fff; transform-origin: 0 50%; transform: scaleX(0); animation: heroFill 6000ms linear forwards; pointer-events: none; opacity: 0; } /* 차오름은 보이지 않게(2026-11-04 사용자: 차오르는 건 별로) — 6초 자동 넘김 시계로만 쓴다 */
 @keyframes heroFill { to { transform: scaleX(1); } }
 .hero.pause .hd-fill { animation-play-state: paused; }
 @media (hover: hover) { .hero:hover .hd-fill { animation-play-state: paused; } }
+.hero:has(:focus-visible) .hd-fill { animation-play-state: paused; }   /* 키보드·화면 읽기 포커스가 배너 안에 있으면 자동 넘김 멈춤 */
 @media (prefers-reduced-motion: reduce) { .hd-fill { display: none; } }
-.hd:focus-visible { outline: 2px solid #fff; outline-offset: -2px; border-radius: 8px; }
+.hd:focus-visible { outline: 3px solid #fff; outline-offset: -6px; border-radius: 14px; box-shadow: inset 0 0 0 6px var(--ink); }
+/* 배너 카드 포커스 링: 그림 칸이 넘침을 잘라 바깥 윤곽이 보이지 않으므로 안쪽에 흰+먹 이중 링 */
+.hero-slot > a.card:focus-visible .thumb, .hero-slot > .card:focus-visible .thumb { outline: none; }
+.hero-slot > .card:focus-visible::after { content: ''; position: absolute; inset: 0; z-index: 6; pointer-events: none; box-shadow: inset 0 0 0 4px #fff, inset 0 0 0 7px var(--ink); }
 
 /* 분류 줄 (2026-11-04 검토 반영): 흰 카드 없이 회색 바탕 위에 '머리글(단색 기호 + 이름) → 그림 줄'. 그림 줄은 가로로 넘기고 왼쪽 시작은 여백(--vl), 오른쪽은 화면 끝까지 이어져 끝에서 잘린다 */
 .rows { flex: none; display: flex; flex-direction: column; gap: 6px; padding: 18px 0 0; --rowx: var(--vl); }
@@ -632,8 +632,9 @@ body.app .hero[hidden] { display: none; }
 .row .label, .n-grid .label { padding: 10px 2px 0; gap: 2px; }
 .row .title, .n-grid .title { font-size: var(--fs-title); letter-spacing: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: calc(2lh); }   /* 두 줄 자리를 늘 잡아 한 줄 제목과 줄이 맞게 */
 .card.is-pressed .thumb { transform: scale(.97); }
-/* 잠김: 색 그대로 + 흰 반투명 한 장(얼굴은 보인다) */
-.card.locked .thumb::before { content: ''; position: absolute; inset: 0; z-index: 2; border-radius: inherit; background: rgba(255, 255, 255, .45); pointer-events: none; }
+/* 잠김 표시는 한 가지(2026-11-05 점검): 그림 전체(레터링까지)를 어둡게 덮고 가운데 큰 자물쇠 하나. 동화 놀이 줄·읽어 주기 격자·재생목록 편집 쪽지가 같은 모양.
+   덮개 = rgba(35,38,47,.52) 한 장(z 4, 레터링 z 2 위), 자물쇠 = 흰 원 위 · 그림 너비 26%(40~72px) · z 5. 모서리 밖으로 나가지 않는다 */
+.card.locked .thumb::before { content: ''; position: absolute; inset: 0; z-index: 4; border-radius: inherit; background: rgba(35, 38, 47, .52); pointer-events: none; }
 /* 만드는 중: 그림 없이 빈 칸 + 가운데 마개(가위 딱지) */
 .card.closed .thumb { background: var(--paper-dn); box-shadow: var(--cut); }
 .card.closed .thumb .art { visibility: hidden; }
@@ -641,17 +642,19 @@ body.app .hero[hidden] { display: none; }
 .row .plug, .n-grid .plug { width: 56px; }
 .row .plug .bdg, .n-grid .plug .bdg { width: 62%; height: 62%; }
 /* 딱지 40: 그림 모서리 바깥으로 12px 걸친다 — 이번 주 무료 = 오른쪽 위, 잠김 = 오른쪽 아래 */
-.thumb > .bdg-week, .thumb > .bdg-lock { position: absolute; z-index: 3; width: 40px; height: 40px; padding: 0; border-radius: 0; background: none; box-shadow: none; pointer-events: none;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .18)); }
-.thumb > .bdg-week { top: 8px; left: 8px; right: auto; width: auto; height: auto; padding: 3px 10px; border-radius: var(--r-pill); background: var(--card); box-shadow: var(--sh-1);
-  font-size: 13px; font-weight: 800; line-height: 1.4; letter-spacing: .02em; color: var(--ink); }   /* 이번 주 무료: 흰 알약 글자, 그림 안 왼쪽 위 */
+.thumb > .bdg-week { position: absolute; z-index: 3; pointer-events: none; }
+.thumb > .bdg-week { bottom: 8px; top: auto; left: 8px; right: auto; width: auto; height: auto; white-space: nowrap; padding: 3px 10px; border-radius: var(--r-pill); background: var(--card); box-shadow: var(--sh-1);
+  font-size: 13px; font-weight: 800; line-height: 1.4; letter-spacing: .02em; color: var(--ink); }   /* 이번 주 무료: 흰 알약 글자, 그림 안 왼쪽 아래(위쪽 40%는 제목 레터링 자리라 비운다) */
 .row[data-row="week"] .thumb > .bdg-week { display: none; }   /* 줄 이름이 이미 '이번 주 무료' */
-.thumb > .bdg-lock { bottom: -12px; right: -12px; }
+.thumb > .bdg-lock, .pl-pic > .bdg-lock { position: absolute; z-index: 5; inset: 0; margin: auto; width: clamp(40px, 26%, 72px); height: auto; aspect-ratio: 1; box-sizing: border-box; border-radius: 50%;
+  background: var(--card); box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 2px 8px rgba(0, 0, 0, .22); pointer-events: none; }
+.thumb > .bdg-lock svg, .thumb > .bdg-lock img, .pl-pic > .bdg-lock svg, .pl-pic > .bdg-lock img { position: absolute; inset: 21%; width: 58%; height: 58%; }
+@media (orientation: portrait) and (max-width: 699px) { .thumb > .bdg-lock, .pl-pic > .bdg-lock { width: clamp(36px, 26%, 72px); } }
 
 /* 빈 상태 */
 .empty { text-align: center; padding: 40px 10px; color: var(--ink-2); font-size: var(--fs-body); font-weight: 600; letter-spacing: .01em; }
 .empty p { margin: 0 0 18px; }
-.empty-pic { display: block; width: 132px; height: 132px; margin: 0 auto 16px; border-radius: 50%; background: var(--paper-deep); box-shadow: inset 1px 1.5px 0 var(--sh-cut), inset 4px 6px 8px var(--sh-cut-2), inset -1px -1.5px 0 var(--lip); overflow: hidden; }
+.empty-pic { display: block; width: 132px; height: 132px; margin: 0 auto 16px; border-radius: 50%; background: var(--paper-deep); box-shadow: var(--cut); overflow: hidden; }
 .empty-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .ticket.big { min-height: var(--hit-kid); min-width: 280px; padding: 0 32px; font-size: max(20px, var(--fs-title)); font-weight: 850; }
 
@@ -664,7 +667,7 @@ body.app .hero[hidden] { display: none; }
 }
 /* pP 아이폰 세로: 배너 16:10, 레터링 76 · 알약 52 */
 @media (orientation: portrait) and (max-width: 699px) {
-  body.app { --hero-ar: 16 / 10; --hero-px: 18px; --hero-pb: 32px; --tl-h: 64px; --play: 48px; --tile-w: 152px; --tile-gap: 12px; }
+  body.app { --hero-ar: 16 / 10; --hero-px: 18px; --hero-pb: 32px; --tl-h: 64px; --play: 56px; --tile-w: 152px; --tile-gap: 12px; }
   .hero-t { font-size: 26px; }
 }
 /* 아이폰(세로·가로): 머리글 기호는 조금 작게 */
@@ -674,7 +677,7 @@ body.app .hero[hidden] { display: none; }
 }
 /* pL 아이폰 가로: 왼쪽 반 = 배너(둥근 창, 꽉 차지 않음), 오른쪽 반 = 분류 카드(세로 넘김) */
 @media (orientation: landscape) and (max-height: 520px) {
-  body.app { --hero-ar: 16 / 9; --hero-px: 14px; --hero-pb: 26px; --tl-h: 52px; --play: 44px; --tile-w: 132px; --tile-gap: 12px; }
+  body.app { --hero-ar: 16 / 9; --hero-px: 14px; --hero-pb: 26px; --tl-h: 52px; --play: 56px; --tile-w: 132px; --tile-gap: 12px; }
   body.app #view-tales { margin: 0; }
   body.app .shelf { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); column-gap: var(--s-4); overflow: hidden; padding-bottom: 6px; }
   body.app .hero { grid-column: 1; grid-row: 1; align-self: start; margin-top: 4px; }
@@ -726,12 +729,12 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 /* 갈래 단추 (퍼즐 | 스티커): 크림 바탕에 올린 두 칸, 고른 칸 = 감빛 조각 */
 .stk-seg { flex: none; display: flex; gap: var(--s-2); width: min(100%, 420px); padding: 6px; border-radius: 40px; background: var(--paper-dn); box-shadow: var(--cut); }
 .stk-seg button { flex: 1 1 0; min-height: 64px; border: 0; border-radius: 32px; background: none; color: var(--ink-2); font: inherit; font-size: var(--fs-title-s, 22px); font-weight: 800; letter-spacing: .08em; cursor: pointer; touch-action: manipulation; transition: background-color var(--t-1) var(--ease), color var(--t-1) var(--ease); }
-.stk-seg button.on { background: var(--act); color: var(--ink-on-act, #fff); box-shadow: var(--lift-hi), var(--sh-1); }
+.stk-seg button.on { background: var(--act); color: var(--ink-on-act, #fff); box-shadow: var(--sh-1); }
 .stk-seg button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 /* 판 선택 (§7-4): 올린 크림 원 88(그림 꽉 참) + 숫자 24 + 이름 16. 선택 = 감빛 테 4 + --sh-2, 나머지 = --sh-1 (회색 처리 없음) */
 .pz-row { flex: none; display: flex; gap: var(--s-5); overflow-x: auto; padding: 8px 6px 2px; scrollbar-width: none; }
 .pz-b { position: relative; flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 2px 4px; border: 0; background: none; cursor: pointer; color: var(--ink-2); touch-action: manipulation; }
-.pz-hole { position: relative; display: block; width: var(--pz-c); height: var(--pz-c); border-radius: 50%; background: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); transition: box-shadow 180ms var(--ease); }
+.pz-hole { position: relative; display: block; width: var(--pz-c); height: var(--pz-c); border-radius: 50%; background: var(--paper); box-shadow: var(--sh-1); transition: box-shadow 180ms var(--ease); }
 .pz-hole img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
 .pz-hole.empty { background: var(--paper-dn); box-shadow: var(--cut); }
 .pz-b.on .pz-hole { box-shadow: 0 0 0 4px var(--act), var(--sh-2); }
@@ -742,7 +745,7 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 .pz-b.on .pz-nm { color: var(--ink); font-weight: 700; }
 .pz-b .pz-cnt { display: none; }   /* 동그라미 아래 숫자는 뺀다: 판 머리(공주 퍼즐 0 / 16)가 이미 보여 준다 */
 .pz-b:focus-visible { outline: 2px solid var(--act); outline-offset: 3px; border-radius: 16px; }
-.pz-done { position: absolute; right: -6px; top: -6px; z-index: 2; width: 32px; height: 32px; padding: 6px; border-radius: 50%; display: block; background: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); }
+.pz-done { position: absolute; right: -6px; top: -6px; z-index: 2; width: 32px; height: 32px; padding: 6px; border-radius: 50%; display: block; background: var(--paper); box-shadow: var(--sh-1); }
 .pz-done svg { display: block; width: 100%; height: 100%; fill: var(--reward); }
 .pz-head .pz-done { position: static; flex: none; }
 
@@ -750,7 +753,7 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 .pz-main { --pw: min(100cqw, max(320px, calc((100dvh - var(--pz-chrome)) * 16 / 9))); flex: none; width: var(--pw); max-width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "win win" "head plate"; align-items: center; column-gap: var(--s-5); row-gap: var(--s-4); }
 .pz-board { display: contents; }
 .pz-win { grid-area: win; position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--r-l); overflow: hidden; background: var(--paper); -webkit-mask-image: -webkit-radial-gradient(white, black); }
-.pz-win::after { content: ''; position: absolute; inset: 0; z-index: 4; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08); pointer-events: none; }   /* 음각 대신 평평한 판 + 1px 테두리(홈 UI 2판) */
+.pz-win::after { content: ''; position: absolute; inset: 0; z-index: 4; border-radius: inherit; box-shadow: var(--cut); pointer-events: none; }   /* 음각 대신 평평한 판 + 1px 테두리(홈 UI 2판) */
 /* 조각 판: 2줄 × 동화 칸, 창 안에서 가로로 넘긴다. 칸 = (창 높이 − 위아래 여백) / 2 */
 .pz-pan { --cell: calc((var(--pw) * 9 / 16 - 2 * var(--pz-pad)) / 2); position: absolute; inset: 0; overflow-x: auto; overflow-y: hidden; padding: var(--pz-pad); scrollbar-width: none; scroll-snap-type: x proximity; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
 .pz-pan::-webkit-scrollbar { display: none; }
@@ -758,7 +761,7 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 .pzp { position: absolute; scroll-snap-align: start; pointer-events: none; }
 .pzp .pz-art { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; pointer-events: none; }
 /* 받은 조각: 그림 그대로 + 조각 사이 얕은 그림자 (§7-5) */
-.pzp.got { filter: drop-shadow(0 1px 2px rgba(46, 36, 28, .35)); }
+.pzp.got { filter: var(--dsh-rest); }
 .pzp .pz-s { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; overflow: visible; cursor: pointer; pointer-events: none; outline: none; }
 .pzp .pz-s path { pointer-events: all; }
 .pzp .pz-s.off { cursor: default; }
@@ -775,7 +778,7 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 .pz-head h2 { min-width: 0; margin: 0; font-size: var(--fs-title-l); font-weight: 850; line-height: 1.15; letter-spacing: 0; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pz-n { flex: none; font-size: var(--fs-num); font-weight: 700; letter-spacing: .06em; color: var(--ink-2); white-space: nowrap; }
 .pz-arrs { flex: none; display: flex; gap: var(--s-5); margin-left: var(--s-2); }
-.pz-arr, .cast-back { flex: none; width: var(--pz-arr); height: var(--pz-arr); padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: var(--ink); background-color: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); }
+.pz-arr, .cast-back { flex: none; width: var(--pz-arr); height: var(--pz-arr); padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: var(--ink); background-color: var(--paper); box-shadow: var(--sh-1); }
 .pz-arr img, .pz-arr svg, .cast-back img, .cast-back svg { display: block; width: calc(var(--pz-arr) * .45); height: calc(var(--pz-arr) * .45); object-fit: contain; }
 .pz-arr[data-act="pan-l"] img, .cast-back img { transform: scaleX(-1); }
 .pz-arr:disabled { cursor: default; background-color: var(--paper-dn); color: var(--ink-3); box-shadow: none; }
@@ -806,7 +809,7 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 .star-open b { font-size: 18px; color: var(--ink-2); }
 .star-open.is-pressed { transform: scale(.96); }
 /* 별 5개면 감빛 원 96 [열기] (star_one 48) */
-.pz-open { flex: none; width: var(--pz-open); height: var(--pz-open); padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; background-color: var(--act); box-shadow: var(--lift-hi), var(--sh-2); }
+.pz-open { flex: none; width: var(--pz-open); height: var(--pz-open); padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; background-color: var(--act); box-shadow: var(--sh-2); }
 .pz-open img, .pz-open svg { display: block; width: calc(var(--pz-open) / 2); height: calc(var(--pz-open) / 2); object-fit: contain; fill: var(--reward); }
 .pz-open.is-pressed { background-color: var(--act-dn); }
 
@@ -815,9 +818,9 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
   position: absolute; inset: 0; display: grid; grid-auto-flow: column; grid-template-rows: repeat(2, var(--cs)); grid-auto-columns: var(--cs); gap: var(--s-3);
   align-content: center; justify-content: safe center; padding: var(--s-5); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
 .cast-grid::-webkit-scrollbar { display: none; }
-.cs { position: relative; z-index: 1; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; background: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); }
+.cs { position: relative; z-index: 1; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; background: var(--paper); box-shadow: var(--sh-1); }
 .cs img { width: 84%; height: 84%; object-fit: contain; display: block; }
-.cs.off { cursor: default; background: var(--paper-dn); box-shadow: inset 0 1px 0 rgba(46, 36, 28, .18), inset 1px 4px 8px -3px rgba(46, 36, 28, .18); }
+.cs.off { cursor: default; background: var(--paper-dn); box-shadow: var(--cut); }
 .cs img.sil { filter: brightness(0); opacity: .12; width: 70%; height: 70%; }
 .cs.plan { background: var(--paper-dn); box-shadow: none; opacity: .5; cursor: default; }
 .cs:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
@@ -917,13 +920,13 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 .pz-play { margin-left: auto; display: flex; gap: 8px; flex: none; }
 .pz-pb { height: 44px; padding: 0 18px; border: 0; border-radius: var(--r-pill); font: inherit; font-size: 15px; font-weight: 800; white-space: nowrap; cursor: pointer; touch-action: manipulation;
   color: var(--ink); background: var(--card); box-shadow: var(--sh-1); }
-.pz-pb.go { color: #fff; background: var(--act); box-shadow: 0 3px 10px rgba(217, 98, 47, .3); }
+.pz-pb.go { color: #fff; background: var(--act); box-shadow: var(--sh-2); }
 /* 흩어진 조각: 끌 수 있다. 끄는 동안 제자리(.pz-ghost)가 노랗게 반짝이고, 착 붙으면 반짝이 별(.pz-spark)이 튄다 */
 .pz-sec.play .pz-hits { display: none; }
 .pzp.fill .pz-s path { pointer-events: none; }   /* 자투리는 누름을 받지 않는다(아래 빈 모양 조각이 받는다) */
 .pzp.fill { filter: none; }
-.pzp.loose { pointer-events: auto; touch-action: none; cursor: grab; z-index: 3; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .28)); transition: filter var(--t-1) var(--ease); }
-.pzp.drag { z-index: 6; cursor: grabbing; filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .32)); }
+.pzp.loose { pointer-events: auto; touch-action: none; cursor: grab; z-index: 3; filter: var(--dsh-rest); transition: filter var(--t-1) var(--ease); }
+.pzp.drag { z-index: 6; cursor: grabbing; filter: var(--dsh-lift); }
 .pz-ghost { pointer-events: none; z-index: 1; animation: pzGhost .9s ease-in-out infinite; }
 .pz-ghost .pz-art { opacity: .55; }
 @keyframes pzGhost { 0%, 100% { filter: drop-shadow(0 0 3px rgba(255, 214, 90, .7)); } 50% { filter: drop-shadow(0 0 14px rgba(255, 214, 90, 1)) drop-shadow(0 0 5px rgba(255, 244, 190, 1)); } }
@@ -937,7 +940,7 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 .cast-none { grid-auto-flow: row; align-content: center; gap: 18px; }
 .cast-none p { margin: 0; }
 .cn-slots { display: flex; justify-content: center; gap: 14px; }
-.cn-slots i { width: 56px; height: 72px; border-radius: 12px; background: var(--paper-dn); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06); }
+.cn-slots i { width: 56px; height: 72px; border-radius: 12px; background: var(--paper-dn); box-shadow: var(--cut); }
 @media (orientation: portrait) and (max-width: 699px) { .cs-sec .cast-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .pz-pb { padding: 0 14px; font-size: 14px; } }
 /* 휴대폰 가로도 같은 쌓기(왼쪽 세로 열 없이) */
 @media (orientation: landscape) and (max-height: 520px) {
@@ -967,7 +970,7 @@ body.app .shelf::-webkit-scrollbar { display: none; }   /* 큰 그림과 목록�
 
 /* 임시(review.js): 새 그림 확인 딱지 */
 .card { position: relative; }
-.rv-badge { position: absolute; left: 6px; top: 6px; z-index: 5; font: 700 13px/1 var(--font); color: #fff; background: #A93B32; padding: 6px 9px; border-radius: 999px; box-shadow: 0 2px 4px rgba(46,36,28,.3); cursor: pointer; }
+.rv-badge { position: absolute; left: 6px; top: 6px; z-index: 5; font: 700 13px/1 var(--font); color: #fff; background: #A93B32; padding: 6px 9px; border-radius: 999px; box-shadow: var(--sh-1); cursor: pointer; }
 .rv-badge.ok { background: #3F6B4F; }
 
 /* ───────── 종이별 · 기다무 · 기기 연결 (앱 모드) ───────── */
@@ -979,14 +982,14 @@ body.app .shelf::-webkit-scrollbar { display: none; }   /* 큰 그림과 목록�
 .link-input {
   min-height: 56px; padding: 0 14px; border: 0; border-radius: 12px; text-align: center;
   font: 800 26px/1 var(--font); letter-spacing: .2em; text-transform: uppercase; color: var(--ink);
-  background: var(--paper-dn); box-shadow: inset 1.5px 2px 3px var(--sh-cut), inset -1px -1px 0 var(--lip);
+  background: var(--paper-dn); box-shadow: var(--cut);
 }
 .link-input:focus-visible { outline: 2px solid var(--reward); outline-offset: 2px; }
 .link-in .how { margin: 0; }
 @media (max-width: 420px) { .link-code { font-size: 32px; } }
 
 /* ═════════ 탭 껍데기 (APP_SCREENS_PLAN §2): 가로 = 왼쪽 레일, 세로 = 아래 막대. 톱니는 늘 오른쪽 위 ═════════ */
-:root { --rail: 92px; --hole-w: 56px; --hole-h: 36px; --tab-ic: 26px; --bar-h: 0px; }   /* 레일 폭 128 → 92(2026-10-30 사용자: 아이패드 왼쪽이 너무 넓다) */
+:root { --rail: 92px; --hole-w: 56px; --hole-h: 38px; --tab-ic: 30px; --bar-h: 0px; }   /* 레일 폭 128 → 92(2026-10-30 사용자: 아이패드 왼쪽이 너무 넓다) */
 body.app #home {
   position: relative; z-index: 1; height: 100%;
   display: grid;
@@ -1008,23 +1011,23 @@ body.app .view[hidden] { display: none; }
 /* 홈 머리 별 조각(앱 모드): 톱니 왼쪽, 단색. 받은 조각은 먹색, 아직은 연회색 */
 .star-chip { position: fixed; z-index: 12; top: max(var(--pad), env(safe-area-inset-top)); right: calc(max(var(--pad), env(safe-area-inset-right)) + 48px); width: 48px; height: 48px; margin: -9px 0 0; padding: 9px; border: 0; background: none; cursor: pointer; color: var(--gear); touch-action: manipulation; }
 .star-chip[hidden] { display: none; }
-.star-chip .star-pc.mono .on { fill: currentColor; }
-.star-chip .star-pc.mono .off { fill: var(--ink-off); opacity: .45; filter: none; }
+.star-chip .star-pc.mono .on { fill: var(--reward); }   /* 0개여도 꺼진 단추처럼 보이지 않게: 받은 조각은 구리색 그대로, 아직인 조각은 같은 구리색을 옅게 */
+.star-chip .star-pc.mono .off { fill: var(--reward); opacity: .38; filter: none; }
 .star-chip .star-pc .cuts line { stroke: var(--paper); stroke-width: 3; }
 .star-chip .chip-n { position: absolute; right: -6px; bottom: 2px; min-width: 22px; padding: 0 5px; border-radius: var(--r-pill); background: var(--card); box-shadow: var(--sh-1); font-size: 12px; font-weight: 800; line-height: 18px; color: var(--ink); }   /* 완성한 별 수 */
 .star-chip.is-pressed { transform: scale(.94); }
 @media (orientation: portrait) and (max-width: 699px), (orientation: landscape) and (max-height: 520px) { .star-chip { right: calc(max(var(--pad), env(safe-area-inset-right)) + 40px); margin-top: -2px; } }
 
 /* 탭 (홈 UI 2판): 흰 막대 위 단색 기호 + 이름. 고른 탭 = 진한 먹색 + 기호 뒤 흰 알약(--sh-1), 나머지 = 연한 회색. 레일·막대는 1px 선으로만 나눈다 */
-.tabs { grid-area: tabs; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: var(--s-4); background: var(--card); box-shadow: 1px 0 0 rgba(0, 0, 0, .06);
+.tabs { grid-area: tabs; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: var(--s-4); background: var(--card); box-shadow: 1px 0 0 var(--hairline);
   padding: max(var(--pad), env(safe-area-inset-top)) 0 max(var(--pad), env(safe-area-inset-bottom)) env(safe-area-inset-left); }
 .tab {
   position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px;
-  z-index: 1; min-width: 76px; min-height: 72px; padding: 6px 4px 4px; border: 0; background: none; cursor: pointer; color: #77746F;
+  z-index: 1; justify-content: center; min-width: 80px; min-height: 80px; padding: 6px 4px 4px; border: 0; background: none; cursor: pointer; color: var(--ink-off-lb);   /* 누름 영역 80×80 이상, 고르지 않은 기호도 이름과 같은 진한 회색(대비 7:1) */
   touch-action: manipulation; transition: color var(--t-1) var(--ease);
 }
 .tab.on { color: var(--ink); }
-.hole { position: relative; flex: none; display: grid; place-items: center; width: var(--hole-w); height: var(--hole-h); border-radius: var(--r-pill);
+.hole { position: relative; flex: none; display: grid; place-items: center; width: min(var(--hole-w), 100%); height: var(--hole-h); border-radius: var(--r-pill);
   transition: background-color var(--t-2) var(--ease), box-shadow var(--t-2) var(--ease), transform var(--t-1) var(--ease); }
 .tab-pill { position: absolute; left: 0; top: 0; z-index: 0; opacity: 0; border-radius: var(--r-pill); background: var(--card); box-shadow: var(--sh-1); pointer-events: none;
   transition: transform 260ms var(--ease); will-change: transform; }   /* 고른 탭의 흰 알약: 탭 사이를 미끄러진다(transform 만) */
@@ -1064,25 +1067,34 @@ body.app .view[hidden] { display: none; }
 
 /* 세로(아이패드·아이폰): 아래 막대 */
 @media (orientation: portrait) {
-  :root { --hole-w: 60px; --hole-h: 34px; --tab-ic: 26px; --bar-h: calc(var(--hole-h) + 34px + env(safe-area-inset-bottom)); }
+  :root { --hole-w: 60px; --hole-h: 36px; --tab-ic: 30px; --bar-h: calc(90px + env(safe-area-inset-bottom)); }
   body.app #home { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; grid-template-areas: "brand" "views" "tabs"; }
   .brand { padding-left: var(--pad); }
   .views { --vl: max(var(--pad), env(safe-area-inset-left)); }
-  .tabs { flex-direction: row; justify-content: space-around; align-items: flex-start; gap: 0; box-shadow: 0 -1px 0 rgba(0, 0, 0, .06);
+  .tabs { flex-direction: row; justify-content: space-around; align-items: flex-start; gap: 0; box-shadow: 0 -1px 0 var(--hairline);
     padding: 6px max(var(--pad), env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 4px) max(var(--pad), env(safe-area-inset-left)); }
-  .tab { flex: 1 1 0; max-width: 220px; min-height: 64px; }
+  .tab { flex: 1 1 0; min-width: 0; max-width: 220px; min-height: 80px; }
   #bubble { bottom: calc(var(--bar-h) + 8px); }
   .hint { bottom: calc(var(--bar-h) + 8px); }
 }
 @media (orientation: portrait) and (min-width: 700px) {
-  :root { --hole-w: 72px; --hole-h: 40px; --tab-ic: 28px; }
+  :root { --hole-w: 72px; --hole-h: 40px; --tab-ic: 32px; }
   .tab-lb { font-size: 15px; }
 }
 /* 아이폰 가로: 좁은 레일 */
 @media (orientation: landscape) and (max-height: 520px) {
-  :root { --rail: 80px; --hole-w: 52px; --hole-h: 32px; --tab-ic: 22px; }
+  :root { --rail: 80px; --hole-w: 52px; --hole-h: 34px; --tab-ic: 28px; }
   .tabs { gap: var(--s-3); }
+  .tab { min-width: 0; width: 100%; min-height: 66px; }
+  .tab::after { content: ''; position: absolute; inset: -7px 0; }   /* 낮은 가로 화면: 보이는 칸은 66, 누름 영역은 위아래로 늘려 80 */
   .gear { top: max(10px, env(safe-area-inset-top)); }
+}
+/* 폰 200% 확대(CSS 폭 약 200~320): 탭 넷이 모두 보이게 줄인다 */
+@media (max-width: 320px) {
+  .tabs { padding-left: 2px; padding-right: 2px; }
+  .tab { padding: 6px 0 4px; }
+  .tab-lb { font-size: 11px; letter-spacing: -.02em; }
+  :root { --tab-ic: 24px; --hole-h: 30px; }
 }
 @media (max-width: 520px) { html[lang="en"] .logo { font-size: min(var(--logo), 4.6vw); } }
 
@@ -1110,7 +1122,7 @@ body.app .view[hidden] { display: none; }
 .gate .sheet { width: min(520px, 100%); text-align: center; }
 .gate .gate-hint { margin: 0 0 18px; min-height: 1.4em; font-size: var(--fs-caption); font-weight: 600; letter-spacing: .06em; color: var(--ink-2); }
 .gate-opt { --ring-r: 26px; min-height: var(--hit-kid); border: 0; border-radius: var(--r-m); font-family: var(--font); color: var(--ink); cursor: pointer; touch-action: none;
-  background-color: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); }
+  background-color: var(--paper); box-shadow: var(--sh-1); }
 .gate-opt b { font-size: 28px; font-weight: 800; letter-spacing: .04em; }
 .gate-opt.pass { background-color: var(--act); color: var(--ink-on-act); transition: background-color 80ms; }
 .gate-opt:focus-visible { outline: 3px solid var(--ink); outline-offset: 8px; }
@@ -1139,7 +1151,7 @@ body.app .view[hidden] { display: none; }
 .g-item { position: relative; flex: none; display: flex; align-items: center; gap: var(--s-4); min-height: 64px; width: 100%; padding: 0 16px 0 22px; border: 0; border-radius: var(--r-m); background: none; text-align: left;
   font-size: 18px; font-weight: 600; letter-spacing: .02em; color: var(--ink-2); cursor: pointer; }
 .g-item svg { flex: none; width: 28px; height: 28px; }
-.g-item.on { color: var(--ink); font-weight: 700; background-color: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); }
+.g-item.on { color: var(--ink); font-weight: 700; background-color: var(--paper); box-shadow: var(--sh-1); }
 .g-item.on::before { content: ''; position: absolute; left: 6px; top: 50%; width: 6px; height: 32px; margin-top: -16px; border-radius: 3px; background: var(--act); }
 .g-item:focus-visible { outline: 2px solid var(--act); outline-offset: 2px; }
 .g-pane { min-height: 0; overflow-y: auto; padding: 4px 4px 40px; scrollbar-width: none; outline: none; }
@@ -1164,9 +1176,9 @@ body.app .view[hidden] { display: none; }
 .g-btns .ticket, .g-dl .ticket { min-height: var(--hit-adult); }
 /* 파괴 행동(초기화): 테두리·글자 --ink. 감빛은 확인 쪽지 안에서만 */
 .ticket.danger { border-color: var(--ink); }
-.g-ask { margin: var(--s-2) 0 var(--s-4); padding: var(--s-4) var(--s-4) 2px; border-radius: var(--r-m); background: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); }
+.g-ask { margin: var(--s-2) 0 var(--s-4); padding: var(--s-4) var(--s-4) 2px; border-radius: var(--r-m); background: var(--paper); box-shadow: var(--sh-1); }
 .g-tales { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-.g-tales li { display: flex; flex-direction: column; gap: 2px; padding: 10px 2px; box-shadow: 0 1px 0 rgba(46, 36, 28, .08); }
+.g-tales li { display: flex; flex-direction: column; gap: 2px; padding: 10px 2px; box-shadow: var(--rule); }
 .g-tales b { font-size: var(--fs-body); }
 .g-tales span { font-size: var(--fs-caption); color: var(--ink-2); }
 .g-doc { display: block; width: 100%; height: 46vh; margin-top: 4px; border: 0; border-radius: var(--r-s); background: var(--paper); }
@@ -1188,7 +1200,7 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
   .g-body { position: relative; display: block; padding: 0; overflow: hidden; }
   .g-list, .g-pane { position: absolute; inset: 0; transition: transform 260ms var(--ease), visibility 0s linear 260ms; }
   .g-list { padding: 4px var(--pad) 24px; }
-  .g-list::after { content: ''; position: absolute; inset: 0; background: rgba(46, 36, 28, .12); opacity: 0; pointer-events: none; transition: opacity 260ms var(--ease); }
+  .g-list::after { content: ''; position: absolute; inset: 0; background: rgba(0, 0, 0, .12); opacity: 0; pointer-events: none; transition: opacity 260ms var(--ease); }
   .g-pane { padding: 4px var(--pad) 32px; background: var(--paper); transform: translateX(100%); visibility: hidden; box-shadow: var(--sh-2); }
   .g-body[data-open] .g-pane { transform: none; visibility: visible; transition: transform 260ms var(--ease), visibility 0s; }
   .g-body[data-open] .g-list { transform: translateX(-20%); visibility: hidden; }
@@ -1227,7 +1239,7 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .note-pic .mini::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: var(--cut); pointer-events: none; }
 .note-pic .mini img { position: absolute; inset: -2.5%; width: 105%; height: 105%; }   /* 사각 썸네일의 둥근 모서리가 창 모서리에 비치지 않게 */
 .note-lock { position: absolute; z-index: 2; right: -22px; bottom: -22px; width: 72px; height: 72px; display: grid; place-items: center; pointer-events: none;
-  filter: drop-shadow(0 1px 1px rgba(46, 36, 28, .28)) drop-shadow(1px 4px 6px rgba(46, 36, 28, .2)); }
+  filter: var(--dsh-rest); }
 .note-lock img, .note-lock svg { display: block; width: 100%; height: 100%; object-fit: contain; }
 .sheet .note-t { margin: 0; font-size: var(--fs-display); font-weight: 850; line-height: 1.15; letter-spacing: 0; color: var(--ink); word-break: keep-all; }
 .note-sub { margin: 8px 0 0; font-size: var(--fs-title); font-weight: 750; letter-spacing: .03em; color: var(--ink-2); }
@@ -1235,9 +1247,11 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .note-btns { display: flex; justify-content: center; gap: var(--s-6); margin: 28px 0; }
 /* 아이용 2차 원 = 크림 올린 조각, 보상 원 = 구리 종이 (§7-9) */
 .round { display: grid; place-items: center; width: var(--hit-kid); height: var(--hit-kid); padding: 0; border: 0; border-radius: 50%; color: var(--ink); cursor: pointer;
-  background-color: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); }
+  background-color: var(--paper); box-shadow: var(--sh-1); }
 .round img, .round svg { display: block; width: 40px; height: 40px; object-fit: contain; }
-.round.star { background-color: var(--reward); box-shadow: var(--lift-hi), var(--sh-2); }
+.round.star { background-color: var(--reward); box-shadow: var(--sh-2); }
+.flow-lock .round:not(.star) { background-color: var(--paper-dn); color: var(--ink-2); box-shadow: none; }   /* 닫기 ✕ = 중립 회색 원(감빛은 화면당 진짜 1차 행동 하나) */
+.flow-lock .round:not(.star) svg { width: 32px; height: 32px; }
 .round.star img, .round.star svg { width: 48px; height: 48px; }
 .round:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
 /* 꾹 단추(보호자 모양 + 링): 빈 종이라 아이 눈에 안 띈다 */
@@ -1257,7 +1271,7 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .buy-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 14px; }
 /* 세 칸 = 같은 크기의 크림 올린 조각. 결제 칸도 같은 크림(감빛 아님) (§4-6) */
 .buy-cols { gap: var(--s-4); margin-bottom: var(--s-4); }
-.col { display: flex; flex-direction: column; gap: 12px; min-height: 220px; padding: 20px; border-radius: var(--r-m); background-color: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); }
+.col { display: flex; flex-direction: column; gap: 12px; min-height: 220px; padding: 20px; border-radius: var(--r-m); background-color: var(--paper); box-shadow: var(--sh-1); }
 .col h3 { margin: 0; font-size: var(--fs-title); font-weight: 750; letter-spacing: .03em; color: var(--ink); }
 .col .how { flex: 1; margin: 0; font-size: 15px; line-height: 1.5; }
 .col .ticket { min-height: var(--hit-adult); }
@@ -1279,9 +1293,9 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .pick-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; max-height: 50vh; overflow-y: auto; padding: 4px; }
 .pick { display: flex; flex-direction: column; align-items: center; gap: 6px; min-height: 120px; padding: 8px 8px 10px; border: 0; border-radius: 14px; cursor: pointer;
   font: 700 var(--fs-label)/1.3 var(--font); letter-spacing: .04em; color: var(--ink); word-break: keep-all; text-align: center;
-  background-color: var(--paper); box-shadow: var(--lift-hi), var(--sh-1); }
+  background-color: var(--paper); box-shadow: var(--sh-1); }
 .pick .mini { width: 100%; }
-.pick.on { box-shadow: var(--lift-hi), var(--sh-2), 0 0 0 4px var(--act); }
+.pick.on { box-shadow: var(--sh-2), 0 0 0 4px var(--act); }
 .pick:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
 .flow-pick .sheet-btns .ticket { min-height: 64px; min-width: 120px; }
 .flow-pick .sheet-btns .ticket:disabled { opacity: .45; }
@@ -1326,14 +1340,14 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .b-pl .b-t { font-size: var(--fs-title); letter-spacing: .04em; }
 /* 1차 행동: 이어 듣기 ▶ = 감빛 원(화면에서 감빛은 이것 하나). 재생목록 ▶ 는 흰 원 + 남색 세모(보조) */
 .b-play { grid-area: play; justify-self: start; width: var(--play); height: var(--play); padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer; touch-action: manipulation;
-  color: var(--ink-on-act); background-color: var(--act); box-shadow: var(--lift-hi), var(--sh-2);
+  color: var(--ink-on-act); background-color: var(--act); box-shadow: none;   /* 남색 카드 위: 그림자 대신 면 밝기 차이 */
   transition: transform var(--t-1) var(--ease), box-shadow var(--t-1) var(--ease), background-color var(--t-1) var(--ease); }
 .b-play img, .b-play svg { display: block; width: calc(var(--play) * .42); height: calc(var(--play) * .42); }
 .b-play img { translate: 6% 0; }
 .b-play.is-pressed { transform: translateY(2px); box-shadow: var(--press); background-color: var(--act-dn); transition-duration: var(--t-0); }
 .b-play:disabled { cursor: default; background-color: var(--paper-dn); color: var(--ink-3); box-shadow: none; }
 .b-play:disabled img { opacity: .4; }
-.b-play.sec { justify-self: end; background-color: var(--card); color: var(--night); box-shadow: var(--sh-1); }
+.b-play.sec { justify-self: end; background-color: var(--card); color: var(--night); box-shadow: none; }
 .b-play.sec svg { translate: 6% 0; width: 46%; height: 46%; }
 .b-play.sec.is-pressed { background-color: var(--paper-dn); }
 .b-play:focus-visible, .b-chip:focus-visible, .b-hold:focus-visible { outline: 3px solid var(--ink-on-night); outline-offset: 4px; }
@@ -1346,7 +1360,7 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .b-chip.on { background-color: var(--card); border-color: var(--card); color: var(--night); font-weight: 800; }
 .b-chip.is-pressed { transform: scale(.96); transition-duration: var(--t-0); }
 .b-thumbs { grid-area: thumbs; display: flex; align-items: center; gap: var(--s-2); min-height: 40px; min-width: 0; }
-.b-th { width: 56px; height: 42px; object-fit: cover; border-radius: var(--r-s); display: block; box-shadow: 0 1px 2px rgba(0, 0, 0, .3); }
+.b-th { width: 56px; height: 42px; object-fit: cover; border-radius: var(--r-s); display: block; box-shadow: none; }
 .b-more { font-size: var(--fs-label); font-weight: 700; letter-spacing: .10em; color: var(--ink-on-night); }
 .b-empty { font-size: var(--fs-caption); line-height: 1.4; font-weight: 600; letter-spacing: .04em; color: var(--ink-on-night-2); }
 /* [편집 1초 꾹] 글자 단추(크림 70%) + 둘레 링 */
@@ -1385,32 +1399,36 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 /* 재생목록 편집 쪽지 (보호자, §7-9·§7-10): 크림 쪽지 r32 + --sh-3. 닫기 = 보호자 테두리 단추, 저장 = 보호자 1차(감빛). 순서 단추 56 = 올린 크림 원(위·아래·빼기 기호) */
 .pl-edit { position: fixed; inset: 0; z-index: 60; background: var(--veil); display: grid; place-items: center; padding: var(--s-4); }
 .pl-edit[hidden] { display: none; }
-.pl-sheet { width: min(760px, 100%); max-height: 100%; overflow-y: auto; border-radius: var(--r-sheet); background: var(--paper); color: var(--ink); padding: var(--s-5) var(--s-6) var(--s-6); box-shadow: var(--lift-hi), var(--sh-3); }
+.pl-sheet { width: min(760px, 100%); max-height: 100%; overflow-y: auto; border-radius: var(--r-sheet); background: var(--paper); color: var(--ink); padding: var(--s-5) var(--s-6) var(--s-6); box-shadow: var(--sh-3); }
 .pl-h { display: flex; align-items: center; gap: var(--s-3); }
 .pl-h h2 { flex: 1; min-width: 0; margin: 0; font-size: var(--fs-title); font-weight: 850; line-height: 1.25; letter-spacing: .04em; text-align: center; color: var(--ink); word-break: keep-all; }
+.pl-max { display: inline-block; margin-left: .4em; font-size: .8em; font-weight: 700; letter-spacing: .02em; color: var(--ink-2); white-space: nowrap; }
+@media (max-width: 520px) { .pl-max { display: block; margin: 2px 0 0; } }
 .pl-top { flex: none; min-width: 96px; min-height: var(--hit-adult); padding: 0 20px; border: 2px solid var(--ink-3); border-radius: var(--r-pill); background-color: var(--paper); color: var(--ink); font: 700 17px/1.2 var(--font); letter-spacing: .02em; cursor: pointer; }
-.pl-save { border-color: transparent; background-color: var(--act); color: var(--ink-on-act); box-shadow: var(--lift-hi), var(--sh-1); }
+.pl-save { border-color: transparent; background-color: var(--act); color: var(--ink-on-act); box-shadow: var(--sh-1); }
 .pl-save.is-pressed { background-color: var(--act-dn); }
 .pl-list { list-style: none; margin: var(--s-4) 0; padding: 0; display: flex; flex-direction: column; gap: var(--s-2); }
-.pl-row { display: flex; align-items: center; gap: var(--s-3); min-height: 64px; box-shadow: 0 1px 0 rgba(46, 36, 28, .08); padding-bottom: var(--s-2); }
+.pl-row { display: flex; align-items: center; gap: var(--s-3); min-height: 64px; box-shadow: var(--rule); padding-bottom: var(--s-2); }
 .pl-n { width: 28px; text-align: center; font-size: var(--fs-label); font-weight: 700; letter-spacing: .06em; color: var(--ink-2); }
 .pl-th { width: 64px; height: 48px; object-fit: cover; border-radius: var(--r-s); box-shadow: var(--sh-0); }
 .pl-tt { flex: 1; min-width: 0; font-size: 17px; font-weight: 600; color: var(--ink); word-break: keep-all; }
-.pl-b { flex: none; width: 56px; height: 56px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; background-color: var(--paper); color: var(--ink); cursor: pointer; box-shadow: var(--lift-hi), var(--sh-1); }
+.pl-b { flex: none; width: 56px; height: 56px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; background-color: var(--paper); color: var(--ink); cursor: pointer; box-shadow: var(--sh-1); }
 .pl-b svg, .pl-add svg { width: 24px; height: 24px; display: block; flex: none; }
 .pl-b:disabled { cursor: default; background-color: var(--paper-dn); color: var(--ink-3); box-shadow: none; }
 .pl-none { color: var(--ink-2); font-size: var(--fs-body); padding: 10px 2px; }
 .pl-add { display: flex; align-items: center; gap: 6px; margin: var(--s-4) 0 var(--s-3); font-size: var(--fs-label); font-weight: 700; letter-spacing: .10em; color: var(--ink-2); }
 .pl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: var(--s-3); }
-.pl-tile { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 6px 10px; border: 0; border-radius: var(--r-m); background-color: var(--paper); color: var(--ink); font: 600 15px/1.3 var(--font); letter-spacing: .02em; word-break: keep-all; cursor: pointer; box-shadow: var(--lift-hi), var(--sh-1); }
-.pl-tile img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r-s); }
+.pl-tile { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 6px 10px; border: 0; border-radius: var(--r-m); background-color: var(--paper); color: var(--ink); font: 600 15px/1.3 var(--font); letter-spacing: .02em; word-break: keep-all; cursor: pointer; box-shadow: var(--sh-1); }
+.pl-pic { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: var(--r-s); overflow: hidden; }
+.pl-pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pl-tile.locked .pl-pic::before { content: ''; position: absolute; inset: 0; z-index: 4; background: rgba(35, 38, 47, .52); pointer-events: none; }
 .pl-tile:disabled { cursor: default; background-color: var(--paper-dn); color: var(--ink-3); box-shadow: none; }
-.pl-tile:disabled img { opacity: .55; }
-.pl-tile.on { box-shadow: 0 0 0 3px var(--act), var(--sh-1); }
-.pl-ck, .pl-lk { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; min-width: 32px; height: 32px; padding: 0 8px; border-radius: var(--r-pill); font-style: normal; font-size: var(--fs-caption); font-weight: 700; }
-.pl-ck { padding: 0; width: 32px; background: var(--act); color: var(--ink-on-act); box-shadow: var(--sh-0); }
+.pl-tile:disabled:not(.locked) img { opacity: .55; }
+.pl-tile.locked { color: var(--ink-2); }
+.pl-tile.on { box-shadow: 0 0 0 3px var(--ink), var(--sh-1); }   /* 감빛은 이 쪽지의 '저장' 하나만 */
+.pl-ck { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; min-width: 32px; height: 32px; padding: 0 8px; border-radius: var(--r-pill); font-style: normal; font-size: var(--fs-caption); font-weight: 700; }
+.pl-ck { padding: 0; width: 32px; background: var(--ink); color: #fff; box-shadow: var(--sh-0); }
 .pl-ck svg { width: 20px; height: 20px; }
-.pl-lk { background: var(--ink); color: var(--paper); }
 .pl-b:focus-visible, .pl-top:focus-visible, .pl-tile:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 @media (orientation: portrait) and (max-width: 699px) {
   .pl-sheet { padding: var(--s-4) var(--s-4) var(--s-5); }
@@ -1424,15 +1442,15 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 
 /* 극장 막(홈 카드 → 동화): 빨간 색지 주름 커튼 그림(ui_curtain_panel, 오른쪽 폭은 뒤집기) + 위 휘장 그림. 홈(home.css)과 같은 모양 */
 .curt { position: fixed; inset: 0; z-index: 90; overflow: hidden; pointer-events: none; }
-.curt .cp { position: absolute; top: 0; bottom: 0; width: 51vw; transform-origin: 50% 0; background: #A93B32; will-change: transform; backface-visibility: hidden; }   /* 그림이 오기 전에도 막은 막 */
-.curt .cp.l { left: 0; transform: translateX(-102%); } .curt .cp.r { right: 0; transform: translateX(102%); }
+.curt .cp { position: absolute; top: 0; bottom: 0; width: calc(51vw + 7vh); transform-origin: 50% 0; background: #A93B32; will-change: transform; backface-visibility: hidden; }   /* 그림이 오기 전에도 막은 막 */
+.curt .cp.l { left: -7vh; transform: translateX(-102%); } .curt .cp.r { right: -7vh; transform: translateX(102%); }   /* 바깥으로 7vh 더 둔다: 흔들림(skew 3°, 위 기준)에 아래 바깥 모서리가 들어와 뒤 화면이 삼각형으로 비치던 것(2026-11-05 검토) */
 .curt.shut .cp { transform: none; }
 .curt .cp::before { content: ''; position: absolute; inset: 0; background: url(assets/ui/ui_curtain_panel.webp) center / 100% 100% no-repeat; }
 .curt .cp.r::before { transform: scaleX(-1); }
 /* 그림자는 필터(drop-shadow) 대신 고정 그라데이션 띠 — 아이패드에서 움직이는 큰 그림에 필터를 매 장면 다시 그리며 잔상이 남았다(2026-10-31). 흔들림(skew)은 JS 가 transform 에 같이 넣는다 */
 .curt .cp::after { content: ''; position: absolute; top: 0; bottom: 0; width: 14px; pointer-events: none; }
-.curt .cp.l::after { right: -14px; background: linear-gradient(90deg, rgba(46,36,28,.32), rgba(46,36,28,0)); }
-.curt .cp.r::after { left: -14px; background: linear-gradient(270deg, rgba(46,36,28,.32), rgba(46,36,28,0)); }
+.curt .cp.l::after { right: -14px; background: linear-gradient(90deg, rgba(0,0,0,.28), rgba(0,0,0,0)); }
+.curt .cp.r::after { left: -14px; background: linear-gradient(270deg, rgba(0,0,0,.28), rgba(0,0,0,0)); }
 .curt .val { position: absolute; left: -2vw; right: -2vw; top: 0; height: max(90px, 17vh); background: url(assets/v3w/cd2_layer_curtain_swag.webp) center top / 100% 100% no-repeat; transform: translateY(-100%); will-change: transform; backface-visibility: hidden; }
 .curt.shut .val { transform: none; }
 

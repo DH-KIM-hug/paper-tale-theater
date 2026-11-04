@@ -156,6 +156,7 @@
   const BAN = new Set(window.BANNERS || []), TTL = new Set(window.TITLES || []), TTL_EN = new Set(window.TITLES_EN || []);   // 맨 위 배너 그림 · 제목 레터링 (assets/banner, post_banner.py)
   const ltOn = id => CARD.has(id) && (lang === 'ko' || CARD_EN.has(id));
   const imgAttrs = 'class="art" alt="" loading="lazy" decoding="async"';
+  const imgNow = 'class="art" alt="" decoding="async"';   // 배너 큰 그림은 바로 받는다
 
   /* ── 그림 딱지: 글자 없이 그림으로 (잠김 = 자물쇠, 이번 주 무료 = 별, 만드는 중 = 가위). 생성 그림 assets/ui/badge_<kind>.webp 가
      ui.js 의 UI_ART 에 올라오면 그것을 쓰고, 그 전에는 작은 기호(코드)로 대신한다 ── */
@@ -205,10 +206,11 @@
     if (big && BAN.has(t.id)) return `<span class="thumb full banner"><img class="art" alt="" decoding="async" src="assets/banner/${t.id}.webp">${plug}</span>`;
     // 밝은 종이 한 가지만 쓴다 (다크 모드 없음). 밝은 판이 없으면 남색 판이라도
     /* 새 카드: 위쪽을 비워 그린 그림 + 동화별 레터링(영어 모드는 영어 레터링이 있을 때만, 없으면 아래 글자 제목) */
-    if (CARD.has(t.id)) return `<span class="thumb full tile card2"><img ${imgAttrs} src="assets/thumbs/${t.id}_card.webp?v=c2">${ltOn(t.id) ? `<img class="lt" src="assets/thumbs/${t.id}_lt${lang === 'en' ? '_en' : ''}.webp?v=c2" alt="" aria-hidden="true" draggable="false" decoding="async">` : ''}${plug}</span>`;
-    if (TILE.has(t.id)) return `<span class="thumb full tile"><img ${imgAttrs} src="assets/thumbs/${t.id}_tile.webp">${plug}</span>`;
+    const ia = big ? imgNow : imgAttrs;
+    if (CARD.has(t.id)) return `<span class="thumb full tile card2"><img ${ia} src="assets/thumbs/${t.id}_card.webp?v=c2">${ltOn(t.id) ? `<img class="lt" src="assets/thumbs/${t.id}_lt${lang === 'en' ? '_en' : ''}.webp?v=c2" alt="" aria-hidden="true" draggable="false"${big ? '' : ' loading="lazy"'} decoding="async">` : ''}${plug}</span>`;
+    if (TILE.has(t.id)) return `<span class="thumb full tile"><img ${ia} src="assets/thumbs/${t.id}_tile.webp">${plug}</span>`;
     const dk = PIC2.has(t.id), lt = PIC2L.has(t.id), base = `assets/thumbs/${t.id}`;
-    if (lt || dk) return `<span class="thumb full"><img ${imgAttrs} src="${base}${lt ? '_light' : ''}.webp">${plug}</span>`;
+    if (lt || dk) return `<span class="thumb full"><img ${ia} src="${base}${lt ? '_light' : ''}.webp">${plug}</span>`;
     if (PIC.has(t.id)) return `<span class="thumb pic"><img class="art" src="assets/thumbs/${t.id}.webp" alt="" loading="lazy" decoding="async">${plug}</span>`;
     return `<span class="thumb svgart"><svg class="art" viewBox="0 0 160 110" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${t.art}</svg>${plug}</span>`;
   }
@@ -283,6 +285,7 @@
     const hero = $('#hero');
     hero.hidden = heroList.length === 0;
     if (!heroList.length) return;
+    const fa = document.activeElement, fIn = fa && hero.contains(fa) ? (fa.classList.contains('hd') ? 'dot' : fa.closest('.card') ? 'card' : '') : '';   // 넘길 때 포커스를 잃지 않게
     if (!heroList.some(t => t.id === heroId)) heroId = heroList[0].id;
     const t = heroList.find(x => x.id === heroId), name = shown(t).title;
     const slot = $('#heroSlot'), tt = $('#heroTitle'), dir = heroDir;
@@ -308,6 +311,8 @@
     const dots = $('#heroDots');
     dots.hidden = heroList.length < 2;
     dots.innerHTML = heroList.map(x => `<button type="button" class="hd${x.id === heroId ? ' on' : ''}" data-id="${x.id}" aria-label="${shown(x).title}"${x.id === heroId ? ' aria-current="true"' : ''}>${x.id === heroId && heroList.length > 1 && motion() ? '<i class="hd-fill"></i>' : ''}</button>`).join('');
+    const nf = fIn === 'dot' ? dots.querySelector('.hd.on') : fIn === 'card' ? slot.querySelector('.card:not(.hero-old)') : null;
+    if (nf) nf.focus({ preventScroll: true });
   }
   const HOVER = matchMedia('(hover: hover)');               // 마우스를 배너에 올려 두면 멈춤(터치 기기는 누른 뒤 남는 hover 무시)
   function heroStep(d, to, auto) {
@@ -591,13 +596,34 @@
   /* ── 쪽지 열고 닫기 (UI_REDESIGN §5-4): 움직임은 CSS 가 맡는다. data-state="open" 으로 놓이고,
      "closing" 으로 걷히며 베일의 전환이 끝나면(transitionend) hidden. 튕김 없음 ── */
   const modalStop = el => { clearTimeout(el._t); if (el._te) el.removeEventListener('transitionend', el._te); el._te = null; };
+  /* 팝업 넷(#guard #gate #flow #plEdit)의 접근성: 열려 있는 동안 뒤 화면은 inert(눌림·포커스·읽기 모두 막힘), 포커스는 팝업 안으로,
+     Tab 은 팝업 안에서만 돌고, Esc 로 닫고, 닫으면 연 단추로 돌아온다. 겹쳐 열린 팝업은 맨 위 것만 살아 있다 */
+  const modalStack = [];
+  const MODAL_BG = ['#home', '#starChip', '#parentBtn'];
+  const modalTop = () => modalStack[modalStack.length - 1] || null;
+  function modalSync() {
+    const top = modalTop();
+    MODAL_BG.forEach(sel => { const e = document.querySelector(sel); if (e) e.inert = modalStack.length > 0; });
+    document.querySelectorAll('.guard, .parent, .pl-edit').forEach(m => { m.inert = !!top && m !== top; });
+  }
+  const FOCUSABLE = 'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  const focusables = root => [...root.querySelectorAll(FOCUSABLE)].filter(e => e.getClientRects().length && getComputedStyle(e).visibility !== 'hidden');
   function showModal(el, sheet, o = {}) {
     modalStop(el);
     hint.hidden = true;
     const opened = !el.hidden && el.dataset.state === 'open';
+    if (!modalStack.includes(el)) {
+      const a = document.activeElement;
+      el._opener = a && a !== document.body && !el.contains(a) ? a : null;   // 닫을 때 돌아올 자리
+      modalStack.push(el);
+    }
     el.hidden = false;
     if (!opened) { void el.offsetWidth; el.dataset.state = 'open'; }   // 닫힌 모습을 한 번 그린 뒤 열어야 전환이 보인다
-    const f = o.focus && el.querySelector(o.focus); if (f) f.focus({ preventScroll: true });
+    modalSync();
+    let f = o.focus && el.querySelector(o.focus);
+    if (!f) f = focusables(el)[0];
+    if (!f) { el.tabIndex = -1; f = el; }
+    f.focus({ preventScroll: true });
   }
   function hideModal(el, sheet, after) {
     if (el.hidden || el.dataset.state === 'closing') return;
@@ -607,7 +633,14 @@
       if (el.dataset.state !== 'closing') return;
       modalStop(el);
       el.hidden = true; delete el.dataset.state;
+      const k = modalStack.indexOf(el); if (k >= 0) modalStack.splice(k, 1);
+      modalSync();
       if (after) after();
+      let op = el._opener; el._opener = null;
+      if (!(op && op.isConnected) && el._refocus) op = el._refocus();     // 다시 그려져 사라진 단추는 새 단추로
+      const a = document.activeElement, lost = !a || a === document.body || el.contains(a);   // 숨긴 팝업 안에 남은 포커스도 잃은 것으로 친다
+      if (lost && op && op.isConnected && !op.closest('[inert]') && op.getClientRects().length) op.focus({ preventScroll: true });
+      else if (lost && modalTop()) { const f = focusables(modalTop())[0]; if (f) f.focus({ preventScroll: true }); }
     };
     el._te = e => { if (e.target === el && e.propertyName === 'opacity') fin(); };
     el.addEventListener('transitionend', el._te);
@@ -760,7 +793,7 @@
   });
 
   /* 설정 줄 72: 글자 왼쪽, 스위치 72×40 오른쪽(§7-8). 체크박스는 보이지 않게 두고 같은 change 처리 */
-  const switchHTML = (key, on, label) => `<label class="toggle"><span class="tg-t">${label}</span><input type="checkbox" role="switch" data-opt="${key}"${on ? ' checked' : ''}><i class="sw" aria-hidden="true"></i></label>`;
+  const switchHTML = (key, on, label, desc) => `<label class="toggle"><span class="tg-t">${label}${desc ? `<small class="tg-d">${desc}</small>` : ''}</span><input type="checkbox" role="switch" data-opt="${key}"${on ? ' checked' : ''}><i class="sw" aria-hidden="true"></i></label>`;
   const chipRowHTML = row => `<section class="tagrow"><h4 class="row-tab">${row === 'origin' ? L('이야기 종류', 'Kind of tale') : L('배우는 것', 'What it teaches')}</h4><div class="chips" role="group" data-row="${row}">`
     + [{ key: '', label: L('전체', 'All'), ic: 'all' }, ...TAGS[row].map(t => ({ key: t.key, label: (lang === 'en' && t.en) || t.label, ic: t.key }))]
       .map(c => `<button type="button" class="chip${c.key ? '' : ' all'}" data-row="${row}" data-key="${c.key}" aria-label="${c.label}">${icon(c.ic)}<span class="lb" aria-hidden="true">${letters(c.label)}</span></button>`).join('') + '</div></section>';
@@ -794,8 +827,7 @@
         <p class="how">${L('탭 이름과 안내는 늘 소리로 읽어 줘요. 아이가 아직 글을 못 읽기 때문이에요.', 'Tab names and guidance are always read aloud, since young children cannot read yet.')}</p>
         ${switchHTML('titlevoice', !titleVoiceOff(), L('동화 그림을 누르면 제목과 테마 소리 들려주기', 'Play the title and theme sound when a tale picture is tapped'))}
         ${switchHTML('caption', !captionsOff(), L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'))}
-        ${switchHTML('auto', autoOn(), L('자동 재생', 'Auto-play'))}
-        <p class="how">${L('놀이 조작 없이 이야기만 흘러가요. 잠자리에 읽어 줄 때는 \'읽어 주기\' 탭을 써요.', 'The story plays on its own with no taps. For bedtime reading, use the Read to Me tab.')}</p>`;
+        ${switchHTML('auto', autoOn(), L('자동 재생', 'Auto-play'), L('놀이 조작 없이 이야기만 흘러가요. 잠자리에 읽어 줄 때는 \'읽어 주기\' 탭을 써요.', 'The story plays on its own with no taps. For bedtime reading, use the Read to Me tab.'))}`;
     } else if (k === 'time') {
       h = `<h3>${name}</h3>
         <div class="seg" id="timerOpts" role="group" aria-label="${name}">${TIMES.map(m => `<button type="button" class="${m === limitNow() ? 'on' : ''}" data-m="${m}" aria-pressed="${m === limitNow()}">${m ? m + L('분', ' min') : L('끄기', 'Off')}</button>`).join('')}</div>
@@ -1029,7 +1061,7 @@
         <h2 class="note-t">${t}</h2>
         <p class="note-sub">${L('잠겨 있어요', 'Locked')}</p>
         <div class="note-btns">
-          <button type="button" class="round f-first" data-act="f-close" aria-label="${L('닫기', 'Close')}">${UIA.has('ic_close') ? uiImg('ic_close') : X_SVG}</button>
+          <button type="button" class="round f-first" data-act="f-close" aria-label="${L('닫기', 'Close')}">${X_SVG}</button>
           ${canStar ? `<button type="button" class="star-open" data-act="f-star1" aria-label="${L(`별로 열기, 별 ${nStar}개 있어요`, `Open with a star, you have ${nStar}`)}">${UIA.has('star_one') ? uiImg('star_one') : STAR_SVG}<span>${L('별로 열기', 'Open with a star')}</span><b>×${nStar}</b></button>` : ''}
         </div>
         <button type="button" class="adult holdbtn" data-adult><span>${L('어른이 열기', 'Grown-ups open')}</span><small>${L('1초 꾹', 'hold 1 s')}</small></button>
@@ -1097,8 +1129,18 @@
   flowEl.addEventListener('click', e => { if (e.target === flowEl) closeFlow(); });
 
   document.addEventListener('keydown', e => {
+    if (e.key === 'Tab') {                                   // 팝업 안에서만 Tab 이 돈다
+      const top = modalTop(); if (!top) return;
+      const fs = focusables(top), a = document.activeElement;
+      if (!fs.length) { e.preventDefault(); return; }
+      if (!top.contains(a)) { e.preventDefault(); fs[e.shiftKey ? fs.length - 1 : 0].focus(); }
+      else if (e.shiftKey && a === fs[0]) { e.preventDefault(); fs[fs.length - 1].focus(); }
+      else if (!e.shiftKey && a === fs[fs.length - 1]) { e.preventDefault(); fs[0].focus(); }
+      return;
+    }
     if (e.key !== 'Escape') return;
-    if (!gateEl.hidden) closeGate(); else if (!flowEl.hidden) closeFlow(); else if (!guardEl.hidden) closeGuard();
+    const top = modalTop(); if (!top) return;
+    if (top === gateEl) closeGate(); else if (top === flowEl) closeFlow(); else if (top === guardEl) closeGuard(); else if (top.id === 'plEdit') hideModal(top);
   });
   Entitlements.onChange(() => { if (!flowEl.hidden && flowCtx.step === 'pick') return; refreshGuard(); });
   addEventListener('online', refreshGuard); addEventListener('offline', refreshGuard);
@@ -1108,7 +1150,7 @@
   ROW_SVG.all = '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><path d="M22.4 11Q14 6 4 7.6V37Q14 35.4 22.4 40Z" fill="#C98A5B"/><path d="M25.6 11Q34 6 44 7.6V37Q34 35.4 25.6 40Z" fill="#DDD2C4"/></svg>';
   const nightList = () => {
     const l = TALES.filter(t => t.read && inScope(t) && isOpen(t));
-    return lang === 'en' ? [...l.filter(t => t.readEn), ...l.filter(t => !t.readEn)] : l;
+    return byRank(lang === 'en' ? [...l.filter(t => t.readEn), ...l.filter(t => !t.readEn)] : l);   // 열린 동화 먼저, 잠긴 동화 뒤(같은 무리 안은 기존 순서)
   };
   /* ── 잠자리 이어 듣기 카드 두 장 (docs/BEDTIME_PLAN.md §4-1): 랜덤 이어 듣기 + 우리 재생목록. 둘 다 bedtime.html 플레이어로 간다.
      설정은 로컬 localStorage paperTheater.bedtime = { count, playlist } (동기화 안 함). 타일 톡의 한 편 읽어 주기(?read=1)는 그대로 ── */
@@ -1155,7 +1197,7 @@
   function btEditor() {
     let el = document.getElementById('plEdit');
     if (!el) {
-      el = document.createElement('div'); el.id = 'plEdit'; el.className = 'pl-edit'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true');
+      el = document.createElement('div'); el.id = 'plEdit'; el.className = 'pl-edit'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', L('우리 재생목록', 'Our playlist'));
       document.body.appendChild(el);
       el.addEventListener('click', e => {
         const b = e.target.closest('[data-pl]'); if (!b) return;
@@ -1174,34 +1216,31 @@
   }
   function btPaintEditor() {
     const el = btEditor(), byId = id => TALES.find(t => t.id === id);
+    const fa = document.activeElement, fk = fa && el.contains(fa) && fa.dataset && fa.dataset.pl ? `[data-pl="${fa.dataset.pl}"]${fa.dataset.i !== undefined ? `[data-i="${fa.dataset.i}"]` : ''}${fa.dataset.id ? `[data-id="${fa.dataset.id}"]` : ''}` : '';
     const rows = btDraft.map((id, i) => { const t = byId(id); return `<li class="pl-row"><span class="pl-n">${i + 1}</span><img class="pl-th" src="assets/thumbs/${id}_tile.webp" alt="" draggable="false"><span class="pl-tt">${shown(t).title}</span>
       <button type="button" class="pl-b" data-pl="up" data-i="${i}" aria-label="${L('위로', 'Up')}"${i === 0 ? ' disabled' : ''}>${SYM('up')}</button>
       <button type="button" class="pl-b" data-pl="down" data-i="${i}" aria-label="${L('아래로', 'Down')}"${i === btDraft.length - 1 ? ' disabled' : ''}>${SYM('down')}</button>
       <button type="button" class="pl-b" data-pl="del" data-i="${i}" aria-label="${L('빼기', 'Remove')}">${SYM('minus')}</button></li>`; }).join('');
     const tiles = nightList().map(t => {
       const locked = !btOk(t), on = btDraft.includes(t.id), full = !on && btDraft.length >= BT_MAX;
-      return `<button type="button" class="pl-tile${on ? ' on' : ''}" data-pl="add" data-id="${t.id}"${locked || full ? ' disabled' : ''} aria-pressed="${on}"><img src="assets/thumbs/${t.id}_tile.webp" alt="" draggable="false"><span>${shown(t).title}</span>${on ? `<i class="pl-ck" aria-hidden="true">${SYM('check')}</i>` : ''}${locked ? `<i class="pl-lk">${L('잠김', 'Locked')}</i>` : ''}</button>`;
+      return `<button type="button" class="pl-tile${on ? ' on' : ''}${locked ? ' locked' : ''}" data-pl="add" data-id="${t.id}"${locked || full ? ' disabled' : ''} aria-pressed="${on}"><span class="pl-pic"><img src="assets/thumbs/${t.id}_tile.webp" alt="" draggable="false" loading="lazy" decoding="async">${locked ? badge('lock') : ''}</span><span>${shown(t).title}${locked ? `<span class="sr">, ${L('잠김', 'Locked')}</span>` : ''}</span>${on ? `<i class="pl-ck" aria-hidden="true">${SYM('check')}</i>` : ''}</button>`;
     }).join('');
-    el.innerHTML = `<div class="pl-sheet"><header class="pl-h"><button type="button" class="pl-top" data-pl="close">${L('닫기', 'Close')}</button><h2>${L(`우리 재생목록 (최대 ${BT_MAX}편)`, `Our playlist (up to ${BT_MAX})`)}</h2><button type="button" class="pl-top pl-save" data-pl="save">${L('저장', 'Save')}</button></header>
+    el.innerHTML = `<div class="pl-sheet"><header class="pl-h"><button type="button" class="pl-top" data-pl="close">${L('닫기', 'Close')}</button><h2>${L('우리 재생목록', 'Our playlist')}<small class="pl-max">${L(`(최대 ${BT_MAX}편)`, `(up to ${BT_MAX})`)}</small></h2><button type="button" class="pl-top pl-save" data-pl="save">${L('저장', 'Save')}</button></header>
       <ol class="pl-list">${rows || `<li class="pl-none">${L('아래에서 동화를 골라요', 'Pick tales below')}</li>`}</ol>
       <h3 class="pl-add">${SYM('plus')}${L('더하기', 'Add')}</h3><div class="pl-grid">${tiles}</div></div>`;
+    if (fk) {   // 누른 단추가 다시 그려져도 포커스는 그 자리에(눌러서 비활성이 되면 맨 앞으로)
+      const n = el.querySelector(fk + ':not([disabled])') || focusables(el)[0];
+      if (n) n.focus({ preventScroll: true });
+    }
   }
   function btOpenEditor() {
     btDraft = btList().filter(t => TALES.some(x => x.id === t.id)).map(t => t.id);
     btPaintEditor(); showModal(btEditor());
+    btEditor()._refocus = () => document.querySelector('[data-bt-hold]');
   }
-  /* 1초 꾹: 손을 떼면 취소. 링 대신 아래 막대가 차오른다(CSS .holding) */
-  let btHoldT = 0;
-  const btHoldEnd = () => { clearTimeout(btHoldT); document.querySelectorAll('.b-hold.holding').forEach(b => b.classList.remove('holding')); };
-  document.addEventListener('pointerdown', e => {
-    const h = e.target.closest && e.target.closest('[data-bt-hold]'); if (!h) return;
-    h.classList.add('holding'); clearTimeout(btHoldT);
-    btHoldT = setTimeout(() => { btHoldEnd(); paper('tap'); btOpenEditor(); }, 1000);
-  });
-  ['pointerup', 'pointercancel', 'dragstart'].forEach(ev => document.addEventListener(ev, btHoldEnd, true));
-  /* 단추 자체를 벗어날 때만 취소. 문서 전체 pointerleave 를 잡으면 마우스가 단추 안 글자(span) 경계를 1px 만 넘어도 꾹이 풀려
-     웹(마우스·트랙패드)에서 '만들기 1초 꾹'이 안 열리던 것(2026-11-04 사용자 제보) */
-  document.addEventListener('pointerleave', e => { if (e.target.matches && e.target.matches('[data-bt-hold]')) btHoldEnd(); }, true);
+  /* 1초 꾹(재생목록 만들기·편집): 톱니·'어른이 열기'와 같은 holdable — 손가락·마우스 꾹, 키보드 Enter·Space 꾹, 화면 읽기 '활성화'(바로 통과)가 모두 된다. 링 모양은 CSS .b-hold.holding */
+  const btHoldInit = root => root.querySelectorAll('[data-bt-hold]').forEach(b => holdable(b, 1000, () => { paper('tap'); btOpenEditor(); },
+    () => toast(L('1초 동안 꾹 누르세요', 'Press and hold for 1 second'))));
   function renderNight() {
     const body = $('#nightBody'); if (!body) return;
     const list = nightList(), recent = readList(recentReadKey).map(id => list.find(t => t.id === id)).filter(Boolean);
@@ -1210,6 +1249,7 @@
     const sec = (k, ko, en, items) => items.length ? `<section class="n-sec" data-row="${k}" aria-label="${L(ko, en)}"><h3 class="row-h"><span class="row-ic">${rowIcon(k)}</span><span class="row-t">${L(ko, en)}</span></h3>
       <div class="n-grid">${items.map(t => `<div class="slot" data-id="${t.id}">${cardHTML(t, { night: true })}</div>`).join('')}</div></section>` : '';
     body.innerHTML = btHTML() + sec('recent', '최근 들은', 'Recently heard', recent) + sec('all', '모든 이야기', 'All tales', list);
+    btHoldInit(body);
   }
   function activateNight(e, c) {
     e.preventDefault();
@@ -1809,6 +1849,8 @@
     title.alt = lang === 'en' ? 'Toki Toki Tale' : '톡톡 동화극장';
     fallback.append(title); sp.append(fallback);
     sp.addEventListener('pointerdown', complete);
+    const gl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } })();
+    if (!gl) { pending = setTimeout(complete, 1600); return; }   // WebGL 이 없으면 3D 장면을 받지 않고 정적 로고만 잠깐 보이다 넘어간다
     pending = setTimeout(complete, 5000);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
     import('./engine/splash/start.js?v=20261030sp5')
       .then(({ startSplash }) => {
