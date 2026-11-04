@@ -603,8 +603,8 @@ body.app .hero[hidden] { display: none; }
 .hd { position: relative; width: 20px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; transition: width var(--t-2) var(--ease); }
 .hd::after { content: ''; position: absolute; left: 6px; right: 6px; top: 8px; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .5); transition: background-color var(--t-2) var(--ease); }
 .hd.on { width: 34px; }
-.hd.on::after { background: rgba(255, 255, 255, .5); }
-.hd-fill { position: absolute; left: 6px; right: 6px; top: 8px; height: 8px; border-radius: 4px; background: #fff; transform-origin: 0 50%; transform: scaleX(0); animation: heroFill 6000ms linear forwards; pointer-events: none; }
+.hd.on::after { background: #fff; }
+.hd-fill { position: absolute; left: 6px; right: 6px; top: 8px; height: 8px; border-radius: 4px; background: #fff; transform-origin: 0 50%; transform: scaleX(0); animation: heroFill 6000ms linear forwards; pointer-events: none; opacity: 0; } /* 차오름은 보이지 않게(2026-11-04 사용자: 차오르는 건 별로) — 6초 자동 넘김 시계로만 쓴다 */
 @keyframes heroFill { to { transform: scaleX(1); } }
 .hero.pause .hd-fill { animation-play-state: paused; }
 @media (hover: hover) { .hero:hover .hd-fill { animation-play-state: paused; } }
