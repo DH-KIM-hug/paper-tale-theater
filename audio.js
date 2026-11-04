@@ -217,7 +217,7 @@ const AudioFX = (() => {
   }
   addEventListener('pagehide', pfStop);
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { if (!mediaNar) pfStop(); }  // 읽어 주기(화면 꺼짐)는 이어 받는다. 재생은 미리 받기에 기대지 않는다
+    if (document.hidden) { if (!mediaNar) { pfStop(); if (pf) pf.i = 0; } }  // 읽어 주기(화면 꺼짐)는 이어 받는다. 재생은 미리 받기에 기대지 않는다. 돌아오면 처음부터 훑어 끊긴 것도 다시 받는다(받아 둔 것은 건너뜀)
     else if (pf && !pf.timer && !pf.ctl && pf.i < pf.all.length) pfPump();
   });
 
@@ -558,7 +558,8 @@ const AudioFX = (() => {
     },
     prefetchClips,
     preloadAll(urls) {
-      urls.forEach(u => loadClip(u).catch(() => { /* 폴백 경로가 처리 */ }));
+      // 받기만 해 둔다(압축 mp3). 여기서 풀면 LRU(24개)에 밀려 첫 장면 대사부터 버려진다 — 푸는 것은 말할 때 (2026-11-04 코드 검토)
+      urls.forEach(u => { if (!narBuffers.has(u) && !prefetched[u]) fetchBytes(u).catch(() => { /* 폴백 경로가 처리 */ }); });
     },
     tap()    { tone(880, 0.07, { type: 'triangle', vol: 0.15 }); },
     pop()    { tone([500, 1400], 0.12, { type: 'triangle', vol: 0.3 }); },

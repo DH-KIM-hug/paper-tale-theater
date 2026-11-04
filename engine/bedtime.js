@@ -37,7 +37,9 @@ const Bedtime = (() => {
     const shade = mk('rect', { x: -400, y: -300, width: 1800, height: 1200, fill: '#0B1030', opacity: 0, 'pointer-events': 'none' }, T.fx);
     let music = null, dy = 0;
     const play = () => { try { music = AudioFX.ambient(lullaby, { vol: vol || (T.reading() ? .22 : .3), loop: true, fadeIn: 1.5 }); } catch (e) { /* 소리 없이 */ } };
-    play(); if (!music) setTimeout(() => { if (!music) play(); }, 900);   // 처음이면 받는 동안 한 번 더
+    let ended = false, tries = 0;
+    const retry = () => { if (music || ended || ++tries > 8) return; play(); if (!music) setTimeout(retry, 900); };   // 처음이면 받는 동안 몇 번 더(0.9초 간격, 최대 약 7초)
+    retry();
     if (focus && !fitW && !document.hidden) { const [fx, fy] = at2(focus); T.camTo(500 + (fx - 500) * .25, 280 + (fy - 280) * .25, 1.05, 16000); }   // 아주 느리게 다가가기
     const B = {
       portrait, at: at2, ih,   // ih = 그림 높이(무대 좌표): 조각 크기를 그림 비율로 맞출 때 쓴다
@@ -59,7 +61,7 @@ const Bedtime = (() => {
         dy = to; return a.finished.catch(() => {});
       },
       dim(op, ms = 2000) { return B.fade(shade, op, ms); },
-      async end(ms = 3200) { const p = B.dim(.92, ms); try { if (music) music.stop(ms / 1000 + .5); } catch (e) { /* 무시 */ } await p; },
+      async end(ms = 3200) { ended = true; const p = B.dim(.92, ms); try { if (music) music.stop(ms / 1000 + .5); } catch (e) { /* 무시 */ } await p; },
     };
     return B;
   }

@@ -1514,7 +1514,7 @@ const Tale = (() => {
     <svg id="stage" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
       <defs>
         <filter id="pp" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#2E241C" flood-opacity=".45"/></filter>
-        <filter id="ppFast" x="-2%" y="-2%" width="104%" height="112%"><feFlood flood-color="#2E241C" flood-opacity=".32"/><feComposite in2="SourceAlpha" operator="in"/><feOffset dy="4"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="ppFast" x="-2%" y="-20%" width="104%" height="150%"><feFlood flood-color="#2E241C" flood-opacity=".32"/><feComposite in2="SourceAlpha" operator="in"/><feOffset dy="4"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         <filter id="armGlow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#F6ECD8" flood-opacity=".9"/></filter>
         <filter id="hintGlow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#FFD54F" flood-opacity="1"/></filter>
       </defs>

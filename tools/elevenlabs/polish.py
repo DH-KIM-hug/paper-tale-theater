@@ -6,7 +6,7 @@
   python3 tools/elevenlabs/polish.py                  # audio/el 전체(새 파일만)
   python3 tools/elevenlabs/polish.py audio/el/red_hen  # 폴더만
   from polish import polish; polish(path)             # 녹음 도구가 저장 직후 부른다"""
-import json, os, re, subprocess, sys, tempfile
+import fcntl, json, os, re, subprocess, sys, tempfile
 from concurrent.futures import ProcessPoolExecutor
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -30,10 +30,14 @@ def polish(path, log=True):
         gain = 0 if lu is None or lu < -70 else max(-12, min(18, TARGET - lu))  # 거의 무음이면 올리지 않는다
         if _ff('-i', mid, '-af', f'volume={gain:.2f}dB,alimiter=limit=0.84:level=false', '-ac', '1', '-ar', '44100', '-b:a', '128k', out).returncode: return False
         os.replace(out, path)
-    if log:
-        done = json.load(open(LOG)) if os.path.exists(LOG) else {}
-        done[os.path.relpath(os.path.abspath(path), ROOT)] = os.path.getsize(path)
-        json.dump(done, open(LOG, 'w'), ensure_ascii=False, indent=0, sort_keys=True)
+    if log:   # gen_tale.py 를 여러 개 동시에 돌려도 기록이 빠지거나 반쯤 쓴 파일을 읽지 않게: 잠그고 임시 파일에 쓴 뒤 바꿔 넣는다 (2026-11-04 코드 검토)
+        with open(LOG + '.lock', 'w') as lk:
+            fcntl.flock(lk, fcntl.LOCK_EX)
+            done = json.load(open(LOG)) if os.path.exists(LOG) else {}
+            done[os.path.relpath(os.path.abspath(path), ROOT)] = os.path.getsize(path)
+            tmp = LOG + '.tmp'
+            with open(tmp, 'w') as f: json.dump(done, f, ensure_ascii=False, indent=0, sort_keys=True)
+            os.replace(tmp, LOG)
     return True
 
 def _job(p):

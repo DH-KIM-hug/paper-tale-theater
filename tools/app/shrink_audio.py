@@ -22,7 +22,9 @@ def one(p):
         os.makedirs(os.path.dirname(c), exist_ok=True)
         tmp = c + '.tmp.mp3'
         r = subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-y', '-i', p] + (['-af', 'atempo=0.9'] if slow else []) + ['-ac', '1', '-ar', '44100', '-b:a', f'{BR}k', tmp])
-        if r.returncode or not os.path.exists(tmp): return 0
+        if r.returncode or not os.path.exists(tmp):
+            if slow: raise RuntimeError(f'영어 0.9배 늘리기 실패: {rel}')   # 앱은 EN_PRESLOWED = true 라 이 클립만 빠르게 나온다 → 빌드를 멈춘다 (2026-11-04 코드 검토)
+            return 0
         os.replace(tmp, c)
     if slow or os.path.getsize(c) < st.st_size: shutil.copyfile(c, p); return st.st_size - os.path.getsize(c)
     return 0
