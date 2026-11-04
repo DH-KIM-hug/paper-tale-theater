@@ -177,7 +177,7 @@
   /* 홈 UI 2판(2026-10-30): 아래 탭·서가 줄 머리는 단색 기호(currentColor). 생성 단색 아이콘이 들어오기 전 임시 */
   const MONO = {
     tales: '<path fill-rule="evenodd" d="M2.5 5.2c3.2-1.3 6.3-1.1 9 .9v14.2c-2.7-1.7-5.8-1.9-9-.7zM21.5 5.2c-3.2-1.3-6.3-1.1-9 .9v14.2c2.7-1.7 5.8-1.9 9-.7z"/>',
-    night: '<path d="M13.6 3.2a8.6 8.6 0 1 0 7.2 13.4A7 7 0 0 1 13.6 3.2z"/><path d="M19.2 2.6l.8 1.7 1.9.3-1.4 1.3.3 1.9-1.6-.9-1.7.9.4-1.9-1.4-1.3 1.9-.3z"/>',   // 달 + 별(2026-10-30 사용자 고름)
+    night: '<path d="M21 13.2A9.2 9.2 0 1 1 10.8 3a7.4 7.4 0 0 0 10.2 10.2z"/><path d="M18.6 2.6l.9 2 2 .9-2 .9-.9 2-.9-2-2-.9 2-.9z"/>',   // 달 + 별(2026-10-30 사용자 고름)
     puzzle: '<path d="M9 3.6a2.2 2.2 0 0 1 4.4 0V5.2h3.8a1 1 0 0 1 1 1V10h-1.6a2.2 2.2 0 0 0 0 4.4h1.6v3.8a1 1 0 0 1-1 1h-3.8v-1.6a2.2 2.2 0 0 0-4.4 0v1.6H5.2a1 1 0 0 1-1-1v-3.8h1.6a2.2 2.2 0 0 0 0-4.4H4.2V6.2a1 1 0 0 1 1-1H9z"/>',
     stickers: '<path fill-rule="evenodd" d="M6 2.5h11.5a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2.5 2.5 0 0 1-2.5-2.5v-14A2.5 2.5 0 0 1 6 2.5zM12 6.8l1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z"/>',
     recent: '<path fill-rule="evenodd" d="M12 2.5a9.5 9.5 0 1 1 0 19 9.5 9.5 0 0 1 0-19zM11 6.5v6.2l4.3 2.6 1-1.7-3.3-2V6.5z"/>',
@@ -307,9 +307,8 @@
     $('#heroPlay').setAttribute('aria-label', locked ? L(`${name} 열어 보기`, `Unlock ${name}`) : L(`${name} 시작하기`, `Start ${name}`));
     const dots = $('#heroDots');
     dots.hidden = heroList.length < 2;
-    dots.innerHTML = heroList.map(x => `<button type="button" class="hd${x.id === heroId ? ' on' : ''}" data-id="${x.id}" aria-label="${shown(x).title}"${x.id === heroId ? ' aria-current="true"' : ''}></button>`).join('');
+    dots.innerHTML = heroList.map(x => `<button type="button" class="hd${x.id === heroId ? ' on' : ''}" data-id="${x.id}" aria-label="${shown(x).title}"${x.id === heroId ? ' aria-current="true"' : ''}>${x.id === heroId && heroList.length > 1 && motion() ? '<i class="hd-fill"></i>' : ''}</button>`).join('');
   }
-  let heroTouchAt = 0;
   const HOVER = matchMedia('(hover: hover)');               // 마우스를 배너에 올려 두면 멈춤(터치 기기는 누른 뒤 남는 hover 무시)
   function heroStep(d, to, auto) {
     if (heroList.length < 2) return;
@@ -319,21 +318,28 @@
     const i = heroList.findIndex(t => t.id === heroId);
     heroId = to || heroList[(i + d + heroList.length) % heroList.length].id;
     heroDir = d;
-    if (!auto) { heroTouchAt = now; paper('tap'); }
+    if (!auto) paper('tap');
     renderHero();
     if (auto) return;                                        // 저절로 넘길 때는 소리·제목 읽기 없음
     const t = heroList.find(x => x.id === heroId);
     sayTitle(shown(t).title, t.id);
   }
-  /* 배너는 6초마다 저절로 다음 동화로 — 손으로 넘긴 뒤 10초는 쉬고, 배너가 안 보이거나(다른 탭·동화 중·스크롤로 위로 사라짐·앱 뒤로) 움직임 줄이기면 멈춘다 */
-  setInterval(() => {
-    const hz = $('#hero');
-    if (!motion() || document.hidden || !hz || hz.hidden || !hz.offsetParent || (HOVER.matches && hz.matches(':hover'))) return;
-    if (performance.now() - heroTouchAt < 10000) return;
-    const r = hz.getBoundingClientRect();
-    if (r.bottom < r.height / 2 || r.top > innerHeight) return;
+  /* 배너는 6초마다 저절로 다음 동화로 — 시간은 지금 점이 왼→오로 차오르는 애니메이션(.hd-fill, CSS heroFill) 하나가 정하고, 다 차면(animationend) 다음 동화.
+     손으로 넘기거나 배너를 만지면 점을 다시 그려 처음부터 차오른다. 배너가 안 보이거나(다른 탭·스크롤로 사라짐) 앱이 뒤로 가면 멈춘다(.pause). 움직임 줄이기면 저절로 넘기지 않는다 */
+  let heroVisible = true;
+  function heroFillRestart() {
+    const f = $('#heroDots .hd-fill'); if (!f) return;
+    f.style.animation = 'none'; void f.offsetWidth; f.style.animation = '';
+  }
+  const heroPauseSync = () => { const hz = $('#hero'); if (hz) hz.classList.toggle('pause', document.hidden || !heroVisible); };
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { heroVisible = es[es.length - 1].isIntersecting; heroPauseSync(); }, { threshold: .5 }).observe($('#hero'));
+  document.addEventListener('visibilitychange', heroPauseSync);
+  $('#heroDots').addEventListener('animationend', e => {
+    if (e.animationName !== 'heroFill') return;
+    const before = heroId;
     heroStep(1, null, true);
-  }, 6000);
+    if (heroId === before) heroFillRestart();
+  });
   {
     /* 감빛 알약 = 배너 그림 톡과 같은 동작(잠긴 동화는 잠김 쪽지, 열린 동화는 커튼 → 동화) */
     $('#heroPlay').addEventListener('click', () => { const c = $('#heroSlot .card:not(.hero-old)'); if (c) c.click(); });
@@ -344,7 +350,7 @@
     });
     let sx = null;
     const hz = $('#hero');
-    hz.addEventListener('pointerdown', e => { sx = e.clientX; heroTouchAt = performance.now(); });
+    hz.addEventListener('pointerdown', e => { sx = e.clientX; heroFillRestart(); });
     hz.addEventListener('pointerup', e => { if (sx !== null && Math.abs(e.clientX - sx) > 70) { heroStep(e.clientX < sx ? 1 : -1); hz.dataset.swiped = '1'; setTimeout(() => { delete hz.dataset.swiped; }, 50); } sx = null; });
     let wheelAt = 0;
     hz.addEventListener('wheel', e => {  // 트랙패드 가로 쓸기로도 넘긴다(세로 스크롤은 목록을 내린다)
@@ -392,16 +398,19 @@
     if (!none) emptySaid = false;
     renderHero();
     renderNight(); drawStickers();
-    if ((opts.intro || introPending) && motion() && opts.anim !== false) {     // 처음 열릴 때: 타일이 차례로 살짝 떠오른다
+    if ((opts.intro || introPending) && motion() && opts.anim !== false && !rowsIntroDone()) {     // 앱을 처음 열었을 때(세션당 한 번): 배너 아래 줄이 위에서부터 50ms 간격으로 8px 떠오른다
       introPending = false;
       let k = 0;
-      rowsEl.querySelectorAll('.card').forEach(c => {
-        const r = c.getBoundingClientRect();
-        if (r.top > innerHeight || r.bottom < 0) return;
-        c.animate([{ opacity: 0, transform: 'translateY(12px) scale(.96)' }, { opacity: 1, transform: 'none' }], { duration: 380, delay: Math.min(k++, 14) * 30 + (opts.delay || 0) * 1000, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' });
+      rowsEl.querySelectorAll('.row').forEach(r => {
+        if (!r.offsetParent) return;
+        const b = r.getBoundingClientRect();
+        if (b.top > innerHeight || b.bottom < 0) return;
+        r.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 320, delay: (opts.delay || 0) * 1000 + k++ * 50, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' });
       });
+      if (k) try { sessionStorage.setItem('ppRowsIntro', '1'); } catch (e) { /* 기억 못 하면 다음에도 한 번 더 보일 뿐 */ }
     }
   }
+  const rowsIntroDone = () => { try { return sessionStorage.getItem('ppRowsIntro') === '1'; } catch (e) { return false; } };
   let emptySaid = false;
   const requestRender = () => render({ anim: false });
 
@@ -451,6 +460,14 @@
     document.body.appendChild(c); return c;
   };
   try { addEventListener('load', () => setTimeout(() => ['assets/ui/ui_curtain_panel.webp', 'assets/v3w/cd2_layer_curtain_swag.webp'].forEach(u => { new Image().src = u; }), 1500)); } catch (e) { /* 무시 */ }   // 막 그림 미리(동화 쪽은 캐시로)
+  /* 누름이 보인 뒤(약 120ms) 커튼으로. 움직임 줄이기면 바로 */
+  let soonCard = null;
+  function openTaleSoon(card) {
+    if (soonCard) return;
+    if (!motion()) { openTale(card); return; }
+    soonCard = card;
+    setTimeout(() => { soonCard = null; openTale(card); }, 120);
+  }
   function openTale(card) {
     const href = card.getAttribute('href');
     if (leavingPage) return;
@@ -515,7 +532,7 @@
     try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (err) { /* 무시 */ }
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;   // 새 탭 열기는 그대로
     e.preventDefault();
-    openTale(c);
+    openTaleSoon(c);
   }
   $('#rows').addEventListener('click', activate);
   // 분류 카드 가로 넘김: 넘기는 동안만 얇은 막대가 보였다가 0.8초 뒤 사라짐(웹 기본 막대는 숨김)
@@ -1123,7 +1140,7 @@
         <span class="b-art" aria-hidden="true">${UIA.has('ic_playlist') ? uiImg('ic_playlist') : BT_LIST}</span>
         <h3 class="b-t">${L('우리 재생목록', 'Our playlist')}</h3>
         <div class="b-thumbs">${pl.length ? thumbs : `<span class="b-empty">${L('어른이 1초 꾹 눌러 만들어요', 'A grown-up can hold 1 second to make one')}</span>`}</div>
-        <button type="button" class="b-play${pl.length ? '' : ' empty'}" data-bt="list"${pl.length ? '' : ' disabled'} aria-label="${L('재생목록 듣기', 'Play the playlist')}">${pl.length ? playIc : ''}</button>
+        ${pl.length ? `<button type="button" class="b-play sec" data-bt="list" aria-label="${L('재생목록 듣기', 'Play the playlist')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg></button>` : ''}
         <button type="button" class="b-hold" data-bt-hold><span class="b-hold-t">${pl.length ? L('편집 1초 꾹', 'Edit · hold 1 s') : L('만들기 1초 꾹', 'Make · hold 1 s')}</span><i class="hold-ring" aria-hidden="true"></i></button>
       </section></div>`;
   }
@@ -1198,7 +1215,7 @@
     paper('tap');
     try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (err) { /* 무시 */ }
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
-    openTale(c);
+    openTaleSoon(c);
   }
 
   /* ── S3 스티커북 탭: 퍼즐판 5개(카탈로그의 origin·also 로 계산 — 새 동화가 공개되면 그 판에 조각이 저절로 는다).
@@ -1445,7 +1462,8 @@
     paintRowOn();
     /* 보상 받기 연결 (§5-7 ④): 처음 보는 조각은 자리에서 한 번 들썩(108% → 100%, 240ms), 본 것으로 적고 탭의 구리 점을 끈다 */
     if (motion()) fresh.forEach(f => $('#pzBoard').querySelectorAll(`.pzp[data-k="${f}"]`).forEach(p => p.animate([{ transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 240, delay: 260, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' })));
-    pzSeenSave(); paintTabBadge();
+    if (curTab === 'puzzle') pzSeenSave();   // 퍼즐 탭을 열어 봤을 때만 '본 것'(다른 탭에서 그려질 때 점이 꺼지지 않게)
+    paintTabBadge();
     drawPlate();
     if (pendingCel.length && !celebrating) { const k2 = pendingCel.shift(); requestAnimationFrame(() => celebrate(k2)); }
   }
@@ -1645,40 +1663,35 @@
     $('#emptyReset').textContent = L('전체 보기', 'Show all');
     if (stkTab()) drawStickers();
   }
-  /* 탭 내용 바꾸기 (§5-2): 이전 뷰는 140ms 에 24px 밀려 나가고 새 뷰는 반대쪽 24px 에서 220ms 로 들어온다(동시에 시작).
-     방향은 탭 순서(동화 → 잠자리 → 스티커북이 오른쪽). 움직임 줄이기면 120ms 크로스페이드만 */
+  /* 탭 내용 바꾸기 (2026-11-04 모션): 이전 화면은 바로 숨기고, 새 화면은 12px 아래에서 220ms 에 떠오르며 나타난다(두 화면이 겹쳐 보이지 않게).
+     고른 탭의 흰 알약(.tab-pill)은 이전 탭 자리에서 새 탭 자리로 미끄러진다. 움직임 줄이기면 모두 바로 바뀐다 */
   const TAB_ORDER = Object.keys(TABS), EASE = 'cubic-bezier(.2,.8,.2,1)';
-  let leaving = null;
   const viewOf = k => document.querySelector(`.view[data-view="${TABS[k] ? TABS[k].view : k}"]`);
-  function leaveDone() {
-    if (!leaving) return;
-    const v = leaving; leaving = null;
-    if (v._anim) { v._anim.cancel(); v._anim = null; }
-    delete v.dataset.leaving;
-    v.style.cssText = '';
-    v.hidden = v.dataset.view !== TABS[curTab].view;
+  const pill = document.createElement('i');
+  pill.className = 'tab-pill'; pill.setAttribute('aria-hidden', 'true');
+  $('#tabs').insertAdjacentElement('afterbegin', pill);
+  function placePill(still) {
+    const tb = tabBtns.find(b => b.classList.contains('on')), h = tb && tb.querySelector('.hole');
+    if (!h || !h.offsetWidth) return;
+    const tabs = $('#tabs');
+    if (still) tabs.classList.add('pill-still');
+    pill.style.width = h.offsetWidth + 'px'; pill.style.height = h.offsetHeight + 'px';
+    pill.style.transform = `translate(${tb.offsetLeft + h.offsetLeft}px, ${tb.offsetTop + h.offsetTop}px)`;
+    pill.style.opacity = '1';
+    if (still) { void pill.offsetWidth; tabs.classList.remove('pill-still'); }
   }
-  function swapViews(prev, k) {
-    const ov = viewOf(prev), nv = viewOf(k);
-    if (!ov || !nv || !ov.animate) return;
-    const rm = RM.matches, mv = rm ? 0 : 24, dir = TAB_ORDER.indexOf(k) > TAB_ORDER.indexOf(prev) ? 1 : -1;
-    Object.assign(ov.style, { position: 'absolute', left: ov._r.l + 'px', top: ov._r.t + 'px', width: ov._r.w + 'px', height: ov._r.h + 'px', margin: '0', pointerEvents: 'none', zIndex: '0' });
-    leaving = ov;
-    ov._anim = ov.animate([{ opacity: 1, transform: 'translateX(0)' }, { opacity: 0, transform: `translateX(${-mv * dir}px)` }], { duration: rm ? 120 : 140, easing: EASE, fill: 'forwards' });
-    ov._anim.onfinish = leaveDone;
-    nv.animate([{ opacity: 0, transform: `translateX(${mv * dir}px)` }, { opacity: 1, transform: 'none' }], { duration: rm ? 120 : 220, easing: EASE });
-  }
+  addEventListener('resize', () => placePill(true));
+  if (window.ResizeObserver) new ResizeObserver(() => placePill(true)).observe($('#tabs'));
   /* 새 탭의 구멍이 열리고(그림 72% → 100%, 감빛 고리) 이전 구멍은 닫힌다 — 움직임은 CSS(.tab.on). 한 번 톡으로 바로 바뀌고 이름을 한 번 읽어 준다 */
   function setTab(k, o = {}) {
     if (!TABS[k]) k = 'tales';
     const prev = curTab;
     if (k === prev && !o.force) return;
-    leaveDone();
-    const ov = !o.silent && prev && prev !== k && TABS[prev].view !== TABS[k].view && viewOf(prev);   // 퍼즐 ↔ 스티커북은 같은 화면이라 밀지 않고 바로 다시 그린다
-    if (ov && !ov.hidden) { ov._r = { l: ov.offsetLeft, t: ov.offsetTop, w: ov.offsetWidth, h: ov.offsetHeight }; ov.dataset.leaving = '1'; }
     curTab = k;
     paintTabs();
-    if (ov && ov.dataset.leaving) swapViews(prev, k);
+    placePill(!!o.silent || !prev || !motion());
+    const nv = viewOf(k);
+    if (!o.silent && prev && TABS[prev].view !== TABS[k].view && nv && nv.animate && motion()) nv.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 220, easing: EASE });   // 퍼즐 ↔ 스티커북은 같은 화면이라 밀지 않고 바로 다시 그린다
     if (!o.silent) { try { localStorage.setItem(TAB_KEY, k); } catch (e) { /* 기억 못 해도 이 화면은 바뀐다 */ } }
     if (!o.silent && location.hash !== '#' + k) { try { history.replaceState(null, '', location.pathname + location.search + '#' + k); } catch (e) { /* 무시 */ } }
     if (o.silent) return;
@@ -1704,8 +1717,57 @@
     starChip.classList.toggle('full', sf > 0);
     starChip.innerHTML = starPieces(sn, true) + (sf ? `<b class="chip-n">×${sf}</b>` : '');
     starChip.setAttribute('aria-label', L(`별 조각 ${sn} / ${need}, 완성한 별 ${sf}개`, `Star pieces ${sn} / ${need}, ${sf} stars`));
-    tabBtns.find(b => b.dataset.tab === 'puzzle').querySelector('.tab-badge').hidden = !(curTab !== 'puzzle' && pzNew().length > 0);
-    tabBtns.find(b => b.dataset.tab === 'stickers').querySelector('.tab-badge').hidden = !(Entitlements.appMode() && Entitlements.starBalance() >= Entitlements.STAR_NEED);
+    const need2 = Entitlements.STAR_NEED, app = Entitlements.appMode();
+    const pzCur = curTab !== 'puzzle' ? pzNew() : [];
+    const stCur = app && sb >= need2;
+    // 새로 생긴 점·별 조각만 날아간다(이미 있던 점·조각은 그대로). 날아가는 동안 점은 숨겨 두었다가 들어가는 순간 나타난다
+    const pzFresh = rewardFresh(FLY_PZ, pzCur), starPrev = starSeen(sb);
+    if (pzFresh && motion() && !flyBusy.puzzle) { flyBusy.puzzle = true; flyLater(() => flyTo('puzzle', () => { flyBusy.puzzle = false; paintTabBadge(); popBadge('puzzle'); })); }
+    else if (stCur && starPrev < need2 && motion() && !flyBusy.stickers) { flyBusy.stickers = true; flyLater(() => flyTo('stickers', () => { flyBusy.stickers = false; paintTabBadge(); popBadge('stickers'); })); }
+    else if (app && sb > starPrev && motion() && !flyBusy.star && !flyBusy.stickers) { flyBusy.star = true; flyLater(() => flyTo('star', () => { flyBusy.star = false; })); }
+    tabBtns.find(b => b.dataset.tab === 'puzzle').querySelector('.tab-badge').hidden = !(pzCur.length > 0) || flyBusy.puzzle;
+    tabBtns.find(b => b.dataset.tab === 'stickers').querySelector('.tab-badge').hidden = !stCur || flyBusy.stickers;
+  }
+  /* ── 보상 날아가기: 새 조각이 생긴 걸 홈에서 처음 볼 때, 작은 조각이 화면 가운데에서 탭 기호로 곡선을 그리며 들어가고 기호가 톡 튀며 점이 나타난다 ── */
+  const FLY_PZ = 'paperTheater.pzFly', FLY_STAR = 'paperTheater.starFly';
+  const flyBusy = { puzzle: false, stickers: false, star: false };
+  let homeRevealed = false; const flyQueue = [];
+  const flyLater = f => { if (homeRevealed) setTimeout(f, 200); else flyQueue.push(f); };
+  function homeReveal() { homeRevealed = true; flyQueue.splice(0).forEach(f => setTimeout(f, 450)); }   // 스플래시가 걷힌 뒤에 시작
+  /* 이미 알린 조각 목록과 비교해 새 것이 있으면 true. 목록은 지금 있는 것으로 바꿔 둔다(처음 켠 기기는 날리지 않는다) */
+  function rewardFresh(key, cur) {
+    let raw = null, ann = [];
+    try { raw = localStorage.getItem(key); ann = JSON.parse(raw); } catch (e) { ann = null; }
+    try { localStorage.setItem(key, JSON.stringify(cur)); } catch (e) { /* 기억 못 하면 날지 않는다 */ }
+    return raw !== null && Array.isArray(ann) && cur.some(k => !ann.includes(k));
+  }
+  function starSeen(sb) {
+    let raw = null;
+    try { raw = localStorage.getItem(FLY_STAR); localStorage.setItem(FLY_STAR, String(sb)); } catch (e) { /* 무시 */ }
+    return raw === null || isNaN(Number(raw)) ? sb : Number(raw);
+  }
+  const bump = el => { if (el && el.animate) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.15)' }, { transform: 'scale(1)' }], { duration: 260, easing: EASE }); };
+  function popBadge(k) {
+    const b = tabBtns.find(x => x.dataset.tab === k).querySelector('.tab-badge');
+    if (b && !b.hidden && b.animate) b.animate([{ transform: 'scale(0)' }, { transform: 'scale(1.4)' }, { transform: 'scale(1)' }], { duration: 300, easing: EASE });
+  }
+  function flyTo(kind, done) {
+    const tb = kind === 'star' ? starChip : tabBtns.find(x => x.dataset.tab === kind).querySelector('.hole');
+    if (!tb || (kind === 'star' && starChip.hidden)) { done(); return; }
+    const r = tb.getBoundingClientRect(), ex = r.left + r.width / 2, ey = r.top + r.height / 2, sx = innerWidth / 2, sy = innerHeight / 2;
+    const cx = (sx + ex) / 2 + (sx - ex) * .3, cy = Math.min(sy, ey) - Math.max(80, innerHeight * .12);
+    const el = document.createElement('div');
+    el.className = 'fly-pc'; el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = kind === 'puzzle' ? mono('puzzle', 'fly-ic') : '<img src="assets/ui/star_one.webp" alt="" draggable="false">';
+    document.body.appendChild(el);
+    const kf = [{ transform: `translate(${sx}px, ${sy}px) scale(.3)`, opacity: 0, offset: 0 }, { transform: `translate(${sx}px, ${sy}px) scale(1.5)`, opacity: 1, offset: .18 }];
+    for (let i = 1; i <= 14; i++) {
+      const u = i / 14, t = u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2, m = 1 - t;
+      kf.push({ transform: `translate(${(m * m * sx + 2 * m * t * cx + t * t * ex).toFixed(1)}px, ${(m * m * sy + 2 * m * t * cy + t * t * ey).toFixed(1)}px) scale(${(1.5 - .8 * t).toFixed(3)})`, opacity: 1, offset: .18 + .82 * u });
+    }
+    const a = el.animate(kf, { duration: 900, easing: 'linear', fill: 'forwards' });
+    a.onfinish = () => { el.remove(); paper('up'); bump(kind === 'star' ? starChip : tb.querySelector('.tab-ic')); done(); };
+    a.oncancel = () => { el.remove(); done(); };
   }
   /* 탭 기호: 단색(홈 UI 2판). 고른 탭은 CSS 가 진한 먹색 + 흰 알약으로 */
   tabBtns.forEach(b => { b.querySelector('.hole').innerHTML = mono(b.dataset.tab, 'tab-ic'); });
@@ -1770,8 +1832,8 @@
     let first = q === '0' ? false : !backFromApp();
     if (['1', '2'].includes(q)) first = true;
     update({ anim: false });
-    if (first && location.hash !== '#parent') splash(() => update({ intro: true, delay: .04, step: .035 }));
-    else update({ intro: true, delay: .02, step: .03 });
+    if (first && location.hash !== '#parent') splash(() => { update({ intro: true, delay: .04, step: .035 }); homeReveal(); });
+    else { update({ intro: true, delay: .02, step: .03 }); homeReveal(); }
   }
 
   /* 처음 탭: 주소의 해시 → 마지막으로 본 탭 → 동화 */
@@ -1782,14 +1844,15 @@
 
   /* ── 누름 반응 (§5-3): pointerdown 에서 .is-pressed, pointerup·cancel 에서 뗀다. 모양은 CSS 가 정한다 ── */
   const PRESS = '.star-open, .star-chip, .tab, .card, .pz-b, .pick, .pl-tile, .round, .pz-pb, .pz-open, .b-go, .b-play, .b-chip, .hero-play, .hd, .ticket, .pl-top, .pl-b, .g-item, .gate-opt';
-  let pressed = null;
+  let pressed = null, pressX = 0, pressY = 0;
   const unpress = () => { if (pressed) { pressed.classList.remove('is-pressed'); pressed = null; } };
+  addEventListener('pointermove', e => { if (pressed && Math.hypot(e.clientX - pressX, e.clientY - pressY) > 8) unpress(); }, true);   // 스크롤하려고 끈 손가락은 누름으로 치지 않는다
   document.addEventListener('pointerdown', e => {
     unpress();
     if (e.button) return;
     const el = e.target.closest && e.target.closest(PRESS);
     if (!el || el.disabled) return;
-    pressed = el; el.classList.add('is-pressed');
+    pressed = el; pressX = e.clientX; pressY = e.clientY; el.classList.add('is-pressed');
   }, true);
   ['pointerup', 'pointercancel', 'dragstart'].forEach(ev => addEventListener(ev, unpress, true));
   addEventListener('blur', unpress);
