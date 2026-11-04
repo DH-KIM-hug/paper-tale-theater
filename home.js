@@ -1198,7 +1198,10 @@
     h.classList.add('holding'); clearTimeout(btHoldT);
     btHoldT = setTimeout(() => { btHoldEnd(); paper('tap'); btOpenEditor(); }, 1000);
   });
-  ['pointerup', 'pointercancel', 'pointerleave', 'dragstart'].forEach(ev => document.addEventListener(ev, btHoldEnd, true));
+  ['pointerup', 'pointercancel', 'dragstart'].forEach(ev => document.addEventListener(ev, btHoldEnd, true));
+  /* 단추 자체를 벗어날 때만 취소. 문서 전체 pointerleave 를 잡으면 마우스가 단추 안 글자(span) 경계를 1px 만 넘어도 꾹이 풀려
+     웹(마우스·트랙패드)에서 '만들기 1초 꾹'이 안 열리던 것(2026-11-04 사용자 제보) */
+  document.addEventListener('pointerleave', e => { if (e.target.matches && e.target.matches('[data-bt-hold]')) btHoldEnd(); }, true);
   function renderNight() {
     const body = $('#nightBody'); if (!body) return;
     const list = nightList(), recent = readList(recentReadKey).map(id => list.find(t => t.id === id)).filter(Boolean);
