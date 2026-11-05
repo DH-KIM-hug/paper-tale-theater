@@ -33,6 +33,14 @@ TAGS = {  # 한국어 say → 영어
 
 ALIAS = {'콩쥐팥쥐': 'Kongjwi and Patjwi'}
 
+STAGE = {  # 스티커북 '내 무대 꾸미기' 안내 (docs/STICKER_STAGE_PLAN.md §6-2)
+  '내 무대 꾸미기': 'My stage', '스티커를 끌어다 붙여 봐요': 'Drag a sticker onto the stage',
+  '서랍에서 친구를 골라요': 'Pick a friend from the drawer', '배경을 골라요': 'Pick a background',
+  '숲': 'Forest', '바다': 'Sea', '밤하늘': 'Night sky', '눈 마을': 'Snow village', '성': 'Castle', '꽃밭': 'Flower meadow',
+  '친구 스티커를 더 모으면 열려요': 'Collect more friend stickers to open it', '새 배경이 열렸어요!': 'A new background opened!',
+  '무대가 가득 찼어요': 'The stages are full', '처음부터 해요': 'Starting over', '지웠어요': 'Deleted',
+}
+
 def tales():
     js = open(os.path.join(ROOT, 'tales/catalog.js')).read() + '\nconsole.log(JSON.stringify(TALES.map(t=>({title:t.title,en:t.en&&t.en.title}))))'
     open('/tmp/_cat.js', 'w').write('const document={},window={},localStorage={getItem(){return null}};\n' + js)
@@ -40,6 +48,7 @@ def tales():
 
 def main():
     dry = '--dry' in sys.argv
+    if '--stage' in sys.argv: return stage(dry)
     items = dict((k, v) for k, v in TAGS.items())
     for t in tales():
         items[t['title']] = t['en']; items[SOON(t['title'])] = f"{t['en']}. Opening soon."
@@ -62,6 +71,31 @@ def main():
     print('새로 보낸 글자 수:', chars, '/ 클립', len(clips), len(clips_en))
     if dry: return
     with open(os.path.join(ROOT, 'home_narration_el.js'), 'w') as f:
+        f.write('/* 홈 화면 문구 내레이션 — ElevenLabs (tools/elevenlabs/gen_home.py 가 생성, 손으로 고치지 말 것) */\n')
+        f.write('const NARRATION_CLIPS = ' + json.dumps(clips, ensure_ascii=False, indent=1) + ';\n')
+        f.write('const NARRATION_CLIPS_EN = ' + json.dumps(clips_en, ensure_ascii=False, indent=1) + ';\n')
+def stage(dry):
+    """--stage: STAGE 줄만 녹음해 지금 home_narration_el.js 에 더한다(다른 스크립트가 넣은 줄·옛 클립은 그대로)."""
+    out = os.path.join(ROOT, 'home_narration_el.js'); src = open(out).read()
+    def obj(name):
+        m = re.search(r'const ' + name + r' = (\{.*?\n\});', src, re.S); return json.loads(m.group(1))
+    clips, clips_en, chars = obj('NARRATION_CLIPS'), obj('NARRATION_CLIPS_EN'), 0
+    for ko, en in STAGE.items():
+        for lang, text in (('ko', ko), ('en', en)):
+            sent = TAG + text
+            h = hashlib.md5(f'{VOICE}|{MODEL}|{sent}|{SET}'.encode()).hexdigest()[:10]
+            rel = f'audio/el/home/{"en/" if lang == "en" else ""}nar_{h}.mp3'
+            path = os.path.join(ROOT, rel); os.makedirs(os.path.dirname(path), exist_ok=True)
+            if not os.path.exists(path):
+                chars += len(sent)
+                if dry: print('NEED', text); continue
+                try: tts(path, VOICE, sent, MODEL, SET); print('ok', text, flush=True)
+                except urllib.error.HTTPError as e: print('ERR', e.code, text); continue
+            if lang == 'ko': clips[ko] = rel
+            else: clips_en[ko] = {'t': en, 'c': rel}
+    print('새로 보낸 글자 수:', chars)
+    if dry: return
+    with open(out, 'w') as f:
         f.write('/* 홈 화면 문구 내레이션 — ElevenLabs (tools/elevenlabs/gen_home.py 가 생성, 손으로 고치지 말 것) */\n')
         f.write('const NARRATION_CLIPS = ' + json.dumps(clips, ensure_ascii=False, indent=1) + ';\n')
         f.write('const NARRATION_CLIPS_EN = ' + json.dumps(clips_en, ensure_ascii=False, indent=1) + ';\n')

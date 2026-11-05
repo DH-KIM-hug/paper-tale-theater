@@ -403,7 +403,22 @@ const NARRATION_CLIPS = {
  "반짝 스티커가 생겼어요!": "audio/el/home/nar_3a8af06f35.mp3",
  "반짝이게 할 스티커를 골라요": "audio/el/home/nar_95c01991aa.mp3",
  "친구 스티커가 생겼어요!": "audio/el/home/nar_2df210e8be.mp3",
- "동화 스티커를 받았어요!": "audio/el/home/nar_26c030ce25.mp3"
+ "동화 스티커를 받았어요!": "audio/el/home/nar_26c030ce25.mp3",
+ "내 무대 꾸미기": "audio/el/home/nar_5036f7714f.mp3",
+ "스티커를 끌어다 붙여 봐요": "audio/el/home/nar_8309d0b536.mp3",
+ "서랍에서 친구를 골라요": "audio/el/home/nar_3ce855db50.mp3",
+ "배경을 골라요": "audio/el/home/nar_9f43ba4b9e.mp3",
+ "숲": "audio/el/home/nar_14e7281791.mp3",
+ "바다": "audio/el/home/nar_75ab501379.mp3",
+ "밤하늘": "audio/el/home/nar_d6aa6f2161.mp3",
+ "눈 마을": "audio/el/home/nar_8feae18bd1.mp3",
+ "성": "audio/el/home/nar_4ee1e7a78d.mp3",
+ "꽃밭": "audio/el/home/nar_c91b94077a.mp3",
+ "친구 스티커를 더 모으면 열려요": "audio/el/home/nar_600b560bfc.mp3",
+ "새 배경이 열렸어요!": "audio/el/home/nar_ea2ce92f93.mp3",
+ "무대가 가득 찼어요": "audio/el/home/nar_b3b0287876.mp3",
+ "처음부터 해요": "audio/el/home/nar_a20d526698.mp3",
+ "지웠어요": "audio/el/home/nar_62cddd6809.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -2305,5 +2320,65 @@ const NARRATION_CLIPS_EN = {
  "You got a story sticker!": {
   "t": "You got a story sticker!",
   "c": "audio/el/home/en/nar_c8fa6c6c4f.mp3"
+ },
+ "내 무대 꾸미기": {
+  "t": "My stage",
+  "c": "audio/el/home/en/nar_170af4da9e.mp3"
+ },
+ "스티커를 끌어다 붙여 봐요": {
+  "t": "Drag a sticker onto the stage",
+  "c": "audio/el/home/en/nar_6fd22385a7.mp3"
+ },
+ "서랍에서 친구를 골라요": {
+  "t": "Pick a friend from the drawer",
+  "c": "audio/el/home/en/nar_14feaacd16.mp3"
+ },
+ "배경을 골라요": {
+  "t": "Pick a background",
+  "c": "audio/el/home/en/nar_4cff599cdd.mp3"
+ },
+ "숲": {
+  "t": "Forest",
+  "c": "audio/el/home/en/nar_c074c83b1e.mp3"
+ },
+ "바다": {
+  "t": "Sea",
+  "c": "audio/el/home/en/nar_f67900d210.mp3"
+ },
+ "밤하늘": {
+  "t": "Night sky",
+  "c": "audio/el/home/en/nar_1450850037.mp3"
+ },
+ "눈 마을": {
+  "t": "Snow village",
+  "c": "audio/el/home/en/nar_a65c5b4155.mp3"
+ },
+ "성": {
+  "t": "Castle",
+  "c": "audio/el/home/en/nar_55cf0f0a5e.mp3"
+ },
+ "꽃밭": {
+  "t": "Flower meadow",
+  "c": "audio/el/home/en/nar_e651650c1d.mp3"
+ },
+ "친구 스티커를 더 모으면 열려요": {
+  "t": "Collect more friend stickers to open it",
+  "c": "audio/el/home/en/nar_07f67beb84.mp3"
+ },
+ "새 배경이 열렸어요!": {
+  "t": "A new background opened!",
+  "c": "audio/el/home/en/nar_0328edbb8d.mp3"
+ },
+ "무대가 가득 찼어요": {
+  "t": "The stages are full",
+  "c": "audio/el/home/en/nar_8a55ff410c.mp3"
+ },
+ "처음부터 해요": {
+  "t": "Starting over",
+  "c": "audio/el/home/en/nar_4b704bd46b.mp3"
+ },
+ "지웠어요": {
+  "t": "Deleted",
+  "c": "audio/el/home/en/nar_267a40e1ce.mp3"
  }
 };
