@@ -60,7 +60,10 @@
   function removeScene(id) { writeScenes(scenes().filter(x => x.id !== id)); }
 
   /* ── 칼선 + 그림자 굽기: 스티커당 한 번, 평소·들림 두 장 ── */
-  const BAKE_H = 480, baked = new Map();
+  /* AREA: 칠해진 면적의 제곱근이 무대 단위(unit)의 몇 배인가. 사람 서기 자세가 예전 크기(unit)쯤 되게 맞춘 값.
+     sizes: 잰 결과를 기기에 적어 두고 스티커북 '내 무대' 장면 카드가 같은 비율로 그린다 */
+  const BAKE_H = 480, AREA = .58, SZ = 'paperTheater.stageSz', baked = new Map();
+  let sizes = {}; try { sizes = JSON.parse(localStorage.getItem(SZ) || '{}') || {}; } catch (e) { sizes = {}; }
   function loadImg(src) {
     return new Promise((res, rej) => { const im = new Image(); im.decoding = 'async'; im.onload = () => res(im); im.onerror = rej; im.src = src; });
   }
@@ -69,12 +72,30 @@
     const p = (async () => {
       const c = info(key); if (!c) return null;
       const im = await loadImg(c.img);
-      const s = BAKE_H / im.naturalHeight, w = Math.round(im.naturalWidth * s), h = BAKE_H;
-      const r = Math.round(h * .013), pad = Math.round(h * .14);
+      const s = BAKE_H / im.naturalHeight, W0 = Math.round(im.naturalWidth * s), H0 = BAKE_H;
+      let src = im, w = W0, h = H0, hf = 1, ch = 1, r, pad;
+      try {
+        /* 0) 크기 맞추기(CLAUDE §4-1): 그림마다 투명 여백이 달라 상자 높이를 같게 두면 크기가 널뛴다.
+              여백을 잘라 내고, 실제로 칠해진 면적(불투명 픽셀 수)이 모두 같아지도록 키를 정한다 → 황소·할머니·밤이 비슷한 무게로 보인다 */
+        const full = document.createElement('canvas'); full.width = W0; full.height = H0;
+        const fx0 = full.getContext('2d'); fx0.drawImage(im, 0, 0, W0, H0);
+        const px = fx0.getImageData(0, 0, W0, H0).data;
+        let x0 = W0, y0 = H0, x1 = -1, y1 = -1, n = 0;
+        for (let y = 0; y < H0; y++) for (let x = 0; x < W0; x++) if (px[(y * W0 + x) * 4 + 3] > 40) { n++; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+        if (n > 50) {
+          w = x1 - x0 + 1; h = y1 - y0 + 1;
+          const t = document.createElement('canvas'); t.width = w; t.height = h; t.getContext('2d').drawImage(full, -x0, -y0); src = t;
+          hf = Math.max(.45, Math.min(1.5, h * AREA / Math.sqrt(n)));   // 무대 높이 단위(unit)에 대한 키 비율
+          ch = hf * H0 / h;                                              // 원본 그림 상자 기준(장면 카드용)
+          sizes[key] = { hf: +hf.toFixed(3), ch: +ch.toFixed(3), cx: +(((x0 + x1) / 2) / W0).toFixed(3), cy: +(((y0 + y1) / 2) / H0).toFixed(3) };
+          try { localStorage.setItem(SZ, JSON.stringify(sizes)); } catch (e) { /* 무시 */ }
+        }
+      } catch (e) { /* 픽셀을 못 읽음(file://) → 상자 그대로 */ }
+      r = Math.round(BAKE_H * .013); pad = Math.round(BAKE_H * .14);
       try {
         /* 1) 모양 그대로 흰색(반짝 스티커는 무지갯빛) 실루엣 */
         const sil = document.createElement('canvas'); sil.width = w; sil.height = h;
-        const sx = sil.getContext('2d'); sx.drawImage(im, 0, 0, w, h); sx.globalCompositeOperation = 'source-in';
+        const sx = sil.getContext('2d'); sx.drawImage(src, 0, 0, w, h); sx.globalCompositeOperation = 'source-in';
         if (shiny(key)) { const g = sx.createLinearGradient(0, 0, w, h); ['#FF8FB1', '#FFD36E', '#9BE7A8', '#8FD3FF', '#C9A7FF', '#FF8FB1'].forEach((col, i, a) => g.addColorStop(i / (a.length - 1), col)); sx.fillStyle = g; }
         else sx.fillStyle = '#fff';
         sx.fillRect(0, 0, w, h);
@@ -82,7 +103,7 @@
         const cut = document.createElement('canvas'); cut.width = w + 2 * r; cut.height = h + 2 * r;
         const cx = cut.getContext('2d');
         for (let a = 0; a < 16; a++) { const t = a / 16 * Math.PI * 2; cx.drawImage(sil, r + Math.cos(t) * r, r + Math.sin(t) * r); }
-        cx.drawImage(im, r, r, w, h);
+        cx.drawImage(src, r, r, w, h);
         /* 3) 그림자: 평소(얕게) · 들림(깊게) — 흐림값을 움직이지 않고 두 장을 바꿔 보인다 */
         const shot = (dy, blur, a) => {
           const f = document.createElement('canvas'); f.width = cut.width + 2 * pad; f.height = cut.height + 2 * pad;
@@ -90,10 +111,10 @@
           fx.drawImage(cut, pad, pad);
           return f.toDataURL('image/png');
         };
-        return { flat: shot(h * .012, h * .022, .35), up: shot(h * .05, h * .07, .28), w: cut.width, h: cut.height, pad, ar: cut.width / cut.height };
+        const B = BAKE_H; return { flat: shot(B * .012, B * .022, .35), up: shot(B * .05, B * .07, .28), w: cut.width, h: cut.height, pad, ar: cut.width / cut.height, hf: hf * cut.height / h };
       } catch (e) {
         /* 굽기 못 함(예: file:// 로 연 페이지) → CSS 칼선으로 */
-        return { flat: c.img, up: c.img, w, h, pad: 0, ar: w / h, css: true };
+        return { flat: c.img, up: c.img, w: W0, h: H0, pad: 0, ar: W0 / H0, hf: 1, css: true };
       }
     })().catch(() => null);
     baked.set(key, p);
@@ -159,7 +180,7 @@
     else { w = aw; h = Math.min(ah, w * 1.65); }   // 세로 배경(3:4)을 덮기 — 좁은 폰에서는 양옆 장식이 조금 잘리고 무대가 더 커진다
     board.style.width = Math.round(w) + 'px'; board.style.height = Math.round(h) + 'px';
     drawer.style.width = Math.round(tall ? w : Math.max(w, Math.min(aw, 1200))) + 'px';
-    unit = tall ? w * .24 : h * .30;
+    unit = tall ? w * .38 : h * .30;   // 세로 무대는 폭 기준(아이패드 세로 ≈ 가로 화면과 같은 크기, 폰은 손가락에 맞게)
     paintBg(false);
     boardR = board.getBoundingClientRect();
     els.forEach((el, key) => placeEl(el, scene.items.find(i => i.c === key)));
@@ -177,7 +198,7 @@
   }
 
   /* ── 무대 위 스티커 ── */
-  const sizeOf = (b, c) => { const hh = unit * (c ? c.sh : 1); return { h: hh, w: hh * b.ar }; };
+  const sizeOf = (b, c) => { const hh = unit * (b.hf || 1) * (c ? c.sh : 1); return { h: hh, w: hh * b.ar }; };
   function stickerEl(key, b) {
     const el = document.createElement('div');
     el.className = 'sg-it' + (b.css ? ' css' : '');
@@ -524,7 +545,9 @@
     const b = BGS.find(x => x.id === s.bg) || BGS[0];
     const items = s.items.filter(i => info(i.c)).map(i => {
       const c = info(i.c);
-      return `<img class="st-s" src="${c.img}" alt="" draggable="false" loading="lazy" decoding="async" style="left:${(i.x * 100).toFixed(1)}%;top:${(i.y * 100).toFixed(1)}%;height:${(30 * c.sh).toFixed(1)}%${i.f ? ';transform:translate(-50%,-50%) scaleX(-1)' : ''}">`;
+      const z = sizes[i.c], hp = 30 * (z ? z.ch : 1) * c.sh;   // 무대 단위 = 카드 높이의 30%(가로 무대와 같은 비율)
+      const ox = z ? (z.cx - .5) * 100 : 0, oy = z ? (z.cy - .5) * 100 : 0;   // 칠해진 부분의 가운데를 자리 점에 맞춘다
+      return `<img class="st-s" src="${c.img}" alt="" draggable="false" loading="lazy" decoding="async" style="left:${(i.x * 100).toFixed(1)}%;top:${(i.y * 100).toFixed(1)}%;height:${hp.toFixed(1)}%;transform:translate(${(-50 - (i.f ? -ox : ox)).toFixed(1)}%,${(-50 - oy).toFixed(1)}%)${i.f ? ' scaleX(-1)' : ''}">`;
     }).join('');
     return `<button type="button" class="st-card" data-id="${s.id}" aria-label="${L('내 무대', 'My stage')} ${L(b.ko, b.en)}"><span class="st-pic"><img class="st-bg" src="${bgSrc(b.id, false)}" alt="" draggable="false" loading="lazy" decoding="async">${items}</span><i class="st-x" role="button" aria-label="${L('지우기', 'Delete')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></i></button>`;
   }
