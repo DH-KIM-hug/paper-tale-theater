@@ -1,0 +1,111 @@
+/* 스티커북 「내 무대 꾸미기」 (stage.js, docs/STICKER_STAGE_PLAN.md)
+   화면(바탕·흰 서랍·단색 기호 단추)은 평평한 홈 2판, 무대 카드 안(배경 종이·스티커)만 종이 그림. 무대 테두리 하나가 경계다 */
+
+/* ── 편집기: 탭을 숨긴 전체 화면 ── */
+.sg { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; align-items: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background: var(--paper); overflow: hidden; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.sg[hidden] { display: none; }
+html.sg-open, html.sg-open body { overflow: hidden; }
+
+.sg-top { flex: none; display: flex; align-items: center; gap: var(--s-3); width: 100%; height: var(--sg-top, 80px); padding: 0 var(--sg-g, 32px); }
+.sg-sp { flex: 1; }
+/* 단추는 80px 누름 영역, 보이는 원은 64px(흰 원 + --sh-2) */
+.sg-btn { position: relative; flex: none; width: 80px; height: 80px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.sg-btn::before { content: ''; position: absolute; inset: 8px; border-radius: 50%; background: var(--card); box-shadow: var(--sh-2); transition: transform var(--t-1, 80ms) var(--ease, ease), background-color var(--t-1, 80ms); }
+.sg-btn:active::before { transform: scale(.94); background: var(--paper-dn); }
+.sg-btn svg { position: relative; width: 30px; height: 30px; fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.sg-btn.on::before { background: var(--paper-dn); box-shadow: var(--cut, inset 0 1px 3px rgba(0,0,0,.12)); }
+.sg-btn:focus-visible { outline: 3px solid var(--ink); outline-offset: -2px; border-radius: 50%; }
+.sg-reset { --ring-r: 50%; }
+.sg-reset .hold-ring { inset: 2px; }
+
+/* 무대: 흰 카드 안 종이 그림, 모서리 r28, 1px 선, 그림자 없음 */
+.sg-mid { flex: 1 1 auto; min-height: 0; width: 100%; display: grid; place-items: center; padding: 0 var(--sg-g, 32px); }
+.sg-board { position: relative; overflow: hidden; border-radius: var(--r-l, 28px); background: var(--paper-deep); box-shadow: 0 0 0 1px rgba(0, 0, 0, .08); isolation: isolate; touch-action: none; }
+.sg-bg { position: absolute; inset: 0; overflow: hidden; }
+.sg-bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; display: block; pointer-events: none; }
+.sg-items { position: absolute; inset: 0; }
+
+/* 무대 위 스티커: 구운 그림 두 장(평소·들림)을 겹쳐 두고 opacity 만 바꾼다. 움직임은 transform 만 */
+.sg-it { position: absolute; left: 0; top: 0; cursor: grab; touch-action: none; }
+.sg-it::after { content: ''; position: absolute; left: 50%; top: 50%; width: max(100%, 96px); height: max(100%, 96px); transform: translate(-50%, -50%); }   /* 작은 스티커도 96px 누름 영역 */
+.sg-face { position: absolute; inset: 0; }
+.sg-face img { position: absolute; max-width: none; pointer-events: none; display: block; }
+.sg-it .sg-face img.u { opacity: 0; }
+.sg-it.up { cursor: grabbing; z-index: 5; will-change: transform; }
+.sg-it.up .sg-face img.u { opacity: 1; }
+.sg-it.up .sg-face img.f { opacity: 0; }
+/* 굽지 못한 경우(file://): CSS 칼선으로 */
+.sg-it.css .sg-face img { filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 3px 4px rgba(46, 36, 28, .35)); }
+.sg-it.css .sg-face img.u { display: none; }
+.sg-it.css .sg-face img.f { opacity: 1; }
+
+/* 날기 층: 들린 스티커·손가락 힌트가 무대·서랍 위로 */
+.sg-fly { position: fixed; inset: 0; z-index: 10; pointer-events: none; }
+.sg-fly .sg-it { position: fixed; }
+.sg-hand { position: fixed; left: 0; top: 0; width: 72px; height: 72px; margin: -10px 0 0 -22px; filter: drop-shadow(1px 4px 3px rgba(20, 26, 46, .35)); }
+
+/* 서랍: 흰 카드 한 줄, 가로 넘김. 받은 순서, 동화가 바뀌는 자리에 동화 동그라미 */
+.sg-drawer { flex: none; display: flex; align-items: center; gap: var(--s-2); height: var(--sg-dh, 136px); max-width: calc(100% - 2 * var(--sg-g, 32px)); margin: var(--s-4) 0 calc(var(--s-4) + var(--sg-sb, 0px));
+  padding: 0 var(--s-4); border-radius: var(--r-l, 28px); background: var(--card); box-shadow: var(--sh-1);
+  overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: none; touch-action: pan-x; transition: background-color 120ms; }
+.sg-drawer::-webkit-scrollbar { display: none; }
+.sg-drawer.drop { background: #FFF8EE; }
+.sg-cell { position: relative; flex: none; width: var(--sg-cell, 112px); height: var(--sg-cell, 112px); padding: 0; border: 0; border-radius: var(--r-m, 20px); background: none; cursor: grab; touch-action: pan-x; -webkit-tap-highlight-color: transparent; }
+.sg-cell img { width: 84%; height: 84%; object-fit: contain; display: block; margin: auto; pointer-events: none;
+  filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 2px 3px rgba(46, 36, 28, .3)); }
+.sg-cell.shiny img { filter: drop-shadow(3px 0 0 #FFD36E) drop-shadow(-3px 0 0 #8FD3FF) drop-shadow(0 3px 0 #C9A7FF) drop-shadow(0 -3px 0 #FF8FB1) drop-shadow(0 2px 3px rgba(46, 36, 28, .3)); }
+/* 무대에 올린 스티커는 서랍에 흐린 자리로 남는다(한 장씩, 판단 ⑤) */
+.sg-cell.used { cursor: default; background: var(--paper-dn); }
+.sg-cell.used img { filter: brightness(0); opacity: .12; }
+.sg-cell:focus-visible, .sg-tale:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
+.sg-tale { flex: none; width: 56px; height: var(--sg-cell, 112px); padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; touch-action: pan-x; }
+.sg-tale img, .sg-tale:empty::before { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; box-shadow: var(--sh-1); }
+.sg-tale:empty::before { content: ''; background: var(--paper-deep); }
+.sg-drawer .sg-tale:not(:first-child) { margin-left: var(--s-3); }
+
+/* 배경 고르기 띠: 무대 위로 흰 띠가 내려온다. 안 열린 배경 = 눌린 회색 자리 + 실루엣(자물쇠·글 없음) */
+.sg-strip { position: absolute; left: 0; right: 0; top: 0; z-index: 8; padding: var(--s-4); background: var(--card); box-shadow: var(--sh-3); border-radius: 0 0 var(--r-l, 28px) var(--r-l, 28px); touch-action: pan-x; }
+.sg-strip[hidden] { display: none; }
+.sg-strip-row { display: flex; gap: var(--s-3); overflow-x: auto; scrollbar-width: none; touch-action: pan-x; }
+.sg-strip-row::-webkit-scrollbar { display: none; }
+.sg-bgo { flex: none; width: 200px; aspect-ratio: 16 / 9; padding: 0; border: 0; border-radius: var(--r-s, 12px); overflow: hidden; cursor: pointer; background: var(--paper-dn); box-shadow: 0 0 0 1px rgba(0, 0, 0, .06); }
+.sg-bgo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sg-bgo.on { box-shadow: 0 0 0 4px var(--act, #D9622F); }
+.sg-bgo.shut { box-shadow: var(--cut, inset 0 1px 3px rgba(0,0,0,.12)); }
+.sg-bgo.shut img { filter: brightness(0); opacity: .1; }
+.sg-bgo:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+@media (max-width: 699px), (max-height: 600px) {
+  .sg-btn::before { inset: 10px; }
+  .sg-btn svg { width: 26px; height: 26px; }
+  .sg-bgo { width: 128px; }
+  .sg-strip { padding: var(--s-3); }
+}
+
+/* ── 스티커북 탭 '내 무대' 줄 ── */
+.st-sec .pz-head h2 { display: flex; align-items: center; gap: var(--s-2); }
+.st-ic { flex: none; width: 24px; height: 24px; fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.st-row { --st-h: 135px; display: flex; gap: var(--s-3); overflow-x: auto; overflow-y: visible; margin: 0 -14px -14px; padding: 4px 14px 14px; scrollbar-width: none; scroll-snap-type: x proximity; overscroll-behavior-x: contain; }
+.st-row::-webkit-scrollbar { display: none; }
+/* + 새 무대: 이 탭의 감빛 행동 하나 */
+.st-new { flex: none; width: var(--st-h); height: var(--st-h); padding: 0; border: 0; border-radius: var(--r-m, 20px); cursor: pointer; display: grid; place-items: center; background: var(--act-dn, #B94E20); box-shadow: var(--sh-2); scroll-snap-align: start; transition: transform var(--t-1, 80ms) var(--ease, ease); touch-action: manipulation; }
+.st-new svg { width: 48px; height: 48px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; }
+.st-new:active { transform: scale(.96); }
+.st-new.full { background: var(--paper-dn); box-shadow: var(--cut, none); }
+.st-new.full svg { stroke: var(--ink-3); }
+.st-card { position: relative; flex: none; width: calc(var(--st-h) * 16 / 9); height: var(--st-h); padding: 0; border: 0; border-radius: var(--r-m, 20px); cursor: pointer; background: none; scroll-snap-align: start; touch-action: manipulation; -webkit-touch-callout: none; }
+.st-pic { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; background: var(--paper-deep); box-shadow: var(--sh-1); }
+.st-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.st-s { position: absolute; width: auto; transform: translate(-50%, -50%); pointer-events: none; }
+.st-card:focus-visible, .st-new:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+/* 1초 꾹: 흔들리며 ✕ */
+.st-x { position: absolute; z-index: 2; right: -10px; top: -10px; width: 56px; height: 56px; display: none; place-items: center; font-style: normal; }
+.st-x::before { content: ''; position: absolute; inset: 10px; border-radius: 50%; background: var(--ink-3); box-shadow: var(--sh-2); }
+.st-x svg { position: relative; width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; }
+.st-card.wig .st-x { display: grid; }
+.st-card.wig .st-pic { animation: stWig .32s ease-in-out infinite alternate; }
+@keyframes stWig { from { transform: rotate(-1.2deg); } to { transform: rotate(1.2deg); } }
+@media (max-width: 699px) { .st-row { --st-h: 104px; } .st-new svg { width: 40px; height: 40px; } }
+@media (prefers-reduced-motion: reduce) { .st-card.wig .st-pic { animation: none; } }
