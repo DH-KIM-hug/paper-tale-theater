@@ -36,11 +36,42 @@
   /* ── 스티커 자료 ── */
   const castKeys = () => { try { return Entitlements.state().cast.slice(); } catch (e) { return []; } };
   const castN = () => castKeys().length;
+  /* 스티커 배율(사용자 요청 2026-11-06): 칠해진 넓이를 같게 맞춘 뒤, 이야기 속 크기 차이를 살린다.
+     어른 사람·어른 크기 동물 = 1(목록에 없으면 1). 아이·중간 동물 .86, 작은 동물 .72, 아주 작은 것 .56, 큰 동물 1.25.
+     STICKERS 항목에 sh 가 적혀 있으면 그것이 먼저다 */
+  const SCALE = {};
+  Object.entries({
+    1.25: 'patjuk.tiger_stand patjuk.tiger_fallen frog.ox_stand frog.ox_jumpfail sunmoon.tiger sunmoon.tiger_slip sunmoon.tiger_scarf'
+      + ' lion_mouse.lion_stand lion_mouse.lion_head_laugh lion_mouse.lion_lie_awake lion_mouse.lion_sleep goldilocks.bear_dad'
+      + ' bremen.donkey bremen.donkey_sing kongjwi.ox_stand little_mermaid.king beauty_beast.beast_stand beauty_beast.beast_ring',
+    .86: 'rabbit.raccoon sunmoon.boy sunmoon.girl turnip.girl_cheer fox_crane.fox_stand fox_crane.fox_lick fox_crane.fox_sorry'
+      + ' goldilocks.goldi_walk_empty goldilocks.goldi_surprised goldilocks.goldi_side_sleep goldilocks.bear_baby goldilocks.bear_baby_cry'
+      + ' bremen.dog_sing three_pigs.pig1_base three_pigs.pig2_base three_pigs.pig3_base three_pigs.pig1_flee three_pigs.pig2_play'
+      + ' kongjwi.kong_hoe kongjwi.kong_wet kongjwi.kong_bride kongjwi.pat_dressed kkultteok.baby_up kkultteok.baby_white kkultteok.baby_huddle'
+      + ' kkultteok.baby_wide kkultteok.baby_sorry hansel.hans_joy hansel.gret_clever hansel.gret_eat hansel.hans_doze'
+      + ' red_hood.hood_joy red_hood.hood_walk red_hood.hood_surprise byeoljubu.octopus_boast byeoljubu.doctor'
+      + ' red_hen.dog_raise red_hen.pig_raise red_hen.pig_mud red_hen.dog_lie snow_white.dwarf_smile snow_white.dwarf_hammer'
+      + ' red_car.red_joy red_car.red_run red_car.red_tired red_car.police_joy unicorn.sheep_happy unicorn.sheep_cry'
+      + ' witch_candy.kid_stand witch_candy.tf_strawberry witch_candy.tf_pumpkin witch_candy.bear_happy witch_candy.fox_happy witch_candy.ghost'
+      + ' sun_wind.sun sun_wind.wind sun_wind.wind_blow sun_wind.wind_tired',
+    .72: 'patjuk.friend_jara patjuk.friend_jeolgu frog.mom frog.mom_puffed frog.mom_dizzy frog.uncle rabbit.rabbit_run_c rabbit.turtle_walk'
+      + ' rabbit.rabbit_congrats_c rabbit.turtle_medal rabbit.rabbit_sleep_c rabbit.rabbit_wake_c turnip.dog_cheer turnip.cat_cheer'
+      + ' fox_crane.duck bremen.cat_sing bremen.rooster_sing ugly_duckling.baby ugly_duckling.baby_happy ugly_duckling.baby_sad'
+      + ' ugly_duckling.young_sad ugly_duckling.young_happy wolf_goats.kid1_joy wolf_goats.kid2_joy wolf_goats.kid5_joy kongjwi.toad_idle'
+      + ' cinderella.coachman magpie.mag_dad_sit magpie.mag_mom_sit byeoljubu.rabbit_wave byeoljubu.rabbit_hop byeoljubu.jara_walk_up'
+      + ' byeoljubu.crab_guard red_hen.hen_bread red_hen.hen_water red_hen.hen_wave red_hen.cat_raise red_hen.cat_yawn'
+      + ' witch_candy.cat_sit witch_candy.rabbit_happy witch_candy.pumpkin_lantern',
+    .56: 'patjuk.friend_bam frog.baby_awake turnip.mouse_cheer lion_mouse.mouse_walk lion_mouse.mouse_pray lion_mouse.mouse_gnaw'
+      + ' ant_grasshopper.ant_stand ant_grasshopper.ant_carry ant_grasshopper.hopper_play ant_grasshopper.hopper_shiver'
+      + ' ant_grasshopper.hopper_winter ant_grasshopper.ant_winter ant_grasshopper.ant_coat hansel.bird_peck heungbu.swallow_band'
+      + ' heungbu.swallow_fly magpie.chick byeoljubu.shrimp_painter byeoljubu.squirrel_sit red_hen.chick_hop rapunzel.bird'
+      + ' frog_prince.frog_sit frog_prince.frog_hop frog_prince.frog_surprise sleeping_beauty.pr_baby_giggle',
+  }).forEach(([v, ks]) => ks.split(' ').forEach(k => { if (k) SCALE[k] = +v; }));
   function info(key) {
     const i = key.indexOf('.'), tale = key.slice(0, i), k = key.slice(i + 1);
     const set = (typeof STICKERS !== 'undefined' && STICKERS[tale]) || [];
     const c = set.find(x => x.k === k);
-    return c && c.img ? { key, tale, k, img: c.img, ko: c.ko, en: c.en, sh: c.sh || 1, kid: !!c.kid } : null;
+    return c && c.img ? { key, tale, k, img: c.img, ko: c.ko, en: c.en, sh: c.sh || SCALE[key] || 1, kid: !!c.kid } : null;
   }
   const shiny = key => { try { return Entitlements.isShiny(key); } catch (e) { return false; } };
   const bgOpen = b => castN() >= b.need;
