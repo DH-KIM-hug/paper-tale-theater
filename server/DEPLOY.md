@@ -42,6 +42,8 @@ iOS 앱 주소(`capacitor://localhost`)는 코드에 이미 허용되어 있어 
 | `APPLE_ROOT_CA_G3_PEM` | 비밀값 | 선택 | `src/apple_root.js` 에 진짜 인증서가 이미 들어 있다(지문 63:34:3A…91:79, 2026-11-06 애플 사이트 파일과 대조). 인증서를 바꿀 때만 비밀값으로 덮어쓴다 |
 | `PLAY_PACKAGE_NAME` | 일반 변수 | 안드로이드용 | 기본값 있음 |
 | `GOOGLE_SERVICE_ACCOUNT_JSON` | 비밀값 | 안드로이드 때 | iOS 1.0 에는 불필요(구글 영수증 엔드포인트만 쓰므로) |
+| `ELEVENLABS_API_KEY` | 비밀값 | 이름 바꾸기 | 이름 바꾸기 녹음(`/v1/name/line`). 없으면 그 요청만 502 `tts_failed` |
+| `NAME_DAILY_LINE_CAP` | 일반 변수 | 선택 | 이름 바꾸기 서버 전체 하루 줄 상한(기본 30000). 넘으면 503 `busy` |
 
 애플 영수증은 비밀 키가 아니라 **애플 공개 루트 인증서**(Apple Root CA G3)로 검증합니다. 코드에 이미 들어 있으므로 아래는 인증서를 바꿀 때만 합니다.
 ```sh
@@ -51,6 +53,13 @@ openssl x509 -in AppleRootCA-G3.pem -noout -fingerprint -sha256   # Apple PKI �
 npx wrangler secret put APPLE_ROOT_CA_G3_PEM < AppleRootCA-G3.pem
 ```
 (App Store Connect 의 인앱 구입 키 같은 개인 키는 이 서버가 쓰지 않습니다. 영수증 JWS 의 서명을 애플 체인으로 검증할 뿐입니다.)
+
+이름 바꾸기(ElevenLabs) 키:
+```sh
+npx wrangler secret put ELEVENLABS_API_KEY < ~/.config/elevenlabs/key   # 화면에 키를 찍지 않게 파일에서 바로 넣는다
+```
+가능하면 서버 전용 키를 새로 만들어(권한: Text to Speech 만) 넣습니다. 요금제가 zero retention(`enable_logging=false`)을 지원하지 않으면 서버가 그 옵션을 빼고 보냅니다(`wrangler tail` 에 `enable_logging=false 미지원` 한 줄).
+App Store Connect 에 소모성 상품 `com.papertale.theater.rename`(0.99달러)을 따로 만듭니다. 서버는 기존 `/v1/receipt/apple` 로 이 상품도 받습니다.
 
 안드로이드를 낼 때 추가:
 ```sh
@@ -90,7 +99,7 @@ npx cap copy ios
 - 로그 보기: `npx wrangler tail` (token 은 로그에 남지 않게 되어 있음).
 
 ## 유료 요금제로 올리는 시점
-무료 Workers 의 KV 쓰기는 **하루 1,000번**이 한도입니다. 이 서버는 기기가 동기화할 때(PUT /v1/state), 계정을 만들 때, 연결 코드·속도 제한 카운터를 쓸 때 KV 에 씁니다. 사용자가 늘면 하루 한도를 넘어 쓰기가 실패합니다.
+무료 Workers 의 KV 쓰기는 **하루 1,000번**이 한도입니다. 이름 바꾸기 한 벌 녹음은 KV 쓰기를 약 140번(한국어만)~270번(한·영) 씁니다(줄마다 카운터 1번). 이 서버는 기기가 동기화할 때(PUT /v1/state), 계정을 만들 때, 연결 코드·속도 제한 카운터를 쓸 때 KV 에 씁니다. 사용자가 늘면 하루 한도를 넘어 쓰기가 실패합니다.
 - **정식 출시(공개) 전에** Workers Paid(월 5달러)로 올립니다. 대시보드 > Workers & Pages > Plans. 유료는 KV 쓰기 월 100만 건이 포함됩니다.
 - 시험·심사 기간(기기 몇 대)은 무료로 충분합니다. 단 심사 중 한도에 걸리면 동기화가 실패할 수 있으니(앱은 서버 없이도 계속 동작) 심사 제출 때 올려 두는 편이 안전합니다.
 - 올린 뒤 대시보드 > Workers > 사용량에서 요청 수와 KV 쓰기를 가끔 봅니다.

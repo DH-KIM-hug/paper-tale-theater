@@ -3,6 +3,7 @@
 import { b64ToBytes, bytesToHex } from './util.js';
 
 export const PRODUCT_ID = 'com.papertale.theater.unlockall';
+export const RENAME_PRODUCT_ID = 'com.papertale.theater.rename'; // 이름 바꾸기권(소모성, 0.99달러)
 export const DEFAULT_BUNDLE_ID = 'com.papertale.theater';
 
 export class ReceiptInvalid extends Error {}
@@ -137,7 +138,8 @@ function bytesEqual(a, b) {
 
 /**
  * 애플 서명 거래 JWS 를 검증하고 거래 정보를 돌려준다. 실패하면 ReceiptInvalid.
- * opts: { rootPem, bundleId, productId, now(ms), requireAppleOids(기본 true) }
+ * opts: { rootPem, bundleId, productId(문자열 또는 허용 목록), now(ms), requireAppleOids(기본 true) }
+ * 반환: { receiptKey(원 거래 기준), environment, productId, transactionId(이 거래) }
  */
 export async function verifyAppleTransaction(jws, opts) {
   const { rootPem, bundleId = DEFAULT_BUNDLE_ID, productId = PRODUCT_ID, now = Date.now(), requireAppleOids = true } = opts;
@@ -199,10 +201,12 @@ async function verifyInner(jws, { rootDer, bundleId, productId, now, requireAppl
 
   // 거래 내용
   if (payload.bundleId !== bundleId) throw new ReceiptInvalid('bundle');
-  if (payload.productId !== productId) throw new ReceiptInvalid('product');
+  const allowed = Array.isArray(productId) ? productId : [productId];
+  if (!allowed.includes(payload.productId)) throw new ReceiptInvalid('product');
   if (payload.revocationDate != null) throw new ReceiptInvalid('revoked');
   if (payload.environment !== 'Production' && payload.environment !== 'Sandbox') throw new ReceiptInvalid('environment');
   const id = String(payload.originalTransactionId ?? payload.transactionId ?? '');
   if (!id) throw new ReceiptInvalid('transaction id');
-  return { receiptKey: 'apple:' + id, environment: payload.environment };
+  const tx = String(payload.transactionId ?? id);
+  return { receiptKey: 'apple:' + id, environment: payload.environment, productId: payload.productId, transactionId: tx };
 }

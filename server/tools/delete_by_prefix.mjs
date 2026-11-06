@@ -32,11 +32,12 @@ for (const h of rec.receipts || []) {
   if (left.length) edit.push({ key: rk, value: JSON.stringify({ ...r, accounts: left }) });
   else del.push(rk);
 }
+for (const h of (rec.name && rec.name.tx) || []) edit.push({ key: 'rename:' + h, value: JSON.stringify({ acct: null }) }); // 이름 바꾸기권: '이미 쓴 거래' 표시만 남김
 for (const k of list('link:')) { const v = get(k); if (v && v.accountId === id) del.push(k); }   // 10분짜리 연결 코드
 for (const k of [...list('rl:linkc:' + id), ...list('rl:linkr:' + id)]) del.push(k);               // 속도 제한 카운터
 
 console.log((yes ? '지울 키 ' : '[dry-run] 지울 키 ') + del.length + '개:'); del.forEach((k) => console.log('  - ' + k));
-if (edit.length) { console.log('이 계정만 빼고 남길 영수증 ' + edit.length + '개:'); edit.forEach((e) => console.log('  ~ ' + e.key)); }
+if (edit.length) { console.log('이 계정만 빼고 남길 영수증·이용권 기록 ' + edit.length + '개:'); edit.forEach((e) => console.log('  ~ ' + e.key)); }
 if (!yes) { console.log('\n실제로 지우려면 --yes 를 붙여 다시 실행하세요.'); process.exit(0); }
 for (const e of edit) wr('put', e.key, e.value);
 for (const k of del) wr('delete', k);

@@ -3,7 +3,8 @@
 import { ApiError, E, jsonResponse, randomToken, sha256Hex, timingSafeEqual } from './util.js';
 import { emptyState, mergeStates, sanitizeClientState } from './state.js';
 import { APPLE_ROOT_CA_G3_PEM } from './apple_root.js';
-import { DEFAULT_BUNDLE_ID, PRODUCT_ID, ReceiptConfigError, ReceiptInvalid, verifyAppleTransaction } from './apple.js';
+import { DEFAULT_BUNDLE_ID, PRODUCT_ID, RENAME_PRODUCT_ID, ReceiptConfigError, ReceiptInvalid, verifyAppleTransaction } from './apple.js';
+import { MAX_NAME_BODY, applyRenameReceipt, catalog, mergeName, nameCheck, nameLine, nameRun, nameState, quota } from './name.js';
 import { GoogleConfigError, GoogleInvalid, GoogleUpstreamError, verifyGooglePurchase } from './google.js';
 
 export const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
@@ -47,9 +48,9 @@ async function authenticate(request, env) {
   return { id: m[1], rec };
 }
 
-async function readJson(request) {
+async function readJson(request, max = MAX_BODY) {
   const text = await request.text();
-  if (text.length > MAX_BODY) throw E.badRequest();
+  if (text.length > max) throw E.badRequest();
   if (!text.trim()) return {};
   try {
     const v = JSON.parse(text);
@@ -126,6 +127,8 @@ async function linkRedeem(env, me, body, now) {
   const token = randomToken();
   const tokenHashes = [...target.tokenHashes, await sha256Hex(token)].slice(-MAX_TOKENS_PER_ACCOUNT);
   const receipts = [...new Set([...(target.receipts || []), ...(me.rec.receipts || [])])];
+  const name = mergeName(target, me.rec);
+  for (const h of nameState(me.rec).tx) await env.ACCOUNTS.put('rename:' + h, JSON.stringify({ acct: rec.accountId })); // 이용권 거래 기록도 옮긴다
   // 영수증 기록의 계정 목록도 옮긴다.
   for (const h of me.rec.receipts || []) {
     const r = await env.ACCOUNTS.get('receipt:' + h, 'json');
@@ -133,7 +136,7 @@ async function linkRedeem(env, me, body, now) {
     r.accounts = [...new Set(r.accounts.map((a) => (a === me.id ? rec.accountId : a)))];
     await env.ACCOUNTS.put('receipt:' + h, JSON.stringify(r));
   }
-  await putAccount(env, rec.accountId, { tokenHashes, state: merged, receipts });
+  await putAccount(env, rec.accountId, { tokenHashes, state: merged, receipts, name });
   await env.ACCOUNTS.delete('acct:' + me.id);
   return { accountId: rec.accountId, token, state: merged };
 }
@@ -146,6 +149,8 @@ async function deleteAccount(env, me) {
     if (r.accounts.length) await env.ACCOUNTS.put('receipt:' + h, JSON.stringify(r));
     else await env.ACCOUNTS.delete('receipt:' + h);
   }
+  // 이름 바꾸기권 거래는 계정만 지우고 '이미 쓴 거래' 표시는 남긴다(다른 계정에서 다시 쓰지 못하게).
+  for (const h of nameState(me.rec).tx) await env.ACCOUNTS.put('rename:' + h, JSON.stringify({ acct: null }));
   await env.ACCOUNTS.delete('acct:' + me.id);
   // 만든 연결 코드는 10분 TTL 로 사라지고, 쓰려 하면 계정이 없어 code_invalid 가 된다.
 }
@@ -174,7 +179,7 @@ async function receiptApple(env, me, body, now) {
     result = await verifyAppleTransaction(body.signedTransaction, {
       rootPem,
       bundleId: env.APPLE_BUNDLE_ID || DEFAULT_BUNDLE_ID,
-      productId: PRODUCT_ID,
+      productId: [PRODUCT_ID, RENAME_PRODUCT_ID],
       now,
     });
   } catch (e) {
@@ -182,6 +187,7 @@ async function receiptApple(env, me, body, now) {
     if (e instanceof ReceiptConfigError) throw logged(e);
     throw e;
   }
+  if (result.productId === RENAME_PRODUCT_ID) return applyRenameReceipt(env, me, 'apple:' + result.transactionId, now, putAccount);
   return applyReceipt(env, me, result.receiptKey);
 }
 
@@ -193,7 +199,7 @@ async function receiptGoogle(env, me, body, now, deps) {
       serviceAccountJson: env.GOOGLE_SERVICE_ACCOUNT_JSON,
       packageName: env.PLAY_PACKAGE_NAME || DEFAULT_BUNDLE_ID,
       productId: body.productId,
-      expectedProductId: PRODUCT_ID,
+      expectedProductId: body.productId === RENAME_PRODUCT_ID ? RENAME_PRODUCT_ID : PRODUCT_ID,
       purchaseToken: body.purchaseToken,
       fetchFn: deps.fetch || globalThis.fetch,
       now,
@@ -203,6 +209,7 @@ async function receiptGoogle(env, me, body, now, deps) {
     if (e instanceof GoogleConfigError || e instanceof GoogleUpstreamError) throw logged(e);
     throw e;
   }
+  if (body.productId === RENAME_PRODUCT_ID) return applyRenameReceipt(env, me, result.receiptKey, now, putAccount);
   return applyReceipt(env, me, result.receiptKey);
 }
 
@@ -228,7 +235,8 @@ export async function handle(request, env, deps = {}) {
       return respond(await newAccount(env, today), 201);
     }
     if (!path.startsWith('/v1/')) throw new ApiError(404, 'not_found');
-    const known = ['GET /v1/state', 'PUT /v1/state', 'POST /v1/link/create', 'POST /v1/link/redeem', 'POST /v1/receipt/apple', 'POST /v1/receipt/google', 'DELETE /v1/account'];
+    const known = ['GET /v1/state', 'PUT /v1/state', 'POST /v1/link/create', 'POST /v1/link/redeem', 'POST /v1/receipt/apple', 'POST /v1/receipt/google', 'DELETE /v1/account',
+      'GET /v1/name/catalog', 'GET /v1/name/quota', 'POST /v1/name/run', 'POST /v1/name/line', 'POST /v1/name/check'];
     if (!known.includes(route)) throw new ApiError(404, 'not_found');
 
     const me = await authenticate(request, env);
@@ -252,6 +260,16 @@ export async function handle(request, env, deps = {}) {
         return respond(await receiptApple(env, me, await readJson(request), now));
       case 'POST /v1/receipt/google':
         return respond(await receiptGoogle(env, me, await readJson(request), now, deps));
+      case 'GET /v1/name/catalog':
+        return respond(catalog());
+      case 'GET /v1/name/quota':
+        return respond(quota(me.rec, now));
+      case 'POST /v1/name/run':
+        return respond(await nameRun(env, me, await readJson(request, MAX_NAME_BODY), now, putAccount));
+      case 'POST /v1/name/line':
+        return await nameLine(env, me, await readJson(request, MAX_NAME_BODY), now, deps, cors, getAccount, putAccount);
+      case 'POST /v1/name/check':
+        return respond(nameCheck(await readJson(request, MAX_NAME_BODY)));
       case 'DELETE /v1/account':
         await deleteAccount(env, me);
         return new Response(null, { status: 204, headers: cors });
