@@ -12,11 +12,11 @@
      dir = <catalog version>/<동화>/<모습 표시><시각> — 설정할 때마다 새 폴더(모습이 바뀌면 다른 녹음이다). 다시 설정하면 그 동화의 옛 폴더를 지운다. 옛 1판 = <version>/<동화>
    · 덮어쓰기: 녹음 맵의 열쇠(원문)는 그대로 두고 값(파일 주소)만 바꾼다. 동화 한 편이 그 언어로 다 받아졌을 때만 그 동화를 덮는다.
      '원래 이름·모습으로 듣기'(동화별)를 켜면 파일은 두고 덮어쓰기·모습을 끈다
-   · 모습: Names.look(동화, 자리) → 'b'|'g'. 그림은 Names.sprite(동화, 자리, id) 로 고른다(반대 모습 그림이 앱에 들어온 동화만, LOOK_ART).
-     G3(동화 코드가 그림을 모습별로 고르기)는 아직 — 지금 동화 코드는 Names.sprite 를 부르지 않는다
+   · 모습: Names.look(동화, 자리) → 'b'|'g'. 그림은 Names.art(동화, id) / Names.sprite(동화, 자리, id) 로 고른다(LOOK_ART 규칙에 맞는 그림만).
+     G3(2026-11-07): 네 편 동화 코드의 src() 가 Names.art 를 거친다. 자세 높이(HT)는 동화마다 반대 모습 표를 따로 둔다(CLAUDE.md §4-1)
    · 아이 본인 대사(이름 없음)의 반대 모습 녹음(확정 사항 7-4): 앱 묶음에 들어오면 LOOK_CLIPS 에 적고,
      동화 폴더의 narration_el_look_<자리><모습>.js(예: narration_el_look_Ab.js)가 window.NARRATION_LOOK_CLIPS['Ab'] = { ko: {열쇠: 값}, en: {열쇠: 값} } 를 둔다.
-     apply() 가 모습이 원래와 다른 자리의 맵을 읽어 이름 덮어쓰기보다 먼저 덮는다. 지금은 녹음이 없어 LOOK_CLIPS 가 비어 있다
+     apply() 가 모습이 원래와 다른 자리의 맵을 읽어 이름 덮어쓰기보다 먼저 덮는다. 맵의 vl 은 VOICE_LINES(말풍선 없는 소리 대사)를 덮는다
    · 화면 글자: Names.view(글, 동화id) — 원래 이름을 받침 규칙으로 바꾸고, 영어 대명사 줄은 서버 템플릿(tplEn)을 모습으로 채운다
    · 서버 호출은 Entitlements.nameCall(인증 Bearer) 로만. 이름·모습은 요청 본문에만 실리고 서버에 남지 않는다
    · 이용권(2판): 4.99 구매에 동화마다 첫 설정 1번(run { tale }) · 그 뒤 0.99 이용권 1장 = 네 편 한 번에(run { ticket: true }, 48시간)
@@ -28,10 +28,16 @@ const Names = (() => {
   const TALE_SLOTS = { unicorn: ['A'], witch_candy: ['A'], red_car: ['B'], kkultteok: ['A', 'B', 'C', 'D'], home: ['A'] };
   const HOME_OWNER = 'witch_candy';
   const owner = t => (t === 'home' ? HOME_OWNER : t);
-  /* 반대 모습 그림이 앱 묶음에 들어온 동화(G2 생성 → G3 끼우기 때 넣는다). 비어 있으면 모든 그림이 원래 모습이다.
-     TODO(G3): 그림이 들어오면 여기에 동화 id 를 넣고, 동화 코드가 Names.sprite 로 그림 id 를 고르게 한다 */
-  const LOOK_ART = new Set([]);
-  /* 아이 본인 대사 반대 모습 녹음이 들어온 동화와 자리·모습(예: { unicorn: ['Ab'], kkultteok: ['Ab', 'Bg', 'Cb'] }). 지금은 없음 */
+  /* 반대 모습 그림(G2 생성 → G3 끼우기, tools/app/gen/post_look.py): 동화 → 자리 → 모습 → [원래 id 규칙, 바꿀 글]. 여기 없는 그림은 원래 그림 그대로.
+     사탕 마녀 변신 컷 틀(wc_cut_tf_frame)은 아이가 없어 그대로 쓴다. 구름 공장은 동화 코드가 'cf4_' 를 떼고 부르므로 접두어를 선택으로 둔다.
+     구름 공장 함께 그림(컷 2·침대 2)은 kkultteok.js 가 아이 없는 배경판(cf4_*_bg)에 자세 그림을 얹어 합성한다(§3-2 (가)) */
+  const LOOK_ART = {
+    unicorn: { A: { b: [[/^uc_kid2_/, 'uc_kid2b_'], [/^uc_cut2_/, 'uc_cut2b_'], [/^uc_bed_(wide|tall)$/, 'uc_bedb_$1']] } },
+    witch_candy: { A: { b: [[/^wc_kid_/, 'wc_kidb_'], [/^wc_cut_(?!tf_frame$)/, 'wc_cutb_']] } },
+    red_car: { B: { g: [[/^rc_child_/, 'rc_childg_'], [/^rc_bed_(wide|tall)$/, 'rc_bedg_$1']] } },
+    kkultteok: { A: { b: [[/^(cf4_)?nuna_/, '$1nunab_']] }, B: { g: [[/^(cf4_)?oppa_/, '$1oppag_']] }, C: { g: [[/^(cf4_)?agi_/, '$1agig_']] } },
+  };
+  /* 아이 본인 대사 반대 모습 녹음이 들어온 동화와 자리·모습(tales/<동화>/narration_el_look_<자리><모습>.js) */
   const LOOK_CLIPS = { red_car: ['Bg'], unicorn: ['Ab'], witch_candy: ['Ab'], kkultteok: ['Ab', 'Bg', 'Cg'] };
   /* 설정 화면 미리보기 그림(원래 모습 id). 반대 모습은 sprite() 규칙(…_stand → …b_stand / …g_stand) */
   const PREVIEW_ART = { unicorn: { A: 'uc_kid2_stand' }, witch_candy: { A: 'wc_kid_stand' }, red_car: { B: 'rc_child_stand' }, kkultteok: { A: 'cf4_nuna_wave', B: 'cf4_oppa_walk', C: 'cf4_agi_wave', D: 'cf4_dog_wag' } };
@@ -78,14 +84,31 @@ const Names = (() => {
     return c.on && !c.original && (c.look[slot] === 'b' || c.look[slot] === 'g') ? c.look[slot] : o;
   }
   const lookTag = (tale, slot) => { const l = look(tale, slot); return l && l !== OLOOK()[slot] ? l : ''; };
-  /* 그림 id: 반대 모습 그림이 있는 동화만 '…_자세' → '…b_자세'/'…g_자세' (G2 파일 규칙: uc_kid2b_stand · rc_childg_stand · cf4_nunab_walk · 막내 여자아이판 cf4_agig_*) */
-  const tagId = (id, tag) => (tag ? String(id).replace(/_([^_]+)$/, tag + '_$1') : id);
-  const sprite = (tale, slot, id, lk) => { const t = owner(tale), tag = lk ? (lk !== OLOOK()[slot] ? lk : '') : lookTag(t, slot); return LOOK_ART.has(t) ? tagId(id, tag) : id; };
+  /* 그림 id: 반대 모습 그림이 있는 그림만 LOOK_ART 규칙으로 바꾼다(G2 파일 규칙: uc_kid2b_stand · wc_kidb_tf_duck · rc_childg_stand · cf4_nunab_walk · 막내 여자아이판 cf4_agig_*) */
+  const ruleId = (t, slot, id, tag) => {
+    const rs = tag && LOOK_ART[t] && LOOK_ART[t][slot] && LOOK_ART[t][slot][tag];
+    if (!rs) return null;
+    for (const [re, to] of rs) if (re.test(id)) return String(id).replace(re, to);
+    return null;
+  };
+  const sprite = (tale, slot, id, lk) => { const t = owner(tale), tag = lk ? (lk !== OLOOK()[slot] ? lk : '') : lookTag(t, slot); return ruleId(t, slot, id, tag) || id; };
+  /* 동화 코드용: 그림 id 하나를 지금 설정한 모습으로(그 동화의 아이 자리를 모두 본다). lk = { A: 'b', … } 를 주면 그 모습으로(시험·합성용) */
+  function art(tale, id, lk) {
+    const t = owner(tale), m = LOOK_ART[t]; if (!m) return id;
+    for (const s of Object.keys(m)) {
+      const tag = lk ? (lk[s] && lk[s] !== OLOOK()[s] ? lk[s] : '') : lookTag(t, s);
+      const r = ruleId(t, s, id, tag); if (r) return r;
+    }
+    return id;
+  }
+  /* 동화의 아이 자리별 모습 { A: 'g', … }(설정이 꺼졌거나 '원래로 듣기'면 원래 모습) */
+  const looks = tale => Object.fromEntries((TALE_SLOTS[owner(tale)] || []).filter(s => KIDS.includes(s)).map(s => [s, look(tale, s)]));
   /* 설정 화면 미리보기: 그림 id 와 '반대 모습 그림이 아직 없음' 표시 */
   function previewArt(tale, slot, lk) {
     const id = (PREVIEW_ART[tale] || {})[slot]; if (!id) return null;
     const want = lk && OLOOK()[slot] && lk !== OLOOK()[slot];
-    return { id: want ? sprite(tale, slot, id, lk) : id, pending: !!(want && !LOOK_ART.has(tale)) };
+    const nid = want ? sprite(tale, slot, id, lk) : id;
+    return { id: nid, pending: !!(want && nid === id) };
   }
 
   /* ───────── 이름 목록 ───────── */
@@ -145,14 +168,18 @@ const Names = (() => {
   }
 
   /* ───────── 녹음 맵 덮어쓰기 ───────── */
-  const orig = { ko: {}, en: {} };   // 덮기 전 값(되돌리기용)
+  const orig = { ko: {}, en: {}, vk: {}, ve: {} };   // 덮기 전 값(되돌리기용). vk·ve = 말풍선 없는 소리 대사(VOICE_LINES·VOICE_LINES_EN)
   const mapKo = () => (typeof NARRATION_CLIPS !== 'undefined' ? NARRATION_CLIPS : null);
   const mapEn = () => (typeof NARRATION_CLIPS_EN !== 'undefined' ? NARRATION_CLIPS_EN : null);
+  const vlKo = () => (typeof VOICE_LINES !== 'undefined' ? VOICE_LINES : null);
+  const vlEn = () => (typeof VOICE_LINES_EN !== 'undefined' ? VOICE_LINES_EN : null);
   function restore() {
-    const ko = mapKo(), en = mapEn();
+    const ko = mapKo(), en = mapEn(), vk = vlKo(), ve = vlEn();
     if (ko) Object.keys(orig.ko).forEach(k => { ko[k] = orig.ko[k]; });
     if (en) Object.keys(orig.en).forEach(k => { en[k] = orig.en[k]; });
-    orig.ko = {}; orig.en = {};
+    if (vk) Object.keys(orig.vk).forEach(k => { vk[k] = orig.vk[k]; });
+    if (ve) Object.keys(orig.ve).forEach(k => { ve[k] = orig.ve[k]; });
+    orig.ko = {}; orig.en = {}; orig.vk = {}; orig.ve = {};
   }
   /* 아이 본인 대사의 반대 모습 녹음 맵(LOOK_CLIPS 에 적힌 것만 읽는다 — 없는 파일을 부르지 않게) */
   const lookLoads = {};
@@ -175,6 +202,12 @@ const Names = (() => {
         const m = await loadLook(code); if (!m) continue;
         Object.keys(m.ko || {}).forEach(k => setKo(k, m.ko[k]));
         if (en) Object.keys(m.en || {}).forEach(k => { if (k in en) { if (!(k in orig.en)) orig.en[k] = en[k]; en[k] = m.en[k]; n++; } });
+        /* 말풍선 없는 소리 대사(사탕 마녀 yuck·ghost_kid·ghost_all·happy_all): 맵의 vl.ko → VOICE_LINES, vl.en → VOICE_LINES_EN.
+           지금 맵에 있는 열쇠만 바꾼다(합창 파일 chorus_el.js 가 지운 열쇠는 되살리지 않는다) */
+        [['ko', vlKo(), 'vk'], ['en', vlEn(), 've']].forEach(([l, vm, ok]) => {
+          if (!vm || !m.vl || !m.vl[l]) return;
+          Object.keys(m.vl[l]).forEach(k => { if (!(k in vm)) return; if (!(k in orig[ok])) orig[ok][k] = vm[k]; vm[k] = m.vl[l][k]; n++; });
+        });
       }
     }
     /* ② 이름·모습으로 서버에서 받은 줄 */
@@ -449,7 +482,7 @@ const Names = (() => {
   return {
     SLOTS, KIDS, TALES, TALE_SLOTS, LOOK_ART, LOOK_CLIPS, supported, settings, tale, catalog: cat, fetchCatalog, quota, lastQuota: () => lastQ, check,
     preview, previewText, previewLine, previewArt, start, resume, useTicket, progress, needed, setOriginal, setAgree, agree: () => !!S.agree,
-    look, lookTag, sprite, apply, view, templatize, active, ready, busy: () => busy, stop: () => { stopReq = true; },
+    look, looks, lookTag, sprite, art, apply, view, templatize, active, ready, busy: () => busy, stop: () => { stopReq = true; },
     onChange: f => { listeners.add(f); return () => listeners.delete(f); }, _polish: polish, _native: !!FS
   };
 })();

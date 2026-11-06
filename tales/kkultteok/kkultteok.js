@@ -6,7 +6,60 @@
 (() => {
   const AS = '../../assets/v3w/';
   const G = 520; // 발 기준선
-  const src = f => AS + 'cf4_' + f + '.webp';
+  /* 주인공 모습(이름 설정 2판 G3): 아이 셋(A 다현=nuna · B 이현=oppa · C 은우=agi) 각각 반대 모습이면 nunab_/oppag_/agig_ 그림(engine/names.js LOOK_ART) */
+  const art = f => { try { return typeof Names !== 'undefined' ? Names.art('kkultteok', f) : f; } catch (e) { return f; } };
+  const src = f => AS + 'cf4_' + art(f) + '.webp';
+  /* 반대 모습 자세 높이 배율(CLAUDE.md §4-1, 2026-11-07 tools/app/gen/post_look.py 뒤 잼): 원래 자세와 몸 실루엣(아래 55%)을 겹쳐
+     가장 잘 맞는 배율을 찾았다(IoU .85~.98). 45장 모두 0.98~1.03 이라 1 로 두고, 3% 어긋난 두 장만 고친다 */
+  const LOOK_HK = { nunab_crouch: 1.03, agig_press: 1.03 };
+  const lookH = (f, h) => Math.round(h * (LOOK_HK[art(f)] || 1));
+
+  /* ───── 함께 그림 층 합성(NAME_SETUP_V2_PLAN §3-2 (가), 사용자 확정 7-3) ─────
+     아이 셋의 모습 조합이 8가지라 컷 2장(cut_hug·cut_rainbow)·침대 2장(bed_wide·bed_tall)은 아이 없는 배경판(cf4_*_bg)에
+     아이 자세 그림을 얹어 캔버스로 한 장을 만든다. 원래 모습 셋이면 손으로 그린 원래 그림을 그대로 쓴다(?compose=1 이면 원래 모습도 합성 — 비교 시험용).
+     자리: 원래 그림의 아이 얼굴(피부 조각) 가운데·폭을 잰 값(그림 폭 비율). 자세 그림은 얼굴 가운데 u,v·폭(그림 폭 비율)으로 맞춘다.
+     서 있는 자세는 원래 그림에서 잰 얼굴 값을 반대 모습에도 쓴다(몸 실루엣이 원래와 겹침 — 반대 모습 머리카락이 얼굴을 덜 가려 피부 폭이 달리 잡힌다).
+     누운 자세(*_lie: 머리·어깨·손 + 시트 띠)는 그림마다 따로 잰다. 컷 hug 는 *_hug, rainbow 는 앞모습 환호(nuna_wave·oppa_jump·agi_jump) —
+     기획 §3-6 은 rainbow 를 *_back 로 적었으나 원래 컷이 앞모습이라 얼굴이 보이는 자세로 했다 */
+  const FACE = {
+    nuna_hug: [.552, .186, .288], oppa_hug: [.495, .24, .338], agi_hug: [.435, .253, .306],
+    nuna_wave: [.484, .195, .353], oppa_jump: [.499, .245, .349], agi_jump: [.553, .227, .317],
+    nuna_lie: [.581, .373, .44], nunab_lie: [.559, .396, .459], oppa_lie: [.551, .419, .433], oppag_lie: [.497, .429, .416], agi_lie: [.554, .41, .402], agig_lie: [.553, .419, .472],
+  };
+  /* 장면: 배경판, 아이 [자세, 얼굴 가운데 x·y(그림 비율), 얼굴 폭(그림 폭 비율), 좌우 뒤집기] — 그리는 순서대로(뒤 → 앞) */
+  const JOINT = {
+    cut_hug: { bg: 'cut_hug_bg', kids: [['nuna_hug', .274, .335, .109], ['oppa_hug', .459, .265, .126, true], ['agi_hug', .370, .468, .101]] },
+    cut_rainbow: { bg: 'cut_rainbow_bg', kids: [['nuna_wave', .225, .447, .079], ['oppa_jump', .433, .487, .083], ['agi_jump', .612, .603, .074]] },
+    /* 침대: clip = 배경판 크림 시트(접은 단) 위 끝 선(그림 비율, 2026-11-07 잼). 누운 아이는 이 선 위만 그려 이불 속에 든 것처럼 */
+    bed_wide: { bg: 'bed_wide_bg', clip: [[0, .62], [.1, .604], [.14, .587], [.18, .577], [.22, .571], [.3, .562], [.38, .554], [.5, .551], [.62, .543], [.7, .55], [.74, .601], [1, .62]], kids: [['nuna_lie', .217, .449, .094], ['oppa_lie', .389, .392, .0875], ['agi_lie', .550, .423, .0875]] },
+    bed_tall: { bg: 'bed_tall_bg', clip: [[0, .575], [.06, .557], [.1, .549], [.18, .542], [.26, .54], [.86, .544], [.94, .551], [1, .56]], kids: [['nuna_lie', .301, .463, .141], ['oppa_lie', .550, .447, .121], ['agi_lie', .790, .477, .133]] },
+  };
+  const JOINT_URL = {};
+  const jsrc = k => JOINT_URL[k] || src(k);
+  const needCompose = () => {
+    try { if (new URLSearchParams(location.search).get('compose') === '1') return true; } catch (e) { /* 없음 */ }
+    try { return typeof Names !== 'undefined' && ['A', 'B', 'C'].some(s => Names.lookTag('kkultteok', s)); } catch (e) { return false; }
+  };
+  const imgP = u => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = u; });
+  async function compose(k) {
+    const J = JOINT[k], bg = await imgP(src(J.bg));
+    const c = document.createElement('canvas'); c.width = bg.naturalWidth; c.height = bg.naturalHeight;
+    const x = c.getContext('2d'); x.drawImage(bg, 0, 0);
+    const W = c.width, H = c.height;
+    for (const [pose, fx, fy, fw, flip] of J.kids) {
+      const f = art(pose), im = await imgP(src(pose));
+      const m = FACE[pose.endsWith('_lie') ? f : pose]; if (!m) continue;
+      const w = fw * W / m[2], h = w * im.naturalHeight / im.naturalWidth;
+      const u = flip ? 1 - m[0] : m[0], X0 = fx * W - u * w, Y0 = fy * H - m[1] * h;
+      x.save();
+      if (J.clip) { x.beginPath(); x.moveTo(0, 0); x.lineTo(W, 0); [...J.clip].reverse().forEach(([cu, cv]) => x.lineTo(cu * W, cv * H + 2)); x.closePath(); x.clip(); }
+      if (flip) { x.translate(X0 + w, Y0); x.scale(-1, 1); x.drawImage(im, 0, 0, w, h); } else x.drawImage(im, X0, Y0, w, h);
+      x.restore();
+    }
+    const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', .92));
+    if (blob) JOINT_URL[k] = URL.createObjectURL(blob);
+  }
+  const composeAll = () => (needCompose() ? Promise.all(Object.keys(JOINT).map(k => compose(k).catch(e => console.warn('[kkultteok] 합성 실패', k, e)))) : Promise.resolve());
   const bgSrc = k => AS + 'cf4_bg_' + k + '.webp';
   const BGS = ['01_road', '02_hill', '03_chimney', '04_door', '05_belt_v2', '06_press_v2', '07_button_v2', '08_tank_room', '09_bell_room', '10_corner_close', '12_storm', '13_rain', '14_soil_v2', '15_rainbow_v2', '16_road_bloom']; // v2·bloom: 2026-10-22 다층 보강(VISUAL_PLAN.md)
   /* 꽃·딸기 (2026-10-22 VISUAL_PLAN §3): 같은 종류는 어디서나 같은 높이(§4-1). 뒷줄은 한 줄 통째로 0.85배 */
@@ -29,6 +82,7 @@
     const looks = {};
     const a = T.actor(T.world, -400, G, g => {
       Object.entries(poses).forEach(([k, [f, h, nat]]) => {
+        h = lookH(f, h);
         const w = h * (ASP[f] || .7), wrap = T.el('g', {}, g);
         if (shadow) T.el('ellipse', { cx: 0, cy: -3, rx: w * .32, ry: Math.max(4, w * .05), fill: 'rgba(46,36,28,.22)' }, wrap);
         T.el('image', { href: src(f), x: -w / 2, y: -h, width: w, height: h, preserveAspectRatio: 'none' }, wrap);
@@ -92,7 +146,7 @@
     const BED = { wide: src('bed_wide'), tall: src('bed_tall'), tallY: .4, focus: { w: [.42, .52], t: [.5, .6] }, moon: { w: [.879, .126], t: [.633, .104] } };
     let bedB = null;
     const bed = {
-      open() { bedB = Bedtime.open(T, BED); },
+      open() { BED.wide = jsrc('bed_wide'); BED.tall = jsrc('bed_tall'); bedB = Bedtime.open(T, BED); },   // 모습 조합이 원래와 다르면 합성 그림
       cloud() {
         const B = bedB; if (!B) return;
         const h = B.ih * .15, n = B.img(src('baby_sleep'), { w: [BED.moon.w[0], BED.moon.w[1] + .03], t: [BED.moon.t[0], BED.moon.t[1] + .03] }, h, 1.4968);
@@ -197,7 +251,7 @@
       return g;
     };
 
-    const loads = [...BGS.map(k => T.preload(bgSrc(k))), T.preload(src('cut_hug')), T.preload(src('cut_rainbow'))];
+    const loads = [...BGS.map(k => T.preload(bgSrc(k))), composeAll().then(() => Promise.all(['cut_hug', 'cut_rainbow'].map(k => T.preload(jsrc(k)))))];
     await Promise.race([Promise.all([...loads, ...SPR.map(f => new Promise(res => { const i = new Image(); i.onload = () => { ASP[f] = i.naturalWidth / i.naturalHeight; res(); }; i.onerror = res; i.src = src(f); }))]), new Promise(r => setTimeout(r, 6000))]);
 
     /* 배역: 쌍둥이는 같은 키, 은우는 3분의 2쯤 */
@@ -523,11 +577,11 @@
       },
       async cut(k) {
         if (k === 'hug') {
-          await T.cutImage([{ src: src('cut_hug'), sfx: 'swish', hold: 3000 }], { hold: 3000 });
+          await T.cutImage([{ src: jsrc('cut_hug'), sfx: 'swish', hold: 3000 }], { hold: 3000 });
           put(T, nuna, X(440, 450), G, { look: 'hug', to: 'right' }); put(T, oppa, X(520, 510), G, { look: 'hug', to: 'left' }); put(T, agi, X(480, 480), G + 6, { look: 'hug', to: 'right' });
           return;
         }
-        if (k === 'rainbow') await T.cutImage([{ src: src('cut_rainbow'), sfx: 'sparkle', hold: 2600 }], { hold: 2600 });
+        if (k === 'rainbow') await T.cutImage([{ src: jsrc('cut_rainbow'), sfx: 'sparkle', hold: 2600 }], { hold: 2600 });
       },
       rain(verb) {
         if (verb === 'start') { RS.rd = 0; return; }
@@ -1000,7 +1054,7 @@
       T.shake(); sfx('thunder', .4) || AudioFX.sfx('boom', .5) || T.tone([110, 55], .6, { type: 'sawtooth', vol: .08 }); T.pop(500, 150, tr('번쩍!'), '#E8A317'); bg.remove(); // 천둥은 부드럽게
       kids.forEach(k => k.look('eek'));
       await say('번쩍! 우르릉 쾅!');
-      await T.cutImage([{ src: src('cut_hug'), sfx: 'swish', hold: 3000 }], { hold: 3000 });
+      await T.cutImage([{ src: jsrc('cut_hug'), sfx: 'swish', hold: 3000 }], { hold: 3000 });
       put(T, nuna, X(440, 450), G, { look: 'hug', to: 'right' }); put(T, oppa, X(520, 510), G, { look: 'hug', to: 'left' }); put(T, agi, X(480, 480), G + 6, { look: 'hug', to: 'right' });
       await say('"으악!" 삼남매는 서로 꼭 껴안아요.');
       await say('"미안, 미안! 인사한 거야!"');
@@ -1126,7 +1180,7 @@
       baby.pos.getAnimations().forEach(an => an.cancel()); baby.setScale(s0 * .55); baby.place(bx, by - 10); baby.pos.style.opacity = .85;
       baby.hop(16, 400); popSfx(T, true); T.pop(baby.x, baby.y - 140, tr('퐁!'));
       await say('하얀 아기 구름이 방긋 웃어요. 퐁!');
-      await T.cutImage([{ src: src('cut_rainbow'), sfx: 'sparkle', hold: 2600 }], { hold: 2600 });
+      await T.cutImage([{ src: jsrc('cut_rainbow'), sfx: 'sparkle', hold: 2600 }], { hold: 2600 });
       await say('"구름은 여기서 오는 거였어!"');
       await say('꿀떡이는 젖은 흙에 코를 대고 킁킁.');
     });

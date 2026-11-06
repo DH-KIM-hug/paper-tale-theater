@@ -57,7 +57,11 @@
   const S_TOY = .42;                    // 사람 세계에서 자동차 다섯 대에 공통으로 쓰는 축소 비율. 그 밖에 s 를 쓰지 않는다
   const BGS = ['rc_bg_room_v2', 'rc_bg_yard_v2', 'rc_bg_gate_v2', 'rc_bg_road_a_v2', 'rc_bg_road_b_v2', 'rc_bg_road_c_v2', 'rc_bg_road_long_v2', 'rc_bg_road_hill_v2', 'rc_bg_playground_v2',
     'rc_bg_road_a_v3', 'rc_bg_road_b_v3', 'rc_bg_road_c_v3', 'rc_bg_road_long_v3', 'rc_bg_road_hill_v4'];   // 2026-10-22 시각 재기획: 옛 rc_bg_* 는 쓰지 않음. _v3: 장난감나라 세상별 컨셉(2026-10-24, PLAN '장난감나라 컨셉 재기획')
-  const src = k => AS + k + '.webp';
+  /* 주인공 모습(이름 설정 2판 G3): 이현이(B) 여자아이판이면 rc_childg_*·rc_bedg_* (engine/names.js LOOK_ART). 침대 그림 rc_childg_bed 는 rc_child_bed 와 같은 틀(800×1200, post_red_car_bed.py 방식).
+     자세 높이(HT)는 원래 그림 값을 그대로 쓴다 — 2026-11-07 tools/app/gen/post_look.py 뒤, 같은 자세의 원래·반대 그림을 몸 실루엣(아래 55%)과 얼굴 폭으로 겹쳐 재니
+     배율이 모두 0.97~1.03(CLAUDE.md §4-1)이었다. 보는 쪽(NAT)도 같다(post_look.py 의 좌우 판정에서 뒤집힌 그림 없음) */
+  const art = k => { try { return typeof Names !== 'undefined' ? Names.art('red_car', k) : k; } catch (e) { return k; } };
+  const src = k => AS + art(k) + '.webp';
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시
 

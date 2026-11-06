@@ -1,0 +1,9 @@
+rc_childg_stand: 0.5183
+rc_childg_eat: 0.76
+rc_childg_sleep: 2.0316
+rc_childg_point: 0.615
+rc_childg_run: 0.615
+rc_childg_cry: 0.52
+rc_childg_turn: 0.52
+rc_childg_hug: 0.5583
+rc_childg_bed: 0.6667

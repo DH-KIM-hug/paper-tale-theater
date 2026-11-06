@@ -7,7 +7,11 @@
    세로 화면: 보이는 폭이 좁아 월드를 ps 배로 줄이고(setView) 누르는 상자는 H() 로 화면 크기를 지킨다. */
 (() => {
   const AS = '../../assets/v3w/';
-  const src = k => AS + k + '.webp';
+  /* 주인공 모습(이름 설정 2판 G3): 다현이(A) 남자아이판이면 wc_kidb_*·wc_cutb_*(변신 컷 틀 wc_cut_tf_frame 은 그대로) (engine/names.js LOOK_ART).
+     자세 높이(HT)는 원래 그림 값을 그대로 쓴다 — 2026-11-07 tools/app/gen/post_look.py 뒤, 같은 자세의 원래·반대 그림을 몸 실루엣(아래 55%)과 얼굴 폭으로 겹쳐 재니
+     배율이 모두 0.97~1.03(CLAUDE.md §4-1)이었다. 보는 쪽(NAT)도 같다(post_look.py 의 좌우 판정에서 뒤집힌 그림 없음) */
+  const art = k => { try { return typeof Names !== 'undefined' ? Names.art('witch_candy', k) : k; } catch (e) { return k; } };
+  const src = k => AS + art(k) + '.webp';
   const FL = 490;                                  // 바닥(발끝 y)
   const CREAM = '#F6ECD8', INK = '#2E241C', FONT = "'Pretendard Variable', Pretendard, sans-serif";
   const artOK = {}, bgOK = {};

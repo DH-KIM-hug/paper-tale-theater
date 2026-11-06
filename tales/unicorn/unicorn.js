@@ -68,7 +68,11 @@
   const FL = 490;                       // 바닥(발끝 y)
   const BGS = ['uc_bg2_hill', 'uc_bg2_cloudland', 'uc_bg2_night_forest', 'uc_bg2_waterfall', 'uc_bg2_dusk_road', 'uc_bg2_moon_night'];   // 2026-10-22 화려한 다층 배경(옛 uc_bg_* 는 쓰지 않음)
   const CUTS = ['uc_cut2_sheep_jump', 'uc_cut2_thorns', 'uc_cut2_turn', 'uc_cut2_hug'];   // 공주 옷 컷
-  const src = k => AS + k + '.webp';
+  /* 주인공 모습(이름 설정 2판 G3): 다현이(A) 남자아이판이면 uc_kid2b_*·uc_cut2b_*·uc_bedb_* (engine/names.js LOOK_ART).
+     자세 높이(HT)는 원래 그림 값을 그대로 쓴다 — 2026-11-07 tools/app/gen/post_look.py 뒤, 같은 자세의 원래·반대 그림을 몸 실루엣(아래 55%)과 얼굴 폭으로 겹쳐 재니
+     배율이 모두 0.97~1.03(CLAUDE.md §4-1)이었다. 보는 쪽(NAT)도 같다(post_look.py 의 좌우 판정에서 뒤집힌 그림 없음) */
+  const art = k => { try { return typeof Names !== 'undefined' ? Names.art('unicorn', k) : k; } catch (e) { return k; } };
+  const src = k => AS + art(k) + '.webp';
   const FILL = { red: '#A93B32', orange: '#E8703A', yellow: '#D9A94E', pink: '#E79AB4', purple: '#7B4F8C', blue: '#3E7CB1', white: '#F4F6FA' };
   const BGBOX = { x: -40, y: -24, w: 1080, h: 1080 * 902 / 1600 };
   const artOK = {}, bgOK = {};          // preload 결과(그림이 실제로 있는지) — 없으면 자리표시

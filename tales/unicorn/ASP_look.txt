@@ -1,0 +1,9 @@
+uc_kid2b_stand: 0.4667
+uc_kid2b_walk: 0.59
+uc_kid2b_sad: 0.4733
+uc_kid2b_tired: 0.5267
+uc_kid2b_turn: 0.465
+uc_kid2b_hug: 0.66
+uc_kid2b_wave: 0.605
+uc_kid2b_turn3: 0.4867
+uc_kid2b_turn4: 0.4617
