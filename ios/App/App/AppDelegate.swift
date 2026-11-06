@@ -1,5 +1,6 @@
 import UIKit
 import Capacitor
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -7,7 +8,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // 무음 모드(벨 끔)에서도 동화 소리가 나게: 기본(ambient)은 무음 스위치를 따라 소리가 꺼진다(2026-11-07 아이패드 시험에서 발견)
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
         return true
     }
 
