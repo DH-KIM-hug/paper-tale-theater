@@ -1570,6 +1570,7 @@ const Tale = (() => {
       <button class="restMore" id="restMore" type="button">${tr('어른이 +10분')}</button>
     </div>
   </div>
+  <button type="button" id="backBtn" aria-label="${tr('홈으로')}">${monoPic('ic_home')}<span class="bk-t">${tr('홈으로')}</span></button>
 </div>`);
     root = $('#tale'); stage = $('#stage');
     transitionMode = transition;
@@ -1581,6 +1582,30 @@ const Tale = (() => {
       if (frame && fq !== '0') { const d = $('#deco'); d.dataset.wide = ROOT_URL + 'assets/frames/' + frame + '_wide.webp'; d.dataset.tall = ROOT_URL + 'assets/frames/' + frame + '_tall.webp'; d.hidden = false; }
     } catch (e) { /* 액자 없이 */ }
     $('#finBtn').onclick = () => { Narrator.stop(); location.href = home; };
+    /* 재생 중 '홈으로'(2026-11-07 사용자: iOS 앱에는 브라우저 뒤로 가기가 없어 동화 도중 나갈 길이 없었다).
+       왼쪽 위 작은 집 동그라미. 아이가 잘못 스치는 일이 잦아 두 번 톡: 첫 톡 = '홈으로' 글자와 함께 커진다(이야기·소리는 그대로),
+       3초 안에 한 번 더 톡 = 소리·녹음·타이머를 모두 끊고 홈으로. 3초가 지나면 원래 크기로. 글자는 화면에만(소리 없음) */
+    {
+      const bb = $('#backBtn'); let armT = null, leaving = false;
+      const disarm = () => { clearTimeout(armT); armT = null; bb.classList.remove('armed'); };
+      const leave = () => {
+        if (leaving) return; leaving = true; disarm(); bb.classList.add('leaving');
+        try { Narrator.stop(); } catch (e) { /* 무시 */ }
+        try { if (AudioFX.hush) AudioFX.hush(); else { AudioFX.stopNarration(); AudioFX.stopAmbient && AudioFX.stopAmbient(0); AudioFX.sessionEnd && AudioFX.sessionEnd(); } } catch (e) { /* 무시 */ }
+        try { PT.run(false); } catch (e) { /* 무시 */ }
+        try { sessionStorage.removeItem('read_once'); } catch (e) { /* 무시 */ }
+        try { if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'none'; } catch (e) { /* 무시 */ }
+        root.classList.add('leaving');   // 남은 누름을 막는다(페이지가 바뀔 때까지)
+        location.href = home;
+      };
+      ['pointerdown', 'pointerup', 'touchstart'].forEach(ev => bb.addEventListener(ev, e => e.stopPropagation(), { passive: true }));
+      bb.addEventListener('click', e => {
+        e.preventDefault(); e.stopPropagation();
+        if (!bb.classList.contains('armed')) { bb.classList.add('armed'); clearTimeout(armT); armT = setTimeout(disarm, 3000); return; }
+        leave();
+      });
+      window.__taleLeave = leave;   // 검수용
+    }
     const heroesP = heroes(); arrive(heroesP);
     // 세로 화면: 무대를 크게 키워 양옆을 자른다(slice), 가로: 전체를 맞춘다(meet)
     const portraitMQ = window.matchMedia('(orientation: portrait)');
@@ -1633,6 +1658,7 @@ const Tale = (() => {
       try { await startRun(); } finally { running = false; }
     };
     const startRun = async () => {
+      root.classList.add('inplay');   // 재생 중 '홈으로' 단추를 보인다(시작·끝·쉬는 화면은 자기 단추가 있다)
       reading = readWanted(); root.classList.toggle('reading', reading); // 끝 화면 '한 번 더'도 같은 모드로 (read_once 는 홈으로 갈 때 지운다)
       if (reading && !VERIFY) {   // 잠자리 탭 '최근 들은'
         try { const k = 'paperTheater.recentRead', id = taleId(), a = JSON.parse(localStorage.getItem(k) || '[]'); localStorage.setItem(k, JSON.stringify([id, ...(Array.isArray(a) ? a : []).filter(x => x !== id)].slice(0, 8))); } catch (err) { /* 기억 못 해도 읽어 준다 */ }
@@ -1667,6 +1693,7 @@ const Tale = (() => {
     /* 끝 화면 = 책의 뒤표지: 이야기 끝 그림 창 + 만세 + 집·한 번 더 동그라미 둘. 그림은 <id>_back_* → 없으면 _key_* → _tile
        놀이로 끝까지 했으면(award) 오른쪽 아래 받은 것 쟁반에서 스티커·종이별이 날아와 앉는다 (APP_SCREENS_PLAN S7) */
     const showEnd = (award = null) => {
+      root.classList.remove('inplay');
       const es = $('#endScreen'), id = taleId(), base = ROOT_URL + 'assets/thumbs/' + id;
       /* 동그라미 버튼 색 = BACKACCENT[id]. thumbs.js 가 아직 안 왔으면(?endpreview 등) 온 뒤에 다시 칠한다 */
       const paint = () => { const ac = (window.BACKACCENT || {})[id]; if (ac) es.style.setProperty('--accent', ac); else es.style.removeProperty('--accent'); };

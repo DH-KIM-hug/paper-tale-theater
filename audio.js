@@ -6,13 +6,14 @@ const englishOn = () => siteLang() === 'en' && typeof NARRATION_CLIPS_EN !== 'un
 
 const AudioFX = (() => {
   let ctx = null;
+  let hushed = false;   // 동화에서 '홈으로' 나가는 중(2026-11-07): 페이지가 바뀔 때까지 어떤 소리도 다시 깨우지 않는다
 
   function ensure() {
     if (!ctx) {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (AC) ctx = new AC();
     }
-    if (ctx && ctx.state !== 'running' && ctx.state !== 'closed') ctx.resume().catch(() => {});
+    if (ctx && !hushed && ctx.state !== 'running' && ctx.state !== 'closed') ctx.resume().catch(() => {});
     return ctx;
   }
 
@@ -24,6 +25,7 @@ const AudioFX = (() => {
   const SILENT = 'data:audio/mpeg;base64,SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYzLjEuMTAyAAAAAAAAAAAAAAD/83DAAAAAAAAAAAAASW5mbwAAAA8AAAAWAAAJsQAdHR0dKCgoKCgzMzMzPT09PT1ISEhIU1NTU1NeXl5eaWlpaWlzc3Nzfn5+fn6JiYmJlJSUlJSenp6enqmpqam0tLS0tL+/v7/KysrKytTU1NTf39/f3+rq6ur19fX19f////8AAAAATGF2YzYzLjEuAAAAAAAAAAAAAAAAJAQvAAAAAAAACbHeQ9eUAAAAAAAAAAAAAAAAAP/zQMQAAAADSAAAAABMQU1FNC4wVVVVVVVVVVVVVVVVTEFNRTQuMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxFsAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTQuMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FNC4wVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FNC4wVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTQuMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTQuMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FNC4wVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FNC4wVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTQuMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTQuMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FNC4wVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVMQU1FNC4wVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80DEpAAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsSjAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTQuMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVTEFNRTQuMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NAxKQAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/80LEowAAA0gAAAAAVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=';
   let keepAlive = null;
   function wake() {
+    if (hushed) return;
     try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) { /* 무시 */ }
     const c = ensure();
     if (!c) return;
@@ -44,7 +46,7 @@ const AudioFX = (() => {
   document.addEventListener('visibilitychange', () => {
     // 화면을 떠나면 붙잡고 있던 세션을 놓아 준다. 읽어 주기(<audio> 내레이션) 중이면 화면이 꺼져도 이어 읽도록 붙잡아 둔다
     if (document.hidden) { if (keepAlive && !mediaNar) keepAlive.pause(); }
-    else if (ctx && ctx.state !== 'running' && ctx.state !== 'closed') ctx.resume().catch(() => {}); // 돌아오면 효과음 다시 깨우기
+    else if (ctx && !hushed && ctx.state !== 'running' && ctx.state !== 'closed') ctx.resume().catch(() => {}); // 돌아오면 효과음 다시 깨우기
   });
 
   /* 기본 톤: freq(Hz) 또는 [시작, 끝] 스윕 */
@@ -113,7 +115,7 @@ const AudioFX = (() => {
   const untilStop = (p, stopP) => Promise.race([p, stopP.then(() => CUT)]);
   function mediaNarration(on) {
     mediaNar = !!on;
-    if (!mediaNar) return;
+    if (!mediaNar || hushed) return;
     if (!narEl) { narEl = document.createElement('audio'); narEl.preload = 'auto'; narEl.setAttribute('playsinline', ''); }
     // 각 요소를 사용자 누름 안에서 열어 두어 iOS에서도 합창을 이어 재생한다.
     while (narHelpers.length < 7) {
@@ -542,11 +544,23 @@ const AudioFX = (() => {
     narStopped: () => narStopP,
     /* 잠금 화면 일시정지·재생 (Media Session) */
     narHold(on) {
+      if (hushed) return;
       narHeld = !!on;
       if (pairEnds.length) narHelpers.forEach(el => { if (on) el.pause(); else if (el.onended && !el.ended) el.play().catch(() => {}); });
       if (mediaNar && narEl) { try { if (on) narEl.pause(); else if (narEnd) narEl.play().catch(() => {}); } catch (e) { /* 무시 */ } }
       else if (ctx) { try { on ? ctx.suspend() : ctx.resume(); } catch (e) { /* 무시 */ } }
     },
+    /* 동화 재생 중 '홈으로'(2026-11-07): 내레이션·배경음·효과음·음악을 모두 끊고, 페이지가 바뀌기 전까지 다시 울리지 않게 묶는다.
+       <audio> 는 음소거·멈춤, Web Audio 는 잠재운다(ensure·wake 가 다시 깨우지 않는다) */
+    hush() {
+      try { api.stopAmbient(0); } catch (e) { /* 무시 */ }
+      try { api.stopNarration(); } catch (e) { /* 무시 */ }
+      hushed = true;
+      [narEl, keepAlive, ...narHelpers].forEach(el => { if (el) { try { el.muted = true; el.pause(); } catch (e) { /* 무시 */ } } });
+      if (ctx) { try { ctx.suspend(); } catch (e) { /* 무시 */ } }
+      try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) { /* 무시 */ }
+    },
+    hushed: () => hushed,
     /* 잠자리 이어 듣기가 끝났을 때: 내레이션 <audio> 를 비우고 무음 유지 루프도 놓는다(배경에 무음만 남지 않게) */
     sessionEnd() {
       mediaNar = false; narHeld = false;
