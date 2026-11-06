@@ -123,8 +123,8 @@ def red_car():
                                                     R + 'rc_child_bed.png'], R + 'rc_childg_bed.png', p, o['size'], o.get('aspect'), src='rc_child_bed',
                     note='post_red_car_bed.py 와 같은 틀(마젠타 밖 오리지 않음)'))
     # 끝 장면 침대 2장
-    for k, refs, pas in (('wide', [R + 'rc_childg_bed.png', R + 'rc_tow_joy.png', R + 'rc_police_run.png', R + 'rc_fire_run.png', R + 'rc_amb_run.png', R + 'rc_bed_wide.png'], 4),
-                         ('tall', [R + 'rc_childg_bed.png', R + 'rc_tow_joy.png', R + 'rc_police_run.png', R + 'rc_fire_run.png', R + 'rc_bedg_wide.png', R + 'rc_bed_tall.png'], 5)):
+    for k, refs, pas in (('wide', [R + 'rc_childg_bed.png', R + 'rc_tow_joy.png', R + 'rc_police_run.png', R + 'rc_fire_run.png', R + 'rc_bed_wide.png'], 4),
+                         ('tall', [R + 'rc_childg_bed.png', R + 'rc_tow_joy.png', R + 'rc_police_run.png', R + 'rc_bedg_wide.png', R + 'rc_bed_tall.png'], 5)):
         o = O[f'rc_bed_{k}']; p = o['prompt']
         p = must(p, "Ihyun's bedroom", "the girl's bedroom").replace('Ihyun sleeps', 'The girl sleeps')
         p = must(p, 'Ihyun: a small child about 4 years old, short straight black hair, round cream-skinned face, 2.5 heads tall, exactly as in the reference.',
