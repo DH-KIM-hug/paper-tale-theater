@@ -169,7 +169,10 @@ const AudioFX = (() => {
   /* 녹음 미리 받기: 동화를 시작하면 이 동화의 녹음 파일을 순서대로(동시에 4개씩) 받아 둔다.
      받은 파일(압축된 mp3)만 들고 있다가 말할 때 풀어 쓴다 → 대사가 바로 나온다 (메모리도 적게) */
   const prefetched = {};      // 받아 둔 압축 mp3 (풀거나 blob 으로 바꾼 뒤엔 버린다)
-  const rawFetch = (url, signal) => fetch(clipUrl(url), signal ? { signal } : undefined).then(r => { if (!r.ok) throw new Error('fetch-fail'); return r.arrayBuffer(); });
+  /* 앱(Capacitor iOS)은 mp3·wav 같은 소리 파일을 HTTP 가 아닌 응답으로 돌려줘 fetch 의 status 가 0(ok=false)이다(2026-11-07 앱 목소리 안 나옴).
+     파일이 없으면 fetch 자체가 실패하므로 status 0 은 받은 것으로 본다 */
+  const fileOk = r => r.ok || r.status === 0;
+  const rawFetch = (url, signal) => fetch(clipUrl(url), signal ? { signal } : undefined).then(r => { if (!fileOk(r)) throw new Error('fetch-fail'); return r.arrayBuffer(); });
   /* 재생용 받기: 미리 받는 중이면 그 약속을 쓰되, 미리 받기가 취소(abort)돼 끊겼으면 바로 다시 받는다 → 재생은 미리 받기에 기대지 않는다 */
   const fetchBytes = url => {
     let p = prefetched[url];
@@ -313,7 +316,7 @@ const AudioFX = (() => {
     if (VARIANTS[vb]) for (let i = 2; i <= VARIANTS[vb]; i++) loadSample(variantPath(vb, i)); // 다른 버전도 같이 받는다
     samples[path] = null;
     const c = ensure(); if (!c) return;
-    fetch(SOUND_BASE + path).then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); })
+    fetch(SOUND_BASE + path).then(r => { if (!fileOk(r)) throw 0; return r.arrayBuffer(); })
       .then(b => c.decodeAudioData(b)).then(buf => { samples[path] = buf; })
       .catch(() => { samples[path] = false; });
   }
